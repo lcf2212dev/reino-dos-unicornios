@@ -1,0 +1,65 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Prévia das 8 direções</title>
+<style>
+  body { background: #a9e6a3; font: 13px sans-serif; margin: 12px; color: #3a2446 }
+  .l { display: flex; gap: 10px; align-items: flex-end; margin-bottom: 14px }
+  .c { display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 60px }
+  canvas { image-rendering: pixelated }
+  h3 { margin: 10px 0 4px }
+</style>
+<div id="r"></div>
+<script src="../js/config.js"></script>
+<script src="../js/pixelart.js"></script>
+<script>
+var E = +(new URLSearchParams(location.search).get('e') || 4);
+var defs = {
+  comum: { id: 'a', raridade: 'comum', cores: { corpo: '#ffffff', crina: ['#ff7eb6', '#b58cff', '#7fd6ff'], chifre: '#ffd34d' } },
+  raro: { id: 'b', raridade: 'raro', cores: { corpo: '#dff1ff', crina: ['#4a9dff', '#ff5c8a', '#ffffff'], chifre: '#ffb020' } },
+  epico: { id: 'c', raridade: 'epico', cores: { corpo: '#ffe98a', crina: ['#ff9d2e', '#ff5c8a', '#fff1b3'], chifre: '#ffffff', asa: '#fff6d6' } },
+};
+var ap = PA.APARENCIA_PADRAO;
+// ordem da bússola: N, NE, E, SE, S, SO, O, NO
+var DIRS = [['N', 0, -1], ['NE', 1, -1], ['L', 1, 0], ['SE', 1, 1], ['S', 0, 1], ['SO', -1, 1], ['O', -1, 0], ['NO', -1, -1]];
+var r = document.getElementById('r');
+function titulo(t) { var h = document.createElement('h3'); h.textContent = t; r.appendChild(h); }
+function linha() { var d = document.createElement('div'); d.className = 'l'; r.appendChild(d); return d; }
+function celula(l, spr, rotulo, espelhar) {
+  var c = document.createElement('div'); c.className = 'c';
+  var src = spr.canvas;
+  if (espelhar) src = PA.espelhado(src);
+  c.appendChild(PA.paraDOM(src, E));
+  var s = document.createElement('span'); s.textContent = rotulo; c.appendChild(s);
+  l.appendChild(c);
+}
+function bussola(nome, fazer) {
+  titulo(nome);
+  var l = linha();
+  DIRS.forEach(function (d) {
+    var v = PA.vistaDaDirecao(d[1], d[2]);
+    celula(l, fazer(v.vista, 0), d[0], v.espelhar);
+  });
+}
+function passos(nome, fazer) {
+  titulo(nome + ' — quadros 0, 1, 2 por vista');
+  var l = linha();
+  PA.VISTAS.forEach(function (v) { for (var q = 0; q < 3; q++) celula(l, fazer(v, q), v + ' ' + q); });
+}
+var tipos = [
+  ['Mariana a pé', function (v, q) { return PA.mariana(ap, false, q, { vista: v }); }],
+  ['Mariana com capa', function (v, q) { return PA.mariana(ap, false, q, { vista: v, capa: true }); }],
+  ['Bebê comum', function (v, q) { return PA.unicornio(defs.comum, 0, q, { vista: v }); }],
+  ['Pequeno raro com flor', function (v, q) { return PA.unicornio(defs.raro, 1, q, { vista: v, enfeites: ['flor'] }); }],
+  ['Adulto comum', function (v, q) { return PA.unicornio(defs.comum, 3, q, { vista: v }); }],
+  ['Adulto épico com coroa e óculos', function (v, q) { return PA.unicornio(defs.epico, 3, q, { vista: v, enfeites: ['coroa', 'oculos'] }); }],
+  ['Montada no pequeno', function (v, q) { return PA.montada(defs.comum, 1, q, ap, { vista: v }); }],
+  ['Montada no adulto', function (v, q) { return PA.montada(defs.comum, 3, q, ap, { vista: v }); }],
+  ['Montada no épico com capa e laço', function (v, q) { return PA.montada(defs.epico, 3, q, ap, { vista: v, capa: true, enfeites: ['laco'] }); }],
+];
+var so = new URLSearchParams(location.search).get('so');
+tipos.forEach(function (t, i) {
+  if (so && so.split(',').indexOf(String(i)) < 0) return;
+  bussola(t[0], t[1]);
+  if (new URLSearchParams(location.search).get('passos')) passos(t[0], t[1]);
+});
+</script>

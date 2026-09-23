@@ -1,0 +1,12 @@
+services:
+  reino:
+    build:
+      context: ..
+      dockerfile: servidor/Dockerfile
+    container_name: reino-unicornios
+    ports:
+      - "80:80"
+    volumes:
+      - ./dados:/dados
+      - ..:/app:ro
+    restart: unless-stopped

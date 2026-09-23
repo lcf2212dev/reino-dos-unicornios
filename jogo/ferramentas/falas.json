@@ -1,0 +1,3640 @@
+{
+ "vozes": {
+  "claude": {
+   "voz": "pt-BR-AntonioNeural",
+   "velocidade": "-5%",
+   "tom": "+0Hz"
+  },
+  "narradora": {
+   "voz": "pt-BR-FranciscaNeural",
+   "velocidade": "-8%",
+   "tom": "+0Hz"
+  },
+  "unicornio": {
+   "voz": "pt-BR-ThalitaMultilingualNeural",
+   "velocidade": "+0%",
+   "tom": "+25Hz"
+  }
+ },
+ "falas": [
+  {
+   "chave": "7ce796a428",
+   "voz": "claude",
+   "texto": "Oi, Mariana! Que bom te ver! Vamos passear pelo Reino e revisar História?",
+   "fala": "Oi, Mariana! Que bom te ver! Vamos passear pelo Reino e revisar História?",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "fcfba9861q",
+   "voz": "claude",
+   "texto": "Olá, Mariana! Seu unicórnio estava com saudade de você!",
+   "fala": "Olá, Mariana! Seu unicórnio estava com saudade de você!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "6252c2211x",
+   "voz": "claude",
+   "texto": "Oba, a Mariana chegou! O Museu das Memórias está te esperando.",
+   "fala": "Oba, a Mariana chegou! O Museu das Memórias está te esperando.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "c75fd9ed1f",
+   "voz": "claude",
+   "texto": "Isso, Mariana! Você leu com calma e acertou!",
+   "fala": "Isso, Mariana! Você leu com calma e acertou!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "2431ae41u",
+   "voz": "claude",
+   "texto": "Uau! Resposta certinha!",
+   "fala": "Uau! Resposta certinha!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "d17935e817",
+   "voz": "claude",
+   "texto": "Que orgulho! Você pensou direitinho.",
+   "fala": "Que orgulho! Você pensou direitinho.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "4eaac7791i",
+   "voz": "claude",
+   "texto": "Acertou! Seu unicórnio está pulando de alegria!",
+   "fala": "Acertou! Seu unicórnio está pulando de alegria!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "503858ea1d",
+   "voz": "claude",
+   "texto": "Muito bem! Ler com atenção funciona mesmo!",
+   "fala": "Muito bem! Ler com atenção funciona mesmo!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "c8a6f31a1b",
+   "voz": "claude",
+   "texto": "Perfeito! Você é uma ótima historiadora!",
+   "fala": "Perfeito! Você é uma ótima historiadora!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "4f325533x",
+   "voz": "claude",
+   "texto": "Mandou muito bem, Mariana!",
+   "fala": "Mandou muito bem, Mariana!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "52e1ccff1d",
+   "voz": "claude",
+   "texto": "Show! Você lembrou direitinho da apostila!",
+   "fala": "Show! Você lembrou direitinho da apostila!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "ecb426601v",
+   "voz": "claude",
+   "texto": "Isso aí! Errar e tentar de novo é assim que a gente aprende.",
+   "fala": "Isso aí! Errar e tentar de novo é assim que a gente aprende.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "5e2af4e21i",
+   "voz": "claude",
+   "texto": "Viu só? Você leu de novo com calma e conseguiu!",
+   "fala": "Viu só? Você leu de novo com calma e conseguiu!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "02d5dd821f",
+   "voz": "claude",
+   "texto": "Muito bem! Agora você não esquece mais essa!",
+   "fala": "Muito bem! Agora você não esquece mais essa!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "e4e238e71h",
+   "voz": "claude",
+   "texto": "Quase! Leia a pista com calma e tente de novo.",
+   "fala": "Quase! Leia a pista com calma e tente de novo.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "c498115f1f",
+   "voz": "claude",
+   "texto": "Tudo bem errar! Errar faz parte de aprender.",
+   "fala": "Tudo bem errar! Errar faz parte de aprender.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "79acb8c01t",
+   "voz": "claude",
+   "texto": "Hmm, não foi essa. Respira fundo e olha de novo com calma.",
+   "fala": "Hmm, não foi essa. Respira fundo e olha de novo com calma.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "99811ae71h",
+   "voz": "claude",
+   "texto": "Opa! Toda campeã erra às vezes. Você consegue!",
+   "fala": "Opa! Toda campeã erra às vezes. Você consegue!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "a5e448be1q",
+   "voz": "claude",
+   "texto": "Ei, Mariana! Leu tudinho? Lê mais uma vez com o dedinho",
+   "fala": "Ei, Mariana! Leu tudinho? Lê mais uma vez com o dedinho",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "69985dad1x",
+   "voz": "claude",
+   "texto": "Opa, foi rapidinho! Que tal ler a pergunta de novo, com calma?",
+   "fala": "Opa, foi rapidinho! Que tal ler a pergunta de novo, com calma?",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "891ca24d21",
+   "voz": "claude",
+   "texto": "Devagarinho se vai longe! Confere mais uma vez antes de responder.",
+   "fala": "Devagarinho se vai longe! Confere mais uma vez antes de responder.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "b5f23c2723",
+   "voz": "claude",
+   "texto": "Lembra: aqui não tem relógio! Lê de novo com calma e depois confere.",
+   "fala": "Lembra: aqui não tem relógio! Lê de novo com calma e depois confere.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "178488572f",
+   "voz": "claude",
+   "texto": "Sabia? Quem termina a prova primeiro não ganha medalha. Quem ACERTA é que ganha!",
+   "fala": "Sabia? Quem termina a prova primeiro não ganha medalha. Quem acerta é que ganha!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "660297d42l",
+   "voz": "claude",
+   "texto": "A medalha de ouro da escola vale R$100! E ela vem das respostas certas, não da pressa.",
+   "fala": "A medalha de ouro da escola vale 100 reais! E ela vem das respostas certas, não da pressa.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "41f322f11y",
+   "voz": "claude",
+   "texto": "Os campeões revisam a prova do começo ao fim antes de entregar.",
+   "fala": "Os campeões revisam a prova do começo ao fim antes de entregar.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "722663841y",
+   "voz": "claude",
+   "texto": "O tempo da prova é todo seu. Terminar por último está tudo bem!",
+   "fala": "O tempo da prova é todo seu. Terminar por último está tudo bem!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "7db19dcb2j",
+   "voz": "claude",
+   "texto": "Na prova, leia cada pergunta duas vezes: uma para entender e outra para ter certeza.",
+   "fala": "Na prova, leia cada pergunta duas vezes: uma para entender e outra para ter certeza.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "91239e1e3z",
+   "voz": "claude",
+   "texto": "Lembra da quadrinha? \"Eu sozinho canto bem, com você canto melhor.\" Ela valoriza a amizade, não a competição! A prova não é uma corrida.",
+   "fala": "Lembra da quadrinha? \"Eu sozinho canto bem, com você canto melhor.\" Ela valoriza a amizade, não a competição! A prova não é uma corrida.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "3f0d429e2h",
+   "voz": "claude",
+   "texto": "Se sobrar tempo na prova, use para revisar. É aí que a gente encontra os errinhos!",
+   "fala": "Se sobrar tempo na prova, use para revisar. É aí que a gente encontra os errinhos!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "ef5e0f5a2s",
+   "voz": "claude",
+   "texto": "Antes de começar a prova, respira fundo três vezes. O cérebro fica tranquilo e lembra melhor.",
+   "fala": "Antes de começar a prova, respira fundo três vezes. O cérebro fica tranquilo e lembra melhor.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "42a95a8c19",
+   "voz": "claude",
+   "texto": "Terminar por último é coisa de campeã!",
+   "fala": "Terminar por último é coisa de campeã!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "e12c7e521p",
+   "voz": "claude",
+   "texto": "Seu unicórnio fica orgulhoso quando você lê com calma.",
+   "fala": "Seu unicórnio fica orgulhoso quando você lê com calma.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "7e0c4ce32k",
+   "voz": "claude",
+   "texto": "Quem acerta com calma ganha o ouro. Quem corre pode errar bobeira. Qual você prefere?",
+   "fala": "Quem acerta com calma ganha o ouro. Quem corre pode errar bobeira. Qual você prefere?",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "60e276101u",
+   "voz": "claude",
+   "texto": "Sabia que a neta do senhor Antônio também se chama Mariana?",
+   "fala": "Sabia que a neta do senhor Antônio também se chama Mariana?",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "e5f720f22m",
+   "voz": "claude",
+   "texto": "No cartão-postal da apostila está escrito: \"Mariana adorou\". Tem Mariana em todo lugar!",
+   "fala": "No cartão-postal da apostila está escrito: \"Mariana adorou\". Tem Mariana em todo lugar!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "e68beae425",
+   "voz": "claude",
+   "texto": "Os griôs contam histórias há centenas de anos. Hoje eu sou o seu griô!",
+   "fala": "Os griôs contam histórias há centenas de anos. Hoje eu sou o seu griô!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "245515a12p",
+   "voz": "claude",
+   "texto": "O senhor Antônio esperava o carteiro todos os dias. Imagina esperar uma carta por semanas!",
+   "fala": "O senhor Antônio esperava o carteiro todos os dias. Imagina esperar uma carta por semanas!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "3a59a50727",
+   "voz": "claude",
+   "texto": "A Dona Sara conheceu o mar em 28/12/1957. Ela guardou até as conchinhas!",
+   "fala": "A Dona Sara conheceu o mar em 28 de dezembro de 1957. Ela guardou até as conchinhas!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "46354f342a",
+   "voz": "claude",
+   "texto": "Você está estudando há um tempinho! Que tal beber água e esticar os braços?",
+   "fala": "Você está estudando há um tempinho! Que tal beber água e esticar os braços?",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "2e7339451r",
+   "voz": "claude",
+   "texto": "Hora de uma pausinha! Levanta, dá três pulinhos e volta.",
+   "fala": "Hora de uma pausinha! Levanta, dá três pulinhos e volta.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "380b95872i",
+   "voz": "claude",
+   "texto": "Seu cérebro trabalhou muito! Descansa os olhinhos um pouquinho olhando pela janela.",
+   "fala": "Seu cérebro trabalhou muito! Descansa os olhinhos um pouquinho olhando pela janela.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "39a6392ew",
+   "voz": "claude",
+   "texto": "Você é incrível, Mariana!",
+   "fala": "Você é incrível, Mariana!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "d549502623",
+   "voz": "claude",
+   "texto": "Mais uma sala! Esse museu está ficando todo iluminado por sua causa!",
+   "fala": "Mais uma sala! Esse museu está ficando todo iluminado por sua causa!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "acc717c018",
+   "voz": "claude",
+   "texto": "Parabéns! Você revisou com dedicação!",
+   "fala": "Parabéns! Você revisou com dedicação!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "979951981x",
+   "voz": "claude",
+   "texto": "Que orgulho, Mariana! Seu unicórnio está comemorando com você!",
+   "fala": "Que orgulho, Mariana! Seu unicórnio está comemorando com você!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "ad623e34u",
+   "voz": "narradora",
+   "texto": "Verdadeiro ou falso?",
+   "fala": "Verdadeiro ou falso?",
+   "pacotes": [
+    "geral",
+    "historia-h1",
+    "historia-h2",
+    "historia-h3",
+    "historia-h4",
+    "historia-h5"
+   ]
+  },
+  {
+   "chave": "483975afm",
+   "voz": "claude",
+   "texto": "Sala concluída!",
+   "fala": "Sala concluída!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "17894122o",
+   "voz": "claude",
+   "texto": "Revisão completa!",
+   "fala": "Revisão completa!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "0663bda3e",
+   "voz": "claude",
+   "texto": "Nasceu!",
+   "fala": "Nasceu!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "6c3f8602j",
+   "voz": "claude",
+   "texto": "Um lendário!",
+   "fala": "Um lendário!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "07673c0ez",
+   "voz": "claude",
+   "texto": "E você tem ovos para chocar!",
+   "fala": "E você tem ovos para chocar!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "488323492h",
+   "voz": "claude",
+   "texto": "Ainda faltam estrelas para esse enfeite. Cada acerto de primeira vale uma estrela!",
+   "fala": "Ainda faltam estrelas para esse enfeite. Cada acerto de primeira vale uma estrela!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "b9bb5a881z",
+   "voz": "claude",
+   "texto": "Puxa o ar pelo nariz, e solta devagarinho pela boca. Três vezes.",
+   "fala": "Puxa o ar pelo nariz, e solta devagarinho pela boca. Três vezes.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "59528fc1u",
+   "voz": "claude",
+   "texto": "Puxa o ar pelo nariz...",
+   "fala": "Puxa o ar pelo nariz...",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "7711099f11",
+   "voz": "claude",
+   "texto": "Solta devagarinho pela boca...",
+   "fala": "Solta devagarinho pela boca...",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "4266626a1l",
+   "voz": "claude",
+   "texto": "Muito bem! Agora o cérebro está calminho e pronto.",
+   "fala": "Muito bem! Agora o cérebro está calminho e pronto.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "69ac980f6c",
+   "voz": "claude",
+   "texto": "Meu plano da prova. Um: respiro três vezes. Dois: leio cada pergunta duas vezes. Três: respondo com calma. Quatro: reviso tudo, do começo ao fim. Cinco: só entrego depois de revisar. Terminar por último é coisa de campeã!",
+   "fala": "Meu plano da prova. Um: respiro três vezes. Dois: leio cada pergunta duas vezes. Três: respondo com calma. Quatro: reviso tudo, do começo ao fim. Cinco: só entrego depois de revisar. Terminar por último é coisa de campeã!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "d2da874e3h",
+   "voz": "claude",
+   "texto": "Chegou a parte mais importante: REVISAR! É aqui que as campeãs encontram os errinhos. Toque em cada questão com calma.",
+   "fala": "Chegou a parte mais importante: revisar! É aqui que as campeãs encontram os errinhos. Toque em cada questão com calma.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "e1bb9fbe2n",
+   "voz": "claude",
+   "texto": "Os que estavam certos ficaram no lugar. Leia de novo com calma e tente só os que faltam.",
+   "fala": "Os que estavam certos ficaram no lugar. Leia de novo com calma e tente só os que faltam.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "50779fb11o",
+   "voz": "claude",
+   "texto": "Os errados foram tirados. Veja se falta marcar algum!",
+   "fala": "Os errados foram tirados. Veja se falta marcar algum!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "b4b1ad5418",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho.",
+   "fala": "Leia a pergunta de novo, devagarinho.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "1f0e6650n",
+   "voz": "claude",
+   "texto": "MEDALHA DE OURO!",
+   "fala": "medalha de ouro!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "728559742w",
+   "voz": "claude",
+   "texto": "Viu? O ouro veio de acertar com calma, não de terminar primeiro! Na prova da escola é igualzinho.",
+   "fala": "Viu? O ouro veio de acertar com calma, não de terminar primeiro! Na prova da escola é igualzinho.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "53eb3c73o",
+   "voz": "claude",
+   "texto": "Medalha de prata!",
+   "fala": "Medalha de prata!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "f74babc92q",
+   "voz": "claude",
+   "texto": "Muito bem! Vamos ler o Livro das Memórias e tentar o ouro de novo? Com calma você chega lá!",
+   "fala": "Muito bem! Vamos ler o Livro das Memórias e tentar o ouro de novo? Com calma você chega lá!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "602b1135p",
+   "voz": "claude",
+   "texto": "Medalha de bronze!",
+   "fala": "Medalha de bronze!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "01d3dd782l",
+   "voz": "claude",
+   "texto": "Você terminou e revisou, isso já é de campeã! Vamos revisar as salas e tentar de novo?",
+   "fala": "Você terminou e revisou, isso já é de campeã! Vamos revisar as salas e tentar de novo?",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "1fc993961g",
+   "voz": "claude",
+   "texto": "Um ovo comum! Toque nele 3 vezes para chocar!",
+   "fala": "Um ovo comum! Toque nele 3 vezes para chocar!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "733c1d771f",
+   "voz": "claude",
+   "texto": "Um ovo raro! Toque nele 3 vezes para chocar!",
+   "fala": "Um ovo raro! Toque nele 3 vezes para chocar!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "a52018591g",
+   "voz": "claude",
+   "texto": "Um ovo épico! Toque nele 3 vezes para chocar!",
+   "fala": "Um ovo épico! Toque nele 3 vezes para chocar!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "371195cb1j",
+   "voz": "claude",
+   "texto": "Um ovo lendário! Toque nele 3 vezes para chocar!",
+   "fala": "Um ovo lendário! Toque nele 3 vezes para chocar!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "b1952a2ey",
+   "voz": "claude",
+   "texto": "Você acertou 0 de primeira.",
+   "fala": "Você acertou 0 de primeira.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "915d28eby",
+   "voz": "claude",
+   "texto": "Você acertou 1 de primeira.",
+   "fala": "Você acertou 1 de primeira.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "2b6361c8y",
+   "voz": "claude",
+   "texto": "Você acertou 2 de primeira.",
+   "fala": "Você acertou 2 de primeira.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "00f8f04dy",
+   "voz": "claude",
+   "texto": "Você acertou 3 de primeira.",
+   "fala": "Você acertou 3 de primeira.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "9abdca12y",
+   "voz": "claude",
+   "texto": "Você acertou 4 de primeira.",
+   "fala": "Você acertou 4 de primeira.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "f45a454fy",
+   "voz": "claude",
+   "texto": "Você acertou 5 de primeira.",
+   "fala": "Você acertou 5 de primeira.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "a26ed9bcy",
+   "voz": "claude",
+   "texto": "Você acertou 6 de primeira.",
+   "fala": "Você acertou 6 de primeira.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "5fb9062cs",
+   "voz": "claude",
+   "texto": "Você acertou 0 de 10.",
+   "fala": "Você acertou 0 de 10.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "def7aee9s",
+   "voz": "claude",
+   "texto": "Você acertou 1 de 10.",
+   "fala": "Você acertou 1 de 10.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "972f7916s",
+   "voz": "claude",
+   "texto": "Você acertou 2 de 10.",
+   "fala": "Você acertou 2 de 10.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "ac440acbs",
+   "voz": "claude",
+   "texto": "Você acertou 3 de 10.",
+   "fala": "Você acertou 3 de 10.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "852c40d0s",
+   "voz": "claude",
+   "texto": "Você acertou 4 de 10.",
+   "fala": "Você acertou 4 de 10.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "1a44fefds",
+   "voz": "claude",
+   "texto": "Você acertou 5 de 10.",
+   "fala": "Você acertou 5 de 10.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "45d6398as",
+   "voz": "claude",
+   "texto": "Você acertou 6 de 10.",
+   "fala": "Você acertou 6 de 10.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "40496a9fs",
+   "voz": "claude",
+   "texto": "Você acertou 7 de 10.",
+   "fala": "Você acertou 7 de 10.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "72f6f344s",
+   "voz": "claude",
+   "texto": "Você acertou 8 de 10.",
+   "fala": "Você acertou 8 de 10.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "a69cbb61s",
+   "voz": "claude",
+   "texto": "Você acertou 9 de 10.",
+   "fala": "Você acertou 9 de 10.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "874e9d7bt",
+   "voz": "claude",
+   "texto": "Você acertou 10 de 10.",
+   "fala": "Você acertou 10 de 10.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "0bff88d51p",
+   "voz": "unicornio",
+   "texto": "Fui o seu primeiro unicórnio. Vamos crescer juntas!",
+   "fala": "Fui o seu primeiro unicórnio. Vamos crescer juntas!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "3909f17932",
+   "voz": "claude",
+   "texto": "Toque no chão para andar (ou use as setas do teclado). Vamos até o Museu das Memórias? É só tocar nele!",
+   "fala": "Toque no chão para andar (ou use as setas do teclado). Vamos até o Museu das Memórias? É só tocar nele!",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "d3f0058a2q",
+   "voz": "claude",
+   "texto": "Eu sou o guia do Museu das Memórias! Em cada sala tem um pedacinho da apostila de História.",
+   "fala": "Eu sou o guia do Museu das Memórias! Em cada sala tem um pedacinho da apostila de História.",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "7a2e358e34",
+   "voz": "claude",
+   "texto": "O treino de História abre quando você terminar as salas do Museu das Memórias. Falta só 1! Você consegue!",
+   "fala": "O treino de História abre quando você terminar as salas do Museu das Memórias. Falta só 1! Você consegue!",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "671dc1de32",
+   "voz": "claude",
+   "texto": "O treino de História abre quando você terminar as salas do Museu das Memórias. Faltam 2! Você consegue!",
+   "fala": "O treino de História abre quando você terminar as salas do Museu das Memórias. Faltam 2! Você consegue!",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "ab72588d32",
+   "voz": "claude",
+   "texto": "O treino de História abre quando você terminar as salas do Museu das Memórias. Faltam 3! Você consegue!",
+   "fala": "O treino de História abre quando você terminar as salas do Museu das Memórias. Faltam 3! Você consegue!",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "54e14b1432",
+   "voz": "claude",
+   "texto": "O treino de História abre quando você terminar as salas do Museu das Memórias. Faltam 4! Você consegue!",
+   "fala": "O treino de História abre quando você terminar as salas do Museu das Memórias. Faltam 4! Você consegue!",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "ffe4296b32",
+   "voz": "claude",
+   "texto": "O treino de História abre quando você terminar as salas do Museu das Memórias. Faltam 5! Você consegue!",
+   "fala": "O treino de História abre quando você terminar as salas do Museu das Memórias. Faltam 5! Você consegue!",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "0d2ab17f2p",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Vestígios do passado\".",
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Vestígios do passado\".",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "c2833560u",
+   "voz": "narradora",
+   "texto": "Vestígios do passado",
+   "fala": "Vestígios do passado",
+   "pacotes": [
+    "historia-livro"
+   ]
+  },
+  {
+   "chave": "69dfb5d78p",
+   "voz": "narradora",
+   "texto": "Vestígios são marcas do passado, como cartas, desenhos antigos, bilhetes e fotografias. Eles não estão só em museus: podem estar dentro da nossa casa, porque cada pessoa tem vestígios do próprio passado. A Sandra usou os presentes, as fotos da festa e o convite para contar a história do casamento dela.",
+   "fala": "Vestígios são marcas do passado, como cartas, desenhos antigos, bilhetes e fotografias. Eles não estão só em museus: podem estar dentro da nossa casa, porque cada pessoa tem vestígios do próprio passado. A Sandra usou os presentes, as fotos da festa e o convite para contar a história do casamento dela.",
+   "pacotes": [
+    "historia-livro"
+   ]
+  },
+  {
+   "chave": "6ef2e0a72w",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"As cartas do senhor Antônio\".",
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"As cartas do senhor Antônio\".",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "b59ee5a211",
+   "voz": "narradora",
+   "texto": "As cartas do senhor Antônio",
+   "fala": "As cartas do senhor Antônio",
+   "pacotes": [
+    "historia-livro"
+   ]
+  },
+  {
+   "chave": "4b6d93e19q",
+   "voz": "narradora",
+   "texto": "Quando o senhor Antônio era criança, a família dele se mudou de cidade. Não havia celulares e o telefone era muito caro, então ele conversava com os amigos por cartas. As cartas demoravam a chegar, e ele esperava o carteiro todos os dias. Ele conta tudo isso para a neta, a Mariana. Ele ainda guarda algumas cartas: \"São um grande tesouro!\"",
+   "fala": "Quando o senhor Antônio era criança, a família dele se mudou de cidade. Não havia celulares e o telefone era muito caro, então ele conversava com os amigos por cartas. As cartas demoravam a chegar, e ele esperava o carteiro todos os dias. Ele conta tudo isso para a neta, a Mariana. Ele ainda guarda algumas cartas: \"São um grande tesouro!\"",
+   "pacotes": [
+    "historia-livro"
+   ]
+  },
+  {
+   "chave": "a6b304742k",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"A carta da Sara\".",
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"A carta da Sara\".",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "0c74a0c9p",
+   "voz": "narradora",
+   "texto": "A carta da Sara",
+   "fala": "A carta da Sara",
+   "pacotes": [
+    "historia-livro"
+   ]
+  },
+  {
+   "chave": "303d5fb37r",
+   "voz": "narradora",
+   "texto": "Em 15/04/1956, a Sara, amiga de infância do Antônio, escreveu uma carta para ele. Ela contou que sentia saudades do quintal e da goiabeira, que a escola nova dele tinha horta e que eles ganharam um cachorro ainda sem nome (a Sara queria \"Fofo\", mas o Lucas não gostou).",
+   "fala": "Em 15 de abril de 1956, a Sara, amiga de infância do Antônio, escreveu uma carta para ele. Ela contou que sentia saudades do quintal e da goiabeira, que a escola nova dele tinha horta e que eles ganharam um cachorro ainda sem nome (a Sara queria \"Fofo\", mas o Lucas não gostou).",
+   "pacotes": [
+    "historia-livro"
+   ]
+  },
+  {
+   "chave": "10479afd2t",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"A caixinha de lembranças\".",
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"A caixinha de lembranças\".",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "df414246y",
+   "voz": "narradora",
+   "texto": "A caixinha de lembranças",
+   "fala": "A caixinha de lembranças",
+   "pacotes": [
+    "historia-livro"
+   ]
+  },
+  {
+   "chave": "317faf1886",
+   "voz": "narradora",
+   "texto": "A Dona Sara também tem uma caixinha de lembranças, com fotos, conchas e um cartão do Antônio. Ela conheceu o mar em 28/12/1957. Para contar a primeira vez que foi à praia, ela juntou lembranças, fotografias, conchinhas e o bilhete da passagem, que mostra que eles chegaram às 6 horas.",
+   "fala": "A Dona Sara também tem uma caixinha de lembranças, com fotos, conchas e um cartão do Antônio. Ela conheceu o mar em 28 de dezembro de 1957. Para contar a primeira vez que foi à praia, ela juntou lembranças, fotografias, conchinhas e o bilhete da passagem, que mostra que eles chegaram às 6 horas.",
+   "pacotes": [
+    "historia-livro"
+   ]
+  },
+  {
+   "chave": "dbcf5da82x",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Pedacinhos da nossa história\".",
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Pedacinhos da nossa história\".",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "b31279c712",
+   "voz": "narradora",
+   "texto": "Pedacinhos da nossa história",
+   "fala": "Pedacinhos da nossa história",
+   "pacotes": [
+    "historia-livro"
+   ]
+  },
+  {
+   "chave": "dd48d706am",
+   "voz": "narradora",
+   "texto": "Os lugares que frequentamos, os objetos que usamos, as músicas que ouvimos e as roupas que usamos são pedacinhos que, juntos, compõem nossa história. Podemos doar brinquedos e roupas que não usamos, sempre com a ajuda de um responsável: a doação ajuda outras crianças e organiza o espaço. Objetos podem ser importantes, mas as memórias que ficam em nossa mente também são!",
+   "fala": "Os lugares que frequentamos, os objetos que usamos, as músicas que ouvimos e as roupas que usamos são pedacinhos que, juntos, compõem nossa história. Podemos doar brinquedos e roupas que não usamos, sempre com a ajuda de um responsável: a doação ajuda outras crianças e organiza o espaço. Objetos podem ser importantes, mas as memórias que ficam em nossa mente também são!",
+   "pacotes": [
+    "historia-livro"
+   ]
+  },
+  {
+   "chave": "b60eb9f82y",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Documentos e outros registros\".",
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Documentos e outros registros\".",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "8116619913",
+   "voz": "narradora",
+   "texto": "Documentos e outros registros",
+   "fala": "Documentos e outros registros",
+   "pacotes": [
+    "historia-livro"
+   ]
+  },
+  {
+   "chave": "790c2abada",
+   "voz": "narradora",
+   "texto": "Desenhos, cartinhas e pinturas são vestígios que nós mesmos fizemos. Os documentos são vestígios feitos por outras pessoas. A carteira de vacinação mostra as vacinas que tomamos. A carteira de identidade tem nosso nome e data de nascimento. O passaporte serve para viajar para fora do Brasil e tem carimbos dos países visitados. Fotos, diários, vídeos e relatos também ajudam a conhecer o passado. Cartas, livros, diários e documentos pessoais são vestígios materiais.",
+   "fala": "Desenhos, cartinhas e pinturas são vestígios que nós mesmos fizemos. Os documentos são vestígios feitos por outras pessoas. A carteira de vacinação mostra as vacinas que tomamos. A carteira de identidade tem nosso nome e data de nascimento. O passaporte serve para viajar para fora do Brasil e tem carimbos dos países visitados. Fotos, diários, vídeos e relatos também ajudam a conhecer o passado. Cartas, livros, diários e documentos pessoais são vestígios materiais.",
+   "pacotes": [
+    "historia-livro"
+   ]
+  },
+  {
+   "chave": "65f1b0cf2k",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"O cartão-postal\".",
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"O cartão-postal\".",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "787dd5fap",
+   "voz": "narradora",
+   "texto": "O cartão-postal",
+   "fala": "O cartão-postal",
+   "pacotes": [
+    "historia-livro"
+   ]
+  },
+  {
+   "chave": "e82382d57a",
+   "voz": "narradora",
+   "texto": "O cartão-postal é uma espécie de carta curtinha. Antigamente era comum enviar um em datas especiais ou de um lugar muito bonito. Na frente vai a imagem de um lugar bonito. No verso vão a mensagem (um recado), o endereço do destinatário e o selo postal.",
+   "fala": "O cartão-postal é uma espécie de carta curtinha. Antigamente era comum enviar um em datas especiais ou de um lugar muito bonito. Na frente vai a imagem de um lugar bonito. No verso vão a mensagem (um recado), o endereço do destinatário e o selo postal.",
+   "pacotes": [
+    "historia-livro"
+   ]
+  },
+  {
+   "chave": "b63283ca2e",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Os museus\".",
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Os museus\".",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "ae6c80f3j",
+   "voz": "narradora",
+   "texto": "Os museus",
+   "fala": "Os museus",
+   "pacotes": [
+    "historia-livro"
+   ]
+  },
+  {
+   "chave": "4031b8efa1",
+   "voz": "narradora",
+   "texto": "Os museus são lugares que reúnem objetos, documentos e até vídeos importantes para uma comunidade. Eles ajudam a entender o passado e as tradições de uma cidade ou região. Os vestígios são apresentados por um guia ou por placas explicativas. Na visita da apostila, as crianças viram uma estátua, um fóssil de dinossauro, um vestido antigo e um quadro.",
+   "fala": "Os museus são lugares que reúnem objetos, documentos e até vídeos importantes para uma comunidade. Eles ajudam a entender o passado e as tradições de uma cidade ou região. Os vestígios são apresentados por um guia ou por placas explicativas. Na visita da apostila, as crianças viram uma estátua, um fóssil de dinossauro, um vestido antigo e um quadro.",
+   "pacotes": [
+    "historia-livro"
+   ]
+  },
+  {
+   "chave": "7b3009c92n",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Memórias coletivas\".",
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Memórias coletivas\".",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "0945e9ees",
+   "voz": "narradora",
+   "texto": "Memórias coletivas",
+   "fala": "Memórias coletivas",
+   "pacotes": [
+    "historia-livro"
+   ]
+  },
+  {
+   "chave": "8eba6832ao",
+   "voz": "narradora",
+   "texto": "Cada pessoa tem a própria história, e as comunidades também! O conjunto de memórias e histórias importantes para uma comunidade é chamado de memórias coletivas. Construções antigas, monumentos e praças guardam memórias vivas do passado. Para conhecer a história da sua cidade, observe as construções, os monumentos e os nomes das ruas, e converse com as pessoas mais velhas.",
+   "fala": "Cada pessoa tem a própria história, e as comunidades também! O conjunto de memórias e histórias importantes para uma comunidade é chamado de memórias coletivas. Construções antigas, monumentos e praças guardam memórias vivas do passado. Para conhecer a história da sua cidade, observe as construções, os monumentos e os nomes das ruas, e converse com as pessoas mais velhas.",
+   "pacotes": [
+    "historia-livro"
+   ]
+  },
+  {
+   "chave": "c21ba3842x",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Lugares de memória do Brasil\".",
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Lugares de memória do Brasil\".",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "83a3fa3f12",
+   "voz": "narradora",
+   "texto": "Lugares de memória do Brasil",
+   "fala": "Lugares de memória do Brasil",
+   "pacotes": [
+    "historia-livro"
+   ]
+  },
+  {
+   "chave": "c8c79302bl",
+   "voz": "narradora",
+   "texto": "O Museu do Homem do Norte fica em Manaus (AM) e conta a história das pessoas da região Norte. O Museu do Maracanã fica no Rio de Janeiro (RJ) e conta a história do futebol brasileiro. A escultura Índia Terena fica em Campo Grande (MS) e homenageia a mulher indígena Terena. As Ruínas de São Miguel das Missões ficam no Rio Grande do Sul e guardam a memória dos indígenas Guarani e dos missionários europeus.",
+   "fala": "O Museu do Homem do Norte fica em Manaus, Amazonas, e conta a história das pessoas da região Norte. O Museu do Maracanã fica no Rio de Janeiro e conta a história do futebol brasileiro. A escultura Índia Terena fica em Campo Grande, Mato Grosso do Sul, e homenageia a mulher indígena Terena. As Ruínas de São Miguel das Missões ficam no Rio Grande do Sul e guardam a memória dos indígenas Guarani e dos missionários europeus.",
+   "pacotes": [
+    "historia-livro"
+   ]
+  },
+  {
+   "chave": "6603900e2o",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"A revista Tico-Tico\".",
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"A revista Tico-Tico\".",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "0f3a34f7t",
+   "voz": "narradora",
+   "texto": "A revista Tico-Tico",
+   "fala": "A revista Tico-Tico",
+   "pacotes": [
+    "historia-livro"
+   ]
+  },
+  {
+   "chave": "64f5ff055v",
+   "voz": "narradora",
+   "texto": "A revista Tico-Tico é de 1954. Ela merece ficar num museu porque mostra como as crianças daquela época viviam, brincavam e o que liam. Assim ela ajuda a preservar a memória da comunidade daquele tempo.",
+   "fala": "A revista Tico-Tico é de 1954. Ela merece ficar num museu porque mostra como as crianças daquela época viviam, brincavam e o que liam. Assim ela ajuda a preservar a memória da comunidade daquele tempo.",
+   "pacotes": [
+    "historia-livro"
+   ]
+  },
+  {
+   "chave": "550776392d",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Os griôs\".",
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Os griôs\".",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "f761b0eei",
+   "voz": "narradora",
+   "texto": "Os griôs",
+   "fala": "Os griôs",
+   "pacotes": [
+    "historia-livro"
+   ]
+  },
+  {
+   "chave": "e36689ce97",
+   "voz": "narradora",
+   "texto": "Uma maneira de conhecer o passado é ouvir as histórias dos mais velhos, que transmitem tradições e valores aos mais jovens. Em alguns povos africanos, como os Hauçás, os griôs contam histórias das famílias, contos antigos, músicas, cantos, poemas, danças, provérbios e adivinhas. Essa tradição existe há centenas de anos!",
+   "fala": "Uma maneira de conhecer o passado é ouvir as histórias dos mais velhos, que transmitem tradições e valores aos mais jovens. Em alguns povos africanos, como os Hauçás, os griôs contam histórias das famílias, contos antigos, músicas, cantos, poemas, danças, provérbios e adivinhas. Essa tradição existe há centenas de anos!",
+   "pacotes": [
+    "historia-livro"
+   ]
+  },
+  {
+   "chave": "6947f3512x",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Rodas, cirandas e quadrinhas\".",
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Rodas, cirandas e quadrinhas\".",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "84cc526612",
+   "voz": "narradora",
+   "texto": "Rodas, cirandas e quadrinhas",
+   "fala": "Rodas, cirandas e quadrinhas",
+   "pacotes": [
+    "historia-livro"
+   ]
+  },
+  {
+   "chave": "ed4f7b269i",
+   "voz": "narradora",
+   "texto": "Brincadeiras de roda, cirandas, quadrinhas e parlendas preservam a memória coletiva. Elas são passadas oralmente, de geração em geração. \"Ciranda, cirandinha, vamos todos cirandar...\" A quadrinha \"Companheiro, me ajude, que eu não posso cantar só. Eu sozinho canto bem, com você canto melhor\" valoriza a amizade, e não a competição.",
+   "fala": "Brincadeiras de roda, cirandas, quadrinhas e parlendas preservam a memória coletiva. Elas são passadas oralmente, de geração em geração. \"Ciranda, cirandinha, vamos todos cirandar...\" A quadrinha \"Companheiro, me ajude, que eu não posso cantar só. Eu sozinho canto bem, com você canto melhor\" valoriza a amizade, e não a competição.",
+   "pacotes": [
+    "historia-livro"
+   ]
+  },
+  {
+   "chave": "4ab953dc2p",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Costumes e tradições\".",
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Costumes e tradições\".",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "a4c615cfu",
+   "voz": "narradora",
+   "texto": "Costumes e tradições",
+   "fala": "Costumes e tradições",
+   "pacotes": [
+    "historia-livro"
+   ]
+  },
+  {
+   "chave": "9fc0dc84e3",
+   "voz": "narradora",
+   "texto": "Preservar costumes é continuar as práticas passadas dos mais velhos para os mais jovens: receitas de família, artesanato, danças e músicas. As paneleiras de Goiabeiras, no Espírito Santo, fazem panelas de barro para a moqueca capixaba: modelam a argila, secam ao sol, polem, queimam ao ar livre e pintam. Os indígenas Tupi-guarani e Una já faziam assim há centenas de anos. Em Tomar, Portugal, a Festa dos Tabuleiros tem tabuleiros com pães, flores e frutas, que simbolizam fartura e prosperidade.",
+   "fala": "Preservar costumes é continuar as práticas passadas dos mais velhos para os mais jovens: receitas de família, artesanato, danças e músicas. As paneleiras de Goiabeiras, no Espírito Santo, fazem panelas de barro para a moqueca capixaba: modelam a argila, secam ao sol, polem, queimam ao ar livre e pintam. Os indígenas Tupi-guarani e Una já faziam assim há centenas de anos. Em Tomar, Portugal, a Festa dos Tabuleiros tem tabuleiros com pães, flores e frutas, que simbolizam fartura e prosperidade.",
+   "pacotes": [
+    "historia-livro"
+   ]
+  },
+  {
+   "chave": "03bc97a42e",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"O carimbó\".",
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"O carimbó\".",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "1ad2630dj",
+   "voz": "narradora",
+   "texto": "O carimbó",
+   "fala": "O carimbó",
+   "pacotes": [
+    "historia-livro"
+   ]
+  },
+  {
+   "chave": "91f152d770",
+   "voz": "narradora",
+   "texto": "O carimbó é uma dança e um estilo de música que surgiu na região amazônica do Brasil, com influências africanas, indígenas e europeias. Tem um ritmo animado e alegre! A música da apostila fala do papagaio. O carimbó é um patrimônio imaterial.",
+   "fala": "O carimbó é uma dança e um estilo de música que surgiu na região amazônica do Brasil, com influências africanas, indígenas e europeias. Tem um ritmo animado e alegre! A música da apostila fala do papagaio. O carimbó é um patrimônio imaterial.",
+   "pacotes": [
+    "historia-livro"
+   ]
+  },
+  {
+   "chave": "ae3039ac2r",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Material ou imaterial?\".",
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Material ou imaterial?\".",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "11d4d6a7w",
+   "voz": "narradora",
+   "texto": "Material ou imaterial?",
+   "fala": "Material ou imaterial?",
+   "pacotes": [
+    "historia-livro"
+   ]
+  },
+  {
+   "chave": "638d928b7w",
+   "voz": "narradora",
+   "texto": "Vestígio MATERIAL é o que dá para pegar: carta, foto, documento, fóssil, estátua, roupa, panela, revista. Vestígio IMATERIAL é o que não dá para pegar com a mão: música, dança, quadrinha, parlenda, brincadeira de roda, história contada. A gente canta, dança, conta e lembra!",
+   "fala": "Vestígio material é o que dá para pegar: carta, foto, documento, fóssil, estátua, roupa, panela, revista. Vestígio imaterial é o que não dá para pegar com a mão: música, dança, quadrinha, parlenda, brincadeira de roda, história contada. A gente canta, dança, conta e lembra!",
+   "pacotes": [
+    "historia-livro"
+   ]
+  },
+  {
+   "chave": "b4835d5d1l",
+   "voz": "unicornio",
+   "texto": "Adoro receber cartinhas... demoram, mas chegam!",
+   "fala": "Adoro receber cartinhas... demoram, mas chegam!",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "d4e85fcd1h",
+   "voz": "unicornio",
+   "texto": "Vim da caixinha de lembranças da Dona Sara!",
+   "fala": "Vim da caixinha de lembranças da Dona Sara!",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "0b0a230616",
+   "voz": "unicornio",
+   "texto": "Vale a pena conhecer o Maranhão!",
+   "fala": "Vale a pena conhecer o Maranhão!",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "f769db7118",
+   "voz": "unicornio",
+   "texto": "Eu colo em qualquer cartão-postal!",
+   "fala": "Eu colo em qualquer cartão-postal!",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "09dec260z",
+   "voz": "unicornio",
+   "texto": "Moro num quadro do museu.",
+   "fala": "Moro num quadro do museu.",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "8e5bf7201q",
+   "voz": "unicornio",
+   "texto": "Sou antigo como um dinossauro, mas bem mais fofinho!",
+   "fala": "Sou antigo como um dinossauro, mas bem mais fofinho!",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "21a0f5f7v",
+   "voz": "unicornio",
+   "texto": "Vamos todos cirandar!",
+   "fala": "Vamos todos cirandar!",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "63df53e01k",
+   "voz": "unicornio",
+   "texto": "Danço com a saia rodada, no ritmo da Amazônia!",
+   "fala": "Danço com a saia rodada, no ritmo da Amazônia!",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "3051e6d61i",
+   "voz": "unicornio",
+   "texto": "Eu sozinho canto bem, com você canto melhor!",
+   "fala": "Eu sozinho canto bem, com você canto melhor!",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "bb3ae2ee15",
+   "voz": "unicornio",
+   "texto": "Quer ouvir uma história antiga?",
+   "fala": "Quer ouvir uma história antiga?",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "0e6542281g",
+   "voz": "unicornio",
+   "texto": "Ganhei asas porque você revisou com calma!",
+   "fala": "Ganhei asas porque você revisou com calma!",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "88fd76711m",
+   "voz": "unicornio",
+   "texto": "Respira fundo... sem pressa a gente acerta tudo!",
+   "fala": "Respira fundo... sem pressa a gente acerta tudo!",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "bc2158161p",
+   "voz": "unicornio",
+   "texto": "Eu guardo todas as histórias do Museu das Memórias!",
+   "fala": "Eu guardo todas as histórias do Museu das Memórias!",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "0f181eceq",
+   "voz": "claude",
+   "texto": "Cartas e Lembranças",
+   "fala": "Cartas e Lembranças",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "1c12468c2f",
+   "voz": "claude",
+   "texto": "Vamos lembrar do senhor Antônio, das cartas da Sara e da caixinha de lembranças!",
+   "fala": "Vamos lembrar do senhor Antônio, das cartas da Sara e da caixinha de lembranças!",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "82eabe6f3h",
+   "voz": "narradora",
+   "texto": "Sandra vai contar aos netos a história do casamento dela. Quais objetos podem ajudar? Toque em TODOS os que ajudam.",
+   "fala": "Sandra vai contar aos netos a história do casamento dela. Quais objetos podem ajudar? Toque em todos os que ajudam.",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "937425caw",
+   "voz": "narradora",
+   "texto": "Presentes de casamento",
+   "fala": "Presentes de casamento",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "d7fa2adeu",
+   "voz": "narradora",
+   "texto": "Fotografias da festa",
+   "fala": "Fotografias da festa",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "d3cf0835u",
+   "voz": "narradora",
+   "texto": "Convite de casamento",
+   "fala": "Convite de casamento",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "0548aaf7p",
+   "voz": "narradora",
+   "texto": "Telefone antigo",
+   "fala": "Telefone antigo",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "9ca83fa1u",
+   "voz": "narradora",
+   "texto": "Desenhos de infância",
+   "fala": "Desenhos de infância",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "96fa0654s",
+   "voz": "narradora",
+   "texto": "Brinquedos antigos",
+   "fala": "Brinquedos antigos",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "1614b3161i",
+   "voz": "narradora",
+   "texto": "Onde podemos encontrar vestígios do passado?",
+   "fala": "Onde podemos encontrar vestígios do passado?",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "3ab6aa73n",
+   "voz": "narradora",
+   "texto": "Só nos museus",
+   "fala": "Só nos museus",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "27f403c11e",
+   "voz": "narradora",
+   "texto": "Nos museus e também dentro da nossa casa",
+   "fala": "Nos museus e também dentro da nossa casa",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "90bdaa17p",
+   "voz": "narradora",
+   "texto": "Em nenhum lugar",
+   "fala": "Em nenhum lugar",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "3d310ee131",
+   "voz": "narradora",
+   "texto": "Quando o senhor Antônio era criança, como ele conversava com os amigos que ficaram na outra cidade?",
+   "fala": "Quando o senhor Antônio era criança, como ele conversava com os amigos que ficaram na outra cidade?",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "9643e71712",
+   "voz": "narradora",
+   "texto": "Mandando mensagem no celular",
+   "fala": "Mandando mensagem no celular",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "d67e697dr",
+   "voz": "narradora",
+   "texto": "Escrevendo cartas",
+   "fala": "Escrevendo cartas",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "1fc0883dy",
+   "voz": "narradora",
+   "texto": "Fazendo chamada de vídeo",
+   "fala": "Fazendo chamada de vídeo",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "644a781823",
+   "voz": "narradora",
+   "texto": "As cartas do senhor Antônio chegavam bem rapidinho, no mesmo dia.",
+   "fala": "As cartas do senhor Antônio chegavam bem rapidinho, no mesmo dia.",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "28e506032a",
+   "voz": "narradora",
+   "texto": "O que aconteceu quando o senhor Antônio tinha mais ou menos a sua idade?",
+   "fala": "O que aconteceu quando o senhor Antônio tinha mais ou menos a sua idade?",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "dcb0817017",
+   "voz": "narradora",
+   "texto": "A família dele se mudou de cidade",
+   "fala": "A família dele se mudou de cidade",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "4b234781v",
+   "voz": "narradora",
+   "texto": "Ele ganhou um celular",
+   "fala": "Ele ganhou um celular",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "82b2d2e2w",
+   "voz": "narradora",
+   "texto": "Ele foi morar na praia",
+   "fala": "Ele foi morar na praia",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "f572b86329",
+   "voz": "narradora",
+   "texto": "O senhor Antônio ainda guarda algumas cartas. O que ele diz sobre elas?",
+   "fala": "O senhor Antônio ainda guarda algumas cartas. O que ele diz sobre elas?",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "d7c8c183y",
+   "voz": "narradora",
+   "texto": "\"São um grande tesouro!\"",
+   "fala": "\"São um grande tesouro!\"",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "d99f51aes",
+   "voz": "narradora",
+   "texto": "\"São papel velho.\"",
+   "fala": "\"São papel velho.\"",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "159211c7x",
+   "voz": "narradora",
+   "texto": "\"Não servem para nada.\"",
+   "fala": "\"Não servem para nada.\"",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "6c33b6e02a",
+   "voz": "narradora",
+   "texto": "Qual é o nome da neta que conversa com o senhor Antônio sobre as cartas?",
+   "fala": "Qual é o nome da neta que conversa com o senhor Antônio sobre as cartas?",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "43ae8578h",
+   "voz": "narradora",
+   "texto": "Mariana",
+   "fala": "Mariana",
+   "pacotes": [
+    "historia-h1",
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "ad9a06b0f",
+   "voz": "narradora",
+   "texto": "Laura",
+   "fala": "Laura",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "9679bbbeg",
+   "voz": "narradora",
+   "texto": "Sandra",
+   "fala": "Sandra",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "fd8a985e1t",
+   "voz": "narradora",
+   "texto": "Quem escreveu a carta para o Antônio no dia 15/04/1956?",
+   "fala": "Quem escreveu a carta para o Antônio no dia 15 de abril de 1956?",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "7e9b44bb14",
+   "voz": "narradora",
+   "texto": "Sara, a amiga de infância dele",
+   "fala": "Sara, a amiga de infância dele",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "f9ab7aceu",
+   "voz": "narradora",
+   "texto": "A professora Daniela",
+   "fala": "A professora Daniela",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "929c8916h",
+   "voz": "narradora",
+   "texto": "O Lucas",
+   "fala": "O Lucas",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "e47579661e",
+   "voz": "narradora",
+   "texto": "Em que data a carta da Sara foi escrita?",
+   "fala": "Em que data a carta da Sara foi escrita?",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "27e60c78k",
+   "voz": "narradora",
+   "texto": "15/04/1956",
+   "fala": "15 de abril de 1956",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "f678d0a6k",
+   "voz": "narradora",
+   "texto": "28/12/1957",
+   "fala": "28 de dezembro de 1957",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "aaf93440k",
+   "voz": "narradora",
+   "texto": "25/12/2025",
+   "fala": "25 de dezembro de 2025",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "f241f9d12e",
+   "voz": "narradora",
+   "texto": "Na carta, a Sara conta que eles ganharam um cachorro que ainda não tem nome.",
+   "fala": "Na carta, a Sara conta que eles ganharam um cachorro que ainda não tem nome.",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "42a044061u",
+   "voz": "narradora",
+   "texto": "A Sara conta que a escola nova do Antônio tem uma horta.",
+   "fala": "A Sara conta que a escola nova do Antônio tem uma horta.",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "2fd53d7a1c",
+   "voz": "narradora",
+   "texto": "Em que dia a Dona Sara conheceu o mar?",
+   "fala": "Em que dia a Dona Sara conheceu o mar?",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "49ae14fbk",
+   "voz": "narradora",
+   "texto": "01/01/2000",
+   "fala": "1 de janeiro de 2000",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "2f633af225",
+   "voz": "narradora",
+   "texto": "O que a Dona Sara guarda na caixinha de lembranças? Toque em TODOS.",
+   "fala": "O que a Dona Sara guarda na caixinha de lembranças? Toque em todos.",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "2b661564f",
+   "voz": "narradora",
+   "texto": "Fotos",
+   "fala": "Fotos",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "e9b33278h",
+   "voz": "narradora",
+   "texto": "Conchas",
+   "fala": "Conchas",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "e696b9c5r",
+   "voz": "narradora",
+   "texto": "Cartão do Antônio",
+   "fala": "Cartão do Antônio",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "ee95dcf9h",
+   "voz": "narradora",
+   "texto": "Celular",
+   "fala": "Celular",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "90112c8ej",
+   "voz": "narradora",
+   "texto": "Videogame",
+   "fala": "Videogame",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "c6c6a5452n",
+   "voz": "narradora",
+   "texto": "Dona Sara contou a primeira vez que foi à praia. Como ela sabe que chegou às 6 horas?",
+   "fala": "Dona Sara contou a primeira vez que foi à praia. Como ela sabe que chegou às 6 horas?",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "650138f2y",
+   "voz": "narradora",
+   "texto": "Pelo bilhete da passagem",
+   "fala": "Pelo bilhete da passagem",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "3e60f679o",
+   "voz": "narradora",
+   "texto": "Pela televisão",
+   "fala": "Pela televisão",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "f571bdfdl",
+   "voz": "narradora",
+   "texto": "Pela concha",
+   "fala": "Pela concha",
+   "pacotes": [
+    "historia-h1"
+   ]
+  },
+  {
+   "chave": "057e563f1y",
+   "voz": "narradora",
+   "texto": "Monte a frase da apostila tocando nos blocos na ordem certa:",
+   "fala": "Monte a frase da apostila tocando nos blocos na ordem certa:",
+   "pacotes": [
+    "historia-h1",
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "9e544c7d19",
+   "voz": "claude",
+   "texto": "Pedacinhos, Documentos e Cartão-Postal",
+   "fala": "Pedacinhos, Documentos e Cartão-Postal",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "99b2d2fe27",
+   "voz": "claude",
+   "texto": "Nesta sala tem pedacinhos da nossa história, documentos e cartão-postal!",
+   "fala": "Nesta sala tem pedacinhos da nossa história, documentos e cartão-postal!",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "2a8c1c711i",
+   "voz": "narradora",
+   "texto": "O que são os \"pedacinhos da nossa história\"?",
+   "fala": "O que são os \"pedacinhos da nossa história\"?",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "f672a4602e",
+   "voz": "narradora",
+   "texto": "Os lugares, os objetos, as músicas e as roupas que fazem parte da nossa vida",
+   "fala": "Os lugares, os objetos, as músicas e as roupas que fazem parte da nossa vida",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "0bb579d6w",
+   "voz": "narradora",
+   "texto": "Só os brinquedos novos",
+   "fala": "Só os brinquedos novos",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "343cfba911",
+   "voz": "narradora",
+   "texto": "Só os desenhos da televisão",
+   "fala": "Só os desenhos da televisão",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "be2fbdf62m",
+   "voz": "narradora",
+   "texto": "A Laura guardou a primeira vez que desenhou o nome dela. O que esse vestígio mostra?",
+   "fala": "A Laura guardou a primeira vez que desenhou o nome dela. O que esse vestígio mostra?",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "4ea8a8981z",
+   "voz": "narradora",
+   "texto": "Que ela cresceu e aprendeu: hoje escreve até de letra cursiva",
+   "fala": "Que ela cresceu e aprendeu: hoje escreve até de letra cursiva",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "e60c8804z",
+   "voz": "narradora",
+   "texto": "Que ela não sabe escrever",
+   "fala": "Que ela não sabe escrever",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "c0b62984s",
+   "voz": "narradora",
+   "texto": "Que o papel é novo",
+   "fala": "Que o papel é novo",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "da0a22052t",
+   "voz": "narradora",
+   "texto": "Para doar brinquedos e roupas, a criança deve separar tudo sozinha, sem a ajuda de ninguém.",
+   "fala": "Para doar brinquedos e roupas, a criança deve separar tudo sozinha, sem a ajuda de ninguém.",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "cc14c5e52w",
+   "voz": "narradora",
+   "texto": "Por que doar brinquedos que não usamos mais é uma boa ideia? Toque em TODOS os motivos certos.",
+   "fala": "Por que doar brinquedos que não usamos mais é uma boa ideia? Toque em todos os motivos certos.",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "579d0074v",
+   "voz": "narradora",
+   "texto": "Ajuda outras crianças",
+   "fala": "Ajuda outras crianças",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "4fea8fa214",
+   "voz": "narradora",
+   "texto": "Deixa o espaço mais organizado",
+   "fala": "Deixa o espaço mais organizado",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "1d7b659es",
+   "voz": "narradora",
+   "texto": "Porque dá dinheiro",
+   "fala": "Porque dá dinheiro",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "5b5d5392y",
+   "voz": "narradora",
+   "texto": "Porque brinquedo é chato",
+   "fala": "Porque brinquedo é chato",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "b0cd5e4e2l",
+   "voz": "narradora",
+   "texto": "Objetos podem ser importantes, mas as memórias que ficam em nossa mente também são!",
+   "fala": "Objetos podem ser importantes, mas as memórias que ficam em nossa mente também são!",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "be88ba162y",
+   "voz": "narradora",
+   "texto": "Desenhos, cartinhas e pinturas que fizemos quando éramos menores são vestígios do nosso passado.",
+   "fala": "Desenhos, cartinhas e pinturas que fizemos quando éramos menores são vestígios do nosso passado.",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "4f7289fb1d",
+   "voz": "narradora",
+   "texto": "Ligue cada documento ao que ele mostra:",
+   "fala": "Ligue cada documento ao que ele mostra:",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "30d567a825",
+   "voz": "narradora",
+   "texto": "Quando vamos viajar para FORA do Brasil, qual documento precisamos?",
+   "fala": "Quando vamos viajar para fora do Brasil, qual documento precisamos?",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "d02216cbk",
+   "voz": "narradora",
+   "texto": "Passaporte",
+   "fala": "Passaporte",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "b07a0b9cv",
+   "voz": "narradora",
+   "texto": "Carteira de vacinação",
+   "fala": "Carteira de vacinação",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "99da1161g",
+   "voz": "narradora",
+   "texto": "Diário",
+   "fala": "Diário",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "204232631s",
+   "voz": "narradora",
+   "texto": "Os documentos são vestígios sobre nós feitos por quem?",
+   "fala": "Os documentos são vestígios sobre nós feitos por quem?",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "6fc8caees",
+   "voz": "narradora",
+   "texto": "Por outras pessoas",
+   "fala": "Por outras pessoas",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "74b2c60319",
+   "voz": "narradora",
+   "texto": "Por nós mesmos, quando éramos bebês",
+   "fala": "Por nós mesmos, quando éramos bebês",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "08fa2654n",
+   "voz": "narradora",
+   "texto": "Pelos animais",
+   "fala": "Pelos animais",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "0c92fa4c1e",
+   "voz": "narradora",
+   "texto": "Na carteira de identidade encontramos...",
+   "fala": "Na carteira de identidade encontramos...",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "74766bc515",
+   "voz": "narradora",
+   "texto": "Nosso nome e data de nascimento",
+   "fala": "Nosso nome e data de nascimento",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "55f4d089w",
+   "voz": "narradora",
+   "texto": "As vacinas que tomamos",
+   "fala": "As vacinas que tomamos",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "24baca90x",
+   "voz": "narradora",
+   "texto": "Os países que visitamos",
+   "fala": "Os países que visitamos",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "fbcf2a601w",
+   "voz": "narradora",
+   "texto": "O que mais nos ajuda a conhecer o passado? Toque em TODOS.",
+   "fala": "O que mais nos ajuda a conhecer o passado? Toque em todos.",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "2961a538l",
+   "voz": "narradora",
+   "texto": "Fotografias",
+   "fala": "Fotografias",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "2c5152f7u",
+   "voz": "narradora",
+   "texto": "Anotações em diários",
+   "fala": "Anotações em diários",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "e7ebda79g",
+   "voz": "narradora",
+   "texto": "Vídeos",
+   "fala": "Vídeos",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "ca916f96z",
+   "voz": "narradora",
+   "texto": "Relatos de outras pessoas",
+   "fala": "Relatos de outras pessoas",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "09663826p",
+   "voz": "narradora",
+   "texto": "Bola de cristal",
+   "fala": "Bola de cristal",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "11bdeadfz",
+   "voz": "narradora",
+   "texto": "O que é um cartão-postal?",
+   "fala": "O que é um cartão-postal?",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "52169e1813",
+   "voz": "narradora",
+   "texto": "Uma espécie de carta curtinha",
+   "fala": "Uma espécie de carta curtinha",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "72fb7072y",
+   "voz": "narradora",
+   "texto": "Um documento para viajar",
+   "fala": "Um documento para viajar",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "7fbc659fu",
+   "voz": "narradora",
+   "texto": "Um tipo de brinquedo",
+   "fala": "Um tipo de brinquedo",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "d1327aec1u",
+   "voz": "narradora",
+   "texto": "Monte o cartão-postal! Ligue cada parte ao que vai nela:",
+   "fala": "Monte o cartão-postal! Ligue cada parte ao que vai nela:",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "b1af405f3e",
+   "voz": "narradora",
+   "texto": "No cartão-postal da apostila, o Antônio escreveu: \"Vale a pena conhecer o Maranhão. ______ adorou.\" Quem adorou?",
+   "fala": "No cartão-postal da apostila, o Antônio escreveu: \"Vale a pena conhecer o Maranhão. … adorou.\" Quem adorou?",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "1519cbd8e",
+   "voz": "narradora",
+   "texto": "Sara",
+   "fala": "Sara",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "5af724aff",
+   "voz": "narradora",
+   "texto": "Lucas",
+   "fala": "Lucas",
+   "pacotes": [
+    "historia-h2"
+   ]
+  },
+  {
+   "chave": "7e156944p",
+   "voz": "claude",
+   "texto": "Museus pelo Brasil",
+   "fala": "Museus pelo Brasil",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "81af470120",
+   "voz": "claude",
+   "texto": "Vamos visitar museus e lugares que guardam as memórias do Brasil!",
+   "fala": "Vamos visitar museus e lugares que guardam as memórias do Brasil!",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "ef036ecdy",
+   "voz": "narradora",
+   "texto": "Para que serve um museu?",
+   "fala": "Para que serve um museu?",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "4779dd851t",
+   "voz": "narradora",
+   "texto": "Para guardar e mostrar vestígios importantes do passado",
+   "fala": "Para guardar e mostrar vestígios importantes do passado",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "4830eb79w",
+   "voz": "narradora",
+   "texto": "Para vender brinquedos",
+   "fala": "Para vender brinquedos",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "0f2c9ecbs",
+   "voz": "narradora",
+   "texto": "Para jogar futebol",
+   "fala": "Para jogar futebol",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "a326f1a72d",
+   "voz": "narradora",
+   "texto": "Na visita ao museu, quais vestígios as crianças observaram? Toque em TODOS.",
+   "fala": "Na visita ao museu, quais vestígios as crianças observaram? Toque em todos.",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "8ce50be4h",
+   "voz": "narradora",
+   "texto": "Estátua",
+   "fala": "Estátua",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "4ad5dd47u",
+   "voz": "narradora",
+   "texto": "Fóssil de dinossauro",
+   "fala": "Fóssil de dinossauro",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "eedb121fo",
+   "voz": "narradora",
+   "texto": "Vestido antigo",
+   "fala": "Vestido antigo",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "12e4f6cdq",
+   "voz": "narradora",
+   "texto": "Quadro (pintura)",
+   "fala": "Quadro (pintura)",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "ffbe5c97m",
+   "voz": "narradora",
+   "texto": "Celular novo",
+   "fala": "Celular novo",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "18e44b8df",
+   "voz": "narradora",
+   "texto": "Pizza",
+   "fala": "Pizza",
+   "pacotes": [
+    "historia-h3",
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "c299116f25",
+   "voz": "narradora",
+   "texto": "A estátua, o fóssil, o vestido e o quadro do museu são vestígios...",
+   "fala": "A estátua, o fóssil, o vestido e o quadro do museu são vestígios...",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "8c1915ecj",
+   "voz": "narradora",
+   "texto": "Materiais",
+   "fala": "Materiais",
+   "pacotes": [
+    "historia-h3",
+    "historia-h5"
+   ]
+  },
+  {
+   "chave": "161fca0fk",
+   "voz": "narradora",
+   "texto": "Imateriais",
+   "fala": "Imateriais",
+   "pacotes": [
+    "historia-h3",
+    "historia-h5"
+   ]
+  },
+  {
+   "chave": "bd2d85de2e",
+   "voz": "narradora",
+   "texto": "Qual destes vestígios só poderia estar em um museu, e não na casa de alguém?",
+   "fala": "Qual destes vestígios só poderia estar em um museu, e não na casa de alguém?",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "090d1fecw",
+   "voz": "narradora",
+   "texto": "O fóssil de dinossauro",
+   "fala": "O fóssil de dinossauro",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "9c6afe1bk",
+   "voz": "narradora",
+   "texto": "Um vestido",
+   "fala": "Um vestido",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "e47f2bd9j",
+   "voz": "narradora",
+   "texto": "Um quadro",
+   "fala": "Um quadro",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "0046af9013",
+   "voz": "narradora",
+   "texto": "O que são memórias coletivas?",
+   "fala": "O que são memórias coletivas?",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "9aacd0dd24",
+   "voz": "narradora",
+   "texto": "O conjunto de memórias e histórias importantes para uma comunidade",
+   "fala": "O conjunto de memórias e histórias importantes para uma comunidade",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "efa391cc14",
+   "voz": "narradora",
+   "texto": "As lembranças de uma pessoa só",
+   "fala": "As lembranças de uma pessoa só",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "a9693ac1z",
+   "voz": "narradora",
+   "texto": "Uma coleção de brinquedos",
+   "fala": "Uma coleção de brinquedos",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "52f6f3331q",
+   "voz": "narradora",
+   "texto": "No museu, os vestígios podem ser apresentados por...",
+   "fala": "No museu, os vestígios podem ser apresentados por...",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "cc42728a14",
+   "voz": "narradora",
+   "texto": "Um guia ou placas explicativas",
+   "fala": "Um guia ou placas explicativas",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "34530f9bk",
+   "voz": "narradora",
+   "texto": "Um palhaço",
+   "fala": "Um palhaço",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "1bb0fa7c14",
+   "voz": "narradora",
+   "texto": "Ninguém, eles ficam escondidos",
+   "fala": "Ninguém, eles ficam escondidos",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "af0b1d3f1o",
+   "voz": "narradora",
+   "texto": "Ligue cada lugar ao lugar do Brasil onde ele fica:",
+   "fala": "Ligue cada lugar ao lugar do Brasil onde ele fica:",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "f81ddb4a1l",
+   "voz": "narradora",
+   "texto": "O Museu do Maracanã preserva a história de quê?",
+   "fala": "O Museu do Maracanã preserva a história de quê?",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "6d9fdab5v",
+   "voz": "narradora",
+   "texto": "Do futebol brasileiro",
+   "fala": "Do futebol brasileiro",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "fbd9184fk",
+   "voz": "narradora",
+   "texto": "Da pintura",
+   "fala": "Da pintura",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "2cb2b83dp",
+   "voz": "narradora",
+   "texto": "Dos dinossauros",
+   "fala": "Dos dinossauros",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "11fe3ee42i",
+   "voz": "narradora",
+   "texto": "O Museu do Homem do Norte conta a história das pessoas de qual região do Brasil?",
+   "fala": "O Museu do Homem do Norte conta a história das pessoas de qual região do Brasil?",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "83976e36m",
+   "voz": "narradora",
+   "texto": "Região Norte",
+   "fala": "Região Norte",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "f2b7bb6ak",
+   "voz": "narradora",
+   "texto": "Região Sul",
+   "fala": "Região Sul",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "c56399ecp",
+   "voz": "narradora",
+   "texto": "Região Nordeste",
+   "fala": "Região Nordeste",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "74d5589e2i",
+   "voz": "narradora",
+   "texto": "A escultura Índia Terena é uma homenagem à mulher indígena da comunidade Terena.",
+   "fala": "A escultura Índia Terena é uma homenagem à mulher indígena da comunidade Terena.",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "477975f82f",
+   "voz": "narradora",
+   "texto": "As Ruínas de São Miguel das Missões guardam a memória da convivência entre...",
+   "fala": "As Ruínas de São Miguel das Missões guardam a memória da convivência entre...",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "97addc211l",
+   "voz": "narradora",
+   "texto": "Os indígenas Guarani e os missionários europeus",
+   "fala": "Os indígenas Guarani e os missionários europeus",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "804089adx",
+   "voz": "narradora",
+   "texto": "Os jogadores de futebol",
+   "fala": "Os jogadores de futebol",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "9dbb379e11",
+   "voz": "narradora",
+   "texto": "Os dinossauros e as pessoas",
+   "fala": "Os dinossauros e as pessoas",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "04221be82c",
+   "voz": "narradora",
+   "texto": "Além dos museus, o que guarda \"memórias vivas\" do passado? Toque em TODOS.",
+   "fala": "Além dos museus, o que guarda \"memórias vivas\" do passado? Toque em todos.",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "ab3c8d14t",
+   "voz": "narradora",
+   "texto": "Construções antigas",
+   "fala": "Construções antigas",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "49719bb2k",
+   "voz": "narradora",
+   "texto": "Monumentos",
+   "fala": "Monumentos",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "988cc663g",
+   "voz": "narradora",
+   "texto": "Praças",
+   "fala": "Praças",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "1082c97ey",
+   "voz": "narradora",
+   "texto": "Carrinho de supermercado",
+   "fala": "Carrinho de supermercado",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "21132d3c26",
+   "voz": "narradora",
+   "texto": "Por que a revista Tico-Tico, de 1954, deve ser guardada em um museu?",
+   "fala": "Por que a revista Tico-Tico, de 1954, deve ser guardada em um museu?",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "98e6a1f32d",
+   "voz": "narradora",
+   "texto": "Porque mostra como as crianças daquela época viviam, brincavam e o que liam",
+   "fala": "Porque mostra como as crianças daquela época viviam, brincavam e o que liam",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "19c6a99c12",
+   "voz": "narradora",
+   "texto": "Porque é uma revista novinha",
+   "fala": "Porque é uma revista novinha",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "141859e9v",
+   "voz": "narradora",
+   "texto": "Porque é muito grande",
+   "fala": "Porque é muito grande",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "a061c82f1u",
+   "voz": "narradora",
+   "texto": "Como podemos conhecer a história da cidade onde moramos?",
+   "fala": "Como podemos conhecer a história da cidade onde moramos?",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "cb33fbd72r",
+   "voz": "narradora",
+   "texto": "Observando construções, monumentos e nomes das ruas, e perguntando às pessoas mais velhas",
+   "fala": "Observando construções, monumentos e nomes das ruas, e perguntando às pessoas mais velhas",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "d55cc2fd1f",
+   "voz": "narradora",
+   "texto": "Ficando em casa sem conversar com ninguém",
+   "fala": "Ficando em casa sem conversar com ninguém",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "ceb08f7313",
+   "voz": "narradora",
+   "texto": "Só assistindo desenho animado",
+   "fala": "Só assistindo desenho animado",
+   "pacotes": [
+    "historia-h3"
+   ]
+  },
+  {
+   "chave": "af60fe7212",
+   "voz": "claude",
+   "texto": "Tradições de Geração em Geração",
+   "fala": "Tradições de Geração em Geração",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "676a5ffe1x",
+   "voz": "claude",
+   "texto": "Griôs, cirandas, panelas de barro, festas e carimbó: vamos lá!",
+   "fala": "Griôs, cirandas, panelas de barro, festas e carimbó: vamos lá!",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "fada9f7es",
+   "voz": "narradora",
+   "texto": "Quem são os griôs?",
+   "fala": "Quem são os griôs?",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "99717c5e2x",
+   "voz": "narradora",
+   "texto": "Pessoas que compartilham conhecimentos com os mais jovens, contando histórias, músicas e poemas",
+   "fala": "Pessoas que compartilham conhecimentos com os mais jovens, contando histórias, músicas e poemas",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "a9254afdv",
+   "voz": "narradora",
+   "texto": "Um tipo de dinossauro",
+   "fala": "Um tipo de dinossauro",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "90d576ddu",
+   "voz": "narradora",
+   "texto": "Jogadores de futebol",
+   "fala": "Jogadores de futebol",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "8d41806b1u",
+   "voz": "narradora",
+   "texto": "Os griôs fazem parte de alguns povos de qual continente?",
+   "fala": "Os griôs fazem parte de alguns povos de qual continente?",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "59abd89fg",
+   "voz": "narradora",
+   "texto": "África",
+   "fala": "África",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "18dc79d3g",
+   "voz": "narradora",
+   "texto": "Europa",
+   "fala": "Europa",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "b36c60f5j",
+   "voz": "narradora",
+   "texto": "Antártida",
+   "fala": "Antártida",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "7f674fec1r",
+   "voz": "narradora",
+   "texto": "O que os griôs contam e compartilham? Toque em TODOS.",
+   "fala": "O que os griôs contam e compartilham? Toque em todos.",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "75cfb8a5w",
+   "voz": "narradora",
+   "texto": "Histórias das famílias",
+   "fala": "Histórias das famílias",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "84e5008cq",
+   "voz": "narradora",
+   "texto": "Músicas e cantos",
+   "fala": "Músicas e cantos",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "73acb77dg",
+   "voz": "narradora",
+   "texto": "Danças",
+   "fala": "Danças",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "6676152cj",
+   "voz": "narradora",
+   "texto": "Adivinhas",
+   "fala": "Adivinhas",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "3135ca4ds",
+   "voz": "narradora",
+   "texto": "Jogos de videogame",
+   "fala": "Jogos de videogame",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "317b087b2m",
+   "voz": "narradora",
+   "texto": "As histórias das pessoas mais velhas transmitem tradições e valores aos mais jovens.",
+   "fala": "As histórias das pessoas mais velhas transmitem tradições e valores aos mais jovens.",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "edf864f429",
+   "voz": "narradora",
+   "texto": "Quais destas brincadeiras preservam a memória coletiva? Toque em TODAS.",
+   "fala": "Quais destas brincadeiras preservam a memória coletiva? Toque em todas.",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "9db1bbbfu",
+   "voz": "narradora",
+   "texto": "Brincadeiras de roda",
+   "fala": "Brincadeiras de roda",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "b50157d6i",
+   "voz": "narradora",
+   "texto": "Cirandas",
+   "fala": "Cirandas",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "32b56b59k",
+   "voz": "narradora",
+   "texto": "Quadrinhas",
+   "fala": "Quadrinhas",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "f67c1ec1j",
+   "voz": "narradora",
+   "texto": "Parlendas",
+   "fala": "Parlendas",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "0a72d83es",
+   "voz": "narradora",
+   "texto": "Jogar lixo no chão",
+   "fala": "Jogar lixo no chão",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "52abb4961k",
+   "voz": "narradora",
+   "texto": "Coloque os versos da quadrinha na ordem certa:",
+   "fala": "Coloque os versos da quadrinha na ordem certa:",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "97c439373l",
+   "voz": "narradora",
+   "texto": "Complete a quadrinha: \"Companheiro, me ajude, que eu não posso cantar só. Eu sozinho canto bem, com você canto ______.\"",
+   "fala": "Complete a quadrinha: \"Companheiro, me ajude, que eu não posso cantar só. Eu sozinho canto bem, com você canto …\"",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "9a4174b2g",
+   "voz": "narradora",
+   "texto": "melhor",
+   "fala": "melhor",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "83495737e",
+   "voz": "narradora",
+   "texto": "pior",
+   "fala": "pior",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "075040c1h",
+   "voz": "narradora",
+   "texto": "sozinho",
+   "fala": "sozinho",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "8cab1be31z",
+   "voz": "narradora",
+   "texto": "Qual sentimento a quadrinha \"Companheiro, me ajude\" valoriza?",
+   "fala": "Qual sentimento a quadrinha \"Companheiro, me ajude\" valoriza?",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "17e041fch",
+   "voz": "narradora",
+   "texto": "Amizade",
+   "fala": "Amizade",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "aacd52b5k",
+   "voz": "narradora",
+   "texto": "Competição",
+   "fala": "Competição",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "2801c6fd1v",
+   "voz": "narradora",
+   "texto": "Como quadrinhas tão antigas chegaram até os dias de hoje?",
+   "fala": "Como quadrinhas tão antigas chegaram até os dias de hoje?",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "e50703f41l",
+   "voz": "narradora",
+   "texto": "Foram passadas oralmente, de geração em geração",
+   "fala": "Foram passadas oralmente, de geração em geração",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "8739f36810",
+   "voz": "narradora",
+   "texto": "Foram mandadas por celular",
+   "fala": "Foram mandadas por celular",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "14b70e6bt",
+   "voz": "narradora",
+   "texto": "Apareceram sozinhas",
+   "fala": "Apareceram sozinhas",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "53f75c002h",
+   "voz": "narradora",
+   "texto": "As paneleiras de Goiabeiras fazem panelas de barro. Coloque as etapas na ordem:",
+   "fala": "As paneleiras de Goiabeiras fazem panelas de barro. Coloque as etapas na ordem:",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "396542662w",
+   "voz": "narradora",
+   "texto": "As panelas de barro de Goiabeiras (Espírito Santo) são usadas para cozinhar qual prato típico?",
+   "fala": "As panelas de barro de Goiabeiras (Espírito Santo) são usadas para cozinhar qual prato típico?",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "8f3d8b4fq",
+   "voz": "narradora",
+   "texto": "Moqueca capixaba",
+   "fala": "Moqueca capixaba",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "0b66517ak",
+   "voz": "narradora",
+   "texto": "Hambúrguer",
+   "fala": "Hambúrguer",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "cedc48df28",
+   "voz": "narradora",
+   "texto": "Esse jeito de fazer panelas já era feito há centenas de anos por quem?",
+   "fala": "Esse jeito de fazer panelas já era feito há centenas de anos por quem?",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "54bfcd561e",
+   "voz": "narradora",
+   "texto": "Comunidades indígenas Tupi-guarani e Una",
+   "fala": "Comunidades indígenas Tupi-guarani e Una",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "cb058541f",
+   "voz": "narradora",
+   "texto": "Robôs",
+   "fala": "Robôs",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "67c27a84l",
+   "voz": "narradora",
+   "texto": "Astronautas",
+   "fala": "Astronautas",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "e7546cb81j",
+   "voz": "narradora",
+   "texto": "A Festa dos Tabuleiros acontece em qual país?",
+   "fala": "A Festa dos Tabuleiros acontece em qual país?",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "73c9ccafi",
+   "voz": "narradora",
+   "texto": "Portugal",
+   "fala": "Portugal",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "02d58b78g",
+   "voz": "narradora",
+   "texto": "Brasil",
+   "fala": "Brasil",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "7a9c922ef",
+   "voz": "narradora",
+   "texto": "Japão",
+   "fala": "Japão",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "b4d088dd22",
+   "voz": "narradora",
+   "texto": "Os tabuleiros enfeitados com pães, flores e frutas simbolizam...",
+   "fala": "Os tabuleiros enfeitados com pães, flores e frutas simbolizam...",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "b18d4b57w",
+   "voz": "narradora",
+   "texto": "Fartura e prosperidade",
+   "fala": "Fartura e prosperidade",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "205a0cd9i",
+   "voz": "narradora",
+   "texto": "Tristeza",
+   "fala": "Tristeza",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "c51fc50de",
+   "voz": "narradora",
+   "texto": "Frio",
+   "fala": "Frio",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "03d7ad981y",
+   "voz": "narradora",
+   "texto": "O carimbó tem influências de quais culturas? Toque em TODAS.",
+   "fala": "O carimbó tem influências de quais culturas? Toque em todas.",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "d83e804fj",
+   "voz": "narradora",
+   "texto": "Africanas",
+   "fala": "Africanas",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "ad106359j",
+   "voz": "narradora",
+   "texto": "Indígenas",
+   "fala": "Indígenas",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "5723d15ej",
+   "voz": "narradora",
+   "texto": "Europeias",
+   "fala": "Europeias",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "5bf050c9j",
+   "voz": "narradora",
+   "texto": "Japonesas",
+   "fala": "Japonesas",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "6a6125be2i",
+   "voz": "narradora",
+   "texto": "O carimbó é uma dança e um estilo de música que surgiu em qual região do Brasil?",
+   "fala": "O carimbó é uma dança e um estilo de música que surgiu em qual região do Brasil?",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "c2f2f699t",
+   "voz": "narradora",
+   "texto": "Na região amazônica",
+   "fala": "Na região amazônica",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "464bebdel",
+   "voz": "narradora",
+   "texto": "No Polo Sul",
+   "fala": "No Polo Sul",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "0effa918k",
+   "voz": "narradora",
+   "texto": "No deserto",
+   "fala": "No deserto",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "131df3881q",
+   "voz": "narradora",
+   "texto": "A música de carimbó da apostila fala de qual animal?",
+   "fala": "A música de carimbó da apostila fala de qual animal?",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "43e6e3b1i",
+   "voz": "narradora",
+   "texto": "Papagaio",
+   "fala": "Papagaio",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "2211f180i",
+   "voz": "narradora",
+   "texto": "Cachorro",
+   "fala": "Cachorro",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "a6585d5ce",
+   "voz": "narradora",
+   "texto": "Gato",
+   "fala": "Gato",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "2e54b0642j",
+   "voz": "narradora",
+   "texto": "Quais destes costumes passam dos mais velhos para os mais jovens? Toque em TODOS.",
+   "fala": "Quais destes costumes passam dos mais velhos para os mais jovens? Toque em todos.",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "963d814ft",
+   "voz": "narradora",
+   "texto": "Receitas de família",
+   "fala": "Receitas de família",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "2a0ee7e9w",
+   "voz": "narradora",
+   "texto": "Artesanato, como tricô",
+   "fala": "Artesanato, como tricô",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "189dd4a114",
+   "voz": "narradora",
+   "texto": "Danças, brincadeiras e músicas",
+   "fala": "Danças, brincadeiras e músicas",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "16a160f511",
+   "voz": "narradora",
+   "texto": "Nunca conversar com os avós",
+   "fala": "Nunca conversar com os avós",
+   "pacotes": [
+    "historia-h4"
+   ]
+  },
+  {
+   "chave": "9bb979d3t",
+   "voz": "claude",
+   "texto": "Material ou Imaterial?",
+   "fala": "Material ou Imaterial?",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "17b06db83e",
+   "voz": "claude",
+   "texto": "A grande dica: MATERIAL dá para pegar com a mão. IMATERIAL não dá para pegar: a gente canta, dança, conta e lembra!",
+   "fala": "A grande dica: material dá para pegar com a mão. imaterial não dá para pegar: a gente canta, dança, conta e lembra!",
+   "pacotes": [
+    "historia-extra"
+   ]
+  },
+  {
+   "chave": "ff8b93d31u",
+   "voz": "narradora",
+   "texto": "Separe nos baús! Toque em um item e depois no baú certo.",
+   "fala": "Separe nos baús! Toque em um item e depois no baú certo.",
+   "pacotes": [
+    "historia-h5"
+   ]
+  },
+  {
+   "chave": "50a72468z",
+   "voz": "narradora",
+   "texto": "Mais um! Separe nos baús:",
+   "fala": "Mais um! Separe nos baús:",
+   "pacotes": [
+    "historia-h5"
+   ]
+  },
+  {
+   "chave": "109bcd911s",
+   "voz": "narradora",
+   "texto": "As cartas que o senhor Antônio guarda são vestígios...",
+   "fala": "As cartas que o senhor Antônio guarda são vestígios...",
+   "pacotes": [
+    "historia-h5"
+   ]
+  },
+  {
+   "chave": "0b0fcf2620",
+   "voz": "narradora",
+   "texto": "A quadrinha \"Companheiro, me ajude\" é um vestígio histórico...",
+   "fala": "A quadrinha \"Companheiro, me ajude\" é um vestígio histórico...",
+   "pacotes": [
+    "historia-h5"
+   ]
+  },
+  {
+   "chave": "afd2edb8i",
+   "voz": "narradora",
+   "texto": "Material",
+   "fala": "Material",
+   "pacotes": [
+    "historia-h5"
+   ]
+  },
+  {
+   "chave": "180f5b45j",
+   "voz": "narradora",
+   "texto": "Imaterial",
+   "fala": "Imaterial",
+   "pacotes": [
+    "historia-h5"
+   ]
+  },
+  {
+   "chave": "d0d296c512",
+   "voz": "narradora",
+   "texto": "O carimbó é um patrimônio...",
+   "fala": "O carimbó é um patrimônio...",
+   "pacotes": [
+    "historia-h5"
+   ]
+  },
+  {
+   "chave": "70212ce22h",
+   "voz": "narradora",
+   "texto": "Vestígio material é aquele que dá para ver e tocar, como uma carta ou uma foto.",
+   "fala": "Vestígio material é aquele que dá para ver e tocar, como uma carta ou uma foto.",
+   "pacotes": [
+    "historia-h5"
+   ]
+  },
+  {
+   "chave": "1af9c07024",
+   "voz": "narradora",
+   "texto": "Uma música é um vestígio material, porque dá para pegar com a mão.",
+   "fala": "Uma música é um vestígio material, porque dá para pegar com a mão.",
+   "pacotes": [
+    "historia-h5"
+   ]
+  },
+  {
+   "chave": "826826c01a",
+   "voz": "narradora",
+   "texto": "Qual destes é um vestígio IMATERIAL?",
+   "fala": "Qual destes é um vestígio imaterial?",
+   "pacotes": [
+    "historia-h5"
+   ]
+  },
+  {
+   "chave": "a04952bbv",
+   "voz": "narradora",
+   "texto": "Uma dança tradicional",
+   "fala": "Uma dança tradicional",
+   "pacotes": [
+    "historia-h5"
+   ]
+  },
+  {
+   "chave": "3c0e5e20o",
+   "voz": "narradora",
+   "texto": "Uma fotografia",
+   "fala": "Uma fotografia",
+   "pacotes": [
+    "historia-h5"
+   ]
+  },
+  {
+   "chave": "83f2b577j",
+   "voz": "narradora",
+   "texto": "Uma carta",
+   "fala": "Uma carta",
+   "pacotes": [
+    "historia-h5"
+   ]
+  },
+  {
+   "chave": "3ec9522319",
+   "voz": "narradora",
+   "texto": "Qual destes é um vestígio MATERIAL?",
+   "fala": "Qual destes é um vestígio material?",
+   "pacotes": [
+    "historia-h5"
+   ]
+  },
+  {
+   "chave": "e4171098t",
+   "voz": "narradora",
+   "texto": "Uma panela de barro",
+   "fala": "Uma panela de barro",
+   "pacotes": [
+    "historia-h5"
+   ]
+  },
+  {
+   "chave": "42347e81n",
+   "voz": "narradora",
+   "texto": "Uma quadrinha",
+   "fala": "Uma quadrinha",
+   "pacotes": [
+    "historia-h5"
+   ]
+  },
+  {
+   "chave": "93ce27c1j",
+   "voz": "narradora",
+   "texto": "Uma dança",
+   "fala": "Uma dança",
+   "pacotes": [
+    "historia-h5"
+   ]
+  },
+  {
+   "chave": "beb504ab19",
+   "voz": "narradora",
+   "texto": "Jogo da memória! Encontre os pares:",
+   "fala": "Jogo da memória! Encontre os pares:",
+   "pacotes": [
+    "historia-h5"
+   ]
+  },
+  {
+   "chave": "7cebb45d1m",
+   "voz": "narradora",
+   "texto": "Monte a frase tocando nos blocos na ordem certa:",
+   "fala": "Monte a frase tocando nos blocos na ordem certa:",
+   "pacotes": [
+    "historia-h5"
+   ]
+  }
+ ]
+}
