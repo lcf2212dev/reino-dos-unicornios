@@ -135,10 +135,10 @@
   // Adulto / jovem (26 x 21)
   UNI.adulto.lado = {
     corpo: [
-      '......................h...',
-      '.....................hg...',
-      '................b...gh....',
-      '..............mmbp.hhg....',
+      '......................k...',
+      '.....................gh...',
+      '................b...gk....',
+      '..............mmbp.hgk....',
       '.............mnnbbbbbbb...',
       '............mnrbbbbbbbbb..',
       '............mnrbbbbelbbbb.',
@@ -505,7 +505,7 @@
     var p = {
       b: corpo, s: escurecer(corpo, 0.14), w: clarear(corpo, 0.55),
       m: crina[0], n: crina[1] || crina[0], r: crina[2] || crina[1] || crina[0],
-      h: chifre, g: escurecer(chifre, 0.25),
+      h: chifre, g: escurecer(chifre, 0.25), k: clarear(chifre, 0.45),
       e: '#2a1838', l: '#ffffff', p: '#ff9cc6', o: '#6b3b5a', q: misturar(corpo, '#ff9cc6', 0.22),
       f: escurecer(def.cores.casco || corpo, 0.3),
       W: def.cores.asa || '#ffffff', X: escurecer(def.cores.asa || '#ffffff', 0.18),
@@ -584,17 +584,17 @@
       ],
       emPe: [
         ['..HH.CCC...',
-         '..HHCCCCKK.',
-         '...HCCCCC..',
-         '...CCCCCC..',
+         '..HHACACKK.',
+         '...HAAACC..',
+         '...CCACCC..',
          '...DDDDDD..',
          '....KK.KK..',
          '....KK.KK..',
          '....SS.SS..'],
         ['..HH.CCC...',
-         '..HHCCCCKK.',
-         '...HCCCCC..',
-         '...CCCCCC..',
+         '..HHACACKK.',
+         '...HAAACC..',
+         '...CCACCC..',
          '...DDDDDD..',
          '...KK...KK.',
          '...KK...KK.',
@@ -623,25 +623,25 @@
       ],
       emPe: [
         ['.HHCCCCCHH.',
-         '.HKCCCCCKH.',
-         '..KCCCCCK..',
-         '...CCCCC...',
+         '.HKCACACKH.',
+         '..KCAAACK..',
+         '...CCACC...',
          '..DDDDDDD..',
          '...KK.KK...',
          '...KK.KK...',
          '...SS.SS...'],
         ['.HHCCCCCHH.',
-         '.HKCCCCCKH.',
-         '..KCCCCCK..',
-         '...CCCCC...',
+         '.HKCACACKH.',
+         '..KCAAACK..',
+         '...CCACC...',
          '..DDDDDDD..',
          '...KK.KK...',
          '...SS.KK...',
          '......SS...'],
         ['.HHCCCCCHH.',
-         '.HKCCCCCKH.',
-         '..KCCCCCK..',
-         '...CCCCC...',
+         '.HKCACACKH.',
+         '..KCAAACK..',
+         '...CCACC...',
          '..DDDDDDD..',
          '...KK.KK...',
          '...KK.SS...',
@@ -672,24 +672,24 @@
         ['.HHHHHHHHH.',
          '..KHHHHHK..',
          '..KCHHHCK..',
-         '...CCCCC...',
-         '..DDDDDDD..',
+         '...CACAC...',
+         '..DDDADDD..',
          '...KK.KK...',
          '...KK.KK...',
          '...SS.SS...'],
         ['.HHHHHHHHH.',
          '..KHHHHHK..',
          '..KCHHHCK..',
-         '...CCCCC...',
-         '..DDDDDDD..',
+         '...CACAC...',
+         '..DDDADDD..',
          '...KK.KK...',
          '...SS.KK...',
          '......SS...'],
         ['.HHHHHHHHH.',
          '..KHHHHHK..',
          '..KCHHHCK..',
-         '...CCCCC...',
-         '..DDDDDDD..',
+         '...CACAC...',
+         '..DDDADDD..',
          '...KK.KK...',
          '...KK.SS...',
          '...SS......'],
@@ -717,25 +717,25 @@
       ],
       emPe: [
         ['..HHCCCC...',
-         '..HKCCCCK..',
-         '...KCCCCK..',
-         '...CCCCCC..',
+         '..HKCACAK..',
+         '...KCAAAK..',
+         '...CCACCC..',
          '...DDDDDD..',
          '....KK.KK..',
          '....KK.KK..',
          '....SS.SS..'],
         ['..HHCCCC...',
-         '..HKCCCCK..',
-         '...KCCCCK..',
-         '...CCCCCC..',
+         '..HKCACAK..',
+         '...KCAAAK..',
+         '...CCACCC..',
          '...DDDDDD..',
          '...KK..KK..',
          '...SS..KK..',
          '.......SS..'],
         ['..HHCCCC...',
-         '..HKCCCCK..',
-         '...KCCCCK..',
-         '...CCCCCC..',
+         '..HKCACAK..',
+         '...KCAAAK..',
+         '...CCACCC..',
          '...DDDDDD..',
          '...KK..KK..',
          '...KK..SS..',
@@ -766,24 +766,24 @@
         ['..HHHHHC...',
          '..HHHHHCK..',
          '...HHHCCK..',
-         '...CCCCCC..',
-         '...DDDDDD..',
+         '...CCACAC..',
+         '...DDADDD..',
          '....KK.KK..',
          '....KK.KK..',
          '....SS.SS..'],
         ['..HHHHHC...',
          '..HHHHHCK..',
          '...HHHCCK..',
-         '...CCCCCC..',
-         '...DDDDDD..',
+         '...CCACAC..',
+         '...DDADDD..',
          '...KK..KK..',
          '...KK..SS..',
          '...SS......'],
         ['..HHHHHC...',
          '..HHHHHCK..',
          '...HHHCCK..',
-         '...CCCCCC..',
-         '...DDDDDD..',
+         '...CCACAC..',
+         '...DDADDD..',
          '...KK..KK..',
          '...SS..KK..',
          '.......SS..'],
@@ -812,7 +812,7 @@
   function paletaMariana(ap) {
     return {
       H: ap.cabelo, L: misturar(ap.cabelo, '#ffe3c4', 0.2), K: ap.pele, E: '#2a1838', R: '#ff9cc6',
-      C: ap.roupa, D: escurecer(ap.roupa, 0.2), S: '#6b3b5a', B: ap.laco,
+      C: ap.roupa, D: escurecer(ap.roupa, 0.2), A: escurecer(ap.roupa, 0.34), S: '#6b3b5a', B: ap.laco,
     };
   }
 
@@ -891,20 +891,21 @@
     '.......a........',
     '.....cccccc.....',
     '...cccccccccc...',
-    '..cccccccccccc..',
-    '.cccleccccleccc.',
-    '.ccceecccceeccc.',
-    '.ccrcccmmcccrcc.',
-    'ccccyyyyyyyycccc',
     '..ccyyyyyyyycc..',
-    '..ccyyyyyyyycc..',
-    '...ddyyyyyydd...',
+    '..ccleyyyylecc..',
+    '..cceeyyyyeecc..',
+    '..cryyyyyyyyrc..',
+    '..ccymyyyymycc..',
+    '..kkyymmmmyykk..',
+    '.kkknnkkkkkkkkk.',
+    '...dnnyyyyydd...',
     '....dddddddd....',
     '....dd....dd....',
   ];
   var CLAUDE_PISCA = CLAUDE.slice();
-  CLAUDE_PISCA[7] = '.cccccccccccccc.';
-  var PAL_CLAUDE = { c: '#f28c5e', d: '#d4684a', y: '#ffe6cc', e: '#2a1838', l: '#ffffff', r: '#ff9cc6', m: '#8a3b3b', a: '#6b4b7a', s: '#ffd34d' };
+  CLAUDE_PISCA[7] = '..cceeyyyyeecc..';
+  CLAUDE_PISCA[8] = '..ccyyyyyyyycc..';
+  var PAL_CLAUDE = { c: '#f28c5e', d: '#d4684a', y: '#ffe6cc', e: '#2a1838', l: '#ffffff', r: '#ff9cc6', m: '#8a3b3b', a: '#6b4b7a', s: '#ffd34d', k: '#c9a6ff', n: '#7a52c4' };
 
   PA.claude = function (quadro) {
     var chave = 'claude|' + quadro;
@@ -963,6 +964,33 @@
     return res;
   };
 
+  PA.iconeMenu = function (id) {
+    var c = novoCanvas(16, 16);
+    var ctx = c.getContext('2d');
+    function r(x, y, w, h, cor) { ctx.fillStyle = cor; ctx.fillRect(x, y, w, h); }
+    if (id === 'lugares') {
+      r(2, 2, 12, 12, '#3a2446'); r(3, 3, 10, 10, '#fff8ee');
+      r(4, 5, 8, 1, '#c6e15a'); r(4, 8, 8, 1, '#f7d7a8'); r(7, 4, 1, 8, '#f7d7a8');
+      r(5, 6, 2, 2, '#f0a04a'); r(9, 9, 2, 2, '#7ed9c8');
+    } else if (id === 'estabulo') {
+      r(3, 7, 10, 6, '#3a2446'); r(4, 8, 8, 4, '#fff5fa');
+      r(11, 9, 2, 2, '#ff9cc6'); r(6, 9, 1, 1, '#2a1838'); r(9, 9, 1, 1, '#2a1838');
+      r(7, 4, 2, 3, '#ffd34d'); r(6, 3, 1, 1, '#fff6a8');
+      r(4, 6, 2, 2, '#ff7eb6'); r(10, 6, 2, 2, '#b58cff');
+    } else if (id === 'plano') {
+      r(6, 2, 4, 3, '#ff8a3d'); r(7, 1, 2, 2, '#ffd34d');
+      r(3, 5, 10, 8, '#3a2446'); r(4, 6, 8, 6, '#ffd34d');
+      r(6, 7, 4, 4, '#fff6a8'); r(7, 8, 2, 2, '#f0a04a');
+    } else {
+      r(6, 1, 4, 2, '#3a2446'); r(6, 13, 4, 2, '#3a2446');
+      r(1, 6, 2, 4, '#3a2446'); r(13, 6, 2, 4, '#3a2446');
+      r(3, 3, 3, 3, '#3a2446'); r(10, 3, 3, 3, '#3a2446');
+      r(3, 10, 3, 3, '#3a2446'); r(10, 10, 3, 3, '#3a2446');
+      r(4, 4, 8, 8, '#7c5cff'); r(6, 6, 4, 4, '#fff8ee'); r(7, 7, 2, 2, '#3a2446');
+    }
+    return contornar(c, '#3a2446');
+  };
+
   /* ---------- utilidades para a interface (DOM) ---------- */
   // devolve um <canvas> ampliado com pixels nítidos para usar em cartões
   PA.paraDOM = function (spr, escala, classe) {
@@ -983,6 +1011,83 @@
     ctx.fillStyle = '#b9a8cc';
     ctx.fillRect(0, 0, c.width, c.height);
     return c;
+  };
+
+  /* Um ícone de emoji vira pixel art: desenho próprio ou o glifo reduzido a uma grade. */
+  var cacheIcone = {};
+  function desenharEmojiPixel(emoji) {
+    var N = 64, G = 16;
+    var c = novoCanvas(N, N);
+    var ctx = c.getContext('2d');
+    ctx.clearRect(0, 0, N, N);
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.font = '54px "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", sans-serif';
+    ctx.fillText(emoji, N / 2, N / 2 + 2);
+    var dados = ctx.getImageData(0, 0, N, N).data;
+    var out = novoCanvas(G, G);
+    var o = out.getContext('2d');
+    var passo = N / G;
+    var algum = false;
+    for (var y = 0; y < G; y++) {
+      for (var x = 0; x < G; x++) {
+        var r = 0, g = 0, b = 0, n = 0;
+        for (var yy = 1; yy < passo; yy += 2) {
+          for (var xx = 1; xx < passo; xx += 2) {
+            var i = (((y * passo + yy) | 0) * N + ((x * passo + xx) | 0)) * 4;
+            if (dados[i + 3] > 50) { r += dados[i]; g += dados[i + 1]; b += dados[i + 2]; n++; }
+          }
+        }
+        if (n < 2) continue;
+        algum = true;
+        r = Math.round(r / n / 48) * 48;
+        g = Math.round(g / n / 48) * 48;
+        b = Math.round(b / n / 48) * 48;
+        o.fillStyle = 'rgb(' + r + ',' + g + ',' + b + ')';
+        o.fillRect(x, y, 1, 1);
+      }
+    }
+    if (!algum) return null;
+    return contornar(out, CONTORNO);
+  }
+  var ICONE_PROPRIO = {
+    '▲': ['..k..', '.kkk.', 'kkkkk', '..k..', '..k..'],
+    '▼': ['..k..', '..k..', 'kkkkk', '.kkk.', '..k..'],
+    '◀': ['..k..', '.kk..', 'kkk..', '.kk..', '..k..'],
+    '▶': ['..k..', '..kk.', '..kkk', '..kk.', '..k..'],
+    '←': ['..k..', '.k...', 'kkkkk', '.k...', '..k..'],
+    '→': ['..k..', '...k.', 'kkkkk', '...k.', '..k..'],
+    '↑': ['..k..', '.kkk.', '..k..', '..k..', '..k..'],
+    '↓': ['..k..', '..k..', '..k..', '.kkk.', '..k..'],
+    '✕': ['k...k', '.k.k.', '..k..', '.k.k.', 'k...k'],
+    '✓': ['....k', '...k.', 'k.k..', '.k...', '.....'],
+    '✔': ['....k', '...k.', 'k.k..', '.k...', '.....'],
+    '↙': ['.k...', 'k....', 'kkkkk', '..k..', '...k.'],
+    '↗': ['...k.', '....k', 'kkkkk', '..k..', '.k...']
+  };
+  var PAL_ICONE = { k: '#3a2446', '.': '' };
+  function iconeProprio(emoji) {
+    var linhas = ICONE_PROPRIO[emoji];
+    if (!linhas) return null;
+    var pal = {};
+    Object.keys(PAL_ICONE).forEach(function (k) { if (PAL_ICONE[k]) pal[k] = PAL_ICONE[k]; });
+    return contornar(matriz(linhas, pal), CONTORNO);
+  }
+  PA.iconeEmoji = function (emoji, escala) {
+    var base = cacheIcone[emoji];
+    if (!base) {
+      base = iconeProprio(emoji) || desenharEmojiPixel(emoji);
+      if (!base) {
+        var vazio = novoCanvas(12, 12);
+        var vx = vazio.getContext('2d');
+        vx.fillStyle = '#7c5cff';
+        vx.fillRect(1, 1, 10, 10);
+        vx.fillStyle = '#fff8ee';
+        vx.fillRect(4, 3, 4, 6);
+        base = contornar(vazio, CONTORNO);
+      } else cacheIcone[emoji] = base;
+    }
+    return PA.paraDOM(base, escala || 2, 'icone-px');
   };
 
   window.PA = PA;

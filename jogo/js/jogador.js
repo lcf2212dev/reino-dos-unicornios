@@ -157,11 +157,13 @@
 
   // p = pintor que desenha em pixels de tela (movimento suave, sem tremer)
   function sombra(p, x, y, larg) {
-    for (var j = -2; j <= 2; j++) {
-      var m = Math.round(larg * Math.sqrt(1 - (j * j) / 6.25));
-      p.ret(x - m, y + j, m * 2, 1, 'rgba(58,36,70,0.22)');
+    var alfa = { 0: 0.28, 1: 0.18, 2: 0.10, 3: 0.05 };
+    for (var j = -3; j <= 3; j++) {
+      var m = Math.round(larg * Math.sqrt(1 - (j * j) / 12.25));
+      p.ret(x - m, y + j, m * 2, 1, 'rgba(58,36,70,' + alfa[Math.abs(j)] + ')');
     }
   }
+  J.sombra = sombra;
 
   function desenharSprite(p, c, x, y, espelhar) {
     p.sprite(espelhar ? espelho(c) : c, x, y);

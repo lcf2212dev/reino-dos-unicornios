@@ -112,7 +112,7 @@
   function mostrar(item) {
     var bal = montar();
     aberto = item;
-    bal.querySelector('.claude-texto').textContent = item.texto;
+    Reino.util.preencher(bal.querySelector('.claude-texto'), item.texto);
     bal.classList.toggle('dica-pressa', item.tipo === 'pressa');
     bal.hidden = false;
     bal.classList.remove('entrando'); void bal.offsetWidth; bal.classList.add('entrando');

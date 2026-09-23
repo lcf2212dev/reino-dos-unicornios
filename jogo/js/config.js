@@ -44,7 +44,7 @@ Reino.util = (function () {
         if (v === undefined || v === null || v === false) return;
         if (k === 'on') { Object.keys(v).forEach(function (ev) { node.addEventListener(ev, v[ev]); }); }
         else if (k === 'style' && typeof v === 'object') { Object.assign(node.style, v); }
-        else if (k === 'text') { node.textContent = v; }
+        else if (k === 'text') { preencher(node, v); }
         else if (k === 'html') { node.innerHTML = v; }
         else if (k in node && typeof v !== 'string') { node[k] = v; }
         else node.setAttribute(k, v === true ? '' : v);
@@ -52,8 +52,32 @@ Reino.util = (function () {
     }
     filhos.flat(Infinity).forEach(function (f) {
       if (f === null || f === undefined || f === false) return;
-      node.appendChild(f.nodeType ? f : document.createTextNode(String(f)));
+      if (f.nodeType) node.appendChild(f);
+      else colocarTexto(node, String(f));
     });
+    return node;
+  }
+
+  var RE_ICONE = /(\p{RI}\p{RI}|\p{Extended_Pictographic}(?:\uFE0F|\uFE0E)?(?:\u200D\p{Extended_Pictographic}(?:\uFE0F|\uFE0E)?)*|[✓✕✔✘←→↑↓▲▼◀▶⌫])/gu;
+  function colocarTexto(node, s) {
+    RE_ICONE.lastIndex = 0;
+    if (!RE_ICONE.test(s) || !window.PA || !PA.iconeEmoji) {
+      node.appendChild(document.createTextNode(s));
+      return;
+    }
+    RE_ICONE.lastIndex = 0;
+    var ultimo = 0, m;
+    while ((m = RE_ICONE.exec(s))) {
+      if (m.index > ultimo) node.appendChild(document.createTextNode(s.slice(ultimo, m.index)));
+      var soIcone = s.trim() === m[0];
+      node.appendChild(PA.iconeEmoji(m[0], soIcone ? 2 : 1.35));
+      ultimo = m.index + m[0].length;
+    }
+    if (ultimo < s.length) node.appendChild(document.createTextNode(s.slice(ultimo)));
+  }
+  function preencher(node, s) {
+    node.textContent = '';
+    colocarTexto(node, String(s));
     return node;
   }
 
@@ -80,7 +104,7 @@ Reino.util = (function () {
   var reduzMovimento = false;
   try { reduzMovimento = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
 
-  return { $: $, $$: $$, el: el, embaralhar: embaralhar, sortear: sortear, clamp: clamp,
+  return { $: $, $$: $$, el: el, preencher: preencher, embaralhar: embaralhar, sortear: sortear, clamp: clamp,
     reais: reais, reaisCurto: reaisCurto, copia: copia, esperar: esperar, on: on, emit: emit,
     reduzMovimentoSistema: reduzMovimento };
 })();

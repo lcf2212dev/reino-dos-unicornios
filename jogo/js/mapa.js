@@ -6,7 +6,7 @@
 
   var tipo = [];            // letra do chão
   var solido = [];          // true = não dá para andar
-  var decor = [];           // enfeite do tile: 'arvore', 'flor', 'cristal', 'arbusto', ...
+  var decor = [];           // enfeite do tile: 'arvore', 'flor', 'cristal', 'arbusto', 'cogumelo'
   var lugares = [];
   var estatico = null;      // canvas com tudo o que não se mexe
   var claudeTile = { x: 20, y: 12 };
@@ -101,6 +101,13 @@
       }
       return true;
     }
+    function pertoDaAgua(x, y) {
+      for (var j = -1; j <= 1; j++) for (var i = -1; i <= 1; i++) {
+        var nx = x + i, ny = y + j;
+        if (dentro(nx, ny) && tipo[ny][nx] === 'a') return true;
+      }
+      return false;
+    }
     for (var by = 0; by < H; by++) for (var bx = 0; bx < W; bx++) {
       var borda = bx === 0 || by === 0 || bx === W - 1 || by === H - 1;
       if (borda) { decor[by][bx] = 'arvore'; solido[by][bx] = true; continue; }
@@ -113,6 +120,7 @@
       else if (v < 0.085) { decor[by][bx] = 'cristal'; solido[by][bx] = true; }
       else if (v < 0.11) { decor[by][bx] = 'arbusto'; solido[by][bx] = true; }
       else if (v < 0.36) decor[by][bx] = 'flor';
+      else if (v < 0.40 && !pertoDaAgua(bx, by)) decor[by][bx] = 'cogumelo';
     }
     estatico = null;
   };
@@ -177,14 +185,15 @@
 
   /* ================= DESENHO ================= */
   var C = {
-    grama: '#a9e6a3', grama2: '#98db93', grama3: '#bdf0b5',
-    rua: '#f7dce8', rua2: '#ebc4d6', rua3: '#fff0f6',
-    praca: '#e9defe', praca2: '#d8c8fb',
-    agua: '#86cdf7', agua2: '#a9ddfa', agua3: '#6bb8ea', margem: '#f3e3c0',
+    grama: '#c6e15a', grama2: '#a8cc48', grama3: '#e4f59a',
+    rua: '#f7d7a8', rua2: '#e4c07a', rua3: '#fff8e8',
+    praca: '#ffe6b0', praca2: '#f0c56e', praca3: '#fff8e8',
+    agua: '#7ed9c8', agua2: '#d9fff4', agua3: '#3eaea3', margem: '#f8e2a8',
     tronco: '#a0745a', contorno: '#3a2446',
+    miolo: '#fff6a8',
   };
-  var COPAS = [['#ffb3d9', '#ff94c6', '#ffd6ea'], ['#b8f0d8', '#8fe0bf', '#dcfff0'], ['#d8c6ff', '#bba3ff', '#efe6ff']];
-  var FLORES = ['#ff7eb6', '#ffe066', '#ffffff', '#b58cff', '#7fd6ff'];
+  var COPAS = [['#ffc27a', '#f0a04a', '#fff1d0'], ['#d4ee78', '#a8cc48', '#f4f8c8'], ['#e4f59a', '#8fb83a', '#fff6d4']];
+  var FLORES = ['#ff8a3d', '#ffe066', '#ffffff', '#ffb15a', '#7ed9c8'];
 
   function ret(ctx, x, y, w, h, cor) { ctx.fillStyle = cor; ctx.fillRect(x, y, w, h); }
   function circulo(ctx, cx, cy, raio, cor) {
@@ -211,62 +220,115 @@
 
   function desenharChao(ctx, x, y, r) {
     var px = x * T, py = y * T, t = tipo[y][x];
+    var par = (x + y) % 2 === 0, fio, topo, k, fx, fy, cor;
     if (t === 'g' || t === 'f') {
-      ret(ctx, px, py, T, T, C.grama);
-      for (var i = 0; i < 5; i++) ret(ctx, px + Math.floor(r() * 15), py + Math.floor(r() * 15), 1, 2, r() < 0.5 ? C.grama2 : C.grama3);
+      ret(ctx, px, py, T, T, t === 'f' ? C.grama3 : C.grama);
+      fio = t === 'f' ? C.grama : C.grama3;
+      var ax = par ? 1 : 13, ay = par ? 1 : 12;
+      var bx = par ? 13 : 1, by = par ? 12 : 1;
+      ret(ctx, px + ax, py + ay, 1, 3, C.grama2);
+      ret(ctx, px + ax + 1, py + ay + 1, 1, 2, fio);
+      ret(ctx, px + bx, py + by, 1, 3, C.grama2);
+      ret(ctx, px + bx + 1, py + by + 1, 1, 2, fio);
       if (t === 'f') {
-        for (var k = 0; k < 4; k++) {
-          var fx = px + 2 + Math.floor(r() * 12), fy = py + 2 + Math.floor(r() * 12);
-          var cor = FLORES[Math.floor(r() * FLORES.length)];
-          ret(ctx, fx - 1, fy, 3, 1, cor); ret(ctx, fx, fy - 1, 1, 3, cor); ret(ctx, fx, fy, 1, 1, '#fff6a8');
+        var pts = [[4, 5], [11, 6], [7, 11]];
+        for (k = 0; k < 3; k++) {
+          fx = px + pts[k][0]; fy = py + pts[k][1];
+          cor = FLORES[(x + y + k) % FLORES.length];
+          ret(ctx, fx, fy + 1, 1, 2, C.grama2);
+          ret(ctx, fx - 1, fy, 3, 1, cor);
+          ret(ctx, fx, fy - 1, 1, 3, cor);
+          ret(ctx, fx, fy, 1, 1, C.miolo);
         }
       }
     } else if (t === 'c') {
-      ret(ctx, px, py, T, T, C.rua);
-      ret(ctx, px + (y % 2 ? 0 : 8), py, 1, 8, C.rua2);
-      ret(ctx, px + (y % 2 ? 8 : 0), py + 8, 1, 8, C.rua2);
-      ret(ctx, px, py + 7, T, 1, C.rua2);
-      ret(ctx, px + 2, py + 2, 3, 1, C.rua3); ret(ctx, px + 10, py + 10, 3, 1, C.rua3);
+      topo = (x % 2) ? 3 : 0;
+      ret(ctx, px, py, T, T, C.rua2);
+      ret(ctx, px + 1, py + topo, 6, 13, C.rua);
+      ret(ctx, px + 9, py + (3 - topo), 6, 13, C.rua);
+      ret(ctx, px + 1, py + topo, 6, 1, C.rua3);
+      ret(ctx, px + 9, py + (3 - topo), 6, 1, C.rua3);
     } else if (t === 'p') {
-      ret(ctx, px, py, T, T, (x + y) % 2 ? C.praca : C.praca2);
-      ret(ctx, px, py, T, 1, '#f6f0ff'); ret(ctx, px, py, 1, T, '#f6f0ff');
+      ret(ctx, px, py, T, T, par ? C.praca2 : C.praca);
+      ret(ctx, px, py + 15, T, 1, C.praca2);
+      ret(ctx, px + 15, py, 1, T, C.praca2);
+      ret(ctx, px, py, T, 1, par ? C.praca : C.praca3);
+      ret(ctx, px, py, 1, T, par ? C.praca : C.praca3);
+      ret(ctx, px + 7, py + 7, 2, 2, par ? C.praca : C.praca2);
     } else if (t === 'a') {
-      ret(ctx, px, py, T, T, C.grama); // o lago é pintado depois, como uma elipse
+      ret(ctx, px, py, T, T, C.grama);
     }
   }
 
   function desenharArvore(ctx, x, y, r) {
     var px = x * T, py = y * T;
-    var copa = COPAS[Math.floor(r() * COPAS.length)];
+    var i = Math.floor(r() * COPAS.length);
+    var copa = COPAS[i], buque = COPAS[(i + 1) % COPAS.length];
     ret(ctx, px + 6, py + 9, 4, 7, C.tronco);
     ret(ctx, px + 6, py + 9, 1, 7, '#8a604a');
+    ret(ctx, px + 4, py + 15, 3, 1, C.tronco);
+    ret(ctx, px + 9, py + 15, 3, 1, C.tronco);
     circulo(ctx, px + 8, py + 6, 7, C.contorno);
     circulo(ctx, px + 8, py + 6, 6, copa[1]);
-    circulo(ctx, px + 7, py + 5, 5, copa[0]);
-    circulo(ctx, px + 6, py + 3, 2, copa[2]);
-    ret(ctx, px + 10, py + 8, 1, 1, '#ffffff');
+    circulo(ctx, px + 6, py + 5, 4, copa[0]);
+    circulo(ctx, px + 5, py + 3, 2, copa[2]);
+    circulo(ctx, px + 12, py + 6, 3, C.contorno);
+    circulo(ctx, px + 12, py + 6, 2, buque[1]);
+    ret(ctx, px + 8, py, 1, 3, '#ffffff');
+    ret(ctx, px + 7, py + 1, 3, 1, '#fff6a8');
   }
   function desenharFlor(ctx, x, y, r) {
-    var px = x * T + 3 + Math.floor(r() * 9), py = y * T + 4 + Math.floor(r() * 8);
+    var px = x * T + 4 + Math.floor(r() * 7), py = y * T + 5 + Math.floor(r() * 5);
     var cor = FLORES[Math.floor(r() * FLORES.length)];
-    ret(ctx, px, py + 2, 1, 3, '#5cb85c');
-    ret(ctx, px - 1, py, 3, 1, cor); ret(ctx, px, py - 1, 1, 3, cor); ret(ctx, px, py, 1, 1, '#fff3a0');
+    var miolo = (cor === '#ffe066' || cor === '#ffffff') ? '#ff8a3d' : '#fff3a0';
+    ret(ctx, px, py + 2, 1, 4, '#7ea832');
+    ret(ctx, px - 2, py + 3, 2, 1, '#8fb83a'); ret(ctx, px + 1, py + 4, 2, 1, '#b6d24e');
+    ret(ctx, px - 2, py, 5, 1, cor); ret(ctx, px, py - 2, 1, 5, cor);
+    ret(ctx, px - 1, py - 1, 1, 1, cor); ret(ctx, px + 1, py - 1, 1, 1, cor);
+    ret(ctx, px - 1, py + 1, 1, 1, cor); ret(ctx, px + 1, py + 1, 1, 1, cor);
+    ret(ctx, px, py, 1, 1, miolo); ret(ctx, px + 3, py - 2, 1, 1, '#ffffff');
   }
   function desenharCristal(ctx, x, y) {
     var px = x * T, py = y * T;
-    ctx.fillStyle = C.contorno;
-    ctx.fillRect(px + 4, py + 4, 8, 11);
-    ret(ctx, px + 5, py + 5, 6, 9, '#9fdcff');
-    ret(ctx, px + 5, py + 5, 2, 9, '#d8f2ff');
-    ret(ctx, px + 7, py + 2, 2, 3, C.contorno); ret(ctx, px + 7, py + 3, 1, 2, '#d8f2ff');
-    ret(ctx, px + 3, py + 13, 10, 2, '#b58cff');
+    elipse(ctx, px + 8, py + 13, 5, 2, '#8fb83a');
+    elipse(ctx, px + 8, py + 12, 3, 1, '#b6d24e');
+    var larg = [2, 4, 6, 8, 8, 6, 4, 2];
+    for (var j = 0; j < larg.length; j++) {
+      var w = larg[j], x0 = px + 8 - w / 2;
+      ret(ctx, x0 - 1, py + 4 + j, w + 2, 1, C.contorno);
+      ret(ctx, x0, py + 4 + j, w / 2, 1, '#d8f2ff');
+      ret(ctx, x0 + w / 2, py + 4 + j, w / 2, 1, j < 4 ? '#9fdcff' : '#6bb8ea');
+      if (w > 2) ret(ctx, x0 + w - 1, py + 4 + j, 1, 1, '#7ed9c8');
+    }
+    ret(ctx, px + 7, py + 6, 1, 2, '#ffffff');
+    ret(ctx, px + 11, py + 4, 1, 3, '#ffffff');
+    ret(ctx, px + 10, py + 5, 3, 1, '#fff6a8');
   }
   function desenharArbusto(ctx, x, y) {
     var px = x * T, py = y * T;
+    var cor = ['#ff8a3d', '#ffb15a', '#7ed9c8'][(x + y) % 3];
     elipse(ctx, px + 8, py + 10, 7, 5, C.contorno);
-    elipse(ctx, px + 8, py + 10, 6, 4, '#7fd08a');
-    elipse(ctx, px + 7, py + 9, 4, 2, '#a4e6ad');
-    ret(ctx, px + 5, py + 8, 1, 1, '#ff7eb6'); ret(ctx, px + 11, py + 11, 1, 1, '#ffe066');
+    elipse(ctx, px + 8, py + 10, 6, 4, '#a8cc48');
+    elipse(ctx, px + 6, py + 9, 3, 2, '#d4ee78');
+    elipse(ctx, px + 12, py + 12, 2, 2, '#8fb83a');
+    ret(ctx, px + 4, py + 9, 3, 1, cor); ret(ctx, px + 5, py + 8, 1, 3, cor); ret(ctx, px + 5, py + 9, 1, 1, '#ffffff');
+    ret(ctx, px + 10, py + 11, 3, 1, '#ffe066'); ret(ctx, px + 11, py + 10, 1, 3, '#ffe066'); ret(ctx, px + 11, py + 11, 1, 1, '#ffffff');
+  }
+  function desenharCogumelo(ctx, x, y) {
+    var sorte = rng(x * 89 + y * 47 + 13);
+    var px = x * T + 4 + Math.floor(sorte() * 5);
+    var py = y * T + 5 + Math.floor(sorte() * 4);
+    var rosa = sorte() < 0.7;
+    var chapeu = rosa ? '#ff8a3d' : '#f0a04a';
+    var barra = rosa ? '#e07028' : '#d9842f';
+    ret(ctx, px, py + 6, 5, 1, C.grama2);
+    ret(ctx, px + 1, py + 3, 3, 4, '#fff6ea');
+    ret(ctx, px + 3, py + 3, 1, 4, '#e7d4b8');
+    circulo(ctx, px + 2, py + 2, 3, C.contorno);
+    circulo(ctx, px + 2, py + 1, 3, chapeu);
+    ret(ctx, px, py + 2, 5, 1, barra);
+    ret(ctx, px + 1, py, 1, 1, '#ffffff');
+    ret(ctx, px + 3, py + 1, 1, 1, '#ffffff');
   }
 
   /* ----- prédios ----- */
@@ -283,24 +345,39 @@
 
   var PREDIOS = {
     castelo: function (ctx, px, py, w, h) {
-      var parede = '#ffd1e6', parede2 = '#f7b7d4', telhado = '#b79cff';
+      var parede = '#fff1d0', parede2 = '#f0d0a0', telhado = '#f0a04a';
       // muralha central
       contornoRet(ctx, px + 20, py + 30, w - 40, h - 30, parede);
       for (var j = py + 36; j < py + h - 4; j += 8) for (var i = px + 22 + ((j / 8) % 2) * 4; i < px + w - 22; i += 10) ret(ctx, i, j, 5, 1, parede2);
       for (var k = px + 20; k < px + w - 20; k += 8) { ret(ctx, k, py + 25, 6, 6, C.contorno); ret(ctx, k + 1, py + 26, 4, 5, parede); }
       // torres
       [px + 2, px + w - 28].forEach(function (tx) {
-        contornoRet(ctx, tx, py + 22, 26, h - 22, '#ffc2dd');
+        contornoRet(ctx, tx, py + 22, 26, h - 22, '#ffe4b8');
         for (var j2 = py + 28; j2 < py + h - 4; j2 += 8) ret(ctx, tx + 4, j2, 18, 1, parede2);
         triangulo(ctx, tx - 3, py + 2, 32, 22, C.contorno);
         triangulo(ctx, tx - 1, py + 4, 28, 19, telhado);
         ret(ctx, tx + 12, py - 6, 1, 9, C.contorno);
-        ret(ctx, tx + 13, py - 6, 7, 4, '#ff7eb6');
+        ret(ctx, tx + 13, py - 6, 7, 4, '#ff8a3d');
         ret(ctx, tx + 8, py + 34, 10, 12, C.contorno); ret(ctx, tx + 9, py + 35, 8, 11, '#9fdcff');
         ret(ctx, tx + 9, py + 35, 3, 4, '#e6f7ff');
       });
       // portão
       portaArco(ctx, px + w / 2 - 10, py + h - 26, 20, 26, '#8a5cff');
+      // fita da medalha: o disco dourado cobre o meio
+      var mx = px + w / 2;
+      var yFita = py + 28;
+      var yFim = py + h - 29;
+      var comp = yFim - yFita + 1;
+      ret(ctx, mx - 6, py + 26, 10, 2, '#ffd34d');
+      ret(ctx, mx - 6, py + 26, 10, 1, '#fff3a0');
+      ret(ctx, mx - 4, yFita, 3, comp, '#ff8a3d');
+      ret(ctx, mx - 4, yFita, 1, comp, '#ffd34d');
+      ret(ctx, mx + 1, yFita, 3, comp, '#8a5cff');
+      ret(ctx, mx + 3, yFita, 1, comp, '#ffd34d');
+      ret(ctx, mx - 4, yFim + 1, 1, 2, '#ffd34d');
+      ret(ctx, mx - 2, yFim + 1, 1, 2, '#ff8a3d');
+      ret(ctx, mx + 1, yFim + 1, 1, 2, '#8a5cff');
+      ret(ctx, mx + 3, yFim + 1, 1, 2, '#ffd34d');
       // medalha acima do portão
       circulo(ctx, px + w / 2, py + 40, 6, C.contorno);
       circulo(ctx, px + w / 2, py + 40, 5, '#ffd34d');
@@ -308,57 +385,120 @@
     },
     museu: function (ctx, px, py, w, h, cores) {
       cores = cores || {};
-      var parede = cores.parede || '#efe6ff', telhado = cores.telhado || '#b79cff', det = cores.detalhe || '#ff9cc6';
-      // degraus
-      contornoRet(ctx, px + 2, py + h - 8, w - 4, 8, '#e2d9f3');
-      ret(ctx, px + 3, py + h - 5, w - 6, 1, '#cfc2ea');
-      contornoRet(ctx, px + 5, py + h - 14, w - 10, 7, '#ece5fa');
-      // parede
-      contornoRet(ctx, px + 7, py + 26, w - 14, h - 39, parede);
-      // colunas
+      var parede = cores.parede || '#fff6e4', telhado = cores.telhado || '#f0a04a', det = cores.detalhe || '#ff8a3d';
+      var pedra = PA.cor.misturar(parede, '#f0d8b8', 0.62);
+      var pedraClara = PA.cor.clarear(pedra, 0.28);
+      var junta = PA.cor.misturar(pedra, '#c4a57a', 0.45);
+      var degrau = PA.cor.misturar(pedra, '#e7d3b0', 0.35);
+      var sombra = PA.cor.escurecer(degrau, 0.16);
+      contornoRet(ctx, px + 1, py + h - 6, w - 2, 6, degrau);
+      ret(ctx, px + 2, py + h - 2, w - 4, 1, sombra);
+      contornoRet(ctx, px + 4, py + h - 10, w - 8, 5, PA.cor.clarear(degrau, 0.12));
+      ret(ctx, px + 5, py + h - 6, w - 10, 1, sombra);
+      contornoRet(ctx, px + 8, py + h - 14, w - 16, 5, pedraClara);
+      ret(ctx, px + 9, py + h - 10, w - 18, 1, sombra);
+      contornoRet(ctx, px + 7, py + 26, w - 14, h - 39, pedra);
+      for (var j = py + 32; j < py + h - 16; j += 6) ret(ctx, px + 8, j, w - 16, 1, junta);
       [px + 9, px + 23, px + w - 31, px + w - 17].forEach(function (cx) {
-        ret(ctx, cx - 1, py + 28, 10, 3, C.contorno); ret(ctx, cx, py + 29, 8, 1, '#ffffff');
-        ret(ctx, cx, py + 31, 8, h - 45, C.contorno); ret(ctx, cx + 1, py + 31, 6, h - 45, '#ffffff');
-        ret(ctx, cx + 5, py + 31, 2, h - 45, '#e3dbf5');
+        ret(ctx, cx - 1, py + 28, 10, 3, C.contorno);
+        ret(ctx, cx, py + 29, 8, 1, pedraClara);
+        ret(ctx, cx, py + 31, 8, h - 45, C.contorno);
+        ret(ctx, cx + 1, py + 31, 6, h - 45, pedraClara);
+        ret(ctx, cx + 5, py + 31, 2, h - 45, PA.cor.escurecer(pedra, 0.18));
       });
-      // frontão
-      ret(ctx, px + 2, py + 20, w - 4, 7, C.contorno); ret(ctx, px + 3, py + 21, w - 6, 5, PA.cor.clarear(telhado, 0.35));
+      ret(ctx, px + 2, py + 20, w - 4, 7, C.contorno);
+      ret(ctx, px + 3, py + 21, w - 6, 5, PA.cor.misturar(PA.cor.clarear(telhado, 0.35), pedraClara, 0.4));
       triangulo(ctx, px + 1, py + 1, w - 2, 20, C.contorno);
       triangulo(ctx, px + 4, py + 4, w - 8, 16, telhado);
-      // emblema: ampulheta do tempo com coração
       circulo(ctx, px + w / 2, py + 13, 4, '#ffffff');
-      ret(ctx, px + w / 2 - 2, py + 11, 5, 1, det); ret(ctx, px + w / 2 - 1, py + 12, 3, 1, det);
-      ret(ctx, px + w / 2, py + 13, 1, 1, det); ret(ctx, px + w / 2 - 1, py + 14, 3, 1, det); ret(ctx, px + w / 2 - 2, py + 15, 5, 1, det);
-      // porta
+      ret(ctx, px + w / 2 - 2, py + 11, 5, 1, det);
+      ret(ctx, px + w / 2 - 1, py + 12, 3, 1, det);
+      ret(ctx, px + w / 2, py + 13, 1, 1, det);
+      ret(ctx, px + w / 2 - 1, py + 14, 3, 1, det);
+      ret(ctx, px + w / 2 - 2, py + 15, 5, 1, det);
       portaArco(ctx, px + w / 2 - 8, py + h - 36, 16, 23, '#7c5cff');
-      // janelinhas
-      ret(ctx, px + 13, py + 38, 8, 10, C.contorno); ret(ctx, px + 14, py + 39, 6, 8, '#bfe7ff');
-      ret(ctx, px + w - 21, py + 38, 8, 10, C.contorno); ret(ctx, px + w - 20, py + 39, 6, 8, '#bfe7ff');
+      function vitral(x, y) {
+        ret(ctx, x, y, 8, 10, C.contorno);
+        ret(ctx, x + 1, y + 1, 2, 3, det);
+        ret(ctx, x + 5, y + 1, 2, 3, telhado);
+        ret(ctx, x + 1, y + 5, 2, 4, PA.cor.clarear(telhado, 0.4));
+        ret(ctx, x + 5, y + 5, 2, 4, PA.cor.clarear(det, 0.35));
+        ret(ctx, x + 3, y + 1, 2, 8, C.contorno);
+        ret(ctx, x + 1, y + 4, 6, 1, C.contorno);
+        ret(ctx, x + 1, y + 1, 1, 1, '#ffffff');
+        ret(ctx, x + 5, y + 6, 1, 1, '#ffffff');
+      }
+      vitral(px + 13, py + 38);
+      vitral(px + w - 21, py + 38);
+      function estandarte(x, y) {
+        ret(ctx, x - 1, y, 6, 2, C.contorno);
+        ret(ctx, x, y, 4, 1, PA.cor.clarear(det, 0.35));
+        ret(ctx, x, y + 2, 4, 12, C.contorno);
+        ret(ctx, x, y + 2, 3, 11, det);
+        ret(ctx, x, y + 2, 1, 11, PA.cor.clarear(det, 0.4));
+        ret(ctx, x + 1, y + 6, 1, 2, '#ffffff');
+        ret(ctx, x, y + 13, 1, 2, telhado);
+        ret(ctx, x + 2, y + 13, 1, 2, telhado);
+      }
+      estandarte(px + w / 2 - 14, py + 32);
+      estandarte(px + w / 2 + 10, py + 32);
+      var qx = px + w / 2 - 4, qy = py + 32;
+      contornoRet(ctx, qx, qy, 9, 10, pedraClara);
+      ret(ctx, qx + 2, qy + 2, 5, 6, PA.cor.clarear(telhado, 0.5));
+      ret(ctx, qx + 2, qy + 5, 5, 3, PA.cor.misturar(det, pedra, 0.35));
+      ret(ctx, qx + 3, qy + 4, 3, 2, telhado);
+      ret(ctx, qx + 4, qy + 3, 1, 1, '#ffffff');
     },
     estabulo: function (ctx, px, py, w, h) {
-      contornoRet(ctx, px + 4, py + 22, w - 8, h - 22, '#c9f2e3');
-      for (var i = px + 10; i < px + w - 6; i += 7) ret(ctx, i, py + 24, 1, h - 25, '#a9e3cf');
+      contornoRet(ctx, px + 4, py + 22, w - 8, h - 22, '#f6e7c4');
+      for (var i = px + 10; i < px + w - 6; i += 7) ret(ctx, i, py + 24, 1, h - 25, '#e6d2a8');
       // telhado
       ctx.fillStyle = C.contorno;
       for (var j = 0; j < 24; j++) { var m = Math.round(12 + j * (w / 2 - 12) / 23); ctx.fillRect(px + w / 2 - m - 2, py + j, (m + 2) * 2, 1); }
-      ctx.fillStyle = '#ff9cc6';
+      ctx.fillStyle = '#f0a04a';
       for (var j2 = 2; j2 < 23; j2++) { var m2 = Math.round(10 + j2 * (w / 2 - 14) / 23); ctx.fillRect(px + w / 2 - m2, py + j2, m2 * 2, 1); }
-      for (var j3 = 6; j3 < 23; j3 += 5) { var m3 = Math.round(10 + j3 * (w / 2 - 14) / 23); ret(ctx, px + w / 2 - m3, py + j3, m3 * 2, 1, '#ff7eb6'); }
-      // janelinha do feno
-      ret(ctx, px + w / 2 - 6, py + 8, 12, 10, C.contorno); ret(ctx, px + w / 2 - 5, py + 9, 10, 8, '#ffe066');
-      ret(ctx, px + w / 2 - 5, py + 14, 10, 3, '#f5c842');
+      for (var j3 = 6; j3 < 23; j3 += 5) { var m3 = Math.round(10 + j3 * (w / 2 - 14) / 23); ret(ctx, px + w / 2 - m3, py + j3, m3 * 2, 1, '#d9842f'); }
+      // palha no vão do telhado
+      ret(ctx, px + w / 2 - 6, py + 8, 12, 10, C.contorno);
+      ret(ctx, px + w / 2 - 5, py + 9, 10, 8, '#f5c842');
+      for (var s = 0; s < 4; s++) ret(ctx, px + w / 2 - 4 + (s % 2), py + 10 + s * 2, 7, 1, s % 2 ? '#ffe066' : '#d9a93a');
+      ret(ctx, px + w / 2 - 3, py + 6, 1, 4, '#ffe066');
+      ret(ctx, px + w / 2 + 1, py + 5, 1, 5, '#f5c842');
+      ret(ctx, px + w / 2 + 3, py + 7, 1, 3, '#ffe066');
       // porta de celeiro
       var dx = px + w / 2 - 10, dy = py + h - 26;
-      contornoRet(ctx, dx, dy, 20, 26, '#ff7eb6');
+      contornoRet(ctx, dx, dy, 20, 26, '#ff8a3d');
       ctx.fillStyle = '#ffffff';
       for (var t = 0; t < 22; t++) { ctx.fillRect(dx + 1 + Math.round(t * 18 / 22), dy + 2 + t, 1, 1); ctx.fillRect(dx + 18 - Math.round(t * 18 / 22), dy + 2 + t, 1, 1); }
       ret(ctx, dx + 1, dy + 1, 18, 1, '#ffffff'); ret(ctx, dx + 9, dy + 1, 2, 25, '#ffffff');
-      // ferradura dourada
-      ret(ctx, px + w / 2 - 3, py + 20, 7, 2, '#ffd34d'); ret(ctx, px + w / 2 - 3, py + 17, 2, 4, '#ffd34d'); ret(ctx, px + w / 2 + 2, py + 17, 2, 4, '#ffd34d');
+      // monte de feno à esquerda da porta
+      elipse(ctx, px + 18, py + h - 10, 11, 6, C.contorno);
+      elipse(ctx, px + 18, py + h - 10, 10, 5, '#f5c842');
+      elipse(ctx, px + 16, py + h - 12, 6, 2, '#ffe066');
+      ret(ctx, px + 12, py + h - 16, 1, 5, '#ffd34d');
+      ret(ctx, px + 21, py + h - 17, 1, 6, '#ffe066');
+      ret(ctx, px + 25, py + h - 14, 1, 4, '#d9a93a');
+      // ferradura na parede direita
+      var hx = px + w - 22, hy = py + 30;
+      ret(ctx, hx, hy, 3, 10, C.contorno);
+      ret(ctx, hx + 8, hy, 3, 10, C.contorno);
+      ret(ctx, hx, hy + 8, 11, 4, C.contorno);
+      ret(ctx, hx + 1, hy + 1, 2, 8, '#ffd34d');
+      ret(ctx, hx + 8, hy + 1, 2, 8, '#ffd34d');
+      ret(ctx, hx + 1, hy + 8, 9, 3, '#ffd34d');
+      ret(ctx, hx + 1, hy + 3, 1, 1, '#fff3a0');
+      ret(ctx, hx + 9, hy + 3, 1, 1, '#fff3a0');
+      ret(ctx, hx + 4, hy + 9, 3, 1, '#d9a93a');
     },
     bau: function (ctx, px, py, w, h) {
       // moedas no topo
-      [[14, 4], [24, 2], [34, 5], [48, 3], [60, 5]].forEach(function (m) { circulo(ctx, px + m[0], py + m[1] + 3, 3, C.contorno); circulo(ctx, px + m[0], py + m[1] + 3, 2, '#ffd34d'); ret(ctx, px + m[0] - 1, py + m[1] + 2, 1, 1, '#fff3a0'); });
+      [[24, 5], [36, 2], [48, 5], [58, 3]].forEach(function (m) {
+        var cx = px + m[0], cy = py + m[1] + 3;
+        circulo(ctx, cx, cy, 3, C.contorno);
+        circulo(ctx, cx, cy, 2, '#ffd34d');
+        ret(ctx, cx - 1, cy - 1, 2, 1, '#ffffff');
+        ret(ctx, cx - 1, cy, 1, 1, '#fff3a0');
+      });
       // tampa arredondada
       elipse(ctx, px + w / 2, py + 22, w / 2 - 2, 14, C.contorno);
       elipse(ctx, px + w / 2, py + 22, w / 2 - 4, 12, '#b77a44');
@@ -379,20 +519,31 @@
       ret(ctx, px + w - 22, py + 28, 8, h - 29, '#f5dfc0');
       // chapéu de cogumelo
       elipse(ctx, px + w / 2, py + 18, w / 2 - 1, 17, C.contorno);
-      elipse(ctx, px + w / 2, py + 17, w / 2 - 3, 15, '#ff7eb6');
-      elipse(ctx, px + w / 2 - 8, py + 11, 14, 6, '#ff9cc6');
-      ret(ctx, px + 2, py + 26, w - 4, 6, C.contorno); ret(ctx, px + 4, py + 26, w - 8, 4, '#e8609d');
-      [[18, 10, 4], [44, 7, 5], [62, 16, 3], [30, 21, 3], [52, 22, 2]].forEach(function (b) { circulo(ctx, px + b[0], py + b[1], b[2], '#ffffff'); });
+      elipse(ctx, px + w / 2, py + 17, w / 2 - 3, 15, '#ff8a3d');
+      elipse(ctx, px + w / 2 - 8, py + 11, 14, 6, '#ffc27a');
+      ret(ctx, px + 2, py + 26, w - 4, 6, C.contorno); ret(ctx, px + 4, py + 26, w - 8, 4, '#e07028');
+      [[14, 16, 3], [58, 12, 3], [66, 18, 2], [28, 21, 2], [50, 21, 2]].forEach(function (b) {
+        circulo(ctx, px + b[0], py + b[1], b[2] + 1, '#e07028');
+        circulo(ctx, px + b[0], py + b[1], b[2], '#ffffff');
+      });
       // janela redonda
-      circulo(ctx, px + 22, py + 42, 5, C.contorno); circulo(ctx, px + 22, py + 42, 4, '#d8c6ff'); ret(ctx, px + 20, py + 40, 2, 2, '#ffffff');
+      circulo(ctx, px + 22, py + 42, 5, C.contorno); circulo(ctx, px + 22, py + 42, 4, '#c8f3ea'); ret(ctx, px + 20, py + 40, 2, 2, '#ffffff');
       // porta
       portaArco(ctx, px + w / 2 - 7, py + h - 22, 14, 22, '#9b5cff', '#ffe066');
+      contornoRet(ctx, px + 14, py + 52, 16, 8, '#c98a4b');
+      ret(ctx, px + 16, py + 50, 12, 3, '#7ea832');
+      ret(ctx, px + 17, py + 50, 8, 1, '#b6d24e');
+      [[18, 50, '#ff8a3d'], [22, 49, '#ffe066'], [26, 50, '#ffffff']].forEach(function (f) {
+        ret(ctx, px + f[0] - 1, py + f[1], 3, 1, f[2]);
+        ret(ctx, px + f[0], py + f[1] - 1, 1, 3, f[2]);
+        ret(ctx, px + f[0], py + f[1], 1, 1, '#fff3a0');
+      });
       // brilhinhos
       [[6, 36], [72, 40], [66, 50]].forEach(function (s) { ret(ctx, px + s[0], py + s[1] - 1, 1, 3, '#ffffff'); ret(ctx, px + s[0] - 1, py + s[1], 3, 1, '#ffffff'); });
     },
     torre: function (ctx, px, py, w, h, cores) {
       cores = cores || {};
-      var parede = cores.parede || '#e6f4ff', telhado = cores.telhado || '#7fd6ff';
+      var parede = cores.parede || '#fff6e4', telhado = cores.telhado || '#f0a04a';
       contornoRet(ctx, px + 12, py + 22, w - 24, h - 22, parede);
       triangulo(ctx, px + 6, py + 1, w - 12, 23, C.contorno);
       triangulo(ctx, px + 9, py + 4, w - 18, 19, telhado);
@@ -403,33 +554,64 @@
   Mapa.PREDIOS = PREDIOS;
 
   var LAGO = { cx: 18, cy: 24.6, rx: 6.5, ry: 2.4 };
+  function hasteJunco(ctx, x, y, h) {
+    ret(ctx, x, y, 1, h, '#2f7a48');
+    ret(ctx, x, y, 1, 2, '#8fb83a');
+  }
   function desenharLago(ctx) {
     var cx = Math.round(LAGO.cx * T), cy = Math.round(LAGO.cy * T);
     var rx = Math.round(LAGO.rx * T), ry = Math.round(LAGO.ry * T);
     elipse(ctx, cx, cy, rx + 4, ry + 4, C.margem);
-    elipse(ctx, cx, cy, rx + 1, ry + 1, '#e7cf9e');
-    elipse(ctx, cx, cy, rx, ry, C.agua3);
-    elipse(ctx, cx, cy - 2, rx - 2, ry - 3, C.agua);
-    var r = rng(99);
-    for (var i = 0; i < 22; i++) {
-      var ax = cx - rx + 10 + Math.floor(r() * (rx * 2 - 20)), ay = cy - ry + 8 + Math.floor(r() * (ry * 2 - 14));
-      var dx = (ax - cx) / rx, dy = (ay - cy) / ry;
-      if (dx * dx + dy * dy < 0.8) ret(ctx, ax, ay, 4 + Math.floor(r() * 4), 1, C.agua2);
-    }
-    // vitórias-régias
-    [[-60, -8], [-40, 12], [52, 4], [70, -10]].forEach(function (v) {
-      elipse(ctx, cx + v[0], cy + v[1], 5, 3, '#5cbf6b'); elipse(ctx, cx + v[0] - 1, cy + v[1] - 1, 3, 1, '#7fd08a');
-      ret(ctx, cx + v[0] + 2, cy + v[1] - 2, 2, 2, '#ff9cc6');
+    elipse(ctx, cx, cy, rx + 1, ry + 1, '#e8d090');
+    elipse(ctx, cx, cy, rx, ry, C.agua);
+    elipse(ctx, cx, cy + 1, rx - 20, ry - 12, C.agua3);
+    elipse(ctx, cx, cy + 3, 48, 13, '#2a7f78');
+    elipse(ctx, cx - 2, cy - 4, 16, 3, C.agua2);
+    [[192, 386, 10, '#ffffff'], [194, 400, 8, C.agua2], [376, 388, 12, C.agua2], [374, 400, 14, '#ffffff']].forEach(function (s) {
+      ret(ctx, s[0], s[1], s[2], 1, s[3]);
     });
+    [[286, 353], [180, 392], [393, 400], [286, 433], [338, 357], [228, 427]].forEach(function (p) {
+      ret(ctx, p[0], p[1], 2, 1, C.margem);
+      ret(ctx, p[0], p[1] + 1, 2, 1, '#cbb892');
+    });
+    [[-60, -8, 6, 3, '#ff8a3d'], [-40, 12, 5, 3, '#ffe066'], [52, 4, 7, 3, null], [70, -10, 5, 2, '#ff8a3d']].forEach(function (v) {
+      elipse(ctx, cx + v[0] + 1, cy + v[1] + 1, v[2], v[3], '#2a7f78');
+      elipse(ctx, cx + v[0], cy + v[1], v[2], v[3], '#8fb83a');
+      elipse(ctx, cx + v[0] - 1, cy + v[1] - 1, Math.max(2, v[2] - 2), 1, '#b6d24e');
+      ret(ctx, cx + v[0], cy + v[1], Math.max(2, v[2] - 1), 1, C.agua3);
+      if (v[4]) {
+        ret(ctx, cx + v[0] + 2, cy + v[1] - 2, 2, 2, v[4]);
+        ret(ctx, cx + v[0] + 2, cy + v[1] - 2, 1, 1, '#fff6a8');
+      }
+    });
+    [[236, 350, 8], [238, 347, 10], [241, 352, 6],
+      [328, 349, 8], [331, 346, 11], [334, 351, 6],
+      [184, 388, 7], [182, 386, 9], [186, 390, 6],
+      [390, 388, 7], [392, 385, 10], [388, 391, 5],
+      [256, 426, 7], [258, 423, 9], [261, 428, 6],
+      [336, 422, 8], [338, 420, 10], [341, 424, 6]].forEach(function (h) { hasteJunco(ctx, h[0], h[1], h[2]); });
   }
 
   function desenharFonte(ctx) {
     var cx = 18 * T, cy = 14 * T;
     elipse(ctx, cx, cy + 2, 15, 11, C.contorno);
-    elipse(ctx, cx, cy + 2, 14, 10, '#e2d9f3');
+    elipse(ctx, cx, cy + 2, 14, 10, '#f3e6c8');
+    elipse(ctx, cx, cy + 2, 12, 8, '#e4d0a4');
     elipse(ctx, cx, cy + 2, 11, 7, C.agua);
+    elipse(ctx, cx, cy + 3, 8, 4, C.agua3);
+    elipse(ctx, cx, cy + 4, 4, 2, '#2a7f78');
+    elipse(ctx, cx - 2, cy, 4, 1, C.agua2);
+    [[12, 1], [9, 8], [-1, 10], [-11, 8], [-14, 1], [9, -4], [-11, -4]].forEach(function (p) {
+      ret(ctx, cx + p[0], cy + p[1], 2, 1, '#fff8e8');
+      ret(ctx, cx + p[0], cy + p[1] + 1, 2, 1, '#cfc4e2');
+    });
     ret(ctx, cx - 2, cy - 10, 4, 12, C.contorno); ret(ctx, cx - 1, cy - 10, 2, 12, '#ffffff');
-    elipse(ctx, cx, cy - 10, 5, 2, C.contorno); elipse(ctx, cx, cy - 10, 4, 1, '#e2d9f3');
+    elipse(ctx, cx, cy - 10, 5, 2, C.contorno); elipse(ctx, cx, cy - 10, 4, 1, '#f3e6c8');
+  }
+
+  function sombraBase(ctx, px, py, w, h) {
+    elipse(ctx, px + w / 2, py + h - 1, Math.round(w * 0.38), 3, 'rgba(58,36,70,0.10)');
+    elipse(ctx, px + w / 2, py + h - 1, Math.round(w * 0.30), 1, 'rgba(58,36,70,0.18)');
   }
 
   Mapa.prerender = function () {
@@ -443,6 +625,7 @@
       if (d === 'flor') desenharFlor(ctx, x2, y2, r2);
       else if (d === 'cristal') desenharCristal(ctx, x2, y2);
       else if (d === 'arbusto') desenharArbusto(ctx, x2, y2);
+      else if (d === 'cogumelo') desenharCogumelo(ctx, x2, y2);
     }
     desenharLago(ctx);
     desenharFonte(ctx);
@@ -450,6 +633,7 @@
     var itens = [];
     lugares.forEach(function (l) { itens.push({ y: l.rect.y + l.rect.h, f: function () {
       var fn = PREDIOS[l.sprite] || PREDIOS.torre;
+      sombraBase(ctx, l.rect.x * T, l.rect.y * T, l.rect.w * T, l.rect.h * T);
       fn(ctx, l.rect.x * T, l.rect.y * T, l.rect.w * T, l.rect.h * T, l.cores);
     } }); });
     for (var y3 = 0; y3 < H; y3++) for (var x3 = 0; x3 < W; x3++) {
@@ -483,7 +667,17 @@
         var gx = cx + lado * f * 9, gy = cy - Math.sin(f * Math.PI) * 9 + f * 10;
         ctx.fillStyle = f < 0.8 ? '#bfe7ff' : '#ffffff';
         ctx.fillRect(Math.round(gx), Math.round(gy), 2, 2);
+        var fio = ((t / 700) + g / 4) % 1;
+        ctx.fillStyle = fio < 0.75 ? '#bfe7ff' : '#ffffff';
+        ctx.fillRect(287 + (g % 2), Math.round(210 + fio * 14), 1, 2);
       }
+      var anel = (t / 700) % 1;
+      var meio = 2 + Math.round(anel * 7);
+      var alfa = (0.85 * (1 - anel)).toFixed(2);
+      ctx.fillStyle = anel < 0.5 ? 'rgba(255,255,255,' + alfa + ')' : 'rgba(217,255,244,' + alfa + ')';
+      ctx.fillRect(18 * T - meio, 14 * T + 1, meio * 2, 1);
+      ctx.fillRect(18 * T - meio, 14 * T + 2, meio * 2, 1);
+      ctx.fillRect(18 * T - meio, 14 * T + 3, meio * 2, 1);
     }
     // arco-íris sobre os lugares concluídos
     (opcoes.concluidos || []).forEach(function (id) {

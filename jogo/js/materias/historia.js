@@ -8,7 +8,7 @@ Reino.registrarMateria({
     nome: 'Museu das Memórias',
     sprite: 'museu',
     rect: { x: 3, y: 3, w: 6, h: 5 },   // em tiles; a porta fica no meio da última linha
-    cores: { parede: '#efe6ff', telhado: '#b79cff', detalhe: '#ff9cc6' },
+    cores: { parede: '#fff6e4', telhado: '#f0a04a', detalhe: '#ff8a3d' },
   },
   guia: 'Eu sou o guia do Museu das Memórias! Em cada sala tem um pedacinho da apostila de História.',
 

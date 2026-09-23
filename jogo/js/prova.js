@@ -38,7 +38,7 @@
         function passo() {
           if (fim) return;
           if (ciclo >= 3) {
-            texto.textContent = Reino.Falas.fixas.ritualFim;
+            Reino.util.preencher(texto, Reino.Falas.fixas.ritualFim);
             contagem.textContent = '';
             Reino.Som.falar(texto.textContent, { voz: 'claude' });
             setTimeout(function () { if (!fim) { fim = true; resolver(); } }, 1800);
@@ -46,13 +46,13 @@
           }
           ciclo++;
           contagem.textContent = 'Respiração ' + ciclo + ' de 3';
-          texto.textContent = Reino.Falas.fixas.ritualPuxa;
+          Reino.util.preencher(texto, Reino.Falas.fixas.ritualPuxa);
           Reino.Som.falar(texto.textContent, { voz: 'claude' });
           balao.classList.remove('esvazia'); balao.classList.add('enche');
           Reino.Som.tocar('respira');
           setTimeout(function () {
             if (fim) return;
-            texto.textContent = Reino.Falas.fixas.ritualSolta;
+            Reino.util.preencher(texto, Reino.Falas.fixas.ritualSolta);
             Reino.Som.falar(texto.textContent, { voz: 'claude' });
             balao.classList.remove('enche'); balao.classList.add('esvazia');
             setTimeout(passo, 3200);
@@ -124,8 +124,8 @@
       var ant = el('button.btn-grande.btn-secundario', { type: 'button' }, '← Anterior');
       var prox = el('button.btn-grande.btn-principal', { type: 'button' });
       function atualizarBotoes() {
-        if (modoRevisao) prox.textContent = 'Revisei ✓';
-        else prox.textContent = i + 1 < questoes.length ? 'Próxima →' : 'Ir para a revisão 👀';
+        if (modoRevisao) Reino.util.preencher(prox, 'Revisei ✓');
+        else Reino.util.preencher(prox, i + 1 < questoes.length ? 'Próxima →' : 'Ir para a revisão 👀');
         prox.disabled = modoRevisao ? !ctrl.pronto() : false;
       }
       ant.hidden = modoRevisao || i === 0;

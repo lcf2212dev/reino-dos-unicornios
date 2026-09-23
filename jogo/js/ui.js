@@ -104,7 +104,8 @@
     var b = U.$('.btn-tela-cheia');
     if (!b) return;
     var cheia = UI.emTelaCheia();
-    b.innerHTML = cheia ? ICONE_FECHAR : ICONE_ABRIR;
+    b.textContent = '';
+    b.appendChild(PA.iconeEmoji(cheia ? '↙' : '↗', 2));
     b.setAttribute('aria-label', cheia ? 'Sair da tela cheia' : 'Tela cheia');
     b.title = cheia ? 'Sair da tela cheia' : 'Tela cheia';
   }
@@ -122,11 +123,20 @@
     var telaCheia = el('button.btn-tela-cheia', { type: 'button', hidden: !UI.telaCheiaDisponivel() });
     telaCheia.addEventListener('click', function () { Reino.Som.tocar('toque'); UI.telaCheia(); });
     hud.appendChild(el('div.hud-topo', el('div.hud-esq', dinheiro, estrelas, ovos), el('div.hud-dir', telaCheia, montaria)));
+    function botaoDock(acao, icone, linhas, aria) {
+      var rot = el('small.dock-rotulo');
+      linhas.forEach(function (l, i) {
+        if (i) rot.appendChild(el('br'));
+        rot.appendChild(document.createTextNode(l));
+      });
+      return el('button.dock-btn', { type: 'button', 'data-acao': acao, 'aria-label': aria },
+        PA.paraDOM(PA.iconeMenu(icone), 2, 'dock-icone'), rot);
+    }
     var dock = el('nav.dock', { 'aria-label': 'Menu' },
-      el('button.dock-btn', { type: 'button', 'data-acao': 'missoes' }, el('span', '📋'), el('small', 'Lugares')),
-      el('button.dock-btn', { type: 'button', 'data-acao': 'estabulo' }, el('span', '🦄'), el('small', 'Estábulo')),
-      el('button.dock-btn', { type: 'button', 'data-acao': 'plano' }, el('span', '🥇'), el('small', 'Plano da Prova')),
-      el('button.dock-btn', { type: 'button', 'data-acao': 'ajustes' }, el('span', '⚙️'), el('small', 'Ajustes')));
+      botaoDock('missoes', 'lugares', ['Lugares'], 'Lugares'),
+      botaoDock('estabulo', 'estabulo', ['Estábulo'], 'Estábulo'),
+      botaoDock('plano', 'plano', ['Plano', 'da Prova'], 'Plano da Prova'),
+      botaoDock('ajustes', 'ajustes', ['Ajustes'], 'Ajustes'));
     hud.appendChild(dock);
     pintarBotaoTela();
     dinheiro.addEventListener('click', function () { Reino.Som.tocar('toque'); UI.telaBau(); });
@@ -150,11 +160,11 @@
     if (!hud || !hud.firstChild || !est()) return;
     U.$('.chip-dinheiro', hud).innerHTML = '';
     U.$('.chip-dinheiro', hud).appendChild(el('span', '💰 ' + U.reais(P.dinheiroTotal())));
-    U.$('.chip-estrelas', hud).textContent = '⭐ ' + P.estrelas();
+    U.preencher(U.$('.chip-estrelas', hud), '⭐ ' + P.estrelas());
     var ovos = P.ovosParaChocar();
     var cOvos = U.$('.chip-ovos', hud);
     cOvos.hidden = !ovos.length;
-    cOvos.textContent = '🥚 ' + ovos.length + (ovos.length === 1 ? ' ovo!' : ' ovos!');
+    U.preencher(cOvos, '🥚 ' + ovos.length + (ovos.length === 1 ? ' ovo!' : ' ovos!'));
     var m = U.$('.chip-montaria', hud);
     m.innerHTML = '';
     var id = P.montaria(), u = est().unis[id];
@@ -358,7 +368,7 @@
     var vitrine = el('div.vitrine-previa');
     var grade = el('div.grade-loja');
     function pintar() {
-      saldo.textContent = '⭐ Você tem ' + P.estrelas() + ' estrelas';
+      U.preencher(saldo, '⭐ Você tem ' + P.estrelas() + ' estrelas');
       vitrine.innerHTML = '';
       var id = P.montaria(), u = est().unis[id];
       var e = Reino.Unicornios.estagio(u ? u.xp : 0);
@@ -436,7 +446,7 @@
       carta.appendChild(el('span.carta-rar', rar.emoji + ' ' + rar.nome));
       carta.appendChild(el('span.carta-estagio', Reino.Unicornios.ESTAGIOS[pe.estagio].emoji + ' ' + Reino.Unicornios.ESTAGIOS[pe.estagio].nome));
       carta.appendChild(el('span.barrinha', el('span', { style: { width: Math.round(pe.pct * 100) + '%' } })));
-      if (d.id === P.montaria()) carta.appendChild(el('span.selo-montado', '🐴 Montaria'));
+      if (d.id === P.montaria()) carta.insertBefore(el('span.selo-montado', '🐴 Montaria'), carta.firstChild);
     } else if (u && !u.chocado) {
       carta.appendChild(PA.paraDOM(PA.ovo(d.raridade, 0), 4));
       carta.appendChild(el('b.carta-nome', 'Ovo ' + rar.nome));

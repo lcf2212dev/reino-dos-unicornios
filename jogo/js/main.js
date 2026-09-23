@@ -53,75 +53,158 @@
     },
   };
 
+  function chanfro(p, x, y, w, h, cor) {
+    p.ret(x + 2, y, w - 4, h, cor);
+    p.ret(x, y + 2, w, h - 4, cor);
+    p.ret(x + 1, y + 1, 1, 1, cor);
+    p.ret(x + w - 2, y + 1, 1, 1, cor);
+    p.ret(x + 1, y + h - 2, 1, 1, cor);
+    p.ret(x + w - 2, y + h - 2, 1, 1, cor);
+  }
+  function desenharBalaoGuia(p, t, x, yTopo) {
+    var ciclo = (t % 5200) / 5200;
+    var a = ciclo < 0.18 ? ciclo / 0.18 : ciclo > 0.72 ? Math.max(0, (1 - ciclo) / 0.28) : 1;
+    if (a < 0.04) return;
+    var bx = x - 6, by = yTopo - 14;
+    var linha = 'rgba(58,36,70,' + (0.38 * a).toFixed(3) + ')';
+    var fundo = 'rgba(255,244,250,' + (0.94 * a).toFixed(3) + ')';
+    chanfro(p, bx, by, 16, 10, linha);
+    chanfro(p, bx + 1, by + 1, 14, 8, fundo);
+    p.ret(bx + 4, by + 2, 6, 1, 'rgba(255,255,255,' + (0.8 * a).toFixed(3) + ')');
+    p.ret(bx + 5, by + 9, 3, 1, fundo);
+    p.ret(bx + 4, by + 10, 1, 1, linha);
+    p.ret(bx + 5, by + 10, 3, 1, fundo);
+    p.ret(bx + 8, by + 10, 1, 1, linha);
+    p.ret(bx + 5, by + 11, 1, 1, linha);
+    p.ret(bx + 6, by + 11, 1, 1, fundo);
+    p.ret(bx + 7, by + 11, 1, 1, linha);
+    p.ret(bx + 5, by + 12, 2, 1, linha);
+    var tons = ['255,156,198', '201,166,255', '255,211,77'];
+    for (var i = 0; i < 3; i++) {
+      var dy = Math.round(Math.sin(t / 280 + i * 1.05));
+      p.ret(bx + 4 + i * 4, by + 4 + dy, 2, 2, 'rgba(' + tons[i] + ',' + a.toFixed(3) + ')');
+    }
+  }
   function desenharClaude(p, t, animar) {
     var ct = Mapa.claudeTile;
     var x = ct.x * T + 8, y = ct.y * T + 14;
     var pulo = animar ? Math.abs(Math.sin(t / 400)) * 2 : 0;
     var piscar = animar && Math.floor(t / 180) % 22 === 0;
     var spr = PA.claude(piscar ? 1 : 0).canvas;
-    p.ret(x - 6, y - 1, 12, 2, 'rgba(58,36,70,0.22)');
+    J.sombra(p, x, y, 6);
     p.sprite(spr, x, y - pulo);
-    // balãozinho chamando
-    if (animar && Math.floor(t / 2200) % 3 === 0) {
-      var bx = x + 6, by = y - spr.height - 12;
-      p.ret(bx - 1, by - 1, 12, 9, '#3a2446');
-      p.ret(bx, by, 10, 7, '#ffffff');
-      p.ret(bx + 2, by + 3, 1, 1, '#3a2446'); p.ret(bx + 5, by + 3, 1, 1, '#3a2446'); p.ret(bx + 8, by + 3, 1, 1, '#3a2446');
-    }
+    if (animar) desenharBalaoGuia(p, t, x, y - pulo - spr.height);
   }
 
-  // plaquinhas com o nome de cada lugar (em pixels de tela, texto nítido)
+  var FONTE_PIXEL = '"Press Start 2P", "Trebuchet MS", sans-serif';
+  function linhasDaPlaca(nome) {
+    var palavras = nome.split(/\s+/);
+    var linhas = [], atual = '';
+    palavras.forEach(function (p) {
+      var prox = atual ? atual + ' ' + p : p;
+      if (atual && prox.length > 12) { linhas.push(atual); atual = p; }
+      else atual = prox;
+    });
+    if (atual) linhas.push(atual);
+    return linhas;
+  }
+  function extraDaPlaca(l) {
+    if (l.tipo === 'materia') {
+      var m = Reino.materia(l.materiaId);
+      return concluidos().indexOf(l.id) >= 0 ? 'Pronto' : P.salasFeitas(m) + '/' + m.salas.length;
+    }
+    if (l.tipo === 'estabulo' && P.ovosParaChocar().length) return 'Ovo';
+    return '';
+  }
+  // placa ao lado da construção, com a fonte pixel (acentos inclusos)
   function desenharPlacas() {
-    var fonte = Math.round(Math.max(12, Math.min(16, 5 * escala / dpr)) * dpr);
-    ctx.font = '700 ' + fonte + 'px "Andika", "Trebuchet MS", sans-serif';
-    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    var feitos = concluidos();
+    var fonte = 16;
+    var miuda = 8;
+    var familia = FONTE_PIXEL;
+    ctx.save();
+    ctx.imageSmoothingEnabled = true;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.font = fonte + 'px ' + familia;
     Mapa.lugares().forEach(function (l) {
-      var wx = (l.rect.x + l.rect.w / 2) * T, wy = (l.rect.y + l.rect.h) * T + 6;
-      var sx = (wx - cam.x) * escala, sy = (wy - cam.y) * escala;
-      if (sx < -200 || sy < -50 || sx > canvas.width + 200 || sy > canvas.height + 50) return;
-      var extra = '';
-      if (l.tipo === 'materia') { var m = Reino.materia(l.materiaId); extra = feitos.indexOf(l.id) >= 0 ? ' 🌈' : ' ' + P.salasFeitas(m) + '/' + m.salas.length; }
-      if (l.tipo === 'estabulo' && P.ovosParaChocar().length) extra = ' 🥚';
-      var txt = l.nome + extra;
-      var w = ctx.measureText(txt).width + fonte * 1.1, h = fonte * 1.7;
-      // fica transparente quando a Mariana passa por trás da plaquinha
-      var perto = Math.abs(J.x - wx) < (w / escala) / 2 + 6 && J.y - 26 < wy + 6 && J.y + 2 > wy - 6;
-      ctx.globalAlpha = perto ? 0.3 : 1;
-      ctx.fillStyle = 'rgba(58,36,70,0.9)';
-      arred(ctx, sx - w / 2 - 2 * dpr, sy - h / 2 - 2 * dpr, w + 4 * dpr, h + 4 * dpr, h / 2 + 2 * dpr);
-      ctx.fillStyle = '#fffafd';
-      arred(ctx, sx - w / 2, sy - h / 2, w, h, h / 2);
+      var linhas = linhasDaPlaca(l.nome);
+      var extra = extraDaPlaca(l);
+      var largura = 0;
+      linhas.forEach(function (linha) { largura = Math.max(largura, ctx.measureText(linha).width); });
+      if (extra) {
+        ctx.font = miuda + 'px ' + familia;
+        largura = Math.max(largura, ctx.measureText(extra).width);
+        ctx.font = fonte + 'px ' + familia;
+      }
+      var pad = 12;
+      var lh = 24;
+      var sw = Math.ceil(largura + pad * 2);
+      var sh = Math.ceil(linhas.length * lh + (extra ? miuda + 4 : 0) + pad * 1.3);
+      var ww = sw / escala, wh = sh / escala;
+      var naDireita = l.rect.x + l.rect.w / 2 < Mapa.W / 2;
+      var x = naDireita ? (l.rect.x + l.rect.w) * T + 3 : l.rect.x * T - ww - 3;
+      var y = (l.rect.y + l.rect.h) * T - wh - 2;
+      x = Math.max(T + 1, Math.min(x, Mapa.largura() - ww - T - 1));
+      var sx = Math.round((x - cam.x) * escala);
+      var sy = Math.round((y - cam.y) * escala);
+      if (sx > canvas.width || sy > canvas.height || sx + sw < 0 || sy + sh < 0) return;
+      var perto = J.x > x - 6 && J.x < x + ww + 6 && J.y > y - 4 && J.y < y + wh + 8;
+      ctx.globalAlpha = perto ? 0.35 : 1;
       ctx.fillStyle = '#3a2446';
-      ctx.fillText(txt, sx, sy + fonte * 0.05);
+      ctx.fillRect(sx - 3, sy - 3, sw + 6, sh + 6);
+      ctx.fillStyle = '#fff8ee';
+      ctx.fillRect(sx, sy, sw, sh);
+      ctx.fillStyle = '#f3e6c8';
+      ctx.fillRect(sx, sy, sw, 3);
+      var poste = Math.max(4, Math.round(escala));
+      ctx.fillStyle = '#8a604a';
+      ctx.fillRect(sx + sw / 2 - poste / 2, sy + sh + 3, poste, Math.round(10 * escala / 3));
+      ctx.fillStyle = '#3a2446';
+      linhas.forEach(function (linha, i) {
+        ctx.font = fonte + 'px ' + familia;
+        ctx.fillText(linha, sx + sw / 2, sy + pad * 0.65 + lh * (i + 0.5));
+      });
+      if (extra) {
+        ctx.font = miuda + 'px ' + familia;
+        ctx.fillStyle = '#7c5cff';
+        ctx.fillText(extra, sx + sw / 2, sy + pad * 0.55 + lh * linhas.length + miuda * 0.45);
+      }
       ctx.globalAlpha = 1;
     });
+    ctx.restore();
+    ctx.imageSmoothingEnabled = false;
   }
-  function arred(c, x, y, w, h, r) {
-    c.beginPath();
-    c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r);
-    c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath(); c.fill();
+
+  function desenharLuz() {
+    var g = ctx.createRadialGradient(canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, Math.max(canvas.width, canvas.height) * 0.62);
+    g.addColorStop(0, 'rgba(255,236,200,0.08)');
+    g.addColorStop(0.42, 'rgba(255,236,200,0)');
+    g.addColorStop(0.72, 'rgba(58,36,70,0)');
+    g.addColorStop(1, 'rgba(58,36,70,0.16)');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
   }
 
   function desenhar(t) {
-    if (!est() || !est().comecou) return;
-    var animar = est().ajustes.animacoes;
+    if (!est()) return;
+    var animar = est().ajustes.animacoes && jogoAtivo;
     atualizarCamera();
     // o cenário é desenhado em pixels do jogo e deslizado com precisão de pixel da tela
     var ox = Math.floor(cam.x), oy = Math.floor(cam.y);
     bctx.setTransform(1, 0, 0, 1, -ox, -oy);
-    bctx.fillStyle = '#a9e6a3';
+    bctx.fillStyle = '#c6e15a';
     bctx.fillRect(ox, oy, buffer.width, buffer.height);
     Mapa.desenharAnimado(bctx, t, { concluidos: concluidos(), semAnimacao: !animar });
     J.desenharMarcador(bctx, t);
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.imageSmoothingEnabled = false;
     ctx.drawImage(buffer, -Math.round((cam.x - ox) * escala), -Math.round((cam.y - oy) * escala), buffer.width * escala, buffer.height * escala);
+    desenharPlacas();
     // quem está mais embaixo aparece na frente
     var ct = Mapa.claudeTile;
     if (J.y < ct.y * T + 14) { J.desenhar(pintor, animar); desenharClaude(pintor, t, animar); }
     else { desenharClaude(pintor, t, animar); J.desenhar(pintor, animar); }
-    desenharPlacas();
+    desenharLuz();
   }
 
   function laco(t) {
@@ -209,7 +292,7 @@
     var box = U.$('#setas');
     box.innerHTML = '';
     [['cima', '▲'], ['esq', '◀'], ['dir', '▶'], ['baixo', '▼']].forEach(function (s) {
-      var b = el('button.seta.seta-' + s[0], { type: 'button', 'aria-label': 'Andar para ' + s[0] }, s[1]);
+      var b = el('button.seta.seta-' + s[0], { type: 'button', 'aria-label': 'Andar para ' + s[0] }, PA.iconeEmoji(s[1], 2));
       function on(e) { e.preventDefault(); teclas[s[0]] = true; Reino.Som.ativar(); }
       function off() { teclas[s[0]] = false; }
       b.addEventListener('pointerdown', on);
@@ -333,11 +416,15 @@
     UI.aplicarAjustes();
     Mapa.criar(Reino.materias);
     Mapa.prerender();
+    if (!est().comecou) J.posicionar(17, 10);
     canvas = U.$('#reino');
     ctx = canvas.getContext('2d');
     buffer = PA.novoCanvas(10, 10);
     bctx = buffer.getContext('2d');
     redimensionar();
+    if (document.fonts && document.fonts.load) {
+      document.fonts.load('16px "Press Start 2P"').then(function () { desenhar(performance.now()); });
+    }
     window.addEventListener('resize', redimensionar);
     ligarControles();
     requestAnimationFrame(laco);
