@@ -116,10 +116,13 @@
     if (l.tipo === 'estabulo' && P.ovosParaChocar().length) return 'Ovo';
     return '';
   }
-  // placa ao lado da construção, com a fonte pixel (acentos inclusos)
+  // placa ao lado da construção, com a fonte pixel (acentos inclusos).
+  // Press Start 2P só fica nítida em múltiplos de 8px e em posições inteiras;
+  // o tamanho acompanha a escala do mapa (em tela de alta densidade o mapa cresce junto).
   function desenharPlacas() {
-    var fonte = 16;
-    var miuda = 8;
+    var fonte = 8 * Math.max(2, Math.round(escala / 2));
+    var k = fonte / 16;
+    function px(v) { return Math.round(v * k); }
     var familia = FONTE_PIXEL;
     ctx.save();
     ctx.imageSmoothingEnabled = true;
@@ -131,15 +134,13 @@
       var extra = extraDaPlaca(l);
       var largura = 0;
       linhas.forEach(function (linha) { largura = Math.max(largura, ctx.measureText(linha).width); });
-      if (extra) {
-        ctx.font = miuda + 'px ' + familia;
-        largura = Math.max(largura, ctx.measureText(extra).width);
-        ctx.font = fonte + 'px ' + familia;
-      }
-      var pad = 12;
-      var lh = 24;
+      // o contador (0/5, Pronto, Ovo) vai numa etiqueta lilás separada do nome
+      var etiquetaW = extra ? Math.ceil(ctx.measureText(extra).width) + px(16) : 0;
+      var etiquetaH = px(24);
+      largura = Math.max(largura, etiquetaW);
+      var pad = px(12), topo = px(8), lh = px(24), vao = px(6), borda = px(3), filete = px(2);
       var sw = Math.ceil(largura + pad * 2);
-      var sh = Math.ceil(linhas.length * lh + (extra ? miuda + 4 : 0) + pad * 1.3);
+      var sh = topo * 2 + linhas.length * lh + (extra ? vao + etiquetaH : 0);
       var ww = sw / escala, wh = sh / escala;
       var naDireita = l.rect.x + l.rect.w / 2 < Mapa.W / 2;
       var x = naDireita ? (l.rect.x + l.rect.w) * T + 3 : l.rect.x * T - ww - 3;
@@ -149,25 +150,29 @@
       var sy = Math.round((y - cam.y) * escala);
       if (sx > canvas.width || sy > canvas.height || sx + sw < 0 || sy + sh < 0) return;
       var perto = J.x > x - 6 && J.x < x + ww + 6 && J.y > y - 4 && J.y < y + wh + 8;
+      var meio = sx + Math.round(sw / 2);
       ctx.globalAlpha = perto ? 0.35 : 1;
       ctx.fillStyle = '#3a2446';
-      ctx.fillRect(sx - 3, sy - 3, sw + 6, sh + 6);
+      ctx.fillRect(sx - borda, sy - borda, sw + borda * 2, sh + borda * 2);
       ctx.fillStyle = '#fff8ee';
       ctx.fillRect(sx, sy, sw, sh);
       ctx.fillStyle = '#f3e6c8';
-      ctx.fillRect(sx, sy, sw, 3);
+      ctx.fillRect(sx, sy, sw, borda);
       var poste = Math.max(4, Math.round(escala));
       ctx.fillStyle = '#8a604a';
-      ctx.fillRect(sx + sw / 2 - poste / 2, sy + sh + 3, poste, Math.round(10 * escala / 3));
+      ctx.fillRect(meio - Math.round(poste / 2), sy + sh + borda, poste, Math.round(10 * escala / 3));
       ctx.fillStyle = '#3a2446';
       linhas.forEach(function (linha, i) {
-        ctx.font = fonte + 'px ' + familia;
-        ctx.fillText(linha, sx + sw / 2, sy + pad * 0.65 + lh * (i + 0.5));
+        ctx.fillText(linha, meio, sy + topo + lh * i + lh / 2);
       });
       if (extra) {
-        ctx.font = miuda + 'px ' + familia;
-        ctx.fillStyle = '#7c5cff';
-        ctx.fillText(extra, sx + sw / 2, sy + pad * 0.55 + lh * linhas.length + miuda * 0.45);
+        var ex = meio - Math.round(etiquetaW / 2), ey = sy + topo + lh * linhas.length + vao;
+        ctx.fillStyle = '#b58cff';
+        ctx.fillRect(ex, ey, etiquetaW, etiquetaH);
+        ctx.fillStyle = '#efe4ff';
+        ctx.fillRect(ex + filete, ey + filete, etiquetaW - filete * 2, etiquetaH - filete * 2);
+        ctx.fillStyle = '#6a4cd6';
+        ctx.fillText(extra, meio, ey + etiquetaH / 2);
       }
       ctx.globalAlpha = 1;
     });

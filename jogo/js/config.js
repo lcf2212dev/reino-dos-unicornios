@@ -58,7 +58,7 @@ Reino.util = (function () {
     return node;
   }
 
-  var RE_ICONE = /(\p{RI}\p{RI}|\p{Extended_Pictographic}(?:\uFE0F|\uFE0E)?(?:\u200D\p{Extended_Pictographic}(?:\uFE0F|\uFE0E)?)*|[✓✕✔✘←→↑↓▲▼◀▶⌫])/gu;
+  var RE_ICONE = /(\p{RI}\p{RI}|\p{Extended_Pictographic}(?:\uFE0F|\uFE0E)?(?:\u200D\p{Extended_Pictographic}(?:\uFE0F|\uFE0E)?)*|[✓✕✔✘←→↑↓▲▼◀▶⌫↙↗])/gu;
   function colocarTexto(node, s) {
     RE_ICONE.lastIndex = 0;
     if (!RE_ICONE.test(s) || !window.PA || !PA.iconeEmoji) {
@@ -69,8 +69,7 @@ Reino.util = (function () {
     var ultimo = 0, m;
     while ((m = RE_ICONE.exec(s))) {
       if (m.index > ultimo) node.appendChild(document.createTextNode(s.slice(ultimo, m.index)));
-      var soIcone = s.trim() === m[0];
-      node.appendChild(PA.iconeEmoji(m[0], soIcone ? 2 : 1.35));
+      node.appendChild(PA.iconeTexto(m[0], s.trim() === m[0]));
       ultimo = m.index + m[0].length;
     }
     if (ultimo < s.length) node.appendChild(document.createTextNode(s.slice(ultimo)));

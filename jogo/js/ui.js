@@ -130,7 +130,7 @@
         rot.appendChild(document.createTextNode(l));
       });
       return el('button.dock-btn', { type: 'button', 'data-acao': acao, 'aria-label': aria },
-        PA.paraDOM(PA.iconeMenu(icone), 2, 'dock-icone'), rot);
+        PA.paraDOM(PA.iconeMenu(icone), PA.escalaNitida(36, 16), 'dock-icone'), rot);
     }
     var dock = el('nav.dock', { 'aria-label': 'Menu' },
       botaoDock('missoes', 'lugares', ['Lugares'], 'Lugares'),

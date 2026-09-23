@@ -964,32 +964,14 @@
     return res;
   };
 
-  PA.iconeMenu = function (id) {
-    var c = novoCanvas(16, 16);
-    var ctx = c.getContext('2d');
-    function r(x, y, w, h, cor) { ctx.fillStyle = cor; ctx.fillRect(x, y, w, h); }
-    if (id === 'lugares') {
-      r(2, 2, 12, 12, '#3a2446'); r(3, 3, 10, 10, '#fff8ee');
-      r(4, 5, 8, 1, '#c6e15a'); r(4, 8, 8, 1, '#f7d7a8'); r(7, 4, 1, 8, '#f7d7a8');
-      r(5, 6, 2, 2, '#f0a04a'); r(9, 9, 2, 2, '#7ed9c8');
-    } else if (id === 'estabulo') {
-      r(3, 7, 10, 6, '#3a2446'); r(4, 8, 8, 4, '#fff5fa');
-      r(11, 9, 2, 2, '#ff9cc6'); r(6, 9, 1, 1, '#2a1838'); r(9, 9, 1, 1, '#2a1838');
-      r(7, 4, 2, 3, '#ffd34d'); r(6, 3, 1, 1, '#fff6a8');
-      r(4, 6, 2, 2, '#ff7eb6'); r(10, 6, 2, 2, '#b58cff');
-    } else if (id === 'plano') {
-      r(6, 2, 4, 3, '#ff8a3d'); r(7, 1, 2, 2, '#ffd34d');
-      r(3, 5, 10, 8, '#3a2446'); r(4, 6, 8, 6, '#ffd34d');
-      r(6, 7, 4, 4, '#fff6a8'); r(7, 8, 2, 2, '#f0a04a');
-    } else {
-      r(6, 1, 4, 2, '#3a2446'); r(6, 13, 4, 2, '#3a2446');
-      r(1, 6, 2, 4, '#3a2446'); r(13, 6, 2, 4, '#3a2446');
-      r(3, 3, 3, 3, '#3a2446'); r(10, 3, 3, 3, '#3a2446');
-      r(3, 10, 3, 3, '#3a2446'); r(10, 10, 3, 3, '#3a2446');
-      r(4, 4, 8, 8, '#7c5cff'); r(6, 6, 4, 4, '#fff8ee'); r(7, 7, 2, 2, '#3a2446');
-    }
-    return contornar(c, '#3a2446');
-  };
+  /* ---------- ícones (desenhos 16x16 de js/icones.js, já com contorno) ---------- */
+  function iconeDesenhado(chave) {
+    var ic = window.ICONES && window.ICONES[chave];
+    if (!ic) return null;
+    if (!cache['icone|' + chave]) cache['icone|' + chave] = matriz(ic.d, ic.p);
+    return cache['icone|' + chave];
+  }
+  PA.iconeMenu = function (id) { return iconeDesenhado('menu:' + id); };
 
   /* ---------- utilidades para a interface (DOM) ---------- */
   // devolve um <canvas> ampliado com pixels nítidos para usar em cartões
@@ -1013,7 +995,7 @@
     return c;
   };
 
-  /* Um ícone de emoji vira pixel art: desenho próprio ou o glifo reduzido a uma grade. */
+  /* Um emoji vira pixel art: desenho próprio; se ainda não houver, o glifo reduzido a uma grade. */
   var cacheIcone = {};
   function desenharEmojiPixel(emoji) {
     var N = 64, G = 16;
@@ -1050,33 +1032,11 @@
     if (!algum) return null;
     return contornar(out, CONTORNO);
   }
-  var ICONE_PROPRIO = {
-    '▲': ['..k..', '.kkk.', 'kkkkk', '..k..', '..k..'],
-    '▼': ['..k..', '..k..', 'kkkkk', '.kkk.', '..k..'],
-    '◀': ['..k..', '.kk..', 'kkk..', '.kk..', '..k..'],
-    '▶': ['..k..', '..kk.', '..kkk', '..kk.', '..k..'],
-    '←': ['..k..', '.k...', 'kkkkk', '.k...', '..k..'],
-    '→': ['..k..', '...k.', 'kkkkk', '...k.', '..k..'],
-    '↑': ['..k..', '.kkk.', '..k..', '..k..', '..k..'],
-    '↓': ['..k..', '..k..', '..k..', '.kkk.', '..k..'],
-    '✕': ['k...k', '.k.k.', '..k..', '.k.k.', 'k...k'],
-    '✓': ['....k', '...k.', 'k.k..', '.k...', '.....'],
-    '✔': ['....k', '...k.', 'k.k..', '.k...', '.....'],
-    '↙': ['.k...', 'k....', 'kkkkk', '..k..', '...k.'],
-    '↗': ['...k.', '....k', 'kkkkk', '..k..', '.k...']
-  };
-  var PAL_ICONE = { k: '#3a2446', '.': '' };
-  function iconeProprio(emoji) {
-    var linhas = ICONE_PROPRIO[emoji];
-    if (!linhas) return null;
-    var pal = {};
-    Object.keys(PAL_ICONE).forEach(function (k) { if (PAL_ICONE[k]) pal[k] = PAL_ICONE[k]; });
-    return contornar(matriz(linhas, pal), CONTORNO);
-  }
   PA.iconeEmoji = function (emoji, escala) {
-    var base = cacheIcone[emoji];
+    var chave = emoji.replace(/\uFE0F/g, '');
+    var base = iconeDesenhado(chave) || cacheIcone[chave];
     if (!base) {
-      base = iconeProprio(emoji) || desenharEmojiPixel(emoji);
+      base = desenharEmojiPixel(emoji);
       if (!base) {
         var vazio = novoCanvas(12, 12);
         var vx = vazio.getContext('2d');
@@ -1085,10 +1045,50 @@
         vx.fillStyle = '#fff8ee';
         vx.fillRect(4, 3, 4, 6);
         base = contornar(vazio, CONTORNO);
-      } else cacheIcone[emoji] = base;
+      } else cacheIcone[chave] = base;
     }
-    return PA.paraDOM(base, escala || 2, 'icone-px');
+    // mesmo tamanho na tela para qualquer grade: 18px de base vezes a escala
+    return PA.paraDOM(base, PA.escalaNitida((escala || 2) * 18, base.width), 'icone-px');
   };
+
+  /* Escala que vira um número inteiro de pixels da tela por pixel do desenho:
+     assim nenhum pixel sai mais largo que o vizinho. */
+  PA.escalaNitida = function (px, grade) {
+    var dpr = window.devicePixelRatio || 1;
+    return Math.max(1, Math.round(px * dpr / grade)) / dpr;
+  };
+
+  /* Ícone dentro de um texto: pelo menos 24px no meio de uma frase e 36px sozinho,
+     crescendo com a fonte onde ela é grande (1.5em / 1.25em, como um emoji).
+     Já na página, vira o tamanho nítido mais próximo. */
+  PA.iconeTexto = function (emoji, sozinho) {
+    var c = PA.iconeEmoji(emoji, 2);
+    c.classList.add('icone-em');
+    c.setAttribute('data-em', sozinho ? '1.25' : '1.5');
+    c.setAttribute('data-min', sozinho ? '36' : '24');
+    c.style.width = c.style.height = 'max(' + c.getAttribute('data-min') + 'px, ' + c.getAttribute('data-em') + 'em)';
+    return c;
+  };
+  function ajustarIcone(c) {
+    var fonte = parseFloat(getComputedStyle(c).fontSize);
+    if (!fonte) return;
+    var alvo = Math.max(parseFloat(c.getAttribute('data-min')), fonte * parseFloat(c.getAttribute('data-em')));
+    var t = c.width * PA.escalaNitida(alvo, c.width);
+    c.style.width = t + 'px';
+    c.style.height = (c.height * t / c.width) + 'px';
+  }
+  function ajustarDentro(no) {
+    if (no.nodeType !== 1) return;
+    if (no.classList.contains('icone-em')) ajustarIcone(no);
+    else if (no.firstElementChild) Array.prototype.forEach.call(no.querySelectorAll('canvas.icone-em'), ajustarIcone);
+  }
+  if (window.MutationObserver) {
+    new MutationObserver(function (mudancas) {
+      mudancas.forEach(function (m) { Array.prototype.forEach.call(m.addedNodes, ajustarDentro); });
+    }).observe(document.documentElement, { childList: true, subtree: true });
+  }
+  // zoom do navegador muda o devicePixelRatio
+  window.addEventListener('resize', function () { ajustarDentro(document.body); });
 
   window.PA = PA;
 })();

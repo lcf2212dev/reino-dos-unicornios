@@ -75,6 +75,20 @@ Reino.materias.forEach((m) => {
   console.log(`✔ ${m.nome}: ${m.salas.length} salas, ${m.salas.reduce((t, s) => t + s.desafios.length, 0)} desafios, ${treinaveis} para o treino, ${(m.livro || []).length} cartões no livro, ${unis.length} unicórnios, R$${valorSala.toFixed(2)} por sala`);
 });
 
+// emoji de matéria sem desenho em js/icones.js aparece como emoji reduzido (feio): desenhar antes de publicar
+{
+  const ic = { window: {} };
+  vm.runInNewContext(fs.readFileSync(path.join(raiz, 'js/icones.js'), 'utf8'), ic);
+  const RE = /(\p{RI}\p{RI}|\p{Extended_Pictographic}(?:\uFE0F|\uFE0E)?(?:\u200D\p{Extended_Pictographic}(?:\uFE0F|\uFE0E)?)*)/gu;
+  const semDesenho = new Set();
+  fs.readdirSync(pastaMaterias).filter((f) => f.endsWith('.js')).forEach((f) => {
+    for (const m of fs.readFileSync(path.join(pastaMaterias, f), 'utf8').matchAll(RE)) {
+      const k = m[0].replace(/\uFE0F/g, '');
+      if (!ic.window.ICONES[k]) semDesenho.add(k);
+    }
+  });
+  if (semDesenho.size) avisos.push(`emojis sem pixel art em js/icones.js: ${[...semDesenho].join(' ')}`);
+}
 avisos.forEach((a) => console.log('⚠ ' + a));
 if (erros.length) {
   erros.forEach((e) => console.log('✘ ' + e));
