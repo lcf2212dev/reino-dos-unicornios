@@ -53,6 +53,16 @@
      O ciclo vai junto só como informação: "Novo ciclo" mantém cuidados e despensa. */
   var CHAVE_NOVIDADES = Reino.config.chaveSave + '-novidades';
   function objeto(x) { return !!x && typeof x === 'object' && !Array.isArray(x); }
+  // ids que vêm de fora (servidor, doc, cópia) viram chaves de objeto: só as próprias e nunca as que
+  // mexem no protótipo (`{"__proto__": …}` de um save estragado não pode sujar Object.prototype)
+  var CHAVES_PROIBIDAS = ['__proto__', 'constructor', 'prototype'];
+  function chaveSegura(o, k) { return Object.prototype.hasOwnProperty.call(o, k) && CHAVES_PROIBIDAS.indexOf(k) < 0; }
+  function proprio(o, k) { return Object.prototype.hasOwnProperty.call(o, k) ? o[k] : undefined; }
+  // número finito (texto com número também vale); senão, o padrão
+  function numeroOu(x, padrao) {
+    var n = typeof x === 'number' ? x : typeof x === 'string' && x.trim() !== '' ? Number(x) : NaN;
+    return isFinite(n) ? n : padrao;
+  }
   function lerCopia() {
     try {
       var bruto = localStorage.getItem(CHAVE_NOVIDADES);
@@ -77,7 +87,7 @@
   function filtrar(o, campos) {
     var r = {};
     if (objeto(o)) Object.keys(o).forEach(function (k) {
-      if (objeto(o[k]) && campos.every(function (c) { return numero(o[k][c]); })) r[k] = o[k];
+      if (chaveSegura(o, k) && objeto(o[k]) && campos.every(function (c) { return numero(o[k][c]); })) r[k] = o[k];
     });
     return r;
   }
@@ -96,6 +106,37 @@
     e.ajustes = Object.assign({}, base.ajustes, e.ajustes || {});
     e.usando = Object.assign({}, base.usando, e.usando || {});
     e.estrelas = Object.assign({}, base.estrelas, e.estrelas || {});
+    normalizarNovos(e);
+    return e;
+  }
+  /* Os campos novos sempre no formato certo, venha o estado de onde vier (aparelho, servidor, doc, cópia):
+     objetos; fome e sede de 0 a 100 (valor estragado = 100, como unicórnio sem registro); `em` ≥ 0;
+     compradas e usadas inteiros ≥ 0 e usadas ≤ compradas; surpresa booleana ("true"/"false" em texto
+     viram booleano, outro valor volta ao padrão). O carimbo `surpresaEm` não muda. */
+  function normalizarNovos(e) {
+    var cuidados = {}, despensa = {};
+    function limpo(y) { var r = {}; Object.keys(y).forEach(function (c) { if (chaveSegura(y, c)) r[c] = y[c]; }); return r; }
+    if (objeto(e.cuidados)) Object.keys(e.cuidados).forEach(function (k) {
+      var y = e.cuidados[k];
+      if (!chaveSegura(e.cuidados, k) || !objeto(y)) return;
+      var r = limpo(y);
+      r.fome = Math.min(100, Math.max(0, numeroOu(y.fome, 100)));
+      r.sede = Math.min(100, Math.max(0, numeroOu(y.sede, 100)));
+      r.em = Math.max(0, numeroOu(y.em, 0));
+      cuidados[k] = r;
+    });
+    if (objeto(e.despensa)) Object.keys(e.despensa).forEach(function (k) {
+      var y = e.despensa[k];
+      if (!chaveSegura(e.despensa, k) || !objeto(y)) return;
+      var r = limpo(y);
+      r.compradas = Math.max(0, Math.floor(numeroOu(y.compradas, 0)));
+      r.usadas = Math.min(r.compradas, Math.max(0, Math.floor(numeroOu(y.usadas, 0))));
+      despensa[k] = r;
+    });
+    e.cuidados = cuidados;
+    e.despensa = despensa;
+    var s = e.ajustes.surpresa;
+    if (typeof s !== 'boolean') e.ajustes.surpresa = s === 'false' ? false : s === 'true' ? true : estadoNovo().ajustes.surpresa;
     return e;
   }
 
@@ -136,16 +177,20 @@
 
   // as regras dos campos novos, usadas pela mescla e pela cópia de segurança: `base` ganha no empate
   function juntarCuidados(base, outro) {
-    Object.keys(outro || {}).forEach(function (k) {
-      var x = base[k], y = outro[k];
+    if (!objeto(outro)) return base;
+    Object.keys(outro).forEach(function (k) {
+      if (!chaveSegura(outro, k)) return;
+      var x = proprio(base, k), y = outro[k];
       if (!objeto(y)) return;
       if (!x || (y.em || 0) > (x.em || 0)) base[k] = U.copia(y);
     });
     return base;
   }
   function juntarDespensa(base, outro) {
-    Object.keys(outro || {}).forEach(function (k) {
-      var x = base[k], y = outro[k];
+    if (!objeto(outro)) return base;
+    Object.keys(outro).forEach(function (k) {
+      if (!chaveSegura(outro, k)) return;
+      var x = proprio(base, k), y = outro[k];
       if (!objeto(y)) return;
       if (!x) { base[k] = U.copia(y); return; }
       x.compradas = max(x.compradas, y.compradas); x.usadas = max(x.usadas, y.usadas);
@@ -346,11 +391,12 @@
   P.materiaCompleta = function (materia) { return P.salasFeitas(materia) === materia.salas.length; };
 
   /* ---------- estrelas ---------- */
-  P.estrelas = function () { return Math.max(0, (estado.estrelas.ganhas || 0) - (estado.estrelas.gastas || 0)); };
-  P.ganharEstrelas = function (n) { estado.estrelas.ganhas = (estado.estrelas.ganhas || 0) + n; };
+  // ganhas/gastas estragadas (texto, NaN) contam como 0: o saldo nunca vira NaN (NaN deixaria tudo de graça)
+  P.estrelas = function () { return Math.max(0, numeroOu(estado.estrelas.ganhas, 0) - numeroOu(estado.estrelas.gastas, 0)); };
+  P.ganharEstrelas = function (n) { estado.estrelas.ganhas = numeroOu(estado.estrelas.ganhas, 0) + n; };
   P.gastarEstrelas = function (n) {
     if (P.estrelas() < n) return false;
-    estado.estrelas.gastas = (estado.estrelas.gastas || 0) + n;
+    estado.estrelas.gastas = numeroOu(estado.estrelas.gastas, 0) + n;
     return true;
   };
 

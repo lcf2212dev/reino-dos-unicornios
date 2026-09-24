@@ -643,6 +643,123 @@ teste('surpresa na cópia: carimbo mais novo que o do estado vence; mais velho n
   assert.strictEqual(j.P.carregar().ajustes.surpresa, true);
 });
 
+/* ---------- revisão de segurança: saves hostis ou estragados ---------- */
+// o Object.prototype e o Object de DENTRO do vm e os de fora (o JSON do vm é o daqui, então U.copia cria objetos deste lado)
+function prototipoLimpo(j) {
+  const dentro = vm.runInContext('[({}).compradas, ({}).usadas, ({}).fome, ({}).em, ({}).polluted, Object.compradas, Object.prototype.compradas]', j.ctx);
+  const fora = [({}).compradas, ({}).usadas, ({}).fome, ({}).em, ({}).polluted, Object.compradas, Object.prototype.compradas];
+  return dentro.concat(fora).every((v) => v === undefined);
+}
+const hostil = (json) => JSON.parse(json);   // JSON.parse cria "__proto__" como chave própria, como chega do servidor
+
+teste('mescla hostil (__proto__, constructor, prototype) não suja o Object.prototype e não perde o outro lado', () => {
+  const j = montar();
+  const local = saveAtual(); local.atualizado = 1750900000000;
+  local.despensa = { maca: { compradas: 2, usadas: 1 } };
+  local.cuidados = { inicial: { fome: 50, sede: 50, em: 100 } };
+  const remoto = saveAtual(); remoto.atualizado = 1750500000000;
+  remoto.despensa = hostil('{"__proto__":{"compradas":7,"usadas":1,"polluted":1},"constructor":{"compradas":2,"usadas":0},"prototype":{"compradas":3,"usadas":0},"bolo":{"compradas":1,"usadas":0}}');
+  remoto.cuidados = hostil('{"__proto__":{"fome":1,"sede":1,"em":9999999999999},"constructor":{"fome":1,"sede":1,"em":5},"h-postal":{"fome":30,"sede":40,"em":7}}');
+  const txt = (o) => hostil(JSON.stringify(o));   // JSON.stringify mantém "__proto__" como chave própria
+  [[local, remoto], [remoto, local]].forEach(([a, b]) => {
+    const r = j.P.mesclar(txt(a), txt(b));
+    assert.ok(prototipoLimpo(j), 'Object.prototype sujo');
+    ['bolo', 'maca'].forEach((k) => assert.ok(Object.prototype.hasOwnProperty.call(r.despensa, k), k));
+    ['h-postal', 'inicial'].forEach((k) => assert.ok(Object.prototype.hasOwnProperty.call(r.cuidados, k), 'o unicórnio que só está de um lado continua: ' + k));
+    assert.deepStrictEqual(r.despensa.maca, { compradas: 2, usadas: 1 });
+  });
+  // o save hostil como lado mais recente (copiado inteiro pela mescla) também não suja
+  j.P.mesclar(txt(local), Object.assign(txt(remoto), { atualizado: 1760000000000 }));
+  assert.ok(prototipoLimpo(j));
+});
+
+teste('save hostil pelo doc e pela cópia: carregar e sincronizar deixam o protótipo limpo', async () => {
+  const s = saveAtual(); s.atualizado = 1750500000000;
+  const j = montar({ save: s, copia: '{"geracao":1,"despensa":{"__proto__":{"compradas":7,"usadas":0}},"cuidados":{"constructor":{"fome":1,"sede":1,"em":5}}}' });
+  j.P.carregar();
+  assert.ok(prototipoLimpo(j));
+  const doc = Object.assign(saveAtual(), { atualizado: 1760000000000 });
+  const bruto = JSON.stringify(doc).replace(/}$/, ',"despensa":{"__proto__":{"compradas":7,"usadas":0,"polluted":1},"maca":{"compradas":1,"usadas":0}},"cuidados":{"__proto__":{"fome":1,"sede":1,"em":9e15}}}');
+  j.ctx.claude = { use: () => Promise.resolve({ doc: () => ({
+    get: () => Promise.resolve({ exists: true, data: () => ({ estado: JSON.parse(bruto) }) }),
+    set: () => Promise.resolve(), onSnapshot: () => {},
+  }) }) };
+  await j.P.iniciarNuvem();
+  assert.ok(prototipoLimpo(j));
+  assert.deepStrictEqual(copia(j.P.estado().despensa), { maca: { compradas: 1, usadas: 0 } });
+  assert.deepStrictEqual(copia(j.P.estado().cuidados), {});
+});
+
+teste('completar normaliza cuidados e despensa; comprar cobra e entrega certo', () => {
+  const s = saveAtual();
+  s.cuidados = { inicial: { fome: 'abc', sede: -50, em: 'x' }, 'h-cartinha': { fome: 1e308, sede: null, em: -1 }, 'h-postal': 'lixo', ok: { fome: 42.5, sede: 99, em: 1750000000000 } };
+  s.despensa = { maca: { compradas: '5', usadas: 0 }, feno: { compradas: 0, usadas: 9 }, bolo: { compradas: -3, usadas: 'x' }, biscoito: { compradas: 2.7, usadas: 1 }, cenoura: 7 };
+  const j = montar({ save: s });
+  const e = j.P.carregar();
+  assert.deepStrictEqual(copia(e.cuidados), {
+    inicial: { fome: 100, sede: 0, em: 0 }, 'h-cartinha': { fome: 100, sede: 100, em: 0 }, ok: { fome: 42.5, sede: 99, em: 1750000000000 },
+  });
+  assert.deepStrictEqual(copia(e.despensa), {
+    maca: { compradas: 5, usadas: 0 }, feno: { compradas: 0, usadas: 0 }, bolo: { compradas: 0, usadas: 0 }, biscoito: { compradas: 2, usadas: 1 },
+  });
+  const e0 = j.P.estrelas();
+  assert.ok(j.C.comprar('maca').ok);
+  assert.strictEqual(j.P.estado().despensa.maca.compradas, 6, 'texto "5" + 1 = 6, não "51"');
+  assert.ok(j.C.comprar('feno').ok);
+  assert.strictEqual(j.C.quantidade('feno'), 1, 'usadas > compradas não come a compra');
+  assert.strictEqual(j.P.estrelas(), e0 - 3 - 4);
+  j.C.iniciar(); j.tocar(); j.andar(3000);
+  assert.ok(j.P.estado().cuidados.inicial.fome < 100, 'o relógio da fome anda sem erro');
+});
+
+teste('cuidados e despensa que não são objetos viram {}; comprar, dar, beber e o relógio sem erro', () => {
+  ['texto', 5, null, [1, 2], true].forEach((ruim) => {
+    const s = saveAtual(); s.cuidados = ruim; s.despensa = ruim;
+    const j = montar({ save: s });
+    const e = j.P.carregar();
+    assert.deepStrictEqual(copia(e.cuidados), {}); assert.deepStrictEqual(copia(e.despensa), {});
+    const e0 = j.P.estrelas();
+    assert.ok(j.C.comprar('maca').ok);
+    assert.strictEqual(j.C.quantidade('maca'), 1); assert.strictEqual(j.P.estrelas(), e0 - 3);
+    j.C.beber('inicial'); j.C.alimentar('inicial', 'maca');
+    j.C.iniciar(); j.tocar(); j.andar(3000);
+  });
+});
+
+teste('estrelas estragadas contam como 0: o saldo nunca é NaN e nada sai de graça', () => {
+  [{ ganhas: 'abc', gastas: 0 }, { ganhas: null, gastas: null }, { ganhas: {}, gastas: 3 }].forEach((est) => {
+    const s = saveAtual(); s.estrelas = est;
+    const j = montar({ save: s });
+    j.P.carregar();
+    assert.strictEqual(j.P.estrelas(), 0);
+    assert.strictEqual(j.C.comprar('maca').ok, false);
+    assert.strictEqual(j.C.quantidade('maca'), 0);
+  });
+  const s = saveAtual(); s.estrelas = { ganhas: 10, gastas: 'x' };
+  const j = montar({ save: s }); j.P.carregar();
+  assert.strictEqual(j.P.estrelas(), 10);
+  assert.ok(j.C.comprar('maca').ok);
+  assert.strictEqual(j.P.estado().estrelas.gastas, 3); assert.strictEqual(j.P.estrelas(), 7);
+});
+
+teste('surpresa em texto vira booleano; outro valor volta ao padrão; o carimbo não muda', () => {
+  [['false', false], ['true', true], ['x', true], [0, true], [null, true], [false, false]].forEach(([v, esperado]) => {
+    const s = saveAtual(); s.ajustes.surpresa = v; s.ajustes.surpresaEm = 1234;
+    const e = montar({ save: s }).P.carregar();
+    assert.strictEqual(e.ajustes.surpresa, esperado, JSON.stringify(v));
+    assert.strictEqual(e.ajustes.surpresaEm, 1234);
+  });
+});
+
+teste('normalização não muda nada de um save bom (antigo nem novo)', () => {
+  const s = saveAtual();
+  s.cuidados = { inicial: { fome: 12.25, sede: 100, em: 1750500000000 }, 'h-postal': { fome: 0, sede: 55, em: 1 } };
+  s.despensa = { maca: { compradas: 3, usadas: 1 }, bolo: { compradas: 1, usadas: 1 } };
+  s.ajustes.surpresa = false; s.ajustes.surpresaEm = 99;
+  const e = montar({ save: s }).P.carregar();
+  assert.deepStrictEqual(copia(e), s);
+});
+
 (async () => {
   let falhas = 0;
   for (const t of testes) {
