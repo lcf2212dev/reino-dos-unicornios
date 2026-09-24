@@ -176,13 +176,24 @@
   var ORDEM_PREMIO = { comum: 1, raro: 2, lendario: 3 };
 
   // as regras dos campos novos, usadas pela mescla e pela cópia de segurança: `base` ganha no empate
+  /* cuidados: `acao` = hora do último comer/beber (o gasto do relógio não mexe nele; 0 = nenhum ainda).
+     Com `acao` dos dois lados: vale a ação mais recente; empate = a mesma ação vista pelos dois e, como o
+     gasto só desce, vale a menor fome e a menor sede. Um lado sem `acao` (versão anterior): o `em` maior. */
   function juntarCuidados(base, outro) {
     if (!objeto(outro)) return base;
     Object.keys(outro).forEach(function (k) {
       if (!chaveSegura(outro, k)) return;
       var x = proprio(base, k), y = outro[k];
       if (!objeto(y)) return;
-      if (!x || (y.em || 0) > (x.em || 0)) base[k] = U.copia(y);
+      if (!objeto(x)) { base[k] = U.copia(y); return; }
+      if (numero(x.acao) && numero(y.acao)) {
+        if (y.acao > x.acao) base[k] = U.copia(y);
+        else if (y.acao === x.acao) {
+          if (numero(y.fome) && !(y.fome >= x.fome)) x.fome = y.fome;
+          if (numero(y.sede) && !(y.sede >= x.sede)) x.sede = y.sede;
+          x.em = max(x.em, y.em);
+        }
+      } else if ((y.em || 0) > (x.em || 0)) base[k] = U.copia(y);
     });
     return base;
   }

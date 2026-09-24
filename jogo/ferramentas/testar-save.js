@@ -760,6 +760,175 @@ teste('normalização não muda nada de um save bom (antigo nem novo)', () => {
   assert.deepStrictEqual(copia(e), s);
 });
 
+/* ---------- D1: dois aparelhos, o carimbo `acao` (comer/beber) e o gasto do relógio ---------- */
+// Casos para entrar em ferramentas/testar-save.js, antes do bloco final `(async () => { ... })()`.
+// Usam montar(), saveAtual(), semNovos(), copia() e teste() de lá. Saves 100% sintéticos.
+
+// um "banco" em memória e a sincronização como o jogo faz: GET, mescla no aparelho, PUT do resultado
+function sincronizar(j, banco) {
+  const remoto = banco.valor;
+  if (remoto) {
+    j.guardado[j.R.config.chaveSave] = JSON.stringify(j.P.mesclar(j.P.estado(), copia(remoto)));
+    j.P.carregar();                        // troca o objeto (e passa pela cópia), como a mescla real
+  }
+  banco.valor = copia(j.P.estado());
+}
+// dois aparelhos com o mesmo save, relógios juntos, os dois iniciados (jogo aberto e tocado)
+function doisAparelhos(ajuste) {
+  const s = saveAtual();
+  s.cuidados = { inicial: { fome: 20, sede: 90, em: 1750500000000, acao: 1750400000000 } };
+  s.despensa = { maca: { compradas: 1, usadas: 0 } };
+  if (ajuste) ajuste(s);
+  const A = montar({ save: s }), B = montar({ save: s });
+  B.relogio.agora = A.relogio.agora;
+  A.P.carregar(); B.P.carregar();
+  A.C.iniciar(); B.C.iniciar();
+  return { A, B, banco: { valor: null } };
+}
+// os dois relógios andam juntos, de 1 em 1 s; `ativos` diz quem está jogando (tocado)
+function andarJuntos(A, B, ms, ativos) {
+  for (let t = 0; t < ms; t += 1000) {
+    ativos.forEach((j) => j.tocar());
+    A.andar(1000); B.andar(1000);
+  }
+}
+const fomeDe = (e, id = 'inicial') => e.cuidados[id].fome;
+
+teste('D1: com os dois aparelhos ativos, a maçã dada num deles vale nos dois e no banco', () => {
+  const { A, B, banco } = doisAparelhos();
+  sincronizar(A, banco); sincronizar(B, banco);
+  andarJuntos(A, B, 60 * 1000, [A, B]);
+  const r = A.C.alimentar('inicial', 'maca');
+  assert.strictEqual(r.ok, true);
+  const depois = r.depois;                 // ~49,5
+  sincronizar(A, banco);
+  // de 25 em 25 s por 100 s, cada um sincroniza na sua vez (o validador viu B ficar em ~19)
+  for (let i = 0; i < 4; i++) {
+    andarJuntos(A, B, 25 * 1000, [A, B]);
+    sincronizar(i % 2 ? A : B, banco);
+    sincronizar(i % 2 ? B : A, banco);
+  }
+  const gasto100s = 100 / (120 * 60) * 100;   // ~1,39 ponto de fome
+  [A.P.estado(), B.P.estado(), banco.valor].forEach((e, n) => {
+    assert.ok(Math.abs(fomeDe(e) - (depois - gasto100s)) < 0.05, ['A', 'B', 'banco'][n] + ': fome ' + fomeDe(e));
+    assert.strictEqual(e.despensa.maca.usadas, 1, 'a maçã conta uma vez só');
+  });
+});
+
+teste('D1: dois aparelhos comendo em horários diferentes: vale a ação mais recente, nas duas ordens', () => {
+  const { A, B } = doisAparelhos((s) => { s.despensa = { maca: { compradas: 2, usadas: 0 }, bolo: { compradas: 1, usadas: 0 } }; });
+  andarJuntos(A, B, 30 * 1000, [A, B]);
+  A.C.alimentar('inicial', 'maca');        // A come primeiro (~49,7)
+  andarJuntos(A, B, 30 * 1000, [A, B]);
+  B.C.alimentar('inicial', 'bolo');        // B come depois, sem ter visto a maçã: enche
+  andarJuntos(A, B, 30 * 1000, [A, B]);    // A continua gastando, com `em` mais novo que a ação do B
+  const b = B.P.estado(), a = A.P.estado();
+  assert.ok(a.cuidados.inicial.em >= b.cuidados.inicial.acao);
+  [A.P.mesclar(a, b), A.P.mesclar(b, a)].forEach((r) => {
+    assert.strictEqual(r.cuidados.inicial.acao, b.cuidados.inicial.acao, 'ação do B é a mais recente');
+    assert.strictEqual(r.cuidados.inicial.fome, b.cuidados.inicial.fome);
+  });
+  // agora A come de novo: a ação dele passa a ser a mais recente
+  A.C.alimentar('inicial', 'maca');
+  const a2 = A.P.estado();
+  [A.P.mesclar(a2, b), A.P.mesclar(b, a2)].forEach((r) => assert.strictEqual(r.cuidados.inicial.fome, a2.cuidados.inicial.fome));
+});
+
+teste('D1: um aparelho parado e outro gastando: vale o que gastou, mesmo se o parado gravou por último', () => {
+  const { A, B } = doisAparelhos();
+  A.documento.hidden = true;               // A aberto com a aba no fundo: não gasta
+  andarJuntos(A, B, 10 * 60 * 1000, [B]);  // só B joga 10 min
+  const b = copia(B.P.estado());
+  A.relogio.agora += 1000;
+  A.P.estado().ajustes.som = false; A.P.salvar();   // A grava depois (atualizado maior) sem ter gastado
+  const a = copia(A.P.estado());
+  assert.ok(a.atualizado > b.atualizado);
+  assert.strictEqual(a.cuidados.inicial.fome, 20);
+  [A.P.mesclar(a, b), A.P.mesclar(b, a)].forEach((r) => {
+    assert.ok(Math.abs(r.cuidados.inicial.fome - (20 - 10 / 120 * 100)) < 1e-6, 'fome ' + r.cuidados.inicial.fome);
+    assert.ok(Math.abs(r.cuidados.inicial.sede - (90 - 10 / 60 * 100)) < 1e-6);
+    assert.strictEqual(r.ajustes.som, false);
+  });
+});
+
+teste('D1: mesma ação dos dois lados: menor fome e menor sede, de cada campo, nas duas ordens', () => {
+  const P = montar().P;
+  const a = saveAtual(), b = saveAtual();
+  a.atualizado = 2000; b.atualizado = 1000;
+  a.cuidados = { inicial: { fome: 40, sede: 10, em: 900, acao: 500 } };
+  b.cuidados = { inicial: { fome: 30, sede: 20, em: 800, acao: 500 } };
+  [P.mesclar(a, b), P.mesclar(b, a)].forEach((r) => assert.deepStrictEqual(copia(r.cuidados.inicial), { fome: 30, sede: 10, em: 900, acao: 500 }));
+  // os originais não mudam
+  assert.strictEqual(a.cuidados.inicial.fome, 40); assert.strictEqual(b.cuidados.inicial.sede, 20);
+});
+
+teste('D1: um lado sem `acao` (versão anterior desta branch): vale a regra de antes, o `em` maior', () => {
+  const P = montar().P;
+  const a = saveAtual(), b = saveAtual();
+  a.atualizado = 2000; b.atualizado = 1000;
+  a.cuidados = { inicial: { fome: 90, sede: 90, em: 500, acao: 400 }, 'h-cartinha': { fome: 50, sede: 50, em: 700 } };
+  b.cuidados = { inicial: { fome: 10, sede: 10, em: 600 }, 'h-cartinha': { fome: 60, sede: 60, em: 700, acao: 1 } };
+  [P.mesclar(a, b), P.mesclar(b, a)].forEach((r) => {
+    assert.deepStrictEqual(copia(r.cuidados.inicial), b.cuidados.inicial, 'em maior vence');
+  });
+  // empate de `em` sem `acao` num dos lados: o lado mais recente (como antes)
+  assert.deepStrictEqual(copia(P.mesclar(a, b).cuidados['h-cartinha']), a.cuidados['h-cartinha']);
+  // `acao` estragada conta como ausente
+  b.cuidados.inicial = { fome: 10, sede: 10, em: 600, acao: 'ontem' };
+  assert.strictEqual(P.mesclar(a, b).cuidados.inicial.fome, 10);
+});
+
+teste('D1: save antigo sem cuidados: nada some; o primeiro gasto cria o registro com acao 0', () => {
+  const antigo = semNovos(saveAtual()); antigo.atualizado = 1750900000000;
+  const novo = saveAtual();
+  novo.cuidados = { inicial: { fome: 20, sede: 30, em: 1750500000000, acao: 1750400000000 } };
+  const P = montar().P;
+  [P.mesclar(novo, antigo), P.mesclar(antigo, novo)].forEach((r) => assert.deepStrictEqual(copia(r.cuidados), novo.cuidados));
+  const j = montar({ save: antigo });
+  j.P.carregar();
+  j.C.avancar(60 * 1000);
+  const reg = j.P.estado().cuidados.inicial;
+  assert.strictEqual(reg.acao, 0);
+  assert.ok(reg.fome < 100 && reg.sede < 100);
+});
+
+teste('D1: registro da versão anterior ganha acao 0 no gasto, e uma comida do outro aparelho vence', () => {
+  const { A, B } = doisAparelhos((s) => { s.cuidados = { inicial: { fome: 20, sede: 90, em: 1750500000000 } }; });
+  andarJuntos(A, B, 5 * 1000, [A, B]);
+  assert.strictEqual(B.P.estado().cuidados.inicial.acao, 0);
+  A.C.alimentar('inicial', 'maca');
+  andarJuntos(A, B, 20 * 1000, [A, B]);    // B gasta depois da maçã (em mais novo que a ação do A)
+  const a = A.P.estado(), b = B.P.estado();
+  assert.ok(b.cuidados.inicial.em > a.cuidados.inicial.acao);
+  [A.P.mesclar(a, b), A.P.mesclar(b, a)].forEach((r) => assert.ok(r.cuidados.inicial.fome > 45, 'fome ' + r.cuidados.inicial.fome));
+});
+
+teste('D1: duas ações no mesmo milissegundo não empatam (acao sempre cresce)', () => {
+  const j = jogoCarregado((s) => { s.despensa = { maca: { compradas: 1, usadas: 0 } }; });
+  j.C.avancar(50 * 60 * 1000);
+  j.C.beber('inicial');
+  const a1 = j.P.estado().cuidados.inicial.acao;
+  j.C.alimentar('inicial', 'maca');        // mesmo relógio
+  const r = j.P.estado().cuidados.inicial;
+  assert.ok(r.acao > a1);
+  assert.strictEqual(r.sede, 100);
+});
+
+teste('D1: a cópia de segurança segue a mesma regra (ação mais nova vence; empate, o menor)', () => {
+  const s = saveAtual();
+  s.cuidados = { inicial: { fome: 70, sede: 70, em: 1000, acao: 900 } };
+  // cópia com `em` mais novo, mas ação mais velha: não desfaz a comida do estado
+  let j = montar({ save: s, copia: { geracao: 1, cuidados: { inicial: { fome: 10, sede: 10, em: 5000, acao: 100 } } } });
+  assert.strictEqual(j.P.carregar().cuidados.inicial.fome, 70);
+  // mesma ação: vale o menor de cada
+  j = montar({ save: s, copia: { geracao: 1, cuidados: { inicial: { fome: 60, sede: 80, em: 950, acao: 900 } } } });
+  const e = j.P.carregar().cuidados.inicial;
+  assert.strictEqual(e.fome, 60); assert.strictEqual(e.sede, 70);
+  // ação mais nova na cópia: vence
+  j = montar({ save: s, copia: { geracao: 1, cuidados: { inicial: { fome: 99, sede: 99, em: 950, acao: 950 } } } });
+  assert.strictEqual(j.P.carregar().cuidados.inicial.fome, 99);
+});
+
 (async () => {
   let falhas = 0;
   for (const t of testes) {

@@ -43,7 +43,9 @@
   function registroParaMudar(id) {
     var e = est();
     if (!e.cuidados) e.cuidados = {};
-    if (!e.cuidados[id]) e.cuidados[id] = { fome: 100, sede: 100, em: agora() };
+    if (!e.cuidados[id]) e.cuidados[id] = { fome: 100, sede: 100, em: agora(), acao: 0 };
+    // registro da versão anterior: ganha o carimbo da ação (0 = nenhuma ainda), senão a mescla usa o `em`
+    if (!(typeof e.cuidados[id].acao === 'number' && e.cuidados[id].acao >= 0)) e.cuidados[id].acao = 0;
     return e.cuidados[id];
   }
 
@@ -105,7 +107,7 @@
     var sede = aoZero(Math.max(0, antes.sede - ms / (cfg().minutosSede * 60000) * 100));
     var mudou = (antes.fome - fome) + (antes.sede - sede);
     if (mudou <= 0) return;
-    r.fome = fome; r.sede = sede; r.em = agora();
+    r.fome = fome; r.sede = sede; r.em = agora();   // o gasto não mexe em `acao` (ver P.mesclar)
     pendente += mudou;
     var ficouBaixo = r.fome < cfg().baixo || r.sede < cfg().baixo;
     var pontoInteiro = Math.floor(antes.fome) !== Math.floor(r.fome) || Math.floor(antes.sede) !== Math.floor(r.sede);
@@ -136,7 +138,8 @@
     var antes = limitar(r[campo]);
     r.fome = limitar(r.fome); r.sede = limitar(r.sede);
     r[campo] = Math.min(100, novo);
-    r.em = agora();
+    // carimbo da ação: sempre maior que o anterior (duas ações no mesmo milissegundo não empatam)
+    r.em = r.acao = Math.max(agora(), r.acao + 1);
     gravar();
     emitir();
     return { ok: true, antes: antes, depois: r[campo] };

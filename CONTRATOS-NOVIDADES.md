@@ -28,16 +28,30 @@ Nada existente muda: `chaveSave`, `v`, `geracao`, `ciclo`, o formato dos campos 
 `P.mesclar()` para eles. Campos novos, todos aditivos (`estadoNovo()` + `completar()`):
 
 ```
-cuidados: { <uniId>: { fome, sede, em } }        // 0–100 (100 = satisfeito); em = Date.now() da última mudança
+cuidados: { <uniId>: { fome, sede, em, acao } }  // 0–100 (100 = satisfeito); em = Date.now() da última mudança;
+                                                 // acao = Date.now() do último comer/beber (o gasto não mexe)
 despensa: { <comidaId>: { compradas, usadas } }  // contadores que só crescem; quantidade = compradas − usadas
 ajustes.surpresa: true                           // interruptor "❓ Perguntas surpresa" (padrão ligado)
 ```
 - Unicórnio sem registro em `cuidados` = fome 100 e sede 100 (unicórnio novo nasce satisfeito).
 - **Mescla** (mesma geração):
-  - `cuidados`: para cada `uniId` de qualquer lado, vale o registro com `em` maior (empate: o do lado mais recente).
+  - `cuidados`: para cada `uniId` de qualquer lado, vale o registro com a `acao` mais recente; empate de `acao`:
+    a menor fome e a menor sede (o gasto só desce entre uma ação e outra); um lado sem `acao` (versão anterior):
+    vale o `em` maior (empate: o do lado mais recente).
   - `despensa`: para cada comida, `compradas` = maior e `usadas` = maior.
   - Um lado sem o campo (aparelho com a versão antiga, que pode apagá-lo): vale o outro lado inteiro.
     Um aparelho antigo nunca faz a Mariana perder comida comprada nem acessório (`loja` já é união).
+  - `ajustes.surpresaEm`: carimbo marcado quando o interruptor da surpresa muda de verdade (em `P.salvar`);
+    na mescla vale o maior carimbo; sem carimbo nos dois lados, vale o lado mais recente que tiver o campo.
+    `estadoNovo()` não tem carimbo (um aparelho novo não "ganha" de quem desligou).
+- **Cópia de segurança** (`Reino.config.chaveSave + '-novidades'`, constante em progresso.js): guarda
+  `{ geracao, ciclo, atualizado, cuidados, despensa, surpresa, surpresaEm }` a cada gravação local. O código
+  antigo não conhece essa chave, então uma aba antiga no mesmo navegador não a apaga; ao abrir e a cada
+  mescla, o que faltar volta dela com as mesmas regras. Só vale na mesma `geracao` ("Apagar tudo" não traz
+  nada de volta). Sem `removeItem` nem `clear`.
+- **Normalização** (fim de `completar()`): só chaves próprias (nunca `__proto__`, `constructor`, `prototype`);
+  fome e sede entre 0 e 100; `compradas`/`usadas` inteiros ≥ 0 com `usadas ≤ compradas`; ids desconhecidos
+  ficam guardados, sem efeito (uma versão não apaga a comida de outra).
   - `ajustes` continua vindo do lado mais recente (regra de hoje); `completar()` põe `surpresa: true` se faltar.
     Exceção só para o campo novo: se o lado mais recente não tem `ajustes.surpresa` (aparelho antigo) e o outro
     tem, vale o do outro (senão um aparelho antigo religaria as perguntas que os pais desligaram).
