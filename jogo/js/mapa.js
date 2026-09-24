@@ -77,10 +77,11 @@
       if (p.y <= 9) { for (var yy = p.y + 1; yy < 9; yy++) pintar(p.x, yy, 'c'); }
       else { for (var yy2 = p.y + 1; yy2 < rua; yy2++) pintar(p.x, yy2, 'c'); }
     });
-    // lago
+    // lago: dá para nadar nele (a Mariana e a montaria), então a água não é sólida.
+    // O sorteio dos enfeites pula a água pelo tipo ('a'), não pela solidez: o reino sai igual.
     for (var ly = 21; ly < H - 1; ly++) for (var lx = 1; lx < W - 1; lx++) {
       var dx = (lx + 0.5 - 18) / 6.5, dy = (ly + 0.5 - 24.6) / 2.4;
-      if (dx * dx + dy * dy <= 1) { tipo[ly][lx] = 'a'; solido[ly][lx] = true; }
+      if (dx * dx + dy * dy <= 1) tipo[ly][lx] = 'a';
     }
     // clareiras livres ganham um tapete de flores
     Mapa.CLAREIRAS.forEach(function (r) {
@@ -154,6 +155,8 @@
   Mapa.lugares = function () { return lugares; };
   Mapa.lugar = function (id) { return lugares.find(function (l) { return l.id === id; }); };
   Mapa.solido = function (x, y) { return !dentro(x, y) || solido[y][x]; };
+  // tile de água do lago (a fonte da praça não é água e continua sólida)
+  Mapa.agua = function (x, y) { return dentro(x, y) && tipo[y][x] === 'a'; };
   Mapa.lugarNoTile = function (x, y) { return lugares.find(function (l) { return noRect(x, y, l.rect); }); };
   Mapa.portaEm = function (x, y) { return lugares.find(function (l) { return l.porta.x === x && l.porta.y === y; }); };
   Mapa.claudeTile = claudeTile;
@@ -164,8 +167,20 @@
   // Na diagonal só passa se os dois vizinhos retos estiverem livres (não corta quina).
   var VIZINHOS = [[1, 0, 1], [-1, 0, 1], [0, 1, 1], [0, -1, 1],
     [1, 1, Math.SQRT2], [1, -1, Math.SQRT2], [-1, 1, Math.SQRT2], [-1, -1, Math.SQRT2]];
+  // Destino em terra: primeiro procura um caminho que não entra na água (o lago como sólido);
+  // só se não houver nenhum (ex.: ela está no meio do lago) procura de novo nadando.
+  // Destino na água (ou a volta a nado): cada passo que entra na água custa config.nado.custo vezes mais.
   Mapa.caminho = function (a, b) {
     if (!dentro(b.x, b.y)) return null;
+    if (tipo[b.y][b.x] !== 'a') {
+      var seco = buscar(a, b, true);
+      if (seco) return seco;
+    }
+    return buscar(a, b, false);
+  };
+  function buscar(a, b, semAgua) {
+    var nado = (window.Reino && Reino.config && Reino.config.nado) || {};
+    var custoAgua = nado.custo > 0 ? nado.custo : 3;
     var chave = function (x, y) { return y * W + x; };
     var custo = {}, veio = {}, fechado = {};
     var ini = chave(a.x, a.y), fim = chave(b.x, b.y);
@@ -184,8 +199,11 @@
       VIZINHOS.forEach(function (d) {
         var nx = cx + d[0], ny = cy + d[1];
         if (!dentro(nx, ny) || solido[ny][nx]) return;
+        if (semAgua && tipo[ny][nx] === 'a') return;
         if (d[0] && d[1] && (solido[cy][nx] || solido[ny][cx])) return;
-        var nk = chave(nx, ny), c = custo[k] + d[2];
+        // de terra para terra na diagonal, também não corta a quina da água (não molha o pé à toa)
+        if (d[0] && d[1] && tipo[cy][cx] !== 'a' && tipo[ny][nx] !== 'a' && (tipo[cy][nx] === 'a' || tipo[ny][cx] === 'a')) return;
+        var nk = chave(nx, ny), c = custo[k] + d[2] * (tipo[ny][nx] === 'a' ? custoAgua : 1);
         if (fechado[nk] || (nk in custo && custo[nk] <= c)) return;
         custo[nk] = c; veio[nk] = k;
         abertos.push(nk);
@@ -195,7 +213,7 @@
     var cam = [], k2 = fim;
     while (veio[k2] !== -1) { cam.unshift({ x: k2 % W, y: Math.floor(k2 / W) }); k2 = veio[k2]; }
     return cam;
-  };
+  }
 
   // tile andável mais perto de (x, y)
   Mapa.maisPerto = function (x, y, de) {
@@ -760,6 +778,18 @@
   Mapa.PREDIOS = PREDIOS;
 
   var LAGO = { cx: 18, cy: 24.6, rx: 6.5, ry: 2.4 };
+  // a água como desenhada (a elipse de desenharLago), em px do jogo
+  var ESPELHO = { cx: Math.round(LAGO.cx * T), cy: Math.round(LAGO.cy * T), rx: Math.round(LAGO.rx * T), ry: Math.round(LAGO.ry * T) };
+  // quantos px o ponto (wx, wy) está para dentro da água desenhada (negativo = fora, na margem).
+  // É o que decide onde fica a linha d'água dos sprites: casa com o desenho do lago, e não com a
+  // grade de tiles (nas pontas da elipse, o tile é água mas o desenho já é areia).
+  Mapa.fundura = function (wx, wy) {
+    var dx = wx - ESPELHO.cx, dy = wy - ESPELHO.cy;
+    var ax = dx / (ESPELHO.rx * ESPELHO.rx), ay = dy / (ESPELHO.ry * ESPELHO.ry);
+    var f = dx * ax + dy * ay;                           // 1 = na borda da água
+    var grad = 2 * Math.sqrt(ax * ax + ay * ay);
+    return (1 - f) / Math.max(grad, 1e-6);               // distância aproximada até a borda
+  };
   function hasteJunco(ctx, x, y, h) {
     ret(ctx, x, y, 1, h, '#2f7a48');
     ret(ctx, x, y, 1, 2, '#8fb83a');
@@ -860,7 +890,7 @@
       for (var i = 0; i < 14; i++) {
         var fase = (t / 1400 + i * 0.37) % 1;
         var ax = 12 * T + ((i * 53) % (12 * T)), ay = 22 * T + 6 + ((i * 29) % (4 * T - 10));
-        if (Mapa.solido(Math.floor(ax / T), Math.floor(ay / T)) && fase < 0.5) {
+        if (Mapa.agua(Math.floor(ax / T), Math.floor(ay / T)) && fase < 0.5) {
           ctx.fillStyle = 'rgba(255,255,255,' + (0.9 - fase * 1.6).toFixed(2) + ')';
           ctx.fillRect(ax, ay, 3, 1);
         }

@@ -106,6 +106,13 @@
     }
     if (l.tipo === 'estabulo' && p.ovosParaChocar().length) return 'Ovo';
     if (l.tipo === 'escola' && Reino.provas.some(function (pv) { return !p.regProva(pv).premio; })) return 'Prova';
+    // Pet Shop: a montaria com sede ou fome (sede primeiro) avisa na placa
+    if (l.tipo === 'petshop') {
+      var b = null;
+      try { b = Reino.Cuidados && Reino.Cuidados.baixo ? Reino.Cuidados.baixo() : null; } catch (e) { b = null; }
+      if (b && b.sede) return 'Sede';
+      if (b && b.fome) return 'Fome';
+    }
     return '';
   }
   // placa ao lado da construção, com a fonte pixel (acentos inclusos).
@@ -211,6 +218,8 @@
     largura: function () { return Mapa.largura(); },
     altura: function () { return Mapa.altura(); },
     solido: function (x, y) { return Mapa.solido(x, y); },
+    // água do lago (os interiores não têm este método: sem água)
+    agua: function (x, y) { return Mapa.agua(x, y); },
     portaEm: function (x, y) { return Mapa.portaEm(x, y); },
     saidaEm: function () { return null; },
     caminho: function (a, b) { return Mapa.caminho(a, b); },
