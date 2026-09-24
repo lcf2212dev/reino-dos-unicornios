@@ -286,7 +286,7 @@
   function professor(prova, x, y) {
     var acao = { tipo: 'prova', prova: prova.id }, id = PROFESSORES[prova.id];
     if (id) return npcDoElenco(id, x, y, acao);
-    return { id: 'prof-' + prova.id, nome: 'Professora do Reino', voz: 'narradora', x: x, y: y, acao: acao, falas: FALAS_PADRAO,
+    return { id: 'prof-' + prova.id, nome: 'Professora do Reino', voz: 'npc-padrao-3', x: x, y: y, acao: acao, falas: FALAS_PADRAO,
       sprite: { base: 'pessoa', pele: '#e8b48a', cabelo: '#3a2a20', penteado: 'coque', oculos: true, roupa: '#9b6bd6', roupa2: '#5a3d8a', perna: 'saia', livro: '#ffd34d' } };
   }
   // uma sala de aula completa (cômodo, objetos, professor, porta e corredores) para a prova n

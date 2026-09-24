@@ -74,9 +74,19 @@
       enfeites().forEach(function (it, i) {
         var fila = i < 4 ? 0 : 1, col = fila ? i - 4 : i;
         var cx = fila ? px + 16 + col * 16 : px + 8 + col * 16, base = top + (fila ? 31 : 15);
-        caber(ctx, icone(it.icone), cx, base, 13, 13);
-        if (c[it.id]) { lacinho(ctx, cx + 1, base - 14); brilho(ctx, cx - 5, base - 11, C.ouro3); }
-        else { ret(ctx, cx - 4, base + 1, 8, 1, C.ouro); estrelinha(ctx, cx - 2, base - 4, C.ouro); ret(ctx, cx, base - 2, 1, 1, K); }
+        if (c[it.id]) {
+          // é seu: fundo rosa, fita no canto e selo verde com ✓
+          ret(ctx, cx - 7, base - 13, 15, 13, '#ffc2e0');
+          caber(ctx, icone(it.icone), cx, base, 12, 12);
+          ret(ctx, cx - 7, base - 13, 4, 1, '#ff4f9a'); ret(ctx, cx - 7, base - 12, 3, 1, '#ff4f9a'); ret(ctx, cx - 7, base - 11, 2, 1, '#ff4f9a'); ret(ctx, cx - 7, base - 10, 1, 1, '#ff4f9a');
+          ret(ctx, cx + 2, base - 7, 7, 7, K); ret(ctx, cx + 3, base - 6, 5, 5, '#3fbf6a');
+          ret(ctx, cx + 4, base - 4, 1, 1, C.branco); ret(ctx, cx + 5, base - 3, 1, 1, C.branco); ret(ctx, cx + 6, base - 4, 1, 1, C.branco); ret(ctx, cx + 7, base - 5, 1, 1, C.branco);
+        } else {
+          // à venda: etiqueta dourada com estrela (o preço)
+          caber(ctx, icone(it.icone), cx, base, 12, 12);
+          ret(ctx, cx + 2, base - 7, 7, 7, K); ret(ctx, cx + 3, base - 6, 5, 5, C.creme);
+          estrelinha(ctx, cx + 3, base - 6, C.ouro2); ret(ctx, cx + 5, base - 4, 1, 1, C.ouro);
+        }
       });
       // vidro: reflexo
       ret(ctx, px + 5, top + 3, 1, 5, C.branco); ret(ctx, px + 6, top + 3, 1, 2, C.branco);
@@ -107,21 +117,20 @@
       ret(ctx, px + 18, top - 4, 12, 3, K); ret(ctx, px + 19, top - 3, 10, 1, LILAS2); ret(ctx, px + 23, top - 6, 2, 2, K);
     } });
   // espelho mágico: mostra a montaria com os enfeites em uso; brilha com Animações
-  I.objeto('loja-espelho-magico', { w: 3, h: 1, topo: 44, solido: true,
+  I.objeto('loja-espelho-magico', { w: 4, h: 1, topo: 48, solido: true,
     chave: function (P) {
       var m = espelhoInfo(P);
       return m ? 'esp:' + m.id + ':' + m.estagio + ':' + m.enfeites.join(',') + ':' + (m.capa ? 1 : 0) + (m.asasFada ? 1 : 0) : 'esp:-';
     },
     desenhar: function (ctx, px, py, o, P) {
-      var cx = px + 24, top = py - 44;
+      var cx = px + 32, top = py - 48;
       // pés de cogumelo e moldura de folhas e flores
-      ret(ctx, px + 8, py + 6, 6, 9, K); ret(ctx, px + 34, py + 6, 6, 9, K);
-      ret(ctx, px + 9, py + 7, 4, 7, C.creme); ret(ctx, px + 35, py + 7, 4, 7, C.creme);
-      elipse(ctx, cx, top + 26, 22, 28, K);
-      elipse(ctx, cx, top + 26, 21, 27, MUSGO);
-      elipse(ctx, cx, top + 26, 18, 24, K);
-      elipse(ctx, cx, top + 26, 17, 23, '#e6f4ff');
-      ret(ctx, px + 9, top + 40, 30, 10, '#d8f0c8');
+      ret(ctx, px + 12, py + 6, 6, 9, K); ret(ctx, px + 46, py + 6, 6, 9, K);
+      ret(ctx, px + 13, py + 7, 4, 7, C.creme); ret(ctx, px + 47, py + 7, 4, 7, C.creme);
+      elipse(ctx, cx, top + 30, 31, 30, K);
+      elipse(ctx, cx, top + 30, 30, 29, MUSGO);
+      elipse(ctx, cx, top + 30, 27, 26, K);
+      elipse(ctx, cx, top + 30, 26, 25, '#e6f4ff');
       var m = espelhoInfo(P), spr = null;
       if (m && window.PA) {
         try {
@@ -131,22 +140,28 @@
         } catch (e) { spr = null; }
       }
       if (spr) {
-        ctx.save(); ctx.beginPath(); ctx.ellipse(cx, top + 26, 17, 23, 0, 0, Math.PI * 2); ctx.clip();
-        caber(ctx, spr, cx, top + 47, 34, 42);
+        // em dobro (pixels inteiros), cortado pela moldura
+        var img = spr.canvas || spr, w2 = img.width * 2, h2 = img.height * 2;
+        var s2 = (w2 > 56 || h2 > 64) ? 1 : 2;
+        ctx.save(); ctx.beginPath(); ctx.ellipse(cx, top + 30, 26, 25, 0, 0, Math.PI * 2); ctx.clip();
+        ret(ctx, cx - 26, top + 44, 52, 12, '#d8f0c8');
+        var lig = ctx.imageSmoothingEnabled; ctx.imageSmoothingEnabled = false;
+        ctx.drawImage(img, Math.round(cx - img.width * s2 / 2), top + 58 - img.height * s2, img.width * s2, img.height * s2);
+        ctx.imageSmoothingEnabled = lig;
         ctx.restore();
       }
       // reflexo no vidro
-      ret(ctx, cx - 12, top + 12, 1, 6, C.branco); ret(ctx, cx - 11, top + 10, 1, 3, C.branco);
+      ret(ctx, cx - 20, top + 14, 1, 6, C.branco); ret(ctx, cx - 19, top + 12, 1, 3, C.branco);
       // flores e folhas na moldura
-      [[-19, 8, '#ff7eb6'], [18, 12, '#ffd34d'], [-21, 34, '#b58cff'], [20, 38, '#ff9cc6'], [0, 0, '#ff7eb6']].forEach(function (f) {
+      [[-27, 12, '#ff7eb6'], [26, 16, '#ffd34d'], [-29, 38, '#b58cff'], [28, 42, '#ff9cc6'], [0, 1, '#ff7eb6']].forEach(function (f) {
         ret(ctx, cx + f[0] - 2, top + f[1] - 1, 5, 3, K); ret(ctx, cx + f[0] - 1, top + f[1] - 2, 3, 5, K);
         ret(ctx, cx + f[0] - 1, top + f[1] - 1, 3, 3, f[2]); ret(ctx, cx + f[0], top + f[1], 1, 1, C.ouro3);
       });
-      ret(ctx, cx - 16, top + 2, 4, 2, C.folha3); ret(ctx, cx + 12, top + 3, 4, 2, C.folha3);
+      ret(ctx, cx - 18, top + 4, 4, 2, C.folha3); ret(ctx, cx + 14, top + 5, 4, 2, C.folha3);
     },
     anim: function (ctx, px, py, t) {
-      var cx = px + 24, top = py - 44, f = Math.floor(t / 260) % 6;
-      var pos = [[-14, 6], [13, 18], [-16, 30], [15, 42], [-8, 48], [9, 2]];
+      var cx = px + 32, top = py - 48, f = Math.floor(t / 260) % 6;
+      var pos = [[-22, 8], [21, 22], [-24, 34], [23, 48], [-10, 56], [12, 3]];
       var p = pos[f], q = pos[(f + 3) % 6];
       brilho(ctx, cx + p[0], top + p[1], C.ouro3);
       brilho(ctx, cx + q[0], top + q[1], C.branco);
@@ -312,12 +327,11 @@
     { tipo: 'cortina', x: 15, y: 1, var: { cor: '#ff9cc6' } },
     // fundo
     { tipo: 'flores', x: 1, y: 3, var: { vaso: '#b58cff' } },
-    inter('potes', 'Potes de pó de estrela', { tipo: 'loja-potes', x: 2, y: 3 }),
+    { tipo: 'flores', x: 2, y: 3, var: { vaso: '#ff9cc6' } }, { tipo: 'cesto', x: 3, y: 3 },
     { tipo: 'loja-cesta-lacos', x: 7, y: 3 },
     { tipo: 'vaso-planta', x: 8, y: 3 },
     { tipo: 'loja-vagalumes', x: 9, y: 3 },
     inter('espelho', 'Espelho mágico', { tipo: 'loja-espelho-magico', x: 11, y: 3 }),
-    { tipo: 'flores', x: 14, y: 3, var: { vaso: '#ff9cc6' } },
     { tipo: 'loja-capas', x: 15, y: 3 },
     // balcão e tapetes
     { tipo: 'loja-cogumelo', x: 1, y: 4, var: { cor: '#b58cff' } },
@@ -325,6 +339,8 @@
     { tipo: 'loja-tapete-folhas', x: 11, y: 4, w: 3, h: 2 },
     { tipo: 'almofada', x: 10, y: 4, var: { cor: '#c9a8ff' } },
     { tipo: 'loja-cogumelo', x: 14, y: 4 },
+    inter('potes', 'Potes de pó de estrela', { tipo: 'loja-potes', x: 13, y: 6 }),
+    { tipo: 'loja-cogumelo', x: 15, y: 6, var: { cor: '#b58cff' } },
     { tipo: 'loja-manequim', x: 15, y: 5 },
     { tipo: 'cesto', x: 1, y: 6 },
     { tipo: 'loja-tapete-folhas', x: 2, y: 6, w: 4, h: 2 },

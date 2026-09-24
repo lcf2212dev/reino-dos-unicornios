@@ -9302,19 +9302,19 @@
    ]
   },
   {
-   "chave": "7b6bfc1b18",
+   "chave": "7039bf9d15",
    "voz": "npc-aurora",
-   "texto": "Faltam dois treinos para o épico!",
-   "fala": "Faltam dois treinos para o épico!",
+   "texto": "Faltam dois treinos pro épico!",
+   "fala": "Faltam dois treinos pro épico!",
    "pacotes": [
     "interior-castelo"
    ]
   },
   {
-   "chave": "3807792718",
+   "chave": "c9f52d8115",
    "voz": "npc-aurora",
-   "texto": "Faltam três treinos para o épico!",
-   "fala": "Faltam três treinos para o épico!",
+   "texto": "Faltam três treinos pro épico!",
+   "fala": "Faltam três treinos pro épico!",
    "pacotes": [
     "interior-castelo"
    ]
@@ -9329,19 +9329,19 @@
    ]
   },
   {
-   "chave": "25d212321a",
+   "chave": "dcb94cb217",
    "voz": "npc-aurora",
-   "texto": "Faltam quatro treinos para o épico!",
-   "fala": "Faltam quatro treinos para o épico!",
+   "texto": "Faltam quatro treinos pro épico!",
+   "fala": "Faltam quatro treinos pro épico!",
    "pacotes": [
     "interior-castelo"
    ]
   },
   {
-   "chave": "5933876219",
+   "chave": "e3af49c216",
    "voz": "npc-aurora",
-   "texto": "Faltam cinco treinos para o épico!",
-   "fala": "Faltam cinco treinos para o épico!",
+   "texto": "Faltam cinco treinos pro épico!",
+   "fala": "Faltam cinco treinos pro épico!",
    "pacotes": [
     "interior-castelo"
    ]
@@ -9536,19 +9536,19 @@
    ]
   },
   {
-   "chave": "5e1f2a8818",
+   "chave": "4ea8634c15",
    "voz": "npc-oliver",
-   "texto": "Faltam dois treinos para o épico!",
-   "fala": "Faltam dois treinos para o épico!",
+   "texto": "Faltam dois treinos pro épico!",
+   "fala": "Faltam dois treinos pro épico!",
    "pacotes": [
     "interior-castelo"
    ]
   },
   {
-   "chave": "230b6b8c18",
+   "chave": "497ba09815",
    "voz": "npc-oliver",
-   "texto": "Faltam três treinos para o épico!",
-   "fala": "Faltam três treinos para o épico!",
+   "texto": "Faltam três treinos pro épico!",
+   "fala": "Faltam três treinos pro épico!",
    "pacotes": [
     "interior-castelo"
    ]
@@ -9563,19 +9563,19 @@
    ]
   },
   {
-   "chave": "7806f65d1a",
+   "chave": "a5a0373b17",
    "voz": "npc-oliver",
-   "texto": "Faltam quatro treinos para o épico!",
-   "fala": "Faltam quatro treinos para o épico!",
+   "texto": "Faltam quatro treinos pro épico!",
+   "fala": "Faltam quatro treinos pro épico!",
    "pacotes": [
     "interior-castelo"
    ]
   },
   {
-   "chave": "aa40eefb19",
+   "chave": "144f157d16",
    "voz": "npc-oliver",
-   "texto": "Faltam cinco treinos para o épico!",
-   "fala": "Faltam cinco treinos para o épico!",
+   "texto": "Faltam cinco treinos pro épico!",
+   "fala": "Faltam cinco treinos pro épico!",
    "pacotes": [
     "interior-castelo"
    ]
@@ -10482,24 +10482,6 @@
    ]
   },
   {
-   "chave": "c300e688x",
-   "voz": "narradora",
-   "texto": "Potes de pó de estrela!",
-   "fala": "Potes de pó de estrela!",
-   "pacotes": [
-    "interior-loja"
-   ]
-  },
-  {
-   "chave": "2c77e98a15",
-   "voz": "narradora",
-   "texto": "Vem de quem acerta de primeira.",
-   "fala": "Vem de quem acerta de primeira.",
-   "pacotes": [
-    "interior-loja"
-   ]
-  },
-  {
    "chave": "0096f671r",
    "voz": "narradora",
    "texto": "O espelho mágico!",
@@ -10531,6 +10513,24 @@
    "voz": "narradora",
    "texto": "Aqui as estrelas descansam.",
    "fala": "Aqui as estrelas descansam.",
+   "pacotes": [
+    "interior-loja"
+   ]
+  },
+  {
+   "chave": "c300e688x",
+   "voz": "narradora",
+   "texto": "Potes de pó de estrela!",
+   "fala": "Potes de pó de estrela!",
+   "pacotes": [
+    "interior-loja"
+   ]
+  },
+  {
+   "chave": "2c77e98a15",
+   "voz": "narradora",
+   "texto": "Vem de quem acerta de primeira.",
+   "fala": "Vem de quem acerta de primeira.",
    "pacotes": [
     "interior-loja"
    ]
@@ -10815,10 +10815,10 @@
    ]
   },
   {
-   "chave": "c6e8bdd910",
+   "chave": "ad9fdd3913",
    "voz": "npc-antonio",
-   "texto": "Vamos ver minhas cartas?",
-   "fala": "Vamos ver minhas cartas?",
+   "texto": "Vamos ver as minhas cartas?",
+   "fala": "Vamos ver as minhas cartas?",
    "pacotes": [
     "interior-museu"
    ]
@@ -11923,10 +11923,10 @@
    ]
   },
   {
-   "chave": "82a0b39b11",
+   "chave": "c422b968x",
    "voz": "narradora",
-   "texto": "São 5 salas, uma por andar.",
-   "fala": "São 5 salas, uma por andar.",
+   "texto": "Uma sala em cada andar.",
+   "fala": "Uma sala em cada andar.",
    "pacotes": [
     "interior-torre"
    ]
@@ -12760,10 +12760,10 @@
    ]
   },
   {
-   "chave": "770f165a10",
+   "chave": "3c5f7f10z",
    "voz": "npc-moon",
-   "texto": "Quer ver a manhã e a noite?",
-   "fala": "Quer ver a manhã e a noite?",
+   "texto": "Vamos ver o dia e a noite?",
+   "fala": "Vamos ver o dia e a noite?",
    "pacotes": [
     "interior-torre"
    ]

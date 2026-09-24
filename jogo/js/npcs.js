@@ -720,7 +720,7 @@
   N.extenso = extenso;
   function faltamSalas(n) { return n === 1 ? 'Falta só uma sala! 💪' : 'Faltam ' + extenso(n, true) + ' salas! 💪'; }
   function dicaRaro(n) { return n === 1 ? 'Mais uma vez e o raro nasce! 💙' : 'Mais ' + extenso(n, true) + ' vezes e o raro nasce! 💙'; }
-  function dicaEpico(n) { return n === 1 ? 'Falta um treino para o épico!' : 'Faltam ' + extenso(n) + ' treinos para o épico!'; }
+  function dicaEpico(n) { return n === 1 ? 'Falta um treino para o épico!' : 'Faltam ' + extenso(n) + ' treinos pro épico!'; }
   function resumoFeitas(n, total) {
     return n === total ? 'Você fez as ' + extenso(total, true) + ' salas! 🎉' : 'Você fez ' + extenso(n, true) + ' de ' + extenso(total, true) + ' salas.';
   }
@@ -964,7 +964,12 @@
   }
 
   N.BAIA_VAZIA = 'Aqui vai morar um amigo novo! 🦄';
-  // unicórnios já chocados, na ordem do álbum do Estábulo (as baias usam o mesmo índice)
+  // baia fixa: a baia n é sempre do n-ésimo unicórnio do álbum; vazia (null) até ele nascer
+  N.unicornioDaBaia = function (n) {
+    var est = P().estado(), d = Reino.Unicornios.todos(est.corInicial)[n];
+    return d && est.unis[d.id] && est.unis[d.id].chocado ? d : null;
+  };
+  // unicórnios já chocados, na ordem do álbum do Estábulo
   N.unicorniosChocados = function () {
     var est = P().estado();
     return Reino.Unicornios.todos(est.corInicial).filter(function (d) { return est.unis[d.id] && est.unis[d.id].chocado; });
@@ -1009,7 +1014,7 @@
     }
     if (acao.tipo === 'unicornio') {
       // o unicórnio da baia diz a frase que já está gravada (o nome que ela deu só aparece na tela)
-      var du = N.unicorniosChocados()[acao.indice || 0];
+      var du = N.unicornioDaBaia(acao.indice || 0);
       if (!du) return falarPaginado(N.BAIA_VAZIA, { nome: 'Baia', voz: 'narradora' });
       var uu = p.estado().unis[du.id];
       var spr = PA.unicornio(du, Reino.Unicornios.estagio(uu ? uu.xp : 0), 0).canvas;

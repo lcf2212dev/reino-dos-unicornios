@@ -352,7 +352,7 @@ caber em 2 linhas; falas maiores são paginadas pelo NPC (Continuar →). Escrev
   conhecido ou padrão (`prof-<prova>`); o Castelo monta uma ala por matéria (`Reino.materias`), com cavaleiro
   conhecido ou padrão (`cav-<matéria>`); o Estábulo monta uma baia por unicórnio do baralho.
 - Ações extras de objeto: `{ tipo: 'unicornio', indice }` (baia do Estábulo; índice em
-  `Reino.NPCs.unicorniosChocados()`; baia vazia fala `Reino.NPCs.BAIA_VAZIA`). A Loja lê `UI.ITENS_LOJA`.
+  `Reino.NPCs.unicornioDaBaia(n)`: baia fixa por unicórnio do álbum; baia vazia fala `Reino.NPCs.BAIA_VAZIA`). A Loja lê `UI.ITENS_LOJA`.
 - Frases automáticas do motor (npcs.js): resumo do guia ("Você fez N de 5 salas.", "Já ganhou R$ X!",
   "Agora vamos para a Sala N!"), persistência ("Mais N vezes e o raro nasce!", "Ou de primeira, com calma!"),
   prova ("Agora vale um prêmio lendário/raro/comum!"), treino ("Faltam N salas!"), estábulo com ovos.

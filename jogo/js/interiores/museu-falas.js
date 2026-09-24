@@ -9,7 +9,7 @@ Reino.FALAS_INTERIORES.museu = {
     // sala 1: Cartas e Lembranças
     antonio: {
       oi: ['Oi! Eu sou o Seu Antônio. ✉️', 'Esperei o carteiro todo dia!'],
-      nova: ['Vamos ler as cartas juntos?', 'Vamos ver minhas cartas? 💌'],
+      nova: ['Vamos ler as cartas juntos?', 'Vamos ver as minhas cartas? 💌'],
       feita: ['Quer reler as cartas comigo?', 'Vamos abrir a caixinha?'],
       depois: ['Você leu com calma! 💌', 'Que leitura atenta! ✨'],
     },

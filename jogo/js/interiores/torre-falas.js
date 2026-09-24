@@ -30,7 +30,7 @@ Reino.FALAS_INTERIORES.torre = {
     // andar 4: «A Day in My Life»
     moon: {
       oi: ['«Hello!» Eu sou a «Miss Moon».', 'Cuido do dia, do sol à lua. 🌙'],
-      nova: ['Vamos contar o dia do David?', 'Quer ver a manhã e a noite?'],
+      nova: ['Vamos contar o dia do David?', 'Vamos ver o dia e a noite?'],
       feita: ['Quer rever o dia do David?', 'Vamos ver a rotina de novo?'],
       depois: ['Você leu com muita atenção! ✨', '«Great!» Que dia bem contado!'],
     },
@@ -45,7 +45,7 @@ Reino.FALAS_INTERIORES.torre = {
   objetos: {
     // térreo
     'livro': ['O Livro das Palavras! 📖', 'Vamos ler com calma?'],
-    'andares': ['A torre tem cinco andares.', 'São 5 salas, uma por andar. 🗼', 'Suba a escada sem pressa.'],
+    'andares': ['A torre tem cinco andares.', 'Uma sala em cada andar. 🗼', 'Suba a escada sem pressa.'],
     'engrenagens': ['Engrenagens do relógio! ⚙️', 'Uma gira a outra, sem pressa.'],
     'relogio-grande': ['O relógio faz tic-tac! 🕰️', 'Lá no alto mora o relógio.'],
     // andar 1

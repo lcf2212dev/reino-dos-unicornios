@@ -84,7 +84,8 @@
   - ❗ sala nova, ✓ sala feita, 💙 o unicórnio raro já nasceu;
   - 🔒 treino fechado, 🥇🥈🥉 medalha do treino;
   - 🌈💙🤍 o que a próxima tentativa da prova vale (lendário, raro, comum);
-  - 💬 guia do prédio, 🥚 ovos esperando.
+  - 💬 conversar (guias, Seu Feno, Fada Pétala e Tostão), 🥚 ovos esperando;
+  - ✓ na professora: o prêmio daquela prova já foi ganho.
 - **Conversar:** tocar no personagem ou apertar Enter ao lado dele. O balão tem "Vamos!", "Agora não" e 🔊 para ouvir de novo.
 - As salas, treinos e provas são os mesmos de antes, com as mesmas regras e o mesmo dinheiro. A lista antiga continua em "Ver a lista", com o guia de cada prédio.
 - Nada disso mudou o progresso salvo: tudo o que os prédios mostram vem do que ela já fez.

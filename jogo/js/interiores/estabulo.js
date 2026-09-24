@@ -28,9 +28,13 @@
     ctx.drawImage(img, Math.round(cx - w / 2), base - h, w, h);
     ctx.imageSmoothingEnabled = lig;
   }
-  // unicórnios já chocados (mesma ordem de Reino.NPCs.unicorniosChocados)
-  function chocados() {
-    try { return (R.NPCs && R.NPCs.unicorniosChocados) ? R.NPCs.unicorniosChocados() : []; } catch (e) { return []; }
+  // baias fixas: a baia n é sempre do n-ésimo unicórnio do álbum (vazia até ele nascer)
+  function daBaia(n) {
+    try { return (R.NPCs && R.NPCs.unicornioDaBaia) ? R.NPCs.unicornioDaBaia(n) : null; } catch (e) { return null; }
+  }
+  function moradorDaBaia(P, n) {
+    var cor; try { cor = P && P.estado ? P.estado().corInicial : undefined; } catch (e) {}
+    return R.Unicornios.todos(cor)[n] || null;
   }
   function estagioDe(P, id) {
     try { var u = P.estado().unis[id]; return R.Unicornios.estagio(u ? u.xp : 0); } catch (e) { return 0; }
@@ -41,12 +45,12 @@
   // baia: o unicórnio chocado de índice var.indice (ou palha vazia)
   I.objeto('estabulo-baia', { w: 2, h: 2, solido: true, semSombra: true,
     chave: function (P, o) {
-      var n = v(o, 'indice', 0), d = P ? chocados()[n] : null;
-      if (!d) return 'baia:' + n + ':-';
-      return 'baia:' + n + ':' + d.id + ':' + estagioDe(P, d.id) + ':' + (P.montaria && P.montaria() === d.id ? 1 : 0);
+      var n = v(o, 'indice', 0), m = moradorDaBaia(P, n), d = P ? daBaia(n) : null;
+      if (!d) return 'baia:' + n + ':' + (m ? m.id : '-') + ':0';
+      return 'baia:' + n + ':' + d.id + ':1:' + estagioDe(P, d.id) + ':' + (P.montaria && P.montaria() === d.id ? 1 : 0);
     },
     desenhar: function (ctx, px, py, o, P) {
-      var n = v(o, 'indice', 0), d = P ? chocados()[n] : null;
+      var n = v(o, 'indice', 0), d = P ? daBaia(n) : null, m = moradorDaBaia(P, n);
       // paredes de tábuas e o chão de palha
       ret(ctx, px, py, 32, 32, K);
       ret(ctx, px + 1, py + 1, 30, 20, '#c98a52');
@@ -56,7 +60,7 @@
       ret(ctx, px, py, 2, 32, K); ret(ctx, px + 30, py, 2, 32, K);
       ret(ctx, px + 1, py, 1, 31, C.madeira); ret(ctx, px + 30, py, 1, 31, C.madeira);
       // plaquinha da baia (cor da raridade)
-      var cr = (window.PA && PA.CORES_RARIDADE && d && PA.CORES_RARIDADE[d.raridade]) || { base: C.creme, borda: '#b8aac8' };
+      var cr = (window.PA && PA.CORES_RARIDADE && m && PA.CORES_RARIDADE[m.raridade]) || { base: C.creme, borda: '#b8aac8' };
       ret(ctx, px + 11, py + 3, 10, 5, K); ret(ctx, px + 12, py + 4, 8, 3, cr.base); ret(ctx, px + 13, py + 5, 6, 1, cr.borda);
       if (d && window.PA && PA.unicornio) {
         var e = estagioDe(P, d.id), spr = PA.unicornio(d, e, 0), c = spr && (spr.canvas || spr);
@@ -68,7 +72,11 @@
           brilho(ctx, px + 26, py + 10, C.ouro3); brilho(ctx, px + 24, py + 15, C.branco);
         }
       } else {
-        // baia vazia: montinho de palha e um coração
+        // baia vazia: silhueta clarinha de quem vai morar aqui, montinho de palha e um coração
+        if (m && window.PA && PA.unicornio && PA.silhueta) {
+          var sm = PA.unicornio(m, 0, 0), cs = sm && PA.silhueta(sm);
+          if (cs) { ctx.save(); ctx.globalAlpha = 0.16; caber(ctx, cs.canvas || cs, px + 16, py + 29, 28, 22); ctx.restore(); }
+        }
         elipse(ctx, px + 16, py + 26, 9, 3, PALHA2); elipse(ctx, px + 16, py + 25, 7, 2, PALHA3);
         ret(ctx, px + 15, py + 13, 1, 1, '#ffb3d9'); ret(ctx, px + 17, py + 13, 1, 1, '#ffb3d9'); ret(ctx, px + 15, py + 14, 3, 1, '#ffb3d9'); ret(ctx, px + 16, py + 15, 1, 1, '#ffb3d9');
       }

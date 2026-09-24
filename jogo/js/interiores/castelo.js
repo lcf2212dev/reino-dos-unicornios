@@ -270,7 +270,7 @@
   function cavaleiro(m, x, y, cor) {
     var acao = { tipo: 'treino', materia: m.id }, id = CAVALEIROS[m.id];
     if (id) return npc(id, x, y, acao);
-    return { id: 'cav-' + m.id, nome: 'Cavaleiro do Reino', voz: 'narradora', x: x, y: y, acao: acao, falas: F.cavaleiro || {},
+    return { id: 'cav-' + m.id, nome: 'Cavaleiro do Reino', voz: 'npc-padrao-1', x: x, y: y, acao: acao, falas: F.cavaleiro || {},
       sprite: { base: 'pessoa', pele: '#e0ac86', cabelo: '#5a3825', penteado: 'curto', chapeu: 'elmo', armadura: true, roupa: cor, cor2: C.ouro } };
   }
 

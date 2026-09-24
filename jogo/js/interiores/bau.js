@@ -49,12 +49,12 @@
         ctx.drawImage(ic, 0, 0, ic.width, ic.height, px + 3, py + 5, 10, 10);
       } else ret(ctx, px + 6, py + 7, 4, 4, C.ouro);
     } });
-  I.objeto('bau-monte', { w: 3, h: 1, topo: 26, solido: true, alto: true,
+  I.objeto('bau-monte', { w: 3, h: 1, topo: 20, solido: true, alto: true,
     chave: function (P) { return 'bm:' + centTotal(P); },
     desenhar: function (ctx, px, py, o, P) {
       var cx = px + 24, max = valorMax() * Math.max(1, (R.materias || []).length);
       var f = Math.max(0, Math.min(1, centTotal(P) / max));
-      var alt = 3 + Math.round(f * 22), larg = 16 + Math.round(f * 26);
+      var alt = 3 + Math.round(f * 16), larg = 16 + Math.round(f * 26);
       // base de pedra
       elipse(ctx, cx, py + 11, 22, 4, K); elipse(ctx, cx, py + 10, 21, 3, '#8a6aa0'); elipse(ctx, cx, py + 9, 19, 2, '#a888bc');
       // o monte (triângulo de moedas com contorno)
@@ -290,8 +290,8 @@
   var objetos = sala(1, 1, desce([
     // parede
     { tipo: 'bau-tocha', x: 0, y: 0 }, { tipo: 'bau-veio', x: 1, y: 0 },
-    inter('mapa', 'Mapa do tesouro', { tipo: 'bau-mapa-tesouro', x: 2, y: 0 }),
-    { tipo: 'bau-tocha', x: 4, y: 0 },
+    inter('mapa', 'Mapa do tesouro', { tipo: 'bau-mapa-tesouro', x: 3, y: 0 }),
+    { tipo: 'bau-tocha', x: 2, y: 0 },
     { tipo: 'estandarte', x: 5, y: 0, var: { cor: '#7c5cff', emblema: 'estrela' } },
     { tipo: 'bau-veio', x: 6, y: 0, var: { cor: '#9fdcff' } }, { tipo: 'bau-tocha', x: 7, y: 0 },
     { tipo: 'bau-veio', x: 8, y: 0, var: { cor: '#ff9cc6' } }, { tipo: 'bau-tocha', x: 10, y: 0 },
@@ -306,8 +306,8 @@
     { tipo: 'bau-taca', x: 14, y: 2 }, { tipo: 'bau', x: 15, y: 2 }, { tipo: 'vaso-grande', x: 16, y: 2 },
     { tipo: 'bau-cristal', x: 17, y: 2, var: { cor: '#9fdcff' } },
     // meio: o monte, a balança, o ninho do dragão
-    { tipo: 'tapete-redondo', x: 7, y: 5, w: 3, h: 1 },
-    inter('monte', 'Monte de moedas', { tipo: 'bau-monte', x: 7, y: 4, acao: TELA }),
+    { tipo: 'tapete-redondo', x: 7, y: 6, w: 3, h: 1 },
+    inter('monte', 'Monte de moedas', { tipo: 'bau-monte', x: 7, y: 5, acao: TELA }),
     { tipo: 'pilha-livros', x: 0, y: 3 }, { tipo: 'bau-saco', x: 0, y: 4, var: { cor: '#a8b8d8' } },
     inter('balanca', 'Balança de moedas', { tipo: 'bau-balanca', x: 3, y: 4 }),
     { tipo: 'caixote', x: 2, y: 4, var: { item: 'moedas' } }, { tipo: 'almofada', x: 4, y: 4, var: { cor: '#ffd34d' } },
