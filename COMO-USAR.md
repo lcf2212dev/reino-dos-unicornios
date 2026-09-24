@@ -46,7 +46,7 @@
   - **Pet Shop:** Dona Aveia. **Observatório:** Doutora Vega e Robô Cosmo (com um leve efeito de robô na gravação).
   - O Carteiro Chico usa a voz do Claude, mais aguda e mais rápida.
   - As falas são curtas para caber no balão do celular.
-  - Amostras: `amostras-de-voz/` de 13 a 36 (34 Dona Aveia, 35 Doutora Vega, 36 Robô Cosmo). As de 13 a 33 também estão juntas em `VOZES-DOS-PERSONAGENS.mp3`.
+  - Amostras: `amostras-de-voz/` de 13 a 36 (34 Dona Aveia, 35 Doutora Vega, 36 Robô Cosmo), ou todas juntas em `VOZES-DOS-PERSONAGENS.mp3`. A 35b é outra voz possível para a Doutora Vega.
   - Para trocar, edite o perfil `npc-<nome>` em `vozes` no `jogo/js/config.js` e peça ao Claude para regravar.
 
 ## Regras do jogo

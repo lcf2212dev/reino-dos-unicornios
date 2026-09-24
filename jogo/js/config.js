@@ -87,7 +87,9 @@ Reino.config = {
     'npc-tostao': { voz: 'ko-KR-HyunsuMultilingualNeural', velocidade: '+10%', tom: '+22Hz' },    // dragãozinho: agudo e engraçado
     // Pet Shop e Observatório
     'npc-aveia': { voz: 'de-DE-SeraphinaMultilingualNeural', velocidade: '+8%', tom: '+10Hz' },  // dona da Pet Shop: alegre e carinhosa
-    'npc-vega': { voz: 'en-US-EmmaMultilingualNeural', velocidade: '-8%', tom: '-10Hz' },        // astrônoma calma, voz de quem conta segredos do céu
+    // astrônoma calma: voz brasileira nativa (as multilíngues trocavam "Plutão" por "botão" e embolavam "Via Láctea"),
+    // mais grave e mais rápida que a narradora para dar para reconhecer de ouvido
+    'npc-vega': { voz: 'pt-BR-FranciscaNeural', velocidade: '-2%', tom: '-10Hz' },
     // robô ajudante: `efeito` passa um filtro metálico na gravação (ferramentas/gerar-vozes.py)
     'npc-cosmo': { voz: 'de-DE-FlorianMultilingualNeural', velocidade: '+6%', tom: '+18Hz', efeito: 'robo-leve' },
     // interior de teste da Fase 1 (js/interiores/teste.js)
