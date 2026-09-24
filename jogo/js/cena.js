@@ -125,12 +125,24 @@
   // mapa, mesmo sem chip nenhum em cima (a da Escola ia parar no meio do lago). A medida é guardada
   // (getBoundingClientRect por quadro é caro) e refeita a cada meio segundo ou quando a tela muda.
   var hudMedido = { rects: [], medidoEm: -1e9, chave: '' };
+  // caixa do chip sem o transform da animação (o do ovo pulsa: medido num instante qualquer do pulso,
+  // a placa que desvia dele pulava a cada nova medida). Só o chip animado é medido por offset*, que
+  // ignora o transform (o menu de baixo se centra com translate, então os outros ficam com a caixa
+  // da tela); o pai que conta (.hud-topo) não é animado. Em volta, a folga do pulso maior (pulsar: scale 1.04).
+  function caixaParada(e) {
+    var anima = getComputedStyle(e).animationName, pai = e.offsetParent;
+    if (!anima || anima === 'none' || !pai) return e.getBoundingClientRect();
+    var pr = pai.getBoundingClientRect();
+    var left = pr.left + pai.clientLeft + e.offsetLeft, top = pr.top + pai.clientTop + e.offsetTop;
+    var w = e.offsetWidth, h = e.offsetHeight, dx = w * 0.02, dy = h * 0.02;
+    return { left: left - dx, right: left + w + dx, top: top - dy, bottom: top + h + dy };
+  }
   function retangulosHud(canvas, dpr) {
     var agora = performance.now(), chave = canvas.width + 'x' + canvas.height + '@' + dpr;
     if (chave === hudMedido.chave && agora - hudMedido.medidoEm <= 500) return hudMedido.rects;
     var c = canvas.getBoundingClientRect();
     hudMedido.rects = Array.prototype.map.call(document.querySelectorAll('#hud > *:not(.hud-topo), #hud .hud-topo > * > *'), function (e) {
-      var r = e.getBoundingClientRect();
+      var r = caixaParada(e);
       // o menu de baixo (dock) empurra a placa para cima; o resto do HUD, para baixo ou para o lado
       return { left: (r.left - c.left) * dpr, right: (r.right - c.left) * dpr, top: (r.top - c.top) * dpr, bottom: (r.bottom - c.top) * dpr,
         embaixo: e.classList.contains('dock') };
