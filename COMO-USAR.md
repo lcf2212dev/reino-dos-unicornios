@@ -46,7 +46,7 @@
   - **Pet Shop:** Dona Aveia. **Observatório:** Doutora Vega e Robô Cosmo (com um leve efeito de robô na gravação).
   - O Carteiro Chico usa a voz do Claude, mais aguda e mais rápida.
   - As falas são curtas para caber no balão do celular.
-  - Amostras: `amostras-de-voz/` de 13 a 36 (34 Dona Aveia, 35 Doutora Vega, 36 Robô Cosmo), ou todas juntas em `VOZES-DOS-PERSONAGENS.mp3`. A 35b é outra voz possível para a Doutora Vega.
+  - Amostras: `amostras-de-voz/` de 13 a 36 (34 Dona Aveia, 35 Doutora Vega, 36 Robô Cosmo), ou todas juntas em `VOZES-DOS-PERSONAGENS.mp3`. A 35b (fora desse arquivo) é outra voz possível para a Doutora Vega: para usar, peça ao Claude.
   - Para trocar, edite o perfil `npc-<nome>` em `vozes` no `jogo/js/config.js` e peça ao Claude para regravar.
 
 ## Regras do jogo
@@ -69,11 +69,11 @@
   - tem revisão obrigatória antes de entregar;
   - a medalha é dada só pelos acertos.
 - **Medalha da escola:** a medalha de ouro da prova real (R$100) é combinada fora do jogo. O jogo só lembra a Mariana de ir com calma e revisar.
-- **Nadar no lago:** ela toca na água ou anda com as setas até o lago, e nada com o unicórnio. Na água anda mais devagar (60%). Se ela toca em terra, o caminho dá a volta por terra. Para mudar, edite `nado` em `jogo/js/config.js`.
+- **Nadar no lago:** ela toca na água ou anda com as setas até o lago, e nada com o unicórnio. Na água anda mais devagar (60% da velocidade). Se ela toca em terra, o caminho dá a volta por terra. Para mudar, edite `nado` em `jogo/js/config.js`.
 
 ## Pergunta surpresa
 - De vez em quando (entre 3 e 10 minutos de jogo livre), o Claude aparece com uma pergunta das salas: escolha, verdadeiro/falso ou várias respostas.
-- Acertou de primeira: ganha **2 estrelas**. Errou: vê a explicação e não perde nada.
+- Uma tentativa só. Acertou: ganha **2 estrelas**. Errou: vê a resposta certa e a explicação, e não perde nada.
 - Tem "Agora não" para fechar sem responder.
 - Nunca aparece no meio de sala, treino, prova ou conversa: espera ela ficar livre.
 - Para desligar: ⚙️ Ajustes → "❓ Perguntas surpresa".
@@ -109,7 +109,7 @@
 - **Onde fica:** em frente ao Estábulo, do outro lado da rua de baixo. Quem atende é a **Dona Aveia**.
 - **Fome e sede:** só a montaria gasta, e só enquanto ela joga (aba aberta e algum toque nos últimos 5 minutos). Jogo fechado ou parado não gasta.
   - A fome vai de cheia a zero em 120 minutos de jogo; a sede, em 60.
-  - Abaixo de 25, o unicórnio anda mais devagar (70%). Comeu ou bebeu, volta ao normal na hora.
+  - Com fome ou sede abaixo de 25, o unicórnio anda mais devagar (70% da velocidade). Volta ao normal na hora em que as duas ficam em 25 ou mais.
   - Não perde XP, dinheiro nem unicórnio.
   - Aparece 🍎 ou 💧 em cima do unicórnio, as barrinhas ficam no topo, junto da montaria, e a placa da Pet Shop mostra "Fome" ou "Sede".
   - O Claude lembra com carinho, no máximo uma vez a cada 10 minutos.
@@ -119,7 +119,7 @@
   - 🌾 **Feno dourado:** 4 ⭐, enche 45.
   - 🍪 **Biscoito de aveia:** 5 ⭐, enche 60.
   - 🎂 **Bolo arco-íris:** 8 ⭐, enche tudo.
-- A comida comprada vai para a **despensa**. Dá para dar na hora ou depois, em "Dar comida", no Estábulo.
+- A comida comprada vai para a **despensa**. Dá para dar na hora ou depois: no Estábulo (botão do menu de baixo), toque no unicórnio e em "🥕 Dar comida".
 - **Água:** de graça, só no bebedouro do Cantinho da Água, dentro da Pet Shop.
 - **Para mudar:** os preços e quanto enche ficam em `comidas`; o ritmo, o limite de 25 e os lembretes ficam em `cuidados`. Os dois em `jogo/js/config.js`.
 - O progresso guarda a fome, a sede e a despensa. "Novo ciclo" mantém; "Apagar tudo" zera.
@@ -127,10 +127,10 @@
 ## Observatório
 - **Onde fica:** no morro a leste do lago, o ponto mais alto do reino.
 - **Cômodos:** Cúpula do Telescópio (o telescópio mostra a Lua, Saturno, o Cruzeiro do Sul e outros), Planetário (o Sol, os 8 planetas e Plutão) e Galeria do Espaço (foguete, traje de astronauta, pedra da Lua, meteorito e constelações).
-- **Doutora Vega:** a guia. Conta curiosidades sem repetir.
+- **Doutora Vega:** a guia. Conta curiosidades sem repetir enquanto o jogo está aberto. Tocar nos planetas, no telescópio e nas peças da Galeria também conta uma.
 - **Robô Cosmo:** conta piadas.
 - São 75 curiosidades, cada uma conferida na fonte (a maioria no NASA Space Place, e também ESA Kids, Agência Espacial Brasileira e outras páginas da NASA, da ESA e do INPE).
-- **Do Brasil:** o Cruzeiro do Sul e as estrelas da bandeira, Marcos Pontes (o primeiro brasileiro no espaço) e a base de Alcântara.
+- **Do Brasil:** o Cruzeiro do Sul e as estrelas da bandeira, Marcos Pontes (o primeiro brasileiro no espaço), a base de Alcântara e o satélite Amazônia Um.
 - É só para curiosidade: não dá estrelas nem muda o progresso.
 
 ## Enfeites da Loja
