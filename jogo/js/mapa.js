@@ -218,21 +218,20 @@
   // tile andável mais perto de (x, y)
   // tocou num tile de terra sólido (árvore, arbusto): prefere terra; água só se não houver terra perto
   Mapa.maisPerto = function (x, y, de) {
-    var melhor = null, dist = 1e9, querAgua = Mapa.agua(x, y);
-    for (var r = 0; r <= 3; r++) for (var j = -r; j <= r; j++) for (var i = -r; i <= r; i++) {
-      var nx = x + i, ny = y + j;
-      if (!dentro(nx, ny) || solido[ny][nx]) continue;
-      if (!querAgua && Mapa.agua(nx, ny)) continue;
-      var d = Math.abs(nx - de.x) + Math.abs(ny - de.y) + (Math.abs(i) + Math.abs(j)) * 3;
-      if (d < dist) { dist = d; melhor = { x: nx, y: ny }; }
-    }
-    if (!melhor && !querAgua) {
-      for (var r2 = 0; r2 <= 3 && !melhor; r2++) for (var j2 = -r2; j2 <= r2; j2++) for (var i2 = -r2; i2 <= r2; i2++) {
-        var ax = x + i2, ay = y + j2;
-        if (dentro(ax, ay) && !solido[ay][ax]) { melhor = { x: ax, y: ay }; break; }
+    function procurar(aceitaAgua) {
+      var melhor = null, dist = 1e9;
+      for (var r = 0; r <= 3; r++) for (var j = -r; j <= r; j++) for (var i = -r; i <= r; i++) {
+        var nx = x + i, ny = y + j;
+        if (!dentro(nx, ny) || solido[ny][nx]) continue;
+        if (!aceitaAgua && Mapa.agua(nx, ny)) continue;
+        var d = Math.abs(nx - de.x) + Math.abs(ny - de.y) + (Math.abs(i) + Math.abs(j)) * 3;
+        if (d < dist) { dist = d; melhor = { x: nx, y: ny }; }
       }
+      return melhor;
     }
-    return melhor;
+    // tocou em terra (arbusto, casa): prefere um tile de terra, para ela não atravessar o lago nadando
+    var querAgua = Mapa.agua(x, y);
+    return procurar(querAgua) || (querAgua ? null : procurar(true));
   };
 
   /* ================= DESENHO ================= */

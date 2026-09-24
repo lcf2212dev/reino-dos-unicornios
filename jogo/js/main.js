@@ -36,14 +36,12 @@
     var dock = U.$('#hud .dock');
     if (dock) { var d = dock.getBoundingClientRect(); if (d.bottom > d.top) m.baixo = Math.max(0, r.bottom - d.top); }
     m.topo = m.topo * dpr / escala; m.baixo = m.baixo * dpr / escala;
-    // quanto da largura da tela o menu de baixo cobre (no celular, quase toda)
-    m.dockLargura = dock && r.width > 0 ? dock.getBoundingClientRect().width / r.width : 0;
     return m;
   }
 
-  // no mapa, só a borda de baixo passa do fim do mapa, e só quando o menu de baixo cobre mais da
-  // metade da largura (celular): senão ele esconde a última fileira (portas da Pet Shop e do
-  // Observatório). No tablet e no notebook dá para ver a fileira ao lado do menu: nada muda lá.
+  // no mapa, só a borda de baixo passa do fim do mapa, na altura do menu de baixo: senão ele esconde
+  // a última fileira (portas da Pet Shop e do Observatório no celular; no notebook, o menu fica
+  // centrado bem em cima do lago e esconderia quem nada na última fileira dele).
   // Em cima não: a coluna de chips da esquerda é alta e deixaria meia tela de grama vazia; as
   // placas já descem para fugir do HUD de cima.
   // A medida é guardada (getBoundingClientRect por quadro é caro) e refeita a cada meio segundo ou
