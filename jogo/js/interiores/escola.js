@@ -182,11 +182,11 @@
   var FUNDO_RARIDADE = { lendario: '#ffe6f7', raro: '#dcefff', comum: '#f4f0f8' };
   var BORDA_RARIDADE = { lendario: '#ff7eb6', raro: '#5fb4ff', comum: '#c4b4d4' };
   var RARIDADES = ['lendario', 'raro', 'comum'];
+  // só o prêmio da prova acende o mural: comprar os outros na Loja das Fadas não conta
   function ganhou(P, prova, r) {
     var a = prova.acessorios && prova.acessorios[r];
-    if (!a || !P) return false;
-    var est = P.estado ? P.estado() : null;
-    return !!((est && est.loja && est.loja[a.id]) || (P.regProva && P.regProva(prova).premio === r));
+    if (!a || !P || !P.regProva) return false;
+    return P.regProva(prova).premio === r;
   }
   function larguraMural(n) { return n <= 1 ? 4 : 7; }
   I.objeto('escola-mural', { w: 7, h: 1, topo: 30, solido: true, alto: true,

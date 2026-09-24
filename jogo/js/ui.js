@@ -338,24 +338,13 @@
   };
 
   /* ---------- loja das fadas ---------- */
-  var ITENS = [
-    { id: 'flor', nome: 'Flor na orelha', preco: 8, slot: 'orelha', icone: '🌸' },
-    { id: 'laco', nome: 'Laço de fita', preco: 12, slot: 'orelha', icone: '🎀' },
-    { id: 'oculos', nome: 'Óculos de coração', preco: 15, slot: 'olho', icone: '💗' },
-    { id: 'capa', nome: 'Capa mágica (para você)', preco: 20, slot: 'capa', icone: '🦸' },
-    { id: 'coroa', nome: 'Coroa real', preco: 25, slot: 'cabeca', icone: '👑' },
-    { id: 'estrelinhas', nome: 'Rastro de estrelinhas', preco: 30, slot: 'rastro', icone: '✨' },
-    { id: 'asasFada', nome: 'Asinhas de fada', preco: 45, slot: 'asas', icone: '🧚' },
-  ];
-  UI.ITENS_LOJA = ITENS;   // a Loja das Fadas por dentro mostra estes mesmos enfeites
-  // acessórios ganhos nas provas da Escola usam os mesmos encaixes dos enfeites da loja
-  function acessorioComoItem(a) { return { id: a.id, nome: a.nome, slot: PA.ENFEITES_MONTARIA[a.id].ancora, raridade: a.raridade, premio: true }; }
-  function itemPorId(id) {
-    var it = ITENS.find(function (x) { return x.id === id; });
-    if (it) return it;
-    var a = Reino.Provas && Reino.Provas.acessorio(id);
-    return a ? acessorioComoItem(a) : null;
-  }
+  // a lista é única e mora em js/loja-itens.js (Reino.LojaItens): enfeites à venda e prêmios da Escola
+  var LI = Reino.LojaItens;
+  var ITENS = LI.ENFEITES;
+  UI.ITENS_LOJA = ITENS;   // apelido: a Loja das Fadas por dentro e quem mais precisar leem a mesma lista
+  // acessórios das provas usam os mesmos encaixes dos enfeites da loja
+  function acessorioComoItem(a) { return LI.item(a.id); }
+  function itemPorId(id) { return LI.item(id); }
   function usando(item) {
     var u = est().usando;
     if (item.slot === 'capa') return u.capa;
@@ -369,14 +358,43 @@
     else if (item.slot === 'rastro') u.estrelinhas = !u.estrelinhas;
     else if (item.slot === 'asas') u.asasFada = !u.asasFada;
     else {
+      // um enfeite por encaixe: tira o que estava no mesmo encaixe
       var ja = u.enfeites.indexOf(item.id) >= 0;
       u.enfeites = u.enfeites.filter(function (id) { var it = itemPorId(id); return it && it.slot !== item.slot; });
       if (!ja) u.enfeites.push(item.id);
     }
   }
 
-  UI.alternarEnfeite = function (id) { alternar(itemPorId(id)); };
-  UI.usandoEnfeite = function (id) { return usando(itemPorId(id)); };
+  UI.alternarEnfeite = function (id) { var it = itemPorId(id); if (it) alternar(it); };
+  UI.usandoEnfeite = function (id) { var it = itemPorId(id); return !!it && usando(it); };
+
+  // ícone do item: desenho de js/icones.js pela chave ('enfeite:…', 'acessorio:…') ou o emoji (vira pixel sozinho)
+  function iconeItem(item) {
+    var chave = item.icone || '';
+    if (chave.indexOf(':') > 0) {
+      var d = PA.iconeDesenho(chave);
+      if (d) return PA.paraDOM(d, PA.escalaNitida(36, 16), 'icone-acessorio');
+    }
+    return chave;
+  }
+  // comprar com estrelas (enfeite ou prêmio à venda): gasta, guarda, já veste e grava
+  function comprar(item, depois) {
+    if (P.estrelas() < item.preco) {
+      Reino.Som.tocar('toque');
+      Reino.Claude.falar('Faltam ' + (item.preco - P.estrelas()) + ' estrelas para ' + item.nome + '. Cada acerto de primeira vale uma estrela! ⭐', { fala: [Reino.Falas.fixas.lojaFaltam] });
+      return;
+    }
+    UI.confirmar('Trocar ' + item.preco + ' estrelas por ' + item.nome + '?', 'Sim, quero! ✨', 'Agora não').then(function (sim) {
+      if (!sim) return;
+      if (!P.gastarEstrelas(item.preco)) return;   // (as estrelas não mudam enquanto ela confirma, mas por via das dúvidas)
+      est().loja[item.id] = true;
+      if (!usando(item)) alternar(item);
+      P.salvar();
+      Reino.Som.tocar('estrela'); UI.confete(40);
+      depois(); U.emit('mapaMudou');
+    });
+  }
+  var avisouPremios = false;   // a regra nova dos prêmios é falada uma vez por sessão
 
   UI.telaLoja = function () {
     var pn = painel('lugar', '🧚 Loja das Fadas');
@@ -384,7 +402,7 @@
     var saldo = el('div.saldo-estrelas');
     var vitrine = el('div.vitrine-previa');
     var grade = el('div.grade-loja');
-    var gradePremios = el('div.grade-loja');
+    var premiosBox = el('div');
     function pintar() {
       U.preencher(saldo, '⭐ Você tem ' + P.estrelas() + ' estrelas');
       vitrine.innerHTML = '';
@@ -398,55 +416,64 @@
       grade.innerHTML = '';
       ITENS.forEach(function (item) {
         var tem = !!est().loja[item.id];
-        var b = el('button.item-loja' + (tem ? '.comprado' : '') + (usando(item) ? '.usando' : ''), { type: 'button' },
-          el('span.item-icone', item.icone), el('b', item.nome),
+        var b = el('button.item-loja' + (tem ? '.comprado' : '') + (usando(item) ? '.usando' : ''), { type: 'button', 'data-item': item.id },
+          el('span.item-icone', iconeItem(item)), el('b', item.nome),
           el('span.item-preco', tem ? (usando(item) ? '✓ Usando' : 'Usar') : '⭐ ' + item.preco));
         b.addEventListener('click', function () {
           if (tem) { alternar(item); Reino.Som.tocar('selecionar'); P.salvar(); pintar(); U.emit('mapaMudou'); return; }
-          if (P.estrelas() < item.preco) {
-            Reino.Som.tocar('toque');
-            Reino.Claude.falar('Faltam ' + (item.preco - P.estrelas()) + ' estrelas para ' + item.nome + '. Cada acerto de primeira vale uma estrela! ⭐', { fala: [Reino.Falas.fixas.lojaFaltam] });
-            return;
-          }
-          UI.confirmar('Trocar ' + item.preco + ' estrelas por ' + item.nome + '?', 'Sim, quero! ✨', 'Agora não').then(function (sim) {
-            if (!sim) return;
-            P.gastarEstrelas(item.preco);
-            est().loja[item.id] = true;
-            alternar(item);
-            if (!usando(item)) alternar(item);
-            P.salvar();
-            Reino.Som.tocar('estrela'); UI.confete(40);
-            pintar(); U.emit('mapaMudou');
-          });
+          comprar(item, pintar);
         });
         grade.appendChild(b);
       });
-      // prêmios da Escola do Reino: não se compram, se ganham acertando a prova
-      gradePremios.innerHTML = '';
-      Reino.Provas.acessorios().forEach(function (a) {
-        var item = acessorioComoItem(a);
-        var tem = !!est().loja[a.id];
-        var rar = Reino.Unicornios.RARIDADES[a.raridade];
-        var desenho = tem ? Reino.Provas.icone(a.id, 36) : PA.paraDOM(PA.silhueta(PA.iconeDesenho('acessorio:' + a.id)), PA.escalaNitida(36, 16), 'icone-acessorio');
-        var b = el('button.item-loja.item-premio.rar-' + a.raridade + (tem ? '.comprado' : '.bloqueado') + (tem && usando(item) ? '.usando' : ''), { type: 'button' },
-          el('span.item-icone', desenho), el('b', a.nome),
-          el('span.item-preco', tem ? (usando(item) ? '✓ Usando' : 'Usar') : '🔒 ' + rar.emoji + ' ' + rar.nome));
-        b.addEventListener('click', function () {
-          if (tem) { alternar(item); Reino.Som.tocar('selecionar'); P.salvar(); pintar(); U.emit('mapaMudou'); return; }
-          Reino.Som.tocar('toque');
-          Reino.Claude.falar(Reino.Falas.provas.lojaPremio);
+      // prêmios da Escola do Reino: ganha 1 acertando TUDO na prova; os outros 2 da mesma prova ficam à venda
+      premiosBox.innerHTML = '';
+      (Reino.provas || []).forEach(function (pv) {
+        var reg = P.regProva(pv);
+        var ganhou = reg.premio ? Reino.Unicornios.RARIDADES[reg.premio] : null;
+        premiosBox.appendChild(el('p.bau-nota', el('b', pv.emoji + ' ' + pv.nome), ganhou
+          ? ' • Você ganhou o ' + ganhou.emoji + ' ' + ganhou.nome.toLowerCase() + '! Os outros estão à venda.'
+          : ' • Acerte TUDO na prova para ganhar o primeiro.'));
+        var g = el('div.grade-loja');
+        LI.premios().filter(function (p) { return p.provaId === pv.id; }).forEach(function (p) {
+          var item = acessorioComoItem(p);
+          var st = LI.estadoPremio(p, P);
+          var tem = st === 'ganho' || st === 'comprado';
+          var rar = Reino.Unicornios.RARIDADES[p.raridade];
+          var desenho = st === 'bloqueado'
+            ? PA.paraDOM(PA.silhueta(PA.iconeDesenho('acessorio:' + p.id)), PA.escalaNitida(36, 16), 'icone-acessorio')
+            : Reino.Provas.icone(p.id, 36);
+          var rotulo = st === 'ganho' ? el('span.chip-mini.ok', '🏫 Ganho na prova')
+            : st === 'comprado' ? el('span.chip-mini', '⭐ Comprado')
+            : el('span.chip-mini', rar.emoji + ' ' + rar.nome);
+          var preco = tem ? (usando(item) ? '✓ Usando' : 'Usar') : st === 'aVenda' ? '⭐ ' + p.preco : '🔒 ' + rar.emoji + ' ' + rar.nome;
+          var b = el('button.item-loja.item-premio.rar-' + p.raridade + '.premio-' + st + (tem ? '.comprado' : st === 'bloqueado' ? '.bloqueado' : '') + (tem && usando(item) ? '.usando' : ''),
+            { type: 'button', 'data-item': p.id, 'data-estado': st },
+            el('span.item-icone', desenho), el('b', p.nome), st === 'bloqueado' ? null : rotulo, el('span.item-preco', preco));
+          b.addEventListener('click', function () {
+            if (tem) { alternar(item); Reino.Som.tocar('selecionar'); P.salvar(); pintar(); U.emit('mapaMudou'); return; }
+            if (st === 'aVenda') return comprar(item, pintar);
+            Reino.Som.tocar('toque');
+            Reino.Claude.falar(Reino.Falas.provas.lojaPremio);
+          });
+          g.appendChild(b);
         });
-        gradePremios.appendChild(b);
+        premiosBox.appendChild(g);
       });
     }
     c.appendChild(saldo);
     c.appendChild(vitrine);
     c.appendChild(grade);
     c.appendChild(el('h3.estabulo-grupo', '🏫 Prêmios da Escola do Reino'));
-    c.appendChild(el('p.bau-nota', 'Estes não se compram: você ganha acertando TUDO nas provas da Escola. Na 1ª tentativa é lendário! 🌈'));
-    c.appendChild(gradePremios);
+    c.appendChild(el('p.bau-nota', 'Acerte TUDO numa prova da Escola e ganhe um destes (na 1ª tentativa é lendário!). Depois, os outros dois daquela prova se trocam por estrelas. 🌈'));
+    c.appendChild(premiosBox);
     c.appendChild(el('p.bau-nota', 'As fadas trocam estrelas por enfeites. Você ganha estrelas acertando de primeira e com a Estrela da Calma. 🌙'));
     pintar();
+    // primeira vez na sessão com prêmio à venda: o Claude conta a novidade
+    var algumAVenda = LI.premios().some(function (p) { return LI.estadoPremio(p, P) === 'aVenda'; });
+    if (algumAVenda && !avisouPremios) {
+      avisouPremios = true;
+      Reino.Claude.falar(LI.FALAS.premiosAVenda);
+    }
   };
 
   /* ---------- estábulo / álbum ---------- */

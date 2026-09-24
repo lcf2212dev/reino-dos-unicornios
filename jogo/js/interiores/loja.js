@@ -10,20 +10,16 @@
   var ELENCO = (R.NPCs && R.NPCs.ELENCO) || {};
   var LILAS = '#c9a8ff', LILAS2 = '#9b6bd6', MUSGO = '#7fa84a', MUSGO2 = '#5e8a36', ROSA = '#ff9cc6';
 
-  // os mesmos enfeites da tela da Loja (UI.ITENS_LOJA); esta cópia só serve às ferramentas sem a UI
-  function enfeites() { return (R.UI && R.UI.ITENS_LOJA) || ENFEITES; }
-  var ENFEITES = [
-    { id: 'flor', icone: '🌸', preco: 8 }, { id: 'laco', icone: '🎀', preco: 12 },
-    { id: 'oculos', icone: '💗', preco: 15 }, { id: 'capa', icone: '🦸', preco: 20 },
-    { id: 'coroa', icone: '👑', preco: 25 }, { id: 'estrelinhas', icone: '✨', preco: 30 },
-    { id: 'asasFada', icone: '🧚', preco: 45 },
-  ];
+  // a lista única da Loja (js/loja-itens.js): os mesmos enfeites e prêmios da tela da Loja
+  function enfeites() { return (R.LojaItens && R.LojaItens.ENFEITES) || []; }
 
   function v(o, k, padrao) { return (o && o.var && o.var[k] !== undefined) ? o.var[k] : padrao; }
   function brilho(ctx, x, y, c) { ret(ctx, x, y - 1, 1, 3, c); ret(ctx, x - 1, y, 3, 1, c); }
   function est(P) { try { return P && P.estado ? P.estado() : null; } catch (e) { return null; } }
   function comprados(P) { var e = est(P); return (e && e.loja) || {}; }
-  function premios() { try { return R.Provas ? R.Provas.acessorios() : []; } catch (e) { return []; } }
+  function premios() { try { return R.LojaItens ? R.LojaItens.premios() : []; } catch (e) { return []; } }
+  // 'bloqueado' | 'aVenda' | 'ganho' | 'comprado' (derivado do save, como na tela da Loja)
+  function estadoPremio(a, P) { try { return R.LojaItens.estadoPremio(a, P); } catch (e) { return 'bloqueado'; } }
   function icone(chave) { return (window.PA && PA.iconeDesenho) ? PA.iconeDesenho(chave) : null; }
   // desenha um canvas cabendo numa caixa (sem suavizar), com a base encostada embaixo
   function caber(ctx, img, cx, base, maxW, maxH) {
@@ -38,6 +34,38 @@
   // estrelinha de etiqueta (5×5)
   function estrelinha(ctx, x, y, c) {
     ret(ctx, x + 2, y, 1, 5, c); ret(ctx, x, y + 2, 5, 1, c); ret(ctx, x + 1, y + 1, 3, 3, c);
+  }
+  // algarismos 3×5 para as etiquetas de preço
+  var DIGITOS = {
+    0: ['111', '101', '101', '101', '111'], 1: ['010', '110', '010', '010', '111'], 2: ['111', '001', '111', '100', '111'],
+    3: ['111', '001', '111', '001', '111'], 4: ['101', '101', '111', '001', '001'], 5: ['111', '100', '111', '001', '111'],
+    6: ['111', '100', '111', '101', '111'], 7: ['111', '001', '010', '010', '010'], 8: ['111', '101', '111', '101', '111'],
+    9: ['111', '101', '111', '001', '111'],
+  };
+  function numero(ctx, x, y, n, cor) {
+    String(n).split('').forEach(function (d, i) {
+      (DIGITOS[d] || []).forEach(function (l, j) {
+        for (var k = 0; k < 3; k++) if (l[k] === '1') ret(ctx, x + i * 4 + k, y + j, 1, 1, cor);
+      });
+    });
+  }
+  // etiqueta de preço (creme, com o número): canto de baixo à direita em (x, y)
+  function etiquetaPreco(ctx, x, y, n) {
+    var w = String(n).length * 4 + 3;
+    ret(ctx, x, y, w, 9, K); ret(ctx, x + 1, y + 1, w - 2, 7, C.creme);
+    ret(ctx, x - 1, y + 3, 1, 3, K);   // o furinho da etiqueta
+    numero(ctx, x + 2, y + 2, n, K);
+  }
+  // cadeado pequeno (prêmio que ainda não dá para comprar)
+  function cadeado(ctx, x, y) {
+    ret(ctx, x + 1, y, 3, 1, K); ret(ctx, x, y + 1, 1, 2, K); ret(ctx, x + 4, y + 1, 1, 2, K);
+    ret(ctx, x - 1, y + 3, 7, 5, K); ret(ctx, x, y + 4, 5, 3, C.ouro); ret(ctx, x + 2, y + 5, 1, 1, K);
+  }
+  // medalha de fita arco-íris: ganho na prova
+  function medalha(ctx, x, y) {
+    ret(ctx, x, y, 3, 4, K); ret(ctx, x + 4, y, 3, 4, K);
+    ret(ctx, x + 1, y, 1, 3, '#ff7eb6'); ret(ctx, x + 5, y, 1, 3, '#5fb4ff');
+    ret(ctx, x + 1, y + 3, 5, 5, K); ret(ctx, x + 2, y + 4, 3, 3, C.ouro); ret(ctx, x + 2, y + 4, 1, 1, C.ouro3);
   }
   // lacinho rosa de "é seu"
   function lacinho(ctx, x, y) {
@@ -57,47 +85,49 @@
   }
 
   /* ================= OBJETOS DA LOJA ================= */
-  // vitrine dos enfeites: duas prateleiras com os ícones; os comprados ganham laço e brilho
-  I.objeto('loja-vitrine-enfeites', { w: 4, h: 1, topo: 30, solido: true,
+  // vitrine dos enfeites: três prateleiras com os ícones de toda a lista; os comprados ganham fundo rosa e selo ✓
+  I.objeto('loja-vitrine-enfeites', { w: 5, h: 1, topo: 44, solido: true,
     chave: function (P) { var c = comprados(P); return 'enf:' + enfeites().map(function (it) { return c[it.id] ? 1 : 0; }).join(''); },
     desenhar: function (ctx, px, py, o, P) {
-      var W = 64, top = py - 30, c = comprados(P);
+      var W = 80, top = py - 44, c = comprados(P), lista = enfeites();
       // móvel de madeira lilás com vidro
-      ret(ctx, px + 1, top, W - 2, 46, K);
-      ret(ctx, px + 2, top + 1, W - 4, 44, LILAS2);
-      ret(ctx, px + 3, top + 2, W - 6, 13, '#f3eaff'); ret(ctx, px + 3, top + 18, W - 6, 13, '#f3eaff');
-      ret(ctx, px + 2, top + 15, W - 4, 3, K); ret(ctx, px + 2, top + 16, W - 4, 1, LILAS);
-      ret(ctx, px + 2, top + 31, W - 4, 3, K); ret(ctx, px + 2, top + 32, W - 4, 1, LILAS);
+      ret(ctx, px + 1, top, W - 2, 60, K);
+      ret(ctx, px + 2, top + 1, W - 4, 58, LILAS2);
+      for (var f = 0; f < 3; f++) {
+        ret(ctx, px + 3, top + 2 + f * 16, W - 6, 13, '#f3eaff');
+        ret(ctx, px + 2, top + 15 + f * 16, W - 4, 3, K); ret(ctx, px + 2, top + 16 + f * 16, W - 4, 1, LILAS);
+      }
       // gaveta de baixo com puxadores
-      ret(ctx, px + 3, top + 35, W - 6, 9, LILAS); ret(ctx, px + 3, top + 35, W - 6, 1, '#e0d0ff');
-      ret(ctx, px + 16, top + 39, 4, 2, K); ret(ctx, px + 44, top + 39, 4, 2, K);
-      enfeites().forEach(function (it, i) {
-        var fila = i < 4 ? 0 : 1, col = fila ? i - 4 : i;
-        var cx = fila ? px + 16 + col * 16 : px + 8 + col * 16, base = top + (fila ? 31 : 15);
+      ret(ctx, px + 3, top + 50, W - 6, 8, LILAS); ret(ctx, px + 3, top + 50, W - 6, 1, '#e0d0ff');
+      ret(ctx, px + 20, top + 53, 4, 2, K); ret(ctx, px + 56, top + 53, 4, 2, K);
+      var porFila = Math.max(1, Math.ceil(lista.length / 3)), esp = Math.floor((W - 6) / porFila);
+      var x0 = px + 3 + Math.floor((W - 6 - porFila * esp) / 2);
+      lista.slice(0, porFila * 3).forEach(function (it, i) {
+        var fila = Math.floor(i / porFila), col = i % porFila;
+        var cx = x0 + col * esp + Math.floor(esp / 2), base = top + 15 + fila * 16;
         if (c[it.id]) {
-          // é seu: fundo rosa, fita no canto e selo verde com ✓
-          ret(ctx, cx - 7, base - 13, 15, 13, '#ffc2e0');
-          caber(ctx, icone(it.icone), cx, base, 12, 12);
-          ret(ctx, cx - 7, base - 13, 4, 1, '#ff4f9a'); ret(ctx, cx - 7, base - 12, 3, 1, '#ff4f9a'); ret(ctx, cx - 7, base - 11, 2, 1, '#ff4f9a'); ret(ctx, cx - 7, base - 10, 1, 1, '#ff4f9a');
-          ret(ctx, cx + 2, base - 7, 7, 7, K); ret(ctx, cx + 3, base - 6, 5, 5, '#3fbf6a');
-          ret(ctx, cx + 4, base - 4, 1, 1, C.branco); ret(ctx, cx + 5, base - 3, 1, 1, C.branco); ret(ctx, cx + 6, base - 4, 1, 1, C.branco); ret(ctx, cx + 7, base - 5, 1, 1, C.branco);
+          // é seu: fundo rosa e selo verde com ✓
+          ret(ctx, cx - 6, base - 12, 12, 12, '#ffc2e0');
+          caber(ctx, icone(it.icone), cx - 1, base - 1, 10, 10);
+          ret(ctx, cx + 1, base - 5, 5, 5, K); ret(ctx, cx + 2, base - 4, 3, 3, '#3fbf6a');
+          ret(ctx, cx + 3, base - 3, 1, 1, C.branco);
         } else {
-          // à venda: etiqueta dourada com estrela (o preço)
-          caber(ctx, icone(it.icone), cx, base, 12, 12);
-          ret(ctx, cx + 2, base - 7, 7, 7, K); ret(ctx, cx + 3, base - 6, 5, 5, C.creme);
-          estrelinha(ctx, cx + 3, base - 6, C.ouro2); ret(ctx, cx + 5, base - 4, 1, 1, C.ouro);
+          // à venda: moedinha de estrela no canto
+          caber(ctx, icone(it.icone), cx - 1, base - 1, 10, 10);
+          ret(ctx, cx + 1, base - 5, 5, 5, K); ret(ctx, cx + 2, base - 4, 3, 3, C.ouro2); ret(ctx, cx + 3, base - 3, 1, 1, C.ouro3);
         }
       });
       // vidro: reflexo
       ret(ctx, px + 5, top + 3, 1, 5, C.branco); ret(ctx, px + 6, top + 3, 1, 2, C.branco);
       // coroinha no topo
-      ret(ctx, px + 28, top - 3, 8, 3, K); ret(ctx, px + 29, top - 2, 6, 1, C.ouro);
+      ret(ctx, px + 36, top - 3, 8, 3, K); ret(ctx, px + 37, top - 2, 6, 1, C.ouro);
     } });
-  // vitrine dos prêmios da Escola: ganhos coloridos, os outros em silhueta
+  // vitrine dos prêmios da Escola: ganho na prova (medalha de fita), comprado (lacinho rosa),
+  // à venda (colorido, com a etiqueta do preço) e bloqueado (silhueta com cadeado)
   I.objeto('loja-vitrine-premios', { w: 3, h: 1, topo: 30, solido: true,
-    chave: function (P) { var c = comprados(P); return 'pre:' + premios().map(function (a) { return c[a.id] ? 1 : 0; }).join(''); },
+    chave: function (P) { return 'pre:' + premios().map(function (a) { return estadoPremio(a, P).charAt(0); }).join(''); },
     desenhar: function (ctx, px, py, o, P) {
-      var W = 48, top = py - 30, c = comprados(P);
+      var W = 48, top = py - 30;
       ret(ctx, px + 1, top, W - 2, 46, K);
       ret(ctx, px + 2, top + 1, W - 4, 44, C.ouro2); ret(ctx, px + 2, top + 1, W - 4, 1, C.ouro3);
       ret(ctx, px + 3, top + 2, W - 6, 13, '#fff6dc'); ret(ctx, px + 3, top + 18, W - 6, 13, '#fff6dc');
@@ -110,8 +140,19 @@
         var cx = px + 8 + col * 16, base = top + (fila ? 31 : 15);
         var img = icone('acessorio:' + a.id);
         if (!img) return;
-        if (c[a.id]) { caber(ctx, img, cx, base, 13, 13); brilho(ctx, cx + 6, base - 12, C.branco); }
-        else caber(ctx, (window.PA && PA.silhueta) ? PA.silhueta(img) : img, cx, base, 13, 13);
+        var st = estadoPremio(a, P);
+        if (st === 'bloqueado') {
+          caber(ctx, (window.PA && PA.silhueta) ? PA.silhueta(img) : img, cx, base, 13, 13);
+          cadeado(ctx, cx + 2, base - 8);
+        } else if (st === 'aVenda') {
+          // colorido embaixo e a etiqueta do preço pendurada em cima, à direita
+          caber(ctx, img, cx - 2, base, 11, 11);
+          etiquetaPreco(ctx, cx, base - 13, a.preco);
+        } else {
+          caber(ctx, img, cx, base, 13, 13); brilho(ctx, cx + 6, base - 12, C.branco);
+          if (st === 'ganho') medalha(ctx, cx - 7, base - 13);
+          else lacinho(ctx, cx - 7, base - 12);
+        }
       });
       // chapéu de formatura no topo
       ret(ctx, px + 18, top - 4, 12, 3, K); ret(ctx, px + 19, top - 3, 10, 1, LILAS2); ret(ctx, px + 23, top - 6, 2, 2, K);
@@ -349,7 +390,6 @@
     // vitrines
     { tipo: 'vaso-planta', x: 1, y: 8 },
     inter('vitrine-enfeites', 'Vitrine dos enfeites', { tipo: 'loja-vitrine-enfeites', x: 2, y: 8, acao: TELA }),
-    { tipo: 'loja-cogumelo', x: 6, y: 8, var: { cor: '#ffd34d' } },
     inter('vitrine-premios', 'Prêmios da Escola', { tipo: 'loja-vitrine-premios', x: 10, y: 8, acao: TELA }),
     { tipo: 'loja-cogumelo', x: 13, y: 8, var: { cor: '#b58cff' } },
     { tipo: 'vaso-planta', x: 15, y: 9 },
