@@ -62,6 +62,7 @@ p { margin: 0; }
 
 /* ---------- mapa ---------- */
 #reino { position: fixed; inset: 0; display: block; touch-action: none; }
+#reino:focus { outline: none; }   /* recebe o foco quando a última tela fecha pelo teclado (ui.js, focarMapa) */
 
 /* ---------- botões ---------- */
 .btn-grande {
@@ -184,6 +185,7 @@ p { margin: 0; }
   overflow: auto;
   animation: aparecer 0.18s ease-out;
 }
+.tela:focus { outline: none; }   /* a tela recebe o foco ao abrir pelo teclado (ui.js, abrirTela) */
 .painel {
   position: relative;
   width: min(720px, 100%);

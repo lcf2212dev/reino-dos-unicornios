@@ -1,13 +1,13 @@
 /* Pet Shop, fome e sede: barrinhas do HUD e do Estábulo, tela da Pet Shop (UI.telaPetShop)
    e a escolha de comida do Estábulo. Usa as classes de jogo.css (painel, item-loja, chip-mini…). */
 :root {
-  /* bem alimentado: laranja-maçã calmo; o vermelho fica só para o alerta (fome baixa) */
-  --fome: #f08a2c;          /* maçã madurinha */
-  --fome-clara: #ffc46b;
+  /* fome em rosa-maçã (o laranja se confundia com a barra de crescimento, também com daltonismo) */
+  --fome: #d6457a;          /* maçã madurinha */
+  --fome-clara: #ff9ec0;
   --sede: #2f7fe0;          /* água */
   --sede-clara: #7cc4ff;
-  --cuid-baixo-fundo: #ffe1d6;
-  --cuid-baixo-borda: #b8321c;
+  --cuid-baixo-fundo: #ffe7c7;
+  --cuid-aviso: #8f4a12;    /* texto "Quer comer!/Quer água!": marrom calmo, sem cara de alarme */
 }
 
 /* ---------- HUD: estágio ao lado da barrinha de crescimento ---------- */
@@ -28,20 +28,23 @@
 .cuid-cheio { display: block; height: 100%; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5); transition: width 0.4s ease; }
 .cuid-fome .cuid-cheio { background: linear-gradient(90deg, var(--fome), var(--fome-clara)); }
 .cuid-sede .cuid-cheio { background: linear-gradient(90deg, var(--sede), var(--sede-clara)); }
-/* baixa (< 25): trilho quentinho e borda mais forte, fome em vermelho e sede em azul-escuro;
-   o ícone chama com um pulinho de 2px (em degrau, sem escala: o pixel continua nítido) */
-.cuid-barra.baixo .cuid-trilho { background: var(--cuid-baixo-fundo); border-color: var(--cuid-baixo-borda); }
-.cuid-fome.baixo .cuid-cheio { background: #d42a3a; }
-.cuid-sede.baixo .cuid-cheio { background: #1c5fb8; }
-.cuid-barra.baixo > canvas, .cuid-barra.baixo .cuid-rotulo canvas { animation: cuid-chamar 2.4s step-end infinite; }
+/* baixa (< 25): trilho listrado quentinho (o listrado se vê com qualquer daltonismo), barra na cor
+   de sempre, sem vermelho de alarme; o ícone chama com 3 pulinhos de 2px (em degrau, sem escala:
+   o pixel continua nítido) e para */
+.cuid-barra.baixo .cuid-trilho { background: repeating-linear-gradient(135deg, #fff 0 4px, var(--cuid-baixo-fundo) 4px 8px); border-color: var(--borda); }
+.cuid-fome.baixo .cuid-cheio { background: var(--fome); }
+.cuid-sede.baixo .cuid-cheio { background: var(--sede); }
+.cuid-barra.baixo > canvas, .cuid-barra.baixo .cuid-rotulo canvas { animation: cuid-chamar 2.4s step-end 3; }
 @keyframes cuid-chamar { 0%, 60%, 100% { transform: none; } 45% { transform: translateY(-2px); } }
 body.sem-animacao .cuid-barra.baixo canvas { animation: none; }
 body.sem-animacao .cuid-cheio { transition: none; }
+@media (prefers-reduced-motion: reduce) { .cuid-cheio { transition: none; } }
 
 /* mini: HUD e cartas do Estábulo */
 .cuid-par-mini { width: 100%; margin-top: 2px; }
 .cuid-par-mini .cuid-barra { flex: 1; }
 .cuid-mini .cuid-trilho { height: 8px; border-radius: 5px; }
+#hud .cuid-mini .cuid-trilho { min-width: 28px; }   /* no HUD a barrinha nunca some espremida */
 .carta-uni .cuid-par-mini { width: 86%; }
 
 /* grande: detalhe do unicórnio, Pet Shop e escolha de comida */
@@ -50,7 +53,7 @@ body.sem-animacao .cuid-cheio { transition: none; }
 .cuid-grande .cuid-rotulo { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; font-size: 0.85em; min-width: 6.5em; }
 .cuid-grande .cuid-rotulo canvas { flex: none; vertical-align: middle; }
 .cuid-grande .cuid-trilho { height: 16px; border-width: 3px; border-radius: 8px; }
-.cuid-grande .cuid-aviso { grid-column: 2; font-size: 0.75em; font-weight: 700; color: var(--cuid-baixo-borda); }
+.cuid-grande .cuid-aviso { grid-column: 2; font-size: 0.75em; font-weight: 700; color: var(--cuid-aviso); }
 .cuid-grande .cuid-aviso:empty { display: none; }
 .cuid-detalhe { padding: 12px 14px; border: 3px solid var(--borda); border-radius: 16px; background: var(--papel); }
 
@@ -67,13 +70,18 @@ body.sem-animacao .cuid-cheio { transition: none; }
    à esquerda); todas as cartas com a mesma largura, então os ícones saem do mesmo tamanho */
 .grade-comidas { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
 .grade-comidas > .item-comida { flex: 0 0 calc((100% - 24px) / 3); min-width: 0; }
-.item-comida { position: relative; min-height: 150px; justify-content: center; color: var(--tinta); }
+/* ícone e nome alinhados pelo topo em toda a linha; o preço (e o "🧺 ×N") descem para o pé da carta */
+.item-comida { position: relative; min-height: 150px; justify-content: flex-start; color: var(--tinta); }
+.item-comida .item-preco { order: 2; margin-top: auto; }
+.item-comida .comida-tem { order: 1; margin-top: auto; }            /* "🧺 ×N" logo acima do preço */
+.item-comida:has(.comida-tem) .item-preco { margin-top: 4px; }     /* preços na mesma altura */
+.item-comida .sem-quebra { white-space: nowrap; }   /* "arco-íris" não quebra no hífen */
 .item-comida:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--borda); }
 .item-comida:focus-visible { outline: 4px solid var(--roxo); outline-offset: 2px; }
 .item-comida b { text-align: center; line-height: 1.5; max-width: 100%; overflow-wrap: anywhere; }
-.comida-enche { font-size: 0.85em; font-weight: 700; color: var(--certo); }
+.comida-enche { font-size: 0.85em; font-weight: 700; color: #1b6e45; }   /* verde mais escuro: 5,8:1 no papel */
 .item-comida.falta .item-preco { background: #f1edf5; color: var(--tinta-suave); }
-.item-comida .comida-tem { margin-top: 2px; font-size: 0.86em; } /* ≥ 12px */
+.item-comida .comida-tem { font-size: 0.86em; } /* ≥ 12px */
 .petshop-despensa {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px;
   padding: 10px 14px; border: 3px dashed var(--borda); border-radius: 16px; background: var(--papel-2);
@@ -81,6 +89,31 @@ body.sem-animacao .cuid-cheio { transition: none; }
 .petshop-despensa p { margin: 0; }
 .petshop-despensa .chip-mini { font-size: 0.8em; }
 .petshop-vazia { text-align: center; font-weight: 700; }
+
+/* confirmação da compra (UI.escolher com 3 opções): linha gentil de barriga cheia e,
+   em tela baixa (celular deitado), botões lado a lado e o painel rola se ainda não couber */
+.confirmar-nota { display: block; margin-top: 8px; font-size: 0.85em; color: var(--tinta-suave); }
+.painel-compra { overflow: auto; }
+@media (max-height: 480px) {
+  .painel-compra { width: min(760px, 100%); padding: 14px 16px; gap: 8px; }
+  .painel-compra .confirmar-nota { margin-top: 4px; }
+  .painel-compra > .intro-botoes { flex-direction: row; flex-wrap: nowrap; margin-top: 6px; gap: 8px; }
+  .painel-compra > .intro-botoes > .btn-grande { flex: 1 1 0; min-width: 0; padding: 10px 12px; }
+}
+
+/* balão dos cuidados com uma tela aberta (ui.js, balaoNaTela): o balão desce para o pé da
+   tela e as telas encolhem para acima dele; nenhum botão fica coberto */
+body.recado-cuidado #claude-balao { bottom: calc(env(safe-area-inset-bottom, 0px) + 10px); }
+body.recado-cuidado .tela { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 22px + var(--recado-altura, 150px)); }
+
+/* notebook: a Pet Shop mais larga, as 5 comidas numa linha e fome e sede lado a lado,
+   para caber sem rolar em 1366×768 */
+@media (min-width: 1000px) {
+  .tela-petshop .painel { width: min(1000px, 100%); }
+  .tela-petshop .grade-comidas > .item-comida { flex-basis: calc((100% - 48px) / 5); }
+  .tela-petshop .cuid-par-grande { flex-direction: row; gap: 18px; }
+  .tela-petshop .cuid-par-grande > .cuid-barra { flex: 1; }
+}
 
 @media (max-width: 480px) {
   /* celular: 2 por linha; a última sozinha (o bolo) ocupa a linha inteira, centralizada */
@@ -96,4 +129,16 @@ body.sem-animacao .cuid-cheio { transition: none; }
   .cuid-grande .cuid-aviso { grid-column: 1 / -1; grid-row: 3; text-align: right; white-space: nowrap; font-size: 0.75em; }
   .cuid-grande .cuid-trilho { grid-column: 1 / -1; grid-row: 2; }
   .cuid-par-mini { gap: 4px; }
+  /* chip da montaria com fome e sede: nome em cima na largura toda; embaixo o unicórnio e as
+     duas barrinhas uma sobre a outra. O estágio e o crescimento ficam no Estábulo */
+  .chip-montaria.com-cuidados { flex-wrap: wrap; column-gap: 6px; row-gap: 2px; padding: 5px 10px 6px 8px; }
+  .chip-montaria.com-cuidados .montaria-info { display: contents; }
+  .chip-montaria.com-cuidados .montaria-info b { order: -1; flex: 0 0 100%; min-width: 0; }
+  .chip-montaria.com-cuidados .montaria-cresce { display: none; }
+  .chip-montaria.com-cuidados .cuid-par-mini { flex: 1 1 0; flex-direction: column; gap: 5px; margin: 0; min-width: 0; }
+  .chip-montaria.com-cuidados .cuid-mini .cuid-trilho { min-width: 40px; }
+  /* balão dos cuidados sobre uma tela: letra um pouco menor e mais largura, até 3 linhas */
+  body.recado-cuidado #claude-balao { left: 6px; right: 6px; gap: 6px; }
+  body.recado-cuidado #claude-balao .claude-fala { padding: 10px 10px 8px; }
+  body.recado-cuidado #claude-balao .claude-texto { font-size: 0.85em; }
 }

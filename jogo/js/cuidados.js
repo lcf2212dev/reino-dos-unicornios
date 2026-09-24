@@ -21,7 +21,7 @@
     lembreteSede: 'Seu unicórnio está com sede. Tem água fresquinha na Pet Shop! 💧',
     lembreteAmbos: 'Seu unicórnio está com fome e sede. Vamos até a Pet Shop? 🍎💧',
     faltamEstrelas: 'Ainda faltam estrelas para essa comidinha. Cada acerto de primeira vale uma estrela! ⭐',
-    guardado: 'Guardei a comidinha na despensa do Estábulo! 💛',
+    guardado: 'Guardei na despensa do Estábulo! 💛',
     comeu: 'Que comidinha mais gostosa! 💛',
     cheio: 'Seu unicórnio está de barriga cheia agora.',
     bebeu: 'Que água fresquinha e gostosa! 💧',
@@ -187,7 +187,17 @@
     if (aqui && aqui.lugarId === 'petshop') return;
     ultimoLembrete = agora();
     var chave = b.fome && b.sede ? 'lembreteAmbos' : b.sede ? 'lembreteSede' : 'lembreteFome';
-    Reino.Claude.falar(C.frases[chave], { tempo: 6000 });
+    // ela está livre (sem balão): o lembrete aparece na hora e fica aberto até a promessa resolver
+    var meu = lembreteAberto = {};
+    Reino.Claude.falar(C.frases[chave], { tempo: 6000 }).then(function () { if (lembreteAberto === meu) lembreteAberto = null; });
+  }
+  // abriu uma tela (sala, prova, treino, Loja…) ou entrou na Pet Shop: o lembrete já passou.
+  // Fecha o balão e cala a voz dele, para ele não ficar por cima dos botões da tela.
+  var lembreteAberto = null;
+  function fecharLembrete() {
+    if (!lembreteAberto) return;
+    lembreteAberto = null;
+    if (Reino.Claude && Reino.Claude.aberto && Reino.Claude.aberto()) Reino.Claude.fechar();
   }
 
   function passo() {
@@ -209,6 +219,8 @@
     ['pointerdown', 'touchstart', 'keydown'].forEach(function (ev) { window.addEventListener(ev, tocou, op); });
     // qualquer gravação (de qualquer lugar do jogo) já leva a fome e a sede junto
     Reino.util.on('progresso', function () { pendente = 0; ultimaGravacao = agora(); });
+    Reino.util.on('telas', function (n) { if (n > 0) fecharLembrete(); });
+    Reino.util.on('cena', function (m) { if (m && m.para === 'petshop') fecharLembrete(); });
     // a aba vai para o fundo: guarda o que ainda não foi gravado
     document.addEventListener('visibilitychange', function () {
       if (document.hidden && pendente > 0) gravar();

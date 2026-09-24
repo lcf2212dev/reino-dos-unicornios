@@ -50,10 +50,34 @@
   ['pointerdown', 'pointerup'].forEach(function (ev) {
     document.addEventListener(ev, function (e) { if (e.isTrusted) ultimoToque = performance.now(); }, true);
   });
+  // a última coisa usada foi o teclado? (quem fecha uma tela decide para onde vai o foco)
+  var ultimaTecla = -1e9;
+  document.addEventListener('keydown', function (e) { if (e.isTrusted) ultimaTecla = performance.now(); }, true);
   document.addEventListener('click', function (e) {
     if (!e.isTrusted || !e.detail || performance.now() >= toquesLivresEm) return;
     e.preventDefault(); e.stopImmediatePropagation();
   }, true);
+  /* Toque repetido no mesmo lugar: quem acha que "não aconteceu nada" toca de novo, e o botão que
+     nasceu embaixo do dedo pode ser o de gastar estrela (o "Comprar e guardar" fica em cima dos
+     cartões de comida). Nos botões que gastam, um toque a menos de 40 px do toque anterior e menos
+     de 1,1 s depois não vale. Numa rajada, cada toque ignorado conta como o anterior, então nenhuma
+     sequência no mesmo lugar compra; um toque noutro ponto, ou depois de uma pausa, vale. */
+  var TOQUE_PERTO_PX = 40, TOQUE_REPETIDO_MS = 1100;
+  var ultimosToques = [];   // os 2 últimos pointerdown de verdade: { x, y, t }
+  document.addEventListener('pointerdown', function (e) {
+    if (!e.isTrusted) return;
+    ultimosToques.push({ x: e.clientX, y: e.clientY, t: performance.now() });
+    if (ultimosToques.length > 2) ultimosToques.shift();
+  }, true);
+  function toqueRepetido(e) {
+    if (!e || !e.isTrusted || !e.detail || ultimosToques.length < 2) return false;
+    var a = ultimosToques[0], b = ultimosToques[1];
+    return b.t - a.t < TOQUE_REPETIDO_MS && Math.abs(b.x - a.x) < TOQUE_PERTO_PX && Math.abs(b.y - a.y) < TOQUE_PERTO_PX;
+  }
+  // logo depois de uma compra, o toque seguinte no mesmo lugar cai no cartão que acabou de ser
+  // comprado (e tirava o enfeite): os cartões da Loja ignoram toques por 1 s depois da compra
+  var comprouEm = -1e9;
+  function logoDepoisDaCompra(e) { return !!(e && e.isTrusted && e.detail) && performance.now() - comprouEm < 1000; }
 
   /* ---------- telas e diálogos ---------- */
   var FOCAVEIS = 'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -71,6 +95,15 @@
     document.body.classList.add('com-tela');
     segurarSeFoiToque();
     U.emit('telas', pilha.length);
+    // o foco entra na tela nova (as que já focam algo, em até 30 ms, ficam como estão): senão ele
+    // ficava no botão do menu atrás dela, e cada Enter abria a mesma tela de novo por cima
+    setTimeout(function () {
+      if (t !== topo() || t.contains(document.activeElement)) return;
+      var bal = document.getElementById('claude-balao');
+      if (bal && bal.contains(document.activeElement)) return;
+      // a própria tela (como um diálogo): Enter de novo não faz nada, e o Tab leva ao 1º botão
+      t.setAttribute('tabindex', '-1'); focar(t);
+    }, 60);
     return t;
   };
   UI.fecharTela = function (t) {
@@ -85,12 +118,27 @@
     segurarSeFoiToque();
     U.emit('telas', pilha.length);
     UI.atualizarHUD();
-    // o foco não cai no body: volta para o botão que abriu esta tela ou para o 1º da tela de baixo
-    if (eraTopo && (tinhaFoco || document.activeElement === document.body || !document.activeElement)) {
-      var baixo = topo();
-      if (!(t._focoAntes && (!baixo || baixo.contains(t._focoAntes)) && focar(t._focoAntes)) && baixo) focar(focaveis(baixo)[0]);
+    // o foco não cai no body: volta para o botão que abriu esta tela ou para o 1º da tela de baixo.
+    // Fechada com toque ou mouse, de volta ao mapa, o foco não volta para o botão do HUD: senão o
+    // Espaço/Enter de andar e falar reabria a tela que ela acabou de fechar.
+    var baixo = topo();
+    if (eraTopo && !baixo && ultimoToque > ultimaTecla) {
+      var at = document.activeElement;
+      if (at && at.blur && at.closest && at.closest('#hud')) at.blur();
+    } else if (eraTopo && (tinhaFoco || document.activeElement === document.body || !document.activeElement)) {
+      if (!(t._focoAntes && (!baixo || baixo.contains(t._focoAntes)) && focar(t._focoAntes))) {
+        if (baixo) focar(focaveis(baixo)[0]);
+        else focarMapa();   // quem abriu (o balão da Dona Aveia, o telescópio) já sumiu
+      }
     }
   };
+  // sem tela nenhuma e sem botão para voltar: o foco vai para o mapa, não para o body
+  function focarMapa() {
+    var cv = document.getElementById('reino');
+    if (!cv) return;
+    if (!cv.hasAttribute('tabindex')) cv.setAttribute('tabindex', '-1');
+    focar(cv);
+  }
   UI.fecharTodas = function () { while (pilha.length) UI.fecharTela(pilha[pilha.length - 1]); };
   UI.temTela = function () { return pilha.length > 0; };
 
@@ -114,38 +162,46 @@
   }
   UI.painel = painel;
 
-  // diálogo com vários botões: `botoes` = [{ rotulo, valor, principal, seguro }]. O seguro (ou o
+  // diálogo com vários botões: `botoes` = [{ rotulo, valor, principal, seguro, gasta }]. O seguro (ou o
   // 1º, se nenhum for marcado) recebe o foco e é o que o Esc escolhe. Resolve com o `valor` tocado.
-  UI.escolher = function (msg, botoes) {
+  // `classe` (opcional) vai no painel. `gasta`: o botão gasta estrela e não aceita toque repetido no mesmo lugar (toqueRepetido).
+  UI.escolher = function (msg, botoes, classe) {
     return new Promise(function (resolver) {
       var t = UI.abrirTela('confirmar');
       var idMsg = 'confirmar-msg-' + (++nPainel);
       t.setAttribute('aria-labelledby', idMsg);
       var bs = botoes.map(function (b) {
         var bt = el('button.btn-grande' + (b.principal ? '.btn-principal' : '.btn-secundario'), { type: 'button' }, b.rotulo);
-        bt.addEventListener('click', function () { UI.fecharTela(t); resolver(b.valor); });
+        bt.addEventListener('click', function (e) {
+          if (b.gasta && toqueRepetido(e)) return;   // o mesmo dedo de antes: não gasta
+          if (b.gasta) comprouEm = performance.now();
+          UI.fecharTela(t); resolver(b.valor);
+        });
         return bt;
       });
-      t.appendChild(el('div.painel.painel-pequeno', el('p.confirmar-msg', { id: idMsg }, msg), el('div.intro-botoes' + (bs.length > 2 ? '.coluna' : ''), bs)));
+      t.appendChild(el('div.painel.painel-pequeno' + (classe ? '.' + classe : ''), el('p.confirmar-msg', { id: idMsg }, msg), el('div.intro-botoes' + (bs.length > 2 ? '.coluna' : ''), bs)));
       var iSeguro = Math.max(0, botoes.findIndex(function (b) { return b.seguro; }));
       t._aoEsc = function () { bs[iSeguro].click(); };
       setTimeout(function () { focar(bs[iSeguro]); }, 30);
     });
   };
-  UI.confirmar = function (msg, sim, nao) {
-    return UI.escolher(msg, [{ rotulo: nao || 'Não', valor: false }, { rotulo: sim || 'Sim', valor: true, principal: true }]);
+  UI.confirmar = function (msg, sim, nao, gasta) {
+    return UI.escolher(msg, [{ rotulo: nao || 'Não', valor: false }, { rotulo: sim || 'Sim', valor: true, principal: true, gasta: !!gasta }]);
   };
 
   /* ---------- teclado nas telas ----------
      Esc fecha a tela de cima (✕ do painel, "não" do diálogo). Fica no window, depois dos
      ouvintes do document (a pergunta surpresa trata o próprio Esc e marca defaultPrevented).
-     Tab/Shift+Tab ficam presos na tela de cima (e no balão do Claude, se estiver com botões),
+     Tab/Shift+Tab ficam presos na tela de cima (e no balão do Claude, se estiver aberto: ele
+     sempre tem botões, o 🔊 e o Ok ou as escolhas),
      senão o foco ia para o HUD atrás e um Enter abria outra tela por cima. */
   function campoDeTexto(e) { return !!(e && e.matches && e.matches('input:not([type=button]):not([type=checkbox]):not([type=radio]), textarea, select, [contenteditable]')); }
   window.addEventListener('keydown', function (e) {
     var t = topo();
     if (!t || e.defaultPrevented || e.key !== 'Escape' || e.repeat) return;
     if (campoDeTexto(document.activeElement)) return;
+    // balão do Claude por cima da tela: o 1º Esc fecha o balão; o seguinte, a tela
+    if (Reino.Claude && Reino.Claude.aberto && Reino.Claude.aberto()) { e.preventDefault(); Reino.Claude.fechar(); return; }
     if (t._aoEsc) { e.preventDefault(); t._aoEsc(); }
   });
   document.addEventListener('keydown', function (e) {
@@ -193,8 +249,8 @@
   // Toda barrinha de fome/sede leva data-uni e data-campo: um único ouvinte do evento 'cuidados'
   // repinta todas as que estão na página (HUD, Estábulo, Pet Shop) sem refazer nada em volta.
   var CUIDADO = {
-    fome: { icone: '🍎', rotulo: 'Fome', baixo: 'Com fome!' },
-    sede: { icone: '💧', rotulo: 'Sede', baixo: 'Com sede!' },
+    fome: { icone: '🍎', rotulo: 'Fome', baixo: 'Quer comer!' },
+    sede: { icone: '💧', rotulo: 'Sede', baixo: 'Quer água!' },
   };
   function cuidadosProntos() { return !!(Reino.Cuidados && Reino.Cuidados.niveis); }
   function uniChocado(id) { var u = est().unis[id]; return !!(u && u.chocado); }
@@ -210,7 +266,8 @@
     var cheio = el('span.cuid-cheio');
     var b = el('span.cuid-barra.cuid-' + campo + '.cuid-' + tamanho,
       { role: 'meter', 'aria-valuemin': '0', 'aria-valuemax': '100', 'data-uni': uniId, 'data-campo': campo },
-      tamanho === 'grande' ? el('span.cuid-rotulo', iconePequeno(info.icone, pxIconeGrande()), el('span', info.rotulo)) : iconePequeno(info.icone, 12),
+      // mini: 16px pedidos = 16px CSS nítidos em dpr 1, 2 e 3 (com 12 o iPhone ficava com 10,7px)
+      tamanho === 'grande' ? el('span.cuid-rotulo', iconePequeno(info.icone, pxIconeGrande()), el('span', info.rotulo)) : iconePequeno(info.icone, 16),
       el('span.cuid-trilho', cheio),
       tamanho === 'grande' ? el('small.cuid-aviso') : null);
     pintarBarra(b);
@@ -256,11 +313,59 @@
     var Cu = Reino.Cuidados, texto = Cu.frases[chave];
     if (!texto) return Promise.resolve(null);
     var voz = Cu.vozDaFrase(chave);
-    // balão comum que fecha sozinho: não fica por cima dos botões da tela aberta
+    // balão comum que fecha sozinho em 5 s
     var op = { voz: voz, agora: true, tempo: 5000 };
     if (voz === 'unicornio') op.quem = { nome: P.nomeUni(uniId), retrato: retratoUni(uniId), voz: voz };
-    return Reino.Claude.falar(texto, op);
+    return balaoNaTela(texto, op);
   }
+  // Balão dos cuidados com uma tela aberta: ele nunca cobre um botão dela. Enquanto está aberto,
+  // body.recado-cuidado desce o balão para o pé da tela e encolhe as telas para acima dele
+  // (--recado-altura, petshop.css; o painel rola se precisar). Uma tela nova por cima (a
+  // confirmação de outra compra) fecha o balão. Os balões das outras telas não mudam.
+  var recado = null;   // { texto, telas } do balão dos cuidados que está sobre as telas
+  function soLetras(t) { return String(t).replace(/[^a-zà-ÿ0-9]/gi, '').slice(0, 24); }
+  function balaoNaTela(texto, op) {
+    var pr = Reino.Claude.falar(texto, op);
+    if (!UI.temTela()) return pr;
+    var meu = recado = { texto: texto, telas: pilha.length };
+    var corpo = document.body;
+    corpo.classList.add('recado-cuidado');
+    var tentativas = 0;
+    (function medir() {
+      if (recado !== meu) return;
+      var bal = document.querySelector('#claude-balao:not([hidden])');
+      var tx = bal && bal.querySelector('.claude-texto');
+      // com outro balão aberto, o nosso entra 180 ms depois (claude.js): espera ele aparecer
+      if (!tx || soLetras(tx.textContent) !== soLetras(texto)) { if (++tentativas < 90) requestAnimationFrame(medir); return; }
+      corpo.style.setProperty('--recado-altura', Math.ceil(bal.getBoundingClientRect().height) + 'px');
+    })();
+    var focoAntes = document.activeElement;
+    pr.then(function () {
+      if (recado === meu) soltarRecado();
+      // o balão sumiu sozinho com o foco nele (Tab preso inclui o balão): o foco volta para a tela
+      var t = topo(), at = document.activeElement;
+      if (t && (!at || at === document.body || (at.closest && at.closest('#claude-balao')))) {
+        if (!(t.contains(focoAntes) && focar(focoAntes))) focar(focaveis(t)[0]);
+      }
+    });
+    return pr;
+  }
+  function soltarRecado() {
+    recado = null;
+    document.body.classList.remove('recado-cuidado');
+    document.body.style.removeProperty('--recado-altura');
+  }
+  U.on('telas', function (n) {
+    if (!recado) return;
+    if (n > recado.telas) {                                           // tela nova por cima: o recado já passou
+      var tx = document.querySelector('#claude-balao:not([hidden]) .claude-texto');
+      var eraEle = tx && soLetras(tx.textContent) === soLetras(recado.texto);
+      soltarRecado();
+      if (eraEle) Reino.Claude.fechar();
+    }
+    else if (!n) soltarRecado();                                      // voltou ao mapa: balão comum
+    else recado.telas = n;
+  });
   // dá uma comida da despensa: nhac + o unicórnio agradece; barriga cheia: não gasta a comida
   function darComida(uniId, comidaId) {
     var r = Reino.Cuidados.alimentar(uniId, comidaId);
@@ -271,6 +376,10 @@
   }
   function comidaPorId(id) { return Reino.Cuidados.comidas().find(function (c) { return c.id === id; }) || null; }
   function textoEnche(c) { return c.enche ? 'Enche tudo!' : 'Enche +' + c.fome; }
+  // nome da comida: palavra com hífen não quebra no hífen ("arco-" / "íris"); o resto hifeniza
+  function nomeComida(nome) {
+    return String(nome).split(/(\S+-\S+)/).map(function (p, i) { return i % 2 ? el('span.sem-quebra', p) : hifenizar(p); });
+  }
 
   /* ---------- tela cheia (esconde a barra do claude.ai em volta do jogo) ---------- */
   var ICONE_ABRIR = '<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>';
@@ -325,6 +434,8 @@
       botaoDock('plano', 'plano', ['Plano', 'da Prova'], 'Plano da Prova'),
       botaoDock('ajustes', 'ajustes', ['Ajustes'], 'Ajustes'));
     hud.appendChild(dock);
+    // com uma tela aberta, o HUD fica atrás dela: um Enter num botão dele não empilha outra tela
+    hud.addEventListener('click', function (e) { if (UI.temTela()) { e.preventDefault(); e.stopImmediatePropagation(); } }, true);
     pintarBotaoTela();
     dinheiro.addEventListener('click', function () { Reino.Som.tocar('toque'); UI.telaBau(); });
     estrelas.addEventListener('click', function () { Reino.Som.tocar('toque'); UI.telaLoja(); });
@@ -361,6 +472,9 @@
     // o ícone do estágio fica ao lado do nome do estágio e da barrinha de crescimento; assim
     // a linha da fome e da sede cabe embaixo sem o chip crescer
     var estg = Reino.Unicornios.ESTAGIOS[pe.estagio];
+    var comCuidados = cuidadosProntos() && uniChocado(id);
+    // com fome e sede, o celular arruma o chip em outra grade (petshop.css): nome em cima, na largura toda
+    m.classList.toggle('com-cuidados', comCuidados);
     m.appendChild(el('span.montaria-info',
       el('b', P.nomeUni(id)),
       el('span.montaria-cresce',
@@ -368,7 +482,7 @@
         el('span.montaria-cresce-col',
           el('span.montaria-estagio', estg.nome),
           el('span.barrinha', el('span', { style: { width: Math.round(pe.pct * 100) + '%' } })))),
-      cuidadosProntos() && uniChocado(id) ? barrasCuidado(id, 'mini') : null));
+      comCuidados ? barrasCuidado(id, 'mini') : null));
   };
 
   /* ---------- lugares ---------- */
@@ -583,10 +697,10 @@
       var falta = item.preco - P.estrelas();
       // o número só aparece na tela; a voz fala a frase gravada (de enfeite ou de prêmio da Escola)
       Reino.Claude.falar((falta === 1 ? 'Falta 1 estrela' : 'Faltam ' + falta + ' estrelas') + ' para ' + item.nome + '. Cada acerto de primeira vale uma estrela! ⭐',
-        { fala: [item.premio ? LI.FALAS.faltamPremio : Reino.Falas.fixas.lojaFaltam] });
+        { fala: [item.premio ? LI.FALAS.faltamPremio : Reino.Falas.fixas.lojaFaltam], tempo: 5000 });
       return;
     }
-    UI.confirmar('Trocar ' + item.preco + ' estrelas por ' + item.nome + '?', 'Sim, quero! ✨', 'Agora não').then(function (sim) {
+    UI.confirmar('Trocar ' + item.preco + ' estrelas por ' + item.nome + '?', 'Sim, quero! ✨', 'Agora não', true).then(function (sim) {
       if (!sim) return;
       if (!P.gastarEstrelas(item.preco)) return;   // (as estrelas não mudam enquanto ela confirma, mas por via das dúvidas)
       est().loja[item.id] = true;
@@ -625,7 +739,8 @@
           { type: 'button', 'data-item': item.id, 'aria-label': item.nome + ', ' + (tem ? (usando(item) ? 'usando' : 'comprado, tocar para usar') : item.preco + ' estrelas') },
           el('span.item-icone', iconeItem(item)), el('b', hifenizar(item.nome)),
           el('span.item-preco', tem ? (usando(item) ? '✓ Usando' : 'Usar') : '⭐ ' + item.preco));
-        b.addEventListener('click', function () {
+        b.addEventListener('click', function (e) {
+          if (logoDepoisDaCompra(e)) return;
           if (tem) { alternar(item); Reino.Som.tocar('selecionar'); P.salvar(); pintar(); U.emit('mapaMudou'); return; }
           comprar(item, pintar);
         });
@@ -658,7 +773,8 @@
                 : tem ? (usando(item) ? 'usando' : (st === 'ganho' ? 'ganho na prova' : 'comprado') + ', tocar para usar')
                 : p.preco + ' estrelas, ' + rar.nome.toLowerCase()) },
             el('span.item-icone', desenho), el('b', hifenizar(p.nome)), st === 'bloqueado' ? null : rotulo, el('span.item-preco', preco));
-          b.addEventListener('click', function () {
+          b.addEventListener('click', function (e) {
+            if (logoDepoisDaCompra(e)) return;
             if (tem) { alternar(item); Reino.Som.tocar('selecionar'); P.salvar(); pintar(); U.emit('mapaMudou'); return; }
             if (st === 'aVenda') return comprar(item, pintar);
             Reino.Som.tocar('toque');
@@ -765,6 +881,8 @@
     var botoes = el('div.intro-botoes');
     if (cuidadosProntos()) {
       c.appendChild(el('div.cuid-detalhe', barrasCuidado(d.id, 'grande')));
+      // com sede, o Estábulo não tem o que dar: diz onde tem água
+      if (Reino.Cuidados.baixo(d.id).sede) c.appendChild(el('p.bau-nota', '💧 Tem água fresquinha na Pet Shop, de graça!'));
       var comer = el('button.btn-grande.btn-secundario.btn-dar-comida', { type: 'button' }, '🥕 Dar comida');
       comer.addEventListener('click', function () { Reino.Som.tocar('toque'); escolherComida(d); });
       botoes.appendChild(comer);
@@ -808,7 +926,8 @@
         if (l) U.emit('irPara', l);
       });
       c.appendChild(el('div.intro-botoes', ir));
-      falarCuidado('despensaVazia', d.id);
+      // o aviso já está escrito na tela: só a voz (um balão por cima tapava o "Ir até a Pet Shop")
+      Reino.Som.falar(Cu.frases.despensaVazia, { voz: Cu.vozDaFrase('despensaVazia') });
       setTimeout(function () { try { ir.focus({ preventScroll: true }); } catch (e) {} }, 30);
       return;
     }
@@ -816,7 +935,7 @@
     var grade = el('div.grade-loja.grade-comidas');
     lista.forEach(function (x) {
       var b = el('button.item-loja.item-comida', { type: 'button', 'data-comida': x.comida.id, 'aria-label': x.comida.nome + ', ' + textoEnche(x.comida).toLowerCase() + ', ' + x.quantidade + ' na despensa' },
-        el('span.item-icone', x.comida.icone), el('b', hifenizar(x.comida.nome)),
+        el('span.item-icone', x.comida.icone), el('b', nomeComida(x.comida.nome)),
         el('span.comida-enche', textoEnche(x.comida)),
         el('span.item-preco', '🧺 ×' + x.quantidade));
       b.addEventListener('click', function () {
@@ -840,6 +959,8 @@
     var grade = el('div.grade-loja.grade-comidas');
     var despensa = el('div.petshop-despensa');
     function pintar(focar) {
+      // refazer a grade encolhe o painel por um instante: a rolagem volta para onde ela estava
+      var rolagem = c.scrollTop;
       U.preencher(saldo, '⭐ Você tem ' + P.estrelas() + (P.estrelas() === 1 ? ' estrela' : ' estrelas'));
       var id = P.montaria();
       uniBox.innerHTML = '';
@@ -850,7 +971,7 @@
         var tem = Cu.quantidade(co.id);
         var b = el('button.item-loja.item-comida' + (P.estrelas() < co.preco ? '.falta' : ''),
           { type: 'button', 'data-comida': co.id, 'aria-label': co.nome + ', ' + textoEnche(co).toLowerCase() + ', ' + co.preco + (co.preco === 1 ? ' estrela' : ' estrelas') + (tem ? ', ' + tem + ' na despensa' : '') },
-          el('span.item-icone', co.icone), el('b', hifenizar(co.nome)),
+          el('span.item-icone', co.icone), el('b', nomeComida(co.nome)),
           el('span.comida-enche', textoEnche(co)),
           el('span.item-preco', '⭐ ' + co.preco),
           tem ? el('span.chip-mini.comida-tem', '🧺 ×' + tem) : null);
@@ -865,23 +986,28 @@
         lista.forEach(function (x) { despensa.appendChild(el('span.chip-mini', x.comida.icone + ' ×' + x.quantidade)); });
       }
       if (focar) { var f = grade.querySelector('[data-comida="' + focar + '"]'); if (f) try { f.focus({ preventScroll: true }); } catch (e) {} }
+      c.scrollTop = rolagem;
     }
     function faltamEstrelas(co, faltam) {
       Reino.Som.tocar('toque');
-      // o número só aparece na tela; a voz fala a frase gravada
-      Reino.Claude.falar((faltam === 1 ? 'Falta 1 estrela' : 'Faltam ' + faltam + ' estrelas') + ' para ' + co.nome + '. Cada acerto de primeira vale uma estrela! ⭐',
-        { fala: [Cu.frases.faltamEstrelas], agora: true });
+      // o número só aparece na tela (curto: até 3 linhas no celular); a voz fala a frase gravada
+      // o caminho para ganhar estrela fica escrito também (valUX): ela sem estrela e ele com fome
+      balaoNaTela((faltam === 1 ? 'Falta 1 estrela!' : 'Faltam ' + faltam + ' estrelas!') + ' Uma sala dá estrelas.',
+        { fala: [Cu.frases.faltamEstrelas], agora: true, tempo: 5000 });
     }
     // nada é gasto sem ela confirmar (como na Loja): um diálogo só, com comprar e dar, comprar
     // e guardar, ou "Agora não" (o seguro, com o foco e no Esc)
     function comprarComida(co) {
       if (P.estrelas() < co.preco) { faltamEstrelas(co, co.preco - P.estrelas()); return; }
       var id = P.montaria();
-      UI.escolher('Trocar ' + co.preco + (co.preco === 1 ? ' estrela' : ' estrelas') + ' por ' + co.nome + '?', [
-        { rotulo: 'Comprar e dar agora ' + co.icone, valor: 'dar', principal: true },
-        { rotulo: 'Comprar e guardar 🧺', valor: 'guardar' },
+      // de barriga cheia ele não come: sem "dar agora", e ela fica sabendo antes de gastar
+      var cheio = uniChocado(id) && Cu.niveis(id).fome >= 99.5;
+      var pergunta = 'Trocar ' + co.preco + (co.preco === 1 ? ' estrela' : ' estrelas') + ' por ' + co.nome + '?';
+      UI.escolher(cheio ? [pergunta, el('span.confirmar-nota', P.nomeUni(id) + ' está de barriga cheia. A comidinha fica guardada para depois! 💛')] : pergunta, [
+        cheio ? null : { rotulo: 'Comprar e dar agora ' + co.icone, valor: 'dar', principal: true, gasta: true },
+        { rotulo: 'Comprar e guardar 🧺', valor: 'guardar', principal: cheio, gasta: true },
         { rotulo: 'Agora não', valor: null, seguro: true },
-      ]).then(function (v) {
+      ].filter(Boolean), 'painel-compra').then(function (v) {
         if (!v) { pintar(co.id); return; }
         var r = Cu.comprar(co.id);
         if (!r.ok) { if (r.motivo === 'estrelas') faltamEstrelas(co, r.faltam); else Reino.Som.tocar('toque'); pintar(co.id); return; }
