@@ -120,6 +120,24 @@
   // o tamanho acompanha a escala do mapa (em tela de alta densidade o mapa cresce junto).
   // caixas das placas do último desenho, em px do jogo (para tocar na placa)
   var placasNaTela = [];
+  // retângulos de verdade dos chips e botões do HUD (e do menu de baixo), em px do canvas. A faixa
+  // .hud-topo ocupa a largura toda da tela: medir ela empurrava para baixo qualquer placa no alto do
+  // mapa, mesmo sem chip nenhum em cima (a da Escola ia parar no meio do lago). A medida é guardada
+  // (getBoundingClientRect por quadro é caro) e refeita a cada meio segundo ou quando a tela muda.
+  var hudMedido = { rects: [], medidoEm: -1e9, chave: '' };
+  function retangulosHud(canvas, dpr) {
+    var agora = performance.now(), chave = canvas.width + 'x' + canvas.height + '@' + dpr;
+    if (chave === hudMedido.chave && agora - hudMedido.medidoEm <= 500) return hudMedido.rects;
+    var c = canvas.getBoundingClientRect();
+    hudMedido.rects = Array.prototype.map.call(document.querySelectorAll('#hud > *:not(.hud-topo), #hud .hud-topo > * > *'), function (e) {
+      var r = e.getBoundingClientRect();
+      // o menu de baixo (dock) empurra a placa para cima; o resto do HUD, para baixo ou para o lado
+      return { left: (r.left - c.left) * dpr, right: (r.right - c.left) * dpr, top: (r.top - c.top) * dpr, bottom: (r.bottom - c.top) * dpr,
+        embaixo: e.classList.contains('dock') };
+    }).filter(function (r) { return r.right > r.left && r.bottom > r.top; });
+    hudMedido.medidoEm = agora; hudMedido.chave = chave;
+    return hudMedido.rects;
+  }
   function desenharPlacas(ctx, pn) {
     placasNaTela = [];
     var canvas = ctx.canvas, escala = pn.escala, dpr = pn.dpr, cam = pn.cam, Jg = J();
@@ -131,13 +149,10 @@
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.font = fonte + 'px ' + FONTE_PIXEL;
-    var c = canvas.getBoundingClientRect();
-    var hud = Array.prototype.map.call(document.querySelectorAll('#hud > *'), function (e) {
-      var r = e.getBoundingClientRect();
-      // o menu de baixo (dock) empurra a placa para cima; o resto do HUD, para baixo
-      return { left: (r.left - c.left) * dpr, right: (r.right - c.left) * dpr, top: (r.top - c.top) * dpr, bottom: (r.bottom - c.top) * dpr,
-        embaixo: e.classList.contains('dock') };
-    }).filter(function (r) { return r.right > r.left; });
+    var hud = retangulosHud(canvas, dpr);
+    var cima = hud.filter(function (r) { return !r.embaixo; });
+    // caixas (px do canvas, com a borda) das placas já postas neste quadro: uma não vai sobre a outra
+    var postas = [];
     Mapa.lugares().forEach(function (l) {
       var linhas = linhasDaPlaca(l.nome);
       var extra = extraDaPlaca(l);
@@ -165,19 +180,35 @@
       x = Math.max(T + 1, Math.min(x, Mapa.largura() - ww - T - 1));
       var sx = Math.round((x - cam.x) * escala);
       var sy = Math.round((y - cam.y) * escala);
-      // no alto do mapa a placa desce para não ficar escondida atrás do HUD;
-      // embaixo, sobe (com o poste) para não ficar atrás do menu
+      // atrás de um chip do HUD de cima, a placa vai para o lugar livre mais perto: embaixo dele ou
+      // ao lado (sem cair sobre outra placa); embaixo, sobe (com o poste) para não ficar atrás do menu
       var posteH = Math.round(10 * escala / 3);
-      hud.forEach(function (r) {
-        if (r.embaixo) return;
-        if (sx < r.right && sx + sw > r.left && sy < r.bottom && sy + sh > r.top) sy = Math.max(sy, r.bottom + borda * 2);
-      });
+      var folga = borda * 2;
+      function cruza(lista, x0, y0) {
+        return lista.some(function (r) { return x0 - folga < r.right && x0 + sw + folga > r.left && y0 - folga < r.bottom && y0 + sh + folga > r.top; });
+      }
+      if (cruza(cima, sx, sy)) {
+        var melhor = null;
+        cima.forEach(function (r) {
+          // (ceil/floor: a borda do chip nem sempre cai num px inteiro)
+          [{ x: sx, y: Math.ceil(r.bottom + folga) }, { x: Math.ceil(r.right + folga), y: sy }, { x: Math.floor(r.left - folga - sw), y: sy }].forEach(function (k) {
+            // para o lado, só se couber inteira na tela (descer mantém o x, mesmo com a placa cortada na borda)
+            if (k.x !== sx && (k.x < folga || k.x + sw + folga > canvas.width)) return;
+            if (cruza(cima, k.x, k.y) || cruza(postas, k.x, k.y)) return;
+            var d = Math.abs(k.x - sx) + Math.abs(k.y - sy);
+            if (!melhor || d < melhor.d) melhor = { x: k.x, y: k.y, d: d };
+          });
+        });
+        if (melhor) { sx = melhor.x; sy = melhor.y; }
+        else cima.forEach(function (r) { if (cruza([r], sx, sy)) sy = Math.max(sy, Math.ceil(r.bottom + folga)); });
+      }
       hud.forEach(function (r) {
         if (!r.embaixo) return;
         if (sx < r.right && sx + sw > r.left && sy - borda < r.bottom && sy + sh + borda + posteH > r.top)
           sy = Math.min(sy, Math.round(r.top) - sh - borda - posteH - borda);
       });
       if (sx > canvas.width || sy > canvas.height || sx + sw < 0 || sy + sh < 0) return;
+      postas.push({ left: sx - borda, right: sx + sw + borda, top: sy - borda, bottom: sy + sh + borda });
       // guarda a caixa como ficou na tela (inclusive quando desceu por causa do HUD ou subiu por causa do menu)
       placasNaTela.push({ lugar: l, x: cam.x + (sx - borda) / escala, y: cam.y + (sy - borda) / escala,
         w: (sw + borda * 2) / escala, h: (sh + borda * 2) / escala });
