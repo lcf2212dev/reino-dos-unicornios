@@ -261,13 +261,16 @@
       if (!x) { r.unis[k] = U.copia(y); return; }
       x.xp = max(x.xp, y.xp); x.em = minPos(x.em, y.em); x.chocado = !!(x.chocado || y.chocado);
     });
-    r.estrelas = { ganhas: max(r.estrelas.ganhas, antigo.estrelas && antigo.estrelas.ganhas), gastas: max(r.estrelas.gastas, antigo.estrelas && antigo.estrelas.gastas) };
+    // estrelas: maior de cada lado; valor estragado (texto, null) conta como 0 e não apaga o número bom do outro lado
+    var er = objeto(r.estrelas) ? r.estrelas : {}, ea = objeto(antigo.estrelas) ? antigo.estrelas : {};
+    r.estrelas = { ganhas: max(numeroOu(er.ganhas, 0), numeroOu(ea.ganhas, 0)), gastas: Math.max(0, max(numeroOu(er.gastas, 0), numeroOu(ea.gastas, 0))) };
     Object.keys(antigo.loja || {}).forEach(function (k) { if (antigo.loja[k]) r.loja[k] = true; });
     // fome e sede: por unicórnio vale o registro mudado por último (`em`; empate: o do lado mais recente).
     // Um lado sem o campo (aparelho com a versão antiga) não apaga nada: vale o outro lado.
-    if (a.cuidados || b.cuidados) r.cuidados = juntarCuidados(U.copia(recente.cuidados || {}), antigo.cuidados);
+    // (cuidados ou despensa estragados no lado mais recente não apagam os do outro lado)
+    if (a.cuidados || b.cuidados) r.cuidados = juntarCuidados(U.copia(objeto(recente.cuidados) ? recente.cuidados : {}), antigo.cuidados);
     // despensa: contadores que só crescem, pelo maior (nunca some comida comprada)
-    if (a.despensa || b.despensa) r.despensa = juntarDespensa(U.copia(recente.despensa || {}), antigo.despensa);
+    if (a.despensa || b.despensa) r.despensa = juntarDespensa(U.copia(objeto(recente.despensa) ? recente.despensa : {}), antigo.despensa);
     // interruptor novo das perguntas surpresa: vale o lado com o carimbo `surpresaEm` maior (troca feita por
     // último); sem carimbo dos dois lados, se o lado mais recente não conhece (versão antiga), vale o do outro
     if (r.ajustes) juntarSurpresa(r.ajustes, antigo.ajustes);

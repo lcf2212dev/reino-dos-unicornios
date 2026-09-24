@@ -929,6 +929,63 @@ teste('D1: a cópia de segurança segue a mesma regra (ação mais nova vence; e
   assert.strictEqual(j.P.carregar().cuidados.inicial.fome, 99);
 });
 
+/* ---------- revalidação de segurança: a mescla com um lado estragado ---------- */
+teste('mescla: estrelas estragadas de um lado não apagam as boas do outro; números bons dão o mesmo de antes', () => {
+  const j = montar();
+  const bom = saveAtual(); bom.atualizado = 1750500000000; bom.estrelas = { ganhas: 40, gastas: 12 };
+  [{ ganhas: 'abc', gastas: 'abc' }, { ganhas: null, gastas: null }, { ganhas: {}, gastas: [] }, null, 'x'].forEach((ruim) => {
+    const mau = saveAtual(); mau.atualizado = 1750900000000; mau.estrelas = ruim;   // o estragado é o mais recente
+    [[bom, mau], [mau, bom]].forEach(([a, b]) => {
+      const r = j.P.mesclar(copia(a), copia(b));
+      assert.deepStrictEqual(copia(r.estrelas), { ganhas: 40, gastas: 12 }, JSON.stringify(ruim));
+    });
+  });
+  const neg = saveAtual(); neg.estrelas = { ganhas: 5, gastas: -30 };
+  const zero = saveAtual(); zero.estrelas = { ganhas: 1, gastas: -2 };
+  assert.deepStrictEqual(copia(j.P.mesclar(copia(neg), copia(zero)).estrelas), { ganhas: 5, gastas: 0 }, 'gastas negativo vira 0');
+  const x = saveAtual(); x.estrelas = { ganhas: 7, gastas: 3 };
+  const y = saveAtual(); y.atualizado += 1; y.estrelas = { ganhas: 9, gastas: 1 };
+  assert.deepStrictEqual(copia(j.P.mesclar(copia(x), copia(y)).estrelas), { ganhas: 9, gastas: 3 });
+  const z = saveAtual(); z.estrelas = { ganhas: '12', gastas: 2 };   // texto com número: como Math.max já fazia
+  assert.deepStrictEqual(copia(j.P.mesclar(copia(z), copia(x)).estrelas), { ganhas: 12, gastas: 3 });
+});
+
+teste('mescla: despensa ou cuidados que não são objeto no lado mais recente não apagam os do outro lado', () => {
+  const j = montar();
+  const bom = saveAtual(); bom.atualizado = 1750500000000;
+  bom.despensa = { maca: { compradas: 3, usadas: 1 } }; bom.cuidados = { inicial: { fome: 20, sede: 30, em: 1750500000000 } };
+  ['texto', 5, true, [1, 2], null].forEach((ruim) => {
+    const mau = saveAtual(); mau.atualizado = 1750900000000; mau.despensa = ruim; mau.cuidados = ruim;
+    [[bom, mau], [mau, bom]].forEach(([a, b]) => {
+      const r = j.P.mesclar(copia(a), copia(b));
+      assert.deepStrictEqual(copia(r.despensa), bom.despensa, JSON.stringify(ruim));
+      assert.deepStrictEqual(copia(r.cuidados), bom.cuidados, JSON.stringify(ruim));
+    });
+  });
+});
+
+teste('outro navegador (sem cópia) com doc estragado e mais recente: comida, cuidados e estrelas continuam', async () => {
+  const s = saveAtual(); s.atualizado = 1750500000000; s.estrelas = { ganhas: 40, gastas: 12 };
+  s.despensa = { bolo: { compradas: 2, usadas: 0 } }; s.cuidados = { inicial: { fome: 20, sede: 30, em: 1750500000000 } };
+  const j = montar({ save: s });
+  j.P.carregar();
+  const doc = saveAtual(); doc.atualizado = 1760000000000; doc.despensa = 'lixo'; doc.cuidados = 7; doc.estrelas = { ganhas: 'abc', gastas: 'abc' };
+  const gravados = [];
+  j.ctx.claude = { use: () => Promise.resolve({ doc: () => ({
+    get: () => Promise.resolve({ exists: true, data: () => ({ estado: copia(doc) }) }),
+    set: (d) => { gravados.push(copia(d)); return Promise.resolve(); }, onSnapshot: () => {},
+  }) }) };
+  await j.P.iniciarNuvem();
+  const e = j.P.estado();
+  assert.deepStrictEqual(copia(e.despensa), s.despensa);
+  assert.strictEqual(e.cuidados.inicial.fome, 20);
+  assert.deepStrictEqual(copia(e.estrelas), { ganhas: 40, gastas: 12 });
+  assert.strictEqual(j.P.estrelas(), 28);
+  const ult = gravados[gravados.length - 1].estado;
+  assert.deepStrictEqual(ult.estrelas, { ganhas: 40, gastas: 12 }, 'o doc volta a ter números');
+  assert.deepStrictEqual(ult.despensa, s.despensa);
+});
+
 (async () => {
   let falhas = 0;
   for (const t of testes) {
