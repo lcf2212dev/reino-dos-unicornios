@@ -36,7 +36,35 @@
     var dock = U.$('#hud .dock');
     if (dock) { var d = dock.getBoundingClientRect(); if (d.bottom > d.top) m.baixo = Math.max(0, r.bottom - d.top); }
     m.topo = m.topo * dpr / escala; m.baixo = m.baixo * dpr / escala;
+    // quanto da largura da tela o menu de baixo cobre (no celular, quase toda)
+    m.dockLargura = dock && r.width > 0 ? dock.getBoundingClientRect().width / r.width : 0;
     return m;
+  }
+
+  // no mapa, só a borda de baixo passa do fim do mapa, e só quando o menu de baixo cobre mais da
+  // metade da largura (celular): senão ele esconde a última fileira (portas da Pet Shop e do
+  // Observatório). No tablet e no notebook dá para ver a fileira ao lado do menu: nada muda lá.
+  // Em cima não: a coluna de chips da esquerda é alta e deixaria meia tela de grama vazia; as
+  // placas já descem para fugir do HUD de cima.
+  // A medida é guardada (getBoundingClientRect por quadro é caro) e refeita a cada meio segundo ou
+  // quando a tela muda de tamanho; a margem usada desliza até a nova medida, para a câmera não pular.
+  var mapaBaixo = { alvo: 0, atual: 0, medidoEm: -1e9, t: 0, chave: '' };
+  function margemBaixoMapa() {
+    var agora = performance.now(), chave = buffer.width + 'x' + buffer.height + '@' + escala;
+    var mudouTela = chave !== mapaBaixo.chave;
+    if (mudouTela || agora - mapaBaixo.medidoEm > 500) {
+      var m = margensHUD();
+      mapaBaixo.alvo = m.dockLargura > 0.5 ? m.baixo : 0;
+      mapaBaixo.medidoEm = agora;
+    }
+    if (mudouTela) { mapaBaixo.chave = chave; mapaBaixo.atual = mapaBaixo.alvo; }
+    else {
+      var dt = Math.min(0.1, Math.max(0, (agora - mapaBaixo.t) / 1000));
+      var d = mapaBaixo.alvo - mapaBaixo.atual;
+      mapaBaixo.atual = Math.abs(d) < 0.05 ? mapaBaixo.alvo : mapaBaixo.atual + d * Math.min(1, dt * 6);
+    }
+    mapaBaixo.t = agora;
+    return mapaBaixo.atual;
   }
 
   function atualizarCamera() {
@@ -45,7 +73,11 @@
     var mw = c.largura(), mh = c.altura();
     var alvoX = J.x - vw / 2, alvoY = J.y - 10 - vh / 2;
     cam.x = mw <= vw ? (mw - vw) / 2 : U.clamp(alvoX, 0, mw - vw);
-    if (c.tipo !== 'interior') { cam.y = mh <= vh ? (mh - vh) / 2 : U.clamp(alvoY, 0, mh - vh); return; }
+    if (c.tipo !== 'interior') {
+      var baixo = margemBaixoMapa();
+      cam.y = mh <= vh - baixo ? (mh - vh + baixo) / 2 : U.clamp(alvoY, 0, Math.max(0, mh - vh + baixo));
+      return;
+    }
     var m = margensHUD(), livre = vh - m.topo - m.baixo;
     cam.y = mh <= livre ? (mh - livre) / 2 - m.topo : U.clamp(alvoY, -m.topo, mh - vh + m.baixo);
   }

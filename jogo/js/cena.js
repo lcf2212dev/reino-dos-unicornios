@@ -134,7 +134,9 @@
     var c = canvas.getBoundingClientRect();
     var hud = Array.prototype.map.call(document.querySelectorAll('#hud > *'), function (e) {
       var r = e.getBoundingClientRect();
-      return { left: (r.left - c.left) * dpr, right: (r.right - c.left) * dpr, top: (r.top - c.top) * dpr, bottom: (r.bottom - c.top) * dpr };
+      // o menu de baixo (dock) empurra a placa para cima; o resto do HUD, para baixo
+      return { left: (r.left - c.left) * dpr, right: (r.right - c.left) * dpr, top: (r.top - c.top) * dpr, bottom: (r.bottom - c.top) * dpr,
+        embaixo: e.classList.contains('dock') };
     }).filter(function (r) { return r.right > r.left; });
     Mapa.lugares().forEach(function (l) {
       var linhas = linhasDaPlaca(l.nome);
@@ -163,12 +165,20 @@
       x = Math.max(T + 1, Math.min(x, Mapa.largura() - ww - T - 1));
       var sx = Math.round((x - cam.x) * escala);
       var sy = Math.round((y - cam.y) * escala);
-      // no alto do mapa a placa desce para não ficar escondida atrás do HUD
+      // no alto do mapa a placa desce para não ficar escondida atrás do HUD;
+      // embaixo, sobe (com o poste) para não ficar atrás do menu
+      var posteH = Math.round(10 * escala / 3);
       hud.forEach(function (r) {
+        if (r.embaixo) return;
         if (sx < r.right && sx + sw > r.left && sy < r.bottom && sy + sh > r.top) sy = Math.max(sy, r.bottom + borda * 2);
       });
+      hud.forEach(function (r) {
+        if (!r.embaixo) return;
+        if (sx < r.right && sx + sw > r.left && sy - borda < r.bottom && sy + sh + borda + posteH > r.top)
+          sy = Math.min(sy, Math.round(r.top) - sh - borda - posteH - borda);
+      });
       if (sx > canvas.width || sy > canvas.height || sx + sw < 0 || sy + sh < 0) return;
-      // guarda a caixa como ficou na tela (inclusive quando desceu por causa do HUD)
+      // guarda a caixa como ficou na tela (inclusive quando desceu por causa do HUD ou subiu por causa do menu)
       placasNaTela.push({ lugar: l, x: cam.x + (sx - borda) / escala, y: cam.y + (sy - borda) / escala,
         w: (sw + borda * 2) / escala, h: (sh + borda * 2) / escala });
       var perto = Jg.x > x - 6 && Jg.x < x + ww + 6 && Jg.y > y - 4 && Jg.y < y + wh + 8;
@@ -182,7 +192,7 @@
       ctx.fillRect(sx, sy, sw, borda);
       var poste = Math.max(4, Math.round(escala));
       ctx.fillStyle = '#8a604a';
-      ctx.fillRect(meio - Math.round(poste / 2), sy + sh + borda, poste, Math.round(10 * escala / 3));
+      ctx.fillRect(meio - Math.round(poste / 2), sy + sh + borda, poste, posteH);
       ctx.fillStyle = '#3a2446';
       linhas.forEach(function (linha, i) {
         ctx.fillText(linha, meio, sy + topo + lh * i + lh / 2);
