@@ -173,15 +173,15 @@
    "tom": "+10Hz"
   },
   "npc-vega": {
-   "voz": "en-US-EmmaMultilingualNeural",
-   "velocidade": "-8%",
+   "voz": "pt-BR-FranciscaNeural",
+   "velocidade": "-2%",
    "tom": "-10Hz"
   },
   "npc-cosmo": {
    "voz": "de-DE-FlorianMultilingualNeural",
    "velocidade": "+6%",
    "tom": "+18Hz",
-   "efeito": "robo"
+   "efeito": "robo-leve"
   },
   "npc-teste-guia": {
    "voz": "de-DE-FlorianMultilingualNeural",
@@ -10417,19 +10417,19 @@
    ]
   },
   {
-   "chave": "46548d6212",
+   "chave": "4fc939aa11",
    "voz": "narradora",
-   "texto": "Água fresquinha e brilhante!",
-   "fala": "Água fresquinha e brilhante!",
+   "texto": "O cocho brilha de limpinho!",
+   "fala": "O cocho brilha de limpinho!",
    "pacotes": [
     "interior-estabulo"
    ]
   },
   {
-   "chave": "814ca7adz",
+   "chave": "b77d96d5z",
    "voz": "narradora",
-   "texto": "Os unicórnios bebem aqui.",
-   "fala": "Os unicórnios bebem aqui.",
+   "texto": "Beber água é na Pet Shop!",
+   "fala": "Beber água é na Pet Shop!",
    "pacotes": [
     "interior-estabulo"
    ]
@@ -10561,6 +10561,15 @@
    ]
   },
   {
+   "chave": "df86834c10",
+   "voz": "narradora",
+   "texto": "Tem até enfeite do espaço!",
+   "fala": "Tem até enfeite do espaço!",
+   "pacotes": [
+    "interior-loja"
+   ]
+  },
+  {
    "chave": "b75aa2ac12",
    "voz": "narradora",
    "texto": "Eles se trocam por estrelas.",
@@ -10579,19 +10588,19 @@
    ]
   },
   {
-   "chave": "23499087v",
+   "chave": "1fd300bd15",
    "voz": "narradora",
-   "texto": "Esses não se compram.",
-   "fala": "Esses não se compram.",
+   "texto": "Acerte a prova toda e ganhe um!",
+   "fala": "Acerte a prova toda e ganhe um!",
    "pacotes": [
     "interior-loja"
    ]
   },
   {
-   "chave": "555f789911",
+   "chave": "cf5d815c10",
    "voz": "narradora",
-   "texto": "É só acertar tudo na prova.",
-   "fala": "É só acertar tudo na prova.",
+   "texto": "Os outros custam estrelas!",
+   "fala": "Os outros custam estrelas!",
    "pacotes": [
     "interior-loja"
    ]
@@ -11729,6 +11738,330 @@
    "fala": "A quadrinha a gente canta!",
    "pacotes": [
     "interior-museu"
+   ]
+  },
+  {
+   "chave": "97a0ae6410",
+   "voz": "npc-vega",
+   "texto": "Olá, eu sou a Doutora Vega!",
+   "fala": "Olá, eu sou a Doutora Vega!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "7297228112",
+   "voz": "npc-vega",
+   "texto": "Eu estudo as estrelas do céu.",
+   "fala": "Eu estudo as estrelas do céu.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "680e80f610",
+   "voz": "npc-vega",
+   "texto": "Quer ouvir uma curiosidade?",
+   "fala": "Quer ouvir uma curiosidade?",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "51daddab12",
+   "voz": "npc-vega",
+   "texto": "Vamos descobrir o céu juntas?",
+   "fala": "Vamos descobrir o céu juntas?",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "2e7a542010",
+   "voz": "npc-vega",
+   "texto": "Tenho um segredo do espaço!",
+   "fala": "Tenho um segredo do espaço!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "3571b415w",
+   "voz": "npc-vega",
+   "texto": "Volte para olhar o céu!",
+   "fala": "Volte para olhar o céu!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "4cff4f63z",
+   "voz": "npc-vega",
+   "texto": "O céu tem muitos segredos.",
+   "fala": "O céu tem muitos segredos.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "f1549fd411",
+   "voz": "npc-vega",
+   "texto": "Até logo, pequena astrônoma!",
+   "fala": "Até logo, pequena astrônoma!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "1a27c79713",
+   "voz": "npc-cosmo",
+   "texto": "Bip bop, eu sou o Robô Cosmo!",
+   "fala": "Bip bop, eu sou o Robô Cosmo!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "30899a71z",
+   "voz": "npc-cosmo",
+   "texto": "Minha bateria está feliz!",
+   "fala": "Minha bateria está feliz!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "27cb07a114",
+   "voz": "npc-cosmo",
+   "texto": "Quer ouvir uma piada, bip bop?",
+   "fala": "Quer ouvir uma piada, bip bop?",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "3cdd9bbaz",
+   "voz": "npc-cosmo",
+   "texto": "Carreguei uma piada nova!",
+   "fala": "Carreguei uma piada nova!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "d0f069b610",
+   "voz": "npc-cosmo",
+   "texto": "Processando uma piada boa!",
+   "fala": "Processando uma piada boa!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "4ced639913",
+   "voz": "npc-cosmo",
+   "texto": "Minha bateria riu muito, bip!",
+   "fala": "Minha bateria riu muito, bip!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "0caecca210",
+   "voz": "npc-cosmo",
+   "texto": "Tchau, tchau, meu bip bop!",
+   "fala": "Tchau, tchau, meu bip bop!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "1acd928613",
+   "voz": "npc-cosmo",
+   "texto": "Volte logo, bip bop, bip bop!",
+   "fala": "Volte logo, bip bop, bip bop!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "6a2d4940z",
+   "voz": "npc-aveia",
+   "texto": "Olá, eu sou a Dona Aveia!",
+   "fala": "Olá, eu sou a Dona Aveia!",
+   "pacotes": [
+    "interior-petshop"
+   ]
+  },
+  {
+   "chave": "a29e2ffd10",
+   "voz": "npc-aveia",
+   "texto": "Cuido da comida e da água.",
+   "fala": "Cuido da comida e da água.",
+   "pacotes": [
+    "interior-petshop"
+   ]
+  },
+  {
+   "chave": "e92e4167x",
+   "voz": "npc-aveia",
+   "texto": "Quer ver as comidinhas?",
+   "fala": "Quer ver as comidinhas?",
+   "pacotes": [
+    "interior-petshop"
+   ]
+  },
+  {
+   "chave": "18d0438b11",
+   "voz": "npc-aveia",
+   "texto": "Tenho lanches bem gostosos!",
+   "fala": "Tenho lanches bem gostosos!",
+   "pacotes": [
+    "interior-petshop"
+   ]
+  },
+  {
+   "chave": "3c991bbbx",
+   "voz": "npc-aveia",
+   "texto": "Bom apetite para vocês!",
+   "fala": "Bom apetite para vocês!",
+   "pacotes": [
+    "interior-petshop"
+   ]
+  },
+  {
+   "chave": "00f3d4f0s",
+   "voz": "npc-aveia",
+   "texto": "Volte sempre, viu?",
+   "fala": "Volte sempre, viu?",
+   "pacotes": [
+    "interior-petshop"
+   ]
+  },
+  {
+   "chave": "c5eeb7a8z",
+   "voz": "narradora",
+   "texto": "A estante das comidinhas!",
+   "fala": "A estante das comidinhas!",
+   "pacotes": [
+    "interior-petshop"
+   ]
+  },
+  {
+   "chave": "1b1c182d13",
+   "voz": "narradora",
+   "texto": "Tem cenoura, maçã e biscoito.",
+   "fala": "Tem cenoura, maçã e biscoito.",
+   "pacotes": [
+    "interior-petshop"
+   ]
+  },
+  {
+   "chave": "4388de8dw",
+   "voz": "narradora",
+   "texto": "A balança da Pet Shop!",
+   "fala": "A balança da Pet Shop!",
+   "pacotes": [
+    "interior-petshop"
+   ]
+  },
+  {
+   "chave": "828347db12",
+   "voz": "narradora",
+   "texto": "Aqui se pesa o feno dourado.",
+   "fala": "Aqui se pesa o feno dourado.",
+   "pacotes": [
+    "interior-petshop"
+   ]
+  },
+  {
+   "chave": "a8ffb21cz",
+   "voz": "narradora",
+   "texto": "Um aquário com peixinhos!",
+   "fala": "Um aquário com peixinhos!",
+   "pacotes": [
+    "interior-petshop"
+   ]
+  },
+  {
+   "chave": "90e76548z",
+   "voz": "narradora",
+   "texto": "Eles nadam o dia inteiro.",
+   "fala": "Eles nadam o dia inteiro.",
+   "pacotes": [
+    "interior-petshop"
+   ]
+  },
+  {
+   "chave": "8a07b49fy",
+   "voz": "narradora",
+   "texto": "Uma casinha bem fofinha!",
+   "fala": "Uma casinha bem fofinha!",
+   "pacotes": [
+    "interior-petshop"
+   ]
+  },
+  {
+   "chave": "a40dbab3x",
+   "voz": "narradora",
+   "texto": "Tem almofada lá dentro.",
+   "fala": "Tem almofada lá dentro.",
+   "pacotes": [
+    "interior-petshop"
+   ]
+  },
+  {
+   "chave": "c69ef08fs",
+   "voz": "narradora",
+   "texto": "Um bolo arco-íris!",
+   "fala": "Um bolo arco-íris!",
+   "pacotes": [
+    "interior-petshop"
+   ]
+  },
+  {
+   "chave": "f027fa4512",
+   "voz": "narradora",
+   "texto": "Ele enche a barriga inteira.",
+   "fala": "Ele enche a barriga inteira.",
+   "pacotes": [
+    "interior-petshop"
+   ]
+  },
+  {
+   "chave": "13a3a90612",
+   "voz": "narradora",
+   "texto": "Toalhas macias e quentinhas.",
+   "fala": "Toalhas macias e quentinhas.",
+   "pacotes": [
+    "interior-petshop"
+   ]
+  },
+  {
+   "chave": "73216a9fy",
+   "voz": "narradora",
+   "texto": "Para secar a crina toda.",
+   "fala": "Para secar a crina toda.",
+   "pacotes": [
+    "interior-petshop"
+   ]
+  },
+  {
+   "chave": "d3330b6fv",
+   "voz": "narradora",
+   "texto": "A banheira de espuma!",
+   "fala": "A banheira de espuma!",
+   "pacotes": [
+    "interior-petshop"
+   ]
+  },
+  {
+   "chave": "7058acb210",
+   "voz": "narradora",
+   "texto": "Banho morninho e cheiroso.",
+   "fala": "Banho morninho e cheiroso.",
+   "pacotes": [
+    "interior-petshop"
    ]
   },
   {
@@ -13259,6 +13592,2148 @@
    "fala": "Ele toca na hora certa.",
    "pacotes": [
     "interior-torre"
+   ]
+  },
+  {
+   "chave": "f4cabefdt",
+   "voz": "npc-vega",
+   "texto": "O Sol é uma estrela.",
+   "fala": "O Sol é uma estrela.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "afc520cey",
+   "voz": "npc-vega",
+   "texto": "É uma bola de gás quente.",
+   "fala": "É uma bola de gás quente.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "1a378b1410",
+   "voz": "npc-vega",
+   "texto": "Nunca olhe direto para ele.",
+   "fala": "Nunca olhe direto para ele.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "bb194ce5o",
+   "voz": "npc-vega",
+   "texto": "O Sol é enorme!",
+   "fala": "O Sol é enorme!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "7c97ca5511",
+   "voz": "npc-vega",
+   "texto": "Pense em cem Terras em fila.",
+   "fala": "Pense em cem Terras em fila.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "f3e04ab811",
+   "voz": "npc-vega",
+   "texto": "A fila tem a largura do Sol!",
+   "fala": "A fila tem a largura do Sol!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "47b3fa5bz",
+   "voz": "npc-vega",
+   "texto": "A luz do Sol viaja rápido.",
+   "fala": "A luz do Sol viaja rápido.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "cbec08f913",
+   "voz": "npc-vega",
+   "texto": "Mas ela leva uns oito minutos.",
+   "fala": "Mas ela leva uns oito minutos.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "2e454e28w",
+   "voz": "npc-vega",
+   "texto": "Só então chega até nós!",
+   "fala": "Só então chega até nós!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "3b98ef7b10",
+   "voz": "npc-vega",
+   "texto": "O Sol tem uma força enorme.",
+   "fala": "O Sol tem uma força enorme.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "b8156af3w",
+   "voz": "npc-vega",
+   "texto": "Ela segura os planetas.",
+   "fala": "Ela segura os planetas.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "5d4d6f06z",
+   "voz": "npc-vega",
+   "texto": "Todos giram em volta dele!",
+   "fala": "Todos giram em volta dele!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "b12ce111z",
+   "voz": "npc-vega",
+   "texto": "A Lua não tem luz própria.",
+   "fala": "A Lua não tem luz própria.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "c3415339y",
+   "voz": "npc-vega",
+   "texto": "Ela reflete a luz do Sol!",
+   "fala": "Ela reflete a luz do Sol!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "024cda3112",
+   "voz": "npc-vega",
+   "texto": "A Lua gira em volta da Terra.",
+   "fala": "A Lua gira em volta da Terra.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "aaa92bffz",
+   "voz": "npc-vega",
+   "texto": "Vemos sempre o mesmo lado!",
+   "fala": "Vemos sempre o mesmo lado!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "e7d49763z",
+   "voz": "npc-vega",
+   "texto": "A Lua tem muitas crateras.",
+   "fala": "A Lua tem muitas crateras.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "95876d5fq",
+   "voz": "npc-vega",
+   "texto": "Lá não tem vento.",
+   "fala": "Lá não tem vento.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "54e5238bv",
+   "voz": "npc-vega",
+   "texto": "Então as marcas ficam!",
+   "fala": "Então as marcas ficam!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "af59e01ax",
+   "voz": "npc-vega",
+   "texto": "Na Lua, tudo pesa menos.",
+   "fala": "Na Lua, tudo pesa menos.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "cd5c1e30w",
+   "voz": "npc-vega",
+   "texto": "Dá para pular bem alto!",
+   "fala": "Dá para pular bem alto!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "37ec6b0410",
+   "voz": "npc-vega",
+   "texto": "Astronautas já foram à Lua!",
+   "fala": "Astronautas já foram à Lua!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "489f5bfdz",
+   "voz": "npc-vega",
+   "texto": "Eles andaram no chão dela.",
+   "fala": "Eles andaram no chão dela.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "9a01d9a611",
+   "voz": "npc-vega",
+   "texto": "A Lua parece mudar de forma.",
+   "fala": "A Lua parece mudar de forma.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "c1fe1b21t",
+   "voz": "npc-vega",
+   "texto": "São as fases da Lua!",
+   "fala": "São as fases da Lua!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "6bc9751d10",
+   "voz": "npc-vega",
+   "texto": "Mercúrio é o menor planeta.",
+   "fala": "Mercúrio é o menor planeta.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "9fdf5d73x",
+   "voz": "npc-vega",
+   "texto": "E é o mais perto do Sol!",
+   "fala": "E é o mais perto do Sol!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "ed3a890710",
+   "voz": "npc-vega",
+   "texto": "Um ano em Mercúrio é curto.",
+   "fala": "Um ano em Mercúrio é curto.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "187cb0cay",
+   "voz": "npc-vega",
+   "texto": "Dura oitenta e oito dias!",
+   "fala": "Dura oitenta e oito dias!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "511ebcadz",
+   "voz": "npc-vega",
+   "texto": "O chão de Mercúrio é duro.",
+   "fala": "O chão de Mercúrio é duro.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "117387e8x",
+   "voz": "npc-vega",
+   "texto": "Ele é cheio de crateras!",
+   "fala": "Ele é cheio de crateras!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "cddcfcb313",
+   "voz": "npc-vega",
+   "texto": "Vênus é o planeta mais quente.",
+   "fala": "Vênus é o planeta mais quente.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "dab21edc10",
+   "voz": "npc-vega",
+   "texto": "É mais quente que Mercúrio!",
+   "fala": "É mais quente que Mercúrio!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "a0aa881310",
+   "voz": "npc-vega",
+   "texto": "Ele tem nuvens bem grossas.",
+   "fala": "Ele tem nuvens bem grossas.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "5ec9f4b8x",
+   "voz": "npc-vega",
+   "texto": "Vênus gira ao contrário.",
+   "fala": "Vênus gira ao contrário.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "c4aa77e8x",
+   "voz": "npc-vega",
+   "texto": "Lá o Sol nasce no oeste!",
+   "fala": "Lá o Sol nasce no oeste!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "8bb817f511",
+   "voz": "npc-vega",
+   "texto": "Em Vênus, o dia é bem longo.",
+   "fala": "Em Vênus, o dia é bem longo.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "b81db22a11",
+   "voz": "npc-vega",
+   "texto": "Um dia dura mais que um ano!",
+   "fala": "Um dia dura mais que um ano!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "f04fdffb13",
+   "voz": "npc-vega",
+   "texto": "Vênus e a Terra são parecidas.",
+   "fala": "Vênus e a Terra são parecidas.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "64639653z",
+   "voz": "npc-vega",
+   "texto": "Têm quase o mesmo tamanho!",
+   "fala": "Têm quase o mesmo tamanho!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "f869861dw",
+   "voz": "npc-vega",
+   "texto": "A Terra é a nossa casa.",
+   "fala": "A Terra é a nossa casa.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "c281d1b111",
+   "voz": "npc-vega",
+   "texto": "Só nela sabemos que há vida!",
+   "fala": "Só nela sabemos que há vida!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "a83b61ef10",
+   "voz": "npc-vega",
+   "texto": "Tem plantas, bichos e você!",
+   "fala": "Tem plantas, bichos e você!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "61d7aeb2w",
+   "voz": "npc-vega",
+   "texto": "A Terra tem muita água!",
+   "fala": "A Terra tem muita água!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "d43960dey",
+   "voz": "npc-vega",
+   "texto": "Tem mais mar do que chão!",
+   "fala": "Tem mais mar do que chão!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "0927375f12",
+   "voz": "npc-vega",
+   "texto": "A Terra é o terceiro planeta.",
+   "fala": "A Terra é o terceiro planeta.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "2bbc6a4610",
+   "voz": "npc-vega",
+   "texto": "Antes vêm Mercúrio e Vênus.",
+   "fala": "Antes vêm Mercúrio e Vênus.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "8fb3c00b12",
+   "voz": "npc-vega",
+   "texto": "A Terra gira em volta do Sol.",
+   "fala": "A Terra gira em volta do Sol.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "4f7511eaw",
+   "voz": "npc-vega",
+   "texto": "Cada volta dura um ano!",
+   "fala": "Cada volta dura um ano!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "50c9d36dz",
+   "voz": "npc-vega",
+   "texto": "A Terra gira como um pião.",
+   "fala": "A Terra gira como um pião.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "dc829f6cs",
+   "voz": "npc-vega",
+   "texto": "Cada giro é um dia!",
+   "fala": "Cada giro é um dia!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "07dac408s",
+   "voz": "npc-vega",
+   "texto": "O ar cobre a Terra.",
+   "fala": "O ar cobre a Terra.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "9bcd734c12",
+   "voz": "npc-vega",
+   "texto": "Ele mantém a Terra quentinha.",
+   "fala": "Ele mantém a Terra quentinha.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "86705b8010",
+   "voz": "npc-vega",
+   "texto": "Marte é o planeta vermelho.",
+   "fala": "Marte é o planeta vermelho.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "008c1094y",
+   "voz": "npc-vega",
+   "texto": "O chão dele tem ferrugem!",
+   "fala": "O chão dele tem ferrugem!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "1d87ee7811",
+   "voz": "npc-vega",
+   "texto": "Marte tem um vulcão gigante.",
+   "fala": "Marte tem um vulcão gigante.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "a645c9d310",
+   "voz": "npc-vega",
+   "texto": "É o maior do Sistema Solar!",
+   "fala": "É o maior do Sistema Solar!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "4f4405b9z",
+   "voz": "npc-vega",
+   "texto": "Ele se chama Monte Olimpo.",
+   "fala": "Ele se chama Monte Olimpo.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "ceba7cabz",
+   "voz": "npc-vega",
+   "texto": "Marte é menor que a Terra.",
+   "fala": "Marte é menor que a Terra.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "7454a73910",
+   "voz": "npc-vega",
+   "texto": "Tem metade da largura dela.",
+   "fala": "Tem metade da largura dela.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "3102e7cay",
+   "voz": "npc-vega",
+   "texto": "Robôs passeiam por Marte!",
+   "fala": "Robôs passeiam por Marte!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "327b086fw",
+   "voz": "npc-vega",
+   "texto": "Eles tiram fotos de lá.",
+   "fala": "Eles tiram fotos de lá.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "c6d209ffz",
+   "voz": "npc-vega",
+   "texto": "Júpiter é o maior planeta.",
+   "fala": "Júpiter é o maior planeta.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "6dc3b2a4v",
+   "voz": "npc-vega",
+   "texto": "Ele é uma bola de gás.",
+   "fala": "Ele é uma bola de gás.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "0e96483fw",
+   "voz": "npc-vega",
+   "texto": "Não dá para pisar nele!",
+   "fala": "Não dá para pisar nele!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "9a7afa77w",
+   "voz": "npc-vega",
+   "texto": "Júpiter tem uma mancha.",
+   "fala": "Júpiter tem uma mancha.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "7e0dda5ay",
+   "voz": "npc-vega",
+   "texto": "É uma tempestade gigante!",
+   "fala": "É uma tempestade gigante!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "621c5fddx",
+   "voz": "npc-vega",
+   "texto": "Ela é maior que a Terra.",
+   "fala": "Ela é maior que a Terra.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "37d4c8a712",
+   "voz": "npc-vega",
+   "texto": "Um dia em Júpiter é curtinho.",
+   "fala": "Um dia em Júpiter é curtinho.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "9f4e2d64w",
+   "voz": "npc-vega",
+   "texto": "Dura só umas dez horas.",
+   "fala": "Dura só umas dez horas.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "dee6ec61y",
+   "voz": "npc-vega",
+   "texto": "Saturno tem anéis lindos.",
+   "fala": "Saturno tem anéis lindos.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "a1c645afy",
+   "voz": "npc-vega",
+   "texto": "Eles são de gelo e pedra.",
+   "fala": "Eles são de gelo e pedra.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "41fd257213",
+   "voz": "npc-vega",
+   "texto": "Saturno é leve para o tamanho.",
+   "fala": "Saturno é leve para o tamanho.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "2a0bce8f13",
+   "voz": "npc-vega",
+   "texto": "Numa piscina gigante, boiaria!",
+   "fala": "Numa piscina gigante, boiaria!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "9f04846313",
+   "voz": "npc-vega",
+   "texto": "Galileu viu Saturno na luneta.",
+   "fala": "Galileu viu Saturno na luneta.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "1a194800z",
+   "voz": "npc-vega",
+   "texto": "Achou que ele tinha alças!",
+   "fala": "Achou que ele tinha alças!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "fa5bd60by",
+   "voz": "npc-vega",
+   "texto": "Eram os anéis de Saturno!",
+   "fala": "Eram os anéis de Saturno!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "1b9b584f10",
+   "voz": "npc-vega",
+   "texto": "Urano gira deitado de lado.",
+   "fala": "Urano gira deitado de lado.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "57cfbcac12",
+   "voz": "npc-vega",
+   "texto": "Nenhum outro planeta é assim!",
+   "fala": "Nenhum outro planeta é assim!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "c6b5efd0w",
+   "voz": "npc-vega",
+   "texto": "Urano tem uma cor azul.",
+   "fala": "Urano tem uma cor azul.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "805da51fz",
+   "voz": "npc-vega",
+   "texto": "O gás metano faz essa cor.",
+   "fala": "O gás metano faz essa cor.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "32ac741fx",
+   "voz": "npc-vega",
+   "texto": "Um ano em Urano é longo.",
+   "fala": "Um ano em Urano é longo.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "59dfb47910",
+   "voz": "npc-vega",
+   "texto": "Dura oitenta e quatro anos!",
+   "fala": "Dura oitenta e quatro anos!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "c91141afy",
+   "voz": "npc-vega",
+   "texto": "Netuno tem ventos fortes.",
+   "fala": "Netuno tem ventos fortes.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "5c6c541d12",
+   "voz": "npc-vega",
+   "texto": "E grandes tempestades também!",
+   "fala": "E grandes tempestades também!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "d7b864c0z",
+   "voz": "npc-vega",
+   "texto": "Netuno é o oitavo planeta.",
+   "fala": "Netuno é o oitavo planeta.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "f3efb3daz",
+   "voz": "npc-vega",
+   "texto": "É o planeta mais distante!",
+   "fala": "É o planeta mais distante!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "16761bcfz",
+   "voz": "npc-vega",
+   "texto": "Um ano em Netuno é enorme!",
+   "fala": "Um ano em Netuno é enorme!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "db58e5e210",
+   "voz": "npc-vega",
+   "texto": "Passa de cem anos da Terra.",
+   "fala": "Passa de cem anos da Terra.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "e661bdb3z",
+   "voz": "npc-vega",
+   "texto": "Cientistas fizeram contas.",
+   "fala": "Cientistas fizeram contas.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "1892d21a11",
+   "voz": "npc-vega",
+   "texto": "Assim acharam Netuno no céu!",
+   "fala": "Assim acharam Netuno no céu!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "04b8d811y",
+   "voz": "npc-vega",
+   "texto": "Plutão é um planeta-anão.",
+   "fala": "Plutão é um planeta-anão.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "79545c1dz",
+   "voz": "npc-vega",
+   "texto": "Ele mora bem longe do Sol.",
+   "fala": "Ele mora bem longe do Sol.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "946928bd12",
+   "voz": "npc-vega",
+   "texto": "Lá tem muitos mundos gelados.",
+   "fala": "Lá tem muitos mundos gelados.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "ad89b658v",
+   "voz": "npc-vega",
+   "texto": "Plutão tem um coração!",
+   "fala": "Plutão tem um coração!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "368d591010",
+   "voz": "npc-vega",
+   "texto": "É uma grande área clarinha.",
+   "fala": "É uma grande área clarinha.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "a010606by",
+   "voz": "npc-vega",
+   "texto": "Plutão é menor que a Lua.",
+   "fala": "Plutão é menor que a Lua.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "5aa5f4e811",
+   "voz": "npc-vega",
+   "texto": "É um mundo pequeno e gelado.",
+   "fala": "É um mundo pequeno e gelado.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "1375c9ac11",
+   "voz": "npc-vega",
+   "texto": "Nosso Sol tem tamanho médio.",
+   "fala": "Nosso Sol tem tamanho médio.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "9990bff111",
+   "voz": "npc-vega",
+   "texto": "Há estrelas maiores que ele.",
+   "fala": "Há estrelas maiores que ele.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "7f439d7212",
+   "voz": "npc-vega",
+   "texto": "E há estrelas menores também.",
+   "fala": "E há estrelas menores também.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "1e8e0f9113",
+   "voz": "npc-vega",
+   "texto": "Estrelas têm cores diferentes.",
+   "fala": "Estrelas têm cores diferentes.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "0a6fd80412",
+   "voz": "npc-vega",
+   "texto": "As azuis são as mais quentes.",
+   "fala": "As azuis são as mais quentes.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "3a256cdb11",
+   "voz": "npc-vega",
+   "texto": "As vermelhas são mais frias.",
+   "fala": "As vermelhas são mais frias.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "d94c4b4bz",
+   "voz": "npc-vega",
+   "texto": "Estrelas nascem em nuvens.",
+   "fala": "Estrelas nascem em nuvens.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "46590a3d10",
+   "voz": "npc-vega",
+   "texto": "São nuvens de poeira e gás.",
+   "fala": "São nuvens de poeira e gás.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "35d61daf11",
+   "voz": "npc-vega",
+   "texto": "Há nuvens que são berçários!",
+   "fala": "Há nuvens que são berçários!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "01e75aa013",
+   "voz": "npc-vega",
+   "texto": "Estrela cadente não é estrela!",
+   "fala": "Estrela cadente não é estrela!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "3ac3ed4b11",
+   "voz": "npc-vega",
+   "texto": "É um meteoro riscando o céu.",
+   "fala": "É um meteoro riscando o céu.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "4ed2a226z",
+   "voz": "npc-vega",
+   "texto": "O ar em volta dele brilha.",
+   "fala": "O ar em volta dele brilha.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "bf6ee43cx",
+   "voz": "npc-vega",
+   "texto": "Por que a estrela pisca?",
+   "fala": "Por que a estrela pisca?",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "89a3bc67y",
+   "voz": "npc-vega",
+   "texto": "A luz dela passa pelo ar.",
+   "fala": "A luz dela passa pelo ar.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "8e087ad510",
+   "voz": "npc-vega",
+   "texto": "O ar mexe, e a luz balança!",
+   "fala": "O ar mexe, e a luz balança!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "bac5796912",
+   "voz": "npc-vega",
+   "texto": "O Cruzeiro do Sul é uma cruz.",
+   "fala": "O Cruzeiro do Sul é uma cruz.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "637add3d10",
+   "voz": "npc-vega",
+   "texto": "Ele está na nossa bandeira!",
+   "fala": "Ele está na nossa bandeira!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "f1979da011",
+   "voz": "npc-vega",
+   "texto": "Vemos bem no Hemisfério Sul.",
+   "fala": "Vemos bem no Hemisfério Sul.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "014f9462y",
+   "voz": "npc-vega",
+   "texto": "A bandeira mostra um céu.",
+   "fala": "A bandeira mostra um céu.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "502214c5z",
+   "voz": "npc-vega",
+   "texto": "É o céu do Rio de Janeiro.",
+   "fala": "É o céu do Rio de Janeiro.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "76f42befx",
+   "voz": "npc-vega",
+   "texto": "Foi no dia da República!",
+   "fala": "Foi no dia da República!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "861775bf11",
+   "voz": "npc-vega",
+   "texto": "Nossa bandeira tem estrelas.",
+   "fala": "Nossa bandeira tem estrelas.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "ba09e36511",
+   "voz": "npc-vega",
+   "texto": "Elas lembram nossos estados.",
+   "fala": "Elas lembram nossos estados.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "c515ead511",
+   "voz": "npc-vega",
+   "texto": "E também o Distrito Federal.",
+   "fala": "E também o Distrito Federal.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "b87a7d7611",
+   "voz": "npc-vega",
+   "texto": "As Três Marias são estrelas.",
+   "fala": "As Três Marias são estrelas.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "67dd3e29z",
+   "voz": "npc-vega",
+   "texto": "Elas ficam em fila no céu.",
+   "fala": "Elas ficam em fila no céu.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "01a0dd8a12",
+   "voz": "npc-vega",
+   "texto": "São o cinto do caçador Órion.",
+   "fala": "São o cinto do caçador Órion.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "1c921098y",
+   "voz": "npc-vega",
+   "texto": "Estrelas formam desenhos.",
+   "fala": "Estrelas formam desenhos.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "5930fec9y",
+   "voz": "npc-vega",
+   "texto": "Esses desenhos têm nomes.",
+   "fala": "Esses desenhos têm nomes.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "900a99eft",
+   "voz": "npc-vega",
+   "texto": "São as constelações!",
+   "fala": "São as constelações!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "d1721b8c13",
+   "voz": "npc-vega",
+   "texto": "O céu tem muitas constelações.",
+   "fala": "O céu tem muitas constelações.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "e44c85b210",
+   "voz": "npc-vega",
+   "texto": "São oitenta e oito ao todo!",
+   "fala": "São oitenta e oito ao todo!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "60b934fe11",
+   "voz": "npc-vega",
+   "texto": "Marcos Pontes foi ao espaço!",
+   "fala": "Marcos Pontes foi ao espaço!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "3ed1df2312",
+   "voz": "npc-vega",
+   "texto": "Ele foi o primeiro do Brasil!",
+   "fala": "Ele foi o primeiro do Brasil!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "9f3485a4w",
+   "voz": "npc-vega",
+   "texto": "Foi em dois mil e seis.",
+   "fala": "Foi em dois mil e seis.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "1403772a11",
+   "voz": "npc-vega",
+   "texto": "Marcos Pontes foi à estação.",
+   "fala": "Marcos Pontes foi à estação.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "e92fcd75u",
+   "voz": "npc-vega",
+   "texto": "É a estação espacial!",
+   "fala": "É a estação espacial!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "93c09d4013",
+   "voz": "npc-vega",
+   "texto": "Ficou oito dias e fez ciência!",
+   "fala": "Ficou oito dias e fez ciência!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "243ff62011",
+   "voz": "npc-vega",
+   "texto": "Astronautas dormem em sacos.",
+   "fala": "Astronautas dormem em sacos.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "2d3024ec11",
+   "voz": "npc-vega",
+   "texto": "O saco fica preso na parede!",
+   "fala": "O saco fica preso na parede!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "6bfa965a12",
+   "voz": "npc-vega",
+   "texto": "Assim, ninguém sai flutuando!",
+   "fala": "Assim, ninguém sai flutuando!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "2562f09e12",
+   "voz": "npc-vega",
+   "texto": "A estação dá voltas na Terra.",
+   "fala": "A estação dá voltas na Terra.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "a43c03fd12",
+   "voz": "npc-vega",
+   "texto": "Quem está lá vê o Sol nascer.",
+   "fala": "Quem está lá vê o Sol nascer.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "453539ff11",
+   "voz": "npc-vega",
+   "texto": "São dezesseis vezes por dia!",
+   "fala": "São dezesseis vezes por dia!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "3abaf1b311",
+   "voz": "npc-vega",
+   "texto": "A estação espacial é enorme!",
+   "fala": "A estação espacial é enorme!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "e152b82613",
+   "voz": "npc-vega",
+   "texto": "Ela cobre um campo de futebol!",
+   "fala": "Ela cobre um campo de futebol!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "35bc3db313",
+   "voz": "npc-vega",
+   "texto": "A estação é uma casa espacial.",
+   "fala": "A estação é uma casa espacial.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "5725dabf11",
+   "voz": "npc-vega",
+   "texto": "Sempre tem gente morando lá!",
+   "fala": "Sempre tem gente morando lá!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "b789978cz",
+   "voz": "npc-vega",
+   "texto": "Astronautas treinam muito!",
+   "fala": "Astronautas treinam muito!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "f237f7edz",
+   "voz": "npc-vega",
+   "texto": "Eles aprendem a mergulhar.",
+   "fala": "Eles aprendem a mergulhar.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "c60a10a912",
+   "voz": "npc-vega",
+   "texto": "Muitos aprendem russo também.",
+   "fala": "Muitos aprendem russo também.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "99fd02cb13",
+   "voz": "npc-vega",
+   "texto": "O foguete joga gás para baixo.",
+   "fala": "O foguete joga gás para baixo.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "8040b32912",
+   "voz": "npc-vega",
+   "texto": "E ele sobe para o outro lado!",
+   "fala": "E ele sobe para o outro lado!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "d6b4226f11",
+   "voz": "npc-vega",
+   "texto": "A gravidade puxa para baixo.",
+   "fala": "A gravidade puxa para baixo.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "bbada16712",
+   "voz": "npc-vega",
+   "texto": "O foguete empurra mais forte!",
+   "fala": "O foguete empurra mais forte!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "e4272581y",
+   "voz": "npc-vega",
+   "texto": "Por isso ele sobe ao céu.",
+   "fala": "Por isso ele sobe ao céu.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "45f80edd11",
+   "voz": "npc-vega",
+   "texto": "O foguete não precisa de ar.",
+   "fala": "O foguete não precisa de ar.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "92162c8f11",
+   "voz": "npc-vega",
+   "texto": "Ele leva tudo o que precisa.",
+   "fala": "Ele leva tudo o que precisa.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "67342e68w",
+   "voz": "npc-vega",
+   "texto": "Por isso voa no espaço!",
+   "fala": "Por isso voa no espaço!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "46a32e4d10",
+   "voz": "npc-vega",
+   "texto": "Quer ir a Marte de foguete?",
+   "fala": "Quer ir a Marte de foguete?",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "23223de712",
+   "voz": "npc-vega",
+   "texto": "Tem que esperar a hora certa.",
+   "fala": "Tem que esperar a hora certa.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "071d7cc4x",
+   "voz": "npc-vega",
+   "texto": "Isso é a cada dois anos!",
+   "fala": "Isso é a cada dois anos!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "9389a072x",
+   "voz": "npc-vega",
+   "texto": "O Brasil lança foguetes!",
+   "fala": "O Brasil lança foguetes!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "dd3fe08by",
+   "voz": "npc-vega",
+   "texto": "A base fica em Alcântara.",
+   "fala": "A base fica em Alcântara.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "1f3223a911",
+   "voz": "npc-vega",
+   "texto": "É perto da linha do Equador!",
+   "fala": "É perto da linha do Equador!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "66ee38a3y",
+   "voz": "npc-vega",
+   "texto": "O Brasil fez um satélite!",
+   "fala": "O Brasil fez um satélite!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "aba98447y",
+   "voz": "npc-vega",
+   "texto": "Ele se chama Amazônia Um.",
+   "fala": "Ele se chama Amazônia Um.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "5f780d29y",
+   "voz": "npc-vega",
+   "texto": "Ele fotografa a floresta!",
+   "fala": "Ele fotografa a floresta!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "5f8d8bd9z",
+   "voz": "npc-vega",
+   "texto": "Cometas são bolas geladas.",
+   "fala": "Cometas são bolas geladas.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "db05aae611",
+   "voz": "npc-vega",
+   "texto": "São feitos de gelo e poeira.",
+   "fala": "São feitos de gelo e poeira.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "8831804210",
+   "voz": "npc-vega",
+   "texto": "Eles giram em volta do Sol.",
+   "fala": "Eles giram em volta do Sol.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "9e57a23813",
+   "voz": "npc-vega",
+   "texto": "Perto do Sol, o gelo vira gás.",
+   "fala": "Perto do Sol, o gelo vira gás.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "ffb6493ex",
+   "voz": "npc-vega",
+   "texto": "Forma uma nuvem, a coma.",
+   "fala": "Forma uma nuvem, a coma.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "13df431811",
+   "voz": "npc-vega",
+   "texto": "E surge uma cauda brilhante!",
+   "fala": "E surge uma cauda brilhante!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "667df956x",
+   "voz": "npc-vega",
+   "texto": "Cometas têm duas caudas!",
+   "fala": "Cometas têm duas caudas!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "906e259e12",
+   "voz": "npc-vega",
+   "texto": "Uma de poeira e outra de gás.",
+   "fala": "Uma de poeira e outra de gás.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "60d2d7f4z",
+   "voz": "npc-vega",
+   "texto": "Apontam para longe do Sol.",
+   "fala": "Apontam para longe do Sol.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "c6211f9e10",
+   "voz": "npc-vega",
+   "texto": "Uma nave visitou um cometa!",
+   "fala": "Uma nave visitou um cometa!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "c2a6e205w",
+   "voz": "npc-vega",
+   "texto": "Ela se chamava Rosetta.",
+   "fala": "Ela se chamava Rosetta.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "93296860v",
+   "voz": "npc-vega",
+   "texto": "E pousou um robô nele!",
+   "fala": "E pousou um robô nele!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "75a9c109y",
+   "voz": "npc-vega",
+   "texto": "Cometas soltam poeirinha.",
+   "fala": "Cometas soltam poeirinha.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "6e06d094v",
+   "voz": "npc-vega",
+   "texto": "A Terra passa por ela.",
+   "fala": "A Terra passa por ela.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "f3646ecez",
+   "voz": "npc-vega",
+   "texto": "E vemos chuva de meteoros!",
+   "fala": "E vemos chuva de meteoros!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "f57c7d4dv",
+   "voz": "npc-vega",
+   "texto": "Moramos na Via Láctea.",
+   "fala": "Moramos na Via Láctea.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "a6b1e19dy",
+   "voz": "npc-vega",
+   "texto": "Ela é uma galáxia enorme.",
+   "fala": "Ela é uma galáxia enorme.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "9cdf73bdx",
+   "voz": "npc-vega",
+   "texto": "Tem bilhões de estrelas!",
+   "fala": "Tem bilhões de estrelas!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "0f9426ba12",
+   "voz": "npc-vega",
+   "texto": "Há galáxias como cata-ventos.",
+   "fala": "Há galáxias como cata-ventos.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "98e706cey",
+   "voz": "npc-vega",
+   "texto": "Outras são ovais e lisas.",
+   "fala": "Outras são ovais e lisas.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "927616de12",
+   "voz": "npc-vega",
+   "texto": "E outras não têm forma certa.",
+   "fala": "E outras não têm forma certa.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "50e72a0013",
+   "voz": "npc-vega",
+   "texto": "Há galáxias vizinhas da nossa.",
+   "fala": "Há galáxias vizinhas da nossa.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "23573f5810",
+   "voz": "npc-vega",
+   "texto": "São as Nuvens de Magalhães.",
+   "fala": "São as Nuvens de Magalhães.",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "7c722b1cz",
+   "voz": "npc-vega",
+   "texto": "Dá para ver no céu do Sul!",
+   "fala": "Dá para ver no céu do Sul!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "218171bf11",
+   "voz": "npc-cosmo",
+   "texto": "Por que a Lua não tem fome?",
+   "fala": "Por que a Lua não tem fome?",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "f17b845fz",
+   "voz": "npc-cosmo",
+   "texto": "Porque ela já está cheia!",
+   "fala": "Porque ela já está cheia!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "7d0a73aez",
+   "voz": "npc-cosmo",
+   "texto": "Por que a estrela estuda?",
+   "fala": "Por que a estrela estuda?",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "4e433f4110",
+   "voz": "npc-cosmo",
+   "texto": "Para ficar mais brilhante!",
+   "fala": "Para ficar mais brilhante!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "1a6ec922z",
+   "voz": "npc-cosmo",
+   "texto": "Qual é o planeta vaidoso?",
+   "fala": "Qual é o planeta vaidoso?",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "19006d48y",
+   "voz": "npc-cosmo",
+   "texto": "Saturno, cheio de anéis!",
+   "fala": "Saturno, cheio de anéis!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "a9a140b8z",
+   "voz": "npc-cosmo",
+   "texto": "O que a Lua disse ao Sol?",
+   "fala": "O que a Lua disse ao Sol?",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "43a82cc313",
+   "voz": "npc-cosmo",
+   "texto": "Obrigada pela luz emprestada!",
+   "fala": "Obrigada pela luz emprestada!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "1e01ffed13",
+   "voz": "npc-cosmo",
+   "texto": "Por que o astronauta é calmo?",
+   "fala": "Por que o astronauta é calmo?",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "e18c2d2a12",
+   "voz": "npc-cosmo",
+   "texto": "Porque ele tem muito espaço!",
+   "fala": "Porque ele tem muito espaço!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "ae28a521y",
+   "voz": "npc-cosmo",
+   "texto": "Qual é o lanche do robô?",
+   "fala": "Qual é o lanche do robô?",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "8804ec45w",
+   "voz": "npc-cosmo",
+   "texto": "Batata chips, bip bop!",
+   "fala": "Batata chips, bip bop!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "33f8a00d11",
+   "voz": "npc-cosmo",
+   "texto": "Qual é o planeta mais fofo?",
+   "fala": "Qual é o planeta mais fofo?",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "4130ad1az",
+   "voz": "npc-cosmo",
+   "texto": "A Terra, porque tem você!",
+   "fala": "A Terra, porque tem você!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "fdd8a35012",
+   "voz": "npc-cosmo",
+   "texto": "Qual é o penteado do cometa?",
+   "fala": "Qual é o penteado do cometa?",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "be79a4d312",
+   "voz": "npc-cosmo",
+   "texto": "Um rabo de cavalo brilhante!",
+   "fala": "Um rabo de cavalo brilhante!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "ea67bf5d13",
+   "voz": "npc-cosmo",
+   "texto": "O que a Terra deu para a Lua?",
+   "fala": "O que a Terra deu para a Lua?",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "4c2a3eabx",
+   "voz": "npc-cosmo",
+   "texto": "Um abraço bem apertado!",
+   "fala": "Um abraço bem apertado!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "6f223ed811",
+   "voz": "npc-cosmo",
+   "texto": "O que o robô faz no escuro?",
+   "fala": "O que o robô faz no escuro?",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "a064ec8812",
+   "voz": "npc-cosmo",
+   "texto": "Acende os olhos de lanterna!",
+   "fala": "Acende os olhos de lanterna!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "1c37cc2f14",
+   "voz": "npc-cosmo",
+   "texto": "O que a estrela disse ao robô?",
+   "fala": "O que a estrela disse ao robô?",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "19789495y",
+   "voz": "npc-cosmo",
+   "texto": "Você também é brilhante!",
+   "fala": "Você também é brilhante!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "9a2579a811",
+   "voz": "npc-cosmo",
+   "texto": "Como o foguete fica alegre?",
+   "fala": "Como o foguete fica alegre?",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "99198b6ez",
+   "voz": "npc-cosmo",
+   "texto": "Ele dá um pulo até o céu!",
+   "fala": "Ele dá um pulo até o céu!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "2072804dx",
+   "voz": "npc-cosmo",
+   "texto": "Qual é a dança do robô?",
+   "fala": "Qual é a dança do robô?",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "5f1ad715z",
+   "voz": "npc-cosmo",
+   "texto": "A dança do robô, bip bop!",
+   "fala": "A dança do robô, bip bop!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "bdbbde7510",
+   "voz": "npc-cosmo",
+   "texto": "Onde o robô guarda piadas?",
+   "fala": "Onde o robô guarda piadas?",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "c8f7e1b511",
+   "voz": "npc-cosmo",
+   "texto": "Na memória de risadas, bip!",
+   "fala": "Na memória de risadas, bip!",
+   "pacotes": [
+    "interior-observatorio"
+   ]
+  },
+  {
+   "chave": "40923a7514",
+   "voz": "narradora",
+   "texto": "Os unicórnios bebem água aqui.",
+   "fala": "Os unicórnios bebem água aqui.",
+   "pacotes": [
+    "interior-petshop"
+   ]
+  },
+  {
+   "chave": "0cd57bb61x",
+   "voz": "claude",
+   "texto": "Seu unicórnio está com fome. A Pet Shop tem comidinha gostosa!",
+   "fala": "Seu unicórnio está com fome. A Pet Shop tem comidinha gostosa!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "bd2816c61w",
+   "voz": "claude",
+   "texto": "Seu unicórnio está com sede. Tem água fresquinha na Pet Shop!",
+   "fala": "Seu unicórnio está com sede. Tem água fresquinha na Pet Shop!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "103b13de1s",
+   "voz": "claude",
+   "texto": "Seu unicórnio está com fome e sede. Vamos até a Pet Shop?",
+   "fala": "Seu unicórnio está com fome e sede. Vamos até a Pet Shop?",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "94cfc2fb2j",
+   "voz": "claude",
+   "texto": "Ainda faltam estrelas para essa comidinha. Cada acerto de primeira vale uma estrela!",
+   "fala": "Ainda faltam estrelas para essa comidinha. Cada acerto de primeira vale uma estrela!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "6ea9ab5e1f",
+   "voz": "claude",
+   "texto": "Guardei a comidinha na despensa do Estábulo!",
+   "fala": "Guardei a comidinha na despensa do Estábulo!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "8381529911",
+   "voz": "unicornio",
+   "texto": "Que comidinha mais gostosa!",
+   "fala": "Que comidinha mais gostosa!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "135807441d",
+   "voz": "claude",
+   "texto": "Seu unicórnio está de barriga cheia agora.",
+   "fala": "Seu unicórnio está de barriga cheia agora.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "3160faa614",
+   "voz": "unicornio",
+   "texto": "Que água fresquinha e gostosa!",
+   "fala": "Que água fresquinha e gostosa!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "e00554cd19",
+   "voz": "claude",
+   "texto": "Seu unicórnio não está com sede agora.",
+   "fala": "Seu unicórnio não está com sede agora.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "094a0ca41u",
+   "voz": "claude",
+   "texto": "A despensa está vazia. Vamos comprar comidinha na Pet Shop?",
+   "fala": "A despensa está vazia. Vamos comprar comidinha na Pet Shop?",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "cb4dc16e1e",
+   "voz": "claude",
+   "texto": "Oba, uma pergunta surpresa! Leia com calma.",
+   "fala": "Oba, uma pergunta surpresa! Leia com calma.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "46285c481f",
+   "voz": "claude",
+   "texto": "Pergunta surpresa! Vamos ver se você lembra?",
+   "fala": "Pergunta surpresa! Vamos ver se você lembra?",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "1c68e2171d",
+   "voz": "claude",
+   "texto": "Hora da pergunta surpresa! Sem pressa, tá?",
+   "fala": "Hora da pergunta surpresa! Sem pressa, tá?",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "8f3c12cd18",
+   "voz": "claude",
+   "texto": "Se acertar, você ganha duas estrelas!",
+   "fala": "Se acertar, você ganha duas estrelas!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "bb4a4a44x",
+   "voz": "claude",
+   "texto": "Você ganhou duas estrelas!",
+   "fala": "Você ganhou duas estrelas!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "3dc046601b",
+   "voz": "claude",
+   "texto": "Tudo bem errar! Agora você já sabe essa.",
+   "fala": "Tudo bem errar! Agora você já sabe essa.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "2f1a73b91p",
+   "voz": "claude",
+   "texto": "Não foi dessa vez, e está tudo bem! Olha a explicação.",
+   "fala": "Não foi dessa vez, e está tudo bem! Olha a explicação.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "6a4a021b1r",
+   "voz": "claude",
+   "texto": "Os outros prêmios da prova agora se trocam por estrelas!",
+   "fala": "Os outros prêmios da prova agora se trocam por estrelas!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "a9580f4a2g",
+   "voz": "claude",
+   "texto": "Ainda faltam estrelas para esse prêmio. Cada acerto de primeira vale uma estrela!",
+   "fala": "Ainda faltam estrelas para esse prêmio. Cada acerto de primeira vale uma estrela!",
+   "pacotes": [
+    "geral"
    ]
   }
  ]

@@ -24,6 +24,9 @@ function pasta(rel) {
 }
 carregar('js/config.js');
 carregar('js/unicornios.js');
+// lista da Loja e cuidados (as vitrines e as baias leem deles)
+carregar('js/loja-itens.js', true);
+carregar('js/cuidados.js', true);
 pasta('js/materias').forEach((f) => carregar(f));
 pasta('js/provas').forEach((f) => carregar(f));
 carregar('js/interiores.js');
@@ -214,7 +217,13 @@ function checarAcao(a, onde, deNpc) {
     checar(LUGARES.has(a.lugar), `${onde}: lugar do guia "${a.lugar}" não existe`);
     if (a.livro) checar(Reino.materia(a.livro), `${onde}: livro "${a.livro}" não existe`);
   } else if (a.tipo === 'unicornio') checar(Number.isInteger(a.indice), `${onde}: ação unicornio sem indice`);
-  else if (ACOES_EXTRAS.includes(a.tipo)) { /* ação registrada por um prédio (ex.: beber, curiosidade) */ }
+  else if (ACOES_EXTRAS.includes(a.tipo)) {
+    // ação registrada por um prédio (ex.: beber, curiosidade); o tema da curiosidade tem que existir
+    if (a.tipo === 'curiosidade' && Reino.Observatorio) {
+      const temas = Reino.Observatorio.temas().concat(['todas', 'telescopio']);
+      checar(temas.includes(a.tema), `${onde}: tema de curiosidade "${a.tema}" não existe (${temas.join(', ')})`);
+    }
+  }
   else erros.push(`${onde}: tipo de ação "${a.tipo}" desconhecido`);
   if (deNpc && a.tipo === 'unicornio') erros.push(`${onde}: ação unicornio é só para objetos`);
 }

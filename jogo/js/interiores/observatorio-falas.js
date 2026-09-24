@@ -25,14 +25,7 @@
     },
 
     // falas curtas dos objetos sem ação (voz narradora), se o interior quiser
-    objetos: {
-      'telescopio': 'O telescópio do Observatório! Ele mostra o céu de pertinho.',
-      'foguete': 'Um foguete pronto para voar! Ele sobe até o espaço.',
-      'traje': 'Um traje de astronauta! Ele protege quem vai ao espaço.',
-      'pedra-lua': 'Uma pedra que veio da Lua! Astronautas trouxeram de lá.',
-      'meteorito': 'Um meteorito de verdade! Ele caiu do espaço na Terra.',
-      'mapa-constelacoes': 'O mapa das constelações! Ligue as estrelas com os olhos.',
-    },
+    objetos: {},   // os objetos do Observatório contam curiosidades (ação), sem fala própria
 
     // nomes para placas e balões (Plutão é planeta-anão)
     nomes: {

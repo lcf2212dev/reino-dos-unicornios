@@ -26,7 +26,7 @@
     cheio: 'Seu unicórnio está de barriga cheia agora.',
     bebeu: 'Que água fresquinha e gostosa! 💧',
     semSede: 'Seu unicórnio não está com sede agora.',
-    despensaVazia: 'A despensa está vazia. A Dona Aveia vende comidinhas na Pet Shop! 🌾',
+    despensaVazia: 'A despensa está vazia. Vamos comprar comidinha na Pet Shop? 🌾',
   };
   var DO_UNICORNIO = { comeu: true, bebeu: true };
   C.vozDaFrase = function (chave) { return DO_UNICORNIO[chave] ? 'unicornio' : 'claude'; };

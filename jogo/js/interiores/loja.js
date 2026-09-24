@@ -86,7 +86,7 @@
 
   /* ================= OBJETOS DA LOJA ================= */
   // vitrine dos enfeites: três prateleiras com os ícones de toda a lista; os comprados ganham fundo rosa e selo ✓
-  I.objeto('loja-vitrine-enfeites', { w: 5, h: 1, topo: 44, solido: true,
+  I.objeto('loja-vitrine-enfeites', { w: 5, h: 1, topo: 44, solido: true, alto: true,
     chave: function (P) { var c = comprados(P); return 'enf:' + enfeites().map(function (it) { return c[it.id] ? 1 : 0; }).join(''); },
     desenhar: function (ctx, px, py, o, P) {
       var W = 80, top = py - 44, c = comprados(P), lista = enfeites();
@@ -125,7 +125,7 @@
   // vitrine dos prêmios da Escola: em cada lugar o prêmio em cima e, embaixo dele, o selo do estado:
   // medalha de fita (ganho na prova), lacinho rosa (comprado), etiqueta com o preço (à venda) ou
   // cadeado com o prêmio em silhueta (bloqueado). Prateleiras altas: nada cobre o prêmio.
-  I.objeto('loja-vitrine-premios', { w: 3, h: 1, topo: 46, solido: true,
+  I.objeto('loja-vitrine-premios', { w: 3, h: 1, topo: 46, solido: true, alto: true,
     chave: function (P) { return 'pre:' + premios().map(function (a) { return estadoPremio(a, P).charAt(0); }).join(''); },
     desenhar: function (ctx, px, py, o, P) {
       var W = 48, top = py - 46;

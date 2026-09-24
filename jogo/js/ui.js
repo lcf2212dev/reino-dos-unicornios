@@ -459,7 +459,10 @@
   function comprar(item, depois) {
     if (P.estrelas() < item.preco) {
       Reino.Som.tocar('toque');
-      Reino.Claude.falar('Faltam ' + (item.preco - P.estrelas()) + ' estrelas para ' + item.nome + '. Cada acerto de primeira vale uma estrela! ⭐', { fala: [Reino.Falas.fixas.lojaFaltam] });
+      var falta = item.preco - P.estrelas();
+      // o número só aparece na tela; a voz fala a frase gravada (de enfeite ou de prêmio da Escola)
+      Reino.Claude.falar((falta === 1 ? 'Falta 1 estrela' : 'Faltam ' + falta + ' estrelas') + ' para ' + item.nome + '. Cada acerto de primeira vale uma estrela! ⭐',
+        { fala: [item.premio ? LI.FALAS.faltamPremio : Reino.Falas.fixas.lojaFaltam] });
       return;
     }
     UI.confirmar('Trocar ' + item.preco + ' estrelas por ' + item.nome + '?', 'Sim, quero! ✨', 'Agora não').then(function (sim) {
@@ -739,7 +742,7 @@
         Reino.Som.tocar('toque');
         if (r.motivo === 'estrelas') {
           // o número só aparece na tela; a voz fala a frase gravada
-          Reino.Claude.falar('Faltam ' + r.faltam + (r.faltam === 1 ? ' estrela' : ' estrelas') + ' para ' + co.nome + '. Cada acerto de primeira vale uma estrela! ⭐',
+          Reino.Claude.falar((r.faltam === 1 ? 'Falta 1 estrela' : 'Faltam ' + r.faltam + ' estrelas') + ' para ' + co.nome + '. Cada acerto de primeira vale uma estrela! ⭐',
             { fala: [Cu.frases.faltamEstrelas], agora: true });
         }
         return;

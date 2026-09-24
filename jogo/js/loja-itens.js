@@ -47,6 +47,7 @@
   // o que a Loja fala de novo (o orquestrador grava; Falas.todas põe no pacote geral)
   L.FALAS = {
     premiosAVenda: 'Os outros prêmios da prova agora se trocam por estrelas! ⭐',
+    faltamPremio: 'Ainda faltam estrelas para esse prêmio. Cada acerto de primeira vale uma estrela! ⭐',
   };
 
   L.enfeite = function (id) {
