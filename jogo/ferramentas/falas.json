@@ -132,9 +132,9 @@
    "tom": "-12Hz"
   },
   "npc-margarida": {
-   "voz": "en-US-EmmaMultilingualNeural",
+   "voz": "de-DE-SeraphinaMultilingualNeural",
    "velocidade": "-12%",
-   "tom": "-8Hz"
+   "tom": "-14Hz"
   },
   "npc-helena": {
    "voz": "fr-FR-VivienneMultilingualNeural",

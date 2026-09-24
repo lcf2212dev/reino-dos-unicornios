@@ -116,17 +116,17 @@
       // chapéu de formatura no topo
       ret(ctx, px + 18, top - 4, 12, 3, K); ret(ctx, px + 19, top - 3, 10, 1, LILAS2); ret(ctx, px + 23, top - 6, 2, 2, K);
     } });
-  // espelho mágico: mostra a montaria com os enfeites em uso; brilha com Animações
-  I.objeto('loja-espelho-magico', { w: 4, h: 1, topo: 48, solido: true,
+  // espelho mágico (desce sobre o tapete da frente para não passar do alto da parede): mostra a montaria com os enfeites em uso; brilha com Animações
+  I.objeto('loja-espelho-magico', { w: 4, h: 1, topo: 30, solido: true,
     chave: function (P) {
       var m = espelhoInfo(P);
       return m ? 'esp:' + m.id + ':' + m.estagio + ':' + m.enfeites.join(',') + ':' + (m.capa ? 1 : 0) + (m.asasFada ? 1 : 0) : 'esp:-';
     },
     desenhar: function (ctx, px, py, o, P) {
-      var cx = px + 32, top = py - 48;
-      // pés de cogumelo e moldura de folhas e flores
-      ret(ctx, px + 12, py + 6, 6, 9, K); ret(ctx, px + 46, py + 6, 6, 9, K);
-      ret(ctx, px + 13, py + 7, 4, 7, C.creme); ret(ctx, px + 47, py + 7, 4, 7, C.creme);
+      var cx = px + 32, top = py - 30;
+      // pés de cogumelo (sobre o tapete da frente) e moldura de folhas e flores
+      ret(ctx, px + 14, py + 26, 6, 8, K); ret(ctx, px + 44, py + 26, 6, 8, K);
+      ret(ctx, px + 15, py + 27, 4, 6, C.creme); ret(ctx, px + 45, py + 27, 4, 6, C.creme);
       elipse(ctx, cx, top + 30, 31, 30, K);
       elipse(ctx, cx, top + 30, 30, 29, MUSGO);
       elipse(ctx, cx, top + 30, 27, 26, K);
@@ -160,7 +160,7 @@
       ret(ctx, cx - 18, top + 4, 4, 2, C.folha3); ret(ctx, cx + 14, top + 5, 4, 2, C.folha3);
     },
     anim: function (ctx, px, py, t) {
-      var cx = px + 32, top = py - 48, f = Math.floor(t / 260) % 6;
+      var cx = px + 32, top = py - 30, f = Math.floor(t / 260) % 6;
       var pos = [[-22, 8], [21, 22], [-24, 34], [23, 48], [-10, 56], [12, 3]];
       var p = pos[f], q = pos[(f + 3) % 6];
       brilho(ctx, cx + p[0], top + p[1], C.ouro3);

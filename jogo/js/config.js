@@ -51,7 +51,7 @@ Reino.config = {
     'npc-oliver': { voz: 'en-US-BrianMultilingualNeural', velocidade: '-12%', tom: '-12Hz', ingles: 'npc-oliver-en' }, // cavaleiro nobre, grave
     'npc-oliver-en': { voz: 'en-US-BrianMultilingualNeural', velocidade: '-20%', tom: '-12Hz' },
     // Escola do Reino
-    'npc-margarida': { voz: 'en-US-EmmaMultilingualNeural', velocidade: '-12%', tom: '-8Hz' },    // diretora serena e firme
+    'npc-margarida': { voz: 'de-DE-SeraphinaMultilingualNeural', velocidade: '-12%', tom: '-14Hz' }, // diretora serena e firme (voz diferente da Teacher Emma, no mesmo prédio)
     'npc-helena': { voz: 'fr-FR-VivienneMultilingualNeural', velocidade: '+6%', tom: '-6Hz' },   // professora clara e animada
     'npc-emma': { voz: 'en-US-EmmaMultilingualNeural', velocidade: '-3%', tom: '+2Hz', ingles: 'npc-emma-en' },      // professora de inglês
     'npc-emma-en': { voz: 'en-US-EmmaMultilingualNeural', velocidade: '-12%', tom: '+2Hz' },
