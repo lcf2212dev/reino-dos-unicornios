@@ -133,6 +133,11 @@
   var OCULOS_ESTRELA_FRENTE = ['kYk....kYk', 'YOYkkkkYOY', 'YkY....YkY'];
 
   var UNI = { adulto: {}, filhote: {} };
+  // desenhos de enfeites que também aparecem em lugar próprio em algum molde
+  var BRINCO_LUA = ['.kYk', 'kYkk', 'kYk.', 'kYYk', '.kk.'];
+  var FITINHA_CAUDA = ['kk.kk', 'kTkTk', 'kk.kk'];
+  var POMPOM_CAUDA = ['.kkk.', 'kPPWk', 'kPPPk', 'kdPPk', '.kkk.'];
+  var COMETA_CAUDA = ['......kb', '....kkbk', '..kkbWk.', '.kYWWk..', 'kYWYk...', '.kYk....', '..k.....'];
 
   // Adulto / jovem (26 x 21)
   UNI.adulto.lado = {
@@ -296,7 +301,9 @@
     asas: [{ linhas: ASA_ADULTO, x: 3, y: 4, atras: true, escura: true }, { linhas: ASA_ADULTO, x: 4, y: 5 }],
     ancoras: { orelha: [20, 2], olho: [19, 7], cabeca: [17, 3],
       pescoco: [16, 12], cauda: [2, 12], chifre: [17, 1] },
-    enfeites: { oculos: { linhas: OCULOS_FRENTE, x: 11, y: 6 }, 'oculos-estrela': { linhas: OCULOS_ESTRELA_FRENTE, x: 11, y: 6 } },
+    enfeites: { oculos: { linhas: OCULOS_FRENTE, x: 11, y: 6 }, 'oculos-estrela': { linhas: OCULOS_ESTRELA_FRENTE, x: 11, y: 6 },
+      // brinco na orelha do lado de cá, longe dos olhos (na orelha de lá tampava o olho)
+      'brinco-lua': { linhas: BRINCO_LUA, x: 7, y: 3 } },
     brilhos: [[10, 6], [8, 9], [2, 13], [15, 4]],
     cavaleira: [4, -4],
     naFrente: [10, 0, 21, 12],
@@ -341,6 +348,10 @@
   };
 
   // Filhote (18 x 16): bebê e pequeno
+  // bebê: o anel desce 1 px e fica 1 px mais estreito, colado na cabeça e centrado no toquinho
+  // (as pontas não ficam soltas acima da cabeça como duas anteninhas)
+  var ANEL_BEBE_FRENTE = { linhas: ['A...A', '.AaA.'], x: 5, y: 3 };
+  var ANEL_BEBE_DIAG = { linhas: ['A...A', '.AaA.'], x: 10, y: 3 };
   UNI.filhote.lado = {
     corpo: [
       '.............h....',
@@ -370,7 +381,11 @@
       pescoco: [10, 10], cauda: [1, 9], chifre: [12, 1] },
     // filhote: o anel de Saturno é um aro pequeno em volta da base do chifrinho, visto um pouco de
     // cima (pontas ao lado do chifre, arco da frente embaixo): no bebê o toquinho aparece dentro dele
-    enfeites: { 'anel-saturno': { linhas: ['A...A', '.AaA.'], x: 10, y: 2 } },
+    enfeites: { 'anel-saturno': { linhas: ['A...A', '.AaA.'], x: 10, y: 2 },
+      // enfeites de cauda 1 px para dentro (cauda + dx −1), para não cortar na borda esquerda
+      'fitinha-cauda': { linhas: FITINHA_CAUDA, x: 0, y: 8 },
+      'pompom-cauda': { linhas: POMPOM_CAUDA, x: 0, y: 7 },
+      'cometa-cauda': { linhas: COMETA_CAUDA, x: 0, y: 6 } },
     brilhos: [[5, 5], [1, 9], [6, 3]],
     cavaleira: [1, -1],
   };
@@ -408,7 +423,7 @@
     ancoras: { orelha: [3, 2], olho: [4, 6], cabeca: [7, 3],
       pescoco: [8, 11], cauda: null, chifre: [7, 1] },
     enfeites: { oculos: { linhas: OCULOS_FRENTE, x: 3, y: 5 }, 'oculos-estrela': { linhas: OCULOS_ESTRELA_FRENTE, x: 3, y: 5 },
-      'anel-saturno': { linhas: ['A....A', '.AaaA.'], x: 5, y: 2 } },
+      'anel-saturno': { linhas: ['A....A', '.AaaA.'], x: 5, y: 2, bebe: ANEL_BEBE_FRENTE } },
     brilhos: [[0, 6], [1, 8], [7, 4]],
     cavaleira: [2, -9],
     naFrente: [0, 0, 15, 10],
@@ -448,7 +463,7 @@
       pescoco: [8, 9], cauda: [7, 12], chifre: [7, 1] },
     enfeites: { 'gravata-borboleta': { linhas: ['RRRRR'], x: 5, y: 9 },
       'colar-perolas': { linhas: ['LcrcrcL', '.LLLLL.'], x: 5, y: 9 },
-      'anel-saturno': { linhas: ['A....A', '.AaaA.'], x: 5, y: 2 } },
+      'anel-saturno': { linhas: ['A....A', '.AaaA.'], x: 5, y: 2, bebe: ANEL_BEBE_FRENTE } },
     brilhos: [[10, 6], [11, 8]],
     cavaleira: [2, 3],
   };
@@ -481,7 +496,8 @@
       pescoco: [12, 11], cauda: [2, 10], chifre: [12, 1] },
     enfeites: { oculos: { linhas: ['R.R..R.R', 'RRRRRRRR', '.R....R.'], x: 7, y: 5 },
       'oculos-estrela': { linhas: ['kYk..kYk', 'YOYkkYOY', 'YkY..YkY'], x: 7, y: 5 },
-      'anel-saturno': { linhas: ['A....A', '.AaaA.'], x: 10, y: 2 } },
+      'anel-saturno': { linhas: ['A....A', '.AaaA.'], x: 10, y: 2, bebe: ANEL_BEBE_DIAG },
+      'brinco-lua': { linhas: BRINCO_LUA, x: 3, y: 3 } },
     brilhos: [[5, 6], [1, 10], [6, 4]],
     cavaleira: [2, -6],
     naFrente: [7, 0, 15, 11],
@@ -515,7 +531,7 @@
       pescoco: [10, 8], cauda: [2, 10], chifre: [12, 1] },
     enfeites: { 'gravata-borboleta': { linhas: ['RRRR'], x: 8, y: 8 },
       'colar-perolas': { linhas: ['LcrcrcL', '.LLLLL.'], x: 7, y: 8 },
-      'anel-saturno': { linhas: ['A....A', '.AaaA.'], x: 10, y: 2 } },
+      'anel-saturno': { linhas: ['A....A', '.AaaA.'], x: 10, y: 2, bebe: ANEL_BEBE_DIAG } },
     brilhos: [[7, 5], [6, 7], [1, 10]],
     cavaleira: [3, 0],
   };
@@ -534,11 +550,11 @@
     'oculos-de-sol': { linhas: ['pppppppp', 'pkkppkkp', 'pkgppkgp', '.pp..pp.'], paleta: { k: '#3a2446', p: '#ff7eb6', g: '#6a5a8a' }, ancora: 'olho', dx: -4, dy: -1 },
     'lacinho-estrela': { linhas: ['kk...kk', 'kbk.kbk', 'kbkykbk', 'kbyyybk', 'kbkykbk', 'kk...kk'], paleta: { k: '#3a2446', b: '#4a9dff', y: '#ffe066' }, ancora: 'orelha', dx: -4, dy: 1 },
     // enfeites da Loja das Fadas (js/loja-itens.js), com os encaixes novos: chifre, pescoço e cauda
-    'fitinha-cauda': { linhas: ['kk.kk', 'kTkTk', 'kk.kk'], paleta: { k: '#3a2446', T: '#34d0c0' }, ancora: 'cauda', dx: -2, dy: -1 },
+    'fitinha-cauda': { linhas: FITINHA_CAUDA, paleta: { k: '#3a2446', T: '#34d0c0' }, ancora: 'cauda', dx: -2, dy: -1 },
     // pompom redondo 5×5 em rosa forte, com brilho branco e sombra: aparece em cima da crina clara
-    'pompom-cauda': { linhas: ['.kkk.', 'kPPWk', 'kPPPk', 'kdPPk', '.kkk.'], paleta: { k: '#3a2446', W: '#ffffff', P: '#ff4f9a', d: '#c92f73' }, ancora: 'cauda', dx: -2, dy: -2 },
+    'pompom-cauda': { linhas: POMPOM_CAUDA, paleta: { k: '#3a2446', W: '#ffffff', P: '#ff4f9a', d: '#c92f73' }, ancora: 'cauda', dx: -2, dy: -2 },
     // cometinha: estrela brilhante na ponta da cauda e um rastro que afina subindo para o lado do corpo
-    'cometa-cauda': { linhas: ['......kb', '....kkbk', '..kkbWk.', '.kYWWk..', 'kYWYk...', '.kYk....', '..k.....'], paleta: { k: '#3a2446', Y: '#ffd34d', W: '#fffbe0', b: '#7fd6ff' }, ancora: 'cauda', dx: -2, dy: -3 },
+    'cometa-cauda': { linhas: COMETA_CAUDA, paleta: { k: '#3a2446', Y: '#ffd34d', W: '#fffbe0', b: '#7fd6ff' }, ancora: 'cauda', dx: -2, dy: -3 },
     // duas asinhas triangulares vermelhas (borda em vermelho-escuro, não em contorno escuro, para não
     // parecer uma carinha) e o nó no meio; de costas só a tirinha R (desenho próprio nos moldes)
     'gravata-borboleta': { linhas: ['dl...ld', 'dRRNRRd', 'dR...Rd'], paleta: { d: '#b0243f', R: '#ff4f6d', l: '#ffa3b3', N: '#8c1c33' }, ancora: 'pescoco', dx: -3, dy: -1 },
@@ -546,7 +562,7 @@
     // qualquer cor, sem o tracejado escuro de zíper) e um coraçãozinho rosa com brilho de pingente
     'colar-perolas': { linhas: ['LcrcrcL', '.LPLPL.', '.LPWPL.', '..LPL..', '...L...'], paleta: { L: '#8a6fb0', c: '#fff8ee', r: '#ffc7e2', P: '#ff4f9a', W: '#ffffff' }, ancora: 'pescoco', dx: -3, dy: 0 },
     'colar-planetas': { linhas: ['kykykyk', 'kRkBkOk'], paleta: { k: '#3a2446', y: '#ffd34d', R: '#ff6b8a', B: '#5fb4ff', O: '#ffb020' }, ancora: 'pescoco', dx: -3, dy: -1 },
-    'brinco-lua': { linhas: ['.kYk', 'kYkk', 'kYk.', 'kYYk', '.kk.'], paleta: { k: '#3a2446', Y: '#ffc21a' }, ancora: 'orelha', dx: -2, dy: 1 },
+    'brinco-lua': { linhas: BRINCO_LUA, paleta: { k: '#3a2446', Y: '#ffc21a' }, ancora: 'orelha', dx: -2, dy: 1 },
     'oculos-estrela': { linhas: ['kYk', 'YOY', 'YkY'], paleta: { k: '#3a2446', Y: '#f5a300', O: '#ffe066' }, ancora: 'olho', dx: -1, dy: -1 },
     'coroa-flores': { linhas: ['kPk.kBk', 'PYPkBYB', 'GGGGGGG', 'kkkkkkk'], paleta: { k: '#3a2446', P: '#ff7eb6', B: '#b58cff', Y: '#ffe066', G: '#6fdc8c' }, ancora: 'cabeca', dx: -3, dy: -2 },
     'tiara-estrelas': { linhas: ['.Y...Y.', 'YWY.YWY', 'kSkSkSk'], paleta: { k: '#3a2446', Y: '#ffd34d', W: '#fffbe0', S: '#dfe6ff' }, ancora: 'cabeca', dx: -3, dy: -2 },
@@ -615,6 +631,7 @@
       var e = ENFEITES[nome];
       if (!e) return;
       var proprio = molde.enfeites && molde.enfeites[nome];
+      if (proprio && estagio === 0 && proprio.bebe) proprio = proprio.bebe;
       if (proprio) { pintarMatriz(ctx, proprio.linhas, e.paleta, proprio.x, proprio.y); return; }
       var a = molde.ancoras[e.ancora];
       if (a) pintarMatriz(ctx, e.linhas, e.paleta, a[0] + e.dx, a[1] + e.dy);
