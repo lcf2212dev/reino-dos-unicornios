@@ -24,8 +24,10 @@
       loja: {},         // itemId -> true
       usando: { enfeites: [], capa: false, asasFada: false, estrelinhas: false },
       pago: {},         // materiaId -> valor já pago pelos pais
-      ajustes: { som: true, musica: false, voz: true, animacoes: !U.reduzMovimentoSistema, texto: 1, setas: false },
+      ajustes: { som: true, musica: false, voz: true, animacoes: !U.reduzMovimentoSistema, texto: 1, setas: false, surpresa: true },
       ritualVisto: false,
+      cuidados: {},     // uniId -> {fome, sede, em} (0–100, 100 = satisfeito; sem registro = 100/100) — js/cuidados.js
+      despensa: {},     // comidaId -> {compradas, usadas} (contadores que só crescem; quantidade = compradas − usadas)
     };
   }
 
@@ -113,6 +115,26 @@
     });
     r.estrelas = { ganhas: max(r.estrelas.ganhas, antigo.estrelas && antigo.estrelas.ganhas), gastas: max(r.estrelas.gastas, antigo.estrelas && antigo.estrelas.gastas) };
     Object.keys(antigo.loja || {}).forEach(function (k) { if (antigo.loja[k]) r.loja[k] = true; });
+    // fome e sede: por unicórnio vale o registro mudado por último (`em`; empate: o do lado mais recente).
+    // Um lado sem o campo (aparelho com a versão antiga) não apaga nada: vale o outro lado.
+    if (a.cuidados || b.cuidados) {
+      r.cuidados = U.copia(recente.cuidados || {});
+      Object.keys(antigo.cuidados || {}).forEach(function (k) {
+        var x = r.cuidados[k], y = antigo.cuidados[k];
+        if (!y) return;
+        if (!x || (y.em || 0) > (x.em || 0)) r.cuidados[k] = U.copia(y);
+      });
+    }
+    // despensa: contadores que só crescem, pelo maior (nunca some comida comprada)
+    if (a.despensa || b.despensa) {
+      r.despensa = U.copia(recente.despensa || {});
+      Object.keys(antigo.despensa || {}).forEach(function (k) {
+        var x = r.despensa[k], y = antigo.despensa[k];
+        if (!y) return;
+        if (!x) { r.despensa[k] = U.copia(y); return; }
+        x.compradas = max(x.compradas, y.compradas); x.usadas = max(x.usadas, y.usadas);
+      });
+    }
     r.comecou = !!(a.comecou || b.comecou);
     r.ritualVisto = !!(a.ritualVisto || b.ritualVisto);
     return r;
@@ -417,6 +439,7 @@
   P.novoCiclo = function () {
     estado.ciclo = (estado.ciclo || 1) + 1;
     estado.salas = {}; estado.treinos = {}; estado.pago = {};
+    // fome e sede (cuidados) e a despensa continuam: são do unicórnio, não do ciclo de provas
     P.salvar();
   };
   P.apagarTudo = function () {
