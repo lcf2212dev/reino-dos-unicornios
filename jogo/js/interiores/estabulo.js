@@ -280,9 +280,17 @@
     PAREDE.forEach(function (t, i) { lista.push({ tipo: t, x: i, y: 0 }); });
     lista.push({ tipo: 'estandarte', x: 15, y: 0, var: { cor: '#ff7eb6', emblema: 'coracao' } });
     lista.push({ tipo: 'estabulo-lanterna', x: 16, y: 0 }, { tipo: 'estandarte', x: 17, y: 0, var: { cor: '#9b6bd6', emblema: 'estrela' } });
+    var SOBRA = [['estabulo-feno', 'balde'], ['flores', 'estabulo-cenouras'], ['barril', 'estabulo-feno'], ['cesto', 'balde']];
     for (var n = 0; n < ALAS * POR_ALA; n++) {
-      var a = Math.floor(n / POR_ALA), j = n % POR_ALA;
-      lista.push({ tipo: 'estabulo-baia', x: 1 + j * 2, y: 2 + a * 4, var: { indice: n }, nome: 'Baia', acao: { tipo: 'unicornio', indice: n } });
+      var a = Math.floor(n / POR_ALA), j = n % POR_ALA, bx = 1 + j * 2, by = 2 + a * 4;
+      if (n < TOTAL) {
+        lista.push({ tipo: 'estabulo-baia', x: bx, y: by, var: { indice: n }, nome: 'Baia', acao: { tipo: 'unicornio', indice: n } });
+      } else {
+        // fim da última fileira: cantinho de guardados (só enfeite, sem baia vazia prometendo alguém)
+        var k = n % SOBRA.length;
+        lista.push({ tipo: SOBRA[k][0], x: bx, y: by }, { tipo: SOBRA[k][1], x: bx + 1, y: by },
+          { tipo: SOBRA[(k + 1) % SOBRA.length][1], x: bx, y: by + 1 }, { tipo: SOBRA[(k + 2) % SOBRA.length][0], x: bx + 1, y: by + 1 });
+      }
     }
     // enfeites nas pontas de cada fileira (coluna 0 e coluna 17)
     for (var y = 2; y < ALT_BAIAS; y++) {
@@ -303,7 +311,7 @@
     { tipo: 'estabulo-vitral', x: 13, y: 0 }, { tipo: 'estabulo-lanterna', x: 17, y: 0 },
     // fundo
     { tipo: 'estabulo-feno', x: 0, y: 2 }, { tipo: 'estabulo-feno', x: 1, y: 2 },
-    inter('cenouras', 'Saco de cenouras', { tipo: 'estabulo-cenouras', x: 2, y: 2 }),
+    inter('cenouras', 'Saco de cenouras', { tipo: 'estabulo-cenouras', x: 1, y: 3 }), { tipo: 'balde', x: 0, y: 3 },
     { tipo: 'barril', x: 5, y: 2 }, { tipo: 'estabulo-sela', x: 6, y: 2 },
     { tipo: 'flores', x: 8, y: 2 }, { tipo: 'cesto', x: 10, y: 2 },
     inter('escovas', 'Escovas de crina', { tipo: 'estabulo-escovas', x: 11, y: 2 }),

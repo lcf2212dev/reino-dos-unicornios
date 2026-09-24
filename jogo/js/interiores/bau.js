@@ -253,10 +253,10 @@
   }
   var TELA = { tipo: 'tela', tela: 'bau' };
 
-  // uma pilha por matéria, até 4 por fileira (x = 4, 6, 8, 10). A 1ª fileira fica no fundo;
+  // uma pilha por matéria, até 4 por fileira (x = 5, 7, 9, 11). A 1ª fileira fica no fundo;
   // cada fileira a mais abre uma faixa de 2 tiles (passagem + pilhas) e empurra o resto para baixo.
-  // O tile 12 da fileira do fundo fica livre para tocar na medalha.
-  var MATS = R.materias || [], POR = 4, XS = [4, 6, 8, 10];
+  // Abaixo do mapa (3-4) e da medalha (12-13) o fundo fica livre: nada alto por cima deles.
+  var MATS = R.materias || [], POR = 4, XS = [5, 7, 9, 11];
   var EXTRA = Math.max(0, Math.ceil(MATS.length / POR) - 1), DY = EXTRA * 2;
   var pilhas = [], entre = [], corrFaixa = [];
   function fileiraY(f) { return f === 0 ? 2 : 2 + f * 2; }
@@ -269,9 +269,9 @@
   });
   function ocupada(x, y) { return pilhas.some(function (p) { return p.x === x && p.y === y; }); }
   for (var f = 0; f <= EXTRA; f++) {
-    var y = fileiraY(f), fim = f === 0 ? 13 : 11;
-    for (var x = 4; x <= fim; x++) {
-      if (x !== 12 && !ocupada(x, y)) entre.push({ tipo: x % 2 ? 'bau-gemas' : 'bau-saco', x: x, y: y });
+    var y = fileiraY(f), ini = f === 0 ? 5 : 4;
+    for (var x = ini; x <= 11; x++) {
+      if (!ocupada(x, y)) entre.push({ tipo: x % 2 ? 'bau-gemas' : 'bau-saco', x: x, y: y });
     }
     if (f > 0) {
       // pontas da faixa: cristais e barris; a passagem acima fica livre
@@ -295,8 +295,8 @@
     { tipo: 'estandarte', x: 5, y: 0, var: { cor: '#7c5cff', emblema: 'estrela' } },
     { tipo: 'bau-veio', x: 6, y: 0, var: { cor: '#9fdcff' } }, { tipo: 'bau-tocha', x: 7, y: 0 },
     { tipo: 'bau-veio', x: 8, y: 0, var: { cor: '#ff9cc6' } }, { tipo: 'bau-tocha', x: 10, y: 0 },
-    inter('medalha', 'Medalha de ouro da escola', { tipo: 'bau-medalha', x: 11, y: 0 }),
-    { tipo: 'bau-tocha', x: 13, y: 0 },
+    inter('medalha', 'Medalha de ouro da escola', { tipo: 'bau-medalha', x: 12, y: 0 }),
+    { tipo: 'bau-tocha', x: 11, y: 0 },
     { tipo: 'estandarte', x: 14, y: 0, var: { cor: '#d9a93a', emblema: 'coracao' } },
     { tipo: 'bau-veio', x: 15, y: 0, var: { cor: '#6fdc8c' } }, { tipo: 'prateleira-parede', x: 16, y: 0 },
     { tipo: 'bau-tocha', x: 17, y: 0 }, { tipo: 'bau-veio', x: 9, y: 0, var: { cor: '#ffd34d' } },

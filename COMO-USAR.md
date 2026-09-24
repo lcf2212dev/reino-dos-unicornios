@@ -77,11 +77,11 @@
   - **Torre do Relógio:** térreo com o Seu Ponteiro e um andar por capítulo, pelas escadas, com «Coach Ben», «Miss Stella», «Doctor Smile», «Miss Moon» e «Mister Joy». O relógio fica no alto.
   - **Castelo da Medalha:** Princesa Serena, o Plano da Prova na tapeçaria e a estante das medalhas. Nas alas, a Cavaleira Aurora (História) e «Sir Oliver» (Inglês).
   - **Escola do Reino:** Diretora Margarida e o mural dos prêmios. Nas salas, a Professora Helena e a «Teacher Emma».
-  - **Estábulo Mágico:** Seu Feno, o ninho dos ovos e as baias com os unicórnios que já nasceram. Tocar num unicórnio faz ele falar.
+  - **Estábulo Mágico:** Seu Feno, o ninho dos ovos e uma baia para cada unicórnio do álbum. A baia fica vazia até ele nascer. Tocar num unicórnio faz ele falar.
   - **Loja das Fadas:** Fada Pétala, vitrines e o espelho mágico.
   - **Baú do Tesouro:** Dragãozinho Tostão e pilhas de moedas que crescem com o dinheiro dela.
 - **Ícone em cima de cada personagem:**
-  - ❗ sala nova, ✓ sala feita, 💙 o unicórnio raro já nasceu;
+  - ❗ sala nova (ou treino aberto e ainda sem medalha), ✓ sala feita, 💙 o unicórnio raro já nasceu;
   - 🔒 treino fechado, 🥇🥈🥉 medalha do treino;
   - 🌈💙🤍 o que a próxima tentativa da prova vale (lendário, raro, comum);
   - 💬 conversar (guias, Seu Feno, Fada Pétala e Tostão), 🥚 ovos esperando;

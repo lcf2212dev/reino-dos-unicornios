@@ -1546,6 +1546,28 @@
         agir: function () { return R.Cena && R.Cena.irPara ? R.Cena.irPara(gt.para, gt.chegada, gt.olhar) : Promise.resolve(); } };
     }
 
+    // quem recebe um toque (px do jogo), sem calcular caminho. Prioridade:
+    // 1) NPC; 2) objeto interativo cuja PEGADA contém o tile tocado (o mais à frente);
+    // 3) objeto cuja parte desenhada acima da pegada (topo) contém o ponto (o mais à frente)
+    function quemEm(wx, wy) {
+      var achados = npcs.filter(function (n) {
+        return wx >= n.x * T - 1 && wx < n.x * T + 17 && wy >= n.y * T - 14 && wy < n.y * T + 16;
+      }).sort(function (a, b) { return b.y - a.y; });
+      if (achados.length) return { npc: achados[0] };
+      var tx = Math.floor(wx / T), ty = Math.floor(wy / T);
+      var frente = function (a, b) { return b.base - a.base; };
+      var donos = objs.filter(function (it) {
+        return it.interativo && tx >= it.o.x && tx < it.o.x + it.w && ty >= it.o.y && ty < it.o.y + it.h;
+      }).sort(frente);
+      if (donos.length) return { it: donos[0] };
+      var altos = objs.filter(function (it) {
+        if (!it.interativo || it.parede || !it.topo) return false;
+        return wx >= it.px && wx < it.px + it.W && wy >= it.py - it.topo && wy < it.py;
+      }).sort(frente);
+      if (altos.length) return { it: altos[0] };
+      return null;
+    }
+
     var cena = {
       id: def.id, tipo: 'interior', lugarId: def.lugar, nome: def.nome, def: def, corFundo: FUNDO,
       spawn: def.spawn, grade: g,
@@ -1570,16 +1592,9 @@
       objetosInterativos: function () { return objs.filter(function (it) { return it.interativo; }).map(function (it) { return it.o; }); },
       // toque em px do jogo: NPC (sprite ~16×24 acima do tile), objeto interativo, tapete/escada
       alvoEm: function (wx, wy) {
-        var achados = npcs.filter(function (n) {
-          return wx >= n.x * T - 1 && wx < n.x * T + 17 && wy >= n.y * T - 14 && wy < n.y * T + 16;
-        }).sort(function (a, b) { return b.y - a.y; });
-        if (achados.length) return alvoNpc(achados[0]);
-        var its = objs.filter(function (it) {
-          if (!it.interativo) return false;
-          var topo = it.parede ? 0 : it.topo;
-          return wx >= it.px && wx < it.px + it.W && wy >= it.py - topo && wy < it.py + it.H;
-        }).sort(function (a, b) { return b.base - a.base; });
-        if (its.length) return alvoObjeto(its[0]);
+        var q = quemEm(wx, wy);
+        if (q && q.npc) return alvoNpc(q.npc);
+        if (q && q.it) return alvoObjeto(q.it);
         var tx = Math.floor(wx / T), ty = Math.floor(wy / T);
         var gt = gatilhoEm(tx, ty);
         // o arco da escada que sobe é desenhado na parede, até 2 tiles acima do degrau
@@ -1701,6 +1716,7 @@
       },
       // para as ferramentas: objetos com a pegada já resolvida
       _objetos: objs,
+      _quemEm: function (wx, wy) { var q = quemEm(wx, wy); return q ? (q.npc ? 'npc:' + q.npc.id : 'obj:' + q.it.i) : null; },
       _renderizar: function () { sujo = true; renderizar(); return estatico; },
     };
 
