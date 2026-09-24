@@ -1,6 +1,7 @@
-/* Início do jogo: carrega o progresso, desenha o reino e liga os controles. */
+/* Início do jogo: carrega o progresso, desenha a cena ativa (mapa ou interior) e liga os controles.
+   O que é de cada cena (placas, Claude, portas, NPCs) fica em cena.js e nos interiores. */
 (function () {
-  var U = Reino.util, el = U.el, P = Reino.Progresso, UI = Reino.UI, J = Jogador, T = Mapa.T;
+  var U = Reino.util, el = U.el, P = Reino.Progresso, UI = Reino.UI, J = Jogador, T = Mapa.T, Cena = Reino.Cena;
   var canvas, ctx, buffer, bctx, escala = 3, dpr = 1;
   var cam = { x: 0, y: 0 };
   var teclas = {};
@@ -19,26 +20,34 @@
     buffer.height = Math.ceil(canvas.height / escala) + 1;
     bctx.imageSmoothingEnabled = false;
     ctx.imageSmoothingEnabled = false;
+    pintor.ctx = ctx; pintor.escala = escala; pintor.dpr = dpr;
     desenhar(performance.now());
   }
 
-  /* ---------- lugares concluídos ganham arco-íris ---------- */
-  function concluidos() {
-    var ids = [];
-    Reino.materias.forEach(function (m) { if (P.materiaCompleta(m)) ids.push('materia:' + m.id); });
-    var ouro = Reino.materias.some(function (m) { var t = est().treinos[m.id]; return t && t.melhor === 'ouro'; });
-    if (ouro) ids.push('castelo');
-    // escola ganha arco-íris quando todas as provas já deram acessório
-    if (Reino.provas.length && Reino.provas.every(function (pv) { return P.regProva(pv).premio; })) ids.push('escola');
-    return ids;
+  // nos interiores, o HUD de cima e o menu de baixo não podem esconder a primeira e a última
+  // fileira (o tapete de saída fica embaixo): a câmera pode passar da borda até o fim do HUD
+  function margensHUD() {
+    var m = { topo: 0, baixo: 0 };
+    var r = canvas.getBoundingClientRect();
+    U.$$('#hud .hud-topo > *').forEach(function (e) {
+      var b = e.getBoundingClientRect();
+      if (b.bottom > b.top) m.topo = Math.max(m.topo, b.bottom - r.top);
+    });
+    var dock = U.$('#hud .dock');
+    if (dock) { var d = dock.getBoundingClientRect(); if (d.bottom > d.top) m.baixo = Math.max(0, r.bottom - d.top); }
+    m.topo = m.topo * dpr / escala; m.baixo = m.baixo * dpr / escala;
+    return m;
   }
 
   function atualizarCamera() {
     var vw = buffer.width, vh = buffer.height;
-    var mw = Mapa.largura(), mh = Mapa.altura();
+    var c = Cena.atual();
+    var mw = c.largura(), mh = c.altura();
     var alvoX = J.x - vw / 2, alvoY = J.y - 10 - vh / 2;
     cam.x = mw <= vw ? (mw - vw) / 2 : U.clamp(alvoX, 0, mw - vw);
-    cam.y = mh <= vh ? (mh - vh) / 2 : U.clamp(alvoY, 0, mh - vh);
+    if (c.tipo !== 'interior') { cam.y = mh <= vh ? (mh - vh) / 2 : U.clamp(alvoY, 0, mh - vh); return; }
+    var m = margensHUD(), livre = vh - m.topo - m.baixo;
+    cam.y = mh <= livre ? (mh - livre) / 2 - m.topo : U.clamp(alvoY, -m.topo, mh - vh + m.baixo);
   }
 
   // desenha personagens direto em pixels de tela: andam suave, sem tremer
@@ -53,151 +62,10 @@
       var dx = Math.round((x - img.width / 2 - cam.x) * escala), dy = Math.round((yPes - img.height - cam.y) * escala);
       ctx.drawImage(img, dx, dy, img.width * escala, img.height * escala);
     },
+    // px do jogo → px do canvas
+    tela: function (x, y) { return { x: Math.round((x - cam.x) * escala), y: Math.round((y - cam.y) * escala) }; },
+    ctx: null, escala: escala, dpr: dpr, cam: cam,
   };
-
-  function chanfro(p, x, y, w, h, cor) {
-    p.ret(x + 2, y, w - 4, h, cor);
-    p.ret(x, y + 2, w, h - 4, cor);
-    p.ret(x + 1, y + 1, 1, 1, cor);
-    p.ret(x + w - 2, y + 1, 1, 1, cor);
-    p.ret(x + 1, y + h - 2, 1, 1, cor);
-    p.ret(x + w - 2, y + h - 2, 1, 1, cor);
-  }
-  function desenharBalaoGuia(p, t, x, yTopo) {
-    var ciclo = (t % 5200) / 5200;
-    var a = ciclo < 0.18 ? ciclo / 0.18 : ciclo > 0.72 ? Math.max(0, (1 - ciclo) / 0.28) : 1;
-    if (a < 0.04) return;
-    var bx = x - 6, by = yTopo - 14;
-    var linha = 'rgba(58,36,70,' + (0.38 * a).toFixed(3) + ')';
-    var fundo = 'rgba(255,244,250,' + (0.94 * a).toFixed(3) + ')';
-    chanfro(p, bx, by, 16, 10, linha);
-    chanfro(p, bx + 1, by + 1, 14, 8, fundo);
-    p.ret(bx + 4, by + 2, 6, 1, 'rgba(255,255,255,' + (0.8 * a).toFixed(3) + ')');
-    p.ret(bx + 5, by + 9, 3, 1, fundo);
-    p.ret(bx + 4, by + 10, 1, 1, linha);
-    p.ret(bx + 5, by + 10, 3, 1, fundo);
-    p.ret(bx + 8, by + 10, 1, 1, linha);
-    p.ret(bx + 5, by + 11, 1, 1, linha);
-    p.ret(bx + 6, by + 11, 1, 1, fundo);
-    p.ret(bx + 7, by + 11, 1, 1, linha);
-    p.ret(bx + 5, by + 12, 2, 1, linha);
-    var tons = ['255,156,198', '201,166,255', '255,211,77'];
-    for (var i = 0; i < 3; i++) {
-      var dy = Math.round(Math.sin(t / 280 + i * 1.05));
-      p.ret(bx + 4 + i * 4, by + 4 + dy, 2, 2, 'rgba(' + tons[i] + ',' + a.toFixed(3) + ')');
-    }
-  }
-  function desenharClaude(p, t, animar) {
-    var ct = Mapa.claudeTile;
-    var x = ct.x * T + 8, y = ct.y * T + 14;
-    var pulo = animar ? Math.abs(Math.sin(t / 400)) * 2 : 0;
-    var piscar = animar && Math.floor(t / 180) % 22 === 0;
-    var spr = PA.claude(piscar ? 1 : 0).canvas;
-    J.sombra(p, x, y, 6);
-    p.sprite(spr, x, y - pulo);
-    if (animar) desenharBalaoGuia(p, t, x, y - pulo - spr.height);
-  }
-
-  var FONTE_PIXEL = '"Press Start 2P", "Trebuchet MS", sans-serif';
-  function linhasDaPlaca(nome) {
-    var palavras = nome.split(/\s+/);
-    var linhas = [], atual = '';
-    palavras.forEach(function (p) {
-      var prox = atual ? atual + ' ' + p : p;
-      if (atual && prox.length > 12) { linhas.push(atual); atual = p; }
-      else atual = prox;
-    });
-    if (atual) linhas.push(atual);
-    return linhas;
-  }
-  function extraDaPlaca(l) {
-    if (l.tipo === 'materia') {
-      var m = Reino.materia(l.materiaId);
-      return concluidos().indexOf(l.id) >= 0 ? 'Pronto' : P.salasFeitas(m) + '/' + m.salas.length;
-    }
-    if (l.tipo === 'estabulo' && P.ovosParaChocar().length) return 'Ovo';
-    if (l.tipo === 'escola' && Reino.provas.some(function (pv) { return !P.regProva(pv).premio; })) return 'Prova';
-    return '';
-  }
-  // placa ao lado da construção, com a fonte pixel (acentos inclusos).
-  // Press Start 2P só fica nítida em múltiplos de 8px e em posições inteiras;
-  // o tamanho acompanha a escala do mapa (em tela de alta densidade o mapa cresce junto).
-  function desenharPlacas() {
-    var fonte = 8 * Math.max(2, Math.round(escala / 2));
-    var k = fonte / 16;
-    function px(v) { return Math.round(v * k); }
-    var familia = FONTE_PIXEL;
-    ctx.save();
-    ctx.imageSmoothingEnabled = true;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.font = fonte + 'px ' + familia;
-    var hud = Array.prototype.map.call(document.querySelectorAll('#hud > *'), function (e) {
-      var r = e.getBoundingClientRect(), c = canvas.getBoundingClientRect();
-      return { left: (r.left - c.left) * dpr, right: (r.right - c.left) * dpr, top: (r.top - c.top) * dpr, bottom: (r.bottom - c.top) * dpr };
-    }).filter(function (r) { return r.right > r.left; });
-    Mapa.lugares().forEach(function (l) {
-      var linhas = linhasDaPlaca(l.nome);
-      var extra = extraDaPlaca(l);
-      var largura = 0;
-      linhas.forEach(function (linha) { largura = Math.max(largura, ctx.measureText(linha).width); });
-      // o contador (0/5, Pronto, Ovo) vai numa etiqueta lilás separada do nome
-      var etiquetaW = extra ? Math.ceil(ctx.measureText(extra).width) + px(16) : 0;
-      var etiquetaH = px(24);
-      largura = Math.max(largura, etiquetaW);
-      var pad = px(12), topo = px(8), lh = px(24), vao = px(6), borda = px(3), filete = px(2);
-      var sw = Math.ceil(largura + pad * 2);
-      var sh = topo * 2 + linhas.length * lh + (extra ? vao + etiquetaH : 0);
-      var ww = sw / escala, wh = sh / escala;
-      // l.placa: 'acima' põe a placa sobre o telhado; 'direita'/'esquerda' forçam o lado;
-      // sem nada, fica ao lado virada para o meio do mapa
-      var x, y;
-      if (l.placa === 'acima') {
-        x = (l.rect.x + l.rect.w / 2) * T - ww / 2;
-        y = l.rect.y * T - wh - 8;
-      } else {
-        var naDireita = l.placa ? l.placa === 'direita' : l.rect.x + l.rect.w / 2 < Mapa.W / 2;
-        x = naDireita ? (l.rect.x + l.rect.w) * T + 3 : l.rect.x * T - ww - 3;
-        y = (l.rect.y + l.rect.h) * T - wh - 2;
-      }
-      x = Math.max(T + 1, Math.min(x, Mapa.largura() - ww - T - 1));
-      var sx = Math.round((x - cam.x) * escala);
-      var sy = Math.round((y - cam.y) * escala);
-      // no alto do mapa a placa desce para não ficar escondida atrás do HUD
-      hud.forEach(function (r) {
-        if (sx < r.right && sx + sw > r.left && sy < r.bottom && sy + sh > r.top) sy = Math.max(sy, r.bottom + borda * 2);
-      });
-      if (sx > canvas.width || sy > canvas.height || sx + sw < 0 || sy + sh < 0) return;
-      var perto = J.x > x - 6 && J.x < x + ww + 6 && J.y > y - 4 && J.y < y + wh + 8;
-      var meio = sx + Math.round(sw / 2);
-      ctx.globalAlpha = perto ? 0.35 : 1;
-      ctx.fillStyle = '#3a2446';
-      ctx.fillRect(sx - borda, sy - borda, sw + borda * 2, sh + borda * 2);
-      ctx.fillStyle = '#fff8ee';
-      ctx.fillRect(sx, sy, sw, sh);
-      ctx.fillStyle = '#f3e6c8';
-      ctx.fillRect(sx, sy, sw, borda);
-      var poste = Math.max(4, Math.round(escala));
-      ctx.fillStyle = '#8a604a';
-      ctx.fillRect(meio - Math.round(poste / 2), sy + sh + borda, poste, Math.round(10 * escala / 3));
-      ctx.fillStyle = '#3a2446';
-      linhas.forEach(function (linha, i) {
-        ctx.fillText(linha, meio, sy + topo + lh * i + lh / 2);
-      });
-      if (extra) {
-        var ex = meio - Math.round(etiquetaW / 2), ey = sy + topo + lh * linhas.length + vao;
-        ctx.fillStyle = '#b58cff';
-        ctx.fillRect(ex, ey, etiquetaW, etiquetaH);
-        ctx.fillStyle = '#efe4ff';
-        ctx.fillRect(ex + filete, ey + filete, etiquetaW - filete * 2, etiquetaH - filete * 2);
-        ctx.fillStyle = '#6a4cd6';
-        ctx.fillText(extra, meio, ey + etiquetaH / 2);
-      }
-      ctx.globalAlpha = 1;
-    });
-    ctx.restore();
-    ctx.imageSmoothingEnabled = false;
-  }
 
   function desenharLuz() {
     var g = ctx.createRadialGradient(canvas.width / 2, canvas.height / 2, 0, canvas.width / 2, canvas.height / 2, Math.max(canvas.width, canvas.height) * 0.62);
@@ -209,26 +77,30 @@
     ctx.fillRect(0, 0, canvas.width, canvas.height);
   }
 
+  function ordemY(a, b) { return a.y - b.y; }
   function desenhar(t) {
-    if (!est()) return;
+    if (!est() || !ctx) return;
+    var t0 = performance.now();
     var animar = est().ajustes.animacoes && jogoAtivo;
+    var cena = Cena.atual();
     atualizarCamera();
     // o cenário é desenhado em pixels do jogo e deslizado com precisão de pixel da tela
     var ox = Math.floor(cam.x), oy = Math.floor(cam.y);
     bctx.setTransform(1, 0, 0, 1, -ox, -oy);
-    bctx.fillStyle = '#c6e15a';
+    bctx.fillStyle = cena.corFundo;
     bctx.fillRect(ox, oy, buffer.width, buffer.height);
-    Mapa.desenharAnimado(bctx, t, { concluidos: concluidos(), semAnimacao: !animar });
+    cena.desenharFundo(bctx, t, animar);
     J.desenharMarcador(bctx, t);
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.imageSmoothingEnabled = false;
     ctx.drawImage(buffer, -Math.round((cam.x - ox) * escala), -Math.round((cam.y - oy) * escala), buffer.width * escala, buffer.height * escala);
-    desenharPlacas();
+    cena.desenharTela(ctx, pintor, t, animar);
     // quem está mais embaixo aparece na frente
-    var ct = Mapa.claudeTile;
-    if (J.y < ct.y * T + 14) { J.desenhar(pintor, animar); desenharClaude(pintor, t, animar); }
-    else { desenharClaude(pintor, t, animar); J.desenhar(pintor, animar); }
+    var itens = J.itensDesenho(pintor, animar).concat(cena.itensDesenho(pintor, t, animar) || []);
+    itens.sort(ordemY).forEach(function (i) { i.desenhar(); });
     desenharLuz();
+    Cena.desenharIris(ctx, pintor, performance.now());
+    Cena.quadros.registrar(performance.now() - t0);
   }
 
   function laco(t) {
@@ -236,78 +108,63 @@
     var dt = Math.min(0.05, (t - (ultimo || t)) / 1000);
     ultimo = t;
     if (!jogoAtivo || pausado) return;
-    var tx = (teclas.dir ? 1 : 0) - (teclas.esq ? 1 : 0);
-    var ty = (teclas.baixo ? 1 : 0) - (teclas.cima ? 1 : 0);
-    J.atualizar(dt, { x: tx, y: ty }, entrarLugar);
+    // em transição ou com um diálogo aberto ela não anda nem aciona portas
+    if (Cena.bloqueado()) J.atualizar(dt, { x: 0, y: 0 }, null);
+    else {
+      var tx = (teclas.dir ? 1 : 0) - (teclas.esq ? 1 : 0);
+      var ty = (teclas.baixo ? 1 : 0) - (teclas.cima ? 1 : 0);
+      J.atualizar(dt, { x: tx, y: ty }, Cena.acionar);
+    }
     desenhar(t);
   }
 
-  /* ---------- entrar nos lugares ---------- */
-  function entrarLugar(lugar) {
-    J.parar();
-    teclas = {};
-    // ao sair, a Mariana aparece na frente da porta
-    esperarTelasFecharem(function () { J.posicionar(lugar.porta.x, lugar.porta.y + 1); J.portaIgnorada = null; });
-    UI.abrirLugar(lugar);
-  }
-  var esperandoFechar = null;
-  function esperarTelasFecharem(fn) { esperandoFechar = fn; }
   U.on('telas', function (n) {
     pausado = n > 0;
-    if (n === 0 && esperandoFechar) { var f = esperandoFechar; esperandoFechar = null; f(); }
     if (n === 0) desenhar(performance.now());
   });
 
-  function irAoLugar(lugar) {
-    var ok = J.irPara(lugar.porta.x, lugar.porta.y, function () { entrarLugar(lugar); });
-    if (!ok) { J.posicionar(lugar.porta.x, lugar.porta.y + 1); entrarLugar(lugar); }
-  }
-  U.on('irPara', irAoLugar);
+  // menu Lugares: anda até a porta (de dentro de um prédio, sai primeiro)
+  U.on('irPara', function (lugar) { Cena.irAoLugar(lugar); });
 
-  function falarComClaude() {
-    Reino.Som.tocar('selecionar');
-    var tipos = ['dica', 'dica', 'curiosidade'];
-    Reino.Claude.falar(Reino.Claude.frase(U.sortear(tipos)));
+  // alvo tocado ou ao lado: anda até ele (se precisar), vira e age
+  function agirNoAlvo(alvo) {
+    var tl = J.tile();
+    if (alvo.tile.x === tl.x && alvo.tile.y === tl.y) {
+      if (alvo.olhar) J.virar(alvo.olhar.x, alvo.olhar.y);
+      alvo.agir();
+      return;
+    }
+    Cena.irAoAlvo(alvo);
   }
 
   /* ---------- controles ---------- */
   var MAPA_TECLAS = { ArrowLeft: 'esq', a: 'esq', A: 'esq', ArrowRight: 'dir', d: 'dir', D: 'dir', ArrowUp: 'cima', w: 'cima', W: 'cima', ArrowDown: 'baixo', s: 'baixo', S: 'baixo' };
   function ligarControles() {
     window.addEventListener('keydown', function (e) {
-      if (UI.temTela() || !jogoAtivo) return;
+      if (!jogoAtivo || Cena.bloqueado()) return;
       if (e.target && /input|textarea/i.test(e.target.tagName)) return;
       var k = MAPA_TECLAS[e.key];
       if (k) { teclas[k] = true; e.preventDefault(); }
       if (e.key === 'Enter' || e.key === ' ') {
-        var tl = J.tile();
-        var p = Mapa.portaEm(tl.x, tl.y);
-        if (p) { e.preventDefault(); entrarLugar(p); }
-        var ct = Mapa.claudeTile;
-        if (Math.abs(tl.x - ct.x) + Math.abs(tl.y - ct.y) === 1) { e.preventDefault(); falarComClaude(); }
+        var alvo = Cena.atual().alvoPerto(J.tile(), { x: J.olharX, y: J.olharY });
+        if (alvo) { e.preventDefault(); agirNoAlvo(alvo); }
       }
     });
     window.addEventListener('keyup', function (e) { var k = MAPA_TECLAS[e.key]; if (k) teclas[k] = false; });
     window.addEventListener('blur', function () { teclas = {}; });
 
     canvas.addEventListener('pointerdown', function (e) {
-      if (!jogoAtivo || UI.temTela()) return;
+      if (!jogoAtivo || Cena.bloqueado()) return;
       Reino.Som.ativar();
       var r = canvas.getBoundingClientRect();
       var wx = cam.x + ((e.clientX - r.left) * dpr) / escala;
       var wy = cam.y + ((e.clientY - r.top) * dpr) / escala;
       var tx = Math.floor(wx / T), ty = Math.floor(wy / T);
-      var ct = Mapa.claudeTile;
-      // tocou no Claude (ou bem perto dele)
-      if (Math.abs(wx - (ct.x * T + 8)) < 12 && wy > ct.y * T - 14 && wy < ct.y * T + 16) {
-        var vizinho = Mapa.maisPerto(ct.x - 1, ct.y, J.tile());
-        J.irPara(vizinho.x, vizinho.y, function () { J.virar(1, 0); falarComClaude(); });
-        return;
-      }
-      var lugar = Mapa.lugarNoTile(tx, ty);
-      // tocou na plaquinha embaixo do prédio também vale
-      if (!lugar) lugar = Mapa.lugarNoTile(tx, ty - 1);
-      if (lugar) { irAoLugar(lugar); return; }
-      var destino = Mapa.solido(tx, ty) ? Mapa.maisPerto(tx, ty, J.tile()) : { x: tx, y: ty };
+      var cena = Cena.atual();
+      // tocou em alguém ou em algo (Claude, prédio, placa, NPC, objeto, tapete, escada)
+      var alvo = cena.alvoEm(wx, wy);
+      if (alvo) { Cena.irAoAlvo(alvo); return; }
+      var destino = cena.solido(tx, ty) ? cena.maisPerto(tx, ty, J.tile()) : { x: tx, y: ty };
       if (destino) J.irPara(destino.x, destino.y);
     });
   }
@@ -421,7 +278,6 @@
     U.$('#hud').hidden = false;
     UI.montarHUD();
     montarSetas();
-    var m = Mapa.lugar('materia:' + Reino.materias[0].id);
     J.posicionar(17, 10);
     desenhar(performance.now());
     if (novo) {
@@ -445,6 +301,7 @@
     ctx = canvas.getContext('2d');
     buffer = PA.novoCanvas(10, 10);
     bctx = buffer.getContext('2d');
+    Cena.ligar({ pintor: pintor, soltarTeclas: function () { teclas = {}; }, desenhar: function () { desenhar(performance.now()); } });
     redimensionar();
     if (document.fonts && document.fonts.load) {
       document.fonts.load('16px "Press Start 2P"').then(function () { desenhar(performance.now()); });

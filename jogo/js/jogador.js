@@ -15,6 +15,17 @@
     return e;
   }
 
+  // a cena ativa (mapa ou interior); antes de a cena existir, o próprio Mapa
+  function cena() { return (Reino.Cena && Reino.Cena.atual()) || Mapa; }
+  // gatilho no tile: porta de prédio (mapa), tapete de saída ou escada (interior)
+  function gatilhoEm(tx, ty) {
+    var c = cena();
+    var g = c.portaEm ? c.portaEm(tx, ty) : null;
+    if (!g && c.saidaEm) g = c.saidaEm(tx, ty);
+    return g || null;
+  }
+  J.gatilhoEm = gatilhoEm;
+
   J.tile = function () { return { x: Math.floor(J.x / T), y: Math.floor((J.y - 2) / T) }; };
   // vira para a direção (dx, dy) da tela
   J.virar = function (dx, dy) {
@@ -30,8 +41,9 @@
   };
 
   function livre(x, y) {
+    var c = cena();
     var pts = [[x - 4, y - 4], [x + 4, y - 4], [x - 4, y - 1], [x + 4, y - 1]];
-    return pts.every(function (p) { return !Mapa.solido(Math.floor(p[0] / T), Math.floor(p[1] / T)); });
+    return pts.every(function (p) { return !c.solido(Math.floor(p[0] / T), Math.floor(p[1] / T)); });
   }
   // dá para ir em linha reta de a até b sem esbarrar em nada?
   function linhaLivre(a, b) {
@@ -63,7 +75,7 @@
 
   J.irPara = function (tx, ty, aoChegar) {
     var ini = J.tile();
-    var cam = Mapa.caminho(ini, { x: tx, y: ty });
+    var cam = cena().caminho(ini, { x: tx, y: ty });
     if (!cam) return false;
     J.caminho = suavizar(cam);
     J.aoChegar = aoChegar || null;
@@ -113,15 +125,15 @@
       if (J.x !== x0 || J.y !== y0) J.virar(J.x - x0, J.y - y0); else J.virar(vx, vy);
       J.andando = true;
       guardarRastro();
-      // pisou numa porta andando com as setas
+      // pisou numa porta, tapete ou escada andando com as setas
       var tl = J.tile();
-      var porta = Mapa.portaEm(tl.x, tl.y);
+      var porta = gatilhoEm(tl.x, tl.y);
       if (porta && J.portaIgnorada !== porta.id && aoPisarPorta) { J.portaIgnorada = porta.id; aoPisarPorta(porta); }
       if (!porta) J.portaIgnorada = null;
     } else {
       J.andando = false;
       var tl2 = J.tile();
-      if (!Mapa.portaEm(tl2.x, tl2.y)) J.portaIgnorada = null;
+      if (!gatilhoEm(tl2.x, tl2.y)) J.portaIgnorada = null;
     }
   };
 
@@ -169,7 +181,9 @@
     p.sprite(espelhar ? espelho(c) : c, x, y);
   }
 
-  J.desenhar = function (p, animar) {
+  // itens para desenhar na ordem por Y junto com NPCs, móveis e o Claude:
+  // montada = um item; bebê e Mariana separados. As faíscas vêm logo antes dela.
+  J.itensDesenho = function (p, animar) {
     var P = Reino.Progresso, est = P.estado();
     var id = P.montaria(), def = P.defUni(id), u = est.unis[id];
     var estagio = Reino.Unicornios.estagio(u ? u.xp : 0);
@@ -181,16 +195,21 @@
 
     // faíscas do rastro de estrelinhas
     J.faiscas = J.faiscas.filter(function (f) { f.v += 0.016; return f.v < 0.7; });
-    J.faiscas.forEach(function (f) {
-      var cor = f.v < 0.35 ? '#fff6a8' : '#ffd1e6', fy = f.y - f.v * 6;
-      p.ret(f.x, fy, 1, 1, cor);
-      if (f.v < 0.3) { p.ret(f.x - 1, fy, 3, 1, cor); p.ret(f.x, fy - 1, 1, 3, cor); }
-    });
+    function faiscas() {
+      J.faiscas.forEach(function (f) {
+        var cor = f.v < 0.35 ? '#fff6a8' : '#ffd1e6', fy = f.y - f.v * 6;
+        p.ret(f.x, fy, 1, 1, cor);
+        if (f.v < 0.3) { p.ret(f.x - 1, fy, 3, 1, cor); p.ret(f.x, fy - 1, 1, 3, cor); }
+      });
+    }
 
+    var itens;
     if (estagio >= 1) {
       var spr = PA.montada(def, estagio, quadro, est.aparencia, opcoes);
-      sombra(p, J.x, J.y, (estagio >= 2 ? 28 : 20) / 2.6 * SOMBRA[olhar.vista]);
-      desenharSprite(p, spr.canvas, J.x, J.y + 1 - pulo, olhar.espelhar);
+      itens = [{ y: J.y, desenhar: function () {
+        sombra(p, J.x, J.y, (estagio >= 2 ? 28 : 20) / 2.6 * SOMBRA[olhar.vista]);
+        desenharSprite(p, spr.canvas, J.x, J.y + 1 - pulo, olhar.espelhar);
+      } }];
     } else {
       // bebê vem atrás, seguindo o rastro, e olha para onde ele mesmo está indo
       var r = pontoAtras(DIST_BEBE);
@@ -200,12 +219,21 @@
       var bebe = PA.unicornio(def, 0, quadro, Object.assign({}, opcoes, { vista: olharB.vista }));
       var menina = PA.mariana(est.aparencia, false, quadro, { capa: usa.capa, vista: olhar.vista });
       pulo *= 1.5;
-      var itens = [
-        { y: r.y - 1, f: function () { sombra(p, r.x, r.y, 7 * SOMBRA[olharB.vista]); desenharSprite(p, bebe.canvas, r.x, r.y + 1 - pulo, olharB.espelhar); } },
-        { y: J.y, f: function () { sombra(p, J.x, J.y, 5); desenharSprite(p, menina.canvas, J.x, J.y + 1, olhar.espelhar); } },
+      var ry = r.y;
+      itens = [
+        { y: ry - 1, desenhar: function () { sombra(p, r.x, ry, 7 * SOMBRA[olharB.vista]); desenharSprite(p, bebe.canvas, r.x, ry + 1 - pulo, olharB.espelhar); } },
+        { y: J.y, desenhar: function () { sombra(p, J.x, J.y, 5); desenharSprite(p, menina.canvas, J.x, J.y + 1, olhar.espelhar); } },
       ];
-      itens.sort(function (a, b) { return a.y - b.y; }).forEach(function (i) { i.f(); });
     }
+    // as faíscas ficam logo antes do primeiro item dela (atrás dela e do unicórnio)
+    var menor = Math.min.apply(null, itens.map(function (i) { return i.y; }));
+    if (J.faiscas.length) itens.unshift({ y: menor - 0.00001, desenhar: faiscas });
+    return itens;
+  };
+
+  // desenha a Mariana (e o bebê) na ordem certa, sem mais ninguém
+  J.desenhar = function (p, animar) {
+    J.itensDesenho(p, animar).sort(function (a, b) { return a.y - b.y; }).forEach(function (i) { i.desenhar(); });
   };
 
   J.desenharMarcador = function (ctx, t) {

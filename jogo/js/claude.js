@@ -81,7 +81,8 @@
   };
 
   /* ---------- balão ---------- */
-  var fila = [], aberto = null, animTimer = null;
+  // quem fala: sem opcoes.quem é o Claude; com quem, nome/retrato/voz da personagem
+  var fila = [], aberto = null, animTimer = null, quadros = null;
 
   function montar() {
     var bal = U.$('#claude-balao');
@@ -91,59 +92,134 @@
       U.el('div.claude-mascote', tela, U.el('span.claude-nome', 'Claude')),
       U.el('div.claude-fala',
         U.el('p.claude-texto'),
+        U.el('div.claude-extra', { hidden: true }),
         U.el('div.claude-acoes',
           U.el('button.btn-ouvir-claude', { type: 'button', 'aria-label': 'Ouvir o Claude', text: '🔊' }),
           U.el('button.btn-ok-claude', { type: 'button', text: 'Ok! 👍' }))));
     document.body.appendChild(bal);
-    bal.querySelector('.btn-ok-claude').addEventListener('click', function () { Reino.Som.tocar('toque'); fechar(); });
-    bal.querySelector('.btn-ouvir-claude').addEventListener('click', function () { if (aberto) Reino.Som.falar(aberto.fala || aberto.texto, { voz: aberto.voz || 'claude' }); });
+    bal.querySelector('.btn-ouvir-claude').addEventListener('click', function () { if (aberto) Reino.Som.falar(aberto.fala || aberto.texto, { voz: vozDe(aberto) }); });
+    bal.querySelector('.claude-acoes').addEventListener('click', function (e) {
+      var b = e.target.closest('button[data-valor]');
+      if (!b || !aberto) return;
+      Reino.Som.tocar('toque'); fechar(b.dataset.valor);
+    });
+    // teclado no balão MODAL: Enter/Espaço acionam o botão focado (ou o principal); Esc aciona o "não" ou fecha
+    window.addEventListener('keydown', function (e) {
+      if (!aberto || e.repeat) return;
+      if (e.key === 'Escape' && (aberto.modal || aberto.botoes)) {
+        var nao = bal.querySelector('.claude-acoes button[data-valor="nao"]');
+        if (!nao && !aberto.modal) return;
+        e.preventDefault(); e.stopPropagation();
+        if (nao) nao.click(); else fechar();
+        return;
+      }
+      if (!aberto.modal || (e.key !== 'Enter' && e.key !== ' ')) return;
+      e.preventDefault(); e.stopPropagation();
+      var alvo = bal.contains(document.activeElement) && document.activeElement.matches('.claude-acoes button') ? document.activeElement : principal(bal);
+      if (alvo) alvo.click();
+    }, true);
     // piscar de vez em quando
     var q = 0;
     animTimer = setInterval(function () {
       q = (q + 1) % 16;
       var c = bal.querySelector('canvas.claude-avatar');
       if (!c || bal.hidden) return;
-      var spr = PA.claude(q === 0 ? 1 : 0).canvas;
+      var spr = quadros ? quadros[q === 0 && quadros[1] ? 1 : 0] : PA.claude(q === 0 ? 1 : 0).canvas;
       var ctx = c.getContext('2d'); ctx.clearRect(0, 0, c.width, c.height); ctx.drawImage(spr, 0, 0);
     }, 220);
     return bal;
   }
 
+  function principal(bal) {
+    return bal.querySelector('.claude-acoes .btn-dialogo.principal') || bal.querySelector('.claude-acoes .btn-dialogo') || bal.querySelector('.btn-ok-claude');
+  }
+
+  function vozDe(item) { return item.voz || (item.quem && item.quem.voz) || 'claude'; }
+
+  // retrato: Claude (padrão) ou o da personagem, ampliado nítido
+  function porRetrato(bal, quem) {
+    var velho = bal.querySelector('canvas.claude-avatar');
+    var r = quem && quem.retrato;
+    quadros = r ? (Array.isArray(r) ? r : [r]) : null;
+    if (!quadros && !bal.classList.contains('com-quem')) return;
+    var src = quadros ? quadros[0] : PA.claude(0).canvas;
+    var novo = PA.paraDOM(src, quadros ? PA.escalaNitida(Math.min(72, src.width * 4), src.width) : 4, 'claude-avatar');
+    velho.replaceWith(novo);
+  }
+
+  function porBotoes(bal, item) {
+    var acoes = bal.querySelector('.claude-acoes');
+    var ouvir = acoes.querySelector('.btn-ouvir-claude');
+    ouvir.setAttribute('aria-label', 'Ouvir ' + (item.quem ? U.semEn(item.quem.nome) : 'o Claude'));
+    while (ouvir.nextSibling) acoes.removeChild(ouvir.nextSibling);
+    if (!item.botoes) {
+      acoes.appendChild(U.el('button.btn-ok-claude', { type: 'button', text: 'Ok! 👍', 'data-valor': 'ok' }));
+      return item.modal ? acoes.querySelector('.btn-ok-claude') : null;
+    }
+    var foco = null;
+    item.botoes.forEach(function (b) {
+      var bt = U.el('button.btn-dialogo' + (b.principal ? '.principal' : ''), { type: 'button', text: b.texto, 'data-valor': b.valor });
+      acoes.appendChild(bt);
+      if (b.principal && !foco) foco = bt;
+    });
+    return foco || acoes.querySelector('.btn-dialogo');
+  }
+
   function mostrar(item) {
     var bal = montar();
     aberto = item;
-    Reino.util.preencher(bal.querySelector('.claude-texto'), item.texto);
+    porRetrato(bal, item.quem);
+    bal.classList.toggle('com-quem', !!item.quem);
+    bal.classList.toggle('com-botoes', !!item.botoes);
+    U.preencher(bal.querySelector('.claude-nome'), item.quem ? item.quem.nome : 'Claude');
+    U.preencher(bal.querySelector('.claude-texto'), item.texto);
+    var extra = bal.querySelector('.claude-extra');
+    extra.innerHTML = '';
+    if (item.extra) extra.appendChild(item.extra);
+    extra.hidden = !item.extra;
+    var foco = porBotoes(bal, item);
+    bal.setAttribute('role', item.modal ? 'dialog' : 'status');
+    document.body.classList.toggle('com-dialogo', !!item.modal);
     bal.classList.toggle('dica-pressa', item.tipo === 'pressa');
     bal.hidden = false;
     bal.classList.remove('entrando'); void bal.offsetWidth; bal.classList.add('entrando');
-    if (item.falar !== false) Reino.Som.falar(item.fala || item.texto, { voz: item.voz || 'claude' });
+    if (foco) try { foco.focus({ preventScroll: true }); } catch (e) { foco.focus(); }
+    if (item.falar !== false) Reino.Som.falar(item.fala || item.texto, { voz: vozDe(item) });
     clearTimeout(item.timer);
     if (item.tempo) item.timer = setTimeout(fechar, item.tempo);
   }
-  function fechar() {
+  function fechar(valor) {
     var bal = U.$('#claude-balao');
     if (!aberto) return;
     var item = aberto;
     clearTimeout(item.timer);
     aberto = null;
     if (bal) bal.hidden = true;
+    document.body.classList.remove('com-dialogo');
     Reino.Som.calar();
-    if (item.resolver) item.resolver();
-    if (fila.length) setTimeout(function () { mostrar(fila.shift()); }, 180);
+    if (item.resolver) item.resolver(typeof valor === 'string' ? valor : null);
+    if (fila.length) setTimeout(function () { if (!aberto && fila.length) mostrar(fila.shift()); }, 180);
   }
 
-  // Claude.falar('texto', {tipo, tempo, falar, fala: [segmentos falados], voz}) -> Promise quando ela fechar
+  // Claude.falar('texto', {tipo, tempo, falar, fala: [segmentos], voz, agora, quem, botoes, extra, modal}) -> Promise<valor do botão | null>
   C.falar = function (texto, opcoes) {
     opcoes = opcoes || {};
     return new Promise(function (resolver) {
-      var item = { texto: texto, fala: opcoes.fala, voz: opcoes.voz, tipo: opcoes.tipo, tempo: opcoes.tempo || 0, falar: opcoes.falar, resolver: resolver };
+      var item = { texto: texto, fala: opcoes.fala, voz: opcoes.voz, tipo: opcoes.tipo, tempo: opcoes.tempo || 0, falar: opcoes.falar, resolver: resolver,
+        quem: opcoes.quem || null, botoes: opcoes.botoes && opcoes.botoes.length ? opcoes.botoes : null, extra: opcoes.extra || null, modal: !!opcoes.modal };
       if (opcoes.agora && aberto) { fila.unshift(item); fechar(); return; }
       if (aberto) fila.push(item); else mostrar(item);
     });
   };
-  C.fechar = fechar;
+  C.fechar = function () { fechar(); };
   C.aberto = function () { return !!aberto; };
-  C.limpar = function () { fila = []; fechar(); };
+  C.dialogoAberto = function () { return !!(aberto && aberto.modal); };
+  C.quemFala = function () { return aberto ? aberto.quem : null; };
+  C.limpar = function () {
+    // itens novos (quem/botões/modal) descartados resolvem null; os antigos seguem sem resolver, como antes
+    fila.forEach(function (it) { if (it.quem || it.botoes || it.modal) it.resolver(null); });
+    fila = []; fechar();
+  };
 
   /* ---------- ritmo das dicas ---------- */
   var missoesDesdeDica = 0, inicioSessao = Date.now(), ultimaPausa = Date.now();

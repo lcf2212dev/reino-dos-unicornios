@@ -1,0 +1,144 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Prévia dos interiores</title>
+<!--
+  Prévia estática das construções por dentro (abre por file://).
+  ?i=<id>        só um interior (sem: todos, um abaixo do outro)
+  ?e=<escala>    tamanho do pixel (padrão 3)
+  ?grade=1       grade de tiles: sólidos (vermelho), corredores (azul), portas (verde),
+                 saída/escadas (amarelo), objetos interativos (contorno branco), NPCs (lilás)
+  ?uni=1         finge que ela já tem todos os unicórnios (quadros com o unicórnio)
+  ?mariana=0     sem a Mariana no spawn
+  ?t=<ms>        instante das animações (padrão 0 = parado)
+  Não grava nada: o progresso fica só na memória desta página.
+  Prédio novo: acrescente o arquivo em INTERIORES abaixo.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
+<style>
+  body { margin: 0; padding: 16px; background: #1a1022; color: #fff8ee; font: 14px/1.4 "Trebuchet MS", sans-serif; }
+  h2 { font: 12px "Press Start 2P", monospace; margin: 18px 0 8px; color: #ffd34d; }
+  h2 small { font: 13px "Trebuchet MS", sans-serif; color: #c9b8dc; margin-left: 8px; }
+  canvas { image-rendering: pixelated; display: block; }
+  .erro { color: #ff8a8a; white-space: pre-wrap; }
+</style>
+<div id="saida"></div>
+<script src="../js/config.js"></script>
+<script src="../js/icones.js"></script>
+<script src="../js/pixelart.js"></script>
+<script src="../js/unicornios.js"></script>
+<script src="../js/materias/historia.js"></script>
+<script src="../js/materias/ingles.js"></script>
+<script src="../js/provas/historia-3bim.js"></script>
+<script src="../js/provas/ingles-3bim.js"></script>
+<script src="../js/progresso.js"></script>
+<script src="../js/voz.js"></script>
+<script src="../js/claude.js"></script>
+<script src="../js/falas.js"></script>
+<script src="../js/interiores.js"></script>
+<script src="../js/npcs.js"></script>
+<script>
+  // arquivos dos prédios (js/interiores/<nome>.js)
+  var INTERIORES = ['teste'];
+  INTERIORES.forEach(function (n) { document.write('<script src="../js/interiores/' + n + '.js"><\/script>'); });
+</script>
+<script>
+(function () {
+  var q = new URLSearchParams(location.search);
+  var E = Math.max(1, parseInt(q.get('e') || '3', 10));
+  var comGrade = q.get('grade') === '1';
+  var t = parseInt(q.get('t') || '0', 10);
+  var saida = document.getElementById('saida');
+  var T = 16;
+
+  // progresso só na memória (file:// não é o jogo; nada é salvo)
+  var P = Reino.Progresso;
+  try {
+    if (P && P.carregar) {
+      var est = P.carregar();
+      if (q.get('uni') === '1') Reino.Unicornios.todos(est.corInicial).forEach(function (u) { est.unis[u.id] = { em: 1, xp: 200, chocado: true }; });
+    }
+  } catch (e) { erro('progresso: ' + e.message); }
+
+  function erro(msg) { var p = document.createElement('p'); p.className = 'erro'; p.textContent = msg; saida.appendChild(p); }
+
+  function desenhar(def) {
+    var cena = Reino.Interiores.cena(def.id);
+    var h2 = document.createElement('h2');
+    h2.textContent = def.nome;
+    var sm = document.createElement('small');
+    sm.textContent = def.id + ' • ' + def.lugar + (def.entrada ? ' • entrada' : '') + ' • ' + def.tamanho.w + '×' + def.tamanho.h;
+    h2.appendChild(sm);
+    saida.appendChild(h2);
+    return cena.preparar().then(function () {
+      var w = cena.largura(), h = cena.altura();
+      var buffer = PA.novoCanvas(w, h), bctx = buffer.getContext('2d');
+      bctx.fillStyle = cena.corFundo; bctx.fillRect(0, 0, w, h);
+      cena.desenharFundo(bctx, t, t > 0);
+      var c = document.createElement('canvas');
+      c.width = w * E; c.height = h * E;
+      c.id = 'interior-' + def.id;
+      saida.appendChild(c);
+      var ctx = c.getContext('2d');
+      ctx.imageSmoothingEnabled = false;
+      ctx.drawImage(buffer, 0, 0, w * E, h * E);
+      var cam = { x: 0, y: 0 };
+      var pintor = {
+        ctx: ctx, escala: E, dpr: 1, cam: cam,
+        tela: function (x, y) { return { x: Math.round(x * E), y: Math.round(y * E) }; },
+        ret: function (x, y, rw, rh, cor) {
+          var x0 = Math.round(x * E), y0 = Math.round(y * E);
+          ctx.fillStyle = cor; ctx.fillRect(x0, y0, Math.round((x + rw) * E) - x0, Math.round((y + rh) * E) - y0);
+        },
+        sprite: function (img, x, yPes) {
+          ctx.drawImage(img, Math.round((x - img.width / 2) * E), Math.round((yPes - img.height) * E), img.width * E, img.height * E);
+        },
+      };
+      cena.desenharTela(ctx, pintor, t, t > 0);
+      var itens = cena.itensDesenho(pintor, t, t > 0).slice();
+      if (q.get('mariana') !== '0' && def.spawn && PA.mariana) {
+        var m = PA.mariana(P && P.estado() ? P.estado().aparencia : null, false, 1, { vista: 'costas' });
+        itens.push({ y: def.spawn.y * T + 12, desenhar: function () {
+          pintor.ret(def.spawn.x * T + 3, def.spawn.y * T + 11, 10, 2, 'rgba(58,36,70,0.25)');
+          pintor.sprite(m.canvas, def.spawn.x * T + 8, def.spawn.y * T + 13);
+        } });
+      }
+      itens.sort(function (a, b) { return a.y - b.y; }).forEach(function (it) { it.desenhar(); });
+      if (comGrade) desenharGrade(ctx, def);
+    }).catch(function (e) { erro(def.id + ': ' + (e && e.stack || e)); });
+  }
+
+  function desenharGrade(ctx, def) {
+    var g = Reino.Interiores.grade(def);
+    function pinta(x, y, cor) { ctx.fillStyle = cor; ctx.fillRect(x * T * E, y * T * E, T * E, T * E); }
+    var corredor = function (x, y) { return (def.corredores || []).some(function (r) { return x >= r.x && y >= r.y && x < r.x + r.w && y < r.y + r.h; }); };
+    for (var y = 0; y < g.h; y++) for (var x = 0; x < g.w; x++) {
+      if (g.solido[y][x] && (g.comodo[y][x] || g.porta[y][x])) pinta(x, y, 'rgba(255,40,60,0.28)');
+      if (corredor(x, y)) pinta(x, y, 'rgba(60,140,255,0.25)');
+      if (g.porta[y][x]) pinta(x, y, 'rgba(60,220,120,0.35)');
+      if (g.ocupado[y][x] === 'saida' || g.ocupado[y][x] === 'escada') pinta(x, y, 'rgba(255,220,40,0.4)');
+      if (g.ocupado[y][x] === 'npc') pinta(x, y, 'rgba(180,120,255,0.45)');
+    }
+    ctx.strokeStyle = 'rgba(255,255,255,0.18)'; ctx.lineWidth = 1;
+    for (var gx = 0; gx <= g.w; gx++) { ctx.beginPath(); ctx.moveTo(gx * T * E + 0.5, 0); ctx.lineTo(gx * T * E + 0.5, g.h * T * E); ctx.stroke(); }
+    for (var gy = 0; gy <= g.h; gy++) { ctx.beginPath(); ctx.moveTo(0, gy * T * E + 0.5); ctx.lineTo(g.w * T * E, gy * T * E + 0.5); ctx.stroke(); }
+    ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2;
+    (def.objetos || []).forEach(function (o) {
+      if (!Reino.Interiores.interativo(o)) return;
+      var d = Reino.Interiores.dimensoes(o);
+      ctx.strokeRect(o.x * T * E + 2, o.y * T * E + 2, d.w * T * E - 4, d.h * T * E - 4);
+    });
+    ctx.fillStyle = '#ffffff'; ctx.font = Math.max(8, 3 * E) + 'px monospace';
+    for (var x2 = 0; x2 < g.w; x2++) ctx.fillText(x2, x2 * T * E + 2, 3 * E + 2);
+    for (var y2 = 1; y2 < g.h; y2++) ctx.fillText(y2, 2, y2 * T * E + 3 * E + 2);
+  }
+
+  var lista = q.get('i') ? Reino.interiores.filter(function (d) { return d.id === q.get('i'); }) : Reino.interiores;
+  if (!lista.length) erro('Nenhum interior com esse id.');
+  var fonte = document.fonts && document.fonts.load ? document.fonts.load('16px "Press Start 2P"').catch(function () {}) : Promise.resolve();
+  Promise.race([fonte, new Promise(function (r) { setTimeout(r, 3000); })]).then(function () {
+    return lista.reduce(function (p, d) { return p.then(function () { return desenhar(d); }); }, Promise.resolve());
+  }).then(function () { window.__pronto = true; });
+})();
+</script>

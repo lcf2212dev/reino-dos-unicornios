@@ -13,7 +13,15 @@ carregar('js/config.js');
 fs.readdirSync(path.join(raiz, 'js/materias')).filter((f) => f.endsWith('.js')).sort().forEach((f) => carregar('js/materias/' + f));
 fs.readdirSync(path.join(raiz, 'js/provas')).filter((f) => f.endsWith('.js')).sort().forEach((f) => carregar('js/provas/' + f));
 ['js/unicornios.js', 'js/voz.js', 'js/claude.js', 'js/falas.js'].forEach(carregar);
+// construções por dentro: interiores, personagens e cada prédio (se existirem)
+['js/interiores.js', 'js/npcs.js'].forEach((f) => { if (fs.existsSync(path.join(raiz, f))) carregar(f); });
+if (fs.existsSync(path.join(raiz, 'js/interiores'))) {
+  fs.readdirSync(path.join(raiz, 'js/interiores')).filter((f) => f.endsWith('.js')).sort().forEach((f) => carregar('js/interiores/' + f));
+}
 const Reino = ctx.Reino;
+// vozes inglesas: 'ingles' e todo perfil usado como `ingles` de outro perfil
+const VOZES_INGLESAS = new Set(['ingles']);
+Object.values(Reino.config.vozes).forEach((v) => { if (v && v.ingles) VOZES_INGLESAS.add(v.ingles); });
 
 /* ---------- preparação do texto para a voz ---------- */
 const MESES = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
@@ -22,7 +30,7 @@ const ESTADOS = { AM: 'Amazonas', RJ: 'Rio de Janeiro', MS: 'Mato Grosso do Sul'
 function prepararFala(texto, voz) {
   let t = Reino.Voz.normalizar(texto);
   // voz inglesa: só lacunas e MAIÚSCULAS (sem as regras do português)
-  if (voz === 'ingles') {
+  if (VOZES_INGLESAS.has(voz)) {
     t = t.replace(/_{2,}/g, '…').replace(/…\./g, '…');
     // "a tick (√) ... a cross (X)": os sinais só aparecem na tela ("√" seria lido como raiz quadrada)
     t = t.replace(/\s*\((?:√|X)\)/g, '');

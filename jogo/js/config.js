@@ -22,6 +22,46 @@ Reino.config = {
     unicornio: { voz: 'pt-BR-ThalitaMultilingualNeural', velocidade: '+0%', tom: '+25Hz' },
     // trechos «em inglês»: inglês britânico (como a apostila), claro e um pouco devagar
     ingles: { voz: 'en-GB-SoniaNeural', velocidade: '-15%', tom: '+0Hz' },
+
+    /* Personagens das construções (js/npcs.js): um perfil por personagem, 'npc-<id>'.
+       Cada um com voz/velocidade/tom diferentes para ser reconhecido de ouvido.
+       `ingles`: perfil dos trechos «em inglês» dessa personagem (padrão: 'ingles'). */
+    // Museu das Memórias (História)
+    'npc-memoria': { voz: 'pt-BR-FranciscaNeural', velocidade: '-16%', tom: '-10Hz' },          // curadora idosa: calma e grave
+    'npc-antonio': { voz: 'en-US-AndrewMultilingualNeural', velocidade: '-14%', tom: '-10Hz' },  // senhor das cartas: devagar, de avô
+    'npc-chico': { voz: 'pt-BR-AntonioNeural', velocidade: '+12%', tom: '+16Hz' },             // carteiro animado (voz nativa: as multilíngues embolavam as frases curtas)
+    'npc-taina': { voz: 'pt-BR-ThalitaMultilingualNeural', velocidade: '+6%', tom: '+6Hz' },    // guia jovem e alegre
+    'npc-contadeira': { voz: 'pt-BR-ThalitaMultilingualNeural', velocidade: '-18%', tom: '-12Hz' }, // griô: devagar, voz de contar história
+    'npc-nina': { voz: 'pt-BR-FranciscaNeural', velocidade: '+8%', tom: '+12Hz' },              // restauradora curiosa e leve
+    // Torre do Relógio (Inglês)
+    'npc-ponteiro': { voz: 'it-IT-GiuseppeMultilingualNeural', velocidade: '-10%', tom: '-6Hz' }, // relojoeiro caprichoso, sotaque de avô italiano
+    'npc-ben': { voz: 'en-US-AndrewMultilingualNeural', velocidade: '+6%', tom: '+4Hz', ingles: 'npc-ben-en' },     // técnico esportivo, energia
+    'npc-ben-en': { voz: 'en-US-AndrewMultilingualNeural', velocidade: '-4%', tom: '+4Hz' },
+    'npc-stella': { voz: 'en-US-AvaMultilingualNeural', velocidade: '+0%', tom: '+6Hz', ingles: 'npc-stella-en' },  // astrônoma encantada
+    'npc-stella-en': { voz: 'en-US-AvaMultilingualNeural', velocidade: '-10%', tom: '+6Hz' },
+    'npc-smile': { voz: 'en-US-BrianMultilingualNeural', velocidade: '+0%', tom: '+8Hz', ingles: 'npc-smile-en' },  // dentista sorridente
+    'npc-smile-en': { voz: 'en-US-BrianMultilingualNeural', velocidade: '-10%', tom: '+8Hz' },
+    'npc-moon': { voz: 'en-US-AvaMultilingualNeural', velocidade: '-15%', tom: '-8Hz', ingles: 'npc-moon-en' },     // voz de boa-noite, bem calminha
+    'npc-moon-en': { voz: 'en-US-AvaMultilingualNeural', velocidade: '-20%', tom: '-8Hz' },
+    'npc-joy': { voz: 'en-AU-WilliamMultilingualNeural', velocidade: '+4%', tom: '+10Hz', ingles: 'npc-joy-en' },   // músico feliz
+    'npc-joy-en': { voz: 'en-AU-WilliamMultilingualNeural', velocidade: '-6%', tom: '+10Hz' },
+    // Castelo da Medalha
+    'npc-serena': { voz: 'fr-FR-VivienneMultilingualNeural', velocidade: '-6%', tom: '+10Hz' },  // princesa gentil e elegante
+    'npc-aurora': { voz: 'de-DE-SeraphinaMultilingualNeural', velocidade: '+4%', tom: '-10Hz' }, // cavaleira firme e corajosa
+    'npc-oliver': { voz: 'en-US-BrianMultilingualNeural', velocidade: '-12%', tom: '-12Hz', ingles: 'npc-oliver-en' }, // cavaleiro nobre, grave
+    'npc-oliver-en': { voz: 'en-US-BrianMultilingualNeural', velocidade: '-20%', tom: '-12Hz' },
+    // Escola do Reino
+    'npc-margarida': { voz: 'en-US-EmmaMultilingualNeural', velocidade: '-12%', tom: '-8Hz' },    // diretora serena e firme
+    'npc-helena': { voz: 'fr-FR-VivienneMultilingualNeural', velocidade: '+6%', tom: '-6Hz' },   // professora clara e animada
+    'npc-emma': { voz: 'en-US-EmmaMultilingualNeural', velocidade: '-3%', tom: '+2Hz', ingles: 'npc-emma-en' },      // professora de inglês
+    'npc-emma-en': { voz: 'en-US-EmmaMultilingualNeural', velocidade: '-12%', tom: '+2Hz' },
+    // Estábulo, Loja e Baú
+    'npc-feno': { voz: 'de-DE-FlorianMultilingualNeural', velocidade: '-8%', tom: '-14Hz' },     // tratador tranquilo, voz grave
+    'npc-petala': { voz: 'en-US-EmmaMultilingualNeural', velocidade: '+8%', tom: '+30Hz' },       // fada: aguda e rápida
+    'npc-tostao': { voz: 'ko-KR-HyunsuMultilingualNeural', velocidade: '+10%', tom: '+22Hz' },    // dragãozinho: agudo e engraçado
+    // interior de teste da Fase 1 (js/interiores/teste.js)
+    'npc-teste-guia': { voz: 'de-DE-FlorianMultilingualNeural', velocidade: '+4%', tom: '+8Hz' },
+    'npc-teste-sala': { voz: 'de-DE-SeraphinaMultilingualNeural', velocidade: '-4%', tom: '+12Hz' },
   },
 };
 

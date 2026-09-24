@@ -1,0 +1,33 @@
+/* Interiores: balão de diálogo com personagens (quem fala, botões grandes, chips). */
+
+/* linha extra (chips da sala etc.) */
+#claude-balao .claude-extra { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+#claude-balao .claude-extra[hidden] { display: none; }
+
+/* botões configuráveis do diálogo */
+#claude-balao.com-botoes .claude-acoes { flex-wrap: wrap; }
+.claude-acoes .btn-dialogo {
+  min-height: 52px; padding: 8px 16px;
+  background: var(--papel);
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.65), 0 3px 0 var(--borda);
+}
+.claude-acoes .btn-dialogo.principal { background: var(--rosa); color: #2b1233; }
+.claude-acoes .btn-dialogo:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--borda); }
+.claude-acoes button:focus-visible { outline: 3px solid var(--roxo); outline-offset: 2px; }
+#claude-balao.com-botoes .btn-ouvir-claude { min-height: 52px; min-width: 52px; }
+
+/* personagem falando */
+#claude-balao.com-quem .claude-avatar { max-width: 88px; height: auto !important; }
+#claude-balao.com-quem .claude-nome { max-width: 130px; text-align: center; font-size: 0.65em; overflow-wrap: normal; word-break: keep-all; hyphens: none; }
+
+@media (max-width: 480px) {
+  #claude-balao.com-quem { gap: 6px; }
+  #claude-balao.com-quem .claude-avatar { max-width: 56px; }
+  /* no celular o nome vira uma aba em cima do balão, inteiro */
+  #claude-balao.com-quem .claude-nome { position: absolute; left: 66px; top: -14px; max-width: calc(100% - 80px); margin: 0; font-size: 0.65em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; z-index: 1; }
+  #claude-balao.com-quem { margin-top: 14px; }
+  #claude-balao.com-botoes .claude-fala { padding: 10px 10px 10px; }
+  #claude-balao.com-botoes .claude-texto { font-size: 0.85em; }
+  #claude-balao.com-botoes .claude-acoes { gap: 6px; }
+  .claude-acoes .btn-dialogo { flex: 1 1 40%; padding: 6px 8px; font-size: 0.8em; }
+}

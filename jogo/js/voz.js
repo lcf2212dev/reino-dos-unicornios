@@ -27,10 +27,13 @@
       t = t.replace(/[«»]/g, '').trim();
       if (/[\p{L}\p{N}]/u.test(V.normalizar(t))) out.push({ texto: t, voz: voz });
     }
+    // a personagem pode ter a sua própria voz para o inglês (campo `ingles` do perfil)
+    var perfil = (Reino.config && Reino.config.vozes && Reino.config.vozes[vozPadrao]) || {};
+    var vozIngles = perfil.ingles || 'ingles';
     var re = /«([^«»]*)»/g, ultimo = 0, m;
     while ((m = re.exec(s))) {
       add(s.slice(ultimo, m.index), vozPadrao);
-      add(m[1], 'ingles');
+      add(m[1], vozIngles);
       ultimo = re.lastIndex;
     }
     add(s.slice(ultimo), vozPadrao);

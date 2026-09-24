@@ -147,6 +147,16 @@
         });
       });
     });
+
+    // construções por dentro: o que cada personagem pode dizer (com a voz dela) e as falas
+    // dos objetos interativos, no pacote de voz do prédio
+    (Reino.interiores || []).forEach(function (def) {
+      (def.npcs || []).forEach(function (npc) {
+        if (!Reino.NPCs) return;
+        Reino.NPCs.falasPossiveis(npc, def).forEach(function (f) { add(f.texto, f.voz, def.pacote); });
+      });
+      (def.objetos || []).forEach(function (obj) { [].concat(obj.fala || []).forEach(function (f) { add(f, obj.voz || 'narradora', def.pacote); }); });
+    });
     return lista;
   };
 
