@@ -171,6 +171,9 @@
     [Reino.Cuidados, Reino.Surpresa].forEach(function (modulo) {
       if (modulo && typeof modulo.falas === 'function') modulo.falas().forEach(function (f) { add(f.texto, f.voz || 'claude', 'geral'); });
     });
+    // o que a Loja fala de novo (prêmios à venda)
+    var FL = (Reino.LojaItens && Reino.LojaItens.FALAS) || {};
+    Object.keys(FL).forEach(function (k) { add(FL[k], 'claude', 'geral'); });
     return lista;
   };
 

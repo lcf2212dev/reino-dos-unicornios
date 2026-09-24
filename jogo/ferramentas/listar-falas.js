@@ -14,7 +14,7 @@ fs.readdirSync(path.join(raiz, 'js/materias')).filter((f) => f.endsWith('.js')).
 fs.readdirSync(path.join(raiz, 'js/provas')).filter((f) => f.endsWith('.js')).sort().forEach((f) => carregar('js/provas/' + f));
 ['js/unicornios.js', 'js/voz.js', 'js/claude.js', 'js/falas.js'].forEach(carregar);
 // novidades: fome e sede e a pergunta surpresa (falas() no pacote geral)
-['js/cuidados.js', 'js/surpresa.js'].forEach((f) => { if (fs.existsSync(path.join(raiz, f))) carregar(f); });
+['js/loja-itens.js', 'js/cuidados.js', 'js/surpresa.js'].forEach((f) => { if (fs.existsSync(path.join(raiz, f))) carregar(f); });
 // construções por dentro: interiores, personagens e cada prédio (se existirem);
 // padrao.js vem por último: ele monta o interior das matérias que não têm um próprio
 function padraoPorUltimo(a, b) { return (a === 'padrao.js') - (b === 'padrao.js') || (a < b ? -1 : a > b ? 1 : 0); }
