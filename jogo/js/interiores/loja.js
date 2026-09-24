@@ -50,10 +50,11 @@
     });
   }
   // etiqueta de preço (creme, com o número): canto de baixo à direita em (x, y)
+  // (contorno de 1 px e 1 px de margem creme em volta dos algarismos: 11×9 para dois algarismos)
   function etiquetaPreco(ctx, x, y, n) {
-    var w = String(n).length * 4 + 1;
-    ret(ctx, x, y, w, 7, K); ret(ctx, x + 1, y + 1, w - 2, 5, C.creme);
-    numero(ctx, x + 1, y + 1, n, K);
+    var w = String(n).length * 4 + 3;
+    ret(ctx, x, y, w, 9, K); ret(ctx, x + 1, y + 1, w - 2, 7, C.creme);
+    numero(ctx, x + 2, y + 2, n, K);
   }
   // cadeado pequeno (prêmio que ainda não dá para comprar)
   function cadeado(ctx, x, y) {
@@ -121,36 +122,38 @@
       // coroinha no topo
       ret(ctx, px + 36, top - 3, 8, 3, K); ret(ctx, px + 37, top - 2, 6, 1, C.ouro);
     } });
-  // vitrine dos prêmios da Escola: ganho na prova (medalha de fita), comprado (lacinho rosa),
-  // à venda (colorido, com a etiqueta do preço) e bloqueado (silhueta com cadeado)
-  I.objeto('loja-vitrine-premios', { w: 3, h: 1, topo: 30, solido: true,
+  // vitrine dos prêmios da Escola: em cada lugar o prêmio em cima e, embaixo dele, o selo do estado:
+  // medalha de fita (ganho na prova), lacinho rosa (comprado), etiqueta com o preço (à venda) ou
+  // cadeado com o prêmio em silhueta (bloqueado). Prateleiras altas: nada cobre o prêmio.
+  I.objeto('loja-vitrine-premios', { w: 3, h: 1, topo: 46, solido: true,
     chave: function (P) { return 'pre:' + premios().map(function (a) { return estadoPremio(a, P).charAt(0); }).join(''); },
     desenhar: function (ctx, px, py, o, P) {
-      var W = 48, top = py - 30;
-      ret(ctx, px + 1, top, W - 2, 46, K);
-      ret(ctx, px + 2, top + 1, W - 4, 44, C.ouro2); ret(ctx, px + 2, top + 1, W - 4, 1, C.ouro3);
-      ret(ctx, px + 3, top + 2, W - 6, 13, '#fff6dc'); ret(ctx, px + 3, top + 18, W - 6, 13, '#fff6dc');
-      ret(ctx, px + 2, top + 15, W - 4, 3, K); ret(ctx, px + 2, top + 16, W - 4, 1, C.ouro);
-      ret(ctx, px + 2, top + 31, W - 4, 3, K); ret(ctx, px + 2, top + 32, W - 4, 1, C.ouro);
+      var W = 48, top = py - 46;
+      ret(ctx, px + 1, top, W - 2, 62, K);
+      ret(ctx, px + 2, top + 1, W - 4, 60, C.ouro2); ret(ctx, px + 2, top + 1, W - 4, 1, C.ouro3);
+      for (var f = 0; f < 2; f++) {
+        ret(ctx, px + 3, top + 2 + f * 24, W - 6, 21, '#fff6dc');
+        ret(ctx, px + 2, top + 23 + f * 24, W - 4, 3, K); ret(ctx, px + 2, top + 24 + f * 24, W - 4, 1, C.ouro);
+      }
       // faixa de arco-íris embaixo
-      ['#ff7eb6', '#ffd34d', '#6fdc8c', '#5fb4ff', '#b58cff'].forEach(function (cor, i) { ret(ctx, px + 3, top + 35 + i * 2, W - 6, 2, cor); });
+      ['#ff7eb6', '#ffd34d', '#6fdc8c', '#5fb4ff', '#b58cff'].forEach(function (cor, i) { ret(ctx, px + 3, top + 50 + i * 2, W - 6, 2, cor); });
       premios().slice(0, 6).forEach(function (a, i) {
         var fila = i < 3 ? 0 : 1, col = i % 3;
-        var cx = px + 8 + col * 16, base = top + (fila ? 31 : 15);
+        var cx = px + 8 + col * 16, y0 = top + 2 + fila * 24, base = y0 + 12;
         var img = icone('acessorio:' + a.id);
         if (!img) return;
         var st = estadoPremio(a, P);
         if (st === 'bloqueado') {
-          caber(ctx, (window.PA && PA.silhueta) ? PA.silhueta(img) : img, cx, base, 13, 13);
-          cadeado(ctx, cx + 2, base - 8);
-        } else if (st === 'aVenda') {
-          // colorido, com a etiqueta do preço pendurada na beirada da prateleira, embaixo dele
-          caber(ctx, img, cx, base - 2, 12, 11);
-          etiquetaPreco(ctx, cx - 4, base - 1, a.preco);
+          caber(ctx, (window.PA && PA.silhueta) ? PA.silhueta(img) : img, cx, base, 13, 12);
+          cadeado(ctx, cx - 2, base + 1);
         } else {
-          caber(ctx, img, cx, base, 13, 13); brilho(ctx, cx + 6, base - 12, C.branco);
-          if (st === 'ganho') medalha(ctx, cx - 7, base - 13);
-          else lacinho(ctx, cx - 7, base - 12);
+          caber(ctx, img, cx, base, 13, 12);
+          if (st === 'aVenda') etiquetaPreco(ctx, cx - 5, base, a.preco);
+          else {
+            brilho(ctx, cx + 6, y0 + 1, C.branco);
+            if (st === 'ganho') medalha(ctx, cx - 3, base);
+            else lacinho(ctx, cx - 3, base + 2);
+          }
         }
       });
       // chapéu de formatura no topo
@@ -385,7 +388,6 @@
     { tipo: 'cesto', x: 1, y: 6 },
     { tipo: 'loja-tapete-folhas', x: 2, y: 6, w: 4, h: 2 },
     { tipo: 'flores', x: 15, y: 7, var: { vaso: '#7fa84a' } },
-    { tipo: 'loja-cogumelo', x: 10, y: 6, var: { cor: '#ff7eb6' } },
     // vitrines
     { tipo: 'vaso-planta', x: 1, y: 8 },
     inter('vitrine-enfeites', 'Vitrine dos enfeites', { tipo: 'loja-vitrine-enfeites', x: 2, y: 8, acao: TELA }),
