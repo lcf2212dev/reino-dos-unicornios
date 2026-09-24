@@ -382,13 +382,15 @@
       }
       setTimeout(function () {
         t.fase = 'fechada'; t.inicio = performance.now();
+        // a espera mínima conta junto com o preparar (fica fechada pelo maior dos dois, não pela soma)
+        var espera = U.esperar(tempos.fechada);
         var pronto = comLimite(function () {
           return Promise.all([
             destino.cena && destino.cena.preparar ? destino.cena.preparar() : null,
             destino.pacote && Reino.Voz && Reino.Voz.carregar ? Reino.Voz.carregar(destino.pacote) : null,
           ]);
         }, tempos.limite);
-        Promise.all([pronto, U.esperar(tempos.fechada)])
+        Promise.all([pronto, espera])
           .then(function (r) { abrir(r[0]); })
           .catch(function (e) { console.error(e); abrir('erro'); });
       }, tempos.fechar);
