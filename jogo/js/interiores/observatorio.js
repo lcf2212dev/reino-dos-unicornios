@@ -56,7 +56,9 @@
   }
 
   /* ================= PISOS E PAREDE DA NOITE ================= */
-  I.PISOS['observatorio-metal'] = { cores: { piso: '#3a4180', piso2: '#2c3268', detalhe: '#9aa4e0' },
+  // pisos da noite num azul mais claro que a parede e o céu das janelas: a Mariana (contorno #3a2446)
+  // e a unicórnio precisam se destacar do chão, principalmente no celular
+  I.PISOS['observatorio-metal'] = { cores: { piso: '#5a66b0', piso2: '#4c57a0', detalhe: '#c0c8f4' },
     desenhar: function (ctx, px, py, tx, ty, p) {
       var linha = escurecer(p.piso2, 0.25), luz = clarear(p.piso, 0.18);
       for (var j = 0; j < 2; j++) for (var i = 0; i < 2; i++) {
@@ -68,7 +70,7 @@
       }
       if (sorte(tx, ty, 17) < 0.2) { ret(ctx, px + 3, py + 11, 3, 1, clarear(p.piso, 0.3)); }
     } };
-  I.PISOS['observatorio-estrelado'] = { cores: { piso: '#231e58', piso2: '#2e2870', detalhe: '#fff3a0' },
+  I.PISOS['observatorio-estrelado'] = { cores: { piso: '#5a52aa', piso2: '#665eb6', detalhe: '#fff3a0' },
     desenhar: function (ctx, px, py, tx, ty, p) {
       ret(ctx, px, py, 16, 16, p.piso);
       for (var j = 0; j < 4; j++) for (var i = 0; i < 4; i++) {
@@ -77,12 +79,12 @@
       }
       for (var k = 0; k < 3; k++) {
         var x = px + 1 + Math.floor(sorte(tx, ty, k + 3) * 14), y = py + 1 + Math.floor(sorte(ty, tx, k + 9) * 14);
-        ret(ctx, x, y, 1, 1, k === 0 ? '#6a64b8' : '#4a4596');
+        ret(ctx, x, y, 1, 1, k === 0 ? misturar(p.detalhe, p.piso, 0.55) : clarear(p.piso, 0.22));
       }
       if (sorte(tx, ty, 41) < 0.12) brilho(ctx, px + 8, py + 8, misturar(p.detalhe, p.piso, 0.45));
     } };
   // ladrilhos da Galeria: azul-noite com uma estrelinha dourada aqui e ali
-  I.PISOS['observatorio-ladrilho'] = { cores: { piso: '#2a2c68', piso2: '#33347a', detalhe: '#ffd34d' },
+  I.PISOS['observatorio-ladrilho'] = { cores: { piso: '#5254a6', piso2: '#5c5eb0', detalhe: '#ffd34d' },
     desenhar: function (ctx, px, py, tx, ty, p) {
       var junta = escurecer(p.piso, 0.3);
       for (var j = 0; j < 2; j++) for (var i = 0; i < 2; i++) {
@@ -93,7 +95,7 @@
         if (sorte(tx * 2 + i, ty * 2 + j, 13) < 0.1) {
           var c = misturar(p.detalhe, p.piso, 0.25);
           ret(ctx, qx + 3, qy + 2, 1, 3, c); ret(ctx, qx + 2, qy + 3, 3, 1, c);
-        } else if (sorte(tx * 2 + i, ty * 2 + j, 29) < 0.2) ret(ctx, qx + 4, qy + 4, 1, 1, '#5a5cb0');
+        } else if (sorte(tx * 2 + i, ty * 2 + j, 29) < 0.2) ret(ctx, qx + 4, qy + 4, 1, 1, clarear(p.piso2, 0.2));
       }
     } };
   function acabamento(ctx, px, py, p) {
