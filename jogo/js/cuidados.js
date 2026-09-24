@@ -179,6 +179,9 @@
     var b = C.baixo(montaria());
     if (!b.fome && !b.sede) return;
     if (!chocado(montaria()) || !livre()) return;
+    // dentro da Pet Shop ela já chegou: o lembrete espera ela sair
+    var aqui = Reino.Cena && Reino.Cena.atual ? Reino.Cena.atual() : null;
+    if (aqui && aqui.lugarId === 'petshop') return;
     ultimoLembrete = agora();
     var chave = b.fome && b.sede ? 'lembreteAmbos' : b.sede ? 'lembreteSede' : 'lembreteFome';
     Reino.Claude.falar(C.frases[chave], { tempo: 6000 });

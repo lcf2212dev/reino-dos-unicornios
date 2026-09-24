@@ -85,6 +85,74 @@
     return PA.paraDOM(spr, escala || 3);
   };
 
+  /* ---------- fome e sede (barrinhas de Reino.Cuidados) ---------- */
+  // Toda barrinha de fome/sede leva data-uni e data-campo: um único ouvinte do evento 'cuidados'
+  // repinta todas as que estão na página (HUD, Estábulo, Pet Shop) sem refazer nada em volta.
+  var CUIDADO = {
+    fome: { icone: '🍎', rotulo: 'Fome', baixo: 'Com fome!' },
+    sede: { icone: '💧', rotulo: 'Sede', baixo: 'Com sede!' },
+  };
+  function cuidadosProntos() { return !!(Reino.Cuidados && Reino.Cuidados.niveis); }
+  function uniChocado(id) { var u = est().unis[id]; return !!(u && u.chocado); }
+  // ícone pequeno e nítido (fora do texto: não cresce com a fonte)
+  function iconePequeno(emoji, px) { return PA.iconeEmoji(emoji, px / 18); }
+
+  // tamanho 'mini' (HUD e cartas: ícone + trilho fino) ou 'grande' (detalhe e Pet Shop: com rótulo)
+  function barraCuidado(uniId, campo, tamanho) {
+    var info = CUIDADO[campo];
+    var cheio = el('span.cuid-cheio');
+    var b = el('span.cuid-barra.cuid-' + campo + '.cuid-' + tamanho,
+      { role: 'meter', 'aria-valuemin': '0', 'aria-valuemax': '100', 'data-uni': uniId, 'data-campo': campo },
+      tamanho === 'grande' ? el('span.cuid-rotulo', info.icone + ' ' + info.rotulo) : iconePequeno(info.icone, 12),
+      el('span.cuid-trilho', cheio),
+      tamanho === 'grande' ? el('small.cuid-aviso') : null);
+    pintarBarra(b);
+    return b;
+  }
+  function barrasCuidado(uniId, tamanho) {
+    return el('span.cuid-par.cuid-par-' + tamanho, barraCuidado(uniId, 'fome', tamanho), barraCuidado(uniId, 'sede', tamanho));
+  }
+  function pintarBarra(b) {
+    if (!cuidadosProntos()) return;
+    var id = b.getAttribute('data-uni'), campo = b.getAttribute('data-campo');
+    var v = Math.round(Reino.Cuidados.niveis(id)[campo]);
+    var baixo = Reino.Cuidados.baixo(id)[campo];
+    var cheio = b.querySelector('.cuid-cheio');
+    if (cheio) cheio.style.width = v + '%';
+    b.classList.toggle('baixo', baixo);
+    b.setAttribute('aria-valuenow', String(v));
+    b.setAttribute('aria-label', CUIDADO[campo].rotulo + ': ' + v + ' de 100' + (baixo ? ', ' + CUIDADO[campo].baixo.toLowerCase() : ''));
+    var aviso = b.querySelector('.cuid-aviso');
+    if (aviso) aviso.textContent = baixo ? CUIDADO[campo].baixo : '';
+  }
+  UI.pintarCuidados = function () { U.$$('.cuid-barra[data-uni]').forEach(pintarBarra); };
+  U.on('cuidados', function () { UI.pintarCuidados(); });
+
+  // retrato do unicórnio para o balão (quem fala é ele)
+  function retratoUni(id) {
+    try { var u = est().unis[id]; return PA.unicornio(P.defUni(id), Reino.Unicornios.estagio(u ? u.xp : 0), 0).canvas; } catch (e) { return null; }
+  }
+  // fala uma frase gravada dos cuidados, na voz de quem fala. O nome que ela deu ao unicórnio
+  // só aparece no balão (quem.nome); a voz lê a frase gravada.
+  function falarCuidado(chave, uniId) {
+    var Cu = Reino.Cuidados, texto = Cu.frases[chave];
+    if (!texto) return Promise.resolve(null);
+    var voz = Cu.vozDaFrase(chave);
+    var op = { voz: voz, agora: true };
+    if (voz === 'unicornio') op.quem = { nome: P.nomeUni(uniId), retrato: retratoUni(uniId), voz: voz };
+    return Reino.Claude.falar(texto, op);
+  }
+  // dá uma comida da despensa: nhac + o unicórnio agradece; barriga cheia: não gasta a comida
+  function darComida(uniId, comidaId) {
+    var r = Reino.Cuidados.alimentar(uniId, comidaId);
+    if (r.ok) { Reino.Som.tocar('nhac'); falarCuidado('comeu', uniId); }
+    else if (r.motivo === 'cheio') { Reino.Som.tocar('toque'); falarCuidado('cheio', uniId); }
+    else if (r.motivo === 'sem-comida') { Reino.Som.tocar('toque'); falarCuidado('despensaVazia', uniId); }
+    return r;
+  }
+  function comidaPorId(id) { return Reino.Cuidados.comidas().find(function (c) { return c.id === id; }) || null; }
+  function textoEnche(c) { return c.enche ? 'Enche tudo!' : 'Enche +' + c.fome; }
+
   /* ---------- tela cheia (esconde a barra do claude.ai em volta do jogo) ---------- */
   var ICONE_ABRIR = '<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>';
   var ICONE_FECHAR = '<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg>';
@@ -170,10 +238,17 @@
     var id = P.montaria(), u = est().unis[id];
     var pe = Reino.Unicornios.progressoEstagio(u ? u.xp : 0);
     m.appendChild(UI.spriteMontaria(id, 2));
+    // o ícone do estágio fica ao lado do nome do estágio e da barrinha de crescimento; assim
+    // a linha da fome e da sede cabe embaixo sem o chip crescer
+    var estg = Reino.Unicornios.ESTAGIOS[pe.estagio];
     m.appendChild(el('span.montaria-info',
       el('b', P.nomeUni(id)),
-      el('span.montaria-estagio', Reino.Unicornios.ESTAGIOS[pe.estagio].emoji + ' ' + Reino.Unicornios.ESTAGIOS[pe.estagio].nome),
-      el('span.barrinha', el('span', { style: { width: Math.round(pe.pct * 100) + '%' } }))));
+      el('span.montaria-cresce',
+        iconePequeno(estg.emoji, 22),
+        el('span.montaria-cresce-col',
+          el('span.montaria-estagio', estg.nome),
+          el('span.barrinha', el('span', { style: { width: Math.round(pe.pct * 100) + '%' } })))),
+      cuidadosProntos() && uniChocado(id) ? barrasCuidado(id, 'mini') : null));
   };
 
   /* ---------- lugares ---------- */
@@ -185,6 +260,8 @@
     if (lugar.tipo === 'estabulo') return UI.telaEstabulo();
     if (lugar.tipo === 'bau') return UI.telaBau();
     if (lugar.tipo === 'loja') return UI.telaLoja();
+    if (lugar.tipo === 'petshop') return UI.telaPetShop();
+    // 'observatorio': não tem tela própria, só o interior
   };
 
   function barraDinheiro(materia) {
@@ -511,6 +588,7 @@
       carta.appendChild(el('span.carta-rar', rar.emoji + ' ' + rar.nome));
       carta.appendChild(el('span.carta-estagio', Reino.Unicornios.ESTAGIOS[pe.estagio].emoji + ' ' + Reino.Unicornios.ESTAGIOS[pe.estagio].nome));
       carta.appendChild(el('span.barrinha', el('span', { style: { width: Math.round(pe.pct * 100) + '%' } })));
+      if (cuidadosProntos()) carta.appendChild(barrasCuidado(d.id, 'mini'));
       if (d.id === P.montaria()) carta.insertBefore(el('span.selo-montado', '🐴 Montaria'), carta.firstChild);
     } else if (u && !u.chocado) {
       carta.appendChild(PA.paraDOM(PA.ovo(d.raridade, 0), 4));
@@ -552,6 +630,12 @@
     c.appendChild(el('p.detalhe-xp', pe.estagio >= E.length - 1 ? 'Já é adulto! 👑' : 'Faltam ' + pe.falta + ' pontinhos para virar ' + E[pe.estagio + 1].nome + '. Ele cresce quando é sua montaria e você acerta!'));
     if (pe.estagio === 0) c.appendChild(el('p.detalhe-dica', '🍼 Bebês ainda não aguentam carregar ninguém: eles andam do seu lado. Quando crescer, dá para montar!'));
     var botoes = el('div.intro-botoes');
+    if (cuidadosProntos()) {
+      c.appendChild(el('div.cuid-detalhe', barrasCuidado(d.id, 'grande')));
+      var comer = el('button.btn-grande.btn-secundario.btn-dar-comida', { type: 'button' }, '🥕 Dar comida');
+      comer.addEventListener('click', function () { Reino.Som.tocar('toque'); escolherComida(d); });
+      botoes.appendChild(comer);
+    }
     if (d.id !== P.montaria()) {
       var montar = el('button.btn-grande.btn-principal', { type: 'button' }, pe.estagio === 0 ? 'Passear junto 🐾' : 'Montar 🐴');
       montar.addEventListener('click', function () {
@@ -571,6 +655,112 @@
     botoes.appendChild(renomear);
     c.appendChild(botoes);
   }
+
+  // "Dar comida" no Estábulo: escolhe uma comida da despensa (só as que tem)
+  function escolherComida(d) {
+    var Cu = Reino.Cuidados;
+    var pn = painel('comida', '🥕 Dar comida');
+    var c = pn.conteudo;
+    var lista = Cu.despensa();
+    c.appendChild(el('div.petshop-uni',
+      UI.spriteMontaria(d.id, 3, { semEnfeite: true }),
+      el('div.petshop-uni-info', el('b', P.nomeUni(d.id)), barrasCuidado(d.id, 'grande'))));
+    if (!lista.length) {
+      c.appendChild(el('p.petshop-vazia', '🧺 A despensa está vazia.'));
+      c.appendChild(el('p.bau-nota', 'A Dona Aveia vende comidinhas na Pet Shop, em frente ao Estábulo. Lá também tem água fresquinha! 🐾'));
+      var ir = el('button.btn-grande.btn-principal', { type: 'button' }, '🐾 Ir até a Pet Shop');
+      ir.addEventListener('click', function () {
+        var l = Mapa.lugares().find(function (x) { return x.tipo === 'petshop'; });
+        Reino.Som.tocar('toque'); Reino.Claude.fechar(); UI.fecharTodas();
+        if (l) U.emit('irPara', l);
+      });
+      c.appendChild(el('div.intro-botoes', ir));
+      falarCuidado('despensaVazia', d.id);
+      setTimeout(function () { try { ir.focus({ preventScroll: true }); } catch (e) {} }, 30);
+      return;
+    }
+    c.appendChild(el('p.saldo-estrelas', 'O que ' + P.nomeUni(d.id) + ' vai comer?'));
+    var grade = el('div.grade-loja.grade-comidas');
+    lista.forEach(function (x) {
+      var b = el('button.item-loja.item-comida', { type: 'button', 'data-comida': x.comida.id },
+        el('span.item-icone', x.comida.icone), el('b', x.comida.nome),
+        el('span.comida-enche', textoEnche(x.comida)),
+        el('span.item-preco', '🧺 ×' + x.quantidade));
+      b.addEventListener('click', function () {
+        var r = darComida(d.id, x.comida.id);
+        if (r.ok) UI.fecharTela(pn.tela);
+      });
+      grade.appendChild(b);
+    });
+    c.appendChild(grade);
+    var primeiro = grade.querySelector('button');
+    setTimeout(function () { try { primeiro.focus({ preventScroll: true }); } catch (e) {} }, 30);
+  }
+
+  /* ---------- pet shop (tela da Dona Aveia) ---------- */
+  UI.telaPetShop = function () {
+    var Cu = Reino.Cuidados;
+    var pn = painel('petshop', '🐾 Pet Shop');
+    var c = pn.conteudo;
+    var saldo = el('div.saldo-estrelas');
+    var uniBox = el('div.petshop-uni');
+    var grade = el('div.grade-loja.grade-comidas');
+    var despensa = el('div.petshop-despensa');
+    function pintar(focar) {
+      U.preencher(saldo, '⭐ Você tem ' + P.estrelas() + (P.estrelas() === 1 ? ' estrela' : ' estrelas'));
+      var id = P.montaria();
+      uniBox.innerHTML = '';
+      uniBox.appendChild(UI.spriteMontaria(id, window.innerWidth <= 480 ? 3 : 4));
+      uniBox.appendChild(el('div.petshop-uni-info', el('b', P.nomeUni(id)), uniChocado(id) ? barrasCuidado(id, 'grande') : null));
+      grade.innerHTML = '';
+      Cu.comidas().forEach(function (co) {
+        var tem = Cu.quantidade(co.id);
+        var b = el('button.item-loja.item-comida' + (P.estrelas() < co.preco ? '.falta' : ''), { type: 'button', 'data-comida': co.id },
+          el('span.item-icone', co.icone), el('b', co.nome),
+          el('span.comida-enche', textoEnche(co)),
+          el('span.item-preco', '⭐ ' + co.preco),
+          tem ? el('span.chip-mini.comida-tem', '🧺 ×' + tem) : null);
+        b.addEventListener('click', function () { comprarComida(co, b); });
+        grade.appendChild(b);
+      });
+      despensa.innerHTML = '';
+      var lista = Cu.despensa();
+      if (!lista.length) despensa.appendChild(el('p', '🧺 A despensa está vazia.'));
+      else {
+        despensa.appendChild(el('b', '🧺 Na despensa:'));
+        lista.forEach(function (x) { despensa.appendChild(el('span.chip-mini', x.comida.icone + ' ×' + x.quantidade)); });
+      }
+      if (focar) { var f = grade.querySelector('[data-comida="' + focar + '"]'); if (f) try { f.focus({ preventScroll: true }); } catch (e) {} }
+    }
+    function comprarComida(co, botao) {
+      var r = Cu.comprar(co.id);
+      if (!r.ok) {
+        Reino.Som.tocar('toque');
+        if (r.motivo === 'estrelas') {
+          // o número só aparece na tela; a voz fala a frase gravada
+          Reino.Claude.falar('Faltam ' + r.faltam + (r.faltam === 1 ? ' estrela' : ' estrelas') + ' para ' + co.nome + '. Cada acerto de primeira vale uma estrela! ⭐',
+            { fala: [Cu.frases.faltamEstrelas], agora: true });
+        }
+        return;
+      }
+      Reino.Som.tocar('estrela');
+      pintar();
+      var id = P.montaria();
+      UI.confirmar('Dar agora para ' + P.nomeUni(id) + '?', 'Dar agora ' + co.icone, 'Guardar').then(function (sim) {
+        if (sim) darComida(id, co.id);
+        else falarCuidado('guardado', id);
+        pintar(co.id);
+      });
+    }
+    c.appendChild(saldo);
+    c.appendChild(uniBox);
+    c.appendChild(grade);
+    c.appendChild(despensa);
+    c.appendChild(el('p.bau-nota', '💧 A água é de graça: é só beber no bebedouro, no Cantinho da Água.'));
+    pintar();
+    var primeiro = grade.querySelector('button');
+    setTimeout(function () { if (pn.tela.parentNode) try { primeiro.focus({ preventScroll: true }); } catch (e) {} }, 30);
+  };
 
   UI.pedirNome = function (pergunta, atual) {
     return new Promise(function (resolver) {
@@ -658,6 +848,17 @@
   UI.chocarUm = chocarUm;
 
   /* ---------- lista rápida de lugares ---------- */
+  // a linha da Pet Shop avisa quando a montaria está com fome ou sede
+  function infoPetShop() {
+    var id = P.montaria();
+    if (cuidadosProntos() && uniChocado(id)) {
+      var b = Reino.Cuidados.baixo(id);
+      if (b.fome && b.sede) return '🍎💧 Seu unicórnio está com fome e sede!';
+      if (b.sede) return '💧 Seu unicórnio está com sede!';
+      if (b.fome) return '🍎 Seu unicórnio está com fome!';
+    }
+    return 'Comida e água para o seu unicórnio';
+  }
   UI.telaLugares = function () {
     var pn = painel('lugares', '📋 Lugares do Reino');
     var lista = el('div.lista-salas');
@@ -673,7 +874,9 @@
       else if (l.tipo === 'escola') { emoji = '🏫'; info = 'Provas bimestrais valendo acessório'; }
       else if (l.tipo === 'estabulo') { emoji = '🦄'; var o = P.ovosParaChocar().length; info = o ? '🥚 ' + o + ' para chocar!' : 'Seus unicórnios'; }
       else if (l.tipo === 'bau') { emoji = '💰'; info = U.reais(P.dinheiroTotal()) + ' guardados'; }
-      else if (l.tipo === 'loja') { emoji = '🧚'; info = '⭐ ' + P.estrelas() + ' estrelas para gastar'; }
+      else if (l.tipo === 'loja') { emoji = '🧚'; info = '⭐ ' + P.estrelas() + (P.estrelas() === 1 ? ' estrela' : ' estrelas') + ' para gastar'; }
+      else if (l.tipo === 'petshop') { emoji = '🐾'; info = infoPetShop(); }
+      else if (l.tipo === 'observatorio') { emoji = '🔭'; info = 'Curiosidades do espaço'; }
       var b = el('button.sala-card', { type: 'button' }, el('span.sala-emoji', emoji), el('span.sala-info', el('b', l.nome), el('small', info)), el('span.sala-ir', 'Ir →'));
       b.addEventListener('click', function () { UI.fecharTela(pn.tela); U.emit('irPara', l); });
       lista.appendChild(b);
