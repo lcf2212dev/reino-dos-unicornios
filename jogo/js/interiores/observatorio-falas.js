@@ -81,6 +81,7 @@
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/all-about-mercury/en/
       { id: 'mercurio-crateras', tema: 'mercurio', paginas: ['O chão de Mercúrio é duro.', 'Ele é cheio de crateras!'] },
 
+      // fonte 2: NASA Space Place — https://spaceplace.nasa.gov/all-about-mercury/en/
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/all-about-venus/en/
       { id: 'venus-quente', tema: 'venus', paginas: ['Vênus é o planeta mais quente.', 'É mais quente que Mercúrio!', 'Ele tem nuvens bem grossas.'] },
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/all-about-venus/en/
@@ -158,6 +159,7 @@
       { id: 'estrelas-bercario', tema: 'estrelas', paginas: ['Estrelas nascem em nuvens.', 'São nuvens de poeira e gás.', 'Há nuvens que são berçários!'] },
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/meteor-shower/en/
       { id: 'estrelas-cadente', tema: 'estrelas', paginas: ['Estrela cadente não é estrela!', 'É um meteoro riscando o céu.', 'O ar em volta dele brilha.'] },
+      // fonte 2: NASA StarChild — https://starchild.gsfc.nasa.gov/docs/StarChild/questions/question26.html
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/review/cosmic-colors/hubble.html
       { id: 'estrelas-piscam', tema: 'estrelas', paginas: ['Por que a estrela pisca?', 'A luz dela passa pelo ar.', 'O ar mexe, e a luz balança!'] },
 
@@ -180,7 +182,7 @@
       // fonte: NASA — https://www.nasa.gov/history/space-station-20th-space-flight-participants/
       { id: 'astronautas-marcos-pontes', tema: 'astronautas', paginas: ['Marcos Pontes foi ao espaço!', 'Ele foi o primeiro do Brasil!', 'Foi em dois mil e seis.'] },
       // fonte: NASA — https://www.nasa.gov/history/space-station-20th-space-flight-participants/
-      { id: 'astronautas-pontes-estacao', tema: 'astronautas', paginas: ['Marcos Pontes foi à estação.', 'Ele ficou lá oito dias.', 'E fez experiências por lá!'] },
+      { id: 'astronautas-pontes-estacao', tema: 'astronautas', paginas: ['Marcos Pontes foi à estação.', 'É a estação espacial!', 'Ficou oito dias e fez ciência!'] },
       // fonte: ESA Kids — https://www.esa.int/kids/es/Aprende/Vida_en_el_Espacio/Vivir_en_el_espacio/El_sueno_en_el_espacio
       { id: 'astronautas-saco-de-dormir', tema: 'astronautas', paginas: ['Astronautas dormem em sacos.', 'O saco fica preso na parede!', 'Assim, ninguém sai flutuando!'] },
       // fonte 2: NASA — https://www.nasa.gov/international-space-station/space-station-facts-and-figures/
