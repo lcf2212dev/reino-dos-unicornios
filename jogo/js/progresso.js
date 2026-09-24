@@ -163,24 +163,43 @@
       },
     };
   }
+  // sem resposta (rede fora) é falha, não "sem servidor": o jogo espera e oferece tentar de novo
   function temServidor() {
     return fetch('api/progresso', { method: 'HEAD', cache: 'no-store' })
-      .then(function (r) { return r.headers.get('X-Reino') === '1'; }, function () { return false; });
+      .then(function (r) { return r.headers.get('X-Reino') === '1'; });
+  }
+  function comLimite(promessa, ms) {
+    return new Promise(function (ok, falha) {
+      var t = setTimeout(function () { falha(new Error('sem resposta')); }, ms);
+      promessa.then(function (v) { clearTimeout(t); ok(v); }, function (e) { clearTimeout(t); falha(e); });
+    });
   }
 
+  /* Busca o progresso guardado (servidor de casa ou claude.ai) e junta com o do aparelho.
+     A promessa só se cumpre com a resposta, e o jogo só começa depois dela: senão um aparelho
+     novo abriria como jogo novo. Falha (ou demora demais) = rejeita, e o jogo pode tentar de novo.
+     Aberto direto do arquivo, sem servidor nenhum, segue só no aparelho. */
+  var tentativa = 0;
   P.iniciarNuvem = function () {
+    var minha = ++tentativa;
     var usaClaude = window.claude && typeof window.claude.use === 'function';
     var pedirDb = usaClaude ? window.claude.use('db')
       : /^https?:$/.test(location.protocol) ? temServidor().then(function (s) { return s ? { doc: docDoServidor } : null; })
       : Promise.resolve(null);
-    pedirDb.then(function (db) {
+    var pronto = pedirDb.then(function (db) {
       if (!db) return;
-      try { nuvem.ref = db.doc('progresso/mariana'); } catch (e) { return; }
-      return nuvem.ref.get().then(function (snap) {
+      var ref = db.doc('progresso/mariana');
+      return ref.get().then(function (snap) {
+        if (minha !== tentativa) return;   // resposta atrasada de uma tentativa que já desistiu
+        nuvem.ref = ref;
         nuvem.ok = true;
         nuvem.status = 'sincronizado';
         if (snap.exists && snap.data() && snap.data().estado) {
-          estado = completar(P.mesclar(estado, snap.data().estado));
+          var guardado = snap.data().estado;
+          // aparelho que nunca começou não tem nada a somar: fica com o guardado inteiro
+          // (senão a aparência e as escolhas em branco dele, mais recentes, venceriam)
+          var emBranco = !estado.comecou && (estado.geracao || 1) <= (guardado.geracao || 1);
+          estado = completar(emBranco ? U.copia(guardado) : P.mesclar(estado, guardado));
           P.conferirPersistencia();
           gravarLocal();
           U.emit('progresso', estado);
@@ -199,7 +218,11 @@
           U.emit('progressoRemoto', estado);
         }, function () { nuvem.status = 'local'; U.emit('nuvem', nuvem.status); });
       });
-    }).catch(function () { /* segue só no aparelho */ });
+    });
+    return comLimite(pronto, 12000).catch(function (e) {
+      if (minha === tentativa) tentativa++;
+      throw e;
+    });
   };
   P.statusNuvem = function () { return nuvem.ok ? nuvem.status : 'local'; };
 

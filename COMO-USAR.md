@@ -4,6 +4,8 @@
 - **Tablet, celular ou notebook (recomendado):** abra https://claude.ai/artifact/CQUd5TWJQW3fWWw5Cvg77U
   - Precisa estar logado no claude.ai com a sua conta nesses aparelhos, porque o link é privado.
   - O progresso é sincronizado entre os aparelhos.
+  - O jogo só começa depois de buscar o progresso guardado, no claude.ai ou no computador de casa. Por isso, um aparelho novo já abre com o progresso dela.
+  - Se aparecer "O reino não abriu agora", o jogo não conseguiu buscar o progresso. Confira a internet, ou o computador de casa, e toque em "Tentar de novo". Até isso dar certo, o jogo não começa.
 - **Só no notebook, sem internet para o jogo:** abra `jogo/index.html` com duplo clique.
   - Nesse modo o progresso fica salvo só naquele navegador.
 

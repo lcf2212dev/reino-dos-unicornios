@@ -305,6 +305,44 @@
     }
   }
 
+  /* o jogo só começa com o progresso guardado em mãos (servidor de casa ou claude.ai):
+     sem ele, um aparelho novo abriria a primeira vez e trocaria as escolhas dela */
+  function esperarProgresso() {
+    return new Promise(function (resolver) {
+      var t = null, msg = null, botao = null;
+      function aviso(texto) {
+        var novo = el('p.inicio-sub', texto);
+        msg.parentNode.replaceChild(novo, msg);
+        msg = novo;
+      }
+      function mostrar() {
+        if (t) return;
+        t = UI.abrirTela('inicio');
+        msg = el('p.inicio-sub', 'Abrindo o reino...');
+        botao = el('button.btn-grande.btn-principal.btn-comecar', { type: 'button' }, 'Tentar de novo 🔄');
+        botao.hidden = true;
+        botao.addEventListener('click', tentar);
+        t.appendChild(el('div.inicio', logo(), msg, botao));
+      }
+      function tentar() {
+        if (t) { aviso('Abrindo o reino...'); botao.hidden = true; }
+        var espera = setTimeout(mostrar, 400);   // resposta rápida: nem aparece
+        P.iniciarNuvem().then(function () {
+          clearTimeout(espera);
+          if (t) UI.fecharTela(t);
+          resolver();
+        }, function () {
+          clearTimeout(espera);
+          mostrar();
+          aviso('O reino não abriu agora. Chame o papai e tente de novo.');
+          botao.hidden = false;
+          botao.focus();
+        });
+      }
+      tentar();
+    });
+  }
+
   /* ---------- início ---------- */
   function iniciar() {
     P.carregar();
@@ -330,12 +368,13 @@
     U.on('mapaMudou', function () { UI.atualizarHUD(); desenhar(performance.now()); });
     U.on('setas', function () { U.$('#setas').hidden = !est().ajustes.setas; });
 
-    P.iniciarNuvem();
     // vozes gravadas: frases do Claude e de cada matéria (as salas carregam quando abrem)
     Reino.Voz.carregarVarios(['geral'].concat(Reino.materias.map(function (m) { return m.id + '-extra'; })));
 
-    var novo = !est().comecou;
-    (novo ? primeiraVez() : telaInicio()).then(function () { entrarNoReino(novo); });
+    esperarProgresso().then(function () {
+      var novo = !est().comecou;
+      (novo ? primeiraVez() : telaInicio()).then(function () { entrarNoReino(novo); });
+    });
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', iniciar);
