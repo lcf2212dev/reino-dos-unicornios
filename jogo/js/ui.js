@@ -138,7 +138,8 @@
     var Cu = Reino.Cuidados, texto = Cu.frases[chave];
     if (!texto) return Promise.resolve(null);
     var voz = Cu.vozDaFrase(chave);
-    var op = { voz: voz, agora: true };
+    // balão comum que fecha sozinho: não fica por cima dos botões da tela aberta
+    var op = { voz: voz, agora: true, tempo: 5000 };
     if (voz === 'unicornio') op.quem = { nome: P.nomeUni(uniId), retrato: retratoUni(uniId), voz: voz };
     return Reino.Claude.falar(texto, op);
   }

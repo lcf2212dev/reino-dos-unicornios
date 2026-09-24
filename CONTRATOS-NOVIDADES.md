@@ -39,6 +39,8 @@ ajustes.surpresa: true                           // interruptor "❓ Perguntas s
   - Um lado sem o campo (aparelho com a versão antiga, que pode apagá-lo): vale o outro lado inteiro.
     Um aparelho antigo nunca faz a Mariana perder comida comprada nem acessório (`loja` já é união).
   - `ajustes` continua vindo do lado mais recente (regra de hoje); `completar()` põe `surpresa: true` se faltar.
+    Exceção só para o campo novo: se o lado mais recente não tem `ajustes.surpresa` (aparelho antigo) e o outro
+    tem, vale o do outro (senão um aparelho antigo religaria as perguntas que os pais desligaram).
   - Geração diferente: continua vencendo o estado inteiro da geração maior (regra de hoje).
 - "Novo ciclo" (`P.novoCiclo`) mantém `cuidados` e `despensa`. "Apagar tudo" (`P.apagarTudo`) zera, como o resto.
 - Quem lê o estado sempre chama `P.estado()` de novo: a mescla troca o objeto inteiro.
