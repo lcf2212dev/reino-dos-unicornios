@@ -1,2 +1,71 @@
 /* Novidades (Pet Shop, fome e sede, pergunta surpresa, Observatório).
-   PROVISÓRIO: vazio. Os construtores da Fase 1 (D) e da Fase 2 acrescentam os estilos aqui. */
+   Cada construtor acrescenta a sua seção, com cabeçalho próprio. */
+
+/* ---------- pergunta surpresa ---------- */
+.tela-surpresa .painel { width: min(660px, 100%); }
+.tela-surpresa .painel-topo { background: var(--ouro-claro); }
+.surpresa-conteudo > * + * { margin-top: 14px; }
+
+/* o Claude com a frase de abertura */
+.surpresa-cabeca { display: flex; align-items: center; gap: 14px; }
+.surpresa-claude { flex: none; }
+.surpresa-balao {
+  flex: 1; min-width: 0;
+  padding: 12px 14px;
+  border: 3px solid var(--borda); border-radius: 16px;
+  background: var(--papel-3);
+}
+.surpresa-fala { font-weight: 700; }
+.surpresa-vale { margin-top: 6px; font-size: 0.9em; font-weight: 700; color: var(--tinta-suave); }
+.surpresa-origem { font-size: 0.85em; font-weight: 700; color: var(--tinta-suave); }
+
+/* "Agora não" e "Conferir" (e o "Ok!" depois da resposta): rodapé fixo do painel */
+.surpresa-botoes {
+  flex: none;
+  display: flex; flex-wrap: wrap; gap: 12px; justify-content: flex-end;
+  padding: 12px 20px 16px;
+  border-top: 3px solid var(--borda);
+  background: var(--papel-2);
+}
+.surpresa-botoes .btn-grande { flex: 1 1 200px; }
+.surpresa-conferir { background: var(--menta); font-size: 1.1em; }
+
+/* resposta: mesmas cores da missão (retorno-certo / retorno-quase), dentro do painel */
+.surpresa-retorno {
+  padding: 16px;
+  border: 3px solid var(--borda); border-radius: 18px;
+  animation: surpresa-surgir 0.22s ease-out;
+}
+.surpresa-retorno > * + * { margin-top: 12px; }
+.surpresa-ganhou { margin-top: 6px; font-weight: 700; color: var(--lendario); }
+.surpresa-certa { font-weight: 700; color: var(--certo); }
+@keyframes surpresa-surgir { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* opções sempre dentro do painel: colunas que encolhem (minmax 0) e texto que quebra */
+.tela-surpresa .painel-conteudo > * { min-width: 0; }
+.tela-surpresa .opcoes { grid-template-columns: minmax(0, 1fr); }
+.tela-surpresa .opcoes-vf, .tela-surpresa .opcoes-duas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 640px) { .tela-surpresa .opcoes-varias { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.tela-surpresa .opcao { min-width: 0; }
+.tela-surpresa .opcao-texto { min-width: 0; overflow-wrap: anywhere; }
+
+/* depois de responder, as opções ficam paradas */
+.tela-surpresa .opcao[aria-disabled="true"] { cursor: default; }
+
+@media (max-width: 480px) {
+  .surpresa-cabeca { gap: 10px; }
+  .surpresa-botoes { padding: 10px 14px 12px; gap: 10px; }
+  /* cabem lado a lado quando dá; com letras grandes, quebram a linha ou descem um embaixo do outro */
+  .surpresa-botoes .btn-grande { flex: 1 1 max-content; min-width: 0; max-width: 100%; padding: 10px 8px; font-size: 0.85em; }
+  /* verdadeiro ou falso: um embaixo do outro */
+  .tela-surpresa .opcoes-vf { grid-template-columns: minmax(0, 1fr); }
+  .surpresa-balao { padding: 10px 12px; font-size: 0.9em; }
+}
+/* tela baixa (celular pequeno): o "vale duas estrelas" fica só na voz, para a pergunta aparecer */
+@media (max-height: 700px) and (max-width: 480px) {
+  .surpresa-vale { display: none; }
+  .surpresa-botoes .btn-grande { min-height: 50px; padding: 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .surpresa-retorno { animation: none; }
+}
