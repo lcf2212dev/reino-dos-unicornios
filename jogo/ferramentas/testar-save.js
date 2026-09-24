@@ -986,6 +986,55 @@ teste('outro navegador (sem cópia) com doc estragado e mais recente: comida, cu
   assert.deepStrictEqual(ult.despensa, s.despensa);
 });
 
+teste('mescla: um registro estragado da despensa num lado não apaga o registro bom do outro', () => {
+  const j = montar();
+  const bom = saveAtual(); bom.atualizado = 1750500000000;
+  bom.despensa = { cenoura: { compradas: 3, usadas: 1 }, maca: { compradas: 2, usadas: 0 }, bolo: { compradas: 4, usadas: 2 } };
+  const mau = saveAtual(); mau.atualizado = 1750900000000;   // o estragado é o mais recente
+  mau.despensa = { cenoura: 'lixo', maca: [1], bolo: { compradas: 'abc', usadas: null }, feno: { compradas: 1, usadas: 0 } };
+  [[bom, mau], [mau, bom]].forEach(([a, b]) => {
+    const r = j.P.mesclar(copia(a), copia(b));
+    assert.deepStrictEqual(copia(r.despensa), {
+      cenoura: { compradas: 3, usadas: 1 }, maca: { compradas: 2, usadas: 0 }, bolo: { compradas: 4, usadas: 2 }, feno: { compradas: 1, usadas: 0 },
+    });
+  });
+  // registro estragado dos dois lados: nada de NaN
+  const m2 = saveAtual(); m2.despensa = { bolo: { compradas: 'x', usadas: 'y' } };
+  const r2 = j.P.mesclar(copia(mau), copia(m2));
+  assert.deepStrictEqual(copia(r2.despensa.bolo), { compradas: 0, usadas: 0 });
+});
+
+teste('mescla: cuidados com registro ou carimbo estragado num lado não apagam o registro bom do outro', () => {
+  const j = montar();
+  const bom = saveAtual(); bom.atualizado = 1750500000000;
+  bom.cuidados = { inicial: { fome: 20, sede: 30, em: 1000, acao: 900 }, 'h-cartinha': { fome: 40, sede: 40, em: 800 }, 'h-postal': { fome: 50, sede: 50, em: 700, acao: 600 } };
+  const mau = saveAtual(); mau.atualizado = 1750900000000;
+  mau.cuidados = { inicial: 'lixo', 'h-cartinha': { fome: 99, sede: 99, em: 'abc' }, 'h-postal': { fome: 99, sede: 99, em: 'abc', acao: 600 } };
+  [[bom, mau], [mau, bom]].forEach(([a, b]) => {
+    const r = j.P.mesclar(copia(a), copia(b));
+    assert.deepStrictEqual(copia(r.cuidados.inicial), bom.cuidados.inicial);
+    assert.deepStrictEqual(copia(r.cuidados['h-cartinha']), bom.cuidados['h-cartinha'], 'em estragado conta como 0');
+    const p = r.cuidados['h-postal'];   // mesma ação: menor fome e sede, em sem NaN
+    assert.strictEqual(p.fome, 50); assert.strictEqual(p.sede, 50); assert.strictEqual(p.acao, 600);
+    assert.strictEqual(p.em, 700, 'em estragado conta como 0, sem NaN');
+  });
+});
+
+teste('outro navegador (sem cópia) com um registro da despensa estragado no doc mais recente: a comida continua', async () => {
+  const s = saveAtual(); s.atualizado = 1750500000000;
+  s.despensa = { cenoura: { compradas: 3, usadas: 1 }, maca: { compradas: 1, usadas: 0 } };
+  const j = montar({ save: s });
+  j.P.carregar();
+  const doc = saveAtual(); doc.atualizado = 1760000000000; doc.despensa = { cenoura: 'lixo', maca: { compradas: 'abc', usadas: 0 } };
+  j.ctx.claude = { use: () => Promise.resolve({ doc: () => ({
+    get: () => Promise.resolve({ exists: true, data: () => ({ estado: copia(doc) }) }),
+    set: () => Promise.resolve(), onSnapshot: () => {},
+  }) }) };
+  await j.P.iniciarNuvem();
+  assert.deepStrictEqual(copia(j.P.estado().despensa), s.despensa);
+  assert.strictEqual(j.C.quantidade('cenoura'), 2);
+});
+
 (async () => {
   let falhas = 0;
   for (const t of testes) {

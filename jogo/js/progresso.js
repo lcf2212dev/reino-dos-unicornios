@@ -186,14 +186,15 @@
       var x = proprio(base, k), y = outro[k];
       if (!objeto(y)) return;
       if (!objeto(x)) { base[k] = U.copia(y); return; }
+      // `acao` estragada conta como ausente (regra do `em`); `em` estragado conta como 0
       if (numero(x.acao) && numero(y.acao)) {
         if (y.acao > x.acao) base[k] = U.copia(y);
         else if (y.acao === x.acao) {
           if (numero(y.fome) && !(y.fome >= x.fome)) x.fome = y.fome;
           if (numero(y.sede) && !(y.sede >= x.sede)) x.sede = y.sede;
-          x.em = max(x.em, y.em);
+          x.em = max(numeroOu(x.em, 0), numeroOu(y.em, 0));
         }
-      } else if ((y.em || 0) > (x.em || 0)) base[k] = U.copia(y);
+      } else if (numeroOu(y.em, 0) > numeroOu(x.em, 0)) base[k] = U.copia(y);
     });
     return base;
   }
@@ -203,8 +204,9 @@
       if (!chaveSegura(outro, k)) return;
       var x = proprio(base, k), y = outro[k];
       if (!objeto(y)) return;
-      if (!x) { base[k] = U.copia(y); return; }
-      x.compradas = max(x.compradas, y.compradas); x.usadas = max(x.usadas, y.usadas);
+      // registro deste lado estragado (não é objeto) conta como ausente; contador estragado conta como 0
+      if (!objeto(x)) { base[k] = U.copia(y); return; }
+      x.compradas = max(numeroOu(x.compradas, 0), numeroOu(y.compradas, 0)); x.usadas = max(numeroOu(x.usadas, 0), numeroOu(y.usadas, 0));
     });
     return base;
   }
