@@ -12,7 +12,8 @@ Reino.FALAS_INTERIORES.estabulo = {
   },
   objetos: {
     'ninho': ['O ninho quentinho de palha. 🥚', 'Aqui os ovinhos descansam.'],
-    'cocho': ['Água fresquinha e brilhante! 💧', 'Os unicórnios bebem aqui.'],
+    // a água de beber agora fica só no bebedouro da Pet Shop: o cocho só mostra o caminho
+    'cocho': ['O cocho brilha de limpinho! ✨', 'Beber água é na Pet Shop! 💧'],
     'cenouras': ['Um saco de cenouras! 🥕', 'O lanche preferido deles.'],
     'escovas': ['As escovas de crina! 🪮', 'Escovar com calma é carinho.'],
     'vitral': ['Um vitral de unicórnio! 🌈', 'Ele brilha quando faz sol.'],

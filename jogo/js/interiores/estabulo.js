@@ -39,6 +39,10 @@
   function estagioDe(P, id) {
     try { var u = P.estado().unis[id]; return R.Unicornios.estagio(u ? u.xp : 0); } catch (e) { return 0; }
   }
+  // 🍎/💧 do unicórnio da baia quando a fome ou a sede está baixa (Reino.Cuidados; ausente nas ferramentas)
+  function iconeCuidado(id) {
+    try { return (R.Cuidados && R.Cuidados.icone) ? R.Cuidados.icone(id) : null; } catch (e) { return null; }
+  }
   function ovos(P) { try { return P && P.ovosParaChocar ? P.ovosParaChocar() : []; } catch (e) { return []; } }
 
   /* ================= OBJETOS DO ESTÁBULO ================= */
@@ -47,7 +51,7 @@
     chave: function (P, o) {
       var n = v(o, 'indice', 0), m = moradorDaBaia(P, n), d = P ? daBaia(n) : null;
       if (!d) return 'baia:' + n + ':' + (m ? m.id : '-') + ':0';
-      return 'baia:' + n + ':' + d.id + ':1:' + estagioDe(P, d.id) + ':' + (P.montaria && P.montaria() === d.id ? 1 : 0);
+      return 'baia:' + n + ':' + d.id + ':1:' + estagioDe(P, d.id) + ':' + (P.montaria && P.montaria() === d.id ? 1 : 0) + ':' + (iconeCuidado(d.id) || '');
     },
     desenhar: function (ctx, px, py, o, P) {
       var n = v(o, 'indice', 0), d = P ? daBaia(n) : null, m = moradorDaBaia(P, n);
@@ -84,6 +88,10 @@
       ret(ctx, px + 1, py + 26, 30, 2, K); ret(ctx, px + 2, py + 26, 28, 1, C.madeiraClara);
       ret(ctx, px + 1, py + 30, 30, 2, K);
       for (var x = px + 4; x < px + 30; x += 6) ret(ctx, x, py + 26, 2, 6, K);
+      // fome ou sede baixa: o ícone (1 px = 1 px do jogo, nítido) no canto de cima da baia
+      var ic = d ? iconeCuidado(d.id) : null, img = ic && window.PA && PA.iconeDesenho ? PA.iconeDesenho(ic) : null;
+      img = img && (img.canvas || img);
+      if (img) ctx.drawImage(img, px + 32 - img.width, py - 2);
     } });
   // ninho de palha com os ovos que ainda não chocaram
   I.objeto('estabulo-ninho', { w: 2, h: 1, topo: 8, solido: true,
