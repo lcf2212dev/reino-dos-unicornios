@@ -130,7 +130,7 @@
   ];
   var OCULOS_FRENTE = ['R.R....R.R', 'RRRRRRRRRR', '.R......R.'];
   // óculos de estrela (Loja) de frente: uma estrela em cada olho
-  var OCULOS_ESTRELA_FRENTE = ['.Y......Y.', 'YOYYYYYYOY', 'Y.Y....Y.Y'];
+  var OCULOS_ESTRELA_FRENTE = ['kYk....kYk', 'YOYkkkkYOY', 'YkY....YkY'];
 
   var UNI = { adulto: {}, filhote: {} };
 
@@ -210,7 +210,7 @@
       { linhas: ['..W', '.WW', 'WWX', 'WX.'], x: 14, y: 12, atras: true },
     ],
     ancoras: { orelha: [3, 2], olho: [5, 7], cabeca: [8, 3],
-      pescoco: [9, 13], cauda: [2, 9], chifre: [8, 2] },
+      pescoco: [9, 13], cauda: null, chifre: [8, 2] },
     enfeites: { oculos: { linhas: OCULOS_FRENTE, x: 4, y: 6 }, 'oculos-estrela': { linhas: OCULOS_ESTRELA_FRENTE, x: 4, y: 6 } },
     brilhos: [[0, 7], [1, 10], [7, 4]],
     cavaleira: [3, -8],
@@ -397,7 +397,7 @@
       { linhas: ['..W', '.WW', 'WWX'], x: 12, y: 9, atras: true },
     ],
     ancoras: { orelha: [3, 2], olho: [4, 6], cabeca: [7, 3],
-      pescoco: [8, 11], cauda: [2, 7], chifre: [7, 2] },
+      pescoco: [8, 11], cauda: null, chifre: [7, 2] },
     enfeites: { oculos: { linhas: OCULOS_FRENTE, x: 3, y: 5 }, 'oculos-estrela': { linhas: OCULOS_ESTRELA_FRENTE, x: 3, y: 5 } },
     brilhos: [[0, 6], [1, 8], [7, 4]],
     cavaleira: [2, -9],
@@ -467,7 +467,7 @@
     ancoras: { orelha: [15, 2], olho: [13, 6], cabeca: [12, 3],
       pescoco: [12, 11], cauda: [2, 10], chifre: [12, 2] },
     enfeites: { oculos: { linhas: ['R.R..R.R', 'RRRRRRRR', '.R....R.'], x: 7, y: 5 },
-      'oculos-estrela': { linhas: ['.Y....Y.', 'YOYYYYOY', 'Y.Y..Y.Y'], x: 7, y: 5 } },
+      'oculos-estrela': { linhas: ['kYk..kYk', 'YOYkkYOY', 'YkY..YkY'], x: 7, y: 5 } },
     brilhos: [[5, 6], [1, 10], [6, 4]],
     cavaleira: [2, -6],
     naFrente: [7, 0, 15, 11],
@@ -524,10 +524,10 @@
     'colar-perolas': { linhas: ['.kkkkk.', 'kwpwpwk', '.kkwkk.', '...k...'], paleta: { k: '#3a2446', w: '#fff4fb', p: '#ff9cc6' }, ancora: 'pescoco', dx: -3, dy: -1 },
     'colar-planetas': { linhas: ['kykykyk', 'kRkBkOk'], paleta: { k: '#3a2446', y: '#ffd34d', R: '#ff6b8a', B: '#5fb4ff', O: '#ffb020' }, ancora: 'pescoco', dx: -3, dy: -1 },
     'brinco-lua': { linhas: ['.kYk', 'kYkk', 'kYk.', 'kYYk', '.kk.'], paleta: { k: '#3a2446', Y: '#ffc21a' }, ancora: 'orelha', dx: -2, dy: 1 },
-    'oculos-estrela': { linhas: ['.Y.', 'YOY', 'Y.Y'], paleta: { Y: '#f5a300', O: '#ffe066' }, ancora: 'olho', dx: -1, dy: -1 },
-    'coroa-flores': { linhas: ['.P...B.', 'PYP.BYB', 'GPGGGBG'], paleta: { P: '#ff7eb6', B: '#b58cff', Y: '#ffe066', G: '#6fdc8c' }, ancora: 'cabeca', dx: -3, dy: -2 },
+    'oculos-estrela': { linhas: ['kYk', 'YOY', 'YkY'], paleta: { k: '#3a2446', Y: '#f5a300', O: '#ffe066' }, ancora: 'olho', dx: -1, dy: -1 },
+    'coroa-flores': { linhas: ['kPk.kBk', 'PYPkBYB', 'GGGGGGG', 'kkkkkkk'], paleta: { k: '#3a2446', P: '#ff7eb6', B: '#b58cff', Y: '#ffe066', G: '#6fdc8c' }, ancora: 'cabeca', dx: -3, dy: -2 },
     'tiara-estrelas': { linhas: ['.Y...Y.', 'YWY.YWY', 'kSkSkSk'], paleta: { k: '#3a2446', Y: '#ffd34d', W: '#fffbe0', S: '#dfe6ff' }, ancora: 'cabeca', dx: -3, dy: -2 },
-    'anel-saturno': { linhas: ['A....A', '.AaaA.'], paleta: { A: '#8a5cf0', a: '#c9a8ff' }, ancora: 'chifre', dx: -2, dy: -1 },
+    'anel-saturno': { linhas: ['A....A', 'kAaaAk', '.kkkk.'], paleta: { k: '#3a2446', A: '#8a5cf0', a: '#c9a8ff' }, ancora: 'chifre', dx: -2, dy: -1 },
   };
   PA.ENFEITES_MONTARIA = ENFEITES;
 

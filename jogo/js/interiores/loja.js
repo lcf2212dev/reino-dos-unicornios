@@ -51,10 +51,9 @@
   }
   // etiqueta de preço (creme, com o número): canto de baixo à direita em (x, y)
   function etiquetaPreco(ctx, x, y, n) {
-    var w = String(n).length * 4 + 3;
-    ret(ctx, x, y, w, 9, K); ret(ctx, x + 1, y + 1, w - 2, 7, C.creme);
-    ret(ctx, x - 1, y + 3, 1, 3, K);   // o furinho da etiqueta
-    numero(ctx, x + 2, y + 2, n, K);
+    var w = String(n).length * 4 + 1;
+    ret(ctx, x, y, w, 7, K); ret(ctx, x + 1, y + 1, w - 2, 5, C.creme);
+    numero(ctx, x + 1, y + 1, n, K);
   }
   // cadeado pequeno (prêmio que ainda não dá para comprar)
   function cadeado(ctx, x, y) {
@@ -145,9 +144,9 @@
           caber(ctx, (window.PA && PA.silhueta) ? PA.silhueta(img) : img, cx, base, 13, 13);
           cadeado(ctx, cx + 2, base - 8);
         } else if (st === 'aVenda') {
-          // colorido embaixo e a etiqueta do preço pendurada em cima, à direita
-          caber(ctx, img, cx - 2, base, 11, 11);
-          etiquetaPreco(ctx, cx, base - 13, a.preco);
+          // colorido, com a etiqueta do preço pendurada na beirada da prateleira, embaixo dele
+          caber(ctx, img, cx, base - 2, 12, 11);
+          etiquetaPreco(ctx, cx - 4, base - 1, a.preco);
         } else {
           caber(ctx, img, cx, base, 13, 13); brilho(ctx, cx + 6, base - 12, C.branco);
           if (st === 'ganho') medalha(ctx, cx - 7, base - 13);
