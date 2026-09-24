@@ -43,9 +43,10 @@
   - **Torre:** Seu Ponteiro, «Coach Ben», «Miss Stella», «Doctor Smile», «Miss Moon» e «Mister Joy» (os trechos em inglês de cada um usam a mesma voz, em inglês).
   - **Castelo:** Princesa Serena, Cavaleira Aurora e «Sir Oliver». **Escola:** Diretora Margarida, Professora Helena e «Teacher Emma».
   - **Estábulo, Loja e Baú:** Seu Feno, Fada Pétala e Dragãozinho Tostão.
+  - **Pet Shop:** Dona Aveia. **Observatório:** Doutora Vega e Robô Cosmo (com um leve efeito de robô na gravação).
   - O Carteiro Chico usa a voz do Claude, mais aguda e mais rápida.
   - As falas são curtas para caber no balão do celular.
-  - Amostras: `amostras-de-voz/` de 13 a 33, ou todas juntas em `VOZES-DOS-PERSONAGENS.mp3`.
+  - Amostras: `amostras-de-voz/` de 13 a 36 (34 Dona Aveia, 35 Doutora Vega, 36 Robô Cosmo). As de 13 a 33 também estão juntas em `VOZES-DOS-PERSONAGENS.mp3`.
   - Para trocar, edite o perfil `npc-<nome>` em `vozes` no `jogo/js/config.js` e peça ao Claude para regravar.
 
 ## Regras do jogo
@@ -68,6 +69,15 @@
   - tem revisão obrigatória antes de entregar;
   - a medalha é dada só pelos acertos.
 - **Medalha da escola:** a medalha de ouro da prova real (R$100) é combinada fora do jogo. O jogo só lembra a Mariana de ir com calma e revisar.
+- **Nadar no lago:** ela toca na água ou anda com as setas até o lago, e nada com o unicórnio. Na água anda mais devagar (60%). Se ela toca em terra, o caminho dá a volta por terra. Para mudar, edite `nado` em `jogo/js/config.js`.
+
+## Pergunta surpresa
+- De vez em quando (entre 3 e 10 minutos de jogo livre), o Claude aparece com uma pergunta das salas: escolha, verdadeiro/falso ou várias respostas.
+- Acertou de primeira: ganha **2 estrelas**. Errou: vê a explicação e não perde nada.
+- Tem "Agora não" para fechar sem responder.
+- Nunca aparece no meio de sala, treino, prova ou conversa: espera ela ficar livre.
+- Para desligar: ⚙️ Ajustes → "❓ Perguntas surpresa".
+- Para mudar os números: `surpresa` em `jogo/js/config.js`.
 
 ## Construções por dentro
 - **Entrar:** pisar na porta, tocar no prédio ou na placa, apertar Enter perto dele ou escolher no menu Lugares. Um círculo fecha a tela e abre de novo já lá dentro.
@@ -82,15 +92,52 @@
   - **Estábulo Mágico:** Seu Feno, o ninho dos ovos e uma baia para cada unicórnio do álbum. A baia fica vazia até ele nascer. Tocar num unicórnio faz ele falar.
   - **Loja das Fadas:** Fada Pétala, vitrines e o espelho mágico.
   - **Baú do Tesouro:** Dragãozinho Tostão e pilhas de moedas que crescem com o dinheiro dela.
+  - **Pet Shop:** a loja da Dona Aveia e o Cantinho da Água, com o bebedouro.
+  - **Observatório:** Cúpula do Telescópio, Planetário e Galeria do Espaço, com a Doutora Vega e o Robô Cosmo.
 - **Ícone em cima de cada personagem:**
   - ❗ sala nova (ou treino aberto e ainda sem medalha), ✓ sala feita, 💙 o unicórnio raro já nasceu;
   - 🔒 treino fechado, 🥇🥈🥉 medalha do treino;
   - 🌈💙🤍 o que a próxima tentativa da prova vale (lendário, raro, comum);
   - 💬 conversar (guias, Seu Feno, Fada Pétala e Tostão), 🥚 ovos esperando;
+  - 🍎/💧 na Dona Aveia: a montaria está com fome ou com sede;
   - ✓ na professora: o prêmio daquela prova já foi ganho.
 - **Conversar:** tocar no personagem ou apertar Enter ao lado dele. O balão tem "Vamos!", "Agora não" e 🔊 para ouvir de novo.
 - As salas, treinos e provas são os mesmos de antes, com as mesmas regras e o mesmo dinheiro. A lista antiga continua em "Ver a lista", com o guia de cada prédio.
 - Nada disso mudou o progresso salvo: tudo o que os prédios mostram vem do que ela já fez.
+
+## Pet Shop, fome e sede
+- **Onde fica:** em frente ao Estábulo, do outro lado da rua de baixo. Quem atende é a **Dona Aveia**.
+- **Fome e sede:** só a montaria gasta, e só enquanto ela joga (aba aberta e algum toque nos últimos 5 minutos). Jogo fechado ou parado não gasta.
+  - A fome vai de cheia a zero em 120 minutos de jogo; a sede, em 60.
+  - Abaixo de 25, o unicórnio anda mais devagar (70%). Comeu ou bebeu, volta ao normal na hora.
+  - Não perde XP, dinheiro nem unicórnio.
+  - Aparece 🍎 ou 💧 em cima do unicórnio, as barrinhas ficam no topo, junto da montaria, e a placa da Pet Shop mostra "Fome" ou "Sede".
+  - O Claude lembra com carinho, no máximo uma vez a cada 10 minutos.
+- **Comidas** (com estrelas):
+  - 🥕 **Cenoura crocante:** 2 ⭐, enche 20.
+  - 🍎 **Maçã do Reino:** 3 ⭐, enche 30.
+  - 🌾 **Feno dourado:** 4 ⭐, enche 45.
+  - 🍪 **Biscoito de aveia:** 5 ⭐, enche 60.
+  - 🎂 **Bolo arco-íris:** 8 ⭐, enche tudo.
+- A comida comprada vai para a **despensa**. Dá para dar na hora ou depois, em "Dar comida", no Estábulo.
+- **Água:** de graça, só no bebedouro do Cantinho da Água, dentro da Pet Shop.
+- **Para mudar:** os preços e quanto enche ficam em `comidas`; o ritmo, o limite de 25 e os lembretes ficam em `cuidados`. Os dois em `jogo/js/config.js`.
+- O progresso guarda a fome, a sede e a despensa. "Novo ciclo" mantém; "Apagar tudo" zera.
+
+## Observatório
+- **Onde fica:** no morro a leste do lago, o ponto mais alto do reino.
+- **Cômodos:** Cúpula do Telescópio (o telescópio mostra a Lua, Saturno, o Cruzeiro do Sul e outros), Planetário (o Sol, os 8 planetas e Plutão) e Galeria do Espaço (foguete, traje de astronauta, pedra da Lua, meteorito e constelações).
+- **Doutora Vega:** a guia. Conta curiosidades sem repetir.
+- **Robô Cosmo:** conta piadas.
+- São 75 curiosidades, cada uma conferida na fonte (a maioria no NASA Space Place, e também ESA Kids, Agência Espacial Brasileira e outras páginas da NASA, da ESA e do INPE).
+- **Do Brasil:** o Cruzeiro do Sul e as estrelas da bandeira, Marcos Pontes (o primeiro brasileiro no espaço) e a base de Alcântara.
+- É só para curiosidade: não dá estrelas nem muda o progresso.
+
+## Enfeites da Loja
+- Na Loja das Fadas, com estrelas. Entraram encaixes novos: **pescoço**, **cauda** e **chifre**. Vale um enfeite por encaixe.
+- **Novos:** Fitinha na cauda (10 ⭐), Gravata-borboleta (10 ⭐), Pompom na cauda (14 ⭐), Colar de pérolas (18 ⭐), Óculos de estrela (22 ⭐) e Coroa de flores (26 ⭐).
+- **Do espaço:** Brinco de lua (16 ⭐), Tiara de estrelas (32 ⭐), Colar de planetas (35 ⭐), Anel de Saturno no chifre (40 ⭐) e Cometa na cauda (42 ⭐).
+- Os de antes continuam iguais. A lista e os preços ficam em `jogo/js/loja-itens.js`.
 
 ## Provas bimestrais (Escola do Reino)
 - A Escola do Reino fica ao lado do Estábulo, perto da rua de baixo. A plaquinha mostra "Prova" enquanto houver prêmio para ganhar.
@@ -116,13 +163,16 @@
   - na 2ª tentativa, um acessório **raro**: Pena Mágica em História, Óculos de Sol em Inglês;
   - da 3ª em diante, um acessório **comum**: Lacinho da Vovó em História, Lacinho de Estrela em Inglês.
 - Isso aparece na capa da prova, numa faixa em cada questão e no resultado.
-- Cada prova dá um acessório só. Depois disso ela vira treino.
+- Cada prova dá um acessório só. Depois disso ela vira treino (os outros dois passam a ser vendidos na Loja, veja abaixo).
 - Sair no meio da prova não conta como tentativa.
 - **Correção:**
   - Depois da 1ª tentativa errada, o jogo só mostra quais questões têm erro, sem dar a resposta, para ela procurar com atenção.
   - A partir da 2ª tentativa errada, e nos treinos, mostra também a resposta certa e a explicação.
 - **Para exigir outra nota:** mude `notaSucessoProva` em `jogo/js/config.js`. Hoje é 10, que quer dizer acertar tudo.
 - **Onde ver os acessórios:** ela usa e troca os acessórios na Loja das Fadas, na parte "Prêmios da Escola do Reino".
+- **Prêmios à venda:** depois que ela ganha um acessório numa prova, os outros dois da mesma prova passam a ser vendidos na Loja, com estrelas: comum 25 ⭐, raro 40 ⭐, lendário 70 ⭐ (`precoPremio` em `jogo/js/config.js`).
+  - A regra da prova não muda: o prêmio de verdade continua sendo só com nota 10.
+  - Comprar não conta como prêmio: não muda a Área dos pais, o mural nem o arco-íris da Escola.
 - **Área dos pais:** mostra as tentativas, as notas de cada tentativa e o prêmio ganho.
 - **Nova prova:** mande as fotos da folha para o Claude. Ele cria `jogo/js/provas/<matéria>-<bimestre>.js` com três acessórios novos, grava as vozes e republica. A prova nova ganha uma sala de aula na Escola do Reino, com um professor (um padrão, se não houver um próprio).
 
