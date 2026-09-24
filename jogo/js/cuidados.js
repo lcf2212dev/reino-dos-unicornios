@@ -99,8 +99,10 @@
     var r = registroParaMudar(id);
     var antes = { fome: limitar(r.fome), sede: limitar(r.sede) };
     var eraBaixo = antes.fome < cfg().baixo || antes.sede < cfg().baixo;
-    var fome = Math.max(0, antes.fome - ms / (cfg().minutosFome * 60000) * 100);
-    var sede = Math.max(0, antes.sede - ms / (cfg().minutosSede * 60000) * 100);
+    // resto de conta com decimais (ex.: 6e-12) vira zero de verdade
+    function aoZero(v) { return v < 1e-6 ? 0 : v; }
+    var fome = aoZero(Math.max(0, antes.fome - ms / (cfg().minutosFome * 60000) * 100));
+    var sede = aoZero(Math.max(0, antes.sede - ms / (cfg().minutosSede * 60000) * 100));
     var mudou = (antes.fome - fome) + (antes.sede - sede);
     if (mudou <= 0) return;
     r.fome = fome; r.sede = sede; r.em = agora();
