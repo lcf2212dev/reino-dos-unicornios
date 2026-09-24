@@ -137,7 +137,12 @@
   var BRINCO_LUA = ['.kYk', 'kYkk', 'kYk.', 'kYYk', '.kk.'];
   var FITINHA_CAUDA = ['kk.kk', 'kTkTk', 'kk.kk'];
   var POMPOM_CAUDA = ['.kkk.', 'kPPWk', 'kPPPk', 'kdPPk', '.kkk.'];
-  var COMETA_CAUDA = ['......kb', '....kkbk', '..kkbWk.', '.kYWWk..', 'kYWYk...', '.kYk....', '..k.....'];
+  // cometa: cabeça branca redonda (com um brilho amarelinho embaixo) na ponta da cauda e o rastro
+  // azul-claro, com contorno próprio, saindo dela para cima (lê como cometa, não como mais uma mecha)
+  var COMETA_CAUDA = ['......kk', '.....kck', '....kcCk', '..kkcCk.', '.kWWCk..', 'kYWWWk..', '.kYWYk..', '..kk....'];
+  // adulto de lado e na diagonal: montada, a Mariana tampa o rastro que sobe para a frente; aqui a
+  // cabeça fica no alto da cauda e o rastro sobe para trás, livre
+  var COMETA_CAUDA_TRAS = ['kk....', 'kck...', 'kCck..', '.kCWk.', '.kWWWk', '.kYWYk', '..kkk.'];
 
   // Adulto / jovem (26 x 21)
   UNI.adulto.lado = {
@@ -173,6 +178,9 @@
     asas: [{ linhas: ASA_ADULTO, x: 2, y: 4, atras: true, escura: true }, { linhas: ASA_ADULTO, x: 3, y: 5 }],
     ancoras: { orelha: [15, 1], olho: [19, 6], cabeca: [17, 3],
       pescoco: [16, 11], cauda: [2, 13], chifre: [21, 1] },
+    // de lado o chifre é inclinado: o anel não leva o risquinho (embaixo dele só há o próprio chifre)
+    enfeites: { 'anel-saturno': { linhas: ['.AA..AA.', 'AAaaaaAA'], x: 18, y: 1 },
+      'cometa-cauda': { linhas: COMETA_CAUDA_TRAS, x: 0, y: 8 } },
     brilhos: [[12, 6], [11, 9], [2, 13], [13, 4]],
     cavaleira: [2, 2],
   };
@@ -302,6 +310,8 @@
     ancoras: { orelha: [20, 2], olho: [19, 7], cabeca: [17, 3],
       pescoco: [16, 12], cauda: [2, 12], chifre: [17, 1] },
     enfeites: { oculos: { linhas: OCULOS_FRENTE, x: 11, y: 6 }, 'oculos-estrela': { linhas: OCULOS_ESTRELA_FRENTE, x: 11, y: 6 },
+      'anel-saturno': { linhas: ['.AA..AA.', 'AAaaaaAA', '.kk.....'], x: 14, y: 1 },
+      'cometa-cauda': { linhas: COMETA_CAUDA_TRAS, x: 0, y: 7 },
       // brinco na orelha do lado de cá, longe dos olhos (na orelha de lá tampava o olho);
       // naFrente: montada, a lua é pintada de novo por cima da Mariana (senão some atrás da perna dela)
       'brinco-lua': { linhas: BRINCO_LUA, x: 7, y: 3, naFrente: true } },
@@ -343,7 +353,9 @@
     ancoras: { orelha: [13, 2], olho: null, cabeca: [16, 4],
       pescoco: [15, 9], cauda: [2, 14], chifre: [18, 1] },
     enfeites: { 'gravata-borboleta': { linhas: ['RRRR'], x: 11, y: 9 },
-      'colar-perolas': { linhas: ['LcrcrcL', '.LLLLL.'], x: 12, y: 9 } },
+      'colar-perolas': { linhas: ['LcrcrcL', '.LLLLL.'], x: 12, y: 9 },
+      // o anel 1 px mais estreito na frente, para caber na borda direita
+      'anel-saturno': { linhas: ['..AA..AA', '.AAaaaAA'], x: 14, y: 1 } },
     brilhos: [[10, 7], [9, 10], [1, 14]],
     cavaleira: [5, 1],
   };
@@ -386,7 +398,9 @@
       // enfeites de cauda 1 px para dentro (cauda + dx −1), para não cortar na borda esquerda
       'fitinha-cauda': { linhas: FITINHA_CAUDA, x: 0, y: 8 },
       'pompom-cauda': { linhas: POMPOM_CAUDA, x: 0, y: 7 },
-      'cometa-cauda': { linhas: COMETA_CAUDA, x: 0, y: 6 } },
+      'cometa-cauda': { linhas: COMETA_CAUDA, x: 0, y: 5 },
+      // de lado o filhote mostra só dois planetas, no peito (os três viravam um cinto na barriga)
+      'colar-planetas': { linhas: ['ykkykky', 'krRkbBk', 'kRRkBBk', '.kk.kk.'], x: 7, y: 9 } },
     brilhos: [[5, 5], [1, 9], [6, 3]],
     cavaleira: [1, -1],
   };
@@ -557,21 +571,26 @@
     // pompom redondo 5×5 em rosa forte, com brilho branco e sombra: aparece em cima da crina clara
     'pompom-cauda': { linhas: POMPOM_CAUDA, paleta: { k: '#3a2446', W: '#ffffff', P: '#ff4f9a', d: '#c92f73' }, ancora: 'cauda', dx: -2, dy: -2 },
     // cometinha: estrela brilhante na ponta da cauda e um rastro que afina subindo para o lado do corpo
-    'cometa-cauda': { linhas: COMETA_CAUDA, paleta: { k: '#3a2446', Y: '#ffd34d', W: '#fffbe0', b: '#7fd6ff' }, ancora: 'cauda', dx: -2, dy: -3 },
+    'cometa-cauda': { linhas: COMETA_CAUDA, paleta: { k: '#3a2446', W: '#ffffff', Y: '#ffe680', C: '#5fc4ff', c: '#c4eeff' }, ancora: 'cauda', dx: -2, dy: -4 },
     // duas asinhas triangulares vermelhas (borda em vermelho-escuro, não em contorno escuro, para não
     // parecer uma carinha) e o nó no meio; de costas só a tirinha R (desenho próprio nos moldes)
     'gravata-borboleta': { linhas: ['dl...ld', 'dRRNRRd', 'dR...Rd'], paleta: { d: '#b0243f', R: '#ff4f6d', l: '#ffa3b3', N: '#8c1c33' }, ancora: 'pescoco', dx: -3, dy: -1 },
     // fio de pérolas creme e rosa-clarinho com 1 px de sombra lilás-escura embaixo (lê em corpo de
     // qualquer cor, sem o tracejado escuro de zíper) e um coraçãozinho rosa com brilho de pingente
     'colar-perolas': { linhas: ['LcrcrcL', '.LPLPL.', '.LPWPL.', '..LPL..', '...L...'], paleta: { L: '#8a6fb0', c: '#fff8ee', r: '#ffc7e2', P: '#ff4f9a', W: '#ffffff' }, ancora: 'pescoco', dx: -3, dy: 0 },
-    'colar-planetas': { linhas: ['kykykyk', 'kRkBkOk'], paleta: { k: '#3a2446', y: '#ffd34d', R: '#ff6b8a', B: '#5fb4ff', O: '#ffb020' }, ancora: 'pescoco', dx: -3, dy: -1 },
+    // colar de planetas: três bolinhas de 2×2 (rosa, azul e laranja, com um pontinho de brilho), cada
+    // uma com contorno próprio, para lerem como planetinhas e não como uma listra no meio da crina,
+    // presas por elos dourados
+    'colar-planetas': { linhas: ['ykkykkykky', 'krRkbBkoOk', 'kRRkBBkOOk', '.kk.kk.kk.'], paleta: { k: '#3a2446', y: '#ffd34d', R: '#ff6b8a', r: '#ffc2d0', B: '#5fb4ff', b: '#cfe9ff', O: '#ffb020', o: '#ffe6a0' }, ancora: 'pescoco', dx: -5, dy: -1 },
     'brinco-lua': { linhas: BRINCO_LUA, paleta: { k: '#3a2446', Y: '#ffc21a' }, ancora: 'orelha', dx: -2, dy: 1 },
     'oculos-estrela': { linhas: ['kYk', 'YOY', 'YkY'], paleta: { k: '#3a2446', Y: '#f5a300', O: '#ffe066' }, ancora: 'olho', dx: -1, dy: -1 },
     'coroa-flores': { linhas: ['kPk.kBk', 'PYPkBYB', 'GGGGGGG', 'kkkkkkk'], paleta: { k: '#3a2446', P: '#ff7eb6', B: '#b58cff', Y: '#ffe066', G: '#6fdc8c' }, ancora: 'cabeca', dx: -3, dy: -2 },
-    'tiara-estrelas': { linhas: ['.Y...Y.', 'YWY.YWY', 'kSkSkSk'], paleta: { k: '#3a2446', Y: '#ffd34d', W: '#fffbe0', S: '#dfe6ff' }, ancora: 'cabeca', dx: -3, dy: -2 },
-    // anel fino atravessando o MEIO do chifre (âncora na 2ª linha do chifre): a ponta aparece por cima
-    // e a base por baixo; no bebê (só o toquinho) fica um aro fininho logo acima dele, não uma boina
-    'anel-saturno': { linhas: ['AAaaAA'], paleta: { A: '#9a6cf5', a: '#d9c2ff' }, ancora: 'chifre', dx: -2, dy: 0 },
+    // tiara: a faixa em azul-noite claro (antes quase branca, sumia na cabeça) segura as duas estrelas
+    'tiara-estrelas': { linhas: ['.Y...Y.', 'YWY.YWY', 'kSkSkSk'], paleta: { k: '#3a2446', Y: '#ffd34d', W: '#fffbe0', S: '#8f9cff' }, ancora: 'cabeca', dx: -3, dy: -2 },
+    // adulto: anel lilás largo atravessando o meio do chifre, visto um pouco de cima: o arco de trás
+    // (lilás forte) some atrás do chifre e o da frente (com brilho claro) passa por cima dele
+    // (e um risquinho de contorno embaixo dele onde encosta na crina, para não se misturar com ela)
+    'anel-saturno': { linhas: ['.AA..AA.', 'AAaaaaAA', '..k..k..'], paleta: { k: '#3a2446', A: '#9a6cf5', a: '#d9c2ff' }, ancora: 'chifre', dx: -3, dy: 0 },
   };
   PA.ENFEITES_MONTARIA = ENFEITES;
 

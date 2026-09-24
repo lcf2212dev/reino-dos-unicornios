@@ -4292,7 +4292,7 @@ window.ICONES = {
     '.....kkkkkk.....',
     '................',
   ] },
-  "enfeite:cometa-cauda": { n: "Cometa na cauda", p: { k: '#3a2446', Y: '#ffd34d', W: '#fffbe0', P: '#5fb4ff', B: '#7fd6ff', L: '#d8f4ff' }, d: [
+  "enfeite:cometa-cauda": { n: "Cometa na cauda", p: { k: '#3a2446', Y: '#ffffff', W: '#ffe680', P: '#5fb4ff', B: '#7fd6ff', L: '#d8f4ff' }, d: [
     '................',
     '...........kk...',
     '..........kYYk..',
@@ -4328,7 +4328,7 @@ window.ICONES = {
     '................',
     '................',
   ] },
-  "enfeite:tiara-estrelas": { n: "Tiara de estrelas", p: { k: '#3a2446', Y: '#ffd34d', W: '#fffbe0', S: '#dfe6ff', s: '#a9b8e8' }, d: [
+  "enfeite:tiara-estrelas": { n: "Tiara de estrelas", p: { k: '#3a2446', Y: '#ffd34d', W: '#fffbe0', S: '#8f9cff', s: '#6f7ce0' }, d: [
     '................',
     '................',
     '.......kk.......',
