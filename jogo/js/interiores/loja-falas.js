@@ -11,7 +11,7 @@ Reino.FALAS_INTERIORES.loja = {
   },
   objetos: {
     'vitrine-enfeites': ['A vitrine dos enfeites! 🎀', 'Tem até enfeite do espaço! 🪐', 'Eles se trocam por estrelas.'],
-    'vitrine-premios': ['Os prêmios da Escola! 🏫', 'Acerte a prova toda e ganhe um!', 'Os outros custam estrelas!'],
+    'vitrine-premios': ['Os prêmios da Escola! 🏫', 'Tire 10 na prova e ganhe um!', 'Os outros custam estrelas!'],
     'espelho': ['O espelho mágico! 🪞', 'Mostra você e seu unicórnio.'],
     'potes': ['Potes de pó de estrela! ⭐', 'Vem de quem acerta de primeira.'],
     'caixa': ['A caixinha das estrelas! 💫', 'Aqui as estrelas descansam.'],

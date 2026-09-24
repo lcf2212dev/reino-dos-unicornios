@@ -174,12 +174,12 @@
   },
   "npc-vega": {
    "voz": "pt-BR-FranciscaNeural",
-   "velocidade": "-2%",
-   "tom": "-10Hz"
+   "velocidade": "-4%",
+   "tom": "-30Hz"
   },
   "npc-cosmo": {
    "voz": "de-DE-FlorianMultilingualNeural",
-   "velocidade": "+6%",
+   "velocidade": "+0%",
    "tom": "+18Hz",
    "efeito": "robo-leve"
   },
@@ -10309,10 +10309,10 @@
    ]
   },
   {
-   "chave": "07defd7414",
+   "chave": "5a0ebeac10",
    "voz": "npc-feno",
-   "texto": "Seus unicórnios adoram visitas!",
-   "fala": "Seus unicórnios adoram visitas!",
+   "texto": "Os unicórnios amam visitas!",
+   "fala": "Os unicórnios amam visitas!",
    "pacotes": [
     "interior-estabulo"
    ]
@@ -10588,10 +10588,10 @@
    ]
   },
   {
-   "chave": "1fd300bd15",
+   "chave": "558926c812",
    "voz": "narradora",
-   "texto": "Acerte a prova toda e ganhe um!",
-   "fala": "Acerte a prova toda e ganhe um!",
+   "texto": "Tire 10 na prova e ganhe um!",
+   "fala": "Tire 10 na prova e ganhe um!",
    "pacotes": [
     "interior-loja"
    ]
@@ -11777,10 +11777,10 @@
    ]
   },
   {
-   "chave": "2e7a542010",
+   "chave": "d2c622ba13",
    "voz": "npc-vega",
-   "texto": "Tenho um segredo do espaço!",
-   "fala": "Tenho um segredo do espaço!",
+   "texto": "Eu tenho um segredo do espaço!",
+   "fala": "Eu tenho um segredo do espaço!",
    "pacotes": [
     "interior-observatorio"
    ]
@@ -11831,10 +11831,10 @@
    ]
   },
   {
-   "chave": "27cb07a114",
+   "chave": "72857a6415",
    "voz": "npc-cosmo",
-   "texto": "Quer ouvir uma piada, bip bop?",
-   "fala": "Quer ouvir uma piada, bip bop?",
+   "texto": "Você quer ouvir uma piada, bip?",
+   "fala": "Você quer ouvir uma piada, bip?",
    "pacotes": [
     "interior-observatorio"
    ]
@@ -11867,10 +11867,10 @@
    ]
   },
   {
-   "chave": "0caecca210",
+   "chave": "9380a34912",
    "voz": "npc-cosmo",
-   "texto": "Tchau, tchau, meu bip bop!",
-   "fala": "Tchau, tchau, meu bip bop!",
+   "texto": "Tchau, tchau, até logo, bip!",
+   "fala": "Tchau, tchau, até logo, bip!",
    "pacotes": [
     "interior-observatorio"
    ]
@@ -13829,10 +13829,10 @@
    ]
   },
   {
-   "chave": "9fdf5d73x",
+   "chave": "912a57fez",
    "voz": "npc-vega",
-   "texto": "E é o mais perto do Sol!",
-   "fala": "E é o mais perto do Sol!",
+   "texto": "Ele é o mais perto do Sol!",
+   "fala": "Ele é o mais perto do Sol!",
    "pacotes": [
     "interior-observatorio"
    ]
@@ -14378,10 +14378,10 @@
    ]
   },
   {
-   "chave": "16761bcfz",
+   "chave": "fa656aa7y",
    "voz": "npc-vega",
-   "texto": "Um ano em Netuno é enorme!",
-   "fala": "Um ano em Netuno é enorme!",
+   "texto": "O ano de Netuno é enorme!",
+   "fala": "O ano de Netuno é enorme!",
    "pacotes": [
     "interior-observatorio"
    ]
@@ -15404,10 +15404,10 @@
    ]
   },
   {
-   "chave": "8804ec45w",
+   "chave": "d0834db611",
    "voz": "npc-cosmo",
-   "texto": "Batata chips, bip bop!",
-   "fala": "Batata chips, bip bop!",
+   "texto": "Sanduíche de parafuso, bip!",
+   "fala": "Sanduíche de parafuso, bip!",
    "pacotes": [
     "interior-observatorio"
    ]
@@ -15602,10 +15602,10 @@
    ]
   },
   {
-   "chave": "6ea9ab5e1f",
+   "chave": "362e8f9f13",
    "voz": "claude",
-   "texto": "Guardei a comidinha na despensa do Estábulo!",
-   "fala": "Guardei a comidinha na despensa do Estábulo!",
+   "texto": "Guardei na despensa do Estábulo!",
+   "fala": "Guardei na despensa do Estábulo!",
    "pacotes": [
     "geral"
    ]
@@ -15665,10 +15665,10 @@
    ]
   },
   {
-   "chave": "46285c481f",
+   "chave": "a1dd0c8f1j",
    "voz": "claude",
-   "texto": "Pergunta surpresa! Vamos ver se você lembra?",
-   "fala": "Pergunta surpresa! Vamos ver se você lembra?",
+   "texto": "Uma pergunta surpresa! Vamos ver se você lembra?",
+   "fala": "Uma pergunta surpresa! Vamos ver se você lembra?",
    "pacotes": [
     "geral"
    ]

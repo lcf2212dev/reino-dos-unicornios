@@ -24,7 +24,7 @@
     return {
       abertura: [
         'Oba, uma pergunta surpresa! Leia com calma. ✨',
-        'Pergunta surpresa! Vamos ver se você lembra? ⭐',
+        'Uma pergunta surpresa! Vamos ver se você lembra? ⭐',
         'Hora da pergunta surpresa! Sem pressa, tá? 💛',
       ],
       vale: 'Se acertar, você ganha ' + valendo() + '! ⭐',

@@ -22,8 +22,9 @@ FILTRO = ('silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.0
 EFEITOS = {
     # robô leve: a voz de verdade com metade de uma cópia metálica e monótona por cima (Robô Cosmo).
     # O robô inteiro embolava as frases (58% de acerto na transcrição); assim fica clara e ainda robótica.
+    # No fim, +2,5 dB (a mistura saía ~3 dB abaixo das outras vozes) com um limitador contra estouro.
     'robo-leve': ("asplit[a][b];[b]afftfilt=real='hypot(re,im)*cos(0)':imag='hypot(re,im)*sin(0)':win_size=512:overlap=0.75,"
-                  "volume=0.55[r];[a]volume=0.75[s];[s][r]amix=inputs=2:normalize=0"),
+                  "volume=0.55[r];[a]volume=0.75[s];[s][r]amix=inputs=2:normalize=0,volume=2.5dB,alimiter=limit=0.9"),
 }
 
 

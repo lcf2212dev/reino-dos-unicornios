@@ -13,14 +13,14 @@
       // a astrônoma, guia do Observatório: conta curiosidades (voz npc-vega)
       vega: {
         oi: ['Olá, eu sou a Doutora Vega! 🔭', 'Eu estudo as estrelas do céu.'],
-        nova: ['Quer ouvir uma curiosidade? ✨', 'Vamos descobrir o céu juntas?', 'Tenho um segredo do espaço!'],
+        nova: ['Quer ouvir uma curiosidade? ✨', 'Vamos descobrir o céu juntas?', 'Eu tenho um segredo do espaço!'],
         depois: ['Volte para olhar o céu! 🌙', 'O céu tem muitos segredos.', 'Até logo, pequena astrônoma! ⭐'],
       },
       // o ajudante engraçado: conta piadas (voz npc-cosmo, com efeito de robô)
       cosmo: {
         oi: ['Bip bop, eu sou o Robô Cosmo! 🤖', 'Minha bateria está feliz!'],
-        nova: ['Quer ouvir uma piada, bip bop?', 'Carreguei uma piada nova!', 'Processando uma piada boa!'],
-        depois: ['Minha bateria riu muito, bip!', 'Tchau, tchau, meu bip bop!', 'Volte logo, bip bop, bip bop!'],
+        nova: ['Você quer ouvir uma piada, bip?', 'Carreguei uma piada nova!', 'Processando uma piada boa!'],
+        depois: ['Minha bateria riu muito, bip!', 'Tchau, tchau, até logo, bip!', 'Volte logo, bip bop, bip bop!'],
       },
     },
 
@@ -68,7 +68,7 @@
       { id: 'lua-fases', tema: 'lua', paginas: ['A Lua parece mudar de forma.', 'São as fases da Lua!'] },
 
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/all-about-mercury/en/
-      { id: 'mercurio-menor', tema: 'mercurio', paginas: ['Mercúrio é o menor planeta.', 'E é o mais perto do Sol!'] },
+      { id: 'mercurio-menor', tema: 'mercurio', paginas: ['Mercúrio é o menor planeta.', 'Ele é o mais perto do Sol!'] },
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/all-about-mercury/en/
       { id: 'mercurio-ano', tema: 'mercurio', paginas: ['Um ano em Mercúrio é curto.', 'Dura oitenta e oito dias!'] },
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/all-about-mercury/en/
@@ -133,7 +133,7 @@
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/all-about-neptune/
       { id: 'netuno-longe', tema: 'netuno', paginas: ['Netuno é o oitavo planeta.', 'Ele é o mais distante do Sol!'] },
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/all-about-neptune/
-      { id: 'netuno-ano', tema: 'netuno', paginas: ['Um ano em Netuno é enorme!', 'Passa de cem anos da Terra.'] },
+      { id: 'netuno-ano', tema: 'netuno', paginas: ['O ano de Netuno é enorme!', 'Passa de cem anos da Terra.'] },
       // fonte: ESA Kids — https://www.esa.int/kids/es/Aprende/Nuestro_Universo/Planetas_y_lunas/Neptuno
       { id: 'netuno-descoberta', tema: 'netuno', paginas: ['Cientistas fizeram contas.', 'Assim acharam Netuno no céu!'] },
 
@@ -231,7 +231,7 @@
       { id: 'saturno-vaidoso', paginas: ['Qual é o planeta vaidoso?', 'Saturno, cheio de anéis!'] },
       { id: 'lua-obrigada', paginas: ['O que a Lua disse ao Sol?', 'Obrigada pela luz emprestada!'] },
       { id: 'astronauta-calmo', paginas: ['Por que o astronauta é calmo?', 'Porque ele tem muito espaço!'] },
-      { id: 'robo-chips', paginas: ['Qual é o lanche do robô?', 'Batata chips, bip bop!'] },
+      { id: 'robo-chips', paginas: ['Qual é o lanche do robô?', 'Sanduíche de parafuso, bip!'] },
       { id: 'terra-fofa', paginas: ['Qual é o planeta mais fofo?', 'A Terra, porque tem você!'] },
       { id: 'cometa-penteado', paginas: ['Qual é o penteado do cometa?', 'Um rabo de cavalo brilhante!'] },
       { id: 'terra-abraco', paginas: ['O que a Terra deu para a Lua?', 'Um abraço bem apertado!'] },
