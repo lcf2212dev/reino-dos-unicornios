@@ -188,10 +188,10 @@ Reino.Surpresa = {
 
 ## 6. Pet Shop (lugar `petshop`)
 - **Mapa:** já posicionada (`EXTRAS` em mapa.js): rect `{ x: 2, y: 21, w: 5, h: 4 }`, porta (4, 24),
-  caminho de rua até a rua de baixo, em frente ao Estábulo. Desenho de fora: `Mapa.PREDIOS.petshop`
-  (provisório em mapa.js). O construtor do prédio entrega o desenho final no próprio arquivo:
-  `if (window.Mapa && Mapa.PREDIOS) Mapa.PREDIOS.petshop = function (ctx, px, py, w, h) {…}` (o
-  orquestrador depois move para mapa.js). A porta é o tile (4, 24): a porta desenhada fica no meio dele.
+  caminho de rua até a rua de baixo, em frente ao Estábulo. Desenho de fora: `Mapa.PREDIOS.petshop`,
+  registrado pelo próprio prédio (js/interiores/petshop.js:
+  `if (window.Mapa && Mapa.PREDIOS) Mapa.PREDIOS.petshop = function (ctx, px, py, w, h) {…}`).
+  A porta é o tile (4, 24): a porta desenhada fica no meio dele.
 - **Interior** (`js/interiores/petshop-falas.js` + `petshop.js`, pacote `interior-petshop`), critério de
   "rico" dos contratos, 2 cômodos:
   - `loja` (Loja): balcão, prateleiras de comida, sacos de feno, cestas de cenoura e maçã, potes de
@@ -217,7 +217,7 @@ Reino.Surpresa = {
 ## 7. Observatório (lugar `observatorio`)
 - **Mapa:** já posicionado (`EXTRAS`): rect `{ x: 28, y: 21, w: 6, h: 5 }`, porta (31, 25), no morro a
   leste do lago (o ponto alto do reino). Desenho de fora: `Mapa.PREDIOS.observatorio` (morro, cúpula,
-  telescópio), provisório em mapa.js; o final vem em `observatorio-cenas.js`, do mesmo jeito da Pet Shop.
+  telescópio), registrado pelo próprio prédio em `observatorio-cenas.js`, do mesmo jeito da Pet Shop.
 - **Cenas do telescópio e robô** (`js/interiores/observatorio-cenas.js`):
   ```
   Reino.ObservatorioCenas = {
@@ -291,7 +291,7 @@ na Pet Shop e no Planetário. Nada de canvas criado por quadro; estático pré-r
 ## 12. Divisão de arquivos
 | Fase | Quem | Arquivos (e só eles) |
 |---|---|---|
-| 0 | orquestrador | index.html, config.js, mapa.js (EXTRAS e PREDIOS provisórios), npcs.js (extensões e ELENCO), falas.js, listar-falas.js, gerar-vozes.py, validar-interiores.js, debug.js, main.js, ui.js (1 linha em Ajustes), arquivos provisórios da Fase 1 |
+| 0 | orquestrador | index.html, config.js, mapa.js (EXTRAS), npcs.js (extensões e ELENCO), falas.js, listar-falas.js, gerar-vozes.py, validar-interiores.js, debug.js, main.js, ui.js (1 linha em Ajustes), arquivos provisórios da Fase 1 |
 | 1 | A | js/cuidados.js, js/progresso.js |
 | 1 | B | js/jogador.js, js/cena.js, js/mapa.js (só a água: solidez, `agua`, custo, brilho), js/audio.js |
 | 1 | C | js/loja-itens.js, js/pixelart.js, js/icones.js, js/ui.js (só a Loja), js/interiores/loja.js, js/interiores/escola.js (só `ganhou()`), ferramentas/acessorios.html |
