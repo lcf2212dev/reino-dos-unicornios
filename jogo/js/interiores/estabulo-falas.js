@@ -7,7 +7,7 @@ Reino.FALAS_INTERIORES.estabulo = {
     feno: {
       oi: ['Oi! Eu sou o Seu Feno. 🐴', 'Cuido de todos os unicórnios.'],
       nova: ['Vamos ver sua coleção? 🦄', 'Quer visitar seus amiguinhos?'],
-      depois: ['Seus unicórnios estão felizes!', 'Que visita mais carinhosa! 💛'],
+      depois: ['Seus unicórnios adoram visitas!', 'Que visita mais carinhosa! 💛'],
     },
   },
   objetos: {
