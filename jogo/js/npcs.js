@@ -1115,6 +1115,11 @@
           paginas([uma(npc, 'depois')]).forEach(function (pg) { Reino.Claude.falar(pg.join(' '), { quem: quem, fala: pg, voz: npc.voz, tempo: 5000 }); });
           return premios;
         }
+        // ação que termina no "Tchau! 💛" (curiosidade da Vega, piada do Cosmo): ele se despede
+        if (premios === 'tchau') {
+          paginas([uma(npc, 'depois')]).forEach(function (pg) { Reino.Claude.falar(pg.join(' '), { quem: quem, fala: pg, voz: npc.voz, tempo: 5000 }); });
+          return premios;
+        }
         if (!atividade) return premios;
         if (premios) {
           paginas([uma(npc, 'depois')]).forEach(function (pg) { Reino.Claude.falar(pg.join(' '), { quem: quem, fala: pg, voz: npc.voz }); });

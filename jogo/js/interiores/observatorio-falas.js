@@ -142,7 +142,7 @@
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/all-about-pluto/
       { id: 'plutao-coracao', tema: 'plutao', paginas: ['Plutão tem um coração!', 'Ele é uma área bem clarinha.'] },
       // fonte: ESA Kids — https://www.esa.int/kids/es/Aprende/Nuestro_Universo/Planetas_y_lunas/Pluton
-      { id: 'plutao-pequeno', tema: 'plutao', paginas: ['Plutão é menor que a Lua.', 'Um mundo pequeno e gelado!'] },
+      { id: 'plutao-pequeno', tema: 'plutao', paginas: ['Plutão é menor que a Lua.', 'Ele é pequeno e gelado!'] },
 
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/sun-compare/en/
       { id: 'estrelas-sol', tema: 'estrelas', paginas: ['Nosso Sol tem tamanho médio.', 'Há estrelas maiores que ele.', 'E há estrelas menores também.'] },
@@ -177,7 +177,7 @@
       // fonte: NASA — https://www.nasa.gov/history/space-station-20th-space-flight-participants/
       { id: 'astronautas-pontes-estacao', tema: 'astronautas', paginas: ['Marcos Pontes foi à estação.', 'Aquela estação lá no espaço!', 'Ficou oito dias e fez ciência!'] },
       // fonte: ESA Kids — https://www.esa.int/kids/es/Aprende/Vida_en_el_Espacio/Vivir_en_el_espacio/El_sueno_en_el_espacio
-      { id: 'astronautas-saco-de-dormir', tema: 'astronautas', paginas: ['Astronautas dormem em sacos.', 'O saco fica preso na parede!', 'Assim, ninguém sai flutuando!'] },
+      { id: 'astronautas-saco-de-dormir', tema: 'astronautas', paginas: ['Astronautas dormem em sacos.', 'O saco fica preso na parede!', 'Assim, ninguém fica flutuando!'] },
       // fonte 2: NASA — https://www.nasa.gov/international-space-station/space-station-facts-and-figures/
       // fonte: ESA Kids — https://www.esa.int/kids/es/Aprende/Vida_en_el_Espacio/Vivir_en_el_espacio/Dormir_en_la_ISS
       { id: 'astronautas-dezesseis-sois', tema: 'astronautas', paginas: ['A estação dá voltas na Terra.', 'Quem está lá vê o Sol nascer.', 'São dezesseis vezes por dia!'] },

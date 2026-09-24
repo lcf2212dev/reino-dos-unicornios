@@ -11957,24 +11957,6 @@
    ]
   },
   {
-   "chave": "4388de8dw",
-   "voz": "narradora",
-   "texto": "A balança da Pet Shop!",
-   "fala": "A balança da Pet Shop!",
-   "pacotes": [
-    "interior-petshop"
-   ]
-  },
-  {
-   "chave": "828347db12",
-   "voz": "narradora",
-   "texto": "Aqui se pesa o feno dourado.",
-   "fala": "Aqui se pesa o feno dourado.",
-   "pacotes": [
-    "interior-petshop"
-   ]
-  },
-  {
    "chave": "a8ffb21cz",
    "voz": "narradora",
    "texto": "Um aquário com peixinhos!",
@@ -12006,6 +11988,24 @@
    "voz": "narradora",
    "texto": "Tem almofada lá dentro.",
    "fala": "Tem almofada lá dentro.",
+   "pacotes": [
+    "interior-petshop"
+   ]
+  },
+  {
+   "chave": "4388de8dw",
+   "voz": "narradora",
+   "texto": "A balança da Pet Shop!",
+   "fala": "A balança da Pet Shop!",
+   "pacotes": [
+    "interior-petshop"
+   ]
+  },
+  {
+   "chave": "828347db12",
+   "voz": "narradora",
+   "texto": "Aqui se pesa o feno dourado.",
+   "fala": "Aqui se pesa o feno dourado.",
    "pacotes": [
     "interior-petshop"
    ]
@@ -14468,10 +14468,10 @@
    ]
   },
   {
-   "chave": "80eb5320z",
+   "chave": "23752e44w",
    "voz": "npc-vega",
-   "texto": "Um mundo pequeno e gelado!",
-   "fala": "Um mundo pequeno e gelado!",
+   "texto": "Ele é pequeno e gelado!",
+   "fala": "Ele é pequeno e gelado!",
    "pacotes": [
     "interior-observatorio"
    ]
@@ -14837,10 +14837,10 @@
    ]
   },
   {
-   "chave": "6bfa965a12",
+   "chave": "e6cd737413",
    "voz": "npc-vega",
-   "texto": "Assim, ninguém sai flutuando!",
-   "fala": "Assim, ninguém sai flutuando!",
+   "texto": "Assim, ninguém fica flutuando!",
+   "fala": "Assim, ninguém fica flutuando!",
    "pacotes": [
     "interior-observatorio"
    ]

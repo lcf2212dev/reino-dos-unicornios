@@ -88,7 +88,7 @@ Reino.config = {
     // Pet Shop e Observatório
     'npc-aveia': { voz: 'de-DE-SeraphinaMultilingualNeural', velocidade: '+8%', tom: '+10Hz' },  // dona da Pet Shop: alegre e carinhosa
     // astrônoma calma: voz brasileira nativa (as multilíngues trocavam "Plutão" por "botão" e embolavam "Via Láctea"),
-    // bem mais grave (~4 semitons) e um pouco mais calma que a narradora, para dar para reconhecer de ouvido
+    // bem mais grave (~3 semitons) e um pouco mais rápida que a narradora, para dar para reconhecer de ouvido
     'npc-vega': { voz: 'pt-BR-FranciscaNeural', velocidade: '-4%', tom: '-30Hz' },
     // robô ajudante: `efeito` passa um filtro metálico na gravação (ferramentas/gerar-vozes.py)
     'npc-cosmo': { voz: 'de-DE-FlorianMultilingualNeural', velocidade: '+0%', tom: '+18Hz', efeito: 'robo-leve' },
