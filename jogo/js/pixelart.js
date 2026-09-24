@@ -302,8 +302,9 @@
     ancoras: { orelha: [20, 2], olho: [19, 7], cabeca: [17, 3],
       pescoco: [16, 12], cauda: [2, 12], chifre: [17, 1] },
     enfeites: { oculos: { linhas: OCULOS_FRENTE, x: 11, y: 6 }, 'oculos-estrela': { linhas: OCULOS_ESTRELA_FRENTE, x: 11, y: 6 },
-      // brinco na orelha do lado de cá, longe dos olhos (na orelha de lá tampava o olho)
-      'brinco-lua': { linhas: BRINCO_LUA, x: 7, y: 3 } },
+      // brinco na orelha do lado de cá, longe dos olhos (na orelha de lá tampava o olho);
+      // naFrente: montada, a lua é pintada de novo por cima da Mariana (senão some atrás da perna dela)
+      'brinco-lua': { linhas: BRINCO_LUA, x: 7, y: 3, naFrente: true } },
     brilhos: [[10, 6], [8, 9], [2, 13], [15, 4]],
     cavaleira: [4, -4],
     naFrente: [10, 0, 21, 12],
@@ -423,7 +424,9 @@
     ancoras: { orelha: [3, 2], olho: [4, 6], cabeca: [7, 3],
       pescoco: [8, 11], cauda: null, chifre: [7, 1] },
     enfeites: { oculos: { linhas: OCULOS_FRENTE, x: 3, y: 5 }, 'oculos-estrela': { linhas: OCULOS_ESTRELA_FRENTE, x: 3, y: 5 },
-      'anel-saturno': { linhas: ['A....A', '.AaaA.'], x: 5, y: 2, bebe: ANEL_BEBE_FRENTE } },
+      'anel-saturno': { linhas: ['A....A', '.AaaA.'], x: 5, y: 2, bebe: ANEL_BEBE_FRENTE },
+      // lua 1 linha mais curta e encostada na borda, com 1 px livre até o olho esquerdo
+      'brinco-lua': { linhas: ['.kYk', 'kYk.', 'kYYk', '.kk.'], x: 0, y: 3 } },
     brilhos: [[0, 6], [1, 8], [7, 4]],
     cavaleira: [2, -9],
     naFrente: [0, 0, 15, 10],
@@ -627,11 +630,13 @@
       molde.brilhos.forEach(function (pt) { ctx.fillRect(pt[0], pt[1], 1, 1); });
     }
 
+    var enfNaFrente = [];
     enf.forEach(function (nome) {
       var e = ENFEITES[nome];
       if (!e) return;
       var proprio = molde.enfeites && molde.enfeites[nome];
       if (proprio && estagio === 0 && proprio.bebe) proprio = proprio.bebe;
+      if (proprio && proprio.naFrente) enfNaFrente.push({ linhas: proprio.linhas, paleta: e.paleta, x: proprio.x, y: proprio.y });
       if (proprio) { pintarMatriz(ctx, proprio.linhas, e.paleta, proprio.x, proprio.y); return; }
       var a = molde.ancoras[e.ancora];
       if (a) pintarMatriz(ctx, e.linhas, e.paleta, a[0] + e.dx, a[1] + e.dy);
@@ -639,7 +644,7 @@
 
     var final = contornar(base, CONTORNO);
     var res = { canvas: final, w: final.width, h: final.height, grande: grande, base: base,
-      cavaleira: molde.cavaleira, naFrente: molde.naFrente || null };
+      cavaleira: molde.cavaleira, naFrente: molde.naFrente || null, enfeitesNaFrente: enfNaFrente };
     cache[chave] = res;
     return res;
   };
@@ -942,6 +947,8 @@
     var larg = r[2] - r[0] + 1, alt = r[3] - r[1] + 1;
     var cab = novoCanvas(bw, bh);
     cab.getContext('2d').drawImage(uni.base, r[0], r[1], larg, alt, r[0], r[1], larg, alt);
+    // enfeites que ficam por cima da cavaleira mesmo fora do retângulo (o brinco de lua na diagonal)
+    (uni.enfeitesNaFrente || []).forEach(function (e) { pintarMatriz(cab.getContext('2d'), e.linhas, e.paleta, e.x, e.y); });
     var dc = cab.getContext('2d').getImageData(0, 0, bw, bh).data;
     var dv = cav.alfa || (cav.alfa = cav.canvas.getContext('2d').getImageData(0, 0, cav.w, cav.h).data);
     var ox = margem + 1, oy = topo + 1; // o molde começa 1px para dentro por causa do contorno
