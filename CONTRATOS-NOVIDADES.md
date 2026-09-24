@@ -14,7 +14,7 @@ sem animação, o desenho fica parado (sem partículas, ondinhas paradas, planet
 config, icones, pixelart, loja-itens, unicornios, materias/*, provas/*, progresso, audio, voz, claude,
 falas, cuidados, surpresa, mapa, jogador, minijogos, prova, provas, ui,
 interiores.js, npcs.js, interiores/<prédios>.js (… loja, bau, petshop-falas, petshop,
-observatorio-falas, observatorio, padrao), cena.js, main.js, debug.js
+observatorio-falas, observatorio-cenas, observatorio, padrao), cena.js, main.js, debug.js
 ```
 CSS: `css/jogo.css`, `css/interiores.css`, `css/novidades.css`.
 
@@ -66,7 +66,10 @@ Reino.Cuidados = {
        // sede = 100, de graça; 'cheio' = sede ≥ 99,5; grava na hora. Só o bebedouro da Pet Shop chama.
   avancar(ms)                // debug e testes: gasta ms de jogo ativo na montaria (como o relógio, sem as condições)
   depurar() → { montaria, fome, sede, fator, icone, ativo, despensa: { id: n }, todos: { uniId: { fome, sede } } }
-  frases: { chave: texto }   // os textos falados (lembretes, Pet Shop, Estábulo), usados pela UI e pelos interiores
+  frases: { chave: texto }   // os textos falados (lembretes, Pet Shop, Estábulo), usados pela UI e pelos interiores.
+                             // Chaves fixas: lembreteFome, lembreteSede, lembreteAmbos, faltamEstrelas (Pet Shop),
+                             // guardado (comprou e guardou na despensa), comeu, cheio, bebeu, semSede, despensaVazia
+  vozDaFrase(chave) → 'claude' | 'unicornio'   // quem fala cada frase (comeu/bebeu = o unicórnio)
   falas() → [{ texto, voz }] // tudo o que os cuidados falam (pacote geral): os valores de `frases`, com a voz
 }
 evento: U.emit('cuidados', depurar())  // a cada ponto inteiro que muda, ao comer/beber e ao cruzar o 25
@@ -185,7 +188,10 @@ Reino.Surpresa = {
 
 ## 6. Pet Shop (lugar `petshop`)
 - **Mapa:** já posicionada (`EXTRAS` em mapa.js): rect `{ x: 2, y: 21, w: 5, h: 4 }`, porta (4, 24),
-  caminho de rua até a rua de baixo, em frente ao Estábulo. Desenho de fora: `Mapa.PREDIOS.petshop`.
+  caminho de rua até a rua de baixo, em frente ao Estábulo. Desenho de fora: `Mapa.PREDIOS.petshop`
+  (provisório em mapa.js). O construtor do prédio entrega o desenho final no próprio arquivo:
+  `if (window.Mapa && Mapa.PREDIOS) Mapa.PREDIOS.petshop = function (ctx, px, py, w, h) {…}` (o
+  orquestrador depois move para mapa.js). A porta é o tile (4, 24): a porta desenhada fica no meio dele.
 - **Interior** (`js/interiores/petshop-falas.js` + `petshop.js`, pacote `interior-petshop`), critério de
   "rico" dos contratos, 2 cômodos:
   - `loja` (Loja): balcão, prateleiras de comida, sacos de feno, cestas de cenoura e maçã, potes de
@@ -210,7 +216,18 @@ Reino.Surpresa = {
 
 ## 7. Observatório (lugar `observatorio`)
 - **Mapa:** já posicionado (`EXTRAS`): rect `{ x: 28, y: 21, w: 6, h: 5 }`, porta (31, 25), no morro a
-  leste do lago (o ponto alto do reino). Desenho de fora: `Mapa.PREDIOS.observatorio` (morro, cúpula, telescópio).
+  leste do lago (o ponto alto do reino). Desenho de fora: `Mapa.PREDIOS.observatorio` (morro, cúpula,
+  telescópio), provisório em mapa.js; o final vem em `observatorio-cenas.js`, do mesmo jeito da Pet Shop.
+- **Cenas do telescópio e robô** (`js/interiores/observatorio-cenas.js`):
+  ```
+  Reino.ObservatorioCenas = {
+    temas() → ['lua', 'saturno', 'cruzeiro', …]      // cenas que o telescópio sabe mostrar
+    cena(tema, t?) → canvas (160×112 px do jogo, com moldura redonda de luneta)  // cacheado; t = animação leve
+    desenharPlaneta(ctx, id, cx, cy, raio)             // Sol, 8 planetas e Plutão, para o Planetário
+  }
+  Reino.NPCs.registrarBase('robo', fn)   // o Robô Cosmo (parâmetros: corpo, detalhe, antena)
+  ```
+  Nada de canvas/PA no carregamento (só dentro das funções).
 - **Interior noturno** (`js/interiores/observatorio-falas.js` + `observatorio.js`, pacote
   `interior-observatorio`), estrelas piscando (só com animações), 3 cômodos:
   - `cupula` (Cúpula do Telescópio): olhar no telescópio abre uma cena em pixel art (Lua, Saturno,
@@ -279,7 +296,9 @@ na Pet Shop e no Planetário. Nada de canvas criado por quadro; estático pré-r
 | 1 | B | js/jogador.js, js/cena.js, js/mapa.js (só a água: solidez, `agua`, custo, brilho), js/audio.js |
 | 1 | C | js/loja-itens.js, js/pixelart.js, js/icones.js, js/ui.js (só a Loja), js/interiores/loja.js, js/interiores/escola.js (só `ganhou()`), ferramentas/acessorios.html |
 | 1 | D | js/surpresa.js, css/novidades.css |
-| 2 | E | js/interiores/petshop-falas.js, js/interiores/petshop.js, js/mapa.js (só `PREDIOS.petshop`), js/interiores/estabulo.js (só as baias) |
+| 2 | E | js/interiores/petshop-falas.js, js/interiores/petshop.js (com o desenho de fora), js/interiores/estabulo.js (só as baias) |
 | 2 | F | js/ui.js (Pet Shop, HUD, Estábulo, Lugares), css/novidades.css, js/icones.js |
-| 3 | G | js/interiores/observatorio.js, js/mapa.js (só `PREDIOS.observatorio`) |
-| 3 | H | js/interiores/observatorio-falas.js |
+| 3 | G1 | js/interiores/observatorio.js (interior, Planetário, ação `curiosidade`) |
+| 3 | G2 | js/interiores/observatorio-cenas.js (cenas do telescópio, planetas, robô, desenho de fora) |
+| 3 | H1–H4 | pesquisa das curiosidades (rascunhos); H junta em js/interiores/observatorio-falas.js |
+| 2–3 | I | ícones novos num rascunho; o orquestrador junta em js/icones.js |
