@@ -167,6 +167,22 @@
    "velocidade": "+10%",
    "tom": "+22Hz"
   },
+  "npc-aveia": {
+   "voz": "de-DE-SeraphinaMultilingualNeural",
+   "velocidade": "+8%",
+   "tom": "+10Hz"
+  },
+  "npc-vega": {
+   "voz": "en-US-EmmaMultilingualNeural",
+   "velocidade": "-8%",
+   "tom": "-10Hz"
+  },
+  "npc-cosmo": {
+   "voz": "de-DE-FlorianMultilingualNeural",
+   "velocidade": "+6%",
+   "tom": "+18Hz",
+   "efeito": "robo"
+  },
   "npc-teste-guia": {
    "voz": "de-DE-FlorianMultilingualNeural",
    "velocidade": "+4%",

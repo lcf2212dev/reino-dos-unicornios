@@ -18,11 +18,19 @@ VOZES = dados['vozes']
 # tira o silêncio do começo e do fim e deixa em mp3 mono leve (24 kHz, 32 kbps)
 FILTRO = ('silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.04,'
           'areverse,silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.08,areverse')
+# efeitos opcionais do perfil (campo `efeito` em Reino.config.vozes), aplicados antes do corte do silêncio
+EFEITOS = {
+    # robô: voz metálica e monótona, ainda bem clara (Robô Cosmo do Observatório)
+    'robo': "afftfilt=real='hypot(re,im)*cos(0)':imag='hypot(re,im)*sin(0)':win_size=512:overlap=0.75",
+}
 
 
 def arquivo(fala):
     v = VOZES[fala['voz']]
-    base = '|'.join([v['voz'], v['velocidade'], v['tom'], fala['fala']])
+    partes = [v['voz'], v['velocidade'], v['tom'], fala['fala']]
+    if v.get('efeito'):
+        partes.append(v['efeito'])   # só perfis com efeito mudam a chave (as gravações antigas continuam valendo)
+    base = '|'.join(partes)
     h = hashlib.sha1(base.encode('utf-8')).hexdigest()[:16]
     return os.path.join(fala['voz'], h + '.mp3')
 
@@ -41,7 +49,8 @@ async def gravar(fala, sem, contagem):
             try:
                 com = edge_tts.Communicate(fala['fala'], v['voz'], rate=v['velocidade'], pitch=v['tom'])
                 await com.save(bruto)
-                subprocess.run(['ffmpeg', '-loglevel', 'error', '-y', '-i', bruto, '-af', FILTRO,
+                filtro = (EFEITOS[v['efeito']] + ',' + FILTRO) if v.get('efeito') else FILTRO
+                subprocess.run(['ffmpeg', '-loglevel', 'error', '-y', '-i', bruto, '-af', filtro,
                                 '-ac', '1', '-ar', '24000', '-b:a', '32k', destino], check=True)
                 os.remove(bruto)
                 contagem['novas'] += 1

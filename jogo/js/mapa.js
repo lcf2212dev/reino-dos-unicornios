@@ -27,6 +27,18 @@
     { id: 'loja', nome: 'Loja das Fadas', sprite: 'loja', rect: { x: 29, y: 15, w: 5, h: 4 } },
     { id: 'escola', nome: 'Escola do Reino', sprite: 'escola', rect: { x: 9, y: 15, w: 5, h: 5 } },
   ];
+  // lugares que chegaram depois (Pet Shop e Observatório): entram no mapa DEPOIS dos enfeites,
+  // para o resto do reino continuar com as mesmas árvores e flores de sempre (o sorteio segue a
+  // ordem dos tiles). Ficam ao sul da rua de baixo, fora das clareiras; `caminho` = tiles de rua
+  // da rua até a frente da porta (a porta fica embaixo, virada para o sul).
+  var EXTRAS = [
+    // em frente ao Estábulo, do outro lado da rua
+    { id: 'petshop', nome: 'Pet Shop', sprite: 'petshop', rect: { x: 2, y: 21, w: 5, h: 4 },
+      caminho: [[7, 21], [7, 22], [7, 23], [7, 24], [7, 25], [6, 25], [5, 25], [4, 25]] },
+    // no morro a leste do lago (o ponto alto do reino)
+    { id: 'observatorio', nome: 'Observatório', sprite: 'observatorio', rect: { x: 28, y: 21, w: 6, h: 5 },
+      caminho: [[27, 21], [27, 22], [27, 23], [27, 24], [27, 25], [27, 26], [28, 26], [29, 26], [30, 26], [31, 26]] },
+  ];
 
   // gerador pseudoaleatório com semente (o reino sai sempre igual)
   function rng(semente) {
@@ -124,6 +136,18 @@
       else if (v < 0.36) decor[by][bx] = 'flor';
       else if (v < 0.40 && !pertoDaAgua(bx, by)) decor[by][bx] = 'cogumelo';
     }
+    // lugares novos por cima do reino já enfeitado: tiram só o enfeite do próprio terreno e do caminho
+    EXTRAS.forEach(function (f) {
+      var l = Object.assign({ tipo: f.id, porta: porta(f.rect) }, f);
+      lugares.push(l);
+      var r = f.rect;
+      for (var yy = r.y; yy < r.y + r.h; yy++) for (var xx = r.x; xx < r.x + r.w; xx++) {
+        decor[yy][xx] = null;
+        tipo[yy][xx] = 'g';
+        solido[yy][xx] = !(xx === l.porta.x && yy === l.porta.y);
+      }
+      f.caminho.forEach(function (p) { decor[p[1]][p[0]] = null; tipo[p[1]][p[0]] = 'c'; solido[p[1]][p[0]] = false; });
+    });
     estatico = null;
   };
 
@@ -640,6 +664,88 @@
       portaArco(ctx, cx - 7, py + h - 20, 14, 20, '#7c5cff', det);
       // brilhinhos
       [[6, 20], [74, 30]].forEach(function (s) { ret(ctx, px + s[0], py + s[1] - 1, 1, 3, '#ffffff'); ret(ctx, px + s[0] - 1, py + s[1], 3, 1, '#ffffff'); });
+    },
+    // Pet Shop: casinha com toldo listrado, vitrine com aquário e plaquinha de patinha
+    petshop: function (ctx, px, py, w, h) {
+      var parede = '#e6f7ef', parede2 = '#c9eadb', telhado = '#39c5bb', telhado2 = '#2a9d94';
+      var cx = px + Math.floor(w / 32) * 16 + 8;   // meio do tile da porta
+      // paredes
+      contornoRet(ctx, px + 5, py + 24, w - 10, h - 24, parede);
+      for (var j = py + 30; j < py + h - 2; j += 6) ret(ctx, px + 6, j, w - 12, 1, parede2);
+      // telhado com telhas
+      triangulo(ctx, px + 1, py + 2, w - 2, 24, C.contorno);
+      triangulo(ctx, px + 4, py + 5, w - 8, 20, telhado);
+      for (var tj = py + 12; tj < py + 24; tj += 4) {
+        var meia = Math.round((w - 8) / 2 * (tj - py - 5 + 1) / 20) - 3;
+        for (var tx = px + w / 2 - meia + 2; tx < px + w / 2 + meia - 2; tx += 6) ret(ctx, tx, tj, 3, 1, telhado2);
+      }
+      ret(ctx, px + 2, py + 23, w - 4, 3, C.contorno); ret(ctx, px + 3, py + 24, w - 6, 1, telhado2);
+      // plaquinha redonda com a patinha no alto do telhado
+      circulo(ctx, px + w / 2, py + 14, 6, C.contorno); circulo(ctx, px + w / 2, py + 14, 5, '#fff8ee');
+      elipse(ctx, px + w / 2, py + 16, 2, 1, '#ff7eb6');
+      [[-3, 12], [-1, 11], [1, 11], [3, 12]].forEach(function (d) { ret(ctx, px + w / 2 + d[0], py + d[1], 1, 1, '#ff7eb6'); });
+      // toldo listrado sobre a vitrine e a porta
+      var ty = py + 27;
+      ret(ctx, px + 7, ty, w - 14, 7, C.contorno);
+      for (var i = px + 8, k = 0; i < px + w - 8; i += 4, k++) ret(ctx, i, ty + 1, 4, 5, k % 2 ? '#ffffff' : '#ff7eb6');
+      for (var s = px + 8, k2 = 0; s < px + w - 8; s += 4, k2++) ret(ctx, s + 1, ty + 6, 2, 2, k2 % 2 ? '#ffffff' : '#ff7eb6');
+      // vitrine com aquário e ossinho
+      var vx = px + 10, vy = py + 38;
+      contornoRet(ctx, vx, vy, 22, 16, '#bfe7ff');
+      ret(ctx, vx + 1, vy + 1, 6, 3, '#e6f7ff');
+      circulo(ctx, vx + 7, vy + 10, 4, C.contorno); circulo(ctx, vx + 7, vy + 10, 3, '#7ed9c8');
+      ret(ctx, vx + 6, vy + 10, 2, 1, '#ff8a3d'); ret(ctx, vx + 8, vy + 9, 1, 1, '#ff8a3d');
+      ret(ctx, vx + 13, vy + 11, 6, 2, '#fff8ee'); ret(ctx, vx + 12, vy + 10, 2, 2, '#fff8ee'); ret(ctx, vx + 12, vy + 13, 2, 1, '#fff8ee');
+      ret(ctx, vx + 18, vy + 10, 2, 2, '#fff8ee'); ret(ctx, vx + 18, vy + 13, 2, 1, '#fff8ee');
+      ret(ctx, vx - 1, vy + 16, 24, 2, C.contorno); ret(ctx, vx, vy + 16, 22, 1, '#c98a4b');
+      // porta
+      portaArco(ctx, cx - 7, py + h - 22, 14, 22, '#ff8a3d', '#ffe066');
+      // potinho de ração ao lado da porta
+      var bx = px + w - 20, by = py + h - 6;
+      elipse(ctx, bx, by, 6, 3, C.contorno); elipse(ctx, bx, by, 5, 2, '#5fb4ff'); ret(ctx, bx - 3, by - 2, 6, 1, '#c98a4b');
+      ret(ctx, bx - 2, by - 3, 2, 1, '#e0a060'); ret(ctx, bx + 1, by - 3, 1, 1, '#e0a060');
+    },
+    // Observatório: cúpula com telescópio no alto de um morrinho, com escada até a porta
+    observatorio: function (ctx, px, py, w, h) {
+      var cx = px + Math.floor(w / 32) * 16 + 8;   // meio do tile da porta (a escada desce até ele)
+      var grama = '#a8cc48', grama2 = '#c6e15a', terra = '#c49a6c', terra2 = '#a47850';
+      // morro: platô gramado com a encosta de terra na frente
+      elipse(ctx, px + w / 2, py + h - 22, w / 2 - 1, 20, C.contorno);
+      elipse(ctx, px + w / 2, py + h - 22, w / 2 - 2, 19, terra);
+      for (var e = 0; e < 5; e++) ret(ctx, px + 12 + e * 16, py + h - 16 + (e % 2) * 4, 6, 1, terra2);
+      elipse(ctx, px + w / 2, py + h - 34, w / 2 - 2, 13, C.contorno);
+      elipse(ctx, px + w / 2, py + h - 34, w / 2 - 3, 12, grama);
+      elipse(ctx, px + w / 2 - 6, py + h - 37, w / 2 - 14, 7, grama2);
+      // escada escavada no morro, da porta (embaixo) até a entrada
+      for (var d = 0; d < 6; d++) {
+        var dy = py + h - 4 - d * 5;
+        ret(ctx, cx - 7, dy - 1, 14, 5, C.contorno);
+        ret(ctx, cx - 6, dy, 12, 3, d % 2 ? '#e8d3a8' : '#f3e6c8');
+      }
+      // prédio redondo
+      var bx = cx - 22, by = py + 24;
+      contornoRet(ctx, bx, by, 44, 26, '#f3eefc');
+      for (var j = by + 6; j < by + 24; j += 6) ret(ctx, bx + 1, j, 42, 1, '#ddd3f2');
+      ret(ctx, bx + 34, by + 1, 9, 24, '#e2d8f6');
+      // cúpula
+      elipse(ctx, cx, by + 1, 23, 21, C.contorno);
+      elipse(ctx, cx, by + 1, 22, 20, '#9fb4d8');
+      elipse(ctx, cx - 6, by - 7, 9, 8, '#c4d3ee');
+      ret(ctx, bx - 1, by, 46, 3, C.contorno); ret(ctx, bx, by + 1, 44, 1, '#7c8fb8');
+      // fresta aberta com o telescópio
+      ret(ctx, cx - 3, by - 19, 6, 19, C.contorno); ret(ctx, cx - 2, by - 18, 4, 17, '#2a2050');
+      ret(ctx, cx - 1, by - 15, 1, 1, '#ffffff'); ret(ctx, cx + 1, by - 9, 1, 1, '#ffe066');
+      for (var t = 0; t < 12; t++) { ret(ctx, cx + 1 + t, by - 12 - t, 4, 4, C.contorno); }
+      for (var t2 = 0; t2 < 11; t2++) { ret(ctx, cx + 2 + t2, by - 11 - t2, 2, 2, t2 > 8 ? '#ffd34d' : '#e6e0f0'); }
+      // porta em arco e janelinhas redondas
+      portaArco(ctx, cx - 6, by + 10, 12, 16, '#7c5cff', '#ffd34d');
+      [bx + 6, bx + 32].forEach(function (jx) {
+        circulo(ctx, jx + 3, by + 12, 3, C.contorno); circulo(ctx, jx + 3, by + 12, 2, '#2a2050'); ret(ctx, jx + 3, by + 11, 1, 1, '#ffe066');
+      });
+      // estrelinhas em volta
+      [[8, 10, '#ffe066'], [w - 10, 6, '#ffffff'], [14, 30, '#ffffff'], [w - 14, 24, '#ffe066']].forEach(function (s) {
+        ret(ctx, px + s[0], py + s[1] - 1, 1, 3, s[2]); ret(ctx, px + s[0] - 1, py + s[1], 3, 1, s[2]);
+      });
     },
     torre: function (ctx, px, py, w, h, cores) {
       cores = cores || {};

@@ -37,8 +37,10 @@ const avisos = [];
 const listas = [];
 function checar(cond, msg) { if (!cond) erros.push(msg); return !!cond; }
 
-const LUGARES = new Set(['castelo', 'bau', 'estabulo', 'loja', 'escola'].concat(Reino.materias.map((m) => 'materia:' + m.id)));
-const TELAS = ['livro', 'plano', 'estabulo', 'loja', 'bau', 'ovos'];
+const LUGARES = new Set(['castelo', 'bau', 'estabulo', 'loja', 'escola', 'petshop', 'observatorio'].concat(Reino.materias.map((m) => 'materia:' + m.id)));
+// telas e ações registradas pelos prédios novos (Reino.NPCs.registrarTela / registrarAcao)
+const TELAS = ['livro', 'plano', 'estabulo', 'loja', 'bau', 'ovos'].concat(temNpcs && Reino.NPCs.telas ? Reino.NPCs.telas() : []);
+const ACOES_EXTRAS = temNpcs && Reino.NPCs.acoes ? Reino.NPCs.acoes() : [];
 const defs = Reino.interiores;
 const porId = new Map();
 
@@ -212,6 +214,7 @@ function checarAcao(a, onde, deNpc) {
     checar(LUGARES.has(a.lugar), `${onde}: lugar do guia "${a.lugar}" não existe`);
     if (a.livro) checar(Reino.materia(a.livro), `${onde}: livro "${a.livro}" não existe`);
   } else if (a.tipo === 'unicornio') checar(Number.isInteger(a.indice), `${onde}: ação unicornio sem indice`);
+  else if (ACOES_EXTRAS.includes(a.tipo)) { /* ação registrada por um prédio (ex.: beber, curiosidade) */ }
   else erros.push(`${onde}: tipo de ação "${a.tipo}" desconhecido`);
   if (deNpc && a.tipo === 'unicornio') erros.push(`${onde}: ação unicornio é só para objetos`);
 }

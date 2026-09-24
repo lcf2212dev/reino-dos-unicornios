@@ -75,6 +75,7 @@
       'violao', 'varinha', 'presilha', 'flor', 'espelhoTesta', 'armadura', 'jardineira', 'colete', 'corrente', 'asas',
       'corpo', 'barriga', 'asa', 'moeda'].forEach(function (k) { if (s[k] !== undefined) o[k] = s[k]; });
     if (o.base === 'fada' && o.asas === undefined) o.asas = true;
+    o.cru = s;   // parâmetros originais (bases novas, como o robô, leem os seus daqui)
     return o;
   }
 
@@ -520,13 +521,20 @@
 
   function chaveSprite(s) { return JSON.stringify(s || {}); }
 
+  /* bases novas de sprite (ex.: 'robo' do Observatório): fn(o, quadro) → { g: Grade, busto }.
+     o = params() com o.cru = o sprite original; quadro: bit 1 respira, bit 2 pisca. */
+  var BASES = {};
+  N.registrarBase = function (nome, fn) { BASES[nome] = fn; };
+  N.gradeSprite = { Grade: Grade, W: W, CX: CX, TOPO: TOPO, HY: HY, BY: BY, CONTORNO: CONTORNO,
+    esc: function (c, t) { return esc(c, t); }, cla: function (c, t) { return cla(c, t); }, mis: function (a, b, t) { return mis(a, b, t); } };
+
   // quadro: bit 1 = respirando (corpo sobe 1 px), bit 2 = piscando. 0 e 1 são os quadros do contrato.
   function gerar(spriteDef, quadro) {
     quadro = quadro | 0;
     var k = 'npc|' + chaveSprite(spriteDef) + '|' + quadro;
     if (cache[k]) return cache[k];
     var o = params(spriteDef);
-    var r = o.base === 'dragao' ? gradeDragao(o, quadro) : gradePessoa(o, quadro);
+    var r = BASES[o.base] ? BASES[o.base](o, quadro) : o.base === 'dragao' ? gradeDragao(o, quadro) : gradePessoa(o, quadro);
     var c = window.PA.contornar(r.g.canvas(), CONTORNO);
     // primeira linha com desenho (para pôr o ícone de status em cima da cabeça)
     var dados = c.getContext('2d').getImageData(0, 0, c.width, c.height).data, topo = 0;
@@ -564,7 +572,13 @@
   var MEDALHA = { ouro: '🥇', prata: '🥈', bronze: '🥉' };
   var VALENDO = { lendario: '🌈', raro: '💙', comum: '🤍' };
 
+  // status vindos de outros módulos (ex.: Dona Aveia com a montaria faminta): fn(npc) → {icone, rotulo} | null
+  var STATUS = [];
+  N.registrarStatus = function (fn) { STATUS.push(fn); };
   N.status = function (npc) {
+    for (var si = 0; si < STATUS.length; si++) {
+      try { var st = STATUS[si](npc); if (st) return st; } catch (e) { console.error(e); }
+    }
     var a = npc.acao || {}, p = P(), est = p.estado();
     if (a.tipo === 'sala') {
       var m = materiaDe(a), s = salaDe(a);
@@ -975,6 +989,16 @@
     return Reino.Unicornios.todos(est.corInicial).filter(function (d) { return est.unis[d.id] && est.unis[d.id].chocado; });
   };
 
+  /* telas e ações de outros módulos (Pet Shop, Observatório):
+     registrarTela('petshop', abrir(acao, ctx), 'Quer ver as comidinhas? 🥕') — abre uma tela do DOM;
+       o NPC espera ela fechar e se despede; o texto é o convite padrão de NPC com essa tela.
+     registrarAcao('beber', fn(acao, ctx) → Promise) — ação de objeto ou NPC ({ tipo: 'beber' }). */
+  var TELAS = {}, ACOES = {};
+  N.registrarTela = function (nome, abrir, convite) { TELAS[nome] = abrir; if (convite) PADRAO.tela.nova[nome] = convite; };
+  N.registrarAcao = function (tipo, fn) { ACOES[tipo] = fn; };
+  N.telas = function () { return Object.keys(TELAS); };
+  N.acoes = function () { return Object.keys(ACOES); };
+
   N.executar = function (acao, ctx) {
     acao = acao || {};
     var UI = Reino.UI, p = P();
@@ -1010,8 +1034,10 @@
         case 'estabulo': return esperarTela(UI.telaEstabulo).then(fim);
         case 'bau': return esperarTela(UI.telaBau).then(fim);
       }
+      if (TELAS[acao.tela]) return esperarTela(function () { TELAS[acao.tela](acao, ctx); }).then(fim);
       return Promise.resolve(null);
     }
+    if (ACOES[acao.tipo]) return Promise.resolve(ACOES[acao.tipo](acao, ctx || {}));
     if (acao.tipo === 'unicornio') {
       // o unicórnio da baia diz a frase que já está gravada (o nome que ela deu só aparece na tela)
       var du = N.unicornioDaBaia(acao.indice || 0);
@@ -1126,6 +1152,11 @@
     feno: { nome: 'Seu Feno', voz: 'npc-feno', sprite: { pele: '#e0ac86', cabelo: '#a0673a', penteado: 'curto', barba: true, chapeu: 'palha', roupa: '#e0433f', estampa: 'xadrez', roupa2: '#4a6fb0', jardineira: true, cor2: '#ffd34d' } },
     petala: { nome: 'Fada Pétala', voz: 'npc-petala', sprite: { base: 'fada', pele: '#ffe0c7', cabelo: '#ff9cc6', penteado: 'rabos', chapeu: 'flores', roupa: '#b58cff', roupa2: '#ff9cc6', varinha: true, cor2: '#ffe066' } },
     tostao: { nome: 'Dragãozinho Tostão', voz: 'npc-tostao', sprite: { base: 'dragao', corpo: '#f0a04a', barriga: '#fff0c4', asa: '#ff7a3d', moeda: true } },
+    // Pet Shop
+    aveia: { nome: 'Dona Aveia', voz: 'npc-aveia', sprite: { pele: '#e0ac86', cabelo: '#c2532b', penteado: 'rabos', chapeu: 'lenco', chapeuCor: '#ff9cc6', roupa: '#8fd08f', roupa2: '#4a7a4a', perna: 'saia', avental: true, aventalCor: '#fff1d0', cor2: '#ff8a3d', colar: '#ffd34d' } },
+    // Observatório (o Cosmo usa a base 'robo', registrada pelo Observatório com N.registrarBase)
+    vega: { nome: 'Doutora Vega', voz: 'npc-vega', sprite: { pele: '#a86b4a', cabelo: '#3a2320', penteado: 'coque', jaleco: true, roupa: '#5a6ad0', roupa2: '#2a2f66', oculos: true, oculosCor: '#ffd34d', presilha: true, cor2: '#ffe066' } },
+    cosmo: { nome: 'Robô Cosmo', voz: 'npc-cosmo', sprite: { base: 'robo', corpo: '#b8c4d8', detalhe: '#5fb4ff', antena: '#ff5c8a' } },
   };
 
   Reino.NPCs = N;

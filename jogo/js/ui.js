@@ -671,6 +671,7 @@
     c.appendChild(interruptor('voz', '🗣️ Voz', 'Ler perguntas e falas em voz alta.'));
     c.appendChild(interruptor('animacoes', '✨ Animações', 'Confete, brilhos e água mexendo.', function () { U.emit('mapaMudou'); }));
     c.appendChild(interruptor('setas', '🕹️ Setas na tela', 'Botões de seta para andar pelo reino.', function () { U.emit('setas'); }));
+    c.appendChild(interruptor('surpresa', '❓ Perguntas surpresa', 'De vez em quando, uma pergunta valendo 2 estrelas.'));
     var tam = el('button.interruptor', { type: 'button', role: 'switch', 'aria-checked': String(a.texto > 1) }, el('span.interruptor-texto', el('b', '🔠 Letras grandes'), el('small', 'Deixa os textos maiores.')), el('span.interruptor-bola'));
     tam.addEventListener('click', function () { a.texto = a.texto > 1 ? 1 : 1.15; tam.setAttribute('aria-checked', String(a.texto > 1)); UI.aplicarAjustes(); P.salvar(); });
     c.appendChild(tam);

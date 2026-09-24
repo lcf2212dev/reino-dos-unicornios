@@ -161,6 +161,16 @@
         if (obj.acao && obj.acao.tipo === 'unicornio' && Reino.NPCs) add(Reino.NPCs.BAIA_VAZIA, 'narradora', def.pacote);
       });
     });
+    // falas dos prédios que não saem dos NPCs nem dos objetos (ex.: bebedouro da Pet Shop,
+    // curiosidades do Observatório): Reino.FALAS_INTERIORES.<prédio>.extras = [{ texto, voz }]
+    var FI = Reino.FALAS_INTERIORES || {};
+    Object.keys(FI).forEach(function (k) {
+      (FI[k].extras || []).forEach(function (f) { add(f.texto, f.voz || 'narradora', 'interior-' + k); });
+    });
+    // novidades: fome e sede (lembretes, Pet Shop, Estábulo) e pergunta surpresa, no pacote geral
+    [Reino.Cuidados, Reino.Surpresa].forEach(function (modulo) {
+      if (modulo && typeof modulo.falas === 'function') modulo.falas().forEach(function (f) { add(f.texto, f.voz || 'claude', 'geral'); });
+    });
     return lista;
   };
 

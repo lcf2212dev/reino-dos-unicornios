@@ -48,5 +48,14 @@
     paraTela: function (wx, wy) { return Reino.Cena ? Reino.Cena.paraTela(wx, wy) : null; },
     get faltando() { return Reino.Voz.faltando; },
     progresso: function () { return Reino.util.copia(Reino.Progresso.estado()); },
+    // novidades (CONTRATOS-NOVIDADES.md): fome e sede, pergunta surpresa e nado
+    avancarJogo: function (ms) { return Reino.Cuidados ? Reino.Cuidados.avancar(ms) : null; },
+    cuidados: function () { return Reino.Cuidados ? Reino.Cuidados.depurar() : null; },
+    surpresa: function () { return Reino.Surpresa ? Reino.Surpresa.forcar() : null; },
+    // agua(tx, ty): o tile do mapa é água do lago? Sem argumentos: ela está nadando agora?
+    agua: function (tx, ty) {
+      if (tx === undefined) return !!(Jogador.nadando && Jogador.nadando());
+      return !!(Mapa.agua && Mapa.agua(tx, ty));
+    },
   };
 })();

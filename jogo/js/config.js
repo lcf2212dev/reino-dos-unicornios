@@ -15,6 +15,32 @@ Reino.config = {
   // caminho da persistência: jogar várias vezes também faz nascer o raro/épico
   persistencia: { sala: 3, treinoOuro: 3, treinoPerfeito: 5 },
   chaveSave: 'mariana-reino-v1',
+  // fome e sede da montaria (js/cuidados.js): só gastam com o jogo aberto e ela jogando.
+  // 100 = satisfeito. Abaixo de `baixo`, ela anda a `fatorLento` da velocidade até comer/beber.
+  cuidados: {
+    minutosFome: 120,          // de 100 a 0 em 120 minutos de jogo
+    minutosSede: 60,           // de 100 a 0 em 60 minutos de jogo
+    baixo: 25,
+    fatorLento: 0.7,
+    semToqueMs: 5 * 60 * 1000, // sem toque nem tecla há 5 minutos: parou de jogar, não gasta
+    lembreteMs: 10 * 60 * 1000,// no máximo 1 lembrete do Claude a cada 10 minutos
+    gravarMs: 60 * 1000,       // grava no máximo a cada 60 s...
+    gravarPontos: 10,          // ...ou a cada 10 pontos de mudança (e sempre ao comer/beber)
+  },
+  // comidas da Pet Shop (preço em estrelas; `fome` = quanto enche; `enche` = vai a 100)
+  comidas: [
+    { id: 'cenoura', nome: 'Cenoura crocante', icone: '🥕', preco: 2, fome: 20 },
+    { id: 'maca', nome: 'Maçã do Reino', icone: '🍎', preco: 3, fome: 30 },
+    { id: 'feno', nome: 'Feno dourado', icone: '🌾', preco: 4, fome: 45 },
+    { id: 'biscoito', nome: 'Biscoito de aveia', icone: '🍪', preco: 5, fome: 60 },
+    { id: 'bolo', nome: 'Bolo arco-íris', icone: '🎂', preco: 8, fome: 100, enche: true },
+  ],
+  // nadar no lago: velocidade na água e quanto a água "custa" na busca de caminho
+  nado: { fator: 0.6, custo: 3 },
+  // pergunta surpresa (js/surpresa.js): de 3 a 10 minutos de jogo livre, vale 2 estrelas de primeira
+  surpresa: { minMinutos: 3, maxMinutos: 10, estrelas: 2, esperaLivreMs: 4000, tipos: ['escolha', 'vf', 'varias'] },
+  // acessórios das provas à venda na Loja (só depois de ganhar um da mesma prova)
+  precoPremio: { comum: 25, raro: 40, lendario: 70 },
   // vozes naturais (gravadas por ferramentas/gerar-vozes.py)
   vozes: {
     claude: { voz: 'pt-BR-AntonioNeural', velocidade: '-5%', tom: '+0Hz' },
@@ -59,6 +85,11 @@ Reino.config = {
     'npc-feno': { voz: 'de-DE-FlorianMultilingualNeural', velocidade: '-8%', tom: '-14Hz' },     // tratador tranquilo, voz grave
     'npc-petala': { voz: 'en-US-EmmaMultilingualNeural', velocidade: '+8%', tom: '+30Hz' },       // fada: aguda e rápida
     'npc-tostao': { voz: 'ko-KR-HyunsuMultilingualNeural', velocidade: '+10%', tom: '+22Hz' },    // dragãozinho: agudo e engraçado
+    // Pet Shop e Observatório
+    'npc-aveia': { voz: 'de-DE-SeraphinaMultilingualNeural', velocidade: '+8%', tom: '+10Hz' },  // dona da Pet Shop: alegre e carinhosa
+    'npc-vega': { voz: 'en-US-EmmaMultilingualNeural', velocidade: '-8%', tom: '-10Hz' },        // astrônoma calma, voz de quem conta segredos do céu
+    // robô ajudante: `efeito` passa um filtro metálico na gravação (ferramentas/gerar-vozes.py)
+    'npc-cosmo': { voz: 'de-DE-FlorianMultilingualNeural', velocidade: '+6%', tom: '+18Hz', efeito: 'robo' },
     // interior de teste da Fase 1 (js/interiores/teste.js)
     'npc-teste-guia': { voz: 'de-DE-FlorianMultilingualNeural', velocidade: '+4%', tom: '+8Hz' },
     'npc-teste-sala': { voz: 'de-DE-SeraphinaMultilingualNeural', velocidade: '-4%', tom: '+12Hz' },

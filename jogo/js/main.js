@@ -295,14 +295,19 @@
     montarSetas();
     J.posicionar(17, 10);
     desenhar(performance.now());
+    // fome e sede da montaria só contam daqui em diante (jogo aberto e ela jogando)
+    if (Reino.Cuidados) Reino.Cuidados.iniciar();
+    var tutorial = null;
     if (novo) {
-      Reino.Claude.falar(Reino.Falas.tutorialMapa(Reino.materias[0]))
+      tutorial = Reino.Claude.falar(Reino.Falas.tutorialMapa(Reino.materias[0]))
         .then(function () { return Reino.Claude.falar(Reino.Claude.frase('dica')); });
     } else {
       var ovos = P.ovosParaChocar().length;
       var oi = Reino.Claude.frase('boasVindas');
       Reino.Claude.falar(oi + (ovos ? ' E você tem ' + (ovos === 1 ? 'um ovo' : ovos + ' ovos') + ' para chocar! 🥚' : ''), { fala: [oi, ovos ? Reino.Falas.fixas.ovosParaChocar : null] });
     }
+    // pergunta surpresa: o relógio só começa depois do tutorial da primeira vez
+    if (Reino.Surpresa) Reino.Surpresa.iniciar({ tutorial: tutorial });
   }
 
   /* o jogo só começa com o progresso guardado em mãos (servidor de casa ou claude.ai):
