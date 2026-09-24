@@ -158,8 +158,8 @@
       case 'plutao':
         var hx = (u - 0.22) / 0.46, hy = -(v - 0.08) / 0.46;
         var cor = hx * hx + hy * hy - 1;
-        if (cor * cor * cor - hx * hx * hy * hy * hy <= 0) return '#fff4e0';          // o "coração"
-        return (u < -0.25 && v > -0.1) ? '#a57a5a' : '#e3c9a2';
+        if (r >= 12 && cor * cor * cor - hx * hx * hy * hy * hy <= 0) return '#fff4e0';   // o "coração" (nos pequenos, molde de pixels)
+        return manchas([[-0.62, 0.28, 0.5, 0.42]], u, v) ? '#a57a5a' : '#e3c9a2';     // a região escura à esquerda
       case 'lua':
         var cr = cratera(LUA_CRATERAS, u, v, '#f4efdc', r);
         if (cr) return cr;
@@ -168,9 +168,14 @@
     return '#ffffff';
   }
 
-  // sombra do lado de baixo à direita (a luz vem do alto à esquerda)
-  function sombrear(cor, u, v) {
+  // sombra do lado de baixo à direita (a luz vem do alto à esquerda); com `xadrez` (0/1, paridade
+  // do pixel), a divisa entre as faixas de sombra vira um pontilhado em vez de uma diagonal dura
+  function sombrear(cor, u, v, xadrez) {
     var d = (u + v) * 0.707;
+    if (xadrez !== undefined) {
+      if (d > 0.62 && d < 0.7) return xadrez ? esc(cor, 0.3) : esc(cor, 0.14);
+      if (d > 0.36 && d < 0.44) return xadrez ? esc(cor, 0.14) : cor;
+    }
     if (d > 0.66) return esc(cor, 0.3);
     if (d > 0.4) return esc(cor, 0.14);
     return cor;
@@ -189,7 +194,6 @@
   function anelDe(id, r) {
     if (id === 'saturno') return { rx: 2.2 * r + 0.5, ry: 0.62 * r + 0.5, ang: -0.28, sIn: 0.6, corte: 0.84,
       gap: r >= 9 ? [0.8, 0.8 + 1.4 / (2.2 * r)] : null, cores: ['#f6e6bc', '#dcc38c'] };
-    if (id === 'urano') return { rx: 0.42 * r + 0.8, ry: 1.7 * r, ang: 0.14, sIn: r >= 10 ? 0.9 : 0.8, corte: 2, cores: ['#d8f4ff'], frenteX: true };
     return null;
   }
 
@@ -198,6 +202,7 @@
     r = Math.max(2, Math.round(r));
     var anel = anelDe(id, r), x, y, dx, dy, a;
     if (id === 'sol') { pintarSol(B, cx, cy, r); return; }
+    if (id === 'urano') { pintarUrano(B, cx, cy, r); return; }
     var alcance = anel ? Math.ceil(Math.max(anel.rx, anel.ry)) + 1 : r + 1;
     // anel de trás
     if (anel) for (dy = -alcance; dy <= alcance; dy++) for (dx = -alcance; dx <= alcance; dx++) {
@@ -209,9 +214,21 @@
     for (dy = -r; dy <= r; dy++) for (dx = -r; dx <= r; dx++) {
       if (!dentroDisco(dx, dy, r)) continue;
       var u = dx / r, v = dy / r;
-      var cor = sombrear(corPlaneta(id, u, v, r), u, v);
-      if (id === 'lua' && r >= 16) cor = sombrear(corPlaneta(id, u, v, r), u * 0.6, v * 0.6);
+      var xz = r >= 8 ? ((dx + dy) & 1) : undefined;
+      var cor = sombrear(corPlaneta(id, u, v, r), u, v, xz);
+      if (id === 'lua' && r >= 16) cor = sombrear(corPlaneta(id, u, v, r), u * 0.6, v * 0.6, xz);
       B.p(cx + dx, cy + dy, cor);
+    }
+    // Plutão pequeno: o "coração" (Planície Sputnik) desenhado pixel a pixel, porque a conta do
+    // coração não fecha em poucos pixels
+    if (id === 'plutao' && r < 12) {
+      var molde = r <= 4 ? CORACAO_P : r <= 8 ? CORACAO_M : CORACAO_G;
+      var mx0 = cx + Math.round(r * 0.22) - (molde[0].length >> 1), my0 = cy + Math.round(r * 0.12) - (molde.length >> 1);
+      for (y = 0; y < molde.length; y++) for (x = 0; x < molde[y].length; x++) {
+        if (molde[y][x] !== 'X' || !B.g(mx0 + x, my0 + y)) continue;
+        var uu = (mx0 + x - cx) / r, vv = (my0 + y - cy) / r;
+        B.p(mx0 + x, my0 + y, sombrear('#fff4e0', uu, vv));
+      }
     }
     // brilhinho
     if (r >= 5 && id !== 'lua') {
@@ -224,6 +241,62 @@
       if (!a || !a.frente) continue;
       B.p(cx + dx, cy + dy, sombrear(a.cor, dx / anel.rx * 0.5, dy / anel.ry * 0.3));
       if (!anel.frenteX && dentroDisco(dx, dy - 1, r) && !pixelAnel(dx, dy - 1, anel)) B.p(cx + dx, cy + dy - 1, esc(B.g(cx + dx, cy + dy - 1) || '#f3dc98', 0.3));
+    }
+  }
+
+  var CORACAO_P = ['X.X', 'XXX', '.X.'];
+  var CORACAO_M = ['XX.XX', 'XXXXX', '.XXX.', '..X..'];
+  var CORACAO_G = ['.XX.XX.', 'XXXXXXX', 'XXXXXXX', '.XXXXX.', '..XXX..', '...X...'];
+
+  // Urano gira "deitado": o anel fica quase em pé. Nos tamanhos pequenos o anel fica todo dentro do
+  // disco (a silhueta continua redonda); nos grandes ele passa um pouco do disco, em laço arredondado.
+  // O anel tem a sua própria linha fina mais escura, para não sumir no azul-claro do planeta.
+  function pintarUrano(B, cx, cy, r) {
+    var dx, dy, u, v;
+    function noDisco(x, y) { return dentroDisco(x, y, r); }
+    var temAnel = r >= 5;
+    var rx = r >= 12 ? 0.5 * r + 0.5 : Math.max(2, Math.round(0.45 * r));
+    var ry = r >= 12 ? r + 2 + Math.round(r * 0.1) : r - 0.4;
+    var gro = r >= 13 ? 2 : 1;
+    function dentroEl(x, y, a, b) { return (x / a) * (x / a) + (y / b) * (y / b) <= 1 + 0.6 / Math.max(a, b); }
+    function noAnel(x, y) {
+      if (!temAnel || !dentroEl(x, y, rx + 0.5, ry + 0.5)) return false;
+      return !dentroEl(x, y, rx + 0.5 - gro, ry + 0.5 - gro);
+    }
+    var alc = Math.ceil(Math.max(r, ry)) + 1;
+    // anel de trás (só aparece fora do disco)
+    for (dy = -alc; dy <= alc; dy++) for (dx = -alc; dx <= alc; dx++) {
+      if (dx >= 0 && noAnel(dx, dy) && !noDisco(dx, dy)) B.p(cx + dx, cy + dy, '#a8d4e8');
+    }
+    // o disco: azul-esverdeado claro, com o polo (virado para o Sol) mais claro
+    for (dy = -r; dy <= r; dy++) for (dx = -r; dx <= r; dx++) {
+      if (!noDisco(dx, dy)) continue;
+      u = dx / r; v = dy / r;
+      var base = u < -0.55 ? '#c9f6f4' : '#9fe6ec';
+      B.p(cx + dx, cy + dy, sombrear(base, u, v, r >= 8 ? ((dx + dy) & 1) : undefined));
+    }
+    if (r >= 5) B.p(cx - Math.round(r * 0.45), cy - Math.round(r * 0.45), '#ffffff');
+    if (!temAnel) return;
+    // onde o anel de trás encosta no disco, a borda do disco continua marcada
+    for (dy = -alc; dy <= alc; dy++) for (dx = 0; dx <= alc; dx++) {
+      if (!noAnel(dx, dy) || noDisco(dx, dy)) continue;
+      if (noDisco(dx - 1, dy) || noDisco(dx, dy - 1) || noDisco(dx, dy + 1)) B.p(cx + dx, cy + dy, CONTORNO);
+    }
+    // anel da frente, por cima do disco, com a linha fina dos dois lados
+    var frente = [];
+    for (dy = -alc; dy <= alc; dy++) for (dx = -alc; dx < 0; dx++) if (noAnel(dx, dy)) frente.push(dx, dy);
+    for (var k = 0; k < frente.length; k += 2) {
+      dx = frente[k]; dy = frente[k + 1];
+      [[1, 0], [-1, 0]].forEach(function (d) {
+        var x = dx + d[0], y = dy;
+        if (noAnel(x, y) || !noDisco(x, y)) return;
+        if (d[0] < 0 && r < 12) return;   // nos pequenos, só a sombrinha do lado de dentro
+        B.p(cx + x, cy + y, d[0] > 0 ? '#4f86a8' : '#6fa6c4');
+      });
+    }
+    for (k = 0; k < frente.length; k += 2) {
+      dx = frente[k]; dy = frente[k + 1];
+      B.p(cx + dx, cy + dy, (dx + dy * 0.3) / r < -0.25 ? '#f2fdff' : '#d8f4ff');
     }
   }
 
@@ -251,6 +324,22 @@
     if (r >= 5) B.p(cx - Math.round(r * 0.4), cy - Math.round(r * 0.4), '#ffffff');
   }
 
+  // brilho quente em volta do Sol: pontilhado amarelo e laranja (pixels cheios, nada de
+  // transparência, que sobre o azul-escuro vira cinza), só nos vãos entre os raios
+  function brilhoSol(B, cx, cy, r) {
+    var L = Math.max(2, Math.round(r * 0.45)), fim = r + L + 0.5;
+    for (var dy = -Math.ceil(fim); dy <= fim; dy++) for (var dx = -Math.ceil(fim); dx <= fim; dx++) {
+      var x = cx + dx, y = cy + dy;
+      if (B.g(x, y)) continue;
+      var d = Math.sqrt(dx * dx + dy * dy);
+      if (d > fim) continue;
+      var t = (d - r) / L;   // 0 junto do disco, 1 na ponta dos raios
+      if (t < 0.5) { if ((x + y) & 1) B.p(x, y, (x & 1) ? '#ffd34d' : '#ffb84a'); }
+      else if (t < 0.8) { if ((x & 1) && (y & 1)) B.p(x, y, '#ff9d2e'); }
+      else if (!(x % 3) && !(y % 3) && ((x + y) % 2)) B.p(x, y, '#e8843a');
+    }
+  }
+
   // sprites dos planetas prontos (com contorno), cacheados por id e raio
   var cachePlaneta = {};
   function spritePlaneta(id, r) {
@@ -261,9 +350,11 @@
     var mx = id === 'sol' ? r + Math.max(2, Math.round(r * 0.45)) + 1 : anel ? Math.ceil(anel.rx) + 1 : r + 1;
     var my = id === 'sol' ? mx : anel ? Math.ceil(anel.ry) + 1 : r + 1;
     mx = Math.max(mx, r + 1); my = Math.max(my, r + 1);
+    if (id === 'urano') my = r + 4 + Math.round(r * 0.1);   // o laço do anel passa um pouco do disco
     var B = new Buf(mx * 2 + 3, my * 2 + 3);
     pintarPlaneta(B, id, mx + 1, my + 1, r);
     B.contornar(CONTORNO);
+    if (id === 'sol') brilhoSol(B, mx + 1, my + 1, r);
     var c = B.canvas();
     cachePlaneta[k] = { c: c, ox: mx + 1, oy: my + 1 };
     return cachePlaneta[k];
@@ -391,30 +482,43 @@
     // sempre apontando para longe do Sol
     cometa: function (B) {
       ceu(B, 61, 60);
-      var nx = 52, ny = 74, dxu = 0.857, dyu = -0.514;
+      // o Sol fica lá embaixo à esquerda, fora da lente: as caudas apontam para o alto à direita
+      var nx = 50, ny = 76, dxu = 0.857, dyu = -0.514;
+      var BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5];
+      var sorte = rng(63);
+      var LP = 74, LG = 88;   // até onde cada cauda chega antes de sumir de vez
       for (var y = 0; y < CH; y++) for (var x = 0; x < CW; x++) {
         if (!B.g(x, y)) continue;
         var rx = x - nx, ry = y - ny;
         var ao = rx * dxu + ry * dyu, lado = -rx * dyu + ry * dxu;
-        if (ao < 0) continue;
-        // poeira: larga e curva
-        var curva = lado - 0.006 * ao * ao, largP = 2.5 + ao * 0.2;
-        if (curva > -largP && curva < largP * 0.6 && ao < 78) {
-          var fade = ao / 78;
-          if (fade > 0.7 && (x + y) % 2 && fade > 0.7 + (Math.abs(curva) / largP) * 0.3) continue;   // ponta se desfazendo
-          B.p(x, y, fade < 0.25 ? '#fff6dc' : fade < 0.5 ? '#f6e0b8' : fade < 0.75 ? '#bba0c8' : '#6a5a9a');
+        if (ao < 2) continue;
+        var limiar = (BAYER[(y & 3) * 4 + (x & 3)] + 0.5) / 16;
+        // cauda de poeira: larga, curva (fica para trás na órbita), clarinha; afina e vira pontinhos
+        var meio = 0.0055 * ao * ao, larg = 1.6 + ao * 0.2;
+        var q = Math.abs(lado - meio) / larg;
+        var bp = q < 1 ? 1.35 * (1 - q * q) * Math.pow(Math.max(0, 1 - ao / LP), 0.8) : 0;
+        if (bp > limiar * 0.9) {
+          B.p(x, y, bp > 0.8 ? '#fff6dc' : bp > 0.5 ? '#f6e0b8' : bp > 0.28 ? '#e0bfd0' : bp > 0.14 ? '#b196c8' : '#7d6aac');
+        } else if (q < 1.5 && ao < LP + 12 && sorte() < 0.05 * (1 - ao / (LP + 12)) + 0.012) {
+          B.p(x, y, sorte() < 0.5 ? '#d8c8e8' : '#fff0d0');   // grãozinhos de poeira soltos
         }
-        // gás: fina e reta
-        if (Math.abs(lado + 1.5) < 1 + ao * 0.035 && ao < 90) {
-          var f2 = ao / 90;
-          if (f2 > 0.75 && (x + y) % 2) continue;
-          B.p(x, y, f2 < 0.4 ? '#9fe0ff' : f2 < 0.7 ? '#6fa8e8' : '#4a5fb0');
+        // cauda de gás (íons): reta, estreita e azul, apontando exatamente para longe do Sol
+        var lg = 0.9 + ao * 0.045, qg = Math.abs(lado + 1) / lg;
+        var bg = qg < 1 ? 1.3 * (1 - qg * qg) * Math.pow(Math.max(0, 1 - ao / LG), 0.7) : 0;
+        if (bg > limiar * 0.8) {
+          B.p(x, y, bg > 0.7 ? '#dff4ff' : bg > 0.36 ? '#9fe0ff' : bg > 0.16 ? '#6fa8e8' : '#4f6fc8');
         }
+      }
+      // cabeleira (coma) com brilho pontilhado e o núcleo bem branco
+      for (var dy = -9; dy <= 9; dy++) for (var dx = -9; dx <= 9; dx++) {
+        var d = Math.sqrt(dx * dx + dy * dy);
+        if (d > 6.5 && d <= 9 && ((nx + dx + ny + dy) & 1) && (d <= 7.8 || !((nx + dx) & 1))) B.p(nx + dx, ny + dy, d <= 7.8 ? '#8fb8e8' : '#5f78c0');
       }
       discoBuf(B, nx, ny, 6, '#8fb8e8');
       discoBuf(B, nx, ny, 4, '#cfeaff');
       discoBuf(B, nx, ny, 2, '#ffffff');
-      return piscantes(62, 7, function (x, y) { var rx = x - nx, ry = y - ny; return rx * dxu + ry * dyu > -10 && Math.abs(-rx * dyu + ry * dxu) < 20; });
+      B.p(nx - 1, ny - 1, '#ffffff');
+      return piscantes(62, 7, function (x, y) { var rx = x - nx, ry = y - ny; return rx * dxu + ry * dyu > -12 && Math.abs(-rx * dyu + ry * dxu) < 24; });
     },
     // galáxia espiral (como a nossa Via Láctea vista de fora), inclinadinha
     galaxia: function (B) {
