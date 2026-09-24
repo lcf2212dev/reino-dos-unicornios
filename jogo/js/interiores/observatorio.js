@@ -175,9 +175,8 @@
     sprites[k] = c;
     return c;
   }
-  var RAIOS = { mercurio: 3, venus: 4, terra: 4, marte: 3, jupiter: 7, saturno: 5, urano: 5, netuno: 5, plutao: 2 };
-  // velocidade da voltinha (os de perto do Sol andam mais rápido)
-  var PERIODOS = { mercurio: 1900, venus: 2600, terra: 3200, marte: 3900, jupiter: 5200, saturno: 6200, urano: 7200, netuno: 8200, plutao: 9400 };
+  // (Plutão continua o menor, mas com raio 3 ele ainda aparece redondinho no celular; Urano com 6 sai redondo)
+  var RAIOS = { mercurio: 4, venus: 5, terra: 5, marte: 4, jupiter: 8, saturno: 6, urano: 6, netuno: 6, plutao: 3 };
 
   /* ================= OBJETOS: PAREDE ================= */
   // a fenda aberta da cúpula, com o céu estrelado (as estrelas piscam; às vezes passa uma estrela cadente)
@@ -461,15 +460,15 @@
   I.objeto('observatorio-sol', { w: 2, h: 2, topo: 4, solido: true, semSombra: true,
     desenhar: function (ctx, px, py) {
       var cx = px + 16, cy = py + 14;
-      circulo(ctx, cx, cy, 17, 'rgba(255,211,77,0.10)');
-      circulo(ctx, cx, cy, 14, 'rgba(255,211,77,0.16)');
+      // sem disco nem halo semitransparente por baixo (no chão escuro virava um disco cinza-marrom):
+      // o brilho quente em pontilhado já vem no desenho do Sol (observatorio-cenas.js)
       desenharPlaneta(ctx, 'sol', cx, cy, 11);
     },
     anim: function (ctx, px, py, t) {
       t = tempo(t);
-      var cx = px + 16, cy = py + 14, giro = t / 2600;
+      var cx = px + 16, cy = py + 14, giro = t / 9000;   // uma volta a cada ~57 s: calmo
       for (var i = 0; i < 8; i++) {
-        var a = giro + i * Math.PI / 4, r1 = 13 + ((i + (t ? Math.floor(t / 500) : 0)) % 2);
+        var a = giro + i * Math.PI / 4, r1 = 13 + ((i + (t ? Math.floor(t / 1200) : 0)) % 2);
         var x = Math.round(cx + Math.cos(a) * r1), y = Math.round(cy + Math.sin(a) * r1);
         ret(ctx, x, y, 1, 1, '#ffb347');
         ret(ctx, Math.round(cx + Math.cos(a) * (r1 + 1.6)), Math.round(cy + Math.sin(a) * (r1 + 1.6)), 1, 1, i % 2 ? '#ffe680' : '#ff9d2e');
@@ -483,19 +482,18 @@
       elipse(ctx, cx, py + 13, 3, 1, 'rgba(127,224,255,0.22)');
       if (v(o, 'id', '') === 'plutao') { ret(ctx, cx - 5, py + 13, 1, 1, '#9a86c8'); ret(ctx, cx + 5, py + 13, 1, 1, '#9a86c8'); }
     },
+    // o planeta fica PARADO (nada de tremer); só as luas dão a volta, bem devagar (≤ 1 px a cada ~0,5 s)
     anim: function (ctx, px, py, t, o) {
       t = tempo(t);
-      var id = v(o, 'id', 'terra'), raio = RAIOS[id] || 4, per = PERIODOS[id] || 4000;
-      var fase = v(o, 'fase', 0), a = (t / per) * Math.PI * 2 + fase;
-      var dx = Math.round(Math.cos(a) * 2), dy = Math.round(Math.sin(a));
-      var s = spritePlaneta(id, raio), cx = px + 8 + dx, cy = py + 6 + dy;
+      var id = v(o, 'id', 'terra'), raio = RAIOS[id] || 4;
+      var s = spritePlaneta(id, raio), cx = px + 8, cy = py + 6;
       ctx.drawImage(s, cx - s.width / 2, cy - s.height / 2);
       if (id === 'terra') {
-        // a Lua dando a volta na Terra
-        var al = (t / 1600) * Math.PI * 2 + 1;
-        ret(ctx, Math.round(cx + Math.cos(al) * 7), Math.round(cy + Math.sin(al) * 3), 1, 1, '#e8e4d8');
+        // a Lua dando a volta na Terra (uma volta a cada 20 s)
+        var al = (t / 20000) * Math.PI * 2 + 1;
+        ret(ctx, Math.round(cx + Math.cos(al) * 8), Math.round(cy + Math.sin(al) * 3), 1, 1, '#e8e4d8');
       } else if (id === 'jupiter') {
-        for (var i = 0; i < 2; i++) { var aj = (t / (1300 + i * 900)) * Math.PI * 2 + i * 2; ret(ctx, Math.round(cx + Math.cos(aj) * (10 + i)), Math.round(cy + Math.sin(aj) * 2), 1, 1, '#f4e4c8'); }
+        for (var i = 0; i < 2; i++) { var aj = (t / (26000 + i * 8000)) * Math.PI * 2 + i * 2; ret(ctx, Math.round(cx + Math.cos(aj) * (11 + i)), Math.round(cy + Math.sin(aj) * 2), 1, 1, '#f4e4c8'); }
       }
     } });
   // foguete na plataforma
@@ -562,9 +560,19 @@
       // caixa de vidro
       ret(ctx, px + 3, py - 11, 26, 13, K); ret(ctx, px + 4, py - 10, 24, 11, '#9fb8e0');
       ret(ctx, px + 4, py - 10, 24, 2, '#c8dcf5');
-      // a pedra
-      elipse(ctx, cx, py - 3, 7, 3, K); elipse(ctx, cx, py - 3, 6, 2, '#a8a6b8'); ret(ctx, cx - 4, py - 5, 5, 1, '#c8c6d4');
-      ret(ctx, cx - 2, py - 3, 2, 1, '#7a7890'); ret(ctx, cx + 3, py - 2, 1, 1, '#7a7890'); ret(ctx, cx + 1, py - 4, 1, 1, '#7a7890');
+      // suporte: almofadinha roxa
+      ret(ctx, cx - 5, py - 1, 11, 3, K); ret(ctx, cx - 4, py - 1, 9, 1, '#7c5cff'); ret(ctx, cx - 4, py, 9, 1, '#5a3fc0');
+      // a pedra: bloco cinza irregular, com crateras e brilho
+      var PEDRA = ['..KKKK...', '.KbbbbKK.', 'KbllbbbdK', 'KblcbbcdK', 'KbbbbbbdK', 'KbcbbbddK', '.KbbdddK.', '..KKKKK..'];
+      var CORES_PEDRA = { K: K, b: '#a8a6b8', l: '#d4d2e0', d: '#7e7c94', c: '#5e5c74' };
+      for (var j = 0; j < PEDRA.length; j++) for (var i = 0; i < PEDRA[j].length; i++) {
+        var ch = PEDRA[j].charAt(i);
+        if (ch !== '.') ret(ctx, cx - 4 + i, py - 9 + j, 1, 1, CORES_PEDRA[ch]);
+      }
+      // borda clara das crateras (luz vindo de cima, à esquerda) e o brilho
+      ret(ctx, cx - 1, py - 7, 1, 1, '#d4d2e0'); ret(ctx, cx + 2, py - 7, 1, 1, '#d4d2e0'); ret(ctx, cx - 2, py - 5, 1, 1, '#d4d2e0');
+      ret(ctx, cx - 2, py - 8, 1, 1, C.branco);
+      // reflexo no vidro
       ret(ctx, px + 6, py - 9, 1, 5, C.branco); ret(ctx, px + 8, py - 9, 1, 3, C.branco);
     } });
   // meteorito no pedestal
@@ -577,6 +585,38 @@
       elipse(ctx, cx, py - 7, 5, 4, K); elipse(ctx, cx, py - 7, 4, 3, '#4a3c3c');
       ret(ctx, cx - 2, py - 9, 2, 1, '#8a7c78'); ret(ctx, cx + 1, py - 6, 2, 1, '#2a2020'); ret(ctx, cx - 3, py - 6, 1, 1, '#2a2020');
       ret(ctx, cx + 2, py - 9, 1, 1, '#d8d4e8'); ret(ctx, cx - 1, py - 5, 1, 1, '#c9c4d6');
+    } });
+  // luminária de pé da noite: haste de latão com uma lua cheia acesa em cima.
+  // A luz é só de pixels opacos em pontilhado em volta da lua (nada de semitransparente nem de poça
+  // no chão: no piso escuro isso vira mancha cinza).
+  I.objeto('observatorio-luminaria', { w: 1, h: 1, topo: 20, solido: true, alto: true,
+    desenhar: function (ctx, px, py) {
+      var cx = px + 8, cy = py - 12;
+      // pé
+      ret(ctx, cx - 4, py + 11, 9, 4, K); ret(ctx, cx - 3, py + 12, 7, 2, C.ouro2); ret(ctx, cx - 3, py + 12, 7, 1, C.ouro);
+      // haste com um anel no meio
+      ret(ctx, cx - 1, py - 6, 3, 18, K); ret(ctx, cx, py - 6, 1, 17, C.ouro);
+      ret(ctx, cx - 2, py + 3, 5, 2, K); ret(ctx, cx - 1, py + 3, 3, 1, C.ouro3);
+      // colarinho que segura a lua
+      ret(ctx, cx - 3, py - 7, 7, 3, K); ret(ctx, cx - 2, py - 6, 5, 1, C.ouro);
+      // a lua acesa (creme, sombra dourada embaixo à direita, crateras e brilho)
+      circulo(ctx, cx, cy, 6, K);
+      circulo(ctx, cx, cy, 5, '#ffe89a');
+      circulo(ctx, cx - 1, cy - 1, 4, '#fff6c8');
+      ret(ctx, cx + 3, cy + 1, 1, 3, '#f2c24e'); ret(ctx, cx + 1, cy + 4, 3, 1, '#f2c24e'); ret(ctx, cx + 2, cy + 3, 1, 1, '#f2c24e');
+      ret(ctx, cx + 1, cy - 2, 2, 2, '#f4d77a'); ret(ctx, cx - 3, cy + 1, 2, 1, '#f4d77a'); ret(ctx, cx, cy + 2, 1, 1, '#f4d77a');
+      ret(ctx, cx - 3, cy - 3, 1, 1, C.branco); ret(ctx, cx - 2, cy - 4, 1, 1, C.branco);
+    },
+    // brilho em volta da lua: anel pontilhado que respira devagar (só com animações)
+    anim: function (ctx, px, py, t, o) {
+      t = tempo(t);
+      var cx = px + 8, cy = py - 12, f = t ? Math.floor(t / 900) % 2 : 0;
+      for (var a = 0; a < 28; a++) {
+        if ((a + f) % 2) continue;
+        var ang = a / 28 * Math.PI * 2;
+        ret(ctx, Math.round(cx + Math.cos(ang) * 8), Math.round(cy + Math.sin(ang) * 8), 1, 1, a % 4 === f * 2 ? '#ffe680' : '#ffb347');
+      }
+      ret(ctx, cx - 2, cy - 2, 1, 1, f ? C.branco : '#fff6c8');
     } });
   // cordão de isolamento (postes prateados, corda azul)
   I.objeto('observatorio-cordao', { w: 2, h: 1, topo: 3, solido: true,
@@ -607,8 +647,8 @@
   var RESERVA_CURIOSIDADE = 'O céu tem muitos segredos!';
   var RESERVA_PIADA = 'Meus parafusos estão felizes!';
   var CONTINUAR = { texto: 'Continuar →', valor: 'mais', principal: true };
-  var FIM_CURIOSIDADE = [{ texto: 'Outra curiosidade! ✨', valor: 'outra', principal: true }, { texto: 'Tchau 👋', valor: 'tchau' }];
-  var FIM_PIADA = [{ texto: 'Mais uma! 🤖', valor: 'outra', principal: true }, { texto: 'Tchau 👋', valor: 'tchau' }];
+  var FIM_CURIOSIDADE = [{ texto: 'Outra curiosidade! ✨', valor: 'outra', principal: true }, { texto: 'Tchau! 💛', valor: 'tchau' }];
+  var FIM_PIADA = [{ texto: 'Mais uma! 🤖', valor: 'outra', principal: true }, { texto: 'Tchau! 💛', valor: 'tchau' }];
   // temas das cenas do telescópio que não têm o mesmo nome de um tema de curiosidade
   var TEMA_DA_CENA = {
     cruzeiro: 'constelacoes', 'cruzeiro-do-sul': 'constelacoes', 'tres-marias': 'constelacoes', orion: 'constelacoes',
@@ -678,10 +718,11 @@
     var c = document.createElement('canvas'), cx;
     if (o.tipo === 'observatorio-planeta' || o.tipo === 'observatorio-sol') {
       var id = o.tipo === 'observatorio-sol' ? 'sol' : v(o, 'id', 'terra');
-      var raio = id === 'sol' ? 12 : id === 'saturno' ? 7 : id === 'plutao' ? 6 : 9;
-      c.width = 44; c.height = 30;
+      // 24×24 como os retratos dos NPCs: o balão amplia 3× (inteiro, nítido); raios que cabem com anel e raios
+      var raio = id === 'sol' ? 7 : id === 'saturno' ? 4 : id === 'jupiter' ? 9 : id === 'plutao' ? 5 : 8;
+      c.width = 24; c.height = 24;
       cx = c.getContext('2d');
-      desenharPlaneta(cx, id, 22, 15, raio);
+      desenharPlaneta(cx, id, 12, 12, raio);
     } else {
       var lib = I.OBJETOS[o.tipo] || {};
       var w = (o.w || lib.w || 1) * T, h = (o.h || lib.h || 1) * T, topo = o.topo !== undefined ? o.topo : (lib.topo || 0);
@@ -711,7 +752,11 @@
     if (o) {
       var retrato = null;
       try { retrato = retratoDe(o); } catch (e) { retrato = null; }
-      return { nome: o.nome || 'Observatório', retrato: retrato, voz: 'npc-vega' };
+      // no balão, o nome curto do Plutão ("Plutão, o planeta-anão" quebrava em 3 linhas no desktop;
+      // a curiosidade já conta que ele é planeta-anão)
+      var nome = o.nome || 'Observatório';
+      if (v(o, 'id', '') === 'plutao') nome = (falas().nomesTemas && falas().nomesTemas.plutao) || 'Plutão';
+      return { nome: nome, retrato: retrato, voz: 'npc-vega' };
     }
     return quemNpc(ctx, 'vega', 'npc-vega');
   }
@@ -833,7 +878,8 @@
         desenharCena(tela, cenaAtual, performance.now());
       }, 200);
     }
-    setTimeout(function () { try { denovo.focus(); } catch (e) {} }, 30);
+    // preventScroll: no celular o foco não pode rolar o painel (o topo da cena ficava sob o cabeçalho)
+    setTimeout(function () { try { denovo.focus({ preventScroll: true }); } catch (e) {} }, 30);
     // o NPC/objeto espera o painel fechar
     return new Promise(function (resolver) {
       var espera = setInterval(function () {
@@ -896,12 +942,13 @@
   var objetos = [].concat(
     /* ---------- CÚPULA DO TELESCÓPIO (entrada) ---------- */
     sala(CUP.x, CUP.y, [
+      // parede: quadros e cartas nas pontas; no meio (atrás da placa do cômodo) só enfeites baixos
       { tipo: 'observatorio-janela', x: 0, y: 0 }, { tipo: 'observatorio-carta', x: 1, y: 0, var: { desenho: 'cruzeiro' } },
-      { tipo: 'arandela', x: 2, y: 0 }, { tipo: 'observatorio-quadro', x: 3, y: 0, var: { cena: 'lua' } },
-      { tipo: 'arandela', x: 4, y: 0 }, { tipo: 'observatorio-quadro', x: 5, y: 0, var: { cena: 'foguete' } },
-      { tipo: 'observatorio-carta', x: 6, y: 0, var: { desenho: 'marias' } }, { tipo: 'relogio-parede', x: 7, y: 0, var: { cor: '#5a6ad0' } },
-      { tipo: 'observatorio-fenda', x: 8, y: 0 },
-      { tipo: 'observatorio-janela', x: 12, y: 0 },
+      { tipo: 'observatorio-quadro', x: 2, y: 0, var: { cena: 'lua' } },
+      { tipo: 'arandela', x: 4, y: 0 },
+      { tipo: 'prateleira-parede', x: 5, y: 0, w: 3, var: { itens: ['livro', 'globo', 'estrela'] } },
+      { tipo: 'arandela', x: 8, y: 0 },
+      { tipo: 'observatorio-fenda', x: 9, y: 0 },
       // o telescópio embaixo da fenda (à direita: a placa do cômodo fica no meio da parede)
       cur('telescopio', 'Telescópio', 'telescopio', { tipo: 'observatorio-telescopio', x: 9, y: 2 }),
       { tipo: 'escrivaninha', x: 0, y: 2, var: { cor: '#5a4a8a', abajur: '#ffd34d' } }, { tipo: 'papeis', x: 0, y: 3 },
@@ -915,10 +962,11 @@
       { tipo: 'tapete', x: 0, y: 6, w: 3, h: 1, var: { cor: '#3a3f8a', borda: '#ffd34d' } },
       { tipo: 'almofada', x: 4, y: 6, var: { cor: '#7c5cff' } },
       { tipo: 'poltrona', x: 11, y: 5, var: { cor: '#5a6ad0' } }, { tipo: 'mesa-centro', x: 11, y: 6 },
-      { tipo: 'luminaria-pe', x: 12, y: 4 }, { tipo: 'cesto', x: 12, y: 5 }, { tipo: 'pilha-livros', x: 9, y: 7 },
+      // luminárias em tile próprio, nunca em cima de vaso ou cesto
+      { tipo: 'observatorio-luminaria', x: 12, y: 5 }, { tipo: 'cesto', x: 12, y: 7 }, { tipo: 'pilha-livros', x: 9, y: 7 },
       { tipo: 'globo', x: 4, y: 4 },
       { tipo: 'sofa', x: 0, y: 12, var: { cor: '#5a6ad0', almofada: '#ffd34d' } }, { tipo: 'planta-alta', x: 0, y: 10 },
-      { tipo: 'luminaria-pe', x: 4, y: 11 }, { tipo: 'cesto', x: 2, y: 12 },
+      { tipo: 'observatorio-luminaria', x: 5, y: 12 }, { tipo: 'cesto', x: 2, y: 12 },
       { tipo: 'tapete', x: 1, y: 10, w: 3, h: 1, var: { cor: '#2d3580', borda: '#b58cff' } },
       { tipo: 'observatorio-luneta', x: 12, y: 10 }, { tipo: 'poltrona', x: 10, y: 11, var: { cor: '#7c5cff' } },
       { tipo: 'caixote', x: 12, y: 12, var: { item: 'estrela' } }, { tipo: 'vaso-grande', x: 8, y: 12, var: { cor: '#5a6ad0' } },
@@ -927,12 +975,12 @@
     ]),
     /* ---------- GALERIA DO ESPAÇO ---------- */
     sala(GAL.x, GAL.y, [
-      { tipo: 'observatorio-janela', x: 0, y: 0 }, { tipo: 'observatorio-quadro', x: 1, y: 0, var: { cena: 'galaxia' } },
-      { tipo: 'arandela', x: 2, y: 0 },
-      cur('mapa-constelacoes', 'Mapa das constelações', 'constelacoes', { tipo: 'observatorio-mapa-constelacoes', x: 3, y: 0 }),
-      { tipo: 'arandela', x: 6, y: 0 }, { tipo: 'observatorio-quadro', x: 7, y: 0, var: { cena: 'astronauta' } },
-      { tipo: 'observatorio-carta', x: 8, y: 0, var: { desenho: 'ursa' } }, { tipo: 'observatorio-quadro', x: 9, y: 0, var: { cena: 'cometa' } },
-      { tipo: 'prateleira-parede', x: 10, y: 0, var: { itens: ['globo', 'estrela', 'livro', 'gema'] } },
+      // parede: o mapa e os quadros nas pontas; no meio (atrás da placa do cômodo) só enfeites baixos
+      cur('mapa-constelacoes', 'Mapa das constelações', 'constelacoes', { tipo: 'observatorio-mapa-constelacoes', x: 0, y: 0 }),
+      { tipo: 'arandela', x: 3, y: 0 },
+      { tipo: 'prateleira-parede', x: 5, y: 0, w: 3, var: { itens: ['globo', 'estrela', 'livro', 'gema'] } },
+      { tipo: 'arandela', x: 9, y: 0 },
+      { tipo: 'observatorio-quadro', x: 10, y: 0, var: { cena: 'astronauta' } }, { tipo: 'observatorio-carta', x: 11, y: 0, var: { desenho: 'ursa' } },
       { tipo: 'observatorio-janela', x: 12, y: 0 },
       { tipo: 'vaso-planta', x: 0, y: 2 }, { tipo: 'pilha-livros', x: 1, y: 2 },
       { tipo: 'observatorio-placa', x: 6, y: 2 }, { tipo: 'estante', x: 7, y: 2, var: { cor: '#5a4a8a' } },
@@ -952,7 +1000,7 @@
       { tipo: 'observatorio-placa', x: 8, y: 7 },
       { tipo: 'banco', x: 5, y: 11, var: { cor: '#5a6ad0' } }, { tipo: 'pedestal', x: 10, y: 8, var: { item: 'globo' } },
       { tipo: 'tapete', x: 9, y: 10, w: 3, h: 1, var: { cor: '#3a3f8a', borda: '#7fe0ff' } },
-      { tipo: 'luminaria-pe', x: 12, y: 11 }, { tipo: 'vaso-grande', x: 12, y: 12, var: { cor: '#5a6ad0' } },
+      { tipo: 'observatorio-luminaria', x: 11, y: 12 }, { tipo: 'vaso-grande', x: 12, y: 12, var: { cor: '#5a6ad0' } },
       { tipo: 'caixote', x: 0, y: 12, var: { item: 'estrela' } }, { tipo: 'cesto', x: 1, y: 12 },
       { tipo: 'almofada', x: 3, y: 11, var: { cor: '#b58cff' } }, { tipo: 'globo', x: 0, y: 6 },
       { tipo: 'vaso-planta', x: 8, y: 12 }, { tipo: 'pedestal', x: 4, y: 2, var: { item: 'gema' } },
@@ -962,15 +1010,17 @@
     sala(PLA.x, PLA.y, [
       { tipo: 'observatorio-janela', x: 0, y: 0 }, { tipo: 'observatorio-ceu', x: 1, y: 0 },
       { tipo: 'observatorio-quadro', x: 3, y: 0, var: { cena: 'cometa' } }, { tipo: 'observatorio-ceu', x: 4, y: 0 },
-      { tipo: 'observatorio-carta', x: 6, y: 0, var: { desenho: 'cruzeiro' } }, { tipo: 'observatorio-ceu', x: 7, y: 0 },
-      { tipo: 'observatorio-quadro', x: 9, y: 0, var: { cena: 'galaxia' } }, { tipo: 'observatorio-ceu', x: 10, y: 0 },
-      { tipo: 'relogio-parede', x: 12, y: 0, var: { cor: '#5a6ad0' } }, { tipo: 'observatorio-ceu', x: 13, y: 0 },
+      // no meio (atrás da placa do cômodo) só duas arandelas baixas, dos lados do projetor
+      { tipo: 'arandela', x: 6, y: 0 }, { tipo: 'arandela', x: 8, y: 0 },
+      { tipo: 'observatorio-ceu', x: 9, y: 0 }, { tipo: 'observatorio-carta', x: 11, y: 0, var: { desenho: 'cruzeiro' } },
+      { tipo: 'observatorio-quadro', x: 12, y: 0, var: { cena: 'galaxia' } }, { tipo: 'relogio-parede', x: 13, y: 0, var: { cor: '#5a6ad0' } },
+      { tipo: 'observatorio-janela', x: 14, y: 0 },
       cur('sol', 'Sol', 'sol', { tipo: 'observatorio-sol', x: SOL_LOCAL.x, y: SOL_LOCAL.y }),
       // plateia em volta (encostada nas paredes)
       { tipo: 'vaso-planta', x: 0, y: 2 }, { tipo: 'banco', x: 1, y: 2, var: { cor: '#5a6ad0' } },
       { tipo: 'observatorio-projetor', x: 7, y: 2 }, { tipo: 'banco', x: 9, y: 2, var: { cor: '#5a6ad0' } },
       { tipo: 'estante', x: 12, y: 2, var: { cor: '#5a4a8a' } }, { tipo: 'planta-alta', x: 14, y: 2 },
-      { tipo: 'poltrona', x: 14, y: 4, var: { cor: '#7c5cff' } }, { tipo: 'luminaria-pe', x: 14, y: 6 },
+      { tipo: 'poltrona', x: 14, y: 4, var: { cor: '#7c5cff' } }, { tipo: 'observatorio-luminaria', x: 14, y: 6 },
       { tipo: 'poltrona', x: 0, y: 4, var: { cor: '#7c5cff' } }, { tipo: 'cesto', x: 0, y: 6 },
       { tipo: 'globo', x: 0, y: 11 }, { tipo: 'banco', x: 2, y: 12, var: { cor: '#5a6ad0' } },
       { tipo: 'almofada', x: 5, y: 12, var: { cor: '#b58cff' } }, { tipo: 'banco', x: 6, y: 12, var: { cor: '#5a6ad0' } },
