@@ -689,6 +689,7 @@
     },
     tela: {
       oi: ['Oi! Que bom te ver por aqui! 😄'],
+      depois: ['Até logo! Volte sempre! 💛'],
       nova: {
         estabulo: 'Quer ver seus unicórnios? 🦄', loja: 'Quer ver os enfeites da loja? ⭐', bau: 'Quer ver o seu tesouro? 💰',
         plano: 'Quer ler o Plano da Prova? 📜', ovos: 'Vamos chocar os ovinhos? 🥚', livro: 'Quer ler o livro? 📖',
@@ -701,16 +702,28 @@
   var CALMA = 'Ou de primeira, com calma! 🌙';
   var RARO_JA = 'O raro desta sala já nasceu! 💙';
   var VALE = {
-    lendario: 'Valendo acessório lendário! 🌈',
-    raro: 'Valendo acessório raro! 💙',
-    comum: 'Valendo acessório comum! 🤍',
+    lendario: 'Agora vale um prêmio lendário! 🌈',
+    raro: 'Agora vale um prêmio raro! 💙',
+    comum: 'Agora vale um prêmio comum! 🤍',
   };
   // épicos do treino: ouro (ou 3 treinos) e nota dez (ou 5 treinos)
-  var OU_EPICO = { ouro: 'Ou tire ouro, com calma! 🥇', perfeito: 'Ou acerte as 10, com calma!' };
-  function faltamSalas(n) { return n === 1 ? 'Falta só 1 sala! 💪' : 'Faltam ' + n + ' salas! 💪'; }
-  function dicaRaro(n) { return n === 1 ? 'Mais 1 vez e o raro nasce! 💙' : 'Mais ' + n + ' vezes e o raro nasce! 💙'; }
-  function dicaEpico(n) { return n === 1 ? 'Falta 1 treino para o épico!' : 'Faltam ' + n + ' treinos para o épico!'; }
-  function resumoFeitas(n, total) { return n === total ? 'Você fez as ' + total + ' salas! 🎉' : 'Você fez ' + n + ' de ' + total + ' salas.'; }
+  var OU_EPICO = { ouro: 'Ou tire ouro, com calma! 🥇', perfeito: 'Ou acerte as dez, com calma!' };
+  // números por extenso (a voz lê "2 salas" como "dois salas"); acima de 20, algarismos
+  var EXTENSO = ['zero', 'um', 'dois', 'três', 'quatro', 'cinco', 'seis', 'sete', 'oito', 'nove', 'dez', 'onze', 'doze',
+    'treze', 'catorze', 'quinze', 'dezesseis', 'dezessete', 'dezoito', 'dezenove', 'vinte'];
+  function extenso(n, fem) {
+    if (n < 0 || n > 20 || n !== Math.floor(n)) return String(n);
+    if (fem && n === 1) return 'uma';
+    if (fem && n === 2) return 'duas';
+    return EXTENSO[n];
+  }
+  N.extenso = extenso;
+  function faltamSalas(n) { return n === 1 ? 'Falta só uma sala! 💪' : 'Faltam ' + extenso(n, true) + ' salas! 💪'; }
+  function dicaRaro(n) { return n === 1 ? 'Mais uma vez e o raro nasce! 💙' : 'Mais ' + extenso(n, true) + ' vezes e o raro nasce! 💙'; }
+  function dicaEpico(n) { return n === 1 ? 'Falta um treino para o épico!' : 'Faltam ' + extenso(n) + ' treinos para o épico!'; }
+  function resumoFeitas(n, total) {
+    return n === total ? 'Você fez as ' + extenso(total, true) + ' salas! 🎉' : 'Você fez ' + extenso(n, true) + ' de ' + extenso(total, true) + ' salas.';
+  }
   function resumoDinheiro(v) { return 'Já ganhou ' + reais(v) + '! 💰'; }
   function resumoProxima(m, s, primeira) {
     return (primeira ? 'A primeira é a Sala ' : 'Agora vamos para a Sala ') + (m.salas.indexOf(s) + 1) + '! ' + (s.emoji || '');
@@ -737,7 +750,7 @@
   var LIMITE = 30;
   // divide um texto em frases (o emoji fica com a frase dele); frase longa demais
   // ainda é cortada nos dois-pontos / ponto e vírgula. Cada frase é um segmento gravado.
-  var RE_FRASE = /([.!?…]+[»"”)]*(?:\s*(?:\p{Extended_Pictographic}|\uFE0F|\u200D)+)*)\s+/gu;
+  var RE_FRASE = /([.!?…]+[»"”)]*(?:\s*[\u{1F000}-\u{1FAFF}\u{2190}-\u{21FF}\u{2300}-\u{23FF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}\u{20E3}]+)*)\s+/gu;
   function frases(t) {
     t = String(t || '').trim();
     var out = [], ult = 0, m;
@@ -747,7 +760,7 @@
     var res = [];
     out.forEach(function (f) {
       if (tamanho(f) <= LIMITE || !/[:;]\s/.test(f)) { res.push(f); return; }
-      f.split(/(?<=[:;])\s+/).forEach(function (p) { if (p.trim()) res.push(p.trim()); });
+      f.replace(/([:;])\s+/g, '$1\n').split('\n').forEach(function (p) { if (p.trim()) res.push(p.trim()); });
     });
     return res.filter(function (f) { return /[\p{L}\p{N}]/u.test(f); });
   }
@@ -773,7 +786,9 @@
   function convite(npc) {
     var a = npc.acao || {}, p = P(), est = p.estado(), pers = Reino.config.persistencia;
     if (a.tipo === 'sala') {
-      var m = materiaDe(a), s = salaDe(a), reg = est.salas[s.id] || {};
+      var m = materiaDe(a), s = salaDe(a);
+      if (!s) return { segs: [uma(npc, 'nova')], botoes: [{ texto: 'Ok', valor: 'ok', principal: true }] };
+      var reg = est.salas[s.id] || {};
       if (!reg.feita) return { segs: [uma(npc, 'nova')], botoes: VAMOS, extra: N.chips(npc) };
       // a dica do caminho da persistência vem antes; a pergunta fica junto dos botões
       var segs = [], raro = raroDaSala(m, s);
@@ -787,6 +802,7 @@
     }
     if (a.tipo === 'treino') {
       var mt = materiaDe(a);
+      if (!mt) return { segs: [uma(npc, 'nova')], botoes: [{ texto: 'Ok', valor: 'ok', principal: true }] };
       if (!p.materiaCompleta(mt)) {
         return { segs: [uma(npc, 'bloqueada'), faltamSalas(mt.salas.length - p.salasFeitas(mt))], botoes: [{ texto: 'Ok', valor: 'ok', principal: true }] };
       }
@@ -806,6 +822,7 @@
       return { segs: sg, botoes: VAMOS };
     }
     if (a.tipo === 'prova') {
+      if (!Reino.prova(a.prova)) return { segs: [uma(npc, 'nova')], botoes: [{ texto: 'Ok', valor: 'ok', principal: true }] };
       var v = p.valendoProva(Reino.prova(a.prova));
       if (v) return { segs: [VALE[v], uma(npc, 'nova')], botoes: VAMOS };
       return { segs: [uma(npc, 'feita')], botoes: VAMOS };
@@ -817,6 +834,7 @@
       bts.push({ texto: 'Agora não', valor: 'nao' });
       if (!mg) return { segs: [uma(npc, 'nova')], botoes: bts };
       var feitas = p.salasFeitas(mg), total = mg.salas.length;
+      if (!total) return { segs: [uma(npc, 'nova')], botoes: bts };
       var prox = mg.salas.find(function (s2) { return !(est.salas[s2.id] && est.salas[s2.id].feita); });
       var r;
       if (feitas === 0) r = [RESUMO_ZERO, resumoProxima(mg, prox, true)];
@@ -905,6 +923,53 @@
     return function (premios) { U().emit('mapaMudou'); resolver(premios || null); };
   }
 
+  // texto já gravado inteiro (frase do unicórnio): as páginas aparecem na tela uma de cada vez,
+  // mas a voz fala o texto INTEIRO na 1ª página (é o que está gravado); as outras ficam em silêncio.
+  var OK = [{ texto: 'Ok! 👍', valor: 'ok', principal: true }];
+  // só para a TELA: frase longa sem ponto quebra nas vírgulas ou entre palavras (a voz não muda)
+  function quebrarNaTela(t) {
+    if (tamanho(t) <= LIMITE) return [t];
+    var partes = t.split(/(,\s+)/).reduce(function (acc, p, i) { if (i % 2) acc[acc.length - 1] += p.trim(); else acc.push(p); return acc; }, []);
+    if (partes.length === 1) {
+      // sem vírgula: corta entre palavras perto do meio (as duas metades ficam parecidas)
+      var pal = t.split(/\s+/), melhor = 1, pior = Infinity;
+      for (var k = 1; k < pal.length; k++) {
+        var m = Math.max(tamanho(pal.slice(0, k).join(' ')), tamanho(pal.slice(k).join(' ')));
+        if (m < pior) { pior = m; melhor = k; }
+      }
+      return [].concat(quebrarNaTela(pal.slice(0, melhor).join(' ')), quebrarNaTela(pal.slice(melhor).join(' ')));
+    }
+    var out = [], atual = '';
+    partes.forEach(function (p) {
+      var junto = atual ? atual + ' ' + p : p;
+      if (atual && tamanho(junto) > LIMITE) { out.push(atual); atual = p; } else atual = junto;
+    });
+    if (atual) out.push(atual);
+    // se ainda sobrou pedaço longo (vírgulas), quebra esse entre palavras
+    return [].concat.apply([], out.map(function (o) { return tamanho(o) > LIMITE && /,/.test(t) && o !== t ? quebrarNaTela(o.replace(/,\s*$/, ',')) : [o]; }));
+  }
+  function falarPaginado(texto, quem) {
+    var pags = [].concat.apply([], paginas([texto]).map(function (pg) { return quebrarNaTela(pg.join(' ')).map(function (x) { return [x]; }); })), i = 0;
+    if (!pags.length) pags = [[texto]];
+    function prox(v) {
+      if (v === null || v === undefined) return null;
+      var pg = pags[i], ultima = i === pags.length - 1, op = { quem: quem, modal: true, voz: quem.voz,
+        botoes: ultima ? OK : [{ texto: 'Continuar →', valor: 'ok', principal: true }] };
+      if (i === 0) op.fala = [texto]; else op.falar = false;
+      i++;
+      var r = Reino.Claude.falar(pg.join(' '), op);
+      return ultima ? r : r.then(prox);
+    }
+    return prox('ok');
+  }
+
+  N.BAIA_VAZIA = 'Aqui vai morar um amigo novo! 🦄';
+  // unicórnios já chocados, na ordem do álbum do Estábulo (as baias usam o mesmo índice)
+  N.unicorniosChocados = function () {
+    var est = P().estado();
+    return Reino.Unicornios.todos(est.corInicial).filter(function (d) { return est.unis[d.id] && est.unis[d.id].chocado; });
+  };
+
   N.executar = function (acao, ctx) {
     acao = acao || {};
     var UI = Reino.UI, p = P();
@@ -941,6 +1006,15 @@
         case 'bau': return esperarTela(UI.telaBau).then(fim);
       }
       return Promise.resolve(null);
+    }
+    if (acao.tipo === 'unicornio') {
+      // o unicórnio da baia diz a frase que já está gravada (o nome que ela deu só aparece na tela)
+      var du = N.unicorniosChocados()[acao.indice || 0];
+      if (!du) return falarPaginado(N.BAIA_VAZIA, { nome: 'Baia', voz: 'narradora' });
+      var uu = p.estado().unis[du.id];
+      var spr = PA.unicornio(du, Reino.Unicornios.estagio(uu ? uu.xp : 0), 0).canvas;
+      Reino.Som.tocar('selecionar');
+      return falarPaginado(du.frase, { nome: p.nomeUni(du.id), retrato: spr, voz: 'unicornio' });
     }
     if (acao.tipo === 'guia') {
       var mg = materiaDoLugar(acao.lugar);
@@ -1000,6 +1074,11 @@
       if (v !== 'vamos') return null;
       var atividade = a.tipo === 'sala' || a.tipo === 'treino' || a.tipo === 'prova';
       return N.executar(a, ctx).then(function (premios) {
+        if (a.tipo === 'tela') {
+          // a tela aberta pelo NPC fechou: ele se despede (balão simples, fecha sozinho)
+          paginas([uma(npc, 'depois')]).forEach(function (pg) { Reino.Claude.falar(pg.join(' '), { quem: quem, fala: pg, voz: npc.voz, tempo: 5000 }); });
+          return premios;
+        }
         if (!atividade) return premios;
         if (premios) {
           paginas([uma(npc, 'depois')]).forEach(function (pg) { Reino.Claude.falar(pg.join(' '), { quem: quem, fala: pg, voz: npc.voz }); });

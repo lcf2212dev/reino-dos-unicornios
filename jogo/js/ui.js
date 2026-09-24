@@ -347,6 +347,7 @@
     { id: 'estrelinhas', nome: 'Rastro de estrelinhas', preco: 30, slot: 'rastro', icone: '✨' },
     { id: 'asasFada', nome: 'Asinhas de fada', preco: 45, slot: 'asas', icone: '🧚' },
   ];
+  UI.ITENS_LOJA = ITENS;   // a Loja das Fadas por dentro mostra estes mesmos enfeites
   // acessórios ganhos nas provas da Escola usam os mesmos encaixes dos enfeites da loja
   function acessorioComoItem(a) { return { id: a.id, nome: a.nome, slot: PA.ENFEITES_MONTARIA[a.id].ancora, raridade: a.raridade, premio: true }; }
   function itemPorId(id) {

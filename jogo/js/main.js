@@ -78,6 +78,14 @@
   }
 
   function ordemY(a, b) { return a.y - b.y; }
+  // um erro no desenho de uma cena não derruba o quadro (nem a íris); avisa uma vez por parte
+  var errosVistos = {};
+  function seguro(cena, parte, fn) {
+    try { return fn(); } catch (e) {
+      var k = cena.id + ':' + parte;
+      if (!errosVistos[k]) { errosVistos[k] = true; console.error('Erro ao desenhar ' + k, e); }
+    }
+  }
   function desenhar(t) {
     if (!est() || !ctx) return;
     var t0 = performance.now();
@@ -89,15 +97,17 @@
     bctx.setTransform(1, 0, 0, 1, -ox, -oy);
     bctx.fillStyle = cena.corFundo;
     bctx.fillRect(ox, oy, buffer.width, buffer.height);
-    cena.desenharFundo(bctx, t, animar);
+    seguro(cena, 'fundo', function () { cena.desenharFundo(bctx, t, animar); });
     J.desenharMarcador(bctx, t);
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.imageSmoothingEnabled = false;
     ctx.drawImage(buffer, -Math.round((cam.x - ox) * escala), -Math.round((cam.y - oy) * escala), buffer.width * escala, buffer.height * escala);
-    cena.desenharTela(ctx, pintor, t, animar);
+    seguro(cena, 'tela', function () { cena.desenharTela(ctx, pintor, t, animar); });
     // quem está mais embaixo aparece na frente
-    var itens = J.itensDesenho(pintor, animar).concat(cena.itensDesenho(pintor, t, animar) || []);
-    itens.sort(ordemY).forEach(function (i) { i.desenhar(); });
+    var itens = J.itensDesenho(pintor, animar).concat(seguro(cena, 'itens', function () { return cena.itensDesenho(pintor, t, animar); }) || []);
+    itens.sort(ordemY).forEach(function (i) { seguro(cena, 'item', function () { i.desenhar(); }); });
+    // por cima dos personagens (ex.: placas dos cômodos que descem para desviar do HUD)
+    if (cena.desenharSobre) seguro(cena, 'sobre', function () { cena.desenharSobre(ctx, pintor, t, animar); });
     desenharLuz();
     Cena.desenharIris(ctx, pintor, performance.now());
     Cena.quadros.registrar(performance.now() - t0);
@@ -109,7 +119,10 @@
     ultimo = t;
     if (!jogoAtivo || pausado) return;
     // em transição ou com um diálogo aberto ela não anda nem aciona portas
-    if (Cena.bloqueado()) J.atualizar(dt, { x: 0, y: 0 }, null);
+    if (Cena.bloqueado()) {
+      if (Cena.estado() === Cena.DIALOGO && (J.caminho.length || J.aoChegar)) J.parar();
+      J.atualizar(dt, { x: 0, y: 0 }, null);
+    }
     else {
       var tx = (teclas.dir ? 1 : 0) - (teclas.esq ? 1 : 0);
       var ty = (teclas.baixo ? 1 : 0) - (teclas.cima ? 1 : 0);
@@ -119,6 +132,8 @@
   }
 
   U.on('telas', function (n) {
+    // abriu uma tela (menu, HUD) com o balão modal de um NPC aberto: o balão fecha
+    if (n > 0) Cena.fecharDialogoModal();
     pausado = n > 0;
     if (n === 0) desenhar(performance.now());
   });

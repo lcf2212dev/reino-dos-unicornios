@@ -1315,6 +1315,16 @@
   }
   var FONTE_PIXEL = '"Press Start 2P", "Trebuchet MS", sans-serif';
 
+  // corpo da Mariana em px da tela (em pé ~16×24 acima dos pés; montada ~28×34)
+  function caixaMariana(pintor) {
+    var J = window.Jogador;
+    if (!J || typeof J.x !== 'number') return null;
+    var montada = false;
+    try { montada = !!(J.montado && J.montado()); } catch (e) {}
+    var w = montada ? 28 : 16, h = montada ? 34 : 24;
+    var a = naTela(pintor, J.x - w / 2, J.y - h), b = naTela(pintor, J.x + w / 2, J.y);
+    return { esq: a.x, cima: a.y, dir: b.x, baixo: b.y };
+  }
   // retângulos do HUD em px do canvas (poucos getBoundingClientRect por quadro, como as placas do mapa)
   function retangulosHud(canvas, dpr) {
     if (typeof document === 'undefined' || !canvas || !canvas.getBoundingClientRect) return [];
@@ -1572,6 +1582,18 @@
         if (its.length) return alvoObjeto(its[0]);
         var tx = Math.floor(wx / T), ty = Math.floor(wy / T);
         var gt = gatilhoEm(tx, ty);
+        // o arco da escada que sobe é desenhado na parede, até 2 tiles acima do degrau
+        if (!gt && g.dentro(tx, ty) && g.parede[ty][tx] && !g.porta[ty][tx]) {
+          for (var d = 1; d <= 2 && !gt; d++) {
+            var e = gatilhoEm(tx, ty + d);
+            if (e && e.tipo === 'escada' && (def.escadas[+e.id.split(':').pop()] || {}).sentido !== 'desce') gt = e;
+          }
+        }
+        // toque num tile sólido cujo tile andável mais perto é um gatilho (ex.: o vão da porta abaixo do tapete)
+        if (!gt && cena.solido(tx, ty)) {
+          var mp = cena.maisPerto(tx, ty, ondeEsta());
+          if (mp) gt = gatilhoEm(mp.x, mp.y);
+        }
         return gt ? alvoGatilho(gt) : null;
       },
       // Enter/Espaço: gatilho no tile; senão NPC/objeto vizinho, preferindo o da direção do olhar
@@ -1608,8 +1630,10 @@
         var esc = def.escadas || [];
         for (var k = 0; k < esc.length; k++) setaEscada(bctx, esc[k], t, animar);
       },
-      // placas dos cômodos, em px da tela, com a fonte pixel
-      desenharTela: function (ctx, pintor, t, animar) {
+      // antes dos personagens: nada (as placas vão por cima, em desenharSobre)
+      desenharTela: function () {},
+      // placas dos cômodos, em px da tela, com a fonte pixel, por cima de móveis e personagens
+      desenharSobre: function (ctx, pintor, t, animar) {
         var escala = pintor.escala || 3;
         var fonte = 8 * Math.max(2, Math.round(escala / 2));
         var k = fonte / 16;
@@ -1620,6 +1644,7 @@
         ctx.textBaseline = 'middle';
         ctx.font = fonte + 'px ' + FONTE_PIXEL;
         var hud = retangulosHud(ctx.canvas, pintor.dpr || 1);
+        var mari = caixaMariana(pintor);
         (def.comodos || []).forEach(function (c) {
           if (!c.placa) return;
           var r = c.rect;
@@ -1651,6 +1676,8 @@
             if (livre.x < esq - borda || livre.x + sw > dir + borda) return;
           }
           sx = livre.x; sy = livre.y;
+          // cruzando a Mariana, a placa fica quase transparente (como as placas do mapa)
+          ctx.globalAlpha = mari && sx - borda < mari.dir && sx + sw + borda > mari.esq && sy - borda < mari.baixo && sy + sh + borda > mari.cima ? 0.35 : 1;
           ctx.fillStyle = K;
           ctx.fillRect(sx - borda, sy - borda, sw + borda * 2, sh + borda * 2);
           ctx.fillStyle = '#fff8ee';
@@ -1662,6 +1689,7 @@
           ctx.fillRect(sx + sw - px(7), sy + px(4), px(3), px(3));
           ctx.fillStyle = K;
           linhas.forEach(function (l, i) { ctx.fillText(l, Math.round(sx + sw / 2), sy + topo + lh * i + Math.round(lh / 2)); });
+          ctx.globalAlpha = 1;
         });
         ctx.restore();
         ctx.imageSmoothingEnabled = false;

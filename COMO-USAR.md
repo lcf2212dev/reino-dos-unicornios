@@ -20,6 +20,7 @@
 2. Peça ao Claude para criar a matéria no reino.
 3. O Claude cria um lugar novo no mapa, com salas que somam R$20, os desafios da apostila, o livro-resumo e os unicórnios da matéria.
 4. O Claude grava as vozes das falas novas e republica no mesmo link. O progresso da Mariana é mantido.
+5. A matéria também ganha um prédio por dentro. Se o Claude ainda não desenhou um prédio próprio, entra um interior padrão automático: hall com guia e livro, uma sala com um personagem para cada sala, uma ala no Castelo e baias no Estábulo. O ideal é pedir ao Claude um prédio próprio com personagens, como o Museu e a Torre.
 
 ## Vozes
 - **Claude:** Antonio.
@@ -35,6 +36,15 @@
   ```
   Só as falas novas são gravadas; as antigas ficam em `ferramentas/vozes-cache/`.
 - Para trocar de voz ou velocidade, edite `vozes` em `jogo/js/config.js` e rode os mesmos comandos.
+- **Personagens das construções:** cada um tem uma voz própria, gravada como as outras.
+  - **Museu:** Dona Memória, Seu Antônio, Carteiro Chico, Guia Tainá, Vovó Contadeira e Restauradora Nina.
+  - **Torre:** Seu Ponteiro, «Coach Ben», «Miss Stella», «Doctor Smile», «Miss Moon» e «Mister Joy» (os trechos em inglês de cada um usam a mesma voz, em inglês).
+  - **Castelo:** Princesa Serena, Cavaleira Aurora e «Sir Oliver». **Escola:** Diretora Margarida, Professora Helena e «Teacher Emma».
+  - **Estábulo, Loja e Baú:** Seu Feno, Fada Pétala e Dragãozinho Tostão.
+  - O Carteiro Chico usa a voz do Claude, mais aguda e mais rápida.
+  - As falas são curtas para caber no balão do celular.
+  - Amostras: `amostras-de-voz/` de 13 a 33, ou todas juntas em `VOZES-DOS-PERSONAGENS.mp3`.
+  - Para trocar, edite o perfil `npc-<nome>` em `vozes` no `jogo/js/config.js` e peça ao Claude para regravar.
 
 ## Regras do jogo
 - **Dinheiro:** cada sala paga uma vez. Cada matéria tem 5 salas de R$4, total de R$20.
@@ -56,6 +66,28 @@
   - tem revisão obrigatória antes de entregar;
   - a medalha é dada só pelos acertos.
 - **Medalha da escola:** a medalha de ouro da prova real (R$100) é combinada fora do jogo. O jogo só lembra a Mariana de ir com calma e revisar.
+
+## Construções por dentro
+- **Entrar:** pisar na porta, tocar no prédio ou na placa, apertar Enter perto dele ou escolher no menu Lugares. Um círculo fecha a tela e abre de novo já lá dentro.
+- **Sair:** pisar no tapete vermelho com a seta.
+- O jogo sempre começa no mapa: o lugar dentro do prédio não é salvo.
+- Os atalhos do topo (💰, ⭐, montaria, 🥚) continuam abrindo as telas direto.
+- **O que tem em cada prédio:**
+  - **Museu das Memórias:** hall com a Dona Memória e 5 galerias, com Seu Antônio, Carteiro Chico, Guia Tainá, Vovó Contadeira e Restauradora Nina. Cada galeria tem o quadro do seu unicórnio raro.
+  - **Torre do Relógio:** térreo com o Seu Ponteiro e um andar por capítulo, pelas escadas, com «Coach Ben», «Miss Stella», «Doctor Smile», «Miss Moon» e «Mister Joy». O relógio fica no alto.
+  - **Castelo da Medalha:** Princesa Serena, o Plano da Prova na tapeçaria e a estante das medalhas. Nas alas, a Cavaleira Aurora (História) e «Sir Oliver» (Inglês).
+  - **Escola do Reino:** Diretora Margarida e o mural dos prêmios. Nas salas, a Professora Helena e a «Teacher Emma».
+  - **Estábulo Mágico:** Seu Feno, o ninho dos ovos e as baias com os unicórnios que já nasceram. Tocar num unicórnio faz ele falar.
+  - **Loja das Fadas:** Fada Pétala, vitrines e o espelho mágico.
+  - **Baú do Tesouro:** Dragãozinho Tostão e pilhas de moedas que crescem com o dinheiro dela.
+- **Ícone em cima de cada personagem:**
+  - ❗ sala nova, ✓ sala feita, 💙 o unicórnio raro já nasceu;
+  - 🔒 treino fechado, 🥇🥈🥉 medalha do treino;
+  - 🌈💙🤍 o que a próxima tentativa da prova vale (lendário, raro, comum);
+  - 💬 guia do prédio, 🥚 ovos esperando.
+- **Conversar:** tocar no personagem ou apertar Enter ao lado dele. O balão tem "Vamos!", "Agora não" e 🔊 para ouvir de novo.
+- As salas, treinos e provas são os mesmos de antes, com as mesmas regras e o mesmo dinheiro. A lista antiga continua em "Ver a lista", com o guia de cada prédio.
+- Nada disso mudou o progresso salvo: tudo o que os prédios mostram vem do que ela já fez.
 
 ## Provas bimestrais (Escola do Reino)
 - A Escola do Reino fica ao lado do Estábulo, perto da rua de baixo. A plaquinha mostra "Prova" enquanto houver prêmio para ganhar.
@@ -89,7 +121,7 @@
 - **Para exigir outra nota:** mude `notaSucessoProva` em `jogo/js/config.js`. Hoje é 10, que quer dizer acertar tudo.
 - **Onde ver os acessórios:** ela usa e troca os acessórios na Loja das Fadas, na parte "Prêmios da Escola do Reino".
 - **Área dos pais:** mostra as tentativas, as notas de cada tentativa e o prêmio ganho.
-- **Nova prova:** mande as fotos da folha para o Claude. Ele cria `jogo/js/provas/<matéria>-<bimestre>.js` com três acessórios novos, grava as vozes e republica.
+- **Nova prova:** mande as fotos da folha para o Claude. Ele cria `jogo/js/provas/<matéria>-<bimestre>.js` com três acessórios novos, grava as vozes e republica. A prova nova ganha uma sala de aula na Escola do Reino, com um professor (um padrão, se não houver um próprio).
 
 ## Jogo no computador de casa
 - Endereço na rede de casa: **http://reinodosunicornios.local** (ou pelo IP do PC, ex.: http://192.168.1.247).

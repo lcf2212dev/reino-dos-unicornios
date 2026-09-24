@@ -40,7 +40,7 @@
 <script src="../js/npcs.js"></script>
 <script>
   // arquivos dos prédios (js/interiores/<nome>.js)
-  var INTERIORES = ['museu-falas', 'museu'];
+  var INTERIORES = ['museu-falas', 'museu', 'torre-falas', 'torre', 'escola-falas', 'escola', 'castelo-falas', 'castelo', 'estabulo-falas', 'estabulo', 'loja-falas', 'loja', 'bau-falas', 'bau', 'padrao'];
   INTERIORES.forEach(function (n) { document.write('<script src="../js/interiores/' + n + '.js"><\/script>'); });
 </script>
 <script>
@@ -105,6 +105,7 @@
         } });
       }
       itens.sort(function (a, b) { return a.y - b.y; }).forEach(function (it) { it.desenhar(); });
+      if (cena.desenharSobre) cena.desenharSobre(ctx, pintor, t, t > 0);
       if (comGrade) desenharGrade(ctx, def);
     }).catch(function (e) { erro(def.id + ': ' + (e && e.stack || e)); });
   }

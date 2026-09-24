@@ -259,6 +259,15 @@
   Cena.mapa = mapa;
 
   /* ---------- estado ---------- */
+  function dialogoModal() {
+    var C = Reino.Claude;
+    try { return !!(C && typeof C.dialogoAberto === 'function' && C.dialogoAberto()); } catch (e) { return false; }
+  }
+  // balão modal de NPC aberto e ela vai fazer outra coisa (tela, menu Lugares): fecha o balão
+  function fecharDialogoModal() {
+    if (dialogoModal() && Reino.Claude.limpar) Reino.Claude.limpar();
+  }
+  Cena.fecharDialogoModal = fecharDialogoModal;
   Cena.atual = function () { return ativa || mapa; };
   Cena.emTransicao = function () { return !!trans; };
   // fase da transição em curso ('fechando' | 'fechada' | 'abrindo'), para o debug e os testes
@@ -266,8 +275,7 @@
   Cena.estado = function () {
     if (trans) return Cena.TRANSICAO;
     if (UI() && UI().temTela && UI().temTela()) return Cena.ATIVIDADE;
-    var C = Reino.Claude;
-    if (C && typeof C.dialogoAberto === 'function' && C.dialogoAberto()) return Cena.DIALOGO;
+    if (dialogoModal()) return Cena.DIALOGO;
     return Cena.atual().tipo === 'interior' ? Cena.INTERIOR : Cena.MAPA;
   };
   Cena.bloqueado = function () {
@@ -323,45 +331,69 @@
     var est = P() && P().estado();
     return (est && est.ajustes && est.ajustes.animacoes === false) || !!U.reduzMovimentoSistema;
   }
-  function comLimite(promessa, ms) {
-    return Promise.race([
-      Promise.resolve(promessa).catch(function (e) { console.error(e); }),
-      new Promise(function (r) { setTimeout(r, ms); }),
-    ]);
+  // resolve com 'ok', 'erro' (preparar falhou) ou 'tempo' (passou do limite); nunca rejeita
+  function comLimite(fn, ms) {
+    return new Promise(function (resolver) {
+      var feito = false;
+      function fim(r) { if (!feito) { feito = true; resolver(r); } }
+      setTimeout(function () { fim('tempo'); }, ms);
+      try {
+        Promise.resolve(fn()).then(function () { fim('ok'); }, function (e) { console.error(e); fim('erro'); });
+      } catch (e) { console.error(e); fim('erro'); }
+    });
+  }
+  function redesenhar() {
+    try { if (vista && vista.desenhar) vista.desenhar(); } catch (e) { console.error(e); }
   }
 
-  // destino: { cena, pacote, depois() } — depois() posiciona a Mariana na cena nova
+  // destino: { cena, pacote, depois() } — depois() posiciona a Mariana na cena nova.
+  // Aconteça o que acontecer (erro no preparar ou no desenho), a transição sempre termina
+  // e o jogo continua: se o destino não ficou pronto por erro, ela fica onde estava.
   function transicionar(destino) {
     if (trans) return trans.promessa;
     var tempos = semAnimacao() ? TEMPO_RAPIDO : TEMPO;
     var Jg = J();
     Jg.parar();
     if (vista && vista.soltarTeclas) vista.soltarTeclas();
-    Reino.Som.tocar('porta');
+    try { Reino.Som.tocar('porta'); } catch (e) { console.error(e); }
     var t = { fase: 'fechando', inicio: performance.now(), tempos: tempos, circulo: tempos === TEMPO, destino: destino };
     trans = t;
     t.promessa = new Promise(function (resolver) {
-      setTimeout(function () {
-        t.fase = 'fechada'; t.inicio = performance.now();
-        var pronto = Promise.all([
-          destino.cena && destino.cena.preparar ? destino.cena.preparar() : null,
-          destino.pacote && Reino.Voz && Reino.Voz.carregar ? Reino.Voz.carregar(destino.pacote) : null,
-        ]);
-        Promise.all([comLimite(pronto, tempos.limite), U.esperar(tempos.fechada)]).then(function () {
-          try {
+      var concluida = false;
+      function concluir() {
+        if (concluida) return;
+        concluida = true;
+        trans = null;
+        redesenhar();
+        resolver();
+      }
+      function abrir(resultado) {
+        try {
+          if (resultado === 'erro') console.error('Cena: o destino não ficou pronto; ela continua em', Cena.atual().id);
+          else {
             trocarCena(destino.cena);
             if (destino.depois) destino.depois();
-            Jg.portaIgnorada = null;
-          } catch (e) { console.error(e); }
-          t.fase = 'abrindo'; t.inicio = performance.now();
-          if (vista && vista.desenhar) vista.desenhar();
-          setTimeout(function () {
-            trans = null;
-            if (vista && vista.desenhar) vista.desenhar();
-            resolver();
-          }, tempos.abrir);
-        });
+          }
+          Jg.portaIgnorada = null;
+        } catch (e) { console.error(e); }
+        t.fase = 'abrindo'; t.inicio = performance.now();
+        redesenhar();
+        setTimeout(concluir, tempos.abrir);
+      }
+      setTimeout(function () {
+        t.fase = 'fechada'; t.inicio = performance.now();
+        var pronto = comLimite(function () {
+          return Promise.all([
+            destino.cena && destino.cena.preparar ? destino.cena.preparar() : null,
+            destino.pacote && Reino.Voz && Reino.Voz.carregar ? Reino.Voz.carregar(destino.pacote) : null,
+          ]);
+        }, tempos.limite);
+        Promise.all([pronto, U.esperar(tempos.fechada)])
+          .then(function (r) { abrir(r[0]); })
+          .catch(function (e) { console.error(e); abrir('erro'); });
       }, tempos.fechar);
+      // rede de segurança: nada segura a íris fechada para sempre
+      setTimeout(concluir, tempos.fechar + tempos.limite + tempos.fechada + tempos.abrir + 1000);
     });
     return t.promessa;
   }
@@ -487,6 +519,7 @@
   Cena.irAoAlvo = irAoAlvo;
   Cena.irAoLugar = function (lugar) {
     if (trans) return trans.promessa;
+    fecharDialogoModal();
     var atual = Cena.atual();
     if (atual.tipo === 'interior') {
       if (atual.lugarId === lugar.id) {

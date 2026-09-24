@@ -62,6 +62,13 @@ Reino.config = {
     // interior de teste da Fase 1 (js/interiores/teste.js)
     'npc-teste-guia': { voz: 'de-DE-FlorianMultilingualNeural', velocidade: '+4%', tom: '+8Hz' },
     'npc-teste-sala': { voz: 'de-DE-SeraphinaMultilingualNeural', velocidade: '-4%', tom: '+12Hz' },
+    // interior padrão (js/interiores/padrao.js): guia e monitores de matérias sem interior próprio (1 e 4 masculinos)
+    'npc-padrao-guia': { voz: 'pt-BR-FranciscaNeural', velocidade: '+4%', tom: '-8Hz' },
+    'npc-padrao-1': { voz: 'pt-BR-AntonioNeural', velocidade: '-12%', tom: '-14Hz' },
+    'npc-padrao-2': { voz: 'pt-BR-ThalitaMultilingualNeural', velocidade: '+16%', tom: '-4Hz' },
+    'npc-padrao-3': { voz: 'pt-BR-FranciscaNeural', velocidade: '-16%', tom: '+12Hz' },
+    'npc-padrao-4': { voz: 'pt-BR-AntonioNeural', velocidade: '+6%', tom: '-22Hz' },
+    'npc-padrao-5': { voz: 'pt-BR-FranciscaNeural', velocidade: '+14%', tom: '+20Hz' },
   },
 };
 

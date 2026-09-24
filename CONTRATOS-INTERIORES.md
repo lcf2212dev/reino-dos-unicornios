@@ -80,8 +80,10 @@ pintor = {
 2. buffer ampliado no canvas.
 3. `cena.desenharTela(ctx, pintor, t, animar)` — placas (mapa) e placas dos cômodos.
 4. Itens ordenados por Y: `Jogador.itensDesenho(pintor, animar)` + `cena.itensDesenho(pintor, t, animar)`.
-5. Luz (vinheta), como hoje.
-6. Íris, se houver transição.
+5. `cena.desenharSobre(ctx, pintor, t, animar)` (opcional) — por cima dos itens: placas dos cômodos nos
+   interiores (quase transparentes quando cobrem a Mariana). As placas do mapa continuam no passo 3.
+6. Luz (vinheta), como hoje.
+7. Íris, se houver transição.
 
 ## 2. Interface de cena (Mapa e cada interior)
 
@@ -104,7 +106,8 @@ cena = {
   npcs() → [npc]                   // NPCs da cena (mapa: [])
   preparar() → Promise             // pré-renderiza o estático (só se precisar) — chamado com a íris fechada
   desenharFundo(bctx, t, animar)   // buffer em px do jogo: canvas estático + animações leves
-  desenharTela(ctx, pintor, t, animar)   // em px da tela, antes dos personagens (placas)
+  desenharTela(ctx, pintor, t, animar)   // em px da tela, antes dos personagens (placas do mapa)
+  desenharSobre?(ctx, pintor, t, animar) // em px da tela, depois dos personagens (placas dos cômodos)
   itensDesenho(pintor, t, animar) → [{ y, desenhar() }]   // NPCs, móveis altos, Claude (ordem por Y)
 }
 
@@ -337,6 +340,29 @@ caber em 2 linhas; falas maiores são paginadas pelo NPC (Continuar →). Escrev
 - `Reino.NPCs.ELENCO` (id → { nome, sprite, voz }): parâmetros de sprite e voz de todo o elenco da tabela.
 - O ícone de status do NPC é desenhado em px da tela (via `pintor.ctx`).
 - Câmera dos interiores: pode passar da borda até o fim do HUD de cima e do menu de baixo.
+
+## 7.2 Convenções dos prédios (Fases 2 a 4)
+- Dois arquivos por prédio: `js/interiores/<prédio>-falas.js` (`Reino.FALAS_INTERIORES.<prédio> = { npcs, objetos }`)
+  e `js/interiores/<prédio>.js` (interior, objetos temáticos `Reino.Interiores.objeto('<prédio>-<nome>', …)`,
+  NPCs com sprite e voz de `Reino.NPCs.ELENCO[id]`). O de falas carrega antes. Os dois entram no `index.html`
+  e na lista `INTERIORES` de `ferramentas/interiores.html`.
+- Prédios: museu (materia:historia), torre + torre-1..5 + torre-relogio (materia:ingles), escola, castelo,
+  estabulo, loja, bau.
+- Geradores (dados → cômodos): a Escola monta uma sala de aula por prova (`Reino.provas`), com professor
+  conhecido ou padrão (`prof-<prova>`); o Castelo monta uma ala por matéria (`Reino.materias`), com cavaleiro
+  conhecido ou padrão (`cav-<matéria>`); o Estábulo monta uma baia por unicórnio do baralho.
+- Ações extras de objeto: `{ tipo: 'unicornio', indice }` (baia do Estábulo; índice em
+  `Reino.NPCs.unicorniosChocados()`; baia vazia fala `Reino.NPCs.BAIA_VAZIA`). A Loja lê `UI.ITENS_LOJA`.
+- Frases automáticas do motor (npcs.js): resumo do guia ("Você fez N de 5 salas.", "Já ganhou R$ X!",
+  "Agora vamos para a Sala N!"), persistência ("Mais N vezes e o raro nasce!", "Ou de primeira, com calma!"),
+  prova ("Agora vale um prêmio lendário/raro/comum!"), treino ("Faltam N salas!"), estábulo com ovos.
+
+## 7.3 Lições de voz e texto
+- Cada fala (ou página) com até 30 letras (sem contar «» e emoji): no celular cabem ~15-17 por linha.
+- Cada frase vira um áudio. Vozes multilíngues embolam frases portuguesas de 1-2 palavras soltas, sobretudo
+  coladas a «inglês» ("Sou a «Miss Stella»" → "Soa"). Use frases de 3+ palavras ("Eu sou a «Miss Stella».")
+  e o padrão «palavra» + "quer dizer <português>.".
+- Toda gravação nova é conferida por transcrição (faster-whisper) antes de entregar.
 
 ## 8. Save
 Nada novo no save. Status, medalhas, unicórnios nas baias e moedas no baú são derivados de

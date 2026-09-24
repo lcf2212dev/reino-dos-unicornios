@@ -18,7 +18,9 @@ function carregar(rel, opcional) {
 }
 function pasta(rel) {
   const p = path.join(raiz, rel);
-  return fs.existsSync(p) ? fs.readdirSync(p).filter((f) => f.endsWith('.js')).sort().map((f) => rel + '/' + f) : [];
+  // padrao.js vem por último: ele monta o interior das matérias que não têm um próprio
+  const ordem = (a, b) => (a === 'padrao.js') - (b === 'padrao.js') || (a < b ? -1 : a > b ? 1 : 0);
+  return fs.existsSync(p) ? fs.readdirSync(p).filter((f) => f.endsWith('.js')).sort(ordem).map((f) => rel + '/' + f) : [];
 }
 carregar('js/config.js');
 carregar('js/unicornios.js');

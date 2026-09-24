@@ -155,7 +155,11 @@
         if (!Reino.NPCs) return;
         Reino.NPCs.falasPossiveis(npc, def).forEach(function (f) { add(f.texto, f.voz, def.pacote); });
       });
-      (def.objetos || []).forEach(function (obj) { [].concat(obj.fala || []).forEach(function (f) { add(f, obj.voz || 'narradora', def.pacote); }); });
+      (def.objetos || []).forEach(function (obj) {
+        [].concat(obj.fala || []).forEach(function (f) { add(f, obj.voz || 'narradora', def.pacote); });
+        // baia do Estábulo sem unicórnio ainda (a frase de cada unicórnio já está gravada)
+        if (obj.acao && obj.acao.tipo === 'unicornio' && Reino.NPCs) add(Reino.NPCs.BAIA_VAZIA, 'narradora', def.pacote);
+      });
     });
     return lista;
   };

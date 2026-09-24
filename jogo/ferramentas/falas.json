@@ -176,6 +176,36 @@
    "voz": "de-DE-SeraphinaMultilingualNeural",
    "velocidade": "-4%",
    "tom": "+12Hz"
+  },
+  "npc-padrao-guia": {
+   "voz": "pt-BR-FranciscaNeural",
+   "velocidade": "+4%",
+   "tom": "-8Hz"
+  },
+  "npc-padrao-1": {
+   "voz": "pt-BR-AntonioNeural",
+   "velocidade": "-12%",
+   "tom": "-14Hz"
+  },
+  "npc-padrao-2": {
+   "voz": "pt-BR-ThalitaMultilingualNeural",
+   "velocidade": "+16%",
+   "tom": "-4Hz"
+  },
+  "npc-padrao-3": {
+   "voz": "pt-BR-FranciscaNeural",
+   "velocidade": "-16%",
+   "tom": "+12Hz"
+  },
+  "npc-padrao-4": {
+   "voz": "pt-BR-AntonioNeural",
+   "velocidade": "+6%",
+   "tom": "-22Hz"
+  },
+  "npc-padrao-5": {
+   "voz": "pt-BR-FranciscaNeural",
+   "velocidade": "+14%",
+   "tom": "+20Hz"
   }
  },
  "falas": [
@@ -1681,7 +1711,8 @@
    "fala": "I brush my teeth every day.",
    "pacotes": [
     "prova-ingles-3bim",
-    "ingles-livro"
+    "ingles-livro",
+    "interior-torre"
    ]
   },
   {
@@ -1844,7 +1875,8 @@
    "texto": "bored",
    "fala": "bored",
    "pacotes": [
-    "prova-ingles-3bim"
+    "prova-ingles-3bim",
+    "interior-torre"
    ]
   },
   {
@@ -1853,7 +1885,8 @@
    "texto": "angry",
    "fala": "angry",
    "pacotes": [
-    "prova-ingles-3bim"
+    "prova-ingles-3bim",
+    "interior-torre"
    ]
   },
   {
@@ -1872,7 +1905,8 @@
    "texto": "excited",
    "fala": "excited",
    "pacotes": [
-    "prova-ingles-3bim"
+    "prova-ingles-3bim",
+    "interior-torre"
    ]
   },
   {
@@ -5513,7 +5547,8 @@
    "texto": "The sun is a star.",
    "fala": "The sun is a star.",
    "pacotes": [
-    "ingles-livro"
+    "ingles-livro",
+    "interior-torre"
    ]
   },
   {
@@ -5615,7 +5650,8 @@
    "fala": "Earth",
    "pacotes": [
     "ingles-livro",
-    "ingles-i2"
+    "ingles-i2",
+    "interior-torre"
    ]
   },
   {
@@ -5969,7 +6005,8 @@
    "texto": "square",
    "fala": "square",
    "pacotes": [
-    "ingles-livro"
+    "ingles-livro",
+    "interior-torre"
    ]
   },
   {
@@ -6005,7 +6042,8 @@
    "texto": "triangle",
    "fala": "triangle",
    "pacotes": [
-    "ingles-livro"
+    "ingles-livro",
+    "interior-torre"
    ]
   },
   {
@@ -6180,7 +6218,8 @@
    "pacotes": [
     "ingles-livro",
     "ingles-i3",
-    "ingles-i4"
+    "ingles-i4",
+    "interior-torre"
    ]
   },
   {
@@ -6218,7 +6257,8 @@
    "fala": "Have a shower",
    "pacotes": [
     "ingles-livro",
-    "ingles-i3"
+    "ingles-i3",
+    "interior-torre"
    ]
   },
   {
@@ -6227,7 +6267,8 @@
    "texto": "é tomar banho.",
    "fala": "é tomar banho.",
    "pacotes": [
-    "ingles-livro"
+    "ingles-livro",
+    "interior-torre"
    ]
   },
   {
@@ -6257,7 +6298,8 @@
    "fala": "Go to bed",
    "pacotes": [
     "ingles-livro",
-    "ingles-i3"
+    "ingles-i3",
+    "interior-torre"
    ]
   },
   {
@@ -6266,7 +6308,8 @@
    "texto": "é ir dormir.",
    "fala": "é ir dormir.",
    "pacotes": [
-    "ingles-livro"
+    "ingles-livro",
+    "interior-torre"
    ]
   },
   {
@@ -6556,7 +6599,8 @@
    "texto": "Homework",
    "fala": "Homework",
    "pacotes": [
-    "ingles-livro"
+    "ingles-livro",
+    "interior-torre"
    ]
   },
   {
@@ -6658,7 +6702,8 @@
    "fala": "Happy",
    "pacotes": [
     "ingles-livro",
-    "ingles-i5"
+    "ingles-i5",
+    "interior-torre"
    ]
   },
   {
@@ -6715,7 +6760,8 @@
    "fala": "Sleepy",
    "pacotes": [
     "ingles-livro",
-    "ingles-i5"
+    "ingles-i5",
+    "interior-torre"
    ]
   },
   {
@@ -7073,7 +7119,8 @@
    "texto": "Clap your hands!",
    "fala": "Clap your hands!",
    "pacotes": [
-    "ingles-extra"
+    "ingles-extra",
+    "interior-torre"
    ]
   },
   {
@@ -8258,7 +8305,8 @@
    "texto": "Morning",
    "fala": "Morning",
    "pacotes": [
-    "ingles-i4"
+    "ingles-i4",
+    "interior-torre"
    ]
   },
   {
@@ -8267,7 +8315,8 @@
    "texto": "Afternoon",
    "fala": "Afternoon",
    "pacotes": [
-    "ingles-i4"
+    "ingles-i4",
+    "interior-torre"
    ]
   },
   {
@@ -8276,7 +8325,8 @@
    "texto": "Night",
    "fala": "Night",
    "pacotes": [
-    "ingles-i4"
+    "ingles-i4",
+    "interior-torre"
    ]
   },
   {
@@ -8802,6 +8852,1735 @@
    ]
   },
   {
+   "chave": "ee369e4ee",
+   "voz": "npc-tostao",
+   "texto": "Oi!",
+   "fala": "Oi!",
+   "pacotes": [
+    "interior-bau"
+   ]
+  },
+  {
+   "chave": "6e147c4310",
+   "voz": "npc-tostao",
+   "texto": "Sou o Dragãozinho Tostão.",
+   "fala": "Sou o Dragãozinho Tostão.",
+   "pacotes": [
+    "interior-bau"
+   ]
+  },
+  {
+   "chave": "7fa2dc6810",
+   "voz": "npc-tostao",
+   "texto": "Eu guardo suas moedinhas!",
+   "fala": "Eu guardo suas moedinhas!",
+   "pacotes": [
+    "interior-bau"
+   ]
+  },
+  {
+   "chave": "486ea34410",
+   "voz": "npc-tostao",
+   "texto": "Vamos contar suas moedas?",
+   "fala": "Vamos contar suas moedas?",
+   "pacotes": [
+    "interior-bau"
+   ]
+  },
+  {
+   "chave": "668448c913",
+   "voz": "npc-tostao",
+   "texto": "Quer ver quanto você juntou?",
+   "fala": "Quer ver quanto você juntou?",
+   "pacotes": [
+    "interior-bau"
+   ]
+  },
+  {
+   "chave": "50db7a3510",
+   "voz": "npc-tostao",
+   "texto": "Vamos abrir o baú juntos?",
+   "fala": "Vamos abrir o baú juntos?",
+   "pacotes": [
+    "interior-bau"
+   ]
+  },
+  {
+   "chave": "f916ea2711",
+   "voz": "npc-tostao",
+   "texto": "Suas moedas estão seguras!",
+   "fala": "Suas moedas estão seguras!",
+   "pacotes": [
+    "interior-bau"
+   ]
+  },
+  {
+   "chave": "3ce4b1d215",
+   "voz": "npc-tostao",
+   "texto": "Contei tudo com muito carinho.",
+   "fala": "Contei tudo com muito carinho.",
+   "pacotes": [
+    "interior-bau"
+   ]
+  },
+  {
+   "chave": "9cf5d71dt",
+   "voz": "narradora",
+   "texto": "Um mapa do tesouro!",
+   "fala": "Um mapa do tesouro!",
+   "pacotes": [
+    "interior-bau"
+   ]
+  },
+  {
+   "chave": "b17e438c11",
+   "voz": "narradora",
+   "texto": "O X é onde a gente aprende.",
+   "fala": "O X é onde a gente aprende.",
+   "pacotes": [
+    "interior-bau"
+   ]
+  },
+  {
+   "chave": "c9f1f9b912",
+   "voz": "narradora",
+   "texto": "A medalha de ouro da escola!",
+   "fala": "A medalha de ouro da escola!",
+   "pacotes": [
+    "interior-bau"
+   ]
+  },
+  {
+   "chave": "101fdfd3z",
+   "voz": "narradora",
+   "texto": "Vem de acertar com calma.",
+   "fala": "Vem de acertar com calma.",
+   "pacotes": [
+    "interior-bau"
+   ]
+  },
+  {
+   "chave": "6e18e3e6z",
+   "voz": "narradora",
+   "texto": "E de revisar com carinho.",
+   "fala": "E de revisar com carinho.",
+   "pacotes": [
+    "interior-bau"
+   ]
+  },
+  {
+   "chave": "33709b4c14",
+   "voz": "narradora",
+   "texto": "Os livros de contas do Tostão.",
+   "fala": "Os livros de contas do Tostão.",
+   "pacotes": [
+    "interior-bau"
+   ]
+  },
+  {
+   "chave": "bf5bafaby",
+   "voz": "narradora",
+   "texto": "Ele anota cada moedinha!",
+   "fala": "Ele anota cada moedinha!",
+   "pacotes": [
+    "interior-bau"
+   ]
+  },
+  {
+   "chave": "cffb526f11",
+   "voz": "narradora",
+   "texto": "O monte de todas as moedas!",
+   "fala": "O monte de todas as moedas!",
+   "pacotes": [
+    "interior-bau"
+   ]
+  },
+  {
+   "chave": "3b650e7d12",
+   "voz": "narradora",
+   "texto": "Ele cresce a cada sala nova.",
+   "fala": "Ele cresce a cada sala nova.",
+   "pacotes": [
+    "interior-bau"
+   ]
+  },
+  {
+   "chave": "b2d38af1w",
+   "voz": "narradora",
+   "texto": "Uma balança de moedas!",
+   "fala": "Uma balança de moedas!",
+   "pacotes": [
+    "interior-bau"
+   ]
+  },
+  {
+   "chave": "1237832814",
+   "voz": "narradora",
+   "texto": "O Tostão pesa tudo direitinho.",
+   "fala": "O Tostão pesa tudo direitinho.",
+   "pacotes": [
+    "interior-bau"
+   ]
+  },
+  {
+   "chave": "767efc8ay",
+   "voz": "narradora",
+   "texto": "O ninho de travesseiros!",
+   "fala": "O ninho de travesseiros!",
+   "pacotes": [
+    "interior-bau"
+   ]
+  },
+  {
+   "chave": "6400200bw",
+   "voz": "narradora",
+   "texto": "O Tostão cochila aqui.",
+   "fala": "O Tostão cochila aqui.",
+   "pacotes": [
+    "interior-bau"
+   ]
+  },
+  {
+   "chave": "b15a3f48z",
+   "voz": "narradora",
+   "texto": "Um cofrinho de porquinho!",
+   "fala": "Um cofrinho de porquinho!",
+   "pacotes": [
+    "interior-bau"
+   ]
+  },
+  {
+   "chave": "47e66e9b14",
+   "voz": "narradora",
+   "texto": "Guardar um pouco é bom demais.",
+   "fala": "Guardar um pouco é bom demais.",
+   "pacotes": [
+    "interior-bau"
+   ]
+  },
+  {
+   "chave": "ce18e58212",
+   "voz": "narradora",
+   "texto": "Esta pilha é de uma matéria.",
+   "fala": "Esta pilha é de uma matéria.",
+   "pacotes": [
+    "interior-bau"
+   ]
+  },
+  {
+   "chave": "a7bc9d6310",
+   "voz": "narradora",
+   "texto": "Cada sala nova põe moedas!",
+   "fala": "Cada sala nova põe moedas!",
+   "pacotes": [
+    "interior-bau"
+   ]
+  },
+  {
+   "chave": "10e29058e",
+   "voz": "npc-serena",
+   "texto": "Oi!",
+   "fala": "Oi!",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "d36b8d5cx",
+   "voz": "npc-serena",
+   "texto": "Sou a Princesa Serena.",
+   "fala": "Sou a Princesa Serena.",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "2bcdaefa15",
+   "voz": "npc-serena",
+   "texto": "O treino aqui não tem relógio.",
+   "fala": "O treino aqui não tem relógio.",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "c4678a4cz",
+   "voz": "npc-serena",
+   "texto": "Aqui ninguém tem pressa.",
+   "fala": "Aqui ninguém tem pressa.",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "cb36ced715",
+   "voz": "npc-serena",
+   "texto": "Revise tudo antes de entregar.",
+   "fala": "Revise tudo antes de entregar.",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "9441f3e511",
+   "voz": "npc-serena",
+   "texto": "A medalha vem dos acertos.",
+   "fala": "A medalha vem dos acertos.",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "d8e7f61611",
+   "voz": "npc-serena",
+   "texto": "Acertar com calma dá ouro.",
+   "fala": "Acertar com calma dá ouro.",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "80f4ce80e",
+   "voz": "npc-aurora",
+   "texto": "Oi!",
+   "fala": "Oi!",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "6bffe46by",
+   "voz": "npc-aurora",
+   "texto": "Sou a Cavaleira Aurora.",
+   "fala": "Sou a Cavaleira Aurora.",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "8dd74fcd15",
+   "voz": "npc-aurora",
+   "texto": "Eu treino a História com você.",
+   "fala": "Eu treino a História com você.",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "de0eebf310",
+   "voz": "npc-aurora",
+   "texto": "Vamos treinar a História?",
+   "fala": "Vamos treinar a História?",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "14d5e370z",
+   "voz": "npc-aurora",
+   "texto": "Vamos ler cada pergunta?",
+   "fala": "Vamos ler cada pergunta?",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "7bbddfa211",
+   "voz": "npc-aurora",
+   "texto": "Quer treinar mais uma vez?",
+   "fala": "Quer treinar mais uma vez?",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "c4dd514315",
+   "voz": "npc-aurora",
+   "texto": "Vamos buscar o ouro com calma?",
+   "fala": "Vamos buscar o ouro com calma?",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "1a04756213",
+   "voz": "npc-aurora",
+   "texto": "Primeiro, as salas do museu.",
+   "fala": "Primeiro, as salas do museu.",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "6808ba4c13",
+   "voz": "npc-aurora",
+   "texto": "O museu vem antes do treino.",
+   "fala": "O museu vem antes do treino.",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "6f77d19213",
+   "voz": "npc-aurora",
+   "texto": "Você revisou tudo com calma!",
+   "fala": "Você revisou tudo com calma!",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "b7d0bdaa11",
+   "voz": "npc-aurora",
+   "texto": "Revisar é coisa de campeã!",
+   "fala": "Revisar é coisa de campeã!",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "a5d0ef9d15",
+   "voz": "npc-aurora",
+   "texto": "Tudo bem, volte quando quiser!",
+   "fala": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "7ae19014t",
+   "voz": "npc-aurora",
+   "texto": "Falta só uma sala!",
+   "fala": "Falta só uma sala!",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "9eb3d0c8t",
+   "voz": "npc-aurora",
+   "texto": "Faltam duas salas!",
+   "fala": "Faltam duas salas!",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "2d88513et",
+   "voz": "npc-aurora",
+   "texto": "Faltam três salas!",
+   "fala": "Faltam três salas!",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "ba6f011dv",
+   "voz": "npc-aurora",
+   "texto": "Faltam quatro salas!",
+   "fala": "Faltam quatro salas!",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "440e0dedu",
+   "voz": "npc-aurora",
+   "texto": "Faltam cinco salas!",
+   "fala": "Faltam cinco salas!",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "7d591dbe14",
+   "voz": "npc-aurora",
+   "texto": "Falta um treino para o épico!",
+   "fala": "Falta um treino para o épico!",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "7b6bfc1b18",
+   "voz": "npc-aurora",
+   "texto": "Faltam dois treinos para o épico!",
+   "fala": "Faltam dois treinos para o épico!",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "3807792718",
+   "voz": "npc-aurora",
+   "texto": "Faltam três treinos para o épico!",
+   "fala": "Faltam três treinos para o épico!",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "c9ce9442z",
+   "voz": "npc-aurora",
+   "texto": "Ou tire ouro, com calma!",
+   "fala": "Ou tire ouro, com calma!",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "25d212321a",
+   "voz": "npc-aurora",
+   "texto": "Faltam quatro treinos para o épico!",
+   "fala": "Faltam quatro treinos para o épico!",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "5933876219",
+   "voz": "npc-aurora",
+   "texto": "Faltam cinco treinos para o épico!",
+   "fala": "Faltam cinco treinos para o épico!",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "49afe4a813",
+   "voz": "npc-aurora",
+   "texto": "Ou acerte as dez, com calma!",
+   "fala": "Ou acerte as dez, com calma!",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "0cb717e3e",
+   "voz": "npc-oliver",
+   "texto": "Oi!",
+   "fala": "Oi!",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "92e442eej",
+   "voz": "npc-oliver",
+   "texto": "Eu sou o",
+   "fala": "Eu sou o",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "8c3dfb91o",
+   "voz": "npc-oliver-en",
+   "texto": "Sir Oliver",
+   "fala": "Sir Oliver",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "df0b3dea13",
+   "voz": "npc-oliver",
+   "texto": "Eu treino o Inglês com você.",
+   "fala": "Eu treino o Inglês com você.",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "707b84fay",
+   "voz": "npc-oliver",
+   "texto": "Vamos treinar o Inglês?",
+   "fala": "Vamos treinar o Inglês?",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "25365aa310",
+   "voz": "npc-oliver",
+   "texto": "Vamos ler tudo com calma?",
+   "fala": "Vamos ler tudo com calma?",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "cf103b5613",
+   "voz": "npc-oliver",
+   "texto": "Quer treinar de novo comigo?",
+   "fala": "Quer treinar de novo comigo?",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "ec1a843c15",
+   "voz": "npc-oliver",
+   "texto": "Vamos tentar o ouro com calma?",
+   "fala": "Vamos tentar o ouro com calma?",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "5309d78a13",
+   "voz": "npc-oliver",
+   "texto": "Primeiro, as salas da Torre.",
+   "fala": "Primeiro, as salas da Torre.",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "e556b1a413",
+   "voz": "npc-oliver",
+   "texto": "A Torre vem antes do treino.",
+   "fala": "A Torre vem antes do treino.",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "e1b6e8afo",
+   "voz": "npc-oliver-en",
+   "texto": "Well done!",
+   "fala": "Well done!",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "6c2acbc2t",
+   "voz": "npc-oliver",
+   "texto": "Você revisou tudo!",
+   "fala": "Você revisou tudo!",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "e97f7ba915",
+   "voz": "npc-oliver",
+   "texto": "Terminar com calma é o melhor!",
+   "fala": "Terminar com calma é o melhor!",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "9d093e7c15",
+   "voz": "npc-oliver",
+   "texto": "Tudo bem, volte quando quiser!",
+   "fala": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "e4544bf1t",
+   "voz": "npc-oliver",
+   "texto": "Falta só uma sala!",
+   "fala": "Falta só uma sala!",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "271770bdt",
+   "voz": "npc-oliver",
+   "texto": "Faltam duas salas!",
+   "fala": "Faltam duas salas!",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "7106fb7bt",
+   "voz": "npc-oliver",
+   "texto": "Faltam três salas!",
+   "fala": "Faltam três salas!",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "91e19d08v",
+   "voz": "npc-oliver",
+   "texto": "Faltam quatro salas!",
+   "fala": "Faltam quatro salas!",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "db147882u",
+   "voz": "npc-oliver",
+   "texto": "Faltam cinco salas!",
+   "fala": "Faltam cinco salas!",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "ac48fa6514",
+   "voz": "npc-oliver",
+   "texto": "Falta um treino para o épico!",
+   "fala": "Falta um treino para o épico!",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "5e1f2a8818",
+   "voz": "npc-oliver",
+   "texto": "Faltam dois treinos para o épico!",
+   "fala": "Faltam dois treinos para o épico!",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "230b6b8c18",
+   "voz": "npc-oliver",
+   "texto": "Faltam três treinos para o épico!",
+   "fala": "Faltam três treinos para o épico!",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "29102ddfz",
+   "voz": "npc-oliver",
+   "texto": "Ou tire ouro, com calma!",
+   "fala": "Ou tire ouro, com calma!",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "7806f65d1a",
+   "voz": "npc-oliver",
+   "texto": "Faltam quatro treinos para o épico!",
+   "fala": "Faltam quatro treinos para o épico!",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "aa40eefb19",
+   "voz": "npc-oliver",
+   "texto": "Faltam cinco treinos para o épico!",
+   "fala": "Faltam cinco treinos para o épico!",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "92e5345113",
+   "voz": "npc-oliver",
+   "texto": "Ou acerte as dez, com calma!",
+   "fala": "Ou acerte as dez, com calma!",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "fbdb9995t",
+   "voz": "narradora",
+   "texto": "É o Plano da Prova!",
+   "fala": "É o Plano da Prova!",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "460be11711",
+   "voz": "narradora",
+   "texto": "Vamos ler juntas com calma?",
+   "fala": "Vamos ler juntas com calma?",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "b0e81989t",
+   "voz": "narradora",
+   "texto": "Que fogo quentinho!",
+   "fala": "Que fogo quentinho!",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "ed99958d11",
+   "voz": "narradora",
+   "texto": "Descanse um pouquinho aqui.",
+   "fala": "Descanse um pouquinho aqui.",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "0ee9536512",
+   "voz": "narradora",
+   "texto": "Aqui ficam as suas medalhas!",
+   "fala": "Aqui ficam as suas medalhas!",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "538ba15514",
+   "voz": "narradora",
+   "texto": "Todas vieram dos seus acertos.",
+   "fala": "Todas vieram dos seus acertos.",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "04c13f02z",
+   "voz": "narradora",
+   "texto": "Uma ampulheta bem antiga!",
+   "fala": "Uma ampulheta bem antiga!",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "66ebb29c10",
+   "voz": "narradora",
+   "texto": "No treino não tem relógio.",
+   "fala": "No treino não tem relógio.",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "84374b21w",
+   "voz": "narradora",
+   "texto": "Pode pensar com calma.",
+   "fala": "Pode pensar com calma.",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "53c7d788j",
+   "voz": "narradora",
+   "texto": "Um cartaz",
+   "fala": "Um cartaz",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "38ed5104h",
+   "voz": "ingles",
+   "texto": "in English",
+   "fala": "in English",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "41dabec5c",
+   "voz": "ingles",
+   "texto": "Hello",
+   "fala": "Hello",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "bd36306cp",
+   "voz": "narradora",
+   "texto": "quer dizer olá.",
+   "fala": "quer dizer olá.",
+   "pacotes": [
+    "interior-castelo"
+   ]
+  },
+  {
+   "chave": "a9874a7ch",
+   "voz": "npc-margarida",
+   "texto": "Oi!",
+   "fala": "Oi!",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "1b3ce74b13",
+   "voz": "npc-margarida",
+   "texto": "Sou a Diretora Margarida.",
+   "fala": "Sou a Diretora Margarida.",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "a8ef8bc612",
+   "voz": "npc-margarida",
+   "texto": "Nota dez é acertar tudo!",
+   "fala": "Nota dez é acertar tudo!",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "0b891ede18",
+   "voz": "npc-margarida",
+   "texto": "Com dez de primeira: lendário!",
+   "fala": "Com dez de primeira: lendário!",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "4df0870f16",
+   "voz": "npc-margarida",
+   "texto": "Na segunda vez, vale o raro.",
+   "fala": "Na segunda vez, vale o raro.",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "62e2a20bz",
+   "voz": "npc-margarida",
+   "texto": "Depois, vale o comum.",
+   "fala": "Depois, vale o comum.",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "4719ac1717",
+   "voz": "npc-margarida",
+   "texto": "Quer ver as provas da Escola?",
+   "fala": "Quer ver as provas da Escola?",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "89b333c616",
+   "voz": "npc-margarida",
+   "texto": "Vamos ver os prêmios juntas?",
+   "fala": "Vamos ver os prêmios juntas?",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "8ceedef1e",
+   "voz": "npc-helena",
+   "texto": "Oi!",
+   "fala": "Oi!",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "43bab611z",
+   "voz": "npc-helena",
+   "texto": "Sou a Professora Helena.",
+   "fala": "Sou a Professora Helena.",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "2be661d611",
+   "voz": "npc-helena",
+   "texto": "Eu adoro contar histórias.",
+   "fala": "Eu adoro contar histórias.",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "11ed669915",
+   "voz": "npc-helena",
+   "texto": "Vamos fazer a prova com calma?",
+   "fala": "Vamos fazer a prova com calma?",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "27cc7f4412",
+   "voz": "npc-helena",
+   "texto": "Leia cada pergunta devagar.",
+   "fala": "Leia cada pergunta devagar.",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "c715f5c014",
+   "voz": "npc-helena",
+   "texto": "Vamos treinar a prova juntas?",
+   "fala": "Vamos treinar a prova juntas?",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "b25d3d1b13",
+   "voz": "npc-helena",
+   "texto": "Quer revisar a prova comigo?",
+   "fala": "Quer revisar a prova comigo?",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "d7a2dfcf12",
+   "voz": "npc-helena",
+   "texto": "Você leu com muita atenção!",
+   "fala": "Você leu com muita atenção!",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "863405a8w",
+   "voz": "npc-helena",
+   "texto": "Que prova caprichada!",
+   "fala": "Que prova caprichada!",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "cca1cf3215",
+   "voz": "npc-helena",
+   "texto": "Tudo bem, volte quando quiser!",
+   "fala": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "2d18c0dc15",
+   "voz": "npc-helena",
+   "texto": "Agora vale um prêmio lendário!",
+   "fala": "Agora vale um prêmio lendário!",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "8bb81b8811",
+   "voz": "npc-helena",
+   "texto": "Agora vale um prêmio raro!",
+   "fala": "Agora vale um prêmio raro!",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "e3cb264512",
+   "voz": "npc-helena",
+   "texto": "Agora vale um prêmio comum!",
+   "fala": "Agora vale um prêmio comum!",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "3f8d24c0c",
+   "voz": "npc-emma",
+   "texto": "Oi!",
+   "fala": "Oi!",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "82c599a5h",
+   "voz": "npc-emma",
+   "texto": "Eu sou a",
+   "fala": "Eu sou a",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "eaf5248do",
+   "voz": "npc-emma-en",
+   "texto": "Teacher Emma",
+   "fala": "Teacher Emma",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "da5ed03512",
+   "voz": "npc-emma",
+   "texto": "Eu ensino Inglês com carinho.",
+   "fala": "Eu ensino Inglês com carinho.",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "5c94d9f210",
+   "voz": "npc-emma",
+   "texto": "Vamos fazer a prova juntas?",
+   "fala": "Vamos fazer a prova juntas?",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "d1901ee513",
+   "voz": "npc-emma",
+   "texto": "Escute cada palavra com calma.",
+   "fala": "Escute cada palavra com calma.",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "f0fb965d12",
+   "voz": "npc-emma",
+   "texto": "Vamos treinar a prova juntas?",
+   "fala": "Vamos treinar a prova juntas?",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "0abbd85d15",
+   "voz": "npc-emma",
+   "texto": "Quer revisar as palavras comigo?",
+   "fala": "Quer revisar as palavras comigo?",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "26b2bec0l",
+   "voz": "npc-emma-en",
+   "texto": "Good job!",
+   "fala": "Good job!",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "9cc42a08s",
+   "voz": "npc-emma",
+   "texto": "Você foi muito bem!",
+   "fala": "Você foi muito bem!",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "fa5d222cw",
+   "voz": "npc-emma",
+   "texto": "Você revisou com calma!",
+   "fala": "Você revisou com calma!",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "b154b05d13",
+   "voz": "npc-emma",
+   "texto": "Tudo bem, volte quando quiser!",
+   "fala": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "e495e51b13",
+   "voz": "npc-emma",
+   "texto": "Agora vale um prêmio lendário!",
+   "fala": "Agora vale um prêmio lendário!",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "73b60073z",
+   "voz": "npc-emma",
+   "texto": "Agora vale um prêmio raro!",
+   "fala": "Agora vale um prêmio raro!",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "7e4bb54010",
+   "voz": "npc-emma",
+   "texto": "Agora vale um prêmio comum!",
+   "fala": "Agora vale um prêmio comum!",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "78025205z",
+   "voz": "narradora",
+   "texto": "São os prêmios da Escola!",
+   "fala": "São os prêmios da Escola!",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "2c2368f5z",
+   "voz": "narradora",
+   "texto": "Os coloridos já são seus.",
+   "fala": "Os coloridos já são seus.",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "ad986bb411",
+   "voz": "narradora",
+   "texto": "Os outros ainda vão chegar.",
+   "fala": "Os outros ainda vão chegar.",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "53271cedt",
+   "voz": "narradora",
+   "texto": "Um golinho de água?",
+   "fala": "Um golinho de água?",
+   "pacotes": [
+    "interior-escola",
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "113cb34fw",
+   "voz": "narradora",
+   "texto": "Descanse um pouquinho.",
+   "fala": "Descanse um pouquinho.",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "5aa3266bx",
+   "voz": "narradora",
+   "texto": "Os armários dos alunos.",
+   "fala": "Os armários dos alunos.",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "d40a06e714",
+   "voz": "narradora",
+   "texto": "Cada um guarda o seu material.",
+   "fala": "Cada um guarda o seu material.",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "1bd9219as",
+   "voz": "narradora",
+   "texto": "A lousa tem o ABC!",
+   "fala": "A lousa tem o abc!",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "aa5cab6512",
+   "voz": "narradora",
+   "texto": "Letra por letra, sem pressa.",
+   "fala": "Letra por letra, sem pressa.",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "64f6b1e7s",
+   "voz": "narradora",
+   "texto": "Um globo do mundo!",
+   "fala": "Um globo do mundo!",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "ccb3527d10",
+   "voz": "narradora",
+   "texto": "O mundo é grande e bonito.",
+   "fala": "O mundo é grande e bonito.",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "d7f23830z",
+   "voz": "narradora",
+   "texto": "Uma mochila bem arrumada.",
+   "fala": "Uma mochila bem arrumada.",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "b0f60e5b10",
+   "voz": "narradora",
+   "texto": "Lápis, caderno e borracha.",
+   "fala": "Lápis, caderno e borracha.",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "da0e4c5bt",
+   "voz": "narradora",
+   "texto": "Uma linha do tempo!",
+   "fala": "Uma linha do tempo!",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "75054af3u",
+   "voz": "narradora",
+   "texto": "Do passado até hoje.",
+   "fala": "Do passado até hoje.",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "2e43cf8ay",
+   "voz": "narradora",
+   "texto": "Cartas antigas da turma.",
+   "fala": "Cartas antigas da turma.",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "130b4c0913",
+   "voz": "narradora",
+   "texto": "Contam coisas de outra época.",
+   "fala": "Contam coisas de outra época.",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "411d0fd3t",
+   "voz": "narradora",
+   "texto": "Palavras em inglês!",
+   "fala": "Palavras em inglês!",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "73373495c",
+   "voz": "ingles",
+   "texto": "Apple",
+   "fala": "Apple",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "8f9f1c2aq",
+   "voz": "narradora",
+   "texto": "quer dizer maçã.",
+   "fala": "quer dizer maçã.",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "f519ee1ab",
+   "voz": "ingles",
+   "texto": "Book",
+   "fala": "Book",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "c3ca600ar",
+   "voz": "narradora",
+   "texto": "quer dizer livro.",
+   "fala": "quer dizer livro.",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "10412c7510",
+   "voz": "narradora",
+   "texto": "A bandeira do Reino Unido.",
+   "fala": "A bandeira do Reino Unido.",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "a675aef2s",
+   "voz": "narradora",
+   "texto": "Lá se fala inglês!",
+   "fala": "Lá se fala inglês!",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
+   "chave": "8ac10616c",
+   "voz": "npc-feno",
+   "texto": "Oi!",
+   "fala": "Oi!",
+   "pacotes": [
+    "interior-estabulo"
+   ]
+  },
+  {
+   "chave": "1c73e696r",
+   "voz": "npc-feno",
+   "texto": "Eu sou o Seu Feno.",
+   "fala": "Eu sou o Seu Feno.",
+   "pacotes": [
+    "interior-estabulo"
+   ]
+  },
+  {
+   "chave": "92d9574612",
+   "voz": "npc-feno",
+   "texto": "Cuido de todos os unicórnios.",
+   "fala": "Cuido de todos os unicórnios.",
+   "pacotes": [
+    "interior-estabulo"
+   ]
+  },
+  {
+   "chave": "71a1a632v",
+   "voz": "npc-feno",
+   "texto": "Vamos ver sua coleção?",
+   "fala": "Vamos ver sua coleção?",
+   "pacotes": [
+    "interior-estabulo"
+   ]
+  },
+  {
+   "chave": "d71b3e7712",
+   "voz": "npc-feno",
+   "texto": "Quer visitar seus amiguinhos?",
+   "fala": "Quer visitar seus amiguinhos?",
+   "pacotes": [
+    "interior-estabulo"
+   ]
+  },
+  {
+   "chave": "a71dd90113",
+   "voz": "npc-feno",
+   "texto": "Seus unicórnios estão felizes!",
+   "fala": "Seus unicórnios estão felizes!",
+   "pacotes": [
+    "interior-estabulo"
+   ]
+  },
+  {
+   "chave": "d11554ebz",
+   "voz": "npc-feno",
+   "texto": "Que visita mais carinhosa!",
+   "fala": "Que visita mais carinhosa!",
+   "pacotes": [
+    "interior-estabulo"
+   ]
+  },
+  {
+   "chave": "50857131w",
+   "voz": "npc-feno",
+   "texto": "Tem ovinho para chocar!",
+   "fala": "Tem ovinho para chocar!",
+   "pacotes": [
+    "interior-estabulo"
+   ]
+  },
+  {
+   "chave": "8c0601d213",
+   "voz": "narradora",
+   "texto": "Aqui vai morar um amigo novo!",
+   "fala": "Aqui vai morar um amigo novo!",
+   "pacotes": [
+    "interior-estabulo"
+   ]
+  },
+  {
+   "chave": "f65ced01x",
+   "voz": "narradora",
+   "texto": "Um vitral de unicórnio!",
+   "fala": "Um vitral de unicórnio!",
+   "pacotes": [
+    "interior-estabulo"
+   ]
+  },
+  {
+   "chave": "f11d923410",
+   "voz": "narradora",
+   "texto": "Ele brilha quando faz sol.",
+   "fala": "Ele brilha quando faz sol.",
+   "pacotes": [
+    "interior-estabulo"
+   ]
+  },
+  {
+   "chave": "2f33c4bdu",
+   "voz": "narradora",
+   "texto": "Um saco de cenouras!",
+   "fala": "Um saco de cenouras!",
+   "pacotes": [
+    "interior-estabulo"
+   ]
+  },
+  {
+   "chave": "18eff3aaz",
+   "voz": "narradora",
+   "texto": "O lanche preferido deles.",
+   "fala": "O lanche preferido deles.",
+   "pacotes": [
+    "interior-estabulo"
+   ]
+  },
+  {
+   "chave": "ce528224u",
+   "voz": "narradora",
+   "texto": "As escovas de crina!",
+   "fala": "As escovas de crina!",
+   "pacotes": [
+    "interior-estabulo"
+   ]
+  },
+  {
+   "chave": "6ab8ad0212",
+   "voz": "narradora",
+   "texto": "Escovar com calma é carinho.",
+   "fala": "Escovar com calma é carinho.",
+   "pacotes": [
+    "interior-estabulo"
+   ]
+  },
+  {
+   "chave": "1bee810611",
+   "voz": "narradora",
+   "texto": "O ninho quentinho de palha.",
+   "fala": "O ninho quentinho de palha.",
+   "pacotes": [
+    "interior-estabulo"
+   ]
+  },
+  {
+   "chave": "18d0ed0610",
+   "voz": "narradora",
+   "texto": "Aqui os ovinhos descansam.",
+   "fala": "Aqui os ovinhos descansam.",
+   "pacotes": [
+    "interior-estabulo"
+   ]
+  },
+  {
+   "chave": "46548d6212",
+   "voz": "narradora",
+   "texto": "Água fresquinha e brilhante!",
+   "fala": "Água fresquinha e brilhante!",
+   "pacotes": [
+    "interior-estabulo"
+   ]
+  },
+  {
+   "chave": "814ca7adz",
+   "voz": "narradora",
+   "texto": "Os unicórnios bebem aqui.",
+   "fala": "Os unicórnios bebem aqui.",
+   "pacotes": [
+    "interior-estabulo"
+   ]
+  },
+  {
+   "chave": "ee05c45be",
+   "voz": "npc-petala",
+   "texto": "Oi!",
+   "fala": "Oi!",
+   "pacotes": [
+    "interior-loja"
+   ]
+  },
+  {
+   "chave": "538fe8e4w",
+   "voz": "npc-petala",
+   "texto": "Eu sou a Fada Pétala!",
+   "fala": "Eu sou a Fada Pétala!",
+   "pacotes": [
+    "interior-loja"
+   ]
+  },
+  {
+   "chave": "043c4faf13",
+   "voz": "npc-petala",
+   "texto": "Aqui tudo tem brilho mágico!",
+   "fala": "Aqui tudo tem brilho mágico!",
+   "pacotes": [
+    "interior-loja"
+   ]
+  },
+  {
+   "chave": "3256b89bx",
+   "voz": "npc-petala",
+   "texto": "Vamos ver os enfeites?",
+   "fala": "Vamos ver os enfeites?",
+   "pacotes": [
+    "interior-loja"
+   ]
+  },
+  {
+   "chave": "09dd540d13",
+   "voz": "npc-petala",
+   "texto": "Quer enfeitar seu unicórnio?",
+   "fala": "Quer enfeitar seu unicórnio?",
+   "pacotes": [
+    "interior-loja"
+   ]
+  },
+  {
+   "chave": "a70e2462w",
+   "voz": "npc-petala",
+   "texto": "Vocês ficaram lindos!",
+   "fala": "Vocês ficaram lindos!",
+   "pacotes": [
+    "interior-loja"
+   ]
+  },
+  {
+   "chave": "6f62e91713",
+   "voz": "npc-petala",
+   "texto": "Que escolha mais caprichada!",
+   "fala": "Que escolha mais caprichada!",
+   "pacotes": [
+    "interior-loja"
+   ]
+  },
+  {
+   "chave": "c300e688x",
+   "voz": "narradora",
+   "texto": "Potes de pó de estrela!",
+   "fala": "Potes de pó de estrela!",
+   "pacotes": [
+    "interior-loja"
+   ]
+  },
+  {
+   "chave": "2c77e98a15",
+   "voz": "narradora",
+   "texto": "Vem de quem acerta de primeira.",
+   "fala": "Vem de quem acerta de primeira.",
+   "pacotes": [
+    "interior-loja"
+   ]
+  },
+  {
+   "chave": "0096f671r",
+   "voz": "narradora",
+   "texto": "O espelho mágico!",
+   "fala": "O espelho mágico!",
+   "pacotes": [
+    "interior-loja"
+   ]
+  },
+  {
+   "chave": "bca6ffd312",
+   "voz": "narradora",
+   "texto": "Mostra você e seu unicórnio.",
+   "fala": "Mostra você e seu unicórnio.",
+   "pacotes": [
+    "interior-loja"
+   ]
+  },
+  {
+   "chave": "b612882by",
+   "voz": "narradora",
+   "texto": "A caixinha das estrelas!",
+   "fala": "A caixinha das estrelas!",
+   "pacotes": [
+    "interior-loja"
+   ]
+  },
+  {
+   "chave": "203db81311",
+   "voz": "narradora",
+   "texto": "Aqui as estrelas descansam.",
+   "fala": "Aqui as estrelas descansam.",
+   "pacotes": [
+    "interior-loja"
+   ]
+  },
+  {
+   "chave": "32409a37x",
+   "voz": "narradora",
+   "texto": "A vitrine dos enfeites!",
+   "fala": "A vitrine dos enfeites!",
+   "pacotes": [
+    "interior-loja"
+   ]
+  },
+  {
+   "chave": "b75aa2ac12",
+   "voz": "narradora",
+   "texto": "Eles se trocam por estrelas.",
+   "fala": "Eles se trocam por estrelas.",
+   "pacotes": [
+    "interior-loja"
+   ]
+  },
+  {
+   "chave": "489d5c86v",
+   "voz": "narradora",
+   "texto": "Os prêmios da Escola!",
+   "fala": "Os prêmios da Escola!",
+   "pacotes": [
+    "interior-loja"
+   ]
+  },
+  {
+   "chave": "23499087v",
+   "voz": "narradora",
+   "texto": "Esses não se compram.",
+   "fala": "Esses não se compram.",
+   "pacotes": [
+    "interior-loja"
+   ]
+  },
+  {
+   "chave": "555f789911",
+   "voz": "narradora",
+   "texto": "É só acertar tudo na prova.",
+   "fala": "É só acertar tudo na prova.",
+   "pacotes": [
+    "interior-loja"
+   ]
+  },
+  {
    "chave": "d037d7f4f",
    "voz": "npc-memoria",
    "texto": "Oi!",
@@ -8856,10 +10635,10 @@
    ]
   },
   {
-   "chave": "4542e45fy",
+   "chave": "6c9a456814",
    "voz": "npc-memoria",
-   "texto": "Você fez 1 de 5 salas.",
-   "fala": "Você fez 1 de 5 salas.",
+   "texto": "Você fez uma de cinco salas.",
+   "fala": "Você fez uma de cinco salas.",
    "pacotes": [
     "interior-museu"
    ]
@@ -8874,10 +10653,10 @@
    ]
   },
   {
-   "chave": "410a9f8ay",
+   "chave": "bca5f6d615",
    "voz": "npc-memoria",
-   "texto": "Você fez 2 de 5 salas.",
-   "fala": "Você fez 2 de 5 salas.",
+   "texto": "Você fez duas de cinco salas.",
+   "fala": "Você fez duas de cinco salas.",
    "pacotes": [
     "interior-museu"
    ]
@@ -8892,10 +10671,10 @@
    ]
   },
   {
-   "chave": "6849ae4dy",
+   "chave": "eaf02af415",
    "voz": "npc-memoria",
-   "texto": "Você fez 3 de 5 salas.",
-   "fala": "Você fez 3 de 5 salas.",
+   "texto": "Você fez três de cinco salas.",
+   "fala": "Você fez três de cinco salas.",
    "pacotes": [
     "interior-museu"
    ]
@@ -8910,10 +10689,10 @@
    ]
   },
   {
-   "chave": "41518bd8y",
+   "chave": "c6ec1fd917",
    "voz": "npc-memoria",
-   "texto": "Você fez 4 de 5 salas.",
-   "fala": "Você fez 4 de 5 salas.",
+   "texto": "Você fez quatro de cinco salas.",
+   "fala": "Você fez quatro de cinco salas.",
    "pacotes": [
     "interior-museu"
    ]
@@ -8928,10 +10707,10 @@
    ]
   },
   {
-   "chave": "d11b2288w",
+   "chave": "8c0970f510",
    "voz": "npc-memoria",
-   "texto": "Você fez as 5 salas!",
-   "fala": "Você fez as 5 salas!",
+   "texto": "Você fez as cinco salas!",
+   "fala": "Você fez as cinco salas!",
    "pacotes": [
     "interior-museu"
    ]
@@ -9090,28 +10869,28 @@
    ]
   },
   {
-   "chave": "7630c8fa12",
+   "chave": "97dc30b414",
    "voz": "npc-antonio",
-   "texto": "Mais 1 vez e o raro nasce!",
-   "fala": "Mais 1 vez e o raro nasce!",
+   "texto": "Mais uma vez e o raro nasce!",
+   "fala": "Mais uma vez e o raro nasce!",
    "pacotes": [
     "interior-museu"
    ]
   },
   {
-   "chave": "a78ac8d314",
+   "chave": "c7894e5417",
    "voz": "npc-antonio",
-   "texto": "Mais 2 vezes e o raro nasce!",
-   "fala": "Mais 2 vezes e o raro nasce!",
+   "texto": "Mais duas vezes e o raro nasce!",
+   "fala": "Mais duas vezes e o raro nasce!",
    "pacotes": [
     "interior-museu"
    ]
   },
   {
-   "chave": "a336405414",
+   "chave": "0b73d3ee17",
    "voz": "npc-antonio",
-   "texto": "Mais 3 vezes e o raro nasce!",
-   "fala": "Mais 3 vezes e o raro nasce!",
+   "texto": "Mais três vezes e o raro nasce!",
+   "fala": "Mais três vezes e o raro nasce!",
    "pacotes": [
     "interior-museu"
    ]
@@ -9225,28 +11004,28 @@
    ]
   },
   {
-   "chave": "802cd3fe10",
+   "chave": "f5c817c812",
    "voz": "npc-chico",
-   "texto": "Mais 1 vez e o raro nasce!",
-   "fala": "Mais 1 vez e o raro nasce!",
+   "texto": "Mais uma vez e o raro nasce!",
+   "fala": "Mais uma vez e o raro nasce!",
    "pacotes": [
     "interior-museu"
    ]
   },
   {
-   "chave": "0d23881f12",
+   "chave": "0d13513815",
    "voz": "npc-chico",
-   "texto": "Mais 2 vezes e o raro nasce!",
-   "fala": "Mais 2 vezes e o raro nasce!",
+   "texto": "Mais duas vezes e o raro nasce!",
+   "fala": "Mais duas vezes e o raro nasce!",
    "pacotes": [
     "interior-museu"
    ]
   },
   {
-   "chave": "d5dc6a7012",
+   "chave": "b38afd6a15",
    "voz": "npc-chico",
-   "texto": "Mais 3 vezes e o raro nasce!",
-   "fala": "Mais 3 vezes e o raro nasce!",
+   "texto": "Mais três vezes e o raro nasce!",
+   "fala": "Mais três vezes e o raro nasce!",
    "pacotes": [
     "interior-museu"
    ]
@@ -9360,28 +11139,28 @@
    ]
   },
   {
-   "chave": "ac520d7710",
+   "chave": "4170d82512",
    "voz": "npc-taina",
-   "texto": "Mais 1 vez e o raro nasce!",
-   "fala": "Mais 1 vez e o raro nasce!",
+   "texto": "Mais uma vez e o raro nasce!",
+   "fala": "Mais uma vez e o raro nasce!",
    "pacotes": [
     "interior-museu"
    ]
   },
   {
-   "chave": "eba559ae12",
+   "chave": "b7e74f8315",
    "voz": "npc-taina",
-   "texto": "Mais 2 vezes e o raro nasce!",
-   "fala": "Mais 2 vezes e o raro nasce!",
+   "texto": "Mais duas vezes e o raro nasce!",
+   "fala": "Mais duas vezes e o raro nasce!",
    "pacotes": [
     "interior-museu"
    ]
   },
   {
-   "chave": "7d5b797d12",
+   "chave": "f33f201d15",
    "voz": "npc-taina",
-   "texto": "Mais 3 vezes e o raro nasce!",
-   "fala": "Mais 3 vezes e o raro nasce!",
+   "texto": "Mais três vezes e o raro nasce!",
+   "fala": "Mais três vezes e o raro nasce!",
    "pacotes": [
     "interior-museu"
    ]
@@ -9495,28 +11274,28 @@
    ]
   },
   {
-   "chave": "aa281bb215",
+   "chave": "904b53fc17",
    "voz": "npc-contadeira",
-   "texto": "Mais 1 vez e o raro nasce!",
-   "fala": "Mais 1 vez e o raro nasce!",
+   "texto": "Mais uma vez e o raro nasce!",
+   "fala": "Mais uma vez e o raro nasce!",
    "pacotes": [
     "interior-museu"
    ]
   },
   {
-   "chave": "dec9d50b17",
+   "chave": "22aced9c1a",
    "voz": "npc-contadeira",
-   "texto": "Mais 2 vezes e o raro nasce!",
-   "fala": "Mais 2 vezes e o raro nasce!",
+   "texto": "Mais duas vezes e o raro nasce!",
+   "fala": "Mais duas vezes e o raro nasce!",
    "pacotes": [
     "interior-museu"
    ]
   },
   {
-   "chave": "a146d96c17",
+   "chave": "fbd60b861a",
    "voz": "npc-contadeira",
-   "texto": "Mais 3 vezes e o raro nasce!",
-   "fala": "Mais 3 vezes e o raro nasce!",
+   "texto": "Mais três vezes e o raro nasce!",
+   "fala": "Mais três vezes e o raro nasce!",
    "pacotes": [
     "interior-museu"
    ]
@@ -9639,28 +11418,28 @@
    ]
   },
   {
-   "chave": "14cc9c14z",
+   "chave": "e3b8822611",
    "voz": "npc-nina",
-   "texto": "Mais 1 vez e o raro nasce!",
-   "fala": "Mais 1 vez e o raro nasce!",
+   "texto": "Mais uma vez e o raro nasce!",
+   "fala": "Mais uma vez e o raro nasce!",
    "pacotes": [
     "interior-museu"
    ]
   },
   {
-   "chave": "df772ded11",
+   "chave": "06153e8a14",
    "voz": "npc-nina",
-   "texto": "Mais 2 vezes e o raro nasce!",
-   "fala": "Mais 2 vezes e o raro nasce!",
+   "texto": "Mais duas vezes e o raro nasce!",
+   "fala": "Mais duas vezes e o raro nasce!",
    "pacotes": [
     "interior-museu"
    ]
   },
   {
-   "chave": "53a8f2de11",
+   "chave": "3529e8e414",
    "voz": "npc-nina",
-   "texto": "Mais 3 vezes e o raro nasce!",
-   "fala": "Mais 3 vezes e o raro nasce!",
+   "texto": "Mais três vezes e o raro nasce!",
+   "fala": "Mais três vezes e o raro nasce!",
    "pacotes": [
     "interior-museu"
    ]
@@ -9698,7 +11477,8 @@
    "texto": "Vamos ler com calma?",
    "fala": "Vamos ler com calma?",
    "pacotes": [
-    "interior-museu"
+    "interior-museu",
+    "interior-torre"
    ]
   },
   {
@@ -9724,15 +11504,6 @@
    "voz": "narradora",
    "texto": "Entre numa sala sem pressa.",
    "fala": "Entre numa sala sem pressa.",
-   "pacotes": [
-    "interior-museu"
-   ]
-  },
-  {
-   "chave": "53271cedt",
-   "voz": "narradora",
-   "texto": "Um golinho de água?",
-   "fala": "Um golinho de água?",
    "pacotes": [
     "interior-museu"
    ]
@@ -9942,6 +11713,1536 @@
    "fala": "A quadrinha a gente canta!",
    "pacotes": [
     "interior-museu"
+   ]
+  },
+  {
+   "chave": "2e0b4123l",
+   "voz": "npc-ponteiro",
+   "texto": "Tic-tac!",
+   "fala": "Tic-tac!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "96b0405aw",
+   "voz": "npc-ponteiro",
+   "texto": "Sou o Seu Ponteiro.",
+   "fala": "Sou o Seu Ponteiro.",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "d013553211",
+   "voz": "npc-ponteiro",
+   "texto": "Cada andar tem uma sala.",
+   "fala": "Cada andar tem uma sala.",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "bc000e74u",
+   "voz": "npc-ponteiro",
+   "texto": "Quer ver a lista?",
+   "fala": "Quer ver a lista?",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "6e3b993b12",
+   "voz": "npc-ponteiro",
+   "texto": "Você ainda não fez salas.",
+   "fala": "Você ainda não fez salas.",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "c3c46cc016",
+   "voz": "npc-ponteiro",
+   "texto": "O treino do Castelo já abriu!",
+   "fala": "O treino do Castelo já abriu!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "5ac8b20e15",
+   "voz": "npc-ponteiro",
+   "texto": "Você fez uma de cinco salas.",
+   "fala": "Você fez uma de cinco salas.",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "f613d481v",
+   "voz": "npc-ponteiro",
+   "texto": "Já ganhou R$ 4,00!",
+   "fala": "Já ganhou 4 reais!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "2f5153a416",
+   "voz": "npc-ponteiro",
+   "texto": "Você fez duas de cinco salas.",
+   "fala": "Você fez duas de cinco salas.",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "c6d676f5v",
+   "voz": "npc-ponteiro",
+   "texto": "Já ganhou R$ 8,00!",
+   "fala": "Já ganhou 8 reais!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "08da2aa216",
+   "voz": "npc-ponteiro",
+   "texto": "Você fez três de cinco salas.",
+   "fala": "Você fez três de cinco salas.",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "115d7a8aw",
+   "voz": "npc-ponteiro",
+   "texto": "Já ganhou R$ 12,00!",
+   "fala": "Já ganhou 12 reais!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "c9868ff318",
+   "voz": "npc-ponteiro",
+   "texto": "Você fez quatro de cinco salas.",
+   "fala": "Você fez quatro de cinco salas.",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "e1329a5ew",
+   "voz": "npc-ponteiro",
+   "texto": "Já ganhou R$ 16,00!",
+   "fala": "Já ganhou 16 reais!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "f020370311",
+   "voz": "npc-ponteiro",
+   "texto": "Você fez as cinco salas!",
+   "fala": "Você fez as cinco salas!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "580c8fdfw",
+   "voz": "npc-ponteiro",
+   "texto": "Já ganhou R$ 20,00!",
+   "fala": "Já ganhou 20 reais!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "649c53d2z",
+   "voz": "npc-ponteiro",
+   "texto": "A primeira é a Sala 1!",
+   "fala": "A primeira é a Sala 1!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "da205d3b13",
+   "voz": "npc-ponteiro",
+   "texto": "Agora vamos para a Sala 1!",
+   "fala": "Agora vamos para a Sala 1!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "4a27c95013",
+   "voz": "npc-ponteiro",
+   "texto": "Agora vamos para a Sala 2!",
+   "fala": "Agora vamos para a Sala 2!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "e624ed4d13",
+   "voz": "npc-ponteiro",
+   "texto": "Agora vamos para a Sala 3!",
+   "fala": "Agora vamos para a Sala 3!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "562c596213",
+   "voz": "npc-ponteiro",
+   "texto": "Agora vamos para a Sala 4!",
+   "fala": "Agora vamos para a Sala 4!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "3229e21f13",
+   "voz": "npc-ponteiro",
+   "texto": "Agora vamos para a Sala 5!",
+   "fala": "Agora vamos para a Sala 5!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "e16132da10",
+   "voz": "narradora",
+   "texto": "A torre tem cinco andares.",
+   "fala": "A torre tem cinco andares.",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "82a0b39b11",
+   "voz": "narradora",
+   "texto": "São 5 salas, uma por andar.",
+   "fala": "São 5 salas, uma por andar.",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "13d9c891z",
+   "voz": "narradora",
+   "texto": "Suba a escada sem pressa.",
+   "fala": "Suba a escada sem pressa.",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "ccc144a9v",
+   "voz": "narradora",
+   "texto": "O Livro das Palavras!",
+   "fala": "O Livro das Palavras!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "1358081fx",
+   "voz": "narradora",
+   "texto": "Engrenagens do relógio!",
+   "fala": "Engrenagens do relógio!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "e4e1ce2813",
+   "voz": "narradora",
+   "texto": "Uma gira a outra, sem pressa.",
+   "fala": "Uma gira a outra, sem pressa.",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "cc636faaw",
+   "voz": "narradora",
+   "texto": "O relógio faz tic-tac!",
+   "fala": "O relógio faz tic-tac!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "075d292e10",
+   "voz": "narradora",
+   "texto": "Lá no alto mora o relógio.",
+   "fala": "Lá no alto mora o relógio.",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "f49f81a7h",
+   "voz": "npc-ben-en",
+   "texto": "Hello!",
+   "fala": "Hello!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "778b90d6g",
+   "voz": "npc-ben",
+   "texto": "Eu sou o",
+   "fala": "Eu sou o",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "f5d33e8bk",
+   "voz": "npc-ben-en",
+   "texto": "Coach Ben",
+   "fala": "Coach Ben",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "b7e0818111",
+   "voz": "npc-ben",
+   "texto": "Regras ajudam a viver juntos!",
+   "fala": "Regras ajudam a viver juntos!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "209b15d9z",
+   "voz": "npc-ben",
+   "texto": "Vamos ver as regras juntos?",
+   "fala": "Vamos ver as regras juntos?",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "75ef9252w",
+   "voz": "npc-ben",
+   "texto": "Quer jogar limpo comigo?",
+   "fala": "Quer jogar limpo comigo?",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "2ae2301010",
+   "voz": "npc-ben",
+   "texto": "Quer rever as regras comigo?",
+   "fala": "Quer rever as regras comigo?",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "e0173de011",
+   "voz": "npc-ben",
+   "texto": "Vamos treinar de novo juntos?",
+   "fala": "Vamos treinar de novo juntos?",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "b5f3291cx",
+   "voz": "npc-ben",
+   "texto": "Você leu com muita calma!",
+   "fala": "Você leu com muita calma!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "17972cc1k",
+   "voz": "npc-ben-en",
+   "texto": "Good job!",
+   "fala": "Good job!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "f0939cc3t",
+   "voz": "npc-ben",
+   "texto": "Que time lindo, hein!",
+   "fala": "Que time lindo, hein!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "bf2c91c412",
+   "voz": "npc-ben",
+   "texto": "Tudo bem, volte quando quiser!",
+   "fala": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "feee7af710",
+   "voz": "npc-ben",
+   "texto": "Mais uma vez e o raro nasce!",
+   "fala": "Mais uma vez e o raro nasce!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "6f8ac10113",
+   "voz": "npc-ben",
+   "texto": "Mais duas vezes e o raro nasce!",
+   "fala": "Mais duas vezes e o raro nasce!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "3f8f860313",
+   "voz": "npc-ben",
+   "texto": "Mais três vezes e o raro nasce!",
+   "fala": "Mais três vezes e o raro nasce!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "5a659f20y",
+   "voz": "npc-ben",
+   "texto": "Ou de primeira, com calma!",
+   "fala": "Ou de primeira, com calma!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "6579621210",
+   "voz": "npc-ben",
+   "texto": "O raro desta sala já nasceu!",
+   "fala": "O raro desta sala já nasceu!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "f0c17dc8n",
+   "voz": "ingles",
+   "texto": "Raise your hand!",
+   "fala": "Raise your hand!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "2791f276z",
+   "voz": "narradora",
+   "texto": "Levante a mão para falar.",
+   "fala": "Levante a mão para falar.",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "a097a56ar",
+   "voz": "ingles",
+   "texto": "Cheer for your team!",
+   "fala": "Cheer for your team!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "3efbfad7u",
+   "voz": "narradora",
+   "texto": "Torça pelo seu time!",
+   "fala": "Torça pelo seu time!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "3ee8d5b5q",
+   "voz": "ingles",
+   "texto": "Put your toys away!",
+   "fala": "Put your toys away!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "130c70cb10",
+   "voz": "narradora",
+   "texto": "Guarde os seus brinquedos.",
+   "fala": "Guarde os seus brinquedos.",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "c0c57695o",
+   "voz": "ingles",
+   "texto": "Play a fair game!",
+   "fala": "Play a fair game!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "7653aa6cy",
+   "voz": "narradora",
+   "texto": "No esporte, jogue limpo!",
+   "fala": "No esporte, jogue limpo!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "04a5e669k",
+   "voz": "npc-stella-en",
+   "texto": "Hello!",
+   "fala": "Hello!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "19046b82j",
+   "voz": "npc-stella",
+   "texto": "Eu sou a",
+   "fala": "Eu sou a",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "396ab13fp",
+   "voz": "npc-stella-en",
+   "texto": "Miss Stella",
+   "fala": "Miss Stella",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "f2c15cc8v",
+   "voz": "npc-stella",
+   "texto": "O sol é uma estrela!",
+   "fala": "O sol é uma estrela!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "88b10f0c10",
+   "voz": "npc-stella",
+   "texto": "Vamos olhar o céu juntas?",
+   "fala": "Vamos olhar o céu juntas?",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "577b98fb11",
+   "voz": "npc-stella",
+   "texto": "Quer conhecer os planetas?",
+   "fala": "Quer conhecer os planetas?",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "9b816dd814",
+   "voz": "npc-stella",
+   "texto": "Quer ver os planetas de novo?",
+   "fala": "Quer ver os planetas de novo?",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "a636807a13",
+   "voz": "npc-stella",
+   "texto": "Vamos olhar o sol outra vez?",
+   "fala": "Vamos olhar o sol outra vez?",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "8f6eb15d11",
+   "voz": "npc-stella",
+   "texto": "Você olhou tudo com calma!",
+   "fala": "Você olhou tudo com calma!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "8999cee8m",
+   "voz": "npc-stella-en",
+   "texto": "Amazing!",
+   "fala": "Amazing!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "be4bf1ads",
+   "voz": "npc-stella",
+   "texto": "Que viagem linda!",
+   "fala": "Que viagem linda!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "b6dde4ea15",
+   "voz": "npc-stella",
+   "texto": "Tudo bem, volte quando quiser!",
+   "fala": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "51e5ad1513",
+   "voz": "npc-stella",
+   "texto": "Mais uma vez e o raro nasce!",
+   "fala": "Mais uma vez e o raro nasce!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "970a879316",
+   "voz": "npc-stella",
+   "texto": "Mais duas vezes e o raro nasce!",
+   "fala": "Mais duas vezes e o raro nasce!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "55e66c0d16",
+   "voz": "npc-stella",
+   "texto": "Mais três vezes e o raro nasce!",
+   "fala": "Mais três vezes e o raro nasce!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "7f5706a611",
+   "voz": "npc-stella",
+   "texto": "Ou de primeira, com calma!",
+   "fala": "Ou de primeira, com calma!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "15d6e4c813",
+   "voz": "npc-stella",
+   "texto": "O raro desta sala já nasceu!",
+   "fala": "O raro desta sala já nasceu!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "a1bbd473u",
+   "voz": "narradora",
+   "texto": "O sol é uma estrela!",
+   "fala": "O sol é uma estrela!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "47f4af8cs",
+   "voz": "narradora",
+   "texto": "São oito planetas!",
+   "fala": "São oito planetas!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "a7affc0fv",
+   "voz": "narradora",
+   "texto": "é o terceiro planeta.",
+   "fala": "é o terceiro planeta.",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "d998b9fbs",
+   "voz": "narradora",
+   "texto": "As formas da arte!",
+   "fala": "As formas da arte!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "34d26d07d",
+   "voz": "ingles",
+   "texto": "Circle",
+   "fala": "Circle",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "5271c9d8m",
+   "voz": "narradora",
+   "texto": "é o círculo.",
+   "fala": "é o círculo.",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "e8c45d1710",
+   "voz": "narradora",
+   "texto": "Uma luneta para ver o céu!",
+   "fala": "Uma luneta para ver o céu!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "1eefe30fx",
+   "voz": "narradora",
+   "texto": "Ela mostra as estrelas!",
+   "fala": "Ela mostra as estrelas!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "9d67f777u",
+   "voz": "narradora",
+   "texto": "É um relógio de sol!",
+   "fala": "É um relógio de sol!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "ec925fade",
+   "voz": "ingles",
+   "texto": "Sundial",
+   "fala": "Sundial",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "20c78da9t",
+   "voz": "narradora",
+   "texto": "é o relógio de sol.",
+   "fala": "é o relógio de sol.",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "d8d3ca03x",
+   "voz": "narradora",
+   "texto": "A sombra mostra a hora.",
+   "fala": "A sombra mostra a hora.",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "28394cfat",
+   "voz": "narradora",
+   "texto": "É o protetor solar!",
+   "fala": "É o protetor solar!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "062195fbg",
+   "voz": "ingles",
+   "texto": "Sunscreen",
+   "fala": "Sunscreen",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "ef7ff023t",
+   "voz": "narradora",
+   "texto": "é o protetor solar.",
+   "fala": "é o protetor solar.",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "23cadbf6z",
+   "voz": "narradora",
+   "texto": "Ele protege a nossa pele.",
+   "fala": "Ele protege a nossa pele.",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "5b624f6dg",
+   "voz": "npc-smile-en",
+   "texto": "Hi!",
+   "fala": "Hi!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "51362975i",
+   "voz": "npc-smile",
+   "texto": "Eu sou o",
+   "fala": "Eu sou o",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "ffb51e1ep",
+   "voz": "npc-smile-en",
+   "texto": "Doctor Smile",
+   "fala": "Doctor Smile",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "e79b935810",
+   "voz": "npc-smile",
+   "texto": "Escovo os dentes todo dia!",
+   "fala": "Escovo os dentes todo dia!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "09c8021a13",
+   "voz": "npc-smile",
+   "texto": "Vamos cantar a rotina juntos?",
+   "fala": "Vamos cantar a rotina juntos?",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "ea259c7d14",
+   "voz": "npc-smile",
+   "texto": "Quer escovar os dentes comigo?",
+   "fala": "Quer escovar os dentes comigo?",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "5a8e684113",
+   "voz": "npc-smile",
+   "texto": "Quer cantar a rotina de novo?",
+   "fala": "Quer cantar a rotina de novo?",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "299ec89514",
+   "voz": "npc-smile",
+   "texto": "Vamos revisar a rotina juntos?",
+   "fala": "Vamos revisar a rotina juntos?",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "310ff2b513",
+   "voz": "npc-smile",
+   "texto": "Que sorriso lindo e limpinho!",
+   "fala": "Que sorriso lindo e limpinho!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "e5d9a01312",
+   "voz": "npc-smile",
+   "texto": "Você cantou com muita calma!",
+   "fala": "Você cantou com muita calma!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "6cda185314",
+   "voz": "npc-smile",
+   "texto": "Tudo bem, volte quando quiser!",
+   "fala": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "5cf9980012",
+   "voz": "npc-smile",
+   "texto": "Mais uma vez e o raro nasce!",
+   "fala": "Mais uma vez e o raro nasce!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "e0eafc5015",
+   "voz": "npc-smile",
+   "texto": "Mais duas vezes e o raro nasce!",
+   "fala": "Mais duas vezes e o raro nasce!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "2df3d43215",
+   "voz": "npc-smile",
+   "texto": "Mais três vezes e o raro nasce!",
+   "fala": "Mais três vezes e o raro nasce!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "8379e94310",
+   "voz": "npc-smile",
+   "texto": "Ou de primeira, com calma!",
+   "fala": "Ou de primeira, com calma!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "9c8c6ee512",
+   "voz": "npc-smile",
+   "texto": "O raro desta sala já nasceu!",
+   "fala": "O raro desta sala já nasceu!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "95a5e73f13",
+   "voz": "narradora",
+   "texto": "Toalhas para depois do banho!",
+   "fala": "Toalhas para depois do banho!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "212f389b13",
+   "voz": "narradora",
+   "texto": "Eu escovo os dentes todo dia.",
+   "fala": "Eu escovo os dentes todo dia.",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "334444be10",
+   "voz": "narradora",
+   "texto": "A pia com água fresquinha!",
+   "fala": "A pia com água fresquinha!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "c42d5b7dc",
+   "voz": "ingles",
+   "texto": "Brush",
+   "fala": "Brush",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "4b7aed1bt",
+   "voz": "narradora",
+   "texto": "quer dizer escovar.",
+   "fala": "quer dizer escovar.",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "f89d582ft",
+   "voz": "narradora",
+   "texto": "Uma escova gigante!",
+   "fala": "Uma escova gigante!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "0397e963u",
+   "voz": "narradora",
+   "texto": "quer dizer levantar.",
+   "fala": "quer dizer levantar.",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "2d0e7335i",
+   "voz": "npc-moon-en",
+   "texto": "Hello!",
+   "fala": "Hello!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "38ce325eh",
+   "voz": "npc-moon",
+   "texto": "Eu sou a",
+   "fala": "Eu sou a",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "c1e8c4efl",
+   "voz": "npc-moon-en",
+   "texto": "Miss Moon",
+   "fala": "Miss Moon",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "148209a410",
+   "voz": "npc-moon",
+   "texto": "Cuido do dia, do sol à lua.",
+   "fala": "Cuido do dia, do sol à lua.",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "2d8062e411",
+   "voz": "npc-moon",
+   "texto": "Vamos contar o dia do David?",
+   "fala": "Vamos contar o dia do David?",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "770f165a10",
+   "voz": "npc-moon",
+   "texto": "Quer ver a manhã e a noite?",
+   "fala": "Quer ver a manhã e a noite?",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "4ddd5ffaz",
+   "voz": "npc-moon",
+   "texto": "Quer rever o dia do David?",
+   "fala": "Quer rever o dia do David?",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "6c99528310",
+   "voz": "npc-moon",
+   "texto": "Vamos ver a rotina de novo?",
+   "fala": "Vamos ver a rotina de novo?",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "0a93e8f310",
+   "voz": "npc-moon",
+   "texto": "Você leu com muita atenção!",
+   "fala": "Você leu com muita atenção!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "d40220c2i",
+   "voz": "npc-moon-en",
+   "texto": "Great!",
+   "fala": "Great!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "2d894062t",
+   "voz": "npc-moon",
+   "texto": "Que dia bem contado!",
+   "fala": "Que dia bem contado!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "98e8d3a613",
+   "voz": "npc-moon",
+   "texto": "Tudo bem, volte quando quiser!",
+   "fala": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "53084a2111",
+   "voz": "npc-moon",
+   "texto": "Mais uma vez e o raro nasce!",
+   "fala": "Mais uma vez e o raro nasce!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "d76099cf14",
+   "voz": "npc-moon",
+   "texto": "Mais duas vezes e o raro nasce!",
+   "fala": "Mais duas vezes e o raro nasce!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "55c2aed114",
+   "voz": "npc-moon",
+   "texto": "Mais três vezes e o raro nasce!",
+   "fala": "Mais três vezes e o raro nasce!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "e4ef37aaz",
+   "voz": "npc-moon",
+   "texto": "Ou de primeira, com calma!",
+   "fala": "Ou de primeira, com calma!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "7598355c11",
+   "voz": "npc-moon",
+   "texto": "O raro desta sala já nasceu!",
+   "fala": "O raro desta sala já nasceu!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "dde04afdy",
+   "voz": "narradora",
+   "texto": "O dia, do sol até a lua!",
+   "fala": "O dia, do sol até a lua!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "d776f915r",
+   "voz": "narradora",
+   "texto": "quer dizer manhã.",
+   "fala": "quer dizer manhã.",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "a3970942r",
+   "voz": "narradora",
+   "texto": "quer dizer tarde.",
+   "fala": "quer dizer tarde.",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "77c0ef45r",
+   "voz": "narradora",
+   "texto": "quer dizer noite.",
+   "fala": "quer dizer noite.",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "ab1f5b2ev",
+   "voz": "narradora",
+   "texto": "Uma cama bem fofinha!",
+   "fala": "Uma cama bem fofinha!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "013a0952q",
+   "voz": "narradora",
+   "texto": "A lição de casa!",
+   "fala": "A lição de casa!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "d9f53eaes",
+   "voz": "narradora",
+   "texto": "é a lição de casa.",
+   "fala": "é a lição de casa.",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "888f3885r",
+   "voz": "narradora",
+   "texto": "A mesa do almoço!",
+   "fala": "A mesa do almoço!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "996150adc",
+   "voz": "ingles",
+   "texto": "Lunch",
+   "fala": "Lunch",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "52d72f3bs",
+   "voz": "narradora",
+   "texto": "quer dizer almoço.",
+   "fala": "quer dizer almoço.",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "d35f6e1fe",
+   "voz": "npc-joy-en",
+   "texto": "Hi!",
+   "fala": "Hi!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "e777c4d7g",
+   "voz": "npc-joy",
+   "texto": "Eu sou o",
+   "fala": "Eu sou o",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "60d0fcb3l",
+   "voz": "npc-joy-en",
+   "texto": "Mister Joy",
+   "fala": "Mister Joy",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "56bbf968x",
+   "voz": "npc-joy",
+   "texto": "Todo sentimento é normal!",
+   "fala": "Todo sentimento é normal!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "1ee2470410",
+   "voz": "npc-joy",
+   "texto": "Vamos cantar e bater palmas?",
+   "fala": "Vamos cantar e bater palmas?",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "35000362z",
+   "voz": "npc-joy",
+   "texto": "Quer falar dos sentimentos?",
+   "fala": "Quer falar dos sentimentos?",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "13694cad11",
+   "voz": "npc-joy",
+   "texto": "Quer cantar a música de novo?",
+   "fala": "Quer cantar a música de novo?",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "f7390f2811",
+   "voz": "npc-joy",
+   "texto": "Vamos bater palmas outra vez?",
+   "fala": "Vamos bater palmas outra vez?",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "5e383cf0y",
+   "voz": "npc-joy",
+   "texto": "Você cantou com o coração!",
+   "fala": "Você cantou com o coração!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "df3aa26fl",
+   "voz": "npc-joy-en",
+   "texto": "I'm happy!",
+   "fala": "I'm happy!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "d650249dm",
+   "voz": "npc-joy",
+   "texto": "E você também?",
+   "fala": "E você também?",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "566a359112",
+   "voz": "npc-joy",
+   "texto": "Tudo bem, volte quando quiser!",
+   "fala": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "b62002fe10",
+   "voz": "npc-joy",
+   "texto": "Mais uma vez e o raro nasce!",
+   "fala": "Mais uma vez e o raro nasce!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "60bf270213",
+   "voz": "npc-joy",
+   "texto": "Mais duas vezes e o raro nasce!",
+   "fala": "Mais duas vezes e o raro nasce!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "ce723e8c13",
+   "voz": "npc-joy",
+   "texto": "Mais três vezes e o raro nasce!",
+   "fala": "Mais três vezes e o raro nasce!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "959bb471y",
+   "voz": "npc-joy",
+   "texto": "Ou de primeira, com calma!",
+   "fala": "Ou de primeira, com calma!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "0bbd332b10",
+   "voz": "npc-joy",
+   "texto": "O raro desta sala já nasceu!",
+   "fala": "O raro desta sala já nasceu!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "32292f01a",
+   "voz": "ingles",
+   "texto": "sad",
+   "fala": "sad",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "a37dc215z",
+   "voz": "narradora",
+   "texto": "Todo sentimento é normal.",
+   "fala": "Todo sentimento é normal.",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "32790e54s",
+   "voz": "narradora",
+   "texto": "Um piano colorido!",
+   "fala": "Um piano colorido!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "9154ac60w",
+   "voz": "narradora",
+   "texto": "Bata palmas bem feliz!",
+   "fala": "Bata palmas bem feliz!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "c6effe56t",
+   "voz": "narradora",
+   "texto": "Um pandeiro alegre!",
+   "fala": "Um pandeiro alegre!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "399e9ce2n",
+   "voz": "ingles",
+   "texto": "Stamp your foot!",
+   "fala": "Stamp your foot!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "b7bd8e0cs",
+   "voz": "narradora",
+   "texto": "Bata o pé no chão!",
+   "fala": "Bata o pé no chão!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "a2023b2a13",
+   "voz": "narradora",
+   "texto": "O mostrador visto por dentro!",
+   "fala": "O mostrador visto por dentro!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "71d864ba11",
+   "voz": "narradora",
+   "texto": "Os ponteiros giram devagar.",
+   "fala": "Os ponteiros giram devagar.",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "bd80f6edw",
+   "voz": "narradora",
+   "texto": "O pêndulo vai e volta.",
+   "fala": "O pêndulo vai e volta.",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "bf6d196c11",
+   "voz": "narradora",
+   "texto": "Tic, tac, sempre com calma.",
+   "fala": "Tic, tac, sempre com calma.",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "32bca5a9v",
+   "voz": "narradora",
+   "texto": "A engrenagem gigante!",
+   "fala": "A engrenagem gigante!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "3fd6f8d613",
+   "voz": "narradora",
+   "texto": "Ela faz os ponteiros girarem.",
+   "fala": "Ela faz os ponteiros girarem.",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "e1760827q",
+   "voz": "narradora",
+   "texto": "O sino da torre!",
+   "fala": "O sino da torre!",
+   "pacotes": [
+    "interior-torre"
+   ]
+  },
+  {
+   "chave": "f4fecd14x",
+   "voz": "narradora",
+   "texto": "Ele toca na hora certa.",
+   "fala": "Ele toca na hora certa.",
+   "pacotes": [
+    "interior-torre"
    ]
   }
  ]

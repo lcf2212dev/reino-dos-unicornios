@@ -106,6 +106,10 @@
     // teclado no balão MODAL: Enter/Espaço acionam o botão focado (ou o principal); Esc aciona o "não" ou fecha
     window.addEventListener('keydown', function (e) {
       if (!aberto || e.repeat) return;
+      // campo de texto em foco ou tela por cima: o teclado é deles
+      var at = document.activeElement;
+      if (at && at.matches && at.matches('input, textarea, select, [contenteditable], [contenteditable] *')) return;
+      if (Reino.UI && Reino.UI.temTela && Reino.UI.temTela()) return;
       if (e.key === 'Escape' && (aberto.modal || aberto.botoes)) {
         var nao = bal.querySelector('.claude-acoes button[data-valor="nao"]');
         if (!nao && !aberto.modal) return;
@@ -208,6 +212,8 @@
       var item = { texto: texto, fala: opcoes.fala, voz: opcoes.voz, tipo: opcoes.tipo, tempo: opcoes.tempo || 0, falar: opcoes.falar, resolver: resolver,
         quem: opcoes.quem || null, botoes: opcoes.botoes && opcoes.botoes.length ? opcoes.botoes : null, extra: opcoes.extra || null, modal: !!opcoes.modal };
       if (opcoes.agora && aberto) { fila.unshift(item); fechar(); return; }
+      // modal passa na frente de um balão comum, para ela não sair andando
+      if (item.modal && aberto && !aberto.modal) { fechar(); mostrar(item); return; }
       if (aberto) fila.push(item); else mostrar(item);
     });
   };
