@@ -403,18 +403,45 @@
         ret(ctx, x + 1, py + 12, 6, 1, 'rgba(255,255,255,0.5)');
       });
     } });
-  // na parede: chuveirinho de dar banho (pinga com Animações)
+  // desenho em mapa de pixels: cada letra é uma cor (o ponto é transparente)
+  function mapaPixels(ctx, x0, y0, linhas, cores) {
+    for (var j = 0; j < linhas.length; j++) for (var i = 0; i < linhas[j].length; i++) {
+      var c = cores[linhas[j][i]];
+      if (c) ret(ctx, x0 + i, y0 + j, 1, 1, c);
+    }
+  }
+  // na parede: chuveirinho de mão de dar banho — o cabo apoiado no suporte rosa, a cabeça redonda
+  // virada para baixo com os furinhos e os jatinhos, e a mangueira sanfonada descendo até o registro
+  // (os pingos correm com Animações). Começa em py + 11, para não encostar na placa do cômodo.
+  var CHUVEIRINHO = [
+    '...........KKKK.',
+    '..........KrbrrK',
+    '..........KrrRRK',
+    '.........KKKKKK.',
+    '........KbmK.KgK',
+    '.......KmmK..KmK',
+    '......KmmK...KgK',
+    '...KKKmmK....KmK',
+    '..KrrbrrrK...KgK',
+    '.KrrrrrrrrK..KmK',
+    '.KRRRRRRRRK.KgK.',
+    'KKKKKKKKKKKKKmK.',
+    'KmAmAmAmAmmKKK..',
+    '.KKKKKKKKKK.KrK.',
+    '.a..a..a..a.KRK.',
+    'a..a..a..a...K..',
+    '.a..a..a.a......',
+  ];
   I.objeto('petshop-chuveirinho', { w: 1, h: 2, parede: true, solido: false,
     desenhar: function (ctx, px, py) {
-      ret(ctx, px + 7, py + 3, 3, 12, K); ret(ctx, px + 8, py + 3, 1, 11, C.metal);
-      ret(ctx, px + 3, py + 13, 11, 5, K); ret(ctx, px + 4, py + 14, 9, 3, C.metal); ret(ctx, px + 4, py + 16, 9, 1, C.metal2);
-      for (var i = 0; i < 4; i++) ret(ctx, px + 5 + i * 2, py + 17, 1, 1, K);
-      ret(ctx, px + 2, py + 22, 5, 5, K); ret(ctx, px + 3, py + 23, 3, 3, ROSA); ret(ctx, px + 10, py + 22, 5, 5, K); ret(ctx, px + 11, py + 23, 3, 3, '#5fb4ff');
+      mapaPixels(ctx, px, py + 11, CHUVEIRINHO, { K: K, r: ROSA, R: ROSA2, b: C.branco, m: C.metal, g: C.metal2, A: AGUA2, a: AGUA3 });
     },
     anim: function (ctx, px, py, t) {
       if (!t) return;
-      var s = (t / 900) % 1;
-      ret(ctx, px + 7, Math.round(py + 19 + s * 10), 1, 2, AGUA2);
+      for (var i = 0; i < 3; i++) {
+        var s = (t / 650 + i / 3) % 1;
+        ret(ctx, px + 1 + i * 3 - Math.round(s * 2), Math.round(py + 25 + s * 5), 1, 2, AGUA3);
+      }
     } });
   // pilha de toalhas dobradas no banquinho
   I.objeto('petshop-pilha-toalhas', { w: 1, h: 1, topo: 8, solido: true,
@@ -474,14 +501,20 @@
         ret(ctx, x, y - 4, 4, 4, K); ret(ctx, x + 1, y - 3, 2, 2, C.ouro); ret(ctx, x + 4, y - 2, 2, 1, LAR); ret(ctx, x + 2, y - 3, 1, 1, K);
       });
     } });
-  // pocinha de espuma no chão (plana, andável)
+  // poça de espuma no chão (plana, andável): lâmina d'água azul baixinha e brilhante, com bolhas redondas na beira
+  // (nada de montinho branco, para não parecer nuvem)
+  var POCA = [
+    '...........oo...',
+    '..oo......owwo..',
+    '.owwooooooowwoo.',
+    'ooaalwlaaaaaaaao',
+    'oaaaaaaaaaaaawao',
+    '.ooaaaaaaaaaaoo.',
+    '...oooooooooo...',
+  ];
   I.objeto('petshop-espuma', { w: 1, h: 1, solido: false, semSombra: true, plano: true,
     desenhar: function (ctx, px, py) {
-      elipse(ctx, px + 8, py + 10, 7, 3, '#8fd0ec');
-      elipse(ctx, px + 8, py + 10, 6, 2, '#d9f3ff');
-      [[4, 9, 2], [8, 8, 3], [12, 10, 2], [7, 12, 1]].forEach(function (b) { circulo(ctx, px + b[0], py + b[1], b[2] + 1, '#8fd0ec'); });
-      [[4, 9, 2], [8, 8, 3], [12, 10, 2], [7, 12, 1]].forEach(function (b) { circulo(ctx, px + b[0], py + b[1], b[2], C.branco); });
-      ret(ctx, px + 9, py + 7, 1, 1, '#9fdcff');
+      mapaPixels(ctx, px, py + 6, POCA, { o: AGUA3, a: AGUA, l: AGUA2, w: C.branco });
     } });
 
   /* ================= AJUDANTES DE MONTAGEM ================= */
@@ -548,20 +581,19 @@
   var agua = [
     // parede do fundo (y 1-2)
     { tipo: 'janela', x: 16, y: 1 },
-    { tipo: 'petshop-chuveirinho', x: 17, y: 1 },
-    { tipo: 'arandela', x: 18, y: 1 },
+    { tipo: 'arandela', x: 17, y: 1 },            // longe da placa do cômodo (a chama não encosta)
+    { tipo: 'petshop-chuveirinho', x: 18, y: 1 },
     { tipo: 'espelho', x: 22, y: 1 },
     inter('toalhas', 'Toalhas', { tipo: 'petshop-toalhas', x: 23, y: 1 }),
     // fundo: o bebedouro grande no meio
     { tipo: 'petshop-xampus', x: 16, y: 3 },
     { tipo: 'petshop-pilha-toalhas', x: 17, y: 3 },
     { tipo: 'petshop-balde-espuma', x: 18, y: 3 },
-    { tipo: 'vaso-planta', x: 16, y: 4, var: { vaso: '#5fb4ff' } },
     { tipo: 'petshop-bebedouro', x: 19, y: 3, nome: 'Bebedouro', acao: { tipo: 'beber' } },
     { tipo: 'balde', x: 22, y: 3 },
     { tipo: 'flores', x: 24, y: 3, var: { vaso: '#ff9cc6' } },
     { tipo: 'petshop-xampus', x: 18, y: 4 },
-    { tipo: 'petshop-espuma', x: 16, y: 5 },
+    { tipo: 'vaso-planta', x: 16, y: 5, var: { vaso: '#5fb4ff' } },   // 1 fileira abaixo: os xampus aparecem inteiros
     { tipo: 'tapete-redondo', x: 17, y: 5, w: 2, h: 2, var: { cores: ['#5fb4ff', '#bfe9ff', '#ffffff', '#9fdcff'] } },
     { tipo: 'petshop-tapete-banho', x: 19, y: 5, w: 3, h: 1 },
     { tipo: 'flores', x: 24, y: 5, var: { vaso: '#9fdcff' } },
@@ -679,10 +711,16 @@
       for (var tx = cx - meia + 2; tx < cx + meia - 2; tx += 6) ret(ctx, tx, tj, 3, 1, telhado2);
     }
     ret(ctx, px + 1, py + 23, w - 2, 3, K); ret(ctx, px + 2, py + 24, w - 4, 1, telhado2);
-    // placa da patinha no telhado (redonda, pendurada)
-    circulo(ctx, cx, py + 14, 8, K); circulo(ctx, cx, py + 14, 7, C.creme); circulo(ctx, cx, py + 14, 5, ROSA3);
-    elipse(ctx, cx, py + 16, 2, 1, ROSA2); ret(ctx, cx - 1, py + 18, 3, 1, ROSA2);
-    ret(ctx, cx - 3, py + 12, 1, 2, ROSA2); ret(ctx, cx - 1, py + 11, 1, 1, ROSA2); ret(ctx, cx + 1, py + 11, 1, 1, ROSA2); ret(ctx, cx + 3, py + 12, 1, 2, ROSA2);
+    // placa da patinha no telhado: plaquinha redonda clarinha com uma patinha escura e bem marcada
+    // (4 dedinhos separados + almofada), que se lê mesmo em 1× e não vira carinha de porquinho
+    var PATA = '#7a2a66';
+    circulo(ctx, cx, py + 14, 8, K); circulo(ctx, cx, py + 14, 7, C.branco);
+    // 4 dedinhos do mesmo tamanho em arco (os do meio mais altos), bem separados da almofada
+    ret(ctx, cx - 2, py + 10, 2, 2, PATA); ret(ctx, cx + 1, py + 10, 2, 2, PATA);
+    ret(ctx, cx - 5, py + 12, 2, 2, PATA); ret(ctx, cx + 4, py + 12, 2, 2, PATA);
+    // almofada: gota larga, estreita em cima e arredondada embaixo
+    ret(ctx, cx - 1, py + 14, 3, 1, PATA); ret(ctx, cx - 2, py + 15, 5, 1, PATA);
+    ret(ctx, cx - 3, py + 16, 7, 2, PATA); ret(ctx, cx - 2, py + 18, 5, 1, PATA);
     // ossinho de cata-vento no topo
     ret(ctx, cx, py - 2, 1, 7, K);
     ret(ctx, cx - 4, py - 3, 9, 3, K); ret(ctx, cx - 3, py - 2, 7, 1, C.creme); ret(ctx, cx - 5, py - 4, 2, 2, K); ret(ctx, cx + 4, py - 4, 2, 2, K); ret(ctx, cx - 5, py - 1, 2, 2, K); ret(ctx, cx + 4, py - 1, 2, 2, K);
