@@ -13604,10 +13604,10 @@
    ]
   },
   {
-   "chave": "afc520cey",
+   "chave": "feb9089a12",
    "voz": "npc-vega",
-   "texto": "É uma bola de gás quente.",
-   "fala": "É uma bola de gás quente.",
+   "texto": "Ele é uma bola de gás quente.",
+   "fala": "Ele é uma bola de gás quente.",
    "pacotes": [
     "interior-observatorio"
    ]
@@ -13883,10 +13883,10 @@
    ]
   },
   {
-   "chave": "dab21edc10",
+   "chave": "8a1efd5312",
    "voz": "npc-vega",
-   "texto": "É mais quente que Mercúrio!",
-   "fala": "É mais quente que Mercúrio!",
+   "texto": "Mais quente até que Mercúrio!",
+   "fala": "Mais quente até que Mercúrio!",
    "pacotes": [
     "interior-observatorio"
    ]
@@ -14099,10 +14099,10 @@
    ]
   },
   {
-   "chave": "a645c9d310",
+   "chave": "45b8aed8y",
    "voz": "npc-vega",
-   "texto": "É o maior do Sistema Solar!",
-   "fala": "É o maior do Sistema Solar!",
+   "texto": "O maior do Sistema Solar!",
+   "fala": "O maior do Sistema Solar!",
    "pacotes": [
     "interior-observatorio"
    ]
@@ -14189,10 +14189,10 @@
    ]
   },
   {
-   "chave": "7e0dda5ay",
+   "chave": "88e644b212",
    "voz": "npc-vega",
-   "texto": "É uma tempestade gigante!",
-   "fala": "É uma tempestade gigante!",
+   "texto": "Ela é uma tempestade gigante!",
+   "fala": "Ela é uma tempestade gigante!",
    "pacotes": [
     "interior-observatorio"
    ]
@@ -14369,10 +14369,10 @@
    ]
   },
   {
-   "chave": "f3efb3daz",
+   "chave": "41acdad812",
    "voz": "npc-vega",
-   "texto": "É o planeta mais distante!",
-   "fala": "É o planeta mais distante!",
+   "texto": "Ele é o mais distante do Sol!",
+   "fala": "Ele é o mais distante do Sol!",
    "pacotes": [
     "interior-observatorio"
    ]
@@ -14450,10 +14450,10 @@
    ]
   },
   {
-   "chave": "368d591010",
+   "chave": "110980ef11",
    "voz": "npc-vega",
-   "texto": "É uma grande área clarinha.",
-   "fala": "É uma grande área clarinha.",
+   "texto": "Ele é uma área bem clarinha.",
+   "fala": "Ele é uma área bem clarinha.",
    "pacotes": [
     "interior-observatorio"
    ]
@@ -14468,10 +14468,10 @@
    ]
   },
   {
-   "chave": "5aa5f4e811",
+   "chave": "80eb5320z",
    "voz": "npc-vega",
-   "texto": "É um mundo pequeno e gelado.",
-   "fala": "É um mundo pequeno e gelado.",
+   "texto": "Um mundo pequeno e gelado!",
+   "fala": "Um mundo pequeno e gelado!",
    "pacotes": [
     "interior-observatorio"
    ]
@@ -14567,10 +14567,10 @@
    ]
   },
   {
-   "chave": "3ac3ed4b11",
+   "chave": "8e4fdb83x",
    "voz": "npc-vega",
-   "texto": "É um meteoro riscando o céu.",
-   "fala": "É um meteoro riscando o céu.",
+   "texto": "Ela é um meteoro no céu!",
+   "fala": "Ela é um meteoro no céu!",
    "pacotes": [
     "interior-observatorio"
    ]
@@ -14648,10 +14648,10 @@
    ]
   },
   {
-   "chave": "502214c5z",
+   "chave": "b7c4db3913",
    "voz": "npc-vega",
-   "texto": "É o céu do Rio de Janeiro.",
-   "fala": "É o céu do Rio de Janeiro.",
+   "texto": "Ele é o céu do Rio de Janeiro.",
+   "fala": "Ele é o céu do Rio de Janeiro.",
    "pacotes": [
     "interior-observatorio"
    ]
@@ -14801,10 +14801,10 @@
    ]
   },
   {
-   "chave": "e92fcd75u",
+   "chave": "acae745d11",
    "voz": "npc-vega",
-   "texto": "É a estação espacial!",
-   "fala": "É a estação espacial!",
+   "texto": "Aquela estação lá no espaço!",
+   "fala": "Aquela estação lá no espaço!",
    "pacotes": [
     "interior-observatorio"
    ]
@@ -15053,10 +15053,10 @@
    ]
   },
   {
-   "chave": "1f3223a911",
+   "chave": "cb3bbeb712",
    "voz": "npc-vega",
-   "texto": "É perto da linha do Equador!",
-   "fala": "É perto da linha do Equador!",
+   "texto": "Pertinho da linha do Equador!",
+   "fala": "Pertinho da linha do Equador!",
    "pacotes": [
     "interior-observatorio"
    ]

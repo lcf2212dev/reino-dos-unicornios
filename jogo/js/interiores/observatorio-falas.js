@@ -46,7 +46,7 @@
 
     curiosidades: [
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/all-about-the-sun/en/
-      { id: 'sol-estrela', tema: 'sol', paginas: ['O Sol é uma estrela.', 'É uma bola de gás quente.', 'Nunca olhe direto para ele.'] },
+      { id: 'sol-estrela', tema: 'sol', paginas: ['O Sol é uma estrela.', 'Ele é uma bola de gás quente.', 'Nunca olhe direto para ele.'] },
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/all-about-the-sun/en/
       { id: 'sol-tamanho', tema: 'sol', paginas: ['O Sol é enorme!', 'Pense em cem Terras em fila.', 'A fila tem a largura do Sol!'] },
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/all-about-the-sun/en/
@@ -76,7 +76,7 @@
 
       // fonte 2: NASA Space Place — https://spaceplace.nasa.gov/all-about-mercury/en/
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/all-about-venus/en/
-      { id: 'venus-quente', tema: 'venus', paginas: ['Vênus é o planeta mais quente.', 'É mais quente que Mercúrio!', 'Ele tem nuvens bem grossas.'] },
+      { id: 'venus-quente', tema: 'venus', paginas: ['Vênus é o planeta mais quente.', 'Mais quente até que Mercúrio!', 'Ele tem nuvens bem grossas.'] },
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/all-about-venus/en/
       { id: 'venus-contrario', tema: 'venus', paginas: ['Vênus gira ao contrário.', 'Lá o Sol nasce no oeste!'] },
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/all-about-venus/en/
@@ -100,7 +100,7 @@
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/all-about-mars/
       { id: 'marte-ferrugem', tema: 'marte', paginas: ['Marte é o planeta vermelho.', 'O chão dele tem ferrugem!'] },
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/volcanoes/en/
-      { id: 'marte-vulcao', tema: 'marte', paginas: ['Marte tem um vulcão gigante.', 'É o maior do Sistema Solar!', 'Ele se chama Monte Olimpo.'] },
+      { id: 'marte-vulcao', tema: 'marte', paginas: ['Marte tem um vulcão gigante.', 'O maior do Sistema Solar!', 'Ele se chama Monte Olimpo.'] },
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/all-about-mars/
       { id: 'marte-tamanho', tema: 'marte', paginas: ['Marte é menor que a Terra.', 'Tem metade da largura dela.'] },
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/all-about-mars/
@@ -109,7 +109,7 @@
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/all-about-jupiter/
       { id: 'jupiter-maior', tema: 'jupiter', paginas: ['Júpiter é o maior planeta.', 'Ele é uma bola de gás.', 'Não dá para pisar nele!'] },
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/all-about-jupiter/
-      { id: 'jupiter-mancha', tema: 'jupiter', paginas: ['Júpiter tem uma mancha.', 'É uma tempestade gigante!', 'Ela é maior que a Terra.'] },
+      { id: 'jupiter-mancha', tema: 'jupiter', paginas: ['Júpiter tem uma mancha.', 'Ela é uma tempestade gigante!', 'Ela é maior que a Terra.'] },
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/all-about-jupiter/
       { id: 'jupiter-dia', tema: 'jupiter', paginas: ['Um dia em Júpiter é curtinho.', 'Dura só umas dez horas.'] },
 
@@ -131,7 +131,7 @@
       // fonte: ESA Kids — https://www.esa.int/kids/es/Aprende/Nuestro_Universo/Planetas_y_lunas/Neptuno
       { id: 'netuno-ventos', tema: 'netuno', paginas: ['Netuno tem ventos fortes.', 'E grandes tempestades também!'] },
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/all-about-neptune/
-      { id: 'netuno-longe', tema: 'netuno', paginas: ['Netuno é o oitavo planeta.', 'É o planeta mais distante!'] },
+      { id: 'netuno-longe', tema: 'netuno', paginas: ['Netuno é o oitavo planeta.', 'Ele é o mais distante do Sol!'] },
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/all-about-neptune/
       { id: 'netuno-ano', tema: 'netuno', paginas: ['Um ano em Netuno é enorme!', 'Passa de cem anos da Terra.'] },
       // fonte: ESA Kids — https://www.esa.int/kids/es/Aprende/Nuestro_Universo/Planetas_y_lunas/Neptuno
@@ -140,9 +140,9 @@
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/all-about-pluto/
       { id: 'plutao-anao', tema: 'plutao', paginas: ['Plutão é um planeta-anão.', 'Ele mora bem longe do Sol.', 'Lá tem muitos mundos gelados.'] },
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/all-about-pluto/
-      { id: 'plutao-coracao', tema: 'plutao', paginas: ['Plutão tem um coração!', 'É uma grande área clarinha.'] },
+      { id: 'plutao-coracao', tema: 'plutao', paginas: ['Plutão tem um coração!', 'Ele é uma área bem clarinha.'] },
       // fonte: ESA Kids — https://www.esa.int/kids/es/Aprende/Nuestro_Universo/Planetas_y_lunas/Pluton
-      { id: 'plutao-pequeno', tema: 'plutao', paginas: ['Plutão é menor que a Lua.', 'É um mundo pequeno e gelado.'] },
+      { id: 'plutao-pequeno', tema: 'plutao', paginas: ['Plutão é menor que a Lua.', 'Um mundo pequeno e gelado!'] },
 
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/sun-compare/en/
       { id: 'estrelas-sol', tema: 'estrelas', paginas: ['Nosso Sol tem tamanho médio.', 'Há estrelas maiores que ele.', 'E há estrelas menores também.'] },
@@ -151,7 +151,7 @@
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/nebula/en/
       { id: 'estrelas-bercario', tema: 'estrelas', paginas: ['Estrelas nascem em nuvens.', 'São nuvens de poeira e gás.', 'Há nuvens que são berçários!'] },
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/meteor-shower/en/
-      { id: 'estrelas-cadente', tema: 'estrelas', paginas: ['Estrela cadente não é estrela!', 'É um meteoro riscando o céu.', 'O ar em volta dele brilha.'] },
+      { id: 'estrelas-cadente', tema: 'estrelas', paginas: ['Estrela cadente não é estrela!', 'Ela é um meteoro no céu!', 'O ar em volta dele brilha.'] },
       // fonte 2: NASA StarChild — https://starchild.gsfc.nasa.gov/docs/StarChild/questions/question26.html
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/review/cosmic-colors/hubble.html
       { id: 'estrelas-piscam', tema: 'estrelas', paginas: ['Por que a estrela pisca?', 'A luz dela passa pelo ar.', 'O ar mexe, e a luz balança!'] },
@@ -160,7 +160,7 @@
       // fonte: NASA JPL — https://www.jpl.nasa.gov/images/pia13442-dark-reflections-in-the-southern-cross/
       { id: 'constelacoes-cruzeiro', tema: 'constelacoes', paginas: ['O Cruzeiro do Sul é uma cruz.', 'Ele está na nossa bandeira!', 'Vemos bem no Hemisfério Sul.'] },
       // fonte: Agência Espacial Brasileira — https://www.gov.br/aeb/pt-br/centrais-de-conteudo/publicacoes/instagram-do-periodo-de-defeso-eleitoral-2022/curiosidades-do-espaco-bandeira-nacional-e-constelacoes
-      { id: 'constelacoes-bandeira', tema: 'constelacoes', paginas: ['A bandeira mostra um céu.', 'É o céu do Rio de Janeiro.', 'Foi no dia da República!'] },
+      { id: 'constelacoes-bandeira', tema: 'constelacoes', paginas: ['A bandeira mostra um céu.', 'Ele é o céu do Rio de Janeiro.', 'Foi no dia da República!'] },
       // fonte: Agência Espacial Brasileira — https://www.gov.br/aeb/pt-br/centrais-de-conteudo/publicacoes/instagram-do-periodo-de-defeso-eleitoral-2022/curiosidades-do-espaco-bandeira-nacional-e-constelacoes
       { id: 'constelacoes-estados', tema: 'constelacoes', paginas: ['Nossa bandeira tem estrelas.', 'Elas lembram nossos estados.', 'E também o Distrito Federal.'] },
       // fonte 2: USP São Carlos — https://saocarlos.usp.br/aprenda-mais-sobre-a-constelacao-de-orion-as-tres-marias-e-sua-familia-estelar-no-sessao-astronomia-deste-sabado/
@@ -175,7 +175,7 @@
       // fonte: NASA — https://www.nasa.gov/history/space-station-20th-space-flight-participants/
       { id: 'astronautas-marcos-pontes', tema: 'astronautas', paginas: ['Marcos Pontes foi ao espaço!', 'Ele foi o primeiro do Brasil!', 'Foi em dois mil e seis.'] },
       // fonte: NASA — https://www.nasa.gov/history/space-station-20th-space-flight-participants/
-      { id: 'astronautas-pontes-estacao', tema: 'astronautas', paginas: ['Marcos Pontes foi à estação.', 'É a estação espacial!', 'Ficou oito dias e fez ciência!'] },
+      { id: 'astronautas-pontes-estacao', tema: 'astronautas', paginas: ['Marcos Pontes foi à estação.', 'Aquela estação lá no espaço!', 'Ficou oito dias e fez ciência!'] },
       // fonte: ESA Kids — https://www.esa.int/kids/es/Aprende/Vida_en_el_Espacio/Vivir_en_el_espacio/El_sueno_en_el_espacio
       { id: 'astronautas-saco-de-dormir', tema: 'astronautas', paginas: ['Astronautas dormem em sacos.', 'O saco fica preso na parede!', 'Assim, ninguém sai flutuando!'] },
       // fonte 2: NASA — https://www.nasa.gov/international-space-station/space-station-facts-and-figures/
@@ -199,7 +199,7 @@
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/launching-into-space/en/
       { id: 'foguetes-janela-para-marte', tema: 'foguetes', paginas: ['Quer ir a Marte de foguete?', 'Tem que esperar a hora certa.', 'Isso é a cada dois anos!'] },
       // fonte: Agência Espacial Brasileira — https://www.gov.br/aeb/pt-br/acoes-e-programas/aplicacoes-espaciais/infraestrutura-de-solo/centros-de-lancamento
-      { id: 'foguetes-alcantara', tema: 'foguetes', paginas: ['O Brasil lança foguetes!', 'A base fica em Alcântara.', 'É perto da linha do Equador!'] },
+      { id: 'foguetes-alcantara', tema: 'foguetes', paginas: ['O Brasil lança foguetes!', 'A base fica em Alcântara.', 'Pertinho da linha do Equador!'] },
       // fonte 2: MundoGEO (ainda em órbita em 2026) — https://mundogeo.com/2026/03/02/satelite-amazonia-1-completa-cinco-anos-em-orbita/
       // fonte: INPE — https://www.gov.br/inpe/pt-br/programas/amazonia1/sobre-o-satelite/sobre-o-satelite
       { id: 'foguetes-amazonia-um', tema: 'foguetes', paginas: ['O Brasil fez um satélite!', 'Ele se chama Amazônia Um.', 'Ele fotografa a floresta!'] },
