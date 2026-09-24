@@ -37,7 +37,8 @@
     { id: 'petshop', nome: 'Pet Shop', sprite: 'petshop', rect: { x: 2, y: 21, w: 5, h: 4 },
       caminho: [[7, 21], [7, 22], [7, 23], [7, 24], [7, 25], [6, 25], [5, 25], [4, 25]] },
     // no morro a leste do lago (o ponto alto do reino)
-    { id: 'observatorio', nome: 'Observatório', sprite: 'observatorio', rect: { x: 28, y: 21, w: 6, h: 5 },
+    // placa em cima: a área inclui a ilha do morro, e ao lado a placa ficava longe da cúpula
+    { id: 'observatorio', nome: 'Observatório', sprite: 'observatorio', rect: { x: 28, y: 21, w: 6, h: 5 }, placa: 'acima',
       caminho: [[27, 21], [27, 22], [27, 23], [27, 24], [27, 25], [27, 26], [28, 26], [29, 26], [30, 26], [31, 26]] },
   ];
 
