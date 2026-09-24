@@ -167,7 +167,7 @@
     ],
     asas: [{ linhas: ASA_ADULTO, x: 2, y: 4, atras: true, escura: true }, { linhas: ASA_ADULTO, x: 3, y: 5 }],
     ancoras: { orelha: [15, 1], olho: [19, 6], cabeca: [17, 3],
-      pescoco: [16, 11], cauda: [2, 13], chifre: [20, 2] },
+      pescoco: [16, 11], cauda: [2, 13], chifre: [21, 1] },
     brilhos: [[12, 6], [11, 9], [2, 13], [13, 4]],
     cavaleira: [2, 2],
   };
@@ -210,7 +210,7 @@
       { linhas: ['..W', '.WW', 'WWX', 'WX.'], x: 14, y: 12, atras: true },
     ],
     ancoras: { orelha: [3, 2], olho: [5, 7], cabeca: [8, 3],
-      pescoco: [9, 13], cauda: null, chifre: [8, 2] },
+      pescoco: [9, 13], cauda: null, chifre: [8, 1] },
     enfeites: { oculos: { linhas: OCULOS_FRENTE, x: 4, y: 6 }, 'oculos-estrela': { linhas: OCULOS_ESTRELA_FRENTE, x: 4, y: 6 } },
     brilhos: [[0, 7], [1, 10], [7, 4]],
     cavaleira: [3, -8],
@@ -255,7 +255,10 @@
       { linhas: ['....WW', '..WWWW', 'WWWWX.', 'WWXX..'], x: 11, y: 10 },
     ],
     ancoras: { orelha: [14, 2], olho: null, cabeca: [8, 3],
-      pescoco: [9, 10], cauda: [8, 16], chifre: [8, 2] },
+      pescoco: [9, 10], cauda: [8, 16], chifre: [8, 1] },
+    // de costas o laço da gravata e o pingente do colar ficam escondidos: só a tirinha e o fio
+    enfeites: { 'gravata-borboleta': { linhas: ['RRRRR'], x: 5, y: 10 },
+      'colar-perolas': { linhas: ['kWsWsWk'], x: 6, y: 10 } },
     brilhos: [[10, 6], [11, 9], [8, 15]],
     cavaleira: [3, 6],
   };
@@ -291,7 +294,7 @@
     ],
     asas: [{ linhas: ASA_ADULTO, x: 3, y: 4, atras: true, escura: true }, { linhas: ASA_ADULTO, x: 4, y: 5 }],
     ancoras: { orelha: [20, 2], olho: [19, 7], cabeca: [17, 3],
-      pescoco: [16, 12], cauda: [2, 12], chifre: [17, 2] },
+      pescoco: [16, 12], cauda: [2, 12], chifre: [17, 1] },
     enfeites: { oculos: { linhas: OCULOS_FRENTE, x: 11, y: 6 }, 'oculos-estrela': { linhas: OCULOS_ESTRELA_FRENTE, x: 11, y: 6 } },
     brilhos: [[10, 6], [8, 9], [2, 13], [15, 4]],
     cavaleira: [4, -4],
@@ -329,7 +332,9 @@
     ],
     asas: [{ linhas: ASA_ADULTO, x: 5, y: 4, atras: true, escura: true }, { linhas: ASA_ADULTO, x: 6, y: 5 }],
     ancoras: { orelha: [13, 2], olho: null, cabeca: [16, 4],
-      pescoco: [15, 9], cauda: [2, 14], chifre: [18, 2] },
+      pescoco: [15, 9], cauda: [2, 14], chifre: [18, 1] },
+    enfeites: { 'gravata-borboleta': { linhas: ['RRRR'], x: 11, y: 9 },
+      'colar-perolas': { linhas: ['kWsWsWk'], x: 12, y: 9 } },
     brilhos: [[10, 7], [9, 10], [1, 14]],
     cavaleira: [5, 1],
   };
@@ -361,7 +366,7 @@
     ],
     asas: [{ linhas: ASA_FILHOTE, x: 1, y: 3, atras: true, escura: true }, { linhas: ASA_FILHOTE, x: 2, y: 4 }],
     ancoras: { orelha: [8, 0], olho: [11, 5], cabeca: [10, 2],
-      pescoco: [10, 10], cauda: [1, 9], chifre: [12, 2] },
+      pescoco: [10, 10], cauda: [1, 9], chifre: [12, 1] },
     brilhos: [[5, 5], [1, 9], [6, 3]],
     cavaleira: [1, -1],
   };
@@ -397,7 +402,7 @@
       { linhas: ['..W', '.WW', 'WWX'], x: 12, y: 9, atras: true },
     ],
     ancoras: { orelha: [3, 2], olho: [4, 6], cabeca: [7, 3],
-      pescoco: [8, 11], cauda: null, chifre: [7, 2] },
+      pescoco: [8, 11], cauda: null, chifre: [7, 1] },
     enfeites: { oculos: { linhas: OCULOS_FRENTE, x: 3, y: 5 }, 'oculos-estrela': { linhas: OCULOS_ESTRELA_FRENTE, x: 3, y: 5 } },
     brilhos: [[0, 6], [1, 8], [7, 4]],
     cavaleira: [2, -9],
@@ -435,7 +440,9 @@
       { linhas: ['...WW', 'WWWW.', 'WWX..'], x: 9, y: 8 },
     ],
     ancoras: { orelha: [12, 2], olho: null, cabeca: [7, 3],
-      pescoco: [8, 9], cauda: [7, 12], chifre: [7, 2] },
+      pescoco: [8, 9], cauda: [7, 12], chifre: [7, 1] },
+    enfeites: { 'gravata-borboleta': { linhas: ['RRRRR'], x: 5, y: 9 },
+      'colar-perolas': { linhas: ['kWsWsWk'], x: 5, y: 9 } },
     brilhos: [[10, 6], [11, 8]],
     cavaleira: [2, 3],
   };
@@ -465,7 +472,7 @@
     ],
     asas: [{ linhas: ASA_FILHOTE, x: 2, y: 5, atras: true, escura: true }, { linhas: ASA_FILHOTE, x: 3, y: 6 }],
     ancoras: { orelha: [15, 2], olho: [13, 6], cabeca: [12, 3],
-      pescoco: [12, 11], cauda: [2, 10], chifre: [12, 2] },
+      pescoco: [12, 11], cauda: [2, 10], chifre: [12, 1] },
     enfeites: { oculos: { linhas: ['R.R..R.R', 'RRRRRRRR', '.R....R.'], x: 7, y: 5 },
       'oculos-estrela': { linhas: ['kYk..kYk', 'YOYkkYOY', 'YkY..YkY'], x: 7, y: 5 } },
     brilhos: [[5, 6], [1, 10], [6, 4]],
@@ -498,7 +505,9 @@
     ],
     asas: [{ linhas: ASA_FILHOTE, x: 3, y: 5, atras: true, escura: true }, { linhas: ASA_FILHOTE, x: 4, y: 6 }],
     ancoras: { orelha: [9, 2], olho: null, cabeca: [12, 3],
-      pescoco: [10, 8], cauda: [2, 10], chifre: [12, 2] },
+      pescoco: [10, 8], cauda: [2, 10], chifre: [12, 1] },
+    enfeites: { 'gravata-borboleta': { linhas: ['RRRR'], x: 8, y: 8 },
+      'colar-perolas': { linhas: ['kWsWsWk'], x: 7, y: 8 } },
     brilhos: [[7, 5], [6, 7], [1, 10]],
     cavaleira: [3, 0],
   };
@@ -518,16 +527,22 @@
     'lacinho-estrela': { linhas: ['kk...kk', 'kbk.kbk', 'kbkykbk', 'kbyyybk', 'kbkykbk', 'kk...kk'], paleta: { k: '#3a2446', b: '#4a9dff', y: '#ffe066' }, ancora: 'orelha', dx: -4, dy: 1 },
     // enfeites da Loja das Fadas (js/loja-itens.js), com os encaixes novos: chifre, pescoço e cauda
     'fitinha-cauda': { linhas: ['kk.kk', 'kTkTk', 'kk.kk'], paleta: { k: '#3a2446', T: '#34d0c0' }, ancora: 'cauda', dx: -2, dy: -1 },
-    'pompom-cauda': { linhas: ['.kk.', 'kWPk', 'kPWk', '.kk.'], paleta: { k: '#3a2446', W: '#ffffff', P: '#ffb3d9' }, ancora: 'cauda', dx: -1, dy: -1 },
-    'cometa-cauda': { linhas: ['..k..', '.kYk.', 'kYWYk', '.kYk.', '..k..'], paleta: { k: '#3a2446', Y: '#ffd34d', W: '#fffbe0' }, ancora: 'cauda', dx: -2, dy: -2 },
+    // pompom redondo 5×5 em rosa forte, com brilho branco e sombra: aparece em cima da crina clara
+    'pompom-cauda': { linhas: ['.kkk.', 'kPPWk', 'kPPPk', 'kdPPk', '.kkk.'], paleta: { k: '#3a2446', W: '#ffffff', P: '#ff4f9a', d: '#c92f73' }, ancora: 'cauda', dx: -2, dy: -2 },
+    // cometinha: estrela brilhante na ponta da cauda e um rastro que afina subindo para o lado do corpo
+    'cometa-cauda': { linhas: ['......kb', '....kkbk', '..kkbWk.', '.kYWWk..', 'kYWYk...', '.kYk....', '..k.....'], paleta: { k: '#3a2446', Y: '#ffd34d', W: '#fffbe0', b: '#7fd6ff' }, ancora: 'cauda', dx: -2, dy: -3 },
     'gravata-borboleta': { linhas: ['kk.kk', 'kRkRk', 'kk.kk'], paleta: { k: '#3a2446', R: '#ff4f6d' }, ancora: 'pescoco', dx: -2, dy: -1 },
-    'colar-perolas': { linhas: ['.kkkkk.', 'kwpwpwk', '.kkwkk.', '...k...'], paleta: { k: '#3a2446', w: '#fff4fb', p: '#ff9cc6' }, ancora: 'pescoco', dx: -3, dy: -1 },
+    // fio de pérolas creme com sombra lilás (sem escuro entre elas nem por cima: o contorno fica só
+    // nas pontas e embaixo) e um pingente rosa
+    'colar-perolas': { linhas: ['kWsWsWk', '.kkPkk.', '..kPk..', '...k...'], paleta: { k: '#3a2446', W: '#fff8ee', s: '#c9aee6', P: '#ff5c9d' }, ancora: 'pescoco', dx: -3, dy: 0 },
     'colar-planetas': { linhas: ['kykykyk', 'kRkBkOk'], paleta: { k: '#3a2446', y: '#ffd34d', R: '#ff6b8a', B: '#5fb4ff', O: '#ffb020' }, ancora: 'pescoco', dx: -3, dy: -1 },
     'brinco-lua': { linhas: ['.kYk', 'kYkk', 'kYk.', 'kYYk', '.kk.'], paleta: { k: '#3a2446', Y: '#ffc21a' }, ancora: 'orelha', dx: -2, dy: 1 },
     'oculos-estrela': { linhas: ['kYk', 'YOY', 'YkY'], paleta: { k: '#3a2446', Y: '#f5a300', O: '#ffe066' }, ancora: 'olho', dx: -1, dy: -1 },
     'coroa-flores': { linhas: ['kPk.kBk', 'PYPkBYB', 'GGGGGGG', 'kkkkkkk'], paleta: { k: '#3a2446', P: '#ff7eb6', B: '#b58cff', Y: '#ffe066', G: '#6fdc8c' }, ancora: 'cabeca', dx: -3, dy: -2 },
     'tiara-estrelas': { linhas: ['.Y...Y.', 'YWY.YWY', 'kSkSkSk'], paleta: { k: '#3a2446', Y: '#ffd34d', W: '#fffbe0', S: '#dfe6ff' }, ancora: 'cabeca', dx: -3, dy: -2 },
-    'anel-saturno': { linhas: ['A....A', 'kAaaAk', '.kkkk.'], paleta: { k: '#3a2446', A: '#8a5cf0', a: '#c9a8ff' }, ancora: 'chifre', dx: -2, dy: -1 },
+    // anel fino atravessando o MEIO do chifre (âncora na 2ª linha do chifre): a ponta aparece por cima
+    // e a base por baixo; no bebê (só o toquinho) fica um aro fininho logo acima dele, não uma boina
+    'anel-saturno': { linhas: ['AAaaAA'], paleta: { A: '#9a6cf5', a: '#d9c2ff' }, ancora: 'chifre', dx: -2, dy: 0 },
   };
   PA.ENFEITES_MONTARIA = ENFEITES;
 
