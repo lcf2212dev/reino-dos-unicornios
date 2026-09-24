@@ -16,7 +16,7 @@ falas, cuidados, surpresa, mapa, jogador, minijogos, prova, provas, ui,
 interiores.js, npcs.js, interiores/<prédios>.js (… loja, bau, petshop-falas, petshop,
 observatorio-falas, observatorio-cenas, observatorio, padrao), cena.js, main.js, debug.js
 ```
-CSS: `css/jogo.css`, `css/interiores.css`, `css/novidades.css`.
+CSS: `css/jogo.css`, `css/interiores.css`, `css/novidades.css` (pergunta surpresa), `css/petshop.css` (Pet Shop, fome e sede).
 
 `js/loja-itens.js`, `js/cuidados.js`, `js/surpresa.js`, `js/interiores/*.js` **não tocam em DOM,
 canvas, `PA`, `Reino.Progresso`, `Reino.Cena` nem `document` no carregamento** (só dentro de funções
@@ -297,7 +297,7 @@ na Pet Shop e no Planetário. Nada de canvas criado por quadro; estático pré-r
 | 1 | C | js/loja-itens.js, js/pixelart.js, js/icones.js, js/ui.js (só a Loja), js/interiores/loja.js, js/interiores/escola.js (só `ganhou()`), ferramentas/acessorios.html |
 | 1 | D | js/surpresa.js, css/novidades.css |
 | 2 | E | js/interiores/petshop-falas.js, js/interiores/petshop.js (com o desenho de fora), js/interiores/estabulo.js (só as baias) |
-| 2 | F | js/ui.js (Pet Shop, HUD, Estábulo, Lugares), css/novidades.css, js/icones.js |
+| 2 | F | js/ui.js (Pet Shop, HUD, Estábulo, Lugares), css/petshop.css |
 | 3 | G1 | js/interiores/observatorio.js (interior, Planetário, ação `curiosidade`) |
 | 3 | G2 | js/interiores/observatorio-cenas.js (cenas do telescópio, planetas, robô, desenho de fora) |
 | 3 | H1–H4 | pesquisa das curiosidades (rascunhos); H junta em js/interiores/observatorio-falas.js |
