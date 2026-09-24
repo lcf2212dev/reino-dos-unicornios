@@ -220,9 +220,9 @@
   // tile andável mais perto de (x, y)
   // tocou num tile de terra sólido (árvore, arbusto): prefere terra; água só se não houver terra perto
   Mapa.maisPerto = function (x, y, de) {
-    function procurar(aceitaAgua) {
-      var melhor = null, dist = 1e9;
-      for (var r = 0; r <= 3; r++) for (var j = -r; j <= r; j++) for (var i = -r; i <= r; i++) {
+    function procurar(aceitaAgua, raio) {
+      var melhor = null, dist = 1e9, rMax = raio === undefined ? 3 : raio;
+      for (var r = 0; r <= rMax; r++) for (var j = -r; j <= r; j++) for (var i = -r; i <= r; i++) {
         var nx = x + i, ny = y + j;
         if (!dentro(nx, ny) || solido[ny][nx]) continue;
         if (!aceitaAgua && Mapa.agua(nx, ny)) continue;
@@ -232,9 +232,11 @@
       return melhor;
     }
     // tocou em terra (arbusto, casa): prefere um tile de terra, para ela não atravessar o lago nadando;
-    // se ela já está nadando, a água em volta vale (senão ela nadaria de lado até a margem)
-    var querAgua = Mapa.agua(x, y) || !!(de && Mapa.agua(de.x, de.y));
-    return procurar(querAgua) || (querAgua ? null : procurar(true));
+    // se ela já está nadando: terra encostada no que foi tocado, senão a água em volta (senão ela
+    // nadaria de lado até a margem para chegar a uma árvore cercada de água)
+    if (Mapa.agua(x, y)) return procurar(true);
+    if (de && Mapa.agua(de.x, de.y)) return procurar(false, 1) || procurar(true);
+    return procurar(false) || procurar(true);
   };
 
   /* ================= DESENHO ================= */
