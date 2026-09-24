@@ -18,14 +18,15 @@
 
 /* personagem falando */
 #claude-balao.com-quem .claude-avatar { max-width: 88px; height: auto !important; }
-#claude-balao.com-quem .claude-nome { max-width: 130px; text-align: center; font-size: 0.65em; overflow-wrap: normal; word-break: keep-all; hyphens: none; }
+#claude-balao.com-quem .claude-nome { position: relative; z-index: 1; margin-top: 4px; max-width: 130px; text-align: center; font-size: 0.65em; overflow-wrap: normal; word-break: keep-all; hyphens: none; }
 
 @media (max-width: 480px) {
   #claude-balao.com-quem { gap: 6px; }
   #claude-balao.com-quem .claude-avatar { max-width: 56px; }
   /* no celular o nome vira uma aba em cima do balão, inteiro */
   #claude-balao.com-quem .claude-nome { position: absolute; left: 66px; top: -14px; max-width: calc(100% - 80px); margin: 0; font-size: 0.65em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; z-index: 1; }
-  #claude-balao.com-quem { margin-top: 14px; }
+  #claude-balao.com-quem { margin-top: 14px; align-items: flex-start; }
+  #claude-balao.com-quem .claude-mascote { margin-top: 10px; }
   #claude-balao.com-botoes .claude-fala { padding: 10px 10px 10px; }
   #claude-balao.com-botoes .claude-texto { font-size: 0.85em; }
   #claude-balao.com-botoes .claude-acoes { gap: 6px; }

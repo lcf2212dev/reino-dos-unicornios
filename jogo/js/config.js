@@ -27,12 +27,12 @@ Reino.config = {
        Cada um com voz/velocidade/tom diferentes para ser reconhecido de ouvido.
        `ingles`: perfil dos trechos «em inglês» dessa personagem (padrão: 'ingles'). */
     // Museu das Memórias (História)
-    'npc-memoria': { voz: 'pt-BR-FranciscaNeural', velocidade: '-16%', tom: '-10Hz' },          // curadora idosa: calma e grave
-    'npc-antonio': { voz: 'en-US-AndrewMultilingualNeural', velocidade: '-14%', tom: '-10Hz' },  // senhor das cartas: devagar, de avô
+    'npc-memoria': { voz: 'fr-FR-VivienneMultilingualNeural', velocidade: '-16%', tom: '-12Hz' }, // curadora idosa, calma (diferente da narradora dos objetos)
+    'npc-antonio': { voz: 'fr-FR-RemyMultilingualNeural', velocidade: '-14%', tom: '-12Hz' },   // senhor das cartas: devagar, de avô
     'npc-chico': { voz: 'pt-BR-AntonioNeural', velocidade: '+12%', tom: '+16Hz' },             // carteiro animado (voz nativa: as multilíngues embolavam as frases curtas)
     'npc-taina': { voz: 'pt-BR-ThalitaMultilingualNeural', velocidade: '+6%', tom: '+6Hz' },    // guia jovem e alegre
     'npc-contadeira': { voz: 'pt-BR-ThalitaMultilingualNeural', velocidade: '-18%', tom: '-12Hz' }, // griô: devagar, voz de contar história
-    'npc-nina': { voz: 'pt-BR-FranciscaNeural', velocidade: '+8%', tom: '+12Hz' },              // restauradora curiosa e leve
+    'npc-nina': { voz: 'en-US-AvaMultilingualNeural', velocidade: '+6%', tom: '+12Hz' },         // restauradora curiosa e leve
     // Torre do Relógio (Inglês)
     'npc-ponteiro': { voz: 'it-IT-GiuseppeMultilingualNeural', velocidade: '-10%', tom: '-6Hz' }, // relojoeiro caprichoso, sotaque de avô italiano
     'npc-ben': { voz: 'en-US-AndrewMultilingualNeural', velocidade: '+6%', tom: '+4Hz', ingles: 'npc-ben-en' },     // técnico esportivo, energia

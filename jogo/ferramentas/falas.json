@@ -19,6 +19,163 @@
    "voz": "en-GB-SoniaNeural",
    "velocidade": "-15%",
    "tom": "+0Hz"
+  },
+  "npc-memoria": {
+   "voz": "fr-FR-VivienneMultilingualNeural",
+   "velocidade": "-16%",
+   "tom": "-12Hz"
+  },
+  "npc-antonio": {
+   "voz": "fr-FR-RemyMultilingualNeural",
+   "velocidade": "-14%",
+   "tom": "-12Hz"
+  },
+  "npc-chico": {
+   "voz": "pt-BR-AntonioNeural",
+   "velocidade": "+12%",
+   "tom": "+16Hz"
+  },
+  "npc-taina": {
+   "voz": "pt-BR-ThalitaMultilingualNeural",
+   "velocidade": "+6%",
+   "tom": "+6Hz"
+  },
+  "npc-contadeira": {
+   "voz": "pt-BR-ThalitaMultilingualNeural",
+   "velocidade": "-18%",
+   "tom": "-12Hz"
+  },
+  "npc-nina": {
+   "voz": "en-US-AvaMultilingualNeural",
+   "velocidade": "+6%",
+   "tom": "+12Hz"
+  },
+  "npc-ponteiro": {
+   "voz": "it-IT-GiuseppeMultilingualNeural",
+   "velocidade": "-10%",
+   "tom": "-6Hz"
+  },
+  "npc-ben": {
+   "voz": "en-US-AndrewMultilingualNeural",
+   "velocidade": "+6%",
+   "tom": "+4Hz",
+   "ingles": "npc-ben-en"
+  },
+  "npc-ben-en": {
+   "voz": "en-US-AndrewMultilingualNeural",
+   "velocidade": "-4%",
+   "tom": "+4Hz"
+  },
+  "npc-stella": {
+   "voz": "en-US-AvaMultilingualNeural",
+   "velocidade": "+0%",
+   "tom": "+6Hz",
+   "ingles": "npc-stella-en"
+  },
+  "npc-stella-en": {
+   "voz": "en-US-AvaMultilingualNeural",
+   "velocidade": "-10%",
+   "tom": "+6Hz"
+  },
+  "npc-smile": {
+   "voz": "en-US-BrianMultilingualNeural",
+   "velocidade": "+0%",
+   "tom": "+8Hz",
+   "ingles": "npc-smile-en"
+  },
+  "npc-smile-en": {
+   "voz": "en-US-BrianMultilingualNeural",
+   "velocidade": "-10%",
+   "tom": "+8Hz"
+  },
+  "npc-moon": {
+   "voz": "en-US-AvaMultilingualNeural",
+   "velocidade": "-15%",
+   "tom": "-8Hz",
+   "ingles": "npc-moon-en"
+  },
+  "npc-moon-en": {
+   "voz": "en-US-AvaMultilingualNeural",
+   "velocidade": "-20%",
+   "tom": "-8Hz"
+  },
+  "npc-joy": {
+   "voz": "en-AU-WilliamMultilingualNeural",
+   "velocidade": "+4%",
+   "tom": "+10Hz",
+   "ingles": "npc-joy-en"
+  },
+  "npc-joy-en": {
+   "voz": "en-AU-WilliamMultilingualNeural",
+   "velocidade": "-6%",
+   "tom": "+10Hz"
+  },
+  "npc-serena": {
+   "voz": "fr-FR-VivienneMultilingualNeural",
+   "velocidade": "-6%",
+   "tom": "+10Hz"
+  },
+  "npc-aurora": {
+   "voz": "de-DE-SeraphinaMultilingualNeural",
+   "velocidade": "+4%",
+   "tom": "-10Hz"
+  },
+  "npc-oliver": {
+   "voz": "en-US-BrianMultilingualNeural",
+   "velocidade": "-12%",
+   "tom": "-12Hz",
+   "ingles": "npc-oliver-en"
+  },
+  "npc-oliver-en": {
+   "voz": "en-US-BrianMultilingualNeural",
+   "velocidade": "-20%",
+   "tom": "-12Hz"
+  },
+  "npc-margarida": {
+   "voz": "en-US-EmmaMultilingualNeural",
+   "velocidade": "-12%",
+   "tom": "-8Hz"
+  },
+  "npc-helena": {
+   "voz": "fr-FR-VivienneMultilingualNeural",
+   "velocidade": "+6%",
+   "tom": "-6Hz"
+  },
+  "npc-emma": {
+   "voz": "en-US-EmmaMultilingualNeural",
+   "velocidade": "-3%",
+   "tom": "+2Hz",
+   "ingles": "npc-emma-en"
+  },
+  "npc-emma-en": {
+   "voz": "en-US-EmmaMultilingualNeural",
+   "velocidade": "-12%",
+   "tom": "+2Hz"
+  },
+  "npc-feno": {
+   "voz": "de-DE-FlorianMultilingualNeural",
+   "velocidade": "-8%",
+   "tom": "-14Hz"
+  },
+  "npc-petala": {
+   "voz": "en-US-EmmaMultilingualNeural",
+   "velocidade": "+8%",
+   "tom": "+30Hz"
+  },
+  "npc-tostao": {
+   "voz": "ko-KR-HyunsuMultilingualNeural",
+   "velocidade": "+10%",
+   "tom": "+22Hz"
+  },
+  "npc-teste-guia": {
+   "voz": "de-DE-FlorianMultilingualNeural",
+   "velocidade": "+4%",
+   "tom": "+8Hz"
+  },
+  "npc-teste-sala": {
+   "voz": "de-DE-SeraphinaMultilingualNeural",
+   "velocidade": "-4%",
+   "tom": "+12Hz"
   }
  },
  "falas": [
@@ -8642,6 +8799,1149 @@
    "fala": "Jogo da memória dos sentimentos!",
    "pacotes": [
     "ingles-i5"
+   ]
+  },
+  {
+   "chave": "d037d7f4f",
+   "voz": "npc-memoria",
+   "texto": "Oi!",
+   "fala": "Oi!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "317c6bf9v",
+   "voz": "npc-memoria",
+   "texto": "Sou a Dona Memória.",
+   "fala": "Sou a Dona Memória.",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "840dfdc510",
+   "voz": "npc-memoria",
+   "texto": "Cuido de todas as salas.",
+   "fala": "Cuido de todas as salas.",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "2ff413dat",
+   "voz": "npc-memoria",
+   "texto": "Quer ver a lista?",
+   "fala": "Quer ver a lista?",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "a09a12e111",
+   "voz": "npc-memoria",
+   "texto": "Você ainda não fez salas.",
+   "fala": "Você ainda não fez salas.",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "c0c4438e15",
+   "voz": "npc-memoria",
+   "texto": "O treino do Castelo já abriu!",
+   "fala": "O treino do Castelo já abriu!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "4542e45fy",
+   "voz": "npc-memoria",
+   "texto": "Você fez 1 de 5 salas.",
+   "fala": "Você fez 1 de 5 salas.",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "2f6ae38bu",
+   "voz": "npc-memoria",
+   "texto": "Já ganhou R$ 4,00!",
+   "fala": "Já ganhou 4 reais!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "410a9f8ay",
+   "voz": "npc-memoria",
+   "texto": "Você fez 2 de 5 salas.",
+   "fala": "Você fez 2 de 5 salas.",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "16203c8fu",
+   "voz": "npc-memoria",
+   "texto": "Já ganhou R$ 8,00!",
+   "fala": "Já ganhou 8 reais!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "6849ae4dy",
+   "voz": "npc-memoria",
+   "texto": "Você fez 3 de 5 salas.",
+   "fala": "Você fez 3 de 5 salas.",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "6c910504v",
+   "voz": "npc-memoria",
+   "texto": "Já ganhou R$ 12,00!",
+   "fala": "Já ganhou 12 reais!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "41518bd8y",
+   "voz": "npc-memoria",
+   "texto": "Você fez 4 de 5 salas.",
+   "fala": "Você fez 4 de 5 salas.",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "c88fb7d8v",
+   "voz": "npc-memoria",
+   "texto": "Já ganhou R$ 16,00!",
+   "fala": "Já ganhou 16 reais!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "d11b2288w",
+   "voz": "npc-memoria",
+   "texto": "Você fez as 5 salas!",
+   "fala": "Você fez as 5 salas!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "81b08b29v",
+   "voz": "npc-memoria",
+   "texto": "Já ganhou R$ 20,00!",
+   "fala": "Já ganhou 20 reais!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "a69754ecy",
+   "voz": "npc-memoria",
+   "texto": "A primeira é a Sala 1!",
+   "fala": "A primeira é a Sala 1!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "39447f7912",
+   "voz": "npc-memoria",
+   "texto": "Agora vamos para a Sala 1!",
+   "fala": "Agora vamos para a Sala 1!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "514266aa12",
+   "voz": "npc-memoria",
+   "texto": "Agora vamos para a Sala 2!",
+   "fala": "Agora vamos para a Sala 2!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "ed3f8aa712",
+   "voz": "npc-memoria",
+   "texto": "Agora vamos para a Sala 3!",
+   "fala": "Agora vamos para a Sala 3!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "c53d0d1812",
+   "voz": "npc-memoria",
+   "texto": "Agora vamos para a Sala 4!",
+   "fala": "Agora vamos para a Sala 4!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "e13afa9512",
+   "voz": "npc-memoria",
+   "texto": "Agora vamos para a Sala 5!",
+   "fala": "Agora vamos para a Sala 5!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "f3544812f",
+   "voz": "npc-antonio",
+   "texto": "Oi!",
+   "fala": "Oi!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "3f7366f9x",
+   "voz": "npc-antonio",
+   "texto": "Eu sou o Seu Antônio.",
+   "fala": "Eu sou o Seu Antônio.",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "0bcfb80514",
+   "voz": "npc-antonio",
+   "texto": "Esperei o carteiro todo dia!",
+   "fala": "Esperei o carteiro todo dia!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "eba247a413",
+   "voz": "npc-antonio",
+   "texto": "Vamos ler as cartas juntos?",
+   "fala": "Vamos ler as cartas juntos?",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "c6e8bdd910",
+   "voz": "npc-antonio",
+   "texto": "Vamos ver minhas cartas?",
+   "fala": "Vamos ver minhas cartas?",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "3b39111f14",
+   "voz": "npc-antonio",
+   "texto": "Quer reler as cartas comigo?",
+   "fala": "Quer reler as cartas comigo?",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "6ed33dfez",
+   "voz": "npc-antonio",
+   "texto": "Vamos abrir a caixinha?",
+   "fala": "Vamos abrir a caixinha?",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "dcce066bv",
+   "voz": "npc-antonio",
+   "texto": "Você leu com calma!",
+   "fala": "Você leu com calma!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "3f1edcecv",
+   "voz": "npc-antonio",
+   "texto": "Que leitura atenta!",
+   "fala": "Que leitura atenta!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "0771e85716",
+   "voz": "npc-antonio",
+   "texto": "Tudo bem, volte quando quiser!",
+   "fala": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "7630c8fa12",
+   "voz": "npc-antonio",
+   "texto": "Mais 1 vez e o raro nasce!",
+   "fala": "Mais 1 vez e o raro nasce!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "a78ac8d314",
+   "voz": "npc-antonio",
+   "texto": "Mais 2 vezes e o raro nasce!",
+   "fala": "Mais 2 vezes e o raro nasce!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "a336405414",
+   "voz": "npc-antonio",
+   "texto": "Mais 3 vezes e o raro nasce!",
+   "fala": "Mais 3 vezes e o raro nasce!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "c709667f12",
+   "voz": "npc-antonio",
+   "texto": "Ou de primeira, com calma!",
+   "fala": "Ou de primeira, com calma!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "5302c4a114",
+   "voz": "npc-antonio",
+   "texto": "O raro desta sala já nasceu!",
+   "fala": "O raro desta sala já nasceu!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "3b01bd32e",
+   "voz": "npc-chico",
+   "texto": "Olá!",
+   "fala": "Olá!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "685a621fv",
+   "voz": "npc-chico",
+   "texto": "Sou o Carteiro Chico!",
+   "fala": "Sou o Carteiro Chico!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "406c8ad9w",
+   "voz": "npc-chico",
+   "texto": "Trago selos e postais!",
+   "fala": "Trago selos e postais!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "f30a20b6y",
+   "voz": "npc-chico",
+   "texto": "Vamos abrir minha bolsa?",
+   "fala": "Vamos abrir minha bolsa?",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "8f122858y",
+   "voz": "npc-chico",
+   "texto": "Vamos ver os documentos?",
+   "fala": "Vamos ver os documentos?",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "88383c0012",
+   "voz": "npc-chico",
+   "texto": "Quer ver os postais de novo?",
+   "fala": "Quer ver os postais de novo?",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "06a89ba912",
+   "voz": "npc-chico",
+   "texto": "Vamos revisar os documentos?",
+   "fala": "Vamos revisar os documentos?",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "6cfc171610",
+   "voz": "npc-chico",
+   "texto": "Entrega feita com carinho!",
+   "fala": "Entrega feita com carinho!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "42e4f626v",
+   "voz": "npc-chico",
+   "texto": "Você leu com atenção!",
+   "fala": "Você leu com atenção!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "6a9910cb14",
+   "voz": "npc-chico",
+   "texto": "Tudo bem, volte quando quiser!",
+   "fala": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "802cd3fe10",
+   "voz": "npc-chico",
+   "texto": "Mais 1 vez e o raro nasce!",
+   "fala": "Mais 1 vez e o raro nasce!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "0d23881f12",
+   "voz": "npc-chico",
+   "texto": "Mais 2 vezes e o raro nasce!",
+   "fala": "Mais 2 vezes e o raro nasce!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "d5dc6a7012",
+   "voz": "npc-chico",
+   "texto": "Mais 3 vezes e o raro nasce!",
+   "fala": "Mais 3 vezes e o raro nasce!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "238c982b10",
+   "voz": "npc-chico",
+   "texto": "Ou de primeira, com calma!",
+   "fala": "Ou de primeira, com calma!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "9d7958ad12",
+   "voz": "npc-chico",
+   "texto": "O raro desta sala já nasceu!",
+   "fala": "O raro desta sala já nasceu!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "4b54ea09d",
+   "voz": "npc-taina",
+   "texto": "Oi!",
+   "fala": "Oi!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "5cb25992u",
+   "voz": "npc-taina",
+   "texto": "Eu sou a Guia Tainá!",
+   "fala": "Eu sou a Guia Tainá!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "8a6d5a6410",
+   "voz": "npc-taina",
+   "texto": "Adoro os museus do Brasil!",
+   "fala": "Adoro os museus do Brasil!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "9033f71d10",
+   "voz": "npc-taina",
+   "texto": "Vamos viajar pelos museus?",
+   "fala": "Vamos viajar pelos museus?",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "644ebbb312",
+   "voz": "npc-taina",
+   "texto": "Quer conhecer museus comigo?",
+   "fala": "Quer conhecer museus comigo?",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "ac47261512",
+   "voz": "npc-taina",
+   "texto": "Quer fazer a viagem de novo?",
+   "fala": "Quer fazer a viagem de novo?",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "08b8cb88y",
+   "voz": "npc-taina",
+   "texto": "Vamos passear outra vez?",
+   "fala": "Vamos passear outra vez?",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "3586e31dr",
+   "voz": "npc-taina",
+   "texto": "Que viagem linda!",
+   "fala": "Que viagem linda!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "66391e4d10",
+   "voz": "npc-taina",
+   "texto": "Você olhou tudo com calma!",
+   "fala": "Você olhou tudo com calma!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "975bb79a14",
+   "voz": "npc-taina",
+   "texto": "Tudo bem, volte quando quiser!",
+   "fala": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "ac520d7710",
+   "voz": "npc-taina",
+   "texto": "Mais 1 vez e o raro nasce!",
+   "fala": "Mais 1 vez e o raro nasce!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "eba559ae12",
+   "voz": "npc-taina",
+   "texto": "Mais 2 vezes e o raro nasce!",
+   "fala": "Mais 2 vezes e o raro nasce!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "7d5b797d12",
+   "voz": "npc-taina",
+   "texto": "Mais 3 vezes e o raro nasce!",
+   "fala": "Mais 3 vezes e o raro nasce!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "31677d5610",
+   "voz": "npc-taina",
+   "texto": "Ou de primeira, com calma!",
+   "fala": "Ou de primeira, com calma!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "3e58f99812",
+   "voz": "npc-taina",
+   "texto": "O raro desta sala já nasceu!",
+   "fala": "O raro desta sala já nasceu!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "a27bbabai",
+   "voz": "npc-contadeira",
+   "texto": "Oi!",
+   "fala": "Oi!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "b6f07a8d11",
+   "voz": "npc-contadeira",
+   "texto": "Sou a Vovó Contadeira.",
+   "fala": "Sou a Vovó Contadeira.",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "bff7334e15",
+   "voz": "npc-contadeira",
+   "texto": "Sou griô: conto histórias!",
+   "fala": "Sou griô: conto histórias!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "4109550b11",
+   "voz": "npc-contadeira",
+   "texto": "Vamos ouvir histórias?",
+   "fala": "Vamos ouvir histórias?",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "e2f0fcb213",
+   "voz": "npc-contadeira",
+   "texto": "Quer aprender tradições?",
+   "fala": "Quer aprender tradições?",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "ec19c3f713",
+   "voz": "npc-contadeira",
+   "texto": "Quer ouvir tudo de novo?",
+   "fala": "Quer ouvir tudo de novo?",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "cce917f212",
+   "voz": "npc-contadeira",
+   "texto": "Vamos cantar a ciranda?",
+   "fala": "Vamos cantar a ciranda?",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "1ef873b312",
+   "voz": "npc-contadeira",
+   "texto": "Você ouviu com carinho!",
+   "fala": "Você ouviu com carinho!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "ba44ed5f16",
+   "voz": "npc-contadeira",
+   "texto": "Você prestou muita atenção!",
+   "fala": "Você prestou muita atenção!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "bc69720f19",
+   "voz": "npc-contadeira",
+   "texto": "Tudo bem, volte quando quiser!",
+   "fala": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "aa281bb215",
+   "voz": "npc-contadeira",
+   "texto": "Mais 1 vez e o raro nasce!",
+   "fala": "Mais 1 vez e o raro nasce!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "dec9d50b17",
+   "voz": "npc-contadeira",
+   "texto": "Mais 2 vezes e o raro nasce!",
+   "fala": "Mais 2 vezes e o raro nasce!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "a146d96c17",
+   "voz": "npc-contadeira",
+   "texto": "Mais 3 vezes e o raro nasce!",
+   "fala": "Mais 3 vezes e o raro nasce!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "83837a6715",
+   "voz": "npc-contadeira",
+   "texto": "Ou de primeira, com calma!",
+   "fala": "Ou de primeira, com calma!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "933e4d6917",
+   "voz": "npc-contadeira",
+   "texto": "O raro desta sala já nasceu!",
+   "fala": "O raro desta sala já nasceu!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "b847415cc",
+   "voz": "npc-nina",
+   "texto": "Oi!",
+   "fala": "Oi!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "a7f19818x",
+   "voz": "npc-nina",
+   "texto": "Sou a Restauradora Nina.",
+   "fala": "Sou a Restauradora Nina.",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "aa147cb212",
+   "voz": "npc-nina",
+   "texto": "Cuido dos brinquedos antigos.",
+   "fala": "Cuido dos brinquedos antigos.",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "b6491f68n",
+   "voz": "npc-nina",
+   "texto": "Dá para pegar?",
+   "fala": "Dá para pegar?",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "f39b9af9j",
+   "voz": "npc-nina",
+   "texto": "Vamos ver?",
+   "fala": "Vamos ver?",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "05287e4310",
+   "voz": "npc-nina",
+   "texto": "Vamos separar os vestígios?",
+   "fala": "Vamos separar os vestígios?",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "bcdfceccz",
+   "voz": "npc-nina",
+   "texto": "Quer separar tudo de novo?",
+   "fala": "Quer separar tudo de novo?",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "613fc3d910",
+   "voz": "npc-nina",
+   "texto": "Vamos revisar os vestígios?",
+   "fala": "Vamos revisar os vestígios?",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "68ea0295v",
+   "voz": "npc-nina",
+   "texto": "Você pensou com calma!",
+   "fala": "Você pensou com calma!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "8e2e52eft",
+   "voz": "npc-nina",
+   "texto": "Separou com atenção!",
+   "fala": "Separou com atenção!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "addad6a913",
+   "voz": "npc-nina",
+   "texto": "Tudo bem, volte quando quiser!",
+   "fala": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "14cc9c14z",
+   "voz": "npc-nina",
+   "texto": "Mais 1 vez e o raro nasce!",
+   "fala": "Mais 1 vez e o raro nasce!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "df772ded11",
+   "voz": "npc-nina",
+   "texto": "Mais 2 vezes e o raro nasce!",
+   "fala": "Mais 2 vezes e o raro nasce!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "53a8f2de11",
+   "voz": "npc-nina",
+   "texto": "Mais 3 vezes e o raro nasce!",
+   "fala": "Mais 3 vezes e o raro nasce!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "198c4299z",
+   "voz": "npc-nina",
+   "texto": "Ou de primeira, com calma!",
+   "fala": "Ou de primeira, com calma!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "688c2bf311",
+   "voz": "npc-nina",
+   "texto": "O raro desta sala já nasceu!",
+   "fala": "O raro desta sala já nasceu!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "daf8c400v",
+   "voz": "narradora",
+   "texto": "O Livro das Memórias!",
+   "fala": "O Livro das Memórias!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "e465e04au",
+   "voz": "narradora",
+   "texto": "Vamos ler com calma?",
+   "fala": "Vamos ler com calma?",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "1678f3e1s",
+   "voz": "narradora",
+   "texto": "É o mapa do museu!",
+   "fala": "É o mapa do museu!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "4197792012",
+   "voz": "narradora",
+   "texto": "São cinco salas de memórias.",
+   "fala": "São cinco salas de memórias.",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "197bfa2e11",
+   "voz": "narradora",
+   "texto": "Entre numa sala sem pressa.",
+   "fala": "Entre numa sala sem pressa.",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "53271cedt",
+   "voz": "narradora",
+   "texto": "Um golinho de água?",
+   "fala": "Um golinho de água?",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "a345d3ee11",
+   "voz": "narradora",
+   "texto": "Descanse os olhos um pouco.",
+   "fala": "Descanse os olhos um pouco.",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "0c84ed01y",
+   "voz": "narradora",
+   "texto": "A caixinha da Dona Sara.",
+   "fala": "A caixinha da Dona Sara.",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "cce753a313",
+   "voz": "narradora",
+   "texto": "Cada objeto tem uma história.",
+   "fala": "Cada objeto tem uma história.",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "097b218bv",
+   "voz": "narradora",
+   "texto": "Uma caixa de correio!",
+   "fala": "Uma caixa de correio!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "99eee881z",
+   "voz": "narradora",
+   "texto": "Aqui as cartas esperavam.",
+   "fala": "Aqui as cartas esperavam.",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "da59327614",
+   "voz": "narradora",
+   "texto": "Vacina, identidade, passaporte",
+   "fala": "Vacina, identidade, passaporte",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "d1b4fb77z",
+   "voz": "narradora",
+   "texto": "Documentos contam de nós.",
+   "fala": "Documentos contam de nós.",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "6733a54714",
+   "voz": "narradora",
+   "texto": "Cartões-postais de todo lugar!",
+   "fala": "Cartões-postais de todo lugar!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "078b61c5u",
+   "voz": "narradora",
+   "texto": "Na frente, uma foto.",
+   "fala": "Na frente, uma foto.",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "ec05ec96u",
+   "voz": "narradora",
+   "texto": "Atrás vai um recado.",
+   "fala": "Atrás vai um recado.",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "5acca3b4r",
+   "voz": "narradora",
+   "texto": "O mapa do Brasil!",
+   "fala": "O mapa do Brasil!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "280c2fb012",
+   "voz": "narradora",
+   "texto": "Tem museus pelo Brasil todo.",
+   "fala": "Tem museus pelo Brasil todo.",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "b7d70927x",
+   "voz": "narradora",
+   "texto": "Uma miniatura de museu!",
+   "fala": "Uma miniatura de museu!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "4f55289az",
+   "voz": "narradora",
+   "texto": "Museus guardam histórias.",
+   "fala": "Museus guardam histórias.",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "9e3cc7d6u",
+   "voz": "narradora",
+   "texto": "O tambor do carimbó!",
+   "fala": "O tambor do carimbó!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "c102ffe911",
+   "voz": "narradora",
+   "texto": "Dança e música da Amazônia!",
+   "fala": "Dança e música da Amazônia!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "c64f4e82u",
+   "voz": "narradora",
+   "texto": "Uma panela de barro.",
+   "fala": "Uma panela de barro.",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "88c0ea3b11",
+   "voz": "narradora",
+   "texto": "Tradição do Espírito Santo.",
+   "fala": "Tradição do Espírito Santo.",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "20982a2ft",
+   "voz": "narradora",
+   "texto": "Brinquedos antigos!",
+   "fala": "Brinquedos antigos!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "70de724213",
+   "voz": "narradora",
+   "texto": "São materiais: dá para pegar!",
+   "fala": "São materiais: dá para pegar!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "c1a6a799z",
+   "voz": "narradora",
+   "texto": "Um caderno de quadrinhas!",
+   "fala": "Um caderno de quadrinhas!",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "e57a4aecv",
+   "voz": "narradora",
+   "texto": "O caderno é material.",
+   "fala": "O caderno é material.",
+   "pacotes": [
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "9f7ec36f10",
+   "voz": "narradora",
+   "texto": "A quadrinha a gente canta!",
+   "fala": "A quadrinha a gente canta!",
+   "pacotes": [
+    "interior-museu"
    ]
   }
  ]

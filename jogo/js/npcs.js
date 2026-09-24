@@ -636,11 +636,26 @@
     var cabeca = pintor.tela(x, yPes + 1 - spr.height + (spr.topo || 0));
     var bob = animar ? Math.round(Math.sin(t / 420 + (f % 10))) * s : 0;
     var bx = Math.round(cabeca.x - (b.width * s) / 2), by = Math.round(cabeca.y - b.height * s - s + bob);
-    var antes = ctx.imageSmoothingEnabled;
+    var bw = b.width * s, bh = b.height * s;
+    var antes = ctx.imageSmoothingEnabled, alfa = ctx.globalAlpha;
     ctx.imageSmoothingEnabled = false;
-    ctx.drawImage(b, bx, by, b.width * s, b.height * s);
+    // se o balãozinho cobre a Mariana, fica quase transparente (como as placas do mapa)
+    if (cobreMariana(pintor, bx, by, bw, bh)) ctx.globalAlpha = alfa * 0.3;
+    ctx.drawImage(b, bx, by, bw, bh);
+    ctx.globalAlpha = alfa;
     ctx.imageSmoothingEnabled = antes;
   };
+
+  // retângulo do corpo da Mariana (px do jogo, a partir dos pés) cruza o do ícone (px da tela)?
+  function cobreMariana(pintor, bx, by, bw, bh) {
+    var J = window.Jogador;
+    if (!J || typeof J.x !== 'number') return false;
+    var montada = false;
+    try { montada = J.montado && J.montado(); } catch (e) {}
+    var w = montada ? 28 : 16, h = montada ? 34 : 24;
+    var a = pintor.tela(J.x - w / 2, J.y - h), z = pintor.tela(J.x + w / 2, J.y + 2);
+    return bx < z.x && bx + bw > a.x && by < z.y && by + bh > a.y;
+  }
 
   /* ================= FALAS ================= */
   function U() { return Reino.util; }
@@ -648,57 +663,59 @@
   function valorSala(m) { return Reino.config.valorPorMateria / m.salas.length; }
   function reais(v) { return U().reais(v); }
 
-  // falas padrão (curtas: cada uma cabe em 2 linhas do balão)
+  // falas padrão (curtas: até ~30 letras por balão, que no celular dá 2 linhas)
   var PADRAO = {
     sala: {
-      nova: ['Esta sala é novinha! Leia com calma, tá? 📖'],
+      nova: ['Sala novinha! Leia com calma. 📖'],
       feita: ['Quer jogar esta sala de novo? 🔁'],
-      depois: ['Que orgulho! Você pensou direitinho. ✨', 'Você leu com calma até o fim! 💛'],
+      depois: ['Que orgulho de você! ✨', 'Leu com calma até o fim! 💛'],
     },
     treino: {
-      oi: ['Oi! Eu cuido do treino da medalha. ⏳'],
-      nova: ['Vamos treinar? Sem relógio e com revisão! 🥇'],
+      oi: ['Oi! Eu cuido do treino. 🥇'],
+      nova: ['Vamos treinar, sem pressa? 🥇'],
       feita: ['Quer treinar de novo? 🥇'],
-      bloqueada: ['Meu treino abre depois de todas as salas.'],
-      depois: ['Você revisou antes de entregar. Campeã! 🏆'],
+      bloqueada: ['Primeiro, termine as salas. 🔒'],
+      depois: ['Revisou tudo? Coisa de campeã! 🏆'],
     },
     prova: {
       oi: ['Oi! Eu cuido desta prova. 📝'],
       nova: ['Vamos fazer a prova com calma? 📝'],
-      feita: ['O acessório já é seu! Agora é treino. ✏️'],
-      depois: ['Muito bem! Você fez tudo com calma. 💛'],
+      feita: ['Prêmio ganho! Vamos treinar? ✏️'],
+      depois: ['Muito bem! Tudo com calma! 💛'],
     },
     guia: {
       oi: ['Oi! Que bom te ver por aqui! 😄'],
-      nova: ['Quer ver a lista de tudo o que tem aqui? 📋'],
+      nova: ['Quer ver a lista? 📋'],
     },
     tela: {
       oi: ['Oi! Que bom te ver por aqui! 😄'],
       nova: {
-        estabulo: 'Quer visitar os seus unicórnios? 🦄', loja: 'Quer ver os enfeites da loja? ⭐', bau: 'Quer ver o seu tesouro? 💰',
+        estabulo: 'Quer ver seus unicórnios? 🦄', loja: 'Quer ver os enfeites da loja? ⭐', bau: 'Quer ver o seu tesouro? 💰',
         plano: 'Quer ler o Plano da Prova? 📜', ovos: 'Vamos chocar os ovinhos? 🥚', livro: 'Quer ler o livro? 📖',
       },
     },
   };
-  var SAIU = 'Tudo bem! Volte quando quiser. 💛';
+  var SAIU = 'Tudo bem, volte quando quiser! 💛';
   var OVOS = 'Tem ovinho para chocar! 🥚';
-  var CALMA = 'Ou acerte tudo de primeira, com calma.';
+  // raro da sala: tudo certo de primeira E com calma, OU jogar a sala 3 vezes
+  var CALMA = 'Ou de primeira, com calma! 🌙';
   var RARO_JA = 'O raro desta sala já nasceu! 💙';
   var VALE = {
     lendario: 'Valendo acessório lendário! 🌈',
     raro: 'Valendo acessório raro! 💙',
     comum: 'Valendo acessório comum! 🤍',
   };
+  // épicos do treino: ouro (ou 3 treinos) e nota dez (ou 5 treinos)
+  var OU_EPICO = { ouro: 'Ou tire ouro, com calma! 🥇', perfeito: 'Ou acerte as 10, com calma!' };
   function faltamSalas(n) { return n === 1 ? 'Falta só 1 sala! 💪' : 'Faltam ' + n + ' salas! 💪'; }
   function dicaRaro(n) { return n === 1 ? 'Mais 1 vez e o raro nasce! 💙' : 'Mais ' + n + ' vezes e o raro nasce! 💙'; }
-  function dicaEpico(tipo, n) {
-    var qual = tipo === 'ouro' ? 'o épico do ouro' : 'o épico da nota dez';
-    return (n === 1 ? 'Mais 1 treino e nasce ' : 'Mais ' + n + ' treinos e nasce ') + qual + '! 💜';
-  }
+  function dicaEpico(n) { return n === 1 ? 'Falta 1 treino para o épico!' : 'Faltam ' + n + ' treinos para o épico!'; }
   function resumoFeitas(n, total) { return n === total ? 'Você fez as ' + total + ' salas! 🎉' : 'Você fez ' + n + ' de ' + total + ' salas.'; }
   function resumoDinheiro(v) { return 'Já ganhou ' + reais(v) + '! 💰'; }
-  function resumoProxima(s, primeira) { return (primeira ? 'A primeira é ' : 'A próxima é ') + s.nome + (/[.!?]$/.test(s.nome) ? '' : '.'); }
-  var RESUMO_ZERO = 'Você ainda não começou as salas.';
+  function resumoProxima(m, s, primeira) {
+    return (primeira ? 'A primeira é a Sala ' : 'Agora vamos para a Sala ') + (m.salas.indexOf(s) + 1) + '! ' + (s.emoji || '');
+  }
+  var RESUMO_ZERO = 'Você ainda não fez salas.';
   var RESUMO_FIM = 'O treino do Castelo já abriu! 🥇';
 
   // lista de falas do NPC para um momento (as dele, ou as padrão)
@@ -717,7 +734,26 @@
   function nomeLivro(m) { return (Reino.UI && Reino.UI.nomeLivro) ? Reino.UI.nomeLivro(m) : (m.nomeLivro || 'Livro das Memórias'); }
 
   // junta os pedaços em balões de até ~2 linhas (a última página leva os botões)
-  var LIMITE = 44;
+  var LIMITE = 30;
+  // divide um texto em frases (o emoji fica com a frase dele); frase longa demais
+  // ainda é cortada nos dois-pontos / ponto e vírgula. Cada frase é um segmento gravado.
+  var RE_FRASE = /([.!?…]+[»"”)]*(?:\s*(?:\p{Extended_Pictographic}|\uFE0F|\u200D)+)*)\s+/gu;
+  function frases(t) {
+    t = String(t || '').trim();
+    var out = [], ult = 0, m;
+    RE_FRASE.lastIndex = 0;
+    while ((m = RE_FRASE.exec(t))) { out.push(t.slice(ult, m.index + m[1].length).trim()); ult = RE_FRASE.lastIndex; }
+    if (t.slice(ult).trim()) out.push(t.slice(ult).trim());
+    var res = [];
+    out.forEach(function (f) {
+      if (tamanho(f) <= LIMITE || !/[:;]\s/.test(f)) { res.push(f); return; }
+      f.split(/(?<=[:;])\s+/).forEach(function (p) { if (p.trim()) res.push(p.trim()); });
+    });
+    return res.filter(function (f) { return /[\p{L}\p{N}]/u.test(f); });
+  }
+  N.frases = frases;
+  // lista de textos → páginas (cada texto vira frases; frases curtas juntam até LIMITE)
+  function paginas(textos) { return paginar([].concat.apply([], (textos || []).map(frases))); }
   function tamanho(t) { return String(t).replace(/[«»]/g, '').replace(/[\u{1F000}-\u{1FAFF}\u{2190}-\u{21FF}\u{2300}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}]/gu, '').trim().length; }
   function paginar(segs) {
     var pags = [], atual = [], n = 0;
@@ -763,9 +799,9 @@
         var ep = (mt.unicornios || []).find(function (u) { return u.raridade === 'epico' && u.treino === tipo; });
         if (!ep || p.temUni(ep.id)) return;
         var n = p.faltamPersistencia({ raridade: 'epico', treino: tipo, materiaId: mt.id });
-        if (n > 0) dica = dicaEpico(tipo, n);
+        if (n > 0) dica = [dicaEpico(n), OU_EPICO[tipo]];
       });
-      if (dica) sg.push(dica);
+      if (dica) sg = sg.concat(dica);
       sg.push(uma(npc, 'feita'));
       return { segs: sg, botoes: VAMOS };
     }
@@ -783,9 +819,9 @@
       var feitas = p.salasFeitas(mg), total = mg.salas.length;
       var prox = mg.salas.find(function (s2) { return !(est.salas[s2.id] && est.salas[s2.id].feita); });
       var r;
-      if (feitas === 0) r = [RESUMO_ZERO, resumoProxima(prox, true)];
+      if (feitas === 0) r = [RESUMO_ZERO, resumoProxima(mg, prox, true)];
       else if (feitas === total) r = [resumoFeitas(total, total), resumoDinheiro(p.dinheiroMateria(mg)), RESUMO_FIM];
-      else r = [resumoFeitas(feitas, total), resumoDinheiro(p.dinheiroMateria(mg)), resumoProxima(prox, false)];
+      else r = [resumoFeitas(feitas, total), resumoDinheiro(p.dinheiroMateria(mg)), resumoProxima(mg, prox, false)];
       return { segs: r, botoes: bts };
     }
     // tela
@@ -797,7 +833,8 @@
   // tudo o que o NPC pode dizer (para gravar as vozes), com os números enumerados
   N.falasPossiveis = function (npc, def) {
     var out = [], a = npc.acao || {}, voz = npc.voz || 'narradora', pers = Reino.config.persistencia;
-    function add(t) { if (t && !out.some(function (o) { return o.texto === t; })) out.push({ texto: t, voz: voz }); }
+    // mesmos segmentos que o balão fala: cada texto dividido em frases
+    function add(t) { frases(t).forEach(function (f) { if (!out.some(function (o) { return o.texto === f; })) out.push({ texto: f, voz: voz }); }); }
     ['oi', 'nova', 'feita', 'bloqueada', 'depois'].forEach(function (tipo) { falas(npc, tipo).forEach(add); });
     if (a.tipo === 'sala' || a.tipo === 'treino' || a.tipo === 'prova') add(SAIU);
     if (a.tipo === 'sala') {
@@ -814,7 +851,8 @@
         (mt.unicornios || []).forEach(function (u) {
           if (u.raridade !== 'epico' || !u.treino) return;
           var max = u.treino === 'ouro' ? pers.treinoOuro : pers.treinoPerfeito;
-          for (var k = 1; k <= max; k++) add(dicaEpico(u.treino, k));
+          for (var k = 1; k <= max; k++) add(dicaEpico(k));
+          add(OU_EPICO[u.treino]);
         });
       }
     }
@@ -825,7 +863,7 @@
         var total = mg.salas.length;
         add(RESUMO_ZERO); add(RESUMO_FIM);
         for (var i = 1; i <= total; i++) { add(resumoFeitas(i, total)); add(resumoDinheiro(Math.round(valorSala(mg) * i * 100) / 100)); }
-        mg.salas.forEach(function (s2, j) { if (j === 0) add(resumoProxima(s2, true)); add(resumoProxima(s2, false)); });
+        mg.salas.forEach(function (s2, j) { if (j === 0) add(resumoProxima(mg, s2, true)); add(resumoProxima(mg, s2, false)); });
       }
     }
     if (a.tipo === 'tela' && a.tela === 'estabulo') add(OVOS);
@@ -925,17 +963,26 @@
       segs = segs.filter(Boolean);
       return Reino.Claude.falar(segs.join(' '), Object.assign({ quem: quem, fala: segs, modal: true, voz: npc.voz }, op || {}));
     }
+    var CONTINUAR = { botoes: [{ texto: 'Continuar →', valor: 'ok', principal: true }] };
+    // mostra as páginas em sequência com "Continuar →"; para se o balão for limpo
+    function emSequencia(pags) {
+      var i = 0;
+      function prox(v) {
+        if (v === null || v === undefined || i >= pags.length) return v;
+        return balao(pags[i++], CONTINUAR).then(prox);
+      }
+      return prox('ok');
+    }
     var seq = Promise.resolve('ok');
     if (!conversou[npc.id]) {
-      var oi = uma(npc, 'oi');
-      if (oi) {
-        seq = balao([oi], { botoes: [{ texto: 'Continuar →', valor: 'ok', principal: true }] });
-      }
+      // a apresentação inteira (todas as falas de `oi`, na ordem), cada uma em sua(s) página(s)
+      var pagsOi = [].concat.apply([], falas(npc, 'oi').map(function (t) { return paginas([t]); }));
+      seq = emSequencia(pagsOi);
       conversou[npc.id] = true;
     }
     emConversa = seq.then(function (v) {
       if (v === null || v === undefined) return null;     // balão limpo no meio: não segue
-      var c = convite(npc), pags = paginar(c.segs), i = 0;
+      var c = convite(npc), pags = paginas(c.segs), i = 0;
       // páginas do meio com "Continuar →"; a última com os botões e os chips
       function proxima(v2) {
         if (v2 === null || v2 === undefined) return null;
@@ -955,12 +1002,10 @@
       return N.executar(a, ctx).then(function (premios) {
         if (!atividade) return premios;
         if (premios) {
-          var d = uma(npc, 'depois');
-          if (d) Reino.Claude.falar(d, { quem: quem, fala: [d], voz: npc.voz });
+          paginas([uma(npc, 'depois')]).forEach(function (pg) { Reino.Claude.falar(pg.join(' '), { quem: quem, fala: pg, voz: npc.voz }); });
           if (a.tipo === 'sala') Reino.Claude.depoisDaMissao();
         } else {
-          var sa = uma(npc, 'saiu');
-          if (sa) Reino.Claude.falar(sa, { quem: quem, fala: [sa], voz: npc.voz, tempo: 5000 });
+          paginas([uma(npc, 'saiu')]).forEach(function (pg) { Reino.Claude.falar(pg.join(' '), { quem: quem, fala: pg, voz: npc.voz, tempo: 5000 }); });
         }
         return premios;
       });

@@ -1315,6 +1315,51 @@
   }
   var FONTE_PIXEL = '"Press Start 2P", "Trebuchet MS", sans-serif';
 
+  // retângulos do HUD em px do canvas (poucos getBoundingClientRect por quadro, como as placas do mapa)
+  function retangulosHud(canvas, dpr) {
+    if (typeof document === 'undefined' || !canvas || !canvas.getBoundingClientRect) return [];
+    var c = canvas.getBoundingClientRect();
+    if (!c.width) return [];
+    var k = canvas.width / c.width || dpr;
+    return Array.prototype.map.call(document.querySelectorAll('#hud > *:not(.hud-topo), #hud .hud-topo > * > *'), function (e) {
+      var r = e.getBoundingClientRect();
+      return { left: (r.left - c.left) * k, right: (r.right - c.left) * k, top: (r.top - c.top) * k, bottom: (r.bottom - c.top) * k };
+    }).filter(function (r) { return r.right > r.left && r.bottom > r.top; });
+  }
+  // posição mais próxima da original em que a placa (com a borda e uma folga) não cruza o HUD
+  function desviarDoHud(hud, sx, sy, sw, sh, borda, cw, ch, xMin, xMax) {
+    if (!hud.length) return { x: sx, y: sy };
+    var folga = borda * 2;
+    function cruza(x, y) {
+      for (var i = 0; i < hud.length; i++) {
+        var r = hud[i];
+        if (x - folga < r.right && x + sw + folga > r.left && y - folga < r.bottom && y + sh + folga > r.top) return true;
+      }
+      return false;
+    }
+    var lo = Math.max(folga, xMin === undefined ? -1e9 : xMin), hi = Math.min(cw - sw - folga, xMax === undefined ? 1e9 : xMax - sw);
+    function dentroX(x) { return hi >= lo ? Math.max(lo, Math.min(x, hi)) : Math.max(folga, Math.min(x, cw - sw - folga)); }
+    if (!cruza(sx, sy)) return { x: sx, y: sy };
+    var cands = [];
+    var ys = [sy], xs = [sx];
+    hud.forEach(function (r) {
+      ys.push(Math.round(r.bottom + folga * 2));
+      xs.push(Math.round(r.right + folga * 2), Math.round(r.left - sw - folga * 2));
+    });
+    ys.forEach(function (y) { xs.forEach(function (x) { cands.push({ x: dentroX(x), y: y }); }); });
+    var melhor = null, custo = Infinity;
+    cands.forEach(function (p) {
+      if (p.y < sy || p.y + sh > ch || cruza(p.x, p.y)) return;
+      // descer é o preferido; andar de lado pesa um pouco mais
+      var k = (p.y - sy) + Math.abs(p.x - sx) * 1.3;
+      if (k < custo) { custo = k; melhor = p; }
+    });
+    if (melhor) return melhor;
+    var fundo = sy;
+    hud.forEach(function (r) { fundo = Math.max(fundo, Math.round(r.bottom + folga * 2)); });
+    return { x: dentroX(sx), y: fundo };
+  }
+
   function criarCena(def) {
     var g = grade(def);
     var npcs = def.npcs || [];
@@ -1448,8 +1493,9 @@
           var ultima = i === pags.length - 1;
           p = p.then(function (v) {
             if (v === null) return null;
+            // botões em todas as páginas: mesmo tamanho de letra dos balões dos personagens
             return Cl.falar(pg, { quem: quem, modal: true, voz: quem.voz,
-              botoes: ultima ? undefined : [{ texto: 'Continuar →', valor: 'mais', principal: true }] });
+              botoes: [ultima ? { texto: 'Ok! 👍', valor: 'ok', principal: true } : { texto: 'Continuar →', valor: 'mais', principal: true }] });
           });
         });
       }
@@ -1573,6 +1619,7 @@
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.font = fonte + 'px ' + FONTE_PIXEL;
+        var hud = retangulosHud(ctx.canvas, pintor.dpr || 1);
         (def.comodos || []).forEach(function (c) {
           if (!c.placa) return;
           var r = c.rect;
@@ -1596,6 +1643,14 @@
           var sx = Math.round(p0.x - sw / 2), sy = Math.round(p0.y);
           var cw = ctx.canvas.width, ch = ctx.canvas.height;
           if (sx > cw || sy > ch || sx + sw < 0 || sy + sh < 0) return;
+          // placa atrás do HUD (chips, botão ↙, montaria): desce para logo abaixo dele ou vai para o lado
+          var esq = naTela(pintor, r.x * T, 0).x, dir = naTela(pintor, (r.x + r.w) * T, 0).x;
+          var livre = desviarDoHud(hud, sx, sy, sw, sh, borda, cw, ch, esq + borda, dir - borda);
+          if (livre.x !== sx || livre.y !== sy) {
+            // desviada, a placa não pode invadir outro cômodo: se o dela está quase fora da tela, some
+            if (livre.x < esq - borda || livre.x + sw > dir + borda) return;
+          }
+          sx = livre.x; sy = livre.y;
           ctx.fillStyle = K;
           ctx.fillRect(sx - borda, sy - borda, sw + borda * 2, sh + borda * 2);
           ctx.fillStyle = '#fff8ee';
