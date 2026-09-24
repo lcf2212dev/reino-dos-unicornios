@@ -40,7 +40,55 @@
     } catch (e) { return null; }
   }
   function gravarLocal() {
+    estado = comCopia(estado);
     try { localStorage.setItem(Reino.config.chaveSave, JSON.stringify(estado)); } catch (e) {}
+    gravarCopia();
+  }
+
+  /* Cópia de segurança dos campos novos (cuidados, despensa, ajustes.surpresa e surpresaEm) numa chave que a
+     versão antiga do jogo não conhece e por isso nunca apaga. Uma aba antiga aberta no mesmo
+     navegador regrava o save principal (e o servidor) sem esses campos; ao carregar e ao mesclar,
+     o que faltar volta daqui, com as mesmas regras da mescla. Só vale na MESMA geração: depois de
+     "Apagar tudo" a cópia fica velha e é ignorada (e regravada na próxima gravação).
+     O ciclo vai junto só como informação: "Novo ciclo" mantém cuidados e despensa. */
+  var CHAVE_NOVIDADES = Reino.config.chaveSave + '-novidades';
+  function objeto(x) { return !!x && typeof x === 'object' && !Array.isArray(x); }
+  function lerCopia() {
+    try {
+      var bruto = localStorage.getItem(CHAVE_NOVIDADES);
+      if (!bruto) return null;
+      var c = JSON.parse(bruto);
+      return objeto(c) ? c : null;
+    } catch (e) { return null; }
+  }
+  function gravarCopia() {
+    if (!estado) return;
+    try {
+      localStorage.setItem(CHAVE_NOVIDADES, JSON.stringify({
+        geracao: estado.geracao || 1, ciclo: estado.ciclo || 1, atualizado: estado.atualizado,
+        cuidados: estado.cuidados || {}, despensa: estado.despensa || {},
+        surpresa: estado.ajustes ? estado.ajustes.surpresa : undefined,
+        surpresaEm: estado.ajustes ? estado.ajustes.surpresaEm : undefined,
+      }));
+    } catch (e) {}
+  }
+  // da cópia só entram registros com números de verdade (cópia estragada não vira NaN no jogo)
+  function numero(x) { return typeof x === 'number' && isFinite(x) && x >= 0; }
+  function filtrar(o, campos) {
+    var r = {};
+    if (objeto(o)) Object.keys(o).forEach(function (k) {
+      if (objeto(o[k]) && campos.every(function (c) { return numero(o[k][c]); })) r[k] = o[k];
+    });
+    return r;
+  }
+  // junta a cópia ao estado `e` (antes do completar(), para a surpresa que falta vir da cópia)
+  function comCopia(e) {
+    var c = lerCopia();
+    if (!objeto(e) || !c || (c.geracao || 1) !== (e.geracao || 1)) return e;
+    e.cuidados = juntarCuidados(objeto(e.cuidados) ? e.cuidados : {}, filtrar(c.cuidados, ['fome', 'sede', 'em']));
+    e.despensa = juntarDespensa(objeto(e.despensa) ? e.despensa : {}, filtrar(c.despensa, ['compradas', 'usadas']));
+    e.ajustes = juntarSurpresa(objeto(e.ajustes) ? e.ajustes : {}, { surpresa: c.surpresa, surpresaEm: c.surpresaEm });
+    return e;
   }
   function completar(e) {
     var base = estadoNovo();
@@ -52,15 +100,30 @@
   }
 
   P.carregar = function () {
-    estado = completar(lerLocal() || estadoNovo());
+    estado = completar(comCopia(lerLocal() || estadoNovo()));
     if (P.conferirPersistencia().length) gravarLocal();
+    vigiarSurpresa();
     return estado;
   };
   P.estado = function () { return estado; };
 
+  /* O interruptor da surpresa muda nos dois sentidos: quando ela o troca (ui.js só muda o valor e
+     chama P.salvar), ganha o carimbo `ajustes.surpresaEm`, e na mescla vale o carimbo maior.
+     Só conta a troca no MESMO objeto de estado: carregar, mesclar e "Apagar tudo" trocam o objeto e
+     não carimbam (o padrão de estadoNovo() nunca tem carimbo, senão um aparelho novo venceria). */
+  var vigiaSurpresa = { estado: null, valor: undefined };
+  function marcarSurpresa() {
+    var a = estado && estado.ajustes;
+    if (!a) return;
+    if (vigiaSurpresa.estado === estado && vigiaSurpresa.valor !== undefined && a.surpresa !== vigiaSurpresa.valor) a.surpresaEm = agora();
+  }
+  function vigiarSurpresa() { vigiaSurpresa = { estado: estado, valor: estado && estado.ajustes ? estado.ajustes.surpresa : undefined }; }
+
   P.salvar = function (semNuvem) {
     estado.atualizado = agora();
+    marcarSurpresa();
     gravarLocal();
+    vigiarSurpresa();
     U.emit('progresso', estado);
     if (!semNuvem) agendarNuvem();
   };
@@ -70,6 +133,35 @@
   function minPos(a, b) { if (!a) return b; if (!b) return a; return Math.min(a, b); }
   var ORDEM_MEDALHA = { bronze: 1, prata: 2, ouro: 3 };
   var ORDEM_PREMIO = { comum: 1, raro: 2, lendario: 3 };
+
+  // as regras dos campos novos, usadas pela mescla e pela cópia de segurança: `base` ganha no empate
+  function juntarCuidados(base, outro) {
+    Object.keys(outro || {}).forEach(function (k) {
+      var x = base[k], y = outro[k];
+      if (!objeto(y)) return;
+      if (!x || (y.em || 0) > (x.em || 0)) base[k] = U.copia(y);
+    });
+    return base;
+  }
+  function juntarDespensa(base, outro) {
+    Object.keys(outro || {}).forEach(function (k) {
+      var x = base[k], y = outro[k];
+      if (!objeto(y)) return;
+      if (!x) { base[k] = U.copia(y); return; }
+      x.compradas = max(x.compradas, y.compradas); x.usadas = max(x.usadas, y.usadas);
+    });
+    return base;
+  }
+
+  // `base` (o lado que fica) recebe a surpresa de `outro` se o carimbo de `outro` for maior, ou, sem carimbo
+  // nenhum, se `base` não tem o campo; `base` ganha no empate
+  function juntarSurpresa(base, outro) {
+    if (!objeto(outro) || typeof outro.surpresa !== 'boolean') return base;
+    var cb = typeof base.surpresa === 'boolean' && numero(base.surpresaEm) ? base.surpresaEm : 0, co = numero(outro.surpresaEm) ? outro.surpresaEm : 0;
+    if (co > cb) { base.surpresa = outro.surpresa; base.surpresaEm = co; }
+    else if (!cb && !co && base.surpresa === undefined) base.surpresa = outro.surpresa;
+    return base;
+  }
 
   P.mesclar = function (a, b) {
     if (!a) return b; if (!b) return a;
@@ -117,26 +209,12 @@
     Object.keys(antigo.loja || {}).forEach(function (k) { if (antigo.loja[k]) r.loja[k] = true; });
     // fome e sede: por unicórnio vale o registro mudado por último (`em`; empate: o do lado mais recente).
     // Um lado sem o campo (aparelho com a versão antiga) não apaga nada: vale o outro lado.
-    if (a.cuidados || b.cuidados) {
-      r.cuidados = U.copia(recente.cuidados || {});
-      Object.keys(antigo.cuidados || {}).forEach(function (k) {
-        var x = r.cuidados[k], y = antigo.cuidados[k];
-        if (!y) return;
-        if (!x || (y.em || 0) > (x.em || 0)) r.cuidados[k] = U.copia(y);
-      });
-    }
+    if (a.cuidados || b.cuidados) r.cuidados = juntarCuidados(U.copia(recente.cuidados || {}), antigo.cuidados);
     // despensa: contadores que só crescem, pelo maior (nunca some comida comprada)
-    if (a.despensa || b.despensa) {
-      r.despensa = U.copia(recente.despensa || {});
-      Object.keys(antigo.despensa || {}).forEach(function (k) {
-        var x = r.despensa[k], y = antigo.despensa[k];
-        if (!y) return;
-        if (!x) { r.despensa[k] = U.copia(y); return; }
-        x.compradas = max(x.compradas, y.compradas); x.usadas = max(x.usadas, y.usadas);
-      });
-    }
-    // interruptor novo das perguntas surpresa: se o lado mais recente não conhece (versão antiga), vale o do outro
-    if (r.ajustes && r.ajustes.surpresa === undefined && antigo.ajustes && antigo.ajustes.surpresa !== undefined) r.ajustes.surpresa = antigo.ajustes.surpresa;
+    if (a.despensa || b.despensa) r.despensa = juntarDespensa(U.copia(recente.despensa || {}), antigo.despensa);
+    // interruptor novo das perguntas surpresa: vale o lado com o carimbo `surpresaEm` maior (troca feita por
+    // último); sem carimbo dos dois lados, se o lado mais recente não conhece (versão antiga), vale o do outro
+    if (r.ajustes) juntarSurpresa(r.ajustes, antigo.ajustes);
     r.comecou = !!(a.comecou || b.comecou);
     r.ritualVisto = !!(a.ritualVisto || b.ritualVisto);
     return r;
@@ -223,9 +301,10 @@
           // aparelho que nunca começou não tem nada a somar: fica com o guardado inteiro
           // (senão a aparência e as escolhas em branco dele, mais recentes, venceriam)
           var emBranco = !estado.comecou && (estado.geracao || 1) <= (guardado.geracao || 1);
-          estado = completar(emBranco ? U.copia(guardado) : P.mesclar(estado, guardado));
+          estado = completar(comCopia(emBranco ? U.copia(guardado) : P.mesclar(estado, guardado)));
           P.conferirPersistencia();
           gravarLocal();
+          vigiarSurpresa();
           U.emit('progresso', estado);
           U.emit('progressoRemoto', estado);
         }
@@ -235,9 +314,10 @@
           if (!s.exists || s.metadata.hasPendingWrites) return;
           var remoto = s.data() && s.data().estado;
           if (!remoto || remoto.atualizado === estado.atualizado) return;
-          estado = completar(P.mesclar(estado, remoto));
+          estado = completar(comCopia(P.mesclar(estado, remoto)));
           if (P.conferirPersistencia().length) agendarNuvem();
           gravarLocal();
+          vigiarSurpresa();
           U.emit('progresso', estado);
           U.emit('progressoRemoto', estado);
         }, function () { nuvem.status = 'local'; U.emit('nuvem', nuvem.status); });
