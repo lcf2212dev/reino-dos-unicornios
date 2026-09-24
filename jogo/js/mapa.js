@@ -9,6 +9,7 @@
   var decor = [];           // enfeite do tile: 'arvore', 'flor', 'cristal', 'arbusto', 'cogumelo'
   var lugares = [];
   var estatico = null;      // canvas com tudo o que não se mexe
+  var BORDA_BAIXO = 4;      // fileiras de grama desenhadas abaixo do fim do mapa (só enfeite)
   var claudeTile = { x: 20, y: 12 };
 
   // clareiras onde as próximas matérias vão ganhar um lugar
@@ -229,8 +230,9 @@
       }
       return melhor;
     }
-    // tocou em terra (arbusto, casa): prefere um tile de terra, para ela não atravessar o lago nadando
-    var querAgua = Mapa.agua(x, y);
+    // tocou em terra (arbusto, casa): prefere um tile de terra, para ela não atravessar o lago nadando;
+    // se ela já está nadando, a água em volta vale (senão ela nadaria de lado até a margem)
+    var querAgua = Mapa.agua(x, y) || !!(de && Mapa.agua(de.x, de.y));
     return procurar(querAgua) || (querAgua ? null : procurar(true));
   };
 
@@ -269,8 +271,8 @@
     }
   }
 
-  function desenharChao(ctx, x, y, r) {
-    var px = x * T, py = y * T, t = tipo[y][x];
+  function desenharChao(ctx, x, y, r, forcado) {
+    var px = x * T, py = y * T, t = forcado || tipo[y][x];
     var par = (x + y) % 2 === 0, fio, topo, k, fx, fy, cor;
     if (t === 'g' || t === 'f') {
       ret(ctx, px, py, T, T, t === 'f' ? C.grama3 : C.grama);
@@ -778,10 +780,13 @@
   }
 
   Mapa.prerender = function () {
-    var c = PA.novoCanvas(W * T, H * T);
+    // mais BORDA_BAIXO fileiras de grama depois do fim do mapa: a câmera passa da borda de baixo para
+    // o menu não esconder a última fileira, e ali aparecia grama lisa, sem os tufinhos
+    var c = PA.novoCanvas(W * T, (H + BORDA_BAIXO) * T);
     var ctx = c.getContext('2d');
     var r = rng(777);
     for (var y = 0; y < H; y++) for (var x = 0; x < W; x++) desenharChao(ctx, x, y, r);
+    for (var yb = H; yb < H + BORDA_BAIXO; yb++) for (var xb = 0; xb < W; xb++) desenharChao(ctx, xb, yb, r, 'g');
     var r2 = rng(4242);
     for (var y2 = 0; y2 < H; y2++) for (var x2 = 0; x2 < W; x2++) {
       var d = decor[y2][x2];
