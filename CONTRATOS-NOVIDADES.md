@@ -269,7 +269,7 @@ Registrar no carregamento é permitido (só guarda a função). Elenco novo em `
 
 ## 9. Vozes e falas
 - Perfis novos em `Reino.config.vozes`: `npc-aveia`, `npc-vega`, `npc-cosmo`. Campo novo opcional
-  `efeito: 'robo'` (filtro metálico na gravação, em `ferramentas/gerar-vozes.py`; muda a chave só dos
+  `efeito: 'robo-leve'` (filtro metálico leve na gravação, em `ferramentas/gerar-vozes.py`; muda a chave só dos
   perfis que têm efeito). Amostras 34 a 36 em `amostras-de-voz/`.
 - Pacotes: `interior-petshop` e `interior-observatorio` (NPCs, objetos e `extras` do prédio); falas de
   `Reino.Cuidados.falas()`, `Reino.Surpresa.falas()` e `Reino.LojaItens.FALAS` no `geral`.

@@ -135,6 +135,8 @@
         x.compradas = max(x.compradas, y.compradas); x.usadas = max(x.usadas, y.usadas);
       });
     }
+    // interruptor novo das perguntas surpresa: se o lado mais recente não conhece (versão antiga), vale o do outro
+    if (r.ajustes && r.ajustes.surpresa === undefined && antigo.ajustes && antigo.ajustes.surpresa !== undefined) r.ajustes.surpresa = antigo.ajustes.surpresa;
     r.comecou = !!(a.comecou || b.comecou);
     r.ritualVisto = !!(a.ritualVisto || b.ritualVisto);
     return r;

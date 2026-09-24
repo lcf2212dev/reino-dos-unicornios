@@ -89,7 +89,7 @@ Reino.config = {
     'npc-aveia': { voz: 'de-DE-SeraphinaMultilingualNeural', velocidade: '+8%', tom: '+10Hz' },  // dona da Pet Shop: alegre e carinhosa
     'npc-vega': { voz: 'en-US-EmmaMultilingualNeural', velocidade: '-8%', tom: '-10Hz' },        // astrônoma calma, voz de quem conta segredos do céu
     // robô ajudante: `efeito` passa um filtro metálico na gravação (ferramentas/gerar-vozes.py)
-    'npc-cosmo': { voz: 'de-DE-FlorianMultilingualNeural', velocidade: '+6%', tom: '+18Hz', efeito: 'robo' },
+    'npc-cosmo': { voz: 'de-DE-FlorianMultilingualNeural', velocidade: '+6%', tom: '+18Hz', efeito: 'robo-leve' },
     // interior de teste da Fase 1 (js/interiores/teste.js)
     'npc-teste-guia': { voz: 'de-DE-FlorianMultilingualNeural', velocidade: '+4%', tom: '+8Hz' },
     'npc-teste-sala': { voz: 'de-DE-SeraphinaMultilingualNeural', velocidade: '-4%', tom: '+12Hz' },

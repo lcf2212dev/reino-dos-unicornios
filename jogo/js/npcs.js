@@ -1037,7 +1037,10 @@
       if (TELAS[acao.tela]) return esperarTela(function () { TELAS[acao.tela](acao, ctx); }).then(fim);
       return Promise.resolve(null);
     }
-    if (ACOES[acao.tipo]) return Promise.resolve(ACOES[acao.tipo](acao, ctx || {}));
+    if (ACOES[acao.tipo]) {
+      try { return Promise.resolve(ACOES[acao.tipo](acao, ctx || {})).catch(function (e) { console.error(e); return null; }); }
+      catch (e) { console.error(e); return Promise.resolve(null); }
+    }
     if (acao.tipo === 'unicornio') {
       // o unicórnio da baia diz a frase que já está gravada (o nome que ela deu só aparece na tela)
       var du = N.unicornioDaBaia(acao.indice || 0);
@@ -1101,6 +1104,8 @@
         var ml = a.livro ? Reino.materia(a.livro) : materiaDoLugar(a.lugar);
         return N.executar({ tipo: 'tela', tela: 'livro', materia: ml && ml.id });
       }
+      // a ação sabe quem a chamou (ex.: a curiosidade contada com o retrato e a voz da Doutora Vega)
+      ctx = Object.assign({ npc: npc, quem: quem }, ctx || {});
       if (v === 'lista') return N.executar(a, ctx);
       if (v !== 'vamos') return null;
       var atividade = a.tipo === 'sala' || a.tipo === 'treino' || a.tipo === 'prova';

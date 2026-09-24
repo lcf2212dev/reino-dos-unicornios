@@ -20,8 +20,10 @@ FILTRO = ('silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.0
           'areverse,silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.08,areverse')
 # efeitos opcionais do perfil (campo `efeito` em Reino.config.vozes), aplicados antes do corte do silêncio
 EFEITOS = {
-    # robô: voz metálica e monótona, ainda bem clara (Robô Cosmo do Observatório)
-    'robo': "afftfilt=real='hypot(re,im)*cos(0)':imag='hypot(re,im)*sin(0)':win_size=512:overlap=0.75",
+    # robô leve: a voz de verdade com metade de uma cópia metálica e monótona por cima (Robô Cosmo).
+    # O robô inteiro embolava as frases (58% de acerto na transcrição); assim fica clara e ainda robótica.
+    'robo-leve': ("asplit[a][b];[b]afftfilt=real='hypot(re,im)*cos(0)':imag='hypot(re,im)*sin(0)':win_size=512:overlap=0.75,"
+                  "volume=0.55[r];[a]volume=0.75[s];[s][r]amix=inputs=2:normalize=0"),
 }
 
 
