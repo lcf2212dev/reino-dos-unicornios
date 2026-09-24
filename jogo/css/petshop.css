@@ -1,8 +1,9 @@
 /* Pet Shop, fome e sede: barrinhas do HUD e do Estábulo, tela da Pet Shop (UI.telaPetShop)
    e a escolha de comida do Estábulo. Usa as classes de jogo.css (painel, item-loja, chip-mini…). */
 :root {
-  --fome: #e0404f;          /* maçã */
-  --fome-clara: #ff8a8a;
+  /* bem alimentado: laranja-maçã calmo; o vermelho fica só para o alerta (fome baixa) */
+  --fome: #f08a2c;          /* maçã madurinha */
+  --fome-clara: #ffc46b;
   --sede: #2f7fe0;          /* água */
   --sede-clara: #7cc4ff;
   --cuid-baixo-fundo: #ffe1d6;
@@ -27,12 +28,14 @@
 .cuid-cheio { display: block; height: 100%; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5); transition: width 0.4s ease; }
 .cuid-fome .cuid-cheio { background: linear-gradient(90deg, var(--fome), var(--fome-clara)); }
 .cuid-sede .cuid-cheio { background: linear-gradient(90deg, var(--sede), var(--sede-clara)); }
-/* baixa (< 25): trilho quentinho e borda mais forte; o ícone chama devagar (sem piscar) */
+/* baixa (< 25): trilho quentinho e borda mais forte, fome em vermelho e sede em azul-escuro;
+   o ícone chama com um pulinho de 2px (em degrau, sem escala: o pixel continua nítido) */
 .cuid-barra.baixo .cuid-trilho { background: var(--cuid-baixo-fundo); border-color: var(--cuid-baixo-borda); }
-.cuid-fome.baixo .cuid-cheio { background: #c21f30; }
+.cuid-fome.baixo .cuid-cheio { background: #d42a3a; }
 .cuid-sede.baixo .cuid-cheio { background: #1c5fb8; }
-.cuid-barra.baixo > canvas, .cuid-barra.baixo .cuid-rotulo canvas { animation: cuid-chamar 2.4s ease-in-out infinite; }
-@keyframes cuid-chamar { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.18); } }
+.cuid-barra.baixo > canvas, .cuid-barra.baixo .cuid-rotulo canvas { animation: cuid-chamar 2.4s step-end infinite; }
+@keyframes cuid-chamar { 0%, 60%, 100% { transform: none; } 45% { transform: translateY(-2px); } }
+body.sem-animacao .cuid-barra.baixo canvas { animation: none; }
 body.sem-animacao .cuid-cheio { transition: none; }
 
 /* mini: HUD e cartas do Estábulo */
@@ -45,8 +48,9 @@ body.sem-animacao .cuid-cheio { transition: none; }
 .cuid-par-grande { flex-direction: column; gap: 8px; width: 100%; }
 .cuid-grande { display: grid; grid-template-columns: auto 1fr; align-items: center; column-gap: 10px; row-gap: 2px; }
 .cuid-grande .cuid-rotulo { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; font-size: 0.85em; min-width: 6.5em; }
+.cuid-grande .cuid-rotulo canvas { flex: none; vertical-align: middle; }
 .cuid-grande .cuid-trilho { height: 16px; border-width: 3px; border-radius: 8px; }
-.cuid-grande .cuid-aviso { grid-column: 2; font-size: 0.7em; font-weight: 700; color: var(--cuid-baixo-borda); }
+.cuid-grande .cuid-aviso { grid-column: 2; font-size: 0.75em; font-weight: 700; color: var(--cuid-baixo-borda); }
 .cuid-grande .cuid-aviso:empty { display: none; }
 .cuid-detalhe { padding: 12px 14px; border: 3px solid var(--borda); border-radius: 16px; background: var(--papel); }
 
@@ -59,29 +63,37 @@ body.sem-animacao .cuid-cheio { transition: none; }
 .petshop-uni > canvas { flex: none; }
 .petshop-uni-info { display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 0; }
 .petshop-uni-info > b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.grade-comidas { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+/* as 5 comidas: 3 + 2 centralizadas (flex em vez da grade da Loja, que deixava o bolo sozinho
+   à esquerda); todas as cartas com a mesma largura, então os ícones saem do mesmo tamanho */
+.grade-comidas { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+.grade-comidas > .item-comida { flex: 0 0 calc((100% - 24px) / 3); min-width: 0; }
 .item-comida { position: relative; min-height: 150px; justify-content: center; color: var(--tinta); }
 .item-comida:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--borda); }
 .item-comida:focus-visible { outline: 4px solid var(--roxo); outline-offset: 2px; }
-.item-comida b { text-align: center; line-height: 1.5; }
+.item-comida b { text-align: center; line-height: 1.5; max-width: 100%; overflow-wrap: anywhere; }
 .comida-enche { font-size: 0.85em; font-weight: 700; color: var(--certo); }
 .item-comida.falta .item-preco { background: #f1edf5; color: var(--tinta-suave); }
-.comida-tem { margin-top: 2px; }
+.item-comida .comida-tem { margin-top: 2px; font-size: 0.86em; } /* ≥ 12px */
 .petshop-despensa {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px;
   padding: 10px 14px; border: 3px dashed var(--borda); border-radius: 16px; background: var(--papel-2);
 }
 .petshop-despensa p { margin: 0; }
+.petshop-despensa .chip-mini { font-size: 0.8em; }
 .petshop-vazia { text-align: center; font-weight: 700; }
 
 @media (max-width: 480px) {
-  .grade-comidas { grid-template-columns: 1fr 1fr; gap: 10px; }
+  /* celular: 2 por linha; a última sozinha (o bolo) ocupa a linha inteira, centralizada */
+  .grade-comidas { gap: 10px; }
+  .grade-comidas > .item-comida { flex-basis: calc((100% - 10px) / 2); }
+  .grade-comidas > .item-comida:last-child:nth-child(odd) { flex-basis: 100%; }
   .item-comida { min-height: 136px; padding: 10px 6px; }
   .petshop-uni { gap: 10px; padding: 8px 10px; }
   /* no celular: rótulo e aviso em cima, trilho largo embaixo */
-  .cuid-grande { grid-template-columns: 1fr auto; column-gap: 6px; }
+  .cuid-grande { grid-template-columns: auto 1fr; column-gap: 6px; }
   .cuid-grande .cuid-rotulo { min-width: 0; font-size: 0.75em; }
-  .cuid-grande .cuid-aviso { grid-column: 2; grid-row: 1; white-space: nowrap; font-size: 0.6em; }
+  /* aviso embaixo do trilho, numa linha só (em cima, ao lado do rótulo, não cabia com 12px) */
+  .cuid-grande .cuid-aviso { grid-column: 1 / -1; grid-row: 3; text-align: right; white-space: nowrap; font-size: 0.75em; }
   .cuid-grande .cuid-trilho { grid-column: 1 / -1; grid-row: 2; }
   .cuid-par-mini { gap: 4px; }
 }

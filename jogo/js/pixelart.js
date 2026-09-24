@@ -257,8 +257,9 @@
     ancoras: { orelha: [14, 2], olho: null, cabeca: [8, 3],
       pescoco: [9, 10], cauda: [8, 16], chifre: [8, 1] },
     // de costas o laço da gravata e o pingente do colar ficam escondidos: só a tirinha e o fio
+    // (os desenhos próprios usam a paleta do enfeite em PA.ENFEITES_MONTARIA)
     enfeites: { 'gravata-borboleta': { linhas: ['RRRRR'], x: 5, y: 10 },
-      'colar-perolas': { linhas: ['kWsWsWk'], x: 6, y: 10 } },
+      'colar-perolas': { linhas: ['LcrcrcL', '.LLLLL.'], x: 6, y: 10 } },
     brilhos: [[10, 6], [11, 9], [8, 15]],
     cavaleira: [3, 6],
   };
@@ -334,7 +335,7 @@
     ancoras: { orelha: [13, 2], olho: null, cabeca: [16, 4],
       pescoco: [15, 9], cauda: [2, 14], chifre: [18, 1] },
     enfeites: { 'gravata-borboleta': { linhas: ['RRRR'], x: 11, y: 9 },
-      'colar-perolas': { linhas: ['kWsWsWk'], x: 12, y: 9 } },
+      'colar-perolas': { linhas: ['LcrcrcL', '.LLLLL.'], x: 12, y: 9 } },
     brilhos: [[10, 7], [9, 10], [1, 14]],
     cavaleira: [5, 1],
   };
@@ -367,6 +368,9 @@
     asas: [{ linhas: ASA_FILHOTE, x: 1, y: 3, atras: true, escura: true }, { linhas: ASA_FILHOTE, x: 2, y: 4 }],
     ancoras: { orelha: [8, 0], olho: [11, 5], cabeca: [10, 2],
       pescoco: [10, 10], cauda: [1, 9], chifre: [12, 1] },
+    // filhote: o anel de Saturno é um aro pequeno em volta da base do chifrinho, visto um pouco de
+    // cima (pontas ao lado do chifre, arco da frente embaixo): no bebê o toquinho aparece dentro dele
+    enfeites: { 'anel-saturno': { linhas: ['A...A', '.AaA.'], x: 10, y: 2 } },
     brilhos: [[5, 5], [1, 9], [6, 3]],
     cavaleira: [1, -1],
   };
@@ -403,7 +407,8 @@
     ],
     ancoras: { orelha: [3, 2], olho: [4, 6], cabeca: [7, 3],
       pescoco: [8, 11], cauda: null, chifre: [7, 1] },
-    enfeites: { oculos: { linhas: OCULOS_FRENTE, x: 3, y: 5 }, 'oculos-estrela': { linhas: OCULOS_ESTRELA_FRENTE, x: 3, y: 5 } },
+    enfeites: { oculos: { linhas: OCULOS_FRENTE, x: 3, y: 5 }, 'oculos-estrela': { linhas: OCULOS_ESTRELA_FRENTE, x: 3, y: 5 },
+      'anel-saturno': { linhas: ['A....A', '.AaaA.'], x: 5, y: 2 } },
     brilhos: [[0, 6], [1, 8], [7, 4]],
     cavaleira: [2, -9],
     naFrente: [0, 0, 15, 10],
@@ -442,7 +447,8 @@
     ancoras: { orelha: [12, 2], olho: null, cabeca: [7, 3],
       pescoco: [8, 9], cauda: [7, 12], chifre: [7, 1] },
     enfeites: { 'gravata-borboleta': { linhas: ['RRRRR'], x: 5, y: 9 },
-      'colar-perolas': { linhas: ['kWsWsWk'], x: 5, y: 9 } },
+      'colar-perolas': { linhas: ['LcrcrcL', '.LLLLL.'], x: 5, y: 9 },
+      'anel-saturno': { linhas: ['A....A', '.AaaA.'], x: 5, y: 2 } },
     brilhos: [[10, 6], [11, 8]],
     cavaleira: [2, 3],
   };
@@ -474,7 +480,8 @@
     ancoras: { orelha: [15, 2], olho: [13, 6], cabeca: [12, 3],
       pescoco: [12, 11], cauda: [2, 10], chifre: [12, 1] },
     enfeites: { oculos: { linhas: ['R.R..R.R', 'RRRRRRRR', '.R....R.'], x: 7, y: 5 },
-      'oculos-estrela': { linhas: ['kYk..kYk', 'YOYkkYOY', 'YkY..YkY'], x: 7, y: 5 } },
+      'oculos-estrela': { linhas: ['kYk..kYk', 'YOYkkYOY', 'YkY..YkY'], x: 7, y: 5 },
+      'anel-saturno': { linhas: ['A....A', '.AaaA.'], x: 10, y: 2 } },
     brilhos: [[5, 6], [1, 10], [6, 4]],
     cavaleira: [2, -6],
     naFrente: [7, 0, 15, 11],
@@ -507,7 +514,8 @@
     ancoras: { orelha: [9, 2], olho: null, cabeca: [12, 3],
       pescoco: [10, 8], cauda: [2, 10], chifre: [12, 1] },
     enfeites: { 'gravata-borboleta': { linhas: ['RRRR'], x: 8, y: 8 },
-      'colar-perolas': { linhas: ['kWsWsWk'], x: 7, y: 8 } },
+      'colar-perolas': { linhas: ['LcrcrcL', '.LLLLL.'], x: 7, y: 8 },
+      'anel-saturno': { linhas: ['A....A', '.AaaA.'], x: 10, y: 2 } },
     brilhos: [[7, 5], [6, 7], [1, 10]],
     cavaleira: [3, 0],
   };
@@ -531,10 +539,12 @@
     'pompom-cauda': { linhas: ['.kkk.', 'kPPWk', 'kPPPk', 'kdPPk', '.kkk.'], paleta: { k: '#3a2446', W: '#ffffff', P: '#ff4f9a', d: '#c92f73' }, ancora: 'cauda', dx: -2, dy: -2 },
     // cometinha: estrela brilhante na ponta da cauda e um rastro que afina subindo para o lado do corpo
     'cometa-cauda': { linhas: ['......kb', '....kkbk', '..kkbWk.', '.kYWWk..', 'kYWYk...', '.kYk....', '..k.....'], paleta: { k: '#3a2446', Y: '#ffd34d', W: '#fffbe0', b: '#7fd6ff' }, ancora: 'cauda', dx: -2, dy: -3 },
-    'gravata-borboleta': { linhas: ['kk.kk', 'kRkRk', 'kk.kk'], paleta: { k: '#3a2446', R: '#ff4f6d' }, ancora: 'pescoco', dx: -2, dy: -1 },
-    // fio de pérolas creme com sombra lilás (sem escuro entre elas nem por cima: o contorno fica só
-    // nas pontas e embaixo) e um pingente rosa
-    'colar-perolas': { linhas: ['kWsWsWk', '.kkPkk.', '..kPk..', '...k...'], paleta: { k: '#3a2446', W: '#fff8ee', s: '#c9aee6', P: '#ff5c9d' }, ancora: 'pescoco', dx: -3, dy: 0 },
+    // duas asinhas triangulares vermelhas (borda em vermelho-escuro, não em contorno escuro, para não
+    // parecer uma carinha) e o nó no meio; de costas só a tirinha R (desenho próprio nos moldes)
+    'gravata-borboleta': { linhas: ['dl...ld', 'dRRNRRd', 'dR...Rd'], paleta: { d: '#b0243f', R: '#ff4f6d', l: '#ffa3b3', N: '#8c1c33' }, ancora: 'pescoco', dx: -3, dy: -1 },
+    // fio de pérolas creme e rosa-clarinho com 1 px de sombra lilás-escura embaixo (lê em corpo de
+    // qualquer cor, sem o tracejado escuro de zíper) e um coraçãozinho rosa com brilho de pingente
+    'colar-perolas': { linhas: ['LcrcrcL', '.LPLPL.', '.LPWPL.', '..LPL..', '...L...'], paleta: { L: '#8a6fb0', c: '#fff8ee', r: '#ffc7e2', P: '#ff4f9a', W: '#ffffff' }, ancora: 'pescoco', dx: -3, dy: 0 },
     'colar-planetas': { linhas: ['kykykyk', 'kRkBkOk'], paleta: { k: '#3a2446', y: '#ffd34d', R: '#ff6b8a', B: '#5fb4ff', O: '#ffb020' }, ancora: 'pescoco', dx: -3, dy: -1 },
     'brinco-lua': { linhas: ['.kYk', 'kYkk', 'kYk.', 'kYYk', '.kk.'], paleta: { k: '#3a2446', Y: '#ffc21a' }, ancora: 'orelha', dx: -2, dy: 1 },
     'oculos-estrela': { linhas: ['kYk', 'YOY', 'YkY'], paleta: { k: '#3a2446', Y: '#f5a300', O: '#ffe066' }, ancora: 'olho', dx: -1, dy: -1 },

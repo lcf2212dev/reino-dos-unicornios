@@ -5,57 +5,161 @@
   var pilha = [];
 
   function est() { return P.estado(); }
+
+  /* Hifenização leve para a fonte pixel (larga): põe hífens invisíveis (\u00AD) entre as sílabas
+     das palavras compridas, e o navegador só mostra o hífen se a palavra precisar quebrar
+     ("Obser-vatório" numa coluna estreita). Regras do português: V-CV e VC-CV, sem separar
+     lh/nh/ch/qu/gu nem consoante + l/r (br, pl, tr...). Palavras curtas ficam como estão. */
+  var VOGAL = 'aeiouáéíóúâêôãõàü';
+  function ehVogal(ch) { return VOGAL.indexOf(ch.toLowerCase()) >= 0; }
+  function ehLetra(ch) { return /[a-zà-ÿ]/i.test(ch); }
+  function hifenizarPalavra(w) {
+    if (w.length < 9) return w;  // até 8 letras cabe inteira nas colunas do celular
+    var cortes = [];
+    for (var i = 1; i < w.length - 1; i++) {
+      var a = w[i - 1], b = w[i], c = w[i + 1], d = w[i + 2];
+      if (!ehLetra(b) || !ehLetra(c) || ehVogal(b) || !ehVogal(a)) continue;
+      if (ehVogal(c)) cortes.push(i);                       // V-CV
+      else if (d && ehVogal(d) && ehLetra(d)) {
+        var par = (b + c).toLowerCase();
+        var junto = /^(lh|nh|ch|qu|gu)$/.test(par) || (/[lr]/.test(c.toLowerCase()) && /[bcdfgkptv]/.test(b.toLowerCase()));
+        cortes.push(junto ? i : i + 1);                      // VC-CV (ou V-CCV)
+      } else if (d && /[lr]/i.test(d) && /[bcdfgkptv]/i.test(c) && w[i + 3] && ehVogal(w[i + 3])) cortes.push(i + 1); // VC-CCV (lem-bran)
+
+    }
+    // nada de sobrar uma letra só de um lado
+    cortes = cortes.filter(function (k) { return k >= 2 && k <= w.length - 2; });
+    for (var j = cortes.length - 1; j >= 0; j--) w = w.slice(0, cortes[j]) + '\u00AD' + w.slice(cortes[j]);
+    return w;
+  }
+  function hifenizar(texto) { return String(texto).replace(/[a-zà-ÿ]+/gi, hifenizarPalavra); }
   function aparencia() { return est().aparencia; }
 
+  /* ---------- toque fantasma ----------
+     Um botão que some no 1º toque deixa o 2º toque (mesmo lugar, 0–300 ms depois) cair no que
+     aparece embaixo: já comprou comida e trocou enfeite sem ela querer. Então, logo depois de
+     abrir ou fechar uma tela, os cliques de dedo/mouse ficam ignorados por um instante.
+     Só os de verdade (isTrusted) e de ponteiro (detail > 0): Enter/Espaço no teclado geram
+     clique com detail 0 e passam sempre; .click() de código também passa. */
+  var SEGURAR_MS = 400;
+  var toquesLivresEm = 0, ultimoToque = -1e9;
+  UI.segurarToques = function (ms) { toquesLivresEm = Math.max(toquesLivresEm, performance.now() + (ms || SEGURAR_MS)); };
+  // só segura quando a tela mudou por causa de um toque (até 600 ms antes): a tela de início
+  // que abre sozinha, ou uma tela aberta pelo teclado, não prendem o próximo toque
+  function segurarSeFoiToque() { if (performance.now() - ultimoToque < 600) UI.segurarToques(); }
+  ['pointerdown', 'pointerup'].forEach(function (ev) {
+    document.addEventListener(ev, function (e) { if (e.isTrusted) ultimoToque = performance.now(); }, true);
+  });
+  document.addEventListener('click', function (e) {
+    if (!e.isTrusted || !e.detail || performance.now() >= toquesLivresEm) return;
+    e.preventDefault(); e.stopImmediatePropagation();
+  }, true);
+
   /* ---------- telas e diálogos ---------- */
+  var FOCAVEIS = 'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+  function visivel(e) { return !!(e.offsetWidth || e.offsetHeight || e.getClientRects().length) && !e.closest('[hidden]'); }
+  function focaveis(raiz) { return Array.prototype.filter.call(raiz.querySelectorAll(FOCAVEIS), visivel); }
+  function focar(e) { if (e && e.isConnected) try { e.focus({ preventScroll: true }); return true; } catch (x) {} return false; }
+  function topo() { return pilha[pilha.length - 1] || null; }
+
   UI.abrirTela = function (nome) {
     var t = el('section.tela.tela-' + nome, { role: 'dialog', 'aria-modal': 'true' });
+    // quem estava com o foco (o botão tocado): volta para ele quando esta tela fechar
+    t._focoAntes = document.activeElement && document.activeElement !== document.body ? document.activeElement : null;
     U.$('#telas').appendChild(t);
     pilha.push(t);
     document.body.classList.add('com-tela');
+    segurarSeFoiToque();
     U.emit('telas', pilha.length);
     return t;
   };
   UI.fecharTela = function (t) {
     t = t || pilha[pilha.length - 1];
     if (!t) return;
+    var eraTopo = t === topo();
     var i = pilha.indexOf(t);
     if (i >= 0) pilha.splice(i, 1);
+    var tinhaFoco = t.contains(document.activeElement);
     if (t.parentNode) t.parentNode.removeChild(t);
     if (!pilha.length) document.body.classList.remove('com-tela');
+    segurarSeFoiToque();
     U.emit('telas', pilha.length);
     UI.atualizarHUD();
+    // o foco não cai no body: volta para o botão que abriu esta tela ou para o 1º da tela de baixo
+    if (eraTopo && (tinhaFoco || document.activeElement === document.body || !document.activeElement)) {
+      var baixo = topo();
+      if (!(t._focoAntes && (!baixo || baixo.contains(t._focoAntes)) && focar(t._focoAntes)) && baixo) focar(focaveis(baixo)[0]);
+    }
   };
   UI.fecharTodas = function () { while (pilha.length) UI.fecharTela(pilha[pilha.length - 1]); };
   UI.temTela = function () { return pilha.length > 0; };
 
   // tela com cartão central, título e botão de fechar
+  var nPainel = 0;
   function painel(nome, titulo, opcoes) {
     opcoes = opcoes || {};
     var t = UI.abrirTela(nome);
+    var idTitulo = 'painel-titulo-' + (++nPainel);
+    t.setAttribute('aria-labelledby', idTitulo);
     var fechar = el('button.btn-icone.btn-fechar', { type: 'button', 'aria-label': 'Fechar' }, '✕');
     var conteudo = el('div.painel-conteudo');
     var card = el('div.painel',
-      el('header.painel-topo', el('h2.titulo-pixel', titulo), opcoes.semFechar ? null : fechar),
+      el('header.painel-topo', el('h2.titulo-pixel', { id: idTitulo }, titulo), opcoes.semFechar ? null : fechar),
       conteudo);
     t.appendChild(card);
     fechar.addEventListener('click', function () { Reino.Som.tocar('toque'); Reino.Som.calar(); UI.fecharTela(t); if (opcoes.aoFechar) opcoes.aoFechar(); });
     t.addEventListener('click', function (e) { if (e.target === t && !opcoes.semFechar) fechar.click(); });
+    if (!opcoes.semFechar) t._aoEsc = function () { fechar.click(); };   // Esc = ✕
     return { tela: t, conteudo: conteudo, card: card };
   }
   UI.painel = painel;
 
-  UI.confirmar = function (msg, sim, nao) {
+  // diálogo com vários botões: `botoes` = [{ rotulo, valor, principal, seguro }]. O seguro (ou o
+  // 1º, se nenhum for marcado) recebe o foco e é o que o Esc escolhe. Resolve com o `valor` tocado.
+  UI.escolher = function (msg, botoes) {
     return new Promise(function (resolver) {
       var t = UI.abrirTela('confirmar');
-      var bSim = el('button.btn-grande.btn-principal', { type: 'button' }, sim || 'Sim');
-      var bNao = el('button.btn-grande.btn-secundario', { type: 'button' }, nao || 'Não');
-      t.appendChild(el('div.painel.painel-pequeno', el('p.confirmar-msg', msg), el('div.intro-botoes', bNao, bSim)));
-      bSim.addEventListener('click', function () { UI.fecharTela(t); resolver(true); });
-      bNao.addEventListener('click', function () { UI.fecharTela(t); resolver(false); });
-      setTimeout(function () { bNao.focus(); }, 30);
+      var idMsg = 'confirmar-msg-' + (++nPainel);
+      t.setAttribute('aria-labelledby', idMsg);
+      var bs = botoes.map(function (b) {
+        var bt = el('button.btn-grande' + (b.principal ? '.btn-principal' : '.btn-secundario'), { type: 'button' }, b.rotulo);
+        bt.addEventListener('click', function () { UI.fecharTela(t); resolver(b.valor); });
+        return bt;
+      });
+      t.appendChild(el('div.painel.painel-pequeno', el('p.confirmar-msg', { id: idMsg }, msg), el('div.intro-botoes' + (bs.length > 2 ? '.coluna' : ''), bs)));
+      var iSeguro = Math.max(0, botoes.findIndex(function (b) { return b.seguro; }));
+      t._aoEsc = function () { bs[iSeguro].click(); };
+      setTimeout(function () { focar(bs[iSeguro]); }, 30);
     });
   };
+  UI.confirmar = function (msg, sim, nao) {
+    return UI.escolher(msg, [{ rotulo: nao || 'Não', valor: false }, { rotulo: sim || 'Sim', valor: true, principal: true }]);
+  };
+
+  /* ---------- teclado nas telas ----------
+     Esc fecha a tela de cima (✕ do painel, "não" do diálogo). Fica no window, depois dos
+     ouvintes do document (a pergunta surpresa trata o próprio Esc e marca defaultPrevented).
+     Tab/Shift+Tab ficam presos na tela de cima (e no balão do Claude, se estiver com botões),
+     senão o foco ia para o HUD atrás e um Enter abria outra tela por cima. */
+  function campoDeTexto(e) { return !!(e && e.matches && e.matches('input:not([type=button]):not([type=checkbox]):not([type=radio]), textarea, select, [contenteditable]')); }
+  window.addEventListener('keydown', function (e) {
+    var t = topo();
+    if (!t || e.defaultPrevented || e.key !== 'Escape' || e.repeat) return;
+    if (campoDeTexto(document.activeElement)) return;
+    if (t._aoEsc) { e.preventDefault(); t._aoEsc(); }
+  });
+  document.addEventListener('keydown', function (e) {
+    var t = topo();
+    if (!t || e.key !== 'Tab') return;
+    var lista = focaveis(t);
+    var balao = document.querySelector('#claude-balao:not([hidden])');
+    if (balao && balao.querySelector('.claude-acoes button')) lista = lista.concat(focaveis(balao));
+    if (!lista.length) { e.preventDefault(); return; }
+    var i = lista.indexOf(document.activeElement);
+    var prox = i < 0 ? (e.shiftKey ? lista.length - 1 : 0) : (i + (e.shiftKey ? -1 : 1) + lista.length) % lista.length;
+    e.preventDefault();
+    focar(lista[prox]);
+  });
 
   /* ---------- confete ---------- */
   UI.confete = function (quantos) {
@@ -94,8 +198,11 @@
   };
   function cuidadosProntos() { return !!(Reino.Cuidados && Reino.Cuidados.niveis); }
   function uniChocado(id) { var u = est().unis[id]; return !!(u && u.chocado); }
-  // ícone pequeno e nítido (fora do texto: não cresce com a fonte)
+  // ícone pequeno e nítido (fora do texto: não cresce com a fonte). PA.iconeEmoji já arredonda
+  // para a escala inteira mais próxima de `px` (PA.escalaNitida), então nunca sai borrado.
   function iconePequeno(emoji, px) { return PA.iconeEmoji(emoji, px / 18); }
+  // tamanho do ícone das barras grandes: 24px no celular e 32px no tablet e no notebook
+  function pxIconeGrande() { return window.innerWidth <= 480 ? 24 : 32; }
 
   // tamanho 'mini' (HUD e cartas: ícone + trilho fino) ou 'grande' (detalhe e Pet Shop: com rótulo)
   function barraCuidado(uniId, campo, tamanho) {
@@ -103,7 +210,7 @@
     var cheio = el('span.cuid-cheio');
     var b = el('span.cuid-barra.cuid-' + campo + '.cuid-' + tamanho,
       { role: 'meter', 'aria-valuemin': '0', 'aria-valuemax': '100', 'data-uni': uniId, 'data-campo': campo },
-      tamanho === 'grande' ? el('span.cuid-rotulo', info.icone + ' ' + info.rotulo) : iconePequeno(info.icone, 12),
+      tamanho === 'grande' ? el('span.cuid-rotulo', iconePequeno(info.icone, pxIconeGrande()), el('span', info.rotulo)) : iconePequeno(info.icone, 12),
       el('span.cuid-trilho', cheio),
       tamanho === 'grande' ? el('small.cuid-aviso') : null);
     pintarBarra(b);
@@ -125,8 +232,19 @@
     var aviso = b.querySelector('.cuid-aviso');
     if (aviso) aviso.textContent = baixo ? CUIDADO[campo].baixo : '';
   }
-  UI.pintarCuidados = function () { U.$$('.cuid-barra[data-uni]').forEach(pintarBarra); };
+  UI.pintarCuidados = function () { U.$$('.cuid-barra[data-uni]').forEach(pintarBarra); rotularMontaria(); };
   U.on('cuidados', function () { UI.pintarCuidados(); });
+  // leitor de tela: o chip da montaria diz também a fome e a sede ("Estábulo — Nome, fome 40, sede 80")
+  function rotularMontaria() {
+    var m = document.querySelector('#hud .chip-montaria');
+    if (!m || !est()) return;
+    var id = P.montaria(), txt = 'Estábulo — ' + P.nomeUni(id);
+    if (cuidadosProntos() && uniChocado(id)) {
+      var n = Reino.Cuidados.niveis(id);
+      txt += ', fome ' + Math.round(n.fome) + ', sede ' + Math.round(n.sede);
+    }
+    m.setAttribute('aria-label', txt);
+  }
 
   // retrato do unicórnio para o balão (quem fala é ele)
   function retratoUni(id) {
@@ -239,6 +357,7 @@
     var id = P.montaria(), u = est().unis[id];
     var pe = Reino.Unicornios.progressoEstagio(u ? u.xp : 0);
     m.appendChild(UI.spriteMontaria(id, 2));
+    rotularMontaria();
     // o ícone do estágio fica ao lado do nome do estágio e da barrinha de crescimento; assim
     // a linha da fome e da sede cabe embaixo sem o chip crescer
     var estg = Reino.Unicornios.ESTAGIOS[pe.estagio];
@@ -289,9 +408,11 @@
         el('span.chip-mini', '💰 ' + U.reais(P.valorSala(materia))),
         temRaro ? el('span.chip-mini.raro', '💙 Raro') : null,
         reg.calma ? el('span.chip-mini.calma', '🌙 Calma') : null);
-      var b = el('button.sala-card' + (reg.feita ? '.feita' : ''), { type: 'button' },
+      // .ir-embaixo: no celular o "Entrar →"/"Jogar de novo" desce para a linha de baixo (senão
+      // espreme o nome da sala numa coluna de uma letra)
+      var b = el('button.sala-card.ir-embaixo' + (reg.feita ? '.feita' : ''), { type: 'button' },
         el('span.sala-emoji', s.emoji),
-        el('span.sala-info', el('b', (i + 1) + '. ' + s.nome), el('small', 'Apostila: ' + s.paginas), chips),
+        el('span.sala-info', el('b', hifenizar((i + 1) + '. ' + s.nome)), el('small', 'Apostila: ' + s.paginas), chips),
         el('span.sala-ir', reg.feita ? 'Jogar de novo' : 'Entrar →'));
       b.addEventListener('click', function () {
         Reino.Som.tocar('porta');
@@ -485,6 +606,9 @@
     var grade = el('div.grade-loja');
     var premiosBox = el('div');
     function pintar() {
+      // o repintar troca os botões: o foco volta para o mesmo item (senão cai no body)
+      var ativo = document.activeElement;
+      var focoItem = ativo && pn.tela.contains(ativo) && ativo.getAttribute('data-item');
       U.preencher(saldo, '⭐ Você tem ' + P.estrelas() + ' estrelas');
       vitrine.innerHTML = '';
       var id = P.montaria(), u = est().unis[id];
@@ -497,8 +621,9 @@
       grade.innerHTML = '';
       ITENS.forEach(function (item) {
         var tem = !!est().loja[item.id];
-        var b = el('button.item-loja' + (tem ? '.comprado' : '') + (usando(item) ? '.usando' : ''), { type: 'button', 'data-item': item.id },
-          el('span.item-icone', iconeItem(item)), el('b', item.nome),
+        var b = el('button.item-loja' + (tem ? '.comprado' : '') + (usando(item) ? '.usando' : ''),
+          { type: 'button', 'data-item': item.id, 'aria-label': item.nome + ', ' + (tem ? (usando(item) ? 'usando' : 'comprado, tocar para usar') : item.preco + ' estrelas') },
+          el('span.item-icone', iconeItem(item)), el('b', hifenizar(item.nome)),
           el('span.item-preco', tem ? (usando(item) ? '✓ Usando' : 'Usar') : '⭐ ' + item.preco));
         b.addEventListener('click', function () {
           if (tem) { alternar(item); Reino.Som.tocar('selecionar'); P.salvar(); pintar(); U.emit('mapaMudou'); return; }
@@ -528,8 +653,11 @@
             : el('span.chip-mini', rar.emoji + ' ' + rar.nome);
           var preco = tem ? (usando(item) ? '✓ Usando' : 'Usar') : st === 'aVenda' ? '⭐ ' + p.preco : '🔒 ' + rar.emoji + ' ' + rar.nome;
           var b = el('button.item-loja.item-premio.rar-' + p.raridade + '.premio-' + st + (tem ? '.comprado' : st === 'bloqueado' ? '.bloqueado' : '') + (tem && usando(item) ? '.usando' : ''),
-            { type: 'button', 'data-item': p.id, 'data-estado': st },
-            el('span.item-icone', desenho), el('b', p.nome), st === 'bloqueado' ? null : rotulo, el('span.item-preco', preco));
+            { type: 'button', 'data-item': p.id, 'data-estado': st,
+              'aria-label': p.nome + ', ' + (st === 'bloqueado' ? 'bloqueado, ' + rar.nome.toLowerCase()
+                : tem ? (usando(item) ? 'usando' : (st === 'ganho' ? 'ganho na prova' : 'comprado') + ', tocar para usar')
+                : p.preco + ' estrelas, ' + rar.nome.toLowerCase()) },
+            el('span.item-icone', desenho), el('b', hifenizar(p.nome)), st === 'bloqueado' ? null : rotulo, el('span.item-preco', preco));
           b.addEventListener('click', function () {
             if (tem) { alternar(item); Reino.Som.tocar('selecionar'); P.salvar(); pintar(); U.emit('mapaMudou'); return; }
             if (st === 'aVenda') return comprar(item, pintar);
@@ -540,6 +668,7 @@
         });
         premiosBox.appendChild(g);
       });
+      if (focoItem) focar(pn.tela.querySelector('[data-item="' + focoItem + '"]'));
     }
     c.appendChild(saldo);
     c.appendChild(vitrine);
@@ -686,8 +815,8 @@
     c.appendChild(el('p.saldo-estrelas', 'O que ' + P.nomeUni(d.id) + ' vai comer?'));
     var grade = el('div.grade-loja.grade-comidas');
     lista.forEach(function (x) {
-      var b = el('button.item-loja.item-comida', { type: 'button', 'data-comida': x.comida.id },
-        el('span.item-icone', x.comida.icone), el('b', x.comida.nome),
+      var b = el('button.item-loja.item-comida', { type: 'button', 'data-comida': x.comida.id, 'aria-label': x.comida.nome + ', ' + textoEnche(x.comida).toLowerCase() + ', ' + x.quantidade + ' na despensa' },
+        el('span.item-icone', x.comida.icone), el('b', hifenizar(x.comida.nome)),
         el('span.comida-enche', textoEnche(x.comida)),
         el('span.item-preco', '🧺 ×' + x.quantidade));
       b.addEventListener('click', function () {
@@ -719,12 +848,13 @@
       grade.innerHTML = '';
       Cu.comidas().forEach(function (co) {
         var tem = Cu.quantidade(co.id);
-        var b = el('button.item-loja.item-comida' + (P.estrelas() < co.preco ? '.falta' : ''), { type: 'button', 'data-comida': co.id },
-          el('span.item-icone', co.icone), el('b', co.nome),
+        var b = el('button.item-loja.item-comida' + (P.estrelas() < co.preco ? '.falta' : ''),
+          { type: 'button', 'data-comida': co.id, 'aria-label': co.nome + ', ' + textoEnche(co).toLowerCase() + ', ' + co.preco + (co.preco === 1 ? ' estrela' : ' estrelas') + (tem ? ', ' + tem + ' na despensa' : '') },
+          el('span.item-icone', co.icone), el('b', hifenizar(co.nome)),
           el('span.comida-enche', textoEnche(co)),
           el('span.item-preco', '⭐ ' + co.preco),
           tem ? el('span.chip-mini.comida-tem', '🧺 ×' + tem) : null);
-        b.addEventListener('click', function () { comprarComida(co, b); });
+        b.addEventListener('click', function () { comprarComida(co); });
         grade.appendChild(b);
       });
       despensa.innerHTML = '';
@@ -736,22 +866,27 @@
       }
       if (focar) { var f = grade.querySelector('[data-comida="' + focar + '"]'); if (f) try { f.focus({ preventScroll: true }); } catch (e) {} }
     }
-    function comprarComida(co, botao) {
-      var r = Cu.comprar(co.id);
-      if (!r.ok) {
-        Reino.Som.tocar('toque');
-        if (r.motivo === 'estrelas') {
-          // o número só aparece na tela; a voz fala a frase gravada
-          Reino.Claude.falar((r.faltam === 1 ? 'Falta 1 estrela' : 'Faltam ' + r.faltam + ' estrelas') + ' para ' + co.nome + '. Cada acerto de primeira vale uma estrela! ⭐',
-            { fala: [Cu.frases.faltamEstrelas], agora: true });
-        }
-        return;
-      }
-      Reino.Som.tocar('estrela');
-      pintar();
+    function faltamEstrelas(co, faltam) {
+      Reino.Som.tocar('toque');
+      // o número só aparece na tela; a voz fala a frase gravada
+      Reino.Claude.falar((faltam === 1 ? 'Falta 1 estrela' : 'Faltam ' + faltam + ' estrelas') + ' para ' + co.nome + '. Cada acerto de primeira vale uma estrela! ⭐',
+        { fala: [Cu.frases.faltamEstrelas], agora: true });
+    }
+    // nada é gasto sem ela confirmar (como na Loja): um diálogo só, com comprar e dar, comprar
+    // e guardar, ou "Agora não" (o seguro, com o foco e no Esc)
+    function comprarComida(co) {
+      if (P.estrelas() < co.preco) { faltamEstrelas(co, co.preco - P.estrelas()); return; }
       var id = P.montaria();
-      UI.confirmar('Dar agora para ' + P.nomeUni(id) + '?', 'Dar agora ' + co.icone, 'Guardar').then(function (sim) {
-        if (sim) darComida(id, co.id);
+      UI.escolher('Trocar ' + co.preco + (co.preco === 1 ? ' estrela' : ' estrelas') + ' por ' + co.nome + '?', [
+        { rotulo: 'Comprar e dar agora ' + co.icone, valor: 'dar', principal: true },
+        { rotulo: 'Comprar e guardar 🧺', valor: 'guardar' },
+        { rotulo: 'Agora não', valor: null, seguro: true },
+      ]).then(function (v) {
+        if (!v) { pintar(co.id); return; }
+        var r = Cu.comprar(co.id);
+        if (!r.ok) { if (r.motivo === 'estrelas') faltamEstrelas(co, r.faltam); else Reino.Som.tocar('toque'); pintar(co.id); return; }
+        Reino.Som.tocar('estrela');
+        if (v === 'dar') darComida(id, co.id);
         else falarCuidado('guardado', id);
         pintar(co.id);
       });
@@ -881,7 +1016,7 @@
       else if (l.tipo === 'loja') { emoji = '🧚'; info = '⭐ ' + P.estrelas() + (P.estrelas() === 1 ? ' estrela' : ' estrelas') + ' para gastar'; }
       else if (l.tipo === 'petshop') { emoji = '🐾'; info = infoPetShop(); }
       else if (l.tipo === 'observatorio') { emoji = '🔭'; info = 'Curiosidades do espaço'; }
-      var b = el('button.sala-card', { type: 'button' }, el('span.sala-emoji', emoji), el('span.sala-info', el('b', l.nome), el('small', info)), el('span.sala-ir', 'Ir →'));
+      var b = el('button.sala-card', { type: 'button' }, el('span.sala-emoji', emoji), el('span.sala-info', el('b', hifenizar(l.nome)), el('small', hifenizar(info))), el('span.sala-ir', 'Ir →'));
       b.addEventListener('click', function () { UI.fecharTela(pn.tela); U.emit('irPara', l); });
       lista.appendChild(b);
     });
@@ -905,7 +1040,7 @@
     c.appendChild(interruptor('voz', '🗣️ Voz', 'Ler perguntas e falas em voz alta.'));
     c.appendChild(interruptor('animacoes', '✨ Animações', 'Confete, brilhos e água mexendo.', function () { U.emit('mapaMudou'); }));
     c.appendChild(interruptor('setas', '🕹️ Setas na tela', 'Botões de seta para andar pelo reino.', function () { U.emit('setas'); }));
-    c.appendChild(interruptor('surpresa', '❓ Perguntas surpresa', 'De vez em quando, uma pergunta valendo 2 estrelas.'));
+    c.appendChild(interruptor('surpresa', '❓ Perguntas surpresa', 'De vez em quando, uma pergunta valendo ' + ((Reino.config.surpresa && Reino.config.surpresa.estrelas) || 2) + ' estrelas.'));
     var tam = el('button.interruptor', { type: 'button', role: 'switch', 'aria-checked': String(a.texto > 1) }, el('span.interruptor-texto', el('b', '🔠 Letras grandes'), el('small', 'Deixa os textos maiores.')), el('span.interruptor-bola'));
     tam.addEventListener('click', function () { a.texto = a.texto > 1 ? 1 : 1.15; tam.setAttribute('aria-checked', String(a.texto > 1)); UI.aplicarAjustes(); P.salvar(); });
     c.appendChild(tam);

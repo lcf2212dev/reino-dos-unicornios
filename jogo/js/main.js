@@ -54,7 +54,9 @@
     var mudouTela = chave !== mapaBaixo.chave;
     if (mudouTela || agora - mapaBaixo.medidoEm > 500) {
       var m = margensHUD();
-      mapaBaixo.alvo = m.dockLargura > 0.5 ? m.baixo : 0;
+      // o menu fica embaixo, no meio (em cima do lago): em qualquer tela a câmera pode passar da borda
+      // até o fim dele, para a última fileira (portas de baixo, ela nadando) não ficar escondida
+      mapaBaixo.alvo = m.baixo;
       mapaBaixo.medidoEm = agora;
     }
     if (mudouTela) { mapaBaixo.chave = chave; mapaBaixo.atual = mapaBaixo.alvo; }

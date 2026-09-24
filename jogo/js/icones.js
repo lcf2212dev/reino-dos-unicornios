@@ -4382,7 +4382,7 @@ window.ICONES = {
     '................',
     '................',
   ] },
-  "enfeite:colar-perolas": { n: "Colar de pérolas", p: { k: '#3a2446', w: '#fff8ee', p: '#c9aee6', P: '#ff5c9a' }, d: [
+  "enfeite:colar-perolas": { n: "Colar de pérolas", p: { k: '#3a2446', w: '#fff8ee', p: '#ffc7e2', P: '#ff4f9a', W: '#ffffff' }, d: [
     '................',
     '.kk..........kk.',
     'kwpk........kwpk',
@@ -4394,11 +4394,11 @@ window.ICONES = {
     '....kwpkkwpk....',
     '....kppkkppk....',
     '.....kkkkkk.....',
-    '......kPPk......',
+    '....kPPkkPPk....',
+    '....kPWPPPPk....',
     '.....kPPPPk.....',
     '......kPPk......',
     '.......kk.......',
-    '................',
   ] },
   "enfeite:brinco-lua": { n: "Brinco de lua", p: { k: '#3a2446', Y: '#ffc21a', l: '#fff3a8', W: '#fffbe0' }, d: [
     '................',
