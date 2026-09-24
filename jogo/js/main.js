@@ -89,7 +89,8 @@
   function desenhar(t) {
     if (!est() || !ctx) return;
     var t0 = performance.now();
-    var animar = est().ajustes.animacoes && jogoAtivo;
+    // Ajustes → Animações e o "reduzir movimento" do aparelho valem para tudo o que se mexe no cenário
+    var animar = est().ajustes.animacoes && !U.reduzMovimentoSistema && jogoAtivo;
     var cena = Cena.atual();
     atualizarCamera();
     // o cenário é desenhado em pixels do jogo e deslizado com precisão de pixel da tela
