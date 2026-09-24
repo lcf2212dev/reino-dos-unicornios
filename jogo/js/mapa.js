@@ -34,7 +34,8 @@
   // da rua até a frente da porta (a porta fica embaixo, virada para o sul).
   var EXTRAS = [
     // em frente ao Estábulo, do outro lado da rua
-    { id: 'petshop', nome: 'Pet Shop', sprite: 'petshop', rect: { x: 2, y: 21, w: 5, h: 4 },
+    // placa em cima: ao lado da porta, ela passava na frente e cobria o "Sede"/"Fome"
+    { id: 'petshop', nome: 'Pet Shop', sprite: 'petshop', rect: { x: 2, y: 21, w: 5, h: 4 }, placa: 'acima',
       caminho: [[7, 21], [7, 22], [7, 23], [7, 24], [7, 25], [6, 25], [5, 25], [4, 25]] },
     // no morro a leste do lago (o ponto alto do reino)
     // placa em cima: a área inclui a ilha do morro, e ao lado a placa ficava longe da cúpula
