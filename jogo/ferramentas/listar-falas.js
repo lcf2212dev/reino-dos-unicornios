@@ -11,6 +11,7 @@ vm.createContext(ctx);
 function carregar(arq) { vm.runInContext(fs.readFileSync(path.join(raiz, arq), 'utf8'), ctx, { filename: arq }); }
 carregar('js/config.js');
 fs.readdirSync(path.join(raiz, 'js/materias')).filter((f) => f.endsWith('.js')).sort().forEach((f) => carregar('js/materias/' + f));
+fs.readdirSync(path.join(raiz, 'js/provas')).filter((f) => f.endsWith('.js')).sort().forEach((f) => carregar('js/provas/' + f));
 ['js/unicornios.js', 'js/voz.js', 'js/claude.js', 'js/falas.js'].forEach(carregar);
 const Reino = ctx.Reino;
 
@@ -18,8 +19,16 @@ const Reino = ctx.Reino;
 const MESES = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
 const ESTADOS = { AM: 'Amazonas', RJ: 'Rio de Janeiro', MS: 'Mato Grosso do Sul', RS: 'Rio Grande do Sul', ES: 'Espírito Santo', TO: 'Tocantins', SP: 'São Paulo', PA: 'Pará', MG: 'Minas Gerais', BA: 'Bahia', PE: 'Pernambuco', CE: 'Ceará', MA: 'Maranhão', GO: 'Goiás', PR: 'Paraná', SC: 'Santa Catarina' };
 
-function prepararFala(texto) {
+function prepararFala(texto, voz) {
   let t = Reino.Voz.normalizar(texto);
+  // voz inglesa: só lacunas e MAIÚSCULAS (sem as regras do português)
+  if (voz === 'ingles') {
+    t = t.replace(/_{2,}/g, '…').replace(/…\./g, '…');
+    // "a tick (√) ... a cross (X)": os sinais só aparecem na tela ("√" seria lido como raiz quadrada)
+    t = t.replace(/\s*\((?:√|X)\)/g, '');
+    t = t.replace(/(^|[^\p{L}])(\p{Lu}{2,})(?=$|[^\p{L}])/gu, (_, a, p) => a + p.toLowerCase());
+    return t.replace(/\s+/g, ' ').trim();
+  }
   t = t.replace(/R\$\s?(\d+)(?:,(\d{2}))?/g, (_, r, c) => r + (r === '1' ? ' real' : ' reais') + (c && c !== '00' ? ' e ' + Number(c) + ' centavos' : ''));
   t = t.replace(/\b(\d{1,2})\/(\d{1,2})\/(\d{2,4})\b/g, (_, d, m, a) => Number(d) + ' de ' + MESES[Number(m) - 1] + ' de ' + (a.length === 2 ? '19' + a : a));
   // "Manaus (AM)" -> "Manaus, Amazonas"; "Rio de Janeiro (RJ)" -> "Rio de Janeiro"
@@ -27,6 +36,8 @@ function prepararFala(texto) {
     if (!ESTADOS[uf]) return s;
     return todo.slice(0, pos).endsWith(ESTADOS[uf]) ? '' : ', ' + ESTADOS[uf] + ',';
   });
+  // siglas de documentos: soletradas do jeito que a gente fala
+  t = t.replace(/\bCPF\b/g, 'cê pê éfe').replace(/\bRG\b/g, 'erre gê');
   t = t.replace(/\bpp\.\s*/g, 'páginas ').replace(/\bcaps\.\s*/g, 'capítulos ');
   t = t.replace(/_{2,}/g, '…').replace(/…\./g, '…').replace(/,,/g, ',');
   // palavras em MAIÚSCULAS seriam soletradas: vira minúscula
@@ -40,7 +51,7 @@ Reino.Falas.todas().forEach((f) => {
   const chave = Reino.Voz.chave(f.voz, f.texto);
   let item = porChave.get(chave);
   if (!item) {
-    item = { chave, voz: f.voz, texto: Reino.Voz.normalizar(f.texto), fala: prepararFala(f.texto), pacotes: [] };
+    item = { chave, voz: f.voz, texto: Reino.Voz.normalizar(f.texto), fala: prepararFala(f.texto, f.voz), pacotes: [] };
     porChave.set(chave, item);
   }
   if (!item.pacotes.includes(f.pacote)) item.pacotes.push(f.pacote);

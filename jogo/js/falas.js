@@ -21,12 +21,38 @@
     pistaEspecial: 'Os que estavam certos ficaram no lugar. Leia de novo com calma e tente só os que faltam.',
     pistaVarias: 'Os errados foram tirados. Veja se falta marcar algum!',
     pistaSimples: 'Leia a pergunta de novo, devagarinho.',
+    pistaDesenho: 'Olhe a listinha embaixo do desenho: ainda falta usar alguma coisa!',
   };
 
   F.medalhas = {
     ouro: { emoji: '🥇', titulo: 'MEDALHA DE OURO!', frase: 'Viu? O ouro veio de acertar com calma, não de terminar primeiro! Na prova da escola é igualzinho. 💛' },
-    prata: { emoji: '🥈', titulo: 'Medalha de prata!', frase: 'Muito bem! Vamos ler o Livro das Memórias e tentar o ouro de novo? Com calma você chega lá!' },
+    prata: { emoji: '🥈', titulo: 'Medalha de prata!', frase: 'Muito bem! Vamos ler o livro da matéria e tentar o ouro de novo? Com calma você chega lá!' },
     bronze: { emoji: '🥉', titulo: 'Medalha de bronze!', frase: 'Você terminou e revisou, isso já é de campeã! Vamos revisar as salas e tentar de novo?' },
+  };
+
+  // Escola do Reino: provas bimestrais valendo acessório (lendário na 1ª tentativa, raro na 2ª, comum depois)
+  F.provas = {
+    escola: 'Bem-vinda à Escola do Reino! Aqui ficam as provas bimestrais. Acertou tudo na primeira tentativa? Ganha um acessório lendário! 🌈',
+    valendo: {
+      lendario: 'Esta é a sua primeira tentativa! Se acertar tudo, você ganha um acessório lendário para o seu unicórnio. Leia cada pergunta com muita atenção! 🌈',
+      raro: 'Esta é a sua segunda tentativa! Se acertar tudo agora, você ganha um acessório raro. Leia cada pergunta com muita atenção! 💙',
+      comum: 'Se acertar tudo, você ganha um acessório comum. Leia com calma e atenção! 🤍',
+    },
+    treino: 'Você já ganhou o acessório desta prova. Agora é treino, para ficar craque! ✏️',
+    perguntaRevisar: 'Você respondeu todas as questões! Quer fazer uma revisão da prova antes de ver a nota? 👀',
+    comecaRevisao: 'Muito bem! Vamos revisar com calma, uma questão de cada vez. Achou um errinho? É só trocar a resposta.',
+    ganhou: {
+      lendario: 'Nota dez de primeira! Você ganhou um acessório lendário! 🌈',
+      raro: 'Nota dez! Você ganhou um acessório raro! 💙',
+      comum: 'Nota dez! Você ganhou um acessório comum! 🤍',
+    },
+    quase: {
+      raro: 'Quase lá! Para ganhar o acessório, precisa acertar tudo. Na próxima tentativa, o prêmio vai ser raro. 💙',
+      comum: 'Quase lá! Para ganhar o acessório, precisa acertar tudo. Na próxima tentativa, o prêmio vai ser comum. 🤍',
+    },
+    treinoDez: 'Nota dez de novo! Você está craque nesta prova! 🏆',
+    treinoFeito: 'Treino feito! Cada revisão deixa você mais preparada para a prova da escola. 💪',
+    lojaPremio: 'Esse acessório é prêmio da Escola do Reino! Acerte tudo na prova para ganhar. Na primeira tentativa, o prêmio é lendário! 🏫',
   };
 
   var NOME_RARIDADE = { comum: 'comum', raro: 'raro', epico: 'épico', lendario: 'lendário' };
@@ -44,6 +70,7 @@
     if (d.dica) return d.dica;
     if (d.tipo === 'ligar' || d.tipo === 'separar' || d.tipo === 'ordenar' || d.tipo === 'frase') return F.fixas.pistaEspecial;
     if (d.tipo === 'varias') return F.fixas.pistaVarias;
+    if (d.tipo === 'desenho') return F.fixas.pistaDesenho;
     var L = (materia.livro || []).find(function (l) { return l.id === d.livro; });
     return L ? F.pistaLivro(L.titulo) : F.fixas.pistaSimples;
   };
@@ -52,11 +79,25 @@
   F.segmentosDesafio = function (d, ordem) {
     if (d.tipo === 'vf') return [F.fixas.verdadeiroOuFalso, d.afirmacao];
     var segs = [d.pergunta];
+    function todos(lista) { return ordem || lista.map(function (_, i) { return i; }); }
     if ((d.tipo === 'escolha' || d.tipo === 'varias') && d.opcoes) {
-      (ordem || d.opcoes.map(function (_, i) { return i; })).forEach(function (i) { segs.push(d.opcoes[i].t); });
+      todos(d.opcoes).forEach(function (i) { segs.push(d.opcoes[i].t); });
     }
+    if (d.tipo === 'vfLista') d.itens.forEach(function (it) { segs.push(it.t); });
+    if (d.tipo === 'completar') {
+      d.palavras.forEach(function (p) { segs.push(p); });
+      d.frases.forEach(function (f) { segs.push(F.fraseComLacuna(f)); });
+    }
+    // lerItens: a narradora lê também os itens (nas provas, que não têm pista)
+    if (d.lerItens && d.tipo === 'ligar') {
+      d.pares.forEach(function (p) { if (p[0].t) segs.push(p[0].t); });
+      todos(d.pares).forEach(function (i) { segs.push(d.pares[i][1].t); });
+    }
+    if (d.lerItens && d.tipo === 'frase') todos(d.blocos).forEach(function (i) { segs.push(d.blocos[i]); });
+    if (d.lerItens && d.tipo === 'ordenar') todos(d.itens).forEach(function (i) { segs.push(d.itens[i]); });
     return segs;
   };
+  F.fraseComLacuna = function (f) { return f.antes + ' ______' + (/^[.,!?]/.test(f.depois) ? '' : ' ') + f.depois; };
 
   /* ---------- lista completa (usada pelas ferramentas de gravação) ---------- */
   F.pacotesDaMateria = function (m) {
@@ -65,7 +106,10 @@
 
   F.todas = function () {
     var lista = [];
-    function add(texto, voz, pacote) { if (texto) lista.push({ texto: texto, voz: voz, pacote: pacote }); }
+    // cada trecho «em inglês» vira uma fala separada da voz 'ingles' (mesma divisão de Voz.falar)
+    function add(texto, voz, pacote) {
+      if (texto) Reino.Voz.dividir(texto, voz).forEach(function (p) { lista.push({ texto: p.texto, voz: p.voz, pacote: pacote }); });
+    }
     var nome = Reino.config.nomeJogadora;
 
     // Claude: banco de frases e frases fixas
@@ -77,6 +121,12 @@
     for (var n = 0; n <= Reino.config.desafiosPorSala; n++) add(F.acertouDePrimeira(n), 'claude', 'geral');
     for (var a = 0; a <= Reino.config.perguntasTreino; a++) add(F.acertouDeTotal(a, Reino.config.perguntasTreino), 'claude', 'geral');
     if (Reino.Unicornios) add(Reino.Unicornios.def('inicial').frase, 'unicornio', 'geral');
+
+    function addGrupo(o) { Object.keys(o).forEach(function (k) { if (typeof o[k] === 'string') add(o[k], 'claude', 'geral'); else addGrupo(o[k]); }); }
+    addGrupo(F.provas);
+    (Reino.provas || []).forEach(function (pv) {
+      pv.questoes.forEach(function (d) { F.segmentosDesafio(d).forEach(function (t) { add(t, 'narradora', 'prova-' + pv.id); }); });
+    });
 
     Reino.materias.forEach(function (m) {
       var p = F.pacotesDaMateria(m);

@@ -28,6 +28,8 @@
     Reino.materias.forEach(function (m) { if (P.materiaCompleta(m)) ids.push('materia:' + m.id); });
     var ouro = Reino.materias.some(function (m) { var t = est().treinos[m.id]; return t && t.melhor === 'ouro'; });
     if (ouro) ids.push('castelo');
+    // escola ganha arco-íris quando todas as provas já deram acessório
+    if (Reino.provas.length && Reino.provas.every(function (pv) { return P.regProva(pv).premio; })) ids.push('escola');
     return ids;
   }
 
@@ -114,6 +116,7 @@
       return concluidos().indexOf(l.id) >= 0 ? 'Pronto' : P.salasFeitas(m) + '/' + m.salas.length;
     }
     if (l.tipo === 'estabulo' && P.ovosParaChocar().length) return 'Ovo';
+    if (l.tipo === 'escola' && Reino.provas.some(function (pv) { return !P.regProva(pv).premio; })) return 'Prova';
     return '';
   }
   // placa ao lado da construção, com a fonte pixel (acentos inclusos).
@@ -129,6 +132,10 @@
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.font = fonte + 'px ' + familia;
+    var hud = Array.prototype.map.call(document.querySelectorAll('#hud > *'), function (e) {
+      var r = e.getBoundingClientRect(), c = canvas.getBoundingClientRect();
+      return { left: (r.left - c.left) * dpr, right: (r.right - c.left) * dpr, top: (r.top - c.top) * dpr, bottom: (r.bottom - c.top) * dpr };
+    }).filter(function (r) { return r.right > r.left; });
     Mapa.lugares().forEach(function (l) {
       var linhas = linhasDaPlaca(l.nome);
       var extra = extraDaPlaca(l);
@@ -142,12 +149,24 @@
       var sw = Math.ceil(largura + pad * 2);
       var sh = topo * 2 + linhas.length * lh + (extra ? vao + etiquetaH : 0);
       var ww = sw / escala, wh = sh / escala;
-      var naDireita = l.rect.x + l.rect.w / 2 < Mapa.W / 2;
-      var x = naDireita ? (l.rect.x + l.rect.w) * T + 3 : l.rect.x * T - ww - 3;
-      var y = (l.rect.y + l.rect.h) * T - wh - 2;
+      // l.placa: 'acima' põe a placa sobre o telhado; 'direita'/'esquerda' forçam o lado;
+      // sem nada, fica ao lado virada para o meio do mapa
+      var x, y;
+      if (l.placa === 'acima') {
+        x = (l.rect.x + l.rect.w / 2) * T - ww / 2;
+        y = l.rect.y * T - wh - 8;
+      } else {
+        var naDireita = l.placa ? l.placa === 'direita' : l.rect.x + l.rect.w / 2 < Mapa.W / 2;
+        x = naDireita ? (l.rect.x + l.rect.w) * T + 3 : l.rect.x * T - ww - 3;
+        y = (l.rect.y + l.rect.h) * T - wh - 2;
+      }
       x = Math.max(T + 1, Math.min(x, Mapa.largura() - ww - T - 1));
       var sx = Math.round((x - cam.x) * escala);
       var sy = Math.round((y - cam.y) * escala);
+      // no alto do mapa a placa desce para não ficar escondida atrás do HUD
+      hud.forEach(function (r) {
+        if (sx < r.right && sx + sw > r.left && sy < r.bottom && sy + sh > r.top) sy = Math.max(sy, r.bottom + borda * 2);
+      });
       if (sx > canvas.width || sy > canvas.height || sx + sw < 0 || sy + sh < 0) return;
       var perto = J.x > x - 6 && J.x < x + ww + 6 && J.y > y - 4 && J.y < y + wh + 8;
       var meio = sx + Math.round(sw / 2);
@@ -321,7 +340,7 @@
       var t = UI.abrirTela('inicio');
       var ir = el('button.btn-grande.btn-principal.btn-comecar', { type: 'button' }, 'Entrar no Reino ✨');
       t.appendChild(el('div.inicio', logo(), ir,
-        el('p.inicio-sub', 'Revisão de História • Museu das Memórias')));
+        el('p.inicio-sub', 'Revisão de ' + Reino.materias.map(function (m) { return m.nome; }).join(' e '))));
       ir.addEventListener('click', function () {
         Reino.Som.ativar(); Reino.Som.tocar('porta');
         UI.telaCheia(true);
@@ -369,7 +388,7 @@
       var pn = UI.painel('regras', 'Como funciona o Reino', { semFechar: true });
       var ir = el('button.btn-grande.btn-principal', { type: 'button' }, 'Entrar no Reino 🦄');
       pn.conteudo.appendChild(el('ul.regras',
-        el('li', el('span.regra-icone', '🏛️'), el('span', el('b', 'Missões: '), 'cada matéria tem um lugar no reino. O Museu das Memórias é de História e tem 5 salas.')),
+        el('li', el('span.regra-icone', '🏛️'), el('span', el('b', 'Missões: '), 'cada matéria tem um lugar no reino, com 5 salas: ' + Reino.materias.map(function (m) { return m.lugar.nome + ' (' + m.nome + ')'; }).join(' e ') + '.')),
         el('li', el('span.regra-icone', '💰'), el('span', el('b', 'Dinheiro: '), 'cada sala vale ' + U.reais(P.valorSala(Reino.materias[0])) + '. A revisão inteira de uma matéria vale ' + U.reais(Reino.config.valorPorMateria) + '!')),
         el('li', el('span.regra-icone', '🦄'), el('span', el('b', 'Unicórnios: '), 'ganhe ovos de unicórnio comum, raro, épico e lendário. Eles nascem bebês e crescem quando você acerta!')),
         el('li', el('span.regra-icone', '⏳'), el('span', el('b', 'Sem relógio: '), 'aqui ninguém tem pressa. Leia com calma e toque em "Conferir".')),

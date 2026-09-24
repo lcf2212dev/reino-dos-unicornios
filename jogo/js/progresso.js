@@ -17,6 +17,7 @@
       corInicial: 'rosa',
       salas: {},        // salaId -> {feita, melhor, perfeita, calma, vezes}
       treinos: {},      // materiaId -> {melhor, ouro, perfeito, vezes}
+      provas: {},       // provaId -> {tentativas, notas, melhor, premio, premioEm} (não zera no novo ciclo)
       unis: {},         // uniId -> {em, nome, xp, chocado}
       montaria: 'inicial',
       estrelas: { ganhas: 0, gastas: 0 },
@@ -50,6 +51,7 @@
 
   P.carregar = function () {
     estado = completar(lerLocal() || estadoNovo());
+    if (P.conferirPersistencia().length) gravarLocal();
     return estado;
   };
   P.estado = function () { return estado; };
@@ -65,6 +67,7 @@
   function max(a, b) { return Math.max(a || 0, b || 0); }
   function minPos(a, b) { if (!a) return b; if (!b) return a; return Math.min(a, b); }
   var ORDEM_MEDALHA = { bronze: 1, prata: 2, ouro: 3 };
+  var ORDEM_PREMIO = { comum: 1, raro: 2, lendario: 3 };
 
   P.mesclar = function (a, b) {
     if (!a) return b; if (!b) return a;
@@ -93,6 +96,15 @@
     } else if ((antigo.ciclo || 1) > (recente.ciclo || 1)) {
       r.ciclo = antigo.ciclo; r.salas = U.copia(antigo.salas || {}); r.treinos = U.copia(antigo.treinos || {}); r.pago = U.copia(antigo.pago || {});
     }
+    // provas bimestrais: vale o aparelho com mais tentativas e o melhor prêmio
+    r.provas = r.provas || {};
+    Object.keys(antigo.provas || {}).forEach(function (k) {
+      var x = r.provas[k], y = antigo.provas[k];
+      if (!x) { r.provas[k] = U.copia(y); return; }
+      if ((y.tentativas || 0) > (x.tentativas || 0)) { x.tentativas = y.tentativas; x.notas = U.copia(y.notas || []); }
+      x.melhor = Math.max(x.melhor || 0, y.melhor || 0);
+      if ((ORDEM_PREMIO[y.premio] || 0) > (ORDEM_PREMIO[x.premio] || 0)) { x.premio = y.premio; x.premioEm = y.premioEm; }
+    });
     // unicórnios: união, maior XP
     Object.keys(antigo.unis || {}).forEach(function (k) {
       var x = r.unis[k], y = antigo.unis[k];
@@ -169,6 +181,7 @@
         nuvem.status = 'sincronizado';
         if (snap.exists && snap.data() && snap.data().estado) {
           estado = completar(P.mesclar(estado, snap.data().estado));
+          P.conferirPersistencia();
           gravarLocal();
           U.emit('progresso', estado);
           U.emit('progressoRemoto', estado);
@@ -180,6 +193,7 @@
           var remoto = s.data() && s.data().estado;
           if (!remoto || remoto.atualizado === estado.atualizado) return;
           estado = completar(P.mesclar(estado, remoto));
+          if (P.conferirPersistencia().length) agendarNuvem();
           gravarLocal();
           U.emit('progresso', estado);
           U.emit('progressoRemoto', estado);
@@ -267,7 +281,10 @@
     var comum = unis.find(function (u) { return u.raridade === 'comum' && u.sala === sala.id; });
     var raro = unis.find(function (u) { return u.raridade === 'raro' && u.sala === sala.id; });
     if (comum && P.ganharUni(comum.id)) premios.ovos.push(comum.id);
-    if (raro && perfeita && calma && P.ganharUni(raro.id)) premios.ovos.push(raro.id);
+    if (raro && (perfeita && calma || P.persistiuSala(sala.id)) && P.ganharUni(raro.id)) {
+      premios.ovos.push(raro.id);
+      if (!(perfeita && calma)) premios.porPersistencia = true;
+    }
     if (P.materiaCompleta(materia)) {
       var lend = unis.find(function (u) { return u.raridade === 'lendario'; });
       if (lend && P.ganharUni(lend.id)) { premios.ovos.push(lend.id); premios.materiaCompleta = true; }
@@ -275,6 +292,32 @@
     premios.cresceu = P.xpMontaria(10 + (calma ? 5 : 0));
     P.salvar();
     return premios;
+  };
+
+  /* ---------- caminho da persistência ---------- */
+  function vezesSala(id) { return (estado.salas[id] && estado.salas[id].vezes) || 0; }
+  function vezesTreino(id) { return (estado.treinos[id] && estado.treinos[id].vezes) || 0; }
+  P.persistiuSala = function (salaId) { return vezesSala(salaId) >= Reino.config.persistencia.sala; };
+  // quantas vezes ainda faltam para o unicórnio nascer pela persistência (0 = já pode)
+  P.faltamPersistencia = function (def) {
+    var pers = Reino.config.persistencia;
+    if (def.raridade === 'raro' && def.sala) return Math.max(0, pers.sala - vezesSala(def.sala));
+    if (def.raridade === 'epico' && def.treino === 'ouro') return Math.max(0, pers.treinoOuro - vezesTreino(def.materiaId));
+    if (def.raridade === 'epico' && def.treino === 'perfeito') return Math.max(0, pers.treinoPerfeito - vezesTreino(def.materiaId));
+    return null;
+  };
+  // dá os raros/épicos que já cumprem a regra (retroativo); devolve os ids novos
+  P.conferirPersistencia = function () {
+    var novos = [];
+    Reino.materias.forEach(function (m) {
+      (m.unicornios || []).forEach(function (u) {
+        if (u.raridade !== 'raro' && u.raridade !== 'epico') return;
+        var def = { raridade: u.raridade, sala: u.sala, treino: u.treino, materiaId: m.id };
+        if (P.faltamPersistencia(def) === 0 && P.ganharUni(u.id)) novos.push(u.id);
+      });
+    });
+    if (novos.length) estado.atualizado = agora();
+    return novos;
   };
 
   P.medalhaPara = function (acertos, total) {
@@ -291,13 +334,14 @@
     if ((ORDEM_MEDALHA[medalha] || 0) > (ORDEM_MEDALHA[reg.melhor] || 0)) reg.melhor = medalha;
     var premios = { medalha: medalha, ovos: [], estrelas: 0 };
     var unis = materia.unicornios || [];
-    if (medalha === 'ouro') {
-      if (!reg.ouro) reg.ouro = agora();
+    var pers = Reino.config.persistencia;
+    if (medalha === 'ouro' && !reg.ouro) reg.ouro = agora();
+    if (medalha === 'ouro' || reg.vezes >= pers.treinoOuro) {
       var ep = unis.find(function (u) { return u.raridade === 'epico' && u.treino === 'ouro'; });
       if (ep && P.ganharUni(ep.id)) premios.ovos.push(ep.id);
     }
-    if (acertos === total) {
-      if (!reg.perfeito) reg.perfeito = agora();
+    if (acertos === total && !reg.perfeito) reg.perfeito = agora();
+    if (acertos === total || reg.vezes >= pers.treinoPerfeito) {
       var ep2 = unis.find(function (u) { return u.raridade === 'epico' && u.treino === 'perfeito'; });
       if (ep2 && P.ganharUni(ep2.id)) premios.ovos.push(ep2.id);
     }
@@ -305,6 +349,39 @@
     P.ganharEstrelas(premios.estrelas);
     premios.cresceu = P.xpMontaria(acertos * 2);
     estado.treinos[materia.id] = reg;
+    P.salvar();
+    return premios;
+  };
+
+  /* ---------- provas bimestrais (Escola do Reino) ---------- */
+  // 1ª tentativa vale lendário, 2ª vale raro, da 3ª em diante vale comum
+  P.premioDaTentativa = function (n) { return n <= 1 ? 'lendario' : n === 2 ? 'raro' : 'comum'; };
+  P.regProva = function (prova) { return estado.provas[prova.id] || { tentativas: 0, notas: [] }; };
+  // o que a próxima tentativa vale (null quando o acessório já foi ganho)
+  P.valendoProva = function (prova) {
+    var reg = P.regProva(prova);
+    return reg.premio ? null : P.premioDaTentativa((reg.tentativas || 0) + 1);
+  };
+  P.registrarProva = function (prova, nota) {
+    var reg = estado.provas[prova.id] || { tentativas: 0, notas: [] };
+    var valendo = reg.premio ? null : P.premioDaTentativa((reg.tentativas || 0) + 1);
+    reg.tentativas = (reg.tentativas || 0) + 1;
+    reg.notas = (reg.notas || []).concat([nota]).slice(-20);
+    reg.melhor = Math.max(reg.melhor || 0, nota);
+    var sucesso = nota >= Reino.config.notaSucessoProva;
+    var premios = { tentativa: reg.tentativas, nota: nota, sucesso: sucesso, valendo: valendo, raridade: null, acessorio: null, estrelas: 0 };
+    if (sucesso && valendo) {
+      premios.raridade = valendo;
+      premios.acessorio = prova.acessorios[valendo];
+      estado.loja[premios.acessorio.id] = true;
+      reg.premio = valendo;
+      reg.premioEm = agora();
+    }
+    premios.proximo = reg.premio ? null : P.premioDaTentativa(reg.tentativas + 1);
+    estado.provas[prova.id] = reg;
+    premios.estrelas = Math.round(nota);
+    P.ganharEstrelas(premios.estrelas);
+    premios.cresceu = P.xpMontaria(Math.round(nota * 2));
     P.salvar();
     return premios;
   };

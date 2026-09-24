@@ -6,9 +6,11 @@
 
   function sortearQuestoes(materia) {
     var todos = [];
-    materia.salas.forEach(function (s) { s.desafios.forEach(function (d) { if (D.TREINAVEIS.indexOf(d.tipo) >= 0) todos.push(d); }); });
+    // questão pessoal (livre) não entra: não tem resposta certa
+    function treinavel(d) { return D.TREINAVEIS.indexOf(d.tipo) >= 0 && !d.livre; }
+    materia.salas.forEach(function (s) { s.desafios.forEach(function (d) { if (treinavel(d)) todos.push(d); }); });
     // pega de todas as salas, de forma equilibrada
-    var porSala = materia.salas.map(function (s) { return U.embaralhar(s.desafios.filter(function (d) { return D.TREINAVEIS.indexOf(d.tipo) >= 0; })); });
+    var porSala = materia.salas.map(function (s) { return U.embaralhar(s.desafios.filter(treinavel)); });
     var lista = [], i = 0;
     while (lista.length < Reino.config.perguntasTreino && lista.length < todos.length) {
       var s = porSala[i % porSala.length];
@@ -196,10 +198,19 @@
         erradas.appendChild(el('div.erro-item',
           el('p', el('b', (i + 1) + '. '), D.enunciado(d)),
           el('p.erro-sua', 'Você marcou: ' + D.respostaTexto(d, respostas[i])),
-          el('p.erro-certa', '✓ Certo: ' + D.respostaCertaTexto(d)),
+          el('p.erro-certa', D.linhaCerta(d)),
           el('p.erro-explica', d.explica)));
       });
       var voltar = el('button.btn-grande.btn-principal', { type: 'button' }, premios.ovos.length ? 'Chocar ' + (premios.ovos.length > 1 ? 'os ovos' : 'o ovo') + ' 🥚' : 'Voltar ao castelo');
+      // caminho da persistência: quantos treinos faltam para cada épico
+      function dicaEpicos() {
+        var linhas = (materia.unicornios || []).filter(function (u) { return u.raridade === 'epico' && !P.temUni(u.id); }).map(function (u) {
+          var f = P.faltamPersistencia({ raridade: 'epico', treino: u.treino, materiaId: materia.id });
+          if (!f) return null;
+          return el('p.dica-raro', '💜 Mais ' + (f === 1 ? '1 treino' : f + ' treinos') + ' e nasce um unicórnio épico! ' + (u.treino === 'ouro' ? 'Ou ganhe OURO.' : 'Ou acerte TODAS.'));
+        }).filter(Boolean);
+        return linhas.length ? el('div', linhas) : null;
+      }
       corpo.appendChild(el('div.fim-sala.resultado-prova',
         el('div.medalha-grande.medalha-' + med, info[0]),
         el('h2.titulo-pixel', info[1]),
@@ -208,6 +219,7 @@
         el('ul.premios',
           el('li', el('span.premio-icone', '⭐'), el('span', '+' + premios.estrelas + ' estrelas')),
           premios.ovos.length ? el('li.premio-ovo', el('span.premio-icone', '🥚'), el('b', premios.ovos.length > 1 ? 'Ovos épicos!' : 'Um ovo ÉPICO!')) : null),
+        dicaEpicos(),
         erradas.children.length ? el('h3', 'Vamos aprender com as que faltaram:') : null,
         erradas.children.length ? erradas : null,
         voltar));

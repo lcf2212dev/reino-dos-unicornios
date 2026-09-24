@@ -1,5 +1,5 @@
-# Grava as falas do jogo com vozes naturais (vozes neurais pt-BR da leitura
-# em voz alta do Microsoft Edge). Só grava o que ainda não está no cache.
+# Grava as falas do jogo com vozes naturais (vozes neurais pt-BR e, nos trechos
+# «em inglês», en-GB, da leitura em voz alta do Microsoft Edge). Só grava o que ainda não está no cache.
 # Uso: uv run --with edge-tts python ferramentas/gerar-vozes.py
 import asyncio
 import hashlib

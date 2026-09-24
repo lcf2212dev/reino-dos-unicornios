@@ -14,6 +14,11 @@
    "voz": "pt-BR-ThalitaMultilingualNeural",
    "velocidade": "+0%",
    "tom": "+25Hz"
+  },
+  "ingles": {
+   "voz": "en-GB-SoniaNeural",
+   "velocidade": "-15%",
+   "tom": "+0Hz"
   }
  },
  "falas": [
@@ -36,10 +41,10 @@
    ]
   },
   {
-   "chave": "6252c2211x",
+   "chave": "d368fe2726",
    "voz": "claude",
-   "texto": "Oba, a Mariana chegou! O Museu das Memórias está te esperando.",
-   "fala": "Oba, a Mariana chegou! O Museu das Memórias está te esperando.",
+   "texto": "Oba, a Mariana chegou! O Museu e a Torre do Relógio estão te esperando.",
+   "fala": "Oba, a Mariana chegou! O Museu e a Torre do Relógio estão te esperando.",
    "pacotes": [
     "geral"
    ]
@@ -433,7 +438,12 @@
     "historia-h2",
     "historia-h3",
     "historia-h4",
-    "historia-h5"
+    "historia-h5",
+    "ingles-i1",
+    "ingles-i2",
+    "ingles-i3",
+    "ingles-i4",
+    "ingles-i5"
    ]
   },
   {
@@ -572,6 +582,15 @@
    ]
   },
   {
+   "chave": "d65f627521",
+   "voz": "claude",
+   "texto": "Olhe a listinha embaixo do desenho: ainda falta usar alguma coisa!",
+   "fala": "Olhe a listinha embaixo do desenho: ainda falta usar alguma coisa!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
    "chave": "1f0e6650n",
    "voz": "claude",
    "texto": "MEDALHA DE OURO!",
@@ -599,10 +618,10 @@
    ]
   },
   {
-   "chave": "f74babc92q",
+   "chave": "d6bfac462o",
    "voz": "claude",
-   "texto": "Muito bem! Vamos ler o Livro das Memórias e tentar o ouro de novo? Com calma você chega lá!",
-   "fala": "Muito bem! Vamos ler o Livro das Memórias e tentar o ouro de novo? Com calma você chega lá!",
+   "texto": "Muito bem! Vamos ler o livro da matéria e tentar o ouro de novo? Com calma você chega lá!",
+   "fala": "Muito bem! Vamos ler o livro da matéria e tentar o ouro de novo? Com calma você chega lá!",
    "pacotes": [
     "geral"
    ]
@@ -830,6 +849,1165 @@
    "fala": "Fui o seu primeiro unicórnio. Vamos crescer juntas!",
    "pacotes": [
     "geral"
+   ]
+  },
+  {
+   "chave": "ec3bb5e63p",
+   "voz": "claude",
+   "texto": "Bem-vinda à Escola do Reino! Aqui ficam as provas bimestrais. Acertou tudo na primeira tentativa? Ganha um acessório lendário!",
+   "fala": "Bem-vinda à Escola do Reino! Aqui ficam as provas bimestrais. Acertou tudo na primeira tentativa? Ganha um acessório lendário!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "d747994545",
+   "voz": "claude",
+   "texto": "Esta é a sua primeira tentativa! Se acertar tudo, você ganha um acessório lendário para o seu unicórnio. Leia cada pergunta com muita atenção!",
+   "fala": "Esta é a sua primeira tentativa! Se acertar tudo, você ganha um acessório lendário para o seu unicórnio. Leia cada pergunta com muita atenção!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "7696620d3l",
+   "voz": "claude",
+   "texto": "Esta é a sua segunda tentativa! Se acertar tudo agora, você ganha um acessório raro. Leia cada pergunta com muita atenção!",
+   "fala": "Esta é a sua segunda tentativa! Se acertar tudo agora, você ganha um acessório raro. Leia cada pergunta com muita atenção!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "9586419e28",
+   "voz": "claude",
+   "texto": "Se acertar tudo, você ganha um acessório comum. Leia com calma e atenção!",
+   "fala": "Se acertar tudo, você ganha um acessório comum. Leia com calma e atenção!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "8f9efe3129",
+   "voz": "claude",
+   "texto": "Você já ganhou o acessório desta prova. Agora é treino, para ficar craque!",
+   "fala": "Você já ganhou o acessório desta prova. Agora é treino, para ficar craque!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "ea3985862l",
+   "voz": "claude",
+   "texto": "Você respondeu todas as questões! Quer fazer uma revisão da prova antes de ver a nota?",
+   "fala": "Você respondeu todas as questões! Quer fazer uma revisão da prova antes de ver a nota?",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "56031d4731",
+   "voz": "claude",
+   "texto": "Muito bem! Vamos revisar com calma, uma questão de cada vez. Achou um errinho? É só trocar a resposta.",
+   "fala": "Muito bem! Vamos revisar com calma, uma questão de cada vez. Achou um errinho? É só trocar a resposta.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "c39af8de1r",
+   "voz": "claude",
+   "texto": "Nota dez de primeira! Você ganhou um acessório lendário!",
+   "fala": "Nota dez de primeira! Você ganhou um acessório lendário!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "5225cf281b",
+   "voz": "claude",
+   "texto": "Nota dez! Você ganhou um acessório raro!",
+   "fala": "Nota dez! Você ganhou um acessório raro!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "a63769651c",
+   "voz": "claude",
+   "texto": "Nota dez! Você ganhou um acessório comum!",
+   "fala": "Nota dez! Você ganhou um acessório comum!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "8074398030",
+   "voz": "claude",
+   "texto": "Quase lá! Para ganhar o acessório, precisa acertar tudo. Na próxima tentativa, o prêmio vai ser raro.",
+   "fala": "Quase lá! Para ganhar o acessório, precisa acertar tudo. Na próxima tentativa, o prêmio vai ser raro.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "bc2e584331",
+   "voz": "claude",
+   "texto": "Quase lá! Para ganhar o acessório, precisa acertar tudo. Na próxima tentativa, o prêmio vai ser comum.",
+   "fala": "Quase lá! Para ganhar o acessório, precisa acertar tudo. Na próxima tentativa, o prêmio vai ser comum.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "d95d1ec21i",
+   "voz": "claude",
+   "texto": "Nota dez de novo! Você está craque nesta prova!",
+   "fala": "Nota dez de novo! Você está craque nesta prova!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "fa4ca5702b",
+   "voz": "claude",
+   "texto": "Treino feito! Cada revisão deixa você mais preparada para a prova da escola.",
+   "fala": "Treino feito! Cada revisão deixa você mais preparada para a prova da escola.",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "d1f1d3a43k",
+   "voz": "claude",
+   "texto": "Esse acessório é prêmio da Escola do Reino! Acerte tudo na prova para ganhar. Na primeira tentativa, o prêmio é lendário!",
+   "fala": "Esse acessório é prêmio da Escola do Reino! Acerte tudo na prova para ganhar. Na primeira tentativa, o prêmio é lendário!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "3bdeb6ca2g",
+   "voz": "narradora",
+   "texto": "Marque um X a opção abaixo, que nos ajuda a conhecer a história de uma pessoa:",
+   "fala": "Marque um X a opção abaixo, que nos ajuda a conhecer a história de uma pessoa:",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "c3c863b2w",
+   "voz": "narradora",
+   "texto": "Certidão de nascimento",
+   "fala": "Certidão de nascimento",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "d6910571r",
+   "voz": "narradora",
+   "texto": "Fotografia antiga",
+   "fala": "Fotografia antiga",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "2f4aee1am",
+   "voz": "narradora",
+   "texto": "Carta antiga",
+   "fala": "Carta antiga",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "8d4452a4t",
+   "voz": "narradora",
+   "texto": "Todos os anteriores",
+   "fala": "Todos os anteriores",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "d89127731r",
+   "voz": "narradora",
+   "texto": "Ligue cada item à informação que ele pode nos trazer:",
+   "fala": "Ligue cada item à informação que ele pode nos trazer:",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "48916e9an",
+   "voz": "narradora",
+   "texto": "Objeto antigo",
+   "fala": "Objeto antigo",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "a8cb062f13",
+   "voz": "narradora",
+   "texto": "Como era a pessoa no passado.",
+   "fala": "Como era a pessoa no passado.",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "66c809ec15",
+   "voz": "narradora",
+   "texto": "Informações sobre o nascimento.",
+   "fala": "Informações sobre o nascimento.",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "ced920bf1g",
+   "voz": "narradora",
+   "texto": "Mensagens e acontecimentos de outra época.",
+   "fala": "Mensagens e acontecimentos de outra época.",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "e0bc3fbf1g",
+   "voz": "narradora",
+   "texto": "Como as pessoas viviam e usavam as coisas.",
+   "fala": "Como as pessoas viviam e usavam as coisas.",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "e088833b2q",
+   "voz": "narradora",
+   "texto": "João encontrou uma fotografia de sua avó quando ela era criança. Essa fotografia mostra:",
+   "fala": "João encontrou uma fotografia de sua avó quando ela era criança. Essa fotografia mostra:",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "53fb8fe5u",
+   "voz": "narradora",
+   "texto": "Como sua avó é hoje.",
+   "fala": "Como sua avó é hoje.",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "81a8682516",
+   "voz": "narradora",
+   "texto": "Como sua avó era quando criança.",
+   "fala": "Como sua avó era quando criança.",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "3f714c8d12",
+   "voz": "narradora",
+   "texto": "Como sua avó será no futuro.",
+   "fala": "Como sua avó será no futuro.",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "d93a12ca27",
+   "voz": "narradora",
+   "texto": "Qual documento registra informações sobre o nascimento de uma pessoa?",
+   "fala": "Qual documento registra informações sobre o nascimento de uma pessoa?",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "4421e89bk",
+   "voz": "narradora",
+   "texto": "Fotografia",
+   "fala": "Fotografia",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "2af8cd42f",
+   "voz": "narradora",
+   "texto": "Carta",
+   "fala": "Carta",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "d240e2f524",
+   "voz": "narradora",
+   "texto": "Circule os objetos que podem ajudar a contar histórias do passado:",
+   "fala": "Circule os objetos que podem ajudar a contar histórias do passado:",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "29b138a8q",
+   "voz": "narradora",
+   "texto": "BRINQUEDO ANTIGO",
+   "fala": "brinquedo antigo",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "04abe224n",
+   "voz": "narradora",
+   "texto": "CELULAR ATUAL",
+   "fala": "celular atual",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "88a3b11am",
+   "voz": "narradora",
+   "texto": "CARTA ANTIGA",
+   "fala": "carta antiga",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "44ae2fd1r",
+   "voz": "narradora",
+   "texto": "FOTOGRAFIA ANTIGA",
+   "fala": "fotografia antiga",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "a2eaa1fan",
+   "voz": "narradora",
+   "texto": "OBJETO ANTIGO",
+   "fala": "objeto antigo",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "ab0d69ec2s",
+   "voz": "narradora",
+   "texto": "Por que uma fotografia antiga pode ser importante para conhecer a história de uma família?",
+   "fala": "Por que uma fotografia antiga pode ser importante para conhecer a história de uma família?",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "cccc419br",
+   "voz": "narradora",
+   "texto": "Porque ela mostra",
+   "fala": "Porque ela mostra",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "26e06336u",
+   "voz": "narradora",
+   "texto": "como eram as pessoas",
+   "fala": "como eram as pessoas",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "4c1d7591k",
+   "voz": "narradora",
+   "texto": "da família",
+   "fala": "da família",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "86102cabl",
+   "voz": "narradora",
+   "texto": "no passado.",
+   "fala": "no passado.",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "a56ea7911e",
+   "voz": "narradora",
+   "texto": "Marque V para verdadeiro e F para falso:",
+   "fala": "Marque V para verdadeiro e F para falso:",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "a7af35ba1k",
+   "voz": "narradora",
+   "texto": "Fotografias podem ajudar a conhecer o passado.",
+   "fala": "Fotografias podem ajudar a conhecer o passado.",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "5ad7ea041x",
+   "voz": "narradora",
+   "texto": "Documentos não possuem nenhuma informação sobre as pessoas.",
+   "fala": "Documentos não possuem nenhuma informação sobre as pessoas.",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "fd9f1cf61y",
+   "voz": "narradora",
+   "texto": "Cartas antigas podem contar acontecimentos de outras épocas.",
+   "fala": "Cartas antigas podem contar acontecimentos de outras épocas.",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "b72186df1b",
+   "voz": "narradora",
+   "texto": "Certidões são documentos importantes.",
+   "fala": "Certidões são documentos importantes.",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "350d69092g",
+   "voz": "narradora",
+   "texto": "Marque um X nos itens que podem ser fontes para conhecer a história da escola:",
+   "fala": "Marque um X nos itens que podem ser fontes para conhecer a história da escola:",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "218b6bc911",
+   "voz": "narradora",
+   "texto": "Fotografia antiga da turma.",
+   "fala": "Fotografia antiga da turma.",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "e7e8ebc6z",
+   "voz": "narradora",
+   "texto": "Relato de uma professora.",
+   "fala": "Relato de uma professora.",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "95c1d3091j",
+   "voz": "narradora",
+   "texto": "Brinquedo inventado sem relação com a escola.",
+   "fala": "Brinquedo inventado sem relação com a escola.",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "6d9da56110",
+   "voz": "narradora",
+   "texto": "Caderno de chamada antigo.",
+   "fala": "Caderno de chamada antigo.",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "13deef381f",
+   "voz": "narradora",
+   "texto": "Objeto usado em uma apresentação escolar.",
+   "fala": "Objeto usado em uma apresentação escolar.",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "bdde8e9415",
+   "voz": "narradora",
+   "texto": "Papel em branco sem informação.",
+   "fala": "Papel em branco sem informação.",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "b132ce9a1j",
+   "voz": "narradora",
+   "texto": "Complete as frases com as palavras do quadro.",
+   "fala": "Complete as frases com as palavras do quadro.",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "eab70678l",
+   "voz": "narradora",
+   "texto": "FOTOGRAFIAS",
+   "fala": "fotografias",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "2a9d505ek",
+   "voz": "narradora",
+   "texto": "DOCUMENTOS",
+   "fala": "documentos",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "5917bceeh",
+   "voz": "narradora",
+   "texto": "PASSADO",
+   "fala": "passado",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "7d29e08b1r",
+   "voz": "narradora",
+   "texto": "Os ______ ajudam a registrar informações importantes.",
+   "fala": "Os … ajudam a registrar informações importantes.",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "97255f661v",
+   "voz": "narradora",
+   "texto": "As ______ podem mostrar como eram as pessoas antigamente.",
+   "fala": "As … podem mostrar como eram as pessoas antigamente.",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "6b6325bf1p",
+   "voz": "narradora",
+   "texto": "Os documentos podem nos ajudar a conhecer o ______.",
+   "fala": "Os documentos podem nos ajudar a conhecer o …",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "5143d94c1j",
+   "voz": "narradora",
+   "texto": "Ligue cada documento, ao seu respectivo nome:",
+   "fala": "Ligue cada documento, ao seu respectivo nome:",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "088374dec",
+   "voz": "narradora",
+   "texto": "RG",
+   "fala": "erre gê",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "a2908498d",
+   "voz": "narradora",
+   "texto": "CPF",
+   "fala": "cê pê éfe",
+   "pacotes": [
+    "prova-historia-3bim"
+   ]
+  },
+  {
+   "chave": "a1809ab91e",
+   "voz": "ingles",
+   "texto": "Name the actions according to the pictures:",
+   "fala": "Name the actions according to the pictures:",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "f36a76d4z",
+   "voz": "narradora",
+   "texto": "Ligue cada figura à ação.",
+   "fala": "Ligue cada figura à ação.",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "9efa684fl",
+   "voz": "ingles",
+   "texto": "brush my teeth",
+   "fala": "brush my teeth",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "09f907eed",
+   "voz": "ingles",
+   "texto": "get up",
+   "fala": "get up",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "5345622aj",
+   "voz": "ingles",
+   "texto": "go to school",
+   "fala": "go to school",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "dfc62af5g",
+   "voz": "ingles",
+   "texto": "go to bed",
+   "fala": "go to bed",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "aadb17941k",
+   "voz": "ingles",
+   "texto": "Choose the actions that are part of your routine:",
+   "fala": "Choose the actions that are part of your routine:",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "3206d9b71k",
+   "voz": "narradora",
+   "texto": "Toque nas ações que fazem parte da sua rotina.",
+   "fala": "Toque nas ações que fazem parte da sua rotina.",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "5f49a02fy",
+   "voz": "ingles",
+   "texto": "I brush my teeth every day.",
+   "fala": "I brush my teeth every day.",
+   "pacotes": [
+    "prova-ingles-3bim",
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "d8dcb50cw",
+   "voz": "ingles",
+   "texto": "I go to school every day.",
+   "fala": "I go to school every day.",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "044b308a11",
+   "voz": "ingles",
+   "texto": "I go to the dentist every day.",
+   "fala": "I go to the dentist every day.",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "9b97fe38x",
+   "voz": "ingles",
+   "texto": "I have a shower every day.",
+   "fala": "I have a shower every day.",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "1888a31510",
+   "voz": "ingles",
+   "texto": "I play video games every day.",
+   "fala": "I play video games every day.",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "193bdcf01v",
+   "voz": "ingles",
+   "texto": "Write one activity that is part of your routine that you do:",
+   "fala": "Write one activity that is part of your routine that you do:",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "59fe4db21i",
+   "voz": "narradora",
+   "texto": "Escolha uma atividade para cada hora do dia.",
+   "fala": "Escolha uma atividade para cada hora do dia.",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "5d6fc9fcl",
+   "voz": "ingles",
+   "texto": "have breakfast",
+   "fala": "have breakfast",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "8e9abef2l",
+   "voz": "ingles",
+   "texto": "do my homework",
+   "fala": "do my homework",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "02cbe7edi",
+   "voz": "ingles",
+   "texto": "read a book",
+   "fala": "read a book",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "e9d9012db",
+   "voz": "ingles",
+   "texto": "play",
+   "fala": "play",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "93fd161cf",
+   "voz": "ingles",
+   "texto": "watch TV",
+   "fala": "watch tv",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "4df39cack",
+   "voz": "ingles",
+   "texto": "have a shower",
+   "fala": "have a shower",
+   "pacotes": [
+    "prova-ingles-3bim",
+    "ingles-i3"
+   ]
+  },
+  {
+   "chave": "5e2b8a77m",
+   "voz": "ingles",
+   "texto": "In the morning:",
+   "fala": "In the morning:",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "a63c99afo",
+   "voz": "ingles",
+   "texto": "In the afternoon:",
+   "fala": "In the afternoon:",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "e741d677m",
+   "voz": "ingles",
+   "texto": "In the evening:",
+   "fala": "In the evening:",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "7c12f48dv",
+   "voz": "ingles",
+   "texto": "Name the feelings below:",
+   "fala": "Name the feelings below:",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "943bfed016",
+   "voz": "narradora",
+   "texto": "Ligue cada figura ao sentimento.",
+   "fala": "Ligue cada figura ao sentimento.",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "0f8dadbfc",
+   "voz": "ingles",
+   "texto": "bored",
+   "fala": "bored",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "f0599fb0c",
+   "voz": "ingles",
+   "texto": "angry",
+   "fala": "angry",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "bae9d701d",
+   "voz": "ingles",
+   "texto": "sleepy",
+   "fala": "sleepy",
+   "pacotes": [
+    "prova-ingles-3bim",
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "ca3bbf6fe",
+   "voz": "ingles",
+   "texto": "excited",
+   "fala": "excited",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "47ae2f131p",
+   "voz": "ingles",
+   "texto": "Read the sentences and tick what you can do at school:",
+   "fala": "Read the sentences and tick what you can do at school:",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "d7f7861715",
+   "voz": "ingles",
+   "texto": "Collaborate and help your friends.",
+   "fala": "Collaborate and help your friends.",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "4e265b59n",
+   "voz": "ingles",
+   "texto": "Throw a tantrum.",
+   "fala": "Throw a tantrum.",
+   "pacotes": [
+    "prova-ingles-3bim",
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "708a5feax",
+   "voz": "ingles",
+   "texto": "Do your homework everyday.",
+   "fala": "Do your homework everyday.",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "64081bf01r",
+   "voz": "ingles",
+   "texto": "Disrespect teachers, friends and other people at school.",
+   "fala": "Disrespect teachers, friends and other people at school.",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "358456b6w",
+   "voz": "ingles",
+   "texto": "Raise your hand to speak.",
+   "fala": "Raise your hand to speak.",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "54276f0a1m",
+   "voz": "ingles",
+   "texto": "Choose the alternatives that are NOT sport's rules:",
+   "fala": "Choose the alternatives that are not sport's rules:",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "9ae65ee41e",
+   "voz": "narradora",
+   "texto": "Toque nas que NÃO são regras do esporte.",
+   "fala": "Toque nas que não são regras do esporte.",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "42594f0fq",
+   "voz": "ingles",
+   "texto": "Cheer for your team",
+   "fala": "Cheer for your team",
+   "pacotes": [
+    "prova-ingles-3bim",
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "3de93fa9m",
+   "voz": "ingles",
+   "texto": "Yell at people.",
+   "fala": "Yell at people.",
+   "pacotes": [
+    "prova-ingles-3bim",
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "2599f404p",
+   "voz": "ingles",
+   "texto": "Hurt the opponent.",
+   "fala": "Hurt the opponent.",
+   "pacotes": [
+    "prova-ingles-3bim",
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "6d44f38115",
+   "voz": "ingles",
+   "texto": "Respect the other team's audience.",
+   "fala": "Respect the other team's audience.",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "b81aa6561r",
+   "voz": "ingles",
+   "texto": "Write T for true and F for false about the solar system:",
+   "fala": "Write T for true and F for false about the solar system:",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "52c31284s",
+   "voz": "ingles",
+   "texto": "The sun isn't a star.",
+   "fala": "The sun isn't a star.",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "fde0576114",
+   "voz": "ingles",
+   "texto": "The sun is really small and cold.",
+   "fala": "The sun is really small and cold.",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "58a86da61b",
+   "voz": "ingles",
+   "texto": "There are 8 planets in the solar system.",
+   "fala": "There are 8 planets in the solar system.",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "68514d161j",
+   "voz": "ingles",
+   "texto": "The Earth is the third planet closer to the sun.",
+   "fala": "The Earth is the third planet closer to the sun.",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "0cd9e359v",
+   "voz": "ingles",
+   "texto": "The moon isn't a planet.",
+   "fala": "The moon isn't a planet.",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "e273880c13",
+   "voz": "ingles",
+   "texto": "Number the order of the planets:",
+   "fala": "Number the order of the planets:",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "2e143cb61s",
+   "voz": "narradora",
+   "texto": "Toque nos planetas do mais perto ao mais longe do sol.",
+   "fala": "Toque nos planetas do mais perto ao mais longe do sol.",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "70aeeb022i",
+   "voz": "ingles",
+   "texto": "Put a tick (√) for the good effects of the sun and a cross (X) for the bad effects:",
+   "fala": "Put a tick for the good effects of the sun and a cross for the bad effects:",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "01f0caae17",
+   "voz": "ingles",
+   "texto": "Solar radiation can generate energy.",
+   "fala": "Solar radiation can generate energy.",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "27bf4f171i",
+   "voz": "ingles",
+   "texto": "Overexposure to the sun can cause eye diseases.",
+   "fala": "Overexposure to the sun can cause eye diseases.",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "7dd0c25814",
+   "voz": "ingles",
+   "texto": "Plants need the sunlight to grow.",
+   "fala": "Plants need the sunlight to grow.",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "236852221h",
+   "voz": "ingles",
+   "texto": "Our body needs the sunlight to make vitamin D.",
+   "fala": "Our body needs the sunlight to make vitamin D.",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "4aac4ecd1d",
+   "voz": "ingles",
+   "texto": "Overexposure to the sun may cause sunburn.",
+   "fala": "Overexposure to the sun may cause sunburn.",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "c8bc766b19",
+   "voz": "ingles",
+   "texto": "Why is it important to wear sunscreen?",
+   "fala": "Why is it important to wear sunscreen?",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "cb8231d915",
+   "voz": "narradora",
+   "texto": "Monte a resposta com os blocos.",
+   "fala": "Monte a resposta com os blocos.",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "e12daebde",
+   "voz": "ingles",
+   "texto": "Because",
+   "fala": "Because",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "584c88aai",
+   "voz": "ingles",
+   "texto": "it protects",
+   "fala": "it protects",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "c63ca012g",
+   "voz": "ingles",
+   "texto": "our skin.",
+   "fala": "our skin.",
+   "pacotes": [
+    "prova-ingles-3bim"
+   ]
+  },
+  {
+   "chave": "c61f162226",
+   "voz": "ingles",
+   "texto": "Draw a picture using the elements of the art (shapes, lines and colors)",
+   "fala": "Draw a picture using the elements of the art (shapes, lines and colors)",
+   "pacotes": [
+    "prova-ingles-3bim"
    ]
   },
   {
@@ -3624,7 +4802,10 @@
    "texto": "Jogo da memória! Encontre os pares:",
    "fala": "Jogo da memória! Encontre os pares:",
    "pacotes": [
-    "historia-h5"
+    "historia-h5",
+    "ingles-i1",
+    "ingles-i2",
+    "ingles-i4"
    ]
   },
   {
@@ -3633,7 +4814,3834 @@
    "texto": "Monte a frase tocando nos blocos na ordem certa:",
    "fala": "Monte a frase tocando nos blocos na ordem certa:",
    "pacotes": [
-    "historia-h5"
+    "historia-h5",
+    "ingles-i3",
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "e813aefd30",
+   "voz": "claude",
+   "texto": "Toque no chão para andar (ou use as setas do teclado). Vamos até o Torre do Relógio? É só tocar nele!",
+   "fala": "Toque no chão para andar (ou use as setas do teclado). Vamos até o Torre do Relógio? É só tocar nele!",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "8f5a80ecd",
+   "voz": "ingles",
+   "texto": "Hello!",
+   "fala": "Hello!",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "174c46572q",
+   "voz": "claude",
+   "texto": "Eu sou o guia da Torre do Relógio! Aqui a gente brinca de inglês, um pouquinho de cada vez.",
+   "fala": "Eu sou o guia da Torre do Relógio! Aqui a gente brinca de inglês, um pouquinho de cada vez.",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "3fc8ac4a30",
+   "voz": "claude",
+   "texto": "O treino de Inglês abre quando você terminar as salas do Torre do Relógio. Falta só 1! Você consegue!",
+   "fala": "O treino de Inglês abre quando você terminar as salas do Torre do Relógio. Falta só 1! Você consegue!",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "8db130e22y",
+   "voz": "claude",
+   "texto": "O treino de Inglês abre quando você terminar as salas do Torre do Relógio. Faltam 2! Você consegue!",
+   "fala": "O treino de Inglês abre quando você terminar as salas do Torre do Relógio. Faltam 2! Você consegue!",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "65c0b3312y",
+   "voz": "claude",
+   "texto": "O treino de Inglês abre quando você terminar as salas do Torre do Relógio. Faltam 3! Você consegue!",
+   "fala": "O treino de Inglês abre quando você terminar as salas do Torre do Relógio. Faltam 3! Você consegue!",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "86b173a02y",
+   "voz": "claude",
+   "texto": "O treino de Inglês abre quando você terminar as salas do Torre do Relógio. Faltam 4! Você consegue!",
+   "fala": "O treino de Inglês abre quando você terminar as salas do Torre do Relógio. Faltam 4! Você consegue!",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "138c79872y",
+   "voz": "claude",
+   "texto": "O treino de Inglês abre quando você terminar as salas do Torre do Relógio. Faltam 5! Você consegue!",
+   "fala": "O treino de Inglês abre quando você terminar as salas do Torre do Relógio. Faltam 5! Você consegue!",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "be6caed02l",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Regras na escola\".",
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Regras na escola\".",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "1e8d42ebq",
+   "voz": "narradora",
+   "texto": "Regras na escola",
+   "fala": "Regras na escola",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "f61c24021o",
+   "voz": "narradora",
+   "texto": "Na escola a gente pode: levantar a mão para falar,",
+   "fala": "Na escola a gente pode: levantar a mão para falar,",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "74be0899m",
+   "voz": "ingles",
+   "texto": "raise your hand",
+   "fala": "raise your hand",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "a35584bet",
+   "voz": "narradora",
+   "texto": ", ajudar os amigos,",
+   "fala": ", ajudar os amigos,",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "0889ef92o",
+   "voz": "ingles",
+   "texto": "help your friends",
+   "fala": "help your friends",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "f8f93feds",
+   "voz": "narradora",
+   "texto": ", e fazer a lição,",
+   "fala": ", e fazer a lição,",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "0467bfe5n",
+   "voz": "ingles",
+   "texto": "do your homework",
+   "fala": "do your homework",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "d206de26y",
+   "voz": "narradora",
+   "texto": ". A gente não faz birra,",
+   "fala": ". A gente não faz birra,",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "971e182dm",
+   "voz": "ingles",
+   "texto": "throw a tantrum",
+   "fala": "throw a tantrum",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "8ed4280344",
+   "voz": "narradora",
+   "texto": ", e respeita professores e amigos. Tem regras em casa, na escola, na rua e no esporte. Elas ajudam a gente a viver junto: com organização,",
+   "fala": ", e respeita professores e amigos. Tem regras em casa, na escola, na rua e no esporte. Elas ajudam a gente a viver junto: com organização,",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "23bfa6adj",
+   "voz": "ingles",
+   "texto": "organisation",
+   "fala": "organisation",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "10cc02eem",
+   "voz": "narradora",
+   "texto": ", segurança,",
+   "fala": ", segurança,",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "d82a15a9d",
+   "voz": "ingles",
+   "texto": "safety",
+   "fala": "safety",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "0cea3074x",
+   "voz": "narradora",
+   "texto": ", e trabalho em equipe,",
+   "fala": ", e trabalho em equipe,",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "37484ca3f",
+   "voz": "ingles",
+   "texto": "teamwork",
+   "fala": "teamwork",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "8ee925012i",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Do's e Don'ts\".",
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Do's e Don'ts\".",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "21281e54n",
+   "voz": "narradora",
+   "texto": "Do's e Don'ts",
+   "fala": "Do's e Don'ts",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "bc0b980cb",
+   "voz": "ingles",
+   "texto": "Do's",
+   "fala": "Do's",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "f9200efet",
+   "voz": "narradora",
+   "texto": "é o que pode fazer.",
+   "fala": "é o que pode fazer.",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "f2ddbfc4d",
+   "voz": "ingles",
+   "texto": "Don'ts",
+   "fala": "Don'ts",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "49ebafe4x",
+   "voz": "narradora",
+   "texto": "é o que não pode. Pode:",
+   "fala": "é o que não pode. Pode:",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "555b7496p",
+   "voz": "ingles",
+   "texto": "put your toys away",
+   "fala": "put your toys away",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "312a6be810",
+   "voz": "narradora",
+   "texto": ", guardar os brinquedos, e",
+   "fala": ", guardar os brinquedos, e",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "6266f8d9w",
+   "voz": "ingles",
+   "texto": "work with your classmates",
+   "fala": "work with your classmates",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "fce154871b",
+   "voz": "narradora",
+   "texto": ", trabalhar com os colegas. Não pode:",
+   "fala": ", trabalhar com os colegas. Não pode:",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "e419fb46q",
+   "voz": "ingles",
+   "texto": "run in the corridor",
+   "fala": "run in the corridor",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "782af65dv",
+   "voz": "narradora",
+   "texto": ", correr no corredor,",
+   "fala": ", correr no corredor,",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "dd77ebeai",
+   "voz": "ingles",
+   "texto": "make a mess",
+   "fala": "make a mess",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "c48f5dc7s",
+   "voz": "narradora",
+   "texto": ", fazer bagunça, e",
+   "fala": ", fazer bagunça, e",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "0fada1cdo",
+   "voz": "ingles",
+   "texto": "throw paper balls",
+   "fala": "throw paper balls",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "ff2afd4110",
+   "voz": "narradora",
+   "texto": ", jogar bolinhas de papel.",
+   "fala": ", jogar bolinhas de papel.",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "56febbd52m",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Regras do esporte\".",
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Regras do esporte\".",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "0e0011bcr",
+   "voz": "narradora",
+   "texto": "Regras do esporte",
+   "fala": "Regras do esporte",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "d0b0c40214",
+   "voz": "narradora",
+   "texto": "No esporte a gente joga limpo,",
+   "fala": "No esporte a gente joga limpo,",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "c45368f6n",
+   "voz": "ingles",
+   "texto": "play a fair game",
+   "fala": "play a fair game",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "526be43au",
+   "voz": "narradora",
+   "texto": ", e torce pelo time,",
+   "fala": ", e torce pelo time,",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "d291896fq",
+   "voz": "ingles",
+   "texto": "cheer for your team",
+   "fala": "cheer for your team",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "8a4225b0p",
+   "voz": "narradora",
+   "texto": ". A torcida é a",
+   "fala": ". A torcida é a",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "f12d9815f",
+   "voz": "ingles",
+   "texto": "audience",
+   "fala": "audience",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "da5ec7a325",
+   "voz": "narradora",
+   "texto": ". Respeite a torcida do outro time! Não pode gritar com as pessoas,",
+   "fala": ". Respeite a torcida do outro time! Não pode gritar com as pessoas,",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "9c9f815dl",
+   "voz": "ingles",
+   "texto": "yell at people",
+   "fala": "yell at people",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "1f0944de12",
+   "voz": "narradora",
+   "texto": ", nem machucar o adversário,",
+   "fala": ", nem machucar o adversário,",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "e5b08922o",
+   "voz": "ingles",
+   "texto": "hurt the opponent",
+   "fala": "hurt the opponent",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "31d6b8f3o",
+   "voz": "narradora",
+   "texto": ". Na queimada:",
+   "fala": ". Na queimada:",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "3e5757b3l",
+   "voz": "ingles",
+   "texto": "throw the ball",
+   "fala": "throw the ball",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "d8a24443k",
+   "voz": "narradora",
+   "texto": ", jogar, e",
+   "fala": ", jogar, e",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "09efc442l",
+   "voz": "ingles",
+   "texto": "catch the ball",
+   "fala": "catch the ball",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "5ccbf46ai",
+   "voz": "narradora",
+   "texto": ", pegar.",
+   "fala": ", pegar.",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "5423bded2a",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"O sol\".",
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"O sol\".",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "85b8e368f",
+   "voz": "narradora",
+   "texto": "O sol",
+   "fala": "O sol",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "d2591099p",
+   "voz": "ingles",
+   "texto": "The sun is a star.",
+   "fala": "The sun is a star.",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "7e84b5301v",
+   "voz": "narradora",
+   "texto": "O sol é uma estrela! Ele fica no centro do sistema solar,",
+   "fala": "O sol é uma estrela! Ele fica no centro do sistema solar,",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "e1647a6a11",
+   "voz": "ingles",
+   "texto": "the centre of our solar system",
+   "fala": "the centre of our solar system",
+   "pacotes": [
+    "ingles-livro",
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "b58977221h",
+   "voz": "narradora",
+   "texto": ". O sol é muito grande, brilhante e quente:",
+   "fala": ". O sol é muito grande, brilhante e quente:",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "ccf8dd91l",
+   "voz": "ingles",
+   "texto": "bright and hot",
+   "fala": "bright and hot",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "8d595f2217",
+   "voz": "narradora",
+   "texto": ". Ele ilumina e esquenta a Terra.",
+   "fala": ". Ele ilumina e esquenta a Terra.",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "8bfd30ea2i",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Os 8 planetas\".",
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Os 8 planetas\".",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "26decae7n",
+   "voz": "narradora",
+   "texto": "Os 8 planetas",
+   "fala": "Os 8 planetas",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "37dd59b0z",
+   "voz": "narradora",
+   "texto": "São 8 planetas, na ordem:",
+   "fala": "São 8 planetas, na ordem:",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "7c7378e8e",
+   "voz": "ingles",
+   "texto": "Mercury",
+   "fala": "Mercury",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "b7023478c",
+   "voz": "ingles",
+   "texto": "Venus",
+   "fala": "Venus",
+   "pacotes": [
+    "ingles-livro",
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "d8047179c",
+   "voz": "ingles",
+   "texto": "Earth",
+   "fala": "Earth",
+   "pacotes": [
+    "ingles-livro",
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "88dbeca2b",
+   "voz": "ingles",
+   "texto": "Mars",
+   "fala": "Mars",
+   "pacotes": [
+    "ingles-livro",
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "56a1699ce",
+   "voz": "ingles",
+   "texto": "Jupiter",
+   "fala": "Jupiter",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "5e52691cd",
+   "voz": "ingles",
+   "texto": "Saturn",
+   "fala": "Saturn",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "bc704ac3d",
+   "voz": "ingles",
+   "texto": "Uranus",
+   "fala": "Uranus",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "08ea6398b",
+   "voz": "narradora",
+   "texto": "e",
+   "fala": "e",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "79127070e",
+   "voz": "ingles",
+   "texto": "Neptune",
+   "fala": "Neptune",
+   "pacotes": [
+    "ingles-livro",
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "5eb830f8k",
+   "voz": "narradora",
+   "texto": ". A Terra,",
+   "fala": ". A Terra,",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "979e0db614",
+   "voz": "narradora",
+   "texto": ", é o terceiro planeta. A lua,",
+   "fala": ", é o terceiro planeta. A lua,",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "58ea933bf",
+   "voz": "ingles",
+   "texto": "the moon",
+   "fala": "the moon",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "38017a9f1i",
+   "voz": "narradora",
+   "texto": ", não é planeta: ela gira em volta da Terra.",
+   "fala": ", não é planeta: ela gira em volta da Terra.",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "c9fbb13e2v",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Coisas boas e ruins do sol\".",
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Coisas boas e ruins do sol\".",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "049b222510",
+   "voz": "narradora",
+   "texto": "Coisas boas e ruins do sol",
+   "fala": "Coisas boas e ruins do sol",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "a164f50am",
+   "voz": "narradora",
+   "texto": "Coisas boas,",
+   "fala": "Coisas boas,",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "dc88b880f",
+   "voz": "ingles",
+   "texto": "positive",
+   "fala": "positive",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "e262d464v",
+   "voz": "narradora",
+   "texto": ": o sol gera energia,",
+   "fala": ": o sol gera energia,",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "f142cad4j",
+   "voz": "ingles",
+   "texto": "solar energy",
+   "fala": "solar energy",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "d872e2b82z",
+   "voz": "narradora",
+   "texto": ", as plantas precisam dele para crescer, e o corpo usa o sol para fazer vitamina D. Coisas ruins,",
+   "fala": ", as plantas precisam dele para crescer, e o corpo usa o sol para fazer vitamina D. Coisas ruins,",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "837b66f8f",
+   "voz": "ingles",
+   "texto": "negative",
+   "fala": "negative",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "5491696314",
+   "voz": "narradora",
+   "texto": ": sol demais causa queimadura,",
+   "fala": ": sol demais causa queimadura,",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "a1348b2ee",
+   "voz": "ingles",
+   "texto": "sunburn",
+   "fala": "sunburn",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "09dec3dew",
+   "voz": "narradora",
+   "texto": ", e doenças nos olhos.",
+   "fala": ", e doenças nos olhos.",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "2c2dae2a2j",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Protetor solar\".",
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Protetor solar\".",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "1b50d9b5o",
+   "voz": "narradora",
+   "texto": "Protetor solar",
+   "fala": "Protetor solar",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "cee8323e12",
+   "voz": "narradora",
+   "texto": "Por que usar protetor solar,",
+   "fala": "Por que usar protetor solar,",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "07843f5bg",
+   "voz": "ingles",
+   "texto": "sunscreen",
+   "fala": "sunscreen",
+   "pacotes": [
+    "ingles-livro",
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "3ca09a3d10",
+   "voz": "ingles",
+   "texto": "Because it protects our skin.",
+   "fala": "Because it protects our skin.",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "c5d0b00337",
+   "voz": "narradora",
+   "texto": "Porque ele protege a nossa pele da queimadura. Use no parque, na escola e na praia, mesmo em dia nublado!",
+   "fala": "Porque ele protege a nossa pele da queimadura. Use no parque, na escola e na praia, mesmo em dia nublado!",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "feb4f6052m",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Elementos da arte\".",
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Elementos da arte\".",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "e9e4aadcr",
+   "voz": "narradora",
+   "texto": "Elementos da arte",
+   "fala": "Elementos da arte",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "7dc09f8ds",
+   "voz": "narradora",
+   "texto": "A arte tem linhas,",
+   "fala": "A arte tem linhas,",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "f273ea0ac",
+   "voz": "ingles",
+   "texto": "lines",
+   "fala": "lines",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "61319d89j",
+   "voz": "narradora",
+   "texto": ", formas,",
+   "fala": ", formas,",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "48669001d",
+   "voz": "ingles",
+   "texto": "shapes",
+   "fala": "shapes",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "4a469d4ck",
+   "voz": "narradora",
+   "texto": ", e cores,",
+   "fala": ", e cores,",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "9a385db4e",
+   "voz": "ingles",
+   "texto": "colours",
+   "fala": "colours",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "e8d317f1j",
+   "voz": "narradora",
+   "texto": ". Formas:",
+   "fala": ". Formas:",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "c27fe1e7d",
+   "voz": "ingles",
+   "texto": "circle",
+   "fala": "circle",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "4f2485b4k",
+   "voz": "narradora",
+   "texto": ", círculo,",
+   "fala": ", círculo,",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "0c4aadc8d",
+   "voz": "ingles",
+   "texto": "square",
+   "fala": "square",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "6cea4296l",
+   "voz": "narradora",
+   "texto": ", quadrado,",
+   "fala": ", quadrado,",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "eb75a66cg",
+   "voz": "ingles",
+   "texto": "rectangle",
+   "fala": "rectangle",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "8d10f120o",
+   "voz": "narradora",
+   "texto": ", retângulo, e",
+   "fala": ", retângulo, e",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "94fb2003f",
+   "voz": "ingles",
+   "texto": "triangle",
+   "fala": "triangle",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "68611297t",
+   "voz": "narradora",
+   "texto": ", triângulo. Cores:",
+   "fala": ", triângulo. Cores:",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "bd39175bd",
+   "voz": "ingles",
+   "texto": "yellow",
+   "fala": "yellow",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "9ab02f52k",
+   "voz": "narradora",
+   "texto": ", amarelo,",
+   "fala": ", amarelo,",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "ff839536c",
+   "voz": "ingles",
+   "texto": "green",
+   "fala": "green",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "3f7131a7i",
+   "voz": "narradora",
+   "texto": ", verde,",
+   "fala": ", verde,",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "3dd8e047b",
+   "voz": "ingles",
+   "texto": "pink",
+   "fala": "pink",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "ed8c4935j",
+   "voz": "narradora",
+   "texto": ", rosa, e",
+   "fala": ", rosa, e",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "9c471c4bb",
+   "voz": "ingles",
+   "texto": "blue",
+   "fala": "blue",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "2845956612",
+   "voz": "narradora",
+   "texto": ", azul. O relógio de sol é o",
+   "fala": ", azul. O relógio de sol é o",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "01af650de",
+   "voz": "ingles",
+   "texto": "sundial",
+   "fala": "sundial",
+   "pacotes": [
+    "ingles-livro",
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "a5970c881j",
+   "voz": "narradora",
+   "texto": ". Ele usa a posição do sol no céu e a sombra,",
+   "fala": ". Ele usa a posição do sol no céu e a sombra,",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "67645c67d",
+   "voz": "ingles",
+   "texto": "shadow",
+   "fala": "shadow",
+   "pacotes": [
+    "ingles-livro",
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "51f0c0141p",
+   "voz": "narradora",
+   "texto": ", para mostrar a hora do dia. De manhã o sol nasce:",
+   "fala": ", para mostrar a hora do dia. De manhã o sol nasce:",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "eaf8c836o",
+   "voz": "ingles",
+   "texto": "the sun is rising",
+   "fala": "the sun is rising",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "336c6cdf11",
+   "voz": "narradora",
+   "texto": ". No fim do dia ele se põe:",
+   "fala": ". No fim do dia ele se põe:",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "09c6901cp",
+   "voz": "ingles",
+   "texto": "the sun is setting",
+   "fala": "the sun is setting",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "a638016a2h",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Minha rotina\".",
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Minha rotina\".",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "fad61a91m",
+   "voz": "narradora",
+   "texto": "Minha rotina",
+   "fala": "Minha rotina",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "96ee8e8ed",
+   "voz": "ingles",
+   "texto": "Get up",
+   "fala": "Get up",
+   "pacotes": [
+    "ingles-livro",
+    "ingles-i3",
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "d4e7ebbbl",
+   "voz": "narradora",
+   "texto": "é levantar.",
+   "fala": "é levantar.",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "7df252efl",
+   "voz": "ingles",
+   "texto": "Brush my teeth",
+   "fala": "Brush my teeth",
+   "pacotes": [
+    "ingles-livro",
+    "ingles-i3"
+   ]
+  },
+  {
+   "chave": "22cda4e6u",
+   "voz": "narradora",
+   "texto": "é escovar os dentes.",
+   "fala": "é escovar os dentes.",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "c3c1ba4ck",
+   "voz": "ingles",
+   "texto": "Have a shower",
+   "fala": "Have a shower",
+   "pacotes": [
+    "ingles-livro",
+    "ingles-i3"
+   ]
+  },
+  {
+   "chave": "4f1fb7cfo",
+   "voz": "narradora",
+   "texto": "é tomar banho.",
+   "fala": "é tomar banho.",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "bff2314aj",
+   "voz": "ingles",
+   "texto": "Go to school",
+   "fala": "Go to school",
+   "pacotes": [
+    "ingles-livro",
+    "ingles-i3",
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "9a4115c9t",
+   "voz": "narradora",
+   "texto": "é ir para a escola.",
+   "fala": "é ir para a escola.",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "65b2a195g",
+   "voz": "ingles",
+   "texto": "Go to bed",
+   "fala": "Go to bed",
+   "pacotes": [
+    "ingles-livro",
+    "ingles-i3"
+   ]
+  },
+  {
+   "chave": "ce7b0f34m",
+   "voz": "narradora",
+   "texto": "é ir dormir.",
+   "fala": "é ir dormir.",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "36124e1e3k",
+   "voz": "ingles",
+   "texto": "I get up, I brush my teeth, I have a shower and I go to school, I go to bed. Oh but wait! I don't go to school every day!",
+   "fala": "I get up, I brush my teeth, I have a shower and I go to school, I go to bed. Oh but wait! I don't go to school every day!",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "cd73c2c6b",
+   "voz": "ingles",
+   "texto": "Wait",
+   "fala": "Wait",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "67f2588du",
+   "voz": "narradora",
+   "texto": "quer dizer \"espera\"!",
+   "fala": "quer dizer \"espera\"!",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "d3588e942l",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Todo dia, ou não\".",
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Todo dia, ou não\".",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "cf223b03q",
+   "voz": "narradora",
+   "texto": "Todo dia, ou não",
+   "fala": "Todo dia, ou não",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "dc5095a4g",
+   "voz": "ingles",
+   "texto": "Every day",
+   "fala": "Every day",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "6b48375f1b",
+   "voz": "narradora",
+   "texto": "é todo dia. Para dizer o que eu faço:",
+   "fala": "é todo dia. Para dizer o que eu faço:",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "b1eaaac717",
+   "voz": "narradora",
+   "texto": "Para dizer o que eu não faço, uso",
+   "fala": "Para dizer o que eu não faço, uso",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "bbaa85bfc",
+   "voz": "ingles",
+   "texto": "don't",
+   "fala": "don't",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "0a7f7b95u",
+   "voz": "ingles",
+   "texto": "I don't swim every day.",
+   "fala": "I don't swim every day.",
+   "pacotes": [
+    "ingles-livro",
+    "ingles-i3"
+   ]
+  },
+  {
+   "chave": "9203dc19v",
+   "voz": "narradora",
+   "texto": "Eu não nado todo dia.",
+   "fala": "Eu não nado todo dia.",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "82b6229e2k",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"As horas do dia\".",
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"As horas do dia\".",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "f14e3b0bp",
+   "voz": "narradora",
+   "texto": "As horas do dia",
+   "fala": "As horas do dia",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "127b1f05h",
+   "voz": "narradora",
+   "texto": "Manhã é",
+   "fala": "Manhã é",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "58ae6d79e",
+   "voz": "ingles",
+   "texto": "morning",
+   "fala": "morning",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "f27d06a2j",
+   "voz": "narradora",
+   "texto": ". Tarde é",
+   "fala": ". Tarde é",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "b5d9d665g",
+   "voz": "ingles",
+   "texto": "afternoon",
+   "fala": "afternoon",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "0f6a73aat",
+   "voz": "narradora",
+   "texto": ". Começo da noite é",
+   "fala": ". Começo da noite é",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "032eb63de",
+   "voz": "ingles",
+   "texto": "evening",
+   "fala": "evening",
+   "pacotes": [
+    "ingles-livro",
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "d7c1c373j",
+   "voz": "narradora",
+   "texto": ". Noite é",
+   "fala": ". Noite é",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "91b912c7c",
+   "voz": "ingles",
+   "texto": "night",
+   "fala": "night",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "be1bcc9br",
+   "voz": "narradora",
+   "texto": ". Café da manhã é",
+   "fala": ". Café da manhã é",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "d0845e17l",
+   "voz": "ingles",
+   "texto": "in the morning",
+   "fala": "in the morning",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "8722c304k",
+   "voz": "narradora",
+   "texto": "e dormir é",
+   "fala": "e dormir é",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "62bb6ee0f",
+   "voz": "ingles",
+   "texto": "at night",
+   "fala": "at night",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "a00611042j",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"O dia do David\".",
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"O dia do David\".",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "3a585d9bo",
+   "voz": "narradora",
+   "texto": "O dia do David",
+   "fala": "O dia do David",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "867666bay",
+   "voz": "narradora",
+   "texto": "O David acordou e disse:",
+   "fala": "O David acordou e disse:",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "9f874566s",
+   "voz": "ingles",
+   "texto": "Mum, I'm tired today.",
+   "fala": "Mum, I'm tired today.",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "92e335171i",
+   "voz": "narradora",
+   "texto": "Mamãe, estou cansado hoje! Mas ele levantou.",
+   "fala": "Mamãe, estou cansado hoje! Mas ele levantou.",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "9b6044b42k",
+   "voz": "ingles",
+   "texto": "I go to school in the morning, I do my homework in the afternoon and I read at night.",
+   "fala": "I go to school in the morning, I do my homework in the afternoon and I read at night.",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "7c1223a1f",
+   "voz": "ingles",
+   "texto": "Homework",
+   "fala": "Homework",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "baf6032as",
+   "voz": "narradora",
+   "texto": "é lição de casa, e",
+   "fala": "é lição de casa, e",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "f3a5df0dc",
+   "voz": "ingles",
+   "texto": "lunch",
+   "fala": "lunch",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "fe38d14dz",
+   "voz": "narradora",
+   "texto": "é almoço. Para perguntar:",
+   "fala": "é almoço. Para perguntar:",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "c50d682117",
+   "voz": "ingles",
+   "texto": "Do you have a shower in the morning?",
+   "fala": "Do you have a shower in the morning?",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "895d055ct",
+   "voz": "narradora",
+   "texto": "Para responder sim:",
+   "fala": "Para responder sim:",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "d945f22ch",
+   "voz": "ingles",
+   "texto": "Yes, I do.",
+   "fala": "Yes, I do.",
+   "pacotes": [
+    "ingles-livro",
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "f326e785t",
+   "voz": "narradora",
+   "texto": "Para responder não:",
+   "fala": "Para responder não:",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "6f69ebddj",
+   "voz": "ingles",
+   "texto": "No, I don't.",
+   "fala": "No, I don't.",
+   "pacotes": [
+    "ingles-livro",
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "814055b72j",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Os sentimentos\".",
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Os sentimentos\".",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "351d5b94o",
+   "voz": "narradora",
+   "texto": "Os sentimentos",
+   "fala": "Os sentimentos",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "df74afdfc",
+   "voz": "ingles",
+   "texto": "Happy",
+   "fala": "Happy",
+   "pacotes": [
+    "ingles-livro",
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "8871b142i",
+   "voz": "narradora",
+   "texto": "é feliz.",
+   "fala": "é feliz.",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "94b559a1a",
+   "voz": "ingles",
+   "texto": "Sad",
+   "fala": "Sad",
+   "pacotes": [
+    "ingles-livro",
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "cd748479j",
+   "voz": "narradora",
+   "texto": "é triste.",
+   "fala": "é triste.",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "98910d50c",
+   "voz": "ingles",
+   "texto": "Angry",
+   "fala": "Angry",
+   "pacotes": [
+    "ingles-livro",
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "4d32b27ai",
+   "voz": "narradora",
+   "texto": "é bravo.",
+   "fala": "é bravo.",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "e7b22f21d",
+   "voz": "ingles",
+   "texto": "Sleepy",
+   "fala": "Sleepy",
+   "pacotes": [
+    "ingles-livro",
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "2fbd235cl",
+   "voz": "narradora",
+   "texto": "é com sono.",
+   "fala": "é com sono.",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "9bfc6a5fc",
+   "voz": "ingles",
+   "texto": "Bored",
+   "fala": "Bored",
+   "pacotes": [
+    "ingles-livro",
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "d64a7a27m",
+   "voz": "narradora",
+   "texto": "é entediado.",
+   "fala": "é entediado.",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "1051600fe",
+   "voz": "ingles",
+   "texto": "Excited",
+   "fala": "Excited",
+   "pacotes": [
+    "ingles-livro",
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "7a175dfa1a",
+   "voz": "narradora",
+   "texto": "é animado. Todo sentimento é normal!",
+   "fala": "é animado. Todo sentimento é normal!",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "7ef4293d14",
+   "voz": "ingles",
+   "texto": "If you're happy, clap your hands!",
+   "fala": "If you're happy, clap your hands!",
+   "pacotes": [
+    "ingles-livro",
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "cd37ccd516",
+   "voz": "narradora",
+   "texto": "Se você está feliz, bata palmas!",
+   "fala": "Se você está feliz, bata palmas!",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "a99131f415",
+   "voz": "ingles",
+   "texto": "If you're sleepy, stamp your foot!",
+   "fala": "If you're sleepy, stamp your foot!",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "185ffea312",
+   "voz": "narradora",
+   "texto": "Se está com sono, bata o pé!",
+   "fala": "Se está com sono, bata o pé!",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "f2ba6e542o",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Como você se sente?\".",
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Como você se sente?\".",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "c6837801t",
+   "voz": "narradora",
+   "texto": "Como você se sente?",
+   "fala": "Como você se sente?",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "936e6701p",
+   "voz": "narradora",
+   "texto": "Para perguntar:",
+   "fala": "Para perguntar:",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "631ee511t",
+   "voz": "ingles",
+   "texto": "How do you feel today?",
+   "fala": "How do you feel today?",
+   "pacotes": [
+    "ingles-livro",
+    "ingles-extra",
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "29770f031e",
+   "voz": "narradora",
+   "texto": "Como você se sente hoje? Para responder:",
+   "fala": "Como você se sente hoje? Para responder:",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "91dbaebfh",
+   "voz": "ingles",
+   "texto": "I'm happy!",
+   "fala": "I'm happy!",
+   "pacotes": [
+    "ingles-livro",
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "e9ec30a9c",
+   "voz": "narradora",
+   "texto": "ou",
+   "fala": "ou",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "f19087b9o",
+   "voz": "ingles",
+   "texto": "I'm sleepy today.",
+   "fala": "I'm sleepy today.",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "072b4f8e11",
+   "voz": "narradora",
+   "texto": "Para falar de outra pessoa:",
+   "fala": "Para falar de outra pessoa:",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "51043035h",
+   "voz": "ingles",
+   "texto": "She's sad.",
+   "fala": "She's sad.",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "874afc6ek",
+   "voz": "ingles",
+   "texto": "He's excited.",
+   "fala": "He's excited.",
+   "pacotes": [
+    "ingles-livro",
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "0d8c791e1g",
+   "voz": "narradora",
+   "texto": "O tempo também muda como a gente se sente!",
+   "fala": "O tempo também muda como a gente se sente!",
+   "pacotes": [
+    "ingles-livro"
+   ]
+  },
+  {
+   "chave": "b48302c4v",
+   "voz": "unicornio",
+   "texto": "Vamos brincar juntos?",
+   "fala": "Vamos brincar juntos?",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "e5ee3bcbi",
+   "voz": "ingles",
+   "texto": "Let's play!",
+   "fala": "Let's play!",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "f93b5675x",
+   "voz": "unicornio",
+   "texto": "Eu torço pelo seu time!",
+   "fala": "Eu torço pelo seu time!",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "b72c0c91k",
+   "voz": "ingles",
+   "texto": "Go, team, go!",
+   "fala": "Go, team, go!",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "afe131d413",
+   "voz": "unicornio",
+   "texto": "Não esqueça o protetor solar!",
+   "fala": "Não esqueça o protetor solar!",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "80dee62eh",
+   "voz": "ingles",
+   "texto": "Sunscreen!",
+   "fala": "Sunscreen!",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "3c8d32761b",
+   "voz": "unicornio",
+   "texto": "Sou o nono planeta... de brincadeira!",
+   "fala": "Sou o nono planeta... de brincadeira!",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "70ba60e4l",
+   "voz": "ingles",
+   "texto": "Eight planets!",
+   "fala": "Eight planets!",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "7645c422s",
+   "voz": "unicornio",
+   "texto": "Brilho no sorriso!",
+   "fala": "Brilho no sorriso!",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "6449a80ey",
+   "voz": "ingles",
+   "texto": "I brush my teeth every day!",
+   "fala": "I brush my teeth every day!",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "46babede13",
+   "voz": "unicornio",
+   "texto": "Hora do banho, cheirinho bom!",
+   "fala": "Hora do banho, cheirinho bom!",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "96f87997l",
+   "voz": "ingles",
+   "texto": "Have a shower!",
+   "fala": "Have a shower!",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "c1ca069es",
+   "voz": "unicornio",
+   "texto": "Uma xícara de chá?",
+   "fala": "Uma xícara de chá?",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "ce988651m",
+   "voz": "ingles",
+   "texto": "Good afternoon!",
+   "fala": "Good afternoon!",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "c15b36f9w",
+   "voz": "unicornio",
+   "texto": "Durma bem, até amanhã!",
+   "fala": "Durma bem, até amanhã!",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "1dd57e87i",
+   "voz": "ingles",
+   "texto": "Good night!",
+   "fala": "Good night!",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "7365fe0d11",
+   "voz": "unicornio",
+   "texto": "Se está feliz, bate palmas!",
+   "fala": "Se está feliz, bate palmas!",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "f1dfa095n",
+   "voz": "ingles",
+   "texto": "Clap your hands!",
+   "fala": "Clap your hands!",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "57134abe11",
+   "voz": "unicornio",
+   "texto": "Uaaah... estou com soninho.",
+   "fala": "Uaaah... estou com soninho.",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "8998d7efi",
+   "voz": "ingles",
+   "texto": "I'm sleepy!",
+   "fala": "I'm sleepy!",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "c6f87feex",
+   "voz": "unicornio",
+   "texto": "Asas de ouro para você!",
+   "fala": "Asas de ouro para você!",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "fa05bf30h",
+   "voz": "ingles",
+   "texto": "Well done!",
+   "fala": "Well done!",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "78187204u",
+   "voz": "unicornio",
+   "texto": "Tic-tac, sem pressa!",
+   "fala": "Tic-tac, sem pressa!",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "ad09bd4bf",
+   "voz": "ingles",
+   "texto": "Perfect!",
+   "fala": "Perfect!",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "3361c7231b",
+   "voz": "unicornio",
+   "texto": "Você aprendeu todo o inglês da Torre!",
+   "fala": "Você aprendeu todo o inglês da Torre!",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "798c7d16n",
+   "voz": "ingles",
+   "texto": "You are amazing!",
+   "fala": "You are amazing!",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "1044d6c0m",
+   "voz": "ingles",
+   "texto": "Living Together",
+   "fala": "Living Together",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "a47599f01s",
+   "voz": "claude",
+   "texto": "Vamos lembrar das regras da escola, de casa e do esporte!",
+   "fala": "Vamos lembrar das regras da escola, de casa e do esporte!",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "b5c6d49fg",
+   "voz": "ingles",
+   "texto": "Let's go!",
+   "fala": "Let's go!",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "744013b71p",
+   "voz": "narradora",
+   "texto": "Por que existem regras na escola, em casa e na rua?",
+   "fala": "Por que existem regras na escola, em casa e na rua?",
+   "pacotes": [
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "320e02431h",
+   "voz": "narradora",
+   "texto": "Para todo mundo conviver bem e ficar seguro",
+   "fala": "Para todo mundo conviver bem e ficar seguro",
+   "pacotes": [
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "f1cecf5d13",
+   "voz": "narradora",
+   "texto": "Para deixar as pessoas bravas",
+   "fala": "Para deixar as pessoas bravas",
+   "pacotes": [
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "80472b7710",
+   "voz": "narradora",
+   "texto": "Para ninguém poder brincar",
+   "fala": "Para ninguém poder brincar",
+   "pacotes": [
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "b7c52ab81k",
+   "voz": "narradora",
+   "texto": "O que PODEMOS fazer na escola? Toque em TODOS.",
+   "fala": "O que podemos fazer na escola? Toque em todos.",
+   "pacotes": [
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "efc17c35n",
+   "voz": "ingles",
+   "texto": "Raise your hand.",
+   "fala": "Raise your hand.",
+   "pacotes": [
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "8ff9e314p",
+   "voz": "ingles",
+   "texto": "Help your friends.",
+   "fala": "Help your friends.",
+   "pacotes": [
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "e4acd3b1o",
+   "voz": "ingles",
+   "texto": "Do your homework.",
+   "fala": "Do your homework.",
+   "pacotes": [
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "04986979p",
+   "voz": "ingles",
+   "texto": "Throw paper balls.",
+   "fala": "Throw paper balls.",
+   "pacotes": [
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "0515eb70q",
+   "voz": "narradora",
+   "texto": "O que quer dizer",
+   "fala": "O que quer dizer",
+   "pacotes": [
+    "ingles-i1",
+    "ingles-i3",
+    "ingles-i4",
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "38704839m",
+   "voz": "ingles",
+   "texto": "Raise your hand",
+   "fala": "Raise your hand",
+   "pacotes": [
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "ed42b60en",
+   "voz": "narradora",
+   "texto": "Levante a mão",
+   "fala": "Levante a mão",
+   "pacotes": [
+    "ingles-i1",
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "736c2d40m",
+   "voz": "narradora",
+   "texto": "Limpe a sala",
+   "fala": "Limpe a sala",
+   "pacotes": [
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "baabb391u",
+   "voz": "narradora",
+   "texto": "Guarde os brinquedos",
+   "fala": "Guarde os brinquedos",
+   "pacotes": [
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "98b8f2cdm",
+   "voz": "ingles",
+   "texto": "Throw a tantrum",
+   "fala": "Throw a tantrum",
+   "pacotes": [
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "ff68bfd1l",
+   "voz": "narradora",
+   "texto": "Fazer birra",
+   "fala": "Fazer birra",
+   "pacotes": [
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "a5256fe8k",
+   "voz": "narradora",
+   "texto": "Jogar bola",
+   "fala": "Jogar bola",
+   "pacotes": [
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "0eead6faq",
+   "voz": "narradora",
+   "texto": "Tirar um cochilo",
+   "fala": "Tirar um cochilo",
+   "pacotes": [
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "ddea1f861n",
+   "voz": "narradora",
+   "texto": "Separe nos baús! O que é bom fazer e o que não é?",
+   "fala": "Separe nos baús! O que é bom fazer e o que não é?",
+   "pacotes": [
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "d642b15c1x",
+   "voz": "narradora",
+   "texto": "Na escola, é legal desrespeitar os professores e os amigos.",
+   "fala": "Na escola, é legal desrespeitar os professores e os amigos.",
+   "pacotes": [
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "e7312ad11d",
+   "voz": "narradora",
+   "texto": "Ligue cada regra ao que ela quer dizer:",
+   "fala": "Ligue cada regra ao que ela quer dizer:",
+   "pacotes": [
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "23a9e4502l",
+   "voz": "narradora",
+   "texto": "Quais NÃO são regras boas no esporte? Toque em TODAS as que a gente NÃO deve fazer.",
+   "fala": "Quais não são regras boas no esporte? Toque em todas as que a gente não deve fazer.",
+   "pacotes": [
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "939790f3r",
+   "voz": "ingles",
+   "texto": "Cheer for your team.",
+   "fala": "Cheer for your team.",
+   "pacotes": [
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "c1c57828o",
+   "voz": "ingles",
+   "texto": "Play a fair game.",
+   "fala": "Play a fair game.",
+   "pacotes": [
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "6f35fc0ct",
+   "voz": "narradora",
+   "texto": "Torça pelo seu time",
+   "fala": "Torça pelo seu time",
+   "pacotes": [
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "c24a830dq",
+   "voz": "narradora",
+   "texto": "Grite com o time",
+   "fala": "Grite com o time",
+   "pacotes": [
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "78f46149m",
+   "voz": "narradora",
+   "texto": "Saia do time",
+   "fala": "Saia do time",
+   "pacotes": [
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "24dd9af21z",
+   "voz": "narradora",
+   "texto": "Respeitar a torcida do outro time é uma regra boa do esporte.",
+   "fala": "Respeitar a torcida do outro time é uma regra boa do esporte.",
+   "pacotes": [
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "003e43c2c",
+   "voz": "narradora",
+   "texto": "No",
+   "fala": "No",
+   "pacotes": [
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "8728a227g",
+   "voz": "ingles",
+   "texto": "dodgeball",
+   "fala": "dodgeball",
+   "pacotes": [
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "027f756012",
+   "voz": "narradora",
+   "texto": "(queimada), o que quer dizer",
+   "fala": "(queimada), o que quer dizer",
+   "pacotes": [
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "851f62e2l",
+   "voz": "ingles",
+   "texto": "Catch the ball",
+   "fala": "Catch the ball",
+   "pacotes": [
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "f3bfcaa2m",
+   "voz": "narradora",
+   "texto": "Pegue a bola",
+   "fala": "Pegue a bola",
+   "pacotes": [
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "5b1476eer",
+   "voz": "narradora",
+   "texto": "Não toque na bola",
+   "fala": "Não toque na bola",
+   "pacotes": [
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "e131f92en",
+   "voz": "narradora",
+   "texto": "Guarde a bola",
+   "fala": "Guarde a bola",
+   "pacotes": [
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "d45e67631b",
+   "voz": "narradora",
+   "texto": "No jogo: o que pode e o que não pode?",
+   "fala": "No jogo: o que pode e o que não pode?",
+   "pacotes": [
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "59e8cf5f1u",
+   "voz": "narradora",
+   "texto": "Monte a regra da sala tocando nos blocos na ordem certa:",
+   "fala": "Monte a regra da sala tocando nos blocos na ordem certa:",
+   "pacotes": [
+    "ingles-i1"
+   ]
+  },
+  {
+   "chave": "7dcb7141p",
+   "voz": "ingles",
+   "texto": "Here Comes the Sun",
+   "fala": "Here Comes the Sun",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "39f30d0bz",
+   "voz": "claude",
+   "texto": "O sol, os planetas e a arte!",
+   "fala": "O sol, os planetas e a arte!",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "6c70b3e0q",
+   "voz": "ingles",
+   "texto": "Here comes the sun!",
+   "fala": "Here comes the sun!",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "30814173o",
+   "voz": "narradora",
+   "texto": "O sol é o quê?",
+   "fala": "O sol é o quê?",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "7992e422m",
+   "voz": "narradora",
+   "texto": "Uma estrela:",
+   "fala": "Uma estrela:",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "9a8633bed",
+   "voz": "ingles",
+   "texto": "a star",
+   "fala": "a star",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "16703ddcl",
+   "voz": "narradora",
+   "texto": "Um planeta:",
+   "fala": "Um planeta:",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "3ce7bfacf",
+   "voz": "ingles",
+   "texto": "a planet",
+   "fala": "a planet",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "5ae2e8e6i",
+   "voz": "narradora",
+   "texto": "Uma lua:",
+   "fala": "Uma lua:",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "5fdf837bd",
+   "voz": "ingles",
+   "texto": "a moon",
+   "fala": "a moon",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "d0d5416ex",
+   "voz": "ingles",
+   "texto": "The sun is small and cold.",
+   "fala": "The sun is small and cold.",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "6c0e2a86z",
+   "voz": "narradora",
+   "texto": "(O sol é pequeno e frio.)",
+   "fala": "(O sol é pequeno e frio.)",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "0836bcff1c",
+   "voz": "narradora",
+   "texto": "O sol fica no centro do sistema solar:",
+   "fala": "O sol fica no centro do sistema solar:",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "ce6ba08623",
+   "voz": "narradora",
+   "texto": "Coloque os planetas na ordem, do mais perto do sol ao mais longe:",
+   "fala": "Coloque os planetas na ordem, do mais perto do sol ao mais longe:",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "ada1abd71b",
+   "voz": "narradora",
+   "texto": "Quantos planetas tem o sistema solar?",
+   "fala": "Quantos planetas tem o sistema solar?",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "7532e2f7l",
+   "voz": "narradora",
+   "texto": "8 planetas:",
+   "fala": "8 planetas:",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "2877b0dac",
+   "voz": "ingles",
+   "texto": "eight",
+   "fala": "eight",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "cb5d31a4l",
+   "voz": "narradora",
+   "texto": "5 planetas:",
+   "fala": "5 planetas:",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "e17c28dfb",
+   "voz": "ingles",
+   "texto": "five",
+   "fala": "five",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "088eede8m",
+   "voz": "narradora",
+   "texto": "10 planetas:",
+   "fala": "10 planetas:",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "b76b9856a",
+   "voz": "ingles",
+   "texto": "ten",
+   "fala": "ten",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "5fc80caai",
+   "voz": "narradora",
+   "texto": "A Terra,",
+   "fala": "A Terra,",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "6b0b559dx",
+   "voz": "narradora",
+   "texto": ", é o planeta número...",
+   "fala": ", é o planeta número...",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "0b47125715",
+   "voz": "narradora",
+   "texto": "3, o terceiro mais perto do sol",
+   "fala": "3, o terceiro mais perto do sol",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "efeccf42n",
+   "voz": "narradora",
+   "texto": "1, o primeiro",
+   "fala": "1, o primeiro",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "b87656f1l",
+   "voz": "narradora",
+   "texto": "8, o último",
+   "fala": "8, o último",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "ac883356t",
+   "voz": "narradora",
+   "texto": "A lua é um planeta.",
+   "fala": "A lua é um planeta.",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "3ff4cc6a1c",
+   "voz": "narradora",
+   "texto": "Qual planeta vem logo DEPOIS da Terra?",
+   "fala": "Qual planeta vem logo depois da Terra?",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "21da223d1l",
+   "voz": "narradora",
+   "texto": "O sol faz coisas boas e ruins. Separe nos baús!",
+   "fala": "O sol faz coisas boas e ruins. Separe nos baús!",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "ceb48ab514",
+   "voz": "narradora",
+   "texto": "Por que usamos protetor solar,",
+   "fala": "Por que usamos protetor solar,",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "e75ff44415",
+   "voz": "narradora",
+   "texto": "Porque ele protege a nossa pele",
+   "fala": "Porque ele protege a nossa pele",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "2b47fe2016",
+   "voz": "narradora",
+   "texto": "Porque ele deixa a pele colorida",
+   "fala": "Porque ele deixa a pele colorida",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "123e7c3410",
+   "voz": "narradora",
+   "texto": "Porque ele esquenta a pele",
+   "fala": "Porque ele esquenta a pele",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "d64e15941s",
+   "voz": "narradora",
+   "texto": "Só precisamos de protetor solar nos dias de sol forte.",
+   "fala": "Só precisamos de protetor solar nos dias de sol forte.",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "3f05248b1o",
+   "voz": "narradora",
+   "texto": "Os elementos da arte! Ligue cada figura à palavra:",
+   "fala": "Os elementos da arte! Ligue cada figura à palavra:",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "cd7ac2ab1j",
+   "voz": "narradora",
+   "texto": "Um círculo, um quadrado e um triângulo são...",
+   "fala": "Um círculo, um quadrado e um triângulo são...",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "752ee821d",
+   "voz": "ingles",
+   "texto": "Shapes",
+   "fala": "Shapes",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "cd5ba254e",
+   "voz": "ingles",
+   "texto": "Colours",
+   "fala": "Colours",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "9830eeaac",
+   "voz": "ingles",
+   "texto": "Lines",
+   "fala": "Lines",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "dbf96984r",
+   "voz": "narradora",
+   "texto": "O relógio de sol,",
+   "fala": "O relógio de sol,",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "4d71cec811",
+   "voz": "narradora",
+   "texto": ", mostra as horas usando...",
+   "fala": ", mostra as horas usando...",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "9096b846r",
+   "voz": "narradora",
+   "texto": "O sol e a sombra:",
+   "fala": "O sol e a sombra:",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "e718277cj",
+   "voz": "narradora",
+   "texto": "Uma pilha",
+   "fala": "Uma pilha",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "f1185abcj",
+   "voz": "narradora",
+   "texto": "O celular",
+   "fala": "O celular",
+   "pacotes": [
+    "ingles-i2"
+   ]
+  },
+  {
+   "chave": "faab833bx",
+   "voz": "ingles",
+   "texto": "I Brush My Teeth Every Day",
+   "fala": "I Brush My Teeth Every Day",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "9326a235t",
+   "voz": "claude",
+   "texto": "Vamos cantar a rotina!",
+   "fala": "Vamos cantar a rotina!",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "89919fd010",
+   "voz": "ingles",
+   "texto": "I get up, I brush my teeth...",
+   "fala": "I get up, I brush my teeth...",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "020aaf4f19",
+   "voz": "narradora",
+   "texto": "Ligue cada figura à ação em inglês:",
+   "fala": "Ligue cada figura à ação em inglês:",
+   "pacotes": [
+    "ingles-i3"
+   ]
+  },
+  {
+   "chave": "3a0b97901m",
+   "voz": "narradora",
+   "texto": "O menino está escovando os dentes . Como se diz?",
+   "fala": "O menino está escovando os dentes . Como se diz?",
+   "pacotes": [
+    "ingles-i3"
+   ]
+  },
+  {
+   "chave": "8630fd74o",
+   "voz": "ingles",
+   "texto": "I brush my teeth.",
+   "fala": "I brush my teeth.",
+   "pacotes": [
+    "ingles-i3"
+   ]
+  },
+  {
+   "chave": "63126b08j",
+   "voz": "ingles",
+   "texto": "I go to bed.",
+   "fala": "I go to bed.",
+   "pacotes": [
+    "ingles-i3"
+   ]
+  },
+  {
+   "chave": "8d55e0cfg",
+   "voz": "ingles",
+   "texto": "I get up.",
+   "fala": "I get up.",
+   "pacotes": [
+    "ingles-i3"
+   ]
+  },
+  {
+   "chave": "2c1fbc761z",
+   "voz": "narradora",
+   "texto": "O despertador tocou e o menino sentou na cama. Qual é a ação?",
+   "fala": "O despertador tocou e o menino sentou na cama. Qual é a ação?",
+   "pacotes": [
+    "ingles-i3"
+   ]
+  },
+  {
+   "chave": "6cc1a5f31x",
+   "voz": "narradora",
+   "texto": "O menino está de mochila, indo para a escola . Como se diz?",
+   "fala": "O menino está de mochila, indo para a escola . Como se diz?",
+   "pacotes": [
+    "ingles-i3"
+   ]
+  },
+  {
+   "chave": "d64a8772l",
+   "voz": "narradora",
+   "texto": "Como se diz",
+   "fala": "Como se diz",
+   "pacotes": [
+    "ingles-i3",
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "0f54954fn",
+   "voz": "narradora",
+   "texto": "em português?",
+   "fala": "em português?",
+   "pacotes": [
+    "ingles-i3",
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "9d75d358l",
+   "voz": "narradora",
+   "texto": "Tomar banho",
+   "fala": "Tomar banho",
+   "pacotes": [
+    "ingles-i3"
+   ]
+  },
+  {
+   "chave": "e63b1905k",
+   "voz": "narradora",
+   "texto": "Tomar café",
+   "fala": "Tomar café",
+   "pacotes": [
+    "ingles-i3"
+   ]
+  },
+  {
+   "chave": "658368f1j",
+   "voz": "narradora",
+   "texto": "Ir dormir",
+   "fala": "Ir dormir",
+   "pacotes": [
+    "ingles-i3"
+   ]
+  },
+  {
+   "chave": "d382ea6b1l",
+   "voz": "narradora",
+   "texto": "A pessoa está dormindo na cama . Qual é a ação?",
+   "fala": "A pessoa está dormindo na cama . Qual é a ação?",
+   "pacotes": [
+    "ingles-i3"
+   ]
+  },
+  {
+   "chave": "c6c75b27q",
+   "voz": "narradora",
+   "texto": "Coloque a música",
+   "fala": "Coloque a música",
+   "pacotes": [
+    "ingles-i3"
+   ]
+  },
+  {
+   "chave": "54874685h",
+   "voz": "ingles",
+   "texto": "My Routine",
+   "fala": "My Routine",
+   "pacotes": [
+    "ingles-i3"
+   ]
+  },
+  {
+   "chave": "3c664825j",
+   "voz": "narradora",
+   "texto": "na ordem:",
+   "fala": "na ordem:",
+   "pacotes": [
+    "ingles-i3"
+   ]
+  },
+  {
+   "chave": "130abd531j",
+   "voz": "narradora",
+   "texto": "Qual frase quer dizer \"Eu não nado todo dia\"?",
+   "fala": "Qual frase quer dizer \"Eu não nado todo dia\"?",
+   "pacotes": [
+    "ingles-i3"
+   ]
+  },
+  {
+   "chave": "a6919477o",
+   "voz": "ingles",
+   "texto": "I swim every day.",
+   "fala": "I swim every day.",
+   "pacotes": [
+    "ingles-i3"
+   ]
+  },
+  {
+   "chave": "2a715da1s",
+   "voz": "ingles",
+   "texto": "I don't go to school.",
+   "fala": "I don't go to school.",
+   "pacotes": [
+    "ingles-i3"
+   ]
+  },
+  {
+   "chave": "25bb0104g",
+   "voz": "ingles",
+   "texto": "every day",
+   "fala": "every day",
+   "pacotes": [
+    "ingles-i3"
+   ]
+  },
+  {
+   "chave": "04b141fbi",
+   "voz": "narradora",
+   "texto": "Todo dia",
+   "fala": "Todo dia",
+   "pacotes": [
+    "ingles-i3"
+   ]
+  },
+  {
+   "chave": "deca4712f",
+   "voz": "narradora",
+   "texto": "Nunca",
+   "fala": "Nunca",
+   "pacotes": [
+    "ingles-i3"
+   ]
+  },
+  {
+   "chave": "63bc73d1g",
+   "voz": "narradora",
+   "texto": "Amanhã",
+   "fala": "Amanhã",
+   "pacotes": [
+    "ingles-i3"
+   ]
+  },
+  {
+   "chave": "f7483b2d12",
+   "voz": "narradora",
+   "texto": "Separe nos baús: sim ou não?",
+   "fala": "Separe nos baús: sim ou não?",
+   "pacotes": [
+    "ingles-i3"
+   ]
+  },
+  {
+   "chave": "cc641afby",
+   "voz": "narradora",
+   "texto": "Na música, o menino diz:",
+   "fala": "Na música, o menino diz:",
+   "pacotes": [
+    "ingles-i3"
+   ]
+  },
+  {
+   "chave": "bcb0fb0f12",
+   "voz": "ingles",
+   "texto": "I don't go to school every day!",
+   "fala": "I don't go to school every day!",
+   "pacotes": [
+    "ingles-i3"
+   ]
+  },
+  {
+   "chave": "8dac839a1r",
+   "voz": "narradora",
+   "texto": "Quebra-cabeça! As letras T, G, E formam qual palavra?",
+   "fala": "Quebra-cabeça! As letras T, G, E formam qual palavra?",
+   "pacotes": [
+    "ingles-i3"
+   ]
+  },
+  {
+   "chave": "afdeac59a",
+   "voz": "ingles",
+   "texto": "GET",
+   "fala": "get",
+   "pacotes": [
+    "ingles-i3"
+   ]
+  },
+  {
+   "chave": "4522baa1a",
+   "voz": "ingles",
+   "texto": "TEG",
+   "fala": "teg",
+   "pacotes": [
+    "ingles-i3"
+   ]
+  },
+  {
+   "chave": "7b0329c3a",
+   "voz": "ingles",
+   "texto": "GTE",
+   "fala": "gte",
+   "pacotes": [
+    "ingles-i3"
+   ]
+  },
+  {
+   "chave": "ea7cbea410",
+   "voz": "narradora",
+   "texto": "Jogo da memória da rotina!",
+   "fala": "Jogo da memória da rotina!",
+   "pacotes": [
+    "ingles-i3"
+   ]
+  },
+  {
+   "chave": "78d15aafn",
+   "voz": "ingles",
+   "texto": "A Day in My Life",
+   "fala": "A Day in My Life",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "73fa83c020",
+   "voz": "claude",
+   "texto": "Manhã, tarde e noite! E a história do David, que acordou cansado.",
+   "fala": "Manhã, tarde e noite! E a história do David, que acordou cansado.",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "cfb5504716",
+   "voz": "narradora",
+   "texto": "Ligue cada figura à hora do dia:",
+   "fala": "Ligue cada figura à hora do dia:",
+   "pacotes": [
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "db2ab45914",
+   "voz": "narradora",
+   "texto": "Como se diz \"manhã\" em inglês?",
+   "fala": "Como se diz \"manhã\" em inglês?",
+   "pacotes": [
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "c6028d19e",
+   "voz": "ingles",
+   "texto": "Morning",
+   "fala": "Morning",
+   "pacotes": [
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "034afb05g",
+   "voz": "ingles",
+   "texto": "Afternoon",
+   "fala": "Afternoon",
+   "pacotes": [
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "63b39567c",
+   "voz": "ingles",
+   "texto": "Night",
+   "fala": "Night",
+   "pacotes": [
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "dd7b454du",
+   "voz": "narradora",
+   "texto": "O comecinho da noite",
+   "fala": "O comecinho da noite",
+   "pacotes": [
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "356059eeq",
+   "voz": "narradora",
+   "texto": "A manhã bem cedo",
+   "fala": "A manhã bem cedo",
+   "pacotes": [
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "c191cee8q",
+   "voz": "narradora",
+   "texto": "A hora do almoço",
+   "fala": "A hora do almoço",
+   "pacotes": [
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "6591d64517",
+   "voz": "narradora",
+   "texto": "Coloque as horas do dia na ordem:",
+   "fala": "Coloque as horas do dia na ordem:",
+   "pacotes": [
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "0a1e4a7018",
+   "voz": "narradora",
+   "texto": "A gente toma café da manhã quando?",
+   "fala": "A gente toma café da manhã quando?",
+   "pacotes": [
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "98a87237l",
+   "voz": "ingles",
+   "texto": "In the morning",
+   "fala": "In the morning",
+   "pacotes": [
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "2ed08680f",
+   "voz": "ingles",
+   "texto": "At night",
+   "fala": "At night",
+   "pacotes": [
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "a12788cfn",
+   "voz": "ingles",
+   "texto": "In the afternoon",
+   "fala": "In the afternoon",
+   "pacotes": [
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "f2d2bec510",
+   "voz": "narradora",
+   "texto": "A gente vai dormir quando?",
+   "fala": "A gente vai dormir quando?",
+   "pacotes": [
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "bb1bac15y",
+   "voz": "narradora",
+   "texto": "Na história, o David diz",
+   "fala": "Na história, o David diz",
+   "pacotes": [
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "ed7e1cecr",
+   "voz": "ingles",
+   "texto": "Mum, I'm tired today",
+   "fala": "Mum, I'm tired today",
+   "pacotes": [
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "1e8e95f1q",
+   "voz": "narradora",
+   "texto": ". Como ele está?",
+   "fala": ". Como ele está?",
+   "pacotes": [
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "175eeeb0h",
+   "voz": "narradora",
+   "texto": "Cansado",
+   "fala": "Cansado",
+   "pacotes": [
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "81cedd76h",
+   "voz": "narradora",
+   "texto": "Animado",
+   "fala": "Animado",
+   "pacotes": [
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "436a82abf",
+   "voz": "narradora",
+   "texto": "Bravo",
+   "fala": "Bravo",
+   "pacotes": [
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "c99836af1k",
+   "voz": "narradora",
+   "texto": "O que o David faz na história? Toque em TODOS.",
+   "fala": "O que o David faz na história? Toque em todos.",
+   "pacotes": [
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "819eea4ci",
+   "voz": "ingles",
+   "texto": "Do homework",
+   "fala": "Do homework",
+   "pacotes": [
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "a512850di",
+   "voz": "ingles",
+   "texto": "Read a book",
+   "fala": "Read a book",
+   "pacotes": [
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "2c68bc6di",
+   "voz": "ingles",
+   "texto": "Watch films",
+   "fala": "Watch films",
+   "pacotes": [
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "c35a066c1b",
+   "voz": "narradora",
+   "texto": "Quando o David faz cada coisa? Ligue:",
+   "fala": "Quando o David faz cada coisa? Ligue:",
+   "pacotes": [
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "9b8bed81f",
+   "voz": "ingles",
+   "texto": "homework",
+   "fala": "homework",
+   "pacotes": [
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "6d1e7034n",
+   "voz": "narradora",
+   "texto": "Lição de casa",
+   "fala": "Lição de casa",
+   "pacotes": [
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "6bde79d5j",
+   "voz": "narradora",
+   "texto": "Casa nova",
+   "fala": "Casa nova",
+   "pacotes": [
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "aa21a89eg",
+   "voz": "narradora",
+   "texto": "Almoço",
+   "fala": "Almoço",
+   "pacotes": [
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "bc9c44bes",
+   "voz": "narradora",
+   "texto": "Um amigo pergunta:",
+   "fala": "Um amigo pergunta:",
+   "pacotes": [
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "b019217b18",
+   "voz": "ingles",
+   "texto": "Do you go to school in the afternoon?",
+   "fala": "Do you go to school in the afternoon?",
+   "pacotes": [
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "d531f1b81f",
+   "voz": "narradora",
+   "texto": "Você estuda à tarde. O que você responde?",
+   "fala": "Você estuda à tarde. O que você responde?",
+   "pacotes": [
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "137482e1i",
+   "voz": "ingles",
+   "texto": "No, I don't",
+   "fala": "No, I don't",
+   "pacotes": [
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "83ce9e0714",
+   "voz": "narradora",
+   "texto": "quer dizer \"Não, eu não faço\".",
+   "fala": "quer dizer \"Não, eu não faço\".",
+   "pacotes": [
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "07e943f1x",
+   "voz": "narradora",
+   "texto": "Monte a frase do David:",
+   "fala": "Monte a frase do David:",
+   "pacotes": [
+    "ingles-i4"
+   ]
+  },
+  {
+   "chave": "d874d9ee13",
+   "voz": "ingles",
+   "texto": "If You're Happy, Clap Your Hands",
+   "fala": "If You're Happy, Clap Your Hands",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "c63eeb13z",
+   "voz": "claude",
+   "texto": "Vamos falar dos sentimentos!",
+   "fala": "Vamos falar dos sentimentos!",
+   "pacotes": [
+    "ingles-extra"
+   ]
+  },
+  {
+   "chave": "ba5f94211h",
+   "voz": "narradora",
+   "texto": "Ligue cada carinha ao sentimento em inglês:",
+   "fala": "Ligue cada carinha ao sentimento em inglês:",
+   "pacotes": [
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "6e8ec3a3i",
+   "voz": "narradora",
+   "texto": "Com sono",
+   "fala": "Com sono",
+   "pacotes": [
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "56be8d3bi",
+   "voz": "narradora",
+   "texto": "Com fome",
+   "fala": "Com fome",
+   "pacotes": [
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "ad0e8152i",
+   "voz": "narradora",
+   "texto": "Com frio",
+   "fala": "Com frio",
+   "pacotes": [
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "5d62622328",
+   "voz": "narradora",
+   "texto": "A menina está com a mão no rosto, sem nada para fazer . Como ela está?",
+   "fala": "A menina está com a mão no rosto, sem nada para fazer . Como ela está?",
+   "pacotes": [
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "0ed299d725",
+   "voz": "narradora",
+   "texto": "A menina está de braços para cima, com um sorrisão . Como ela está?",
+   "fala": "A menina está de braços para cima, com um sorrisão . Como ela está?",
+   "pacotes": [
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "8e7fa5ed20",
+   "voz": "narradora",
+   "texto": "A menina está brava, soltando fumacinha . Qual é o sentimento?",
+   "fala": "A menina está brava, soltando fumacinha . Qual é o sentimento?",
+   "pacotes": [
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "d5c64c301e",
+   "voz": "narradora",
+   "texto": "O menino está bocejando . Como ele está?",
+   "fala": "O menino está bocejando . Como ele está?",
+   "pacotes": [
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "a95ebe8aj",
+   "voz": "ingles",
+   "texto": "He's sleepy.",
+   "fala": "He's sleepy.",
+   "pacotes": [
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "5eeb5d8fi",
+   "voz": "ingles",
+   "texto": "He's angry.",
+   "fala": "He's angry.",
+   "pacotes": [
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "f13dede915",
+   "voz": "narradora",
+   "texto": "Separe os sentimentos nos baús!",
+   "fala": "Separe os sentimentos nos baús!",
+   "pacotes": [
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "ebfe1917k",
+   "voz": "narradora",
+   "texto": "Na música:",
+   "fala": "Na música:",
+   "pacotes": [
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "a9573ae9s",
+   "voz": "narradora",
+   "texto": "O que a gente faz?",
+   "fala": "O que a gente faz?",
+   "pacotes": [
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "8dc8411dl",
+   "voz": "narradora",
+   "texto": "Bate palmas",
+   "fala": "Bate palmas",
+   "pacotes": [
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "dc94ac1dj",
+   "voz": "narradora",
+   "texto": "Bate o pé",
+   "fala": "Bate o pé",
+   "pacotes": [
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "9e21d030f",
+   "voz": "narradora",
+   "texto": "Dorme",
+   "fala": "Dorme",
+   "pacotes": [
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "a7a3d057m",
+   "voz": "ingles",
+   "texto": "stamp your foot",
+   "fala": "stamp your foot",
+   "pacotes": [
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "b15a9241j",
+   "voz": "narradora",
+   "texto": "Bata o pé",
+   "fala": "Bata o pé",
+   "pacotes": [
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "62aca719l",
+   "voz": "narradora",
+   "texto": "Bata palmas",
+   "fala": "Bata palmas",
+   "pacotes": [
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "724a2791s",
+   "voz": "narradora",
+   "texto": "quer dizer triste.",
+   "fala": "quer dizer triste.",
+   "pacotes": [
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "15fd912ep",
+   "voz": "narradora",
+   "texto": "Alguém pergunta",
+   "fala": "Alguém pergunta",
+   "pacotes": [
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "45248bc318",
+   "voz": "narradora",
+   "texto": "e você está feliz. O que você diz?",
+   "fala": "e você está feliz. O que você diz?",
+   "pacotes": [
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "a65f9138f",
+   "voz": "ingles",
+   "texto": "I'm sad.",
+   "fala": "I'm sad.",
+   "pacotes": [
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "84fe2e33h",
+   "voz": "ingles",
+   "texto": "I'm angry.",
+   "fala": "I'm angry.",
+   "pacotes": [
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "5b0690281u",
+   "voz": "narradora",
+   "texto": "O tempo, sol ou chuva, pode mudar como a gente se sente.",
+   "fala": "O tempo, sol ou chuva, pode mudar como a gente se sente.",
+   "pacotes": [
+    "ingles-i5"
+   ]
+  },
+  {
+   "chave": "f3b6877b16",
+   "voz": "narradora",
+   "texto": "Jogo da memória dos sentimentos!",
+   "fala": "Jogo da memória dos sentimentos!",
+   "pacotes": [
+    "ingles-i5"
    ]
   }
  ]

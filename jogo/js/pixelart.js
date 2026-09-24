@@ -495,6 +495,14 @@
     laco:   { linhas: ['PP.PP', 'PPYPP', 'P...P'], paleta: { P: '#ff4f9a', Y: '#ffd1e6' }, ancora: 'orelha', dx: -3, dy: 1 },
     coroa:  { linhas: ['Y.Y.Y', 'YYYYY', 'YRYBY'], paleta: { Y: '#ffd34d', R: '#ff5c8a', B: '#6fb8ff' }, ancora: 'cabeca', dx: -3, dy: -1 },
     oculos: { linhas: ['R.R', 'RRR', '.R.'], paleta: { R: '#ff3b7f' }, ancora: 'olho', dx: -1, dy: -1 },
+    // acessórios das provas bimestrais (js/provas/*.js)
+    // (com contorno próprio 'k' para não sumir no meio da crina colorida)
+    'tiara-arco-iris': { linhas: ['..kpk..', 'kykpkyk', 'kyyyyyk', 'kroGbvk'], paleta: { k: '#3a2446', y: '#ffd34d', p: '#ff7eb6', r: '#ff6b8a', o: '#ffb020', G: '#6fdc8c', b: '#5fb4ff', v: '#a66bff' }, ancora: 'cabeca', dx: -5, dy: -2 },
+    'pena-magica': { linhas: ['kk...', 'kbk..', 'klbk.', '.klbk', '..kbk', '...ky'], paleta: { k: '#3a2446', b: '#4a9dff', l: '#e6f3ff', y: '#ffd34d' }, ancora: 'orelha', dx: -4, dy: 0 },
+    'laco-vovo': { linhas: ['kk...kk', 'kLk.kLk', 'kLwDwLk', 'kLkDkLk', 'kk...kk'], paleta: { k: '#3a2446', L: '#b58cff', w: '#ffffff', D: '#7c5cff' }, ancora: 'orelha', dx: -4, dy: 1 },
+    'coroa-big-ben': { linhas: ['...k...', '..kbk..', '.kwhwk.', 'kykkkyk', 'kyyryyk', 'kkkkkkk'], paleta: { k: '#3a2446', y: '#ffd34d', b: '#4a6cd4', w: '#ffffff', h: '#ff5c8a', r: '#5fb4ff' }, ancora: 'cabeca', dx: -3, dy: -5 },
+    'oculos-de-sol': { linhas: ['pppppppp', 'pkkppkkp', 'pkgppkgp', '.pp..pp.'], paleta: { k: '#3a2446', p: '#ff7eb6', g: '#6a5a8a' }, ancora: 'olho', dx: -4, dy: -1 },
+    'lacinho-estrela': { linhas: ['kk...kk', 'kbk.kbk', 'kbkykbk', 'kbyyybk', 'kbkykbk', 'kk...kk'], paleta: { k: '#3a2446', b: '#4a9dff', y: '#ffe066' }, ancora: 'orelha', dx: -4, dy: 1 },
   };
   PA.ENFEITES_MONTARIA = ENFEITES;
 
@@ -972,6 +980,7 @@
     return cache['icone|' + chave];
   }
   PA.iconeMenu = function (id) { return iconeDesenhado('menu:' + id); };
+  PA.iconeDesenho = iconeDesenhado;   // qualquer chave de js/icones.js (ex.: 'doc:rg', 'acessorio:pena-magica')
 
   /* ---------- utilidades para a interface (DOM) ---------- */
   // devolve um <canvas> ampliado com pixels nítidos para usar em cartões

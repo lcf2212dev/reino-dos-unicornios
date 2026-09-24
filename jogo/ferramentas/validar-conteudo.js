@@ -14,15 +14,45 @@ fs.readdirSync(pastaMaterias).filter((f) => f.endsWith('.js')).forEach((f) => {
   vm.runInContext(fs.readFileSync(path.join(pastaMaterias, f), 'utf8'), ctx, { filename: f });
 });
 
+const pastaProvas = path.join(raiz, 'js/provas');
+fs.readdirSync(pastaProvas).filter((f) => f.endsWith('.js')).forEach((f) => {
+  vm.runInContext(fs.readFileSync(path.join(pastaProvas, f), 'utf8'), ctx, { filename: f });
+});
+
 const Reino = ctx.Reino;
 const erros = [];
 const avisos = [];
 const ids = new Set();
-const TIPOS = ['escolha', 'vf', 'varias', 'ligar', 'ordenar', 'frase', 'separar', 'memoria'];
+const TIPOS = ['escolha', 'vf', 'varias', 'ligar', 'ordenar', 'frase', 'separar', 'memoria', 'vfLista', 'completar', 'desenho'];
+const REQUISITOS = ['linhas', 'formas', 'cores'];
 
 function checar(cond, msg) { if (!cond) erros.push(msg); }
 
+// trechos em inglês: «...» balanceado e sem aninhar, em qualquer texto
+function checarIngles(obj, onde) {
+  if (typeof obj === 'string') {
+    let aberto = false;
+    for (const ch of obj) {
+      if (ch === '«') { if (aberto) { erros.push(`${onde}: «» aninhado em "${obj}"`); return; } aberto = true; }
+      else if (ch === '»') { if (!aberto) { erros.push(`${onde}: » sem « em "${obj}"`); return; } aberto = false; }
+    }
+    if (aberto) erros.push(`${onde}: « sem » em "${obj}"`);
+    if (/«\s*»/.test(obj)) erros.push(`${onde}: «» vazio em "${obj}"`);
+  } else if (Array.isArray(obj)) obj.forEach((v) => checarIngles(v, onde));
+  else if (obj && typeof obj === 'object') Object.keys(obj).forEach((k) => checarIngles(obj[k], obj.id ? obj.id : onde));
+}
+// campos novos: livre (varias/completar), rotulos (vfLista), desenho
+function checarNovos(d) {
+  if (d.livre !== undefined) checar(d.livre === true && ['varias', 'completar'].includes(d.tipo), `${d.id}: "livre" só vale true em varias/completar`);
+  if (d.rotulos !== undefined) checar(d.tipo === 'vfLista' && Array.isArray(d.rotulos) && d.rotulos.length === 2 && d.rotulos.every((r) => typeof r === 'string' && r), `${d.id}: rotulos deve ser ['T', 'F'] (2 textos) num vfLista`);
+  if (d.tipo === 'desenho') {
+    checar(d.pergunta, `${d.id}: desenho sem pergunta`);
+    checar(Array.isArray(d.requisitos) && d.requisitos.length > 0 && d.requisitos.every((r) => REQUISITOS.includes(r)), `${d.id}: requisitos do desenho devem ser de ${REQUISITOS.join('/')}`);
+  }
+}
+
 Reino.materias.forEach((m) => {
+  checarIngles(m, m.id);
   const livro = new Set((m.livro || []).map((l) => l.id));
   checar(m.salas && m.salas.length > 0, `${m.id}: sem salas`);
   const valorSala = Reino.config.valorPorMateria / m.salas.length;
@@ -38,6 +68,7 @@ Reino.materias.forEach((m) => {
       checar(TIPOS.includes(d.tipo), `${d.id}: tipo desconhecido ${d.tipo}`);
       checar(typeof d.explica === 'string' && d.explica.length > 10, `${d.id}: sem explicação`);
       checar(livro.has(d.livro), `${d.id}: cartão do livro "${d.livro}" não existe`);
+      checarNovos(d);
       if (d.tipo === 'escolha') {
         checar(Array.isArray(d.opcoes) && d.opcoes.length >= 2, `${d.id}: poucas opções`);
         checar(Number.isInteger(d.certa) && d.certa >= 0 && d.certa < d.opcoes.length, `${d.id}: índice certo inválido`);
@@ -45,12 +76,14 @@ Reino.materias.forEach((m) => {
         checar(new Set(textos).size === textos.length, `${d.id}: opções repetidas`);
       }
       if (d.tipo === 'vf') checar(typeof d.certo === 'boolean' && d.afirmacao, `${d.id}: V/F incompleto`);
-      if (d.tipo === 'varias') {
+      if (d.tipo === 'varias' && !d.livre) {
         const ok = d.opcoes.filter((o) => o.ok).length;
         checar(ok >= 1, `${d.id}: nenhuma opção certa`);
         if (ok === d.opcoes.length) avisos.push(`${d.id}: todas as opções são certas`);
       }
-      if (d.tipo === 'ligar') checar(d.pares.length >= 2 && d.pares.every((p) => p[0].t && p[1].t), `${d.id}: pares inválidos`);
+      if (d.tipo === 'ligar') checar(d.pares.length >= 2 && d.pares.every((p) => (p[0].t || (p[0].img && p[0].alt)) && p[1].t), `${d.id}: pares inválidos`);
+      if (d.tipo === 'completar') checar(d.frases.every((f) => (d.livre || (Number.isInteger(f.certa) && f.certa < d.palavras.length)) && typeof f.antes === 'string' && typeof f.depois === 'string'), `${d.id}: frases inválidas`);
+      if (d.tipo === 'vfLista') checar(d.itens.length >= 2 && d.itens.every((i) => i.t && typeof i.v === 'boolean'), `${d.id}: V/F inválido`);
       if (d.tipo === 'ordenar') checar(d.itens.length >= 3, `${d.id}: poucos itens para ordenar`);
       if (d.tipo === 'frase') checar(d.blocos.length >= 3, `${d.id}: poucos blocos`);
       if (d.tipo === 'separar') checar(d.itens.every((i) => i.g === 0 || i.g === 1) && d.grupos.length === 2, `${d.id}: separar inválido`);
@@ -70,9 +103,49 @@ Reino.materias.forEach((m) => {
     checar(u.cores && u.cores.corpo && Array.isArray(u.cores.crina), `${u.id}: cores incompletas`);
     checar(u.frase, `${u.id}: sem frase`);
   });
-  const treinaveis = m.salas.flatMap((s) => s.desafios).filter((d) => ['escolha', 'vf', 'varias'].includes(d.tipo)).length;
+  const treinaveis = m.salas.flatMap((s) => s.desafios).filter((d) => ['escolha', 'vf', 'varias'].includes(d.tipo) && !d.livre).length;
   checar(treinaveis >= Reino.config.perguntasTreino, `${m.id}: só ${treinaveis} perguntas para o treino`);
   console.log(`✔ ${m.nome}: ${m.salas.length} salas, ${m.salas.reduce((t, s) => t + s.desafios.length, 0)} desafios, ${treinaveis} para o treino, ${(m.livro || []).length} cartões no livro, ${unis.length} unicórnios, R$${valorSala.toFixed(2)} por sala`);
+});
+
+// provas bimestrais (Escola do Reino)
+const icones = { window: {} };
+vm.runInNewContext(fs.readFileSync(path.join(raiz, 'js/icones.js'), 'utf8'), icones);
+const pixelart = fs.readFileSync(path.join(raiz, 'js/pixelart.js'), 'utf8');
+Reino.provas.forEach((pv) => {
+  const m = Reino.materia(pv.materiaId);
+  checar(m, `${pv.id}: matéria ${pv.materiaId} não existe`);
+  const livro = new Set(((m && m.livro) || []).map((l) => l.id));
+  ['lendario', 'raro', 'comum'].forEach((r) => {
+    const a = pv.acessorios && pv.acessorios[r];
+    checar(a && a.id && a.nome, `${pv.id}: falta acessório ${r}`);
+    if (!a) return;
+    checar(!ids.has(a.id), `ID repetido: ${a.id}`);
+    ids.add(a.id);
+    checar(icones.window.ICONES['acessorio:' + a.id], `${a.id}: falta o ícone "acessorio:${a.id}" em js/icones.js`);
+    checar(pixelart.includes(`'${a.id}':`), `${a.id}: falta o desenho no unicórnio (ENFEITES em js/pixelart.js)`);
+  });
+  checarIngles(pv, pv.id);
+  pv.questoes.forEach((d) => {
+    checarNovos(d);
+    checar(!ids.has(d.id), `ID repetido: ${d.id}`);
+    ids.add(d.id);
+    checar(TIPOS.includes(d.tipo), `${d.id}: tipo desconhecido ${d.tipo}`);
+    checar(typeof d.explica === 'string' && d.explica.length > 10, `${d.id}: sem explicação`);
+    checar(livro.has(d.livro), `${d.id}: cartão do livro "${d.livro}" não existe`);
+    if (d.tipo === 'escolha') checar(Number.isInteger(d.certa) && d.certa >= 0 && d.certa < d.opcoes.length, `${d.id}: índice certo inválido`);
+    if (d.tipo === 'varias' && !d.livre) checar(d.opcoes.some((o) => o.ok), `${d.id}: nenhuma opção certa`);
+    if (d.tipo === 'ligar') {
+      checar(d.pares.every((p) => (p[0].t || (p[0].img && p[0].alt)) && p[1].t), `${d.id}: pares inválidos`);
+      d.pares.forEach((p) => { if (p[0].img) checar(icones.window.ICONES[p[0].img], `${d.id}: falta o desenho "${p[0].img}" em js/icones.js`); });
+      if (d.direita) checar([...d.direita].sort().join() === d.pares.map((_, i) => i).join(), `${d.id}: ordem da direita inválida`);
+    }
+    if (d.tipo === 'vfLista') checar(d.itens.length >= 2 && d.itens.every((i) => i.t && typeof i.v === 'boolean'), `${d.id}: V/F inválido`);
+    if (d.tipo === 'completar') checar(d.frases.every((f) => (d.livre || (Number.isInteger(f.certa) && f.certa < d.palavras.length)) && typeof f.antes === 'string' && typeof f.depois === 'string'), `${d.id}: frases inválidas`);
+    if (d.tipo === 'ordenar') checar(d.itens.length >= 3, `${d.id}: poucos itens para ordenar`);
+    if (d.tipo === 'frase') checar(d.blocos.length >= 3, `${d.id}: poucos blocos`);
+  });
+  console.log(`✔ ${pv.nome} (${pv.bimestre}): ${pv.questoes.length} questões, acessórios ${pv.acessorios.lendario.nome} / ${pv.acessorios.raro.nome} / ${pv.acessorios.comum.nome}`);
 });
 
 // emoji de matéria sem desenho em js/icones.js aparece como emoji reduzido (feio): desenhar antes de publicar
@@ -81,8 +154,11 @@ Reino.materias.forEach((m) => {
   vm.runInNewContext(fs.readFileSync(path.join(raiz, 'js/icones.js'), 'utf8'), ic);
   const RE = /(\p{RI}\p{RI}|\p{Extended_Pictographic}(?:\uFE0F|\uFE0E)?(?:\u200D\p{Extended_Pictographic}(?:\uFE0F|\uFE0E)?)*)/gu;
   const semDesenho = new Set();
-  fs.readdirSync(pastaMaterias).filter((f) => f.endsWith('.js')).forEach((f) => {
-    for (const m of fs.readFileSync(path.join(pastaMaterias, f), 'utf8').matchAll(RE)) {
+  const arquivos = fs.readdirSync(pastaMaterias).filter((f) => f.endsWith('.js')).map((f) => path.join(pastaMaterias, f))
+    .concat(fs.readdirSync(pastaProvas).filter((f) => f.endsWith('.js')).map((f) => path.join(pastaProvas, f)))
+    .concat(['js/provas.js', 'js/falas.js', 'js/ui.js'].map((f) => path.join(raiz, f)));
+  arquivos.forEach((f) => {
+    for (const m of fs.readFileSync(f, 'utf8').matchAll(RE)) {
       const k = m[0].replace(/\uFE0F/g, '');
       if (!ic.window.ICONES[k]) semDesenho.add(k);
     }

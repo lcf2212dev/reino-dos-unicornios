@@ -70,9 +70,13 @@
     var m = def.materiaId ? Reino.materia(def.materiaId) : null;
     var sala = m && def.sala ? m.salas.find(function (s) { return s.id === def.sala; }) : null;
     if (def.raridade === 'comum' && sala) return 'Conclua a sala "' + sala.nome + '".';
-    if (def.raridade === 'raro' && sala) return 'Faça a sala "' + sala.nome + '" com tudo certo de primeira e sem pressa.';
-    if (def.raridade === 'epico' && def.treino === 'ouro') return 'Ganhe OURO no Treino da Medalha de ' + (m ? m.nome : '') + '.';
-    if (def.raridade === 'epico' && def.treino === 'perfeito') return 'Acerte TODAS no Treino da Medalha de ' + (m ? m.nome : '') + ', revisando com calma.';
+    var P = Reino.Progresso;
+    var faltam = P && !P.temUni(def.id) ? P.faltamPersistencia(def) : null;
+    var resto = function () { return faltam ? ' (' + (faltam === 1 ? 'falta 1' : 'faltam ' + faltam) + ')' : ''; };
+    var pers = Reino.config.persistencia;
+    if (def.raridade === 'raro' && sala) return 'Faça a sala "' + sala.nome + '" com tudo certo de primeira e com calma, ou jogue a sala ' + pers.sala + ' vezes' + resto() + '. Treinar também vale!';
+    if (def.raridade === 'epico' && def.treino === 'ouro') return 'Ganhe OURO no Treino da Medalha de ' + (m ? m.nome : '') + ', ou termine esse treino ' + pers.treinoOuro + ' vezes' + resto() + '. Treinar também vale!';
+    if (def.raridade === 'epico' && def.treino === 'perfeito') return 'Acerte TODAS no Treino da Medalha de ' + (m ? m.nome : '') + ', ou termine esse treino ' + pers.treinoPerfeito + ' vezes' + resto() + '. Treinar também vale!';
     if (def.raridade === 'lendario' && m) return 'Complete a revisão de ' + m.nome + ' (todas as salas).';
     return 'Continue revisando!';
   };

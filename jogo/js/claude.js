@@ -8,7 +8,7 @@
     boasVindas: [
       'Oi, {nome}! Que bom te ver! Vamos passear pelo Reino e revisar História?',
       'Olá, {nome}! Seu unicórnio estava com saudade de você! 🦄',
-      'Oba, a {nome} chegou! O Museu das Memórias está te esperando.',
+      'Oba, a {nome} chegou! O Museu e a Torre do Relógio estão te esperando.',
     ],
     acerto: [
       'Isso, {nome}! Você leu com calma e acertou! ✨',

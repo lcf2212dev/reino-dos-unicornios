@@ -13,8 +13,28 @@
   V.normalizar = function (t) {
     return String(t)
       .replace(/[\u{1F000}-\u{1FAFF}\u{2190}-\u{21FF}\u{2300}-\u{23FF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}\u{20E3}]/gu, '')
+      .replace(/[«»]/g, '')
       .replace(/\s+/g, ' ')
       .trim();
+  };
+
+  // separa os trechos «em inglês» (voz 'ingles') do resto (voz padrão).
+  // Usada ao falar E ao gravar (Falas.todas), então as chaves batem.
+  // Pedaço vazio ou só com pontuação/emoji não vira fala.
+  V.dividir = function (texto, vozPadrao) {
+    var s = String(texto == null ? '' : texto), out = [];
+    function add(t, voz) {
+      t = t.replace(/[«»]/g, '').trim();
+      if (/[\p{L}\p{N}]/u.test(V.normalizar(t))) out.push({ texto: t, voz: voz });
+    }
+    var re = /«([^«»]*)»/g, ultimo = 0, m;
+    while ((m = re.exec(s))) {
+      add(s.slice(ultimo, m.index), vozPadrao);
+      add(m[1], 'ingles');
+      ultimo = re.lastIndex;
+    }
+    add(s.slice(ultimo), vozPadrao);
+    return out;
   };
   V.chave = function (voz, texto) {
     var s = voz + '|' + V.normalizar(texto);
@@ -69,8 +89,10 @@
     opcoes = opcoes || {};
     V.calar();
     if (ajustes().voz === false) return Promise.resolve();
-    var lista = (Array.isArray(segmentos) ? segmentos : [segmentos]).filter(Boolean).map(function (s) {
-      return typeof s === 'string' ? { texto: s, voz: opcoes.voz || 'claude' } : { texto: s.texto, voz: s.voz || opcoes.voz || 'claude' };
+    var lista = [];
+    (Array.isArray(segmentos) ? segmentos : [segmentos]).filter(Boolean).forEach(function (s) {
+      var voz = (typeof s === 'string' ? null : s.voz) || opcoes.voz || 'claude';
+      lista = lista.concat(V.dividir(typeof s === 'string' ? s : s.texto, voz));
     });
     var ac = Reino.Som.contexto();
     if (!ac || !lista.length) return Promise.resolve();
@@ -113,7 +135,7 @@
   };
 
   V.falando = function () { return !!tocando; };
-  V.tem = function (voz, texto) { return !!clips[V.chave(voz, texto)]; };
+  V.tem = function (voz, texto) { return V.dividir(texto, voz).every(function (p) { return !!clips[V.chave(p.voz, p.texto)]; }); };
 
   Reino.Voz = V;
 })();

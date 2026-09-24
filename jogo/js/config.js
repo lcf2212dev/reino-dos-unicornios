@@ -9,18 +9,29 @@ Reino.config = {
   pinPais: '2026',            // troque aqui o PIN da Área dos Pais
   desafiosPorSala: 6,
   perguntasTreino: 10,
+  // provas bimestrais (Escola do Reino): o acessório só vem com esta nota ou mais.
+  // 10 = acertar tudo. Tentativa 1 → lendário, 2 → raro, depois → comum.
+  notaSucessoProva: 10,
+  // caminho da persistência: jogar várias vezes também faz nascer o raro/épico
+  persistencia: { sala: 3, treinoOuro: 3, treinoPerfeito: 5 },
   chaveSave: 'mariana-reino-v1',
   // vozes naturais (gravadas por ferramentas/gerar-vozes.py)
   vozes: {
     claude: { voz: 'pt-BR-AntonioNeural', velocidade: '-5%', tom: '+0Hz' },
     narradora: { voz: 'pt-BR-FranciscaNeural', velocidade: '-8%', tom: '+0Hz' },
     unicornio: { voz: 'pt-BR-ThalitaMultilingualNeural', velocidade: '+0%', tom: '+25Hz' },
+    // trechos «em inglês»: inglês britânico (como a apostila), claro e um pouco devagar
+    ingles: { voz: 'en-GB-SoniaNeural', velocidade: '-15%', tom: '+0Hz' },
   },
 };
 
 Reino.materias = [];
 Reino.registrarMateria = function (m) { Reino.materias.push(m); };
 Reino.materia = function (id) { return Reino.materias.find(function (m) { return m.id === id; }); };
+// provas bimestrais: cada uma em js/provas/<id>.js
+Reino.provas = [];
+Reino.registrarProva = function (p) { Reino.provas.push(p); };
+Reino.prova = function (id) { return Reino.provas.find(function (p) { return p.id === id; }); };
 
 Reino.util = (function () {
   function $(sel, raiz) { return (raiz || document).querySelector(sel); }
@@ -59,7 +70,24 @@ Reino.util = (function () {
   }
 
   var RE_ICONE = /(\p{RI}\p{RI}|\p{Extended_Pictographic}(?:\uFE0F|\uFE0E)?(?:\u200D\p{Extended_Pictographic}(?:\uFE0F|\uFE0E)?)*|[✓✕✔✘←→↑↓▲▼◀▶⌫↙↗])/gu;
+  // «inglês» vira <span class="en"> sem os sinais (a voz inglesa lê o mesmo trecho)
+  var RE_EN = /«([^«»]*)»/g;
+  function semEn(s) { return String(s).replace(/[«»]/g, ''); }
   function colocarTexto(node, s) {
+    if (s.indexOf('«') < 0 && s.indexOf('»') < 0) { colocarIcones(node, s); return; }
+    RE_EN.lastIndex = 0;
+    var ultimo = 0, m;
+    while ((m = RE_EN.exec(s))) {
+      if (m.index > ultimo) colocarIcones(node, semEn(s.slice(ultimo, m.index)));
+      var span = document.createElement('span');
+      span.className = 'en'; span.lang = 'en';
+      colocarIcones(span, m[1]);
+      node.appendChild(span);
+      ultimo = RE_EN.lastIndex;
+    }
+    if (ultimo < s.length) colocarIcones(node, semEn(s.slice(ultimo)));
+  }
+  function colocarIcones(node, s) {
     RE_ICONE.lastIndex = 0;
     if (!RE_ICONE.test(s) || !window.PA || !PA.iconeEmoji) {
       node.appendChild(document.createTextNode(s));
@@ -103,7 +131,7 @@ Reino.util = (function () {
   var reduzMovimento = false;
   try { reduzMovimento = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
 
-  return { $: $, $$: $$, el: el, preencher: preencher, embaralhar: embaralhar, sortear: sortear, clamp: clamp,
+  return { $: $, $$: $$, el: el, preencher: preencher, semEn: semEn, embaralhar: embaralhar, sortear: sortear, clamp: clamp,
     reais: reais, reaisCurto: reaisCurto, copia: copia, esperar: esperar, on: on, emit: emit,
     reduzMovimentoSistema: reduzMovimento };
 })();

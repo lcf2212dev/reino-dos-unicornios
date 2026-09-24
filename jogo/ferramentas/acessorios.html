@@ -1,0 +1,22 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Prévia dos acessórios</title>
+<style>body{background:#bfe8c0;font:14px sans-serif;margin:16px} .l{display:flex;gap:14px;align-items:flex-end;flex-wrap:wrap;margin-bottom:14px} canvas{image-rendering:pixelated} h3{margin:10px 0 4px}</style>
+<div id="r"></div>
+<script src="../js/config.js"></script>
+<script src="../js/icones.js"></script>
+<script src="../js/pixelart.js"></script>
+<script>
+// cada acessório das provas em todas as vistas: bebê, pequeno e adulto
+var def = {id:'p', raridade:'comum', cores:{corpo:'#fff5fa', crina:['#ff7eb6','#b58cff','#7fd6ff'], chifre:'#ffd34d'}};
+var r = document.getElementById('r');
+['tiara-arco-iris','pena-magica','laco-vovo'].forEach(function (id) {
+  var h = document.createElement('h3'); h.textContent = id; r.appendChild(h);
+  var l = document.createElement('div'); l.className = 'l'; r.appendChild(l);
+  l.appendChild(PA.paraDOM(PA.iconeDesenho('acessorio:' + id), 4));
+  [0, 1, 3].forEach(function (e) {
+    PA.VISTAS.forEach(function (v) { l.appendChild(PA.paraDOM(PA.unicornio(def, e, 0, { enfeites: [id], vista: v }), 4)); });
+  });
+  l.appendChild(PA.paraDOM(PA.montada(def, 3, 0, PA.APARENCIA_PADRAO, { enfeites: [id] }), 4));
+});
+</script>

@@ -15,15 +15,17 @@
   Mapa.CLAREIRAS = [
     { x: 10, y: 4, w: 5, h: 5 },
     { x: 23, y: 4, w: 5, h: 5 },
-    { x: 9, y: 15, w: 5, h: 5 },
     { x: 22, y: 15, w: 5, h: 5 },
   ];
 
   var FIXOS = [
-    { id: 'castelo', nome: 'Castelo da Medalha', sprite: 'castelo', rect: { x: 15, y: 1, w: 7, h: 5 } },
-    { id: 'bau', nome: 'Baú do Tesouro', sprite: 'bau', rect: { x: 29, y: 3, w: 5, h: 4 } },
-    { id: 'estabulo', nome: 'Estábulo Mágico', sprite: 'estabulo', rect: { x: 2, y: 15, w: 6, h: 4 } },
+    // castelo com placa à direita (à esquerda cobriria a torre da clareira); a do baú vai no telhado
+    { id: 'castelo', nome: 'Castelo da Medalha', sprite: 'castelo', rect: { x: 15, y: 1, w: 7, h: 5 }, placa: 'direita' },
+    { id: 'bau', nome: 'Baú do Tesouro', sprite: 'bau', rect: { x: 29, y: 3, w: 5, h: 4 }, placa: 'acima' },
+    // placa em cima do telhado: à direita ela cobriria a Escola do Reino
+    { id: 'estabulo', nome: 'Estábulo Mágico', sprite: 'estabulo', rect: { x: 2, y: 15, w: 6, h: 4 }, placa: 'acima' },
     { id: 'loja', nome: 'Loja das Fadas', sprite: 'loja', rect: { x: 29, y: 15, w: 5, h: 4 } },
+    { id: 'escola', nome: 'Escola do Reino', sprite: 'escola', rect: { x: 9, y: 15, w: 5, h: 5 } },
   ];
 
   // gerador pseudoaleatório com semente (o reino sai sempre igual)
@@ -47,7 +49,7 @@
     materias.forEach(function (m, i) {
       var r = m.lugar.rect || Mapa.CLAREIRAS[i % Mapa.CLAREIRAS.length];
       lugares.push({ id: 'materia:' + m.id, tipo: 'materia', materiaId: m.id, nome: m.lugar.nome,
-        sprite: m.lugar.sprite || 'torre', cores: m.lugar.cores, rect: r, porta: porta(r) });
+        sprite: m.lugar.sprite || 'torre', cores: m.lugar.cores, rect: r, porta: porta(r), placa: m.lugar.placa });
     });
 
     function pintar(x, y, t) { if (dentro(x, y)) tipo[y][x] = t; }
@@ -540,6 +542,104 @@
       });
       // brilhinhos
       [[6, 36], [72, 40], [66, 50]].forEach(function (s) { ret(ctx, px + s[0], py + s[1] - 1, 1, 3, '#ffffff'); ret(ctx, px + s[0] - 1, py + s[1], 3, 1, '#ffffff'); });
+    },
+    escola: function (ctx, px, py, w, h) {
+      var parede = '#fff1e8', parede2 = '#f6dccb', telhado = '#ff7a8a', telhado2 = '#e0506a';
+      var cx = px + w / 2;
+      function letra(linhas, x, y, cor) {
+        linhas.forEach(function (l, j) { for (var i = 0; i < l.length; i++) if (l[i] === '#') ret(ctx, x + i, y + j, 1, 1, cor); });
+      }
+      // telhado principal
+      triangulo(ctx, px, py + 16, w, 26, C.contorno);
+      triangulo(ctx, px + 3, py + 19, w - 6, 22, telhado);
+      for (var tj = py + 26; tj < py + 40; tj += 5) {
+        var meia = Math.round((w - 6) / 2 * (tj - py - 19 + 1) / 22) - 2;
+        for (var tx = cx - meia + 2; tx < cx + meia - 1; tx += 6) ret(ctx, tx, tj, 3, 1, telhado2);
+      }
+      // beiral e bandeirinhas
+      ret(ctx, px + 2, py + 40, w - 4, 4, C.contorno);
+      ret(ctx, px + 3, py + 41, w - 6, 2, telhado2);
+      // paredes
+      contornoRet(ctx, px + 6, py + 43, w - 12, h - 49, parede);
+      for (var j = py + 49; j < py + h - 7; j += 6) ret(ctx, px + 7, j, w - 14, 1, parede2);
+      var bandeiras = ['#ffd34d', '#6fdc8c', '#5fb4ff', '#a66bff', '#ff9d2e'];
+      for (var b = 0, bx = px + 9; bx < px + w - 12; bx += 7, b++) {
+        var cb = bandeiras[b % bandeiras.length];
+        ret(ctx, bx, py + 44, 5, 1, cb); ret(ctx, bx + 1, py + 45, 3, 1, cb); ret(ctx, bx + 2, py + 46, 1, 1, cb);
+      }
+      // janelas
+      [px + 12, px + w - 24].forEach(function (jx) {
+        var jy = py + 50;
+        contornoRet(ctx, jx, jy, 12, 12, '#9fdcff');
+        ret(ctx, jx + 1, jy + 1, 4, 4, '#e6f7ff');
+        ret(ctx, jx + 5, jy + 1, 2, 10, C.contorno);
+        ret(ctx, jx + 1, jy + 5, 10, 2, C.contorno);
+        ret(ctx, jx - 1, jy + 12, 14, 2, '#c98a4b');
+        ret(ctx, jx + 1, jy + 11, 2, 1, '#ff7eb6'); ret(ctx, jx + 9, jy + 11, 2, 1, '#ffe066');
+      });
+      // degrau e porta
+      contornoRet(ctx, cx - 14, py + h - 7, 28, 7, '#e8d3a8');
+      ret(ctx, cx - 13, py + h - 2, 26, 1, '#d4bc8c');
+      portaArco(ctx, cx - 7, py + h - 29, 14, 22, '#7c5cff');
+      // lousa com ABC no telhado
+      contornoRet(ctx, cx - 11, py + 28, 22, 11, '#5fae6a');
+      ret(ctx, cx - 10, py + 29, 20, 1, '#8fd08f');
+      letra(['.#.', '#.#', '###', '#.#', '#.#'], cx - 7, py + 31, '#ffffff');
+      letra(['##.', '#.#', '##.', '#.#', '##.'], cx - 2, py + 31, '#ffffff');
+      letra(['.##', '#..', '#..', '#..', '.##'], cx + 3, py + 31, '#ffffff');
+      // torre do sino
+      contornoRet(ctx, cx - 8, py + 9, 16, 19, '#fff8ee');
+      ret(ctx, cx - 5, py + 13, 10, 10, '#8a6aa8');
+      ret(ctx, cx - 4, py + 12, 8, 1, '#8a6aa8');
+      ret(ctx, cx - 2, py + 14, 4, 1, '#ffd34d');
+      ret(ctx, cx - 3, py + 15, 6, 4, '#ffd34d');
+      ret(ctx, cx - 4, py + 19, 8, 2, '#ffd34d');
+      ret(ctx, cx - 2, py + 15, 1, 3, '#fff3a0');
+      ret(ctx, cx - 1, py + 21, 2, 1, '#d9a93a');
+      triangulo(ctx, cx - 12, py, 24, 11, C.contorno);
+      triangulo(ctx, cx - 10, py + 2, 20, 8, telhado);
+      ret(ctx, cx, py - 5, 1, 6, C.contorno);
+      ret(ctx, cx + 1, py - 5, 5, 3, '#ffd34d');
+      ret(ctx, cx + 1, py - 5, 5, 1, '#fff3a0');
+    },
+    relogio: function (ctx, px, py, w, h, cores) {
+      cores = cores || {};
+      var parede = cores.parede || '#eef3ff', telhado = cores.telhado || '#4a6cd4', det = cores.detalhe || '#ffcf3d';
+      var pedra = PA.cor.misturar(parede, '#d8c8a8', 0.35), junta = PA.cor.escurecer(pedra, 0.14);
+      var cx = px + w / 2;
+      // corpo da torre
+      contornoRet(ctx, cx - 17, py + 36, 34, h - 36, pedra);
+      for (var j = py + 42; j < py + h - 2; j += 6) ret(ctx, cx - 16, j, 32, 1, junta);
+      ret(ctx, cx + 10, py + 37, 6, h - 38, PA.cor.escurecer(pedra, 0.08));
+      // janelinhas dos lados
+      [cx - 13, cx + 8].forEach(function (jx) {
+        contornoRet(ctx, jx, py + 42, 5, 8, '#9fdcff');
+        ret(ctx, jx + 1, py + 43, 2, 2, '#e6f7ff');
+      });
+      // caixa do relógio
+      contornoRet(ctx, cx - 20, py + 14, 40, 24, parede);
+      ret(ctx, cx - 19, py + 15, 38, 2, PA.cor.clarear(det, 0.3));
+      ret(ctx, cx - 19, py + 35, 38, 2, det);
+      // mostrador
+      circulo(ctx, cx, py + 26, 11, C.contorno);
+      circulo(ctx, cx, py + 26, 10, det);
+      circulo(ctx, cx, py + 26, 8, '#ffffff');
+      [[0, -7], [7, 0], [0, 7], [-7, 0]].forEach(function (m) { ret(ctx, cx + m[0] - 1, py + 26 + m[1] - 1, 2, 2, telhado); });
+      [[5, -5], [5, 5], [-5, 5], [-5, -5]].forEach(function (m) { ret(ctx, cx + m[0] - 1, py + 26 + m[1] - 1, 1, 1, '#8a8aa8'); });
+      ret(ctx, cx - 1, py + 20, 2, 7, C.contorno);          // ponteiro grande
+      ret(ctx, cx - 1, py + 25, 6, 2, C.contorno);          // ponteiro pequeno
+      ret(ctx, cx - 1, py + 25, 2, 2, '#ff5c8a');
+      // telhadinho pontudo
+      ret(ctx, cx - 18, py + 12, 36, 3, C.contorno);
+      triangulo(ctx, cx - 16, py - 4, 32, 17, C.contorno);
+      triangulo(ctx, cx - 13, py - 1, 26, 13, telhado);
+      ret(ctx, cx - 2, py + 5, 1, 6, PA.cor.clarear(telhado, 0.3));
+      ret(ctx, cx, py - 9, 1, 6, C.contorno);
+      circulo(ctx, cx, py - 9, 2, det);
+      // porta
+      portaArco(ctx, cx - 7, py + h - 20, 14, 20, '#7c5cff', det);
+      // brilhinhos
+      [[6, 20], [74, 30]].forEach(function (s) { ret(ctx, px + s[0], py + s[1] - 1, 1, 3, '#ffffff'); ret(ctx, px + s[0] - 1, py + s[1], 3, 1, '#ffffff'); });
     },
     torre: function (ctx, px, py, w, h, cores) {
       cores = cores || {};
