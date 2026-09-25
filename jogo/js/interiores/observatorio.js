@@ -134,14 +134,18 @@
     saturno: ['#f0dc9a', '#caa860', '#fff8d8'], urano: ['#9fe8e8', '#6cc4cc', '#e0ffff'], netuno: ['#5f7fff', '#3a4fcc', '#a8b8ff'],
     plutao: ['#d8c0a8', '#a88c74', '#f4e4d4'],
   };
+  // anel lilás-claro (cor diferente do corpo, para não virar um "pastel" amarelo), com contorno
   function anelSaturno(ctx, cx, cy, raio, frente) {
-    var rx = Math.round(raio * 1.9), ry = Math.max(1, Math.round(raio * 0.5));
-    for (var i = 0; i < 64; i++) {
-      var a = i / 64 * Math.PI * 2, s = Math.sin(a);
-      if ((s >= 0) !== frente) continue;
-      var x = Math.round(cx + Math.cos(a) * rx), y = Math.round(cy + s * ry);
-      ret(ctx, x, y, 1, 1, i % 4 === 0 ? '#caa860' : '#f4e6b8');
-      ret(ctx, x, y + 1, 1, 1, K);
+    var rx = Math.round(raio * 2), ry = Math.max(1, Math.round(raio * 0.65));
+    // primeiro o contorno (em cima e embaixo de cada ponto), depois o anel por cima dele
+    for (var passo = 0; passo < 2; passo++) {
+      for (var i = 0; i < 64; i++) {
+        var a = i / 64 * Math.PI * 2, s = Math.sin(a);
+        if ((s >= 0) !== frente) continue;
+        var x = Math.round(cx + Math.cos(a) * rx), y = Math.round(cy + s * ry);
+        if (passo === 0) ret(ctx, x, y - 1, 1, 3, K);
+        else ret(ctx, x, y, 1, 1, i % 4 === 0 ? '#a58fe6' : '#c9b6ff');
+      }
     }
   }
   function planetaReserva(ctx, id, cx, cy, raio) {
@@ -479,32 +483,42 @@
   // o disco da projeção é uma galáxia azul-clara: a base fica na faixa de claridade do piso, para a Mariana e a
   // unicórnio (contorno #3a2446) aparecerem em cima dela; o brilho do miolo, os dois braços em espiral e as
   // estrelas vêm por cima. (Um disco escuro, ou só um pouco mais claro, fica da mesma luminância do contorno.)
-  // A faixa de fora (de 0,8 do raio até a borda) é um pouco mais escura, para dar profundidade de longe,
-  // e o aro também fica claro o bastante para ela aparecer bem na beirada.
-  var GALAXIA = { aro: '#6a62b8', borda: '#8a82d6', fora: '#5a64b8', base: '#6470c4', meio: '#6a76c8', miolo: '#7a84d6',
-    braco: '#8490de', braco2: '#a8b0f0', orbita: '#4a52a8' };
+  // Entre os braços, a base é a mais escura (#5a64b8, ainda 2,6:1 do contorno); os braços são largos e claros
+  // (auréola, nuvem, faixa clara e fio), com volta e meia cada um, para as duas espirais serem a forma que se vê
+  // de longe no celular, e não uma oval lisa.
+  var GALAXIA = { aro: '#6a62b8', borda: '#8a82d6', fora: '#5a64b8', meio: '#6a76c8', miolo: '#7a84d6',
+    aureola: '#7680d0', braco: '#8f9ae6', braco2: '#a8b0f0', fio: '#b8c0ff', orbita: '#4a52a8' };
   function desenharGalaxia(ctx, sx, sy, d) {
     var g = GALAXIA;
     elipse(ctx, sx, sy, d.rx + 3, d.ry + 2, g.aro);
     elipse(ctx, sx, sy, d.rx + 2, d.ry + 1, g.borda);
     elipse(ctx, sx, sy, d.rx, d.ry, g.fora);
-    elipse(ctx, sx, sy, Math.round(d.rx * 0.84), Math.round(d.ry * 0.84), misturar(g.fora, g.base, 0.5));
-    elipse(ctx, sx, sy, Math.round(d.rx * 0.8), Math.round(d.ry * 0.8), g.base);
-    elipse(ctx, sx, sy, Math.round(d.rx * 0.55), Math.round(d.ry * 0.55), g.meio);
-    elipse(ctx, sx, sy, Math.round(d.rx * 0.3), Math.round(d.ry * 0.3), g.miolo);
+    elipse(ctx, sx, sy, Math.round(d.rx * 0.36), Math.round(d.ry * 0.36), g.meio);
+    elipse(ctx, sx, sy, Math.round(d.rx * 0.26), Math.round(d.ry * 0.26), g.miolo);
     elipse(ctx, sx, sy, Math.round(d.rx * 0.15), Math.round(d.ry * 0.15), clarear(g.miolo, 0.3));
-    // dois braços em espiral: uma nuvem clara que afina para fora, com um fio mais claro no meio
+    // ponto s (0 = junto do miolo, 1 = na beirada) do braço b
+    function noBraco(b, s) {
+      var r = 0.16 + 0.8 * s, ang = b * Math.PI + s * Math.PI * 1.5 + 0.4;
+      return [Math.round(sx + Math.cos(ang) * r * d.rx), Math.round(sy + Math.sin(ang) * r * d.ry)];
+    }
+    // cada braço afina para fora: auréola, nuvem clara, faixa mais clara no miolo do braço e fio pontilhado
+    var PASSOS = 90;
     for (var b = 0; b < 2; b++) {
-      for (var i = 0; i < 70; i++) {
-        var s = i / 70, r = 0.16 + 0.8 * s, ang = b * Math.PI + s * Math.PI * 1.9 + 0.4;
-        var raio = Math.max(1, Math.round(5 * (1 - s * 0.75)));
-        elipse(ctx, Math.round(sx + Math.cos(ang) * r * d.rx), Math.round(sy + Math.sin(ang) * r * d.ry),
-          raio + 1, Math.max(1, Math.round(raio * 0.6)), g.braco);
+      var camadas = [[g.aureola, 3, 2], [g.braco, 1, 0]];
+      camadas.forEach(function (c) {
+        for (var i = 0; i < PASSOS; i++) {
+          var s = i / PASSOS, p = noBraco(b, s), raio = Math.max(1, Math.round(8 * (1 - s * 0.7)));
+          elipse(ctx, p[0], p[1], raio + c[1], Math.max(1, Math.round(raio * 0.6)) + c[2], c[0]);
+        }
+      });
+      for (var j = 0; j < PASSOS; j++) {
+        var s3 = j / PASSOS, p3 = noBraco(b, s3), raio3 = Math.round(3.6 * (1 - s3 * 1.1));
+        if (raio3 >= 1) elipse(ctx, p3[0], p3[1], raio3 + 1, Math.max(1, Math.round(raio3 * 0.5)), g.braco2);
       }
-      for (var f = 0; f < 70; f++) {
+      for (var f = 0; f < PASSOS; f++) {
         if (sorte(f, b, 51) < 0.3) continue;
-        var s2 = f / 70, r2 = 0.16 + 0.8 * s2, ang2 = b * Math.PI + s2 * Math.PI * 1.9 + 0.4;
-        ret(ctx, Math.round(sx + Math.cos(ang2) * r2 * d.rx), Math.round(sy + Math.sin(ang2) * r2 * d.ry), s2 < 0.5 ? 2 : 1, 1, g.braco2);
+        var s2 = f / PASSOS, p2 = noBraco(b, s2);
+        ret(ctx, p2[0], p2[1], s2 < 0.5 ? 2 : 1, 1, g.fio);
       }
     }
     // estrelas espalhadas (lilás e amarelinhas, algumas com brilho em cruz)

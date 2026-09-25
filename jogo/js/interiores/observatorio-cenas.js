@@ -192,8 +192,8 @@
     return { cor: cor, frente: a.frenteX ? x < 0 : y > 0 };
   }
   function anelDe(id, r) {
-    if (id === 'saturno') return { rx: 2.2 * r + 0.5, ry: 0.62 * r + 0.5, ang: -0.28, sIn: 0.6, corte: 0.84,
-      gap: r >= 9 ? [0.8, 0.8 + 1.4 / (2.2 * r)] : null, cores: ['#f6e6bc', '#dcc38c'] };
+    if (id === 'saturno') return { rx: 2.2 * r + 0.5, ry: 0.72 * r + 0.5, ang: -0.28, sIn: 0.64, corte: 0.86,
+      gap: r >= 9 ? [0.8, 0.8 + 1.4 / (2.2 * r)] : null, cores: ['#c9b6ff', '#a58fe6'], contorno: true };
     return null;
   }
 
@@ -217,6 +217,9 @@
       var xz = r >= 8 ? ((dx + dy) & 1) : undefined;
       var cor = sombrear(corPlaneta(id, u, v, r), u, v, xz);
       if (id === 'lua' && r >= 16) cor = sombrear(corPlaneta(id, u, v, r), u * 0.6, v * 0.6, xz);
+      if (anel && anel.contorno && [[1, 0], [-1, 0], [0, 1], [0, -1]].some(function (d) {
+        var q = pixelAnel(dx + d[0], dy + d[1], anel); return !dentroDisco(dx + d[0], dy + d[1], r) && q && !q.frente;
+      })) cor = CONTORNO;
       B.p(cx + dx, cy + dy, cor);
     }
     // Plutão pequeno: o "coração" (Planície Sputnik) desenhado pixel a pixel, porque a conta do
@@ -240,7 +243,7 @@
       a = pixelAnel(dx, dy, anel);
       if (!a || !a.frente) continue;
       B.p(cx + dx, cy + dy, sombrear(a.cor, dx / anel.rx * 0.5, dy / anel.ry * 0.3));
-      if (!anel.frenteX && dentroDisco(dx, dy - 1, r) && !pixelAnel(dx, dy - 1, anel)) B.p(cx + dx, cy + dy - 1, esc(B.g(cx + dx, cy + dy - 1) || '#f3dc98', 0.3));
+      if (!anel.frenteX && dentroDisco(dx, dy - 1, r) && !pixelAnel(dx, dy - 1, anel)) B.p(cx + dx, cy + dy - 1, anel.contorno ? CONTORNO : esc(B.g(cx + dx, cy + dy - 1) || '#f3dc98', 0.3));
     }
   }
 
