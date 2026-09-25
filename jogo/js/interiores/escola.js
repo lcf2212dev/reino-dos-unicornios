@@ -189,7 +189,7 @@
     return P.regProva(prova).premio === r;
   }
   function larguraMural(n) { return n <= 1 ? 4 : 7; }
-  I.objeto('escola-mural', { w: 7, h: 1, topo: 30, solido: true, alto: true,
+  I.objeto('escola-mural', { w: 7, h: 1, topo: 32, solido: true, alto: true,   // 32: a faixa dourada sobe 2 px acima da moldura
     chave: function (P) {
       return 'mural:' + (R.provas || []).map(function (pv) {
         return pv.id + '=' + RARIDADES.map(function (r) { return ganhou(P, pv, r) ? 1 : 0; }).join('');
@@ -329,12 +329,18 @@
   function trechoHall(bx, by, nProvas) {
     var mw = larguraMural(nProvas);
     return sala(bx, by, [
-      // parede do hall (o mural fica na frente dos primeiros tiles)
-      { tipo: 'escola-brasao', x: 7, y: 0 }, { tipo: 'relogio-parede', x: 8, y: 0 }, { tipo: 'escola-sino', x: 9, y: 0 },
-      { tipo: 'janela', x: 10, y: 0 },
-      inter('mural', 'Prêmios da Escola do Reino', { tipo: 'escola-mural', x: 0, y: 2, w: mw }),
-      inter('bebedouro', 'Bebedouro', { tipo: 'bebedouro', x: 7, y: 2 }),
-      { tipo: 'escrivaninha', x: 8, y: 2, var: { abajur: '#39a860' } }, { tipo: 'planta-alta', x: 10, y: 2 },
+      // parede do hall: janela, sino, relógio e o brasão em cima da mesa da Diretora
+      { tipo: 'janela', x: 0, y: 0 }, { tipo: 'escola-sino', x: 1, y: 0 }, { tipo: 'relogio-parede', x: 2, y: 0 },
+      { tipo: 'escola-brasao', x: 3, y: 0 },
+      { tipo: 'planta-alta', x: 0, y: 2 },
+      inter('bebedouro', 'Bebedouro', { tipo: 'bebedouro', x: 2, y: 2 }),
+      { tipo: 'escrivaninha', x: 3, y: 2, var: { abajur: '#39a860' } },
+      // o mural dos prêmios fica à direita e uma fileira à frente da parede: no canto de cima à esquerda
+      // ele sumia sob os avisos do HUD (⭐, "🥚 1 ovo!"). Bandeirinhas na parede em cima dele; atrás dele,
+      // só caixotes (o chão ali ficaria preso)
+      { tipo: 'bandeirinhas', x: 5, y: 0 }, { tipo: 'bandeirinhas', x: 7, y: 0 }, { tipo: 'bandeirinhas', x: 9, y: 0 },
+      inter('mural', 'Prêmios da Escola do Reino', { tipo: 'escola-mural', x: 12 - mw, y: 3, w: mw }),
+      { tipo: 'caixote', x: 12 - mw, y: 2, w: mw },
       // passadeira no corredor (não bloqueia)
       { tipo: 'tapete', x: 0, y: 4, w: 12, h: 2, var: { cor: '#9fe0a0', borda: '#ffd34d' } },
       // recepção, perto do tapete de saída
@@ -398,7 +404,7 @@
         { x: 5, y: by + 5, w: 3, h: 4 },         // do tapete de saída até a passagem
       ].concat([].concat.apply([], salas.map(function (s) { return s.corredores.concat([{ x: s.porta.x, y: by + 2, w: 1, h: 2 }]); }))),
       objetos: objetos,
-      npcs: [npcDoElenco('margarida', 9, by + 3, { tipo: 'guia', lugar: 'escola' })].concat(salas.map(function (s) { return s.npc; })),
+      npcs: [npcDoElenco('margarida', 5, by + 3, { tipo: 'guia', lugar: 'escola' })].concat(salas.map(function (s) { return s.npc; })),
     };
   }
   R.registrarInterior(montar());

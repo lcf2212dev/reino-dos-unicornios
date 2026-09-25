@@ -541,7 +541,8 @@
     { tipo: 'bandeirinhas', x: 10, y: 1 },
     { tipo: 'janela', x: 12, y: 1 },
     { tipo: 'petshop-coleiras', x: 13, y: 1 },
-    // fundo (a estante fica no canto da direita: o canto da esquerda some sob os avisos do HUD, como "🥚 1 ovo!")
+    // fundo: nada que se toca nos cantos de cima, que somem sob as colunas do HUD (à esquerda os avisos,
+    // como "🥚 1 ovo!"; à direita o ↙ e o cartão da montaria). A estante fica uma fileira à frente, à direita
     { tipo: 'petshop-sacos-feno', x: 1, y: 3 },
     { tipo: 'planta-alta', x: 2, y: 3 },
     { tipo: 'petshop-potes-biscoito', x: 3, y: 3 },
@@ -552,7 +553,8 @@
     { tipo: 'caixote', x: 10, y: 3, var: { item: 'estrela' } },
     { tipo: 'petshop-potes-biscoito', x: 11, y: 3 },
     { tipo: 'petshop-sacos-feno', x: 12, y: 3 },
-    inter('estante', 'Estante das comidinhas', { tipo: 'petshop-estante-comida', x: 13, y: 3, acao: TELA }),
+    { tipo: 'planta-alta', x: 13, y: 3 },
+    { tipo: 'petshop-sacos-feno', x: 14, y: 3 },
     { tipo: 'petshop-balcao', x: 9, y: 4 },
     // lado esquerdo
     { tipo: 'cesto', x: 1, y: 4 },
@@ -565,11 +567,12 @@
     { tipo: 'petshop-cesta-macas', x: 1, y: 11 },
     { tipo: 'cesto', x: 2, y: 11 },
     { tipo: 'caixote', x: 6, y: 11 },
-    // lado direito
-    inter('balanca', 'Balança', { tipo: 'petshop-balanca', x: 14, y: 5 }),
+    // lado direito: atrás da estante, só enfeites (o chão ali ficaria preso)
+    { tipo: 'petshop-potes-biscoito', x: 13, y: 4 },
+    { tipo: 'cesto', x: 14, y: 4 },
+    inter('estante', 'Estante das comidinhas', { tipo: 'petshop-estante-comida', x: 13, y: 5, acao: TELA }),
     inter('bolo', 'Bolo arco-íris', { tipo: 'petshop-vitrine-bolo', x: 10, y: 6, acao: TELA }),
-    { tipo: 'petshop-cesta-cenouras', x: 13, y: 6 },
-    { tipo: 'petshop-potes-biscoito', x: 14, y: 7 },
+    inter('balanca', 'Balança', { tipo: 'petshop-balanca', x: 14, y: 7 }),
     { tipo: 'flores', x: 14, y: 6, var: { vaso: '#b58cff' } },
     { tipo: 'almofada', x: 12, y: 7, var: { cor: '#ff9cc6' } },
     { tipo: 'petshop-tapete-patinhas', x: 10, y: 10, w: 3, h: 2 },

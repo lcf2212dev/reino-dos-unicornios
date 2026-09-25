@@ -1068,10 +1068,11 @@
     ]),
     /* ---------- GALERIA DO ESPAÇO ---------- */
     sala(GAL.x, GAL.y, [
-      // parede: o mapa e os quadros nas pontas; no meio (atrás da placa do cômodo) só enfeites baixos
-      cur('mapa-constelacoes', 'Mapa das constelações', 'constelacoes', { tipo: 'observatorio-mapa-constelacoes', x: 0, y: 0 }),
-      { tipo: 'arandela', x: 3, y: 0 },
-      { tipo: 'prateleira-parede', x: 5, y: 0, w: 3, var: { itens: ['globo', 'estrela', 'livro', 'gema'] } },
+      // parede: o mapa das constelações, a prateleira baixa (atrás da placa do cômodo) e os quadros à direita.
+      // O mapa fica 3 tiles para dentro: no canto ele sumia sob as fichas da esquerda do HUD (R$, ⭐, 🥚)
+      { tipo: 'arandela', x: 1, y: 0 },
+      cur('mapa-constelacoes', 'Mapa das constelações', 'constelacoes', { tipo: 'observatorio-mapa-constelacoes', x: 3, y: 0 }),
+      { tipo: 'prateleira-parede', x: 6, y: 0, w: 3, var: { itens: ['globo', 'estrela', 'livro', 'gema'] } },
       { tipo: 'arandela', x: 9, y: 0 },
       { tipo: 'observatorio-quadro', x: 10, y: 0, var: { cena: 'astronauta' } }, { tipo: 'observatorio-carta', x: 11, y: 0, var: { desenho: 'ursa' } },
       { tipo: 'observatorio-janela', x: 12, y: 0 },

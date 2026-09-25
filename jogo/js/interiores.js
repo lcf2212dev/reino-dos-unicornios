@@ -1325,16 +1325,32 @@
     var a = naTela(pintor, J.x - w / 2, J.y - h), b = naTela(pintor, J.x + w / 2, J.y);
     return { esq: a.x, cima: a.y, dir: b.x, baixo: b.y };
   }
-  // retângulos do HUD em px do canvas (poucos getBoundingClientRect por quadro, como as placas do mapa)
+  // caixa de um elemento do HUD sem o transform da animação (o chip do ovo pulsa: medir com
+  // getBoundingClientRect fazia a placa tremer 1-2 px); a mesma ideia do caixaParada do mapa (cena.js),
+  // com 2% de folga para caber o pulso
+  function caixaParada(e) {
+    var anima = getComputedStyle(e).animationName, pai = e.offsetParent;
+    if (!anima || anima === 'none' || !pai) return e.getBoundingClientRect();
+    var pr = pai.getBoundingClientRect();
+    var left = pr.left + pai.clientLeft + e.offsetLeft, top = pr.top + pai.clientTop + e.offsetTop;
+    var w = e.offsetWidth, h = e.offsetHeight, dx = w * 0.02, dy = h * 0.02;
+    return { left: left - dx, right: left + w + dx, top: top - dy, bottom: top + h + dy };
+  }
+  // retângulos do HUD em px do canvas, medidos no máximo a cada 500 ms (como as placas do mapa)
+  var hudMedido = { chave: '', medidoEm: -1e9, rects: [] };
   function retangulosHud(canvas, dpr) {
     if (typeof document === 'undefined' || !canvas || !canvas.getBoundingClientRect) return [];
+    var agora = performance.now(), chave = canvas.width + 'x' + canvas.height + '@' + dpr;
+    if (chave === hudMedido.chave && agora - hudMedido.medidoEm <= 500) return hudMedido.rects;
     var c = canvas.getBoundingClientRect();
     if (!c.width) return [];
     var k = canvas.width / c.width || dpr;
-    return Array.prototype.map.call(document.querySelectorAll('#hud > *:not(.hud-topo), #hud .hud-topo > * > *'), function (e) {
-      var r = e.getBoundingClientRect();
+    hudMedido.rects = Array.prototype.map.call(document.querySelectorAll('#hud > *:not(.hud-topo), #hud .hud-topo > * > *'), function (e) {
+      var r = caixaParada(e);
       return { left: (r.left - c.left) * k, right: (r.right - c.left) * k, top: (r.top - c.top) * k, bottom: (r.bottom - c.top) * k };
     }).filter(function (r) { return r.right > r.left && r.bottom > r.top; });
+    hudMedido.medidoEm = agora; hudMedido.chave = chave;
+    return hudMedido.rects;
   }
   // posição mais próxima da original em que a placa (com a borda e uma folga) não cruza o HUD
   function desviarDoHud(hud, sx, sy, sw, sh, borda, cw, ch, xMin, xMax) {
@@ -1577,12 +1593,12 @@
       mascaras[it.i] = m;
       return m;
     }
-    // o ponto cai no desenho do objeto (com 1 px de folga em volta)? Sem máscara, vale o retângulo.
-    function noDesenho(it, wx, wy) {
+    // o ponto cai no desenho do objeto (com `folga` px do jogo em volta)? Sem máscara, vale o retângulo.
+    function noDesenho(it, wx, wy, folga) {
       var m = mascaraDe(it);
       if (!m) return true;
       var x = Math.floor(wx) - m.x0, y = Math.floor(wy) - m.y0;
-      for (var dy = -1; dy <= 1; dy++) for (var dx = -1; dx <= 1; dx++) {
+      for (var dy = -folga; dy <= folga; dy++) for (var dx = -folga; dx <= folga; dx++) {
         var xx = x + dx, yy = y + dy;
         if (xx >= 0 && yy >= 0 && xx < m.w && yy < m.h && m.a[yy * m.w + xx]) return true;
       }
@@ -1602,9 +1618,17 @@
         var b = bolhaNpc(n);
         return !!b && wx >= b.x0 && wx < b.x1 && wy >= b.topo && wy < n.y * T - 14;
       }).sort(function (a, b) { return b.y - a.y; });
-      if (achados.length) return { npc: achados[0] };
       var tx = Math.floor(wx / T), ty = Math.floor(wy / T);
       var frente = function (a, b) { return b.base - a.base; };
+      if (achados.length) {
+        // móvel alto desenhado na frente do NPC (mais embaixo) e com desenho no ponto fica com o toque
+        var pes = achados[0].y * T + 12;
+        var naFrente = objs.filter(function (it) {
+          return it.interativo && it.alto && !it.parede && it.base - 1 > pes &&
+            wx >= it.px && wx < it.px + it.W && wy >= it.py - it.topo && wy < it.py + it.H && noDesenho(it, wx, wy, 0);
+        }).sort(frente);
+        return naFrente.length ? { it: naFrente[0] } : { npc: achados[0] };
+      }
       // móveis altos vão por Y; os outros, na ordem da lista (a mesma do desenho)
       var desenhoPorCima = function (a, b) { return (a.alto || b.alto) ? frente(a, b) : b.i - a.i; };
       for (var folga = 0; folga <= 1; folga++) {
@@ -1621,8 +1645,22 @@
       var altos = objs.filter(function (it) {
         if (!it.interativo || it.parede || !it.topo) return false;
         if (!(wx >= it.px && wx < it.px + it.W && wy >= it.py - it.topo && wy < it.py)) return false;
-        return !livre || noDesenho(it, wx, wy);
-      }).sort(frente);
+        // no chão livre vale o desenho, com 2 px do jogo de folga (~4 px no celular): as partes finas
+        // (luneta, poste, pé) ainda se acertam
+        return !livre || noDesenho(it, wx, wy, 2);
+      });
+      // se mais de um serve, ganha quem está mesmo desenhado no ponto (a folga de um não passa por
+      // cima do desenho do vizinho); entre esses, o mais à frente
+      altos.forEach(function (it) { it._exato = noDesenho(it, wx, wy, 0) ? 0 : 1; });
+      if (altos.length > 1) altos.sort(function (a, b) { return (a._exato - b._exato) || frente(a, b); });
+      // só pela folga, no chão livre: se ali está o desenho de outro objeto que se toca (que passa
+      // um pouquinho da própria pegada), o toque é dele
+      if (altos.length && altos[0]._exato && livre) {
+        var desenhado = objs.filter(function (it) {
+          return it !== altos[0] && it.interativo && !it.parede && noDesenho(it, wx, wy, 0);
+        }).sort(frente);
+        if (desenhado.length) return { it: desenhado[0] };
+      }
       if (altos.length) return { it: altos[0] };
       return null;
     }
