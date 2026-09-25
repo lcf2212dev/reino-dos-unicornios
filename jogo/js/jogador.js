@@ -376,8 +376,12 @@
     bolhas[icone] = c;
     return c;
   }
+  // 🍎/💧 sobre ela; some durante uma conversa (balão modal), para não empilhar com o balão do personagem
   function iconeMontaria() {
-    try { return Reino.Cuidados && Reino.Cuidados.iconeMontaria ? Reino.Cuidados.iconeMontaria() : null; } catch (e) { return null; }
+    try {
+      if (Reino.Claude && Reino.Claude.dialogoAberto && Reino.Claude.dialogoAberto()) return null;
+      return Reino.Cuidados && Reino.Cuidados.iconeMontaria ? Reino.Cuidados.iconeMontaria() : null;
+    } catch (e) { return null; }
   }
   // altura estável do sprite (a maior das 5 vistas): o ícone não pula quando ela vira
   var alturas = {};
