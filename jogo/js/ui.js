@@ -1488,12 +1488,14 @@
 
   /* ---------- área dos pais ---------- */
   // pelo menu, sempre pede o PIN; `desbloqueada` só na reabertura logo depois de registrar um
-  // pagamento ou começar um novo ciclo (o pai acabou de digitar o PIN nesta mesma tela)
+  // pagamento ou começar um novo ciclo (o pai acabou de digitar o PIN nesta mesma tela).
+  // `materiaId`: reabre mostrando o bloco da matéria que acabou de ser paga (e, pelo teclado, com o
+  // foco no "Registrar pagamento" dela), para o pai não perder o lugar
   UI.telaPais = function () { abrirPais(false); };
-  function abrirPais(desbloqueada) {
+  function abrirPais(desbloqueada, materiaId) {
     var pn = painel('pais', '🔒 Área dos pais');
     var c = pn.conteudo;
-    if (desbloqueada) { conteudoPais(c, pn); return; }
+    if (desbloqueada) { conteudoPais(c, pn); if (materiaId) mostrarMateriaPaga(c, materiaId); return; }
     var digitado = '';
     var visor = el('div.pin-visor', '• • • •');
     var teclado = el('div.pin-teclado');
@@ -1515,6 +1517,15 @@
       else { visor.textContent = 'PIN errado'; digitado = ''; Reino.Som.tocar('erro'); }
     }
   }
+  // rola só o conteúdo do painel (nada de scrollIntoView) até o bloco da matéria ficar no alto
+  function mostrarMateriaPaga(c, materiaId) {
+    var campo = document.getElementById('pago-' + materiaId);
+    var bloco = campo && campo.closest('.pais-materia');
+    if (!bloco) return;
+    var r = bloco.getBoundingClientRect(), cr = c.getBoundingClientRect();
+    c.scrollTop += r.top - (cr.top + c.clientTop) - (parseFloat(getComputedStyle(c).paddingTop) || 0);   // a 1ª (História) fica no alto, como abriu
+    if (UI.porTeclado()) UI.focarTeclado(bloco.querySelector('.pais-pagar button'));
+  }
 
   function conteudoPais(c, pn) {
     var total = 0, pagoTotal = 0;
@@ -1523,7 +1534,7 @@
       total += ganho; pagoTotal += pago;
       var campo = el('input.campo-pago#pago-' + m.id, { type: 'number', min: 0, step: 1, value: pago, 'aria-label': 'Valor já pago de ' + m.nome });
       var salvar = el('button.btn-pequeno', { type: 'button' }, 'Registrar pagamento');
-      salvar.addEventListener('click', function () { P.registrarPagamento(m.id, parseFloat(campo.value) || 0); UI.fecharTela(pn.tela); abrirPais(true); });
+      salvar.addEventListener('click', function () { P.registrarPagamento(m.id, parseFloat(campo.value) || 0); UI.fecharTela(pn.tela); abrirPais(true, m.id); });
       var t = est().treinos[m.id] || {};
       c.appendChild(el('div.pais-materia',
         el('h3', m.emoji + ' ' + m.nome),
