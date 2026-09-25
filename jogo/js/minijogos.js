@@ -53,7 +53,11 @@
      Só nas matérias desta lista: História e Inglês têm o mesmo aperto, mas as telas delas ficam como estão. */
   D.MATERIAS_TITULO_AJUSTAVEL = ['portugues'];
   D.ajustarTitulo = function (titulo, materiaId) {
-    if (D.MATERIAS_TITULO_AJUSTAVEL.indexOf(materiaId) < 0 || !window.ResizeObserver) return;
+    if (D.MATERIAS_TITULO_AJUSTAVEL.indexOf(materiaId) < 0) return;
+    // palavra curtinha no fim não desce sozinha: "L, R e RR" ia com o "RR" sozinho embaixo; agora "e RR" vai junto
+    var fim = (titulo.firstElementChild || titulo).lastChild;
+    if (fim && fim.nodeType === 3) fim.nodeValue = fim.nodeValue.replace(/ (\S{1,3})$/, '\u00a0$1');
+    if (!window.ResizeObserver) return;
     var largura = -1, pedido = 0;
     function linhas() {
       var alvo = titulo.firstElementChild || titulo, topos = [];
