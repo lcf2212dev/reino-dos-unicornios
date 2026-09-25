@@ -79,9 +79,9 @@
       }
       for (var k = 0; k < 3; k++) {
         var x = px + 1 + Math.floor(sorte(tx, ty, k + 3) * 14), y = py + 1 + Math.floor(sorte(ty, tx, k + 9) * 14);
-        ret(ctx, x, y, 1, 1, k === 0 ? misturar(p.detalhe, p.piso, 0.55) : clarear(p.piso, 0.22));
+        ret(ctx, x, y, 1, 1, k === 0 ? LILAS : clarear(p.piso, 0.22));
       }
-      if (sorte(tx, ty, 41) < 0.12) brilho(ctx, px + 8, py + 8, misturar(p.detalhe, p.piso, 0.45));
+      if (sorte(tx, ty, 41) < 0.12) brilho(ctx, px + 8, py + 8, ESTRELA);
     } };
   // ladrilhos da Galeria: azul-noite com uma estrelinha dourada aqui e ali
   I.PISOS['observatorio-ladrilho'] = { cores: { piso: '#5254a6', piso2: '#5c5eb0', detalhe: '#ffd34d' },
@@ -179,6 +179,45 @@
   }
   // (Plutão continua o menor, mas com raio 3 ele ainda aparece redondinho no celular; Urano com 6 sai redondo)
   var RAIOS = { mercurio: 4, venus: 5, terra: 5, marte: 4, jupiter: 8, saturno: 6, urano: 6, netuno: 6, plutao: 3 };
+
+  /* ---------- toque: o desenho do planeta (e do Sol) inteiro, até as pontas dos anéis ---------- */
+  // alfa de um sprite (1 = tem desenho), guardado junto dele
+  function alfaDe(c) {
+    if (c.__alfa) return c.__alfa;
+    var d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data, a = new Uint8Array(c.width * c.height);
+    for (var i = 0; i < a.length; i++) a[i] = d[i * 4 + 3] >= 64 ? 1 : 0;
+    c.__alfa = a;
+    return a;
+  }
+  // o ponto (px do jogo) cai no sprite desenhado com o canto em (x0, y0)? `folga` px a mais em volta
+  function tocaSprite(c, x0, y0, wx, wy, folga) {
+    var a = alfaDe(c), x = Math.floor(wx - x0), y = Math.floor(wy - y0);
+    for (var dy = -folga; dy <= folga; dy++) for (var dx = -folga; dx <= folga; dx++) {
+      var xx = x + dx, yy = y + dy;
+      if (xx >= 0 && yy >= 0 && xx < c.width && yy < c.height && a[yy * c.width + xx]) return true;
+    }
+    return false;
+  }
+  var spriteSol = null;
+  function toqueSol(wx, wy, px, py, o, folga) {
+    try {
+      if (!spriteSol) {
+        spriteSol = document.createElement('canvas'); spriteSol.width = 40; spriteSol.height = 40;
+        desenharPlaneta(spriteSol.getContext('2d'), 'sol', 20, 20, 11);
+      }
+      return tocaSprite(spriteSol, px + 16 - 20, py + 14 - 20, wx, wy, folga);
+    } catch (e) { return false; }
+  }
+  function toquePlaneta(wx, wy, px, py, o, folga) {
+    try {
+      var id = v(o, 'id', 'terra'), c = spritePlaneta(id, RAIOS[id] || 4), cx = px + 8, cy = py + 6;
+      if (tocaSprite(c, cx - c.width / 2, cy - c.height / 2, wx, wy, folga)) return true;
+      // com folga, a faixa em que as luas dão a volta também vale
+      if (folga && id === 'jupiter') return Math.abs(wx - cx) <= 13 && Math.abs(wy - cy) <= 3;
+      if (folga && id === 'terra') return Math.abs(wx - cx) <= 9 && Math.abs(wy - cy) <= 4;
+      return false;
+    } catch (e) { return false; }
+  }
 
   /* ================= OBJETOS: PAREDE ================= */
   // a fenda aberta da cúpula, com o céu estrelado (as estrelas piscam; às vezes passa uma estrela cadente)
@@ -437,6 +476,40 @@
         if ((f + i) % 3 === 0) ret(ctx, cx + s[0], py + s[1], 1, 1, i % 2 ? ESTRELA : CIANO);
       });
     } });
+  // o disco da projeção é uma galáxia azul-clara: a base fica na faixa de claridade do piso, para a Mariana e a
+  // unicórnio (contorno #3a2446) aparecerem em cima dela; o brilho do miolo, os dois braços em espiral e as
+  // estrelas vêm por cima. (Um disco escuro, ou só um pouco mais claro, fica da mesma luminância do contorno.)
+  var GALAXIA = { aro: '#3d3a8a', borda: '#8a82d6', base: '#6470c4', meio: '#6a76c8', miolo: '#7a84d6',
+    braco: '#8490de', braco2: '#a8b0f0', orbita: '#4a52a8' };
+  function desenharGalaxia(ctx, sx, sy, d) {
+    var g = GALAXIA;
+    elipse(ctx, sx, sy, d.rx + 3, d.ry + 2, g.aro);
+    elipse(ctx, sx, sy, d.rx + 2, d.ry + 1, g.borda);
+    elipse(ctx, sx, sy, d.rx, d.ry, g.base);
+    elipse(ctx, sx, sy, Math.round(d.rx * 0.55), Math.round(d.ry * 0.55), g.meio);
+    elipse(ctx, sx, sy, Math.round(d.rx * 0.3), Math.round(d.ry * 0.3), g.miolo);
+    elipse(ctx, sx, sy, Math.round(d.rx * 0.15), Math.round(d.ry * 0.15), clarear(g.miolo, 0.3));
+    // dois braços em espiral: uma nuvem clara que afina para fora, com um fio mais claro no meio
+    for (var b = 0; b < 2; b++) {
+      for (var i = 0; i < 70; i++) {
+        var s = i / 70, r = 0.16 + 0.8 * s, ang = b * Math.PI + s * Math.PI * 1.9 + 0.4;
+        var raio = Math.max(1, Math.round(5 * (1 - s * 0.75)));
+        elipse(ctx, Math.round(sx + Math.cos(ang) * r * d.rx), Math.round(sy + Math.sin(ang) * r * d.ry),
+          raio + 1, Math.max(1, Math.round(raio * 0.6)), g.braco);
+      }
+      for (var f = 0; f < 70; f++) {
+        if (sorte(f, b, 51) < 0.3) continue;
+        var s2 = f / 70, r2 = 0.16 + 0.8 * s2, ang2 = b * Math.PI + s2 * Math.PI * 1.9 + 0.4;
+        ret(ctx, Math.round(sx + Math.cos(ang2) * r2 * d.rx), Math.round(sy + Math.sin(ang2) * r2 * d.ry), s2 < 0.5 ? 2 : 1, 1, g.braco2);
+      }
+    }
+    // estrelas espalhadas (lilás e amarelinhas, algumas com brilho em cruz)
+    for (var k = 0; k < 46; k++) {
+      var a = sorte(k, 3, 61) * Math.PI * 2, q = Math.sqrt(sorte(k, 5, 67)) * 0.95;
+      var x = Math.round(sx + Math.cos(a) * q * d.rx), y = Math.round(sy + Math.sin(a) * q * d.ry);
+      if (k % 9 === 0) brilho(ctx, x, y, ESTRELA); else ret(ctx, x, y, 1, 1, k % 3 ? LILAS : ESTRELA);
+    }
+  }
   // chão do Planetário: disco da projeção com as órbitas pontilhadas (Plutão tracejada)
   I.objeto('observatorio-orbitas', { w: 3, h: 3, solido: false, semSombra: true, plano: true,
     desenhar: function (ctx, px, py, o) {
@@ -444,9 +517,7 @@
       ctx.save();
       if (clip && ctx.beginPath) { ctx.beginPath(); ctx.rect(clip.x, clip.y, clip.w, clip.h); ctx.clip(); }
       var disco = v(o, 'disco', { rx: 120, ry: 66 });
-      elipse(ctx, sx, sy, disco.rx + 2, disco.ry + 1, '#3d3a8a');
-      elipse(ctx, sx, sy, disco.rx, disco.ry, '#1d1a4a');
-      elipse(ctx, sx, sy, Math.round(disco.rx * 0.5), Math.round(disco.ry * 0.5), '#211d52');
+      desenharGalaxia(ctx, sx, sy, disco);
       (v(o, 'aneis', []) || []).forEach(function (a) {
         var passos = Math.max(24, Math.round(a.rx * 2.2));
         for (var i = 0; i < passos; i++) {
@@ -460,6 +531,7 @@
     } });
   // o Sol, no meio do Planetário (raios girando devagar)
   I.objeto('observatorio-sol', { w: 2, h: 2, topo: 4, solido: true, semSombra: true,
+    toque: toqueSol,
     desenhar: function (ctx, px, py) {
       var cx = px + 16, cy = py + 14;
       // sem disco nem halo semitransparente por baixo (no chão escuro virava um disco cinza-marrom):
@@ -478,6 +550,7 @@
     } });
   // cada planeta: pegada fixa de 1 tile; a animação só dá uma voltinha pequena dentro dela
   I.objeto('observatorio-planeta', { w: 1, h: 1, topo: 6, solido: true, semSombra: true,
+    toque: toquePlaneta,
     desenhar: function (ctx, px, py, o) {
       var cx = px + 8;
       elipse(ctx, cx, py + 13, 5, 1, 'rgba(127,224,255,0.20)');
@@ -935,7 +1008,7 @@
   var aneis = PLANETAS.map(function (p) {
     var dx = (PLA.x + p.x) * T + 8 - solPx.x, dy = (PLA.y + p.y) * T + 8 - solPx.y;
     var rx = Math.round(Math.sqrt(dx * dx + (dy / ACHATAR) * (dy / ACHATAR)));
-    return { rx: rx, ry: Math.round(rx * ACHATAR), cor: p.id === 'plutao' ? '#9a86c8' : '#5d62b8', tracejado: p.id === 'plutao' };
+    return { rx: rx, ry: Math.round(rx * ACHATAR), cor: p.id === 'plutao' ? '#9a86c8' : GALAXIA.orbita, tracejado: p.id === 'plutao' };
   });
   var orbitas = { tipo: 'observatorio-orbitas', x: PLA.x + 1, y: PLA.y + 3, w: 13, h: 9,
     var: { sx: solPx.x, sy: solPx.y, aneis: aneis, disco: { rx: 118, ry: 68 },
@@ -963,15 +1036,15 @@
       { tipo: 'vaso-planta', x: 0, y: 5 }, { tipo: 'observatorio-placa', x: 2, y: 5 },
       { tipo: 'tapete', x: 0, y: 6, w: 3, h: 1, var: { cor: '#3a3f8a', borda: '#ffd34d' } },
       { tipo: 'almofada', x: 4, y: 6, var: { cor: '#7c5cff' } },
-      { tipo: 'poltrona', x: 11, y: 5, var: { cor: '#5a6ad0' } }, { tipo: 'mesa-centro', x: 11, y: 6 },
+      { tipo: 'poltrona', x: 11, y: 5, var: { cor: '#b58cff' } }, { tipo: 'mesa-centro', x: 11, y: 6 },
       // luminárias em tile próprio, nunca em cima de vaso ou cesto
       { tipo: 'observatorio-luminaria', x: 12, y: 5 }, { tipo: 'cesto', x: 12, y: 7 }, { tipo: 'pilha-livros', x: 9, y: 7 },
       { tipo: 'globo', x: 4, y: 4 },
-      { tipo: 'sofa', x: 0, y: 12, var: { cor: '#5a6ad0', almofada: '#ffd34d' } }, { tipo: 'planta-alta', x: 0, y: 10 },
+      { tipo: 'sofa', x: 0, y: 12, var: { cor: AZUL_CLARO, almofada: '#ffd34d' } }, { tipo: 'planta-alta', x: 0, y: 10 },
       { tipo: 'observatorio-luminaria', x: 5, y: 12 }, { tipo: 'cesto', x: 2, y: 12 },
       { tipo: 'tapete', x: 1, y: 10, w: 3, h: 1, var: { cor: '#2d3580', borda: '#b58cff' } },
       { tipo: 'observatorio-luneta', x: 12, y: 10 }, { tipo: 'poltrona', x: 10, y: 11, var: { cor: '#7c5cff' } },
-      { tipo: 'caixote', x: 12, y: 12, var: { item: 'estrela' } }, { tipo: 'vaso-grande', x: 8, y: 12, var: { cor: '#5a6ad0' } },
+      { tipo: 'caixote', x: 12, y: 12, var: { item: 'estrela' } }, { tipo: 'vaso-grande', x: 8, y: 12, var: { cor: AZUL_CLARO } },
       { tipo: 'tapete', x: 9, y: 10, w: 2, h: 1, var: { cor: '#3a3f8a', borda: '#7fe0ff' } }, { tipo: 'almofada', x: 11, y: 11, var: { cor: '#ffd34d' } },
       { tipo: 'vaso-planta', x: 4, y: 12 },
     ]),
@@ -1000,9 +1073,9 @@
       { tipo: 'observatorio-cordao', x: 0, y: 9 },
       cur('meteorito', 'Meteorito', 'cometas', { tipo: 'observatorio-meteorito', x: 7, y: 7 }),
       { tipo: 'observatorio-placa', x: 8, y: 7 },
-      { tipo: 'banco', x: 5, y: 11, var: { cor: '#5a6ad0' } }, { tipo: 'pedestal', x: 10, y: 8, var: { item: 'globo' } },
+      { tipo: 'banco', x: 5, y: 11, var: { cor: AZUL_CLARO } }, { tipo: 'pedestal', x: 10, y: 8, var: { item: 'globo' } },
       { tipo: 'tapete', x: 9, y: 10, w: 3, h: 1, var: { cor: '#3a3f8a', borda: '#7fe0ff' } },
-      { tipo: 'observatorio-luminaria', x: 11, y: 12 }, { tipo: 'vaso-grande', x: 12, y: 12, var: { cor: '#5a6ad0' } },
+      { tipo: 'observatorio-luminaria', x: 11, y: 12 }, { tipo: 'vaso-grande', x: 12, y: 12, var: { cor: AZUL_CLARO } },
       { tipo: 'caixote', x: 0, y: 12, var: { item: 'estrela' } }, { tipo: 'cesto', x: 1, y: 12 },
       { tipo: 'almofada', x: 3, y: 11, var: { cor: '#b58cff' } }, { tipo: 'globo', x: 0, y: 6 },
       { tipo: 'vaso-planta', x: 8, y: 12 }, { tipo: 'pedestal', x: 4, y: 2, var: { item: 'gema' } },
@@ -1019,15 +1092,15 @@
       { tipo: 'observatorio-janela', x: 14, y: 0 },
       cur('sol', 'Sol', 'sol', { tipo: 'observatorio-sol', x: SOL_LOCAL.x, y: SOL_LOCAL.y }),
       // plateia em volta (encostada nas paredes)
-      { tipo: 'vaso-planta', x: 0, y: 2 }, { tipo: 'banco', x: 1, y: 2, var: { cor: '#5a6ad0' } },
-      { tipo: 'observatorio-projetor', x: 7, y: 2 }, { tipo: 'banco', x: 9, y: 2, var: { cor: '#5a6ad0' } },
+      { tipo: 'vaso-planta', x: 0, y: 2 }, { tipo: 'banco', x: 1, y: 2, var: { cor: AZUL_CLARO } },
+      { tipo: 'observatorio-projetor', x: 7, y: 2 }, { tipo: 'banco', x: 9, y: 2, var: { cor: AZUL_CLARO } },
       { tipo: 'estante', x: 12, y: 2, var: { cor: '#5a4a8a' } }, { tipo: 'planta-alta', x: 14, y: 2 },
       { tipo: 'poltrona', x: 14, y: 4, var: { cor: '#7c5cff' } }, { tipo: 'observatorio-luminaria', x: 14, y: 6 },
       { tipo: 'poltrona', x: 0, y: 4, var: { cor: '#7c5cff' } }, { tipo: 'cesto', x: 0, y: 6 },
-      { tipo: 'globo', x: 0, y: 11 }, { tipo: 'banco', x: 2, y: 12, var: { cor: '#5a6ad0' } },
-      { tipo: 'almofada', x: 5, y: 12, var: { cor: '#b58cff' } }, { tipo: 'banco', x: 6, y: 12, var: { cor: '#5a6ad0' } },
-      { tipo: 'almofada', x: 8, y: 12, var: { cor: '#ffd34d' } }, { tipo: 'banco', x: 10, y: 12, var: { cor: '#5a6ad0' } },
-      { tipo: 'vaso-grande', x: 14, y: 12, var: { cor: '#5a6ad0' } }, { tipo: 'caixote', x: 14, y: 11, var: { item: 'estrela' } },
+      { tipo: 'globo', x: 0, y: 11 }, { tipo: 'banco', x: 2, y: 12, var: { cor: AZUL_CLARO } },
+      { tipo: 'almofada', x: 5, y: 12, var: { cor: '#b58cff' } }, { tipo: 'banco', x: 6, y: 12, var: { cor: AZUL_CLARO } },
+      { tipo: 'almofada', x: 8, y: 12, var: { cor: '#ffd34d' } }, { tipo: 'banco', x: 10, y: 12, var: { cor: AZUL_CLARO } },
+      { tipo: 'vaso-grande', x: 14, y: 12, var: { cor: AZUL_CLARO } }, { tipo: 'caixote', x: 14, y: 11, var: { item: 'estrela' } },
       { tipo: 'pilha-livros', x: 11, y: 2 },
     ]),
     sala(PLA.x, PLA.y, PLANETAS.map(function (p) {
