@@ -192,7 +192,12 @@
       if (!jogoAtivo || Cena.bloqueado()) return;
       if (e.target && /input|textarea/i.test(e.target.tagName)) return;
       var k = MAPA_TECLAS[e.key];
-      if (k) { teclas[k] = true; e.preventDefault(); }
+      if (k) {
+        teclas[k] = true; e.preventDefault();
+        // andando com as setas, o foco sai do botão do HUD (senão o próximo Espaço/Enter o apertaria de novo)
+        var foco = document.activeElement;
+        if (foco && foco !== document.body && foco.closest && foco.closest('#hud')) foco.blur();
+      }
       if (e.key === 'Enter' || e.key === ' ') {
         var alvo = Cena.atual().alvoPerto(J.tile(), { x: J.olharX, y: J.olharY });
         if (alvo) { e.preventDefault(); agirNoAlvo(alvo); }
