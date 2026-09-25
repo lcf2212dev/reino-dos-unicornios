@@ -70,6 +70,27 @@ body.sem-animacao .toque-ignorado { transform: none; }
 /* botão que gasta estrela, recém-aberto (ui.js, UI.escolher): meio apagado e sem aceitar toque até
    passar 1,1 s sem nenhum toque na tela; depois acende. O "Agora não" vale desde o início */
 .btn-grande.armando { opacity: 0.45; filter: grayscale(0.5); box-shadow: 0 2px 0 var(--borda); cursor: default; }
+/* enquanto espera, uma barrinha enche por baixo do rótulo em 1,1 s (o mesmo ARMAR_MS de ui.js) e o
+   botão acende quando ela completa; um toque recomeça as duas. Com "reduzir movimento", no lugar
+   da barrinha, o texto curto "Espera um pouquinho…" */
+.armando-barra, .armando-texto { display: none; }
+.btn-grande.armando { position: relative; overflow: hidden; }
+.btn-grande.armando .armando-barra {
+  display: block; position: absolute; left: 0; right: 0; bottom: 0; height: 6px;
+  background: var(--borda); transform-origin: left center; transform: scaleX(0);
+  animation: armar-encher 1.1s linear forwards;
+}
+@keyframes armar-encher { to { transform: scaleX(1); } }
+/* pelo teclado a trava não vale (ui.js): com o foco do teclado no botão, ele não parece desligado */
+.btn-grande.armando:focus-visible { opacity: 1; filter: none; box-shadow: var(--sombra-botao); }
+.btn-grande.armando:focus-visible .armando-barra, .btn-grande.armando:focus-visible .armando-texto { display: none; }
+.btn-grande.armando .armando-texto { font-size: 0.75em; font-weight: 700; }
+body.sem-animacao .btn-grande.armando .armando-barra { display: none; }
+body.sem-animacao .btn-grande.armando .armando-texto { display: block; }
+@media (prefers-reduced-motion: reduce) {
+  .btn-grande.armando .armando-barra { display: none; }
+  .btn-grande.armando .armando-texto { display: block; }
+}
 
 /* ---------- botões ---------- */
 .btn-grande {

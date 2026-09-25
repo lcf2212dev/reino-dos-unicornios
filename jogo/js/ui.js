@@ -211,7 +211,13 @@
       t.setAttribute('aria-labelledby', idMsg);
       var bs = botoes.map(function (b) {
         var bt = el('button.btn-grande' + (b.principal ? '.btn-principal' : '.btn-secundario'), { type: 'button' }, b.rotulo);
-        if (b.gasta) { bt.classList.add('armando'); bt.setAttribute('aria-disabled', 'true'); }
+        if (b.gasta) {
+          bt.classList.add('armando'); bt.setAttribute('aria-disabled', 'true');
+          // o que está acontecendo, sem som: uma barrinha enche durante a espera (com "reduzir
+          // movimento", o texto "Espera um pouquinho…"), jogo.css
+          bt.appendChild(el('span.armando-barra', { 'aria-hidden': 'true' }));
+          bt.appendChild(el('span.armando-texto', { 'aria-hidden': 'true' }, 'Espera um pouquinho…'));
+        }
         bt.addEventListener('click', function (e) {
           if (bt.classList.contains('armando') && e.detail) return;   // a trava é só do toque e do mouse: pelo teclado ela chega aqui com um Tab de propósito
           // reserva: se nem trocando de lugar nem movendo o diálogo deu para tirar o botão de baixo
@@ -232,6 +238,8 @@
       var armar = null;
       function acenderDepois() {
         clearTimeout(armar);
+        // a barrinha recomeça junto com a espera
+        gastam.forEach(function (bt) { var br = bt.querySelector('.armando-barra'); if (br) { br.style.animation = 'none'; void br.offsetWidth; br.style.animation = ''; } });
         armar = setTimeout(function () { gastam.forEach(function (bt) { bt.classList.remove('armando'); bt.removeAttribute('aria-disabled'); }); }, ARMAR_MS);
       }
       if (gastam.length) {
