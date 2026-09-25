@@ -10,9 +10,14 @@ ctx.window = ctx;
 vm.createContext(ctx);
 vm.runInContext(fs.readFileSync(path.join(raiz, 'js/config.js'), 'utf8'), ctx);
 const pastaMaterias = path.join(raiz, 'js/materias');
+// --materia <arquivo>: usa esse arquivo no lugar do js/materias/ de mesmo nome (ex.: a matéria montada à parte)
+const iMateria = process.argv.indexOf('--materia');
+const materiaFora = iMateria >= 0 ? path.resolve(process.argv[iMateria + 1]) : null;
 fs.readdirSync(pastaMaterias).filter((f) => f.endsWith('.js')).forEach((f) => {
+  if (materiaFora && path.basename(materiaFora) === f) return;
   vm.runInContext(fs.readFileSync(path.join(pastaMaterias, f), 'utf8'), ctx, { filename: f });
 });
+if (materiaFora) vm.runInContext(fs.readFileSync(materiaFora, 'utf8'), ctx, { filename: materiaFora });
 
 const pastaProvas = path.join(raiz, 'js/provas');
 fs.readdirSync(pastaProvas).filter((f) => f.endsWith('.js')).forEach((f) => {
@@ -154,7 +159,8 @@ Reino.provas.forEach((pv) => {
   vm.runInNewContext(fs.readFileSync(path.join(raiz, 'js/icones.js'), 'utf8'), ic);
   const RE = /(\p{RI}\p{RI}|\p{Extended_Pictographic}(?:\uFE0F|\uFE0E)?(?:\u200D\p{Extended_Pictographic}(?:\uFE0F|\uFE0E)?)*)/gu;
   const semDesenho = new Set();
-  const arquivos = fs.readdirSync(pastaMaterias).filter((f) => f.endsWith('.js')).map((f) => path.join(pastaMaterias, f))
+  const arquivos = fs.readdirSync(pastaMaterias).filter((f) => f.endsWith('.js') && !(materiaFora && path.basename(materiaFora) === f)).map((f) => path.join(pastaMaterias, f))
+    .concat(materiaFora ? [materiaFora] : [])
     .concat(fs.readdirSync(pastaProvas).filter((f) => f.endsWith('.js')).map((f) => path.join(pastaProvas, f)))
     .concat(['js/provas.js', 'js/falas.js', 'js/ui.js'].map((f) => path.join(raiz, f)));
   arquivos.forEach((f) => {

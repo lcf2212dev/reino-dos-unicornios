@@ -599,6 +599,10 @@
     // (e um risquinho de contorno embaixo dele onde encosta na crina, para não se misturar com ela)
     'anel-saturno': { linhas: ['.AA..AA.', 'AAWWWWAA', '..k..k..'], paleta: { k: '#3a2446', A: '#9a6cf5', a: '#d9c2ff', W: '#ffffff' }, ancora: 'chifre', dx: -3, dy: 0 },
   };
+  // PROVISÓRIO (Português): até os desenhos dos acessórios de portugues-3bim chegarem, usam os de História
+  ENFEITES['chapeu-chef-arco-iris'] = ENFEITES['chapeu-chef-arco-iris'] || ENFEITES['tiara-arco-iris'];
+  ENFEITES['cachecol-pinguim'] = ENFEITES['cachecol-pinguim'] || ENFEITES['pena-magica'];
+  ENFEITES['lacinho-morango'] = ENFEITES['lacinho-morango'] || ENFEITES['laco-vovo'];
   PA.ENFEITES_MONTARIA = ENFEITES;
 
   function paletaUnicornio(def, estagio) {

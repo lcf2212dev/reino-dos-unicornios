@@ -301,7 +301,7 @@
       var pn = UI.painel('regras', 'Como funciona o Reino', { semFechar: true });
       var ir = el('button.btn-grande.btn-principal', { type: 'button' }, 'Entrar no Reino 🦄');
       pn.conteudo.appendChild(el('ul.regras',
-        el('li', el('span.regra-icone', '🏛️'), el('span', el('b', 'Missões: '), 'cada matéria tem um lugar no reino, com 5 salas: ' + Reino.materias.map(function (m) { return m.lugar.nome + ' (' + m.nome + ')'; }).join(' e ') + '.')),
+        el('li', el('span.regra-icone', '🏛️'), el('span', el('b', 'Missões: '), 'cada matéria tem um lugar no reino, com 5 salas: ' + Reino.materias.map(function (m) { return m.lugar.nome + ' (' + m.nome + ')'; }).join(', ').replace(/, ([^,]*)$/, ' e $1') + '.')),
         el('li', el('span.regra-icone', '💰'), el('span', el('b', 'Dinheiro: '), 'cada sala vale ' + U.reais(P.valorSala(Reino.materias[0])) + '. A revisão inteira de uma matéria vale ' + U.reais(Reino.config.valorPorMateria) + '!')),
         el('li', el('span.regra-icone', '🦄'), el('span', el('b', 'Unicórnios: '), 'ganhe ovos de unicórnio comum, raro, épico e lendário. Eles nascem bebês e crescem quando você acerta!')),
         el('li', el('span.regra-icone', '⏳'), el('span', el('b', 'Sem relógio: '), 'aqui ninguém tem pressa. Leia com calma e toque em "Conferir".')),

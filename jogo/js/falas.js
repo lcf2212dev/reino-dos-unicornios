@@ -59,9 +59,11 @@
   F.ovo = function (raridade) { return 'Um ovo ' + NOME_RARIDADE[raridade] + '! Toque nele 3 vezes para chocar!'; };
   F.acertouDePrimeira = function (n) { return 'Você acertou ' + n + ' de primeira.'; };
   F.acertouDeTotal = function (n, total) { return 'Você acertou ' + n + ' de ' + total + '.'; };
-  F.tutorialMapa = function (m) { return 'Toque no chão para andar (ou use as setas do teclado). Vamos até o ' + m.lugar.nome + '? É só tocar nele! ' + m.emoji; };
+  // lugar.artigo: 'a' para lugar feminino (a Casa das Palavras); sem ele, masculino (o Museu, a Torre já diz "do")
+  function feminino(m) { return m.lugar.artigo === 'a'; }
+  F.tutorialMapa = function (m) { return 'Toque no chão para andar (ou use as setas do teclado). Vamos até ' + (feminino(m) ? 'a ' : 'o ') + m.lugar.nome + '? É só tocar ' + (feminino(m) ? 'nela' : 'nele') + '! ' + m.emoji; };
   F.treinoBloqueado = function (m, faltam) {
-    return 'O treino de ' + m.nome + ' abre quando você terminar as salas do ' + m.lugar.nome + '. Falta' + (faltam === 1 ? ' só 1!' : 'm ' + faltam + '!') + ' Você consegue! 💪';
+    return 'O treino de ' + m.nome + ' abre quando você terminar as salas ' + (feminino(m) ? 'da ' : 'do ') + m.lugar.nome + '. Falta' + (faltam === 1 ? ' só 1!' : 'm ' + faltam + '!') + ' Você consegue! 💪';
   };
   F.pistaLivro = function (titulo) { return 'Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em "' + titulo + '".'; };
 
@@ -84,7 +86,9 @@
       todos(d.opcoes).forEach(function (i) { segs.push(d.opcoes[i].t); });
     }
     if (d.tipo === 'vfLista') d.itens.forEach(function (it) { segs.push(it.t); });
-    if (d.tipo === 'completar') {
+    // completar com a lacuna dentro da palavra (colado: PA__ARINHO) e copiar (PASEIO/PASSEIO): as palavras
+    // pela metade e as duas escritas soam iguais ou sem sentido em voz alta; a narradora lê só o enunciado
+    if (d.tipo === 'completar' && !d.colado) {
       d.palavras.forEach(function (p) { segs.push(p); });
       d.frases.forEach(function (f) { segs.push(F.fraseComLacuna(f)); });
     }
@@ -95,6 +99,18 @@
     }
     if (d.lerItens && d.tipo === 'frase') todos(d.blocos).forEach(function (i) { segs.push(d.blocos[i]); });
     if (d.lerItens && d.tipo === 'ordenar') todos(d.itens).forEach(function (i) { segs.push(d.itens[i]); });
+    return segs;
+  };
+  // texto de apoio de uma questão (d.apoio: título e partes com lista ou texto), lido no 🔊 da caixa do texto
+  F.segmentosApoio = function (apoio) {
+    if (!apoio) return [];
+    var segs = [];
+    if (apoio.titulo) segs.push(apoio.titulo);
+    (apoio.partes || []).forEach(function (p) {
+      if (p.titulo) segs.push(p.titulo);
+      (p.lista || []).forEach(function (t) { segs.push(t); });
+      if (p.texto) segs.push(p.texto);
+    });
     return segs;
   };
   F.fraseComLacuna = function (f) { return f.antes + ' ______' + (/^[.,!?]/.test(f.depois) ? '' : ' ') + f.depois; };
@@ -125,7 +141,9 @@
     function addGrupo(o) { Object.keys(o).forEach(function (k) { if (typeof o[k] === 'string') add(o[k], 'claude', 'geral'); else addGrupo(o[k]); }); }
     addGrupo(F.provas);
     (Reino.provas || []).forEach(function (pv) {
-      pv.questoes.forEach(function (d) { F.segmentosDesafio(d).forEach(function (t) { add(t, 'narradora', 'prova-' + pv.id); }); });
+      pv.questoes.forEach(function (d) {
+        F.segmentosDesafio(d).concat(F.segmentosApoio(d.apoio)).forEach(function (t) { add(t, 'narradora', 'prova-' + pv.id); });
+      });
     });
 
     Reino.materias.forEach(function (m) {
@@ -143,7 +161,7 @@
         add(s.nome, 'claude', p.extra);
         add(s.intro, 'claude', p.extra);
         s.desafios.forEach(function (d) {
-          F.segmentosDesafio(d).forEach(function (t) { add(t, 'narradora', p.sala(s)); });
+          F.segmentosDesafio(d).concat(F.segmentosApoio(d.apoio)).forEach(function (t) { add(t, 'narradora', p.sala(s)); });
         });
       });
     });

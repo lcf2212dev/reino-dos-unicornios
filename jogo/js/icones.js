@@ -4869,3 +4869,8 @@ window.ICONES = {
     'kkkkkkkkkkkkkkkk',
   ] },
 };
+// PROVISÓRIO (Português): até os ícones dos acessórios de portugues-3bim chegarem, usam os de História
+['chapeu-chef-arco-iris:tiara-arco-iris', 'cachecol-pinguim:pena-magica', 'lacinho-morango:laco-vovo'].forEach(function (par) {
+  var ab = par.split(':');
+  if (!window.ICONES['acessorio:' + ab[0]]) window.ICONES['acessorio:' + ab[0]] = window.ICONES['acessorio:' + ab[1]];
+});

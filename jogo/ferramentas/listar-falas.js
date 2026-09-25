@@ -31,8 +31,17 @@ Object.values(Reino.config.vozes).forEach((v) => { if (v && v.ingles) VOZES_INGL
 const MESES = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
 const ESTADOS = { AM: 'Amazonas', RJ: 'Rio de Janeiro', MS: 'Mato Grosso do Sul', RS: 'Rio Grande do Sul', ES: 'Espírito Santo', TO: 'Tocantins', SP: 'São Paulo', PA: 'Pará', MG: 'Minas Gerais', BA: 'Bahia', PE: 'Pernambuco', CE: 'Ceará', MA: 'Maranhão', GO: 'Goiás', PR: 'Paraná', SC: 'Santa Catarina' };
 
-function prepararFala(texto, voz) {
+// Português: letras sozinhas ("usando X ou CH", "a letra H") são lidas pelo nome, como a professora fala.
+// Só nas falas dos pacotes de Português (as gravações das outras matérias não mudam).
+const NOME_LETRA = { CH: 'cê agá', LH: 'éle agá', NH: 'ene agá', SS: 'dois ésses', RR: 'dois érres',
+  H: 'agá', X: 'xis', S: 'ésse', Z: 'zê', R: 'érre', L: 'éle', U: 'u' };
+function nomesDasLetras(t) {
+  return t.replace(/(^|[^\p{L}])(CH|LH|NH|SS|RR|H|X|S|Z|R|L|U)(?=$|[^\p{L}])/gu, (_, a, l) => a + NOME_LETRA[l]);
+}
+
+function prepararFala(texto, voz, pacotes) {
   let t = Reino.Voz.normalizar(texto);
+  if ((pacotes || []).some((p) => /portugues/.test(p)) && !VOZES_INGLESAS.has(voz)) t = nomesDasLetras(t);
   // voz inglesa: só lacunas e MAIÚSCULAS (sem as regras do português)
   if (VOZES_INGLESAS.has(voz)) {
     t = t.replace(/_{2,}/g, '…').replace(/…\./g, '…');
@@ -63,10 +72,15 @@ Reino.Falas.todas().forEach((f) => {
   const chave = Reino.Voz.chave(f.voz, f.texto);
   let item = porChave.get(chave);
   if (!item) {
-    item = { chave, voz: f.voz, texto: Reino.Voz.normalizar(f.texto), fala: prepararFala(f.texto, f.voz), pacotes: [] };
+    item = { chave, voz: f.voz, texto: Reino.Voz.normalizar(f.texto), original: f.texto, pacotes: [] };
     porChave.set(chave, item);
   }
   if (!item.pacotes.includes(f.pacote)) item.pacotes.push(f.pacote);
+});
+// o texto falado depende dos pacotes (nomes das letras só em Português): calculado depois de juntar todos
+porChave.forEach((item) => {
+  item.fala = prepararFala(item.original, item.voz, item.pacotes);
+  delete item.original;
 });
 const falas = [...porChave.values()].filter((f) => f.fala.length > 0);
 fs.writeFileSync(path.join(__dirname, 'falas.json'), JSON.stringify({ vozes: Reino.config.vozes, falas }, null, 1));

@@ -1186,6 +1186,16 @@
     // Observatório (o Cosmo usa a base 'robo', registrada pelo Observatório com N.registrarBase)
     vega: { nome: 'Doutora Vega', voz: 'npc-vega', sprite: { pele: '#a86b4a', cabelo: '#3a2320', penteado: 'coque', jaleco: true, roupa: '#5a6ad0', roupa2: '#2a2f66', oculos: true, oculosCor: '#ffd34d', presilha: true, cor2: '#ffe066' } },
     cosmo: { nome: 'Robô Cosmo', voz: 'npc-cosmo', sprite: { base: 'robo', corpo: '#b8c4d8', detalhe: '#5fb4ff', antena: '#ff5c8a' } },
+    // Casa das Palavras (Português). Opções novas do gerador: chapeu 'chef' e 'quepe', nariz (palhaço)
+    palavrinha: { nome: 'Dona Palavrinha', voz: 'npc-palavrinha', sprite: { idade: 'idoso', pele: '#c68a5e', cabelo: '#e4e0ec', penteado: 'coque', oculos: true, oculosCor: '#e0433f', roupa: '#ffd1e6', roupa2: '#c9365a', perna: 'saia', livro: '#39a860', colar: true, cor2: '#ffd34d' } },
+    manu: { nome: 'Chef Manu', voz: 'npc-manu', sprite: { pele: '#f1c7a5', cabelo: '#2b1b17', penteado: 'rabo', chapeu: 'chef', roupa: '#f4f2fa', roupa2: '#3a3a5a', avental: true, aventalCor: '#ff6b8a', cor2: '#e0433f' } },
+    heitor: { nome: 'Jardineiro Heitor', voz: 'npc-heitor', sprite: { pele: '#7a4a32', cabelo: '#2b1b17', penteado: 'curto', barba: true, chapeu: 'palha', roupa: '#8fd08f', roupa2: '#4a6fb0', jardineira: true, cor2: '#39a860' } },
+    chocalho: { nome: 'Palhaço Chocalho', voz: 'npc-chocalho', sprite: { pele: '#ffe0c7', cabelo: '#ff9d2e', penteado: 'cacheado', chapeu: 'cartola', chapeuCor: '#7c5cff', nariz: '#ff3b3b', roupa: '#ffd34d', estampa: 'bolinhas', roupa2: '#39c5bb', gravata: '#ff4f9a', cor2: '#ff4f9a' } },
+    brisa: { nome: 'Capitã Brisa', voz: 'npc-brisa', sprite: { pele: '#d9a07a', cabelo: '#5a3825', penteado: 'trancas', chapeu: 'quepe', chapeuCor: '#f4f2fa', roupa: '#2f6fd6', roupa2: '#2a2f66', cachecol: true, cachecolCor: '#e0433f', cor2: '#ffd34d' } },
+    carlos: { nome: 'Seu Carlos do Carrossel', voz: 'npc-carlos', sprite: { idade: 'idoso', pele: '#e0ac86', cabelo: '#d8d4e0', penteado: 'careca', bigode: true, chapeu: 'boina', chapeuCor: '#c9365a', roupa: '#fff1d0', colete: '#c9365a', roupa2: '#3a3a5a', gravata: '#ffd34d' } },
+    // Castelo (treino de Português) e Escola (prova de Português)
+    clara: { nome: 'Cavaleira Clara', voz: 'npc-clara', sprite: { pele: '#a86b4a', cabelo: '#2b1b17', penteado: 'black', chapeu: 'elmo', cor2: '#39a860', armadura: true, roupa: '#39a860', capa: true, capaCor: '#ffd34d' } },
+    lucia: { nome: 'Professora Lúcia', voz: 'npc-lucia', sprite: { pele: '#ffe0c7', cabelo: '#2b1b17', penteado: 'longo', oculos: true, roupa: '#e0433f', roupa2: '#3a3a5a', perna: 'saia', livro: '#ffd34d', cor2: '#ffd34d', colar: '#39c5bb' } },
   };
 
   Reino.NPCs = N;
