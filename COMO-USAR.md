@@ -6,6 +6,9 @@
   - O progresso é sincronizado entre os aparelhos. Quando um aparelho junta o que veio de outro lugar (outro aparelho, outra aba), ele reenvia o resultado ao servidor.
   - Duas abas do jogo no mesmo navegador juntam o progresso uma da outra, sem perder nada.
   - **Teclado:** uma tela aberta pelo teclado mostra um contorno roxo em volta dela (o Tab leva ao primeiro botão), e o Esc fecha os balões do Claude e dos personagens.
+  - **Teclado nas provas, salas e treino:** o foco acompanha. A tela rola até o botão focado; depois de escolher um bloco, o foco fica no monte de blocos; ao trocar de questão (ou sair do ritual de respirar), o foco vai para a questão nova. O Enter que chega logo depois da troca não escolhe nada sem ela ver.
+  - **Letras da fonte do jogo:** as maiúsculas com acento saem certas em todo o jogo (HISTÓRIA, NÃO, ÁFRICA). Antes, a letra acentuada aparecia minúscula no meio da palavra.
+  - **No celular:** Verdadeiro ou falso, Ligar e Separar cabem na tela em todas as matérias ("Falso" fica embaixo de "Verdadeiro", e os baús ficam um embaixo do outro).
   - O jogo só começa depois de buscar o progresso guardado, no claude.ai ou no computador de casa. Por isso, um aparelho novo já abre com o progresso dela.
   - Se aparecer "O reino não abriu agora", o jogo não conseguiu buscar o progresso. Confira a internet, ou o computador de casa, e toque em "Tentar de novo". Até isso dar certo, o jogo não começa.
 - **Só no notebook, sem internet para o jogo:** abra `jogo/index.html` com duplo clique.
@@ -16,14 +19,16 @@
 - PIN: **2026**. Para trocar, edite `pinPais` em `jogo/js/config.js` e peça ao Claude para republicar.
 - Na área dos pais dá para:
   - ver quanto ela ganhou por matéria;
+  - ver quantas vezes ela fez o Treino da Medalha de cada matéria (com uma só, aparece "(1 vez)");
   - registrar o que já foi pago;
   - **🔄 Começar novo ciclo de provas:** zera salas, treinos, dinheiro e pagamentos, e mantém os unicórnios, as estrelas, os enfeites, a comida da despensa e a fome e a sede.
+- Depois de registrar um pagamento ou começar um novo ciclo, a Área dos pais continua aberta, sem pedir o PIN de novo.
 - **🗑️ Apagar tudo** zera TODO o progresso, inclusive unicórnios e estrelas, e não tem volta. Não use para resolver problema: peça ao Claude.
 
 ## Nova matéria
 1. Salve os prints numa pasta `Mariana Revisões/<Matéria>/`, por exemplo `Mariana Revisões/Geografia/`.
 2. Peça ao Claude para criar a matéria no reino.
-3. O Claude cria um lugar novo no mapa, com salas que somam R$20, os desafios da apostila, o livro-resumo e os unicórnios da matéria.
+3. O Claude cria um lugar novo no mapa, com salas que somam R$20, os desafios da apostila, o livro-resumo e os unicórnios da matéria. Sobrou uma clareira livre no mapa, a de cima à direita (23,4). O lugar novo entra "por cima" do mapa: as árvores e as flores do resto do reino não mudam.
 4. O Claude grava as vozes das falas novas e republica no mesmo link. O progresso da Mariana é mantido.
 5. A matéria também ganha um prédio por dentro. Se o Claude ainda não desenhou um prédio próprio, entra um interior padrão automático: hall com guia e livro, uma sala com um personagem para cada sala, uma ala no Castelo e baias no Estábulo. O ideal é pedir ao Claude um prédio próprio com personagens, como o Museu e a Torre.
 
@@ -33,6 +38,8 @@
 - **Unicórnios:** Thalita, com a voz mais aguda.
 - **Inglês:** Sonia (inglês britânico, como a apostila), um pouco mais devagar. Ouça as amostras 10, 11 e 12 em `amostras-de-voz/` (Sonia, Libby e Maisie, que tem voz de criança). Para trocar, edite `ingles` em `vozes` no `jogo/js/config.js`, regrave e peça para republicar.
 - Nas matérias e provas, o inglês fica entre «» no arquivo. Na tela, ele aparece destacado em azul-violeta, sem os sinais, e é falado pela voz inglesa. O resto é falado em português.
+- **Português:** quando a pergunta fala de uma letra sozinha, em maiúsculas ("usando X ou CH", "a letra H"), a voz lê o nome da letra: xis, cê agá, éle agá, ene agá, ésse, dois ésses, zê, érre, dois érres, éle, agá.
+- Nas palavras com um espaço para completar dentro delas (como XÍ_ARA), a voz lê só a pergunta, para não entregar a resposta.
 - As falas são gravadas uma vez com as vozes naturais da leitura em voz alta do Microsoft Edge e ficam dentro do jogo. Por isso funcionam igual em todo aparelho, até sem internet.
 - Nomes que a Mariana digita (como o nome do unicórnio) não são falados.
 - Para regravar depois de mudar textos (roda dentro de `jogo/`):
@@ -45,22 +52,36 @@
 - **Personagens das construções:** cada um tem uma voz própria, gravada como as outras.
   - **Museu:** Dona Memória, Seu Antônio, Carteiro Chico, Guia Tainá, Vovó Contadeira e Restauradora Nina.
   - **Torre:** Seu Ponteiro, «Coach Ben», «Miss Stella», «Doctor Smile», «Miss Moon» e «Mister Joy» (os trechos em inglês de cada um usam a mesma voz, em inglês).
-  - **Castelo:** Princesa Serena, Cavaleira Aurora e «Sir Oliver». **Escola:** Diretora Margarida, Professora Helena e «Teacher Emma».
+  - **Casa das Palavras:** Dona Palavrinha, Chef Manu, Jardineiro Heitor, Palhaço Chocalho, Capitã Brisa e Seu Carlos do Carrossel.
+  - **Castelo:** Princesa Serena, Cavaleira Aurora, «Sir Oliver» e Cavaleira Clara. **Escola:** Diretora Margarida, Professora Helena, «Teacher Emma» e Professora Lúcia.
   - **Estábulo, Loja e Baú:** Seu Feno, Fada Pétala e Dragãozinho Tostão.
   - **Pet Shop:** Dona Aveia. **Observatório:** Doutora Vega e Robô Cosmo (com um leve efeito de robô na gravação).
   - A Doutora Vega tem voz própria: é a Francisca, a mesma voz da narradora, só que bem mais grave e um pouco mais rápida, para dar para reconhecer de ouvido.
   - O Robô Cosmo fala na velocidade normal e no mesmo volume dos outros, para as piadas ficarem claras.
   - Quando a Mariana escolhe "Tchau" depois de uma curiosidade da Vega ou de uma piada do Cosmo, o personagem se despede num balão que fecha sozinho.
   - O Carteiro Chico usa a voz do Claude, mais aguda e mais rápida.
-  - As falas são curtas para caber no balão do celular.
-  - Amostras: `amostras-de-voz/` de 13 a 36 (34 Dona Aveia, 35 Doutora Vega, 36 Robô Cosmo, já com as vozes que estão no jogo), ou todas juntas em `VOZES-DOS-PERSONAGENS.mp3`.
+  - Visual: Dona Palavrinha com um lápis no cabelo e um livro aberto; Jardineiro Heitor com chapéu de pescador e regador; Palhaço Chocalho com cachos verdes (visual próprio, sem lembrar palhaço famoso); Cavaleira Clara com um "A" dourado na armadura.
+  - As falas são curtas para caber no balão do celular, inclusive as frases automáticas.
+  - Amostras: `amostras-de-voz/` de 13 a 44 (34 Dona Aveia, 35 Doutora Vega, 36 Robô Cosmo; de 37 a 42 a Casa das Palavras, 43 a Cavaleira Clara e 44 a Professora Lúcia, já com as vozes que estão no jogo), ou todas juntas em `VOZES-DOS-PERSONAGENS.mp3`.
   - Para trocar, edite o perfil `npc-<nome>` em `vozes` no `jogo/js/config.js` e peça ao Claude para regravar.
 
 ## Regras do jogo
-- **Dinheiro:** cada sala paga uma vez. Cada matéria tem 5 salas de R$4, total de R$20.
+- **Dinheiro:** cada sala paga uma vez. Cada matéria tem 5 salas de R$4, total de R$20. Com as 3 matérias (História, Inglês e Português), dá R$60 no total.
 - **Matérias:**
   - **História:** no Museu das Memórias.
   - **Inglês:** na Torre do Relógio, com uma sala para cada capítulo, do 6 ao 10: Living Together, Here Comes the Sun, I Brush My Teeth Every Day, A Day in My Life e If You're Happy, Clap Your Hands.
+  - **Português:** na Casa das Palavras, com o Livro das Letras e 5 salas:
+    - **Receita de Quê?** 🍓: o que é uma receita, as partes dela (ingredientes e modo de preparo) e o passo a passo.
+    - **O H Silencioso** 🌿: palavras que começam com H, a letra que não tem som.
+    - **CH, LH, NH e o X** 🐣: palavras com CH, LH e NH, quando se usa X ou CH e os sons do X.
+    - **Expedição Antártida** 🧊: o relato de viagem, o tempo no relato e o som de S (S ou SS).
+    - **L, R e RR** 🎠: sílabas, o L e o R no fim da sílaba, e quando se usa R ou RR.
+  - **Texto de apoio nas salas:** algumas perguntas trazem o texto para ler junto: a lista das frutas da receita (sala Receita de Quê?), trechos do relato "Chegamos?" (Expedição Antártida) e um resumo do relato do piquenique (L, R e RR). O resumo e os trechos são do jogo, não da apostila.
+    - Na Expedição Antártida, cada desafio mostra só o trecho do relato de que precisa (quem escreveu, a ordem da viagem, os sinais de chegada, o combinado do iceberg), e não o resumo inteiro.
+    - Nas salas, a caixa do texto vem sempre aberta.
+  - Nas explicações de verdadeiro ou falso de Português, a resposta falsa começa com "É falso!".
+  - Na sala CH, LH, NH e o X, NI_O aceita NINHO e NICHO, porque as duas palavras existem.
+  - Na sala com S, SS, Z e X, no celular, os itens ficam um por linha.
 - **Unicórnios:**
   - **Comum:** concluir uma sala.
   - **Raro:** fazer a sala com tudo certo de primeira e sem aviso de pressa, **ou** jogar a sala 3 vezes, com qualquer resultado.
@@ -74,7 +95,8 @@
   - abre quando todas as salas da matéria estão feitas;
   - não tem relógio;
   - tem revisão obrigatória antes de entregar;
-  - a medalha é dada só pelos acertos.
+  - a medalha é dada só pelos acertos;
+  - o balão "REVISAR!" some quando ela começa a revisar, para não cobrir as questões.
 - **Medalha da escola:** a medalha de ouro da prova real (R$100) é combinada fora do jogo. O jogo só lembra a Mariana de ir com calma e revisar.
 - **Nadar no lago:** ela toca na água ou anda com as setas até o lago, e nada, montada ou a pé. Na água anda mais devagar (60% da velocidade). Se a montaria estiver com fome ou sede, as duas lentidões se somam: na água fica com cerca de 42% da velocidade. Se ela toca em terra, o caminho dá a volta por terra. Para mudar, edite `nado` em `jogo/js/config.js`.
 
@@ -91,16 +113,26 @@
 ## Construções por dentro
 - **Entrar:** pisar na porta, tocar no prédio ou na placa, apertar Enter perto dele ou escolher no menu Lugares. Um círculo fecha a tela e abre de novo já lá dentro.
 - **Sair:** pisar no tapete vermelho com a seta.
+- **Placas:**
+  - No mapa, nenhuma placa cobre outra. Quando uma placa precisa sair de trás do menu, ela vai para o lado, sem ficar em cima de outra.
+  - Dentro dos prédios, quando o menu do topo cobre a placa de um cômodo, ela desvia só dentro da parede do próprio cômodo. Se não couber ali, some enquanto estiver coberta. Assim ela nunca parece estar no chão ou no cômodo de baixo.
 - O jogo sempre começa no mapa: o lugar dentro do prédio não é salvo.
 - Os atalhos do topo (💰, ⭐, montaria, 🥚) continuam abrindo as telas direto.
 - **O que tem em cada prédio:**
   - **Museu das Memórias:** hall com a Dona Memória e 5 galerias, com Seu Antônio, Carteiro Chico, Guia Tainá, Vovó Contadeira e Restauradora Nina. Cada galeria tem o quadro do seu unicórnio raro.
   - **Torre do Relógio:** térreo com o Seu Ponteiro e um andar por capítulo, pelas escadas, com «Coach Ben», «Miss Stella», «Doctor Smile», «Miss Moon» e «Mister Joy». O relógio fica no alto.
-  - **Castelo da Medalha:** Princesa Serena, o Plano da Prova na tapeçaria e a estante das medalhas. Nas alas, a Cavaleira Aurora (História) e «Sir Oliver» (Inglês).
-  - **Escola do Reino:** Diretora Margarida e o mural dos prêmios. Nas salas, a Professora Helena e a «Teacher Emma».
+  - **Casa das Palavras:** por fora, um livro aberto com "Aa" na fachada e a porta roxa; a placa fica em cima do telhado, e o mastro com a flâmula do lápis fica à vista acima dela. Hall com a Dona Palavrinha (lápis no cabelo e livro aberto na mão), a lista das salas, o Livro das Letras, uma poltrona de leitura e um tapete de página de caderno. Cinco cômodos, um por sala:
+    - **Cozinha das Receitas:** Chef Manu, com a tigela de salada de frutas e a mesa de preparo (Receita de Quê?);
+    - **Horta do H:** Jardineiro Heitor, de chapéu de pescador e regador, com canteiros de terra no chão, tomates, hibiscos e um vaso de hortelã (O H Silencioso);
+    - **Pátio do Circo:** Palhaço Chocalho, com cachos verdes, nariz vermelho, bochechas rosadas e gola (a pele é a de sempre, sem rosto branco), com uma amarelinha no chão, um chocalho em pé no seu suporte, um carrinho de pipoca e um ninho com três ovinhos (CH, LH, NH e o X);
+    - **Porto da Expedição:** Capitã Brisa, com o cais, um tanque com um iceberg (só a "ponta" fora da água, a maior parte embaixo), pinguins, focas e um albatroz (Expedição Antártida);
+    - **Parque do Carrossel:** Seu Carlos do Carrossel, com um carrossel de unicórnios, balões e uma árvore (L, R e RR).
+    - Cada cômodo tem o quadro do seu unicórnio raro.
+  - **Castelo da Medalha:** Princesa Serena, o Plano da Prova na tapeçaria e a estante das medalhas. Nas alas, a Cavaleira Aurora (História), «Sir Oliver» (Inglês) e a Cavaleira Clara (Português), com um "A" dourado no peito. A ala de Português tem blocos de letras, um livro aberto e um cavalete com uma receita.
+  - **Escola do Reino:** Diretora Margarida e o mural dos prêmios. Nas salas, a Professora Helena, a «Teacher Emma» e a Professora Lúcia (prova de Português).
   - **Estábulo Mágico:** Seu Feno, o ninho dos ovos e uma baia para cada unicórnio do álbum. A baia fica vazia até ele nascer. Tocar num unicórnio faz ele falar.
-  - **Loja das Fadas:** Fada Pétala, vitrines e o espelho mágico.
-  - **Baú do Tesouro:** Dragãozinho Tostão e pilhas de moedas que crescem com o dinheiro dela.
+  - **Loja das Fadas:** Fada Pétala, vitrines e o espelho mágico. A vitrine de prêmios mostra também os de Português.
+  - **Baú do Tesouro:** Dragãozinho Tostão e pilhas de moedas que crescem com o dinheiro dela. O monte grande fica cheio em R$40 e nunca encolhe quando entra uma matéria nova. As pilhas de cada matéria continuam crescendo com o dinheiro dela.
   - **Pet Shop:** a loja da Dona Aveia e o Cantinho da Água, com o bebedouro.
   - **Observatório:** Cúpula do Telescópio, Planetário e Galeria do Espaço, com a Doutora Vega e o Robô Cosmo.
 - **Ícone em cima de cada personagem:**
@@ -168,22 +200,36 @@
   - **Ligar:** ela toca num item e depois no par dele.
   - **Circular:** o item tocado ganha um círculo.
   - **Completar:** ela escolhe a palavra do quadro.
-  - **Pergunta aberta:** ela monta a resposta com blocos. É a questão 6 de História e a 10 de Inglês.
+  - **Pergunta aberta:** ela monta a resposta com blocos. É a questão 6 de História, a 10 de Inglês e a 1 de Português.
   - **Figuras:** os documentos da questão 10 de História e as figuras das questões 1 e 4 de Inglês são desenhos em pixel art.
   - **Numerar (questão 8 de Inglês):** ela toca nos planetas na ordem.
   - **Desenho (questão 11 de Inglês):** ela desenha numa prancheta. A questão vale quando ela usa linhas, formas e pelo menos 2 cores.
   - **Questões pessoais (2 e 3 de Inglês):** qualquer resposta vale, porque falam da rotina dela.
+- **Prova de Português ("Revisão Bimestral de Português", 12 questões):**
+  - **Texto de apoio (questões 1 a 4):** a receita "Salada de frutas", com o botão 🔊 para ouvir o texto.
+    - Na 1ª questão que traz o texto, ele vem aberto.
+    - No celular e no tablet em pé, depois disso ele fica numa caixa em cima da pergunta que abre e fecha ("📖 Ver o texto de apoio" / "📖 Esconder"). O 🔊 fica sempre à vista.
+    - No notebook (e no tablet deitado), o texto fica ao lado da pergunta.
+  - **Instrução:** em cada questão, o que fazer no jogo ("Toque em X ou CH para completar cada palavra.") vem numa linha própria, com 👉, separada do enunciado da folha.
+  - **Completar letras dentro da palavra:** o espaço fica no meio da palavra (MO_ILA) e ela toca nas letras do quadro (X ou CH, S ou SS, X ou Z, R ou RR).
+  - **Figuras (questão 10):** 18 figuras em pixel art, na ordem da folha. Em cada uma ela escolhe CH, LH ou NH para completar o nome.
+  - **Escolher e montar com letras (questão 11):** ela toca na escrita certa (PASEIO ou PASSEIO) e depois monta a palavra tocando nas letras. Tocar numa letra já colocada tira ela. Cada item vale duas partes: escolher certo e copiar certo. Pelo teclado, depois de pôr uma letra, o foco volta para a primeira letra livre.
+  - **Mais de uma resposta certa:** só em duas palavras da questão 12. CA_O vale CARRO ou CARO, e CA_ETA vale CARETA ou CARRETA. Na correção aparece a da folha, com "(ou …)" para a outra. Palavras raras (como cassa, cassaco e fero) não valem, porque a prova imita a correção da professora.
 - Ajustes de texto:
   - **História:** "documeto" foi corrigido para "documento" na questão 10.
   - **Inglês:** "sport´s" virou "sport's", e o "not" da questão 6 aparece em maiúsculas (NOT), porque na folha ele está em negrito.
+  - **Português:**
+    - "13.e)" impresso na questão 12 virou "e)".
+    - O item h) da questão 8 está riscado na folha, com "REPETIDA", e ficou de fora.
+    - O título "SALADA DE FRUTAS" e os itens e) a g) da questão 8 estão escritos à mão por um adulto na folha. Entraram como estão. O título é a resposta da questão 1.
 - Aparece uma questão por vez. O jogo não diz se está certo nem mostra a nota no meio da prova.
 - Se ela tenta avançar rápido demais, o Claude pede para ler de novo (no máximo 3 vezes por prova).
 - No fim, o jogo pergunta se ela quer revisar a prova antes de ver a nota. Se ela quiser, passa por todas as questões de novo e pode trocar respostas.
-- **Nota:** vai de 0 a 10, e as questões com várias partes dão ponto parcial. Em História, cada questão vale 1 ponto. Em Inglês, que tem 11 questões, a nota é proporcional. Só dá 10 quem acerta tudo.
+- **Nota:** vai de 0 a 10, e as questões com várias partes dão ponto parcial. Em História, cada questão vale 1 ponto. Em Inglês (11 questões) e em Português (12 questões), a nota é proporcional. Só dá 10 quem acerta tudo.
 - **Prêmio:** ela ganha um acessório para o unicórnio quando tira nota 10. O prêmio depende da tentativa:
-  - na 1ª tentativa, um acessório **lendário**: Tiara de Arco-íris em História, Coroa do Big Ben em Inglês;
-  - na 2ª tentativa, um acessório **raro**: Pena Mágica em História, Óculos de Sol em Inglês;
-  - da 3ª em diante, um acessório **comum**: Lacinho da Vovó em História, Lacinho de Estrela em Inglês.
+  - na 1ª tentativa, um acessório **lendário**: Tiara de Arco-íris em História, Coroa do Big Ben em Inglês, Chapéu de Chef Arco-íris em Português;
+  - na 2ª tentativa, um acessório **raro**: Pena Mágica em História, Óculos de Sol em Inglês, Cachecol de Pinguim em Português;
+  - da 3ª em diante, um acessório **comum**: Lacinho da Vovó em História, Lacinho de Estrela em Inglês, Lacinho de Morango em Português.
 - Isso aparece na capa da prova, numa faixa em cada questão e no resultado.
 - Cada prova dá um acessório só. Depois disso ela vira treino (os outros dois passam a ser vendidos na Loja, veja abaixo).
 - Sair no meio da prova não conta como tentativa.
@@ -213,13 +259,14 @@
 ## Dia de atualizar o jogo (servidor de casa e claude.ai juntos)
 - O servidor de casa e o link do claude.ai guardam o progresso em lugares separados, e nada copia de um para o outro. Mesmo assim, os dois precisam ser atualizados no mesmo dia:
   - se só um lado tiver a Pet Shop e o Observatório, ela compra comida ou enfeite num lado e não acha no outro, e para ela isso é "sumiu";
-  - uma aba ainda aberta com o jogo antigo tira o enfeite novo que ela está usando (a compra fica, é só vestir de novo) e pode apagar a comida comprada.
+  - uma aba ainda aberta com o jogo antigo tira o enfeite novo que ela está usando (a compra fica, é só vestir de novo) e pode apagar a comida comprada;
+  - uma aba com o jogo **antigo** aberta, com a montaria sendo um unicórnio de Português, dá erro: a personagem some do mapa e a Loja não abre. O progresso não se perde, mas essa aba precisa ser fechada e aberta de novo.
 - **Passo a passo:**
   1. Escolha um horário em que a Mariana não esteja jogando.
-  2. Em **todos** os aparelhos (tablet, celular, notebook), feche as abas do jogo: a do computador de casa (reinodosunicornios.local ou o IP) e a do claude.ai. É fechar a aba mesmo, não só trocar de aba. No celular e no tablet, feche também no seletor de abas e de apps.
+  2. Em **todos** os aparelhos (tablet, celular, notebook), feche as abas do jogo: a do computador de casa (reinodosunicornios.local ou o IP) e a do claude.ai. É fechar a aba mesmo, não só trocar de aba. No celular e no tablet, feche também no seletor de abas e de apps. Não deixe **nenhuma** aba antiga aberta, nem esquecida em outro aparelho: o jogo antigo não conhece o Português.
   3. Peça ao Claude para fazer o merge e republicar o link do claude.ai. O computador de casa passa a servir o jogo novo na hora do merge: não precisa reiniciar o Docker.
   4. Espere **uns 5 minutos** depois do merge. O servidor de casa deixa os arquivos do jogo guardados no navegador por até 5 minutos (300 s), e antes disso uma aba nova pode misturar arquivos novos com antigos.
-  5. Abra um aparelho só, no computador de casa. Confira se aparecem a Pet Shop, o Observatório e o lago, e se as estrelas, as salas e os unicórnios estão como antes. Se algo estiver estranho, recarregue a página.
+  5. Abra um aparelho só, no computador de casa. Confira se aparece a Casa das Palavras, se o Chapéu de Chef Arco-íris (prêmio da prova de Português) aparece no unicórnio quando ela já ganhou, e se as estrelas, as salas e os unicórnios estão como antes. Se algo estiver estranho, recarregue a página.
   6. Depois abra o link do claude.ai num aparelho e confira do mesmo jeito.
   7. Só então libere os outros aparelhos, abrindo o jogo numa aba nova.
   8. Nos primeiros dias, se achar alguma aba esquecida de antes, feche e abra de novo antes de ela jogar.
@@ -227,7 +274,7 @@
 
 ## Limitações conhecidas
 - **Dois aparelhos gastando estrelas quase ao mesmo tempo:** as duas compras podem virar uma só na sincronização. As estrelas nunca ficam negativas.
-- **Aba com o jogo ANTIGO aberta no dia de atualizar:** quando ela troca um enfeite nessa aba, os enfeites novos saem de uso (a compra não se perde: é só vestir de novo na Loja). E, no mesmo aparelho, se a cópia de segurança não estiver lá, a comida comprada pode sumir de vez, com as estrelas já gastas. Por isso, nenhuma aba antiga pode ficar aberta: siga o passo a passo do dia de atualizar, acima.
+- **Aba com o jogo ANTIGO aberta no dia de atualizar:** quando ela troca um enfeite ou grava por cima nessa aba, os enfeites e acessórios novos saem do unicórnio (a compra não se perde: é só vestir de novo na Loja). Se a montaria for um unicórnio de Português, a aba antiga dá erro: a personagem some do mapa e a Loja não abre (o progresso fica; é fechar a aba e abrir de novo). E, no mesmo aparelho, se a cópia de segurança não estiver lá, a comida comprada pode sumir de vez, com as estrelas já gastas. Por isso, nenhuma aba antiga pode ficar aberta: siga o passo a passo do dia de atualizar, acima.
 
 ## Números que dá para mudar (`jogo/js/config.js`)
 Depois de mudar, peça ao Claude para republicar.
