@@ -353,7 +353,9 @@ body.em-missao #claude-balao { bottom: calc(env(safe-area-inset-bottom, 0px) + 1
   background: var(--papel); border-top: 4px solid var(--borda);
 }
 .sem-relogio { font-size: 0.8em; font-weight: 700; color: var(--tinta-suave); }
-.btn-conferir { min-width: 190px; font-size: 1.1em; background: var(--menta); }
+.btn-conferir { min-width: 190px; font-size: 1.1em; background: var(--menta); flex-shrink: 0; }
+/* letras grandes no tablet: "Conferir ✓" não quebra e o "Sem relógio…" cabe numa linha (bordas do rodapé 16 → 10 px) */
+@media (min-width: 640px) { .missao-rodape { padding-left: calc(16px - (var(--escala-texto) - 1) * 40px); padding-right: calc(16px - (var(--escala-texto) - 1) * 40px); } }
 .desafio-num { font-weight: 700; color: var(--tinta-suave); font-size: 0.85em; margin-bottom: 8px; }
 
 .desafio { display: flex; flex-direction: column; gap: 16px; }
@@ -377,6 +379,10 @@ body.em-missao #claude-balao { bottom: calc(env(safe-area-inset-bottom, 0px) + 1
 }
 .opcao-emoji { font-size: 1.6em; }
 .opcao-texto { flex: 1; }
+/* palavra comprida (ex.: "acontecimentos" com letras grandes no celular): quebra dentro do texto da opção em vez de
+   empurrar o botão para fora da tela; palavras que cabem não mudam (break-word só age quando a palavra não cabe) */
+.opcoes-varias > .opcao { min-width: 0; }
+.opcoes-varias .opcao-texto { min-width: 0; overflow-wrap: break-word; }
 .opcao[aria-pressed="true"] { background: var(--lavanda-clara); border-color: var(--roxo); box-shadow: 0 4px 0 var(--roxo); outline: 3px solid var(--roxo); outline-offset: 0; }
 .opcao-marcar::after { content: ""; flex: none; width: 28px; height: 28px; border: 3px solid var(--borda); border-radius: 8px; background: #fff; }
 .opcao-marcar[aria-pressed="true"]::after {
@@ -566,6 +572,9 @@ body.em-missao #claude-balao { bottom: calc(env(safe-area-inset-bottom, 0px) + 1
 .quadro-premios { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
 .linha-premio { display: grid; grid-template-columns: auto 1fr auto; grid-template-areas: "quando quando status" "icone info info"; align-items: center; gap: 6px 12px; padding: 10px 12px; border: 3px solid var(--borda); border-radius: 14px; background: var(--papel); }
 .linha-premio > canvas { grid-area: icone; }
+/* o selo (VALENDO AGORA…) não passa por cima do "1ª tentativa": a coluna dele deixa ~90 px para o rótulo com letra
+   normal (igual a antes) e ~150 px com letras grandes; sem espaço, o selo quebra em 2 linhas */
+.linha-premio { grid-template-columns: auto 1fr fit-content(calc(100% - 12px - 90px - (var(--escala-texto) - 1) * 400px)); }
 .linha-premio.rar-raro { background: #eef5ff; }
 .linha-premio.rar-lendario { background: #fffbe6; }
 .linha-premio.agora { outline: 4px solid var(--roxo); outline-offset: 2px; box-shadow: 0 4px 0 var(--roxo); }
@@ -884,10 +893,15 @@ body.sem-animacao *:not(.balao-respira), body.sem-animacao *::before, body.sem-a
   .apoio-abrir { flex: 1 1 auto; min-width: 0; }
   .apoio-ouvir-rotulo { display: none; }
   .btn-ouvir-apoio { min-width: 52px; font-size: 1em; }
-  .apoio-corpo { max-height: 18vh; max-height: 18dvh; overflow: auto; margin-top: 8px; padding: 0 6px 4px 2px; border-bottom: 2px dashed var(--lavanda); overscroll-behavior: contain; }
+  .apoio-corpo { max-height: calc(18vh * var(--escala-texto)); max-height: calc(18dvh * var(--escala-texto)); overflow: auto; margin-top: 8px; padding: 0 6px 4px 2px; border-bottom: 2px dashed var(--lavanda); overscroll-behavior: contain; }
   .apoio-corpo .apoio-titulo { margin-top: 0; }
   .apoio-fechado .apoio-corpo { display: none; }
   .desafio.com-apoio { gap: 10px; }
+}
+/* celular, nas salas (não na prova): a caixa cresce até mostrar o trecho inteiro quando ele é curto (~350 px em 844);
+   só textos maiores que isso rolam dentro dela */
+@media (max-width: 639.98px) {
+  .tela-missao .apoio-corpo { max-height: min(calc(42vh * var(--escala-texto)), 46vh); max-height: min(calc(42dvh * var(--escala-texto)), 46dvh); }
 }
 @media (min-width: 640px) and (max-width: 999.98px) { .apoio-ouvir-rotulo { display: inline; } .apoio-corpo { max-height: 30vh; max-height: 30dvh; } }
 /* tablet em pé: pouco escondido (ou espaço livre na tela) → o texto inteiro, sem rolagem dentro da caixa (js: caber) */

@@ -1066,6 +1066,26 @@
      { titulo, partes: [{ titulo, lista: [...] } ou { titulo, texto }] }
      tela larga (≥ 1000 px): ao lado da pergunta, sempre aberto. Celular e tablet em pé: caixa recolhível,
      aberta na primeira questão que traz o texto e fechada nas seguintes (fechado = true); o 🔊 fica sempre à vista. */
+  /* um só escutador de resize para todas as caixas de apoio: guarda só as caixas ainda na tela (WeakRef, quando há),
+     e descarta as que saíram a cada caixa nova e a cada resize, sem segurar questões e provas antigas na memória */
+  var apoiosVivos = [];
+  var ouvindoApoios = false;
+  function apoioDaRef(r) { return r && typeof r.deref === 'function' ? r.deref() : r; }
+  function aoRedimensionarApoios() {
+    apoiosVivos = apoiosVivos.filter(function (r) {
+      var c = apoioDaRef(r);
+      if (!c || !c.isConnected) return false;
+      c._caber();
+      return true;
+    });
+    if (!apoiosVivos.length && ouvindoApoios) { window.removeEventListener('resize', aoRedimensionarApoios); ouvindoApoios = false; }
+  }
+  function apoioVivo(caixa) {
+    apoiosVivos = apoiosVivos.filter(function (r) { var c = apoioDaRef(r); return c && c.isConnected; });
+    apoiosVivos.push(typeof WeakRef === 'function' ? new WeakRef(caixa) : caixa);
+    if (!ouvindoApoios) { window.addEventListener('resize', aoRedimensionarApoios); ouvindoApoios = true; }
+  }
+
   D.caixaApoio = function (apoio, fechado) {
     var corpoApoio = el('div.apoio-corpo',
       apoio.titulo ? el('h3.apoio-titulo', apoio.titulo) : null,
@@ -1097,17 +1117,13 @@
       var livre = tela ? tela.clientHeight - tela.scrollHeight : 0;
       if (falta < 80 || falta <= livre) caixa.classList.add('apoio-inteiro');
     }
-    var montada = false;
-    function aoMudar() {
-      if (montada && !caixa.isConnected) { window.removeEventListener('resize', aoMudar); return; }
-      caber();
-    }
+    caixa._caber = caber;
     (function esperar(n) {
       // a caixa entra na tela logo depois de criada: mede quando já está lá (e de novo com as fontes prontas)
       if (caixa.isConnected) {
-        montada = true; caber();
-        window.addEventListener('resize', aoMudar);
-        if (document.fonts && document.fonts.ready) document.fonts.ready.then(aoMudar);
+        caber();
+        apoioVivo(caixa);
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { if (caixa.isConnected) caber(); });
       } else if (n < 60) requestAnimationFrame(function () { esperar(n + 1); });
     })(0);
     if (Reino.Som.temVoz()) {

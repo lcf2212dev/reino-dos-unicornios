@@ -25,6 +25,8 @@
   #claude-balao.com-quem .claude-avatar { max-width: 56px; }
   /* no celular o nome vira uma aba em cima do balão, inteiro */
   #claude-balao.com-quem .claude-nome { position: absolute; left: 66px; top: -14px; max-width: calc(100% - 80px); margin: 0; font-size: 0.65em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; z-index: 1; }
+  /* letras grandes: a aba do nome encolhe um pouco (6%) para "Seu Carlos do Carrossel" caber inteiro; com letra normal, igual */
+  #claude-balao.com-quem .claude-nome { font-size: calc(0.65em * (1.4 - 0.4 * var(--escala-texto))); }
   #claude-balao.com-quem { margin-top: 14px; align-items: flex-start; }
   #claude-balao.com-quem .claude-mascote { margin-top: 10px; }
   #claude-balao.com-botoes .claude-fala { padding: 10px 10px 10px; }
