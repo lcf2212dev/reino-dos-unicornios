@@ -142,9 +142,9 @@
   var COMETA_CAUDA = ['......kk', '.....kck', '....kcCk', '..kkcCk.', '.kWWCk..', 'kYWWWk..', '.kYWYk..', '..kk....'];
   // adulto de lado e na diagonal: montada, a Mariana tampa o rastro que sobe para a frente; aqui a
   // cabeça fica no alto da cauda e o rastro sobe para trás, livre
-  var CHAPEU_CHEF = ['.ww.www.', 'wwwlwwwl', 'wwwwwwwl', 'lwwwwwll', 'roygtbpm'];
+  var CHAPEU_CHEF = ['.wl.wwl.', 'wwlLwwwL', 'lwwwwwlL', 'roygtbpm', 'ROYGTBPM'];
   // de frente e de costas o chifre atravessa a touca pelo meio (o buraco deixa o chifre aparecer)
-  var CHAPEU_CHEF_FRENTE = ['.ww..ww.', 'www..wwl', 'wwwllwwl', 'lwwwwwll', 'roygtbpm'];
+  var CHAPEU_CHEF_FRENTE = ['.wl..wl.', 'lwL..wlL', 'lwwLLwlL', 'roygtbpm', 'ROYGTBPM'];
   var CACHECOL_PINGUIM = ['BcBcBcBcB', 'DBDBDBDBD', '....cBc..', '....BDB..', '...kdddk.', '...dwdwd.', '...dwowd.', '....kkk..'];
   // filhote: a pontinha é mais curta (o pinguim logo abaixo da volta); de costas e 3/4 de costas só a volta
   var CACHECOL_PINGUIM_FILHOTE = ['BcBcBcBcB', 'DBDBDcDBD', '...kdddk.', '...dwdwd.', '...dwowd.', '....kkk..'];
@@ -607,8 +607,9 @@
     // (e um risquinho de contorno embaixo dele onde encosta na crina, para não se misturar com ela)
     'anel-saturno': { linhas: ['.AA..AA.', 'AAWWWWAA', '..k..k..'], paleta: { k: '#3a2446', A: '#9a6cf5', a: '#d9c2ff', W: '#ffffff' }, ancora: 'chifre', dx: -3, dy: 0 },
     // prêmios da prova de Português (js/provas/portugues-3bim.js)
-    // touca de chef branca e fofa (dois gomos, sombra lilás) com faixa de arco-íris
-    'chapeu-chef-arco-iris': { linhas: CHAPEU_CHEF, paleta: { k: '#3a2446', w: '#ffffff', l: '#d9cff0', r: '#ff5a6e', o: '#ffa53a', y: '#ffe14d', g: '#5fd07a', t: '#4fd6c8', b: '#5fb4ff', p: '#b07cff', m: '#ff7eb6' }, ancora: 'cabeca', dx: -6, dy: -2 },
+    // touca de chef branca e fofa (dois gomos, dobras e lado da sombra em lilás L) com faixa de arco-íris
+    // de 2 px (a de baixo mais escura): assim a touca não se confunde com a cabeça de um unicórnio branco
+    'chapeu-chef-arco-iris': { linhas: CHAPEU_CHEF, paleta: { k: '#3a2446', w: '#ffffff', l: '#d9cff0', L: '#a58fd6', r: '#ff5a6e', o: '#ffa53a', y: '#ffe14d', g: '#5fd07a', t: '#4fd6c8', b: '#5fb4ff', p: '#b07cff', m: '#ff7eb6', R: '#e03a55', O: '#f08a1c', Y: '#f2c21c', G: '#3cb45e', T: '#26b8aa', B: '#3f8fe8', P: '#8e5ae8', M: '#e85a9a' }, ancora: 'cabeca', dx: -6, dy: -2 },
     // cachecol listrado azul e gelo, com a ponta caída e uma carinha de pinguim no pompom
     'cachecol-pinguim': { linhas: CACHECOL_PINGUIM, paleta: { k: '#3a2446', B: '#3d8ee8', c: '#bfe4ff', D: '#2a62b8', d: '#2c2f4a', w: '#ffffff', o: '#ffa020' }, ancora: 'pescoco', dx: -4, dy: -1 },
     // lacinho vermelho de morango com sementinhas e o nó de folhinha verde
