@@ -3,6 +3,7 @@
 (function () {
   var U = Reino.util, el = U.el, D = Reino.Desafios;
   var Pr = {};
+  var CALMA_TROCA = 400;   // como em provas.js: o Enter/Espaço logo depois da troca não vale no botão novo
 
   function sortearQuestoes(materia) {
     var todos = [];
@@ -29,13 +30,16 @@
       var contagem = el('p.respira-conta', '');
       var pular = el('button.btn-grande.btn-secundario', { type: 'button', hidden: !podePular }, 'Já respirei, pular');
       var comecar = el('button.btn-grande.btn-principal', { type: 'button' }, 'Começar a respirar 🎈');
-      cont.appendChild(el('div.ritual',
-        el('h2.titulo-pixel', 'Ritual da Calma'),
-        balao, texto, contagem, el('div.intro-botoes', comecar, pular)));
+      var titulo = el('h2.titulo-pixel', 'Ritual da Calma');
+      var ritual = el('div.ritual', titulo, balao, texto, contagem, el('div.intro-botoes', comecar, pular));
+      cont.appendChild(ritual);
       var fim = false;
       pular.addEventListener('click', function () { fim = true; resolver(); });
-      comecar.addEventListener('click', function () {
+      comecar.addEventListener('click', function (ev) {
         comecar.hidden = true;
+        // teclado (Enter/Espaço: detail 0): o botão sumiu e o foco ia para o body; vai para o
+        // "Já respirei, pular" (quando aparece) ou para o título do ritual. Toque e mouse: nada muda
+        if (ev && !ev.detail) Reino.UI.focarTroca(ritual, titulo, CALMA_TROCA);
         var ciclo = 0;
         function passo() {
           if (fim) return;
@@ -107,6 +111,8 @@
         el('div.intro-botoes', ir)));
       ir.addEventListener('click', function () { Reino.Som.tocar('porta'); fase = 'prova'; mostrarQuestao(0); });
       Reino.Som.falar(Reino.Falas.fixas.plano, { voz: 'claude' });
+      // teclado: o ritual saiu da tela e o foco ia para o body; vai para "Começar o treino"
+      Reino.UI.focarTroca(ir, corpo.querySelector('.intro-sala h2'), CALMA_TROCA);
     }
 
     function mostrarQuestao(i, modoRevisao) {
