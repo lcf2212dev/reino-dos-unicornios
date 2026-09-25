@@ -246,11 +246,12 @@
     }
     if (estilo === 'frase') {
       wrap.appendChild(alvo);
-      wrap.appendChild(el('p.dica-toque', 'Toque num bloco para colocar. Toque de novo para tirar.'));
+      // com instrucao (linha logo abaixo da pergunta), a dica de toque não se repete
+      if (!d.instrucao) wrap.appendChild(el('p.dica-toque', 'Toque num bloco para colocar. Toque de novo para tirar.'));
       wrap.appendChild(pool);
     } else {
       // no ordenar, as opções ficam em cima para caberem na tela do celular
-      wrap.appendChild(el('p.dica-toque', 'Toque nas etapas na ordem certa. Errou? Toque no item da lista para tirar.'));
+      if (!d.instrucao) wrap.appendChild(el('p.dica-toque', 'Toque nas etapas na ordem certa. Errou? Toque no item da lista para tirar.'));
       wrap.appendChild(pool);
       wrap.appendChild(alvo);
     }
@@ -430,6 +431,8 @@
       return [i ? el('span.quadro-traco', '–') : null, el('b', p)];
     })));
     var grade = comFigura ? el('div.completar-itens') : wrap;
+    // quantos botões cada item tem: a coluna da grade fica larga o bastante para botões de 48 px (css)
+    if (comFigura) grade.style.setProperty('--opcoes', String(d.palavras.length));
     if (comFigura) wrap.appendChild(grade);
     var frases = d.frases.map(function (f, i) {
       var lacuna = el('span.lacuna' + (d.colado ? '.lacuna-colada' : ''));
@@ -955,8 +958,33 @@
       abrir.setAttribute('aria-expanded', String(!fechado));
       U.preencher(abrir, fechado ? '📖 Ver o texto de apoio' : '📖 Esconder');
     }
-    abrir.addEventListener('click', function () { fechado = !fechado; Reino.Som.tocar('toque'); pintar(); });
+    abrir.addEventListener('click', function () { fechado = !fechado; Reino.Som.tocar('toque'); pintar(); caber(); });
     pintar();
+    // tablet em pé: se o que fica escondido na rolagem é pouco (< 80 px) ou cabe no espaço livre da tela,
+    // a caixa mostra o texto inteiro, sem rolagem dentro dela (no celular e na tela larga, nada muda)
+    var TABLET_EM_PE = '(min-width: 640px) and (max-width: 999.98px)';
+    function caber() {
+      caixa.classList.remove('apoio-inteiro');
+      if (fechado || !caixa.isConnected || !window.matchMedia(TABLET_EM_PE).matches) return;
+      var falta = corpoApoio.scrollHeight - corpoApoio.clientHeight;
+      if (falta <= 0) return;
+      var tela = caixa.closest('.missao-corpo');
+      var livre = tela ? tela.clientHeight - tela.scrollHeight : 0;
+      if (falta < 80 || falta <= livre) caixa.classList.add('apoio-inteiro');
+    }
+    var montada = false;
+    function aoMudar() {
+      if (montada && !caixa.isConnected) { window.removeEventListener('resize', aoMudar); return; }
+      caber();
+    }
+    (function esperar(n) {
+      // a caixa entra na tela logo depois de criada: mede quando já está lá (e de novo com as fontes prontas)
+      if (caixa.isConnected) {
+        montada = true; caber();
+        window.addEventListener('resize', aoMudar);
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(aoMudar);
+      } else if (n < 60) requestAnimationFrame(function () { esperar(n + 1); });
+    })(0);
     if (Reino.Som.temVoz()) {
       // no topo da caixa, à vista mesmo com o texto fechado
       var ouvir = el('button.btn-ouvir.btn-ouvir-apoio', { type: 'button', 'aria-label': 'Ouvir o texto de apoio' }, '🔊', el('span.apoio-ouvir-rotulo', ' Ouvir o texto'));

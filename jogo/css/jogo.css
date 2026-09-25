@@ -890,6 +890,8 @@ body.sem-animacao *:not(.balao-respira), body.sem-animacao *::before, body.sem-a
   .desafio.com-apoio { gap: 10px; }
 }
 @media (min-width: 640px) and (max-width: 999.98px) { .apoio-ouvir-rotulo { display: inline; } .apoio-corpo { max-height: 30vh; max-height: 30dvh; } }
+/* tablet em pé: pouco escondido (ou espaço livre na tela) → o texto inteiro, sem rolagem dentro da caixa (js: caber) */
+@media (min-width: 640px) and (max-width: 999.98px) { .apoio-inteiro .apoio-corpo { max-height: none; overflow: visible; } }
 /* tela larga (notebook, tablet deitado): o texto de apoio ao lado da pergunta, sempre aberto */
 @media (min-width: 1000px) {
   .missao-corpo > .desafio.com-apoio, .missao-corpo:has(> .desafio.com-apoio) > * { max-width: 1180px; }
@@ -909,6 +911,9 @@ body.sem-animacao *:not(.balao-respira), body.sem-animacao *::before, body.sem-a
 .completar-grade .frase-texto { margin: 0; font-size: 0.8em; line-height: 2; }
 .completar-grade .frase-opcoes { display: flex; flex-wrap: nowrap; gap: 5px; width: 100%; justify-content: center; }
 .completar-grade .chip-palavra { flex: 1 1 0; min-width: 0; max-width: 5.5em; min-height: 48px; padding: 6px 2px; }
+/* botões de letra (S, Z, X, R…) com no mínimo 48×48: na grade, a coluna cresce conforme o número de botões (--opcoes) */
+.completar-grade .completar-itens { grid-template-columns: repeat(auto-fill, minmax(min(100%, max(10em, calc(var(--opcoes, 1) * 53px + 13px))), 1fr)); }
+.completar-colado .chip-palavra, .completar-grade .chip-palavra { min-width: 48px; }
 .completar-img { display: inline-flex; line-height: 0; min-height: 64px; align-items: center; justify-content: center; font-size: 2em; }
 .palavra-colada { white-space: nowrap; }
 .lacuna.lacuna-colada { min-width: 2em; margin: 0; padding: 0 1px; line-height: 1.5; }
