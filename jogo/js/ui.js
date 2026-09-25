@@ -1332,12 +1332,45 @@
         }
         card.appendChild(botoes);
         // o ovo (com o foco) sumiu: pelo teclado, o foco vai para o botão principal, não para o body
-        if (UI.porTeclado()) UI.focarTeclado(botoes.querySelector('.btn-principal'), 600);
+        var principal = botoes.querySelector('.btn-principal');
+        compactarNascimento(t, card, principal);
+        if (UI.porTeclado()) UI.focarTeclado(principal, 600);
         Reino.Som.falar([d.raridade === 'lendario' ? Reino.Falas.fixas.lendario : Reino.Falas.fixas.nasceu, { texto: d.frase, voz: 'unicornio' }], { voz: 'claude' });
       }
     });
   }
   UI.chocarUm = chocarUm;
+  /* O cartão de quem nasceu (o do lendário, no celular e no notebook) passava da altura da tela, e o
+     texto ainda cresce um pouco quando a fonte termina de carregar. Quando não cabe, ele fica mais
+     compacto, um passo de cada vez (espaços, depois o desenho, depois as letras), até o título e o
+     botão principal aparecerem inteiros sem rolar: é a hora da comemoração, nada de rolar o título.
+     Mede de novo quando a fonte carrega e quando o conteúdo muda de tamanho no primeiro instante.
+     Se nem assim couber, por toque fica como está (título inteiro); pelo teclado, o botão com o
+     foco aparece inteiro (mostrarFoco rola o cartão por dentro). */
+  function compactarNascimento(t, card, botao) {
+    var sprite = card.querySelector('.detalhe-sprite'), tela = sprite && sprite.querySelector('canvas');
+    var dica = card.querySelector('.detalhe-dica'), nome = card.querySelector('.ovo-nome'), botoes = botao && botao.parentElement;
+    function escala(k) { if (tela) { tela.style.width = (tela.width * k) + 'px'; tela.style.height = (tela.height * k) + 'px'; } }
+    var passos = [
+      function () { card.style.gap = '8px'; card.style.paddingTop = card.style.paddingBottom = '14px'; if (botoes) botoes.style.marginTop = '6px'; },
+      function () { escala(7); if (sprite) sprite.style.minHeight = '0'; },
+      function () { escala(5.5); if (nome) nome.style.fontSize = '1.3em'; if (dica) dica.style.fontSize = '0.82em'; },
+      function () { escala(4.5); },
+    ];
+    var feito = 0;
+    function cabe() { return card.scrollHeight <= card.clientHeight + 1; }
+    function ajustar() {
+      if (!card.isConnected) return;
+      while (!cabe() && feito < passos.length) passos[feito++]();
+      if (feito && UI.porTeclado() && document.activeElement === botao && t === topo()) mostrarFoco(botao);
+    }
+    ajustar();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(ajustar);
+    if (!window.ResizeObserver) { setTimeout(ajustar, 300); return; }
+    var obs = new ResizeObserver(ajustar);
+    Array.prototype.forEach.call(card.children, function (filho) { obs.observe(filho); });
+    setTimeout(function () { obs.disconnect(); ajustar(); }, 1500);
+  }
 
   /* ---------- lista rápida de lugares ---------- */
   // a linha da Pet Shop avisa quando a montaria está com fome ou sede
@@ -1454,9 +1487,13 @@
   };
 
   /* ---------- área dos pais ---------- */
-  UI.telaPais = function () {
+  // pelo menu, sempre pede o PIN; `desbloqueada` só na reabertura logo depois de registrar um
+  // pagamento ou começar um novo ciclo (o pai acabou de digitar o PIN nesta mesma tela)
+  UI.telaPais = function () { abrirPais(false); };
+  function abrirPais(desbloqueada) {
     var pn = painel('pais', '🔒 Área dos pais');
     var c = pn.conteudo;
+    if (desbloqueada) { conteudoPais(c, pn); return; }
     var digitado = '';
     var visor = el('div.pin-visor', '• • • •');
     var teclado = el('div.pin-teclado');
@@ -1477,7 +1514,7 @@
       if (digitado === String(Reino.config.pinPais)) { c.innerHTML = ''; conteudoPais(c, pn); }
       else { visor.textContent = 'PIN errado'; digitado = ''; Reino.Som.tocar('erro'); }
     }
-  };
+  }
 
   function conteudoPais(c, pn) {
     var total = 0, pagoTotal = 0;
@@ -1486,12 +1523,12 @@
       total += ganho; pagoTotal += pago;
       var campo = el('input.campo-pago#pago-' + m.id, { type: 'number', min: 0, step: 1, value: pago, 'aria-label': 'Valor já pago de ' + m.nome });
       var salvar = el('button.btn-pequeno', { type: 'button' }, 'Registrar pagamento');
-      salvar.addEventListener('click', function () { P.registrarPagamento(m.id, parseFloat(campo.value) || 0); UI.fecharTela(pn.tela); UI.telaPais(); });
+      salvar.addEventListener('click', function () { P.registrarPagamento(m.id, parseFloat(campo.value) || 0); UI.fecharTela(pn.tela); abrirPais(true); });
       var t = est().treinos[m.id] || {};
       c.appendChild(el('div.pais-materia',
         el('h3', m.emoji + ' ' + m.nome),
         el('p', 'Salas feitas: ', el('b', P.salasFeitas(m) + ' de ' + m.salas.length), ' • Ganhou: ', el('b', U.reais(ganho)), ' • Já pago: ', el('b', U.reais(pago)), ' • A pagar: ', el('b', U.reais(Math.max(0, ganho - pago)))),
-        el('p', 'Treino da Medalha: ', el('b', t.melhor ? ({ ouro: '🥇 ouro', prata: '🥈 prata', bronze: '🥉 bronze' }[t.melhor]) : 'ainda não fez'), t.vezes ? ' (' + t.vezes + ' vezes)' : ''),
+        el('p', 'Treino da Medalha: ', el('b', t.melhor ? ({ ouro: '🥇 ouro', prata: '🥈 prata', bronze: '🥉 bronze' }[t.melhor]) : 'ainda não fez'), t.vezes ? ' (' + t.vezes + (t.vezes === 1 ? ' vez)' : ' vezes)') : ''),
         Reino.provas.filter(function (pv) { return pv.materiaId === m.id; }).map(function (pv) {
           var r = P.regProva(pv);
           return el('p', pv.nome + ' (' + pv.bimestre + '): ',
@@ -1510,7 +1547,7 @@
     var ciclo = el('button.btn-grande.btn-secundario', { type: 'button' }, '🔄 Começar novo ciclo de provas');
     ciclo.addEventListener('click', function () {
       UI.confirmar('Zerar salas, treinos, dinheiro e pagamentos para um novo ciclo de provas? Os unicórnios, as estrelas e os enfeites continuam.', 'Sim, zerar', 'Cancelar').then(function (sim) {
-        if (!sim) return; P.novoCiclo(); UI.fecharTela(pn.tela); UI.telaPais(); U.emit('mapaMudou');
+        if (!sim) return; P.novoCiclo(); UI.fecharTela(pn.tela); abrirPais(true); U.emit('mapaMudou');
       });
     });
     var apagar = el('button.btn-grande.btn-perigo', { type: 'button' }, '🗑️ Apagar tudo');
