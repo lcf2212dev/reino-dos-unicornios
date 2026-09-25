@@ -81,7 +81,12 @@
     var u = e.unis && e.unis[id];
     var estagio = R.Unicornios.estagio(u ? u.xp : 0);
     var us = e.usando || {};
-    return { id: id, def: d, estagio: estagio, enfeites: (us.enfeites || []).slice(), capa: !!us.capa, asasFada: !!us.asasFada, aparencia: e.aparencia };
+    var enf = (us.enfeites || []).slice();
+    // o reflexo a mostra de frente, que é onde aparecem os enfeites da cabeça (o chapéu de chef, a pena...);
+    // de lado a cavaleira cobre a cabeça do unicórnio. De frente a cauda não aparece: com enfeite de cauda, na diagonal
+    var cauda = enf.some(function (id) { var it = R.LojaItens && R.LojaItens.item ? R.LojaItens.item(id) : null; return it && it.slot === 'cauda'; });
+    return { id: id, def: d, estagio: estagio, enfeites: enf, capa: !!us.capa, asasFada: !!us.asasFada, aparencia: e.aparencia,
+      vista: cauda ? 'diagFrente' : 'frente' };
   }
 
   /* ================= OBJETOS DA LOJA ================= */
@@ -125,29 +130,34 @@
   // vitrine dos prêmios da Escola: em cada lugar o prêmio em cima e, embaixo dele, o selo do estado:
   // medalha de fita (ganho na prova), lacinho rosa (comprado), etiqueta com o preço (à venda) ou
   // cadeado com o prêmio em silhueta (bloqueado). Prateleiras altas: nada cobre o prêmio.
-  I.objeto('loja-vitrine-premios', { w: 3, h: 1, topo: 46, solido: true, alto: true,
+  // Três prateleiras (uma por prova: lendário, raro, comum); com mais de 9 prêmios, mais colunas por prateleira.
+  // A pegada ocupa 2 fileiras para caber a terceira prateleira sem subir sobre o espelho mágico.
+  var FILAS_PREMIOS = 3;
+  I.objeto('loja-vitrine-premios', { w: 3, h: 2, topo: 46, solido: true, alto: true,
     chave: function (P) { return 'pre:' + premios().map(function (a) { return estadoPremio(a, P).charAt(0); }).join(''); },
     desenhar: function (ctx, px, py, o, P) {
-      var W = 48, top = py - 46;
-      ret(ctx, px + 1, top, W - 2, 62, K);
-      ret(ctx, px + 2, top + 1, W - 4, 60, C.ouro2); ret(ctx, px + 2, top + 1, W - 4, 1, C.ouro3);
-      for (var f = 0; f < 2; f++) {
+      var W = 48, top = py - 46, lista = premios();
+      ret(ctx, px + 1, top, W - 2, 80, K);
+      ret(ctx, px + 2, top + 1, W - 4, 78, C.ouro2); ret(ctx, px + 2, top + 1, W - 4, 1, C.ouro3);
+      for (var f = 0; f < FILAS_PREMIOS; f++) {
         ret(ctx, px + 3, top + 2 + f * 24, W - 6, 21, '#fff6dc');
         ret(ctx, px + 2, top + 23 + f * 24, W - 4, 3, K); ret(ctx, px + 2, top + 24 + f * 24, W - 4, 1, C.ouro);
       }
       // faixa de arco-íris embaixo
-      ['#ff7eb6', '#ffd34d', '#6fdc8c', '#5fb4ff', '#b58cff'].forEach(function (cor, i) { ret(ctx, px + 3, top + 50 + i * 2, W - 6, 2, cor); });
-      premios().slice(0, 6).forEach(function (a, i) {
-        var fila = i < 3 ? 0 : 1, col = i % 3;
-        var cx = px + 8 + col * 16, y0 = top + 2 + fila * 24, base = y0 + 12;
+      ['#ff7eb6', '#ffd34d', '#6fdc8c', '#5fb4ff', '#b58cff'].forEach(function (cor, i) { ret(ctx, px + 3, top + 74 + i, W - 6, 1, cor); });
+      var cols = Math.max(3, Math.ceil(lista.length / FILAS_PREMIOS));
+      var esp = cols <= 3 ? 16 : Math.floor((W - 4) / cols), x0 = px + 3 + Math.floor(esp / 2) + Math.floor((W - 6 - cols * esp) / 2);
+      lista.slice(0, cols * FILAS_PREMIOS).forEach(function (a, i) {
+        var fila = Math.floor(i / cols), col = i % cols;
+        var cx = x0 + col * esp, y0 = top + 2 + fila * 24, base = y0 + 12;
         var img = icone('acessorio:' + a.id);
         if (!img) return;
-        var st = estadoPremio(a, P);
+        var st = estadoPremio(a, P), mw = Math.min(13, esp - 1);
         if (st === 'bloqueado') {
-          caber(ctx, (window.PA && PA.silhueta) ? PA.silhueta(img) : img, cx, base, 13, 12);
+          caber(ctx, (window.PA && PA.silhueta) ? PA.silhueta(img) : img, cx, base, mw, 12);
           cadeado(ctx, cx - 2, base + 1);
         } else {
-          caber(ctx, img, cx, base, 13, 12);
+          caber(ctx, img, cx, base, mw, 12);
           if (st === 'aVenda') etiquetaPreco(ctx, cx - 5, base, a.preco);
           else {
             brilho(ctx, cx + 6, y0 + 1, C.branco);
@@ -178,8 +188,8 @@
       if (m && window.PA) {
         try {
           spr = m.estagio >= 1 && PA.montada
-            ? PA.montada(m.def, m.estagio, 0, m.aparencia, { enfeites: m.enfeites, capa: m.capa, asasFada: m.asasFada })
-            : PA.unicornio(m.def, m.estagio, 0, { enfeites: m.enfeites, asasFada: m.asasFada });
+            ? PA.montada(m.def, m.estagio, 0, m.aparencia, { enfeites: m.enfeites, capa: m.capa, asasFada: m.asasFada, vista: m.vista })
+            : PA.unicornio(m.def, m.estagio, 0, { enfeites: m.enfeites, asasFada: m.asasFada, vista: m.vista });
         } catch (e) { spr = null; }
       }
       if (spr) {
@@ -189,7 +199,8 @@
         ctx.save(); ctx.beginPath(); ctx.ellipse(cx, top + 30, 26, 25, 0, 0, Math.PI * 2); ctx.clip();
         ret(ctx, cx - 26, top + 44, 52, 12, '#d8f0c8');
         var lig = ctx.imageSmoothingEnabled; ctx.imageSmoothingEnabled = false;
-        ctx.drawImage(img, Math.round(cx - img.width * s2 / 2), top + 58 - img.height * s2, img.width * s2, img.height * s2);
+        // (de frente ela fica mais alta: a cabeça começa logo abaixo da moldura e as patas passam da borda)
+        ctx.drawImage(img, Math.round(cx - img.width * s2 / 2), Math.max(top + 58 - img.height * s2, top + 7), img.width * s2, img.height * s2);
         ctx.imageSmoothingEnabled = lig;
         ctx.restore();
       }
