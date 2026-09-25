@@ -26,7 +26,7 @@
       pago: {},         // materiaId -> valor já pago pelos pais
       ajustes: { som: true, musica: false, voz: true, animacoes: !U.reduzMovimentoSistema, texto: 1, setas: false, surpresa: true },
       ritualVisto: false,
-      cuidados: {},     // uniId -> {fome, sede, em} (0–100, 100 = satisfeito; sem registro = 100/100) — js/cuidados.js
+      cuidados: {},     // uniId -> {fome, sede, em, acao} (0–100, 100 = satisfeito; sem registro = 100/100; acao = carimbo do último comer/beber, 0 = nenhum) — js/cuidados.js
       despensa: {},     // comidaId -> {compradas, usadas} (contadores que só crescem; quantidade = compradas − usadas)
     };
   }
@@ -269,7 +269,8 @@
     var er = objeto(r.estrelas) ? r.estrelas : {}, ea = objeto(antigo.estrelas) ? antigo.estrelas : {};
     r.estrelas = { ganhas: max(numeroOu(er.ganhas, 0), numeroOu(ea.ganhas, 0)), gastas: Math.max(0, max(numeroOu(er.gastas, 0), numeroOu(ea.gastas, 0))) };
     Object.keys(antigo.loja || {}).forEach(function (k) { if (antigo.loja[k]) r.loja[k] = true; });
-    // fome e sede: por unicórnio vale o registro mudado por último (`em`; empate: o do lado mais recente).
+    // fome e sede: por unicórnio, a regra de juntarCuidados (`acao` dos dois lados, 0 inclusive: a maior vale;
+    // empate: menor fome, menor sede e maior `em`; um lado sem `acao`: o `em` maior, empate = o lado mais recente).
     // Um lado sem o campo (aparelho com a versão antiga) não apaga nada: vale o outro lado.
     // (cuidados ou despensa estragados no lado mais recente não apagam os do outro lado)
     if (a.cuidados || b.cuidados) r.cuidados = juntarCuidados(U.copia(objeto(recente.cuidados) ? recente.cuidados : {}), antigo.cuidados);

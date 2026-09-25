@@ -209,6 +209,19 @@ pilha-livros, papeis, almofada, luminaria-pe, cesto, balde, placa-chao, cavalete
 "miudezas" sobre mesas e vitrines. Pisos: taco, mosaico, pedra, palha, tabuas, azulejo, carpete.
 Paredes: papel, pedra, madeira, tijolo, azulejo. Ver `js/interiores.js` e `ferramentas/interiores.html`.
 
+#### 4.2.1 Extensões (novidades: Pet Shop e Observatório)
+```
+  toque?(wx, wy, px, py, obj, folga) → bool   // área de toque própria, em px do jogo (ex.: os planetas, desenhados
+                                              // maiores que a pegada); folga 0 = desenho exato, 1 = com folga
+```
+Prioridade do `alvoEm` nos interiores: NPC (o corpo e o **balãozinho de status** em cima da cabeça, que
+também é tocável) → objeto interativo com `toque` (exato, depois com folga 1; o desenhado por cima ganha) →
+objeto interativo cuja pegada contém o tile → parte desenhada acima da pegada (`topo`), o mais à frente; no
+chão livre, só onde há pixel desenhado (máscara do `desenhar` + `anim` no instante 0, feita uma vez e
+refeita quando o desenho muda). Ações de objeto recebem `ctx = { interior, cena, objeto }` e rodam depois
+da `fala` do objeto. Status registrados (`Reino.NPCs.registrarStatus`) passam na frente dos embutidos; ação
+que resolve `'tchau'` faz o NPC se despedir. Detalhes em `CONTRATOS-NOVIDADES.md` §8.
+
 ### 4.3 Regras de desenho e desempenho
 - Estático pré-renderizado **uma vez** num canvas por interior; refeito só quando a chave de estado
   (junção das `chave(P)`) muda, conferida nos eventos `progresso`/`progressoRemoto`/`mapaMudou`.

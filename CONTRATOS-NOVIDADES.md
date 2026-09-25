@@ -22,40 +22,60 @@ CSS: `css/jogo.css`, `css/interiores.css`, `css/novidades.css` (pergunta surpres
 canvas, `PA`, `Reino.Progresso`, `Reino.Cena` nem `document` no carregamento** (só dentro de funções
 chamadas depois): `ferramentas/listar-falas.js` e `validar-interiores.js` os carregam num `vm` sem DOM.
 
+`ferramentas/listar-falas.js` carrega `js/interiores/*.js` em ordem **alfabética** (com `padrao.js` por
+último), e não na ordem do index.html: `<prédio>-falas.js` e `<prédio>-cenas.js` precisam vir antes de
+`<prédio>.js` também nessa ordem (hoje dá certo pelo nome).
+
 ## 1. Save: campos novos e mescla (js/progresso.js)
 
-Nada existente muda: `chaveSave`, `v`, `geracao`, `ciclo`, o formato dos campos e as regras de
-`P.mesclar()` para eles. Campos novos, todos aditivos (`estadoNovo()` + `completar()`):
+Não mudam: `chaveSave`, `v`, `geracao`, `ciclo` e o formato dos campos. As regras de `P.mesclar()` para os
+campos existentes também não mudam, com um endurecimento só (em `estrelas`, logo abaixo). Campos novos,
+todos aditivos (`estadoNovo()` + `completar()`):
 
 ```
 cuidados: { <uniId>: { fome, sede, em, acao } }  // 0–100 (100 = satisfeito); em = Date.now() da última mudança;
-                                                 // acao = Date.now() do último comer/beber (o gasto não mexe)
+                                                 // acao = carimbo do último comer/beber: max(Date.now(), acao + 1),
+                                                 // sempre crescente; 0 = nunca comeu/bebeu. O gasto não mexe em
+                                                 // acao, mas cria o registro já com acao: 0 (e põe acao: 0 no
+                                                 // registro de versão anterior que ainda não tem)
 despensa: { <comidaId>: { compradas, usadas } }  // contadores que só crescem; quantidade = compradas − usadas
 ajustes.surpresa: true                           // interruptor "❓ Perguntas surpresa" (padrão ligado)
+ajustes.surpresaEm: <Date.now()>                 // carimbo da última troca de verdade do interruptor (só P.salvar marca)
 ```
 - Unicórnio sem registro em `cuidados` = fome 100 e sede 100 (unicórnio novo nasce satisfeito).
 - **Mescla** (mesma geração):
-  - `cuidados`: para cada `uniId` de qualquer lado, vale o registro com a `acao` mais recente; empate de `acao`:
-    a menor fome e a menor sede (o gasto só desce entre uma ação e outra); um lado sem `acao` (versão anterior):
-    vale o `em` maior (empate: o do lado mais recente).
-  - `despensa`: para cada comida, `compradas` = maior e `usadas` = maior.
+  - `cuidados` (`juntarCuidados`): para cada `uniId` de qualquer lado, se os DOIS lados têm `acao` numérica ≥ 0
+    (o 0 conta), vale a maior `acao`; empate (inclusive 0 e 0, os dois só gastaram) = a menor fome, a menor
+    sede e o maior `em` (o gasto só desce entre uma ação e outra). Se algum lado não tem `acao` numérica (save
+    da versão anterior ou valor estragado): vale o `em` maior (empate: o lado mais recente). Quem tratar
+    `acao: 0` como "sem acao" muda a mescla de dois aparelhos.
+  - `despensa`: para cada comida, `compradas` = maior e `usadas` = maior (contador estragado conta 0).
   - Um lado sem o campo (aparelho com a versão antiga, que pode apagá-lo): vale o outro lado inteiro.
     Um aparelho antigo nunca faz a Mariana perder comida comprada nem acessório (`loja` já é união).
-  - `ajustes.surpresaEm`: carimbo marcado quando o interruptor da surpresa muda de verdade (em `P.salvar`);
-    na mescla vale o maior carimbo; sem carimbo nos dois lados, vale o lado mais recente que tiver o campo.
-    `estadoNovo()` não tem carimbo (um aparelho novo não "ganha" de quem desligou).
+  - `ajustes` continua vindo do lado mais recente (regra de hoje), com uma exceção só para `surpresa`
+    (`juntarSurpresa`, a mesma regra na mescla e na cópia): vale o lado com o carimbo `surpresaEm` maior;
+    sem carimbo nos dois lados, o lado que fica só recebe o `surpresa` do outro se não tiver o campo
+    (aparelho antigo não religa as perguntas que os pais desligaram). `estadoNovo()` não tem carimbo (um
+    aparelho novo não "ganha" de quem desligou); `completar()` põe `surpresa: true` se faltar.
+  - Geração diferente: continua vencendo o estado inteiro da geração maior (regra de hoje).
+- **Endurecimento em campo existente:** `estrelas.ganhas`/`gastas` estragados (texto sem número, null, NaN)
+  contam como 0 na mescla (`numeroOu`; `estrelas` que não é objeto conta como vazio; `gastas` ≥ 0) e em
+  `P.estrelas`/`P.ganharEstrelas`/`P.gastarEstrelas`. Número em texto ("12") vale o número. Com números
+  válidos, o resultado é o de antes.
 - **Cópia de segurança** (`Reino.config.chaveSave + '-novidades'`, constante em progresso.js): guarda
   `{ geracao, ciclo, atualizado, cuidados, despensa, surpresa, surpresaEm }` a cada gravação local. O código
-  antigo não conhece essa chave, então uma aba antiga no mesmo navegador não a apaga; ao abrir e a cada
-  mescla, o que faltar volta dela com as mesmas regras. Só vale na mesma `geracao` ("Apagar tudo" não traz
-  nada de volta). Sem `removeItem` nem `clear`.
-- **Normalização** (fim de `completar()`): só chaves próprias (nunca `__proto__`, `constructor`, `prototype`);
-  fome e sede entre 0 e 100; `compradas`/`usadas` inteiros ≥ 0 com `usadas ≤ compradas`; ids desconhecidos
-  ficam guardados, sem efeito (uma versão não apaga a comida de outra).
-  - `ajustes` continua vindo do lado mais recente (regra de hoje); `completar()` põe `surpresa: true` se faltar.
-    Exceção só para o campo novo: se o lado mais recente não tem `ajustes.surpresa` (aparelho antigo) e o outro
-    tem, vale o do outro (senão um aparelho antigo religaria as perguntas que os pais desligaram).
-  - Geração diferente: continua vencendo o estado inteiro da geração maior (regra de hoje).
+  antigo não conhece essa chave, então uma aba antiga no mesmo navegador não a apaga. O que faltar volta
+  dela, com as mesmas regras, ao carregar, a cada mescla, a cada gravação local (`gravarLocal` faz
+  `normalizarNovos(comCopia(estado))`) e no aparelho "em branco" que adota o save guardado (`iniciarNuvem`).
+  Da cópia só entram registros de cuidados com `fome`, `sede` e `em` numéricos ≥ 0 e registros da despensa
+  com `compradas` e `usadas` numéricos ≥ 0. Só vale na mesma `geracao` ("Apagar tudo" não traz nada de
+  volta). Sem `removeItem` nem `clear`.
+- **Normalização** (`normalizarNovos`, no fim de `completar()` e em `gravarLocal`): só chaves próprias, e nunca
+  `__proto__`, `constructor`, `prototype` nem outro nome de `Object.prototype` (`hasOwnProperty`,
+  `toString`…); fome e sede entre 0 e 100 (inválida vira 100); `em` ≥ 0; `compradas`/`usadas` inteiros ≥ 0
+  com `usadas ≤ compradas`; `surpresa` "true"/"false" em texto vira booleano (outro valor volta ao padrão);
+  ids desconhecidos ficam guardados, sem efeito (uma versão não apaga a comida de outra). `acao` **não** é
+  normalizada aqui (nem apagada): quem a conserta é `Cuidados` ao mudar o registro (`registroParaMudar`).
 - "Novo ciclo" (`P.novoCiclo`) mantém `cuidados` e `despensa`. "Apagar tudo" (`P.apagarTudo`) zera, como o resto.
 - Quem lê o estado sempre chama `P.estado()` de novo: a mescla troca o objeto inteiro.
 
@@ -74,8 +94,9 @@ Reino.Cuidados = {
   comidas() → config.comidas
   quantidade(comidaId) → compradas − usadas
   despensa() → [{ comida, quantidade }]  // só as que têm quantidade > 0, na ordem de config.comidas
-  comprar(comidaId) → { ok: true } | { ok: false, motivo: 'estrelas', faltam: n }
-       // P.gastarEstrelas(preço) → compradas + 1 → P.salvar()
+  comprar(comidaId) → { ok: true } | { ok: false, motivo: 'estrelas', faltam: n ≥ 1 }
+                    | { ok: false, motivo: 'sem-comida' }   // id desconhecido
+       // P.gastarEstrelas(preço) → compradas + 1 → P.salvar(). Só compra: quem pergunta antes é a UI (§6)
   alimentar(uniId, comidaId) → { ok: true, antes, depois } | { ok: false, motivo: 'sem-comida' | 'cheio' | 'sem-uni' }
        // usadas + 1; fome + comida.fome (enche = 100), no máximo 100; 'cheio' = fome ≥ 99,5; grava na hora
   beber(uniId) → { ok: true, antes, depois } | { ok: false, motivo: 'cheio' | 'sem-uni' }
@@ -88,8 +109,9 @@ Reino.Cuidados = {
   vozDaFrase(chave) → 'claude' | 'unicornio'   // quem fala cada frase (comeu/bebeu = o unicórnio)
   falas() → [{ texto, voz }] // tudo o que os cuidados falam (pacote geral): os valores de `frases`, com a voz
 }
-evento: U.emit('cuidados', depurar())  // a cada ponto inteiro que muda, ao comer/beber e ao cruzar o 25
+evento: U.emit('cuidados', depurar())  // a cada ponto inteiro que muda, ao cruzar o 25, ao comer, beber e comprar
 ```
+- `Reino.Cuidados.frases` é **objeto**; `Reino.Surpresa.frases` (§5) é **função**. Não confundir.
 - **Quem gasta:** só a montaria (`P.montaria()`, bebê que passeia junto inclusive), e só com o relógio ativo:
   depois de `iniciar()`, aba visível (`!document.hidden`) e com toque ou tecla (pointerdown, touchstart,
   keydown) nos últimos `semToqueMs` (5 min). O próprio "Entrar no Reino" conta como toque.
@@ -101,29 +123,49 @@ evento: U.emit('cuidados', depurar())  // a cada ponto inteiro que muda, ao come
 - **Gravação:** `P.salvar()` no máximo a cada `gravarMs` (60 s) enquanto gasta, ou antes se juntou
   `gravarPontos` (10) de mudança, e sempre ao cruzar o 25, comer, beber ou comprar. Nunca a cada quadro:
   cada `P.salvar()` sincroniza. Entre gravações o valor vive em `P.estado().cuidados` (em memória).
+  Também grava quando a aba vai para o fundo com mudança pendente; qualquer `P.salvar()` de outro lugar
+  (evento `progresso`) zera o pendente, porque já levou a fome e a sede junto.
 - **Lembrete gentil do Claude:** com a montaria baixa, no máximo 1 a cada `lembreteMs` (10 min), e só
-  com ela livre: `Reino.Cena.estado()` é `'mapa'` ou `'interior'` e `!Reino.Claude.aberto()`.
-  Balão comum do Claude (não modal, fecha sozinho), texto de `frases`.
+  com ela livre: `Reino.Cena.estado()` é `'mapa'` ou `'interior'` e `!Reino.Claude.aberto()`. Não aparece
+  dentro da Pet Shop. Balão comum do Claude (não modal), texto de `frases`, 6 s; some sozinho (balão fechado
+  e voz calada) quando abre uma tela (evento `telas`) ou ela entra na Pet Shop.
 
 ## 3. Nadar no lago — `js/mapa.js` (água), `js/cena.js`, `js/jogador.js`, `js/audio.js`
 ```
 Mapa.agua(tx, ty) → bool          // tile de água do lago (tipo 'a'); a fonte da praça não é água e segue sólida
 Mapa.solido(tx, ty)               // a água do lago passa a ser andável (false); borda, prédios e enfeites, como hoje
-Mapa.caminho(a, b)                // cada passo que entra na água custa config.nado.custo (3×)
+Mapa.caminho(a, b)                // destino em terra: primeiro um caminho SEM água (o lago como sólido); só se
+                                  // não houver nenhum (ela no meio do lago), um caminho nadando. Destino na água:
+                                  // cada passo que entra na água custa config.nado.custo (3×). Na diagonal, de
+                                  // terra para terra, não corta quina de água
+Mapa.maisPerto(x, y, de)          // tocou em terra sólida: prefere terra; quem já está nadando prefere a terra
+                                  // encostada no que tocou (senão a água em volta); tocou na água: aceita água
+Mapa.fundura(wx, wy) → px         // quanto o ponto está dentro da água DESENHADA (a elipse do lago); negativo = margem
 cena.agua(tx, ty) → bool          // no adaptador do mapa (Reino.Cena.mapa); interiores não têm: ausente = false
-Jogador.nadando() → bool          // o tile atual dela é água
-Jogador.velocidade() → px/s       // base (montada 82, a pé 58) × (nadando ? config.nado.fator : 1) × Cuidados.fatorVelocidade()
+Jogador.nadando() → bool          // o tile atual dela é água (vale para velocidade e som)
+Jogador.fundura(x, y) → 0–1       // Mapa.fundura suavizada numa RAMPA de 12 px; fora do mapa = 0
+Jogador.velocidade() → px/s       // o ALVO: base (montada 82, a pé 58) × (nadando ? config.nado.fator : 1)
+                                  // × Cuidados.fatorVelocidade(). O passo usa J.vel, que chega ao alvo aos
+                                  // poucos (SUAVE_VEL 0,18 s), sem tranco na margem
 Reino.Som.tocar('splash' | 'gotas' | 'gole' | 'nhac')   // sintetizados (entrar na água, sair, beber, comer)
 ```
 - Só ela anda no mapa: a água é andável para ela e a montaria (ou ela e o bebê).
-- Tocar na água: vai até lá, nadando. Tocar em terra: o caminho evita o lago sempre que há caminho por
-  terra (custo 3×). A linha reta do `suavizar()` não pode cortar por água que o caminho de tiles evitou.
+- Tocar na água: vai até lá, nadando. Tocar em terra: vai por terra sempre que existe caminho por terra,
+  mesmo longo (a busca sem água vem primeiro; o custo 3× só decide quando não há). A linha reta do
+  `suavizar()` não pode cortar por água que o caminho de tiles evitou.
 - Setas/teclado: entra e sai da água livremente. Nunca sai dos limites do mapa, nunca fica presa
   (vitórias-régias e juncos são enfeite: não travam).
-- **Desenho na água** (todas as 5 vistas e os espelhos; montada e a pé com o bebê, cada um cortado no
-  seu próprio tile): o sprite é cortado na linha d'água (só a parte de cima aparece), anel de ondinhas
-  animado em volta (parado sem animação), respingo + `splash` ao entrar e gotinhas por 1 s ao sair
-  (sem animação: nenhuma partícula; o som continua).
+- **Desenho na água** (todas as 5 vistas e os espelhos; montada e a pé com o bebê, cada corpo medido no
+  próprio ponto dos pés): o corte na linha d'água (só a parte de cima aparece), o anel de ondinhas (parado
+  sem animação), o respingo e as gotinhas seguem a água **desenhada** (`Jogador.fundura`), e não a grade de
+  tiles: nas pontas da elipse o tile é água mas o desenho é areia, e ali ela não aparece cortada. Entra com
+  fundura ≥ 0,5 (respingo + `splash`) e sai com ≤ 0,15 (gotinhas por 1 s + `gotas`); a folga evita piscar
+  na margem. Sem animação: nenhuma partícula; o som continua. `Jogador.nadando()` continua sendo pelo tile.
+- **Mapa em volta:** `EXTRAS` com `placa: 'acima'` na Pet Shop e no Observatório (a placa do lado cobria
+  "Sede"/"Fome" ou ficava longe da cúpula) e `caminho` com a lista explícita dos tiles de rua. `BORDA_BAIXO`
+  (4 fileiras de grama) desenhada abaixo do mapa e margem de baixo da câmera medida no HUD
+  (`margemBaixoMapa`, main.js), para as portas de baixo e ela nadando não sumirem atrás do menu. As placas
+  desviam dos chips do HUD pela `caixaParada` (a caixa sem o transform da animação, remedida a cada 500 ms).
 - **Ícone da fome/sede:** `Cuidados.iconeMontaria()` desenhado acima do unicórnio (montada: acima do
   conjunto; bebê: acima do bebê), em px da tela e nítido (inteiro de px por px do ícone), como a bolha
   de status dos NPCs. Em todas as cenas (mapa e interiores).
@@ -136,13 +178,17 @@ Reino.Som.tocar('splash' | 'gotas' | 'gole' | 'nhac')   // sintetizados (entrar 
 ### 4.1 `js/loja-itens.js` (`Reino.LojaItens`, dados sem DOM)
 ```
 Reino.LojaItens = {
-  ENFEITES: [{ id, nome, preco, slot, icone, espaco?: true }]   // tudo o que se compra com estrelas
-  SLOTS: { <slot>: { nome } }       // orelha, olho, cabeca, capa, rastro, asas + os slots novos
+  ENFEITES: [{ id, nome, preco, slot, icone, espaco?: true }]   // tudo o que se compra com estrelas;
+                                    // icone = emoji com desenho em icones.js OU a chave 'enfeite:<id>'
+  SLOTS: { <slot>: { nome } }       // orelha, olho, cabeca, chifre, pescoco, cauda (em usando.enfeites, com âncora
+                                    // nos moldes) + capa, rastro, asas (especiais: usando.capa, usando.estrelinhas,
+                                    // usando.asasFada). Não existe `patas`
   enfeite(id) → item | null
-  premios() → [{ id, nome, raridade, provaId, preco, slot }]    // acessórios de todas as provas
+  premios() → [{ id, nome, raridade, provaId, preco, slot }]    // acessórios de todas as provas; slot = âncora
+                                    // de PA.ENFEITES_MONTARIA (null sem PA, como nas ferramentas em vm)
   precoPremio(raridade) → Reino.config.precoPremio[raridade]
   estadoPremio(premio, P) → 'bloqueado' | 'aVenda' | 'ganho' | 'comprado'
-  item(id) → enfeite ou prêmio no formato de item da loja (id, nome, slot, preco, premio?)
+  item(id) → enfeite, ou prêmio como { id, nome, slot, preco, raridade, provaId, icone: 'acessorio:<id>', premio: true }
   FALAS: { chave: texto }           // o que a Loja fala de novo (o orquestrador liga em Falas.todas, pacote geral)
 }
 ```
@@ -164,9 +210,11 @@ Reino.LojaItens = {
 - Pelo menos 10 enfeites novos, preço de 10 a 45 ⭐, pelo menos 3 do espaço (`espaco: true`), nomes que
   não repetem os de hoje nem os acessórios das provas. Um enfeite por slot, como hoje.
 - Desenho em `PA.ENFEITES_MONTARIA[id] = { linhas, paleta, ancora, dx, dy }` (com contorno próprio `k`).
-- Slot novo (ex.: `pescoco`, `cauda`, `patas`) = âncora nova em **todos** os 10 moldes (`UNI.adulto` e
+- Slots com âncora hoje: `orelha`, `olho`, `cabeca`, `chifre`, `pescoco`, `cauda`. Enfeite de chifre usa o
+  slot `chifre` que já existe. Slot novo = âncora nova em **todos** os 10 moldes (`UNI.adulto` e
   `UNI.filhote`, vistas lado/frente/costas/diagFrente/diagCostas). As direções da esquerda são o espelho.
-  Vista que não mostra o encaixe: âncora `null` (como `olho` de costas), e o enfeite não aparece nela.
+  Vista que não mostra o encaixe: âncora `null` (como `olho` de costas e `cauda` de frente, nos dois
+  estágios), e o enfeite não aparece nela.
 - Tudo continua em `usando.enfeites` (lista de ids): nenhum campo novo no save.
 - Cada enfeite novo tem ícone em pixel e aparece em `ferramentas/acessorios.html` (grade vista × estágio).
 
@@ -175,28 +223,45 @@ Reino.LojaItens = {
 Reino.Surpresa = {
   iniciar({ tutorial })   // main.js chama no fim de entrarNoReino; tutorial = Promise da 1ª vez (ou null):
                           // o relógio só começa depois que ela resolver
-  forcar() → Promise      // debug: sorteia e mostra agora (se ela estiver ocupada, assim que ficar livre)
+  forcar() → Promise      // debug: sorteia e mostra agora (se ela estiver ocupada, assim que ficar livre).
+                          // Resolve quando o painel ABRE, com { materia, sala, desafio, tipo } (ids), ou null
+                          // sem pergunta; com o painel já aberto, resolve na hora com o dele. Ignora o
+                          // interruptor, `ativo`, o tempo sorteado e `esperaLivreMs`
   restante() → ms | null  // quanto falta para vencer (null com o interruptor desligado ou antes de iniciar)
   aberta() → bool
   proximaPergunta() → { materia, sala, desafio } | null   // o que sairia agora (para os testes)
   falas() → [{ texto, voz }]   // tudo o que a surpresa fala (pacote geral)
+  frases() → { abertura, vale, ganhou, erro }   // FUNÇÃO (monta o número de estrelas); Cuidados.frases é objeto
 }
 ```
 - **Tempo:** sorteado entre `config.surpresa.minMinutos` e `maxMinutos` (3 a 10) de relógio livre.
 - **O relógio conta só com ela livre:** depois de iniciar (e do tutorial), `ajustes.surpresa !== false`,
-  aba visível, toque ou tecla nos últimos 5 min, `Reino.Cena.estado()` `'mapa'` ou `'interior'` e
-  `!Reino.Claude.aberto()`. Use `Date.now()`/`setInterval` (os testes usam relógio falso do Playwright).
+  aba visível, toque ou tecla nos últimos 5 min, `Reino.Cena.estado()` `'mapa'` ou `'interior'`,
+  `!Reino.Claude.aberto()` e, *(em acabamento)*, ela **parada** (sem `Jogador.caminho` nem `aoChegar`: ela
+  termina o que começou); ao abrir, `Jogador.parar()` (senão entraria sozinha na porta ao fechar).
+- **Relógio monotônico** *(em acabamento; o commit atual ainda usa `Date.now()`)*: `performance.now()` +
+  `setInterval`, que o relógio falso do Playwright também controla. Nunca `Date.now()` aqui: o relógio do
+  aparelho mudando (ajuste manual, NTP) travaria ou dispararia a espera. (`cuidados.js` usa `Date.now()`,
+  porque grava carimbos no save.) Passo limitado a 5 s (aba que volta do fundo não dá salto).
+- **Tutorial:** o relógio começa quando a promessa resolver, OU depois de 10 s seguidos livre, OU no máximo
+  2 min depois de entrar (`Claude.limpar()` pode descartar a promessa sem resolver).
 - **Venceu com ela ocupada:** espera ela ficar livre e aparece depois de `esperaLivreMs` (4 s) seguidos
-  de livre. Nunca no meio de sala, treino, prova, tela, diálogo ou transição.
+  de livre. Nunca no meio de sala, treino, prova, tela, diálogo ou transição. *(Em acabamento:)* terminou
+  sala, treino ou prova (`.tela-missao`/`.tela-prova` saiu da pilha) → sorteia um tempo novo do zero.
 - **Pergunta:** de qualquer matéria, só das salas (`materia.salas[].desafios`, nunca `Reino.provas`), só
   dos tipos `config.surpresa.tipos` (escolha, vf, varias; sem `livre: true`), de preferência de salas que
-  ela já fez, sem repetir na sessão. Carrega o pacote de voz da sala (`Reino.Voz.carregarSala`) antes; o
-  🔊 do card lê a pergunta. Card com `Reino.Desafios.render(d, { modo: 'surpresa', onMudar })`,
-  correção com `Reino.Desafios.pontuar(d, valor) === 1`, explicação em `d.explica`.
+  ela já fez, sem repetir na sessão. Carrega o pacote de voz da sala (`Reino.Voz.carregarSala`) antes,
+  esperando no máximo 4 s; o 🔊 do card lê a pergunta. Card com `Reino.Desafios.render(d, { modo:
+  'surpresa', onMudar })` (hoje `modo` não tem efeito no `D.render`), correção com
+  `Reino.Desafios.pontuar(d, valor) === 1`. Depende também de `D.enunciado`, `D.linhaCerta` e de
+  `ctrl.pronto/valor/travado/marcarCerto/revelar/card`.
 - **Painel:** tela do DOM (`UI.painel('surpresa', '❓ Pergunta surpresa')`), com o Claude, o card,
-  "Conferir" e "Agora não". Uma tentativa só:
-  - acertou: `P.ganharEstrelas(config.surpresa.estrelas)` + `P.salvar()`, confete pequeno, som e elogio;
-  - errou: mostra `d.explica`, sem perder nada;
+  "Conferir" e "Agora não". Esc = "Agora não"; tocar fora do cartão **não** fecha. Uma tentativa só:
+  - acertou: `P.ganharEstrelas(config.surpresa.estrelas)` + `P.salvar()`, confete pequeno, som e elogio de
+    `Claude.FALAS.acerto` *(em acabamento: sem os que citam "historiador")*;
+  - errou: revela a certa no card (`ctrl.revelar`), mostra `D.linhaCerta(d)` e `d.explica`, sem perder nada;
+    *(em acabamento)* o enunciado se repete no topo do resultado;
+  - o "Ok!" do resultado fica travado 600 ms (o toque repetido não fecha sem ela ler);
   - "Agora não" ou ✕: fecha sem nada.
   Em todos os casos, sorteia o próximo tempo.
 - **Ajustes:** interruptor "❓ Perguntas surpresa" (`ajustes.surpresa`, já está em `UI.telaAjustes`).
@@ -210,22 +275,36 @@ Reino.Surpresa = {
   A porta é o tile (4, 24): a porta desenhada fica no meio dele.
 - **Interior** (`js/interiores/petshop-falas.js` + `petshop.js`, pacote `interior-petshop`), critério de
   "rico" dos contratos, 2 cômodos:
-  - `loja` (Loja): balcão, prateleiras de comida, sacos de feno, cestas de cenoura e maçã, potes de
-    biscoito, escovas de crina, coleiras, casinha, aquário, balança;
+  - `loja` (nome na tela: "Pet Shop"): balcão, prateleiras de comida, sacos de feno, cestas de cenoura e
+    maçã, potes de biscoito, escovas de crina, coleiras, casinha, aquário, balança. A `estante` e a vitrine
+    do `bolo` também abrem a tela (`acao: { tipo: 'tela', tela: 'petshop' }`);
   - `agua` (Cantinho da Água): bebedouro grande, toalhas e banheira de espuma.
 - **NPC** `aveia` (Dona Aveia, voz `npc-aveia`): `acao: { tipo: 'tela', tela: 'petshop' }`.
   O prédio registra `Reino.NPCs.registrarTela('petshop', function () { Reino.UI.telaPetShop(); }, '<convite>')`
-  e pode registrar um status (`Reino.NPCs.registrarStatus`), ex.: 🍎/💧 na Dona Aveia com a montaria baixa.
+  e um status (`Reino.NPCs.registrarStatus`): 🍎/💧 na Dona Aveia com a montaria baixa, só se o emoji tem
+  desenho (`PA.iconeDesenho`).
 - **Bebedouro:** objeto interativo com `acao: { tipo: 'beber' }`. O prédio registra
-  `Reino.NPCs.registrarAcao('beber', fn)`: `Reino.Cuidados.beber(P.montaria())`, som `gole`, animação de
-  água no bebedouro (só com animações) e uma fala curta (das `extras` do prédio). É o único lugar com água.
+  `Reino.NPCs.registrarAcao('beber', fn)` → `Reino.Cuidados.beber(P.montaria())`. Bebeu: som `gole`,
+  animação de água no bebedouro (só com animações) e `Cuidados.frases.bebeu` na voz do unicórnio (retrato e
+  nome dele); já satisfeito (`cheio`): `Cuidados.frases.semSede` (Claude); sem unicórnio chocado: a fala das
+  `extras` da Pet Shop (narradora). Sempre em balão modal com "Ok! 👍". `bebeu`/`semSede` já estão no pacote
+  geral: não duplicar nas `extras`. É o único lugar com água.
 - **`UI.telaPetShop()`** (ui.js): saldo de estrelas; cada comida com ícone, nome, preço e quanto enche;
-  a despensa. Comprar: `Cuidados.comprar(id)` e, se deu certo, oferece "Dar agora para <nome>?"
-  (`UI.confirmar`) → `Cuidados.alimentar(P.montaria(), id)`. Faltando estrelas: fala gentil como a da
-  Loja (texto de `Cuidados.frases`).
-- **HUD:** duas barrinhas (fome e sede) no chip da montaria, atualizadas no evento `cuidados`.
+  a despensa; nota de que a água é de graça. **Nada é gasto sem ela confirmar:** tocar numa comida abre UM
+  `UI.escolher` ("Trocar N estrelas por <comida>?") com "Comprar e dar agora <ícone>" (`principal`,
+  `gasta`), "Comprar e guardar 🧺" (`gasta`) e "Agora não" (`seguro`: foco e Esc). De barriga cheia (fome
+  ≥ 99,5) o "dar agora" não aparece, o "guardar" vira o principal e uma nota avisa antes de gastar. Só
+  depois da escolha: `Cuidados.comprar(id)` → dar (`Cuidados.alimentar` + `nhac` + `comeu`) ou guardar
+  (fala `guardado`). Nunca comprar primeiro e perguntar depois (volta a compra sem querer que a guarda de
+  toque, §13, resolveu). Faltando estrelas (antes ou na compra): o número só na tela e a voz fala
+  `Cuidados.frases.faltamEstrelas`, como na Loja.
+- **HUD:** duas barrinhas (fome e sede) no chip da montaria, com `data-uni`/`data-campo`, repintadas só
+  pelo evento `cuidados` (`UI.pintarCuidados`); o `aria-label` do chip leva a fome e a sede.
+- **Balões dos cuidados com uma tela aberta** (`balaoNaTela`): `body.recado-cuidado` + `--recado-altura`
+  (petshop.css) descem o balão para o pé da tela e encolhem a tela, e o balão nunca cobre um botão.
 - **Estábulo:** a tela mostra as barras de cada unicórnio chocado; "Dar comida" (no detalhe) usa a
-  despensa (`Cuidados.alimentar`); despensa vazia: fala que a Dona Aveia vende comidinhas.
+  despensa (`Cuidados.alimentar`); despensa vazia: fala que a Dona Aveia vende comidinhas e mostra o botão
+  "🐾 Ir até a Pet Shop" (`U.emit('irPara', lugar)`); com sede, avisa que a água é de graça.
   As baias por dentro (`js/interiores/estabulo.js`) mostram 🍎/💧 quando a barra do unicórnio está baixa,
   e isso entra na `chave` do pré-render da baia.
 - **Menu Lugares:** Pet Shop (🐾) e Observatório (🔭) com uma linha de informação cada.
@@ -237,8 +316,10 @@ Reino.Surpresa = {
 - **Cenas do telescópio e robô** (`js/interiores/observatorio-cenas.js`):
   ```
   Reino.ObservatorioCenas = {
-    temas() → ['lua', 'saturno', 'cruzeiro', …]      // cenas que o telescópio sabe mostrar
-    cena(tema, t?) → canvas (160×112 px do jogo, com moldura redonda de luneta)  // cacheado; t = animação leve
+    temas() → ['lua','saturno','jupiter','marte','cruzeiro','cometa','galaxia','venus','pleiades']
+    cena(tema, t?) → canvas (160×112 px do jogo, com moldura redonda de luneta). Sem t: o fixo, cacheado.
+                     Com t (ms): UM canvas de animação por tema, reaproveitado e sobrescrito na próxima
+                     chamada (desenhe na hora e não guarde). Tema desconhecido = 'lua'
     desenharPlaneta(ctx, id, cx, cy, raio)             // Sol, 8 planetas e Plutão, para o Planetário
   }
   Reino.NPCs.registrarBase('robo', fn)   // o Robô Cosmo (parâmetros: corpo, detalhe, antena)
@@ -256,14 +337,29 @@ Reino.Surpresa = {
 - **NPCs:** `vega` (Doutora Vega, voz `npc-vega`, a guia: "Outra curiosidade!", sorteando sem repetir na
   sessão) e `cosmo` (Robô Cosmo, voz `npc-cosmo`, falas engraçadas; sprite com a base `'robo'`,
   registrada pelo prédio com `Reino.NPCs.registrarBase('robo', fn)`).
-- **Ação** `{ tipo: 'curiosidade', tema }` registrada pelo prédio (`registrarAcao`). Curiosidades:
+- **Ações** registradas pelo prédio (`registrarAcao`):
+  ```
+  { tipo: 'curiosidade', tema }   // tema 'todas' = qualquer uma; tema 'telescopio' = abre o painel do telescópio;
+                                  // tema sem curiosidade cai em 'todas' e depois numa frase de reserva
+  { tipo: 'piada' }               // Robô Cosmo
+  ```
+  Fim de cada uma: "Outra curiosidade! ✨" / "Mais uma! 🤖" (repete) ou "Tchau! 💛" (resolve `'tchau'`: o
+  NPC se despede, §8). Curiosidade tocada num objeto é contada pelo objeto (retrato e nome dele) com a voz
+  `npc-vega`; vinda de NPC, pela Doutora Vega.
+- **Telescópio:** painel do DOM (`UI.painel('telescopio')`) com a cena animada a 5 quadros/s, só com as
+  animações ligadas e o painel aberto. `Reino.ObservatorioInterior = { retratoDe, abrirTelescopio, temaDaCena }`.
+- **Curiosidades:**
   ```
   Reino.FALAS_INTERIORES.observatorio.curiosidades = [
     // fonte: <NASA Space Place | ESA Kids | Agência Espacial Brasileira> — <URL>
     { id, tema, paginas: ['frase curta.', 'outra frase.'] },
   ]
-  Reino.Observatorio = { curiosidade(tema) → { id, tema, paginas }   // sorteia sem repetir na sessão
-                         temas() → [tema] }
+  Reino.Observatorio (em observatorio-falas.js) = {
+    temas() → [tema]                                  // temas com pelo menos uma curiosidade
+    curiosidade(tema) → { id, tema, paginas } | null  // sorteia sem repetir na sessão; 'todas' (ou vazio) = qualquer
+    piada() → { id, paginas } | null                  // piadas do Cosmo, sem repetir na sessão
+    reiniciar()                                       // só testes: zera a memória da sessão
+  }
   ```
   Pelo menos 40, em temas: sol, lua, mercurio, venus, terra, marte, jupiter, saturno, urano, netuno,
   plutao, estrelas, constelacoes, astronautas, foguetes, cometas, galaxias. Corretas, atuais e curtas
@@ -273,13 +369,27 @@ Reino.Surpresa = {
 
 ## 8. NPCs: extensões (`js/npcs.js`)
 ```
-Reino.NPCs.registrarTela(nome, abrir(acao, ctx), convite?)   // tela nova para { tipo: 'tela', tela: nome }
+Reino.NPCs.registrarTela(nome, abrir(acao, ctx), convite?)   // tela nova para { tipo: 'tela', tela: nome };
+                                                              // o convite vira a fala `nova` padrão de NPC com essa tela
 Reino.NPCs.registrarAcao(tipo, fn(acao, ctx) → Promise)      // ação nova de NPC/objeto ({ tipo: 'beber' } …)
-Reino.NPCs.registrarStatus(fn(npc) → { icone, rotulo } | null)   // status extra (vale o primeiro não nulo)
-Reino.NPCs.registrarBase(nome, fn(o, quadro) → { g, busto })     // base nova de sprite; o.cru = sprite original
+Reino.NPCs.registrarStatus(fn(npc) → { icone, rotulo } | null)   // roda ANTES dos status embutidos (sala nova…)
+                                                              // e os substitui: o primeiro não nulo vence;
+                                                              // exceção vira console.error e segue
+Reino.NPCs.registrarBase(nome, fn(o, quadro) → { g, busto })     // base nova de sprite (o.base escolhe);
+                                                              // o.cru = sprite original; quadro: bit 1 = respirando,
+                                                              // bit 2 = piscando
 Reino.NPCs.gradeSprite = { Grade, W, CX, TOPO, HY, BY, CONTORNO, esc, cla, mis }   // para desenhar a base
+                                                              // (esc/cla/mis = escurecer, clarear, misturar cores)
 Reino.NPCs.telas(), Reino.NPCs.acoes()                        // o que foi registrado (o validador aceita)
 ```
+- **`ctx` das ações:** vinda de objeto, `{ interior, cena, objeto }`, e a ação roda **depois** da `fala`
+  do objeto (se houver; se a fala resolver `null`, a ação não roda). Vinda de NPC, `{ npc, quem }`, e só roda no
+  "vamos"/"lista" do diálogo.
+- **Despedida:** tela registrada que fecha, ou ação que resolve `'tchau'` → o NPC fala a sua `depois`
+  (balão simples de 5 s).
+- Pontos de extensão do motor de interiores usados aqui (campo `toque` da biblioteca, balãozinho de status
+  tocável): `CONTRATOS-INTERIORES.md` §4.2.1.
+
 Registrar no carregamento é permitido (só guarda a função). Elenco novo em `Reino.NPCs.ELENCO`:
 `aveia` (Dona Aveia), `vega` (Doutora Vega), `cosmo` (Robô Cosmo, `base: 'robo'`).
 
@@ -303,8 +413,13 @@ Além dos de hoje: `avancarJogo(ms)` (= `Cuidados.avancar`), `cuidados()` (= `Cu
 ## 11. Desempenho
 Média de até 16,7 ms por quadro com a CPU 4× mais lenta (`__reino.tempoQuadro()`), no mapa, nadando,
 na Pet Shop e no Planetário. Nada de canvas criado por quadro; estático pré-renderizado; animações leves.
+*(Em acabamento, sem commit:)* teto de 24 MB de áudio decodificado em `voz.js` (`V.memoria()` para os
+testes) e teto de 24 combinações de enfeites no cache de `PA.unicornio` (pixelart.js).
 
 ## 12. Divisão de arquivos
+Divisão histórica das fases; não indica quem é o dono dos arquivos hoje (o `ui.js`, por exemplo, foi
+mexido por várias fases).
+
 | Fase | Quem | Arquivos (e só eles) |
 |---|---|---|
 | 0 | orquestrador | index.html, config.js, mapa.js (EXTRAS), npcs.js (extensões e ELENCO), falas.js, listar-falas.js, gerar-vozes.py, validar-interiores.js, debug.js, main.js, ui.js (1 linha em Ajustes), arquivos provisórios da Fase 1 |
@@ -318,3 +433,20 @@ na Pet Shop e no Planetário. Nada de canvas criado por quadro; estático pré-r
 | 3 | G2 | js/interiores/observatorio-cenas.js (cenas do telescópio, planetas, robô, desenho de fora) |
 | 3 | H1–H4 | pesquisa das curiosidades (rascunhos); H junta em js/interiores/observatorio-falas.js |
 | 2–3 | I | ícones novos num rascunho; o orquestrador junta em js/icones.js |
+
+## 13. Guarda de toque (ui.js; vale para toda tela que gasta estrela)
+*(Em acabamento: a guarda está sendo ajustada agora; abaixo, o que está no commit.)* Um botão que some no
+1º toque deixava o 2º toque cair no que aparece embaixo (já comprou comida e trocou enfeite sem ela querer).
+```
+UI.segurarToques(ms = 400)   // cliques de dedo/mouse PERTO (40 px) do toque que abriu/fechou uma tela são
+                             // ignorados por um instante (o botão afunda de leve, sem som); um toque noutro
+                             // lugar vale na hora. Teclado (detail 0) e .click() de código passam sempre
+UI.escolher(msg, [{ rotulo, valor, principal?, seguro?, gasta? }], classe?) → Promise(valor)
+                             // o `seguro` (ou o 1º) recebe o foco e é o que o Esc escolhe. `gasta`: se nascer
+                             // sob o dedo que abriu o diálogo, troca de lugar com o seguro; se nem assim sair
+                             // de baixo, o toque ali até 500 ms depois de abrir não gasta
+UI.confirmar(msg, sim, nao, gasta?)   // atalho de UI.escolher com dois botões ("não" é o seguro)
+```
+- Cartões da Loja: toque perto do ponto da compra, até 1 s depois, é ignorado (`logoDepoisDaCompra`).
+- Toda compra nova pergunta ANTES de gastar, com os botões de gastar marcados `gasta: true` e um botão
+  `seguro`. Nunca gastar e perguntar depois.
