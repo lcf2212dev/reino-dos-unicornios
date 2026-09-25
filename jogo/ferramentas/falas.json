@@ -2649,13 +2649,13 @@
    "fala": "Circule somente as palavras que começam com agá:"
   },
   {
-   "chave": "06a213e61a",
+   "chave": "f0e9d1d51p",
    "voz": "narradora",
-   "texto": "Toque em cada palavra para circular.",
+   "texto": "Toque nas palavras que começam com H para circular.",
    "pacotes": [
     "prova-portugues-3bim"
    ],
-   "fala": "Toque em cada palavra para circular."
+   "fala": "Toque nas palavras que começam com agá para circular."
   },
   {
    "chave": "edae745de",
@@ -11441,22 +11441,22 @@
    "fala": "Um escritor famoso"
   },
   {
-   "chave": "2d45d925s",
+   "chave": "12f5233fs",
    "voz": "narradora",
-   "texto": "Chegamos? (resumo)",
+   "texto": "Chegamos? (trecho)",
    "pacotes": [
     "portugues-p4"
    ],
-   "fala": "Chegamos? (resumo)"
+   "fala": "Chegamos? (trecho)"
   },
   {
-   "chave": "91d1874egc",
+   "chave": "4e5108e24a",
    "voz": "narradora",
-   "texto": "Este relato foi escrito por três irmãs: Laura, Tamara e Marininha. Elas viajaram de barco com o pai até a Antártida. Primeiro, saíram da América do Sul e passaram pelo Cabo Horn. Depois, navegaram pelo Estreito de Drake, com muitas aves do mar por perto. Chegando perto da Antártida, a água foi ficando mais fria. Elas sentiram um vento gelado no rosto e viram pinguins saltando da água e focas. Lá fora, só dava para ficar de luvas e gorro! O combinado no barco era: quem visse o primeiro iceberg ganhava um prêmio. As irmãs sentiram que a viagem dos sonhos estava acontecendo.",
+   "texto": "Este relato foi escrito por três irmãs: Laura, Tamara e Marininha. Elas contam como foi a viagem de barco que fizeram com o pai até a Antártida.",
    "pacotes": [
     "portugues-p4"
    ],
-   "fala": "Este relato foi escrito por três irmãs: Laura, Tamara e Marininha. Elas viajaram de barco com o pai até a Antártida. Primeiro, saíram da América do Sul e passaram pelo Cabo Horn. Depois, navegaram pelo Estreito de Drake, com muitas aves do mar por perto. Chegando perto da Antártida, a água foi ficando mais fria. Elas sentiram um vento gelado no rosto e viram pinguins saltando da água e focas. Lá fora, só dava para ficar de luvas e gorro! O combinado no barco era: quem visse o primeiro iceberg ganhava um prêmio. As irmãs sentiram que a viagem dos sonhos estava acontecendo."
+   "fala": "Este relato foi escrito por três irmãs: Laura, Tamara e Marininha. Elas contam como foi a viagem de barco que fizeram com o pai até a Antártida."
   },
   {
    "chave": "d8593cba20",
@@ -11511,6 +11511,15 @@
     "portugues-p4"
    ],
    "fala": "Coloque a viagem das irmãs na ordem em que aconteceu:"
+  },
+  {
+   "chave": "9c07796456",
+   "voz": "narradora",
+   "texto": "Primeiro, as irmãs deixaram a América do Sul e passaram pelo Cabo Horn. Depois, navegaram pelo Estreito de Drake. Só quando chegaram perto da Antártida é que viram os pinguins.",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Primeiro, as irmãs deixaram a América do Sul e passaram pelo Cabo Horn. Depois, navegaram pelo Estreito de Drake. Só quando chegaram perto da Antártida é que viram os pinguins."
   },
   {
    "chave": "178d702d2e",
@@ -11594,6 +11603,15 @@
    "fala": "Um calorão no barco"
   },
   {
+   "chave": "e1b83fe253",
+   "voz": "narradora",
+   "texto": "Depois do Drake, as irmãs perceberam que estavam chegando. Sentiram um vento gelado no rosto e viram pinguins saltando da água. Lá fora, só dava para ficar de luvas e gorro!",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Depois do Drake, as irmãs perceberam que estavam chegando. Sentiram um vento gelado no rosto e viram pinguins saltando da água. Lá fora, só dava para ficar de luvas e gorro!"
+  },
+  {
    "chave": "d41fa29814",
    "voz": "narradora",
    "texto": "Qual era o combinado no barco?",
@@ -11630,6 +11648,15 @@
    "fala": "Quem pescar um peixe ganha um doce"
   },
   {
+   "chave": "c12d84f44g",
+   "voz": "narradora",
+   "texto": "O pai contou que já dava para encontrar um iceberg no caminho. Então, no barco, fizeram um combinado: quem visse o primeiro iceberg ganhava um prêmio.",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "O pai contou que já dava para encontrar um iceberg no caminho. Então, no barco, fizeram um combinado: quem visse o primeiro iceberg ganhava um prêmio."
+  },
+  {
    "chave": "49d9c1e71q",
    "voz": "narradora",
    "texto": "Ligue cada pergunta sobre o relato à resposta certa:",
@@ -11637,6 +11664,15 @@
     "portugues-p4"
    ],
    "fala": "Ligue cada pergunta sobre o relato à resposta certa:"
+  },
+  {
+   "chave": "606426744j",
+   "voz": "narradora",
+   "texto": "Três irmãs viajaram de barco com o pai até a Antártida. No caminho, todos queriam ver icebergs. Elas sentiram que a viagem dos sonhos estava acontecendo.",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Três irmãs viajaram de barco com o pai até a Antártida. No caminho, todos queriam ver icebergs. Elas sentiram que a viagem dos sonhos estava acontecendo."
   },
   {
    "chave": "da7681521z",
@@ -11727,6 +11763,15 @@
     "portugues-p4"
    ],
    "fala": "\"Pinguins e focas\""
+  },
+  {
+   "chave": "c28e237a59",
+   "voz": "narradora",
+   "texto": "As irmãs usam palavras que mostram a ordem da viagem, como quando e depois. Elas contam que, depois de cruzarem o Drake, sentiram o vento gelado no rosto e viram pinguins e focas.",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "As irmãs usam palavras que mostram a ordem da viagem, como quando e depois. Elas contam que, depois de cruzarem o Drake, sentiram o vento gelado no rosto e viram pinguins e focas."
   },
   {
    "chave": "5045ad861x",

@@ -79,7 +79,7 @@
 
       { id: 'pb3-06', tipo: 'varias', estilo: 'circular', livro: 'letra-h',
         pergunta: 'Circule somente as palavras que começam com H:',
-        instrucao: 'Toque em cada palavra para circular.',
+        instrucao: 'Toque nas palavras que começam com H para circular.',
         opcoes: [
           { t: 'HOJE', ok: true },
           { t: 'BOLA' },

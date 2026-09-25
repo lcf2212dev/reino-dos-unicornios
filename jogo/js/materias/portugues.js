@@ -478,7 +478,7 @@ Reino.registrarMateria({
       intro: 'Vista um casaco bem quentinho, que vamos de barco até a Antártida ver pinguins e icebergs!',
       desafios: [
         { id: 'p4-01', tipo: 'escolha', livro: 'relato', pagina: 62,
-          apoio: { titulo: 'Chegamos? (resumo)', partes: [ { texto: 'Este relato foi escrito por três irmãs: Laura, Tamara e Marininha. Elas viajaram de barco com o pai até a Antártida. Primeiro, saíram da América do Sul e passaram pelo Cabo Horn. Depois, navegaram pelo Estreito de Drake, com muitas aves do mar por perto. Chegando perto da Antártida, a água foi ficando mais fria. Elas sentiram um vento gelado no rosto e viram pinguins saltando da água e focas. Lá fora, só dava para ficar de luvas e gorro! O combinado no barco era: quem visse o primeiro iceberg ganhava um prêmio. As irmãs sentiram que a viagem dos sonhos estava acontecendo.' } ] },
+          apoio: { titulo: 'Chegamos? (trecho)', partes: [ { texto: 'Este relato foi escrito por três irmãs: Laura, Tamara e Marininha. Elas contam como foi a viagem de barco que fizeram com o pai até a Antártida.' } ] },
           pergunta: 'O relato "Chegamos?" conta uma viagem até a Antártida. Quem escreveu esse relato?',
           opcoes: [
             { e: '👧', t: 'Três irmãs' },
@@ -497,7 +497,7 @@ Reino.registrarMateria({
           ], certa: 0,
           explica: 'A Antártida é um lugar muito gelado, com mar frio, gelo e icebergs, pinguins e focas.' },
         { id: 'p4-03', tipo: 'ordenar', livro: 'tempo-no-relato', pagina: 59,
-          apoio: { titulo: 'Chegamos? (resumo)', partes: [ { texto: 'Este relato foi escrito por três irmãs: Laura, Tamara e Marininha. Elas viajaram de barco com o pai até a Antártida. Primeiro, saíram da América do Sul e passaram pelo Cabo Horn. Depois, navegaram pelo Estreito de Drake, com muitas aves do mar por perto. Chegando perto da Antártida, a água foi ficando mais fria. Elas sentiram um vento gelado no rosto e viram pinguins saltando da água e focas. Lá fora, só dava para ficar de luvas e gorro! O combinado no barco era: quem visse o primeiro iceberg ganhava um prêmio. As irmãs sentiram que a viagem dos sonhos estava acontecendo.' } ] },
+          apoio: { titulo: 'Chegamos? (trecho)', partes: [ { texto: 'Primeiro, as irmãs deixaram a América do Sul e passaram pelo Cabo Horn. Depois, navegaram pelo Estreito de Drake. Só quando chegaram perto da Antártida é que viram os pinguins.' } ] },
           pergunta: 'Coloque a viagem das irmãs na ordem em que aconteceu:',
           itens: ['Deixaram a América do Sul', 'Passaram pelo Cabo Horn', 'Navegaram pelo Estreito de Drake', 'Chegaram perto da Antártida e viram pinguins'],
           explica: 'Primeiro saíram da América do Sul e passaram pelo Cabo Horn. Depois cruzaram o Estreito de Drake. Só no fim, perto da Antártida, viram os pinguins!' },
@@ -510,7 +510,7 @@ Reino.registrarMateria({
           ], certa: 0,
           explica: 'Densa quer dizer mais apertadinha, quase virando gelo. Quanto mais perto da Antártida, mais fria fica a água.' },
         { id: 'p4-05', tipo: 'varias', livro: 'relato', pagina: 60,
-          apoio: { titulo: 'Chegamos? (resumo)', partes: [ { texto: 'Este relato foi escrito por três irmãs: Laura, Tamara e Marininha. Elas viajaram de barco com o pai até a Antártida. Primeiro, saíram da América do Sul e passaram pelo Cabo Horn. Depois, navegaram pelo Estreito de Drake, com muitas aves do mar por perto. Chegando perto da Antártida, a água foi ficando mais fria. Elas sentiram um vento gelado no rosto e viram pinguins saltando da água e focas. Lá fora, só dava para ficar de luvas e gorro! O combinado no barco era: quem visse o primeiro iceberg ganhava um prêmio. As irmãs sentiram que a viagem dos sonhos estava acontecendo.' } ] },
+          apoio: { titulo: 'Chegamos? (trecho)', partes: [ { texto: 'Depois do Drake, as irmãs perceberam que estavam chegando. Sentiram um vento gelado no rosto e viram pinguins saltando da água. Lá fora, só dava para ficar de luvas e gorro!' } ] },
           pergunta: 'Quais sinais mostraram que as irmãs estavam chegando? Toque em TODOS.',
           opcoes: [
             { e: '🌬', t: 'Vento gelado no rosto', ok: true },
@@ -520,7 +520,7 @@ Reino.registrarMateria({
           ],
           explica: 'O vento ficou gelado, os pinguins e as focas apareceram, e ninguém saía sem luvas e gorros. Calorão, não!' },
         { id: 'p4-06', tipo: 'escolha', livro: 'relato', pagina: 60,
-          apoio: { titulo: 'Chegamos? (resumo)', partes: [ { texto: 'Este relato foi escrito por três irmãs: Laura, Tamara e Marininha. Elas viajaram de barco com o pai até a Antártida. Primeiro, saíram da América do Sul e passaram pelo Cabo Horn. Depois, navegaram pelo Estreito de Drake, com muitas aves do mar por perto. Chegando perto da Antártida, a água foi ficando mais fria. Elas sentiram um vento gelado no rosto e viram pinguins saltando da água e focas. Lá fora, só dava para ficar de luvas e gorro! O combinado no barco era: quem visse o primeiro iceberg ganhava um prêmio. As irmãs sentiram que a viagem dos sonhos estava acontecendo.' } ] },
+          apoio: { titulo: 'Chegamos? (trecho)', partes: [ { texto: 'O pai contou que já dava para encontrar um iceberg no caminho. Então, no barco, fizeram um combinado: quem visse o primeiro iceberg ganhava um prêmio.' } ] },
           pergunta: 'Qual era o combinado no barco?',
           opcoes: [
             { e: '🏆', t: 'Quem avistar o primeiro iceberg ganha um prêmio' },
@@ -529,7 +529,7 @@ Reino.registrarMateria({
           ], certa: 0,
           explica: 'Quem avistasse o primeiro iceberg ganhava um prêmio! Assim as meninas tinham coragem de ficar mais tempo no frio.' },
         { id: 'p4-07', tipo: 'ligar', livro: 'relato', pagina: 62,
-          apoio: { titulo: 'Chegamos? (resumo)', partes: [ { texto: 'Este relato foi escrito por três irmãs: Laura, Tamara e Marininha. Elas viajaram de barco com o pai até a Antártida. Primeiro, saíram da América do Sul e passaram pelo Cabo Horn. Depois, navegaram pelo Estreito de Drake, com muitas aves do mar por perto. Chegando perto da Antártida, a água foi ficando mais fria. Elas sentiram um vento gelado no rosto e viram pinguins saltando da água e focas. Lá fora, só dava para ficar de luvas e gorro! O combinado no barco era: quem visse o primeiro iceberg ganhava um prêmio. As irmãs sentiram que a viagem dos sonhos estava acontecendo.' } ] },
+          apoio: { titulo: 'Chegamos? (trecho)', partes: [ { texto: 'Três irmãs viajaram de barco com o pai até a Antártida. No caminho, todos queriam ver icebergs. Elas sentiram que a viagem dos sonhos estava acontecendo.' } ] },
           pergunta: 'Ligue cada pergunta sobre o relato à resposta certa:',
           pares: [
             [{ e: '❓', t: 'O que aconteceu?' }, { t: 'Uma família viajou de barco para ver icebergs.' }],
@@ -552,7 +552,7 @@ Reino.registrarMateria({
           ],
           explica: 'O relato pessoal conta algo que a pessoa viveu, na ordem certa, com detalhes e sentimentos. História inventada não é relato!' },
         { id: 'p4-10', tipo: 'escolha', livro: 'tempo-no-relato', pagina: 61,
-          apoio: { titulo: 'Chegamos? (resumo)', partes: [ { texto: 'Este relato foi escrito por três irmãs: Laura, Tamara e Marininha. Elas viajaram de barco com o pai até a Antártida. Primeiro, saíram da América do Sul e passaram pelo Cabo Horn. Depois, navegaram pelo Estreito de Drake, com muitas aves do mar por perto. Chegando perto da Antártida, a água foi ficando mais fria. Elas sentiram um vento gelado no rosto e viram pinguins saltando da água e focas. Lá fora, só dava para ficar de luvas e gorro! O combinado no barco era: quem visse o primeiro iceberg ganhava um prêmio. As irmãs sentiram que a viagem dos sonhos estava acontecendo.' } ] },
+          apoio: { titulo: 'Chegamos? (trecho)', partes: [ { texto: 'As irmãs usam palavras que mostram a ordem da viagem, como quando e depois. Elas contam que, depois de cruzarem o Drake, sentiram o vento gelado no rosto e viram pinguins e focas.' } ] },
           pergunta: 'Qual trecho mostra QUANDO as coisas aconteceram?',
           opcoes: [
             { e: '⏳', t: '"Depois de cruzarmos o Drake"' },
@@ -615,7 +615,7 @@ Reino.registrarMateria({
             { letra: 'c', antes: 'A beleza de', depois: 'a região.', certa: 1 },
             { letra: 'd', antes: 'O silêncio traz pa', depois: '.', certa: 2 },
           ],
-          explica: 'InEXplicável tem X com som de S (quer dizer: tão bonito que nem dá para explicar!). ESculpidas tem S antes de consoante (quer dizer: moldadas pela água). DeSSa tem SS entre vogais. PaZ tem Z no final.' },
+          explica: 'InEXplicável tem X com som de S (quer dizer: tão incrível que nem dá para explicar!). ESculpidas tem S antes de consoante (quer dizer: moldadas pelo vento e pela água). DeSSa tem SS entre vogais. PaZ tem Z no final.' },
         { id: 'p4-18', tipo: 'escolha', livro: 'ponta-iceberg', pagina: 67,
           pergunta: 'O que quer dizer "isso é apenas a ponta do iceberg"?',
           opcoes: [
