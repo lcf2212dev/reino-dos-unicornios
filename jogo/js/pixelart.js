@@ -971,9 +971,10 @@
   PA.montada = function (def, estagio, quadro, ap, opcoes) {
     opcoes = opcoes || {};
     var vista = opcoes.vista || 'lado';
+    var combo = (opcoes.enfeites || []).join('+');
     var chave = ['mont', def.id, estagio, quadro % 3, ap.pele, ap.cabelo, ap.roupa, ap.laco,
-      (opcoes.enfeites || []).join('+'), opcoes.capa ? 1 : 0, opcoes.asasFada ? 1 : 0, vista].join('|');
-    if (cache[chave]) return cache[chave];
+      combo, opcoes.capa ? 1 : 0, opcoes.asasFada ? 1 : 0, vista].join('|');
+    if (cache[chave]) { usarCombo(combo); return cache[chave]; }
     var uni = PA.unicornio(def, estagio, quadro, opcoes);
     var cav = PA.mariana(ap, true, 0, { capa: opcoes.capa, vista: vista });
     var px = uni.cavaleira[0], py = uni.cavaleira[1];
@@ -988,6 +989,7 @@
     if (uni.naFrente) pintarNaFrente(ctx, uni, cav, margem, topo, px, py);
     var res = { canvas: c, w: c.width, h: c.height };
     cache[chave] = res;
+    usarCombo(combo, chave);   // sai do cache junto com a combinação de enfeites (teto TETO_COMBOS)
     return res;
   };
 
