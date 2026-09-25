@@ -27,7 +27,8 @@
     },
     questoes: [
       { id: 'pb3-01', tipo: 'frase', livro: 'receita', lerItens: true, apoio: SALADA,
-        pergunta: 'Qual é o nome da receita? Monte a resposta com os blocos.',
+        pergunta: 'Qual é o nome da receita?',
+        instrucao: 'Monte a resposta com os blocos.',
         blocos: ['O nome da receita é', 'Salada', 'de frutas.'],
         explica: 'O nome da receita é o título, que vem antes de tudo: "Salada de frutas".' },
 
@@ -41,7 +42,8 @@
         explica: 'A receita ensina a preparar um alimento: diz o que usar (ingredientes) e como fazer (modo de preparo).' },
 
       { id: 'pb3-03', tipo: 'varias', livro: 'partes-receita', apoio: SALADA,
-        pergunta: 'Quais são os ingredientes usados para preparar essa receita? Toque em todos.',
+        pergunta: 'Quais são os ingredientes usados para preparar essa receita?',
+        instrucao: 'Toque em todos.',
         opcoes: [
           { t: 'banana', ok: true },
           { t: 'morango' },
@@ -127,7 +129,8 @@
         explica: 'Exame e exemplo se escrevem com X, mesmo com som de Z. Doze e zebra se escrevem com Z.' },
 
       { id: 'pb3-10', tipo: 'completar', colado: true, livro: 'digrafos',
-        pergunta: 'Escreva o nome das imagens, classificando corretamente: Toque em CH, LH ou NH para completar cada nome.',
+        pergunta: 'Escreva o nome das imagens, classificando corretamente:',
+        instrucao: 'Toque em CH, LH ou NH para completar cada nome.',
         palavras: ['CH', 'LH', 'NH'],
         frases: [   // na ordem em que as figuras aparecem na folha
           { img: 'palavra:quinhentos', alt: 'o número 500', antes: 'QUI', depois: 'ENTOS', certa: 2 },
@@ -152,7 +155,8 @@
         explica: 'Com CH: cachorro, chocolate, chupeta, chave, mochila e cachecol. Com LH: palhaço, milho, folha, olho, coelho e ovelha. Com NH: ninho, quinhentos, golfinho, dinheiro, pinheiro e aranha.' },
 
       { id: 'pb3-11', tipo: 'copiar', livro: 'som-de-s',
-        pergunta: 'Escolha a escrita correta e copie a palavra: Depois, monte a palavra tocando nas letras.',
+        pergunta: 'Escolha a escrita correta e copie a palavra:',
+        instrucao: 'Toque na escrita certa e depois monte a palavra tocando nas letras.',
         itens: [
           { letra: 'a', opcoes: ['PASEIO', 'PASSEIO'], certa: 1 },
           { letra: 'b', opcoes: ['EXAME', 'EZAME'], certa: 0 },

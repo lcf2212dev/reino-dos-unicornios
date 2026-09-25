@@ -13,7 +13,7 @@ Reino.RASCUNHO_PORTUGUES.p1 =
             { e: '😴', t: 'A gente não precisa fazer nada' },
           ], certa: 0,
           explica: 'A receita mostra tudo o que vamos usar e o que fazer, em ordem. Assim a comida dá certo!' },
-        { id: 'p1-02', tipo: 'escolha', livro: 'receita', pagina: 32,
+        { id: 'p1-02', tipo: 'escolha', livro: 'receita', pagina: 33,
           pergunta: 'Para que serve uma receita?',
           opcoes: [
             { e: '📰', t: 'Para dar as notícias do dia' },
@@ -60,7 +60,7 @@ Reino.RASCUNHO_PORTUGUES.p1 =
           pergunta: 'Jogo da memória dos ingredientes! Encontre os pares:',
           pares: [['🍓', 'Morango'], ['🍌', 'Banana'], ['🥛', 'Leite condensado'], ['💧', 'Água morna']],
           explica: 'Morango, banana, leite condensado e água morna estão na lista de ingredientes da salada de frutas.' },
-        { id: 'p1-08', tipo: 'escolha', livro: 'passo-a-passo', pagina: 35,
+        { id: 'p1-08', tipo: 'escolha', livro: 'passo-a-passo', pagina: 34,
           pergunta: 'Na receita de salada de frutas, o que deve ser feito primeiro?',
           opcoes: [
             { e: '🥛', t: 'Adicionar leite condensado' },
@@ -79,7 +79,7 @@ Reino.RASCUNHO_PORTUGUES.p1 =
             'Está pronto! Agora é só servir.',
           ],
           explica: 'Primeiro reúne tudo, depois faz o creme, junta as frutas, leva à geladeira e, no fim, serve. A ordem importa!' },
-        { id: 'p1-10', tipo: 'escolha', livro: 'passo-a-passo', pagina: 35,
+        { id: 'p1-10', tipo: 'escolha', livro: 'passo-a-passo', pagina: 34,
           pergunta: 'Quantas vezes a salada de frutas vai à geladeira?',
           opcoes: [
             { e: '⏰', t: '1 vez' },

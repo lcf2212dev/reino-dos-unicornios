@@ -51,7 +51,7 @@ const icones = { window: {} };
 vm.runInNewContext(fs.readFileSync(path.join(raiz, 'js/icones.js'), 'utf8'), icones);
 const textoOk = (t) => typeof t === 'string' && t.trim().length > 0;
 
-// campos novos: livre (varias/completar), rotulos (vfLista), desenho, apoio, copiar, colado/img/aceitas (completar)
+// campos novos: livre (varias/completar), rotulos (vfLista), desenho, apoio, instrucao, copiar, colado/img/aceitas (completar)
 // naProva: figura que falta é erro (nas salas, só aviso: o jogo mostra ❓)
 function checarNovos(d, naProva) {
   if (d.apoio !== undefined) {
@@ -64,6 +64,7 @@ function checarNovos(d, naProva) {
         `${d.id}: parte ${i + 1} do apoio precisa de lista (textos) ou texto`);
     });
   }
+  if (d.instrucao !== undefined) checar(textoOk(d.instrucao), `${d.id}: "instrucao" precisa ser um texto não vazio`);
   if (d.colado !== undefined) checar(d.colado === true && d.tipo === 'completar', `${d.id}: "colado" só vale true num completar`);
   if (d.tipo === 'completar' && Array.isArray(d.frases) && Array.isArray(d.palavras)) {
     d.frases.forEach((f, i) => {

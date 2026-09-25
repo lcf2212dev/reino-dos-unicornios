@@ -871,7 +871,37 @@ body.sem-animacao *:not(.balao-respira), body.sem-animacao *::before, body.sem-a
 .apoio-parte-titulo { margin: 0 0 4px; font-weight: 700; font-size: 0.9em; color: var(--rosa-forte); }
 .apoio-lista { margin: 0; padding-left: 1.5em; font-size: 0.9em; line-height: 2; }
 .apoio-texto { margin: 0; font-size: 0.9em; line-height: 2.1; overflow-wrap: break-word; }
-.btn-ouvir-apoio { margin-top: 14px; }
+.btn-ouvir-apoio { margin-top: 0; flex: none; }
+.apoio-topo { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 10px; }
+.apoio-topo .apoio-rotulo { margin: 0; }
+.apoio-abrir { min-height: 44px; padding: 4px 12px; border: 2px solid var(--borda); border-radius: 12px; background: var(--ouro-claro); font-weight: 700; font-size: 0.8em; }
+/* celular e tablet em pé: caixa recolhível numa linha (📖 abrir/esconder + 🔊); aberta, o texto rola dentro dela
+   para a pergunta caber na primeira tela */
+@media (max-width: 999.98px) {
+  .apoio { padding: 10px 12px 12px; }
+  .apoio-topo { flex-wrap: nowrap; }
+  .apoio-topo .apoio-rotulo { display: none; }
+  .apoio-abrir { flex: 1 1 auto; min-width: 0; }
+  .apoio-ouvir-rotulo { display: none; }
+  .btn-ouvir-apoio { min-width: 52px; font-size: 1em; }
+  .apoio-corpo { max-height: 18vh; max-height: 18dvh; overflow: auto; margin-top: 8px; padding: 0 6px 4px 2px; border-bottom: 2px dashed var(--lavanda); overscroll-behavior: contain; }
+  .apoio-corpo .apoio-titulo { margin-top: 0; }
+  .apoio-fechado .apoio-corpo { display: none; }
+  .desafio.com-apoio { gap: 10px; }
+}
+@media (min-width: 640px) and (max-width: 999.98px) { .apoio-ouvir-rotulo { display: inline; } .apoio-corpo { max-height: 30vh; max-height: 30dvh; } }
+/* tela larga (notebook, tablet deitado): o texto de apoio ao lado da pergunta, sempre aberto */
+@media (min-width: 1000px) {
+  .missao-corpo > .desafio.com-apoio, .missao-corpo:has(> .desafio.com-apoio) > * { max-width: 1180px; }
+  .desafio.com-apoio { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); grid-template-rows: auto 1fr; align-items: start; column-gap: 20px; }
+  .desafio.com-apoio > .apoio { grid-column: 1; grid-row: 1 / span 2; }
+  .desafio.com-apoio > :not(.apoio) { grid-column: 2; }
+  .apoio-abrir { display: none; }
+}
+
+/* instrucao (opcional): como responder no jogo, numa linha própria logo abaixo da pergunta */
+.instrucao { display: flex; align-items: baseline; gap: 6px; margin: 8px 0 0; font-size: 0.9em; font-style: italic; font-weight: 700; color: var(--tinta-suave); }
+.instrucao-icone { flex: none; font-style: normal; }
 
 /* completar: lacuna dentro da palavra (colado) e grade compacta (itens com figura) */
 .completar-itens { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 10em), 1fr)); gap: 8px; }
@@ -882,6 +912,11 @@ body.sem-animacao *:not(.balao-respira), body.sem-animacao *::before, body.sem-a
 .completar-img { display: inline-flex; line-height: 0; min-height: 64px; align-items: center; justify-content: center; font-size: 2em; }
 .palavra-colada { white-space: nowrap; }
 .lacuna.lacuna-colada { min-width: 2em; margin: 0; padding: 0 1px; line-height: 1.5; }
+.lacuna.lacuna-colada.preenchida { min-width: 0; padding: 0; }
+/* colado com frase inteira: caixa na largura toda, a frase quebra nos espaços (só a palavra da lacuna fica inteira) */
+.completar-colado-longo .frase-texto { overflow-wrap: break-word; }
+.completar-colado-longo .lacuna.lacuna-colada { min-width: 1.6em; }
+.completar-colado-longo .lacuna.lacuna-colada.preenchida { min-width: 0; }
 
 /* copiar: marcar a escrita certa entre duas e escrever a palavra com peças de letras */
 .copiar { display: flex; flex-direction: column; gap: 14px; }

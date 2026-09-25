@@ -81,6 +81,8 @@
   F.segmentosDesafio = function (d, ordem) {
     if (d.tipo === 'vf') return [F.fixas.verdadeiroOuFalso, d.afirmacao];
     var segs = [d.pergunta];
+    // instrucao: o jeito de responder no jogo, numa linha própria (o texto da folha fica intacto na pergunta)
+    if (d.instrucao) segs.push(d.instrucao);
     function todos(lista) { return ordem || lista.map(function (_, i) { return i; }); }
     if ((d.tipo === 'escolha' || d.tipo === 'varias') && d.opcoes) {
       todos(d.opcoes).forEach(function (i) { segs.push(d.opcoes[i].t); });

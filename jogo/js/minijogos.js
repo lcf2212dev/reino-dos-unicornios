@@ -25,6 +25,7 @@
   D.tamanhoLeitura = function (d) {
     var t = D.enunciado(d);
     if (d.opcoes) t += d.opcoes.map(function (o) { return o.t; }).join(' ');
+    if (d.instrucao) t += ' ' + d.instrucao;
     return t.length;
   };
 
@@ -409,13 +410,22 @@
       desenho ? PA.paraDOM(desenho, PA.escalaNitida(desenho.width > 16 ? 64 : 48, desenho.width)) : '❓');
   }
 
+  // colado: [texto antes da palavra, pedaço da palavra antes da lacuna, pedaço depois, resto da frase]
+  // ('Meu pai dirigiu o ca' + lacuna + 'o até o local.' → 'Meu pai dirigiu o ', 'ca', 'o', ' até o local.')
+  function partesColado(f) {
+    var a = f.antes.match(/^([\s\S]*\s)?(\S*)$/), b = f.depois.match(/^(\S*)([\s\S]*)$/);
+    return [a[1] || '', a[2], b[1], b[2]];
+  }
+
   // completar frases com as palavras do quadro — valor: [índice da palavra ou null por frase]
   // campos opcionais: d.colado (lacuna dentro da palavra), frases[i].img + alt (figura), frases[i].aceitas (outros índices certos)
   TIPOS.completar = function (d, opts) {
     var escolha = opts.valorInicial ? opts.valorInicial.slice() : d.frases.map(function () { return null; });
-    // com figura ou com a lacuna dentro da palavra: os itens ficam numa grade compacta
-    var comFigura = d.frases.some(function (f) { return f.img; }) || !!d.colado;
-    var wrap = el('div.completar' + (d.colado ? '.completar-colado' : '') + (comFigura ? '.completar-grade' : ''));
+    // colado com frase inteira (espaço no antes/depois): a caixa ocupa a largura toda e a linha quebra nos espaços
+    var coladoLongo = !!d.colado && d.frases.some(function (f) { return /\s/.test((f.antes + f.depois).trim()); });
+    // com figura ou com a lacuna dentro da palavra solta: os itens ficam numa grade compacta
+    var comFigura = d.frases.some(function (f) { return f.img; }) || (!!d.colado && !coladoLongo);
+    var wrap = el('div.completar' + (d.colado ? '.completar-colado' : '') + (coladoLongo ? '.completar-colado-longo' : '') + (comFigura ? '.completar-grade' : ''));
     wrap.appendChild(el('div.quadro-palavras', d.palavras.map(function (p, i) {
       return [i ? el('span.quadro-traco', '–') : null, el('b', p)];
     })));
@@ -432,9 +442,10 @@
         });
         return b;
       });
+      // colado: PA + lacuna + ARINHO, sem espaços; só a palavra da lacuna fica inteira (o resto da frase quebra nos espaços)
+      var cola = d.colado && partesColado(f);
       var texto = d.colado
-        // colado: PA + lacuna + ARINHO, sem espaços (a palavra fica inteira numa linha)
-        ? el('p.frase-texto.frase-colada', f.letra ? el('b', f.letra + ') ') : null, el('span.palavra-colada', f.antes, lacuna, f.depois))
+        ? el('p.frase-texto.frase-colada', f.letra ? el('b', f.letra + ') ') : null, cola[0], el('span.palavra-colada', cola[1], lacuna, cola[2]), cola[3])
         : el('p.frase-texto', f.letra ? el('b', f.letra + ') ') : null, f.antes + ' ', lacuna, f.depois.match(/^[.,!?]/) ? '' : ' ', f.depois);
       var caixa = el('div.frase-completar' + (f.img ? '.com-img' : ''),
         f.img ? figuraCompletar(f) : null,
@@ -508,7 +519,8 @@
     });
     var monte = opts.monte && opts.monte.length === d.itens.length ? opts.monte : d.itens.map(function (it) { return D.ordemPecasCopiar(it); });
     var wrap = el('div.copiar');
-    wrap.appendChild(el('p.dica-toque', 'Marque a escrita certa e monte a palavra com as letras. Para tirar uma letra, toque nela.'));
+    // com instrucao (linha logo abaixo da pergunta), a dica de toque não se repete
+    if (!d.instrucao) wrap.appendChild(el('p.dica-toque', 'Marque a escrita certa e monte a palavra com as letras. Para tirar uma letra, toque nela.'));
     var itens = d.itens.map(function (it, i) {
       var pecas = D.pecasCopiar(it);
       var botoesOpc = it.opcoes.map(function (o, j) {
@@ -923,10 +935,11 @@
   };
 
   /* texto de apoio (d.apoio, em qualquer desafio ou questão), acima do enunciado:
-     { titulo, partes: [{ titulo, lista: [...] } ou { titulo, texto }] } */
-  D.caixaApoio = function (apoio) {
-    var caixa = el('section.apoio', { 'aria-label': 'Texto de apoio' },
-      el('p.apoio-rotulo', '📖 Texto de apoio'),
+     { titulo, partes: [{ titulo, lista: [...] } ou { titulo, texto }] }
+     tela larga (≥ 1000 px): ao lado da pergunta, sempre aberto. Celular e tablet em pé: caixa recolhível,
+     aberta na primeira questão que traz o texto e fechada nas seguintes (fechado = true); o 🔊 fica sempre à vista. */
+  D.caixaApoio = function (apoio, fechado) {
+    var corpoApoio = el('div.apoio-corpo',
       apoio.titulo ? el('h3.apoio-titulo', apoio.titulo) : null,
       (apoio.partes || []).map(function (p) {
         return el('div.apoio-parte',
@@ -934,10 +947,21 @@
           p.lista ? el('ul.apoio-lista', p.lista.map(function (t) { return el('li', t); })) : null,
           p.texto ? el('p.apoio-texto', p.texto) : null);
       }));
+    var abrir = el('button.apoio-abrir', { type: 'button' });
+    var topo = el('div.apoio-topo', el('p.apoio-rotulo', '📖 Texto de apoio'), abrir);
+    var caixa = el('section.apoio', { 'aria-label': 'Texto de apoio' }, topo, corpoApoio);
+    function pintar() {
+      caixa.classList.toggle('apoio-fechado', fechado);
+      abrir.setAttribute('aria-expanded', String(!fechado));
+      U.preencher(abrir, fechado ? '📖 Ver o texto de apoio' : '📖 Esconder');
+    }
+    abrir.addEventListener('click', function () { fechado = !fechado; Reino.Som.tocar('toque'); pintar(); });
+    pintar();
     if (Reino.Som.temVoz()) {
-      var ouvir = el('button.btn-ouvir.btn-ouvir-apoio', { type: 'button', 'aria-label': 'Ouvir o texto de apoio' }, '🔊 Ouvir o texto');
+      // no topo da caixa, à vista mesmo com o texto fechado
+      var ouvir = el('button.btn-ouvir.btn-ouvir-apoio', { type: 'button', 'aria-label': 'Ouvir o texto de apoio' }, '🔊', el('span.apoio-ouvir-rotulo', ' Ouvir o texto'));
       ouvir.addEventListener('click', function () { Reino.Som.falar(Reino.Falas.segmentosApoio(apoio), { voz: 'narradora' }); });
-      caixa.appendChild(ouvir);
+      topo.appendChild(ouvir);
     }
     return caixa;
   };
@@ -946,8 +970,8 @@
     opts = Object.assign({ onMudar: function () {} }, opts || {});
     var fabrica = TIPOS[d.tipo] || TIPOS.escolha;
     var ctrl = fabrica(d, opts);
-    var card = el('div.desafio.desafio-' + d.tipo + (d.estilo ? '.estilo-' + d.estilo : ''));
-    if (d.apoio) card.appendChild(D.caixaApoio(d.apoio));
+    var card = el('div.desafio.desafio-' + d.tipo + (d.estilo ? '.estilo-' + d.estilo : '') + (d.apoio ? '.com-apoio' : ''));
+    if (d.apoio) card.appendChild(D.caixaApoio(d.apoio, !!opts.apoioFechado));
     var enun = el('div.enunciado');
     if (d.tipo === 'vf') {
       enun.appendChild(el('p.pergunta', 'Verdadeiro ou falso?'));
@@ -955,6 +979,8 @@
     } else {
       enun.appendChild(el('p.pergunta', d.pergunta));
     }
+    // instrucao (opcional): o jeito de responder no jogo, numa linha própria logo abaixo da pergunta
+    if (d.instrucao) enun.appendChild(el('p.instrucao', el('span.instrucao-icone', { 'aria-hidden': 'true' }, '👉'), el('span', d.instrucao)));
     var ouvir = el('button.btn-ouvir', { type: 'button', 'aria-label': 'Ouvir a pergunta' }, '🔊 Ouvir');
     ouvir.addEventListener('click', function () { Reino.Som.falar(Reino.Falas.segmentosDesafio(d, ctrl.ordem), { voz: 'narradora' }); });
     if (Reino.Som.temVoz()) enun.appendChild(ouvir);

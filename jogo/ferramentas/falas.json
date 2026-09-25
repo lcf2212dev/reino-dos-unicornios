@@ -2222,7 +2222,8 @@
    "voz": "narradora",
    "texto": "Monte a resposta com os blocos.",
    "pacotes": [
-    "prova-ingles-3bim"
+    "prova-ingles-3bim",
+    "prova-portugues-3bim"
    ],
    "fala": "Monte a resposta com os blocos."
   },
@@ -2263,13 +2264,13 @@
    "fala": "Draw a picture using the elements of the art (shapes, lines and colors)"
   },
   {
-   "chave": "065485de1v",
+   "chave": "9e14bb88z",
    "voz": "narradora",
-   "texto": "Qual é o nome da receita? Monte a resposta com os blocos.",
+   "texto": "Qual é o nome da receita?",
    "pacotes": [
     "prova-portugues-3bim"
    ],
-   "fala": "Qual é o nome da receita? Monte a resposta com os blocos."
+   "fala": "Qual é o nome da receita?"
   },
   {
    "chave": "6acd1a9et",
@@ -2417,13 +2418,22 @@
    "fala": "Para ensinar uma brincadeira."
   },
   {
-   "chave": "2800c91b2e",
+   "chave": "bbc615021y",
    "voz": "narradora",
-   "texto": "Quais são os ingredientes usados para preparar essa receita? Toque em todos.",
+   "texto": "Quais são os ingredientes usados para preparar essa receita?",
    "pacotes": [
     "prova-portugues-3bim"
    ],
-   "fala": "Quais são os ingredientes usados para preparar essa receita? Toque em todos."
+   "fala": "Quais são os ingredientes usados para preparar essa receita?"
+  },
+  {
+   "chave": "cd3ea17ep",
+   "voz": "narradora",
+   "texto": "Toque em todos.",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "Toque em todos."
   },
   {
    "chave": "17a49df8g",
@@ -2698,22 +2708,40 @@
    "fala": "Complete as palavras com xis ou zê:"
   },
   {
-   "chave": "caa9e9f635",
+   "chave": "b8008f3a1t",
    "voz": "narradora",
-   "texto": "Escreva o nome das imagens, classificando corretamente: Toque em CH, LH ou NH para completar cada nome.",
+   "texto": "Escreva o nome das imagens, classificando corretamente:",
    "pacotes": [
     "prova-portugues-3bim"
    ],
-   "fala": "Escreva o nome das imagens, classificando corretamente: Toque em cê agá, éle agá ou ene agá para completar cada nome."
+   "fala": "Escreva o nome das imagens, classificando corretamente:"
   },
   {
-   "chave": "f248f8372q",
+   "chave": "5b5cdc471l",
    "voz": "narradora",
-   "texto": "Escolha a escrita correta e copie a palavra: Depois, monte a palavra tocando nas letras.",
+   "texto": "Toque em CH, LH ou NH para completar cada nome.",
    "pacotes": [
     "prova-portugues-3bim"
    ],
-   "fala": "Escolha a escrita correta e copie a palavra: Depois, monte a palavra tocando nas letras."
+   "fala": "Toque em cê agá, éle agá ou ene agá para completar cada nome."
+  },
+  {
+   "chave": "8f2adf4b1i",
+   "voz": "narradora",
+   "texto": "Escolha a escrita correta e copie a palavra:",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "Escolha a escrita correta e copie a palavra:"
+  },
+  {
+   "chave": "e0fac0a525",
+   "voz": "narradora",
+   "texto": "Toque na escrita certa e depois monte a palavra tocando nas letras.",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "Toque na escrita certa e depois monte a palavra tocando nas letras."
   },
   {
    "chave": "c30223701a",
@@ -11902,15 +11930,6 @@
     "portugues-p5"
    ],
    "fala": "mel"
-  },
-  {
-   "chave": "28bc27d7e",
-   "voz": "narradora",
-   "texto": "anel",
-   "pacotes": [
-    "portugues-p5"
-   ],
-   "fala": "anel"
   },
   {
    "chave": "02b77604f",

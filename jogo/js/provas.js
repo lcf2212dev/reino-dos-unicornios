@@ -180,6 +180,8 @@
       var t = D.textoParaFala(d);
       // texto de apoio: conta tudo o que ela precisa ler
       if (d.apoio) t += Reino.Falas.segmentosApoio(d.apoio).join(' ');
+      // instrucao: a linha de como responder, logo abaixo da pergunta
+      if (d.instrucao) t += ' ' + d.instrucao;
       if (d.tipo === 'copiar') t += d.itens.map(function (x) { return x.opcoes.join(' '); }).join(' ');
       else if (d.itens) t += d.itens.map(function (x) { return typeof x === 'string' ? x : x.t; }).join(' ');
       if (d.frases) t += d.frases.map(function (f) { return f.antes + f.depois; }).join(' ');
@@ -197,6 +199,8 @@
       var inicio = Date.now(), avisou = false;
       var ctrl = D.render(d, {
         modo: 'prova', ordem: ordens[i], monte: ordens[i], valorInicial: respostas[i],
+        // texto de apoio já visto numa questão anterior: começa fechado (no celular e no tablet em pé)
+        apoioFechado: !!d.apoio && questoes.slice(0, i).some(function (q) { return q.apoio && (q.apoio === d.apoio || JSON.stringify(q.apoio) === JSON.stringify(d.apoio)); }),
         onMudar: function () { respostas[i] = ctrl.valor(); prontas[i] = ctrl.pronto(); pintarPontos(i); atualizar(); },
       });
       prontas[i] = ctrl.pronto();
