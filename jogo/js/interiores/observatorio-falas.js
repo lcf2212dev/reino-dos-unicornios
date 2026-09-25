@@ -19,7 +19,7 @@
       // o ajudante engraçado: conta piadas (voz npc-cosmo, com efeito de robô)
       cosmo: {
         oi: ['Bip bop, eu sou o Robô Cosmo! 🤖', 'Minha bateria está feliz!'],
-        nova: ['Você quer ouvir uma piada, bip?', 'Carreguei uma piada nova!', 'Processando uma piada boa!'],
+        nova: ['Você quer uma piada, bip?', 'Carreguei uma piada nova!', 'Processando uma piada boa!'],
         depois: ['Minha bateria riu muito, bip!', 'Tchau, tchau, até logo, bip!', 'Volte logo, bip bop, bip bop!'],
       },
     },
@@ -151,21 +151,21 @@
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/nebula/en/
       { id: 'estrelas-bercario', tema: 'estrelas', paginas: ['Estrelas nascem em nuvens.', 'São nuvens de poeira e gás.', 'Há nuvens que são berçários!'] },
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/meteor-shower/en/
-      { id: 'estrelas-cadente', tema: 'estrelas', paginas: ['Estrela cadente não é estrela!', 'Ela é um meteoro no céu!', 'O ar em volta dele brilha.'] },
+      { id: 'estrelas-cadente', tema: 'estrelas', paginas: ['Estrela cadente não é estrela!', 'Ela é uma pedrinha do espaço!', 'O ar em volta dela brilha.'] },
       // fonte 2: NASA StarChild — https://starchild.gsfc.nasa.gov/docs/StarChild/questions/question26.html
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/review/cosmic-colors/hubble.html
       { id: 'estrelas-piscam', tema: 'estrelas', paginas: ['Por que a estrela pisca?', 'A luz dela passa pelo ar.', 'O ar mexe, e a luz balança!'] },
 
       // fonte 2: Agência Espacial Brasileira — https://www.gov.br/aeb/pt-br/centrais-de-conteudo/publicacoes/instagram-do-periodo-de-defeso-eleitoral-2022/curiosidades-do-espaco-bandeira-nacional-e-constelacoes
       // fonte: NASA JPL — https://www.jpl.nasa.gov/images/pia13442-dark-reflections-in-the-southern-cross/
-      { id: 'constelacoes-cruzeiro', tema: 'constelacoes', paginas: ['O Cruzeiro do Sul é uma cruz.', 'Ele está na nossa bandeira!', 'Vemos bem no Hemisfério Sul.'] },
+      { id: 'constelacoes-cruzeiro', tema: 'constelacoes', paginas: ['O Cruzeiro do Sul é uma cruz.', 'Ele está na nossa bandeira!', 'Aqui no Brasil dá para ver!'] },
       // fonte: Agência Espacial Brasileira — https://www.gov.br/aeb/pt-br/centrais-de-conteudo/publicacoes/instagram-do-periodo-de-defeso-eleitoral-2022/curiosidades-do-espaco-bandeira-nacional-e-constelacoes
-      { id: 'constelacoes-bandeira', tema: 'constelacoes', paginas: ['A bandeira mostra um céu.', 'Ele é o céu do Rio de Janeiro.', 'Foi no dia da República!'] },
+      { id: 'constelacoes-bandeira', tema: 'constelacoes', paginas: ['A bandeira mostra um céu.', 'Ele é o céu do Rio de Janeiro.', 'Era o céu do dia da República!'] },
       // fonte: Agência Espacial Brasileira — https://www.gov.br/aeb/pt-br/centrais-de-conteudo/publicacoes/instagram-do-periodo-de-defeso-eleitoral-2022/curiosidades-do-espaco-bandeira-nacional-e-constelacoes
       { id: 'constelacoes-estados', tema: 'constelacoes', paginas: ['Nossa bandeira tem estrelas.', 'Elas lembram nossos estados.', 'E também o Distrito Federal.'] },
       // fonte 2: USP São Carlos — https://saocarlos.usp.br/aprenda-mais-sobre-a-constelacao-de-orion-as-tres-marias-e-sua-familia-estelar-no-sessao-astronomia-deste-sabado/
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/constellations/en/
-      { id: 'constelacoes-tres-marias', tema: 'constelacoes', paginas: ['As Três Marias são estrelas.', 'Elas ficam em fila no céu.', 'São o cinto do caçador Órion.'] },
+      { id: 'constelacoes-tres-marias', tema: 'constelacoes', paginas: ['As Três Marias são estrelas.', 'Elas ficam em fila no céu.', 'São o cinto de um caçador.'] },
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/constellations/en/
       { id: 'constelacoes-desenhos', tema: 'constelacoes', paginas: ['Estrelas formam desenhos.', 'Esses desenhos têm nomes.', 'São as constelações!'] },
       // fonte: NASA Space Place — https://spaceplace.nasa.gov/constellations/en/
@@ -238,7 +238,7 @@
       { id: 'robo-escuro', paginas: ['O que o robô faz no escuro?', 'Acende os olhos de lanterna!'] },
       { id: 'estrela-robo', paginas: ['O que a estrela disse ao robô?', 'Você também é brilhante!'] },
       { id: 'foguete-alegre', paginas: ['Como o foguete fica alegre?', 'Ele dá um pulo até o céu!'] },
-      { id: 'robo-danca', paginas: ['Qual é a dança do robô?', 'A dança do robô, bip bop!'] },
+      { id: 'robo-danca', paginas: ['Qual é a dança do robô?', 'Ele dança o parafusinho, bip!'] },
       { id: 'robo-memoria', paginas: ['Onde o robô guarda piadas?', 'Na memória de risadas, bip!'] },
     ],
 

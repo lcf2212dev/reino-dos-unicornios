@@ -150,7 +150,7 @@
 
 ## Enfeites da Loja
 - Na Loja das Fadas, com estrelas. Entraram encaixes novos: **pescoço**, **cauda** e **chifre**. Vale um enfeite por encaixe.
-- **Novos:** Fitinha na cauda (10 ⭐), Gravata-borboleta (10 ⭐), Pompom na cauda (14 ⭐), Colar de pérolas (18 ⭐), Óculos de estrela (22 ⭐) e Coroa de flores (26 ⭐).
+- **Novos:** Fitinha na cauda (10 ⭐), Gravata-borboleta (10 ⭐), Pompom na cauda (14 ⭐), Colar de pérolas (18 ⭐), Oculinhos de estrela (22 ⭐) e Coroa de flores (26 ⭐).
 - **Do espaço:** Brinco de lua (16 ⭐), Tiara de estrelas (32 ⭐), Colar de planetas (35 ⭐), Anel de Saturno no chifre (40 ⭐) e Cometa na cauda (42 ⭐).
   - Foram redesenhados para aparecer bem no jogo: o anel de Saturno é um aro lilás atravessando o chifre, o colar tem três planetinhas presos em elos dourados, o cometa tem cabeça branca e rastro azul, e a tiara tem uma faixa azul-lavanda. O brinco de lua continua à vista com ela montada.
 - Os de antes continuam iguais. A lista e os preços ficam em `jogo/js/loja-itens.js`.

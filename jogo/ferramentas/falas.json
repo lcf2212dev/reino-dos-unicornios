@@ -10047,6 +10047,25 @@
    ]
   },
   {
+   "chave": "53271cedt",
+   "voz": "narradora",
+   "texto": "Um golinho de água?",
+   "fala": "Um golinho de água?",
+   "pacotes": [
+    "interior-escola",
+    "interior-museu"
+   ]
+  },
+  {
+   "chave": "113cb34fw",
+   "voz": "narradora",
+   "texto": "Descanse um pouquinho.",
+   "fala": "Descanse um pouquinho.",
+   "pacotes": [
+    "interior-escola"
+   ]
+  },
+  {
    "chave": "78025205z",
    "voz": "narradora",
    "texto": "São os prêmios da Escola!",
@@ -10069,25 +10088,6 @@
    "voz": "narradora",
    "texto": "Os outros ainda vão chegar.",
    "fala": "Os outros ainda vão chegar.",
-   "pacotes": [
-    "interior-escola"
-   ]
-  },
-  {
-   "chave": "53271cedt",
-   "voz": "narradora",
-   "texto": "Um golinho de água?",
-   "fala": "Um golinho de água?",
-   "pacotes": [
-    "interior-escola",
-    "interior-museu"
-   ]
-  },
-  {
-   "chave": "113cb34fw",
-   "voz": "narradora",
-   "texto": "Descanse um pouquinho.",
-   "fala": "Descanse um pouquinho.",
    "pacotes": [
     "interior-escola"
    ]
@@ -11831,10 +11831,10 @@
    ]
   },
   {
-   "chave": "72857a6415",
+   "chave": "e763fb11z",
    "voz": "npc-cosmo",
-   "texto": "Você quer ouvir uma piada, bip?",
-   "fala": "Você quer ouvir uma piada, bip?",
+   "texto": "Você quer uma piada, bip?",
+   "fala": "Você quer uma piada, bip?",
    "pacotes": [
     "interior-observatorio"
    ]
@@ -14567,19 +14567,19 @@
    ]
   },
   {
-   "chave": "8e4fdb83x",
+   "chave": "245d881612",
    "voz": "npc-vega",
-   "texto": "Ela é um meteoro no céu!",
-   "fala": "Ela é um meteoro no céu!",
+   "texto": "Ela é uma pedrinha do espaço!",
+   "fala": "Ela é uma pedrinha do espaço!",
    "pacotes": [
     "interior-observatorio"
    ]
   },
   {
-   "chave": "4ed2a226z",
+   "chave": "3aa912baz",
    "voz": "npc-vega",
-   "texto": "O ar em volta dele brilha.",
-   "fala": "O ar em volta dele brilha.",
+   "texto": "O ar em volta dela brilha.",
+   "fala": "O ar em volta dela brilha.",
    "pacotes": [
     "interior-observatorio"
    ]
@@ -14630,10 +14630,10 @@
    ]
   },
   {
-   "chave": "f1979da011",
+   "chave": "9508a09b10",
    "voz": "npc-vega",
-   "texto": "Vemos bem no Hemisfério Sul.",
-   "fala": "Vemos bem no Hemisfério Sul.",
+   "texto": "Aqui no Brasil dá para ver!",
+   "fala": "Aqui no Brasil dá para ver!",
    "pacotes": [
     "interior-observatorio"
    ]
@@ -14657,10 +14657,10 @@
    ]
   },
   {
-   "chave": "76f42befx",
+   "chave": "9807b7e313",
    "voz": "npc-vega",
-   "texto": "Foi no dia da República!",
-   "fala": "Foi no dia da República!",
+   "texto": "Era o céu do dia da República!",
+   "fala": "Era o céu do dia da República!",
    "pacotes": [
     "interior-observatorio"
    ]
@@ -14711,10 +14711,10 @@
    ]
   },
   {
-   "chave": "01a0dd8a12",
+   "chave": "818e103dz",
    "voz": "npc-vega",
-   "texto": "São o cinto do caçador Órion.",
-   "fala": "São o cinto do caçador Órion.",
+   "texto": "São o cinto de um caçador.",
+   "fala": "São o cinto de um caçador.",
    "pacotes": [
     "interior-observatorio"
    ]
@@ -15530,10 +15530,10 @@
    ]
   },
   {
-   "chave": "5f1ad715z",
+   "chave": "8ddb592013",
    "voz": "npc-cosmo",
-   "texto": "A dança do robô, bip bop!",
-   "fala": "A dança do robô, bip bop!",
+   "texto": "Ele dança o parafusinho, bip!",
+   "fala": "Ele dança o parafusinho, bip!",
    "pacotes": [
     "interior-observatorio"
    ]

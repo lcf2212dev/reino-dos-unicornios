@@ -691,7 +691,8 @@
       if (!n || n.id !== 'aveia' || !R.Cuidados || !R.Cuidados.iconeMontaria) return null;
       var ic = R.Cuidados.iconeMontaria();
       if (!ic || !(window.PA && PA.iconeDesenho && PA.iconeDesenho(ic))) return null;
-      return { icone: ic, rotulo: ic === '💧' ? 'Com sede' : 'Com fome' };
+      var b = R.Cuidados.baixo ? R.Cuidados.baixo() : null;
+      return { icone: ic, rotulo: b && b.fome && b.sede ? 'Com fome e sede' : (ic === '💧' ? 'Com sede' : 'Com fome') };
     });
   }
   /* ================= DE FORA: o prédio no mapa (80 × 64 px) ================= */

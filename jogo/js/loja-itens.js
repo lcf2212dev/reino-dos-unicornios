@@ -33,7 +33,7 @@
     { id: 'brinco-lua', nome: 'Brinco de lua', preco: 16, slot: 'orelha', icone: 'enfeite:brinco-lua', espaco: true },
     { id: 'colar-perolas', nome: 'Colar de pérolas', preco: 18, slot: 'pescoco', icone: 'enfeite:colar-perolas' },
     { id: 'capa', nome: 'Capa mágica (para você)', preco: 20, slot: 'capa', icone: '🦸' },
-    { id: 'oculos-estrela', nome: 'Óculos de estrela', preco: 22, slot: 'olho', icone: 'enfeite:oculos-estrela' },
+    { id: 'oculos-estrela', nome: 'Oculinhos de estrela', preco: 22, slot: 'olho', icone: 'enfeite:oculos-estrela' },
     { id: 'coroa', nome: 'Coroa real', preco: 25, slot: 'cabeca', icone: '👑' },
     { id: 'coroa-flores', nome: 'Coroa de flores', preco: 26, slot: 'cabeca', icone: 'enfeite:coroa-flores' },
     { id: 'estrelinhas', nome: 'Rastro de estrelinhas', preco: 30, slot: 'rastro', icone: '✨' },
