@@ -46,6 +46,10 @@ body.sem-animacao .cuid-cheio { transition: none; }
 .cuid-mini .cuid-trilho { height: 8px; border-radius: 5px; }
 #hud .cuid-mini .cuid-trilho { min-width: 28px; }   /* no HUD a barrinha nunca some espremida */
 .carta-uni .cuid-par-mini { width: 86%; }
+/* crescimento nas cartas: 🌱 + barrinha, na mesma largura da fome e da sede */
+.carta-uni .carta-cresce { display: flex; align-items: center; gap: 3px; width: 86%; }
+.carta-uni .carta-cresce > canvas { flex: none; }
+.carta-uni .carta-cresce .barrinha { flex: 1; width: auto; min-width: 0; margin-top: 0; }
 
 /* grande: detalhe do unicórnio, Pet Shop e escolha de comida */
 .cuid-par-grande { flex-direction: column; gap: 8px; width: 100%; }
@@ -105,6 +109,17 @@ body.sem-animacao .cuid-cheio { transition: none; }
    tela e as telas encolhem para acima dele; nenhum botão fica coberto */
 body.recado-cuidado #claude-balao { bottom: calc(env(safe-area-inset-bottom, 0px) + 10px); }
 body.recado-cuidado .tela { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 22px + var(--recado-altura, 150px)); }
+/* tela baixa (celular deitado): embaixo a tela ficava com ~70 px. O balão vai para a direita,
+   estreito, e a tela encolhe na largura em vez de na altura */
+@media (max-height: 480px) {
+  body.recado-cuidado #claude-balao { left: auto; right: calc(env(safe-area-inset-right, 0px) + 6px); width: min(340px, 42vw); margin: 0; gap: 6px; }
+  body.recado-cuidado #claude-balao .claude-fala { padding: 10px 10px 8px; }
+  body.recado-cuidado #claude-balao .claude-texto { font-size: 0.85em; }
+  body.recado-cuidado .tela {
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 12px);
+    padding-right: calc(env(safe-area-inset-right, 0px) + 18px + min(340px, 42vw));
+  }
+}
 
 /* notebook: a Pet Shop mais larga, as 5 comidas numa linha e fome e sede lado a lado,
    para caber sem rolar em 1366×768 */
@@ -119,7 +134,7 @@ body.recado-cuidado .tela { padding-bottom: calc(env(safe-area-inset-bottom, 0px
   /* celular: 2 por linha; a última sozinha (o bolo) ocupa a linha inteira, centralizada */
   .grade-comidas { gap: 10px; }
   .grade-comidas > .item-comida { flex-basis: calc((100% - 10px) / 2); }
-  .grade-comidas > .item-comida:last-child:nth-child(odd) { flex-basis: 100%; }
+  .grade-comidas > .item-comida:last-child:nth-child(odd), .grade-comidas > .item-comida.comida-larga { flex-basis: 100%; }
   .item-comida { min-height: 136px; padding: 10px 6px; }
   .petshop-uni { gap: 10px; padding: 8px 10px; }
   /* no celular: rótulo e aviso em cima, trilho largo embaixo */

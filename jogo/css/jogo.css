@@ -62,7 +62,11 @@ p { margin: 0; }
 
 /* ---------- mapa ---------- */
 #reino { position: fixed; inset: 0; display: block; touch-action: none; }
-#reino:focus { outline: none; }   /* recebe o foco quando a última tela fecha pelo teclado (ui.js, focarMapa) */
+#reino:focus { outline: none; }
+/* toque que não valeu (guarda de toque fantasma, ui.js): o botão afunda 2 px, sem som */
+.toque-ignorado { transform: translateY(2px); filter: brightness(0.94); }
+body.sem-animacao .toque-ignorado { transform: none; }
+@media (prefers-reduced-motion: reduce) { .toque-ignorado { transform: none; } }   /* recebe o foco quando a última tela fecha pelo teclado (ui.js, focarMapa) */
 
 /* ---------- botões ---------- */
 .btn-grande {
@@ -627,7 +631,7 @@ body.em-missao #claude-balao { bottom: calc(env(safe-area-inset-bottom, 0px) + 1
 /* rótulos dos prêmios (Ganho na prova, Comprado, raridade): ≥ 12px no celular, e quebram dentro da carta */
 .item-loja .chip-mini { font-size: 0.86em; max-width: 100%; text-align: center; overflow-wrap: anywhere; border-radius: 10px; }
 .item-preco { font-weight: 700; padding: 2px 10px; border-radius: 999px; background: var(--ouro-claro); border: 2px solid var(--borda); }
-.item-loja.comprado .item-preco { background: var(--lavanda-clara); }
+.item-loja.comprado .item-preco { background: var(--certo-fundo); }   /* "Usar" não tem a cor do preço */
 .item-loja.usando { background: var(--certo-fundo); }
 
 /* ---------- estábulo ---------- */

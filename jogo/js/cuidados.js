@@ -20,7 +20,7 @@
     lembreteFome: 'Seu unicórnio está com fome. A Pet Shop tem comidinha gostosa! 🍎',
     lembreteSede: 'Seu unicórnio está com sede. Tem água fresquinha na Pet Shop! 💧',
     lembreteAmbos: 'Seu unicórnio está com fome e sede. Vamos até a Pet Shop? 🍎💧',
-    faltamEstrelas: 'Ainda faltam estrelas para essa comidinha. Cada acerto de primeira vale uma estrela! ⭐',
+    faltamEstrelas: 'Faça uma sala para ganhar estrelas.',
     guardado: 'Guardei na despensa do Estábulo! 💛',
     comeu: 'Que comidinha mais gostosa! 💛',
     cheio: 'Seu unicórnio está de barriga cheia agora.',

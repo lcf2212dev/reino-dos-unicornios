@@ -38,46 +38,62 @@
   /* ---------- toque fantasma ----------
      Um botão que some no 1º toque deixa o 2º toque (mesmo lugar, 0–300 ms depois) cair no que
      aparece embaixo: já comprou comida e trocou enfeite sem ela querer. Então, logo depois de
-     abrir ou fechar uma tela, os cliques de dedo/mouse ficam ignorados por um instante.
+     abrir ou fechar uma tela por toque, os cliques de dedo/mouse PERTO desse toque (até 40 px)
+     ficam ignorados por um instante; um toque noutro lugar vale na hora ("Vamos" → "Começar").
      Só os de verdade (isTrusted) e de ponteiro (detail > 0): Enter/Espaço no teclado geram
-     clique com detail 0 e passam sempre; .click() de código também passa. */
-  var SEGURAR_MS = 400;
+     clique com detail 0 e passam sempre; .click() de código também passa. O toque ignorado
+     não fica mudo: o botão afunda de leve (toqueIgnorado, sem som). */
+  var SEGURAR_MS = 400, TOQUE_PERTO_PX = 40;
   var toquesLivresEm = 0, ultimoToque = -1e9;
-  UI.segurarToques = function (ms) { toquesLivresEm = Math.max(toquesLivresEm, performance.now() + (ms || SEGURAR_MS)); };
+  var ultimoPonto = null;    // { x, y } do último pointerdown de verdade
+  var pontoGuarda = null;    // o toque que abriu ou fechou a tela: a guarda vale só perto dele
+  UI.segurarToques = function (ms) {
+    toquesLivresEm = Math.max(toquesLivresEm, performance.now() + (ms || SEGURAR_MS));
+    pontoGuarda = ultimoPonto;
+  };
   // só segura quando a tela mudou por causa de um toque (até 600 ms antes): a tela de início
   // que abre sozinha, ou uma tela aberta pelo teclado, não prendem o próximo toque
   function segurarSeFoiToque() { if (performance.now() - ultimoToque < 600) UI.segurarToques(); }
   ['pointerdown', 'pointerup'].forEach(function (ev) {
-    document.addEventListener(ev, function (e) { if (e.isTrusted) ultimoToque = performance.now(); }, true);
+    document.addEventListener(ev, function (e) {
+      if (!e.isTrusted) return;
+      ultimoToque = performance.now();
+      if (ev === 'pointerdown') ultimoPonto = { x: e.clientX, y: e.clientY };
+    }, true);
   });
+  function perto(a, b) { return !!(a && b) && Math.abs(a.x - b.x) < TOQUE_PERTO_PX && Math.abs(a.y - b.y) < TOQUE_PERTO_PX; }
+  // retorno calmo de um toque que não valeu: o botão afunda 2 px por um instante (sem som;
+  // com "reduzir movimento" só escurece de leve, jogo.css)
+  function toqueIgnorado(alvo) {
+    var b = alvo && alvo.closest ? alvo.closest('button, [role="button"]') : null;
+    if (!b) return;
+    b.classList.remove('toque-ignorado'); void b.offsetWidth; b.classList.add('toque-ignorado');
+    clearTimeout(b._tiIgnorado);
+    b._tiIgnorado = setTimeout(function () { b.classList.remove('toque-ignorado'); }, 220);
+  }
   // a última coisa usada foi o teclado? (quem fecha uma tela decide para onde vai o foco)
   var ultimaTecla = -1e9;
   document.addEventListener('keydown', function (e) { if (e.isTrusted) ultimaTecla = performance.now(); }, true);
   document.addEventListener('click', function (e) {
     if (!e.isTrusted || !e.detail || performance.now() >= toquesLivresEm) return;
+    if (pontoGuarda && !perto({ x: e.clientX, y: e.clientY }, pontoGuarda)) return;   // longe: vale
     e.preventDefault(); e.stopImmediatePropagation();
+    toqueIgnorado(e.target);
   }, true);
-  /* Toque repetido no mesmo lugar: quem acha que "não aconteceu nada" toca de novo, e o botão que
-     nasceu embaixo do dedo pode ser o de gastar estrela (o "Comprar e guardar" fica em cima dos
-     cartões de comida). Nos botões que gastam, um toque a menos de 40 px do toque anterior e menos
-     de 1,1 s depois não vale. Numa rajada, cada toque ignorado conta como o anterior, então nenhuma
-     sequência no mesmo lugar compra; um toque noutro ponto, ou depois de uma pausa, vale. */
-  var TOQUE_PERTO_PX = 40, TOQUE_REPETIDO_MS = 1100;
-  var ultimosToques = [];   // os 2 últimos pointerdown de verdade: { x, y, t }
-  document.addEventListener('pointerdown', function (e) {
-    if (!e.isTrusted) return;
-    ultimosToques.push({ x: e.clientX, y: e.clientY, t: performance.now() });
-    if (ultimosToques.length > 2) ultimosToques.shift();
-  }, true);
-  function toqueRepetido(e) {
-    if (!e || !e.isTrusted || !e.detail || ultimosToques.length < 2) return false;
-    var a = ultimosToques[0], b = ultimosToques[1];
-    return b.t - a.t < TOQUE_REPETIDO_MS && Math.abs(b.x - a.x) < TOQUE_PERTO_PX && Math.abs(b.y - a.y) < TOQUE_PERTO_PX;
-  }
+  /* Botão de gastar embaixo do dedo: a confirmação da compra nasce em cima dos cartões, e quem
+     continua tocando no mesmo lugar acertava "Comprar". Segurança pelo desenho (UI.escolher):
+     se o toque que abriu o diálogo cai num botão que gasta, esse botão troca de lugar com o
+     seguro ("Agora não"); quem continua tocando ali só acerta o "Agora não". Um toque de
+     propósito no botão de gastar, noutro ponto, vale na hora. */
   // logo depois de uma compra, o toque seguinte no mesmo lugar cai no cartão que acabou de ser
-  // comprado (e tirava o enfeite): os cartões da Loja ignoram toques por 1 s depois da compra
-  var comprouEm = -1e9;
-  function logoDepoisDaCompra(e) { return !!(e && e.isTrusted && e.detail) && performance.now() - comprouEm < 1000; }
+  // comprado (e tirava o enfeite): os cartões da Loja ignoram toques perto dele por 1 s
+  var comprouEm = -1e9, pontoDaCompra = null;
+  function logoDepoisDaCompra(e) {
+    if (!(e && e.isTrusted && e.detail) || performance.now() - comprouEm >= 1000) return false;
+    if (!perto({ x: e.clientX, y: e.clientY }, pontoDaCompra)) return false;
+    toqueIgnorado(e.target);
+    return true;
+  }
 
   /* ---------- telas e diálogos ---------- */
   var FOCAVEIS = 'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -164,7 +180,8 @@
 
   // diálogo com vários botões: `botoes` = [{ rotulo, valor, principal, seguro, gasta }]. O seguro (ou o
   // 1º, se nenhum for marcado) recebe o foco e é o que o Esc escolhe. Resolve com o `valor` tocado.
-  // `classe` (opcional) vai no painel. `gasta`: o botão gasta estrela e não aceita toque repetido no mesmo lugar (toqueRepetido).
+  // `classe` (opcional) vai no painel. `gasta`: o botão gasta estrela e nunca nasce embaixo do
+  // dedo que abriu o diálogo (afastarDoDedo).
   UI.escolher = function (msg, botoes, classe) {
     return new Promise(function (resolver) {
       var t = UI.abrirTela('confirmar');
@@ -173,18 +190,40 @@
       var bs = botoes.map(function (b) {
         var bt = el('button.btn-grande' + (b.principal ? '.btn-principal' : '.btn-secundario'), { type: 'button' }, b.rotulo);
         bt.addEventListener('click', function (e) {
-          if (b.gasta && toqueRepetido(e)) return;   // o mesmo dedo de antes: não gasta
-          if (b.gasta) comprouEm = performance.now();
+          // reserva: se nem trocando de lugar deu para tirar o botão de baixo do dedo, o toque
+          // ali até 500 ms depois de abrir não gasta
+          if (b.gasta && dedoPreso && performance.now() - abriuEm < 500 && perto({ x: e.clientX, y: e.clientY }, dedoPreso) && e.isTrusted && e.detail) { toqueIgnorado(bt); return; }
+          if (b.gasta) { comprouEm = performance.now(); pontoDaCompra = e.detail ? { x: e.clientX, y: e.clientY } : null; }
           UI.fecharTela(t); resolver(b.valor);
         });
         return bt;
       });
       t.appendChild(el('div.painel.painel-pequeno' + (classe ? '.' + classe : ''), el('p.confirmar-msg', { id: idMsg }, msg), el('div.intro-botoes' + (bs.length > 2 ? '.coluna' : ''), bs)));
       var iSeguro = Math.max(0, botoes.findIndex(function (b) { return b.seguro; }));
+      var abriuEm = performance.now();
+      var dedoPreso = afastarDoDedo(bs, botoes, iSeguro);
       t._aoEsc = function () { bs[iSeguro].click(); };
       setTimeout(function () { focar(bs[iSeguro]); }, 30);
     });
   };
+  // o toque que abriu o diálogo (até 600 ms antes) caiu num botão que gasta? Troca esse botão de
+  // lugar com o seguro. Devolve o ponto se ainda sobrar um botão de gastar embaixo dele.
+  function sobre(bt, p) { var r = bt.getBoundingClientRect(); return p.x > r.left - 12 && p.x < r.right + 12 && p.y > r.top - 12 && p.y < r.bottom + 12; }
+  function afastarDoDedo(bs, botoes, iSeguro) {
+    var p = ultimoPonto;
+    if (!p || performance.now() - ultimoToque > 600 || !botoes.some(function (b) { return b.gasta; })) return null;
+    var seguro = bs[iSeguro];
+    for (var i = 0; i < bs.length; i++) {
+      if (!botoes[i].gasta || !sobre(bs[i], p)) continue;
+      // troca os dois de lugar no DOM (a ordem do Tab acompanha o que se vê)
+      var marca = document.createComment('');
+      bs[i].parentNode.replaceChild(marca, bs[i]);
+      seguro.parentNode.replaceChild(bs[i], seguro);
+      marca.parentNode.replaceChild(seguro, marca);
+      break;
+    }
+    return bs.some(function (bt, j) { return botoes[j].gasta && sobre(bt, p); }) ? p : null;
+  }
   UI.confirmar = function (msg, sim, nao, gasta) {
     return UI.escolher(msg, [{ rotulo: nao || 'Não', valor: false }, { rotulo: sim || 'Sim', valor: true, principal: true, gasta: !!gasta }]);
   };
@@ -338,6 +377,7 @@
       // com outro balão aberto, o nosso entra 180 ms depois (claude.js): espera ele aparecer
       if (!tx || soLetras(tx.textContent) !== soLetras(texto)) { if (++tentativas < 90) requestAnimationFrame(medir); return; }
       corpo.style.setProperty('--recado-altura', Math.ceil(bal.getBoundingClientRect().height) + 'px');
+      requestAnimationFrame(function () { if (recado === meu) mostrarBotoes(); });
     })();
     var focoAntes = document.activeElement;
     pr.then(function () {
@@ -349,6 +389,17 @@
       }
     });
     return pr;
+  }
+  // a tela encolheu: a fileira de botões (ou o que está com o foco) continua à vista, rolando só
+  // o conteúdo do painel (sem scrollIntoView, que também rolaria a tela de fundo)
+  function mostrarBotoes() {
+    var t = topo(), pc = t && t.querySelector('.painel-conteudo');
+    if (!pc) return;
+    var fileiras = pc.querySelectorAll('.intro-botoes');
+    var alvo = fileiras.length ? fileiras[fileiras.length - 1] : (pc.contains(document.activeElement) ? document.activeElement : null);
+    if (!alvo) return;
+    var r = alvo.getBoundingClientRect(), c = pc.getBoundingClientRect();
+    if (r.bottom > c.bottom - 8) pc.scrollTop += Math.min(r.bottom - c.bottom + 12, r.top - c.top - 8);
   }
   function soltarRecado() {
     recado = null;
@@ -752,8 +803,8 @@
         var reg = P.regProva(pv);
         var ganhou = reg.premio ? Reino.Unicornios.RARIDADES[reg.premio] : null;
         premiosBox.appendChild(el('p.bau-nota', el('b', pv.emoji + ' ' + pv.nome), ganhou
-          ? ' • Você ganhou o ' + ganhou.emoji + ' ' + ganhou.nome.toLowerCase() + '! Os outros estão à venda.'
-          : ' • Acerte TUDO na prova para ganhar o primeiro.'));
+          ? ' • Você ganhou o prêmio ' + ganhou.emoji + ' ' + ganhou.nome.toLowerCase() + '! Os outros estão à venda.'
+          : ' • Acerte TUDO na prova para ganhar um deles.'));
         var g = el('div.grade-loja');
         LI.premios().filter(function (p) { return p.provaId === pv.id; }).forEach(function (p) {
           var item = acessorioComoItem(p);
@@ -836,7 +887,8 @@
       carta.appendChild(el('b.carta-nome', P.nomeUni(d.id)));
       carta.appendChild(el('span.carta-rar', rar.emoji + ' ' + rar.nome));
       carta.appendChild(el('span.carta-estagio', Reino.Unicornios.ESTAGIOS[pe.estagio].emoji + ' ' + Reino.Unicornios.ESTAGIOS[pe.estagio].nome));
-      carta.appendChild(el('span.barrinha', el('span', { style: { width: Math.round(pe.pct * 100) + '%' } })));
+      // 🌱 antes do crescimento, como o 🍎 e o 💧 da fome e da sede (na tritanopia as cores se parecem)
+      carta.appendChild(el('span.carta-cresce', iconePequeno('🌱', 16), el('span.barrinha', el('span', { style: { width: Math.round(pe.pct * 100) + '%' } }))));
       if (cuidadosProntos()) carta.appendChild(barrasCuidado(d.id, 'mini'));
       if (d.id === P.montaria()) carta.insertBefore(el('span.selo-montado', '🐴 Montaria'), carta.firstChild);
     } else if (u && !u.chocado) {
@@ -934,7 +986,8 @@
     c.appendChild(el('p.saldo-estrelas', 'O que ' + P.nomeUni(d.id) + ' vai comer?'));
     var grade = el('div.grade-loja.grade-comidas');
     lista.forEach(function (x) {
-      var b = el('button.item-loja.item-comida', { type: 'button', 'data-comida': x.comida.id, 'aria-label': x.comida.nome + ', ' + textoEnche(x.comida).toLowerCase() + ', ' + x.quantidade + ' na despensa' },
+      // o bolo ("Enche tudo!") ocupa a linha inteira no celular, como na Pet Shop: "arco-íris" cabe sem quebrar
+      var b = el('button.item-loja.item-comida' + (x.comida.enche ? '.comida-larga' : ''), { type: 'button', 'data-comida': x.comida.id, 'aria-label': x.comida.nome + ', ' + textoEnche(x.comida).toLowerCase() + ', ' + x.quantidade + ' na despensa' },
         el('span.item-icone', x.comida.icone), el('b', nomeComida(x.comida.nome)),
         el('span.comida-enche', textoEnche(x.comida)),
         el('span.item-preco', '🧺 ×' + x.quantidade));
@@ -990,9 +1043,9 @@
     }
     function faltamEstrelas(co, faltam) {
       Reino.Som.tocar('toque');
-      // o número só aparece na tela (curto: até 3 linhas no celular); a voz fala a frase gravada
-      // o caminho para ganhar estrela fica escrito também (valUX): ela sem estrela e ele com fome
-      balaoNaTela((faltam === 1 ? 'Falta 1 estrela!' : 'Faltam ' + faltam + ' estrelas!') + ' Uma sala dá estrelas.',
+      // o número fica só na tela; o resto é a frase gravada, igual ao que a voz diz (como na Loja).
+      // Ela diz o caminho para ganhar estrela (valUX): ela sem estrela e ele com fome
+      balaoNaTela((faltam === 1 ? 'Falta 1 estrela! ' : 'Faltam ' + faltam + ' estrelas! ') + Cu.frases.faltamEstrelas,
         { fala: [Cu.frases.faltamEstrelas], agora: true, tempo: 5000 });
     }
     // nada é gasto sem ela confirmar (como na Loja): um diálogo só, com comprar e dar, comprar
