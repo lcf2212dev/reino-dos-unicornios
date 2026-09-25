@@ -78,9 +78,9 @@ ajustes.surpresaEm: <Date.now()>                 // carimbo da última troca de 
   `__proto__`, `constructor`, `prototype` nem outro nome de `Object.prototype` (`hasOwnProperty`,
   `toString`…); fome e sede entre 0 e 100 (inválida vira 100); `em` ≥ 0; `compradas`/`usadas` inteiros ≥ 0
   com `usadas ≤ compradas`; `surpresa` "true"/"false" em texto vira booleano (outro valor volta ao padrão);
-  ids desconhecidos ficam guardados, sem efeito (uma versão não apaga a comida de outra). `acao` **não** é `acaoFome`/`acaoSede` que não são números ≥ 0 são apagados (contam como ausentes; vale o `acao`);
-  `acao` continua não sendo normalizada aqui.
-  normalizada aqui (nem apagada): quem a conserta é `Cuidados` ao mudar o registro (`registroParaMudar`).
+  ids desconhecidos ficam guardados, sem efeito (uma versão não apaga a comida de outra); `acaoFome`/`acaoSede`
+  que não são números ≥ 0 são apagados (contam como ausentes; vale o `acao`). `acao` **não** é normalizada
+  aqui (nem apagada): quem a conserta é `Cuidados` ao mudar o registro (`registroParaMudar`).
 - "Novo ciclo" (`P.novoCiclo`) mantém `cuidados` e `despensa`. "Apagar tudo" (`P.apagarTudo`) zera, como o resto.
 - Quem lê o estado sempre chama `P.estado()` de novo: a mescla troca o objeto inteiro.
 
