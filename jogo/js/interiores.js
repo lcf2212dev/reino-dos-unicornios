@@ -1782,10 +1782,15 @@
           if (sx > cw || sy > ch || sx + sw < 0 || sy + sh < 0) return;
           // placa atrás do HUD (chips, botão ↙, montaria): desce para logo abaixo dele ou vai para o lado
           var esq = naTela(pintor, r.x * T, 0).x, dir = naTela(pintor, (r.x + r.w) * T, 0).x;
-          var livre = desviarDoHud(hud, sx, sy, sw, sh, borda, cw, ch, esq + borda, dir - borda);
+          // e só desce até a borda de baixo da parede do fundo (as 2 primeiras fileiras do cômodo):
+          // mais abaixo ela pareceria estar no chão, ou no meio do cômodo de baixo
+          var fimParede = naTela(pintor, 0, (r.y + 2) * T).y;
+          var livre = desviarDoHud(hud, sx, sy, sw, sh, borda, cw, Math.min(ch, fimParede - borda), esq + borda, dir - borda);
           if (livre.x !== sx || livre.y !== sy) {
             // desviada, a placa não pode invadir outro cômodo: se o dela está quase fora da tela, some
             if (livre.x < esq - borda || livre.x + sw > dir + borda) return;
+            // nem sair da parede: se não coube nela, fora do HUD, some neste quadro
+            if (livre.y + sh + borda > fimParede) return;
           }
           sx = livre.x; sy = livre.y;
           // cruzando a Mariana, a placa fica quase transparente (como as placas do mapa)
