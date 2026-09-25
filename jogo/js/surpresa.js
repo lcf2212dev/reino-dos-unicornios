@@ -13,7 +13,9 @@
   var S = {};
 
   function cfg() { return Reino.config.surpresa; }
-  function agora() { return Date.now(); }
+  // relógio monotônico: o relógio do aparelho voltando (ajuste manual, NTP) não trava nem adianta
+  // a espera; performance.now() também é o que o relógio falso do Playwright controla
+  function agora() { return (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now(); }
   function est() { return Reino.Progresso.estado(); }   // a mescla troca o objeto: sempre ler de novo
 
   /* ---------- o que o Claude fala (todas gravadas no pacote geral) ---------- */
@@ -41,9 +43,17 @@
     lista.push({ texto: f.vale, voz: 'claude' });
     lista.push({ texto: f.ganhou, voz: 'claude' });
     f.erro.forEach(function (t) { lista.push({ texto: t, voz: 'claude' }); });
-    // o elogio do acerto vem de Reino.Claude.frase('acerto'), já gravado pelo banco do Claude
+    // o elogio do acerto vem do banco do Claude (FALAS.acerto), já gravado: ver elogioAcerto()
     return lista;
   };
+  // elogio do acerto: só os que servem para qualquer matéria (sem "historiadora" numa pergunta de Inglês)
+  var SO_DE_UMA_MATERIA = /historiador/i;
+  function elogioAcerto() {
+    var C = Reino.Claude, todas = (C && C.FALAS && C.FALAS.acerto) || [];
+    var lista = todas.filter(function (t) { return !SO_DE_UMA_MATERIA.test(t); });
+    if (!lista.length) return C.frase('acerto');
+    return sortearFrase(lista, 'acerto').replace(/\{nome\}/g, Reino.config.nomeJogadora);
+  }
   var ultimaFrase = {};
   function sortearFrase(lista, tipo) {
     var i, tent = 0;
@@ -54,11 +64,16 @@
 
   /* ---------- perguntas ---------- */
   var usadas = {};      // chave -> true (só na memória: sem repetir na mesma sessão)
+  var adiadas = {};     // chave -> ordem do "Agora não": a pergunta volta, mas para o fim da fila
+  var nAdiadas = 0, ultimaChave = null;
   var guardada = null;  // a próxima pergunta já sorteada (proximaPergunta() e abrir() mostram a mesma)
   function chave(p) { return p.materia.id + '|' + p.sala.id + '|' + p.desafio.id; }
 
   // todas as perguntas possíveis: só das salas (nunca das provas), só dos tipos combinados, sem `livre`
+  // (as matérias não mudam durante o jogo: a lista é montada uma vez)
+  var cacheTodas = null;
   function todas() {
+    if (cacheTodas && cacheTodas.materias === Reino.materias) return cacheTodas.lista;
     var tipos = cfg().tipos, lista = [];
     (Reino.materias || []).forEach(function (m) {
       (m.salas || []).forEach(function (s) {
@@ -68,6 +83,7 @@
         });
       });
     });
+    cacheTodas = { materias: Reino.materias, lista: lista };
     return lista;
   }
   function salaFeita(salaId) {
@@ -75,14 +91,23 @@
     var x = e && e.salas && e.salas[salaId];
     return !!(x && x.feita);
   }
-  // de preferência das salas que ela já fez; acabou: as outras; acabou tudo: recomeça
+  // só das salas que ela já fez (nenhuma feita: nenhuma pergunta, a surpresa não aparece)
+  function dasFeitas() { return todas().filter(function (p) { return salaFeita(p.sala.id); }); }
+  // primeiro as que ainda não vieram; depois as que ela adiou com "Agora não" (a mais antiga
+  // primeiro); acabou tudo: recomeça pelas das salas feitas, sem repetir a última que apareceu
   function candidatas() {
-    var lista = todas();
+    var lista = dasFeitas();
     if (!lista.length) return [];
     var novas = lista.filter(function (p) { return !usadas[chave(p)]; });
-    if (!novas.length) { usadas = {}; novas = lista; }
-    var feitas = novas.filter(function (p) { return salaFeita(p.sala.id); });
-    return feitas.length ? feitas : novas;
+    var frescas = novas.filter(function (p) { return adiadas[chave(p)] === undefined; });
+    if (frescas.length) return frescas;
+    if (novas.length) {
+      var velha = novas.reduce(function (a, b) { return adiadas[chave(b)] < adiadas[chave(a)] ? b : a; });
+      return [velha];
+    }
+    usadas = {}; adiadas = {};
+    var semUltima = lista.filter(function (p) { return chave(p) !== ultimaChave; });
+    return semUltima.length ? semUltima : lista;
   }
   S.proximaPergunta = function () {
     var lista = candidatas();
@@ -106,12 +131,18 @@
     return !(e && e.ajustes && e.ajustes.surpresa === false);
   }
   function semToqueMs() { var c = Reino.config.cuidados; return (c && c.semToqueMs) || 5 * 60 * 1000; }
+  function visivel() { return !(typeof document !== 'undefined' && document.hidden); }
   function ativo() {
-    if (!iniciado) return false;
-    if (typeof document !== 'undefined' && document.hidden) return false;
+    if (!iniciado || !visivel()) return false;
     return agora() - ultimoToque < semToqueMs();
   }
-  // no mapa ou dentro de uma construção, sem tela, diálogo, transição nem balão do Claude
+  // andando até algum lugar (porta, objeto, ponto tocado no chão): ela termina o que começou
+  function andando() {
+    var J = typeof window !== 'undefined' ? window.Jogador : null;
+    return !!(J && ((J.caminho && J.caminho.length) || J.aoChegar));
+  }
+  // no mapa ou dentro de uma construção, sem tela, diálogo, transição nem balão do Claude.
+  // Andando conta como livre (o tempo corre); só a abertura espera ela parar.
   function livre() {
     var cena = Reino.Cena && Reino.Cena.estado ? Reino.Cena.estado() : 'mapa';
     if (cena !== 'mapa' && cena !== 'interior') return false;
@@ -129,16 +160,19 @@
     ultimoTique = t;
     if (painelAberto || abrindo) return;
     // pedido do debug: assim que ela estiver livre (sem esperar os segundos)
-    if (forcado) { if (livre()) abrir(); return; }
+    if (forcado) { if (livre() && !andando() && visivel()) abrir(); return; }
     if (!ligado()) { livreDesde = null; return; }
+    // nenhuma sala feita: não há pergunta para fazer, o relógio fica parado
+    if (!dasFeitas().length) { livreDesde = null; return; }
+    // o tempo conta também com ela andando; só a ABERTURA espera ela parar (ver andando())
     var pode = ativo() && livre();
     if (!venceu) {
       if (pode) contado += dt;
-      if (contado >= alvo) { venceu = true; livreDesde = pode ? t : null; }
+      if (contado >= alvo) { venceu = true; livreDesde = pode && !andando() ? t : null; }
       return;
     }
-    // venceu: espera esperaLivreMs seguidos de livre
-    if (!pode) { livreDesde = null; return; }
+    // venceu: espera esperaLivreMs seguidos de livre e parada
+    if (!pode || andando()) { livreDesde = null; return; }
     if (livreDesde === null) livreDesde = t;
     if (t - livreDesde >= cfg().esperaLivreMs) abrir();
   }
@@ -157,6 +191,7 @@
     function comecar() {
       esperandoTutorial = false;
       iniciado = true;
+      vigiarTelas();
       ultimoToque = agora();   // o próprio "Entrar no Reino" conta como toque
       sortearTempo();
       ligarRelogio();
@@ -203,7 +238,8 @@
     f.promessa = new Promise(function (r) { f.resolver = r; });
     forcado = f;
     ligarRelogio();
-    if (!abrindo && livre()) abrir();
+    // com uma abertura já carregando, é ela que resolve este pedido (abrir() lê `forcado` no fim)
+    if (!abrindo && livre() && !andando() && visivel()) abrir();
     return f.promessa;
   };
 
@@ -213,9 +249,9 @@
   function abrir() {
     if (abrindo || painelAberto) return;
     var p = S.proximaPergunta();
-    var pedido = forcado;
     if (!p) {
-      if (pedido) { forcado = null; pedido.resolver(null); }
+      var semPergunta = forcado;
+      if (semPergunta) { forcado = null; semPergunta.resolver(null); }
       sortearTempo();
       return;
     }
@@ -223,11 +259,14 @@
     // carrega o pacote de voz da sala (para o 🔊 ler a pergunta); no máximo 4 s de espera
     Promise.race([Reino.Voz.carregarSala(p.materia, p.sala), esperar(4000)]).then(function () {
       abrindo = false;
-      // no meio da espera ela entrou numa porta, abriu uma tela...: espera de novo
-      if (!livre() || painelAberto) { livreDesde = null; return; }
-      if (!pedido && !ligado()) return;
-      if (forcado === pedido) forcado = null;
+      // o pedido do debug é o que estiver pendente AGORA (pode ter chegado durante o carregamento)
+      var pedido = forcado;
+      // no meio da espera ela entrou numa porta, abriu uma tela, escondeu a aba...: espera de novo
+      if (!livre() || andando() || !visivel() || painelAberto) { livreDesde = null; return; }
+      if (!pedido && (!ligado() || !ativo() || !venceu)) { livreDesde = null; return; }
+      forcado = null;
       usadas[chave(p)] = true;
+      ultimaChave = chave(p);
       guardada = null;
       mostrar(p);
       if (pedido) pedido.resolver(painelAberto.info);
@@ -238,10 +277,12 @@
     try { return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches); } catch (e) { return false; }
   }
 
+  // celular em pé ou deitado: mesmo corte do @media compacto de css/novidades.css
+  function compacto() { return window.innerWidth <= 480 || window.innerHeight <= 500; }
   // o Claude com escala inteira de pixel da tela (nítido): menor no celular, sem transform fracionário
   function claudeNitido() {
     var spr = PA.claude(0), src = spr.canvas || spr;
-    var alvo = (window.innerWidth <= 480 ? 2 : 3) * src.width;
+    var alvo = (compacto() ? 2 : 3) * src.width;
     return PA.paraDOM(spr, PA.escalaNitida(alvo, src.width), 'surpresa-claude');
   }
 
@@ -252,10 +293,16 @@
     var resultado = null;
 
     Reino.Claude.limpar();
+    // ela podia estar andando até uma porta: para ali, senão entraria sozinha ao fechar a pergunta
+    var J = window.Jogador;
+    if (J && J.parar) J.parar();
     var pn = UI.painel('surpresa', '❓ Pergunta surpresa', { aoFechar: function () { soltar(); terminar(resultado || 'agoraNao'); } });
     painelAberto = { info: info, pn: pn, encerrar: function () { soltar(); terminar(resultado || 'agoraNao'); } };
     vigiarTelas();
     pn.tela.setAttribute('aria-label', 'Pergunta surpresa');
+    // ela não abriu a surpresa por um botão: ao fechar, o foco vai para o mapa (UI.fecharTela sem
+    // _focoAntes), nunca de volta ao botão do HUD que estava focado (o Espaço abriria o Estábulo)
+    pn.tela._focoAntes = null;
 
     var abertura = sortearFrase(S.frases().abertura, 'abertura');
     var vale = S.frases().vale;
@@ -265,6 +312,12 @@
         el('p.surpresa-fala', abertura),
         el('p.surpresa-vale', vale)));
     var origem = el('p.surpresa-origem', p.materia.emoji + ' ' + p.materia.nome + ' • ' + p.sala.nome);
+    // no celular (CSS compacto) o balão e a origem dão lugar a uma linha só: Claude, matéria e o prêmio;
+    // a frase de abertura e o "se acertar..." continuam na voz
+    var curta = el('div.surpresa-curta',
+      claudeNitido(),
+      el('p.surpresa-curta-materia', el('span', p.materia.emoji), el('span.surpresa-curta-nome', ' ' + p.materia.nome)),
+      el('p.surpresa-curta-vale', '+' + cfg().estrelas + ' ⭐'));
 
     var btnConferir = el('button.btn-grande.btn-principal.surpresa-conferir', { type: 'button', disabled: true }, 'Conferir ✓');
     var btnDepois = el('button.btn-grande.btn-secundario.surpresa-depois', { type: 'button' }, 'Agora não');
@@ -274,8 +327,13 @@
     ctrl = D.render(d, { modo: 'surpresa', onMudar: function () { btnConferir.disabled = fase !== 'pergunta' || !ctrl.pronto(); } });
     var retorno = el('div.surpresa-retorno', { hidden: true, 'aria-live': 'polite' });
 
+    // compacto: o 🔊 Ouvir sobe para a linha curta (economiza uma linha inteira antes das alternativas)
+    var ouvir = ctrl.card.querySelector('.btn-ouvir');
+    if (ouvir && compacto()) curta.insertBefore(ouvir, curta.lastChild);
+
     pn.conteudo.classList.add('surpresa-conteudo');
     pn.conteudo.appendChild(cabeca);
+    pn.conteudo.appendChild(curta);
     pn.conteudo.appendChild(origem);
     pn.conteudo.appendChild(ctrl.card);
     pn.conteudo.appendChild(retorno);
@@ -299,7 +357,14 @@
     function foraDoCartao(e) { if (e.target === pn.tela) e.stopPropagation(); }
     document.addEventListener('click', foraDoCartao, true);
 
-    btnDepois.addEventListener('click', function () { Reino.Som.tocar('toque'); fechar(); });
+    btnDepois.addEventListener('click', function () { if (btnDepois.disabled) return; Reino.Som.tocar('toque'); fechar(); });
+    // "Agora não" e ✕ travados nos primeiros OK_TRAVA_MS: um toque no menu do celular no instante em
+    // que o painel abre (o "Agora não" fica em cima de Lugares e Estábulo) não fecha a pergunta sem
+    // ela ver. O Esc continua valendo.
+    var btnX = pn.card.querySelector('.btn-fechar');
+    btnDepois.disabled = true;
+    if (btnX) btnX.disabled = true;
+    setTimeout(function () { btnDepois.disabled = false; if (btnX) btnX.disabled = false; }, OK_TRAVA_MS);
 
     btnConferir.addEventListener('click', function () {
       if (fase !== 'pergunta' || !ctrl.pronto()) return;
@@ -320,7 +385,7 @@
       Reino.Som.tocar('acerto');
       setTimeout(function () { Reino.Som.tocar('estrela'); }, 350);
       if (!reduzMovimento()) UI.confete(24);
-      var elogio = Reino.Claude.frase('acerto');
+      var elogio = elogioAcerto();
       var ganhou = S.frases().ganhou;
       mostrarRetorno(true, '✨ Isso! +' + n + ' ⭐', elogio, ganhou);
       Reino.Som.falar([elogio, ganhou], { voz: 'claude' });
@@ -337,6 +402,8 @@
     function mostrarRetorno(ok, titulo, fala, extra) {
       retorno.innerHTML = '';
       retorno.className = 'surpresa-retorno ' + (ok ? 'retorno-certo' : 'retorno-quase');
+      // o enunciado de novo, curto, em cima: a explicação não fica solta quando o painel rola até aqui
+      retorno.appendChild(el('p.surpresa-eco', '❓ ' + D.enunciado(d)));
       retorno.appendChild(el('div.retorno-cabeca',
         claudeNitido(),
         el('div',
@@ -353,13 +420,22 @@
       botoes.appendChild(okBtn);
       // o cabeçalho de abertura sai: o retorno do Claude fica no lugar dele
       cabeca.hidden = true;
+      curta.hidden = true;
       retorno.hidden = false;
       setTimeout(function () {
         okBtn.disabled = false;
         okBtn.focus();
       }, OK_TRAVA_MS);
       setTimeout(function () {
-        if (retorno.scrollIntoView) retorno.scrollIntoView({ block: 'nearest', behavior: reduzMovimento() ? 'auto' : 'smooth' });
+        // rola até o COMEÇO do resultado (o enunciado repetido); se assim a explicação ficar abaixo
+        // da dobra (celular deitado), rola mais até ela aparecer inteira: antes do Ok destravar
+        var c = pn.conteudo, cr = c.getBoundingClientRect(), rr = retorno.getBoundingClientRect();
+        var fim = (retorno.querySelector('.retorno-explica') || retorno.lastChild).getBoundingClientRect();
+        var topo = c.scrollTop + rr.top - cr.top - 8, ateExplica = c.scrollTop + fim.bottom - cr.bottom + 8;
+        // sem passar do começo da explicação (letras grandes no celular deitado: ela não cabe inteira)
+        var inicioExplica = c.scrollTop + fim.top - cr.top - 8;
+        var alvo = Math.max(0, Math.min(Math.max(topo, ateExplica), Math.max(topo, inicioExplica)));
+        if (c.scrollTo) c.scrollTo({ top: alvo, behavior: reduzMovimento() ? 'auto' : 'smooth' }); else c.scrollTop = alvo;
       }, 60);
     }
 
@@ -373,13 +449,21 @@
   }
 
   // painel fechado por fora dos botões (UI.fecharTodas(), outra tela fechando a pilha...):
-  // encerra do mesmo jeito, sem estrelas, senão a surpresa ficaria "aberta" para sempre
-  var vigiando = false;
+  // encerra do mesmo jeito, sem estrelas, senão a surpresa ficaria "aberta" para sempre.
+  // E estudo terminado (sala, treino ou prova: telas 'missao' e 'prova'): a contagem recomeça do
+  // zero, com um tempo novo de 3 a 10 min, para a surpresa não cair logo depois de ela estudar.
+  var vigiando = false, estudando = false;
+  function telaDeEstudo() { return !!document.querySelector('#telas > .tela-missao, #telas > .tela-prova'); }
   function vigiarTelas() {
     if (vigiando || !Reino.util || !Reino.util.on) return;
     vigiando = true;
     Reino.util.on('telas', function () {
       if (painelAberto && !painelAberto.pn.tela.parentNode) painelAberto.encerrar();
+      if (telaDeEstudo()) estudando = true;
+      else if (estudando) {
+        estudando = false;
+        if (iniciado && !painelAberto) sortearTempo();
+      }
     });
   }
 
@@ -387,6 +471,12 @@
   var ultimoResultado = null;
   function terminar(res) {
     if (!painelAberto) return;
+    // "Agora não" (ou ✕, Esc): a pergunta não se perde, volta para o fim da fila
+    if (res === 'agoraNao') {
+      var i = painelAberto.info, k = i.materia + '|' + i.sala + '|' + i.desafio;
+      delete usadas[k];
+      adiadas[k] = ++nAdiadas;
+    }
     ultimoResultado = { resultado: res, pergunta: painelAberto.info };
     painelAberto = null;
     sortearTempo();
@@ -397,7 +487,7 @@
   S._ultimo = function () { return ultimoResultado; };
   // para os testes: o tempo sorteado e o tempo livre já contado
   S._depurar = function () {
-    return { iniciado: iniciado, ligado: ligado(), alvo: alvo, contado: contado, venceu: venceu, livreDesde: livreDesde, aberta: !!painelAberto, pergunta: painelAberto ? painelAberto.info : null, usadas: Object.keys(usadas).length };
+    return { iniciado: iniciado, ligado: ligado(), estudando: estudando, andando: andando(), alvo: alvo, contado: contado, venceu: venceu, livreDesde: livreDesde, aberta: !!painelAberto, pergunta: painelAberto ? painelAberto.info : null, usadas: Object.keys(usadas).length, adiadas: Object.keys(adiadas).length, possiveis: dasFeitas().length };
   };
 
   Reino.Surpresa = S;
