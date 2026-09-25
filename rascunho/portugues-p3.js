@@ -91,7 +91,7 @@ Reino.RASCUNHO_PORTUGUES.p3 =
           ], certa: 0,
           explica: 'Xarope começa com X! Chocolate se escreve com CH, e banana não tem nenhum dos dois.' },
         { id: 'p3-10', tipo: 'ligar', livro: 'sons-do-x', pagina: 47,
-          pergunta: 'A letra X tem sons diferentes! Ligue três deles à palavra certa:',
+          pergunta: 'A apostila mostra três sons do X! Ligue cada som à palavra certa:',
           pares: [
             [{ t: 'Som de S' }, { t: 'próximo' }],
             [{ t: 'Som de Z' }, { t: 'exame' }],

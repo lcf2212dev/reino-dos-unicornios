@@ -9691,31 +9691,31 @@
    "fala": "O xis e o cê agá podem ter o mesmo som. Xícara e chave começam com o mesmo som! Com xis: xícara, abacaxi, peixe, caixa. Com cê agá: chave, chuva, mochila, chocolate. Só ouvindo não dá para saber: é preciso conhecer a palavra. Quanto mais a gente lê, mais fácil fica!"
   },
   {
-   "chave": "270e63942e",
+   "chave": "05dca56d2j",
    "voz": "claude",
-   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Sons do X\".",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Três sons do X\".",
    "pacotes": [
     "portugues-extra"
    ],
-   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Sons do xis\"."
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Três sons do xis\"."
   },
   {
-   "chave": "2a4514f9j",
+   "chave": "51dbb612o",
    "voz": "narradora",
-   "texto": "Sons do X",
+   "texto": "Três sons do X",
    "pacotes": [
     "portugues-livro"
    ],
-   "fala": "Sons do xis"
+   "fala": "Três sons do xis"
   },
   {
-   "chave": "159646ba56",
+   "chave": "87517d1848",
    "voz": "narradora",
-   "texto": "A letra X pode ter sons diferentes, conforme a palavra. Três deles: som de S, como em excesso e próximo. Som de Z, como em exame e exemplo. Som de CH, como em xícara e abacaxi.",
+   "texto": "A apostila mostra três sons do X: som de S, como em excesso e próximo. Som de Z, como em exame e exemplo. Som de CH, como em xícara e abacaxi.",
    "pacotes": [
     "portugues-livro"
    ],
-   "fala": "A letra xis pode ter sons diferentes, conforme a palavra. Três deles: som de ésse, como em excesso e próximo. Som de zê, como em exame e exemplo. Som de cê agá, como em xícara e abacaxi."
+   "fala": "A apostila mostra três sons do xis: som de ésse, como em excesso e próximo. Som de zê, como em exame e exemplo. Som de cê agá, como em xícara e abacaxi."
   },
   {
    "chave": "66cb262d2l",
@@ -11207,13 +11207,13 @@
    "fala": "banana amassada"
   },
   {
-   "chave": "20761ac122",
+   "chave": "a5a62ccd23",
    "voz": "narradora",
-   "texto": "A letra X tem sons diferentes! Ligue três deles à palavra certa:",
+   "texto": "A apostila mostra três sons do X! Ligue cada som à palavra certa:",
    "pacotes": [
     "portugues-p3"
    ],
-   "fala": "A letra xis tem sons diferentes! Ligue três deles à palavra certa:"
+   "fala": "A apostila mostra três sons do xis! Ligue cada som à palavra certa:"
   },
   {
    "chave": "d45810c31q",
