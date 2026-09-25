@@ -73,7 +73,8 @@
     ['oculos', 'oculosCor', 'barba', 'bigode', 'avental', 'aventalCor', 'capa', 'capaCor', 'capaEstrelas', 'jaleco', 'apito',
       'bengala', 'bolsa', 'bolsaCor', 'colar', 'gravata', 'cachecol', 'cachecolCor', 'cracha', 'livro', 'carta', 'pincel',
       'violao', 'varinha', 'presilha', 'flor', 'espelhoTesta', 'armadura', 'jardineira', 'colete', 'corrente', 'asas',
-      'corpo', 'barriga', 'asa', 'moeda', 'nariz'].forEach(function (k) { if (s[k] !== undefined) o[k] = s[k]; });
+      'corpo', 'barriga', 'asa', 'moeda', 'nariz',
+      'regador', 'regadorCor', 'gola', 'emblema', 'emblemaCor', 'livroAberto', 'lapis', 'palhaco', 'sapatoes'].forEach(function (k) { if (s[k] !== undefined) o[k] = s[k]; });
     if (o.base === 'fada' && o.asas === undefined) o.asas = true;
     o.cru = s;   // parâmetros originais (bases novas, como o robô, leem os seus daqui)
     return o;
@@ -203,6 +204,12 @@
       pernas(yy, K, 2); pernas(yy + 1, '#ffffff', 2);
       sapatos(m.h - 1);
     }
+    // sapatões de palhaço: 1 px a mais para cada lado e a biqueira clarinha
+    if (o.sapatoes) {
+      var Sp = S;
+      g.l(m.h - 1, x - 4, x - 1, Sp); g.l(m.h - 1, x + 1, x + 4, Sp);
+      g.p(x - 4, m.h - 1, cla(Sp, 0.3)); g.p(x + 4, m.h - 1, cla(Sp, 0.3));
+    }
     // roupas por cima
     if (o.jardineira) {
       var J = o.roupa2;
@@ -245,6 +252,14 @@
       g.l(L0 + 1, x - 2, x + 2, Rd);
       g.p(x - 1, b + 2, o.cor2); g.p(x + 1, b + 2, o.cor2); g.l(b + 3, x - 1, x + 1, o.cor2); if (nT > 4) g.p(x, b + 4, o.cor2);
       g.p(x - 2, L0 + 3, Ml); g.p(x + 2, L0 + 3, Ml);
+      if (o.emblema === 'A') {
+        // letra A dourada no lugar do coração/escudo (pinta a sobreveste por baixo de novo)
+        var Ea = o.emblemaCor || '#ffd34d', Ead = esc(Ea, 0.3);
+        for (var ya = b + 1; ya <= b + 5; ya++) g.l(ya, x - 2, x + 2, R);
+        g.p(x, b + 2, Ea); g.p(x - 1, b + 3, Ea); g.p(x + 1, b + 3, Ea);
+        g.l(b + 4, x - 1, x + 1, Ea); g.p(x - 1, b + 5, Ea); g.p(x + 1, b + 5, Ea);
+        g.p(x + 1, b + 4, Ead);
+      }
     }
   }
 
@@ -279,6 +294,18 @@
         g.p(x - 1, y, cla(K, 0.45)); g.p(x - 2, y + 1, cla(K, 0.25));
         g.p(x - 4, y + 2, H); g.p(x - 3, y + 2, H); g.p(x + 3, y + 2, H); g.p(x + 4, y + 2, H);
         g.p(x - 4, y + 3, H); g.p(x + 4, y + 3, H);
+        queixoFino();
+        break;
+      case 'tufos':
+        // careca de palhaço com dois tufos fofos saindo dos lados
+        g.p(x - 1, y, cla(K, 0.5)); g.p(x - 2, y + 1, cla(K, 0.3));
+        [-1, 1].forEach(function (s) {
+          g.p(x + s * 4, y + 1, H); g.l(y + 2, Math.min(x + s * 4, x + s * 6), Math.max(x + s * 4, x + s * 6), H);
+          g.l(y + 3, Math.min(x + s * 4, x + s * 7), Math.max(x + s * 4, x + s * 7), H);
+          g.l(y + 4, Math.min(x + s * 5, x + s * 7), Math.max(x + s * 5, x + s * 7), H);
+          g.p(x + s * 6, y + 5, H); g.p(x + s * 5, y + 1, H);
+          g.p(x + s * 5, y + 2, L); g.p(x + s * 6, y + 3, L); g.p(x + s * 7, y + 4, Hd); g.p(x + s * 6, y + 5, Hd);
+        });
         queixoFino();
         break;
       case 'espetado':
@@ -334,6 +361,16 @@
       var Nz = o.nariz === true ? '#ff3b3b' : o.nariz;
       g.p(x, y + 4, Nz); g.l(y + 5, x - 1, x + 1, Nz); g.p(x + 1, y + 5, esc(Nz, 0.2)); g.p(x - 1, y + 5, cla(Nz, 0.5));
     }
+  }
+
+  // rosto de palhaço (sem marca nenhuma): losango azul nos olhos, nariz redondo 3×3 com brilho, sorrisão
+  function pintarPalhaco(g, o) {
+    if (!o.palhaco) return;
+    var x = CX, y = HY, Nz = '#ff3b3b', Nd = esc(Nz, 0.25), Bc = '#e0433f', Az = '#5fb4ff';
+    g.p(x - 2, y + 3, Az); g.p(x + 2, y + 3, Az);
+    g.l(y + 3, x - 1, x + 1, Nz); g.l(y + 4, x - 1, x + 1, Nz); g.l(y + 5, x - 1, x + 1, Nz);
+    g.p(x - 1, y + 3, '#ffffff'); g.p(x + 1, y + 5, Nd); g.p(x + 1, y + 4, Nd); g.p(x, y + 5, Nd);
+    g.l(y + 6, x - 2, x + 2, Bc); g.p(x - 3, y + 5, Bc); g.p(x + 3, y + 5, Bc); g.p(x, y + 6, esc(Bc, 0.3));
   }
 
   function pintarChapeu(g, o) {
@@ -410,6 +447,27 @@
         g.l(y, x - 4, x + 4, Fq); g.p(x, y, Oq); g.p(x, y - 1, Oq);
         g.l(y + 1, x - 4, x + 4, Pq); g.p(x - 2, y + 1, '#4a4466');
         break;
+      case 'pescador':
+        // chapéu de pescador (molinho) com uma folhinha brotando em cima
+        g.l(y - 2, x - 3, x + 3, C); g.l(y - 1, x - 4, x + 4, C);
+        g.l(y, x - 4, x + 4, esc(C, 0.35)); g.p(x - 2, y, c2);
+        g.l(y + 1, x - 6, x + 6, Cd); g.p(x - 6, y + 2, Cd); g.p(x + 6, y + 2, Cd);
+        g.p(x - 2, y - 2, Cl); g.p(x - 3, y - 1, Cl); g.p(x - 4, y + 1, Cl); g.p(x + 2, y + 1, Cl);
+        g.p(x + 1, y - 3, '#4a8a3a'); g.p(x + 1, y - 4, '#6fdc5c'); g.p(x + 2, y - 4, '#9af07a'); g.p(x, y - 5, '#6fdc5c');
+        break;
+      case 'festa':
+        // chapeuzinho de festa em cone, listrado, com pompom no alto
+        g.l(y - 1, x - 3, x + 3, C); g.l(y - 2, x - 2, x + 2, c2); g.l(y - 3, x - 2, x + 1, C);
+        g.l(y - 4, x - 1, x + 1, c2); g.p(x, y - 5, C);
+        g.p(x + 3, y - 1, Cd); g.p(x + 2, y - 2, esc(c2, 0.2)); g.p(x + 1, y - 3, Cd); g.p(x - 2, y - 1, Cl);
+        g.l(y, x - 3, x + 3, c2); g.p(x + 3, y, esc(c2, 0.2)); g.p(x - 3, y, cla(c2, 0.3));
+        g.p(x, y - 6, '#ffffff'); g.p(x + 1, y - 6, '#ffffff'); g.p(x + 1, y - 5, '#dcd8e8');
+        break;
+      case 'faixa':
+        // faixa de cabelo com lacinho do lado
+        g.l(y, x - 5, x + 5, C); g.p(x - 3, y, Cl); g.p(x + 5, y, Cd);
+        g.p(x - 6, y - 1, C); g.p(x - 7, y - 1, Cl); g.p(x - 6, y + 1, Cd); g.p(x - 7, y + 1, C);
+        break;
       case 'flores':
         var cores = ['#ff6b8a', '#ffe066', '#ffffff', '#b58cff', '#ff9d2e'];
         [-4, -2, 0, 2, 4].forEach(function (dx, i) { g.p(x + dx, y + 1, cores[i]); });
@@ -424,6 +482,13 @@
     if (o.colar) {
       var P = o.colar === true ? '#ffffff' : o.colar;
       g.p(x - 2, b, P); g.p(x + 2, b, P); g.p(x - 1, b + 1, o.cor2); g.p(x, b + 1, P); g.p(x + 1, b + 1, o.cor2);
+    }
+    if (o.gola) {
+      // gola de babado: franzida nos ombros, com a borda em ondinhas
+      var Gw = o.gola === true ? '#ffffff' : o.gola, Gs = mis(Gw, o.chapeuCor, 0.35);
+      g.l(b, x - 4, x + 4, Gs); g.l(b + 1, x - 5, x + 5, Gw);
+      [-4, -2, 0, 2, 4].forEach(function (d) { g.p(x + d, b, Gw); g.p(x + d, b + 2, Gw); });
+      [-5, -3, -1, 1, 3, 5].forEach(function (d) { g.p(x + d, b + 1, mis(Gw, o.chapeuCor, 0.18)); });
     }
     if (o.gravata) { var G = o.gravata === true ? '#e0433f' : o.gravata; g.p(x - 1, b, G); g.p(x + 1, b, G); g.p(x, b, esc(G, 0.3)); g.p(x - 2, b + 1, G); g.p(x + 2, b + 1, G); }
     if (o.cachecol) {
@@ -459,6 +524,32 @@
       var Lv = o.livro === true ? o.cor2 : o.livro;
       g.r(x - 6, maos - 1, 3, 3, Lv); g.p(x - 5, maos - 1, '#ffffff'); g.p(x - 5, maos, '#ffffff'); g.p(x - 5, maos + 1, esc(Lv, 0.25));
       g.p(x - 4, maos, K);
+    }
+    if (o.livroAberto) {
+      // livro aberto na frente do peito, segurado pelas duas mãos (páginas em V, capa por baixo)
+      var La = o.livroAberto === true ? o.cor2 : o.livroAberto, Lad = esc(La, 0.3), Pg = '#fffaf0', Pgs = '#e8dcc8', Tx = '#cfc6dc';
+      g.p(x - 3, maos - 3, Pg); g.p(x - 2, maos - 3, Pg); g.p(x + 2, maos - 3, Pg); g.p(x + 3, maos - 3, Pg);
+      g.l(maos - 2, x - 4, x + 4, Pg); g.l(maos - 1, x - 4, x + 4, Pg);
+      g.p(x - 1, maos - 3, Pgs); g.p(x + 1, maos - 3, Pgs); g.p(x, maos - 2, Pgs); g.p(x, maos - 1, Pgs);
+      g.l(maos - 2, x - 3, x - 2, Tx); g.l(maos - 2, x + 2, x + 3, Tx); g.p(x - 3, maos - 1, Tx); g.l(maos - 1, x + 2, x + 3, Tx);
+      g.l(maos, x - 5, x + 5, La); g.p(x, maos, Lad); g.p(x - 5, maos - 1, La); g.p(x + 5, maos - 1, La);
+      g.p(x - 4, maos - 1, K); g.p(x + 4, maos - 1, K); g.p(x - 5, maos, Lad); g.p(x + 5, maos, Lad);
+    }
+    if (o.regador) {
+      // regador de lata na mão direita, com o bico para fora e uma gotinha
+      var Rg = o.regadorCor || '#5fb4ff', Rgd = esc(Rg, 0.28), Rgl = cla(Rg, 0.45);
+      g.r(x + 5, maos - 1, 3, 3, Rg); g.l(maos + 1, x + 5, x + 7, Rgd); g.p(x + 5, maos - 1, Rgl);
+      g.p(x + 5, maos - 2, Rgd); g.p(x + 7, maos - 2, Rgd); g.p(x + 6, maos - 3, Rgd);
+      g.p(x + 8, maos, Rg); g.p(x + 9, maos - 1, Rg); g.p(x + 9, maos - 2, Rgd);
+      g.p(x + 9, maos + 1, '#bfe6ff');
+      g.p(x + 4, maos, K);
+    }
+    if (o.lapis) {
+      // lápis espetado no cabelo, com a borrachinha de fora
+      var Lp = '#ffd34d', Lpd = '#e09a1e';
+      g.p(x + 3, HY - 1, Lp); g.p(x + 4, HY - 2, Lp); g.p(x + 5, HY - 3, Lp);
+      g.p(x + 4, HY - 1, Lpd); g.p(x + 5, HY - 2, Lpd); g.p(x + 6, HY - 3, Lpd);
+      g.p(x + 6, HY - 4, '#c3cde0'); g.p(x + 7, HY - 4, '#8791ad'); g.p(x + 7, HY - 5, '#ff8fb8');
     }
     if (o.carta) {
       g.r(x - 7, maos - 1, 3, 2, '#fffaf0'); g.p(x - 6, maos - 1, '#e0433f'); g.p(x - 4, maos, K);
@@ -534,6 +625,7 @@
     pintarCabeca(g, o, !!(quadro & 2));
     pintarCabeloFrente(g, o);
     pintarRosto(g, o);
+    pintarPalhaco(g, o);
     pintarChapeu(g, o);
     pintarFrente(g, o, m);
     g.fecharCorte();
@@ -1207,15 +1299,16 @@
     // Observatório (o Cosmo usa a base 'robo', registrada pelo Observatório com N.registrarBase)
     vega: { nome: 'Doutora Vega', voz: 'npc-vega', sprite: { pele: '#a86b4a', cabelo: '#3a2320', penteado: 'coque', jaleco: true, roupa: '#5a6ad0', roupa2: '#2a2f66', oculos: true, oculosCor: '#ffd34d', presilha: true, cor2: '#ffe066' } },
     cosmo: { nome: 'Robô Cosmo', voz: 'npc-cosmo', sprite: { base: 'robo', corpo: '#b8c4d8', detalhe: '#5fb4ff', antena: '#ff5c8a' } },
-    // Casa das Palavras (Português). Opções novas do gerador: chapeu 'chef' e 'quepe', nariz (palhaço)
-    palavrinha: { nome: 'Dona Palavrinha', voz: 'npc-palavrinha', sprite: { idade: 'idoso', pele: '#c68a5e', cabelo: '#e4e0ec', penteado: 'coque', oculos: true, oculosCor: '#e0433f', roupa: '#ffd1e6', roupa2: '#c9365a', perna: 'saia', livro: '#39a860', colar: true, cor2: '#ffd34d' } },
+    // Casa das Palavras (Português). Opções novas do gerador: chapeu 'chef', 'quepe', 'pescador', 'festa' e 'faixa',
+    // penteado 'tufos', nariz, palhaco, gola, sapatoes, regador, livroAberto, lapis; na armadura, emblema: 'A'
+    palavrinha: { nome: 'Dona Palavrinha', voz: 'npc-palavrinha', sprite: { idade: 'idoso', pele: '#c68a5e', cabelo: '#d8d4e0', penteado: 'black', chapeu: 'faixa', chapeuCor: '#c9365a', lapis: true, roupa: '#ff8ac4', roupa2: '#c9365a', perna: 'saia', livroAberto: '#39a860', cor2: '#ffd34d' } },
     manu: { nome: 'Chef Manu', voz: 'npc-manu', sprite: { pele: '#f1c7a5', cabelo: '#2b1b17', penteado: 'rabo', chapeu: 'chef', roupa: '#f4f2fa', roupa2: '#3a3a5a', avental: true, aventalCor: '#ff6b8a', cor2: '#e0433f' } },
-    heitor: { nome: 'Jardineiro Heitor', voz: 'npc-heitor', sprite: { pele: '#7a4a32', cabelo: '#2b1b17', penteado: 'curto', barba: true, chapeu: 'palha', roupa: '#8fd08f', roupa2: '#4a6fb0', jardineira: true, cor2: '#39a860' } },
-    chocalho: { nome: 'Palhaço Chocalho', voz: 'npc-chocalho', sprite: { pele: '#ffe0c7', cabelo: '#ff9d2e', penteado: 'cacheado', chapeu: 'cartola', chapeuCor: '#7c5cff', nariz: '#ff3b3b', roupa: '#ffd34d', estampa: 'bolinhas', roupa2: '#39c5bb', gravata: '#ff4f9a', cor2: '#ff4f9a' } },
+    heitor: { nome: 'Jardineiro Heitor', voz: 'npc-heitor', sprite: { pele: '#7a4a32', cabelo: '#2b1b17', penteado: 'curto', chapeu: 'pescador', chapeuCor: '#7cc15a', roupa: '#ffb347', roupa2: '#8a5a3a', avental: true, aventalCor: '#2e8b57', regador: true, regadorCor: '#5fb4ff', cor2: '#ffd34d' } },
+    chocalho: { nome: 'Palhaço Chocalho', voz: 'npc-chocalho', sprite: { pele: '#fff3ea', cabelo: '#ff9d2e', penteado: 'tufos', chapeu: 'festa', chapeuCor: '#ff4f9a', cor2: '#ffd34d', palhaco: true, gola: true, roupa: '#5fb4ff', estampa: 'bolinhas', roupa2: '#39c5bb', sapato: '#e0433f', sapatoes: true } },
     brisa: { nome: 'Capitã Brisa', voz: 'npc-brisa', sprite: { pele: '#d9a07a', cabelo: '#5a3825', penteado: 'trancas', chapeu: 'quepe', chapeuCor: '#f4f2fa', roupa: '#2f6fd6', roupa2: '#2a2f66', cachecol: true, cachecolCor: '#e0433f', cor2: '#ffd34d' } },
     carlos: { nome: 'Seu Carlos do Carrossel', voz: 'npc-carlos', sprite: { idade: 'idoso', pele: '#e0ac86', cabelo: '#d8d4e0', penteado: 'careca', bigode: true, chapeu: 'boina', chapeuCor: '#c9365a', roupa: '#fff1d0', colete: '#c9365a', roupa2: '#3a3a5a', gravata: '#ffd34d' } },
     // Castelo (treino de Português) e Escola (prova de Português)
-    clara: { nome: 'Cavaleira Clara', voz: 'npc-clara', sprite: { pele: '#a86b4a', cabelo: '#2b1b17', penteado: 'black', chapeu: 'elmo', cor2: '#39a860', armadura: true, roupa: '#39a860', capa: true, capaCor: '#ffd34d' } },
+    clara: { nome: 'Cavaleira Clara', voz: 'npc-clara', sprite: { pele: '#a86b4a', cabelo: '#2b1b17', penteado: 'black', chapeu: 'elmo', cor2: '#39a860', armadura: true, roupa: '#39a860', emblema: 'A', capa: true, capaCor: '#ffd34d' } },
     lucia: { nome: 'Professora Lúcia', voz: 'npc-lucia', sprite: { pele: '#ffe0c7', cabelo: '#2b1b17', penteado: 'longo', oculos: true, roupa: '#e0433f', roupa2: '#3a3a5a', perna: 'saia', livro: '#ffd34d', cor2: '#ffd34d', colar: '#39c5bb' } },
   };
 
