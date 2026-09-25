@@ -119,7 +119,7 @@
       var W = (o.w || 2) * 16, p = v(o, 'palavra', W > 16 ? 'APPLE' : 'CAT'), fundo = v(o, 'cor', C.creme);
       contornoRet(ctx, px + 1, py + 8, W - 2, 18, fundo);
       ret(ctx, px + 2, py + 9, W - 4, 2, v(o, 'faixa', C.azul));
-      (FIGURAS[p] || FIGURAS.SUN)(ctx, px + Math.floor(W / 2), py + 15);
+      (FIGURAS[v(o, 'figura', p)] || FIGURAS.SUN)(ctx, px + Math.floor(W / 2), py + 15);
       var lw = p.length * 4 - 1;
       palavra(ctx, p, px + Math.floor((W - lw) / 2), py + 20, v(o, 'letra', C.roxo));
       ret(ctx, px + 2, py + 7, 2, 2, C.vermelho); ret(ctx, px + W - 4, py + 7, 2, 2, C.azul);
@@ -176,6 +176,33 @@
         ret(ctx, px + m[0] - 1, py - 12 + (i % 2) * 8, 4, 3, K); ret(ctx, px + m[0], py - 11 + (i % 2) * 8, 2, 1, C.branco);
       });
       triangulo(ctx, px + 27, py - 8, 3, 5, C.madeiraEscura);
+    } });
+
+  // receita na parede (sala de Português): ficha com morango, ingredientes e modo de preparo
+  I.objeto('escola-receita', { w: 2, h: 2, parede: true, solido: false,
+    desenhar: function (ctx, px, py) {
+      var VD = '#39a860', VM = '#e0433f';
+      contornoRet(ctx, px + 2, py + 6, 28, 22, C.creme);
+      ret(ctx, px + 3, py + 7, 26, 3, VD); ret(ctx, px + 3, py + 8, 26, 1, D.clarear(VD, 0.3));
+      ret(ctx, px + 14, py + 4, 4, 3, K); ret(ctx, px + 15, py + 5, 2, 1, VM);   // alfinete
+      // morango grande
+      circulo(ctx, px + 8, py + 17, 4, K); circulo(ctx, px + 8, py + 17, 3, VM);
+      ret(ctx, px + 6, py + 12, 5, 2, VD); ret(ctx, px + 7, py + 16, 1, 1, C.ouro3); ret(ctx, px + 9, py + 18, 1, 1, C.ouro3);
+      // ingredientes (bolinha + linha) e modo de preparo (linhas numeradas)
+      for (var i = 0; i < 3; i++) { ret(ctx, px + 15, py + 12 + i * 3, 2, 2, [VM, C.ouro, VD][i]); ret(ctx, px + 18, py + 12 + i * 3, 8 - (i % 2) * 2, 1, '#8a7aa8'); }
+      ret(ctx, px + 5, py + 24, 22, 1, '#8a7aa8'); ret(ctx, px + 5, py + 26, 15, 1, '#8a7aa8');
+    } });
+  // quadro das sílabas num suporte (sala de Português): BO-LA em blocos coloridos e palminhas
+  I.objeto('escola-silabas', { w: 2, h: 1, topo: 14, solido: true, alto: true,
+    desenhar: function (ctx, px, py) {
+      ret(ctx, px + 3, py - 2, 2, 17, K); ret(ctx, px + 27, py - 2, 2, 17, K);
+      ret(ctx, px + 1, py - 14, 30, 14, K); ret(ctx, px + 2, py - 13, 28, 12, '#2e6b45');
+      [['BO', '#e0433f', 4], ['LA', '#ffd34d', 17]].forEach(function (b) {
+        ret(ctx, px + b[2], py - 11, 11, 8, K); ret(ctx, px + b[2] + 1, py - 10, 9, 6, b[1]);
+        palavra(ctx, b[0], px + b[2] + 2, py - 10, b[1] === '#ffd34d' ? K : C.branco);
+      });
+      ret(ctx, px + 15, py - 8, 2, 1, C.branco);   // o tracinho entre as sílabas
+      ret(ctx, px + 2, py - 2, 28, 1, C.madeira3);
     } });
 
   /* ---------- mural dos prêmios: derivado do estado (colorido = ganho; silhueta = ainda não) ---------- */
@@ -237,7 +264,7 @@
 
   /* ================= GERADOR DAS SALAS DE AULA ================= */
   // professor conhecido de cada prova (ids fixos do elenco)
-  var PROFESSORES = { 'historia-3bim': 'helena', 'ingles-3bim': 'emma' };
+  var PROFESSORES = { 'historia-3bim': 'helena', 'ingles-3bim': 'emma', 'portugues-3bim': 'lucia' };
   // tema de cada matéria: piso, paleta e os enfeites próprios (coordenadas locais da sala 11×11)
   var TEMAS = {
     historia: {
@@ -261,6 +288,18 @@
         { tipo: 'escola-palavras', x: 3, y: 0, w: 1, var: { palavra: 'CAT', faixa: '#d63d63' } },
         { tipo: 'cavalete', x: 7, y: 9 }, { tipo: 'luminaria-pe', x: 8, y: 9 },
         { tipo: 'bau', x: 0, y: 9 },
+      ],
+    },
+    portugues: {
+      piso: 'taco', parede: 'papel',
+      paleta: { piso: '#e8f4dc', piso2: '#bcdca4', parede: '#fff4ec', parede2: '#ffd6cc', rodape: '#2e7a45', detalhe: '#e0433f' },
+      cortina: '#e0433f', carteira: '#39a860',
+      enfeites: [
+        inter('receita', 'Receita', { tipo: 'escola-receita', x: 8, y: 0 }),
+        { tipo: 'estandarte', x: 10, y: 0, var: { cor: '#e0433f', emblema: 'coracao' } },
+        { tipo: 'escola-palavras', x: 3, y: 0, w: 1, var: { palavra: 'ABC', figura: 'BOOK', faixa: '#39a860', letra: '#e0433f' } },
+        inter('silabas', 'Quadro das sílabas', { tipo: 'escola-silabas', x: 7, y: 9 }),
+        { tipo: 'escola-mochila', x: 0, y: 9, var: { cor: '#e0433f' } },
       ],
     },
   };

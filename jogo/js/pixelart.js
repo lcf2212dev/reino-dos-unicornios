@@ -142,6 +142,14 @@
   var COMETA_CAUDA = ['......kk', '.....kck', '....kcCk', '..kkcCk.', '.kWWCk..', 'kYWWWk..', '.kYWYk..', '..kk....'];
   // adulto de lado e na diagonal: montada, a Mariana tampa o rastro que sobe para a frente; aqui a
   // cabeça fica no alto da cauda e o rastro sobe para trás, livre
+  var CHAPEU_CHEF = ['.ww.www.', 'wwwlwwwl', 'wwwwwwwl', 'lwwwwwll', 'roygtbpm'];
+  // de frente e de costas o chifre atravessa a touca pelo meio (o buraco deixa o chifre aparecer)
+  var CHAPEU_CHEF_FRENTE = ['.ww..ww.', 'www..wwl', 'wwwllwwl', 'lwwwwwll', 'roygtbpm'];
+  var CACHECOL_PINGUIM = ['BcBcBcBcB', 'DBDBDBDBD', '....cBc..', '....BDB..', '...kdddk.', '...dwdwd.', '...dwowd.', '....kkk..'];
+  // filhote: a pontinha é mais curta (o pinguim logo abaixo da volta); de costas e 3/4 de costas só a volta
+  var CACHECOL_PINGUIM_FILHOTE = ['BcBcBcBcB', 'DBDBDcDBD', '...kdddk.', '...dwdwd.', '...dwowd.', '....kkk..'];
+  var CACHECOL_COSTAS = ['BcBcBcBcB', 'DBDBDBDBD'];
+  var LACINHO_MORANGO = ['rR.g.Rr', 'RyRGRyR', 'RRdGdRR', 'yRd.dRy', 'dd...dd'];
   var COLAR_PLANETAS = ['ykkykkykky', 'krRkbBkoOk', 'kRRkBBkOOk', '.kk.kk.kk.'];
   var COMETA_CAUDA_TRAS = ['kk....', 'kck...', 'kCck..', '.kCWk.', '.kWWWk', '.kYWYk', '..kkk.'];
 
@@ -225,7 +233,7 @@
     ],
     ancoras: { orelha: [3, 2], olho: [5, 7], cabeca: [8, 3],
       pescoco: [9, 13], cauda: null, chifre: [8, 1] },
-    enfeites: { oculos: { linhas: OCULOS_FRENTE, x: 4, y: 6 }, 'oculos-estrela': { linhas: OCULOS_ESTRELA_FRENTE, x: 4, y: 6 } },
+    enfeites: { 'chapeu-chef-arco-iris': { linhas: CHAPEU_CHEF_FRENTE, x: 5, y: 1 }, oculos: { linhas: OCULOS_FRENTE, x: 4, y: 6 }, 'oculos-estrela': { linhas: OCULOS_ESTRELA_FRENTE, x: 4, y: 6 } },
     brilhos: [[0, 7], [1, 10], [7, 4]],
     cavaleira: [3, -8],
     naFrente: [0, 0, 17, 12],
@@ -272,7 +280,7 @@
       pescoco: [9, 10], cauda: [8, 16], chifre: [8, 1] },
     // de costas o laço da gravata e o pingente do colar ficam escondidos: só a tirinha e o fio
     // (os desenhos próprios usam a paleta do enfeite em PA.ENFEITES_MONTARIA)
-    enfeites: { 'gravata-borboleta': { linhas: ['RRRRR'], x: 5, y: 10 },
+    enfeites: { 'cachecol-pinguim': { linhas: CACHECOL_COSTAS, x: 5, y: 9 }, 'chapeu-chef-arco-iris': { linhas: CHAPEU_CHEF_FRENTE, x: 5, y: 1 }, 'gravata-borboleta': { linhas: ['RRRRR'], x: 5, y: 10 },
       'colar-perolas': { linhas: ['LcrcrcL', '.LLLLL.'], x: 6, y: 10 } },
     brilhos: [[10, 6], [11, 9], [8, 15]],
     cavaleira: [3, 6],
@@ -310,7 +318,7 @@
     asas: [{ linhas: ASA_ADULTO, x: 3, y: 4, atras: true, escura: true }, { linhas: ASA_ADULTO, x: 4, y: 5 }],
     ancoras: { orelha: [20, 2], olho: [19, 7], cabeca: [17, 3],
       pescoco: [16, 12], cauda: [2, 12], chifre: [17, 1] },
-    enfeites: { oculos: { linhas: OCULOS_FRENTE, x: 11, y: 6 }, 'oculos-estrela': { linhas: OCULOS_ESTRELA_FRENTE, x: 11, y: 6 },
+    enfeites: { 'chapeu-chef-arco-iris': { linhas: CHAPEU_CHEF, x: 9, y: 1 }, oculos: { linhas: OCULOS_FRENTE, x: 11, y: 6 }, 'oculos-estrela': { linhas: OCULOS_ESTRELA_FRENTE, x: 11, y: 6 },
       'anel-saturno': { linhas: ['.AA..AA.', 'AAWWWWAA', '.kk.....'], x: 14, y: 1 },
       'cometa-cauda': { linhas: COMETA_CAUDA_TRAS, x: 0, y: 7 },
       // brinco na orelha do lado de cá, longe dos olhos (na orelha de lá tampava o olho);
@@ -353,7 +361,7 @@
     asas: [{ linhas: ASA_ADULTO, x: 5, y: 4, atras: true, escura: true }, { linhas: ASA_ADULTO, x: 6, y: 5 }],
     ancoras: { orelha: [13, 2], olho: null, cabeca: [16, 4],
       pescoco: [15, 9], cauda: [2, 14], chifre: [18, 1] },
-    enfeites: { 'gravata-borboleta': { linhas: ['RRRR'], x: 11, y: 9 },
+    enfeites: { 'cachecol-pinguim': { linhas: CACHECOL_COSTAS, x: 11, y: 8 }, 'gravata-borboleta': { linhas: ['RRRR'], x: 11, y: 9 },
       'colar-perolas': { linhas: ['LcrcrcL', '.LLLLL.'], x: 12, y: 9 },
       // o anel 1 px mais estreito na frente, para caber na borda direita
       'anel-saturno': { linhas: ['..AA..AA', '.AAWWWAA'], x: 14, y: 1 } },
@@ -395,7 +403,7 @@
       pescoco: [10, 10], cauda: [1, 9], chifre: [12, 1] },
     // filhote: o anel de Saturno é um aro pequeno em volta da base do chifrinho, visto um pouco de
     // cima (pontas ao lado do chifre, arco da frente embaixo): no bebê o toquinho aparece dentro dele
-    enfeites: { 'anel-saturno': { linhas: ['A...A', '.AaA.'], x: 10, y: 2 },
+    enfeites: { 'cachecol-pinguim': { linhas: CACHECOL_PINGUIM_FILHOTE, x: 6, y: 9 }, 'anel-saturno': { linhas: ['A...A', '.AaA.'], x: 10, y: 2 },
       // enfeites de cauda 1 px para dentro (cauda + dx −1), para não cortar na borda esquerda
       'fitinha-cauda': { linhas: FITINHA_CAUDA, x: 0, y: 8 },
       'pompom-cauda': { linhas: POMPOM_CAUDA, x: 0, y: 7 },
@@ -438,7 +446,7 @@
     ],
     ancoras: { orelha: [3, 2], olho: [4, 6], cabeca: [7, 3],
       pescoco: [8, 11], cauda: null, chifre: [7, 1] },
-    enfeites: { oculos: { linhas: OCULOS_FRENTE, x: 3, y: 5 }, 'oculos-estrela': { linhas: OCULOS_ESTRELA_FRENTE, x: 3, y: 5 },
+    enfeites: { 'cachecol-pinguim': { linhas: CACHECOL_PINGUIM_FILHOTE, x: 4, y: 10 }, 'chapeu-chef-arco-iris': { linhas: CHAPEU_CHEF_FRENTE, x: 4, y: 1 }, oculos: { linhas: OCULOS_FRENTE, x: 3, y: 5 }, 'oculos-estrela': { linhas: OCULOS_ESTRELA_FRENTE, x: 3, y: 5 },
       'anel-saturno': { linhas: ['A....A', '.AaaA.'], x: 5, y: 2, bebe: ANEL_BEBE_FRENTE },
       // lua 1 linha mais curta e encostada na borda, com 1 px livre até o olho esquerdo
       'brinco-lua': { linhas: ['.kYk', 'kYk.', 'kYYk', '.kk.'], x: 0, y: 3 } },
@@ -479,7 +487,7 @@
     ],
     ancoras: { orelha: [12, 2], olho: null, cabeca: [7, 3],
       pescoco: [8, 9], cauda: [7, 12], chifre: [7, 1] },
-    enfeites: { 'gravata-borboleta': { linhas: ['RRRRR'], x: 5, y: 9 },
+    enfeites: { 'cachecol-pinguim': { linhas: CACHECOL_COSTAS, x: 4, y: 8 }, 'chapeu-chef-arco-iris': { linhas: CHAPEU_CHEF_FRENTE, x: 4, y: 1 }, 'gravata-borboleta': { linhas: ['RRRRR'], x: 5, y: 9 },
       'colar-perolas': { linhas: ['LcrcrcL', '.LLLLL.'], x: 5, y: 9 },
       'anel-saturno': { linhas: ['A....A', '.AaaA.'], x: 5, y: 2, bebe: ANEL_BEBE_FRENTE } },
     brilhos: [[10, 6], [11, 8]],
@@ -512,7 +520,7 @@
     asas: [{ linhas: ASA_FILHOTE, x: 2, y: 5, atras: true, escura: true }, { linhas: ASA_FILHOTE, x: 3, y: 6 }],
     ancoras: { orelha: [15, 2], olho: [13, 6], cabeca: [12, 3],
       pescoco: [12, 11], cauda: [2, 10], chifre: [12, 1] },
-    enfeites: { oculos: { linhas: ['R.R..R.R', 'RRRRRRRR', '.R....R.'], x: 7, y: 5 },
+    enfeites: { 'cachecol-pinguim': { linhas: CACHECOL_PINGUIM_FILHOTE, x: 8, y: 10 }, 'chapeu-chef-arco-iris': { linhas: CHAPEU_CHEF, x: 4, y: 1 }, oculos: { linhas: ['R.R..R.R', 'RRRRRRRR', '.R....R.'], x: 7, y: 5 },
       'oculos-estrela': { linhas: ['kYk..kYk', 'YOYkkYOY', 'YkY..YkY'], x: 7, y: 5 },
       'anel-saturno': { linhas: ['A....A', '.AaaA.'], x: 10, y: 2, bebe: ANEL_BEBE_DIAG },
       'brinco-lua': { linhas: BRINCO_LUA, x: 3, y: 3 },
@@ -552,7 +560,7 @@
     asas: [{ linhas: ASA_FILHOTE, x: 3, y: 5, atras: true, escura: true }, { linhas: ASA_FILHOTE, x: 4, y: 6 }],
     ancoras: { orelha: [9, 2], olho: null, cabeca: [12, 3],
       pescoco: [10, 8], cauda: [2, 10], chifre: [12, 1] },
-    enfeites: { 'gravata-borboleta': { linhas: ['RRRR'], x: 8, y: 8 },
+    enfeites: { 'cachecol-pinguim': { linhas: CACHECOL_COSTAS, x: 6, y: 7 }, 'gravata-borboleta': { linhas: ['RRRR'], x: 8, y: 8 },
       'colar-perolas': { linhas: ['LcrcrcL', '.LLLLL.'], x: 7, y: 8 },
       'anel-saturno': { linhas: ['A....A', '.AaaA.'], x: 10, y: 2, bebe: ANEL_BEBE_DIAG } },
     brilhos: [[7, 5], [6, 7], [1, 10]],
@@ -598,11 +606,14 @@
     // lilás quando ela está montada de frente) passa por cima dele; o filhote usa o lilás claro 'a'
     // (e um risquinho de contorno embaixo dele onde encosta na crina, para não se misturar com ela)
     'anel-saturno': { linhas: ['.AA..AA.', 'AAWWWWAA', '..k..k..'], paleta: { k: '#3a2446', A: '#9a6cf5', a: '#d9c2ff', W: '#ffffff' }, ancora: 'chifre', dx: -3, dy: 0 },
+    // prêmios da prova de Português (js/provas/portugues-3bim.js)
+    // touca de chef branca e fofa (dois gomos, sombra lilás) com faixa de arco-íris
+    'chapeu-chef-arco-iris': { linhas: CHAPEU_CHEF, paleta: { k: '#3a2446', w: '#ffffff', l: '#d9cff0', r: '#ff5a6e', o: '#ffa53a', y: '#ffe14d', g: '#5fd07a', t: '#4fd6c8', b: '#5fb4ff', p: '#b07cff', m: '#ff7eb6' }, ancora: 'cabeca', dx: -6, dy: -2 },
+    // cachecol listrado azul e gelo, com a ponta caída e uma carinha de pinguim no pompom
+    'cachecol-pinguim': { linhas: CACHECOL_PINGUIM, paleta: { k: '#3a2446', B: '#3d8ee8', c: '#bfe4ff', D: '#2a62b8', d: '#2c2f4a', w: '#ffffff', o: '#ffa020' }, ancora: 'pescoco', dx: -4, dy: -1 },
+    // lacinho vermelho de morango com sementinhas e o nó de folhinha verde
+    'lacinho-morango': { linhas: LACINHO_MORANGO, paleta: { k: '#3a2446', r: '#ff8a96', R: '#ee3b50', d: '#b3203a', y: '#ffe98a', G: '#3fae4f', g: '#8fe07a' }, ancora: 'orelha', dx: -4, dy: 1 },
   };
-  // PROVISÓRIO (Português): até os desenhos dos acessórios de portugues-3bim chegarem, usam os de História
-  ENFEITES['chapeu-chef-arco-iris'] = ENFEITES['chapeu-chef-arco-iris'] || ENFEITES['tiara-arco-iris'];
-  ENFEITES['cachecol-pinguim'] = ENFEITES['cachecol-pinguim'] || ENFEITES['pena-magica'];
-  ENFEITES['lacinho-morango'] = ENFEITES['lacinho-morango'] || ENFEITES['laco-vovo'];
   PA.ENFEITES_MONTARIA = ENFEITES;
 
   function paletaUnicornio(def, estagio) {

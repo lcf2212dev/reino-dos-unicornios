@@ -215,6 +215,72 @@
       matriz(ctx, cx - 5, py - 6, ['r.r.bbb.g', 'r.r..b..g', 'rrr..b..g', 'r.r..b...', 'r.r.bbb.g'], { r: '#c8324a', b: '#2f6fd6', g: C.verde });
     } });
 
+  /* ---------- ala de Português: letras, livro aberto, receita (verde e vermelho da Casa das Palavras) ---------- */
+  var PT_VERDE = '#39a860', PT_VERMELHO = '#e0433f';
+  // letrinhas 3×5 das palavras do quadro
+  var LETRAS_PT = {
+    C: ['.xx', 'x..', 'x..', 'x..', '.xx'], H: ['x.x', 'x.x', 'xxx', 'x.x', 'x.x'],
+    L: ['x..', 'x..', 'x..', 'x..', 'xxx'], N: ['x.x', 'xxx', 'xxx', 'x.x', 'x.x'],
+    A: ['.x.', 'x.x', 'xxx', 'x.x', 'x.x'], B: ['xx.', 'x.x', 'xx.', 'x.x', 'xx.'],
+  };
+  function letras(ctx, texto, x, y, cor) {
+    for (var i = 0; i < texto.length; i++) if (LETRAS_PT[texto[i]]) matriz(ctx, x + i * 4, y, LETRAS_PT[texto[i]], { x: cor });
+  }
+  // quadro-verde de giz com CH, LH e NH (moldura de madeira e bandeja de giz)
+  I.objeto('castelo-quadro-palavras', { w: 2, h: 2, parede: true, solido: false,
+    desenhar: function (ctx, px, py) {
+      ret(ctx, px + 1, py + 6, 30, 21, K); ret(ctx, px + 2, py + 7, 28, 19, C.madeira);
+      ret(ctx, px + 4, py + 9, 24, 14, '#2e6b45'); ret(ctx, px + 4, py + 9, 24, 1, '#3f8a5a');
+      letras(ctx, 'CH', px + 6, py + 11, C.branco);
+      letras(ctx, 'LH', px + 17, py + 11, C.ouro3);
+      letras(ctx, 'NH', px + 11, py + 17, '#ffd0d6');
+      // bandeja com giz e apagador
+      ret(ctx, px + 3, py + 23, 26, 2, C.madeira3);
+      ret(ctx, px + 7, py + 22, 3, 1, C.branco); ret(ctx, px + 12, py + 22, 2, 1, '#ffb0b8');
+      ret(ctx, px + 21, py + 21, 5, 2, K); ret(ctx, px + 22, py + 21, 3, 1, C.ouro);
+    } });
+  // livro aberto num atril de madeira
+  I.objeto('castelo-livro-aberto', { w: 1, h: 1, topo: 8, solido: true, alto: true,
+    desenhar: function (ctx, px, py) {
+      var cx = px + 8;
+      ret(ctx, cx - 4, py + 12, 9, 3, K); ret(ctx, cx - 3, py + 12, 7, 2, C.madeira2);
+      ret(ctx, cx - 1, py + 1, 3, 12, K); ret(ctx, cx, py + 1, 1, 11, C.madeira);
+      // tampo inclinado
+      ret(ctx, cx - 7, py - 2, 15, 4, K); ret(ctx, cx - 6, py - 1, 13, 2, C.madeira3);
+      // páginas abertas
+      ret(ctx, cx - 7, py - 8, 15, 7, K);
+      ret(ctx, cx - 6, py - 7, 6, 5, C.creme); ret(ctx, cx + 1, py - 7, 6, 5, C.creme);
+      ret(ctx, cx, py - 7, 1, 5, PT_VERMELHO);
+      for (var i = 0; i < 2; i++) { ret(ctx, cx - 5, py - 6 + i * 2, 4, 1, '#8a7aa8'); ret(ctx, cx + 2, py - 6 + i * 2, 4, 1, '#8a7aa8'); }
+      ret(ctx, cx + 2, py - 7, 1, 1, PT_VERDE);
+      // fitinha marcadora
+      ret(ctx, cx, py - 2, 1, 3, PT_VERMELHO);
+    } });
+  // cubinhos de letras empilhados (A, B, C)
+  I.objeto('castelo-blocos-letras', { w: 1, h: 1, topo: 6, solido: true,
+    desenhar: function (ctx, px, py) {
+      function cubo(x, y, c, l) {
+        ret(ctx, x, y, 7, 7, K); ret(ctx, x + 1, y + 1, 5, 5, c); ret(ctx, x + 1, y + 1, 5, 1, D.clarear(c, 0.35));
+        matriz(ctx, x + 2, y + 1, LETRAS_PT[l], { x: C.branco });
+      }
+      cubo(px + 1, py + 7, PT_VERMELHO, 'A'); cubo(px + 8, py + 7, PT_VERDE, 'B'); cubo(px + 4, py + 1, C.ouro2, 'C');
+    } });
+  // cavalete com a receita da salada de frutas (morango e as linhas dos ingredientes)
+  I.objeto('castelo-cavalete-receita', { w: 1, h: 1, topo: 12, solido: true, alto: true,
+    desenhar: function (ctx, px, py) {
+      var cx = px + 8;
+      ret(ctx, cx - 6, py + 2, 2, 13, K); ret(ctx, cx + 5, py + 2, 2, 13, K); ret(ctx, cx - 1, py + 4, 2, 9, K);
+      ret(ctx, cx - 5, py + 3, 1, 11, C.madeira); ret(ctx, cx + 6, py + 3, 1, 11, C.madeira);
+      ret(ctx, cx - 7, py - 12, 15, 15, K); ret(ctx, cx - 6, py - 11, 13, 13, C.creme);
+      ret(ctx, cx - 6, py - 11, 13, 2, PT_VERDE);
+      // morango
+      circulo(ctx, cx - 3, py - 5, 2, PT_VERMELHO); ret(ctx, cx - 4, py - 8, 3, 1, PT_VERDE);
+      ret(ctx, cx - 3, py - 5, 1, 1, C.ouro3);
+      // ingredientes com tracinhos
+      for (var i = 0; i < 3; i++) { ret(ctx, cx + 1, py - 7 + i * 3, 1, 1, PT_VERMELHO); ret(ctx, cx + 3, py - 7 + i * 3, 3 - (i % 2), 1, '#8a7aa8'); }
+      ret(ctx, cx - 5, py - 1, 11, 1, '#8a7aa8');
+    } });
+
   /* ================= AJUDANTES DE MONTAGEM ================= */
   // coordenadas locais do cômodo (fileiras 0 e 1 são a parede)
   function sala(ox, oy, lista) {
@@ -231,7 +297,7 @@
 
   /* ================= ALAS: TEMAS E CAVALEIROS ================= */
   // cavaleiros conhecidos por matéria; as outras ganham o cavaleiro padrão
-  var CAVALEIROS = { historia: 'aurora', ingles: 'oliver' };
+  var CAVALEIROS = { historia: 'aurora', ingles: 'oliver', portugues: 'clara' };
   // tema de cada ala: enfeite largo (2) e estreito (1) da parede, 4 peças de chão (A..D), piso e paleta
   var TEMAS = {
     historia: {
@@ -247,6 +313,13 @@
       b: { tipo: 'relogio-pe' }, c: { tipo: 'pilha-livros' }, d: { tipo: 'globo' },
       cor: '#2f6fd6', piso: 'pedra', parede: 'tijolo',
       paleta: { piso: '#dfe6f2', piso2: '#aebcd8', parede: '#f4e4d8', parede2: '#d8b0a0', rodape: '#2f4f8a' },
+    },
+    portugues: {
+      paredeLarga: { tipo: 'castelo-quadro-palavras' }, paredeEstreita: { tipo: 'cartaz', var: { desenho: 'abc' } },
+      a: inter('portugues-livro', 'Livro aberto', { tipo: 'castelo-livro-aberto' }),
+      b: { tipo: 'castelo-blocos-letras' }, c: { tipo: 'pilha-livros' }, d: { tipo: 'castelo-cavalete-receita' },
+      cor: PT_VERMELHO, piso: 'taco', parede: 'pedra',
+      paleta: { piso: '#e4f0d4', piso2: '#b4d49a', parede: '#fff1ea', parede2: '#f2c4b8', rodape: '#2e7a45' },
     },
   };
   var PISOS_PADRAO = ['palha', 'taco', 'azulejo', 'carpete', 'mosaico'];

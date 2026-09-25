@@ -28,6 +28,14 @@ Reino.FALAS_INTERIORES.castelo = {
       bloqueada: ['Primeiro, as salas da Torre. 🕰️', 'A Torre vem antes do treino.'],
       depois: ['«Well done!» Você revisou tudo!', 'Terminar com calma é o melhor!'],
     },
+    // ala do Português
+    clara: {
+      oi: ['Eu sou a Cavaleira Clara! 🛡️', 'Eu treino Português com você.'],
+      nova: ['Vamos treinar o Português? 🥇', 'Leia cada pergunta duas vezes.'],
+      feita: ['Quer treinar mais uma vez? ✨', 'Vamos buscar o ouro com calma?'],
+      bloqueada: ['Primeiro, as salas da Casa. 📝', 'A Casa das Palavras vem antes.'],
+      depois: ['Você leu tudo com calma! ✨', 'Ler duas vezes dá certo! 🏆'],
+    },
   },
   // cavaleiro padrão: usado pelo gerador numa matéria sem cavaleiro conhecido
   cavaleiro: {
@@ -46,5 +54,7 @@ Reino.FALAS_INTERIORES.castelo = {
     'historia-ampulheta': ['Uma ampulheta bem antiga! ⏳', 'No treino não tem relógio.', 'Pode pensar com calma.'],
     // ala do Inglês
     'ingles-cartaz': ['Um cartaz «in English»! 📋', '«Hello» quer dizer olá.'],
+    // ala do Português
+    'portugues-livro': ['Um livro aberto na mesa! 📖', 'Leia devagar, com o dedinho.', 'Depois, leia mais uma vez.'],
   },
 };

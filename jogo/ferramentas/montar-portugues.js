@@ -32,7 +32,10 @@ function trecho(arquivo, chave) {
   const marca = 'Reino.RASCUNHO_PORTUGUES.' + chave + ' =';
   const i = texto.indexOf(marca);
   if (i < 0) throw new Error(`${arquivo}: não achei "${marca}"`);
-  const corpo = texto.slice(i + marca.length).replace(/^[ \t]*\r?\n/, '').replace(/;\s*$/, '');
+  let resto = texto.slice(i + marca.length);
+  const prox = resto.indexOf('\nReino.RASCUNHO_PORTUGUES.');   // a base tem duas partes no mesmo arquivo
+  if (prox >= 0) resto = resto.slice(0, prox);
+  const corpo = resto.replace(/^[ \t]*\r?\n/, '').replace(/;\s*$/, '');
   // confere que é um objeto JS válido
   const ctx = { Reino: {} };
   vm.createContext(ctx);

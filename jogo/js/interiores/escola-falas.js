@@ -27,6 +27,13 @@ Reino.FALAS_INTERIORES.escola = {
       feita: ['Vamos treinar a prova juntas?', 'Quer revisar as palavras comigo?'],
       depois: ['«Good job!» Você foi muito bem!', 'Você revisou com calma! ✨'],
     },
+    // sala de Português
+    lucia: {
+      oi: ['Eu sou a Professora Lúcia! 📝', 'Eu adoro ler e escrever.'],
+      nova: ['Vamos fazer a prova com calma?', 'Leia o texto duas vezes. 📖'],
+      feita: ['Vamos treinar a prova juntas?', 'Revise antes de entregar. ✏️'],
+      depois: ['Você leu tudo com atenção!', 'Revisar ajudou muito! ✨'],
+    },
   },
   // professora de uma prova nova, sem professor próprio ainda (voz da narradora)
   professorPadrao: {
@@ -50,5 +57,8 @@ Reino.FALAS_INTERIORES.escola = {
     // sala de Inglês
     'palavras': ['Palavras em inglês! 🍎', '«Apple» quer dizer maçã.', '«Book» quer dizer livro. 📖'],
     'bandeira': ['A bandeira do Reino Unido.', 'Lá se fala inglês! 💂'],
+    // sala de Português
+    'receita': ['Uma receita de salada! 🍎', 'Primeiro vêm os ingredientes.', 'Depois, o modo de preparo.'],
+    'silabas': ['Sílabas coloridas no quadro! 🔤', 'Toda palavra tem sílabas.', 'Bata uma palma em cada uma.'],
   },
 };

@@ -6,9 +6,9 @@
 
   var FALAS = {
     boasVindas: [
-      'Oi, {nome}! Que bom te ver! Vamos passear pelo Reino e revisar História?',
+      'Oi, {nome}! Que bom te ver! Vamos passear pelo Reino e revisar um pouquinho?',
       'Olá, {nome}! Seu unicórnio estava com saudade de você! 🦄',
-      'Oba, a {nome} chegou! O Museu e a Torre do Relógio estão te esperando.',
+      'Oba, a {nome} chegou! As salas do Reino estão te esperando.',
     ],
     acerto: [
       'Isso, {nome}! Você leu com calma e acertou! ✨',
@@ -16,7 +16,7 @@
       'Que orgulho! Você pensou direitinho.',
       'Acertou! Seu unicórnio está pulando de alegria!',
       'Muito bem! Ler com atenção funciona mesmo!',
-      'Perfeito! Você é uma ótima historiadora! 🏛️',
+      'Perfeito! Você é uma ótima estudante! ⭐',
       'Mandou muito bem, {nome}! 💛',
       'Show! Você lembrou direitinho da apostila!',
     ],
@@ -43,7 +43,7 @@
       'Os campeões revisam a prova do começo ao fim antes de entregar.',
       'O tempo da prova é todo seu. Terminar por último está tudo bem!',
       'Na prova, leia cada pergunta duas vezes: uma para entender e outra para ter certeza.',
-      'Lembra da quadrinha? "Eu sozinho canto bem, com você canto melhor." Ela valoriza a amizade, não a competição! A prova não é uma corrida.',
+      'A prova não é uma corrida! Cada um tem o seu tempo, e está tudo bem.',
       'Se sobrar tempo na prova, use para revisar. É aí que a gente encontra os errinhos!',
       'Antes de começar a prova, respira fundo três vezes. O cérebro fica tranquilo e lembra melhor.',
       'Terminar por último é coisa de campeã! 🏆',
@@ -64,7 +64,7 @@
     ],
     fimSala: [
       'Você é incrível, {nome}! 🎉',
-      'Mais uma sala! Esse museu está ficando todo iluminado por sua causa!',
+      'Mais uma sala! O Reino está ficando todo iluminado por sua causa!',
       'Parabéns! Você revisou com dedicação!',
       'Que orgulho, {nome}! Seu unicórnio está comemorando com você! 🦄',
     ],
