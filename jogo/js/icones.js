@@ -4310,7 +4310,7 @@ window.ICONES = {
     'kkkkk...........',
     '................',
   ] },
-  "enfeite:anel-saturno": { n: "Anel de Saturno no chifre", p: { k: '#3a2446', Y: '#ffd34d', O: '#f0a020', A: '#9a6cf5', a: '#d9c2ff' }, d: [
+  "enfeite:anel-saturno": { n: "Anel de Saturno no chifre", p: { k: '#3a2446', Y: '#ffd34d', O: '#f0a020', A: '#9a6cf5', a: '#ffffff' }, d: [
     '................',
     '.......kk.......',
     '.......kYk......',
