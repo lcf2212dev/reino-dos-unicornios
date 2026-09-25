@@ -104,7 +104,7 @@ body.sem-animacao .cuid-cheio { transition: none; }
 @media (max-height: 480px) {
   .painel-compra { width: min(760px, 100%); padding: 14px 16px; gap: 8px; }
   .painel-compra .confirmar-nota { margin-top: 4px; }
-  .painel-compra > .intro-botoes { flex-direction: row; flex-wrap: nowrap; margin-top: 6px; gap: 8px; }
+  .painel-compra > .intro-botoes, .painel-compra > .intro-botoes.coluna { display: flex; flex-direction: row; flex-wrap: nowrap; margin-top: 6px; gap: 8px; }
   .painel-compra > .intro-botoes > .btn-grande { flex: 1 1 0; min-width: 0; padding: 10px 12px; }
 }
 

@@ -1138,12 +1138,19 @@
       var msg = guardada
         ? [co.nome + ': tem ' + guardada + ' na despensa! 🧺', podeComprar ? el('span.confirmar-nota', 'Ou trocar ' + co.preco + (co.preco === 1 ? ' estrela' : ' estrelas') + ' por mais uma.') : null]
         : cheio ? [pergunta, el('span.confirmar-nota', P.nomeUni(id) + ' está de barriga cheia. A comidinha fica guardada para depois! 💛')] : pergunta;
-      UI.escolher(msg, [
-        guardada ? { rotulo: 'Dar uma da despensa 🧺', valor: 'despensa', principal: true } : null,
-        !podeComprar || cheio ? null : { rotulo: 'Comprar e dar agora ' + co.icone, valor: 'dar', principal: !guardada, gasta: true },
-        podeComprar ? { rotulo: 'Comprar e guardar 🧺', valor: 'guardar', principal: cheio, gasta: true } : null,
+      // com comida guardada: "Dar uma", "Agora não" e "Comprar e guardar" (sem "Comprar e dar":
+      // 4 botões não cabiam em tela pequena). "Dar uma" gasta comida guardada: nasce apagado e
+      // longe do dedo, como os botões que gastam estrela
+      var opcoes = guardada ? [
+        { rotulo: 'Dar uma da despensa 🧺', valor: 'despensa', principal: true, gasta: true },
         { rotulo: 'Agora não', valor: null, seguro: true },
-      ].filter(Boolean), 'painel-compra').then(function (v) {
+        podeComprar ? { rotulo: 'Comprar e guardar 🧺', valor: 'guardar', gasta: true } : null,
+      ] : [
+        cheio ? null : { rotulo: 'Comprar e dar agora ' + co.icone, valor: 'dar', principal: true, gasta: true },
+        { rotulo: 'Comprar e guardar 🧺', valor: 'guardar', principal: cheio, gasta: true },
+        { rotulo: 'Agora não', valor: null, seguro: true },
+      ];
+      UI.escolher(msg, opcoes.filter(Boolean), 'painel-compra').then(function (v) {
         if (!v) { pintar(co.id); return; }
         if (v === 'despensa') { var rd = darComida(id, co.id); if (rd.ok) visita.deu++; pintar(co.id); return; }
         var r = Cu.comprar(co.id);
