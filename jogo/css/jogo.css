@@ -62,11 +62,14 @@ p { margin: 0; }
 
 /* ---------- mapa ---------- */
 #reino { position: fixed; inset: 0; display: block; touch-action: none; }
-#reino:focus { outline: none; }
+#reino:focus { outline: none; }   /* recebe o foco quando a última tela fecha pelo teclado (ui.js, focarMapa) */
 /* toque que não valeu (guarda de toque fantasma, ui.js): o botão afunda 2 px, sem som */
 .toque-ignorado { transform: translateY(2px); filter: brightness(0.94); }
 body.sem-animacao .toque-ignorado { transform: none; }
-@media (prefers-reduced-motion: reduce) { .toque-ignorado { transform: none; } }   /* recebe o foco quando a última tela fecha pelo teclado (ui.js, focarMapa) */
+@media (prefers-reduced-motion: reduce) { .toque-ignorado { transform: none; } }
+/* botão que gasta estrela, recém-aberto (ui.js, UI.escolher): meio apagado e sem aceitar toque até
+   passar 1,1 s sem nenhum toque na tela; depois acende. O "Agora não" vale desde o início */
+.btn-grande.armando { opacity: 0.45; filter: grayscale(0.5); box-shadow: 0 2px 0 var(--borda); cursor: default; }
 
 /* ---------- botões ---------- */
 .btn-grande {
@@ -189,7 +192,8 @@ body.sem-animacao .toque-ignorado { transform: none; }
   overflow: auto;
   animation: aparecer 0.18s ease-out;
 }
-.tela:focus { outline: none; }   /* a tela recebe o foco ao abrir pelo teclado (ui.js, abrirTela) */
+.tela:focus { outline: none; }   /* a tela recebe o foco ao abrir (ui.js, abrirTela); pelo teclado ganha a marca abaixo */
+.tela.foco-teclado:focus-visible { outline: 3px solid var(--roxo); outline-offset: -3px; }   /* aberta pelo teclado: marca de foco à vista */
 .painel {
   position: relative;
   width: min(720px, 100%);

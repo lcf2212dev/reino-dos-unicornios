@@ -19,6 +19,7 @@
   C.frases = {
     lembreteFome: 'Seu unicórnio está com fome. A Pet Shop tem comidinha gostosa! 🍎',
     lembreteSede: 'Seu unicórnio está com sede. Tem água fresquinha na Pet Shop! 💧',
+    lembreteDespensa: 'Tem comidinha guardada na despensa! Vamos dar para ele? 🧺',
     lembreteAmbos: 'Seu unicórnio está com fome e sede. Vamos até a Pet Shop? 🍎💧',
     faltamEstrelas: 'Faça uma sala para ganhar estrelas.',
     guardado: 'Guardei na despensa do Estábulo! 💛',
@@ -46,6 +47,10 @@
     if (!e.cuidados[id]) e.cuidados[id] = { fome: 100, sede: 100, em: agora(), acao: 0 };
     // registro da versão anterior: ganha o carimbo da ação (0 = nenhuma ainda), senão a mescla usa o `em`
     if (!(typeof e.cuidados[id].acao === 'number' && e.cuidados[id].acao >= 0)) e.cuidados[id].acao = 0;
+    // um carimbo por campo (comer e beber): o registro que só tem `acao` começa com ele nos dois
+    ['acaoFome', 'acaoSede'].forEach(function (c) {
+      if (!(typeof e.cuidados[id][c] === 'number' && e.cuidados[id][c] >= 0)) e.cuidados[id][c] = e.cuidados[id].acao;
+    });
     return e.cuidados[id];
   }
 
@@ -138,8 +143,9 @@
     var antes = limitar(r[campo]);
     r.fome = limitar(r.fome); r.sede = limitar(r.sede);
     r[campo] = Math.min(100, novo);
-    // carimbo da ação: sempre maior que o anterior (duas ações no mesmo milissegundo não empatam)
-    r.em = r.acao = Math.max(agora(), r.acao + 1);
+    // carimbo da ação, só do campo que mudou (comer não mexe no da sede, beber não mexe no da fome):
+    // sempre maior que o anterior (duas ações no mesmo milissegundo não empatam); `acao` = o maior dos dois
+    r.em = r.acao = r[campo === 'fome' ? 'acaoFome' : 'acaoSede'] = Math.max(agora(), r.acao + 1);
     gravar();
     emitir();
     return { ok: true, antes: antes, depois: r[campo] };
@@ -187,6 +193,8 @@
     if (aqui && aqui.lugarId === 'petshop') return;
     ultimoLembrete = agora();
     var chave = b.fome && b.sede ? 'lembreteAmbos' : b.sede ? 'lembreteSede' : 'lembreteFome';
+    // só com fome e com comida guardada: lembra da despensa (dá para dar no Estábulo ou na Pet Shop)
+    if (chave === 'lembreteFome' && C.despensa().length) chave = 'lembreteDespensa';
     // ela está livre (sem balão): o lembrete aparece na hora e fica aberto até a promessa resolver
     var meu = lembreteAberto = {};
     Reino.Claude.falar(C.frases[chave], { tempo: 6000 }).then(function () { if (lembreteAberto === meu) lembreteAberto = null; });

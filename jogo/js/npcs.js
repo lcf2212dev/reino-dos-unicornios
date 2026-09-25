@@ -1124,6 +1124,9 @@
       var atividade = a.tipo === 'sala' || a.tipo === 'treino' || a.tipo === 'prova';
       return N.executar(a, ctx).then(function (premios) {
         if (a.tipo === 'tela') {
+          // na Pet Shop, sem ter comprado nem dado nada, a Dona Aveia não se despede ("Bom apetite!" sem comida)
+          var visita = a.tela === 'petshop' && Reino.UI && Reino.UI.visitaPetShop;
+          if (visita && !visita.comprou && !visita.deu) return premios;
           // a tela aberta pelo NPC fechou: ele se despede (balão simples, fecha sozinho)
           paginas([uma(npc, 'depois')]).forEach(function (pg) { Reino.Claude.falar(pg.join(' '), { quem: quem, fala: pg, voz: npc.voz, tempo: 5000 }); });
           return premios;

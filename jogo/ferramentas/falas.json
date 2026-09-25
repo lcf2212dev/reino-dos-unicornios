@@ -11939,24 +11939,6 @@
    ]
   },
   {
-   "chave": "c5eeb7a8z",
-   "voz": "narradora",
-   "texto": "A estante das comidinhas!",
-   "fala": "A estante das comidinhas!",
-   "pacotes": [
-    "interior-petshop"
-   ]
-  },
-  {
-   "chave": "1b1c182d13",
-   "voz": "narradora",
-   "texto": "Tem cenoura, maçã e biscoito.",
-   "fala": "Tem cenoura, maçã e biscoito.",
-   "pacotes": [
-    "interior-petshop"
-   ]
-  },
-  {
    "chave": "a8ffb21cz",
    "voz": "narradora",
    "texto": "Um aquário com peixinhos!",
@@ -11993,19 +11975,19 @@
    ]
   },
   {
-   "chave": "4388de8dw",
+   "chave": "c5eeb7a8z",
    "voz": "narradora",
-   "texto": "A balança da Pet Shop!",
-   "fala": "A balança da Pet Shop!",
+   "texto": "A estante das comidinhas!",
+   "fala": "A estante das comidinhas!",
    "pacotes": [
     "interior-petshop"
    ]
   },
   {
-   "chave": "828347db12",
+   "chave": "1b1c182d13",
    "voz": "narradora",
-   "texto": "Aqui se pesa o feno dourado.",
-   "fala": "Aqui se pesa o feno dourado.",
+   "texto": "Tem cenoura, maçã e biscoito.",
+   "fala": "Tem cenoura, maçã e biscoito.",
    "pacotes": [
     "interior-petshop"
    ]
@@ -12024,6 +12006,24 @@
    "voz": "narradora",
    "texto": "Ele enche a barriga inteira.",
    "fala": "Ele enche a barriga inteira.",
+   "pacotes": [
+    "interior-petshop"
+   ]
+  },
+  {
+   "chave": "4388de8dw",
+   "voz": "narradora",
+   "texto": "A balança da Pet Shop!",
+   "fala": "A balança da Pet Shop!",
+   "pacotes": [
+    "interior-petshop"
+   ]
+  },
+  {
+   "chave": "828347db12",
+   "voz": "narradora",
+   "texto": "Aqui se pesa o feno dourado.",
+   "fala": "Aqui se pesa o feno dourado.",
    "pacotes": [
     "interior-petshop"
    ]
@@ -15579,6 +15579,15 @@
    "voz": "claude",
    "texto": "Seu unicórnio está com sede. Tem água fresquinha na Pet Shop!",
    "fala": "Seu unicórnio está com sede. Tem água fresquinha na Pet Shop!",
+   "pacotes": [
+    "geral"
+   ]
+  },
+  {
+   "chave": "0169799d1q",
+   "voz": "claude",
+   "texto": "Tem comidinha guardada na despensa! Vamos dar para ele?",
+   "fala": "Tem comidinha guardada na despensa! Vamos dar para ele?",
    "pacotes": [
     "geral"
    ]

@@ -371,7 +371,7 @@ teste('avancar gasta mesmo parada; depurar e falas no formato do contrato', () =
   assert.ok(Math.abs(d.fome - 90) < 0.01 && Math.abs(d.sede - 80) < 0.01);
   assert.deepStrictEqual(Object.keys(d).sort(), ['ativo', 'despensa', 'fator', 'fome', 'icone', 'montaria', 'sede', 'todos']);
   assert.deepStrictEqual(Object.keys(d.todos).sort(), ['h-cartinha', 'inicial']);
-  const chaves = ['lembreteFome', 'lembreteSede', 'lembreteAmbos', 'faltamEstrelas', 'guardado', 'comeu', 'cheio', 'bebeu', 'semSede', 'despensaVazia'];
+  const chaves = ['lembreteFome', 'lembreteSede', 'lembreteAmbos', 'lembreteDespensa', 'faltamEstrelas', 'guardado', 'comeu', 'cheio', 'bebeu', 'semSede', 'despensaVazia'];
   assert.deepStrictEqual(Object.keys(j.C.frases).sort(), chaves.slice().sort());
   assert.strictEqual(j.C.vozDaFrase('comeu'), 'unicornio');
   assert.strictEqual(j.C.vozDaFrase('bebeu'), 'unicornio');
@@ -1401,6 +1401,95 @@ teste('nuvem: comida dada neste aparelho (acao) que o banco não tem volta ao ba
   const ult = d.enviados[d.enviados.length - 1].estado;
   assert.strictEqual(ult.cuidados.inicial.acao, 1760000000000);
   assert.strictEqual(ult.estrelas.ganhas, base.estrelas.ganhas + 1);
+});
+
+/* ---------- S3-5: um carimbo por campo (`acaoFome`, `acaoSede`) ---------- */
+function aparelhosS35(ajuste) {
+  const s = saveAtual();
+  s.estrelas = { ganhas: 100, gastas: 0 };
+  s.despensa = { maca: { compradas: 1, usadas: 0 } };
+  s.cuidados = { 'h-cartinha': { fome: 30, sede: 30, em: 1750000000000, acao: 1750000000000 } };   // registro da versão anterior (só `acao`)
+  if (ajuste) ajuste(s);
+  const A = montar({ save: copia(s) }), B = montar({ save: copia(s) });
+  A.P.carregar(); B.P.carregar();
+  return { A, B };
+}
+
+teste('S3-5: maçã dada em B e água dada em A (sem ter visto a maçã): as duas valem, nos dois sentidos da mescla', () => {
+  const { A, B } = aparelhosS35();
+  B.relogio.agora += 1000;
+  assert.ok(B.C.alimentar('h-cartinha', 'maca').ok);                   // fome 30 → 60
+  A.relogio.agora += 5000;                                               // ~4 s depois, sem ter visto
+  assert.ok(A.C.beber('h-cartinha').ok);                                  // sede 30 → 100
+  const rb = B.P.estado().cuidados['h-cartinha'], ra = A.P.estado().cuidados['h-cartinha'];
+  assert.strictEqual(rb.acaoSede, 1750000000000, 'comer não mexe no carimbo da sede');
+  assert.strictEqual(ra.acaoFome, 1750000000000, 'beber não mexe no carimbo da fome');
+  [[A, B], [B, A]].forEach(([x, y]) => {
+    const r = x.P.mesclar(copia(x.P.estado()), copia(y.P.estado()));
+    const c = r.cuidados['h-cartinha'];
+    assert.strictEqual(c.fome, 60, 'a maçã vale'); assert.strictEqual(c.sede, 100, 'a água vale');
+    assert.strictEqual(c.acaoFome, rb.acaoFome); assert.strictEqual(c.acaoSede, ra.acaoSede);
+    assert.strictEqual(c.acao, Math.max(rb.acao, ra.acao));
+    assert.deepStrictEqual(r.despensa.maca, { compradas: 1, usadas: 1 });
+  });
+});
+
+teste('S3-5: empate por campo = menor valor; `acao` sozinho vale para os dois campos; sem carimbo, o `em`', () => {
+  const P = montar().P;
+  const a = saveAtual(), b = saveAtual(); a.atualizado = 2000; b.atualizado = 1000;
+  // empate nos dois campos (a mesma ação vista pelos dois, o relógio gastou diferente)
+  a.cuidados = { inicial: { fome: 40, sede: 10, em: 900, acao: 500, acaoFome: 500, acaoSede: 300 } };
+  b.cuidados = { inicial: { fome: 30, sede: 20, em: 800, acao: 500, acaoFome: 500, acaoSede: 300 } };
+  [P.mesclar(copia(a), copia(b)), P.mesclar(copia(b), copia(a))].forEach((r) =>
+    assert.deepStrictEqual(copia(r.cuidados.inicial), { fome: 30, sede: 10, em: 900, acao: 500, acaoFome: 500, acaoSede: 300 }));
+  // um lado da versão anterior (só `acao` = 400): perde a fome (500 > 400) e ganha a sede (400 > 300)
+  b.cuidados = { inicial: { fome: 5, sede: 95, em: 800, acao: 400 } };
+  [P.mesclar(copia(a), copia(b)), P.mesclar(copia(b), copia(a))].forEach((r) => {
+    const c = r.cuidados.inicial;
+    assert.strictEqual(c.fome, 40); assert.strictEqual(c.sede, 95); assert.strictEqual(c.acaoFome, 500); assert.strictEqual(c.acaoSede, 400);
+  });
+  // os dois só com `acao` (versão anterior dos dois lados): como antes, os dois campos do lado com a `acao` maior
+  const x = saveAtual(), y = saveAtual();
+  x.cuidados = { inicial: { fome: 90, sede: 90, em: 500, acao: 400 } }; y.cuidados = { inicial: { fome: 10, sede: 20, em: 450, acao: 450 } };
+  [P.mesclar(copia(x), copia(y)), P.mesclar(copia(y), copia(x))].forEach((r) => {
+    const c = r.cuidados.inicial;
+    assert.strictEqual(c.fome, 10); assert.strictEqual(c.sede, 20); assert.strictEqual(c.acao, 450);
+    assert.ok(!('acaoFome' in c) && !('acaoSede' in c), 'não inventa campos');
+  });
+  // um lado sem carimbo nenhum: o registro do `em` maior
+  y.cuidados = { inicial: { fome: 10, sede: 20, em: 600 } };
+  assert.deepStrictEqual(copia(P.mesclar(copia(x), copia(y)).cuidados.inicial), { fome: 10, sede: 20, em: 600 });
+});
+
+teste('S3-5: carimbo por campo estragado conta como ausente (vale o `acao`); normalização e cópia de segurança', () => {
+  const s = saveAtual();
+  s.cuidados = { inicial: { fome: 50, sede: 50, em: 10, acao: 100, acaoFome: 'ontem', acaoSede: 90 } };
+  const j = montar({ save: s, copia: { geracao: 1, cuidados: { inicial: { fome: 77, sede: 1, em: 5, acao: 200, acaoFome: 200, acaoSede: 50 } } } });
+  const c = j.P.carregar().cuidados.inicial;
+  assert.strictEqual(c.fome, 77, 'a comida mais nova da cópia vale (200 > acao 100 do estado)');
+  assert.strictEqual(c.sede, 50, 'a água do estado (90) é mais nova que a da cópia (50)');
+  assert.strictEqual(c.acaoFome, 200); assert.strictEqual(c.acaoSede, 90);
+  j.P.salvar(true);
+  const cop = j.copiaGuardada().cuidados.inicial;
+  assert.strictEqual(cop.acaoFome, 200); assert.strictEqual(cop.acaoSede, 90);
+  // normalização: carimbo por campo estragado sai (o `acao` continua valendo para ele)
+  const s2 = saveAtual(); s2.cuidados = { inicial: { fome: 50, sede: 50, em: 10, acao: 100, acaoFome: 'x', acaoSede: -3 } };
+  const c2 = montar({ save: s2 }).P.carregar().cuidados.inicial;
+  assert.ok(!('acaoFome' in c2) && !('acaoSede' in c2)); assert.strictEqual(c2.acao, 100);
+});
+
+teste('S3-5: a água dada aqui volta ao banco que só tem a comida do outro aparelho (e o banco igual não reenvia)', async () => {
+  const { A, B } = aparelhosS35();
+  B.relogio.agora += 1000; B.C.alimentar('h-cartinha', 'maca');
+  A.relogio.agora += 5000; A.C.beber('h-cartinha');
+  const banco = copia(B.P.estado()); banco.atualizado = A.P.estado().atualizado + 1000;   // o banco tem a maçã de B
+  const d = docFalso(A, banco);
+  await A.P.iniciarNuvem(); await esperar();
+  const env = d.enviados[d.enviados.length - 1].estado.cuidados['h-cartinha'];
+  assert.strictEqual(env.fome, 60); assert.strictEqual(env.sede, 100);
+  const n = d.enviados.length;
+  d.chegou(copia(A.P.estado())); d.rodarTimers(); await esperar();
+  assert.strictEqual(d.enviados.length, n, 'sem vaivém');
 });
 
 (async () => {

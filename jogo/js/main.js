@@ -208,6 +208,9 @@
 
     canvas.addEventListener('pointerdown', function (e) {
       if (!jogoAtivo || Cena.bloqueado()) return;
+      // logo depois de fechar uma tela por toque, o dedo que ainda bate no mesmo lugar não mexe
+      // no mapa (o 2º toque no "Ir" do Lugares trocava o destino da caminhada)
+      if (e.isTrusted && Reino.UI.toqueSegurado && Reino.UI.toqueSegurado(e.clientX, e.clientY)) return;
       Reino.Som.ativar();
       var r = canvas.getBoundingClientRect();
       var wx = cam.x + ((e.clientX - r.left) * dpr) / escala;

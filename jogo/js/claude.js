@@ -103,7 +103,8 @@
       if (!b || !aberto) return;
       Reino.Som.tocar('toque'); fechar(b.dataset.valor);
     });
-    // teclado no balão MODAL: Enter/Espaço acionam o botão focado (ou o principal); Esc aciona o "não" ou fecha
+    // teclado no balão (sem tela por cima): Tab fica preso no balão com botões; Esc fecha qualquer
+    // balão (pelo "não", se houver); Enter/Espaço, só no modal, acionam o botão focado (ou o principal)
     window.addEventListener('keydown', function (e) {
       if (!aberto || e.repeat) return;
       // campo de texto em foco ou tela por cima: o teclado é deles

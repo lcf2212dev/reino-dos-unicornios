@@ -42,14 +42,26 @@
      ficam ignorados por um instante; um toque noutro lugar vale na hora ("Vamos" → "Começar").
      Só os de verdade (isTrusted) e de ponteiro (detail > 0): Enter/Espaço no teclado geram
      clique com detail 0 e passam sempre; .click() de código também passa. O toque ignorado
-     não fica mudo: o botão afunda de leve (toqueIgnorado, sem som). */
-  var SEGURAR_MS = 400, TOQUE_PERTO_PX = 40;
+     não fica mudo: o botão afunda de leve (toqueIgnorado, sem som). Toques que continuam no
+     mesmo lugar (o dedo batendo no botão do menu) esticam a guarda, até 2 s depois da troca de
+     tela: o 3º toque no dock não liga mais um interruptor dos Ajustes. */
+  var SEGURAR_MS = 800, TOQUE_PERTO_PX = 40, GUARDA_MAX_MS = 2000;
   var toquesLivresEm = 0, ultimoToque = -1e9;
   var ultimoPonto = null;    // { x, y } do último pointerdown de verdade
   var pontoGuarda = null;    // o toque que abriu ou fechou a tela: a guarda vale só perto dele
+  var guardaDesde = 0;
   UI.segurarToques = function (ms) {
     toquesLivresEm = Math.max(toquesLivresEm, performance.now() + (ms || SEGURAR_MS));
     pontoGuarda = ultimoPonto;
+    guardaDesde = performance.now();
+  };
+  // o toque em (x, y) está segurado agora? Também para o mapa (main.js, pointerdown do canvas):
+  // o 2º toque no "Ir" do Lugares caía no mapa e trocava o destino da caminhada
+  UI.toqueSegurado = function (x, y) {
+    var agora = performance.now();
+    if (agora >= toquesLivresEm || (pontoGuarda && !perto({ x: x, y: y }, pontoGuarda))) return false;
+    toquesLivresEm = Math.max(toquesLivresEm, Math.min(agora + SEGURAR_MS, guardaDesde + GUARDA_MAX_MS));
+    return true;
   };
   // só segura quando a tela mudou por causa de um toque (até 600 ms antes): a tela de início
   // que abre sozinha, ou uma tela aberta pelo teclado, não prendem o próximo toque
@@ -74,16 +86,15 @@
   // a última coisa usada foi o teclado? (quem fecha uma tela decide para onde vai o foco)
   var ultimaTecla = -1e9;
   document.addEventListener('keydown', function (e) { if (e.isTrusted) ultimaTecla = performance.now(); }, true);
-  // Enter/Espaço segurados (repetição automática), ou apertados de novo logo depois (400 ms) de a tela
-  // abrir pelo teclado com o foco num botão, não acionam esse botão sem querer
+  // Enter/Espaço segurados (repetição automática) numa tela não acionam de novo o botão em foco
+  // sem querer; num campo de texto (o nome do unicórnio) a tecla é do campo
   document.addEventListener('keydown', function (e) {
-    if (!pilha.length || (e.key !== 'Enter' && e.key !== ' ')) return;
-    var t = pilha[pilha.length - 1];
-    if (e.repeat || (t._focoPorTeclaEm && performance.now() - t._focoPorTeclaEm < 400)) { e.preventDefault(); e.stopPropagation(); }
+    if (!pilha.length || !e.repeat || (e.key !== 'Enter' && e.key !== ' ')) return;
+    if (campoDeTexto(document.activeElement)) return;
+    e.preventDefault(); e.stopPropagation();
   }, true);
   document.addEventListener('click', function (e) {
-    if (!e.isTrusted || !e.detail || performance.now() >= toquesLivresEm) return;
-    if (pontoGuarda && !perto({ x: e.clientX, y: e.clientY }, pontoGuarda)) return;   // longe: vale
+    if (!e.isTrusted || !e.detail || !UI.toqueSegurado(e.clientX, e.clientY)) return;   // longe ou fora da guarda: vale
     e.preventDefault(); e.stopImmediatePropagation();
     toqueIgnorado(e.target);
   }, true);
@@ -93,10 +104,10 @@
      seguro ("Agora não"); quem continua tocando ali só acerta o "Agora não". Um toque de
      propósito no botão de gastar, noutro ponto, vale na hora. */
   // logo depois de uma compra, o toque seguinte no mesmo lugar cai no cartão que acabou de ser
-  // comprado (e tirava o enfeite): os cartões da Loja ignoram toques perto dele por 1 s
-  var comprouEm = -1e9, pontoDaCompra = null;
-  function logoDepoisDaCompra(e) {
-    if (!(e && e.isTrusted && e.detail) || performance.now() - comprouEm >= 1000) return false;
+  // comprado (e tirava o enfeite): esse cartão (só ele) ignora toques perto do da compra por 1 s
+  var comprouEm = -1e9, pontoDaCompra = null, itemComprado = null;
+  function logoDepoisDaCompra(e, itemId) {
+    if (!(e && e.isTrusted && e.detail) || itemId !== itemComprado || performance.now() - comprouEm >= 1000) return false;
     if (!perto({ x: e.clientX, y: e.clientY }, pontoDaCompra)) return false;
     toqueIgnorado(e.target);
     return true;
@@ -124,12 +135,10 @@
       if (t !== topo() || t.contains(document.activeElement)) return;
       var bal = document.getElementById('claude-balao');
       if (bal && bal.contains(document.activeElement)) return;
-      // aberta pelo teclado: o foco vai para o 1º botão da tela (menos o ✕), com a marca de foco à
-      // vista; aberta por toque ou mouse: a própria tela (como um diálogo), e o Tab leva ao 1º botão
-      if (ultimaTecla > ultimoToque) {
-        var primeiro = focaveis(t).filter(function (b) { return !b.classList.contains('btn-fechar'); })[0];
-        if (primeiro && focar(primeiro)) { t._focoPorTeclaEm = performance.now(); return; }
-      }
+      // o foco vai para a própria tela (como um diálogo), e o Tab leva ao 1º botão. No 1º botão, um
+      // Enter logo depois agia sozinho (tirava o enfeite, desligava o som, "Quer sair da prova?").
+      // Aberta pelo teclado, a tela mostra a marca de foco (.foco-teclado, jogo.css)
+      t.classList.toggle('foco-teclado', ultimaTecla > ultimoToque);
       t.setAttribute('tabindex', '-1'); focar(t);
     }, 60);
     return t;
@@ -194,6 +203,7 @@
   // 1º, se nenhum for marcado) recebe o foco e é o que o Esc escolhe. Resolve com o `valor` tocado.
   // `classe` (opcional) vai no painel. `gasta`: o botão gasta estrela e nunca nasce embaixo do
   // dedo que abriu o diálogo (afastarDoDedo).
+  var ARMAR_MS = 1100;
   UI.escolher = function (msg, botoes, classe) {
     return new Promise(function (resolver) {
       var t = UI.abrirTela('confirmar');
@@ -201,10 +211,12 @@
       t.setAttribute('aria-labelledby', idMsg);
       var bs = botoes.map(function (b) {
         var bt = el('button.btn-grande' + (b.principal ? '.btn-principal' : '.btn-secundario'), { type: 'button' }, b.rotulo);
+        if (b.gasta) { bt.classList.add('armando'); bt.setAttribute('aria-disabled', 'true'); }
         bt.addEventListener('click', function (e) {
+          if (bt.classList.contains('armando') && e.detail) return;   // a trava é só do toque e do mouse: pelo teclado ela chega aqui com um Tab de propósito
           // reserva: se nem trocando de lugar nem movendo o diálogo deu para tirar o botão de baixo
-          // do dedo, um toque bem ali (24 px) não gasta; o resto do botão vale na hora
-          if (b.gasta && dedoPreso && e.isTrusted && e.detail && Math.abs(e.clientX - dedoPreso.x) < 24 && Math.abs(e.clientY - dedoPreso.y) < 24) { toqueIgnorado(bt); return; }
+          // do dedo, um toque perto dali (40 px) não gasta; o resto do botão vale
+          if (b.gasta && dedoPreso && e.isTrusted && e.detail && perto({ x: e.clientX, y: e.clientY }, dedoPreso)) { toqueIgnorado(bt); return; }
           if (b.gasta) { comprouEm = performance.now(); pontoDaCompra = e.detail ? { x: e.clientX, y: e.clientY } : null; }
           UI.fecharTela(t); resolver(b.valor);
         });
@@ -213,13 +225,26 @@
       t.appendChild(el('div.painel.painel-pequeno' + (classe ? '.' + classe : ''), el('p.confirmar-msg', { id: idMsg }, msg), el('div.intro-botoes' + (bs.length > 2 ? '.coluna' : ''), bs)));
       var iSeguro = Math.max(0, botoes.findIndex(function (b) { return b.seguro; }));
       var dedoPreso = afastarDoDedo(bs, botoes, iSeguro);
+      // os que gastam nascem inativos (meio apagados) e só acendem depois de 1,1 s sem nenhum
+      // toque: quem vem passando o dedo pelos cartões (a cada 100–1000 ms) não compra. O
+      // "Agora não" vale na hora
+      var gastam = bs.filter(function (bt, j) { return botoes[j].gasta; });
+      var armar = null;
+      function acenderDepois() {
+        clearTimeout(armar);
+        armar = setTimeout(function () { gastam.forEach(function (bt) { bt.classList.remove('armando'); bt.removeAttribute('aria-disabled'); }); }, ARMAR_MS);
+      }
+      if (gastam.length) {
+        acenderDepois();
+        t.addEventListener('pointerdown', function (e) { if (e.isTrusted && gastam[0].classList.contains('armando')) acenderDepois(); }, true);
+      }
       t._aoEsc = function () { bs[iSeguro].click(); };
       setTimeout(function () { focar(bs[iSeguro]); }, 30);
     });
   };
   // o toque que abriu o diálogo (até 600 ms antes) caiu num botão que gasta? Troca esse botão de
   // lugar com o seguro. Devolve o ponto se ainda sobrar um botão de gastar embaixo dele.
-  function sobre(bt, p) { var r = bt.getBoundingClientRect(); return p.x > r.left - 12 && p.x < r.right + 12 && p.y > r.top - 12 && p.y < r.bottom + 12; }
+  function sobre(bt, p) { var r = bt.getBoundingClientRect(); return p.x > r.left - TOQUE_PERTO_PX && p.x < r.right + TOQUE_PERTO_PX && p.y > r.top - TOQUE_PERTO_PX && p.y < r.bottom + TOQUE_PERTO_PX; }
   function afastarDoDedo(bs, botoes, iSeguro) {
     var p = ultimoPonto;
     if (!p || performance.now() - ultimoToque > 600 || !botoes.some(function (b) { return b.gasta; })) return null;
@@ -430,6 +455,26 @@
     document.body.classList.remove('recado-cuidado');
     document.body.style.removeProperty('--recado-altura');
   }
+  // Um balão sem botões e não modal (a despedida da Dona Aveia, o "Faltam N estrelas"…) que já
+  // estava aberto quando ela tocou ou apertou a tecla que abriu uma tela nova fecha: ficava por
+  // cima da tela e o toque dela caía no "Ok!"
+  var balaoNpcNoGesto = null, telasAntes = 0;
+  function textoBalaoNpc() {
+    var bal = document.querySelector('#claude-balao:not([hidden])');
+    if (!bal || bal.classList.contains('com-botoes')) return null;
+    if (Reino.Claude.dialogoAberto && Reino.Claude.dialogoAberto()) return null;
+    return soLetras(bal.querySelector('.claude-texto').textContent);
+  }
+  ['pointerdown', 'keydown'].forEach(function (ev) {
+    document.addEventListener(ev, function (e) { if (e.isTrusted) balaoNpcNoGesto = textoBalaoNpc(); }, true);
+  });
+  U.on('telas', function (n) {
+    var abriu = n > telasAntes; telasAntes = n;
+    if (abriu && balaoNpcNoGesto && textoBalaoNpc() === balaoNpcNoGesto && !(recado && soLetras(recado.texto) === balaoNpcNoGesto)) {
+      // limpar, não só fechar: a despedida da Dona Aveia na fila atrás do "Faltam…" entrava por cima da tela nova
+      balaoNpcNoGesto = null; Reino.Claude.limpar();
+    }
+  });
   U.on('telas', function (n) {
     if (!recado) return;
     if (n > recado.telas) {                                           // tela nova por cima: o recado já passou
@@ -777,6 +822,7 @@
     }
     UI.confirmar('Trocar ' + item.preco + ' estrelas por ' + item.nome + '?', 'Sim, quero! ✨', 'Agora não', true).then(function (sim) {
       if (!sim) return;
+      itemComprado = item.id;   // o cartão dele ignora o próximo toque perto do "Sim" por 1 s
       if (!P.gastarEstrelas(item.preco)) return;   // (as estrelas não mudam enquanto ela confirma, mas por via das dúvidas)
       est().loja[item.id] = true;
       if (!usando(item)) alternar(item);
@@ -815,7 +861,7 @@
           el('span.item-icone', iconeItem(item)), el('b', hifenizar(item.nome)),
           el('span.item-preco', tem ? (usando(item) ? '✓ Usando' : 'Usar') : '⭐ ' + item.preco));
         b.addEventListener('click', function (e) {
-          if (logoDepoisDaCompra(e)) return;
+          if (logoDepoisDaCompra(e, item.id)) return;
           if (tem) { alternar(item); Reino.Som.tocar('selecionar'); P.salvar(); pintar(); U.emit('mapaMudou'); return; }
           comprar(item, pintar);
         });
@@ -849,7 +895,7 @@
                 : p.preco + ' estrelas, ' + rar.nome.toLowerCase()) },
             el('span.item-icone', desenho), el('b', hifenizar(p.nome)), st === 'bloqueado' ? null : rotulo, el('span.item-preco', preco));
           b.addEventListener('click', function (e) {
-            if (logoDepoisDaCompra(e)) return;
+            if (logoDepoisDaCompra(e, item.id)) return;
             if (tem) { alternar(item); Reino.Som.tocar('selecionar'); P.salvar(); pintar(); U.emit('mapaMudou'); return; }
             if (st === 'aVenda') return comprar(item, pintar);
             Reino.Som.tocar('toque');
@@ -865,7 +911,7 @@
     c.appendChild(vitrine);
     c.appendChild(grade);
     c.appendChild(el('h3.estabulo-grupo', '🏫 Prêmios da Escola do Reino'));
-    c.appendChild(el('p.bau-nota', 'Acerte TUDO numa prova da Escola e ganhe um destes (na 1ª tentativa é lendário!). Depois, os outros dois daquela prova se trocam por estrelas. 🌈'));
+    c.appendChild(el('p.bau-nota', 'Acerte TUDO numa prova e ganhe um prêmio; os outros se trocam por estrelas. 🌈'));
     c.appendChild(premiosBox);
     c.appendChild(el('p.bau-nota', 'As fadas trocam estrelas por enfeites. Você ganha estrelas acertando de primeira e com a Estrela da Calma. 🌙'));
     pintar();
@@ -873,7 +919,8 @@
     var algumAVenda = LI.premios().some(function (p) { return LI.estadoPremio(p, P) === 'aVenda'; });
     if (algumAVenda && !avisouPremios) {
       avisouPremios = true;
-      Reino.Claude.falar(LI.FALAS.premiosAVenda);
+      // fecha sozinho e fica no pé da tela, sem cobrir os cartões (como os balões dos cuidados)
+      balaoNaTela(LI.FALAS.premiosAVenda, { tempo: 5000 });
     }
   };
 
@@ -999,6 +1046,7 @@
       ir.addEventListener('click', function () {
         var l = Mapa.lugares().find(function (x) { return x.tipo === 'petshop'; });
         Reino.Som.tocar('toque'); Reino.Claude.fechar(); UI.fecharTodas();
+        focarMapa();   // ela vai andando até a Pet Shop: o foco fica no mapa, não no menu
         if (l) U.emit('irPara', l);
       });
       c.appendChild(el('div.intro-botoes', ir));
@@ -1022,13 +1070,17 @@
       grade.appendChild(b);
     });
     c.appendChild(grade);
-    var primeiro = grade.querySelector('button');
-    setTimeout(function () { try { primeiro.focus({ preventScroll: true }); } catch (e) {} }, 30);
+    // o foco fica na própria tela (UI.abrirTela), e a 1ª comida só pelo Tab: Enter + Enter dava a
+    // cenoura sem ela escolher
   }
 
   /* ---------- pet shop (tela da Dona Aveia) ---------- */
+  // o que aconteceu na última visita à tela da Pet Shop: quem abriu a tela (a Dona Aveia) pode
+  // escolher a despedida. { comprou, deu } são contagens; valem até a próxima visita
+  UI.visitaPetShop = { comprou: 0, deu: 0 };
   UI.telaPetShop = function () {
     var Cu = Reino.Cuidados;
+    var visita = UI.visitaPetShop = { comprou: 0, deu: 0 };
     var pn = painel('petshop', '🐾 Pet Shop');
     var c = pn.conteudo;
     var saldo = el('div.saldo-estrelas');
@@ -1075,20 +1127,29 @@
     // nada é gasto sem ela confirmar (como na Loja): um diálogo só, com comprar e dar, comprar
     // e guardar, ou "Agora não" (o seguro, com o foco e no Esc)
     function comprarComida(co) {
-      if (P.estrelas() < co.preco) { faltamEstrelas(co, co.preco - P.estrelas()); return; }
       var id = P.montaria();
       // de barriga cheia ele não come: sem "dar agora", e ela fica sabendo antes de gastar
       var cheio = uniChocado(id) && Cu.niveis(id).fome >= 99.5;
+      // tem dessa comida guardada e ele pode comer: a 1ª opção é dar uma da despensa, sem gastar
+      var guardada = !cheio && uniChocado(id) ? Cu.quantidade(co.id) : 0;
+      var podeComprar = P.estrelas() >= co.preco;
+      if (!podeComprar && !guardada) { faltamEstrelas(co, co.preco - P.estrelas()); return; }
       var pergunta = 'Trocar ' + co.preco + (co.preco === 1 ? ' estrela' : ' estrelas') + ' por ' + co.nome + '?';
-      UI.escolher(cheio ? [pergunta, el('span.confirmar-nota', P.nomeUni(id) + ' está de barriga cheia. A comidinha fica guardada para depois! 💛')] : pergunta, [
-        cheio ? null : { rotulo: 'Comprar e dar agora ' + co.icone, valor: 'dar', principal: true, gasta: true },
-        { rotulo: 'Comprar e guardar 🧺', valor: 'guardar', principal: cheio, gasta: true },
+      var msg = guardada
+        ? [co.nome + ': tem ' + guardada + ' na despensa! 🧺', podeComprar ? el('span.confirmar-nota', 'Ou trocar ' + co.preco + (co.preco === 1 ? ' estrela' : ' estrelas') + ' por mais uma.') : null]
+        : cheio ? [pergunta, el('span.confirmar-nota', P.nomeUni(id) + ' está de barriga cheia. A comidinha fica guardada para depois! 💛')] : pergunta;
+      UI.escolher(msg, [
+        guardada ? { rotulo: 'Dar uma da despensa 🧺', valor: 'despensa', principal: true } : null,
+        !podeComprar || cheio ? null : { rotulo: 'Comprar e dar agora ' + co.icone, valor: 'dar', principal: !guardada, gasta: true },
+        podeComprar ? { rotulo: 'Comprar e guardar 🧺', valor: 'guardar', principal: cheio, gasta: true } : null,
         { rotulo: 'Agora não', valor: null, seguro: true },
       ].filter(Boolean), 'painel-compra').then(function (v) {
         if (!v) { pintar(co.id); return; }
+        if (v === 'despensa') { var rd = darComida(id, co.id); if (rd.ok) visita.deu++; pintar(co.id); return; }
         var r = Cu.comprar(co.id);
         if (!r.ok) { if (r.motivo === 'estrelas') faltamEstrelas(co, r.faltam); else Reino.Som.tocar('toque'); pintar(co.id); return; }
         Reino.Som.tocar('estrela');
+        visita.comprou++;
         if (v === 'dar') darComida(id, co.id);
         else falarCuidado('guardado', id);
         pintar(co.id);
@@ -1220,7 +1281,14 @@
       else if (l.tipo === 'petshop') { emoji = '🐾'; info = infoPetShop(); }
       else if (l.tipo === 'observatorio') { emoji = '🔭'; info = 'Curiosidades do espaço'; }
       var b = el('button.sala-card', { type: 'button' }, el('span.sala-emoji', emoji), el('span.sala-info', el('b', hifenizar(l.nome)), el('small', hifenizar(info))), el('span.sala-ir', 'Ir →'));
-      b.addEventListener('click', function () { UI.fecharTela(pn.tela); U.emit('irPara', l); });
+      b.addEventListener('click', function (e) {
+        UI.fecharTela(pn.tela);
+        // o dedo que ainda bate no "Ir" cai no mapa e trocaria o destino: segura mais um pouco
+        // (só perto desse toque; main.js pergunta a UI.toqueSegurado)
+        if (e.isTrusted && e.detail) UI.segurarToques(1500);
+        focarMapa();   // ela vai andando sozinha: o foco não volta ao botão do menu (Espaço reabria Lugares)
+        U.emit('irPara', l);
+      });
       lista.appendChild(b);
     });
     pn.conteudo.appendChild(lista);
@@ -1230,6 +1298,14 @@
   UI.telaAjustes = function () {
     var pn = painel('ajustes', '⚙️ Ajustes');
     var a = est().ajustes;
+    // no 1º segundo depois de abrir, um toque (o dedo ainda batendo no menu) não muda nenhum
+    // interruptor: ficava gravado ("Letras grandes" ligava sozinho no tablet)
+    var abriuAjustes = performance.now();
+    pn.tela.addEventListener('click', function (e) {
+      var sw = e.target.closest && e.target.closest('.interruptor');
+      if (!sw || !e.isTrusted || !e.detail || performance.now() - abriuAjustes >= 1000) return;
+      e.preventDefault(); e.stopImmediatePropagation(); toqueIgnorado(sw);
+    }, true);
     function interruptor(chave, rotulo, desc, depois) {
       var b = el('button.interruptor', { type: 'button', role: 'switch', 'aria-checked': String(!!a[chave]) }, el('span.interruptor-texto', el('b', rotulo), el('small', desc)), el('span.interruptor-bola'));
       b.addEventListener('click', function () {
