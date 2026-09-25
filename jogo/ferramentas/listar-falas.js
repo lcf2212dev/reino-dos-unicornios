@@ -35,8 +35,14 @@ const ESTADOS = { AM: 'Amazonas', RJ: 'Rio de Janeiro', MS: 'Mato Grosso do Sul'
 // Só nas falas dos pacotes de Português (as gravações das outras matérias não mudam).
 const NOME_LETRA = { CH: 'cê agá', LH: 'éle agá', NH: 'ene agá', SS: 'dois ésses', RR: 'dois érres',
   H: 'agá', X: 'xis', S: 'ésse', Z: 'zê', R: 'érre', L: 'éle', U: 'u' };
+// palavras com hífen que não são sílabas separadas (compostas e pronomes: "lave-os", "bem-vinda")
+const COMPOSTAS = /^(pega-pega|bem-vind[oa]s?|caça-palavras|arco-íris|guarda-chuva|beija-flor)$/i;
+const PRONOME = /-(se|os|as|o|a|lo|la|los|las|me|te|lhe|lhes|nos)$/i;
 function nomesDasLetras(t) {
-  return t.replace(/(^|[^\p{L}])(CH|LH|NH|SS|RR|H|X|S|Z|R|L|U)(?=$|[^\p{L}])/gu, (_, a, l) => a + NOME_LETRA[l]);
+  // "R$ 4,00" é dinheiro, não a letra
+  t = t.replace(/(^|[^\p{L}])(CH|LH|NH|SS|RR|H|X|S|Z|R|L|U)(?=$|[^\p{L}$])/gu, (_, a, l) => a + NOME_LETRA[l]);
+  // sílabas separadas ("al-gu-ma"): uma pausa em cada hífen, senão a voz lê a palavra inteira
+  return t.replace(/\p{L}+(?:-\p{L}+)+/gu, (w) => (COMPOSTAS.test(w) || PRONOME.test(w) ? w : w.split('-').join('… ')));
 }
 
 function prepararFala(texto, voz, pacotes) {
