@@ -84,7 +84,7 @@
     });
   }
   // a rede voltou (o aparelho avisa): pede na hora os pacotes que falharam
-  window.addEventListener('online', function () { tentarDeNovo(true); });
+  if (window.addEventListener) window.addEventListener('online', function () { tentarDeNovo(true); });
 
   V.carregar = function (nome) {
     if (carregados[nome]) return Promise.resolve();
