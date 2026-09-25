@@ -47,8 +47,9 @@ ajustes.surpresaEm: <Date.now()>                 // carimbo da última troca de 
 - Unicórnio sem registro em `cuidados` = fome 100 e sede 100 (unicórnio novo nasce satisfeito).
 - **Mescla** (mesma geração):
   - `cuidados` (`juntarCuidados`): para cada `uniId` de qualquer lado, se os DOIS lados têm carimbo para a fome
-    e para a sede (o carimbo de um campo é `acaoFome`/`acaoSede` numérico ≥ 0 ou, na falta dele, `acao`; o 0
-    conta), CADA campo vem do lado com o seu carimbo maior (comida dada num aparelho e água dada no outro valem
+    e para a sede (o carimbo de um campo é `acaoFome`/`acaoSede` numérico ≥ 0 ou, na falta dele, `acao`; um
+    `acao` mais novo que os dois carimbos de campo, de uma aba que só conhece o `acao`, vale para os dois
+    campos; o 0 conta), CADA campo vem do lado com o seu carimbo maior (comida dada num aparelho e água dada no outro valem
     as duas); empate (inclusive 0 e 0) = o menor valor daquele campo (o gasto só desce entre uma ação e
     outra). `acao` = o maior dos dois lados; `em` = o maior. Se algum lado não tem carimbo nenhum (save da
     versão anterior ou valor estragado): vale o registro do `em` maior (empate: o lado mais recente). Quem
@@ -81,6 +82,23 @@ ajustes.surpresaEm: <Date.now()>                 // carimbo da última troca de 
   ids desconhecidos ficam guardados, sem efeito (uma versão não apaga a comida de outra); `acaoFome`/`acaoSede`
   que não são números ≥ 0 são apagados (contam como ausentes; vale o `acao`). `acao` **não** é normalizada
   aqui (nem apagada): quem a conserta é `Cuidados` ao mudar o registro (`registroParaMudar`).
+- **Sincronização** (mesmas regras da mescla, só onde e quando ela roda):
+  - **Duas abas no mesmo aparelho:** `vistoLocal` é o texto do save que esta aba leu ou gravou por último.
+    `gravarLocal` confere antes de gravar: se o save do aparelho mudou (outra aba gravou), junta com
+    `P.mesclar` e só então grava. O evento `storage` (chave do save) e a volta da aba (`visibilitychange`,
+    para a aba congelada no fundo que perdeu o evento) fazem a mesma junção (`juntarDoAparelho`); se a
+    junção trouxe algo que a outra aba não tinha, `P.salvar()` devolve com carimbo novo (aparelho e
+    servidor); senão só avisa (`progresso`/`progressoRemoto`). Duas abas novas não entram em vaivém.
+  - **"Trouxe algo novo"** (`trouxeAlgo`/`conteudo`): compara o conteúdo, e não o `atualizado`: chaves em
+    ordem, sem valores vazios, sem `atualizado` e, nos cuidados, só os carimbos (`acao`, `acaoFome`,
+    `acaoSede`), porque fome, sede e `em` mudam a cada segundo. Comida ou água dada num lado conta.
+  - **Servidor/claude.ai:** o `onSnapshot` ignora o remoto de mesmo conteúdo (dois aparelhos podem mandar
+    estados diferentes com o mesmo `atualizado`); se a junção trouxe algo que o banco não tem (ou
+    `conferirPersistencia` achou algo), ganha `atualizado` novo e reenvia. No `iniciarNuvem`, o aparelho que
+    trouxe algo ganha `atualizado` novo antes do primeiro envio (senão os outros o ignorariam como já visto).
+  - **Rede lenta:** cada gravação e cada fetch do servidor desistem em `limiteRedeMs` (15 s; o fetch é
+    cancelado com `AbortController`); depois de um erro, tenta de novo sozinha em `novaTentativaMs` (15 s).
+    A busca inicial (`iniciarNuvem`) desiste em 12 s e rejeita; o jogo pode tentar de novo.
 - "Novo ciclo" (`P.novoCiclo`) mantém `cuidados` e `despensa`. "Apagar tudo" (`P.apagarTudo`) zera, como o resto.
 - Quem lê o estado sempre chama `P.estado()` de novo: a mescla troca o objeto inteiro.
 
@@ -231,7 +249,8 @@ Reino.Surpresa = {
   forcar() → Promise      // debug: sorteia e mostra agora (se ela estiver ocupada, assim que ficar livre).
                           // Resolve quando o painel ABRE, com { materia, sala, desafio, tipo } (ids), ou null
                           // sem pergunta; com o painel já aberto, resolve na hora com o dele. Ignora o
-                          // interruptor, `ativo`, o tempo sorteado e `esperaLivreMs`
+                          // interruptor, `ativo`, o tempo sorteado e `esperaLivreMs`; espera ela livre,
+                          // parada e com a aba visível
   restante() → ms | null  // quanto falta para vencer (null com o interruptor desligado ou antes de iniciar)
   aberta() → bool
   proximaPergunta() → { materia, sala, desafio } | null   // o que sairia agora (para os testes)
@@ -241,34 +260,42 @@ Reino.Surpresa = {
 ```
 - **Tempo:** sorteado entre `config.surpresa.minMinutos` e `maxMinutos` (3 a 10) de relógio livre.
 - **O relógio conta só com ela livre:** depois de iniciar (e do tutorial), `ajustes.surpresa !== false`,
-  aba visível, toque ou tecla nos últimos 5 min, `Reino.Cena.estado()` `'mapa'` ou `'interior'`,
-  `!Reino.Claude.aberto()` e, *(em acabamento)*, ela **parada** (sem `Jogador.caminho` nem `aoChegar`: ela
-  termina o que começou); ao abrir, `Jogador.parar()` (senão entraria sozinha na porta ao fechar).
-- **Relógio monotônico** *(em acabamento; o commit atual ainda usa `Date.now()`)*: `performance.now()` +
-  `setInterval`, que o relógio falso do Playwright também controla. Nunca `Date.now()` aqui: o relógio do
-  aparelho mudando (ajuste manual, NTP) travaria ou dispararia a espera. (`cuidados.js` usa `Date.now()`,
-  porque grava carimbos no save.) Passo limitado a 5 s (aba que volta do fundo não dá salto).
+  aba visível, toque ou tecla nos últimos 5 min, `Reino.Cena.estado()` `'mapa'` ou `'interior'` e
+  `!Reino.Claude.aberto()`. Andando também conta (o tempo corre); só a **abertura** espera ela parada (sem
+  `Jogador.caminho` nem `aoChegar`: ela termina o que começou), e ao abrir o painel chama `Jogador.parar()`
+  (senão entraria sozinha na porta ao fechar a pergunta).
+- **Relógio monotônico:** `performance.now()` + `setInterval`, que o relógio falso do Playwright também
+  controla. Nunca `Date.now()` aqui: o relógio do aparelho mudando (ajuste manual, NTP) travaria ou
+  dispararia a espera. (`cuidados.js` usa `Date.now()`, porque grava carimbos no save.) Passo limitado a 5 s
+  (aba que volta do fundo não dá salto).
 - **Tutorial:** o relógio começa quando a promessa resolver, OU depois de 10 s seguidos livre, OU no máximo
   2 min depois de entrar (`Claude.limpar()` pode descartar a promessa sem resolver).
-- **Venceu com ela ocupada:** espera ela ficar livre e aparece depois de `esperaLivreMs` (4 s) seguidos
-  de livre. Nunca no meio de sala, treino, prova, tela, diálogo ou transição. *(Em acabamento:)* terminou
-  sala, treino ou prova (`.tela-missao`/`.tela-prova` saiu da pilha) → sorteia um tempo novo do zero.
-- **Pergunta:** de qualquer matéria, só das salas (`materia.salas[].desafios`, nunca `Reino.provas`), só
-  dos tipos `config.surpresa.tipos` (escolha, vf, varias; sem `livre: true`), de preferência de salas que
-  ela já fez, sem repetir na sessão. Carrega o pacote de voz da sala (`Reino.Voz.carregarSala`) antes,
-  esperando no máximo 4 s; o 🔊 do card lê a pergunta. Card com `Reino.Desafios.render(d, { modo:
-  'surpresa', onMudar })` (hoje `modo` não tem efeito no `D.render`), correção com
-  `Reino.Desafios.pontuar(d, valor) === 1`. Depende também de `D.enunciado`, `D.linhaCerta` e de
-  `ctrl.pronto/valor/travado/marcarCerto/revelar/card`.
+- **Venceu com ela ocupada:** espera ela ficar livre e parada e aparece depois de `esperaLivreMs` (4 s)
+  seguidos. Nunca no meio de sala, treino, prova, tela, diálogo ou transição.
+- **Recomeço depois de estudar:** terminou sala, treino ou prova (`.tela-missao`/`.tela-prova` saiu da pilha,
+  evento `telas`) → sorteia um tempo novo do zero, para a surpresa não cair logo depois do estudo.
+- **Pergunta:** só das salas que ela **já fez** (`estado.salas[id].feita`); de qualquer matéria, só das
+  salas (`materia.salas[].desafios`, nunca `Reino.provas`), só dos tipos `config.surpresa.tipos` (escolha,
+  vf, varias; sem `livre: true`). **Nenhuma sala feita: nenhuma pergunta, e a surpresa não abre** (o tempo é
+  sorteado de novo; `forcar()` resolve `null`). Fila: primeiro as que ainda não vieram na sessão; depois as
+  que ela adiou com "Agora não" (a mais antiga primeiro); acabou tudo: recomeça, sem repetir a última.
+  `proximaPergunta()` e a abertura mostram a mesma (a sorteada fica guardada). Carrega o pacote de voz da
+  sala (`Reino.Voz.carregarSala`) antes, esperando no máximo 4 s; o 🔊 do card lê a pergunta. Card com
+  `Reino.Desafios.render(d, { modo: 'surpresa', onMudar })` (hoje `modo` não tem efeito no `D.render`),
+  correção com `Reino.Desafios.pontuar(d, valor) === 1`. Depende também de `D.enunciado`, `D.linhaCerta` e
+  de `ctrl.pronto/valor/travado/marcarCerto/revelar/card`.
 - **Painel:** tela do DOM (`UI.painel('surpresa', '❓ Pergunta surpresa')`), com o Claude, o card,
-  "Conferir" e "Agora não". Esc = "Agora não"; tocar fora do cartão **não** fecha. Uma tentativa só:
+  "Conferir" e "Agora não". Esc = "Agora não" (vale sempre); tocar fora do cartão **não** fecha.
+  **Travas de 600 ms** (`OK_TRAVA_MS`): "Agora não" e ✕ nascem travados (um toque no menu do celular no
+  instante em que o painel abre não fecha a pergunta sem ela ver), e o "Ok!" do resultado também (o toque
+  duplo no "Conferir" não fecha antes de ela ler). Uma tentativa só:
   - acertou: `P.ganharEstrelas(config.surpresa.estrelas)` + `P.salvar()`, confete pequeno, som e elogio de
-    `Claude.FALAS.acerto` *(em acabamento: sem os que citam "historiador")*;
+    `Claude.FALAS.acerto` sem os que citam "historiador" (servem para qualquer matéria);
   - errou: revela a certa no card (`ctrl.revelar`), mostra `D.linhaCerta(d)` e `d.explica`, sem perder nada;
-    *(em acabamento)* o enunciado se repete no topo do resultado;
-  - o "Ok!" do resultado fica travado 600 ms (o toque repetido não fecha sem ela ler);
-  - "Agora não" ou ✕: fecha sem nada.
-  Em todos os casos, sorteia o próximo tempo.
+  - nos dois, o enunciado se repete no topo do resultado e o painel rola até ele;
+  - **"Agora não", ✕ ou Esc: fecha sem nada e a pergunta volta** para o fim da fila (não conta como feita).
+  Em todos os casos, sorteia o próximo tempo. **Ao fechar, o foco vai para o mapa** (o painel não tem
+  `_focoAntes`), nunca de volta ao botão do HUD (o Espaço de andar abriria o Estábulo).
 - **Ajustes:** interruptor "❓ Perguntas surpresa" (`ajustes.surpresa`, já está em `UI.telaAjustes`).
   Desligado: nunca aparece e o relógio não conta.
 
@@ -296,13 +323,22 @@ Reino.Surpresa = {
   geral: não duplicar nas `extras`. É o único lugar com água.
 - **`UI.telaPetShop()`** (ui.js): saldo de estrelas; cada comida com ícone, nome, preço e quanto enche;
   a despensa; nota de que a água é de graça. **Nada é gasto sem ela confirmar:** tocar numa comida abre UM
-  `UI.escolher` ("Trocar N estrelas por <comida>?") com "Comprar e dar agora <ícone>" (`principal`,
-  `gasta`), "Comprar e guardar 🧺" (`gasta`) e "Agora não" (`seguro`: foco e Esc). De barriga cheia (fome
-  ≥ 99,5) o "dar agora" não aparece, o "guardar" vira o principal e uma nota avisa antes de gastar. Só
-  depois da escolha: `Cuidados.comprar(id)` → dar (`Cuidados.alimentar` + `nhac` + `comeu`) ou guardar
-  (fala `guardado`). Nunca comprar primeiro e perguntar depois (volta a compra sem querer que a guarda de
-  toque, §13, resolveu). Faltando estrelas (antes ou na compra): o número só na tela e a voz fala
-  `Cuidados.frases.faltamEstrelas`, como na Loja.
+  `UI.escolher` (classe `painel-compra`), e só depois da escolha algo acontece:
+  - **sem essa comida guardada:** "Trocar N estrelas por <comida>?" com "Comprar e dar agora <ícone>"
+    (`principal`, `gasta`), "Comprar e guardar 🧺" (`gasta`) e "Agora não" (`seguro`: foco e Esc). De
+    barriga cheia (fome ≥ 99,5) o "dar agora" não aparece, o "guardar" vira o principal e uma nota avisa
+    antes de gastar;
+  - **com essa comida na despensa e ele podendo comer:** "<comida>: tem N na despensa! 🧺" com "Dar uma da
+    despensa 🧺" (`principal`, `gasta`: gasta comida guardada, sem estrela), "Agora não" (`seguro`) e, se
+    der para comprar, "Comprar e guardar 🧺" (`gasta`), com a nota "Ou trocar N estrelas por mais uma."
+    (sem "Comprar e dar": 4 botões não cabiam em tela pequena).
+  Depois: dar da despensa (`Cuidados.alimentar` + `nhac` + `comeu`); ou `Cuidados.comprar(id)` → dar
+  (`alimentar` + `nhac` + `comeu`) ou guardar (fala `guardado`). Nunca comprar primeiro e perguntar depois
+  (volta a compra sem querer que a guarda de toque, §13, resolveu). Faltando estrelas e sem nada guardado
+  (antes ou na compra): o número só na tela e a voz fala `Cuidados.frases.faltamEstrelas`, como na Loja.
+- **Despedida da Dona Aveia:** `UI.visitaPetShop = { comprou, deu }` conta o que aconteceu na última visita
+  à tela (zera a cada abertura). Ao fechar a tela, ela só se despede (a fala `depois`, "Bom apetite!") se
+  ela comprou ou deu alguma comida; saiu sem nada, a Dona Aveia fica quieta (`npcs.js`).
 - **HUD:** duas barrinhas (fome e sede) no chip da montaria, com `data-uni`/`data-campo`, repintadas só
   pelo evento `cuidados` (`UI.pintarCuidados`); o `aria-label` do chip leva a fome e a sede.
 - **Balões dos cuidados com uma tela aberta** (`balaoNaTela`): `body.recado-cuidado` + `--recado-altura`
@@ -391,7 +427,7 @@ Reino.NPCs.telas(), Reino.NPCs.acoes()                        // o que foi regis
   do objeto (se houver; se a fala resolver `null`, a ação não roda). Vinda de NPC, `{ npc, quem }`, e só roda no
   "vamos"/"lista" do diálogo.
 - **Despedida:** tela registrada que fecha, ou ação que resolve `'tchau'` → o NPC fala a sua `depois`
-  (balão simples de 5 s).
+  (balão simples de 5 s). Exceção: a tela `petshop` sem compra nem comida dada (`UI.visitaPetShop`, §6).
 - Pontos de extensão do motor de interiores usados aqui (campo `toque` da biblioteca, balãozinho de status
   tocável): `CONTRATOS-INTERIORES.md` §4.2.1.
 
@@ -418,8 +454,17 @@ Além dos de hoje: `avancarJogo(ms)` (= `Cuidados.avancar`), `cuidados()` (= `Cu
 ## 11. Desempenho
 Média de até 16,7 ms por quadro com a CPU 4× mais lenta (`__reino.tempoQuadro()`), no mapa, nadando,
 na Pet Shop e no Planetário. Nada de canvas criado por quadro; estático pré-renderizado; animações leves.
-*(Em acabamento, sem commit:)* teto de 24 MB de áudio decodificado em `voz.js` (`V.memoria()` para os
-testes) e teto de 24 combinações de enfeites no cache de `PA.unicornio` (pixelart.js).
+- **Áudio decodificado** (`voz.js`): cache LRU de `AudioBuffer` com teto de 24 MB (`TETO_BUFFERS`); a fala
+  usada há mais tempo sai primeiro e, se voltar, é decodificada de novo do base64 (que continua guardado).
+  Duas filas: as falas ouvidas uma vez (curiosidades, perguntas) saem antes das que se repetem (acertos,
+  erros, avisos do Claude), que têm até 14 MB protegidos (`TETO_REPETIDAS`); a que acabou de chegar sempre
+  fica. `V.memoria()` → `{ falas, repetidas, bytes }` para os testes.
+- **Pacote de voz que falhou** (Wi-Fi caiu): é esquecido e pedido de novo sozinho em 3 s, 10 s e 30 s
+  (`ESPERAS`), também na próxima fala (no máximo a cada 5 s) e na hora no evento `online`. A fala que já
+  passou muda não toca atrasada.
+- **Sprites com enfeites** (`pixelart.js`): o cache guarda só as 24 combinações de enfeites usadas por
+  último (`TETO_COMBOS`; a sem enfeite fica sempre), contando `PA.unicornio` e a composição montada
+  (`PA.montada`), que sai do cache junto com a sua combinação. A que sai é redesenhada no mesmo quadro se voltar.
 
 ## 12. Divisão de arquivos
 Divisão histórica das fases; não indica quem é o dono dos arquivos hoje (o `ui.js`, por exemplo, foi
@@ -439,19 +484,34 @@ mexido por várias fases).
 | 3 | H1–H4 | pesquisa das curiosidades (rascunhos); H junta em js/interiores/observatorio-falas.js |
 | 2–3 | I | ícones novos num rascunho; o orquestrador junta em js/icones.js |
 
-## 13. Guarda de toque (ui.js; vale para toda tela que gasta estrela)
-*(Em acabamento: a guarda está sendo ajustada agora; abaixo, o que está no commit.)* Um botão que some no
-1º toque deixava o 2º toque cair no que aparece embaixo (já comprou comida e trocou enfeite sem ela querer).
+## 13. Guarda de toque (ui.js; vale para toda tela que gasta estrela ou comida)
+Um botão que some no 1º toque deixava o 2º toque cair no que aparece embaixo (já comprou comida, trocou
+enfeite e ligou interruptor sem ela querer). Tudo vale só para toque e mouse de verdade (`isTrusted`,
+`detail > 0`); o toque ignorado afunda o botão de leve, sem som.
 ```
-UI.segurarToques(ms = 400)   // cliques de dedo/mouse PERTO (40 px) do toque que abriu/fechou uma tela são
-                             // ignorados por um instante (o botão afunda de leve, sem som); um toque noutro
-                             // lugar vale na hora. Teclado (detail 0) e .click() de código passam sempre
+UI.segurarToques(ms = 800)   // abriu ou fechou uma tela por toque (até 600 ms antes): cliques PERTO (40 px) desse
+                             // toque ficam ignorados por 800 ms; cada toque ignorado no mesmo lugar estica a
+                             // guarda (+800 ms), até 2 s depois da troca de tela. Longe dele, vale na hora
+UI.toqueSegurado(x, y) → bool   // o toque em (x, y) está segurado agora? (e estica a guarda). main.js usa no
+                             // pointerdown do mapa: o 2º toque no "Ir" do Lugares não troca o destino
 UI.escolher(msg, [{ rotulo, valor, principal?, seguro?, gasta? }], classe?) → Promise(valor)
-                             // o `seguro` (ou o 1º) recebe o foco e é o que o Esc escolhe. `gasta`: se nascer
-                             // sob o dedo que abriu o diálogo, troca de lugar com o seguro; se nem assim sair
-                             // de baixo, o toque ali até 500 ms depois de abrir não gasta
+                             // o `seguro` (ou o 1º) recebe o foco e é o que o Esc escolhe. `gasta`: ver abaixo
 UI.confirmar(msg, sim, nao, gasta?)   // atalho de UI.escolher com dois botões ("não" é o seguro)
 ```
-- Cartões da Loja: toque perto do ponto da compra, até 1 s depois, é ignorado (`logoDepoisDaCompra`).
+- **Botões que gastam** (`gasta: true`; estrela ou comida guardada, como "Dar uma da despensa"): nascem
+  apagados (`.armando`, `aria-disabled`) e só acendem depois de 1,1 s (`ARMAR_MS`) **sem nenhum toque** na
+  tela; cada toque nesse tempo recomeça a espera. Uma barrinha enche durante a espera (com "reduzir
+  movimento", o texto "Espera um pouquinho…"). O "Agora não" vale na hora.
+- **Sob o dedo:** se o toque que abriu o diálogo (até 600 ms antes) cai a 40 px de um botão que gasta, esse
+  botão troca de lugar com o seguro; se ainda sobrar um embaixo do dedo, o diálogo se move até o "Agora não"
+  ficar sob o dedo; se nem assim, um toque a 40 px dali não gasta.
+- **Ajustes:** no 1º segundo depois de abrir, nenhum toque muda interruptor.
+- **Loja:** logo depois de uma compra, o cartão comprado (só ele) ignora toques perto do ponto da compra
+  por 1 s (`logoDepoisDaCompra`).
+- **Teclado sem trava:** Enter/Espaço (clique com `detail` 0) e `.click()` de código passam sempre, inclusive
+  num botão apagado (ela chega nele com um Tab de propósito); Enter/Espaço segurados (repetição automática)
+  não acionam de novo. Tela nova que não põe o foco em nada recebe o foco **nela mesma** (como um diálogo),
+  não no 1º botão: um Enter logo depois não age sozinho; o Tab leva ao 1º botão. (O `UI.escolher` foca o
+  seguro.)
 - Toda compra nova pergunta ANTES de gastar, com os botões de gastar marcados `gasta: true` e um botão
   `seguro`. Nunca gastar e perguntar depois.
