@@ -37,10 +37,14 @@ const NOME_LETRA = { CH: 'cê agá', LH: 'éle agá', NH: 'ene agá', SS: 'dois 
   H: 'agá', X: 'xis', S: 'ésse', Z: 'zê', R: 'érre', L: 'éle', U: 'u' };
 // palavras com hífen que não são sílabas separadas (compostas e pronomes: "lave-os", "bem-vinda")
 const COMPOSTAS = /^(pega-pega|bem-vind[oa]s?|caça-palavras|arco-íris|guarda-chuva|beija-flor)$/i;
+const FEM_SEM_A = /^(vez|colher|flor|mulher|luz|noite|tarde|parte|sílaba|árvore|nuvem|viagem)$/i;
+const MASC_EM_A = /^(dia|mapa|planeta|problema|sofá|clima|tema|cometa)$/i;
 const PRONOME = /-(se|os|as|o|a|lo|la|los|las|me|te|lhe|lhes|nos)$/i;
 function nomesDasLetras(t) {
   // "R$ 4,00" é dinheiro, não a letra
   t = t.replace(/(^|[^\p{L}])(CH|LH|NH|SS|RR|H|X|S|Z|R|L|U)(?=$|[^\p{L}$])/gu, (_, a, l) => a + NOME_LETRA[l]);
+  // "1 laranja" era lido "um laranja": antes de palavra terminada em A/Ã (feminina), o 1 vira "uma"
+  t = t.replace(/(^|[^\p{L}\d])1 (?=(\p{L}+))/gu, (m, a, pal) => ((/[aã]$/i.test(pal) && !MASC_EM_A.test(pal)) || FEM_SEM_A.test(pal) ? a + 'uma ' : m));
   // sílabas separadas ("al-gu-ma"): uma pausa em cada hífen, senão a voz lê a palavra inteira
   return t.replace(/\p{L}+(?:-\p{L}+)+/gu, (w) => (COMPOSTAS.test(w) || PRONOME.test(w) ? w : w.split('-').join('… ')));
 }

@@ -2304,7 +2304,8 @@
    "voz": "narradora",
    "texto": "Salada de frutas",
    "pacotes": [
-    "prova-portugues-3bim"
+    "prova-portugues-3bim",
+    "portugues-p1"
    ],
    "fala": "Salada de frutas"
   },
@@ -2324,7 +2325,7 @@
    "pacotes": [
     "prova-portugues-3bim"
    ],
-   "fala": "1 banana"
+   "fala": "uma banana"
   },
   {
    "chave": "1cbca310g",
@@ -2333,7 +2334,7 @@
    "pacotes": [
     "prova-portugues-3bim"
    ],
-   "fala": "1 maçã"
+   "fala": "uma maçã"
   },
   {
    "chave": "27421458p",
@@ -2351,7 +2352,7 @@
    "pacotes": [
     "prova-portugues-3bim"
    ],
-   "fala": "1 laranja"
+   "fala": "uma laranja"
   },
   {
    "chave": "1e62a472p",
@@ -2427,13 +2428,13 @@
    "fala": "Quais são os ingredientes usados para preparar essa receita?"
   },
   {
-   "chave": "cd3ea17ep",
+   "chave": "e827a53b1g",
    "voz": "narradora",
-   "texto": "Toque em todos.",
+   "texto": "Toque em TODOS os ingredientes da receita.",
    "pacotes": [
     "prova-portugues-3bim"
    ],
-   "fala": "Toque em todos."
+   "fala": "Toque em todos os ingredientes da receita."
   },
   {
    "chave": "17a49df8g",
@@ -2458,7 +2459,8 @@
    "voz": "narradora",
    "texto": "maçã",
    "pacotes": [
-    "prova-portugues-3bim"
+    "prova-portugues-3bim",
+    "portugues-p1"
    ],
    "fala": "maçã"
   },
@@ -2477,6 +2479,7 @@
    "texto": "abacaxi",
    "pacotes": [
     "prova-portugues-3bim",
+    "portugues-p1",
     "portugues-p2",
     "portugues-p3"
    ],
@@ -2505,7 +2508,8 @@
    "voz": "narradora",
    "texto": "uvas",
    "pacotes": [
-    "prova-portugues-3bim"
+    "prova-portugues-3bim",
+    "portugues-p1"
    ],
    "fala": "uvas"
   },
@@ -2553,6 +2557,15 @@
     "prova-portugues-3bim"
    ],
    "fala": "Complete as frases com as palavras do quadro:"
+  },
+  {
+   "chave": "4d87a32b1n",
+   "voz": "narradora",
+   "texto": "Toque na palavra certa para completar cada frase.",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "Toque na palavra certa para completar cada frase."
   },
   {
    "chave": "a283b031e",
@@ -2636,6 +2649,15 @@
    "fala": "Circule somente as palavras que começam com agá:"
   },
   {
+   "chave": "06a213e61a",
+   "voz": "narradora",
+   "texto": "Toque em cada palavra para circular.",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "Toque em cada palavra para circular."
+  },
+  {
    "chave": "edae745de",
    "voz": "narradora",
    "texto": "BOLA",
@@ -2690,6 +2712,15 @@
    "fala": "Complete as palavras usando xis ou cê agá:"
   },
   {
+   "chave": "7d6b6c9d1j",
+   "voz": "narradora",
+   "texto": "Toque em X ou CH para completar cada palavra.",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "Toque em xis ou cê agá para completar cada palavra."
+  },
+  {
    "chave": "afaeefeb1a",
    "voz": "narradora",
    "texto": "Complete as palavras usando S ou SS:",
@@ -2699,6 +2730,15 @@
    "fala": "Complete as palavras usando ésse ou dois ésses:"
   },
   {
+   "chave": "986ea2a11j",
+   "voz": "narradora",
+   "texto": "Toque em S ou SS para completar cada palavra.",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "Toque em ésse ou dois ésses para completar cada palavra."
+  },
+  {
    "chave": "d10a6b9716",
    "voz": "narradora",
    "texto": "Complete as palavras com X ou Z:",
@@ -2706,6 +2746,15 @@
     "prova-portugues-3bim"
    ],
    "fala": "Complete as palavras com xis ou zê:"
+  },
+  {
+   "chave": "f35d22e81i",
+   "voz": "narradora",
+   "texto": "Toque em X ou Z para completar cada palavra.",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "Toque em xis ou zê para completar cada palavra."
   },
   {
    "chave": "b8008f3a1t",
@@ -2751,6 +2800,15 @@
     "prova-portugues-3bim"
    ],
    "fala": "Complete as palavras usando érre ou dois érres:"
+  },
+  {
+   "chave": "1a467a6a1j",
+   "voz": "narradora",
+   "texto": "Toque em R ou RR para completar cada palavra.",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "Toque em érre ou dois érres para completar cada palavra."
   },
   {
    "chave": "3909f17932",
@@ -9597,13 +9655,13 @@
    "fala": "cê agá, éle agá e ene agá"
   },
   {
-   "chave": "bb587c075k",
+   "chave": "dab9d7765u",
    "voz": "narradora",
-   "texto": "CH, LH e NH são dígrafos: duas letras que fazem um som só. O CH tem o som de X, como em chocalho. O LH tem um som único, como em escolhem. O NH também tem um som só dele, como em amarelinha.",
+   "texto": "CH, LH e NH são dígrafos: duas letras que fazem um som só. O CH tem o som do X de xícara, como em chocalho. O LH tem um som único, como em escolhem. O NH também tem um som só dele, como em amarelinha.",
    "pacotes": [
     "portugues-livro"
    ],
-   "fala": "cê agá, éle agá e ene agá são dígrafos: duas letras que fazem um som só. O cê agá tem o som de xis, como em chocalho. O éle agá tem um som único, como em escolhem. O ene agá também tem um som só dele, como em amarelinha."
+   "fala": "cê agá, éle agá e ene agá são dígrafos: duas letras que fazem um som só. O cê agá tem o som do xis de xícara, como em chocalho. O éle agá tem um som único, como em escolhem. O ene agá também tem um som só dele, como em amarelinha."
   },
   {
    "chave": "13bc48322d",
@@ -9732,13 +9790,13 @@
    "fala": "Quem faz o som de ésse?"
   },
   {
-   "chave": "05700f737i",
+   "chave": "887c9555c1",
    "voz": "narradora",
-   "texto": "Várias letras podem ter o som de S! A letra S no começo da palavra: sapato, sol, sapo. O SS sempre fica no meio da palavra, entre duas vogais: passarinho, massa, carrossel. O Z no final da palavra: arroz, feliz, voz. E o X em algumas palavras: próximo, máximo.",
+   "texto": "Várias letras podem ter o som de S! O S no começo da palavra: sapato, sol, sapo. O S depois de uma vogal e antes de uma consoante: pasta, costa. O S no final da palavra: dados, alunos. O SS sempre fica no meio da palavra, entre duas vogais: passarinho, massa, carrossel. Cuidado: um S só, entre duas vogais, tem som de Z: casa, casaco. O Z no final da palavra: arroz, feliz, voz. E o X em algumas palavras: próximo, máximo.",
    "pacotes": [
     "portugues-livro"
    ],
-   "fala": "Várias letras podem ter o som de ésse! A letra ésse no começo da palavra: sapato, sol, sapo. O dois ésses sempre fica no meio da palavra, entre duas vogais: passarinho, massa, carrossel. O zê no final da palavra: arroz, feliz, voz. E o xis em algumas palavras: próximo, máximo."
+   "fala": "Várias letras podem ter o som de ésse! O ésse no começo da palavra: sapato, sol, sapo. O ésse depois de uma vogal e antes de uma consoante: pasta, costa. O ésse no final da palavra: dados, alunos. O dois ésses sempre fica no meio da palavra, entre duas vogais: passarinho, massa, carrossel. Cuidado: um ésse só, entre duas vogais, tem som de zê: casa, casaco. O zê no final da palavra: arroz, feliz, voz. E o xis em algumas palavras: próximo, máximo."
   },
   {
    "chave": "e6f650852n",
@@ -9759,13 +9817,13 @@
    "fala": "A ponta do iceberg"
   },
   {
-   "chave": "8e678ca47q",
+   "chave": "279f6d098p",
    "voz": "narradora",
-   "texto": "Quando alguém diz \"isso é só a ponta do iceberg\", quer dizer que tem muito mais do que parece! Só 30% do iceberg fica fora da água, em cima do mar. O resto, a parte maior, fica escondido debaixo da água. E cada iceberg é único, com tons de branco, cinza, azul e verde.",
+   "texto": "Quando alguém diz \"isso é só a ponta do iceberg\", quer dizer que tem muito mais do que parece! Só um pedaço pequeno do iceberg fica fora da água, em cima do mar (a apostila diz 30%). O resto, a parte maior, fica escondido debaixo da água. E cada iceberg é único, com tons de branco, cinza, azul e verde.",
    "pacotes": [
     "portugues-livro"
    ],
-   "fala": "Quando alguém diz \"isso é só a ponta do iceberg\", quer dizer que tem muito mais do que parece! Só 30% do iceberg fica fora da água, em cima do mar. O resto, a parte maior, fica escondido debaixo da água. E cada iceberg é único, com tons de branco, cinza, azul e verde."
+   "fala": "Quando alguém diz \"isso é só a ponta do iceberg\", quer dizer que tem muito mais do que parece! Só um pedaço pequeno do iceberg fica fora da água, em cima do mar (a apostila diz 30%). O resto, a parte maior, fica escondido debaixo da água. E cada iceberg é único, com tons de branco, cinza, azul e verde."
   },
   {
    "chave": "52a45ecf2n",
@@ -9840,13 +9898,13 @@
    "fala": "érre fraco, érre forte e dois érres"
   },
   {
-   "chave": "39e4227582",
+   "chave": "ca0fc3928e",
    "voz": "narradora",
-   "texto": "O R fraco aparece sozinho no meio da palavra, como em árvore e perigo. O R forte aparece no começo da palavra, como em rua e roda: aí ele é escrito com um R só. No meio da palavra, entre duas vogais, o som forte é escrito com RR: carro, terra, carrossel. O RR também é um dígrafo.",
+   "texto": "O R fraco aparece sozinho no meio da palavra, entre vogais, como em perigo e caro. O R forte aparece no começo da palavra, como em rua e roda: aí ele é escrito com um R só. No meio da palavra, entre duas vogais, o som forte é escrito com RR: carro, terra, carrossel. O RR também é um dígrafo.",
    "pacotes": [
     "portugues-livro"
    ],
-   "fala": "O érre fraco aparece sozinho no meio da palavra, como em árvore e perigo. O érre forte aparece no começo da palavra, como em rua e roda: aí ele é escrito com um érre só. No meio da palavra, entre duas vogais, o som forte é escrito com dois érres: carro, terra, carrossel. O dois érres também é um dígrafo."
+   "fala": "O érre fraco aparece sozinho no meio da palavra, entre vogais, como em perigo e caro. O érre forte aparece no começo da palavra, como em rua e roda: aí ele é escrito com um érre só. No meio da palavra, entre duas vogais, o som forte é escrito com dois érres: carro, terra, carrossel. O dois érres também é um dígrafo."
   },
   {
    "chave": "e4e677bd1c",
@@ -9876,13 +9934,13 @@
    "fala": "Hortelã começa com agá... mas o agá não faz som!"
   },
   {
-   "chave": "4104d7681g",
+   "chave": "aec0212b20",
    "voz": "unicornio",
-   "texto": "Psiu! O H é mudinho: hora, hotel, hibisco.",
+   "texto": "Vamos falar bem baixinho! O H é mudinho: hora, hotel, hibisco.",
    "pacotes": [
     "portugues-extra"
    ],
-   "fala": "Psiu! O agá é mudinho: hora, hotel, hibisco."
+   "fala": "Vamos falar bem baixinho! O agá é mudinho: hora, hotel, hibisco."
   },
   {
    "chave": "55ca9aa0x",
@@ -9903,13 +9961,13 @@
    "fala": "Xícara é com xis, chave é com cê agá!"
   },
   {
-   "chave": "f71c71431b",
+   "chave": "5b2a29be1s",
    "voz": "unicornio",
-   "texto": "Brrr! Vamos ver os pinguins saltando?",
+   "texto": "Que frio gostoso aqui! Vamos ver os pinguins saltando?",
    "pacotes": [
     "portugues-extra"
    ],
-   "fala": "Brrr! Vamos ver os pinguins saltando?"
+   "fala": "Que frio gostoso aqui! Vamos ver os pinguins saltando?"
   },
   {
    "chave": "3bdccec41i",
@@ -9930,13 +9988,13 @@
    "fala": "Roda, roda, carrossel! Carrossel tem dois érres!"
   },
   {
-   "chave": "691cdff51a",
+   "chave": "f0b4842e1i",
    "voz": "unicornio",
-   "texto": "Fa-rol: o meu L no fim tem som de U!",
+   "texto": "No meu nome, Farol, o L no fim tem som de U!",
    "pacotes": [
     "portugues-extra"
    ],
-   "fala": "Fa… rol: o meu éle no fim tem som de u!"
+   "fala": "No meu nome, Farol, o éle no fim tem som de u!"
   },
   {
    "chave": "6c6732721j",
@@ -9948,13 +10006,13 @@
    "fala": "Brilhei de orgulho: você é ouro nas palavras!"
   },
   {
-   "chave": "7e76cec61b",
+   "chave": "3b4df68c1m",
    "voz": "unicornio",
-   "texto": "Tudo certinho e caprichado! Perfeito!",
+   "texto": "Tudo certinho e caprichado! Ficou tudo perfeito!",
    "pacotes": [
     "portugues-extra"
    ],
-   "fala": "Tudo certinho e caprichado! Perfeito!"
+   "fala": "Tudo certinho e caprichado! Ficou tudo perfeito!"
   },
   {
    "chave": "c15f8af61e",
@@ -10056,13 +10114,13 @@
    "fala": "Ligue cada parte da receita à informação certa:"
   },
   {
-   "chave": "ba34ae352c",
+   "chave": "54b808e12a",
    "voz": "narradora",
-   "texto": "Quais frutas estão nos ingredientes da \"Salada de frutas\"? Toque em TODAS.",
+   "texto": "Olhe a lista da receita. Quais destas frutas estão nela? Toque em TODAS.",
    "pacotes": [
     "portugues-p1"
    ],
-   "fala": "Quais frutas estão nos ingredientes da \"Salada de frutas\"? Toque em todas."
+   "fala": "Olhe a lista da receita. Quais destas frutas estão nela? Toque em todas."
   },
   {
    "chave": "627f0d6ch",
@@ -10117,6 +10175,60 @@
     "portugues-p1"
    ],
    "fala": "Melancia"
+  },
+  {
+   "chave": "8507a936s",
+   "voz": "narradora",
+   "texto": "Frutas da receita:",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Frutas da receita:"
+  },
+  {
+   "chave": "7508bfa7e",
+   "voz": "narradora",
+   "texto": "pera",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "pera"
+  },
+  {
+   "chave": "7c318dedi",
+   "voz": "narradora",
+   "texto": "morangos",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "morangos"
+  },
+  {
+   "chave": "7e121366f",
+   "voz": "narradora",
+   "texto": "kiwis",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "kiwis"
+  },
+  {
+   "chave": "c32401d1h",
+   "voz": "narradora",
+   "texto": "bananas",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "bananas"
+  },
+  {
+   "chave": "ef518587j",
+   "voz": "narradora",
+   "texto": "carambola",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "carambola"
   },
   {
    "chave": "23672f8122",
@@ -10182,13 +10294,13 @@
    "fala": "Coloque os passos da salada de frutas na ordem certa:"
   },
   {
-   "chave": "9b0c38451n",
+   "chave": "6a560a5128",
    "voz": "narradora",
-   "texto": "Quantas vezes a salada de frutas vai à geladeira?",
+   "texto": "Na receita da salada de frutas, quantas vezes a gente usa a geladeira?",
    "pacotes": [
     "portugues-p1"
    ],
-   "fala": "Quantas vezes a salada de frutas vai à geladeira?"
+   "fala": "Na receita da salada de frutas, quantas vezes a gente usa a geladeira?"
   },
   {
    "chave": "ca91e981f",
@@ -10197,7 +10309,7 @@
    "pacotes": [
     "portugues-p1"
    ],
-   "fala": "1 vez"
+   "fala": "uma vez"
   },
   {
    "chave": "6094a96ch",
@@ -10227,13 +10339,13 @@
    "fala": "Na salada de frutas, a gente mistura tudo com força, de qualquer jeito."
   },
   {
-   "chave": "04ab7e911z",
+   "chave": "1a0450fa1t",
    "voz": "narradora",
-   "texto": "A receita usa um \"fouet\". O que é um fouet? Olhe o glossário!",
+   "texto": "Na receita aparece a palavra \"fouet\". O que é um fouet?",
    "pacotes": [
     "portugues-p1"
    ],
-   "fala": "A receita usa um \"fouet\". O que é um fouet? Olhe o glossário!"
+   "fala": "Na receita aparece a palavra \"fouet\". O que é um fouet?"
   },
   {
    "chave": "c4ffc3cet",
@@ -10371,13 +10483,13 @@
    "fala": "A receita é toda pintada de azul?"
   },
   {
-   "chave": "f83f237b1u",
+   "chave": "343aa282x",
    "voz": "narradora",
-   "texto": "Qual das alternativas é uma característica das receitas?",
+   "texto": "O que toda receita faz?",
    "pacotes": [
     "portugues-p1"
    ],
-   "fala": "Qual das alternativas é uma característica das receitas?"
+   "fala": "O que toda receita faz?"
   },
   {
    "chave": "d8ea5f8816",
@@ -10426,15 +10538,6 @@
    "fala": "folhas"
   },
   {
-   "chave": "7c318dedi",
-   "voz": "narradora",
-   "texto": "morangos",
-   "pacotes": [
-    "portugues-p1"
-   ],
-   "fala": "morangos"
-  },
-  {
    "chave": "d02fa7b6o",
    "voz": "narradora",
    "texto": "liquidificador",
@@ -10454,22 +10557,22 @@
    "fala": "água"
   },
   {
-   "chave": "8edce7481e",
+   "chave": "23f146b414",
    "voz": "narradora",
-   "texto": "Retire as ______ dos morangos e lave-os.",
+   "texto": "Retire as ______ dos morangos.",
    "pacotes": [
     "portugues-p1"
    ],
-   "fala": "Retire as … dos morangos e lave-os."
+   "fala": "Retire as … dos morangos."
   },
   {
-   "chave": "6db656271c",
+   "chave": "ddbec0ebt",
    "voz": "narradora",
-   "texto": "Retire as folhas dos ______ e lave-os.",
+   "texto": "Lave bem os ______.",
    "pacotes": [
     "portugues-p1"
    ],
-   "fala": "Retire as folhas dos … e lave-os."
+   "fala": "Lave bem os …"
   },
   {
    "chave": "02d8ba6c14",
@@ -10580,13 +10683,13 @@
    "fala": "O agá Silencioso"
   },
   {
-   "chave": "3fc096222f",
+   "chave": "77787c2c2y",
    "voz": "claude",
-   "texto": "Psiu! Nesta horta mora a letra H, que fica bem quietinha no começo das palavras!",
+   "texto": "Fale bem baixinho, psiu! Nesta horta mora a letra H, que fica bem quietinha no começo das palavras!",
    "pacotes": [
     "portugues-extra"
    ],
-   "fala": "Psiu! Nesta horta mora a letra agá, que fica bem quietinha no começo das palavras!"
+   "fala": "Fale bem baixinho, psiu! Nesta horta mora a letra agá, que fica bem quietinha no começo das palavras!"
   },
   {
    "chave": "dc447fce2e",
@@ -11104,13 +11207,13 @@
    "fala": "banana amassada"
   },
   {
-   "chave": "806fef4c23",
+   "chave": "62bd13bb1x",
    "voz": "narradora",
-   "texto": "A letra X pode ter três sons! Ligue cada som à palavra do quadro:",
+   "texto": "A letra X pode ter três sons! Ligue cada som a uma palavra:",
    "pacotes": [
     "portugues-p3"
    ],
-   "fala": "A letra xis pode ter três sons! Ligue cada som à palavra do quadro:"
+   "fala": "A letra xis pode ter três sons! Ligue cada som a uma palavra:"
   },
   {
    "chave": "d45810c31q",
@@ -11194,13 +11297,13 @@
    "fala": "Complete as palavras com xis ou cê agá:"
   },
   {
-   "chave": "fae395b33f",
+   "chave": "6715f0f91j",
    "voz": "narradora",
-   "texto": "No caça-palavras estavam escondidas: CHOCOLATE, XÍCARA, CHUCHU, CHÁ, AMEIXA e MEXER. Toque em TODAS as que têm X.",
+   "texto": "Toque em TODAS as palavras que têm a letra X.",
    "pacotes": [
     "portugues-p3"
    ],
-   "fala": "No caça-palavras estavam escondidas: chocolate, xícara, chuchu, chá, ameixa e mexer. Toque em todas as que têm xis."
+   "fala": "Toque em todas as palavras que têm a letra xis."
   },
   {
    "chave": "58cc4f96g",
@@ -11284,22 +11387,22 @@
    "fala": "Expedição Antártida"
   },
   {
-   "chave": "f0884d5527",
+   "chave": "7b6daaf52p",
    "voz": "claude",
-   "texto": "Agasalhe-se bem: vamos de barco até a Antártida ver pinguins e icebergs!",
+   "texto": "Vista um casaco bem quentinho, que vamos de barco até a Antártida ver pinguins e icebergs!",
    "pacotes": [
     "portugues-extra"
    ],
-   "fala": "Agasalhe-se bem: vamos de barco até a Antártida ver pinguins e icebergs!"
+   "fala": "Vista um casaco bem quentinho, que vamos de barco até a Antártida ver pinguins e icebergs!"
   },
   {
-   "chave": "0432bede19",
+   "chave": "cf283b4d2j",
    "voz": "narradora",
-   "texto": "Quem escreveu o relato \"Chegamos?\"?",
+   "texto": "O relato \"Chegamos?\" conta uma viagem até a Antártida. Quem escreveu esse relato?",
    "pacotes": [
     "portugues-p4"
    ],
-   "fala": "Quem escreveu o relato \"Chegamos?\"?"
+   "fala": "O relato \"Chegamos?\" conta uma viagem até a Antártida. Quem escreveu esse relato?"
   },
   {
    "chave": "b7d87fa0k",
@@ -11336,6 +11439,24 @@
     "portugues-p4"
    ],
    "fala": "Um escritor famoso"
+  },
+  {
+   "chave": "2d45d925s",
+   "voz": "narradora",
+   "texto": "Chegamos? (resumo)",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Chegamos? (resumo)"
+  },
+  {
+   "chave": "91d1874egc",
+   "voz": "narradora",
+   "texto": "Este relato foi escrito por três irmãs: Laura, Tamara e Marininha. Elas viajaram de barco com o pai até a Antártida. Primeiro, saíram da América do Sul e passaram pelo Cabo Horn. Depois, navegaram pelo Estreito de Drake, com muitas aves do mar por perto. Chegando perto da Antártida, a água foi ficando mais fria. Elas sentiram um vento gelado no rosto e viram pinguins saltando da água e focas. Lá fora, só dava para ficar de luvas e gorro! O combinado no barco era: quem visse o primeiro iceberg ganhava um prêmio. As irmãs sentiram que a viagem dos sonhos estava acontecendo.",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Este relato foi escrito por três irmãs: Laura, Tamara e Marininha. Elas viajaram de barco com o pai até a Antártida. Primeiro, saíram da América do Sul e passaram pelo Cabo Horn. Depois, navegaram pelo Estreito de Drake, com muitas aves do mar por perto. Chegando perto da Antártida, a água foi ficando mais fria. Elas sentiram um vento gelado no rosto e viram pinguins saltando da água e focas. Lá fora, só dava para ficar de luvas e gorro! O combinado no barco era: quem visse o primeiro iceberg ganhava um prêmio. As irmãs sentiram que a viagem dos sonhos estava acontecendo."
   },
   {
    "chave": "d8593cba20",
@@ -12112,13 +12233,13 @@
    "fala": "Complete cada frase com érre ou dois érres:"
   },
   {
-   "chave": "bb16932f4q",
+   "chave": "df9f8b5a2k",
    "voz": "narradora",
-   "texto": "Adivinha! Posso ter vários tamanhos e cores. Gosto de correr e brincar ao ar livre. Sou leal e, para escrever meu nome, você precisa do dígrafo RR. Quem sou eu?",
+   "texto": "Adivinha! Gosto de correr e brincar. Sou amigo fiel. Meu nome tem RR. Quem sou eu?",
    "pacotes": [
     "portugues-p5"
    ],
-   "fala": "Adivinha! Posso ter vários tamanhos e cores. Gosto de correr e brincar ao ar livre. Sou leal e, para escrever meu nome, você precisa do dígrafo dois érres. Quem sou eu?"
+   "fala": "Adivinha! Gosto de correr e brincar. Sou amigo fiel. Meu nome tem dois érres. Quem sou eu?"
   },
   {
    "chave": "28ff127ce",
@@ -12155,6 +12276,24 @@
     "portugues-p5"
    ],
    "fala": "Coloque os fatos do relato do piquenique na ordem em que aconteceram:"
+  },
+  {
+   "chave": "ab547210v",
+   "voz": "narradora",
+   "texto": "O piquenique (resumo)",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "O piquenique (resumo)"
+  },
+  {
+   "chave": "a46b94fe7w",
+   "voz": "narradora",
+   "texto": "Uma família resolveu fazer um piquenique no parque. Eles levaram muitas frutas e lanches. O pai foi dirigindo o carro até lá. Chegando, todos se sentaram numa sombra, perto do rio. Enquanto brincavam, viram um passarinho voando perto de uma rosa branca. Foi um dia incrível!",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "Uma família resolveu fazer um piquenique no parque. Eles levaram muitas frutas e lanches. O pai foi dirigindo o carro até lá. Chegando, todos se sentaram numa sombra, perto do rio. Enquanto brincavam, viram um passarinho voando perto de uma rosa branca. Foi um dia incrível!"
   },
   {
    "chave": "373bd65023",
