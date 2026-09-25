@@ -296,6 +296,9 @@ Reino.Surpresa = {
   - **"Agora não", ✕ ou Esc: fecha sem nada e a pergunta volta** para o fim da fila (não conta como feita).
   Em todos os casos, sorteia o próximo tempo. **Ao fechar, o foco vai para o mapa** (o painel não tem
   `_focoAntes`), nunca de volta ao botão do HUD (o Espaço de andar abriria o Estábulo).
+  **Fechou com o dedo** ("Ok!", "Agora não" ou ✕) e ela continua tocando perto dali (40 px, último toque
+  há menos de 800 ms): 1 s depois de fechar, `UI.segurarToques(1)` renova a guarda, que dura até 3 s no
+  total; o botão do menu que estava embaixo do painel não abre. Toque longe e teclado valem na hora.
 - **Ajustes:** interruptor "❓ Perguntas surpresa" (`ajustes.surpresa`, já está em `UI.telaAjustes`).
   Desligado: nunca aparece e o relógio não conta.
 
@@ -507,7 +510,8 @@ UI.confirmar(msg, sim, nao, gasta?)   // atalho de UI.escolher com dois botões 
   ficar sob o dedo; se nem assim, um toque a 40 px dali não gasta.
 - **Ajustes:** no 1º segundo depois de abrir, nenhum toque muda interruptor.
 - **Loja:** logo depois de uma compra, o cartão comprado (só ele) ignora toques perto do ponto da compra
-  por 1 s (`logoDepoisDaCompra`).
+  até 1,1 s (`ARMAR_MS`) sem nenhum toque na tela; cada toque nesse tempo recomeça a espera
+  (`logoDepoisDaCompra`).
 - **Teclado sem trava:** Enter/Espaço (clique com `detail` 0) e `.click()` de código passam sempre, inclusive
   num botão apagado (ela chega nele com um Tab de propósito); Enter/Espaço segurados (repetição automática)
   não acionam de novo. Tela nova que não põe o foco em nada recebe o foco **nela mesma** (como um diálogo),
