@@ -1467,11 +1467,12 @@ teste('S3-5: carimbo por campo estragado conta como ausente (vale o `acao`); nor
   const j = montar({ save: s, copia: { geracao: 1, cuidados: { inicial: { fome: 77, sede: 1, em: 5, acao: 200, acaoFome: 200, acaoSede: 50 } } } });
   const c = j.P.carregar().cuidados.inicial;
   assert.strictEqual(c.fome, 77, 'a comida mais nova da cópia vale (200 > acao 100 do estado)');
-  assert.strictEqual(c.sede, 50, 'a água do estado (90) é mais nova que a da cópia (50)');
-  assert.strictEqual(c.acaoFome, 200); assert.strictEqual(c.acaoSede, 90);
+  assert.strictEqual(c.sede, 50, 'a água do estado é mais nova que a da cópia (50)');
+  // (L2) o `acao` 100 do estado é mais novo que o único carimbo de campo válido (90): vale para a sede também
+  assert.strictEqual(c.acaoFome, 200); assert.strictEqual(c.acaoSede, 100);
   j.P.salvar(true);
   const cop = j.copiaGuardada().cuidados.inicial;
-  assert.strictEqual(cop.acaoFome, 200); assert.strictEqual(cop.acaoSede, 90);
+  assert.strictEqual(cop.acaoFome, 200); assert.strictEqual(cop.acaoSede, 100);
   // normalização: carimbo por campo estragado sai (o `acao` continua valendo para ele)
   const s2 = saveAtual(); s2.cuidados = { inicial: { fome: 50, sede: 50, em: 10, acao: 100, acaoFome: 'x', acaoSede: -3 } };
   const c2 = montar({ save: s2 }).P.carregar().cuidados.inicial;
@@ -1490,6 +1491,68 @@ teste('S3-5: a água dada aqui volta ao banco que só tem a comida do outro apar
   const n = d.enviados.length;
   d.chegou(copia(A.P.estado())); d.rodarTimers(); await esperar();
   assert.strictEqual(d.enviados.length, n, 'sem vaivém');
+});
+
+/* ---------- L2: aba da versão anterior desta branch (só conhece o `acao`) ---------- */
+// o que a versão anterior (D1) fazia ao dar comida ou água: mexe no campo e marca só o `acao` (e o `em`)
+function acaoVersaoAnterior(r, campo, valor, t) { r[campo] = valor; r.em = r.acao = Math.max(t, r.acao + 1); }
+
+teste('L2: água dada numa aba da versão anterior (só `acao`) vale na mescla, nos dois sentidos', () => {
+  const P = montar().P;
+  const base = { fome: 30, sede: 30, em: 1000, acao: 1000, acaoFome: 1000, acaoSede: 1000 };
+  const a = saveAtual(), b = saveAtual(); a.atualizado = 2000; b.atualizado = 3000;
+  a.cuidados = { 'h-cartinha': copia(base) }; b.cuidados = { 'h-cartinha': copia(base) };
+  acaoVersaoAnterior(b.cuidados['h-cartinha'], 'sede', 100, 5000);          // a aba velha deu água
+  a.cuidados['h-cartinha'].sede = 20; a.cuidados['h-cartinha'].em = 6000;  // aqui o relógio só gastou
+  [[a, b], [b, a]].forEach(([x, y]) => {
+    const c = P.mesclar(copia(x), copia(y)).cuidados['h-cartinha'];
+    assert.strictEqual(c.sede, 100, 'a água da aba velha vale');
+    assert.strictEqual(c.acaoSede, 5000); assert.strictEqual(c.acao, 5000);
+  });
+  // a aba velha deu comida e a nova deu água depois: as duas valem
+  const x = saveAtual(), y = saveAtual();
+  x.cuidados = { 'h-cartinha': copia(base) }; y.cuidados = { 'h-cartinha': copia(base) };
+  acaoVersaoAnterior(x.cuidados['h-cartinha'], 'fome', 60, 5000);
+  Object.assign(y.cuidados['h-cartinha'], { sede: 100, em: 7000, acao: 7000, acaoSede: 7000 });
+  [[x, y], [y, x]].forEach(([p, q]) => {
+    const c = P.mesclar(copia(p), copia(q)).cuidados['h-cartinha'];
+    assert.strictEqual(c.fome, 60); assert.strictEqual(c.sede, 100);
+    assert.strictEqual(c.acaoFome, 5000); assert.strictEqual(c.acaoSede, 7000); assert.strictEqual(c.acao, 7000);
+  });
+});
+
+teste('L2: a normalização sobe os carimbos de campo até o `acao` mais novo (e não mexe no registro de hoje)', () => {
+  const s = saveAtual();
+  s.cuidados = {
+    velha: { fome: 30, sede: 100, em: 5000, acao: 5000, acaoFome: 1000, acaoSede: 1000 },   // a aba velha agiu depois
+    hoje: { fome: 60, sede: 100, em: 7000, acao: 7000, acaoFome: 5000, acaoSede: 7000 },    // registro da versão atual
+    soAcao: { fome: 50, sede: 50, em: 10, acao: 10 },                                        // versão anterior: sem campos
+  };
+  const e = montar({ save: s }).P.carregar();
+  assert.strictEqual(e.cuidados.velha.acaoFome, 5000); assert.strictEqual(e.cuidados.velha.acaoSede, 5000);
+  assert.deepStrictEqual(copia(e.cuidados.hoje), s.cuidados.hoje);
+  assert.ok(!('acaoFome' in e.cuidados.soAcao), 'não inventa campos');
+  // e comer aqui depois não esconde a água da aba velha (o carimbo da sede já subiu)
+  const j = montar({ save: s }); j.P.carregar();
+  j.P.estado().unis.velha = { em: 1, xp: 0, chocado: true };
+  j.relogio.agora = 9000; j.P.estado().despensa.maca = { compradas: 1, usadas: 0 };
+  assert.ok(j.C.alimentar('velha', 'maca').ok);
+  const r = j.P.estado().cuidados.velha;
+  assert.strictEqual(r.acaoSede, 5000); assert.strictEqual(r.acaoFome, r.acao); assert.ok(r.acaoFome >= 9000);
+});
+
+teste('L2: o S3-5 continua (comida em B e água em A valem as duas) com o carimbo efetivo', () => {
+  const { A, B } = aparelhosS35();
+  B.relogio.agora += 1000; assert.ok(B.C.alimentar('h-cartinha', 'maca').ok);
+  A.relogio.agora += 5000; assert.ok(A.C.beber('h-cartinha').ok);
+  [[A, B], [B, A]].forEach(([x, y]) => {
+    const c = x.P.mesclar(copia(x.P.estado()), copia(y.P.estado())).cuidados['h-cartinha'];
+    assert.strictEqual(c.fome, 60); assert.strictEqual(c.sede, 100);
+  });
+  // e depois de carregar (normalização) também
+  const junto = A.P.mesclar(copia(A.P.estado()), copia(B.P.estado()));
+  const C3 = montar({ save: junto }); const c = C3.P.carregar().cuidados['h-cartinha'];
+  assert.strictEqual(c.fome, 60); assert.strictEqual(c.sede, 100);
 });
 
 (async () => {

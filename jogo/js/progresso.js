@@ -169,6 +169,10 @@
       r.sede = Math.min(100, Math.max(0, numeroOu(y.sede, 100)));
       r.em = Math.max(0, numeroOu(y.em, 0));
       ['acaoFome', 'acaoSede'].forEach(function (c) { if (c in r && !numero(r[c])) delete r[c]; });
+      // `acao` mais novo que os carimbos de campo (aba da versão anterior comeu ou bebeu): os campos sobem até ele
+      // (os dois calculados antes de mudar: subir um primeiro esconderia o `acao` do outro)
+      var efetivos = CAMPOS_CUIDADO.map(function (c) { return carimbo(r, c[1]); });
+      CAMPOS_CUIDADO.forEach(function (c, i) { if (numero(r[c[1]]) && numero(r.acao)) r[c[1]] = efetivos[i]; });
       cuidados[k] = r;
     });
     if (objeto(e.despensa)) Object.keys(e.despensa).forEach(function (k) {
@@ -253,7 +257,13 @@
      carimbo maior (água dada num aparelho não apaga a comida dada no outro); empate = a mesma ação vista pelos
      dois e, como o gasto só desce, vale o menor valor. Um lado sem carimbo nenhum: o registro do `em` maior. */
   var CAMPOS_CUIDADO = [['fome', 'acaoFome'], ['sede', 'acaoSede']];
-  function carimbo(r, chave) { return numero(r[chave]) ? r[chave] : numero(r.acao) ? r.acao : null; }
+  // carimbo efetivo de um campo: o do campo; mas um `acao` mais novo que os dois carimbos de campo (ação feita
+  // numa aba da versão anterior desta branch, que só conhece o `acao`) vale para os dois campos
+  function carimbo(r, chave) {
+    var campos = CAMPOS_CUIDADO.map(function (c) { return r[c[1]]; }).filter(numero);
+    if (numero(r.acao) && (!numero(r[chave]) || r.acao > Math.max.apply(null, campos))) return r.acao;
+    return numero(r[chave]) ? r[chave] : null;
+  }
   function juntarCuidados(base, outro) {
     if (!objeto(outro)) return base;
     Object.keys(outro).forEach(function (k) {
@@ -264,12 +274,13 @@
       // carimbo estragado conta como ausente (regra do `em`); `em` estragado conta como 0
       var comCarimbo = CAMPOS_CUIDADO.every(function (c) { return carimbo(x, c[1]) !== null && carimbo(y, c[1]) !== null; });
       if (!comCarimbo) { if (numeroOu(y.em, 0) > numeroOu(x.em, 0)) base[k] = U.copia(y); return; }
-      CAMPOS_CUIDADO.forEach(function (c) {
-        var campo = c[0], chave = c[1], cx = carimbo(x, chave), cy = carimbo(y, chave);
-        if (cy > cx) {
-          if (numero(y[campo])) x[campo] = y[campo];
-          if (numero(x[chave]) || numero(y[chave])) x[chave] = cy;
-        } else if (cy === cx && numero(y[campo]) && !(y[campo] >= x[campo])) x[campo] = y[campo];
+      // os carimbos efetivos dos dois campos, calculados antes de mudar qualquer um
+      var cxs = CAMPOS_CUIDADO.map(function (c) { return carimbo(x, c[1]); }), cys = CAMPOS_CUIDADO.map(function (c) { return carimbo(y, c[1]); });
+      CAMPOS_CUIDADO.forEach(function (c, i) {
+        var campo = c[0], chave = c[1], cx = cxs[i], cy = cys[i];
+        if (cy > cx && numero(y[campo])) x[campo] = y[campo];
+        else if (cy === cx && numero(y[campo]) && !(y[campo] >= x[campo])) x[campo] = y[campo];
+        if (numero(x[chave]) || numero(y[chave])) x[chave] = Math.max(cx, cy);
       });
       if (numero(x.acao) || numero(y.acao)) x.acao = max(numeroOu(x.acao, 0), numeroOu(y.acao, 0));
       x.em = max(numeroOu(x.em, 0), numeroOu(y.em, 0));
