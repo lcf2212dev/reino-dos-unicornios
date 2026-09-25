@@ -37,6 +37,9 @@
     if (!m) return;
     for (var j = 0; j < 5; j++) for (var i = 0; i < 3; i++) if (m[j][i] === '#') ret(ctx, x + i, y + j, 1, 1, cor);
   }
+  // "a" minúsculo de fôrma em 4×5 (o mesmo do livro do telhado): tampinha, barriga redonda e a perninha
+  var A_MINUSCULO = ['.##.', '...#', '.###', '#..#', '.###'];
+  function aMinusculo(ctx, x, y, cor) { D.matriz(ctx, x, y, A_MINUSCULO, { '#': cor }); }
   function palavra(ctx, txt, x, y, cor) { for (var i = 0; i < txt.length; i++) letra(ctx, txt[i], x + i * 4, y, cor); }
 
   /* ---------- miudezas da casa ---------- */
@@ -136,7 +139,7 @@
       var c = v(o, 'cor', VERM);
       contornoRet(ctx, px + 2, py + 7, 12, 18, C.creme);
       ret(ctx, px + 3, py + 8, 10, 3, c);
-      letra(ctx, 'A', px + 4, py + 13, c); letra(ctx, 'a', px + 8, py + 13, VERDE);
+      letra(ctx, 'A', px + 4, py + 13, c); aMinusculo(ctx, px + 8, py + 13, VERDE);
       ret(ctx, px + 4, py + 20, 8, 1, '#c8b8d8'); ret(ctx, px + 4, py + 22, 6, 1, '#c8b8d8');
       ret(ctx, px + 7, py + 5, 2, 2, K);
     } });
@@ -155,7 +158,7 @@
       // "Aa" e uma palavrinha escrita a lápis
       // (a poltrona fica na frente do meio do tapete: o "Aa" vai à direita dela)
       ret(ctx, x + 11, y + 5, 3, 1, '#6a5a8a'); ret(ctx, x + 11, y + 8, 2, 1, '#6a5a8a');
-      letra(ctx, 'A', x + 33, y + 4, VERM); letra(ctx, 'a', x + 37, y + 4, VERDE2);
+      letra(ctx, 'A', x + 33, y + 4, VERM); aMinusculo(ctx, x + 37, y + 4, VERDE2);
       ret(ctx, x + 42, y + 7, 7, 1, '#6a5a8a'); ret(ctx, x + 50, y + 7, 5, 1, '#6a5a8a');
       ret(ctx, x + 33, y + 10, 9, 1, '#6a5a8a'); ret(ctx, x + 43, y + 10, 3, 1, '#6a5a8a');
       // lápis largado no canto
@@ -514,38 +517,40 @@
       // pedrinha e giz
       ret(ctx, cx + 9, base - 6, 3, 2, '#8a8aa0'); ret(ctx, cx - 14, base - 4, 4, 2, giz);
     } });
-  // chocalho deitado em diagonal numa almofadinha de exposição: cabeça oval listrada e cabo comprido de madeira
+  // chocalho em pé no seu suporte: cabeça redonda listrada, anel dourado e cabo curto de madeira
   I.objeto('portugues-chocalho', { w: 1, h: 1, topo: 14, solido: true, alto: true,
     desenhar: function (ctx, px, py) {
-      var cx = px + 8;
-      // almofadinha roxa com franja dourada
-      elipse(ctx, cx - 1, py + 9, 8, 5, K); elipse(ctx, cx - 1, py + 9, 7, 4, '#7c5cff'); elipse(ctx, cx - 2, py + 8, 5, 2, '#a88cff');
-      for (var f = cx - 7; f <= cx + 5; f += 2) ret(ctx, f, py + 14, 1, 1, C.ouro);
-      ret(ctx, cx - 9, py + 9, 1, 1, C.ouro); ret(ctx, cx + 7, py + 9, 1, 1, C.ouro);
-      // cabo de madeira, do canto de baixo à esquerda até a cabeça (deitado por cima da almofadinha)
-      var hx = cx + 4, hy = py - 6;
-      ret(ctx, cx - 6, py + 11, 9, 1, 'rgba(58,36,70,0.25)');
-      for (var t = 3; t <= 13; t++) ret(ctx, hx - t - 1, hy + t - 1, 4, 4, K);
-      for (var t2 = 3; t2 <= 13; t2++) { ret(ctx, hx - t2, hy + t2, 2, 2, t2 % 4 === 0 ? C.madeira2 : C.madeira); ret(ctx, hx - t2, hy + t2, 1, 1, C.madeiraClara); }
-      circulo(ctx, hx - 13, hy + 14, 2, K); circulo(ctx, hx - 13, hy + 14, 1, VERM);
-      // cabeça oval (inclinada) com faixas coloridas
-      for (var dy = -9; dy <= 9; dy++) for (var dx = -9; dx <= 9; dx++) {
-        var ao = (dx - dy) / 1.4142, pe = (dx + dy) / 1.4142;
-        var dentro = (ao * ao) / 30 + (pe * pe) / 14 <= 1, borda = (ao * ao) / 42 + (pe * pe) / 21 <= 1;
-        if (!borda) continue;
+      var cx = px + 8, cy = py - 8;
+      // suporte: banquinho roxo acolchoado com a franja dourada e a estrelinha na frente
+      ret(ctx, cx - 6, py + 14, 13, 1, 'rgba(58,36,70,0.25)');
+      ret(ctx, cx - 6, py + 7, 13, 8, K); ret(ctx, cx - 5, py + 8, 11, 6, '#7c5cff');
+      ret(ctx, cx - 5, py + 8, 11, 1, '#a88cff'); ret(ctx, cx - 5, py + 8, 1, 6, '#a88cff'); ret(ctx, cx + 4, py + 9, 1, 5, '#5a3fd0');
+      for (var f = cx - 5; f <= cx + 5; f += 2) ret(ctx, f, py + 13, 1, 1, C.ouro);
+      ret(ctx, cx, py + 9, 1, 3, C.ouro); ret(ctx, cx - 1, py + 10, 3, 1, C.ouro);
+      // cabo curto de madeira, encaixado no suporte
+      ret(ctx, cx - 2, py - 2, 5, 10, K); ret(ctx, cx - 1, py - 1, 3, 8, C.madeira); ret(ctx, cx - 1, py - 1, 1, 8, C.madeiraClara);
+      ret(ctx, cx + 1, py + 2, 1, 1, C.madeira2); ret(ctx, cx + 1, py + 5, 1, 1, C.madeira2);
+      ret(ctx, cx - 3, py + 7, 7, 1, K);
+      // cabeça redonda com as listras (laranja, vermelha, amarela e azul), sombra embaixo à direita
+      for (var dy = -7; dy <= 7; dy++) for (var dx = -7; dx <= 7; dx++) {
+        var d = Math.sqrt(dx * dx + dy * dy);
+        if (d > 6.6) continue;
         var cor = K;
-        if (dentro) {
-          cor = '#ff9d2e';
-          if (ao > -2.5 && ao < -0.8) cor = VERM; else if (ao > 0.8 && ao < 2.5) cor = '#ffe066'; else if (ao > 3.8) cor = '#5fb4ff';
+        if (d <= 5.6) {
+          var faixa = dy + dx * dx * 0.06;
+          cor = faixa < -3 ? '#ff9d2e' : faixa < -1.2 ? VERM : faixa < 0.8 ? '#ffe066' : faixa < 2.8 ? '#5fb4ff' : '#ff9d2e';
+          if (dx + dy > 4.5 && d > 3.5) cor = escurecer(cor, 0.2);
         }
-        ret(ctx, hx + dx, hy + dy, 1, 1, cor);
+        ret(ctx, cx + dx, cy + dy, 1, 1, cor);
       }
-      ret(ctx, hx - 2, hy - 2, 2, 1, C.branco); ret(ctx, hx - 2, hy - 1, 1, 1, C.branco);
+      ret(ctx, cx - 3, cy - 4, 2, 1, C.branco); ret(ctx, cx - 4, cy - 3, 1, 2, C.branco);
+      // anel dourado entre a cabeça e o cabo
+      ret(ctx, cx - 3, py - 3, 7, 2, K); ret(ctx, cx - 2, py - 3, 5, 1, C.ouro);
     },
     anim: function (ctx, px, py, t) {
-      // chique-chique: risquinhos de som em volta da cabeça
-      var f = Math.floor(t / 180) % 6, hx = px + 12, hy = py - 6;
-      if (f < 2) { ret(ctx, hx + 5, hy - 6 - f, 2, 1, K); ret(ctx, hx + 7, hy - 2, 1, 2, K); ret(ctx, hx + 1, hy - 8 + f, 1, 1, K); }
+      // chique-chique: risquinhos de som dos dois lados da cabeça
+      var f = Math.floor(t / 180) % 6, cx = px + 8, cy = py - 8;
+      if (f < 2) { ret(ctx, cx + 8, cy - 4 - f, 1, 2, K); ret(ctx, cx - 9, cy - 4 - f, 1, 2, K); ret(ctx, cx + 6, cy - 8 + f, 2, 1, K); ret(ctx, cx - 7, cy - 8 + f, 2, 1, K); }
     } });
   I.objeto('portugues-lona', { w: 2, h: 2, parede: true, solido: false,
     desenhar: function (ctx, px, py, o) {
@@ -570,18 +575,25 @@
       [[-5, 2], [-1, 6], [3, 3], [5, 9], [-4, 10], [1, 12]].forEach(function (p) { ret(ctx, cx + p[0], py + p[1], 2, 1, '#8fe08a'); });
       ret(ctx, cx - 6, py + 8, 2, 2, '#ff9cc6'); ret(ctx, cx + 5, py + 4, 2, 2, C.branco);
       ret(ctx, cx - 7, py + 13, 15, 2, K);
-      // ninho de palha clarinha
-      elipse(ctx, cx, py - 1, 8, 4, K); elipse(ctx, cx, py - 1, 7, 3, '#e8c070');
-      ret(ctx, cx - 6, py - 3, 13, 1, '#6b4428');   // a boca do ninho (sombra por dentro)
-      ovoPintado(ctx, cx - 3, py - 5); ovoPintado(ctx, cx + 3, py - 5); ovoPintado(ctx, cx, py - 6);
-      elipse(ctx, cx, py - 2, 7, 1, K); ret(ctx, cx - 6, py - 2, 13, 1, '#f5d88a');
-      for (var i = -6; i <= 5; i += 2) { ret(ctx, cx + i, py, 2, 1, '#c8923a'); ret(ctx, cx + i + 1, py + 1, 1, 1, '#fff0b0'); }
-      ret(ctx, cx - 8, py - 2, 2, 1, '#c8923a'); ret(ctx, cx + 7, py - 1, 2, 1, '#c8923a'); ret(ctx, cx + 6, py - 3, 1, 1, '#f5d88a');
+      // ninho de palha marrom: a tigela, o fundo escuro por dentro e os três ovinhos sentados nele
+      var PALHA = '#b07838', PALHA2 = '#7a4a22', PALHA3 = '#e0a858';
+      elipse(ctx, cx, py, 9, 4, K); elipse(ctx, cx, py, 8, 3, PALHA);
+      elipse(ctx, cx, py - 2, 7, 1, '#4a2c18');
+      ovoPintado(ctx, cx - 3, py - 11, '#ffd0e2', '#e07aa6');  // rosa clarinho (no meio, mais alto: fica atrás)
+      ovoPintado(ctx, cx - 8, py - 9, '#fff2d0', '#c89a5a');   // creme
+      ovoPintado(ctx, cx + 2, py - 9, '#cdeeff', '#5f9fd0');   // azul clarinho
+      // a beirada da frente do ninho, trançada, por cima da base dos ovos
+      ret(ctx, cx - 8, py - 2, 17, 4, K); ret(ctx, cx - 9, py - 1, 19, 2, K);
+      ret(ctx, cx - 7, py - 1, 15, 2, PALHA); ret(ctx, cx - 8, py, 17, 1, PALHA);
+      for (var i = -7; i <= 7; i += 3) { ret(ctx, cx + i, py - 1, 2, 1, PALHA3); ret(ctx, cx + i + 1, py, 2, 1, PALHA2); }
+      for (var k = -6; k <= 6; k += 4) ret(ctx, cx + k, py + 2, 2, 1, PALHA2);
+      // fiapos de palha escapando
+      ret(ctx, cx - 10, py - 2, 1, 1, PALHA2); ret(ctx, cx - 9, py - 3, 1, 1, PALHA);
+      ret(ctx, cx + 9, py - 3, 1, 1, PALHA2); ret(ctx, cx + 8, py - 3, 1, 1, PALHA); ret(ctx, cx + 7, py + 3, 2, 1, PALHA2);
     } });
-  function ovoPintado(ctx, cx, cy) {
-    elipse(ctx, cx, cy, 2, 3, K); elipse(ctx, cx, cy, 1, 2, '#cfeeff');
-    ret(ctx, cx - 1, cy - 1, 1, 1, C.branco); ret(ctx, cx + 1, cy - 1, 1, 1, '#3f5f96'); ret(ctx, cx, cy + 1, 1, 1, '#3f5f96'); ret(ctx, cx - 1, cy + 2, 1, 1, '#7a4a8a');
-  }
+  // ovinho oval (6×8; a base fica atrás da beirada do ninho) com pintinhas
+  var OVO = ['..kk..', '.kwck.', 'kwccck', 'kccpck', 'kpccck', 'kcccpk', 'kcccck', '.kkkk.'];
+  function ovoPintado(ctx, x, y, cor, pinta) { D.matriz(ctx, x, y, OVO, { k: K, c: cor, w: C.branco, p: pinta }); }
   I.objeto('portugues-pipoca', { w: 1, h: 1, topo: 18, solido: true, alto: true,
     desenhar: function (ctx, px, py) {
       var cx = px + 8;
@@ -1054,10 +1066,11 @@
       { tipo: 'tapete-redondo', x: 1, y: 8, w: 1, h: 1 }, { tipo: 'globo', x: 2, y: 8 },
       { tipo: 'pilha-livros', x: 0, y: 9 }, { tipo: 'almofada', x: 1, y: 9, var: { cor: '#9fe0a0' } },
       { tipo: 'banco', x: 0, y: 10 }, { tipo: 'vaso-planta', x: 2, y: 10 }, { tipo: 'luminaria-pe', x: 3, y: 10 },
-      inter('blocos', 'Blocos de letras', { tipo: 'portugues-blocos', x: 7, y: 9 }),
+      // os blocos ficam um tile abaixo dos pés da Dona Palavrinha (ela fica em 7,8)
+      inter('blocos', 'Blocos de letras', { tipo: 'portugues-blocos', x: 7, y: 10 }),
       { tipo: 'mesa', x: 8, y: 9, var: { toalha: '#ffd1e6', itens: ['livro', 'xicara'] } },
       { tipo: 'cabideiro', x: 10, y: 8 }, { tipo: 'relogio-pe', x: 10, y: 10 }, { tipo: 'caixote', x: 10, y: 9, var: { item: 'estrela' } },
-      { tipo: 'cesto', x: 7, y: 10 }, { tipo: 'banco', x: 8, y: 10 }, { tipo: 'almofada', x: 7, y: 8, var: { cor: '#ff9cc6' } },
+      { tipo: 'banco', x: 8, y: 10 }, { tipo: 'almofada', x: 7, y: 8, var: { cor: '#ff9cc6' } },
     ]),
     /* ---------- SALA 1: Cozinha das Receitas (azulejo de morango) ---------- */
     sala(1, 13, [
@@ -1071,7 +1084,8 @@
       inter('liquidificador', 'Liquidificador', { tipo: 'portugues-liquidificador', x: 6, y: 3 }),
       { tipo: 'portugues-cesta-frutas', x: 5, y: 2 }, { tipo: 'flores', x: 6, y: 2, var: { vaso: '#ff4f6a' } }, { tipo: 'vaso-planta', x: 7, y: 2 },
       inter('abacaxi', 'Abacaxi', { tipo: 'portugues-abacaxi', x: 9, y: 3 }),
-      { tipo: 'barril', x: 8, y: 2 }, { tipo: 'caixote', x: 10, y: 2, var: { item: 'estrela' } }, { tipo: 'cesto', x: 9, y: 2 },
+      // o caixote embaixo do quadro do raro fica sem nada em cima (senão invade a moldura)
+      { tipo: 'barril', x: 8, y: 2 }, { tipo: 'caixote', x: 10, y: 2 }, { tipo: 'cesto', x: 9, y: 2 },
       { tipo: 'tapete-listrado', x: 0, y: 4, w: 3, h: 1, var: { cores: ['#ff4f6a', '#fff4ec', '#39a860', '#fff4ec'] } },
       { tipo: 'tapete', x: 1, y: 6, w: 3, h: 2, var: { cor: '#ffd1e6', borda: '#ff4f6a' } },
       inter('salada', 'Salada de frutas', { tipo: 'portugues-salada', x: 1, y: 8 }),
@@ -1091,10 +1105,11 @@
       { tipo: 'janela', x: 4, y: 0 }, { tipo: 'portugues-cartaz-h', x: 5, y: 0, var: { figura: 'helicoptero' } },
       { tipo: 'bandeirinhas', x: 6, y: 0 }, { tipo: 'janela', x: 8, y: 0 }, { tipo: 'relogio-parede', x: 9, y: 0 }, { tipo: 'janela', x: 10, y: 0 },
       { tipo: 'vaso-planta', x: 6, y: 2 },
-      inter('placa-horta', 'Placa da horta', { tipo: 'portugues-placa-horta', x: 1, y: 3 }),
+      // a placa e o vaso de hortelã ficam uma fileira abaixo dos canteiros (sem cobrir a ponta deles)
+      inter('placa-horta', 'Placa da horta', { tipo: 'portugues-placa-horta', x: 1, y: 4 }),
       { tipo: 'portugues-canteiro', x: 2, y: 2, var: { planta: 'alface' } },
       { tipo: 'portugues-canteiro', x: 4, y: 2, var: { planta: 'tomate' } },
-      inter('hortela', 'Vaso de hortelã', { tipo: 'portugues-hortela', x: 7, y: 3 }),
+      inter('hortela', 'Vaso de hortelã', { tipo: 'portugues-hortela', x: 7, y: 4 }),
       { tipo: 'portugues-canteiro', x: 7, y: 2, var: { planta: 'hortela' } },
       { tipo: 'planta-alta', x: 10, y: 2 }, { tipo: 'portugues-regador', x: 1, y: 2 },
       { tipo: 'portugues-canteiro', x: 3, y: 4, var: { planta: 'cenoura', chao: true } },
@@ -1106,7 +1121,7 @@
       { tipo: 'portugues-espantalho', x: 3, y: 8 },
       { tipo: 'vaso-grande', x: 0, y: 10 }, { tipo: 'banco', x: 1, y: 10 }, { tipo: 'balde', x: 3, y: 10 },
       { tipo: 'cesto', x: 4, y: 10 }, { tipo: 'flores', x: 6, y: 10 }, { tipo: 'caixote', x: 7, y: 10, var: { item: 'moedas' } },
-      { tipo: 'portugues-canteiro', x: 8, y: 9, var: { planta: 'alface', chao: true } }, { tipo: 'portugues-canteiro', x: 8, y: 10, w: 2, var: { planta: 'hortela', chao: true } },
+      { tipo: 'portugues-canteiro', x: 8, y: 10, var: { planta: 'alface', chao: true } },   // com uma fileira livre entre ele e a leira
       { tipo: 'vaso-planta', x: 10, y: 10 }, { tipo: 'portugues-regador', x: 5, y: 6 },
       { tipo: 'portugues-carrinho', x: 0, y: 8 },
     ]),
@@ -1144,7 +1159,7 @@
       // na frente do cais só coisas baixas; o albatroz fica num tile livre, com chão atrás dele
       { tipo: 'portugues-cordas', x: 0, y: 4 }, { tipo: 'caixote', x: 1, y: 4, var: { item: 'concha' } },
       { tipo: 'portugues-albatroz', x: 9, y: 4 }, { tipo: 'portugues-leme', x: 7, y: 5 },
-      { tipo: 'barril', x: 8, y: 2 }, { tipo: 'portugues-cordas', x: 9, y: 2 }, { tipo: 'caixote', x: 10, y: 2, var: { item: 'moedas' } },
+      { tipo: 'barril', x: 8, y: 2 }, { tipo: 'portugues-cordas', x: 9, y: 2 }, { tipo: 'caixote', x: 10, y: 2 },   // sem nada em cima: fica embaixo do quadro do raro
       inter('pinguins', 'Pinguins', { tipo: 'portugues-pinguins', x: 0, y: 5 }),
       { tipo: 'portugues-gelo', x: 0, y: 8, w: 3, h: 2 },
       inter('focas', 'Focas', { tipo: 'portugues-focas', x: 8, y: 5 }),
@@ -1261,18 +1276,19 @@
     D.matriz(ctx, cx + 4, py + 21, La, { '#': det2 });
     ret(ctx, cx - 10, py + 27, 21, 1, '#e8d8c0');
     ret(ctx, cx + 1, py + 28, 1, 4, '#ffd34d'); ret(ctx, cx + 1, py + 31, 1, 1, '#e0a020');
-    // flâmula amarela com um lápis, no bico do telhado
-    ret(ctx, cx - 1, py - 5, 2, 15, K); ret(ctx, cx - 1, py - 4, 1, 13, '#c9a27a');
-    circulo(ctx, cx - 1, py - 6, 1, C.ouro);
+    // flâmula amarela com um lápis, no bico do telhado (3 px mais baixa: a placa do nome não tampa a ponta do mastro)
+    var fy = py + 3;
+    ret(ctx, cx - 1, fy - 5, 2, py + 10 - (fy - 5), K); ret(ctx, cx - 1, fy - 4, 1, py + 9 - (fy - 4), '#c9a27a');
+    circulo(ctx, cx - 1, fy - 6, 1, C.ouro);
     for (var fi = 0; fi < 14; fi++) {
       var meiaF = Math.max(0, Math.round(4 * (1 - fi / 14))), fx = cx + 1 + fi;
-      ret(ctx, fx, py - 1 - meiaF - 1, 1, meiaF * 2 + 3, K);
-      if (meiaF > 0) { ret(ctx, fx, py - 1 - meiaF, 1, meiaF * 2 + 1, '#ffd34d'); ret(ctx, fx, py - 1 - meiaF, 1, 1, '#fff0a0'); }
+      ret(ctx, fx, fy - 1 - meiaF - 1, 1, meiaF * 2 + 3, K);
+      if (meiaF > 0) { ret(ctx, fx, fy - 1 - meiaF, 1, meiaF * 2 + 1, '#ffd34d'); ret(ctx, fx, fy - 1 - meiaF, 1, 1, '#fff0a0'); }
     }
     // o lápis: borracha rosa, corpo laranja, madeira e a ponta
-    ret(ctx, cx + 2, py - 2, 1, 3, '#ff9cc6'); ret(ctx, cx + 3, py - 2, 1, 3, '#c9c2d8');
-    ret(ctx, cx + 4, py - 2, 4, 3, '#ff7a3a'); ret(ctx, cx + 4, py - 1, 4, 1, '#ffb070');
-    ret(ctx, cx + 8, py - 2, 1, 3, '#f3c890'); ret(ctx, cx + 9, py - 1, 1, 1, K);
+    ret(ctx, cx + 2, fy - 2, 1, 3, '#ff9cc6'); ret(ctx, cx + 3, fy - 2, 1, 3, '#c9c2d8');
+    ret(ctx, cx + 4, fy - 2, 4, 3, '#ff7a3a'); ret(ctx, cx + 4, fy - 1, 4, 1, '#ffb070');
+    ret(ctx, cx + 8, fy - 2, 1, 3, '#f3c890'); ret(ctx, cx + 9, fy - 1, 1, 1, K);
     // toldo listrado verde e creme em cima da porta e das janelas
     var ay = py + 37;
     ret(ctx, px + 9, ay, w - 18, 6, K);
