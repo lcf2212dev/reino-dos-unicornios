@@ -40,7 +40,8 @@
     } catch (e) { return null; }
   }
   function gravarLocal() {
-    estado = comCopia(estado);
+    // a cópia entra antes da normalização (como em carregar e na mescla, onde o completar() vem depois)
+    estado = normalizarNovos(comCopia(estado));
     try { localStorage.setItem(Reino.config.chaveSave, JSON.stringify(estado)); } catch (e) {}
     gravarCopia();
   }
@@ -55,8 +56,9 @@
   function objeto(x) { return !!x && typeof x === 'object' && !Array.isArray(x); }
   // ids que vêm de fora (servidor, doc, cópia) viram chaves de objeto: só as próprias e nunca as que
   // mexem no protótipo (`{"__proto__": …}` de um save estragado não pode sujar Object.prototype)
+  // nem nomes de Object.prototype (hasOwnProperty, toString…)
   var CHAVES_PROIBIDAS = ['__proto__', 'constructor', 'prototype'];
-  function chaveSegura(o, k) { return Object.prototype.hasOwnProperty.call(o, k) && CHAVES_PROIBIDAS.indexOf(k) < 0; }
+  function chaveSegura(o, k) { return Object.prototype.hasOwnProperty.call(o, k) && CHAVES_PROIBIDAS.indexOf(k) < 0 && !(k in Object.prototype); }
   function proprio(o, k) { return Object.prototype.hasOwnProperty.call(o, k) ? o[k] : undefined; }
   // número finito (texto com número também vale); senão, o padrão
   function numeroOu(x, padrao) {

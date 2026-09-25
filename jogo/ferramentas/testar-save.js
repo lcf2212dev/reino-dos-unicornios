@@ -1035,6 +1035,60 @@ teste('outro navegador (sem cópia) com um registro da despensa estragado no doc
   assert.strictEqual(j.C.quantidade('cenoura'), 2);
 });
 
+teste('cópia hostil que aparece depois de carregar: o que se grava sai normalizado (usadas ≤ compradas, fome ≤ 100)', () => {
+  const s = saveAtual(); s.despensa = { maca: { compradas: 3, usadas: 0 } }; s.cuidados = { inicial: { fome: 50, sede: 50, em: 10 } };
+  const j = montar({ save: s });
+  j.P.carregar();
+  j.guardado[j.chaveCopia] = JSON.stringify({ geracao: 1, despensa: { maca: { compradas: 3, usadas: 7 }, bolo: { compradas: 1.5, usadas: 4 } },
+    cuidados: { inicial: { fome: 500, sede: 900, em: 20 } } });
+  j.P.salvar(true);
+  const principal = JSON.parse(j.guardado[j.R.config.chaveSave]), c = j.copiaGuardada();
+  [principal.despensa, c.despensa, copia(j.P.estado().despensa)].forEach((d) => {
+    assert.deepStrictEqual(d, { maca: { compradas: 3, usadas: 3 }, bolo: { compradas: 1, usadas: 1 } });
+  });
+  [principal.cuidados.inicial, c.cuidados.inicial].forEach((r) => { assert.strictEqual(r.fome, 100); assert.strictEqual(r.sede, 100); });
+  assert.strictEqual(j.C.quantidade('maca'), 0);
+  // e ao carregar com a mesma cópia hostil
+  const j2 = montar({ save: s, copia: { geracao: 1, despensa: { maca: { compradas: 3, usadas: 7 } } } });
+  assert.deepStrictEqual(copia(j2.P.carregar().despensa.maca), { compradas: 3, usadas: 3 });
+});
+
+teste('nomes de Object.prototype (hasOwnProperty, toString…) nunca viram comida nem unicórnio; id desconhecido fica', async () => {
+  const nomes = ['hasOwnProperty', 'toString', 'valueOf', 'isPrototypeOf', 'propertyIsEnumerable', 'toLocaleString', '__defineGetter__', '__lookupSetter__'];
+  const lixoD = {}, lixoC = {};
+  nomes.forEach((k) => { lixoD[k] = { compradas: 5, usadas: 0 }; lixoC[k] = { fome: 1, sede: 1, em: 9e12 }; });
+  const s = saveAtual();
+  s.despensa = Object.assign({ maca: { compradas: 2, usadas: 0 }, 'comida-nova': { compradas: 1, usadas: 0 } }, lixoD);
+  s.cuidados = Object.assign({ inicial: { fome: 40, sede: 40, em: 5 }, 'uni-novo': { fome: 70, sede: 70, em: 5 } }, lixoC);
+  const esperadoD = { maca: { compradas: 2, usadas: 0 }, 'comida-nova': { compradas: 1, usadas: 0 } };
+  const esperadoC = { inicial: { fome: 40, sede: 40, em: 5 }, 'uni-novo': { fome: 70, sede: 70, em: 5 } };
+  // carregar
+  const j = montar({ save: s, copia: { geracao: 1, despensa: lixoD, cuidados: lixoC } });
+  const e = j.P.carregar();
+  assert.deepStrictEqual(copia(e.despensa), esperadoD); assert.deepStrictEqual(copia(e.cuidados), esperadoC);
+  // sincronizar com um doc que traz esses nomes, mais recente e mais antigo (a mescla + completar do jogo)
+  for (const atualizado of [1760000000000, 1700000000000]) {
+    const doc = Object.assign(copia(s), { atualizado });
+    const jj = montar({ save: Object.assign(saveAtual(), { despensa: { maca: { compradas: 2, usadas: 0 } } }) });
+    jj.P.carregar();
+    jj.ctx.claude = { use: () => Promise.resolve({ doc: () => ({
+      get: () => Promise.resolve({ exists: true, data: () => ({ estado: copia(doc) }) }), set: () => Promise.resolve(), onSnapshot: () => {},
+    }) }) };
+    await jj.P.iniciarNuvem();
+    const r = jj.P.estado();
+    nomes.forEach((k) => {
+      assert.ok(!Object.prototype.hasOwnProperty.call(r.despensa, k), 'despensa: ' + k);
+      assert.ok(!Object.prototype.hasOwnProperty.call(r.cuidados, k), 'cuidados: ' + k);
+    });
+    assert.deepStrictEqual(copia(r.despensa), esperadoD);
+    assert.ok(r.cuidados['uni-novo'] && r.cuidados.inicial);
+  }
+  j.P.salvar(true);
+  const principal = JSON.parse(j.guardado[j.R.config.chaveSave]);
+  assert.deepStrictEqual(principal.despensa, esperadoD); assert.deepStrictEqual(j.copiaGuardada().despensa, esperadoD);
+  assert.strictEqual(typeof j.P.estado().despensa.hasOwnProperty, 'function', 'hasOwnProperty continua o de Object.prototype');
+});
+
 (async () => {
   let falhas = 0;
   for (const t of testes) {
