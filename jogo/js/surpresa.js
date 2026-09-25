@@ -183,6 +183,25 @@
   }
 
   var OK_TRAVA_MS = 600;
+  // fechou a pergunta com o dedo e continua tocando ali: a guarda do ui.js (UI.segurarToques) segura
+  // os toques perto dela até 2 s depois de fechar; aqui ela é renovada uma vez, aos
+  // GUARDA_FECHAR_MS - 2000, para durar até 3 s (o botão do menu que estava embaixo não abre).
+  // Só se o último toque foi perto do fechamento e há pouco (a guarda ainda de pé): ms 1 não cria
+  // guarda nova, só estica a que existe. Toque longe e teclado continuam valendo na hora.
+  var GUARDA_FECHAR_MS = 3000, TOQUE_PERTO_PX = 40, TOQUE_SEGUIDO_MS = 800;
+  function segurarAoFechar(e) {
+    var UI = Reino.UI;
+    if (!e || !e.isTrusted || !e.detail || !UI.segurarToques) return;
+    var ponto = { x: e.clientX, y: e.clientY }, ultimo = null;
+    function marcar(ev) { if (ev.isTrusted) ultimo = { x: ev.clientX, y: ev.clientY, t: agora() }; }
+    document.addEventListener('pointerdown', marcar, true);
+    setTimeout(function () {
+      document.removeEventListener('pointerdown', marcar, true);
+      if (!ultimo || agora() - ultimo.t > TOQUE_SEGUIDO_MS || document.querySelector('#telas > .tela')) return;
+      if (Math.abs(ultimo.x - ponto.x) >= TOQUE_PERTO_PX || Math.abs(ultimo.y - ponto.y) >= TOQUE_PERTO_PX) return;
+      UI.segurarToques(1);
+    }, GUARDA_FECHAR_MS - 2000);
+  }
   var TUTORIAL_LIVRE_MS = 10000, TUTORIAL_MAX_MS = 2 * 60000;
   // main.js chama no fim de entrarNoReino; tutorial = Promise da 1ª vez (ou null)
   S.iniciar = function (opcoes) {
@@ -357,13 +376,15 @@
     function foraDoCartao(e) { if (e.target === pn.tela) e.stopPropagation(); }
     document.addEventListener('click', foraDoCartao, true);
 
-    btnDepois.addEventListener('click', function () { if (btnDepois.disabled) return; Reino.Som.tocar('toque'); fechar(); });
+    btnDepois.addEventListener('click', function (e) { if (btnDepois.disabled) return; Reino.Som.tocar('toque'); fechar(e); });
     // "Agora não" e ✕ travados nos primeiros OK_TRAVA_MS: um toque no menu do celular no instante em
     // que o painel abre (o "Agora não" fica em cima de Lugares e Estábulo) não fecha a pergunta sem
     // ela ver. O Esc continua valendo.
     var btnX = pn.card.querySelector('.btn-fechar');
     btnDepois.disabled = true;
     if (btnX) btnX.disabled = true;
+    // o ✕ fecha pelo UI.painel (aoFechar): aqui só a guarda do dedo que continua tocando
+    if (btnX) btnX.addEventListener('click', function (e) { if (!btnX.disabled) segurarAoFechar(e); });
     setTimeout(function () { btnDepois.disabled = false; if (btnX) btnX.disabled = false; }, OK_TRAVA_MS);
 
     btnConferir.addEventListener('click', function () {
@@ -415,7 +436,7 @@
       // o "Ok!" nasce no lugar do "Conferir": fica travado por OK_TRAVA_MS para um toque duplo
       // no "Conferir" não fechar o resultado antes de ela ler (principalmente a explicação do erro)
       var okBtn = el('button.btn-grande.btn-principal.surpresa-ok', { type: 'button', disabled: true }, 'Ok! 👍');
-      okBtn.addEventListener('click', function () { if (okBtn.disabled) return; Reino.Som.tocar('toque'); fechar(); });
+      okBtn.addEventListener('click', function (e) { if (okBtn.disabled) return; Reino.Som.tocar('toque'); fechar(e); });
       botoes.innerHTML = '';
       botoes.appendChild(okBtn);
       // o cabeçalho de abertura sai: o retorno do Claude fica no lugar dele
@@ -433,17 +454,20 @@
         var fim = (retorno.querySelector('.retorno-explica') || retorno.lastChild).getBoundingClientRect();
         var topo = c.scrollTop + rr.top - cr.top - 8, ateExplica = c.scrollTop + fim.bottom - cr.bottom + 8;
         // sem passar do começo da explicação (letras grandes no celular deitado: ela não cabe inteira)
-        var inicioExplica = c.scrollTop + fim.top - cr.top - 8;
+        // (celular deitado: o "✓ Certo" fica em cima dela, na mesma coluna, e também não passa do topo)
+        var certa = retorno.querySelector('.surpresa-certa'), cb = certa && certa.getBoundingClientRect();
+        var inicioExplica = c.scrollTop + (cb && cb.left > rr.left + rr.width / 3 ? cb.top : fim.top) - cr.top - 8;
         var alvo = Math.max(0, Math.min(Math.max(topo, ateExplica), Math.max(topo, inicioExplica)));
         if (c.scrollTo) c.scrollTo({ top: alvo, behavior: reduzMovimento() ? 'auto' : 'smooth' }); else c.scrollTop = alvo;
       }, 60);
     }
 
     function soltar() { document.removeEventListener('keydown', aoTeclar); document.removeEventListener('click', foraDoCartao, true); }
-    function fechar() {
+    function fechar(e) {
       soltar();
       Reino.Som.calar();
       UI.fecharTela(pn.tela);
+      segurarAoFechar(e);
       terminar(resultado || 'agoraNao');
     }
   }

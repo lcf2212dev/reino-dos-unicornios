@@ -162,13 +162,19 @@
   .surpresa-curta { grid-column: 1; grid-row: 1; }
   .tela-surpresa .enunciado { grid-column: 1; grid-row: 2; align-self: start; }
   .tela-surpresa .opcoes { grid-column: 2; grid-row: 1 / span 2; align-self: start; }
-  /* resultado em duas colunas: pergunta, Claude e a certa à esquerda; a explicação à direita,
-     tudo à vista antes de o Ok destravar */
+  /* resultado em duas colunas: pergunta e Claude à esquerda; a certa (no erro) e a explicação à
+     direita, tudo à vista antes de o Ok destravar */
   .surpresa-retorno { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px 12px; align-items: start; }
   .surpresa-retorno > * + * { margin-top: 0; }
   .surpresa-retorno > * { grid-column: 1; }
   .surpresa-retorno > .retorno-explica { grid-column: 2; grid-row: 1 / span 3; }
+  /* no erro, o "✓ Certo: …" fica em cima da explicação (à esquerda ficava cortado embaixo com
+     letras grandes); a coluna da direita fica mais larga e as letras do erro, um pouco menores */
+  .surpresa-retorno.retorno-quase { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); }
+  .surpresa-retorno > .surpresa-certa { grid-column: 2; grid-row: 1; }
+  .surpresa-retorno > .surpresa-certa + .retorno-explica { grid-row: 2 / span 2; font-size: 0.85em; }
   .surpresa-retorno .retorno-fala, .surpresa-retorno .surpresa-certa { font-size: 0.9em; }
+  .surpresa-retorno .surpresa-certa, .retorno-quase .retorno-fala { font-size: 0.85em; }
   .surpresa-botoes { padding: 6px 12px 8px; }
   .surpresa-botoes .btn-grande { min-height: 46px; }
 }
