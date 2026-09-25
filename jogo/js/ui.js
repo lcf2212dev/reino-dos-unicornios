@@ -74,6 +74,13 @@
   // a última coisa usada foi o teclado? (quem fecha uma tela decide para onde vai o foco)
   var ultimaTecla = -1e9;
   document.addEventListener('keydown', function (e) { if (e.isTrusted) ultimaTecla = performance.now(); }, true);
+  // Enter/Espaço segurados (repetição automática), ou apertados de novo logo depois (400 ms) de a tela
+  // abrir pelo teclado com o foco num botão, não acionam esse botão sem querer
+  document.addEventListener('keydown', function (e) {
+    if (!pilha.length || (e.key !== 'Enter' && e.key !== ' ')) return;
+    var t = pilha[pilha.length - 1];
+    if (e.repeat || (t._focoPorTeclaEm && performance.now() - t._focoPorTeclaEm < 400)) { e.preventDefault(); e.stopPropagation(); }
+  }, true);
   document.addEventListener('click', function (e) {
     if (!e.isTrusted || !e.detail || performance.now() >= toquesLivresEm) return;
     if (pontoGuarda && !perto({ x: e.clientX, y: e.clientY }, pontoGuarda)) return;   // longe: vale
@@ -117,7 +124,12 @@
       if (t !== topo() || t.contains(document.activeElement)) return;
       var bal = document.getElementById('claude-balao');
       if (bal && bal.contains(document.activeElement)) return;
-      // a própria tela (como um diálogo): Enter de novo não faz nada, e o Tab leva ao 1º botão
+      // aberta pelo teclado: o foco vai para o 1º botão da tela (menos o ✕), com a marca de foco à
+      // vista; aberta por toque ou mouse: a própria tela (como um diálogo), e o Tab leva ao 1º botão
+      if (ultimaTecla > ultimoToque) {
+        var primeiro = focaveis(t).filter(function (b) { return !b.classList.contains('btn-fechar'); })[0];
+        if (primeiro && focar(primeiro)) { t._focoPorTeclaEm = performance.now(); return; }
+      }
       t.setAttribute('tabindex', '-1'); focar(t);
     }, 60);
     return t;

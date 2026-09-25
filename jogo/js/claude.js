@@ -110,6 +110,17 @@
       var at = document.activeElement;
       if (at && at.matches && at.matches('input, textarea, select, [contenteditable], [contenteditable] *')) return;
       if (Reino.UI && Reino.UI.temTela && Reino.UI.temTela()) return;
+      // Tab fica dentro do balão com botões (senão o foco escapava para o HUD atrás dele)
+      if (e.key === 'Tab' && (aberto.modal || aberto.botoes)) {
+        var bts = Array.prototype.filter.call(bal.querySelectorAll('button'), function (b) { return !b.disabled && b.offsetParent !== null; });
+        if (bts.length) {
+          var i = bts.indexOf(document.activeElement);
+          var prox = e.shiftKey ? (i <= 0 ? bts.length - 1 : i - 1) : (i < 0 || i === bts.length - 1 ? 0 : i + 1);
+          e.preventDefault(); e.stopPropagation();
+          try { bts[prox].focus({ preventScroll: true }); } catch (x) { bts[prox].focus(); }
+        }
+        return;
+      }
       // Esc fecha qualquer balão aberto (o "não", se houver): sem isso, quem joga só com o teclado ficava
       // com o balão de boas-vindas aberto para sempre (e a pergunta surpresa esperando por ele)
       if (e.key === 'Escape') {
@@ -184,6 +195,7 @@
     extra.hidden = !item.extra;
     var foco = porBotoes(bal, item);
     bal.setAttribute('role', item.modal ? 'dialog' : 'status');
+    if (item.modal) bal.setAttribute('aria-modal', 'true'); else bal.removeAttribute('aria-modal');
     document.body.classList.toggle('com-dialogo', !!item.modal);
     bal.classList.toggle('dica-pressa', item.tipo === 'pressa');
     bal.hidden = false;
