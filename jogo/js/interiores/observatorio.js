@@ -479,13 +479,17 @@
   // o disco da projeção é uma galáxia azul-clara: a base fica na faixa de claridade do piso, para a Mariana e a
   // unicórnio (contorno #3a2446) aparecerem em cima dela; o brilho do miolo, os dois braços em espiral e as
   // estrelas vêm por cima. (Um disco escuro, ou só um pouco mais claro, fica da mesma luminância do contorno.)
-  var GALAXIA = { aro: '#3d3a8a', borda: '#8a82d6', base: '#6470c4', meio: '#6a76c8', miolo: '#7a84d6',
+  // A faixa de fora (de 0,8 do raio até a borda) é um pouco mais escura, para dar profundidade de longe,
+  // e o aro também fica claro o bastante para ela aparecer bem na beirada.
+  var GALAXIA = { aro: '#6a62b8', borda: '#8a82d6', fora: '#5a64b8', base: '#6470c4', meio: '#6a76c8', miolo: '#7a84d6',
     braco: '#8490de', braco2: '#a8b0f0', orbita: '#4a52a8' };
   function desenharGalaxia(ctx, sx, sy, d) {
     var g = GALAXIA;
     elipse(ctx, sx, sy, d.rx + 3, d.ry + 2, g.aro);
     elipse(ctx, sx, sy, d.rx + 2, d.ry + 1, g.borda);
-    elipse(ctx, sx, sy, d.rx, d.ry, g.base);
+    elipse(ctx, sx, sy, d.rx, d.ry, g.fora);
+    elipse(ctx, sx, sy, Math.round(d.rx * 0.84), Math.round(d.ry * 0.84), misturar(g.fora, g.base, 0.5));
+    elipse(ctx, sx, sy, Math.round(d.rx * 0.8), Math.round(d.ry * 0.8), g.base);
     elipse(ctx, sx, sy, Math.round(d.rx * 0.55), Math.round(d.ry * 0.55), g.meio);
     elipse(ctx, sx, sy, Math.round(d.rx * 0.3), Math.round(d.ry * 0.3), g.miolo);
     elipse(ctx, sx, sy, Math.round(d.rx * 0.15), Math.round(d.ry * 0.15), clarear(g.miolo, 0.3));
