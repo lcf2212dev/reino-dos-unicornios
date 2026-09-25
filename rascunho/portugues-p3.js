@@ -8,9 +8,9 @@ Reino.RASCUNHO_PORTUGUES.p3 =
         { id: 'p3-01', tipo: 'escolha', livro: 'digrafos', pagina: 42,
           pergunta: 'Leia as palavras da brincadeira de amarelinha: AMARELINHA, DESENHE, PEDRINHA. O que elas têm de igual na escrita?',
           opcoes: [
-            { e: '✅', t: 'Todas têm NH' },
-            { e: '❌', t: 'Todas têm CH' },
-            { e: '❌', t: 'Todas começam com A' },
+            { e: '🔤', t: 'Todas têm NH' },
+            { e: '🔤', t: 'Todas têm CH' },
+            { e: '🔤', t: 'Todas começam com A' },
           ], certa: 0,
           explica: 'AmareliNHa, deseNHe e pedriNHa: as três têm NH!' },
         { id: 'p3-02', tipo: 'vf', livro: 'digrafos', pagina: 43,
@@ -24,7 +24,7 @@ Reino.RASCUNHO_PORTUGUES.p3 =
             [{ t: 'LH' }, { t: 'escolhem' }],
             [{ t: 'NH' }, { t: 'amarelinha' }],
           ],
-          explica: 'O CH tem som de X, como em chocalho. O LH aparece em escolhem. O NH aparece em amarelinha.' },
+          explica: 'O CH tem o mesmo som do X de xícara, como em chocalho. O LH aparece em escolhem. O NH aparece em amarelinha.' },
         { id: 'p3-04', tipo: 'escolha', livro: 'digrafos', pagina: 44,
           pergunta: 'Na frase "As folhas caem das árvores no outono.", qual palavra tem dígrafo?',
           opcoes: [
@@ -91,13 +91,13 @@ Reino.RASCUNHO_PORTUGUES.p3 =
           ], certa: 0,
           explica: 'Xarope começa com X! Chocolate se escreve com CH, e banana não tem nenhum dos dois.' },
         { id: 'p3-10', tipo: 'ligar', livro: 'sons-do-x', pagina: 47,
-          pergunta: 'A letra X pode ter três sons! Ligue cada som à palavra do quadro:',
+          pergunta: 'A letra X pode ter três sons! Ligue cada som a uma palavra:',
           pares: [
-            [{ t: 'Som de S' }, { t: 'excesso' }],
+            [{ t: 'Som de S' }, { t: 'próximo' }],
             [{ t: 'Som de Z' }, { t: 'exame' }],
             [{ t: 'Som de CH' }, { t: 'xícara' }],
           ],
-          explica: 'Em excesso, o X tem som de S. Em exame, som de Z. Em xícara, som de CH, parecido com o CH de chave.' },
+          explica: 'Em próximo, o X tem som de S. Em exame, som de Z. Em xícara, som de CH, parecido com o som do CH de chave.' },
         { id: 'p3-11', tipo: 'varias', livro: 'x-ou-ch', pagina: 48,
           pergunta: 'Toque em TODAS as palavras escritas com X ou com CH.',
           opcoes: [
@@ -136,7 +136,7 @@ Reino.RASCUNHO_PORTUGUES.p3 =
           ],
           explica: 'CaiXa, feCHar, meXer, CHão e CHave.' },
         { id: 'p3-14', tipo: 'varias', livro: 'x-ou-ch', pagina: 50,
-          pergunta: 'No caça-palavras estavam escondidas: CHOCOLATE, XÍCARA, CHUCHU, CHÁ, AMEIXA e MEXER. Toque em TODAS as que têm X.',
+          pergunta: 'Toque em TODAS as palavras que têm a letra X.',
           opcoes: [
             { t: 'xícara', ok: true },
             { t: 'ameixa', ok: true },

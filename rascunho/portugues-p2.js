@@ -3,7 +3,7 @@ Reino.RASCUNHO_PORTUGUES = Reino.RASCUNHO_PORTUGUES || {};
 Reino.RASCUNHO_PORTUGUES.p2 =
     {
       id: 'p2', nome: 'O H Silencioso', emoji: '🌿', paginas: 'pp. 37 a 41 e 54',
-      intro: 'Psiu! Nesta horta mora a letra H, que fica bem quietinha no começo das palavras!',
+      intro: 'Fale bem baixinho, psiu! Nesta horta mora a letra H, que fica bem quietinha no começo das palavras!',
       desafios: [
         { id: 'p2-01', tipo: 'escolha', livro: 'letra-h', pagina: 37,
           pergunta: 'Na receita "Suco de abacaxi com hortelã", qual palavra começa com a letra H?',

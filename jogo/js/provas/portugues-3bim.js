@@ -43,7 +43,7 @@
 
       { id: 'pb3-03', tipo: 'varias', livro: 'partes-receita', apoio: SALADA,
         pergunta: 'Quais são os ingredientes usados para preparar essa receita?',
-        instrucao: 'Toque em todos.',
+        instrucao: 'Toque em TODOS os ingredientes da receita.',
         opcoes: [
           { t: 'banana', ok: true },
           { t: 'morango' },
@@ -67,6 +67,7 @@
 
       { id: 'pb3-05', tipo: 'completar', livro: 'letra-h',
         pergunta: 'Complete as frases com as palavras do quadro:',
+        instrucao: 'Toque na palavra certa para completar cada frase.',
         palavras: ['HOJE', 'HOSPITAL', 'HISTÓRIA', 'HORTA'],
         frases: [
           { letra: 'a', antes: '', depois: 'eu vou estudar para a prova.', certa: 0 },
@@ -78,6 +79,7 @@
 
       { id: 'pb3-06', tipo: 'varias', estilo: 'circular', livro: 'letra-h',
         pergunta: 'Circule somente as palavras que começam com H:',
+        instrucao: 'Toque em cada palavra para circular.',
         opcoes: [
           { t: 'HOJE', ok: true },
           { t: 'BOLA' },
@@ -92,6 +94,7 @@
 
       { id: 'pb3-07', tipo: 'completar', colado: true, livro: 'x-ou-ch',
         pergunta: 'Complete as palavras usando X ou CH:',
+        instrucao: 'Toque em X ou CH para completar cada palavra.',
         palavras: ['X', 'CH'],
         frases: [
           { letra: 'a', antes: '', depois: 'ícara', certa: 0 },
@@ -105,6 +108,7 @@
 
       { id: 'pb3-08', tipo: 'completar', colado: true, livro: 'som-de-s',
         pergunta: 'Complete as palavras usando S ou SS:',
+        instrucao: 'Toque em S ou SS para completar cada palavra.',
         palavras: ['S', 'SS'],
         frases: [
           { letra: 'a', antes: 'PA', depois: 'ARINHO', certa: 1 },
@@ -119,6 +123,7 @@
 
       { id: 'pb3-09', tipo: 'completar', colado: true, livro: 'sons-do-x',
         pergunta: 'Complete as palavras com X ou Z:',
+        instrucao: 'Toque em X ou Z para completar cada palavra.',
         palavras: ['X', 'Z'],
         frases: [
           { letra: 'a', antes: 'E', depois: 'AME', certa: 0 },
@@ -152,7 +157,7 @@
           { img: 'palavra:olho', alt: 'olho', antes: 'O', depois: 'O', certa: 1 },
           { img: 'palavra:milho', alt: 'milho', antes: 'MI', depois: 'O', certa: 1 },
         ],
-        explica: 'Com CH: cachorro, chocolate, chupeta, chave, mochila e cachecol. Com LH: palhaço, milho, folha, olho, coelho e ovelha. Com NH: ninho, quinhentos, golfinho, dinheiro, pinheiro e aranha.' },
+        explica: 'CH soa como em chave: mochila, chupeta, cachorro. LH soa como em folha: milho, coelho, ovelha. NH soa como em ninho: aranha, dinheiro, golfinho.' },
 
       { id: 'pb3-11', tipo: 'copiar', livro: 'som-de-s',
         pergunta: 'Escolha a escrita correta e copie a palavra:',
@@ -166,6 +171,7 @@
 
       { id: 'pb3-12', tipo: 'completar', colado: true, livro: 'r-rr',
         pergunta: 'Complete as palavras usando R ou RR:',
+        instrucao: 'Toque em R ou RR para completar cada palavra.',
         palavras: ['R', 'RR'],
         frases: [
           { letra: 'a', antes: 'CA', depois: 'O', certa: 1, aceitas: [0] },      // carro (e caro)
