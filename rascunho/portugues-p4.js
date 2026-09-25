@@ -6,7 +6,7 @@ Reino.RASCUNHO_PORTUGUES.p4 =
       intro: 'Vista um casaco bem quentinho, que vamos de barco até a Antártida ver pinguins e icebergs!',
       desafios: [
         { id: 'p4-01', tipo: 'escolha', livro: 'relato', pagina: 62,
-          apoio: { titulo: 'Chegamos? (trecho)', partes: [ { texto: 'Este relato foi escrito por três irmãs: Laura, Tamara e Marininha. Elas contam como foi a viagem de barco que fizeram com o pai até a Antártida.' } ] },
+          apoio: { titulo: 'Chegamos? (trecho)', partes: [ { texto: 'Três irmãs, Laura, Tamara e Marininha, escreveram este relato. Elas contam a viagem de barco que fizeram com o pai até a Antártida.' } ] },
           pergunta: 'O relato "Chegamos?" conta uma viagem até a Antártida. Quem escreveu esse relato?',
           opcoes: [
             { e: '👧', t: 'Três irmãs' },
@@ -25,7 +25,7 @@ Reino.RASCUNHO_PORTUGUES.p4 =
           ], certa: 0,
           explica: 'A Antártida é um lugar muito gelado, com mar frio, gelo e icebergs, pinguins e focas.' },
         { id: 'p4-03', tipo: 'ordenar', livro: 'tempo-no-relato', pagina: 59,
-          apoio: { titulo: 'Chegamos? (trecho)', partes: [ { texto: 'Primeiro, as irmãs deixaram a América do Sul e passaram pelo Cabo Horn. Depois, navegaram pelo Estreito de Drake. Só quando chegaram perto da Antártida é que viram os pinguins.' } ] },
+          apoio: { titulo: 'Chegamos? (trecho)', partes: [ { texto: 'Ao deixar a América do Sul, as irmãs passaram pelo Cabo Horn e depois pelo Estreito de Drake. Perto da Antártida, viram pinguins.' } ] },
           pergunta: 'Coloque a viagem das irmãs na ordem em que aconteceu:',
           itens: ['Deixaram a América do Sul', 'Passaram pelo Cabo Horn', 'Navegaram pelo Estreito de Drake', 'Chegaram perto da Antártida e viram pinguins'],
           explica: 'Primeiro saíram da América do Sul e passaram pelo Cabo Horn. Depois cruzaram o Estreito de Drake. Só no fim, perto da Antártida, viram os pinguins!' },
@@ -38,7 +38,7 @@ Reino.RASCUNHO_PORTUGUES.p4 =
           ], certa: 0,
           explica: 'Densa quer dizer mais apertadinha, quase virando gelo. Quanto mais perto da Antártida, mais fria fica a água.' },
         { id: 'p4-05', tipo: 'varias', livro: 'relato', pagina: 60,
-          apoio: { titulo: 'Chegamos? (trecho)', partes: [ { texto: 'Depois do Drake, as irmãs perceberam que estavam chegando. Sentiram um vento gelado no rosto e viram pinguins saltando da água. Lá fora, só dava para ficar de luvas e gorro!' } ] },
+          apoio: { titulo: 'Chegamos? (trecho)', partes: [ { texto: 'Chegando perto, sentiram vento gelado no rosto e viram pinguins saltando da água e focas no mar. Lá fora, só com luvas e gorro!' } ] },
           pergunta: 'Quais sinais mostraram que as irmãs estavam chegando? Toque em TODOS.',
           opcoes: [
             { e: '🌬', t: 'Vento gelado no rosto', ok: true },
@@ -48,7 +48,7 @@ Reino.RASCUNHO_PORTUGUES.p4 =
           ],
           explica: 'O vento ficou gelado, os pinguins e as focas apareceram, e ninguém saía sem luvas e gorros. Calorão, não!' },
         { id: 'p4-06', tipo: 'escolha', livro: 'relato', pagina: 60,
-          apoio: { titulo: 'Chegamos? (trecho)', partes: [ { texto: 'O pai contou que já dava para encontrar um iceberg no caminho. Então, no barco, fizeram um combinado: quem visse o primeiro iceberg ganhava um prêmio.' } ] },
+          apoio: { titulo: 'Chegamos? (trecho)', partes: [ { texto: 'O pai disse que já dava para ver um iceberg no caminho. Combinaram: quem visse o primeiro iceberg ganhava um prêmio.' } ] },
           pergunta: 'Qual era o combinado no barco?',
           opcoes: [
             { e: '🏆', t: 'Quem avistar o primeiro iceberg ganha um prêmio' },
@@ -57,7 +57,7 @@ Reino.RASCUNHO_PORTUGUES.p4 =
           ], certa: 0,
           explica: 'Quem avistasse o primeiro iceberg ganhava um prêmio! Assim as meninas tinham coragem de ficar mais tempo no frio.' },
         { id: 'p4-07', tipo: 'ligar', livro: 'relato', pagina: 62,
-          apoio: { titulo: 'Chegamos? (trecho)', partes: [ { texto: 'Três irmãs viajaram de barco com o pai até a Antártida. No caminho, todos queriam ver icebergs. Elas sentiram que a viagem dos sonhos estava acontecendo.' } ] },
+          apoio: { titulo: 'Chegamos? (trecho)', partes: [ { texto: 'Três irmãs e o pai foram de barco até a Antártida para ver icebergs. Para elas, era a viagem dos sonhos acontecendo.' } ] },
           pergunta: 'Ligue cada pergunta sobre o relato à resposta certa:',
           pares: [
             [{ e: '❓', t: 'O que aconteceu?' }, { t: 'Uma família viajou de barco para ver icebergs.' }],
@@ -80,7 +80,7 @@ Reino.RASCUNHO_PORTUGUES.p4 =
           ],
           explica: 'O relato pessoal conta algo que a pessoa viveu, na ordem certa, com detalhes e sentimentos. História inventada não é relato!' },
         { id: 'p4-10', tipo: 'escolha', livro: 'tempo-no-relato', pagina: 61,
-          apoio: { titulo: 'Chegamos? (trecho)', partes: [ { texto: 'As irmãs usam palavras que mostram a ordem da viagem, como quando e depois. Elas contam que, depois de cruzarem o Drake, sentiram o vento gelado no rosto e viram pinguins e focas.' } ] },
+          apoio: { titulo: 'Chegamos? (trecho)', partes: [ { texto: 'As irmãs contam: "Depois de cruzarmos o Drake, […] sentimos o vento gelado no rosto". Logo veem pinguins e focas no mar.' } ] },
           pergunta: 'Qual trecho mostra QUANDO as coisas aconteceram?',
           opcoes: [
             { e: '⏳', t: '"Depois de cruzarmos o Drake"' },

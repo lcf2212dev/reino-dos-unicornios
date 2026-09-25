@@ -11450,13 +11450,13 @@
    "fala": "Chegamos? (trecho)"
   },
   {
-   "chave": "4e5108e24a",
+   "chave": "29aa1e413x",
    "voz": "narradora",
-   "texto": "Este relato foi escrito por três irmãs: Laura, Tamara e Marininha. Elas contam como foi a viagem de barco que fizeram com o pai até a Antártida.",
+   "texto": "Três irmãs, Laura, Tamara e Marininha, escreveram este relato. Elas contam a viagem de barco que fizeram com o pai até a Antártida.",
    "pacotes": [
     "portugues-p4"
    ],
-   "fala": "Este relato foi escrito por três irmãs: Laura, Tamara e Marininha. Elas contam como foi a viagem de barco que fizeram com o pai até a Antártida."
+   "fala": "Três irmãs, Laura, Tamara e Marininha, escreveram este relato. Elas contam a viagem de barco que fizeram com o pai até a Antártida."
   },
   {
    "chave": "d8593cba20",
@@ -11513,13 +11513,13 @@
    "fala": "Coloque a viagem das irmãs na ordem em que aconteceu:"
   },
   {
-   "chave": "9c07796456",
+   "chave": "c0b79cd33v",
    "voz": "narradora",
-   "texto": "Primeiro, as irmãs deixaram a América do Sul e passaram pelo Cabo Horn. Depois, navegaram pelo Estreito de Drake. Só quando chegaram perto da Antártida é que viram os pinguins.",
+   "texto": "Ao deixar a América do Sul, as irmãs passaram pelo Cabo Horn e depois pelo Estreito de Drake. Perto da Antártida, viram pinguins.",
    "pacotes": [
     "portugues-p4"
    ],
-   "fala": "Primeiro, as irmãs deixaram a América do Sul e passaram pelo Cabo Horn. Depois, navegaram pelo Estreito de Drake. Só quando chegaram perto da Antártida é que viram os pinguins."
+   "fala": "Ao deixar a América do Sul, as irmãs passaram pelo Cabo Horn e depois pelo Estreito de Drake. Perto da Antártida, viram pinguins."
   },
   {
    "chave": "178d702d2e",
@@ -11603,13 +11603,13 @@
    "fala": "Um calorão no barco"
   },
   {
-   "chave": "e1b83fe253",
+   "chave": "da49b6333t",
    "voz": "narradora",
-   "texto": "Depois do Drake, as irmãs perceberam que estavam chegando. Sentiram um vento gelado no rosto e viram pinguins saltando da água. Lá fora, só dava para ficar de luvas e gorro!",
+   "texto": "Chegando perto, sentiram vento gelado no rosto e viram pinguins saltando da água e focas no mar. Lá fora, só com luvas e gorro!",
    "pacotes": [
     "portugues-p4"
    ],
-   "fala": "Depois do Drake, as irmãs perceberam que estavam chegando. Sentiram um vento gelado no rosto e viram pinguins saltando da água. Lá fora, só dava para ficar de luvas e gorro!"
+   "fala": "Chegando perto, sentiram vento gelado no rosto e viram pinguins saltando da água e focas no mar. Lá fora, só com luvas e gorro!"
   },
   {
    "chave": "d41fa29814",
@@ -11648,13 +11648,13 @@
    "fala": "Quem pescar um peixe ganha um doce"
   },
   {
-   "chave": "c12d84f44g",
+   "chave": "d3aa46993i",
    "voz": "narradora",
-   "texto": "O pai contou que já dava para encontrar um iceberg no caminho. Então, no barco, fizeram um combinado: quem visse o primeiro iceberg ganhava um prêmio.",
+   "texto": "O pai disse que já dava para ver um iceberg no caminho. Combinaram: quem visse o primeiro iceberg ganhava um prêmio.",
    "pacotes": [
     "portugues-p4"
    ],
-   "fala": "O pai contou que já dava para encontrar um iceberg no caminho. Então, no barco, fizeram um combinado: quem visse o primeiro iceberg ganhava um prêmio."
+   "fala": "O pai disse que já dava para ver um iceberg no caminho. Combinaram: quem visse o primeiro iceberg ganhava um prêmio."
   },
   {
    "chave": "49d9c1e71q",
@@ -11666,13 +11666,13 @@
    "fala": "Ligue cada pergunta sobre o relato à resposta certa:"
   },
   {
-   "chave": "606426744j",
+   "chave": "29b05dc73i",
    "voz": "narradora",
-   "texto": "Três irmãs viajaram de barco com o pai até a Antártida. No caminho, todos queriam ver icebergs. Elas sentiram que a viagem dos sonhos estava acontecendo.",
+   "texto": "Três irmãs e o pai foram de barco até a Antártida para ver icebergs. Para elas, era a viagem dos sonhos acontecendo.",
    "pacotes": [
     "portugues-p4"
    ],
-   "fala": "Três irmãs viajaram de barco com o pai até a Antártida. No caminho, todos queriam ver icebergs. Elas sentiram que a viagem dos sonhos estava acontecendo."
+   "fala": "Três irmãs e o pai foram de barco até a Antártida para ver icebergs. Para elas, era a viagem dos sonhos acontecendo."
   },
   {
    "chave": "da7681521z",
@@ -11765,13 +11765,13 @@
    "fala": "\"Pinguins e focas\""
   },
   {
-   "chave": "c28e237a59",
+   "chave": "6d3fac603m",
    "voz": "narradora",
-   "texto": "As irmãs usam palavras que mostram a ordem da viagem, como quando e depois. Elas contam que, depois de cruzarem o Drake, sentiram o vento gelado no rosto e viram pinguins e focas.",
+   "texto": "As irmãs contam: \"Depois de cruzarmos o Drake, […] sentimos o vento gelado no rosto\". Logo veem pinguins e focas no mar.",
    "pacotes": [
     "portugues-p4"
    ],
-   "fala": "As irmãs usam palavras que mostram a ordem da viagem, como quando e depois. Elas contam que, depois de cruzarem o Drake, sentiram o vento gelado no rosto e viram pinguins e focas."
+   "fala": "As irmãs contam: \"Depois de cruzarmos o Drake, […] sentimos o vento gelado no rosto\". Logo veem pinguins e focas no mar."
   },
   {
    "chave": "5045ad861x",
