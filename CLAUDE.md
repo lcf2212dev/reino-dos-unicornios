@@ -5,6 +5,6 @@
 - Não rode testes no Firefox nem no Safari/WebKit, nem emulação de iPhone ou iPad com o motor WebKit.
 
 ## Agentes
-- No máximo 8 subagentes e workers ao mesmo tempo.
-- Quando o teto baixar, os agentes que já estavam rodando continuam até terminar. Nenhum novo é lançado enquanto houver 8 ou mais ativos.
+- Até 16 subagentes e workers ao mesmo tempo. Quando um termina e há trabalho independente, outro entra no lugar.
+- Se o teto mudar, os agentes que já estavam rodando continuam até terminar.
 - Retomar um agente que já terminou conta como lançar um novo.
