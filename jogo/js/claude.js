@@ -110,9 +110,10 @@
       var at = document.activeElement;
       if (at && at.matches && at.matches('input, textarea, select, [contenteditable], [contenteditable] *')) return;
       if (Reino.UI && Reino.UI.temTela && Reino.UI.temTela()) return;
-      if (e.key === 'Escape' && (aberto.modal || aberto.botoes)) {
+      // Esc fecha qualquer balão aberto (o "não", se houver): sem isso, quem joga só com o teclado ficava
+      // com o balão de boas-vindas aberto para sempre (e a pergunta surpresa esperando por ele)
+      if (e.key === 'Escape') {
         var nao = bal.querySelector('.claude-acoes button[data-valor="nao"]');
-        if (!nao && !aberto.modal) return;
         e.preventDefault(); e.stopPropagation();
         if (nao) nao.click(); else fechar();
         return;
