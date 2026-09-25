@@ -30,7 +30,7 @@
     O: ['.#.', '#.#', '#.#', '#.#', '.#.'], P: ['##.', '#.#', '##.', '#..', '#..'], Q: ['.#.', '#.#', '#.#', '.#.', '..#'],
     R: ['##.', '#.#', '##.', '#.#', '#.#'], S: ['.##', '#..', '.#.', '..#', '##.'], T: ['###', '.#.', '.#.', '.#.', '.#.'],
     U: ['#.#', '#.#', '#.#', '#.#', '.#.'], V: ['#.#', '#.#', '#.#', '.#.', '.#.'], X: ['#.#', '#.#', '.#.', '#.#', '#.#'],
-    Z: ['###', '..#', '.#.', '#..', '###'], a: ['...', '##.', '.##', '#.#', '.##'],
+    Z: ['###', '..#', '.#.', '#..', '###'], a: ['##.', '..#', '.##', '#.#', '.##'],
   };
   function letra(ctx, ch, x, y, cor) {
     var m = FONTE[ch];
@@ -140,6 +140,51 @@
       ret(ctx, px + 4, py + 20, 8, 1, '#c8b8d8'); ret(ctx, px + 4, py + 22, 6, 1, '#c8b8d8');
       ret(ctx, px + 7, py + 5, 2, 2, K);
     } });
+  // tapete de "página de caderno": papel creme, pauta azul, margem vermelha e o "Aa" escrito
+  I.objeto('portugues-tapete-caderno', { w: 4, h: 1, solido: false, semSombra: true, plano: true,
+    desenhar: function (ctx, px, py, o) {
+      var W = (o.w || 4) * 16, x = px + 2, y = py + 1, w = W - 4, h = 14;
+      ret(ctx, x + 1, y + h, w, 1, 'rgba(58,36,70,0.18)');
+      ret(ctx, x, y, w, h, K); ret(ctx, x + 1, y + 1, w - 2, h - 2, '#fffdf6');
+      ret(ctx, x + 1, y + 1, w - 2, 2, '#fbe9ef');
+      for (var ly = y + 4; ly < y + h - 1; ly += 3) ret(ctx, x + 1, ly, w - 2, 1, '#9fc8f0');
+      ret(ctx, x + 9, y + 1, 1, h - 2, '#ff6b7a');
+      // furinhos de fichário na borda
+      for (var fx = x + 3; fx < x + 8; fx += 4) ret(ctx, fx, y + 5, 2, 2, '#e8dcc8');
+      ret(ctx, x + 3, y + 10, 2, 2, '#e8dcc8');
+      // "Aa" e uma palavrinha escrita a lápis
+      // (a poltrona fica na frente do meio do tapete: o "Aa" vai à direita dela)
+      ret(ctx, x + 11, y + 5, 3, 1, '#6a5a8a'); ret(ctx, x + 11, y + 8, 2, 1, '#6a5a8a');
+      letra(ctx, 'A', x + 33, y + 4, VERM); letra(ctx, 'a', x + 37, y + 4, VERDE2);
+      ret(ctx, x + 42, y + 7, 7, 1, '#6a5a8a'); ret(ctx, x + 50, y + 7, 5, 1, '#6a5a8a');
+      ret(ctx, x + 33, y + 10, 9, 1, '#6a5a8a'); ret(ctx, x + 43, y + 10, 3, 1, '#6a5a8a');
+      // lápis largado no canto
+      ret(ctx, x + w - 11, y + 10, 8, 3, K); ret(ctx, x + w - 10, y + 11, 5, 1, '#ffd34d'); ret(ctx, x + w - 5, y + 11, 1, 1, '#f3c890');
+      ret(ctx, x + w - 12, y + 11, 1, 1, '#ff9cc6');
+    } });
+  // poltrona de leitura com encosto alto e braços roliços
+  I.objeto('portugues-poltrona', { w: 1, h: 1, topo: 10, solido: true, alto: true,
+    desenhar: function (ctx, px, py, o) {
+      var c = v(o, 'cor', VERM), e = escurecer(c, 0.22), l = clarear(c, 0.35), cx = px + 8;
+      // encosto alto e arredondado, com capitonê
+      ret(ctx, cx - 6, py - 9, 13, 12, K); ret(ctx, cx - 5, py - 10, 11, 1, K);
+      ret(ctx, cx - 5, py - 9, 11, 11, c); ret(ctx, cx - 4, py - 9, 9, 1, l);
+      ret(ctx, cx - 2, py - 6, 1, 1, e); ret(ctx, cx + 2, py - 6, 1, 1, e); ret(ctx, cx, py - 3, 1, 1, e);
+      // assento
+      ret(ctx, cx - 6, py + 2, 13, 7, K); ret(ctx, cx - 5, py + 3, 11, 5, l); ret(ctx, cx - 5, py + 6, 11, 2, c);
+      // braços roliços dos dois lados
+      [cx - 8, cx + 5].forEach(function (bx) {
+        ret(ctx, bx, py - 2, 4, 11, K); ret(ctx, bx + 1, py - 1, 2, 9, e); ret(ctx, bx + 1, py - 1, 2, 1, l);
+        ret(ctx, bx - 0, py - 3, 4, 2, K); ret(ctx, bx + 1, py - 2, 2, 1, l);
+      });
+      // saia com babado e pezinhos de madeira
+      ret(ctx, cx - 8, py + 9, 17, 3, K); ret(ctx, cx - 7, py + 9, 15, 2, e);
+      for (var b = cx - 7; b < cx + 8; b += 3) ret(ctx, b, py + 10, 1, 1, l);
+      ret(ctx, cx - 7, py + 12, 2, 3, K); ret(ctx, cx + 6, py + 12, 2, 3, K);
+      ret(ctx, cx - 7, py + 12, 1, 2, C.madeira); ret(ctx, cx + 6, py + 12, 1, 2, C.madeira);
+      // almofadinha com o "A"
+      ret(ctx, cx - 3, py - 1, 7, 5, K); ret(ctx, cx - 2, py, 5, 3, C.creme); ret(ctx, cx, py, 1, 3, VERDE);
+    } });
 
   /* ================= COZINHA DAS RECEITAS ================= */
   I.objeto('portugues-fogao', { w: 2, h: 1, topo: 14, solido: true, alto: true,
@@ -174,18 +219,43 @@
       ret(ctx, px + 18, py - 7, 9, 3, K); ret(ctx, px + 19, py - 6, 7, 1, BANANA); ret(ctx, px + 19, py - 7, 7, 1, '#fff3a0');
       ret(ctx, px + 20, py - 9, 8, 2, K); ret(ctx, px + 21, py - 9, 6, 1, BANANA);
     } });
-  I.objeto('portugues-salada', { w: 1, h: 1, topo: 10, solido: true, alto: true,
+  I.objeto('portugues-salada', { w: 1, h: 1, topo: 12, solido: true, alto: true,
     desenhar: function (ctx, px, py) {
       var cx = px + 8;
-      mesinha(ctx, cx, py, py - 1, '#ffc2d8');
-      // tigela de vidro com a salada de frutas
-      elipse(ctx, cx, py - 5, 7, 5, K);
-      ret(ctx, cx - 7, py - 7, 15, 3, K); ret(ctx, cx - 6, py - 7, 13, 3, '#dff4ff');
-      elipse(ctx, cx, py - 4, 6, 3, '#dff4ff'); ret(ctx, cx - 5, py - 7, 1, 3, C.branco);
-      ret(ctx, cx - 6, py - 9, 13, 3, K);
-      ret(ctx, cx - 5, py - 9, 3, 2, MORANGO); ret(ctx, cx - 2, py - 10, 3, 2, BANANA); ret(ctx, cx + 1, py - 9, 2, 2, KIWI);
-      ret(ctx, cx + 3, py - 10, 3, 2, LARANJA); ret(ctx, cx - 1, py - 8, 2, 1, UVA); ret(ctx, cx + 4, py - 8, 2, 1, MORANGO);
-      ret(ctx, cx + 5, py - 13, 1, 4, C.metal); ret(ctx, cx + 4, py - 14, 3, 2, C.metal2);
+      mesinha(ctx, cx, py, py + 1, '#ffc2d8');
+      // tigelona de vidro transbordando de salada de frutas, com a colher de pau
+      ret(ctx, cx - 8, py - 6, 17, 3, K); ret(ctx, cx - 7, py - 3, 15, 3, K); ret(ctx, cx - 5, py, 11, 2, K);
+      ret(ctx, cx - 7, py - 5, 15, 2, '#dff4ff'); ret(ctx, cx - 6, py - 3, 13, 2, '#dff4ff'); ret(ctx, cx - 4, py - 1, 9, 2, '#c8e8f8');
+      ret(ctx, cx - 6, py - 5, 1, 3, C.branco); ret(ctx, cx - 5, py - 2, 1, 1, C.branco);
+      ret(ctx, cx - 5, py - 4, 3, 1, MORANGO); ret(ctx, cx - 1, py - 3, 2, 1, KIWI); ret(ctx, cx + 3, py - 4, 3, 1, LARANJA);
+      // frutas por cima (montinho)
+      ret(ctx, cx - 7, py - 8, 15, 3, K); ret(ctx, cx - 5, py - 10, 11, 2, K);
+      ret(ctx, cx - 6, py - 8, 3, 2, MORANGO); ret(ctx, cx - 3, py - 9, 3, 2, BANANA); ret(ctx, cx, py - 8, 2, 2, KIWI);
+      ret(ctx, cx + 2, py - 9, 3, 2, LARANJA); ret(ctx, cx + 5, py - 8, 2, 2, UVA); ret(ctx, cx - 1, py - 10, 2, 1, UVA);
+      ret(ctx, cx - 4, py - 10, 2, 1, MORANGO); ret(ctx, cx + 3, py - 10, 2, 1, KIWI); ret(ctx, cx - 5, py - 9, 1, 1, '#ffd0d8');
+      // colher de pau espetada na salada
+      ret(ctx, cx + 3, py - 16, 3, 3, K); ret(ctx, cx + 4, py - 15, 1, 1, C.madeiraClara);
+      for (var i = 0; i < 4; i++) { ret(ctx, cx + 4 + i, py - 14 + i, 2, 2, K); }
+      for (var j = 0; j < 4; j++) ret(ctx, cx + 4 + j, py - 13 + j, 1, 1, C.madeira);
+      ret(ctx, cx + 2, py - 18, 4, 3, K); ret(ctx, cx + 3, py - 17, 2, 1, C.madeiraClara);
+    } });
+  // mesa de preparo: tábua com massa, rolo de macarrão, tigela de farinha e ovos
+  I.objeto('portugues-mesa-preparo', { w: 2, h: 1, topo: 10, solido: true, alto: true,
+    desenhar: function (ctx, px, py) {
+      ret(ctx, px + 1, py - 1, 30, 6, K); ret(ctx, px + 2, py, 28, 4, C.madeiraClara); ret(ctx, px + 2, py + 3, 28, 1, C.madeira);
+      ret(ctx, px + 3, py + 5, 3, 10, K); ret(ctx, px + 26, py + 5, 3, 10, K); ret(ctx, px + 4, py + 5, 1, 9, C.madeira);  ret(ctx, px + 27, py + 5, 1, 9, C.madeira);
+      ret(ctx, px + 5, py + 10, 22, 2, K); ret(ctx, px + 6, py + 10, 20, 1, C.madeira2);
+      ret(ctx, px + 8, py + 12, 16, 1, 'rgba(58,36,70,0.25)');
+      // tábua com a massa de biscoito e as forminhas de coração e estrela
+      ret(ctx, px + 3, py - 3, 15, 4, K); ret(ctx, px + 4, py - 2, 13, 2, '#f3c890');
+      elipse(ctx, px + 9, py - 3, 4, 1, '#fff0d8'); ret(ctx, px + 13, py - 3, 2, 1, '#ff7eb6'); ret(ctx, px + 15, py - 4, 1, 1, '#ffd34d');
+      // rolo de macarrão
+      ret(ctx, px + 3, py - 6, 14, 3, K); ret(ctx, px + 5, py - 5, 10, 1, C.madeiraClara); ret(ctx, px + 4, py - 5, 1, 1, C.madeira); ret(ctx, px + 15, py - 5, 1, 1, C.madeira);
+      // tigela de farinha com a colher
+      ret(ctx, px + 19, py - 6, 10, 6, K); ret(ctx, px + 20, py - 5, 8, 4, '#9fd0ff'); ret(ctx, px + 20, py - 6, 8, 1, C.branco); ret(ctx, px + 21, py - 7, 6, 1, C.branco);
+      ret(ctx, px + 26, py - 11, 1, 5, C.madeira3);
+      // dois ovos e farinha espalhada
+      ovo(ctx, px + 22, py + 1, C.creme); ret(ctx, px + 27, py, 2, 1, C.branco); ret(ctx, px + 7, py + 1, 3, 1, C.branco);
     } });
   I.objeto('portugues-liquidificador', { w: 1, h: 1, topo: 14, solido: true, alto: true,
     desenhar: function (ctx, px, py) {
@@ -269,17 +339,42 @@
   I.objeto('portugues-canteiro', { w: 2, h: 1, topo: 8, solido: true,
     desenhar: function (ctx, px, py, o) {
       var W = (o.w || 2) * 16, planta = v(o, 'planta', 'alface');
-      ret(ctx, px + 1, py + 3, W - 2, 12, K); ret(ctx, px + 2, py + 4, W - 4, 10, C.madeira); ret(ctx, px + 2, py + 4, W - 4, 1, C.madeiraClara);
-      ret(ctx, px + 3, py + 5, W - 6, 4, TERRA); for (var t = px + 4; t < px + W - 4; t += 4) ret(ctx, t, py + 6, 1, 1, TERRA2);
+      if (v(o, 'chao', false)) {
+        // canteiro direto no chão: montinho de terra fofa com a bordinha de pedras
+        ret(ctx, px + 1, py + 4, W - 2, 11, K); ret(ctx, px + 2, py + 5, W - 4, 9, TERRA); ret(ctx, px + 2, py + 5, W - 4, 1, '#a8744a');
+        for (var r = py + 8; r < py + 14; r += 3) for (var q = px + 3 + (r % 2) * 2; q < px + W - 3; q += 4) ret(ctx, q, r, 2, 1, TERRA2);
+        for (var pd = px + 1; pd < px + W - 2; pd += 4) { ret(ctx, pd, py + 13, 3, 2, '#b8b0a8'); ret(ctx, pd, py + 13, 3, 1, '#e0dad2'); }
+      } else {
+        ret(ctx, px + 1, py + 3, W - 2, 12, K); ret(ctx, px + 2, py + 4, W - 4, 10, C.madeira); ret(ctx, px + 2, py + 4, W - 4, 1, C.madeiraClara);
+        ret(ctx, px + 3, py + 5, W - 6, 4, TERRA); for (var t = px + 4; t < px + W - 4; t += 4) ret(ctx, t, py + 6, 1, 1, TERRA2);
+      }
       for (var x = px + 6; x < px + W - 4; x += 8) {
         if (planta === 'alface') { elipse(ctx, x, py + 3, 3, 3, K); elipse(ctx, x, py + 3, 2, 2, KIWI); ret(ctx, x, py + 2, 1, 2, FOLHA2); }
         else if (planta === 'cenoura') { ret(ctx, x - 1, py + 5, 3, 2, LARANJA); ret(ctx, x, py - 1, 1, 6, FOLHA); ret(ctx, x - 2, py, 1, 4, FOLHA2); ret(ctx, x + 2, py, 1, 4, FOLHA2); }
         else if (planta === 'tomate') {
-          ret(ctx, x, py - 7, 1, 12, FOLHA2); ret(ctx, x - 2, py - 4, 5, 1, FOLHA);
-          circulo(ctx, x - 2, py - 1, 2, K); circulo(ctx, x - 2, py - 1, 1, '#ff4f5e'); circulo(ctx, x + 2, py - 5, 2, K); circulo(ctx, x + 2, py - 5, 1, '#ff4f5e');
+          // tutor de madeira, galhinho com folhas e tomates redondos com o cabinho verde em estrela
+          ret(ctx, x + 3, py - 9, 1, 14, C.madeira2);
+          ret(ctx, x, py - 8, 1, 13, FOLHA2); ret(ctx, x - 3, py - 6, 3, 2, FOLHA); ret(ctx, x + 1, py - 3, 3, 2, FOLHA); ret(ctx, x - 3, py + 1, 3, 1, FOLHA);
+          [[-2, -1], [2, -6]].forEach(function (tm) {
+            var tx = x + tm[0], ty = py + tm[1];
+            circulo(ctx, tx, ty, 3, K); circulo(ctx, tx, ty, 2, '#ff3b3b'); ret(ctx, tx - 1, ty - 1, 1, 1, '#ffb0a0'); ret(ctx, tx + 1, ty + 1, 1, 1, '#c81e2e');
+            ret(ctx, tx - 1, ty - 3, 3, 1, '#2f8a3a'); ret(ctx, tx, ty - 4, 1, 1, '#2f8a3a');
+          });
         } else { // hortelã
           [[-2, 2], [0, 0], [2, 2], [-1, -2], [1, -3]].forEach(function (f) { ret(ctx, x + f[0], py + f[1] + 1, 2, 2, K); ret(ctx, x + f[0], py + f[1] + 1, 1, 1, '#7fe08a'); });
         }
+      }
+    } });
+  // leira de terra arada, pintada no chão da horta (dá para pisar), com brotinhos ou repolhinhos
+  I.objeto('portugues-leira', { w: 3, h: 1, solido: false, plano: true, semSombra: true,
+    desenhar: function (ctx, px, py, o) {
+      var W = (o.w || 3) * 16, H = (o.h || 1) * 16, tipo = v(o, 'planta', 'broto');
+      ret(ctx, px + 2, py + 2, W - 4, H - 3, '#7a4e30'); ret(ctx, px + 3, py + 1, W - 6, H - 1, '#7a4e30');
+      ret(ctx, px + 3, py + 3, W - 6, H - 6, TERRA);
+      for (var r = py + 5; r < py + H - 3; r += 4) { ret(ctx, px + 4, r, W - 8, 1, TERRA2); ret(ctx, px + 4, r + 1, W - 8, 1, '#a8744a'); }
+      for (var x = px + 7; x < px + W - 5; x += 8) for (var y = py + 4; y < py + H - 4; y += 8) {
+        if (tipo === 'repolho') { circulo(ctx, x, y + 1, 2, '#3f9a45'); ret(ctx, x - 1, y, 2, 2, '#9fe08a'); }
+        else { ret(ctx, x, y, 1, 3, '#3f9a45'); ret(ctx, x - 2, y, 2, 1, '#6fdc8c'); ret(ctx, x + 1, y - 1, 2, 1, '#6fdc8c'); }
       }
     } });
   I.objeto('portugues-hortela', { w: 1, h: 1, topo: 8, solido: true,
@@ -300,15 +395,25 @@
   I.objeto('portugues-hibisco', { w: 1, h: 1, topo: 16, solido: true, alto: true,
     desenhar: function (ctx, px, py) {
       var cx = px + 8;
-      ret(ctx, cx - 5, py + 5, 11, 10, K); ret(ctx, cx - 4, py + 6, 9, 8, '#e8b27a'); ret(ctx, cx - 4, py + 6, 9, 1, '#ffd9a8');
-      circulo(ctx, cx, py - 5, 9, K); circulo(ctx, cx, py - 5, 8, FOLHA2);
-      circulo(ctx, cx - 3, py - 8, 4, FOLHA); circulo(ctx, cx + 4, py - 3, 4, FOLHA); circulo(ctx, cx - 2, py, 3, FOLHA);
-      // flores de hibisco: 5 pétalas vermelhas e o miolo amarelo comprido
-      [[-4, -9], [4, -7], [0, -2], [-5, 0], [5, 1]].forEach(function (f) {
-        var x = cx + f[0], y = py + f[1];
-        ret(ctx, x - 2, y - 1, 5, 3, '#ff3b5c'); ret(ctx, x - 1, y - 2, 3, 5, '#ff3b5c'); ret(ctx, x - 1, y - 1, 1, 1, '#ff8aa0');
-        ret(ctx, x, y, 1, 1, '#c01a3a'); ret(ctx, x + 1, y - 2, 1, 1, BANANA);
-      });
+      // vaso de barro
+      ret(ctx, cx - 5, py + 5, 11, 10, K); ret(ctx, cx - 4, py + 6, 9, 8, '#e8b27a'); ret(ctx, cx - 4, py + 6, 9, 1, '#ffd9a8'); ret(ctx, cx - 4, py + 6, 2, 8, '#f3c898');
+      // folhagem com folhas pontudas
+      circulo(ctx, cx, py - 4, 9, K); circulo(ctx, cx, py - 4, 8, FOLHA2);
+      circulo(ctx, cx + 3, py - 7, 4, FOLHA); circulo(ctx, cx - 5, py - 1, 3, FOLHA); circulo(ctx, cx + 4, py + 1, 3, '#4ea84e');
+      [[-8, -8], [8, -4], [-9, 1], [7, 3]].forEach(function (f) { ret(ctx, cx + f[0], py + f[1], 2, 1, FOLHA2); ret(ctx, cx + f[0], py + f[1] - 1, 1, 1, K); });
+      // um botão fechado e duas flores grandes de hibisco: 5 pétalas, o fundinho escuro e o miolo amarelo comprido
+      ret(ctx, cx + 5, py - 11, 3, 4, K); ret(ctx, cx + 6, py - 10, 1, 2, '#ff3b5c'); ret(ctx, cx + 6, py - 8, 1, 2, FOLHA);
+      var PET = [[0, -3], [3, -1], [2, 3], [-2, 3], [-3, -1]], FLORES = [[-3, -7, 1], [4, 0, -1]];
+      FLORES.forEach(function (f) { PET.forEach(function (p) { circulo(ctx, cx + f[0] + p[0], py + f[1] + p[1], 2, K); }); });
+      FLORES.forEach(function (f) { flor(cx + f[0], py + f[1], f[2]); });
+      function flor(x, y, lado) {
+        PET.forEach(function (p) { circulo(ctx, x + p[0], y + p[1], 1, '#ff3b5c'); ret(ctx, x + p[0] + (p[0] > 0 ? 1 : -1), y + p[1] + (p[1] > 0 ? 1 : -1), 1, 1, '#ff3b5c'); });
+        PET.forEach(function (p) { ret(ctx, x + Math.round(p[0] * 1.3), y + Math.round(p[1] * 1.3), 1, 1, '#ff8aa0'); });
+        ret(ctx, x - 1, y - 1, 3, 3, '#e0203f'); ret(ctx, x, y, 1, 1, '#8a0a26');
+        // miolo comprido saindo para o lado, com as pontinhas de pólen
+        for (var i = 1; i <= 4; i++) ret(ctx, x + lado * i, y - i, 1, 1, BANANA);
+        ret(ctx, x + lado * 5, y - 5, 1, 1, '#ff9d2e'); ret(ctx, x + lado * 4, y - 5, 1, 1, '#ff9d2e'); ret(ctx, x + lado * 5, y - 4, 1, 1, '#ff9d2e');
+      }
     } });
   I.objeto('portugues-placa-horta', { w: 1, h: 1, topo: 12, solido: true, alto: true,
     desenhar: function (ctx, px, py) {
@@ -409,26 +514,38 @@
       // pedrinha e giz
       ret(ctx, cx + 9, base - 6, 3, 2, '#8a8aa0'); ret(ctx, cx - 14, base - 4, 4, 2, giz);
     } });
+  // chocalho deitado em diagonal numa almofadinha de exposição: cabeça oval listrada e cabo comprido de madeira
   I.objeto('portugues-chocalho', { w: 1, h: 1, topo: 14, solido: true, alto: true,
     desenhar: function (ctx, px, py) {
       var cx = px + 8;
-      // pedestal de circo (tamborzinho vermelho e dourado)
-      ret(ctx, cx - 6, py + 3, 13, 12, K); ret(ctx, cx - 5, py + 4, 11, 10, VERM);
-      for (var i = 0; i < 4; i++) ret(ctx, cx - 4 + i * 3, py + 5 + (i % 2) * 4, 2, 4, C.ouro);
-      elipse(ctx, cx, py + 3, 6, 2, K); elipse(ctx, cx, py + 3, 5, 1, C.ouro3);
-      // chocalho grandão: cabo e cabeça redonda com bolinhas
-      ret(ctx, cx - 1, py - 4, 3, 7, K); ret(ctx, cx, py - 4, 1, 6, C.madeira);
-      circulo(ctx, cx, py - 9, 6, K); circulo(ctx, cx, py - 9, 5, '#ff9d2e');
-      ret(ctx, cx - 5, py - 9, 11, 1, '#fff3a0');
-      [[-2, -12], [2, -11], [-3, -6], [2, -6]].forEach(function (p) { ret(ctx, cx + p[0], py + p[1], 1, 1, '#b8452e'); });
-      // contas coloridas em volta (o chique-chique do chocalho)
-      [[-7, -9, '#5fb4ff'], [7, -9, '#ff4f9a'], [-5, -14, '#6fdc8c'], [5, -14, '#ffe066'], [-5, -4, '#b58cff'], [5, -4, '#6fdc8c']].forEach(function (p) { ret(ctx, cx + p[0] - 1, py + p[1] - 1, 3, 3, K); ret(ctx, cx + p[0], py + p[1], 1, 1, p[2]); });
-      ret(ctx, cx - 1, py - 3, 3, 1, VERM); ret(ctx, cx - 1, py - 1, 3, 1, VERM);
-      ret(ctx, cx - 3, py - 13, 2, 1, C.branco);
+      // almofadinha roxa com franja dourada
+      elipse(ctx, cx - 1, py + 9, 8, 5, K); elipse(ctx, cx - 1, py + 9, 7, 4, '#7c5cff'); elipse(ctx, cx - 2, py + 8, 5, 2, '#a88cff');
+      for (var f = cx - 7; f <= cx + 5; f += 2) ret(ctx, f, py + 14, 1, 1, C.ouro);
+      ret(ctx, cx - 9, py + 9, 1, 1, C.ouro); ret(ctx, cx + 7, py + 9, 1, 1, C.ouro);
+      // cabo de madeira, do canto de baixo à esquerda até a cabeça (deitado por cima da almofadinha)
+      var hx = cx + 4, hy = py - 6;
+      ret(ctx, cx - 6, py + 11, 9, 1, 'rgba(58,36,70,0.25)');
+      for (var t = 3; t <= 13; t++) ret(ctx, hx - t - 1, hy + t - 1, 4, 4, K);
+      for (var t2 = 3; t2 <= 13; t2++) { ret(ctx, hx - t2, hy + t2, 2, 2, t2 % 4 === 0 ? C.madeira2 : C.madeira); ret(ctx, hx - t2, hy + t2, 1, 1, C.madeiraClara); }
+      circulo(ctx, hx - 13, hy + 14, 2, K); circulo(ctx, hx - 13, hy + 14, 1, VERM);
+      // cabeça oval (inclinada) com faixas coloridas
+      for (var dy = -9; dy <= 9; dy++) for (var dx = -9; dx <= 9; dx++) {
+        var ao = (dx - dy) / 1.4142, pe = (dx + dy) / 1.4142;
+        var dentro = (ao * ao) / 30 + (pe * pe) / 14 <= 1, borda = (ao * ao) / 42 + (pe * pe) / 21 <= 1;
+        if (!borda) continue;
+        var cor = K;
+        if (dentro) {
+          cor = '#ff9d2e';
+          if (ao > -2.5 && ao < -0.8) cor = VERM; else if (ao > 0.8 && ao < 2.5) cor = '#ffe066'; else if (ao > 3.8) cor = '#5fb4ff';
+        }
+        ret(ctx, hx + dx, hy + dy, 1, 1, cor);
+      }
+      ret(ctx, hx - 2, hy - 2, 2, 1, C.branco); ret(ctx, hx - 2, hy - 1, 1, 1, C.branco);
     },
     anim: function (ctx, px, py, t) {
-      var f = Math.floor(t / 180) % 6;
-      if (f < 2) { var cx = px + 8; ret(ctx, cx - 9, py - 11 + f, 2, 1, K); ret(ctx, cx + 8, py - 9 - f, 2, 1, K); ret(ctx, cx - 9, py - 7, 1, 1, K); }
+      // chique-chique: risquinhos de som em volta da cabeça
+      var f = Math.floor(t / 180) % 6, hx = px + 12, hy = py - 6;
+      if (f < 2) { ret(ctx, hx + 5, hy - 6 - f, 2, 1, K); ret(ctx, hx + 7, hy - 2, 1, 2, K); ret(ctx, hx + 1, hy - 8 + f, 1, 1, K); }
     } });
   I.objeto('portugues-lona', { w: 2, h: 2, parede: true, solido: false,
     desenhar: function (ctx, px, py, o) {
@@ -443,16 +560,28 @@
       ret(ctx, px + W / 2 - 2, py + 20, 5, 5, C.ouro); ret(ctx, px + W / 2, py + 18, 1, 9, C.ouro); ret(ctx, px + W / 2 - 4, py + 22, 9, 1, C.ouro);
       for (var b = 0; b < W; b += 4) { triangulo(ctx, px + b, py + 6, 4, 3, b % 8 ? C.ouro : c); }
     } });
-  I.objeto('portugues-ninho', { w: 1, h: 1, topo: 10, solido: true, alto: true,
+  // ninho de palha em cima de um arbusto, com três ovinhos pintados
+  I.objeto('portugues-ninho', { w: 1, h: 1, topo: 12, solido: true, alto: true,
     desenhar: function (ctx, px, py) {
       var cx = px + 8;
-      toco(ctx, cx, py, py - 1);
-      // ninho de gravetos com três ovinhos
-      elipse(ctx, cx, py - 4, 7, 4, K); elipse(ctx, cx, py - 4, 6, 3, '#b07a4a');
-      ovo(ctx, cx - 3, py - 7, '#dff4ff'); ovo(ctx, cx + 3, py - 7, '#dff4ff'); ovo(ctx, cx, py - 8, C.creme);
-      ret(ctx, cx - 6, py - 4, 13, 1, '#8a5a3a'); ret(ctx, cx - 5, py - 2, 11, 1, '#d9a36a');
-      for (var i = -6; i <= 6; i += 3) ret(ctx, cx + i, py - 3, 2, 1, '#6b4428');
+      // arbusto redondo com folhas e duas florzinhas
+      circulo(ctx, cx, py + 6, 8, K); circulo(ctx, cx, py + 6, 7, FOLHA2);
+      circulo(ctx, cx - 3, py + 4, 4, FOLHA); circulo(ctx, cx + 4, py + 7, 3, FOLHA); circulo(ctx, cx - 1, py + 10, 3, '#4ea84e');
+      [[-5, 2], [-1, 6], [3, 3], [5, 9], [-4, 10], [1, 12]].forEach(function (p) { ret(ctx, cx + p[0], py + p[1], 2, 1, '#8fe08a'); });
+      ret(ctx, cx - 6, py + 8, 2, 2, '#ff9cc6'); ret(ctx, cx + 5, py + 4, 2, 2, C.branco);
+      ret(ctx, cx - 7, py + 13, 15, 2, K);
+      // ninho de palha clarinha
+      elipse(ctx, cx, py - 1, 8, 4, K); elipse(ctx, cx, py - 1, 7, 3, '#e8c070');
+      ret(ctx, cx - 6, py - 3, 13, 1, '#6b4428');   // a boca do ninho (sombra por dentro)
+      ovoPintado(ctx, cx - 3, py - 5); ovoPintado(ctx, cx + 3, py - 5); ovoPintado(ctx, cx, py - 6);
+      elipse(ctx, cx, py - 2, 7, 1, K); ret(ctx, cx - 6, py - 2, 13, 1, '#f5d88a');
+      for (var i = -6; i <= 5; i += 2) { ret(ctx, cx + i, py, 2, 1, '#c8923a'); ret(ctx, cx + i + 1, py + 1, 1, 1, '#fff0b0'); }
+      ret(ctx, cx - 8, py - 2, 2, 1, '#c8923a'); ret(ctx, cx + 7, py - 1, 2, 1, '#c8923a'); ret(ctx, cx + 6, py - 3, 1, 1, '#f5d88a');
     } });
+  function ovoPintado(ctx, cx, cy) {
+    elipse(ctx, cx, cy, 2, 3, K); elipse(ctx, cx, cy, 1, 2, '#cfeeff');
+    ret(ctx, cx - 1, cy - 1, 1, 1, C.branco); ret(ctx, cx + 1, cy - 1, 1, 1, '#3f5f96'); ret(ctx, cx, cy + 1, 1, 1, '#3f5f96'); ret(ctx, cx - 1, cy + 2, 1, 1, '#7a4a8a');
+  }
   I.objeto('portugues-pipoca', { w: 1, h: 1, topo: 18, solido: true, alto: true,
     desenhar: function (ctx, px, py) {
       var cx = px + 8;
@@ -491,24 +620,51 @@
 
   /* ================= PORTO DA EXPEDIÇÃO ================= */
   // tanque de vidro: a pontinha do iceberg fora da água e a maior parte embaixo
-  I.objeto('portugues-iceberg', { w: 2, h: 1, topo: 16, solido: true, alto: true,
+  I.objeto('portugues-iceberg', { w: 2, h: 1, topo: 18, solido: true, alto: true,
     desenhar: function (ctx, px, py) {
+      var cx = px + 16, nivel = py - 6;
+      var FUNDO = '#1f6f96', FUNDO2 = '#2a88b4', GELOF = '#56c3de', GELOF2 = '#8fe0f0', CONT = '#12506e';
+      // base de madeira do tanque
       ret(ctx, px + 2, py + 8, 28, 7, K); ret(ctx, px + 3, py + 9, 26, 5, C.madeira2); ret(ctx, px + 3, py + 9, 26, 1, C.madeiraClara);
-      ret(ctx, px + 1, py - 16, 30, 25, K); ret(ctx, px + 2, py - 15, 28, 23, '#eaf8ff');
-      ret(ctx, px + 2, py - 7, 28, 15, MAR3); ret(ctx, px + 2, py - 7, 28, 1, C.branco);
-      // parte de baixo (grande) e pontinha de cima (pequena)
-      var cx = px + 16;
-      for (var j = 0; j < 14; j++) { var m = Math.round(4 + Math.sin((j + 1) / 14 * Math.PI) * 7); ret(ctx, cx - m, py - 6 + j, m * 2, 1, j % 5 === 2 ? GELO3 : GELO2); }
-      triangulo(ctx, cx - 5, py - 14, 10, 8, K); triangulo(ctx, cx - 4, py - 13, 8, 7, C.branco); ret(ctx, cx - 4, py - 7, 8, 1, GELO);
-      ret(ctx, cx - 1, py - 12, 1, 3, GELO2);
-      ret(ctx, px + 3, py - 14, 1, 20, C.branco);
-      ret(ctx, px + 25, py - 12, 3, 1, '#9fdcff'); ret(ctx, px + 24, py - 10, 2, 1, '#9fdcff');
+      ret(ctx, px + 5, py + 11, 22, 1, C.madeira3);
+      // vidro: ar em cima, água funda embaixo
+      ret(ctx, px + 1, py - 17, 30, 26, K);
+      ret(ctx, px + 2, py - 16, 28, nivel - py + 16, '#eef9ff');
+      ret(ctx, px + 2, nivel, 28, py + 8 - nivel, FUNDO2);
+      for (var a = nivel + 4; a < py + 8; a += 4) ret(ctx, px + 2, a, 28, 2, FUNDO);
+      // a parte escondida: bem MAIOR, embaixo d'água, com contorno
+      var fundo = [[0, 7], [1, 9], [2, 10], [3, 11], [4, 12], [5, 12], [6, 12], [7, 11], [8, 11], [9, 10], [10, 9], [11, 8], [12, 6], [13, 4]];
+      fundo.forEach(function (f) { var y = nivel + 1 + f[0], m = f[1], d = f[0] % 4 === 1 ? 1 : 0; ret(ctx, cx - m - 1 + d, y, m * 2 + 2 - d, 1, CONT); });
+      fundo.forEach(function (f) { var y = nivel + 1 + f[0], m = f[1] - 1, d = f[0] % 4 === 1 ? 1 : 0; if (m > 0) ret(ctx, cx - m + d, y, m * 2 - d, 1, GELOF); });
+      for (var k = 1; k < 12; k++) ret(ctx, cx - (fundo[k][1] - 2), nivel + 1 + k, 2, 1, GELOF2);
+      [[3, 3], [6, 5], [9, 2]].forEach(function (r) { ret(ctx, cx + r[0] - 2, nivel + r[1] + 2, 3, 1, '#3aa6c8'); });
+      // a pontinha (pequena) fora d'água: branca, com a sombra azul-clara do lado direito
+      triangulo(ctx, cx - 6, nivel - 9, 12, 10, K);
+      triangulo(ctx, cx - 5, nivel - 8, 10, 9, C.branco);
+      for (var j = 0; j < 8; j++) { var mm = Math.round((j + 1) * 5 / 9); ret(ctx, cx + 1, nivel - 7 + j, Math.max(1, mm - 1), 1, GELO2); }
+      ret(ctx, cx - 1, nivel - 6, 1, 3, GELO);
+      // linha d'água com espuma
+      ret(ctx, px + 2, nivel, 28, 1, '#8fd0f5');
+      for (var e = px + 3; e < px + 29; e += 3) ret(ctx, e, nivel, 2, 1, C.branco);
+      ret(ctx, cx - 8, nivel + 1, 3, 1, C.branco); ret(ctx, cx + 6, nivel + 1, 3, 1, C.branco);
+      // brilho do vidro
+      ret(ctx, px + 3, py - 15, 1, 21, 'rgba(255,255,255,0.75)'); ret(ctx, px + 5, py - 15, 1, 6, 'rgba(255,255,255,0.6)');
+      // bolhinhas
+      ret(ctx, px + 25, py + 1, 1, 1, '#bfe9ff'); ret(ctx, px + 26, py - 2, 2, 2, '#bfe9ff');
+      // tampa do tanque
+      ret(ctx, px, py - 18, 32, 2, K); ret(ctx, px + 1, py - 18, 30, 1, '#5a6a84');
     } });
   I.objeto('portugues-barco', { w: 3, h: 2, topo: 18, solido: true, alto: true,
     desenhar: function (ctx, px, py) {
-      // água do cais embaixo do barco
-      ret(ctx, px, py + 18, 48, 14, K); ret(ctx, px + 1, py + 19, 46, 12, MAR); ret(ctx, px + 1, py + 19, 46, 2, MAR3);
-      for (var w = 0; w < 5; w++) ret(ctx, px + 4 + w * 9, py + 25 + (w % 2) * 3, 4, 1, MAR3);
+      // água do cais: só no lugar do barco (da parede até o fim da fileira dele), com a borda de pedra
+      ret(ctx, px, py + 1, 48, 27, K); ret(ctx, px + 1, py + 1, 46, 26, MAR2); ret(ctx, px + 1, py + 1, 46, 3, '#23649e');
+      ret(ctx, px + 1, py + 16, 46, 11, MAR);
+      for (var w = 0; w < 6; w++) { ret(ctx, px + 3 + w * 8, py + 6 + (w % 2) * 4, 4, 1, MAR); ret(ctx, px + 2 + w * 8, py + 23 + (w % 2) * 2, 4, 1, MAR3); }
+      ret(ctx, px + 2, py + 21, 5, 1, C.branco); ret(ctx, px + 41, py + 21, 5, 1, C.branco);
+      // borda do cais: pedras com a luz em cima
+      ret(ctx, px, py + 27, 48, 5, K);
+      for (var pd = 0; pd < 8; pd++) { var pxp = px + 1 + pd * 6; ret(ctx, pxp, py + 28, 5, 3, pd % 2 ? '#b8b0c8' : '#c9c2d8'); ret(ctx, pxp, py + 28, 5, 1, '#e4e0ee'); }
+
       // casco vermelho com faixa branca
       ret(ctx, px + 3, py + 8, 42, 14, K);
       ret(ctx, px + 4, py + 9, 40, 12, VERM); ret(ctx, px + 4, py + 9, 40, 2, C.branco); ret(ctx, px + 4, py + 17, 40, 4, VERM2);
@@ -532,31 +688,107 @@
       }
       pinguim(px + 4, py + 13, 12); pinguim(px + 12, py + 13, 14); pinguim(px + 8, py + 15, 9);
     } });
-  I.objeto('portugues-focas', { w: 2, h: 1, topo: 5, solido: true,
+  var FOCA_DEITADA = [
+    '............kkk...',
+    '...........kpppk..',
+    '..........kppwkpk.',
+    '....kkkkkkkppppppk',
+    '...kppppppppplllnk',
+    '..kpppppppppllllk.',
+    'kkpppppplllllllk..',
+    'kdkplllllllllkk...',
+    'k.kkkkkdddkkk.....',
+  ];
+  var FOCA_ERGUIDA = [
+    '...kkk........',
+    '..kpppk.......',
+    '.kpkwpk.......',
+    'knplppk.......',
+    '.kllppk.......',
+    '..kllpk.......',
+    '..kllppkkkk...',
+    '..kllpppppppk.',
+    '.kllllpppppdpk',
+    '.kllllllpppkdk',
+    'kdkkllllllkk.k',
+    'k..kkkkkkk....',
+  ];
+  I.objeto('portugues-focas', { w: 2, h: 1, topo: 6, solido: true,
     desenhar: function (ctx, px, py) {
-      // placa de gelo com duas focas deitadas
-      elipse(ctx, px + 16, py + 11, 15, 4, K); elipse(ctx, px + 16, py + 11, 14, 3, GELO); ret(ctx, px + 4, py + 11, 24, 1, GELO2);
-      function foca(cx, cy, vira) {
-        elipse(ctx, cx, cy, 7, 3, K); elipse(ctx, cx, cy, 6, 2, '#8a94aa'); ret(ctx, cx - 4, cy + 1, 8, 1, '#b9c4d6');
-        var hx = cx + vira * 6;
-        circulo(ctx, hx, cy - 2, 3, K); circulo(ctx, hx, cy - 2, 2, '#8a94aa');
-        ret(ctx, hx + vira, cy - 3, 1, 1, K); ret(ctx, hx + vira * 3, cy - 1, 1, 1, K);
-        ret(ctx, cx - vira * 8, cy - 1, 2, 3, K);
-      }
-      foca(px + 10, py + 8, 1); foca(px + 23, py + 7, -1);
-      ret(ctx, px + 21, py + 5, 2, 1, C.branco);
+      // placa de gelo com duas focas: uma deitada e outra de cabeça levantada
+      elipse(ctx, px + 16, py + 12, 16, 4, K); elipse(ctx, px + 16, py + 12, 15, 3, GELO); ret(ctx, px + 5, py + 14, 22, 1, GELO2);
+      ret(ctx, px + 3, py + 11, 4, 1, C.branco); ret(ctx, px + 26, py + 13, 3, 1, C.branco);
+      var pal = { k: K, p: '#7f8aa3', d: '#56607a', l: '#dfe5ef', w: C.branco, n: '#2a1e34' };
+      function espelho(m) { return m.map(function (l) { return l.split('').reverse().join(''); }); }
+      // costas com costas: a deitada olha para a esquerda e a de cabeça erguida para a direita
+      D.matriz(ctx, px, py + 4, espelho(FOCA_DEITADA), pal);
+      D.matriz(ctx, px + 18, py + 1, espelho(FOCA_ERGUIDA), pal);
+      // luz no lombo e bigodinhos
+      ret(ctx, px + 9, py + 8, 5, 1, '#a3adc2'); ret(ctx, px + 21, py + 8, 4, 1, '#a3adc2');
+      ret(ctx, px - 1, py + 7, 1, 1, '#4a4058'); ret(ctx, px - 2, py + 9, 2, 1, '#4a4058'); ret(ctx, px - 1, py + 8, 1, 1, '#4a4058');
+      ret(ctx, px + 32, py + 3, 1, 1, '#4a4058'); ret(ctx, px + 32, py + 5, 2, 1, '#4a4058'); ret(ctx, px + 32, py + 4, 1, 1, '#4a4058');
     } });
-  I.objeto('portugues-albatroz', { w: 1, h: 1, topo: 20, solido: true, alto: true,
+  // albatroz em pé no chão do cais, de frente, com as asas bem abertas (pontas escuras) e o bico de lado
+  var ALBATROZ = [
+    '........kkk.........',
+    '.......kwwwk........',
+    '.......kgkwkkkkk....',
+    '.......kwwwkyyyyk...',
+    '........kwwkkkkok...',
+    '.kkkkkkkkwwkkkkkkkk.',
+    'kppdddddgwwgdddddppk',
+    'kpppddddwwwwddddpppk',
+    '.kppwwwwwwwwwwwwppk.',
+    '..kkkkkwwwwwwkkkkk..',
+    '......kwwwwwwk......',
+    '......kgwwwwgk......',
+    '.......kgwwgk.......',
+    '........kddk........',
+    '.......kr..rk.......',
+    '......rrr..rrr......',
+  ];
+  I.objeto('portugues-albatroz', { w: 1, h: 1, topo: 10, solido: true, alto: true,
     desenhar: function (ctx, px, py) {
-      var cx = px + 8;
-      // poste do cais com o albatroz de asas compridas
-      ret(ctx, cx - 3, py - 6, 7, 21, K); ret(ctx, cx - 2, py - 5, 5, 19, C.madeira); ret(ctx, cx - 2, py - 5, 1, 19, C.madeiraClara);
-      ret(ctx, cx - 2, py + 2, 5, 2, '#e8d2a8'); ret(ctx, cx - 3, py - 7, 7, 2, K);
-      elipse(ctx, cx, py - 11, 4, 3, K); elipse(ctx, cx, py - 11, 3, 2, C.branco);
-      ret(ctx, cx - 9, py - 14, 8, 2, K); ret(ctx, cx - 8, py - 14, 6, 1, '#5a5a6a');
-      ret(ctx, cx + 2, py - 14, 8, 2, K); ret(ctx, cx + 3, py - 14, 6, 1, '#5a5a6a');
-      circulo(ctx, cx + 3, py - 15, 2, K); circulo(ctx, cx + 3, py - 15, 1, C.branco);
-      ret(ctx, cx + 5, py - 15, 3, 1, '#ffc27a'); ret(ctx, cx + 3, py - 16, 1, 1, K);
+      // o sprite de um móvel alto só tem 2 px de folga de cada lado: 20 px de ponta a ponta de asa
+      D.matriz(ctx, px - 2, py - 1, ALBATROZ, { k: K, w: C.branco, g: '#d6dbe8', d: '#4e4a62', p: '#241f33', y: '#ffd08a', o: '#e07a6a', r: '#ff8fa8' });
+      ret(ctx, px + 5, py + 6, 2, 1, '#6e6a84'); ret(ctx, px + 9, py + 6, 2, 1, '#6e6a84');
+    } });
+  // lampião de navio: gaiola de latão com vidro e a chama, pendurado num suporte
+  I.objeto('portugues-lampiao', { w: 1, h: 1, topo: 20, solido: true, alto: true,
+    desenhar: function (ctx, px, py) {
+      var cx = px + 8, LATAO = '#d9a441', LATAO2 = '#a8742a';
+      ret(ctx, cx - 4, py + 12, 9, 3, K); ret(ctx, cx - 3, py + 12, 7, 1, LATAO);
+      ret(ctx, cx - 1, py - 8, 3, 21, K); ret(ctx, cx, py - 8, 1, 20, '#5a6a84');
+      ret(ctx, cx - 1, py - 10, 7, 3, K); ret(ctx, cx, py - 9, 5, 1, '#5a6a84'); ret(ctx, cx + 4, py - 8, 1, 3, K);
+      // lampião
+      ret(ctx, cx + 1, py - 5, 7, 2, K); ret(ctx, cx + 2, py - 5, 5, 1, LATAO);
+      ret(ctx, cx + 1, py - 3, 7, 9, K); ret(ctx, cx + 2, py - 2, 5, 7, '#fff3c0');
+      ret(ctx, cx + 3, py - 1, 3, 4, '#ffd34d'); ret(ctx, cx + 4, py, 1, 2, '#ff9d2e');
+      ret(ctx, cx + 4, py - 3, 1, 9, LATAO2); ret(ctx, cx + 2, py + 1, 5, 1, LATAO2);
+      ret(ctx, cx + 1, py + 6, 7, 2, K); ret(ctx, cx + 2, py + 6, 5, 1, LATAO);
+    },
+    anim: function (ctx, px, py, t) {
+      var f = Math.floor(t / 300) % 3;
+      ret(ctx, px + 12, py - 1 + (f === 1 ? 1 : 0), 1, 1, f === 2 ? '#fff3a0' : '#ffb020');
+    } });
+  // leme de navio num pedestal (roda vazada: aro, oito raios e manoplas)
+  I.objeto('portugues-leme', { w: 1, h: 1, topo: 14, solido: true, alto: true,
+    desenhar: function (ctx, px, py) {
+      var cx = px + 8, cy = py - 2;
+      ret(ctx, cx - 4, py + 11, 9, 4, K); ret(ctx, cx - 3, py + 12, 7, 2, C.madeira2); ret(ctx, cx - 3, py + 12, 7, 1, C.madeiraClara);
+      ret(ctx, cx - 1, py + 6, 3, 6, K); ret(ctx, cx, py + 6, 1, 5, C.madeira);
+      for (var dy = -9; dy <= 9; dy++) for (var dx = -9; dx <= 9; dx++) {
+        var r = Math.sqrt(dx * dx + dy * dy), raio = dx === 0 || dy === 0 || Math.abs(dx) === Math.abs(dy), cor = null;
+        if (r >= 3.9 && r <= 6.5) cor = (r < 4.3 || r > 5.7) ? K : (dy < 0 ? C.madeiraClara : C.madeira);
+        else if (raio && r < 3.9 && r > 2.2) cor = C.madeira3;
+        else if (raio && r > 6.5 && r <= 7.5) cor = C.madeira2;
+        else if (r <= 2.2) cor = r > 1.5 ? K : '#d9a441';
+        if (cor) ret(ctx, cx + dx, cy + dy, 1, 1, cor);
+      }
+      // manoplas nas pontas dos raios
+      [[0, -8], [0, 8], [-8, 0], [8, 0], [-6, -6], [6, -6], [-6, 6], [6, 6]].forEach(function (m) {
+        ret(ctx, cx + m[0] - 1, cy + m[1] - 1, 3, 3, K); ret(ctx, cx + m[0], cy + m[1], 1, 1, C.madeiraClara);
+      });
     } });
   I.objeto('portugues-diario', { w: 1, h: 1, topo: 10, solido: true, alto: true,
     desenhar: function (ctx, px, py) {
@@ -610,16 +842,27 @@
     } });
 
   /* ================= PARQUE DO CARROSSEL ================= */
-  I.objeto('portugues-carrossel', { w: 3, h: 3, topo: 18, solido: true, alto: true,
+  // carrossel de três unicórnios, cada um preso na sua barra, em alturas alternadas
+  var CARROSSEL_BARRAS = [-15, 0, 15];
+  I.objeto('portugues-carrossel', { w: 3, h: 3, topo: 23, solido: true, alto: true,
     desenhar: function (ctx, px, py) {
       var cx = px + 24;
-      // plataforma redonda
-      elipse(ctx, cx, py + 40, 23, 7, K); elipse(ctx, cx, py + 40, 22, 6, '#ffd1e6'); elipse(ctx, cx, py + 39, 22, 5, '#ffe6f2');
-      ret(ctx, cx - 22, py + 40, 45, 3, '#ff7eb6'); ret(ctx, cx - 22, py + 43, 45, 1, K);
-      // poste central
-      ret(ctx, cx - 2, py - 4, 5, 44, K); ret(ctx, cx - 1, py - 4, 3, 43, C.ouro); ret(ctx, cx - 1, py - 4, 1, 43, C.ouro3);
-      // cavalinhos e unicórnios nos postes (desenhados pelo anim; aqui só os postes)
-      [-15, 15, -7, 7].forEach(function (dx) { ret(ctx, cx + dx, py + 2, 1, 36, C.ouro2); });
+      // sombra no chão e a plataforma redonda com a saia listrada
+      elipse(ctx, cx, py + 44, 24, 4, 'rgba(58,36,70,0.22)');
+      elipse(ctx, cx, py + 40, 23, 7, K); elipse(ctx, cx, py + 40, 22, 6, '#ffd1e6'); elipse(ctx, cx, py + 38, 21, 4, '#ffe6f2');
+      ret(ctx, cx - 22, py + 40, 45, 3, '#ff7eb6');
+      for (var sx = cx - 21; sx < cx + 22; sx += 6) ret(ctx, sx, py + 40, 3, 3, '#ffc2dc');
+      ret(ctx, cx - 22, py + 43, 45, 1, K);
+      ret(ctx, cx - 19, py + 36, 6, 1, C.branco);
+      // coluna central (espelhada, com luzinhas)
+      ret(ctx, cx - 3, py - 4, 7, 42, K); ret(ctx, cx - 2, py - 4, 5, 41, '#ffd1e6'); ret(ctx, cx - 2, py - 4, 1, 41, C.branco);
+      for (var ly = py + 2; ly < py + 36; ly += 6) { ret(ctx, cx, ly, 1, 1, C.ouro); ret(ctx, cx, ly + 3, 1, 1, '#5fb4ff'); }
+      // as três barras douradas, do teto até a plataforma
+      CARROSSEL_BARRAS.forEach(function (dx) {
+        var bx = cx + dx;
+        ret(ctx, bx - 1, py + 3, 3, 36, K); ret(ctx, bx, py + 3, 1, 36, C.ouro); ret(ctx, bx, py + 3, 1, 36, C.ouro);
+        for (var k = py + 5; k < py + 38; k += 4) ret(ctx, bx, k, 1, 1, C.ouro3);
+      });
       // telhado de lona listrada com babados
       triangulo(ctx, cx - 25, py - 18, 51, 16, K);
       for (var j = 0; j < 14; j++) {
@@ -628,34 +871,43 @@
       }
       ret(ctx, cx - 25, py - 3, 51, 4, K); ret(ctx, cx - 24, py - 2, 49, 2, C.ouro);
       for (var b = 0; b < 12; b++) { ret(ctx, cx - 24 + b * 4, py + 1, 4, 3, K); ret(ctx, cx - 23 + b * 4, py + 1, 2, 2, b % 2 ? '#5fb4ff' : '#ff5c8a'); }
-      ret(ctx, cx, py - 22, 1, 5, K); ret(ctx, cx + 1, py - 22, 5, 3, VERDE);
+      ret(ctx, cx, py - 22, 1, 5, K); ret(ctx, cx + 1, py - 22, 5, 3, VERDE); ret(ctx, cx + 1, py - 22, 5, 1, VERDE3);
     },
     anim: function (ctx, px, py, t) {
       bichinhos(ctx, px, py, t);
     } });
-  // os cavalinhos e unicórnios sobem e descem; parado (sem animações) eles ficam no meio
-  var CAVALINHO = [
-    '........y...',
-    '.......kkk..',
-    '......kmcck.',
-    '......kmceck',
-    '.kkkkkkmccck',
-    'mcccccccckk.',
-    'kcccccccck..',
-    '.kcckkkcck..',
-    '.kk.....kk..',
+  // unicórnio de carrossel (olhando para a direita): chifre dourado, crina e rabo de duas cores
+  var UNI_CARROSSEL = [
+    '............y...',
+    '...........yy...',
+    '.........kkyk...',
+    '........kmccck..',
+    '.......kmnccecck',
+    '.......knmccccck',
+    '......kmnmcckkk.',
+    '..kkkkknmccck...',
+    '.kmkcccccccccck.',
+    'kmnkcccccccccck.',
+    'kn.kcccccccccck.',
+    '....kcckkkkcck..',
+    '....kk.....kk...',
   ];
+  // sobem e descem em alturas alternadas; parado (sem animações) um fica em cima e os outros embaixo
   function bichinhos(ctx, px, py, t) {
-    var cx = px + 24, cores = [['#ffffff', '#ff7eb6'], ['#ffd1e6', '#b58cff'], ['#e8dcff', '#5fb4ff'], ['#ffe066', '#ff5c8a']];
-    [-15, 7, -7, 15].forEach(function (dx, i) {
-      var y = py + 16 + Math.round(Math.sin(t / 420 + i * 1.6) * 3), x = cx + dx, vira = dx < 0;
-      var pal = { k: K, c: cores[i][0], m: cores[i][1], e: K, y: i % 2 === 0 ? C.ouro : null };
-      for (var j = 0; j < CAVALINHO.length; j++) for (var a = 0; a < 12; a++) {
-        var ch = CAVALINHO[j][vira ? 11 - a : a], cor = pal[ch];
-        if (cor) ret(ctx, x - 6 + a, y + j, 1, 1, cor);
+    var cx = px + 24;
+    var cores = [['#ffffff', '#ff7eb6', '#b58cff'], ['#e8dcff', '#5fb4ff', '#6fdc8c'], ['#ffe6f2', '#ffd34d', '#ff9d2e']];
+    CARROSSEL_BARRAS.forEach(function (dx, i) {
+      var fase = (i % 2 ? Math.PI : 0), y = py + 16 + Math.round(Math.sin(t / 420 + fase) * 4.5), x = cx + dx, vira = dx < 0;
+      if (!t) y = py + (i % 2 ? 21 : 12);
+      var pal = { k: K, K: K, c: cores[i][0], m: cores[i][1], n: cores[i][2], e: K, y: C.ouro };
+      for (var j = 0; j < UNI_CARROSSEL.length; j++) for (var a = 0; a < 16; a++) {
+        var ch = UNI_CARROSSEL[j][vira ? 15 - a : a], cor = pal[ch];
+        if (cor) ret(ctx, x - (vira ? 9 : 6) + a, y + j, 1, 1, cor);
       }
-      ret(ctx, x, y + 5, 1, 2, C.ouro2);   // o poste passando pela sela
-      ret(ctx, x - 1, y + 4, 3, 1, VERM);
+      // bochecha rosada, a selinha no lombo e a barra passando por ela
+      ret(ctx, x + (vira ? -3 : 6), y + 5, 1, 1, '#ff9cc6');
+      ret(ctx, x - 2, y + 7, 5, 2, VERM); ret(ctx, x - 2, y + 8, 5, 1, VERM2); ret(ctx, x - 1, y + 9, 3, 1, C.ouro);
+      ret(ctx, x, y + 6, 1, 4, C.ouro); ret(ctx, x, y + 6, 1, 1, C.ouro3);
     });
   }
   I.objeto('portugues-arvore', { w: 1, h: 1, topo: 28, solido: true, alto: true,
@@ -683,19 +935,29 @@
       ret(ctx, x, y + 4, 1, 1, K);
     });
   }
-  I.objeto('portugues-mel', { w: 1, h: 1, topo: 10, solido: true, alto: true,
+  I.objeto('portugues-mel', { w: 1, h: 1, topo: 17, solido: true, alto: true,
     desenhar: function (ctx, px, py) {
-      var cx = px + 8;
+      var cx = px + 8, MEL = '#ffb020', MEL2 = '#e08a10', MEL3 = '#ffe08a';
       mesinha(ctx, cx, py, py + 1, '#ffe28a');
-      // pote redondo de mel, com o mel escorrendo da tampa e o rótulo MEL
-      elipse(ctx, cx, py - 4, 7, 5, K); elipse(ctx, cx, py - 4, 6, 4, '#ffb020'); ret(ctx, cx - 5, py - 6, 2, 3, '#ffd34d');
-      ret(ctx, cx - 5, py - 11, 11, 4, K); ret(ctx, cx - 4, py - 10, 9, 2, '#e0433f'); ret(ctx, cx - 4, py - 10, 9, 1, '#ff8a8a');
-      ret(ctx, cx - 3, py - 8, 2, 3, '#ffb020'); ret(ctx, cx + 2, py - 8, 1, 2, '#ffb020');
-      ret(ctx, cx - 7, py - 7, 15, 9, K); ret(ctx, cx - 6, py - 6, 13, 7, C.creme);
-      D.matriz(ctx, cx - 6, py - 5, ['#...#', '##.##', '#.#.#', '#...#', '#...#'], { '#': '#b8603a' });
-      letra(ctx, 'E', cx, py - 5, '#b8603a'); letra(ctx, 'L', cx + 4, py - 5, '#b8603a');
-      // abelhinha voando
-      ret(ctx, cx + 5, py - 15, 4, 3, K); ret(ctx, cx + 6, py - 14, 2, 1, BANANA); ret(ctx, cx + 6, py - 16, 2, 1, '#dff4ff');
+      // pote de vidro cheio de mel, com rótulo MEL, tampa de paninho xadrez e o mel escorrendo
+      ret(ctx, cx - 6, py - 11, 13, 13, K); ret(ctx, cx - 7, py - 9, 15, 9, K);
+      ret(ctx, cx - 5, py - 10, 11, 11, MEL); ret(ctx, cx - 6, py - 8, 13, 7, MEL);
+      ret(ctx, cx + 4, py - 9, 2, 9, MEL2); ret(ctx, cx - 5, py - 9, 1, 8, MEL3);
+      ret(ctx, cx - 5, py, 11, 1, MEL2);
+      // rótulo
+      ret(ctx, cx - 7, py - 8, 15, 7, K); ret(ctx, cx - 6, py - 7, 13, 5, C.creme);
+      D.matriz(ctx, cx - 6, py - 7, ['#...#', '##.##', '#.#.#', '#...#', '#...#'], { '#': '#b8603a' });
+      letra(ctx, 'E', cx, py - 7, '#b8603a'); letra(ctx, 'L', cx + 4, py - 7, '#b8603a');
+      // tampa de pano vermelho com bolinhas, amarrada
+      ret(ctx, cx - 6, py - 15, 13, 5, K); ret(ctx, cx - 5, py - 14, 11, 3, VERM); ret(ctx, cx - 7, py - 12, 15, 2, K); ret(ctx, cx - 6, py - 12, 13, 1, VERM2);
+      ret(ctx, cx - 3, py - 14, 1, 1, C.branco); ret(ctx, cx + 1, py - 13, 1, 1, C.branco); ret(ctx, cx + 4, py - 14, 1, 1, C.branco);
+      ret(ctx, cx - 5, py - 11, 11, 1, '#f3c890');
+      // mel escorrendo pela beirada do pote
+      ret(ctx, cx - 6, py - 10, 2, 2, MEL); ret(ctx, cx - 7, py - 9, 1, 4, MEL); ret(ctx, cx - 7, py - 5, 1, 1, MEL2);
+      // pingo de mel na mesa e a abelhinha
+      ret(ctx, cx + 6, py + 2, 2, 1, MEL);
+      ret(ctx, cx + 6, py - 16, 4, 3, K); ret(ctx, cx + 7, py - 15, 1, 1, BANANA); ret(ctx, cx + 9, py - 15, 1, 1, BANANA); ret(ctx, cx + 8, py - 15, 1, 1, K);
+      ret(ctx, cx + 7, py - 18, 2, 2, '#dff4ff');
     } });
   I.objeto('portugues-algodao', { w: 1, h: 1, topo: 16, solido: true, alto: true,
     desenhar: function (ctx, px, py) {
@@ -784,17 +1046,17 @@
       { tipo: 'planta-alta', x: 0, y: 5 },
       { tipo: 'flores', x: 8, y: 2, var: { vaso: '#e0433f' } }, { tipo: 'estante', x: 9, y: 2 },
       inter('mapa-casa', 'Mapa da Casa', { tipo: 'portugues-mapa', x: 8, y: 3 }),
-      { tipo: 'tapete-listrado', x: 7, y: 4, w: 4, h: 1, var: { cores: ['#e0433f', '#fff4ec', '#39a860', '#fff4ec'] } },
-      { tipo: 'poltrona', x: 8, y: 5, var: { cor: '#e0433f' } }, { tipo: 'cesto', x: 10, y: 5 },
+      // tapete de página de caderno e a poltrona de leitura com braços
+      { tipo: 'portugues-tapete-caderno', x: 7, y: 4, w: 4, h: 1 },
+      { tipo: 'portugues-poltrona', x: 8, y: 5 }, { tipo: 'cesto', x: 10, y: 5 },
+      // canto do dicionário: nada alto logo embaixo do dicionário e do globo (não "pousam" em cima de nada)
       inter('dicionario', 'Dicionário', { tipo: 'portugues-dicionario', x: 0, y: 8 }),
-      { tipo: 'banco', x: 1, y: 9 }, { tipo: 'globo', x: 3, y: 9 },
-      { tipo: 'banco', x: 0, y: 10 }, { tipo: 'luminaria-pe', x: 3, y: 10 },
-      { tipo: 'pilha-livros', x: 2, y: 10 },
-      { tipo: 'tapete-redondo', x: 1, y: 8, w: 1, h: 1 },
+      { tipo: 'tapete-redondo', x: 1, y: 8, w: 1, h: 1 }, { tipo: 'globo', x: 2, y: 8 },
+      { tipo: 'pilha-livros', x: 0, y: 9 }, { tipo: 'almofada', x: 1, y: 9, var: { cor: '#9fe0a0' } },
+      { tipo: 'banco', x: 0, y: 10 }, { tipo: 'vaso-planta', x: 2, y: 10 }, { tipo: 'luminaria-pe', x: 3, y: 10 },
       inter('blocos', 'Blocos de letras', { tipo: 'portugues-blocos', x: 7, y: 9 }),
       { tipo: 'mesa', x: 8, y: 9, var: { toalha: '#ffd1e6', itens: ['livro', 'xicara'] } },
       { tipo: 'cabideiro', x: 10, y: 8 }, { tipo: 'relogio-pe', x: 10, y: 10 }, { tipo: 'caixote', x: 10, y: 9, var: { item: 'estrela' } },
-      { tipo: 'vaso-planta', x: 0, y: 9 },
       { tipo: 'cesto', x: 7, y: 10 }, { tipo: 'banco', x: 8, y: 10 }, { tipo: 'almofada', x: 7, y: 8, var: { cor: '#ff9cc6' } },
     ]),
     /* ---------- SALA 1: Cozinha das Receitas (azulejo de morango) ---------- */
@@ -815,10 +1077,12 @@
       inter('salada', 'Salada de frutas', { tipo: 'portugues-salada', x: 1, y: 8 }),
       { tipo: 'cadeira', x: 0, y: 8, var: { almofada: '#ff9cc6' } }, { tipo: 'cadeira', x: 2, y: 8, var: { almofada: '#9fe0a0' } },
       { tipo: 'mesa', x: 4, y: 9, var: { toalha: '#ffc2d8', itens: ['xicara', 'bolo'] } },
+      { tipo: 'portugues-mesa-preparo', x: 7, y: 5 }, { tipo: 'portugues-cesta-frutas', x: 9, y: 5 },
+      { tipo: 'portugues-cesta-frutas', x: 5, y: 7 },
       inter('caneca-bolo', 'Bolo de caneca', { tipo: 'portugues-caneca-bolo', x: 6, y: 10 }),
       { tipo: 'portugues-cesta-frutas', x: 0, y: 10 }, { tipo: 'balde', x: 2, y: 10 }, { tipo: 'banco', x: 7, y: 10 },
       { tipo: 'vaso-grande', x: 10, y: 10 }, { tipo: 'cesto', x: 9, y: 10 },
-      { tipo: 'almofada', x: 4, y: 7, var: { cor: '#ff9cc6' } },
+      { tipo: 'almofada', x: 3, y: 8, var: { cor: '#ff9cc6' } },   // encostada na cadeira
     ]),
     /* ---------- SALA 2: Horta do H (terra e verde) ---------- */
     sala(25, 13, [
@@ -833,17 +1097,17 @@
       inter('hortela', 'Vaso de hortelã', { tipo: 'portugues-hortela', x: 7, y: 3 }),
       { tipo: 'portugues-canteiro', x: 7, y: 2, var: { planta: 'hortela' } },
       { tipo: 'planta-alta', x: 10, y: 2 }, { tipo: 'portugues-regador', x: 1, y: 2 },
-      { tipo: 'portugues-canteiro', x: 3, y: 4, var: { planta: 'cenoura' } },
+      { tipo: 'portugues-canteiro', x: 3, y: 4, var: { planta: 'cenoura', chao: true } },
       inter('hibisco', 'Pé de hibisco', { tipo: 'portugues-hibisco', x: 9, y: 5 }),
       { tipo: 'portugues-carrinho', x: 10, y: 6 },
-      { tipo: 'tapete-listrado', x: 6, y: 6, w: 3, h: 1, var: { cores: ['#39a860', '#fff4ec', '#ff3b5c', '#fff4ec'] } },
-      { tipo: 'tapete', x: 8, y: 8, w: 3, h: 1, var: { cor: '#9fe0a0', borda: '#39a860' } },
+      { tipo: 'portugues-leira', x: 6, y: 6, w: 3, h: 1 },
+      { tipo: 'portugues-leira', x: 8, y: 8, w: 3, h: 1, var: { planta: 'repolho' } },
       inter('helicoptero', 'Helicóptero de brinquedo', { tipo: 'portugues-helicoptero', x: 5, y: 8 }),
       { tipo: 'portugues-espantalho', x: 3, y: 8 },
       { tipo: 'vaso-grande', x: 0, y: 10 }, { tipo: 'banco', x: 1, y: 10 }, { tipo: 'balde', x: 3, y: 10 },
       { tipo: 'cesto', x: 4, y: 10 }, { tipo: 'flores', x: 6, y: 10 }, { tipo: 'caixote', x: 7, y: 10, var: { item: 'moedas' } },
-      { tipo: 'portugues-canteiro', x: 8, y: 9, var: { planta: 'alface' } }, { tipo: 'portugues-canteiro', x: 8, y: 10, w: 2, var: { planta: 'hortela' } },
-      { tipo: 'vaso-planta', x: 10, y: 10 }, { tipo: 'almofada', x: 5, y: 6, var: { cor: '#9fe0a0' } },
+      { tipo: 'portugues-canteiro', x: 8, y: 9, var: { planta: 'alface', chao: true } }, { tipo: 'portugues-canteiro', x: 8, y: 10, w: 2, var: { planta: 'hortela', chao: true } },
+      { tipo: 'vaso-planta', x: 10, y: 10 }, { tipo: 'portugues-regador', x: 5, y: 6 },
       { tipo: 'portugues-carrinho', x: 0, y: 8 },
     ]),
     /* ---------- SALA 3: Pátio do Circo (lona vermelha e amarelinha no chão) ---------- */
@@ -859,13 +1123,13 @@
       { tipo: 'portugues-bola-circo', x: 3, y: 2 }, { tipo: 'flores', x: 5, y: 2, var: { vaso: '#7c5cff' } },
       inter('pipoca', 'Carrinho de pipoca', { tipo: 'portugues-pipoca', x: 7, y: 3 }),
       { tipo: 'portugues-banquinho', x: 6, y: 2, var: { cor: '#e0433f' } }, { tipo: 'vaso-planta', x: 4, y: 2 },
-      { tipo: 'barril', x: 1, y: 2 },
+      { tipo: 'barril', x: 10, y: 3 },   // longe do chocalho: atrás dele fica o chão
       inter('ninho', 'Ninho', { tipo: 'portugues-ninho', x: 9, y: 4 }),
       { tipo: 'portugues-bola-circo', x: 0, y: 6 }, { tipo: 'balde', x: 0, y: 7 },
       { tipo: 'banco', x: 4, y: 10 }, { tipo: 'portugues-banquinho', x: 6, y: 10, var: { cor: '#39c5bb' } },
       { tipo: 'tapete', x: 7, y: 8, w: 3, h: 2, var: { cor: '#ffd34d', borda: '#e0433f' } },
       { tipo: 'caixote', x: 10, y: 10, var: { item: 'estrela' } }, { tipo: 'cesto', x: 8, y: 10 },
-      { tipo: 'luminaria-pe', x: 0, y: 10 }, { tipo: 'almofada', x: 5, y: 8, var: { cor: '#ffd34d' } },
+      { tipo: 'luminaria-pe', x: 0, y: 10 }, { tipo: 'portugues-banquinho', x: 5, y: 8, var: { cor: '#ff9d2e' } },
       { tipo: 'portugues-bola-circo', x: 10, y: 8 },
     ]),
     /* ---------- SALA 4: Porto da Expedição (convés de madeira, gelo e mar) ---------- */
@@ -876,15 +1140,17 @@
       { tipo: 'portugues-quadro-estreito', x: 9, y: 0, var: { uni: 'p-iceberg', lado: 'dir' } },
       { tipo: 'portugues-barco', x: 0, y: 2 },
       inter('iceberg', 'Tanque do iceberg', { tipo: 'portugues-iceberg', x: 7, y: 3 }),
-      { tipo: 'portugues-ancora', x: 3, y: 2 }, { tipo: 'portugues-albatroz', x: 1, y: 4 },
+      { tipo: 'portugues-ancora', x: 3, y: 2 },
+      // na frente do cais só coisas baixas; o albatroz fica num tile livre, com chão atrás dele
+      { tipo: 'portugues-cordas', x: 0, y: 4 }, { tipo: 'caixote', x: 1, y: 4, var: { item: 'concha' } },
+      { tipo: 'portugues-albatroz', x: 9, y: 4 }, { tipo: 'portugues-leme', x: 7, y: 5 },
       { tipo: 'barril', x: 8, y: 2 }, { tipo: 'portugues-cordas', x: 9, y: 2 }, { tipo: 'caixote', x: 10, y: 2, var: { item: 'moedas' } },
       inter('pinguins', 'Pinguins', { tipo: 'portugues-pinguins', x: 0, y: 5 }),
-      { tipo: 'bau', x: 0, y: 4 },
       { tipo: 'portugues-gelo', x: 0, y: 8, w: 3, h: 2 },
       inter('focas', 'Focas', { tipo: 'portugues-focas', x: 8, y: 5 }),
       inter('diario', 'Diário da expedição', { tipo: 'portugues-diario', x: 9, y: 9 }),
       { tipo: 'caixote', x: 10, y: 10, var: { item: 'estrela' } }, { tipo: 'banco', x: 6, y: 10 }, { tipo: 'globo', x: 10, y: 9 },
-      { tipo: 'luminaria-pe', x: 0, y: 10 }, { tipo: 'balde', x: 1, y: 10 }, { tipo: 'portugues-cordas', x: 3, y: 10 },
+      { tipo: 'portugues-lampiao', x: 0, y: 10 }, { tipo: 'balde', x: 1, y: 10 }, { tipo: 'portugues-cordas', x: 3, y: 10 },
       { tipo: 'portugues-pinguins', x: 2, y: 8 }, { tipo: 'cesto', x: 8, y: 8 }, { tipo: 'tapete', x: 3, y: 9, w: 2, h: 1, var: { cor: '#9fcfff', borda: '#2f6fd6' } },
     ]),
     /* ---------- SALA 5: Parque do Carrossel (grama e festa) ---------- */
@@ -926,7 +1192,7 @@
       { id: 'cozinha', nome: 'Cozinha das Receitas', placa: 'Sala 1 • Receita de Quê?', rect: { x: 1, y: 13, w: 11, h: 11 },
         piso: 'azulejo', parede: 'azulejo', paleta: { piso: '#fff4ec', piso2: '#ffc2c8', detalhe: '#ff4f6a', parede: '#fffaf2', parede2: '#ffd1d6', rodape: '#b82e35' } },
       { id: 'horta', nome: 'Horta do H', placa: 'Sala 2 • O H Silencioso', rect: { x: 25, y: 13, w: 11, h: 11 },
-        piso: 'pedra', parede: 'madeira', paleta: { piso: '#e2d4b0', piso2: '#b89a6a', parede: '#e8f6d8', parede2: '#b6d88a', rodape: '#2a7d48' } },
+        piso: 'carpete', parede: 'madeira', paleta: { piso: '#b4d67e', piso2: '#94bd62', parede: '#e8f6d8', parede2: '#b6d88a', rodape: '#2a7d48' } },
       { id: 'circo', nome: 'Pátio do Circo', placa: 'Sala 3 • CH, LH, NH e o X', rect: { x: 1, y: 1, w: 11, h: 11 },
         piso: 'tabuas', parede: 'papel', paleta: { piso: '#f0c890', piso2: '#d09a5a', parede: '#fff1f4', parede2: '#ffd34d', rodape: '#7c5cff' } },
       { id: 'porto', nome: 'Porto da Expedição', placa: 'Sala 4 • Expedição Antártida', rect: { x: 13, y: 1, w: 11, h: 11 },
@@ -959,7 +1225,7 @@
   });
 
   /* ================= A CASA DE FORA (mapa) ================= */
-  // casinha de cozinha com chaminé, livros e a bandeirinha da expedição; porta no meio da última fileira
+  // casinha de cozinha com chaminé, o livro aberto "Aa" no telhado e a flâmula do lápis; porta roxa no meio da última fileira
   function desenharFora(ctx, px, py, w, h, cores) {
     cores = cores || {};
     var parede = cores.parede || CREME, telhado = cores.telhado || VERM, det = cores.detalhe || VERDE;
@@ -982,17 +1248,31 @@
       for (var tx = cx - meia + 1; tx < cx + meia - 2; tx += 5) { ret(ctx, tx, ty, 4, 1, telhado2); ret(ctx, tx + 1, ty - 1, 2, 1, telhadoL); }
     }
     ret(ctx, px + 2, py + 33, w - 4, 3, K); ret(ctx, px + 3, py + 34, w - 6, 1, telhado2);
-    // livro aberto no telhado (a placa da casa), com "ABC"
-    ret(ctx, cx - 12, py + 17, 25, 12, K);
-    ret(ctx, cx - 11, py + 18, 11, 9, C.creme); ret(ctx, cx + 1, py + 18, 11, 9, C.creme);
-    ret(ctx, cx, py + 18, 1, 10, det); ret(ctx, cx - 11, py + 27, 23, 1, det2);
-    letra(ctx, 'A', cx - 10, py + 20, telhado); letra(ctx, 'B', cx - 5, py + 20, det2); letra(ctx, 'C', cx + 3, py + 20, '#2f6fd6');
-    ret(ctx, cx + 7, py + 21, 4, 1, '#c8b8d8'); ret(ctx, cx + 7, py + 23, 3, 1, '#c8b8d8');
-    // bandeirinha da expedição no bico do telhado (azul com o floquinho)
-    ret(ctx, cx, py - 4, 1, 14, K);
-    ret(ctx, cx + 1, py - 4, 10, 7, K); ret(ctx, cx + 1, py - 3, 9, 5, '#2f6fd6'); ret(ctx, cx + 1, py - 3, 9, 1, '#5f9ae8');
-    ret(ctx, cx + 5, py - 2, 1, 3, C.branco); ret(ctx, cx + 4, py - 1, 3, 1, C.branco);
-    circulo(ctx, cx, py - 5, 1, C.ouro);
+    // livro aberto no telhado (a placa da casa), com o "Aa" grandão: capa vermelha, páginas e a fitinha
+    var LA = ['.###.', '#...#', '#...#', '#####', '#...#', '#...#', '#...#'];
+    var La = ['.##.', '...#', '.###', '#..#', '.###'];
+    ret(ctx, cx - 14, py + 18, 29, 12, K); ret(ctx, cx - 13, py + 19, 27, 10, telhado2);
+    ret(ctx, cx - 12, py + 16, 25, 12, K);
+    ret(ctx, cx - 11, py + 17, 11, 10, C.creme); ret(ctx, cx + 1, py + 17, 11, 10, C.creme);
+    ret(ctx, cx - 11, py + 17, 3, 1, '#fffaf2'); ret(ctx, cx + 9, py + 17, 3, 1, '#fffaf2');
+    ret(ctx, cx - 1, py + 16, 3, 1, K); ret(ctx, cx - 2, py + 17, 1, 10, '#e8d8c0'); ret(ctx, cx + 2, py + 17, 1, 10, '#e8d8c0');
+    ret(ctx, cx, py + 17, 1, 11, K);
+    D.matriz(ctx, cx - 9, py + 19, LA, { '#': telhado });
+    D.matriz(ctx, cx + 4, py + 21, La, { '#': det2 });
+    ret(ctx, cx - 10, py + 27, 21, 1, '#e8d8c0');
+    ret(ctx, cx + 1, py + 28, 1, 4, '#ffd34d'); ret(ctx, cx + 1, py + 31, 1, 1, '#e0a020');
+    // flâmula amarela com um lápis, no bico do telhado
+    ret(ctx, cx - 1, py - 5, 2, 15, K); ret(ctx, cx - 1, py - 4, 1, 13, '#c9a27a');
+    circulo(ctx, cx - 1, py - 6, 1, C.ouro);
+    for (var fi = 0; fi < 14; fi++) {
+      var meiaF = Math.max(0, Math.round(4 * (1 - fi / 14))), fx = cx + 1 + fi;
+      ret(ctx, fx, py - 1 - meiaF - 1, 1, meiaF * 2 + 3, K);
+      if (meiaF > 0) { ret(ctx, fx, py - 1 - meiaF, 1, meiaF * 2 + 1, '#ffd34d'); ret(ctx, fx, py - 1 - meiaF, 1, 1, '#fff0a0'); }
+    }
+    // o lápis: borracha rosa, corpo laranja, madeira e a ponta
+    ret(ctx, cx + 2, py - 2, 1, 3, '#ff9cc6'); ret(ctx, cx + 3, py - 2, 1, 3, '#c9c2d8');
+    ret(ctx, cx + 4, py - 2, 4, 3, '#ff7a3a'); ret(ctx, cx + 4, py - 1, 4, 1, '#ffb070');
+    ret(ctx, cx + 8, py - 2, 1, 3, '#f3c890'); ret(ctx, cx + 9, py - 1, 1, 1, K);
     // toldo listrado verde e creme em cima da porta e das janelas
     var ay = py + 37;
     ret(ctx, px + 9, ay, w - 18, 6, K);
@@ -1009,15 +1289,18 @@
     var rx = px + 62, ry = py + 52;
     circulo(ctx, rx, ry, 7, K); circulo(ctx, rx, ry, 6, det); circulo(ctx, rx, ry, 4, K); circulo(ctx, rx, ry, 3, '#eef9ff');
     ret(ctx, rx - 2, ry, 4, 3, '#ff7eb6'); ret(ctx, rx + 2, ry + 1, 1, 1, '#ff7eb6'); ret(ctx, rx - 1, ry - 2, 1, 1, C.branco);
-    // porta verde com arco e janelinha, no meio do tile da porta
-    var dx = cx - 7, dy = py + h - 21;
-    ret(ctx, dx - 1, dy + 2, 16, 19, C.ouro); elipse(ctx, dx + 7, dy + 3, 8, 3, C.ouro);
-    ret(ctx, dx, dy + 3, 14, 18, det); elipse(ctx, dx + 7, dy + 4, 7, 3, det);
-    ret(ctx, dx + 1, dy + 5, 12, 1, clarear(det, 0.35));
-    ret(ctx, dx + 4, dy + 6, 6, 5, K); ret(ctx, dx + 5, dy + 7, 4, 3, '#bfe9ff'); ret(ctx, dx + 7, dy + 7, 1, 3, K);
-    ret(ctx, dx + 10, dy + 13, 2, 2, C.ouro);
-    // tapetinho da porta
-    ret(ctx, cx - 6, py + h - 2, 13, 2, K); ret(ctx, cx - 5, py + h - 2, 11, 1, '#ff9cc6');
+    // degrau de pedra e a porta roxa de arco com moldura dourada (como todas as entradas do reino)
+    ret(ctx, cx - 12, py + h - 5, 25, 5, K); ret(ctx, cx - 11, py + h - 4, 23, 3, '#e8d3a8');
+    ret(ctx, cx - 11, py + h - 4, 23, 1, '#fff0d0'); ret(ctx, cx - 11, py + h - 2, 23, 1, '#d4bc8c');
+    for (var dg = cx - 7; dg < cx + 11; dg += 6) ret(ctx, dg, py + h - 3, 1, 2, '#c9ae80');
+    var dx = cx - 7, dy = py + h - 26, dw = 14, dh = 21, roxo = '#7c5cff';
+    ret(ctx, dx - 1, dy + 2, dw + 2, dh - 2, C.ouro); elipse(ctx, dx + dw / 2 - 0.5, dy + 3, dw / 2, 3, C.ouro);
+    ret(ctx, dx, dy + 3, dw, dh - 3, roxo); elipse(ctx, dx + dw / 2 - 0.5, dy + 4, dw / 2 - 1, 3, roxo);
+    ret(ctx, dx + dw / 2 - 1, dy + 5, 1, dh - 5, escurecer(roxo, 0.25));
+    ret(ctx, dx + 1, dy + 6, 1, dh - 7, clarear(roxo, 0.3));
+    ret(ctx, dx + dw - 4, dy + dh / 2 + 2, 2, 2, C.ouro);
+    // sombra de 2 px na base da casa
+    ret(ctx, px + 7, py + h, w - 14, 1, 'rgba(58,36,70,0.28)'); ret(ctx, px + 9, py + h + 1, w - 18, 1, 'rgba(58,36,70,0.14)');
     // pilha de livros ao lado da porta (esquerda) e um vaso de hortelã (direita)
     var lx = px + 12, lb = py + h - 2;
     livrinho(ctx, lx, lb, 14, 5, '#5fb4ff'); livrinho(ctx, lx + 1, lb - 4, 12, 5, '#ffd34d'); livrinho(ctx, lx + 2, lb - 8, 11, 5, '#ff7eb6');
