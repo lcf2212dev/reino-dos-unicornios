@@ -82,11 +82,87 @@
     var estagio = R.Unicornios.estagio(u ? u.xp : 0);
     var us = e.usando || {};
     var enf = (us.enfeites || []).slice();
-    // o reflexo a mostra de frente, que é onde aparecem os enfeites da cabeça (o chapéu de chef, a pena...);
-    // de lado a cavaleira cobre a cabeça do unicórnio. De frente a cauda não aparece: com enfeite de cauda, na diagonal
+    // o reflexo mostra o unicórnio de frente, que é onde aparecem os enfeites da cabeça (o chapéu de chef, a pena...).
+    // De frente a cauda não aparece: com enfeite de cauda, na diagonal
     var cauda = enf.some(function (id) { var it = R.LojaItens && R.LojaItens.item ? R.LojaItens.item(id) : null; return it && it.slot === 'cauda'; });
     return { id: id, def: d, estagio: estagio, enfeites: enf, capa: !!us.capa, asasFada: !!us.asasFada, aparencia: e.aparencia,
       vista: cauda ? 'diagFrente' : 'frente' };
+  }
+
+  // Monta o reflexo do espelho (o vidro é a elipse de raios 26×25 com centro em (cx, top + 30)):
+  // o unicórnio em dobro onde os enfeites fiquem inteiros dentro do vidro (e a cabeça de preferência inteira)
+  // e a Mariana (tamanho normal) num lugar que não cubra nenhum enfeite; se não houver, ela fica atrás dele.
+  // Só roda quando muda o que o espelho mostra (a chave do objeto).
+  function cenaEspelho(m, cx, top) {
+    var sprU = PA.unicornio(m.def, m.estagio, 0, { enfeites: m.enfeites, asasFada: m.asasFada, vista: m.vista });
+    var sprB = PA.unicornio(m.def, m.estagio, 0, { vista: m.vista });
+    var uImg = sprU.canvas || sprU, bImg = sprB.canvas || sprB, W = uImg.width, H = uImg.height;
+    var du = uImg.getContext('2d').getImageData(0, 0, W, H).data;
+    var db = (bImg.width === W && bImg.height === H) ? bImg.getContext('2d').getImageData(0, 0, W, H).data : null;
+    // pixels do unicórnio: os dos enfeites (o que muda em relação a ele sem enfeite) e os do corpo
+    var enf = [], corpo = [];
+    for (var y = 0; y < H; y++) for (var x = 0; x < W; x++) {
+      var i = (y * W + x) * 4;
+      if (du[i + 3] === 0 && !(db && db[i + 3] > 0)) continue;
+      var igual = db && du[i] === db[i] && du[i + 1] === db[i + 1] && du[i + 2] === db[i + 2] && du[i + 3] === db[i + 3];
+      (igual ? corpo : enf).push(x, y);
+    }
+    function noVidro(x, y) { var a = (x + 0.5 - cx) / 26, b = (y + 0.5 - top - 30) / 25; return a * a + b * b <= 1; }
+    // conta os pixels (em dobro) de uma lista que ficam fora do vidro com o unicórnio em (ux, uy)
+    function fora(lista, ux, uy, pesoCima) {
+      var n = 0;
+      for (var k = 0; k < lista.length; k += 2) {
+        var px = ux + lista[k] * 2, py = uy + lista[k + 1] * 2, f = 0;
+        if (!noVidro(px, py)) f++; if (!noVidro(px + 1, py)) f++; if (!noVidro(px, py + 1)) f++; if (!noVidro(px + 1, py + 1)) f++;
+        n += f * (pesoCima && lista[k + 1] < H / 2 ? pesoCima : 1);
+      }
+      return n;
+    }
+    // posição do unicórnio: nenhum enfeite cortado; depois a cabeça (metade de cima) e o resto; empate: mais perto do meio
+    var melhor = null, x0 = cx - W, yMin = top + 2, yMax = Math.max(yMin, top + 52 - H * 2);
+    for (var dx = -6; dx <= 6; dx++) for (var uy = yMin; uy <= yMax; uy++) {
+      var ux = x0 + dx;
+      var nota = fora(enf, ux, uy) * 1000 + fora(corpo, ux, uy, 4) + Math.abs(dx) * 0.1 + (yMax - uy) * 0.01;
+      if (!melhor || nota < melhor.nota) melhor = { nota: nota, x: ux, y: uy };
+    }
+    var cena = { uni: { img: uImg, x: melhor.x, y: melhor.y }, mariana: null, atras: false };
+    var spr = PA.mariana(m.aparencia, false, 1, { capa: m.capa, vista: 'frente' });
+    var mImg = spr && (spr.canvas || spr);
+    if (!mImg) return cena;
+    var mw = mImg.width, mh = mImg.height, dm = mImg.getContext('2d').getImageData(0, 0, mw, mh).data;
+    // o que o unicórnio ocupa na cena (em dobro): 2 = enfeite, 1 = cabeça (até o focinho), 0 = resto do corpo
+    var ocupa = {};
+    function marcar(lista, tipo) {
+      for (var k = 0; k < lista.length; k += 2) {
+        var ex = melhor.x + lista[k] * 2, ey = melhor.y + lista[k + 1] * 2, t = tipo || (lista[k + 1] < H * 0.62 ? 1 : 0);
+        ocupa[ex + ',' + ey] = ocupa[(ex + 1) + ',' + ey] = ocupa[ex + ',' + (ey + 1)] = ocupa[(ex + 1) + ',' + (ey + 1)] = t;
+      }
+    }
+    marcar(corpo, 0); marcar(enf, 2);
+    // lugares para ela, de pé na grama (na ordem de preferência: à direita, à esquerda, mais para o meio),
+    // na frente dele (sem cobrir enfeite nem a cabeça) ou, se não der, atrás (aparecendo o máximo possível)
+    var escolhido = null;
+    [cx + 23 - mw, cx + 21 - mw, cx + 19 - mw, cx - 22, cx - 20, cx - 18, cx + 4, cx - 9].forEach(function (lx, ordem) {
+      [top + 47, top + 49, top + 45, top + 51].forEach(function (pe) {
+        var ly = pe - mh, enfeite = 0, cabeca = 0, corpoCob = 0, cortado = 0, total = 0;
+        for (var y = 0; y < mh; y++) for (var x = 0; x < mw; x++) {
+          if (dm[(y * mw + x) * 4 + 3] === 0) continue;
+          total++;
+          if (!noVidro(lx + x, ly + y)) { cortado++; continue; }
+          var t = ocupa[(lx + x) + ',' + (ly + y)];
+          if (t === 2) enfeite++; else if (t === 1) cabeca++; else if (t === 0) corpoCob++;
+        }
+        var frente = enfeite * 1000 + cabeca * 20 + cortado * 10 + ordem;
+        // atrás: o que o unicórnio tapa dela conta como cortado
+        var atras = 60 + (enfeite + cabeca + corpoCob + cortado) * 10 + ordem;
+        [[frente, false], [atras, true]].forEach(function (op) {
+          if (!escolhido || op[0] < escolhido.nota) escolhido = { nota: op[0], x: lx, y: ly, atras: op[1] };
+        });
+      });
+    });
+    cena.mariana = { img: mImg, x: escolhido.x, y: escolhido.y };
+    cena.atras = escolhido.atras;
+    return cena;
   }
 
   /* ================= OBJETOS DA LOJA ================= */
@@ -173,7 +249,9 @@
   I.objeto('loja-espelho-magico', { w: 4, h: 1, topo: 30, solido: true,
     chave: function (P) {
       var m = espelhoInfo(P);
-      return m ? 'esp:' + m.id + ':' + m.estagio + ':' + m.enfeites.join(',') + ':' + (m.capa ? 1 : 0) + (m.asasFada ? 1 : 0) : 'esp:-';
+      var ap = (m && m.aparencia) || {};
+      return m ? 'esp:' + m.id + ':' + m.estagio + ':' + m.enfeites.join(',') + ':' + (m.capa ? 1 : 0) + (m.asasFada ? 1 : 0) +
+        ':' + [ap.pele, ap.cabelo, ap.roupa, ap.laco].join(',') : 'esp:-';
     },
     desenhar: function (ctx, px, py, o, P) {
       var cx = px + 32, top = py - 30;
@@ -184,23 +262,18 @@
       elipse(ctx, cx, top + 30, 30, 29, MUSGO);
       elipse(ctx, cx, top + 30, 27, 26, K);
       elipse(ctx, cx, top + 30, 26, 25, '#e6f4ff');
-      var m = espelhoInfo(P), spr = null;
-      if (m && window.PA) {
-        try {
-          spr = m.estagio >= 1 && PA.montada
-            ? PA.montada(m.def, m.estagio, 0, m.aparencia, { enfeites: m.enfeites, capa: m.capa, asasFada: m.asasFada, vista: m.vista })
-            : PA.unicornio(m.def, m.estagio, 0, { enfeites: m.enfeites, asasFada: m.asasFada, vista: m.vista });
-        } catch (e) { spr = null; }
-      }
-      if (spr) {
-        // em dobro (pixels inteiros), cortado pela moldura
-        var img = spr.canvas || spr, w2 = img.width * 2, h2 = img.height * 2;
-        var s2 = (w2 > 56 || h2 > 64) ? 1 : 2;
+      // o reflexo mostra o unicórnio sozinho, grande (em dobro), com todos os enfeites à vista, e a Mariana
+      // de pé com ele, pequena; montada, ela cobriria a cabeça dele (o chapéu de chef, a tiara, a pena...)
+      var m = espelhoInfo(P), cena = null;
+      if (m && window.PA) { try { cena = cenaEspelho(m, cx, top); } catch (e) { cena = null; } }
+      if (cena) {
         ctx.save(); ctx.beginPath(); ctx.ellipse(cx, top + 30, 26, 25, 0, 0, Math.PI * 2); ctx.clip();
         ret(ctx, cx - 26, top + 44, 52, 12, '#d8f0c8');
         var lig = ctx.imageSmoothingEnabled; ctx.imageSmoothingEnabled = false;
-        // (de frente ela fica mais alta: a cabeça começa logo abaixo da moldura e as patas passam da borda)
-        ctx.drawImage(img, Math.round(cx - img.width * s2 / 2), Math.max(top + 58 - img.height * s2, top + 7), img.width * s2, img.height * s2);
+        var u = cena.uni, mi = cena.mariana;
+        if (mi && cena.atras) ctx.drawImage(mi.img, mi.x, mi.y);
+        ctx.drawImage(u.img, u.x, u.y, u.img.width * 2, u.img.height * 2);
+        if (mi && !cena.atras) ctx.drawImage(mi.img, mi.x, mi.y);
         ctx.imageSmoothingEnabled = lig;
         ctx.restore();
       }
