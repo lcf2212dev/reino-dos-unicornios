@@ -89,6 +89,8 @@ Reino.RASCUNHO_PORTUGUES.pN =
 - Palavra com lacuna dentro dela (xí__ara): use `completar` com `colado: true` (§4.2). Nas salas, a narradora
   lê só o enunciado desse tipo.
 - Separação de sílabas: escreva em minúsculas com hífen (`bal-de`).
+- Ligar: a palavra mais comprida da coluna da esquerda + a da direita até 24 letras (senão, no celular,
+  quebra palavra ou vaza); `validar-conteudo.js` avisa.
 - Emoji: prefira os que já têm desenho em `js/icones.js` (ver `jogo/ferramentas/icones.html`). Emoji novo:
   liste no retorno (o orquestrador pede o desenho).
 - Validar sozinho, sem tocar no arquivo do jogo:

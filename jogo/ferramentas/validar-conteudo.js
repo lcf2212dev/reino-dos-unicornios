@@ -32,6 +32,14 @@ const TIPOS = ['escolha', 'vf', 'varias', 'ligar', 'ordenar', 'frase', 'separar'
 const REQUISITOS = ['linhas', 'formas', 'cores'];
 
 function checar(cond, msg) { if (!cond) erros.push(msg); }
+// Ligar no celular: as duas colunas lado a lado só cabem em 390 px se a palavra mais comprida da esquerda
+// mais a da direita somarem até 24 letras (fonte pixel com 1em por letra; ver css/jogo.css, .ligar-item)
+function maiorPalavra(t) { return Math.max(0, ...String(t || '').replace(/[«»]/g, '').split(/[\s\-]+/).map((w) => [...w.replace(/[^\p{L}\p{N}]/gu, '')].length)); }
+function checarLigarLargura(d) {
+  const esq = Math.max(0, ...d.pares.map((p) => (p[0].img ? 0 : maiorPalavra(p[0].t))));
+  const dir = Math.max(0, ...d.pares.map((p) => maiorPalavra(p[1].t)));
+  if (esq + dir > 24) avisos.push(`${d.id}: Ligar com palavras longas (${esq} + ${dir} letras > 24): no celular vai quebrar palavra ou vazar`);
+}
 
 // trechos em inglês: «...» balanceado e sem aninhar, em qualquer texto
 function checarIngles(obj, onde) {
@@ -122,6 +130,7 @@ Reino.materias.forEach((m) => {
         checar(ok >= 1, `${d.id}: nenhuma opção certa`);
         if (ok === d.opcoes.length) avisos.push(`${d.id}: todas as opções são certas`);
       }
+      if (d.tipo === 'ligar') checarLigarLargura(d);
       if (d.tipo === 'ligar') checar(d.pares.length >= 2 && d.pares.every((p) => (p[0].t || (p[0].img && p[0].alt)) && p[1].t), `${d.id}: pares inválidos`);
       if (d.tipo === 'completar') checar(d.frases.every((f) => (d.livre || (Number.isInteger(f.certa) && f.certa < d.palavras.length)) && typeof f.antes === 'string' && typeof f.depois === 'string'), `${d.id}: frases inválidas`);
       if (d.tipo === 'vfLista') checar(d.itens.length >= 2 && d.itens.every((i) => i.t && typeof i.v === 'boolean'), `${d.id}: V/F inválido`);
@@ -175,6 +184,7 @@ Reino.provas.forEach((pv) => {
     if (d.tipo === 'escolha') checar(Number.isInteger(d.certa) && d.certa >= 0 && d.certa < d.opcoes.length, `${d.id}: índice certo inválido`);
     if (d.tipo === 'varias' && !d.livre) checar(d.opcoes.some((o) => o.ok), `${d.id}: nenhuma opção certa`);
     if (d.tipo === 'ligar') {
+      checarLigarLargura(d);
       checar(d.pares.every((p) => (p[0].t || (p[0].img && p[0].alt)) && p[1].t), `${d.id}: pares inválidos`);
       d.pares.forEach((p) => { if (p[0].img) checar(icones.window.ICONES[p[0].img], `${d.id}: falta o desenho "${p[0].img}" em js/icones.js`); });
       if (d.direita) checar([...d.direita].sort().join() === d.pares.map((_, i) => i).join(), `${d.id}: ordem da direita inválida`);
