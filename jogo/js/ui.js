@@ -104,10 +104,15 @@
      seguro ("Agora não"); quem continua tocando ali só acerta o "Agora não". Um toque de
      propósito no botão de gastar, noutro ponto, vale na hora. */
   // logo depois de uma compra, o toque seguinte no mesmo lugar cai no cartão que acabou de ser
-  // comprado (e tirava o enfeite): esse cartão (só ele) ignora toques perto do da compra por 1 s
-  var comprouEm = -1e9, pontoDaCompra = null, itemComprado = null;
+  // comprado (e tirava o enfeite): esse cartão (só ele) ignora toques perto do da compra até
+  // 1,1 s (ARMAR_MS, a mesma espera dos botões que gastam) sem nenhum toque na tela
+  var compraLivreEm = 0, pontoDaCompra = null, itemComprado = null;
+  document.addEventListener('pointerdown', function (e) {
+    var agora = performance.now();
+    if (e.isTrusted && agora < compraLivreEm) compraLivreEm = agora + ARMAR_MS;   // cada toque recomeça a espera
+  }, true);
   function logoDepoisDaCompra(e, itemId) {
-    if (!(e && e.isTrusted && e.detail) || itemId !== itemComprado || performance.now() - comprouEm >= 1000) return false;
+    if (!(e && e.isTrusted && e.detail) || itemId !== itemComprado || performance.now() >= compraLivreEm) return false;
     if (!perto({ x: e.clientX, y: e.clientY }, pontoDaCompra)) return false;
     toqueIgnorado(e.target);
     return true;
@@ -223,7 +228,7 @@
           // reserva: se nem trocando de lugar nem movendo o diálogo deu para tirar o botão de baixo
           // do dedo, um toque perto dali (40 px) não gasta; o resto do botão vale
           if (b.gasta && dedoPreso && e.isTrusted && e.detail && perto({ x: e.clientX, y: e.clientY }, dedoPreso)) { toqueIgnorado(bt); return; }
-          if (b.gasta) { comprouEm = performance.now(); pontoDaCompra = e.detail ? { x: e.clientX, y: e.clientY } : null; }
+          if (b.gasta) { compraLivreEm = performance.now() + ARMAR_MS; pontoDaCompra = e.detail ? { x: e.clientX, y: e.clientY } : null; }
           UI.fecharTela(t); resolver(b.valor);
         });
         return bt;
@@ -830,7 +835,7 @@
     }
     UI.confirmar('Trocar ' + item.preco + ' estrelas por ' + item.nome + '?', 'Sim, quero! ✨', 'Agora não', true).then(function (sim) {
       if (!sim) return;
-      itemComprado = item.id;   // o cartão dele ignora o próximo toque perto do "Sim" por 1 s
+      itemComprado = item.id;   // o cartão dele ignora toques perto do "Sim" até 1,1 s sem toque
       if (!P.gastarEstrelas(item.preco)) return;   // (as estrelas não mudam enquanto ela confirma, mas por via das dúvidas)
       est().loja[item.id] = true;
       if (!usando(item)) alternar(item);
