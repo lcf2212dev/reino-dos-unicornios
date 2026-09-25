@@ -400,15 +400,29 @@
     return ctrl;
   };
 
+  // completar: a palavra j vale na frase f? (a certa ou uma das aceitas)
+  function completarAceita(f, j) { return j === f.certa || (f.aceitas || []).indexOf(j) >= 0; }
+  // figura de js/icones.js (32×32) para uma frase do completar; desenho que falta: ❓
+  function figuraCompletar(f) {
+    var desenho = PA.iconeDesenho(f.img);
+    return el('span.completar-img', { role: 'img', 'aria-label': f.alt ? U.semEn(f.alt) : null },
+      desenho ? PA.paraDOM(desenho, PA.escalaNitida(desenho.width > 16 ? 64 : 48, desenho.width)) : '❓');
+  }
+
   // completar frases com as palavras do quadro — valor: [índice da palavra ou null por frase]
+  // campos opcionais: d.colado (lacuna dentro da palavra), frases[i].img + alt (figura), frases[i].aceitas (outros índices certos)
   TIPOS.completar = function (d, opts) {
     var escolha = opts.valorInicial ? opts.valorInicial.slice() : d.frases.map(function () { return null; });
-    var wrap = el('div.completar');
+    // com figura ou com a lacuna dentro da palavra: os itens ficam numa grade compacta
+    var comFigura = d.frases.some(function (f) { return f.img; }) || !!d.colado;
+    var wrap = el('div.completar' + (d.colado ? '.completar-colado' : '') + (comFigura ? '.completar-grade' : ''));
     wrap.appendChild(el('div.quadro-palavras', d.palavras.map(function (p, i) {
       return [i ? el('span.quadro-traco', '–') : null, el('b', p)];
     })));
+    var grade = comFigura ? el('div.completar-itens') : wrap;
+    if (comFigura) wrap.appendChild(grade);
     var frases = d.frases.map(function (f, i) {
-      var lacuna = el('span.lacuna');
+      var lacuna = el('span.lacuna' + (d.colado ? '.lacuna-colada' : ''));
       var botoes = d.palavras.map(function (p, j) {
         var b = el('button.chip-palavra', { type: 'button' }, p);
         b.addEventListener('click', function () {
@@ -418,15 +432,20 @@
         });
         return b;
       });
-      var caixa = el('div.frase-completar',
-        el('p.frase-texto', f.letra ? el('b', f.letra + ') ') : null, f.antes + ' ', lacuna, f.depois.match(/^[.,!?]/) ? '' : ' ', f.depois),
+      var texto = d.colado
+        // colado: PA + lacuna + ARINHO, sem espaços (a palavra fica inteira numa linha)
+        ? el('p.frase-texto.frase-colada', f.letra ? el('b', f.letra + ') ') : null, el('span.palavra-colada', f.antes, lacuna, f.depois))
+        : el('p.frase-texto', f.letra ? el('b', f.letra + ') ') : null, f.antes + ' ', lacuna, f.depois.match(/^[.,!?]/) ? '' : ' ', f.depois);
+      var caixa = el('div.frase-completar' + (f.img ? '.com-img' : ''),
+        f.img ? figuraCompletar(f) : null,
+        texto,
         el('div.frase-opcoes', botoes));
-      wrap.appendChild(caixa);
+      grade.appendChild(caixa);
       return { caixa: caixa, lacuna: lacuna, botoes: botoes };
     });
     function pintar() {
       frases.forEach(function (f, i) {
-        U.preencher(f.lacuna, escolha[i] === null ? '______' : d.palavras[escolha[i]]);
+        U.preencher(f.lacuna, escolha[i] === null ? (d.colado ? '  ' : '______') : d.palavras[escolha[i]]);
         f.lacuna.classList.toggle('preenchida', escolha[i] !== null);
         f.botoes.forEach(function (b, j) { b.setAttribute('aria-pressed', String(escolha[i] === j)); });
       });
@@ -439,10 +458,163 @@
       conferir: function () {
         // livre: questão pessoal, vale qualquer palavra (a mesma pode ir em mais de uma lacuna)
         if (d.livre) return { ok: escolha.every(function (e) { return e !== null; }), erradas: [] };
-        var erradas = escolha.map(function (e, i) { return e === d.frases[i].certa ? -1 : i; }).filter(function (i) { return i >= 0; });
+        var erradas = escolha.map(function (e, i) { return completarAceita(d.frases[i], e) ? -1 : i; }).filter(function (i) { return i >= 0; });
         return { ok: erradas.length === 0, erradas: erradas };
       },
       marcarErro: function (res) { (res.erradas || []).forEach(function (i) { escolha[i] = null; }); pintar(); opts.onMudar(); },
+      marcarCerto: function () { wrap.classList.add('tudo-certo'); },
+    };
+    return ctrl;
+  };
+
+  /* ---------- copiar: escolher a escrita certa entre duas e copiar com peças de letras ----------
+     { tipo: 'copiar', pergunta, itens: [{ letra: 'a', opcoes: ['PASEIO', 'PASSEIO'], certa: 1 }, …] }
+     valor: [{ escolha: índice da escrita marcada ou null, letras: [índices das peças, na ordem da resposta] }]
+     peças de um item: D.pecasCopiar(item), as letras das duas escritas sem repetir as comuns além do necessário
+     (PASEIO + PASSEIO = P A S E I O S); a ordem na tela é embaralhada (opts.monte[i] na prova, para ficar igual ao voltar). */
+  function letrasDe(t) { return Array.from(String(t).replace(/\s+/g, '')); }
+  D.pecasCopiar = function (it) {
+    var pecas = [], tem = {};
+    it.opcoes.forEach(function (o) {
+      var aqui = {};
+      letrasDe(o).forEach(function (ch) {
+        aqui[ch] = (aqui[ch] || 0) + 1;
+        if (aqui[ch] > (tem[ch] || 0)) { pecas.push(ch); tem[ch] = aqui[ch]; }
+      });
+    });
+    return pecas;
+  };
+  // ordem embaralhada das peças (nunca soletrando uma das escritas logo de cara)
+  D.ordemPecasCopiar = function (it) {
+    var pecas = D.pecasCopiar(it);
+    var idx = pecas.map(function (_, i) { return i; });
+    var palavras = it.opcoes.map(function (o) { return letrasDe(o).join(''); });
+    function entrega(m) { var s = m.map(function (i) { return pecas[i]; }).join(''); return palavras.some(function (p) { return s.indexOf(p) === 0; }); }
+    var m = U.embaralhar(idx), tentativas = 0;
+    while (pecas.length > 2 && entrega(m) && tentativas++ < 20) m = U.embaralhar(idx);
+    return m;
+  };
+  function copiaCerta(it, v) {
+    if (!v || !v.letras) return false;
+    var pecas = D.pecasCopiar(it);
+    return v.letras.map(function (i) { return pecas[i]; }).join('') === letrasDe(it.opcoes[it.certa]).join('');
+  }
+  function textoCopia(it, v) { var pecas = D.pecasCopiar(it); return ((v && v.letras) || []).map(function (i) { return pecas[i]; }).join(''); }
+
+  TIPOS.copiar = function (d, opts) {
+    var valores = d.itens.map(function (it, i) {
+      var v = opts.valorInicial && opts.valorInicial[i];
+      return { escolha: v && v.escolha != null ? v.escolha : null, letras: v && v.letras ? v.letras.slice() : [] };
+    });
+    var monte = opts.monte && opts.monte.length === d.itens.length ? opts.monte : d.itens.map(function (it) { return D.ordemPecasCopiar(it); });
+    var wrap = el('div.copiar');
+    wrap.appendChild(el('p.dica-toque', 'Marque a escrita certa e monte a palavra com as letras. Para tirar uma letra, toque nela.'));
+    var itens = d.itens.map(function (it, i) {
+      var pecas = D.pecasCopiar(it);
+      var botoesOpc = it.opcoes.map(function (o, j) {
+        var b = el('button.copiar-opcao', { type: 'button' }, el('span.copiar-marca', { 'aria-hidden': 'true' }), el('span.copiar-palavra', o));
+        b.addEventListener('click', function () {
+          if (ctrl.travado) return;
+          var v = valores[i];
+          v.escolha = v.escolha === j ? null : j;
+          // trocou para uma escrita mais curta: as letras que sobram voltam para o monte
+          if (v.escolha !== null) v.letras = v.letras.slice(0, letrasDe(it.opcoes[v.escolha]).length);
+          Reino.Som.tocar(v.escolha === null ? 'toque' : 'selecionar'); pintar(i); opts.onMudar();
+        });
+        return b;
+      });
+      var linha = el('div.copiar-linha');
+      var botoesPeca = {};
+      var pool = el('div.copiar-pecas', monte[i].map(function (k) {
+        var b = el('button.copiar-peca', { type: 'button' }, pecas[k]);
+        b.addEventListener('click', function () {
+          if (ctrl.travado) return;
+          var v = valores[i];
+          if (v.letras.indexOf(k) >= 0) return;
+          var max = v.escolha !== null ? letrasDe(it.opcoes[v.escolha]).length : pecas.length;
+          if (v.letras.length >= max) { avisar(linha); return; }
+          v.letras.push(k);
+          Reino.Som.tocar('selecionar'); pintar(i); opts.onMudar();
+          // teclado: o foco segue para a próxima peça livre
+          if (document.activeElement === b || document.activeElement === document.body) focarPeca(i, monte[i].indexOf(k));
+        });
+        botoesPeca[k] = b;
+        return b;
+      }));
+      var caixa = el('div.copiar-item',
+        el('div.copiar-escolha', it.letra ? el('b.copiar-letra', it.letra + ')') : null, botoesOpc),
+        el('div.copiar-resposta', el('span.copiar-rotulo', 'Resposta:'), linha),
+        pool);
+      wrap.appendChild(caixa);
+      return { caixa: caixa, botoesOpc: botoesOpc, linha: linha, botoesPeca: botoesPeca, pecas: pecas };
+    });
+    function avisar(no) { no.classList.remove('pisca'); void no.offsetWidth; no.classList.add('pisca'); }
+    function focarPeca(i, desde) {
+      var ordem = monte[i], n = ordem.length;
+      for (var s = 1; s <= n; s++) {
+        var b = itens[i].botoesPeca[ordem[(desde + s) % n]];
+        if (!b.disabled) { b.focus({ preventScroll: true }); return; }
+      }
+      var ultima = itens[i].linha.lastElementChild;
+      if (ultima && ultima.tagName === 'BUTTON') ultima.focus({ preventScroll: true });
+    }
+    function pintar(i) {
+      var it = d.itens[i], v = valores[i], x = itens[i];
+      x.botoesOpc.forEach(function (b, j) {
+        b.setAttribute('aria-pressed', String(v.escolha === j));
+        U.preencher(b.querySelector('.copiar-marca'), v.escolha === j ? 'X' : '');
+      });
+      x.linha.innerHTML = '';
+      v.letras.forEach(function (k, pos) {
+        var b = el('button.copiar-peca.colocada', { type: 'button', 'aria-label': 'Tirar a letra ' + x.pecas[k] }, x.pecas[k]);
+        b.addEventListener('click', function () {
+          if (ctrl.travado) return;
+          v.letras.splice(pos, 1);
+          Reino.Som.tocar('toque'); pintar(i); opts.onMudar();
+          var bs = x.linha.querySelectorAll('button');
+          if (bs.length) bs[Math.min(pos, bs.length - 1)].focus({ preventScroll: true });
+          else x.botoesPeca[k].focus({ preventScroll: true });
+        });
+        x.linha.appendChild(b);
+      });
+      // vagas: quantas letras faltam para a escrita marcada
+      var total = v.escolha !== null ? letrasDe(it.opcoes[v.escolha]).length : 0;
+      for (var s = v.letras.length; s < total; s++) x.linha.appendChild(el('span.copiar-vaga', { 'aria-hidden': 'true' }));
+      if (!v.letras.length && v.escolha === null) x.linha.appendChild(el('span.copiar-vazia', 'Marque a escrita certa e toque nas letras'));
+      Object.keys(x.botoesPeca).forEach(function (k) {
+        var usada = v.letras.indexOf(+k) >= 0;
+        x.botoesPeca[k].disabled = usada;
+        x.botoesPeca[k].classList.toggle('usada', usada);
+      });
+      x.caixa.classList.toggle('pronto', itemPronto(i));
+    }
+    function itemPronto(i) {
+      var v = valores[i];
+      return v.escolha !== null && v.letras.length === letrasDe(d.itens[i].opcoes[v.escolha]).length;
+    }
+    d.itens.forEach(function (_, i) { pintar(i); });
+    var ctrl = {
+      el: wrap, monte: monte,
+      valor: function () { return valores.map(function (v) { return { escolha: v.escolha, letras: v.letras.slice() }; }); },
+      pronto: function () { return d.itens.every(function (_, i) { return itemPronto(i); }); },
+      conferir: function () {
+        var erradas = d.itens.map(function (it, i) {
+          return valores[i].escolha === it.certa && copiaCerta(it, valores[i]) ? -1 : i;
+        }).filter(function (i) { return i >= 0; });
+        return { ok: erradas.length === 0, erradas: erradas };
+      },
+      // desfaz só a parte errada de cada item (a escolha e/ou a cópia)
+      marcarErro: function (res) {
+        (res.erradas || []).forEach(function (i) {
+          var it = d.itens[i], v = valores[i];
+          if (v.escolha !== it.certa) v.escolha = null;
+          if (!copiaCerta(it, v)) v.letras = [];
+          itens[i].caixa.classList.add('treme');
+          setTimeout(function () { itens[i].caixa.classList.remove('treme'); }, 600);
+          pintar(i);
+        });
+        opts.onMudar();
+      },
       marcarCerto: function () { wrap.classList.add('tudo-certo'); },
     };
     return ctrl;
@@ -750,11 +922,32 @@
     return ctrl;
   };
 
+  /* texto de apoio (d.apoio, em qualquer desafio ou questão), acima do enunciado:
+     { titulo, partes: [{ titulo, lista: [...] } ou { titulo, texto }] } */
+  D.caixaApoio = function (apoio) {
+    var caixa = el('section.apoio', { 'aria-label': 'Texto de apoio' },
+      el('p.apoio-rotulo', '📖 Texto de apoio'),
+      apoio.titulo ? el('h3.apoio-titulo', apoio.titulo) : null,
+      (apoio.partes || []).map(function (p) {
+        return el('div.apoio-parte',
+          p.titulo ? el('p.apoio-parte-titulo', p.titulo) : null,
+          p.lista ? el('ul.apoio-lista', p.lista.map(function (t) { return el('li', t); })) : null,
+          p.texto ? el('p.apoio-texto', p.texto) : null);
+      }));
+    if (Reino.Som.temVoz()) {
+      var ouvir = el('button.btn-ouvir.btn-ouvir-apoio', { type: 'button', 'aria-label': 'Ouvir o texto de apoio' }, '🔊 Ouvir o texto');
+      ouvir.addEventListener('click', function () { Reino.Som.falar(Reino.Falas.segmentosApoio(apoio), { voz: 'narradora' }); });
+      caixa.appendChild(ouvir);
+    }
+    return caixa;
+  };
+
   D.render = function (d, opts) {
     opts = Object.assign({ onMudar: function () {} }, opts || {});
     var fabrica = TIPOS[d.tipo] || TIPOS.escolha;
     var ctrl = fabrica(d, opts);
     var card = el('div.desafio.desafio-' + d.tipo + (d.estilo ? '.estilo-' + d.estilo : ''));
+    if (d.apoio) card.appendChild(D.caixaApoio(d.apoio));
     var enun = el('div.enunciado');
     if (d.tipo === 'vf') {
       enun.appendChild(el('p.pergunta', 'Verdadeiro ou falso?'));
@@ -786,7 +979,9 @@
     }
     if (d.tipo === 'ligar') return fracao(d.pares.filter(function (_, i) { return valor[i] === i; }).length, d.pares.length);
     if (d.tipo === 'vfLista') return fracao(d.itens.filter(function (it, i) { return valor[i] === (it.v ? 0 : 1); }).length, d.itens.length);
-    if (d.tipo === 'completar') return fracao(d.frases.filter(function (f, i) { return valor[i] === f.certa; }).length, d.frases.length);
+    if (d.tipo === 'completar') return fracao(d.frases.filter(function (f, i) { return valor[i] != null && completarAceita(f, valor[i]); }).length, d.frases.length);
+    // copiar: 2 partes por item (marcou a escrita certa; a cópia forma a escrita certa)
+    if (d.tipo === 'copiar') return fracao(d.itens.reduce(function (t, it, i) { var v = valor[i] || {}; return t + (v.escolha === it.certa ? 1 : 0) + (copiaCerta(it, v) ? 1 : 0); }, 0), d.itens.length * 2);
     if (d.tipo === 'separar') return fracao(d.itens.filter(function (it, i) { return valor[i] === it.g; }).length, d.itens.length);
     if (d.tipo === 'ordenar' || d.tipo === 'frase') {
       var itens = d.itens || d.blocos;
@@ -798,6 +993,11 @@
   D.conferirValor = function (d, valor) { return D.pontuar(d, valor) === 1; };
 
   function textoFrase(d, seq) { return seq.map(function (i) { return (d.itens || d.blocos)[i]; }).join(' '); }
+  // palavra j numa frase do completar (colado: a palavra inteira, como XÍCARA; sem escolha: a lacuna)
+  function palavraCompletar(d, f, j) {
+    if (d.colado) return f.antes + (j != null ? d.palavras[j] : '_') + f.depois;
+    return j != null ? d.palavras[j] : '______';
+  }
   function textoEsquerda(p, i) { return p[0].t || ((i + 1) + 'º ' + p[0].alt); }
   D.TEXTO_PESSOAL = 'Resposta pessoal: vale o que for verdade para você.';
   // linha da correção: "✓ Certo: ..." (ou o aviso de resposta pessoal)
@@ -810,7 +1010,11 @@
     if (d.tipo === 'varias') return d.opcoes.filter(function (o) { return o.ok; }).map(function (o) { return o.t; }).join(', ');
     if (d.tipo === 'ligar') return d.pares.map(function (p, i) { return textoEsquerda(p, i) + ' → ' + p[1].t; }).join(' • ');
     if (d.tipo === 'vfLista') return d.itens.map(function (it) { return '(' + rotulosVF(d)[it.v ? 0 : 1] + ') ' + it.t; }).join(' • ');
-    if (d.tipo === 'completar') return d.frases.map(function (f) { return (f.letra ? f.letra + ') ' : '') + d.palavras[f.certa]; }).join(' • ');
+    if (d.tipo === 'completar') return d.frases.map(function (f) {
+      var outras = (f.aceitas || []).map(function (j) { return palavraCompletar(d, f, j); });
+      return (f.letra ? f.letra + ') ' : '') + palavraCompletar(d, f, f.certa) + (outras.length ? ' (ou ' + outras.join(' ou ') + ')' : '');
+    }).join(' • ');
+    if (d.tipo === 'copiar') return d.itens.map(function (it) { return (it.letra ? it.letra + ') ' : '') + it.opcoes[it.certa]; }).join(' • ');
     if (d.tipo === 'ordenar' || d.tipo === 'frase') return textoFrase(d, (d.itens || d.blocos).map(function (_, i) { return i; }));
     return '';
   };
@@ -822,7 +1026,11 @@
     if (d.tipo === 'ligar') return d.pares.map(function (p, i) { return textoEsquerda(p, i) + ' → ' + (valor[i] != null ? d.pares[valor[i]][1].t : '?'); }).join(' • ');
     if (d.tipo === 'vfLista') return d.itens.map(function (it, i) { return '(' + (valor[i] === 0 || valor[i] === 1 ? rotulosVF(d)[valor[i]] : ' ') + ') ' + it.t; }).join(' • ');
     if (d.tipo === 'desenho') return D.desenhoCumpriu(d, valor) ? 'Desenho com tudo o que foi pedido.' : 'Desenho sem ' + D.desenhoFaltam(d, valor).join(', ') + '.';
-    if (d.tipo === 'completar') return d.frases.map(function (f, i) { return (f.letra ? f.letra + ') ' : '') + (valor[i] != null ? d.palavras[valor[i]] : '______'); }).join(' • ');
+    if (d.tipo === 'completar') return d.frases.map(function (f, i) { return (f.letra ? f.letra + ') ' : '') + palavraCompletar(d, f, valor[i]); }).join(' • ');
+    if (d.tipo === 'copiar') return d.itens.map(function (it, i) {
+      var v = valor[i] || {}, copia = textoCopia(it, v);
+      return (it.letra ? it.letra + ') ' : '') + (v.escolha != null ? 'marcou ' + it.opcoes[v.escolha] : 'não marcou') + ', escreveu ' + (copia || '(nada)');
+    }).join(' • ');
     if (d.tipo === 'ordenar' || d.tipo === 'frase') return textoFrase(d, valor);
     return '';
   };
@@ -1037,7 +1245,7 @@
       var faltamRaro = raro && !Reino.Progresso.temUni(raro.id) ? Reino.Progresso.faltamPersistencia({ raridade: 'raro', sala: sala.id }) : 0;
       var dicaRaro = faltamRaro ? el('p.dica-raro', '💙 Mais ' + (faltamRaro === 1 ? '1 vez' : faltamRaro + ' vezes') + ' nesta sala e o unicórnio raro nasce! Ou faça tudo certo de primeira e com calma.')
         : premios.porPersistencia ? el('p.dica-raro', '💙 O unicórnio raro nasceu pela sua persistência!') : null;
-      var btn = el('button.btn-grande.btn-principal', { type: 'button' }, premios.ovos.length ? 'Chocar ' + (premios.ovos.length > 1 ? 'os ovos' : 'o ovo') + ' 🥚' : 'Voltar ao ' + materia.lugar.nome);
+      var btn = el('button.btn-grande.btn-principal', { type: 'button' }, premios.ovos.length ? 'Chocar ' + (premios.ovos.length > 1 ? 'os ovos' : 'o ovo') + ' 🥚' : 'Voltar ' + (materia.lugar.artigo === 'a' ? 'à ' : 'ao ') + materia.lugar.nome);
       corpo.appendChild(el('div.fim-sala',
         el('div.fim-emoji', premios.materiaCompleta ? '🌈' : '🎉'),
         el('h2.titulo-pixel', premios.materiaCompleta ? 'Revisão de ' + materia.nome + ' completa!' : 'Sala concluída!'),

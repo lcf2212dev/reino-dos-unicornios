@@ -11,7 +11,7 @@ Reino.registrarMateria({
     nome: 'Casa das Palavras',
     artigo: 'a',   // "até a Casa das Palavras", "as salas da Casa das Palavras" (js/falas.js)
     sprite: 'palavras',
-    rect: { x: 23, y: 4, w: 5, h: 5 },
+    rect: { x: 22, y: 15, w: 5, h: 5 },   // clareira de baixo: na (23,4) a placa do Castelo cobria o telhado
     placa: 'acima',
     cores: { parede: '#fff4ec', telhado: '#e0433f', detalhe: '#39a860' },
   },

@@ -266,13 +266,13 @@
  },
  "falas": [
   {
-   "chave": "7ce796a428",
+   "chave": "c193209b2c",
    "voz": "claude",
-   "texto": "Oi, Mariana! Que bom te ver! Vamos passear pelo Reino e revisar História?",
+   "texto": "Oi, Mariana! Que bom te ver! Vamos passear pelo Reino e revisar um pouquinho?",
    "pacotes": [
     "geral"
    ],
-   "fala": "Oi, Mariana! Que bom te ver! Vamos passear pelo Reino e revisar História?"
+   "fala": "Oi, Mariana! Que bom te ver! Vamos passear pelo Reino e revisar um pouquinho?"
   },
   {
    "chave": "fcfba9861q",
@@ -284,13 +284,13 @@
    "fala": "Olá, Mariana! Seu unicórnio estava com saudade de você!"
   },
   {
-   "chave": "d368fe2726",
+   "chave": "e14e741f1v",
    "voz": "claude",
-   "texto": "Oba, a Mariana chegou! O Museu e a Torre do Relógio estão te esperando.",
+   "texto": "Oba, a Mariana chegou! As salas do Reino estão te esperando.",
    "pacotes": [
     "geral"
    ],
-   "fala": "Oba, a Mariana chegou! O Museu e a Torre do Relógio estão te esperando."
+   "fala": "Oba, a Mariana chegou! As salas do Reino estão te esperando."
   },
   {
    "chave": "c75fd9ed1f",
@@ -338,13 +338,13 @@
    "fala": "Muito bem! Ler com atenção funciona mesmo!"
   },
   {
-   "chave": "c8a6f31a1b",
+   "chave": "c2bbac8c18",
    "voz": "claude",
-   "texto": "Perfeito! Você é uma ótima historiadora!",
+   "texto": "Perfeito! Você é uma ótima estudante!",
    "pacotes": [
     "geral"
    ],
-   "fala": "Perfeito! Você é uma ótima historiadora!"
+   "fala": "Perfeito! Você é uma ótima estudante!"
   },
   {
    "chave": "4f325533x",
@@ -509,13 +509,13 @@
    "fala": "Na prova, leia cada pergunta duas vezes: uma para entender e outra para ter certeza."
   },
   {
-   "chave": "91239e1e3z",
+   "chave": "c608488f23",
    "voz": "claude",
-   "texto": "Lembra da quadrinha? \"Eu sozinho canto bem, com você canto melhor.\" Ela valoriza a amizade, não a competição! A prova não é uma corrida.",
+   "texto": "A prova não é uma corrida! Cada um tem o seu tempo, e está tudo bem.",
    "pacotes": [
     "geral"
    ],
-   "fala": "Lembra da quadrinha? \"Eu sozinho canto bem, com você canto melhor.\" Ela valoriza a amizade, não a competição! A prova não é uma corrida."
+   "fala": "A prova não é uma corrida! Cada um tem o seu tempo, e está tudo bem."
   },
   {
    "chave": "3f0d429e2h",
@@ -644,13 +644,13 @@
    "fala": "Você é incrível, Mariana!"
   },
   {
-   "chave": "d549502623",
+   "chave": "0d0c2d8b20",
    "voz": "claude",
-   "texto": "Mais uma sala! Esse museu está ficando todo iluminado por sua causa!",
+   "texto": "Mais uma sala! O Reino está ficando todo iluminado por sua causa!",
    "pacotes": [
     "geral"
    ],
-   "fala": "Mais uma sala! Esse museu está ficando todo iluminado por sua causa!"
+   "fala": "Mais uma sala! O Reino está ficando todo iluminado por sua causa!"
   },
   {
    "chave": "acc717c018",
@@ -685,7 +685,12 @@
     "ingles-i2",
     "ingles-i3",
     "ingles-i4",
-    "ingles-i5"
+    "ingles-i5",
+    "portugues-p1",
+    "portugues-p2",
+    "portugues-p3",
+    "portugues-p4",
+    "portugues-p5"
    ],
    "fala": "Verdadeiro ou falso?"
   },
@@ -2258,6 +2263,468 @@
    "fala": "Draw a picture using the elements of the art (shapes, lines and colors)"
   },
   {
+   "chave": "065485de1v",
+   "voz": "narradora",
+   "texto": "Qual é o nome da receita? Monte a resposta com os blocos.",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "Qual é o nome da receita? Monte a resposta com os blocos."
+  },
+  {
+   "chave": "6acd1a9et",
+   "voz": "narradora",
+   "texto": "O nome da receita é",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "O nome da receita é"
+  },
+  {
+   "chave": "b17b7de9g",
+   "voz": "narradora",
+   "texto": "Salada",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "Salada"
+  },
+  {
+   "chave": "1ab0bf4fk",
+   "voz": "narradora",
+   "texto": "de frutas.",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "de frutas."
+  },
+  {
+   "chave": "b8fa2461q",
+   "voz": "narradora",
+   "texto": "Salada de frutas",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "Salada de frutas"
+  },
+  {
+   "chave": "40de1d5cn",
+   "voz": "narradora",
+   "texto": "Ingredientes:",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "Ingredientes:"
+  },
+  {
+   "chave": "93270dddi",
+   "voz": "narradora",
+   "texto": "1 banana",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "1 banana"
+  },
+  {
+   "chave": "1cbca310g",
+   "voz": "narradora",
+   "texto": "1 maçã",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "1 maçã"
+  },
+  {
+   "chave": "27421458p",
+   "voz": "narradora",
+   "texto": "1 mamão pequeno",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "1 mamão pequeno"
+  },
+  {
+   "chave": "1add4095j",
+   "voz": "narradora",
+   "texto": "1 laranja",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "1 laranja"
+  },
+  {
+   "chave": "1e62a472p",
+   "voz": "narradora",
+   "texto": "1 cacho de uvas",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "1 cacho de uvas"
+  },
+  {
+   "chave": "506bd0b8q",
+   "voz": "narradora",
+   "texto": "Modo de preparo:",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "Modo de preparo:"
+  },
+  {
+   "chave": "1570d5e74u",
+   "voz": "narradora",
+   "texto": "Lave bem as frutas. Descasque a banana, a maçã, o mamão e a laranja. Corte as frutas em pedaços pequenos. Coloque tudo em uma tigela e misture. Depois, é só servir!",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "Lave bem as frutas. Descasque a banana, a maçã, o mamão e a laranja. Corte as frutas em pedaços pequenos. Coloque tudo em uma tigela e misture. Depois, é só servir!"
+  },
+  {
+   "chave": "f5f5615811",
+   "voz": "narradora",
+   "texto": "Para que serve uma receita?",
+   "pacotes": [
+    "prova-portugues-3bim",
+    "portugues-p1"
+   ],
+   "fala": "Para que serve uma receita?"
+  },
+  {
+   "chave": "292761b4z",
+   "voz": "narradora",
+   "texto": "Para contar uma história.",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "Para contar uma história."
+  },
+  {
+   "chave": "2163469e1a",
+   "voz": "narradora",
+   "texto": "Para ensinar a preparar um alimento.",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "Para ensinar a preparar um alimento."
+  },
+  {
+   "chave": "86651d5613",
+   "voz": "narradora",
+   "texto": "Para ensinar uma brincadeira.",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "Para ensinar uma brincadeira."
+  },
+  {
+   "chave": "2800c91b2e",
+   "voz": "narradora",
+   "texto": "Quais são os ingredientes usados para preparar essa receita? Toque em todos.",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "Quais são os ingredientes usados para preparar essa receita? Toque em todos."
+  },
+  {
+   "chave": "17a49df8g",
+   "voz": "narradora",
+   "texto": "banana",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "banana"
+  },
+  {
+   "chave": "e91fe20ch",
+   "voz": "narradora",
+   "texto": "morango",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "morango"
+  },
+  {
+   "chave": "a6fc000de",
+   "voz": "narradora",
+   "texto": "maçã",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "maçã"
+  },
+  {
+   "chave": "13c95f5cf",
+   "voz": "narradora",
+   "texto": "mamão",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "mamão"
+  },
+  {
+   "chave": "588ee032h",
+   "voz": "narradora",
+   "texto": "abacaxi",
+   "pacotes": [
+    "prova-portugues-3bim",
+    "portugues-p2",
+    "portugues-p3"
+   ],
+   "fala": "abacaxi"
+  },
+  {
+   "chave": "d1708146h",
+   "voz": "narradora",
+   "texto": "laranja",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "laranja"
+  },
+  {
+   "chave": "2ab3159di",
+   "voz": "narradora",
+   "texto": "melancia",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "melancia"
+  },
+  {
+   "chave": "f0901496e",
+   "voz": "narradora",
+   "texto": "uvas",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "uvas"
+  },
+  {
+   "chave": "9346bd511k",
+   "voz": "narradora",
+   "texto": "O que devemos fazer antes de cortar as frutas?",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "O que devemos fazer antes de cortar as frutas?"
+  },
+  {
+   "chave": "1eeab21aq",
+   "voz": "narradora",
+   "texto": "Comer as frutas.",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "Comer as frutas."
+  },
+  {
+   "chave": "6b6f68a4u",
+   "voz": "narradora",
+   "texto": "Lavar bem as frutas.",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "Lavar bem as frutas."
+  },
+  {
+   "chave": "fac101aa15",
+   "voz": "narradora",
+   "texto": "Colocar as frutas na geladeira.",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "Colocar as frutas na geladeira."
+  },
+  {
+   "chave": "9d32af1e1j",
+   "voz": "narradora",
+   "texto": "Complete as frases com as palavras do quadro:",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "Complete as frases com as palavras do quadro:"
+  },
+  {
+   "chave": "a283b031e",
+   "voz": "narradora",
+   "texto": "HOJE",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "hoje"
+  },
+  {
+   "chave": "9636411bi",
+   "voz": "narradora",
+   "texto": "HOSPITAL",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "hospital"
+  },
+  {
+   "chave": "1cc0235ei",
+   "voz": "narradora",
+   "texto": "HISTÓRIA",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "história"
+  },
+  {
+   "chave": "1d0f8b95f",
+   "voz": "narradora",
+   "texto": "HORTA",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "horta"
+  },
+  {
+   "chave": "2c35bbc019",
+   "voz": "narradora",
+   "texto": "______ eu vou estudar para a prova.",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "… eu vou estudar para a prova."
+  },
+  {
+   "chave": "8d49c12312",
+   "voz": "narradora",
+   "texto": "O médico trabalha no ______.",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "O médico trabalha no …"
+  },
+  {
+   "chave": "2e939a9915",
+   "voz": "narradora",
+   "texto": "A professora contou uma ______.",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "A professora contou uma …"
+  },
+  {
+   "chave": "c9be38361d",
+   "voz": "narradora",
+   "texto": "O menino plantou uma cenoura na ______.",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "O menino plantou uma cenoura na …"
+  },
+  {
+   "chave": "9b0911321k",
+   "voz": "narradora",
+   "texto": "Circule somente as palavras que começam com H:",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "Circule somente as palavras que começam com agá:"
+  },
+  {
+   "chave": "edae745de",
+   "voz": "narradora",
+   "texto": "BOLA",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "bola"
+  },
+  {
+   "chave": "96490625e",
+   "voz": "narradora",
+   "texto": "HORA",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "hora"
+  },
+  {
+   "chave": "3e22bd85e",
+   "voz": "narradora",
+   "texto": "CASA",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "casa"
+  },
+  {
+   "chave": "3d3a59d1f",
+   "voz": "narradora",
+   "texto": "HOMEM",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "homem"
+  },
+  {
+   "chave": "89c929bbg",
+   "voz": "narradora",
+   "texto": "SAPATO",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "sapato"
+  },
+  {
+   "chave": "28d705571a",
+   "voz": "narradora",
+   "texto": "Complete as palavras usando X ou CH:",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "Complete as palavras usando xis ou cê agá:"
+  },
+  {
+   "chave": "afaeefeb1a",
+   "voz": "narradora",
+   "texto": "Complete as palavras usando S ou SS:",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "Complete as palavras usando ésse ou dois ésses:"
+  },
+  {
+   "chave": "d10a6b9716",
+   "voz": "narradora",
+   "texto": "Complete as palavras com X ou Z:",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "Complete as palavras com xis ou zê:"
+  },
+  {
+   "chave": "caa9e9f635",
+   "voz": "narradora",
+   "texto": "Escreva o nome das imagens, classificando corretamente: Toque em CH, LH ou NH para completar cada nome.",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "Escreva o nome das imagens, classificando corretamente: Toque em cê agá, éle agá ou ene agá para completar cada nome."
+  },
+  {
+   "chave": "f248f8372q",
+   "voz": "narradora",
+   "texto": "Escolha a escrita correta e copie a palavra: Depois, monte a palavra tocando nas letras.",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "Escolha a escrita correta e copie a palavra: Depois, monte a palavra tocando nas letras."
+  },
+  {
+   "chave": "c30223701a",
+   "voz": "narradora",
+   "texto": "Complete as palavras usando R ou RR:",
+   "pacotes": [
+    "prova-portugues-3bim"
+   ],
+   "fala": "Complete as palavras usando érre ou dois érres:"
+  },
+  {
    "chave": "3909f17932",
    "voz": "claude",
    "texto": "Toque no chão para andar (ou use as setas do teclado). Vamos até o Museu das Memórias? É só tocar nele!",
@@ -3344,7 +3811,8 @@
    "texto": "Monte a frase da apostila tocando nos blocos na ordem certa:",
    "pacotes": [
     "historia-h1",
-    "historia-h2"
+    "historia-h2",
+    "portugues-p3"
    ],
    "fala": "Monte a frase da apostila tocando nos blocos na ordem certa:"
   },
@@ -5051,7 +5519,8 @@
     "historia-h5",
     "ingles-i1",
     "ingles-i2",
-    "ingles-i4"
+    "ingles-i4",
+    "portugues-p3"
    ],
    "fala": "Jogo da memória! Encontre os pares:"
   },
@@ -5062,7 +5531,10 @@
    "pacotes": [
     "historia-h5",
     "ingles-i3",
-    "ingles-i5"
+    "ingles-i5",
+    "portugues-p1",
+    "portugues-p2",
+    "portugues-p5"
    ],
    "fala": "Monte a frase tocando nos blocos na ordem certa:"
   },
@@ -8971,274 +9443,499 @@
    "fala": "O treino de Português abre quando você terminar as salas da Casa das Palavras. Faltam 5! Você consegue!"
   },
   {
-   "chave": "74ca674c2i",
+   "chave": "ac8a371b2o",
    "voz": "claude",
-   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Carta receita\".",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"O que é uma receita\".",
    "pacotes": [
     "portugues-extra"
    ],
-   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Carta receita\"."
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"O que é uma receita\"."
   },
   {
-   "chave": "2676ed51n",
+   "chave": "0c891816t",
    "voz": "narradora",
-   "texto": "Carta receita",
+   "texto": "O que é uma receita",
    "pacotes": [
     "portugues-livro"
    ],
-   "fala": "Carta receita"
+   "fala": "O que é uma receita"
   },
   {
-   "chave": "883aedecr",
+   "chave": "7a5351fd96",
    "voz": "narradora",
-   "texto": "Carta provisória.",
+   "texto": "Uma receita é um texto que ensina a fazer um prato, uma bebida ou uma sobremesa. Ela usa uma linguagem simples e organizada. Com ela a gente sabe o que usar e o que fazer. Dá para achar receitas em livros de cozinha, em revistas e na internet. Outros textos também ensinam a fazer coisas, como os tutoriais e os manuais.",
    "pacotes": [
     "portugues-livro"
    ],
-   "fala": "Carta provisória."
+   "fala": "Uma receita é um texto que ensina a fazer um prato, uma bebida ou uma sobremesa. Ela usa uma linguagem simples e organizada. Com ela a gente sabe o que usar e o que fazer. Dá para achar receitas em livros de cozinha, em revistas e na internet. Outros textos também ensinam a fazer coisas, como os tutoriais e os manuais."
   },
   {
-   "chave": "a45f1cba2p",
+   "chave": "4a7732852p",
    "voz": "claude",
-   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Carta partes-receita\".",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"As partes da receita\".",
    "pacotes": [
     "portugues-extra"
    ],
-   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Carta partes-receita\"."
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"As partes da receita\"."
   },
   {
-   "chave": "1038c5c9u",
+   "chave": "df13e036u",
    "voz": "narradora",
-   "texto": "Carta partes-receita",
+   "texto": "As partes da receita",
    "pacotes": [
     "portugues-livro"
    ],
-   "fala": "Carta partes-receita"
+   "fala": "As partes da receita"
   },
   {
-   "chave": "de1b80482o",
+   "chave": "62c9fd1f78",
+   "voz": "narradora",
+   "texto": "O título é o nome da receita, como \"Salada de frutas\". Os ingredientes mostram tudo o que vai ser usado. O modo de preparo explica o passo a passo. As porções dizem quantas pessoas a receita serve. Uma boa receita deixa todas as partes bem separadas.",
+   "pacotes": [
+    "portugues-livro"
+   ],
+   "fala": "O título é o nome da receita, como \"Salada de frutas\". Os ingredientes mostram tudo o que vai ser usado. O modo de preparo explica o passo a passo. As porções dizem quantas pessoas a receita serve. Uma boa receita deixa todas as partes bem separadas."
+  },
+  {
+   "chave": "aea15cc52p",
    "voz": "claude",
-   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Carta passo-a-passo\".",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Um passo de cada vez\".",
    "pacotes": [
     "portugues-extra"
    ],
-   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Carta passo-a-passo\"."
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Um passo de cada vez\"."
   },
   {
-   "chave": "c8550025t",
+   "chave": "205dd006u",
    "voz": "narradora",
-   "texto": "Carta passo-a-passo",
+   "texto": "Um passo de cada vez",
    "pacotes": [
     "portugues-livro"
    ],
-   "fala": "Carta passo-a-passo"
+   "fala": "Um passo de cada vez"
   },
   {
-   "chave": "3b221c422i",
+   "chave": "ce1291987i",
+   "voz": "narradora",
+   "texto": "O modo de preparo vem em etapas, com números: 1, 2, 3... É importante seguir a ordem! Na salada de frutas, o primeiro passo é reunir todos os ingredientes. O último é servir e se deliciar. Se a gente pula um passo ou troca a ordem, a comida pode não dar certo.",
+   "pacotes": [
+    "portugues-livro"
+   ],
+   "fala": "O modo de preparo vem em etapas, com números: 1, 2, 3... É importante seguir a ordem! Na salada de frutas, o primeiro passo é reunir todos os ingredientes. O último é servir e se deliciar. Se a gente pula um passo ou troca a ordem, a comida pode não dar certo."
+  },
+  {
+   "chave": "bfd017272g",
    "voz": "claude",
-   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Carta letra-h\".",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"O H mudinho\".",
    "pacotes": [
     "portugues-extra"
    ],
-   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Carta letra-h\"."
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"O agá mudinho\"."
   },
   {
-   "chave": "113b191fn",
+   "chave": "edaff3aal",
    "voz": "narradora",
-   "texto": "Carta letra-h",
+   "texto": "O H mudinho",
    "pacotes": [
     "portugues-livro"
    ],
-   "fala": "Carta letra-h"
+   "fala": "O agá mudinho"
   },
   {
-   "chave": "fe6a53a62j",
+   "chave": "b742bfb872",
+   "voz": "narradora",
+   "texto": "A letra H, quando aparece no começo da palavra, não tem som. Por isso a gente diz que o H é uma letra muda: ele está lá, mas não é falado. Veja: hora, homem, história, hotel, hortelã. Na fala o H não aparece, mas na escrita ele não pode faltar!",
+   "pacotes": [
+    "portugues-livro"
+   ],
+   "fala": "A letra agá, quando aparece no começo da palavra, não tem som. Por isso a gente diz que o agá é uma letra muda: ele está lá, mas não é falado. Veja: hora, homem, história, hotel, hortelã. Na fala o agá não aparece, mas na escrita ele não pode faltar!"
+  },
+  {
+   "chave": "785eece82g",
    "voz": "claude",
-   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Carta digrafos\".",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"CH, LH e NH\".",
    "pacotes": [
     "portugues-extra"
    ],
-   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Carta digrafos\"."
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"cê agá, éle agá e ene agá\"."
   },
   {
-   "chave": "cad9c8edo",
+   "chave": "625d8649l",
    "voz": "narradora",
-   "texto": "Carta digrafos",
+   "texto": "CH, LH e NH",
    "pacotes": [
     "portugues-livro"
    ],
-   "fala": "Carta digrafos"
+   "fala": "cê agá, éle agá e ene agá"
   },
   {
-   "chave": "c0ec960a2i",
+   "chave": "bb587c075k",
+   "voz": "narradora",
+   "texto": "CH, LH e NH são dígrafos: duas letras que fazem um som só. O CH tem o som de X, como em chocalho. O LH tem um som único, como em escolhem. O NH também tem um som só dele, como em amarelinha.",
+   "pacotes": [
+    "portugues-livro"
+   ],
+   "fala": "cê agá, éle agá e ene agá são dígrafos: duas letras que fazem um som só. O cê agá tem o som de xis, como em chocalho. O éle agá tem um som único, como em escolhem. O ene agá também tem um som só dele, como em amarelinha."
+  },
+  {
+   "chave": "13bc48322d",
    "voz": "claude",
-   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Carta x-ou-ch\".",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"X ou CH?\".",
    "pacotes": [
     "portugues-extra"
    ],
-   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Carta x-ou-ch\"."
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"xis ou cê agá?\"."
   },
   {
-   "chave": "b081a797n",
+   "chave": "858e5e6di",
    "voz": "narradora",
-   "texto": "Carta x-ou-ch",
+   "texto": "X ou CH?",
    "pacotes": [
     "portugues-livro"
    ],
-   "fala": "Carta x-ou-ch"
+   "fala": "xis ou cê agá?"
   },
   {
-   "chave": "d53eec872k",
+   "chave": "55a1611a7c",
+   "voz": "narradora",
+   "texto": "O X e o CH podem ter o mesmo som. Xícara e chave começam com o mesmo som! Com X: xícara, abacaxi, peixe, caixa. Com CH: chave, chuva, mochila, chocolate. Só ouvindo não dá para saber: é preciso conhecer a palavra. Quanto mais a gente lê, mais fácil fica!",
+   "pacotes": [
+    "portugues-livro"
+   ],
+   "fala": "O xis e o cê agá podem ter o mesmo som. Xícara e chave começam com o mesmo som! Com xis: xícara, abacaxi, peixe, caixa. Com cê agá: chave, chuva, mochila, chocolate. Só ouvindo não dá para saber: é preciso conhecer a palavra. Quanto mais a gente lê, mais fácil fica!"
+  },
+  {
+   "chave": "1b0ab0ff2m",
    "voz": "claude",
-   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Carta sons-do-x\".",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Os três sons do X\".",
    "pacotes": [
     "portugues-extra"
    ],
-   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Carta sons-do-x\"."
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Os três sons do xis\"."
   },
   {
-   "chave": "cd5c9952p",
+   "chave": "3d3c39a2r",
    "voz": "narradora",
-   "texto": "Carta sons-do-x",
+   "texto": "Os três sons do X",
    "pacotes": [
     "portugues-livro"
    ],
-   "fala": "Carta sons-do-x"
+   "fala": "Os três sons do xis"
   },
   {
-   "chave": "a018076e2h",
+   "chave": "b17a43834z",
+   "voz": "narradora",
+   "texto": "A letra X pode ter três sons diferentes, conforme a palavra. Som de S, como em excesso e próximo. Som de Z, como em exame e exemplo. Som de CH, como em xícara e abacaxi.",
+   "pacotes": [
+    "portugues-livro"
+   ],
+   "fala": "A letra xis pode ter três sons diferentes, conforme a palavra. Som de ésse, como em excesso e próximo. Som de zê, como em exame e exemplo. Som de cê agá, como em xícara e abacaxi."
+  },
+  {
+   "chave": "66cb262d2l",
    "voz": "claude",
-   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Carta relato\".",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"O relato pessoal\".",
    "pacotes": [
     "portugues-extra"
    ],
-   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Carta relato\"."
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"O relato pessoal\"."
   },
   {
-   "chave": "53ae6c55m",
+   "chave": "5aa3d53aq",
    "voz": "narradora",
-   "texto": "Carta relato",
+   "texto": "O relato pessoal",
    "pacotes": [
     "portugues-livro"
    ],
-   "fala": "Carta relato"
+   "fala": "O relato pessoal"
   },
   {
-   "chave": "c89acfb42q",
+   "chave": "21a7607eaz",
+   "voz": "narradora",
+   "texto": "O relato pessoal conta uma situação especial que a gente viveu. Ele diz o que aconteceu, onde foi, quem estava junto e como a gente se sentiu. As irmãs Laura, Tamara e Marininha escreveram um relato da viagem de barco delas até a Antártida. Elas contaram dos pinguins, das focas, do vento gelado no rosto e dos icebergs. Escrever ajuda a lembrar e deixa outras pessoas imaginarem tudo.",
+   "pacotes": [
+    "portugues-livro"
+   ],
+   "fala": "O relato pessoal conta uma situação especial que a gente viveu. Ele diz o que aconteceu, onde foi, quem estava junto e como a gente se sentiu. As irmãs Laura, Tamara e Marininha escreveram um relato da viagem de barco delas até a Antártida. Elas contaram dos pinguins, das focas, do vento gelado no rosto e dos icebergs. Escrever ajuda a lembrar e deixa outras pessoas imaginarem tudo."
+  },
+  {
+   "chave": "a36017d82m",
    "voz": "claude",
-   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Carta tempo-no-relato\".",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Quando aconteceu?\".",
    "pacotes": [
     "portugues-extra"
    ],
-   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Carta tempo-no-relato\"."
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Quando aconteceu?\"."
   },
   {
-   "chave": "8107e429v",
+   "chave": "e8916435r",
    "voz": "narradora",
-   "texto": "Carta tempo-no-relato",
+   "texto": "Quando aconteceu?",
    "pacotes": [
     "portugues-livro"
    ],
-   "fala": "Carta tempo-no-relato"
+   "fala": "Quando aconteceu?"
   },
   {
-   "chave": "6e4238b22j",
+   "chave": "25dabbc577",
+   "voz": "narradora",
+   "texto": "No relato, os fatos vêm na ordem em que aconteceram. Palavras de tempo mostram quando cada coisa aconteceu: ontem, depois, naquele dia, no início do dia, à noite. Isso se chama marcação temporal. As irmãs escreveram: \"Depois de cruzarmos o Drake...\"",
+   "pacotes": [
+    "portugues-livro"
+   ],
+   "fala": "No relato, os fatos vêm na ordem em que aconteceram. Palavras de tempo mostram quando cada coisa aconteceu: ontem, depois, naquele dia, no início do dia, à noite. Isso se chama marcação temporal. As irmãs escreveram: \"Depois de cruzarmos o Drake...\""
+  },
+  {
+   "chave": "c4e487a02p",
    "voz": "claude",
-   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Carta som-de-s\".",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Quem faz o som de S?\".",
    "pacotes": [
     "portugues-extra"
    ],
-   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Carta som-de-s\"."
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Quem faz o som de ésse?\"."
   },
   {
-   "chave": "2724f6b5o",
+   "chave": "62791dd3u",
    "voz": "narradora",
-   "texto": "Carta som-de-s",
+   "texto": "Quem faz o som de S?",
    "pacotes": [
     "portugues-livro"
    ],
-   "fala": "Carta som-de-s"
+   "fala": "Quem faz o som de ésse?"
   },
   {
-   "chave": "abbfd2b52o",
+   "chave": "05700f737i",
+   "voz": "narradora",
+   "texto": "Várias letras podem ter o som de S! A letra S no começo da palavra: sapato, sol, sapo. O SS sempre fica no meio da palavra, entre duas vogais: passarinho, massa, carrossel. O Z no final da palavra: arroz, feliz, voz. E o X em algumas palavras: próximo, máximo.",
+   "pacotes": [
+    "portugues-livro"
+   ],
+   "fala": "Várias letras podem ter o som de ésse! A letra ésse no começo da palavra: sapato, sol, sapo. O dois ésses sempre fica no meio da palavra, entre duas vogais: passarinho, massa, carrossel. O zê no final da palavra: arroz, feliz, voz. E o xis em algumas palavras: próximo, máximo."
+  },
+  {
+   "chave": "e6f650852n",
    "voz": "claude",
-   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Carta ponta-iceberg\".",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"A ponta do iceberg\".",
    "pacotes": [
     "portugues-extra"
    ],
-   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Carta ponta-iceberg\"."
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"A ponta do iceberg\"."
   },
   {
-   "chave": "6f590f4ct",
+   "chave": "0c0ce27as",
    "voz": "narradora",
-   "texto": "Carta ponta-iceberg",
+   "texto": "A ponta do iceberg",
    "pacotes": [
     "portugues-livro"
    ],
-   "fala": "Carta ponta-iceberg"
+   "fala": "A ponta do iceberg"
   },
   {
-   "chave": "2d055ce42i",
+   "chave": "8e678ca47q",
+   "voz": "narradora",
+   "texto": "Quando alguém diz \"isso é só a ponta do iceberg\", quer dizer que tem muito mais do que parece! Só 30% do iceberg fica fora da água, em cima do mar. O resto, a parte maior, fica escondido debaixo da água. E cada iceberg é único, com tons de branco, cinza, azul e verde.",
+   "pacotes": [
+    "portugues-livro"
+   ],
+   "fala": "Quando alguém diz \"isso é só a ponta do iceberg\", quer dizer que tem muito mais do que parece! Só 30% do iceberg fica fora da água, em cima do mar. O resto, a parte maior, fica escondido debaixo da água. E cada iceberg é único, com tons de branco, cinza, azul e verde."
+  },
+  {
+   "chave": "52a45ecf2n",
    "voz": "claude",
-   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Carta silabas\".",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Separar em sílabas\".",
    "pacotes": [
     "portugues-extra"
    ],
-   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Carta silabas\"."
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Separar em sílabas\"."
   },
   {
-   "chave": "e7307c01n",
+   "chave": "e98cb770s",
    "voz": "narradora",
-   "texto": "Carta silabas",
+   "texto": "Separar em sílabas",
    "pacotes": [
     "portugues-livro"
    ],
-   "fala": "Carta silabas"
+   "fala": "Separar em sílabas"
   },
   {
-   "chave": "a9e28add2k",
+   "chave": "227de71c68",
+   "voz": "narradora",
+   "texto": "As sílabas são os pedacinhos da palavra. Fale batendo palmas, uma palma para cada pedacinho: bal-de, pal-mei-ra! Para escrever a palavra separada, a gente usa um tracinho entre as sílabas: al-gu-ma, par-te, to-tal.",
+   "pacotes": [
+    "portugues-livro"
+   ],
+   "fala": "As sílabas são os pedacinhos da palavra. Fale batendo palmas, uma palma para cada pedacinho: bal-de, pal-mei-ra! Para escrever a palavra separada, a gente usa um tracinho entre as sílabas: al-gu-ma, par-te, to-tal."
+  },
+  {
+   "chave": "75e217892r",
    "voz": "claude",
-   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Carta l-r-final\".",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"L e R no fim da sílaba\".",
    "pacotes": [
     "portugues-extra"
    ],
-   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Carta l-r-final\"."
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"éle e érre no fim da sílaba\"."
   },
   {
-   "chave": "7c8eb9bcp",
+   "chave": "241382d2w",
    "voz": "narradora",
-   "texto": "Carta l-r-final",
+   "texto": "L e R no fim da sílaba",
    "pacotes": [
     "portugues-livro"
    ],
-   "fala": "Carta l-r-final"
+   "fala": "éle e érre no fim da sílaba"
   },
   {
-   "chave": "52ab93c82f",
+   "chave": "59dc5de86r",
+   "voz": "narradora",
+   "texto": "A letra L no fim da sílaba tem som de U, como em volta e calmo. Outros exemplos: palco, alto, balde, mel. A letra R também aparece no fim da sílaba: parte, porta, verde, mar. O som desse R pode mudar, conforme o sotaque de quem fala.",
+   "pacotes": [
+    "portugues-livro"
+   ],
+   "fala": "A letra éle no fim da sílaba tem som de u, como em volta e calmo. Outros exemplos: palco, alto, balde, mel. A letra érre também aparece no fim da sílaba: parte, porta, verde, mar. O som desse érre pode mudar, conforme o sotaque de quem fala."
+  },
+  {
+   "chave": "36ca3bf22q",
    "voz": "claude",
-   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Carta r-rr\".",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"R fraco, R forte e RR\".",
    "pacotes": [
     "portugues-extra"
    ],
-   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Carta r-rr\"."
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"érre fraco, érre forte e dois érres\"."
   },
   {
-   "chave": "ca6d93a3k",
+   "chave": "0f59d95bv",
    "voz": "narradora",
-   "texto": "Carta r-rr",
+   "texto": "R fraco, R forte e RR",
    "pacotes": [
     "portugues-livro"
    ],
-   "fala": "Carta r-rr"
+   "fala": "érre fraco, érre forte e dois érres"
   },
   {
-   "chave": "ab5850d6r",
+   "chave": "39e4227582",
+   "voz": "narradora",
+   "texto": "O R fraco aparece sozinho no meio da palavra, como em árvore e perigo. O R forte aparece no começo da palavra, como em rua e roda: aí ele é escrito com um R só. No meio da palavra, entre duas vogais, o som forte é escrito com RR: carro, terra, carrossel. O RR também é um dígrafo.",
+   "pacotes": [
+    "portugues-livro"
+   ],
+   "fala": "O érre fraco aparece sozinho no meio da palavra, como em árvore e perigo. O érre forte aparece no começo da palavra, como em rua e roda: aí ele é escrito com um érre só. No meio da palavra, entre duas vogais, o som forte é escrito com dois érres: carro, terra, carrossel. O dois érres também é um dígrafo."
+  },
+  {
+   "chave": "e4e677bd1c",
    "voz": "unicornio",
-   "texto": "Frase provisória.",
+   "texto": "Uma pitada de carinho em cada receita!",
    "pacotes": [
     "portugues-extra"
    ],
-   "fala": "Frase provisória."
+   "fala": "Uma pitada de carinho em cada receita!"
+  },
+  {
+   "chave": "7e36afa41n",
+   "voz": "unicornio",
+   "texto": "Primeiro os ingredientes, depois o passo a passo!",
+   "pacotes": [
+    "portugues-extra"
+   ],
+   "fala": "Primeiro os ingredientes, depois o passo a passo!"
+  },
+  {
+   "chave": "ca1b1d1e1i",
+   "voz": "unicornio",
+   "texto": "Hortelã começa com H... mas o H não faz som!",
+   "pacotes": [
+    "portugues-extra"
+   ],
+   "fala": "Hortelã começa com agá... mas o agá não faz som!"
+  },
+  {
+   "chave": "4104d7681g",
+   "voz": "unicornio",
+   "texto": "Psiu! O H é mudinho: hora, hotel, hibisco.",
+   "pacotes": [
+    "portugues-extra"
+   ],
+   "fala": "Psiu! O agá é mudinho: hora, hotel, hibisco."
+  },
+  {
+   "chave": "55ca9aa0x",
+   "voz": "unicornio",
+   "texto": "No meu ninho mora o NH!",
+   "pacotes": [
+    "portugues-extra"
+   ],
+   "fala": "No meu ninho mora o ene agá!"
+  },
+  {
+   "chave": "f00e32c015",
+   "voz": "unicornio",
+   "texto": "Xícara é com X, chave é com CH!",
+   "pacotes": [
+    "portugues-extra"
+   ],
+   "fala": "Xícara é com xis, chave é com cê agá!"
+  },
+  {
+   "chave": "f71c71431b",
+   "voz": "unicornio",
+   "texto": "Brrr! Vamos ver os pinguins saltando?",
+   "pacotes": [
+    "portugues-extra"
+   ],
+   "fala": "Brrr! Vamos ver os pinguins saltando?"
+  },
+  {
+   "chave": "3bdccec41i",
+   "voz": "unicornio",
+   "texto": "Sou só a ponta do iceberg... tem muito mais!",
+   "pacotes": [
+    "portugues-extra"
+   ],
+   "fala": "Sou só a ponta do iceberg... tem muito mais!"
+  },
+  {
+   "chave": "fa34d1f31e",
+   "voz": "unicornio",
+   "texto": "Roda, roda, carrossel! Carrossel tem RR!",
+   "pacotes": [
+    "portugues-extra"
+   ],
+   "fala": "Roda, roda, carrossel! Carrossel tem dois érres!"
+  },
+  {
+   "chave": "691cdff51a",
+   "voz": "unicornio",
+   "texto": "Fa-rol: o meu L no fim tem som de U!",
+   "pacotes": [
+    "portugues-extra"
+   ],
+   "fala": "Fa-rol: o meu éle no fim tem som de u!"
+  },
+  {
+   "chave": "6c6732721j",
+   "voz": "unicornio",
+   "texto": "Brilhei de orgulho: você é ouro nas palavras!",
+   "pacotes": [
+    "portugues-extra"
+   ],
+   "fala": "Brilhei de orgulho: você é ouro nas palavras!"
+  },
+  {
+   "chave": "7e76cec61b",
+   "voz": "unicornio",
+   "texto": "Tudo certinho e caprichado! Perfeito!",
+   "pacotes": [
+    "portugues-extra"
+   ],
+   "fala": "Tudo certinho e caprichado! Perfeito!"
+  },
+  {
+   "chave": "c15f8af61e",
+   "voz": "unicornio",
+   "texto": "Você aprendeu todas as palavras da Casa!",
+   "pacotes": [
+    "portugues-extra"
+   ],
+   "fala": "Você aprendeu todas as palavras da Casa!"
   },
   {
    "chave": "8f44df54m",
@@ -9250,93 +9947,600 @@
    "fala": "Receita de Quê?"
   },
   {
-   "chave": "7e35fcf416",
+   "chave": "491220ea1w",
    "voz": "claude",
-   "texto": "Sala provisória da Receita de Quê?.",
+   "texto": "Avental no lugar! Vamos descobrir os segredos de uma receita!",
    "pacotes": [
     "portugues-extra"
    ],
-   "fala": "Sala provisória da Receita de Quê?."
+   "fala": "Avental no lugar! Vamos descobrir os segredos de uma receita!"
   },
   {
-   "chave": "08036ce519",
+   "chave": "bd82bfd323",
    "voz": "narradora",
-   "texto": "(provisório) Pergunta 1 da sala p1?",
+   "texto": "Qual é a vantagem de seguir uma receita para preparar uma comida?",
    "pacotes": [
     "portugues-p1"
    ],
-   "fala": "(provisório) Pergunta 1 da sala p1?"
+   "fala": "Qual é a vantagem de seguir uma receita para preparar uma comida?"
   },
   {
-   "chave": "6e4fd33ef",
+   "chave": "7eac939f1q",
    "voz": "narradora",
-   "texto": "Certa",
+   "texto": "A gente sabe o que usar e o que fazer, passo a passo",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "A gente sabe o que usar e o que fazer, passo a passo"
+  },
+  {
+   "chave": "6156e53f18",
+   "voz": "narradora",
+   "texto": "A comida fica sempre mais colorida",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "A comida fica sempre mais colorida"
+  },
+  {
+   "chave": "0c22f2e014",
+   "voz": "narradora",
+   "texto": "A gente não precisa fazer nada",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "A gente não precisa fazer nada"
+  },
+  {
+   "chave": "92cfa08b11",
+   "voz": "narradora",
+   "texto": "Para dar as notícias do dia",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Para dar as notícias do dia"
+  },
+  {
+   "chave": "ea06bd571z",
+   "voz": "narradora",
+   "texto": "Para ensinar a preparar um prato, uma bebida ou uma sobremesa",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Para ensinar a preparar um prato, uma bebida ou uma sobremesa"
+  },
+  {
+   "chave": "5fbef91d1a",
+   "voz": "narradora",
+   "texto": "Para contar uma história de aventura",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Para contar uma história de aventura"
+  },
+  {
+   "chave": "6bd83e101l",
+   "voz": "narradora",
+   "texto": "Ligue cada parte da receita à informação certa:",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Ligue cada parte da receita à informação certa:"
+  },
+  {
+   "chave": "ba34ae352c",
+   "voz": "narradora",
+   "texto": "Quais frutas estão nos ingredientes da \"Salada de frutas\"? Toque em TODAS.",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Quais frutas estão nos ingredientes da \"Salada de frutas\"? Toque em todas."
+  },
+  {
+   "chave": "627f0d6ch",
+   "voz": "narradora",
+   "texto": "Morango",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Morango"
+  },
+  {
+   "chave": "2a4960d8g",
+   "voz": "narradora",
+   "texto": "Banana",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Banana"
+  },
+  {
+   "chave": "256b9b92h",
+   "voz": "narradora",
+   "texto": "Abacaxi",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Abacaxi"
+  },
+  {
+   "chave": "401ad5ede",
+   "voz": "narradora",
+   "texto": "Maçã",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Maçã"
+  },
+  {
+   "chave": "60010afch",
+   "voz": "narradora",
+   "texto": "Cenoura",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Cenoura"
+  },
+  {
+   "chave": "af45b17di",
+   "voz": "narradora",
+   "texto": "Melancia",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Melancia"
+  },
+  {
+   "chave": "23672f8122",
+   "voz": "narradora",
+   "texto": "É ingrediente ou é um passo do modo de preparo? Separe nos baús!",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "É ingrediente ou é um passo do modo de preparo? Separe nos baús!"
+  },
+  {
+   "chave": "b317c6c41q",
+   "voz": "narradora",
+   "texto": "Jogo da memória dos ingredientes! Encontre os pares:",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Jogo da memória dos ingredientes! Encontre os pares:"
+  },
+  {
+   "chave": "5ea2188d20",
+   "voz": "narradora",
+   "texto": "Na receita de salada de frutas, o que deve ser feito primeiro?",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Na receita de salada de frutas, o que deve ser feito primeiro?"
+  },
+  {
+   "chave": "76c1da0a10",
+   "voz": "narradora",
+   "texto": "Adicionar leite condensado",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Adicionar leite condensado"
+  },
+  {
+   "chave": "e1d82ac812",
+   "voz": "narradora",
+   "texto": "Reunir todos os ingredientes",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Reunir todos os ingredientes"
+  },
+  {
+   "chave": "8c6dd53916",
+   "voz": "narradora",
+   "texto": "Levar as frutas para a geladeira",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Levar as frutas para a geladeira"
+  },
+  {
+   "chave": "49ea68921r",
+   "voz": "narradora",
+   "texto": "Coloque os passos da salada de frutas na ordem certa:",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Coloque os passos da salada de frutas na ordem certa:"
+  },
+  {
+   "chave": "9b0c38451n",
+   "voz": "narradora",
+   "texto": "Quantas vezes a salada de frutas vai à geladeira?",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Quantas vezes a salada de frutas vai à geladeira?"
+  },
+  {
+   "chave": "ca91e981f",
+   "voz": "narradora",
+   "texto": "1 vez",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "1 vez"
+  },
+  {
+   "chave": "6094a96ch",
+   "voz": "narradora",
+   "texto": "2 vezes",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "2 vezes"
+  },
+  {
+   "chave": "f9c0785fh",
+   "voz": "narradora",
+   "texto": "3 vezes",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "3 vezes"
+  },
+  {
+   "chave": "25ddb9b929",
+   "voz": "narradora",
+   "texto": "Na salada de frutas, a gente mistura tudo com força, de qualquer jeito.",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Na salada de frutas, a gente mistura tudo com força, de qualquer jeito."
+  },
+  {
+   "chave": "04ab7e911z",
+   "voz": "narradora",
+   "texto": "A receita usa um \"fouet\". O que é um fouet? Olhe o glossário!",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "A receita usa um \"fouet\". O que é um fouet? Olhe o glossário!"
+  },
+  {
+   "chave": "c4ffc3cet",
+   "voz": "narradora",
+   "texto": "Uma fruta diferente",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Uma fruta diferente"
+  },
+  {
+   "chave": "b8f474bdu",
+   "voz": "narradora",
+   "texto": "Um batedor de claras",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Um batedor de claras"
+  },
+  {
+   "chave": "4eedc6c0p",
+   "voz": "narradora",
+   "texto": "Um tipo de bolo",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Um tipo de bolo"
+  },
+  {
+   "chave": "640fbc2723",
+   "voz": "narradora",
+   "texto": "Em qual parte da receita a gente escreve a lista do que vai usar?",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Em qual parte da receita a gente escreve a lista do que vai usar?"
+  },
+  {
+   "chave": "70f0fedcr",
+   "voz": "narradora",
+   "texto": "Título da receita",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Título da receita"
+  },
+  {
+   "chave": "3658368em",
+   "voz": "narradora",
+   "texto": "Ingredientes",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Ingredientes"
+  },
+  {
+   "chave": "9cd83f52p",
+   "voz": "narradora",
+   "texto": "Modo de preparo",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Modo de preparo"
+  },
+  {
+   "chave": "61d738df2a",
+   "voz": "narradora",
+   "texto": "Na hora de escrever uma receita, coloque as partes na ordem da apostila:",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Na hora de escrever uma receita, coloque as partes na ordem da apostila:"
+  },
+  {
+   "chave": "6020199122",
+   "voz": "narradora",
+   "texto": "Para avaliar uma receita, o que a gente confere? Toque em TODOS.",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Para avaliar uma receita, o que a gente confere? Toque em todos."
+  },
+  {
+   "chave": "e69d6f93v",
+   "voz": "narradora",
+   "texto": "A receita tem título?",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "A receita tem título?"
+  },
+  {
+   "chave": "b9aa6e5d1k",
+   "voz": "narradora",
+   "texto": "Os ingredientes estão listados de forma clara?",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Os ingredientes estão listados de forma clara?"
+  },
+  {
+   "chave": "8f9eb4551i",
+   "voz": "narradora",
+   "texto": "O modo de preparo está organizado em etapas?",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "O modo de preparo está organizado em etapas?"
+  },
+  {
+   "chave": "63eeca3b12",
+   "voz": "narradora",
+   "texto": "O texto é fácil de entender?",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "O texto é fácil de entender?"
+  },
+  {
+   "chave": "5611d57dv",
+   "voz": "narradora",
+   "texto": "A receita tem música?",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "A receita tem música?"
+  },
+  {
+   "chave": "497aeeab17",
+   "voz": "narradora",
+   "texto": "A receita é toda pintada de azul?",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "A receita é toda pintada de azul?"
+  },
+  {
+   "chave": "f83f237b1u",
+   "voz": "narradora",
+   "texto": "Qual das alternativas é uma característica das receitas?",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Qual das alternativas é uma característica das receitas?"
+  },
+  {
+   "chave": "d8ea5f8816",
+   "voz": "narradora",
+   "texto": "Contar uma história sobre frutas",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Contar uma história sobre frutas"
+  },
+  {
+   "chave": "da8be9b414",
+   "voz": "narradora",
+   "texto": "Ensinar como preparar um prato",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Ensinar como preparar um prato"
+  },
+  {
+   "chave": "e3a72f961h",
+   "voz": "narradora",
+   "texto": "Apresentar opiniões sobre comidas favoritas",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Apresentar opiniões sobre comidas favoritas"
+  },
+  {
+   "chave": "db8fa3432f",
+   "voz": "narradora",
+   "texto": "Suco de morango (começo): complete o passo a passo com as palavras do quadro.",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Suco de morango (começo): complete o passo a passo com as palavras do quadro."
+  },
+  {
+   "chave": "0d1e59bag",
+   "voz": "narradora",
+   "texto": "folhas",
    "pacotes": [
     "portugues-p1",
-    "portugues-p2",
-    "portugues-p3",
-    "portugues-p4",
-    "portugues-p5"
+    "portugues-p3"
    ],
-   "fala": "Certa"
+   "fala": "folhas"
   },
   {
-   "chave": "c93bec40g",
+   "chave": "7c318dedi",
    "voz": "narradora",
-   "texto": "Errada",
+   "texto": "morangos",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "morangos"
+  },
+  {
+   "chave": "d02fa7b6o",
+   "voz": "narradora",
+   "texto": "liquidificador",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "liquidificador"
+  },
+  {
+   "chave": "3f74549fe",
+   "voz": "narradora",
+   "texto": "água",
    "pacotes": [
     "portugues-p1",
-    "portugues-p2",
-    "portugues-p3",
-    "portugues-p4",
-    "portugues-p5"
+    "portugues-p2"
    ],
-   "fala": "Errada"
+   "fala": "água"
   },
   {
-   "chave": "bcfdadd019",
+   "chave": "8edce7481e",
    "voz": "narradora",
-   "texto": "(provisório) Pergunta 2 da sala p1?",
+   "texto": "Retire as ______ dos morangos e lave-os.",
    "pacotes": [
     "portugues-p1"
    ],
-   "fala": "(provisório) Pergunta 2 da sala p1?"
+   "fala": "Retire as … dos morangos e lave-os."
   },
   {
-   "chave": "25338f3319",
+   "chave": "6db656271c",
    "voz": "narradora",
-   "texto": "(provisório) Pergunta 3 da sala p1?",
+   "texto": "Retire as folhas dos ______ e lave-os.",
    "pacotes": [
     "portugues-p1"
    ],
-   "fala": "(provisório) Pergunta 3 da sala p1?"
+   "fala": "Retire as folhas dos … e lave-os."
   },
   {
-   "chave": "6016f2e619",
+   "chave": "02d8ba6c14",
    "voz": "narradora",
-   "texto": "(provisório) Pergunta 4 da sala p1?",
+   "texto": "Coloque os morangos no ______.",
    "pacotes": [
     "portugues-p1"
    ],
-   "fala": "(provisório) Pergunta 4 da sala p1?"
+   "fala": "Coloque os morangos no …"
   },
   {
-   "chave": "e82b0dd919",
+   "chave": "d76ac4ef11",
    "voz": "narradora",
-   "texto": "(provisório) Pergunta 5 da sala p1?",
+   "texto": "Adicione 1 litro de ______.",
    "pacotes": [
     "portugues-p1"
    ],
-   "fala": "(provisório) Pergunta 5 da sala p1?"
+   "fala": "Adicione 1 litro de …"
   },
   {
-   "chave": "ee80168419",
+   "chave": "916c52032e",
    "voz": "narradora",
-   "texto": "(provisório) Pergunta 6 da sala p1?",
+   "texto": "Suco de morango (final): complete o passo a passo com as palavras do quadro.",
    "pacotes": [
     "portugues-p1"
    ],
-   "fala": "(provisório) Pergunta 6 da sala p1?"
+   "fala": "Suco de morango (final): complete o passo a passo com as palavras do quadro."
+  },
+  {
+   "chave": "17b64bbdg",
+   "voz": "narradora",
+   "texto": "açúcar",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "açúcar"
+  },
+  {
+   "chave": "74278228e",
+   "voz": "narradora",
+   "texto": "gelo",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "gelo"
+  },
+  {
+   "chave": "bbd4a376e",
+   "voz": "narradora",
+   "texto": "copo",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "copo"
+  },
+  {
+   "chave": "32b68547g",
+   "voz": "narradora",
+   "texto": "gelado",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "gelado"
+  },
+  {
+   "chave": "bb6160f928",
+   "voz": "narradora",
+   "texto": "Se você desejar, coloque ______ a gosto, para deixar o suco mais doce.",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Se você desejar, coloque … a gosto, para deixar o suco mais doce."
+  },
+  {
+   "chave": "f903d0d811",
+   "voz": "narradora",
+   "texto": "Adicione 4 cubos de ______.",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Adicione 4 cubos de …"
+  },
+  {
+   "chave": "039adb6811",
+   "voz": "narradora",
+   "texto": "Distribua o suco no ______.",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Distribua o suco no …"
+  },
+  {
+   "chave": "64d5a2b8n",
+   "voz": "narradora",
+   "texto": "Sirva ______.",
+   "pacotes": [
+    "portugues-p1"
+   ],
+   "fala": "Sirva …"
   },
   {
    "chave": "bfdeee78l",
@@ -9348,67 +10552,312 @@
    "fala": "O agá Silencioso"
   },
   {
-   "chave": "e0d2210015",
+   "chave": "3fc096222f",
    "voz": "claude",
-   "texto": "Sala provisória da O H Silencioso.",
+   "texto": "Psiu! Nesta horta mora a letra H, que fica bem quietinha no começo das palavras!",
    "pacotes": [
     "portugues-extra"
    ],
-   "fala": "Sala provisória da O agá Silencioso."
+   "fala": "Psiu! Nesta horta mora a letra agá, que fica bem quietinha no começo das palavras!"
   },
   {
-   "chave": "880af22a19",
+   "chave": "dc447fce2e",
    "voz": "narradora",
-   "texto": "(provisório) Pergunta 1 da sala p2?",
+   "texto": "Na receita \"Suco de abacaxi com hortelã\", qual palavra começa com a letra H?",
    "pacotes": [
     "portugues-p2"
    ],
-   "fala": "(provisório) Pergunta 1 da sala p2?"
+   "fala": "Na receita \"Suco de abacaxi com hortelã\", qual palavra começa com a letra agá?"
   },
   {
-   "chave": "bcffec6719",
+   "chave": "16497434h",
    "voz": "narradora",
-   "texto": "(provisório) Pergunta 2 da sala p2?",
+   "texto": "hortelã",
    "pacotes": [
     "portugues-p2"
    ],
-   "fala": "(provisório) Pergunta 2 da sala p2?"
+   "fala": "hortelã"
   },
   {
-   "chave": "2531509c19",
+   "chave": "3d5f18241x",
    "voz": "narradora",
-   "texto": "(provisório) Pergunta 3 da sala p2?",
+   "texto": "Quando a letra H aparece no começo da palavra, ela tem som?",
    "pacotes": [
     "portugues-p2"
    ],
-   "fala": "(provisório) Pergunta 3 da sala p2?"
+   "fala": "Quando a letra agá aparece no começo da palavra, ela tem som?"
   },
   {
-   "chave": "6010372119",
+   "chave": "0e5ad424z",
    "voz": "narradora",
-   "texto": "(provisório) Pergunta 4 da sala p2?",
+   "texto": "Não, ela é uma letra muda",
    "pacotes": [
     "portugues-p2"
    ],
-   "fala": "(provisório) Pergunta 4 da sala p2?"
+   "fala": "Não, ela é uma letra muda"
   },
   {
-   "chave": "6832931e19",
+   "chave": "7f974ca513",
    "voz": "narradora",
-   "texto": "(provisório) Pergunta 5 da sala p2?",
+   "texto": "Sim, ela tem um som bem forte",
    "pacotes": [
     "portugues-p2"
    ],
-   "fala": "(provisório) Pergunta 5 da sala p2?"
+   "fala": "Sim, ela tem um som bem forte"
   },
   {
-   "chave": "ee82551b19",
+   "chave": "7c7085301b",
    "voz": "narradora",
-   "texto": "(provisório) Pergunta 6 da sala p2?",
+   "texto": "Sim, ela faz um barulhinho de assobio",
    "pacotes": [
     "portugues-p2"
    ],
-   "fala": "(provisório) Pergunta 6 da sala p2?"
+   "fala": "Sim, ela faz um barulhinho de assobio"
+  },
+  {
+   "chave": "f6d648e02x",
+   "voz": "narradora",
+   "texto": "Nas palavras hora, homem, história e hotel, a gente escreve a letra H, mas não fala o som dela.",
+   "pacotes": [
+    "portugues-p2"
+   ],
+   "fala": "Nas palavras hora, homem, história e hotel, a gente escreve a letra agá, mas não fala o som dela."
+  },
+  {
+   "chave": "791eaeee1s",
+   "voz": "narradora",
+   "texto": "Jogo da memória! Encontre os pares das palavras com H:",
+   "pacotes": [
+    "portugues-p2"
+   ],
+   "fala": "Jogo da memória! Encontre os pares das palavras com agá:"
+  },
+  {
+   "chave": "5378c5501e",
+   "voz": "narradora",
+   "texto": "Complete cada frase com a palavra certa:",
+   "pacotes": [
+    "portugues-p2"
+   ],
+   "fala": "Complete cada frase com a palavra certa:"
+  },
+  {
+   "chave": "e55dc751e",
+   "voz": "narradora",
+   "texto": "Hoje",
+   "pacotes": [
+    "portugues-p2"
+   ],
+   "fala": "Hoje"
+  },
+  {
+   "chave": "64db43c5f",
+   "voz": "narradora",
+   "texto": "hotel",
+   "pacotes": [
+    "portugues-p2"
+   ],
+   "fala": "hotel"
+  },
+  {
+   "chave": "5bc9d265e",
+   "voz": "narradora",
+   "texto": "hora",
+   "pacotes": [
+    "portugues-p2"
+   ],
+   "fala": "hora"
+  },
+  {
+   "chave": "af54985ei",
+   "voz": "narradora",
+   "texto": "história",
+   "pacotes": [
+    "portugues-p2"
+   ],
+   "fala": "história"
+  },
+  {
+   "chave": "85b36ac51h",
+   "voz": "narradora",
+   "texto": "______ eu vou ao shopping depois da escola.",
+   "pacotes": [
+    "portugues-p2"
+   ],
+   "fala": "… eu vou ao shopping depois da escola."
+  },
+  {
+   "chave": "79672ae11e",
+   "voz": "narradora",
+   "texto": "Nas férias eu fui a um ______ bem legal.",
+   "pacotes": [
+    "portugues-p2"
+   ],
+   "fala": "Nas férias eu fui a um … bem legal."
+  },
+  {
+   "chave": "2e755bf61m",
+   "voz": "narradora",
+   "texto": "Vamos brincar de pega-pega na ______ do recreio?",
+   "pacotes": [
+    "portugues-p2"
+   ],
+   "fala": "Vamos brincar de pega-pega na … do recreio?"
+  },
+  {
+   "chave": "14b265471g",
+   "voz": "narradora",
+   "texto": "A professora leu uma ______ bem divertida.",
+   "pacotes": [
+    "portugues-p2"
+   ],
+   "fala": "A professora leu uma … bem divertida."
+  },
+  {
+   "chave": "4993388716",
+   "voz": "narradora",
+   "texto": "Ligue cada palavra ao que ela é:",
+   "pacotes": [
+    "portugues-p2"
+   ],
+   "fala": "Ligue cada palavra ao que ela é:"
+  },
+  {
+   "chave": "b0055d441r",
+   "voz": "narradora",
+   "texto": "Toque em TODAS as palavras que começam com a letra H:",
+   "pacotes": [
+    "portugues-p2"
+   ],
+   "fala": "Toque em todas as palavras que começam com a letra agá:"
+  },
+  {
+   "chave": "04b2ce91l",
+   "voz": "narradora",
+   "texto": "helicóptero",
+   "pacotes": [
+    "portugues-p2"
+   ],
+   "fala": "helicóptero"
+  },
+  {
+   "chave": "9d80e8a0i",
+   "voz": "narradora",
+   "texto": "cachorro",
+   "pacotes": [
+    "portugues-p2",
+    "portugues-p5"
+   ],
+   "fala": "cachorro"
+  },
+  {
+   "chave": "273effc5e",
+   "voz": "narradora",
+   "texto": "casa",
+   "pacotes": [
+    "portugues-p2"
+   ],
+   "fala": "casa"
+  },
+  {
+   "chave": "06fcde71f",
+   "voz": "narradora",
+   "texto": "homem",
+   "pacotes": [
+    "portugues-p2"
+   ],
+   "fala": "homem"
+  },
+  {
+   "chave": "043405b6h",
+   "voz": "narradora",
+   "texto": "mochila",
+   "pacotes": [
+    "portugues-p2"
+   ],
+   "fala": "mochila"
+  },
+  {
+   "chave": "3bed2731j",
+   "voz": "narradora",
+   "texto": "chocolate",
+   "pacotes": [
+    "portugues-p2",
+    "portugues-p3"
+   ],
+   "fala": "chocolate"
+  },
+  {
+   "chave": "5742d89ak",
+   "voz": "narradora",
+   "texto": "hambúrguer",
+   "pacotes": [
+    "portugues-p2"
+   ],
+   "fala": "hambúrguer"
+  },
+  {
+   "chave": "92a3d669h",
+   "voz": "narradora",
+   "texto": "desenho",
+   "pacotes": [
+    "portugues-p2"
+   ],
+   "fala": "desenho"
+  },
+  {
+   "chave": "1e43b26b26",
+   "voz": "narradora",
+   "texto": "Qual letra está faltando no começo de cada palavra? Ela é quietinha!",
+   "pacotes": [
+    "portugues-p2"
+   ],
+   "fala": "Qual letra está faltando no começo de cada palavra? Ela é quietinha!"
+  },
+  {
+   "chave": "4d7ff1dc2t",
+   "voz": "narradora",
+   "texto": "Adivinha! \"Tenho pão, carne e queijo também, com alface e tomate é sabor que vem.\" O que é?",
+   "pacotes": [
+    "portugues-p2"
+   ],
+   "fala": "Adivinha! \"Tenho pão, carne e queijo também, com alface e tomate é sabor que vem.\" O que é?"
+  },
+  {
+   "chave": "062781ee2j",
+   "voz": "narradora",
+   "texto": "Adivinha! \"Verde eu sou e muito cheirosa. No chá ou suco, sou saborosa.\" O que é?",
+   "pacotes": [
+    "portugues-p2"
+   ],
+   "fala": "Adivinha! \"Verde eu sou e muito cheirosa. No chá ou suco, sou saborosa.\" O que é?"
+  },
+  {
+   "chave": "6d7ac13c2o",
+   "voz": "narradora",
+   "texto": "Adivinha! \"Em cada cidade, eu posso estar, com muitos quartos pra descansar.\" O que é?",
+   "pacotes": [
+    "portugues-p2"
+   ],
+   "fala": "Adivinha! \"Em cada cidade, eu posso estar, com muitos quartos pra descansar.\" O que é?"
+  },
+  {
+   "chave": "a98049f42f",
+   "voz": "narradora",
+   "texto": "Adivinha! \"Não sou animal, mas sei voar. No alto eu giro sem parar.\" O que é?",
+   "pacotes": [
+    "portugues-p2"
+   ],
+   "fala": "Adivinha! \"Não sou animal, mas sei voar. No alto eu giro sem parar.\" O que é?"
+  },
+  {
+   "chave": "8ef256b51t",
+   "voz": "narradora",
+   "texto": "Separe nos baús! A palavra começa com a letra H ou não?",
+   "pacotes": [
+    "portugues-p2"
+   ],
+   "fala": "Separe nos baús! A palavra começa com a letra agá ou não?"
   },
   {
    "chave": "7a971866n",
@@ -9420,67 +10869,382 @@
    "fala": "cê agá, éle agá, ene agá e o xis"
   },
   {
-   "chave": "57e5a4d617",
+   "chave": "ed6faac325",
    "voz": "claude",
-   "texto": "Sala provisória da CH, LH, NH e o X.",
+   "texto": "Bem-vinda ao Pátio do Circo: vamos brincar com o CH, o LH, o NH e o X!",
    "pacotes": [
     "portugues-extra"
    ],
-   "fala": "Sala provisória da cê agá, éle agá, ene agá e o xis."
+   "fala": "Bem-vinda ao Pátio do Circo: vamos brincar com o cê agá, o éle agá, o ene agá e o xis!"
   },
   {
-   "chave": "0807ea1319",
+   "chave": "25e0b6a93f",
    "voz": "narradora",
-   "texto": "(provisório) Pergunta 1 da sala p3?",
+   "texto": "Leia as palavras da brincadeira de amarelinha: AMARELINHA, DESENHE, PEDRINHA. O que elas têm de igual na escrita?",
    "pacotes": [
     "portugues-p3"
    ],
-   "fala": "(provisório) Pergunta 1 da sala p3?"
+   "fala": "Leia as palavras da brincadeira de amarelinha: amarelinha, desenhe, pedrinha. O que elas têm de igual na escrita?"
   },
   {
-   "chave": "bd022afe19",
+   "chave": "db6ddc71m",
    "voz": "narradora",
-   "texto": "(provisório) Pergunta 2 da sala p3?",
+   "texto": "Todas têm NH",
    "pacotes": [
     "portugues-p3"
    ],
-   "fala": "(provisório) Pergunta 2 da sala p3?"
+   "fala": "Todas têm ene agá"
   },
   {
-   "chave": "a52e488519",
+   "chave": "fd885574m",
    "voz": "narradora",
-   "texto": "(provisório) Pergunta 3 da sala p3?",
+   "texto": "Todas têm CH",
    "pacotes": [
     "portugues-p3"
    ],
-   "fala": "(provisório) Pergunta 3 da sala p3?"
+   "fala": "Todas têm cê agá"
   },
   {
-   "chave": "601275b819",
+   "chave": "fe0c956dt",
    "voz": "narradora",
-   "texto": "(provisório) Pergunta 4 da sala p3?",
+   "texto": "Todas começam com A",
    "pacotes": [
     "portugues-p3"
    ],
-   "fala": "(provisório) Pergunta 4 da sala p3?"
+   "fala": "Todas começam com A"
   },
   {
-   "chave": "6830548719",
+   "chave": "0ce6694f23",
    "voz": "narradora",
-   "texto": "(provisório) Pergunta 5 da sala p3?",
+   "texto": "CH, LH e NH são dígrafos: duas letras que juntas fazem um som só.",
    "pacotes": [
     "portugues-p3"
    ],
-   "fala": "(provisório) Pergunta 5 da sala p3?"
+   "fala": "cê agá, éle agá e ene agá são dígrafos: duas letras que juntas fazem um som só."
   },
   {
-   "chave": "ee8493b219",
+   "chave": "c929ed251u",
    "voz": "narradora",
-   "texto": "(provisório) Pergunta 6 da sala p3?",
+   "texto": "Ligue cada dígrafo à palavra da brincadeira que tem ele:",
    "pacotes": [
     "portugues-p3"
    ],
-   "fala": "(provisório) Pergunta 6 da sala p3?"
+   "fala": "Ligue cada dígrafo à palavra da brincadeira que tem ele:"
+  },
+  {
+   "chave": "b227f0282d",
+   "voz": "narradora",
+   "texto": "Na frase \"As folhas caem das árvores no outono.\", qual palavra tem dígrafo?",
+   "pacotes": [
+    "portugues-p3"
+   ],
+   "fala": "Na frase \"As folhas caem das árvores no outono.\", qual palavra tem dígrafo?"
+  },
+  {
+   "chave": "cbca100dh",
+   "voz": "narradora",
+   "texto": "árvores",
+   "pacotes": [
+    "portugues-p3"
+   ],
+   "fala": "árvores"
+  },
+  {
+   "chave": "a6fdea57g",
+   "voz": "narradora",
+   "texto": "outono",
+   "pacotes": [
+    "portugues-p3"
+   ],
+   "fala": "outono"
+  },
+  {
+   "chave": "b389527532",
+   "voz": "narradora",
+   "texto": "Na frase \"A linha e a agulha da vovó estavam no chão.\", toque em TODAS as palavras com CH, LH ou NH.",
+   "pacotes": [
+    "portugues-p3"
+   ],
+   "fala": "Na frase \"A linha e a agulha da vovó estavam no chão.\", toque em todas as palavras com cê agá, éle agá ou ene agá."
+  },
+  {
+   "chave": "2eb5cc3bf",
+   "voz": "narradora",
+   "texto": "linha",
+   "pacotes": [
+    "portugues-p3"
+   ],
+   "fala": "linha"
+  },
+  {
+   "chave": "bc9e10e3g",
+   "voz": "narradora",
+   "texto": "agulha",
+   "pacotes": [
+    "portugues-p3"
+   ],
+   "fala": "agulha"
+  },
+  {
+   "chave": "77211970e",
+   "voz": "narradora",
+   "texto": "chão",
+   "pacotes": [
+    "portugues-p3"
+   ],
+   "fala": "chão"
+  },
+  {
+   "chave": "45dde5e5e",
+   "voz": "narradora",
+   "texto": "vovó",
+   "pacotes": [
+    "portugues-p3"
+   ],
+   "fala": "vovó"
+  },
+  {
+   "chave": "4ef8a956h",
+   "voz": "narradora",
+   "texto": "estavam",
+   "pacotes": [
+    "portugues-p3"
+   ],
+   "fala": "estavam"
+  },
+  {
+   "chave": "4451dcdb1e",
+   "voz": "narradora",
+   "texto": "Separe nos baús! A palavra tem LH ou NH?",
+   "pacotes": [
+    "portugues-p3"
+   ],
+   "fala": "Separe nos baús! A palavra tem éle agá ou ene agá?"
+  },
+  {
+   "chave": "9439c0761c",
+   "voz": "narradora",
+   "texto": "Complete as palavras com CH, LH ou NH:",
+   "pacotes": [
+    "portugues-p3"
+   ],
+   "fala": "Complete as palavras com cê agá, éle agá ou ene agá:"
+  },
+  {
+   "chave": "2faa494c1m",
+   "voz": "narradora",
+   "texto": "Separe as figuras nos baús: o nome tem CH ou LH?",
+   "pacotes": [
+    "portugues-p3"
+   ],
+   "fala": "Separe as figuras nos baús: o nome tem cê agá ou éle agá?"
+  },
+  {
+   "chave": "b3aff7b12l",
+   "voz": "narradora",
+   "texto": "Na receita \"Bolo de caneca: banana e chocolate\", qual ingrediente se escreve com X?",
+   "pacotes": [
+    "portugues-p3"
+   ],
+   "fala": "Na receita \"Bolo de caneca: banana e chocolate\", qual ingrediente se escreve com xis?"
+  },
+  {
+   "chave": "261f0673p",
+   "voz": "narradora",
+   "texto": "xarope de agave",
+   "pacotes": [
+    "portugues-p3"
+   ],
+   "fala": "xarope de agave"
+  },
+  {
+   "chave": "56d1aedes",
+   "voz": "narradora",
+   "texto": "gotas de chocolate",
+   "pacotes": [
+    "portugues-p3"
+   ],
+   "fala": "gotas de chocolate"
+  },
+  {
+   "chave": "02602c99p",
+   "voz": "narradora",
+   "texto": "banana amassada",
+   "pacotes": [
+    "portugues-p3"
+   ],
+   "fala": "banana amassada"
+  },
+  {
+   "chave": "806fef4c23",
+   "voz": "narradora",
+   "texto": "A letra X pode ter três sons! Ligue cada som à palavra do quadro:",
+   "pacotes": [
+    "portugues-p3"
+   ],
+   "fala": "A letra xis pode ter três sons! Ligue cada som à palavra do quadro:"
+  },
+  {
+   "chave": "d45810c31q",
+   "voz": "narradora",
+   "texto": "Toque em TODAS as palavras escritas com X ou com CH.",
+   "pacotes": [
+    "portugues-p3"
+   ],
+   "fala": "Toque em todas as palavras escritas com xis ou com cê agá."
+  },
+  {
+   "chave": "1cb06cfbg",
+   "voz": "narradora",
+   "texto": "xícara",
+   "pacotes": [
+    "portugues-p3"
+   ],
+   "fala": "xícara"
+  },
+  {
+   "chave": "131c7ba4f",
+   "voz": "narradora",
+   "texto": "chuva",
+   "pacotes": [
+    "portugues-p3"
+   ],
+   "fala": "chuva"
+  },
+  {
+   "chave": "cad41dffh",
+   "voz": "narradora",
+   "texto": "cozinha",
+   "pacotes": [
+    "portugues-p3"
+   ],
+   "fala": "cozinha"
+  },
+  {
+   "chave": "c319d9d4h",
+   "voz": "narradora",
+   "texto": "pássaro",
+   "pacotes": [
+    "portugues-p3"
+   ],
+   "fala": "pássaro"
+  },
+  {
+   "chave": "1cc46041g",
+   "voz": "narradora",
+   "texto": "jacaré",
+   "pacotes": [
+    "portugues-p3"
+   ],
+   "fala": "jacaré"
+  },
+  {
+   "chave": "48d790c7i",
+   "voz": "narradora",
+   "texto": "banheiro",
+   "pacotes": [
+    "portugues-p3"
+   ],
+   "fala": "banheiro"
+  },
+  {
+   "chave": "6d527f131s",
+   "voz": "narradora",
+   "texto": "Separe nos baús! A palavra se escreve com X ou com CH?",
+   "pacotes": [
+    "portugues-p3"
+   ],
+   "fala": "Separe nos baús! A palavra se escreve com xis ou com cê agá?"
+  },
+  {
+   "chave": "37ccfe3217",
+   "voz": "narradora",
+   "texto": "Complete as palavras com X ou CH:",
+   "pacotes": [
+    "portugues-p3"
+   ],
+   "fala": "Complete as palavras com xis ou cê agá:"
+  },
+  {
+   "chave": "fae395b33f",
+   "voz": "narradora",
+   "texto": "No caça-palavras estavam escondidas: CHOCOLATE, XÍCARA, CHUCHU, CHÁ, AMEIXA e MEXER. Toque em TODAS as que têm X.",
+   "pacotes": [
+    "portugues-p3"
+   ],
+   "fala": "No caça-palavras estavam escondidas: chocolate, xícara, chuchu, chá, ameixa e mexer. Toque em todas as que têm xis."
+  },
+  {
+   "chave": "58cc4f96g",
+   "voz": "narradora",
+   "texto": "ameixa",
+   "pacotes": [
+    "portugues-p3"
+   ],
+   "fala": "ameixa"
+  },
+  {
+   "chave": "892b6f96f",
+   "voz": "narradora",
+   "texto": "mexer",
+   "pacotes": [
+    "portugues-p3"
+   ],
+   "fala": "mexer"
+  },
+  {
+   "chave": "fc771e15g",
+   "voz": "narradora",
+   "texto": "chuchu",
+   "pacotes": [
+    "portugues-p3"
+   ],
+   "fala": "chuchu"
+  },
+  {
+   "chave": "9e0c29e5d",
+   "voz": "narradora",
+   "texto": "chá",
+   "pacotes": [
+    "portugues-p3"
+   ],
+   "fala": "chá"
+  },
+  {
+   "chave": "9eb0a9701s",
+   "voz": "narradora",
+   "texto": "Ligue cada figura ao dígrafo que aparece no nome dela:",
+   "pacotes": [
+    "portugues-p3"
+   ],
+   "fala": "Ligue cada figura ao dígrafo que aparece no nome dela:"
+  },
+  {
+   "chave": "ded83e221p",
+   "voz": "narradora",
+   "texto": "Ditado! Qual é a escrita certa do nome desta fruta?",
+   "pacotes": [
+    "portugues-p3"
+   ],
+   "fala": "Ditado! Qual é a escrita certa do nome desta fruta?"
+  },
+  {
+   "chave": "b19df91di",
+   "voz": "narradora",
+   "texto": "abacachi",
+   "pacotes": [
+    "portugues-p3"
+   ],
+   "fala": "abacachi"
+  },
+  {
+   "chave": "9f6b5d0di",
+   "voz": "narradora",
+   "texto": "abacashi",
+   "pacotes": [
+    "portugues-p3"
+   ],
+   "fala": "abacashi"
   },
   {
    "chave": "0204dea9q",
@@ -9492,67 +11256,490 @@
    "fala": "Expedição Antártida"
   },
   {
-   "chave": "11ccc3371a",
+   "chave": "f0884d5527",
    "voz": "claude",
-   "texto": "Sala provisória da Expedição Antártida.",
+   "texto": "Agasalhe-se bem: vamos de barco até a Antártida ver pinguins e icebergs!",
    "pacotes": [
     "portugues-extra"
    ],
-   "fala": "Sala provisória da Expedição Antártida."
+   "fala": "Agasalhe-se bem: vamos de barco até a Antártida ver pinguins e icebergs!"
   },
   {
-   "chave": "880f6f5819",
+   "chave": "0432bede19",
    "voz": "narradora",
-   "texto": "(provisório) Pergunta 1 da sala p4?",
+   "texto": "Quem escreveu o relato \"Chegamos?\"?",
    "pacotes": [
     "portugues-p4"
    ],
-   "fala": "(provisório) Pergunta 1 da sala p4?"
+   "fala": "Quem escreveu o relato \"Chegamos?\"?"
   },
   {
-   "chave": "bcf0e1dd19",
+   "chave": "b7d87fa0k",
    "voz": "narradora",
-   "texto": "(provisório) Pergunta 2 da sala p4?",
+   "texto": "Três irmãs",
    "pacotes": [
     "portugues-p4"
    ],
-   "fala": "(provisório) Pergunta 2 da sala p4?"
+   "fala": "Três irmãs"
   },
   {
-   "chave": "a53f91a619",
+   "chave": "b38b9b14w",
    "voz": "narradora",
-   "texto": "(provisório) Pergunta 3 da sala p4?",
+   "texto": "Um grupo de cientistas",
    "pacotes": [
     "portugues-p4"
    ],
-   "fala": "(provisório) Pergunta 3 da sala p4?"
+   "fala": "Um grupo de cientistas"
   },
   {
-   "chave": "e00af07319",
+   "chave": "9e50cb2br",
    "voz": "narradora",
-   "texto": "(provisório) Pergunta 4 da sala p4?",
+   "texto": "O pai das meninas",
    "pacotes": [
     "portugues-p4"
    ],
-   "fala": "(provisório) Pergunta 4 da sala p4?"
+   "fala": "O pai das meninas"
   },
   {
-   "chave": "6823889419",
+   "chave": "bf3b3fbbs",
    "voz": "narradora",
-   "texto": "(provisório) Pergunta 5 da sala p4?",
+   "texto": "Um escritor famoso",
    "pacotes": [
     "portugues-p4"
    ],
-   "fala": "(provisório) Pergunta 5 da sala p4?"
+   "fala": "Um escritor famoso"
   },
   {
-   "chave": "6e879bc919",
+   "chave": "d8593cba20",
    "voz": "narradora",
-   "texto": "(provisório) Pergunta 6 da sala p4?",
+   "texto": "As irmãs viajaram para a Antártida. Como era a paisagem de lá?",
    "pacotes": [
     "portugues-p4"
    ],
-   "fala": "(provisório) Pergunta 6 da sala p4?"
+   "fala": "As irmãs viajaram para a Antártida. Como era a paisagem de lá?"
+  },
+  {
+   "chave": "197bc6f2y",
+   "voz": "narradora",
+   "texto": "Mar gelado, com icebergs",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Mar gelado, com icebergs"
+  },
+  {
+   "chave": "427b2f4911",
+   "voz": "narradora",
+   "texto": "Praia quente, com coqueiros",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Praia quente, com coqueiros"
+  },
+  {
+   "chave": "86de065az",
+   "voz": "narradora",
+   "texto": "Floresta cheia de árvores",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Floresta cheia de árvores"
+  },
+  {
+   "chave": "cb338cb0q",
+   "voz": "narradora",
+   "texto": "Deserto de areia",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Deserto de areia"
+  },
+  {
+   "chave": "c9eb13891r",
+   "voz": "narradora",
+   "texto": "Coloque a viagem das irmãs na ordem em que aconteceu:",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Coloque a viagem das irmãs na ordem em que aconteceu:"
+  },
+  {
+   "chave": "178d702d2e",
+   "voz": "narradora",
+   "texto": "Perto da Antártida, a água fica mais fria e \"densa\". O que quer dizer densa?",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Perto da Antártida, a água fica mais fria e \"densa\". O que quer dizer densa?"
+  },
+  {
+   "chave": "04c537371a",
+   "voz": "narradora",
+   "texto": "Mais apertadinha, quase virando gelo",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Mais apertadinha, quase virando gelo"
+  },
+  {
+   "chave": "9dd2dbcf11",
+   "voz": "narradora",
+   "texto": "Mais quente, quase fervendo",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Mais quente, quase fervendo"
+  },
+  {
+   "chave": "8ee003e911",
+   "voz": "narradora",
+   "texto": "Mais limpa, sem nada dentro",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Mais limpa, sem nada dentro"
+  },
+  {
+   "chave": "a9e1392a27",
+   "voz": "narradora",
+   "texto": "Quais sinais mostraram que as irmãs estavam chegando? Toque em TODOS.",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Quais sinais mostraram que as irmãs estavam chegando? Toque em todos."
+  },
+  {
+   "chave": "e88c9397v",
+   "voz": "narradora",
+   "texto": "Vento gelado no rosto",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Vento gelado no rosto"
+  },
+  {
+   "chave": "9318777dz",
+   "voz": "narradora",
+   "texto": "Pinguins saltando da água",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Pinguins saltando da água"
+  },
+  {
+   "chave": "3ff20fb618",
+   "voz": "narradora",
+   "texto": "Precisar de luvas e gorros lá fora",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Precisar de luvas e gorros lá fora"
+  },
+  {
+   "chave": "5824e81ct",
+   "voz": "narradora",
+   "texto": "Um calorão no barco",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Um calorão no barco"
+  },
+  {
+   "chave": "d41fa29814",
+   "voz": "narradora",
+   "texto": "Qual era o combinado no barco?",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Qual era o combinado no barco?"
+  },
+  {
+   "chave": "0fc43a7a1l",
+   "voz": "narradora",
+   "texto": "Quem avistar o primeiro iceberg ganha um prêmio",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Quem avistar o primeiro iceberg ganha um prêmio"
+  },
+  {
+   "chave": "fcd04404v",
+   "voz": "narradora",
+   "texto": "Todo mundo dorme cedo",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Todo mundo dorme cedo"
+  },
+  {
+   "chave": "a4ff0ffa18",
+   "voz": "narradora",
+   "texto": "Quem pescar um peixe ganha um doce",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Quem pescar um peixe ganha um doce"
+  },
+  {
+   "chave": "49d9c1e71q",
+   "voz": "narradora",
+   "texto": "Ligue cada pergunta sobre o relato à resposta certa:",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Ligue cada pergunta sobre o relato à resposta certa:"
+  },
+  {
+   "chave": "da7681521z",
+   "voz": "narradora",
+   "texto": "As palavras de tempo ajudam a pôr na ordem. Arrume as frases:",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "As palavras de tempo ajudam a pôr na ordem. Arrume as frases:"
+  },
+  {
+   "chave": "c52690d81s",
+   "voz": "narradora",
+   "texto": "O que um relato pessoal faz? Toque em TODAS as certas.",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "O que um relato pessoal faz? Toque em todas as certas."
+  },
+  {
+   "chave": "a90bfa081f",
+   "voz": "narradora",
+   "texto": "Conta coisas que o autor viveu de verdade",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Conta coisas que o autor viveu de verdade"
+  },
+  {
+   "chave": "4f04338d17",
+   "voz": "narradora",
+   "texto": "Mostra a ordem dos acontecimentos",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Mostra a ordem dos acontecimentos"
+  },
+  {
+   "chave": "304c435c15",
+   "voz": "narradora",
+   "texto": "Descreve sentimentos e detalhes",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Descreve sentimentos e detalhes"
+  },
+  {
+   "chave": "62a0670412",
+   "voz": "narradora",
+   "texto": "Conta uma história inventada",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Conta uma história inventada"
+  },
+  {
+   "chave": "d8e0ef981m",
+   "voz": "narradora",
+   "texto": "Qual trecho mostra QUANDO as coisas aconteceram?",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Qual trecho mostra quando as coisas aconteceram?"
+  },
+  {
+   "chave": "6951dfaa13",
+   "voz": "narradora",
+   "texto": "\"Depois de cruzarmos o Drake\"",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "\"Depois de cruzarmos o Drake\""
+  },
+  {
+   "chave": "63b7ce5818",
+   "voz": "narradora",
+   "texto": "\"Sentimos o vento gelado no rosto\"",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "\"Sentimos o vento gelado no rosto\""
+  },
+  {
+   "chave": "103cf07fs",
+   "voz": "narradora",
+   "texto": "\"Pinguins e focas\"",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "\"Pinguins e focas\""
+  },
+  {
+   "chave": "5045ad861x",
+   "voz": "narradora",
+   "texto": "Monte o começo do relato tocando nos blocos na ordem certa:",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Monte o começo do relato tocando nos blocos na ordem certa:"
+  },
+  {
+   "chave": "e9e335521j",
+   "voz": "narradora",
+   "texto": "O Z de \"diz\" tem o mesmo som do Z de \"cinza\".",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "O zê de \"diz\" tem o mesmo som do zê de \"cinza\"."
+  },
+  {
+   "chave": "48bac8401w",
+   "voz": "narradora",
+   "texto": "O X de \"aproximamos\" tem som parecido com o de qual letra?",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "O xis de \"aproximamos\" tem som parecido com o de qual letra?"
+  },
+  {
+   "chave": "3eeab89ab",
+   "voz": "narradora",
+   "texto": "S",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "ésse"
+  },
+  {
+   "chave": "37eaad95b",
+   "voz": "narradora",
+   "texto": "Z",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "zê"
+  },
+  {
+   "chave": "fd588286c",
+   "voz": "narradora",
+   "texto": "CH",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "cê agá"
+  },
+  {
+   "chave": "b7c63a841d",
+   "voz": "narradora",
+   "texto": "Separe nos baús! A palavra tem S ou SS?",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Separe nos baús! A palavra tem ésse ou dois ésses?"
+  },
+  {
+   "chave": "001bfb3522",
+   "voz": "narradora",
+   "texto": "Em \"arroz\", \"feliz\" e \"voz\", o Z do final tem som de qual letra?",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Em \"arroz\", \"feliz\" e \"voz\", o zê do final tem som de qual letra?"
+  },
+  {
+   "chave": "3feaba2db",
+   "voz": "narradora",
+   "texto": "R",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "érre"
+  },
+  {
+   "chave": "35eaaa6fb",
+   "voz": "narradora",
+   "texto": "X",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "xis"
+  },
+  {
+   "chave": "2d3986201d",
+   "voz": "narradora",
+   "texto": "Complete as palavras com S, SS, Z ou X:",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Complete as palavras com ésse, dois ésses, zê ou xis:"
+  },
+  {
+   "chave": "61bb3adc1v",
+   "voz": "narradora",
+   "texto": "Complete as palavras sobre a Antártida com S, SS, Z ou X:",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Complete as palavras sobre a Antártida com ésse, dois ésses, zê ou xis:"
+  },
+  {
+   "chave": "18a4caa91q",
+   "voz": "narradora",
+   "texto": "O que quer dizer \"isso é apenas a ponta do iceberg\"?",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "O que quer dizer \"isso é apenas a ponta do iceberg\"?"
+  },
+  {
+   "chave": "4d09ef751f",
+   "voz": "narradora",
+   "texto": "Que tem muito mais por trás do que parece",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Que tem muito mais por trás do que parece"
+  },
+  {
+   "chave": "55be55c21e",
+   "voz": "narradora",
+   "texto": "Que a parte de cima do iceberg é a maior",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Que a parte de cima do iceberg é a maior"
+  },
+  {
+   "chave": "5efff73915",
+   "voz": "narradora",
+   "texto": "Que o iceberg está muito gelado",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Que o iceberg está muito gelado"
+  },
+  {
+   "chave": "9ebf01d51t",
+   "voz": "narradora",
+   "texto": "A maior parte do iceberg fica escondida embaixo d'água.",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "A maior parte do iceberg fica escondida embaixo d'água."
+  },
+  {
+   "chave": "de51ebe21m",
+   "voz": "narradora",
+   "texto": "Jogo da memória da expedição! Encontre os pares:",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Jogo da memória da expedição! Encontre os pares:"
   },
   {
    "chave": "a795bee8g",
@@ -9564,67 +11751,472 @@
    "fala": "éle, érre e dois érres"
   },
   {
-   "chave": "113a950c10",
+   "chave": "08fe689f1y",
    "voz": "claude",
-   "texto": "Sala provisória da L, R e RR.",
+   "texto": "Suba no carrossel, que hoje a gente brinca com o L, o R e o RR!",
    "pacotes": [
     "portugues-extra"
    ],
-   "fala": "Sala provisória da éle, érre e dois érres."
+   "fala": "Suba no carrossel, que hoje a gente brinca com o éle, o érre e o dois érres!"
   },
   {
-   "chave": "880d30c119",
+   "chave": "fd71e8231j",
    "voz": "narradora",
-   "texto": "(provisório) Pergunta 1 da sala p5?",
+   "texto": "Como separamos a palavra \"alguma\" em sílabas?",
    "pacotes": [
     "portugues-p5"
    ],
-   "fala": "(provisório) Pergunta 1 da sala p5?"
+   "fala": "Como separamos a palavra \"alguma\" em sílabas?"
   },
   {
-   "chave": "3cf3e9f419",
+   "chave": "ef2b09e8i",
    "voz": "narradora",
-   "texto": "(provisório) Pergunta 2 da sala p5?",
+   "texto": "al-gu-ma",
    "pacotes": [
     "portugues-p5"
    ],
-   "fala": "(provisório) Pergunta 2 da sala p5?"
+   "fala": "al-gu-ma"
   },
   {
-   "chave": "a53d530f19",
+   "chave": "1fcacef6i",
    "voz": "narradora",
-   "texto": "(provisório) Pergunta 3 da sala p5?",
+   "texto": "a-lgu-ma",
    "pacotes": [
     "portugues-p5"
    ],
-   "fala": "(provisório) Pergunta 3 da sala p5?"
+   "fala": "a-lgu-ma"
   },
   {
-   "chave": "e00d2f0a19",
+   "chave": "88c38f10i",
    "voz": "narradora",
-   "texto": "(provisório) Pergunta 4 da sala p5?",
+   "texto": "alg-u-ma",
    "pacotes": [
     "portugues-p5"
    ],
-   "fala": "(provisório) Pergunta 4 da sala p5?"
+   "fala": "alg-u-ma"
   },
   {
-   "chave": "682149fd19",
+   "chave": "1df156c82x",
    "voz": "narradora",
-   "texto": "(provisório) Pergunta 5 da sala p5?",
+   "texto": "Quando a letra L fica no final da sílaba, como em \"volta\" e \"calmo\", ela tem som de qual letra?",
    "pacotes": [
     "portugues-p5"
    ],
-   "fala": "(provisório) Pergunta 5 da sala p5?"
+   "fala": "Quando a letra éle fica no final da sílaba, como em \"volta\" e \"calmo\", ela tem som de qual letra?"
   },
   {
-   "chave": "6e89da6019",
+   "chave": "f2f386dei",
    "voz": "narradora",
-   "texto": "(provisório) Pergunta 6 da sala p5?",
+   "texto": "Som de U",
    "pacotes": [
     "portugues-p5"
    ],
-   "fala": "(provisório) Pergunta 6 da sala p5?"
+   "fala": "Som de u"
+  },
+  {
+   "chave": "f5f38b97i",
+   "voz": "narradora",
+   "texto": "Som de R",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "Som de érre"
+  },
+  {
+   "chave": "06f3a65ai",
+   "voz": "narradora",
+   "texto": "Som de A",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "Som de A"
+  },
+  {
+   "chave": "179332f41m",
+   "voz": "narradora",
+   "texto": "O L de \"alguma\" tem o mesmo som do L de \"luvas\".",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "O éle de \"alguma\" tem o mesmo som do éle de \"luvas\"."
+  },
+  {
+   "chave": "81bc9c582j",
+   "voz": "narradora",
+   "texto": "O R no final da sílaba pode ter sons diferentes, conforme o sotaque de quem fala.",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "O érre no final da sílaba pode ter sons diferentes, conforme o sotaque de quem fala."
+  },
+  {
+   "chave": "3b41d22f19",
+   "voz": "narradora",
+   "texto": "Ligue cada palavra às suas sílabas:",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "Ligue cada palavra às suas sílabas:"
+  },
+  {
+   "chave": "9bc7fb0a1z",
+   "voz": "narradora",
+   "texto": "Separe nos baús! A palavra tem L ou R no final de uma sílaba?",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "Separe nos baús! A palavra tem éle ou érre no final de uma sílaba?"
+  },
+  {
+   "chave": "7bd4cfeb16",
+   "voz": "narradora",
+   "texto": "Complete as palavras com L ou R:",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "Complete as palavras com éle ou érre:"
+  },
+  {
+   "chave": "0242aa6c20",
+   "voz": "narradora",
+   "texto": "Quais nomes têm L ou R no final de uma sílaba? Toque em TODOS.",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "Quais nomes têm éle ou érre no final de uma sílaba? Toque em todos."
+  },
+  {
+   "chave": "88872bacg",
+   "voz": "narradora",
+   "texto": "árvore",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "árvore"
+  },
+  {
+   "chave": "4e8d5069d",
+   "voz": "narradora",
+   "texto": "mel",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "mel"
+  },
+  {
+   "chave": "28bc27d7e",
+   "voz": "narradora",
+   "texto": "anel",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "anel"
+  },
+  {
+   "chave": "02b77604f",
+   "voz": "narradora",
+   "texto": "barco",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "barco"
+  },
+  {
+   "chave": "4131b413f",
+   "voz": "narradora",
+   "texto": "livro",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "livro"
+  },
+  {
+   "chave": "d6c9239de",
+   "voz": "narradora",
+   "texto": "bola",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "bola"
+  },
+  {
+   "chave": "0429caef1p",
+   "voz": "narradora",
+   "texto": "Jogo da memória! Encontre cada figura e o seu nome:",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "Jogo da memória! Encontre cada figura e o seu nome:"
+  },
+  {
+   "chave": "85932d321k",
+   "voz": "narradora",
+   "texto": "Por que \"carro\" e \"terra\" são escritas com RR?",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "Por que \"carro\" e \"terra\" são escritas com dois érres?"
+  },
+  {
+   "chave": "2b7ad5ed1k",
+   "voz": "narradora",
+   "texto": "Porque o som forte do R fica entre duas vogais",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "Porque o som forte do érre fica entre duas vogais"
+  },
+  {
+   "chave": "996695bc1a",
+   "voz": "narradora",
+   "texto": "Porque o R está no começo da palavra",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "Porque o érre está no começo da palavra"
+  },
+  {
+   "chave": "1fec716619",
+   "voz": "narradora",
+   "texto": "Porque o R está no final da palavra",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "Porque o érre está no final da palavra"
+  },
+  {
+   "chave": "81de553e1j",
+   "voz": "narradora",
+   "texto": "Separe nos baús! O som do R é fraco ou forte?",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "Separe nos baús! O som do érre é fraco ou forte?"
+  },
+  {
+   "chave": "21535f3d1c",
+   "voz": "narradora",
+   "texto": "Ligue cada palavra ao lugar do R nela:",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "Ligue cada palavra ao lugar do érre nela:"
+  },
+  {
+   "chave": "476ee7b61m",
+   "voz": "narradora",
+   "texto": "Quais palavras têm o dígrafo RR? Toque em TODAS.",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "Quais palavras têm o dígrafo dois érres? Toque em todas."
+  },
+  {
+   "chave": "26d50a01j",
+   "voz": "narradora",
+   "texto": "carrossel",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "carrossel"
+  },
+  {
+   "chave": "14ff9c74g",
+   "voz": "narradora",
+   "texto": "correr",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "correr"
+  },
+  {
+   "chave": "c2004695f",
+   "voz": "narradora",
+   "texto": "arroz",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "arroz"
+  },
+  {
+   "chave": "a5df3083i",
+   "voz": "narradora",
+   "texto": "barreira",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "barreira"
+  },
+  {
+   "chave": "5a1dee79d",
+   "voz": "narradora",
+   "texto": "rio",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "rio"
+  },
+  {
+   "chave": "858b5f20e",
+   "voz": "narradora",
+   "texto": "remo",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "remo"
+  },
+  {
+   "chave": "60fbccacg",
+   "voz": "narradora",
+   "texto": "parede",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "parede"
+  },
+  {
+   "chave": "8504340117",
+   "voz": "narradora",
+   "texto": "Complete as palavras com R ou RR:",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "Complete as palavras com érre ou dois érres:"
+  },
+  {
+   "chave": "9df636bd16",
+   "voz": "narradora",
+   "texto": "Complete cada frase com R ou RR:",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "Complete cada frase com érre ou dois érres:"
+  },
+  {
+   "chave": "bb16932f4q",
+   "voz": "narradora",
+   "texto": "Adivinha! Posso ter vários tamanhos e cores. Gosto de correr e brincar ao ar livre. Sou leal e, para escrever meu nome, você precisa do dígrafo RR. Quem sou eu?",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "Adivinha! Posso ter vários tamanhos e cores. Gosto de correr e brincar ao ar livre. Sou leal e, para escrever meu nome, você precisa do dígrafo dois érres. Quem sou eu?"
+  },
+  {
+   "chave": "28ff127ce",
+   "voz": "narradora",
+   "texto": "gato",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "gato"
+  },
+  {
+   "chave": "fc65b7bfg",
+   "voz": "narradora",
+   "texto": "coelho",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "coelho"
+  },
+  {
+   "chave": "8a474e761i",
+   "voz": "narradora",
+   "texto": "Complete o relato do piquenique com R ou RR:",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "Complete o relato do piquenique com érre ou dois érres:"
+  },
+  {
+   "chave": "0d9020b427",
+   "voz": "narradora",
+   "texto": "Coloque os fatos do relato do piquenique na ordem em que aconteceram:",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "Coloque os fatos do relato do piquenique na ordem em que aconteceram:"
+  },
+  {
+   "chave": "373bd65023",
+   "voz": "narradora",
+   "texto": "Quais palavras têm L ou R no final de uma sílaba? Toque em TODAS.",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "Quais palavras têm éle ou érre no final de uma sílaba? Toque em todas."
+  },
+  {
+   "chave": "0e748c22f",
+   "voz": "narradora",
+   "texto": "caldo",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "caldo"
+  },
+  {
+   "chave": "fd4399dei",
+   "voz": "narradora",
+   "texto": "palmeira",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "palmeira"
+  },
+  {
+   "chave": "4568112cf",
+   "voz": "narradora",
+   "texto": "golfe",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "golfe"
+  },
+  {
+   "chave": "19c93f04f",
+   "voz": "narradora",
+   "texto": "força",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "força"
+  },
+  {
+   "chave": "f50b4830f",
+   "voz": "narradora",
+   "texto": "carne",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "carne"
+  },
+  {
+   "chave": "80a8c21eh",
+   "voz": "narradora",
+   "texto": "tesoura",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "tesoura"
+  },
+  {
+   "chave": "1136eb16e",
+   "voz": "narradora",
+   "texto": "roça",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "roça"
+  },
+  {
+   "chave": "c85b1450g",
+   "voz": "narradora",
+   "texto": "casulo",
+   "pacotes": [
+    "portugues-p5"
+   ],
+   "fala": "casulo"
   },
   {
    "chave": "ee369e4ee",
@@ -10365,54 +12957,44 @@
    "fala": "Ou acerte as dez, com calma!"
   },
   {
-   "chave": "7f47a66bg",
-   "voz": "npc-padrao-1",
-   "texto": "Oi!",
-   "pacotes": [
-    "interior-castelo",
-    "interior-padrao-portugues"
-   ],
-   "fala": "Oi!"
-  },
-  {
-   "chave": "368b32ab13",
-   "voz": "npc-padrao-1",
-   "texto": "Sou um cavaleiro do Reino.",
+   "chave": "4ff27268z",
+   "voz": "npc-clara",
+   "texto": "Eu sou a Cavaleira Clara!",
    "pacotes": [
     "interior-castelo"
    ],
-   "fala": "Sou um cavaleiro do Reino."
+   "fala": "Eu sou a Cavaleira Clara!"
   },
   {
-   "chave": "06b3793b16",
-   "voz": "npc-padrao-1",
-   "texto": "Eu cuido do treino desta ala.",
+   "chave": "dd947e4713",
+   "voz": "npc-clara",
+   "texto": "Eu treino Português com você.",
    "pacotes": [
     "interior-castelo"
    ],
-   "fala": "Eu cuido do treino desta ala."
+   "fala": "Eu treino Português com você."
   },
   {
-   "chave": "a02f673312",
-   "voz": "npc-padrao-1",
-   "texto": "Vamos treinar sem pressa?",
+   "chave": "1132e39210",
+   "voz": "npc-clara",
+   "texto": "Vamos treinar o Português?",
    "pacotes": [
     "interior-castelo"
    ],
-   "fala": "Vamos treinar sem pressa?"
+   "fala": "Vamos treinar o Português?"
   },
   {
-   "chave": "3f9b910d11",
-   "voz": "npc-padrao-1",
-   "texto": "Vamos ler cada pergunta?",
+   "chave": "92b4e5b214",
+   "voz": "npc-clara",
+   "texto": "Leia cada pergunta duas vezes.",
    "pacotes": [
     "interior-castelo"
    ],
-   "fala": "Vamos ler cada pergunta?"
+   "fala": "Leia cada pergunta duas vezes."
   },
   {
-   "chave": "6d39ec5313",
-   "voz": "npc-padrao-1",
+   "chave": "d67baf1d10",
+   "voz": "npc-clara",
    "texto": "Quer treinar mais uma vez?",
    "pacotes": [
     "interior-castelo"
@@ -10420,8 +13002,8 @@
    "fala": "Quer treinar mais uma vez?"
   },
   {
-   "chave": "5cc8a44e17",
-   "voz": "npc-padrao-1",
+   "chave": "6428d0d414",
+   "voz": "npc-clara",
    "texto": "Vamos buscar o ouro com calma?",
    "pacotes": [
     "interior-castelo"
@@ -10429,45 +13011,53 @@
    "fala": "Vamos buscar o ouro com calma?"
   },
   {
-   "chave": "eea2fbb114",
-   "voz": "npc-padrao-1",
-   "texto": "Primeiro, termine as salas.",
+   "chave": "49dceb9811",
+   "voz": "npc-clara",
+   "texto": "Primeiro, as salas da Casa.",
    "pacotes": [
     "interior-castelo"
    ],
-   "fala": "Primeiro, termine as salas."
+   "fala": "Primeiro, as salas da Casa."
   },
   {
-   "chave": "bda4175b15",
-   "voz": "npc-padrao-1",
-   "texto": "Você revisou tudo com calma!",
+   "chave": "23335ebe14",
+   "voz": "npc-clara",
+   "texto": "A Casa das Palavras vem antes.",
    "pacotes": [
     "interior-castelo"
    ],
-   "fala": "Você revisou tudo com calma!"
+   "fala": "A Casa das Palavras vem antes."
   },
   {
-   "chave": "0940f9fb13",
-   "voz": "npc-padrao-1",
-   "texto": "Revisar é coisa de campeã!",
+   "chave": "b51110eay",
+   "voz": "npc-clara",
+   "texto": "Você leu tudo com calma!",
    "pacotes": [
     "interior-castelo"
    ],
-   "fala": "Revisar é coisa de campeã!"
+   "fala": "Você leu tudo com calma!"
   },
   {
-   "chave": "a0ba939417",
-   "voz": "npc-padrao-1",
+   "chave": "81fa457ey",
+   "voz": "npc-clara",
+   "texto": "Ler duas vezes dá certo!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Ler duas vezes dá certo!"
+  },
+  {
+   "chave": "d6edfa1e14",
+   "voz": "npc-clara",
    "texto": "Tudo bem, volte quando quiser!",
    "pacotes": [
-    "interior-castelo",
-    "interior-padrao-portugues"
+    "interior-castelo"
    ],
    "fala": "Tudo bem, volte quando quiser!"
   },
   {
-   "chave": "fa5f3979v",
-   "voz": "npc-padrao-1",
+   "chave": "eeda21dbs",
+   "voz": "npc-clara",
    "texto": "Falta só uma sala!",
    "pacotes": [
     "interior-castelo"
@@ -10475,8 +13065,8 @@
    "fala": "Falta só uma sala!"
   },
   {
-   "chave": "d8c096c5v",
-   "voz": "npc-padrao-1",
+   "chave": "f2949fd7s",
+   "voz": "npc-clara",
    "texto": "Faltam duas salas!",
    "pacotes": [
     "interior-castelo"
@@ -10484,8 +13074,8 @@
    "fala": "Faltam duas salas!"
   },
   {
-   "chave": "053f7c53v",
-   "voz": "npc-padrao-1",
+   "chave": "ca4a36a5s",
+   "voz": "npc-clara",
    "texto": "Faltam três salas!",
    "pacotes": [
     "interior-castelo"
@@ -10493,8 +13083,8 @@
    "fala": "Faltam três salas!"
   },
   {
-   "chave": "af9a8940x",
-   "voz": "npc-padrao-1",
+   "chave": "e55e82ceu",
+   "voz": "npc-clara",
    "texto": "Faltam quatro salas!",
    "pacotes": [
     "interior-castelo"
@@ -10502,8 +13092,8 @@
    "fala": "Faltam quatro salas!"
   },
   {
-   "chave": "bcb29f2aw",
-   "voz": "npc-padrao-1",
+   "chave": "5d94e13ct",
+   "voz": "npc-clara",
    "texto": "Faltam cinco salas!",
    "pacotes": [
     "interior-castelo"
@@ -10511,8 +13101,8 @@
    "fala": "Faltam cinco salas!"
   },
   {
-   "chave": "2a36779d16",
-   "voz": "npc-padrao-1",
+   "chave": "7cfa1eeb13",
+   "voz": "npc-clara",
    "texto": "Falta um treino para o épico!",
    "pacotes": [
     "interior-castelo"
@@ -10520,8 +13110,8 @@
    "fala": "Falta um treino para o épico!"
   },
   {
-   "chave": "d606449417",
-   "voz": "npc-padrao-1",
+   "chave": "e063694214",
+   "voz": "npc-clara",
    "texto": "Faltam dois treinos pro épico!",
    "pacotes": [
     "interior-castelo"
@@ -10529,8 +13119,8 @@
    "fala": "Faltam dois treinos pro épico!"
   },
   {
-   "chave": "4eb7859017",
-   "voz": "npc-padrao-1",
+   "chave": "95a0f6da14",
+   "voz": "npc-clara",
    "texto": "Faltam três treinos pro épico!",
    "pacotes": [
     "interior-castelo"
@@ -10538,8 +13128,8 @@
    "fala": "Faltam três treinos pro épico!"
   },
   {
-   "chave": "9837e30711",
-   "voz": "npc-padrao-1",
+   "chave": "d4e079a1y",
+   "voz": "npc-clara",
    "texto": "Ou tire ouro, com calma!",
    "pacotes": [
     "interior-castelo"
@@ -10547,8 +13137,8 @@
    "fala": "Ou tire ouro, com calma!"
   },
   {
-   "chave": "e197731319",
-   "voz": "npc-padrao-1",
+   "chave": "a2dbe61116",
+   "voz": "npc-clara",
    "texto": "Faltam quatro treinos pro épico!",
    "pacotes": [
     "interior-castelo"
@@ -10556,8 +13146,8 @@
    "fala": "Faltam quatro treinos pro épico!"
   },
   {
-   "chave": "b5b536a518",
-   "voz": "npc-padrao-1",
+   "chave": "8536a2b715",
+   "voz": "npc-clara",
    "texto": "Faltam cinco treinos pro épico!",
    "pacotes": [
     "interior-castelo"
@@ -10565,8 +13155,8 @@
    "fala": "Faltam cinco treinos pro épico!"
   },
   {
-   "chave": "c8bc057915",
-   "voz": "npc-padrao-1",
+   "chave": "ead28eeb12",
+   "voz": "npc-clara",
    "texto": "Ou acerte as dez, com calma!",
    "pacotes": [
     "interior-castelo"
@@ -10587,8 +13177,7 @@
    "voz": "narradora",
    "texto": "Vamos ler juntas com calma?",
    "pacotes": [
-    "interior-castelo",
-    "interior-padrao-portugues"
+    "interior-castelo"
    ],
    "fala": "Vamos ler juntas com calma?"
   },
@@ -10690,6 +13279,33 @@
     "interior-castelo"
    ],
    "fala": "quer dizer olá."
+  },
+  {
+   "chave": "f6f56d28y",
+   "voz": "narradora",
+   "texto": "Um livro aberto na mesa!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Um livro aberto na mesa!"
+  },
+  {
+   "chave": "0ec0878712",
+   "voz": "narradora",
+   "texto": "Leia devagar, com o dedinho.",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Leia devagar, com o dedinho."
+  },
+  {
+   "chave": "52ae721610",
+   "voz": "narradora",
+   "texto": "Depois, leia mais uma vez.",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Depois, leia mais uma vez."
   },
   {
    "chave": "a9874a7ch",
@@ -11016,6 +13632,114 @@
    "fala": "Agora vale um prêmio comum!"
   },
   {
+   "chave": "0d933bfd10",
+   "voz": "npc-lucia",
+   "texto": "Eu sou a Professora Lúcia!",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Eu sou a Professora Lúcia!"
+  },
+  {
+   "chave": "0f1acb83y",
+   "voz": "npc-lucia",
+   "texto": "Eu adoro ler e escrever.",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Eu adoro ler e escrever."
+  },
+  {
+   "chave": "ee3c15ae14",
+   "voz": "npc-lucia",
+   "texto": "Vamos fazer a prova com calma?",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Vamos fazer a prova com calma?"
+  },
+  {
+   "chave": "7d8a0ac5y",
+   "voz": "npc-lucia",
+   "texto": "Leia o texto duas vezes.",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Leia o texto duas vezes."
+  },
+  {
+   "chave": "dfbf7a4513",
+   "voz": "npc-lucia",
+   "texto": "Vamos treinar a prova juntas?",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Vamos treinar a prova juntas?"
+  },
+  {
+   "chave": "84aaf937z",
+   "voz": "npc-lucia",
+   "texto": "Revise antes de entregar.",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Revise antes de entregar."
+  },
+  {
+   "chave": "fbf62f2410",
+   "voz": "npc-lucia",
+   "texto": "Você leu tudo com atenção!",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Você leu tudo com atenção!"
+  },
+  {
+   "chave": "d6b7a2b4v",
+   "voz": "npc-lucia",
+   "texto": "Revisar ajudou muito!",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Revisar ajudou muito!"
+  },
+  {
+   "chave": "7102a7b514",
+   "voz": "npc-lucia",
+   "texto": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Tudo bem, volte quando quiser!"
+  },
+  {
+   "chave": "95763f4314",
+   "voz": "npc-lucia",
+   "texto": "Agora vale um prêmio lendário!",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Agora vale um prêmio lendário!"
+  },
+  {
+   "chave": "72fe1aeb10",
+   "voz": "npc-lucia",
+   "texto": "Agora vale um prêmio raro!",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Agora vale um prêmio raro!"
+  },
+  {
+   "chave": "64847f8811",
+   "voz": "npc-lucia",
+   "texto": "Agora vale um prêmio comum!",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Agora vale um prêmio comum!"
+  },
+  {
    "chave": "53271cedt",
    "voz": "narradora",
    "texto": "Um golinho de água?",
@@ -11231,6 +13955,60 @@
     "interior-escola"
    ],
    "fala": "Lá se fala inglês!"
+  },
+  {
+   "chave": "43db2c53w",
+   "voz": "narradora",
+   "texto": "Uma receita de salada!",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Uma receita de salada!"
+  },
+  {
+   "chave": "8c3c714c13",
+   "voz": "narradora",
+   "texto": "Primeiro vêm os ingredientes.",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Primeiro vêm os ingredientes."
+  },
+  {
+   "chave": "b3a453e110",
+   "voz": "narradora",
+   "texto": "Depois, o modo de preparo.",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Depois, o modo de preparo."
+  },
+  {
+   "chave": "e3eb457612",
+   "voz": "narradora",
+   "texto": "Sílabas coloridas no quadro!",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Sílabas coloridas no quadro!"
+  },
+  {
+   "chave": "3d521649z",
+   "voz": "narradora",
+   "texto": "Toda palavra tem sílabas.",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Toda palavra tem sílabas."
+  },
+  {
+   "chave": "65e8ae4911",
+   "voz": "narradora",
+   "texto": "Bata uma palma em cada uma.",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Bata uma palma em cada uma."
   },
   {
    "chave": "8ac10616c",
@@ -12471,6 +15249,7 @@
    "texto": "Vamos ler com calma?",
    "pacotes": [
     "interior-museu",
+    "interior-portugues",
     "interior-torre"
    ],
    "fala": "Vamos ler com calma?"
@@ -13032,6 +15811,1275 @@
     "interior-petshop"
    ],
    "fala": "Banho morninho e cheiroso."
+  },
+  {
+   "chave": "dc354bec18",
+   "voz": "npc-palavrinha",
+   "texto": "Oi, eu sou a Dona Palavrinha!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Oi, eu sou a Dona Palavrinha!"
+  },
+  {
+   "chave": "faa5ebc812",
+   "voz": "npc-palavrinha",
+   "texto": "Aqui moram as palavras!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Aqui moram as palavras!"
+  },
+  {
+   "chave": "7242ae0ew",
+   "voz": "npc-palavrinha",
+   "texto": "Quer ver a lista?",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Quer ver a lista?"
+  },
+  {
+   "chave": "0f5a3d9d14",
+   "voz": "npc-palavrinha",
+   "texto": "Você ainda não fez salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Você ainda não fez salas."
+  },
+  {
+   "chave": "52d8415a18",
+   "voz": "npc-palavrinha",
+   "texto": "O treino do Castelo já abriu!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "O treino do Castelo já abriu!"
+  },
+  {
+   "chave": "97fb485c17",
+   "voz": "npc-palavrinha",
+   "texto": "Você fez uma de cinco salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Você fez uma de cinco salas."
+  },
+  {
+   "chave": "1fdb5647x",
+   "voz": "npc-palavrinha",
+   "texto": "Já ganhou R$ 4,00!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou érre$ 4,00!"
+  },
+  {
+   "chave": "17f4016218",
+   "voz": "npc-palavrinha",
+   "texto": "Você fez duas de cinco salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Você fez duas de cinco salas."
+  },
+  {
+   "chave": "6617edf3x",
+   "voz": "npc-palavrinha",
+   "texto": "Já ganhou R$ 8,00!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou érre$ 8,00!"
+  },
+  {
+   "chave": "7fd4f98818",
+   "voz": "npc-palavrinha",
+   "texto": "Você fez três de cinco salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Você fez três de cinco salas."
+  },
+  {
+   "chave": "2ce73e10y",
+   "voz": "npc-palavrinha",
+   "texto": "Já ganhou R$ 12,00!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou érre$ 12,00!"
+  },
+  {
+   "chave": "83b65bdd1a",
+   "voz": "npc-palavrinha",
+   "texto": "Você fez quatro de cinco salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Você fez quatro de cinco salas."
+  },
+  {
+   "chave": "5d121e3cy",
+   "voz": "npc-palavrinha",
+   "texto": "Já ganhou R$ 16,00!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou érre$ 16,00!"
+  },
+  {
+   "chave": "9e96eda113",
+   "voz": "npc-palavrinha",
+   "texto": "Você fez as cinco salas!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Você fez as cinco salas!"
+  },
+  {
+   "chave": "38343475y",
+   "voz": "npc-palavrinha",
+   "texto": "Já ganhou R$ 20,00!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou érre$ 20,00!"
+  },
+  {
+   "chave": "0eab933811",
+   "voz": "npc-palavrinha",
+   "texto": "A primeira é a Sala 1!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "A primeira é a Sala 1!"
+  },
+  {
+   "chave": "4101111d15",
+   "voz": "npc-palavrinha",
+   "texto": "Agora vamos para a Sala 1!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para a Sala 1!"
+  },
+  {
+   "chave": "58fef84e15",
+   "voz": "npc-palavrinha",
+   "texto": "Agora vamos para a Sala 2!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para a Sala 2!"
+  },
+  {
+   "chave": "34fc810b15",
+   "voz": "npc-palavrinha",
+   "texto": "Agora vamos para a Sala 3!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para a Sala 3!"
+  },
+  {
+   "chave": "3d0dd6c415",
+   "voz": "npc-palavrinha",
+   "texto": "Agora vamos para a Sala 4!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para a Sala 4!"
+  },
+  {
+   "chave": "d90afac115",
+   "voz": "npc-palavrinha",
+   "texto": "Agora vamos para a Sala 5!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para a Sala 5!"
+  },
+  {
+   "chave": "02ec71dcx",
+   "voz": "npc-manu",
+   "texto": "Olá, eu sou a Chef Manu!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Olá, eu sou a Chef Manu!"
+  },
+  {
+   "chave": "473b42e0z",
+   "voz": "npc-manu",
+   "texto": "Receita tem passo a passo.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Receita tem passo a passo."
+  },
+  {
+   "chave": "1122b8d0v",
+   "voz": "npc-manu",
+   "texto": "Vamos ler uma receita?",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Vamos ler uma receita?"
+  },
+  {
+   "chave": "b5bc1f3411",
+   "voz": "npc-manu",
+   "texto": "Vamos cozinhar com palavras?",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Vamos cozinhar com palavras?"
+  },
+  {
+   "chave": "98c910af12",
+   "voz": "npc-manu",
+   "texto": "Quer cozinhar de novo comigo?",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Quer cozinhar de novo comigo?"
+  },
+  {
+   "chave": "d550139cx",
+   "voz": "npc-manu",
+   "texto": "Vamos repetir a receita?",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Vamos repetir a receita?"
+  },
+  {
+   "chave": "0235495fw",
+   "voz": "npc-manu",
+   "texto": "Que receita caprichada!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Que receita caprichada!"
+  },
+  {
+   "chave": "51157620w",
+   "voz": "npc-manu",
+   "texto": "Você seguiu cada passo!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Você seguiu cada passo!"
+  },
+  {
+   "chave": "bddd417813",
+   "voz": "npc-manu",
+   "texto": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Tudo bem, volte quando quiser!"
+  },
+  {
+   "chave": "ad5ea05b11",
+   "voz": "npc-manu",
+   "texto": "Mais uma vez e o raro nasce!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Mais uma vez e o raro nasce!"
+  },
+  {
+   "chave": "b87a83d514",
+   "voz": "npc-manu",
+   "texto": "Mais duas vezes e o raro nasce!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Mais duas vezes e o raro nasce!"
+  },
+  {
+   "chave": "98b543df14",
+   "voz": "npc-manu",
+   "texto": "Mais três vezes e o raro nasce!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Mais três vezes e o raro nasce!"
+  },
+  {
+   "chave": "b04acebcz",
+   "voz": "npc-manu",
+   "texto": "Ou de primeira, com calma!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Ou de primeira, com calma!"
+  },
+  {
+   "chave": "b0cce99e11",
+   "voz": "npc-manu",
+   "texto": "O raro desta sala já nasceu!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "O raro desta sala já nasceu!"
+  },
+  {
+   "chave": "4f2c778fz",
+   "voz": "npc-heitor",
+   "texto": "Sou o Jardineiro Heitor!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Sou o Jardineiro Heitor!"
+  },
+  {
+   "chave": "26296ef910",
+   "voz": "npc-heitor",
+   "texto": "Na horta tem um H calado.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Na horta tem um agá calado."
+  },
+  {
+   "chave": "13c258a8z",
+   "voz": "npc-heitor",
+   "texto": "Vamos regar as palavras?",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Vamos regar as palavras?"
+  },
+  {
+   "chave": "497e3803y",
+   "voz": "npc-heitor",
+   "texto": "Vamos achar o H calado?",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Vamos achar o agá calado?"
+  },
+  {
+   "chave": "a34c659515",
+   "voz": "npc-heitor",
+   "texto": "Quer plantar palavras de novo?",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Quer plantar palavras de novo?"
+  },
+  {
+   "chave": "40b7c55612",
+   "voz": "npc-heitor",
+   "texto": "Vamos colher mais palavras?",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Vamos colher mais palavras?"
+  },
+  {
+   "chave": "9e5aa23110",
+   "voz": "npc-heitor",
+   "texto": "Que horta linda você fez!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Que horta linda você fez!"
+  },
+  {
+   "chave": "b7d6968ex",
+   "voz": "npc-heitor",
+   "texto": "Você achou o H calado!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Você achou o agá calado!"
+  },
+  {
+   "chave": "cb76ca5815",
+   "voz": "npc-heitor",
+   "texto": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Tudo bem, volte quando quiser!"
+  },
+  {
+   "chave": "584b9dbb13",
+   "voz": "npc-heitor",
+   "texto": "Mais uma vez e o raro nasce!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Mais uma vez e o raro nasce!"
+  },
+  {
+   "chave": "a6c3d53516",
+   "voz": "npc-heitor",
+   "texto": "Mais duas vezes e o raro nasce!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Mais duas vezes e o raro nasce!"
+  },
+  {
+   "chave": "11671abf16",
+   "voz": "npc-heitor",
+   "texto": "Mais três vezes e o raro nasce!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Mais três vezes e o raro nasce!"
+  },
+  {
+   "chave": "908c139c11",
+   "voz": "npc-heitor",
+   "texto": "Ou de primeira, com calma!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Ou de primeira, com calma!"
+  },
+  {
+   "chave": "dbb4787e13",
+   "voz": "npc-heitor",
+   "texto": "O raro desta sala já nasceu!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "O raro desta sala já nasceu!"
+  },
+  {
+   "chave": "7a252df017",
+   "voz": "npc-chocalho",
+   "texto": "Oi, eu sou o Palhaço Chocalho!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Oi, eu sou o Palhaço Chocalho!"
+  },
+  {
+   "chave": "6efe95cbv",
+   "voz": "npc-chocalho",
+   "texto": "O meu nome tem CH!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "O meu nome tem cê agá!"
+  },
+  {
+   "chave": "09f6d8e012",
+   "voz": "npc-chocalho",
+   "texto": "Vamos pular a amarelinha?",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Vamos pular a amarelinha?"
+  },
+  {
+   "chave": "cc17dc0113",
+   "voz": "npc-chocalho",
+   "texto": "Vamos brincar com CH e NH?",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Vamos brincar com cê agá e ene agá?"
+  },
+  {
+   "chave": "8574972a15",
+   "voz": "npc-chocalho",
+   "texto": "Quer brincar de novo comigo?",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Quer brincar de novo comigo?"
+  },
+  {
+   "chave": "47e9c0f7z",
+   "voz": "npc-chocalho",
+   "texto": "Vamos pular outra vez?",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Vamos pular outra vez?"
+  },
+  {
+   "chave": "876e0a2dy",
+   "voz": "npc-chocalho",
+   "texto": "Que pulo mais bonito!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Que pulo mais bonito!"
+  },
+  {
+   "chave": "0b76105b14",
+   "voz": "npc-chocalho",
+   "texto": "Você brincou com as letras!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Você brincou com as letras!"
+  },
+  {
+   "chave": "ce46a0d217",
+   "voz": "npc-chocalho",
+   "texto": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Tudo bem, volte quando quiser!"
+  },
+  {
+   "chave": "03165ecd15",
+   "voz": "npc-chocalho",
+   "texto": "Mais uma vez e o raro nasce!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Mais uma vez e o raro nasce!"
+  },
+  {
+   "chave": "5456c5ab18",
+   "voz": "npc-chocalho",
+   "texto": "Mais duas vezes e o raro nasce!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Mais duas vezes e o raro nasce!"
+  },
+  {
+   "chave": "6de61df518",
+   "voz": "npc-chocalho",
+   "texto": "Mais três vezes e o raro nasce!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Mais três vezes e o raro nasce!"
+  },
+  {
+   "chave": "14eadd7e13",
+   "voz": "npc-chocalho",
+   "texto": "Ou de primeira, com calma!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Ou de primeira, com calma!"
+  },
+  {
+   "chave": "974b2a8015",
+   "voz": "npc-chocalho",
+   "texto": "O raro desta sala já nasceu!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "O raro desta sala já nasceu!"
+  },
+  {
+   "chave": "f54a1f2411",
+   "voz": "npc-brisa",
+   "texto": "Olá, eu sou a Capitã Brisa!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Olá, eu sou a Capitã Brisa!"
+  },
+  {
+   "chave": "7a55d0d512",
+   "voz": "npc-brisa",
+   "texto": "Já naveguei até a Antártida!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já naveguei até a Antártida!"
+  },
+  {
+   "chave": "cd770ee2x",
+   "voz": "npc-brisa",
+   "texto": "Vamos para a expedição?",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Vamos para a expedição?"
+  },
+  {
+   "chave": "18b0a30513",
+   "voz": "npc-brisa",
+   "texto": "Vamos ver os icebergs juntas?",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Vamos ver os icebergs juntas?"
+  },
+  {
+   "chave": "57600a9a11",
+   "voz": "npc-brisa",
+   "texto": "Quer viajar de novo comigo?",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Quer viajar de novo comigo?"
+  },
+  {
+   "chave": "abee5487y",
+   "voz": "npc-brisa",
+   "texto": "Vamos navegar outra vez?",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Vamos navegar outra vez?"
+  },
+  {
+   "chave": "ccbb32a8x",
+   "voz": "npc-brisa",
+   "texto": "Que expedição corajosa!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Que expedição corajosa!"
+  },
+  {
+   "chave": "b19feba813",
+   "voz": "npc-brisa",
+   "texto": "Você relatou tudo direitinho!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Você relatou tudo direitinho!"
+  },
+  {
+   "chave": "141399e614",
+   "voz": "npc-brisa",
+   "texto": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Tudo bem, volte quando quiser!"
+  },
+  {
+   "chave": "01a042e112",
+   "voz": "npc-brisa",
+   "texto": "Mais uma vez e o raro nasce!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Mais uma vez e o raro nasce!"
+  },
+  {
+   "chave": "9f88e68f15",
+   "voz": "npc-brisa",
+   "texto": "Mais duas vezes e o raro nasce!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Mais duas vezes e o raro nasce!"
+  },
+  {
+   "chave": "3eab389115",
+   "voz": "npc-brisa",
+   "texto": "Mais três vezes e o raro nasce!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Mais três vezes e o raro nasce!"
+  },
+  {
+   "chave": "24f077ea10",
+   "voz": "npc-brisa",
+   "texto": "Ou de primeira, com calma!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Ou de primeira, com calma!"
+  },
+  {
+   "chave": "412a909c12",
+   "voz": "npc-brisa",
+   "texto": "O raro desta sala já nasceu!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "O raro desta sala já nasceu!"
+  },
+  {
+   "chave": "85da2c2fz",
+   "voz": "npc-carlos",
+   "texto": "Oi, eu sou o Seu Carlos!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Oi, eu sou o Seu Carlos!"
+  },
+  {
+   "chave": "01c53cebx",
+   "voz": "npc-carlos",
+   "texto": "Eu cuido do carrossel!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Eu cuido do carrossel!"
+  },
+  {
+   "chave": "ef77664a10",
+   "voz": "npc-carlos",
+   "texto": "Vamos girar no carrossel?",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Vamos girar no carrossel?"
+  },
+  {
+   "chave": "669d6563z",
+   "voz": "npc-carlos",
+   "texto": "Vamos brincar com L e R?",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Vamos brincar com éle e érre?"
+  },
+  {
+   "chave": "695b06daz",
+   "voz": "npc-carlos",
+   "texto": "Quer dar outra voltinha?",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Quer dar outra voltinha?"
+  },
+  {
+   "chave": "92b9c8e6v",
+   "voz": "npc-carlos",
+   "texto": "Vamos girar de novo?",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Vamos girar de novo?"
+  },
+  {
+   "chave": "8aaed51910",
+   "voz": "npc-carlos",
+   "texto": "Que volta mais divertida!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Que volta mais divertida!"
+  },
+  {
+   "chave": "d92129c010",
+   "voz": "npc-carlos",
+   "texto": "Você girou com as letras!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Você girou com as letras!"
+  },
+  {
+   "chave": "bb458f0115",
+   "voz": "npc-carlos",
+   "texto": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Tudo bem, volte quando quiser!"
+  },
+  {
+   "chave": "5dce4f4e13",
+   "voz": "npc-carlos",
+   "texto": "Mais uma vez e o raro nasce!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Mais uma vez e o raro nasce!"
+  },
+  {
+   "chave": "d956ceb216",
+   "voz": "npc-carlos",
+   "texto": "Mais duas vezes e o raro nasce!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Mais duas vezes e o raro nasce!"
+  },
+  {
+   "chave": "8d58f71c16",
+   "voz": "npc-carlos",
+   "texto": "Mais três vezes e o raro nasce!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Mais três vezes e o raro nasce!"
+  },
+  {
+   "chave": "1b0a0c2111",
+   "voz": "npc-carlos",
+   "texto": "Ou de primeira, com calma!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Ou de primeira, com calma!"
+  },
+  {
+   "chave": "a929c3bb13",
+   "voz": "npc-carlos",
+   "texto": "O raro desta sala já nasceu!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "O raro desta sala já nasceu!"
+  },
+  {
+   "chave": "09666e6at",
+   "voz": "narradora",
+   "texto": "O Livro das Letras!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "O Livro das Letras!"
+  },
+  {
+   "chave": "4953aebd14",
+   "voz": "narradora",
+   "texto": "É o mapa da Casa das Palavras.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "É o mapa da Casa das Palavras."
+  },
+  {
+   "chave": "eab6e4ec13",
+   "voz": "narradora",
+   "texto": "São cinco salas para visitar.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "São cinco salas para visitar."
+  },
+  {
+   "chave": "a63d00af10",
+   "voz": "narradora",
+   "texto": "Um dicionário bem grandão!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Um dicionário bem grandão!"
+  },
+  {
+   "chave": "be084e8e11",
+   "voz": "narradora",
+   "texto": "Ele guarda muitas palavras.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Ele guarda muitas palavras."
+  },
+  {
+   "chave": "57490e1f12",
+   "voz": "narradora",
+   "texto": "Blocos com as letras do ABC!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Blocos com as letras do abc!"
+  },
+  {
+   "chave": "1480e8e714",
+   "voz": "narradora",
+   "texto": "Letras juntas formam palavras.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Letras juntas formam palavras."
+  },
+  {
+   "chave": "bf69b86910",
+   "voz": "narradora",
+   "texto": "Suco de morango geladinho!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Suco de morango geladinho!"
+  },
+  {
+   "chave": "f2b5c52713",
+   "voz": "narradora",
+   "texto": "Primeiro, lave bem as frutas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Primeiro, lave bem as frutas."
+  },
+  {
+   "chave": "c4367204z",
+   "voz": "narradora",
+   "texto": "Olha que abacaxi grandão!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Olha que abacaxi grandão!"
+  },
+  {
+   "chave": "df422374z",
+   "voz": "narradora",
+   "texto": "Abacaxi se escreve com X.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Abacaxi se escreve com xis."
+  },
+  {
+   "chave": "131e2fb9v",
+   "voz": "narradora",
+   "texto": "Uma salada de frutas!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Uma salada de frutas!"
+  },
+  {
+   "chave": "5e2999aa11",
+   "voz": "narradora",
+   "texto": "A receita tem ingredientes.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "A receita tem ingredientes."
+  },
+  {
+   "chave": "30a7efd8y",
+   "voz": "narradora",
+   "texto": "E tem o modo de preparo.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "E tem o modo de preparo."
+  },
+  {
+   "chave": "fd972e8by",
+   "voz": "narradora",
+   "texto": "Um bolo feito na caneca!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Um bolo feito na caneca!"
+  },
+  {
+   "chave": "cb0d243by",
+   "voz": "narradora",
+   "texto": "Siga os passos em ordem.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Siga os passos em ordem."
+  },
+  {
+   "chave": "c55f11f7y",
+   "voz": "narradora",
+   "texto": "Aqui está escrito HORTA.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Aqui está escrito horta."
+  },
+  {
+   "chave": "c2fcb1aa10",
+   "voz": "narradora",
+   "texto": "O H do começo não tem som.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "O agá do começo não tem som."
+  },
+  {
+   "chave": "4ce1171512",
+   "voz": "narradora",
+   "texto": "Um vaso de hortelã cheiroso!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Um vaso de hortelã cheiroso!"
+  },
+  {
+   "chave": "2798a109v",
+   "voz": "narradora",
+   "texto": "Hortelã começa com H.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Hortelã começa com agá."
+  },
+  {
+   "chave": "e4905777v",
+   "voz": "narradora",
+   "texto": "As flores do hibisco!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "As flores do hibisco!"
+  },
+  {
+   "chave": "b78ae4b5x",
+   "voz": "narradora",
+   "texto": "O H fica bem quietinho.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "O agá fica bem quietinho."
+  },
+  {
+   "chave": "270350f412",
+   "voz": "narradora",
+   "texto": "Um helicóptero de brinquedo!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Um helicóptero de brinquedo!"
+  },
+  {
+   "chave": "6c8e175fz",
+   "voz": "narradora",
+   "texto": "Ele começa com a letra H.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Ele começa com a letra agá."
+  },
+  {
+   "chave": "237ddfb3x",
+   "voz": "narradora",
+   "texto": "Chocalho começa com CH!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Chocalho começa com cê agá!"
+  },
+  {
+   "chave": "642abc80z",
+   "voz": "narradora",
+   "texto": "Escute o barulhinho dele!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Escute o barulhinho dele!"
+  },
+  {
+   "chave": "c6ca51e0w",
+   "voz": "narradora",
+   "texto": "A amarelinha dos dias!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "A amarelinha dos dias!"
+  },
+  {
+   "chave": "139f88c7x",
+   "voz": "narradora",
+   "texto": "A semana tem sete dias.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "A semana tem sete dias."
+  },
+  {
+   "chave": "82a83981v",
+   "voz": "narradora",
+   "texto": "Pule de casa em casa!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Pule de casa em casa!"
+  },
+  {
+   "chave": "fb38441d10",
+   "voz": "narradora",
+   "texto": "A pipoca é feita de milho!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "A pipoca é feita de milho!"
+  },
+  {
+   "chave": "27044caey",
+   "voz": "narradora",
+   "texto": "Milho se escreve com LH.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Milho se escreve com éle agá."
+  },
+  {
+   "chave": "beb41abdv",
+   "voz": "narradora",
+   "texto": "Um ninho com ovinhos!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Um ninho com ovinhos!"
+  },
+  {
+   "chave": "425d8995y",
+   "voz": "narradora",
+   "texto": "Ninho se escreve com NH.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Ninho se escreve com ene agá."
+  },
+  {
+   "chave": "4cfe13b413",
+   "voz": "narradora",
+   "texto": "Isso é só a ponta do iceberg!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Isso é só a ponta do iceberg!"
+  },
+  {
+   "chave": "afdb48b811",
+   "voz": "narradora",
+   "texto": "A maior parte fica embaixo.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "A maior parte fica embaixo."
+  },
+  {
+   "chave": "fa4a7988y",
+   "voz": "narradora",
+   "texto": "Pinguins na neve gelada!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Pinguins na neve gelada!"
+  },
+  {
+   "chave": "6bcc1b63y",
+   "voz": "narradora",
+   "texto": "Eles moram na Antártida.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Eles moram na Antártida."
+  },
+  {
+   "chave": "c1fec93711",
+   "voz": "narradora",
+   "texto": "As focas descansam no gelo!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "As focas descansam no gelo!"
+  },
+  {
+   "chave": "13fa1788v",
+   "voz": "narradora",
+   "texto": "Elas nadam muito bem!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Elas nadam muito bem!"
+  },
+  {
+   "chave": "6561dbccw",
+   "voz": "narradora",
+   "texto": "O diário da expedição!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "O diário da expedição!"
+  },
+  {
+   "chave": "33346b2711",
+   "voz": "narradora",
+   "texto": "O relato conta o que houve.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "O relato conta o que houve."
+  },
+  {
+   "chave": "a8013b69y",
+   "voz": "narradora",
+   "texto": "Ele conta tudo em ordem.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Ele conta tudo em ordem."
+  },
+  {
+   "chave": "4568159fw",
+   "voz": "narradora",
+   "texto": "Uma árvore bem bonita!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Uma árvore bem bonita!"
+  },
+  {
+   "chave": "61d6e05f13",
+   "voz": "narradora",
+   "texto": "Ár-vo-re: o R fecha a sílaba.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Ár-vo-re: o érre fecha a sílaba."
+  },
+  {
+   "chave": "72b10851z",
+   "voz": "narradora",
+   "texto": "Carrossel tem RR no meio!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Carrossel tem dois érres no meio!"
+  },
+  {
+   "chave": "3ec62c1bw",
+   "voz": "narradora",
+   "texto": "O RR tem um som forte.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "O dois érres tem um som forte."
+  },
+  {
+   "chave": "dd5419f0u",
+   "voz": "narradora",
+   "texto": "Balões para a festa!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Balões para a festa!"
+  },
+  {
+   "chave": "46f003b0x",
+   "voz": "narradora",
+   "texto": "Balão se escreve com L.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Balão se escreve com éle."
+  },
+  {
+   "chave": "ae7febebx",
+   "voz": "narradora",
+   "texto": "Um pote de mel docinho!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Um pote de mel docinho!"
+  },
+  {
+   "chave": "a9e43965w",
+   "voz": "narradora",
+   "texto": "O L no fim soa como U.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "O éle no fim soa como u."
   },
   {
    "chave": "2e0b4123l",
@@ -14562,915 +18610,6 @@
     "interior-torre"
    ],
    "fala": "Ele toca na hora certa."
-  },
-  {
-   "chave": "f955bc90j",
-   "voz": "npc-padrao-guia",
-   "texto": "Oi!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Oi!"
-  },
-  {
-   "chave": "7e31780910",
-   "voz": "npc-padrao-guia",
-   "texto": "Eu sou a guia daqui.",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Eu sou a guia daqui."
-  },
-  {
-   "chave": "b409bdab16",
-   "voz": "npc-padrao-guia",
-   "texto": "Cada sala tem um ajudante.",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Cada sala tem um ajudante."
-  },
-  {
-   "chave": "206aa8b6x",
-   "voz": "npc-padrao-guia",
-   "texto": "Quer ver a lista?",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Quer ver a lista?"
-  },
-  {
-   "chave": "84e5a54515",
-   "voz": "npc-padrao-guia",
-   "texto": "Você ainda não fez salas.",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Você ainda não fez salas."
-  },
-  {
-   "chave": "d595d04219",
-   "voz": "npc-padrao-guia",
-   "texto": "O treino do Castelo já abriu!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "O treino do Castelo já abriu!"
-  },
-  {
-   "chave": "e256fb5418",
-   "voz": "npc-padrao-guia",
-   "texto": "Você fez uma de cinco salas.",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Você fez uma de cinco salas."
-  },
-  {
-   "chave": "de8e555fy",
-   "voz": "npc-padrao-guia",
-   "texto": "Já ganhou R$ 4,00!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Já ganhou érre$ 4,00!"
-  },
-  {
-   "chave": "7c96e85a19",
-   "voz": "npc-padrao-guia",
-   "texto": "Você fez duas de cinco salas.",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Você fez duas de cinco salas."
-  },
-  {
-   "chave": "5bdbaf1by",
-   "voz": "npc-padrao-guia",
-   "texto": "Já ganhou R$ 8,00!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Já ganhou érre$ 8,00!"
-  },
-  {
-   "chave": "bdf9301019",
-   "voz": "npc-padrao-guia",
-   "texto": "Você fez três de cinco salas.",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Você fez três de cinco salas."
-  },
-  {
-   "chave": "4cb91318z",
-   "voz": "npc-padrao-guia",
-   "texto": "Já ganhou R$ 12,00!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Já ganhou érre$ 12,00!"
-  },
-  {
-   "chave": "a154dde51b",
-   "voz": "npc-padrao-guia",
-   "texto": "Você fez quatro de cinco salas.",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Você fez quatro de cinco salas."
-  },
-  {
-   "chave": "f0ba6044z",
-   "voz": "npc-padrao-guia",
-   "texto": "Já ganhou R$ 16,00!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Já ganhou érre$ 16,00!"
-  },
-  {
-   "chave": "97c9dcd914",
-   "voz": "npc-padrao-guia",
-   "texto": "Você fez as cinco salas!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Você fez as cinco salas!"
-  },
-  {
-   "chave": "b068e95dz",
-   "voz": "npc-padrao-guia",
-   "texto": "Já ganhou R$ 20,00!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Já ganhou érre$ 20,00!"
-  },
-  {
-   "chave": "495412d012",
-   "voz": "npc-padrao-guia",
-   "texto": "A primeira é a Sala 1!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "A primeira é a Sala 1!"
-  },
-  {
-   "chave": "2483e32516",
-   "voz": "npc-padrao-guia",
-   "texto": "Agora vamos para a Sala 1!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Agora vamos para a Sala 1!"
-  },
-  {
-   "chave": "bc8100d616",
-   "voz": "npc-padrao-guia",
-   "texto": "Agora vamos para a Sala 2!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Agora vamos para a Sala 2!"
-  },
-  {
-   "chave": "987e899316",
-   "voz": "npc-padrao-guia",
-   "texto": "Agora vamos para a Sala 3!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Agora vamos para a Sala 3!"
-  },
-  {
-   "chave": "a08fdf4c16",
-   "voz": "npc-padrao-guia",
-   "texto": "Agora vamos para a Sala 4!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Agora vamos para a Sala 4!"
-  },
-  {
-   "chave": "bc8dccc916",
-   "voz": "npc-padrao-guia",
-   "texto": "Agora vamos para a Sala 5!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Agora vamos para a Sala 5!"
-  },
-  {
-   "chave": "d346136dw",
-   "voz": "npc-padrao-1",
-   "texto": "Eu cuido da Sala 1.",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Eu cuido da Sala 1."
-  },
-  {
-   "chave": "cdb5d18912",
-   "voz": "npc-padrao-1",
-   "texto": "Vamos aprender com calma?",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Vamos aprender com calma?"
-  },
-  {
-   "chave": "5f17c223z",
-   "voz": "npc-padrao-1",
-   "texto": "Vamos fazer esta sala?",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Vamos fazer esta sala?"
-  },
-  {
-   "chave": "49fa830c13",
-   "voz": "npc-padrao-1",
-   "texto": "Quer começar agora comigo?",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Quer começar agora comigo?"
-  },
-  {
-   "chave": "c6ef73ba13",
-   "voz": "npc-padrao-1",
-   "texto": "Quer brincar de novo aqui?",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Quer brincar de novo aqui?"
-  },
-  {
-   "chave": "e61a19e911",
-   "voz": "npc-padrao-1",
-   "texto": "Vamos repetir com calma?",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Vamos repetir com calma?"
-  },
-  {
-   "chave": "e933a0abw",
-   "voz": "npc-padrao-1",
-   "texto": "Você foi muito bem!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Você foi muito bem!"
-  },
-  {
-   "chave": "2b03d40bx",
-   "voz": "npc-padrao-1",
-   "texto": "Que orgulho de você!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Que orgulho de você!"
-  },
-  {
-   "chave": "da70996715",
-   "voz": "npc-padrao-1",
-   "texto": "Mais uma vez e o raro nasce!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Mais uma vez e o raro nasce!"
-  },
-  {
-   "chave": "53cf2b9118",
-   "voz": "npc-padrao-1",
-   "texto": "Mais duas vezes e o raro nasce!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Mais duas vezes e o raro nasce!"
-  },
-  {
-   "chave": "ddbeb23318",
-   "voz": "npc-padrao-1",
-   "texto": "Mais três vezes e o raro nasce!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Mais três vezes e o raro nasce!"
-  },
-  {
-   "chave": "509ffc7013",
-   "voz": "npc-padrao-1",
-   "texto": "Ou de primeira, com calma!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Ou de primeira, com calma!"
-  },
-  {
-   "chave": "a331a84215",
-   "voz": "npc-padrao-1",
-   "texto": "O raro desta sala já nasceu!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "O raro desta sala já nasceu!"
-  },
-  {
-   "chave": "2cddfb3eg",
-   "voz": "npc-padrao-2",
-   "texto": "Oi!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Oi!"
-  },
-  {
-   "chave": "285df4b3w",
-   "voz": "npc-padrao-2",
-   "texto": "Eu cuido da Sala 2.",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Eu cuido da Sala 2."
-  },
-  {
-   "chave": "24a8980812",
-   "voz": "npc-padrao-2",
-   "texto": "Vamos aprender com calma?",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Vamos aprender com calma?"
-  },
-  {
-   "chave": "764a40f8z",
-   "voz": "npc-padrao-2",
-   "texto": "Vamos fazer esta sala?",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Vamos fazer esta sala?"
-  },
-  {
-   "chave": "dfac924713",
-   "voz": "npc-padrao-2",
-   "texto": "Quer começar agora comigo?",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Quer começar agora comigo?"
-  },
-  {
-   "chave": "56c55f5d13",
-   "voz": "npc-padrao-2",
-   "texto": "Quer brincar de novo aqui?",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Quer brincar de novo aqui?"
-  },
-  {
-   "chave": "63524fbe11",
-   "voz": "npc-padrao-2",
-   "texto": "Vamos repetir com calma?",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Vamos repetir com calma?"
-  },
-  {
-   "chave": "456a3552w",
-   "voz": "npc-padrao-2",
-   "texto": "Você foi muito bem!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Você foi muito bem!"
-  },
-  {
-   "chave": "668e4bd4x",
-   "voz": "npc-padrao-2",
-   "texto": "Que orgulho de você!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Que orgulho de você!"
-  },
-  {
-   "chave": "09f5e01317",
-   "voz": "npc-padrao-2",
-   "texto": "Tudo bem, volte quando quiser!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Tudo bem, volte quando quiser!"
-  },
-  {
-   "chave": "4d9b7f4015",
-   "voz": "npc-padrao-2",
-   "texto": "Mais uma vez e o raro nasce!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Mais uma vez e o raro nasce!"
-  },
-  {
-   "chave": "6188bf9018",
-   "voz": "npc-padrao-2",
-   "texto": "Mais duas vezes e o raro nasce!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Mais duas vezes e o raro nasce!"
-  },
-  {
-   "chave": "5397397218",
-   "voz": "npc-padrao-2",
-   "texto": "Mais três vezes e o raro nasce!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Mais três vezes e o raro nasce!"
-  },
-  {
-   "chave": "0c5ca90313",
-   "voz": "npc-padrao-2",
-   "texto": "Ou de primeira, com calma!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Ou de primeira, com calma!"
-  },
-  {
-   "chave": "80c50da515",
-   "voz": "npc-padrao-2",
-   "texto": "O raro desta sala já nasceu!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "O raro desta sala já nasceu!"
-  },
-  {
-   "chave": "a226378dg",
-   "voz": "npc-padrao-3",
-   "texto": "Oi!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Oi!"
-  },
-  {
-   "chave": "e2f9f401w",
-   "voz": "npc-padrao-3",
-   "texto": "Eu cuido da Sala 3.",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Eu cuido da Sala 3."
-  },
-  {
-   "chave": "a4e4ce0f12",
-   "voz": "npc-padrao-3",
-   "texto": "Vamos aprender com calma?",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Vamos aprender com calma?"
-  },
-  {
-   "chave": "1f132091z",
-   "voz": "npc-padrao-3",
-   "texto": "Vamos fazer esta sala?",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Vamos fazer esta sala?"
-  },
-  {
-   "chave": "87bf0e7a13",
-   "voz": "npc-padrao-3",
-   "texto": "Quer começar agora comigo?",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Quer começar agora comigo?"
-  },
-  {
-   "chave": "bd84f7f013",
-   "voz": "npc-padrao-3",
-   "texto": "Quer brincar de novo aqui?",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Quer brincar de novo aqui?"
-  },
-  {
-   "chave": "9cc0e67f11",
-   "voz": "npc-padrao-3",
-   "texto": "Vamos repetir com calma?",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Vamos repetir com calma?"
-  },
-  {
-   "chave": "9ea4e8a1w",
-   "voz": "npc-padrao-3",
-   "texto": "Você foi muito bem!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Você foi muito bem!"
-  },
-  {
-   "chave": "58b08c1dx",
-   "voz": "npc-padrao-3",
-   "texto": "Que orgulho de você!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Que orgulho de você!"
-  },
-  {
-   "chave": "20bf0e9e17",
-   "voz": "npc-padrao-3",
-   "texto": "Tudo bem, volte quando quiser!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Tudo bem, volte quando quiser!"
-  },
-  {
-   "chave": "2801150915",
-   "voz": "npc-padrao-3",
-   "texto": "Mais uma vez e o raro nasce!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Mais uma vez e o raro nasce!"
-  },
-  {
-   "chave": "8bb4ca1718",
-   "voz": "npc-padrao-3",
-   "texto": "Mais duas vezes e o raro nasce!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Mais duas vezes e o raro nasce!"
-  },
-  {
-   "chave": "1a70274918",
-   "voz": "npc-padrao-3",
-   "texto": "Mais três vezes e o raro nasce!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Mais três vezes e o raro nasce!"
-  },
-  {
-   "chave": "11f6285213",
-   "voz": "npc-padrao-3",
-   "texto": "Ou de primeira, com calma!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Ou de primeira, com calma!"
-  },
-  {
-   "chave": "3b2c2be415",
-   "voz": "npc-padrao-3",
-   "texto": "O raro desta sala já nasceu!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "O raro desta sala já nasceu!"
-  },
-  {
-   "chave": "a129cfc0g",
-   "voz": "npc-padrao-4",
-   "texto": "Oi!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Oi!"
-  },
-  {
-   "chave": "39e0a48bw",
-   "voz": "npc-padrao-4",
-   "texto": "Eu cuido da Sala 4.",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Eu cuido da Sala 4."
-  },
-  {
-   "chave": "0a5a19f612",
-   "voz": "npc-padrao-4",
-   "texto": "Vamos aprender com calma?",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Vamos aprender com calma?"
-  },
-  {
-   "chave": "0abbf626z",
-   "voz": "npc-padrao-4",
-   "texto": "Vamos fazer esta sala?",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Vamos fazer esta sala?"
-  },
-  {
-   "chave": "3e61cd0d13",
-   "voz": "npc-padrao-4",
-   "texto": "Quer começar agora comigo?",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Quer começar agora comigo?"
-  },
-  {
-   "chave": "4804c76b13",
-   "voz": "npc-padrao-4",
-   "texto": "Quer brincar de novo aqui?",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Quer brincar de novo aqui?"
-  },
-  {
-   "chave": "9ec936dc11",
-   "voz": "npc-padrao-4",
-   "texto": "Vamos repetir com calma?",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Vamos repetir com calma?"
-  },
-  {
-   "chave": "bd619508w",
-   "voz": "npc-padrao-4",
-   "texto": "Você foi muito bem!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Você foi muito bem!"
-  },
-  {
-   "chave": "f1f2fdd6x",
-   "voz": "npc-padrao-4",
-   "texto": "Que orgulho de você!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Que orgulho de você!"
-  },
-  {
-   "chave": "3c36295d17",
-   "voz": "npc-padrao-4",
-   "texto": "Tudo bem, volte quando quiser!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Tudo bem, volte quando quiser!"
-  },
-  {
-   "chave": "487f8a9a15",
-   "voz": "npc-padrao-4",
-   "texto": "Mais uma vez e o raro nasce!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Mais uma vez e o raro nasce!"
-  },
-  {
-   "chave": "9498038e18",
-   "voz": "npc-padrao-4",
-   "texto": "Mais duas vezes e o raro nasce!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Mais duas vezes e o raro nasce!"
-  },
-  {
-   "chave": "6130d96018",
-   "voz": "npc-padrao-4",
-   "texto": "Mais três vezes e o raro nasce!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Mais três vezes e o raro nasce!"
-  },
-  {
-   "chave": "faa8153513",
-   "voz": "npc-padrao-4",
-   "texto": "Ou de primeira, com calma!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Ou de primeira, com calma!"
-  },
-  {
-   "chave": "a8c699ff15",
-   "voz": "npc-padrao-4",
-   "texto": "O raro desta sala já nasceu!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "O raro desta sala já nasceu!"
-  },
-  {
-   "chave": "a177d2e7g",
-   "voz": "npc-padrao-5",
-   "texto": "Oi!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Oi!"
-  },
-  {
-   "chave": "aad19fc5w",
-   "voz": "npc-padrao-5",
-   "texto": "Eu cuido da Sala 5.",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Eu cuido da Sala 5."
-  },
-  {
-   "chave": "017957ed12",
-   "voz": "npc-padrao-5",
-   "texto": "Vamos aprender com calma?",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Vamos aprender com calma?"
-  },
-  {
-   "chave": "0dffb5e7z",
-   "voz": "npc-padrao-5",
-   "texto": "Vamos fazer esta sala?",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Vamos fazer esta sala?"
-  },
-  {
-   "chave": "d7cc8dc013",
-   "voz": "npc-padrao-5",
-   "texto": "Quer começar agora comigo?",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Quer começar agora comigo?"
-  },
-  {
-   "chave": "94728b8e13",
-   "voz": "npc-padrao-5",
-   "texto": "Quer brincar de novo aqui?",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Quer brincar de novo aqui?"
-  },
-  {
-   "chave": "b14d153d11",
-   "voz": "npc-padrao-5",
-   "texto": "Vamos repetir com calma?",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Vamos repetir com calma?"
-  },
-  {
-   "chave": "6e5065cfw",
-   "voz": "npc-padrao-5",
-   "texto": "Você foi muito bem!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Você foi muito bem!"
-  },
-  {
-   "chave": "9911831fx",
-   "voz": "npc-padrao-5",
-   "texto": "Que orgulho de você!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Que orgulho de você!"
-  },
-  {
-   "chave": "8cd1eab017",
-   "voz": "npc-padrao-5",
-   "texto": "Tudo bem, volte quando quiser!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Tudo bem, volte quando quiser!"
-  },
-  {
-   "chave": "675f8f0315",
-   "voz": "npc-padrao-5",
-   "texto": "Mais uma vez e o raro nasce!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Mais uma vez e o raro nasce!"
-  },
-  {
-   "chave": "9ff77dbd18",
-   "voz": "npc-padrao-5",
-   "texto": "Mais duas vezes e o raro nasce!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Mais duas vezes e o raro nasce!"
-  },
-  {
-   "chave": "a52ccd5718",
-   "voz": "npc-padrao-5",
-   "texto": "Mais três vezes e o raro nasce!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Mais três vezes e o raro nasce!"
-  },
-  {
-   "chave": "e4c853e413",
-   "voz": "npc-padrao-5",
-   "texto": "Ou de primeira, com calma!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Ou de primeira, com calma!"
-  },
-  {
-   "chave": "3a9f74c615",
-   "voz": "npc-padrao-5",
-   "texto": "O raro desta sala já nasceu!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "O raro desta sala já nasceu!"
-  },
-  {
-   "chave": "8c22fcd013",
-   "voz": "narradora",
-   "texto": "Aqui mora o livro da matéria!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Aqui mora o livro da matéria!"
-  },
-  {
-   "chave": "dc6ad288y",
-   "voz": "narradora",
-   "texto": "Olha que desenho bonito!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Olha que desenho bonito!"
-  },
-  {
-   "chave": "b3e36927x",
-   "voz": "narradora",
-   "texto": "Ele fala desta matéria.",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Ele fala desta matéria."
-  },
-  {
-   "chave": "c9d78d7710",
-   "voz": "narradora",
-   "texto": "Um golinho de água fresca!",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Um golinho de água fresca!"
-  },
-  {
-   "chave": "9c9b41b2z",
-   "voz": "narradora",
-   "texto": "Beber água faz muito bem.",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Beber água faz muito bem."
-  },
-  {
-   "chave": "9b098ba9z",
-   "voz": "narradora",
-   "texto": "Ele fala desta sala aqui.",
-   "pacotes": [
-    "interior-padrao-portugues"
-   ],
-   "fala": "Ele fala desta sala aqui."
   },
   {
    "chave": "f4cabefdt",

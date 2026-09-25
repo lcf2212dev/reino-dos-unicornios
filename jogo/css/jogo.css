@@ -862,3 +862,56 @@ body.sem-animacao *:not(.balao-respira), body.sem-animacao *::before, body.sem-a
   .desenho-moldura { width: min(100%, 300px); }
   .missao-corpo:has(.desenho) { padding-bottom: 40px; }
 }
+
+/* texto de apoio (d.apoio): a caixa do texto que a questão manda ler, acima do enunciado */
+.apoio { padding: 14px 16px 16px; border: 3px solid var(--borda); border-radius: 18px; background: #fffef8; box-shadow: 0 4px 0 var(--borda); }
+.apoio-rotulo { display: inline-block; margin: 0 0 6px; padding: 2px 10px; border: 2px solid var(--borda); border-radius: 999px; background: var(--ouro-claro); font-size: 0.7em; font-weight: 700; line-height: 1.8; }
+.apoio-titulo { margin: 6px 0 4px; font-family: var(--fonte-titulo); font-size: 1.05em; line-height: 1.6; text-align: center; color: var(--roxo); }
+.apoio-parte { margin-top: 12px; }
+.apoio-parte-titulo { margin: 0 0 4px; font-weight: 700; font-size: 0.9em; color: var(--rosa-forte); }
+.apoio-lista { margin: 0; padding-left: 1.5em; font-size: 0.9em; line-height: 2; }
+.apoio-texto { margin: 0; font-size: 0.9em; line-height: 2.1; overflow-wrap: break-word; }
+.btn-ouvir-apoio { margin-top: 14px; }
+
+/* completar: lacuna dentro da palavra (colado) e grade compacta (itens com figura) */
+.completar-itens { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 10em), 1fr)); gap: 8px; }
+.completar-grade .frase-completar { align-items: center; gap: 6px; padding: 8px 6px 10px; text-align: center; }
+.completar-grade .frase-texto { margin: 0; font-size: 0.8em; line-height: 2; }
+.completar-grade .frase-opcoes { display: flex; flex-wrap: nowrap; gap: 5px; width: 100%; justify-content: center; }
+.completar-grade .chip-palavra { flex: 1 1 0; min-width: 0; max-width: 5.5em; min-height: 48px; padding: 6px 2px; }
+.completar-img { display: inline-flex; line-height: 0; min-height: 64px; align-items: center; justify-content: center; font-size: 2em; }
+.palavra-colada { white-space: nowrap; }
+.lacuna.lacuna-colada { min-width: 2em; margin: 0; padding: 0 1px; line-height: 1.5; }
+
+/* copiar: marcar a escrita certa entre duas e escrever a palavra com peças de letras */
+.copiar { display: flex; flex-direction: column; gap: 14px; }
+.copiar-item { display: flex; flex-direction: column; gap: 10px; padding: 12px 14px 14px; border: 3px solid var(--borda); border-radius: 16px; background: var(--papel); }
+.copiar-escolha { display: grid; grid-template-columns: auto 1fr 1fr; align-items: center; gap: 8px; }
+.copiar-letra { font-size: 1em; }
+.copiar-opcao { display: flex; align-items: center; justify-content: center; gap: 8px; min-width: 0; min-height: 52px; padding: 6px 8px; border: 3px solid var(--borda); border-radius: 12px; background: #fff; box-shadow: 0 3px 0 var(--borda); font-weight: 700; }
+.copiar-marca { display: inline-flex; align-items: center; justify-content: center; width: 1.9em; height: 1.9em; flex: none; border: 3px solid var(--borda); border-radius: 50%; background: #fff; color: #fff; font-size: 0.8em; line-height: 1; }
+.copiar-opcao[aria-pressed="true"] { background: var(--lavanda-clara); border-color: var(--roxo); box-shadow: 0 3px 0 var(--roxo); outline: 3px solid var(--roxo); outline-offset: 0; }
+.copiar-opcao[aria-pressed="true"] .copiar-marca { background: var(--roxo); border-color: var(--roxo); }
+.copiar-palavra { letter-spacing: 0.06em; }
+.copiar-resposta { display: flex; flex-direction: column; gap: 4px; }
+.copiar-rotulo { font-size: 0.8em; font-weight: 700; color: var(--tinta-suave); }
+.copiar-linha {
+  display: flex; flex-wrap: wrap; align-items: flex-end; gap: 4px;
+  min-height: 62px; padding: 6px 8px 8px 14px;
+  border-left: 3px solid #ff9db5; border-radius: 4px;
+  background: linear-gradient(to bottom, transparent calc(100% - 4px), #7fb2ff calc(100% - 4px)), #fbfdff;
+}
+.copiar-linha.pisca { animation: piscar 0.6s ease-in-out 2; }
+.copiar-vazia { align-self: center; color: #a597bd; font-weight: 700; font-size: 0.72em; line-height: 1.7; }
+.copiar-vaga { width: 38px; height: 44px; border: 2px dashed #cdbff5; border-radius: 8px; }
+.copiar-pecas { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; padding: 10px 8px; border: 3px dashed var(--lavanda); border-radius: 14px; background: var(--papel-2); }
+.copiar-peca { min-width: 42px; height: 48px; padding: 0 6px; border: 3px solid var(--borda); border-radius: 10px; background: #fff3c4; box-shadow: 0 3px 0 var(--borda); font-weight: 700; font-size: 1.05em; line-height: 1; }
+.copiar-peca.colocada { min-width: 38px; height: 44px; background: #fff; border-color: var(--roxo); color: var(--roxo); box-shadow: 0 3px 0 var(--roxo); }
+.copiar-peca.usada { border: 2px dashed #d9cfee; background: transparent; box-shadow: none; color: transparent; }
+.tudo-certo .copiar-item { background: var(--certo-fundo); }
+@media (max-width: 480px) {
+  .copiar-item { padding: 10px 10px 12px; }
+  .copiar-opcao { gap: 6px; padding: 6px 4px; font-size: 0.8em; }
+  .copiar-pecas { gap: 6px; padding: 8px 4px; }
+  .copiar-peca { min-width: 38px; }
+}

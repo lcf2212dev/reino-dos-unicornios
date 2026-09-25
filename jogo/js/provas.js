@@ -108,6 +108,8 @@
         while (m.every(function (v, i) { return v === i; })) m = U.embaralhar(m);
         return m;
       }
+      // copiar: as peças de letras de cada item, embaralhadas uma vez
+      if (d.tipo === 'copiar') return d.itens.map(function (it) { return D.ordemPecasCopiar(it); });
       return null;
     });
     var avisosPressa = 0;
@@ -176,7 +178,10 @@
     // detector gentil de pressa: lembra de ler tudo (no máximo 3 vezes por prova)
     function tempoMinimo(d) {
       var t = D.textoParaFala(d);
-      if (d.itens) t += d.itens.map(function (x) { return typeof x === 'string' ? x : x.t; }).join(' ');
+      // texto de apoio: conta tudo o que ela precisa ler
+      if (d.apoio) t += Reino.Falas.segmentosApoio(d.apoio).join(' ');
+      if (d.tipo === 'copiar') t += d.itens.map(function (x) { return x.opcoes.join(' '); }).join(' ');
+      else if (d.itens) t += d.itens.map(function (x) { return typeof x === 'string' ? x : x.t; }).join(' ');
       if (d.frases) t += d.frases.map(function (f) { return f.antes + f.depois; }).join(' ');
       if (d.pares) t += d.pares.map(function (p) { return (p[0].t || '') + p[1].t; }).join(' ');
       return U.clamp(1500 + t.length * 32, 2500, 9000);

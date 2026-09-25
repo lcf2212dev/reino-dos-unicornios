@@ -28,7 +28,7 @@ const Reino = ctx.Reino;
 const erros = [];
 const avisos = [];
 const ids = new Set();
-const TIPOS = ['escolha', 'vf', 'varias', 'ligar', 'ordenar', 'frase', 'separar', 'memoria', 'vfLista', 'completar', 'desenho'];
+const TIPOS = ['escolha', 'vf', 'varias', 'ligar', 'ordenar', 'frase', 'separar', 'memoria', 'vfLista', 'completar', 'desenho', 'copiar'];
 const REQUISITOS = ['linhas', 'formas', 'cores'];
 
 function checar(cond, msg) { if (!cond) erros.push(msg); }
@@ -46,8 +46,43 @@ function checarIngles(obj, onde) {
   } else if (Array.isArray(obj)) obj.forEach((v) => checarIngles(v, onde));
   else if (obj && typeof obj === 'object') Object.keys(obj).forEach((k) => checarIngles(obj[k], obj.id ? obj.id : onde));
 }
-// campos novos: livre (varias/completar), rotulos (vfLista), desenho
-function checarNovos(d) {
+// desenhos de js/icones.js (figuras do completar)
+const icones = { window: {} };
+vm.runInNewContext(fs.readFileSync(path.join(raiz, 'js/icones.js'), 'utf8'), icones);
+const textoOk = (t) => typeof t === 'string' && t.trim().length > 0;
+
+// campos novos: livre (varias/completar), rotulos (vfLista), desenho, apoio, copiar, colado/img/aceitas (completar)
+// naProva: figura que falta é erro (nas salas, só aviso: o jogo mostra ❓)
+function checarNovos(d, naProva) {
+  if (d.apoio !== undefined) {
+    const a = d.apoio;
+    checar(a && textoOk(a.titulo), `${d.id}: apoio sem título`);
+    checar(a && Array.isArray(a.partes) && a.partes.length > 0, `${d.id}: apoio sem partes`);
+    ((a && a.partes) || []).forEach((p, i) => {
+      const lista = Array.isArray(p.lista) && p.lista.length > 0 && p.lista.every(textoOk);
+      checar(p && (lista || textoOk(p.texto)) && (p.lista === undefined || lista) && (p.texto === undefined || textoOk(p.texto)) && (p.titulo === undefined || textoOk(p.titulo)),
+        `${d.id}: parte ${i + 1} do apoio precisa de lista (textos) ou texto`);
+    });
+  }
+  if (d.colado !== undefined) checar(d.colado === true && d.tipo === 'completar', `${d.id}: "colado" só vale true num completar`);
+  if (d.tipo === 'completar' && Array.isArray(d.frases) && Array.isArray(d.palavras)) {
+    d.frases.forEach((f, i) => {
+      const onde = `${d.id}: frase ${f.letra || i + 1}`;
+      if (f.aceitas !== undefined) checar(!d.livre && Array.isArray(f.aceitas) && f.aceitas.length > 0 && f.aceitas.every((j) => Number.isInteger(j) && j >= 0 && j < d.palavras.length && j !== f.certa) && new Set(f.aceitas).size === f.aceitas.length, `${onde}: aceitas deve ter índices de palavras válidos, sem repetir e sem a certa`);
+      if (f.img !== undefined) {
+        checar(textoOk(f.img) && textoOk(f.alt), `${onde}: figura precisa de img e alt`);
+        if (textoOk(f.img) && !icones.window.ICONES[f.img]) {
+          if (naProva) erros.push(`${onde}: falta o desenho "${f.img}" em js/icones.js`);
+          else avisos.push(`${onde}: falta o desenho "${f.img}" em js/icones.js (aparece ❓)`);
+        }
+      }
+    });
+  }
+  if (d.tipo === 'copiar') {
+    checar(textoOk(d.pergunta), `${d.id}: copiar sem pergunta`);
+    checar(Array.isArray(d.itens) && d.itens.length > 0 && d.itens.every((it) => Array.isArray(it.opcoes) && it.opcoes.length >= 2 && it.opcoes.every(textoOk)
+      && new Set(it.opcoes).size === it.opcoes.length && Number.isInteger(it.certa) && it.certa >= 0 && it.certa < it.opcoes.length), `${d.id}: itens do copiar inválidos (2+ escritas diferentes e a certa)`);
+  }
   if (d.livre !== undefined) checar(d.livre === true && ['varias', 'completar'].includes(d.tipo), `${d.id}: "livre" só vale true em varias/completar`);
   if (d.rotulos !== undefined) checar(d.tipo === 'vfLista' && Array.isArray(d.rotulos) && d.rotulos.length === 2 && d.rotulos.every((r) => typeof r === 'string' && r), `${d.id}: rotulos deve ser ['T', 'F'] (2 textos) num vfLista`);
   if (d.tipo === 'desenho') {
@@ -73,7 +108,7 @@ Reino.materias.forEach((m) => {
       checar(TIPOS.includes(d.tipo), `${d.id}: tipo desconhecido ${d.tipo}`);
       checar(typeof d.explica === 'string' && d.explica.length > 10, `${d.id}: sem explicação`);
       checar(livro.has(d.livro), `${d.id}: cartão do livro "${d.livro}" não existe`);
-      checarNovos(d);
+      checarNovos(d, false);
       if (d.tipo === 'escolha') {
         checar(Array.isArray(d.opcoes) && d.opcoes.length >= 2, `${d.id}: poucas opções`);
         checar(Number.isInteger(d.certa) && d.certa >= 0 && d.certa < d.opcoes.length, `${d.id}: índice certo inválido`);
@@ -114,8 +149,6 @@ Reino.materias.forEach((m) => {
 });
 
 // provas bimestrais (Escola do Reino)
-const icones = { window: {} };
-vm.runInNewContext(fs.readFileSync(path.join(raiz, 'js/icones.js'), 'utf8'), icones);
 const pixelart = fs.readFileSync(path.join(raiz, 'js/pixelart.js'), 'utf8');
 Reino.provas.forEach((pv) => {
   const m = Reino.materia(pv.materiaId);
@@ -132,7 +165,7 @@ Reino.provas.forEach((pv) => {
   });
   checarIngles(pv, pv.id);
   pv.questoes.forEach((d) => {
-    checarNovos(d);
+    checarNovos(d, true);
     checar(!ids.has(d.id), `ID repetido: ${d.id}`);
     ids.add(d.id);
     checar(TIPOS.includes(d.tipo), `${d.id}: tipo desconhecido ${d.tipo}`);

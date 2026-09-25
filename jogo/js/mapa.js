@@ -25,7 +25,8 @@
     { id: 'bau', nome: 'Baú do Tesouro', sprite: 'bau', rect: { x: 29, y: 3, w: 5, h: 4 }, placa: 'acima' },
     // placa em cima do telhado: à direita ela cobriria a Escola do Reino
     { id: 'estabulo', nome: 'Estábulo Mágico', sprite: 'estabulo', rect: { x: 2, y: 15, w: 6, h: 4 }, placa: 'acima' },
-    { id: 'loja', nome: 'Loja das Fadas', sprite: 'loja', rect: { x: 29, y: 15, w: 5, h: 4 } },
+    // placa em cima do telhado: ao lado ela cobria a Casa das Palavras (clareira 22,15)
+    { id: 'loja', nome: 'Loja das Fadas', sprite: 'loja', rect: { x: 29, y: 15, w: 5, h: 4 }, placa: 'acima' },
     { id: 'escola', nome: 'Escola do Reino', sprite: 'escola', rect: { x: 9, y: 15, w: 5, h: 5 } },
   ];
   // lugares que chegaram depois (Pet Shop e Observatório): entram no mapa DEPOIS dos enfeites,

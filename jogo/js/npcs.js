@@ -73,7 +73,7 @@
     ['oculos', 'oculosCor', 'barba', 'bigode', 'avental', 'aventalCor', 'capa', 'capaCor', 'capaEstrelas', 'jaleco', 'apito',
       'bengala', 'bolsa', 'bolsaCor', 'colar', 'gravata', 'cachecol', 'cachecolCor', 'cracha', 'livro', 'carta', 'pincel',
       'violao', 'varinha', 'presilha', 'flor', 'espelhoTesta', 'armadura', 'jardineira', 'colete', 'corrente', 'asas',
-      'corpo', 'barriga', 'asa', 'moeda'].forEach(function (k) { if (s[k] !== undefined) o[k] = s[k]; });
+      'corpo', 'barriga', 'asa', 'moeda', 'nariz'].forEach(function (k) { if (s[k] !== undefined) o[k] = s[k]; });
     if (o.base === 'fada' && o.asas === undefined) o.asas = true;
     o.cru = s;   // parâmetros originais (bases novas, como o robô, leem os seus daqui)
     return o;
@@ -329,6 +329,11 @@
       g.p(x - 3, y + 4, Oc); g.p(x - 1, y + 4, Oc); g.p(x, y + 4, Oc); g.p(x + 1, y + 4, Oc); g.p(x + 3, y + 4, Oc);
       g.p(x - 2, y + 3, cla(o.pele, 0.5)); g.p(x + 2, y + 3, cla(o.pele, 0.5));
     }
+    if (o.nariz) {
+      // nariz redondo de palhaço, entre os olhos e a boca, com um brilhinho
+      var Nz = o.nariz === true ? '#ff3b3b' : o.nariz;
+      g.p(x, y + 4, Nz); g.l(y + 5, x - 1, x + 1, Nz); g.p(x + 1, y + 5, esc(Nz, 0.2)); g.p(x - 1, y + 5, cla(Nz, 0.5));
+    }
   }
 
   function pintarChapeu(g, o) {
@@ -388,6 +393,22 @@
       case 'lenco':
         g.l(y - 1, x - 2, x + 2, C); g.l(y, x - 4, x + 4, C); g.l(y + 1, x - 4, x + 4, C);
         g.p(x - 2, y, c2); g.p(x + 1, y + 1, c2); g.p(x + 3, y, c2); g.p(x + 5, y + 1, C); g.p(x + 5, y + 2, Cd); g.p(x + 6, y + 2, C);
+        break;
+      case 'chef':
+        // touca alta branca e fofinha, com a faixa dobrada na testa
+        var Tb = '#ffffff', Ts = '#dcd8e8', Tm = '#eeebf5';
+        g.l(y + 1, x - 4, x + 4, Ts); g.l(y, x - 4, x + 4, Tm); g.p(x - 3, y, Tb); g.p(x - 2, y, Tb);
+        g.r(x - 3, y - 2, 7, 2, Tb); g.p(x + 3, y - 2, Tm); g.p(x + 3, y - 1, Tm);
+        g.l(y - 3, x - 4, x + 4, Tb); g.l(y - 4, x - 4, x + 4, Tb); g.l(y - 5, x - 3, x + 3, Tb); g.l(y - 6, x - 2, x + 2, Tb);
+        g.p(x - 1, y - 4, Ts); g.p(x + 2, y - 5, Ts); g.p(x + 4, y - 3, Tm); g.p(x + 4, y - 4, Tm); g.p(x + 1, y - 3, Ts);
+        break;
+      case 'quepe':
+        // quepe de capitã: copa na cor do chapéu, faixa escura com a âncora dourada e a pala na testa
+        var Fq = '#2a2f66', Pq = '#1f1b2e', Oq = '#ffd34d';
+        g.l(y - 2, x - 3, x + 3, C); g.l(y - 1, x - 5, x + 5, C); g.p(x - 5, y - 1, Cd); g.p(x + 5, y - 1, Cd);
+        g.p(x - 2, y - 2, Cl); g.p(x - 3, y - 1, Cl);
+        g.l(y, x - 4, x + 4, Fq); g.p(x, y, Oq); g.p(x, y - 1, Oq);
+        g.l(y + 1, x - 4, x + 4, Pq); g.p(x - 2, y + 1, '#4a4466');
         break;
       case 'flores':
         var cores = ['#ff6b8a', '#ffe066', '#ffffff', '#b58cff', '#ff9d2e'];
