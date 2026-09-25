@@ -124,6 +124,7 @@
     var corpo = el('div.missao-corpo');
     var rodape = el('footer.missao-rodape.prova-rodape', { hidden: true });
     tela.appendChild(el('header.missao-topo', sair, titulo, pontos));
+    Reino.Desafios.ajustarTitulo(titulo, prova.materiaId);
     tela.appendChild(faixa);
     tela.appendChild(corpo);
     tela.appendChild(rodape);

@@ -955,3 +955,20 @@ body.sem-animacao *:not(.balao-respira), body.sem-animacao *::before, body.sem-a
   .copiar-pecas { gap: 6px; padding: 8px 4px; }
   .copiar-peca { min-width: 38px; }
 }
+
+/* maiúsculas acentuadas na fonte pixel (js/minijogos.js): a letra de verdade fica invisível e por cima vêm
+   a maiúscula sem acento (::before) e o acento da fonte uma linha de pixels acima dela (::after).
+   "span.mai-acento.mai-acento" + all: unset: nenhuma regra de "... span" do jogo muda este span. */
+span.mai-acento-texto.mai-acento-texto { all: unset; }
+span.mai-acento.mai-acento { all: unset; position: relative; -webkit-text-fill-color: transparent; }
+span.mai-acento.mai-acento::before, span.mai-acento.mai-acento::after {
+  position: absolute; left: 0; top: 0; line-height: normal; white-space: pre;
+  -webkit-text-fill-color: currentColor; pointer-events: none;
+}
+span.mai-acento.mai-acento::before { content: attr(data-b); content: attr(data-b) / ""; }
+span.mai-acento.mai-acento::after { content: attr(data-a); content: attr(data-a) / ""; top: -0.375em; }
+
+/* completar colado na grade: "a)" e a palavra na mesma linha; se não couberem, a fonte encolhe só o necessário
+   (--letras vem de js/minijogos.js; onde já cabia, min() mantém os 0.8em de antes) */
+.completar-grade.completar-colado:not(.completar-colado-longo) .frase-completar { container-type: inline-size; }
+.completar-grade.completar-colado:not(.completar-colado-longo) .frase-colada { font-size: min(0.8em, calc((100cqi - 4px) / (var(--letras, 1) + 0.5))); }

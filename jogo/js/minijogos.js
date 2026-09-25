@@ -6,6 +6,96 @@
 
   D.TREINAVEIS = ['escolha', 'vf', 'varias'];
 
+  /* Maiúsculas acentuadas na fonte pixel: a Press Start 2P desenha Á, Ó, Ã… com o desenho da minúscula
+     (HISTÓRIA saía HISTóRIA). Cada uma vira <span class="mai-acento" data-b="O" data-a="´">Ó</span>:
+     a letra de verdade fica no texto (textContent, cópia) mas invisível, e o css desenha por cima
+     a maiúscula sem acento e o acento da própria fonte, logo acima dela. O pedaço de texto trocado fica num
+     <span class="mai-acento-texto"> (sem estilo próprio). Vale para o jogo todo. */
+  var MAI_ACENTO = { 'Á': 'A´', 'À': 'A`', 'Â': 'A^', 'Ã': 'A˜', 'É': 'E´', 'È': 'E`', 'Ê': 'E^', 'Í': 'I´',
+    'Ó': 'O´', 'Ò': 'O`', 'Ô': 'O^', 'Õ': 'O˜', 'Ú': 'U´', 'Ù': 'U`', 'Ü': 'U¨' };
+  var RE_MAI_ACENTO = /[ÁÀÂÃÉÈÊÍÓÒÔÕÚÙÜ]/g;
+  var SEM_ACENTO_DENTRO = /^(SCRIPT|STYLE|TITLE|OPTION|TEXTAREA|NOSCRIPT)$/;
+  function acentuarTexto(t) {
+    var pai = t.parentNode, s = t.nodeValue;
+    if (!pai || pai.nodeType !== 1 || !s) return;
+    RE_MAI_ACENTO.lastIndex = 0;
+    if (!RE_MAI_ACENTO.test(s)) return;
+    if (pai.classList.contains('mai-acento') || SEM_ACENTO_DENTRO.test(pai.nodeName) || pai.namespaceURI !== 'http://www.w3.org/1999/xhtml') return;
+    // tudo num span só: dentro de flex/grid o texto continua um item só (a letra não vira uma coluna à parte)
+    var caixa = document.createElement('span'), ultimo = 0, m;
+    caixa.className = 'mai-acento-texto';
+    RE_MAI_ACENTO.lastIndex = 0;
+    while ((m = RE_MAI_ACENTO.exec(s))) {
+      if (m.index > ultimo) caixa.appendChild(document.createTextNode(s.slice(ultimo, m.index)));
+      var sp = document.createElement('span');
+      sp.className = 'mai-acento';
+      sp.setAttribute('data-b', MAI_ACENTO[m[0]].charAt(0));
+      sp.setAttribute('data-a', MAI_ACENTO[m[0]].charAt(1));
+      sp.textContent = m[0];
+      caixa.appendChild(sp);
+      ultimo = m.index + 1;
+    }
+    if (ultimo < s.length) caixa.appendChild(document.createTextNode(s.slice(ultimo)));
+    pai.replaceChild(caixa, t);
+  }
+  function acentuarDentro(no) {
+    if (no.nodeType === 3) { acentuarTexto(no); return; }
+    if (no.nodeType !== 1 && no.nodeType !== 11) return;
+    var textos = [], w = document.createTreeWalker(no, NodeFilter.SHOW_TEXT), t;
+    while ((t = w.nextNode())) { RE_MAI_ACENTO.lastIndex = 0; if (RE_MAI_ACENTO.test(t.nodeValue)) textos.push(t); }
+    textos.forEach(acentuarTexto);
+  }
+  D.acentuarMaiusculas = acentuarDentro;
+
+  /* Título do topo da sala/prova que não cabe: no celular, com as bolinhas ao lado, "Revisão Bimestral de
+     Português" ia a 4 linhas e o ícone de "Expedição Antártida" ficava sozinho em cima do nome. Se o título
+     passa de 2 linhas, a fonte desce aos poucos (até 70%) e fica o tamanho com menos linhas.
+     Só nas matérias desta lista: História e Inglês têm o mesmo aperto, mas as telas delas ficam como estão. */
+  D.MATERIAS_TITULO_AJUSTAVEL = ['portugues'];
+  D.ajustarTitulo = function (titulo, materiaId) {
+    if (D.MATERIAS_TITULO_AJUSTAVEL.indexOf(materiaId) < 0 || !window.ResizeObserver) return;
+    var largura = -1, pedido = 0;
+    function linhas() {
+      var alvo = titulo.firstElementChild || titulo, topos = [];
+      Array.prototype.forEach.call(alvo.getClientRects(), function (r) {
+        if (r.width > 0 && !topos.some(function (y) { return Math.abs(y - r.top) < 2; })) topos.push(r.top);
+      });
+      return topos.length;
+    }
+    function medir() {
+      pedido = 0;
+      if (!titulo.isConnected) return;
+      titulo.style.fontSize = '';
+      var n = linhas();
+      if (n <= 2) return;
+      var base = parseFloat(getComputedStyle(titulo).fontSize), melhor = { k: 1, n: n };
+      [0.9, 0.8, 0.7].some(function (k) {
+        titulo.style.fontSize = (base * k) + 'px';
+        var nk = linhas();
+        if (nk < melhor.n) melhor = { k: k, n: nk };
+        return nk <= 2;
+      });
+      titulo.style.fontSize = melhor.k === 1 ? '' : (base * melhor.k) + 'px';
+    }
+    function pedir() { if (!pedido) pedido = requestAnimationFrame(medir); }
+    new ResizeObserver(function () {
+      // só a largura importa (a altura muda com a própria fonte)
+      if (titulo.clientWidth === largura) return;
+      largura = titulo.clientWidth;
+      pedir();
+    }).observe(titulo);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(pedir);
+  };
+  if (window.MutationObserver && document.body) {
+    acentuarDentro(document.body);
+    new MutationObserver(function (mudancas) {
+      mudancas.forEach(function (m) {
+        if (m.type === 'characterData') acentuarTexto(m.target);
+        else Array.prototype.forEach.call(m.addedNodes, function (n) { if (n.isConnected) acentuarDentro(n); });
+      });
+    }).observe(document.body, { childList: true, subtree: true, characterData: true });
+  }
+
   function botaoOpcao(o, extra) {
     return el('button.opcao' + (extra || ''), { type: 'button' },
       o.e ? el('span.opcao-emoji', { 'aria-hidden': 'true' }, o.e) : null,
@@ -450,6 +540,12 @@
       var texto = d.colado
         ? el('p.frase-texto.frase-colada', f.letra ? el('b', f.letra + ') ') : null, cola[0], el('span.palavra-colada', cola[1], lacuna, cola[2]), cola[3])
         : el('p.frase-texto', f.letra ? el('b', f.letra + ') ') : null, f.antes + ' ', lacuna, f.depois.match(/^[.,!?]/) ? '' : ' ', f.depois);
+      // colado na grade: quantas letras a linha "a) PA__ARINHO" tem (a fonte pixel tem 1em por letra; a lacuna
+      // vale a maior palavra do quadro, no mínimo 2). O css encolhe um pouco a fonte só se a linha não couber.
+      if (d.colado && !coladoLongo) {
+        var maior = Math.max.apply(null, d.palavras.map(function (p) { return String(p).length; }).concat(2));
+        texto.style.setProperty('--letras', String((f.letra ? f.letra.length + 2 : 0) + cola.join('').length + maior));
+      }
       var caixa = el('div.frase-completar' + (f.img ? '.com-img' : ''),
         f.img ? figuraCompletar(f) : null,
         texto,
@@ -1132,6 +1228,7 @@
     tela.appendChild(rodape);
     tela.appendChild(retorno);
     document.body.classList.add('em-missao');
+    D.ajustarTitulo(titulo, materia && materia.id);
 
     sair.addEventListener('click', function () {
       Reino.UI.confirmar('Quer sair da sala agora? Você pode voltar e fazer de novo depois.', 'Sair', 'Continuar aqui').then(function (sim) {
