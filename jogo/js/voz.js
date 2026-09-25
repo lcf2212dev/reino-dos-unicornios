@@ -75,14 +75,16 @@
       f.relogio = setTimeout(function () { f.relogio = null; f.vezes++; V.carregar(nome); }, ESPERAS[f.vezes]);
     }
   }
-  function tentarDeNovo() {
+  function tentarDeNovo(agora) {
     Object.keys(falhas).forEach(function (nome) {
       var f = falhas[nome];
-      if (pacotes[nome] || Date.now() - f.quando < ESPERA_NA_FALA) return;
+      if (pacotes[nome] || (!agora && Date.now() - f.quando < ESPERA_NA_FALA)) return;
       clearTimeout(f.relogio); f.relogio = null;
       V.carregar(nome);
     });
   }
+  // a rede voltou (o aparelho avisa): pede na hora os pacotes que falharam
+  window.addEventListener('online', function () { tentarDeNovo(true); });
 
   V.carregar = function (nome) {
     if (carregados[nome]) return Promise.resolve();
