@@ -533,18 +533,18 @@
   var loja = [
     // parede do fundo (y 1-2)
     { tipo: 'petshop-escovas', x: 1, y: 1 },
-    { tipo: 'petshop-coleiras', x: 2, y: 1 },
+    { tipo: 'cortina', x: 3, y: 1, var: { cor: '#8fe0d0' } },
     { tipo: 'janela', x: 4, y: 1 },
     { tipo: 'petshop-placa-patinha', x: 5, y: 1 },
     { tipo: 'relogio-parede', x: 7, y: 1 },
     { tipo: 'prateleira-parede', x: 8, y: 1, var: { itens: ['bolo', 'planta', 'ursinho'] } },
     { tipo: 'bandeirinhas', x: 10, y: 1 },
     { tipo: 'janela', x: 12, y: 1 },
-    { tipo: 'petshop-escovas', x: 13, y: 1 },
-    { tipo: 'cortina', x: 14, y: 1, var: { cor: '#8fe0d0' } },
-    // fundo
+    { tipo: 'petshop-coleiras', x: 13, y: 1 },
+    // fundo (a estante fica no canto da direita: o canto da esquerda some sob os avisos do HUD, como "🥚 1 ovo!")
     { tipo: 'petshop-sacos-feno', x: 1, y: 3 },
-    inter('estante', 'Estante das comidinhas', { tipo: 'petshop-estante-comida', x: 2, y: 3, acao: TELA }),
+    { tipo: 'planta-alta', x: 2, y: 3 },
+    { tipo: 'petshop-potes-biscoito', x: 3, y: 3 },
     { tipo: 'petshop-cesta-cenouras', x: 4, y: 3 },
     { tipo: 'petshop-cesta-macas', x: 5, y: 3 },
     { tipo: 'flores', x: 6, y: 3, var: { vaso: '#ff9cc6' } },
@@ -552,8 +552,7 @@
     { tipo: 'caixote', x: 10, y: 3, var: { item: 'estrela' } },
     { tipo: 'petshop-potes-biscoito', x: 11, y: 3 },
     { tipo: 'petshop-sacos-feno', x: 12, y: 3 },
-    inter('balanca', 'Balança', { tipo: 'petshop-balanca', x: 13, y: 3 }),
-    { tipo: 'planta-alta', x: 14, y: 3 },
+    inter('estante', 'Estante das comidinhas', { tipo: 'petshop-estante-comida', x: 13, y: 3, acao: TELA }),
     { tipo: 'petshop-balcao', x: 9, y: 4 },
     // lado esquerdo
     { tipo: 'cesto', x: 1, y: 4 },
@@ -567,7 +566,7 @@
     { tipo: 'cesto', x: 2, y: 11 },
     { tipo: 'caixote', x: 6, y: 11 },
     // lado direito
-    { tipo: 'petshop-sacos-feno', x: 14, y: 5 },
+    inter('balanca', 'Balança', { tipo: 'petshop-balanca', x: 14, y: 5 }),
     inter('bolo', 'Bolo arco-íris', { tipo: 'petshop-vitrine-bolo', x: 10, y: 6, acao: TELA }),
     { tipo: 'petshop-cesta-cenouras', x: 13, y: 6 },
     { tipo: 'petshop-potes-biscoito', x: 14, y: 7 },

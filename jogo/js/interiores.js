@@ -1398,6 +1398,7 @@
       var P = progresso();
       var chave = chaveEstado();
       if (estatico && chave === chaveFeita) { sujo = false; return; }
+      mascaras = {};
       if (!estatico) estatico = PA.novoCanvas(g.w * T, g.h * T);
       var ctx = estatico.getContext('2d');
       desenharEstatico(ctx, def, g, P, objs);
@@ -1546,23 +1547,81 @@
         agir: function () { return R.Cena && R.Cena.irPara ? R.Cena.irPara(gt.para, gt.chegada, gt.olhar) : Promise.resolve(); } };
     }
 
+    // balãozinho de status em cima do NPC (px do jogo), no mesmo lugar em que o Reino.NPCs.desenhar
+    // o põe: centrado na cabeça, 20 × 23 px do ícone com `s` px da tela cada, 1 de vão e ±1 do balanço
+    function bolhaNpc(n) {
+      var N = R.NPCs;
+      if (!N || !N.desenhar || !N.sprite || !pintorAtual) return null;
+      try {
+        var spr = N.sprite(n, 0), esc = pintorAtual.escala || 3, s = Math.max(1, Math.round(esc / 2));
+        var cabeca = n.y * T + 13 - spr.height + (spr.topo || 0), meia = 10 * s / esc;
+        return { x0: n.x * T + 8 - meia, x1: n.x * T + 8 + meia, topo: cabeca - 25 * s / esc };
+      } catch (e) { return null; }
+    }
+    // máscara do desenho de um objeto (o parado + a animação no instante 0), em px do jogo: feita uma vez
+    // e refeita quando o desenho muda com o progresso (renderizar)
+    var mascaras = {};
+    function mascaraDe(it) {
+      if (mascaras[it.i] !== undefined) return mascaras[it.i];
+      var m = null;
+      try {
+        var x0 = it.px - 8, y0 = it.py - it.topo - 8, w = it.W + 16, h = it.topo + it.H + 16;
+        var c = PA.novoCanvas(w, h), cx = c.getContext('2d');
+        cx.translate(-x0, -y0);
+        if (it.lib.desenhar) it.lib.desenhar(cx, it.px, it.py, it.o, progresso());
+        if (it.lib.anim) it.lib.anim(cx, it.px, it.py, 0, it.o);
+        var d = cx.getImageData(0, 0, w, h).data, a = new Uint8Array(w * h);
+        for (var i = 0; i < w * h; i++) a[i] = d[i * 4 + 3] >= 64 ? 1 : 0;
+        m = { x0: x0, y0: y0, w: w, h: h, a: a };
+      } catch (e) { m = null; }
+      mascaras[it.i] = m;
+      return m;
+    }
+    // o ponto cai no desenho do objeto (com 1 px de folga em volta)? Sem máscara, vale o retângulo.
+    function noDesenho(it, wx, wy) {
+      var m = mascaraDe(it);
+      if (!m) return true;
+      var x = Math.floor(wx) - m.x0, y = Math.floor(wy) - m.y0;
+      for (var dy = -1; dy <= 1; dy++) for (var dx = -1; dx <= 1; dx++) {
+        var xx = x + dx, yy = y + dy;
+        if (xx >= 0 && yy >= 0 && xx < m.w && yy < m.h && m.a[yy * m.w + xx]) return true;
+      }
+      return false;
+    }
+
     // quem recebe um toque (px do jogo), sem calcular caminho. Prioridade:
-    // 1) NPC; 2) objeto interativo cuja PEGADA contém o tile tocado (o mais à frente);
-    // 3) objeto cuja parte desenhada acima da pegada (topo) contém o ponto (o mais à frente)
+    // 1) NPC (o corpo e o balãozinho de status em cima da cabeça);
+    // 2) objeto com área de toque própria (lib.toque: ex. os planetas, desenhados maiores que a pegada),
+    //    primeiro no desenho exato e depois com folga, o desenhado por cima ganha;
+    // 3) objeto interativo cuja PEGADA contém o tile tocado (o mais à frente);
+    // 4) objeto cuja parte desenhada acima da pegada (topo) contém o ponto (o mais à frente); no chão
+    //    livre, só onde há desenho (o chão em volta do nariz do foguete anda)
     function quemEm(wx, wy) {
       var achados = npcs.filter(function (n) {
-        return wx >= n.x * T - 1 && wx < n.x * T + 17 && wy >= n.y * T - 14 && wy < n.y * T + 16;
+        if (wx >= n.x * T - 1 && wx < n.x * T + 17 && wy >= n.y * T - 14 && wy < n.y * T + 16) return true;
+        var b = bolhaNpc(n);
+        return !!b && wx >= b.x0 && wx < b.x1 && wy >= b.topo && wy < n.y * T - 14;
       }).sort(function (a, b) { return b.y - a.y; });
       if (achados.length) return { npc: achados[0] };
       var tx = Math.floor(wx / T), ty = Math.floor(wy / T);
       var frente = function (a, b) { return b.base - a.base; };
+      // móveis altos vão por Y; os outros, na ordem da lista (a mesma do desenho)
+      var desenhoPorCima = function (a, b) { return (a.alto || b.alto) ? frente(a, b) : b.i - a.i; };
+      for (var folga = 0; folga <= 1; folga++) {
+        var proprios = objs.filter(function (it) {
+          return it.interativo && it.lib.toque && it.lib.toque(wx, wy, it.px, it.py, it.o, folga);
+        }).sort(desenhoPorCima);
+        if (proprios.length) return { it: proprios[0] };
+      }
       var donos = objs.filter(function (it) {
         return it.interativo && tx >= it.o.x && tx < it.o.x + it.w && ty >= it.o.y && ty < it.o.y + it.h;
       }).sort(frente);
       if (donos.length) return { it: donos[0] };
+      var livre = !cena.solido(tx, ty);
       var altos = objs.filter(function (it) {
         if (!it.interativo || it.parede || !it.topo) return false;
-        return wx >= it.px && wx < it.px + it.W && wy >= it.py - it.topo && wy < it.py;
+        if (!(wx >= it.px && wx < it.px + it.W && wy >= it.py - it.topo && wy < it.py)) return false;
+        return !livre || noDesenho(it, wx, wy);
       }).sort(frente);
       if (altos.length) return { it: altos[0] };
       return null;
