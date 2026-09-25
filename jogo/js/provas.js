@@ -7,6 +7,8 @@
   var RARIDADES = ['lendario', 'raro', 'comum'];
   var QUANDO = { lendario: '1ª tentativa', raro: '2ª tentativa', comum: '3ª em diante' };
   var MAX_AVISOS_PRESSA = 3;
+  // troca de tela pelo teclado: o Enter/Espaço que chega logo depois no controle novo não vale
+  var CALMA_TROCA = 400;
 
   function rar(r) { return Reino.Unicornios.RARIDADES[r]; }
   function est() { return P.estado(); }
@@ -173,6 +175,9 @@
           est().ritualVisto = true; P.salvar();
           mostrarQuestao(0, false);
         });
+        // teclado: o botão sumiu com o conteúdo; o foco vai para o 1º botão do ritual
+        var rit = corpo.querySelector('.ritual');
+        if (rit) Reino.UI.focarTroca(rit, rit.querySelector('h2'), CALMA_TROCA);
       });
     }
 
@@ -205,7 +210,8 @@
         onMudar: function () { respostas[i] = ctrl.valor(); prontas[i] = ctrl.pronto(); pintarPontos(i); atualizar(); },
       });
       prontas[i] = ctrl.pronto();
-      corpo.appendChild(el('div.desafio-num', (revisando ? '👀 Revisando a questão ' : 'Questão ') + (i + 1) + ' de ' + questoes.length));
+      var num = el('div.desafio-num', (revisando ? '👀 Revisando a questão ' : 'Questão ') + (i + 1) + ' de ' + questoes.length);
+      corpo.appendChild(num);
       corpo.appendChild(ctrl.card);
       if (revisando) corpo.appendChild(el('p.dica-revisao', 'Leia de novo com calma. Se achar um errinho, é só trocar a resposta.'));
       pintarPontos(i);
@@ -235,6 +241,9 @@
       rodape.appendChild(prox);
       atualizar();
       corpo.scrollTop = 0;
+      // teclado ("Próxima", "Anterior", "Começar a prova", "Sim, quero revisar"): o foco vai para o
+      // 1º controle da questão (ou para o número dela), não para o body
+      Reino.UI.focarTroca(ctrl.card, num, CALMA_TROCA);
     }
 
     function perguntarRevisao() {
@@ -250,6 +259,7 @@
         el('div.intro-claude', PA.paraDOM(PA.claude(0), 4, 'claude-intro'), el('p', Reino.Falas.provas.perguntaRevisar)),
         el('p.dica-revisao', 'As campeãs revisam antes de entregar: é aí que a gente acha os errinhos.'),
         el('div.intro-botoes', nao, sim)));
+      Reino.UI.focarTroca(sim, corpo.querySelector('.pergunta-revisao h2'), CALMA_TROCA);
       Reino.Som.falar(Reino.Falas.provas.perguntaRevisar, { voz: 'claude' });
       sim.addEventListener('click', function () {
         Reino.Som.tocar('porta');
@@ -295,6 +305,8 @@
           P.salvar(); U.emit('mapaMudou');
           Reino.Som.tocar('estrela');
           usar.disabled = true; U.preencher(usar, '✓ Já está usando!');
+          // o botão desligado perdeu o foco (ia para o body): pelo teclado, segue no "Voltar à Escola"
+          if (Reino.UI.porTeclado()) Reino.UI.focarTeclado(voltar);
         });
         botoes.appendChild(usar);
       } else if (premios.proximo) {
@@ -351,6 +363,7 @@
       caixa.appendChild(botoes);
       corpo.appendChild(caixa);
       corpo.scrollTop = 0;
+      Reino.UI.focarTroca(botoes.querySelector('.btn-principal'), caixa.querySelector('h2'), CALMA_TROCA);
 
       Reino.Som.tocar(a ? 'fanfarra' : premios.sucesso ? 'acerto' : 'toque');
       if (a) { Reino.UI.confete(premios.raridade === 'lendario' ? 160 : 90); setTimeout(function () { Reino.Som.tocar('estrela'); }, 700); }

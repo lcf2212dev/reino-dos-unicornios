@@ -124,6 +124,64 @@
   function focaveis(raiz) { return Array.prototype.filter.call(raiz.querySelectorAll(FOCAVEIS), visivel); }
   function focar(e) { if (e && e.isConnected) try { e.focus({ preventScroll: true }); return true; } catch (x) {} return false; }
   function topo() { return pilha[pilha.length - 1] || null; }
+  // a última coisa usada foi o teclado (e não o dedo ou o mouse)?
+  UI.porTeclado = function () { return ultimaTecla > ultimoToque; };
+  // o elemento com foco inteiro à vista, com a marca de foco (outline de 4 px + 3 px): rola só as
+  // caixas que rolam por dentro da tela de cima (.missao-corpo, .painel-conteudo, .apoio-corpo),
+  // da mais de dentro para a de fora; nada de scrollIntoView, que rolaria também o que está atrás
+  var FOLGA_FOCO = 12;
+  function mostrarFoco(e) {
+    var t = topo();
+    if (!e || !e.isConnected || !t || !t.contains(e)) return;
+    for (var c = e.parentElement; c && t.contains(c); c = c.parentElement) {
+      if (c.scrollHeight <= c.clientHeight + 1) continue;
+      var oy = getComputedStyle(c).overflowY;
+      if (oy !== 'auto' && oy !== 'scroll') continue;
+      var r = e.getBoundingClientRect(), cr = c.getBoundingClientRect();
+      var cima = cr.top + c.clientTop + FOLGA_FOCO, baixo = cr.top + c.clientTop + c.clientHeight - FOLGA_FOCO;
+      if (r.top < cima) c.scrollTop -= cima - r.top;
+      else if (r.bottom > baixo) c.scrollTop += Math.min(r.bottom - baixo, r.top - cima);   // mais alto que a caixa: o começo dele à vista
+    }
+  }
+  // foco pelo teclado: foca e mostra (quem chama só faz isso quando UI.porTeclado()).
+  // calma (ms): numa troca de tela, o Enter/Espaço que chega logo depois no botão novo não vale
+  // (ela ainda apertava o botão de antes, ou o ovo: não escolhe nada sem ver)
+  UI.focarTeclado = function (e, calma) {
+    if (!focar(e)) return false;
+    mostrarFoco(e);
+    if (calma) {
+      var ate = performance.now() + calma;
+      var segura = function (ev) {
+        if (performance.now() >= ate) { e.removeEventListener('keydown', segura, true); e.removeEventListener('keyup', segura, true); return; }
+        if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); ev.stopPropagation(); }
+      };
+      e.addEventListener('keydown', segura, true);
+      e.addEventListener('keyup', segura, true);
+    }
+    return true;
+  };
+  // já está inteiro à vista, sem rolar nada?
+  function aVista(e) {
+    var t = topo(), r = e.getBoundingClientRect();
+    if (!r.width && !r.height) return false;
+    for (var c = e.parentElement; c && t && t.contains(c); c = c.parentElement) {
+      if (c.scrollHeight <= c.clientHeight + 1) continue;
+      var cr = c.getBoundingClientRect();
+      if (r.top < cr.top + c.clientTop || r.bottom > cr.top + c.clientTop + c.clientHeight) return false;
+    }
+    return r.top >= 0 && r.bottom <= window.innerHeight;
+  }
+  /* A tela trocou por dentro (questão nova, fim da sala, resultado) e o foco ia para o body: pelo
+     teclado, ele vai para `alvo` (um botão, ou o 1º controle de `alvo` se for uma caixa) quando
+     ele já aparece sem rolar; senão para o título (tabindex -1: o Tab segue dali para baixo), para
+     o começo da tela não sumir. Pelo toque, nada muda. */
+  UI.focarTroca = function (alvo, titulo, calma) {
+    if (!UI.porTeclado() || !alvo) return false;
+    if (alvo.tagName !== 'BUTTON') alvo = focaveis(alvo)[0];
+    if (alvo && aVista(alvo)) return UI.focarTeclado(alvo, calma);
+    if (titulo) { titulo.setAttribute('tabindex', '-1'); return focar(titulo); }
+    return alvo ? UI.focarTeclado(alvo, calma) : false;
+  };
 
   UI.abrirTela = function (nome) {
     var t = el('section.tela.tela-' + nome, { role: 'dialog', 'aria-modal': 'true' });
@@ -308,10 +366,19 @@
     var balao = document.querySelector('#claude-balao:not([hidden])');
     if (balao && balao.querySelector('.claude-acoes button')) lista = lista.concat(focaveis(balao));
     if (!lista.length) { e.preventDefault(); return; }
-    var i = lista.indexOf(document.activeElement);
+    var at = document.activeElement;
+    var i = lista.indexOf(at);
     var prox = i < 0 ? (e.shiftKey ? lista.length - 1 : 0) : (i + (e.shiftKey ? -1 : 1) + lista.length) % lista.length;
+    // o foco está num título (tabindex -1) dentro da tela: o Tab segue dali, não do começo
+    if (i < 0 && at && at !== t && t.contains(at)) {
+      var depois = lista.filter(function (x) { return at.compareDocumentPosition(x) & Node.DOCUMENT_POSITION_FOLLOWING; });
+      var antes = lista.filter(function (x) { return at.compareDocumentPosition(x) & Node.DOCUMENT_POSITION_PRECEDING; });
+      if (!e.shiftKey && depois.length) prox = lista.indexOf(depois[0]);
+      if (e.shiftKey && antes.length) prox = lista.indexOf(antes[antes.length - 1]);
+    }
     e.preventDefault();
     focar(lista[prox]);
+    mostrarFoco(lista[prox]);
   });
 
   /* ---------- confete ---------- */
@@ -1264,6 +1331,8 @@
           botoes.appendChild(guardar); botoes.appendChild(montar);
         }
         card.appendChild(botoes);
+        // o ovo (com o foco) sumiu: pelo teclado, o foco vai para o botão principal, não para o body
+        if (UI.porTeclado()) UI.focarTeclado(botoes.querySelector('.btn-principal'), 600);
         Reino.Som.falar([d.raridade === 'lendario' ? Reino.Falas.fixas.lendario : Reino.Falas.fixas.nasceu, { texto: d.frase, voz: 'unicornio' }], { voz: 'claude' });
       }
     });

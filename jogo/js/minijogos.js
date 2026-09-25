@@ -304,6 +304,9 @@
     return ctrl;
   };
 
+  // o clique veio do Enter/Espaço (detail 0 e a última coisa usada foi o teclado)? Toque e mouse não mudam o foco
+  function doTeclado(ev) { return !!ev && ev.isTrusted && !ev.detail && Reino.UI.porTeclado(); }
+
   // ordenar e montar frase: tocar para colocar na sequência
   function sequencia(d, opts, estilo) {
     var itens = d.itens || d.blocos;
@@ -315,15 +318,18 @@
     var wrap = el('div.sequencia.seq-' + estilo);
     var alvo = el(estilo === 'frase' ? 'div.seq-alvo.frase-linha' : 'ol.seq-alvo');
     var pool = el('div.seq-monte');
+    function pecasAlvo() { return alvo.querySelectorAll('button'); }
     function pintar() {
       alvo.innerHTML = '';
       pool.innerHTML = '';
       seq.forEach(function (i, pos) {
         var b = el('button.seq-item.no-alvo', { type: 'button' },
           estilo === 'frase' ? null : el('span.seq-num', String(pos + 1)), el('span', itens[i]));
-        b.addEventListener('click', function () {
+        b.addEventListener('click', function (ev) {
           if (ctrl.travado) return;
           seq.splice(pos, 1); Reino.Som.tocar('toque'); pintar(); opts.onMudar();
+          // teclado: os botões foram refeitos; o foco fica na mesma posição da resposta (ou no monte)
+          if (doTeclado(ev)) Reino.UI.focarTeclado(pecasAlvo()[Math.min(pos, seq.length - 1)] || pool.querySelector('button'));
         });
         alvo.appendChild(estilo === 'frase' ? b : el('li', b));
       });
@@ -331,9 +337,16 @@
       if (estilo === 'frase' && !seq.length) alvo.appendChild(el('span.frase-vazia', 'Toque nos blocos abaixo para montar a frase'));
       monte.filter(function (i) { return seq.indexOf(i) < 0; }).forEach(function (i) {
         var b = el('button.seq-item', { type: 'button' }, itens[i]);
-        b.addEventListener('click', function () {
+        b.addEventListener('click', function (ev) {
           if (ctrl.travado) return;
+          var noMonte = Array.prototype.indexOf.call(pool.querySelectorAll('button'), b);
           seq.push(i); Reino.Som.tocar('selecionar'); pintar(); opts.onMudar();
+          // teclado: os botões foram refeitos e o foco ia para o body; ele vai para o bloco que
+          // ficou no lugar deste no monte (ou o de antes); o monte acabou: a última peça colocada
+          if (doTeclado(ev)) {
+            var resto = pool.querySelectorAll('button'), pecas = pecasAlvo();
+            Reino.UI.focarTeclado(resto[Math.min(noMonte, resto.length - 1)] || pecas[pecas.length - 1]);
+          }
         });
         pool.appendChild(b);
       });
@@ -642,7 +655,7 @@
       var botoesPeca = {};
       var pool = el('div.copiar-pecas', monte[i].map(function (k) {
         var b = el('button.copiar-peca', { type: 'button' }, pecas[k]);
-        b.addEventListener('click', function () {
+        b.addEventListener('click', function (ev) {
           if (ctrl.travado) return;
           var v = valores[i];
           if (v.letras.indexOf(k) >= 0) return;
@@ -650,8 +663,11 @@
           if (v.letras.length >= max) { avisar(linha); return; }
           v.letras.push(k);
           Reino.Som.tocar('selecionar'); pintar(i); opts.onMudar();
-          // teclado: o foco segue para a próxima peça livre
-          if (document.activeElement === b || document.activeElement === document.body) focarPeca(i, monte[i].indexOf(k));
+          // teclado: o foco volta para a 1ª peça livre do monte; o Tab só anda para a frente, então
+          // qualquer letra que falta fica a poucos Tabs (antes, a letra à esquerda do foco pedia a
+          // volta inteira na tela: até 29 Tabs)
+          if (doTeclado(ev)) focarPrimeiraLivre(i);
+          else if (document.activeElement === b || document.activeElement === document.body) focarPeca(i, monte[i].indexOf(k));
         });
         botoesPeca[k] = b;
         return b;
@@ -672,6 +688,15 @@
       }
       var ultima = itens[i].linha.lastElementChild;
       if (ultima && ultima.tagName === 'BUTTON') ultima.focus({ preventScroll: true });
+    }
+    function focarPrimeiraLivre(i) {
+      var ordem = monte[i];
+      for (var s = 0; s < ordem.length; s++) {
+        var b = itens[i].botoesPeca[ordem[s]];
+        if (!b.disabled) { Reino.UI.focarTeclado(b); return; }
+      }
+      var ultima = itens[i].linha.lastElementChild;
+      if (ultima && ultima.tagName === 'BUTTON') Reino.UI.focarTeclado(ultima);
     }
     function pintar(i) {
       var it = d.itens[i], v = valores[i], x = itens[i];
@@ -1212,6 +1237,8 @@
 
   /* ================= MISSÃO ================= */
   var M = {};
+  // troca de tela pelo teclado: o Enter/Espaço que chega logo depois no controle novo não vale
+  var CALMA_TROCA = 400;
 
   M.iniciar = function (materia, sala, aoTerminar) {
     var tela = Reino.UI.abrirTela('missao');
@@ -1291,12 +1318,15 @@
         onMudar: function () { btnConferir.disabled = !ctrl.pronto(); },
         onCompleto: function () { conferir(true); },
       });
-      corpo.appendChild(el('div.desafio-num', 'Desafio ' + (idx + 1) + ' de ' + lista.length));
+      var num = el('div.desafio-num', 'Desafio ' + (idx + 1) + ' de ' + lista.length);
+      corpo.appendChild(num);
       corpo.appendChild(ctrl.card);
       btnConferir.disabled = true;
       btnConferir.hidden = !!ctrl.semConferir;
       corpo.scrollTop = 0;
       inicioDesafio = Date.now();
+      // teclado ("Começar", "Continuar"): o foco vai para o 1º controle do desafio (ou o número dele)
+      Reino.UI.focarTroca(ctrl.card, num, CALMA_TROCA);
     }
 
     function tempoMinimo(d) {
@@ -1364,6 +1394,8 @@
         denovo.addEventListener('click', function () {
           Reino.Som.tocar('toque'); retorno.hidden = true; Reino.Som.calar();
           btnConferir.disabled = !ctrl.pronto();
+          // o botão sumiu com o retorno: pelo teclado, o foco volta para o desafio
+          Reino.UI.focarTroca(ctrl.card, corpo.querySelector('.desafio-num'), CALMA_TROCA);
         });
         botoes.appendChild(livro); botoes.appendChild(denovo);
       }
@@ -1406,6 +1438,7 @@
         el('h2.titulo-pixel', premios.materiaCompleta ? 'Revisão de ' + materia.nome + ' completa!' : 'Sala concluída!'),
         premios.materiaCompleta ? el('p.fim-grande', 'Você completou TODAS as salas! ' + U.reais(Reino.config.valorPorMateria) + ' de ' + materia.nome + ' no baú! 🥳') : el('p', Reino.Claude.frase('fimSala')),
         itens, dicaRaro, btn));
+      Reino.UI.focarTroca(btn, corpo.querySelector('.fim-sala h2'), CALMA_TROCA);
       if (premios.primeiraVez) setTimeout(function () { Reino.Som.tocar('moeda'); }, 900);
       Reino.Som.falar([premios.materiaCompleta ? Reino.Falas.fixas.revisaoCompleta : Reino.Falas.fixas.salaConcluida, Reino.Falas.acertouDePrimeira(acertosPrimeira)], { voz: 'claude' });
       btn.addEventListener('click', function () {
