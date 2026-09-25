@@ -296,15 +296,19 @@
         g.p(x - 4, y + 3, H); g.p(x + 4, y + 3, H);
         queixoFino();
         break;
-      case 'tufos':
-        // careca de palhaço com dois tufos fofos saindo dos lados
-        g.p(x - 1, y, cla(K, 0.5)); g.p(x - 2, y + 1, cla(K, 0.3));
+      case 'cachos':
+        // cabeleira de cachinhos fofos: franja cacheada na testa e dois cachos redondos de cada lado
+        g.l(y, x - 3, x + 3, H); g.l(y + 1, x - 4, x + 4, H);
+        [-3, -1, 1, 3].forEach(function (d) { g.p(x + d, y, L); });
+        [-4, -2, 0, 2, 4].forEach(function (d) { g.p(x + d, y + 1, Hd); });
         [-1, 1].forEach(function (s) {
-          g.p(x + s * 4, y + 1, H); g.l(y + 2, Math.min(x + s * 4, x + s * 6), Math.max(x + s * 4, x + s * 6), H);
-          g.l(y + 3, Math.min(x + s * 4, x + s * 7), Math.max(x + s * 4, x + s * 7), H);
-          g.l(y + 4, Math.min(x + s * 5, x + s * 7), Math.max(x + s * 5, x + s * 7), H);
-          g.p(x + s * 6, y + 5, H); g.p(x + s * 5, y + 1, H);
-          g.p(x + s * 5, y + 2, L); g.p(x + s * 6, y + 3, L); g.p(x + s * 7, y + 4, Hd); g.p(x + s * 6, y + 5, Hd);
+          g.l(y + 1, Math.min(x + s * 5, x + s * 5), Math.max(x + s * 5, x + s * 5), H);
+          g.l(y + 2, Math.min(x + s * 4, x + s * 6), Math.max(x + s * 4, x + s * 6), H);
+          g.l(y + 3, Math.min(x + s * 4, x + s * 6), Math.max(x + s * 4, x + s * 6), H);
+          g.l(y + 4, Math.min(x + s * 5, x + s * 6), Math.max(x + s * 5, x + s * 6), H);
+          g.l(y + 5, Math.min(x + s * 5, x + s * 6), Math.max(x + s * 5, x + s * 6), H);
+          g.p(x + s * 5, y + 6, H);
+          g.p(x + s * 5, y + 2, L); g.p(x + s * 6, y + 4, L); g.p(x + s * 5, y + 5, Hd); g.p(x + s * 6, y + 3, Hd); g.p(x + s * 5, y + 6, Hd);
         });
         queixoFino();
         break;
@@ -363,14 +367,14 @@
     }
   }
 
-  // rosto de palhaço (sem marca nenhuma): losango azul nos olhos, nariz redondo 3×3 com brilho, sorrisão
+  // rosto de palhaço alegre, com a pele de sempre: bochechas redondas pintadas de rosa,
+  // nariz vermelho redondinho com brilho e um sorrisão
   function pintarPalhaco(g, o) {
     if (!o.palhaco) return;
-    var x = CX, y = HY, Nz = '#ff3b3b', Nd = esc(Nz, 0.25), Bc = '#e0433f', Az = '#5fb4ff';
-    g.p(x - 2, y + 3, Az); g.p(x + 2, y + 3, Az);
-    g.l(y + 3, x - 1, x + 1, Nz); g.l(y + 4, x - 1, x + 1, Nz); g.l(y + 5, x - 1, x + 1, Nz);
-    g.p(x - 1, y + 3, '#ffffff'); g.p(x + 1, y + 5, Nd); g.p(x + 1, y + 4, Nd); g.p(x, y + 5, Nd);
-    g.l(y + 6, x - 2, x + 2, Bc); g.p(x - 3, y + 5, Bc); g.p(x + 3, y + 5, Bc); g.p(x, y + 6, esc(Bc, 0.3));
+    var x = CX, y = HY, Nz = '#ff3b3b', Bc = '#c2304f', Rs = '#ff7fa8';
+    g.p(x - 3, y + 5, Rs); g.p(x + 3, y + 5, Rs); g.p(x - 4, y + 5, mis(o.pele, Rs, 0.6)); g.p(x + 4, y + 5, mis(o.pele, Rs, 0.6));
+    g.p(x, y + 4, Nz); g.l(y + 5, x - 1, x + 1, Nz); g.p(x, y + 4, cla(Nz, 0.2)); g.p(x - 1, y + 5, cla(Nz, 0.55)); g.p(x + 1, y + 5, esc(Nz, 0.2));
+    g.l(y + 6, x - 2, x + 2, Bc); g.p(x, y + 6, esc(Bc, 0.2));
   }
 
   function pintarChapeu(g, o) {
@@ -1300,11 +1304,11 @@
     vega: { nome: 'Doutora Vega', voz: 'npc-vega', sprite: { pele: '#a86b4a', cabelo: '#3a2320', penteado: 'coque', jaleco: true, roupa: '#5a6ad0', roupa2: '#2a2f66', oculos: true, oculosCor: '#ffd34d', presilha: true, cor2: '#ffe066' } },
     cosmo: { nome: 'Robô Cosmo', voz: 'npc-cosmo', sprite: { base: 'robo', corpo: '#b8c4d8', detalhe: '#5fb4ff', antena: '#ff5c8a' } },
     // Casa das Palavras (Português). Opções novas do gerador: chapeu 'chef', 'quepe', 'pescador', 'festa' e 'faixa',
-    // penteado 'tufos', nariz, palhaco, gola, sapatoes, regador, livroAberto, lapis; na armadura, emblema: 'A'
+    // penteado 'cachos', nariz, palhaco, gola, sapatoes, regador, livroAberto, lapis; na armadura, emblema: 'A'
     palavrinha: { nome: 'Dona Palavrinha', voz: 'npc-palavrinha', sprite: { idade: 'idoso', pele: '#c68a5e', cabelo: '#d8d4e0', penteado: 'black', chapeu: 'faixa', chapeuCor: '#c9365a', lapis: true, roupa: '#ff8ac4', roupa2: '#c9365a', perna: 'saia', livroAberto: '#39a860', cor2: '#ffd34d' } },
     manu: { nome: 'Chef Manu', voz: 'npc-manu', sprite: { pele: '#f1c7a5', cabelo: '#2b1b17', penteado: 'rabo', chapeu: 'chef', roupa: '#f4f2fa', roupa2: '#3a3a5a', avental: true, aventalCor: '#ff6b8a', cor2: '#e0433f' } },
     heitor: { nome: 'Jardineiro Heitor', voz: 'npc-heitor', sprite: { pele: '#7a4a32', cabelo: '#2b1b17', penteado: 'curto', chapeu: 'pescador', chapeuCor: '#7cc15a', roupa: '#ffb347', roupa2: '#8a5a3a', avental: true, aventalCor: '#2e8b57', regador: true, regadorCor: '#5fb4ff', cor2: '#ffd34d' } },
-    chocalho: { nome: 'Palhaço Chocalho', voz: 'npc-chocalho', sprite: { pele: '#fff3ea', cabelo: '#ff9d2e', penteado: 'tufos', chapeu: 'festa', chapeuCor: '#ff4f9a', cor2: '#ffd34d', palhaco: true, gola: true, roupa: '#5fb4ff', estampa: 'bolinhas', roupa2: '#39c5bb', sapato: '#e0433f', sapatoes: true } },
+    chocalho: { nome: 'Palhaço Chocalho', voz: 'npc-chocalho', sprite: { pele: '#f5c9a3', cabelo: '#3fc98a', penteado: 'cachos', chapeu: 'festa', chapeuCor: '#9b5cff', cor2: '#ffd34d', palhaco: true, gola: '#ffe066', roupa: '#ff6b8a', estampa: 'listras', roupa2: '#9b5cff', sapato: '#3fc98a', sapatoes: true } },
     brisa: { nome: 'Capitã Brisa', voz: 'npc-brisa', sprite: { pele: '#d9a07a', cabelo: '#5a3825', penteado: 'trancas', chapeu: 'quepe', chapeuCor: '#f4f2fa', roupa: '#2f6fd6', roupa2: '#2a2f66', cachecol: true, cachecolCor: '#e0433f', cor2: '#ffd34d' } },
     carlos: { nome: 'Seu Carlos do Carrossel', voz: 'npc-carlos', sprite: { idade: 'idoso', pele: '#e0ac86', cabelo: '#d8d4e0', penteado: 'careca', bigode: true, chapeu: 'boina', chapeuCor: '#c9365a', roupa: '#fff1d0', colete: '#c9365a', roupa2: '#3a3a5a', gravata: '#ffd34d' } },
     // Castelo (treino de Português) e Escola (prova de Português)
