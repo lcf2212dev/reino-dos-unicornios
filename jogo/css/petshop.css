@@ -98,6 +98,9 @@ body.sem-animacao .cuid-cheio { transition: none; }
    em tela baixa (celular deitado), botões lado a lado e o painel rola se ainda não couber */
 .confirmar-nota { display: block; margin-top: 8px; font-size: 0.85em; color: var(--tinta-suave); }
 .painel-compra { overflow: auto; }
+/* os 3 botões da compra com a mesma altura: trocar o "Agora não" de lugar com um botão de gastar
+   (ui.js, afastarDoDedo) põe o "Agora não" exatamente onde o dedo estava */
+.painel-compra > .intro-botoes.coluna { display: grid; grid-auto-rows: 1fr; }
 @media (max-height: 480px) {
   .painel-compra { width: min(760px, 100%); padding: 14px 16px; gap: 8px; }
   .painel-compra .confirmar-nota { margin-top: 4px; }

@@ -190,9 +190,9 @@
       var bs = botoes.map(function (b) {
         var bt = el('button.btn-grande' + (b.principal ? '.btn-principal' : '.btn-secundario'), { type: 'button' }, b.rotulo);
         bt.addEventListener('click', function (e) {
-          // reserva: se nem trocando de lugar deu para tirar o botão de baixo do dedo, o toque
-          // ali até 500 ms depois de abrir não gasta
-          if (b.gasta && dedoPreso && performance.now() - abriuEm < 500 && perto({ x: e.clientX, y: e.clientY }, dedoPreso) && e.isTrusted && e.detail) { toqueIgnorado(bt); return; }
+          // reserva: se nem trocando de lugar nem movendo o diálogo deu para tirar o botão de baixo
+          // do dedo, um toque bem ali (24 px) não gasta; o resto do botão vale na hora
+          if (b.gasta && dedoPreso && e.isTrusted && e.detail && Math.abs(e.clientX - dedoPreso.x) < 24 && Math.abs(e.clientY - dedoPreso.y) < 24) { toqueIgnorado(bt); return; }
           if (b.gasta) { comprouEm = performance.now(); pontoDaCompra = e.detail ? { x: e.clientX, y: e.clientY } : null; }
           UI.fecharTela(t); resolver(b.valor);
         });
@@ -200,7 +200,6 @@
       });
       t.appendChild(el('div.painel.painel-pequeno' + (classe ? '.' + classe : ''), el('p.confirmar-msg', { id: idMsg }, msg), el('div.intro-botoes' + (bs.length > 2 ? '.coluna' : ''), bs)));
       var iSeguro = Math.max(0, botoes.findIndex(function (b) { return b.seguro; }));
-      var abriuEm = performance.now();
       var dedoPreso = afastarDoDedo(bs, botoes, iSeguro);
       t._aoEsc = function () { bs[iSeguro].click(); };
       setTimeout(function () { focar(bs[iSeguro]); }, 30);
@@ -213,6 +212,7 @@
     var p = ultimoPonto;
     if (!p || performance.now() - ultimoToque > 600 || !botoes.some(function (b) { return b.gasta; })) return null;
     var seguro = bs[iSeguro];
+    function coberto() { return bs.some(function (bt, j) { return botoes[j].gasta && sobre(bt, p); }); }
     for (var i = 0; i < bs.length; i++) {
       if (!botoes[i].gasta || !sobre(bs[i], p)) continue;
       // troca os dois de lugar no DOM (a ordem do Tab acompanha o que se vê)
@@ -222,7 +222,15 @@
       marca.parentNode.replaceChild(seguro, marca);
       break;
     }
-    return bs.some(function (bt, j) { return botoes[j].gasta && sobre(bt, p); }) ? p : null;
+    if (!coberto()) return null;
+    // botões de alturas diferentes: o dedo ainda cai num que gasta. Move o diálogo até o centro
+    // do "Agora não" ficar embaixo do dedo (sem sair da tela)
+    var painelEl = seguro.closest('.painel');
+    var r = seguro.getBoundingClientRect(), pr = painelEl.getBoundingClientRect();
+    var dx = Math.max(-pr.left, Math.min(innerWidth - pr.right, p.x - (r.left + r.width / 2)));
+    var dy = Math.max(-pr.top, Math.min(innerHeight - pr.bottom, p.y - (r.top + r.height / 2)));
+    painelEl.style.transform = 'translate(' + Math.round(dx) + 'px, ' + Math.round(dy) + 'px)';
+    return coberto() ? p : null;
   }
   UI.confirmar = function (msg, sim, nao, gasta) {
     return UI.escolher(msg, [{ rotulo: nao || 'Não', valor: false }, { rotulo: sim || 'Sim', valor: true, principal: true, gasta: !!gasta }]);
@@ -379,8 +387,12 @@
       corpo.style.setProperty('--recado-altura', Math.ceil(bal.getBoundingClientRect().height) + 'px');
       requestAnimationFrame(function () { if (recado === meu) mostrarBotoes(); });
     })();
+    // segurança: se o balão for descartado ainda na fila (Claude.limpar), a promessa não termina;
+    // a tela volta ao tamanho de sempre depois do tempo do balão + 1,5 s
+    var seguranca = setTimeout(function () { if (recado === meu) soltarRecado(); }, (op.tempo || 5000) + 1500);
     var focoAntes = document.activeElement;
     pr.then(function () {
+      clearTimeout(seguranca);
       if (recado === meu) soltarRecado();
       // o balão sumiu sozinho com o foco nele (Tab preso inclui o balão): o foco volta para a tela
       var t = topo(), at = document.activeElement;
