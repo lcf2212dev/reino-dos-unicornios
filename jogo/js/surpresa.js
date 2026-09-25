@@ -136,10 +136,10 @@
     if (!iniciado || !visivel()) return false;
     return agora() - ultimoToque < semToqueMs();
   }
-  // andando até algum lugar (porta, objeto, ponto tocado no chão): ela termina o que começou
+  // andando até algum lugar (porta, objeto, ponto tocado no chão) ou com as setas: ela termina o que começou
   function andando() {
     var J = typeof window !== 'undefined' ? window.Jogador : null;
-    return !!(J && ((J.caminho && J.caminho.length) || J.aoChegar));
+    return !!(J && ((J.caminho && J.caminho.length) || J.aoChegar || J.andando));
   }
   // no mapa ou dentro de uma construção, sem tela, diálogo, transição nem balão do Claude.
   // Andando conta como livre (o tempo corre); só a abertura espera ela parar.
