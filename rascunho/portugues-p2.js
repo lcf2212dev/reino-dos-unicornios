@@ -64,7 +64,7 @@ Reino.RASCUNHO_PORTUGUES.p2 =
             { e: '🍔', t: 'hambúrguer', ok: true },
             { e: '🎨', t: 'desenho' },
           ],
-          explica: 'Helicóptero, hotel, homem e hambúrguer começam com H. Cachorro, mochila, chocolate e desenho têm H, mas no meio da palavra!' },
+          explica: 'Helicóptero, hotel, homem e hambúrguer começam com H. Cachorro, mochila e chocolate têm H, mas junto com o C (CH), e não sozinho no começo. Desenho tem H junto com o N (NH).' },
         { id: 'p2-09', tipo: 'completar', colado: true, livro: 'letra-h', pagina: 40,
           pergunta: 'Qual letra está faltando no começo de cada palavra? Ela é quietinha!',
           palavras: ['H', 'P', 'D'],
@@ -117,7 +117,7 @@ Reino.RASCUNHO_PORTUGUES.p2 =
           itens: [
             { e: '🦛', t: 'hipopótamo', g: 0 },
             { e: '🍔', t: 'hambúrguer', g: 0 },
-            { e: '🥕', t: 'horta', g: 0 },
+            { e: '🌱', t: 'horta', g: 0 },
             { e: '🍍', t: 'abacaxi', g: 1 },
             { e: '💧', t: 'água', g: 1 },
             { e: '🐶', t: 'cachorro', g: 1 },

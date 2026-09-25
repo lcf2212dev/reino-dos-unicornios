@@ -9691,31 +9691,31 @@
    "fala": "O xis e o cê agá podem ter o mesmo som. Xícara e chave começam com o mesmo som! Com xis: xícara, abacaxi, peixe, caixa. Com cê agá: chave, chuva, mochila, chocolate. Só ouvindo não dá para saber: é preciso conhecer a palavra. Quanto mais a gente lê, mais fácil fica!"
   },
   {
-   "chave": "1b0ab0ff2m",
+   "chave": "270e63942e",
    "voz": "claude",
-   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Os três sons do X\".",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Sons do X\".",
    "pacotes": [
     "portugues-extra"
    ],
-   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Os três sons do xis\"."
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Sons do xis\"."
   },
   {
-   "chave": "3d3c39a2r",
+   "chave": "2a4514f9j",
    "voz": "narradora",
-   "texto": "Os três sons do X",
+   "texto": "Sons do X",
    "pacotes": [
     "portugues-livro"
    ],
-   "fala": "Os três sons do xis"
+   "fala": "Sons do xis"
   },
   {
-   "chave": "b17a43834z",
+   "chave": "159646ba56",
    "voz": "narradora",
-   "texto": "A letra X pode ter três sons diferentes, conforme a palavra. Som de S, como em excesso e próximo. Som de Z, como em exame e exemplo. Som de CH, como em xícara e abacaxi.",
+   "texto": "A letra X pode ter sons diferentes, conforme a palavra. Três deles: som de S, como em excesso e próximo. Som de Z, como em exame e exemplo. Som de CH, como em xícara e abacaxi.",
    "pacotes": [
     "portugues-livro"
    ],
-   "fala": "A letra xis pode ter três sons diferentes, conforme a palavra. Som de ésse, como em excesso e próximo. Som de zê, como em exame e exemplo. Som de cê agá, como em xícara e abacaxi."
+   "fala": "A letra xis pode ter sons diferentes, conforme a palavra. Três deles: som de ésse, como em excesso e próximo. Som de zê, como em exame e exemplo. Som de cê agá, como em xícara e abacaxi."
   },
   {
    "chave": "66cb262d2l",
@@ -9817,13 +9817,13 @@
    "fala": "A ponta do iceberg"
   },
   {
-   "chave": "279f6d098p",
+   "chave": "ddcf5b3f84",
    "voz": "narradora",
-   "texto": "Quando alguém diz \"isso é só a ponta do iceberg\", quer dizer que tem muito mais do que parece! Só um pedaço pequeno do iceberg fica fora da água, em cima do mar (a apostila diz 30%). O resto, a parte maior, fica escondido debaixo da água. E cada iceberg é único, com tons de branco, cinza, azul e verde.",
+   "texto": "Quando alguém diz \"isso é só a ponta do iceberg\", quer dizer que tem muito mais do que parece! Só um pedaço pequeno do iceberg fica fora da água, em cima do mar. O resto, a parte maior, fica escondido debaixo da água. E cada iceberg é único, com tons de branco, cinza, azul e verde.",
    "pacotes": [
     "portugues-livro"
    ],
-   "fala": "Quando alguém diz \"isso é só a ponta do iceberg\", quer dizer que tem muito mais do que parece! Só um pedaço pequeno do iceberg fica fora da água, em cima do mar (a apostila diz 30%). O resto, a parte maior, fica escondido debaixo da água. E cada iceberg é único, com tons de branco, cinza, azul e verde."
+   "fala": "Quando alguém diz \"isso é só a ponta do iceberg\", quer dizer que tem muito mais do que parece! Só um pedaço pequeno do iceberg fica fora da água, em cima do mar. O resto, a parte maior, fica escondido debaixo da água. E cada iceberg é único, com tons de branco, cinza, azul e verde."
   },
   {
    "chave": "52a45ecf2n",
@@ -10647,13 +10647,13 @@
    "fala": "Se você desejar, coloque … a gosto, para deixar o suco mais doce."
   },
   {
-   "chave": "f903d0d811",
+   "chave": "3ea855f31t",
    "voz": "narradora",
-   "texto": "Adicione 4 cubos de ______.",
+   "texto": "Adicione 4 cubos de ______ para o suco ficar geladinho.",
    "pacotes": [
     "portugues-p1"
    ],
-   "fala": "Adicione 4 cubos de …"
+   "fala": "Adicione 4 cubos de … para o suco ficar geladinho."
   },
   {
    "chave": "039adb6811",
@@ -11207,13 +11207,13 @@
    "fala": "banana amassada"
   },
   {
-   "chave": "62bd13bb1x",
+   "chave": "20761ac122",
    "voz": "narradora",
-   "texto": "A letra X pode ter três sons! Ligue cada som a uma palavra:",
+   "texto": "A letra X tem sons diferentes! Ligue três deles à palavra certa:",
    "pacotes": [
     "portugues-p3"
    ],
-   "fala": "A letra xis pode ter três sons! Ligue cada som a uma palavra:"
+   "fala": "A letra xis tem sons diferentes! Ligue três deles à palavra certa:"
   },
   {
    "chave": "d45810c31q",
@@ -11576,13 +11576,13 @@
    "fala": "Vento gelado no rosto"
   },
   {
-   "chave": "9318777dz",
+   "chave": "ec27a5b514",
    "voz": "narradora",
-   "texto": "Pinguins saltando da água",
+   "texto": "Não ver mais albatrozes no céu",
    "pacotes": [
     "portugues-p4"
    ],
-   "fala": "Pinguins saltando da água"
+   "fala": "Não ver mais albatrozes no céu"
   },
   {
    "chave": "3ff20fb618",
@@ -11594,22 +11594,31 @@
    "fala": "Precisar de luvas e gorros lá fora"
   },
   {
-   "chave": "5824e81ct",
+   "chave": "4e86e4441a",
    "voz": "narradora",
-   "texto": "Um calorão no barco",
+   "texto": "Uma praia de areia quente no caminho",
    "pacotes": [
     "portugues-p4"
    ],
-   "fala": "Um calorão no barco"
+   "fala": "Uma praia de areia quente no caminho"
   },
   {
-   "chave": "da49b6333t",
+   "chave": "2d45d925s",
    "voz": "narradora",
-   "texto": "Chegando perto, sentiram vento gelado no rosto e viram pinguins saltando da água e focas no mar. Lá fora, só com luvas e gorro!",
+   "texto": "Chegamos? (resumo)",
    "pacotes": [
     "portugues-p4"
    ],
-   "fala": "Chegando perto, sentiram vento gelado no rosto e viram pinguins saltando da água e focas no mar. Lá fora, só com luvas e gorro!"
+   "fala": "Chegamos? (resumo)"
+  },
+  {
+   "chave": "36b704435v",
+   "voz": "narradora",
+   "texto": "Alguns sinais mostraram que estavam chegando: não viam mais albatrozes no céu, sentiam o vento gelado no rosto e lá fora só dava para ficar com luvas e gorros. Depois, começaram a ver pinguins e focas.",
+   "pacotes": [
+    "portugues-p4"
+   ],
+   "fala": "Alguns sinais mostraram que estavam chegando: não viam mais albatrozes no céu, sentiam o vento gelado no rosto e lá fora só dava para ficar com luvas e gorros. Depois, começaram a ver pinguins e focas."
   },
   {
    "chave": "d41fa29814",
@@ -11648,13 +11657,13 @@
    "fala": "Quem pescar um peixe ganha um doce"
   },
   {
-   "chave": "d3aa46993i",
+   "chave": "68de13b43j",
    "voz": "narradora",
-   "texto": "O pai disse que já dava para ver um iceberg no caminho. Combinaram: quem visse o primeiro iceberg ganhava um prêmio.",
+   "texto": "O pai disse que um iceberg já podia aparecer no caminho. Combinaram: quem visse o primeiro iceberg ganhava um prêmio.",
    "pacotes": [
     "portugues-p4"
    ],
-   "fala": "O pai disse que já dava para ver um iceberg no caminho. Combinaram: quem visse o primeiro iceberg ganhava um prêmio."
+   "fala": "O pai disse que um iceberg já podia aparecer no caminho. Combinaram: quem visse o primeiro iceberg ganhava um prêmio."
   },
   {
    "chave": "49d9c1e71q",

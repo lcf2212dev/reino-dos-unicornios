@@ -2,7 +2,7 @@
 Reino.RASCUNHO_PORTUGUES = Reino.RASCUNHO_PORTUGUES || {};
 Reino.RASCUNHO_PORTUGUES.p3 =
     {
-      id: 'p3', nome: 'CH, LH, NH e o X', emoji: '🐣', paginas: 'pp. 42 a 50, 55 e 56',
+      id: 'p3', nome: 'CH, LH, NH e o X', emoji: '🐣', paginas: 'pp. 42 a 50 e 55',
       intro: 'Bem-vinda ao Pátio do Circo: vamos brincar com o CH, o LH, o NH e o X!',
       desafios: [
         { id: 'p3-01', tipo: 'escolha', livro: 'digrafos', pagina: 42,
@@ -91,7 +91,7 @@ Reino.RASCUNHO_PORTUGUES.p3 =
           ], certa: 0,
           explica: 'Xarope começa com X! Chocolate se escreve com CH, e banana não tem nenhum dos dois.' },
         { id: 'p3-10', tipo: 'ligar', livro: 'sons-do-x', pagina: 47,
-          pergunta: 'A letra X pode ter três sons! Ligue cada som a uma palavra:',
+          pergunta: 'A letra X tem sons diferentes! Ligue três deles à palavra certa:',
           pares: [
             [{ t: 'Som de S' }, { t: 'próximo' }],
             [{ t: 'Som de Z' }, { t: 'exame' }],
@@ -145,7 +145,7 @@ Reino.RASCUNHO_PORTUGUES.p3 =
             { t: 'chuchu' },
             { t: 'chá' },
           ],
-          explica: 'XÍcara, ameiXa e meXer têm X. Chocolate, chuchu e chá se escrevem com CH.' },
+          explica: 'Xícara, ameiXa e meXer têm X. Chocolate, chuchu e chá se escrevem com CH.' },
         { id: 'p3-15', tipo: 'ligar', livro: 'digrafos', pagina: 55,
           pergunta: 'Ligue cada figura ao dígrafo que aparece no nome dela:',
           pares: [
@@ -154,7 +154,7 @@ Reino.RASCUNHO_PORTUGUES.p3 =
             [{ e: '⛰️', t: 'montanha' }, { t: 'NH' }],
           ],
           explica: 'AbeLHa tem LH, CHinelo tem CH e montaNHa tem NH.' },
-        { id: 'p3-16', tipo: 'escolha', livro: 'x-ou-ch', pagina: 55,
+        { id: 'p3-16', tipo: 'escolha', livro: 'x-ou-ch', pagina: 48,
           pergunta: 'Ditado! Qual é a escrita certa do nome desta fruta? 🍍',
           opcoes: [
             { t: 'abacaxi' },
@@ -164,8 +164,8 @@ Reino.RASCUNHO_PORTUGUES.p3 =
           explica: 'Abacaxi se escreve com X no final: a-ba-ca-xi.' },
         { id: 'p3-17', tipo: 'frase', livro: 'digrafos', pagina: 43,
           pergunta: 'Monte a frase da apostila tocando nos blocos na ordem certa:',
-          blocos: ['CH, LH e NH', 'são dígrafos:', 'duas letras', 'que representam', 'um único som.'],
-          explica: 'CH, LH e NH são dígrafos: duas letras que representam um único som.' },
+          blocos: ['CH, LH e NH', 'são dígrafos,', 'duas letras', 'que representam', 'um único som.'],
+          explica: 'CH, LH e NH são dígrafos, duas letras que representam um único som.' },
         { id: 'p3-18', tipo: 'memoria', livro: 'x-ou-ch', pagina: 48,
           pergunta: 'Jogo da memória! Encontre os pares:',
           pares: [['🍍', 'abacaxi'], ['🔑', 'chave'], ['🐟', 'peixe'], ['🎒', 'mochila']],

@@ -2,7 +2,7 @@
 Reino.RASCUNHO_PORTUGUES = Reino.RASCUNHO_PORTUGUES || {};
 Reino.RASCUNHO_PORTUGUES.p1 =
     {
-      id: 'p1', nome: 'Receita de Quê?', emoji: '🍓', paginas: 'pp. 30 a 36 e 51 a 54',
+      id: 'p1', nome: 'Receita de Quê?', emoji: '🍓', paginas: 'pp. 30, 32 a 34 e 52 a 54',
       intro: 'Avental no lugar! Vamos descobrir os segredos de uma receita!',
       desafios: [
         { id: 'p1-01', tipo: 'escolha', livro: 'receita', pagina: 30,
@@ -100,7 +100,7 @@ Reino.RASCUNHO_PORTUGUES.p1 =
             { e: '🍰', t: 'Um tipo de bolo' },
           ], certa: 1,
           explica: 'Fouet é um batedor de claras. Ele serve para bater e misturar. Na apostila, isso está no glossário, a caixinha que explica as palavras difíceis.' },
-        { id: 'p1-13', tipo: 'escolha', livro: 'partes-receita', pagina: 36,
+        { id: 'p1-13', tipo: 'escolha', livro: 'partes-receita', pagina: 34,
           pergunta: 'Em qual parte da receita a gente escreve a lista do que vai usar?',
           opcoes: [
             { e: '📝', t: 'Título da receita' },
@@ -111,7 +111,7 @@ Reino.RASCUNHO_PORTUGUES.p1 =
         { id: 'p1-14', tipo: 'ordenar', livro: 'partes-receita', pagina: 52,
           pergunta: 'Na hora de escrever uma receita, coloque as partes na ordem da apostila:',
           itens: ['Título da receita', 'Ingredientes', 'Modo de preparo', 'Porções'],
-          explica: 'Primeiro o título, depois os ingredientes, o modo de preparo e, por fim, as porções.' },
+          explica: 'Na apostila, primeiro vem o título, depois os ingredientes, o modo de preparo e, por fim, as porções.' },
         { id: 'p1-15', tipo: 'varias', livro: 'partes-receita', pagina: 53,
           pergunta: 'Para avaliar uma receita, o que a gente confere? Toque em TODOS.',
           opcoes: [
@@ -146,7 +146,7 @@ Reino.RASCUNHO_PORTUGUES.p1 =
           palavras: ['açúcar', 'gelo', 'copo', 'gelado'],
           frases: [
             { antes: 'Se você desejar, coloque', depois: 'a gosto, para deixar o suco mais doce.', certa: 0 },
-            { antes: 'Adicione 4 cubos de', depois: '.', certa: 1 },
+            { antes: 'Adicione 4 cubos de', depois: 'para o suco ficar geladinho.', certa: 1 },
             { antes: 'Distribua o suco no', depois: '.', certa: 2 },
             { antes: 'Sirva', depois: '.', certa: 3 },
           ],

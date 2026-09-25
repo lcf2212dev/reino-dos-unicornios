@@ -21,7 +21,7 @@ Reino.registrarMateria({
   salas: [
     /* ------------------------------------------------------------ SALA 1 */
     {
-      id: 'p1', nome: 'Receita de Quê?', emoji: '🍓', paginas: 'pp. 30 a 36 e 51 a 54',
+      id: 'p1', nome: 'Receita de Quê?', emoji: '🍓', paginas: 'pp. 30, 32 a 34 e 52 a 54',
       intro: 'Avental no lugar! Vamos descobrir os segredos de uma receita!',
       desafios: [
         { id: 'p1-01', tipo: 'escolha', livro: 'receita', pagina: 30,
@@ -119,7 +119,7 @@ Reino.registrarMateria({
             { e: '🍰', t: 'Um tipo de bolo' },
           ], certa: 1,
           explica: 'Fouet é um batedor de claras. Ele serve para bater e misturar. Na apostila, isso está no glossário, a caixinha que explica as palavras difíceis.' },
-        { id: 'p1-13', tipo: 'escolha', livro: 'partes-receita', pagina: 36,
+        { id: 'p1-13', tipo: 'escolha', livro: 'partes-receita', pagina: 34,
           pergunta: 'Em qual parte da receita a gente escreve a lista do que vai usar?',
           opcoes: [
             { e: '📝', t: 'Título da receita' },
@@ -130,7 +130,7 @@ Reino.registrarMateria({
         { id: 'p1-14', tipo: 'ordenar', livro: 'partes-receita', pagina: 52,
           pergunta: 'Na hora de escrever uma receita, coloque as partes na ordem da apostila:',
           itens: ['Título da receita', 'Ingredientes', 'Modo de preparo', 'Porções'],
-          explica: 'Primeiro o título, depois os ingredientes, o modo de preparo e, por fim, as porções.' },
+          explica: 'Na apostila, primeiro vem o título, depois os ingredientes, o modo de preparo e, por fim, as porções.' },
         { id: 'p1-15', tipo: 'varias', livro: 'partes-receita', pagina: 53,
           pergunta: 'Para avaliar uma receita, o que a gente confere? Toque em TODOS.',
           opcoes: [
@@ -165,7 +165,7 @@ Reino.registrarMateria({
           palavras: ['açúcar', 'gelo', 'copo', 'gelado'],
           frases: [
             { antes: 'Se você desejar, coloque', depois: 'a gosto, para deixar o suco mais doce.', certa: 0 },
-            { antes: 'Adicione 4 cubos de', depois: '.', certa: 1 },
+            { antes: 'Adicione 4 cubos de', depois: 'para o suco ficar geladinho.', certa: 1 },
             { antes: 'Distribua o suco no', depois: '.', certa: 2 },
             { antes: 'Sirva', depois: '.', certa: 3 },
           ],
@@ -237,7 +237,7 @@ Reino.registrarMateria({
             { e: '🍔', t: 'hambúrguer', ok: true },
             { e: '🎨', t: 'desenho' },
           ],
-          explica: 'Helicóptero, hotel, homem e hambúrguer começam com H. Cachorro, mochila, chocolate e desenho têm H, mas no meio da palavra!' },
+          explica: 'Helicóptero, hotel, homem e hambúrguer começam com H. Cachorro, mochila e chocolate têm H, mas junto com o C (CH), e não sozinho no começo. Desenho tem H junto com o N (NH).' },
         { id: 'p2-09', tipo: 'completar', colado: true, livro: 'letra-h', pagina: 40,
           pergunta: 'Qual letra está faltando no começo de cada palavra? Ela é quietinha!',
           palavras: ['H', 'P', 'D'],
@@ -290,7 +290,7 @@ Reino.registrarMateria({
           itens: [
             { e: '🦛', t: 'hipopótamo', g: 0 },
             { e: '🍔', t: 'hambúrguer', g: 0 },
-            { e: '🥕', t: 'horta', g: 0 },
+            { e: '🌱', t: 'horta', g: 0 },
             { e: '🍍', t: 'abacaxi', g: 1 },
             { e: '💧', t: 'água', g: 1 },
             { e: '🐶', t: 'cachorro', g: 1 },
@@ -301,7 +301,7 @@ Reino.registrarMateria({
 
     /* ------------------------------------------------------------ SALA 3 */
     {
-      id: 'p3', nome: 'CH, LH, NH e o X', emoji: '🐣', paginas: 'pp. 42 a 50, 55 e 56',
+      id: 'p3', nome: 'CH, LH, NH e o X', emoji: '🐣', paginas: 'pp. 42 a 50 e 55',
       intro: 'Bem-vinda ao Pátio do Circo: vamos brincar com o CH, o LH, o NH e o X!',
       desafios: [
         { id: 'p3-01', tipo: 'escolha', livro: 'digrafos', pagina: 42,
@@ -390,7 +390,7 @@ Reino.registrarMateria({
           ], certa: 0,
           explica: 'Xarope começa com X! Chocolate se escreve com CH, e banana não tem nenhum dos dois.' },
         { id: 'p3-10', tipo: 'ligar', livro: 'sons-do-x', pagina: 47,
-          pergunta: 'A letra X pode ter três sons! Ligue cada som a uma palavra:',
+          pergunta: 'A letra X tem sons diferentes! Ligue três deles à palavra certa:',
           pares: [
             [{ t: 'Som de S' }, { t: 'próximo' }],
             [{ t: 'Som de Z' }, { t: 'exame' }],
@@ -444,7 +444,7 @@ Reino.registrarMateria({
             { t: 'chuchu' },
             { t: 'chá' },
           ],
-          explica: 'XÍcara, ameiXa e meXer têm X. Chocolate, chuchu e chá se escrevem com CH.' },
+          explica: 'Xícara, ameiXa e meXer têm X. Chocolate, chuchu e chá se escrevem com CH.' },
         { id: 'p3-15', tipo: 'ligar', livro: 'digrafos', pagina: 55,
           pergunta: 'Ligue cada figura ao dígrafo que aparece no nome dela:',
           pares: [
@@ -453,7 +453,7 @@ Reino.registrarMateria({
             [{ e: '⛰️', t: 'montanha' }, { t: 'NH' }],
           ],
           explica: 'AbeLHa tem LH, CHinelo tem CH e montaNHa tem NH.' },
-        { id: 'p3-16', tipo: 'escolha', livro: 'x-ou-ch', pagina: 55,
+        { id: 'p3-16', tipo: 'escolha', livro: 'x-ou-ch', pagina: 48,
           pergunta: 'Ditado! Qual é a escrita certa do nome desta fruta? 🍍',
           opcoes: [
             { t: 'abacaxi' },
@@ -463,8 +463,8 @@ Reino.registrarMateria({
           explica: 'Abacaxi se escreve com X no final: a-ba-ca-xi.' },
         { id: 'p3-17', tipo: 'frase', livro: 'digrafos', pagina: 43,
           pergunta: 'Monte a frase da apostila tocando nos blocos na ordem certa:',
-          blocos: ['CH, LH e NH', 'são dígrafos:', 'duas letras', 'que representam', 'um único som.'],
-          explica: 'CH, LH e NH são dígrafos: duas letras que representam um único som.' },
+          blocos: ['CH, LH e NH', 'são dígrafos,', 'duas letras', 'que representam', 'um único som.'],
+          explica: 'CH, LH e NH são dígrafos, duas letras que representam um único som.' },
         { id: 'p3-18', tipo: 'memoria', livro: 'x-ou-ch', pagina: 48,
           pergunta: 'Jogo da memória! Encontre os pares:',
           pares: [['🍍', 'abacaxi'], ['🔑', 'chave'], ['🐟', 'peixe'], ['🎒', 'mochila']],
@@ -510,17 +510,17 @@ Reino.registrarMateria({
           ], certa: 0,
           explica: 'Densa quer dizer mais apertadinha, quase virando gelo. Quanto mais perto da Antártida, mais fria fica a água.' },
         { id: 'p4-05', tipo: 'varias', livro: 'relato', pagina: 60,
-          apoio: { titulo: 'Chegamos? (trecho)', partes: [ { texto: 'Chegando perto, sentiram vento gelado no rosto e viram pinguins saltando da água e focas no mar. Lá fora, só com luvas e gorro!' } ] },
+          apoio: { titulo: 'Chegamos? (resumo)', partes: [ { texto: 'Alguns sinais mostraram que estavam chegando: não viam mais albatrozes no céu, sentiam o vento gelado no rosto e lá fora só dava para ficar com luvas e gorros. Depois, começaram a ver pinguins e focas.' } ] },
           pergunta: 'Quais sinais mostraram que as irmãs estavam chegando? Toque em TODOS.',
           opcoes: [
             { e: '🌬', t: 'Vento gelado no rosto', ok: true },
-            { e: '🐧', t: 'Pinguins saltando da água', ok: true },
+            { e: '🪶', t: 'Não ver mais albatrozes no céu', ok: true },
             { e: '🥶', t: 'Precisar de luvas e gorros lá fora', ok: true },
-            { e: '☀', t: 'Um calorão no barco' },
+            { e: '🏖', t: 'Uma praia de areia quente no caminho' },
           ],
-          explica: 'O vento ficou gelado, os pinguins e as focas apareceram, e ninguém saía sem luvas e gorros. Calorão, não!' },
+          explica: 'Os albatrozes sumiram do céu, o vento ficou gelado e ninguém saía sem luvas e gorros. Praia quente, não! Lá é tudo gelo.' },
         { id: 'p4-06', tipo: 'escolha', livro: 'relato', pagina: 60,
-          apoio: { titulo: 'Chegamos? (trecho)', partes: [ { texto: 'O pai disse que já dava para ver um iceberg no caminho. Combinaram: quem visse o primeiro iceberg ganhava um prêmio.' } ] },
+          apoio: { titulo: 'Chegamos? (resumo)', partes: [ { texto: 'O pai disse que um iceberg já podia aparecer no caminho. Combinaram: quem visse o primeiro iceberg ganhava um prêmio.' } ] },
           pergunta: 'Qual era o combinado no barco?',
           opcoes: [
             { e: '🏆', t: 'Quem avistar o primeiro iceberg ganha um prêmio' },
@@ -623,11 +623,11 @@ Reino.registrarMateria({
             { e: '🔺', t: 'Que a parte de cima do iceberg é a maior' },
             { e: '🥶', t: 'Que o iceberg está muito gelado' },
           ], certa: 0,
-          explica: 'Só um pedaço pequeno do iceberg fica fora da água (a apostila diz 30%). O resto fica escondido embaixo d\'água. Por isso a frase quer dizer que tem muito mais do que se vê à primeira vista.' },
+          explica: 'Só um pedaço pequeno do iceberg fica fora da água. O resto fica escondido embaixo d\'água. Por isso a frase quer dizer que tem muito mais do que se vê à primeira vista.' },
         { id: 'p4-19', tipo: 'vf', livro: 'ponta-iceberg', pagina: 67,
           afirmacao: 'A maior parte do iceberg fica escondida embaixo d\'água.',
           certo: true,
-          explica: 'Isso! Só um pedaço pequeno do iceberg fica fora da água (a apostila diz 30%). O resto está submerso, embaixo d\'água.' },
+          explica: 'Isso! Só um pedaço pequeno do iceberg fica fora da água. O resto está submerso, embaixo d\'água.' },
         { id: 'p4-20', tipo: 'memoria', livro: 'relato', pagina: 60,
           pergunta: 'Jogo da memória da expedição! Encontre os pares:',
           pares: [['🐧', 'Pinguins'], ['🌬', 'Vento gelado'], ['🌊', 'Estreito de Drake'], ['🏆', 'Prêmio do iceberg']],
@@ -842,8 +842,8 @@ Reino.registrarMateria({
       texto: 'CH, LH e NH são dígrafos: duas letras que fazem um som só. O CH tem o som do X de xícara, como em chocalho. O LH tem um som único, como em escolhem. O NH também tem um som só dele, como em amarelinha.' },
     { id: 'x-ou-ch', e: '🔤', titulo: 'X ou CH?',
       texto: 'O X e o CH podem ter o mesmo som. Xícara e chave começam com o mesmo som! Com X: xícara, abacaxi, peixe, caixa. Com CH: chave, chuva, mochila, chocolate. Só ouvindo não dá para saber: é preciso conhecer a palavra. Quanto mais a gente lê, mais fácil fica!' },
-    { id: 'sons-do-x', e: '🔊', titulo: 'Os três sons do X',
-      texto: 'A letra X pode ter três sons diferentes, conforme a palavra. Som de S, como em excesso e próximo. Som de Z, como em exame e exemplo. Som de CH, como em xícara e abacaxi.' },
+    { id: 'sons-do-x', e: '🔊', titulo: 'Sons do X',
+      texto: 'A letra X pode ter sons diferentes, conforme a palavra. Três deles: som de S, como em excesso e próximo. Som de Z, como em exame e exemplo. Som de CH, como em xícara e abacaxi.' },
     { id: 'relato', e: '📔', titulo: 'O relato pessoal',
       texto: 'O relato pessoal conta uma situação especial que a gente viveu. Ele diz o que aconteceu, onde foi, quem estava junto e como a gente se sentiu. As irmãs Laura, Tamara e Marininha escreveram um relato da viagem de barco delas até a Antártida. Elas contaram dos pinguins, das focas, do vento gelado no rosto e dos icebergs. Escrever ajuda a lembrar e deixa outras pessoas imaginarem tudo.' },
     { id: 'tempo-no-relato', e: '⏰', titulo: 'Quando aconteceu?',
@@ -851,7 +851,7 @@ Reino.registrarMateria({
     { id: 'som-de-s', e: '🌞', titulo: 'Quem faz o som de S?',
       texto: 'Várias letras podem ter o som de S! O S no começo da palavra: sapato, sol, sapo. O S depois de uma vogal e antes de uma consoante: pasta, costa. O S no final da palavra: dados, alunos. O SS sempre fica no meio da palavra, entre duas vogais: passarinho, massa, carrossel. Cuidado: um S só, entre duas vogais, tem som de Z: casa, casaco. O Z no final da palavra: arroz, feliz, voz. E o X em algumas palavras: próximo, máximo.' },
     { id: 'ponta-iceberg', e: '🧊', titulo: 'A ponta do iceberg',
-      texto: 'Quando alguém diz "isso é só a ponta do iceberg", quer dizer que tem muito mais do que parece! Só um pedaço pequeno do iceberg fica fora da água, em cima do mar (a apostila diz 30%). O resto, a parte maior, fica escondido debaixo da água. E cada iceberg é único, com tons de branco, cinza, azul e verde.' },
+      texto: 'Quando alguém diz "isso é só a ponta do iceberg", quer dizer que tem muito mais do que parece! Só um pedaço pequeno do iceberg fica fora da água, em cima do mar. O resto, a parte maior, fica escondido debaixo da água. E cada iceberg é único, com tons de branco, cinza, azul e verde.' },
     { id: 'silabas', e: '👏', titulo: 'Separar em sílabas',
       texto: 'As sílabas são os pedacinhos da palavra. Fale batendo palmas, uma palma para cada pedacinho: bal-de, pal-mei-ra! Para escrever a palavra separada, a gente usa um tracinho entre as sílabas: al-gu-ma, par-te, to-tal.' },
     { id: 'l-r-final', e: '🌊', titulo: 'L e R no fim da sílaba',
