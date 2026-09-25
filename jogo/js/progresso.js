@@ -32,18 +32,58 @@
   }
 
   /* ---------- carregar / salvar ---------- */
+  /* Duas abas no mesmo aparelho dividem o mesmo save. `vistoLocal` é o texto do save que ESTA aba
+     leu ou gravou por último: se o que está no aparelho for diferente, outra aba gravou no meio, e
+     antes de gravar por cima esta aba junta o que ela fez (P.mesclar, as mesmas regras de sempre).
+     O evento `storage` (abaixo) faz a mesma junção assim que a outra aba grava. */
+  var vistoLocal = null;
+  function lerBruto() {
+    try { return localStorage.getItem(Reino.config.chaveSave); } catch (e) { return null; }
+  }
   function lerLocal() {
-    try {
-      var bruto = localStorage.getItem(Reino.config.chaveSave);
-      if (!bruto) return null;
-      return JSON.parse(bruto);
-    } catch (e) { return null; }
+    var bruto = lerBruto();
+    vistoLocal = bruto;
+    if (!bruto) return null;
+    try { return JSON.parse(bruto); } catch (e) { return null; }
+  }
+  // o save que outra aba gravou e esta ainda não juntou (null = nenhum)
+  function gravadoPorOutra() {
+    var bruto = lerBruto();
+    if (!bruto || bruto === vistoLocal) return null;
+    try { var outro = JSON.parse(bruto); return objeto(outro) ? outro : null; } catch (e) { return null; }
   }
   function gravarLocal() {
+    var outro = estado && gravadoPorOutra();
+    if (outro) { estado = completar(comCopia(P.mesclar(estado, outro))); P.conferirPersistencia(); }
     // a cópia entra antes da normalização (como em carregar e na mescla, onde o completar() vem depois)
     estado = normalizarNovos(comCopia(estado));
-    try { localStorage.setItem(Reino.config.chaveSave, JSON.stringify(estado)); } catch (e) {}
+    var texto = JSON.stringify(estado);
+    try { localStorage.setItem(Reino.config.chaveSave, texto); vistoLocal = texto; } catch (e) {}
     gravarCopia();
+  }
+  /* Conteúdo que importa para saber se uma mescla trouxe algo novo: tudo menos `atualizado` e a
+     fome, a sede e o `em` dos cuidados (que o relógio muda a cada segundo e o cuidados.js grava sozinho;
+     a `acao`, carimbo de comer/beber, conta: comida dada num aparelho tem que chegar aos outros), com as chaves
+     em ordem e sem os valores vazios (a mescla escreve `perfeita: false` onde o save não tinha o
+     campo, e o jogo lê os dois do mesmo jeito). Sem isso, duas abas (ou dois aparelhos) ficariam
+     regravando uma para a outra. */
+  function conteudo(e) {
+    function ordenar(x) {
+      if (Array.isArray(x)) return x.map(ordenar);
+      if (!x || typeof x !== 'object') return x;
+      var r = {};
+      Object.keys(x).sort().forEach(function (k) { if (x[k]) r[k] = ordenar(x[k]); });
+      return r;
+    }
+    var c = ordenar(e), acoes = {};
+    delete c.atualizado;
+    if (objeto(c.cuidados)) Object.keys(c.cuidados).forEach(function (k) { if (objeto(c.cuidados[k]) && c.cuidados[k].acao) acoes[k] = c.cuidados[k].acao; });
+    c.cuidados = acoes;
+    return JSON.stringify(c);
+  }
+  // `mesclado` tem algo que `recebido` não tem? (o `recebido` passa pela mesma arrumação do carregar)
+  function trouxeAlgo(mesclado, recebido) {
+    return conteudo(mesclado) !== conteudo(completar(U.copia(recebido)));
   }
 
   /* Cópia de segurança dos campos novos (cuidados, despensa, ajustes.surpresa e surpresaEm) numa chave que a
@@ -149,6 +189,31 @@
     return estado;
   };
   P.estado = function () { return estado; };
+
+  /* Outra aba deste aparelho gravou: junta na hora com o que esta aba tem na memória. Se esta aba
+     tinha algo a mais (por exemplo, a outra é de uma versão antiga e gravou sem mesclar), grava de
+     volta, com carimbo novo, para o aparelho e para o servidor. Duas abas novas não ficam num
+     vaivém: a segunda junção já não traz nada novo. Vale no evento `storage` e também quando a aba
+     volta a aparecer (aba que ficou congelada no fundo pode não ter recebido o evento). */
+  function juntarDoAparelho(bruto) {
+    if (!estado || !bruto || bruto === vistoLocal) return;
+    var outro;
+    try { outro = JSON.parse(bruto); } catch (e) { return; }
+    if (!objeto(outro)) return;
+    vistoLocal = bruto;
+    estado = completar(comCopia(P.mesclar(estado, U.copia(outro))));
+    var novos = P.conferirPersistencia();
+    vigiarSurpresa();
+    if (novos.length || trouxeAlgo(estado, outro)) P.salvar();
+    else U.emit('progresso', estado);
+    U.emit('progressoRemoto', estado);
+  }
+  if (typeof window !== 'undefined' && window.addEventListener) window.addEventListener('storage', function (ev) {
+    if (ev.key === Reino.config.chaveSave) juntarDoAparelho(ev.newValue);
+  });
+  if (typeof document !== 'undefined' && document.addEventListener) document.addEventListener('visibilitychange', function () {
+    if (!document.hidden) juntarDoAparelho(lerBruto());
+  });
 
   /* O interruptor da surpresa muda nos dois sentidos: quando ela o troca (ui.js só muda o valor e
      chama P.salvar), ganha o carimbo `ajustes.surpresaEm`, e na mescla vale o carimbo maior.
@@ -383,6 +448,9 @@
           var emBranco = !estado.comecou && (estado.geracao || 1) <= (guardado.geracao || 1);
           estado = completar(comCopia(emBranco ? U.copia(guardado) : P.mesclar(estado, guardado)));
           P.conferirPersistencia();
+          // este aparelho tinha algo que o banco não tem: carimbo novo, para os outros aparelhos
+          // não ignorarem o envio abaixo como "já visto" (mesmo `atualizado`)
+          if (trouxeAlgo(estado, guardado)) estado.atualizado = agora();
           gravarLocal();
           vigiarSurpresa();
           U.emit('progresso', estado);
@@ -393,9 +461,12 @@
         nuvem.ref.onSnapshot(function (s) {
           if (!s.exists || s.metadata.hasPendingWrites) return;
           var remoto = s.data() && s.data().estado;
-          if (!remoto || remoto.atualizado === estado.atualizado) return;
+          // nada de novo no banco (pelo conteúdo, não pelo `atualizado`: dois aparelhos podem mandar
+          // estados diferentes com o mesmo carimbo)
+          if (!objeto(remoto) || conteudo(completar(U.copia(remoto))) === conteudo(estado)) return;
           estado = completar(comCopia(P.mesclar(estado, remoto)));
-          if (P.conferirPersistencia().length) agendarNuvem();
+          // a junção trouxe algo que o banco não tem: devolve ao banco com carimbo novo
+          if (P.conferirPersistencia().length || trouxeAlgo(estado, remoto)) { estado.atualizado = agora(); agendarNuvem(); }
           gravarLocal();
           vigiarSurpresa();
           U.emit('progresso', estado);
