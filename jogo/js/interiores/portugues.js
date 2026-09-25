@@ -742,6 +742,16 @@
       });
     } });
 
+  /* ================= QUADRO DO RARO, ESTREITO ================= */
+  // o mesmo quadro-unicornio da biblioteca, 4 px mais estreito e encostado num lado (var.lado: 'dir'|'esq'),
+  // para ficar inteiro ao lado de uma placa de sala comprida (a placa fica no meio da parede, em cima)
+  var QU = I.OBJETOS['quadro-unicornio'];
+  I.objeto('portugues-quadro-estreito', { w: 2, h: 2, parede: true, solido: false,
+    chave: function (P, o) { return QU.chave(P, o); },
+    desenhar: function (ctx, px, py, o, P) {
+      QU.desenhar(ctx, px + (v(o, 'lado', 'dir') === 'dir' ? 4 : 0), py, Object.assign({}, o, { w: 1.75 }), P);
+    } });
+
   /* ================= AJUDANTES DE MONTAGEM ================= */
   // coordenadas locais do cômodo (0..10 × 0..10; fileiras 0 e 1 são a parede)
   function sala(ox, oy, lista) {
@@ -789,16 +799,17 @@
     ]),
     /* ---------- SALA 1: Cozinha das Receitas (azulejo de morango) ---------- */
     sala(1, 13, [
+      // o quadro do raro no canto da parede, fora da placa da sala (que fica no meio, em cima)
       { tipo: 'janela', x: 0, y: 0 }, { tipo: 'portugues-receita', x: 1, y: 0 },
-      { tipo: 'quadro-unicornio', x: 2, y: 0, var: { uni: 'p-receitinha' } },
-      { tipo: 'portugues-panelas', x: 4, y: 0 }, { tipo: 'cortina', x: 6, y: 0, var: { cor: '#ff9cc6' } },
-      { tipo: 'relogio-parede', x: 7, y: 0 }, { tipo: 'prateleira-parede', x: 8, y: 0 }, { tipo: 'janela', x: 10, y: 0 },
+      { tipo: 'portugues-panelas', x: 2, y: 0 }, { tipo: 'cortina', x: 4, y: 0, var: { cor: '#ff9cc6' } },
+      { tipo: 'relogio-parede', x: 5, y: 0 }, { tipo: 'prateleira-parede', x: 6, y: 0 }, { tipo: 'janela', x: 8, y: 0 },
+      { tipo: 'quadro-unicornio', x: 9, y: 0, var: { uni: 'p-receitinha' } },
       { tipo: 'portugues-geladeira', x: 0, y: 2 }, { tipo: 'portugues-fogao', x: 1, y: 2 },
       { tipo: 'portugues-bancada', x: 3, y: 2 },
       inter('liquidificador', 'Liquidificador', { tipo: 'portugues-liquidificador', x: 6, y: 3 }),
       { tipo: 'portugues-cesta-frutas', x: 5, y: 2 }, { tipo: 'flores', x: 6, y: 2, var: { vaso: '#ff4f6a' } }, { tipo: 'vaso-planta', x: 7, y: 2 },
       inter('abacaxi', 'Abacaxi', { tipo: 'portugues-abacaxi', x: 9, y: 3 }),
-      { tipo: 'barril', x: 10, y: 2 }, { tipo: 'caixote', x: 8, y: 2, var: { item: 'estrela' } }, { tipo: 'balde', x: 9, y: 2 },
+      { tipo: 'barril', x: 8, y: 2 }, { tipo: 'caixote', x: 10, y: 2, var: { item: 'estrela' } }, { tipo: 'cesto', x: 9, y: 2 },
       { tipo: 'tapete-listrado', x: 0, y: 4, w: 3, h: 1, var: { cores: ['#ff4f6a', '#fff4ec', '#39a860', '#fff4ec'] } },
       { tipo: 'tapete', x: 1, y: 6, w: 3, h: 2, var: { cor: '#ffd1e6', borda: '#ff4f6a' } },
       inter('salada', 'Salada de frutas', { tipo: 'portugues-salada', x: 1, y: 8 }),
@@ -811,11 +822,11 @@
     ]),
     /* ---------- SALA 2: Horta do H (terra e verde) ---------- */
     sala(25, 13, [
-      { tipo: 'janela', x: 0, y: 0 }, { tipo: 'portugues-cartaz-h', x: 1, y: 0, var: { figura: 'hotel' } },
-      { tipo: 'quadro-unicornio', x: 2, y: 0, var: { uni: 'p-hibisco' } },
+      { tipo: 'quadro-unicornio', x: 0, y: 0, var: { uni: 'p-hibisco' } },
+      { tipo: 'janela', x: 2, y: 0 }, { tipo: 'portugues-cartaz-h', x: 3, y: 0, var: { figura: 'hotel' } },
       { tipo: 'janela', x: 4, y: 0 }, { tipo: 'portugues-cartaz-h', x: 5, y: 0, var: { figura: 'helicoptero' } },
       { tipo: 'bandeirinhas', x: 6, y: 0 }, { tipo: 'janela', x: 8, y: 0 }, { tipo: 'relogio-parede', x: 9, y: 0 }, { tipo: 'janela', x: 10, y: 0 },
-      { tipo: 'vaso-planta', x: 0, y: 2 },
+      { tipo: 'vaso-planta', x: 6, y: 2 },
       inter('placa-horta', 'Placa da horta', { tipo: 'portugues-placa-horta', x: 1, y: 3 }),
       { tipo: 'portugues-canteiro', x: 2, y: 2, var: { planta: 'alface' } },
       { tipo: 'portugues-canteiro', x: 4, y: 2, var: { planta: 'tomate' } },
@@ -837,16 +848,18 @@
     ]),
     /* ---------- SALA 3: Pátio do Circo (lona vermelha e amarelinha no chão) ---------- */
     sala(1, 1, [
-      { tipo: 'quadro-unicornio', x: 0, y: 0, var: { uni: 'p-xicara' } }, { tipo: 'portugues-lona', x: 2, y: 0 },
+      // o quadro do raro no canto da direita, fora da placa da sala (e, no notebook, fora do dinheiro e da estrela)
+      { tipo: 'janela', x: 0, y: 0 }, { tipo: 'cartaz', x: 1, y: 0 }, { tipo: 'portugues-lona', x: 2, y: 0 },
       { tipo: 'bandeirinhas', x: 4, y: 0 }, { tipo: 'portugues-lona', x: 6, y: 0, var: { cor: '#7c5cff' } },
-      { tipo: 'estandarte', x: 8, y: 0, var: { cor: '#e0433f', emblema: 'estrela' } }, { tipo: 'cartaz', x: 9, y: 0 }, { tipo: 'janela', x: 10, y: 0 },
+      { tipo: 'estandarte', x: 8, y: 0, var: { cor: '#e0433f', emblema: 'estrela' } },
+      { tipo: 'quadro-unicornio', x: 9, y: 0, var: { uni: 'p-xicara' } },
       { tipo: 'portugues-banquinho', x: 0, y: 2 },
       inter('chocalho', 'Chocalho', { tipo: 'portugues-chocalho', x: 1, y: 3 }),
       inter('amarelinha', 'Amarelinha', { tipo: 'portugues-amarelinha', x: 2, y: 5 }),
       { tipo: 'portugues-bola-circo', x: 3, y: 2 }, { tipo: 'flores', x: 5, y: 2, var: { vaso: '#7c5cff' } },
       inter('pipoca', 'Carrinho de pipoca', { tipo: 'portugues-pipoca', x: 7, y: 3 }),
-      { tipo: 'portugues-banquinho', x: 6, y: 2, var: { cor: '#e0433f' } }, { tipo: 'vaso-planta', x: 10, y: 2 },
-      { tipo: 'barril', x: 9, y: 2 },
+      { tipo: 'portugues-banquinho', x: 6, y: 2, var: { cor: '#e0433f' } }, { tipo: 'vaso-planta', x: 4, y: 2 },
+      { tipo: 'barril', x: 1, y: 2 },
       inter('ninho', 'Ninho', { tipo: 'portugues-ninho', x: 9, y: 4 }),
       { tipo: 'portugues-bola-circo', x: 0, y: 6 }, { tipo: 'balde', x: 0, y: 7 },
       { tipo: 'banco', x: 4, y: 10 }, { tipo: 'portugues-banquinho', x: 6, y: 10, var: { cor: '#39c5bb' } },
@@ -858,13 +871,13 @@
     /* ---------- SALA 4: Porto da Expedição (convés de madeira, gelo e mar) ---------- */
     sala(13, 1, [
       { tipo: 'janela', x: 0, y: 0 }, { tipo: 'portugues-boia', x: 1, y: 0 },
-      { tipo: 'quadro-unicornio', x: 2, y: 0, var: { uni: 'p-iceberg' } },
-      { tipo: 'mapa-parede', x: 4, y: 0 }, { tipo: 'portugues-bandeira', x: 6, y: 0 },
-      { tipo: 'relogio-parede', x: 7, y: 0 }, { tipo: 'portugues-boia', x: 8, y: 0 }, { tipo: 'janela', x: 9, y: 0 }, { tipo: 'janela', x: 10, y: 0 },
+      { tipo: 'mapa-parede', x: 2, y: 0 }, { tipo: 'portugues-bandeira', x: 4, y: 0 },
+      { tipo: 'relogio-parede', x: 5, y: 0 }, { tipo: 'portugues-boia', x: 6, y: 0 }, { tipo: 'janela', x: 7, y: 0 }, { tipo: 'janela', x: 8, y: 0 },
+      { tipo: 'portugues-quadro-estreito', x: 9, y: 0, var: { uni: 'p-iceberg', lado: 'dir' } },
       { tipo: 'portugues-barco', x: 0, y: 2 },
       inter('iceberg', 'Tanque do iceberg', { tipo: 'portugues-iceberg', x: 7, y: 3 }),
-      { tipo: 'balde', x: 3, y: 2 }, { tipo: 'portugues-albatroz', x: 1, y: 4 },
-      { tipo: 'portugues-cordas', x: 8, y: 2 }, { tipo: 'portugues-ancora', x: 9, y: 2 }, { tipo: 'barril', x: 10, y: 2 },
+      { tipo: 'portugues-ancora', x: 3, y: 2 }, { tipo: 'portugues-albatroz', x: 1, y: 4 },
+      { tipo: 'barril', x: 8, y: 2 }, { tipo: 'portugues-cordas', x: 9, y: 2 }, { tipo: 'caixote', x: 10, y: 2, var: { item: 'moedas' } },
       inter('pinguins', 'Pinguins', { tipo: 'portugues-pinguins', x: 0, y: 5 }),
       { tipo: 'bau', x: 0, y: 4 },
       { tipo: 'portugues-gelo', x: 0, y: 8, w: 3, h: 2 },
@@ -876,15 +889,15 @@
     ]),
     /* ---------- SALA 5: Parque do Carrossel (grama e festa) ---------- */
     sala(25, 1, [
-      { tipo: 'janela', x: 0, y: 0 }, { tipo: 'bandeirinhas', x: 1, y: 0 },
-      { tipo: 'quadro-unicornio', x: 3, y: 0, var: { uni: 'p-farol' } },
-      { tipo: 'bandeirinhas', x: 5, y: 0 }, { tipo: 'janela', x: 7, y: 0 },
+      // o quadro do raro no canto da esquerda, fora da placa da sala (e, no notebook, fora da carta do unicórnio)
+      { tipo: 'quadro-unicornio', x: 0, y: 0, var: { uni: 'p-farol' } },
+      { tipo: 'bandeirinhas', x: 2, y: 0 }, { tipo: 'janela', x: 4, y: 0 }, { tipo: 'bandeirinhas', x: 5, y: 0 }, { tipo: 'janela', x: 7, y: 0 },
       { tipo: 'estandarte', x: 8, y: 0, var: { cor: '#ff5c8a', emblema: 'coracao' } }, { tipo: 'janela', x: 9, y: 0 }, { tipo: 'janela', x: 10, y: 0 },
-      inter('arvore', 'Árvore', { tipo: 'portugues-arvore', x: 1, y: 3 }), { tipo: 'portugues-canteiro-flores', x: 0, y: 2 },
-      { tipo: 'portugues-poste', x: 1, y: 2 }, { tipo: 'portugues-bola', x: 3, y: 4 },
+      inter('arvore', 'Árvore', { tipo: 'portugues-arvore', x: 1, y: 4 }), { tipo: 'portugues-canteiro-flores', x: 2, y: 2 },
+      { tipo: 'portugues-bola', x: 0, y: 2 }, { tipo: 'portugues-bola', x: 3, y: 4 },
       inter('carrossel', 'Carrossel', { tipo: 'portugues-carrossel', x: 5, y: 2 }),
       { tipo: 'portugues-canteiro-flores', x: 4, y: 2, var: { cor: '#b58cff' } }, { tipo: 'portugues-canteiro-flores', x: 8, y: 2, var: { cor: '#ffd34d' } },
-      { tipo: 'planta-alta', x: 10, y: 2 }, { tipo: 'portugues-poste', x: 9, y: 2 },
+      { tipo: 'planta-alta', x: 10, y: 2 }, { tipo: 'portugues-poste', x: 9, y: 2 }, { tipo: 'portugues-poste', x: 3, y: 2 },
       inter('baloes', 'Balões', { tipo: 'portugues-baloes', x: 9, y: 4 }),
       { tipo: 'portugues-algodao', x: 10, y: 5 },
       inter('mel', 'Pote de mel', { tipo: 'portugues-mel', x: 8, y: 9 }),
