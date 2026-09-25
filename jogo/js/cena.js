@@ -167,18 +167,18 @@
     ctx.font = fonte + 'px ' + FONTE_PIXEL;
     var hud = retangulosHud(canvas, dpr);
     var cima = hud.filter(function (r) { return !r.embaixo; });
-    // caixas (px do canvas, com a borda) das placas já postas neste quadro: uma não vai sobre a outra
-    var postas = [];
-    Mapa.lugares().forEach(function (l) {
+    var pad = px(12), topo = px(8), lh = px(24), vao = px(6), borda = px(3), filete = px(2), etiquetaH = px(24);
+    var posteH = Math.round(10 * escala / 3);
+    var folga = borda * 2;
+    // 1ª passada: o lugar normal de cada placa (sobre o telhado ou ao lado), em px do canvas
+    var placas = Mapa.lugares().map(function (l) {
       var linhas = linhasDaPlaca(l.nome);
       var extra = extraDaPlaca(l);
       var largura = 0;
       linhas.forEach(function (linha) { largura = Math.max(largura, ctx.measureText(linha).width); });
       // o contador (0/5, Pronto, Ovo) vai numa etiqueta lilás separada do nome
       var etiquetaW = extra ? Math.ceil(ctx.measureText(extra).width) + px(16) : 0;
-      var etiquetaH = px(24);
       largura = Math.max(largura, etiquetaW);
-      var pad = px(12), topo = px(8), lh = px(24), vao = px(6), borda = px(3), filete = px(2);
       var sw = Math.ceil(largura + pad * 2);
       var sh = topo * 2 + linhas.length * lh + (extra ? vao + etiquetaH : 0);
       var ww = sw / escala, wh = sh / escala;
@@ -194,37 +194,61 @@
         y = (l.rect.y + l.rect.h) * T - wh - 2;
       }
       x = Math.max(T + 1, Math.min(x, Mapa.largura() - ww - T - 1));
-      var sx = Math.round((x - cam.x) * escala);
-      var sy = Math.round((y - cam.y) * escala);
+      return { l: l, linhas: linhas, extra: extra, etiquetaW: etiquetaW, sw: sw, sh: sh, x: x, y: y, ww: ww, wh: wh,
+        sx: Math.round((x - cam.x) * escala), sy: Math.round((y - cam.y) * escala) };
+    });
+    function cruza(lista, x0, y0, sw, sh) {
+      return lista.some(function (r) { return x0 - folga < r.right && x0 + sw + folga > r.left && y0 - folga < r.bottom && y0 + sh + folga > r.top; });
+    }
+    // as placas que não estão atrás de um chip ficam no lugar normal: são obstáculo para as que desviam
+    // (o menu de baixo, o dock, empurra a placa para cima, com o poste)
+    function sobeDoMenu(sx, sy, sw, sh) {
+      hud.forEach(function (r) {
+        if (!r.embaixo) return;
+        if (sx < r.right && sx + sw > r.left && sy - borda < r.bottom && sy + sh + borda + posteH > r.top)
+          sy = Math.min(sy, Math.round(r.top) - sh - borda - posteH - borda);
+      });
+      return sy;
+    }
+    function naTela(sx, sy, sw, sh) { return !(sx > canvas.width || sy > canvas.height || sx + sw < 0 || sy + sh < 0); }
+    var paradas = [];
+    placas.forEach(function (pl) {
+      pl.atras = cruza(cima, pl.sx, pl.sy, pl.sw, pl.sh);
+      if (pl.atras) return;
+      pl.sy = sobeDoMenu(pl.sx, pl.sy, pl.sw, pl.sh);
+      if (naTela(pl.sx, pl.sy, pl.sw, pl.sh)) paradas.push({ left: pl.sx - borda, right: pl.sx + pl.sw + borda, top: pl.sy - borda, bottom: pl.sy + pl.sh + borda });
+    });
+    // caixas (px do canvas, com a borda) das placas que já desviaram neste quadro
+    var postas = [];
+    placas.forEach(function (pl) {
+      var l = pl.l, linhas = pl.linhas, extra = pl.extra, etiquetaW = pl.etiquetaW, sw = pl.sw, sh = pl.sh;
+      var x = pl.x, y = pl.y, ww = pl.ww, wh = pl.wh, sx = pl.sx, sy = pl.sy;
       // atrás de um chip do HUD de cima, a placa vai para o lugar livre mais perto: embaixo dele ou
-      // ao lado (sem cair sobre outra placa); embaixo, sobe (com o poste) para não ficar atrás do menu
-      var posteH = Math.round(10 * escala / 3);
-      var folga = borda * 2;
-      function cruza(lista, x0, y0) {
-        return lista.some(function (r) { return x0 - folga < r.right && x0 + sw + folga > r.left && y0 - folga < r.bottom && y0 + sh + folga > r.top; });
-      }
-      if (cruza(cima, sx, sy)) {
+      // ao lado, nunca sobre outra placa; sem lugar livre, fica no lugar normal (atrás do chip) em vez
+      // de ir para longe do prédio. Embaixo, sobe (com o poste) para não ficar atrás do menu
+      if (pl.atras) {
+        var outras = paradas.concat(postas);
         var melhor = null;
         cima.forEach(function (r) {
           // (ceil/floor: a borda do chip nem sempre cai num px inteiro)
           [{ x: sx, y: Math.ceil(r.bottom + folga) }, { x: Math.ceil(r.right + folga), y: sy }, { x: Math.floor(r.left - folga - sw), y: sy }].forEach(function (k) {
             // para o lado, só se couber inteira na tela (descer mantém o x, mesmo com a placa cortada na borda)
             if (k.x !== sx && (k.x < folga || k.x + sw + folga > canvas.width)) return;
-            if (cruza(cima, k.x, k.y) || cruza(postas, k.x, k.y)) return;
+            if (cruza(cima, k.x, k.y, sw, sh) || cruza(outras, k.x, k.y, sw, sh)) return;
             var d = Math.abs(k.x - sx) + Math.abs(k.y - sy);
             if (!melhor || d < melhor.d) melhor = { x: k.x, y: k.y, d: d };
           });
         });
         if (melhor) { sx = melhor.x; sy = melhor.y; }
-        else cima.forEach(function (r) { if (cruza([r], sx, sy)) sy = Math.max(sy, Math.ceil(r.bottom + folga)); });
+        else {
+          var abaixo = sy;
+          cima.forEach(function (r) { if (cruza([r], sx, abaixo, sw, sh)) abaixo = Math.max(abaixo, Math.ceil(r.bottom + folga)); });
+          if (!cruza(outras, sx, abaixo, sw, sh)) sy = abaixo;
+        }
+        sy = sobeDoMenu(sx, sy, sw, sh);
       }
-      hud.forEach(function (r) {
-        if (!r.embaixo) return;
-        if (sx < r.right && sx + sw > r.left && sy - borda < r.bottom && sy + sh + borda + posteH > r.top)
-          sy = Math.min(sy, Math.round(r.top) - sh - borda - posteH - borda);
-      });
-      if (sx > canvas.width || sy > canvas.height || sx + sw < 0 || sy + sh < 0) return;
-      postas.push({ left: sx - borda, right: sx + sw + borda, top: sy - borda, bottom: sy + sh + borda });
+      if (!naTela(sx, sy, sw, sh)) return;
+      if (pl.atras) postas.push({ left: sx - borda, right: sx + sw + borda, top: sy - borda, bottom: sy + sh + borda });
       // guarda a caixa como ficou na tela (inclusive quando desceu por causa do HUD ou subiu por causa do menu)
       placasNaTela.push({ lugar: l, x: cam.x + (sx - borda) / escala, y: cam.y + (sy - borda) / escala,
         w: (sw + borda * 2) / escala, h: (sh + borda * 2) / escala });
