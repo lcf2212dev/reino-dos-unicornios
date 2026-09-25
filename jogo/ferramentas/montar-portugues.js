@@ -112,6 +112,7 @@ Reino.registrarMateria({
     sprite: 'palavras',
     rect: { x: 22, y: 15, w: 5, h: 5 },   // clareira de baixo: na (23,4) a placa do Castelo cobria o telhado
     placa: 'acima',
+    porCima: true,   // entra depois do sorteio dos enfeites: o resto do reino fica igual (js/mapa.js)
     cores: { parede: '#fff4ec', telhado: '#e0433f', detalhe: '#39a860' },
   },
   guia: 'Eu sou o guia da Casa das Palavras! Aqui tem receita, letras, uma viagem gelada e um carrossel.',

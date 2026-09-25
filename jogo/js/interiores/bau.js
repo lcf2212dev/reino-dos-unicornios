@@ -52,7 +52,9 @@
   I.objeto('bau-monte', { w: 3, h: 1, topo: 20, solido: true, alto: true,
     chave: function (P) { return 'bm:' + centTotal(P); },
     desenhar: function (ctx, px, py, o, P) {
-      var cx = px + 24, max = valorMax() * Math.max(1, (R.materias || []).length);
+      // escala fixa de 2 matérias (R$40): com uma matéria nova, o mesmo dinheiro não pode parecer menor.
+      // Cheio a partir de R$40 (hoje há R$60 possíveis)
+      var cx = px + 24, max = valorMax() * 2;
       var f = Math.max(0, Math.min(1, centTotal(P) / max));
       var alt = 3 + Math.round(f * 16), larg = 16 + Math.round(f * 26);
       // base de pedra

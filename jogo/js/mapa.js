@@ -62,10 +62,14 @@
     }
     // lugares: fixos + um por matéria
     FIXOS.forEach(function (f) { lugares.push(Object.assign({ tipo: f.id, porta: porta(f.rect) }, f)); });
+    // matéria com lugar.porCima entra depois do sorteio dos enfeites (como os EXTRAS), para as árvores
+    // e flores do resto do reino continuarem iguais: o sorteio ainda vê a clareira livre
+    var porCima = [];
     materias.forEach(function (m, i) {
       var r = m.lugar.rect || Mapa.CLAREIRAS[i % Mapa.CLAREIRAS.length];
-      lugares.push({ id: 'materia:' + m.id, tipo: 'materia', materiaId: m.id, nome: m.lugar.nome,
-        sprite: m.lugar.sprite || 'torre', cores: m.lugar.cores, rect: r, porta: porta(r), placa: m.lugar.placa });
+      var l = { id: 'materia:' + m.id, tipo: 'materia', materiaId: m.id, nome: m.lugar.nome,
+        sprite: m.lugar.sprite || 'torre', cores: m.lugar.cores, rect: r, porta: porta(r), placa: m.lugar.placa };
+      if (m.lugar.porCima) porCima.push(l); else lugares.push(l);
     });
 
     function pintar(x, y, t) { if (dentro(x, y)) tipo[y][x] = t; }
@@ -142,6 +146,18 @@
       else if (v < 0.40 && !pertoDaAgua(bx, by)) decor[by][bx] = 'cogumelo';
     }
     // lugares novos por cima do reino já enfeitado: tiram só o enfeite do próprio terreno e do caminho
+    porCima.forEach(function (l) {
+      lugares.push(l);
+      var r = l.rect, p = l.porta;
+      for (var yy = r.y; yy < r.y + r.h; yy++) for (var xx = r.x; xx < r.x + r.w; xx++) {
+        decor[yy][xx] = null;
+        tipo[yy][xx] = 'g';
+        solido[yy][xx] = !(xx === p.x && yy === p.y);
+      }
+      // da porta até a rua (a mesma ligação dos outros lugares)
+      var rua = p.y < 9 ? 9 : 20;
+      for (var cy = p.y + 1; cy < rua; cy++) { decor[cy][p.x] = null; tipo[cy][p.x] = 'c'; solido[cy][p.x] = false; }
+    });
     EXTRAS.forEach(function (f) {
       var l = Object.assign({ tipo: f.id, porta: porta(f.rect) }, f);
       lugares.push(l);
