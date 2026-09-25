@@ -12872,22 +12872,22 @@
    "fala": "Falta um treino para o épico!"
   },
   {
-   "chave": "7039bf9d15",
+   "chave": "8121ca1413",
    "voz": "npc-aurora",
-   "texto": "Faltam dois treinos pro épico!",
+   "texto": "Mais dois treinos pro épico!",
    "pacotes": [
     "interior-castelo"
    ],
-   "fala": "Faltam dois treinos pro épico!"
+   "fala": "Mais dois treinos pro épico!"
   },
   {
-   "chave": "c9f52d8115",
+   "chave": "6a847a1013",
    "voz": "npc-aurora",
-   "texto": "Faltam três treinos pro épico!",
+   "texto": "Mais três treinos pro épico!",
    "pacotes": [
     "interior-castelo"
    ],
-   "fala": "Faltam três treinos pro épico!"
+   "fala": "Mais três treinos pro épico!"
   },
   {
    "chave": "c9ce9442z",
@@ -12899,22 +12899,22 @@
    "fala": "Ou tire ouro, com calma!"
   },
   {
-   "chave": "dcb94cb217",
+   "chave": "efd74e9315",
    "voz": "npc-aurora",
-   "texto": "Faltam quatro treinos pro épico!",
+   "texto": "Mais quatro treinos pro épico!",
    "pacotes": [
     "interior-castelo"
    ],
-   "fala": "Faltam quatro treinos pro épico!"
+   "fala": "Mais quatro treinos pro épico!"
   },
   {
-   "chave": "e3af49c216",
+   "chave": "3d5d532514",
    "voz": "npc-aurora",
-   "texto": "Faltam cinco treinos pro épico!",
+   "texto": "Mais cinco treinos pro épico!",
    "pacotes": [
     "interior-castelo"
    ],
-   "fala": "Faltam cinco treinos pro épico!"
+   "fala": "Mais cinco treinos pro épico!"
   },
   {
    "chave": "49afe4a813",
@@ -13106,22 +13106,22 @@
    "fala": "Falta um treino para o épico!"
   },
   {
-   "chave": "4ea8634c15",
+   "chave": "e649f34113",
    "voz": "npc-oliver",
-   "texto": "Faltam dois treinos pro épico!",
+   "texto": "Mais dois treinos pro épico!",
    "pacotes": [
     "interior-castelo"
    ],
-   "fala": "Faltam dois treinos pro épico!"
+   "fala": "Mais dois treinos pro épico!"
   },
   {
-   "chave": "497ba09815",
+   "chave": "76d4393d13",
    "voz": "npc-oliver",
-   "texto": "Faltam três treinos pro épico!",
+   "texto": "Mais três treinos pro épico!",
    "pacotes": [
     "interior-castelo"
    ],
-   "fala": "Faltam três treinos pro épico!"
+   "fala": "Mais três treinos pro épico!"
   },
   {
    "chave": "29102ddfz",
@@ -13133,22 +13133,22 @@
    "fala": "Ou tire ouro, com calma!"
   },
   {
-   "chave": "a5a0373b17",
+   "chave": "093b4dae15",
    "voz": "npc-oliver",
-   "texto": "Faltam quatro treinos pro épico!",
+   "texto": "Mais quatro treinos pro épico!",
    "pacotes": [
     "interior-castelo"
    ],
-   "fala": "Faltam quatro treinos pro épico!"
+   "fala": "Mais quatro treinos pro épico!"
   },
   {
-   "chave": "144f157d16",
+   "chave": "f217078e14",
    "voz": "npc-oliver",
-   "texto": "Faltam cinco treinos pro épico!",
+   "texto": "Mais cinco treinos pro épico!",
    "pacotes": [
     "interior-castelo"
    ],
-   "fala": "Faltam cinco treinos pro épico!"
+   "fala": "Mais cinco treinos pro épico!"
   },
   {
    "chave": "92e5345113",
@@ -13313,22 +13313,22 @@
    "fala": "Falta um treino para o épico!"
   },
   {
-   "chave": "e063694214",
+   "chave": "b8cb4a3f12",
    "voz": "npc-clara",
-   "texto": "Faltam dois treinos pro épico!",
+   "texto": "Mais dois treinos pro épico!",
    "pacotes": [
     "interior-castelo"
    ],
-   "fala": "Faltam dois treinos pro épico!"
+   "fala": "Mais dois treinos pro épico!"
   },
   {
-   "chave": "95a0f6da14",
+   "chave": "4a40bcaf12",
    "voz": "npc-clara",
-   "texto": "Faltam três treinos pro épico!",
+   "texto": "Mais três treinos pro épico!",
    "pacotes": [
     "interior-castelo"
    ],
-   "fala": "Faltam três treinos pro épico!"
+   "fala": "Mais três treinos pro épico!"
   },
   {
    "chave": "d4e079a1y",
@@ -13340,22 +13340,22 @@
    "fala": "Ou tire ouro, com calma!"
   },
   {
-   "chave": "a2dbe61116",
+   "chave": "ceab746c14",
    "voz": "npc-clara",
-   "texto": "Faltam quatro treinos pro épico!",
+   "texto": "Mais quatro treinos pro épico!",
    "pacotes": [
     "interior-castelo"
    ],
-   "fala": "Faltam quatro treinos pro épico!"
+   "fala": "Mais quatro treinos pro épico!"
   },
   {
-   "chave": "8536a2b715",
+   "chave": "b87aff2013",
    "voz": "npc-clara",
-   "texto": "Faltam cinco treinos pro épico!",
+   "texto": "Mais cinco treinos pro épico!",
    "pacotes": [
     "interior-castelo"
    ],
-   "fala": "Faltam cinco treinos pro épico!"
+   "fala": "Mais cinco treinos pro épico!"
   },
   {
    "chave": "ead28eeb12",
@@ -14610,13 +14610,13 @@
    "fala": "O treino do Castelo já abriu!"
   },
   {
-   "chave": "6c9a456814",
+   "chave": "df5810bf12",
    "voz": "npc-memoria",
-   "texto": "Você fez uma de cinco salas.",
+   "texto": "Já fez uma de cinco salas.",
    "pacotes": [
     "interior-museu"
    ],
-   "fala": "Você fez uma de cinco salas."
+   "fala": "Já fez uma de cinco salas."
   },
   {
    "chave": "2f6ae38bu",
@@ -14628,13 +14628,13 @@
    "fala": "Já ganhou 4 reais!"
   },
   {
-   "chave": "bca5f6d615",
+   "chave": "eebdaceb13",
    "voz": "npc-memoria",
-   "texto": "Você fez duas de cinco salas.",
+   "texto": "Já fez duas de cinco salas.",
    "pacotes": [
     "interior-museu"
    ],
-   "fala": "Você fez duas de cinco salas."
+   "fala": "Já fez duas de cinco salas."
   },
   {
    "chave": "16203c8fu",
@@ -14646,13 +14646,13 @@
    "fala": "Já ganhou 8 reais!"
   },
   {
-   "chave": "eaf02af415",
+   "chave": "4bd59ed913",
    "voz": "npc-memoria",
-   "texto": "Você fez três de cinco salas.",
+   "texto": "Já fez três de cinco salas.",
    "pacotes": [
     "interior-museu"
    ],
-   "fala": "Você fez três de cinco salas."
+   "fala": "Já fez três de cinco salas."
   },
   {
    "chave": "6c910504v",
@@ -14664,13 +14664,13 @@
    "fala": "Já ganhou 12 reais!"
   },
   {
-   "chave": "c6ec1fd917",
+   "chave": "4c19502c15",
    "voz": "npc-memoria",
-   "texto": "Você fez quatro de cinco salas.",
+   "texto": "Já fez quatro de cinco salas.",
    "pacotes": [
     "interior-museu"
    ],
-   "fala": "Você fez quatro de cinco salas."
+   "fala": "Já fez quatro de cinco salas."
   },
   {
    "chave": "c88fb7d8v",
@@ -14853,22 +14853,22 @@
    "fala": "Mais uma vez e o raro nasce!"
   },
   {
-   "chave": "c7894e5417",
+   "chave": "dfbe4f3013",
    "voz": "npc-antonio",
-   "texto": "Mais duas vezes e o raro nasce!",
+   "texto": "Faltam duas vezes pro raro!",
    "pacotes": [
     "interior-museu"
    ],
-   "fala": "Mais duas vezes e o raro nasce!"
+   "fala": "Faltam duas vezes pro raro!"
   },
   {
-   "chave": "0b73d3ee17",
+   "chave": "6af15f3a13",
    "voz": "npc-antonio",
-   "texto": "Mais três vezes e o raro nasce!",
+   "texto": "Faltam três vezes pro raro!",
    "pacotes": [
     "interior-museu"
    ],
-   "fala": "Mais três vezes e o raro nasce!"
+   "fala": "Faltam três vezes pro raro!"
   },
   {
    "chave": "c709667f12",
@@ -14988,22 +14988,22 @@
    "fala": "Mais uma vez e o raro nasce!"
   },
   {
-   "chave": "0d13513815",
+   "chave": "aa2a378411",
    "voz": "npc-chico",
-   "texto": "Mais duas vezes e o raro nasce!",
+   "texto": "Faltam duas vezes pro raro!",
    "pacotes": [
     "interior-museu"
    ],
-   "fala": "Mais duas vezes e o raro nasce!"
+   "fala": "Faltam duas vezes pro raro!"
   },
   {
-   "chave": "b38afd6a15",
+   "chave": "c41c2df611",
    "voz": "npc-chico",
-   "texto": "Mais três vezes e o raro nasce!",
+   "texto": "Faltam três vezes pro raro!",
    "pacotes": [
     "interior-museu"
    ],
-   "fala": "Mais três vezes e o raro nasce!"
+   "fala": "Faltam três vezes pro raro!"
   },
   {
    "chave": "238c982b10",
@@ -15123,22 +15123,22 @@
    "fala": "Mais uma vez e o raro nasce!"
   },
   {
-   "chave": "b7e74f8315",
+   "chave": "1ccdb2b711",
    "voz": "npc-taina",
-   "texto": "Mais duas vezes e o raro nasce!",
+   "texto": "Faltam duas vezes pro raro!",
    "pacotes": [
     "interior-museu"
    ],
-   "fala": "Mais duas vezes e o raro nasce!"
+   "fala": "Faltam duas vezes pro raro!"
   },
   {
-   "chave": "f33f201d15",
+   "chave": "8bf4912111",
    "voz": "npc-taina",
-   "texto": "Mais três vezes e o raro nasce!",
+   "texto": "Faltam três vezes pro raro!",
    "pacotes": [
     "interior-museu"
    ],
-   "fala": "Mais três vezes e o raro nasce!"
+   "fala": "Faltam três vezes pro raro!"
   },
   {
    "chave": "31677d5610",
@@ -15258,22 +15258,22 @@
    "fala": "Mais uma vez e o raro nasce!"
   },
   {
-   "chave": "22aced9c1a",
+   "chave": "3be7f8a816",
    "voz": "npc-contadeira",
-   "texto": "Mais duas vezes e o raro nasce!",
+   "texto": "Faltam duas vezes pro raro!",
    "pacotes": [
     "interior-museu"
    ],
-   "fala": "Mais duas vezes e o raro nasce!"
+   "fala": "Faltam duas vezes pro raro!"
   },
   {
-   "chave": "fbd60b861a",
+   "chave": "b08d1f4216",
    "voz": "npc-contadeira",
-   "texto": "Mais três vezes e o raro nasce!",
+   "texto": "Faltam três vezes pro raro!",
    "pacotes": [
     "interior-museu"
    ],
-   "fala": "Mais três vezes e o raro nasce!"
+   "fala": "Faltam três vezes pro raro!"
   },
   {
    "chave": "83837a6715",
@@ -15402,22 +15402,22 @@
    "fala": "Mais uma vez e o raro nasce!"
   },
   {
-   "chave": "06153e8a14",
+   "chave": "af1889ce10",
    "voz": "npc-nina",
-   "texto": "Mais duas vezes e o raro nasce!",
+   "texto": "Faltam duas vezes pro raro!",
    "pacotes": [
     "interior-museu"
    ],
-   "fala": "Mais duas vezes e o raro nasce!"
+   "fala": "Faltam duas vezes pro raro!"
   },
   {
-   "chave": "3529e8e414",
+   "chave": "669b7d4810",
    "voz": "npc-nina",
-   "texto": "Mais três vezes e o raro nasce!",
+   "texto": "Faltam três vezes pro raro!",
    "pacotes": [
     "interior-museu"
    ],
-   "fala": "Mais três vezes e o raro nasce!"
+   "fala": "Faltam três vezes pro raro!"
   },
   {
    "chave": "198c4299z",
@@ -16061,13 +16061,13 @@
    "fala": "O treino do Castelo já abriu!"
   },
   {
-   "chave": "97fb485c17",
+   "chave": "801d601315",
    "voz": "npc-palavrinha",
-   "texto": "Você fez uma de cinco salas.",
+   "texto": "Já fez uma de cinco salas.",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Você fez uma de cinco salas."
+   "fala": "Já fez uma de cinco salas."
   },
   {
    "chave": "1fdb5647x",
@@ -16079,13 +16079,13 @@
    "fala": "Já ganhou 4 reais!"
   },
   {
-   "chave": "17f4016218",
+   "chave": "029e4f0716",
    "voz": "npc-palavrinha",
-   "texto": "Você fez duas de cinco salas.",
+   "texto": "Já fez duas de cinco salas.",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Você fez duas de cinco salas."
+   "fala": "Já fez duas de cinco salas."
   },
   {
    "chave": "6617edf3x",
@@ -16097,13 +16097,13 @@
    "fala": "Já ganhou 8 reais!"
   },
   {
-   "chave": "7fd4f98818",
+   "chave": "d78f827d16",
    "voz": "npc-palavrinha",
-   "texto": "Você fez três de cinco salas.",
+   "texto": "Já fez três de cinco salas.",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Você fez três de cinco salas."
+   "fala": "Já fez três de cinco salas."
   },
   {
    "chave": "2ce73e10y",
@@ -16115,13 +16115,13 @@
    "fala": "Já ganhou 12 reais!"
   },
   {
-   "chave": "83b65bdd1a",
+   "chave": "ba93c79018",
    "voz": "npc-palavrinha",
-   "texto": "Você fez quatro de cinco salas.",
+   "texto": "Já fez quatro de cinco salas.",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Você fez quatro de cinco salas."
+   "fala": "Já fez quatro de cinco salas."
   },
   {
    "chave": "5d121e3cy",
@@ -16295,22 +16295,22 @@
    "fala": "Mais uma vez e o raro nasce!"
   },
   {
-   "chave": "b87a83d514",
+   "chave": "f3b53dc110",
    "voz": "npc-manu",
-   "texto": "Mais duas vezes e o raro nasce!",
+   "texto": "Faltam duas vezes pro raro!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Mais duas vezes e o raro nasce!"
+   "fala": "Faltam duas vezes pro raro!"
   },
   {
-   "chave": "98b543df14",
+   "chave": "c46d693b10",
    "voz": "npc-manu",
-   "texto": "Mais três vezes e o raro nasce!",
+   "texto": "Faltam três vezes pro raro!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Mais três vezes e o raro nasce!"
+   "fala": "Faltam três vezes pro raro!"
   },
   {
    "chave": "b04acebcz",
@@ -16421,22 +16421,22 @@
    "fala": "Mais uma vez e o raro nasce!"
   },
   {
-   "chave": "a6c3d53516",
+   "chave": "45b0bf2112",
    "voz": "npc-heitor",
-   "texto": "Mais duas vezes e o raro nasce!",
+   "texto": "Faltam duas vezes pro raro!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Mais duas vezes e o raro nasce!"
+   "fala": "Faltam duas vezes pro raro!"
   },
   {
-   "chave": "11671abf16",
+   "chave": "f68d569b12",
    "voz": "npc-heitor",
-   "texto": "Mais três vezes e o raro nasce!",
+   "texto": "Faltam três vezes pro raro!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Mais três vezes e o raro nasce!"
+   "fala": "Faltam três vezes pro raro!"
   },
   {
    "chave": "908c139c11",
@@ -16547,22 +16547,22 @@
    "fala": "Mais uma vez e o raro nasce!"
   },
   {
-   "chave": "5456c5ab18",
+   "chave": "bc15376f14",
    "voz": "npc-chocalho",
-   "texto": "Mais duas vezes e o raro nasce!",
+   "texto": "Faltam duas vezes pro raro!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Mais duas vezes e o raro nasce!"
+   "fala": "Faltam duas vezes pro raro!"
   },
   {
-   "chave": "6de61df518",
+   "chave": "45b640c914",
    "voz": "npc-chocalho",
-   "texto": "Mais três vezes e o raro nasce!",
+   "texto": "Faltam três vezes pro raro!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Mais três vezes e o raro nasce!"
+   "fala": "Faltam três vezes pro raro!"
   },
   {
    "chave": "14eadd7e13",
@@ -16673,22 +16673,22 @@
    "fala": "Mais uma vez e o raro nasce!"
   },
   {
-   "chave": "9f88e68f15",
+   "chave": "c22de94311",
    "voz": "npc-brisa",
-   "texto": "Mais duas vezes e o raro nasce!",
+   "texto": "Faltam duas vezes pro raro!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Mais duas vezes e o raro nasce!"
+   "fala": "Faltam duas vezes pro raro!"
   },
   {
-   "chave": "3eab389115",
+   "chave": "7ef5ac9511",
    "voz": "npc-brisa",
-   "texto": "Mais três vezes e o raro nasce!",
+   "texto": "Faltam três vezes pro raro!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Mais três vezes e o raro nasce!"
+   "fala": "Faltam três vezes pro raro!"
   },
   {
    "chave": "24f077ea10",
@@ -16799,22 +16799,22 @@
    "fala": "Mais uma vez e o raro nasce!"
   },
   {
-   "chave": "d956ceb216",
+   "chave": "058adf2612",
    "voz": "npc-carlos",
-   "texto": "Mais duas vezes e o raro nasce!",
+   "texto": "Faltam duas vezes pro raro!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Mais duas vezes e o raro nasce!"
+   "fala": "Faltam duas vezes pro raro!"
   },
   {
-   "chave": "8d58f71c16",
+   "chave": "7e54219012",
    "voz": "npc-carlos",
-   "texto": "Mais três vezes e o raro nasce!",
+   "texto": "Faltam três vezes pro raro!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Mais três vezes e o raro nasce!"
+   "fala": "Faltam três vezes pro raro!"
   },
   {
    "chave": "1b0a0c2111",
@@ -17339,13 +17339,13 @@
    "fala": "O treino do Castelo já abriu!"
   },
   {
-   "chave": "5ac8b20e15",
+   "chave": "8f192f4913",
    "voz": "npc-ponteiro",
-   "texto": "Você fez uma de cinco salas.",
+   "texto": "Já fez uma de cinco salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Você fez uma de cinco salas."
+   "fala": "Já fez uma de cinco salas."
   },
   {
    "chave": "f613d481v",
@@ -17357,13 +17357,13 @@
    "fala": "Já ganhou 4 reais!"
   },
   {
-   "chave": "2f5153a416",
+   "chave": "6bd2e54514",
    "voz": "npc-ponteiro",
-   "texto": "Você fez duas de cinco salas.",
+   "texto": "Já fez duas de cinco salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Você fez duas de cinco salas."
+   "fala": "Já fez duas de cinco salas."
   },
   {
    "chave": "c6d676f5v",
@@ -17375,13 +17375,13 @@
    "fala": "Já ganhou 8 reais!"
   },
   {
-   "chave": "08da2aa216",
+   "chave": "67bdfa3b14",
    "voz": "npc-ponteiro",
-   "texto": "Você fez três de cinco salas.",
+   "texto": "Já fez três de cinco salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Você fez três de cinco salas."
+   "fala": "Já fez três de cinco salas."
   },
   {
    "chave": "115d7a8aw",
@@ -17393,13 +17393,13 @@
    "fala": "Já ganhou 12 reais!"
   },
   {
-   "chave": "c9868ff318",
+   "chave": "ba0a36da16",
    "voz": "npc-ponteiro",
-   "texto": "Você fez quatro de cinco salas.",
+   "texto": "Já fez quatro de cinco salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Você fez quatro de cinco salas."
+   "fala": "Já fez quatro de cinco salas."
   },
   {
    "chave": "e1329a5ew",
@@ -17672,22 +17672,22 @@
    "fala": "Mais uma vez e o raro nasce!"
   },
   {
-   "chave": "6f8ac10113",
+   "chave": "caef89cdz",
    "voz": "npc-ben",
-   "texto": "Mais duas vezes e o raro nasce!",
+   "texto": "Faltam duas vezes pro raro!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Mais duas vezes e o raro nasce!"
+   "fala": "Faltam duas vezes pro raro!"
   },
   {
-   "chave": "3f8f860313",
+   "chave": "ee895f2fz",
    "voz": "npc-ben",
-   "texto": "Mais três vezes e o raro nasce!",
+   "texto": "Faltam três vezes pro raro!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Mais três vezes e o raro nasce!"
+   "fala": "Faltam três vezes pro raro!"
   },
   {
    "chave": "5a659f20y",
@@ -17897,22 +17897,22 @@
    "fala": "Mais uma vez e o raro nasce!"
   },
   {
-   "chave": "970a879316",
+   "chave": "401ee82712",
    "voz": "npc-stella",
-   "texto": "Mais duas vezes e o raro nasce!",
+   "texto": "Faltam duas vezes pro raro!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Mais duas vezes e o raro nasce!"
+   "fala": "Faltam duas vezes pro raro!"
   },
   {
-   "chave": "55e66c0d16",
+   "chave": "1047007112",
    "voz": "npc-stella",
-   "texto": "Mais três vezes e o raro nasce!",
+   "texto": "Faltam três vezes pro raro!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Mais três vezes e o raro nasce!"
+   "fala": "Faltam três vezes pro raro!"
   },
   {
    "chave": "7f5706a611",
@@ -18185,22 +18185,22 @@
    "fala": "Mais uma vez e o raro nasce!"
   },
   {
-   "chave": "e0eafc5015",
+   "chave": "0e8f5a8c11",
    "voz": "npc-smile",
-   "texto": "Mais duas vezes e o raro nasce!",
+   "texto": "Faltam duas vezes pro raro!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Mais duas vezes e o raro nasce!"
+   "fala": "Faltam duas vezes pro raro!"
   },
   {
-   "chave": "2df3d43215",
+   "chave": "ed830a8e11",
    "voz": "npc-smile",
-   "texto": "Mais três vezes e o raro nasce!",
+   "texto": "Faltam três vezes pro raro!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Mais três vezes e o raro nasce!"
+   "fala": "Faltam três vezes pro raro!"
   },
   {
    "chave": "8379e94310",
@@ -18401,22 +18401,22 @@
    "fala": "Mais uma vez e o raro nasce!"
   },
   {
-   "chave": "d76099cf14",
+   "chave": "a864f08310",
    "voz": "npc-moon",
-   "texto": "Mais duas vezes e o raro nasce!",
+   "texto": "Faltam duas vezes pro raro!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Mais duas vezes e o raro nasce!"
+   "fala": "Faltam duas vezes pro raro!"
   },
   {
-   "chave": "55c2aed114",
+   "chave": "483453d510",
    "voz": "npc-moon",
-   "texto": "Mais três vezes e o raro nasce!",
+   "texto": "Faltam três vezes pro raro!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Mais três vezes e o raro nasce!"
+   "fala": "Faltam três vezes pro raro!"
   },
   {
    "chave": "e4ef37aaz",
@@ -18644,22 +18644,22 @@
    "fala": "Mais uma vez e o raro nasce!"
   },
   {
-   "chave": "60bf270213",
+   "chave": "6cf96796z",
    "voz": "npc-joy",
-   "texto": "Mais duas vezes e o raro nasce!",
+   "texto": "Faltam duas vezes pro raro!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Mais duas vezes e o raro nasce!"
+   "fala": "Faltam duas vezes pro raro!"
   },
   {
-   "chave": "ce723e8c13",
+   "chave": "6073eba0z",
    "voz": "npc-joy",
-   "texto": "Mais três vezes e o raro nasce!",
+   "texto": "Faltam três vezes pro raro!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Mais três vezes e o raro nasce!"
+   "fala": "Faltam três vezes pro raro!"
   },
   {
    "chave": "959bb471y",

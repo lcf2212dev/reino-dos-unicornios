@@ -197,9 +197,9 @@ Folha (IMG_7486 a 7488), notas da leitura do orquestrador:
 - Questão 8: a) a d) impressos; e) CA_A, f) _AIA, g) CA_ACO escritos à mão (letra de adulto); h) riscado com
   "REPETIDA". Fica e) a g), sem o h). Ponto para o Leandro.
 - "13.e)" impresso na questão 12 vira "e)".
-- Itens com mais de uma palavra válida (aceitar todas): 12a CA_O (carro/caro), 12c CA_ETA (careta/carreta).
-  Também existem no dicionário, mas são raras ou regionais (aceitas, e a lista vai para o Leandro):
-  8e CA_A (cassa), 8g CA_ACO (cassaco), 12f FE_O (fero).
+- Itens com mais de uma palavra válida: 12a CA_O (carro/caro), 12c CA_ETA (careta/carreta), aceitas.
+  Decisão da Fase 2: as raras 8e CA_A (cassa), 8g CA_ACO (cassaco) e 12f FE_O (fero) NÃO são aceitas — a prova
+  imita a correção da professora. Na sala p3, NI_O aceita ninho e nicho (treino).
 
 ## 6. Prédio (lugar `materia:portugues`)
 - Desenho de fora: `Mapa.PREDIOS.palavras`, registrado pelo próprio prédio (como a Pet Shop): casinha de

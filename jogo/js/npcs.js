@@ -853,10 +853,10 @@
   }
   N.extenso = extenso;
   function faltamSalas(n) { return n === 1 ? 'Falta só uma sala! 💪' : 'Faltam ' + extenso(n, true) + ' salas! 💪'; }
-  function dicaRaro(n) { return n === 1 ? 'Mais uma vez e o raro nasce! 💙' : 'Mais ' + extenso(n, true) + ' vezes e o raro nasce! 💙'; }
-  function dicaEpico(n) { return n === 1 ? 'Falta um treino para o épico!' : 'Faltam ' + extenso(n) + ' treinos pro épico!'; }
+  function dicaRaro(n) { return n === 1 ? 'Mais uma vez e o raro nasce! 💙' : 'Faltam ' + extenso(n, true) + ' vezes pro raro! 💙'; }
+  function dicaEpico(n) { return n === 1 ? 'Falta um treino para o épico!' : 'Mais ' + extenso(n) + ' treinos pro épico!'; }
   function resumoFeitas(n, total) {
-    return n === total ? 'Você fez as ' + extenso(total, true) + ' salas! 🎉' : 'Você fez ' + extenso(n, true) + ' de ' + extenso(total, true) + ' salas.';
+    return n === total ? 'Você fez as ' + extenso(total, true) + ' salas! 🎉' : 'Já fez ' + extenso(n, true) + ' de ' + extenso(total, true) + ' salas.';
   }
   function resumoDinheiro(v) { return 'Já ganhou ' + reais(v) + '! 💰'; }
   function resumoProxima(m, s, primeira) {

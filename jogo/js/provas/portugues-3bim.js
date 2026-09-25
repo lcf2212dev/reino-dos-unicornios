@@ -115,9 +115,9 @@
           { letra: 'b', antes: 'MA', depois: 'A', certa: 1 },
           { letra: 'c', antes: 'PA', depois: 'EIO', certa: 1 },
           { letra: 'd', antes: 'O', depois: 'O', certa: 1 },
-          { letra: 'e', antes: 'CA', depois: 'A', certa: 0, aceitas: [1] },      // casa (e cassa, o tecido)
+          { letra: 'e', antes: 'CA', depois: 'A', certa: 0 },
           { letra: 'f', antes: '', depois: 'AIA', certa: 0 },
-          { letra: 'g', antes: 'CA', depois: 'ACO', certa: 0, aceitas: [1] },    // casaco (e cassaco, palavra regional)
+          { letra: 'g', antes: 'CA', depois: 'ACO', certa: 0 },
         ],
         explica: 'Entre duas vogais, SS tem som de S: passarinho, massa, passeio, osso. Um S só, entre vogais, tem som de Z: casa, casaco. No começo da palavra é um S só: saia.' },
 
@@ -179,7 +179,7 @@
           { letra: 'c', antes: 'CA', depois: 'ETA', certa: 0, aceitas: [1] },    // careta (e carreta)
           { letra: 'd', antes: '', depois: 'ATO', certa: 0 },
           { letra: 'e', antes: 'CO', depois: 'IDA', certa: 1 },
-          { letra: 'f', antes: 'FE', depois: 'O', certa: 1, aceitas: [0] },      // ferro (e fero, que quer dizer feroz)
+          { letra: 'f', antes: 'FE', depois: 'O', certa: 1 },
         ],
         explica: 'Entre vogais, o som forte do R se escreve com RR: carro, barriga, corrida, ferro. No começo da palavra, um R só já tem som forte: rato. Careta tem som fraco, com um R só.' },
     ],
