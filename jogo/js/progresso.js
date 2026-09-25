@@ -26,7 +26,7 @@
       pago: {},         // materiaId -> valor já pago pelos pais
       ajustes: { som: true, musica: false, voz: true, animacoes: !U.reduzMovimentoSistema, texto: 1, setas: false, surpresa: true },
       ritualVisto: false,
-      cuidados: {},     // uniId -> {fome, sede, em, acao} (0–100, 100 = satisfeito; sem registro = 100/100; acao = carimbo do último comer/beber, 0 = nenhum) — js/cuidados.js
+      cuidados: {},     // uniId -> {fome, sede, em, acao, acaoFome, acaoSede} (0–100, 100 = satisfeito; sem registro = 100/100; acaoFome/acaoSede = carimbo do último comer/beber, acao = o maior, 0 = nenhum) — js/cuidados.js
       despensa: {},     // comidaId -> {compradas, usadas} (contadores que só crescem; quantidade = compradas − usadas)
     };
   }
@@ -77,7 +77,10 @@
     }
     var c = ordenar(e), acoes = {};
     delete c.atualizado;
-    if (objeto(c.cuidados)) Object.keys(c.cuidados).forEach(function (k) { if (objeto(c.cuidados[k]) && c.cuidados[k].acao) acoes[k] = c.cuidados[k].acao; });
+    if (objeto(c.cuidados)) Object.keys(c.cuidados).forEach(function (k) {
+      var r = c.cuidados[k];
+      if (objeto(r) && (r.acao || r.acaoFome || r.acaoSede)) acoes[k] = [r.acao || 0, r.acaoFome || 0, r.acaoSede || 0];
+    });
     c.cuidados = acoes;
     return JSON.stringify(c);
   }
@@ -165,6 +168,7 @@
       r.fome = Math.min(100, Math.max(0, numeroOu(y.fome, 100)));
       r.sede = Math.min(100, Math.max(0, numeroOu(y.sede, 100)));
       r.em = Math.max(0, numeroOu(y.em, 0));
+      ['acaoFome', 'acaoSede'].forEach(function (c) { if (c in r && !numero(r[c])) delete r[c]; });
       cuidados[k] = r;
     });
     if (objeto(e.despensa)) Object.keys(e.despensa).forEach(function (k) {
@@ -243,9 +247,13 @@
   var ORDEM_PREMIO = { comum: 1, raro: 2, lendario: 3 };
 
   // as regras dos campos novos, usadas pela mescla e pela cópia de segurança: `base` ganha no empate
-  /* cuidados: `acao` = hora do último comer/beber (o gasto do relógio não mexe nele; 0 = nenhum ainda).
-     Com `acao` dos dois lados: vale a ação mais recente; empate = a mesma ação vista pelos dois e, como o
-     gasto só desce, vale a menor fome e a menor sede. Um lado sem `acao` (versão anterior): o `em` maior. */
+  /* cuidados: um carimbo por campo, `acaoFome` (hora do último comer) e `acaoSede` (do último beber); o gasto
+     do relógio não mexe neles (0 = nenhum ainda). `acao` = o maior dos dois (registro da versão anterior só
+     tem ele, e aí ele vale para os dois campos). Com carimbo dos dois lados, CADA campo vem do lado com o seu
+     carimbo maior (água dada num aparelho não apaga a comida dada no outro); empate = a mesma ação vista pelos
+     dois e, como o gasto só desce, vale o menor valor. Um lado sem carimbo nenhum: o registro do `em` maior. */
+  var CAMPOS_CUIDADO = [['fome', 'acaoFome'], ['sede', 'acaoSede']];
+  function carimbo(r, chave) { return numero(r[chave]) ? r[chave] : numero(r.acao) ? r.acao : null; }
   function juntarCuidados(base, outro) {
     if (!objeto(outro)) return base;
     Object.keys(outro).forEach(function (k) {
@@ -253,15 +261,18 @@
       var x = proprio(base, k), y = outro[k];
       if (!objeto(y)) return;
       if (!objeto(x)) { base[k] = U.copia(y); return; }
-      // `acao` estragada conta como ausente (regra do `em`); `em` estragado conta como 0
-      if (numero(x.acao) && numero(y.acao)) {
-        if (y.acao > x.acao) base[k] = U.copia(y);
-        else if (y.acao === x.acao) {
-          if (numero(y.fome) && !(y.fome >= x.fome)) x.fome = y.fome;
-          if (numero(y.sede) && !(y.sede >= x.sede)) x.sede = y.sede;
-          x.em = max(numeroOu(x.em, 0), numeroOu(y.em, 0));
-        }
-      } else if (numeroOu(y.em, 0) > numeroOu(x.em, 0)) base[k] = U.copia(y);
+      // carimbo estragado conta como ausente (regra do `em`); `em` estragado conta como 0
+      var comCarimbo = CAMPOS_CUIDADO.every(function (c) { return carimbo(x, c[1]) !== null && carimbo(y, c[1]) !== null; });
+      if (!comCarimbo) { if (numeroOu(y.em, 0) > numeroOu(x.em, 0)) base[k] = U.copia(y); return; }
+      CAMPOS_CUIDADO.forEach(function (c) {
+        var campo = c[0], chave = c[1], cx = carimbo(x, chave), cy = carimbo(y, chave);
+        if (cy > cx) {
+          if (numero(y[campo])) x[campo] = y[campo];
+          if (numero(x[chave]) || numero(y[chave])) x[chave] = cy;
+        } else if (cy === cx && numero(y[campo]) && !(y[campo] >= x[campo])) x[campo] = y[campo];
+      });
+      if (numero(x.acao) || numero(y.acao)) x.acao = max(numeroOu(x.acao, 0), numeroOu(y.acao, 0));
+      x.em = max(numeroOu(x.em, 0), numeroOu(y.em, 0));
     });
     return base;
   }
@@ -334,8 +345,9 @@
     var er = objeto(r.estrelas) ? r.estrelas : {}, ea = objeto(antigo.estrelas) ? antigo.estrelas : {};
     r.estrelas = { ganhas: max(numeroOu(er.ganhas, 0), numeroOu(ea.ganhas, 0)), gastas: Math.max(0, max(numeroOu(er.gastas, 0), numeroOu(ea.gastas, 0))) };
     Object.keys(antigo.loja || {}).forEach(function (k) { if (antigo.loja[k]) r.loja[k] = true; });
-    // fome e sede: por unicórnio, a regra de juntarCuidados (`acao` dos dois lados, 0 inclusive: a maior vale;
-    // empate: menor fome, menor sede e maior `em`; um lado sem `acao`: o `em` maior, empate = o lado mais recente).
+    // fome e sede: por unicórnio, a regra de juntarCuidados (carimbo dos dois lados, 0 inclusive: cada campo vem
+    // do lado com o seu carimbo maior, `acaoFome`/`acaoSede`, ou `acao` para os dois; empate: o menor valor e o
+    // maior `em`; um lado sem carimbo: o `em` maior, empate = o lado mais recente).
     // Um lado sem o campo (aparelho com a versão antiga) não apaga nada: vale o outro lado.
     // (cuidados ou despensa estragados no lado mais recente não apagam os do outro lado)
     if (a.cuidados || b.cuidados) r.cuidados = juntarCuidados(U.copia(objeto(recente.cuidados) ? recente.cuidados : {}), antigo.cuidados);

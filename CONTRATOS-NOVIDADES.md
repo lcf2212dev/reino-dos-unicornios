@@ -33,22 +33,26 @@ campos existentes também não mudam, com um endurecimento só (em `estrelas`, l
 todos aditivos (`estadoNovo()` + `completar()`):
 
 ```
-cuidados: { <uniId>: { fome, sede, em, acao } }  // 0–100 (100 = satisfeito); em = Date.now() da última mudança;
-                                                 // acao = carimbo do último comer/beber: max(Date.now(), acao + 1),
-                                                 // sempre crescente; 0 = nunca comeu/bebeu. O gasto não mexe em
-                                                 // acao, mas cria o registro já com acao: 0 (e põe acao: 0 no
-                                                 // registro de versão anterior que ainda não tem)
+cuidados: { <uniId>: { fome, sede, em, acao, acaoFome, acaoSede } }
+                                                 // 0–100 (100 = satisfeito); em = Date.now() da última mudança;
+                                                 // acaoFome = carimbo do último comer, acaoSede = do último beber:
+                                                 // max(Date.now(), acao + 1), sempre crescente; acao = o maior dos
+                                                 // dois; 0 = nunca. O gasto não mexe nos carimbos. registroParaMudar
+                                                 // cria o registro com acao: 0 e dá ao registro que só tem `acao`
+                                                 // acaoFome = acaoSede = acao (campos aditivos)
 despensa: { <comidaId>: { compradas, usadas } }  // contadores que só crescem; quantidade = compradas − usadas
 ajustes.surpresa: true                           // interruptor "❓ Perguntas surpresa" (padrão ligado)
 ajustes.surpresaEm: <Date.now()>                 // carimbo da última troca de verdade do interruptor (só P.salvar marca)
 ```
 - Unicórnio sem registro em `cuidados` = fome 100 e sede 100 (unicórnio novo nasce satisfeito).
 - **Mescla** (mesma geração):
-  - `cuidados` (`juntarCuidados`): para cada `uniId` de qualquer lado, se os DOIS lados têm `acao` numérica ≥ 0
-    (o 0 conta), vale a maior `acao`; empate (inclusive 0 e 0, os dois só gastaram) = a menor fome, a menor
-    sede e o maior `em` (o gasto só desce entre uma ação e outra). Se algum lado não tem `acao` numérica (save
-    da versão anterior ou valor estragado): vale o `em` maior (empate: o lado mais recente). Quem tratar
-    `acao: 0` como "sem acao" muda a mescla de dois aparelhos.
+  - `cuidados` (`juntarCuidados`): para cada `uniId` de qualquer lado, se os DOIS lados têm carimbo para a fome
+    e para a sede (o carimbo de um campo é `acaoFome`/`acaoSede` numérico ≥ 0 ou, na falta dele, `acao`; o 0
+    conta), CADA campo vem do lado com o seu carimbo maior (comida dada num aparelho e água dada no outro valem
+    as duas); empate (inclusive 0 e 0) = o menor valor daquele campo (o gasto só desce entre uma ação e
+    outra). `acao` = o maior dos dois lados; `em` = o maior. Se algum lado não tem carimbo nenhum (save da
+    versão anterior ou valor estragado): vale o registro do `em` maior (empate: o lado mais recente). Quem
+    tratar `acao: 0` como "sem acao" muda a mescla de dois aparelhos.
   - `despensa`: para cada comida, `compradas` = maior e `usadas` = maior (contador estragado conta 0).
   - Um lado sem o campo (aparelho com a versão antiga, que pode apagá-lo): vale o outro lado inteiro.
     Um aparelho antigo nunca faz a Mariana perder comida comprada nem acessório (`loja` já é união).
@@ -74,7 +78,8 @@ ajustes.surpresaEm: <Date.now()>                 // carimbo da última troca de 
   `__proto__`, `constructor`, `prototype` nem outro nome de `Object.prototype` (`hasOwnProperty`,
   `toString`…); fome e sede entre 0 e 100 (inválida vira 100); `em` ≥ 0; `compradas`/`usadas` inteiros ≥ 0
   com `usadas ≤ compradas`; `surpresa` "true"/"false" em texto vira booleano (outro valor volta ao padrão);
-  ids desconhecidos ficam guardados, sem efeito (uma versão não apaga a comida de outra). `acao` **não** é
+  ids desconhecidos ficam guardados, sem efeito (uma versão não apaga a comida de outra). `acao` **não** é `acaoFome`/`acaoSede` que não são números ≥ 0 são apagados (contam como ausentes; vale o `acao`);
+  `acao` continua não sendo normalizada aqui.
   normalizada aqui (nem apagada): quem a conserta é `Cuidados` ao mudar o registro (`registroParaMudar`).
 - "Novo ciclo" (`P.novoCiclo`) mantém `cuidados` e `despensa`. "Apagar tudo" (`P.apagarTudo`) zera, como o resto.
 - Quem lê o estado sempre chama `P.estado()` de novo: a mescla troca o objeto inteiro.
