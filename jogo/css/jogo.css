@@ -365,8 +365,9 @@ body.em-missao #claude-balao { bottom: calc(env(safe-area-inset-bottom, 0px) + 1
 .btn-ouvir { margin-top: 10px; min-height: 44px; padding: 4px 14px; border: 2px solid var(--borda); border-radius: 12px; background: var(--papel-2); font-weight: 700; font-size: 0.85em; }
 
 .opcoes { display: grid; grid-template-columns: 1fr; gap: 12px; }
+/* Verdadeiro/Falso e duas opções lado a lado só a partir de 640 px: no celular, "Verdadeiro" na letra pixel
+   não cabe em meia tela e empurrava o "Falso" para fora */
 @media (min-width: 640px) { .opcoes-varias { grid-template-columns: 1fr 1fr; } .opcoes-duas, .opcoes-vf { grid-template-columns: 1fr 1fr; } }
-.opcoes-vf, .opcoes-duas { grid-template-columns: 1fr 1fr; }
 .opcao {
   display: flex; align-items: center; gap: 12px;
   min-height: 64px; padding: 12px 16px; text-align: left;
@@ -402,7 +403,7 @@ body.em-missao #claude-balao { bottom: calc(env(safe-area-inset-bottom, 0px) + 1
 .dica-toque.pisca { animation: piscar 0.6s ease-in-out 2; color: var(--rosa-forte); }
 
 /* ligar */
-.ligar-colunas { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.ligar-colunas { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
 .ligar-col { display: flex; flex-direction: column; gap: 10px; }
 .ligar-item {
   --cor-par: transparent;
@@ -411,7 +412,10 @@ body.em-missao #claude-balao { bottom: calc(env(safe-area-inset-bottom, 0px) + 1
   border: 3px solid var(--borda); border-radius: 14px;
   background: var(--papel); box-shadow: 0 4px 0 var(--borda);
   font-weight: 700; font-size: 0.92em;
+  flex-wrap: wrap;
 }
+/* o texto desce para baixo da bolinha/figura só quando a palavra mais comprida não cabe ao lado */
+.ligar-item > span:last-child:not(.ligar-img) { flex: 1 1 0; max-width: 100%; overflow-wrap: break-word; }
 .ligar-marca { flex: none; width: 26px; height: 26px; border-radius: 50%; border: 3px solid var(--borda); background: var(--cor-par); color: #fff; font-size: 0.8em; display: grid; place-items: center; }
 .ligar-item.escolhida { outline: 4px solid var(--roxo); outline-offset: 2px; background: var(--lavanda-clara); }
 .ligar-item.ligado { background: color-mix(in srgb, var(--cor-par) 16%, white); }
@@ -441,7 +445,7 @@ body.em-missao #claude-balao { bottom: calc(env(safe-area-inset-bottom, 0px) + 1
 .separar-monte { display: flex; flex-wrap: wrap; gap: 10px; min-height: 60px; padding: 10px; border: 3px dashed var(--lavanda); border-radius: 16px; background: var(--papel); }
 .sep-item { display: flex; align-items: center; gap: 8px; min-height: 52px; padding: 6px 12px; border: 3px solid var(--borda); border-radius: 14px; background: var(--papel); box-shadow: 0 3px 0 var(--borda); font-weight: 700; }
 .sep-item.escolhido { outline: 4px solid var(--roxo); outline-offset: 2px; background: var(--lavanda-clara); transform: translateY(-2px); }
-.baus { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.baus { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
 .bau {
   display: flex; flex-direction: column; align-items: stretch; gap: 6px;
   min-height: 170px; padding: 12px; text-align: left;
@@ -451,7 +455,8 @@ body.em-missao #claude-balao { bottom: calc(env(safe-area-inset-bottom, 0px) + 1
 }
 .bau:nth-child(2) { background: linear-gradient(180deg, #e3d8ff 0 34px, #f6f1ff 34px); }
 .com-escolha .bau { animation: pulsar 1.2s ease-in-out infinite; }
-.bau-titulo { display: flex; align-items: center; gap: 8px; font-size: 1.05em; }
+.bau-titulo { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 1.05em; }
+.bau-titulo b, .sep-item { max-width: 100%; overflow-wrap: break-word; }
 .bau-emoji { font-size: 1.5em; }
 .bau-dica { font-size: 0.78em; font-weight: 700; color: var(--tinta-suave); }
 .bau-itens { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -789,9 +794,13 @@ body.sem-animacao *:not(.balao-respira), body.sem-animacao *::before, body.sem-a
   .missao-pontos .ponto { width: 11px; height: 11px; border-width: 2px; }
   .missao-rodape .sem-relogio { display: none; }
   .btn-conferir { flex: 1; }
-  .ligar-colunas { gap: 8px; }
-  .ligar-item { font-size: 0.85em; padding: 8px; }
-  .baus { gap: 8px; }
+  /* coluna com a palavra mais comprida fica mais larga (1fr com mínimo automático) e a letra do Ligar para em
+     ~24 letras nas duas palavras mais compridas juntas ("nascimento" + "acontecimentos"): nada vaza nem corta palavra */
+  .ligar-colunas { grid-template-columns: 1fr 1fr; gap: 8px; container-type: inline-size; }
+  .ligar-item { font-size: min(0.8em, calc((100cqi - 44px) / 24)); padding: 8px 6px; gap: 6px; }
+  /* baús um embaixo do outro: lado a lado, "Ingredientes"/"Sentimentos" na letra pixel não cabiam */
+  .baus { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .bau { min-height: 120px; }
   .chip { padding: 4px 10px; font-size: 0.85em; }
   .montaria-info { font-size: 0.72em; }
   /* lista de salas da matéria: "Entrar →"/"Jogar de novo" descem para a linha de baixo */
