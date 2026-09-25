@@ -3,7 +3,9 @@
 ## Como jogar
 - **Tablet, celular ou notebook (recomendado):** abra https://claude.ai/artifact/CQUd5TWJQW3fWWw5Cvg77U
   - Precisa estar logado no claude.ai com a sua conta nesses aparelhos, porque o link é privado.
-  - O progresso é sincronizado entre os aparelhos.
+  - O progresso é sincronizado entre os aparelhos. Quando um aparelho junta o que veio de outro lugar (outro aparelho, outra aba), ele reenvia o resultado ao servidor.
+  - Duas abas do jogo no mesmo navegador juntam o progresso uma da outra, sem perder nada.
+  - **Teclado:** uma tela aberta pelo teclado mostra um contorno roxo em volta dela (o Tab leva ao primeiro botão), e o Esc fecha os balões do Claude e dos personagens.
   - O jogo só começa depois de buscar o progresso guardado, no claude.ai ou no computador de casa. Por isso, um aparelho novo já abre com o progresso dela.
   - Se aparecer "O reino não abriu agora", o jogo não conseguiu buscar o progresso. Confira a internet, ou o computador de casa, e toque em "Tentar de novo". Até isso dar certo, o jogo não começa.
 - **Só no notebook, sem internet para o jogo:** abra `jogo/index.html` com duplo clique.
@@ -38,6 +40,7 @@
   node ferramentas/listar-falas.js && uv run --with edge-tts python ferramentas/gerar-vozes.py && node ferramentas/empacotar-vozes.js
   ```
   Só as falas novas são gravadas; as antigas ficam em `ferramentas/vozes-cache/`.
+- Se a rede cair e um pacote de vozes não chegar, o jogo tenta de novo sozinho, e na hora em que a rede volta.
 - Para trocar de voz ou velocidade, edite `vozes` em `jogo/js/config.js` e rode os mesmos comandos.
 - **Personagens das construções:** cada um tem uma voz própria, gravada como as outras.
   - **Museu:** Dona Memória, Seu Antônio, Carteiro Chico, Guia Tainá, Vovó Contadeira e Restauradora Nina.
@@ -76,12 +79,12 @@
 - **Nadar no lago:** ela toca na água ou anda com as setas até o lago, e nada, montada ou a pé. Na água anda mais devagar (60% da velocidade). Se a montaria estiver com fome ou sede, as duas lentidões se somam: na água fica com cerca de 42% da velocidade. Se ela toca em terra, o caminho dá a volta por terra. Para mudar, edite `nado` em `jogo/js/config.js`.
 
 ## Pergunta surpresa
-- De vez em quando (entre 3 e 10 minutos de jogo livre), o Claude aparece com uma pergunta das salas: escolha, verdadeiro/falso ou várias respostas.
+- De vez em quando (entre 3 e 10 minutos de jogo livre), o Claude aparece com uma pergunta das salas que ela já fez: escolha, verdadeiro/falso ou várias respostas. Sem nenhuma sala feita, a pergunta não aparece.
 - Uma tentativa só. Acertou: ganha **2 estrelas**. Errou: vê a resposta certa e a explicação, e não perde nada.
-- Tem "Agora não" para fechar sem responder.
-- Nunca aparece no meio de sala, treino, prova ou conversa: espera ela ficar livre.
+- Tem "Agora não" para fechar sem responder. A pergunta não se perde: volta mais tarde, no fim da fila.
+- Nunca aparece no meio de sala, treino, prova ou conversa, nem com ela andando: espera ela ficar livre e parada.
 - Depois de uma sala, treino ou prova, a contagem recomeça do zero, para a pergunta não cair logo depois de ela estudar.
-- As perguntas vêm de preferência das salas que ela já fez, sem repetir enquanto o jogo está aberto.
+- Não repete enquanto o jogo está aberto; quando acabam, recomeça pelas mesmas salas.
 - Para desligar: ⚙️ Ajustes → "❓ Perguntas surpresa".
 - Para mudar os números: `surpresa` em `jogo/js/config.js`.
 
@@ -120,7 +123,7 @@
   - Aparece 🍎 ou 💧 em cima do unicórnio, e a placa da Pet Shop, em cima do telhado, mostra "Fome" ou "Sede" (a sede aparece primeiro).
   - **Barrinhas:** a fome é rosa-maçã e a sede é azul. Ficam no topo, junto da montaria (no celular, o nome fica em cima e as barrinhas embaixo), e também na Pet Shop e no detalhe de cada unicórnio no Estábulo.
   - Quando uma delas fica baixa, a barrinha ganha listras e aparece escrito "Quer comer!" ou "Quer água!", sem vermelho piscando.
-  - O Claude lembra com carinho, no máximo uma vez a cada 10 minutos. O lembrete fecha sozinho quando ela abre uma tela ou sala.
+  - O Claude lembra com carinho, no máximo uma vez a cada 10 minutos. Se houver comida guardada, o lembrete avisa que tem comidinha na despensa. O lembrete fecha sozinho quando ela abre uma tela ou sala.
 - **Comidas** (com estrelas):
   - 🥕 **Cenoura crocante:** 2 ⭐, enche 20.
   - 🍎 **Maçã do Reino:** 3 ⭐, enche 30.
@@ -133,8 +136,9 @@
   - **Comprar e guardar 🧺:** a comida vai para a despensa;
   - **Agora não:** fecha sem gastar nada (é o botão que o Esc aperta).
   - Com a barriga cheia, o "dar agora" não aparece: o jogo avisa que a comidinha fica guardada para depois, antes de ela gastar.
+  - Se já tem daquela comida na despensa, o primeiro botão é **Dar uma da despensa 🧺** (sem gastar estrela), com "Agora não" e "Comprar e guardar".
   - Faltando estrelas, o jogo diz quantas faltam e lembra que fazer salas dá estrelas.
-  - Tocar duas vezes seguidas sem querer no mesmo botão não gasta estrela duas vezes.
+  - Contra compra sem querer: os botões que gastam começam apagados e acendem depois de ~1 segundo sem toque, com uma barrinha que enche no pé do botão. O "Agora não" vale na hora, e pelo teclado não há espera.
 - A comida comprada fica na **despensa**. Para dar depois: no Estábulo (botão do menu de baixo), toque no unicórnio e em "🥕 Dar comida".
 - **Água:** de graça, só no bebedouro do Cantinho da Água, dentro da Pet Shop. Com sede, o detalhe do unicórnio no Estábulo lembra: "💧 Tem água fresquinha na Pet Shop, de graça!".
 - **Para mudar:** os preços e quanto enche ficam em `comidas`; o ritmo, o limite de 25 e os lembretes ficam em `cuidados`. Os dois em `jogo/js/config.js` (veja "Números que dá para mudar", no fim).
@@ -222,10 +226,8 @@
 - **Se algo parecer errado** (estrelas, salas ou unicórnios): não apague nada nem use "Apagar tudo". Deixe o jogo fechado e peça ao Claude para olhar. O computador de casa guarda as últimas 50 versões do progresso.
 
 ## Limitações conhecidas
-- **Dois aparelhos comprando comida quase ao mesmo tempo:** as duas compras podem virar uma só na sincronização. As estrelas nunca ficam negativas.
-- **Dois aparelhos abertos ao mesmo tempo:** o que muda num deles só aparece no outro quando algum dos dois grava de novo (por exemplo, quando ela faz alguma coisa no jogo).
-- **Duas abas do jogo no mesmo navegador:** podem perder progresso uma da outra. Isso já era assim antes das novidades. Deixe uma aba só.
-- **Aba com o jogo antigo aberta:** quando ela troca um enfeite nessa aba, os enfeites novos saem de uso (a compra não se perde: é só vestir de novo na Loja). E, no mesmo aparelho, se a cópia de segurança não estiver lá, a comida comprada pode sumir de vez, com as estrelas já gastas. Por isso, nenhuma aba antiga pode ficar aberta: siga o passo a passo do dia de atualizar, acima.
+- **Dois aparelhos gastando estrelas quase ao mesmo tempo:** as duas compras podem virar uma só na sincronização. As estrelas nunca ficam negativas.
+- **Aba com o jogo ANTIGO aberta no dia de atualizar:** quando ela troca um enfeite nessa aba, os enfeites novos saem de uso (a compra não se perde: é só vestir de novo na Loja). E, no mesmo aparelho, se a cópia de segurança não estiver lá, a comida comprada pode sumir de vez, com as estrelas já gastas. Por isso, nenhuma aba antiga pode ficar aberta: siga o passo a passo do dia de atualizar, acima.
 
 ## Números que dá para mudar (`jogo/js/config.js`)
 Depois de mudar, peça ao Claude para republicar.
