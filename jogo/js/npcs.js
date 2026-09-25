@@ -1061,7 +1061,18 @@
 
   /* ================= CONVERSA ================= */
   var conversou = {};     // quem já se apresentou nesta sessão (só na memória, nada no save)
+  var semVoz = {};        // quantas vezes a apresentação saiu sem voz (pacote ainda vindo)
+  var MAX_SEM_VOZ = 3;    // depois disso não insiste mais (pacote que não vem nunca)
   var emConversa = null;
+
+  function apresentacaoComVoz(npc, pags) {
+    var V = Reino.Voz, est = Reino.Progresso && Reino.Progresso.estado();
+    semVoz[npc.id] = semVoz[npc.id] || 0;
+    if (!V || !V.tem || (est && est.ajustes && est.ajustes.voz === false)) return true;   // voz desligada: nada a esperar
+    return pags.every(function (segs) {
+      return segs.filter(Boolean).every(function (t) { return V.tem(npc.voz || 'claude', t); });
+    });
+  }
 
   N.interagir = function (npc, ctx) {
     if (emConversa) return emConversa;
@@ -1085,8 +1096,10 @@
     if (!conversou[npc.id]) {
       // a apresentação inteira (todas as falas de `oi`, na ordem), cada uma em sua(s) página(s)
       var pagsOi = [].concat.apply([], falas(npc, 'oi').map(function (t) { return paginas([t]); }));
+      // só conta como apresentada se ela ouviu tudo com voz; se o pacote de voz ainda está
+      // chegando (Wi-Fi fraco), na próxima conversa a apresentação volta, já com voz
+      if (apresentacaoComVoz(npc, pagsOi) || ++semVoz[npc.id] >= MAX_SEM_VOZ) conversou[npc.id] = true;
       seq = emSequencia(pagsOi);
-      conversou[npc.id] = true;
     }
     emConversa = seq.then(function (v) {
       if (v === null || v === undefined) return null;     // balão limpo no meio: não segue

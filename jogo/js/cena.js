@@ -6,6 +6,10 @@
   var COR_IRIS = '#3a2446';
   var TEMPO = { fechar: 450, fechada: 120, abrir: 450, limite: 4000 };
   var TEMPO_RAPIDO = { fechar: 50, fechada: 50, abrir: 50, limite: 4000 };
+  // pacote de voz que já foi pedido numa entrada e ainda não chegou (Wi-Fi fraco): as próximas
+  // entradas esperam só LIMITE_VINDO; as falas ganham voz quando ele chegar
+  var LIMITE_VINDO = 1500;
+  var vindo = {};         // nome do pacote -> true enquanto o carregamento pedido aqui não termina
 
   var Cena = {
     MAPA: 'mapa', TRANSICAO: 'transicao', INTERIOR: 'interior', DIALOGO: 'dialogo', ATIVIDADE: 'atividade',
@@ -404,6 +408,12 @@
       } catch (e) { console.error(e); fim('erro'); }
     });
   }
+  function carregarPacote(nome) {
+    vindo[nome] = true;
+    var p = Promise.resolve(Reino.Voz.carregar(nome));
+    p.then(function () { delete vindo[nome]; }, function () { delete vindo[nome]; });
+    return p;
+  }
   function redesenhar() {
     try { if (vista && vista.desenhar) vista.desenhar(); } catch (e) { console.error(e); }
   }
@@ -420,6 +430,8 @@
     try { Reino.Som.tocar('porta'); } catch (e) { console.error(e); }
     var t = { fase: 'fechando', inicio: performance.now(), tempos: tempos, circulo: tempos === TEMPO, destino: destino };
     trans = t;
+    var pacote = destino.pacote && Reino.Voz && Reino.Voz.carregar ? destino.pacote : null;
+    var limite = pacote && vindo[pacote] ? Math.min(LIMITE_VINDO, tempos.limite) : tempos.limite;
     t.promessa = new Promise(function (resolver) {
       var concluida = false;
       function concluir() {
@@ -449,15 +461,15 @@
         var pronto = comLimite(function () {
           return Promise.all([
             destino.cena && destino.cena.preparar ? destino.cena.preparar() : null,
-            destino.pacote && Reino.Voz && Reino.Voz.carregar ? Reino.Voz.carregar(destino.pacote) : null,
+            pacote ? carregarPacote(pacote) : null,
           ]);
-        }, tempos.limite);
+        }, limite);
         Promise.all([pronto, espera])
           .then(function (r) { abrir(r[0]); })
           .catch(function (e) { console.error(e); abrir('erro'); });
       }, tempos.fechar);
       // rede de segurança: nada segura a íris fechada para sempre
-      setTimeout(concluir, tempos.fechar + tempos.limite + tempos.fechada + tempos.abrir + 1000);
+      setTimeout(concluir, tempos.fechar + limite + tempos.fechada + tempos.abrir + 1000);
     });
     return t.promessa;
   }
