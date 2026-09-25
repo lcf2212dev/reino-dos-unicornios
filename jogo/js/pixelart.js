@@ -617,13 +617,36 @@
     return p;
   }
 
+  // Cada combinação de enfeites gera os seus sprites (uns 13 canvas). Guardamos só as
+  // TETO_COMBOS combinações usadas por último; a sem enfeite fica sempre. Uma que sai é
+  // redesenhada na hora, no mesmo quadro, se voltar.
+  var combosUni = new Map();   // enf.join('+') -> chaves do cache (a usada por último no fim)
+  var TETO_COMBOS = 24, ultimoCombo = '';
+  function usarCombo(combo, chave) {
+    if (!combo) return;
+    var chaves = combosUni.get(combo);
+    if (chaves && combo === ultimoCombo && !chave) return;
+    if (chaves) combosUni.delete(combo); else chaves = [];
+    if (chave) chaves.push(chave);
+    combosUni.set(combo, chaves);
+    ultimoCombo = combo;
+    var it = combosUni.keys();
+    while (combosUni.size > TETO_COMBOS) {
+      var velho = it.next().value;
+      if (velho === combo) continue;
+      combosUni.get(velho).forEach(function (k) { delete cache[k]; });
+      combosUni.delete(velho);
+    }
+  }
+
   // estagio: 0 bebê, 1 pequeno, 2 jovem, 3 adulto • opcoes.vista: uma de PA.VISTAS
   PA.unicornio = function (def, estagio, quadro, opcoes) {
     opcoes = opcoes || {};
     var enf = opcoes.enfeites || [];
     var vista = opcoes.vista || 'lado';
-    var chave = ['uni', def.id, estagio, quadro, enf.join('+'), opcoes.asasFada ? 'af' : '', vista].join('|');
-    if (cache[chave]) return cache[chave];
+    var combo = enf.join('+');
+    var chave = ['uni', def.id, estagio, quadro, combo, opcoes.asasFada ? 'af' : '', vista].join('|');
+    if (cache[chave]) { usarCombo(combo); return cache[chave]; }
 
     var grande = estagio >= 2;
     var molde = UNI[grande ? 'adulto' : 'filhote'][vista];
@@ -672,6 +695,7 @@
     var res = { canvas: final, w: final.width, h: final.height, grande: grande, base: base,
       cavaleira: molde.cavaleira, naFrente: molde.naFrente || null, enfeitesNaFrente: enfNaFrente };
     cache[chave] = res;
+    usarCombo(combo, chave);
     return res;
   };
 
