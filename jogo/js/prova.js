@@ -9,6 +9,32 @@
   // uns pixels depois e o botão focado fica com a pontinha escondida
   function depoisDosIcones(fn) { Promise.resolve().then(fn); }
 
+  /* Balão do Claude que some sozinho (o "Hora de revisar!" do treino e o começo da revisão da prova
+     da Escola): não fica por cima da lista, das opções nem do botão do rodapé. Some quando ela já
+     teve tempo de ler (pelo tamanho do texto) E a voz acabou (a voz nunca é cortada no meio pelo
+     tempo: entre um pedaço e outro da fala há pausas curtas, por isso espera um pouquinho de
+     silêncio). Quem chama também o fecha antes (Claude.limpar) quando ela abre uma questão, entrega
+     ou chega ao resultado. Se o balão estiver na fila atrás de outro, o tempo só conta quando ele
+     aparecer; se outro balão tomou o lugar, não fecha nada. */
+  var SILENCIO_BALAO = 1200;
+  Pr.balaoQueSome = function (texto, opcoes) {
+    var minimo = U.clamp(texto.length * 45, 4000, 9000);
+    var visto = 0, ultimaVoz = 0;
+    var inicio = texto.slice(0, 30);   // o começo (sem emoji: o fim pode virar ícone de pixel art)
+    function meu() {
+      var bal = document.getElementById('claude-balao'), t = bal && bal.querySelector('.claude-texto');
+      return !!(bal && !bal.hidden && Reino.Claude.aberto() && t && t.textContent.indexOf(inicio) === 0);
+    }
+    var espera = setInterval(function () {
+      var agora = Date.now();
+      if (!meu()) { if (visto) clearInterval(espera); return; }
+      if (!visto) visto = ultimaVoz = agora;
+      if (Reino.Voz && Reino.Voz.falando()) ultimaVoz = agora;
+      if (agora - visto >= minimo && agora - ultimaVoz >= SILENCIO_BALAO) { clearInterval(espera); Reino.Claude.fechar(); }
+    }, 200);
+    return Reino.Claude.falar(texto, opcoes);
+  };
+
   function sortearQuestoes(materia) {
     var todos = [];
     // questão pessoal (livre) não entra: não tem resposta certa
@@ -129,6 +155,8 @@
         modo: 'prova', ordem: d.tipo === 'vf' ? [0, 1] : ordens[i], valorInicial: respostas[i],
         onMudar: function () { respostas[i] = ctrl.valor(); if (modoRevisao) { revisadas[i] = false; } atualizarBotoes(); },
       });
+      // abriu uma questão da lista: o balão "Hora de revisar!" não fica por cima dela
+      if (modoRevisao) Reino.Claude.limpar();
       var num = el('div.desafio-num', (modoRevisao ? '👀 Revisando a questão ' : 'Questão ') + (i + 1) + ' de ' + questoes.length);
       corpo.appendChild(num);
       corpo.appendChild(ctrl.card);
@@ -196,7 +224,7 @@
       rodape.appendChild(el('span.sem-relogio', revisadas.filter(Boolean).length + ' de ' + questoes.length + ' revisadas'));
       rodape.appendChild(entregar);
       entregar.addEventListener('click', function () { Reino.Som.tocar('toque'); resultado(); });
-      if (primeiraVez) Reino.Claude.falar(Reino.Falas.fixas.revisar);
+      if (primeiraVez) Pr.balaoQueSome(Reino.Falas.fixas.revisar);
       // teclado: a lista entrou no lugar da questão e o foco ia para o body. Vai para a próxima
       // questão ainda sem revisar (depois da que ela revisou; "← Lista": a mesma de antes) ou, tudo
       // revisado, para "Entregar a prova". Na 1ª vez, o título fica à vista se a questão não couber;
@@ -216,6 +244,7 @@
 
     function resultado() {
       fase = 'resultado';
+      Reino.Claude.limpar();   // entregou: o balão da revisão não fica por cima do resultado
       rodape.hidden = true;
       var acertos = questoes.filter(function (d, i) { return D.conferirValor(d, respostas[i]); }).length;
       var premios = P.registrarTreino(materia, acertos, questoes.length);

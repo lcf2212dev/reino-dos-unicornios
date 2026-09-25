@@ -264,7 +264,7 @@
       sim.addEventListener('click', function () {
         Reino.Som.tocar('porta');
         mostrarQuestao(0, true);
-        Reino.Claude.falar(Reino.Falas.provas.comecaRevisao, { tempo: 6000 });
+        Reino.Prova.balaoQueSome(Reino.Falas.provas.comecaRevisao);
       });
       nao.addEventListener('click', function () { Reino.Som.tocar('toque'); entregar(); });
     }

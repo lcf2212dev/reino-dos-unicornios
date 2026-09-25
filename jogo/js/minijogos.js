@@ -407,6 +407,9 @@
         var prox = ordem.find(function (i) { return grupo[i] === undefined; });
         escolhido = prox === undefined ? null : prox;
         Reino.Som.tocar('selecionar'); pintar(); opts.onMudar();
+        // teclado: o baú com foco cresceu com o item novo e a parte de baixo ia para trás do
+        // rodapé; rola a caixa até ele aparecer inteiro. Toque e mouse: nada muda
+        if (doTeclado(ev)) Reino.UI.focarTeclado(b);
       });
       return { el: b, caixa: caixa };
     });
