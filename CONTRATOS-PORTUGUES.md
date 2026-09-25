@@ -46,7 +46,10 @@ Mudança de contrato: só o orquestrador.
 ## 2. Matéria (`js/materias/portugues.js`, montada pelo orquestrador)
 `id: 'portugues'`, `nome: 'Português'`, `emoji: '📝'`, `nomeLivro: 'Livro das Letras'`.
 Lugar: `nome: 'Casa das Palavras'`, `artigo: 'a'` (novo, opcional: "até a Casa", "salas da Casa"),
-`sprite: 'palavras'`, `rect: { x: 23, y: 4, w: 5, h: 5 }` (clareira; a (22,15) fica livre), `placa: 'acima'`.
+`sprite: 'palavras'`, `rect: { x: 22, y: 15, w: 5, h: 5 }` (clareira; na (23,4) a placa do Castelo cobria o telhado,
+e ela fica livre), `placa: 'acima'`, `porCima: true` (novo, opcional: o lugar entra no mapa depois do sorteio dos
+enfeites, como os EXTRAS, e o resto do reino fica com as mesmas árvores e flores). A placa da Loja das Fadas foi
+para cima do telhado (ao lado ela cobria a casa).
 
 | Sala | Nome | Emoji | Páginas | Fotos | Cartas do livro |
 |---|---|---|---|---|---|
