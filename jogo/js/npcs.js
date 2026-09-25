@@ -651,23 +651,23 @@
     var bob = animar ? Math.round(Math.sin(t / 420 + (f % 10))) * s : 0;
     var bx = Math.round(cabeca.x - (b.width * s) / 2), by = Math.round(cabeca.y - b.height * s - s + bob);
     var bw = b.width * s, bh = b.height * s;
-    var antes = ctx.imageSmoothingEnabled, alfa = ctx.globalAlpha;
+    // some enquanto cobre a Mariana: ela já está encostada no personagem (sem o balanço, para não piscar)
+    if (cobreMariana(pintor, bx, by - bob, bw, bh)) return;
+    var antes = ctx.imageSmoothingEnabled;
     ctx.imageSmoothingEnabled = false;
-    // se o balãozinho cobre a Mariana, fica quase transparente (como as placas do mapa)
-    if (cobreMariana(pintor, bx, by, bw, bh)) ctx.globalAlpha = alfa * 0.3;
     ctx.drawImage(b, bx, by, bw, bh);
-    ctx.globalAlpha = alfa;
     ctx.imageSmoothingEnabled = antes;
   };
 
-  // retângulo do corpo da Mariana (px do jogo, a partir dos pés) cruza o do ícone (px da tela)?
+  // retângulo do corpo da Mariana (px do jogo, dos pés para cima) cruza o do ícone (px da tela)?
+  // Os 10 px de baixo (pés e cascos) ficam de fora: a 2 tiles, o ícone só roçava os cascos e sumia longe dela
   function cobreMariana(pintor, bx, by, bw, bh) {
     var J = window.Jogador;
     if (!J || typeof J.x !== 'number') return false;
     var montada = false;
     try { montada = J.montado && J.montado(); } catch (e) {}
     var w = montada ? 28 : 16, h = montada ? 34 : 24;
-    var a = pintor.tela(J.x - w / 2, J.y - h), z = pintor.tela(J.x + w / 2, J.y + 2);
+    var a = pintor.tela(J.x - w / 2, J.y - h), z = pintor.tela(J.x + w / 2, J.y - 10);
     return bx < z.x && bx + bw > a.x && by < z.y && by + bh > a.y;
   }
 
