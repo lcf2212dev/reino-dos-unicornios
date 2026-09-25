@@ -44,9 +44,12 @@
   - **Castelo:** Princesa Serena, Cavaleira Aurora e «Sir Oliver». **Escola:** Diretora Margarida, Professora Helena e «Teacher Emma».
   - **Estábulo, Loja e Baú:** Seu Feno, Fada Pétala e Dragãozinho Tostão.
   - **Pet Shop:** Dona Aveia. **Observatório:** Doutora Vega e Robô Cosmo (com um leve efeito de robô na gravação).
+  - A Doutora Vega tem voz própria: é a Francisca, a mesma voz da narradora, só que bem mais grave e um pouco mais rápida, para dar para reconhecer de ouvido.
+  - O Robô Cosmo fala na velocidade normal e um pouco mais alto que antes, para as piadas ficarem claras.
+  - Quando a Mariana escolhe "Tchau" depois de uma curiosidade da Vega ou de uma piada do Cosmo, o personagem se despede num balão que fecha sozinho.
   - O Carteiro Chico usa a voz do Claude, mais aguda e mais rápida.
   - As falas são curtas para caber no balão do celular.
-  - Amostras: `amostras-de-voz/` de 13 a 36 (34 Dona Aveia, 35 Doutora Vega, 36 Robô Cosmo), ou todas juntas em `VOZES-DOS-PERSONAGENS.mp3`. A 35b (fora desse arquivo) é outra voz possível para a Doutora Vega: para usar, peça ao Claude.
+  - Amostras: `amostras-de-voz/` de 13 a 36 (34 Dona Aveia, 35 Doutora Vega, 36 Robô Cosmo, já com as vozes que estão no jogo), ou todas juntas em `VOZES-DOS-PERSONAGENS.mp3`.
   - Para trocar, edite o perfil `npc-<nome>` em `vozes` no `jogo/js/config.js` e peça ao Claude para regravar.
 
 ## Regras do jogo
@@ -111,22 +114,34 @@
   - A fome vai de cheia a zero em 120 minutos de jogo; a sede, em 60.
   - Com fome ou sede abaixo de 25, o unicórnio anda mais devagar (70% da velocidade). Volta ao normal na hora em que as duas ficam em 25 ou mais.
   - Não perde XP, dinheiro nem unicórnio.
-  - Aparece 🍎 ou 💧 em cima do unicórnio, as barrinhas ficam no topo, junto da montaria, e a placa da Pet Shop mostra "Fome" ou "Sede".
-  - O Claude lembra com carinho, no máximo uma vez a cada 10 minutos.
+  - Aparece 🍎 ou 💧 em cima do unicórnio, e a placa da Pet Shop, em cima do telhado, mostra "Fome" ou "Sede" (a sede aparece primeiro).
+  - **Barrinhas:** a fome é rosa-maçã e a sede é azul. Ficam no topo, junto da montaria (no celular, o nome fica em cima e as barrinhas embaixo), e também na Pet Shop e no detalhe de cada unicórnio no Estábulo.
+  - Quando uma delas fica baixa, a barrinha ganha listras e aparece escrito "Quer comer!" ou "Quer água!", sem vermelho piscando.
+  - O Claude lembra com carinho, no máximo uma vez a cada 10 minutos. O lembrete fecha sozinho quando ela abre uma tela ou sala.
 - **Comidas** (com estrelas):
   - 🥕 **Cenoura crocante:** 2 ⭐, enche 20.
   - 🍎 **Maçã do Reino:** 3 ⭐, enche 30.
   - 🌾 **Feno dourado:** 4 ⭐, enche 45.
   - 🍪 **Biscoito de aveia:** 5 ⭐, enche 60.
   - 🎂 **Bolo arco-íris:** 8 ⭐, enche tudo.
-- A comida comprada vai para a **despensa**. Dá para dar na hora ou depois: no Estábulo (botão do menu de baixo), toque no unicórnio e em "🥕 Dar comida".
-- **Água:** de graça, só no bebedouro do Cantinho da Água, dentro da Pet Shop.
-- **Para mudar:** os preços e quanto enche ficam em `comidas`; o ritmo, o limite de 25 e os lembretes ficam em `cuidados`. Os dois em `jogo/js/config.js`.
+- **Onde comprar:** tocar na Dona Aveia ou na estante das comidinhas, no canto do fundo à direita da loja.
+- **Comprar:** nada é gasto sem ela confirmar. Ao tocar numa comida, o jogo pergunta "Trocar N estrelas por …?" com três botões:
+  - **Comprar e dar agora:** a montaria come na hora;
+  - **Comprar e guardar 🧺:** a comida vai para a despensa;
+  - **Agora não:** fecha sem gastar nada (é o botão que o Esc aperta).
+  - Com a barriga cheia, o "dar agora" não aparece: o jogo avisa que a comidinha fica guardada para depois, antes de ela gastar.
+  - Faltando estrelas, aparece "Faltam N estrelas! Uma sala dá estrelas."
+  - Tocar duas vezes seguidas sem querer no mesmo botão não gasta estrela duas vezes.
+- A comida comprada fica na **despensa**. Para dar depois: no Estábulo (botão do menu de baixo), toque no unicórnio e em "🥕 Dar comida".
+- **Água:** de graça, só no bebedouro do Cantinho da Água, dentro da Pet Shop. Com sede, o detalhe do unicórnio no Estábulo lembra: "💧 Tem água fresquinha na Pet Shop, de graça!".
+- **Para mudar:** os preços e quanto enche ficam em `comidas`; o ritmo, o limite de 25 e os lembretes ficam em `cuidados`. Os dois em `jogo/js/config.js` (veja "Números que dá para mudar", no fim).
 - O progresso guarda a fome, a sede e a despensa. "Novo ciclo" mantém; "Apagar tudo" zera.
 
 ## Observatório
 - **Onde fica:** no morro a leste do lago, o ponto mais alto do reino.
 - **Cômodos:** Cúpula do Telescópio (o telescópio mostra a Lua, Saturno, o Cruzeiro do Sul e outros), Planetário (o Sol, os 8 planetas e Plutão) e Galeria do Espaço (foguete, traje de astronauta, pedra da Lua, meteorito e constelações).
+- **Planetário:** o chão tem uma galáxia azul-clara, com braços de luz e estrelas, e a Mariana aparece bem em cima dela. Os planetas ficam parados (só as luas andam, devagar), e o toque de cada um segue o próprio desenho, até a ponta dos anéis de Saturno.
+- Os pisos dos três cômodos são mais claros que o céu e as paredes, para ela e o unicórnio não sumirem no escuro. A placa do Observatório fica em cima da cúpula.
 - **Doutora Vega:** a guia. Conta curiosidades sem repetir enquanto o jogo está aberto. Tocar nos planetas, no telescópio e nas peças da Galeria também conta uma.
 - **Robô Cosmo:** conta piadas.
 - São 75 curiosidades, cada uma conferida na fonte (a maioria no NASA Space Place, e também ESA Kids, Agência Espacial Brasileira e outras páginas da NASA, da ESA e do INPE).
@@ -137,6 +152,7 @@
 - Na Loja das Fadas, com estrelas. Entraram encaixes novos: **pescoço**, **cauda** e **chifre**. Vale um enfeite por encaixe.
 - **Novos:** Fitinha na cauda (10 ⭐), Gravata-borboleta (10 ⭐), Pompom na cauda (14 ⭐), Colar de pérolas (18 ⭐), Óculos de estrela (22 ⭐) e Coroa de flores (26 ⭐).
 - **Do espaço:** Brinco de lua (16 ⭐), Tiara de estrelas (32 ⭐), Colar de planetas (35 ⭐), Anel de Saturno no chifre (40 ⭐) e Cometa na cauda (42 ⭐).
+  - Foram redesenhados para aparecer bem no jogo: o anel de Saturno é um aro lilás atravessando o chifre, o colar tem três planetinhas presos em elos dourados, o cometa tem cabeça branca e rastro azul, e a tiara tem uma faixa azul-lavanda. O brinco de lua continua à vista com ela montada.
 - Os de antes continuam iguais. A lista e os preços ficam em `jogo/js/loja-itens.js`.
 
 ## Provas bimestrais (Escola do Reino)
@@ -181,3 +197,43 @@
 - Roda no Docker (container `reino-unicornios`, volta sozinho quando o PC liga). Reiniciar: `cd "jogo/servidor" && docker compose restart`.
 - O progresso fica no banco `jogo/servidor/dados/reino.db` (SQLite), com as últimas 50 versões guardadas como backup.
 - O nome `reinodosunicornios.local` vem do serviço `systemctl --user status reino-nome`.
+
+## Cópia de segurança da comida e dos cuidados
+- Além do progresso normal (`mariana-reino-v1`), cada navegador guarda uma segunda chave: **`mariana-reino-v1-novidades`**. Ela tem só a fome, a sede, a despensa e o interruptor das perguntas surpresa.
+- **Por que existe:** uma aba com a versão antiga do jogo não conhece esses campos. Se ela gravar por último, apaga a comida comprada e os cuidados do progresso normal. A versão antiga não conhece a cópia e não mexe nela. Por isso, ao abrir o jogo e a cada sincronização, o que faltar volta da cópia, com as mesmas regras de sempre: vale a despensa maior e o cuidado mais recente.
+- **Não apague essa chave.** Se for limpar alguma coisa à mão no navegador, deixe as duas chaves do jogo.
+- "Apagar tudo" não traz nada de volta dessa cópia: depois dele, ela é ignorada e regravada na próxima vez que o jogo salvar.
+
+## Dia de atualizar o jogo (servidor de casa e claude.ai juntos)
+- O servidor de casa e o link do claude.ai guardam o progresso em lugares separados, e nada copia de um para o outro. Mesmo assim, os dois precisam ser atualizados no mesmo dia:
+  - se só um lado tiver a Pet Shop e o Observatório, ela compra comida ou enfeite num lado e não acha no outro, e para ela isso é "sumiu";
+  - uma aba ainda aberta com o jogo antigo tira o enfeite novo que ela está usando (a compra fica, é só vestir de novo) e pode apagar a comida comprada.
+- **Passo a passo:**
+  1. Escolha um horário em que a Mariana não esteja jogando.
+  2. Em **todos** os aparelhos (tablet, celular, notebook), feche as abas do jogo: a do computador de casa (reinodosunicornios.local ou o IP) e a do claude.ai. É fechar a aba mesmo, não só trocar de aba. No celular e no tablet, feche também no seletor de abas e de apps.
+  3. Peça ao Claude para fazer o merge e republicar o link do claude.ai. O computador de casa passa a servir o jogo novo na hora do merge: não precisa reiniciar o Docker.
+  4. Espere **uns 5 minutos** depois do merge. O servidor de casa deixa os arquivos do jogo guardados no navegador por até 5 minutos (300 s), e antes disso uma aba nova pode misturar arquivos novos com antigos.
+  5. Abra um aparelho só, no computador de casa. Confira se aparecem a Pet Shop, o Observatório e o lago, e se as estrelas, as salas e os unicórnios estão como antes. Se algo estiver estranho, recarregue a página.
+  6. Depois abra o link do claude.ai num aparelho e confira do mesmo jeito.
+  7. Só então libere os outros aparelhos, abrindo o jogo numa aba nova.
+  8. Nos primeiros dias, se achar alguma aba esquecida de antes, feche e abra de novo antes de ela jogar.
+
+## Limitações conhecidas
+- **Dois aparelhos comprando comida quase ao mesmo tempo:** as duas compras podem virar uma só na sincronização. As estrelas nunca ficam negativas.
+- **Dois aparelhos abertos ao mesmo tempo:** o que muda num deles só aparece no outro quando algum dos dois grava de novo (por exemplo, quando ela faz alguma coisa no jogo).
+- **Duas abas do jogo no mesmo navegador:** podem perder progresso uma da outra. Isso já era assim antes das novidades. Deixe uma aba só.
+- **Aba com o jogo antigo aberta:** quando ela troca um enfeite nessa aba, os enfeites novos saem de uso (a compra não se perde: é só vestir de novo na Loja). Veja o dia de atualizar, acima.
+
+## Números que dá para mudar (`jogo/js/config.js`)
+Depois de mudar, peça ao Claude para republicar.
+- **`comidas`:** cada comida tem `nome`, `icone`, `preco` (estrelas) e `fome` (quanto enche, de 0 a 100). O bolo tem `enche: true`, que enche tudo. Hoje: cenoura 2 ⭐/20, maçã 3 ⭐/30, feno 4 ⭐/45, biscoito 5 ⭐/60, bolo 8 ⭐/tudo. **Não troque o `id`:** a despensa guarda a comida por ele.
+- **`cuidados`:**
+  - `minutosFome: 120` e `minutosSede: 60`: minutos de jogo para ir de cheia a zero;
+  - `baixo: 25`: abaixo disso aparece o aviso e o unicórnio fica mais lento;
+  - `fatorLento: 0.7`: a velocidade com fome ou sede (70%);
+  - `semToqueMs`: sem toque há 5 minutos, ela parou de jogar e nada gasta;
+  - `lembreteMs`: no máximo um lembrete do Claude a cada 10 minutos;
+  - `gravarMs` e `gravarPontos`: de quanto em quanto tempo o jogo grava a fome e a sede (60 s ou 10 pontos). Melhor não mexer.
+- **`surpresa`:** `minMinutos: 3` e `maxMinutos: 10` (o intervalo sorteado), `estrelas: 2` (o prêmio), `esperaLivreMs: 4000` (se o tempo acaba com ela ocupada, a pergunta espera ela ficar 4 segundos livre) e `tipos` (escolha, verdadeiro/falso, várias). Se mudar `estrelas`, peça também para regravar as vozes, porque o Claude fala o valor.
+- **`nado`:** `fator: 0.6` (a velocidade na água, 60%) e `custo: 3` (quanto a água "pesa" na hora de escolher o caminho: com 3, ela prefere dar a volta por terra).
+- **`precoPremio`:** o preço dos acessórios das provas à venda na Loja: `comum: 25`, `raro: 40`, `lendario: 70`.
