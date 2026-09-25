@@ -10,5 +10,7 @@
 - Retomar um agente que já terminou conta como lançar um novo.
 
 ## Comandos
-- Nunca use `rm` com alvo vindo de `$(...)`. Leia o caminho para uma variável e use guarda:
+- Não apague temporários: deixe-os em `/tmp` (o sistema limpa ao reiniciar). Assim nenhum comando para esperando confirmação do Leandro.
+- Se precisar apagar, só com o caminho escrito por extenso: `rm -rf /tmp/val1/jogo`. Alvo que só se conhece na hora de rodar faz o Claude Code parar e perguntar.
+- Nunca use `rm` com alvo vindo de `$(...)`. Se for inevitável, leia o caminho para uma variável e use guarda:
   `d=$(cat arquivo.txt); rm -rf "${d:?}"`
