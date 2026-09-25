@@ -290,26 +290,42 @@
     clearTimeout(nuvem.timer);
     nuvem.timer = setTimeout(enviarNuvem, 1800);
   }
+  /* Rede lenta: uma gravação sem resposta em LIMITE_REDE_MS vira erro (senão `gravando` ficava preso e
+     nenhuma outra saía, com o indicador em "sincronizado"). No servidor de casa o fetch é cancelado
+     (AbortController); no claude.ai o set do doc não tem como cancelar, e o limite só libera a fila.
+     Depois de um erro, tenta de novo sozinha em 15 s (a próxima gravação leva o estado inteiro). */
+  function limiteRede() { return Reino.config.limiteRedeMs || 15000; }            // (os testes encurtam os dois)
+  function novaTentativa() { return Reino.config.novaTentativaMs || 15000; }
   function enviarNuvem() {
     if (!nuvem.ok || !nuvem.ref) return;
     if (nuvem.gravando) { nuvem.pendente = true; return; }
     nuvem.gravando = true;
-    nuvem.ref.set({ estado: U.copia(estado), atualizado: estado.atualizado })
+    var falhou = false;
+    comLimite(nuvem.ref.set({ estado: U.copia(estado), atualizado: estado.atualizado }), limiteRede())
       .then(function () { nuvem.status = 'sincronizado'; U.emit('nuvem', nuvem.status); })
       .catch(function (e) {
         nuvem.status = 'erro'; U.emit('nuvem', nuvem.status);
         if (e && (e.code === 'revoked' || e.code === 'not_granted' || e.code === 'invalid_argument')) nuvem.ok = false;
+        else falhou = true;
       })
       .then(function () {
         nuvem.gravando = false;
         if (nuvem.pendente) { nuvem.pendente = false; agendarNuvem(); }
+        else if (falhou && nuvem.ok) { clearTimeout(nuvem.timer); nuvem.timer = setTimeout(enviarNuvem, novaTentativa()); }
       });
   }
   /* no servidor de casa (servidor/servidor.js) o mesmo doc fica em /api/progresso;
      este adaptador imita o doc da capacidade db (get, set, onSnapshot) */
+  // fetch que desiste (e cancela a conexão) depois do limite de rede
+  function buscar(url, opcoes) {
+    var ctl = typeof AbortController === 'function' ? new AbortController() : null;
+    var t = ctl ? setTimeout(function () { ctl.abort(); }, limiteRede()) : 0;
+    return fetch(url, ctl ? Object.assign({ signal: ctl.signal }, opcoes) : opcoes)
+      .then(function (r) { clearTimeout(t); return r; }, function (e) { clearTimeout(t); throw e; });
+  }
   function docDoServidor() {
     function ler() {
-      return fetch('api/progresso', { cache: 'no-store' }).then(function (r) {
+      return buscar('api/progresso', { cache: 'no-store' }).then(function (r) {
         if (r.status === 404) return null;
         if (!r.ok) throw new Error('servidor ' + r.status);
         return r.json();
@@ -319,7 +335,7 @@
     return {
       get: function () { return ler().then(snap); },
       set: function (d) {
-        return fetch('api/progresso', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(d) })
+        return buscar('api/progresso', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(d) })
           .then(function (r) { if (!r.ok) throw new Error('servidor ' + r.status); });
       },
       onSnapshot: function (ok, erro) {

@@ -26,7 +26,7 @@ function montar(opcoes = {}) {
   };
   const ctx = {
     console, Math, JSON, Date: DataFalsa,
-    setTimeout: () => 0, clearTimeout: () => {},
+    setTimeout: opcoes.timersReais ? setTimeout : () => 0, clearTimeout: opcoes.timersReais ? clearTimeout : () => {},
     setInterval: (fn, ms) => { intervalos.push({ fn, ms }); return intervalos.length; },
     clearInterval: () => {},
     document: documento,
@@ -1087,6 +1087,35 @@ teste('nomes de Object.prototype (hasOwnProperty, toString…) nunca viram comid
   const principal = JSON.parse(j.guardado[j.R.config.chaveSave]);
   assert.deepStrictEqual(principal.despensa, esperadoD); assert.deepStrictEqual(j.copiaGuardada().despensa, esperadoD);
   assert.strictEqual(typeof j.P.estado().despensa.hasOwnProperty, 'function', 'hasOwnProperty continua o de Object.prototype');
+});
+
+teste('rede lenta: gravação pendurada vira erro no limite, a próxima sai sozinha e leva tudo', async () => {
+  const j = montar({ save: saveAtual(), timersReais: true });
+  j.R.config.limiteRedeMs = 60; j.R.config.novaTentativaMs = 80;
+  j.P.carregar();
+  const sets = [], status = [];
+  j.R.util.on('nuvem', (st) => status.push(st));
+  j.ctx.claude = { use: () => Promise.resolve({ doc: () => ({
+    get: () => Promise.resolve({ exists: false, data: () => undefined }),
+    // a 1ª gravação nunca responde (conexão pendurada); as outras respondem
+    set: (d) => { sets.push(copia(d)); return sets.length === 1 ? new Promise(() => {}) : Promise.resolve(); },
+    onSnapshot: () => {},
+  }) }) };
+  await j.P.iniciarNuvem();
+  assert.strictEqual(sets.length, 1);
+  j.P.gastarEstrelas(3); j.P.estado().despensa.maca = { compradas: 1, usadas: 0 };   // compra durante a trava
+  j.P.salvar(true);
+  await new Promise((ok) => setTimeout(ok, 100));
+  assert.strictEqual(j.P.statusNuvem(), 'erro', 'passou do limite: erro');
+  await new Promise((ok) => setTimeout(ok, 150));
+  assert.ok(sets.length >= 2, 'a próxima gravação saiu');
+  assert.strictEqual(j.P.statusNuvem(), 'sincronizado', 'e o indicador voltou');
+  const ult = sets[sets.length - 1].estado;
+  assert.deepStrictEqual(ult.despensa.maca, { compradas: 1, usadas: 0 });
+  assert.strictEqual(ult.estrelas.gastas, j.P.estado().estrelas.gastas);
+  assert.deepStrictEqual(status.slice(-2), ['erro', 'sincronizado']);
+  await new Promise((ok) => setTimeout(ok, 200));
+  assert.strictEqual(sets.length, 2, 'sem erro, não fica regravando');
 });
 
 (async () => {
