@@ -18,7 +18,8 @@
     solido: [],             // true = não dá para andar
     tipoSorteio: [], decorSorteio: [],   // cópia do reino sem os lugares novos: o sorteio das flores segue ela
     decor: [],              // enfeite do tile: 'arvore', 'flor', 'cristal', 'arbusto', 'cogumelo'
-    lugares: [],            // o que Mapa.lugares() devolve
+    lugares: [],            // os lugares desenhados no mapa (Mapa.lugares() junta os de dentro)
+    lugaresDentro: [],      // matérias com lugar.dentro: só menu, sem desenho nem colisão
     estatico: null,         // canvas com tudo o que não se mexe (mundo/mapa-desenho.js)
     rng: rng,
     dentro: dentro,
@@ -44,9 +45,12 @@
     Mapa.LUGARES_FIXOS.forEach(function (f) { if (!f.caminho) lugares.push(Object.assign({ tipo: f.id, porta: porta(f.rect) }, f)); });
     // matéria com lugar.porCima entra depois do sorteio dos enfeites (como os lugares com caminho), para as árvores
     // e flores do resto do reino continuarem iguais: o sorteio ainda vê a clareira livre
-    var porCima = [];
-    materias.forEach(function (m, i) {
-      var r = m.lugar.rect || Mapa.CLAREIRAS[i % Mapa.CLAREIRAS.length];
+    // matéria com lugar.dentro mora num prédio que já existe: nada no mapa (entra no fim, em I.lugaresDentro)
+    // e não conta na vez das clareiras, para as outras não mudarem de lugar
+    var porCima = [], k = 0, deDentro = [];
+    materias.forEach(function (m) {
+      if (m.lugar.dentro) { deDentro.push(m); return; }
+      var r = m.lugar.rect || Mapa.CLAREIRAS[k++ % Mapa.CLAREIRAS.length];
       var l = { id: 'materia:' + m.id, tipo: 'materia', materiaId: m.id, nome: m.lugar.nome,
         sprite: m.lugar.sprite || 'torre', cores: m.lugar.cores, rect: r, porta: porta(r), placa: m.lugar.placa };
       if (m.lugar.porCima) porCima.push(l); else lugares.push(l);
@@ -164,11 +168,21 @@
     // sempre com caminho, na ordem de registro
     novas.forEach(porCimaNoMapa);
     (Reino.lugaresRegistrados || []).forEach(function (f) { if (f.caminho) comCaminho(f); });
+    // matérias dentro de um prédio: só para o menu Lugares, com a porta (e a área) do anfitrião;
+    // não desenham nem fazem colisão (ficam fora de I.lugares)
+    I.lugaresDentro = [];
+    deDentro.forEach(function (m) {
+      var h = lugares.find(function (l) { return l.id === m.lugar.dentro; });
+      if (!h) return;   // anfitrião inexistente: o validador acusa
+      I.lugaresDentro.push({ id: 'materia:' + m.id, tipo: 'materia', materiaId: m.id, nome: m.lugar.nome,
+        dentro: h.id, interior: m.lugar.interior, rect: h.rect, porta: h.porta });
+    });
     I.estatico = null;
   };
 
-  Mapa.lugares = function () { return I.lugares; };
-  Mapa.lugar = function (id) { return I.lugares.find(function (l) { return l.id === id; }); };
+  // todos os lugares (os do mapa e, no fim, as matérias de dentro de um prédio)
+  Mapa.lugares = function () { return I.lugares.concat(I.lugaresDentro || []); };
+  Mapa.lugar = function (id) { return Mapa.lugares().find(function (l) { return l.id === id; }); };
   Mapa.solido = function (x, y) { return !dentro(x, y) || I.solido[y][x]; };
   Mapa.lugarNoTile = function (x, y) { return I.lugares.find(function (l) { return noRect(x, y, l.rect); }); };
   Mapa.portaEm = function (x, y) { return I.lugares.find(function (l) { return l.porta.x === x && l.porta.y === y; }); };

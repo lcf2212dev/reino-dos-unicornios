@@ -162,7 +162,9 @@ Reino.Interiores.objeto('escrivaninha', {
 
 ## 9. Prédios
 Lugares: museu (`materia:historia`), torre + torre-1..5 + torre-relogio (`materia:ingles`), escola, castelo,
-estabulo, loja, bau, petshop, observatorio, portugues (`materia:portugues`).
+estabulo, loja, bau, petshop, observatorio (andares `observatorio`, `observatorio-2`; e `observatorio-3`, que é o
+lugar `materia:ciencias`: matéria dentro do Observatório, sem prédio no mapa, `docs/contratos/conteudo.md` §2 item 6),
+portugues (`materia:portugues`). Escada entre andares de lugares diferentes vale se um for matéria `dentro` do outro.
 
 ### 9.1 Estábulo
 1. Ação de objeto `{ tipo: 'unicornio', indice }` (baia; índice em `Reino.NPCs.unicornioDaBaia(n)`: baia fixa
@@ -219,6 +221,15 @@ estabulo, loja, bau, petshop, observatorio, portugues (`materia:portugues`).
 8. Piso da Cúpula e da Galeria em galáxia clara (contraste com o contorno da Mariana ≥ 2,9); o Planetário
    mantém o chão clareado que o pai aprovou.
 9. NPCs, ações e curiosidades: `npcs-e-dialogo.md` §9.
+10. 2º andar `observatorio-2`, Centro de Pesquisas Avançadas da NASA (`nasa-falas.js`, `nasa-personagens.js`,
+   `nasa-objetos.js`, `nasa-experiencias.js`, `nasa-andar.js`; escadas em `andar2-escadas.js`): só diversão, sem
+   pergunta, estrela, dinheiro ou save. Sobe pelo arco no fundo da Cúpula (26, 3); chega em
+   `S.escadasNasa.chegadaDeBaixo` (22, 12); desce pelo vão (21, 12); sobe para `observatorio-3` em (26, 3) quando
+   `S.escadasLab` existe; quem desce do 3º chega em `chegadaDeCima` (26, 4). Visual branco/cinza/azul, "NASA" em
+   letras próprias 5×7 (`S.escreverNasa`, nunca o logotipo). Cômodos: `hangar` (foguete grande com torre, traje,
+   tanques), `controle` (telões, consoles, relógio, NASA no chão, escadas), `experiencias`. Experiências (ação
+   `nasa-experiencia`, animação no próprio objeto só com Animações): foguete que decola, pena e martelo na câmara
+   sem ar, fases da Lua com a lâmpada, horta espacial.
 
 ### 9.5 Casa das Palavras (lugar `materia:portugues`)
 1. Desenho de fora: `Mapa.PREDIOS.palavras`, registrado pelo próprio prédio (`portugues/fora.js`): livro
@@ -233,6 +244,28 @@ estabulo, loja, bau, petshop, observatorio, portugues (`materia:portugues`).
 4. Castelo: `clara` com `paraMateria: 'portugues'` no elenco e um tema de ala `TEMAS.portugues`
    (`castelo/castelo.js`). Escola: `lucia` com `paraProva: 'portugues-3bim'` no elenco. Falas próprias no
    `falas.js` de cada prédio.
+
+### Laboratório de Ciências (lugar `materia:ciencias`, 3º andar do Observatório)
+1. Sem prédio no mapa: a matéria mora no Observatório (`lugar.dentro: 'observatorio'`, `interior: 'observatorio-3'`).
+   O interior `observatorio-3` é o de entrada do lugar `materia:ciencias` (o menu Lugares leva ao `spawn`), sem
+   saída para o mapa: só a escada `desce` (vão no chão do Hall, em (18, 23)) para `observatorio-2`, com chegada em
+   `S.escadasNasa.chegadaDeCima`. Onde ela chega subindo: `S.escadasLab.chegadaDeBaixo` = (18, 22)
+   (`observatorio/andar3-escadas.js`; `S = Reino._predios.observatorio`). Pacote `interior-observatorio`.
+2. Partes: `andar3-escadas.js` (depois do `ceu.js`), `lab-falas.js` (personagens e falas, acrescentadas ao
+   `Reino.FALAS_INTERIORES.observatorio`), `lab-objetos-1.js`, `lab-objetos-2.js`, `lab-objetos-3.js` (objetos
+   `lab-<nome>`, cores e ajudantes em `S.lab`) e `lab-andar3.js` (layout e registro). Laboratório claro (branco,
+   verde-água e amarelo), estático, sem animações.
+3. Cômodos (37×25, a mesma planta da Casa das Palavras): Hall (Professora Íris, mapa das salas, Livro de Ciências
+   no púlpito, microscópio, tubos de ensaio); sala 1 Vivo ou Não Vivo? (formigueiro de vidro, brotinho de feijão,
+   pedra, galão de água); sala 2 Quem Ganha, Quem Perde (onça, jacaré no rio, gafanhoto, cachorrinho com pulgas,
+   colmeia); sala 3 Amigos da Natureza (búfalo com o passarinho, beija-flor, flores e abelha, jogo da memória no
+   chão); sala 4 Cada Um no Seu Hábitat (iglu com urso-polar, aquário com aguapé e peixe, mandacaru, camelo,
+   Caatinga, termômetro); sala 5 Detetives da Natureza (mesa do detetive com a lupa, bicho-preguiça, pinguim,
+   tartaruga marinha, feneco, lagarto-de-colar, lobo-do-ártico, pegadas). Critério de "rico" e o quadro do
+   unicórnio raro de cada sala (id lido da matéria: o raro com `sala: 'c<n>'`).
+4. Castelo: `lab-cavaleira` (Cavaleira Jade, `paraMateria: 'ciencias'`), registrada e com falas no próprio
+   `castelo/castelo.js` (o Castelo carrega antes do Observatório), e o tema de ala `TEMAS.ciencias`, que usa
+   objetos `lab-*`.
 
 ### 9.6 Interior de teste
 O interior de teste da primeira fase (`teste`, lugar `bau`, NPCs `teste-guia`/`teste-sala`) foi trocado pelo

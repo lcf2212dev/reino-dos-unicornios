@@ -26,7 +26,10 @@ function todos(ctx) {
   const R = ctx.Reino;
   const fixos = M.LUGARES_FIXOS.map((f) => ({ id: f.id, rect: f.rect, caminho: f.caminho }));
   const regs = (R.lugaresRegistrados || []).map((f) => ({ id: f.id, rect: f.rect, caminho: f.caminho, registrado: true }));
-  const mats = (R.materias || []).map((m, i) => ({ id: 'materia:' + m.id, rect: (m.lugar && m.lugar.rect) || M.CLAREIRAS[i % M.CLAREIRAS.length] }));
+  // matéria com lugar.dentro mora num prédio que já existe: fora do mapa e fora da vez das clareiras
+  let k = 0;
+  const mats = (R.materias || []).filter((m) => !(m.lugar && m.lugar.dentro))
+    .map((m) => ({ id: 'materia:' + m.id, rect: (m.lugar && m.lugar.rect) || M.CLAREIRAS[k++ % M.CLAREIRAS.length] }));
   return fixos.concat(mats, regs);
 }
 // roda o Mapa.criar de verdade num vm (arte/desenho.js dá o rng; o resto do Reino não entra):

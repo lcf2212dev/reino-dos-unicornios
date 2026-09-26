@@ -7,7 +7,7 @@ Personagens: `npcs-e-dialogo.md`. Prédios: `interiores.md`. Vozes: `som-musica-
 ## Índice
 1. Onde está no código · 2. Matéria, sala e livro · 3. Tipos de desafio e campos · 4. Regras para escrever salas ·
 5. Provas e treino · 6. Português: matéria, salas, unicórnios · 7. Português: fontes (apostila) ·
-8. Português: prova · 9. Antes de mexer
+8. Português: prova · 9. Antes de mexer · 10. Ciências: matéria, salas, unicórnios
 
 ## 1. Onde está no código
 - `jogo/js/conteudo/materias/registro.js` — `Reino.registrarSala`, `registrarLivro`, `salasDa`, `livroDa`.
@@ -40,6 +40,18 @@ Personagens: `npcs-e-dialogo.md`. Prédios: `interiores.md`. Vozes: `som-musica-
 5. O Português era montado de `rascunho/` por `ferramentas/montar-portugues.js`: os dois foram removidos (estão no
    histórico do git). Edite direto as salas `portugues/p1.js`…`p5.js`, `livro.js` e `portugues.js`.
    <!-- validar-docs: fim -->
+6. Onde a matéria fica (`lugar`): um prédio próprio no mapa (`nome`, `sprite`, `rect` ou uma clareira, `porCima`;
+   ex.: §6) OU dentro de um prédio que já existe: `lugar: { nome, artigo, dentro: '<id do lugar anfitrião>',
+   interior: '<id do andar>' }`, sem `rect` nem `sprite`. Com `dentro`, `Mapa.criar` (`mundo/mapa.js`) não põe nada
+   no mapa (nem clareira, nem rua) e ela não conta na vez das clareiras: o reino sai idêntico. `Mapa.lugares()` ganha
+   no fim `{ id: 'materia:<m>', tipo: 'materia', materiaId, dentro, interior, porta e rect do anfitrião }` só para o
+   menu Lugares (o que desenha e faz colisão usa `Mapa._interno.lugares`, sem ela). "Ir" anda até a porta do
+   anfitrião e entra direto no `interior` (`Cena.entrar`); de dentro do anfitrião vai direto, sem sair
+   (`Cena.irAoLugar`); sair do andar dela volta à porta do anfitrião. O andar é um `Reino.registrarInterior` com
+   `lugar: 'materia:<m>'` e `entrada: true` (pode não ter `saida` se tiver escada). O arco-íris de matéria completa
+   aparece no anfitrião. `validar-interiores.js` acusa anfitrião ou andar inexistente. Gerador:
+   `npm run novo -- materia <m> --nome … --emoji … --dentro <lugar> --interior <id>`. Ex.: Ciências
+   (`dentro: 'observatorio'`, `interior: 'observatorio-3'`).
 
 ## 3. Tipos de desafio e campos
 1. Tipos: escolha, vf, varias, ligar, ordenar, frase, separar, vfLista, completar, copiar, memoria, desenho.
@@ -144,6 +156,11 @@ Personagens: `npcs-e-dialogo.md`. Prédios: `interiores.md`. Vozes: `som-musica-
      desenho: { linhas: ['.k.', 'kyk', '.k.'], paleta: { k: '#3a2446', y: '#ffd34d' }, ancora: 'orelha', dx: -1, dy: 1 },
      icone: { n: 'Estrelinha (comum)', p: { k: '#3a2446', y: '#ffd34d' }, d: [ /* 16 linhas de 16 */ ] } },
    ```
+5. Ciências (`provas/ciencias-3bim.js`, 11 questões, `cb3-01`…`cb3-11`, emoji 🔬): professora `prof-flora`
+   ("Professora Flora", voz `de-DE-SeraphinaMultilingualNeural`, -2%, +6Hz); acessórios inline `oculos-cientista`
+   (lendário, `olho`), `lupa-exploradora` (raro, `pescoco`), `broto-cabeca` (comum, `cabeca`). 03 e 04 são
+   `completar` com `livre: true`; 07 e 11 trazem a situação como `apoio`; 09 (ciclo da planta) é `ordenar`;
+   10 e 11 viram `completar` com a resposta e o motivo no quadro.
 
 ## 6. Português: matéria, salas, unicórnios
 1. Matéria (`portugues/portugues.js`): `id: 'portugues'`, `nome: 'Português'`, `emoji: '📝'`,
@@ -239,3 +256,32 @@ node jogo/ferramentas/vozes/listar-falas.js              # texto novo precisa de
 node jogo/ferramentas/testes/referencias.js capturar /tmp/<voce>/nova --raiz jogo --so dados
 npm test
 ```
+
+## 10. Ciências: matéria, salas, unicórnios
+1. Matéria (`ciencias/ciencias.js`): `id: 'ciencias'`, `nome: 'Ciências'`, `emoji: '🔬'`,
+   `nomeLivro: 'Caderno do Cientista'`. Apostila: 2º ano, volume 3, capítulos 8 ("Seres vivos e suas relações",
+   pp. 13 a 22) e 9 ("Características dos seres vivos", pp. 23 a 32); fotos na pasta Ciências da raiz (IMG_7528 a 7538).
+2. Lugar: `{ nome: 'Laboratório de Ciências', artigo: 'o', dentro: 'observatorio', interior: 'observatorio-3' }`,
+   sem `rect` nem `sprite`: a matéria mora no 3º andar do Observatório.
+3. Salas (ids fixos; o andar do Observatório usa c1 a c5):
+
+| Sala | Nome | Emoji | Páginas | Fotos | Cartas do livro |
+|---|---|---|---|---|---|
+| c1 | Vivo ou Não Vivo? | 🌱 | 13–15, 22 | 7528, 7529, 7533 | seres-vivos, fatores-abioticos, formigueiro |
+| c2 | Quem Ganha, Quem Perde | 🐆 | 16–19 | 7530 | relacoes, alimentacao, competicao, prejuizo, sociedade |
+| c3 | Amigos da Natureza | 🐃 | 18–22 | 7531–7533 | ajuda (e seres-vivos, fatores-abioticos, sociedade, competicao) |
+| c4 | Cada Um no Seu Hábitat | 🏜 | 23–27 | 7533–7535 | habitat, caatinga, muito-quente, muito-frio, aquatico, terrestre |
+| c5 | Detetives da Natureza | 🔎 | 28–32 | 7536–7538 | adaptacoes, observar (e muito-quente, muito-frio, habitat) |
+
+4. Cartas do livro (ids fixos, nesta ordem): `seres-vivos`, `fatores-abioticos`, `formigueiro`, `relacoes`,
+   `alimentacao`, `competicao`, `prejuizo`, `sociedade`, `ajuda`, `habitat`, `caatinga`, `muito-quente`,
+   `muito-frio`, `aquatico`, `terrestre`, `adaptacoes`, `observar`.
+5. Unicórnios (ids fixos): c1 `c-brotinho` (Brotinho, comum) e `c-formiguinha` (Formiguinha, raro); c2
+   `c-pintadinha` (Pintadinha) e `c-colmeia` (Colmeia); c3 `c-beija-flor` (Beija-Flor) e `c-parceria` (Parceria);
+   c4 `c-mandacaru` (Mandacaru) e `c-aguape` (Aguapé); c5 `c-lupinha` (Lupinha) e `c-feneco` (Feneco); épicos
+   `c-cientista` (`treino: 'ouro'`) e `c-descoberta` (`treino: 'perfeito'`); lendário `c-rainha-natureza`
+   (Rainha da Natureza, `materiaCompleta: true`). Épicos e lendário com `asa`.
+6. Ícones dos emojis novos em `ciencias/icones.js` (`Reino.registrarIcones`, grupo `'icones'` no manifesto para o
+   validador enxergar): 🔬 🐜 🐆 🐊 🦗 🐒 🐃 🌵 🐪 🐻 🦊 🐺 🦎 🦥 🪨 🐦 🟫 🍄.
+7. Na sala c3, a questão dos pássaros adultos (p. 21, b) tem como resposta a competição (comem o mesmo alimento),
+   como no bugio e na arara (p. 16). O que está marcado à mão na foto é da Mariana (§7).

@@ -28,6 +28,16 @@ function checar(cond, msg) { if (!cond) erros.push(msg); return !!cond; }
 // prédios (Reino.registrarLugar) + as matérias
 const LUGARES = new Set(LugaresDoMapa.ids(ctx).concat(Reino.materias.map((m) => 'materia:' + m.id)));
 if (!SO) LugaresDoMapa.checar(ctx).forEach((e) => erros.push(e));
+// matéria dentro de um prédio que já existe (lugar.dentro + lugar.interior): o anfitrião é um lugar do mapa
+// e o interior existe com lugar 'materia:<id>'. predio(l) = o prédio do mapa onde o lugar l fica.
+const ANFITRIAO = {};
+Reino.materias.filter((m) => m.lugar && m.lugar.dentro).forEach((m) => {
+  const id = 'materia:' + m.id, l = m.lugar, di = Reino.interiores.find((d) => d.id === l.interior);
+  ANFITRIAO[id] = l.dentro;
+  checar(LUGARES.has(l.dentro) && !/^materia:/.test(l.dentro), `${id}: lugar.dentro "${l.dentro}" não é um prédio do mapa`);
+  if (checar(di, `${id}: lugar.interior "${l.interior}" não existe`)) checar(di.lugar === id, `${id}: o interior "${l.interior}" tem lugar "${di.lugar}" (precisa ser "${id}")`);
+});
+const predio = (l) => ANFITRIAO[l] || l;
 // telas e ações registradas pelos prédios novos (Reino.NPCs.registrarTela / registrarAcao)
 const TELAS = ['livro', 'plano', 'estabulo', 'loja', 'bau', 'ovos'].concat(temNpcs && Reino.NPCs.telas ? Reino.NPCs.telas() : []);
 const ACOES_EXTRAS = temNpcs && Reino.NPCs.acoes ? Reino.NPCs.acoes() : [];
@@ -135,7 +145,9 @@ defs.forEach((d) => {
   });
   // saída e spawn
   if (d.entrada) {
-    if (checar(d.saida, `${onde}: interior de entrada sem saida`)) {
+    // andar de uma matéria dentro de um prédio: pode não ter porta para o mapa, mas aí tem escada
+    if (ANFITRIAO[d.lugar] && !d.saida) checar((d.escadas || []).length, `${onde}: sem saida nem escada (matéria dentro de "${ANFITRIAO[d.lugar]}")`);
+    else if (checar(d.saida, `${onde}: interior de entrada sem saida`)) {
       checar(andavel(g, d.saida), `${onde}: saída (${d.saida.x},${d.saida.y}) não é andável`);
       const c = (d.comodos || []).find((c) => d.saida.x >= c.rect.x && d.saida.x < c.rect.x + c.rect.w && d.saida.y === c.rect.y + c.rect.h - 1);
       checar(c, `${onde}: a saída precisa ficar na última fileira de um cômodo`);
@@ -154,7 +166,7 @@ defs.forEach((d) => {
     checar(g.dentro(e.x, e.y) && g.chao[e.y][e.x], `${o} fora do chão`);
     const dest = porId.get(e.para);
     if (!checar(dest, `${o}: destino "${e.para}" não existe`)) return;
-    checar(dest.lugar === d.lugar, `${o}: destino "${e.para}" é de outro prédio`);
+    checar(predio(dest.lugar) === predio(d.lugar), `${o}: destino "${e.para}" é de outro prédio`);
     const gd = grades.get(e.para);
     if (checar(e.chegada, `${o}: sem chegada`) && gd) {
       checar(andavel(gd, e.chegada), `${o}: chegada (${e.chegada.x},${e.chegada.y}) em "${e.para}" não é andável`);

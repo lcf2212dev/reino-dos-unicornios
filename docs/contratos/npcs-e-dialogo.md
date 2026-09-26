@@ -88,10 +88,17 @@ O que o NPC já disse na sessão fica só na memória (nada no save).
 | | `chocalho` | Palhaço Chocalho | Pátio do Circo; sala p3 |
 | | `brisa` | Capitã Brisa | Porto da Expedição; sala p4 |
 | | `carlos` | Seu Carlos do Carrossel | Parque do Carrossel; sala p5 |
+| Laboratório de Ciências (3º andar do Observatório; `registrarPersonagem` em `observatorio/lab-falas.js`) | `lab-iris` | Professora Íris | Hall; `{ tipo: 'guia', lugar: 'materia:ciencias', livro: 'ciencias' }` |
+| | `lab-bento` | Biólogo Bento | Vivo ou Não Vivo?; sala c1 |
+| | `lab-jana` | Guarda Jana | Quem Ganha, Quem Perde; sala c2 |
+| | `lab-malu` | Jardineira Malu | Amigos da Natureza; sala c3 |
+| | `lab-ravi` | Explorador Ravi | Cada Um no Seu Hábitat; sala c4 |
+| | `lab-lupa` | Detetive Lupa | Detetives da Natureza; sala c5 |
 | Castelo | `serena` | Princesa Serena | guia `castelo` |
 | | `aurora` | Cavaleira Aurora | treino historia |
 | | `oliver` | «Sir Oliver» | treino ingles |
 | | `clara` | Cavaleira Clara | ala de Português; `{ tipo: 'treino', materia: 'portugues' }` |
+| | `lab-cavaleira` | Cavaleira Jade | ala de Ciências; `{ tipo: 'treino', materia: 'ciencias' }` (registrada em `castelo/castelo.js`) |
 | Escola | `margarida` | Diretora Margarida | guia `escola` |
 | | `helena` | Professora Helena | prova historia-3bim |
 | | `emma` | «Teacher Emma» | prova ingles-3bim |
@@ -239,7 +246,12 @@ Reino.Claude.dialogoAberto() → bool   // o balão aberto é modal
    comentário. Toques do Brasil: o Cruzeiro do Sul na bandeira; Marcos Pontes, o primeiro astronauta
    brasileiro. Todas narradas pela voz `npc-vega`, em qualquer lugar em que apareçam. Só curiosidades: não
    dão estrelas nem mexem no save.
-8. Pet Shop: `aveia` (Dona Aveia, voz `npc-aveia`), `acao: { tipo: 'tela', tela: 'petshop' }`; a tela, o
+8. 2º andar (NASA, `observatorio/nasa-personagens.js`, `Reino.registrarPersonagem`): `nasa-lia` (Doutora Lia,
+   foguetes e missões), `nasa-davi` (Astronauta Davi, base de sprite `'astronauta'`), `nasa-bia` (Engenheira Bia,
+   Estação Espacial e a voz das experiências). Ação `{ tipo: 'nasa-curiosidade', temas, quem }` (sorteia sem repetir
+   na sessão, voz do tema: `OBS.nasa.TEMA_VOZ`) e `{ tipo: 'nasa-experiencia', exp }`; falas em
+   `FALAS_INTERIORES.observatorio.nasa` (`nasa-falas.js`).
+9. Pet Shop: `aveia` (Dona Aveia, voz `npc-aveia`), `acao: { tipo: 'tela', tela: 'petshop' }`; a tela, o
    status 🍎/💧/🛁 e as ações `beber`/`banho` estão em `cuidados.md` §6–§7.
 
 ## 10. Falas (tamanho e frases automáticas)

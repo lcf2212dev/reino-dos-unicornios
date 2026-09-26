@@ -119,7 +119,7 @@ const TIPOS = {
   },
 
   materia: {
-    ajuda: 'materia <id> --nome "Geografia" --emoji 🌍 [--salas 5] [--prefixo g] [--rect x,y,w,h]',
+    ajuda: 'materia <id> --nome "Geografia" --emoji 🌍 [--salas 5] [--prefixo g] [--rect x,y,w,h | --dentro <lugar> --interior <id>]',
     cria: 'jogo/js/conteudo/materias/<id>/{<prefixo>1..N, livro, <id>}.js no formato de historia/ (lugar.porCima: true); o prédio vem do interiores/padrao.js',
     conferir(id, op, ex, raiz) {
       if (!op.nome) throw new Error('materia: falta --nome "Nome da matéria"');
@@ -128,7 +128,10 @@ const TIPOS = {
       const n = salasDe(op);
       op.valorPorMateria = ex.valorPorMateria;
       if (!/^[a-z0-9]+$/.test(prefixo(id, op))) throw new Error('materia: --prefixo só com [a-z0-9]');
-      if (!op.rect) { op.areaAuto = areaDaMateria(raiz, ex); op.rect = op.areaAuto.rect; }
+      // dentro de um prédio que já existe: sem área no mapa; o andar (--interior) é feito à parte
+      if (op.dentro && !ex.lugares.has(op.dentro)) throw new Error(`materia: --dentro "${op.dentro}" não é um lugar do mapa (${[...ex.lugares].join(', ')})`);
+      if (op.dentro && !op.interior) throw new Error('materia: --dentro pede --interior <id do andar>');
+      if (!op.rect && !op.dentro) { op.areaAuto = areaDaMateria(raiz, ex); op.rect = op.areaAuto.rect; }
       const repetidas = nomesSalas(id, op, n).filter((s) => ex.salas.has(s));
       if (repetidas.length) throw new Error(`materia: sala já existe em outra matéria: ${repetidas.join(', ')} (use --prefixo)`);
     },
@@ -149,7 +152,7 @@ const TIPOS = {
       const lista = salas.map((s) => s + '.js').join(', ');
       return salas.map((s, i) => [`${pasta}/${s}.js`, modelo('materia-sala.js.modelo', { NOME, n: i + 1, sala: s, materia: id })])
         .concat([[`${pasta}/livro.js`, modelo('materia-livro.js.modelo', { nome: aspas(op.nome), id, cartas })],
-          [`${pasta}/${id}.js`, modelo('materia.js.modelo', { NOME, id, nome: aspas(op.nome), emoji: op.emoji, rect: r.rect, comentarioRect: r.comentario, arquivosSalas: lista, unicornios: unis })]]);
+          [`${pasta}/${id}.js`, lugarDentro(modelo('materia.js.modelo', { NOME, id, nome: aspas(op.nome), emoji: op.emoji, rect: r.rect, comentarioRect: r.comentario, arquivosSalas: lista, unicornios: unis }), op)]]);
     },
     // salas → livro.js → <m>.js, no grupo 'materias', depois das outras matérias
     manifesto(id, op, ex, raiz) {
@@ -161,6 +164,7 @@ const TIPOS = {
         `conteúdo: troque cada (preencher) nas salas, em livro.js e em ${id}.js (jogo/js/conteudo/materias/${id}/)`,
         valorSala(op.valorPorMateria, salasDe(op)),
         `unicórnios: nome, frase e cores de cada um em ${id}.js (1 comum e 1 raro por sala, 2 épicos, 1 lendário)`,
+        ...(op.dentro ? [`lugar: dentro de ${op.dentro}; o andar ${op.interior} (lugar: 'materia:${id}', entrada: true) é um prédio por dentro à parte (receita novo-predio)`] : []),
         ...(op.areaAuto ? [`lugar no mapa: escolhi ${op.areaAuto.de} (rect ${op.rect}, porCima: true); troque com --rect ou em ${id}.js (npm run ver -- --livres 5x5)`] : []),
         EMOJIS + ` (o da matéria: ${op.emoji}, e os dos desafios)`,
         UNI_NPC,
@@ -218,6 +222,16 @@ function valorSala(total, n, antes) {
   const texto = (c) => reais(c.sala) + ' por sala' + (c.bonus ? ' + ' + reais(c.bonus) + ' de bônus ao completar' : '');
   return `valor: ${texto(agora)} (R$ ${total} em ${n} salas${velho ? `; antes, com ${antes}, ${texto(velho)}` : ''})`;
 }
+// --dentro: o `lugar` da matéria vira { nome, artigo, dentro, interior } (sem rect nem desenho no mapa)
+function lugarDentro(txt, op) {
+  if (!op.dentro) return txt;
+  return txt.replace(/  lugar: \{[\s\S]*?\n  \},\n/, `  lugar: {
+    nome: '(preencher) nome do lugar',
+    artigo: 'o',
+    dentro: '${op.dentro}',       // o prédio do mapa onde ela fica (nada novo no mapa; contrato conteudo.md)
+    interior: '${op.interior}',   // o andar onde ela chega pelo menu Lugares (Reino.registrarInterior com lugar: 'materia:<id>')
+  },\n`);
+}
 // área de uma matéria nova sem --rect: a 1ª clareira que ninguém usa; senão o 1º rect livre de 5×5 do mapa
 function areaDaMateria(raiz, ex) {
   const L = require(path.join(raiz, 'jogo/ferramentas/validar/lugares-do-mapa.js'));
@@ -249,7 +263,7 @@ const nomesSalas = (id, op, n) => Array.from({ length: n }, (_, i) => prefixo(id
 /* ================= LINHA DE COMANDO ================= */
 function lerArgs(argv) {
   const op = { pos: [] };
-  const valor = { '--voz': 'voz', '--antes-de': 'antesDe', '--depois-de': 'depoisDe', '--x': 'x', '--y': 'y', '--acao': 'acao', '--predio': 'predio', '--professora': 'professora', '--nome-professora': 'nomeProfessora', '--campo': 'campo', '--estrategia': 'estrategia', '--nome': 'nome', '--rect': 'rect', '--caminho': 'caminho', '--emoji': 'emoji', '--salas': 'salas', '--prefixo': 'prefixo', '--raiz': 'raiz' };
+  const valor = { '--voz': 'voz', '--antes-de': 'antesDe', '--depois-de': 'depoisDe', '--x': 'x', '--y': 'y', '--acao': 'acao', '--predio': 'predio', '--professora': 'professora', '--nome-professora': 'nomeProfessora', '--campo': 'campo', '--estrategia': 'estrategia', '--nome': 'nome', '--rect': 'rect', '--caminho': 'caminho', '--emoji': 'emoji', '--salas': 'salas', '--prefixo': 'prefixo', '--raiz': 'raiz', '--dentro': 'dentro', '--interior': 'interior' };
   for (let i = 0; i < argv.length; i++) {
     const k = argv[i];
     if (valor[k]) { if (argv[i + 1] === undefined) throw new Error(`${k} precisa de um valor`); op[valor[k]] = argv[++i]; }

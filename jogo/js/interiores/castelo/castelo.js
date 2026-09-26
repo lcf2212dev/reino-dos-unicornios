@@ -35,6 +35,20 @@
   function cavaleiroDoElenco(materiaId) {
     return R.NPCs && R.NPCs.doElenco ? R.NPCs.doElenco({ paraMateria: materiaId }) : null;
   }
+  // ala de Ciências: a cavaleira é registrada aqui (o Laboratório, no Observatório, carrega depois do Castelo)
+  if (!ELENCO['lab-cavaleira']) {
+    R.registrarPersonagem({ id: 'lab-cavaleira', nome: 'Cavaleira Jade', paraMateria: 'ciencias',
+      sprite: { pele: '#e0ac86', cabelo: '#7a3a1a', penteado: 'rabo', chapeu: 'elmo', cor2: '#39c5bb', armadura: true, roupa: '#39c5bb', capa: true, capaCor: '#5fb85a' },
+      perfil: { voz: 'en-US-EmmaMultilingualNeural', velocidade: '+0%', tom: '-8Hz' } });
+  }
+  F.npcs['lab-cavaleira'] = F.npcs['lab-cavaleira'] || {
+    oi: ['Eu sou a Cavaleira Jade! 🛡️', 'Eu treino Ciências com você.'],
+    nova: ['Vamos treinar Ciências? 🥇', 'Pense como uma cientista!'],
+    feita: ['Quer treinar mais uma vez? ✨', 'Vamos buscar o ouro com calma?'],
+    bloqueada: ['Primeiro, as salas do Laboratório.', 'O Laboratório vem antes.'],
+    depois: ['Que cientista caprichosa! ✨', 'Você sabe muito da natureza! 🏆'],
+  };
+  F.objetos['ciencias-microscopio'] = F.objetos['ciencias-microscopio'] || ['Um microscópio na ala!', 'Ele mostra o bem pequeninho.'];
   // { historia: 'aurora', ingles: 'oliver', portugues: 'clara' }: gancho de teste (I.castelo), tirado do elenco
   var CAVALEIROS = {};
   Object.keys(ELENCO).forEach(function (id) {
@@ -63,6 +77,13 @@
       b: { tipo: 'castelo-blocos-letras' }, c: { tipo: 'pilha-livros' }, d: { tipo: 'castelo-cavalete-receita' },
       cor: PT_VERMELHO, piso: 'taco', parede: 'pedra',
       paleta: { piso: '#e4f0d4', piso2: '#b4d49a', parede: '#fff1ea', parede2: '#f2c4b8', rodape: '#2e7a45' },
+    },
+    ciencias: {
+      paredeLarga: { tipo: 'lab-quadro', var: { desenho: 'seres' } }, paredeEstreita: { tipo: 'lab-cartaz', var: { desenho: 'vivo' } },
+      a: inter('ciencias-microscopio', 'Microscópio', { tipo: 'lab-microscopio' }),
+      b: { tipo: 'lab-formigueiro' }, c: { tipo: 'lab-tubos' }, d: { tipo: 'lab-cacto' },
+      cor: '#39c5bb', piso: 'azulejo', parede: 'pedra',
+      paleta: { piso: '#eefaf6', piso2: '#c4ece2', parede: '#f4fbff', parede2: '#cfe8ee', rodape: '#1f9a92' },
     },
   };
   var PISOS_PADRAO = ['palha', 'taco', 'azulejo', 'carpete', 'mosaico'];

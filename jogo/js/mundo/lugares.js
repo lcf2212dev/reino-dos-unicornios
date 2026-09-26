@@ -9,8 +9,8 @@
        sempre (o sorteio segue a ordem dos tiles). Lugar SEM caminho (os primeiros) entra antes do
        sorteio e ganha uma ligação reta até a rua mais próxima. Todo lugar novo vai COM caminho.
    Ordem de Mapa.lugares(): os sem caminho (nesta ordem), as matérias, as matérias porCima e os
-   com caminho (nesta ordem). As matérias trazem o lugar em Reino.materias (lugar.rect ou uma
-   clareira). */
+   com caminho (nesta ordem) e, no fim, as matérias com lugar.dentro (só menu, na porta do anfitrião).
+   As matérias trazem o lugar em Reino.materias (lugar.rect, uma clareira ou lugar.dentro). */
 (function () {
   var Mapa = window.Mapa;
 

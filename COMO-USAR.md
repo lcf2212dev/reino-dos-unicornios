@@ -147,6 +147,7 @@
   - **Baú do Tesouro:** Dragãozinho Tostão e pilhas de moedas que crescem com o dinheiro dela. O monte grande fica cheio em R$40 e nunca encolhe quando entra uma matéria nova. As pilhas de cada matéria continuam crescendo com o dinheiro dela.
   - **Pet Shop:** a loja da Dona Aveia e o Cantinho da Água, com o bebedouro e a banheira de espuma.
   - **Observatório:** Cúpula do Telescópio, Planetário e Galeria do Espaço, com a Doutora Vega e o Robô Cosmo.
+  - **Laboratório de Ciências (3º andar do Observatório):** Hall com a Professora Íris, o Livro de Ciências e o microscópio, e uma sala por capítulo: Biólogo Bento (formigueiro de vidro), Guarda Jana (onça e jacaré), Jardineira Malu (beija-flor e jogo da memória), Explorador Ravi (iglu, aquário com aguapé, cacto) e Detetive Lupa (pegadas e bichos para investigar). No Castelo, a Cavaleira Jade cuida da ala de Ciências.
 - **Ícone em cima de cada personagem:**
   - ❗ sala nova (ou treino aberto e ainda sem medalha), ✓ sala feita, 💙 o unicórnio raro já nasceu;
   - 🔒 treino fechado, 🥇🥈🥉 medalha do treino;
@@ -199,6 +200,7 @@
 - **Brilho de galáxia:** paredes, chão, cúpula e telescópio em azul, roxo e magenta, com Via Láctea, halos nos planetas e nas luminárias, estrelas que piscam e trocam de cor e uma estrela cadente a cada 8 a 15 segundos. O prédio no mapa tem a cúpula com reflexo de galáxia. Com "Animações" desligado fica colorido e parado.
 - **Doutora Vega:** a guia. Conta curiosidades sem repetir enquanto o jogo está aberto. Tocar nos planetas, no telescópio e nas peças da Galeria também conta uma.
 - **Robô Cosmo:** conta piadas.
+- **2º andar (Centro de Pesquisas Avançadas da NASA):** escada no fundo da Cúpula. Hangar dos Foguetes, Sala de Controle e Laboratório de Experiências, com a Doutora Lia, o Astronauta Davi e a Engenheira Bia (curiosidades) e 4 experiências de tocar (foguete que decola, pena e martelo, fases da Lua, horta espacial). Só para brincar: sem perguntas nem prêmios.
 - São 75 curiosidades, cada uma conferida na fonte (a maioria no NASA Space Place, e também ESA Kids, Agência Espacial Brasileira e outras páginas da NASA e da ESA, além de fontes brasileiras: INPE, USP São Carlos, Agência Brasil e MundoGEO).
 - **Do Brasil:** o Cruzeiro do Sul e as estrelas da bandeira, Marcos Pontes (o primeiro brasileiro no espaço), a base de Alcântara e o satélite Amazônia Um.
 - É só para curiosidade: não dá estrelas nem muda o progresso.
@@ -258,6 +260,7 @@
   - **Figuras (questão 10):** 18 figuras em pixel art, na ordem da folha. Em cada uma ela escolhe CH, LH ou NH para completar o nome.
   - **Escolher e montar com letras (questão 11):** ela toca na escrita certa (PASEIO ou PASSEIO) e depois monta a palavra tocando nas letras. Tocar numa letra já colocada tira ela. Cada item vale duas partes: escolher certo e copiar certo. Pelo teclado, depois de pôr uma letra, o foco volta para a primeira letra livre.
   - **Mais de uma resposta certa:** só em duas palavras da questão 12. CA_O vale CARRO ou CARO, e CA_ETA vale CARETA ou CARRETA. Na correção aparece a da folha, com "(ou …)" para a outra. Palavras raras (como cassa, cassaco e fero) não valem, porque a prova imita a correção da professora.
+- **Prova de Ciências ("Revisão Bimestral de Ciências", 11 questões, Professora Flora):** as 03 e 04 são pessoais (qualquer ser vivo ou não vivo da lista vale); na 09 ela toca nas fases do ciclo da planta na ordem; nas 07, 10 e 11 ela completa com as respostas do quadro (na 10, a resposta e o motivo). Prêmios: Óculos de Cientista, Lupa de Exploradora e Brotinho na Cabeça.
 - Ajustes de texto:
   - **História:** "documeto" foi corrigido para "documento" na questão 10.
   - **Inglês:** "sport´s" virou "sport's", e o "not" da questão 6 aparece em maiúsculas (NOT), porque na folha ele está em negrito.

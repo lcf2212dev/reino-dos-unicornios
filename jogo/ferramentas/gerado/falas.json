@@ -262,6 +262,61 @@
    "voz": "pt-BR-FranciscaNeural",
    "velocidade": "+14%",
    "tom": "+20Hz"
+  },
+  "npc-prof-flora": {
+   "voz": "de-DE-SeraphinaMultilingualNeural",
+   "velocidade": "-2%",
+   "tom": "+6Hz"
+  },
+  "npc-lab-cavaleira": {
+   "voz": "en-US-EmmaMultilingualNeural",
+   "velocidade": "+0%",
+   "tom": "-8Hz"
+  },
+  "npc-nasa-lia": {
+   "voz": "en-US-EmmaMultilingualNeural",
+   "velocidade": "+4%",
+   "tom": "+6Hz"
+  },
+  "npc-nasa-davi": {
+   "voz": "ko-KR-HyunsuMultilingualNeural",
+   "velocidade": "-4%",
+   "tom": "-8Hz"
+  },
+  "npc-nasa-bia": {
+   "voz": "de-DE-SeraphinaMultilingualNeural",
+   "velocidade": "+6%",
+   "tom": "+0Hz"
+  },
+  "npc-lab-iris": {
+   "voz": "pt-BR-ThalitaMultilingualNeural",
+   "velocidade": "-8%",
+   "tom": "+10Hz"
+  },
+  "npc-lab-bento": {
+   "voz": "en-US-AndrewMultilingualNeural",
+   "velocidade": "+2%",
+   "tom": "+6Hz"
+  },
+  "npc-lab-jana": {
+   "voz": "en-US-AvaMultilingualNeural",
+   "velocidade": "+2%",
+   "tom": "-6Hz"
+  },
+  "npc-lab-malu": {
+   "voz": "fr-FR-VivienneMultilingualNeural",
+   "velocidade": "+8%",
+   "tom": "+20Hz"
+  },
+  "npc-lab-ravi": {
+   "voz": "en-AU-WilliamMultilingualNeural",
+   "velocidade": "-2%",
+   "tom": "-8Hz"
+  },
+  "npc-lab-lupa": {
+   "voz": "pt-BR-FranciscaNeural",
+   "velocidade": "+4%",
+   "tom": "+18Hz"
   }
  },
  "falas": [
@@ -690,7 +745,12 @@
     "portugues-p2",
     "portugues-p3",
     "portugues-p4",
-    "portugues-p5"
+    "portugues-p5",
+    "ciencias-c1",
+    "ciencias-c2",
+    "ciencias-c3",
+    "ciencias-c4",
+    "ciencias-c5"
    ],
    "fala": "Verdadeiro ou falso?"
   },
@@ -1500,7 +1560,8 @@
    "voz": "narradora",
    "texto": "Marque V para verdadeiro e F para falso:",
    "pacotes": [
-    "prova-historia-3bim"
+    "prova-historia-3bim",
+    "prova-ciencias-3bim"
    ],
    "fala": "Marque V para verdadeiro e F para falso:"
   },
@@ -1608,7 +1669,8 @@
    "voz": "narradora",
    "texto": "Complete as frases com as palavras do quadro.",
    "pacotes": [
-    "prova-historia-3bim"
+    "prova-historia-3bim",
+    "ciencias-c1"
    ],
    "fala": "Complete as frases com as palavras do quadro."
   },
@@ -2809,6 +2871,607 @@
     "prova-portugues-3bim"
    ],
    "fala": "Toque em érre ou dois érres para completar cada palavra."
+  },
+  {
+   "chave": "4fc3da801s",
+   "voz": "narradora",
+   "texto": "O que são seres vivos? Assinale a alternativa correta:",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "O que são seres vivos? Assinale a alternativa correta:"
+  },
+  {
+   "chave": "fa6983b01y",
+   "voz": "narradora",
+   "texto": "Coisas que não se movem e não precisam de nada para existir.",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "Coisas que não se movem e não precisam de nada para existir."
+  },
+  {
+   "chave": "cd4945b122",
+   "voz": "narradora",
+   "texto": "Seres que nascem, crescem, se alimentam, se reproduzem e morrem.",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "Seres que nascem, crescem, se alimentam, se reproduzem e morrem."
+  },
+  {
+   "chave": "4c191de11x",
+   "voz": "narradora",
+   "texto": "Objetos fabricados pelas pessoas, como carros e brinquedos.",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "Objetos fabricados pelas pessoas, como carros e brinquedos."
+  },
+  {
+   "chave": "a563e5661e",
+   "voz": "narradora",
+   "texto": "Os seres vivos nascem, crescem e morrem.",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "Os seres vivos nascem, crescem e morrem."
+  },
+  {
+   "chave": "f6f128fb1l",
+   "voz": "narradora",
+   "texto": "Os seres vivos não precisam de água para viver.",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "Os seres vivos não precisam de água para viver."
+  },
+  {
+   "chave": "2b6ea32a14",
+   "voz": "narradora",
+   "texto": "Todos os seres vivos respiram.",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "Todos os seres vivos respiram."
+  },
+  {
+   "chave": "f9d0054f1g",
+   "voz": "narradora",
+   "texto": "As pedras e os brinquedos são seres vivos.",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "As pedras e os brinquedos são seres vivos."
+  },
+  {
+   "chave": "d1e2d9e52a",
+   "voz": "narradora",
+   "texto": "Os seres vivos podem se reproduzir, ou seja, gerar filhotes ou sementes.",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "Os seres vivos podem se reproduzir, ou seja, gerar filhotes ou sementes."
+  },
+  {
+   "chave": "e29f85de1s",
+   "voz": "narradora",
+   "texto": "Escreva três exemplos de seres vivos que você conhece.",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "Escreva três exemplos de seres vivos que você conhece."
+  },
+  {
+   "chave": "7ef6f9cc1b",
+   "voz": "narradora",
+   "texto": "Toque em um ser vivo para cada linha.",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "Toque em um ser vivo para cada linha."
+  },
+  {
+   "chave": "9d80e8a0i",
+   "voz": "narradora",
+   "texto": "cachorro",
+   "pacotes": [
+    "prova-ciencias-3bim",
+    "portugues-p2",
+    "portugues-p5"
+   ],
+   "fala": "cachorro"
+  },
+  {
+   "chave": "28ff127ce",
+   "voz": "narradora",
+   "texto": "gato",
+   "pacotes": [
+    "prova-ciencias-3bim",
+    "portugues-p5"
+   ],
+   "fala": "gato"
+  },
+  {
+   "chave": "c75e9135k",
+   "voz": "narradora",
+   "texto": "passarinho",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "passarinho"
+  },
+  {
+   "chave": "0fe16eeef",
+   "voz": "narradora",
+   "texto": "peixe",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "peixe"
+  },
+  {
+   "chave": "3fe90b0ah",
+   "voz": "narradora",
+   "texto": "formiga",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "formiga"
+  },
+  {
+   "chave": "c1123663j",
+   "voz": "narradora",
+   "texto": "borboleta",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "borboleta"
+  },
+  {
+   "chave": "88872bacg",
+   "voz": "narradora",
+   "texto": "árvore",
+   "pacotes": [
+    "prova-ciencias-3bim",
+    "portugues-p5"
+   ],
+   "fala": "árvore"
+  },
+  {
+   "chave": "4a4daefee",
+   "voz": "narradora",
+   "texto": "flor",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "flor"
+  },
+  {
+   "chave": "f5fb4e17c",
+   "voz": "narradora",
+   "texto": "eu",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "eu"
+  },
+  {
+   "chave": "f31edb161w",
+   "voz": "narradora",
+   "texto": "Escreva três exemplos de seres não vivos que você conhece.",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "Escreva três exemplos de seres não vivos que você conhece."
+  },
+  {
+   "chave": "368159181f",
+   "voz": "narradora",
+   "texto": "Toque em um ser não vivo para cada linha.",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "Toque em um ser não vivo para cada linha."
+  },
+  {
+   "chave": "87eab867f",
+   "voz": "narradora",
+   "texto": "pedra",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "pedra"
+  },
+  {
+   "chave": "3f74549fe",
+   "voz": "narradora",
+   "texto": "água",
+   "pacotes": [
+    "prova-ciencias-3bim",
+    "portugues-p1",
+    "portugues-p2",
+    "ciencias-c1"
+   ],
+   "fala": "água"
+  },
+  {
+   "chave": "8e54bdf9d",
+   "voz": "narradora",
+   "texto": "Sol",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "Sol"
+  },
+  {
+   "chave": "2c60610ch",
+   "voz": "narradora",
+   "texto": "cadeira",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "cadeira"
+  },
+  {
+   "chave": "a863a6dfe",
+   "voz": "narradora",
+   "texto": "mesa",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "mesa"
+  },
+  {
+   "chave": "feeed5daf",
+   "voz": "narradora",
+   "texto": "carro",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "carro"
+  },
+  {
+   "chave": "173eb3baj",
+   "voz": "narradora",
+   "texto": "brinquedo",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "brinquedo"
+  },
+  {
+   "chave": "a12694f6f",
+   "voz": "narradora",
+   "texto": "lápis",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "lápis"
+  },
+  {
+   "chave": "48c25dfd27",
+   "voz": "narradora",
+   "texto": "O que significa dizer que um ser vivo foi BENEFICIADO em uma relação?",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "O que significa dizer que um ser vivo foi beneficiado em uma relação?"
+  },
+  {
+   "chave": "a5b2be491s",
+   "voz": "narradora",
+   "texto": "Ele ganhou algo bom, como alimento, proteção ou ajuda.",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "Ele ganhou algo bom, como alimento, proteção ou ajuda."
+  },
+  {
+   "chave": "a8e351c818",
+   "voz": "narradora",
+   "texto": "Ele perdeu algo ou saiu machucado.",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "Ele perdeu algo ou saiu machucado."
+  },
+  {
+   "chave": "0f12cc8e27",
+   "voz": "narradora",
+   "texto": "O que significa dizer que um ser vivo foi PREJUDICADO em uma relação?",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "O que significa dizer que um ser vivo foi prejudicado em uma relação?"
+  },
+  {
+   "chave": "afb979a015",
+   "voz": "narradora",
+   "texto": "Ele ganhou alimento e proteção.",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "Ele ganhou alimento e proteção."
+  },
+  {
+   "chave": "6280a5a41u",
+   "voz": "narradora",
+   "texto": "Ele saiu perdendo, machucado ou foi usado como alimento.",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "Ele saiu perdendo, machucado ou foi usado como alimento."
+  },
+  {
+   "chave": "648ff1e911",
+   "voz": "narradora",
+   "texto": "Leia a situação e responda:",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "Leia a situação e responda:"
+  },
+  {
+   "chave": "37e159cc1f",
+   "voz": "narradora",
+   "texto": "Toque no animal certo para cada pergunta.",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "Toque no animal certo para cada pergunta."
+  },
+  {
+   "chave": "deeacc9fg",
+   "voz": "narradora",
+   "texto": "o leão",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "o leão"
+  },
+  {
+   "chave": "4a1e84dch",
+   "voz": "narradora",
+   "texto": "a zebra",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "a zebra"
+  },
+  {
+   "chave": "7ab8530b12",
+   "voz": "narradora",
+   "texto": "Quem foi beneficiado? ______",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "Quem foi beneficiado? …"
+  },
+  {
+   "chave": "7526ab5c12",
+   "voz": "narradora",
+   "texto": "Quem foi prejudicado? ______",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "Quem foi prejudicado? …"
+  },
+  {
+   "chave": "79cbea00i",
+   "voz": "narradora",
+   "texto": "Situação",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "Situação"
+  },
+  {
+   "chave": "c90c02e41n",
+   "voz": "narradora",
+   "texto": "O leão persegue e caça a zebra para se alimentar.",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "O leão persegue e caça a zebra para se alimentar."
+  },
+  {
+   "chave": "1d627ba442",
+   "voz": "narradora",
+   "texto": "Em uma colmeia, várias abelhas trabalham juntas. Algumas procuram alimento, enquanto outras cuidam da colmeia. Essa situação mostra que:",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "Em uma colmeia, várias abelhas trabalham juntas. Algumas procuram alimento, enquanto outras cuidam da colmeia. Essa situação mostra que:"
+  },
+  {
+   "chave": "f62733ee1p",
+   "voz": "narradora",
+   "texto": "Os seres vivos podem estabelecer relações entre si.",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "Os seres vivos podem estabelecer relações entre si."
+  },
+  {
+   "chave": "8e62cf151d",
+   "voz": "narradora",
+   "texto": "Os animais não precisam uns dos outros.",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "Os animais não precisam uns dos outros."
+  },
+  {
+   "chave": "665ee56d1e",
+   "voz": "narradora",
+   "texto": "Apenas os seres humanos vivem em grupos.",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "Apenas os seres humanos vivem em grupos."
+  },
+  {
+   "chave": "eac3c1f421",
+   "voz": "narradora",
+   "texto": "Numere de 1 a 4 a ordem correta do ciclo de vida de uma planta:",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "Numere de 1 a 4 a ordem correta do ciclo de vida de uma planta:"
+  },
+  {
+   "chave": "3acb6d9f1f",
+   "voz": "narradora",
+   "texto": "Toque nas fases da primeira até a última.",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "Toque nas fases da primeira até a última."
+  },
+  {
+   "chave": "be25f7552c",
+   "voz": "narradora",
+   "texto": "O Sol é um ser vivo ou um ser não vivo? Explique o motivo da sua resposta.",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "O Sol é um ser vivo ou um ser não vivo? Explique o motivo da sua resposta."
+  },
+  {
+   "chave": "dee1bba51b",
+   "voz": "narradora",
+   "texto": "Toque na resposta e depois no motivo.",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "Toque na resposta e depois no motivo."
+  },
+  {
+   "chave": "24f2c8a5l",
+   "voz": "narradora",
+   "texto": "um ser vivo",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "um ser vivo"
+  },
+  {
+   "chave": "c159102dp",
+   "voz": "narradora",
+   "texto": "um ser não vivo",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "um ser não vivo"
+  },
+  {
+   "chave": "148cd68818",
+   "voz": "narradora",
+   "texto": "porque nasce, cresce e se reproduz",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "porque nasce, cresce e se reproduz"
+  },
+  {
+   "chave": "84a2cdac1k",
+   "voz": "narradora",
+   "texto": "porque não nasce, não cresce e não se reproduz",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "porque não nasce, não cresce e não se reproduz"
+  },
+  {
+   "chave": "7de29a77p",
+   "voz": "narradora",
+   "texto": "O Sol é ______.",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "O Sol é …"
+  },
+  {
+   "chave": "bc395f0bt",
+   "voz": "narradora",
+   "texto": "Ele é assim ______.",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "Ele é assim …"
+  },
+  {
+   "chave": "584948371h",
+   "voz": "narradora",
+   "texto": "Toque na resposta certa para cada pergunta.",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "Toque na resposta certa para cada pergunta."
+  },
+  {
+   "chave": "bdd1d0fd1h",
+   "voz": "narradora",
+   "texto": "Sim, porque ganhou alimento: os carrapatos.",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "Sim, porque ganhou alimento: os carrapatos."
+  },
+  {
+   "chave": "4c323f3a11",
+   "voz": "narradora",
+   "texto": "Não, porque saiu machucado.",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "Não, porque saiu machucado."
+  },
+  {
+   "chave": "035c959el",
+   "voz": "narradora",
+   "texto": "beneficiado",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "beneficiado"
+  },
+  {
+   "chave": "291beb1dl",
+   "voz": "narradora",
+   "texto": "prejudicado",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "prejudicado"
+  },
+  {
+   "chave": "f924543e1j",
+   "voz": "narradora",
+   "texto": "O passarinho foi beneficiado? Por quê? ______",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "O passarinho foi beneficiado? Por quê? …"
+  },
+  {
+   "chave": "1f8f4b7a1i",
+   "voz": "narradora",
+   "texto": "O boi foi beneficiado ou prejudicado? ______",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "O boi foi beneficiado ou prejudicado? …"
+  },
+  {
+   "chave": "2c35ef822u",
+   "voz": "narradora",
+   "texto": "O passarinho anu-branco pousa nas costas do boi e come os carrapatos que incomodam o animal.",
+   "pacotes": [
+    "prova-ciencias-3bim"
+   ],
+   "fala": "O passarinho anu-branco pousa nas costas do boi e come os carrapatos que incomodam o animal."
   },
   {
    "chave": "3909f17932",
@@ -5368,7 +6031,8 @@
    "voz": "narradora",
    "texto": "Cachorro",
    "pacotes": [
-    "historia-h4"
+    "historia-h4",
+    "ciencias-c3"
    ],
    "fala": "Cachorro"
   },
@@ -10547,16 +11211,6 @@
    "fala": "liquidificador"
   },
   {
-   "chave": "3f74549fe",
-   "voz": "narradora",
-   "texto": "água",
-   "pacotes": [
-    "portugues-p1",
-    "portugues-p2"
-   ],
-   "fala": "água"
-  },
-  {
    "chave": "23f146b414",
    "voz": "narradora",
    "texto": "Retire as ______ dos morangos.",
@@ -10870,16 +11524,6 @@
     "portugues-p2"
    ],
    "fala": "helicóptero"
-  },
-  {
-   "chave": "9d80e8a0i",
-   "voz": "narradora",
-   "texto": "cachorro",
-   "pacotes": [
-    "portugues-p2",
-    "portugues-p5"
-   ],
-   "fala": "cachorro"
   },
   {
    "chave": "273effc5e",
@@ -12089,15 +12733,6 @@
    "fala": "Quais nomes têm éle ou érre no final de uma sílaba? Toque em todos."
   },
   {
-   "chave": "88872bacg",
-   "voz": "narradora",
-   "texto": "árvore",
-   "pacotes": [
-    "portugues-p5"
-   ],
-   "fala": "árvore"
-  },
-  {
    "chave": "4e8d5069d",
    "voz": "narradora",
    "texto": "mel",
@@ -12296,15 +12931,6 @@
    "fala": "Adivinha! Gosto de correr e brincar. Sou amigo fiel. Meu nome tem dois érres. Quem sou eu?"
   },
   {
-   "chave": "28ff127ce",
-   "voz": "narradora",
-   "texto": "gato",
-   "pacotes": [
-    "portugues-p5"
-   ],
-   "fala": "gato"
-  },
-  {
    "chave": "fc65b7bfg",
    "voz": "narradora",
    "texto": "coelho",
@@ -12429,6 +13055,2642 @@
     "portugues-p5"
    ],
    "fala": "casulo"
+  },
+  {
+   "chave": "dd4247c037",
+   "voz": "claude",
+   "texto": "Toque no chão para andar (ou use as setas do teclado). Vamos até o Laboratório de Ciências? É só tocar nele!",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Toque no chão para andar (ou use as setas do teclado). Vamos até o Laboratório de Ciências? É só tocar nele!"
+  },
+  {
+   "chave": "628209b92y",
+   "voz": "claude",
+   "texto": "Eu sou o guia do Laboratório de Ciências! Aqui a gente descobre os seres vivos e onde cada um mora.",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Eu sou o guia do Laboratório de Ciências! Aqui a gente descobre os seres vivos e onde cada um mora."
+  },
+  {
+   "chave": "09faca2a39",
+   "voz": "claude",
+   "texto": "O treino de Ciências abre quando você terminar as salas do Laboratório de Ciências. Falta só 1! Você consegue!",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "O treino de Ciências abre quando você terminar as salas do Laboratório de Ciências. Falta só 1! Você consegue!"
+  },
+  {
+   "chave": "a1e2ea4237",
+   "voz": "claude",
+   "texto": "O treino de Ciências abre quando você terminar as salas do Laboratório de Ciências. Faltam 2! Você consegue!",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "O treino de Ciências abre quando você terminar as salas do Laboratório de Ciências. Faltam 2! Você consegue!"
+  },
+  {
+   "chave": "7af1809137",
+   "voz": "claude",
+   "texto": "O treino de Ciências abre quando você terminar as salas do Laboratório de Ciências. Faltam 3! Você consegue!",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "O treino de Ciências abre quando você terminar as salas do Laboratório de Ciências. Faltam 3! Você consegue!"
+  },
+  {
+   "chave": "1a0fe20037",
+   "voz": "claude",
+   "texto": "O treino de Ciências abre quando você terminar as salas do Laboratório de Ciências. Faltam 4! Você consegue!",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "O treino de Ciências abre quando você terminar as salas do Laboratório de Ciências. Faltam 4! Você consegue!"
+  },
+  {
+   "chave": "c326fd6737",
+   "voz": "claude",
+   "texto": "O treino de Ciências abre quando você terminar as salas do Laboratório de Ciências. Faltam 5! Você consegue!",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "O treino de Ciências abre quando você terminar as salas do Laboratório de Ciências. Faltam 5! Você consegue!"
+  },
+  {
+   "chave": "fd2473692j",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Os seres vivos\".",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Os seres vivos\"."
+  },
+  {
+   "chave": "08be08eeo",
+   "voz": "narradora",
+   "texto": "Os seres vivos",
+   "pacotes": [
+    "ciencias-livro"
+   ],
+   "fala": "Os seres vivos"
+  },
+  {
+   "chave": "ff9c49995w",
+   "voz": "narradora",
+   "texto": "Os seres vivos nascem, crescem, se alimentam, se reproduzem e morrem. As plantas, os animais, os fungos e até as formigas são seres vivos. O ambiente é formado por seres vivos e por elementos não vivos.",
+   "pacotes": [
+    "ciencias-livro"
+   ],
+   "fala": "Os seres vivos nascem, crescem, se alimentam, se reproduzem e morrem. As plantas, os animais, os fungos e até as formigas são seres vivos. O ambiente é formado por seres vivos e por elementos não vivos."
+  },
+  {
+   "chave": "26dcef8d2p",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Os fatores abióticos\".",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Os fatores abióticos\"."
+  },
+  {
+   "chave": "c676643eu",
+   "voz": "narradora",
+   "texto": "Os fatores abióticos",
+   "pacotes": [
+    "ciencias-livro"
+   ],
+   "fala": "Os fatores abióticos"
+  },
+  {
+   "chave": "d882771c78",
+   "voz": "narradora",
+   "texto": "Na natureza também existem elementos que não são vivos. Eles se chamam fatores abióticos. Alguns exemplos: a água, o ar, as rochas, o solo e a luz solar. Os seres vivos interagem com eles. Os animais precisam do ar para respirar e da água para beber.",
+   "pacotes": [
+    "ciencias-livro"
+   ],
+   "fala": "Na natureza também existem elementos que não são vivos. Eles se chamam fatores abióticos. Alguns exemplos: a água, o ar, as rochas, o solo e a luz solar. Os seres vivos interagem com eles. Os animais precisam do ar para respirar e da água para beber."
+  },
+  {
+   "chave": "0c29c2be2w",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"As formigas e o formigueiro\".",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"As formigas e o formigueiro\"."
+  },
+  {
+   "chave": "6c545cc711",
+   "voz": "narradora",
+   "texto": "As formigas e o formigueiro",
+   "pacotes": [
+    "ciencias-livro"
+   ],
+   "fala": "As formigas e o formigueiro"
+  },
+  {
+   "chave": "4c4a9f595h",
+   "voz": "narradora",
+   "texto": "As formigas carregam pedaços de folhas até o formigueiro. Lá dentro, as folhas servem para cultivar um fungo, que é o alimento delas. As formigas trabalham em grupo, uma ajudando a outra.",
+   "pacotes": [
+    "ciencias-livro"
+   ],
+   "fala": "As formigas carregam pedaços de folhas até o formigueiro. Lá dentro, as folhas servem para cultivar um fungo, que é o alimento delas. As formigas trabalham em grupo, uma ajudando a outra."
+  },
+  {
+   "chave": "3bd4bb5f2y",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Relações entre os seres vivos\".",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Relações entre os seres vivos\"."
+  },
+  {
+   "chave": "559ac64613",
+   "voz": "narradora",
+   "texto": "Relações entre os seres vivos",
+   "pacotes": [
+    "ciencias-livro"
+   ],
+   "fala": "Relações entre os seres vivos"
+  },
+  {
+   "chave": "d564c26c5k",
+   "voz": "narradora",
+   "texto": "Todos os seres vivos, como os animais e as plantas, são chamados de fatores bióticos. Eles estão sempre interagindo uns com os outros. Essas relações podem ser benéficas ou trazer prejuízos.",
+   "pacotes": [
+    "ciencias-livro"
+   ],
+   "fala": "Todos os seres vivos, como os animais e as plantas, são chamados de fatores bióticos. Eles estão sempre interagindo uns com os outros. Essas relações podem ser benéficas ou trazer prejuízos."
+  },
+  {
+   "chave": "569f84622j",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Quem come quem\".",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Quem come quem\"."
+  },
+  {
+   "chave": "01ffb239o",
+   "voz": "narradora",
+   "texto": "Quem come quem",
+   "pacotes": [
+    "ciencias-livro"
+   ],
+   "fala": "Quem come quem"
+  },
+  {
+   "chave": "7ff4b9e962",
+   "voz": "narradora",
+   "texto": "Muitos seres vivos se alimentam de outros seres vivos. A onça-pintada caça o jacaré: a onça se beneficia, e o jacaré é prejudicado. O gafanhoto come folhas: o gafanhoto se beneficia, e a planta é prejudicada.",
+   "pacotes": [
+    "ciencias-livro"
+   ],
+   "fala": "Muitos seres vivos se alimentam de outros seres vivos. A onça-pintada caça o jacaré: a onça se beneficia, e o jacaré é prejudicado. O gafanhoto come folhas: o gafanhoto se beneficia, e a planta é prejudicada."
+  },
+  {
+   "chave": "16889beb2h",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"A competição\".",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"A competição\"."
+  },
+  {
+   "chave": "22f400e4m",
+   "voz": "narradora",
+   "texto": "A competição",
+   "pacotes": [
+    "ciencias-livro"
+   ],
+   "fala": "A competição"
+  },
+  {
+   "chave": "7ec695406j",
+   "voz": "narradora",
+   "texto": "Às vezes, seres vivos diferentes disputam o mesmo alimento. Isso é competição. O bugio e a arara-vermelha podem competir pelos frutos da palmeira. Quando isso acontece, alguns podem ter mais dificuldade para encontrar comida.",
+   "pacotes": [
+    "ciencias-livro"
+   ],
+   "fala": "Às vezes, seres vivos diferentes disputam o mesmo alimento. Isso é competição. O bugio e a arara-vermelha podem competir pelos frutos da palmeira. Quando isso acontece, alguns podem ter mais dificuldade para encontrar comida."
+  },
+  {
+   "chave": "bb911ea02e",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"As pulgas\".",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"As pulgas\"."
+  },
+  {
+   "chave": "b2a5f579j",
+   "voz": "narradora",
+   "texto": "As pulgas",
+   "pacotes": [
+    "ciencias-livro"
+   ],
+   "fala": "As pulgas"
+  },
+  {
+   "chave": "89ee938e70",
+   "voz": "narradora",
+   "texto": "Alguns seres vivos vivem no corpo de outros e causam prejuízos a eles. As pulgas vivem no corpo de gatos e cachorros e se alimentam do sangue deles. As pulgas se beneficiam. Os gatos e cachorros são prejudicados: sentem coceira e desconforto.",
+   "pacotes": [
+    "ciencias-livro"
+   ],
+   "fala": "Alguns seres vivos vivem no corpo de outros e causam prejuízos a eles. As pulgas vivem no corpo de gatos e cachorros e se alimentam do sangue deles. As pulgas se beneficiam. Os gatos e cachorros são prejudicados: sentem coceira e desconforto."
+  },
+  {
+   "chave": "e236b15c2o",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"A vida em sociedade\".",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"A vida em sociedade\"."
+  },
+  {
+   "chave": "06c4ba05t",
+   "voz": "narradora",
+   "texto": "A vida em sociedade",
+   "pacotes": [
+    "ciencias-livro"
+   ],
+   "fala": "A vida em sociedade"
+  },
+  {
+   "chave": "611abf567b",
+   "voz": "narradora",
+   "texto": "Alguns seres vivos vivem em sociedade: eles se organizam e cooperam para o bem de todos. Na colmeia, as abelhas cuidam dos ovos e das larvas, buscam alimento e protegem a colmeia. As formigas e os cupins também vivem em grupos, e cada um tem sua função.",
+   "pacotes": [
+    "ciencias-livro"
+   ],
+   "fala": "Alguns seres vivos vivem em sociedade: eles se organizam e cooperam para o bem de todos. Na colmeia, as abelhas cuidam dos ovos e das larvas, buscam alimento e protegem a colmeia. As formigas e os cupins também vivem em grupos, e cada um tem sua função."
+  },
+  {
+   "chave": "ef81c7482r",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"O búfalo e os pássaros\".",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"O búfalo e os pássaros\"."
+  },
+  {
+   "chave": "27406c17w",
+   "voz": "narradora",
+   "texto": "O búfalo e os pássaros",
+   "pacotes": [
+    "ciencias-livro"
+   ],
+   "fala": "O búfalo e os pássaros"
+  },
+  {
+   "chave": "301cc8246i",
+   "voz": "narradora",
+   "texto": "Alguns pássaros vivem pertinho dos búfalos. Eles pousam nos búfalos e comem os insetos que ficam na pele deles. Assim, os búfalos ficam livres dos insetos, e os pássaros encontram alimento com facilidade. É bom para os dois!",
+   "pacotes": [
+    "ciencias-livro"
+   ],
+   "fala": "Alguns pássaros vivem pertinho dos búfalos. Eles pousam nos búfalos e comem os insetos que ficam na pele deles. Assim, os búfalos ficam livres dos insetos, e os pássaros encontram alimento com facilidade. É bom para os dois!"
+  },
+  {
+   "chave": "0c11c1602e",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"O hábitat\".",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"O hábitat\"."
+  },
+  {
+   "chave": "39faa5adj",
+   "voz": "narradora",
+   "texto": "O hábitat",
+   "pacotes": [
+    "ciencias-livro"
+   ],
+   "fala": "O hábitat"
+  },
+  {
+   "chave": "5d659ff378",
+   "voz": "narradora",
+   "texto": "O lugar onde cada ser vivo vive é o seu hábitat. O hábitat pode ser quente, frio, seco ou úmido. Cada ser vivo tem características que o ajudam a sobreviver no seu hábitat, a encontrar água, alimento e abrigo. Essas características são as adaptações.",
+   "pacotes": [
+    "ciencias-livro"
+   ],
+   "fala": "O lugar onde cada ser vivo vive é o seu hábitat. O hábitat pode ser quente, frio, seco ou úmido. Cada ser vivo tem características que o ajudam a sobreviver no seu hábitat, a encontrar água, alimento e abrigo. Essas características são as adaptações."
+  },
+  {
+   "chave": "b3383aee2v",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Os seres vivos da Caatinga\".",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Os seres vivos da Caatinga\"."
+  },
+  {
+   "chave": "662a155110",
+   "voz": "narradora",
+   "texto": "Os seres vivos da Caatinga",
+   "pacotes": [
+    "ciencias-livro"
+   ],
+   "fala": "Os seres vivos da Caatinga"
+  },
+  {
+   "chave": "c88565b39h",
+   "voz": "narradora",
+   "texto": "A Caatinga é um ambiente quente e seco. O sagui-do-nordeste pula entre os galhos para achar alimento. O bico-virado-da-caatinga acha alimento e abrigo na vegetação seca. O tatu-bola se esconde em buracos no solo. O tamanduá-mirim cava o solo com as garras atrás de insetos. E o peixe-das-nuvens vive em poças que duram pouco tempo.",
+   "pacotes": [
+    "ciencias-livro"
+   ],
+   "fala": "A Caatinga é um ambiente quente e seco. O sagui-do-nordeste pula entre os galhos para achar alimento. O bico-virado-da-caatinga acha alimento e abrigo na vegetação seca. O tatu-bola se esconde em buracos no solo. O tamanduá-mirim cava o solo com as garras atrás de insetos. E o peixe-das-nuvens vive em poças que duram pouco tempo."
+  },
+  {
+   "chave": "aab6c9112s",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Ambientes muito quentes\".",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Ambientes muito quentes\"."
+  },
+  {
+   "chave": "0b1879b8x",
+   "voz": "narradora",
+   "texto": "Ambientes muito quentes",
+   "pacotes": [
+    "ciencias-livro"
+   ],
+   "fala": "Ambientes muito quentes"
+  },
+  {
+   "chave": "e6e8c0b37z",
+   "voz": "narradora",
+   "texto": "No deserto faz muito calor e falta água. O cacto tem espinhos no lugar de folhas e guarda água dentro dele. O camelo guarda gordura nas corcovas e tira energia delas para ficar muito tempo sem comer. O feneco tem orelhas grandes que liberam calor e cava tocas para se proteger.",
+   "pacotes": [
+    "ciencias-livro"
+   ],
+   "fala": "No deserto faz muito calor e falta água. O cacto tem espinhos no lugar de folhas e guarda água dentro dele. O camelo guarda gordura nas corcovas e tira energia delas para ficar muito tempo sem comer. O feneco tem orelhas grandes que liberam calor e cava tocas para se proteger."
+  },
+  {
+   "chave": "c5bff5b72q",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Ambientes muito frios\".",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Ambientes muito frios\"."
+  },
+  {
+   "chave": "99fe6376v",
+   "voz": "narradora",
+   "texto": "Ambientes muito frios",
+   "pacotes": [
+    "ciencias-livro"
+   ],
+   "fala": "Ambientes muito frios"
+  },
+  {
+   "chave": "cab4089b7h",
+   "voz": "narradora",
+   "texto": "Nas regiões polares faz um frio intenso. As plantas crescem pertinho do solo, para se proteger do vento gelado. O urso-polar tem uma camada grossa de gordura e uma pelagem densa. O lobo-do-ártico tem pelagem grossa, e a cor branca ajuda a se esconder na neve.",
+   "pacotes": [
+    "ciencias-livro"
+   ],
+   "fala": "Nas regiões polares faz um frio intenso. As plantas crescem pertinho do solo, para se proteger do vento gelado. O urso-polar tem uma camada grossa de gordura e uma pelagem densa. O lobo-do-ártico tem pelagem grossa, e a cor branca ajuda a se esconder na neve."
+  },
+  {
+   "chave": "161860e82o",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Ambientes aquáticos\".",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Ambientes aquáticos\"."
+  },
+  {
+   "chave": "47cb3c05t",
+   "voz": "narradora",
+   "texto": "Ambientes aquáticos",
+   "pacotes": [
+    "ciencias-livro"
+   ],
+   "fala": "Ambientes aquáticos"
+  },
+  {
+   "chave": "0fc5dba66w",
+   "voz": "narradora",
+   "texto": "Rios, lagos e oceanos são ambientes aquáticos. O aguapé guarda ar e flutua na água, e as raízes soltas tiram nutrientes da água. Os peixes, como o dourado, têm nadadeiras para nadar e estruturas que tiram o oxigênio da água para respirar.",
+   "pacotes": [
+    "ciencias-livro"
+   ],
+   "fala": "Rios, lagos e oceanos são ambientes aquáticos. O aguapé guarda ar e flutua na água, e as raízes soltas tiram nutrientes da água. Os peixes, como o dourado, têm nadadeiras para nadar e estruturas que tiram o oxigênio da água para respirar."
+  },
+  {
+   "chave": "b42c0f4b2p",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Ambientes terrestres\".",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Ambientes terrestres\"."
+  },
+  {
+   "chave": "127733ccu",
+   "voz": "narradora",
+   "texto": "Ambientes terrestres",
+   "pacotes": [
+    "ciencias-livro"
+   ],
+   "fala": "Ambientes terrestres"
+  },
+  {
+   "chave": "5d2f71e063",
+   "voz": "narradora",
+   "texto": "Florestas e campos são ambientes terrestres. A onça tem patas fortes para correr atrás das presas. Algumas árvores, como o pau-brasil, têm raízes profundas, que buscam água e nutrientes no solo, mesmo na seca.",
+   "pacotes": [
+    "ciencias-livro"
+   ],
+   "fala": "Florestas e campos são ambientes terrestres. A onça tem patas fortes para correr atrás das presas. Algumas árvores, como o pau-brasil, têm raízes profundas, que buscam água e nutrientes no solo, mesmo na seca."
+  },
+  {
+   "chave": "7893012c2y",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Cada corpo, um jeito de viver\".",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Cada corpo, um jeito de viver\"."
+  },
+  {
+   "chave": "82f591d513",
+   "voz": "narradora",
+   "texto": "Cada corpo, um jeito de viver",
+   "pacotes": [
+    "ciencias-livro"
+   ],
+   "fala": "Cada corpo, um jeito de viver"
+  },
+  {
+   "chave": "ce83e0348n",
+   "voz": "narradora",
+   "texto": "A tartaruga marinha tem nadadeiras e casco para nadar e se proteger no oceano. O bicho-preguiça tem garras longas para se pendurar nas árvores. O lagarto-de-colar tem escamas que evitam a perda de água e pernas fortes para correr no deserto. O pinguim tem gordura e penas que não deixam a água passar.",
+   "pacotes": [
+    "ciencias-livro"
+   ],
+   "fala": "A tartaruga marinha tem nadadeiras e casco para nadar e se proteger no oceano. O bicho-preguiça tem garras longas para se pendurar nas árvores. O lagarto-de-colar tem escamas que evitam a perda de água e pernas fortes para correr no deserto. O pinguim tem gordura e penas que não deixam a água passar."
+  },
+  {
+   "chave": "c7d29e0e2v",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Observar como um cientista\".",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Observar como um cientista\"."
+  },
+  {
+   "chave": "12dd920110",
+   "voz": "narradora",
+   "texto": "Observar como um cientista",
+   "pacotes": [
+    "ciencias-livro"
+   ],
+   "fala": "Observar como um cientista"
+  },
+  {
+   "chave": "493a0a396w",
+   "voz": "narradora",
+   "texto": "Plantas, insetos, pássaros, fungos, algas e bactérias são seres vivos. Para observar, o cientista presta atenção nas cores, nos tamanhos, em onde cada ser vivo está e no que ele está fazendo. Depois, registra tudo com desenhos e palavras.",
+   "pacotes": [
+    "ciencias-livro"
+   ],
+   "fala": "Plantas, insetos, pássaros, fungos, algas e bactérias são seres vivos. Para observar, o cientista presta atenção nas cores, nos tamanhos, em onde cada ser vivo está e no que ele está fazendo. Depois, registra tudo com desenhos e palavras."
+  },
+  {
+   "chave": "251c5a451r",
+   "voz": "unicornio",
+   "texto": "Eu nasci, cresci e vou crescer mais! Sou um ser vivo!",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Eu nasci, cresci e vou crescer mais! Sou um ser vivo!"
+  },
+  {
+   "chave": "9a49a1881v",
+   "voz": "unicornio",
+   "texto": "Uma folhinha de cada vez, todas juntas até o formigueiro!",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Uma folhinha de cada vez, todas juntas até o formigueiro!"
+  },
+  {
+   "chave": "9dbbac661a",
+   "voz": "unicornio",
+   "texto": "Tenho pintinhas como a onça-pintada!",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Tenho pintinhas como a onça-pintada!"
+  },
+  {
+   "chave": "61d7045f1f",
+   "voz": "unicornio",
+   "texto": "Na colmeia, cada abelha ajuda todo mundo!",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Na colmeia, cada abelha ajuda todo mundo!"
+  },
+  {
+   "chave": "addc39b319",
+   "voz": "unicornio",
+   "texto": "Hum, que néctar docinho nas flores!",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Hum, que néctar docinho nas flores!"
+  },
+  {
+   "chave": "a19937e31s",
+   "voz": "unicornio",
+   "texto": "O búfalo e os pássaros são amigos: é bom para os dois!",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "O búfalo e os pássaros são amigos: é bom para os dois!"
+  },
+  {
+   "chave": "2e4b9e831g",
+   "voz": "unicornio",
+   "texto": "Guardo água aqui dentro, igual a um cacto!",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Guardo água aqui dentro, igual a um cacto!"
+  },
+  {
+   "chave": "07e3f4581j",
+   "voz": "unicornio",
+   "texto": "Eu flutuo na água, bem leve, pertinho do Sol!",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Eu flutuo na água, bem leve, pertinho do Sol!"
+  },
+  {
+   "chave": "6fd2ed881o",
+   "voz": "unicornio",
+   "texto": "Observe as cores, os tamanhos e o que cada um faz!",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Observe as cores, os tamanhos e o que cada um faz!"
+  },
+  {
+   "chave": "10f72fa71q",
+   "voz": "unicornio",
+   "texto": "Minhas orelhas grandes me ajudam a espantar o calor!",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Minhas orelhas grandes me ajudam a espantar o calor!"
+  },
+  {
+   "chave": "0e23a3001i",
+   "voz": "unicornio",
+   "texto": "Brilhei de orgulho: você é ouro em Ciências!",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Brilhei de orgulho: você é ouro em Ciências!"
+  },
+  {
+   "chave": "5b2efb821e",
+   "voz": "unicornio",
+   "texto": "Nenhum errinho! Que descoberta perfeita!",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Nenhum errinho! Que descoberta perfeita!"
+  },
+  {
+   "chave": "b7b5b47f1o",
+   "voz": "unicornio",
+   "texto": "Você conheceu todos os seres vivos do Laboratório!",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Você conheceu todos os seres vivos do Laboratório!"
+  },
+  {
+   "chave": "88154796o",
+   "voz": "claude",
+   "texto": "Vivo ou Não Vivo?",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Vivo ou Não Vivo?"
+  },
+  {
+   "chave": "8cbfa3222c",
+   "voz": "claude",
+   "texto": "Jaleco no lugar! Vamos descobrir o que é vivo e o que não é vivo na natureza!",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Jaleco no lugar! Vamos descobrir o que é vivo e o que não é vivo na natureza!"
+  },
+  {
+   "chave": "0d7a867b1y",
+   "voz": "narradora",
+   "texto": "Na abertura do capítulo, o que as formigas estão carregando?",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "Na abertura do capítulo, o que as formigas estão carregando?"
+  },
+  {
+   "chave": "96146189j",
+   "voz": "narradora",
+   "texto": "Pedrinhas",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "Pedrinhas"
+  },
+  {
+   "chave": "daaa241er",
+   "voz": "narradora",
+   "texto": "Pedaços de folhas",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "Pedaços de folhas"
+  },
+  {
+   "chave": "22c3fa8an",
+   "voz": "narradora",
+   "texto": "Gotas de água",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "Gotas de água"
+  },
+  {
+   "chave": "db6fce0b1w",
+   "voz": "narradora",
+   "texto": "Para que as formigas usam as folhas dentro do formigueiro?",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "Para que as formigas usam as folhas dentro do formigueiro?"
+  },
+  {
+   "chave": "ba5f9562u",
+   "voz": "narradora",
+   "texto": "Para enfeitar a casa",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "Para enfeitar a casa"
+  },
+  {
+   "chave": "be87a8e81i",
+   "voz": "narradora",
+   "texto": "Para cultivar um fungo que serve de alimento",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "Para cultivar um fungo que serve de alimento"
+  },
+  {
+   "chave": "2139325fw",
+   "voz": "narradora",
+   "texto": "Para fazer uma caminha",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "Para fazer uma caminha"
+  },
+  {
+   "chave": "b67c7ceb12",
+   "voz": "narradora",
+   "texto": "As formigas são seres vivos.",
+   "pacotes": [
+    "ciencias-c1",
+    "interior-observatorio"
+   ],
+   "fala": "As formigas são seres vivos."
+  },
+  {
+   "chave": "03b55e451i",
+   "voz": "narradora",
+   "texto": "O solo onde as formigas vivem é um ser vivo.",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "O solo onde as formigas vivem é um ser vivo."
+  },
+  {
+   "chave": "5eea5a972a",
+   "voz": "narradora",
+   "texto": "Quais destes são fatores abióticos, elementos não vivos? Toque em TODOS.",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "Quais destes são fatores abióticos, elementos não vivos? Toque em todos."
+  },
+  {
+   "chave": "bf48087fe",
+   "voz": "narradora",
+   "texto": "Água",
+   "pacotes": [
+    "ciencias-c1",
+    "ciencias-c3"
+   ],
+   "fala": "Água"
+  },
+  {
+   "chave": "eb53e902c",
+   "voz": "narradora",
+   "texto": "Ar",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "Ar"
+  },
+  {
+   "chave": "8f9e34bdg",
+   "voz": "narradora",
+   "texto": "Rochas",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "Rochas"
+  },
+  {
+   "chave": "97d0c101j",
+   "voz": "narradora",
+   "texto": "Luz solar",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "Luz solar"
+  },
+  {
+   "chave": "67f86c6ah",
+   "voz": "narradora",
+   "texto": "Formiga",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "Formiga"
+  },
+  {
+   "chave": "4273b18cg",
+   "voz": "narradora",
+   "texto": "Árvore",
+   "pacotes": [
+    "ciencias-c1",
+    "ciencias-c3"
+   ],
+   "fala": "Árvore"
+  },
+  {
+   "chave": "c505fbbf1g",
+   "voz": "narradora",
+   "texto": "É ser vivo ou não é vivo? Separe nos baús!",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "É ser vivo ou não é vivo? Separe nos baús!"
+  },
+  {
+   "chave": "23f4bc331w",
+   "voz": "narradora",
+   "texto": "Como se chamam os elementos da natureza que não são vivos?",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "Como se chamam os elementos da natureza que não são vivos?"
+  },
+  {
+   "chave": "0e7f05fel",
+   "voz": "narradora",
+   "texto": "Seres vivos",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "Seres vivos"
+  },
+  {
+   "chave": "7c5ddc4er",
+   "voz": "narradora",
+   "texto": "Fatores abióticos",
+   "pacotes": [
+    "ciencias-c1",
+    "ciencias-c2"
+   ],
+   "fala": "Fatores abióticos"
+  },
+  {
+   "chave": "dcf50f56g",
+   "voz": "narradora",
+   "texto": "Flores",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "Flores"
+  },
+  {
+   "chave": "eb043722c",
+   "voz": "narradora",
+   "texto": "ar",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "ar"
+  },
+  {
+   "chave": "baa89a77j",
+   "voz": "narradora",
+   "texto": "interagem",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "interagem"
+  },
+  {
+   "chave": "25945242e",
+   "voz": "narradora",
+   "texto": "solo",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "solo"
+  },
+  {
+   "chave": "360518701f",
+   "voz": "narradora",
+   "texto": "Os animais precisam da ______ para beber.",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "Os animais precisam da … para beber."
+  },
+  {
+   "chave": "68b78cb61i",
+   "voz": "narradora",
+   "texto": "Os animais precisam do ______ para respirar.",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "Os animais precisam do … para respirar."
+  },
+  {
+   "chave": "fe945b8f1y",
+   "voz": "narradora",
+   "texto": "Na natureza, os seres vivos ______ com os fatores abióticos.",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "Na natureza, os seres vivos … com os fatores abióticos."
+  },
+  {
+   "chave": "ce557b191i",
+   "voz": "narradora",
+   "texto": "As formigas vivem no ______, que não é vivo.",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "As formigas vivem no …, que não é vivo."
+  },
+  {
+   "chave": "08d383c429",
+   "voz": "narradora",
+   "texto": "Os macacos e as aves precisam do ar para respirar e da água para beber.",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "Os macacos e as aves precisam do ar para respirar e da água para beber."
+  },
+  {
+   "chave": "ffe023521e",
+   "voz": "narradora",
+   "texto": "O que todo ser vivo faz? Toque em TODOS.",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "O que todo ser vivo faz? Toque em todos."
+  },
+  {
+   "chave": "70cf3b19f",
+   "voz": "narradora",
+   "texto": "Nasce",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "Nasce"
+  },
+  {
+   "chave": "3834faa8g",
+   "voz": "narradora",
+   "texto": "Cresce",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "Cresce"
+  },
+  {
+   "chave": "a8f86a80l",
+   "voz": "narradora",
+   "texto": "Se alimenta",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "Se alimenta"
+  },
+  {
+   "chave": "c67b8228l",
+   "voz": "narradora",
+   "texto": "Se reproduz",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "Se reproduz"
+  },
+  {
+   "chave": "d0af9c5c12",
+   "voz": "narradora",
+   "texto": "Fica sempre igual, sem mudar",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "Fica sempre igual, sem mudar"
+  },
+  {
+   "chave": "b417ed8f19",
+   "voz": "narradora",
+   "texto": "As formigas trabalham de que jeito?",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "As formigas trabalham de que jeito?"
+  },
+  {
+   "chave": "9291e3ff14",
+   "voz": "narradora",
+   "texto": "Em grupo, uma ajudando a outra",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "Em grupo, uma ajudando a outra"
+  },
+  {
+   "chave": "00f75d9b12",
+   "voz": "narradora",
+   "texto": "Cada uma sozinha, sem ajudar",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "Cada uma sozinha, sem ajudar"
+  },
+  {
+   "chave": "47690f56s",
+   "voz": "narradora",
+   "texto": "Elas não trabalham",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "Elas não trabalham"
+  },
+  {
+   "chave": "4cb782101l",
+   "voz": "narradora",
+   "texto": "Jogo da memória da natureza! Encontre os pares:",
+   "pacotes": [
+    "ciencias-c1",
+    "ciencias-c3"
+   ],
+   "fala": "Jogo da memória da natureza! Encontre os pares:"
+  },
+  {
+   "chave": "c70425d41i",
+   "voz": "narradora",
+   "texto": "Vire duas cartas e ache a figura com o nome.",
+   "pacotes": [
+    "ciencias-c1",
+    "ciencias-c3"
+   ],
+   "fala": "Vire duas cartas e ache a figura com o nome."
+  },
+  {
+   "chave": "43c1a9dc13",
+   "voz": "narradora",
+   "texto": "O ambiente é formado por quê?",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "O ambiente é formado por quê?"
+  },
+  {
+   "chave": "c5a35a07s",
+   "voz": "narradora",
+   "texto": "Só por seres vivos",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "Só por seres vivos"
+  },
+  {
+   "chave": "cff0d556u",
+   "voz": "narradora",
+   "texto": "Só por pedras e água",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "Só por pedras e água"
+  },
+  {
+   "chave": "ea9d71841d",
+   "voz": "narradora",
+   "texto": "Por seres vivos e por fatores abióticos",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "Por seres vivos e por fatores abióticos"
+  },
+  {
+   "chave": "198eeb6f11",
+   "voz": "narradora",
+   "texto": "A luz do Sol é um ser vivo.",
+   "pacotes": [
+    "ciencias-c1"
+   ],
+   "fala": "A luz do Sol é um ser vivo."
+  },
+  {
+   "chave": "65623c98t",
+   "voz": "claude",
+   "texto": "Quem Ganha, Quem Perde",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Quem Ganha, Quem Perde"
+  },
+  {
+   "chave": "400469322q",
+   "voz": "claude",
+   "texto": "Na natureza, os seres vivos estão sempre se encontrando. Vamos ver quem ganha e quem perde?",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Na natureza, os seres vivos estão sempre se encontrando. Vamos ver quem ganha e quem perde?"
+  },
+  {
+   "chave": "1dc757422j",
+   "voz": "narradora",
+   "texto": "Como são chamados todos os seres vivos da natureza, como os animais e as plantas?",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "Como são chamados todos os seres vivos da natureza, como os animais e as plantas?"
+  },
+  {
+   "chave": "f382a767q",
+   "voz": "narradora",
+   "texto": "Fatores bióticos",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "Fatores bióticos"
+  },
+  {
+   "chave": "dd780942g",
+   "voz": "narradora",
+   "texto": "Nuvens",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "Nuvens"
+  },
+  {
+   "chave": "893fba302b",
+   "voz": "narradora",
+   "texto": "As relações entre os seres vivos podem ser benéficas ou trazer prejuízos.",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "As relações entre os seres vivos podem ser benéficas ou trazer prejuízos."
+  },
+  {
+   "chave": "a55cf1e224",
+   "voz": "narradora",
+   "texto": "A onça-pintada caça o jacaré para se alimentar. Quem se beneficia?",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "A onça-pintada caça o jacaré para se alimentar. Quem se beneficia?"
+  },
+  {
+   "chave": "b9300bcfo",
+   "voz": "narradora",
+   "texto": "A onça-pintada",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "A onça-pintada"
+  },
+  {
+   "chave": "eaaa9666i",
+   "voz": "narradora",
+   "texto": "O jacaré",
+   "pacotes": [
+    "ciencias-c2",
+    "ciencias-c3"
+   ],
+   "fala": "O jacaré"
+  },
+  {
+   "chave": "0ba97734h",
+   "voz": "narradora",
+   "texto": "Os dois",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "Os dois"
+  },
+  {
+   "chave": "05370ffa1t",
+   "voz": "narradora",
+   "texto": "O gafanhoto come folhas de plantas. Quem é prejudicado?",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "O gafanhoto come folhas de plantas. Quem é prejudicado?"
+  },
+  {
+   "chave": "fe0bceffl",
+   "voz": "narradora",
+   "texto": "O gafanhoto",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "O gafanhoto"
+  },
+  {
+   "chave": "e0a85d30i",
+   "voz": "narradora",
+   "texto": "A planta",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "A planta"
+  },
+  {
+   "chave": "eabde408f",
+   "voz": "narradora",
+   "texto": "O Sol",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "O Sol"
+  },
+  {
+   "chave": "450ecb711u",
+   "voz": "narradora",
+   "texto": "Quem se beneficia e quem é prejudicado? Separe nos baús!",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "Quem se beneficia e quem é prejudicado? Separe nos baús!"
+  },
+  {
+   "chave": "7a11d0782g",
+   "voz": "narradora",
+   "texto": "O bugio e a arara-vermelha querem os frutos da mesma palmeira. O que acontece?",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "O bugio e a arara-vermelha querem os frutos da mesma palmeira. O que acontece?"
+  },
+  {
+   "chave": "e1c3c7f2z",
+   "voz": "narradora",
+   "texto": "Eles dividem tudo, sempre",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "Eles dividem tudo, sempre"
+  },
+  {
+   "chave": "a645e74617",
+   "voz": "narradora",
+   "texto": "Eles competem pelo mesmo alimento",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "Eles competem pelo mesmo alimento"
+  },
+  {
+   "chave": "2e85aadbp",
+   "voz": "narradora",
+   "texto": "Eles vão dormir",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "Eles vão dormir"
+  },
+  {
+   "chave": "2dd813a634",
+   "voz": "narradora",
+   "texto": "Quando os seres vivos competem pelo alimento, alguns podem ter mais dificuldade para encontrar comida.",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "Quando os seres vivos competem pelo alimento, alguns podem ter mais dificuldade para encontrar comida."
+  },
+  {
+   "chave": "d65518f52f",
+   "voz": "narradora",
+   "texto": "As pulgas vivem no corpo dos gatos e dos cachorros. Do que elas se alimentam?",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "As pulgas vivem no corpo dos gatos e dos cachorros. Do que elas se alimentam?"
+  },
+  {
+   "chave": "90bda8a1j",
+   "voz": "narradora",
+   "texto": "De folhas",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "De folhas"
+  },
+  {
+   "chave": "5d95b024p",
+   "voz": "narradora",
+   "texto": "Do sangue deles",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "Do sangue deles"
+  },
+  {
+   "chave": "2951b0f8l",
+   "voz": "narradora",
+   "texto": "De ossinhos",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "De ossinhos"
+  },
+  {
+   "chave": "105e39851t",
+   "voz": "narradora",
+   "texto": "O gato com pulgas se beneficia, porque ganha companhia.",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "O gato com pulgas se beneficia, porque ganha companhia."
+  },
+  {
+   "chave": "c493845823",
+   "voz": "narradora",
+   "texto": "Na colmeia, as abelhas vivem em sociedade. O que isso quer dizer?",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "Na colmeia, as abelhas vivem em sociedade. O que isso quer dizer?"
+  },
+  {
+   "chave": "3e2ff7bc1m",
+   "voz": "narradora",
+   "texto": "Elas se organizam e cooperam para o bem de todas",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "Elas se organizam e cooperam para o bem de todas"
+  },
+  {
+   "chave": "87af17f0y",
+   "voz": "narradora",
+   "texto": "Elas brigam o tempo todo",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "Elas brigam o tempo todo"
+  },
+  {
+   "chave": "5f19cf6f17",
+   "voz": "narradora",
+   "texto": "Cada uma mora num lugar diferente",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "Cada uma mora num lugar diferente"
+  },
+  {
+   "chave": "c1ff60e329",
+   "voz": "narradora",
+   "texto": "Quais destes seres vivos vivem em sociedade, em grupos? Toque em TODOS.",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "Quais destes seres vivos vivem em sociedade, em grupos? Toque em todos."
+  },
+  {
+   "chave": "8973e671h",
+   "voz": "narradora",
+   "texto": "Abelhas",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "Abelhas"
+  },
+  {
+   "chave": "c5122b5bi",
+   "voz": "narradora",
+   "texto": "Formigas",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "Formigas"
+  },
+  {
+   "chave": "b161236dg",
+   "voz": "narradora",
+   "texto": "Cupins",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "Cupins"
+  },
+  {
+   "chave": "6cc093d2m",
+   "voz": "narradora",
+   "texto": "Onça-pintada",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "Onça-pintada"
+  },
+  {
+   "chave": "4fe22516j",
+   "voz": "narradora",
+   "texto": "Gafanhoto",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "Gafanhoto"
+  },
+  {
+   "chave": "41ae3b681x",
+   "voz": "narradora",
+   "texto": "Quais são trabalhos das abelhas na colmeia? Toque em TODOS.",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "Quais são trabalhos das abelhas na colmeia? Toque em todos."
+  },
+  {
+   "chave": "af15ee6212",
+   "voz": "narradora",
+   "texto": "Cuidar dos ovos e das larvas",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "Cuidar dos ovos e das larvas"
+  },
+  {
+   "chave": "0ccc03dez",
+   "voz": "narradora",
+   "texto": "Sair em busca de alimento",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "Sair em busca de alimento"
+  },
+  {
+   "chave": "2e55fda6s",
+   "voz": "narradora",
+   "texto": "Proteger a colmeia",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "Proteger a colmeia"
+  },
+  {
+   "chave": "780a7b48n",
+   "voz": "narradora",
+   "texto": "Caçar jacarés",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "Caçar jacarés"
+  },
+  {
+   "chave": "5f84bdf219",
+   "voz": "narradora",
+   "texto": "Ligue cada ser vivo ao que ele faz:",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "Ligue cada ser vivo ao que ele faz:"
+  },
+  {
+   "chave": "4e15021b1k",
+   "voz": "narradora",
+   "texto": "Jogo da memória dos bichos! Encontre os pares:",
+   "pacotes": [
+    "ciencias-c2"
+   ],
+   "fala": "Jogo da memória dos bichos! Encontre os pares:"
+  },
+  {
+   "chave": "03a35392p",
+   "voz": "claude",
+   "texto": "Amigos da Natureza",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Amigos da Natureza"
+  },
+  {
+   "chave": "642a2ab62o",
+   "voz": "claude",
+   "texto": "Hora de organizar o conhecimento! E tem um búfalo com amigos voadores esperando por você.",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Hora de organizar o conhecimento! E tem um búfalo com amigos voadores esperando por você."
+  },
+  {
+   "chave": "6ec039001a",
+   "voz": "narradora",
+   "texto": "Ligue cada figura à descrição certa:",
+   "pacotes": [
+    "ciencias-c3"
+   ],
+   "fala": "Ligue cada figura à descrição certa:"
+  },
+  {
+   "chave": "baba26d11o",
+   "voz": "narradora",
+   "texto": "É um fator abiótico onde os peixes vivem. O que é?",
+   "pacotes": [
+    "ciencias-c3"
+   ],
+   "fala": "É um fator abiótico onde os peixes vivem. O que é?"
+  },
+  {
+   "chave": "0f3734bfh",
+   "voz": "narradora",
+   "texto": "A rocha",
+   "pacotes": [
+    "ciencias-c3"
+   ],
+   "fala": "A rocha"
+  },
+  {
+   "chave": "29677a5ag",
+   "voz": "narradora",
+   "texto": "A água",
+   "pacotes": [
+    "ciencias-c3"
+   ],
+   "fala": "A água"
+  },
+  {
+   "chave": "23e65de1e",
+   "voz": "narradora",
+   "texto": "O ar",
+   "pacotes": [
+    "ciencias-c3"
+   ],
+   "fala": "O ar"
+  },
+  {
+   "chave": "65afee451x",
+   "voz": "narradora",
+   "texto": "É um ser vivo que se alimenta do néctar das flores. Quem é?",
+   "pacotes": [
+    "ciencias-c3"
+   ],
+   "fala": "É um ser vivo que se alimenta do néctar das flores. Quem é?"
+  },
+  {
+   "chave": "8ffd118dm",
+   "voz": "narradora",
+   "texto": "O beija-flor",
+   "pacotes": [
+    "ciencias-c3"
+   ],
+   "fala": "O beija-flor"
+  },
+  {
+   "chave": "62920367h",
+   "voz": "narradora",
+   "texto": "O peixe",
+   "pacotes": [
+    "ciencias-c3"
+   ],
+   "fala": "O peixe"
+  },
+  {
+   "chave": "9923ad6c1t",
+   "voz": "narradora",
+   "texto": "Os cupins vivem em sociedade e se alimentam de madeira.",
+   "pacotes": [
+    "ciencias-c3"
+   ],
+   "fala": "Os cupins vivem em sociedade e se alimentam de madeira."
+  },
+  {
+   "chave": "34ad7c542k",
+   "voz": "narradora",
+   "texto": "Os pássaros pousam no búfalo e comem os insetos da pele dele. Como é essa relação?",
+   "pacotes": [
+    "ciencias-c3"
+   ],
+   "fala": "Os pássaros pousam no búfalo e comem os insetos da pele dele. Como é essa relação?"
+  },
+  {
+   "chave": "4b2330e11n",
+   "voz": "narradora",
+   "texto": "Os pássaros ajudam o búfalo, e é bom para os dois",
+   "pacotes": [
+    "ciencias-c3"
+   ],
+   "fala": "Os pássaros ajudam o búfalo, e é bom para os dois"
+  },
+  {
+   "chave": "b401fb5f1b",
+   "voz": "narradora",
+   "texto": "Os pássaros causam prejuízo ao búfalo",
+   "pacotes": [
+    "ciencias-c3"
+   ],
+   "fala": "Os pássaros causam prejuízo ao búfalo"
+  },
+  {
+   "chave": "ab80c044z",
+   "voz": "narradora",
+   "texto": "O búfalo caça os pássaros",
+   "pacotes": [
+    "ciencias-c3"
+   ],
+   "fala": "O búfalo caça os pássaros"
+  },
+  {
+   "chave": "5f668a931v",
+   "voz": "narradora",
+   "texto": "Os pássaros tiram nutrientes do búfalo e o deixam doente.",
+   "pacotes": [
+    "ciencias-c3"
+   ],
+   "fala": "Os pássaros tiram nutrientes do búfalo e o deixam doente."
+  },
+  {
+   "chave": "c4f5aa3d2y",
+   "voz": "narradora",
+   "texto": "Os pássaros adultos comem o mesmo tipo de alimento: os insetos. O que pode acontecer entre eles?",
+   "pacotes": [
+    "ciencias-c3"
+   ],
+   "fala": "Os pássaros adultos comem o mesmo tipo de alimento: os insetos. O que pode acontecer entre eles?"
+  },
+  {
+   "chave": "cd5ee6cf1a",
+   "voz": "narradora",
+   "texto": "Eles competem entre si pelo alimento",
+   "pacotes": [
+    "ciencias-c3"
+   ],
+   "fala": "Eles competem entre si pelo alimento"
+  },
+  {
+   "chave": "9c824b46s",
+   "voz": "narradora",
+   "texto": "Eles viram búfalos",
+   "pacotes": [
+    "ciencias-c3"
+   ],
+   "fala": "Eles viram búfalos"
+  },
+  {
+   "chave": "8a3bb766t",
+   "voz": "narradora",
+   "texto": "Eles param de comer",
+   "pacotes": [
+    "ciencias-c3"
+   ],
+   "fala": "Eles param de comer"
+  },
+  {
+   "chave": "6980c7552c",
+   "voz": "narradora",
+   "texto": "Na história do búfalo, quem é ser vivo e quem não é vivo? Separe nos baús!",
+   "pacotes": [
+    "ciencias-c3"
+   ],
+   "fala": "Na história do búfalo, quem é ser vivo e quem não é vivo? Separe nos baús!"
+  },
+  {
+   "chave": "c26b8abf29",
+   "voz": "narradora",
+   "texto": "Na ilustração do cachorrinho, quais são os seres vivos? Toque em TODOS.",
+   "pacotes": [
+    "ciencias-c3"
+   ],
+   "fala": "Na ilustração do cachorrinho, quais são os seres vivos? Toque em todos."
+  },
+  {
+   "chave": "fbf8d7a6h",
+   "voz": "narradora",
+   "texto": "Plantas",
+   "pacotes": [
+    "ciencias-c3",
+    "ciencias-c5"
+   ],
+   "fala": "Plantas"
+  },
+  {
+   "chave": "6fe98c7de",
+   "voz": "narradora",
+   "texto": "Bola",
+   "pacotes": [
+    "ciencias-c3"
+   ],
+   "fala": "Bola"
+  },
+  {
+   "chave": "e22f46c7f",
+   "voz": "narradora",
+   "texto": "Pedra",
+   "pacotes": [
+    "ciencias-c3"
+   ],
+   "fala": "Pedra"
+  },
+  {
+   "chave": "2e56f4df1h",
+   "voz": "narradora",
+   "texto": "Como o cachorrinho se relaciona com a água?",
+   "pacotes": [
+    "ciencias-c3"
+   ],
+   "fala": "Como o cachorrinho se relaciona com a água?"
+  },
+  {
+   "chave": "52d9c793y",
+   "voz": "narradora",
+   "texto": "Ele bebe água para viver",
+   "pacotes": [
+    "ciencias-c3"
+   ],
+   "fala": "Ele bebe água para viver"
+  },
+  {
+   "chave": "9d6a287ex",
+   "voz": "narradora",
+   "texto": "Ele joga água como bola",
+   "pacotes": [
+    "ciencias-c3"
+   ],
+   "fala": "Ele joga água como bola"
+  },
+  {
+   "chave": "ed7fd34dx",
+   "voz": "narradora",
+   "texto": "Ele não precisa de água",
+   "pacotes": [
+    "ciencias-c3"
+   ],
+   "fala": "Ele não precisa de água"
+  },
+  {
+   "chave": "4e0f22441a",
+   "voz": "narradora",
+   "texto": "A bola do cachorrinho é um ser vivo.",
+   "pacotes": [
+    "ciencias-c3"
+   ],
+   "fala": "A bola do cachorrinho é um ser vivo."
+  },
+  {
+   "chave": "6b7a22551u",
+   "voz": "narradora",
+   "texto": "Complete a história do búfalo com as palavras do quadro.",
+   "pacotes": [
+    "ciencias-c3"
+   ],
+   "fala": "Complete a história do búfalo com as palavras do quadro."
+  },
+  {
+   "chave": "c15b60beh",
+   "voz": "narradora",
+   "texto": "búfalos",
+   "pacotes": [
+    "ciencias-c3"
+   ],
+   "fala": "búfalos"
+  },
+  {
+   "chave": "21f3abd0h",
+   "voz": "narradora",
+   "texto": "insetos",
+   "pacotes": [
+    "ciencias-c3"
+   ],
+   "fala": "insetos"
+  },
+  {
+   "chave": "390b4c18i",
+   "voz": "narradora",
+   "texto": "alimento",
+   "pacotes": [
+    "ciencias-c3"
+   ],
+   "fala": "alimento"
+  },
+  {
+   "chave": "3b8baea014",
+   "voz": "narradora",
+   "texto": "Os pássaros pousam nos ______.",
+   "pacotes": [
+    "ciencias-c3"
+   ],
+   "fala": "Os pássaros pousam nos …"
+  },
+  {
+   "chave": "4b21ef161j",
+   "voz": "narradora",
+   "texto": "Eles comem os ______ que ficam na pele deles.",
+   "pacotes": [
+    "ciencias-c3"
+   ],
+   "fala": "Eles comem os … que ficam na pele deles."
+  },
+  {
+   "chave": "4b841e521p",
+   "voz": "narradora",
+   "texto": "Assim, os pássaros encontram ______ com facilidade.",
+   "pacotes": [
+    "ciencias-c3"
+   ],
+   "fala": "Assim, os pássaros encontram … com facilidade."
+  },
+  {
+   "chave": "db1948b3t",
+   "voz": "claude",
+   "texto": "Cada Um no Seu Hábitat",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Cada Um no Seu Hábitat"
+  },
+  {
+   "chave": "a7c430ff2f",
+   "voz": "claude",
+   "texto": "Do deserto ao gelo, cada ser vivo tem o seu cantinho. Vamos visitar os hábitats?",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Do deserto ao gelo, cada ser vivo tem o seu cantinho. Vamos visitar os hábitats?"
+  },
+  {
+   "chave": "829b3f2b1k",
+   "voz": "narradora",
+   "texto": "Como se chama o lugar onde cada ser vivo vive?",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "Como se chama o lugar onde cada ser vivo vive?"
+  },
+  {
+   "chave": "256b43c8h",
+   "voz": "narradora",
+   "texto": "Hábitat",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "Hábitat"
+  },
+  {
+   "chave": "bd02e9f8i",
+   "voz": "narradora",
+   "texto": "Alimento",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "Alimento"
+  },
+  {
+   "chave": "31a50f5bf",
+   "voz": "narradora",
+   "texto": "Vento",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "Vento"
+  },
+  {
+   "chave": "9602d6522j",
+   "voz": "narradora",
+   "texto": "As características que ajudam o ser vivo a sobreviver no seu hábitat se chamam...",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "As características que ajudam o ser vivo a sobreviver no seu hábitat se chamam..."
+  },
+  {
+   "chave": "d1791f36k",
+   "voz": "narradora",
+   "texto": "Adaptações",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "Adaptações"
+  },
+  {
+   "chave": "570c4cdbi",
+   "voz": "narradora",
+   "texto": "Pinturas",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "Pinturas"
+  },
+  {
+   "chave": "b2c6d537j",
+   "voz": "narradora",
+   "texto": "Histórias",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "Histórias"
+  },
+  {
+   "chave": "040dfbe422",
+   "voz": "narradora",
+   "texto": "O pinguim tem características que o ajudam a sobreviver ao frio.",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "O pinguim tem características que o ajudam a sobreviver ao frio."
+  },
+  {
+   "chave": "07541b491o",
+   "voz": "narradora",
+   "texto": "Animais da Caatinga: ligue cada um ao que ele faz.",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "Animais da Caatinga: ligue cada um ao que ele faz."
+  },
+  {
+   "chave": "c886e25414",
+   "voz": "narradora",
+   "texto": "Como é o ambiente da Caatinga?",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "Como é o ambiente da Caatinga?"
+  },
+  {
+   "chave": "5c3cdcc6n",
+   "voz": "narradora",
+   "texto": "Quente e seco",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "Quente e seco"
+  },
+  {
+   "chave": "820edb83r",
+   "voz": "narradora",
+   "texto": "Gelado e com neve",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "Gelado e com neve"
+  },
+  {
+   "chave": "03119e78u",
+   "voz": "narradora",
+   "texto": "Todo coberto de água",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "Todo coberto de água"
+  },
+  {
+   "chave": "075ae3d02f",
+   "voz": "narradora",
+   "texto": "O peixe-das-nuvens vive em poças que duram pouco tempo. Como são essas poças?",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "O peixe-das-nuvens vive em poças que duram pouco tempo. Como são essas poças?"
+  },
+  {
+   "chave": "68d952d4l",
+   "voz": "narradora",
+   "texto": "Temporárias",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "Temporárias"
+  },
+  {
+   "chave": "0a76baf8k",
+   "voz": "narradora",
+   "texto": "Congeladas",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "Congeladas"
+  },
+  {
+   "chave": "ec7e1501s",
+   "voz": "narradora",
+   "texto": "Enormes como o mar",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "Enormes como o mar"
+  },
+  {
+   "chave": "18ece76720",
+   "voz": "narradora",
+   "texto": "Quais são adaptações ao ambiente muito quente? Toque em TODAS.",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "Quais são adaptações ao ambiente muito quente? Toque em todas."
+  },
+  {
+   "chave": "f5c15d371d",
+   "voz": "narradora",
+   "texto": "O cacto tem espinhos no lugar de folhas",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "O cacto tem espinhos no lugar de folhas"
+  },
+  {
+   "chave": "3d0d82a615",
+   "voz": "narradora",
+   "texto": "O cacto guarda água dentro dele",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "O cacto guarda água dentro dele"
+  },
+  {
+   "chave": "51e3ee951a",
+   "voz": "narradora",
+   "texto": "O camelo guarda gordura nas corcovas",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "O camelo guarda gordura nas corcovas"
+  },
+  {
+   "chave": "05ea7aa31a",
+   "voz": "narradora",
+   "texto": "O urso-polar tem gordura para o frio",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "O urso-polar tem gordura para o frio"
+  },
+  {
+   "chave": "f320c04d1c",
+   "voz": "narradora",
+   "texto": "Para que servem as corcovas do camelo?",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "Para que servem as corcovas do camelo?"
+  },
+  {
+   "chave": "e20f8b3f1t",
+   "voz": "narradora",
+   "texto": "Guardam gordura e dão energia por muito tempo sem comer",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "Guardam gordura e dão energia por muito tempo sem comer"
+  },
+  {
+   "chave": "a3cd6edb18",
+   "voz": "narradora",
+   "texto": "Servem de mochila para as crianças",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "Servem de mochila para as crianças"
+  },
+  {
+   "chave": "dc52b8ffw",
+   "voz": "narradora",
+   "texto": "Deixam o camelo gelado",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "Deixam o camelo gelado"
+  },
+  {
+   "chave": "07c26b1b1i",
+   "voz": "narradora",
+   "texto": "O que mantém o urso-polar quentinho no frio?",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "O que mantém o urso-polar quentinho no frio?"
+  },
+  {
+   "chave": "240e31f91m",
+   "voz": "narradora",
+   "texto": "Uma camada grossa de gordura e uma pelagem densa",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "Uma camada grossa de gordura e uma pelagem densa"
+  },
+  {
+   "chave": "07371fedr",
+   "voz": "narradora",
+   "texto": "Um cachecol de lã",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "Um cachecol de lã"
+  },
+  {
+   "chave": "1b199e79w",
+   "voz": "narradora",
+   "texto": "Ele fica sempre no sol",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "Ele fica sempre no sol"
+  },
+  {
+   "chave": "f22a0d3e2c",
+   "voz": "narradora",
+   "texto": "Nas regiões muito frias, as plantas crescem bem altas, para pegar o vento.",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "Nas regiões muito frias, as plantas crescem bem altas, para pegar o vento."
+  },
+  {
+   "chave": "c0efef3419",
+   "voz": "narradora",
+   "texto": "Onde cada um vive? Separe nos baús!",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "Onde cada um vive? Separe nos baús!"
+  },
+  {
+   "chave": "fa46858e25",
+   "voz": "narradora",
+   "texto": "O que ajuda o peixe dourado a se mover e a respirar dentro da água?",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "O que ajuda o peixe dourado a se mover e a respirar dentro da água?"
+  },
+  {
+   "chave": "e59871671q",
+   "voz": "narradora",
+   "texto": "Nadadeiras e estruturas que tiram o oxigênio da água",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "Nadadeiras e estruturas que tiram o oxigênio da água"
+  },
+  {
+   "chave": "d95f3530q",
+   "voz": "narradora",
+   "texto": "Pernas compridas",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "Pernas compridas"
+  },
+  {
+   "chave": "f65e8c8ep",
+   "voz": "narradora",
+   "texto": "Penas coloridas",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "Penas coloridas"
+  },
+  {
+   "chave": "bf61898d1o",
+   "voz": "narradora",
+   "texto": "O aguapé guarda ar e flutua na superfície da água.",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "O aguapé guarda ar e flutua na superfície da água."
+  },
+  {
+   "chave": "3098fb1d1m",
+   "voz": "narradora",
+   "texto": "Ambiente aquático ou terrestre? Separe nos baús!",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "Ambiente aquático ou terrestre? Separe nos baús!"
+  },
+  {
+   "chave": "55498bc52c",
+   "voz": "narradora",
+   "texto": "Algumas árvores, como o pau-brasil, têm raízes profundas. Para que servem?",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "Algumas árvores, como o pau-brasil, têm raízes profundas. Para que servem?"
+  },
+  {
+   "chave": "fc2bf1111s",
+   "voz": "narradora",
+   "texto": "Para absorver água e nutrientes do solo, mesmo na seca",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "Para absorver água e nutrientes do solo, mesmo na seca"
+  },
+  {
+   "chave": "74c84227t",
+   "voz": "narradora",
+   "texto": "Para a árvore andar",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "Para a árvore andar"
+  },
+  {
+   "chave": "2d5042d4r",
+   "voz": "narradora",
+   "texto": "Para fazer música",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "Para fazer música"
+  },
+  {
+   "chave": "598db1f525",
+   "voz": "narradora",
+   "texto": "A onça tem patas fortes que a ajudam a correr atrás de suas presas.",
+   "pacotes": [
+    "ciencias-c4"
+   ],
+   "fala": "A onça tem patas fortes que a ajudam a correr atrás de suas presas."
+  },
+  {
+   "chave": "89a28f7bs",
+   "voz": "claude",
+   "texto": "Detetives da Natureza",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Detetives da Natureza"
+  },
+  {
+   "chave": "a964b5cc2i",
+   "voz": "claude",
+   "texto": "Pegue a lupa, detetive! Vamos observar os seres vivos e descobrir os seus segredos.",
+   "pacotes": [
+    "ciencias-extra"
+   ],
+   "fala": "Pegue a lupa, detetive! Vamos observar os seres vivos e descobrir os seus segredos."
+  },
+  {
+   "chave": "99ba49241c",
+   "voz": "narradora",
+   "texto": "Ligue cada ser vivo à descrição certa:",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "Ligue cada ser vivo à descrição certa:"
+  },
+  {
+   "chave": "396dcace2n",
+   "voz": "narradora",
+   "texto": "Qual animal tem nadadeiras e um casco que o ajudam a nadar e a se proteger no oceano?",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "Qual animal tem nadadeiras e um casco que o ajudam a nadar e a se proteger no oceano?"
+  },
+  {
+   "chave": "75dd1aber",
+   "voz": "narradora",
+   "texto": "Tartaruga marinha",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "Tartaruga marinha"
+  },
+  {
+   "chave": "64e830efo",
+   "voz": "narradora",
+   "texto": "Bicho-preguiça",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "Bicho-preguiça"
+  },
+  {
+   "chave": "46f57756g",
+   "voz": "narradora",
+   "texto": "Camelo",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "Camelo"
+  },
+  {
+   "chave": "f3388b852j",
+   "voz": "narradora",
+   "texto": "Qual animal tem membros e garras longas para se pendurar nas árvores da floresta?",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "Qual animal tem membros e garras longas para se pendurar nas árvores da floresta?"
+  },
+  {
+   "chave": "4d9b5e16h",
+   "voz": "narradora",
+   "texto": "Pinguim",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "Pinguim"
+  },
+  {
+   "chave": "67ab944ef",
+   "voz": "narradora",
+   "texto": "Peixe",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "Peixe"
+  },
+  {
+   "chave": "5d1e45f12e",
+   "voz": "narradora",
+   "texto": "O lagarto-de-colar tem escamas que evitam a perda de água no deserto quente.",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "O lagarto-de-colar tem escamas que evitam a perda de água no deserto quente."
+  },
+  {
+   "chave": "bfda585e20",
+   "voz": "narradora",
+   "texto": "O pinguim tem penas que deixam a água entrar e molhar o corpo.",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "O pinguim tem penas que deixam a água entrar e molhar o corpo."
+  },
+  {
+   "chave": "485137801l",
+   "voz": "narradora",
+   "texto": "Quais são tipos de seres vivos? Toque em TODOS.",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "Quais são tipos de seres vivos? Toque em todos."
+  },
+  {
+   "chave": "4a017a30h",
+   "voz": "narradora",
+   "texto": "Insetos",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "Insetos"
+  },
+  {
+   "chave": "3d89f9c5i",
+   "voz": "narradora",
+   "texto": "Pássaros",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "Pássaros"
+  },
+  {
+   "chave": "522a6e25g",
+   "voz": "narradora",
+   "texto": "Fungos",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "Fungos"
+  },
+  {
+   "chave": "c46c4d5cg",
+   "voz": "narradora",
+   "texto": "Pedras",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "Pedras"
+  },
+  {
+   "chave": "f05a64c22n",
+   "voz": "narradora",
+   "texto": "Para observar um ser vivo como um cientista, o que prestamos atenção? Toque em TODOS.",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "Para observar um ser vivo como um cientista, o que prestamos atenção? Toque em todos."
+  },
+  {
+   "chave": "359b7cc5i",
+   "voz": "narradora",
+   "texto": "As cores",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "As cores"
+  },
+  {
+   "chave": "7e43f192j",
+   "voz": "narradora",
+   "texto": "O tamanho",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "O tamanho"
+  },
+  {
+   "chave": "b56ded31v",
+   "voz": "narradora",
+   "texto": "Onde ele está vivendo",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "Onde ele está vivendo"
+  },
+  {
+   "chave": "cb570365w",
+   "voz": "narradora",
+   "texto": "O que ele está fazendo",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "O que ele está fazendo"
+  },
+  {
+   "chave": "bffe754fw",
+   "voz": "narradora",
+   "texto": "A música favorita dele",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "A música favorita dele"
+  },
+  {
+   "chave": "b845b92d1f",
+   "voz": "narradora",
+   "texto": "Coloque em ordem os passos da observação:",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "Coloque em ordem os passos da observação:"
+  },
+  {
+   "chave": "d23380e62e",
+   "voz": "narradora",
+   "texto": "O feneco é uma raposa de orelhas bem grandes. Para que servem essas orelhas?",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "O feneco é uma raposa de orelhas bem grandes. Para que servem essas orelhas?"
+  },
+  {
+   "chave": "f142de4718",
+   "voz": "narradora",
+   "texto": "Para liberar calor para o ambiente",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "Para liberar calor para o ambiente"
+  },
+  {
+   "chave": "ce1f4338t",
+   "voz": "narradora",
+   "texto": "Para guardar o frio",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "Para guardar o frio"
+  },
+  {
+   "chave": "d7b56d35r",
+   "voz": "narradora",
+   "texto": "Para ouvir música",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "Para ouvir música"
+  },
+  {
+   "chave": "800f3a6118",
+   "voz": "narradora",
+   "texto": "Onde o feneco se protege do calor?",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "Onde o feneco se protege do calor?"
+  },
+  {
+   "chave": "127406bdv",
+   "voz": "narradora",
+   "texto": "Em tocas que ele cava",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "Em tocas que ele cava"
+  },
+  {
+   "chave": "88ba9ca8n",
+   "voz": "narradora",
+   "texto": "Dentro do mar",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "Dentro do mar"
+  },
+  {
+   "chave": "d8ae1d0dp",
+   "voz": "narradora",
+   "texto": "Em cima do gelo",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "Em cima do gelo"
+  },
+  {
+   "chave": "5eaf248b22",
+   "voz": "narradora",
+   "texto": "O lobo-do-ártico vive na neve. Para que serve a cor branca dele?",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "O lobo-do-ártico vive na neve. Para que serve a cor branca dele?"
+  },
+  {
+   "chave": "e3e1dea61c",
+   "voz": "narradora",
+   "texto": "Para se esconder na neve e se proteger",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "Para se esconder na neve e se proteger"
+  },
+  {
+   "chave": "1a925628v",
+   "voz": "narradora",
+   "texto": "Para esquentar no sol",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "Para esquentar no sol"
+  },
+  {
+   "chave": "a1231eec18",
+   "voz": "narradora",
+   "texto": "Para ficar parecido com o céu azul",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "Para ficar parecido com o céu azul"
+  },
+  {
+   "chave": "481822aa1d",
+   "voz": "narradora",
+   "texto": "Onde cada animal vive? Separe nos baús!",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "Onde cada animal vive? Separe nos baús!"
+  },
+  {
+   "chave": "27f5ef841a",
+   "voz": "narradora",
+   "texto": "Em que tipo de hábitat o cacto vive?",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "Em que tipo de hábitat o cacto vive?"
+  },
+  {
+   "chave": "e6f4a357r",
+   "voz": "narradora",
+   "texto": "Ambiente aquático",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "Ambiente aquático"
+  },
+  {
+   "chave": "d525e808v",
+   "voz": "narradora",
+   "texto": "Ambiente muito quente",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "Ambiente muito quente"
+  },
+  {
+   "chave": "e220a50et",
+   "voz": "narradora",
+   "texto": "Ambiente muito frio",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "Ambiente muito frio"
+  },
+  {
+   "chave": "4074c433u",
+   "voz": "narradora",
+   "texto": "Ambiente muito úmido",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "Ambiente muito úmido"
+  },
+  {
+   "chave": "64e8741b1n",
+   "voz": "narradora",
+   "texto": "Quais são as adaptações do cacto? Toque em TODAS.",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "Quais são as adaptações do cacto? Toque em todas."
+  },
+  {
+   "chave": "ed529c8bx",
+   "voz": "narradora",
+   "texto": "Guarda água dentro dele",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "Guarda água dentro dele"
+  },
+  {
+   "chave": "192e756215",
+   "voz": "narradora",
+   "texto": "Tem espinhos no lugar de folhas",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "Tem espinhos no lugar de folhas"
+  },
+  {
+   "chave": "069906c9s",
+   "voz": "narradora",
+   "texto": "Tem folhas enormes",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "Tem folhas enormes"
+  },
+  {
+   "chave": "b29f6ac812",
+   "voz": "narradora",
+   "texto": "Precisa ficar dentro da água",
+   "pacotes": [
+    "ciencias-c5"
+   ],
+   "fala": "Precisa ficar dentro da água"
   },
   {
    "chave": "ee369e4ee",
@@ -13376,6 +16638,213 @@
    "fala": "Ou acerte as dez, com calma!"
   },
   {
+   "chave": "2bd97c5c16",
+   "voz": "npc-lab-cavaleira",
+   "texto": "Eu sou a Cavaleira Jade!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Eu sou a Cavaleira Jade!"
+  },
+  {
+   "chave": "476ac3d71a",
+   "voz": "npc-lab-cavaleira",
+   "texto": "Eu treino Ciências com você.",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Eu treino Ciências com você."
+  },
+  {
+   "chave": "9bff6d8115",
+   "voz": "npc-lab-cavaleira",
+   "texto": "Vamos treinar Ciências?",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Vamos treinar Ciências?"
+  },
+  {
+   "chave": "e0527dcc17",
+   "voz": "npc-lab-cavaleira",
+   "texto": "Pense como uma cientista!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Pense como uma cientista!"
+  },
+  {
+   "chave": "9aa0bc5a18",
+   "voz": "npc-lab-cavaleira",
+   "texto": "Quer treinar mais uma vez?",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Quer treinar mais uma vez?"
+  },
+  {
+   "chave": "6bdd0acb1c",
+   "voz": "npc-lab-cavaleira",
+   "texto": "Vamos buscar o ouro com calma?",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Vamos buscar o ouro com calma?"
+  },
+  {
+   "chave": "397bc8d71g",
+   "voz": "npc-lab-cavaleira",
+   "texto": "Primeiro, as salas do Laboratório.",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Primeiro, as salas do Laboratório."
+  },
+  {
+   "chave": "81be50c916",
+   "voz": "npc-lab-cavaleira",
+   "texto": "O Laboratório vem antes.",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "O Laboratório vem antes."
+  },
+  {
+   "chave": "eb0aeeee17",
+   "voz": "npc-lab-cavaleira",
+   "texto": "Que cientista caprichosa!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Que cientista caprichosa!"
+  },
+  {
+   "chave": "993992ee1a",
+   "voz": "npc-lab-cavaleira",
+   "texto": "Você sabe muito da natureza!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Você sabe muito da natureza!"
+  },
+  {
+   "chave": "cc117b251c",
+   "voz": "npc-lab-cavaleira",
+   "texto": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Tudo bem, volte quando quiser!"
+  },
+  {
+   "chave": "3682e4cc10",
+   "voz": "npc-lab-cavaleira",
+   "texto": "Falta só uma sala!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Falta só uma sala!"
+  },
+  {
+   "chave": "8a328b8010",
+   "voz": "npc-lab-cavaleira",
+   "texto": "Faltam duas salas!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Faltam duas salas!"
+  },
+  {
+   "chave": "1d6cba4610",
+   "voz": "npc-lab-cavaleira",
+   "texto": "Faltam três salas!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Faltam três salas!"
+  },
+  {
+   "chave": "6986170512",
+   "voz": "npc-lab-cavaleira",
+   "texto": "Faltam quatro salas!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Faltam quatro salas!"
+  },
+  {
+   "chave": "377203c511",
+   "voz": "npc-lab-cavaleira",
+   "texto": "Faltam cinco salas!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Faltam cinco salas!"
+  },
+  {
+   "chave": "5cc27d661b",
+   "voz": "npc-lab-cavaleira",
+   "texto": "Falta um treino para o épico!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Falta um treino para o épico!"
+  },
+  {
+   "chave": "9594e3cc1a",
+   "voz": "npc-lab-cavaleira",
+   "texto": "Mais dois treinos pro épico!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Mais dois treinos pro épico!"
+  },
+  {
+   "chave": "55299e181a",
+   "voz": "npc-lab-cavaleira",
+   "texto": "Mais três treinos pro épico!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Mais três treinos pro épico!"
+  },
+  {
+   "chave": "1388f95a16",
+   "voz": "npc-lab-cavaleira",
+   "texto": "Ou tire ouro, com calma!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Ou tire ouro, com calma!"
+  },
+  {
+   "chave": "bb86d1bb1c",
+   "voz": "npc-lab-cavaleira",
+   "texto": "Mais quatro treinos pro épico!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Mais quatro treinos pro épico!"
+  },
+  {
+   "chave": "8f486afd1b",
+   "voz": "npc-lab-cavaleira",
+   "texto": "Mais cinco treinos pro épico!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Mais cinco treinos pro épico!"
+  },
+  {
+   "chave": "ecf502001a",
+   "voz": "npc-lab-cavaleira",
+   "texto": "Ou acerte as dez, com calma!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Ou acerte as dez, com calma!"
+  },
+  {
    "chave": "fbdb9995t",
    "voz": "narradora",
    "texto": "É o Plano da Prova!",
@@ -13518,6 +16987,25 @@
     "interior-castelo"
    ],
    "fala": "Depois, leia mais uma vez."
+  },
+  {
+   "chave": "e7dc420aw",
+   "voz": "narradora",
+   "texto": "Um microscópio na ala!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Um microscópio na ala!"
+  },
+  {
+   "chave": "53682ce012",
+   "voz": "narradora",
+   "texto": "Ele mostra o bem pequeninho.",
+   "pacotes": [
+    "interior-castelo",
+    "interior-observatorio"
+   ],
+   "fala": "Ele mostra o bem pequeninho."
   },
   {
    "chave": "a9874a7ch",
@@ -13945,6 +17433,105 @@
   {
    "chave": "64847f8811",
    "voz": "npc-lucia",
+   "texto": "Agora vale um prêmio comum!",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Agora vale um prêmio comum!"
+  },
+  {
+   "chave": "292d49a0i",
+   "voz": "npc-prof-flora",
+   "texto": "Oi!",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Oi!"
+  },
+  {
+   "chave": "e4d209ea10",
+   "voz": "npc-prof-flora",
+   "texto": "Eu cuido desta prova.",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Eu cuido desta prova."
+  },
+  {
+   "chave": "5e45df6619",
+   "voz": "npc-prof-flora",
+   "texto": "Vamos fazer a prova com calma?",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Vamos fazer a prova com calma?"
+  },
+  {
+   "chave": "844501e4s",
+   "voz": "npc-prof-flora",
+   "texto": "Prêmio ganho!",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Prêmio ganho!"
+  },
+  {
+   "chave": "3da6a2a9t",
+   "voz": "npc-prof-flora",
+   "texto": "Vamos treinar?",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Vamos treinar?"
+  },
+  {
+   "chave": "fd66e2bep",
+   "voz": "npc-prof-flora",
+   "texto": "Muito bem!",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Muito bem!"
+  },
+  {
+   "chave": "f93ce25fu",
+   "voz": "npc-prof-flora",
+   "texto": "Tudo com calma!",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Tudo com calma!"
+  },
+  {
+   "chave": "82f630bd19",
+   "voz": "npc-prof-flora",
+   "texto": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Tudo bem, volte quando quiser!"
+  },
+  {
+   "chave": "5775fe7b19",
+   "voz": "npc-prof-flora",
+   "texto": "Agora vale um prêmio lendário!",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Agora vale um prêmio lendário!"
+  },
+  {
+   "chave": "aa5e375315",
+   "voz": "npc-prof-flora",
+   "texto": "Agora vale um prêmio raro!",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Agora vale um prêmio raro!"
+  },
+  {
+   "chave": "519f742016",
+   "voz": "npc-prof-flora",
    "texto": "Agora vale um prêmio comum!",
    "pacotes": [
     "interior-escola"
@@ -15461,6 +19048,7 @@
    "texto": "Vamos ler com calma?",
    "pacotes": [
     "interior-museu",
+    "interior-observatorio",
     "interior-portugues",
     "interior-torre"
    ],
@@ -15843,6 +19431,1609 @@
     "interior-observatorio"
    ],
    "fala": "Volte logo, bip bop, bip bop!"
+  },
+  {
+   "chave": "28265ea2g",
+   "voz": "npc-nasa-lia",
+   "texto": "Oi!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Oi!"
+  },
+  {
+   "chave": "7ca84341y",
+   "voz": "npc-nasa-lia",
+   "texto": "Eu sou a doutora Lia.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eu sou a doutora Lia."
+  },
+  {
+   "chave": "458f4c2b14",
+   "voz": "npc-nasa-lia",
+   "texto": "Aqui cuidamos dos foguetes!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Aqui cuidamos dos foguetes!"
+  },
+  {
+   "chave": "29c0fe13z",
+   "voz": "npc-nasa-lia",
+   "texto": "Quer ouvir um segredo?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Quer ouvir um segredo?"
+  },
+  {
+   "chave": "e9edec1514",
+   "voz": "npc-nasa-lia",
+   "texto": "Tenho uma curiosidade nova!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Tenho uma curiosidade nova!"
+  },
+  {
+   "chave": "f6185dc612",
+   "voz": "npc-nasa-lia",
+   "texto": "Volte sempre para a NASA!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Volte sempre para a nasa!"
+  },
+  {
+   "chave": "94a29079y",
+   "voz": "npc-nasa-lia",
+   "texto": "Até a próxima missão!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Até a próxima missão!"
+  },
+  {
+   "chave": "cc883c04h",
+   "voz": "npc-nasa-davi",
+   "texto": "Oi!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Oi!"
+  },
+  {
+   "chave": "9442552f13",
+   "voz": "npc-nasa-davi",
+   "texto": "Eu sou o astronauta Davi.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eu sou o astronauta Davi."
+  },
+  {
+   "chave": "4d7323a310",
+   "voz": "npc-nasa-davi",
+   "texto": "Eu já morei no espaço!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eu já morei no espaço!"
+  },
+  {
+   "chave": "ebfda4e217",
+   "voz": "npc-nasa-davi",
+   "texto": "Quer saber como é lá em cima?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Quer saber como é lá em cima?"
+  },
+  {
+   "chave": "f4b12a0215",
+   "voz": "npc-nasa-davi",
+   "texto": "Vou contar da minha viagem!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vou contar da minha viagem!"
+  },
+  {
+   "chave": "d57bfe7617",
+   "voz": "npc-nasa-davi",
+   "texto": "Até logo, pequena astronauta!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Até logo, pequena astronauta!"
+  },
+  {
+   "chave": "94f248d9k",
+   "voz": "npc-nasa-davi",
+   "texto": "Tchau!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Tchau!"
+  },
+  {
+   "chave": "845871d1y",
+   "voz": "npc-nasa-davi",
+   "texto": "Eu vou voar de novo!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eu vou voar de novo!"
+  },
+  {
+   "chave": "a4d60b98g",
+   "voz": "npc-nasa-bia",
+   "texto": "Oi!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Oi!"
+  },
+  {
+   "chave": "142af64511",
+   "voz": "npc-nasa-bia",
+   "texto": "Eu sou a engenheira Bia.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eu sou a engenheira Bia."
+  },
+  {
+   "chave": "dd7213ea15",
+   "voz": "npc-nasa-bia",
+   "texto": "Eu adoro fazer experiências!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eu adoro fazer experiências!"
+  },
+  {
+   "chave": "f1dc41f910",
+   "voz": "npc-nasa-bia",
+   "texto": "Toque nas experiências!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Toque nas experiências!"
+  },
+  {
+   "chave": "8cb2e56810",
+   "voz": "npc-nasa-bia",
+   "texto": "Vamos descobrir juntas?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos descobrir juntas?"
+  },
+  {
+   "chave": "6862694614",
+   "voz": "npc-nasa-bia",
+   "texto": "Você é uma ótima cientista!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Você é uma ótima cientista!"
+  },
+  {
+   "chave": "b535d9ba11",
+   "voz": "npc-nasa-bia",
+   "texto": "Volte para experimentar!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Volte para experimentar!"
+  },
+  {
+   "chave": "063d6e3c16",
+   "voz": "npc-lab-iris",
+   "texto": "Oi, eu sou a Professora Íris!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Oi, eu sou a Professora Íris!"
+  },
+  {
+   "chave": "3062e3e614",
+   "voz": "npc-lab-iris",
+   "texto": "Aqui a gente estuda a vida!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Aqui a gente estuda a vida!"
+  },
+  {
+   "chave": "e8ef453bu",
+   "voz": "npc-lab-iris",
+   "texto": "Quer ver a lista?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Quer ver a lista?"
+  },
+  {
+   "chave": "e182591012",
+   "voz": "npc-lab-iris",
+   "texto": "Você ainda não fez salas.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Você ainda não fez salas."
+  },
+  {
+   "chave": "e794853b16",
+   "voz": "npc-lab-iris",
+   "texto": "O treino do Castelo já abriu!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O treino do Castelo já abriu!"
+  },
+  {
+   "chave": "10477be813",
+   "voz": "npc-lab-iris",
+   "texto": "Já fez uma de cinco salas.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Já fez uma de cinco salas."
+  },
+  {
+   "chave": "ea11e3d0v",
+   "voz": "npc-lab-iris",
+   "texto": "Já ganhou R$ 4,00!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Já ganhou 4 reais!"
+  },
+  {
+   "chave": "e652c25614",
+   "voz": "npc-lab-iris",
+   "texto": "Já fez duas de cinco salas.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Já fez duas de cinco salas."
+  },
+  {
+   "chave": "3b508444v",
+   "voz": "npc-lab-iris",
+   "texto": "Já ganhou R$ 8,00!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Já ganhou 8 reais!"
+  },
+  {
+   "chave": "f7364d7414",
+   "voz": "npc-lab-iris",
+   "texto": "Já fez três de cinco salas.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Já fez três de cinco salas."
+  },
+  {
+   "chave": "da05ea8dw",
+   "voz": "npc-lab-iris",
+   "texto": "Já ganhou R$ 12,00!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Já ganhou 12 reais!"
+  },
+  {
+   "chave": "cec6975916",
+   "voz": "npc-lab-iris",
+   "texto": "Já fez quatro de cinco salas.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Já fez quatro de cinco salas."
+  },
+  {
+   "chave": "41641381w",
+   "voz": "npc-lab-iris",
+   "texto": "Já ganhou R$ 16,00!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Já ganhou 16 reais!"
+  },
+  {
+   "chave": "f8e9a3be11",
+   "voz": "npc-lab-iris",
+   "texto": "Você fez as cinco salas!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Você fez as cinco salas!"
+  },
+  {
+   "chave": "f998e2c4w",
+   "voz": "npc-lab-iris",
+   "texto": "Já ganhou R$ 20,00!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Já ganhou 20 reais!"
+  },
+  {
+   "chave": "2598794bz",
+   "voz": "npc-lab-iris",
+   "texto": "A primeira é a Sala 1!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "A primeira é a Sala 1!"
+  },
+  {
+   "chave": "e49afcf613",
+   "voz": "npc-lab-iris",
+   "texto": "Agora vamos para a Sala 1!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Agora vamos para a Sala 1!"
+  },
+  {
+   "chave": "cc9d15c513",
+   "voz": "npc-lab-iris",
+   "texto": "Agora vamos para a Sala 2!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Agora vamos para a Sala 2!"
+  },
+  {
+   "chave": "f09f8d0813",
+   "voz": "npc-lab-iris",
+   "texto": "Agora vamos para a Sala 3!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Agora vamos para a Sala 3!"
+  },
+  {
+   "chave": "58a26f5713",
+   "voz": "npc-lab-iris",
+   "texto": "Agora vamos para a Sala 4!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Agora vamos para a Sala 4!"
+  },
+  {
+   "chave": "7ca4e69a13",
+   "voz": "npc-lab-iris",
+   "texto": "Agora vamos para a Sala 5!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Agora vamos para a Sala 5!"
+  },
+  {
+   "chave": "3b111f6515",
+   "voz": "npc-lab-bento",
+   "texto": "Oi, eu sou o Biólogo Bento!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Oi, eu sou o Biólogo Bento!"
+  },
+  {
+   "chave": "e70d8e3114",
+   "voz": "npc-lab-bento",
+   "texto": "Eu cuido das formiguinhas.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eu cuido das formiguinhas."
+  },
+  {
+   "chave": "0ddad2ed12",
+   "voz": "npc-lab-bento",
+   "texto": "Isso é vivo ou não vivo?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Isso é vivo ou não vivo?"
+  },
+  {
+   "chave": "5ba2e4e714",
+   "voz": "npc-lab-bento",
+   "texto": "Vamos olhar o formigueiro?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos olhar o formigueiro?"
+  },
+  {
+   "chave": "df642cdc12",
+   "voz": "npc-lab-bento",
+   "texto": "Quer investigar de novo?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Quer investigar de novo?"
+  },
+  {
+   "chave": "3ad3e1c717",
+   "voz": "npc-lab-bento",
+   "texto": "Vamos olhar mais seres vivos?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos olhar mais seres vivos?"
+  },
+  {
+   "chave": "4dc6e9e914",
+   "voz": "npc-lab-bento",
+   "texto": "Você achou os seres vivos!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Você achou os seres vivos!"
+  },
+  {
+   "chave": "99f8f0bc11",
+   "voz": "npc-lab-bento",
+   "texto": "Que olhar de cientista!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Que olhar de cientista!"
+  },
+  {
+   "chave": "315a008118",
+   "voz": "npc-lab-bento",
+   "texto": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Tudo bem, volte quando quiser!"
+  },
+  {
+   "chave": "386204ce16",
+   "voz": "npc-lab-bento",
+   "texto": "Mais uma vez e o raro nasce!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Mais uma vez e o raro nasce!"
+  },
+  {
+   "chave": "b32fc3a615",
+   "voz": "npc-lab-bento",
+   "texto": "Faltam duas vezes pro raro!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Faltam duas vezes pro raro!"
+  },
+  {
+   "chave": "495faf1015",
+   "voz": "npc-lab-bento",
+   "texto": "Faltam três vezes pro raro!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Faltam três vezes pro raro!"
+  },
+  {
+   "chave": "c89265a114",
+   "voz": "npc-lab-bento",
+   "texto": "Ou de primeira, com calma!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Ou de primeira, com calma!"
+  },
+  {
+   "chave": "cc7e6c3b16",
+   "voz": "npc-lab-bento",
+   "texto": "O raro desta sala já nasceu!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O raro desta sala já nasceu!"
+  },
+  {
+   "chave": "cd49e0e213",
+   "voz": "npc-lab-jana",
+   "texto": "Olá, eu sou a Guarda Jana!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Olá, eu sou a Guarda Jana!"
+  },
+  {
+   "chave": "a39b3bfe17",
+   "voz": "npc-lab-jana",
+   "texto": "Eu cuido dos bichos do parque.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eu cuido dos bichos do parque."
+  },
+  {
+   "chave": "8d7c302011",
+   "voz": "npc-lab-jana",
+   "texto": "Quem ganha e quem perde?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Quem ganha e quem perde?"
+  },
+  {
+   "chave": "d75a6e1d15",
+   "voz": "npc-lab-jana",
+   "texto": "Vamos ver a onça e o jacaré?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos ver a onça e o jacaré?"
+  },
+  {
+   "chave": "40d0def916",
+   "voz": "npc-lab-jana",
+   "texto": "Quer voltar ao parque comigo?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Quer voltar ao parque comigo?"
+  },
+  {
+   "chave": "17e3110a15",
+   "voz": "npc-lab-jana",
+   "texto": "Vamos ver os bichos de novo?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos ver os bichos de novo?"
+  },
+  {
+   "chave": "46d9d79411",
+   "voz": "npc-lab-jana",
+   "texto": "Você entendeu os bichos!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Você entendeu os bichos!"
+  },
+  {
+   "chave": "b64a97caz",
+   "voz": "npc-lab-jana",
+   "texto": "Que guarda caprichosa!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Que guarda caprichosa!"
+  },
+  {
+   "chave": "23eaa14b17",
+   "voz": "npc-lab-jana",
+   "texto": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Tudo bem, volte quando quiser!"
+  },
+  {
+   "chave": "fc16144815",
+   "voz": "npc-lab-jana",
+   "texto": "Mais uma vez e o raro nasce!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Mais uma vez e o raro nasce!"
+  },
+  {
+   "chave": "9074190414",
+   "voz": "npc-lab-jana",
+   "texto": "Faltam duas vezes pro raro!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Faltam duas vezes pro raro!"
+  },
+  {
+   "chave": "c7ccb87614",
+   "voz": "npc-lab-jana",
+   "texto": "Faltam três vezes pro raro!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Faltam três vezes pro raro!"
+  },
+  {
+   "chave": "1c2e20ab13",
+   "voz": "npc-lab-jana",
+   "texto": "Ou de primeira, com calma!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Ou de primeira, com calma!"
+  },
+  {
+   "chave": "5b06622d15",
+   "voz": "npc-lab-jana",
+   "texto": "O raro desta sala já nasceu!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O raro desta sala já nasceu!"
+  },
+  {
+   "chave": "33b2230cv",
+   "voz": "npc-lab-malu",
+   "texto": "Oi, eu sou a Malu!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Oi, eu sou a Malu!"
+  },
+  {
+   "chave": "d6377f6f12",
+   "voz": "npc-lab-malu",
+   "texto": "Meu amigo é o beija-flor.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Meu amigo é o beija-flor."
+  },
+  {
+   "chave": "0d0b6ab716",
+   "voz": "npc-lab-malu",
+   "texto": "Vamos ver amigos da natureza?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos ver amigos da natureza?"
+  },
+  {
+   "chave": "cecc0bf9z",
+   "voz": "npc-lab-malu",
+   "texto": "Vamos jogar a memória?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos jogar a memória?"
+  },
+  {
+   "chave": "a96cee2c15",
+   "voz": "npc-lab-malu",
+   "texto": "Quer brincar de novo comigo?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Quer brincar de novo comigo?"
+  },
+  {
+   "chave": "e9f235aez",
+   "voz": "npc-lab-malu",
+   "texto": "Vamos jogar outra vez?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos jogar outra vez?"
+  },
+  {
+   "chave": "4824480ey",
+   "voz": "npc-lab-malu",
+   "texto": "Todo mundo se ajudou!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Todo mundo se ajudou!"
+  },
+  {
+   "chave": "359fbbde12",
+   "voz": "npc-lab-malu",
+   "texto": "Você é amiga da natureza!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Você é amiga da natureza!"
+  },
+  {
+   "chave": "ae64184817",
+   "voz": "npc-lab-malu",
+   "texto": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Tudo bem, volte quando quiser!"
+  },
+  {
+   "chave": "8f84c74b15",
+   "voz": "npc-lab-malu",
+   "texto": "Mais uma vez e o raro nasce!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Mais uma vez e o raro nasce!"
+  },
+  {
+   "chave": "9a82f9b114",
+   "voz": "npc-lab-malu",
+   "texto": "Faltam duas vezes pro raro!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Faltam duas vezes pro raro!"
+  },
+  {
+   "chave": "52be95cb14",
+   "voz": "npc-lab-malu",
+   "texto": "Faltam três vezes pro raro!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Faltam três vezes pro raro!"
+  },
+  {
+   "chave": "970a230c13",
+   "voz": "npc-lab-malu",
+   "texto": "Ou de primeira, com calma!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Ou de primeira, com calma!"
+  },
+  {
+   "chave": "b9f30b4e15",
+   "voz": "npc-lab-malu",
+   "texto": "O raro desta sala já nasceu!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O raro desta sala já nasceu!"
+  },
+  {
+   "chave": "9636764417",
+   "voz": "npc-lab-ravi",
+   "texto": "Olá, eu sou o Explorador Ravi!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Olá, eu sou o Explorador Ravi!"
+  },
+  {
+   "chave": "d1ecf5b313",
+   "voz": "npc-lab-ravi",
+   "texto": "Já fui do deserto ao gelo!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Já fui do deserto ao gelo!"
+  },
+  {
+   "chave": "e35a55e713",
+   "voz": "npc-lab-ravi",
+   "texto": "Cada bicho tem a sua casa.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Cada bicho tem a sua casa."
+  },
+  {
+   "chave": "56c54de514",
+   "voz": "npc-lab-ravi",
+   "texto": "Vamos explorar os hábitats?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos explorar os hábitats?"
+  },
+  {
+   "chave": "15cf38a316",
+   "voz": "npc-lab-ravi",
+   "texto": "Quer explorar de novo comigo?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Quer explorar de novo comigo?"
+  },
+  {
+   "chave": "2e39b16110",
+   "voz": "npc-lab-ravi",
+   "texto": "Vamos viajar outra vez?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos viajar outra vez?"
+  },
+  {
+   "chave": "68ea302012",
+   "voz": "npc-lab-ravi",
+   "texto": "Que viagem mais corajosa!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Que viagem mais corajosa!"
+  },
+  {
+   "chave": "608412c611",
+   "voz": "npc-lab-ravi",
+   "texto": "Você achou cada hábitat!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Você achou cada hábitat!"
+  },
+  {
+   "chave": "21aa810317",
+   "voz": "npc-lab-ravi",
+   "texto": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Tudo bem, volte quando quiser!"
+  },
+  {
+   "chave": "f061009015",
+   "voz": "npc-lab-ravi",
+   "texto": "Mais uma vez e o raro nasce!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Mais uma vez e o raro nasce!"
+  },
+  {
+   "chave": "be5e719c14",
+   "voz": "npc-lab-ravi",
+   "texto": "Faltam duas vezes pro raro!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Faltam duas vezes pro raro!"
+  },
+  {
+   "chave": "6fd9f5fe14",
+   "voz": "npc-lab-ravi",
+   "texto": "Faltam três vezes pro raro!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Faltam três vezes pro raro!"
+  },
+  {
+   "chave": "53aef97313",
+   "voz": "npc-lab-ravi",
+   "texto": "Ou de primeira, com calma!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Ou de primeira, com calma!"
+  },
+  {
+   "chave": "4353ca3515",
+   "voz": "npc-lab-ravi",
+   "texto": "O raro desta sala já nasceu!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O raro desta sala já nasceu!"
+  },
+  {
+   "chave": "e74efd6415",
+   "voz": "npc-lab-lupa",
+   "texto": "Olá, eu sou a Detetive Lupa!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Olá, eu sou a Detetive Lupa!"
+  },
+  {
+   "chave": "eb9586a116",
+   "voz": "npc-lab-lupa",
+   "texto": "Eu sigo as pistas dos bichos.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eu sigo as pistas dos bichos."
+  },
+  {
+   "chave": "56ea153814",
+   "voz": "npc-lab-lupa",
+   "texto": "Vamos resolver um mistério?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos resolver um mistério?"
+  },
+  {
+   "chave": "fbc6e4e1s",
+   "voz": "npc-lab-lupa",
+   "texto": "Quem mora aqui?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Quem mora aqui?"
+  },
+  {
+   "chave": "ee0ed3b3n",
+   "voz": "npc-lab-lupa",
+   "texto": "Vamos ver?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos ver?"
+  },
+  {
+   "chave": "cc7531ca11",
+   "voz": "npc-lab-lupa",
+   "texto": "Quer investigar de novo?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Quer investigar de novo?"
+  },
+  {
+   "chave": "a4b848a912",
+   "voz": "npc-lab-lupa",
+   "texto": "Vamos seguir mais pistas?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos seguir mais pistas?"
+  },
+  {
+   "chave": "131d153412",
+   "voz": "npc-lab-lupa",
+   "texto": "O mistério foi resolvido!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O mistério foi resolvido!"
+  },
+  {
+   "chave": "c254692a13",
+   "voz": "npc-lab-lupa",
+   "texto": "Você é uma ótima detetive!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Você é uma ótima detetive!"
+  },
+  {
+   "chave": "889fd34317",
+   "voz": "npc-lab-lupa",
+   "texto": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Tudo bem, volte quando quiser!"
+  },
+  {
+   "chave": "ed96c75015",
+   "voz": "npc-lab-lupa",
+   "texto": "Mais uma vez e o raro nasce!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Mais uma vez e o raro nasce!"
+  },
+  {
+   "chave": "48a8605c14",
+   "voz": "npc-lab-lupa",
+   "texto": "Faltam duas vezes pro raro!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Faltam duas vezes pro raro!"
+  },
+  {
+   "chave": "ab72b6be14",
+   "voz": "npc-lab-lupa",
+   "texto": "Faltam três vezes pro raro!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Faltam três vezes pro raro!"
+  },
+  {
+   "chave": "ac9e3bb313",
+   "voz": "npc-lab-lupa",
+   "texto": "Ou de primeira, com calma!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Ou de primeira, com calma!"
+  },
+  {
+   "chave": "8be0797515",
+   "voz": "npc-lab-lupa",
+   "texto": "O raro desta sala já nasceu!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O raro desta sala já nasceu!"
+  },
+  {
+   "chave": "2f2f23dau",
+   "voz": "narradora",
+   "texto": "O Livro de Ciências!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O Livro de Ciências!"
+  },
+  {
+   "chave": "6fe33b44w",
+   "voz": "narradora",
+   "texto": "O mapa do laboratório.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O mapa do laboratório."
+  },
+  {
+   "chave": "eab6e4ec13",
+   "voz": "narradora",
+   "texto": "São cinco salas para visitar.",
+   "pacotes": [
+    "interior-observatorio",
+    "interior-portugues"
+   ],
+   "fala": "São cinco salas para visitar."
+  },
+  {
+   "chave": "95a9d3eb10",
+   "voz": "narradora",
+   "texto": "Um microscópio de verdade!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Um microscópio de verdade!"
+  },
+  {
+   "chave": "91b70277y",
+   "voz": "narradora",
+   "texto": "Tubos com água colorida!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Tubos com água colorida!"
+  },
+  {
+   "chave": "d484752812",
+   "voz": "narradora",
+   "texto": "Cientista testa com cuidado.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Cientista testa com cuidado."
+  },
+  {
+   "chave": "02fc2139y",
+   "voz": "narradora",
+   "texto": "Um formigueiro de vidro!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Um formigueiro de vidro!"
+  },
+  {
+   "chave": "150fff4b13",
+   "voz": "narradora",
+   "texto": "Elas nascem, comem e crescem.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Elas nascem, comem e crescem."
+  },
+  {
+   "chave": "d0315388w",
+   "voz": "narradora",
+   "texto": "Um brotinho de feijão!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Um brotinho de feijão!"
+  },
+  {
+   "chave": "213a254cy",
+   "voz": "narradora",
+   "texto": "A planta nasce e cresce.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "A planta nasce e cresce."
+  },
+  {
+   "chave": "580632e4z",
+   "voz": "narradora",
+   "texto": "Ela também é um ser vivo.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Ela também é um ser vivo."
+  },
+  {
+   "chave": "949a9956z",
+   "voz": "narradora",
+   "texto": "Uma pedra bem redondinha.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Uma pedra bem redondinha."
+  },
+  {
+   "chave": "46ef40ef13",
+   "voz": "narradora",
+   "texto": "A pedra não nasce nem cresce.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "A pedra não nasce nem cresce."
+  },
+  {
+   "chave": "304ccc0b11",
+   "voz": "narradora",
+   "texto": "Ela é um elemento não vivo.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Ela é um elemento não vivo."
+  },
+  {
+   "chave": "1aad9a97z",
+   "voz": "narradora",
+   "texto": "Água fresquinha no galão!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Água fresquinha no galão!"
+  },
+  {
+   "chave": "f0f95c4fs",
+   "voz": "narradora",
+   "texto": "A água não é viva.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "A água não é viva."
+  },
+  {
+   "chave": "45555fab15",
+   "voz": "narradora",
+   "texto": "Mas todo ser vivo precisa dela.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Mas todo ser vivo precisa dela."
+  },
+  {
+   "chave": "15181d64x",
+   "voz": "narradora",
+   "texto": "Uma colmeia de abelhas!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Uma colmeia de abelhas!"
+  },
+  {
+   "chave": "0567f8d812",
+   "voz": "narradora",
+   "texto": "Cada abelha tem um trabalho.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Cada abelha tem um trabalho."
+  },
+  {
+   "chave": "ce902d88y",
+   "voz": "narradora",
+   "texto": "Elas vivem em sociedade.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Elas vivem em sociedade."
+  },
+  {
+   "chave": "7f783fcbv",
+   "voz": "narradora",
+   "texto": "Um gafanhoto comilão!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Um gafanhoto comilão!"
+  },
+  {
+   "chave": "41b519f713",
+   "voz": "narradora",
+   "texto": "Ele come as folhas da planta.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Ele come as folhas da planta."
+  },
+  {
+   "chave": "7d823b1cw",
+   "voz": "narradora",
+   "texto": "A onça é uma caçadora!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "A onça é uma caçadora!"
+  },
+  {
+   "chave": "e985bf34z",
+   "voz": "narradora",
+   "texto": "Ela ganha e a caça perde.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Ela ganha e a caça perde."
+  },
+  {
+   "chave": "63880ac2v",
+   "voz": "narradora",
+   "texto": "O jacaré mora no rio.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O jacaré mora no rio."
+  },
+  {
+   "chave": "99f7309011",
+   "voz": "narradora",
+   "texto": "A onça pode caçar o jacaré.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "A onça pode caçar o jacaré."
+  },
+  {
+   "chave": "6e40efa5z",
+   "voz": "narradora",
+   "texto": "Esse cãozinho tem pulgas!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Esse cãozinho tem pulgas!"
+  },
+  {
+   "chave": "7b88ded912",
+   "voz": "narradora",
+   "texto": "A pulga ganha e o cão perde.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "A pulga ganha e o cão perde."
+  },
+  {
+   "chave": "1b363defy",
+   "voz": "narradora",
+   "texto": "O búfalo e o passarinho!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O búfalo e o passarinho!"
+  },
+  {
+   "chave": "63d9a34012",
+   "voz": "narradora",
+   "texto": "O pássaro come os bichinhos.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O pássaro come os bichinhos."
+  },
+  {
+   "chave": "5233e3f1x",
+   "voz": "narradora",
+   "texto": "O búfalo fica limpinho.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O búfalo fica limpinho."
+  },
+  {
+   "chave": "42e0e297s",
+   "voz": "narradora",
+   "texto": "O jogo da memória!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O jogo da memória!"
+  },
+  {
+   "chave": "f3ba3420y",
+   "voz": "narradora",
+   "texto": "Ache os pares de amigos.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Ache os pares de amigos."
+  },
+  {
+   "chave": "36c0a27410",
+   "voz": "narradora",
+   "texto": "A abelha visita as flores.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "A abelha visita as flores."
+  },
+  {
+   "chave": "7e1100f714",
+   "voz": "narradora",
+   "texto": "Ela ajuda a flor a dar frutos.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Ela ajuda a flor a dar frutos."
+  },
+  {
+   "chave": "65674cd311",
+   "voz": "narradora",
+   "texto": "O beija-flor bebe o néctar.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O beija-flor bebe o néctar."
+  },
+  {
+   "chave": "aa04e73615",
+   "voz": "narradora",
+   "texto": "Ele leva pólen de flor em flor.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Ele leva pólen de flor em flor."
+  },
+  {
+   "chave": "fe1810c1w",
+   "voz": "narradora",
+   "texto": "Os dois saem ganhando!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Os dois saem ganhando!"
+  },
+  {
+   "chave": "7e6ea47310",
+   "voz": "narradora",
+   "texto": "O urso-polar mora no gelo.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O urso-polar mora no gelo."
+  },
+  {
+   "chave": "1037571511",
+   "voz": "narradora",
+   "texto": "O pelo grosso esquenta ele.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O pelo grosso esquenta ele."
+  },
+  {
+   "chave": "5e57e70cw",
+   "voz": "narradora",
+   "texto": "O aguapé boia na água!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O aguapé boia na água!"
+  },
+  {
+   "chave": "8ddd1d39y",
+   "voz": "narradora",
+   "texto": "O peixe mora no aquário.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O peixe mora no aquário."
+  },
+  {
+   "chave": "f77cec3bz",
+   "voz": "narradora",
+   "texto": "O camelo mora no deserto.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O camelo mora no deserto."
+  },
+  {
+   "chave": "dc554cc213",
+   "voz": "narradora",
+   "texto": "Ele fica dias sem beber água.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Ele fica dias sem beber água."
+  },
+  {
+   "chave": "d90237ec11",
+   "voz": "narradora",
+   "texto": "O cacto guarda água dentro.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O cacto guarda água dentro."
+  },
+  {
+   "chave": "2150d7c6z",
+   "voz": "narradora",
+   "texto": "Ele vive bem na Caatinga.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Ele vive bem na Caatinga."
+  },
+  {
+   "chave": "117270e412",
+   "voz": "narradora",
+   "texto": "Esta é a Caatinga do Brasil.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Esta é a Caatinga do Brasil."
+  },
+  {
+   "chave": "fcbdd03011",
+   "voz": "narradora",
+   "texto": "Lá chove pouco e faz calor.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Lá chove pouco e faz calor."
+  },
+  {
+   "chave": "e3747d0e10",
+   "voz": "narradora",
+   "texto": "Um termômetro de hábitats!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Um termômetro de hábitats!"
+  },
+  {
+   "chave": "1cf44bb915",
+   "voz": "narradora",
+   "texto": "No gelo frio, no deserto calor.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "No gelo frio, no deserto calor."
+  },
+  {
+   "chave": "b52e54d012",
+   "voz": "narradora",
+   "texto": "Um bicho-preguiça na árvore!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Um bicho-preguiça na árvore!"
+  },
+  {
+   "chave": "cdf81e94y",
+   "voz": "narradora",
+   "texto": "Ele se mexe bem devagar.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Ele se mexe bem devagar."
+  },
+  {
+   "chave": "5c111802t",
+   "voz": "narradora",
+   "texto": "A mesa do detetive!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "A mesa do detetive!"
+  },
+  {
+   "chave": "cafc1950y",
+   "voz": "narradora",
+   "texto": "A lupa mostra as pistas.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "A lupa mostra as pistas."
+  },
+  {
+   "chave": "e8a8e51a13",
+   "voz": "narradora",
+   "texto": "O pinguim nada no mar gelado.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O pinguim nada no mar gelado."
+  },
+  {
+   "chave": "f8626ad010",
+   "voz": "narradora",
+   "texto": "As penas protegem do frio.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "As penas protegem do frio."
+  },
+  {
+   "chave": "b263c96313",
+   "voz": "narradora",
+   "texto": "O feneco tem orelhas grandes!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O feneco tem orelhas grandes!"
+  },
+  {
+   "chave": "4478aa8315",
+   "voz": "narradora",
+   "texto": "Elas soltam o calor do deserto.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Elas soltam o calor do deserto."
+  },
+  {
+   "chave": "6aa00e30z",
+   "voz": "narradora",
+   "texto": "A tartaruga marinha nada!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "A tartaruga marinha nada!"
+  },
+  {
+   "chave": "26f27bbdx",
+   "voz": "narradora",
+   "texto": "Ela bota ovos na areia.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Ela bota ovos na areia."
+  },
+  {
+   "chave": "52dd745714",
+   "voz": "narradora",
+   "texto": "O lobo-do-ártico é branquinho.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O lobo-do-ártico é branquinho."
+  },
+  {
+   "chave": "08e30b9dx",
+   "voz": "narradora",
+   "texto": "Ele se esconde na neve.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Ele se esconde na neve."
+  },
+  {
+   "chave": "9a0dabd915",
+   "voz": "narradora",
+   "texto": "O lagarto-de-colar abre a gola!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O lagarto-de-colar abre a gola!"
+  },
+  {
+   "chave": "450d695e13",
+   "voz": "narradora",
+   "texto": "Assim ele assusta quem chega.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Assim ele assusta quem chega."
   },
   {
    "chave": "6a2d4940z",
@@ -16869,15 +22060,6 @@
     "interior-portugues"
    ],
    "fala": "É o mapa da Casa das Palavras."
-  },
-  {
-   "chave": "eab6e4ec13",
-   "voz": "narradora",
-   "texto": "São cinco salas para visitar.",
-   "pacotes": [
-    "interior-portugues"
-   ],
-   "fala": "São cinco salas para visitar."
   },
   {
    "chave": "a63d00af10",
@@ -20793,6 +25975,456 @@
     "interior-observatorio"
    ],
    "fala": "Na memória de risadas, bip!"
+  },
+  {
+   "chave": "86bff87c16",
+   "voz": "npc-nasa-lia",
+   "texto": "O foguete solta fogo embaixo.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O foguete solta fogo embaixo."
+  },
+  {
+   "chave": "1392be9112",
+   "voz": "npc-nasa-lia",
+   "texto": "O fogo empurra o foguete.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O fogo empurra o foguete."
+  },
+  {
+   "chave": "8cdb024a13",
+   "voz": "npc-nasa-lia",
+   "texto": "Assim ele sobe para o céu!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Assim ele sobe para o céu!"
+  },
+  {
+   "chave": "2a15efa815",
+   "voz": "npc-nasa-lia",
+   "texto": "O foguete tem várias partes.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O foguete tem várias partes."
+  },
+  {
+   "chave": "4253d6af15",
+   "voz": "npc-nasa-lia",
+   "texto": "Cada parte cai quando acaba.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Cada parte cai quando acaba."
+  },
+  {
+   "chave": "a72d0b3212",
+   "voz": "npc-nasa-lia",
+   "texto": "Assim ele fica mais leve!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Assim ele fica mais leve!"
+  },
+  {
+   "chave": "fb3a304912",
+   "voz": "npc-nasa-lia",
+   "texto": "O foguete é muito rápido.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O foguete é muito rápido."
+  },
+  {
+   "chave": "7f49121115",
+   "voz": "npc-nasa-lia",
+   "texto": "Ele é mais rápido que avião!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Ele é mais rápido que avião!"
+  },
+  {
+   "chave": "f776b62b15",
+   "voz": "npc-nasa-lia",
+   "texto": "A missão Apolo 11 foi à Lua.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "A missão Apolo 11 foi à Lua."
+  },
+  {
+   "chave": "06ef137611",
+   "voz": "npc-nasa-lia",
+   "texto": "Isso foi no ano de 1969.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Isso foi no ano de 1969."
+  },
+  {
+   "chave": "8c2a0fcc14",
+   "voz": "npc-nasa-lia",
+   "texto": "Astronautas pisaram na Lua.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Astronautas pisaram na Lua."
+  },
+  {
+   "chave": "576e40d413",
+   "voz": "npc-nasa-lia",
+   "texto": "As pegadas ainda estão lá.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "As pegadas ainda estão lá."
+  },
+  {
+   "chave": "cbb6b00516",
+   "voz": "npc-nasa-lia",
+   "texto": "Lá não tem vento para apagar!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Lá não tem vento para apagar!"
+  },
+  {
+   "chave": "d0adf63012",
+   "voz": "npc-nasa-lia",
+   "texto": "A NASA quer voltar à Lua.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "A nasa quer voltar à Lua."
+  },
+  {
+   "chave": "0e790d2f13",
+   "voz": "npc-nasa-lia",
+   "texto": "A missão se chama Ártemis.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "A missão se chama Ártemis."
+  },
+  {
+   "chave": "df94567911",
+   "voz": "npc-nasa-lia",
+   "texto": "Robôs passeiam em Marte.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Robôs passeiam em Marte."
+  },
+  {
+   "chave": "678b7f6915",
+   "voz": "npc-nasa-lia",
+   "texto": "Eles tiram fotos das pedras.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eles tiram fotos das pedras."
+  },
+  {
+   "chave": "02b40c3517",
+   "voz": "npc-nasa-lia",
+   "texto": "A sonda Voyager viaja há anos.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "A sonda Voyager viaja há anos."
+  },
+  {
+   "chave": "9fd7520b15",
+   "voz": "npc-nasa-lia",
+   "texto": "Ela está muito longe do Sol!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Ela está muito longe do Sol!"
+  },
+  {
+   "chave": "f2b5b23517",
+   "voz": "npc-nasa-bia",
+   "texto": "A Estação Espacial voa rápido.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "A Estação Espacial voa rápido."
+  },
+  {
+   "chave": "4f28746011",
+   "voz": "npc-nasa-bia",
+   "texto": "Ela dá a volta na Terra.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Ela dá a volta na Terra."
+  },
+  {
+   "chave": "b5dd4f1a11",
+   "voz": "npc-nasa-bia",
+   "texto": "Leva só uma hora e meia!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Leva só uma hora e meia!"
+  },
+  {
+   "chave": "784bae8215",
+   "voz": "npc-nasa-bia",
+   "texto": "Na Estação Espacial é assim.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Na Estação Espacial é assim."
+  },
+  {
+   "chave": "568c848e16",
+   "voz": "npc-nasa-bia",
+   "texto": "O Sol nasce 16 vezes por dia!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O Sol nasce 16 vezes por dia!"
+  },
+  {
+   "chave": "5f1fc73014",
+   "voz": "npc-nasa-bia",
+   "texto": "No espaço não tem chuveiro.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "No espaço não tem chuveiro."
+  },
+  {
+   "chave": "38d5ef5116",
+   "voz": "npc-nasa-bia",
+   "texto": "Eles se limpam com toalhinha.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eles se limpam com toalhinha."
+  },
+  {
+   "chave": "87e56d3411",
+   "voz": "npc-nasa-davi",
+   "texto": "No espaço, tudo flutua.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "No espaço, tudo flutua."
+  },
+  {
+   "chave": "8e81dbcc17",
+   "voz": "npc-nasa-davi",
+   "texto": "Os astronautas dormem presos.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Os astronautas dormem presos."
+  },
+  {
+   "chave": "9cec26a716",
+   "voz": "npc-nasa-davi",
+   "texto": "Eles usam um saco de dormir!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eles usam um saco de dormir!"
+  },
+  {
+   "chave": "b262873215",
+   "voz": "npc-nasa-davi",
+   "texto": "Astronautas comem tortilha.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Astronautas comem tortilha."
+  },
+  {
+   "chave": "a1e0769814",
+   "voz": "npc-nasa-davi",
+   "texto": "Pão faz farelo que flutua!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Pão faz farelo que flutua!"
+  },
+  {
+   "chave": "0ec8609614",
+   "voz": "npc-nasa-davi",
+   "texto": "No espaço, o corpo estica.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "No espaço, o corpo estica."
+  },
+  {
+   "chave": "4bd3ec5616",
+   "voz": "npc-nasa-davi",
+   "texto": "O astronauta fica mais alto!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O astronauta fica mais alto!"
+  },
+  {
+   "chave": "226e212718",
+   "voz": "npc-nasa-davi",
+   "texto": "Na Terra, ele volta ao normal.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Na Terra, ele volta ao normal."
+  },
+  {
+   "chave": "b10ee69d15",
+   "voz": "npc-nasa-davi",
+   "texto": "O traje é uma nave pequena.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O traje é uma nave pequena."
+  },
+  {
+   "chave": "328fad3613",
+   "voz": "npc-nasa-davi",
+   "texto": "Ele tem ar para respirar.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Ele tem ar para respirar."
+  },
+  {
+   "chave": "f82eeb1815",
+   "voz": "npc-nasa-davi",
+   "texto": "Marcos Pontes é brasileiro.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Marcos Pontes é brasileiro."
+  },
+  {
+   "chave": "8a0ed3b215",
+   "voz": "npc-nasa-davi",
+   "texto": "Ele foi à Estação Espacial!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Ele foi à Estação Espacial!"
+  },
+  {
+   "chave": "9060a05c16",
+   "voz": "npc-nasa-bia",
+   "texto": "Atenção, contagem regressiva!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Atenção, contagem regressiva!"
+  },
+  {
+   "chave": "dccde543y",
+   "voz": "npc-nasa-bia",
+   "texto": "Três, dois, um... já!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Três, dois, um... já!"
+  },
+  {
+   "chave": "6c27a5e212",
+   "voz": "npc-nasa-bia",
+   "texto": "O fogo empurra o foguete!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O fogo empurra o foguete!"
+  },
+  {
+   "chave": "b774879a12",
+   "voz": "npc-nasa-bia",
+   "texto": "Na Lua não tem ar nenhum.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Na Lua não tem ar nenhum."
+  },
+  {
+   "chave": "db6406b014",
+   "voz": "npc-nasa-bia",
+   "texto": "Pena e martelo caem juntos!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Pena e martelo caem juntos!"
+  },
+  {
+   "chave": "c3a57a1a13",
+   "voz": "npc-nasa-bia",
+   "texto": "Um astronauta fez isso lá!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Um astronauta fez isso lá!"
+  },
+  {
+   "chave": "f83f67cb11",
+   "voz": "npc-nasa-bia",
+   "texto": "A lâmpada é o nosso Sol.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "A lâmpada é o nosso Sol."
+  },
+  {
+   "chave": "5983e1e010",
+   "voz": "npc-nasa-bia",
+   "texto": "A bola é a Lua girando.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "A bola é a Lua girando."
+  },
+  {
+   "chave": "ba552d6114",
+   "voz": "npc-nasa-bia",
+   "texto": "Vemos partes da Lua acesas.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vemos partes da Lua acesas."
+  },
+  {
+   "chave": "4285e23113",
+   "voz": "npc-nasa-bia",
+   "texto": "Plantas crescem no espaço!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Plantas crescem no espaço!"
+  },
+  {
+   "chave": "c3d1a4eb12",
+   "voz": "npc-nasa-bia",
+   "texto": "Na Estação tem uma horta.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Na Estação tem uma horta."
+  },
+  {
+   "chave": "89d671c1z",
+   "voz": "npc-nasa-bia",
+   "texto": "Lá já colheram alface!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Lá já colheram alface!"
   },
   {
    "chave": "40923a7514",

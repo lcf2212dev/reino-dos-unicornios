@@ -239,7 +239,8 @@
   Cena.entrar = function (lugarId) {
     if (S.trans) return S.trans.promessa;
     var lugar = Mapa.lugar(lugarId);
-    var def = defDoLugar(lugarId);
+    // matéria dentro de um prédio (lugar.interior): entra direto no andar dela
+    var def = (lugar && lugar.interior && defDoInterior(lugar.interior)) || defDoLugar(lugarId);
     if (!def) {
       if (lugar) painelAntigo(lugar);
       return Promise.resolve();
@@ -307,8 +308,9 @@
     fecharDialogoModal();
     var atual = Cena.atual();
     if (atual.tipo === 'interior') {
-      if (atual.lugarId === lugar.id) {
-        var def = defDoLugar(lugar.id);
+      // já no prédio (ou no anfitrião da matéria de dentro): vai direto, sem sair
+      if (atual.lugarId === lugar.id || (lugar.dentro && atual.lugarId === lugar.dentro)) {
+        var def = (lugar.interior && defDoInterior(lugar.interior)) || defDoLugar(lugar.id);
         if (def) return Cena.irPara(def.id, def.spawn, { x: 0, y: -1 });
       }
       return Cena.sair().then(function () { irAoAlvo(alvoLugar(lugar)); });
