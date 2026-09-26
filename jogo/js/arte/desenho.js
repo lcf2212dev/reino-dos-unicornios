@@ -8,7 +8,7 @@
   var K = '#3a2446';          // contorno
   var FUNDO = '#24162e';      // vão entre os cômodos
 
-  /* ================= CORES E DESENHO (os mesmos helpers do mapa.js) ================= */
+  /* ================= CORES E DESENHO (os mesmos helpers do mundo/mapa-desenho.js) ================= */
   var C = {
     contorno: K, fundo: FUNDO,
     madeira: '#c98a4b', madeira2: '#a0745a', madeira3: '#8a604a', madeiraClara: '#e8b27a', madeiraEscura: '#6b4428',

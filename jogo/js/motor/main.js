@@ -5,6 +5,7 @@
    cômodos, Claude, portas, NPCs) fica em cena.js e nos interiores. */
 (function () {
   var U = Reino.util, el = U.el, P = Reino.Progresso, UI = Reino.UI, J = Jogador, T = Mapa.T, Cena = Reino.Cena;
+  var EV = Reino.EVENTOS;
   var V = Reino._motor, est = V.est, pintor = V.pintor;
 
   /* ---------- telas de entrada ---------- */
@@ -177,10 +178,10 @@
     V.ligarControles();
     requestAnimationFrame(V.laco);
 
-    U.on('progresso', function () { UI.atualizarHUD(); });
-    U.on('progressoRemoto', function () { UI.aplicarAjustes(); if (V.jogoAtivo) UI.atualizarHUD(); });
-    U.on('mapaMudou', function () { UI.atualizarHUD(); V.desenhar(performance.now()); });
-    U.on('setas', function () { U.$('#setas').hidden = !est().ajustes.setas; });
+    U.on(EV.PROGRESSO, function () { UI.atualizarHUD(); });
+    U.on(EV.PROGRESSO_REMOTO, function () { UI.aplicarAjustes(); if (V.jogoAtivo) UI.atualizarHUD(); });
+    U.on(EV.MAPA_MUDOU, function () { UI.atualizarHUD(); V.desenhar(performance.now()); });
+    U.on(EV.SETAS, function () { U.$('#setas').hidden = !est().ajustes.setas; });
 
     // vozes gravadas: frases do Claude e de cada matéria (as salas carregam quando abrem)
     Reino.Voz.carregarVarios(['geral'].concat(Reino.materias.map(function (m) { return m.id + '-extra'; })));

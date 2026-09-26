@@ -11,6 +11,7 @@
    `nuvem`, `P` e as funções auxiliares que cada parte publica no fim dela. */
 (function () {
   var U = Reino.util;
+  var EV = Reino.EVENTOS;
   var P = {};
   var nuvem = { ref: null, ok: false, gravando: false, pendente: false, timer: null, status: 'local' };
   // o que as partes do progresso dividem (ver o cabeçalho)
@@ -225,8 +226,8 @@
     var novos = P.conferirPersistencia();
     vigiarSurpresa();
     if (novos.length || trouxeAlgo(I.estado, outro)) P.salvar();
-    else U.emit('progresso', I.estado);
-    U.emit('progressoRemoto', I.estado);
+    else U.emit(EV.PROGRESSO, I.estado);
+    U.emit(EV.PROGRESSO_REMOTO, I.estado);
   }
   if (typeof window !== 'undefined' && window.addEventListener) window.addEventListener('storage', function (ev) {
     if (ev.key === Reino.config.chaveSave) juntarDoAparelho(ev.newValue);
@@ -235,7 +236,7 @@
     if (!document.hidden) juntarDoAparelho(lerBruto());
   });
 
-  /* O interruptor da surpresa muda nos dois sentidos: quando ela o troca (ui.js só muda o valor e
+  /* O interruptor da surpresa muda nos dois sentidos: quando ela o troca (ui/ajustes.js só muda o valor e
      chama P.salvar), ganha o carimbo `ajustes.surpresaEm`, e na mescla vale o carimbo maior.
      Só conta a troca no MESMO objeto de estado: carregar, mesclar e "Apagar tudo" trocam o objeto e
      não carimbam (o padrão de estadoNovo() nunca tem carimbo, senão um aparelho novo venceria). */
@@ -252,7 +253,7 @@
     marcarSurpresa();
     gravarLocal();
     vigiarSurpresa();
-    U.emit('progresso', I.estado);
+    U.emit(EV.PROGRESSO, I.estado);
     if (!semNuvem) I.agendarNuvem();
   };
 

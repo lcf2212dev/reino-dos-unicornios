@@ -67,7 +67,7 @@
 
   /* ---------- toque e teclado durante o banho ----------
      Ouvinte próprio, na captura da janela: nada chega ao mapa nem ao HUD enquanto dura
-     (o do canvas no main.js já ignora com a cena ocupada). Depois de pularDepoisMs, pula para o fim. */
+     (o do canvas no motor/entrada.js já ignora com a cena ocupada). Depois de pularDepoisMs, pula para o fim. */
   var engolirAte = 0;
   function podePular() { return I.st && I.st.comecou && !I.st.fim && agora() - I.st.inicio >= cfg().pularDepoisMs; }
   function aoToque(e) {

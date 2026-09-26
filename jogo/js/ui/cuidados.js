@@ -3,6 +3,7 @@
    comida e o nome/rótulo das comidas. */
 (function () {
   var U = Reino.util, el = U.el, P = Reino.Progresso;
+  var EV = Reino.EVENTOS;
   var UI = Reino.UI, R = Reino._ui;
   var est = R.est, pilha = R.pilha, topo = R.topo, focar = R.focar, focaveis = R.focaveis, hifenizar = R.hifenizar;
 
@@ -56,7 +57,7 @@
     if (aviso) aviso.textContent = baixo ? CUIDADO[campo].baixo : '';
   }
   UI.pintarCuidados = function () { U.$$('.cuid-barra[data-uni]').forEach(pintarBarra); rotularMontaria(); };
-  U.on('cuidados', function () { UI.pintarCuidados(); });
+  U.on(EV.CUIDADOS, function () { UI.pintarCuidados(); });
   // leitor de tela: o chip da montaria diz também a fome, a sede e o banho ("Estábulo — Nome, fome 40, sede 80, banho 60")
   function rotularMontaria() {
     var m = document.querySelector('#hud .chip-montaria');
@@ -150,14 +151,14 @@
   ['pointerdown', 'keydown'].forEach(function (ev) {
     document.addEventListener(ev, function (e) { if (e.isTrusted) balaoNpcNoGesto = textoBalaoNpc(); }, true);
   });
-  U.on('telas', function (n) {
+  U.on(EV.TELAS, function (n) {
     var abriu = n > telasAntes; telasAntes = n;
     if (abriu && balaoNpcNoGesto && textoBalaoNpc() === balaoNpcNoGesto && !(recado && soLetras(recado.texto) === balaoNpcNoGesto)) {
       // limpar, não só fechar: a despedida da Dona Aveia na fila atrás do "Faltam…" entrava por cima da tela nova
       balaoNpcNoGesto = null; Reino.Claude.limpar();
     }
   });
-  U.on('telas', function (n) {
+  U.on(EV.TELAS, function (n) {
     if (!recado) return;
     if (n > recado.telas) {                                           // tela nova por cima: o recado já passou
       var tx = document.querySelector('#claude-balao:not([hidden]) .claude-texto');

@@ -1,11 +1,12 @@
 /* Cena ativa: o mapa ou o interior de uma construção. Cuida das portas, do tapete de saída,
    das escadas, de entrar/sair e do estado (mapa, interior, diálogo, atividade, transição).
    A transição em íris (o círculo que fecha e abre centrado na Mariana) fica em motor/transicao.js.
-   O main.js desenha e lê os controles; aqui fica o que muda de uma cena para outra.
+   O motor (camera.js, laco.js, entrada.js e main.js) desenha e lê os controles; aqui fica o que muda de uma cena para outra.
    Reino._cena (INTERNO, só deste arquivo e de transicao.js): trans (transição em curso), vista
    (ligações com o main.js), trocarCena(nova) e transicionar(destino) (transicao.js). */
 (function () {
   var U = Reino.util, T = Mapa.T;
+  var EV = Reino.EVENTOS;
 
   var Cena = {
     MAPA: 'mapa', TRANSICAO: 'transicao', INTERIOR: 'interior', DIALOGO: 'dialogo', ATIVIDADE: 'atividade',
@@ -169,12 +170,12 @@
     ocupadaPor = motivo || 'atividade';
     if (J() && J().parar) J().parar();
     if (S.vista && S.vista.soltarTeclas) S.vista.soltarTeclas();
-    U.emit('ocupada', ocupadaPor);
+    U.emit(EV.OCUPADA, ocupadaPor);
   };
   Cena.liberar = function (motivo) {
     if (!ocupadaPor || (motivo && motivo !== ocupadaPor)) return;
     ocupadaPor = null;
-    U.emit('ocupada', null);
+    U.emit(EV.OCUPADA, null);
   };
   Cena.ocupada = function () { return ocupadaPor; };
   Cena.estado = function () {
@@ -193,12 +194,12 @@
     var de = Cena.atual().id;
     ativa = nova && nova.tipo !== 'mapa' ? nova : null;
     var para = Cena.atual().id;
-    if (de !== para) U.emit('cena', { de: de, para: para });
+    if (de !== para) U.emit(EV.CENA, { de: de, para: para });
   }
 
   /* ---------- lugar sem interior: o painel de sempre ---------- */
   var esperandoFechar = null;
-  U.on('telas', function (n) {
+  U.on(EV.TELAS, function (n) {
     if (n === 0 && esperandoFechar) { var f = esperandoFechar; esperandoFechar = null; f(); }
   });
   function painelAntigo(lugar) {

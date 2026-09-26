@@ -14,7 +14,7 @@
   // a mescla com outro aparelho troca o objeto inteiro: sempre ler de novo
   function est() { return Reino.Progresso.estado(); }
   function agora() { return Date.now(); }
-  function emitir() { if (Reino.util && Reino.util.emit) Reino.util.emit('cuidados', C.depurar()); }
+  function emitir() { if (Reino.util && Reino.util.emit) Reino.util.emit(Reino.EVENTOS.CUIDADOS, C.depurar()); }
 
   /* ---------- o que se fala ---------- */
   // frases de 3+ palavras, sem nome digitado (é "Seu unicórnio"), emoji só com ícone em pixel
@@ -257,9 +257,9 @@
     var op = { capture: true, passive: true };
     ['pointerdown', 'touchstart', 'keydown'].forEach(function (ev) { window.addEventListener(ev, tocou, op); });
     // qualquer gravação (de qualquer lugar do jogo) já leva a fome e a sede junto
-    Reino.util.on('progresso', function () { pendente = 0; ultimaGravacao = agora(); });
-    Reino.util.on('telas', function (n) { if (n > 0) fecharLembrete(); });
-    Reino.util.on('cena', function (m) { if (m && m.para === 'petshop') fecharLembrete(); });
+    Reino.util.on(Reino.EVENTOS.PROGRESSO, function () { pendente = 0; ultimaGravacao = agora(); });
+    Reino.util.on(Reino.EVENTOS.TELAS, function (n) { if (n > 0) fecharLembrete(); });
+    Reino.util.on(Reino.EVENTOS.CENA, function (m) { if (m && m.para === 'petshop') fecharLembrete(); });
     // a aba vai para o fundo: guarda o que ainda não foi gravado
     document.addEventListener('visibilitychange', function () {
       if (document.hidden && pendente > 0) gravar();

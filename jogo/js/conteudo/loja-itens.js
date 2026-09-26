@@ -1,5 +1,5 @@
 /* Lista da Loja das Fadas (dados, sem DOM): a ÚNICA lista de enfeites à venda e dos prêmios da Escola.
-   Usada por ui.js (UI.ITENS_LOJA é apelido de ENFEITES), pela Loja por dentro (interiores/loja/loja.js)
+   Usada por ui/loja.js (UI.ITENS_LOJA é apelido de ENFEITES), pela Loja por dentro (interiores/loja/loja.js)
    e pelas ferramentas (ferramentas/previas/acessorios.html).
    Nada de DOM, canvas, PA nem Reino.Progresso no carregamento: listar-falas.js e validar-interiores.js
    carregam este arquivo num vm sem DOM. PA, Reino.provas e Reino.config só dentro das funções. */
@@ -9,7 +9,7 @@
 
   // encaixes dos enfeites (um enfeite por encaixe). capa, rastro e asas são especiais (usando.capa,
   // usando.estrelinhas, usando.asasFada); os outros vão em usando.enfeites e têm âncora nos moldes
-  // do unicórnio (js/arte/pixelart.js, UNI.adulto e UNI.filhote, em todas as vistas).
+  // do unicórnio (js/arte/pixelart-unicornio-moldes.js, UNI.adulto e UNI.filhote, em todas as vistas).
   L.SLOTS = {
     orelha: { nome: 'Orelha' },
     olho: { nome: 'Olhos' },
@@ -22,7 +22,7 @@
     asas: { nome: 'Asas' },
   };
 
-  // tudo o que se compra com estrelas. icone: emoji com desenho em js/arte/icones.js ou chave 'enfeite:<id>'
+  // tudo o que se compra com estrelas. icone: emoji com desenho em js/arte/icones/ ou chave 'enfeite:<id>'
   L.ENFEITES = [
     { id: 'flor', nome: 'Flor na orelha', preco: 8, slot: 'orelha', icone: '🌸' },
     { id: 'fitinha-cauda', nome: 'Fitinha na cauda', preco: 10, slot: 'cauda', icone: 'enfeite:fitinha-cauda' },

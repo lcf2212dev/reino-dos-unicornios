@@ -19,7 +19,7 @@
   function centMateria(P, id) { var m = materia(id); return m && P && P.dinheiroMateria ? Math.round(P.dinheiroMateria(m) * 100) : 0; }
   function centTotal(P) { return P && P.dinheiroTotal ? Math.round(P.dinheiroTotal() * 100) : 0; }
   function valorMax() { return ((R.config && R.config.valorPorMateria) || 20) * 100; }
-  // ícone da matéria em pixel (desenho de js/arte/icones.js ou o emoji reduzido a pixels)
+  // ícone da matéria em pixel (desenho de js/arte/icones/ ou o emoji reduzido a pixels)
   function iconeMateria(m) {
     if (!m || !window.PA || typeof document === 'undefined') return null;
     try { var c = PA.iconeEmoji(m.emoji, 1); return c; } catch (e) { return null; }

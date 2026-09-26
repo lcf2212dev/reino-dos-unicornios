@@ -1,6 +1,7 @@
 /* Chocar ovos: os 3 toques no ovo, o nascimento e o cartão que encolhe para caber. */
 (function () {
   var U = Reino.util, el = U.el, P = Reino.Progresso;
+  var EV = Reino.EVENTOS;
   var UI = Reino.UI, R = Reino._ui;
   var est = R.est, topo = R.topo, mostrarFoco = R.mostrarFoco;
 
@@ -59,7 +60,7 @@
         } else {
           var montar = el('button.btn-grande.btn-principal', { type: 'button' }, 'Passear com ele 🐾');
           var guardar = el('button.btn-grande.btn-secundario', { type: 'button' }, 'Guardar no estábulo');
-          montar.addEventListener('click', function () { est().montaria = id; P.salvar(); UI.fecharTela(t); U.emit('mapaMudou'); resolver(); });
+          montar.addEventListener('click', function () { est().montaria = id; P.salvar(); UI.fecharTela(t); U.emit(EV.MAPA_MUDOU); resolver(); });
           guardar.addEventListener('click', function () { UI.fecharTela(t); resolver(); });
           botoes.appendChild(guardar); botoes.appendChild(montar);
         }

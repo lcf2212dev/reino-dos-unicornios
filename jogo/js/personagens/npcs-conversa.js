@@ -27,7 +27,7 @@
     });
   }
   function fimDaAtividade(resolver) {
-    return function (premios) { U().emit('mapaMudou'); resolver(premios || null); };
+    return function (premios) { U().emit(Reino.EVENTOS.MAPA_MUDOU); resolver(premios || null); };
   }
 
   // texto já gravado inteiro (frase do unicórnio): as páginas aparecem na tela uma de cada vez,
@@ -118,7 +118,7 @@
       return new Promise(function (res) { Reino.Provas.iniciar(pv, fimDaAtividade(res)); });
     }
     if (acao.tipo === 'tela') {
-      var fim = function (r) { U().emit('mapaMudou'); return r || null; };
+      var fim = function (r) { U().emit(Reino.EVENTOS.MAPA_MUDOU); return r || null; };
       switch (acao.tela) {
         case 'ovos': return UI.chocarOvos(p.ovosParaChocar()).then(fim);
         case 'livro': var ml = Reino.materia(acao.materia); return ml ? esperarTela(function () { UI.abrirLivro(ml); }).then(fim) : Promise.resolve(null);

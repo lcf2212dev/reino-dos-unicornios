@@ -19,7 +19,7 @@ if (materiaFora) {
   if (alvos.length !== 1) { console.log('✘ --materia: ' + (alvos.length ? 'mais de um' : 'nenhum') + ' arquivo de js/conteudo/materias/ com esse nome (livro.js: ponha na pasta da matéria)'); process.exit(1); }
   trocar[Jogo.nome(alvos[0])] = materiaFora;
 }
-Jogo.carregar(ctx, Jogo.scripts({ nomes: ['nucleo/config', 'nucleo/registros', 'nucleo/util'], grupos: ['materias', 'provas'] }), { trocar });
+Jogo.carregar(ctx, Jogo.scripts({ nomes: ['nucleo/config', 'nucleo/registros', 'nucleo/util', 'nucleo/eventos'], grupos: ['materias', 'provas'] }), { trocar });
 
 const Reino = ctx.Reino;
 const erros = [];

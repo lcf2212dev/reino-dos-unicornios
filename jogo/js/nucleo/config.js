@@ -59,7 +59,7 @@ Reino.config = {
     // trechos «em inglês»: inglês britânico (como a apostila), claro e um pouco devagar
     ingles: { voz: 'en-GB-SoniaNeural', velocidade: '-15%', tom: '+0Hz' },
 
-    /* Personagens das construções (js/personagens/npcs.js): um perfil por personagem, 'npc-<id>'.
+    /* Personagens das construções (elenco em js/personagens/elenco.js): um perfil por personagem, 'npc-<id>'.
        Cada um com voz/velocidade/tom diferentes para ser reconhecido de ouvido.
        `ingles`: perfil dos trechos «em inglês» dessa personagem (padrão: 'ingles'). */
     // Museu das Memórias (História)
@@ -111,7 +111,7 @@ Reino.config = {
     'npc-carlos': { voz: 'en-US-AndrewMultilingualNeural', velocidade: '-8%', tom: '-12Hz' },     // senhor do carrossel, tranquilo
     'npc-clara': { voz: 'pt-BR-ThalitaMultilingualNeural', velocidade: '+4%', tom: '-10Hz' },     // cavaleira do treino (Castelo: diferente de Serena, Aurora e Oliver)
     'npc-lucia': { voz: 'pt-BR-FranciscaNeural', velocidade: '+4%', tom: '-14Hz' },              // professora (Escola: diferente de Margarida, Helena e Emma)
-    // interior de teste da Fase 1 (js/interiores/teste.js)
+    // interior de teste da Fase 1 (js/interiores/teste.js, já removido)
     'npc-teste-guia': { voz: 'de-DE-FlorianMultilingualNeural', velocidade: '+4%', tom: '+8Hz' },
     'npc-teste-sala': { voz: 'de-DE-SeraphinaMultilingualNeural', velocidade: '-4%', tom: '+12Hz' },
     // interior padrão (js/interiores/padrao.js): guia e monitores de matérias sem interior próprio (1 e 4 masculinos)

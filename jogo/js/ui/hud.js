@@ -2,6 +2,7 @@
    das fotos (Reino.Fotos). */
 (function () {
   var U = Reino.util, el = U.el, P = Reino.Progresso;
+  var EV = Reino.EVENTOS;
   var UI = Reino.UI, R = Reino._ui;
   var est = R.est, iconePequeno = R.iconePequeno, barrasCuidado = R.barrasCuidado, rotularMontaria = R.rotularMontaria;
   var cuidadosProntos = R.cuidadosProntos, uniChocado = R.uniChocado;
@@ -51,7 +52,7 @@
     b.setAttribute('aria-disabled', String(!pode));
   }
   UI.pintarBotaoFoto = pintarBotaoFoto;
-  ['cena', 'telas', 'ocupada', 'transicao'].forEach(function (ev) { U.on(ev, function () { pintarBotaoFoto(); }); });
+  [EV.CENA, EV.TELAS, EV.OCUPADA, EV.TRANSICAO].forEach(function (ev) { U.on(ev, function () { pintarBotaoFoto(); }); });
   // balão de diálogo não tem evento: confere de vez em quando (só mexe no DOM quando muda)
   setInterval(pintarBotaoFoto, 500);
   function botaoFoto() {
@@ -75,7 +76,7 @@
       }, ms);
     });
     ['pointerup', 'pointercancel', 'pointerleave'].forEach(function (ev) { b.addEventListener(ev, soltar); });
-    // Enter/Espaço no botão são dele: não chegam ao main.js (que agiria no que estiver perto dela)
+    // Enter/Espaço no botão são dele: não chegam ao motor/entrada.js (que agiria no que estiver perto dela)
     b.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') e.stopPropagation(); });
     // toque longo no celular abriria o menu do navegador
     b.addEventListener('contextmenu', function (e) { e.preventDefault(); });

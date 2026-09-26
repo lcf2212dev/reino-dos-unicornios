@@ -1,5 +1,8 @@
 /* Elenco dos NPCs: nome, voz e parâmetros do sprite de cada personagem (só dados, sem DOM).
-   Os prédios reaproveitam daqui o sprite e a voz. O gerador de sprites está em npcs*.js. */
+   Os prédios reaproveitam daqui o sprite e a voz. O gerador de sprites está em npcs*.js.
+   Papéis opcionais, lidos pelos prédios com N.doElenco:
+     paraMateria: id da matéria cujo treino o cavaleiro dá no Castelo (castelo/castelo.js)
+     paraProva:   id da prova bimestral que a professora aplica na Escola (escola/escola.js) */
 (function () {
   var N = window.Reino.NPCs;
 
@@ -23,12 +26,12 @@
     joy: { nome: '«Mister Joy»', voz: 'npc-joy', sprite: { pele: '#d9a07a', cabelo: '#5a3825', penteado: 'cacheado', chapeu: 'cartola', chapeuCor: '#ff4f9a', cor2: '#ffd34d', roupa: '#ffd34d', roupa2: '#6b3fc4', gravata: '#ff4f9a', violao: true } },
     // Castelo da Medalha
     serena: { nome: 'Princesa Serena', voz: 'npc-serena', sprite: { pele: '#ffe0c7', cabelo: '#f2c14e', penteado: 'longo', chapeu: 'coroa', roupa: '#ffb3d9', roupa2: '#ff8ac4', perna: 'vestido', colar: true, cor2: '#b58cff' } },
-    aurora: { nome: 'Cavaleira Aurora', voz: 'npc-aurora', sprite: { pele: '#d9a07a', cabelo: '#a0673a', penteado: 'rabo', chapeu: 'elmo', cor2: '#ff6b8a', armadura: true, roupa: '#ff7eb6' } },
-    oliver: { nome: '«Sir Oliver»', voz: 'npc-oliver', sprite: { pele: '#f1c7a5', cabelo: '#c2532b', penteado: 'curto', bigode: true, chapeu: 'elmo', cor2: '#5fb4ff', armadura: true, roupa: '#2f6fd6', capa: true, capaCor: '#c9365a' } },
+    aurora: { nome: 'Cavaleira Aurora', voz: 'npc-aurora', paraMateria: 'historia', sprite: { pele: '#d9a07a', cabelo: '#a0673a', penteado: 'rabo', chapeu: 'elmo', cor2: '#ff6b8a', armadura: true, roupa: '#ff7eb6' } },
+    oliver: { nome: '«Sir Oliver»', voz: 'npc-oliver', paraMateria: 'ingles', sprite: { pele: '#f1c7a5', cabelo: '#c2532b', penteado: 'curto', bigode: true, chapeu: 'elmo', cor2: '#5fb4ff', armadura: true, roupa: '#2f6fd6', capa: true, capaCor: '#c9365a' } },
     // Escola do Reino
     margarida: { nome: 'Diretora Margarida', voz: 'npc-margarida', sprite: { pele: '#d9a07a', cabelo: '#6b5a66', penteado: 'coque', oculos: true, flor: true, roupa: '#39a860', roupa2: '#2d6b4a', perna: 'saia', cor2: '#ffd34d', colar: true } },
-    helena: { nome: 'Professora Helena', voz: 'npc-helena', sprite: { pele: '#f1c7a5', cabelo: '#5a3825', penteado: 'chanel', roupa: '#ff9d2e', roupa2: '#6b4a9a', perna: 'saia', livro: '#5fb4ff', cor2: '#5fb4ff', oculos: true, oculosCor: '#c9365a' } },
-    emma: { nome: '«Teacher Emma»', voz: 'npc-emma', sprite: { pele: '#ffe0c7', cabelo: '#a0673a', penteado: 'longo', chapeu: 'boina', chapeuCor: '#d63d63', cachecol: true, cachecolCor: '#2f4f8a', roupa: '#8fd0ff', roupa2: '#2f4f8a', perna: 'saia', livro: '#d63d63' } },
+    helena: { nome: 'Professora Helena', voz: 'npc-helena', paraProva: 'historia-3bim', sprite: { pele: '#f1c7a5', cabelo: '#5a3825', penteado: 'chanel', roupa: '#ff9d2e', roupa2: '#6b4a9a', perna: 'saia', livro: '#5fb4ff', cor2: '#5fb4ff', oculos: true, oculosCor: '#c9365a' } },
+    emma: { nome: '«Teacher Emma»', voz: 'npc-emma', paraProva: 'ingles-3bim', sprite: { pele: '#ffe0c7', cabelo: '#a0673a', penteado: 'longo', chapeu: 'boina', chapeuCor: '#d63d63', cachecol: true, cachecolCor: '#2f4f8a', roupa: '#8fd0ff', roupa2: '#2f4f8a', perna: 'saia', livro: '#d63d63' } },
     // Estábulo, Loja e Baú
     feno: { nome: 'Seu Feno', voz: 'npc-feno', sprite: { pele: '#e0ac86', cabelo: '#a0673a', penteado: 'curto', barba: true, chapeu: 'palha', roupa: '#e0433f', estampa: 'xadrez', roupa2: '#4a6fb0', jardineira: true, cor2: '#ffd34d' } },
     petala: { nome: 'Fada Pétala', voz: 'npc-petala', sprite: { base: 'fada', pele: '#ffe0c7', cabelo: '#ff9cc6', penteado: 'rabos', chapeu: 'flores', roupa: '#b58cff', roupa2: '#ff9cc6', varinha: true, cor2: '#ffe066' } },
@@ -47,7 +50,19 @@
     brisa: { nome: 'Capitã Brisa', voz: 'npc-brisa', sprite: { pele: '#d9a07a', cabelo: '#5a3825', penteado: 'trancas', chapeu: 'quepe', chapeuCor: '#f4f2fa', roupa: '#2f6fd6', roupa2: '#2a2f66', cachecol: true, cachecolCor: '#e0433f', cor2: '#ffd34d' } },
     carlos: { nome: 'Seu Carlos do Carrossel', voz: 'npc-carlos', sprite: { idade: 'idoso', pele: '#e0ac86', cabelo: '#d8d4e0', penteado: 'careca', bigode: true, chapeu: 'boina', chapeuCor: '#c9365a', roupa: '#fff1d0', colete: '#c9365a', roupa2: '#3a3a5a', gravata: '#ffd34d' } },
     // Castelo (treino de Português) e Escola (prova de Português)
-    clara: { nome: 'Cavaleira Clara', voz: 'npc-clara', sprite: { pele: '#a86b4a', cabelo: '#2b1b17', penteado: 'black', chapeu: 'elmo', cor2: '#39a860', armadura: true, roupa: '#39a860', emblema: 'A', capa: true, capaCor: '#ffd34d' } },
-    lucia: { nome: 'Professora Lúcia', voz: 'npc-lucia', sprite: { pele: '#ffe0c7', cabelo: '#2b1b17', penteado: 'longo', oculos: true, roupa: '#e0433f', roupa2: '#3a3a5a', perna: 'saia', livro: '#ffd34d', cor2: '#ffd34d', colar: '#39c5bb' } },
+    clara: { nome: 'Cavaleira Clara', voz: 'npc-clara', paraMateria: 'portugues', sprite: { pele: '#a86b4a', cabelo: '#2b1b17', penteado: 'black', chapeu: 'elmo', cor2: '#39a860', armadura: true, roupa: '#39a860', emblema: 'A', capa: true, capaCor: '#ffd34d' } },
+    lucia: { nome: 'Professora Lúcia', voz: 'npc-lucia', paraProva: 'portugues-3bim', sprite: { pele: '#ffe0c7', cabelo: '#2b1b17', penteado: 'longo', oculos: true, roupa: '#e0433f', roupa2: '#3a3a5a', perna: 'saia', livro: '#ffd34d', cor2: '#ffd34d', colar: '#39c5bb' } },
+  };
+
+  // id do primeiro personagem do elenco (na ordem acima) cujos campos batem com o filtro, ou null
+  // (campo ausente no personagem não bate, nem com filtro undefined).
+  // Ex.: N.doElenco({ paraMateria: 'historia' }) → 'aurora'; N.doElenco({ paraProva: 'ingles-3bim' }) → 'emma'
+  N.doElenco = function (filtro) {
+    var ids = Object.keys(N.ELENCO);
+    for (var i = 0; i < ids.length; i++) {
+      var e = N.ELENCO[ids[i]];
+      if (Object.keys(filtro).every(function (k) { return e[k] !== undefined && e[k] === filtro[k]; })) return ids[i];
+    }
+    return null;
   };
 })();

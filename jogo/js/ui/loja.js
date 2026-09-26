@@ -1,6 +1,7 @@
 /* Loja das Fadas: enfeites à venda (Reino.LojaItens), prêmios da Escola e usar/tirar enfeite. */
 (function () {
   var U = Reino.util, el = U.el, P = Reino.Progresso;
+  var EV = Reino.EVENTOS;
   var UI = Reino.UI, R = Reino._ui;
   var est = R.est, painel = R.painel, focar = R.focar, hifenizar = R.hifenizar, aparencia = R.aparencia;
   var logoDepoisDaCompra = R.logoDepoisDaCompra, compra = R.compra, balaoNaTela = R.balaoNaTela;
@@ -36,7 +37,7 @@
   UI.alternarEnfeite = function (id) { var it = itemPorId(id); if (it) alternar(it); };
   UI.usandoEnfeite = function (id) { var it = itemPorId(id); return !!it && usando(it); };
 
-  // ícone do item: desenho de js/arte/icones.js pela chave ('enfeite:…', 'acessorio:…') ou o emoji (vira pixel sozinho)
+  // ícone do item: desenho de js/arte/icones/ pela chave ('enfeite:…', 'acessorio:…') ou o emoji (vira pixel sozinho)
   function iconeItem(item) {
     var chave = item.icone || '';
     if (chave.indexOf(':') > 0) {
@@ -63,7 +64,7 @@
       if (!usando(item)) alternar(item);
       P.salvar();
       Reino.Som.tocar('estrela'); UI.confete(40);
-      depois(); U.emit('mapaMudou');
+      depois(); U.emit(EV.MAPA_MUDOU);
     });
   }
   var avisouPremios = false;   // a regra nova dos prêmios é falada uma vez por sessão
@@ -97,7 +98,7 @@
           el('span.item-preco', tem ? (usando(item) ? '✓ Usando' : 'Usar') : '⭐ ' + item.preco));
         b.addEventListener('click', function (e) {
           if (logoDepoisDaCompra(e, item.id)) return;
-          if (tem) { alternar(item); Reino.Som.tocar('selecionar'); P.salvar(); pintar(); U.emit('mapaMudou'); return; }
+          if (tem) { alternar(item); Reino.Som.tocar('selecionar'); P.salvar(); pintar(); U.emit(EV.MAPA_MUDOU); return; }
           comprar(item, pintar);
         });
         grade.appendChild(b);
@@ -131,7 +132,7 @@
             el('span.item-icone', desenho), el('b', hifenizar(p.nome)), st === 'bloqueado' ? null : rotulo, el('span.item-preco', preco));
           b.addEventListener('click', function (e) {
             if (logoDepoisDaCompra(e, item.id)) return;
-            if (tem) { alternar(item); Reino.Som.tocar('selecionar'); P.salvar(); pintar(); U.emit('mapaMudou'); return; }
+            if (tem) { alternar(item); Reino.Som.tocar('selecionar'); P.salvar(); pintar(); U.emit(EV.MAPA_MUDOU); return; }
             if (st === 'aVenda') return comprar(item, pintar);
             Reino.Som.tocar('toque');
             Reino.Claude.falar(Reino.Falas.provas.lojaPremio);

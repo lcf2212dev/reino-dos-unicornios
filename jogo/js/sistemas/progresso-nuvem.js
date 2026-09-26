@@ -2,6 +2,7 @@
    (capacidade db, doc progresso/mariana). Ver o cabeçalho de progresso.js. */
 (function () {
   var U = Reino.util, I = Reino._progresso, P = I.P, nuvem = I.nuvem;
+  var EV = Reino.EVENTOS;
   var agora = I.agora, objeto = I.objeto, completar = I.completar, comCopia = I.comCopia, conteudo = I.conteudo;
   var trouxeAlgo = I.trouxeAlgo, gravarLocal = I.gravarLocal, vigiarSurpresa = I.vigiarSurpresa;
 
@@ -23,9 +24,9 @@
     nuvem.gravando = true;
     var falhou = false;
     comLimite(nuvem.ref.set({ estado: U.copia(I.estado), atualizado: I.estado.atualizado }), limiteRede())
-      .then(function () { nuvem.status = 'sincronizado'; U.emit('nuvem', nuvem.status); })
+      .then(function () { nuvem.status = 'sincronizado'; U.emit(EV.NUVEM, nuvem.status); })
       .catch(function (e) {
-        nuvem.status = 'erro'; U.emit('nuvem', nuvem.status);
+        nuvem.status = 'erro'; U.emit(EV.NUVEM, nuvem.status);
         if (e && (e.code === 'revoked' || e.code === 'not_granted' || e.code === 'invalid_argument')) nuvem.ok = false;
         else falhou = true;
       })
@@ -109,11 +110,11 @@
           if (trouxeAlgo(I.estado, guardado)) I.estado.atualizado = agora();
           gravarLocal();
           vigiarSurpresa();
-          U.emit('progresso', I.estado);
-          U.emit('progressoRemoto', I.estado);
+          U.emit(EV.PROGRESSO, I.estado);
+          U.emit(EV.PROGRESSO_REMOTO, I.estado);
         }
         if (I.estado.comecou) enviarNuvem();
-        U.emit('nuvem', nuvem.status);
+        U.emit(EV.NUVEM, nuvem.status);
         nuvem.ref.onSnapshot(function (s) {
           if (!s.exists || s.metadata.hasPendingWrites) return;
           var remoto = s.data() && s.data().estado;
@@ -125,9 +126,9 @@
           if (P.conferirPersistencia().length || trouxeAlgo(I.estado, remoto)) { I.estado.atualizado = agora(); agendarNuvem(); }
           gravarLocal();
           vigiarSurpresa();
-          U.emit('progresso', I.estado);
-          U.emit('progressoRemoto', I.estado);
-        }, function () { nuvem.status = 'local'; U.emit('nuvem', nuvem.status); });
+          U.emit(EV.PROGRESSO, I.estado);
+          U.emit(EV.PROGRESSO_REMOTO, I.estado);
+        }, function () { nuvem.status = 'local'; U.emit(EV.NUVEM, nuvem.status); });
       });
     });
     return comLimite(pronto, 12000).catch(function (e) {

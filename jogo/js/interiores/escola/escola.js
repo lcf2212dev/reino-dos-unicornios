@@ -26,8 +26,10 @@
   }
 
   /* ================= GERADOR DAS SALAS DE AULA ================= */
-  // professor conhecido de cada prova (ids fixos do elenco)
-  var PROFESSORES = { 'historia-3bim': 'helena', 'ingles-3bim': 'emma', 'portugues-3bim': 'lucia' };
+  // professora de cada prova: o personagem do elenco com `paraProva` (personagens/elenco.js)
+  function professorDoElenco(provaId) {
+    return R.NPCs && R.NPCs.doElenco ? R.NPCs.doElenco({ paraProva: provaId }) : null;
+  }
   // tema de cada matéria: piso, paleta e os enfeites próprios (coordenadas locais da sala 11×11)
   var TEMAS = {
     historia: {
@@ -86,7 +88,7 @@
   }
   // professor da prova: do elenco, se houver; senão um professor padrão
   function professor(prova, x, y) {
-    var acao = { tipo: 'prova', prova: prova.id }, id = PROFESSORES[prova.id];
+    var acao = { tipo: 'prova', prova: prova.id }, id = professorDoElenco(prova.id);
     if (id) return npcDoElenco(id, x, y, acao);
     return { id: 'prof-' + prova.id, nome: 'Professora do Reino', voz: 'npc-padrao-3', x: x, y: y, acao: acao, falas: FALAS_PADRAO,
       sprite: { base: 'pessoa', pele: '#e8b48a', cabelo: '#3a2a20', penteado: 'coque', oculos: true, roupa: '#9b6bd6', roupa2: '#5a3d8a', perna: 'saia', livro: '#ffd34d' } };

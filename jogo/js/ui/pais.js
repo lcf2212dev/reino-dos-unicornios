@@ -1,6 +1,7 @@
 /* Área dos pais: PIN, pagamentos por matéria, novo ciclo e apagar tudo. */
 (function () {
   var U = Reino.util, el = U.el, P = Reino.Progresso;
+  var EV = Reino.EVENTOS;
   var UI = Reino.UI, R = Reino._ui;
   var est = R.est, painel = R.painel;
 
@@ -76,7 +77,7 @@
     var ciclo = el('button.btn-grande.btn-secundario', { type: 'button' }, '🔄 Começar novo ciclo de provas');
     ciclo.addEventListener('click', function () {
       UI.confirmar('Zerar salas, treinos, dinheiro e pagamentos para um novo ciclo de provas? Os unicórnios, as estrelas e os enfeites continuam.', 'Sim, zerar', 'Cancelar').then(function (sim) {
-        if (!sim) return; P.novoCiclo(); UI.fecharTela(pn.tela); abrirPais(true); U.emit('mapaMudou');
+        if (!sim) return; P.novoCiclo(); UI.fecharTela(pn.tela); abrirPais(true); U.emit(EV.MAPA_MUDOU);
       });
     });
     var apagar = el('button.btn-grande.btn-perigo', { type: 'button' }, '🗑️ Apagar tudo');

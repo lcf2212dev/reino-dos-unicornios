@@ -3,6 +3,7 @@
    Usa Reino._motor (ver motor/camera.js); registra V.desenhar e V.laco. */
 (function () {
   var U = Reino.util, J = Jogador, Cena = Reino.Cena;
+  var EV = Reino.EVENTOS;
   var V = Reino._motor, cam = V.cam, pintor = V.pintor, est = V.est, atualizarCamera = V.atualizarCamera;
 
   function desenharLuz() {
@@ -74,7 +75,7 @@
     desenhar(t);
   }
 
-  U.on('telas', function (n) {
+  U.on(EV.TELAS, function (n) {
     // abriu uma tela (menu, HUD) com o balão modal de um NPC aberto: o balão fecha
     if (n > 0) Cena.fecharDialogoModal();
     V.pausado = n > 0;
@@ -82,7 +83,7 @@
   });
 
   // menu Lugares: anda até a porta (de dentro de um prédio, sai primeiro)
-  U.on('irPara', function (lugar) { Cena.irAoLugar(lugar); });
+  U.on(EV.IR_PARA, function (lugar) { Cena.irAoLugar(lugar); });
 
   V.desenhar = desenhar; V.laco = laco;
 })();

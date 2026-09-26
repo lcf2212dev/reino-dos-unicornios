@@ -27,8 +27,17 @@
   }
 
   /* ================= ALAS: TEMAS E CAVALEIROS ================= */
-  // cavaleiros conhecidos por matéria; as outras ganham o cavaleiro padrão
-  var CAVALEIROS = { historia: 'aurora', ingles: 'oliver', portugues: 'clara' };
+  // cavaleiro de cada matéria: o personagem do elenco com `paraMateria` (personagens/elenco.js);
+  // as outras matérias ganham o cavaleiro padrão
+  function cavaleiroDoElenco(materiaId) {
+    return R.NPCs && R.NPCs.doElenco ? R.NPCs.doElenco({ paraMateria: materiaId }) : null;
+  }
+  // { historia: 'aurora', ingles: 'oliver', portugues: 'clara' }: gancho de teste (I.castelo), tirado do elenco
+  var CAVALEIROS = {};
+  Object.keys(ELENCO).forEach(function (id) {
+    var m = ELENCO[id].paraMateria;
+    if (m && !(m in CAVALEIROS)) CAVALEIROS[m] = id;
+  });
   // tema de cada ala: enfeite largo (2) e estreito (1) da parede, 4 peças de chão (A..D), piso e paleta
   var TEMAS = {
     historia: {
@@ -72,7 +81,7 @@
   }
   // cavaleiro da matéria: do elenco, ou o padrão (armadura genérica, voz da narradora)
   function cavaleiro(m, x, y, cor) {
-    var acao = { tipo: 'treino', materia: m.id }, id = CAVALEIROS[m.id];
+    var acao = { tipo: 'treino', materia: m.id }, id = cavaleiroDoElenco(m.id);
     if (id) return npc(id, x, y, acao);
     return { id: 'cav-' + m.id, nome: 'Cavaleiro do Reino', voz: 'npc-padrao-1', x: x, y: y, acao: acao, falas: F.cavaleiro || {},
       sprite: { base: 'pessoa', pele: '#e0ac86', cabelo: '#5a3825', penteado: 'curto', chapeu: 'elmo', armadura: true, roupa: cor, cor2: C.ouro } };

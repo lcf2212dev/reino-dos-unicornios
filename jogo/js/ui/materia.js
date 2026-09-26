@@ -2,6 +2,7 @@
    Prova e o Castelo da Medalha (treino). */
 (function () {
   var U = Reino.util, el = U.el, P = Reino.Progresso;
+  var EV = Reino.EVENTOS;
   var UI = Reino.UI, R = Reino._ui;
   var est = R.est, painel = R.painel, hifenizar = R.hifenizar;
 
@@ -41,7 +42,7 @@
           UI.fecharTela(pn.tela);
           UI.telaMateria(materia);
           if (premios) Reino.Claude.depoisDaMissao();
-          U.emit('mapaMudou');
+          U.emit(EV.MAPA_MUDOU);
         });
       });
       lista.appendChild(b);
@@ -132,7 +133,7 @@
           return;
         }
         Reino.Som.tocar('porta');
-        Reino.Prova.iniciar(m, function () { UI.fecharTela(pn.tela); UI.telaCastelo(); U.emit('mapaMudou'); });
+        Reino.Prova.iniciar(m, function () { UI.fecharTela(pn.tela); UI.telaCastelo(); U.emit(EV.MAPA_MUDOU); });
       });
       lista.appendChild(b);
     });

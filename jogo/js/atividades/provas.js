@@ -3,6 +3,7 @@
    e só depois mostra a nota. Acertou tudo na 1ª tentativa: lendário; na 2ª: raro; depois: comum. */
 (function () {
   var U = Reino.util, el = U.el, D = Reino.Desafios, P = Reino.Progresso;
+  var EV = Reino.EVENTOS;
   var Pv = {};
   var RARIDADES = ['lendario', 'raro', 'comum'];
   var QUANDO = { lendario: '1ª tentativa', raro: '2ª tentativa', comum: '3ª em diante' };
@@ -82,7 +83,7 @@
         el('span.sala-ir', reg.premio ? 'Treinar →' : reg.tentativas ? 'De novo →' : 'Fazer →'));
       b.addEventListener('click', function () {
         Reino.Som.tocar('porta');
-        Pv.iniciar(prova, function () { Reino.UI.fecharTela(pn.tela); Pv.telaEscola(); U.emit('mapaMudou'); });
+        Pv.iniciar(prova, function () { Reino.UI.fecharTela(pn.tela); Pv.telaEscola(); U.emit(EV.MAPA_MUDOU); });
       });
       lista.appendChild(b);
     });
@@ -302,7 +303,7 @@
         var usar = el('button.btn-grande.btn-principal', { type: 'button' }, 'Colocar no meu unicórnio ✨');
         usar.addEventListener('click', function () {
           if (!Reino.UI.usandoEnfeite(a.id)) Reino.UI.alternarEnfeite(a.id);
-          P.salvar(); U.emit('mapaMudou');
+          P.salvar(); U.emit(EV.MAPA_MUDOU);
           Reino.Som.tocar('estrela');
           usar.disabled = true; U.preencher(usar, '✓ Já está usando!');
           // o botão desligado perdeu o foco (ia para o body): pelo teclado, segue no "Voltar à Escola"

@@ -40,7 +40,7 @@ test('conferidor das músicas: acusa uma faixa encurtada numa cópia (loop < 20 
 
 test('direto: cada faixa dura pelo menos 20 s, começa no tempo 0 e tem notas válidas', () => {
   const ctx = Jogo.contexto({ console, Math, Object, Array, JSON, String, Number, Error, parseFloat, setTimeout, clearTimeout });
-  Jogo.carregar(ctx, Jogo.scripts({ nomes: ['nucleo/config', 'nucleo/registros', 'nucleo/util', 'sistemas/musicas-faixas', 'sistemas/musicas'] }));
+  Jogo.carregar(ctx, Jogo.scripts({ nomes: ['nucleo/config', 'nucleo/registros', 'nucleo/util', 'nucleo/eventos', 'sistemas/musicas-faixas', 'sistemas/musicas'] }));
   const M = ctx.Reino.Musicas;
   const ids = Object.keys(M.faixas);
   assert.ok(ids.length >= 10, 'poucas faixas: ' + ids.length);

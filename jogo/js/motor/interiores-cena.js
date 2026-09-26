@@ -1,4 +1,4 @@
-/* Interiores: a cena de um interior (o que o main.js desenha e a Cena usa: grade, caminho, alvos,
+/* Interiores: a cena de um interior (o que o motor/laco.js desenha e a Cena usa: grade, caminho, alvos,
    desenho do fundo, dos móveis altos e dos NPCs, placas por cima), o NPC genérico e a API pública
    Reino.Interiores. Veio de motor/interiores.js. A interface da cena é a da seção 2 de
    CONTRATOS-INTERIORES.md. O estado de cada cena que as outras partes usam fica em E
@@ -62,7 +62,7 @@
       chaveFeita = chave; sujo = false;
     }
     function marcarSujo() { sujo = true; }
-    if (R.util && R.util.on) { R.util.on('progresso', marcarSujo); R.util.on('progressoRemoto', marcarSujo); R.util.on('mapaMudou', marcarSujo); }
+    if (R.util && R.util.on) { R.util.on(R.EVENTOS.PROGRESSO, marcarSujo); R.util.on(R.EVENTOS.PROGRESSO_REMOTO, marcarSujo); R.util.on(R.EVENTOS.MAPA_MUDOU, marcarSujo); }
 
     // contexto falso para as animações dos móveis altos: desenha com o pintor, em px da tela
     var ctxPintor = { fillStyle: '#000', fillRect: function (x, y, w, h) { E.pintorAtual.ret(x, y, w, h, this.fillStyle); } };

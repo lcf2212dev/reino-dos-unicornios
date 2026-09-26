@@ -10,7 +10,7 @@ const Jogo = require('../../jogo-no-node');
 
 function carregar() {
   const ctx = Jogo.contexto({ console, Math, Date, JSON });
-  const base = Jogo.scripts({ nomes: ['nucleo/config', 'nucleo/registros', 'nucleo/util'], grupos: ['materias', 'provas'] });
+  const base = Jogo.scripts({ nomes: ['nucleo/config', 'nucleo/registros', 'nucleo/util', 'nucleo/eventos'], grupos: ['materias', 'provas'] });
   const desafios = Jogo.manifesto.scripts.filter((s) => s.grupo === 'atividades' && /^js\/atividades\/desafios(\.js|\/)/.test(s.js));
   assert.ok(desafios.length >= 11, 'desafios.js e os tipos não estão no manifesto');
   Jogo.carregar(ctx, base.concat(desafios));

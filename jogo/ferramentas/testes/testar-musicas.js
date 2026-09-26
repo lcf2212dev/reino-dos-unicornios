@@ -23,7 +23,7 @@ const Jogo = require('../jogo-no-node');
 const ctx = Jogo.contexto({ console, Math, Object, Array, JSON, String, Number, Error, parseFloat, setTimeout, clearTimeout });
 // MUSICAS_ARQ=<caminho> confere outro arquivo de músicas (teste do próprio conferidor; relativo a jogo/)
 const trocar = process.env.MUSICAS_ARQ ? { 'sistemas/musicas': path.resolve(Jogo.raiz, process.env.MUSICAS_ARQ) } : {};
-Jogo.carregar(ctx, Jogo.scripts({ nomes: ['nucleo/config', 'nucleo/registros', 'nucleo/util', 'sistemas/musicas-faixas', 'sistemas/musicas'] }), { trocar });
+Jogo.carregar(ctx, Jogo.scripts({ nomes: ['nucleo/config', 'nucleo/registros', 'nucleo/util', 'nucleo/eventos', 'sistemas/musicas-faixas', 'sistemas/musicas'] }), { trocar });
 const R = ctx.Reino;
 const M = R.Musicas;
 

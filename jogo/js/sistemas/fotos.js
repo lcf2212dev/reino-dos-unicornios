@@ -170,7 +170,7 @@
     var x = c.getContext('2d');
     x.imageSmoothingEnabled = false;
     x.drawImage(cv, 0, 0);
-    // a mesma escala do jogo (main.js, redimensionar): px da tela por pixel do jogo
+    // a mesma escala do jogo (motor/camera.js, redimensionar): px da tela por pixel do jogo
     var T = (window.Mapa && window.Mapa.T) || 16;
     var escala = Math.max(2, Math.round(Math.min(cv.width, cv.height) / (T * 12.5)));
     return { canvas: c, escala: escala };

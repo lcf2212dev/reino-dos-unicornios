@@ -4,6 +4,7 @@
    Veio de motor/cena.js. Usa Reino._cena (ver cena.js); registra S.transicionar e Cena.desenharIris. */
 (function () {
   var U = Reino.util, Cena = Reino.Cena, S = Reino._cena, trocarCena = S.trocarCena;
+  var EV = Reino.EVENTOS;
   var COR_IRIS = '#3a2446';
   var TEMPO = { fechar: 450, fechada: 120, abrir: 450, limite: 4000 };
   var TEMPO_RAPIDO = { fechar: 50, fechada: 50, abrir: 50, limite: 4000 };
@@ -53,7 +54,7 @@
     try { Reino.Som.tocar('porta'); } catch (e) { console.error(e); }
     var t = { fase: 'fechando', inicio: performance.now(), tempos: tempos, circulo: tempos === TEMPO, destino: destino };
     S.trans = t;
-    U.emit('transicao', true);   // o botão das fotos (ui.js) se apaga durante a transição
+    U.emit(EV.TRANSICAO, true);   // o botão das fotos (ui/hud.js) se apaga durante a transição
     var pacote = destino.pacote && Reino.Voz && Reino.Voz.carregar ? destino.pacote : null;
     var limite = pacote && vindo[pacote] ? Math.min(LIMITE_VINDO, tempos.limite) : tempos.limite;
     t.promessa = new Promise(function (resolver) {
@@ -63,7 +64,7 @@
         concluida = true;
         S.trans = null;
         redesenhar();
-        U.emit('transicao', false);
+        U.emit(EV.TRANSICAO, false);
         resolver();
       }
       function abrir(resultado) {

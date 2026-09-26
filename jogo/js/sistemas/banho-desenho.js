@@ -1,6 +1,6 @@
 /* Banho (parte 2 de 2): o desenho do banho, sempre a partir do tempo decorrido `e` (ms) — sprites pequenos
    (bolha, patinho, escova, chuveirinho), a posição do unicórnio, a espuma, as bolhas, a escova, o chuveirinho,
-   as gotas da sacudida e os brilhos de limpinho; e B.itensDesenho / B.sobre, que o main.js chama a cada quadro.
+   as gotas da sacudida e os brilhos de limpinho; e B.itensDesenho / B.sobre, que o motor/laco.js chama a cada quadro.
    Nada roda no carregamento. Ver o cabeçalho de banho.js. */
 (function () {
   var R = window.Reino;
@@ -251,7 +251,7 @@
     });
   }
 
-  // itens do banho para ordenar por Y com a cena e o Jogador (main.js)
+  // itens do banho para ordenar por Y com a cena e o Jogador (motor/laco.js)
   B.itensDesenho = function (p, t, animar) {
     if (!B.desenhandoUni()) return [];
     var e = Math.min(I.st.dur, agora() - I.st.inicio), g = I.st.geo, pos = posicao(e);

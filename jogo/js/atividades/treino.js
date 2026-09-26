@@ -4,7 +4,7 @@
   var U = Reino.util, el = U.el, D = Reino.Desafios;
   var Pr = {};
   var CALMA_TROCA = 400;   // como em provas.js: o Enter/Espaço logo depois da troca não vale no botão novo
-  // os ícones de texto (📝, 🥚) só ganham o tamanho final no MutationObserver de pixelart.js (uma
+  // os ícones de texto (📝, 🥚) só ganham o tamanho final no MutationObserver de pixelart-icones.js (uma
   // microtarefa depois): o foco que rola a tela até um botão espera por eles, senão o rodapé cresce
   // uns pixels depois e o botão focado fica com a pontinha escondida
   function depoisDosIcones(fn) { Promise.resolve().then(fn); }

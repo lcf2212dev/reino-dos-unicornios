@@ -1,6 +1,7 @@
 /* Ajustes (interruptores) e UI.aplicarAjustes (letras grandes, sem animação). */
 (function () {
   var U = Reino.util, el = U.el, P = Reino.Progresso;
+  var EV = Reino.EVENTOS;
   var UI = Reino.UI, R = Reino._ui;
   var est = R.est, painel = R.painel, toqueIgnorado = R.toqueIgnorado;
 
@@ -33,14 +34,14 @@
     c.appendChild(interruptor('som', '🔔 Sons', 'Sons de acerto, moedas e ovos.'));
     c.appendChild(interruptor('musica', '🎵 Musiquinha', 'Música bem baixinha enquanto joga.', function (v) { Reino.Som.musica(v); }));
     c.appendChild(interruptor('voz', '🗣️ Voz', 'Ler perguntas e falas em voz alta.'));
-    c.appendChild(interruptor('animacoes', '✨ Animações', 'Confete, brilhos e água mexendo.', function () { U.emit('mapaMudou'); }));
-    c.appendChild(interruptor('setas', '🕹️ Setas na tela', 'Botões de seta para andar pelo reino.', function () { U.emit('setas'); }));
+    c.appendChild(interruptor('animacoes', '✨ Animações', 'Confete, brilhos e água mexendo.', function () { U.emit(EV.MAPA_MUDOU); }));
+    c.appendChild(interruptor('setas', '🕹️ Setas na tela', 'Botões de seta para andar pelo reino.', function () { U.emit(EV.SETAS); }));
     c.appendChild(interruptor('surpresa', '❓ Perguntas surpresa', 'De vez em quando, uma pergunta valendo ' + ((Reino.config.surpresa && Reino.config.surpresa.estrelas) || 2) + ' estrelas.'));
     var tam = el('button.interruptor', { type: 'button', role: 'switch', 'aria-checked': String(a.texto > 1) }, el('span.interruptor-texto', el('b', '🔠 Letras grandes'), el('small', 'Deixa os textos maiores.')), el('span.interruptor-bola'));
     tam.addEventListener('click', function () { var v = !ligado(tam); atuais().texto = v ? 1.15 : 1; tam.setAttribute('aria-checked', String(v)); UI.aplicarAjustes(); P.salvar(); });
     c.appendChild(tam);
     var pers = el('button.btn-grande.btn-secundario', { type: 'button' }, '👧 Mudar minha personagem');
-    pers.addEventListener('click', function () { UI.fecharTela(pn.tela); UI.telaAparencia().then(function () { U.emit('mapaMudou'); }); });
+    pers.addEventListener('click', function () { UI.fecharTela(pn.tela); UI.telaAparencia().then(function () { U.emit(EV.MAPA_MUDOU); }); });
     var pais = el('button.btn-grande.btn-secundario', { type: 'button' }, '🔒 Área dos pais');
     pais.addEventListener('click', function () { UI.fecharTela(pn.tela); UI.telaPais(); });
     c.appendChild(el('div.intro-botoes.coluna', pers, pais));

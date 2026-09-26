@@ -1,6 +1,7 @@
 /* Lugares: abrir a tela de um lugar do mapa, o menu Lugares do Reino e os avisos de cada lugar. */
 (function () {
   var U = Reino.util, el = U.el, P = Reino.Progresso;
+  var EV = Reino.EVENTOS;
   var UI = Reino.UI, R = Reino._ui;
   var painel = R.painel, focarMapa = R.focarMapa, hifenizar = R.hifenizar, iconePequeno = R.iconePequeno;
   var CUIDADO = R.CUIDADO, cuidadosProntos = R.cuidadosProntos, comBanho = R.comBanho, uniChocado = R.uniChocado;
@@ -78,10 +79,10 @@
       b.addEventListener('click', function (e) {
         UI.fecharTela(pn.tela);
         // o dedo que ainda bate no "Ir" cai no mapa e trocaria o destino: segura mais um pouco
-        // (só perto desse toque; main.js pergunta a UI.toqueSegurado)
+        // (só perto desse toque; motor/entrada.js pergunta a UI.toqueSegurado)
         if (e.isTrusted && e.detail) UI.segurarToques(1500);
         focarMapa();   // ela vai andando sozinha: o foco não volta ao botão do menu (Espaço reabria Lugares)
-        U.emit('irPara', l);
+        U.emit(EV.IR_PARA, l);
       });
       lista.appendChild(b);
     });

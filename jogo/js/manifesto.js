@@ -37,6 +37,8 @@
       { js: 'js/nucleo/config.js', grupo: 'nucleo', node: true },
       { js: 'js/nucleo/registros.js', grupo: 'nucleo', node: true },
       { js: 'js/nucleo/util.js', grupo: 'nucleo', node: true },
+      // eventos.js logo depois do util.js: os nomes dos eventos do barramento (Reino.EVENTOS)
+      { js: 'js/nucleo/eventos.js', grupo: 'nucleo', node: true },
       { js: 'js/arte/icones/icones.js', grupo: 'icones', node: true },
       { js: 'js/arte/icones/interface.js', grupo: 'icones', node: true },
       { js: 'js/arte/icones/premios.js', grupo: 'icones', node: true },

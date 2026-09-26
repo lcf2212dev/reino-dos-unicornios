@@ -6,6 +6,7 @@
    materia, bau, loja, estabulo, petshop, ovos, lugares, ajustes, aparencia, pais. */
 (function () {
   var U = Reino.util, el = U.el, P = Reino.Progresso;
+  var EV = Reino.EVENTOS;
   var UI = {};
   var pilha = [];
 
@@ -31,7 +32,7 @@
     pontoGuarda = ultimoPonto;
     guardaDesde = performance.now();
   };
-  // o toque em (x, y) está segurado agora? Também para o mapa (main.js, pointerdown do canvas):
+  // o toque em (x, y) está segurado agora? Também para o mapa (motor/entrada.js, pointerdown do canvas):
   // o 2º toque no "Ir" do Lugares caía no mapa e trocava o destino da caminhada
   UI.toqueSegurado = function (x, y) {
     var agora = performance.now();
@@ -168,7 +169,7 @@
     pilha.push(t);
     document.body.classList.add('com-tela');
     segurarSeFoiToque();
-    U.emit('telas', pilha.length);
+    U.emit(EV.TELAS, pilha.length);
     // o foco entra na tela nova (as que já focam algo, em até 30 ms, ficam como estão): senão ele
     // ficava no botão do menu atrás dela, e cada Enter abria a mesma tela de novo por cima
     setTimeout(function () {
@@ -193,7 +194,7 @@
     if (t.parentNode) t.parentNode.removeChild(t);
     if (!pilha.length) document.body.classList.remove('com-tela');
     segurarSeFoiToque();
-    U.emit('telas', pilha.length);
+    U.emit(EV.TELAS, pilha.length);
     UI.atualizarHUD();
     // o foco não cai no body: volta para o botão que abriu esta tela ou para o 1º da tela de baixo.
     // Fechada com toque ou mouse, de volta ao mapa, o foco não volta para o botão do HUD: senão o

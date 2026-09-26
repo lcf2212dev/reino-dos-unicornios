@@ -26,7 +26,7 @@
   function est() { return Reino.Progresso.estado(); }   // a mescla troca o objeto: sempre ler de novo
 
   /* ---------- o que o Claude fala (todas gravadas no pacote geral) ---------- */
-  // frases de 3+ palavras, curtas, emoji só com ícone em pixel (js/arte/icones.js)
+  // frases de 3+ palavras, curtas, emoji só com ícone em pixel (js/arte/icones/)
   var NUMERO = { 1: 'uma estrela', 2: 'duas estrelas', 3: 'três estrelas' };
   function valendo() { return NUMERO[cfg().estrelas] || cfg().estrelas + ' estrelas'; }
   S.frases = function () {
@@ -288,7 +288,7 @@
   function vigiarTelas() {
     if (vigiando || !Reino.util || !Reino.util.on) return;
     vigiando = true;
-    Reino.util.on('telas', function () {
+    Reino.util.on(Reino.EVENTOS.TELAS, function () {
       if (I.painelAberto && !I.painelAberto.pn.tela.parentNode) I.painelAberto.encerrar();
       if (telaDeEstudo()) estudando = true;
       else if (estudando) {

@@ -1,6 +1,7 @@
 /* Estábulo Mágico: coleção de unicórnios, cartas, detalhe (montar, renomear) e "Dar comida". */
 (function () {
   var U = Reino.util, el = U.el, P = Reino.Progresso;
+  var EV = Reino.EVENTOS;
   var UI = Reino.UI, R = Reino._ui;
   var est = R.est, painel = R.painel, focarMapa = R.focarMapa, iconePequeno = R.iconePequeno;
   var cuidadosProntos = R.cuidadosProntos, barrasCuidado = R.barrasCuidado, darComida = R.darComida;
@@ -96,7 +97,7 @@
       var montar = el('button.btn-grande.btn-principal', { type: 'button' }, pe.estagio === 0 ? 'Passear junto 🐾' : 'Montar 🐴');
       montar.addEventListener('click', function () {
         est().montaria = d.id; P.salvar(); Reino.Som.tocar('selecionar');
-        UI.fecharTela(pn.tela); if (aoMudar) aoMudar(); U.emit('mapaMudou');
+        UI.fecharTela(pn.tela); if (aoMudar) aoMudar(); U.emit(EV.MAPA_MUDOU);
         Reino.Claude.falar(P.nomeUni(d.id) + ': "' + d.frase + '"', { tempo: 5000, fala: [d.frase], voz: 'unicornio' });
       });
       botoes.appendChild(montar);
@@ -105,7 +106,7 @@
     renomear.addEventListener('click', function () {
       UI.pedirNome('Qual vai ser o novo nome?', P.nomeUni(d.id)).then(function (nome) {
         if (!nome) return;
-        u.nome = nome; P.salvar(); UI.fecharTela(pn.tela); detalheUni(d, aoMudar); U.emit('mapaMudou');
+        u.nome = nome; P.salvar(); UI.fecharTela(pn.tela); detalheUni(d, aoMudar); U.emit(EV.MAPA_MUDOU);
       });
     });
     botoes.appendChild(renomear);
@@ -129,7 +130,7 @@
         var l = Mapa.lugares().find(function (x) { return x.tipo === 'petshop'; });
         Reino.Som.tocar('toque'); Reino.Claude.fechar(); UI.fecharTodas();
         focarMapa();   // ela vai andando até a Pet Shop: o foco fica no mapa, não no menu
-        if (l) U.emit('irPara', l);
+        if (l) U.emit(EV.IR_PARA, l);
       });
       c.appendChild(el('div.intro-botoes', ir));
       // o aviso já está escrito na tela: só a voz (um balão por cima tapava o "Ir até a Pet Shop")

@@ -15,9 +15,9 @@
     var colE = el('div.ligar-col'), colD = el('div.ligar-col');
     var bE = [], bD = {};
     d.pares.forEach(function (p, i) {
-      // p[0].img: desenho de js/arte/icones.js no lugar do texto (o nome não aparece, senão entrega a resposta).
+      // p[0].img: desenho de js/arte/icones/ no lugar do texto (o nome não aparece, senão entrega a resposta).
       // Qualquer chave de ICONES serve (ex.: 'doc:rg', 'acao:escovar', 'sentimento:bored'): os desenhos
-      // novos são registrados em js/arte/icones.js (window.ICONES['acao:escovar'] = ...), e PA.iconeDesenho os acha.
+      // novos são registrados em js/arte/icones/ (window.ICONES['acao:escovar'] = ...), e PA.iconeDesenho os acha.
       // desenho ainda não feito: mostra ❓ em vez de quebrar a questão
       var desenhoImg = p[0].img && PA.iconeDesenho(p[0].img);
       var conteudo = p[0].img

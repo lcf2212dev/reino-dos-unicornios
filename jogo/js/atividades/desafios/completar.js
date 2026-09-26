@@ -5,7 +5,7 @@
 
   // completar: a palavra j vale na frase f? (a certa ou uma das aceitas)
   function completarAceita(f, j) { return j === f.certa || (f.aceitas || []).indexOf(j) >= 0; }
-  // figura de js/arte/icones.js (32×32) para uma frase do completar; desenho que falta: ❓
+  // figura de js/arte/icones/ (32×32) para uma frase do completar; desenho que falta: ❓
   function figuraCompletar(f) {
     var desenho = PA.iconeDesenho(f.img);
     return el('span.completar-img', { role: 'img', 'aria-label': f.alt ? U.semEn(f.alt) : null },

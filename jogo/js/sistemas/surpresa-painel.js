@@ -7,7 +7,7 @@
   var vigiarTelas = I.vigiarTelas, terminar = I.terminar;
 
   var OK_TRAVA_MS = 600;
-  // fechou a pergunta com o dedo e continua tocando ali: a guarda do ui.js (UI.segurarToques) segura
+  // fechou a pergunta com o dedo e continua tocando ali: a guarda do ui/base.js (UI.segurarToques) segura
   // os toques perto dela até 2 s depois de fechar; aqui ela é renovada uma vez, aos
   // GUARDA_FECHAR_MS - 2000, para durar até 3 s (o botão do menu que estava embaixo não abre).
   // Só se o último toque foi perto do fechamento e há pouco (a guarda ainda de pé): ms 1 não cria

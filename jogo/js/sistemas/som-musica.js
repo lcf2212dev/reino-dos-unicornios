@@ -199,8 +199,8 @@
   function ouvir() {
     if (MUS.ouvindo) return;
     MUS.ouvindo = true;
-    var U = Reino.util;
-    if (U && U.on) ['cena', 'telas', 'ocupada'].forEach(function (ev) { U.on(ev, function () { decidir(true); }); });
+    var U = Reino.util, EV = Reino.EVENTOS;
+    if (U && U.on) [EV.CENA, EV.TELAS, EV.OCUPADA].forEach(function (ev) { U.on(ev, function () { decidir(true); }); });
     document.addEventListener('visibilitychange', aoMudarVisibilidade);
   }
 
