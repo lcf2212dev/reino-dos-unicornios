@@ -5,9 +5,16 @@
 <canvas id="c"></canvas>
 <script src="../../js/manifesto.js"></script>
 <script src="previa.js"></script>
-<script>Previa.carregar({ nomes: ['nucleo/config', 'nucleo/registros', 'nucleo/util', 'nucleo/eventos', 'arte/desenho',
-  'conteudo/materias/registro',
-  'conteudo/materias/historia/h1', 'conteudo/materias/historia/h2', 'conteudo/materias/historia/h3', 'conteudo/materias/historia/h4', 'conteudo/materias/historia/h5', 'conteudo/materias/historia/livro', 'conteudo/materias/historia/historia'], grupos: ['pixelart', 'mundo'] });</script>
+<script>
+// ?grade=1: todas as matérias e os lugares registrados (js/interiores/<p>/lugar.js), com números de coluna/linha,
+// o rect de cada lugar (e das clareiras) com o id, e as áreas livres pintadas de leve (`npm run ver -- --previa mapa`)
+var GRADE = /[?&]grade=1/.test(location.search);
+var HISTORIA = ['conteudo/materias/registro', 'conteudo/materias/historia/h1', 'conteudo/materias/historia/h2', 'conteudo/materias/historia/h3',
+  'conteudo/materias/historia/h4', 'conteudo/materias/historia/h5', 'conteudo/materias/historia/livro', 'conteudo/materias/historia/historia'];
+var LUGARES_JS = Reino.MANIFESTO.scripts.filter(function (s) { return /^js\/interiores\/[^/]+\/lugar\.js$/.test(s.js); })
+  .map(function (s) { return s.js.replace(/^js\//, '').replace(/\.js$/, ''); });
+Previa.carregar({ nomes: ['nucleo/config', 'nucleo/registros', 'nucleo/util', 'nucleo/eventos', 'arte/desenho'].concat(GRADE ? LUGARES_JS : HISTORIA),
+  grupos: ['pixelart', 'mundo'].concat(GRADE ? ['materias'] : []) });</script>
 <script>
 Mapa.criar(Reino.materias);
 var e = Mapa.prerender();
@@ -17,4 +24,43 @@ var ctx = c.getContext('2d'); ctx.imageSmoothingEnabled = false;
 var tmp = PA.novoCanvas(e.width, e.height); var tc = tmp.getContext('2d');
 Mapa.desenharAnimado(tc, 1000, {concluidos:['materia:historia']});
 ctx.drawImage(tmp,0,0,c.width,c.height);
+if (GRADE) desenharGrade();
+
+// livre = a mesma regra de ferramentas/validar/lugares-do-mapa.js (livresGrade): chão 'g', não sólido, fora de todo rect
+function desenharGrade() {
+  var I = Mapa._interno, P = Mapa.T * E;
+  var rects = Mapa.lugares().map(function (l) { return { id: l.id, r: l.rect }; });
+  Mapa.CLAREIRAS.forEach(function (r, i) {
+    if (!rects.some(function (o) { return o.r.x === r.x && o.r.y === r.y; })) rects.push({ id: 'clareira ' + (i + 1), r: r, clareira: true });
+  });
+  var emRect = function (x, y) { return rects.some(function (o) { return I.noRect(x, y, o.r); }); };
+  for (var y = 0; y < Mapa.H; y++) for (var x = 0; x < Mapa.W; x++) {
+    if (I.tipo[y][x] === 'g' && !I.solido[y][x] && !emRect(x, y)) { ctx.fillStyle = 'rgba(60,140,255,0.22)'; ctx.fillRect(x * P, y * P, P, P); }
+  }
+  ctx.lineWidth = 1;
+  // linhas finas a cada tile, mais fortes a cada 5
+  for (var i = 0; i <= Math.max(Mapa.W, Mapa.H); i++) {
+    ctx.strokeStyle = i % 5 === 0 ? 'rgba(0,0,0,0.45)' : 'rgba(0,0,0,0.18)';
+    ctx.beginPath();
+    if (i <= Mapa.W) { ctx.moveTo(i * P + 0.5, 0); ctx.lineTo(i * P + 0.5, Mapa.H * P); }
+    if (i <= Mapa.H) { ctx.moveTo(0, i * P + 0.5); ctx.lineTo(Mapa.W * P, i * P + 0.5); }
+    ctx.stroke();
+  }
+  rects.forEach(function (o) {
+    ctx.strokeStyle = o.clareira ? '#ffd23f' : '#ff3fa4'; ctx.lineWidth = 3;
+    ctx.setLineDash(o.clareira ? [6, 4] : []);
+    ctx.strokeRect(o.r.x * P + 1.5, o.r.y * P + 1.5, o.r.w * P - 3, o.r.h * P - 3);
+    ctx.setLineDash([]);
+    rotulo(o.id, o.r.x * P + 4, o.r.y * P + 4, '#ffffff', 'rgba(120,0,70,0.8)');
+  });
+  // números de coluna (em cima) e de linha (à esquerda), um por tile
+  for (var cx = 0; cx < Mapa.W; cx++) rotulo(String(cx), cx * P + 2, 1, '#000', 'rgba(255,255,255,0.8)');
+  for (var cy = 1; cy < Mapa.H; cy++) rotulo(String(cy), 1, cy * P + 2, '#000', 'rgba(255,255,255,0.8)');
+}
+function rotulo(t, x, y, cor, fundo) {
+  ctx.font = 'bold 11px sans-serif'; ctx.textBaseline = 'top';
+  var w = ctx.measureText(t).width;
+  ctx.fillStyle = fundo; ctx.fillRect(x, y, w + 4, 13);
+  ctx.fillStyle = cor; ctx.fillText(t, x + 2, y + 1);
+}
 </script>

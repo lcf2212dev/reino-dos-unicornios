@@ -1,13 +1,19 @@
 // Confere o conteúdo das matérias antes de publicar.
-// Uso: node ferramentas/validar/validar-conteudo.js
+// Uso: node ferramentas/validar/validar-conteudo.js [--materia <arquivo>] [--so <id>] [--detalhes]
+//   --so <id>    só aquela matéria ou prova (ids repetidos só são conferidos dentro dela)
+//   --detalhes   também a linha "✔ <matéria/prova> …" de cada uma (sem ele: só erros, avisos e o resumo)
 const fs = require('fs');
 const path = require('path');
 const Jogo = require('../jogo-no-node');
+const Preencher = require('./preencher');
 
 const ctx = Jogo.contexto({ console });
 // --materia <arquivo>: usa esse arquivo no lugar do arquivo de mesmo nome em js/conteudo/materias/: a matéria
 // (portugues.js; um arquivo com a matéria inteira, salas dentro, também serve) ou uma sala (p3.js). livro.js
 // existe em toda matéria: vale a pasta de cima (ex.: /tmp/x/portugues/livro.js).
+const iSo = process.argv.indexOf('--so');
+const SO = iSo >= 0 ? process.argv[iSo + 1] : null;
+const DETALHES = process.argv.includes('--detalhes');
 const iMateria = process.argv.indexOf('--materia');
 const materiaFora = iMateria >= 0 ? path.resolve(process.argv[iMateria + 1]) : null;
 const materias = Jogo.scripts({ grupos: ['materias'] });
@@ -19,25 +25,25 @@ if (materiaFora) {
   if (alvos.length !== 1) { console.log('✘ --materia: ' + (alvos.length ? 'mais de um' : 'nenhum') + ' arquivo de js/conteudo/materias/ com esse nome (livro.js: ponha na pasta da matéria)'); process.exit(1); }
   trocar[Jogo.nome(alvos[0])] = materiaFora;
 }
-Jogo.carregar(ctx, Jogo.scripts({ nomes: ['nucleo/config', 'nucleo/registros', 'nucleo/util', 'nucleo/eventos'], grupos: ['materias', 'provas'] }), { trocar });
+// tipos de desafio antes do conteúdo (Reino.registrarTipoDesafio): o núcleo e cada js/atividades/desafios/<tipo>.js,
+// com as checagens do tipo (assim um arquivo trocado por --materia também pode registrar um tipo)
+Jogo.carregar(ctx, Jogo.scripts({ nomes: ['nucleo/config', 'nucleo/registros', 'nucleo/util', 'nucleo/eventos'], grupos: ['atividades'] }));
+Jogo.carregar(ctx, Jogo.scripts({ grupos: ['materias', 'provas'] }), { trocar });
 
 const Reino = ctx.Reino;
 const erros = [];
 const avisos = [];
 const ids = new Set();
-const TIPOS = ['escolha', 'vf', 'varias', 'ligar', 'ordenar', 'frase', 'separar', 'memoria', 'vfLista', 'completar', 'desenho', 'copiar'];
-const REQUISITOS = ['linhas', 'formas', 'cores'];
+const TIPOS = Reino.tiposDesafio;
+// campos que só alguns tipos aceitam (def.campos), ex.: livre, colado, rotulos
+const CAMPOS_DE_TIPO = [...new Set(Object.keys(TIPOS).flatMap((t) => TIPOS[t].campos || []))];
+const MATERIAS = SO ? Reino.materias.filter((m) => m.id === SO) : Reino.materias;
+const PROVAS = SO ? Reino.provas.filter((p) => p.id === SO) : Reino.provas;
+if (SO && !MATERIAS.length && !PROVAS.length) erros.push(`--so ${SO}: nenhuma matéria nem prova com esse id (${Reino.materias.concat(Reino.provas).map((x) => x.id).join(', ')})`);
+const detalhe = (l) => { if (DETALHES) console.log(l); };
+const tipoDe = (d) => (Object.prototype.hasOwnProperty.call(TIPOS, d.tipo) ? TIPOS[d.tipo] : null);
 
 function checar(cond, msg) { if (!cond) erros.push(msg); }
-// Ligar no celular: as duas colunas lado a lado só cabem em 390 px se a palavra mais comprida da esquerda
-// mais a da direita somarem até 24 letras (fonte pixel com 1em por letra; ver css/ui-jogo.css, .ligar-item)
-function maiorPalavra(t) { return Math.max(0, ...String(t || '').replace(/[«»]/g, '').split(/[\s\-]+/).map((w) => [...w.replace(/[^\p{L}\p{N}]/gu, '')].length)); }
-function checarLigarLargura(d) {
-  const esq = Math.max(0, ...d.pares.map((p) => (p[0].img ? 0 : maiorPalavra(p[0].t))));
-  const dir = Math.max(0, ...d.pares.map((p) => maiorPalavra(p[1].t)));
-  if (esq + dir > 24) avisos.push(`${d.id}: Ligar com palavras longas (${esq} + ${dir} letras > 24): no celular vai quebrar palavra ou vazar`);
-}
-
 // trechos em inglês: «...» balanceado e sem aninhar, em qualquer texto
 function checarIngles(obj, onde) {
   if (typeof obj === 'string') {
@@ -51,12 +57,13 @@ function checarIngles(obj, onde) {
   } else if (Array.isArray(obj)) obj.forEach((v) => checarIngles(v, onde));
   else if (obj && typeof obj === 'object') Object.keys(obj).forEach((k) => checarIngles(obj[k], obj.id ? obj.id : onde));
 }
-// desenhos de js/arte/icones/*.js (figuras do completar)
-const icones = Jogo.carregar(Jogo.contexto(), Jogo.scripts({ grupos: ['icones'] }));
+// desenhos de js/arte/icones/*.js (figuras do completar) e os que os prédios e módulos registram com
+// Reino.registrarIcones (ex.: interiores/<p>/): carregam todos os `node: true` (o jogo como no navegador)
+const icones = Jogo.carregar(Jogo.contexto({ console, Math, Date }), Jogo.ordemDosPredios(Jogo.scripts()));
 const textoOk = (t) => typeof t === 'string' && t.trim().length > 0;
 
-// campos novos: livre (varias/completar), rotulos (vfLista), desenho, apoio, instrucao, copiar, colado/img/aceitas (completar)
-// naProva: figura que falta é erro (nas salas, só aviso: o jogo mostra ❓)
+// campos comuns (apoio, instrucao), campos que só alguns tipos aceitam (def.campos: livre, colado, rotulos) e as
+// checagens do próprio tipo (def.validar(d, v), no arquivo do tipo). naProva: a def pode ser mais ou menos exigente.
 function checarNovos(d, naProva) {
   if (d.apoio !== undefined) {
     const a = d.apoio;
@@ -69,35 +76,18 @@ function checarNovos(d, naProva) {
     });
   }
   if (d.instrucao !== undefined) checar(textoOk(d.instrucao), `${d.id}: "instrucao" precisa ser um texto não vazio`);
-  if (d.colado !== undefined) checar(d.colado === true && d.tipo === 'completar', `${d.id}: "colado" só vale true num completar`);
-  if (d.tipo === 'completar' && Array.isArray(d.frases) && Array.isArray(d.palavras)) {
-    d.frases.forEach((f, i) => {
-      const onde = `${d.id}: frase ${f.letra || i + 1}`;
-      if (f.aceitas !== undefined) checar(!d.livre && Array.isArray(f.aceitas) && f.aceitas.length > 0 && f.aceitas.every((j) => Number.isInteger(j) && j >= 0 && j < d.palavras.length && j !== f.certa) && new Set(f.aceitas).size === f.aceitas.length, `${onde}: aceitas deve ter índices de palavras válidos, sem repetir e sem a certa`);
-      if (f.img !== undefined) {
-        checar(textoOk(f.img) && textoOk(f.alt), `${onde}: figura precisa de img e alt`);
-        if (textoOk(f.img) && !icones.window.ICONES[f.img]) {
-          if (naProva) erros.push(`${onde}: falta o desenho "${f.img}" em js/arte/icones/`);
-          else avisos.push(`${onde}: falta o desenho "${f.img}" em js/arte/icones/ (aparece ❓)`);
-        }
-      }
-    });
-  }
-  if (d.tipo === 'copiar') {
-    checar(textoOk(d.pergunta), `${d.id}: copiar sem pergunta`);
-    checar(Array.isArray(d.itens) && d.itens.length > 0 && d.itens.every((it) => Array.isArray(it.opcoes) && it.opcoes.length >= 2 && it.opcoes.every(textoOk)
-      && new Set(it.opcoes).size === it.opcoes.length && Number.isInteger(it.certa) && it.certa >= 0 && it.certa < it.opcoes.length), `${d.id}: itens do copiar inválidos (2+ escritas diferentes e a certa)`);
-  }
-  if (d.livre !== undefined) checar(d.livre === true && ['varias', 'completar'].includes(d.tipo), `${d.id}: "livre" só vale true em varias/completar`);
-  if (d.rotulos !== undefined) checar(d.tipo === 'vfLista' && Array.isArray(d.rotulos) && d.rotulos.length === 2 && d.rotulos.every((r) => typeof r === 'string' && r), `${d.id}: rotulos deve ser ['T', 'F'] (2 textos) num vfLista`);
-  if (d.tipo === 'desenho') {
-    checar(d.pergunta, `${d.id}: desenho sem pergunta`);
-    checar(Array.isArray(d.requisitos) && d.requisitos.length > 0 && d.requisitos.every((r) => REQUISITOS.includes(r)), `${d.id}: requisitos do desenho devem ser de ${REQUISITOS.join('/')}`);
-  }
+  const def = tipoDe(d);
+  CAMPOS_DE_TIPO.forEach((c) => {
+    if (d[c] === undefined) return;
+    const aceitam = Object.keys(TIPOS).filter((t) => (TIPOS[t].campos || []).includes(c));
+    checar(def && (def.campos || []).includes(c), `${d.id}: "${c}" só vale em ${aceitam.join('/')}`);
+  });
+  if (def && def.validar) def.validar(d, { checar, avisar: (msg) => avisos.push(msg), naProva, icones: icones.window.ICONES, textoOk });
 }
 
-Reino.materias.forEach((m) => {
+MATERIAS.forEach((m) => {
   checarIngles(m, m.id);
+  Preencher.faltas(m, m.id).forEach((e) => erros.push(e));   // esqueleto do `npm run novo` ainda por escrever
   const livro = new Set((m.livro || []).map((l) => l.id));
   checar(m.salas && m.salas.length > 0, `${m.id}: sem salas`);
   const valorSala = Reino.config.valorPorMateria / m.salas.length;
@@ -110,30 +100,10 @@ Reino.materias.forEach((m) => {
     s.desafios.forEach((d) => {
       checar(!ids.has(d.id), `ID repetido: ${d.id}`);
       ids.add(d.id);
-      checar(TIPOS.includes(d.tipo), `${d.id}: tipo desconhecido ${d.tipo}`);
+      checar(tipoDe(d), `${d.id}: tipo desconhecido ${d.tipo}`);
       checar(typeof d.explica === 'string' && d.explica.length > 10, `${d.id}: sem explicação`);
       checar(livro.has(d.livro), `${d.id}: cartão do livro "${d.livro}" não existe`);
       checarNovos(d, false);
-      if (d.tipo === 'escolha') {
-        checar(Array.isArray(d.opcoes) && d.opcoes.length >= 2, `${d.id}: poucas opções`);
-        checar(Number.isInteger(d.certa) && d.certa >= 0 && d.certa < d.opcoes.length, `${d.id}: índice certo inválido`);
-        const textos = d.opcoes.map((o) => o.t);
-        checar(new Set(textos).size === textos.length, `${d.id}: opções repetidas`);
-      }
-      if (d.tipo === 'vf') checar(typeof d.certo === 'boolean' && d.afirmacao, `${d.id}: V/F incompleto`);
-      if (d.tipo === 'varias' && !d.livre) {
-        const ok = d.opcoes.filter((o) => o.ok).length;
-        checar(ok >= 1, `${d.id}: nenhuma opção certa`);
-        if (ok === d.opcoes.length) avisos.push(`${d.id}: todas as opções são certas`);
-      }
-      if (d.tipo === 'ligar') checarLigarLargura(d);
-      if (d.tipo === 'ligar') checar(d.pares.length >= 2 && d.pares.every((p) => (p[0].t || (p[0].img && p[0].alt)) && p[1].t), `${d.id}: pares inválidos`);
-      if (d.tipo === 'completar') checar(d.frases.every((f) => (d.livre || (Number.isInteger(f.certa) && f.certa < d.palavras.length)) && typeof f.antes === 'string' && typeof f.depois === 'string'), `${d.id}: frases inválidas`);
-      if (d.tipo === 'vfLista') checar(d.itens.length >= 2 && d.itens.every((i) => i.t && typeof i.v === 'boolean'), `${d.id}: V/F inválido`);
-      if (d.tipo === 'ordenar') checar(d.itens.length >= 3, `${d.id}: poucos itens para ordenar`);
-      if (d.tipo === 'frase') checar(d.blocos.length >= 3, `${d.id}: poucos blocos`);
-      if (d.tipo === 'separar') checar(d.itens.every((i) => i.g === 0 || i.g === 1) && d.grupos.length === 2, `${d.id}: separar inválido`);
-      if (d.tipo === 'memoria') checar(d.pares.length >= 3, `${d.id}: memória com poucos pares`);
     });
     const unis = m.unicornios || [];
     checar(unis.filter((u) => u.raridade === 'comum' && u.sala === s.id).length === 1, `${s.id}: precisa de 1 unicórnio comum`);
@@ -149,14 +119,36 @@ Reino.materias.forEach((m) => {
     checar(u.cores && u.cores.corpo && Array.isArray(u.cores.crina), `${u.id}: cores incompletas`);
     checar(u.frase, `${u.id}: sem frase`);
   });
-  const treinaveis = m.salas.flatMap((s) => s.desafios).filter((d) => ['escolha', 'vf', 'varias'].includes(d.tipo) && !d.livre).length;
+  const treinaveis = m.salas.flatMap((s) => s.desafios).filter((d) => Reino.Desafios.TREINAVEIS.includes(d.tipo) && !d.livre).length;
   checar(treinaveis >= Reino.config.perguntasTreino, `${m.id}: só ${treinaveis} perguntas para o treino`);
-  console.log(`✔ ${m.nome}: ${m.salas.length} salas, ${m.salas.reduce((t, s) => t + s.desafios.length, 0)} desafios, ${treinaveis} para o treino, ${(m.livro || []).length} cartões no livro, ${unis.length} unicórnios, R$${valorSala.toFixed(2)} por sala`);
+  detalhe(`✔ ${m.nome}: ${m.salas.length} salas, ${m.salas.reduce((t, s) => t + s.desafios.length, 0)} desafios, ${treinaveis} para o treino, ${(m.livro || []).length} cartões no livro, ${unis.length} unicórnios, R$${valorSala.toFixed(2)} por sala`);
 });
+
+// acessório com desenho e ícone no próprio arquivo da prova (conteudo.md §5)
+const ANCORAS = ['orelha', 'cabeca', 'olho', 'chifre', 'pescoco', 'cauda'];
+function checarLinhas(linhas, paleta, larg, alt, onde) {
+  if (!checarRet(Array.isArray(linhas) && linhas.length > 0 && (!alt || linhas.length === alt), `${onde}: linhas faltando${alt ? ` (precisa de ${alt})` : ''}`)) return;
+  const w = larg || String(linhas[0]).length;
+  checar(linhas.every((l) => typeof l === 'string' && l.length === w), `${onde}: linhas de tamanhos diferentes (todas com ${w})`);
+  const falta = new Set();
+  linhas.join('').split('').forEach((c) => { if (c !== '.' && !(paleta && paleta[c])) falta.add(c); });
+  checar(!falta.size, `${onde}: letras sem cor na paleta: ${[...falta].join(' ')}`);
+}
+function checarRet(cond, msg) { checar(cond, msg); return cond; }
+function checarDesenhoInline(d, id) {
+  checar(d.paleta && typeof d.paleta === 'object', `${id}: desenho sem paleta`);
+  checarLinhas(d.linhas, d.paleta, 0, 0, `${id} (desenho)`);
+  checar(ANCORAS.includes(d.ancora), `${id}: âncora do desenho inválida "${d.ancora}" (${ANCORAS.join(', ')})`);
+  checar(Number.isInteger(d.dx) && Number.isInteger(d.dy), `${id}: desenho sem dx/dy inteiros`);
+}
+// o mesmo formato que Reino.registrarIcones confere no jogo (js/arte/icones/icones.js)
+function checarIconeInline(ic, id) {
+  icones.Reino.conferirIcone(ic).forEach((e) => erros.push(`${id} (ícone): ${e}`));
+}
 
 // provas bimestrais (Escola do Reino)
 const pixelart = fs.readFileSync(Jogo.arquivo('arte/pixelart-unicornio-moldes'), 'utf8');
-Reino.provas.forEach((pv) => {
+PROVAS.forEach((pv) => {
   const m = Reino.materia(pv.materiaId);
   checar(m, `${pv.id}: matéria ${pv.materiaId} não existe`);
   const livro = new Set(((m && m.livro) || []).map((l) => l.id));
@@ -166,42 +158,35 @@ Reino.provas.forEach((pv) => {
     if (!a) return;
     checar(!ids.has(a.id), `ID repetido: ${a.id}`);
     ids.add(a.id);
-    checar(icones.window.ICONES['acessorio:' + a.id], `${a.id}: falta o ícone "acessorio:${a.id}" em js/arte/icones/`);
-    checar(pixelart.includes(`'${a.id}':`), `${a.id}: falta o desenho no unicórnio (ENFEITES em js/arte/pixelart-unicornio-moldes.js)`);
+    if (a.icone) checarIconeInline(a.icone, a.id);
+    else checar(icones.window.ICONES['acessorio:' + a.id], `${a.id}: falta o ícone "acessorio:${a.id}" em js/arte/icones/ (ou icone no acessório)`);
+    if (a.desenho) checarDesenhoInline(a.desenho, a.id);
+    else checar(pixelart.includes(`'${a.id}':`), `${a.id}: falta o desenho no unicórnio (ENFEITES em js/arte/pixelart-unicornio-moldes.js, ou desenho no acessório)`);
   });
   checarIngles(pv, pv.id);
+  Preencher.faltas(pv, pv.id).forEach((e) => erros.push(e));
   pv.questoes.forEach((d) => {
     checarNovos(d, true);
     checar(!ids.has(d.id), `ID repetido: ${d.id}`);
     ids.add(d.id);
-    checar(TIPOS.includes(d.tipo), `${d.id}: tipo desconhecido ${d.tipo}`);
+    checar(tipoDe(d), `${d.id}: tipo desconhecido ${d.tipo}`);
     checar(typeof d.explica === 'string' && d.explica.length > 10, `${d.id}: sem explicação`);
     checar(livro.has(d.livro), `${d.id}: cartão do livro "${d.livro}" não existe`);
-    if (d.tipo === 'escolha') checar(Number.isInteger(d.certa) && d.certa >= 0 && d.certa < d.opcoes.length, `${d.id}: índice certo inválido`);
-    if (d.tipo === 'varias' && !d.livre) checar(d.opcoes.some((o) => o.ok), `${d.id}: nenhuma opção certa`);
-    if (d.tipo === 'ligar') {
-      checarLigarLargura(d);
-      checar(d.pares.every((p) => (p[0].t || (p[0].img && p[0].alt)) && p[1].t), `${d.id}: pares inválidos`);
-      d.pares.forEach((p) => { if (p[0].img) checar(icones.window.ICONES[p[0].img], `${d.id}: falta o desenho "${p[0].img}" em js/arte/icones/`); });
-      if (d.direita) checar([...d.direita].sort().join() === d.pares.map((_, i) => i).join(), `${d.id}: ordem da direita inválida`);
-    }
-    if (d.tipo === 'vfLista') checar(d.itens.length >= 2 && d.itens.every((i) => i.t && typeof i.v === 'boolean'), `${d.id}: V/F inválido`);
-    if (d.tipo === 'completar') checar(d.frases.every((f) => (d.livre || (Number.isInteger(f.certa) && f.certa < d.palavras.length)) && typeof f.antes === 'string' && typeof f.depois === 'string'), `${d.id}: frases inválidas`);
-    if (d.tipo === 'ordenar') checar(d.itens.length >= 3, `${d.id}: poucos itens para ordenar`);
-    if (d.tipo === 'frase') checar(d.blocos.length >= 3, `${d.id}: poucos blocos`);
   });
-  console.log(`✔ ${pv.nome} (${pv.bimestre}): ${pv.questoes.length} questões, acessórios ${pv.acessorios.lendario.nome} / ${pv.acessorios.raro.nome} / ${pv.acessorios.comum.nome}`);
+  detalhe(`✔ ${pv.nome} (${pv.bimestre}): ${pv.questoes.length} questões, acessórios ${pv.acessorios.lendario.nome} / ${pv.acessorios.raro.nome} / ${pv.acessorios.comum.nome}`);
 });
 
 // emoji de matéria sem desenho em js/arte/icones/ aparece como emoji reduzido (feio): desenhar antes de publicar
 {
-  const ic = Jogo.carregar(Jogo.contexto(), Jogo.scripts({ grupos: ['icones'] }));
+  const ic = icones;
   const RE = /(\p{RI}\p{RI}|\p{Extended_Pictographic}(?:\uFE0F|\uFE0E)?(?:\u200D\p{Extended_Pictographic}(?:\uFE0F|\uFE0E)?)*)/gu;
   const semDesenho = new Set();
-  const arquivos = materias.map((s) => trocar[Jogo.nome(s)] || Jogo.caminho(s.js))
-    .concat(provas.map((s) => Jogo.caminho(s.js)))
-    .concat(['atividades/provas', 'sistemas/falas'].map(Jogo.arquivo))
-    .concat(Jogo.manifesto.scripts.filter((s) => s.grupo === 'ui').map((s) => Jogo.caminho(s.js)));
+  // com --so, só os arquivos daquela matéria (js/conteudo/materias/<id>/) ou prova (js/conteudo/provas/<id>.js)
+  const daVez = (s) => !SO || s.js.split('/').includes(SO) || s.js.endsWith('/' + SO + '.js');
+  const arquivos = materias.filter(daVez).map((s) => trocar[Jogo.nome(s)] || Jogo.caminho(s.js))
+    .concat(provas.filter(daVez).map((s) => Jogo.caminho(s.js)))
+    .concat(SO ? [] : ['atividades/provas', 'sistemas/falas'].map(Jogo.arquivo))
+    .concat(SO ? [] : Jogo.manifesto.scripts.filter((s) => s.grupo === 'ui').map((s) => Jogo.caminho(s.js)));
   arquivos.forEach((f) => {
     for (const m of fs.readFileSync(f, 'utf8').matchAll(RE)) {
       const k = m[0].replace(/\uFE0F/g, '');
@@ -210,9 +195,21 @@ Reino.provas.forEach((pv) => {
   });
   if (semDesenho.size) avisos.push(`emojis sem pixel art em js/arte/icones/: ${[...semDesenho].join(' ')}`);
 }
+// falas dos módulos (sistemas: Reino.registrarModulo) com `(preencher)`: carregam com todos os `node: true`
+if (!SO) {
+  const todos = icones;
+  (todos.Reino.modulos || []).forEach((m) => {
+    let f = [];
+    try { f = m.falas ? m.falas() : []; } catch (e) { erros.push(`módulo ${m.id}: falas() falhou: ${e.message}`); }
+    Preencher.faltas(f, `falas do módulo ${m.id}`).forEach((e) => erros.push(e));
+  });
+}
 avisos.forEach((a) => console.log('⚠ ' + a));
+// a última linha é o resumo (o validar-tudo mostra a última)
+const conta = `${MATERIAS.length} matéria(s), ${PROVAS.length} prova(s), ${avisos.length} aviso(s)`;
 if (erros.length) {
   erros.forEach((e) => console.log('✘ ' + e));
-  process.exit(1);
-}
-console.log('Tudo certo!');
+  console.log(`Resumo: ${erros.length} erro(s) — ${conta}`);
+  // exitCode, não exit(): com a saída num pipe, exit() cortaria a lista (o esqueleto do npm run novo tem centenas)
+  process.exitCode = 1;
+} else console.log(`Tudo certo! ${conta}${DETALHES ? '' : ' (uma linha por matéria/prova: --detalhes)'}`);

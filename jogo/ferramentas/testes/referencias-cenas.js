@@ -141,4 +141,4 @@ async function cenasProvasEDesafios(page, pasta) {
   }
 }
 
-module.exports = { cenasMapaEInteriores, cenasTelas, cenasSalas, cenasProvasEDesafios };
+module.exports = { cenasMapaEInteriores, cenasTelas, cenasSalas, cenasProvasEDesafios, mostrarDesafio };

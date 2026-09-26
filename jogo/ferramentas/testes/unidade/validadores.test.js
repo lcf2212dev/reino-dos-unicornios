@@ -56,6 +56,68 @@ test('validar-interiores: passa no jogo de hoje e acusa uma tela que não existe
   assert.match(r.saida, /tela "telaPlantada" não existe/);
 });
 
+test('validar-interiores: personagem registrado com predio museu e x/y passa; sem x/y (prédio antigo, sem vagas) é acusado', () => {
+  const copia = copiaDoJogo('personagem');
+  const falas = path.join(copia, 'js/interiores/museu/falas.js');
+  const original = fs.readFileSync(falas, 'utf8');
+  const registro = (xy) => `Reino.registrarPersonagem({ id: 'visitante-teste', nome: 'Visitante', predio: 'museu'${xy},
+  sprite: { base: 'pessoa', pele: '#f1c7a5', cabelo: '#5a3825', penteado: 'rabo', roupa: '#e36b8a', roupa2: '#5a4a8a', perna: 'saia' } });\n`;
+  // relativo: o museu tem um NPC a mais que antes (vale com outros personagens já registrados no jogo)
+  const npcsDoMuseu = (saida) => Number((/✔ museu — .* (\d+) NPCs/.exec(saida) || [])[1]);
+  const antes = node('ferramentas/validar/validar-interiores.js', ['--detalhes'], copia);
+  fs.writeFileSync(falas, registro(', x: 22, y: 21') + original);
+  const ok = node('ferramentas/validar/validar-interiores.js', ['--detalhes'], copia);
+  assert.strictEqual(ok.status, 0, ok.saida);
+  assert.strictEqual(npcsDoMuseu(ok.saida), npcsDoMuseu(antes.saida) + 1, ok.saida);
+  fs.writeFileSync(falas, registro('') + original);
+  const r = node('ferramentas/validar/validar-interiores.js', [], copia);
+  assert.strictEqual(r.status, 1, r.saida);
+  assert.match(r.saida, /personagem visitante-teste: registrado em 'museu' sem x\/y, e esse prédio não tem vagas/);
+});
+
+test('validar-conteudo: emoji com ícone registrado num prédio (Reino.registrarIcones em interiores/) não vira aviso', () => {
+  const copia = copiaDoJogo('icone');
+  const sala = path.join(copia, 'js/conteudo/materias/historia/h1.js');
+  const falas = path.join(copia, 'js/interiores/museu/falas.js');
+  const original = fs.readFileSync(falas, 'utf8');
+  fs.writeFileSync(falas, original);   // a cópia é reaproveitada: sempre do jogo de hoje
+  plantar(sala, "explica: '", "explica: '🍦 ");
+  const sem = node('ferramentas/validar/validar-conteudo.js', [], copia);
+  assert.match(sem.saida, /emojis sem pixel art em js\/arte\/icones\/:.*🍦/);
+  const d = Array.from({ length: 16 }, () => '..aaaaaaaaaaaa..');
+  fs.writeFileSync(falas, `Reino.registrarIcones({ '🍦': { n: 'sorvete', p: { a: '#ffd1e0' }, d: ${JSON.stringify(d)} } });\n` + original);
+  const com = node('ferramentas/validar/validar-conteudo.js', [], copia);
+  assert.strictEqual(com.status, 0, com.saida);
+  assert.doesNotMatch(com.saida, /🍦/);
+});
+
+test('validar-interiores: por padrão só o resumo; --detalhes lista; --so filtra; ação de módulo e sprite (aviso)', () => {
+  const ok = node('ferramentas/validar/validar-interiores.js');
+  assert.ok(!/^✔ /m.test(ok.saida), ok.saida);
+  assert.match(ok.saida.trim().split('\n').pop(), /^Tudo certo! \d+ interiores/);
+  assert.match(node('ferramentas/validar/validar-interiores.js', ['--detalhes']).saida, /^✔ castelo — /m);
+  const so = node('ferramentas/validar/validar-interiores.js', ['--so', 'escola']);
+  assert.strictEqual(so.status, 0, so.saida);
+  assert.match(so.saida, /1 interiores de escola/);
+  assert.strictEqual(node('ferramentas/validar/validar-interiores.js', ['--so', 'naoexiste']).status, 1);
+  // um sistema declara a ação no def do módulo (carrega antes dos NPCs) e um prédio a usa; sprite com chave errada
+  const copia = copiaDoJogo('acao-de-modulo');
+  fs.appendFileSync(path.join(copia, 'js/sistemas/cuidados.js'), "\nReino.registrarModulo({ id: 'plantado', acoes: { assarPlantado: function () { return Promise.resolve(null); } } });\n");
+  plantar(path.join(copia, 'js/interiores/castelo/castelo.js'), "acao: { tipo: 'tela', tela: 'plano' }", "acao: { tipo: 'assarPlantado' }");
+  plantar(path.join(copia, 'js/personagens/elenco.js'), "penteado: 'coque', oculos: true, flor: true", "penteado: 'coque', oculos: true, flor: true, toucaPlantada: true");
+  const r = node('ferramentas/validar/validar-interiores.js', [], copia);
+  assert.strictEqual(r.status, 0, r.saida);
+  assert.match(r.saida, /⚠ elenco margarida: chave de sprite "toucaPlantada" desconhecida/);
+});
+
+test('validar-conteudo: --so filtra e --detalhes mostra a linha de cada uma', () => {
+  const so = node('ferramentas/validar/validar-conteudo.js', ['--so', 'historia-3bim', '--detalhes']);
+  assert.strictEqual(so.status, 0, so.saida);
+  assert.match(so.saida, /0 matéria\(s\), 1 prova\(s\)/);
+  assert.match(so.saida, /^✔ Revisão Bimestral de História/m);
+  assert.ok(!/^✔ /m.test(node('ferramentas/validar/validar-conteudo.js').saida));
+});
+
 test('validar-tudo: resume os validadores e falha quando um deles falha', () => {
   const ok = node('ferramentas/validar/validar-tudo.js');
   assert.strictEqual(ok.status, 0, ok.saida);

@@ -1,18 +1,20 @@
 // Confere os interiores (construções por dentro) antes de publicar.
-// Uso: node ferramentas/validar/validar-interiores.js
-// Carrega config, unicórnios, Loja, cuidados, matérias, provas, arte/desenho.js, motor/interiores-*.js, npcs.js e os
-// prédios (js/interiores/) num vm SEM DOM (como listar-falas.js), pelo manifesto (ferramentas/jogo-no-node.js).
-// Os prédios em ordem alfabética (padrao.js por último), como a lista de vozes. Sai com código 1 se houver erro.
+// Uso: node ferramentas/validar/validar-interiores.js [--so <id>] [--detalhes]
+//   --so <id>    só aquele prédio: o id de um interior ou do lugar (todos os andares dele)
+//   --detalhes   também a lista "✔ <interior> …" por cômodo (sem ele: só erros, avisos e a linha de resumo)
+// Carrega todos os scripts `node: true` do manifesto num vm SEM DOM (ferramentas/jogo-no-node.js): núcleo,
+// ícones, sistemas (as `acoes` dos módulos), motor dos interiores, NPCs e os prédios (js/interiores/), estes em
+// ordem alfabética (padrao.js por último), como a lista de vozes. Sai com código 1 se houver erro.
 const Jogo = require('../jogo-no-node');
+const LugaresDoMapa = require('./lugares-do-mapa');
+const Preencher = require('./preencher');
+const Extras = require('./interiores-extras');
 
-const ctx = Jogo.contexto({ console, setTimeout, clearTimeout });
-Jogo.carregar(ctx, Jogo.ordemDosPredios(Jogo.scripts({
-  nomes: ['nucleo/config', 'nucleo/registros', 'nucleo/util', 'nucleo/eventos', 'personagens/unicornios', 'conteudo/loja-itens', 'sistemas/cuidados', 'arte/desenho',
-      'motor/interiores-base', 'motor/interiores-pisos', 'motor/interiores-objetos-parede', 'motor/interiores-objetos-moveis', 'motor/interiores-objetos-enfeites', 'motor/interiores-grade', 'motor/interiores-estatico', 'motor/interiores-placas', 'motor/interiores-toque', 'motor/interiores-cena', 'personagens/npcs',
-    'personagens/npcs-corpo', 'personagens/npcs-cabeca', 'personagens/npcs-sprites', 'personagens/npcs-status', 'personagens/npcs-falas',
-    'personagens/npcs-conversa', 'personagens/elenco'],
-  grupos: ['materias', 'provas', 'interiores'],
-})));
+const iSo = process.argv.indexOf('--so');
+const SO = iSo >= 0 ? process.argv[iSo + 1] : null;
+const DETALHES = process.argv.includes('--detalhes');
+const ctx = Jogo.contexto({ console, setTimeout, clearTimeout, Math, Date });
+Jogo.carregar(ctx, Jogo.ordemDosPredios(Jogo.scripts()));
 const temNpcs = Boolean(ctx.Reino.NPCs);
 
 const Reino = ctx.Reino;
@@ -22,11 +24,17 @@ const avisos = [];
 const listas = [];
 function checar(cond, msg) { if (!cond) erros.push(msg); return !!cond; }
 
-const LUGARES = new Set(['castelo', 'bau', 'estabulo', 'loja', 'escola', 'petshop', 'observatorio'].concat(Reino.materias.map((m) => 'materia:' + m.id)));
+// lugares do mapa, dos dados: Mapa.LUGARES_FIXOS (mundo/lugares.js, avaliado sem DOM) + os registrados pelos
+// prédios (Reino.registrarLugar) + as matérias
+const LUGARES = new Set(LugaresDoMapa.ids(ctx).concat(Reino.materias.map((m) => 'materia:' + m.id)));
+if (!SO) LugaresDoMapa.checar(ctx).forEach((e) => erros.push(e));
 // telas e ações registradas pelos prédios novos (Reino.NPCs.registrarTela / registrarAcao)
 const TELAS = ['livro', 'plano', 'estabulo', 'loja', 'bau', 'ovos'].concat(temNpcs && Reino.NPCs.telas ? Reino.NPCs.telas() : []);
 const ACOES_EXTRAS = temNpcs && Reino.NPCs.acoes ? Reino.NPCs.acoes() : [];
-const defs = Reino.interiores;
+// --so: só os interiores daquele prédio (as conferências entre prédios ficam só entre eles)
+const defs = SO ? Reino.interiores.filter((d) => d.id === SO || d.lugar === SO) : Reino.interiores;
+const doSo = (id) => !SO || defs.some((d) => d.id === id || d.lugar === id);
+if (SO && !defs.length) erros.push(`--so ${SO}: nenhum interior nem lugar com esse id (${[...new Set(Reino.interiores.map((d) => d.lugar))].join(', ')})`);
 const porId = new Map();
 
 // «» balanceado, sem aninhar
@@ -50,7 +58,8 @@ function normal(s) {
     .split(/[^a-z0-9]+/).filter(Boolean);
 }
 const NOMES_UNI = new Set(['Estrelinha', 'Purpurina', 'Algodão', 'Arco-Íris', 'Luna', 'Docinho', 'Brilho']);
-Reino.materias.forEach((m) => (m.unicornios || []).forEach((u) => NOMES_UNI.add(u.nome)));
+// (o marcador `(preencher)` de um esqueleto não é nome: quem acusa é o Preencher, lá embaixo)
+Reino.materias.forEach((m) => (m.unicornios || []).forEach((u) => { if (!String(u.nome).includes(Preencher.MARCADOR)) NOMES_UNI.add(u.nome); }));
 function nomeDeUnicornio(nome) {
   const pal = normal(nome);
   for (const u of NOMES_UNI) {
@@ -61,6 +70,11 @@ function nomeDeUnicornio(nome) {
   }
   return null;
 }
+
+// texto com `(preencher)` (esqueleto do `npm run novo`): nos interiores, nas falas dos prédios e nos lugares
+defs.forEach((d) => Preencher.faltas(d, d.id).forEach((e) => erros.push(e)));
+Object.keys(Reino.FALAS_INTERIORES || {}).filter(doSo).forEach((p) => Preencher.faltas(Reino.FALAS_INTERIORES[p], `falas de ${p}`).forEach((e) => erros.push(e)));
+(Reino.lugaresRegistrados || []).filter((l) => doSo(l.id)).forEach((l) => Preencher.faltas(l, `lugar ${l.id}`, ['info']).forEach((e) => erros.push(e)));
 
 // ids únicos
 defs.forEach((d) => {
@@ -226,6 +240,7 @@ defs.forEach((d) => {
       if (!Reino.config.vozes[n.voz]) avisos.push(`${on}: perfil de voz "${n.voz}" ainda não existe em Reino.config.vozes`);
     }
     checar(n.sprite && n.sprite.base, `${on}: sem sprite.base`);
+    Extras.chavesDoSprite(Reino, n.sprite, on).forEach((a) => avisos.push(a));
     checarAcao(n.acao, on, true);
     const f = n.falas || {};
     ['oi', 'nova', 'feita', 'bloqueada', 'depois'].forEach((k) => {
@@ -256,7 +271,7 @@ Reino.materias.forEach((m) => {
   (esperadas.castelo = esperadas.castelo || []).push('treino:' + m.id);
 });
 esperadas.escola = Reino.provas.map((p) => 'prova:' + p.id);
-Object.keys(esperadas).forEach((l) => {
+Object.keys(esperadas).filter(doSo).forEach((l) => {
   if (porLugar[l]) {
     esperadas[l].forEach((k) => {
       const onde = atividades.get(k) || [];
@@ -353,12 +368,29 @@ defs.forEach((d) => {
   resumo.push(...linhasC);
 });
 
-console.log(`Biblioteca: ${Object.keys(I.OBJETOS).length} tipos de objeto, ${Object.keys(I.PISOS).length} pisos, ${Object.keys(I.PAREDES).length} paredes${temNpcs ? '' : ' (js/personagens/npcs.js ainda não existe)'}`);
-resumo.forEach((l) => console.log(l));
-listas.forEach((l) => console.log('• ' + l));
+// personagens registrados com predio (Reino.personagensDoPredio): o id é o do interior (andar da torre: o do
+// andar; interior padrão: 'padrao-<matéria>'); prédio antigo não tem vagas, então sem x/y ele não aparece
+(Reino._personagensPredio || []).filter((r) => doSo(r.predio)).forEach((r) => {
+  const d = Reino.interiores.find((i) => i.id === r.predio);
+  if (!checar(d, `personagem ${r.id}: predio '${r.predio}' não é id de interior (${Reino.interiores.map((i) => i.id).join(', ')})`)) return;
+  checar((d.npcs || []).some((n) => n.id === r.id), `personagem ${r.id}: registrado em '${r.predio}' sem x/y, e esse prédio não tem vagas (prédio antigo): dê x e y (tile de chão livre do interior)`);
+});
+
+// sprites do elenco e de registrarPersonagem; emoji do menu sem desenho (Reino.registrarLugar)
+if (!SO && temNpcs) Object.keys(Reino.NPCs.ELENCO).forEach((id) => Extras.chavesDoSprite(Reino, Reino.NPCs.ELENCO[id].sprite, `elenco ${id}`).forEach((a) => avisos.push(a)));
+(Reino.lugaresRegistrados || []).filter((l) => doSo(l.id)).forEach((l) => Extras.emojiDoMenu(ctx, l).forEach((a) => avisos.push(a)));
+
+if (DETALHES) {
+  console.log(`Biblioteca: ${Object.keys(I.OBJETOS).length} tipos de objeto, ${Object.keys(I.PISOS).length} pisos, ${Object.keys(I.PAREDES).length} paredes${temNpcs ? '' : ' (js/personagens/npcs.js ainda não existe)'}`);
+  resumo.forEach((l) => console.log(l));
+  listas.forEach((l) => console.log('• ' + l));
+}
 avisos.forEach((a) => console.log('⚠ ' + a));
+// a última linha é o resumo (o validar-tudo mostra a última)
+const conta = `${defs.length} interiores${SO ? ` de ${SO}` : ''}, ${defs.reduce((t, d) => t + (d.npcs || []).length, 0)} NPCs, ${avisos.length} aviso(s)`;
 if (erros.length) {
   erros.forEach((e) => console.log('✘ ' + e));
-  process.exit(1);
-}
-console.log('Tudo certo!');
+  console.log(`Resumo: ${erros.length} erro(s) — ${conta}`);
+  // exitCode, não exit(): com a saída num pipe, exit() cortaria a lista (o esqueleto do npm run novo tem centenas)
+  process.exitCode = 1;
+} else console.log(`Tudo certo! ${conta}${DETALHES ? '' : ' (lista por cômodo: --detalhes)'}`);

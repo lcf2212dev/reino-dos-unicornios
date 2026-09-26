@@ -43,6 +43,10 @@ async function abrir(op) {
   for (const sc of op.scripts || []) await context.addInitScript(sc);
   const page = await context.newPage();
   page.__erros = [];
+  // todo o console (log/info/warn/error), com a marca do que estava rodando (ver.js marca cada --js e --passos)
+  page.__console = [];
+  page.__marca = null;
+  page.on('console', (m) => page.__console.push({ tipo: m.type(), texto: m.text(), marca: page.__marca }));
   page.on('pageerror', (e) => page.__erros.push(String(e)));
   page.on('console', (m) => { if (m.type() === 'error' && !/Failed to load resource/.test(m.text())) page.__erros.push('console: ' + m.text()); });
   const alvo = new URL(base.href);

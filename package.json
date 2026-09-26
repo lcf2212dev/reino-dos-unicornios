@@ -16,6 +16,8 @@
     "index": "node jogo/ferramentas/gerar-index.js",
     "artifact": "node jogo/ferramentas/gerar-artifact.js",
     "tamanho": "node jogo/ferramentas/tamanho.js",
-    "tipos": "node jogo/ferramentas/testes/tipos.js"
+    "tipos": "node jogo/ferramentas/testes/tipos.js",
+    "ver": "node jogo/ferramentas/testes/ver.js",
+    "novo": "node jogo/ferramentas/novo/novo.js"
   }
 }

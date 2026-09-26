@@ -8,17 +8,18 @@ const { spawnSync } = require('child_process');
 
 const jogo = path.join(__dirname, '..', '..');
 const VALIDADORES = [
-  { nome: 'conteúdo das matérias', arq: 'ferramentas/validar/validar-conteudo.js' },
-  { nome: 'interiores', arq: 'ferramentas/validar/validar-interiores.js' },
+  { nome: 'conteúdo das matérias', arq: 'ferramentas/validar/validar-conteudo.js', detalhes: true },
+  { nome: 'interiores', arq: 'ferramentas/validar/validar-interiores.js', detalhes: true },
   { nome: 'index.html x manifesto', arq: 'ferramentas/gerar-index.js', args: ['--conferir'] },
   { nome: 'docs', arq: 'ferramentas/validar/validar-docs.js' },
 ];
 
-function rodar(v) {
+// detalhes: repassa --detalhes a quem aceita (a lista "✔ …" por matéria, prova e interior)
+function rodar(v, detalhes) {
   const arq = path.join(jogo, v.arq);
   if (!fs.existsSync(arq)) return { pulado: true };
   const t0 = Date.now();
-  const r = spawnSync(process.execPath, [arq].concat(v.args || []), { cwd: jogo, encoding: 'utf8' });
+  const r = spawnSync(process.execPath, [arq].concat(v.args || [], detalhes && v.detalhes ? ['--detalhes'] : []), { cwd: jogo, encoding: 'utf8' });
   return { ok: r.status === 0, saida: (r.stdout || '') + (r.stderr || ''), ms: Date.now() - t0 };
 }
 
@@ -26,7 +27,7 @@ if (require.main === module) {
   const detalhes = process.argv.includes('--detalhes');
   let falhas = 0;
   for (const v of VALIDADORES) {
-    const r = rodar(v);
+    const r = rodar(v, detalhes);
     if (r.pulado) {
       falhas++; console.log(`✘ ${v.nome}: ${v.arq} não existe`);
       continue;

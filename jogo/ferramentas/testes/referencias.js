@@ -10,6 +10,7 @@
 // referencias-dados.js (dados, desempenho, vozes), referencias-comparar.js (comparação).
 // Base automática (commit de base-referencia.txt) e comparação de um comando só: e2e.js.
 const fs = require('fs');
+const os = require('os');
 const path = require('path');
 const { iniciar } = require('./servidor-teste');
 const { abrir, lancar, TAMANHOS } = require('./navegador');
@@ -19,6 +20,11 @@ const { cenasMapaEInteriores, cenasTelas, cenasSalas, cenasProvasEDesafios } = r
 const { capturarDados, capturarDesempenho, capturarVozes } = require('./referencias-dados');
 const { comparar } = require('./referencias-comparar');
 
+// abas simultâneas: metade das CPUs, até 12
+const PARALELO_PADRAO = Math.max(1, Math.min(Math.floor(os.cpus().length / 2), 12));
+
+// op: { raiz, so, tamanhos, paralelo (abas ao mesmo tempo), filtro (RegExp: só fotografa esses nomes),
+//       faltam ({ tamanho: Set de nomes }: com filtro, as abas param quando todos já saíram) }
 async function capturar(saida, op) {
   const so = new Set((op.so || 'dados,imagens,vozes').split(','));
   const tamanhos = (op.tamanhos || Object.keys(TAMANHOS).join(',')).split(',');
@@ -37,22 +43,36 @@ async function capturar(saida, op) {
       await context.close();
     }
     if (so.has('imagens')) {
-      await Promise.all(tamanhos.map(async (tamanho) => {
-        const pasta = path.join(saida, 'imagens', tamanho);
-        const grupos = [
-          ['inicio', async (page) => foto(page, pasta, 'mapa-inicio')],
-          ['avancado', async (page) => foto(page, pasta, 'mapa-avancado')],
-          ['completo', (page) => cenasMapaEInteriores(page, pasta)],
-          ['completo', (page) => cenasTelas(page, pasta)],
-          ['completo', (page) => cenasSalas(page, pasta)],
-          ['completo', (page) => cenasProvasEDesafios(page, pasta)],
-        ];
-        for (const [save, fn] of grupos) {
-          const { context, page } = await abrirJogo(browser, raiz, tamanho, saves[save]);
-          await fn(page);
-          if (page.__erros.length) erros.push(`${tamanho}/${save}: ${page.__erros.join(' | ')}`);
-          await context.close();
-        }
+      // cada grupo numa aba própria (servidor e banco próprios): roda em paralelo, até op.paralelo por vez
+      // as filas de mapa + interiores (as mais longas) entram primeiro, uma por tamanho
+      const tarefas = [];
+      const t = (tamanho, save, fn) => tarefas.push({ tamanho, save, fn: Object.assign((page) => fn(page, path.join(saida, 'imagens', tamanho)), { nome: fn.name }) });
+      // mapa + interiores fica numa aba só, em fila: as barras de fome/sede/banho do HUD andam com o
+      // relógio, então um lote de interiores que começasse numa página nova sairia com outras barras (testado)
+      tamanhos.forEach((tm) => t(tm, 'completo', cenasMapaEInteriores));
+      tamanhos.forEach((tm) => [cenasSalas, cenasProvasEDesafios, cenasTelas].forEach((fn) => t(tm, 'completo', fn)));
+      tamanhos.forEach((tm) => {
+        t(tm, 'inicio', (page, p) => foto(page, p, 'mapa-inicio'));
+        t(tm, 'avancado', (page, p) => foto(page, p, 'mapa-avancado'));
+      });
+      const limite = op.paralelo || PARALELO_PADRAO;
+      let prox = 0;
+      // um Chromium por vaga: com --disable-gpu a composição de um navegador é uma fila só para todas as abas
+      await Promise.all(Array.from({ length: Math.min(limite, tarefas.length) }, async () => {
+        const nav = await lancar();
+        try {
+          while (prox < tarefas.length) {
+            const { tamanho, save, fn } = tarefas[prox++];
+            const { context, page } = await abrirJogo(nav, raiz, tamanho, saves[save]);
+            if (op.filtro) page.__filtro = op.filtro;
+            if (op.faltam) page.__faltam = op.faltam[tamanho];
+            const t0 = Date.now();
+            try { await fn(page); } catch (e) { if (!e.chega) throw e; }
+            if (process.env.REINO_TEMPOS) console.log(`  ${tamanho}/${save} ${fn.nome || ''}: ${((Date.now() - t0) / 1000).toFixed(0)} s`);
+            if (page.__erros.length) erros.push(`${tamanho}/${save}: ${page.__erros.join(' | ')}`);
+            await context.close();
+          }
+        } finally { await nav.close(); }
       }));
     }
     if (so.has('desempenho')) await capturarDesempenho(browser, raiz, saves, path.join(saida, 'desempenho.json'));
@@ -60,11 +80,12 @@ async function capturar(saida, op) {
     await browser.close();
     servidor.parar();
   }
+  erros.sort(); // a ordem de término varia com o paralelismo
   fs.writeFileSync(path.join(saida, 'erros.txt'), erros.join('\n') + (erros.length ? '\n' : ''));
   console.log(`✔ referências em ${saida}` + (erros.length ? ` (${erros.length} grupos com erro no console: veja erros.txt)` : ''));
 }
 
-module.exports = { capturar, comparar, estavel };
+module.exports = { capturar, comparar, estavel, PARALELO_PADRAO };
 
 if (require.main === module) {
   const [cmd, a, b] = process.argv.slice(2);

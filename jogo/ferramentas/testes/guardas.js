@@ -5,12 +5,21 @@
 //   conferirUrl(url)      só http://127.0.0.1:<porta de teste>/… (ou file://); o resto é recusado
 //   conferirPorta(porta)  porta de teste: inteira, 1024–65535 (nunca a 80)
 //   conferirBanco(arq)    banco de teste: sempre em /tmp, nunca em servidor/dados
-//   conferirPastaTmp(p)   pasta que uma ferramenta pode criar/limpar: só dentro de /tmp/reino-testes/
+//   conferirPastaTmp(p)   pasta que uma ferramenta pode criar/limpar: só dentro de /tmp/reino-testes/ (ou REINO_TESTES)
 // Teste: node --test jogo/ferramentas/testes/unidade/guardas.test.js
 const fs = require('fs');
 const path = require('path');
 
-const PASTA_TESTES = '/tmp/reino-testes';
+// REINO_TESTES troca a pasta (ex.: /dev/shm/reino-testes, quando o /tmp está cheio): só dentro de /tmp ou /dev/shm
+const PASTA_TESTES = pastaTestes(process.env.REINO_TESTES);
+function pastaTestes(pedida) {
+  if (!pedida) return '/tmp/reino-testes';
+  const abs = path.resolve(pedida);
+  if (!/^\/(tmp|dev\/shm)\/[^/]/.test(abs) || abs.includes('..') || /servidor[\\/]+dados/.test(abs)) {
+    throw new Error(`proibido: REINO_TESTES fora de /tmp e /dev/shm (recebido: ${abs})`);
+  }
+  return abs.replace(/\/+$/, '');
+}
 
 // IPv4 da rede local / privados (a "rede" onde o PC é achado pelo IP)
 function ipDaRede(host) {
@@ -70,4 +79,4 @@ function conferirPastaTmp(pasta) {
   return abs;
 }
 
-module.exports = { PASTA_TESTES, conferirUrl, conferirPorta, conferirBanco, conferirPastaTmp, ipDaRede };
+module.exports = { PASTA_TESTES, pastaTestes, conferirUrl, conferirPorta, conferirBanco, conferirPastaTmp, ipDaRede };
