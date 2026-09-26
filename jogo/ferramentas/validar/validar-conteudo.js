@@ -90,10 +90,11 @@ MATERIAS.forEach((m) => {
   Preencher.faltas(m, m.id).forEach((e) => erros.push(e));   // esqueleto do `npm run novo` ainda por escrever
   const livro = new Set((m.livro || []).map((l) => l.id));
   checar(m.salas && m.salas.length > 0, `${m.id}: sem salas`);
-  const valorSala = Reino.config.valorPorMateria / m.salas.length;
-  const soma = Math.round(valorSala * m.salas.length * 100) / 100;
-  checar(soma === Reino.config.valorPorMateria, `${m.id}: salas somam R$${soma}, esperado R$${Reino.config.valorPorMateria}`);
-  if (Math.round(valorSala * 100) !== valorSala * 100) avisos.push(`${m.id}: valor por sala tem mais de 2 casas (${valorSala})`);
+  // cada sala vale um valor redondo e a sobra é bônus ao completar (progresso-regras.js): a soma fecha sempre
+  const P = icones.Reino.Progresso, valorSala = P.valorSala(m), bonus = P.bonusMateria(m);   // o jogo inteiro (linha do `icones`)
+  const soma = Math.round((valorSala * m.salas.length + bonus) * 100) / 100;
+  checar(soma === Reino.config.valorPorMateria, `${m.id}: salas + bônus somam R$${soma}, esperado R$${Reino.config.valorPorMateria}`);
+  checar(Math.round(valorSala * 100) % 50 === 0 && bonus >= 0, `${m.id}: valor por sala (${valorSala}) tem de ser de R$ 0,50 em R$ 0,50 e o bônus (${bonus}) não pode ser negativo`);
 
   m.salas.forEach((s) => {
     checar(s.desafios.length >= Reino.config.desafiosPorSala, `${s.id}: só ${s.desafios.length} desafios (mínimo ${Reino.config.desafiosPorSala})`);

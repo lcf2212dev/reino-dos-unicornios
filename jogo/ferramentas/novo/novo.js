@@ -209,11 +209,14 @@ const TIPOS = {
     ver(id) { return `npm run ver -- --tela sala:${id} --nome ${id}`; },
   },
 };
-// aviso do valor por sala (config.valorPorMateria ÷ nº de salas), que muda quando a matéria ganha sala
+// aviso do valor por sala, que muda quando a matéria ganha sala: a mesma regra de progresso-regras.js
+// (cada sala de R$ 0,50 em R$ 0,50, arredondado para baixo; a sobra é bônus ao completar a matéria)
 function valorSala(total, n, antes) {
-  const v = total / n, exato = Math.round(v * 100) === v * 100;
-  return `valor por sala: R$ ${v.toFixed(2).replace('.', ',')} (R$ ${total} ÷ ${n} salas${antes ? `; antes, com ${antes}, R$ ${(total / antes).toFixed(2).replace('.', ',')}` : ''})` +
-    (exato ? '' : ': dízima; o validador só avisa, mas confira os centavos que aparecem para ela');
+  const reais = (c) => 'R$ ' + (c / 100).toFixed(2).replace('.', ',');
+  const conta = (k) => { const sala = Math.floor(total * 100 / k / 50) * 50; return { sala, bonus: total * 100 - sala * k }; };
+  const agora = conta(n), velho = antes ? conta(antes) : null;
+  const texto = (c) => reais(c.sala) + ' por sala' + (c.bonus ? ' + ' + reais(c.bonus) + ' de bônus ao completar' : '');
+  return `valor: ${texto(agora)} (R$ ${total} em ${n} salas${velho ? `; antes, com ${antes}, ${texto(velho)}` : ''})`;
 }
 // área de uma matéria nova sem --rect: a 1ª clareira que ninguém usa; senão o 1º rect livre de 5×5 do mapa
 function areaDaMateria(raiz, ex) {

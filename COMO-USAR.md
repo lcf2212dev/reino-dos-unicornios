@@ -68,6 +68,7 @@
 
 ## Regras do jogo
 - **Dinheiro:** cada sala paga uma vez. Cada matéria tem 5 salas de R$4, total de R$20. Com as 3 matérias (História, Inglês e Português), dá R$60 no total.
+  - Se uma matéria tiver um número de salas que não divide R$20 certinho (6 salas, por exemplo), cada sala vale um valor redondo, de R$0,50 em R$0,50, e a sobra vem como bônus quando ela completa a matéria. Com 6 salas: R$3 por sala e R$2 de bônus no fim. O Baú e a tela da matéria mostram o bônus antes, e a tela de fim da última sala mostra "+ R$2 de bônus por completar". Nunca aparece valor quebrado, como R$3,33.
 - **Matérias:**
   - **História:** no Museu das Memórias.
   - **Inglês:** na Torre do Relógio, com uma sala para cada capítulo, do 6 ao 10: Living Together, Here Comes the Sun, I Brush My Teeth Every Day, A Day in My Life e If You're Happy, Clap Your Hands.

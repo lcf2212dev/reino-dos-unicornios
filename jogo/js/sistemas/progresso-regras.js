@@ -5,11 +5,18 @@
   var agora = I.agora, estadoNovo = I.estadoNovo, numeroOu = I.numeroOu, ORDEM_MEDALHA = I.ORDEM_MEDALHA;
 
   /* ---------- dinheiro ---------- */
-  P.valorSala = function (materia) { return Reino.config.valorPorMateria / materia.salas.length; };
+  // cada sala vale um valor redondo (de R$ 0,50 em R$ 0,50, arredondado para baixo) e a sobra de
+  // config.valorPorMateria vira bônus quando a matéria fica completa: dinheiro fácil de pagar, nunca dízima
+  // (decisão do Leandro, 2026-09-26). Com 5 salas: R$ 4,00 cada e bônus zero; com 6: R$ 3,00 + R$ 2,00.
+  var PASSO_CENT = 50;
+  function centMateria() { return Math.round(Reino.config.valorPorMateria * 100); }
+  function centSala(materia) { var n = materia.salas.length; return n ? Math.floor(centMateria() / n / PASSO_CENT) * PASSO_CENT : 0; }
+  P.valorSala = function (materia) { return centSala(materia) / 100; };
+  P.bonusMateria = function (materia) { return materia.salas.length ? (centMateria() - centSala(materia) * materia.salas.length) / 100 : 0; };
   P.dinheiroMateria = function (materia) {
-    var v = 0;
-    materia.salas.forEach(function (s) { if (I.estado.salas[s.id] && I.estado.salas[s.id].feita) v += P.valorSala(materia); });
-    return Math.round(v * 100) / 100;
+    var cent = P.salasFeitas(materia) * centSala(materia);
+    if (materia.salas.length && P.materiaCompleta(materia)) cent += Math.round(P.bonusMateria(materia) * 100);
+    return cent / 100;
   };
   P.dinheiroTotal = function () {
     return Reino.materias.reduce(function (t, m) { return t + P.dinheiroMateria(m); }, 0);
@@ -76,6 +83,8 @@
     if (perfeita) reg.perfeita = true;
     if (calma) reg.calma = true;
     I.estado.salas[sala.id] = reg;
+    // a última sala feita pela primeira vez completa a matéria: entra também o bônus (a sobra da divisão)
+    if (primeiraVez && P.materiaCompleta(materia) && P.bonusMateria(materia) > 0) premios.bonus = P.bonusMateria(materia);
 
     premios.estrelas = resultado.acertosPrimeira + (calma ? 3 : 0);
     P.ganharEstrelas(premios.estrelas);

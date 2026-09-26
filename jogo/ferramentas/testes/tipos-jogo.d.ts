@@ -179,6 +179,8 @@ interface PremiosSala {
   materiaCompleta: boolean;
   /** o raro veio pelo caminho da persistência */
   porPersistencia?: boolean;
+  /** bônus da matéria (a sobra da divisão em valores redondos), na sala que a completa */
+  bonus?: number;
 }
 /** O que P.registrarTreino devolve. */
 interface PremiosTreino {
@@ -246,6 +248,7 @@ interface ProgressoApi {
   statusNuvem(): StatusNuvem;
   // progresso-regras.js
   valorSala(materia: Materia): number;
+  bonusMateria(materia: Materia): number;
   dinheiroMateria(materia: Materia): number;
   dinheiroTotal(): number;
   pago(materiaId: string): number;

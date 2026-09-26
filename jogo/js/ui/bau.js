@@ -11,7 +11,9 @@
     c.appendChild(el('div.bau-total', el('span.bau-moeda', '🪙'), el('div', el('small', 'Você já ganhou'), el('b', U.reais(P.dinheiroTotal())))));
     Reino.materias.forEach(function (m) {
       c.appendChild(el('div.bau-materia', el('b', m.emoji + ' ' + m.nome), barraDinheiro(m),
-        el('small', P.salasFeitas(m) + ' de ' + m.salas.length + ' salas feitas • cada sala vale ' + U.reais(P.valorSala(m)))));
+        el('small', P.salasFeitas(m) + ' de ' + m.salas.length + ' salas feitas • cada sala vale ' + U.reais(P.valorSala(m)) +
+          // espaço inseguível: o valor não quebra entre o R$ e o número
+          (P.bonusMateria(m) > 0 ? ' + ' + U.reais(P.bonusMateria(m)).replace(' ', '\u00a0') + ' de bônus ao completar' : ''))));
     });
     c.appendChild(el('div.aviso-medalha',
       el('span.aviso-medalha-icone', '🥇'),

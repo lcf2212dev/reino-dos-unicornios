@@ -30,6 +30,10 @@ Personagens: `npcs-e-dialogo.md`. Prédios: `interiores.md`. Vozes: `som-musica-
 2. Livro: `<m>/livro.js` com `Reino.registrarLivro('<m>', [{ id, e, titulo, texto }, …])`.
 3. Unicórnios da matéria: no `<m>/<m>.js` (`unicornios: [{ id, nome, raridade, sala | treino | materiaCompleta,
    cores: { corpo, crina: [3 cores], chifre, asa? }, frase }]`).
+   Dinheiro da matéria (`Reino.config.valorPorMateria`, derivado, nunca no save): cada sala vale um valor redondo,
+   de R$ 0,50 em R$ 0,50 arredondado para baixo (`P.valorSala`), e a sobra é bônus quando a matéria fica completa
+   (`P.bonusMateria`; `premios.bonus` no `concluirSala` da última sala). 5 salas: R$ 4,00 e bônus zero; 6 salas:
+   R$ 3,00 + R$ 2,00. Nunca dízima (decisão do Leandro, 2026-09-26).
 4. Estilo dos arquivos de sala: igual aos que já existem (ex.: `historia/h1.js`): indentação de 4 espaços na sala,
    8 nos desafios.
    <!-- validar-docs: ignorar -->

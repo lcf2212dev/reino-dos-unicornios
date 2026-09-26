@@ -29,7 +29,8 @@ index. À mão: o conteúdo da apostila (todo `(preencher)`; os validadores recu
 | (opcional) cavaleiro do treino | `personagem-novo.md` com `paraMateria: '<m>'` |
 
 Automático (não mexa): ala no Castelo, baias no Estábulo, interior padrão, pergunta surpresa, dinheiro
-(`Reino.config.valorPorMateria` dividido entre as salas), menu Lugares.
+(`Reino.config.valorPorMateria`: cada sala vale um valor redondo, de R$ 0,50 em R$ 0,50, e a sobra é bônus ao
+completar a matéria; `P.valorSala`/`P.bonusMateria` em `progresso-regras.js`), menu Lugares.
 
 ## Passo a passo
 1. Leia a apostila pelas fotos (converta para JPEG em `/tmp`; o que está escrito à mão é da Mariana e

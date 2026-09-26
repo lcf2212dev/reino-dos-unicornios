@@ -20,6 +20,8 @@
     c.appendChild(el('div.lugar-guia', PA.paraDOM(PA.claude(0), 3, 'claude-intro'),
       el('p', feitas === 0 ? materia.guia : (feitas === materia.salas.length ? 'Você completou todas as salas! Agora pode treinar no Castelo da Medalha ou jogar as salas de novo para ganhar os raros. 🌈' : 'Você já fez ' + feitas + ' de ' + materia.salas.length + ' salas. Vamos para a próxima?'))));
     c.appendChild(barraDinheiro(materia));
+    // a sobra da divisão em valores redondos vem como bônus ao completar (progresso-regras.js)
+    if (P.bonusMateria(materia) > 0 && !P.materiaCompleta(materia)) c.appendChild(el('p.bau-nota', '🎁 Completando todas as salas: + ' + U.reais(P.bonusMateria(materia)).replace(' ', '\u00a0') + ' de bônus!'));
     var lista = el('div.lista-salas');
     materia.salas.forEach(function (s, i) {
       var reg = est().salas[s.id] || {};
