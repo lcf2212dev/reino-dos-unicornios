@@ -14,7 +14,9 @@ nunca leia nem grave o doc `progresso/mariana`. Nunca `force`. Nunca o campo `ca
 2. **Montar o delta** (na main integrada, tudo em commit): `npm run artifact -- --desde publicado`.
    Recusa se houver mudança fora de commit em `jogo/js`, `jogo/css` ou `jogo/index.html`.
    Grava em `/tmp/reino-testes/artifact/<data>/`: a página index.html, os lotes lote-1.json…lote-N.json e o resumo.txt.
-3. **Mostrar ao Leandro** o resumo.txt: novos, mudados, removidos e o número de lotes. Espere o sinal.
+3. **Conferir o delta** no resumo.txt (novos, mudados, removidos, lotes) e siga sem esperar. Se o claude.ai recusar
+   por arquivo "não lido", leia esses arquivos (`read` com `paths`) e confira que são iguais aos do commit registrado
+   (`git show <hash>:jogo/<caminho>`); iguais, publique de novo. Diferentes: pare e conte ao Leandro.
 4. **Publicar um lote por vez**, na ordem: `Artifact` publish com `url` (a registrada), `file_path` = o
    `index.html` da pasta e `files` = o conteúdo do lote-K.json. Sem `capabilities`, sem `icon`, sem `force`.
    A página e os removidos (`null`) estão no ÚLTIMO lote: os anteriores só acrescentam arquivos.
