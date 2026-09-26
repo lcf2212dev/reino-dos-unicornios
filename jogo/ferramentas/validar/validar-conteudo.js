@@ -51,8 +51,8 @@ function checarIngles(obj, onde) {
   } else if (Array.isArray(obj)) obj.forEach((v) => checarIngles(v, onde));
   else if (obj && typeof obj === 'object') Object.keys(obj).forEach((k) => checarIngles(obj[k], obj.id ? obj.id : onde));
 }
-// desenhos de js/arte/icones.js (figuras do completar)
-const icones = Jogo.carregar(Jogo.contexto(), Jogo.scripts({ nomes: ['arte/icones'] }));
+// desenhos de js/arte/icones/*.js (figuras do completar)
+const icones = Jogo.carregar(Jogo.contexto(), Jogo.scripts({ grupos: ['icones'] }));
 const textoOk = (t) => typeof t === 'string' && t.trim().length > 0;
 
 // campos novos: livre (varias/completar), rotulos (vfLista), desenho, apoio, instrucao, copiar, colado/img/aceitas (completar)
@@ -77,8 +77,8 @@ function checarNovos(d, naProva) {
       if (f.img !== undefined) {
         checar(textoOk(f.img) && textoOk(f.alt), `${onde}: figura precisa de img e alt`);
         if (textoOk(f.img) && !icones.window.ICONES[f.img]) {
-          if (naProva) erros.push(`${onde}: falta o desenho "${f.img}" em js/arte/icones.js`);
-          else avisos.push(`${onde}: falta o desenho "${f.img}" em js/arte/icones.js (aparece ❓)`);
+          if (naProva) erros.push(`${onde}: falta o desenho "${f.img}" em js/arte/icones/`);
+          else avisos.push(`${onde}: falta o desenho "${f.img}" em js/arte/icones/ (aparece ❓)`);
         }
       }
     });
@@ -155,7 +155,7 @@ Reino.materias.forEach((m) => {
 });
 
 // provas bimestrais (Escola do Reino)
-const pixelart = fs.readFileSync(Jogo.arquivo('arte/pixelart'), 'utf8');
+const pixelart = fs.readFileSync(Jogo.arquivo('arte/pixelart-unicornio-moldes'), 'utf8');
 Reino.provas.forEach((pv) => {
   const m = Reino.materia(pv.materiaId);
   checar(m, `${pv.id}: matéria ${pv.materiaId} não existe`);
@@ -166,8 +166,8 @@ Reino.provas.forEach((pv) => {
     if (!a) return;
     checar(!ids.has(a.id), `ID repetido: ${a.id}`);
     ids.add(a.id);
-    checar(icones.window.ICONES['acessorio:' + a.id], `${a.id}: falta o ícone "acessorio:${a.id}" em js/arte/icones.js`);
-    checar(pixelart.includes(`'${a.id}':`), `${a.id}: falta o desenho no unicórnio (ENFEITES em js/arte/pixelart.js)`);
+    checar(icones.window.ICONES['acessorio:' + a.id], `${a.id}: falta o ícone "acessorio:${a.id}" em js/arte/icones/`);
+    checar(pixelart.includes(`'${a.id}':`), `${a.id}: falta o desenho no unicórnio (ENFEITES em js/arte/pixelart-unicornio-moldes.js)`);
   });
   checarIngles(pv, pv.id);
   pv.questoes.forEach((d) => {
@@ -182,7 +182,7 @@ Reino.provas.forEach((pv) => {
     if (d.tipo === 'ligar') {
       checarLigarLargura(d);
       checar(d.pares.every((p) => (p[0].t || (p[0].img && p[0].alt)) && p[1].t), `${d.id}: pares inválidos`);
-      d.pares.forEach((p) => { if (p[0].img) checar(icones.window.ICONES[p[0].img], `${d.id}: falta o desenho "${p[0].img}" em js/arte/icones.js`); });
+      d.pares.forEach((p) => { if (p[0].img) checar(icones.window.ICONES[p[0].img], `${d.id}: falta o desenho "${p[0].img}" em js/arte/icones/`); });
       if (d.direita) checar([...d.direita].sort().join() === d.pares.map((_, i) => i).join(), `${d.id}: ordem da direita inválida`);
     }
     if (d.tipo === 'vfLista') checar(d.itens.length >= 2 && d.itens.every((i) => i.t && typeof i.v === 'boolean'), `${d.id}: V/F inválido`);
@@ -193,9 +193,9 @@ Reino.provas.forEach((pv) => {
   console.log(`✔ ${pv.nome} (${pv.bimestre}): ${pv.questoes.length} questões, acessórios ${pv.acessorios.lendario.nome} / ${pv.acessorios.raro.nome} / ${pv.acessorios.comum.nome}`);
 });
 
-// emoji de matéria sem desenho em js/arte/icones.js aparece como emoji reduzido (feio): desenhar antes de publicar
+// emoji de matéria sem desenho em js/arte/icones/ aparece como emoji reduzido (feio): desenhar antes de publicar
 {
-  const ic = Jogo.carregar(Jogo.contexto(), Jogo.scripts({ nomes: ['arte/icones'] }));
+  const ic = Jogo.carregar(Jogo.contexto(), Jogo.scripts({ grupos: ['icones'] }));
   const RE = /(\p{RI}\p{RI}|\p{Extended_Pictographic}(?:\uFE0F|\uFE0E)?(?:\u200D\p{Extended_Pictographic}(?:\uFE0F|\uFE0E)?)*)/gu;
   const semDesenho = new Set();
   const arquivos = materias.map((s) => trocar[Jogo.nome(s)] || Jogo.caminho(s.js))
@@ -207,7 +207,7 @@ Reino.provas.forEach((pv) => {
       if (!ic.window.ICONES[k]) semDesenho.add(k);
     }
   });
-  if (semDesenho.size) avisos.push(`emojis sem pixel art em js/arte/icones.js: ${[...semDesenho].join(' ')}`);
+  if (semDesenho.size) avisos.push(`emojis sem pixel art em js/arte/icones/: ${[...semDesenho].join(' ')}`);
 }
 avisos.forEach((a) => console.log('⚠ ' + a));
 if (erros.length) {

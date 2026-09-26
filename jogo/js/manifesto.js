@@ -8,7 +8,7 @@
    - scripts: um por linha, na ordem em que o navegador carrega (a ordem importa: cada
      arquivo usa o que os de cima registraram em window.Reino).
        js     caminho a partir de jogo/
-       grupo  área do arquivo (nucleo, arte, conteudo, materias, provas, personagens,
+       grupo  área do arquivo (nucleo, arte, icones, pixelart, conteudo, materias, provas, personagens,
               sistemas, mundo, atividades, ui, motor, interiores, debug); as ferramentas
               escolhem os arquivos por grupo
        node   true = roda num vm do Node sem DOM (as ferramentas dão só console, relógio,
@@ -37,8 +37,26 @@
       { js: 'js/nucleo/config.js', grupo: 'nucleo', node: true },
       { js: 'js/nucleo/registros.js', grupo: 'nucleo', node: true },
       { js: 'js/nucleo/util.js', grupo: 'nucleo', node: true },
-      { js: 'js/arte/icones.js', grupo: 'arte', node: true },
-      { js: 'js/arte/pixelart.js', grupo: 'arte' },
+      { js: 'js/arte/icones/icones.js', grupo: 'icones', node: true },
+      { js: 'js/arte/icones/interface.js', grupo: 'icones', node: true },
+      { js: 'js/arte/icones/premios.js', grupo: 'icones', node: true },
+      { js: 'js/arte/icones/pessoas.js', grupo: 'icones', node: true },
+      { js: 'js/arte/icones/objetos.js', grupo: 'icones', node: true },
+      { js: 'js/arte/icones/natureza.js', grupo: 'icones', node: true },
+      { js: 'js/arte/icones/cotidiano.js', grupo: 'icones', node: true },
+      { js: 'js/arte/icones/ingles.js', grupo: 'icones', node: true },
+      { js: 'js/arte/icones/loja-petshop.js', grupo: 'icones', node: true },
+      { js: 'js/arte/icones/espaco.js', grupo: 'icones', node: true },
+      { js: 'js/arte/icones/portugues.js', grupo: 'icones', node: true },
+      { js: 'js/arte/icones/portugues-palavras.js', grupo: 'icones', node: true },
+      { js: 'js/arte/icones/portugues-salas.js', grupo: 'icones', node: true },
+      // pixelart.js (base) primeiro: cria window.PA e PA._interno, que as outras partes usam
+      { js: 'js/arte/pixelart.js', grupo: 'pixelart' },
+      { js: 'js/arte/pixelart-unicornio-moldes.js', grupo: 'pixelart' },
+      { js: 'js/arte/pixelart-unicornio.js', grupo: 'pixelart' },
+      { js: 'js/arte/pixelart-personagens.js', grupo: 'pixelart' },
+      { js: 'js/arte/pixelart-ovos.js', grupo: 'pixelart' },
+      { js: 'js/arte/pixelart-icones.js', grupo: 'pixelart' },
       { js: 'js/arte/desenho.js', grupo: 'arte', node: true },
       { js: 'js/conteudo/loja-itens.js', grupo: 'conteudo', node: true },
       { js: 'js/personagens/unicornios.js', grupo: 'personagens', node: true },
