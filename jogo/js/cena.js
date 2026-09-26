@@ -89,200 +89,6 @@
     Reino.Claude.falar(Reino.Claude.frase(U.sortear(tipos)));
   }
 
-  /* ---------- placas do mapa (fonte pixel, em px da tela) ---------- */
-  var FONTE_PIXEL = '"Press Start 2P", "Trebuchet MS", sans-serif';
-  function linhasDaPlaca(nome) {
-    var palavras = nome.split(/\s+/);
-    var linhas = [], atual = '';
-    palavras.forEach(function (p) {
-      var prox = atual ? atual + ' ' + p : p;
-      if (atual && prox.length > 12) { linhas.push(atual); atual = p; }
-      else atual = prox;
-    });
-    if (atual) linhas.push(atual);
-    return linhas;
-  }
-  function extraDaPlaca(l) {
-    var p = P();
-    if (l.tipo === 'materia') {
-      var m = Reino.materia(l.materiaId);
-      return concluidos().indexOf(l.id) >= 0 ? 'Pronto' : p.salasFeitas(m) + '/' + m.salas.length;
-    }
-    if (l.tipo === 'estabulo' && p.ovosParaChocar().length) return 'Ovo';
-    if (l.tipo === 'escola' && Reino.provas.some(function (pv) { return !p.regProva(pv).premio; })) return 'Prova';
-    // Pet Shop: a montaria com sede ou fome (sede primeiro) avisa na placa
-    if (l.tipo === 'petshop') {
-      var b = null;
-      try { b = Reino.Cuidados && Reino.Cuidados.baixo ? Reino.Cuidados.baixo() : null; } catch (e) { b = null; }
-      if (b && b.sede) return 'Sede';
-      if (b && b.fome) return 'Fome';
-    }
-    return '';
-  }
-  // placa ao lado da construção, com a fonte pixel (acentos inclusos).
-  // Press Start 2P só fica nítida em múltiplos de 8px e em posições inteiras;
-  // o tamanho acompanha a escala do mapa (em tela de alta densidade o mapa cresce junto).
-  // caixas das placas do último desenho, em px do jogo (para tocar na placa)
-  var placasNaTela = [];
-  // retângulos de verdade dos chips e botões do HUD (e do menu de baixo), em px do canvas. A faixa
-  // .hud-topo ocupa a largura toda da tela: medir ela empurrava para baixo qualquer placa no alto do
-  // mapa, mesmo sem chip nenhum em cima (a da Escola ia parar no meio do lago). A medida é guardada
-  // (getBoundingClientRect por quadro é caro) e refeita a cada meio segundo ou quando a tela muda.
-  var hudMedido = { rects: [], medidoEm: -1e9, chave: '' };
-  // caixa do chip sem o transform da animação (o do ovo pulsa: medido num instante qualquer do pulso,
-  // a placa que desvia dele pulava a cada nova medida). Só o chip animado é medido por offset*, que
-  // ignora o transform (o menu de baixo se centra com translate, então os outros ficam com a caixa
-  // da tela); o pai que conta (.hud-topo) não é animado. Em volta, a folga do pulso maior (pulsar: scale 1.04).
-  function caixaParada(e) {
-    var anima = getComputedStyle(e).animationName, pai = e.offsetParent;
-    if (!anima || anima === 'none' || !pai) return e.getBoundingClientRect();
-    var pr = pai.getBoundingClientRect();
-    var left = pr.left + pai.clientLeft + e.offsetLeft, top = pr.top + pai.clientTop + e.offsetTop;
-    var w = e.offsetWidth, h = e.offsetHeight, dx = w * 0.02, dy = h * 0.02;
-    return { left: left - dx, right: left + w + dx, top: top - dy, bottom: top + h + dy };
-  }
-  function retangulosHud(canvas, dpr) {
-    var agora = performance.now(), chave = canvas.width + 'x' + canvas.height + '@' + dpr;
-    if (chave === hudMedido.chave && agora - hudMedido.medidoEm <= 500) return hudMedido.rects;
-    var c = canvas.getBoundingClientRect();
-    hudMedido.rects = Array.prototype.map.call(document.querySelectorAll('#hud > *:not(.hud-topo), #hud .hud-topo > * > *'), function (e) {
-      var r = caixaParada(e);
-      // o menu de baixo (dock) empurra a placa para cima; o resto do HUD, para baixo ou para o lado
-      return { left: (r.left - c.left) * dpr, right: (r.right - c.left) * dpr, top: (r.top - c.top) * dpr, bottom: (r.bottom - c.top) * dpr,
-        embaixo: e.classList.contains('dock') };
-    }).filter(function (r) { return r.right > r.left && r.bottom > r.top; });
-    hudMedido.medidoEm = agora; hudMedido.chave = chave;
-    return hudMedido.rects;
-  }
-  function desenharPlacas(ctx, pn) {
-    placasNaTela = [];
-    var canvas = ctx.canvas, escala = pn.escala, dpr = pn.dpr, cam = pn.cam, Jg = J();
-    var fonte = 8 * Math.max(2, Math.round(escala / 2));
-    var k = fonte / 16;
-    function px(v) { return Math.round(v * k); }
-    ctx.save();
-    ctx.imageSmoothingEnabled = true;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.font = fonte + 'px ' + FONTE_PIXEL;
-    var hud = retangulosHud(canvas, dpr);
-    var cima = hud.filter(function (r) { return !r.embaixo; });
-    var pad = px(12), topo = px(8), lh = px(24), vao = px(6), borda = px(3), filete = px(2), etiquetaH = px(24);
-    var posteH = Math.round(10 * escala / 3);
-    var folga = borda * 2;
-    // 1ª passada: o lugar normal de cada placa (sobre o telhado ou ao lado), em px do canvas
-    var placas = Mapa.lugares().map(function (l) {
-      var linhas = linhasDaPlaca(l.nome);
-      var extra = extraDaPlaca(l);
-      var largura = 0;
-      linhas.forEach(function (linha) { largura = Math.max(largura, ctx.measureText(linha).width); });
-      // o contador (0/5, Pronto, Ovo) vai numa etiqueta lilás separada do nome
-      var etiquetaW = extra ? Math.ceil(ctx.measureText(extra).width) + px(16) : 0;
-      largura = Math.max(largura, etiquetaW);
-      var sw = Math.ceil(largura + pad * 2);
-      var sh = topo * 2 + linhas.length * lh + (extra ? vao + etiquetaH : 0);
-      var ww = sw / escala, wh = sh / escala;
-      // l.placa: 'acima' põe a placa sobre o telhado; 'direita'/'esquerda' forçam o lado;
-      // sem nada, fica ao lado virada para o meio do mapa
-      var x, y;
-      if (l.placa === 'acima') {
-        x = (l.rect.x + l.rect.w / 2) * T - ww / 2;
-        y = l.rect.y * T - wh - 8;
-      } else {
-        var naDireita = l.placa ? l.placa === 'direita' : l.rect.x + l.rect.w / 2 < Mapa.W / 2;
-        x = naDireita ? (l.rect.x + l.rect.w) * T + 3 : l.rect.x * T - ww - 3;
-        y = (l.rect.y + l.rect.h) * T - wh - 2;
-      }
-      x = Math.max(T + 1, Math.min(x, Mapa.largura() - ww - T - 1));
-      return { l: l, linhas: linhas, extra: extra, etiquetaW: etiquetaW, sw: sw, sh: sh, x: x, y: y, ww: ww, wh: wh,
-        sx: Math.round((x - cam.x) * escala), sy: Math.round((y - cam.y) * escala) };
-    });
-    function cruza(lista, x0, y0, sw, sh) {
-      return lista.some(function (r) { return x0 - folga < r.right && x0 + sw + folga > r.left && y0 - folga < r.bottom && y0 + sh + folga > r.top; });
-    }
-    // as placas que não estão atrás de um chip ficam no lugar normal: são obstáculo para as que desviam
-    // (o menu de baixo, o dock, empurra a placa para cima, com o poste)
-    function sobeDoMenu(sx, sy, sw, sh) {
-      hud.forEach(function (r) {
-        if (!r.embaixo) return;
-        if (sx < r.right && sx + sw > r.left && sy - borda < r.bottom && sy + sh + borda + posteH > r.top)
-          sy = Math.min(sy, Math.round(r.top) - sh - borda - posteH - borda);
-      });
-      return sy;
-    }
-    function naTela(sx, sy, sw, sh) { return !(sx > canvas.width || sy > canvas.height || sx + sw < 0 || sy + sh < 0); }
-    var paradas = [];
-    placas.forEach(function (pl) {
-      pl.atras = cruza(cima, pl.sx, pl.sy, pl.sw, pl.sh);
-      if (pl.atras) return;
-      pl.sy = sobeDoMenu(pl.sx, pl.sy, pl.sw, pl.sh);
-      if (naTela(pl.sx, pl.sy, pl.sw, pl.sh)) paradas.push({ left: pl.sx - borda, right: pl.sx + pl.sw + borda, top: pl.sy - borda, bottom: pl.sy + pl.sh + borda });
-    });
-    // caixas (px do canvas, com a borda) das placas que já desviaram neste quadro
-    var postas = [];
-    placas.forEach(function (pl) {
-      var l = pl.l, linhas = pl.linhas, extra = pl.extra, etiquetaW = pl.etiquetaW, sw = pl.sw, sh = pl.sh;
-      var x = pl.x, y = pl.y, ww = pl.ww, wh = pl.wh, sx = pl.sx, sy = pl.sy;
-      // atrás de um chip do HUD de cima, a placa vai para o lugar livre mais perto: embaixo dele ou
-      // ao lado, nunca sobre outra placa; sem lugar livre, fica no lugar normal (atrás do chip) em vez
-      // de ir para longe do prédio. Embaixo, sobe (com o poste) para não ficar atrás do menu
-      if (pl.atras) {
-        var outras = paradas.concat(postas);
-        var melhor = null;
-        cima.forEach(function (r) {
-          // (ceil/floor: a borda do chip nem sempre cai num px inteiro)
-          [{ x: sx, y: Math.ceil(r.bottom + folga) }, { x: Math.ceil(r.right + folga), y: sy }, { x: Math.floor(r.left - folga - sw), y: sy }].forEach(function (k) {
-            // para o lado, só se couber inteira na tela (descer mantém o x, mesmo com a placa cortada na borda)
-            if (k.x !== sx && (k.x < folga || k.x + sw + folga > canvas.width)) return;
-            if (cruza(cima, k.x, k.y, sw, sh) || cruza(outras, k.x, k.y, sw, sh)) return;
-            var d = Math.abs(k.x - sx) + Math.abs(k.y - sy);
-            if (!melhor || d < melhor.d) melhor = { x: k.x, y: k.y, d: d };
-          });
-        });
-        if (melhor) { sx = melhor.x; sy = melhor.y; }
-        else {
-          var abaixo = sy;
-          cima.forEach(function (r) { if (cruza([r], sx, abaixo, sw, sh)) abaixo = Math.max(abaixo, Math.ceil(r.bottom + folga)); });
-          if (!cruza(outras, sx, abaixo, sw, sh)) sy = abaixo;
-        }
-        sy = sobeDoMenu(sx, sy, sw, sh);
-      }
-      if (!naTela(sx, sy, sw, sh)) return;
-      if (pl.atras) postas.push({ left: sx - borda, right: sx + sw + borda, top: sy - borda, bottom: sy + sh + borda });
-      // guarda a caixa como ficou na tela (inclusive quando desceu por causa do HUD ou subiu por causa do menu)
-      placasNaTela.push({ lugar: l, x: cam.x + (sx - borda) / escala, y: cam.y + (sy - borda) / escala,
-        w: (sw + borda * 2) / escala, h: (sh + borda * 2) / escala });
-      var perto = Jg.x > x - 6 && Jg.x < x + ww + 6 && Jg.y > y - 4 && Jg.y < y + wh + 8;
-      var meio = sx + Math.round(sw / 2);
-      ctx.globalAlpha = perto ? 0.35 : 1;
-      ctx.fillStyle = '#3a2446';
-      ctx.fillRect(sx - borda, sy - borda, sw + borda * 2, sh + borda * 2);
-      ctx.fillStyle = '#fff8ee';
-      ctx.fillRect(sx, sy, sw, sh);
-      ctx.fillStyle = '#f3e6c8';
-      ctx.fillRect(sx, sy, sw, borda);
-      var poste = Math.max(4, Math.round(escala));
-      ctx.fillStyle = '#8a604a';
-      ctx.fillRect(meio - Math.round(poste / 2), sy + sh + borda, poste, posteH);
-      ctx.fillStyle = '#3a2446';
-      linhas.forEach(function (linha, i) {
-        ctx.fillText(linha, meio, sy + topo + lh * i + lh / 2);
-      });
-      if (extra) {
-        var ex = meio - Math.round(etiquetaW / 2), ey = sy + topo + lh * linhas.length + vao;
-        ctx.fillStyle = '#b58cff';
-        ctx.fillRect(ex, ey, etiquetaW, etiquetaH);
-        ctx.fillStyle = '#efe4ff';
-        ctx.fillRect(ex + filete, ey + filete, etiquetaW - filete * 2, etiquetaH - filete * 2);
-        ctx.fillStyle = '#6a4cd6';
-        ctx.fillText(extra, meio, ey + etiquetaH / 2);
-      }
-      ctx.globalAlpha = 1;
-    });
-    ctx.restore();
-    ctx.imageSmoothingEnabled = false;
-  }
-
   /* ---------- a cena do mapa (adaptador sobre Mapa) ---------- */
   function alvoLugar(lugar) {
     return {
@@ -313,13 +119,8 @@
         var vizinho = Mapa.maisPerto(ct.x - 1, ct.y, J().tile());
         return { tipo: 'claude', id: 'claude', tile: vizinho, olhar: { x: 1, y: 0 }, agir: falarComClaude };
       }
-      // tocou na placa com o nome (a de cima fica na frente)
-      for (var i = placasNaTela.length - 1; i >= 0; i--) {
-        var pl = placasNaTela[i];
-        if (wx >= pl.x && wx < pl.x + pl.w && wy >= pl.y && wy < pl.y + pl.h) return alvoLugar(pl.lugar);
-      }
       var lugar = Mapa.lugarNoTile(tx, ty);
-      // tocou na plaquinha embaixo do prédio também vale
+      // tocou logo embaixo do prédio (na frente da porta) também vale
       if (!lugar) lugar = Mapa.lugarNoTile(tx, ty - 1);
       return lugar ? alvoLugar(lugar) : null;
     },
@@ -332,14 +133,14 @@
       }
       return null;
     },
-    // caixas das placas no último desenho (px do jogo), para o debug e os testes
-    placas: function () { return placasNaTela.map(function (p) { return { id: p.lugar.id, x: p.x, y: p.y, w: p.w, h: p.h }; }); },
     npcs: function () { return []; },
     preparar: function () { return Promise.resolve(); },   // o mapa já é pré-renderizado no início
     desenharFundo: function (bctx, t, animar) {
       Mapa.desenharAnimado(bctx, t, { concluidos: concluidos(), semAnimacao: !animar });
     },
-    desenharTela: function (ctx, pn) { desenharPlacas(ctx, pn); },
+    // o mapa não tem nada por cima dos personagens: os prédios não têm mais placa (o nome e os avisos
+    // de cada lugar ficam no menu Lugares, UI.telaLugares)
+    desenharTela: function () {},
     itensDesenho: function (pn, t, animar) {
       var ct = Mapa.claudeTile;
       // empate com a Mariana: o Claude fica atrás (como sempre foi)
@@ -471,6 +272,7 @@
     try { Reino.Som.tocar('porta'); } catch (e) { console.error(e); }
     var t = { fase: 'fechando', inicio: performance.now(), tempos: tempos, circulo: tempos === TEMPO, destino: destino };
     trans = t;
+    U.emit('transicao', true);   // o botão das fotos (ui.js) se apaga durante a transição
     var pacote = destino.pacote && Reino.Voz && Reino.Voz.carregar ? destino.pacote : null;
     var limite = pacote && vindo[pacote] ? Math.min(LIMITE_VINDO, tempos.limite) : tempos.limite;
     t.promessa = new Promise(function (resolver) {
@@ -480,6 +282,7 @@
         concluida = true;
         trans = null;
         redesenhar();
+        U.emit('transicao', false);
         resolver();
       }
       function abrir(resultado) {

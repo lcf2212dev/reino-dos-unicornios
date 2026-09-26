@@ -409,14 +409,17 @@
     return PA.paraDOM(spr, escala || 3);
   };
 
-  /* ---------- fome e sede (barrinhas de Reino.Cuidados) ---------- */
-  // Toda barrinha de fome/sede leva data-uni e data-campo: um único ouvinte do evento 'cuidados'
+  /* ---------- fome, sede e banho (barrinhas de Reino.Cuidados) ---------- */
+  // Toda barrinha de fome/sede/banho leva data-uni e data-campo: um único ouvinte do evento 'cuidados'
   // repinta todas as que estão na página (HUD, Estábulo, Pet Shop) sem refazer nada em volta.
   var CUIDADO = {
     fome: { icone: '🍎', rotulo: 'Fome', baixo: 'Quer comer!' },
     sede: { icone: '💧', rotulo: 'Sede', baixo: 'Quer água!' },
+    banho: { icone: '🛁', rotulo: 'Banho', baixo: 'Quer banho!' },
   };
   function cuidadosProntos() { return !!(Reino.Cuidados && Reino.Cuidados.niveis); }
+  // o banho só aparece quando Reino.Cuidados já o conhece (niveis() com o campo)
+  function comBanho() { try { return cuidadosProntos() && typeof Reino.Cuidados.niveis().banho === 'number'; } catch (e) { return false; } }
   function uniChocado(id) { var u = est().unis[id]; return !!(u && u.chocado); }
   // ícone pequeno e nítido (fora do texto: não cresce com a fonte). PA.iconeEmoji já arredonda
   // para a escala inteira mais próxima de `px` (PA.escalaNitida), então nunca sai borrado.
@@ -438,13 +441,15 @@
     return b;
   }
   function barrasCuidado(uniId, tamanho) {
-    return el('span.cuid-par.cuid-par-' + tamanho, barraCuidado(uniId, 'fome', tamanho), barraCuidado(uniId, 'sede', tamanho));
+    return el('span.cuid-par.cuid-par-' + tamanho, barraCuidado(uniId, 'fome', tamanho), barraCuidado(uniId, 'sede', tamanho),
+      comBanho() ? barraCuidado(uniId, 'banho', tamanho) : null);
   }
   function pintarBarra(b) {
     if (!cuidadosProntos()) return;
     var id = b.getAttribute('data-uni'), campo = b.getAttribute('data-campo');
-    var v = Math.round(Reino.Cuidados.niveis(id)[campo]);
-    var baixo = Reino.Cuidados.baixo(id)[campo];
+    var nv = Reino.Cuidados.niveis(id)[campo];
+    var v = Math.round(typeof nv === 'number' ? nv : 100);   // sem o campo = cheio
+    var baixo = !!Reino.Cuidados.baixo(id)[campo];
     var cheio = b.querySelector('.cuid-cheio');
     if (cheio) cheio.style.width = v + '%';
     b.classList.toggle('baixo', baixo);
@@ -455,14 +460,14 @@
   }
   UI.pintarCuidados = function () { U.$$('.cuid-barra[data-uni]').forEach(pintarBarra); rotularMontaria(); };
   U.on('cuidados', function () { UI.pintarCuidados(); });
-  // leitor de tela: o chip da montaria diz também a fome e a sede ("Estábulo — Nome, fome 40, sede 80")
+  // leitor de tela: o chip da montaria diz também a fome, a sede e o banho ("Estábulo — Nome, fome 40, sede 80, banho 60")
   function rotularMontaria() {
     var m = document.querySelector('#hud .chip-montaria');
     if (!m || !est()) return;
     var id = P.montaria(), txt = 'Estábulo — ' + P.nomeUni(id);
     if (cuidadosProntos() && uniChocado(id)) {
       var n = Reino.Cuidados.niveis(id);
-      txt += ', fome ' + Math.round(n.fome) + ', sede ' + Math.round(n.sede);
+      txt += ', fome ' + Math.round(n.fome) + ', sede ' + Math.round(n.sede) + (typeof n.banho === 'number' ? ', banho ' + Math.round(n.banho) : '');
     }
     m.setAttribute('aria-label', txt);
   }
@@ -608,6 +613,64 @@
   document.addEventListener('fullscreenchange', pintarBotaoTela);
   document.addEventListener('webkitfullscreenchange', pintarBotaoTela);
 
+  /* ---------- botão das fotos (Reino.Fotos, js/fotos.js) ---------- */
+  // toque → tira a foto; toque longo (config.fotos.toqueLongoMs) → abre o álbum, sem tirar a foto.
+  // Apagado (aria-disabled) quando Fotos.podeTirar() diz não: transição, tela aberta, balão, banho.
+  function fotos() { var F = Reino.Fotos; return F && typeof F.tirar === 'function' ? F : null; }
+  function podeFotografar() {
+    var F = fotos();
+    try { return !!(F && (typeof F.podeTirar !== 'function' || F.podeTirar())); } catch (e) { return false; }
+  }
+  function pintarBotaoFoto() {
+    var b = U.$('#hud .btn-foto');
+    if (!b) return;
+    b.hidden = !fotos();
+    var pode = podeFotografar();
+    if (b.classList.contains('desligado') === !pode) return;
+    b.classList.toggle('desligado', !pode);
+    b.setAttribute('aria-disabled', String(!pode));
+  }
+  UI.pintarBotaoFoto = pintarBotaoFoto;
+  ['cena', 'telas', 'ocupada', 'transicao'].forEach(function (ev) { U.on(ev, function () { pintarBotaoFoto(); }); });
+  // balão de diálogo não tem evento: confere de vez em quando (só mexe no DOM quando muda)
+  setInterval(pintarBotaoFoto, 500);
+  function botaoFoto() {
+    var b = el('button.btn-tela-cheia.btn-foto', { type: 'button', 'aria-label': 'Tirar foto', 'aria-disabled': 'false', title: 'Tirar foto (segure para ver o álbum)' });
+    b.appendChild(PA.iconeEmoji('📷', 2));
+    var timer = null, longoEm = -1e9;
+    function soltar() { if (timer) { clearTimeout(timer); timer = null; } }
+    b.addEventListener('pointerdown', function (e) {
+      if (e.button) return;
+      soltar(); longoEm = -1e9;   // toque novo: o click dele vale
+      var ms = (Reino.config.fotos && Reino.config.fotos.toqueLongoMs) || 600;
+      timer = setTimeout(function () {
+        timer = null;
+        var F = fotos();
+        if (!F || UI.temTela() || !podeFotografar() || typeof F.abrirAlbum !== 'function') return;
+        longoEm = performance.now();   // o click que vem ao soltar o dedo não tira a foto
+        // nem fecha o álbum que acabou de abrir embaixo do dedo (o dedo ainda está na tela)
+        UI.segurarToques();
+        Reino.Som.tocar('toque');
+        F.abrirAlbum();
+      }, ms);
+    });
+    ['pointerup', 'pointercancel', 'pointerleave'].forEach(function (ev) { b.addEventListener(ev, soltar); });
+    // Enter/Espaço no botão são dele: não chegam ao main.js (que agiria no que estiver perto dela)
+    b.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') e.stopPropagation(); });
+    // toque longo no celular abriria o menu do navegador
+    b.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+    b.addEventListener('click', function (e) {
+      // (só o do dedo/mouse, logo depois: o álbum cobre o botão e às vezes esse click nem chega)
+      if (e.detail && performance.now() - longoEm < 2000) { longoEm = -1e9; e.preventDefault(); return; }
+      soltar();
+      var F = fotos();
+      pintarBotaoFoto();
+      if (!F || !podeFotografar()) return;
+      F.tirar();
+    });
+    return b;
+  }
+
   /* ---------- HUD ---------- */
   UI.montarHUD = function () {
     var hud = U.$('#hud');
@@ -618,7 +681,9 @@
     var montaria = el('button.chip-montaria', { type: 'button', 'aria-label': 'Estábulo' });
     var telaCheia = el('button.btn-tela-cheia', { type: 'button', hidden: !UI.telaCheiaDisponivel() });
     telaCheia.addEventListener('click', function () { Reino.Som.tocar('toque'); UI.telaCheia(); });
-    hud.appendChild(el('div.hud-topo', el('div.hud-esq', dinheiro, estrelas, ovos), el('div.hud-dir', telaCheia, montaria)));
+    // tela cheia e câmera juntos (no celular, um embaixo do outro, ao lado do chip da montaria)
+    var foto = botaoFoto();
+    hud.appendChild(el('div.hud-topo', el('div.hud-esq', dinheiro, estrelas, ovos), el('div.hud-dir', el('div.hud-botoes', telaCheia, foto), montaria)));
     function botaoDock(acao, icone, linhas, aria) {
       var rot = el('small.dock-rotulo');
       linhas.forEach(function (l, i) {
@@ -637,6 +702,7 @@
     // com uma tela aberta, o HUD fica atrás dela: um Enter num botão dele não empilha outra tela
     hud.addEventListener('click', function (e) { if (UI.temTela()) { e.preventDefault(); e.stopImmediatePropagation(); } }, true);
     pintarBotaoTela();
+    pintarBotaoFoto();
     dinheiro.addEventListener('click', function () { Reino.Som.tocar('toque'); UI.telaBau(); });
     estrelas.addEventListener('click', function () { Reino.Som.tocar('toque'); UI.telaLoja(); });
     ovos.addEventListener('click', function () { Reino.Som.tocar('toque'); UI.chocarOvos(P.ovosParaChocar()); });
@@ -1373,7 +1439,7 @@
   }
 
   /* ---------- lista rápida de lugares ---------- */
-  // a linha da Pet Shop avisa quando a montaria está com fome ou sede
+  // a linha da Pet Shop avisa quando a montaria está com fome, sede ou precisando de banho
   function infoPetShop() {
     var id = P.montaria();
     if (cuidadosProntos() && uniChocado(id)) {
@@ -1381,8 +1447,34 @@
       if (b.fome && b.sede) return '🍎💧 Seu unicórnio está com fome e sede!';
       if (b.sede) return '💧 Seu unicórnio está com sede!';
       if (b.fome) return '🍎 Seu unicórnio está com fome!';
+      if (b.banho) return '🛁 Seu unicórnio precisa de um banho!';
     }
-    return 'Comida e água para o seu unicórnio';
+    return comBanho() ? 'Comida, água e banho para o seu unicórnio' : 'Comida e água para o seu unicórnio';
+  }
+  // os avisos que as placas do mapa davam (as placas saíram do mapa): 0/5 ou Pronto nas matérias,
+  // Ovo no Estábulo, Prova na Escola e Sede/Fome/Banho na Pet Shop (todos os baixos, sede primeiro)
+  UI.avisosDoLugar = function (l) {
+    var av = [];
+    if (l.tipo === 'materia') {
+      var m = Reino.materia(l.materiaId);
+      var pronto = Reino.Cena && Reino.Cena.concluidos ? Reino.Cena.concluidos().indexOf(l.id) >= 0 : P.materiaCompleta(m);
+      av.push({ texto: pronto ? 'Pronto' : P.salasFeitas(m) + '/' + m.salas.length, tipo: pronto ? 'pronto' : 'salas' });
+    }
+    if (l.tipo === 'estabulo' && P.ovosParaChocar().length) av.push({ texto: 'Ovo', icone: '🥚', tipo: 'ovo' });
+    if (l.tipo === 'escola' && Reino.provas.some(function (pv) { return !P.regProva(pv).premio; })) av.push({ texto: 'Prova', tipo: 'prova' });
+    if (l.tipo === 'petshop' && cuidadosProntos() && uniChocado(P.montaria())) {
+      var b = {};
+      try { b = Reino.Cuidados.baixo(P.montaria()) || {}; } catch (e) { b = {}; }
+      ['sede', 'fome', 'banho'].forEach(function (c) { if (b[c]) av.push({ texto: CUIDADO[c].rotulo, icone: CUIDADO[c].icone, tipo: c }); });
+    }
+    return av;
+  };
+  function chipsAvisos(l) {
+    var av = UI.avisosDoLugar(l);
+    if (!av.length) return null;
+    return el('span.lugar-avisos', av.map(function (a) {
+      return el('span.lugar-aviso.aviso-' + a.tipo, a.icone ? iconePequeno(a.icone, 16) : null, el('span', a.texto));
+    }));
   }
   UI.telaLugares = function () {
     var pn = painel('lugares', '📋 Lugares do Reino');
@@ -1402,7 +1494,7 @@
       else if (l.tipo === 'loja') { emoji = '🧚'; info = '⭐ ' + P.estrelas() + (P.estrelas() === 1 ? ' estrela' : ' estrelas') + ' para gastar'; }
       else if (l.tipo === 'petshop') { emoji = '🐾'; info = infoPetShop(); }
       else if (l.tipo === 'observatorio') { emoji = '🔭'; info = 'Curiosidades do espaço'; }
-      var b = el('button.sala-card', { type: 'button' }, el('span.sala-emoji', emoji), el('span.sala-info', el('b', hifenizar(l.nome)), el('small', hifenizar(info))), el('span.sala-ir', 'Ir →'));
+      var b = el('button.sala-card', { type: 'button' }, el('span.sala-emoji', emoji), el('span.sala-info', el('b', hifenizar(l.nome)), el('small', hifenizar(info)), chipsAvisos(l)), el('span.sala-ir', 'Ir →'));
       b.addEventListener('click', function (e) {
         UI.fecharTela(pn.tela);
         // o dedo que ainda bate no "Ir" cai no mapa e trocaria o destino: segura mais um pouco

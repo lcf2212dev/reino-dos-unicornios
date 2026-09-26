@@ -1,4 +1,4 @@
-/* Pet Shop, fome e sede: barrinhas do HUD e do Estábulo, tela da Pet Shop (UI.telaPetShop)
+/* Pet Shop, fome, sede e banho: barrinhas do HUD e do Estábulo, tela da Pet Shop (UI.telaPetShop)
    e a escolha de comida do Estábulo. Usa as classes de jogo.css (painel, item-loja, chip-mini…). */
 :root {
   /* fome em rosa-maçã (o laranja se confundia com a barra de crescimento, também com daltonismo) */
@@ -6,6 +6,8 @@
   --fome-clara: #ff9ec0;
   --sede: #2f7fe0;          /* água */
   --sede-clara: #7cc4ff;
+  --banho: #139a8c;         /* espuma verde-água: longe do azul da sede e do rosa da fome */
+  --banho-clara: #8ee8da;
   --cuid-baixo-fundo: #ffe7c7;
   --cuid-aviso: #8f4a12;    /* texto "Quer comer!/Quer água!": marrom calmo, sem cara de alarme */
 }
@@ -28,12 +30,14 @@
 .cuid-cheio { display: block; height: 100%; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5); transition: width 0.4s ease; }
 .cuid-fome .cuid-cheio { background: linear-gradient(90deg, var(--fome), var(--fome-clara)); }
 .cuid-sede .cuid-cheio { background: linear-gradient(90deg, var(--sede), var(--sede-clara)); }
+.cuid-banho .cuid-cheio { background: linear-gradient(90deg, var(--banho), var(--banho-clara)); }
 /* baixa (< 25): trilho listrado quentinho (o listrado se vê com qualquer daltonismo), barra na cor
    de sempre, sem vermelho de alarme; o ícone chama com 3 pulinhos de 2px (em degrau, sem escala:
    o pixel continua nítido) e para */
 .cuid-barra.baixo .cuid-trilho { background: repeating-linear-gradient(135deg, #fff 0 4px, var(--cuid-baixo-fundo) 4px 8px); border-color: var(--borda); }
 .cuid-fome.baixo .cuid-cheio { background: var(--fome); }
 .cuid-sede.baixo .cuid-cheio { background: var(--sede); }
+.cuid-banho.baixo .cuid-cheio { background: var(--banho); }
 .cuid-barra.baixo > canvas, .cuid-barra.baixo .cuid-rotulo canvas { animation: cuid-chamar 2.4s step-end 3; }
 @keyframes cuid-chamar { 0%, 60%, 100% { transform: none; } 45% { transform: translateY(-2px); } }
 body.sem-animacao .cuid-barra.baixo canvas { animation: none; }
@@ -45,7 +49,15 @@ body.sem-animacao .cuid-cheio { transition: none; }
 .cuid-par-mini .cuid-barra { flex: 1; }
 .cuid-mini .cuid-trilho { height: 8px; border-radius: 5px; }
 #hud .cuid-mini .cuid-trilho { min-width: 28px; }   /* no HUD a barrinha nunca some espremida */
+/* tablet e notebook: as 3 barrinhas (fome, sede e banho) lado a lado; o chip alarga um pouco para
+   cada trilho ficar com 40px (no celular elas ficam uma sobre a outra, lá embaixo) */
+@media (min-width: 481px) {
+  #hud .chip-montaria.com-cuidados { max-width: 320px; }
+  #hud .cuid-par-mini:has(.cuid-banho) .cuid-trilho { min-width: 40px; }
+}
 .carta-uni .cuid-par-mini { width: 86%; }
+/* com o banho, as três uma embaixo da outra (como a do crescimento): lado a lado o trilho sumia */
+.carta-uni .cuid-par-mini:has(.cuid-banho) { flex-direction: column; gap: 4px; }
 /* crescimento nas cartas: 🌱 + barrinha, na mesma largura da fome e da sede */
 .carta-uni .carta-cresce { display: flex; align-items: center; gap: 3px; width: 86%; }
 .carta-uni .carta-cresce > canvas { flex: none; }
@@ -147,14 +159,15 @@ body.recado-cuidado .tela { padding-bottom: calc(env(safe-area-inset-bottom, 0px
   .cuid-grande .cuid-aviso { grid-column: 1 / -1; grid-row: 3; text-align: right; white-space: nowrap; font-size: 0.75em; }
   .cuid-grande .cuid-trilho { grid-column: 1 / -1; grid-row: 2; }
   .cuid-par-mini { gap: 4px; }
-  /* chip da montaria com fome e sede: nome em cima na largura toda; embaixo o unicórnio e as
-     duas barrinhas uma sobre a outra. O estágio e o crescimento ficam no Estábulo */
+  /* chip da montaria com fome, sede e banho: nome em cima na largura toda; embaixo o unicórnio e as
+     barrinhas uma sobre a outra (com o banho, mais juntinhas). O estágio e o crescimento ficam no Estábulo */
   .chip-montaria.com-cuidados { flex-wrap: wrap; column-gap: 6px; row-gap: 2px; padding: 5px 10px 6px 8px; }
   .chip-montaria.com-cuidados .montaria-info { display: contents; }
   .chip-montaria.com-cuidados .montaria-info b { order: -1; flex: 0 0 100%; min-width: 0; }
   .chip-montaria.com-cuidados .montaria-cresce { display: none; }
   .chip-montaria.com-cuidados .cuid-par-mini { flex: 1 1 0; flex-direction: column; gap: 5px; margin: 0; min-width: 0; }
   .chip-montaria.com-cuidados .cuid-mini .cuid-trilho { min-width: 40px; }
+  .chip-montaria.com-cuidados .cuid-par-mini:has(.cuid-banho) { gap: 2px; }
   /* balão dos cuidados sobre uma tela: letra um pouco menor e mais largura, até 3 linhas */
   body.recado-cuidado #claude-balao { left: 6px; right: 6px; gap: 6px; }
   body.recado-cuidado #claude-balao .claude-fala { padding: 10px 10px 8px; }

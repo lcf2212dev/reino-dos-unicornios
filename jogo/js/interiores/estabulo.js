@@ -39,7 +39,8 @@
   function estagioDe(P, id) {
     try { var u = P.estado().unis[id]; return R.Unicornios.estagio(u ? u.xp : 0); } catch (e) { return 0; }
   }
-  // 🍎/💧 do unicórnio da baia quando a fome ou a sede está baixa (Reino.Cuidados; ausente nas ferramentas)
+  // 💧/🍎/🛁 do unicórnio da baia quando a sede, a fome ou o banho está baixo (Reino.Cuidados.icone, nessa
+  // prioridade; ausente nas ferramentas)
   function iconeCuidado(id) {
     try { return (R.Cuidados && R.Cuidados.icone) ? R.Cuidados.icone(id) : null; } catch (e) { return null; }
   }
