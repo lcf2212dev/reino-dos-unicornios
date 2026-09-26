@@ -726,6 +726,9 @@
   };
 
   Mapa.PREDIOS = PREDIOS;
+  // brilhos animados de um prédio, por cima da imagem fixa (o prédio registra Mapa.PREDIOS_ANIM[sprite];
+  // mesmos argumentos do desenho de fora, mais o tempo t). Só roda com Animações ligado.
+  Mapa.PREDIOS_ANIM = Mapa.PREDIOS_ANIM || {};
 
   var LAGO = { cx: 18, cy: 24.6, rx: 6.5, ry: 2.4 };
   // a água como desenhada (a elipse de desenharLago), em px do jogo
@@ -867,6 +870,10 @@
       ctx.fillRect(18 * T - meio, 14 * T + 1, meio * 2, 1);
       ctx.fillRect(18 * T - meio, 14 * T + 2, meio * 2, 1);
       ctx.fillRect(18 * T - meio, 14 * T + 3, meio * 2, 1);
+      lugares.forEach(function (l) {
+        var fa = Mapa.PREDIOS_ANIM[l.sprite];
+        if (fa) fa(ctx, l.rect.x * T, l.rect.y * T, l.rect.w * T, l.rect.h * T, t);
+      });
     }
     // arco-íris sobre os lugares concluídos
     (opcoes.concluidos || []).forEach(function (id) {

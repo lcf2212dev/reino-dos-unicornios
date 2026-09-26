@@ -948,5 +948,29 @@
     });
   }
 
-  if (window.Mapa && window.Mapa.PREDIOS) window.Mapa.PREDIOS.observatorio = desenharObservatorio;
+  // estrelinhas que cintilam no prédio (camada animada do mapa, só com Animações ligado): as da cúpula e da
+  // fenda trocam de cor (branco → ciano → lilás) e piscam cada uma no seu ritmo; nada de canvas novo
+  var CINTILA_MAPA = [
+    [-15, 6, 0], [-9, 14, 0], [9, 4, 0], [15, 10, 0], [-18, 3, 0], [12, 15, 0], [-6, 5, 0],   // na cúpula
+    [-12, 10, 2], [17, 5, 2],                                                                // as de cruz
+    [-3, 15, 1], [2, 7, 1],                                                                  // na fenda
+  ];
+  function animarObservatorio(ctx, px, py, w, h, t) {
+    if (!t) return;
+    var cx = px + Math.floor(w / 32) * 16 + 8, dy0 = py + 26;
+    for (var i = 0; i < CINTILA_MAPA.length; i++) {
+      var s = CINTILA_MAPA[i], x = cx + s[0], y = dy0 - s[1];
+      var per = 1100 + (i * 373) % 1500, f = ((t / per) + i * 0.29) % 1;
+      var cor = CINTILA[Math.floor(t / (per * 1.6) + i) % 3];
+      if (f > 0.7) { ctx.fillStyle = s[2] === 1 ? '#2f3fb8' : '#9a8ce8'; ctx.fillRect(x, y, 1, 1); continue; }   // apagadinha
+      ctx.fillStyle = cor;
+      if (f > 0.25 && f < 0.45) { ctx.fillRect(x - 1, y, 3, 1); ctx.fillRect(x, y - 1, 1, 3); if (s[2] === 2) { ctx.fillRect(x - 2, y, 5, 1); ctx.fillRect(x, y - 2, 1, 5); } ctx.fillStyle = '#ffffff'; }
+      ctx.fillRect(x, y, 1, 1);
+    }
+  }
+
+  if (window.Mapa && window.Mapa.PREDIOS) {
+    window.Mapa.PREDIOS.observatorio = desenharObservatorio;
+    (window.Mapa.PREDIOS_ANIM = window.Mapa.PREDIOS_ANIM || {}).observatorio = animarObservatorio;
+  }
 })();
