@@ -1,4 +1,4 @@
-// Confere o tamanho dos arquivos (em linhas): código ≤ 420, dados ≤ 800, gerados sem limite.
+// Confere o tamanho dos arquivos (em linhas): código ≤ 420, dados ≤ 800, tipos ≤ 1000, gerados sem limite.
 // Uso: node ferramentas/tamanho.js              (npm run tamanho, na raiz do repositório)
 //      node ferramentas/tamanho.js --todos      (lista também os que estão dentro do limite)
 //      node ferramentas/tamanho.js --raiz <pasta jogo>   (confere outra cópia do jogo; usado pelos testes)
@@ -9,13 +9,16 @@
 const fs = require('fs');
 const path = require('path');
 
-const LIMITE = { codigo: 420, dados: 800 };
+const LIMITE = { codigo: 420, dados: 800, tipos: 1000 };
 
 // A regra de cada arquivo, por caminho (a partir de jogo/). A PRIMEIRA regra que casa vale.
 //   gerado  sem limite e fora da conta (pacotes de voz, cache das vozes, index.html do gerar-index)
 //   dados   listas e desenhos (conteúdo das salas, ícones em pixel, falas, elenco, moldes, partituras):
 //           crescem com o jogo e se leem por item, então o limite é maior
-//   codigo  todo o resto: lógica do jogo, estilos e ferramentas
+//   tipos   declarações do TypeScript (.d.ts) do npm run tipos: uma lista de formas lida por item, como os
+//           dados; limite maior (1000) porque tipos-jogo.d.ts junta TODAS as formas num arquivo só, citado
+//           pelos comentários JSDoc do jogo e pela documentação (dividir mudaria essas referências)
+//   codigo  todo o resto: lógica do jogo, estilos e ferramentas (inclusive .ts que não seja declaração)
 const REGRAS = [
   { tipo: 'gerado', casa: /^js\/voz\// },
   { tipo: 'gerado', casa: /^ferramentas\/gerado\// },
@@ -28,7 +31,8 @@ const REGRAS = [
   { tipo: 'dados', casa: /^js\/sistemas\/musicas-faixas\.js$/ },
   { tipo: 'codigo', casa: /^js\/.*\.js$/ },
   { tipo: 'codigo', casa: /^css\/.*\.css$/ },
-  { tipo: 'codigo', casa: /^ferramentas\/.*\.(js|py|html)$/ },
+  { tipo: 'tipos', casa: /\.d\.ts$/ },
+  { tipo: 'codigo', casa: /^ferramentas\/.*\.(js|py|html|ts)$/ },
 ];
 
 // Exceções temporárias: caminho → motivo. O arquivo aparece na saída, mas não faz falhar.
@@ -39,7 +43,7 @@ const EXCECOES = {
 // pastas que a conferência percorre (e só elas)
 const PASTAS = ['js', 'css', 'ferramentas'];
 const AVULSOS = ['index.html'];
-const EXTENSOES = /\.(js|css|py|html)$/;
+const EXTENSOES = /\.(js|css|py|html|ts)$/;
 
 function regra(rel) {
   const r = REGRAS.find((x) => x.casa.test(rel));
@@ -106,12 +110,12 @@ if (require.main === module) {
   r.sobrando.forEach((t) => console.log(`⚠ exceção sobrando em EXCECOES: ${t.rel} ${t.sumiu ? '(arquivo não existe mais)' : `(${t.linhas} linhas, já cabe em ${t.limite})`}`));
   r.semRegra.forEach((rel) => console.log(`⚠ sem regra de tamanho: ${rel}`));
   if (r.passam.length) {
-    console.log(`✘ ${r.passam.length} arquivo(s) acima do limite (código ${LIMITE.codigo}, dados ${LIMITE.dados} linhas):`);
+    console.log(`✘ ${r.passam.length} arquivo(s) acima do limite (código ${LIMITE.codigo}, dados ${LIMITE.dados}, tipos ${LIMITE.tipos} linhas):`);
     r.passam.sort((a, b) => b.linhas - a.linhas).forEach((t) => console.log(`  ${t.rel}: ${t.linhas} linhas (${t.tipo}, limite ${t.limite})`));
     console.log('  Divida o arquivo por responsabilidade (docs/decisoes/refatoracao-plano.md).');
     process.exit(1);
   }
-  console.log(`✔ tamanho: ${r.todos.length - r.excecoes.length} arquivos dentro do limite${r.excecoes.length ? ` e ${r.excecoes.length} exceção(ões)` : ''} (código ${LIMITE.codigo}, dados ${LIMITE.dados} linhas; gerados fora)`);
+  console.log(`✔ tamanho: ${r.todos.length - r.excecoes.length} arquivos dentro do limite${r.excecoes.length ? ` e ${r.excecoes.length} exceção(ões)` : ''} (código ${LIMITE.codigo}, dados ${LIMITE.dados}, tipos ${LIMITE.tipos} linhas; gerados fora)`);
 }
 
 module.exports = { LIMITE, REGRAS, EXCECOES, regra, linhas, conferir };

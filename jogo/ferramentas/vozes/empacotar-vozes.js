@@ -1,13 +1,26 @@
 // Junta os áudios gravados em pacotes que o jogo carrega (js/voz/<pacote>.js).
-// Uso: node ferramentas/vozes/empacotar-vozes.js   (--saida <pasta>: grava em outra pasta, para conferir)
+// Uso: node ferramentas/vozes/empacotar-vozes.js   (grava em js/voz/ e apaga os pacotes que não existem mais)
+//      … --saida <pasta>: grava numa pasta em /tmp, para conferir; só escreve os pacotes, NUNCA apaga nada lá
 const fs = require('fs');
 const path = require('path');
 
 const base = path.join(__dirname, '..', 'gerado');
+const VOZ_JOGO = path.join(__dirname, '..', '..', 'js', 'voz');
+const iSaida = process.argv.indexOf('--saida');
+let saida = VOZ_JOGO;
+if (iSaida >= 0) {
+  // pasta pedida: só dentro de /tmp (conferida antes de ler qualquer coisa)
+  const pedida = process.argv[iSaida + 1];
+  const abs = pedida && !pedida.startsWith('--') ? path.resolve(pedida) : '';
+  const real = (p) => { let d = p; while (!fs.existsSync(d)) d = path.dirname(d); return path.join(fs.realpathSync(d), path.relative(d, p)); };
+  if (!abs || !abs.startsWith('/tmp/') || abs.split('/').includes('..') || !real(abs).startsWith('/tmp/')) {
+    console.error(`✘ proibido: --saida precisa ser uma pasta dentro de /tmp (ex.: /tmp/reino-testes/vozes/saida); recebido: ${pedida || '(nada)'}`);
+    process.exit(2);
+  }
+  saida = abs;
+}
 const { falas } = JSON.parse(fs.readFileSync(path.join(base, 'falas.json'), 'utf8'));
 const indice = JSON.parse(fs.readFileSync(path.join(base, 'vozes-indice.json'), 'utf8'));
-const iSaida = process.argv.indexOf('--saida');
-const saida = iSaida >= 0 ? path.resolve(process.argv[iSaida + 1]) : path.join(__dirname, '..', '..', 'js', 'voz');
 fs.mkdirSync(saida, { recursive: true });
 
 const pacotes = {};
@@ -24,8 +37,8 @@ if (faltando.length) {
   process.exit(1);
 }
 
-// apaga pacotes antigos que não existem mais
-fs.readdirSync(saida).filter((a) => a.endsWith('.js') && !pacotes[a.replace(/\.js$/, '')]).forEach((a) => fs.unlinkSync(path.join(saida, a)));
+// apaga pacotes antigos que não existem mais (só em js/voz do jogo; na --saida nada é apagado)
+if (saida === VOZ_JOGO) fs.readdirSync(saida).filter((a) => a.endsWith('.js') && !pacotes[a.replace(/\.js$/, '')]).forEach((a) => fs.unlinkSync(path.join(saida, a)));
 
 let total = 0;
 Object.keys(pacotes).sort().forEach((p) => {

@@ -8,14 +8,15 @@
 //   3. globais novas (window.X, Reino.X usado por outro arquivo) entram em tipos-globais.d.ts;
 //   4. rode npm run tipos até passar sem erro.
 // As formas (EstadoSave, Materia, Desafio…) estão em tipos-jogo.d.ts, puxado por tipos-globais.d.ts.
-// O tsconfig é gerado em /tmp/reino-testes/tipos/ (nada é escrito no repositório).
+// O tsconfig é gerado numa pasta própria de cada execução, /tmp/reino-testes/tipos-<pid>/ (duas execuções
+// ao mesmo tempo não se atropelam; nada é escrito no repositório).
 const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
 
 const TYPESCRIPT = 'typescript@5.9.3';
 const REPO = path.resolve(__dirname, '..', '..', '..');
-const PASTA = '/tmp/reino-testes/tipos';
+const PASTA = `/tmp/reino-testes/tipos-${process.pid}`;
 
 const pedidos = process.argv.slice(2);
 const lista = pedidos.length ? pedidos : JSON.parse(fs.readFileSync(path.join(__dirname, 'tipos.json'), 'utf8')).arquivos;

@@ -6,7 +6,7 @@
 //   2. validadores          jogo/ferramentas/validar/validar-tudo.js (conteúdo, interiores, index, docs)
 //   3. tamanho              jogo/ferramentas/tamanho.js (código ≤ 420 linhas, dados ≤ 800)
 //   4. referências de dados jogo/ferramentas/testes/e2e.js --so-dados (servidor de TESTE + Chromium)
-// Passo que ainda não existe nesta árvore (e2e.js) é pulado com aviso. A saída de cada passo só aparece
+// Passo cujo arquivo não existe é erro. A saída de cada passo só aparece
 // inteira quando ele falha (ou com --detalhes). Sai com código 1 se algum passo falhar.
 // Nada aqui toca no servidor de casa, no artifact publicado nem no save da Mariana: os testes usam saves
 // sintéticos em vm, cópias em /tmp e o servidor de teste (porta livre, banco em /tmp).
@@ -23,7 +23,7 @@ const PASSOS = [
   { nome: 'testes de unidade', args: () => ['--test'].concat(fs.readdirSync(unidade).filter((f) => f.endsWith('.test.js')).sort().map((f) => path.join(unidade, f))) },
   { nome: 'validadores', arq: 'jogo/ferramentas/validar/validar-tudo.js' },
   { nome: 'tamanho', arq: 'jogo/ferramentas/tamanho.js' },
-  { nome: 'referências de dados', arq: 'jogo/ferramentas/testes/e2e.js', extra: ['--so-dados'], opcional: 'do construtor F2; entra quando for integrado', aoVivo: true },
+  { nome: 'referências de dados', arq: 'jogo/ferramentas/testes/e2e.js', extra: ['--so-dados'], aoVivo: true },
 ];
 
 // resumo de um passo: as linhas "ℹ tests/pass/fail" do node:test ou a última linha da saída
@@ -41,7 +41,7 @@ for (const p of PASSOS) {
   if (p.arq) {
     const arq = path.join(repo, p.arq);
     if (!fs.existsSync(arq)) {
-      if (!p.opcional) { falhas++; console.log(`✘ ${p.nome}: ${p.arq} não existe`); } else console.log(`⚠ ${p.nome}: ${p.arq} ainda não existe (${p.opcional}); pulado`);
+      falhas++; console.log(`✘ ${p.nome}: ${p.arq} não existe`);
       continue;
     }
     args = [arq].concat(p.extra || []);

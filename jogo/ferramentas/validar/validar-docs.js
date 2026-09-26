@@ -32,12 +32,9 @@ const HISTORICOS = [
   { arquivo: 'docs/decisoes/refatoracao-plano.md', secao: null },
   { arquivo: 'docs/decisoes/contratos-consolidados.md', secao: null },
 ];
-// entregues por outro construtor na mesma fase: enquanto não existem, aviso (não erro)
-const EM_CONSTRUCAO = [
-  'jogo/ferramentas/testes/e2e.js', 'jogo/ferramentas/testes/base-referencia.txt', 'jogo/ferramentas/testes/tipos.js',
-  'jogo/ferramentas/testes/tipos.json', 'jogo/ferramentas/vozes/vozes.js', 'jogo/ferramentas/vozes/conferir-vozes.py',
-  'jogo/ferramentas/testes/guardas.js',
-];
+// entregues por outro construtor na mesma fase: enquanto não existem, aviso (não erro).
+// Hoje vazia: tudo o que estava aqui já existe (faltar é erro). Só para uso temporário entre construtores.
+const EM_CONSTRUCAO = [];
 const PULAR_PASTAS = new Set(['node_modules', '.git']);
 const PULAR_CAMINHOS = ['jogo/js/voz', 'jogo/ferramentas/gerado/vozes-cache', 'jogo/servidor/dados'];
 const RAIZES_SIMBOLO = /^(?:window\.)?(Reino|Mapa|Jogador|PA|UI|__reino|__congelar)(?=\.|$)/;

@@ -2,7 +2,8 @@
 // doctype, <head> e viewport, então aqui ficam só o título, os estilos e o corpo.
 // Este script NUNCA publica nada: só grava a página e a lista dos arquivos que vão junto.
 // Uso: node jogo/ferramentas/gerar-artifact.js                → /tmp/reino-testes/artifact/<data>/index.html
-//      node jogo/ferramentas/gerar-artifact.js <saida.html>   → grava onde pedido
+//      node jogo/ferramentas/gerar-artifact.js <saida.html>   → grava onde pedido, SÓ dentro de /tmp
+//        (a publicação é feita pelo Leandro/orquestrador a partir de /tmp; nada é gravado no repositório)
 // Sem argumento, ao lado da página: arquivos.txt (um caminho publicado por linha, na ordem de carga) e
 // arquivos.json ({ "css/x.css": "/caminho/absoluto/jogo/css/x.css", … }, o mapa `files` da publicação):
 // todos os css e js do manifesto (js/manifesto.js), na ordem, e depois os pacotes js/voz/*.js.
@@ -44,6 +45,11 @@ function saidaPadrao() {
 
 const pedida = process.argv[2];
 const saida = path.resolve(pedida || saidaPadrao());
+const real = (p) => { let d = p; while (!fs.existsSync(d)) d = path.dirname(d); return path.join(fs.realpathSync(d), path.relative(d, p)); };
+if (!saida.startsWith('/tmp/') || !real(saida).startsWith('/tmp/')) {
+  console.error(`✘ proibido: a saída tem que ficar dentro de /tmp (recebido: ${saida}). Sem argumento: /tmp/reino-testes/artifact/<data>/`);
+  process.exit(2);
+}
 const html = pagina();
 const lista = arquivos(html);
 fs.mkdirSync(path.dirname(saida), { recursive: true });

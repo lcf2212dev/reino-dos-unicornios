@@ -1,8 +1,7 @@
 // Roda todos os validadores e resume: conteúdo das matérias, interiores, index.html x manifesto e docs.
 // Uso: node ferramentas/validar/validar-tudo.js [--detalhes]   (npm run validar, na raiz do repositório)
 // Cada validador roda à parte (eles terminam com process.exit); a saída inteira só aparece quando um
-// falha (ou com --detalhes). Validador que ainda não existe (validar-docs.js, da Fase 4) é pulado com
-// aviso. Sai com código 1 se algum falhar.
+// falha (ou com --detalhes). Validador que não existe é erro. Sai com código 1 se algum falhar.
 const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
@@ -12,7 +11,7 @@ const VALIDADORES = [
   { nome: 'conteúdo das matérias', arq: 'ferramentas/validar/validar-conteudo.js' },
   { nome: 'interiores', arq: 'ferramentas/validar/validar-interiores.js' },
   { nome: 'index.html x manifesto', arq: 'ferramentas/gerar-index.js', args: ['--conferir'] },
-  { nome: 'docs', arq: 'ferramentas/validar/validar-docs.js', opcional: 'criado na Fase 4' },
+  { nome: 'docs', arq: 'ferramentas/validar/validar-docs.js' },
 ];
 
 function rodar(v) {
@@ -29,7 +28,7 @@ if (require.main === module) {
   for (const v of VALIDADORES) {
     const r = rodar(v);
     if (r.pulado) {
-      if (!v.opcional) { falhas++; console.log(`✘ ${v.nome}: ${v.arq} não existe`); } else console.log(`⚠ ${v.nome}: ${v.arq} ainda não existe (${v.opcional}); pulado`);
+      falhas++; console.log(`✘ ${v.nome}: ${v.arq} não existe`);
       continue;
     }
     if (!r.ok) falhas++;
