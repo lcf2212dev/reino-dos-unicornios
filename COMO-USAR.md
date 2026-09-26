@@ -90,7 +90,7 @@
   - O que ela já tinha jogado antes conta. Quando alguém chega ao número de vezes, o ovo aparece sozinho ao abrir o jogo.
   - Para mudar os números, edite `persistencia` em `jogo/js/config.js`.
   - **Lendário:** completar a matéria.
-- **Crescimento:** o unicórnio que está de montaria cresce quando ela acerta. Bebê anda ao lado dela; a partir de "Pequeno" ela monta. Nas cartas do Estábulo, 🌱 é a barrinha de crescimento, e 🍎 e 💧 são a fome e a sede.
+- **Crescimento:** o unicórnio que está de montaria cresce quando ela acerta. Bebê anda ao lado dela; a partir de "Pequeno" ela monta. Nas cartas do Estábulo, 🌱 é a barrinha de crescimento, e 🍎, 💧 e 🛁 (uma embaixo da outra) são a fome, a sede e o banho.
 - **Treino da Medalha (Castelo):**
   - abre quando todas as salas da matéria estão feitas;
   - não tem relógio;
@@ -111,17 +111,17 @@
 - Para mudar os números: `surpresa` em `jogo/js/config.js`.
 
 ## Construções por dentro
-- **Entrar:** pisar na porta, tocar no prédio ou na placa, apertar Enter perto dele ou escolher no menu Lugares. Um círculo fecha a tela e abre de novo já lá dentro.
+- **Entrar:** pisar na porta, tocar no prédio, apertar Enter perto dele ou escolher no menu Lugares. Um círculo fecha a tela e abre de novo já lá dentro.
 - **Sair:** pisar no tapete vermelho com a seta.
 - **Placas:**
-  - No mapa, nenhuma placa cobre outra. Quando uma placa precisa sair de trás do menu, ela vai para o lado, sem ficar em cima de outra.
-  - Dentro dos prédios, quando o menu do topo cobre a placa de um cômodo, ela desvia só dentro da parede do próprio cômodo. Se não couber ali, some enquanto estiver coberta. Assim ela nunca parece estar no chão ou no cômodo de baixo.
+  - No mapa, os prédios não têm mais placa com o nome. O nome e os avisos de cada lugar ficam no menu **Lugares**: 0/5 ou "Pronto" nas matérias, "Ovo" no Estábulo, "Prova" na Escola e 💧 Sede, 🍎 Fome ou 🛁 Banho na Pet Shop.
+  - Dentro dos prédios, as placas dos cômodos continuam. Quando o menu do topo cobre a placa de um cômodo, ela desvia só dentro da parede do próprio cômodo. Se não couber ali, some enquanto estiver coberta. Assim ela nunca parece estar no chão ou no cômodo de baixo.
 - O jogo sempre começa no mapa: o lugar dentro do prédio não é salvo.
 - Os atalhos do topo (💰, ⭐, montaria, 🥚) continuam abrindo as telas direto.
 - **O que tem em cada prédio:**
   - **Museu das Memórias:** hall com a Dona Memória e 5 galerias, com Seu Antônio, Carteiro Chico, Guia Tainá, Vovó Contadeira e Restauradora Nina. Cada galeria tem o quadro do seu unicórnio raro.
   - **Torre do Relógio:** térreo com o Seu Ponteiro e um andar por capítulo, pelas escadas, com «Coach Ben», «Miss Stella», «Doctor Smile», «Miss Moon» e «Mister Joy». O relógio fica no alto.
-  - **Casa das Palavras:** por fora, um livro aberto com "Aa" na fachada e a porta roxa; a placa fica em cima do telhado, e o mastro com a flâmula do lápis fica à vista acima dela. Hall com a Dona Palavrinha (lápis no cabelo e livro aberto na mão), a lista das salas, o Livro das Letras, uma poltrona de leitura e um tapete de página de caderno. Cinco cômodos, um por sala:
+  - **Casa das Palavras:** por fora, um livro aberto com "Aa" na fachada e a porta roxa, e o mastro com a flâmula do lápis no alto. Hall com a Dona Palavrinha (lápis no cabelo e livro aberto na mão), a lista das salas, o Livro das Letras, uma poltrona de leitura e um tapete de página de caderno. Cinco cômodos, um por sala:
     - **Cozinha das Receitas:** Chef Manu, com a tigela de salada de frutas e a mesa de preparo (Receita de Quê?);
     - **Horta do H:** Jardineiro Heitor, de chapéu de pescador e regador, com canteiros de terra no chão, tomates, hibiscos e um vaso de hortelã (O H Silencioso);
     - **Pátio do Circo:** Palhaço Chocalho, com cachos verdes, nariz vermelho, bochechas rosadas e gola (a pele é a de sempre, sem rosto branco), com uma amarelinha no chão, um chocalho em pé no seu suporte, um carrinho de pipoca e um ninho com três ovinhos (CH, LH, NH e o X);
@@ -133,28 +133,28 @@
   - **Estábulo Mágico:** Seu Feno, o ninho dos ovos e uma baia para cada unicórnio do álbum. A baia fica vazia até ele nascer. Tocar num unicórnio faz ele falar.
   - **Loja das Fadas:** Fada Pétala, vitrines e o espelho mágico. A vitrine de prêmios mostra também os de Português.
   - **Baú do Tesouro:** Dragãozinho Tostão e pilhas de moedas que crescem com o dinheiro dela. O monte grande fica cheio em R$40 e nunca encolhe quando entra uma matéria nova. As pilhas de cada matéria continuam crescendo com o dinheiro dela.
-  - **Pet Shop:** a loja da Dona Aveia e o Cantinho da Água, com o bebedouro.
+  - **Pet Shop:** a loja da Dona Aveia e o Cantinho da Água, com o bebedouro e a banheira de espuma.
   - **Observatório:** Cúpula do Telescópio, Planetário e Galeria do Espaço, com a Doutora Vega e o Robô Cosmo.
 - **Ícone em cima de cada personagem:**
   - ❗ sala nova (ou treino aberto e ainda sem medalha), ✓ sala feita, 💙 o unicórnio raro já nasceu;
   - 🔒 treino fechado, 🥇🥈🥉 medalha do treino;
   - 🌈💙🤍 o que a próxima tentativa da prova vale (lendário, raro, comum);
   - 💬 conversar (guias, Seu Feno, Fada Pétala e Tostão), 🥚 ovos esperando;
-  - 🍎/💧 na Dona Aveia: a montaria está com fome ou com sede;
+  - 🍎/💧/🛁 na Dona Aveia: a montaria está com fome, com sede ou precisando de banho;
   - ✓ na professora: o prêmio daquela prova já foi ganho.
 - **Conversar:** tocar no personagem ou apertar Enter ao lado dele. O balão tem "Vamos!", "Agora não" e 🔊 para ouvir de novo.
 - As salas, treinos e provas são os mesmos de antes, com as mesmas regras e o mesmo dinheiro. A lista antiga continua em "Ver a lista", com o guia de cada prédio.
 - Nada disso mudou o progresso salvo: tudo o que os prédios mostram vem do que ela já fez.
 
-## Pet Shop, fome e sede
+## Pet Shop, fome, sede e banho
 - **Onde fica:** em frente ao Estábulo, do outro lado da rua de baixo. Quem atende é a **Dona Aveia**.
 - **Fome e sede:** só a montaria gasta, e só enquanto ela joga (aba aberta e algum toque nos últimos 5 minutos). Jogo fechado ou parado não gasta.
   - A fome vai de cheia a zero em 120 minutos de jogo; a sede, em 60.
   - Com fome ou sede abaixo de 25, ela anda mais devagar (70% da velocidade), montada ou a pé com o bebê. Volta ao normal na hora em que as duas ficam em 25 ou mais.
   - Não perde XP, dinheiro nem unicórnio.
-  - Aparece 🍎 ou 💧 em cima do unicórnio, e a placa da Pet Shop, em cima do telhado, mostra "Fome" ou "Sede" (a sede aparece primeiro).
-  - **Barrinhas:** a fome é rosa-maçã e a sede é azul. Ficam no topo, junto da montaria (no celular, o nome fica em cima e as barrinhas embaixo), e também na Pet Shop e no detalhe de cada unicórnio no Estábulo.
-  - Quando uma delas fica baixa, a barrinha ganha listras e aparece escrito "Quer comer!" ou "Quer água!", sem vermelho piscando.
+  - Aparece 🍎 ou 💧 em cima do unicórnio, e o menu Lugares mostra "Fome" ou "Sede" ao lado da Pet Shop.
+  - **Barrinhas:** a fome é rosa-maçã, a sede é azul e o banho é verde-água. Ficam no topo, junto da montaria (no celular, o nome fica em cima e as barrinhas embaixo), e também na Pet Shop e no detalhe de cada unicórnio no Estábulo.
+  - Quando uma delas fica baixa, a barrinha ganha listras e aparece escrito "Quer comer!", "Quer água!" ou "Quer banho!", sem vermelho piscando.
   - O Claude lembra com carinho, no máximo uma vez a cada 10 minutos. Se houver comida guardada, o lembrete avisa que tem comidinha na despensa. O lembrete fecha sozinho quando ela abre uma tela ou sala.
 - **Comidas** (com estrelas):
   - 🥕 **Cenoura crocante:** 2 ⭐, enche 20.
@@ -172,19 +172,45 @@
   - Faltando estrelas, o jogo diz quantas faltam e lembra que fazer salas dá estrelas.
   - Contra compra sem querer: os botões que gastam começam apagados e acendem depois de ~1 segundo sem toque, com uma barrinha que enche no pé do botão. O "Agora não" vale na hora, e pelo teclado não há espera.
 - A comida comprada fica na **despensa**. Para dar depois: no Estábulo (botão do menu de baixo), toque no unicórnio e em "🥕 Dar comida".
+- **Banho:** a terceira barrinha (🛁). Vai de limpinho a zero em 180 minutos de jogo, do mesmo jeito que a fome e a sede (só a montaria, só com ela jogando).
+  - Abaixo de 25, o unicórnio fica sujinho (manchinhas no pelo e uma nuvenzinha de poeira), aparece 🛁 em cima dele (depois da sede e da fome) e o Claude lembra, dentro do mesmo limite de lembretes. Sujinho **não** fica mais lento.
+  - **Onde dar:** na banheira de espuma do Cantinho da Água, dentro da Pet Shop. É de graça. Ela toca na banheira, vai até lá, desce do unicórnio e ele toma banho: entra na espuma, bolhas, escova, patinho, chuveirinho, se sacode e brilha de limpinho. Leva uns 6 segundos; depois de 2 segundos, um toque pula para o fim. Com "Animações" desligado, é só um brilho de 1 segundo.
+  - Se ele já estiver limpinho, o Claude avisa e não tem banho.
 - **Água:** de graça, só no bebedouro do Cantinho da Água, dentro da Pet Shop. Com sede, o detalhe do unicórnio no Estábulo lembra: "💧 Tem água fresquinha na Pet Shop, de graça!".
-- **Para mudar:** os preços e quanto enche ficam em `comidas`; o ritmo, o limite de 25 e os lembretes ficam em `cuidados`. Os dois em `jogo/js/config.js` (veja "Números que dá para mudar", no fim).
-- O progresso guarda a fome, a sede e a despensa. "Começar novo ciclo de provas" mantém; "Apagar tudo" zera.
+- **Para mudar:** os preços e quanto enche ficam em `comidas`; o ritmo (inclusive `minutosBanho`), o limite de 25 e os lembretes ficam em `cuidados`; a duração do banho fica em `banho`. Os dois em `jogo/js/config.js` (veja "Números que dá para mudar", no fim).
+- O progresso guarda a fome, a sede, o banho e a despensa. "Começar novo ciclo de provas" mantém; "Apagar tudo" zera.
 
 ## Observatório
 - **Onde fica:** no morro a leste do lago, o ponto mais alto do reino.
 - **Cômodos:** Cúpula do Telescópio (o telescópio mostra a Lua, Saturno, o Cruzeiro do Sul e outros), Planetário (o Sol, os 8 planetas e Plutão) e Galeria do Espaço (foguete, traje de astronauta, pedra da Lua, meteorito e constelações).
 - No Planetário, os planetas ficam parados e são fáceis de tocar; nos três cômodos o chão é claro, para ela não sumir no escuro.
+- **Brilho de galáxia:** paredes, chão, cúpula e telescópio em azul, roxo e magenta, com Via Láctea, halos nos planetas e nas luminárias, estrelas que piscam e trocam de cor e uma estrela cadente a cada 8 a 15 segundos. O prédio no mapa tem a cúpula com reflexo de galáxia. Com "Animações" desligado fica colorido e parado.
 - **Doutora Vega:** a guia. Conta curiosidades sem repetir enquanto o jogo está aberto. Tocar nos planetas, no telescópio e nas peças da Galeria também conta uma.
 - **Robô Cosmo:** conta piadas.
 - São 75 curiosidades, cada uma conferida na fonte (a maioria no NASA Space Place, e também ESA Kids, Agência Espacial Brasileira e outras páginas da NASA e da ESA, além de fontes brasileiras: INPE, USP São Carlos, Agência Brasil e MundoGEO).
 - **Do Brasil:** o Cruzeiro do Sul e as estrelas da bandeira, Marcos Pontes (o primeiro brasileiro no espaço), a base de Alcântara e o satélite Amazônia Um.
 - É só para curiosidade: não dá estrelas nem muda o progresso.
+
+## Fotos do jogo
+- **Tirar:** o botão 📷 no topo, ao lado do botão de tela cheia. Funciona no mapa e dentro dos prédios, até nadando. Fica apagado durante a troca de tela, com uma tela ou conversa aberta e durante o banho.
+- São fotos do **jogo**, não da câmera: o aparelho nunca pede para usar a câmera.
+- Ao tocar: um flash branco, um clique, e a foto sai só com o cenário (sem os botões do topo e do menu), numa moldura cor-de-rosa com o nome do lugar e a data. O tamanho máximo é 1600 pixels no lado maior (PNG).
+- Na prévia "Que foto linda!": **Guardar no álbum**, **Salvar no aparelho** (baixa um arquivo `reino-<lugar>-<data>.png`) ou **Apagar**.
+- **Álbum:** abre pela prévia ou **segurando** o botão 📷. Mostra as fotos em grade; tocar numa abre grande, com setas, salvar e apagar (o apagar pergunta antes).
+  - Guarda até **40 fotos**. Cheio, o jogo avisa e pede para apagar uma antes de guardar outra.
+  - O álbum fica **só naquele aparelho** (no próprio navegador). Não vai para o progresso, nem para o computador de casa, nem para o claude.ai. Outro aparelho tem o seu próprio álbum, e limpar os dados do navegador apaga o álbum dele.
+  - Se o navegador não deixar guardar (modo anônimo, por exemplo), ainda dá para salvar a foto no aparelho, e o jogo avisa com carinho.
+- O menu de baixo não ganhou um botão de álbum porque não cabia no celular.
+
+## Música
+- **Ligar e desligar:** ⚙️ Ajustes → "🎵 Musiquinha". Começa desligada. Desligar o "Som" (os efeitos) não desliga a música, e vice-versa.
+- Cada lugar tem a sua música, de pelo menos 20 segundos antes de repetir, e ela troca devagar (cerca de 1,5 segundo) quando ela entra ou sai de um prédio, entra ou sai do lago ou abre uma sala:
+  - **Mapa:** alegre, flauta e violão. **Nadando no lago:** aquática, com eco e sininhos.
+  - **Museu:** caixinha de música. **Torre:** tique-taque, xilofone e sino. **Casa das Palavras:** cozinha alegre, de ukulele. **Castelo:** medieval, nobre e calma. **Escola:** leve. **Estábulo:** campestre, com trote. **Loja das Fadas:** harpa e sininhos. **Baú:** aventura de tesouro. **Pet Shop:** fofinha e saltitante. **Observatório:** espacial.
+  - **Salas de estudo:** bem suave.
+  - **Treino da Medalha e provas:** a música some, para ela se concentrar, e volta ao sair.
+  - Prédio sem música própria (matéria nova) usa a do mapa.
+- Enquanto uma voz fala, a música abaixa. Com a aba escondida, ela para.
 
 ## Enfeites da Loja
 - Na Loja das Fadas, com estrelas. Entraram encaixes novos: **pescoço**, **cauda** e **chifre**. Vale um enfeite por encaixe.
@@ -194,7 +220,7 @@
 - Os de antes continuam iguais. A lista e os preços ficam em `jogo/js/loja-itens.js`.
 
 ## Provas bimestrais (Escola do Reino)
-- A Escola do Reino fica ao lado do Estábulo, perto da rua de baixo. A plaquinha mostra "Prova" enquanto houver prêmio para ganhar.
+- A Escola do Reino fica ao lado do Estábulo, perto da rua de baixo. No menu Lugares aparece "Prova" enquanto houver prêmio para ganhar.
 - As questões são as da folha da escola, com o mesmo texto e na mesma ordem. Muda só o jeito de responder:
   - **Marcar X e V/F:** ela toca.
   - **Ligar:** ela toca num item e depois no par dele.
@@ -251,7 +277,7 @@
 - O nome `reinodosunicornios.local` vem do serviço `systemctl --user status reino-nome`.
 
 ## Cópia de segurança da comida e dos cuidados
-- Além do progresso normal (`mariana-reino-v1`), cada navegador guarda uma segunda chave: **`mariana-reino-v1-novidades`**. Ela tem só a fome, a sede, a despensa e o interruptor das perguntas surpresa. Fica em cada aparelho (não vai para o servidor nem para o claude.ai) e não guarda os enfeites.
+- Além do progresso normal (`mariana-reino-v1`), cada navegador guarda uma segunda chave: **`mariana-reino-v1-novidades`**. Ela tem só a fome, a sede, o banho, a despensa e o interruptor das perguntas surpresa. Fica em cada aparelho (não vai para o servidor nem para o claude.ai) e não guarda os enfeites.
 - **Por que existe:** uma aba com a versão antiga do jogo não conhece esses campos. Se ela gravar por último, apaga a comida comprada e os cuidados do progresso normal. A versão antiga não conhece a cópia e não mexe nela. Por isso, ao abrir o jogo e a cada sincronização, o que faltar volta da cópia, com as mesmas regras de sempre: vale a despensa maior e o cuidado mais recente.
 - **Não apague essa chave.** Se for limpar alguma coisa à mão no navegador, deixe as duas chaves do jogo.
 - "Apagar tudo" não traz nada de volta dessa cópia: depois dele, ela é ignorada e regravada na próxima vez que o jogo salvar.
@@ -260,13 +286,14 @@
 - O servidor de casa e o link do claude.ai guardam o progresso em lugares separados, e nada copia de um para o outro. Mesmo assim, os dois precisam ser atualizados no mesmo dia:
   - se só um lado tiver a Pet Shop e o Observatório, ela compra comida ou enfeite num lado e não acha no outro, e para ela isso é "sumiu";
   - uma aba ainda aberta com o jogo antigo tira o enfeite novo que ela está usando (a compra fica, é só vestir de novo) e pode apagar a comida comprada;
+  - uma aba com o jogo antigo não conhece o banho: se ela gravar por último, o banho some do progresso daquele lado e só volta pela cópia de segurança do aparelho novo;
   - uma aba com o jogo **antigo** aberta, com a montaria sendo um unicórnio de Português, dá erro: a personagem some do mapa e a Loja não abre. O progresso não se perde, mas essa aba precisa ser fechada e aberta de novo.
 - **Passo a passo:**
   1. Escolha um horário em que a Mariana não esteja jogando.
   2. Em **todos** os aparelhos (tablet, celular, notebook), feche as abas do jogo: a do computador de casa (reinodosunicornios.local ou o IP) e a do claude.ai. É fechar a aba mesmo, não só trocar de aba. No celular e no tablet, feche também no seletor de abas e de apps. Não deixe **nenhuma** aba antiga aberta, nem esquecida em outro aparelho: o jogo antigo não conhece o Português.
   3. Peça ao Claude para fazer o merge e republicar o link do claude.ai. O computador de casa passa a servir o jogo novo na hora do merge: não precisa reiniciar o Docker.
   4. Espere **uns 5 minutos** depois do merge. O servidor de casa deixa os arquivos do jogo guardados no navegador por até 5 minutos (300 s), e antes disso uma aba nova pode misturar arquivos novos com antigos.
-  5. Abra um aparelho só, no computador de casa. Confira se aparece a Casa das Palavras, se o Chapéu de Chef Arco-íris (prêmio da prova de Português) aparece no unicórnio quando ela já ganhou, e se as estrelas, as salas e os unicórnios estão como antes. Se algo estiver estranho, recarregue a página.
+  5. Abra um aparelho só, no computador de casa. Confira se aparece a barrinha 🛁 do banho junto da montaria, o botão 📷 no topo, a banheira dentro da Pet Shop, e se as estrelas, as salas e os unicórnios estão como antes. Se algo estiver estranho, recarregue a página.
   6. Depois abra o link do claude.ai num aparelho e confira do mesmo jeito.
   7. Só então libere os outros aparelhos, abrindo o jogo numa aba nova.
   8. Nos primeiros dias, se achar alguma aba esquecida de antes, feche e abra de novo antes de ela jogar.
@@ -280,12 +307,15 @@
 Depois de mudar, peça ao Claude para republicar.
 - **`comidas`:** cada comida tem `nome`, `icone`, `preco` (estrelas) e `fome` (quanto enche, de 0 a 100). O bolo tem `enche: true`, que enche tudo. Hoje: cenoura 2 ⭐/20, maçã 3 ⭐/30, feno 4 ⭐/45, biscoito 5 ⭐/60, bolo 8 ⭐/tudo. **Não troque o `id`:** a despensa guarda a comida por ele.
 - **`cuidados`:**
-  - `minutosFome: 120` e `minutosSede: 60`: minutos de jogo para ir de cheia a zero;
-  - `baixo: 25`: abaixo disso aparece o aviso e o unicórnio fica mais lento;
+  - `minutosFome: 120`, `minutosSede: 60` e `minutosBanho: 180`: minutos de jogo para ir de cheia (ou limpinho) a zero;
+  - `baixo: 25`: abaixo disso aparece o aviso; com fome ou sede o unicórnio fica mais lento (com banho baixo, só fica sujinho);
   - `fatorLento: 0.7`: a velocidade com fome ou sede (70%);
   - `semToqueMs`: sem toque há 5 minutos, ela parou de jogar e nada gasta;
   - `lembreteMs`: no máximo um lembrete do Claude a cada 10 minutos;
   - `gravarMs` e `gravarPontos`: de quanto em quanto tempo o jogo grava a fome e a sede (60 s ou 10 pontos). Melhor não mexer.
 - **`surpresa`:** `minMinutos: 3` e `maxMinutos: 10` (o intervalo sorteado), `estrelas: 2` (o prêmio), `esperaLivreMs: 4000` (se o tempo acaba com ela ocupada, a pergunta espera ela ficar 4 segundos livre) e `tipos` (escolha, verdadeiro/falso, várias). Se mudar `estrelas`, peça também para regravar as vozes, porque o Claude fala o valor.
+- **`banho`:** `duracaoMs: 6000` (a animação do banho), `duracaoCurtaMs: 1000` (sem Animações) e `pularDepoisMs: 2000` (depois disso um toque pula para o fim).
+- **`fotos`:** `maxLado: 1600` (tamanho máximo da foto), `maxAlbum: 40` (fotos no álbum de cada aparelho) e `toqueLongoMs: 600` (quanto segurar o 📷 para abrir o álbum). Não troque o `banco`, senão o álbum parece vazio.
+- **`musica`:** `volume` (0.22), `crossfadeS` (1,5 s de troca), `comVoz` (a música fica em 30% enquanto uma voz fala). Melhor não mexer em `lookaheadS` e `intervaloMs`.
 - **`nado`:** `fator: 0.6` (a velocidade na água, 60%) e `custo: 3` (quanto a água "pesa" na hora de escolher o caminho: com 3, ela prefere dar a volta por terra).
 - **`precoPremio`:** o preço dos acessórios das provas à venda na Loja: `comum: 25`, `raro: 40`, `lendario: 70`.
