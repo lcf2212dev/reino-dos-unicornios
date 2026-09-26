@@ -34,7 +34,6 @@ const REGRAS = [
 // Exceções temporárias: caminho → motivo. O arquivo aparece na saída, mas não faz falhar.
 // Exceção que não precisa mais (arquivo já dentro do limite) vira aviso: tire daqui.
 const EXCECOES = {
-  'ferramentas/testes/referencias.js': 'dividido pelo F2 (Fase 3); o orquestrador tira esta exceção ao integrar',
 };
 
 // pastas que a conferência percorre (e só elas)

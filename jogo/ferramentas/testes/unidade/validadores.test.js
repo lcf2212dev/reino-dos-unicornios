@@ -70,7 +70,7 @@ test('validar-tudo: resume os validadores e falha quando um deles falha', () => 
   assert.match(r.saida, /✘ index\.html x manifesto/);
 });
 
-test('tamanho: o jogo de hoje passa; código acima de 420, dados acima de 800 e exceção sobrando são acusados', () => {
+test('tamanho: o jogo de hoje passa; código acima de 420, dados acima de 800 são acusados (EXCECOES hoje vazia)', () => {
   const ok = node('ferramentas/tamanho.js');
   assert.strictEqual(ok.status, 0, ok.saida);
   const T = require('../../tamanho');
@@ -92,11 +92,9 @@ test('tamanho: o jogo de hoje passa; código acima de 420, dados acima de 800 e 
   escrever('js/arte/icones/cabe.js', 800);
   escrever('js/voz/enorme.js', 5000);
   escrever('css/estilo.css', 10);
-  escrever('ferramentas/testes/referencias.js', 10);   // exceção que já cabe: aviso
   const r = node(path.join(jogo, 'ferramentas/tamanho.js'), ['--raiz', raiz]);
   assert.strictEqual(r.status, 1, r.saida);
   assert.match(r.saida, /js\/sistemas\/grande\.js: 421 linhas \(codigo, limite 420\)/);
   assert.match(r.saida, /js\/conteudo\/materias\/muita\.js: 801 linhas \(dados, limite 800\)/);
-  assert.match(r.saida, /exceção sobrando em EXCECOES: ferramentas\/testes\/referencias\.js/);
   assert.doesNotMatch(r.saida, /cabe\.js|enorme\.js/);
 });

@@ -4,4 +4,5 @@
 # Trocar a base só quando uma mudança de comportamento for de propósito e já estiver num commit:
 # ponha aqui o hash desse commit (o jogo dele passa a ser a referência). Para um teste só: --base <hash>.
 # 982f1ed = modo determinístico (?debug=1&congelar=1), antes da refatoração.
-982f1ed
+# f8e280a = cavaleiros e professoras no elenco (paraMateria/paraProva): única diferença, dados/elenco.json.
+f8e280a
