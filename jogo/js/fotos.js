@@ -145,7 +145,11 @@
   function lugarArquivo(lugar) {
     return semAcento(lugar).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'reino';
   }
-  function nomeArquivo(foto) { return 'reino-' + lugarArquivo(foto.lugar) + '-' + foto.arquivo + '.png'; }
+  // o lugar que já começa com "reino" ("Reino dos Unicórnios") não repete o prefixo
+  function nomeArquivo(foto) {
+    var l = lugarArquivo(foto.lugar);
+    return (/^reino(-|$)/.test(l) ? l : 'reino-' + l) + '-' + foto.arquivo + '.png';
+  }
 
   /* ---------- pode tirar? ---------- */
   var ocupado = false;   // tirando (entre o toque e a prévia): não tira outra por cima
