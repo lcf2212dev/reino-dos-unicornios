@@ -127,7 +127,13 @@ Reino.Fotos = {
 ## 6. Música por ambiente (js/audio.js, js/musicas.js)
 - `Reino.Musicas` (dados, sem DOM): `faixas: { <id>: { nome, bpm, … , secoes, ordem } }`,
   `expandir(id) → [{ t, dur, freq, parte: 'melodia'|'harmonia'|'baixo'|'percussao', vol, onda? }]` (um loop
-  inteiro, em segundos), `duracao(id) → s`. O formato exato fica documentado no topo de musicas.js.
+  inteiro, em segundos), `duracao(id) → s`, `secao()`, `compassos()`. O formato exato fica documentado no topo de musicas.js:
+  faixa `{ nome, bpm, compasso, tom, modo: 'maior'|'menor'|'dorico', volume, timbres, mix?, eco?, secoes, ordem, base? }`;
+  seção `{ de?, acordes: '1 | 5 | 6 4 | 5M', melodia: "3 5:1.5 1':.5 | …", melodia2?, harmonia, baixo, percussao: 'b.c.a.c.', timbres?, oitava? }`.
+  Na percussão, `onda` é o tipo do toque e `freq` a frequência central do filtro.
+- `Reino.Som.renderizarFaixa(id, segundos, { volume, taxa }) → Promise<AudioBuffer>` (OfflineAudioContext, mesmos
+  instrumentos do motor), para o validador e para conferir picos e emendas.
+- Conferência pelos dados: `node jogo/ferramentas/testar-musicas.js`.
 - Cada faixa: ≥ 20 s antes de repetir, ≥ 2 seções diferentes, nenhum trecho < 20 s repetido em loop, fim
   emendando no começo sem estalo.
 - Ambientes → faixa: `mapa`, `lago` (nadando), `museu`, `torre`, `portugues` (e `portugues-gelo` no cômodo
@@ -167,4 +173,22 @@ Reino.Fotos = {
   canvas continuar desenhando a animação.
 - D4. Música decide o ambiente lendo a cena ativa, o nado e a tela do topo (`.tela-missao` = sala,
   `.tela-prova` = treino e prova), sem precisar de API nova na UI.
+- D6. Fotos: a prévia descarta com ✕/Esc; "Apagar" na prévia não pergunta (a foto ainda não foi guardada). Avisos
+  escritos na tela também são falados só como voz (sem balão); só "Foto guardada no álbum!" usa o balão do Claude.
+  Escala inteira com vizinho mais próximo; interior menor que a tela sai com as margens escuras do canvas.
+- D7. O Álbum NÃO entrou no menu de baixo: com 5 botões o menu ficou com 420 px numa tela de 390 e cortava. O álbum
+  abre pela prévia e segurando o 📷. No celular o 📷 fica embaixo do botão de tela cheia; no tablet/notebook, ao lado.
+- D8. Banho: a banheira age como o bebedouro (toca e começa, sem a fala antiga do objeto); ela para no tile (21,7)
+  virada para a banheira. Durante o banho todos os toques da tela (inclusive HUD) são ignorados, com um temporizador
+  de segurança que sempre libera a cena. A frase `banhou` virou "Que banho cheiroso! Agora estou limpinho! ✨"
+  (3+ palavras por frase). A Dona Aveia mostra "Precisa de banho" quando o ícone é 🛁.
+- D9. Carregar o save, comer ou beber não cria o campo `banho`; só o gasto (ou o banho) cria.
+- D10. Música: `.tela-prova` em qualquer lugar da pilha = silêncio; nadar e trocar de cômodo só trocam a faixa depois
+  de 250 ms firmes (sem vaivém na margem); ao voltar a um ambiente a faixa continua de onde parou; `portugues-gelo`
+  é a cantiga da cozinha com sininhos, pad frio e eco. Volume interno ajustado para a música ficar perto dos efeitos
+  e bem abaixo da voz.
+- D11. Observatório: piso da Cúpula e da Galeria em galáxia clara (contraste com o contorno da Mariana ≥ 2,9), cerca
+  de 78 partículas animadas no prédio todo; o Planetário mantém o chão clareado que o pai aprovou.
+- D12. Placas: `UI.avisosDoLugar(l)` em ui.js no lugar de `extraDaPlaca`; o campo `placa` dos dados ficou sem uso;
+  `mapa.desenharTela` ficou vazio (o main.js ainda chama); evento novo `'transicao'` (true/false) em cena.js.
 - D5. Portas de teste: B1 8791, B2 8792, B3 8793, B4 8794, B5 8795, B6 8796; validadores 8797 em diante.
