@@ -1,7 +1,9 @@
-/* Fome e sede dos unicórnios (Reino.Cuidados) — CONTRATOS-NOVIDADES.md, seção 2.
-   Cada unicórnio chocado tem fome e sede de 0 a 100 (100 = satisfeito; sem registro = 100/100).
-   Só a montaria gasta, e só com o jogo aberto e ela jogando (aba visível e toque/tecla nos
-   últimos minutos). Com fome OU sede abaixo de 25, ela anda mais devagar até comer ou beber.
+/* Fome, sede e banho dos unicórnios (Reino.Cuidados) — CONTRATOS-NOVIDADES.md, seção 2, e
+   CONTRATOS-BANHO-FOTOS-MUSICA.md, seção 2.
+   Cada unicórnio chocado tem fome, sede e banho de 0 a 100 (100 = satisfeito/limpinho; sem registro ou
+   sem o campo = 100). Só a montaria gasta, e só com o jogo aberto e ela jogando (aba visível e toque/tecla
+   nos últimos minutos). Com fome OU sede abaixo de 25, ela anda mais devagar até comer ou beber; sujinho
+   (banho abaixo de 25) só ganha o ícone 🛁 e o lembrete, não fica lento.
    Nada aqui toca em DOM, Progresso ou Cena no carregamento: ferramentas/listar-falas.js carrega
    este arquivo num vm sem DOM. Tudo isso só acontece dentro das funções. */
 (function () {
@@ -28,8 +30,11 @@
     bebeu: 'Que água fresquinha e gostosa! 💧',
     semSede: 'Seu unicórnio não está com sede agora.',
     despensaVazia: 'A despensa está vazia. Vamos comprar comidinha na Pet Shop? 🌾',
+    lembreteBanho: 'Seu unicórnio está precisando de um banho. Tem banheira na Pet Shop! 🛁',
+    banhou: 'Que banho cheiroso! Agora estou limpinho! ✨',
+    jaLimpinho: 'Ele já está limpinho! Pode brincar à vontade. ✨',
   };
-  var DO_UNICORNIO = { comeu: true, bebeu: true };
+  var DO_UNICORNIO = { comeu: true, bebeu: true, banhou: true };
   C.vozDaFrase = function (chave) { return DO_UNICORNIO[chave] ? 'unicornio' : 'claude'; };
   C.falas = function () {
     return Object.keys(C.frases).map(function (k) { return { texto: C.frases[k], voz: C.vozDaFrase(k) }; });
@@ -54,22 +59,26 @@
     return e.cuidados[id];
   }
 
+  // registro sem `banho` (versão de hoje) = limpinho; a leitura não cria o campo
   C.niveis = function (uniId) {
     var r = registro(uniId || montaria());
-    return { fome: r ? limitar(r.fome) : 100, sede: r ? limitar(r.sede) : 100 };
+    return { fome: r ? limitar(r.fome) : 100, sede: r ? limitar(r.sede) : 100, banho: r ? limitar(r.banho) : 100 };
   };
   C.baixo = function (uniId) {
     var n = C.niveis(uniId), b = cfg().baixo;
-    return { fome: n.fome < b, sede: n.sede < b };
+    return { fome: n.fome < b, sede: n.sede < b, banho: n.banho < b };
   };
-  // sede baixa tem prioridade (é a que acaba primeiro)
+  // sede baixa tem prioridade (é a que acaba primeiro); o banho fica por último (não deixa lento)
   C.icone = function (uniId) {
     var b = C.baixo(uniId);
-    return b.sede ? '💧' : b.fome ? '🍎' : null;
+    return b.sede ? '💧' : b.fome ? '🍎' : b.banho ? '🛁' : null;
   };
+  // sujinho: o desenho ganha manchinhas (jogador.js)
+  C.sujo = function (uniId) { return C.baixo(uniId).banho; };
   C.iconeMontaria = function () { return C.icone(montaria()); };
   function montariaBaixa() { var b = C.baixo(montaria()); return b.fome || b.sede; }
   // chamada a cada quadro pelo Jogador: só leituras baratas
+  // (só fome e sede: sujinho não fica lento)
   C.fatorVelocidade = function () { return montariaBaixa() ? cfg().fatorLento : 1; };
 
   /* ---------- despensa ---------- */
@@ -104,18 +113,23 @@
     var id = montaria();
     if (!chocado(id)) return;
     var r = registroParaMudar(id);
-    var antes = { fome: limitar(r.fome), sede: limitar(r.sede) };
-    var eraBaixo = antes.fome < cfg().baixo || antes.sede < cfg().baixo;
+    var antes = { fome: limitar(r.fome), sede: limitar(r.sede), banho: limitar(r.banho) };
+    // cada barra do lado de cima ou de baixo do 25 (a do banho também: cruzar grava e avisa)
+    function baixos(v) { return [v.fome < cfg().baixo, v.sede < cfg().baixo, v.banho < cfg().baixo].join(); }
+    var eraBaixo = baixos(antes);
     // resto de conta com decimais (ex.: 6e-12) vira zero de verdade
     function aoZero(v) { return v < 1e-6 ? 0 : v; }
     var fome = aoZero(Math.max(0, antes.fome - ms / (cfg().minutosFome * 60000) * 100));
     var sede = aoZero(Math.max(0, antes.sede - ms / (cfg().minutosSede * 60000) * 100));
-    var mudou = (antes.fome - fome) + (antes.sede - sede);
+    var banho = aoZero(Math.max(0, antes.banho - ms / (cfg().minutosBanho * 60000) * 100));
+    var mudou = (antes.fome - fome) + (antes.sede - sede) + (antes.banho - banho);
     if (mudou <= 0) return;
-    r.fome = fome; r.sede = sede; r.em = agora();   // o gasto não mexe em `acao` (ver P.mesclar)
+    r.fome = fome; r.sede = sede; r.em = agora();   // o gasto não mexe em `acao` nem em `acaoBanho` (ver P.mesclar)
+    if (banho !== antes.banho) r.banho = banho;     // limpinho que não mudou continua sem o campo
     pendente += mudou;
-    var ficouBaixo = r.fome < cfg().baixo || r.sede < cfg().baixo;
-    var pontoInteiro = Math.floor(antes.fome) !== Math.floor(r.fome) || Math.floor(antes.sede) !== Math.floor(r.sede);
+    var ficouBaixo = baixos({ fome: r.fome, sede: r.sede, banho: banho });
+    var pontoInteiro = Math.floor(antes.fome) !== Math.floor(r.fome) || Math.floor(antes.sede) !== Math.floor(r.sede) ||
+      Math.floor(antes.banho) !== Math.floor(banho);
     // cruzou o 25: grava na hora (as baias e a placa da Pet Shop se redesenham)
     if (eraBaixo !== ficouBaixo || pendente >= cfg().gravarPontos || agora() - ultimaGravacao >= cfg().gravarMs) gravar();
     if (pontoInteiro || eraBaixo !== ficouBaixo) emitir();
@@ -141,7 +155,7 @@
   function satisfazer(uniId, campo, novo) {
     var r = registroParaMudar(uniId);
     var antes = limitar(r[campo]);
-    r.fome = limitar(r.fome); r.sede = limitar(r.sede);
+    r.fome = limitar(r.fome); r.sede = limitar(r.sede);   // (o banho fica como está)
     r[campo] = Math.min(100, novo);
     // carimbo da ação, só do campo que mudou (comer não mexe no da sede, beber não mexe no da fome):
     // sempre maior que o anterior (duas ações no mesmo milissegundo não empatam); `acao` = o maior dos dois
@@ -167,6 +181,22 @@
     if (C.niveis(uniId).sede >= 99.5) return { ok: false, motivo: 'cheio' };
     return satisfazer(uniId, 'sede', 100);
   };
+  // banho de espuma é de graça (só a banheira da Pet Shop chama, no fim da animação). Carimbo próprio,
+  // `acaoBanho`: o `acao` continua sendo só de comer e beber (um aparelho da versão de hoje trata um `acao`
+  // novo como comida e água), e por isso aqui ele, `acaoFome` e `acaoSede` não mudam.
+  C.banhar = function (uniId) {
+    uniId = uniId || montaria();
+    if (!chocado(uniId)) return { ok: false, motivo: 'sem-uni' };
+    var antes = C.niveis(uniId).banho;
+    if (antes >= 99.5) return { ok: false, motivo: 'cheio' };
+    var r = registroParaMudar(uniId);
+    r.banho = 100;
+    r.acaoBanho = Math.max(agora(), (typeof r.acaoBanho === 'number' && r.acaoBanho >= 0 ? r.acaoBanho : 0) + 1);
+    r.em = agora();
+    gravar();
+    emitir();
+    return { ok: true, antes: antes, depois: 100 };
+  };
 
   /* ---------- relógio de jogo ativo ---------- */
   var iniciado = false, ultimoToque = 0, ultimoPasso = 0, ultimoLembrete = -Infinity;
@@ -186,13 +216,14 @@
   function lembrar() {
     if (agora() - ultimoLembrete < cfg().lembreteMs) return;
     var b = C.baixo(montaria());
-    if (!b.fome && !b.sede) return;
+    if (!b.fome && !b.sede && !b.banho) return;
     if (!chocado(montaria()) || !livre()) return;
     // dentro da Pet Shop ela já chegou: o lembrete espera ela sair
     var aqui = Reino.Cena && Reino.Cena.atual ? Reino.Cena.atual() : null;
     if (aqui && aqui.lugarId === 'petshop') return;
     ultimoLembrete = agora();
-    var chave = b.fome && b.sede ? 'lembreteAmbos' : b.sede ? 'lembreteSede' : 'lembreteFome';
+    // fome e sede têm prioridade; o banho só lembra quando as duas estão bem
+    var chave = b.fome && b.sede ? 'lembreteAmbos' : b.sede ? 'lembreteSede' : b.fome ? 'lembreteFome' : 'lembreteBanho';
     // só com fome e com comida guardada: lembra da despensa (dá para dar no Estábulo ou na Pet Shop)
     if (chave === 'lembreteFome' && C.despensa().length) chave = 'lembreteDespensa';
     // ela está livre (sem balão): o lembrete aparece na hora e fica aberto até a promessa resolver
@@ -243,7 +274,7 @@
     var despensa = {}, todos = {};
     C.comidas().forEach(function (c) { var q = C.quantidade(c.id); if (q > 0) despensa[c.id] = q; });
     Object.keys(e.unis || {}).forEach(function (u) { if (e.unis[u].chocado) todos[u] = C.niveis(u); });
-    return { montaria: id, fome: n.fome, sede: n.sede, fator: C.fatorVelocidade(), icone: C.icone(id), ativo: C.ativo(), despensa: despensa, todos: todos };
+    return { montaria: id, fome: n.fome, sede: n.sede, banho: n.banho, sujo: n.banho < cfg().baixo, fator: C.fatorVelocidade(), icone: C.icone(id), ativo: C.ativo(), despensa: despensa, todos: todos };
   };
 
   Reino.Cuidados = C;

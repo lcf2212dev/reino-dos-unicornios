@@ -116,8 +116,8 @@ teste('save no formato de hoje carrega com os mesmos valores e unicórnios satis
   assert.deepStrictEqual(copia(e.cuidados), {});
   assert.deepStrictEqual(copia(e.despensa), {});
   assert.strictEqual(e.ajustes.surpresa, true);
-  assert.deepStrictEqual(copia(j.C.niveis('inicial')), { fome: 100, sede: 100 });
-  assert.deepStrictEqual(copia(j.C.niveis('h-cartinha')), { fome: 100, sede: 100 });
+  assert.deepStrictEqual(copia(j.C.niveis('inicial')), { fome: 100, sede: 100, banho: 100 });
+  assert.deepStrictEqual(copia(j.C.niveis('h-cartinha')), { fome: 100, sede: 100, banho: 100 });
   assert.strictEqual(j.C.fatorVelocidade(), 1);
   assert.strictEqual(j.C.iconeMontaria(), null);
   // dinheiro e estrelas iguais
@@ -237,13 +237,13 @@ function jogoCarregado(ajuste) {
 teste('nada gasta antes de iniciar; só a montaria gasta; ritmo de 120 e 60 minutos', () => {
   const j = jogoCarregado();
   j.andar(60 * 1000);
-  assert.deepStrictEqual(copia(j.C.niveis()), { fome: 100, sede: 100 }, 'gastou antes do Entrar no Reino');
+  assert.deepStrictEqual(copia(j.C.niveis()), { fome: 100, sede: 100, banho: 100 }, 'gastou antes do Entrar no Reino');
   j.C.iniciar();
   for (let m = 0; m < 30; m++) { j.tocar(); j.andar(60 * 1000); }   // 30 min tocando
   const n = j.C.niveis('inicial');
   assert.ok(Math.abs(n.fome - 75) < 0.2, 'fome ' + n.fome);
   assert.ok(Math.abs(n.sede - 50) < 0.2, 'sede ' + n.sede);
-  assert.deepStrictEqual(copia(j.C.niveis('h-cartinha')), { fome: 100, sede: 100 }, 'unicórnio que não é a montaria gastou');
+  assert.deepStrictEqual(copia(j.C.niveis('h-cartinha')), { fome: 100, sede: 100, banho: 100 }, 'unicórnio que não é a montaria gastou');
 });
 
 teste('sem toque por 5 minutos e aba escondida: não gasta', () => {
@@ -369,9 +369,10 @@ teste('avancar gasta mesmo parada; depurar e falas no formato do contrato', () =
   const j = jogoCarregado();
   const d = j.C.avancar(12 * 60 * 1000);   // sem iniciar, sem toque
   assert.ok(Math.abs(d.fome - 90) < 0.01 && Math.abs(d.sede - 80) < 0.01);
-  assert.deepStrictEqual(Object.keys(d).sort(), ['ativo', 'despensa', 'fator', 'fome', 'icone', 'montaria', 'sede', 'todos']);
+  assert.deepStrictEqual(Object.keys(d).sort(), ['ativo', 'banho', 'despensa', 'fator', 'fome', 'icone', 'montaria', 'sede', 'sujo', 'todos']);
   assert.deepStrictEqual(Object.keys(d.todos).sort(), ['h-cartinha', 'inicial']);
-  const chaves = ['lembreteFome', 'lembreteSede', 'lembreteAmbos', 'lembreteDespensa', 'faltamEstrelas', 'guardado', 'comeu', 'cheio', 'bebeu', 'semSede', 'despensaVazia'];
+  const chaves = ['lembreteFome', 'lembreteSede', 'lembreteAmbos', 'lembreteDespensa', 'faltamEstrelas', 'guardado', 'comeu', 'cheio', 'bebeu', 'semSede', 'despensaVazia',
+    'lembreteBanho', 'banhou', 'jaLimpinho'];
   assert.deepStrictEqual(Object.keys(j.C.frases).sort(), chaves.slice().sort());
   assert.strictEqual(j.C.vozDaFrase('comeu'), 'unicornio');
   assert.strictEqual(j.C.vozDaFrase('bebeu'), 'unicornio');
@@ -1562,5 +1563,8 @@ teste('L2: o S3-5 continua (comida em B e água em A valem as duas) com o carimb
     catch (e) { falhas++; console.log('FALHOU ' + t.nome + '\n       ' + (e && e.message)); }
   }
   console.log(`\n${testes.length - falhas}/${testes.length} testes passaram`);
-  process.exit(falhas ? 1 : 0);
+  // os testes do banho (ferramentas/testar-banho.js) rodam junto
+  console.log('\n--- banho (ferramentas/testar-banho.js) ---');
+  const banho = require('child_process').spawnSync(process.execPath, [path.join(__dirname, 'testar-banho.js')], { stdio: 'inherit' });
+  process.exit(falhas || banho.status !== 0 ? 1 : 0);
 })();

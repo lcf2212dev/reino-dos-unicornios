@@ -26,7 +26,7 @@
       pago: {},         // materiaId -> valor já pago pelos pais
       ajustes: { som: true, musica: false, voz: true, animacoes: !U.reduzMovimentoSistema, texto: 1, setas: false, surpresa: true },
       ritualVisto: false,
-      cuidados: {},     // uniId -> {fome, sede, em, acao, acaoFome, acaoSede} (0–100, 100 = satisfeito; sem registro = 100/100; acaoFome/acaoSede = carimbo do último comer/beber, acao = o maior, 0 = nenhum) — js/cuidados.js
+      cuidados: {},     // uniId -> {fome, sede, banho, em, acao, acaoFome, acaoSede, acaoBanho} (0–100, 100 = satisfeito/limpinho; sem registro ou sem banho = 100; acaoFome/acaoSede = carimbo do último comer/beber, acao = o maior dos dois (o banho não mexe nele), acaoBanho = do último banho, 0 = nenhum) — js/cuidados.js
       despensa: {},     // comidaId -> {compradas, usadas} (contadores que só crescem; quantidade = compradas − usadas)
     };
   }
@@ -62,8 +62,8 @@
     gravarCopia();
   }
   /* Conteúdo que importa para saber se uma mescla trouxe algo novo: tudo menos `atualizado` e a
-     fome, a sede e o `em` dos cuidados (que o relógio muda a cada segundo e o cuidados.js grava sozinho;
-     a `acao`, carimbo de comer/beber, conta: comida dada num aparelho tem que chegar aos outros), com as chaves
+     fome, a sede, o banho e o `em` dos cuidados (que o relógio muda a cada segundo e o cuidados.js grava sozinho;
+     os carimbos de comer, beber e do banho contam: comida dada num aparelho tem que chegar aos outros), com as chaves
      em ordem e sem os valores vazios (a mescla escreve `perfeita: false` onde o save não tinha o
      campo, e o jogo lê os dois do mesmo jeito). Sem isso, duas abas (ou dois aparelhos) ficariam
      regravando uma para a outra. */
@@ -79,7 +79,7 @@
     delete c.atualizado;
     if (objeto(c.cuidados)) Object.keys(c.cuidados).forEach(function (k) {
       var r = c.cuidados[k];
-      if (objeto(r) && (r.acao || r.acaoFome || r.acaoSede)) acoes[k] = [r.acao || 0, r.acaoFome || 0, r.acaoSede || 0];
+      if (objeto(r) && (r.acao || r.acaoFome || r.acaoSede || r.acaoBanho)) acoes[k] = [r.acao || 0, r.acaoFome || 0, r.acaoSede || 0, r.acaoBanho || 0];
     });
     c.cuidados = acoes;
     return JSON.stringify(c);
@@ -155,7 +155,7 @@
     return e;
   }
   /* Os campos novos sempre no formato certo, venha o estado de onde vier (aparelho, servidor, doc, cópia):
-     objetos; fome e sede de 0 a 100 (valor estragado = 100, como unicórnio sem registro); `em` ≥ 0;
+     objetos; fome, sede e banho de 0 a 100 (valor estragado = 100, como unicórnio sem registro; banho ausente fica ausente); `em` ≥ 0;
      compradas e usadas inteiros ≥ 0 e usadas ≤ compradas; surpresa booleana ("true"/"false" em texto
      viram booleano, outro valor volta ao padrão). O carimbo `surpresaEm` não muda. */
   function normalizarNovos(e) {
@@ -168,7 +168,10 @@
       r.fome = Math.min(100, Math.max(0, numeroOu(y.fome, 100)));
       r.sede = Math.min(100, Math.max(0, numeroOu(y.sede, 100)));
       r.em = Math.max(0, numeroOu(y.em, 0));
-      ['acaoFome', 'acaoSede'].forEach(function (c) { if (c in r && !numero(r[c])) delete r[c]; });
+      ['acaoFome', 'acaoSede', 'acaoBanho'].forEach(function (c) { if (c in r && !numero(r[c])) delete r[c]; });
+      // banho: ausente continua ausente (vale 100 na leitura); presente e estragado vira 100; entre 0 e 100
+      if (r.banho === undefined) delete r.banho;
+      else r.banho = Math.min(100, Math.max(0, numeroOu(y.banho, 100)));
       // `acao` mais novo que os carimbos de campo (aba da versão anterior comeu ou bebeu): os campos sobem até ele
       // (os dois calculados antes de mudar: subir um primeiro esconderia o `acao` do outro)
       var efetivos = CAMPOS_CUIDADO.map(function (c) { return carimbo(r, c[1]); });
@@ -264,6 +267,22 @@
     if (numero(r.acao) && (!numero(r[chave]) || r.acao > Math.max.apply(null, campos))) return r.acao;
     return numero(r[chave]) ? r[chave] : null;
   }
+  /* banho: carimbo próprio (`acaoBanho`, 0 = nunca) e fora do `acao`, para um aparelho da versão de hoje (que
+     trata um `acao` novo como comer e beber) nunca ver um banho como comida. Roda depois da regra da fome e da
+     sede, com os valores ORIGINAIS dos dois lados: só um lado tem `banho` numérico = vale esse lado (mesmo
+     que a regra do `em` tenha escolhido o registro inteiro do outro: aparelho de hoje nunca faz o banho
+     sumir); os dois = o carimbo maior, empate = o menor banho (o gasto só desce); nenhum = continua ausente. */
+  function temBanho(r) { return typeof r.banho === 'number' && isFinite(r.banho); }
+  function juntarBanho(fica, x, y) {
+    var bx = temBanho(x), by = temBanho(y);
+    if (!bx && !by) return;
+    var cx = numero(x.acaoBanho) ? x.acaoBanho : 0, cy = numero(y.acaoBanho) ? y.acaoBanho : 0;
+    var lado = !by ? x : !bx ? y : cy > cx ? y : cx > cy ? x : y.banho < x.banho ? y : x;
+    fica.banho = lado.banho;
+    if (bx && by) { if (numero(x.acaoBanho) || numero(y.acaoBanho)) fica.acaoBanho = Math.max(cx, cy); }
+    else if (numero(lado.acaoBanho)) fica.acaoBanho = lado.acaoBanho;
+    else delete fica.acaoBanho;
+  }
   function juntarCuidados(base, outro) {
     if (!objeto(outro)) return base;
     Object.keys(outro).forEach(function (k) {
@@ -271,9 +290,15 @@
       var x = proprio(base, k), y = outro[k];
       if (!objeto(y)) return;
       if (!objeto(x)) { base[k] = U.copia(y); return; }
+      // os campos do banho como chegaram (a regra da fome e da sede não mexe neles, mas pode trocar o registro)
+      var bx = { banho: x.banho, acaoBanho: x.acaoBanho }, by = { banho: y.banho, acaoBanho: y.acaoBanho };
       // carimbo estragado conta como ausente (regra do `em`); `em` estragado conta como 0
       var comCarimbo = CAMPOS_CUIDADO.every(function (c) { return carimbo(x, c[1]) !== null && carimbo(y, c[1]) !== null; });
-      if (!comCarimbo) { if (numeroOu(y.em, 0) > numeroOu(x.em, 0)) base[k] = U.copia(y); return; }
+      if (!comCarimbo) {
+        if (numeroOu(y.em, 0) > numeroOu(x.em, 0)) base[k] = U.copia(y);
+        juntarBanho(base[k], bx, by);
+        return;
+      }
       // os carimbos efetivos dos dois campos, calculados antes de mudar qualquer um
       var cxs = CAMPOS_CUIDADO.map(function (c) { return carimbo(x, c[1]); }), cys = CAMPOS_CUIDADO.map(function (c) { return carimbo(y, c[1]); });
       CAMPOS_CUIDADO.forEach(function (c, i) {
@@ -284,6 +309,7 @@
       });
       if (numero(x.acao) || numero(y.acao)) x.acao = max(numeroOu(x.acao, 0), numeroOu(y.acao, 0));
       x.em = max(numeroOu(x.em, 0), numeroOu(y.em, 0));
+      juntarBanho(x, bx, by);
     });
     return base;
   }
@@ -356,7 +382,7 @@
     var er = objeto(r.estrelas) ? r.estrelas : {}, ea = objeto(antigo.estrelas) ? antigo.estrelas : {};
     r.estrelas = { ganhas: max(numeroOu(er.ganhas, 0), numeroOu(ea.ganhas, 0)), gastas: Math.max(0, max(numeroOu(er.gastas, 0), numeroOu(ea.gastas, 0))) };
     Object.keys(antigo.loja || {}).forEach(function (k) { if (antigo.loja[k]) r.loja[k] = true; });
-    // fome e sede: por unicórnio, a regra de juntarCuidados (carimbo dos dois lados, 0 inclusive: cada campo vem
+    // fome, sede e banho: por unicórnio, a regra de juntarCuidados (carimbo dos dois lados, 0 inclusive: cada campo vem
     // do lado com o seu carimbo maior, `acaoFome`/`acaoSede`, ou `acao` para os dois; empate: o menor valor e o
     // maior `em`; um lado sem carimbo: o `em` maior, empate = o lado mais recente).
     // Um lado sem o campo (aparelho com a versão antiga) não apaga nada: vale o outro lado.
