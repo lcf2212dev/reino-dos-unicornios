@@ -1,0 +1,86 @@
+/* Fotos do jogo (js/sistemas/fotos.js): flash, prévia "Que foto linda!", álbum e a foto grande. */
+
+/* flash: transição de opacidade (body.sem-animacao corta animações, não transições) */
+.fotos-flash {
+  position: fixed; inset: 0; z-index: 70;
+  background: #fff; pointer-events: none;
+  opacity: 0.95;
+}
+.fotos-flash.sumindo { opacity: 0; transition: opacity 0.32s ease-out; }
+/* Animações desligado ou "reduzir movimento": só um esmaecer suave, sem clarão forte */
+.fotos-flash.suave { opacity: 0.3; }
+.fotos-flash.suave.sumindo { opacity: 0; transition: opacity 0.6s ease; }
+
+/* a foto na tela: reduzida suave (a foto em si é nítida; aqui ela só cabe na tela) */
+.fotos-moldura-img { display: flex; justify-content: center; min-width: 0; }
+.fotos-img {
+  display: block; width: auto; height: auto;
+  max-width: 100%;
+  image-rendering: auto;
+  filter: drop-shadow(0 5px 0 rgba(58, 36, 70, 0.3));
+  -webkit-user-select: none; user-select: none; -webkit-touch-callout: none;
+}
+.tela-fotos-previa .fotos-img { max-height: calc(100vh - 380px); max-height: calc(100dvh - 380px); min-height: 120px; object-fit: contain; }
+.tela-fotos-ver .fotos-img { max-height: calc(100vh - 330px); max-height: calc(100dvh - 330px); min-height: 120px; object-fit: contain; }
+
+.fotos-previa-corpo, .fotos-ver-corpo { display: flex; flex-direction: column; align-items: stretch; gap: 12px; }
+.fotos-msg { font-weight: 700; text-align: center; line-height: 1.6; margin: 0; }
+.fotos-msg[hidden] { display: none; }
+.fotos-aviso {
+  padding: 10px 12px;
+  border: 3px solid var(--borda); border-radius: 14px;
+  background: #ffe3ef;
+}
+.fotos-nota { text-align: center; font-size: 0.85em; color: var(--tinta-suave); line-height: 1.6; }
+.fotos-botoes { margin-top: 4px; }
+.fotos-botoes .btn-grande[hidden] { display: none; }
+.fotos-legenda { text-align: center; font-size: 0.8em; line-height: 1.6; margin: 0; }
+
+/* celular: os botões um embaixo do outro, a largura toda */
+@media (max-width: 600px) {
+  .tela-fotos-previa .painel-conteudo, .tela-fotos-ver .painel-conteudo, .tela-fotos-album .painel-conteudo { padding: 14px 14px 18px; }
+  .fotos-botoes { flex-direction: column; align-items: stretch; gap: 10px; }
+  .fotos-botoes .btn-grande { min-height: 52px; padding: 10px 14px; }
+  .tela-fotos-previa .fotos-img { max-height: calc(100vh - 360px); max-height: calc(100dvh - 360px); }
+  .fotos-grade { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+}
+/* com um aviso escrito (álbum cheio, só salvar, salva), a foto encolhe para os botões caberem */
+.tela-fotos-previa .com-msg .fotos-img { max-height: calc(100vh - 470px); max-height: calc(100dvh - 470px); }
+
+/* a foto grande: ◀ foto ▶ */
+.fotos-ver-linha { display: flex; align-items: center; justify-content: center; gap: 8px; }
+.fotos-ver-linha .fotos-moldura-img { flex: 1 1 auto; }
+.fotos-nav[hidden] { display: none; }
+@media (max-width: 600px) {
+  .fotos-ver-linha { gap: 4px; }
+  .fotos-nav { width: 40px; height: 52px; border-radius: 12px; }
+}
+
+/* álbum: grade de miniaturas */
+.fotos-conta { text-align: center; font-size: 0.85em; color: var(--tinta-suave); margin: 0; }
+.fotos-grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+  gap: 12px;
+}
+.fotos-mini {
+  display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 6px;
+  min-height: 132px; padding: 8px 6px 6px;
+  border: 3px solid var(--borda); border-radius: 14px;
+  background: var(--papel);
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.85), 0 4px 0 var(--borda);
+  transition: transform 0.08s, box-shadow 0.08s;
+}
+.fotos-mini:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--borda); }
+.fotos-mini img { display: block; width: 100%; height: 92px; object-fit: contain; image-rendering: auto; }
+.fotos-mini-data { font-size: 0.55em; line-height: 1.4; white-space: nowrap; }
+@media (min-width: 700px) {
+  .fotos-grade { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+  .fotos-mini { min-height: 168px; }
+  .fotos-grade { gap: 12px; }
+  .fotos-mini img { height: 124px; }
+}
+body.sem-animacao .fotos-mini, body.sem-animacao .fotos-mini:active { transition: none; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .fotos-mini, .fotos-mini:active { transition: none; transform: none; }
+}

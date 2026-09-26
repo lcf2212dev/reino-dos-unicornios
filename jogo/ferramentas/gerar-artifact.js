@@ -9,6 +9,7 @@ if (!saida) { console.error('Informe o arquivo de saída.'); process.exit(1); }
 let html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
 html = html
   .replace(/<!doctype html>\s*/i, '')
+  .replace(/<!-- Gerado por ferramentas\/gerar-index\.js[^>]*-->\s*/, '')
   .replace(/<\/?html[^>]*>\s*/gi, '')
   .replace(/<\/?head>\s*/gi, '')
   .replace(/<\/?body>\s*/gi, '')

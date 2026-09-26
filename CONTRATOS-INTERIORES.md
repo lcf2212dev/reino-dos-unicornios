@@ -14,13 +14,13 @@ config, icones, pixelart, unicornios, materias/*, provas/*, progresso, audio, vo
 falas, mapa, jogador, minijogos, prova, provas, ui,
 interiores.js, npcs.js, interiores/<cada prédio>.js, cena.js, main.js, debug.js
 ```
-CSS: `css/jogo.css`, `css/interiores.css`.
+CSS: `css/ui-jogo.css`, `css/interiores.css`.
 
-`js/interiores.js`, `js/npcs.js` e `js/interiores/*.js` **não tocam em DOM, canvas, `PA` nem
+`js/motor/interiores.js`, `js/personagens/npcs.js` e `js/interiores/*.js` **não tocam em DOM, canvas, `PA` nem
 `Reino.Progresso` no carregamento** (só dentro de funções chamadas depois). As ferramentas em Node
 (`listar-falas.js`, `validar-interiores.js`) carregam esses arquivos num `vm` sem DOM.
 
-## 1. Cena ativa — `js/cena.js` (`Reino.Cena`)
+## 1. Cena ativa — `js/motor/cena.js` (`Reino.Cena`)
 
 Estados (strings): `'mapa'`, `'transicao'`, `'interior'`, `'dialogo'`, `'atividade'`.
 
@@ -120,7 +120,7 @@ Controle genérico (main.js/cena.js): toque → `alvoEm`; se houver alvo, `Jogad
 ao chegar, `Jogador.virar(olhar)` e `agir()`; senão anda até o tile (ou `maisPerto`).
 Enter/Espaço → `alvoPerto`. Tudo ignorado quando `Reino.Cena.bloqueado()`.
 
-## 3. Jogador (`js/jogador.js`)
+## 3. Jogador (`js/personagens/jogador.js`)
 - Consulta sempre `Reino.Cena.atual()` (com `Mapa` como reserva antes de a cena existir) para
   `solido`, `caminho`, `portaEm`/`saidaEm`.
 - `J.atualizar(dt, teclas, aoPisar)`: andando com as setas, ao pisar num tile com `portaEm` ou
@@ -128,7 +128,7 @@ Enter/Espaço → `alvoPerto`. Tudo ignorado quando `Reino.Cena.bloqueado()`.
 - `J.itensDesenho(pintor, animar) → [{ y, desenhar() }]` (Mariana e bebê como itens separados;
   montada = um item). `J.desenhar(pintor, animar)` continua existindo (desenha os próprios itens em ordem).
 
-## 4. Interiores — `js/interiores.js` (`Reino.registrarInterior`, `Reino.Interiores`)
+## 4. Interiores — `js/motor/interiores.js` (`Reino.registrarInterior`, `Reino.Interiores`)
 
 ```
 Reino.interiores = []                 // defs registradas, na ordem
@@ -207,7 +207,7 @@ cadeira, poltrona, sofa, banco, tapete, tapete-redondo, tapete-listrado, vaso-pl
 vaso-grande, bau, caixote, barril, pedestal, vitrine, lareira, fonte, bebedouro, cabideiro, globo,
 pilha-livros, papeis, almofada, luminaria-pe, cesto, balde, placa-chao, cavalete, relogio-pe; e
 "miudezas" sobre mesas e vitrines. Pisos: taco, mosaico, pedra, palha, tabuas, azulejo, carpete.
-Paredes: papel, pedra, madeira, tijolo, azulejo. Ver `js/interiores.js` e `ferramentas/interiores.html`.
+Paredes: papel, pedra, madeira, tijolo, azulejo. Ver `js/motor/interiores.js` e `ferramentas/previas/interiores.html`.
 
 #### 4.2.1 Extensões (novidades: Pet Shop e Observatório)
 ```
@@ -230,14 +230,14 @@ que resolve `'tchau'` faz o NPC se despedir. Detalhes em `CONTRATOS-NOVIDADES.md
 - Câmera igual à do mapa: centraliza se couber; senão segue a Mariana com limite nas bordas.
 - Placas dos cômodos em px da tela com a fonte pixel (tamanho `8 * max(2, round(escala/2))`, como no mapa).
 
-### 4.4 Critério de "rico" (conferido por `ferramentas/validar-interiores.js`)
+### 4.4 Critério de "rico" (conferido por `ferramentas/validar/validar-interiores.js`)
 - Cada cômodo: ≥15 **tipos** de objeto distintos (pegada tocando o `rect`, parede inclusa).
 - Nenhuma janela de 3×3 tiles de chão sem nenhum objeto, NPC, tapete ou escada, fora dos `corredores`.
 - Camadas: piso com padrão, rodapé, parede decorada, móveis, objetos pequenos, sombras.
 - ≥3 objetos interativos por interior.
 - Tudo alcançável a partir do `spawn`: vizinho livre de cada NPC e objeto interativo, a saída e as escadas.
 
-## 5. NPCs — `js/npcs.js` (`Reino.NPCs`)
+## 5. NPCs — `js/personagens/npcs.js` (`Reino.NPCs`)
 
 ```
 npc = {
@@ -317,7 +317,7 @@ Ações (as mesmas funções de hoje, regras intactas):
 - `fim(premios)`: `U.emit('mapaMudou')`; se concluiu, o NPC comemora (`depois`); depois de sala
   concluída, `Reino.Claude.depoisDaMissao()`, como hoje. Ela continua ao lado do NPC.
 
-## 6. Diálogo — `js/claude.js` (balão generalizado)
+## 6. Diálogo — `js/personagens/claude.js` (balão generalizado)
 
 ```
 Reino.Claude.falar(texto, opcoes) → Promise<valor>
@@ -344,7 +344,7 @@ caber em 2 linhas; falas maiores são paginadas pelo NPC (Continuar →). Escrev
   Perfis de hoje (claude, narradora, unicornio, ingles) não mudam.
 - Um pacote por prédio: `interior-<id do prédio>` (`def.pacote`), carregado durante a íris de entrada.
 - `Reino.Falas.todas()` inclui `NPCs.falasPossiveis` de cada NPC e as `fala` dos objetos, no pacote do interior.
-- `ferramentas/listar-falas.js` carrega `js/interiores.js`, `js/npcs.js` e `js/interiores/*.js`.
+- `ferramentas/vozes/listar-falas.js` carrega `js/motor/interiores.js`, `js/personagens/npcs.js` e `js/interiores/*.js`.
 - Números que mudam são enumerados (como `treinoBloqueado`); inglês entre «».
 
 ## 7.1 Extras expostos na Fase 1 (podem ser usados)
@@ -355,10 +355,10 @@ caber em 2 linhas; falas maiores são paginadas pelo NPC (Continuar →). Escrev
 - Câmera dos interiores: pode passar da borda até o fim do HUD de cima e do menu de baixo.
 
 ## 7.2 Convenções dos prédios (Fases 2 a 4)
-- Dois arquivos por prédio: `js/interiores/<prédio>-falas.js` (`Reino.FALAS_INTERIORES.<prédio> = { npcs, objetos }`)
-  e `js/interiores/<prédio>.js` (interior, objetos temáticos `Reino.Interiores.objeto('<prédio>-<nome>', …)`,
+- Dois arquivos por prédio: `js/interiores/<prédio>/falas.js` (`Reino.FALAS_INTERIORES.<prédio> = { npcs, objetos }`)
+  e `js/interiores/<prédio>/<prédio>.js` (interior, objetos temáticos `Reino.Interiores.objeto('<prédio>-<nome>', …)`,
   NPCs com sprite e voz de `Reino.NPCs.ELENCO[id]`). O de falas carrega antes. Os dois entram no `index.html`
-  e na lista `INTERIORES` de `ferramentas/interiores.html`.
+  e na lista `INTERIORES` de `ferramentas/previas/interiores.html`.
 - Prédios: museu (materia:historia), torre + torre-1..5 + torre-relogio (materia:ingles), escola, castelo,
   estabulo, loja, bau.
 - Geradores (dados → cômodos): a Escola monta uma sala de aula por prova (`Reino.provas`), com professor

@@ -5,5 +5,8 @@
   "devDependencies": {
     "playwright": "1.63.0",
     "pngjs": "7.0.0"
+  },
+  "scripts": {
+    "index": "node jogo/ferramentas/gerar-index.js"
   }
 }

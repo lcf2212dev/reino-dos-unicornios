@@ -5,8 +5,8 @@ Branch `feat/petshop-lago-observatorio` (worktree `/home/leandro/reino-novidades
 
 Convenções de sempre: scripts clássicos, tudo em `window.Reino` (e `Mapa`, `Jogador`, `PA`), nomes e
 comentários em português, pixel art em código (contorno `#3a2446`, tile de 16 px), sem imagens.
-Todo emoji que aparece na tela ou no canvas precisa do seu ícone em `js/icones.js` (confira em
-`ferramentas/icones.html`). Ajustes → Animações desligado e `prefers-reduced-motion` valem em tudo:
+Todo emoji que aparece na tela ou no canvas precisa do seu ícone em `js/arte/icones.js` (confira em
+`ferramentas/previas/icones.html`). Ajustes → Animações desligado e `prefers-reduced-motion` valem em tudo:
 sem animação, o desenho fica parado (sem partículas, ondinhas paradas, planetas parados).
 
 ## 0. Ordem dos scripts (index.html)
@@ -16,17 +16,17 @@ falas, cuidados, surpresa, mapa, jogador, minijogos, prova, provas, ui,
 interiores.js, npcs.js, interiores/<prédios>.js (… loja, bau, petshop-falas, petshop,
 observatorio-falas, observatorio-cenas, observatorio, padrao), cena.js, main.js, debug.js
 ```
-CSS: `css/jogo.css`, `css/interiores.css`, `css/novidades.css` (pergunta surpresa), `css/petshop.css` (Pet Shop, fome e sede).
+CSS: `css/ui-jogo.css`, `css/interiores.css`, `css/ui-novidades.css` (pergunta surpresa), `css/ui-petshop.css` (Pet Shop, fome e sede).
 
-`js/loja-itens.js`, `js/cuidados.js`, `js/surpresa.js`, `js/interiores/*.js` **não tocam em DOM,
+`js/conteudo/loja-itens.js`, `js/sistemas/cuidados.js`, `js/sistemas/surpresa.js`, `js/interiores/*.js` **não tocam em DOM,
 canvas, `PA`, `Reino.Progresso`, `Reino.Cena` nem `document` no carregamento** (só dentro de funções
-chamadas depois): `ferramentas/listar-falas.js` e `validar-interiores.js` os carregam num `vm` sem DOM.
+chamadas depois): `ferramentas/vozes/listar-falas.js` e `validar-interiores.js` os carregam num `vm` sem DOM.
 
-`ferramentas/listar-falas.js` carrega `js/interiores/*.js` em ordem **alfabética** (com `padrao.js` por
-último), e não na ordem do index.html: `<prédio>-falas.js` e `<prédio>-cenas.js` precisam vir antes de
+`ferramentas/vozes/listar-falas.js` carrega `js/interiores/*.js` em ordem **alfabética** (com `padrao.js` por
+último), e não na ordem do index.html: `<prédio>/falas.js` e `<prédio>/cenas.js` precisam vir antes de
 `<prédio>.js` também nessa ordem (hoje dá certo pelo nome).
 
-## 1. Save: campos novos e mescla (js/progresso.js)
+## 1. Save: campos novos e mescla (js/sistemas/progresso.js)
 
 Não mudam: `chaveSave`, `v`, `geracao`, `ciclo` e o formato dos campos. As regras de `P.mesclar()` para os
 campos existentes também não mudam, com um endurecimento só (em `estrelas`, logo abaixo). Campos novos,
@@ -102,7 +102,7 @@ ajustes.surpresaEm: <Date.now()>                 // carimbo da última troca de 
 - "Novo ciclo" (`P.novoCiclo`) mantém `cuidados` e `despensa`. "Apagar tudo" (`P.apagarTudo`) zera, como o resto.
 - Quem lê o estado sempre chama `P.estado()` de novo: a mescla troca o objeto inteiro.
 
-## 2. Fome e sede — `js/cuidados.js` (`Reino.Cuidados`)
+## 2. Fome e sede — `js/sistemas/cuidados.js` (`Reino.Cuidados`)
 
 Números em `Reino.config.cuidados` e `Reino.config.comidas` (ver config.js).
 ```
@@ -153,7 +153,7 @@ evento: U.emit('cuidados', depurar())  // a cada ponto inteiro que muda, ao cruz
   dentro da Pet Shop. Balão comum do Claude (não modal), texto de `frases`, 6 s; some sozinho (balão fechado
   e voz calada) quando abre uma tela (evento `telas`) ou ela entra na Pet Shop.
 
-## 3. Nadar no lago — `js/mapa.js` (água), `js/cena.js`, `js/jogador.js`, `js/audio.js`
+## 3. Nadar no lago — `js/mundo/mapa.js` (água), `js/motor/cena.js`, `js/personagens/jogador.js`, `js/sistemas/som.js`
 ```
 Mapa.agua(tx, ty) → bool          // tile de água do lago (tipo 'a'); a fonte da praça não é água e segue sólida
 Mapa.solido(tx, ty)               // a água do lago passa a ser andável (false); borda, prédios e enfeites, como hoje
@@ -198,7 +198,7 @@ Reino.Som.tocar('splash' | 'gotas' | 'gole' | 'nhac')   // sintetizados (entrar 
 
 ## 4. Loja: lista única, enfeites novos e prêmios à venda
 
-### 4.1 `js/loja-itens.js` (`Reino.LojaItens`, dados sem DOM)
+### 4.1 `js/conteudo/loja-itens.js` (`Reino.LojaItens`, dados sem DOM)
 ```
 Reino.LojaItens = {
   ENFEITES: [{ id, nome, preco, slot, icone, espaco?: true }]   // tudo o que se compra com estrelas;
@@ -216,7 +216,7 @@ Reino.LojaItens = {
 }
 ```
 - É a única lista: `ui.js` (`UI.ITENS_LOJA` continua existindo como apelido de `ENFEITES`), a Loja por
-  dentro (`js/interiores/loja.js`) e as ferramentas usam esta. Nenhuma cópia duplicada.
+  dentro (`js/interiores/loja/loja.js`) e as ferramentas usam esta. Nenhuma cópia duplicada.
 - **Estado de um prêmio** (derivado, nada novo no save):
   - `ganho`: `P.regProva(prova).premio === premio.raridade`;
   - `comprado`: `estado.loja[id]` e não é o ganho;
@@ -226,10 +226,10 @@ Reino.LojaItens = {
   enfeites) → `P.salvar()`. Não mexe em `estado.provas`, `P.regProva`, arco-íris da Escola, status das
   professoras, mural da Escola nem Área dos pais. Preços: `Reino.config.precoPremio` (comum 25, raro 40, lendário 70).
 - Regra da prova intacta: só nota 10 dá acessório, a tentativa define o tipo, depois vira treino.
-- Mural da Escola por dentro (`js/interiores/escola.js`, `ganhou()`): passa a contar só o prêmio da
+- Mural da Escola por dentro (`js/interiores/escola/escola.js`, `ganhou()`): passa a contar só o prêmio da
   prova (`P.regProva(prova).premio === r`), não a compra.
 
-### 4.2 Enfeites novos e slots (`js/pixelart.js`)
+### 4.2 Enfeites novos e slots (`js/arte/pixelart.js`)
 - Pelo menos 10 enfeites novos, preço de 10 a 45 ⭐, pelo menos 3 do espaço (`espaco: true`), nomes que
   não repetem os de hoje nem os acessórios das provas. Um enfeite por slot, como hoje.
 - Desenho em `PA.ENFEITES_MONTARIA[id] = { linhas, paleta, ancora, dx, dy }` (com contorno próprio `k`).
@@ -239,9 +239,9 @@ Reino.LojaItens = {
   Vista que não mostra o encaixe: âncora `null` (como `olho` de costas e `cauda` de frente, nos dois
   estágios), e o enfeite não aparece nela.
 - Tudo continua em `usando.enfeites` (lista de ids): nenhum campo novo no save.
-- Cada enfeite novo tem ícone em pixel e aparece em `ferramentas/acessorios.html` (grade vista × estágio).
+- Cada enfeite novo tem ícone em pixel e aparece em `ferramentas/previas/acessorios.html` (grade vista × estágio).
 
-## 5. Pergunta surpresa — `js/surpresa.js` (`Reino.Surpresa`)
+## 5. Pergunta surpresa — `js/sistemas/surpresa.js` (`Reino.Surpresa`)
 ```
 Reino.Surpresa = {
   iniciar({ tutorial })   // main.js chama no fim de entrarNoReino; tutorial = Promise da 1ª vez (ou null):
@@ -305,10 +305,10 @@ Reino.Surpresa = {
 ## 6. Pet Shop (lugar `petshop`)
 - **Mapa:** já posicionada (`EXTRAS` em mapa.js): rect `{ x: 2, y: 21, w: 5, h: 4 }`, porta (4, 24),
   caminho de rua até a rua de baixo, em frente ao Estábulo. Desenho de fora: `Mapa.PREDIOS.petshop`,
-  registrado pelo próprio prédio (js/interiores/petshop.js:
+  registrado pelo próprio prédio (js/interiores/petshop/petshop.js:
   `if (window.Mapa && Mapa.PREDIOS) Mapa.PREDIOS.petshop = function (ctx, px, py, w, h) {…}`).
   A porta é o tile (4, 24): a porta desenhada fica no meio dele.
-- **Interior** (`js/interiores/petshop-falas.js` + `petshop.js`, pacote `interior-petshop`), critério de
+- **Interior** (`js/interiores/petshop/falas.js` + `petshop.js`, pacote `interior-petshop`), critério de
   "rico" dos contratos, 2 cômodos:
   - `loja` (nome na tela: "Pet Shop"): balcão, prateleiras de comida, sacos de feno, cestas de cenoura e
     maçã, potes de biscoito, escovas de crina, coleiras, casinha, aquário, balança. A `estante` e a vitrine
@@ -345,19 +345,19 @@ Reino.Surpresa = {
 - **HUD:** duas barrinhas (fome e sede) no chip da montaria, com `data-uni`/`data-campo`, repintadas só
   pelo evento `cuidados` (`UI.pintarCuidados`); o `aria-label` do chip leva a fome e a sede.
 - **Balões dos cuidados com uma tela aberta** (`balaoNaTela`): `body.recado-cuidado` + `--recado-altura`
-  (petshop.css) descem o balão para o pé da tela e encolhem a tela, e o balão nunca cobre um botão.
+  (ui-petshop.css) descem o balão para o pé da tela e encolhem a tela, e o balão nunca cobre um botão.
 - **Estábulo:** a tela mostra as barras de cada unicórnio chocado; "Dar comida" (no detalhe) usa a
   despensa (`Cuidados.alimentar`); despensa vazia: fala que a Dona Aveia vende comidinhas e mostra o botão
   "🐾 Ir até a Pet Shop" (`U.emit('irPara', lugar)`); com sede, avisa que a água é de graça.
-  As baias por dentro (`js/interiores/estabulo.js`) mostram 🍎/💧 quando a barra do unicórnio está baixa,
+  As baias por dentro (`js/interiores/estabulo/estabulo.js`) mostram 🍎/💧 quando a barra do unicórnio está baixa,
   e isso entra na `chave` do pré-render da baia.
 - **Menu Lugares:** Pet Shop (🐾) e Observatório (🔭) com uma linha de informação cada.
 
 ## 7. Observatório (lugar `observatorio`)
 - **Mapa:** já posicionado (`EXTRAS`): rect `{ x: 28, y: 21, w: 6, h: 5 }`, porta (31, 25), no morro a
   leste do lago (o ponto alto do reino). Desenho de fora: `Mapa.PREDIOS.observatorio` (morro, cúpula,
-  telescópio), registrado pelo próprio prédio em `observatorio-cenas.js`, do mesmo jeito da Pet Shop.
-- **Cenas do telescópio e robô** (`js/interiores/observatorio-cenas.js`):
+  telescópio), registrado pelo próprio prédio em `observatorio/cenas.js`, do mesmo jeito da Pet Shop.
+- **Cenas do telescópio e robô** (`js/interiores/observatorio/cenas.js`):
   ```
   Reino.ObservatorioCenas = {
     temas() → ['lua','saturno','jupiter','marte','cruzeiro','cometa','galaxia','venus','pleiades']
@@ -369,7 +369,7 @@ Reino.Surpresa = {
   Reino.NPCs.registrarBase('robo', fn)   // o Robô Cosmo (parâmetros: corpo, detalhe, antena)
   ```
   Nada de canvas/PA no carregamento (só dentro das funções).
-- **Interior noturno** (`js/interiores/observatorio-falas.js` + `observatorio.js`, pacote
+- **Interior noturno** (`js/interiores/observatorio/falas.js` + `observatorio.js`, pacote
   `interior-observatorio`), estrelas piscando (só com animações), 3 cômodos:
   - `cupula` (Cúpula do Telescópio): olhar no telescópio abre uma cena em pixel art (Lua, Saturno,
     Cruzeiro do Sul…) com uma curiosidade;
@@ -398,7 +398,7 @@ Reino.Surpresa = {
     // fonte: <NASA Space Place | ESA Kids | Agência Espacial Brasileira> — <URL>
     { id, tema, paginas: ['frase curta.', 'outra frase.'] },
   ]
-  Reino.Observatorio (em observatorio-falas.js) = {
+  Reino.Observatorio (em observatorio/falas.js) = {
     temas() → [tema]                                  // temas com pelo menos uma curiosidade
     curiosidade(tema) → { id, tema, paginas } | null  // sorteia sem repetir na sessão; 'todas' (ou vazio) = qualquer
     piada() → { id, paginas } | null                  // piadas do Cosmo, sem repetir na sessão
@@ -411,7 +411,7 @@ Reino.Surpresa = {
   na bandeira; Marcos Pontes, o primeiro astronauta brasileiro. Todas narradas pela voz da Doutora Vega
   (`npc-vega`), em qualquer lugar em que apareçam. Só curiosidades: não dá estrelas nem mexe no save.
 
-## 8. NPCs: extensões (`js/npcs.js`)
+## 8. NPCs: extensões (`js/personagens/npcs.js`)
 ```
 Reino.NPCs.registrarTela(nome, abrir(acao, ctx), convite?)   // tela nova para { tipo: 'tela', tela: nome };
                                                               // o convite vira a fala `nova` padrão de NPC com essa tela
@@ -439,7 +439,7 @@ Registrar no carregamento é permitido (só guarda a função). Elenco novo em `
 
 ## 9. Vozes e falas
 - Perfis novos em `Reino.config.vozes`: `npc-aveia`, `npc-vega`, `npc-cosmo`. Campo novo opcional
-  `efeito: 'robo-leve'` (filtro metálico leve na gravação, em `ferramentas/gerar-vozes.py`; muda a chave só dos
+  `efeito: 'robo-leve'` (filtro metálico leve na gravação, em `ferramentas/vozes/gerar-vozes.py`; muda a chave só dos
   perfis que têm efeito). Amostras 34 a 36 em `amostras-de-voz/`.
 - Pacotes: `interior-petshop` e `interior-observatorio` (NPCs, objetos e `extras` do prédio); falas de
   `Reino.Cuidados.falas()`, `Reino.Surpresa.falas()` e `Reino.LojaItens.FALAS` no `geral`.
@@ -476,16 +476,16 @@ mexido por várias fases).
 | Fase | Quem | Arquivos (e só eles) |
 |---|---|---|
 | 0 | orquestrador | index.html, config.js, mapa.js (EXTRAS), npcs.js (extensões e ELENCO), falas.js, listar-falas.js, gerar-vozes.py, validar-interiores.js, debug.js, main.js, ui.js (1 linha em Ajustes), arquivos provisórios da Fase 1 |
-| 1 | A | js/cuidados.js, js/progresso.js |
-| 1 | B | js/jogador.js, js/cena.js, js/mapa.js (só a água: solidez, `agua`, custo, brilho), js/audio.js |
-| 1 | C | js/loja-itens.js, js/pixelart.js, js/icones.js, js/ui.js (só a Loja), js/interiores/loja.js, js/interiores/escola.js (só `ganhou()`), ferramentas/acessorios.html |
-| 1 | D | js/surpresa.js, css/novidades.css |
-| 2 | E | js/interiores/petshop-falas.js, js/interiores/petshop.js (com o desenho de fora), js/interiores/estabulo.js (só as baias) |
-| 2 | F | js/ui.js (Pet Shop, HUD, Estábulo, Lugares), css/petshop.css |
-| 3 | G1 | js/interiores/observatorio.js (interior, Planetário, ação `curiosidade`) |
-| 3 | G2 | js/interiores/observatorio-cenas.js (cenas do telescópio, planetas, robô, desenho de fora) |
-| 3 | H1–H4 | pesquisa das curiosidades (rascunhos); H junta em js/interiores/observatorio-falas.js |
-| 2–3 | I | ícones novos num rascunho; o orquestrador junta em js/icones.js |
+| 1 | A | js/sistemas/cuidados.js, js/sistemas/progresso.js |
+| 1 | B | js/personagens/jogador.js, js/motor/cena.js, js/mundo/mapa.js (só a água: solidez, `agua`, custo, brilho), js/sistemas/som.js |
+| 1 | C | js/conteudo/loja-itens.js, js/arte/pixelart.js, js/arte/icones.js, js/ui/ui.js (só a Loja), js/interiores/loja/loja.js, js/interiores/escola/escola.js (só `ganhou()`), ferramentas/previas/acessorios.html |
+| 1 | D | js/sistemas/surpresa.js, css/ui-novidades.css |
+| 2 | E | js/interiores/petshop/falas.js, js/interiores/petshop/petshop.js (com o desenho de fora), js/interiores/estabulo/estabulo.js (só as baias) |
+| 2 | F | js/ui/ui.js (Pet Shop, HUD, Estábulo, Lugares), css/ui-petshop.css |
+| 3 | G1 | js/interiores/observatorio/observatorio.js (interior, Planetário, ação `curiosidade`) |
+| 3 | G2 | js/interiores/observatorio/cenas.js (cenas do telescópio, planetas, robô, desenho de fora) |
+| 3 | H1–H4 | pesquisa das curiosidades (rascunhos); H junta em js/interiores/observatorio/falas.js |
+| 2–3 | I | ícones novos num rascunho; o orquestrador junta em js/arte/icones.js |
 
 ## 13. Guarda de toque (ui.js; vale para toda tela que gasta estrela ou comida)
 Um botão que some no 1º toque deixava o 2º toque cair no que aparece embaixo (já comprou comida, trocou

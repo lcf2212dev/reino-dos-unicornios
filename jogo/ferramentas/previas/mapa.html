@@ -1,0 +1,18 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Prévia do mapa</title>
+<style>body{margin:0;background:#222} canvas{image-rendering:pixelated}</style>
+<canvas id="c"></canvas>
+<script src="../../js/manifesto.js"></script>
+<script src="previa.js"></script>
+<script>Previa.carregar({ nomes: ['nucleo/config', 'arte/pixelart', 'mundo/mapa', 'conteudo/materias/historia/historia'] });</script>
+<script>
+Mapa.criar(Reino.materias);
+var e = Mapa.prerender();
+var c = document.getElementById('c'); var E = 2;
+c.width = e.width*E; c.height = e.height*E;
+var ctx = c.getContext('2d'); ctx.imageSmoothingEnabled = false;
+var tmp = PA.novoCanvas(e.width, e.height); var tc = tmp.getContext('2d');
+Mapa.desenharAnimado(tc, 1000, {concluidos:['materia:historia']});
+ctx.drawImage(tmp,0,0,c.width,c.height);
+</script>

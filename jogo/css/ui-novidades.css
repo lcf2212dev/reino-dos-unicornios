@@ -1,0 +1,183 @@
+/* Novidades (Pet Shop, fome e sede, pergunta surpresa, Observatório).
+   Cada construtor acrescenta a sua seção, com cabeçalho próprio. */
+
+/* ---------- pergunta surpresa ---------- */
+.tela-surpresa .painel { width: min(660px, 100%); }
+.tela-surpresa .painel-topo { background: var(--ouro-claro); }
+.surpresa-conteudo > * + * { margin-top: 14px; }
+
+/* o Claude com a frase de abertura */
+.surpresa-cabeca { display: flex; align-items: center; gap: 14px; }
+.surpresa-claude { flex: none; }
+.surpresa-balao {
+  flex: 1; min-width: 0;
+  padding: 12px 14px;
+  border: 3px solid var(--borda); border-radius: 16px;
+  background: var(--papel-3);
+}
+.surpresa-fala { font-weight: 700; }
+.surpresa-vale { margin-top: 6px; font-size: 0.9em; font-weight: 700; color: var(--tinta-suave); }
+.surpresa-origem { font-size: 0.85em; font-weight: 700; color: var(--tinta-suave); }
+/* a linha curta (Claude, matéria e +2) só aparece no modo compacto, lá embaixo */
+.surpresa-curta { display: none; }
+
+/* ✕ travado nos primeiros 600 ms (como o "Agora não"): inativo à vista */
+.tela-surpresa .btn-fechar:disabled { opacity: 0.45; cursor: default; }
+
+/* "Agora não" e "Conferir" (e o "Ok!" depois da resposta): rodapé fixo do painel */
+.surpresa-botoes {
+  flex: none;
+  display: flex; flex-wrap: wrap; gap: 12px; justify-content: flex-end;
+  padding: 12px 20px 16px;
+  border-top: 3px solid var(--borda);
+  background: var(--papel-2);
+}
+.surpresa-botoes .btn-grande { flex: 1 1 200px; }
+.surpresa-conferir { background: var(--menta); font-size: 1.1em; }
+
+/* resposta: mesmas cores da missão (retorno-certo / retorno-quase), dentro do painel */
+.surpresa-retorno {
+  padding: 16px;
+  border: 3px solid var(--borda); border-radius: 18px;
+  animation: surpresa-surgir 0.22s ease-out;
+}
+.surpresa-retorno > * + * { margin-top: 12px; }
+/* o enunciado repetido no topo do resultado: curto (até 2 linhas) e discreto */
+.surpresa-eco {
+  padding-bottom: 8px; border-bottom: 2px dashed var(--borda);
+  font-size: 0.85em; font-weight: 700; color: var(--tinta-suave);
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
+}
+.surpresa-ganhou { margin-top: 6px; font-weight: 700; color: #8a5200; }   /* 5,7:1 no fundo verde */
+.surpresa-certa { font-weight: 700; color: #1b6e45; }                    /* 5,5:1 no fundo "Quase!" */
+@keyframes surpresa-surgir { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* opções sempre dentro do painel: colunas que encolhem (minmax 0) e texto que quebra */
+.tela-surpresa .painel-conteudo > * { min-width: 0; }
+.tela-surpresa .opcoes { grid-template-columns: minmax(0, 1fr); }
+.tela-surpresa .opcoes-vf, .tela-surpresa .opcoes-duas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+/* telas largas: as alternativas em duas colunas (assim cabem sem rolar no notebook e no celular deitado) */
+@media (min-width: 640px) { .tela-surpresa .opcoes-varias, .tela-surpresa .opcoes { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.tela-surpresa .opcao { min-width: 0; }
+.tela-surpresa .opcao-texto { min-width: 0; overflow-wrap: anywhere; }
+
+/* depois de responder, as opções ficam paradas */
+.tela-surpresa .opcao[aria-disabled="true"] { cursor: default; }
+/* a errada continua legível (5,8:1, com o risco) e a certa ganha um selo ✓, não só a cor
+   (no ::before: o ::after é o quadradinho das de marcar).
+   Só aqui: a regra de ui-jogo.css (.opcao.errada) é das provas e fica como está. */
+.tela-surpresa .opcao.errada { opacity: 1; color: #6b5378; background: #f1edf5; }
+.tela-surpresa .opcao.certa { position: relative; }
+.tela-surpresa .opcao.certa::before {
+  content: "✓"; position: absolute; top: -10px; right: 6px;
+  width: 26px; height: 26px; display: grid; place-items: center;
+  border: 3px solid var(--borda); border-radius: 50%;
+  background: var(--certo); color: #fff; font-size: 14px;
+}
+
+/* tablet e notebook: painel mais largo (alternativas numa linha só) e o 🔊 Ouvir ao lado da pergunta */
+@media (min-width: 481px) and (min-height: 501px) {
+  .tela-surpresa .painel { width: min(860px, 100%); }
+  .tela-surpresa .enunciado { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
+  .tela-surpresa .enunciado .pergunta { flex: 1 1 260px; min-width: 0; }
+  .tela-surpresa .enunciado .btn-ouvir { flex: none; margin-top: 0; }
+  .tela-surpresa .enunciado .afirmacao { flex: 1 1 100%; order: 2; margin-top: 0; }
+}
+/* notebook: a pergunta sobe um pouco (balão e espaços mais justos) */
+@media (min-width: 481px) and (max-height: 820px) {
+  .surpresa-conteudo > * + * { margin-top: 10px; }
+  .tela-surpresa .painel-conteudo { padding-top: 12px; padding-bottom: 14px; }
+  .surpresa-balao { padding: 8px 12px; }
+  .tela-surpresa .enunciado { padding: 10px 14px; }
+  .tela-surpresa .btn-ouvir { margin-top: 6px; min-height: 40px; }
+  .tela-surpresa .opcao { min-height: 54px; padding: 8px 14px; }
+  .tela-surpresa .opcoes { gap: 10px; }
+  .surpresa-botoes { padding: 10px 20px 12px; }
+  .surpresa-botoes .btn-grande { min-height: 50px; padding: 8px 18px; }
+}
+
+/* COMPACTO: celular em pé (até 480 px de largura) ou deitado (até 500 px de altura).
+   Mesmo corte de compacto() em js/sistemas/surpresa.js. A abertura vira uma linha só (Claude pequeno,
+   matéria e +2 ⭐; as frases continuam na voz), e os espaços ficam justos para a pergunta e as
+   alternativas caberem sem rolar. */
+@media (max-width: 480px), (max-height: 500px) {
+  .tela-surpresa .painel-topo { padding: 8px 8px 8px 14px; border-bottom-width: 3px; }
+  .tela-surpresa .painel-topo .titulo-pixel { font-size: 12px; line-height: 1.5; }
+  .tela-surpresa .painel-topo .btn-fechar { width: 44px; height: 44px; min-width: 44px; min-height: 44px; }
+  .tela-surpresa .painel-conteudo { padding: 10px 12px 12px; }
+  .surpresa-conteudo > * + * { margin-top: 10px; }
+  .surpresa-cabeca, .surpresa-origem { display: none; }
+  .surpresa-curta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+  .surpresa-curta[hidden] { display: none; }
+  .surpresa-curta-materia { flex: 1; min-width: 0; font-size: 0.85em; font-weight: 700; color: var(--tinta-suave); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .surpresa-curta-vale { flex: none; padding: 2px 8px; border: 2px solid var(--borda); border-radius: 10px; background: var(--ouro-claro); font-size: 0.85em; font-weight: 700; white-space: nowrap; }
+  .surpresa-curta .btn-ouvir { flex: none; margin-top: 0; }
+  .tela-surpresa .enunciado { padding: 10px 12px; border-radius: 14px; }
+  .tela-surpresa .pergunta { font-size: 1em; }
+  .tela-surpresa .afirmacao { margin-top: 6px; padding: 8px 10px; font-size: 1em; }
+  /* no verdadeiro ou falso, o "Verdadeiro ou falso?" é só o rótulo: a frase é que importa */
+  .tela-surpresa .desafio-vf .pergunta { font-size: 0.85em; color: var(--tinta-suave); }
+  .tela-surpresa .btn-ouvir { margin-top: 6px; min-height: 40px; padding: 2px 10px; font-size: 0.8em; }
+  .tela-surpresa .opcoes { gap: 8px; }
+  .tela-surpresa .opcao { min-height: 48px; padding: 6px 10px; gap: 8px; border-radius: 12px; font-size: 0.9em; }
+  .tela-surpresa .opcao-emoji { font-size: 1.3em; }
+  .tela-surpresa .opcao-marcar::after { width: 24px; height: 24px; }
+  .tela-surpresa .opcoes-vf .opcao { font-size: 1em; }
+  /* os dois botões lado a lado, sempre numa fileira só */
+  .surpresa-botoes { flex-wrap: nowrap; padding: 8px 12px 10px; gap: 10px; border-top-width: 3px; }
+  .surpresa-botoes .btn-grande { flex: 1 1 0; min-width: 0; min-height: 50px; padding: 6px 8px; font-size: 0.85em; }
+  .surpresa-conferir { font-size: 0.95em; }
+  .surpresa-retorno { padding: 10px 12px; border-radius: 14px; }
+  .surpresa-retorno > * + * { margin-top: 8px; }
+  .surpresa-retorno .retorno-cabeca { gap: 10px; }
+  .surpresa-retorno .retorno-cabeca h3 { font-size: 1.1em; }
+  .surpresa-retorno .retorno-explica { padding: 8px 10px; }
+}
+/* celular em pé: verdadeiro ou falso um embaixo do outro */
+@media (max-width: 480px) {
+  .tela-surpresa .opcoes-vf { grid-template-columns: minmax(0, 1fr); }
+}
+/* celular estreito: na linha curta fica só o ícone da matéria (o nome não cabe ao lado do Ouvir) */
+@media (max-width: 400px) {
+  .surpresa-curta-nome { display: none; }
+  .surpresa-curta-materia { flex: none; overflow: visible; }
+  .surpresa-curta .btn-ouvir { margin-left: auto; }
+  /* "Agora não" e "Conferir ✓" numa linha só (com letras grandes, o ✓ pode descer) */
+  .surpresa-botoes .btn-grande, .surpresa-conferir { font-size: 0.75em; padding: 6px 6px; }
+  .surpresa-botoes .surpresa-depois { flex: 0 1 auto; }
+  .surpresa-curta { column-gap: 6px; }
+  .surpresa-curta .btn-ouvir { padding: 2px 4px; font-size: 0.75em; }   /* 12 px com letras normais */
+  .surpresa-curta-vale { padding: 2px 3px; }
+}
+/* celular deitado: a pergunta à esquerda e as alternativas à direita, em duas colunas */
+@media (max-height: 500px) and (min-width: 640px) {
+  .tela-surpresa .painel { width: min(900px, 100%); }
+  .tela-surpresa .painel-topo { padding-top: 4px; padding-bottom: 4px; }
+  .surpresa-conteudo { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 8fr); gap: 8px 12px; align-content: start; }
+  .tela-surpresa .opcao { font-size: 0.8em; padding: 6px 8px; gap: 6px; }
+  .tela-surpresa .opcao-texto { overflow-wrap: break-word; }
+  .tela-surpresa .opcao-emoji { font-size: 1.15em; }
+  .surpresa-conteudo > * + * { margin-top: 0; }
+  .surpresa-conteudo > .desafio { display: contents; }
+  .surpresa-curta { grid-column: 1; grid-row: 1; }
+  .tela-surpresa .enunciado { grid-column: 1; grid-row: 2; align-self: start; }
+  .tela-surpresa .opcoes { grid-column: 2; grid-row: 1 / span 2; align-self: start; }
+  /* resultado em duas colunas: pergunta e Claude à esquerda; a certa (no erro) e a explicação à
+     direita, tudo à vista antes de o Ok destravar */
+  .surpresa-retorno { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px 12px; align-items: start; }
+  .surpresa-retorno > * + * { margin-top: 0; }
+  .surpresa-retorno > * { grid-column: 1; }
+  .surpresa-retorno > .retorno-explica { grid-column: 2; grid-row: 1 / span 3; }
+  /* no erro, o "✓ Certo: …" fica em cima da explicação (à esquerda ficava cortado embaixo com
+     letras grandes); a coluna da direita fica mais larga e as letras do erro, um pouco menores */
+  .surpresa-retorno.retorno-quase { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); }
+  .surpresa-retorno > .surpresa-certa { grid-column: 2; grid-row: 1; }
+  .surpresa-retorno > .surpresa-certa + .retorno-explica { grid-row: 2 / span 2; font-size: 0.85em; }
+  .surpresa-retorno .retorno-fala, .surpresa-retorno .surpresa-certa { font-size: 0.9em; }
+  .surpresa-retorno .surpresa-certa, .retorno-quase .retorno-fala { font-size: 0.85em; }
+  .surpresa-botoes { padding: 6px 12px 8px; }
+  .surpresa-botoes .btn-grande { min-height: 46px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .surpresa-retorno { animation: none; }
+}

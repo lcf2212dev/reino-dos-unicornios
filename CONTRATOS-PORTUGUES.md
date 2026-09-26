@@ -13,7 +13,7 @@ Mudança de contrato: só o orquestrador.
 - Derrubar só servidores próprios, pelo PID. Nunca `pkill`/`killall` por nome (node, servidor.js, chrome).
 - Testes só no Chromium do Playwright, em celular (390×844), tablet (820×1180) e notebook (1366×768).
 - Convenções de sempre: scripts clássicos, `window.Reino`, nomes e comentários em português, pixel art em
-  código (contorno `#3a2446`), todo emoji com ícone em `js/icones.js`.
+  código (contorno `#3a2446`), todo emoji com ícone em `js/arte/icones.js`.
 
 ## 1. Fotos
 - Originais: `/home/leandro/reino-portugues/Português/` (IMG_7459 a 7485) e `Português/Revisão/` (7486 a 7488).
@@ -43,7 +43,7 @@ Mudança de contrato: só o orquestrador.
 | 7471 | 54–55 | 7484 | 78–79 |
 | | | 7485 | 80 |
 
-## 2. Matéria (`js/materias/portugues.js`, montada pelo orquestrador)
+## 2. Matéria (`js/conteudo/materias/portugues/portugues.js`, montada pelo orquestrador)
 `id: 'portugues'`, `nome: 'Português'`, `emoji: '📝'`, `nomeLivro: 'Livro das Letras'`.
 Lugar: `nome: 'Casa das Palavras'`, `artigo: 'a'` (novo, opcional: "até a Casa", "salas da Casa"),
 `sprite: 'palavras'`, `rect: { x: 22, y: 15, w: 5, h: 5 }` (clareira; na (23,4) a placa do Castelo cobria o telhado,
@@ -61,7 +61,7 @@ para cima do telhado (ao lado ela cobria a casa).
 
 ### 2.1 Rascunho de uma sala (`rascunho/portugues-pN.js`, fora do jogo)
 ```
-/* Rascunho da sala pN: montado em js/materias/portugues.js por ferramentas/montar-portugues.js */
+/* Rascunho da sala pN: montado em js/conteudo/materias/portugues/portugues.js por ferramentas/montar-portugues.js */
 Reino.RASCUNHO_PORTUGUES = Reino.RASCUNHO_PORTUGUES || {};
 Reino.RASCUNHO_PORTUGUES.pN =
     {
@@ -74,7 +74,7 @@ Reino.RASCUNHO_PORTUGUES.pN =
       ],
     };
 ```
-- Estilo igual ao de `js/materias/historia.js` (indentação de 4 espaços na sala, 8 nos desafios). O trecho
+- Estilo igual ao de `js/conteudo/materias/historia/historia.js` (indentação de 4 espaços na sala, 8 nos desafios). O trecho
   depois de `=` entra no arquivo final do jeito que está.
 - Todo desafio tem `pagina` (número da página da apostila de onde ele vem; campo novo, só informativo, o jogo
   ignora), `livro` (uma das cartas da tabela) e `explica`.
@@ -91,13 +91,13 @@ Reino.RASCUNHO_PORTUGUES.pN =
 - Separação de sílabas: escreva em minúsculas com hífen (`bal-de`).
 - Ligar: a palavra mais comprida da coluna da esquerda + a da direita até 24 letras (senão, no celular,
   quebra palavra ou vaza); `validar-conteudo.js` avisa.
-- Emoji: prefira os que já têm desenho em `js/icones.js` (ver `jogo/ferramentas/icones.html`). Emoji novo:
+- Emoji: prefira os que já têm desenho em `js/arte/icones.js` (ver `jogo/ferramentas/previas/icones.html`). Emoji novo:
   liste no retorno (o orquestrador pede o desenho).
 - Validar sozinho, sem tocar no arquivo do jogo:
   ```
   cd /home/leandro/reino-portugues/jogo
   node ferramentas/montar-portugues.js --parcial --saida /tmp/<seu-nome>/portugues.js
-  node ferramentas/validar-conteudo.js --materia /tmp/<seu-nome>/portugues.js
+  node ferramentas/validar/validar-conteudo.js --materia /tmp/<seu-nome>/portugues.js
   ```
 
 ### 2.2 Base (`rascunho/portugues-base.js`)
@@ -162,7 +162,7 @@ apoio: { titulo: 'Salada de frutas',
 ```
 Caixa "texto de apoio" acima do enunciado, sempre visível, com botão "🔊 Ouvir o texto" (narradora, lendo
 `Reino.Falas.segmentosApoio(apoio)`: título, título de cada parte, cada item da lista, o texto). As falas
-entram no pacote da prova ou da sala (já em `js/falas.js`).
+entram no pacote da prova ou da sala (já em `js/sistemas/falas.js`).
 ### 4.2 `completar` (campos novos)
 - `colado: true` (no desafio): a lacuna fica dentro da palavra, sem espaços (`PA` + lacuna + `ARINHO`), com a
   lacuna mais curta. A narradora lê só o enunciado.
@@ -181,16 +181,16 @@ numa letra colocada tira). Valor: `[{ escolha: i | null, letras: [índices das p
 escolha e com tantas letras quanto a escrita escolhida. Pontuação: 2 partes por item (escolheu a certa; a
 cópia forma `opcoes[certa]`), em fração, como as outras questões com partes.
 ### 4.4 Onde
-`js/minijogos.js` (render, `pontuar`, `linhaCerta`, `linhaValor`, `conferir`), `js/provas.js` (tempo mínimo de
-leitura e lista de revisão com os tipos novos), `css/jogo.css` (estilos), `ferramentas/validar-conteudo.js`
+`js/atividades/desafios.js` (render, `pontuar`, `linhaCerta`, `linhaValor`, `conferir`), `js/atividades/provas.js` (tempo mínimo de
+leitura e lista de revisão com os tipos novos), `css/ui-jogo.css` (estilos), `ferramentas/validar/validar-conteudo.js`
 (`copiar` e os campos novos). As provas de História e de Inglês e as salas de hoje ficam idênticas.
 
-## 5. Prova (`js/provas/portugues-3bim.js`)
+## 5. Prova (`js/conteudo/provas/portugues-3bim.js`)
 `id: 'portugues-3bim'`, `materiaId: 'portugues'`, `nome: 'Revisão Bimestral de Português'`,
 `bimestre: '3º bimestre'`, `emoji: '📝'`, questões `pb3-01` a `pb3-12`.
 Acessórios: lendário `chapeu-chef-arco-iris` "Chapéu de Chef Arco-íris" (slot cabeca), raro `cachecol-pinguim`
 "Cachecol de Pinguim" (pescoco), comum `lacinho-morango` "Lacinho de Morango" (orelha).
-Figuras da questão 10: `palavra:<nome>` em `js/icones.js` (32×32): cachorro, chocolate, chupeta, chave, mochila,
+Figuras da questão 10: `palavra:<nome>` em `js/arte/icones.js` (32×32): cachorro, chocolate, chupeta, chave, mochila,
 cachecol, palhaco, milho, folha, olho, coelho, ovelha, ninho, quinhentos, golfinho, dinheiro, pinheiro, aranha.
 
 Folha (IMG_7486 a 7488), notas da leitura do orquestrador:
@@ -206,8 +206,8 @@ Folha (IMG_7486 a 7488), notas da leitura do orquestrador:
 ## 6. Prédio (lugar `materia:portugues`)
 - Desenho de fora: `Mapa.PREDIOS.palavras`, registrado pelo próprio prédio (como a Pet Shop): casinha de
   cozinha com chaminé, livros e uma bandeirinha de expedição; cores próprias; a placa não cobre os vizinhos.
-- Interior: `js/interiores/portugues-falas.js` (`Reino.FALAS_INTERIORES.portugues = { npcs, objetos, extras? }`) e
-  `js/interiores/portugues.js`; ids `portugues` (entrada) e, se houver andares ou alas, `portugues-<n>`; todos com
+- Interior: `js/interiores/portugues/falas.js` (`Reino.FALAS_INTERIORES.portugues = { npcs, objetos, extras? }`) e
+  `js/interiores/portugues/portugues.js`; ids `portugues` (entrada) e, se houver andares ou alas, `portugues-<n>`; todos com
   `pacote: 'interior-portugues'`. Objetos temáticos `portugues-<nome>`.
 - Cômodos: Hall (Dona Palavrinha, lista das salas e Livro das Letras no púlpito), Cozinha das Receitas, Horta do H,
   Pátio do Circo (amarelinha no chão), Porto da Expedição (icebergs, pinguins, focas, albatroz), Parque do
@@ -225,14 +225,14 @@ conferência por transcrição: só o orquestrador. Amostras 37 a 44 em `amostra
 ## 8. Arquivos e donos (Fase 1)
 | Quem | Arquivos (e só eles) |
 |---|---|
-| orquestrador | index.html, js/config.js, js/npcs.js (ELENCO), js/falas.js, js/main.js, js/materias/portugues.js, ferramentas/listar-falas.js, ferramentas/montar-portugues.js, CONTRATOS-PORTUGUES.md, COMO-USAR.md, js/voz/*, amostras-de-voz/ |
+| orquestrador | index.html, js/nucleo/config.js, js/personagens/npcs.js (ELENCO), js/sistemas/falas.js, js/motor/main.js, js/conteudo/materias/portugues/portugues.js, ferramentas/vozes/listar-falas.js, ferramentas/montar-portugues.js, CONTRATOS-PORTUGUES.md, COMO-USAR.md, js/voz/*, amostras-de-voz/ |
 | Sala p1…p5 | rascunho/portugues-pN.js |
 | Livro e unicórnios | rascunho/portugues-base.js |
-| Motor | js/minijogos.js, js/provas.js, css/jogo.css, ferramentas/validar-conteudo.js |
-| Prova | js/provas/portugues-3bim.js |
-| Arte | js/icones.js, js/pixelart.js, ferramentas/acessorios.html, ferramentas/icones.html |
-| Prédio | js/interiores/portugues-falas.js, js/interiores/portugues.js, js/npcs.js (só o gerador: chef, quepe, nariz), ferramentas/interiores.html (lista) |
-| Castelo e Escola | js/interiores/castelo.js, castelo-falas.js, escola.js, escola-falas.js, js/claude.js (só as falas fixas) |
+| Motor | js/atividades/desafios.js, js/atividades/provas.js, css/ui-jogo.css, ferramentas/validar/validar-conteudo.js |
+| Prova | js/conteudo/provas/portugues-3bim.js |
+| Arte | js/arte/icones.js, js/arte/pixelart.js, ferramentas/previas/acessorios.html, ferramentas/previas/icones.html |
+| Prédio | js/interiores/portugues/falas.js, js/interiores/portugues/portugues.js, js/personagens/npcs.js (só o gerador: chef, quepe, nariz), ferramentas/previas/interiores.html (lista) |
+| Castelo e Escola | js/interiores/castelo/castelo.js, castelo/falas.js, escola/escola.js, escola/falas.js, js/personagens/claude.js (só as falas fixas) |
 
 Servidor de teste: `http://127.0.0.1:8789/?debug=1` (worktree, banco temporário). Saves sintéticos em
 `<scratchpad>/saves/`: `sem-portugues.json`, `portugues-metade.json`, `prova-premiada.json`.

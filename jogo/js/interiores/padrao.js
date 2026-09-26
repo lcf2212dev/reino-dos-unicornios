@@ -38,7 +38,7 @@
   function clara(c, t) { return mistura(c, '#ffffff', t); }
   function escura(c, t) { return mistura(c, '#000000', t); }
   function semFE0F(s) { return String(s || '').replace(/️/g, ''); }
-  // ícone do emoji em pixel (desenho de js/icones.js ou o emoji reduzido a pixels)
+  // ícone do emoji em pixel (desenho de js/arte/icones.js ou o emoji reduzido a pixels)
   function iconeEmoji(e) {
     if (!e || !window.PA || !PA.iconeEmoji || typeof document === 'undefined') return null;
     try { return PA.iconeDesenho(semFE0F(e)) || PA.iconeEmoji(e, 1); } catch (x) { return null; }

@@ -6,7 +6,7 @@ Mudança de contrato: só o orquestrador.
 
 Convenções de sempre: scripts clássicos, tudo em `window.Reino` (e `Mapa`, `Jogador`, `PA`), nomes e
 comentários em português, pixel art em código (contorno `#3a2446`, tile de 16 px), sem imagens. Todo emoji
-na tela ou no canvas tem ícone em `js/icones.js` (🛁 📷 🖼 🫧 🧽 🚿 💾 🗑 ✨ 🎵 🧼 📸 já existem; 🦆 e 📥 não).
+na tela ou no canvas tem ícone em `js/arte/icones.js` (🛁 📷 🖼 🫧 🧽 🚿 💾 🗑 ✨ 🎵 🧼 📸 já existem; 🦆 e 📥 não).
 Animações desligado e `prefers-reduced-motion` valem em tudo. Texto para criança: pt-BR correto e carinhoso,
 falas de personagem com até 30 letras por página, frases de 3 palavras ou mais.
 
@@ -14,20 +14,20 @@ falas de personagem com até 30 letras por página, frases de 3 palavras ou mais
 
 | Dono | Arquivos |
 |---|---|
-| B1 save e cuidados | `js/progresso.js`, `js/cuidados.js`, `ferramentas/testar-save.js`, `ferramentas/testar-banho.js` (novo) |
-| B2 banheira e animação | `js/banho.js` (novo), `js/interiores/petshop.js`, `js/interiores/petshop-falas.js`, `js/jogador.js`, `js/main.js` |
-| B3 música e sons | `js/audio.js`, `js/musicas.js` (novo), `ferramentas/testar-musicas.js` (novo) |
-| B4 fotos | `js/fotos.js` (novo), `css/fotos.css` (novo), `js/icones.js` |
-| B5 Observatório | `js/interiores/observatorio.js`, `js/interiores/observatorio-cenas.js` |
-| B6 placas e UI | `js/cena.js`, `js/ui.js`, `css/jogo.css`, `css/petshop.css`, `js/interiores/estabulo.js`, `js/interiores/*-falas.js` que não são de B2/B5 (só textos de "placa"), `ferramentas/validar-interiores.js` (só o que for de placa do mapa) |
-| Orquestrador | `index.html`, `js/config.js`, `js/falas.js`, `ferramentas/listar-falas.js`, `js/debug.js`, `js/voz/*`, vozes, docs, commits |
+| B1 save e cuidados | `js/sistemas/progresso.js`, `js/sistemas/cuidados.js`, `ferramentas/testes/testar-save.js`, `ferramentas/testes/testar-banho.js` (novo) |
+| B2 banheira e animação | `js/sistemas/banho.js` (novo), `js/interiores/petshop/petshop.js`, `js/interiores/petshop/falas.js`, `js/personagens/jogador.js`, `js/motor/main.js` |
+| B3 música e sons | `js/sistemas/som.js`, `js/sistemas/musicas.js` (novo), `ferramentas/testes/testar-musicas.js` (novo) |
+| B4 fotos | `js/sistemas/fotos.js` (novo), `css/ui-fotos.css` (novo), `js/arte/icones.js` |
+| B5 Observatório | `js/interiores/observatorio/observatorio.js`, `js/interiores/observatorio/cenas.js` |
+| B6 placas e UI | `js/motor/cena.js`, `js/ui/ui.js`, `css/ui-jogo.css`, `css/ui-petshop.css`, `js/interiores/estabulo/estabulo.js`, `js/interiores/*-falas.js` que não são de B2/B5 (só textos de "placa"), `ferramentas/validar/validar-interiores.js` (só o que for de placa do mapa) |
+| Orquestrador | `index.html`, `js/nucleo/config.js`, `js/sistemas/falas.js`, `ferramentas/vozes/listar-falas.js`, `js/debug.js`, `js/voz/*`, vozes, docs, commits |
 
 Ordem nova dos scripts (index.html): `… progresso, audio, musicas, voz, claude, falas, cuidados, surpresa,
 mapa, jogador, minijogos, prova, provas, ui, fotos, interiores.js, npcs.js, interiores/*, banho, cena.js, main.js, debug.js`.
-CSS novo: `css/fotos.css`. `js/musicas.js`, `js/fotos.js` e `js/banho.js` **não tocam em DOM, canvas, PA,
+CSS novo: `css/ui-fotos.css`. `js/sistemas/musicas.js`, `js/sistemas/fotos.js` e `js/sistemas/banho.js` **não tocam em DOM, canvas, PA,
 Progresso nem Cena no carregamento** (as ferramentas em Node os carregam num `vm`).
 
-## 1. Banho no save (js/progresso.js)
+## 1. Banho no save (js/sistemas/progresso.js)
 
 Não mudam: `chaveSave`, `v`, `geracao`, `ciclo`, o formato dos campos existentes e as regras de mescla deles.
 O registro de cuidados ganha dois campos, só aditivos:
@@ -53,7 +53,7 @@ cuidados: { <uniId>: { fome, sede, banho, em, acao, acaoFome, acaoSede, acaoBanh
   volta dela pela mesma regra de mescla.
 - "Novo ciclo" mantém; "Apagar tudo" zera (como fome e sede).
 
-## 2. Banho nos cuidados (js/cuidados.js, `Reino.Cuidados`)
+## 2. Banho nos cuidados (js/sistemas/cuidados.js, `Reino.Cuidados`)
 ```
 niveis(uniId?) → { fome, sede, banho }          // sem registro / sem campo = 100
 baixo(uniId?)  → { fome, sede, banho }          // < config.cuidados.baixo (25)
@@ -73,7 +73,7 @@ vozDaFrase('banhou') = 'unicornio'
 - Lembrete: o mesmo limite (1 a cada `lembreteMs`, livre, fora da Pet Shop). `lembreteBanho` só quando a
   fome e a sede não estão baixas (elas têm prioridade).
 
-## 3. Banheira e animação (js/banho.js, `Reino.Banho`; js/interiores/petshop.js)
+## 3. Banheira e animação (js/sistemas/banho.js, `Reino.Banho`; js/interiores/petshop/petshop.js)
 - O objeto `petshop-banheira` vira interativo ("Banho de espuma"), `acao: { tipo: 'banho' }`, registrado
   com `Reino.NPCs.registrarAcao('banho', fn)`. De graça. Tocar: ela anda até a banheira (como no bebedouro).
 - `Reino.Banho = { iniciar(uniId) → Promise, ativo() → bool, depurar() → { ativo, fase, t, curta, uniId, pulou },
@@ -92,17 +92,17 @@ vozDaFrase('banhou') = 'unicornio'
 - Sons (Reino.Som.tocar): `'bolhas'`, `'esfregar'`, `'chuveiro'`, `'sacudida'`.
 - Sujinho (jogador.js): com `Cuidados.sujo()` o unicórnio ganha manchinhas no pelo e uma nuvenzinha de
   poeira (anima só com Animações). O ícone 🛁 vem de `Cuidados.iconeMontaria()` (já desenhado hoje).
-- Falas novas da Dona Aveia sobre o banho (petshop-falas.js, pacote interior-petshop) e o guia da Pet Shop
+- Falas novas da Dona Aveia sobre o banho (petshop/falas.js, pacote interior-petshop) e o guia da Pet Shop
   menciona a banheira.
 
-## 4. Observatório de galáxia (observatorio.js, observatorio-cenas.js)
+## 4. Observatório de galáxia (observatorio/observatorio.js, observatorio/cenas.js)
 Paleta azul-marinho → azul #2f3fb8 → roxo #6c3fd4 → magenta #b24fe0, toques ciano #6fd6ff e rosa; faixa de
 Via Láctea na cúpula; halos em anéis de pixel; estrelas em cruz; poeira cintilante; estrelas que trocam de cor
 (branco → ciano → lilás) em ritmos diferentes; estrela cadente a cada 8–15 s. Nos 3 cômodos, na cena do
 telescópio e no prédio do mapa. Nebulosas e céu pré-renderizados (canvas cacheado); no máximo ~80 partículas
 animadas; parado e colorido sem Animações. Balões, placas dos cômodos e ícones de status legíveis.
 
-## 5. Fotos (js/fotos.js, css/fotos.css; `Reino.Fotos`)
+## 5. Fotos (js/sistemas/fotos.js, css/ui-fotos.css; `Reino.Fotos`)
 ```
 Reino.Fotos = {
   podeTirar() → bool          // jogo começou, Cena.estado() é 'mapa' ou 'interior' (nadando inclusive), sem tela
@@ -124,7 +124,7 @@ Reino.Fotos = {
 - Botão 📷 no HUD de cima, perto da tela cheia (ui.js, B6): toque → `Fotos.tirar()`; toque longo
   (`config.fotos.toqueLongoMs`) → `Fotos.abrirAlbum()`. Desabilitado quando `!Fotos.podeTirar()`.
 
-## 6. Música por ambiente (js/audio.js, js/musicas.js)
+## 6. Música por ambiente (js/sistemas/som.js, js/sistemas/musicas.js)
 - `Reino.Musicas` (dados, sem DOM): `faixas: { <id>: { nome, bpm, … , secoes, ordem } }`,
   `expandir(id) → [{ t, dur, freq, parte: 'melodia'|'harmonia'|'baixo'|'percussao', vol, onda? }]` (um loop
   inteiro, em segundos), `duracao(id) → s`, `secao()`, `compassos()`. O formato exato fica documentado no topo de musicas.js:
@@ -133,7 +133,7 @@ Reino.Fotos = {
   Na percussão, `onda` é o tipo do toque e `freq` a frequência central do filtro.
 - `Reino.Som.renderizarFaixa(id, segundos, { volume, taxa }) → Promise<AudioBuffer>` (OfflineAudioContext, mesmos
   instrumentos do motor), para o validador e para conferir picos e emendas.
-- Conferência pelos dados: `node jogo/ferramentas/testar-musicas.js`.
+- Conferência pelos dados: `node jogo/ferramentas/testes/testar-musicas.js`.
 - Cada faixa: ≥ 20 s antes de repetir, ≥ 2 seções diferentes, nenhum trecho < 20 s repetido em loop, fim
   emendando no começo sem estalo.
 - Ambientes → faixa: `mapa`, `lago` (nadando), `museu`, `torre`, `portugues` (e `portugues-gelo` no cômodo
@@ -148,7 +148,7 @@ Reino.Fotos = {
 - `Reino.Som.musicaAtual() → { ligada, ambiente, faixa, tocando, volume, abafada, pausada }`.
 - Sons novos em SONS: `bolhas`, `esfregar`, `chuveiro`, `sacudida` (banho), `clique` (foto).
 
-## 7. Placas do mapa removidas (js/cena.js, js/ui.js)
+## 7. Placas do mapa removidas (js/motor/cena.js, js/ui/ui.js)
 - Sai: desenho das placas dos prédios, toque na placa, desvio do HUD (`caixaParada` etc.) e código morto.
   O campo `placa` dos dados de mapa.js fica sem uso.
 - Fica: toque no prédio, arco-íris dos concluídos, placas DOS CÔMODOS nos interiores.

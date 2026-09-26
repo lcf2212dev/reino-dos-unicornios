@@ -16,7 +16,7 @@
 
 ## Área dos pais
 - Fica em ⚙️ Ajustes → 🔒 Área dos pais.
-- PIN: **2026**. Para trocar, edite `pinPais` em `jogo/js/config.js` e peça ao Claude para republicar.
+- PIN: **2026**. Para trocar, edite `pinPais` em `jogo/js/nucleo/config.js` e peça ao Claude para republicar.
 - Na área dos pais dá para:
   - ver quanto ela ganhou por matéria;
   - ver quantas vezes ela fez o Treino da Medalha de cada matéria (com uma só, aparece "(1 vez)");
@@ -36,7 +36,7 @@
 - **Claude:** Antonio.
 - **Narradora** (perguntas, opções e livro): Francisca.
 - **Unicórnios:** Thalita, com a voz mais aguda.
-- **Inglês:** Sonia (inglês britânico, como a apostila), um pouco mais devagar. Ouça as amostras 10, 11 e 12 em `amostras-de-voz/` (Sonia, Libby e Maisie, que tem voz de criança). Para trocar, edite `ingles` em `vozes` no `jogo/js/config.js`, regrave e peça para republicar.
+- **Inglês:** Sonia (inglês britânico, como a apostila), um pouco mais devagar. Ouça as amostras 10, 11 e 12 em `amostras-de-voz/` (Sonia, Libby e Maisie, que tem voz de criança). Para trocar, edite `ingles` em `vozes` no `jogo/js/nucleo/config.js`, regrave e peça para republicar.
 - Nas matérias e provas, o inglês fica entre «» no arquivo. Na tela, ele aparece destacado em azul-violeta, sem os sinais, e é falado pela voz inglesa. O resto é falado em português.
 - **Português:** quando a pergunta fala de uma letra sozinha, em maiúsculas ("usando X ou CH", "a letra H"), a voz lê o nome da letra: xis, cê agá, éle agá, ene agá, ésse, dois ésses, zê, érre, dois érres, éle, agá.
 - Nas palavras com um espaço para completar dentro delas (como XÍ_ARA), a voz lê só a pergunta, para não entregar a resposta.
@@ -44,11 +44,11 @@
 - Nomes que a Mariana digita (como o nome do unicórnio) não são falados.
 - Para regravar depois de mudar textos (roda dentro de `jogo/`):
   ```
-  node ferramentas/listar-falas.js && uv run --with edge-tts python ferramentas/gerar-vozes.py && node ferramentas/empacotar-vozes.js
+  node ferramentas/vozes/listar-falas.js && uv run --with edge-tts python ferramentas/vozes/gerar-vozes.py && node ferramentas/vozes/empacotar-vozes.js
   ```
-  Só as falas novas são gravadas; as antigas ficam em `ferramentas/vozes-cache/`.
+  Só as falas novas são gravadas; as antigas ficam em `ferramentas/gerado/vozes-cache/`.
 - Se a rede cair e um pacote de vozes não chegar, o jogo tenta de novo sozinho, e na hora em que a rede volta.
-- Para trocar de voz ou velocidade, edite `vozes` em `jogo/js/config.js` e rode os mesmos comandos.
+- Para trocar de voz ou velocidade, edite `vozes` em `jogo/js/nucleo/config.js` e rode os mesmos comandos.
 - **Personagens das construções:** cada um tem uma voz própria, gravada como as outras.
   - **Museu:** Dona Memória, Seu Antônio, Carteiro Chico, Guia Tainá, Vovó Contadeira e Restauradora Nina.
   - **Torre:** Seu Ponteiro, «Coach Ben», «Miss Stella», «Doctor Smile», «Miss Moon» e «Mister Joy» (os trechos em inglês de cada um usam a mesma voz, em inglês).
@@ -63,7 +63,7 @@
   - Visual: Dona Palavrinha com um lápis no cabelo e um livro aberto; Jardineiro Heitor com chapéu de pescador e regador; Palhaço Chocalho com cachos verdes (visual próprio, sem lembrar palhaço famoso); Cavaleira Clara com um "A" dourado na armadura.
   - As falas são curtas para caber no balão do celular, inclusive as frases automáticas.
   - Amostras: `amostras-de-voz/` de 13 a 44 (34 Dona Aveia, 35 Doutora Vega, 36 Robô Cosmo; de 37 a 42 a Casa das Palavras, 43 a Cavaleira Clara e 44 a Professora Lúcia, já com as vozes que estão no jogo), ou todas juntas em `VOZES-DOS-PERSONAGENS.mp3`.
-  - Para trocar, edite o perfil `npc-<nome>` em `vozes` no `jogo/js/config.js` e peça ao Claude para regravar.
+  - Para trocar, edite o perfil `npc-<nome>` em `vozes` no `jogo/js/nucleo/config.js` e peça ao Claude para regravar.
 
 ## Regras do jogo
 - **Dinheiro:** cada sala paga uma vez. Cada matéria tem 5 salas de R$4, total de R$20. Com as 3 matérias (História, Inglês e Português), dá R$60 no total.
@@ -88,7 +88,7 @@
   - **Épico:** um vem com ouro no Treino da Medalha **ou** com 3 treinos terminados; o outro vem acertando todas no treino **ou** com 5 treinos terminados.
   - Esse caminho da persistência existe para nenhum unicórnio depender só de perfeição. A calma chega mais rápido, mas treinar também vale. O jogo mostra quantas vezes faltam, no fim da sala e no Estábulo, em "Como ganhar".
   - O que ela já tinha jogado antes conta. Quando alguém chega ao número de vezes, o ovo aparece sozinho ao abrir o jogo.
-  - Para mudar os números, edite `persistencia` em `jogo/js/config.js`.
+  - Para mudar os números, edite `persistencia` em `jogo/js/nucleo/config.js`.
   - **Lendário:** completar a matéria.
 - **Crescimento:** o unicórnio que está de montaria cresce quando ela acerta. Bebê anda ao lado dela; a partir de "Pequeno" ela monta. Nas cartas do Estábulo, 🌱 é a barrinha de crescimento, e 🍎, 💧 e 🛁 (uma embaixo da outra) são a fome, a sede e o banho.
 - **Treino da Medalha (Castelo):**
@@ -98,7 +98,7 @@
   - a medalha é dada só pelos acertos;
   - o balão "REVISAR!" some quando ela começa a revisar, para não cobrir as questões.
 - **Medalha da escola:** a medalha de ouro da prova real (R$100) é combinada fora do jogo. O jogo só lembra a Mariana de ir com calma e revisar.
-- **Nadar no lago:** ela toca na água ou anda com as setas até o lago, e nada, montada ou a pé. Na água anda mais devagar (60% da velocidade). Se a montaria estiver com fome ou sede, as duas lentidões se somam: na água fica com cerca de 42% da velocidade. Se ela toca em terra, o caminho dá a volta por terra. Para mudar, edite `nado` em `jogo/js/config.js`.
+- **Nadar no lago:** ela toca na água ou anda com as setas até o lago, e nada, montada ou a pé. Na água anda mais devagar (60% da velocidade). Se a montaria estiver com fome ou sede, as duas lentidões se somam: na água fica com cerca de 42% da velocidade. Se ela toca em terra, o caminho dá a volta por terra. Para mudar, edite `nado` em `jogo/js/nucleo/config.js`.
 
 ## Pergunta surpresa
 - De vez em quando (entre 3 e 10 minutos de jogo livre), o Claude aparece com uma pergunta das salas que ela já fez: escolha, verdadeiro/falso ou várias respostas. Sem nenhuma sala feita, a pergunta não aparece.
@@ -108,7 +108,7 @@
 - Depois de uma sala, treino ou prova, a contagem recomeça do zero, para a pergunta não cair logo depois de ela estudar.
 - Não repete enquanto o jogo está aberto; quando acabam, recomeça pelas mesmas salas.
 - Para desligar: ⚙️ Ajustes → "❓ Perguntas surpresa".
-- Para mudar os números: `surpresa` em `jogo/js/config.js`.
+- Para mudar os números: `surpresa` em `jogo/js/nucleo/config.js`.
 
 ## Construções por dentro
 - **Entrar:** pisar na porta, tocar no prédio, apertar Enter perto dele ou escolher no menu Lugares. Um círculo fecha a tela e abre de novo já lá dentro.
@@ -177,7 +177,7 @@
   - **Onde dar:** na banheira de espuma do Cantinho da Água, dentro da Pet Shop. É de graça. Ela toca na banheira, vai até lá, desce do unicórnio e ele toma banho: entra na espuma, bolhas, escova, patinho, chuveirinho, se sacode e brilha de limpinho. Leva uns 6 segundos; depois de 2 segundos, um toque pula para o fim. Com "Animações" desligado, é só um brilho de 1 segundo.
   - Se ele já estiver limpinho, o Claude avisa e não tem banho.
 - **Água:** de graça, só no bebedouro do Cantinho da Água, dentro da Pet Shop. Com sede, o detalhe do unicórnio no Estábulo lembra: "💧 Tem água fresquinha na Pet Shop, de graça!".
-- **Para mudar:** os preços e quanto enche ficam em `comidas`; o ritmo (inclusive `minutosBanho`), o limite de 25 e os lembretes ficam em `cuidados`; a duração do banho fica em `banho`. Os dois em `jogo/js/config.js` (veja "Números que dá para mudar", no fim).
+- **Para mudar:** os preços e quanto enche ficam em `comidas`; o ritmo (inclusive `minutosBanho`), o limite de 25 e os lembretes ficam em `cuidados`; a duração do banho fica em `banho`. Os dois em `jogo/js/nucleo/config.js` (veja "Números que dá para mudar", no fim).
 - O progresso guarda a fome, a sede, o banho e a despensa. "Começar novo ciclo de provas" mantém; "Apagar tudo" zera.
 
 ## Observatório
@@ -217,7 +217,7 @@
 - **Novos:** Fitinha na cauda (10 ⭐), Gravata-borboleta (10 ⭐), Pompom na cauda (14 ⭐), Colar de pérolas (18 ⭐), Oculinhos de estrela (22 ⭐) e Coroa de flores (26 ⭐).
 - **Do espaço:** Brinco de lua (16 ⭐), Tiara de estrelas (32 ⭐), Colar de planetas (35 ⭐), Anel de Saturno no chifre (40 ⭐) e Cometa na cauda (42 ⭐).
   - O anel de Saturno é um aro lilás atravessando o chifre, o colar tem três planetinhas em elos dourados, o cometa tem cabeça branca e rastro azul, e a tiara tem uma faixa azul-lavanda.
-- Os de antes continuam iguais. A lista e os preços ficam em `jogo/js/loja-itens.js`.
+- Os de antes continuam iguais. A lista e os preços ficam em `jogo/js/conteudo/loja-itens.js`.
 
 ## Provas bimestrais (Escola do Reino)
 - A Escola do Reino fica ao lado do Estábulo, perto da rua de baixo. No menu Lugares aparece "Prova" enquanto houver prêmio para ganhar.
@@ -262,13 +262,13 @@
 - **Correção:**
   - Depois da 1ª tentativa errada, o jogo só mostra quais questões têm erro, sem dar a resposta, para ela procurar com atenção.
   - A partir da 2ª tentativa errada, e nos treinos, mostra também a resposta certa e a explicação.
-- **Para exigir outra nota:** mude `notaSucessoProva` em `jogo/js/config.js`. Hoje é 10, que quer dizer acertar tudo.
+- **Para exigir outra nota:** mude `notaSucessoProva` em `jogo/js/nucleo/config.js`. Hoje é 10, que quer dizer acertar tudo.
 - **Onde ver os acessórios:** ela usa e troca os acessórios na Loja das Fadas, na parte "Prêmios da Escola do Reino".
-- **Prêmios à venda:** depois que ela ganha um acessório numa prova, os outros dois da mesma prova passam a ser vendidos na Loja, com estrelas: comum 25 ⭐, raro 40 ⭐, lendário 70 ⭐ (`precoPremio` em `jogo/js/config.js`).
+- **Prêmios à venda:** depois que ela ganha um acessório numa prova, os outros dois da mesma prova passam a ser vendidos na Loja, com estrelas: comum 25 ⭐, raro 40 ⭐, lendário 70 ⭐ (`precoPremio` em `jogo/js/nucleo/config.js`).
   - A regra da prova não muda: o prêmio de verdade continua sendo só com nota 10.
   - Comprar não conta como prêmio: não muda a Área dos pais, o mural nem o arco-íris da Escola.
 - **Área dos pais:** mostra as tentativas, as notas de cada tentativa e o prêmio ganho.
-- **Nova prova:** mande as fotos da folha para o Claude. Ele cria `jogo/js/provas/<matéria>-<bimestre>.js` com três acessórios novos, grava as vozes e republica. A prova nova ganha uma sala de aula na Escola do Reino, com um professor (um padrão, se não houver um próprio).
+- **Nova prova:** mande as fotos da folha para o Claude. Ele cria `jogo/js/conteudo/provas/<matéria>-<bimestre>.js` com três acessórios novos, grava as vozes e republica. A prova nova ganha uma sala de aula na Escola do Reino, com um professor (um padrão, se não houver um próprio).
 
 ## Jogo no computador de casa
 - Endereço na rede de casa: **http://reinodosunicornios.local** (ou pelo IP do PC, ex.: http://192.168.1.247).
@@ -303,7 +303,7 @@
 - **Dois aparelhos gastando estrelas quase ao mesmo tempo:** as duas compras podem virar uma só na sincronização. As estrelas nunca ficam negativas.
 - **Aba com o jogo ANTIGO aberta no dia de atualizar:** quando ela troca um enfeite ou grava por cima nessa aba, os enfeites e acessórios novos saem do unicórnio (a compra não se perde: é só vestir de novo na Loja). Se a montaria for um unicórnio de Português, a aba antiga dá erro: a personagem some do mapa e a Loja não abre (o progresso fica; é fechar a aba e abrir de novo). E, no mesmo aparelho, se a cópia de segurança não estiver lá, a comida comprada pode sumir de vez, com as estrelas já gastas. Por isso, nenhuma aba antiga pode ficar aberta: siga o passo a passo do dia de atualizar, acima.
 
-## Números que dá para mudar (`jogo/js/config.js`)
+## Números que dá para mudar (`jogo/js/nucleo/config.js`)
 Depois de mudar, peça ao Claude para republicar.
 - **`comidas`:** cada comida tem `nome`, `icone`, `preco` (estrelas) e `fome` (quanto enche, de 0 a 100). O bolo tem `enche: true`, que enche tudo. Hoje: cenoura 2 ⭐/20, maçã 3 ⭐/30, feno 4 ⭐/45, biscoito 5 ⭐/60, bolo 8 ⭐/tudo. **Não troque o `id`:** a despensa guarda a comida por ele.
 - **`cuidados`:**
