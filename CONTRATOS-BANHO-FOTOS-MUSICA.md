@@ -191,4 +191,16 @@ Reino.Fotos = {
   de 78 partículas animadas no prédio todo; o Planetário mantém o chão clareado que o pai aprovou.
 - D12. Placas: `UI.avisosDoLugar(l)` em ui.js no lugar de `extraDaPlaca`; o campo `placa` dos dados ficou sem uso;
   `mapa.desenharTela` ficou vazio (o main.js ainda chama); evento novo `'transicao'` (true/false) em cena.js.
+- D13. Interruptores dos Ajustes leem `P.estado().ajustes` na hora do toque (defeito antigo: a tela guardava o objeto
+  e, depois de uma mescla com a tela aberta, o 🎵 parava a música mas o save continuava ligado).
+- D14. Blocos do HUD de cima (`.hud-esq`, `.hud-dir`, `.hud-botoes`) com `pointer-events: none`; só botões e chips pegam
+  toque (o 📷 tinha criado uma faixa morta sob o chip da montaria no celular).
+- D15. Maiúscula acentuada com a fonte reserva (sem internet para a fonte do Google) sai com o acento deslocado em todo
+  o jogo ("´Album", "´Area dos pais"); defeito antigo e geral, fora do escopo; com a Press Start 2P sai certo. Não mexido.
+- D16. Música: rampas de volume sem `cancelAndHoldAtTime` (dava degrau de 8–17 dB no Chromium); descida e volta com a voz
+  em rampa exponencial (0,6 s / 0,8 s). `testar-musicas.js` compara em tiques da grade (48 por batida). Brecha conhecida:
+  uma frase de 1 compasso repetida só 2 vezes começando fora da batida não é pega (as faixas reais não têm isso).
+- D17. `Mapa.PREDIOS_ANIM[sprite](ctx, px, py, w, h, t)`: gancho genérico na camada animada do mapa (só com Animações),
+  usado pelo Observatório para cintilar no mapa.
+- D18. Download no mapa: `reino-dos-unicornios-<data>.png` (sem repetir "reino").
 - D5. Portas de teste: B1 8791, B2 8792, B3 8793, B4 8794, B5 8795, B6 8796; validadores 8797 em diante.
