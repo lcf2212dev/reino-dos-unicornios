@@ -25,6 +25,12 @@
 - Depois de registrar um pagamento ou começar um novo ciclo, a Área dos pais continua aberta, sem pedir o PIN de novo.
 - **🗑️ Apagar tudo** zera TODO o progresso, inclusive unicórnios e estrelas, e não tem volta. Não use para resolver problema: peça ao Claude.
 
+## Pedir uma novidade ao Claude
+- Use o modelo `PEDIDO-DE-FEATURE.md`, que fica na pasta do projeto: copie, preencha e cole na conversa.
+- Para ajuste pequeno, use o modelo curto, de 4 linhas. Para novidade de verdade, use o completo.
+- Campo em branco vale o padrão escrito nele. O que vale sempre (vozes, ícones, persistência, os 3 aparelhos) já está no modelo.
+- O Claude constrói à parte e te dá um servidor de teste para jogar. Merge, GitHub e artifact só com a sua marcação em "Até onde ir".
+
 ## Nova matéria
 1. Salve os prints numa pasta `Mariana Revisões/<Matéria>/`, por exemplo `Mariana Revisões/Geografia/`.
 2. Peça ao Claude para criar a matéria no reino.
