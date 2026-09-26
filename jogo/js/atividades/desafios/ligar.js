@@ -87,8 +87,10 @@
       },
       marcarErro: function (res) {
         (res.erradas || []).forEach(function (k) {
-          bD[liga[k]].classList.add('treme'); bE[k].classList.add('treme');
-          setTimeout(function () { bD[liga[k]] && bD[liga[k]].classList.remove('treme'); bE[k].classList.remove('treme'); }, 600);
+          // os botões são guardados agora: aos 450 ms o par é apagado e liga[k] some
+          var bDir = bD[liga[k]], bEsq = bE[k];
+          bDir.classList.add('treme'); bEsq.classList.add('treme');
+          setTimeout(function () { bDir.classList.remove('treme'); bEsq.classList.remove('treme'); }, 600);
         });
         setTimeout(function () {
           (res.erradas || []).forEach(function (k) { delete liga[k]; });

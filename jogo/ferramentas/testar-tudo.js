@@ -1,7 +1,8 @@
 // Roda tudo o que é rápido (< ~1 min) e resume: é o `npm test` (na raiz do repositório).
 // Uso: node jogo/ferramentas/testar-tudo.js [--detalhes]
 //   1. testes de unidade    node --test jogo/ferramentas/testes/unidade/*.test.js (save, cuidados, banho,
-//                           loja, surpresa, pontuação dos desafios, músicas, validadores)
+//                           loja, surpresa, pontuação dos desafios, músicas, validadores; os *.navegador.test.js
+//                           abrem o Chromium no servidor de TESTE, ~1 s cada)
 //   2. validadores          jogo/ferramentas/validar/validar-tudo.js (conteúdo, interiores, index, docs)
 //   3. tamanho              jogo/ferramentas/tamanho.js (código ≤ 420 linhas, dados ≤ 800)
 //   4. referências de dados jogo/ferramentas/testes/e2e.js --so-dados (servidor de TESTE + Chromium)
