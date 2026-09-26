@@ -20,7 +20,9 @@ function listar(p) {
 // rasteriza elementos com transform: scale estático com ±1–3 de diferença entre execuções no
 // celular (densidade 3), mesmo no modo determinístico (docs/decisoes/referencias-ruido.md).
 // Até RUIDO_MAX pixels assim por imagem contam como ruído; qualquer outro pixel diferente reprova.
-const RUIDO_CANAL = 4, RUIDO_MAX = 64;
+// FORTE_MAX: até tantos pixels fortes (do aparelho) numa imagem ainda contam como ruído (1–2 px soltos que o Chromium
+// às vezes varia entre execuções); qualquer mudança de desenho de verdade passa disso de longe
+const RUIDO_CANAL = 4, RUIDO_MAX = 64, FORTE_MAX = 4;
 // Células CELULA×CELULA px (do aparelho) com pixel forte, marcadas no mesmo laço; células vizinhas
 // (8 lados) viram uma caixa. As caixas saem em px CSS (÷ densidade: celular 3, tablet 2, notebook 1).
 const CELULA = 8;
@@ -122,10 +124,10 @@ function comparar(ref, nova, op) {
       const tm = f.split(path.sep).slice(-2)[0];
       const d = pixelsDiferentes(x, y, arqDiff, (REGIOES[tm] || {}).densidade);
       if (d.erro) imagens.push({ f, texto: `${f}: ${d.erro}\n      base:  ${path.join(ref, f)}\n      atual: ${path.join(nova, f)}` });
-      else if (d.forte || d.ruido > RUIDO_MAX) imagens.push({ f, caixas: d.caixas, texto: `${f}: ${d.forte + d.ruido} pixels diferentes (${d.forte} fora do ruído)` +
+      else if (d.forte > FORTE_MAX || d.ruido > RUIDO_MAX) imagens.push({ f, caixas: d.caixas, texto: `${f}: ${d.forte + d.ruido} pixels diferentes (${d.forte} fora do ruído)` +
         (d.caixas.length ? `\n      caixas (px CSS): ${txtCaixas(d.caixas)}` : '') +
         `\n      base:  ${path.join(ref, f)}\n      atual: ${path.join(nova, f)}\n      diferença (magenta): ${arqDiff}` });
-      else ruidos.push(`${f}: ${d.ruido} pixels de ruído de antialiasing`);
+      else ruidos.push(`${f}: ${d.ruido} pixels de ruído de antialiasing` + (d.forte ? ` e ${d.forte} pixel(s) forte(s) solto(s)` : ''));
     } else falhas.push(`${f}: conteúdo diferente (diff -u ${path.join(ref, f)} ${path.join(nova, f)})`);
   });
   listar(nova).forEach((f) => { if (!a.includes(f) && entra(f)) falhas.push(`novo (não existe na referência): ${f}`); });

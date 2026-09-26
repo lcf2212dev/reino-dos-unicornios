@@ -73,6 +73,8 @@ try { scripts = JSON.parse(fs.readFileSync(path.join(RAIZ, 'package.json'), 'utf
 
 /* ---------- conferência de uma referência ---------- */
 const proibido = (t) => /servidor\/dados/.test(t);
+// gerados e ignorados pelo git (não existem numa worktree nova): contam como existentes
+const GERADOS_IGNORADOS = /(^|\/)versao\.json$/;
 function existeCaminho(tok, docDir) {
   let t = tok.replace(/^\.\//, '').replace(/:\d+(-\d+)?$/, '');
   if (t.startsWith('/')) return proibido(t) || !t.startsWith('/home/') || fs.existsSync(t);
@@ -95,6 +97,7 @@ function ehCaminho(t) {
 }
 // devolve null (ok), { erro } ou { aviso }
 function conferirCaminho(t, docDir) {
+  if (GERADOS_IGNORADOS.test(t)) return null;
   if (t.startsWith('/tmp/') || t === '/tmp' || proibido(t)) return null;
   if (existeCaminho(t, docDir)) return null;
   const pend = emConstrucao(t);

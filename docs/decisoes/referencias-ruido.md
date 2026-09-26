@@ -16,7 +16,8 @@ seguidas. A variação é do rasterizador do Chromium, não do jogo.
 O comparador (`ferramentas/testes/referencias.js`) separa:
 - **ruído**: pixel que muda no máximo 4 em cada canal; até 64 pixels assim por imagem são
   aceitos e informados à parte;
-- **diferença**: qualquer pixel que muda mais que isso, ou mais de 64 pixels de ruído na mesma
-  imagem. Uma diferença reprova.
+- **pixel forte solto**: até 4 pixels (do aparelho) que mudam mais que isso numa imagem também contam como ruído
+  (o Chromium às vezes varia 1–2 pixels entre execuções; decisão de 2026-09-26);
+- **diferença**: mais de 4 pixels fortes, ou mais de 64 pixels de ruído na mesma imagem. Uma diferença reprova.
 
 Qualquer mudança real de desenho (cor, posição, forma) muda os pixels muito mais que 4 e reprova.
