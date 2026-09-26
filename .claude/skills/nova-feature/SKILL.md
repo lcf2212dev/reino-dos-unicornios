@@ -37,12 +37,12 @@ O modelo que o Leandro preenche: `PEDIDO-DE-FEATURE.md` (raiz). Campo em branco 
    - as fotos;
    - o "Pronto quando" item a item (feito / não feito / como conferir);
    - quando a novidade usa recurso do aparelho, onde funciona (claude.ai x servidor de casa, campo 12);
-   - só atualize o `COMO-USAR.md` se mudar como o Leandro USA o jogo (jogar, área dos pais, dia de atualizar);
+   - só atualize o `COMO-USAR.md` se mudar como o Leandro USA o jogo (jogar, área dos pais, quando chega uma novidade);
      nada de changelog, catálogo nem números — números ajustáveis ficam comentados em `jogo/js/nucleo/config.js`.
 8. **Integrar:** skill `entregar`, até o merge na main e o push (`CLAUDE.md` da raiz). Só pare antes se o Leandro
-   escreveu no pedido para parar antes ("só servidor de teste"). Artifact só se ele pedir, seguindo
-   `docs/decisoes/seguranca-do-progresso.md`.
+   escreveu no pedido para parar antes ("só servidor de teste"). Depois do push, o artifact (skill
+   `publicar-artifact`, seguindo `docs/decisoes/seguranca-do-progresso.md`), salvo se ele marcou para não publicar.
 9. **Relatório final**, curto: o que ela vai ver, o "Pronto quando" item a item, o que você decidiu sozinho, o hash
-   da main e o endereço do servidor de teste.
+   da main, a versão do artifact e o endereço do servidor de teste.
 
 Nunca: servidor de casa, artifact publicado, save real, Docker (`docs/contratos/save-e-mescla.md` §9).

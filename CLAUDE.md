@@ -19,13 +19,15 @@ Este arquivo tem as regras invioláveis e o índice. As regras de código de cad
 - Feature, ajuste ou correção pedidos pelo Leandro vão até o fim sem pedir decisão nem confirmação: decida com o
   padrão mais sensato (a opção que você recomendaria), construa numa worktree, feche com `validar-tudo`, faça o commit,
   integre na main e dê push (skill `entregar`: `npm run integrar -- <branch> --commit --merge --push`).
-  Esta é a autorização escrita dele para commit, merge na main, push e troca da base do e2e.
+  Depois do push, se o jogo mudou, republique o artifact do claude.ai (skill `publicar-artifact`).
+  Esta é a autorização escrita dele para commit, merge na main, push, troca da base do e2e e artifact.
 - Não use AskUserQuestion nem pare para aprovar plano. O que você decidiu vai no relatório final, curto.
 - Merge só com `npm test` e `npm run e2e` verdes; diferença no e2e fora do que a feature explica é defeito: corrija.
   Mudança de propósito no e2e: troque a base (`--trocar-base`) na mesma integração.
 - Só pare e pergunte o que não tem volta ou não é seu: o progresso da Mariana (nunca), Docker e servidor de casa,
   apagar o que não é temporário, material do Leandro que colide com outro conteúdo, `git push --force`.
-- Artifact do claude.ai: só quando o Leandro pedir (skill `publicar-artifact`).
+- O artifact publica só o jogo (o delta desde `jogo/ferramentas/artifact-publicado.txt`); o doc `progresso/mariana`
+  nunca se toca. Mudança só em docs ou ferramentas: sem publicar.
 - Frentes (workers) não fazem commit; quem orquestra integra. Commit no estilo `Reino dos Unicórnios: <o que mudou>`.
 - O `node_modules` da worktree é um link: nunca `git add` dele.
 

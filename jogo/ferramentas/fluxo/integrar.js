@@ -15,9 +15,9 @@
 //    relatório em /tmp/reino-testes/integrar/<nome>/relatorio.txt
 // e. colisões: arquivo NÃO rastreado na árvore principal que a integração passa a rastrear. Igual byte a
 //    byte = "mover" (só com --merge, para /tmp/reino-testes/antes-do-merge/<data>/); diferente = para.
-// f. SÓ com autorização escrita do Leandro: --trocar-base "<descrição>" (base do e2e = HEAD da integração,
-//    com commit), --merge (move as colisões iguais e `merge --ff-only` na árvore principal; exige npm test
-//    verde), --push (git push origin main; nunca --force).
+// f. entrega (autorizada pelo CLAUDE.md da raiz): --trocar-base "<descrição>" (base do e2e = HEAD da integração,
+//    com commit), --merge (move as colisões iguais, `merge --ff-only` na árvore principal e grava o versao.json
+//    dela; exige npm test verde), --push (git push origin main; nunca --force).
 // Sem entradas, retoma a integração <nome> (padrão: a de hoje) e roda só as fases que faltam ou foram pedidas.
 const fs = require('fs');
 const path = require('path');
@@ -240,6 +240,12 @@ async function integrar(argv, op2 = {}) {
     }
     log(`✔ main = ${C.git(r.principal, 'rev-parse', '--short', 'HEAD')} (merge --ff-only de ${branch})`);
     estado.mergeado = C.git(r.principal, 'rev-parse', 'HEAD'); salvar();
+    // impressão digital nova: as abas abertas do servidor de casa percebem e se atualizam (cena-e-motor.md §15)
+    const gerador = path.join(r.principal, 'jogo/ferramentas/gerar-versao.js');
+    if (fs.existsSync(gerador)) {
+      const v = C.rodar('node', [gerador], { cwd: r.principal });
+      log(v.ok ? '✔ npm run versao na árvore principal' : `⚠ npm run versao falhou (rode à mão):\n${(v.erro || v.saida).trim()}`);
+    }
   }
   if (op.push) {
     if (C.git(r.repo, 'rev-parse', 'main') !== C.git(r.repo, 'rev-parse', branch)) { log('✘ --push recusado: a main não é o HEAD da integração (faça o --merge antes)'); return fim(1); }
