@@ -7,6 +7,7 @@
    - começo sem tutorial nem tela de entrada (main.js lê Reino.congelado). */
 (function () {
   if (!/[?&]debug=1(&|$)/.test(location.search) || !/[?&]congelar=1(&|$)/.test(location.search)) return;
+  /** @type {ReinoGlobal} */
   var R = window.Reino = window.Reino || {};
   R.congelado = true;
 
@@ -34,6 +35,9 @@
   DataVirtual.now = function () { return BASE + agora; };
   DataVirtual.parse = DataReal.parse;
   DataVirtual.UTC = DataReal.UTC;
+  // DataVirtual imita o Date de verdade (construtor e, chamado como função, texto): o TypeScript não aceita
+  // uma função JavaScript com os dois papéis no lugar do DateConstructor
+  // @ts-expect-error
   window.Date = DataVirtual;
   performance.now = function () { return agora; };
 

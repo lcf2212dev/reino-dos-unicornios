@@ -27,7 +27,10 @@
   function cur(chave, nome, tema, o) {
     return Object.assign(o, { chave: chave, nome: nomeDe(chave, nome), acao: { tipo: 'curiosidade', tema: tema } });
   }
+  /** NPC do interior com sprite e voz do elenco. @param {string} id @param {number} x @param {number} y
+      @param {AcaoNpc} acao @returns {Npc} */
   function npc(id, x, y, acao) {
+    /** @type {Partial<PersonagemElenco>} */
     var e = ELENCO[id] || {}, F = falas();
     return { id: id, nome: e.nome || id, sprite: e.sprite ? Object.assign({ base: 'pessoa' }, e.sprite) : { base: 'pessoa' },
       voz: e.voz || 'npc-' + id, x: x, y: y, acao: acao, falas: (F.npcs && F.npcs[id]) || {} };

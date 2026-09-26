@@ -1,7 +1,9 @@
 /* Tudo o que o jogo fala em voz alta. O jogo usa estas frases, e as
    ferramentas usam Falas.todas() para gravar os áudios com vozes naturais.
-   Números e nomes que a Mariana digita não são falados (só aparecem na tela). */
+   Números e nomes que a Mariana digita não são falados (só aparecem na tela).
+   Tipos (Fala, FalasApi, Desafio): jogo/ferramentas/testes/tipos-jogo.d.ts. */
 (function () {
+  /** @type {FalasApi} */
   var F = {};
 
   F.fixas = {
@@ -123,6 +125,7 @@
   };
 
   F.todas = function () {
+    /** @type {Fala[]} */
     var lista = [];
     // cada trecho «em inglês» vira uma fala separada da voz 'ingles' (mesma divisão de Voz.falar)
     function add(texto, voz, pacote) {

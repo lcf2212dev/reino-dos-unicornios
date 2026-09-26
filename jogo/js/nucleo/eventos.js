@@ -2,7 +2,8 @@
    Só dados (sem DOM): carrega logo depois de js/nucleo/util.js e também roda no Node.
    O valor de cada constante é o nome do evento (a string); ouvir: U.on(Reino.EVENTOS.CENA, fn),
    avisar: U.emit(Reino.EVENTOS.CENA, carga). Os ouvintes rodam na ordem em que se registraram.
-   Em cada evento: quem emite, quem ouve e a carga (o argumento que chega ao ouvinte). */
+   Em cada evento: quem emite, quem ouve e a carga (o argumento que chega ao ouvinte).
+   Tipo: EventosReino (jogo/ferramentas/testes/tipos-jogo.d.ts); um nome qualquer de evento é `Evento`. */
 window.Reino = window.Reino || {};
 
 Reino.EVENTOS = {

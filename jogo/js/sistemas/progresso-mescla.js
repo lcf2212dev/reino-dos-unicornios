@@ -20,6 +20,7 @@
   var CAMPOS_CUIDADO = [['fome', 'acaoFome'], ['sede', 'acaoSede']];
   // carimbo efetivo de um campo: o do campo; mas um `acao` mais novo que os dois carimbos de campo (ação feita
   // numa aba da versão anterior desta branch, que só conhece o `acao`) vale para os dois campos
+  /** @param {Partial<RegCuidado>} r @param {string} chave 'acaoFome' | 'acaoSede' @returns {number | null} */
   function carimbo(r, chave) {
     var campos = CAMPOS_CUIDADO.map(function (c) { return r[c[1]]; }).filter(numero);
     if (numero(r.acao) && (!numero(r[chave]) || r.acao > Math.max.apply(null, campos))) return r.acao;
@@ -41,6 +42,8 @@
     else if (numero(lado.acaoBanho)) fica.acaoBanho = lado.acaoBanho;
     else delete fica.acaoBanho;
   }
+  /** @param {Object<string, RegCuidado>} base o lado que fica (é mudado e devolvido) @param {any} outro
+      @returns {Object<string, RegCuidado>} */
   function juntarCuidados(base, outro) {
     if (!objeto(outro)) return base;
     Object.keys(outro).forEach(function (k) {
@@ -71,6 +74,8 @@
     });
     return base;
   }
+  /** @param {Object<string, RegDespensa>} base o lado que fica (é mudado e devolvido) @param {any} outro
+      @returns {Object<string, RegDespensa>} */
   function juntarDespensa(base, outro) {
     if (!objeto(outro)) return base;
     Object.keys(outro).forEach(function (k) {
@@ -94,6 +99,9 @@
     return base;
   }
 
+  /** Junta dois estados da mesma Mariana (regras em docs/contratos/save-e-mescla.md §4). Não muda `a` nem `b`,
+      exceto quando devolve um deles inteiro (lado vazio ou geração diferente).
+      @param {EstadoSave} a @param {EstadoSave} b @returns {EstadoSave} */
   P.mesclar = function (a, b) {
     if (!a) return b; if (!b) return a;
     // quem "apagou tudo" por último vence inteiro

@@ -17,6 +17,7 @@
 (function () {
   var S = {};
   // o que as partes da surpresa dividem (ver o cabeçalho)
+  /** @type {Object<string, any>} interno: as partes publicam o que dividem (ver o cabeçalho) */
   var I = Reino._surpresa = { painelAberto: null, S: S };
 
   function cfg() { return Reino.config.surpresa; }

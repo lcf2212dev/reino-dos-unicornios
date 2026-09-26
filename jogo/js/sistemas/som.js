@@ -9,8 +9,10 @@
 (function () {
   var S = {};
   // o que as partes do som dividem: `ac` = o AudioContext do jogo (criado no primeiro toque, em S.ativar)
+  /** @type {Object<string, any>} interno: as partes publicam o que dividem (ver o cabeçalho) */
   var I = Reino._som = { ac: null, S: S };
   var mestre = null;
+  /** @returns {Partial<Ajustes>} */
   var ajustes = function () { return (Reino.Progresso && Reino.Progresso.estado() && Reino.Progresso.estado().ajustes) || {}; };
 
   S.ativar = function () {

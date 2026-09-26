@@ -8,17 +8,22 @@
      progresso-regras.js  dinheiro, estrelas, unicórnios, salas, treinos, provas, pagamentos
    O que as partes dividem mora em Reino._progresso (interno, não é API): `estado` (o objeto do save;
    carregar, mesclar e "Apagar tudo" TROCAM o objeto: sempre ler I.estado, nunca guardar numa variável),
-   `nuvem`, `P` e as funções auxiliares que cada parte publica no fim dela. */
+   `nuvem`, `P` e as funções auxiliares que cada parte publica no fim dela.
+   Tipos (EstadoSave, ProgressoApi, ProgressoInterno): jogo/ferramentas/testes/tipos-jogo.d.ts. */
 (function () {
   var U = Reino.util;
   var EV = Reino.EVENTOS;
+  /** @type {ProgressoApi} */
   var P = {};
+  /** @type {EstadoNuvem} */
   var nuvem = { ref: null, ok: false, gravando: false, pendente: false, timer: null, status: 'local' };
   // o que as partes do progresso dividem (ver o cabeçalho)
+  /** @type {ProgressoInterno} */
   var I = Reino._progresso = { estado: null, nuvem: nuvem, P: P };
 
   function agora() { return Date.now(); }
 
+  /** @returns {EstadoSave} */
   function estadoNovo() {
     return {
       v: 1, geracao: 1, ciclo: 1, criado: agora(), atualizado: agora(),
@@ -77,6 +82,7 @@
      em ordem e sem os valores vazios (a mescla escreve `perfeita: false` onde o save não tinha o
      campo, e o jogo lê os dois do mesmo jeito). Sem isso, duas abas (ou dois aparelhos) ficariam
      regravando uma para a outra. */
+  /** @param {EstadoSave} e @returns {string} */
   function conteudo(e) {
     function ordenar(x) {
       if (Array.isArray(x)) return x.map(ordenar);
@@ -95,6 +101,7 @@
     return JSON.stringify(c);
   }
   // `mesclado` tem algo que `recebido` não tem? (o `recebido` passa pela mesma arrumação do carregar)
+  /** @param {EstadoSave} mesclado @param {EstadoSave} recebido */
   function trouxeAlgo(mesclado, recebido) {
     return conteudo(mesclado) !== conteudo(completar(U.copia(recebido)));
   }
@@ -147,6 +154,7 @@
     return r;
   }
   // junta a cópia ao estado `e` (antes do completar(), para a surpresa que falta vir da cópia)
+  /** @param {any} e estado cru (do aparelho, do servidor, da mescla) @returns {EstadoSave} */
   function comCopia(e) {
     var c = lerCopia();
     if (!objeto(e) || !c || (c.geracao || 1) !== (e.geracao || 1)) return e;
@@ -155,6 +163,7 @@
     e.ajustes = I.juntarSurpresa(objeto(e.ajustes) ? e.ajustes : {}, { surpresa: c.surpresa, surpresaEm: c.surpresaEm });
     return e;
   }
+  /** @param {any} e estado cru @returns {EstadoSave} com todos os campos de estadoNovo() */
   function completar(e) {
     var base = estadoNovo();
     Object.keys(base).forEach(function (k) { if (e[k] === undefined) e[k] = base[k]; });
@@ -168,8 +177,10 @@
      objetos; fome, sede e banho de 0 a 100 (valor estragado = 100, como unicórnio sem registro; banho ausente fica ausente); `em` ≥ 0;
      compradas e usadas inteiros ≥ 0 e usadas ≤ compradas; surpresa booleana ("true"/"false" em texto
      viram booleano, outro valor volta ao padrão). O carimbo `surpresaEm` não muda. */
+  /** @param {any} e estado cru (já com `ajustes`) @returns {EstadoSave} */
   function normalizarNovos(e) {
     var cuidados = {}, despensa = {};
+    /** @returns {any} registro com as mesmas chaves seguras (os campos são conferidos logo abaixo) */
     function limpo(y) { var r = {}; Object.keys(y).forEach(function (c) { if (chaveSegura(y, c)) r[c] = y[c]; }); return r; }
     if (objeto(e.cuidados)) Object.keys(e.cuidados).forEach(function (k) {
       var y = e.cuidados[k];

@@ -1,9 +1,11 @@
 /* Músicas por ambiente: as FAIXAS (só dados; nada de DOM, canvas ou áudio no carregamento).
    O formato de uma faixa e a API estão no cabeçalho de js/sistemas/musicas.js, que carrega depois deste
    e publica as faixas em Reino.Musicas.faixas. Quem toca é o motor de js/sistemas/som-musica.js. */
+/** @type {ReinoGlobal} */
 var Reino = window.Reino = window.Reino || {};
 (function () {
   /* ================= AS FAIXAS ================= */
+  /** @type {Object<string, Musica>} faixa id → faixa (forma Musica em jogo/ferramentas/testes/tipos-jogo.d.ts) */
   var F = {};
 
   // Mapa: alegre, flauta e violão

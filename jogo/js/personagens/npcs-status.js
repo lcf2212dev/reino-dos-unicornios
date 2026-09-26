@@ -38,6 +38,7 @@
       var mt = materiaDe(a);
       if (!mt) return { icone: '💬', rotulo: 'Conversar' };
       if (!p.materiaCompleta(mt)) return { icone: '🔒', rotulo: 'Treino fechado' };
+      /** @type {Partial<RegTreino>} */
       var t = est.treinos[mt.id] || {};
       return MEDALHA[t.melhor] ? { icone: MEDALHA[t.melhor], rotulo: 'Melhor medalha' } : { icone: '❗', rotulo: 'Treino aberto' };
     }

@@ -2,9 +2,12 @@
    Usada por ui/loja.js (UI.ITENS_LOJA é apelido de ENFEITES), pela Loja por dentro (interiores/loja/loja.js)
    e pelas ferramentas (ferramentas/previas/acessorios.html).
    Nada de DOM, canvas, PA nem Reino.Progresso no carregamento: listar-falas.js e validar-interiores.js
-   carregam este arquivo num vm sem DOM. PA, Reino.provas e Reino.config só dentro das funções. */
+   carregam este arquivo num vm sem DOM. PA, Reino.provas e Reino.config só dentro das funções.
+   Tipos (Enfeite, Premio, ItemLoja, LojaItensApi): jogo/ferramentas/testes/tipos-jogo.d.ts. */
 (function () {
+  /** @type {ReinoGlobal} */
   var R = (window.Reino = window.Reino || {});
+  /** @type {LojaItensApi} */
   var L = {};
 
   // encaixes dos enfeites (um enfeite por encaixe). capa, rastro e asas são especiais (usando.capa,
@@ -55,6 +58,7 @@
     return null;
   };
 
+  /** @type {RaridadePremio[]} */
   var RARIDADES = ['lendario', 'raro', 'comum'];
   L.precoPremio = function (raridade) {
     var t = (R.config && R.config.precoPremio) || { comum: 25, raro: 40, lendario: 70 };
@@ -76,11 +80,13 @@
     });
     return lista;
   };
+  /** @param {string} id @returns {Premio | null} */
   function premioPorId(id) {
     var ps = L.premios();
     for (var i = 0; i < ps.length; i++) if (ps[i].id === id) return ps[i];
     return null;
   }
+  /** @param {Premio} premio @returns {Prova | { id: string }} a prova do prêmio (só o id, se ela não carregou) */
   function provaDe(premio) {
     var ps = R.provas || [];
     for (var i = 0; i < ps.length; i++) if (ps[i].id === premio.provaId) return ps[i];

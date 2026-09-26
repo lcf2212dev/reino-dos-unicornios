@@ -123,8 +123,10 @@
     return lista.map(function (o) { var n = Object.assign({}, o); n.x = o.x + ox; n.y = o.y + oy; return n; });
   }
 
+  /** @param {Materia} m @returns {InteriorDef} */
   function gerar(m) {
     var salas = m.salas || [], N = salas.length;
+    /** @type {Partial<LugarMateria['cores']>} */
     var cores = (m.lugar && m.lugar.cores) || {};
     var cP = cores.parede || '#fff6e4', cT = cores.telhado || '#9b6bd6', cD = cores.detalhe || '#ff8ac4';
     var nomeLugar = (m.lugar && m.lugar.nome) || m.nome;
@@ -195,6 +197,7 @@
       comodos.push({ id: 'sala' + n, nome: String(s.nome || '').replace(/[«»]/g, ''), placa: placa(n, s.nome),
         rect: { x: o.x, y: o.y, w: 11, h: 11 }, piso: PISOS[(i + 1) % PISOS.length], parede: PAREDES[i % PAREDES.length], paleta: pal });
       cruz(o);
+      /** @type {ObjetoInterior[]} */
       var parede = [
         { tipo: 'janela', x: 0, y: 0 },
         raro ? { tipo: 'quadro-unicornio', x: 1, y: 0, var: { uni: raro.id } } : { tipo: 'mapa-parede', x: 1, y: 0 },

@@ -11,12 +11,14 @@
    No carregamento NADA de DOM, canvas, PA ou Progresso: as ferramentas em Node carregam
    estes arquivos num vm. Tudo o que desenha só roda dentro de funções chamadas depois. */
 (function () {
+  /** @type {ReinoGlobal} */
   var R = window.Reino = window.Reino || {};
   var T = 16;
   var K = R.Desenho.K;          // contorno
   var FUNDO = R.Desenho.FUNDO;  // vão entre os cômodos
 
   R.interiores = R.interiores || [];
+  /** @param {InteriorDef} def (formato em docs/contratos/interiores.md §3) */
   R.registrarInterior = function (def) { R.interiores.push(def); };
 
   var LIVROS = ['#ff7eb6', '#5fb4ff', '#ffd34d', '#6fdc8c', '#b58cff', '#ff8a3d', '#7ed9c8', '#fff8ee', '#ff5c6a'];

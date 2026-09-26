@@ -21,7 +21,10 @@
   function inter(chave, nome, o) {
     return Object.assign(o, { chave: chave, nome: nome, fala: F.objetos[chave] || '(fala de ' + chave + ')' });
   }
+  /** NPC do interior com sprite e voz do elenco. @param {string} id @param {number} x @param {number} y
+      @param {AcaoNpc} acao @returns {Npc} */
   function npc(id, x, y, acao) {
+    /** @type {Partial<PersonagemElenco>} */
     var e = ELENCO[id] || {};
     return { id: id, nome: e.nome || id, sprite: e.sprite ? Object.assign({ base: 'pessoa' }, e.sprite) : { base: 'pessoa' },
       voz: e.voz || 'npc-' + id, x: x, y: y, acao: acao, falas: F.npcs[id] || {} };

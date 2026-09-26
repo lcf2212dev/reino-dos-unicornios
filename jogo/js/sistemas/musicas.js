@@ -41,9 +41,12 @@
    Reino.Musicas.secao(id, nome) → a seção com a herança (`de`) resolvida
    Reino.Musicas.compassos(id) → [{ secao, t, batidas, melodia, melodia2, … }] (batidas somadas em cada
      compasso, para ferramentas/testes/testar-musicas.js conferir)
+   Tipos (Musica, SecaoMusica, NotaMusica, MusicasApi): jogo/ferramentas/testes/tipos-jogo.d.ts.
 */
+/** @type {ReinoGlobal} */
 var Reino = window.Reino = window.Reino || {};
 (function () {
+  /** @type {MusicasApi} */
   var M = {};
 
   var ESCALAS = { maior: [0, 2, 4, 5, 7, 9, 11], menor: [0, 2, 3, 5, 7, 8, 10], dorico: [0, 2, 3, 5, 7, 9, 10] };
@@ -73,6 +76,8 @@ var Reino = window.Reino = window.Reino || {};
   function arred(x) { return Math.round(x * 1e6) / 1e6; }
 
   // seção com a herança de `de` resolvida (a faixa pode ter `base`: seções de outra faixa)
+  /** @param {{ secoes: Object<string, SecaoMusica>, base?: Object<string, SecaoMusica> }} fx @param {string} nome
+      @returns {SecaoMusica} */
   function secao(fx, nome) {
     var s = fx.secoes[nome] || (fx.base && fx.base[nome]);
     if (!s) throw new Error('seção inexistente: ' + nome);
@@ -108,6 +113,7 @@ var Reino = window.Reino = window.Reino || {};
 
   // "[b|#]grau[''/,][:dur]" → { midi|null, dur }
   var RE_NOTA = /^([b#]?)([0-7])([',]*)(?::([\d.]+))?$/;
+  /** @param {Musica} fx @param {string} texto @param {number} base @returns {{ midi: number | null, dur: number }[][]} */
   function lerLinha(fx, texto, base) {
     var esc = escala(fx), compassos = [];
     String(texto || '').split('|').forEach(function (c) {

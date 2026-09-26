@@ -40,7 +40,8 @@ Este arquivo é o índice. Cada pasta principal tem um `CLAUDE.md` com as regras
 - `npm run vozes` — lista as falas, grava as novas e empacota (`jogo/js/voz/`).
 - `npm run artifact` — monta a página do artifact em `/tmp/reino-testes/artifact/` (nunca publica).
 - `npm run tamanho` — código até 420 linhas, dados até 800.
-- `npm run tipos` — TypeScript confere os arquivos anotados com JSDoc (lista em `jogo/ferramentas/testes/tipos.json`).
+- `npm run tipos` — TypeScript confere os arquivos anotados com JSDoc (lista em `jogo/ferramentas/testes/tipos.json`;
+  as formas do save, conteúdo, interiores, falas, loja e músicas em `jogo/ferramentas/testes/tipos-jogo.d.ts`).
 
 ## Mapa de pastas
 ```

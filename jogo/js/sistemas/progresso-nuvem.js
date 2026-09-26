@@ -45,6 +45,7 @@
     return fetch(url, ctl ? Object.assign({ signal: ctl.signal }, opcoes) : opcoes)
       .then(function (r) { clearTimeout(t); return r; }, function (e) { clearTimeout(t); throw e; });
   }
+  /** @returns {DocProgresso} */
   function docDoServidor() {
     function ler() {
       return buscar('api/progresso', { cache: 'no-store' }).then(function (r) {
@@ -72,6 +73,7 @@
     return fetch('api/progresso', { method: 'HEAD', cache: 'no-store' })
       .then(function (r) { return r.headers.get('X-Reino') === '1'; });
   }
+  /** @template T @param {Promise<T>} promessa @param {number} ms @returns {Promise<T>} rejeita sem resposta em `ms` */
   function comLimite(promessa, ms) {
     return new Promise(function (ok, falha) {
       var t = setTimeout(function () { falha(new Error('sem resposta')); }, ms);

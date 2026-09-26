@@ -62,6 +62,7 @@
 
   /* ---------- conclusões ---------- */
   // resultado: {acertosPrimeira, total, pressas}
+  /** @param {Materia} materia @param {Sala} sala @param {ResultadoSala} resultado @returns {PremiosSala} */
   P.concluirSala = function (materia, sala, resultado) {
     var reg = I.estado.salas[sala.id] || { vezes: 0, melhor: 0 };
     var primeiraVez = !reg.feita;
@@ -129,6 +130,7 @@
     return 'bronze';
   };
 
+  /** @param {Materia} materia @param {number} acertos @param {number} total @returns {PremiosTreino} */
   P.registrarTreino = function (materia, acertos, total) {
     var medalha = P.medalhaPara(acertos, total);
     var reg = I.estado.treinos[materia.id] || { vezes: 0 };
@@ -164,6 +166,7 @@
     var reg = P.regProva(prova);
     return reg.premio ? null : P.premioDaTentativa((reg.tentativas || 0) + 1);
   };
+  /** @param {Prova} prova @param {number} nota 0–10 @returns {PremiosProva} */
   P.registrarProva = function (prova, nota) {
     var reg = I.estado.provas[prova.id] || { tentativas: 0, notas: [] };
     var valendo = reg.premio ? null : P.premioDaTentativa((reg.tentativas || 0) + 1);

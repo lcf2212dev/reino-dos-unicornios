@@ -111,6 +111,7 @@
     return V.carregarVarios(materia.salas.map(function (s) { return materia.id + '-' + s.id; }));
   };
 
+  /** @returns {Partial<Ajustes>} */
   function ajustes() { return (Reino.Progresso && Reino.Progresso.estado() && Reino.Progresso.estado().ajustes) || {}; }
 
   function tamanho(buf) { return buf.length * buf.numberOfChannels * 4; }

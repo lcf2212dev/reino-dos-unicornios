@@ -174,6 +174,14 @@ NUNCA abra `jogo/js/voz/*.js`, `falas.json`, `vozes-indice.json` nem `vozes-cach
 | `npm run tamanho` | código ≤ 420 linhas, dados ≤ 800 |
 | `npm run tipos` | JSDoc + TypeScript só nos arquivos listados |
 
+Tipos (só conferência, nunca build nem arquivo carregado pelo jogo): as formas principais ficam em
+`jogo/ferramentas/testes/tipos-jogo.d.ts` — `EstadoSave` (e `RegSala`, `RegTreino`, `RegProva`, `RegUni`,
+`RegCuidado`, `RegDespensa`, `Ajustes`, `Usando`), `Materia`, `Sala`, `Desafio` (união por `tipo`), `Prova`,
+`InteriorDef`, `ObjetoInterior`, `Npc`, `PersonagemElenco`, `Fala`, `Enfeite`/`Comida`/`ItemLoja`, `Musica`,
+`EventosReino`, e as APIs `ProgressoApi`, `FalasApi`, `LojaItensApi`, `MusicasApi`. As globais (`Reino.*`
+com tipo) ficam em `tipos-globais.d.ts`; a lista conferida, em `tipos.json` (`fora` = os que ainda têm erro).
+Nos arquivos do jogo os tipos entram só em comentários JSDoc (`/** @param {Materia} m */`).
+
 ## 12. Fluxo de trabalho
 1. Worktree própria (nunca a árvore principal `/home/leandro/Mariana Revisões`, servida ao vivo).
 2. Mude; rode `npm test` e o que a receita pedir; confira no servidor de TESTE com save sintético.

@@ -24,6 +24,7 @@
     menta: { nome: 'Menta', corpo: '#effff7', crina: ['#39c5bb', '#ff9cc6', '#ffe066'], chifre: '#ffd34d' },
   };
 
+  /** @param {string} corEscolhida @returns {Omit<UnicornioBaralho, 'materiaId'>} */
   function inicial(corEscolhida) {
     var c = U.CORES_INICIAIS[corEscolhida] || U.CORES_INICIAIS.rosa;
     return { id: 'inicial', nome: 'Estrelinha', raridade: 'comum', inicial: true,
@@ -32,7 +33,9 @@
   }
 
   // todos os unicórnios do deck, na ordem de exibição
+  /** @param {string} [corInicial] @returns {UnicornioBaralho[]} */
   U.todos = function (corInicial) {
+    /** @type {UnicornioBaralho[]} */
     var lista = [Object.assign(inicial(corInicial), { materiaId: null })];
     Reino.materias.forEach(function (m) {
       (m.unicornios || []).forEach(function (u) { lista.push(Object.assign({ materiaId: m.id }, u)); });

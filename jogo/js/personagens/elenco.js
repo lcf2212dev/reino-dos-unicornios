@@ -8,7 +8,8 @@
 
 
   /* ================= ELENCO =================
-     Parâmetros propostos para cada personagem (os prédios reaproveitam: sprite e voz). */
+     Parâmetros propostos para cada personagem (os prédios reaproveitam: sprite e voz).
+     Cada entrada é um PersonagemElenco (jogo/ferramentas/testes/tipos-jogo.d.ts). */
   N.ELENCO = {
     // Museu das Memórias (História)
     memoria: { nome: 'Dona Memória', voz: 'npc-memoria', sprite: { idade: 'idoso', pele: '#f1c7a5', cabelo: '#e4e0ec', penteado: 'coque', roupa: '#9b6bd6', roupa2: '#6b4a9a', perna: 'saia', oculos: true, colar: true, cor2: '#ff9cc6', cracha: true } },
@@ -57,6 +58,7 @@
   // id do primeiro personagem do elenco (na ordem acima) cujos campos batem com o filtro, ou null
   // (campo ausente no personagem não bate, nem com filtro undefined).
   // Ex.: N.doElenco({ paraMateria: 'historia' }) → 'aurora'; N.doElenco({ paraProva: 'ingles-3bim' }) → 'emma'
+  /** @param {Partial<PersonagemElenco>} filtro @returns {string | null} */
   N.doElenco = function (filtro) {
     var ids = Object.keys(N.ELENCO);
     for (var i = 0; i < ids.length; i++) {

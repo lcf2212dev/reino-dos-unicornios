@@ -7,6 +7,7 @@
 //   2. ponha o caminho (a partir da raiz do repositório) em jogo/ferramentas/testes/tipos.json;
 //   3. globais novas (window.X, Reino.X usado por outro arquivo) entram em tipos-globais.d.ts;
 //   4. rode npm run tipos até passar sem erro.
+// As formas (EstadoSave, Materia, Desafio…) estão em tipos-jogo.d.ts, puxado por tipos-globais.d.ts.
 // O tsconfig é gerado em /tmp/reino-testes/tipos/ (nada é escrito no repositório).
 const fs = require('fs');
 const path = require('path');

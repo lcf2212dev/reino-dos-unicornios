@@ -45,6 +45,7 @@
   function registro(id) { var c = est().cuidados || {}; return c[id] || null; }
   function limitar(v) { return Math.max(0, Math.min(100, typeof v === 'number' && isFinite(v) ? v : 100)); }
   // o registro do unicórnio, criado (100/100) se ainda não existe
+  /** @param {string} id @returns {RegCuidado} o registro do save (criado se faltar), pronto para mudar */
   function registroParaMudar(id) {
     var e = est();
     if (!e.cuidados) e.cuidados = {};
@@ -59,10 +60,12 @@
   }
 
   // registro sem `banho` (versão de hoje) = limpinho; a leitura não cria o campo
+  /** @param {string} uniId @returns {NiveisCuidado} (sem registro = 100) */
   C.niveis = function (uniId) {
     var r = registro(uniId || montaria());
     return { fome: r ? limitar(r.fome) : 100, sede: r ? limitar(r.sede) : 100, banho: r ? limitar(r.banho) : 100 };
   };
+  /** @param {string} uniId @returns {{ fome: boolean, sede: boolean, banho: boolean }} abaixo de config.cuidados.baixo */
   C.baixo = function (uniId) {
     var n = C.niveis(uniId), b = cfg().baixo;
     return { fome: n.fome < b, sede: n.sede < b, banho: n.banho < b };
@@ -83,10 +86,12 @@
   /* ---------- despensa ---------- */
   C.comidas = function () { return Reino.config.comidas; };
   function comida(id) { return Reino.config.comidas.find(function (c) { return c.id === id; }) || null; }
+  /** @param {string} comidaId @returns {number} compradas − usadas */
   C.quantidade = function (comidaId) {
     var d = (est().despensa || {})[comidaId];
     return d ? Math.max(0, (d.compradas || 0) - (d.usadas || 0)) : 0;
   };
+  /** @returns {{ comida: Comida, quantidade: number }[]} só as que têm alguma */
   C.despensa = function () {
     return C.comidas().map(function (c) { return { comida: c, quantidade: C.quantidade(c.id) }; })
       .filter(function (x) { return x.quantidade > 0; });
@@ -140,6 +145,7 @@
   };
 
   /* ---------- comer, beber, comprar ---------- */
+  /** @param {string} comidaId @returns {ResultadoCuidado} */
   C.comprar = function (comidaId) {
     var c = comida(comidaId);
     if (!c) return { ok: false, motivo: 'sem-comida' };
@@ -151,6 +157,7 @@
   };
 
   // muda fome ou sede de um unicórnio, grava na hora e avisa
+  /** @param {string} uniId @param {'fome' | 'sede'} campo @param {number} novo @returns {ResultadoCuidado} */
   function satisfazer(uniId, campo, novo) {
     var r = registroParaMudar(uniId);
     var antes = limitar(r[campo]);
@@ -163,6 +170,7 @@
     emitir();
     return { ok: true, antes: antes, depois: r[campo] };
   }
+  /** @param {string} uniId @param {string} comidaId @returns {ResultadoCuidado} */
   C.alimentar = function (uniId, comidaId) {
     uniId = uniId || montaria();
     if (!chocado(uniId)) return { ok: false, motivo: 'sem-uni' };
@@ -174,6 +182,7 @@
     return satisfazer(uniId, 'fome', c.enche ? 100 : fome + c.fome);
   };
   // água é de graça (só o bebedouro da Pet Shop chama)
+  /** @param {string} uniId @returns {ResultadoCuidado} */
   C.beber = function (uniId) {
     uniId = uniId || montaria();
     if (!chocado(uniId)) return { ok: false, motivo: 'sem-uni' };
@@ -183,6 +192,7 @@
   // banho de espuma é de graça (só a banheira da Pet Shop chama, no fim da animação). Carimbo próprio,
   // `acaoBanho`: o `acao` continua sendo só de comer e beber (um aparelho da versão de hoje trata um `acao`
   // novo como comida e água), e por isso aqui ele, `acaoFome` e `acaoSede` não mudam.
+  /** @param {string} uniId @returns {ResultadoCuidado} */
   C.banhar = function (uniId) {
     uniId = uniId || montaria();
     if (!chocado(uniId)) return { ok: false, motivo: 'sem-uni' };

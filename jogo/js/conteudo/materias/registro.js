@@ -8,6 +8,7 @@
    uma linha no js/manifesto.js (grupo 'materias', node: true) depois da última sala e antes de
    <m>/livro.js e <m>/<m>.js. */
 (function () {
+  /** @type {Object<string, { salas: Sala[], livro: CartaLivro[] }>} */
   var pendentes = {};   // { idDaMateria: { salas: [...], livro: [...] } }
   function da(materiaId) { return pendentes[materiaId] || (pendentes[materiaId] = { salas: [], livro: [] }); }
 
