@@ -1,0 +1,57 @@
+/* Desafio vfLista: várias afirmações, cada uma com ( V ) e ( F ) (ou os rótulos de d.rotulos). */
+(function () {
+  var U = Reino.util, el = U.el, D = Reino.Desafios, _d = Reino._desafios;
+  var TIPOS = _d.TIPOS, PONTUAR = _d.PONTUAR, fracao = _d.fracao;
+
+  // rótulos dos botões do vfLista: d.rotulos (ex.: ['T', 'F'], ['√', 'X']); sem rotulos, V/F
+  var NOME_ROTULO = { T: 'True', '√': 'Certo', X: 'Errado' };
+  function rotulosVF(d) { return d.rotulos || ['V', 'F']; }
+  function nomeRotulo(d, v) {
+    var r = rotulosVF(d)[v];
+    if (!d.rotulos) return v ? 'Falso' : 'Verdadeiro';
+    if (r === 'F') return rotulosVF(d)[0] === 'T' ? 'False' : 'Falso';
+    return NOME_ROTULO[r] || r;
+  }
+  _d.rotulosVF = rotulosVF;
+
+  // várias afirmações, cada uma com ( V ) e ( F ) — valor: [0 = V, 1 = F, null]
+  TIPOS.vfLista = function (d, opts) {
+    var marcas = opts.valorInicial ? opts.valorInicial.slice() : d.itens.map(function () { return null; });
+    var lista = el('div.vf-lista');
+    var linhas = d.itens.map(function (it, i) {
+      var rot = rotulosVF(d);
+      var bV = el('button.vf-botao', { type: 'button', 'aria-label': nomeRotulo(d, 0) }, el('span.vf-rotulo', rot[0]));
+      var bF = el('button.vf-botao', { type: 'button', 'aria-label': nomeRotulo(d, 1) }, el('span.vf-rotulo', rot[1]));
+      [bV, bF].forEach(function (b, v) {
+        b.addEventListener('click', function () {
+          if (ctrl.travado) return;
+          marcas[i] = v; Reino.Som.tocar('selecionar'); pintar(); opts.onMudar();
+        });
+      });
+      var linha = el('div.vf-linha', el('span.vf-botoes', bV, bF), el('span.vf-texto', it.t));
+      lista.appendChild(linha);
+      return { linha: linha, b: [bV, bF] };
+    });
+    function pintar() {
+      linhas.forEach(function (l, i) { l.b.forEach(function (b, v) { b.setAttribute('aria-pressed', String(marcas[i] === v)); }); });
+    }
+    pintar();
+    function certo(i) { return d.itens[i].v ? 0 : 1; }
+    var ctrl = {
+      el: lista,
+      valor: function () { return marcas.slice(); },
+      pronto: function () { return marcas.every(function (m) { return m !== null; }); },
+      conferir: function () {
+        var erradas = marcas.map(function (m, i) { return m === certo(i) ? -1 : i; }).filter(function (i) { return i >= 0; });
+        return { ok: erradas.length === 0, erradas: erradas };
+      },
+      marcarErro: function (res) {
+        (res.erradas || []).forEach(function (i) { marcas[i] = null; linhas[i].linha.classList.add('treme'); setTimeout(function () { linhas[i].linha.classList.remove('treme'); }, 600); });
+        pintar(); opts.onMudar();
+      },
+      marcarCerto: function () { lista.classList.add('tudo-certo'); },
+    };
+    return ctrl;
+  };
+  PONTUAR.vfLista = function (d, valor) { return fracao(d.itens.filter(function (it, i) { return valor[i] === (it.v ? 0 : 1); }).length, d.itens.length); };
+})();
