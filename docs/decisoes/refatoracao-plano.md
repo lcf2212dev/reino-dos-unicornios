@@ -147,3 +147,16 @@ Novos na Fase 1: `js/manifesto.js`, `ferramentas/gerar-index.js` (gera e confere
 - **Referência atualizada no elenco (f8e280a):** CAVALEIROS e PROFESSORES viraram campos do elenco
   (`paraMateria`, `paraProva`). A única diferença contra a base 982f1ed é `dados/elenco.json` com
   esses 6 campos (provado: sem eles, igual). A partir daí a referência é a captura de f8e280a.
+
+## Encerramento (2026-09-26)
+- **Referência final:** base do e2e em `e954b33` (jogo/ferramentas/testes/base-referencia.txt). Contra a
+  base original 982f1ed, só três diferenças, todas de propósito: `dados/elenco.json` (campos
+  `paraMateria`/`paraProva`), `tela-pais` nos 3 tamanhos (bug 2) e nenhuma pelo bug 3 (classe `treme`).
+- **Desempenho:** A/B determinístico (982f1ed × final), mapa +0,4%, escola −0,9%, museu 0,0%,
+  observatório −2,6% (ruído A/A até 2,1%).
+- **Tamanhos:** antes 76 arquivos de código/estilo/ferramenta, 31 acima de 400 linhas, o maior com 6115
+  (icones.js); depois 250, nenhum arquivo de código acima de 420 (o maior, 395), 11 de dados entre 442 e 747.
+- **Worktrees auxiliares** (`/home/leandro/reino-ref-*`, branches `feat/ref-*`) removidas depois de
+  integradas por cherry-pick; fica só `feat/refatoracao` em `/home/leandro/reino-refatoracao`.
+- **Construtores em worktrees próprias; o orquestrador integrou e fez todos os commits.** Nas listas
+  `nomes:` das ferramentas houve conflitos a cada divisão; a receita e o `jogo/js/CLAUDE.md` avisam.
