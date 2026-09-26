@@ -115,7 +115,7 @@
     var tela = Reino.UI.abrirTela('prova');
     var sair = el('button.btn-icone.btn-sair', { type: 'button', 'aria-label': 'Sair da prova' }, '✕');
     var pontos = el('div.missao-pontos', { 'aria-hidden': 'true' });
-    var titulo = el('div.missao-titulo', el('span', '📝 ' + prova.nome));
+    var titulo = el('div.missao-titulo', el('span', (prova.emoji || '📝') + ' ' + prova.nome));
     var faixa = el('div.faixa-valendo' + (valendo ? '.rar-' + valendo : '.treino'), { hidden: true },
       valendo ? [Pv.icone(prova.acessorios[valendo].id, 28), el('span', 'Valendo: acessório ', el('b', rar(valendo).nome.toLowerCase()), '. Acerte TUDO!')]
         : el('span', '✏️ Treino: o acessório desta prova você já ganhou.'));
