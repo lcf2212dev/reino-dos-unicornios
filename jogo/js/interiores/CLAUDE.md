@@ -4,7 +4,10 @@ Contrato: `docs/contratos/interiores.md` (§8 convenções, §9 prédios). NPCs:
 Receitas: `docs/receitas/predio-novo.md`, `docs/receitas/personagem-novo.md`.
 
 ## Uma pasta por prédio: `interiores/<p>/`
-- `falas.js` — `Reino.FALAS_INTERIORES.<p> = { npcs, objetos, extras? }`. Carrega ANTES das outras partes.
+- `falas.js` — `Reino.falasDoPredio('<p>', { npcs, objetos, extras? })` (o modelo do `npm run novo` já vem assim).
+- Falas em várias partes (ex.: `observatorio/nasa-falas.js`, `lab-falas.js`): cada parte chama
+  `Reino.falasDoPredio('<p>', { … })`; nunca `FALAS_INTERIORES.<p> = …` nem ler o objeto no carregamento. Qualquer
+  ordem de carga dá o mesmo conteúdo; chave, NPC ou objeto repetido entre partes é erro (`npcs-e-dialogo.md` §10).
 - `objetos*.js` — objetos temáticos: `Reino.Interiores.objeto('<p>-<nome>', …)`.
 - `<p>.js` — o layout e `Reino.registrarInterior(def)`.
 - `acoes.js` — ações, telas e status dos NPCs do prédio (quando houver).

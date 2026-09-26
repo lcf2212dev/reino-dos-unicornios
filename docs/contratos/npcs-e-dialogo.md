@@ -263,6 +263,12 @@ Reino.Claude.dialogoAberto() → bool   // o balão aberto é modal
    estábulo com ovos.
 3. Números que mudam são enumerados (como `treinoBloqueado`); inglês entre «».
 4. `Reino.Falas.todas()` inclui `NPCs.falasPossiveis` de cada NPC e as `fala` dos objetos, no pacote do interior.
+5. Falas de um prédio em partes (`nucleo/registros.js`, seguro no node): `Reino.falasDoPredio(id)` cria ou devolve
+   `Reino.FALAS_INTERIORES[id]`; `Reino.falasDoPredio(id, parte)` junta a parte: listas (`extras`, …) concatenadas na
+   ordem de carga; `npcs` e `objetos` por id; as outras chaves (`nasa`, `curiosidades`, …) inteiras. A mesma chave,
+   NPC ou objeto em duas partes é erro (lança, com o nome). Qualquer ordem de carga dá o mesmo conteúdo, então
+   nenhuma parte cria o objeto com `=` nem o lê ao carregar: cada uma monta o que é dela e entrega. Exemplo: o
+   Observatório (`falas.js` base, `nasa-falas.js`, `lab-falas.js`). Teste: `testes/unidade/falas-predio.test.js`.
 
 ## 11. Antes de mexer, rode
 ```

@@ -253,11 +253,13 @@
     });
   };
 
-  Cena.irPara = function (interiorId, chegada, olhar) {
+  // de: id do interior de onde ela vem (escada). Sem chegada: ao lado da escada que volta para `de`; senão o spawn
+  Cena.irPara = function (interiorId, chegada, olhar, de) {
     if (S.trans) return S.trans.promessa;
     var cena = cenaDoInterior(interiorId);
     if (!cena) return Promise.resolve();
-    var def = defDoInterior(interiorId) || {};
+    var def = defDoInterior(interiorId) || {}, I = interiores();
+    if (!chegada && de && I && typeof I.chegadaVindoDe === 'function') chegada = I.chegadaVindoDe(interiorId, de);
     if (!chegada) chegada = def.spawn;
     return S.transicionar({
       cena: cena, pacote: def.pacote,
@@ -287,7 +289,7 @@
   Cena.acionar = function (g) {
     if (!g || S.trans) return S.trans ? S.trans.promessa : Promise.resolve();
     if (g.tipo === 'saida') return Cena.sair();
-    if (g.tipo === 'escada') return Cena.irPara(g.para, g.chegada, g.olhar);
+    if (g.tipo === 'escada') return Cena.irPara(g.para, g.chegada, g.olhar, g.de);
     if (g.porta && g.rect) return entrarLugar(g);   // lugar do mapa
     return Promise.resolve();
   };

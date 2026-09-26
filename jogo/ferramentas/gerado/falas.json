@@ -26688,6 +26688,24 @@
    "fala": "O álbum ainda está vazio. Vamos tirar uma foto?"
   },
   {
+   "chave": "e2597d87w",
+   "voz": "claude",
+   "texto": "Chegou novidade no Reino!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Chegou novidade no Reino!"
+  },
+  {
+   "chave": "f5e6357610",
+   "voz": "claude",
+   "texto": "O que você fez fica guardado.",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "O que você fez fica guardado."
+  },
+  {
    "chave": "6a4a021b1r",
    "voz": "claude",
    "texto": "Os outros prêmios da prova agora se trocam por estrelas!",

@@ -39,7 +39,6 @@ const PULAR_PASTAS = new Set(['node_modules', '.git']);
 const PULAR_CAMINHOS = ['jogo/js/voz', 'jogo/ferramentas/gerado/vozes-cache', 'jogo/servidor/dados'];
 const RAIZES_SIMBOLO = /^(?:window\.)?(Reino|Mapa|Jogador|PA|UI|__reino|__congelar)(?=\.|$)/;
 const EXT = /\.(js|mjs|cjs|md|css|html|json|py|txt|db|ts|sh|yml|yaml|mp3|png|service)$/i;
-const RAIZES_CAMINHO = /^(\.{1,2}\/|\/home\/|\/tmp\/|jogo\/|js\/|css\/|docs\/|ferramentas\/|\.claude\/|amostras-de-voz\/|História\/|Inglês\/|Português\/)/;
 const MODELO = /[<>*{}…$|()'"=,;!?]|\.\.\./;
 
 /* ---------- índice do disco (nomes; nenhum arquivo é lido) ---------- */
@@ -56,6 +55,11 @@ const indice = [];            // caminhos relativos à raiz, de arquivos e pasta
     if (pasta) { indice.push(r + '/'); andar(r); } else indice.push(r);
   });
 })('');
+// raízes de caminho: as fixas + as pastas de primeiro nível do disco (as de material: História/, Geografia/…)
+const RAIZES_FIXAS = ['./', '../', '/home/', '/tmp/', 'jogo/', 'js/', 'css/', 'docs/', 'ferramentas/', '.claude/', 'amostras-de-voz/'];
+const RAIZES_DISCO = indice.filter((p) => /^[^/]+\/$/.test(p));
+const RAIZES = RAIZES_FIXAS.concat(RAIZES_DISCO.filter((p) => !RAIZES_FIXAS.includes(p)));
+const comecaNumaRaiz = (t) => RAIZES.some((r) => t.startsWith(r));
 const porFim = (fim) => indice.some((p) => p === fim || p === fim + '/' || p.endsWith('/' + fim) || p.endsWith('/' + fim + '/'));
 
 /* ---------- identificadores do jogo (jogo/js, fora de js/voz) ---------- */
@@ -87,7 +91,7 @@ function ehCaminho(t) {
   if (EXT.test(t)) return true;
   // sem extensão: só pasta terminada em / ou que começa numa pasta conhecida (senão `progresso/mariana`,
   // `ocupar/liberar`, `feat/<branch>` e `/api/…` virariam caminho)
-  return t.includes('/') && /\p{L}/u.test(t) && (t.endsWith('/') || RAIZES_CAMINHO.test(t));
+  return t.includes('/') && /\p{L}/u.test(t) && (t.endsWith('/') || comecaNumaRaiz(t));
 }
 // devolve null (ok), { erro } ou { aviso }
 function conferirCaminho(t, docDir) {

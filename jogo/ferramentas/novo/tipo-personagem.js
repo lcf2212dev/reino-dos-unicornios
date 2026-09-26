@@ -34,7 +34,7 @@ function chaoLivre(R, def) {
   const g = R.Interiores.grade(def);
   const livre = (x, y) => g.dentro(x, y) && g.chao[y][x] && !g.solido[y][x];
   const proibido = (x, y) => [def.saida, def.spawn].some((p) => p && p.x === x && p.y === y) || (def.escadas || []).some((e) => e.x === x && e.y === y);
-  const chegada = (R.interiores || []).flatMap((d) => (d.escadas || []).filter((e) => e.para === def.id).map((e) => e.chegada))[0];
+  const chegada = (R.interiores || []).flatMap((d) => (d.escadas || []).map((e, i) => (e.para === def.id ? R.Interiores.chegadaDaEscada(d.id, i) : null)).filter(Boolean))[0];
   let ini = def.spawn || chegada;
   for (let y = 0; y < g.h && !ini; y++) for (let x = 0; x < g.w && !ini; x++) if (livre(x, y)) ini = { x, y };
   if (!ini) return null;

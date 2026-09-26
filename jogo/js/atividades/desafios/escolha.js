@@ -6,7 +6,7 @@
 
   // escolha única (também serve para "completar a frase")
   function montarEscolha(d, opts) {
-    var ordem = opts.ordem || U.embaralhar(d.opcoes.map(function (_, i) { return i; }));
+    var ordem = opts.ordem || U.embaralhar(d.opcoes.map(function (_, i) { return i; }), ['escolha', d]);
     var sel = opts.valorInicial != null ? opts.valorInicial : null;
     var bloqueadas = {};
     var lista = el('div.opcoes' + (d.opcoes.length === 2 ? '.opcoes-duas' : ''));

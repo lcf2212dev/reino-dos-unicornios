@@ -9,6 +9,7 @@
 // para trás se o pai cair, mesmo com kill -9.
 const fs = require('fs');
 const net = require('net');
+const os = require('os');
 const path = require('path');
 const { spawn } = require('child_process');
 const { PASTA_TESTES, conferirPorta, conferirBanco } = require('./guardas');
@@ -26,6 +27,15 @@ function portaLivre(de) {
     };
     tentar(conferirPorta(de));
   });
+}
+
+// IPv4 da rede (não internos): para o pai abrir o jogo de TESTE à mão no celular/tablet. O Playwright fica no 127.0.0.1.
+function enderecosRede(interfaces = os.networkInterfaces()) {
+  const ips = [];
+  Object.values(interfaces || {}).forEach((lista) => (lista || []).forEach((i) => {
+    if ((i.family === 'IPv4' || i.family === 4) && !i.internal && ips.indexOf(i.address) < 0) ips.push(i.address);
+  }));
+  return ips;
 }
 
 // duas subidas ao mesmo tempo podem escolher a mesma porta: tenta outra (só quando a porta não foi pedida)
@@ -65,17 +75,19 @@ async function subir(op) {
   if (op.fundo) proc.unref();
   return {
     porta, banco, raiz, log, pid: proc.pid, proc, url: `http://127.0.0.1:${porta}/`,
+    urlsRede: enderecosRede().map((ip) => `http://${ip}:${porta}/`),
     parar() { try { proc.kill(); } catch (e) { /* já parou */ } },
   };
 }
 
-module.exports = { iniciar, portaLivre, conferirPorta, conferirBanco };
+module.exports = { iniciar, portaLivre, enderecosRede, conferirPorta, conferirBanco };
 
 if (require.main === module) {
   const arg = (n) => { const i = process.argv.indexOf(n); return i > 0 ? process.argv[i + 1] : undefined; };
   const fundo = process.argv.includes('--fundo');
   iniciar({ porta: arg('--porta'), raiz: arg('--raiz'), banco: arg('--banco'), fundo }).then((s) => {
     console.log(`Servidor de TESTE em ${s.url} (banco ${s.banco})`);
+    s.urlsRede.forEach((u) => console.log(`No celular/tablet da mesma rede: ${u} (servidor de TESTE)`));
     console.log(`Jogo em modo de teste: ${s.url}?debug=1   ·   determinístico: ${s.url}?debug=1&congelar=1`);
     if (fundo) {
       console.log(`Rodando sozinho: PID ${s.pid} (log em ${s.log}). Para parar: kill ${s.pid}`);

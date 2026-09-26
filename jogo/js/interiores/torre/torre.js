@@ -30,13 +30,14 @@
   function acaoSala(s) { return { tipo: 'sala', materia: 'ingles', sala: s }; }
 
   // todos os andares têm o mesmo esqueleto: 13×13, um cômodo 11×11 em (1,1);
-  // sobe no fundo à direita (10,3) e desce no chão à esquerda (2,10); corredor no meio
+  // sobe no fundo à direita (10,3) e desce no chão à esquerda (2,10); corredor no meio.
+  // Quem desce chega à esquerda do arco (9,3); quem sobe, à direita do vão (3,10) (`chegar`)
   var ANDARES = ['torre', 'torre-1', 'torre-2', 'torre-3', 'torre-4', 'torre-5', 'torre-relogio'];
   var SOBE = { x: 10, y: 3 }, DESCE = { x: 2, y: 10 };
   function escadas(i) {
     var e = [];
-    if (i < ANDARES.length - 1) e.push({ x: SOBE.x, y: SOBE.y, para: ANDARES[i + 1], chegada: { x: DESCE.x + 1, y: DESCE.y }, olhar: { x: 1, y: 0 }, sentido: 'sobe' });
-    if (i > 0) e.push({ x: DESCE.x, y: DESCE.y, para: ANDARES[i - 1], chegada: { x: SOBE.x - 1, y: SOBE.y }, olhar: { x: 0, y: 1 }, sentido: 'desce' });
+    if (i < ANDARES.length - 1) e.push({ x: SOBE.x, y: SOBE.y, para: ANDARES[i + 1], chegar: { x: -1, y: 0 }, olhar: { x: 1, y: 0 }, sentido: 'sobe' });
+    if (i > 0) e.push({ x: DESCE.x, y: DESCE.y, para: ANDARES[i - 1], chegar: { x: 1, y: 0 }, olhar: { x: 0, y: 1 }, sentido: 'desce' });
     return e;
   }
   function andar(i, nome, comodo, objetos, npcs, extra) {

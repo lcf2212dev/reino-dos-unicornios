@@ -198,6 +198,8 @@
       misturar: D.misturar, escurecer: D.escurecer, clarear: D.clarear },
     // utilidades para as ferramentas e o validador (puras)
     caminhoNaGrade: caminhoNa,
+    // escadas pareadas (interiores-toque.js): onde ela chega pela escada i; vindo do andar `de` para `para`
+    chegadaDaEscada: II.chegadaDaEscada, chegadaVindoDe: II.chegadaVindoDe,
     dimensoes: dimensoes, solidoDe: solidoDe, ehParede: ehParede, ehAlto: ehAlto, interativo: interativo,
   };
 })();

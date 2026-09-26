@@ -42,3 +42,20 @@ test('ver: --tela desafio:<id> abre esse desafio (sem o sorteio da sala)', () =>
   assert.strictEqual(r.estado.estado, 'atividade');
   assert.throws(() => rodar(`teste-desafio-nao-${id}`, ['--tela', 'desafio:nao-existe']), /desafio "nao-existe" não existe/);
 });
+
+test('ver: arrastar na metade esquerda do celular mostra o thumbstick e a Mariana anda', () => {
+  const antes = rodar(`teste-parado-${id}`, []).estado.pos;
+  const r = rodar(`teste-arrastar-${id}`, ['--passos', 'arrastar:100,600,170,600,600,preso;js:console.log("thumbstick", !document.querySelector("#controle").hidden)']);
+  assert.match(r.saida, /\(--passos\) thumbstick true/, 'o thumbstick aparece com o dedo na tela');
+  assert.ok(r.estado.pos.x > antes.x + 5, `a Mariana anda para a direita (${antes.x} → ${r.estado.pos.x})`);
+});
+
+test('ver: --tela album:1 chega à foto grande', () => {
+  const r = rodar(`teste-album-${id}`, ['--tela', 'album:1']);
+  assert.ok(r.estado.telas.some((t) => /tela-fotos-ver/.test(t)), JSON.stringify(r.estado.telas));
+});
+
+test('ver: --tela prova:<id>:2 mostra a 2ª questão', () => {
+  const r = rodar(`teste-prova-q2-${id}`, ['--tela', 'prova:historia-3bim:2', '--js', 'document.querySelector(".desafio-num").textContent']);
+  assert.match(r.saida, /--js 1 → Questão 2/);
+});

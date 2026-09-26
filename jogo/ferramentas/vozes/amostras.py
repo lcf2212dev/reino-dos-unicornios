@@ -36,7 +36,9 @@ _spec.loader.exec_module(GERAR)
 ELENCO = json.loads(subprocess.run(['node', os.path.join(AQUI, 'elenco-vozes.js'), '--json'], capture_output=True, text=True, check=True).stdout)
 DADOS = json.load(open(FALAS, encoding='utf-8'))
 VOZES = DADOS['vozes']
-TMP = tempfile.mkdtemp(prefix='amostras-', dir='/tmp/reino-testes' if os.path.isdir('/tmp/reino-testes') else None)
+# temporários em <raiz>/.vozes/ (ignorado pelo git; o /tmp é memória); o resultado vai para --pasta
+os.makedirs(os.path.join(REPO, '.vozes'), exist_ok=True)
+TMP = tempfile.mkdtemp(prefix='amostras-', dir=os.path.join(REPO, '.vozes'))
 
 
 def arquivo_nome(t):

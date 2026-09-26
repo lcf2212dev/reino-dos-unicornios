@@ -20,6 +20,8 @@ function modelo(nome, marcas) {
     return String(marcas[k]);
   });
 }
+// data de hoje 'AAAA-MM-DD' (hora local): a `novidade` do lugar novo (selo "✨ Novo!", contrato conteudo.md)
+function hoje() { const d = new Date(); return [d.getFullYear(), d.getMonth() + 1, d.getDate()].map((n) => String(n).padStart(2, '0')).join('-'); }
 const aspas = (s) => String(s).replace(/\\/g, '\\\\').replace(/'/g, "\\'");
 function numeros(s, n, nome) {
   const v = String(s).split(',').map((x) => Number(x.trim()));
@@ -84,7 +86,7 @@ const TIPOS = {
     },
     arquivos(id, op) {
       const r = rectTexto(op), c = caminhoTexto(op);
-      const m = { id, nome: aspas(op.nome), emoji: op.emoji || '📍', rect: r.rect, comentarioRect: r.comentario, caminho: c.texto,
+      const m = { id, nome: aspas(op.nome), emoji: op.emoji || '📍', rect: r.rect, comentarioRect: r.comentario, caminho: c.texto, hoje: hoje(),
         largura: r.w ? r.w * 16 : 'w', altura: r.h ? r.h * 16 : 'h' };
       // o comentário do caminho vai depois da vírgula da linha
       const lugar = modelo('predio-lugar.js.modelo', m).replace(`caminho: ${c.texto},`, `caminho: ${c.texto},${c.comentario}`);
@@ -152,7 +154,7 @@ const TIPOS = {
       const lista = salas.map((s) => s + '.js').join(', ');
       return salas.map((s, i) => [`${pasta}/${s}.js`, modelo('materia-sala.js.modelo', { NOME, n: i + 1, sala: s, materia: id })])
         .concat([[`${pasta}/livro.js`, modelo('materia-livro.js.modelo', { nome: aspas(op.nome), id, cartas })],
-          [`${pasta}/${id}.js`, lugarDentro(modelo('materia.js.modelo', { NOME, id, nome: aspas(op.nome), emoji: op.emoji, rect: r.rect, comentarioRect: r.comentario, arquivosSalas: lista, unicornios: unis }), op)]]);
+          [`${pasta}/${id}.js`, lugarDentro(modelo('materia.js.modelo', { NOME, id, nome: aspas(op.nome), emoji: op.emoji, rect: r.rect, comentarioRect: r.comentario, hoje: hoje(), arquivosSalas: lista, unicornios: unis }), op)]]);
     },
     // salas → livro.js → <m>.js, no grupo 'materias', depois das outras matérias
     manifesto(id, op, ex, raiz) {
@@ -230,6 +232,8 @@ function lugarDentro(txt, op) {
     artigo: 'o',
     dentro: '${op.dentro}',       // o prédio do mapa onde ela fica (nada novo no mapa; contrato conteudo.md)
     interior: '${op.interior}',   // o andar onde ela chega pelo menu Lugares (Reino.registrarInterior com lugar: 'materia:<id>')
+    andar: '(preencher) 3º andar',   // o menu Lugares mostra "No 3º andar do <prédio>"; sem andar: "Dentro do <prédio>"
+    novidade: '${hoje()}',   // selo "✨ Novo!" no menu Lugares até ela entrar (ou config.novidadeDias dias)
   },\n`);
 }
 // área de uma matéria nova sem --rect: a 1ª clareira que ninguém usa; senão o 1º rect livre de 5×5 do mapa

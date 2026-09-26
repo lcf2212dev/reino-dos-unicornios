@@ -1,4 +1,4 @@
-// Roda todos os validadores e resume: conteúdo das matérias, interiores, index.html x manifesto e docs.
+// Roda todos os validadores e resume: conteúdo das matérias, interiores, nomes repetidos, index.html x manifesto e docs.
 // Uso: node ferramentas/validar/validar-tudo.js [--detalhes]   (npm run validar, na raiz do repositório)
 // Cada validador roda à parte (eles terminam com process.exit); a saída inteira só aparece quando um
 // falha (ou com --detalhes). Validador que não existe é erro. Sai com código 1 se algum falhar.
@@ -11,6 +11,7 @@ const VALIDADORES = [
   { nome: 'conteúdo das matérias', arq: 'ferramentas/validar/validar-conteudo.js', detalhes: true },
   { nome: 'interiores', arq: 'ferramentas/validar/validar-interiores.js', detalhes: true },
   { nome: 'index.html x manifesto', arq: 'ferramentas/gerar-index.js', args: ['--conferir'] },
+  { nome: 'nomes repetidos', arq: 'ferramentas/validar/validar-nomes.js' },
   { nome: 'docs', arq: 'ferramentas/validar/validar-docs.js' },
 ];
 

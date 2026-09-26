@@ -8,22 +8,27 @@
 //   4. referências de dados jogo/ferramentas/testes/e2e.js --so-dados (servidor de TESTE + Chromium)
 // Passo cujo arquivo não existe é erro. A saída de cada passo só aparece
 // inteira quando ele falha (ou com --detalhes). Sai com código 1 se algum passo falhar.
+// Cada passo roda num grupo de processos próprio com tempo máximo (unidade 6 min, validadores 2, tamanho 1,
+// referências 4; REINO_TEMPO=2 dobra): estourou, o grupo inteiro (Chromium incluso) é derrubado. Pega a trava
+// da worktree (testes/trava.js): outro `npm test` na mesma worktree espera (ou falha com --sem-esperar).
 // Nada aqui toca no servidor de casa, no artifact publicado nem no save da Mariana: os testes usam saves
 // sintéticos em vm, cópias em /tmp e o servidor de teste (porta livre, banco em /tmp).
 const fs = require('fs');
 const path = require('path');
-const { spawnSync } = require('child_process');
+const { rodar } = require('./testes/processo');
+const { pegar } = require('./testes/trava');
+const unidadeArgs = require('./testes/unidade');
 
 const jogo = path.join(__dirname, '..');
 const repo = path.join(jogo, '..');
-const unidade = path.join(jogo, 'ferramentas/testes/unidade');
 const detalhes = process.argv.includes('--detalhes');
 
+const FATOR = Number(process.env.REINO_TEMPO) || 1;
 const PASSOS = [
-  { nome: 'testes de unidade', args: () => ['--test'].concat(fs.readdirSync(unidade).filter((f) => f.endsWith('.test.js')).sort().map((f) => path.join(unidade, f))) },
-  { nome: 'validadores', arq: 'jogo/ferramentas/validar/validar-tudo.js' },
-  { nome: 'tamanho', arq: 'jogo/ferramentas/tamanho.js' },
-  { nome: 'referências de dados', arq: 'jogo/ferramentas/testes/e2e.js', extra: ['--so-dados'], aoVivo: true },
+  { nome: 'testes de unidade', min: 6, args: () => unidadeArgs.argsNode(unidadeArgs.arquivos()) },
+  { nome: 'validadores', min: 2, arq: 'jogo/ferramentas/validar/validar-tudo.js' },
+  { nome: 'tamanho', min: 1, arq: 'jogo/ferramentas/tamanho.js' },
+  { nome: 'referências de dados', min: 4, arq: 'jogo/ferramentas/testes/e2e.js', extra: ['--so-dados'], aoVivo: true },
 ];
 
 // resumo de um passo: as linhas "ℹ tests/pass/fail" do node:test ou a última linha da saída
@@ -33,6 +38,8 @@ function resumo(saida) {
   return saida.trim().split('\n').pop() || '';
 }
 
+async function principal() {
+await pegar('npm test');
 let falhas = 0;
 const t0 = Date.now();
 for (const p of PASSOS) {
@@ -47,10 +54,15 @@ for (const p of PASSOS) {
     args = [arq].concat(p.extra || []);
   } else args = p.args();
   // passo longo (navegador) mostra a saída ao vivo; os rápidos só no fim, se falharem
-  const r = spawnSync(process.execPath, args, { cwd: repo, encoding: 'utf8', stdio: p.aoVivo ? 'inherit' : 'pipe' });
-  const saida = (r.stdout || '') + (r.stderr || '');
-  const ok = r.status === 0;
+  const limite = p.min * 60 * FATOR;
+  const r = await rodar(process.execPath, args, { cwd: repo, timeoutMs: limite * 1000, aoVivo: p.aoVivo, nome: p.nome });
+  const saida = r.saida;
+  const ok = r.status === 0 && !r.estourou;
   if (!ok) falhas++;
+  if (r.estourou) {
+    console.log(`✘ ${p.nome} passou de ${limite} s: grupo ${r.pgid} derrubado\n` + saida.trimEnd().split('\n').slice(-30).join('\n'));
+    continue;
+  }
   if (!p.aoVivo && (!ok || detalhes)) console.log(`\n--- ${p.nome} ---\n` + saida.trimEnd() + '\n');
   const s = ((Date.now() - inicio) / 1000).toFixed(1);
   console.log(`${ok ? '✔' : '✘'} ${p.nome} (${s} s)${p.aoVivo ? '' : ': ' + resumo(saida)}`);
@@ -58,3 +70,5 @@ for (const p of PASSOS) {
 const total = ((Date.now() - t0) / 1000).toFixed(1);
 if (falhas) { console.log(`\n✘ ${falhas} passo(s) falharam (${total} s)`); process.exit(1); }
 console.log(`\n✔ tudo certo (${total} s)`);
+}
+principal().then(() => process.exit(0), (e) => { console.error('✘ ' + e.message); process.exit(1); });

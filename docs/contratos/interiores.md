@@ -5,7 +5,7 @@ o critério de "rico" conferido pelo validador, o desenho e as regras de cada pr
 NPCs e diálogo: `npcs-e-dialogo.md`. Cena, íris e câmera: `cena-e-motor.md`.
 
 ## Índice
-1. Onde está no código · 2. API `Reino.Interiores` · 3. Formato de um interior · 4. Grade ·
+1. Onde está no código · 2. API `Reino.Interiores` · 3. Formato de um interior (3.1 Escadas pareadas) · 4. Grade ·
 5. Biblioteca de objetos · 6. Desenho e desempenho · 7. Critério de "rico" (validador) ·
 8. Convenções dos prédios · 9. Prédios (9.7 Lugar novo no mapa) · 10. Antes de mexer
 
@@ -18,7 +18,7 @@ NPCs e diálogo: `npcs-e-dialogo.md`. Cena, íris e câmera: `cena-e-motor.md`.
 - Helpers de desenho e paleta: `jogo/js/arte/desenho.js` (`Reino.Desenho`; os prédios usam `Reino.Interiores.desenho`).
 - Prédios: `jogo/js/interiores/<prédio>/` (falas, objetos, interior, ações, desenho de fora); `jogo/js/interiores/padrao.js`.
 - Prévia: `jogo/ferramentas/previas/interiores.html` (acha os prédios sozinha pelo grupo `interiores` do manifesto).
-- Validador: `jogo/ferramentas/validar/validar-interiores.js`.
+- Validador: `jogo/ferramentas/validar/validar-interiores.js` (escadas: `validar-escadas.js`, chamado por ele).
 
 ## 2. API `Reino.Interiores`
 ```
@@ -34,6 +34,8 @@ Reino.Interiores = {
   objeto(tipo, defObjeto)             // registra um tipo de objeto; cada prédio pode registrar os seus
   OBJETOS, PISOS, PAREDES             // bibliotecas
   desenho: { C, ret, circulo, elipse, triangulo, contornoRet, … }   // os helpers de arte/desenho.js
+  chegadaDaEscada(origemId, i) → {x,y} | null   // onde ela chega pela escada i de origemId (§3.1)
+  chegadaVindoDe(paraId, deId) → {x,y} | null   // ao lado da escada de paraId que volta para deId (§3.1)
 }
 ```
 
@@ -49,8 +51,8 @@ Reino.registrarInterior({
   tamanho: { w, h },                  // em tiles
   saida: { x, y },                    // tapete de saída (só no de entrada): tile de chão na última fileira do cômodo
   spawn: { x, y },                    // 1 tile acima do tapete
-  escadas: [{ x, y, para: 'torre-1', chegada: { x, y }, olhar: { x: 0, y: 1 }, sentido: 'sobe'|'desce' }],
-                                      // chegada nunca em cima de escada; 'sobe' = arco na parede, 'desce' = vão no chão
+  escadas: [{ x, y, para: 'torre-1', chegar: { x: 0, y: 1 }, olhar: { x: 0, y: 1 }, sentido: 'sobe'|'desce' }],
+                                      // 'sobe' = arco na parede, 'desce' = vão no chão; pareadas (abaixo)
   comodos: [{
     id: 'galeria1', nome: 'Cartas e Lembranças',
     placa: 'Sala 1 • Cartas e Lembranças',   // placa com a fonte pixel na parede do fundo
@@ -80,6 +82,20 @@ Reino.registrarInterior({
 ```
 Ações de objeto recebem `ctx = { interior, cena, objeto }` e rodam DEPOIS da `fala` do objeto (se a fala
 resolver `null`, a ação não roda).
+
+### 3.1 Escadas pareadas
+1. Toda escada tem **par** no andar `para`: exatamente uma escada de lá com `para` = este andar. Cada andar
+   declara só as próprias escadas; nenhum arquivo de coordenação entre andares.
+2. `chegar: { x, y }` é da escada que **recebe**: de que lado dela a Mariana aparece quando chega pelo par
+   (um passo: `{x:±1,y:0}` ou `{x:0,y:±1}`; padrão `{ x: 0, y: 1 }`, logo abaixo). `olhar` é da escada de
+   **origem**: para onde ela olha ao chegar.
+3. O lado de chegada (escada + `chegar`) é andável, fora de escada e do tapete de saída do andar.
+4. Sem par, ela chega no `spawn` do destino. `chegada: { x, y }` explícita (jeito antigo) ainda vale e ganha do
+   par; com par também, o validador dá aviso (tire a `chegada`).
+5. Onde ela chega de fato: `Reino.Interiores.chegadaDaEscada(origemId, i)` (validador, e2e, testes);
+   `Reino.Interiores.chegadaVindoDe(paraId, deId)` é o que o motor usa (`cena-e-motor.md` §3).
+6. Conferido por `validar/validar-escadas.js` (chamado pelo `validar-interiores.js`) e pela tabela congelada de
+   `testes/unidade/escadas.test.js` (mudou uma posição de propósito: atualize a tabela).
 
 ## 4. Grade
 1. Tiles fora de qualquer `rect` são sólidos (vão).
@@ -218,14 +234,16 @@ portugues (`materia:portugues`). Escada entre andares de lugares diferentes vale
    cada 8–15 s. Nos 3 cômodos, na cena do telescópio e no prédio do mapa.
 7. Nebulosas e céu pré-renderizados (canvas cacheado); no máximo ~80 partículas animadas (hoje ~78 no prédio
    todo); parado e colorido sem Animações. Balões, placas dos cômodos e ícones de status legíveis.
-8. Piso da Cúpula e da Galeria em galáxia clara (contraste com o contorno da Mariana ≥ 2,9); o Planetário
-   mantém o chão clareado que o pai aprovou.
+8. Piso da Cúpula e da Galeria em galáxia clara (contraste com o contorno da Mariana ≥ 2,9, mediana dos pixels
+   desenhados, conferida em todo cômodo por `contraste-pisos.navegador.test.js`; exceções com motivo em
+   `validar/contraste.js`: a Cúpula mede 2,87, exceção aceita pelo Leandro em 2026-09-26); o Planetário mantém o
+   chão clareado que o pai aprovou.
 9. NPCs, ações e curiosidades: `npcs-e-dialogo.md` §9.
 10. 2º andar `observatorio-2`, Centro de Pesquisas Avançadas da NASA (`nasa-falas.js`, `nasa-personagens.js`,
-   `nasa-objetos.js`, `nasa-experiencias.js`, `nasa-andar.js`; escadas em `andar2-escadas.js`): só diversão, sem
-   pergunta, estrela, dinheiro ou save. Sobe pelo arco no fundo da Cúpula (26, 3); chega em
-   `S.escadasNasa.chegadaDeBaixo` (22, 12); desce pelo vão (21, 12); sobe para `observatorio-3` em (26, 3) quando
-   `S.escadasLab` existe; quem desce do 3º chega em `chegadaDeCima` (26, 4). Visual branco/cinza/azul, "NASA" em
+   `nasa-objetos.js`, `nasa-experiencias.js`, `nasa-andar.js`): só diversão, sem
+   pergunta, estrela, dinheiro ou save. Sobe pelo arco no fundo da Cúpula (26, 3); chega à direita do vão que
+   desce, (21, 12) com `chegar: { x: 1, y: 0 }` = (22, 12); sobe para `observatorio-3` pelo arco (26, 3); quem
+   desce do 3º chega logo abaixo dele (26, 4) (escadas pareadas, §3.1). Visual branco/cinza/azul, "NASA" em
    letras próprias 5×7 (`S.escreverNasa`, nunca o logotipo). Cômodos: `hangar` (foguete grande com torre, traje,
    tanques), `controle` (telões, consoles, relógio, NASA no chão, escadas), `experiencias`. Experiências (ação
    `nasa-experiencia`, animação no próprio objeto só com Animações): foguete que decola, pena e martelo na câmara
@@ -248,10 +266,10 @@ portugues (`materia:portugues`). Escada entre andares de lugares diferentes vale
 ### Laboratório de Ciências (lugar `materia:ciencias`, 3º andar do Observatório)
 1. Sem prédio no mapa: a matéria mora no Observatório (`lugar.dentro: 'observatorio'`, `interior: 'observatorio-3'`).
    O interior `observatorio-3` é o de entrada do lugar `materia:ciencias` (o menu Lugares leva ao `spawn`), sem
-   saída para o mapa: só a escada `desce` (vão no chão do Hall, em (18, 23)) para `observatorio-2`, com chegada em
-   `S.escadasNasa.chegadaDeCima`. Onde ela chega subindo: `S.escadasLab.chegadaDeBaixo` = (18, 22)
-   (`observatorio/andar3-escadas.js`; `S = Reino._predios.observatorio`). Pacote `interior-observatorio`.
-2. Partes: `andar3-escadas.js` (depois do `ceu.js`), `lab-falas.js` (personagens e falas, acrescentadas ao
+   saída para o mapa: só a escada `desce` (vão no chão do Hall, em (18, 23)) para `observatorio-2` (lá ela chega
+   em (26, 4)). Quem sobe chega logo acima do vão (`chegar: { x: 0, y: -1 }` = (18, 22), igual ao `spawn`)
+   (escadas pareadas, §3.1). Pacote `interior-observatorio`.
+2. Partes: `lab-falas.js` (personagens e falas, acrescentadas ao
    `Reino.FALAS_INTERIORES.observatorio`), `lab-objetos-1.js`, `lab-objetos-2.js`, `lab-objetos-3.js` (objetos
    `lab-<nome>`, cores e ajudantes em `S.lab`) e `lab-andar3.js` (layout e registro). Laboratório claro (branco,
    verde-água e amarelo), estático, sem animações.

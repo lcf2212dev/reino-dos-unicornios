@@ -30,7 +30,7 @@ O modelo que o Leandro preenche: `PEDIDO-DE-FEATURE.md` (raiz). Campo em branco 
    nela. Nunca escreva na árvore principal.
 5. **Construir** começando pelo gerador quando houver: `npm run novo -- <tipo> <id>`. Cada item de "O que já vale
    sempre" é requisito: caminho por persistência em todo prêmio, nada que premie pressa, emoji novo = ícone, fala nova =
-   voz conferida, número do campo 10 em `jogo/js/nucleo/config.js` e na lista de números do `COMO-USAR.md`.
+   texto listado no retorno (quem integra grava e confere com `gravar-vozes` e `validar-vozes`), número do campo 10 em `jogo/js/nucleo/config.js` e na lista de números do `COMO-USAR.md`.
 6. **Conferir** cada passo do campo 5 com `npm run ver` nos aparelhos do campo 12; feche com a skill `validar-tudo`.
    Diferença no `npm run e2e` só a que a novidade explica.
 7. **Entregar:**
@@ -39,8 +39,8 @@ O modelo que o Leandro preenche: `PEDIDO-DE-FEATURE.md` (raiz). Campo em branco 
    - o "Pronto quando" item a item (feito / não feito / como conferir);
    - quando a novidade usa recurso do aparelho, onde funciona (claude.ai x servidor de casa, campo 12);
    - o `COMO-USAR.md` atualizado quando a novidade muda o que ele precisa saber.
-8. **Até onde ir:** só o que estiver marcado no campo 15 (no modelo curto, a linha "Até onde ir"). Commit no estilo
-   `Reino dos Unicórnios: <o que mudou>`. Merge, push e artifact só marcados ou pedidos por escrito. O artifact segue
+8. **Até onde ir:** só o que estiver marcado no campo 15 (no modelo curto, a linha "Até onde ir"). Commit só por quem
+   integra, com o campo 15 marcado ou autorização escrita, no estilo `Reino dos Unicórnios: <o que mudou>`. Merge, push e artifact só marcados ou pedidos por escrito. O artifact segue
    `docs/decisoes/seguranca-do-progresso.md`.
 
 Nunca: servidor de casa, artifact publicado, save real, Docker (`docs/contratos/save-e-mescla.md` §9).

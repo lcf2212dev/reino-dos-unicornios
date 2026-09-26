@@ -15,9 +15,14 @@ const AJUDA = `Uso: node jogo/ferramentas/testes/ver.js [opções]   (npm run ve
   --tela <nome>             loja | estabulo | bau | ajustes | pais | lugares | petshop | album | castelo | plano
                             | aparencia | escola | materia:<id> | livro:<id> | sala:<id> | prova:<id> | treino:<id>
                             | desafio:<id do desafio> (ex.: desafio:h1-03: esse desafio, sem o sorteio da sala)
+                            | foto (a prévia da foto) | album:<n> (tira n fotos e abre a n-ésima grande)
+                            | prova:<id>:<n> (a questão n, como as imagens prova-<id>-qNN do e2e)
   --js '<código>'           roda na página (repetível, na ordem); o valor devolvido e o console.log dele
                             saem no fim da saída (o console todo da página fica em console.txt)
   --passos 'tocar:<seletor ou texto>;esperar:<ms>;tecla:<k>;js:<código>'
+            ;arrastar:x1,y1,x2,y2[,ms][,toque|mouse][,preso]   gesto de verdade (padrão: toque no celular/tablet,
+                                                 mouse no notebook; preso = não solta, a foto sai com o thumbstick)
+            ;segurar:<seletor|x,y>,ms                  dedo (ou mouse) parado ms milissegundos
   --tamanhos celular,tablet,notebook   (padrão: os 3, em paralelo)
   --vivo                    jogo vivo (sem congelar; animações ligadas)
   --nome <n>                pasta de saída (padrão: data e hora)
@@ -33,6 +38,8 @@ Exemplos:
   npm run ver -- --estrelas 500 --tela loja --tamanhos celular
   npm run ver -- --tela desafio:h1-03 --tamanhos celular
   npm run ver -- --tela sala:h1 --passos 'tocar:.intro-botoes .btn-principal;esperar:600'
+  npm run ver -- --tamanhos celular --passos 'arrastar:100,600,160,600,500,preso'   (o thumbstick e a Mariana andando)
+  npm run ver -- --tela album:2 --tamanhos celular      npm run ver -- --tela prova:historia-3bim:2
   npm run ver -- --cuidados fome=5,sede=5 --js 'Reino.UI.telaPetShop()'
   npm run ver -- --previa interiores:petshop --recorte 0,0,200,150 --ampliar 4
   npm run ver -- --tamanhos celular --js 'console.log(Mapa.lugares().length)' --js 'Reino.materias.length'`;
@@ -86,6 +93,8 @@ async function rodarPassos(c, texto) {
     else if (tipo === 'esperar') await c.avancar(Number(resto));
     else if (tipo === 'tecla') await c.tecla(resto);
     else if (tipo === 'js') await c.js(resto);
+    else if (tipo === 'arrastar') await c.arrastar(resto);
+    else if (tipo === 'segurar') await c.segurar(resto);
     else throw new Error(`passo desconhecido: ${p}`);
   }
 }

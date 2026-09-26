@@ -79,3 +79,28 @@ Reino.personagensDoPredio = function (p) {
   return Reino._personagensPredio.filter(function (r) { return r.predio === p; })
     .map(function (r) { return { id: r.id, x: r.x, y: r.y, acao: r.acao }; });
 };
+
+// falas de um prédio em várias partes (falas.js, nasa-falas.js...), em qualquer ordem de carga.
+// Sem parte: cria ou devolve Reino.FALAS_INTERIORES[id]. Com parte: junta — listas (extras...) concatenadas na ordem de carga,
+// npcs e objetos por id, as outras chaves inteiras; a mesma chave (ou NPC/objeto) em duas partes é erro.
+// Contrato: docs/contratos/npcs-e-dialogo.md.
+/** @param {string} id @param {{ [chave: string]: any }} [parte] @returns {{ [chave: string]: any }} */
+Reino.falasDoPredio = function (id, parte) {
+  var F = Reino.FALAS_INTERIORES = Reino.FALAS_INTERIORES || {};
+  var base = F[id] = F[id] || {};
+  Object.keys(parte || {}).forEach(function (k) {
+    var v = parte[k];
+    if (Array.isArray(v)) { base[k] = (base[k] || []).concat(v); return; }
+    if (k === 'npcs' || k === 'objetos') {
+      var dest = base[k] = base[k] || {};
+      Object.keys(v).forEach(function (n) {
+        if (n in dest) throw new Error('falasDoPredio: "' + id + '".' + k + '["' + n + '"] veio de duas partes');
+        dest[n] = v[n];
+      });
+      return;
+    }
+    if (k in base) throw new Error('falasDoPredio: a chave "' + k + '" de "' + id + '" veio de duas partes');
+    base[k] = v;
+  });
+  return base;
+};

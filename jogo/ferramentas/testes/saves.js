@@ -31,7 +31,9 @@ function gerarSaves() {
     cuidados: { inicial: { fome: 62, sede: 44, banho: 71, em: T - 1000, acao: T - 5000, acaoFome: T - 5000, acaoSede: T - 9000, acaoBanho: T - 20000 } },
     despensa: {},
   });
-  salas.forEach(function (x, n) { if (x.i < 3) completo.salas[x.s] = sala(x.s, n); });
+  // só as matérias FIXAS: matéria nova não muda o save (nem o dinheiro do HUD em todas as imagens)
+  var FIXAS = ['historia', 'ingles', 'portugues'];
+  salas.forEach(function (x, n) { if (x.i < 3 && FIXAS.indexOf(x.m) >= 0) completo.salas[x.s] = sala(x.s, n); });
   unis.slice(0, 9).forEach(function (id, n) { completo.unis[id] = { em: T - (50 - n) * H, nome: n ? '' : 'Teste Lua', xp: [220, 10, 35, 90, 160, 0, 5, 60, 0][n], chocado: n < 7 }; });
   enfeites.slice(0, 6).forEach(function (id) { completo.loja[id] = true; });
   comidas.slice(0, 3).forEach(function (id, n) { completo.despensa[id] = { compradas: 3 + n, usadas: n }; });

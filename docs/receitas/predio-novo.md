@@ -36,12 +36,24 @@ manifesto e o index. À mão: preencher os `(preencher)`, mais cômodos e objeto
    tiles de rua, da rua até a frente da porta. Espaço livre: `npm run ver -- --previa mapa`.
    `menu` dá o emoji, a linha de informação e os chips do menu Lugares; `abrir` só se o prédio tiver tela própria.
    Não edite `mundo/lugares.js`, `ui/lugares.js` nem `validar-interiores.js`.
-2. Falas (`falas.js`): curtas (`licoes-de-voz.md`). Objetos: `objetos.<chave>` = lista de falas.
+2. Falas (`falas.js`): curtas (`licoes-de-voz.md`). Objetos: `objetos.<chave>` = lista de falas. O `falas.js` gerado chama
+   `Reino.falasDoPredio('<p>', { npcs, objetos, extras })`. Se as falas passarem de um arquivo (um andar, uma ala), crie
+   outra parte (ex.: `<p>/ala-falas.js`, com `node: true` no manifesto) que também chama `Reino.falasDoPredio('<p>', { … })`
+   só com o que é dela. Nunca `Reino.FALAS_INTERIORES.<p> = …` nem ler o objeto ao carregar. As partes podem carregar
+   em qualquer ordem; `extras` se somam, `npcs`/`objetos` se juntam por id e chave repetida entre partes é erro.
+   Exemplo: Observatório (`falas.js`, `nasa-falas.js`, `lab-falas.js`).
 3. Objetos temáticos: formato em `docs/contratos/interiores.md` §5 (`desenhar(ctx, px, py, obj, P)`, `chave`,
    `topo`, `anim`, `toque`). Use `Reino.Interiores.desenho` (paleta e helpers) em vez de copiar funções.
 4. Interior (`<p>.js`): formato em `docs/contratos/interiores.md` §3. `saida` na última fileira de um cômodo,
    `spawn` 1 tile acima. Critério de "rico": ≥ 15 tipos de objeto por cômodo, nenhum 3×3 de chão vazio,
    ≥ 3 objetos interativos, tudo alcançável.
+4a. Andares e escadas: cada andar declara só as próprias escadas: `escadas: [{ x, y, para: '<id do outro andar>',
+   chegar: { x, y }, olhar: { x, y }, sentido: 'sobe'|'desce' }]`. Toda escada precisa de um par: no andar `para`,
+   exatamente uma escada com `para` apontando de volta. Quem chega aparece ao lado da escada de volta, no lado `chegar`
+   dela (um passo; padrão `{ x: 0, y: 1 }`, logo abaixo). `olhar` é para onde ela olha ao chegar e fica na escada de
+   onde ela sai. Não escreva `chegada` nem crie arquivo de coordenação entre andares. O `npm run validar` acusa escada
+   sem par e lado de chegada que não é andável. Mudou de propósito a posição de uma escada que já existe? Atualize a
+   tabela de `jogo/ferramentas/testes/unidade/escadas.test.js`.
 5. Desenho de fora (`fora.js`), no tamanho do `rect` (`w`, `h` em px = tiles × 16). Brilho animado:
    `Mapa.PREDIOS_ANIM.<p>` (só com Animações).
 6. Manifesto (partes na ordem: `falas.js`, objetos, `<p>.js`, `acoes.js`, `fora.js`, `<p>/lugar.js`) + `npm run index`.

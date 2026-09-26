@@ -1,5 +1,5 @@
 // Gera o jogo/index.html a partir de js/manifesto.js (a lista única de CSS e scripts, em ordem).
-// Uso: node ferramentas/gerar-index.js             → reescreve index.html
+// Uso: node ferramentas/gerar-index.js             → reescreve index.html e o js/versao.json (gerar-versao.js)
 //      node ferramentas/gerar-index.js --conferir  → só confere; sai com código 1 se o index.html
 //        não bate com o manifesto, se algum arquivo do manifesto não existe ou se há .js em js/
 //        (fora de js/voz/ e do próprio manifesto) que não está no manifesto.
@@ -75,4 +75,7 @@ if (process.argv.includes('--conferir')) {
 } else {
   fs.writeFileSync(arqIndex, html);
   console.log(`index.html gerado (${MANIFESTO.css.length} CSS, ${MANIFESTO.scripts.length} scripts)`);
+  // a impressão digital do jogo (js/versao.json, no .gitignore): as abas abertas se atualizam sozinhas
+  const v = require('./gerar-versao').gravar(raiz);
+  console.log(`js/versao.json gerado (${v.versao.slice(0, 12)}…)`);
 }

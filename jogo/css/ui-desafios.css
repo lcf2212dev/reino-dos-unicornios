@@ -178,3 +178,7 @@ span.mai-acento.mai-acento::after { content: attr(data-a); content: attr(data-a)
 }
 .lugar-aviso > canvas { flex: none; display: block; }
 .lugar-aviso.aviso-pronto { border-color: #4fb37a; background: #e2f7e9; color: #1b6e45; }
+/* selo "✨ Novo!" (lugar com novidade que ela ainda não visitou) e onde fica a matéria de dentro de um prédio */
+.lugar-aviso.aviso-novo { border-color: #f0b400; background: #fff6cc; color: #8a5a00; }
+.lugar-onde { display: flex; align-items: center; gap: 4px; margin-top: 2px; }
+.lugar-onde > canvas { flex: none; display: block; }

@@ -26,7 +26,22 @@ async function capturarDados(browser, raiz, pasta) {
     var falas = R.Falas.todas().map((f) => ({ texto: f.texto, voz: f.voz, pacote: f.pacote }));
     var W = Mapa.largura() / 16, H = Mapa.altura() / 16, tiles = [];
     for (var y = 0; y < H; y++) { var linha = ''; for (var x = 0; x < W; x++) linha += Mapa.agua(x, y) ? 'a' : Mapa.solido(x, y) ? '#' : '.'; tiles.push(linha); }
-    var interiores = R.interiores.map((def) => ({ def: def, grade: R.Interiores.grade(def) }));
+    // escadas normalizadas: `chegada` = onde ela chega de fato (chegadaDaEscada, quando existe) e sem `chegar`,
+    // para a base (chegada fixa) e o jogo de hoje (escadas pareadas) darem os mesmos dados
+    var normal = (def) => {
+      if (!def.escadas || typeof R.Interiores.chegadaDaEscada !== 'function') return def;
+      var escadas = def.escadas.map((e, i) => {
+        var n = {};
+        Object.keys(e).forEach((k) => {
+          if (k === 'chegar' || k === 'chegada') return;
+          n[k] = e[k];
+          if (k === 'para') n.chegada = R.Interiores.chegadaDaEscada(def.id, i);
+        });
+        return n;
+      });
+      return Object.assign({}, def, { escadas: escadas });
+    };
+    var interiores = R.interiores.map((def) => ({ def: normal(def), grade: R.Interiores.grade(def) }));
     return {
       falas: falas,
       materias: R.materias, provas: R.provas,

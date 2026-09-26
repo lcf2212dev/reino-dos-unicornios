@@ -3,10 +3,14 @@
 //   node jogo/ferramentas/vozes/vozes.js [--sem-listar] [--sem-gravar] [--sem-empacotar] [--sem-conferir] [--saida <pasta>]
 //   1. listar     listar-falas.js: tudo o que o jogo fala → ferramentas/gerado/falas.json
 //   2. gravar     gerar-vozes.py: grava SÓ as falas sem áudio no cache (precisa de uv ou python com edge-tts,
-//                 ffmpeg e internet). Sem fala nova, nem roda. Antes, guarda o índice antigo em /tmp/reino-testes/vozes/
+//                 ffmpeg e internet). Sem fala nova, nem roda. Antes, guarda o índice antigo em .vozes/
 //   3. empacotar  empacotar-vozes.js: junta os áudios em js/voz/<pacote>.js (ou em --saida <pasta>; aí
 //                 também compara com os js/voz/*.js do jogo e diz se ficou idêntico)
-//   4. conferir   conferir-vozes.py: transcreve só as gravações novas (faster-whisper) e acusa as que divergem
+//   4. conferir   conferir-vozes.py: transcreve só as gravações novas (faster-whisper) e acusa as que divergem.
+//                 Python, nesta ordem: .vozes/venv-whisper; senão `uv run --with faster-whisper`; senão cria o
+//                 .vozes/venv-whisper (python3 -m venv + pip install faster-whisper; baixa pacotes).
+//                 O modelo do whisper fica no cache do usuário (~/.cache/huggingface).
+// Temporários das vozes em <raiz do repositório>/.vozes/ (ignorado pelo git; o /tmp é memória).
 // Cada passo pode ser pulado. As vozes são achadas pelo TEXTO EXATO: texto falado mudou = gravação nova.
 const fs = require('fs');
 const path = require('path');
@@ -16,7 +20,9 @@ const { spawnSync } = require('child_process');
 const AQUI = __dirname;
 const GERADO = path.join(AQUI, '..', 'gerado');
 const VOZ_JOGO = path.join(AQUI, '..', '..', 'js', 'voz');
-const PASTA_TMP = '/tmp/reino-testes/vozes';
+const RAIZ = path.resolve(AQUI, '..', '..', '..');
+const PASTA_VOZES = path.join(RAIZ, '.vozes');
+const VENV = path.join(PASTA_VOZES, 'venv-whisper');
 const tem = (o) => process.argv.includes(o);
 const arg = (n) => { const i = process.argv.indexOf(n); return i > 0 ? process.argv[i + 1] : undefined; };
 
@@ -37,6 +43,17 @@ function pendentes() {
     const h = crypto.createHash('sha1').update(partes.join('|'), 'utf8').digest('hex').slice(0, 16);
     return !fs.existsSync(path.join(GERADO, 'vozes-cache', f.voz, h + '.mp3'));
   });
+}
+
+// python do conferir: .vozes/venv-whisper → uv run --with faster-whisper → cria o venv (avisa que baixa)
+function pythonDoConferir() {
+  const py = path.join(VENV, 'bin', 'python');
+  if (fs.existsSync(py)) return { cmd: py, pre: [] };
+  if (existe('uv')) return { cmd: 'uv', pre: ['run', '--with', 'faster-whisper', 'python'] };
+  console.log(`\n⚠ sem o ${path.relative(RAIZ, VENV)} e sem uv: vou criar o venv e instalar o faster-whisper (baixa pacotes da internet)`);
+  if (rodar('4. conferir (criar venv)', 'python3', ['-m', 'venv', VENV]) !== 0) return null;
+  if (rodar('4. conferir (pip install)', path.join(VENV, 'bin', 'pip'), ['install', 'faster-whisper']) !== 0) return null;
+  return { cmd: py, pre: [] };
 }
 
 const hash = (arq) => crypto.createHash('sha256').update(fs.readFileSync(arq)).digest('hex');
@@ -63,8 +80,8 @@ function principal() {
     if (novas.length) {
       novas.slice(0, 20).forEach((f) => console.log(`    ${f.voz}: ${f.fala}`));
       if (novas.length > 20) console.log(`    … e mais ${novas.length - 20}`);
-      fs.mkdirSync(PASTA_TMP, { recursive: true });
-      antes = path.join(PASTA_TMP, `indice-antes-${quando}.json`);
+      fs.mkdirSync(PASTA_VOZES, { recursive: true });
+      antes = path.join(PASTA_VOZES, `indice-antes-${quando}.json`);
       fs.copyFileSync(path.join(GERADO, 'vozes-indice.json'), antes);
       console.log(`    índice antigo guardado em ${antes}`);
       const py = path.join(AQUI, 'gerar-vozes.py');
@@ -83,8 +100,8 @@ function principal() {
   if (!tem('--sem-conferir')) {
     const py = path.join(AQUI, 'conferir-vozes.py');
     const args = [py].concat(antes ? ['--antes', antes] : []);
-    const venv = '/tmp/reino-testes/venv-whisper/bin/python';
-    const st = fs.existsSync(venv) ? rodar('4. conferir', venv, args) : rodar('4. conferir', 'python3', args);
+    const p = pythonDoConferir();
+    const st = p ? rodar('4. conferir', p.cmd, p.pre.concat(args)) : 2;
     if (st !== 0) falhas.push(st === 2 ? 'conferir (instale o faster-whisper: instruções acima)' : 'conferir (gravações que não batem com o texto)');
   }
   return falhas;

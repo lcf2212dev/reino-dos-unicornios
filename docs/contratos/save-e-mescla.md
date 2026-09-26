@@ -52,6 +52,11 @@ ajustes.surpresaEm: <Date.now()>                  // carimbo da última troca de
 5. Por que `acao` não muda de sentido: um aparelho da versão antiga trata um `acao` novo como comer e beber;
    com o banho em `acaoBanho`, ele nunca vê um banho como comida.
 
+### 3.1 `visitados`
+`visitados: { <id>: true }`: os ids dos interiores e lugares em que ela já entrou (selo "✨ Novo!" do menu Lugares).
+Declarado em `sistemas/visitados.js` com `registrarCampo('visitados', { mesclar: 'uniao', novoCiclo: 'mantem' })`.
+Só cresce; um aparelho antigo sem o campo não apaga nada (se sumir, o selo só volta). Fica fora da cópia `-novidades`.
+
 ## 4. Mescla (`P.mesclar`, mesma geração)
 ### 4.1 `cuidados` (`juntarCuidados`)
 1. Para cada `uniId` de qualquer lado, se os DOIS lados têm carimbo para a fome e para a sede (o carimbo de
@@ -105,6 +110,15 @@ Para cada comida, `compradas` = maior e `usadas` = maior (contador estragado con
 4. `compradas`/`usadas` inteiros ≥ 0, com `usadas ≤ compradas`.
 5. `surpresa` "true"/"false" em texto vira booleano (outro valor volta ao padrão).
 6. Ids desconhecidos ficam guardados, sem efeito (uma versão não apaga a comida de outra).
+   Vale para todo campo com id (unicórnio, ovo, montaria, sala, prova, treino, `pago`, comida, `loja`,
+   `usando.enfeites`): a aba de uma versão ANTIGA recebe pela mescla ids da versão nova e não pode quebrar.
+   - A LEITURA cai na reserva: `P.montaria()` devolve `'inicial'` quando o unicórnio não chocou, não está em `unis`
+     ou não tem def (`!P.defUni(id)`); `P.ovosParaChocar()` só lista ovo com def. HUD, Loja, Mariana montada,
+     Estábulo, Pet Shop, banho, xp e cuidados leem por essas duas e caem juntos na reserva.
+   - A GRAVAÇÃO conserva: `estado.montaria` continua com o id desconhecido (ninguém grava `'inicial'` por cima);
+     trocar enfeite na Loja só tira do encaixe o que ela conhece (`!it || it.slot !== item.slot`).
+   - Segunda defesa na interface: `UI.chocarOvos` ignora ovo sem def; `UI.spriteMontaria` desenha `'inicial'`
+     quando a def falta. Teste: `testes/unidade/futuro.test.js` e `futuro.navegador.test.js`.
 7. `acaoFome`/`acaoSede`/`acaoBanho` que não são números ≥ 0 são apagados (contam como ausentes; vale o `acao`).
 8. `acao` NÃO é normalizada aqui (nem apagada): quem a conserta é `Cuidados` ao mudar o registro (`registroParaMudar`).
 

@@ -124,6 +124,7 @@
 - Para mudar os números: `surpresa` em `jogo/js/nucleo/config.js`.
 
 ## Construções por dentro
+- **Lugar novo:** mostra "✨ Novo!" no menu Lugares até a Mariana entrar nele, ou por `novidadeDias` dias (45). A data vai em `lugar.novidade: 'AAAA-MM-DD'` (o `npm run novo` já põe a de hoje). Matéria dentro de um prédio mostra o andar no menu (ex.: "No 3º andar do Observatório"), pelo campo `lugar.andar`.
 - **Entrar:** pisar na porta, tocar no prédio, apertar Enter perto dele ou escolher no menu Lugares. Um círculo fecha a tela e abre de novo já lá dentro.
 - **Sair:** pisar no tapete vermelho com a seta.
 - **Placas:**
@@ -308,21 +309,22 @@
   - se só um lado tiver a Pet Shop e o Observatório, ela compra comida ou enfeite num lado e não acha no outro, e para ela isso é "sumiu";
   - uma aba ainda aberta com o jogo antigo tira o enfeite novo que ela está usando (a compra fica, é só vestir de novo) e pode apagar a comida comprada;
   - uma aba com o jogo antigo não conhece o banho: se ela gravar por último, o banho some do progresso daquele lado e só volta pela cópia de segurança do aparelho novo;
-  - uma aba com o jogo **antigo** aberta, com a montaria sendo um unicórnio de Português, dá erro: a personagem some do mapa e a Loja não abre. O progresso não se perde, mas essa aba precisa ser fechada e aberta de novo.
+  - uma aba com o jogo **antigo** aberta (de antes da atualização de 26/09/2026), com a montaria sendo um unicórnio que ela não conhece, dá erro: a personagem some do mapa e a Loja não abre. O progresso não se perde; é fechar a aba e abrir de novo. A partir dessa versão isso não acontece mais: a aba antiga mostra o unicórnio inicial no lugar do novo, esconde o ovo que não conhece e guarda tudo sem apagar.
 - **Passo a passo:**
   1. Escolha um horário em que a Mariana não esteja jogando.
   2. Em **todos** os aparelhos (tablet, celular, notebook), feche as abas do jogo: a do computador de casa (reinodosunicornios.local ou o IP) e a do claude.ai. É fechar a aba mesmo, não só trocar de aba. No celular e no tablet, feche também no seletor de abas e de apps. Não deixe **nenhuma** aba antiga aberta, nem esquecida em outro aparelho: o jogo antigo não conhece o Português.
   3. Peça ao Claude para fazer o merge e republicar o link do claude.ai. O computador de casa passa a servir o jogo novo na hora do merge: não precisa reiniciar o Docker.
-  4. Espere **uns 5 minutos** depois do merge. O servidor de casa deixa os arquivos do jogo guardados no navegador por até 5 minutos (300 s), e antes disso uma aba nova pode misturar arquivos novos com antigos.
-  5. Abra um aparelho só, no computador de casa. Confira se aparece a barrinha 🛁 do banho junto da montaria, o botão 📷 no topo, a banheira dentro da Pet Shop, e se as estrelas, as salas e os unicórnios estão como antes. Se algo estiver estranho, recarregue a página.
-  6. Depois abra o link do claude.ai num aparelho e confira do mesmo jeito.
-  7. Só então libere os outros aparelhos, abrindo o jogo numa aba nova.
-  8. Nos primeiros dias, se achar alguma aba esquecida de antes, feche e abra de novo antes de ela jogar.
+  4. Rode `npm run versao` (o `npm run index` também faz isso). Ele grava a "impressão digital" do jogo (`jogo/js/versao.json`). As abas do computador de casa que ficaram abertas percebem sozinhas: conferem a cada 10 minutos (e quando a aba volta para a frente) e, quando a aba já está aberta há uns 6 minutos e a Mariana está parada no mapa, o Claude avisa "Chegou novidade no Reino! ✨ O que você fez fica guardado.", o jogo grava e a página recarrega. Se ela estiver numa sala, numa tela ou andando, ele espera ela parar. No claude.ai isso fica desligado (lá o site já entrega a versão nova). Os números ficam em `config.versao`.
+  5. Espere **uns 5 minutos** depois do merge. O servidor de casa deixa os arquivos do jogo guardados no navegador por até 5 minutos (300 s), e antes disso uma aba nova pode misturar arquivos novos com antigos.
+  6. Abra um aparelho só, no computador de casa. Confira se aparece a barrinha 🛁 do banho junto da montaria, o botão 📷 no topo, a banheira dentro da Pet Shop, e se as estrelas, as salas e os unicórnios estão como antes. Se algo estiver estranho, recarregue a página.
+  7. Depois abra o link do claude.ai num aparelho e confira do mesmo jeito.
+  8. Só então libere os outros aparelhos, abrindo o jogo numa aba nova.
+  9. Nos primeiros dias, se achar alguma aba esquecida de antes, feche e abra de novo antes de ela jogar.
 - **Se algo parecer errado** (estrelas, salas ou unicórnios): não apague nada nem use "Apagar tudo". Deixe o jogo fechado e peça ao Claude para olhar. O computador de casa guarda as últimas 50 versões do progresso.
 
 ## Limitações conhecidas
 - **Dois aparelhos gastando estrelas quase ao mesmo tempo:** as duas compras podem virar uma só na sincronização. As estrelas nunca ficam negativas.
-- **Aba com o jogo ANTIGO aberta no dia de atualizar:** quando ela troca um enfeite ou grava por cima nessa aba, os enfeites e acessórios novos saem do unicórnio (a compra não se perde: é só vestir de novo na Loja). Se a montaria for um unicórnio de Português, a aba antiga dá erro: a personagem some do mapa e a Loja não abre (o progresso fica; é fechar a aba e abrir de novo). E, no mesmo aparelho, se a cópia de segurança não estiver lá, a comida comprada pode sumir de vez, com as estrelas já gastas. Por isso, nenhuma aba antiga pode ficar aberta: siga o passo a passo do dia de atualizar, acima.
+- **Aba com o jogo ANTIGO aberta no dia de atualizar:** quando ela troca um enfeite ou grava por cima nessa aba, os enfeites e acessórios novos saem do unicórnio (a compra não se perde: é só vestir de novo na Loja). Numa aba desta versão ou mais nova (de 26/09/2026 em diante), se a montaria ou um ovo for de uma matéria que ela ainda não conhece, nada quebra: a personagem aparece no unicórnio inicial, o ovo novo não aparece e a Loja abre normal; os enfeites novos continuam guardados e voltam quando a aba for atualizada. Numa aba de antes disso ainda pode dar erro: é fechar e abrir de novo. E, no mesmo aparelho, se a cópia de segurança não estiver lá, a comida comprada pode sumir de vez, com as estrelas já gastas. Por isso, nenhuma aba antiga pode ficar aberta: siga o passo a passo do dia de atualizar, acima.
 
 ## Números que dá para mudar (`jogo/js/nucleo/config.js`)
 Depois de mudar, peça ao Claude para republicar.
@@ -338,5 +340,7 @@ Depois de mudar, peça ao Claude para republicar.
 - **`banho`:** `duracaoMs: 6000` (a animação do banho), `duracaoCurtaMs: 1000` (sem Animações) e `pularDepoisMs: 2000` (depois disso um toque pula para o fim).
 - **`fotos`:** `maxLado: 1600` (tamanho máximo da foto), `maxAlbum: 40` (fotos no álbum de cada aparelho) e `toqueLongoMs: 600` (quanto segurar o 📷 para abrir o álbum). Não troque o `banco`, senão o álbum parece vazio.
 - **`musica`:** `volume` (0.22), `crossfadeS` (1,5 s de troca), `comVoz` (a música fica em 30% enquanto uma voz fala). Melhor não mexer em `lookaheadS` e `intervaloMs`.
+- **`controles`:** `limiarMouse: 6` / `limiarToque: 12` (px que o mouse ou o dedo pode mexer e ainda contar como clique ou toque rápido); `segurarMs: 300` (quanto tempo segurando o mouse parado até ela seguir o ponteiro); `zonaMorta: 10` (quanto o dedo precisa arrastar no thumbstick para ela andar); `paraPerto: 6` / `voltaLonge: 12` (com o mouse, ela para perto do ponteiro e só volta a andar quando ele se afasta); `folgaGraus: 10` (folga para virar entre as 8 direções sem ficar trocando); `base: 110` / `pino: 48` (tamanho do thumbstick no celular) e `baseTablet: 130` / `pinoTablet: 56` (em tela a partir de 700×700).
+- **`versao`:** de quanto em quanto tempo a aba confere se o jogo mudou (`intervaloMs`, 10 min), a confirmação (`confirmarMs`), a espera do cache (`cacheMs`, 330 s), quanto tempo parada no mapa (`paradaMs`, 8 s), o aviso do Claude (`avisoMs`) e a espera até recarregar (`esperaMs`).
 - **`nado`:** `fator: 0.6` (a velocidade na água, 60%) e `custo: 3` (quanto a água "pesa" na hora de escolher o caminho: com 3, ela prefere dar a volta por terra).
 - **`precoPremio`:** o preço dos acessórios das provas à venda na Loja: `comum: 25`, `raro: 40`, `lendario: 70`.

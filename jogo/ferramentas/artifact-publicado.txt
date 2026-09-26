@@ -1,0 +1,6 @@
+# Versão do artifact publicado no claude.ai (npm run artifact -- --desde publicado).
+# Formato: a primeira linha que não começa com # é "<hash> <url> <versão>": o commit de onde saiu a
+# publicação, o endereço do artifact e a versão que o claude.ai mostrou. Só a skill publicar-artifact
+# troca esta linha, depois de publicar e conferir (npm run artifact -- --registrar <hash> --versao vN).
+# daa3e6e = main com controles, álbum e Ciências no Observatório (Version 22, publicada por delta).
+daa3e6e https://claude.ai/artifact/CQUd5TWJQW3fWWw5Cvg77U v22

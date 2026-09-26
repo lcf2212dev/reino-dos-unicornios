@@ -281,14 +281,14 @@
     function especial(d) { return prop(d, 'especial'); }
     var porTipo = {};
     sala.desafios.forEach(function (d) { if (especial(d)) (porTipo[d.tipo] = porTipo[d.tipo] || []).push(d); });
-    var tiposEsp = U.embaralhar(Object.keys(porTipo));
+    var tiposEsp = U.embaralhar(Object.keys(porTipo), 'sortear:' + sala.id + ':esp');
     // a sala 5 sempre tem pelo menos um "separar nos baús"
     var primeiros = tiposEsp.filter(function (t) { return DEFS[t].semprePrimeiro; });
     tiposEsp = primeiros.concat(tiposEsp.filter(function (t) { return !DEFS[t].semprePrimeiro; }));
-    var escolhidos = tiposEsp.slice(0, 2).map(function (t) { return U.sortear(porTipo[t]); });
-    var simples = U.embaralhar(sala.desafios.filter(function (d) { return !especial(d); }));
+    var escolhidos = tiposEsp.slice(0, 2).map(function (t) { return U.sortear(porTipo[t], 'esp:' + t); });
+    var simples = U.embaralhar(sala.desafios.filter(function (d) { return !especial(d); }), 'sortear:' + sala.id + ':simples');
     var lista = escolhidos.concat(simples.slice(0, Math.max(0, quantos - escolhidos.length)));
-    lista = U.embaralhar(lista);
+    lista = U.embaralhar(lista, 'sortear:' + sala.id + ':lista');
     // começa com uma pergunta simples e deixa a memória para o fim
     lista.sort(function (a, b) { return prop(a, 'noFim') - prop(b, 'noFim'); });
     var iSimples = lista.findIndex(function (d) { return !especial(d); });

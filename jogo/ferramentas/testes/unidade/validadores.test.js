@@ -56,6 +56,19 @@ test('validar-interiores: passa no jogo de hoje e acusa uma tela que não existe
   assert.match(r.saida, /tela "telaPlantada" não existe/);
 });
 
+test('validar-interiores: escada sem par no destino e lado de chegada na parede são acusados (validar-escadas)', () => {
+  const copia = copiaDoJogo('escadas');
+  // o 3º andar do Observatório desce para o térreo (que não tem escada de volta) em vez do 2º
+  plantar(path.join(copia, 'js/interiores/observatorio/lab-andar3.js'), "para: 'observatorio-2', chegar", "para: 'observatorio', chegar");
+  // quem desce na torre chegaria acima do arco (na parede)
+  plantar(path.join(copia, 'js/interiores/torre/torre.js'), 'chegar: { x: -1, y: 0 }', 'chegar: { x: 0, y: -1 }');
+  const r = node('ferramentas/validar/validar-interiores.js', [], copia);
+  assert.strictEqual(r.status, 1, r.saida);
+  assert.match(r.saida, /observatorio-3: escada 0 \(18,23\): precisa de exatamente 1 escada de volta em "observatorio" \(para: 'observatorio-3'\), tem 0/);
+  assert.match(r.saida, /observatorio-2: escada 1 \(26,3\): precisa de exatamente 1 escada de volta em "observatorio-3" \(para: 'observatorio-2'\), tem 0/);
+  assert.match(r.saida, /torre-1: escada 1 \(2,10\): chegada \(lado `chegar` \{"x":0,"y":-1\} da escada de volta\) \(10,2\) em "torre" não é andável/);
+});
+
 test('validar-interiores: personagem registrado com predio museu e x/y passa; sem x/y (prédio antigo, sem vagas) é acusado', () => {
   const copia = copiaDoJogo('personagem');
   const falas = path.join(copia, 'js/interiores/museu/falas.js');

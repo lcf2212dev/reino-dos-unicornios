@@ -93,7 +93,7 @@ if (require.main === module) {
   if (cmd === 'capturar' && a) {
     capturar(path.resolve(a), { raiz: arg('--raiz'), so: arg('--so'), tamanhos: arg('--tamanhos') }).catch((e) => { console.error(e); process.exit(1); });
   } else if (cmd === 'comparar' && a && b) {
-    process.exit(comparar(path.resolve(a), path.resolve(b), { desempenho: process.argv.includes('--desempenho') }) ? 0 : 1);
+    process.exit(comparar(path.resolve(a), path.resolve(b), { desempenho: process.argv.includes('--desempenho') }).ok ? 0 : 1);
   } else {
     console.log('Uso: referencias.js capturar <saida> [--raiz <jogo>] [--so dados,imagens,vozes,desempenho] [--tamanhos celular,tablet,notebook]\n     referencias.js comparar <referencia> <nova> [--desempenho]');
     process.exit(2);

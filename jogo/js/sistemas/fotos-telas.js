@@ -51,13 +51,10 @@
     try { return new File([f.png], nomeArquivo(f), { type: 'image/png' }); } catch (e) { return null; }
   }
   // no artifact do claude.ai a plataforma recusa o share e bloqueia o download: lá só o menu da própria imagem
-  function noArtifact() { return !!(window.claude && typeof window.claude.use === 'function'); }
+  var amb = Reino.ambiente;
   function podeCompartilhar(f) {
-    if (noArtifact()) return false;
-    try {
-      var n = navigator, arq = arquivoDe(f);
-      return !!(arq && n.share && n.canShare && n.canShare({ files: [arq] }));
-    } catch (e) { return false; }
+    var arq = amb.artifact() ? null : arquivoDe(f);
+    return !!arq && amb.podeCompartilhar([arq]);
   }
   // 'ok' | 'cancelou' (AbortError: nada a dizer) | 'erro'; sem canShare aqui, nem chama
   function compartilhar(f) {
@@ -72,8 +69,7 @@
 
   // sem o Compartilhar: segurar a foto (toque) ou o botão direito (mouse) abre o menu do navegador
   function dica() {
-    var toque = false;
-    try { toque = window.matchMedia('(pointer: coarse)').matches; } catch (e) {}
+    var toque = amb.toque();
     return U().el('p.fotos-legenda.fotos-dica', toque ? 'Segure a foto para compartilhar ou salvar.' : 'Clique com o botão direito na foto para salvar.');
   }
 
@@ -143,7 +139,7 @@
         // sem álbum neste aparelho, o "Salvar no aparelho" vira o botão principal
         salvar.classList.toggle('btn-principal', banco.estado !== 'ok');
         salvar.classList.toggle('btn-secundario', banco.estado === 'ok');
-        salvar.hidden = noArtifact();
+        salvar.hidden = !amb.podeBaixar();
         if (banco.estado !== 'ok') { guardar.hidden = true; album.hidden = true; avisar(FRASES.semBanco); return; }
         guardar.hidden = cheio; album.hidden = !cheio;
         if (cheio) avisar(FRASES.cheio); else { msg.hidden = true; corpo.classList.remove('com-msg'); falarVoz(FRASES.previa); }
@@ -260,7 +256,7 @@
     comp.hidden = !podeCompartilhar(lista[i]);
     salvar.classList.toggle('btn-principal', comp.hidden);
     salvar.classList.toggle('btn-secundario', !comp.hidden);
-    salvar.hidden = noArtifact();
+    salvar.hidden = !amb.podeBaixar();
     pn.conteudo.appendChild(el('div.fotos-ver-corpo' + (comp.hidden ? '' : '.com-compartilhar'),
       el('div.fotos-ver-linha', ant, el('div.fotos-moldura-img', img), prox),
       legenda, comp.hidden ? dica() : null, msg, el('div.intro-botoes.fotos-botoes', comp, salvar, apagar)));

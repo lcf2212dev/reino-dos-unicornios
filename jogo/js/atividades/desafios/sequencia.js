@@ -10,8 +10,8 @@
     var n = itens.length;
     var seq = opts.valorInicial ? opts.valorInicial.slice() : [];
     // opts.monte: mesma ordem embaralhada ao voltar numa questão da prova
-    var monte = opts.monte ? opts.monte.slice() : U.embaralhar(itens.map(function (_, i) { return i; }));
-    while (!opts.monte && n > 2 && monte.every(function (v, i) { return v === i; })) monte = U.embaralhar(monte);
+    var monte = opts.monte ? opts.monte.slice() : U.embaralhar(itens.map(function (_, i) { return i; }), ['sequencia', d]);
+    while (!opts.monte && n > 2 && monte.every(function (v, i) { return v === i; })) monte = U.embaralhar(monte, ['sequencia', d]);
     var wrap = el('div.sequencia.seq-' + estilo);
     var alvo = el(estilo === 'frase' ? 'div.seq-alvo.frase-linha' : 'ol.seq-alvo');
     var pool = el('div.seq-monte');
@@ -90,8 +90,8 @@
   function textoFrase(d, seq) { return seq.map(function (i) { return (d.itens || d.blocos)[i]; }).join(' '); }
   // na prova: a ordem é embaralhada uma vez (nunca já na ordem certa)
   function prepararProva(d) {
-    var m = U.embaralhar((d.blocos || d.itens).map(function (_, i) { return i; }));
-    while (m.every(function (v, i) { return v === i; })) m = U.embaralhar(m);
+    var m = U.embaralhar((d.blocos || d.itens).map(function (_, i) { return i; }), ['sequencia-prova', d]);
+    while (m.every(function (v, i) { return v === i; })) m = U.embaralhar(m, ['sequencia-prova', d]);
     return m;
   }
   function textoCerto(d) { return textoFrase(d, (d.itens || d.blocos).map(function (_, i) { return i; })); }

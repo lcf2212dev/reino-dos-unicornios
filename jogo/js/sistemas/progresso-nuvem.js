@@ -71,7 +71,11 @@
   // sem resposta (rede fora) é falha, não "sem servidor": o jogo espera e oferece tentar de novo
   function temServidor() {
     return fetch('api/progresso', { method: 'HEAD', cache: 'no-store' })
-      .then(function (r) { return r.headers.get('X-Reino') === '1'; });
+      .then(function (r) {
+        var sim = r.headers.get('X-Reino') === '1';
+        Reino.ambiente.marcarServidorCasa(sim);
+        return sim;
+      });
   }
   /** @template T @param {Promise<T>} promessa @param {number} ms @returns {Promise<T>} rejeita sem resposta em `ms` */
   function comLimite(promessa, ms) {
@@ -88,9 +92,9 @@
   var tentativa = 0;
   P.iniciarNuvem = function () {
     var minha = ++tentativa;
-    var usaClaude = window.claude && typeof window.claude.use === 'function';
-    var pedirDb = usaClaude ? window.claude.use('db')
-      : /^https?:$/.test(location.protocol) ? temServidor().then(function (s) { return s ? { doc: docDoServidor } : null; })
+    var amb = Reino.ambiente;
+    var pedirDb = amb.artifact() ? window.claude.use('db')
+      : amb.http() || /^https:$/.test(location.protocol) ? temServidor().then(function (s) { return s ? { doc: docDoServidor } : null; })
       : Promise.resolve(null);
     var pronto = pedirDb.then(function (db) {
       if (!db) return;

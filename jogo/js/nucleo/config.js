@@ -47,8 +47,24 @@ Reino.config = {
   musica: { volume: 0.22, crossfadeS: 1.5, comVoz: 0.3, lookaheadS: 0.25, intervaloMs: 60 },
   // nadar no lago: velocidade na água e quanto a água "custa" na busca de caminho
   nado: { fator: 0.6, custo: 3 },
+  // controles de andar (js/motor/entrada.js e css/ui-hud.css): mouse segurado e thumbstick do toque
+  controles: {
+    limiarMouse: 6, limiarToque: 12, // px CSS: até aqui ainda é clique/toque rápido
+    segurarMs: 300,                  // mouse parado segurando isso já segue o ponteiro
+    zonaMorta: 10,                   // px CSS do thumbstick sem andar
+    paraPerto: 6, voltaLonge: 12,    // px do jogo: mouse perto dela para (e só volta mais longe)
+    folgaGraus: 10,                  // folga para virar entre as 8 direções (não pisca entre duas)
+    base: 110, pino: 48,             // px do thumbstick no celular...
+    baseTablet: 130, pinoTablet: 56, // ...e em tela a partir de 700×700
+  },
   // pergunta surpresa (js/sistemas/surpresa.js): de 3 a 10 minutos de jogo livre, vale 2 estrelas de primeira
   surpresa: { minMinutos: 3, maxMinutos: 10, estrelas: 2, esperaLivreMs: 4000, tipos: ['escolha', 'vf', 'varias'] },
+  // versão nova no servidor de casa (js/sistemas/versao.js): confere o js/versao.json a cada `intervaloMs` e ao
+  // voltar para a aba; só acredita depois de ver a mudança 2 vezes (`confirmarMs` entre elas) e de `cacheMs` de
+  // aba aberta (o servidor guarda css/js em cache por 300 s); parada no mapa há `paradaMs`, o Claude avisa num
+  // balão de `avisoMs`, o jogo grava e recarrega `esperaMs` depois (depois do envio ao servidor, que sai em 1,8 s)
+  novidadeDias: 45,   // dias em que o selo "✨ Novo!" aparece num lugar novo (lugar.novidade)
+  versao: { intervaloMs: 10 * 60000, confirmarMs: 60000, cacheMs: 330000, paradaMs: 8000, avisoMs: 4500, esperaMs: 2500 },
   // acessórios das provas à venda na Loja (só depois de ganhar um da mesma prova)
   precoPremio: { comum: 25, raro: 40, lendario: 70 },
   // vozes naturais (gravadas por ferramentas/vozes/gerar-vozes.py)

@@ -52,7 +52,8 @@
       if (m.lugar.dentro) { deDentro.push(m); return; }
       var r = m.lugar.rect || Mapa.CLAREIRAS[k++ % Mapa.CLAREIRAS.length];
       var l = { id: 'materia:' + m.id, tipo: 'materia', materiaId: m.id, nome: m.lugar.nome,
-        sprite: m.lugar.sprite || 'torre', cores: m.lugar.cores, rect: r, porta: porta(r), placa: m.lugar.placa };
+        sprite: m.lugar.sprite || 'torre', cores: m.lugar.cores, rect: r, porta: porta(r), placa: m.lugar.placa,
+        novidade: m.lugar.novidade };
       if (m.lugar.porCima) porCima.push(l); else lugares.push(l);
     });
 
@@ -175,7 +176,8 @@
       var h = lugares.find(function (l) { return l.id === m.lugar.dentro; });
       if (!h) return;   // anfitrião inexistente: o validador acusa
       I.lugaresDentro.push({ id: 'materia:' + m.id, tipo: 'materia', materiaId: m.id, nome: m.lugar.nome,
-        dentro: h.id, interior: m.lugar.interior, rect: h.rect, porta: h.porta });
+        dentro: h.id, interior: m.lugar.interior, rect: h.rect, porta: h.porta,
+        andar: m.lugar.andar, anfitriaoNome: h.nome, novidade: m.lugar.novidade });
     });
     I.estatico = null;
   };

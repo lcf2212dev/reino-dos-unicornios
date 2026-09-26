@@ -52,7 +52,7 @@ function montar(opcoes = {}) {
   const trocar = opcoes.antigo ? { 'sistemas/progresso': path.join(opcoes.antigo, 'progresso.js'), 'sistemas/cuidados': path.join(opcoes.antigo, 'cuidados.js') } : {};
   Jogo.carregar(ctx, Jogo.scripts({
     // o progresso.js antigo (inteiro, de antes da divisão) entra sozinho no lugar das quatro partes de hoje
-    nomes: ['nucleo/config', 'nucleo/registros', 'nucleo/util', 'nucleo/eventos', 'personagens/unicornios'].concat(opcoes.antigo ? ['sistemas/progresso']
+    nomes: ['nucleo/config', 'nucleo/registros', 'nucleo/util', 'nucleo/eventos', 'nucleo/ambiente', 'personagens/unicornios'].concat(opcoes.antigo ? ['sistemas/progresso']
       : ['sistemas/progresso', 'sistemas/progresso-mescla', 'sistemas/progresso-nuvem', 'sistemas/progresso-regras'], ['sistemas/cuidados']),
     grupos: ['materias', 'provas'],
   }), { trocar });

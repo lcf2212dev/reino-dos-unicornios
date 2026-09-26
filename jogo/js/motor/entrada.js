@@ -54,7 +54,7 @@
       if (!g || e.pointerId !== g.id) return;
       if (!V.jogoAtivo || V.pausado || Cena.bloqueado()) return soltar();
       g.x = e.clientX; g.y = e.clientY;
-      if (!g.arrastando && Math.hypot(g.x - g.x0, g.y - g.y0) > (g.mouse ? LIMIAR_MOUSE : LIMIAR_TOQUE)) comecarArrasto();
+      if (!g.arrastando && Math.hypot(g.x - g.x0, g.y - g.y0) > num(g.mouse ? 'limiarMouse' : 'limiarToque')) comecarArrasto();
       if (g && g.arrastando && !g.mouse) moverPino();
     });
     function fim(e) {
@@ -84,10 +84,13 @@
   }
 
   /* ---------- mouse segurado e thumbstick do toque ---------- */
-  var LIMIAR_MOUSE = 6, LIMIAR_TOQUE = 12;   // px CSS: até aqui ainda é toque/clique rápido
-  var SEGURAR_MS = 300;                      // mouse parado segurando isso já segue o ponteiro
-  var ZONA_MORTA = 10;                       // px CSS do thumbstick sem andar
-  var PARA_PERTO = 6, VOLTA_LONGE = 12;      // px do jogo: mouse perto dela para (e só volta mais longe)
+  // números em Reino.config.controles, lidos na hora de usar (com os de sempre se faltar)
+  var PADRAO = { limiarMouse: 6, limiarToque: 12, segurarMs: 300, zonaMorta: 10, paraPerto: 6, voltaLonge: 12,
+    base: 110, pino: 48, baseTablet: 130, pinoTablet: 56 };
+  function num(k) {
+    var c = (Reino.config && Reino.config.controles) || {};
+    return typeof c[k] === 'number' ? c[k] : PADRAO[k];
+  }
   var g = null;                              // o gesto: um ponteiro por vez (pointerId)
   var caixa = null, base = null, pino = null;
 
@@ -95,6 +98,10 @@
     g.arrastando = true;
     J.parar();
     if (g.mouse) return;
+    // tamanhos do thumbstick (variáveis CSS de ui-hud.css); tablet na mesma condição do CSS
+    var tablet = window.matchMedia('(min-width: 700px) and (min-height: 700px)').matches;
+    caixa.style.setProperty('--cb', num(tablet ? 'baseTablet' : 'base') + 'px');
+    caixa.style.setProperty('--cp', num(tablet ? 'pinoTablet' : 'pino') + 'px');
     base.style.left = g.x0 + 'px'; base.style.top = g.y0 + 'px';
     caixa.hidden = false;
   }
@@ -113,7 +120,7 @@
   function direcaoLivre() {
     if (!g) return null;
     if (!g.arrastando) {
-      if (!g.mouse || performance.now() - g.t0 < SEGURAR_MS) return null;
+      if (!g.mouse || performance.now() - g.t0 < num('segurarMs')) return null;
       comecarArrasto();
     }
     var dx, dy, d;
@@ -123,11 +130,11 @@
       dy = cam.y + ((g.y - r.top) * V.dpr) / V.escala - (J.y - 8);
       d = Math.hypot(dx, dy);
       // perto do ponteiro ela para (não treme em volta dele)
-      if (g.parado ? d < VOLTA_LONGE : d < PARA_PERTO) { g.parado = true; return null; }
+      if (g.parado ? d < num('voltaLonge') : d < num('paraPerto')) { g.parado = true; return null; }
       g.parado = false;
     } else {
       dx = g.x - g.x0; dy = g.y - g.y0; d = Math.hypot(dx, dy);
-      if (d < ZONA_MORTA) return null;
+      if (d < num('zonaMorta')) return null;
     }
     return { x: dx / d, y: dy / d };
   }

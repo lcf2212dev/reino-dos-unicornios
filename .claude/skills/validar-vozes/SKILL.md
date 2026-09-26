@@ -25,4 +25,5 @@ Gravação, amostras e conferência: só quem integra (o orquestrador). NUNCA ab
 - Algarismo x extenso, "R$ 16" x "16 reais", "pro" x "para o", colmeia x coméia contam como iguais.
 - `✘` (frase de 3+ palavras): voz errada de verdade. Reescreva ou use `PRONUNCIA` no `listar-falas.js` e grave de novo.
 - `?` palavra solta (1–2 palavras, ex.: opções de desafio): não reprova; ouça o arquivo listado. Só regrave se soar errado.
-- Reconferir avulsos: `/tmp/reino-testes/venv-whisper/bin/python jogo/ferramentas/vozes/conferir-vozes.py --amostras arq.mp3=texto --modelo medium`.
+- Reconferir avulsos: `.vozes/venv-whisper/bin/python jogo/ferramentas/vozes/conferir-vozes.py --amostras arq.mp3=texto --modelo medium`
+  (sem esse venv: `uv run --with faster-whisper python jogo/ferramentas/vozes/conferir-vozes.py …`).

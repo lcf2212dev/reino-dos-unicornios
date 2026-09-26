@@ -1,8 +1,8 @@
 /* Observatório, 2º andar (NASA), parte 3 de 3: o Centro de Pesquisas Avançadas da NASA, 3 cômodos lado a lado —
    Hangar dos Foguetes (esquerda) | Sala de Controle (meio, com as escadas) | Laboratório de Experiências (direita).
    Só para brincar: curiosidades e experiências, sem pergunta, estrela, dinheiro ou save.
-   Escadas: desce para o térreo e sobe para o 3º andar (observatorio-3, se ele existir);
-   as chegadas estão em observatorio/andar2-escadas.js e andar3-escadas.js. */
+   Escadas: desce para o térreo e sobe para o 3º andar (observatorio-3). Quem chega aparece ao lado da escada
+   que volta para o andar de onde veio (`chegar`; padrão: logo abaixo). */
 (function () {
   var R = window.Reino;
   var ELENCO = (R.NPCs && R.NPCs.ELENCO) || {};
@@ -88,10 +88,12 @@
     ])
   );
 
-  // escadas: desce para o térreo; sobe para o 3º andar só quando ele existe (observatorio/andar3-escadas.js)
-  var CH = S.escadasNasa;
-  var escadas = [{ x: CTL.x + 6, y: 12, para: 'observatorio', chegada: { x: 26, y: 4 }, olhar: { x: 0, y: 1 }, sentido: 'desce' }];
-  if (S.escadasLab) escadas.push({ x: CH.chegadaDeCima.x, y: CH.chegadaDeCima.y - 1, para: 'observatorio-3', chegada: S.escadasLab.chegadaDeBaixo, olhar: { x: 0, y: 1 }, sentido: 'sobe' });
+  // escadas: desce para o térreo (quem sobe de lá chega à direita do vão, (22, 12)); sobe para o 3º andar
+  // (quem desce de lá chega logo abaixo do arco, (26, 4))
+  var escadas = [
+    { x: CTL.x + 6, y: 12, para: 'observatorio', chegar: { x: 1, y: 0 }, olhar: { x: 0, y: 1 }, sentido: 'desce' },
+    { x: CTL.x + 11, y: 3, para: 'observatorio-3', olhar: { x: 0, y: 1 }, sentido: 'sobe' },
+  ];
 
   var AZULEJO = { piso: '#e6ecf6', piso2: '#d2dbea', detalhe: '#9fb4d8' };
   var PAREDE = { parede: '#e2e8f4', parede2: '#a8b8d4', rodape: N.azul, detalhe: N.ciano };

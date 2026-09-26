@@ -21,5 +21,5 @@ Contratos: `docs/contratos/interiores.md` e `docs/contratos/npcs-e-dialogo.md`.
 5. Lugar no mapa: `Reino.registrarLugar` com `menu` em `jogo/js/interiores/<p>/lugar.js` (receita
    `docs/receitas/predio-novo.md`); não edite `mundo/lugares.js`, `ui/lugares.js` nem `validar-interiores.js`.
    Confira: `npm run ver -- --previa interiores:<p>`, `npm run ver -- --ir <p>` e `npm run ver -- --tela lugares`.
-6. Vozes: skill `gravar-vozes`. Feche com a skill `validar-tudo` (inclui desempenho, se mexeu em desenho:
+6. Vozes: liste as falas novas no retorno; quem integra grava com a skill `gravar-vozes`. Feche com a skill `validar-tudo` (inclui desempenho, se mexeu em desenho:
    `npm run e2e -- --desempenho`).

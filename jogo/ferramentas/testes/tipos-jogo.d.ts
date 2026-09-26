@@ -627,7 +627,10 @@ interface InteriorDef {
 interface Escada extends Ponto {
   /** id do interior do outro andar */
   para: string;
-  chegada: Ponto;
+  /** de que lado desta escada ela aparece quando vem do andar `para` (um passo; padrão { x: 0, y: 1 }) */
+  chegar?: Ponto;
+  /** (antigo) onde ela chega lá; sem ela, chega ao lado da escada de lá que volta para cá (o `chegar` dela) */
+  chegada?: Ponto;
   /** para onde ela olha ao chegar */
   olhar: Ponto;
   sentido: 'sobe' | 'desce';

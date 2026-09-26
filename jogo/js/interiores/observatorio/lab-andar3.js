@@ -175,9 +175,7 @@
     ])
   );
 
-  // escada que desce ao 2º andar (vão no chão do Hall); a chegada lá embaixo é do andar2-escadas.js
-  var chegadaNasa = (S.escadasNasa && S.escadasNasa.chegadaDeCima) || { x: 2, y: 3 };
-
+  // escada que desce ao 2º andar (vão no chão do Hall): quem sobe de lá chega logo acima do vão (18, 22)
   R.registrarInterior({
     id: 'observatorio-3',
     lugar: 'materia:ciencias',
@@ -185,8 +183,8 @@
     entrada: true,
     pacote: 'interior-observatorio',
     tamanho: { w: 37, h: 25 },
-    spawn: { x: S.escadasLab.chegadaDeBaixo.x, y: S.escadasLab.chegadaDeBaixo.y },
-    escadas: [{ x: 18, y: 23, para: 'observatorio-2', chegada: chegadaNasa, olhar: { x: 0, y: 1 }, sentido: 'desce' }],
+    spawn: { x: 18, y: 22 },
+    escadas: [{ x: 18, y: 23, para: 'observatorio-2', chegar: { x: 0, y: -1 }, olhar: { x: 0, y: 1 }, sentido: 'desce' }],
     comodos: [
       { id: 'hall', nome: 'Hall', placa: 'Hall • Laboratório de Ciências', rect: { x: 13, y: 13, w: 11, h: 11 },
         piso: 'mosaico', parede: 'azulejo', paleta: { piso: '#f4fbff', piso2: '#bff0ea', detalhe: AGUA, parede: '#f4fbff', parede2: '#d6eef8', rodape: '#1f9a92' } },

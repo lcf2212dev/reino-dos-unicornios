@@ -15,8 +15,7 @@ Este arquivo é o índice. Cada pasta principal tem um `CLAUDE.md` com as regras
 ## Comandos
 - Não apague temporários: deixe-os em `/tmp` (o sistema limpa ao reiniciar). Assim nenhum comando para esperando confirmação do Leandro.
 - Se precisar apagar, só com o caminho escrito por extenso: `rm -rf /tmp/val1/jogo`. Alvo que só se conhece na hora de rodar faz o Claude Code parar e perguntar.
-- Nunca use `rm` com alvo vindo de `$(...)`. Se for inevitável, leia o caminho para uma variável e use guarda:
-  `d=$(cat arquivo.txt); rm -rf "${d:?}"`
+- Nunca use `rm` com alvo vindo de variável ou de `$(...)`, nem com guarda. Se for inevitável, peça ao Leandro.
 
 ## O progresso da Mariana é intocável
 - Ele vive em 3 lugares: o servidor de casa (container `reino-unicornios`, porta 80,
@@ -44,7 +43,17 @@ Este arquivo é o índice. Cada pasta principal tem um `CLAUDE.md` com as regras
 - `npm run index` — refaz o `jogo/index.html` a partir do manifesto.
 - `npm run vozes` — lista as falas, grava as novas e empacota (`jogo/js/voz/`).
 - `npm run vozes-elenco` — confere as vozes dos personagens (parecida com o Claude, iguais no prédio, gênero, nome).
-- `npm run artifact` — monta a página do artifact em `/tmp/reino-testes/artifact/` (nunca publica).
+- `npm run artifact` — monta a página do artifact em `/tmp/reino-testes/artifact/<data>/`, em lotes de até 250 arquivos
+  (nunca publica); `-- --desde publicado` só o que mudou desde `jogo/ferramentas/artifact-publicado.txt`; publicar: skill
+  `publicar-artifact`, só com pedido do Leandro.
+- `npm run versao` — grava `jogo/js/versao.json` (as abas do servidor de casa se atualizam sozinhas; o `index` também grava).
+- `npm run worktree -- <tema> [--material <Pasta>]` — worktree da main em `/home/leandro/reino-<tema>`, `node_modules` por
+  link, copia a pasta de material não rastreada.
+- `npm run material -- <Pasta> [--folha]` — cópias reduzidas dos prints em `/tmp/reino-testes/material/<pasta>/` (+ índice).
+- `npm run integrar -- <branch|worktree>…` — integração linear numa worktree nova (cherry-pick / `apply --3way`), index,
+  test, e2e e colisões; `--commit`, `--trocar-base`, `--merge`, `--push` só com autorização escrita do Leandro (skill
+  `entregar`).
+- `npm run e2e -- --trocar-base <hash> "<descrição>"` — troca a base das referências (só quem integra).
 - `npm run tamanho` — código até 420 linhas, dados até 800.
 - `npm run tipos` — TypeScript confere os arquivos anotados com JSDoc (lista em `jogo/ferramentas/testes/tipos.json`;
   as formas em `jogo/ferramentas/testes/tipos-jogo.d.ts`; as das APIs de extensão em `tipos-extensoes.d.ts`).
@@ -84,15 +93,17 @@ docs/                      ARQUITETURA.md, contratos/, receitas/, decisoes/
 - `jogo/js/voz/*.js` (pacotes de áudio, enormes; nomes fixos).
 - `jogo/ferramentas/gerado/**` (`falas.json`, `vozes-indice.json`, `vozes-cache/`).
 - `jogo/index.html`: gerado do `jogo/js/manifesto.js`. Mude o manifesto e rode `npm run index`.
+- `.vozes/` (ambiente do transcritor e temporários das vozes; ignorado pelo git).
 
 ## Fluxo de trabalho
 1. Worktree nova a partir da ponta:
-   `git worktree add /home/leandro/reino-<tema> -b feat/<tema> main` (ou a branch de integração em curso).
+   `npm run worktree -- <tema> [--material <Pasta>]` (ou `git worktree add /home/leandro/reino-<tema> -b feat/<tema> main`).
 2. Para o Playwright, `node_modules` pode ser um link para um já instalado. Nunca `git add` desse link.
 3. `npm run ver` para ver o jogo (ex.: `npm run ver -- --ir petshop`; em script, `abrirCenario`).
 4. Feature nova: comece por `npm run novo -- <tipo> <id>` (preencha os `(preencher)`); leia antes o contrato do assunto.
 5. `npm test` e `npm run e2e` (compara com as referências). Diferença fora do que a receita espera reprova.
-6. Commit na branch, em português, no estilo do histórico: `Reino dos Unicórnios: <o que mudou>`.
+6. Sem commit nas frentes: o trabalho fica na worktree. Quem integra (o orquestrador, com autorização do Leandro)
+   faz os commits no estilo `Reino dos Unicórnios: <o que mudou>`.
 7. Sem merge nem push sem o Leandro.
 
 ## Onde está o resto
@@ -103,4 +114,4 @@ docs/                      ARQUITETURA.md, contratos/, receitas/, decisoes/
 - Guia do Leandro (o que o jogo faz, números que dá para mudar): `COMO-USAR.md`.
 - Pedido de novidade do Leandro: modelo em `PEDIDO-DE-FEATURE.md`, seguido pela skill nova-feature.
 - Skills do projeto: `.claude/skills/` (preparar-pedido, nova-feature, nova-materia, nova-prova, novo-predio,
-  gravar-vozes, validar-vozes, validar-tudo, servidor-de-teste).
+  gravar-vozes, validar-vozes, validar-tudo, servidor-de-teste, orquestrar-frentes, entregar, publicar-artifact).

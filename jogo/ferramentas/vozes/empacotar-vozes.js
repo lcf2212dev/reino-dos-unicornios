@@ -40,13 +40,19 @@ if (faltando.length) {
 // apaga pacotes antigos que não existem mais (só em js/voz do jogo; na --saida nada é apagado)
 if (saida === VOZ_JOGO) fs.readdirSync(saida).filter((a) => a.endsWith('.js') && !pacotes[a.replace(/\.js$/, '')]).forEach((a) => fs.unlinkSync(path.join(saida, a)));
 
-let total = 0;
+let total = 0, reescritos = 0, iguais = 0;
 Object.keys(pacotes).sort().forEach((p) => {
+  // chaves em ordem alfabética: a ordem do falas.json não muda o pacote
+  const ordenado = {};
+  Object.keys(pacotes[p]).sort().forEach((k) => { ordenado[k] = pacotes[p][k]; });
   // o cabeçalho cita o caminho antigo da ferramenta de propósito: mudar o texto mudaria os pacotes já gravados
   const conteudo = '/* vozes gravadas — gerado por ferramentas/empacotar-vozes.js, não editar */\n'
-    + 'Reino.Voz.registrar(' + JSON.stringify(p) + ',' + JSON.stringify(pacotes[p]) + ');\n';
-  fs.writeFileSync(path.join(saida, p + '.js'), conteudo);
+    + 'Reino.Voz.registrar(' + JSON.stringify(p) + ',' + JSON.stringify(ordenado) + ');\n';
+  // pacote igual não é regravado (nem republicado no artifact)
+  const arq = path.join(saida, p + '.js');
+  if (fs.existsSync(arq) && fs.readFileSync(arq, 'utf8') === conteudo) iguais++;
+  else { fs.writeFileSync(arq, conteudo); reescritos++; }
   total += conteudo.length;
   console.log(`  js/voz/${p}.js: ${Object.keys(pacotes[p]).length} falas, ${(conteudo.length / 1048576).toFixed(2)} MB`);
 });
-console.log(`✔ ${Object.keys(pacotes).length} pacotes, ${(total / 1048576).toFixed(1)} MB no total`);
+console.log(`✔ ${Object.keys(pacotes).length} pacotes, ${(total / 1048576).toFixed(1)} MB no total; ${reescritos} reescritos, ${iguais} iguais`);

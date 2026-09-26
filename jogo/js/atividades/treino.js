@@ -41,14 +41,14 @@
     function treinavel(d) { return D.TREINAVEIS.indexOf(d.tipo) >= 0 && !d.livre; }
     materia.salas.forEach(function (s) { s.desafios.forEach(function (d) { if (treinavel(d)) todos.push(d); }); });
     // pega de todas as salas, de forma equilibrada
-    var porSala = materia.salas.map(function (s) { return U.embaralhar(s.desafios.filter(treinavel)); });
+    var porSala = materia.salas.map(function (s) { return U.embaralhar(s.desafios.filter(treinavel), 'treino:' + s.id); });
     var lista = [], i = 0;
     while (lista.length < Reino.config.perguntasTreino && lista.length < todos.length) {
       var s = porSala[i % porSala.length];
       if (s.length) lista.push(s.shift());
       i++;
     }
-    return U.embaralhar(lista);
+    return U.embaralhar(lista, 'treino:' + materia.id);
   }
 
   // Ritual da Calma: 3 respirações com o balão de arco-íris
@@ -105,7 +105,7 @@
     var P = Reino.Progresso, est = P.estado();
     var questoes = sortearQuestoes(materia);
     var respostas = questoes.map(function () { return null; });
-    var ordens = questoes.map(function (d) { return d.opcoes ? U.embaralhar(d.opcoes.map(function (_, i) { return i; })) : null; });
+    var ordens = questoes.map(function (d) { return d.opcoes ? U.embaralhar(d.opcoes.map(function (_, i) { return i; }), ['treino-ordem', d]) : null; });
     var revisadas = questoes.map(function () { return false; });
     var atual = 0, fase = 'ritual';
 

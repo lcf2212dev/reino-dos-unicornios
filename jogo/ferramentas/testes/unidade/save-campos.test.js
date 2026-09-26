@@ -200,7 +200,7 @@ test('NOMES_DO_SAVE (a lista fixa que registrarCampo recusa) bate com as chaves 
 test('registrarCampo funciona no Node sem PA (ferramentas carregam os node: true sem pixel art)', () => {
   const Jogo = require('../../jogo-no-node');
   const ctx = Jogo.contexto({ console, Math, Date, JSON, localStorage: { getItem() { return null; }, setItem() {}, removeItem() {} } });
-  Jogo.carregar(ctx, Jogo.scripts({ nomes: ['nucleo/config', 'nucleo/registros', 'nucleo/util', 'nucleo/eventos',
+  Jogo.carregar(ctx, Jogo.scripts({ nomes: ['nucleo/config', 'nucleo/registros', 'nucleo/util', 'nucleo/eventos', 'nucleo/ambiente',
     'sistemas/progresso', 'sistemas/progresso-mescla', 'sistemas/progresso-nuvem', 'sistemas/progresso-regras', 'sistemas/progresso-campos'] }));
   assert.strictEqual(ctx.PA, undefined);
   ctx.Reino.Progresso.registrarCampo('semPa', { padrao: () => 0, mesclar: 'maior', novoCiclo: 'mantem' });

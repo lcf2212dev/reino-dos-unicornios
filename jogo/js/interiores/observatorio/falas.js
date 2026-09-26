@@ -6,9 +6,8 @@
    Reino.Observatorio sorteia sem repetir na sessão (a memória fica só aqui, nada vai para o save). */
 (function () {
   var R = window.Reino;
-  R.FALAS_INTERIORES = R.FALAS_INTERIORES || {};
-
-  var OBS = R.FALAS_INTERIORES.observatorio = {
+  // a base do prédio; nasa-falas.js e lab-falas.js juntam as partes deles (Reino.falasDoPredio)
+  var OBS = R.falasDoPredio('observatorio', {
     npcs: {
       // a astrônoma, guia do Observatório: conta curiosidades (voz npc-vega)
       vega: {
@@ -243,7 +242,7 @@
     ],
 
     extras: [],
-  };
+  });
 
   // ---- extras: cada página falada fora do balão do NPC (curiosidades: Vega; piadas: Cosmo) ----
   // montado aqui no fim, depois das listas; o orquestrador acrescenta curiosidades acima.

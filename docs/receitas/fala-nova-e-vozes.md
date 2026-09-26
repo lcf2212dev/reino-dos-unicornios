@@ -55,6 +55,10 @@ npm run vozes    # listar → gravar (só o que falta) → empacotar → conferi
   ouvido" (`?`, com o arquivo), sem reprovar. Algarismo x extenso, "R$ N" x "N reais" e "pro" x "para o" não
   contam como erro. Voz embolada: reescreva a frase (`licoes-de-voz.md`) ou acrescente a pronúncia em `listar-falas.js` (`PRONUNCIA`).
 - Precisa de internet (edge-tts), `uv` e `ffmpeg`.
+- O transcritor (faster-whisper) roda pelo `.vozes/venv-whisper` se existir; senão por `uv run --with faster-whisper`;
+  sem `uv`, o `npm run vozes` cria o venv em `.vozes/` (baixa pacotes). A cópia do índice de antes e os temporários
+  das amostras também ficam em `.vozes/` (ignorado pelo git; fora do /tmp, que é memória). O modelo fica em
+  `~/.cache/huggingface`.
 
 ## Validadores
 ```

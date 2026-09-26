@@ -27,8 +27,8 @@
     var idx = pecas.map(function (_, i) { return i; });
     var palavras = it.opcoes.map(function (o) { return letrasDe(o).join(''); });
     function entrega(m) { var s = m.map(function (i) { return pecas[i]; }).join(''); return palavras.some(function (p) { return s.indexOf(p) === 0; }); }
-    var m = U.embaralhar(idx), tentativas = 0;
-    while (pecas.length > 2 && entrega(m) && tentativas++ < 20) m = U.embaralhar(idx);
+    var m = U.embaralhar(idx, ['copiar', it]), tentativas = 0;
+    while (pecas.length > 2 && entrega(m) && tentativas++ < 20) m = U.embaralhar(idx, ['copiar', it]);
     return m;
   };
   function copiaCerta(it, v) {

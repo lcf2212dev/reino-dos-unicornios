@@ -52,6 +52,12 @@ Personagens: `npcs-e-dialogo.md`. Prédios: `interiores.md`. Vozes: `som-musica-
    aparece no anfitrião. `validar-interiores.js` acusa anfitrião ou andar inexistente. Gerador:
    `npm run novo -- materia <m> --nome … --emoji … --dentro <lugar> --interior <id>`. Ex.: Ciências
    (`dentro: 'observatorio'`, `interior: 'observatorio-3'`).
+   - `andar: '3º andar'` (opcional, só com `dentro`): a linha do menu Lugares diz "No 3º andar do Observatório",
+     com o emoji do anfitrião (sem `andar`: "Dentro do Observatório"). `mapa.js` copia `andar` e `anfitriaoNome`.
+   - `novidade: 'AAAA-MM-DD'` (opcional, matéria ou `Reino.registrarLugar`): selo "✨ Novo!" (aviso `tipo: 'novo'`)
+     no menu Lugares enquanto ela não entrou e a data tem menos de `config.novidadeDias` dias (padrão 45).
+     Visita = entrar no interior ou abrir a tela do lugar; fica no campo `visitados` do save
+     (`sistemas/visitados.js`, `Reino.Novidades.ehNovo(lugar)`). O `npm run novo` (matéria e prédio) põe a data de hoje.
 
 ## 3. Tipos de desafio e campos
 1. Tipos: escolha, vf, varias, ligar, ordenar, frase, separar, vfLista, completar, copiar, memoria, desenho.

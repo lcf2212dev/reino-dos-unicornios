@@ -6,7 +6,7 @@
   var montar = function (d, opts) {
     var grupo = {}; // item -> 0/1
     var escolhido = null;
-    var ordem = U.embaralhar(d.itens.map(function (_, i) { return i; }));
+    var ordem = U.embaralhar(d.itens.map(function (_, i) { return i; }), ['separar', d]);
     var wrap = el('div.separar');
     var pool = el('div.separar-monte');
     var baus = d.grupos.map(function (g, gi) {

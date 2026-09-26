@@ -42,7 +42,7 @@ Aqui não se escreve código: só se lê o jogo e se escreve o pedido.
 8. **Construir**, só se ele disser para seguir: para cada pedido, a skill `nova-feature` com ele. Uma worktree por
    feature (`/home/leandro/reino-<nome>`, branch `feat/<nome>`); features independentes em agentes paralelos, até o
    teto do `CLAUDE.md` da raiz. Cada worktree guarda uma cópia do seu pedido em `pedidos/AAAA-MM-DD-<nome>.md`, que
-   entra no commit da feature (quando o campo 15 marcar commit).
+   entra no commit da feature (feito por quem integra, quando o campo 15 marcar commit).
 
 ## Exemplo (2026-09-26, resumido)
 Texto do Leandro: Ciências no 3º andar do Observatório e o 2º andar como centro da NASA só de diversão; um lugar para

@@ -87,3 +87,18 @@ test('cópia da documentação de verdade: a referência plantada vira um erro n
   const novos = depois.erros.filter((l) => !antes.erros.includes(l));
   assert.deepStrictEqual(novos, ['✘ docs/plantado.md:4: caminho não existe: jogo/js/nucleo/nao-existe.js'], depois.saida);
 });
+
+test('pasta de material nova na raiz (Geografia/): vira raiz de caminho sem lista fixa', () => {
+  const raiz = pastaNova('material');
+  escrever(raiz, 'package.json', JSON.stringify({ scripts: {} }));
+  escrever(raiz, 'Geografia/prints/mapa.png', 'x');
+  escrever(raiz, 'docs/guia.md', [
+    '# Guia',                                            // 1
+    'Bom: `Geografia/prints`, `Geografia/`.',            // 2
+    'Ruim: `Geografia/sumiu`.',                          // 3
+    'Não é caminho: `Ciencias/sumiu` (pasta que não existe no disco).', // 4
+  ].join('\n') + '\n');
+  const r = rodar(raiz);
+  assert.strictEqual(r.status, 1, r.saida);
+  assert.deepStrictEqual(r.erros.map((l) => l.split(': ')[0].slice(2)), ['docs/guia.md:3'], r.saida);
+});

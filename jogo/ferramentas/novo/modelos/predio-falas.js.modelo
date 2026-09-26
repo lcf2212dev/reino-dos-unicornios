@@ -1,8 +1,8 @@
 /* {{nome}}: tudo o que a pessoa de dentro e os objetos dizem (gravado com a voz de cada um).
    Esqueleto do `npm run novo`: troque cada marcador de preencher por falas de verdade (o validador recusa o marcador).
-   Cada página com até 30 letras (sem contar «» e emoji) e frases de 3+ palavras. */
-Reino.FALAS_INTERIORES = Reino.FALAS_INTERIORES || {};
-Reino.FALAS_INTERIORES['{{id}}'] = {
+   Cada página com até 30 letras (sem contar «» e emoji) e frases de 3+ palavras.
+   Falas demais para um arquivo? Outra parte chama Reino.falasDoPredio('{{id}}', { ... }) (qualquer ordem de carga). */
+Reino.falasDoPredio('{{id}}', {
   // as pessoas de dentro: npm run novo -- personagem <id> --predio {{id}} (as falas delas ficam em {{id}}/personagens.js)
   npcs: {},
   objetos: {
@@ -10,4 +10,4 @@ Reino.FALAS_INTERIORES['{{id}}'] = {
     'pedestal': ['(preencher) o que está no pedestal?'],
     'bebedouro': ['(preencher) uma fala do bebedouro.'],
   },
-};
+});

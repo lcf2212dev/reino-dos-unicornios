@@ -11,11 +11,16 @@
 //                            o tamanho já tem todas as pedidas; a base é a completa (capturada antes, em cache).
 //   … --paralelo N           abas ao mesmo tempo (padrão: metade das CPUs, até 12). Cada grupo de cenas (e cada
 //                            lote de interiores) abre a própria aba com servidor e banco próprios.
+// Relatório: no topo, "Resumo: N imagens diferentes — só HUD a · só dock b · só balão c · outras d" por tamanho
+// (regiões em referencias-regioes.js); as de região conhecida só como contagem + 5 nomes, as "outras" na lista
+// com as caixas (px CSS). O resumo vai também para e2e-<data>/resumo.json.
 // Diferença em imagem: o relatório dá o caminho da base, do atual e de e2e-<data>/diferencas/<tamanho>/<nome>.png
 // (a imagem atual apagada com os pixels diferentes em magenta).
 // Tempo: o piso é a fila mapa + interiores de cada tamanho (uma aba só, ver referencias.js); REINO_TEMPOS=1
 // mostra quanto levou cada grupo.
 //   … --manter               guarda a captura do atual mesmo quando dá idêntico (sem ele, idêntico = apagada)
+//   … --trocar-base <hash> "<descrição>"   só troca a base (trocar-base.js: commit ancestral de HEAD, comentários
+//                            intactos, "# <curto> = <descrição>" acima do hash, grava atômico, mostra o diff; sem commit)
 //   … --podar                só poda e sai: e2e-* com mais de 1 h e ref-<base>/…-h<hash> de harness que não é o
 //                            atual nem o da main (h83b7a60d); lista antes o que apaga e quanto libera
 // Disco: abaixo de 1,5 GB livres o e2e nem começa (diz o que podar). A pasta é /tmp/reino-testes ou a de
@@ -128,7 +133,7 @@ async function e2e(op) {
     await capAtual(faltam);
   } else [ref] = await Promise.all([refBase(base, raizBase, op), capAtual()]);
   console.log(`• comparando base ${base.curto} × atual (${op.so}${op.filtro ? `; só /${op.filtro.source}/` : ''})`);
-  let ok = comparar(ref, atual, { filtro: op.filtro });
+  let ok = comparar(ref, atual, { filtro: op.filtro }).ok;
   if (op.desempenho) {
     console.log('• desempenho (A/B intercalado, CPU 4× mais lenta; base = referência)');
     const { comparar: compararDesempenho } = require('./desempenho');
@@ -152,7 +157,11 @@ if (require.main === module) {
   if (soDados && cenas) { console.error('✘ --cenas é só para imagens; --so-dados não tem imagens'); process.exit(2); }
   const so = soDados ? 'dados,vozes' : cenas ? 'imagens' : 'dados,imagens,vozes';
   const paralelo = arg('--paralelo') ? Number(arg('--paralelo')) : undefined;
+  if (process.argv.includes('--trocar-base')) {
+    try { require('./trocar-base').trocarBase(arg('--trocar-base'), process.argv[process.argv.indexOf('--trocar-base') + 2]); process.exit(0); }
+    catch (e) { console.error('✘ ' + e.message); process.exit(2); }
+  }
   if (process.argv.includes('--podar')) process.exit(podar() ? 0 : 1);
-  e2e({ manter: process.argv.includes('--manter'), base: arg('--base'), raiz: arg('--raiz'), tamanhos: arg('--tamanhos'), so, filtro: cenas ? new RegExp(cenas) : undefined, paralelo, desempenho: process.argv.includes('--desempenho') })
+  require('./trava').pegar('npm run e2e').then(() => e2e({ manter: process.argv.includes('--manter'), base: arg('--base'), raiz: arg('--raiz'), tamanhos: arg('--tamanhos'), so, filtro: cenas ? new RegExp(cenas) : undefined, paralelo, desempenho: process.argv.includes('--desempenho') }))
     .then((ok) => process.exit(ok ? 0 : 1), (e) => { console.error('✘ ' + (e && e.stack || e)); process.exit(1); });
 }

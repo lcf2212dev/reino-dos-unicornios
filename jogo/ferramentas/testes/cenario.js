@@ -17,6 +17,8 @@ const { PASTA_TESTES } = require('./guardas');
 // o avancar do e2e: congelado, pula a pintura dos passos intermediários (e espera os pacotes de voz)
 const { avancar: avancarSemPintura } = require('./referencias-pagina');
 const { mostrarDesafio } = require('./referencias-cenas');
+const { telaEspecial } = require('./cenario-telas');
+const { arrastar, segurar } = require('./cenario-ponteiro');
 
 const PASTA_VER = path.join(PASTA_TESTES, 'ver');
 
@@ -136,6 +138,8 @@ async function abrirCenario(op = {}) {
       },
       // tela por cima do mapa: 'loja', 'sala:h1', 'prova:historia-3bim', 'treino:historia', 'materia:historia', 'livro:…'
       async tela(nome) {
+        // foto, album:<n>, prova:<id>:<n> (cenario-telas.js)
+        if (await telaEspecial(c, nome)) return;
         const [tipo, id] = nome.split(/:(.+)/);
         // um desafio certo de uma sala (a missão sorteia 6 de 12): a mesma tela das fotos do e2e
         if (tipo === 'desafio' && id) {
@@ -169,6 +173,9 @@ async function abrirCenario(op = {}) {
         if (!ok) throw new Error(`nada para tocar: "${alvo}"`);
         await avancar(400);
       },
+      // gestos de verdade (cenario-ponteiro.js): 'x1,y1,x2,y2[,ms][,toque|mouse]' e '<seletor|x,y>,ms'
+      arrastar: (texto) => arrastar(c, texto),
+      segurar: (texto) => segurar(c, texto),
       async tecla(k) { await page.keyboard.press(k); await avancar(200); },
       // foto em <pasta>/<nome>.png; recorte [x,y,w,h] em px CSS; ampliar n (vizinho mais próximo)
       async foto(nome, fop = {}) {

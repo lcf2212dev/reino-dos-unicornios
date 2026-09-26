@@ -166,8 +166,8 @@
     tamanho: { w: 45, h: 15 },
     saida: { x: CUP.x + 6, y: 13 },
     spawn: { x: CUP.x + 6, y: 12 },
-    // sobe para o 2º andar (NASA): arco no fundo da Cúpula, à direita; quem desce chega logo abaixo (26, 4)
-    escadas: [{ x: CUP.x + 11, y: 3, para: 'observatorio-2', chegada: S.escadasNasa.chegadaDeBaixo, olhar: { x: 0, y: 1 }, sentido: 'sobe' }],
+    // sobe para o 2º andar (NASA): arco no fundo da Cúpula, à direita; quem desce de lá chega logo abaixo (26, 4)
+    escadas: [{ x: CUP.x + 11, y: 3, para: 'observatorio-2', olhar: { x: 0, y: 1 }, sentido: 'sobe' }],
     comodos: [
       { id: 'cupula', nome: 'Cúpula do Telescópio', placa: 'Cúpula do Telescópio', rect: { x: CUP.x, y: CUP.y, w: 13, h: 13 },
         piso: 'observatorio-metal', parede: 'observatorio-noite' },

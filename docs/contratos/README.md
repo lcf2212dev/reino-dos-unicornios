@@ -23,6 +23,8 @@ A origem de cada regra (os 4 contratos antigos da raiz) está em `rastreio.md`.
 2. Sem módulos ES, sem bundler, sem build. Scripts clássicos, carregados em ordem.
 3. Sem `fetch` de arquivo local.
 4. O servidor só entrega `index.html`, `css/<arquivo>` (CSS sem subpasta) e `js/**`.
+4a. Ambiente (artifact, `file:`, https, servidor de casa, toque, compartilhar, baixar): só por `Reino.ambiente`
+   (`js/nucleo/ambiente.js`); não repita a checagem de `window.claude` nem de `navigator.share`.
 5. As vozes são achadas pelo TEXTO EXATO da fala e agrupadas em pacotes de nome fixo (`js/voz/<pacote>.js`).
 6. Save: `chaveSave`, formato do estado, regras de `P.mesclar` e da sincronização só mudam com muito
    cuidado e testes (ver `save-e-mescla.md`).
@@ -92,6 +94,10 @@ Resumo (detalhes em `save-e-mescla.md` §9):
 7. Temporários ficam em `/tmp` e não são apagados; `rm` só com caminho literal, nunca com alvo de `$(...)`.
 8. Depuração: `?debug=1` → `window.__reino` (`jogo/js/debug.js`); modo determinístico: `?debug=1&congelar=1`
    (`jogo/js/nucleo/congelar.js`, `__congelar.avancar(ms)`).
+   Nele, `U.embaralhar(arr, chave)`/`U.sortear(arr, chave)` sorteiam por `Reino.sorteioDaChave(chave)` (semente =
+   FNV-1a da chave + nº de usos dela; não gasta o `Math.random` global): desafio, sala ou treino novo não muda a ordem
+   das outras telas. Quem sorteia conteúdo passa a chave (`'sortear:' + sala.id + ...`, `['escolha', d]`). Sem
+   congelar (o jogo de verdade), a chave é ignorada e tudo continua com `Math.random`.
 9. "Page crashed"/"Target crashed" no Chromium: confira `df -h /tmp`; se estiver cheio, rode com
    `TMPDIR=/dev/shm/<pasta>` (não apague temporários de outros). A pasta de testes pode ir junto:
    `REINO_TESTES=/dev/shm/reino-testes` (só dentro de `/tmp` ou `/dev/shm`; `guardas.js`).

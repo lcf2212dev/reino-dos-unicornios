@@ -5,6 +5,7 @@ Reino.registrarLugar({
   id: '{{id}}', nome: '{{nome}}', sprite: '{{id}}', placa: 'acima',
   rect: {{rect}},{{comentarioRect}}
   caminho: {{caminho}},
+  novidade: '{{hoje}}',   // selo "✨ Novo!" no menu Lugares até ela entrar (ou config.novidadeDias dias)
   menu: {
     emoji: '{{emoji}}',
     // a linha de baixo no menu Lugares

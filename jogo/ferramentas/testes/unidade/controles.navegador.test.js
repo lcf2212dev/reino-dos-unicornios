@@ -1,7 +1,7 @@
 // Teste de NAVEGADOR (Chromium, servidor de TESTE, save sintético, modo determinístico ?debug=1&congelar=1):
 // os controles de andar (motor/entrada.js). Mouse segurado segue o ponteiro e soltar para; clique rápido
 // ainda anda até o ponto; dedo arrastado na metade esquerda mostra o thumbstick e anda; toque rápido na
-// metade esquerda ainda anda até o ponto; as setas do teclado ainda andam.
+// metade esquerda ainda anda até o ponto; as setas do teclado ainda andam; config.controles.zonaMorta vale.
 // Os ponteiros são PointerEvents sintéticos no canvas (mouse no notebook, toque no celular).
 // Rodar (da raiz): node --test jogo/ferramentas/testes/unidade/controles.navegador.test.js   (tudo: npm test)
 const { test } = require('node:test');
@@ -128,6 +128,21 @@ test('controles: mouse segurado, clique rápido, thumbstick, toque rápido e tec
     await avancar(page, 3000);
     e4 = await ela(page);
     assert.deepStrictEqual([e4.tx, e4.ty], [alvo.x, alvo.y], 'o toque rápido leva até o tile tocado');
+
+    // config.controles.zonaMorta maior: o mesmo arrasto de 40 px não anda mais; 60 px anda
+    await page.evaluate(() => { Reino.config.controles.zonaMorta = 50; });
+    const arrastar = async (dx, id) => {
+      const a0 = await ela(page);
+      await page.evaluate((q) => { window.__pt('pointerdown', 'touch', q.x, q.y, q.id); window.__pt('pointermove', 'touch', q.x + q.dx, q.y, q.id); }, { ...ini, dx, id });
+      await avancar(page, 500);
+      const a1 = await ela(page);
+      await page.evaluate((q) => { window.__pt('pointerup', 'touch', q.x + q.dx, q.y, q.id); }, { ...ini, dx, id });
+      await avancar(page, 100);
+      return a1.x - a0.x;
+    };
+    assert.strictEqual(await arrastar(40, 10), 0, 'zona morta de 50 px: arrasto de 40 px não anda');
+    assert.ok((await arrastar(60, 11)) > 5, 'zona morta de 50 px: arrasto de 60 px anda');
+    await page.evaluate(() => { Reino.config.controles.zonaMorta = 10; });
     assert.deepStrictEqual(page.__erros, []);
     await cel.context.close();
   } finally {

@@ -9,6 +9,7 @@ const Jogo = require('../jogo-no-node');
 const LugaresDoMapa = require('./lugares-do-mapa');
 const Preencher = require('./preencher');
 const Extras = require('./interiores-extras');
+const Escadas = require('./validar-escadas');
 
 const iSo = process.argv.indexOf('--so');
 const SO = iSo >= 0 ? process.argv[iSo + 1] : null;
@@ -167,12 +168,6 @@ defs.forEach((d) => {
     const dest = porId.get(e.para);
     if (!checar(dest, `${o}: destino "${e.para}" não existe`)) return;
     checar(predio(dest.lugar) === predio(d.lugar), `${o}: destino "${e.para}" é de outro prédio`);
-    const gd = grades.get(e.para);
-    if (checar(e.chegada, `${o}: sem chegada`) && gd) {
-      checar(andavel(gd, e.chegada), `${o}: chegada (${e.chegada.x},${e.chegada.y}) em "${e.para}" não é andável`);
-      checar(!ehEscada(dest, e.chegada), `${o}: chegada em cima de escada em "${e.para}"`);
-      checar(!(dest.saida && dest.saida.x === e.chegada.x && dest.saida.y === e.chegada.y), `${o}: chegada em cima do tapete de saída`);
-    }
     if (e.olhar) checar(Math.abs(e.olhar.x) + Math.abs(e.olhar.y) > 0, `${o}: olhar vazio`);
     if (e.sentido) checar(['sobe', 'desce'].includes(e.sentido), `${o}: sentido deve ser 'sobe' ou 'desce'`);
   });
@@ -295,6 +290,9 @@ Object.keys(esperadas).filter(doSo).forEach((l) => {
   }
 });
 
+// escadas pareadas: par no destino e lado de chegada (validar-escadas.js)
+Escadas.checar({ Reino, defs, grades, erros, avisos });
+
 // alcançabilidade a partir do spawn da entrada, atravessando escadas
 const chave = (id, x, y) => id + ':' + x + ',' + y;
 Object.keys(porLugar).forEach((l) => {
@@ -307,10 +305,11 @@ Object.keys(porLugar).forEach((l) => {
   while (fila.length) {
     const [id, x, y] = fila.shift();
     const d = porId.get(id), g = grades.get(id);
-    const e = (d.escadas || []).find((e) => e.x === x && e.y === y);
-    if (e && e.chegada && grades.get(e.para)) {
-      const k = chave(e.para, e.chegada.x, e.chegada.y);
-      if (!visto.has(k)) { visto.add(k); fila.push([e.para, e.chegada.x, e.chegada.y]); }
+    const ie = (d.escadas || []).findIndex((e) => e.x === x && e.y === y), e = d.escadas && d.escadas[ie];
+    const c = e && Escadas.chegada(Reino, d, ie);
+    if (c && grades.get(e.para)) {
+      const k = chave(e.para, c.x, c.y);
+      if (!visto.has(k)) { visto.add(k); fila.push([e.para, c.x, c.y]); }
     }
     DIRS.forEach(([dx, dy]) => {
       const nx = x + dx, ny = y + dy;

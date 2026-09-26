@@ -8,7 +8,7 @@ Regras gerais (ambiente, convenções, testes): `README.md`.
 1. Onde está no código · 2. Cena ativa (`Reino.Cena`) · 3. Entrar e sair · 4. Transição em íris ·
 5. Pintor e ordem de desenho · 6. Interface de cena · 7. Jogador · 8. Câmera ·
 9. Mapa: placas, lugares e prédios · 10. Nadar no lago · 11. Desempenho · 12. Depuração · 13. Antes de mexer ·
-14. Módulos (sistemas)
+14. Módulos (sistemas) · 15. Versão nova: a aba se atualiza sozinha
 
 ## 1. Onde está no código
 - `jogo/js/motor/cena.js` — `Reino.Cena` (estado, entrar/sair, adaptador do mapa, ocupar/liberar, quadros).
@@ -35,7 +35,9 @@ Reino.Cena = {
   emTransicao() → bool
   entrar(lugarId) → Promise      // mapa → interior de entrada do lugar, com íris.
                                  // Lugar sem interior registrado: UI.abrirLugar(lugar) (painel antigo)
-  irPara(interiorId, chegada {x,y}, olhar {x,y}) → Promise   // interior → interior (escadas), com íris
+  irPara(interiorId, chegada {x,y}?, olhar {x,y}?, de?) → Promise   // interior → interior (escadas), com íris.
+                                 // Sem chegada: ao lado da escada de interiorId que volta para `de`
+                                 // (Interiores.chegadaVindoDe; interiores.md §3.1); sem ela, o spawn
   sair() → Promise               // interior → mapa, 1 tile abaixo da porta do lugar, olhando para baixo
   paraTela(wx, wy) → {x, y}      // px do jogo → px CSS da página (testes e toques)
   quadros: { media() → ms, ultimo }   // tempo de desenho por quadro (últimos ~120), para o debug
@@ -56,7 +58,9 @@ eventos (Reino.EVENTOS, jogo/js/nucleo/eventos.js):
 2. Dentro: ela aparece em `spawn` (1 tile acima do tapete de saída), de costas (`J.virar(0,-1)`).
 3. Sair: pisar no tapete, tocar nele ou Enter/Espaço em cima dele. Reaparece em `porta.x, porta.y + 1`,
    virada para baixo.
-4. Sem loop: `J.portaIgnorada` vale para porta, tapete e escada.
+4. Sem loop: `J.portaIgnorada` vale para porta, tapete e escada. Escada: o gatilho leva `para`, `olhar` e
+   `de` (o interior atual); `acionar` chama `irPara(para, chegada, olhar, de)`. Ela aparece ao lado da escada
+   do andar `para` que volta para `de`, no lado `chegar` dela (padrão logo abaixo), olhando para `olhar` da escada de origem (`interiores.md` §3.1).
 5. Menu Lugares dentro de um interior: `sair()`, anda até o destino e entra. Destino = o próprio prédio:
    vai para o `spawn` da entrada (com íris).
 6. Atalhos do HUD (💰 Baú, ⭐ Loja, montaria/Estábulo, 🥚) abrem os painéis direto.
@@ -104,7 +108,7 @@ cena = {
   largura(), altura()              // px do jogo
   solido(tx, ty) → bool            // fora dos limites = true
   portaEm(tx, ty) → lugar | null   // só o mapa (como Mapa.portaEm)
-  saidaEm(tx, ty) → gatilho | null // só interiores: { id, tipo: 'saida'|'escada', x, y, para?, chegada?, olhar? }
+  saidaEm(tx, ty) → gatilho | null // só interiores: { id, tipo: 'saida'|'escada', x, y, para?, chegada?, olhar?, de? }
   agua?(tx, ty) → bool             // só o adaptador do mapa; ausente = false
   caminho(a, b) → [{x,y}] | null   // 8 direções, sem cortar quina (regra de Mapa.caminho)
   maisPerto(x, y, de) → {x,y} | null
@@ -320,3 +324,32 @@ Exemplo mínimo (um sistema novo "brilho" na pasta dos sistemas, no manifesto de
   Reino.Brilho = B;
 })();
 ```
+
+## 15. Versão nova: a aba se atualiza sozinha
+Módulo `versao` (`jogo/js/sistemas/versao.js`, `Reino.Versao`). Depois de atualizar o jogo no servidor de casa, as
+abas que ficaram abertas nos aparelhos percebem e recarregam sozinhas (decisão do Leandro: sem perguntar).
+- **A impressão digital**: `npm run versao` (`jogo/ferramentas/gerar-versao.js`) grava `jogo/js/versao.json` =
+  `{ versao, gerado }`, com `versao` = sha256 de `index.html` + `css/**` + `js/**` (inclusive `js/voz/`, fora o próprio
+  `versao.json`), caminho e conteúdo, em ordem alfabética: a mesma árvore dá sempre o mesmo hash. O arquivo está no
+  `.gitignore` (cada checkout gera o seu; `gerar-index.js --conferir` não olha para ele) e o `npm run index` (modo de
+  escrita) também o grava. No dia de atualizar: `npm run versao` depois do merge.
+- **Desligado** (`Reino.Versao.motivoDesligado(amb)`): no artifact (`window.claude.use` existe: a plataforma já entrega
+  a versão nova), aberto do arquivo (`file:`) e no modo determinístico (`Reino.congelado`), a menos que a URL tenha
+  `&versao=1` (o teste deste módulo). O e2e não faz fetch nenhum.
+- **Conferir** (`iniciar`, ao entrar no Reino): `fetch('js/versao.json?t=…', { cache: 'no-store' })` = linha de base;
+  de novo a cada `intervaloMs` e quando a aba volta a ficar visível (no máximo 1×/min). `versao.json` com 404: compara
+  o texto do `index.html` (sem cache). Rede fora ou erro: ignora a leitura.
+- **Confirmar**: só vale a mudança vista 2 vezes, com `confirmarMs` entre elas, e com `performance.now() > cacheMs`
+  (330 s: o servidor deixa css/js 300 s em cache; recarregar antes misturaria arquivos novos e velhos).
+- **Quando**: parada NO MAPA há `paradaMs` = `Cena.estado() === 'mapa'`, nada bloqueado, nenhuma tela DOM, nenhuma
+  pergunta surpresa, nenhum balão (Claude ou NPC), sem caminho nem setas, aba visível, sem toque nem tecla.
+- **Como**: o Claude fala num balão que fecha sozinho em `avisoMs` ("Chegou novidade no Reino! ✨" + "O que você fez
+  fica guardado.", `falas()` do módulo, pacote `geral`); fechado o balão (sozinho ou no "Ok!"), `P.salvar()` e,
+  `esperaMs` depois (o envio ao servidor sai 1,8 s depois de gravar), `Reino.Versao._recarregar()` (= `location.reload()`;
+  os testes trocam). Tocar fora do balão, tecla, andar ou sair do mapa durante o aviso ou a espera: desiste e tenta de
+  novo na próxima parada. Nada vai para o save.
+- Números: `config.versao = { intervaloMs, confirmarMs, cacheMs, paradaMs, avisoMs, esperaMs }` (o módulo tem os
+  mesmos valores padrão se faltar). Depuração: `__reino.modulo('versao')` → `{ ligado, motivo, fase, base, suspeita,
+  nova, buscas, avisos, cancelados, … }` (`fase`: `desligado`, `vigiando`, `nova`, `aviso`, `gravado`, `recarregando`).
+- Testes: `unidade/versao.test.js` (desligado, falas, gerador estável) e `unidade/versao.navegador.test.js`
+  (`?debug=1&congelar=1&versao=1`, `page.route` servindo v1 e v2).

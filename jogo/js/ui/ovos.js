@@ -7,7 +7,8 @@
 
   /* ---------- chocar ovos ---------- */
   UI.chocarOvos = function (ids) {
-    ids = (ids || []).filter(function (id) { return est().unis[id] && !est().unis[id].chocado; });
+    // só ovo que esta versão conhece (sem def não há como desenhar nem chocar)
+    ids = (ids || []).filter(function (id) { return est().unis[id] && !est().unis[id].chocado && !!P.defUni(id); });
     var seq = Promise.resolve();
     ids.forEach(function (id) { seq = seq.then(function () { return chocarUm(id); }); });
     return seq.then(function () { UI.atualizarHUD(); });

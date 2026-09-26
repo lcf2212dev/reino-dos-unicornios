@@ -4,9 +4,13 @@ Contratos: `docs/contratos/loja.md` §6 (guarda de toque), `cuidados.md`, `fotos
 
 ## Estrutura
 - `base.js` cria `Reino.UI` (pilha de telas, painel, `escolher`/`confirmar`, foco, teclado) e `Reino._ui`.
-- As outras partes acrescentam telas a `Reino.UI`, nesta ordem (manifesto): pecas, cuidados, hud, materia,
+- As outras partes acrescentam telas a `Reino.UI`, nesta ordem (manifesto): pecas, cuidados, hud, hud-fotos, materia,
   bau, loja, estabulo, petshop, ovos, lugares, ajustes, aparencia, pais.
 - O que cada parte publica em `Reino._ui` está no fim de `base.js`. Tela nova = arquivo novo + linha no manifesto.
+- Botão no HUD (ao lado da tela cheia): num arquivo da feature, `UI.registrarBotaoHud({ id, ordem, criar, pintar?,
+  eventos? })`; não mexa em `hud.js`. Ordem: tela cheia, depois os registrados (foto 10, álbum 20, em `hud-fotos.js`).
+  `pintar` roda na montagem, em cena/telas/ocupada/transição (ou nos `eventos` dados) e de 500 em 500 ms: só mexa no
+  DOM quando mudar.
 - Estilos em `jogo/css/` (regras em `jogo/css/CLAUDE.md`).
 
 ## Regras

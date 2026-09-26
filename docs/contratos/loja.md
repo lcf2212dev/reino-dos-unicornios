@@ -62,6 +62,9 @@ Reino.LojaItens = {
 4. Vista que não mostra o encaixe: âncora `null` (como `olho` de costas e `cauda` de frente, nos dois
    estágios), e o enfeite não aparece nela.
 5. Tudo continua em `usando.enfeites` (lista de ids): nenhum campo novo no save.
+   Id que esta versão não conhece (enfeite ou prêmio de uma versão nova, vindo pela mescla) fica em
+   `usando.enfeites` e em `loja`: o desenho o pula, e trocar um enfeite só tira do encaixe os ids conhecidos
+   (`ui/loja.js`, `alternar`; `save-e-mescla.md` §6).
 6. Cada enfeite novo tem ícone em pixel e aparece em `ferramentas/previas/acessorios.html` (grade vista × estágio).
 7. Cache de sprites com enfeites: guarda só as 24 combinações usadas por último (`TETO_COMBOS`; a sem enfeite
    fica sempre), contando `PA.unicornio` e a composição montada (`PA.montada`), que sai do cache junto com a

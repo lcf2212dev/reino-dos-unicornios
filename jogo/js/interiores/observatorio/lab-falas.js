@@ -1,9 +1,8 @@
 /* Laboratório de Ciências (3º andar do Observatório): os personagens e o que eles e os objetos dizem.
-   Acrescenta ao Reino.FALAS_INTERIORES.observatorio (carregado depois de observatorio/falas.js).
+   Uma parte das falas do Observatório (Reino.falasDoPredio junta, em qualquer ordem de carga).
    Cada página com até 30 letras (sem contar emoji), frases de 3 ou mais palavras. */
 (function () {
   var R = window.Reino;
-  var OBS = R.FALAS_INTERIORES.observatorio;
 
   /* ---------- personagens (voz pt-BR do edge-tts; diferentes da Vega e do Cosmo) ---------- */
   // guia do Hall
@@ -32,7 +31,7 @@
     perfil: { voz: 'pt-BR-FranciscaNeural', velocidade: '+4%', tom: '+18Hz' } });
 
   /* ---------- falas dos personagens ---------- */
-  Object.assign(OBS.npcs, {
+  R.falasDoPredio('observatorio', { npcs: {
     'lab-iris': {
       oi: ['Oi, eu sou a Professora Íris!', 'Aqui a gente estuda a vida!'],
     },
@@ -66,10 +65,10 @@
       feita: ['Quer investigar de novo?', 'Vamos seguir mais pistas?'],
       depois: ['O mistério foi resolvido!', 'Você é uma ótima detetive! ✨'],
     },
-  });
+  } });
 
   /* ---------- falas dos objetos (voz da narradora) ---------- */
-  Object.assign(OBS.objetos, {
+  R.falasDoPredio('observatorio', { objetos: {
     // hall
     'lab-livro': ['O Livro de Ciências! 📖', 'Vamos ler com calma?'],
     'lab-mapa': ['O mapa do laboratório.', 'São cinco salas para visitar.'],
@@ -106,7 +105,7 @@
     'lab-feneco': ['O feneco tem orelhas grandes!', 'Elas soltam o calor do deserto.'],
     'lab-lagarto': ['O lagarto-de-colar abre a gola!', 'Assim ele assusta quem chega.'],
     'lab-lobo': ['O lobo-do-ártico é branquinho.', 'Ele se esconde na neve.'],
-  });
+  } });
 
   // cavaleira da ala de Ciências no Castelo: registrada em castelo/castelo.js (o Castelo carrega antes daqui)
 })();

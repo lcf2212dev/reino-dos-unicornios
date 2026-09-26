@@ -30,9 +30,29 @@
     var esc = E.def.escadas || [];
     for (var i = 0; i < esc.length; i++) {
       var e = esc[i];
-      if (e.x === x && e.y === y) return { id: 'escada:' + E.def.id + ':' + i, tipo: 'escada', x: x, y: y, para: e.para, chegada: e.chegada, olhar: e.olhar || { x: 0, y: 1 } };
+      if (e.x === x && e.y === y) return { id: 'escada:' + E.def.id + ':' + i, tipo: 'escada', x: x, y: y, para: e.para, chegada: e.chegada, olhar: e.olhar || { x: 0, y: 1 }, de: E.def.id };
     }
     return null;
+  }
+  /* Escadas pareadas: sem `chegada`, ela aparece ao lado da escada do andar `para` que volta para `de`,
+     no lado `chegar` dela (padrão (0, 1): logo abaixo). Sem escada de volta: null (quem chama usa o spawn). */
+  function defDe(id) { return (R.interiores || []).find(function (d) { return d.id === id; }) || null; }
+  function chegadaVindoDe(para, de) {
+    var d = defDe(para), esc = (d && d.escadas) || [];
+    for (var i = 0; i < esc.length; i++) {
+      if (esc[i].para !== de) continue;
+      var c = esc[i].chegar || { x: 0, y: 1 };
+      return { x: esc[i].x + c.x, y: esc[i].y + c.y };
+    }
+    return null;
+  }
+  // onde ela chega pela escada i do interior origemId (a `chegada` explícita vale; senão a do par; senão o spawn)
+  function chegadaDaEscada(origemId, i) {
+    var o = defDe(origemId), e = o && (o.escadas || [])[i];
+    if (!e) return null;
+    if (e.chegada) return { x: e.chegada.x, y: e.chegada.y };
+    var c = chegadaVindoDe(e.para, origemId), d = defDe(e.para);
+    return c || (d && d.spawn ? { x: d.spawn.x, y: d.spawn.y } : null);
   }
   function ondeEsta(E) {
     var J = window.Jogador;
@@ -139,7 +159,7 @@
     if (gt.tipo === 'saida') return { tipo: 'saida', id: gt.id, gatilho: gt, tile: { x: gt.x, y: gt.y }, olhar: { x: 0, y: 1 },
       agir: function () { return R.Cena && R.Cena.sair ? R.Cena.sair() : Promise.resolve(); } };
     return { tipo: 'escada', id: gt.id, gatilho: gt, tile: { x: gt.x, y: gt.y }, olhar: { x: 0, y: -1 },
-      agir: function () { return R.Cena && R.Cena.irPara ? R.Cena.irPara(gt.para, gt.chegada, gt.olhar) : Promise.resolve(); } };
+      agir: function () { return R.Cena && R.Cena.irPara ? R.Cena.irPara(gt.para, gt.chegada, gt.olhar, gt.de) : Promise.resolve(); } };
   }
 
   // balãozinho de status em cima do NPC (px do jogo), no mesmo lugar em que o Reino.NPCs.desenhar
@@ -284,4 +304,5 @@
   }
 
   II.alvoEm = alvoEm; II.alvoPerto = alvoPerto; II.quemEm = quemEm; II.gatilhoEm = gatilhoEm;
+  II.chegadaVindoDe = chegadaVindoDe; II.chegadaDaEscada = chegadaDaEscada;
 })();

@@ -17,6 +17,7 @@
 
   UI.abrirLugar = function (lugar) {
     Reino.Som.tocar('porta');
+    if (Reino.Novidades && lugar) Reino.Novidades.marcar(lugar.id);   // lugar sem interior: a tela própria conta como visita
     var d = menuDe(lugar);
     if (d && d.abrir) return d.abrir(lugar);
   };
@@ -24,8 +25,22 @@
   // Ovo no Estábulo, Prova na Escola e Sede/Fome/Banho na Pet Shop (todos os baixos, sede primeiro)
   UI.avisosDoLugar = function (l) {
     var d = menuDe(l);
-    return d && d.avisos ? d.avisos(l) : [];
+    var av = d && d.avisos ? d.avisos(l) : [];
+    // novidade declarada (lugar.novidade) que ela ainda não visitou: o selo vem primeiro
+    if (Reino.Novidades && Reino.Novidades.ehNovo(l)) av = [{ texto: 'Novo!', icone: '✨', tipo: 'novo' }].concat(av);
+    return av;
   };
+  // matéria dentro de um prédio: onde ela fica ("No 3º andar do Observatório"), com o emoji do anfitrião
+  function ondeFica(l) {
+    if (!l.dentro) return null;
+    var h = Mapa.lugar(l.dentro), dh = (h && menuDe(h)) || {};
+    var emoji = typeof dh.emoji === 'function' ? dh.emoji(h) : (dh.emoji || '📍');
+    var nome = l.anfitriaoNome || (h && h.nome) || '';
+    var de = (h && h.artigo === 'a' ? 'da ' : 'do ') + nome;
+    var texto = l.andar ? 'No ' + l.andar + ' ' + de : 'Dentro ' + de;
+    return el('small.lugar-onde', iconePequeno(emoji, 16), el('span', hifenizar(texto)));
+  }
+  UI.ondeFica = ondeFica;
 
   // a linha da Pet Shop avisa quando a montaria está com fome, sede ou precisando de banho
   function infoPetShop() {
@@ -100,7 +115,7 @@
       var d = menuDe(l) || {};
       var emoji = typeof d.emoji === 'function' ? d.emoji(l) : (d.emoji || '📍');
       var info = d.info ? d.info(l) : '';
-      var b = el('button.sala-card', { type: 'button' }, el('span.sala-emoji', emoji), el('span.sala-info', el('b', hifenizar(l.nome)), el('small', hifenizar(info)), chipsAvisos(l)), el('span.sala-ir', 'Ir →'));
+      var b = el('button.sala-card', { type: 'button' }, el('span.sala-emoji', emoji), el('span.sala-info', el('b', hifenizar(l.nome)), el('small', hifenizar(info)), ondeFica(l), chipsAvisos(l)), el('span.sala-ir', 'Ir →'));
       b.addEventListener('click', function (e) {
         UI.fecharTela(pn.tela);
         // o dedo que ainda bate no "Ir" cai no mapa e trocaria o destino: segura mais um pouco

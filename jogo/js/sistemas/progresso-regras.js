@@ -48,13 +48,15 @@
     I.estado.unis[id] = { em: agora(), xp: 0, chocado: false };
     return true;
   };
+  // ovo de id que esta versão não conhece (veio de uma versão nova pela mescla) fica guardado, mas não aparece
   P.ovosParaChocar = function () {
-    return Object.keys(I.estado.unis).filter(function (id) { return !I.estado.unis[id].chocado; });
+    return Object.keys(I.estado.unis).filter(function (id) { return !I.estado.unis[id].chocado && !!P.defUni(id); });
   };
   P.chocar = function (id) { if (I.estado.unis[id]) I.estado.unis[id].chocado = true; };
   P.montaria = function () {
     var id = I.estado.montaria;
-    if (!I.estado.unis[id] || !I.estado.unis[id].chocado) id = 'inicial';
+    // montaria desconhecida (de uma versão nova) cai na reserva só na leitura: estado.montaria guarda o id
+    if (!I.estado.unis[id] || !I.estado.unis[id].chocado || !P.defUni(id)) id = 'inicial';
     return id;
   };
   P.xpMontaria = function (n) {

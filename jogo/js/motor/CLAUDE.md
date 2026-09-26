@@ -6,7 +6,8 @@ Contratos: `docs/contratos/cena-e-motor.md` (cena, íris, câmera, pintor, laço
 ## Arquivos
 - `camera.js` cria `Reino._motor` (canvas, escala, câmera, pintor); `laco.js`, `entrada.js` e `main.js` usam.
 - `cena.js` cria `Reino.Cena`; `Reino._cena` é interno de `cena.js` e `transicao.js`.
-- `transicao.js`: a íris. `laco.js`: o quadro e o laço. `entrada.js`: teclado, toque, mouse segurado, thumbstick.
+- `transicao.js`: a íris. `laco.js`: o quadro e o laço. `entrada.js`: teclado, toque, mouse segurado, thumbstick
+  (números em `config.controles`, lidos na hora de usar; tamanhos do thumbstick nas variáveis CSS `--cb`/`--cp`).
   `main.js`: início do jogo e telas de entrada.
 - `interiores-*.js`: o motor dos interiores, `node: true`, nesta ordem: base, pisos, objetos-parede,
   objetos-moveis, objetos-enfeites, grade, estatico, placas, toque, cena. Dividem `Reino._interiores`.

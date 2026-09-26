@@ -1,5 +1,5 @@
 /* HUD: chips de cima (dinheiro, estrelas, ovos, montaria), dock do menu, tela cheia e os botões
-   das fotos (Reino.Fotos): 📷 e o álbum. */
+   registrados por UI.registrarBotaoHud (📷 e álbum em ui/hud-fotos.js). */
 (function () {
   var U = Reino.util, el = U.el, P = Reino.Progresso;
   var EV = Reino.EVENTOS;
@@ -34,79 +34,30 @@
   document.addEventListener('fullscreenchange', pintarBotaoTela);
   document.addEventListener('webkitfullscreenchange', pintarBotaoTela);
 
-  /* ---------- botão das fotos (Reino.Fotos, js/sistemas/fotos.js) ---------- */
-  // toque → tira a foto; toque longo (config.fotos.toqueLongoMs) → abre o álbum, sem tirar a foto.
-  // Apagado (aria-disabled) quando Fotos.podeTirar() diz não: transição, tela aberta, balão, banho.
-  function fotos() { var F = Reino.Fotos; return F && typeof F.tirar === 'function' ? F : null; }
-  function podeFotografar() {
-    var F = fotos();
-    try { return !!(F && (typeof F.podeTirar !== 'function' || F.podeTirar())); } catch (e) { return false; }
-  }
-  function pintarBotaoFoto() {
-    var pode = podeFotografar();
-    ['#hud .btn-foto', '#hud .btn-album'].forEach(function (sel) {
-      var b = U.$(sel);
-      if (!b) return;
-      b.hidden = !fotos();
-      if (b.classList.contains('desligado') === !pode) return;
-      b.classList.toggle('desligado', !pode);
-      b.setAttribute('aria-disabled', String(!pode));
+  /* ---------- botões registrados (ao lado da tela cheia) ---------- */
+  // UI.registrarBotaoHud({ id, ordem, criar() → botão, pintar?(), eventos?: [EV…] }): montarHUD põe os botões
+  // pela ordem; pintar roda na montagem, nos eventos e de 500 em 500 ms (balão não tem evento).
+  var botoesHud = [], EVENTOS_BASE = [EV.CENA, EV.TELAS, EV.OCUPADA, EV.TRANSICAO], ouvidos = {};
+  function pintarRegistrados(ev) {
+    botoesHud.forEach(function (d) {
+      if (!d.pintar || (ev && !(d.eventos || EVENTOS_BASE).includes(ev))) return;
+      d.pintar();
     });
   }
-  UI.pintarBotaoFoto = pintarBotaoFoto;
-  [EV.CENA, EV.TELAS, EV.OCUPADA, EV.TRANSICAO].forEach(function (ev) { U.on(ev, function () { pintarBotaoFoto(); }); });
-  // balão de diálogo não tem evento: confere de vez em quando (só mexe no DOM quando muda)
-  setInterval(pintarBotaoFoto, 500);
-  function botaoFoto() {
-    var b = el('button.btn-tela-cheia.btn-foto', { type: 'button', 'aria-label': 'Tirar foto', 'aria-disabled': 'false', title: 'Tirar foto (segure para ver o álbum)' });
-    b.appendChild(PA.iconeEmoji('📷', 2));
-    var timer = null, longoEm = -1e9;
-    function soltar() { if (timer) { clearTimeout(timer); timer = null; } }
-    b.addEventListener('pointerdown', function (e) {
-      if (e.button) return;
-      soltar(); longoEm = -1e9;   // toque novo: o click dele vale
-      var ms = (Reino.config.fotos && Reino.config.fotos.toqueLongoMs) || 600;
-      timer = setTimeout(function () {
-        timer = null;
-        var F = fotos();
-        if (!F || UI.temTela() || !podeFotografar() || typeof F.abrirAlbum !== 'function') return;
-        longoEm = performance.now();   // o click que vem ao soltar o dedo não tira a foto
-        // nem fecha o álbum que acabou de abrir embaixo do dedo (o dedo ainda está na tela)
-        UI.segurarToques();
-        Reino.Som.tocar('toque');
-        F.abrirAlbum();
-      }, ms);
-    });
-    ['pointerup', 'pointercancel', 'pointerleave'].forEach(function (ev) { b.addEventListener(ev, soltar); });
-    // Enter/Espaço no botão são dele: não chegam ao motor/entrada.js (que agiria no que estiver perto dela)
-    b.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') e.stopPropagation(); });
-    // toque longo no celular abriria o menu do navegador
-    b.addEventListener('contextmenu', function (e) { e.preventDefault(); });
-    b.addEventListener('click', function (e) {
-      // (só o do dedo/mouse, logo depois: o álbum cobre o botão e às vezes esse click nem chega)
-      if (e.detail && performance.now() - longoEm < 2000) { longoEm = -1e9; e.preventDefault(); return; }
-      soltar();
-      var F = fotos();
-      pintarBotaoFoto();
-      if (!F || !podeFotografar()) return;
-      F.tirar();
-    });
-    return b;
+  function ouvir(ev) {
+    if (ouvidos[ev]) return;
+    ouvidos[ev] = true;
+    U.on(ev, function () { pintarRegistrados(ev); });
   }
-  // o álbum à vista (um toque): o mesmo apagado do 📷; segurar o 📷 continua abrindo também
-  function botaoAlbum() {
-    var b = el('button.btn-tela-cheia.btn-album', { type: 'button', 'aria-label': 'Álbum de fotos', 'aria-disabled': 'false', title: 'Álbum de fotos' });
-    b.appendChild(PA.paraDOM(PA.iconeMenu('album'), 2, 'hud-icone'));
-    b.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') e.stopPropagation(); });
-    b.addEventListener('click', function () {
-      var F = fotos();
-      pintarBotaoFoto();
-      if (!F || UI.temTela() || !podeFotografar() || typeof F.abrirAlbum !== 'function') return;
-      Reino.Som.tocar('toque');
-      F.abrirAlbum();
-    });
-    return b;
-  }
+  EVENTOS_BASE.forEach(ouvir);
+  setInterval(function () { pintarRegistrados(); }, 500);
+  UI.registrarBotaoHud = function (def) {
+    if (!def || !def.id || typeof def.criar !== 'function') throw new Error('registrarBotaoHud: precisa de id e criar()');
+    botoesHud = botoesHud.filter(function (d) { return d.id !== def.id; });
+    botoesHud.push(def);
+    botoesHud.sort(function (x, y) { return (x.ordem || 0) - (y.ordem || 0); });
+    (def.eventos || []).forEach(ouvir);
+  };
 
   /* ---------- HUD ---------- */
   UI.montarHUD = function () {
@@ -118,9 +69,10 @@
     var montaria = el('button.chip-montaria', { type: 'button', 'aria-label': 'Estábulo' });
     var telaCheia = el('button.btn-tela-cheia', { type: 'button', hidden: !UI.telaCheiaDisponivel() });
     telaCheia.addEventListener('click', function () { Reino.Som.tocar('toque'); UI.telaCheia(); });
-    // tela cheia, câmera e álbum juntos (no celular, um embaixo do outro, ao lado do chip da montaria)
-    var foto = botaoFoto(), album = botaoAlbum();
-    hud.appendChild(el('div.hud-topo', el('div.hud-esq', dinheiro, estrelas, ovos), el('div.hud-dir', el('div.hud-botoes', telaCheia, foto, album), montaria)));
+    // tela cheia e os registrados (câmera, álbum…) juntos (no celular, um embaixo do outro, ao lado do chip da montaria)
+    var botoes = el('div.hud-botoes', telaCheia);
+    botoesHud.forEach(function (d) { botoes.appendChild(d.criar()); });
+    hud.appendChild(el('div.hud-topo', el('div.hud-esq', dinheiro, estrelas, ovos), el('div.hud-dir', botoes, montaria)));
     function botaoDock(acao, icone, linhas, aria) {
       var rot = el('small.dock-rotulo');
       linhas.forEach(function (l, i) {
@@ -139,7 +91,7 @@
     // com uma tela aberta, o HUD fica atrás dela: um Enter num botão dele não empilha outra tela
     hud.addEventListener('click', function (e) { if (UI.temTela()) { e.preventDefault(); e.stopImmediatePropagation(); } }, true);
     pintarBotaoTela();
-    pintarBotaoFoto();
+    pintarRegistrados();
     dinheiro.addEventListener('click', function () { Reino.Som.tocar('toque'); UI.telaBau(); });
     estrelas.addEventListener('click', function () { Reino.Som.tocar('toque'); UI.telaLoja(); });
     ovos.addEventListener('click', function () { Reino.Som.tocar('toque'); UI.chocarOvos(P.ovosParaChocar()); });

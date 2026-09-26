@@ -55,6 +55,7 @@
   /* ---------- sprites prontos para a interface ---------- */
   UI.spriteMontaria = function (id, escala, opcoes) {
     var d = P.defUni(id);
+    if (!d) { id = 'inicial'; d = P.defUni(id); }   // id desconhecido (versão nova): desenha a reserva
     var u = est().unis[id];
     var e = Reino.Unicornios.estagio(u ? u.xp : 0);
     opcoes = opcoes || {};

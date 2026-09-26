@@ -102,6 +102,10 @@ linhas do manifesto e o index, e deixa `(preencher)` onde só a pessoa escreve (
 | Tipo de desafio (ex.: conta armada) | `novo desafio` | `Reino.registrarTipoDesafio` em `jogo/js/atividades/desafios/<tipo>.js` (tela, pontos, textos, voz, validador) | `atividades/desafios.js`, `atividades/provas.js`, `sistemas/falas.js`, `validar-conteudo.js` | `desafio-novo.md` |
 | Ícone de emoji novo | — | `Reino.registrarIcones({ '<emoji>': { n, p, d } })` num arquivo da pasta da feature | `arte/icones/<lote>.js` | `docs/contratos/README.md` §2 |
 | Ação de NPC de um sistema | `novo sistema` | `acoes: { <tipo>: fn }` no `Reino.registrarModulo` | `personagens/npcs-conversa.js` | `cena-e-motor.md` §14 |
+| Botão no HUD | — | `UI.registrarBotaoHud({ id, ordem, criar, pintar?, eventos? })` num arquivo da feature (ex.: `ui/hud-fotos.js`) | `ui/hud.js` | `jogo/js/ui/CLAUDE.md` |
+| Saber onde o jogo roda (artifact, `file:`, https, servidor de casa, toque, compartilhar, baixar) | — | `Reino.ambiente` (`jogo/js/nucleo/ambiente.js`), funções avaliadas na hora | checar `window.claude`/`navigator.share` de novo | `fotos.md` |
+| Falas de um prédio em vários arquivos | `novo predio` | `Reino.falasDoPredio(id, parte)` (`nucleo/registros.js`) em cada parte | `Reino.FALAS_INTERIORES.<p> = …` | `npcs-e-dialogo.md` §10.5 |
+| Andar novo com escadas | — | `escadas: [{ x, y, para, chegar, olhar, sentido }]` com par no outro andar (sem `chegada`) | arquivos de coordenação entre andares | `interiores.md` §3.1 |
 
 Conferir enquanto constrói (rápido): `npm run ver -- …` (fotos), `npm run validar` (só erros e avisos; `--so <id>` num
 validador para olhar uma feature, `--detalhes` para a lista inteira), `npm run e2e -- --cenas '<regex>'` (só as imagens

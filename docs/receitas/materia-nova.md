@@ -33,7 +33,8 @@ Automático (não mexa): ala no Castelo, baias no Estábulo, interior padrão, p
 completar a matéria; `P.valorSala`/`P.bonusMateria` em `progresso-regras.js`), menu Lugares.
 
 ## Passo a passo
-1. Leia a apostila pelas fotos (converta para JPEG em `/tmp`; o que está escrito à mão é da Mariana e
+1. Leia a apostila pelas fotos: `npm run material -- <Pasta> --folha` e leia só as reduzidas em `/tmp/reino-testes/material/`
+   (o que está escrito à mão é da Mariana e
    NUNCA é gabarito: `docs/contratos/conteudo.md` §7).
 2. Salas: copie o formato de `jogo/js/conteudo/materias/historia/h1.js` (4 espaços na sala, 8 nos desafios).
    - ids das salas ÚNICOS no jogo todo (o save guarda `salas[<id da sala>]`): use prefixo da matéria (`g1`…).

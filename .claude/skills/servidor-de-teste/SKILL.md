@@ -15,7 +15,15 @@ Regras: `jogo/ferramentas/CLAUDE.md` e `docs/contratos/README.md` §5.
    npm run ver -- --cuidados fome=5,sede=5 --js 'Reino.UI.telaPetShop()'
    npm run ver -- --tela sala:h1 --passos 'tocar:.intro-botoes .btn-principal;esperar:600'
    npm run ver -- --previa interiores:petshop --recorte 0,0,200,150 --ampliar 4
+   npm run ver -- --tamanhos celular --passos 'arrastar:100,600,170,600,600,preso'   # thumbstick na foto
+   npm run ver -- --tamanhos notebook --passos 'arrastar:600,400,800,400,500,mouse'
+   npm run ver -- --passos 'segurar:#hud .btn-album,800'                          # toque longo
+   npm run ver -- --tela foto              # prévia da foto recém-tirada
+   npm run ver -- --tela album:2           # tira 2 fotos e abre a 2ª grande
+   npm run ver -- --tela prova:historia-3bim:5   # questão 5, igual à imagem prova-historia-3bim-q05 do e2e
    ```
+   Os gestos (`arrastar`, `segurar`) são de verdade: toque pelo CDP no celular/tablet, mouse no notebook; o
+   `tocar` só faz `el.click()`.
 2. Em script (várias fotos numa sessão): `abrirCenario()` de `jogo/ferramentas/testes/cenario.js`
    (exemplo no topo do arquivo). Não escreva outro ajudante de Playwright.
 3. Só para o que o `ver` não cobre (jogar à mão, sessão longa):

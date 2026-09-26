@@ -27,9 +27,9 @@
     else if (item.slot === 'rastro') u.estrelinhas = !u.estrelinhas;
     else if (item.slot === 'asas') u.asasFada = !u.asasFada;
     else {
-      // um enfeite por encaixe: tira o que estava no mesmo encaixe
+      // um enfeite por encaixe: tira o que estava no mesmo encaixe; id desconhecido (de uma versão nova) fica guardado
       var ja = u.enfeites.indexOf(item.id) >= 0;
-      u.enfeites = u.enfeites.filter(function (id) { var it = itemPorId(id); return it && it.slot !== item.slot; });
+      u.enfeites = u.enfeites.filter(function (id) { var it = itemPorId(id); return !it || it.slot !== item.slot; });
       if (!ja) u.enfeites.push(item.id);
     }
   }

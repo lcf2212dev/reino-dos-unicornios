@@ -19,6 +19,9 @@ Na raiz da worktree:
 npm run vozes
 ```
 (listar → gravar só as novas → empacotar em `jogo/js/voz/` → conferir por transcrição).
+O transcritor roda pelo `.vozes/venv-whisper` (se existir), senão por `uv run --with faster-whisper`, senão o
+`npm run vozes` cria o venv em `.vozes/`. Temporários das vozes (índice de antes etc.) ficam em `.vozes/` (ignorado
+pelo git), não no /tmp; o modelo do whisper fica em `~/.cache/huggingface`.
 Para conferir sem tocar no jogo: `npm run vozes -- --saida /tmp/reino-testes/vozes/<pasta>`.
 
 Depois: `npm test` e `npm run e2e -- --so-dados` (a lista de falas entra nas referências).

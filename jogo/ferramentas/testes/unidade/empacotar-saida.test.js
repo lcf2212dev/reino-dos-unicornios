@@ -40,3 +40,32 @@ test('--saida em /tmp não apaga os .js que já estavam lá', () => {
   assert.ok(fs.existsSync(path.join(pasta, 'meu-arquivo.js')), 'o .js que não é pacote tem que continuar lá');
   assert.ok(fs.existsSync(path.join(pasta, 'geral.js')));
 });
+
+test('ordem do falas.json não muda os bytes e pacote igual não é regravado', () => {
+  // cópia do empacotador numa árvore falsa em /tmp (não toca no gerado/ real)
+  fs.mkdirSync('/tmp/reino-testes', { recursive: true });
+  const casa = fs.mkdtempSync('/tmp/reino-testes/empacotar-ordem-');
+  const ger = path.join(casa, 'jogo', 'ferramentas', 'gerado');
+  fs.mkdirSync(path.join(ger, 'vozes-cache'), { recursive: true });
+  fs.mkdirSync(path.join(casa, 'jogo', 'ferramentas', 'vozes'), { recursive: true });
+  const copia = path.join(casa, 'jogo', 'ferramentas', 'vozes', 'empacotar-vozes.js');
+  fs.copyFileSync(EMPACOTAR, copia);
+  const falas = ['c', 'a', 'd', 'b'].map((k) => ({ chave: k, voz: 'v', fala: k, pacotes: ['geral', 'p' + (k < 'c' ? 1 : 2)] }));
+  const indice = {};
+  falas.forEach((f) => { indice[f.chave] = f.chave + '.mp3'; fs.writeFileSync(path.join(ger, 'vozes-cache', f.chave + '.mp3'), 'audio ' + f.chave); });
+  fs.writeFileSync(path.join(ger, 'vozes-indice.json'), JSON.stringify(indice));
+  const saida = path.join(casa, 'saida');
+  const vez = (ordem) => {
+    fs.writeFileSync(path.join(ger, 'falas.json'), JSON.stringify({ falas: ordem }));
+    const r = spawnSync(process.execPath, [copia, '--saida', saida], { encoding: 'utf8' });
+    assert.strictEqual(r.status, 0, r.stdout + r.stderr);
+    return r.stdout;
+  };
+  assert.match(vez(falas), /3 reescritos, 0 iguais/);
+  const bytes = fs.readFileSync(path.join(saida, 'geral.js'), 'utf8');
+  const mtime = fs.statSync(path.join(saida, 'geral.js')).mtimeMs;
+  assert.match(bytes, /\{"a":.*"b":.*"c":.*"d":/);
+  assert.match(vez(falas.slice().reverse()), /0 reescritos, 3 iguais/);
+  assert.strictEqual(fs.readFileSync(path.join(saida, 'geral.js'), 'utf8'), bytes);
+  assert.strictEqual(fs.statSync(path.join(saida, 'geral.js')).mtimeMs, mtime);
+});

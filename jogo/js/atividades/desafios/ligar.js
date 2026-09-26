@@ -8,7 +8,7 @@
   var montar = function (d, opts) {
     var n = d.pares.length;
     // d.direita: ordem fixa da coluna da direita (como na folha da prova)
-    var direita = d.direita ? d.direita.slice() : U.embaralhar(d.pares.map(function (_, i) { return i; }));
+    var direita = d.direita ? d.direita.slice() : U.embaralhar(d.pares.map(function (_, i) { return i; }), ['ligar', d]);
     var liga = opts.valorInicial ? U.copia(opts.valorInicial) : {}; // esquerda -> direita
     var escolhida = null;
     var wrap = el('div.ligar');

@@ -25,14 +25,14 @@ import unicodedata
 AQUI = os.path.dirname(os.path.abspath(__file__))
 GERADO = os.path.join(AQUI, '..', 'gerado')
 REPO = os.path.abspath(os.path.join(AQUI, '..', '..', '..'))
-VENV = '/tmp/reino-testes/venv-whisper'
-COMO_INSTALAR = f"""✘ faster-whisper não está instalado. Instale num venv em /tmp (não entra no projeto):
+VENV = os.path.join(REPO, '.vozes', 'venv-whisper')   # .vozes/ é ignorado pelo git (fora do /tmp, que é memória)
+COMO_INSTALAR = f"""✘ faster-whisper não está instalado. Instale no venv do projeto (.vozes/, ignorado pelo git):
     python3 -m venv {VENV}
     {VENV}/bin/pip install faster-whisper
-  e rode de novo com esse python:
+  e rode de novo com esse python (o npm run vozes já usa esse venv se ele existir):
     {VENV}/bin/python jogo/ferramentas/vozes/conferir-vozes.py {' '.join(sys.argv[1:])}
   (ou, com uv: uv run --with faster-whisper python jogo/ferramentas/vozes/conferir-vozes.py …)
-  Na 1ª vez o modelo é baixado da internet (small: ~500 MB)."""
+  Na 1ª vez o modelo é baixado da internet (small: ~500 MB) para ~/.cache/huggingface."""
 
 
 def opcao(nome, padrao=None):
@@ -85,8 +85,7 @@ def indice_antes():
 
 
 def carregar_modelo(nome=None):
-    # modelo baixado para /tmp (não enche a pasta pessoal); HF_HOME definido por fora vale
-    os.environ.setdefault('HF_HOME', '/tmp/reino-testes/hf')
+    # modelo no cache padrão do usuário (~/.cache/huggingface; HF_HOME definido por fora vale)
     try:
         from faster_whisper import WhisperModel
     except ImportError:

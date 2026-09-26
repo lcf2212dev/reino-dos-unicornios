@@ -1,36 +1,34 @@
 /* Observatório, 2º andar (Centro de Pesquisas Avançadas da NASA): as falas da Doutora Lia, do Astronauta
    Davi e da Engenheira Bia, as curiosidades de foguetes, missões e da Estação Espacial e as explicações das
    experiências. Só diversão: nada de pergunta, estrela, dinheiro ou save.
-   Acrescenta ao Reino.FALAS_INTERIORES.observatorio (carregado depois do observatorio/falas.js).
+   Uma parte das falas do Observatório (Reino.falasDoPredio junta, em qualquer ordem de carga).
    Cada página é uma frase inteira com até 30 letras (sem contar «» e emoji) e 3+ palavras.
    Sem DOM no carregamento: as ferramentas de voz e o validador carregam este arquivo num vm. */
 (function () {
   var R = window.Reino;
-  R.FALAS_INTERIORES = R.FALAS_INTERIORES || {};
-  var OBS = R.FALAS_INTERIORES.observatorio = R.FALAS_INTERIORES.observatorio || {};
-  OBS.npcs = OBS.npcs || {};
-  OBS.extras = OBS.extras || [];
+  var npcs = {};
+  var extras = [];
 
   // a doutora da Sala de Controle: foguetes e missões (voz npc-nasa-lia)
-  OBS.npcs['nasa-lia'] = {
+  npcs['nasa-lia'] = {
     oi: ['Oi! Eu sou a doutora Lia.', 'Aqui cuidamos dos foguetes!'],
     nova: ['Quer ouvir um segredo? 🚀', 'Tenho uma curiosidade nova!'],
     depois: ['Volte sempre para a NASA! 🚀', 'Até a próxima missão!'],
   };
   // o astronauta do Hangar: como é viver no espaço (voz npc-nasa-davi)
-  OBS.npcs['nasa-davi'] = {
+  npcs['nasa-davi'] = {
     oi: ['Oi! Eu sou o astronauta Davi.', 'Eu já morei no espaço!'],
     nova: ['Quer saber como é lá em cima?', 'Vou contar da minha viagem!'],
     depois: ['Até logo, pequena astronauta!', 'Tchau! Eu vou voar de novo!'],
   };
   // a engenheira do Laboratório: a Estação Espacial e as experiências (voz npc-nasa-bia)
-  OBS.npcs['nasa-bia'] = {
+  npcs['nasa-bia'] = {
     oi: ['Oi! Eu sou a engenheira Bia.', 'Eu adoro fazer experiências!'],
     nova: ['Toque nas experiências! ✨', 'Vamos descobrir juntas?'],
     depois: ['Você é uma ótima cientista! ⭐', 'Volte para experimentar!'],
   };
 
-  OBS.nasa = {
+  var nasa = {
     // nomes nos balões
     nomes: {
       'nasa-foguete': 'Foguete da NASA', 'nasa-pena': 'Pena e martelo', 'nasa-fases': 'Fases da Lua',
@@ -87,14 +85,15 @@
   // extras: cada página falada fora do balão do NPC, na voz de quem conta
   var TEMA_VOZ = { foguetes: 'npc-nasa-lia', missoes: 'npc-nasa-lia', astronautas: 'npc-nasa-davi', estacao: 'npc-nasa-bia' };
   var vistos = {};
-  OBS.extras.forEach(function (e) { vistos[e.voz + '|' + e.texto] = true; });
   function add(texto, voz) {
     var k = voz + '|' + texto;
     if (vistos[k]) return;
     vistos[k] = true;
-    OBS.extras.push({ texto: texto, voz: voz });
+    extras.push({ texto: texto, voz: voz });
   }
-  OBS.nasa.TEMA_VOZ = TEMA_VOZ;
-  OBS.nasa.curiosidades.forEach(function (c) { c.paginas.forEach(function (p) { add(p, TEMA_VOZ[c.tema]); }); });
-  Object.keys(OBS.nasa.experiencias).forEach(function (k) { OBS.nasa.experiencias[k].forEach(function (p) { add(p, 'npc-nasa-bia'); }); });
+  nasa.TEMA_VOZ = TEMA_VOZ;
+  nasa.curiosidades.forEach(function (c) { c.paginas.forEach(function (p) { add(p, TEMA_VOZ[c.tema]); }); });
+  Object.keys(nasa.experiencias).forEach(function (k) { nasa.experiencias[k].forEach(function (p) { add(p, 'npc-nasa-bia'); }); });
+
+  R.falasDoPredio('observatorio', { npcs: npcs, nasa: nasa, extras: extras });
 })();

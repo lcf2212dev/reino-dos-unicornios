@@ -54,6 +54,12 @@ Nada toca em DOM, canvas, PA, Progresso ou Cena no carregamento.
    claude.ai. Em todo lugar, a foto (`.fotos-img` da prévia e da foto grande, `<img>` com URL `blob:`) deixa o menu
    do navegador: segurar (toque) ou botão direito. Sem `-webkit-touch-callout: none` nem `contextmenu` bloqueado
    nela (o 📷 do HUD continua sem menu).
+   Quem decide é `Reino.ambiente` (`jogo/js/nucleo/ambiente.js`), avaliado na hora de montar a tela:
+   | Botão | Aparece quando |
+   |---|---|
+   | Compartilhar (foto grande) | `ambiente.podeCompartilhar([arquivo])`: fora do artifact, contexto seguro (https), `share` e `canShare({files})` |
+   | Salvar no aparelho (prévia e foto grande) | `ambiente.podeBaixar()`: fora do artifact e `'download' in HTMLAnchorElement.prototype` |
+   | Dica de toque ou de mouse | `ambiente.toque()` (`pointer: coarse`) escolhe o texto |
 8. Dica `.fotos-dica` embaixo da foto sempre que o Compartilhar não aparece (na prévia, sempre): com toque
    (`pointer: coarse`) "Segure a foto para compartilhar ou salvar."; com mouse "Clique com o botão direito na foto
    para salvar.". É legenda fixa, como lugar e data: NÃO é falada (não é aviso de algo que aconteceu; falar a cada

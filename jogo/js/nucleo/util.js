@@ -78,15 +78,21 @@ Reino.util = (function () {
     return node;
   }
 
-  function embaralhar(arr) {
-    var a = arr.slice();
+  // chave: só no modo de teste (congelado) dá ordem estável por chave; no jogo de verdade é sempre Math.random
+  function sorteador(chave) {
+    var R = window.Reino;
+    if (!R || !R.congelado || chave == null || !R.sorteioDaChave) return Math.random;
+    return R.sorteioDaChave(typeof chave === 'string' ? chave : JSON.stringify(chave));
+  }
+  function embaralhar(arr, chave) {
+    var a = arr.slice(), aleatorio = sorteador(chave);
     for (var i = a.length - 1; i > 0; i--) {
-      var j = Math.floor(Math.random() * (i + 1));
+      var j = Math.floor(aleatorio() * (i + 1));
       var t = a[i]; a[i] = a[j]; a[j] = t;
     }
     return a;
   }
-  function sortear(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+  function sortear(arr, chave) { return arr[Math.floor(sorteador(chave)() * arr.length)]; }
   function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
   function reais(v) { return 'R$ ' + (Math.round(v * 100) / 100).toFixed(2).replace('.', ','); }
   function reaisCurto(v) { return 'R$' + (Number.isInteger(v) ? v : v.toFixed(2).replace('.', ',')); }

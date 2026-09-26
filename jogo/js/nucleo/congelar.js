@@ -24,6 +24,23 @@
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
 
+  // sorteio estável por chave (U.embaralhar/sortear com chave): FNV-1a da chave + nº de usos dessa chave
+  // alimentam um mulberry32 próprio; não gasta o Math.random global, então conteúdo novo não mexe nas outras telas
+  var usosDaChave = {};
+  R.sorteioDaChave = function (chave) {
+    var k = String(chave);
+    var uso = usosDaChave[k] = (usosDaChave[k] || 0) + 1;
+    var h = 0x811C9DC5;
+    for (var i = 0; i < k.length; i++) h = Math.imul(h ^ k.charCodeAt(i), 0x01000193);
+    var s = (h ^ Math.imul(uso, 0x9E3779B1)) | 0;
+    return function () {
+      s = (s + 0x6D2B79F5) | 0;
+      var t = Math.imul(s ^ (s >>> 15), 1 | s);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  };
+
   // relógio
   var DataReal = Date;
   function DataVirtual(a, b, c, d, e, f, g) {

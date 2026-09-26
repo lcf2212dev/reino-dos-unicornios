@@ -34,6 +34,12 @@ interface ReinoGlobal {
   personagensDoPredio?(p: string): { id: string; x?: number; y?: number; acao?: AcaoNpc }[];
   // js/nucleo/eventos.js
   EVENTOS?: EventosReino;
+  // js/nucleo/ambiente.js
+  ambiente?: {
+    artifact(): boolean; arquivoLocal(): boolean; http(): boolean; https(): boolean;
+    servidorCasa(): boolean | null; marcarServidorCasa(sim: boolean): void; toque(): boolean;
+    podeCompartilhar(files: File[]): boolean; podeBaixar(): boolean;
+  };
   // js/conteudo/materias/registro.js
   registrarSala?(materiaId: string, sala: Sala): void;
   registrarLivro?(materiaId: string, cartas: CartaLivro[]): void;

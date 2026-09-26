@@ -39,11 +39,14 @@
   };
   // vira para a mais próxima das 8 direções, com folga (histerese): só troca quando o ângulo passa
   // 10° além da metade do caminho até a vizinha, para não piscar entre duas (thumbstick e mouse)
-  var OITAVO = Math.PI / 4, FOLGA = Math.PI / 18;
+  // (folgaGraus em Reino.config.controles; com 10 dá exatamente Math.PI / 18)
+  var OITAVO = Math.PI / 4;
   J.virar8 = function (dx, dy) {
     if (Math.hypot(dx, dy) < 0.001) return;
     var ang = Math.atan2(dy, dx), atual = Math.round(Math.atan2(J.olharY, J.olharX) / OITAVO);
     var dif = Math.atan2(Math.sin(ang - atual * OITAVO), Math.cos(ang - atual * OITAVO));
+    var c = (Reino.config && Reino.config.controles) || {};
+    var FOLGA = Math.PI / (180 / (typeof c.folgaGraus === 'number' ? c.folgaGraus : 10));
     if (Math.abs(dif) <= OITAVO / 2 + FOLGA) return J.virar(Math.cos(atual * OITAVO), Math.sin(atual * OITAVO));
     var novo = Math.round(ang / OITAVO) * OITAVO;
     J.virar(Math.cos(novo), Math.sin(novo));

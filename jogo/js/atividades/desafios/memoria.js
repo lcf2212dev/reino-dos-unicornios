@@ -6,7 +6,7 @@
   var montar = function (d, opts) {
     var cartas = [];
     d.pares.forEach(function (p, i) { cartas.push({ par: i, face: p[0], emoji: true }); cartas.push({ par: i, face: p[1] }); });
-    cartas = U.embaralhar(cartas);
+    cartas = U.embaralhar(cartas, ['memoria', d]);
     var abertas = [], achados = {}, travar = false, completo = false;
     var grade = el('div.memoria');
     var botoes = cartas.map(function (c, idx) {

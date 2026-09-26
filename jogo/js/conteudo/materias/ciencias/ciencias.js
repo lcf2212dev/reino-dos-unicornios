@@ -8,7 +8,8 @@ Reino.registrarMateria({
   nome: 'Ciências',
   emoji: '🔬',
   nomeLivro: 'Caderno do Cientista',
-  lugar: { nome: 'Laboratório de Ciências', artigo: 'o', dentro: 'observatorio', interior: 'observatorio-3' },
+  lugar: { nome: 'Laboratório de Ciências', artigo: 'o', dentro: 'observatorio', interior: 'observatorio-3',
+    andar: '3º andar', novidade: '2026-09-26' },
   guia: 'Eu sou o guia do Laboratório de Ciências! Aqui a gente descobre os seres vivos e onde cada um mora.',
 
   salas: Reino.salasDa('ciencias'),         // c1.js, c2.js, c3.js, c4.js, c5.js, na ordem do manifesto
