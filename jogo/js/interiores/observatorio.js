@@ -52,7 +52,7 @@
   var MARINHO = '#0e1240', G_AZUL = '#2f3fb8', G_ROXO = '#6c3fd4', G_MAGENTA = '#b24fe0';
   var G_CIANO = '#6fd6ff', G_ROSA = '#ff9ad8', G_LILAS = '#c9b6ff';
   // [fraca, forte] de cada família da nebulosa
-  var NEBULOSA = [['#1c2580', G_AZUL], ['#2e2388', G_ROXO], ['#3c2280', G_MAGENTA]];
+  var NEBULOSA = [['#2230a0', G_AZUL, '#5a6ae0'], ['#3a2aa0', G_ROXO, '#9670ec'], ['#4c2898', G_MAGENTA, '#d07cf0']];
   // cores da estrela que cintila (branco → ciano → lilás)
   var CINTILA = [C.branco, G_CIANO, G_LILAS];
   var BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5];
@@ -63,7 +63,7 @@
     if (escala) { X = X * escala; Y = Y * escala; }
     var d = 0.55 * Math.sin(X * 0.043 + 1.3 * Math.sin(X * 0.011)) + 0.35 * Math.sin(X * 0.017 + Y * 0.21 + 2) + 0.1;
     d = d * forca;
-    var nivel = d > 0.28 + l * 0.5 ? 1 : d > -0.22 + l * 0.5 ? 0 : -1;
+    var nivel = d > 0.72 + l * 0.4 ? 2 : d > 0.28 + l * 0.5 ? 1 : d > -0.22 + l * 0.5 ? 0 : -1;
     if (nivel < 0) return null;
     var h = 0.5 + 0.5 * Math.sin(X * 0.02 + 0.8 + Y * 0.02) + (l - 0.5) * 0.25;
     return NEBULOSA[h < 0.36 ? 0 : h < 0.68 ? 1 : 2][nivel];
@@ -82,7 +82,7 @@
       var X = tx * 16 + i, Y = j + 19;
       // a nebulosa some perto das beiradas da faixa (em cima e embaixo)
       var borda = Math.min(j, 13 - j) < 2 ? 0.55 : 1;
-      var cor = corNebulosa(X, Y, borda);
+      var cor = corNebulosa(X, Y, borda * 1.35);
       if (via) {
         var meio = 3 + (X - via) * 8 / 208, dist = Math.abs(j - meio), l = limiar(X, Y);
         if (dist < 1.2 && l < 0.7) cor = l < 0.25 ? '#e8e0ff' : G_LILAS;
@@ -144,20 +144,90 @@
   }
 
   /* ================= PISOS E PAREDE DA NOITE ================= */
+  // Piso de galáxia (Cúpula e Galeria): o ladrilho ganha um pontilhado claro que vai do azul ao roxo e ao
+  // magenta pelo cômodo, fiapos de nebulosa e estrelinhas fixas. Continua CLARO (luminância igual ou maior
+  // que a do piso azul de antes): a Mariana e a unicórnio (contorno #3a2446) se destacam como no Planetário.
+  // Cada tile é pintado uma vez num canvas de 16×16 (cache por tile e tipo) e depois só copiado.
+  var PISO_GAL = [hexRgb('#5e6ccc'), hexRgb('#7666d0'), hexRgb('#9a60cc')];
+  var RGB_K = hexRgb(K), RGB_BRANCO = [255, 255, 255], RGB_NEVOA = hexRgb('#c9c0ff');
+  function mixRgb(a, b, t) { return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t]; }
+  function corPiso(X, Y, fase) {
+    var l = limiar(X, Y);
+    var h = 0.5 + 0.5 * Math.sin(X * 0.011 + Y * 0.017 + 1.2 * Math.sin(Y * 0.009 - X * 0.005) + fase);
+    var c = PISO_GAL[Math.max(0, Math.min(2, Math.round(h * 2.4 - 0.2 + (l - 0.5) * 0.9)))];
+    // fiapos de nebulosa, mais claros, em pontilhado
+    var w = Math.sin(X * 0.05 + Y * 0.03 + fase) * Math.sin(Y * 0.045 - X * 0.02);
+    if (w > 0.5 && l < 0.35) c = mixRgb(c, RGB_NEVOA, 0.22);
+    return c;
+  }
+  var cachePiso = {};
+  function pisoGalaxia(ctx, px, py, tx, ty, tipo) {
+    var k = tipo + tx + ',' + ty;
+    var c = cachePiso[k];
+    if (!c && typeof document !== 'undefined') {
+      c = document.createElement('canvas');
+      c.width = 16; c.height = 16;
+      var x = c.getContext('2d'), img = x.createImageData(16, 16), d = img.data;
+      var fase = tipo === 'metal' ? 0.6 : 2.4;
+      for (var j = 0; j < 16; j++) for (var i = 0; i < 16; i++) {
+        var X = tx * 16 + i, Y = ty * 16 + j, qi = i & 7, qj = j & 7;
+        var cor = corPiso(X, Y, fase), par = ((i >> 3) + (j >> 3) + tx + ty) % 2 === 0;
+        if (tipo === 'metal') {
+          if (!par) cor = mixRgb(cor, RGB_K, 0.05);
+          if (qi === 7 || qj === 7) cor = mixRgb(cor, RGB_K, 0.28);
+          else if (qi === 0 || qj === 0) cor = mixRgb(cor, RGB_BRANCO, 0.16);
+          else if (qi === 1 && qj === 1) cor = mixRgb(cor, RGB_BRANCO, 0.5);
+          else if (qi === 5 && qj === 5) cor = mixRgb(cor, RGB_K, 0.2);
+        } else {
+          if (qi === 7 || qj === 7) cor = mixRgb(cor, RGB_K, 0.3);
+          else if (qj === 0 && qi < 3) cor = mixRgb(cor, RGB_BRANCO, 0.14);
+          else if (par) cor = mixRgb(cor, RGB_BRANCO, 0.04);
+        }
+        var o = (j * 16 + i) * 4;
+        d[o] = Math.round(cor[0]); d[o + 1] = Math.round(cor[1]); d[o + 2] = Math.round(cor[2]); d[o + 3] = 255;
+      }
+      x.putImageData(img, 0, 0);
+      // estrelinhas fixas no piso (lilás, branca, ciano, rosa; às vezes uma em cruz)
+      for (var e = 0; e < 2; e++) {
+        if (sorte(tx, ty, 61 + e) > 0.32) continue;
+        var ex = 2 + Math.floor(sorte(tx, ty, 71 + e) * 5) + e * 8, ey = 2 + Math.floor(sorte(ty, tx, 81 + e) * 5) + e * 8;
+        var ce = ['#e8e0ff', C.branco, '#bff0ff', '#ffd0ee'][Math.floor(sorte(tx, ty, 91 + e) * 4)];
+        if (sorte(tx, ty, 95 + e) < 0.25) { brilho(x, ex, ey, misturar(ce, '#7666d0', 0.3)); ret(x, ex, ey, 1, 1, C.branco); }
+        else ret(x, ex, ey, 1, 1, ce);
+      }
+      // na Galeria, a estrelinha dourada de antes
+      if (tipo === 'ladrilho' && sorte(tx, ty, 13) < 0.2) { var cg = '#ffe89a'; ret(x, 11, 2, 1, 3, cg); ret(x, 10, 3, 3, 1, cg); }
+      cachePiso[k] = c;
+    }
+    if (c && ctx.drawImage) ctx.drawImage(c, px, py);
+    else ret(ctx, px, py, 16, 16, '#6a66cc');
+  }
+  // poeira cintilante no piso da Cúpula e da Galeria (8 pontinhos em cada, cada um no seu ritmo)
+  var poeiraPisos = null;
+  function poeiraPiso(ctx, comodo, t) {
+    if (!poeiraPisos) {
+      poeiraPisos = {};
+      [['cupula', CUP, 13], ['galeria', GAL, 13]].forEach(function (c) {
+        var l = poeiraPisos[c[0]] = [];
+        for (var k = 0; k < 8; k++) l.push([c[1].x * T + 8 + Math.floor(sorte(k, c[2], 101) * (c[2] - 1) * T), (c[1].y + 2) * T + 4 + Math.floor(sorte(c[2], k, 103) * 10 * T), k]);
+      });
+    }
+    var lista = poeiraPisos[comodo] || [];
+    for (var i = 0; i < lista.length; i++) {
+      var q = lista[i], per = 1100 + q[2] * 211, f = t ? ((t / per) + q[2] * 0.37) % 1 : (q[2] % 3) / 3;
+      if (f > 0.6) continue;
+      var cor = CINTILA[(q[2] + (t ? Math.floor(t / 1500) : 0)) % 3];
+      // com animação, o grão sobe devagar 0-3 px enquanto brilha
+      var sobe = t ? Math.floor(f * 5) : 0;
+      if (f > 0.2 && f < 0.36) brilho(ctx, q[0], q[1] - sobe, cor);
+      ret(ctx, q[0], q[1] - sobe, 1, 1, f > 0.2 && f < 0.36 ? C.branco : cor);
+    }
+  }
+
   // pisos da noite num azul mais claro que a parede e o céu das janelas: a Mariana (contorno #3a2446)
   // e a unicórnio precisam se destacar do chão, principalmente no celular
   I.PISOS['observatorio-metal'] = { cores: { piso: '#5a66b0', piso2: '#4c57a0', detalhe: '#c0c8f4' },
-    desenhar: function (ctx, px, py, tx, ty, p) {
-      var linha = escurecer(p.piso2, 0.25), luz = clarear(p.piso, 0.18);
-      for (var j = 0; j < 2; j++) for (var i = 0; i < 2; i++) {
-        var qx = px + i * 8, qy = py + j * 8, par = (i + j + tx + ty) % 2 === 0;
-        ret(ctx, qx, qy, 8, 8, par ? p.piso : misturar(p.piso, p.piso2, 0.5));
-        ret(ctx, qx, qy, 7, 1, luz); ret(ctx, qx, qy, 1, 7, luz);
-        ret(ctx, qx + 7, qy, 1, 8, linha); ret(ctx, qx, qy + 7, 8, 1, linha);
-        ret(ctx, qx + 1, qy + 1, 1, 1, p.detalhe); ret(ctx, qx + 5, qy + 5, 1, 1, escurecer(p.detalhe, 0.35));
-      }
-      if (sorte(tx, ty, 17) < 0.2) { ret(ctx, px + 3, py + 11, 3, 1, clarear(p.piso, 0.3)); }
-    } };
+    desenhar: function (ctx, px, py, tx, ty, p) { pisoGalaxia(ctx, px, py, tx, ty, 'metal'); } };
   I.PISOS['observatorio-estrelado'] = { cores: { piso: '#5a52aa', piso2: '#665eb6', detalhe: '#fff3a0' },
     desenhar: function (ctx, px, py, tx, ty, p) {
       ret(ctx, px, py, 16, 16, p.piso);
@@ -171,21 +241,9 @@
       }
       if (sorte(tx, ty, 41) < 0.12) brilho(ctx, px + 8, py + 8, ESTRELA);
     } };
-  // ladrilhos da Galeria: azul-noite com uma estrelinha dourada aqui e ali
+  // ladrilhos da Galeria: galáxia clara com uma estrelinha dourada aqui e ali
   I.PISOS['observatorio-ladrilho'] = { cores: { piso: '#5254a6', piso2: '#5c5eb0', detalhe: '#ffd34d' },
-    desenhar: function (ctx, px, py, tx, ty, p) {
-      var junta = escurecer(p.piso, 0.3);
-      for (var j = 0; j < 2; j++) for (var i = 0; i < 2; i++) {
-        var qx = px + i * 8, qy = py + j * 8, par = (i + j + tx + ty) % 2 === 0;
-        ret(ctx, qx, qy, 8, 8, junta);
-        ret(ctx, qx, qy, 7, 7, par ? p.piso : p.piso2);
-        ret(ctx, qx, qy, 3, 1, clarear(par ? p.piso : p.piso2, 0.12));
-        if (sorte(tx * 2 + i, ty * 2 + j, 13) < 0.1) {
-          var c = misturar(p.detalhe, p.piso, 0.25);
-          ret(ctx, qx + 3, qy + 2, 1, 3, c); ret(ctx, qx + 2, qy + 3, 3, 1, c);
-        } else if (sorte(tx * 2 + i, ty * 2 + j, 29) < 0.2) ret(ctx, qx + 4, qy + 4, 1, 1, clarear(p.piso2, 0.2));
-      }
-    } };
+    desenhar: function (ctx, px, py, tx, ty, p) { pisoGalaxia(ctx, px, py, tx, ty, 'ladrilho'); } };
   function acabamento(ctx, px, py, p) {
     ret(ctx, px, py, 16, 1, escurecer(p.parede, 0.35));
     ret(ctx, px, py + 1, 16, 1, clarear(p.parede, 0.25));
@@ -201,7 +259,7 @@
       ret(ctx, px, py, 16, 32, p.parede);
       // o céu pintado: faixa de galáxia pronta (nebulosa em pontilhado; Via Láctea na Cúpula)
       var via = (tx >= CUP.x && tx < CUP.x + 13) ? CUP.x * 16 : 0;
-      if (typeof document !== 'undefined' && ctx.drawImage) ctx.drawImage(faixaCeu(tx, misturar(p.parede, MARINHO, 0.55), via), px, py + 3);
+      if (typeof document !== 'undefined' && ctx.drawImage) ctx.drawImage(faixaCeu(tx, misturar(p.parede, G_AZUL, 0.2), via), px, py + 3);
       else ret(ctx, px, py + 3, 16, 14, misturar(p.parede, MARINHO, 0.55));
       // uma estrela grande em cruz a cada tanto
       if (sorte(tx, 7, 1) < 0.4) {
@@ -212,8 +270,12 @@
       ret(ctx, px + 15, py + 3, 1, 15, escurecer(p.parede, 0.18));
       ret(ctx, px, py + 17, 16, 1, clarear(p.detalhe, 0.3));
       ret(ctx, px, py + 18, 16, 1, p.detalhe);
-      var lam = p.parede2;
+      // lambri em tom de galáxia (azul, roxo ou magenta conforme a parede avança), com pontilhado no painel
+      var hue = 0.5 + 0.5 * Math.sin(tx * 0.33 + 0.8);
+      var lam = misturar(p.parede2, hue < 0.36 ? G_AZUL : hue < 0.68 ? G_ROXO : G_MAGENTA, 0.32);
       ret(ctx, px, py + 19, 16, 8, lam);
+      for (var lj = 21; lj < 25; lj++) for (var li = 3; li < 13; li++) if (limiar(px + li, py + lj) < 0.28) ret(ctx, px + li, py + lj, 1, 1, clarear(lam, 0.14));
+      if (sorte(tx, 3, 91) < 0.5) ret(ctx, px + 8, py + 22, 1, 1, sorte(tx, 4, 93) < 0.5 ? G_CIANO : G_ROSA);
       ret(ctx, px + 2, py + 20, 12, 1, escurecer(lam, 0.2)); ret(ctx, px + 2, py + 20, 1, 6, escurecer(lam, 0.2));
       ret(ctx, px + 3, py + 25, 11, 1, clarear(lam, 0.18)); ret(ctx, px + 13, py + 21, 1, 5, clarear(lam, 0.18));
       acabamento(ctx, px, py, p);
@@ -344,6 +406,7 @@
       for (var i = 0; i < FENDA_ESTRELAS.length; i += 2) piscar(ctx, x0 + FENDA_ESTRELAS[i][0], py + 1 + FENDA_ESTRELAS[i][1], t, i, i % 4 === 0);
       // as estrelas que cintilam no céu pintado da parede da Cúpula
       cintilarParede(ctx, 'cupula', t);
+      poeiraPiso(ctx, 'cupula', t);
       // estrela cadente atravessando a Cúpula: do céu da parede até a fenda (a cada 8 a 15 s)
       estrelaCadente(ctx, t, px - 5 * T - 8, py + 5, x0 + w - 4, py + 20);
     } });
@@ -524,6 +587,7 @@
       var x = px + 4, y = py + 6;
       MAPA_CRUZ.forEach(function (p, i) { piscar(ctx, x + p[0], y + p[1], t, i * 2 + 1, i < 2); });
       cintilarParede(ctx, 'galeria', t);
+      poeiraPiso(ctx, 'galeria', t);
     } });
 
   /* ================= OBJETOS: CHÃO ================= */
@@ -708,11 +772,11 @@
       });
       ctx.restore();
     },
-    // poeira cintilante sobre o disco da galáxia (14 pontinhos claros, cada um no seu ritmo)
+    // poeira cintilante sobre o disco da galáxia (10 pontinhos claros, cada um no seu ritmo)
     anim: function (ctx, px, py, t, o) {
       t = tempo(t);
       var sx = v(o, 'sx', px), sy = v(o, 'sy', py), disco = v(o, 'disco', { rx: 120, ry: 66 });
-      for (var k = 0; k < 14; k++) {
+      for (var k = 0; k < 10; k++) {
         var a = sorte(k, 9, 71) * Math.PI * 2, q = 0.3 + sorte(k, 4, 73) * 0.55;
         var x = Math.round(sx + Math.cos(a) * q * Math.min(disco.rx, 105)), y = Math.round(sy + Math.sin(a) * q * disco.ry);
         var per = 900 + k * 173, f = t ? ((t / per) + k * 0.29) % 1 : (k % 3) / 3;
