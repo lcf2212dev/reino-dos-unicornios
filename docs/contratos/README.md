@@ -36,6 +36,11 @@ A origem de cada regra (os 4 contratos antigos da raiz) está em `rastreio.md`.
 4. Texto no canvas: fonte "Press Start 2P".
 5. Todo emoji que aparece na tela ou no canvas tem ícone desenhado em `jogo/js/arte/icones/<lote>.js`
    (confira em `jogo/ferramentas/previas/icones.html`). Emoji novo sem desenho: avise quem integra.
+   Feature com emoji próprio (ex.: o 🥐 da Padaria) desenha na PRÓPRIA pasta, sem editar os lotes:
+   `Reino.registrarIcones({ '🥐': { n: 'croissant', p: { k: '#3a2446', … }, d: [16 linhas de 16] } })`
+   (`js/arte/icones/icones.js`, `node: true`; chave sem `\uFE0F`). Chave que já existe ou formato torto
+   (o mesmo que o `validar-conteudo` confere nos acessórios: `Reino.conferirIcone`) lança erro na hora.
+   O `validar-interiores` avisa o `menu.emoji` de `Reino.registrarLugar` que ficar sem desenho.
 6. Ajustes → Animações desligado e `prefers-reduced-motion` valem em tudo: sem animação, o desenho fica
    parado (sem partículas, ondinhas paradas, planetas parados). O som continua.
 7. Texto para criança: pt-BR correto e carinhoso; falas de personagem até 30 letras por página, frases de
@@ -88,7 +93,21 @@ Resumo (detalhes em `save-e-mescla.md` §9):
 8. Depuração: `?debug=1` → `window.__reino` (`jogo/js/debug.js`); modo determinístico: `?debug=1&congelar=1`
    (`jogo/js/nucleo/congelar.js`, `__congelar.avancar(ms)`).
 9. "Page crashed"/"Target crashed" no Chromium: confira `df -h /tmp`; se estiver cheio, rode com
-   `TMPDIR=/dev/shm/<pasta>` (não apague temporários de outros).
+   `TMPDIR=/dev/shm/<pasta>` (não apague temporários de outros). A pasta de testes pode ir junto:
+   `REINO_TESTES=/dev/shm/reino-testes` (só dentro de `/tmp` ou `/dev/shm`; `guardas.js`).
+10. Ver e fotografar uma cena com UM comando: `npm run ver -- --ir petshop --estrelas 500 --tamanhos celular`
+   (`jogo/ferramentas/testes/ver.js`; `--tela loja|sala:h1|prova:<id>|desafio:h1-03` (esse desafio, sem sorteio), `--passos`, `--js`, `--previa`, `--recorte`,
+   `--ampliar`; `--ajuda` tem exemplos). Sai em `/tmp/reino-testes/ver/<nome>/` (PNG, erros.txt, estado.json e
+   console.txt, o console todo da página) e com código ≠ 0 se houve erro de console. O `console.log` de cada `--js`/
+   `--passos` e o valor que cada `--js` devolve saem no fim da saída. `--previa mapa` traz a grade (coluna/linha,
+   rect e id de cada lugar e clareira, áreas livres em azul); `--livres 5x4` lista rects livres com o `caminho`
+   sugerido até a rua (sem navegador; `cena-e-motor.md` §9). Em script: `abrirCenario()` de `jogo/ferramentas/testes/cenario.js` (servidor
+   e banco novos por cenário, save de `saves-compor.js`); não escreva outro ajudante de Playwright.
+11. Prédio, matéria ou sala novos começam com UM comando: `npm run novo -- predio padaria --nome "Padaria" --rect 10,10,5,4
+   --caminho "14,14;13,14;12,14"`, `npm run novo -- materia geografia --nome "Geografia" --emoji 🌍` ou
+   `npm run novo -- sala historia h6` (`jogo/ferramentas/novo/novo.js`; `--lista`, `--ajuda`, `--seco`, `--raiz`). Cria os
+   arquivos dos modelos (`jogo/ferramentas/novo/modelos/`), põe as linhas no manifesto na ordem certa, refaz o index e
+   imprime o que falta. O que só a pessoa escreve sai como `(preencher)`, que os validadores recusam ("falta preencher").
 
 ## 6. Comandos que existem hoje
 ```
@@ -101,6 +120,13 @@ node jogo/ferramentas/testes/testar-musicas.js           # músicas pelos dados
 node jogo/ferramentas/testes/referencias.js capturar <saida> --raiz <jogo> [--so dados,imagens,vozes,desempenho]
 node jogo/ferramentas/testes/referencias.js comparar <referencia> <nova> [--desempenho]
 node jogo/ferramentas/testes/desempenho.js <jogo-ref> <jogo-novo>
+npm run e2e [-- --so-dados | --cenas <regex> | --paralelo N | --tamanhos celular | --manter]   # atual x base (e2e.js)
+#   idêntico: a captura do atual é apagada (--manter guarda); abaixo de 1,5 GB livres nem começa
+npm run e2e -- --podar                                   # apaga e2e-* com mais de 1 h e ref de harness antigo (lista antes)
+#   --cenas: só as imagens cujo nome casa (sem dados/vozes; a base é a completa, em cache); cada aba
+#            para quando o tamanho já tem todas as pedidas
+#   --paralelo: abas ao mesmo tempo (padrão metade das CPUs, até 12; um Chromium por vaga)
+#   diferença em imagem: caminhos da base, do atual e de e2e-<data>/diferencas/ (pixels em magenta)
 node jogo/ferramentas/vozes/listar-falas.js              # gera ferramentas/gerado/falas.json
 npm test                                                 # (atalhos npm: ver package.json)
 ```

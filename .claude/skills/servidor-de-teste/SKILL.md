@@ -2,24 +2,30 @@
 name: servidor-de-teste
 description: Use para abrir, ver, testar ou tirar print do jogo Reino dos Unicórnios num navegador (Playwright ou manual), sempre no servidor de TESTE com saves sintéticos, nunca no servidor de casa nem no artifact publicado.
 ---
-# Servidor de teste
+# Ver o jogo (servidor de teste)
 
 Regras: `jogo/ferramentas/CLAUDE.md` e `docs/contratos/README.md` §5.
 
-1. Na raiz da worktree:
+1. PRIMEIRO `npm run ver` (na raiz da worktree): sobe servidor de TESTE e banco novos, põe um save sintético,
+   vai ao lugar/tela, roda passos e fotografa nos 3 tamanhos em `/tmp/reino-testes/ver/<nome>/` (PNG, `<nome>/erros.txt`,
+   `<nome>/estado.json`; sai com código ≠ 0 se houve erro de console). `npm run ver -- --ajuda` lista tudo.
    ```
-   npm run servidor-teste                      # porta livre ≥ 1024 (nunca 80), banco novo em /tmp/reino-testes/
-   npm run servidor-teste -- --porta 8801      # porta escolhida (nunca a 80)
+   npm run ver -- --ir petshop --nome petshop
+   npm run ver -- --estrelas 500 --tela loja --tamanhos celular
+   npm run ver -- --cuidados fome=5,sede=5 --js 'Reino.UI.telaPetShop()'
+   npm run ver -- --tela sala:h1 --passos 'tocar:.intro-botoes .btn-principal;esperar:600'
+   npm run ver -- --previa interiores:petshop --recorte 0,0,200,150 --ampliar 4
    ```
-   Ele mostra o endereço: `http://127.0.0.1:<porta>/?debug=1` (determinístico: `&congelar=1`).
-2. Navegador: só Chromium do Playwright, pelo `jogo/ferramentas/testes/navegador.js`
-   (`abrir({ url, tamanho, save, query })`; tamanhos `celular`, `tablet`, `notebook`). Ele bloqueia toda outra rede.
-3. Saves 100% sintéticos: `jogo/ferramentas/testes/saves.js`. Nunca copie o save real.
-4. Em código: `const { iniciar } = require('./servidor-teste'); const s = await iniciar(); … s.parar();`
+2. Em script (várias fotos numa sessão): `abrirCenario()` de `jogo/ferramentas/testes/cenario.js`
+   (exemplo no topo do arquivo). Não escreva outro ajudante de Playwright.
+3. Só para o que o `ver` não cobre (jogar à mão, sessão longa):
+   `npm run servidor-teste` (porta livre ≥ 1024, nunca 80; banco novo em `/tmp/reino-testes/`) e o Chromium de
+   `jogo/ferramentas/testes/navegador.js` (`abrir({ url, tamanho, save, query })`), com saves de
+   `jogo/ferramentas/testes/saves.js`. Em código: `const { iniciar } = require('./servidor-teste'); const s = await iniciar(); … s.parar();`
 
 Guardas:
 - Nunca porta 80, `reinodosunicornios.local`, `localhost` sem porta de teste nem o IP do PC.
 - Nunca Firefox, WebKit nem emulação de iPhone/iPad com WebKit.
-- Nunca "Apagar tudo", "Novo ciclo" nem pagamento fora do servidor de teste.
+- Saves só sintéticos; nunca copie o save real. Nunca "Apagar tudo", "Novo ciclo" nem pagamento fora do teste.
 - Pare só os seus servidores (Ctrl+C, `s.parar()` ou pelo PID). Nunca `pkill`/`killall` por nome.
 - Temporários ficam em `/tmp/reino-testes/`, sem apagar.

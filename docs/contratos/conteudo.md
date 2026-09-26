@@ -14,8 +14,9 @@ Personagens: `npcs-e-dialogo.md`. Prédios: `interiores.md`. Vozes: `som-musica-
 - `jogo/js/conteudo/materias/<m>/<sala>.js` (uma sala por arquivo), `<m>/livro.js`, `<m>/<m>.js` (a matéria:
   `Reino.registrarMateria({ …, salas: Reino.salasDa('<m>'), livro: Reino.livroDa('<m>'), unicornios, … })`).
 - `jogo/js/conteudo/provas/<prova>.js` — provas da escola (dados).
-- `jogo/js/atividades/desafios.js` (núcleo: render, `pontuar`, `linhaCerta`, `linhaValor`, `conferir`, `Reino._desafios`)
+- `jogo/js/atividades/desafios.js` (núcleo: render, `pontuar`, `linhaCerta`, `conferir`, `Reino.registrarTipoDesafio`)
   + `jogo/js/atividades/desafios/<tipo>.js` (um por tipo; `vf` fica em `escolha.js`, `ordenar`/`frase` em `sequencia.js`).
+  Todos `node: true` no manifesto (o validador e as falas usam os ganchos dos tipos). Tipo novo: §3.7.
 - `jogo/js/atividades/missao.js` (sala: `Reino.Missao`), `treino.js` (treino do Castelo: `Reino.Prova`),
   `provas.js` (prova da escola: `Reino.Provas`; tempo mínimo de leitura, lista de revisão).
 - `css/ui-desafios.css` (estilos dos desafios, texto de apoio, `copiar`).
@@ -65,8 +66,43 @@ Personagens: `npcs-e-dialogo.md`. Prédios: `interiores.md`. Vozes: `som-musica-
    tocar numa letra colocada tira). Valor: `[{ escolha: i | null, letras: [índices das peças] }]`. Pronto:
    todo item com escolha e com tantas letras quanto a escrita escolhida. Pontuação: 2 partes por item
    (escolheu a certa; a cópia forma `opcoes[certa]`), em fração, como as outras questões com partes.
-6. Campo novo de desafio = aditivo (sem ele, as salas e provas de antes ficam idênticas) + conferência em
-   `validar-conteudo.js` + estilos em `css/ui-desafios.css` + tempo mínimo e revisão em `provas.js`.
+6. Campo novo de desafio = aditivo (sem ele, as salas e provas de antes ficam idênticas) + conferência no
+   `validar` do tipo (ou em `validar-conteudo.js`, se vale para todos) + estilos em `css/ui-desafios.css`.
+7. **Tipo de desafio novo** = UM arquivo `jogo/js/atividades/desafios/<tipo>.js` + a linha dele no manifesto
+   (`grupo: 'atividades', node: true`, depois de `desafios.js`) + `npm run index`. O núcleo (`desafios.js`),
+   a prova (`provas.js`), as falas (`falas.js`) e o validador não sabem de tipo nenhum: chamam os ganchos.
+   `Reino.registrarTipoDesafio(tipo, def)` (forma: `TipoDesafioDef` em `ferramentas/testes/tipos-extensoes.d.ts`):
+   - `montar(d, opts)` (obrigatório; DOM só aqui dentro) devolve o controle `{ el, valor, pronto, conferir, … }`;
+     `pontuar(d, valor)` de 0 a 1 (sem ele: 0).
+   - `treinavel` (treino e mínimo do validador), `especial`/`semprePrimeiro`/`noFim` (sorteio da missão),
+     `pista` (nome da frase em `Falas.fixas`), `campos` (campos opcionais só deste tipo: `livre`, `colado`, `rotulos`).
+   - Textos: `enunciado(d)`/`enunciadoTela(d)` (sem eles: `d.pergunta`), `textoCerto(d)`, `textoResposta(d, valor)`
+     (correção), `textoFala(d)` e `textoProva(d)` (tempo mínimo de leitura da prova).
+   - Voz: `falas(d, todos, segs)` recebe `[pergunta, instrucao?]` e devolve a lista lida no 🔊 e gravada
+     (`todos(lista)` = índices na ordem da tela). Mudou o que é lido: `npm run vozes`.
+   - Prova: `prepararProva(d)` (ordem preparada uma vez), `extraCorrecao(d, valor)` (elemento a mais na correção).
+   - `validar(d, v)`: checagens sem DOM, no Node; `v = { checar(cond, msg), avisar(msg), naProva, icones, textoOk }`.
+   - `exemplos: { desafio, certa(d), estranhos }` (obrigatório para o `npm test`): um desafio sintético do tipo,
+     `certa(d)` a resposta certa de QUALQUER desafio do tipo (sem `pontuar`, não tem) e `estranhos` (respostas
+     erradas ou vazias no formato do tipo). `desafios-pontuacao.test.js` percorre todos os tipos registrados: a
+     certa vale 1 em toda sala e prova, e nenhuma estranha quebra ou sai de 0..1. Sem eles: "falta exemplos em <tipo>".
+   No carregamento o arquivo não toca em `document` (o Node carrega todos). Exemplo mínimo:
+   ```
+   (function () {
+     var el = Reino.util.el;
+     Reino.registrarTipoDesafio('conta', {
+       montar: function (d, opts) { /* … tela: el(...), opts.onMudar() … */ },
+       pontuar: function (d, valor) { return valor === d.resultado ? 1 : 0; },
+       falas: function (d, todos, segs) { return segs.concat(['Quanto é ' + d.conta + '?']); },
+       textoCerto: function (d) { return String(d.resultado); },
+       textoResposta: function (d, valor) { return String(valor); },
+       validar: function (d, v) { v.checar(typeof d.conta === 'string', d.id + ': conta sem a conta'); },
+       exemplos: { desafio: { id: 'x', tipo: 'conta', conta: '2 + 3', resultado: 5 },
+         certa: function (d) { return d.resultado; }, estranhos: [-1, '5', null, true] },
+     });
+   })();
+   ```
+   Teste de modelo: `ferramentas/testes/unidade/desafio-tipo.test.js` (tipo de mentira no validador, falas e pontuação).
 
 ## 4. Regras para escrever salas
 1. Pelo menos 12 desafios, variados; pelo menos 6 de `escolha`, `vf` ou `varias` (a pergunta surpresa e o
@@ -93,6 +129,17 @@ Personagens: `npcs-e-dialogo.md`. Prédios: `interiores.md`. Vozes: `som-musica-
    depois de ganhar algum da mesma prova (`loja.md` §3).
 2. Treino do Castelo: `Reino.Prova.iniciar(materia, fim)`, só com todas as salas da matéria feitas.
 3. As provas de História e de Inglês e as salas de antes ficam idênticas quando um campo novo entra.
+4. Prova autocontida (um arquivo + a linha no manifesto): cada acessório pode trazer `desenho` (formato de um
+   item de `PA.ENFEITES_MONTARIA`: `linhas`, `paleta`, `ancora`, `dx`, `dy`) e `icone` (formato de `window.ICONES`:
+   `n`, `p`, `d` com 16 linhas de 16). `Reino.registrarProva` põe o ícone em `ICONES['acessorio:<id>']` e o desenho
+   na montaria; sem eles, valem o desenho em `pixelart-unicornio-moldes.js` e o ícone em `js/arte/icones/`. A
+   professora vem no mesmo arquivo com `Reino.registrarPersonagem` (`npcs-e-dialogo.md` §5).
+   `validar-conteudo` confere linhas do mesmo tamanho, letras da paleta e âncora válida.
+   ```js
+   comum: { id: 'estrelinha', nome: 'Estrelinha',
+     desenho: { linhas: ['.k.', 'kyk', '.k.'], paleta: { k: '#3a2446', y: '#ffd34d' }, ancora: 'orelha', dx: -1, dy: 1 },
+     icone: { n: 'Estrelinha (comum)', p: { k: '#3a2446', y: '#ffd34d' }, d: [ /* 16 linhas de 16 */ ] } },
+   ```
 
 ## 6. Português: matéria, salas, unicórnios
 1. Matéria (`portugues/portugues.js`): `id: 'portugues'`, `nome: 'Português'`, `emoji: '📝'`,

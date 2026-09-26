@@ -7,7 +7,7 @@ NPCs e diálogo: `npcs-e-dialogo.md`. Cena, íris e câmera: `cena-e-motor.md`.
 ## Índice
 1. Onde está no código · 2. API `Reino.Interiores` · 3. Formato de um interior · 4. Grade ·
 5. Biblioteca de objetos · 6. Desenho e desempenho · 7. Critério de "rico" (validador) ·
-8. Convenções dos prédios · 9. Prédios · 10. Antes de mexer
+8. Convenções dos prédios · 9. Prédios (9.7 Lugar novo no mapa) · 10. Antes de mexer
 
 ## 1. Onde está no código
 - Motor (`jogo/js/motor/`, nesta ordem): `interiores-base.js` (`Reino.registrarInterior`, `Reino._interiores`),
@@ -238,6 +238,28 @@ estabulo, loja, bau, petshop, observatorio, portugues (`materia:portugues`).
 O interior de teste da primeira fase (`teste`, lugar `bau`, NPCs `teste-guia`/`teste-sala`) foi trocado pelo
 Baú de verdade e não existe mais. Os perfis de voz `npc-teste-guia`/`npc-teste-sala` ainda estão em
 `config.js` (sem uso no jogo); não os reaproveite para personagem novo.
+
+### 9.7 Lugar novo no mapa
+Prédio novo = a pasta `jogo/js/interiores/<p>/` + as linhas dela no manifesto. Nada muda em `mundo/lugares.js`,
+`ui/lugares.js` nem `validar-interiores.js`: o prédio se registra ao carregar.
+- `Reino.registrarLugar(def)` (`nucleo/registros.js`) guarda em `Reino.lugaresRegistrados`, na ordem de registro.
+  `def = { id, nome, sprite, rect, placa?, caminho, menu? }`; `caminho` (tiles `[x, y]` da rua até a frente da
+  porta) é OBRIGATÓRIO: sem ele o lugar é recusado (devolve `false`, vai para `Reino.lugaresRecusados` e o
+  validador acusa). `Mapa.criar` põe os registrados depois dos fixos com caminho (depois do sorteio dos enfeites).
+- `menu = { emoji, info?(l), avisos?(l) → [{ texto, icone?, tipo }], abrir?(l) }` alimenta a linha do menu
+  Lugares, os chips e a tela própria (`Reino.UI.registrarLugarMenu(tipo, menu)`, a mesma tabela dos lugares de
+  hoje). Sem `menu`: 📍, sem informação, sem avisos e só o interior. `tipo` do lugar = `id`.
+- O validador lê os lugares dos dados (`ferramentas/validar/lugares-do-mapa.js`) e acusa id repetido, registrado
+  sem caminho, rect fora do mapa ou por cima de outro lugar, caminho fora do mapa ou por dentro de um prédio.
+```js
+// jogo/js/interiores/ninho/lugar.js (depois do desenho de fora em Mapa.PREDIOS.ninho)
+Reino.registrarLugar({
+  id: 'ninho', nome: 'Ninho das Corujas', sprite: 'ninho', rect: { x: 10, y: 10, w: 5, h: 4 }, placa: 'acima',
+  caminho: [[14, 14], [13, 14], [12, 14]],   // livre de verdade: npm run ver -- --livres 5x4
+  menu: { emoji: '🦉', info: function () { return 'Histórias da noite'; } },
+});
+// e o interior de entrada: Reino.registrarInterior({ id: 'ninho', lugar: 'ninho', entrada: true, ... })
+```
 
 ## 10. Antes de mexer, rode
 ```

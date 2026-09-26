@@ -108,6 +108,50 @@ O que o NPC já disse na sessão fica só na memória (nada no save).
 2. Personagens não imitam pessoas reais (nem os autores da apostila).
 3. Personagem novo = entrada em `elenco.js` + perfil `npc-<id>` em `Reino.config.vozes`. Cavaleiro ou professora:
    `paraMateria` / `paraProva` na entrada do elenco (`Reino.NPCs.doElenco(filtro)`).
+4. Caminho novo, sem mexer em arquivo central: `Reino.registrarPersonagem(def)` (`nucleo/registros.js`) no
+   `falas.js` do prédio ou no arquivo da prova. O `perfil` (formato de `Reino.config.vozes`) vira na hora
+   `Reino.config.vozes['npc-<id>']`; o `elenco.js` soma os registrados ao `N.ELENCO` depois dos de sempre (quem
+   registra depois do elenco entra direto). Id repetido (com o elenco ou entre registrados) lança erro.
+   ```js
+   Reino.registrarPersonagem({ id: 'rosa', nome: 'Professora Rosa', paraProva: 'ciencias-4bim',
+     sprite: { pele: '#f1c7a5', cabelo: '#5a3825', penteado: 'chanel', roupa: '#39a860', perna: 'saia' },
+     perfil: { voz: 'pt-BR-FranciscaNeural', velocidade: '-5%', tom: '+4Hz' } });
+   ```
+   Com `predio: '<p>'` (e, opcionais, `x`, `y`, `acao`), o registro entra em `Reino.personagensDoPredio('<p>')`
+   (`[{ id, x, y, acao }]`, na ordem de registro). O `<p>.js` feito por `npm run novo -- predio` soma esses à lista
+   `npcs` (pelo ajudante `npc()`, que lê sprite e voz do elenco; sem `x/y`, uma vaga livre perto da entrada; sem
+   `acao`, `guia`). Os prédios de antes também somam, mas só com `x` e `y` (tile do interior; não têm vagas): sem
+   eles o `validar-interiores` acusa; sem `acao`, a do guia do prédio. O id é SEMPRE o do interior
+   (`registrarInterior({ id })`): `'museu'`, `'escola'`…; na Torre, o de cada andar (`'torre'`, `'torre-1'`…
+   `'torre-relogio'`); no interior padrão, `'padrao-<matéria>'`. `npm run novo -- personagem <id> --predio <p>`
+   escreve o registro em `jogo/js/interiores/<p>/personagens.js` (depois do `falas.js`, antes do `<p>.js`).
+   A mesma pessoa em mais de um interior (mesma voz e sprite; as falas de cada lugar em `FALAS_INTERIORES.<p>.npcs.<id>`):
+   `lugares: [{ predio, x, y, acao }]` no registro ou, de outro arquivo, `Reino.personagemTambemEm(id, { predio, x, y, acao })`;
+   `Reino.personagensDoPredio(p)` devolve quem tem `p` em qualquer lugar. O registro tem de carregar ANTES do layout de cada
+   interior onde aparece (no manifesto e na ordem alfabética das pastas das ferramentas). Gerador:
+   `npm run novo -- personagem <id> --predio <outro> --tambem`.
+5. Chaves do `sprite` (lista em `Reino.NPCs.OPCOES_SPRITE`, `personagens/npcs.js`; o desenho está em
+   `npcs-corpo.js`, `npcs-cabeca.js` e `npcs-sprites.js`). Chave fora daqui é ignorada pelo desenho: o
+   `validar-interiores` AVISA (elenco, `registrarPersonagem` e NPCs dos interiores), e também valor fora da lista.
+   "cor" = `'#rrggbb'`; "sim" = `true` (onde diz "ou cor", aceita uma cor no lugar de `true`).
+
+   | Chave | Valores aceitos |
+   |---|---|
+   | `base` | `'pessoa'` (padrão), `'fada'` (criança com asas), `'dragao'`, e as de `registrarBase` (hoje `'robo'`) |
+   | `idade` | `'adulto'` (padrão; fada: `'crianca'`), `'crianca'`, `'idoso'` (cabelo grisalho padrão) |
+   | `penteado` | `'curto'` (padrão), `'careca'`, `'cachos'`, `'espetado'`, `'longo'`, `'trancas'`, `'chanel'`, `'rabo'`, `'rabos'`, `'coque'`, `'black'`, `'cacheado'` |
+   | `chapeu` | `'bone'`, `'chapeu'`, `'palha'`, `'cartola'`, `'boina'`, `'coroa'`, `'tiara'`, `'elmo'`, `'turbante'`, `'gorro'`, `'lenco'`, `'chef'`, `'quepe'`, `'pescador'`, `'festa'`, `'faixa'`, `'flores'` |
+   | `perna` | `'calca'` (padrão; fada: `'vestido'`), `'saia'`, `'vestido'`, `'short'` |
+   | `estampa` | `'listras'`, `'xadrez'`, `'bolinhas'`, `'estrelas'` (no tronco; bolinhas/estrelas em `cor2`) |
+   | `emblema` | `'A'` (letra na sobreveste da `armadura`; cor em `emblemaCor`) |
+   | cores | `pele`, `cabelo`, `roupa`, `roupa2` (calça/saia), `sapato`, `cor2` (detalhes), `chapeuCor`, `oculosCor`, `aventalCor`, `capaCor`, `bolsaCor`, `cachecolCor`, `regadorCor`, `emblemaCor`, `colete` |
+   | sim | `boca` (`false` tira a boca), `oculos`, `avental`, `capa`, `capaEstrelas`, `jaleco`, `apito`, `bengala`, `bolsa`, `cachecol`, `cracha`, `carta`, `pincel`, `violao`, `varinha`, `presilha`, `flor`, `espelhoTesta`, `armadura`, `jardineira`, `corrente` (com `colete`), `asas`, `lapis`, `palhaco`, `sapatoes`, `regador` |
+   | sim ou cor | `barba`, `bigode` (padrão: cor do cabelo), `nariz`, `colar`, `gravata`, `gola`, `livro`, `livroAberto` (padrão: `cor2`) |
+   | dragão | `corpo`, `barriga`, `asa` (cores), `moeda` (`false` tira a moeda) |
+   | robô | `corpo`, `detalhe`, `antena` (cores; `observatorio/robo.js`) |
+
+   Base nova: `registrarBase(nome, fn, chaves?)`, com `chaves = { detalhe: 'cor', … }` (as que ela lê de `o.cru`),
+   para o validador não avisar.
 
 ## 6. Ações (as mesmas funções de sempre, regras intactas)
 1. sala → `Reino.Missao.iniciar(materia, sala, fim)` (`atividades/missao.js`).
@@ -121,7 +165,9 @@ O que o NPC já disse na sessão fica só na memória (nada no save).
    `Reino.Claude.depoisDaMissao()`. Ela continua ao lado do NPC.
 7. `ctx` das ações: vinda de objeto, `{ interior, cena, objeto }`, e roda DEPOIS da `fala` do objeto (se a
    fala resolver `null`, não roda). Vinda de NPC, `{ npc, quem }`, e só roda no "vamos"/"lista" do diálogo.
-8. Despedida: tela registrada que fecha, ou ação que resolve `'tchau'` → o NPC fala a sua `depois` (balão
+8. Outro tipo: primeiro as de `registrarAcao`, depois as `acoes` dos módulos (`Reino.registrarModulo`, cena-e-motor
+   §14; um sistema carrega antes dos NPCs e declara ali). Tipo que ninguém tem não faz nada (o validador acusa).
+9. Despedida: tela registrada que fecha, ou ação que resolve `'tchau'` → o NPC fala a sua `depois` (balão
    simples de 5 s). Exceção: a tela `petshop` sem compra nem comida dada (`UI.visitaPetShop`, `cuidados.md` §6).
 
 ## 7. Extensões
@@ -131,11 +177,16 @@ Reino.NPCs.registrarTela(nome, abrir(acao, ctx), convite?)   // tela nova para {
 Reino.NPCs.registrarAcao(tipo, fn(acao, ctx) → Promise)      // ação nova de NPC/objeto ({ tipo: 'beber' } …)
 Reino.NPCs.registrarStatus(fn(npc) → { icone, rotulo } | null)   // roda ANTES dos status embutidos e os substitui:
                                                               // o primeiro não nulo vence; exceção vira console.error e segue
-Reino.NPCs.registrarBase(nome, fn(o, quadro) → { g, busto }) // base nova de sprite (o.base escolhe); o.cru = sprite
-                                                              // original; quadro: bit 1 = respirando, bit 2 = piscando
+Reino.registrarModulo({ id, acoes: { tipo: fn(acao, ctx) → Promise } })   // o mesmo, vindo de um SISTEMA
+                                                              // (carrega antes dos NPCs; cena-e-motor.md §14)
+Reino.NPCs.registrarBase(nome, fn(o, quadro) → { g, busto }, chaves?) // base nova de sprite (o.base escolhe); o.cru =
+                                                              // sprite original; quadro: bit 1 = respirando, bit 2 =
+                                                              // piscando; chaves: as dela ({ detalhe: 'cor' }, §5)
 Reino.NPCs.gradeSprite = { Grade, W, CX, TOPO, HY, BY, CONTORNO, esc, cla, mis }   // para desenhar a base
                                                               // (esc/cla/mis = escurecer, clarear, misturar)
-Reino.NPCs.telas(), Reino.NPCs.acoes()                        // o que foi registrado (o validador aceita)
+Reino.NPCs.telas(), Reino.NPCs.acoes()                        // o que foi registrado (o validador aceita);
+                                                              // acoes() inclui as dos módulos
+Reino.NPCs.OPCOES_SPRITE                                      // chaves do sprite → valores (§5)
 ```
 Registrar no carregamento é permitido (só guarda a função).
 

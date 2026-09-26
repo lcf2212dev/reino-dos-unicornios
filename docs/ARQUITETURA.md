@@ -83,6 +83,30 @@ docs/  ARQUITETURA.md  contratos/  receitas/  decisoes/
 | Ícones em pixel | `jogo/js/arte/icones/<lote>.js` (prévia `jogo/ferramentas/previas/icones.html`) | `docs/contratos/README.md` §2.5 |
 | Configuração (números, PIN, vozes) | `jogo/js/nucleo/config.js` | — |
 
+## 5.1 Pontos de extensão (quero X → faço Y)
+Cada feature entra por um registro, no arquivo dela + uma linha no manifesto (`npm run index`). Os centrais ficam intactos.
+Comece pelo gerador quando houver: `npm run novo -- <tipo> <id>` (`--lista`, `--seco`); ele cria os arquivos, as
+linhas do manifesto e o index, e deixa `(preencher)` onde só a pessoa escreve (os validadores recusam).
+| Quero | Gerador | Faço (registro / arquivo) | NÃO toco | Receita |
+|---|---|---|---|---|
+| Sistema (mecânica como banho, fotos) | `novo sistema` | `Reino.registrarModulo` em `jogo/js/sistemas/<s>.js` | `motor/main.js`, `motor/laco.js`, `sistemas/falas.js`, `debug.js` | `sistema-novo.md` |
+| Campo novo no save | `novo sistema --campo` | `Reino.Progresso.registrarCampo` no arquivo do sistema | `progresso*.js`, testes do save | `sistema-novo.md` passo 5 |
+| Prédio (lugar + interior) | `novo predio` | `Reino.registrarLugar` + `Reino.registrarInterior` em `jogo/js/interiores/<p>/` | `mundo/lugares.js`, `ui/lugares.js`, `validar-interiores.js` | `predio-novo.md` |
+| Matéria / sala | `novo materia`, `novo sala` | `Reino.registrarMateria` / `Reino.registrarSala` em `jogo/js/conteudo/materias/<m>/` | telas e desafios | `materia-nova.md` |
+| Prova | `novo prova` | `Reino.registrarProva` (acessórios com `desenho` e `icone` inline) em `jogo/js/conteudo/provas/` | Escola, `arte/pixelart-unicornio-moldes.js`, `arte/icones/` | `prova-nova.md` |
+| Personagem | `novo personagem` | `Reino.registrarPersonagem` (com o perfil de voz) em `jogo/js/interiores/<p>/personagens.js` | `personagens/elenco.js`, `nucleo/config.js` | `personagem-novo.md` |
+| Enfeite / comida | — | `Reino.LojaItens` (`jogo/js/conteudo/loja-itens.js`) | telas da Loja e Pet Shop | `enfeite-novo.md`, `comida-nova.md` |
+| Música | — | `jogo/js/sistemas/musicas-faixas.js` | `musicas.js` | `musica-nova.md` |
+| Fala | — | dados do dono (`falas.js` do prédio, `falas()` do módulo) | `sistemas/falas.js` | `fala-nova-e-vozes.md` |
+| Tipo de desafio (ex.: conta armada) | `novo desafio` | `Reino.registrarTipoDesafio` em `jogo/js/atividades/desafios/<tipo>.js` (tela, pontos, textos, voz, validador) | `atividades/desafios.js`, `atividades/provas.js`, `sistemas/falas.js`, `validar-conteudo.js` | `desafio-novo.md` |
+| Ícone de emoji novo | — | `Reino.registrarIcones({ '<emoji>': { n, p, d } })` num arquivo da pasta da feature | `arte/icones/<lote>.js` | `docs/contratos/README.md` §2 |
+| Ação de NPC de um sistema | `novo sistema` | `acoes: { <tipo>: fn }` no `Reino.registrarModulo` | `personagens/npcs-conversa.js` | `cena-e-motor.md` §14 |
+
+Conferir enquanto constrói (rápido): `npm run ver -- …` (fotos), `npm run validar` (só erros e avisos; `--so <id>` num
+validador para olhar uma feature, `--detalhes` para a lista inteira), `npm run e2e -- --cenas '<regex>'` (só as imagens
+daquela parte). No fim: `npm test` e o `npm run e2e` completo (cada imagem diferente sai com a da base, a atual e uma
+imagem de diferença em magenta).
+
 ## 6. Ciclo de um quadro (`jogo/js/motor/laco.js`)
 `laco(t)` roda a cada `requestAnimationFrame`:
 1. `dt` limitado a 50 ms. Parado se o jogo não começou ou há tela DOM aberta (`V.pausado`).
@@ -94,8 +118,9 @@ docs/  ARQUITETURA.md  contratos/  receitas/  decisoes/
    3. Buffer em px do jogo: `cena.corFundo`, `cena.desenharFundo(bctx, t, animar)`, marcador do toque.
    4. Buffer ampliado no canvas (px da tela), sem suavizar.
    5. `cena.desenharTela(ctx, pintor, t, animar)` (no mapa, vazio).
-   6. Itens ordenados por Y: `Jogador.itensDesenho` + `cena.itensDesenho` (+ `Reino.Banho.itensDesenho` no banho).
-   7. `cena.desenharSobre` (placas dos cômodos) e `Reino.Banho.sobre` no banho.
+   6. Itens ordenados por Y: `Jogador.itensDesenho` + `cena.itensDesenho` + `camada.itensDesenho` de cada módulo
+      com `camada.ativo()` (ex.: o banho), na ordem de registro.
+   7. `cena.desenharSobre` (placas dos cômodos) e `camada.sobre` dos módulos ativos.
    8. Luz (vinheta), íris (`Cena.desenharIris`), tempo do quadro (`Reino.Cena.quadros`).
 - Cada parte roda dentro de `seguro()`: um erro de desenho vira um `console.error` (uma vez) e o quadro segue.
 - Nada de canvas novo por quadro; o estático é pré-renderizado (`motor/interiores-estatico.js`).
@@ -158,7 +183,10 @@ NUNCA abra `jogo/js/voz/*.js`, `falas.json`, `vozes-indice.json` nem `vozes-cach
   começo direto no mapa. É o que as referências (`npm run e2e`) usam.
 - Servidor de TESTE: `npm run servidor-teste` (porta livre, banco novo em `/tmp/reino-testes/`).
 - Navegador de teste: `jogo/ferramentas/testes/navegador.js` (só Chromium; bloqueia rede fora da porta de teste).
-- Saves sintéticos: `jogo/ferramentas/testes/saves.js`.
+- Saves sintéticos: `jogo/ferramentas/testes/saves.js` (compostos por `saves-compor.js`).
+- Ver uma cena com um comando: `npm run ver -- --ir petshop --tamanhos celular` (`jogo/ferramentas/testes/ver.js`,
+  `--ajuda`); em script, `abrirCenario()` de `jogo/ferramentas/testes/cenario.js`. `docs/contratos/README.md` §5.
+- Módulos: `__reino.modulo(id)` devolve o `depurar()` do sistema (`docs/contratos/cena-e-motor.md` §14).
 
 ## 11. Comandos (`package.json`, da raiz)
 | Comando | O que faz |
@@ -167,7 +195,9 @@ NUNCA abra `jogo/js/voz/*.js`, `falas.json`, `vozes-indice.json` nem `vozes-cach
 | `npm run unidade` | testes de unidade (`jogo/ferramentas/testes/unidade/*.test.js`) |
 | `npm run validar` | conteúdo, interiores, index x manifesto, docs |
 | `npm run e2e` | referências completas contra o commit base (dados, imagens nos 3 tamanhos, vozes) |
-| `npm run servidor-teste` | sobe o servidor de TESTE |
+| `npm run novo` | gerador: `predio`, `materia`, `sala`, `prova`, `personagem`, `sistema` (`--lista`, `--seco`) |
+| `npm run ver` | abre uma cena (save sintético, lugar, tela, passos) e fotografa nos 3 tamanhos (`--ajuda`) |
+| `npm run servidor-teste` | sobe o servidor de TESTE (para o que o `ver` não cobre) |
 | `npm run index` | gera `jogo/index.html` |
 | `npm run vozes` | listar → gravar → empacotar → conferir por transcrição |
 | `npm run artifact` | monta a página do artifact em `/tmp` (não publica) |

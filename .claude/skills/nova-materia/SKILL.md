@@ -8,13 +8,15 @@ Siga a receita `docs/receitas/materia-nova.md`. Contrato: `docs/contratos/conteu
 
 1. Trabalhe numa worktree (nunca na árvore principal). Leia `jogo/js/conteudo/CLAUDE.md`.
 2. Os prints ficam na pasta da matéria na raiz do repositório (`<Matéria>/`). Não mova essa pasta.
-3. Crie `jogo/js/conteudo/materias/<m>/`: uma sala por arquivo, `livro.js` e `<m>.js`.
-4. Uma linha por arquivo em `jogo/js/manifesto.js` (grupo `materias`, `node: true`), salas antes de
-   `livro.js` e `<m>.js`. Depois:
+3. Gere: `npm run novo -- materia <m> --nome "…" --emoji 🌍 --salas <n> --prefixo <p> --seco` e, conferido, sem
+   `--seco` (salas, `livro.js`, `<m>.js`, manifesto, index). Sala avulsa: `npm run novo -- sala <m> <idSala>`.
+   Preencha todo `(preencher)` com a apostila.
+4. O gerador já pôs as linhas no manifesto (salas antes de `livro.js` e `<m>.js`). Depois de preencher:
    ```
    npm run index
    npm run validar
    ```
 5. Sem prédio próprio, a matéria ganha o interior padrão. Prédio próprio: skill `novo-predio`.
-6. Texto novo precisa de voz: skill `gravar-vozes` (só quem integra grava).
+6. Veja no jogo: `npm run ver -- --ir materia:<m>` e `npm run ver -- --tela sala:<sala> --tamanhos celular`.
+   Texto novo precisa de voz: skill `gravar-vozes` (só quem integra grava).
 7. Feche com a skill `validar-tudo`. Commit na branch; sem merge nem push sem o Leandro.

@@ -7,7 +7,7 @@ do progresso real. Mudança aqui só com muito cuidado e testes.
 ## Índice
 1. Onde está no código · 2. O que nunca muda · 3. Campos aditivos · 4. Mescla · 5. Cópia `-novidades` ·
 6. Normalização · 7. Sincronização · 8. Novo ciclo, Apagar tudo, quem lê o estado · 9. Segurança do progresso real ·
-10. Antes de mexer
+10. Antes de mexer · 11. Campo novo (`registrarCampo`)
 
 ## 1. Onde está no código
 - `jogo/js/sistemas/progresso.js` — estado, `estadoNovo`, `completar`, `normalizarNovos`, `numeroOu`,
@@ -16,6 +16,7 @@ do progresso real. Mudança aqui só com muito cuidado e testes.
 - `jogo/js/sistemas/progresso-nuvem.js` — servidor de casa (`/api/progresso`) e claude.ai (`db`, doc
   `progresso/mariana`), `iniciarNuvem`, `limiteRedeMs`, `novaTentativaMs`.
 - `jogo/js/sistemas/progresso-regras.js` — dinheiro, estrelas, unicórnios, salas, treinos, provas, pagamentos.
+- `jogo/js/sistemas/progresso-campos.js` — `P.registrarCampo` e o catálogo de estratégias de mescla (§11).
 - Interno compartilhado: `Reino._progresso` (`I.estado` é o objeto do save; ver o cabeçalho de progresso.js).
 - Chave: `Reino.config.chaveSave` = `'mariana-reino-v1'` (`jogo/js/nucleo/config.js`).
 - Testes: `jogo/ferramentas/testes/testar-save.js`, `testar-banho.js`.
@@ -23,7 +24,8 @@ do progresso real. Mudança aqui só com muito cuidado e testes.
 ## 2. O que nunca muda
 1. `chaveSave`, `v`, `geracao`, `ciclo` e o formato dos campos existentes.
 2. As regras de `P.mesclar()` para os campos existentes (só o endurecimento de `estrelas`, §4.5).
-3. Campo novo só aditivo (`estadoNovo()` + `completar()`), com regra de mescla própria e teste.
+3. Campo novo só aditivo, e declarado com `P.registrarCampo` (§11): o padrão, a limpeza, a mescla, o Novo ciclo
+   e a cópia saem de uma declaração, e os testes de contrato valem para ele. Os campos de hoje ficam como estão.
 4. Dinheiro e prêmios são DERIVADOS das conquistas, nunca guardados soltos. Status de NPC, medalhas,
    unicórnios nas baias, moedas no baú, prêmio no mural: derivados de `Reino.Progresso` (nada novo no save).
 5. Matéria nova (ex.: Português) usa os campos de sempre, com ids novos: nenhum campo novo, nenhuma regra nova.
@@ -167,3 +169,48 @@ npm test
 ```
 Mudou regra de mescla ou campo: teste novo em `testar-save.js` com dois aparelhos (versão antiga e nova,
 `git show <commit>:…` num `vm` separado, como em `testar-banho.js`).
+
+## 11. Campo novo (`registrarCampo`)
+Mecânica nova com estado declara o campo UMA vez, num script carregado antes do `P.carregar()` (no
+carregamento, depois de `progresso-campos.js` no manifesto):
+```
+Reino.Progresso.registrarCampo('jardim', {
+  padrao: function () { return {}; },   // save sem o campo (antigo, novo, "Apagar tudo")
+  mesclar: 'carimbo',                   // do catálogo abaixo, ou function (a, b) própria
+  limpar: function (v) { return v; },   // opcional: saneamento extra, depois do da estratégia
+  novoCiclo: 'mantem',                  // 'mantem' | 'zera'
+  copiaSeguranca: true,                 // opcional: entra na cópia -novidades (em `campos`)
+  exemplos: [a, b],                     // opcional (OBRIGATÓRIO com mesclar próprio): valores realistas p/ os testes
+});
+```
+1. Onde entra: `estadoNovo()` e `completar()` põem `padrao()`; `normalizarNovos()` limpa (a da estratégia,
+   depois `limpar`; `undefined` = estragado, volta ao padrão; lista onde o padrão é objeto, ou o contrário,
+   também); `P.mesclar` junta (base = o lado mais recente, como a despensa; um lado sem o campo ou estragado não
+   apaga o outro; campo que `zera`, entre ciclos diferentes, vem inteiro do ciclo mais novo, como as salas);
+   `P.novoCiclo` põe o padrão nos que `zera`; a cópia `-novidades` guarda os que pediram em `campos: { nome: valor }`
+   e devolve pela mesma regra da mescla (os que `zera`, só do mesmo ciclo).
+2. Nome: palavra em camelCase, fora de `Object.prototype`, não usado pelo save de hoje (`salas`, `cuidados`,
+   `despensa`, `ajustes`, `geracao`…) nem registrado antes. Senão, erro claro. O padrão tem que passar pela limpeza. `exemplos`, quando vem, é
+   `[a, b]` e os dois passam pela limpeza; com `mesclar` função própria ele é obrigatório (erro claro sem ele).
+3. Catálogo (`progresso-campos.js`, `ESTRATEGIAS`), cada uma com a sua garantia:
+   | estratégia | formato | regra | garantia |
+   |---|---|---|---|
+   | `contadores` | `{ id: n }` ou `{ id: { a: n, … } }` | por chave (e subchave) o maior; contador estragado = 0 | nada some, comutativa |
+   | `carimbo` | `{ id: { …, em } }` | por chave vence o `em` maior; empate = a base | nenhuma chave some; comutativa com carimbos diferentes |
+   | `uniao` | lista de valores simples ou `{ id: true }` | união (ordem da base, depois os novos) | nada some, comutativa como conjunto |
+   | `maior` | número | o maior | nunca desce, comutativa |
+   Todas: `mesclar(a, a) = a`; só chaves próprias e seguras (§6.1); NaN, Infinity e texto sem número não entram.
+   Função própria recebe `(base, outro)` já limpos e não pode mudar nenhum dos dois.
+   Cada estratégia sabe gerar dois exemplos no formato do `padrao()` (`exemplos(padrao)`); os do def, se vierem, valem no lugar.
+4. Sem campo registrado, o save, a cópia, a mescla e o Novo ciclo saem byte a byte iguais aos de antes.
+5. Testes: `jogo/ferramentas/testes/unidade/save-campos.test.js` carrega o jogo inteiro no vm (todos os `node: true`
+   do manifesto) e roda o contrato (idempotência, nada some, comutatividade, entrada hostil, save antigo, Novo
+   ciclo, ida e volta pela cópia) para CADA campo de `P.camposRegistrados()`, com os exemplos do campo. Campo real
+   novo entra sozinho, sem mexer no teste (o arquivo precisa estar no manifesto com `node: true`); um caso prova isso com
+   uma feature de mentira num arquivo à parte. Também há um campo de mentira por estratégia.
+6. Exemplo: a despensa, se fosse nova, seria
+   `registrarCampo('despensa', { padrao: () => ({}), mesclar: 'contadores', novoCiclo: 'mantem', copiaSeguranca: true,
+   limpar: (d) => { /* usadas ≤ compradas, inteiros */ return d; } })` — no lugar do `juntarDespensa`, do trecho em
+   `normalizarNovos`, da linha em `comCopia`/`gravarCopia` e do comentário no `P.novoCiclo`.
+7. Gravar depois de mudar o campo (nos ganchos ou quando a Mariana age, nunca no carregamento): mude
+   `Reino.Progresso.estado().<campo>` e chame `Reino.Progresso.salvar()` (grava no aparelho e agenda a nuvem).

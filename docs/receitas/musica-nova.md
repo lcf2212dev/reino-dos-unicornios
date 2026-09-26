@@ -33,7 +33,7 @@ esperada abaixo; os outros passos têm que sair ✔. Diferenças esperadas no `n
 A base do e2e só muda por commit: quem integra troca o hash em `jogo/ferramentas/testes/base-referencia.txt`
 depois do commit da mudança; não edite esse arquivo na tarefa. Qualquer diferença fora da lista acima é defeito.
 
-Conferir (servidor de TESTE, Ajustes → Música ligada no save sintético): `__reino.musicaAtual()` dentro do lugar
+Conferir: `npm run ver -- --ajustes '{"musica":true}' --ir <lugar> --js 'console.log(JSON.stringify(__reino.musicaAtual()))'`
 mostra `faixa: '<amb>'`. Ouvir mesmo, só o Leandro.
 
 ## Armadilhas

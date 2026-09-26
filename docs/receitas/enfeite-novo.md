@@ -81,7 +81,7 @@ No começo do objeto, junto dos outros `"enfeite:…"`, no mesmo formato:
 ] },
 ```
 - Exatamente 16 linhas de 16 caracteres. Confira na prévia `jogo/ferramentas/previas/icones.html` (por `file://`):
-  o script do §6 tira a foto icone.png do cartão `enfeite:<id>`.
+  `npm run ver -- --previa icones` (§6).
 
 ### 5. Validadores (da raiz)
 ```
@@ -95,101 +95,19 @@ diferença esperada da Loja (§7); os outros passos têm que sair ✔. `loja-enf
 diferente do `slot`.
 
 ### 6. Conferir no jogo (visual), com save sintético
-Salve o script abaixo em `/tmp/<voce>/conferir-enfeite.js` e rode
-`node /tmp/<voce>/conferir-enfeite.js <raiz do repositório> <id> /tmp/<voce>/fotos`. Ele:
-1. abre a prévia `jogo/ferramentas/previas/acessorios.html?id=<id>` por `file://` (o enfeite em 8 direções,
-   4 estágios e montado) → previa.png, e a prévia `jogo/ferramentas/previas/icones.html` rolada até o
-   cartão `enfeite:<id>` (em 6x e no tamanho do jogo, fundo claro e escuro) → icone.png;
-2. sobe um servidor de TESTE (porta livre, banco em `/tmp/reino-testes/`), gera os saves sintéticos do
-   próprio jogo (`jogo/ferramentas/testes/saves.js`), compra e veste o enfeite num unicórnio adulto;
-3. abre o jogo no Chromium de teste (celular e notebook, `?debug=1&congelar=1`) → `mapa-<tamanho>.png` e a
-   montaria recortada de frente, de lado e de costas → `montaria-<vista>-<tamanho>.png`, e a Loja rolada até o
-   cartão do enfeite → `loja-<tamanho>.png`. Mostra os erros de página (tem que ser "nenhum").
-```js
-// Fotos para conferir um enfeite: a prévia (file://) e o jogo no servidor de TESTE com save sintético.
-// Uso: node conferir-enfeite.js <raiz do repositório> <id do enfeite> <pasta de saída em /tmp>
-const path = require('path');
-const [raiz, id, saida] = process.argv.slice(2).map((a, i) => (i === 1 ? a : path.resolve(a)));
-if (!raiz || !id || !saida || !saida.startsWith('/tmp/')) { console.error('uso: node conferir-enfeite.js <repo> <id> </tmp/pasta>'); process.exit(1); }
-const T = path.join(raiz, 'jogo', 'ferramentas', 'testes');
-const { iniciar } = require(path.join(T, 'servidor-teste'));
-const { abrir, lancar } = require(path.join(T, 'navegador'));
-const { gerarSaves } = require(path.join(T, 'saves'));
-require('fs').mkdirSync(saida, { recursive: true });
-
-const avancar = (page, ms) => page.evaluate((m) => window.__congelar.avancar(m), ms);
-async function noMapa(page) {
-  await page.waitForFunction(() => window.__congelar && window.__reino, null, { timeout: 30000 });
-  for (let i = 0; i < 400; i++) {
-    const ok = await page.evaluate(() => { const h = document.querySelector('#hud'); return window.__reino.estado() === 'mapa' && h && !h.hidden; });
-    if (ok) return avancar(page, 1000);
-    await avancar(page, 50); await page.waitForTimeout(15);
-  }
-  throw new Error('o jogo não chegou no mapa');
-}
-
-(async () => {
-  const browser = await lancar();
-  const servidores = [];
-  try {
-    // 1. prévia: o enfeite em todas as vistas e estágios (abre por file://; o servidor não entrega ferramentas/)
-    const url = 'file://' + path.join(raiz, 'jogo/ferramentas/previas/acessorios.html') + '?id=' + encodeURIComponent(id);
-    const p = await abrir({ browser, url, tamanho: 'notebook' });
-    await p.page.waitForTimeout(800);
-    await p.page.screenshot({ path: path.join(saida, 'previa.png'), fullPage: true });
-    console.log('erros na prévia:', p.page.__erros.length ? p.page.__erros : 'nenhum');
-    // 1b. ícone: a prévia dos ícones (file://), só o cartão `enfeite:<id>`
-    const ic = await abrir({ browser, url: 'file://' + path.join(raiz, 'jogo/ferramentas/previas/icones.html'), tamanho: 'notebook' });
-    await ic.page.waitForTimeout(800);
-    const cartoes = ic.page.locator('.cel');
-    const n = await cartoes.evaluateAll((els, k) => els.findIndex((e) => e.textContent.startsWith(k + ' ')), 'enfeite:' + id);
-    if (n < 0) console.log('✘ ícone enfeite:' + id + ' não está na prévia (falta o desenho em js/arte/icones/)');
-    else { await cartoes.nth(n).scrollIntoViewIfNeeded(); await cartoes.nth(n).screenshot({ path: path.join(saida, 'icone.png') }); }
-    console.log('erros na prévia dos ícones:', ic.page.__erros.length ? ic.page.__erros : 'nenhum');
-    // 2. save sintético feito pelo próprio jogo (saves.js), com o enfeite comprado e vestido, montaria adulta
-    const s1 = await iniciar({ raiz: path.join(raiz, 'jogo') }); servidores.push(s1);
-    const a = await abrir({ browser, url: s1.url, tamanho: 'celular', query: '?debug=1&congelar=1' });
-    await a.page.waitForFunction(() => window.Reino && Reino.Progresso && Reino.Progresso.estado(), null, { timeout: 30000 });
-    const saves = await a.page.evaluate(`(${gerarSaves.toString()})()`);
-    const save = saves.completo;
-    save.loja[id] = true;
-    save.usando.enfeites = [id];
-    save.unis.inicial.xp = 200;          // adulto
-    await a.context.close();
-    // 3. o jogo com esse save, em outro servidor de teste (banco novo)
-    for (const tamanho of ['celular', 'notebook']) {
-      const s = await iniciar({ raiz: path.join(raiz, 'jogo') }); servidores.push(s);
-      const b = await abrir({ browser, url: s.url, tamanho, save, query: '?debug=1&congelar=1' });
-      await noMapa(b.page);
-      await b.page.screenshot({ path: path.join(saida, `mapa-${tamanho}.png`) });
-      // a Mariana montada vista de frente, de lado e de costas (cauda e olho não aparecem em todas as vistas),
-      // cada uma recortada em volta dela
-      for (const [vista, dx, dy] of [['frente', 0, 1], ['lado', 1, 0], ['costas', 0, -1]]) {
-        await b.page.evaluate(([x, y]) => Jogador.virar(x, y), [dx, dy]);
-        await avancar(b.page, 300);
-        const c = await b.page.evaluate(() => Reino.Cena.paraTela(Jogador.x, Jogador.y));
-        const clip = { x: Math.max(0, c.x - 100), y: Math.max(0, c.y - 160), width: 200, height: 200 };
-        await b.page.screenshot({ path: path.join(saida, `montaria-${vista}-${tamanho}.png`), clip });
-      }
-      await b.page.evaluate((id) => {
-        Reino.UI.telaLoja();
-        try { Reino.Claude.limpar(); } catch (e) { /* sem balão */ }
-        const nome = Reino.LojaItens.enfeite(id).nome;   // rola a tela até o cartão do enfeite
-        const c = [...document.querySelectorAll('#telas *')].find((e) => e.children.length === 0 && e.textContent.trim() === nome);
-        if (c) c.scrollIntoView({ block: 'center' });
-      }, id);
-      await avancar(b.page, 800);
-      await b.page.screenshot({ path: path.join(saida, `loja-${tamanho}.png`) });
-      console.log(`${tamanho}: vestindo`, await b.page.evaluate(() => Reino.Progresso.estado().usando.enfeites), 'erros:', b.page.__erros.length ? b.page.__erros : 'nenhum');
-      await b.context.close();
-    }
-    console.log('fotos em ' + saida);
-  } finally {
-    await browser.close();
-    servidores.forEach((s) => s.parar());
-  }
-})().catch((e) => { console.error('✘ ' + e.message); process.exit(1); });
+Com `npm run ver` (servidor de TESTE e banco novos, save sintético; fotos em `/tmp/reino-testes/ver/<nome>/`,
+sai com erro se houve erro de console):
 ```
+npm run ver -- --previa acessorios:<id> --nome enf-previa         # o enfeite em 8 direções, 4 estágios e montado
+npm run ver -- --previa icones --nome enf-icone                # o cartão enfeite:<id> (6x e tamanho do jogo)
+M='{"loja":{"<id>":true},"usando":{"enfeites":["<id>"]},"unis":{"inicial":{"xp":200}}}'   # comprado, vestido, adulto
+npm run ver -- --mudar "$M" --tamanhos celular,notebook --nome enf-frente --js 'Jogador.virar(0,1)'
+npm run ver -- --mudar "$M" --tamanhos celular,notebook --nome enf-lado   --js 'Jogador.virar(1,0)'
+npm run ver -- --mudar "$M" --tamanhos celular,notebook --nome enf-costas --js 'Jogador.virar(0,-1)'
+npm run ver -- --mudar "$M" --estrelas 500 --tela loja --nome enf-loja   # role até o cartão com --js se preciso
+```
+Para ampliar a montaria: `--recorte x,y,w,h --ampliar 4` (a posição na tela: `Reino.Cena.paraTela(Jogador.x, Jogador.y)`).
+Em script (mais fotos numa sessão só): `abrirCenario()` de `jogo/ferramentas/testes/cenario.js` (exemplo no topo do arquivo).
 Olhe as fotos (ex.: com a ferramenta de ler imagem): o enfeite aparece em cada vista da prévia, sem cobrir o
 olho; na montaria, nas vistas em que o encaixe aparece (enfeite de `cauda` some de frente e o de `olho`, de
 costas: para esses encaixes vale a vista de lado e a prévia); na Loja, o cartão com o ícone e "Usando".
@@ -219,4 +137,4 @@ integra troca o hash em `base-referencia.txt` depois do commit do enfeite); não
   `TMPDIR=/dev/shm/<pasta>` (não apague temporários de outros).
 - No zsh deste PC, `cp` pede confirmação ao sobrescrever: use `command cp -f` em scripts.
 - Temporários ficam em `/tmp`; não apague (se precisar, só com o caminho escrito por extenso).
-- Testes só no Chromium de `jogo/ferramentas/testes/navegador.js`; nunca a porta 80 nem outro navegador.
+- Testes só no Chromium (`npm run ver` / `abrirCenario`); nunca a porta 80 nem outro navegador.

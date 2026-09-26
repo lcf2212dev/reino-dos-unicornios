@@ -7,7 +7,8 @@ Regras gerais (ambiente, convenções, testes): `README.md`.
 ## Índice
 1. Onde está no código · 2. Cena ativa (`Reino.Cena`) · 3. Entrar e sair · 4. Transição em íris ·
 5. Pintor e ordem de desenho · 6. Interface de cena · 7. Jogador · 8. Câmera ·
-9. Mapa: placas, lugares e prédios · 10. Nadar no lago · 11. Desempenho · 12. Depuração · 13. Antes de mexer
+9. Mapa: placas, lugares e prédios · 10. Nadar no lago · 11. Desempenho · 12. Depuração · 13. Antes de mexer ·
+14. Módulos (sistemas)
 
 ## 1. Onde está no código
 - `jogo/js/motor/cena.js` — `Reino.Cena` (estado, entrar/sair, adaptador do mapa, ocupar/liberar, quadros).
@@ -88,9 +89,9 @@ Ordem de cada quadro (`motor/laco.js`):
 2. Buffer ampliado no canvas.
 3. `cena.desenharTela(ctx, pintor, t, animar)` (no mapa hoje é vazio: as placas do mapa saíram, §9).
 4. Itens ordenados por Y: `Jogador.itensDesenho(pintor, animar)` + `cena.itensDesenho(pintor, t, animar)`
-   (+ `Reino.Banho.itensDesenho` durante o banho).
+   (+ `camada.itensDesenho` de cada módulo com `camada.ativo()`, §14; ex.: o banho).
 5. `cena.desenharSobre(ctx, pintor, t, animar)` (opcional): placas dos cômodos nos interiores (quase
-   transparentes quando cobrem a Mariana) (+ `Reino.Banho.sobre` durante o banho).
+   transparentes quando cobrem a Mariana) (+ `camada.sobre` dos módulos ativos, §14).
 6. Luz (vinheta).
 7. Íris, se houver transição.
 
@@ -158,9 +159,25 @@ alvo = { tipo: 'npc'|'objeto'|'saida'|'escada'|'lugar'|'claude', id,
    explícita dos tiles de rua) + o desenho em `Mapa.PREDIOS[sprite]` (`mundo/predios.js` ou o arquivo `fora.js`
    do prédio). Lugar com `caminho` (ou matéria com `porCima: true`) entra depois do sorteio dos enfeites:
    o resto do reino fica com as mesmas árvores e flores.
+   - O desenho das flores (`Mapa.prerender` → `I.desenharEnfeites`) tira os números do sorteio sequencial
+     (`rng(4242)`) de uma CÓPIA do reino de hoje (`I.tipoSorteio`/`I.decorSorteio`, feita no `Mapa.criar` depois
+     dos lugares de hoje e antes dos novos). Flor que um lugar novo tirou gasta os mesmos números sem pintar: as
+     flores longe dele não mudam. (O chão não usa sorteio.) Teste: `unidade/mapa-sorteio.test.js`.
+   - Entram ANTES da cópia: `LUGARES_FIXOS` e as matérias `porCima` listadas em `Mapa.LEGADO_SORTEIO`
+     (`mundo/mapa.js`, hoje `['portugues']`). Depois: matéria `porCima` nova e `Reino.registrarLugar`.
+     Não acrescente id ao `LEGADO_SORTEIO` nem lugar com caminho ao `LUGARES_FIXOS`: prédio novo usa `registrarLugar`.
 5. `Mapa.PREDIOS_ANIM[sprite](ctx, px, py, w, h, t)`: gancho na camada animada do mapa (só com Animações);
    o Observatório usa para cintilar.
 6. O registro do desenho de fora pelo próprio prédio: `if (window.Mapa && Mapa.PREDIOS) Mapa.PREDIOS.<sprite> = function (ctx, px, py, w, h) {…}`.
+7. Achar lugar: `npm run ver -- --previa mapa` (a prévia `ferramentas/previas/mapa.html?grade=1`: números de coluna
+   e linha, o rect de cada lugar e das clareiras livres com o id, e as áreas livres pintadas de azul) e
+   `npm run ver -- --livres 5x4` (= `node jogo/ferramentas/validar/lugares-do-mapa.js --livres 5x4`): os rects livres
+   daquele tamanho com um `caminho` da rua até a frente da porta, caminho mais curto primeiro. Livre = tile de chão
+   do mapa de verdade (`Mapa.criar` rodado num vm), sem rua, praça, água, prédio, rect de lugar, clareira nem sólido
+   (árvore, arbusto, cristal). O caminho sugerido pode passar por árvore (o mapa tira o enfeite do caminho).
+8. O validador (`lugares-do-mapa.js`, chamado por `validar-interiores.js`) confere cada rect (fixos, matérias e
+   registrados) contra os outros lugares E contra o terreno fixo (rua, praça, água do lago, fonte, Claude, borda),
+   e cada `caminho` contra os rects, a água, a fonte e a borda.
 
 ## 10. Nadar no lago
 ```
@@ -181,6 +198,7 @@ Jogador.velocidade() → px/s       // ALVO: base (montada 82, a pé 58) × (nad
                                   // poucos (SUAVE_VEL 0,18 s), sem tranco na margem
 Reino.Som.tocar('splash' | 'gotas' | 'gole' | 'nhac')   // entrar na água, sair, beber, comer
 ```
+Lugar novo não entra na água: o validador acusa rect ou `caminho` no lago (§9.8).
 1. Só ela anda no mapa: a água é andável para ela e a montaria (ou ela e o bebê).
 2. Tocar na água: vai nadando. Tocar em terra: vai por terra sempre que existe caminho por terra, mesmo
    longo. A linha reta do `suavizar()` não corta por água que o caminho de tiles evitou.
@@ -205,7 +223,7 @@ Reino.Som.tocar('splash' | 'gotas' | 'gole' | 'nhac')   // entrar na água, sair
 `paraTela(wx, wy)`, `faltando`, `progresso()`, `avancarJogo(ms)` (= `Cuidados.avancar`), `cuidados()`
 (= `Cuidados.depurar`), `surpresa()` (= `Surpresa.forcar`), `agua(tx, ty)` (tile é água?; sem argumentos:
 ela está nadando?), `banho(uniId)` (= `Cuidados.banhar`), `animacaoBanho()` (= `Banho.depurar`),
-`musicaAtual()`, `fotos()` (= `Fotos.depurar`).
+`musicaAtual()`, `fotos()` (= `Fotos.depurar`), `modulos()` (ids, §14), `modulo(id)` (= `depurar()` do módulo).
 
 ## 13. Antes de mexer, rode
 ```
@@ -214,4 +232,78 @@ node jogo/ferramentas/validar/validar-interiores.js
 node jogo/ferramentas/testes/referencias.js capturar /tmp/<voce>/nova --raiz jogo --so dados,imagens
 node jogo/ferramentas/testes/referencias.js comparar <referencia> /tmp/<voce>/nova
 npm test
+```
+
+## 14. Módulos (sistemas)
+Sistema novo (como cuidados, surpresa, fotos, banho) = arquivos na pasta dele + linhas no manifesto; nada em
+`motor/main.js`, `motor/laco.js`, `sistemas/falas.js` nem `debug.js`. Registro em `js/nucleo/modulos.js`
+(`node: true`, logo depois de `nucleo/registros.js`):
+- `Reino.registrarModulo(def)`, `Reino.modulos` (ordem de registro = ordem do manifesto), `Reino.modulo(id)`.
+- `def = { id, iniciar?(ctx), depoisDasBoasVindas?(ctx), falas?(), depurar?(), acoes?, camada? }` (tipo `ModuloDef`).
+
+| Gancho | Quando roda |
+|---|---|
+| `iniciar({ novo, tutorial: null })` | ao entrar no Reino, antes das boas-vindas/tutorial (ex.: fome e sede) |
+| `depoisDasBoasVindas({ novo, tutorial })` | logo depois; `tutorial` = promessa do tutorial da primeira vez ou `null` (ex.: surpresa) |
+| `falas()` → `[{ texto, voz?, pacote? }]` | `Reino.Falas.todas()` (voz padrão `claude`, pacote padrão `geral`) |
+| `depurar()` | `__reino.modulo(id)` |
+| `camada: { ativo(), itensDesenho(pintor, t, animar), sobre?(ctx, pintor, t, animar) }` | a cada quadro, §5 passos 4 e 5 (erros com rótulo `id` e `id + '-sobre'`) |
+| `acoes: { <tipo>: fn(acao, ctx) → Promise }` | quando a Mariana toca um objeto/NPC com `acao: { tipo: '<tipo>', … }` (npcs-e-dialogo.md §7) |
+
+1. Registrar só guarda funções: nada de DOM, Progresso ou Cena no carregamento (as ferramentas carregam no Node).
+2. A ordem de registro vale para tudo (chamadas e ordem do `falas.json`): mudar a posição no manifesto muda a
+   ordem das vozes e pode mudar o modo determinístico (o e2e acusa).
+3. `acoes`: os sistemas carregam ANTES dos NPCs, então `Reino.NPCs.registrarAcao` ainda não existe; por isso a ação
+   vai no def. A conversa dos NPCs (`personagens/npcs-conversa.js`) procura o tipo nas de `registrarAcao` e, se não
+   achar, nos módulos (na ordem de registro); `Reino.NPCs.acoes()` lista as duas; o `validar-interiores` aceita o tipo.
+   `ctx` = `{ npc?, … }` de quem chamou; a Promise resolve quando a ação acaba (erro vira `null`, com `console.error`).
+   Antes da ação, o NPC diz a fala `nova` dele (`npcs.<id>.nova` no `falas.js` do prédio) com os botões "Vamos! ✨" e
+   "Agora não"; só no "Vamos!" a ação roda. Para a ação falar no balão DO NPC (retrato e voz dele), use `ctx.quem`:
+   ```
+   acoes: { paozinho: function (acao, ctx) {
+     var t = 'Um pãozinho quentinho para você!';   // texto também em falas() do módulo, para ser gravado
+     return Reino.Claude.falar(t, { quem: ctx.quem, voz: ctx.npc && ctx.npc.voz, fala: [t], modal: true });
+   } }
+   ```
+
+`Reino.util.hoje()` (`nucleo/util.js`): o dia `'aaaa-mm-dd'` no fuso local, guardado por minuto (pode ser chamado
+a cada quadro, até em `camada.ativo()`); lê o `Date` na hora, então segue o relógio virtual do modo determinístico.
+
+### Camada: o formato dos itens
+`camada.itensDesenho(pintor, t, animar)` devolve `[{ y, desenhar() }]`:
+- `y` = a linha dos PÉS do que o item desenha, em **px do jogo** (as mesmas coordenadas de `Jogador.x/y`, dos NPCs
+  e dos móveis: tile × 16 + 12 é o pé de quem está no tile). Quem está mais embaixo (y maior) aparece na frente.
+- Quem ordena é o `motor/laco.js`: junta os itens do Jogador, da cena e de todas as camadas ativas e faz um só
+  `sort` por `y` (empate: a ordem em que chegaram). Não ordene nem desenhe fora de `desenhar()`.
+- `desenhar()` não recebe nada: use o `pintor` do fechamento (`pintor.ret(x, y, w, h, cor)` e
+  `pintor.sprite(img, x, yPes)` em px do jogo, §5). `t` = `performance.now()`; `animar` = falso com Animações
+  desligadas ou "reduzir movimento" (desenhe parado).
+- `ativo()` roda a cada quadro: barato, sem DOM. Com `false`, nem `itensDesenho` nem `sobre` são chamados.
+
+Onde está a Mariana e o unicórnio (`personagens/jogador.js`, global `Jogador`):
+- `Jogador.x`, `Jogador.y`: os pés dela (px do jogo); `Jogador.tile()` → `{ x, y }` em tiles.
+- `Jogador.posMontaria()` → `{ x, y, montado, vista, espelhar }`: os pés do unicórnio (montada: junto com ela;
+  bebê: no rastro atrás dela), `vista` ('frente', 'diagFrente', 'lado', 'diagCostas', 'costas') e `espelhar` para onde ele olha.
+- `Jogador.montado()`: se ela está montada (unicórnio já crescido).
+
+Exemplo mínimo (uma estrelinha que flutua ao lado do unicórnio; atrás dele quando está mais acima):
+```js
+Reino.registrarModulo({ id: 'estrelinha', camada: {
+  ativo: function () { return !!window.Jogador && Reino.Estrelinha.ligada; },
+  itensDesenho: function (p, t, animar) {
+    var m = Jogador.posMontaria(), sobe = animar ? Math.round(Math.sin(t / 300) * 2) : 0;
+    return [{ y: m.y - 0.5, desenhar: function () { p.ret(m.x + 10, m.y - 20 + sobe, 3, 3, '#ffe066'); } }];
+  },
+} });
+```
+
+Exemplo mínimo (um sistema novo "brilho" na pasta dos sistemas, no manifesto depois dos outros sistemas):
+```js
+(function () {
+  var B = {};
+  B.falas = function () { return [{ texto: 'Que brilho lindo! ✨' }]; };
+  Reino.registrarModulo({ id: 'brilho', iniciar: function (ctx) { /* começa a contar */ }, falas: B.falas,
+    depurar: function () { return { ligado: true }; } });
+  Reino.Brilho = B;
+})();
 ```

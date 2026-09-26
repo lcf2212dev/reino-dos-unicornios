@@ -15,6 +15,12 @@ Ferramentas de desenvolvimento (Node). Nenhuma entra no jogo. Comandos: `CLAUDE.
 - Derrube só os seus servidores, pelo PID ou `s.parar()`. Nunca `pkill`/`killall` por nome.
 - Temporários em `/tmp/reino-testes/`, sem apagar.
 
+## Ver o jogo
+- `npm run ver` (`testes/ver.js`) ou, em script, `abrirCenario()` de `testes/cenario.js`; não escreva outro ajudante de Playwright.
+
+## Gerador
+- `novo/` (`npm run novo`): cria os arquivos de prédio, matéria, sala, prova, personagem e sistema a partir de `novo/modelos/`, com as linhas do manifesto.
+
 ## Pastas
 - `vozes/` (listar, gravar, empacotar), `validar/`, `testes/` (unidade, referências, e2e), `previas/` (file://).
 - `gerado/`: GERADO (`falas.json`, `vozes-indice.json`, `vozes-cache/`). Não abra (enorme).

@@ -34,8 +34,12 @@ esperada abaixo; os outros passos têm que sair ✔. Diferenças esperadas no `n
 A base do e2e só muda por commit: quem integra troca o hash em `jogo/ferramentas/testes/base-referencia.txt`
 depois do commit da mudança; não edite esse arquivo na tarefa. Qualquer diferença fora da lista acima é defeito.
 
-Conferir: servidor de TESTE + save sintético com estrelas (modelo em `enfeite-novo.md` §6), `__reino.entrar('petshop')`,
-`Reino.UI.telaPetShop()`, `__reino.cuidados()` (despensa).
+Conferir (fotos em `/tmp/reino-testes/ver/<nome>/`; `<nome>/estado.json` traz `__reino.cuidados()` com a despensa):
+```
+npm run ver -- --estrelas 500 --ir petshop --tela petshop --nome comida      # a tela da Pet Shop com o item
+npm run ver -- --cuidados fome=10,sede=5 --tela estabulo --tamanhos celular   # barras e despensa
+```
+Em script: `abrirCenario()` de `jogo/ferramentas/testes/cenario.js`.
 
 ## Armadilhas
 - Id de comida nunca muda nem é reaproveitado: a despensa do save guarda contadores por id (ids

@@ -61,7 +61,7 @@ esperada abaixo; os outros passos têm que sair ✔. Diferenças esperadas no `n
 A base do e2e só muda por commit: quem integra troca o hash em `jogo/ferramentas/testes/base-referencia.txt`
 depois do commit da mudança; não edite esse arquivo na tarefa. Qualquer diferença fora da lista acima é defeito.
 
-No jogo (servidor de TESTE): `__reino.faltando` lista as falas pedidas sem áudio (tem que ficar vazio).
+No jogo (`npm run ver -- --ir <lugar> --js 'console.log(JSON.stringify(__reino.faltando))'`): `__reino.faltando` lista as falas pedidas sem áudio (tem que ficar vazio).
 
 ## Armadilhas
 - Fala mudada sem regravar: fica muda (ou com o áudio velho, se o texto antigo ainda existir em outro lugar).
