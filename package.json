@@ -1,0 +1,9 @@
+{
+  "name": "reino-dos-unicornios",
+  "private": true,
+  "description": "Ferramentas de desenvolvimento do jogo Mariana e o Reino dos Unicórnios (o jogo não tem dependências nem build).",
+  "devDependencies": {
+    "playwright": "1.63.0",
+    "pngjs": "7.0.0"
+  }
+}
