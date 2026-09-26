@@ -6,4 +6,5 @@
 # 982f1ed = modo determinístico (?debug=1&congelar=1), antes da refatoração.
 # f8e280a = cavaleiros e professoras no elenco (paraMateria/paraProva): única diferença, dados/elenco.json.
 # e954b33 = tela dos pais cita js/nucleo/config.js (bug 2): só tela-pais nos 3 tamanhos muda.
-e954b33
+# d0f1239 = cabeçalho da prova com o emoji dela (📜 História, 🔠 Inglês): só as telas de prova dessas duas mudam.
+d0f1239
