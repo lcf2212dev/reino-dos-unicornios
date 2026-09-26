@@ -49,7 +49,8 @@ Acrescente em `L.ENFEITES`, na ordem de preço (a ordem da lista é a ordem da t
 - `icone` sempre `'enfeite:<id>'` (o desenho do passo 4). Emoji solto só se já existir desenho dele.
 
 ### 3. Desenho no unicórnio (`jogo/js/arte/pixelart-unicornio-moldes.js`)
-No bloco `var ENFEITES = {` (logo antes de `PA.ENFEITES_MONTARIA = ENFEITES;`), acrescente:
+No bloco `var ENFEITES = {`, no fim do grupo `// enfeites da Loja das Fadas`, antes de
+`// prêmios da prova de Português` (não no fim do bloco: ali ficam os prêmios de Português), acrescente:
 ```
 'margarida-orelha': { linhas: ['.kWk.', 'kWYWk', '.kWk.'], paleta: { k: '#3a2446', W: '#ffffff', Y: '#ffd34d' }, ancora: 'orelha', dx: -2, dy: 1 },
 ```
@@ -70,7 +71,8 @@ No começo do objeto, junto dos outros `"enfeite:…"`, no mesmo formato:
   ... 16 linhas de 16 letras (o contorno k faz parte do desenho) ...
 ] },
 ```
-- Exatamente 16 linhas de 16 caracteres. Confira em `jogo/ferramentas/previas/icones.html` (por `file://`).
+- Exatamente 16 linhas de 16 caracteres. Confira na prévia `jogo/ferramentas/previas/icones.html` (por `file://`):
+  o script do §6 tira a foto icone.png do cartão `enfeite:<id>`.
 
 ### 5. Validadores (da raiz)
 ```
@@ -87,7 +89,8 @@ diferente do `slot`.
 Salve o script abaixo em `/tmp/<voce>/conferir-enfeite.js` e rode
 `node /tmp/<voce>/conferir-enfeite.js <raiz do repositório> <id> /tmp/<voce>/fotos`. Ele:
 1. abre a prévia `jogo/ferramentas/previas/acessorios.html?id=<id>` por `file://` (o enfeite em 8 direções,
-   4 estágios e montado) → previa.png;
+   4 estágios e montado) → previa.png, e a prévia `jogo/ferramentas/previas/icones.html` rolada até o
+   cartão `enfeite:<id>` (em 6x e no tamanho do jogo, fundo claro e escuro) → icone.png;
 2. sobe um servidor de TESTE (porta livre, banco em `/tmp/reino-testes/`), gera os saves sintéticos do
    próprio jogo (`jogo/ferramentas/testes/saves.js`), compra e veste o enfeite num unicórnio adulto;
 3. abre o jogo no Chromium de teste (celular e notebook, `?debug=1&congelar=1`) → `mapa-<tamanho>.png` e a
@@ -125,6 +128,14 @@ async function noMapa(page) {
     await p.page.waitForTimeout(800);
     await p.page.screenshot({ path: path.join(saida, 'previa.png'), fullPage: true });
     console.log('erros na prévia:', p.page.__erros.length ? p.page.__erros : 'nenhum');
+    // 1b. ícone: a prévia dos ícones (file://), só o cartão `enfeite:<id>`
+    const ic = await abrir({ browser, url: 'file://' + path.join(raiz, 'jogo/ferramentas/previas/icones.html'), tamanho: 'notebook' });
+    await ic.page.waitForTimeout(800);
+    const cartoes = ic.page.locator('.cel');
+    const n = await cartoes.evaluateAll((els, k) => els.findIndex((e) => e.textContent.startsWith(k + ' ')), 'enfeite:' + id);
+    if (n < 0) console.log('✘ ícone enfeite:' + id + ' não está na prévia (falta o desenho em js/arte/icones/)');
+    else { await cartoes.nth(n).scrollIntoViewIfNeeded(); await cartoes.nth(n).screenshot({ path: path.join(saida, 'icone.png') }); }
+    console.log('erros na prévia dos ícones:', ic.page.__erros.length ? ic.page.__erros : 'nenhum');
     // 2. save sintético feito pelo próprio jogo (saves.js), com o enfeite comprado e vestido, montaria adulta
     const s1 = await iniciar({ raiz: path.join(raiz, 'jogo') }); servidores.push(s1);
     const a = await abrir({ browser, url: s1.url, tamanho: 'celular', query: '?debug=1&congelar=1' });
