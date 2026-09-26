@@ -5,8 +5,8 @@ description: Use no Reino dos Unicórnios, como orquestrador, quando as frentes 
 # Entregar (integrar frentes na main)
 
 Para quem coordena. Ferramentas em `jogo/ferramentas/fluxo/` (Node, sem dependência). O histórico é LINEAR:
-cherry-pick, nunca merge commit. Commit, merge, push e artifact só com autorização ESCRITA do Leandro, pedida
-antes de cada um.
+cherry-pick, nunca merge commit. Pedido do Leandro vai ponta a ponta (`CLAUDE.md` da raiz): commit, troca da base
+do e2e, merge e push sem perguntar. Artifact só quando ele pedir.
 
 ## Começar uma frente
 ```
@@ -29,7 +29,7 @@ npm run worktree -- <tema> --material <Pasta>
    - Worktree `/home/leandro/reino-integracao-<data>` (branch `integracao/<data>`; `--nome` para outro nome).
    - Branch com commits além da main: cherry-pick. Worktree sem commit: diff dela aplicado com `apply --3way`
      + os arquivos novos. Sem `--commit`, as frentes soltas entram depois dos cherry-picks e ficam sem commit
-     (dá para testar e mostrar ao Leandro). Com `--commit` (só com o ok dele), um commit por frente solta:
+     (dá para testar antes). Com `--commit`, um commit por frente solta:
      "Reino dos Unicórnios: <assunto>" + linha Claude-Session (variável `CLAUDE_SESSION_URL`).
    - Depois: `npm run index`, aviso se o `falas.json` mudou, `npm test`, `npm run e2e` (e o resumo dele, se
      houver). Relatório e saídas em `/tmp/reino-testes/integrar/<nome>/`.
@@ -45,22 +45,22 @@ npm run worktree -- <tema> --material <Pasta>
 6. Diferença no e2e: confira cada uma com o que as frentes disseram. Diferença não explicada = volte à frente.
 7. Colisões: arquivo NÃO rastreado na árvore principal (ex.: a pasta de prints) que a integração passa a
    rastrear. Igual byte a byte = "mover" (só com `--merge`, para `/tmp/reino-testes/antes-do-merge/<data>/`);
-   diferente = a ferramenta para e lista: pergunte ao Leandro qual vale.
+   diferente = a ferramenta para e lista: é material do Leandro, pergunte qual vale.
 
-## Entregar (cada passo só com autorização escrita do Leandro)
-Mostre o relatório e pergunte, um de cada vez:
-1. **Commit?** "Posso fazer os commits da integração?" → refaça com `--commit` (ou commits à mão na worktree).
-2. **Troca da base do e2e?** Só se o e2e mudou de propósito: "Posso trocar a base do e2e para `<hash>` (<motivo>)?"
-   → `--trocar-base "<descrição curta>"` (commit "Reino dos Unicórnios: base do e2e em <hash> (<descrição>)").
-3. **Merge?** "Posso pôr na main (a árvore principal é servida ao vivo para a Mariana)?" →
-   `node jogo/ferramentas/fluxo/integrar.js --nome <nome> --merge`: move as colisões iguais e faz
-   `merge --ff-only` na árvore principal; exige `npm test` verde e a integração sem mudança solta.
-4. **Push?** "Posso mandar para o GitHub?" → `--push` (`git push origin main`, nunca `--force`).
-5. **Artifact?** "Posso publicar a versão nova no claude.ai?" → skill publicar-artifact (nunca mexer no doc de
-   progresso da Mariana; conferir antes o que vai mudar).
-As flags podem ir juntas numa chamada só (`--trocar-base … --merge --push`) quando o Leandro autorizou todas.
+## Entregar (sem perguntar, com tudo verde)
+1. **Commit:** `--commit` (ou commits à mão na worktree de integração).
+2. **Base do e2e:** só se o e2e mudou de propósito (a diferença que a feature explica) →
+   `--trocar-base "<descrição curta>"` (commit "Reino dos Unicórnios: base do e2e em <hash> (<descrição>)").
+3. **Merge:** `--merge` move as colisões iguais e faz `merge --ff-only` na árvore principal (servida ao vivo); exige
+   `npm test` verde e a integração sem mudança solta. Se a árvore principal tiver mudança em arquivo rastreado, veja
+   o que é: o Leandro pode ter mexido nela (ex.: moveu uma pasta de material); leve a mudança para a integração e
+   restaure a árvore principal ao que está no git antes do merge; se não der para entender, pare e conte.
+4. **Push:** `--push` (`git push origin main`, nunca `--force`).
+As flags vão juntas numa chamada só: `--commit --trocar-base … --merge --push`.
+5. **Artifact:** só quando o Leandro pedir → skill `publicar-artifact`.
+6. **Relatório final ao Leandro:** o que entrou, o que você decidiu sozinho, o hash da main e o servidor de teste.
 
 ## Nunca
 - Escrever na árvore principal fora do `--merge`; `git push --force`; merge commit; `rm` com caminho variável.
 - Servidor de casa, save real, artifact publicado ou Docker (regras do `CLAUDE.md` da raiz).
-- Apagar a worktree de integração ou as das frentes sem o Leandro pedir.
+- Apagar a worktree de integração ou as das frentes (ficam; o Leandro limpa quando quiser).

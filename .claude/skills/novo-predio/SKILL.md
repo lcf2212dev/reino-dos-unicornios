@@ -10,4 +10,4 @@ description: Use quando for criar ou refazer um prédio por dentro (interior) no
    personagem novo: `docs/receitas/personagem-novo.md`; falas: `docs/receitas/licoes-de-voz.md`.
    Contratos: `docs/contratos/interiores.md` e `docs/contratos/npcs-e-dialogo.md`.
 3. Fecho: skill `validar-tudo` (com `npm run e2e -- --desempenho`, se mexeu em desenho); falas novas com o texto
-   exato no retorno (quem integra grava com `gravar-vozes`). Sem commit, merge nem push.
+   exato no retorno (quem integra grava com `gravar-vozes`). A frente não faz commit; quem orquestra integra até a main (skill `entregar`).
