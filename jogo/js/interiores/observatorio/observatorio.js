@@ -189,7 +189,10 @@
     npcs: [
       npc('vega', CUP.x + 8, CUP.y + 4, { tipo: 'curiosidade', tema: 'todas' }),
       npc('cosmo', GAL.x + 6, GAL.y + 9, { tipo: 'piada' }),
-    ],
+    // + os registrados com predio: 'observatorio' e x/y (Reino.personagensDoPredio; prédio antigo não tem vagas: sem x/y, o validador acusa)
+    ].concat(R.personagensDoPredio('observatorio').filter(function (p) { return p.x != null && p.y != null; }).map(function (p) {
+      return npc(p.id, p.x, p.y, p.acao || { tipo: 'curiosidade', tema: 'todas' });
+    })),
   });
 
   // para as outras partes (R._predios.observatorio): as estrelas da parede (objetos-parede.js) leem a lista

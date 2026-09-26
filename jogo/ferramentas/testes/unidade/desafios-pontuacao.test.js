@@ -90,70 +90,59 @@ test('resposta vazia e tipo desconhecido valem 0; conferirValor é "pontuar deu 
   assert.strictEqual(D.conferirValor(v, [0, 1]), false);   // meio certo não é certo
 });
 
+/* ---------- todo tipo registrado: os exemplos da def (def.exemplos, conteudo.md §3.7) ---------- */
+// exemplos = { desafio, certa(d) (a resposta certa de QUALQUER desafio do tipo; sem pontuar, não tem), estranhos }
+const TIPOS = Object.keys(R.tiposDesafio);
+const exemplosDe = (tipo) => {
+  const ex = R.tiposDesafio[tipo] && R.tiposDesafio[tipo].exemplos;
+  assert.ok(ex && ex.desafio && Array.isArray(ex.estranhos), `falta exemplos em ${tipo} (def.exemplos = { desafio, certa, estranhos })`);
+  assert.ok(typeof ex.certa === 'function' || !R.tiposDesafio[tipo].pontuar, `falta exemplos.certa em ${tipo} (tem pontuar)`);
+  return ex;
+};
+test('todo tipo registrado tem exemplos, e a resposta certa do exemplo vale 1', () => {
+  assert.ok(TIPOS.length >= 12, 'poucos tipos registrados: ' + TIPOS.length);
+  TIPOS.forEach((tipo) => {
+    const ex = exemplosDe(tipo);
+    assert.strictEqual(ex.desafio.tipo, tipo, `exemplos.desafio de ${tipo} com outro tipo`);
+    if (ex.certa) assert.strictEqual(D.pontuar(ex.desafio, ex.certa(ex.desafio)), 1, `${tipo}: a certa do exemplo não vale 1`);
+  });
+});
+
 /* ---------- todo o conteúdo: salas e provas ---------- */
-// a resposta certa de cada desafio, montada pelos dados (o que a Mariana faria acertando tudo)
-function respostaCerta(d) {
-  const n = (k) => Array.from({ length: k }, (_, i) => i);
-  switch (d.tipo) {
-    case 'escolha': return d.certa;
-    case 'vf': return d.certo ? 0 : 1;
-    case 'varias': return d.livre ? [0] : n(d.opcoes.length).filter((i) => d.opcoes[i].ok);
-    case 'ligar': return Object.assign({}, n(d.pares.length));
-    case 'ordenar': case 'frase': return n((d.itens || d.blocos).length);
-    case 'separar': return d.itens.map((it) => it.g);
-    case 'vfLista': return d.itens.map((it) => (it.v ? 0 : 1));
-    case 'completar': return d.frases.map((f) => (d.livre ? 0 : f.certa));
-    case 'copiar': return d.itens.map((it) => {
-      const pecas = D.pecasCopiar(it), usadas = [];
-      const letras = Array.from(String(it.opcoes[it.certa]).replace(/\s+/g, '')).map((ch) => {
-        const k = pecas.findIndex((p, j) => p === ch && usadas.indexOf(j) < 0); usadas.push(k); return k;
-      });
-      return { escolha: it.certa, letras };
-    });
-    case 'desenho': return { px: '1', usou: { linhas: true, formas: true, cores: [1, 2] } };
-    default: return undefined;
-  }
-}
 function todosOsDesafios() {
   const lista = [];
   R.materias.forEach((m) => m.salas.forEach((s) => s.desafios.forEach((d) => lista.push({ onde: m.id + '/' + s.id, d }))));
   R.provas.forEach((p) => p.questoes.forEach((d) => lista.push({ onde: p.id, d })));
+  // os exemplos entram também (um tipo novo é conferido antes de ter sala)
+  TIPOS.forEach((tipo) => lista.push({ onde: 'exemplo', d: exemplosDe(tipo).desafio }));
   return lista;
 }
 
-test('todas as salas e provas: a resposta certa vale 1 (menos memoria) e confere', () => {
+test('todas as salas e provas: a resposta certa (exemplos.certa) vale 1 e confere; tipo sem pontuar fica de fora', () => {
   const lista = todosOsDesafios();
   assert.ok(lista.length > 200, 'poucos desafios carregados: ' + lista.length);
   const erros = [];
   lista.forEach(({ onde, d }) => {
-    if (d.tipo === 'memoria') return;
-    const v = respostaCerta(d);
+    const ex = exemplosDe(d.tipo);
+    if (!ex.certa) return;
+    const v = ex.certa(d);
     if (D.pontuar(d, v) !== 1 || D.conferirValor(d, v) !== true) erros.push(`${onde}/${d.id} (${d.tipo}): pontuar = ${D.pontuar(d, v)}`);
   });
   assert.deepStrictEqual(erros, []);
 });
 
-// respostas erradas ou incompletas no FORMATO de cada tipo (a tela sempre entrega esse formato; um formato
-// trocado, como {} num varias, lança erro hoje)
-const ESTRANHOS = {
-  escolha: [-1, 99, '0', true], vf: [-1, 2, '0', true],
-  varias: [[], [99], [null], [0, 0, 0]], ordenar: [[], [99], [null], [0, 0, 0]], frase: [[], [99], [null], [0, 0, 0]],
-  ligar: [{}, { 0: 99 }, [], [null]], separar: [{}, { 0: 99 }, [], [null]],
-  vfLista: [[], [null], [99, 99]], completar: [[], [null], [99, 99]],
-  copiar: [[], [{}], [null], [{ escolha: 99, letras: [99] }]],
-  desenho: [{}, { px: '1' }, { usou: {} }, { px: '', usou: { linhas: true, formas: true, cores: [1, 2] } }],
-  memoria: [true, false],
-};
+// respostas erradas ou incompletas no FORMATO de cada tipo (exemplos.estranhos; a tela sempre entrega esse
+// formato; um formato trocado, como {} num varias, lança erro hoje)
 test('todas as salas e provas: respostas erradas ou vazias não quebram e a nota fica entre 0 e 1', () => {
   const erros = [];
   todosOsDesafios().forEach(({ onde, d }) => {
-    assert.ok(ESTRANHOS[d.tipo], `${onde}/${d.id}: tipo ${d.tipo} sem respostas de teste (acrescente em ESTRANHOS)`);
-    [null, undefined].concat(ESTRANHOS[d.tipo]).forEach((v) => {
+    [null, undefined].concat(exemplosDe(d.tipo).estranhos).forEach((v) => {
       let p;
       try { p = D.pontuar(d, v); } catch (e) { erros.push(`${onde}/${d.id} (${d.tipo}) com ${JSON.stringify(v)}: ${e.message}`); return; }
       if (!(p >= 0 && p <= 1)) erros.push(`${onde}/${d.id} (${d.tipo}) com ${JSON.stringify(v)}: nota ${p}`);
       if (D.conferirValor(d, v) !== (p === 1)) erros.push(`${onde}/${d.id}: conferirValor diferente de pontuar === 1`);
     });
+    if (onde === 'exemplo') return;
     // texto do "✓ Certo: ..." (separar e memoria não têm: a própria tela mostra os grupos e os pares)
     const t = D.respostaCertaTexto(d);
     if (!['memoria', 'separar'].includes(d.tipo) && !(typeof t === 'string' && t.length)) erros.push(`${onde}/${d.id}: sem texto da resposta certa`);

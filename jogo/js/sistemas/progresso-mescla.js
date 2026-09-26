@@ -159,6 +159,15 @@
     // interruptor novo das perguntas surpresa: vale o lado com o carimbo `surpresaEm` maior (troca feita por
     // último); sem carimbo dos dois lados, se o lado mais recente não conhece (versão antiga), vale o do outro
     if (r.ajustes) juntarSurpresa(r.ajustes, antigo.ajustes);
+    // campos de P.registrarCampo: a estratégia de cada um (base = o lado mais recente, como a despensa);
+    // o que zera no Novo ciclo vem inteiro do ciclo mais novo (como as salas)
+    I.cadaCampo(function (n, def) {
+      if (a[n] === undefined && b[n] === undefined) return;
+      if (def.novoCiclo === 'zera' && !mesmoCiclo) {
+        var novo = (antigo.ciclo || 1) > (recente.ciclo || 1) ? antigo : recente, v = I.limparCampo(def, novo[n]);
+        r[n] = v === undefined ? def.padrao() : U.copia(v);
+      } else r[n] = I.juntarCampo(def, recente[n], antigo[n]);
+    });
     r.comecou = !!(a.comecou || b.comecou);
     r.ritualVisto = !!(a.ritualVisto || b.ritualVisto);
     return r;

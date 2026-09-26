@@ -11,6 +11,71 @@ Reino.materia = function (id) { return Reino.materias.find(function (m) { return
 // provas bimestrais: cada uma em js/conteudo/provas/<id>.js
 Reino.provas = [];
 /** @param {Prova} p */
-Reino.registrarProva = function (p) { Reino.provas.push(p); };
+Reino.registrarProva = function (p) {
+  Reino.provas.push(p);
+  // acessórios autocontidos: ícone e desenho da montaria no próprio arquivo da prova
+  ['lendario', 'raro', 'comum'].forEach(function (r) {
+    var a = p.acessorios && p.acessorios[r];
+    if (!a) return;
+    if (a.icone && window.ICONES) window.ICONES['acessorio:' + a.id] = a.icone;
+    if (a.desenho) {
+      Reino.desenhosAcessorios[a.id] = a.desenho;
+      // o pixelart (só no navegador) carrega antes das provas: o desenho entra direto na montaria
+      if (window.PA && window.PA.ENFEITES_MONTARIA) window.PA.ENFEITES_MONTARIA[a.id] = a.desenho;
+    }
+  });
+};
+// desenhos inline dos acessórios de prova (id → formato de PA.ENFEITES_MONTARIA)
+/** @type {{ [id: string]: DesenhoEnfeite }} */
+Reino.desenhosAcessorios = {};
 /** @param {string} id @returns {Prova | undefined} */
 Reino.prova = function (id) { return Reino.provas.find(function (p) { return p.id === id; }); };
+// lugares novos no mapa: cada prédio em js/interiores/<p>/ chama Reino.registrarLugar ao carregar
+// (mundo/mapa.js os põe depois dos fixos com caminho; ui/lugares.js usa o `menu`). Contrato: docs/contratos/interiores.md.
+Reino.lugaresRegistrados = [];
+Reino.lugaresRecusados = [];   // ids recusados, para o validador acusar
+/** @param {LugarRegistrado} def @returns {boolean} false quando recusado */
+Reino.registrarLugar = function (def) {
+  // sem caminho ele entraria antes do sorteio dos enfeites e mudaria as árvores do reino todo
+  if (!def || !def.id || !Array.isArray(def.caminho) || !def.caminho.length) {
+    Reino.lugaresRecusados.push(String(def && def.id));
+    console.warn('Reino.registrarLugar: lugar "' + (def && def.id) + '" recusado (precisa de id e caminho)');
+    return false;
+  }
+  Reino.lugaresRegistrados.push(def);
+  return true;
+};
+
+// personagens declarados fora do elenco.js (pasta do prédio ou arquivo da prova), com a voz junto.
+// O perfil entra na hora em Reino.config.vozes['npc-<id>']; o elenco.js soma todos ao N.ELENCO
+// (quem registra depois do elenco entra direto). Id repetido é erro.
+/** @type {{ [id: string]: PersonagemElenco }} */
+Reino.personagens = {};
+/** @param {PersonagemRegistrado} def */
+Reino.registrarPersonagem = function (def) {
+  var N = Reino.NPCs;
+  if (Reino.personagens[def.id] || (N && N.ELENCO && N.ELENCO[def.id])) throw new Error('registrarPersonagem: id repetido "' + def.id + '"');
+  var voz = 'npc-' + def.id;
+  if (def.perfil) Reino.config.vozes[voz] = def.perfil;
+  /** @type {PersonagemElenco} */
+  var p = { nome: def.nome, voz: voz, sprite: def.sprite };
+  if (def.paraMateria) p.paraMateria = def.paraMateria;
+  if (def.paraProva) p.paraProva = def.paraProva;
+  Reino.personagens[def.id] = p;
+  if (N && N.ELENCO) N.ELENCO[def.id] = p;
+  // com `predio` (e/ou `lugares`): o <p>.js põe a pessoa no interior (Reino.personagensDoPredio), sem editar o layout
+  if (def.predio) Reino.personagemTambemEm(def.id, { predio: def.predio, x: def.x, y: def.y, acao: def.acao });
+  (def.lugares || []).forEach(function (l) { Reino.personagemTambemEm(def.id, l); });
+};
+Reino._personagensPredio = [];
+/** a mesma pessoa (mesma voz e sprite) em mais um interior; as falas de lá em FALAS_INTERIORES.<p>.npcs.<id>
+    @param {string} id @param {LugarPersonagem} l */
+Reino.personagemTambemEm = function (id, l) {
+  Reino._personagensPredio.push({ id: id, predio: l.predio, x: l.x, y: l.y, acao: l.acao });
+};
+/** os registrados com `predio: p`, na ordem de registro: [{ id, x, y, acao }]
+    @param {string} p @returns {{ id: string, x?: number, y?: number, acao?: AcaoNpc }[]} */
+Reino.personagensDoPredio = function (p) {
+  return Reino._personagensPredio.filter(function (r) { return r.predio === p; })
+    .map(function (r) { return { id: r.id, x: r.x, y: r.y, acao: r.acao }; });
+};

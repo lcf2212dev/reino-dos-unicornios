@@ -243,6 +243,15 @@
     }
     // os vãos entre cômodos também ficam livres
     portas.forEach(function (p) { corredores.push({ x: p.x, y: p.y, w: p.w, h: p.h }); });
+    // + os registrados com predio: 'padrao-<matéria>' e x/y (Reino.personagensDoPredio), sprite e voz do elenco
+    var ELENCO = (R.NPCs && R.NPCs.ELENCO) || {};
+    var FP = ((R.FALAS_INTERIORES || {})['padrao-' + m.id] || { npcs: {} }).npcs;
+    R.personagensDoPredio('padrao-' + m.id).filter(function (p) { return p.x != null && p.y != null; }).forEach(function (p) {
+      /** @type {Partial<PersonagemElenco>} */
+      var e = ELENCO[p.id] || {};
+      npcs.push({ id: p.id, nome: e.nome || p.id, sprite: e.sprite ? Object.assign({ base: 'pessoa' }, e.sprite) : { base: 'pessoa' },
+        voz: e.voz || 'npc-' + p.id, x: p.x, y: p.y, acao: p.acao || { tipo: 'guia', lugar: 'materia:' + m.id, livro: m.id }, falas: FP[p.id] || {} });
+    });
 
     return {
       id: 'padrao-' + m.id,

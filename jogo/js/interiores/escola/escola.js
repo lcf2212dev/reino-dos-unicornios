@@ -211,7 +211,11 @@
         { x: 5, y: by + 5, w: 3, h: 4 },         // do tapete de saída até a passagem
       ].concat([].concat.apply([], salas.map(function (s) { return s.corredores.concat([{ x: s.porta.x, y: by + 2, w: 1, h: 2 }]); }))),
       objetos: objetos,
-      npcs: [npcDoElenco('margarida', 5, by + 3, { tipo: 'guia', lugar: 'escola' })].concat(salas.map(function (s) { return s.npc; })),
+      npcs: [npcDoElenco('margarida', 5, by + 3, { tipo: 'guia', lugar: 'escola' })].concat(salas.map(function (s) { return s.npc; }))
+        // + os registrados com predio: 'escola' e x/y (Reino.personagensDoPredio; prédio antigo não tem vagas)
+        .concat(R.personagensDoPredio('escola').filter(function (p) { return p.x != null && p.y != null; }).map(function (p) {
+          return npcDoElenco(p.id, p.x, p.y, p.acao || { tipo: 'guia', lugar: 'escola' });
+        })),
     };
   }
   R.registrarInterior(montar());

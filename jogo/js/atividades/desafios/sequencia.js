@@ -2,7 +2,7 @@
    a mesma implementação (sequencia) com dois estilos. Valor: índices na ordem da resposta. */
 (function () {
   var U = Reino.util, el = U.el, D = Reino.Desafios, _d = Reino._desafios;
-  var TIPOS = _d.TIPOS, PONTUAR = _d.PONTUAR, doTeclado = _d.doTeclado;
+  var doTeclado = _d.doTeclado;
 
   // ordenar e montar frase: tocar para colocar na sequência
   function sequencia(d, opts, estilo) {
@@ -81,11 +81,34 @@
     };
     return ctrl;
   }
-  TIPOS.ordenar = function (d, opts) { return sequencia(d, opts, 'ordem'); };
-  TIPOS.frase = function (d, opts) { return sequencia(d, opts, 'frase'); };
-  PONTUAR.ordenar = PONTUAR.frase = function (d, valor) {
+  var pontuar = function (d, valor) {
     var itens = d.itens || d.blocos;
     var aceitas = [itens.map(function (_, i) { return i; })].concat(d.aceitas || []);
     return aceitas.some(function (a) { return JSON.stringify(a) === JSON.stringify(valor); }) ? 1 : 0;
   };
+
+  function textoFrase(d, seq) { return seq.map(function (i) { return (d.itens || d.blocos)[i]; }).join(' '); }
+  // na prova: a ordem é embaralhada uma vez (nunca já na ordem certa)
+  function prepararProva(d) {
+    var m = U.embaralhar((d.blocos || d.itens).map(function (_, i) { return i; }));
+    while (m.every(function (v, i) { return v === i; })) m = U.embaralhar(m);
+    return m;
+  }
+  function textoCerto(d) { return textoFrase(d, (d.itens || d.blocos).map(function (_, i) { return i; })); }
+  // desafios sintéticos do teste de unidade (def.exemplos)
+  var EXEMPLOS = { ordenar: { id: 'x', tipo: 'ordenar', itens: ['a', 'b', 'c'], aceitas: [[1, 0, 2]] },
+    frase: { id: 'y', tipo: 'frase', blocos: ['Eu', 'gosto', 'de', 'ler'] } };
+  [['ordenar', 'itens', 'ordem', 'poucos itens para ordenar'], ['frase', 'blocos', 'frase', 'poucos blocos']].forEach(function (t) {
+    var campo = t[1], estilo = t[2], erro = t[3];
+    Reino.registrarTipoDesafio(t[0], {
+      montar: function (d, opts) { return sequencia(d, opts, estilo); },
+      pontuar: pontuar, especial: true, pista: 'pistaEspecial', prepararProva: prepararProva,
+      exemplos: { desafio: EXEMPLOS[t[0]], estranhos: [[], [99], [null], [0, 0, 0]],
+        certa: function (d) { return d[campo].map(function (_, i) { return i; }); } },
+      // lerItens: a narradora lê também os itens (nas provas, que não têm pista)
+      falas: function (d, todos, segs) { if (d.lerItens) todos(d[campo]).forEach(function (i) { segs.push(d[campo][i]); }); return segs; },
+      textoCerto: textoCerto, textoResposta: textoFrase,
+      validar: function (d, v) { v.checar(d[campo].length >= 3, d.id + ': ' + erro); },
+    });
+  });
 })();

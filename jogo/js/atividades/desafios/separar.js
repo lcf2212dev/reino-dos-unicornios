@@ -1,9 +1,9 @@
 /* Desafio separar: levar cada item para o baú (grupo) certo (valor: { item: 0 ou 1 }). */
 (function () {
   var U = Reino.util, el = U.el, D = Reino.Desafios, _d = Reino._desafios;
-  var TIPOS = _d.TIPOS, PONTUAR = _d.PONTUAR, fracao = _d.fracao, doTeclado = _d.doTeclado;
+  var fracao = _d.fracao, doTeclado = _d.doTeclado;
 
-  TIPOS.separar = function (d, opts) {
+  var montar = function (d, opts) {
     var grupo = {}; // item -> 0/1
     var escolhido = null;
     var ordem = U.embaralhar(d.itens.map(function (_, i) { return i; }));
@@ -77,5 +77,13 @@
     };
     return ctrl;
   };
-  PONTUAR.separar = function (d, valor) { return fracao(d.itens.filter(function (it, i) { return valor[i] === it.g; }).length, d.itens.length); };
+  var pontuar = function (d, valor) { return fracao(d.itens.filter(function (it, i) { return valor[i] === it.g; }).length, d.itens.length); };
+
+  // a sala 5 sempre tem pelo menos um "separar nos baús" (semprePrimeiro)
+  Reino.registrarTipoDesafio('separar', {
+    montar: montar, pontuar: pontuar, especial: true, semprePrimeiro: true, pista: 'pistaEspecial',
+    exemplos: { desafio: { id: 'y', tipo: 'separar', grupos: ['G1', 'G2'], itens: [{ t: 'a', g: 0 }, { t: 'b', g: 1 }, { t: 'c', g: 0 }] },
+      certa: function (d) { return d.itens.map(function (it) { return it.g; }); }, estranhos: [{}, { 0: 99 }, [], [null]] },
+    validar: function (d, v) { if (!v.naProva) v.checar(d.itens.every(function (i) { return i.g === 0 || i.g === 1; }) && d.grupos.length === 2, d.id + ': separar inválido'); },
+  });
 })();

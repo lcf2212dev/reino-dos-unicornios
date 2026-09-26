@@ -511,5 +511,7 @@
     'lacinho-morango': { linhas: LACINHO_MORANGO, paleta: { k: '#3a2446', r: '#ff8a96', R: '#ee3b50', d: '#b3203a', y: '#ffe98a', G: '#3fae4f', g: '#8fe07a' }, ancora: 'orelha', dx: -4, dy: 1 },
   };
   PA.ENFEITES_MONTARIA = ENFEITES;
+  // acessórios de prova com desenho no próprio arquivo (Reino.registrarProva), se já registrados
+  Object.assign(ENFEITES, (window.Reino && window.Reino.desenhosAcessorios) || {});
   I.UNI = UNI;
 })();

@@ -183,4 +183,6 @@
   I.nomeLugar = nomeLugar; I.nomeArquivo = nomeArquivo; I.capturar = capturar;
 
   Reino.Fotos = F;
+  // módulo (js/nucleo/modulos.js); o if é para os testes que carregam só este arquivo
+  if (Reino.registrarModulo) Reino.registrarModulo({ id: 'fotos', falas: function () { return F.falas(); }, depurar: function () { return F.depurar(); } });
 })();

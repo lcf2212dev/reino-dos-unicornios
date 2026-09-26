@@ -1,11 +1,11 @@
 /* Desafio ligar: tocar num item da esquerda e depois no par dele na direita (valor: { esquerda: direita }). */
 (function () {
   var U = Reino.util, el = U.el, D = Reino.Desafios, _d = Reino._desafios;
-  var TIPOS = _d.TIPOS, PONTUAR = _d.PONTUAR, fracao = _d.fracao;
+  var fracao = _d.fracao;
 
   var CORES_LIGAR = ['#ff7eb6', '#7c5cff', '#39c5bb', '#ffb020', '#5fb4ff'];
 
-  TIPOS.ligar = function (d, opts) {
+  var montar = function (d, opts) {
     var n = d.pares.length;
     // d.direita: ordem fixa da coluna da direita (como na folha da prova)
     var direita = d.direita ? d.direita.slice() : U.embaralhar(d.pares.map(function (_, i) { return i; }));
@@ -102,5 +102,39 @@
     };
     return ctrl;
   };
-  PONTUAR.ligar = function (d, valor) { return fracao(d.pares.filter(function (_, i) { return valor[i] === i; }).length, d.pares.length); };
+  var pontuar = function (d, valor) { return fracao(d.pares.filter(function (_, i) { return valor[i] === i; }).length, d.pares.length); };
+
+  function textoEsquerda(p, i) { return p[0].t || ((i + 1) + 'º ' + p[0].alt); }
+  /* Ligar no celular: as duas colunas lado a lado só cabem em 390 px se a palavra mais comprida da esquerda
+     mais a da direita somarem até 24 letras (fonte pixel com 1em por letra; ver css/ui-jogo.css, .ligar-item) */
+  function maiorPalavra(t) {
+    return Math.max.apply(null, [0].concat(String(t || '').replace(/[«»]/g, '').split(/[\s\-]+/)
+      .map(function (w) { return Array.from(w.replace(/[^\p{L}\p{N}]/gu, '')).length; })));
+  }
+
+  Reino.registrarTipoDesafio('ligar', {
+    montar: montar, pontuar: pontuar, especial: true, pista: 'pistaEspecial',
+    exemplos: { desafio: { id: 'x', tipo: 'ligar', pares: [[{ t: 'a' }, { t: '1' }], [{ t: 'b' }, { t: '2' }], [{ t: 'c' }, { t: '3' }]] },
+      certa: function (d) { var v = {}; d.pares.forEach(function (_, i) { v[i] = i; }); return v; },
+      estranhos: [{}, { 0: 99 }, [], [null]] },
+    // lerItens: a narradora lê também os itens (nas provas, que não têm pista)
+    falas: function (d, todos, segs) {
+      if (!d.lerItens) return segs;
+      d.pares.forEach(function (p) { if (p[0].t) segs.push(p[0].t); });
+      todos(d.pares).forEach(function (i) { segs.push(d.pares[i][1].t); });
+      return segs;
+    },
+    textoCerto: function (d) { return d.pares.map(function (p, i) { return textoEsquerda(p, i) + ' → ' + p[1].t; }).join(' • '); },
+    textoResposta: function (d, valor) { return d.pares.map(function (p, i) { return textoEsquerda(p, i) + ' → ' + (valor[i] != null ? d.pares[valor[i]][1].t : '?'); }).join(' • '); },
+    validar: function (d, v) {
+      var esq = Math.max.apply(null, [0].concat(d.pares.map(function (p) { return p[0].img ? 0 : maiorPalavra(p[0].t); })));
+      var dir = Math.max.apply(null, [0].concat(d.pares.map(function (p) { return maiorPalavra(p[1].t); })));
+      if (esq + dir > 24) v.avisar(d.id + ': Ligar com palavras longas (' + esq + ' + ' + dir + ' letras > 24): no celular vai quebrar palavra ou vazar');
+      var pares = d.pares.every(function (p) { return (p[0].t || (p[0].img && p[0].alt)) && p[1].t; });
+      if (!v.naProva) { v.checar(d.pares.length >= 2 && pares, d.id + ': pares inválidos'); return; }
+      v.checar(pares, d.id + ': pares inválidos');
+      d.pares.forEach(function (p) { if (p[0].img) v.checar(v.icones[p[0].img], d.id + ': falta o desenho "' + p[0].img + '" em js/arte/icones/'); });
+      if (d.direita) v.checar(d.direita.slice().sort().join() === d.pares.map(function (_, i) { return i; }).join(), d.id + ': ordem da direita inválida');
+    },
+  });
 })();

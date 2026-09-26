@@ -390,6 +390,9 @@
     objetos: baias().concat(entrada),
     npcs: [
       npc('feno', 4, HALL_Y + 4, { tipo: 'tela', tela: 'estabulo' }),
-    ],
+    // + os registrados com predio: 'estabulo' e x/y (Reino.personagensDoPredio; prédio antigo não tem vagas: sem x/y, o validador acusa)
+    ].concat(R.personagensDoPredio('estabulo').filter(function (p) { return p.x != null && p.y != null; }).map(function (p) {
+      return npc(p.id, p.x, p.y, p.acao || { tipo: 'tela', tela: 'estabulo' });
+    })),
   });
 })();

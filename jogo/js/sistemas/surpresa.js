@@ -327,4 +327,6 @@
   I.vigiarTelas = vigiarTelas; I.terminar = terminar;
 
   Reino.Surpresa = S;
+  // módulo (js/nucleo/modulos.js); o if é para os testes que carregam só este arquivo
+  if (Reino.registrarModulo) Reino.registrarModulo({ id: 'surpresa', depoisDasBoasVindas: function (ctx) { S.iniciar({ tutorial: ctx.tutorial }); }, falas: function () { return S.falas(); }, depurar: function () { return S._depurar(); } });
 })();

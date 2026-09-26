@@ -9,6 +9,7 @@ Receitas: `docs/receitas/predio-novo.md`, `docs/receitas/personagem-novo.md`.
 - `<p>.js` — o layout e `Reino.registrarInterior(def)`.
 - `acoes.js` — ações, telas e status dos NPCs do prédio (quando houver).
 - `fora.js` — o prédio de fora, no mapa (`Mapa.PREDIOS.<p>`), quando houver.
+- `<p>/lugar.js` — prédio novo: `Reino.registrarLugar({ …, caminho, menu })` (`interiores.md` §9.7); nada em `mundo/lugares.js`, `ui/lugares.js`, `validar-interiores.js`.
 - As partes dividem o que precisam em `Reino._predios.<p>`. Cada arquivo até ~400 linhas.
 - A ordem exata de cada prédio é a do manifesto (o Observatório tem partes extras: planetas, cenas, robo, ceu).
 

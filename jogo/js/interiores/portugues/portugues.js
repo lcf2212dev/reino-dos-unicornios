@@ -226,7 +226,10 @@
       npc('chocalho', 6, 6, acaoSala('p3')),
       npc('brisa', 16, 6, acaoSala('p4')),
       npc('carlos', 30, 6, acaoSala('p5')),
-    ],
+    // + os registrados com predio: 'portugues' e x/y (Reino.personagensDoPredio; prédio antigo não tem vagas: sem x/y, o validador acusa)
+    ].concat(R.personagensDoPredio('portugues').filter(function (p) { return p.x != null && p.y != null; }).map(function (p) {
+      return npc(p.id, p.x, p.y, p.acao || { tipo: 'guia', lugar: 'materia:portugues', livro: 'portugues' });
+    })),
   });
 
 })();

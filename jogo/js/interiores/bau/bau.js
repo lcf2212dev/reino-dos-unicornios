@@ -352,6 +352,9 @@
     objetos: objetos,
     npcs: [
       npc('tostao', 12, 5 + DY, TELA),
-    ],
+    // + os registrados com predio: 'bau' e x/y (Reino.personagensDoPredio; prédio antigo não tem vagas: sem x/y, o validador acusa)
+    ].concat(R.personagensDoPredio('bau').filter(function (p) { return p.x != null && p.y != null; }).map(function (p) {
+      return npc(p.id, p.x, p.y, p.acao || TELA);
+    })),
   });
 })();

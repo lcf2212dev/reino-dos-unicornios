@@ -241,4 +241,10 @@
   I.agora = agora; I.trecho = trecho; I.suave = suave; I.lerp = lerp;
 
   R.Banho = B;
+  // módulo (js/nucleo/modulos.js): o desenho (banho-desenho.js) entra no quadro como camada
+  if (R.registrarModulo) R.registrarModulo({ id: 'banho', depurar: function () { return B.depurar(); }, camada: {
+    ativo: function () { return B.ativo(); },
+    itensDesenho: function (p, t, animar) { return B.itensDesenho(p, t, animar); },
+    sobre: function (ctx, p, t, animar) { B.sobre(ctx, p, t, animar); },
+  } });
 })();

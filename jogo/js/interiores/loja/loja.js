@@ -98,6 +98,9 @@
     objetos: objetos,
     npcs: [
       npc('petala', 5, 4, TELA),
-    ],
+    // + os registrados com predio: 'loja' e x/y (Reino.personagensDoPredio; prédio antigo não tem vagas: sem x/y, o validador acusa)
+    ].concat(R.personagensDoPredio('loja').filter(function (p) { return p.x != null && p.y != null; }).map(function (p) {
+      return npc(p.id, p.x, p.y, p.acao || TELA);
+    })),
   });
 })();

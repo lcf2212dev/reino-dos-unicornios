@@ -15,6 +15,10 @@ O servidor entrega `js/**`, este arquivo também: nada de segredo aqui.
 - A ordem importa: cada arquivo usa o que os de cima registraram.
 - `js/voz/*.js` fica FORA do manifesto (gerado, carregado por `Reino.Voz.carregar`). Não abra.
 
+## Registros
+- Feature nova entra por registro (`docs/ARQUITETURA.md` §5.1): sistema = `Reino.registrarModulo`, prédio =
+  `Reino.registrarLugar`; nada em `main.js`, `laco.js`, `falas.js`, `debug.js`, `mundo/lugares.js`, `ui/lugares.js`.
+
 ## Objetos internos
 - Arquivo dividido em partes divide o que é privado por um objeto interno, descrito no cabeçalho:
   `Reino._motor`, `_cena`, `_interiores`, `_predios.<prédio>`, `_npcs`, `_jogador`, `_ui`, `_desafios`,

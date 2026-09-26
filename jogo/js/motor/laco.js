@@ -45,13 +45,13 @@
     seguro(cena, 'tela', function () { cena.desenharTela(V.ctx, pintor, t, animar); });
     // quem está mais embaixo aparece na frente
     var itens = J.itensDesenho(pintor, animar).concat(seguro(cena, 'itens', function () { return cena.itensDesenho(pintor, t, animar); }) || []);
-    // banho de espuma (js/sistemas/banho.js): o unicórnio na banheira, a espuma e as gotas entram na mesma ordem
-    var Banho = Reino.Banho;
-    if (Banho && Banho.ativo()) itens = itens.concat(seguro(cena, 'banho', function () { return Banho.itensDesenho(pintor, t, animar); }) || []);
+    // camadas dos módulos (js/nucleo/modulos.js; ex.: banho de espuma) entram na mesma ordem por y
+    var camadas = Reino.modulos.filter(function (m) { return m.camada && m.camada.ativo(); });
+    camadas.forEach(function (m) { itens = itens.concat(seguro(cena, m.id, function () { return m.camada.itensDesenho(pintor, t, animar); }) || []); });
     itens.sort(ordemY).forEach(function (i) { seguro(cena, 'item', function () { i.desenhar(); }); });
     // por cima dos personagens (ex.: placas dos cômodos que descem para desviar do HUD)
     if (cena.desenharSobre) seguro(cena, 'sobre', function () { cena.desenharSobre(V.ctx, pintor, t, animar); });
-    if (Banho && Banho.ativo()) seguro(cena, 'banho-sobre', function () { Banho.sobre(V.ctx, pintor, t, animar); });
+    camadas.forEach(function (m) { if (m.camada.sobre && m.camada.ativo()) seguro(cena, m.id + '-sobre', function () { m.camada.sobre(V.ctx, pintor, t, animar); }); });
     desenharLuz();
     Cena.desenharIris(V.ctx, pintor, performance.now());
     Cena.quadros.registrar(performance.now() - t0);

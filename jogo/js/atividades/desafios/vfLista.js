@@ -1,7 +1,7 @@
 /* Desafio vfLista: várias afirmações, cada uma com ( V ) e ( F ) (ou os rótulos de d.rotulos). */
 (function () {
   var U = Reino.util, el = U.el, D = Reino.Desafios, _d = Reino._desafios;
-  var TIPOS = _d.TIPOS, PONTUAR = _d.PONTUAR, fracao = _d.fracao;
+  var fracao = _d.fracao;
 
   // rótulos dos botões do vfLista: d.rotulos (ex.: ['T', 'F'], ['√', 'X']); sem rotulos, V/F
   var NOME_ROTULO = { T: 'True', '√': 'Certo', X: 'Errado' };
@@ -12,10 +12,9 @@
     if (r === 'F') return rotulosVF(d)[0] === 'T' ? 'False' : 'Falso';
     return NOME_ROTULO[r] || r;
   }
-  _d.rotulosVF = rotulosVF;
 
   // várias afirmações, cada uma com ( V ) e ( F ) — valor: [0 = V, 1 = F, null]
-  TIPOS.vfLista = function (d, opts) {
+  var montar = function (d, opts) {
     var marcas = opts.valorInicial ? opts.valorInicial.slice() : d.itens.map(function () { return null; });
     var lista = el('div.vf-lista');
     var linhas = d.itens.map(function (it, i) {
@@ -53,5 +52,19 @@
     };
     return ctrl;
   };
-  PONTUAR.vfLista = function (d, valor) { return fracao(d.itens.filter(function (it, i) { return valor[i] === (it.v ? 0 : 1); }).length, d.itens.length); };
+  var pontuar = function (d, valor) { return fracao(d.itens.filter(function (it, i) { return valor[i] === (it.v ? 0 : 1); }).length, d.itens.length); };
+
+  function marca(d, v) { return '(' + rotulosVF(d)[v] + ') '; }
+  Reino.registrarTipoDesafio('vfLista', {
+    montar: montar, pontuar: pontuar, campos: ['rotulos'],
+    exemplos: { desafio: { id: 'x', tipo: 'vfLista', itens: [{ t: 'a', v: true }, { t: 'b', v: false }] },
+      certa: function (d) { return d.itens.map(function (it) { return it.v ? 0 : 1; }); }, estranhos: [[], [null], [99, 99]] },
+    falas: function (d, todos, segs) { d.itens.forEach(function (it) { segs.push(it.t); }); return segs; },
+    textoCerto: function (d) { return d.itens.map(function (it) { return marca(d, it.v ? 0 : 1) + it.t; }).join(' • '); },
+    textoResposta: function (d, valor) { return d.itens.map(function (it, i) { return (valor[i] === 0 || valor[i] === 1 ? marca(d, valor[i]) : '( ) ') + it.t; }).join(' • '); },
+    validar: function (d, v) {
+      if (d.rotulos !== undefined) v.checar(Array.isArray(d.rotulos) && d.rotulos.length === 2 && d.rotulos.every(function (r) { return typeof r === 'string' && r; }), d.id + ": rotulos deve ser ['T', 'F'] (2 textos) num vfLista");
+      v.checar(d.itens.length >= 2 && d.itens.every(function (i) { return i.t && typeof i.v === 'boolean'; }), d.id + ': V/F inválido');
+    },
+  });
 })();

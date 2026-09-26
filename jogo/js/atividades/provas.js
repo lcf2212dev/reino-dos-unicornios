@@ -103,17 +103,12 @@
     var questoes = prova.questoes;
     var respostas = questoes.map(function () { return null; });
     var prontas = questoes.map(function () { return false; });
-    // a ordem das alternativas é a da folha; só os blocos de montar frase e os itens de ordenar são embaralhados (uma vez)
+    // a ordem das alternativas é a da folha; o tipo pode preparar a sua uma vez (def.prepararProva: blocos de
+    // montar frase e itens de ordenar embaralhados, peças de letras do copiar)
     var ordens = questoes.map(function (d) {
       if (d.opcoes) return d.opcoes.map(function (_, i) { return i; });
-      if (d.tipo === 'frase' || d.tipo === 'ordenar') {
-        var m = U.embaralhar((d.blocos || d.itens).map(function (_, i) { return i; }));
-        while (m.every(function (v, i) { return v === i; })) m = U.embaralhar(m);
-        return m;
-      }
-      // copiar: as peças de letras de cada item, embaralhadas uma vez
-      if (d.tipo === 'copiar') return d.itens.map(function (it) { return D.ordemPecasCopiar(it); });
-      return null;
+      var def = D.tipoDe(d);
+      return def && def.prepararProva ? def.prepararProva(d) : null;
     });
     var avisosPressa = 0;
 
@@ -189,7 +184,8 @@
       if (d.apoio) t += Reino.Falas.segmentosApoio(d.apoio).join(' ');
       // instrucao: a linha de como responder, logo abaixo da pergunta
       if (d.instrucao) t += ' ' + d.instrucao;
-      if (d.tipo === 'copiar') t += d.itens.map(function (x) { return x.opcoes.join(' '); }).join(' ');
+      var def = D.tipoDe(d);
+      if (def && def.textoProva) t += def.textoProva(d);
       else if (d.itens) t += d.itens.map(function (x) { return typeof x === 'string' ? x : x.t; }).join(' ');
       if (d.frases) t += d.frases.map(function (f) { return f.antes + f.depois; }).join(' ');
       if (d.pares) t += d.pares.map(function (p) { return (p[0].t || '') + p[1].t; }).join(' ');
@@ -330,8 +326,9 @@
         var ok = pts[i] === 1;
         var li = el('li.correcao-item' + (ok ? '.certa' : '.errinho'),
           el('p', el('b', (ok ? '✓ ' : '🔎 ') + 'Questão ' + (i + 1)), ok ? ' certinha!' : ' tem errinho (' + Pv.formatarNota(pts[i]) + ' de 1)'));
-        // desenho: a miniatura aparece sempre na correção
-        if (d.tipo === 'desenho') { var mini = D.miniaturaDesenho(respostas[i], 3); if (mini) li.appendChild(el('div.correcao-desenho', mini)); }
+        // def.extraCorrecao (desenho: a miniatura) aparece sempre na correção
+        var def = D.tipoDe(d), extra = def && def.extraCorrecao ? def.extraCorrecao(d, respostas[i]) : null;
+        if (extra) li.appendChild(extra);
         if (!ok) {
           li.appendChild(el('p.correcao-enunciado', D.enunciado(d)));
           if (mostrarCerta) {
@@ -351,7 +348,7 @@
         caixa.appendChild(el('h3', mostrarCerta ? 'Vamos aprender com as que faltaram:' : 'Procure o errinho com atenção:'));
         if (!mostrarCerta) caixa.appendChild(el('p.dica-revisao', 'Não vou contar a resposta ainda: leia de novo no livro e descubra! 🔎'));
       }
-      if (!premios.sucesso || questoes.some(function (d) { return d.tipo === 'desenho'; })) caixa.appendChild(lista);
+      if (!premios.sucesso || questoes.some(function (d) { var def = D.tipoDe(d); return !!(def && def.extraCorrecao); })) caixa.appendChild(lista);
 
       var voltar = el('button.btn-grande' + (a ? '.btn-secundario' : '.btn-principal'), { type: 'button' }, 'Voltar à Escola');
       voltar.addEventListener('click', function () { fechar(); if (aoTerminar) aoTerminar(premios); });

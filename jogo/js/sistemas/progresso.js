@@ -1,11 +1,12 @@
 /* Progresso da Mariana: salvo no aparelho (localStorage) e, quando o jogo roda
    publicado no claude.ai, sincronizado entre aparelhos pela capacidade `db`.
    Dinheiro e prêmios são DERIVADOS das conquistas, nunca guardados soltos.
-   Em quatro arquivos, carregados nesta ordem (Reino.Progresso é um só):
+   Em cinco arquivos, carregados nesta ordem (Reino.Progresso é um só):
      progresso.js         estado, estadoNovo, completar, normalizarNovos, carregar/salvar, cópia -novidades, abas
      progresso-mescla.js  P.mesclar e as regras de junção (cuidados, despensa, surpresa)
      progresso-nuvem.js   sincronização com o servidor de casa e com o claude.ai
      progresso-regras.js  dinheiro, estrelas, unicórnios, salas, treinos, provas, pagamentos
+     progresso-campos.js  P.registrarCampo: campo NOVO declarado uma vez (padrão, limpeza, mescla, ciclo, cópia)
    O que as partes dividem mora em Reino._progresso (interno, não é API): `estado` (o objeto do save;
    carregar, mesclar e "Apagar tudo" TROCAM o objeto: sempre ler I.estado, nunca guardar numa variável),
    `nuvem`, `P` e as funções auxiliares que cada parte publica no fim dela.
@@ -19,13 +20,17 @@
   var nuvem = { ref: null, ok: false, gravando: false, pendente: false, timer: null, status: 'local' };
   // o que as partes do progresso dividem (ver o cabeçalho)
   /** @type {ProgressoInterno} */
-  var I = Reino._progresso = { estado: null, nuvem: nuvem, P: P };
+  var I = Reino._progresso = { estado: null, nuvem: nuvem, P: P, campos: {} };
+  // os campos de P.registrarCampo (progresso-campos.js); sem nenhum, nada muda no save
+  /** @param {(nome: string, def: CampoSave) => void} f */
+  function cadaCampo(f) { Object.keys(I.campos).forEach(function (n) { f(n, I.campos[n]); }); }
 
   function agora() { return Date.now(); }
 
   /** @returns {EstadoSave} */
   function estadoNovo() {
-    return {
+    /** @type {EstadoSave} */
+    var e = {
       v: 1, geracao: 1, ciclo: 1, criado: agora(), atualizado: agora(),
       comecou: false,
       aparencia: Object.assign({}, PA.APARENCIA_PADRAO),
@@ -44,6 +49,8 @@
       cuidados: {},     // uniId -> {fome, sede, banho, em, acao, acaoFome, acaoSede, acaoBanho} (0–100, 100 = satisfeito/limpinho; sem registro ou sem banho = 100; acaoFome/acaoSede = carimbo do último comer/beber, acao = o maior dos dois (o banho não mexe nele), acaoBanho = do último banho, 0 = nenhum) — js/sistemas/cuidados.js
       despensa: {},     // comidaId -> {compradas, usadas} (contadores que só crescem; quantidade = compradas − usadas)
     };
+    cadaCampo(function (n, def) { e[n] = def.padrao(); });
+    return e;
   }
 
   /* ---------- carregar / salvar ---------- */
@@ -135,14 +142,15 @@
   }
   function gravarCopia() {
     if (!I.estado) return;
-    try {
-      localStorage.setItem(CHAVE_NOVIDADES, JSON.stringify({
-        geracao: I.estado.geracao || 1, ciclo: I.estado.ciclo || 1, atualizado: I.estado.atualizado,
-        cuidados: I.estado.cuidados || {}, despensa: I.estado.despensa || {},
-        surpresa: I.estado.ajustes ? I.estado.ajustes.surpresa : undefined,
-        surpresaEm: I.estado.ajustes ? I.estado.ajustes.surpresaEm : undefined,
-      }));
-    } catch (e) {}
+    var copia = {
+      geracao: I.estado.geracao || 1, ciclo: I.estado.ciclo || 1, atualizado: I.estado.atualizado,
+      cuidados: I.estado.cuidados || {}, despensa: I.estado.despensa || {},
+      surpresa: I.estado.ajustes ? I.estado.ajustes.surpresa : undefined,
+      surpresaEm: I.estado.ajustes ? I.estado.ajustes.surpresaEm : undefined,
+    };
+    // campos registrados que pediram a cópia, em `campos` (sem nenhum, a cópia sai igual à de sempre)
+    cadaCampo(function (n, def) { if (def.copiaSeguranca) (copia.campos = copia.campos || {})[n] = I.estado[n]; });
+    try { localStorage.setItem(CHAVE_NOVIDADES, JSON.stringify(copia)); } catch (e) {}
   }
   // da cópia só entram registros com números de verdade (cópia estragada não vira NaN no jogo)
   function numero(x) { return typeof x === 'number' && isFinite(x) && x >= 0; }
@@ -161,6 +169,12 @@
     e.cuidados = I.juntarCuidados(objeto(e.cuidados) ? e.cuidados : {}, filtrar(c.cuidados, ['fome', 'sede', 'em']));
     e.despensa = I.juntarDespensa(objeto(e.despensa) ? e.despensa : {}, filtrar(c.despensa, ['compradas', 'usadas']));
     e.ajustes = I.juntarSurpresa(objeto(e.ajustes) ? e.ajustes : {}, { surpresa: c.surpresa, surpresaEm: c.surpresaEm });
+    // campo que zera no Novo ciclo só volta da cópia do mesmo ciclo
+    cadaCampo(function (n, def) {
+      if (!def.copiaSeguranca || !objeto(c.campos) || !chaveSegura(c.campos, n)) return;
+      if (def.novoCiclo === 'zera' && (c.ciclo || 1) !== (e.ciclo || 1)) return;
+      e[n] = I.juntarCampo(def, e[n], c.campos[n]);
+    });
     return e;
   }
   /** @param {any} e estado cru @returns {EstadoSave} com todos os campos de estadoNovo() */
@@ -211,6 +225,7 @@
     e.despensa = despensa;
     var s = e.ajustes.surpresa;
     if (typeof s !== 'boolean') e.ajustes.surpresa = s === 'false' ? false : s === 'true' ? true : estadoNovo().ajustes.surpresa;
+    cadaCampo(function (n, def) { var v = I.limparCampo(def, e[n]); e[n] = v === undefined ? def.padrao() : v; });
     return e;
   }
 
@@ -271,7 +286,7 @@
   // para as outras partes
   I.agora = agora; I.estadoNovo = estadoNovo; I.objeto = objeto; I.numero = numero; I.numeroOu = numeroOu;
   I.chaveSegura = chaveSegura; I.proprio = proprio; I.completar = completar; I.comCopia = comCopia;
-  I.conteudo = conteudo; I.trouxeAlgo = trouxeAlgo; I.gravarLocal = gravarLocal; I.vigiarSurpresa = vigiarSurpresa;
+  I.conteudo = conteudo; I.cadaCampo = cadaCampo; I.trouxeAlgo = trouxeAlgo; I.gravarLocal = gravarLocal; I.vigiarSurpresa = vigiarSurpresa;
 
   Reino.Progresso = P;
 })();

@@ -70,9 +70,14 @@
   function chaveSprite(s) { return JSON.stringify(s || {}); }
 
   /* bases novas de sprite (ex.: 'robo' do Observatório): fn(o, quadro) → { g: Grade, busto }.
-     o = params() com o.cru = o sprite original; quadro: bit 1 respira, bit 2 pisca. */
+     o = params() com o.cru = o sprite original; quadro: bit 1 respira, bit 2 pisca.
+     chaves (opcional): { chave: 'cor' | 'sim' | [valores] } que a base lê de o.cru (entram em N.OPCOES_SPRITE). */
   var BASES = {};
-  N.registrarBase = function (nome, fn) { BASES[nome] = fn; };
+  N.registrarBase = function (nome, fn, chaves) {
+    BASES[nome] = fn;
+    if (N.OPCOES_SPRITE.base.indexOf(nome) < 0) N.OPCOES_SPRITE.base.push(nome);
+    Object.keys(chaves || {}).forEach(function (k) { if (!N.OPCOES_SPRITE[k]) N.OPCOES_SPRITE[k] = chaves[k]; });
+  };
   N.gradeSprite = { Grade: Grade, W: W, CX: CX, TOPO: TOPO, HY: HY, BY: BY, CONTORNO: CONTORNO,
     esc: function (c, t) { return esc(c, t); }, cla: function (c, t) { return cla(c, t); }, mis: function (a, b, t) { return mis(a, b, t); } };
 

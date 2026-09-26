@@ -57,6 +57,9 @@
     animacaoBanho: function () { return Reino.Banho ? Reino.Banho.depurar() : null; },
     musicaAtual: function () { return Reino.Som && Reino.Som.musicaAtual ? Reino.Som.musicaAtual() : null; },
     fotos: function () { return Reino.Fotos ? Reino.Fotos.depurar() : null; },
+    // módulos (js/nucleo/modulos.js): os ids na ordem de registro e o depurar() de cada um
+    modulos: function () { return Reino.modulos.map(function (m) { return m.id; }); },
+    modulo: function (id) { var m = Reino.modulo(id); return m && m.depurar ? m.depurar() : null; },
     // agua(tx, ty): o tile do mapa é água do lago? Sem argumentos: ela está nadando agora?
     agua: function (tx, ty) {
       if (tx === undefined) return !!(Jogador.nadando && Jogador.nadando());

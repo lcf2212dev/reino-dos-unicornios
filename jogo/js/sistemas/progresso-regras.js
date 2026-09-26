@@ -200,6 +200,7 @@
     I.estado.ciclo = (I.estado.ciclo || 1) + 1;
     I.estado.salas = {}; I.estado.treinos = {}; I.estado.pago = {};
     // fome e sede (cuidados) e a despensa continuam: são do unicórnio, não do ciclo de provas
+    I.cadaCampo(function (n, def) { if (def.novoCiclo === 'zera') I.estado[n] = def.padrao(); });
     P.salvar();
   };
   P.apagarTudo = function () {

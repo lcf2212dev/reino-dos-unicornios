@@ -276,6 +276,11 @@ interface ProgressoApi {
   registrarPagamento(materiaId: string, valor: number): void;
   novoCiclo(): void;
   apagarTudo(): void;
+  // progresso-campos.js
+  registrarCampo(nome: string, def: CampoSave): void;
+  camposRegistrados(): string[];
+  /** nomes do save de hoje, que um campo registrado não pode usar (progresso-campos.js) */
+  NOMES_DO_SAVE: string[];
 }
 
 /** Reino._progresso: o que as quatro partes do progresso dividem (interno, não é API). Os auxiliares são
@@ -308,6 +313,13 @@ interface ProgressoInterno {
   juntarSurpresa?(base: any, outro: any): any;
   // progresso-nuvem.js
   agendarNuvem?(): void;
+  // progresso-campos.js (o registro `campos` nasce vazio em progresso.js)
+  campos: { [nome: string]: CampoSave };
+  cadaCampo?(f: (nome: string, def: CampoSave) => void): void;
+  ESTRATEGIAS?: { [nome: string]: EstrategiaMescla };
+  limparCampo?(def: CampoSave, v: any): any;
+  juntarCampo?(def: CampoSave, base: any, outro: any): any;
+  exemplosCampo?(def: CampoSave): any[];
 }
 
 /* ============================ CONTEÚDO (docs/contratos/conteudo.md) ============================ */
@@ -316,7 +328,7 @@ interface ProgressoInterno {
 interface Materia {
   id: string;
   nome: string;
-  emoji: string;
+  emoji: string | ((l?: any) => string);
   /** o prédio da matéria no mapa */
   lugar: LugarMateria;
   /** fala do guia (voz 'claude') */
@@ -390,7 +402,7 @@ interface CartaLivro {
 interface Sala {
   id: string;
   nome: string;
-  emoji: string;
+  emoji: string | ((l?: any) => string);
   /** páginas da apostila */
   paginas: string;
   /** fala de abertura (voz 'claude') */
@@ -404,7 +416,7 @@ interface Prova {
   materiaId: string;
   nome: string;
   bimestre: string;
-  emoji: string;
+  emoji: string | ((l?: any) => string);
   /** o prêmio de cada tentativa: 1ª lendário, 2ª raro, depois comum */
   acessorios: { lendario: Acessorio; raro: Acessorio; comum: Acessorio };
   questoes: Desafio[];
@@ -414,6 +426,27 @@ interface Prova {
 interface Acessorio {
   id: string;
   nome: string;
+  /** desenho na montaria no próprio arquivo (senão, em pixelart-unicornio-moldes.js) */
+  desenho?: DesenhoEnfeite;
+  /** ícone 'acessorio:<id>' no próprio arquivo (senão, em js/arte/icones/) */
+  icone?: IconePixel;
+}
+
+/** Desenho de um enfeite na montaria (item de PA.ENFEITES_MONTARIA). */
+interface DesenhoEnfeite {
+  linhas: string[];
+  paleta: { [letra: string]: string };
+  ancora: 'orelha' | 'cabeca' | 'olho' | 'chifre' | 'pescoco' | 'cauda';
+  dx: number;
+  dy: number;
+  [k: string]: any;
+}
+
+/** Ícone 16×16 de window.ICONES: n = nome, p = paleta, d = 16 linhas de 16 letras. */
+interface IconePixel {
+  n: string;
+  p: { [letra: string]: string };
+  d: string[];
 }
 
 /** Texto de apoio de uma questão (lido no 🔊 da caixa do texto). */
@@ -660,6 +693,15 @@ interface PersonagemElenco {
   paraMateria?: string;
   /** professora desta prova na Escola */
   paraProva?: string;
+}
+
+/** Perfil de voz (Reino.config.vozes[nome]). */
+interface PerfilVoz {
+  voz: string;
+  velocidade: string;
+  tom: string;
+  ingles?: string;
+  efeito?: string;
 }
 
 /** NPC de um interior (npcs-e-dialogo.md §2). */

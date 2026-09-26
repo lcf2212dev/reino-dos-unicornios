@@ -14,6 +14,9 @@ Contratos: `docs/contratos/save-e-mescla.md`, `cuidados.md`, `surpresa.md`, `som
 - Dinheiro e prêmios são DERIVADOS das conquistas, nunca guardados soltos. Fotos nunca no save.
 - Não mexa na chave `mariana-reino-v1-novidades` sem ler `save-e-mescla.md` §5.
 
+## Sistema novo
+- `Reino.registrarModulo` no fim do arquivo (receita `docs/receitas/sistema-novo.md`); não edite `motor/main.js`, `motor/laco.js`, `falas.js` nem `debug.js`.
+
 ## Outros sistemas
 - `cuidados.js` (fome, sede, banho, despensa), `banho.js` + `banho-desenho.js`, `surpresa*.js`, `fotos*.js`.
 - `som*.js` (efeitos sintetizados), `musicas*.js` (música por ambiente), `voz.js` (toca áudios gravados).

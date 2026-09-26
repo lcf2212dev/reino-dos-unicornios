@@ -72,38 +72,29 @@
   // pista depois de um erro: ajuda sem entregar a resposta
   F.pista = function (d, materia) {
     if (d.dica) return d.dica;
-    if (d.tipo === 'ligar' || d.tipo === 'separar' || d.tipo === 'ordenar' || d.tipo === 'frase') return F.fixas.pistaEspecial;
-    if (d.tipo === 'varias') return F.fixas.pistaVarias;
-    if (d.tipo === 'desenho') return F.fixas.pistaDesenho;
+    // def.pista: nome da frase fixa do tipo (ex.: 'pistaEspecial')
+    var def = tipoDe(d);
+    if (def && def.pista) return F.fixas[def.pista];
     var L = (materia.livro || []).find(function (l) { return l.id === d.livro; });
     return L ? F.pistaLivro(L.titulo) : F.fixas.pistaSimples;
   };
 
-  // o que a narradora lê no botão 🔊 de um desafio (opções na ordem da tela)
+  // def do tipo do desafio (Reino.registrarTipoDesafio, js/atividades/desafios.js; carregado depois deste)
+  function tipoDe(d) {
+    var defs = Reino.tiposDesafio;
+    return defs && Object.prototype.hasOwnProperty.call(defs, d.tipo) ? defs[d.tipo] : null;
+  }
+
+  // o que a narradora lê no botão 🔊 de um desafio (opções na ordem da tela): a pergunta, a instrução e
+  // o que o tipo acrescenta (def.falas(d, todos, segs) devolve a lista; todos(lista) = a ordem da tela)
   F.segmentosDesafio = function (d, ordem) {
-    if (d.tipo === 'vf') return [F.fixas.verdadeiroOuFalso, d.afirmacao];
-    var segs = [d.pergunta];
+    // vf não tem pergunta: o tipo troca a lista inteira (def.falas)
+    var segs = [/** @type {any} */ (d).pergunta];
     // instrucao: o jeito de responder no jogo, numa linha própria (o texto da folha fica intacto na pergunta)
     if (d.instrucao) segs.push(d.instrucao);
     function todos(lista) { return ordem || lista.map(function (_, i) { return i; }); }
-    if ((d.tipo === 'escolha' || d.tipo === 'varias') && d.opcoes) {
-      todos(d.opcoes).forEach(function (i) { segs.push(d.opcoes[i].t); });
-    }
-    if (d.tipo === 'vfLista') d.itens.forEach(function (it) { segs.push(it.t); });
-    // completar com a lacuna dentro da palavra (colado: PA__ARINHO) e copiar (PASEIO/PASSEIO): as palavras
-    // pela metade e as duas escritas soam iguais ou sem sentido em voz alta; a narradora lê só o enunciado
-    if (d.tipo === 'completar' && !d.colado) {
-      d.palavras.forEach(function (p) { segs.push(p); });
-      d.frases.forEach(function (f) { segs.push(F.fraseComLacuna(f)); });
-    }
-    // lerItens: a narradora lê também os itens (nas provas, que não têm pista)
-    if (d.lerItens && d.tipo === 'ligar') {
-      d.pares.forEach(function (p) { if (p[0].t) segs.push(p[0].t); });
-      todos(d.pares).forEach(function (i) { segs.push(d.pares[i][1].t); });
-    }
-    if (d.lerItens && d.tipo === 'frase') todos(d.blocos).forEach(function (i) { segs.push(d.blocos[i]); });
-    if (d.lerItens && d.tipo === 'ordenar') todos(d.itens).forEach(function (i) { segs.push(d.itens[i]); });
-    return segs;
+    var def = tipoDe(d);
+    return def && def.falas ? def.falas(d, todos, segs) : segs;
   };
   // texto de apoio de uma questão (d.apoio: título e partes com lista ou texto), lido no 🔊 da caixa do texto
   F.segmentosApoio = function (apoio) {
@@ -190,9 +181,9 @@
     Object.keys(FI).forEach(function (k) {
       (FI[k].extras || []).forEach(function (f) { add(f.texto, f.voz || 'narradora', 'interior-' + k); });
     });
-    // novidades: fome, sede e banho (lembretes, Pet Shop, Estábulo), pergunta surpresa e fotos, no pacote geral
-    [Reino.Cuidados, Reino.Surpresa, Reino.Fotos].forEach(function (modulo) {
-      if (modulo && typeof modulo.falas === 'function') modulo.falas().forEach(function (f) { add(f.texto, f.voz || 'claude', 'geral'); });
+    // módulos (js/nucleo/modulos.js), na ordem de registro: cuidados, surpresa, fotos… (pacote geral se não disserem)
+    (Reino.modulos || []).forEach(function (modulo) {
+      if (typeof modulo.falas === 'function') modulo.falas().forEach(function (f) { add(f.texto, f.voz || 'claude', f.pacote || 'geral'); });
     });
     // o que a Loja fala de novo (prêmios à venda)
     var FL = (Reino.LojaItens && Reino.LojaItens.FALAS) || {};

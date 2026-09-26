@@ -2,7 +2,7 @@
    (D.pecasCopiar, D.ordemPecasCopiar; a prova usa a ordem das peças para voltar numa questão). */
 (function () {
   var U = Reino.util, el = U.el, D = Reino.Desafios, _d = Reino._desafios;
-  var TIPOS = _d.TIPOS, PONTUAR = _d.PONTUAR, fracao = _d.fracao, doTeclado = _d.doTeclado;
+  var fracao = _d.fracao, doTeclado = _d.doTeclado;
 
   /* ---------- copiar: escolher a escrita certa entre duas e copiar com peças de letras ----------
      { tipo: 'copiar', pergunta, itens: [{ letra: 'a', opcoes: ['PASEIO', 'PASSEIO'], certa: 1 }, …] }
@@ -37,9 +37,8 @@
     return v.letras.map(function (i) { return pecas[i]; }).join('') === letrasDe(it.opcoes[it.certa]).join('');
   }
   function textoCopia(it, v) { var pecas = D.pecasCopiar(it); return ((v && v.letras) || []).map(function (i) { return pecas[i]; }).join(''); }
-  _d.textoCopia = textoCopia;
 
-  TIPOS.copiar = function (d, opts) {
+  var montar = function (d, opts) {
     var valores = d.itens.map(function (it, i) {
       var v = opts.valorInicial && opts.valorInicial[i];
       return { escolha: v && v.escolha != null ? v.escolha : null, letras: v && v.letras ? v.letras.slice() : [] };
@@ -171,5 +170,38 @@
     return ctrl;
   };
   // copiar: 2 partes por item (marcou a escrita certa; a cópia forma a escrita certa)
-  PONTUAR.copiar = function (d, valor) { return fracao(d.itens.reduce(function (t, it, i) { var v = valor[i] || {}; return t + (v.escolha === it.certa ? 1 : 0) + (copiaCerta(it, v) ? 1 : 0); }, 0), d.itens.length * 2); };
+  var pontuar = function (d, valor) { return fracao(d.itens.reduce(function (t, it, i) { var v = valor[i] || {}; return t + (v.escolha === it.certa ? 1 : 0) + (copiaCerta(it, v) ? 1 : 0); }, 0), d.itens.length * 2); };
+
+  function letra(it) { return it.letra ? it.letra + ') ' : ''; }
+  // copiar (PASEIO/PASSEIO): as duas escritas soam iguais em voz alta; a narradora lê só o enunciado
+  Reino.registrarTipoDesafio('copiar', {
+    montar: montar, pontuar: pontuar,
+    // certa: a escrita certa e, para cada letra dela, a primeira peça igual ainda não usada
+    exemplos: { desafio: { id: 'x', tipo: 'copiar', itens: [{ opcoes: ['CASA', 'KAZA'], certa: 0 }] },
+      certa: function (d) { return d.itens.map(function (it) {
+        var pecas = D.pecasCopiar(it), usadas = [];
+        var letras = Array.from(String(it.opcoes[it.certa]).replace(/\s+/g, '')).map(function (ch) {
+          var k = pecas.findIndex(function (p, j) { return p === ch && usadas.indexOf(j) < 0; }); usadas.push(k); return k;
+        });
+        return { escolha: it.certa, letras: letras };
+      }); },
+      estranhos: [[], [{}], [null], [{ escolha: 99, letras: [99] }]] },
+    // na prova: as peças de letras de cada item, embaralhadas uma vez
+    prepararProva: function (d) { return d.itens.map(function (it) { return D.ordemPecasCopiar(it); }); },
+    textoProva: function (d) { return d.itens.map(function (x) { return x.opcoes.join(' '); }).join(' '); },
+    textoCerto: function (d) { return d.itens.map(function (it) { return letra(it) + it.opcoes[it.certa]; }).join(' • '); },
+    textoResposta: function (d, valor) {
+      return d.itens.map(function (it, i) {
+        var v = valor[i] || {}, copia = textoCopia(it, v);
+        return letra(it) + (v.escolha != null ? 'marcou ' + it.opcoes[v.escolha] : 'não marcou') + ', escreveu ' + (copia || '(nada)');
+      }).join(' • ');
+    },
+    validar: function (d, v) {
+      v.checar(v.textoOk(d.pergunta), d.id + ': copiar sem pergunta');
+      v.checar(Array.isArray(d.itens) && d.itens.length > 0 && d.itens.every(function (it) {
+        return Array.isArray(it.opcoes) && it.opcoes.length >= 2 && it.opcoes.every(v.textoOk)
+          && new Set(it.opcoes).size === it.opcoes.length && Number.isInteger(it.certa) && it.certa >= 0 && it.certa < it.opcoes.length;
+      }), d.id + ': itens do copiar inválidos (2+ escritas diferentes e a certa)');
+    },
+  });
 })();

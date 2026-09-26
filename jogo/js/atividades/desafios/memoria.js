@@ -2,9 +2,8 @@
    Não tem pontuação própria: D.pontuar dá 0 (ele só aparece na missão, que não pontua). */
 (function () {
   var U = Reino.util, el = U.el, D = Reino.Desafios, _d = Reino._desafios;
-  var TIPOS = _d.TIPOS, PONTUAR = _d.PONTUAR;
 
-  TIPOS.memoria = function (d, opts) {
+  var montar = function (d, opts) {
     var cartas = [];
     d.pares.forEach(function (p, i) { cartas.push({ par: i, face: p[0], emoji: true }); cartas.push({ par: i, face: p[1] }); });
     cartas = U.embaralhar(cartas);
@@ -46,4 +45,12 @@
       marcarCerto: function () {},
     };
   };
+
+  // sem pontuar (vale 0) e sempre no fim da missão
+  Reino.registrarTipoDesafio('memoria', {
+    montar: montar, especial: true, noFim: true,
+    // sem pontuar: sem resposta certa (termina sozinho); só as estranhas, que valem 0
+    exemplos: { desafio: { id: 'm', tipo: 'memoria', pares: [] }, estranhos: [true, false] },
+    validar: function (d, v) { if (!v.naProva) v.checar(d.pares.length >= 3, d.id + ': memória com poucos pares'); },
+  });
 })();

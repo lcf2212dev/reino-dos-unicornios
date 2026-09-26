@@ -56,6 +56,6 @@
     return { g: g, busto: 16 };
   }
 
-  if (Reino.NPCs && Reino.NPCs.registrarBase) Reino.NPCs.registrarBase('robo', gradeRobo);
+  if (Reino.NPCs && Reino.NPCs.registrarBase) Reino.NPCs.registrarBase('robo', gradeRobo, { detalhe: 'cor', antena: 'cor' });
 
 })();

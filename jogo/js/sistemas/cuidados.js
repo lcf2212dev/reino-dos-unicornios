@@ -287,4 +287,6 @@
   };
 
   Reino.Cuidados = C;
+  // módulo (js/nucleo/modulos.js); o if é para os testes que carregam só este arquivo
+  if (Reino.registrarModulo) Reino.registrarModulo({ id: 'cuidados', iniciar: function () { C.iniciar(); }, falas: function () { return C.falas(); }, depurar: function () { return C.depurar(); } });
 })();

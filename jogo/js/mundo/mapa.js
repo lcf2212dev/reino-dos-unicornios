@@ -16,6 +16,7 @@
   var I = Mapa._interno = {
     tipo: [],               // letra do chão
     solido: [],             // true = não dá para andar
+    tipoSorteio: [], decorSorteio: [],   // cópia do reino sem os lugares novos: o sorteio das flores segue ela
     decor: [],              // enfeite do tile: 'arvore', 'flor', 'cristal', 'arbusto', 'cogumelo'
     lugares: [],            // o que Mapa.lugares() devolve
     estatico: null,         // canvas com tudo o que não se mexe (mundo/mapa-desenho.js)
@@ -27,6 +28,11 @@
   function dentro(x, y) { return x >= 0 && y >= 0 && x < W && y < H; }
   function noRect(x, y, r) { return x >= r.x && y >= r.y && x < r.x + r.w && y < r.y + r.h; }
   function porta(r) { return { x: r.x + Math.floor(r.w / 2), y: r.y + r.h - 1 }; }
+
+  // ids das matérias porCima que já estavam no reino quando o sorteio das flores passou a seguir a cópia
+  // (I.tipoSorteio/I.decorSorteio): elas entram antes da cópia, para o mapa de hoje sair igual.
+  // Matéria nova NÃO entra aqui: fica fora da cópia e não mexe nas flores do resto do reino.
+  Mapa.LEGADO_SORTEIO = ['portugues'];
 
   Mapa.criar = function (materias) {
     var tipo = I.tipo = [], solido = I.solido = [], decor = I.decor = [], lugares = I.lugares = [];
@@ -120,8 +126,7 @@
       else if (v < 0.40 && !pertoDaAgua(bx, by)) decor[by][bx] = 'cogumelo';
     }
     // lugares novos por cima do reino já enfeitado: tiram só o enfeite do próprio terreno e do caminho
-    porCima.forEach(function (l) {
-      lugares.push(l);
+    function porCimaNoMapa(l) {
       var r = l.rect, p = l.porta;
       for (var yy = r.y; yy < r.y + r.h; yy++) for (var xx = r.x; xx < r.x + r.w; xx++) {
         decor[yy][xx] = null;
@@ -131,10 +136,8 @@
       // da porta até a rua (a mesma ligação dos outros lugares)
       var rua = p.y < 9 ? 9 : 20;
       for (var cy = p.y + 1; cy < rua; cy++) { decor[cy][p.x] = null; tipo[cy][p.x] = 'c'; solido[cy][p.x] = false; }
-    });
-    // os que têm `caminho` chegaram depois: por cima do reino já enfeitado
-    Mapa.LUGARES_FIXOS.forEach(function (f) {
-      if (!f.caminho) return;
+    }
+    function comCaminho(f) {
       var l = Object.assign({ tipo: f.id, porta: porta(f.rect) }, f);
       lugares.push(l);
       var r = f.rect;
@@ -144,7 +147,23 @@
         solido[yy][xx] = !(xx === l.porta.x && yy === l.porta.y);
       }
       f.caminho.forEach(function (p) { decor[p[1]][p[0]] = null; tipo[p[1]][p[0]] = 'c'; solido[p[1]][p[0]] = false; });
+    }
+    // as matérias porCima de hoje (LEGADO_SORTEIO) entram já; as novas só depois da cópia de sorteio (abaixo)
+    var novas = [];
+    porCima.forEach(function (l) {
+      lugares.push(l);
+      if (Mapa.LEGADO_SORTEIO.indexOf(l.materiaId) >= 0) porCimaNoMapa(l); else novas.push(l);
     });
+    // os que têm `caminho` chegaram depois: por cima do reino já enfeitado
+    Mapa.LUGARES_FIXOS.forEach(function (f) { if (f.caminho) comCaminho(f); });
+    // cópia do reino de hoje: o Mapa.prerender tira os sorteios das flores dela, para um lugar novo
+    // não mudar as flores longe dele (contrato cena-e-motor.md §9)
+    I.tipoSorteio = tipo.map(function (l) { return l.slice(); });
+    I.decorSorteio = decor.map(function (l) { return l.slice(); });
+    // lugares novos: matérias porCima de fora do legado e os registrados pelos prédios (Reino.registrarLugar),
+    // sempre com caminho, na ordem de registro
+    novas.forEach(porCimaNoMapa);
+    (Reino.lugaresRegistrados || []).forEach(function (f) { if (f.caminho) comCaminho(f); });
     I.estatico = null;
   };
 

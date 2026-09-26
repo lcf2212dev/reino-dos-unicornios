@@ -182,6 +182,10 @@
     portas.push({ x: dir ? SX + SW : SX - 1, y: oy + 6, w: 1, h: 2 });
     corredores.push({ x: ox, y: oy + 6, w: 11, h: 2 });
   });
+  // + os registrados com predio: 'castelo' e x/y (Reino.personagensDoPredio; prédio antigo não tem vagas)
+  npcs = npcs.concat(R.personagensDoPredio('castelo').filter(function (p) { return p.x != null && p.y != null; }).map(function (p) {
+    return npc(p.id, p.x, p.y, p.acao || { tipo: 'guia', lugar: 'castelo' });
+  }));
   // fileiras das portas também no salão
   for (var a = 0; a < andares; a++) corredores.push({ x: SX, y: 7 + 12 * a, w: SW, h: 2 });
 

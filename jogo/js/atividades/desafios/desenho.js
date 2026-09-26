@@ -2,7 +2,6 @@
    (D.desenhoFaltam, D.desenhoCumpriu, D.miniaturaDesenho para a correção da prova). */
 (function () {
   var U = Reino.util, el = U.el, D = Reino.Desafios, _d = Reino._desafios;
-  var TIPOS = _d.TIPOS, PONTUAR = _d.PONTUAR;
 
   /* ---------- desenho: prancheta de pixel art ----------
      { tipo: 'desenho', pergunta, requisitos: ['linhas', 'formas', 'cores'] }
@@ -103,7 +102,7 @@
     return c;
   }
 
-  TIPOS.desenho = function (d, opts) {
+  var montar = function (d, opts) {
     var ini = opts.valorInicial || {};
     var px = (ini.px && ini.px.length === GRADE * GRADE ? ini.px : new Array(GRADE * GRADE + 1).join('0')).split('');
     var usou = { linhas: !!(ini.usou && ini.usou.linhas), formas: !!(ini.usou && ini.usou.formas), cores: ((ini.usou && ini.usou.cores) || []).slice() };
@@ -262,5 +261,21 @@
     };
     return ctrl;
   };
-  PONTUAR.desenho = function (d, valor) { return D.desenhoCumpriu(d, valor) ? 1 : 0; };
+  var pontuar = function (d, valor) { return D.desenhoCumpriu(d, valor) ? 1 : 0; };
+
+  Reino.registrarTipoDesafio('desenho', {
+    montar: montar, pontuar: pontuar, especial: true, pista: 'pistaDesenho',
+    exemplos: { desafio: { id: 'x', tipo: 'desenho', requisitos: ['linhas', 'formas', 'cores'] },
+      certa: function () { return { px: '1', usou: { linhas: true, formas: true, cores: [1, 2] } }; },
+      estranhos: [{}, { px: '1' }, { usou: {} }, { px: '', usou: { linhas: true, formas: true, cores: [1, 2] } }] },
+    // na correção da prova a miniatura aparece sempre (e a lista da correção também, mesmo com nota dez)
+    extraCorrecao: function (d, valor) { var mini = D.miniaturaDesenho(valor, 3); return mini ? el('div.correcao-desenho', mini) : null; },
+    textoCerto: function (d) { return 'Um desenho usando ' + d.requisitos.join(', ') + '.'; },
+    textoResposta: function (d, valor) { return D.desenhoCumpriu(d, valor) ? 'Desenho com tudo o que foi pedido.' : 'Desenho sem ' + D.desenhoFaltam(d, valor).join(', ') + '.'; },
+    validar: function (d, v) {
+      var req = Object.keys(NOME_REQUISITO);
+      v.checar(d.pergunta, d.id + ': desenho sem pergunta');
+      v.checar(Array.isArray(d.requisitos) && d.requisitos.length > 0 && d.requisitos.every(function (r) { return req.indexOf(r) >= 0; }), d.id + ': requisitos do desenho devem ser de ' + req.join('/'));
+    },
+  });
 })();

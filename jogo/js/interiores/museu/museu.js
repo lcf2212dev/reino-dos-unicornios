@@ -219,6 +219,9 @@
       npc('taina', 5, 6, acaoSala('h3')),
       npc('contadeira', 16, 5, acaoSala('h4')),
       npc('nina', 30, 6, acaoSala('h5')),
-    ],
+    // + os registrados com predio: 'museu' e x/y (Reino.personagensDoPredio; prédio antigo não tem vagas: sem x/y, o validador acusa)
+    ].concat(R.personagensDoPredio('museu').filter(function (p) { return p.x != null && p.y != null; }).map(function (p) {
+      return npc(p.id, p.x, p.y, p.acao || { tipo: 'guia', lugar: 'materia:historia', livro: 'historia' });
+    })),
   });
 })();

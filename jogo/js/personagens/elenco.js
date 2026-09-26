@@ -55,6 +55,13 @@
     lucia: { nome: 'Professora Lúcia', voz: 'npc-lucia', paraProva: 'portugues-3bim', sprite: { pele: '#ffe0c7', cabelo: '#2b1b17', penteado: 'longo', oculos: true, roupa: '#e0433f', roupa2: '#3a3a5a', perna: 'saia', livro: '#ffd34d', cor2: '#ffd34d', colar: '#39c5bb' } },
   };
 
+  // personagens de Reino.registrarPersonagem (provas e prédios) entram depois dos de cima
+  var registrados = window.Reino.personagens || {};
+  Object.keys(registrados).forEach(function (id) {
+    if (N.ELENCO[id]) throw new Error('registrarPersonagem: id repetido com o elenco "' + id + '"');
+    N.ELENCO[id] = registrados[id];
+  });
+
   // id do primeiro personagem do elenco (na ordem acima) cujos campos batem com o filtro, ou null
   // (campo ausente no personagem não bate, nem com filtro undefined).
   // Ex.: N.doElenco({ paraMateria: 'historia' }) → 'aurora'; N.doElenco({ paraProva: 'ingles-3bim' }) → 'emma'

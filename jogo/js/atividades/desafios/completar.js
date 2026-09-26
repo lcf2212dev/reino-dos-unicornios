@@ -1,7 +1,7 @@
 /* Desafio completar: completar frases com as palavras do quadro (lacuna solta ou colada na palavra, com figura opcional). */
 (function () {
   var U = Reino.util, el = U.el, D = Reino.Desafios, _d = Reino._desafios;
-  var TIPOS = _d.TIPOS, PONTUAR = _d.PONTUAR, fracao = _d.fracao;
+  var fracao = _d.fracao;
 
   // completar: a palavra j vale na frase f? (a certa ou uma das aceitas)
   function completarAceita(f, j) { return j === f.certa || (f.aceitas || []).indexOf(j) >= 0; }
@@ -21,7 +21,7 @@
 
   // completar frases com as palavras do quadro — valor: [índice da palavra ou null por frase]
   // campos opcionais: d.colado (lacuna dentro da palavra), frases[i].img + alt (figura), frases[i].aceitas (outros índices certos)
-  TIPOS.completar = function (d, opts) {
+  var montar = function (d, opts) {
     var escolha = opts.valorInicial ? opts.valorInicial.slice() : d.frases.map(function () { return null; });
     // colado com frase inteira (espaço no antes/depois): a caixa ocupa a largura toda e a linha quebra nos espaços
     var coladoLongo = !!d.colado && d.frases.some(function (f) { return /\s/.test((f.antes + f.depois).trim()); });
@@ -87,8 +87,50 @@
     };
     return ctrl;
   };
-  PONTUAR.completar = function (d, valor) {
+  var pontuar = function (d, valor) {
     if (d.livre) return valor.every(function (v) { return v != null; }) ? 1 : 0;
     return fracao(d.frases.filter(function (f, i) { return valor[i] != null && completarAceita(f, valor[i]); }).length, d.frases.length);
   };
+
+  // palavra j numa frase (colado: a palavra inteira, como XÍCARA; sem escolha: a lacuna)
+  function palavraCompletar(d, f, j) {
+    if (d.colado) return f.antes + (j != null ? d.palavras[j] : '_') + f.depois;
+    return j != null ? d.palavras[j] : '______';
+  }
+  function letra(f) { return f.letra ? f.letra + ') ' : ''; }
+  Reino.registrarTipoDesafio('completar', {
+    montar: montar, pontuar: pontuar, campos: ['livre', 'colado'],
+    exemplos: { desafio: { id: 'y', tipo: 'completar', opcoes: ['x', 'y', 'z'], frases: [{ t: 'a', certa: 1 }, { t: 'b', certa: 0, aceitas: [2] }] },
+      certa: function (d) { return d.frases.map(function (f) { return d.livre ? 0 : f.certa; }); }, estranhos: [[], [null], [99, 99]] },
+    // colado (lacuna dentro da palavra: PA__ARINHO): as palavras pela metade soam sem sentido; lê só o enunciado
+    falas: function (d, todos, segs) {
+      if (d.colado) return segs;
+      d.palavras.forEach(function (p) { segs.push(p); });
+      d.frases.forEach(function (f) { segs.push(Reino.Falas.fraseComLacuna(f)); });
+      return segs;
+    },
+    textoCerto: function (d) {
+      return d.frases.map(function (f) {
+        var outras = (f.aceitas || []).map(function (j) { return palavraCompletar(d, f, j); });
+        return letra(f) + palavraCompletar(d, f, f.certa) + (outras.length ? ' (ou ' + outras.join(' ou ') + ')' : '');
+      }).join(' • ');
+    },
+    textoResposta: function (d, valor) { return d.frases.map(function (f, i) { return letra(f) + palavraCompletar(d, f, valor[i]); }).join(' • '); },
+    // naProva: figura que falta é erro (nas salas, só aviso: o jogo mostra ❓)
+    validar: function (d, v) {
+      if (d.livre !== undefined) v.checar(d.livre === true, d.id + ': "livre" só vale true');
+      if (d.colado !== undefined) v.checar(d.colado === true, d.id + ': "colado" só vale true');
+      if (Array.isArray(d.frases) && Array.isArray(d.palavras)) d.frases.forEach(function (f, i) {
+        var onde = d.id + ': frase ' + (f.letra || i + 1);
+        if (f.aceitas !== undefined) v.checar(!d.livre && Array.isArray(f.aceitas) && f.aceitas.length > 0 && f.aceitas.every(function (j) { return Number.isInteger(j) && j >= 0 && j < d.palavras.length && j !== f.certa; }) && new Set(f.aceitas).size === f.aceitas.length, onde + ': aceitas deve ter índices de palavras válidos, sem repetir e sem a certa');
+        if (f.img === undefined) return;
+        v.checar(v.textoOk(f.img) && v.textoOk(f.alt), onde + ': figura precisa de img e alt');
+        if (v.textoOk(f.img) && !v.icones[f.img]) {
+          if (v.naProva) v.checar(false, onde + ': falta o desenho "' + f.img + '" em js/arte/icones/');
+          else v.avisar(onde + ': falta o desenho "' + f.img + '" em js/arte/icones/ (aparece ❓)');
+        }
+      });
+      v.checar(d.frases.every(function (f) { return (d.livre || (Number.isInteger(f.certa) && f.certa < d.palavras.length)) && typeof f.antes === 'string' && typeof f.depois === 'string'; }), d.id + ': frases inválidas');
+    },
+  });
 })();

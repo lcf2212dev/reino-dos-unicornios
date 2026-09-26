@@ -1,5 +1,5 @@
 /* Utilidades comuns (Reino.util): $, $$, el (monta DOM), preencher, semEn, embaralhar, sortear, clamp,
-   reais, reaisCurto, copia, esperar, o barramento de eventos (on, emit) e reduzMovimentoSistema
+   reais, reaisCurto, copia, esperar, hoje, o barramento de eventos (on, emit) e reduzMovimentoSistema
    (lido na carga, depois do js/nucleo/congelar.js). */
 window.Reino = window.Reino || {};
 
@@ -98,10 +98,23 @@ Reino.util = (function () {
   function on(ev, fn) { (ouvintes[ev] = ouvintes[ev] || []).push(fn); }
   function emit(ev, dado) { (ouvintes[ev] || []).forEach(function (fn) { try { fn(dado); } catch (e) { console.error(e); } }); }
 
+  // o dia de hoje 'aaaa-mm-dd' no fuso local; guardado por minuto (há quem pergunte a cada quadro).
+  // Lê o Date da hora da chamada: o relógio virtual do modo determinístico vale.
+  var hojeMinuto = -1, hojeTexto = '';
+  function hoje() {
+    var agora = Date.now(), min = Math.floor(agora / 60000);
+    if (min !== hojeMinuto) {
+      var d = new Date(agora);
+      hojeMinuto = min;
+      hojeTexto = d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
+    }
+    return hojeTexto;
+  }
+
   var reduzMovimento = false;
   try { reduzMovimento = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
 
   return { $: $, $$: $$, el: el, preencher: preencher, semEn: semEn, embaralhar: embaralhar, sortear: sortear, clamp: clamp,
-    reais: reais, reaisCurto: reaisCurto, copia: copia, esperar: esperar, on: on, emit: emit,
+    reais: reais, reaisCurto: reaisCurto, copia: copia, esperar: esperar, hoje: hoje, on: on, emit: emit,
     reduzMovimentoSistema: reduzMovimento };
 })();

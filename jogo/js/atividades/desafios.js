@@ -1,7 +1,9 @@
 /* Desafios: núcleo. Helpers comuns (maiúsculas acentuadas, título que encolhe, botão de opção,
    clique pelo teclado), textos do desafio (enunciado, fala, correção), caixa do texto de apoio,
    D.render, D.pontuar, D.conferirValor e D.sortear. Cada tipo de desafio mora em
-   js/atividades/desafios/<tipo>.js e se registra em Reino._desafios (carregado depois deste).
+   js/atividades/desafios/<tipo>.js e se registra com Reino.registrarTipoDesafio (carregado depois deste):
+   o núcleo, a prova, as falas e o validador só chamam os ganchos do tipo (docs/contratos/conteudo.md,
+   "Tipo de desafio novo"). Este arquivo e os tipos são `node: true`: no carregamento não tocam em document.
    A tela de uma sala (Reino.Missao) fica em js/atividades/missao.js. */
 (function () {
   var U = Reino.util, el = U.el;
@@ -10,11 +12,27 @@
   /* Objeto interno das partes dos desafios (não é API do jogo; só estes arquivos usam):
      TIPOS      fábricas de cada tipo: TIPOS.<tipo>(d, opts) devolve o controle { el, valor, pronto, conferir, ... }
      PONTUAR    pontuação de cada tipo: PONTUAR.<tipo>(d, valor) de 0 a 1 (tipo sem entrada vale 0)
-     fracao, botaoOpcao, doTeclado: helpers comuns (neste arquivo)
-     rotulosVF (desafios/vfLista.js) e textoCopia (desafios/copiar.js): usados nos textos da correção */
+     fracao, botaoOpcao, doTeclado: helpers comuns (neste arquivo) */
   var _d = Reino._desafios = { TIPOS: {}, PONTUAR: {} };
+  var tem = function (o, k) { return Object.prototype.hasOwnProperty.call(o, k); };
 
-  D.TREINAVEIS = ['escolha', 'vf', 'varias'];
+  // tipos que valem para o treino (e contam no mínimo do treino do validador): os de def.treinavel
+  D.TREINAVEIS = [];
+
+  /* Registro dos tipos: Reino.registrarTipoDesafio(tipo, def), def = { montar, pontuar, ... } (TipoDesafioDef em
+     ferramentas/testes/tipos-jogo.d.ts). Reino.tiposDesafio[tipo] é a def; D.tipoDe(d) a def do desafio (ou null). */
+  var DEFS = Reino.tiposDesafio = {};
+  Reino.registrarTipoDesafio = function (tipo, def) {
+    if (tem(DEFS, tipo)) throw new Error('tipo de desafio repetido: ' + tipo);
+    if (!def || typeof def.montar !== 'function') throw new Error('tipo de desafio sem montar: ' + tipo);
+    DEFS[tipo] = def;
+    _d.TIPOS[tipo] = def.montar;
+    // sem pontuar (memória): vale 0
+    if (def.pontuar) _d.PONTUAR[tipo] = def.pontuar;
+    if (def.treinavel) D.TREINAVEIS.push(tipo);
+    return def;
+  };
+  D.tipoDe = function (d) { return d && tem(DEFS, d.tipo) ? DEFS[d.tipo] : null; };
 
   /* Maiúsculas acentuadas na fonte pixel: a Press Start 2P desenha Á, Ó, Ã… com o desenho da minúscula
      (HISTÓRIA saía HISTóRIA). Cada uma vira <span class="mai-acento" data-b="O" data-a="´">Ó</span>:
@@ -118,13 +136,12 @@
   _d.botaoOpcao = botaoOpcao;
 
   D.enunciado = function (d) {
-    if (d.tipo === 'vf') return 'Verdadeiro ou falso? ' + d.afirmacao;
-    return d.pergunta;
+    var def = D.tipoDe(d);
+    return def && def.enunciado ? def.enunciado(d) : d.pergunta;
   };
   D.textoParaFala = function (d) {
-    var t = D.enunciado(d);
-    if (d.tipo === 'escolha' || d.tipo === 'varias') t += '. ' + d.opcoes.map(function (o) { return o.t; }).join('. ');
-    return t;
+    var def = D.tipoDe(d);
+    return D.enunciado(d) + (def && def.textoFala ? def.textoFala(d) : '');
   };
   // tamanho do texto para o detector de pressa
   D.tamanhoLeitura = function (d) {
@@ -217,13 +234,9 @@
     var ctrl = fabrica(d, opts);
     var card = el('div.desafio.desafio-' + d.tipo + (d.estilo ? '.estilo-' + d.estilo : '') + (d.apoio ? '.com-apoio' : ''));
     if (d.apoio) card.appendChild(D.caixaApoio(d.apoio, !!opts.apoioFechado));
-    var enun = el('div.enunciado');
-    if (d.tipo === 'vf') {
-      enun.appendChild(el('p.pergunta', 'Verdadeiro ou falso?'));
-      enun.appendChild(el('blockquote.afirmacao', d.afirmacao));
-    } else {
-      enun.appendChild(el('p.pergunta', d.pergunta));
-    }
+    var enun = el('div.enunciado'), def = D.tipoDe(d);
+    // enunciadoTela: o tipo desenha o próprio enunciado (vf: a pergunta fixa e a afirmação)
+    (def && def.enunciadoTela ? def.enunciadoTela(d) : [el('p.pergunta', d.pergunta)]).forEach(function (n) { enun.appendChild(n); });
     // instrucao (opcional): o jeito de responder no jogo, numa linha própria logo abaixo da pergunta
     if (d.instrucao) enun.appendChild(el('p.instrucao', el('span.instrucao-icone', { 'aria-hidden': 'true' }, '👉'), el('span', d.instrucao)));
     var ouvir = el('button.btn-ouvir', { type: 'button', 'aria-label': 'Ouvir a pergunta' }, '🔊 Ouvir');
@@ -245,64 +258,40 @@
   };
   D.conferirValor = function (d, valor) { return D.pontuar(d, valor) === 1; };
 
-  function textoFrase(d, seq) { return seq.map(function (i) { return (d.itens || d.blocos)[i]; }).join(' '); }
-  // palavra j numa frase do completar (colado: a palavra inteira, como XÍCARA; sem escolha: a lacuna)
-  function palavraCompletar(d, f, j) {
-    if (d.colado) return f.antes + (j != null ? d.palavras[j] : '_') + f.depois;
-    return j != null ? d.palavras[j] : '______';
-  }
-  function textoEsquerda(p, i) { return p[0].t || ((i + 1) + 'º ' + p[0].alt); }
   D.TEXTO_PESSOAL = 'Resposta pessoal: vale o que for verdade para você.';
   // linha da correção: "✓ Certo: ..." (ou o aviso de resposta pessoal)
   D.linhaCerta = function (d) { return d.livre ? D.TEXTO_PESSOAL : '✓ Certo: ' + D.respostaCertaTexto(d); };
+  // textos da correção: cada tipo diz a resposta certa (def.textoCerto) e a dada (def.textoResposta)
   D.respostaCertaTexto = function (d) {
     if (d.livre) return D.TEXTO_PESSOAL;
-    if (d.tipo === 'desenho') return 'Um desenho usando ' + d.requisitos.join(', ') + '.';
-    if (d.tipo === 'vf') return d.certo ? 'Verdadeiro' : 'Falso';
-    if (d.tipo === 'escolha') return d.opcoes[d.certa].t;
-    if (d.tipo === 'varias') return d.opcoes.filter(function (o) { return o.ok; }).map(function (o) { return o.t; }).join(', ');
-    if (d.tipo === 'ligar') return d.pares.map(function (p, i) { return textoEsquerda(p, i) + ' → ' + p[1].t; }).join(' • ');
-    if (d.tipo === 'vfLista') return d.itens.map(function (it) { return '(' + _d.rotulosVF(d)[it.v ? 0 : 1] + ') ' + it.t; }).join(' • ');
-    if (d.tipo === 'completar') return d.frases.map(function (f) {
-      var outras = (f.aceitas || []).map(function (j) { return palavraCompletar(d, f, j); });
-      return (f.letra ? f.letra + ') ' : '') + palavraCompletar(d, f, f.certa) + (outras.length ? ' (ou ' + outras.join(' ou ') + ')' : '');
-    }).join(' • ');
-    if (d.tipo === 'copiar') return d.itens.map(function (it) { return (it.letra ? it.letra + ') ' : '') + it.opcoes[it.certa]; }).join(' • ');
-    if (d.tipo === 'ordenar' || d.tipo === 'frase') return textoFrase(d, (d.itens || d.blocos).map(function (_, i) { return i; }));
-    return '';
+    var def = D.tipoDe(d);
+    return def && def.textoCerto ? def.textoCerto(d) : '';
   };
   D.respostaTexto = function (d, valor) {
     if (valor == null || (Array.isArray(valor) && !valor.length)) return '(sem resposta)';
-    if (d.tipo === 'vf') return valor === 0 ? 'Verdadeiro' : 'Falso';
-    if (d.tipo === 'escolha') return d.opcoes[valor].t;
-    if (d.tipo === 'varias') return valor.map(function (i) { return d.opcoes[i].t; }).join(', ');
-    if (d.tipo === 'ligar') return d.pares.map(function (p, i) { return textoEsquerda(p, i) + ' → ' + (valor[i] != null ? d.pares[valor[i]][1].t : '?'); }).join(' • ');
-    if (d.tipo === 'vfLista') return d.itens.map(function (it, i) { return '(' + (valor[i] === 0 || valor[i] === 1 ? _d.rotulosVF(d)[valor[i]] : ' ') + ') ' + it.t; }).join(' • ');
-    if (d.tipo === 'desenho') return D.desenhoCumpriu(d, valor) ? 'Desenho com tudo o que foi pedido.' : 'Desenho sem ' + D.desenhoFaltam(d, valor).join(', ') + '.';
-    if (d.tipo === 'completar') return d.frases.map(function (f, i) { return (f.letra ? f.letra + ') ' : '') + palavraCompletar(d, f, valor[i]); }).join(' • ');
-    if (d.tipo === 'copiar') return d.itens.map(function (it, i) {
-      var v = valor[i] || {}, copia = _d.textoCopia(it, v);
-      return (it.letra ? it.letra + ') ' : '') + (v.escolha != null ? 'marcou ' + it.opcoes[v.escolha] : 'não marcou') + ', escreveu ' + (copia || '(nada)');
-    }).join(' • ');
-    if (d.tipo === 'ordenar' || d.tipo === 'frase') return textoFrase(d, valor);
-    return '';
+    var def = D.tipoDe(d);
+    return def && def.textoResposta ? def.textoResposta(d, valor) : '';
   };
 
   // sorteia os desafios da missão: variedade de tipos e o jogo da memória no fim
+  // (def.especial: no máximo 2 tipos especiais por missão; def.semprePrimeiro: entra sempre que a sala tem;
+  // def.noFim: vai para o fim da missão)
+  function prop(d, k) { var def = D.tipoDe(d); return !!(def && def[k]); }
   D.sortear = function (sala, quantos) {
-    var especiais = ['ligar', 'ordenar', 'separar', 'frase', 'memoria', 'desenho'];
+    function especial(d) { return prop(d, 'especial'); }
     var porTipo = {};
-    sala.desafios.forEach(function (d) { if (especiais.indexOf(d.tipo) >= 0) (porTipo[d.tipo] = porTipo[d.tipo] || []).push(d); });
+    sala.desafios.forEach(function (d) { if (especial(d)) (porTipo[d.tipo] = porTipo[d.tipo] || []).push(d); });
     var tiposEsp = U.embaralhar(Object.keys(porTipo));
     // a sala 5 sempre tem pelo menos um "separar nos baús"
-    if (porTipo.separar) tiposEsp = ['separar'].concat(tiposEsp.filter(function (t) { return t !== 'separar'; }));
+    var primeiros = tiposEsp.filter(function (t) { return DEFS[t].semprePrimeiro; });
+    tiposEsp = primeiros.concat(tiposEsp.filter(function (t) { return !DEFS[t].semprePrimeiro; }));
     var escolhidos = tiposEsp.slice(0, 2).map(function (t) { return U.sortear(porTipo[t]); });
-    var simples = U.embaralhar(sala.desafios.filter(function (d) { return especiais.indexOf(d.tipo) < 0; }));
+    var simples = U.embaralhar(sala.desafios.filter(function (d) { return !especial(d); }));
     var lista = escolhidos.concat(simples.slice(0, Math.max(0, quantos - escolhidos.length)));
     lista = U.embaralhar(lista);
     // começa com uma pergunta simples e deixa a memória para o fim
-    lista.sort(function (a, b) { return (a.tipo === 'memoria') - (b.tipo === 'memoria'); });
-    var iSimples = lista.findIndex(function (d) { return especiais.indexOf(d.tipo) < 0; });
+    lista.sort(function (a, b) { return prop(a, 'noFim') - prop(b, 'noFim'); });
+    var iSimples = lista.findIndex(function (d) { return !especial(d); });
     if (iSimples > 0) { var s = lista.splice(iSimples, 1)[0]; lista.unshift(s); }
     return lista.slice(0, quantos);
   };

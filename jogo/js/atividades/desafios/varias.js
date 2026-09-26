@@ -1,9 +1,9 @@
 /* Desafio varias: marcar todas as opções certas (d.livre: questão pessoal, qualquer escolha vale). */
 (function () {
   var U = Reino.util, el = U.el, D = Reino.Desafios, _d = Reino._desafios;
-  var TIPOS = _d.TIPOS, PONTUAR = _d.PONTUAR, fracao = _d.fracao, botaoOpcao = _d.botaoOpcao;
+  var fracao = _d.fracao, botaoOpcao = _d.botaoOpcao;
 
-  TIPOS.varias = function (d, opts) {
+  var montar = function (d, opts) {
     var ordem = opts.ordem || U.embaralhar(d.opcoes.map(function (_, i) { return i; }));
     var sel = {};
     (opts.valorInicial || []).forEach(function (i) { sel[i] = true; });
@@ -48,9 +48,26 @@
     };
     return ctrl;
   };
-  PONTUAR.varias = function (d, valor) {
+  var pontuar = function (d, valor) {
     if (d.livre) return (valor || []).length ? 1 : 0;
     var marcadas = valor || [];
     return fracao(d.opcoes.filter(function (o, i) { return !!o.ok === (marcadas.indexOf(i) >= 0); }).length, d.opcoes.length);
   };
+
+  Reino.registrarTipoDesafio('varias', {
+    montar: montar, pontuar: pontuar, treinavel: true, campos: ['livre'], pista: 'pistaVarias',
+    exemplos: { desafio: { id: 'x', tipo: 'varias', opcoes: [{ t: 'a', ok: true }, { t: 'b' }, { t: 'c', ok: true }] },
+      certa: function (d) { return d.livre ? [0] : d.opcoes.map(function (o, i) { return o.ok ? i : -1; }).filter(function (i) { return i >= 0; }); },
+      estranhos: [[], [99], [null], [0, 0, 0]] },
+    textoFala: _d.textoOpcoes, falas: _d.opcoesFaladas,
+    textoCerto: function (d) { return d.opcoes.filter(function (o) { return o.ok; }).map(function (o) { return o.t; }).join(', '); },
+    textoResposta: function (d, valor) { return valor.map(function (i) { return d.opcoes[i].t; }).join(', '); },
+    validar: function (d, v) {
+      if (d.livre !== undefined) v.checar(d.livre === true, d.id + ': "livre" só vale true');
+      if (d.livre) return;
+      var ok = d.opcoes.filter(function (o) { return o.ok; }).length;
+      v.checar(ok >= 1, d.id + ': nenhuma opção certa');
+      if (!v.naProva && ok === d.opcoes.length) v.avisar(d.id + ': todas as opções são certas');
+    },
+  });
 })();

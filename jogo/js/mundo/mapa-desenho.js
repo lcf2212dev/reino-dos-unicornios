@@ -81,9 +81,10 @@
     ret(ctx, px + 8, py, 1, 3, '#ffffff');
     ret(ctx, px + 7, py + 1, 3, 1, '#fff6a8');
   }
-  function desenharFlor(ctx, x, y, r) {
+  function desenharFlor(ctx, x, y, r, soSortear) {
     var px = x * T + 4 + Math.floor(r() * 7), py = y * T + 5 + Math.floor(r() * 5);
     var cor = FLORES[Math.floor(r() * FLORES.length)];
+    if (soSortear) return;   // gasta os mesmos 3 números sem pintar (flor que um lugar novo tirou)
     var miolo = (cor === '#ffe066' || cor === '#ffffff') ? '#ff8a3d' : '#fff3a0';
     ret(ctx, px, py + 2, 1, 4, '#7ea832');
     ret(ctx, px - 2, py + 3, 2, 1, '#8fb83a'); ret(ctx, px + 1, py + 4, 2, 1, '#b6d24e');
@@ -174,6 +175,20 @@
     elipse(ctx, px + w / 2, py + h - 1, Math.round(w * 0.30), 1, 'rgba(58,36,70,0.18)');
   }
 
+  // enfeites do chão, tile a tile. O sorteio das flores anda pela cópia do reino de hoje (I.decorSorteio):
+  // um lugar novo não desloca as flores do resto; flor que só existe no estado final usa sorteio da coordenada
+  I.desenharEnfeites = function (ctx) {
+    var r = I.rng(4242), base = I.decorSorteio;
+    for (var y = 0; y < H; y++) for (var x = 0; x < W; x++) {
+      var d = I.decor[y][x], antes = base[y] && base[y][x] === 'flor';
+      if (antes) desenharFlor(ctx, x, y, r, d !== 'flor');
+      else if (d === 'flor') desenharFlor(ctx, x, y, I.rng(x * 89 + y * 47 + 13));
+      if (d === 'cristal') desenharCristal(ctx, x, y);
+      else if (d === 'arbusto') desenharArbusto(ctx, x, y);
+      else if (d === 'cogumelo') desenharCogumelo(ctx, x, y);
+    }
+  };
+
   Mapa.prerender = function () {
     // mais BORDA_BAIXO fileiras de grama depois do fim do mapa: a câmera passa da borda de baixo para
     // o menu não esconder a última fileira, e ali aparecia grama lisa, sem os tufinhos
@@ -182,14 +197,7 @@
     var r = I.rng(777);
     for (var y = 0; y < H; y++) for (var x = 0; x < W; x++) desenharChao(ctx, x, y, r);
     for (var yb = H; yb < H + BORDA_BAIXO; yb++) for (var xb = 0; xb < W; xb++) desenharChao(ctx, xb, yb, r, 'g');
-    var r2 = I.rng(4242);
-    for (var y2 = 0; y2 < H; y2++) for (var x2 = 0; x2 < W; x2++) {
-      var d = I.decor[y2][x2];
-      if (d === 'flor') desenharFlor(ctx, x2, y2, r2);
-      else if (d === 'cristal') desenharCristal(ctx, x2, y2);
-      else if (d === 'arbusto') desenharArbusto(ctx, x2, y2);
-      else if (d === 'cogumelo') desenharCogumelo(ctx, x2, y2);
-    }
+    I.desenharEnfeites(ctx);
     I.desenharLago(ctx);
     desenharFonte(ctx);
     // prédios e árvores em ordem de cima para baixo

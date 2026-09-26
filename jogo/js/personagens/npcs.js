@@ -66,6 +66,24 @@
   };
 
   // parâmetros com os padrões preenchidos
+  /* chaves aceitas no sprite (tabela com os valores: docs/contratos/npcs-e-dialogo.md §5). Lista = valores
+     aceitos; 'cor' = cor '#rrggbb'; 'sim' = true (ou uma cor, onde a tabela diz). Chave fora daqui é ignorada
+     pelo desenho, e o validar-interiores avisa. Bases registradas (N.registrarBase) somam as suas. */
+  var EXTRAS = ['oculos', 'oculosCor', 'barba', 'bigode', 'avental', 'aventalCor', 'capa', 'capaCor', 'capaEstrelas', 'jaleco', 'apito',
+    'bengala', 'bolsa', 'bolsaCor', 'colar', 'gravata', 'cachecol', 'cachecolCor', 'cracha', 'livro', 'carta', 'pincel',
+    'violao', 'varinha', 'presilha', 'flor', 'espelhoTesta', 'armadura', 'jardineira', 'colete', 'corrente', 'asas',
+    'corpo', 'barriga', 'asa', 'moeda', 'nariz',
+    'regador', 'regadorCor', 'gola', 'emblema', 'emblemaCor', 'livroAberto', 'lapis', 'palhaco', 'sapatoes'];
+  N.OPCOES_SPRITE = {
+    base: ['pessoa', 'fada', 'dragao'], idade: ['adulto', 'crianca', 'idoso'],
+    penteado: ['curto', 'careca', 'cachos', 'espetado', 'longo', 'trancas', 'chanel', 'rabo', 'rabos', 'coque', 'black', 'cacheado'],
+    chapeu: ['bone', 'chapeu', 'palha', 'cartola', 'boina', 'coroa', 'tiara', 'elmo', 'turbante', 'gorro', 'lenco', 'chef',
+      'quepe', 'pescador', 'festa', 'faixa', 'flores'],
+    perna: ['calca', 'saia', 'vestido', 'short'], estampa: ['listras', 'xadrez', 'bolinhas', 'estrelas'], emblema: ['A'],
+    pele: 'cor', cabelo: 'cor', roupa: 'cor', roupa2: 'cor', sapato: 'cor', cor2: 'cor', chapeuCor: 'cor', boca: 'sim',
+  };
+  EXTRAS.forEach(function (k) { if (!N.OPCOES_SPRITE[k]) N.OPCOES_SPRITE[k] = /Cor$|^(corpo|barriga|asa|colete)$/.test(k) ? 'cor' : 'sim'; });
+
   function params(s) {
     s = s || {};
     var idade = s.idade || (s.base === 'fada' ? 'crianca' : 'adulto');
@@ -83,11 +101,7 @@
       estampa: s.estampa || null,
       boca: s.boca !== false,
     };
-    ['oculos', 'oculosCor', 'barba', 'bigode', 'avental', 'aventalCor', 'capa', 'capaCor', 'capaEstrelas', 'jaleco', 'apito',
-      'bengala', 'bolsa', 'bolsaCor', 'colar', 'gravata', 'cachecol', 'cachecolCor', 'cracha', 'livro', 'carta', 'pincel',
-      'violao', 'varinha', 'presilha', 'flor', 'espelhoTesta', 'armadura', 'jardineira', 'colete', 'corrente', 'asas',
-      'corpo', 'barriga', 'asa', 'moeda', 'nariz',
-      'regador', 'regadorCor', 'gola', 'emblema', 'emblemaCor', 'livroAberto', 'lapis', 'palhaco', 'sapatoes'].forEach(function (k) { if (s[k] !== undefined) o[k] = s[k]; });
+    EXTRAS.forEach(function (k) { if (s[k] !== undefined) o[k] = s[k]; });
     if (o.base === 'fada' && o.asas === undefined) o.asas = true;
     o.cru = s;   // parâmetros originais (bases novas, como o robô, leem os seus daqui)
     return o;

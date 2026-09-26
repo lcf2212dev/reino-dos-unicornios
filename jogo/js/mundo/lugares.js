@@ -1,6 +1,6 @@
 /* Lugares fixos do mapa (DADOS): prédios que não são matéria, e as clareiras das matérias.
-   Prédio novo no mapa = uma entrada em Mapa.LUGARES_FIXOS (com `caminho`, ver abaixo) + o desenho
-   em Mapa.PREDIOS[sprite] (mundo/predios.js, ou o arquivo do prédio em js/interiores/).
+   Os prédios de hoje ficam aqui. Prédio novo NÃO entra aqui: usa Reino.registrarLugar na pasta dele
+   (js/interiores/<p>/lugar.js; docs/contratos/interiores.md §9.7) + o desenho em Mapa.PREDIOS[sprite].
    Cada entrada vira um lugar de Mapa.lugares() assim: { tipo: id, porta, ...a entrada }.
      id, nome (a placa), sprite (chave de Mapa.PREDIOS), rect (em tiles; a porta fica no meio da
      última linha), placa ('acima' ou 'direita'; sem ela, o padrão da placa).

@@ -85,12 +85,22 @@
   /* telas e ações de outros módulos (Pet Shop, Observatório):
      registrarTela('petshop', abrir(acao, ctx), 'Quer ver as comidinhas? 🥕') — abre uma tela do DOM;
        o NPC espera ela fechar e se despede; o texto é o convite padrão de NPC com essa tela.
-     registrarAcao('beber', fn(acao, ctx) → Promise) — ação de objeto ou NPC ({ tipo: 'beber' }). */
+     registrarAcao('beber', fn(acao, ctx) → Promise) — ação de objeto ou NPC ({ tipo: 'beber' }).
+     Um sistema (carrega antes dos NPCs) declara as suas no def do módulo: acoes: { tipo: fn } (nucleo/modulos.js). */
   var TELAS = {}, ACOES = {};
   N.registrarTela = function (nome, abrir, convite) { TELAS[nome] = abrir; if (convite) PADRAO.tela.nova[nome] = convite; };
   N.registrarAcao = function (tipo, fn) { ACOES[tipo] = fn; };
   N.telas = function () { return Object.keys(TELAS); };
-  N.acoes = function () { return Object.keys(ACOES); };
+  // as de registrarAcao e depois as dos módulos (a de registrarAcao ganha, se o tipo repetir)
+  function acaoDeModulo(tipo) {
+    var m = (Reino.modulos || []).find(function (d) { return d.acoes && Object.prototype.hasOwnProperty.call(d.acoes, tipo); });
+    return m ? m.acoes[tipo] : null;
+  }
+  N.acoes = function () {
+    var l = Object.keys(ACOES);
+    (Reino.modulos || []).forEach(function (m) { Object.keys(m.acoes || {}).forEach(function (k) { if (l.indexOf(k) < 0) l.push(k); }); });
+    return l;
+  };
 
   N.executar = function (acao, ctx) {
     acao = acao || {};
@@ -130,8 +140,9 @@
       if (TELAS[acao.tela]) return esperarTela(function () { TELAS[acao.tela](acao, ctx); }).then(fim);
       return Promise.resolve(null);
     }
-    if (ACOES[acao.tipo]) {
-      try { return Promise.resolve(ACOES[acao.tipo](acao, ctx || {})).catch(function (e) { console.error(e); return null; }); }
+    var fnAcao = ACOES[acao.tipo] || acaoDeModulo(acao.tipo);
+    if (fnAcao) {
+      try { return Promise.resolve(fnAcao(acao, ctx || {})).catch(function (e) { console.error(e); return null; }); }
       catch (e) { console.error(e); return Promise.resolve(null); }
     }
     if (acao.tipo === 'unicornio') {

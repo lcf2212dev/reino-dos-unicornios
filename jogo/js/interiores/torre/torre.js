@@ -50,7 +50,10 @@
       comodos: [Object.assign({ id: 'andar', nome: nome, rect: { x: 1, y: 1, w: 11, h: 11 } }, comodo)],
       corredores: [{ x: 5, y: 3, w: 3, h: 9 }, { x: 8, y: 3, w: 2, h: 1 }, { x: 3, y: 10, w: 2, h: 1 }],
       objetos: sala(objetos),
-      npcs: npcs,
+      // + os registrados com predio: o id do andar ('torre', 'torre-1'…) e x/y do interior (npc() soma 1: tira aqui)
+      npcs: npcs.concat(R.personagensDoPredio(ANDARES[i]).filter(function (p) { return p.x != null && p.y != null; }).map(function (p) {
+        return npc(p.id, p.x - 1, p.y - 1, p.acao || { tipo: 'guia', lugar: 'materia:ingles', livro: 'ingles' });
+      })),
     }, extra || {}));
   }
   function cartaz(x, icone, cor, faixa) { return { tipo: 'torre-cartaz', x: x, y: 0, var: { icone: icone, cor: cor, faixa: faixa } }; }
