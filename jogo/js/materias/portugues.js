@@ -302,7 +302,7 @@ Reino.registrarMateria({
     /* ------------------------------------------------------------ SALA 3 */
     {
       id: 'p3', nome: 'CH, LH, NH e o X', emoji: '🐣', paginas: 'pp. 42 a 50 e 55',
-      intro: 'Bem-vinda ao Pátio do Circo: vamos brincar com o CH, o LH, o NH e o X!',
+      intro: 'Que bom ver você no Pátio do Circo! Vamos brincar com o CH, o LH, o NH e o X!',
       desafios: [
         { id: 'p3-01', tipo: 'escolha', livro: 'digrafos', pagina: 42,
           pergunta: 'Leia as palavras da brincadeira de amarelinha: AMARELINHA, DESENHE, PEDRINHA. O que elas têm de igual na escrita?',

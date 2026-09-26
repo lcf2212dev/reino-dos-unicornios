@@ -39,6 +39,7 @@ const NOME_LETRA = { CH: 'cê agá', LH: 'éle agá', NH: 'ene agá', SS: 'dois 
 const COMPOSTAS = /^(pega-pega|bem-vind[oa]s?|caça-palavras|arco-íris|guarda-chuva|beija-flor)$/i;
 const FEM_SEM_A = /^(vez|colher|flor|mulher|luz|noite|tarde|parte|sílaba|árvore|nuvem|viagem)$/i;
 const MASC_EM_A = /^(dia|mapa|planeta|problema|sofá|clima|tema|cometa)$/i;
+const PRONUNCIA = { kiwis: 'kiuís', kiwi: 'kiuí' };
 const PRONOME = /-(se|os|as|o|a|lo|la|los|las|me|te|lhe|lhes|nos)$/i;
 function nomesDasLetras(t) {
   // "R$ 4,00" é dinheiro, não a letra
@@ -46,7 +47,11 @@ function nomesDasLetras(t) {
   // "1 laranja" era lido "um laranja": antes de palavra terminada em A/Ã (feminina), o 1 vira "uma"
   t = t.replace(/(^|[^\p{L}\d])1 (?=(\p{L}+))/gu, (m, a, pal) => ((/[aã]$/i.test(pal) && !MASC_EM_A.test(pal)) || FEM_SEM_A.test(pal) ? a + 'uma ' : m));
   // sílabas separadas ("al-gu-ma"): uma pausa em cada hífen, senão a voz lê a palavra inteira
-  return t.replace(/\p{L}+(?:-\p{L}+)+/gu, (w) => (COMPOSTAS.test(w) || PRONOME.test(w) ? w : w.split('-').join('… ')));
+  // pronome só com um hífen e verbo de 4+ letras antes ("lave-os"); "par-te", "bo-la" são sílabas
+  const pronome = (w) => { const p = w.split('-'); return p.length === 2 && p[0].length >= 4 && PRONOME.test(w); };
+  t = t.replace(/\p{L}+(?:-\p{L}+)+/gu, (w) => (COMPOSTAS.test(w) || pronome(w) ? w : w.split('-').join('… ')));
+  // palavras que a voz pronunciava mal (conferido por transcrição): só o texto falado muda
+  return t.replace(/(^|[^\p{L}])(kiwis|kiwi)(?=$|[^\p{L}])/giu, (_, a, w) => a + PRONUNCIA[w.toLowerCase()]);
 }
 
 function prepararFala(texto, voz, pacotes) {

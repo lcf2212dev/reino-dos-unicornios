@@ -62,7 +62,7 @@ Reino.FALAS_INTERIORES.portugues = {
     // sala 3: circo
     'amarelinha': ['A amarelinha dos dias!', 'A semana tem sete dias.', 'Pule de casa em casa!'],
     'chocalho': ['Chocalho começa com CH!', 'Escute o barulhinho dele! 🎵'],
-    'ninho': ['Um ninho com ovinhos! 🥚', 'Ninho se escreve com NH.'],
+    'ninho': ['Olha o ninho com três ovinhos! 🥚', 'Ninho se escreve com NH.'],
     'pipoca': ['A pipoca é feita de milho!', 'Milho se escreve com LH.'],
     // sala 4: porto
     'iceberg': ['Isso é só a ponta do iceberg!', 'A maior parte fica embaixo.'],

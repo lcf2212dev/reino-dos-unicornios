@@ -9850,7 +9850,7 @@
    "pacotes": [
     "portugues-livro"
    ],
-   "fala": "As sílabas são os pedacinhos da palavra. Fale batendo palmas, uma palma para cada pedacinho: bal… de, pal… mei… ra! Para escrever a palavra separada, a gente usa um tracinho entre as sílabas: al… gu… ma, par-te, to… tal."
+   "fala": "As sílabas são os pedacinhos da palavra. Fale batendo palmas, uma palma para cada pedacinho: bal… de, pal… mei… ra! Para escrever a palavra separada, a gente usa um tracinho entre as sílabas: al… gu… ma, par… te, to… tal."
   },
   {
    "chave": "75e217892r",
@@ -10210,7 +10210,7 @@
    "pacotes": [
     "portugues-p1"
    ],
-   "fala": "kiwis"
+   "fala": "kiuís"
   },
   {
    "chave": "c32401d1h",
@@ -11000,13 +11000,13 @@
    "fala": "cê agá, éle agá, ene agá e o xis"
   },
   {
-   "chave": "ed6faac325",
+   "chave": "5e8f7a962c",
    "voz": "claude",
-   "texto": "Bem-vinda ao Pátio do Circo: vamos brincar com o CH, o LH, o NH e o X!",
+   "texto": "Que bom ver você no Pátio do Circo! Vamos brincar com o CH, o LH, o NH e o X!",
    "pacotes": [
     "portugues-extra"
    ],
-   "fala": "Bem-vinda ao Pátio do Circo: vamos brincar com o cê agá, o éle agá, o ene agá e o xis!"
+   "fala": "Que bom ver você no Pátio do Circo! Vamos brincar com o cê agá, o éle agá, o ene agá e o xis!"
   },
   {
    "chave": "25e0b6a93f",
@@ -17123,13 +17123,13 @@
    "fala": "Milho se escreve com éle agá."
   },
   {
-   "chave": "beb41abdv",
+   "chave": "038a745d14",
    "voz": "narradora",
-   "texto": "Um ninho com ovinhos!",
+   "texto": "Olha o ninho com três ovinhos!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Um ninho com ovinhos!"
+   "fala": "Olha o ninho com três ovinhos!"
   },
   {
    "chave": "425d8995y",
