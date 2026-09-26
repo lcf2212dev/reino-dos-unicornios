@@ -9,4 +9,4 @@ description: Use quando o Leandro pedir uma matéria nova no Reino dos Unicórni
 2. Siga a receita `docs/receitas/materia-nova.md` (gerador, apostila pelas reduzidas, manifesto, conferir no jogo).
    Contrato: `docs/contratos/conteudo.md`. Prédio próprio: skill `novo-predio`.
 3. Fecho: skill `validar-tudo`; falas novas com o texto exato no retorno (quem integra grava com `gravar-vozes`).
-   Sem commit, merge nem push: o trabalho fica na worktree.
+   A frente não faz commit; quem orquestra integra até a main (skill `entregar`).

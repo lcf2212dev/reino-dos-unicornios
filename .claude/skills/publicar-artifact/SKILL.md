@@ -25,4 +25,4 @@ nunca leia nem grave o doc `progresso/mariana`. Nunca `force`. Nunca o campo `ca
 6. **Avisar o Leandro**: fechar as abas antigas do artifact (uma aba velha pode pedir arquivo que mudou).
    As abas do servidor de casa se atualizam sozinhas quando existir o módulo de versão (frente A2, módulo versao.js).
 7. **Registrar**: `npm run artifact -- --registrar <hash do HEAD publicado> --versao vN`. Deixe o
-   `artifact-publicado.txt` alterado para o commit (commit só com autorização do Leandro).
+   `artifact-publicado.txt` alterado e faça o commit dele na main, com push (pedir o artifact já autoriza).

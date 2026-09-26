@@ -15,7 +15,7 @@ Fotos e prints vão numa pasta dentro de `matérias/`. Exemplo: `Mariana Revisõ
 O que quero:
 Onde aparece:
 Pronto quando:
-Até onde ir: servidor de teste | commit | main | GitHub | artifact
+Parar antes? (em branco = até a main e o GitHub)
 ```
 
 ## Modelo completo (novidade de verdade)
@@ -88,15 +88,12 @@ Onde ela joga (se usa recurso do aparelho, como compartilhar, baixar ou câmera)
 - [ ]
 
 # 14. Decisões
-Pode decidir sozinho:
-Me pergunte antes:
+O que você já sabe que quer (o resto o Claude decide):
 
 # 15. Até onde ir
-[x] Construir numa worktree e me dar um servidor de teste para eu jogar
-[ ] Commit na branch
-[ ] Merge na main (o servidor de casa passa a servir a novidade)
-[ ] Push no GitHub
-[ ] Republicar o artifact do claude.ai
+Padrão: construir, testar, pôr na main (o servidor de casa passa a servir a novidade) e mandar para o GitHub.
+[ ] Parar antes: só servidor de teste para eu jogar
+[ ] Também republicar o artifact do claude.ai
 ```
 
 ## O que já vale sempre (não precisa escrever)
@@ -112,8 +109,8 @@ Me pergunte antes:
 - **Números:** os ajustáveis ficam em `jogo/js/nucleo/config.js`.
 
 ## O que o Claude faz com o pedido
-O Claude pergunta o que faltar de uma vez, manda um plano curto, constrói à parte e te dá um servidor de teste para
-jogar; não passa do que você marcou em "Até onde ir".
+O Claude não pergunta nada: decide o que faltar, constrói à parte, testa, põe na main e manda para o GitHub. No fim
+te conta o que ficou pronto, o que ele decidiu e o endereço de um servidor de teste para você jogar.
 
 ## Exemplo preenchido
 ```
@@ -161,10 +158,5 @@ A pergunta surpresa continua igual, e as duas nunca aparecem ao mesmo tempo.
 - [ ] no celular, dá para pegar só com toque
 
 # 14. Decisões
-Pode decidir sozinho: o desenho do brilho e o som.
-Me pergunte antes: qualquer mudança na pergunta surpresa.
-
-# 15. Até onde ir
-[x] Construir numa worktree e me dar um servidor de teste para eu jogar
-[x] Commit na branch
+Não mexer na pergunta surpresa.
 ```
