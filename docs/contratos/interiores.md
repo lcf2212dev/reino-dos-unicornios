@@ -119,7 +119,7 @@ Reino.Interiores.objeto('escrivaninha', {
 
 ## 6. Desenho e desempenho
 1. Estático pré-renderizado UMA vez num canvas por interior; refeito só quando a chave de estado (junção
-   das `chave(P)`) muda, conferida nos eventos `progresso`/`progressoRemoto`/`mapaMudou`.
+   das `chave(P)`) muda, conferida nos eventos `Reino.EVENTOS.PROGRESSO`/`PROGRESSO_REMOTO`/`MAPA_MUDOU`.
 2. Nada de criar canvas a cada quadro. Móveis altos viram sprites pré-renderizados.
 3. Animações (vela, pêndulo, brilho, água) só com `animar`.
 4. Placas dos cômodos: em px da tela, fonte pixel, tamanho `8 * max(2, round(escala/2))`, desenhadas por
@@ -153,8 +153,8 @@ Reino.Interiores.objeto('escrivaninha', {
    também nessa ordem (o que vale se estiverem antes no manifesto, dentro da pasta).
 6. Nada de canvas/PA/DOM no carregamento: só dentro das funções.
 7. Geradores (dados → cômodos): a Escola monta uma sala de aula por prova (`Reino.provas`), com professor
-   conhecido (`PROFESSORES`, `escola/escola.js`) ou padrão (`prof-<prova>`); o Castelo monta uma ala por
-   matéria (`Reino.materias`), com cavaleiro conhecido (`CAVALEIROS`, `castelo/castelo.js`) ou padrão
+   do elenco com `paraProva` (`Reino.NPCs.doElenco`) ou padrão (`prof-<prova>`); o Castelo monta uma ala por
+   matéria (`Reino.materias`), com cavaleiro do elenco com `paraMateria` ou padrão
    (`cav-<matéria>`); o Estábulo monta uma baia por unicórnio do baralho.
 8. Matéria sem interior próprio ganha o interior padrão (`interiores/padrao.js`): hall com guia e livro e um
    cômodo por sala; ala no Castelo e baias no Estábulo vêm dos geradores.
@@ -220,8 +220,8 @@ estabulo, loja, bau, petshop, observatorio, portugues (`materia:portugues`).
 9. NPCs, ações e curiosidades: `npcs-e-dialogo.md` §9.
 
 ### 9.5 Casa das Palavras (lugar `materia:portugues`)
-1. Desenho de fora: `Mapa.PREDIOS.palavras`, registrado pelo próprio prédio (`portugues/fora.js`): livro
-   aberto com "Aa" na fachada, porta roxa, mastro com a flâmula do lápis; cores próprias.
+1. Desenho de fora: `Mapa.PREDIOS.palavras`, registrado pelo próprio prédio (`portugues/fora.js`): casinha de
+   cozinha com chaminé, livro aberto "Aa" no telhado, flâmula do lápis e porta roxa; cores próprias.
 2. Interior: `portugues/falas.js` (`Reino.FALAS_INTERIORES.portugues = { npcs, objetos, extras? }`) e as partes
    `objetos-hall-cozinha.js`, `objetos-horta-circo.js`, `objetos-porto.js`, `objetos-parque.js`, `portugues.js`,
    `fora.js`. Ids `portugues` (entrada) e, se houver andares ou alas, `portugues-<n>`; todos com
@@ -229,8 +229,9 @@ estabulo, loja, bau, petshop, observatorio, portugues (`materia:portugues`).
 3. Cômodos: Hall (Dona Palavrinha, lista das salas e Livro das Letras no púlpito), Cozinha das Receitas,
    Horta do H, Pátio do Circo (amarelinha no chão), Porto da Expedição (icebergs, pinguins, focas,
    albatroz), Parque do Carrossel. Critério de "rico", objetos da apostila, quadro do unicórnio raro em cada sala.
-4. Castelo: `CAVALEIROS.portugues = 'clara'` e um tema de ala `TEMAS.portugues`. Escola:
-   `PROFESSORES['portugues-3bim'] = 'lucia'`. Falas próprias no `falas.js` de cada prédio.
+4. Castelo: `clara` tem `paraMateria: 'portugues'` e a ala usa `TEMAS.portugues` (`castelo/castelo.js`). Escola:
+   `lucia` tem `paraProva: 'portugues-3bim'` (`personagens/elenco.js`, lidos com `Reino.NPCs.doElenco`).
+   Falas próprias no `falas.js` de cada prédio.
 
 ### 9.6 Interior de teste
 O interior de teste da primeira fase (`teste`, lugar `bau`, NPCs `teste-guia`/`teste-sala`) foi trocado pelo
@@ -245,4 +246,5 @@ node jogo/ferramentas/vozes/listar-falas.js        # se mudou fala: confira as f
 node jogo/ferramentas/testes/referencias.js capturar /tmp/<voce>/nova --raiz jogo --so dados,imagens
 npm test
 ```
-Abra `jogo/ferramentas/previas/interiores.html` pelo servidor de teste para ver os cômodos.
+Abra `jogo/ferramentas/previas/interiores.html` direto no Chromium (file://) para ver os cômodos (o servidor de
+teste só entrega `index.html`, `css/` e `js/`).

@@ -96,7 +96,7 @@ regra, ou o que deixou de existir; motivo ao lado).
 | INT | §7.2 L358–361 | dois arquivos por prédio (falas antes); entram no index.html e na lista `INTERIORES` da prévia | interiores.md §8.1–8.2 | atualizada: pasta por prédio com várias partes (`Reino._predios`); grupo `interiores` do manifesto entra sozinho na prévia |
 | INT | §7.2 L360 | objetos temáticos `<prédio>-<nome>`; NPCs com sprite/voz do ELENCO | interiores.md §8.3–8.4 | igual |
 | INT | §7.2 L362–363 | lista dos prédios e lugares | interiores.md §9 | igual (ampliada com petshop, observatorio, portugues) |
-| INT | §7.2 L364–366 | geradores da Escola, Castelo e Estábulo (`prof-`, `cav-`) | interiores.md §8.7 | igual |
+| INT | §7.2 L364–366 | geradores da Escola, Castelo e Estábulo (`prof-`, `cav-`) | interiores.md §8.7; npcs-e-dialogo.md §5.3 | atualizada: professor/cavaleiro conhecido vem do elenco com `paraProva`/`paraMateria` (`Reino.NPCs.doElenco`), não de listas `PROFESSORES`/`CAVALEIROS` |
 | INT | §7.2 L367–368 | ação `unicornio` (unicornioDaBaia, BAIA_VAZIA) | interiores.md §9.1.1 | igual |
 | INT | §7.2 L368 | a Loja lê `UI.ITENS_LOJA` | interiores.md §9.2.1; loja.md §2.1 | atualizada: lê `Reino.LojaItens` (NOV §4.1); `UI.ITENS_LOJA` é apelido |
 | INT | §7.2 L369–371 | frases automáticas do motor (guia, persistência, prova, treino, estábulo) | npcs-e-dialogo.md §10.2 | igual |
@@ -286,7 +286,7 @@ regra, ou o que deixou de existir; motivo ao lado).
 | POR | §6 L207–208 | desenho de fora `Mapa.PREDIOS.palavras` registrado pelo prédio; a placa não cobre os vizinhos | interiores.md §9.5.1 | atualizada: em `portugues/fora.js`; a regra da placa caiu com as placas do mapa (BFM §7) |
 | POR | §6 L209–211 | interior (falas + portugues.js), ids, pacote, objetos `portugues-<nome>` | interiores.md §9.5.2 | atualizada: prédio dividido em partes (`objetos-*.js`, `fora.js`) |
 | POR | §6 L212–214 | cômodos, rico, objetos da apostila, quadro do raro | interiores.md §9.5.3 | igual |
-| POR | §6 L215–216 | `CAVALEIROS.portugues`, `TEMAS.portugues`, `PROFESSORES['portugues-3bim']`, falas nos prédios | interiores.md §9.5.4 | igual |
+| POR | §6 L215–216 | `CAVALEIROS.portugues`, `TEMAS.portugues`, `PROFESSORES['portugues-3bim']`, falas nos prédios | interiores.md §9.5.4; npcs-e-dialogo.md §5.3 | atualizada: `PROFESSORES` não existe e `CAVALEIROS` é derivado; `clara` tem `paraMateria` e `lucia` `paraProva` no elenco (`Reino.NPCs.doElenco`) |
 | POR | §6 L217–218 | falas fixas do Claude que citam só História: genéricas ou na matéria certa | npcs-e-dialogo.md §8.3 | igual |
 | POR | §7 L221–222 | pacotes do Português | som-musica-e-voz.md §4.4 | igual |
 | POR | §7 L222 | 30 letras por página, 3+ palavras | som-musica-e-voz.md §5.1–5.2 | igual |
@@ -363,7 +363,7 @@ regra, ou o que deixou de existir; motivo ao lado).
 | BFM | D12 L192–193 | `UI.avisosDoLugar`; `placa` sem uso; `desenharTela` vazio; evento `'transicao'` | cena-e-motor.md §9.1, §9.3, §2 | igual |
 | BFM | D13 L194–195 | interruptores leem `P.estado().ajustes` na hora do toque | save-e-mescla.md §8.3 | igual |
 | BFM | D14 L196–197 | blocos do HUD de cima com `pointer-events: none` | loja.md §6.9; fotos.md §6.3 | igual |
-| BFM | D15 L198–199 | maiúscula acentuada com a fonte reserva sai deslocada; fora do escopo, não mexido | README.md §2.9 | igual |
+| BFM | D15 L198–199 | maiúscula acentuada com a fonte reserva sai deslocada; fora do escopo, não mexido | README.md §2.10 | igual |
 | BFM | D16 L200–202 | rampas sem `cancelAndHoldAtTime`, exponenciais 0,6/0,8 s; tiques 48 por batida; brecha conhecida | som-musica-e-voz.md §3.10, §3.4 | igual |
 | BFM | D17 L203–204 | `Mapa.PREDIOS_ANIM[sprite]` na camada animada | cena-e-motor.md §9.5 | igual |
 | BFM | D18 L205 | download no mapa `reino-dos-unicornios-<data>.png` | fotos.md §4.3 | igual |
@@ -402,10 +402,10 @@ Os títulos não têm regra própria; os caminhos de arquivo que citavam foram c
 ## Totais
 | contrato antigo | linhas da tabela | igual | atualizada | removida |
 |---|---|---|---|---|
-| `CONTRATOS-INTERIORES.md` | 103 | 85 | 16 | 2 |
+| `CONTRATOS-INTERIORES.md` | 103 | 84 | 17 | 2 |
 | `CONTRATOS-NOVIDADES.md` | 125 | 106 | 17 | 2 |
-| `CONTRATOS-PORTUGUES.md` | 68 | 48 | 17 | 3 |
+| `CONTRATOS-PORTUGUES.md` | 68 | 47 | 18 | 3 |
 | `CONTRATOS-BANHO-FOTOS-MUSICA.md` | 74 | 61 | 11 | 2 |
-| total | 370 | 300 | 61 | 9 |
+| total | 370 | 298 | 63 | 9 |
 
 Conferência de cobertura: toda linha não vazia de cada contrato antigo (fora `}` e cercas de código) está em alguma faixa de linhas acima.

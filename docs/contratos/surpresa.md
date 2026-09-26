@@ -45,7 +45,7 @@ Progresso, Cena ou `document` no carregamento.
 6. Venceu com ela ocupada: espera ela ficar livre e parada e aparece depois de `esperaLivreMs` (4 s) seguidos.
    Nunca no meio de sala, treino, prova, tela, diálogo ou transição.
 7. Recomeço depois de estudar: terminou sala, treino ou prova (`.tela-missao`/`.tela-prova` saiu da pilha,
-   evento `telas`) → sorteia um tempo novo do zero.
+   evento `Reino.EVENTOS.TELAS`) → sorteia um tempo novo do zero.
 
 ## 4. Que pergunta sai
 1. Só das salas que ela JÁ FEZ (`estado.salas[id].feita`); de qualquer matéria; só das salas

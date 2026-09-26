@@ -9,7 +9,7 @@ e o tamanho das falas. Interiores: `interiores.md`. Vozes: `som-musica-e-voz.md`
 6. Ações · 7. Extensões · 8. Balão e diálogo · 9. NPCs do Observatório e da Pet Shop · 10. Falas · 11. Antes de mexer
 
 ## 1. Onde está no código
-`jogo/js/personagens/` (nesta ordem no manifesto; a API pública é `Reino.NPCs`, o interno `Reino._npcs`):
+`jogo/js/personagens/` (a API pública é `Reino.NPCs`, o interno `Reino._npcs`; `claude.js` carrega antes de `npcs*.js`):
 - `npcs.js` — cria `Reino.NPCs`/`Reino._npcs`, grade de pixels, parâmetros e medidas do sprite.
 - `npcs-corpo.js`, `npcs-cabeca.js` — pintam corpo, acessórios, cabeça, cabelo, rosto, chapéus, nariz.
 - `npcs-sprites.js` — dragãozinho, bases (`registrarBase`, `gradeSprite`), `sprite`, `retrato`.
@@ -106,7 +106,8 @@ O que o NPC já disse na sessão fica só na memória (nada no save).
 1. Opções do gerador de sprites (sem mudar as de antes): `chapeu: 'chef'` (touca alta branca),
    `chapeu: 'quepe'` (quepe de capitã, com `chapeuCor`) e `nariz: '<cor>'` (nariz redondo de palhaço).
 2. Personagens não imitam pessoas reais (nem os autores da apostila).
-3. Personagem novo = entrada em `elenco.js` + perfil `npc-<id>` em `Reino.config.vozes`.
+3. Personagem novo = entrada em `elenco.js` + perfil `npc-<id>` em `Reino.config.vozes`. Cavaleiro ou professora:
+   `paraMateria` / `paraProva` na entrada do elenco (`Reino.NPCs.doElenco(filtro)`).
 
 ## 6. Ações (as mesmas funções de sempre, regras intactas)
 1. sala → `Reino.Missao.iniciar(materia, sala, fim)` (`atividades/missao.js`).
@@ -116,7 +117,7 @@ O que o NPC já disse na sessão fica só na memória (nada no save).
    `UI.chocarOvos(P.ovosParaChocar())`, `UI.telaBau()`, ou a tela registrada (§7).
 5. guia → botão "Ver a lista" abre `UI.telaMateria(m)` / `UI.telaCastelo()` / `Reino.Provas.telaEscola()`;
    guia de matéria também oferece o livro.
-6. `fim(premios)`: `U.emit('mapaMudou')`; se concluiu, o NPC comemora (`depois`); depois de sala concluída,
+6. `fim(premios)`: `U.emit(Reino.EVENTOS.MAPA_MUDOU)`; se concluiu, o NPC comemora (`depois`); depois de sala concluída,
    `Reino.Claude.depoisDaMissao()`. Ela continua ao lado do NPC.
 7. `ctx` das ações: vinda de objeto, `{ interior, cena, objeto }`, e roda DEPOIS da `fala` do objeto (se a
    fala resolver `null`, não roda). Vinda de NPC, `{ npc, quem }`, e só roda no "vamos"/"lista" do diálogo.

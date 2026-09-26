@@ -48,7 +48,7 @@ frases: { chave: texto }   // OBJETO (Reino.Surpresa.frases é FUNÇÃO: não co
                            // banhou, jaLimpinho
 vozDaFrase(chave) → 'claude' | 'unicornio'   // comeu/bebeu/banhou = o unicórnio
 falas() → [{ texto, voz }] // tudo o que os cuidados falam (pacote geral): os valores de `frases`, com a voz
-evento: U.emit('cuidados', depurar())  // a cada ponto inteiro que muda, ao cruzar o 25, ao comer, beber, banhar e comprar
+evento: U.emit(Reino.EVENTOS.CUIDADOS, depurar())  // a cada ponto inteiro que muda, ao cruzar o 25, ao comer, beber, banhar e comprar
 ```
 
 ## 3. Quem gasta e o ritmo
@@ -67,13 +67,13 @@ evento: U.emit('cuidados', depurar())  // a cada ponto inteiro que muda, ao cruz
    de mudança, e sempre ao cruzar o 25, comer, beber, banhar ou comprar.
 2. Nunca a cada quadro: cada `P.salvar()` sincroniza. Entre gravações o valor vive em `P.estado().cuidados`.
 3. Também grava quando a aba vai para o fundo com mudança pendente; qualquer `P.salvar()` de outro lugar
-   (evento `progresso`) zera o pendente, porque já levou os cuidados junto.
+   (evento `Reino.EVENTOS.PROGRESSO`) zera o pendente, porque já levou os cuidados junto.
 
 ## 5. Lembretes do Claude
 1. Com a montaria baixa, no máximo 1 a cada `lembreteMs` (10 min), e só com ela livre:
    `Reino.Cena.estado()` é `'mapa'` ou `'interior'` e `!Reino.Claude.aberto()`. Não aparece dentro da Pet Shop.
 2. Balão comum do Claude (não modal), texto de `frases`, 6 s; some sozinho (balão fechado e voz calada)
-   quando abre uma tela (evento `telas`) ou ela entra na Pet Shop.
+   quando abre uma tela (evento `Reino.EVENTOS.TELAS`) ou ela entra na Pet Shop.
 3. `lembreteBanho` só quando a fome e a sede não estão baixas (elas têm prioridade).
 
 ## 6. Pet Shop: tela, Dona Aveia, bebedouro
@@ -122,7 +122,7 @@ evento: U.emit('cuidados', depurar())  // a cada ponto inteiro que muda, ao cruz
                    sobre(ctx, pintor, t, animar) }
    ```
 3. Estado: `Reino.Cena.ocupar('banho')` no começo e `Reino.Cena.liberar('banho')` no fim (`Cena.estado()` =
-   'atividade', input bloqueado, evento `'ocupada'`). Durante o banho todos os toques da tela (inclusive HUD)
+   'atividade', input bloqueado, evento `Reino.EVENTOS.OCUPADA`). Durante o banho todos os toques da tela (inclusive HUD)
    são ignorados, com um temporizador de segurança que sempre libera a cena.
 4. Depois de `config.banho.pularDepoisMs` (2 s), um toque (ou Enter/Espaço) pula para o fim.
 5. Fases (~6 s, `config.banho.duracaoMs`): `entrar` (cortado na linha da espuma, como no nado), `espuma`
@@ -139,12 +139,12 @@ evento: U.emit('cuidados', depurar())  // a cada ponto inteiro que muda, ao cruz
 
 ## 8. HUD, Estábulo e avisos
 1. HUD: três barrinhas (fome, sede, banho 🛁) no chip da montaria, com `data-uni`/`data-campo`, repintadas
-   só pelo evento `cuidados` (`UI.pintarCuidados`); o `aria-label` do chip leva fome, sede e banho.
+   só pelo evento `Reino.EVENTOS.CUIDADOS` (`UI.pintarCuidados`); o `aria-label` do chip leva fome, sede e banho.
 2. Balões dos cuidados com uma tela aberta (`balaoNaTela`): `body.recado-cuidado` + `--recado-altura`
    (`ui-petshop.css`) descem o balão para o pé da tela e encolhem a tela; o balão nunca cobre um botão.
 3. Estábulo: a tela mostra as barras (fome, sede e banho) de cada unicórnio chocado; "Dar comida" (no detalhe)
    usa a despensa (`Cuidados.alimentar`); despensa vazia: fala que a Dona Aveia vende comidinhas e mostra
-   "🐾 Ir até a Pet Shop" (`U.emit('irPara', lugar)`); com sede, avisa que a água é de graça.
+   "🐾 Ir até a Pet Shop" (`U.emit(Reino.EVENTOS.IR_PARA, lugar)`); com sede, avisa que a água é de graça.
 4. Baias por dentro: `interiores.md` §9.1. Ícone acima do unicórnio e sujinho: `cena-e-motor.md` §7.
 5. Menu Lugares: `Sede`/`Fome`/`Banho` na Pet Shop (`UI.avisosDoLugar`, `cena-e-motor.md` §9).
 

@@ -113,7 +113,7 @@ Para cada comida, `compradas` = maior e `usadas` = maior (contador estragado con
 2. O evento `storage` (chave do save) e a volta da aba (`visibilitychange`, para a aba congelada no fundo
    que perdeu o evento) fazem a mesma junção (`juntarDoAparelho`); se a junção trouxe algo que a outra aba
    não tinha, `P.salvar()` devolve com carimbo novo (aparelho e servidor); senão só avisa
-   (`progresso`/`progressoRemoto`). Duas abas novas não entram em vaivém.
+   (`Reino.EVENTOS.PROGRESSO`/`PROGRESSO_REMOTO`). Duas abas novas não entram em vaivém.
 3. "Trouxe algo novo" (`trouxeAlgo`/`conteudo`): compara o CONTEÚDO, não o `atualizado`: chaves em ordem,
    sem valores vazios, sem `atualizado` e, nos cuidados, só os carimbos (`acao`, `acaoFome`, `acaoSede`,
    `acaoBanho`), porque fome, sede, banho e `em` mudam a cada segundo. Comida ou água dada num lado conta.
@@ -149,7 +149,7 @@ Para cada comida, `compradas` = maior e `usadas` = maior (contador estragado con
    - `localStorage.clear()`, `removeItem` em chaves existentes, "Apagar tudo", "Novo ciclo" ou pagamentos
      fora do ambiente de teste.
 3. Como testar sem risco:
-   - servidor de TESTE: `node jogo/ferramentas/testes/servidor-teste.js` (porta livre > 1024, banco novo em
+   - servidor de TESTE: `node jogo/ferramentas/testes/servidor-teste.js` (porta livre ≥ 1024, nunca 80, banco novo em
      `/tmp/reino-testes/`; recusa a porta 80 e banco fora de `/tmp`/dentro de `servidor/dados`). Em código:
      `const { iniciar } = require('./servidor-teste'); const s = await iniciar(); … s.parar();`;
    - Playwright só Chromium e só na porta de teste (`jogo/ferramentas/testes/navegador.js` bloqueia o resto);

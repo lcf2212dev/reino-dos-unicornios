@@ -11,7 +11,7 @@ Regras gerais (ambiente, convenções, testes): `README.md`.
 
 ## 1. Onde está no código
 - `jogo/js/motor/cena.js` — `Reino.Cena` (estado, entrar/sair, adaptador do mapa, ocupar/liberar, quadros).
-- `jogo/js/motor/transicao.js` — íris (`TEMPO`, `TEMPO_RAPIDO`, `COR_IRIS`), evento `'transicao'`.
+- `jogo/js/motor/transicao.js` — íris (`TEMPO`, `TEMPO_RAPIDO`, `COR_IRIS`), evento `Reino.EVENTOS.TRANSICAO`.
 - `jogo/js/motor/camera.js` — canvas, escala, câmera, pintor, `margemBaixoMapa` (cria `Reino._motor`).
 - `jogo/js/motor/laco.js` — o quadro (camadas) e o laço (`requestAnimationFrame`).
 - `jogo/js/motor/entrada.js` — teclado, toque no canvas, setas na tela, agir no alvo.
@@ -38,12 +38,13 @@ Reino.Cena = {
   sair() → Promise               // interior → mapa, 1 tile abaixo da porta do lugar, olhando para baixo
   paraTela(wx, wy) → {x, y}      // px do jogo → px CSS da página (testes e toques)
   quadros: { media() → ms, ultimo }   // tempo de desenho por quadro (últimos ~120), para o debug
-  ocupar(motivo), liberar(motivo)     // estado 'atividade' sem tela DOM (ex.: banho); evento 'ocupada' (motivo | null)
+  ocupar(motivo), liberar(motivo)     // estado 'atividade' sem tela DOM (ex.: banho); evento OCUPADA (motivo | null)
   acionar(gatilho), irAoLugar(lugar), irAoAlvo(alvo), entrarLugar(lugar), faseTransicao()   // extras, podem ser usados
 }
-eventos: U.emit('cena', { de, para })      // a cena ativa trocou
-         U.emit('transicao', true|false)   // começou / terminou a transição
-         U.emit('ocupada', motivo|null)
+eventos (Reino.EVENTOS, jogo/js/nucleo/eventos.js):
+         CENA       { de, para }      // a cena ativa trocou
+         TRANSICAO  true | false      // começou / terminou a transição
+         OCUPADA    motivo | null
 ```
 1. `liberar(motivo)` só desliga se for o mesmo motivo de `ocupar`.
 2. Por que `ocupar/liberar` (e não uma tela DOM) no banho: o canvas continua desenhando a animação.
@@ -71,7 +72,7 @@ eventos: U.emit('cena', { de, para })      // a cena ativa trocou
    ignorados). Nunca dispara duas vezes (a segunda chamada devolve a mesma promessa).
 5. Resize/rotação no meio não quebra (raio em fração da tela, calculado a cada quadro).
 6. Animações desligado ou `prefers-reduced-motion`: troca rápida (~150 ms), sem círculo.
-7. O botão 📷 se apaga durante a transição (evento `'transicao'`).
+7. O botão 📷 se apaga durante a transição (evento `Reino.EVENTOS.TRANSICAO`).
 
 ## 5. Pintor e ordem de desenho
 ```

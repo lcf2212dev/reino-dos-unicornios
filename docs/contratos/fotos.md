@@ -47,7 +47,7 @@ Nada toca em DOM, canvas, PA, Progresso ou Cena no carregamento.
 
 ## 6. Botão 📷
 1. No HUD de cima, perto da tela cheia: toque → `Fotos.tirar()`; toque longo (`config.fotos.toqueLongoMs`) →
-   `Fotos.abrirAlbum()`. Desabilitado quando `!Fotos.podeTirar()` e apagado durante a transição (evento `'transicao'`).
+   `Fotos.abrirAlbum()`. Desabilitado quando `!Fotos.podeTirar()` e apagado durante a transição (evento `Reino.EVENTOS.TRANSICAO`).
 2. O Álbum NÃO está no menu de baixo (com 5 botões o menu ficava com 420 px numa tela de 390 e cortava):
    abre pela prévia e segurando o 📷. No celular o 📷 fica embaixo do botão de tela cheia; no tablet/notebook, ao lado.
 3. Os blocos do HUD de cima deixam o toque passar (`loja.md` §6, regra 9).

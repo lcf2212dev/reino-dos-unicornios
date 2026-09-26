@@ -43,7 +43,10 @@ A origem de cada regra (os 4 contratos antigos da raiz) está em `rastreio.md`.
 8. Arquivo dividido em partes compartilha o que era privado por um objeto interno documentado no
    cabeçalho (`Reino._interiores`, `Reino._npcs`, `Reino._progresso`, `Reino._som`, `Reino._motor`,
    `Reino._predios.<prédio>`…). A API pública (`Reino.*`, `Mapa`, `Jogador`, `PA`, `window.__reino`) não muda.
-9. Defeito conhecido, fora dos contratos: com a fonte reserva (sem internet para a Press Start 2P), maiúscula
+9. Eventos do barramento: use as constantes de `Reino.EVENTOS` (`jogo/js/nucleo/eventos.js`, que documenta quem
+   emite, quem ouve e a carga): `U.on(Reino.EVENTOS.CENA, fn)`, `U.emit(Reino.EVENTOS.CENA, carga)`. Evento novo =
+   constante nova lá, documentada.
+10. Defeito conhecido, fora dos contratos: com a fonte reserva (sem internet para a Press Start 2P), maiúscula
    acentuada pode sair com o acento deslocado; com a Press Start 2P sai certo. Não é regra; não mexa por tabela.
 
 ## 3. Ordem de carga e arquivo novo
@@ -75,7 +78,7 @@ Resumo (detalhes em `save-e-mescla.md` §9):
 ## 5. Testes
 1. Só no Chromium do Playwright. Nada de Firefox, Safari/WebKit nem emulação de iPhone/iPad com WebKit.
 2. Tamanhos: celular 390×844, tablet 820×1180, notebook 1366×768 (`jogo/ferramentas/testes/navegador.js`, `TAMANHOS`).
-3. Servidor de TESTE: `node jogo/ferramentas/testes/servidor-teste.js` (porta livre > 1024, banco novo em
+3. Servidor de TESTE: `node jogo/ferramentas/testes/servidor-teste.js` (porta livre ≥ 1024, nunca 80, banco novo em
    `/tmp/reino-testes/`; recusa a porta 80 e banco fora de `/tmp`).
 4. Navegador de teste: `jogo/ferramentas/testes/navegador.js` (`abrir({ url, tamanho, save, query })`), preso
    à porta de teste (bloqueia toda outra rede).
