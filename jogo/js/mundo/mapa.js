@@ -7,6 +7,8 @@
   var W = 36, H = 28;       // tamanho do mapa em tiles
   var Mapa = { T: T, W: W, H: H };
   Mapa.claudeTile = { x: 20, y: 12 };
+  // gerador pseudoaleatório com semente (o reino sai sempre igual): o de Reino.Desenho
+  var rng = window.Reino.Desenho.rng;
 
   /* Estado e ajudantes compartilhados entre os arquivos de mundo/ (não é API do jogo).
      Mapa.criar troca as grades e a lista de lugares a cada chamada: leia sempre I.tipo etc. na hora
@@ -21,12 +23,6 @@
     dentro: dentro,
     noRect: noRect,
   };
-
-  // gerador pseudoaleatório com semente (o reino sai sempre igual)
-  function rng(semente) {
-    var s = semente >>> 0;
-    return function () { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; };
-  }
 
   function dentro(x, y) { return x >= 0 && y >= 0 && x < W && y < H; }
   function noRect(x, y, r) { return x >= r.x && y >= r.y && x < r.x + r.w && y < r.y + r.h; }

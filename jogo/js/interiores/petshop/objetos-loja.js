@@ -5,7 +5,7 @@
   var R = window.Reino;
   var I = R.Interiores, D = I.desenho, C = D.C;
   var ret = D.ret, circulo = D.circulo, elipse = D.elipse, triangulo = D.triangulo, contornoRet = D.contornoRet;
-  var K = '#3a2446';
+  var K = R.Desenho.K;
   var F = (R.FALAS_INTERIORES && R.FALAS_INTERIORES.petshop) || { npcs: {}, objetos: {}, extras: [] };
   var ELENCO = (R.NPCs && R.NPCs.ELENCO) || {};
   // o que as partes do prédio compartilham (criado aqui; cada parte põe o seu no fim do arquivo)
@@ -19,7 +19,7 @@
   var AGUA = '#5fc8e8', AGUA2 = '#a8ecff', AGUA3 = '#2f9ec4', BISC = '#d99a52', BISC2 = '#8a5a2e';
 
   function v(o, k, padrao) { return (o && o.var && o.var[k] !== undefined) ? o.var[k] : padrao; }
-  function brilho(ctx, x, y, c) { ret(ctx, x, y - 1, 1, 3, c); ret(ctx, x - 1, y, 3, 1, c); }
+  var brilho = R.Desenho.brilho;   // brilho em cruz (aqui sempre com a cor)
 
   /* ---------- miudezas (comidinhas desenhadas pequenas) ---------- */
   // cenoura em pé com as folhas (base em yb)

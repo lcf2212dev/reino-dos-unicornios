@@ -18,28 +18,9 @@
   var COPAS = [['#ffc27a', '#f0a04a', '#fff1d0'], ['#d4ee78', '#a8cc48', '#f4f8c8'], ['#e4f59a', '#8fb83a', '#fff6d4']];
   var FLORES = ['#ff8a3d', '#ffe066', '#ffffff', '#ffb15a', '#7ed9c8'];
 
-  function ret(ctx, x, y, w, h, cor) { ctx.fillStyle = cor; ctx.fillRect(x, y, w, h); }
-  function circulo(ctx, cx, cy, raio, cor) {
-    ctx.fillStyle = cor;
-    for (var j = -raio; j <= raio; j++) {
-      var meia = Math.floor(Math.sqrt(raio * raio - j * j) + 0.35);
-      ctx.fillRect(cx - meia, cy + j, meia * 2 + 1, 1);
-    }
-  }
-  function elipse(ctx, cx, cy, rx, ry, cor) {
-    ctx.fillStyle = cor;
-    for (var j = -ry; j <= ry; j++) {
-      var meia = Math.floor(rx * Math.sqrt(Math.max(0, 1 - (j * j) / (ry * ry))) + 0.3);
-      ctx.fillRect(cx - meia, cy + j, meia * 2 + 1, 1);
-    }
-  }
-  function triangulo(ctx, x, y, w, h, cor) { // triângulo isósceles apontando para cima
-    ctx.fillStyle = cor;
-    for (var j = 0; j < h; j++) {
-      var meia = Math.round((w / 2) * (j + 1) / h);
-      ctx.fillRect(Math.round(x + w / 2 - meia), y + j, meia * 2, 1);
-    }
-  }
+  // helpers de pixel: os de Reino.Desenho (js/arte/desenho.js); C acima é a paleta própria do mapa
+  var D = window.Reino.Desenho;
+  var ret = D.ret, circulo = D.circulo, elipse = D.elipse, triangulo = D.triangulo;
 
   function desenharChao(ctx, x, y, r, forcado) {
     var px = x * T, py = y * T, t = forcado || I.tipo[y][x];
@@ -155,7 +136,7 @@
   }
 
   /* ----- ajudantes dos prédios (mundo/predios.js) ----- */
-  function contornoRet(ctx, x, y, w, h, cor, fundo) { ret(ctx, x, y, w, h, C.contorno); ret(ctx, x + 1, y + 1, w - 2, h - 2, fundo || cor); }
+  var contornoRet = D.contornoRet;   // contorno em D.K, a mesma cor de C.contorno
 
   function portaArco(ctx, x, y, w, h, cor, moldura) {
     ret(ctx, x - 1, y + 2, w + 2, h - 2, moldura || '#ffd34d');

@@ -5,7 +5,7 @@
   var R = window.Reino;
   var I = R.Interiores, D = I.desenho, C = D.C;
   var ret = D.ret, circulo = D.circulo, elipse = D.elipse, triangulo = D.triangulo, contornoRet = D.contornoRet, matriz = D.matriz;
-  var K = '#3a2446';
+  var K = R.Desenho.K;
   var F = (R.FALAS_INTERIORES && R.FALAS_INTERIORES.escola) || { npcs: {}, objetos: {} };
   var ELENCO = (R.NPCs && R.NPCs.ELENCO) || {};
   // o que as partes do prédio compartilham (criado aqui; cada parte põe o seu no fim do arquivo)

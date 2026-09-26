@@ -265,7 +265,8 @@
   var piadasVistas = {};
   var ultimaPiada = null;
 
-  function sortear(lista) { return lista[Math.floor(Math.random() * lista.length)]; }
+  var sortear = R.util.sortear;
+  // cópia rasa (listas copiadas com slice): não é a Reino.util.copia, que copia fundo via JSON
   function copia(o) {
     var c = {};
     Object.keys(o).forEach(function (k) { c[k] = Array.isArray(o[k]) ? o[k].slice() : o[k]; });

@@ -5,7 +5,7 @@
   var R = window.Reino;
   var I = R.Interiores, D = I.desenho, C = D.C;
   var ret = D.ret, circulo = D.circulo, elipse = D.elipse, triangulo = D.triangulo, contornoRet = D.contornoRet;
-  var K = '#3a2446';
+  var K = R.Desenho.K;
   var F = (R.FALAS_INTERIORES && R.FALAS_INTERIORES.castelo) || { npcs: {}, objetos: {} };
   var ELENCO = (R.NPCs && R.NPCs.ELENCO) || {};
   // o que as partes do prédio compartilham (criado aqui; cada parte põe o seu no fim do arquivo)
@@ -14,9 +14,7 @@
 
   function v(o, k, padrao) { return (o && o.var && o.var[k] !== undefined) ? o.var[k] : padrao; }
   // desenho por texto: cada letra da linha é uma cor do mapa (ponto = vazio)
-  function matriz(ctx, x, y, linhas, cores) {
-    linhas.forEach(function (l, j) { for (var i = 0; i < l.length; i++) if (cores[l[i]]) ret(ctx, x + i, y + j, 1, 1, cores[l[i]]); });
-  }
+  var matriz = D.matriz;
   // medalha pequena com fita (usada no brasão e na estante)
   function medalha(ctx, cx, cy, tipo) {
     var c = MEDALHA[tipo] || MEDALHA.ouro;

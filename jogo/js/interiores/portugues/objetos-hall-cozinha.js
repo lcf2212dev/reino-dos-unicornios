@@ -6,7 +6,7 @@
   var I = R.Interiores, D = I.desenho, C = D.C;
   var ret = D.ret, circulo = D.circulo, elipse = D.elipse, triangulo = D.triangulo, contornoRet = D.contornoRet;
   var clarear = D.clarear, escurecer = D.escurecer;
-  var K = '#3a2446';
+  var K = R.Desenho.K;
   var F = (R.FALAS_INTERIORES && R.FALAS_INTERIORES.portugues) || { npcs: {}, objetos: {} };
   var ELENCO = (R.NPCs && R.NPCs.ELENCO) || {};
   // o que as partes do prédio compartilham (criado aqui; cada parte põe o seu no fim do arquivo)
@@ -18,7 +18,7 @@
   var TERRA = '#8a5a3a', TERRA2 = '#6b4428', FOLHA = '#5fb85a', FOLHA2 = '#3f9a45';
 
   function v(o, k, padrao) { return (o && o.var && o.var[k] !== undefined) ? o.var[k] : padrao; }
-  function brilho(ctx, x, y, c) { ret(ctx, x, y - 1, 1, 3, c); ret(ctx, x - 1, y, 3, 1, c); }
+  var brilho = R.Desenho.brilho;   // brilho em cruz (aqui sempre com a cor)
 
   /* ---------- letrinhas 3×5 (placas, blocos, amarelinha) ---------- */
   var FONTE = {

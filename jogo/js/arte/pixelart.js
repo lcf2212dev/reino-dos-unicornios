@@ -1,39 +1,24 @@
 /* Pixel art feita em código: matrizes de letras + paleta, contorno automático.
    Nada de imagens externas.
-   Este arquivo é a BASE (carrega primeiro): cores, canvas, pintarMatriz/matriz, contorno,
-   espelho e as 8 direções (vistas). Cria window.PA e o objeto interno PA._interno, que as
-   outras partes usam (pixelart-unicornio-moldes, -unicornio, -personagens, -ovos, -icones):
+   Este arquivo é a BASE (carrega primeiro, logo depois de js/arte/desenho.js): cores (PA.cor, as
+   de Reino.Desenho), canvas, pintarMatriz/matriz, contorno, espelho e as 8 direções (vistas).
+   Cria window.PA e o objeto interno PA._interno, que as outras partes usam
+   (pixelart-unicornio-moldes, -unicornio, -personagens, -ovos, -icones):
      PA._interno.CONTORNO  cor do contorno automático
      PA._interno.cache     cache único de sprites (chave → sprite), de todas as partes
      PA._interno.UNI       moldes do unicórnio (pixelart-unicornio-moldes.js)
      PA._interno.usarCombo teto do cache por combinação de enfeites (pixelart-unicornio.js) */
 (function () {
   var PA = {};
-  var CONTORNO = '#3a2446';
+  var D = window.Reino.Desenho;   // js/arte/desenho.js (carrega antes)
+  var CONTORNO = D.K;
   var cache = {};
   // o que as partes compartilham (não é API: fora de js/arte/pixelart-*.js, use só PA.*)
   PA._interno = { CONTORNO: CONTORNO, cache: cache };
 
   /* ---------- cores ---------- */
-  function hexParaRgb(h) {
-    h = h.replace('#', '');
-    if (h.length === 3) h = h.split('').map(function (c) { return c + c; }).join('');
-    var n = parseInt(h, 16);
-    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
-  }
-  function rgbParaHex(r, g, b) {
-    return '#' + [r, g, b].map(function (v) {
-      v = Math.max(0, Math.min(255, Math.round(v)));
-      return (v < 16 ? '0' : '') + v.toString(16);
-    }).join('');
-  }
-  function misturar(a, b, t) {
-    var x = hexParaRgb(a), y = hexParaRgb(b);
-    return rgbParaHex(x[0] + (y[0] - x[0]) * t, x[1] + (y[1] - x[1]) * t, x[2] + (y[2] - x[2]) * t);
-  }
-  function escurecer(c, t) { return misturar(c, '#3a2446', t); }
-  function clarear(c, t) { return misturar(c, '#ffffff', t); }
-  PA.cor = { misturar: misturar, escurecer: escurecer, clarear: clarear, hexParaRgb: hexParaRgb };
+  // as mesmas de Reino.Desenho (fonte única): escurecer mistura com o contorno, clarear com o branco
+  PA.cor = { misturar: D.misturar, escurecer: D.escurecer, clarear: D.clarear, hexParaRgb: D.hexRgb };
 
   /* ---------- canvas ---------- */
   function novoCanvas(w, h) {

@@ -5,7 +5,7 @@
   var R = window.Reino;
   var I = R.Interiores, D = I.desenho, C = D.C;
   var ret = D.ret, circulo = D.circulo, elipse = D.elipse, contornoRet = D.contornoRet;
-  var K = '#3a2446';
+  var K = R.Desenho.K;
 
   /* ================= FALAS PADRÃO (cada uma ≤30 letras, 3+ palavras) ================= */
   var FALAS = {
@@ -29,7 +29,8 @@
   function salaOi(n) { return ['Oi! Eu cuido da Sala ' + n + '.'].concat(FALAS.sala.oi); }
 
   function v(o, k, padrao) { return (o && o.var && o.var[k] !== undefined) ? o.var[k] : padrao; }
-  // cores: mistura dois hex (t = 0 → a, 1 → b)
+  // cores: mistura dois hex (t = 0 → a, 1 → b). Própria, não a Reino.Desenho.misturar: cor vazia vira
+  // '#999999', não limita a 0–255 e escura mistura com o preto (não com o contorno)
   function hex(c) { c = String(c || '#999999').replace('#', ''); if (c.length === 3) c = c.replace(/./g, '$&$&'); return [0, 2, 4].map(function (i) { return parseInt(c.substr(i, 2), 16) || 0; }); }
   function mistura(a, b, t) {
     var x = hex(a), y = hex(b);

@@ -5,13 +5,13 @@
   var R = window.Reino;
   var I = R.Interiores, D = I.desenho, C = D.C;
   var ret = D.ret, circulo = D.circulo, elipse = D.elipse, triangulo = D.triangulo, contornoRet = D.contornoRet;
-  var K = '#3a2446';
+  var K = R.Desenho.K;
   var F = (R.FALAS_INTERIORES && R.FALAS_INTERIORES.estabulo) || { npcs: {}, objetos: {} };
   var ELENCO = (R.NPCs && R.NPCs.ELENCO) || {};
   var PALHA = '#f5d77a', PALHA2 = '#d9ab45', PALHA3 = '#fff0a8';
 
   function v(o, k, padrao) { return (o && o.var && o.var[k] !== undefined) ? o.var[k] : padrao; }
-  function brilho(ctx, x, y, c) { ret(ctx, x, y - 1, 1, 3, c); ret(ctx, x - 1, y, 3, 1, c); }
+  var brilho = R.Desenho.brilho;   // brilho em cruz (aqui sempre com a cor)
   // tufos de palha espalhados
   function palha(ctx, x, y, w, h) {
     ret(ctx, x, y, w, h, PALHA);

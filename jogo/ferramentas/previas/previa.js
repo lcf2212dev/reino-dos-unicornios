@@ -2,7 +2,7 @@
    js/manifesto.js (nenhuma prévia guarda caminho de script). Carregar depois do manifesto:
      <script src="../../js/manifesto.js"></script>
      <script src="previa.js"></script>
-     <script>Previa.carregar({ nomes: ['nucleo/config'], grupos: ['pixelart', 'interiores'] });</script>
+     <script>Previa.carregar({ nomes: ['nucleo/config', 'arte/desenho'], grupos: ['pixelart', 'interiores'] });</script>
    Nome = caminho sob js/ sem .js (como em ferramentas/jogo-no-node.js); grupo = o do manifesto.
    document.write: os scripts rodam em ordem antes do resto da página. */
 window.Previa = {

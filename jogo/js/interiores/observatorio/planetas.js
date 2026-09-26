@@ -5,7 +5,7 @@
    Node o carregam num vm sem DOM). Tudo que cria canvas fica cacheado. */
 (function () {
   var Reino = window.Reino = window.Reino || {};
-  var CONTORNO = '#3a2446';
+  var CONTORNO = Reino.Desenho.K;
   // o que as partes do prédio compartilham (criado aqui; cada parte põe o seu no fim do arquivo)
   var S = (Reino._predios = Reino._predios || {}).observatorioCenas = {};
   /* ================= UTILIDADES ================= */
@@ -15,11 +15,8 @@
   function cla(c, t) { var k = 'c' + c + t; return memoCor[k] || (memoCor[k] = window.PA.cor.clarear(c, t)); }
   function mis(a, b, t) { var k = 'm' + a + b + t; return memoCor[k] || (memoCor[k] = window.PA.cor.misturar(a, b, t)); }
 
-  // gerador pseudoaleatório com semente (a cena sai sempre igual)
-  function rng(semente) {
-    var s = semente >>> 0;
-    return function () { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; };
-  }
+  // gerador pseudoaleatório com semente (a cena sai sempre igual): o de Reino.Desenho
+  var rng = Reino.Desenho.rng;
 
   // grade de pixels (cor por pixel) que vira canvas uma vez só, juntando as sequências da mesma cor
   function Buf(w, h) { this.w = w; this.h = h; this.c = new Array(w * h); }

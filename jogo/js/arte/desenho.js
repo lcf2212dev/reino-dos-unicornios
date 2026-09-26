@@ -1,7 +1,11 @@
 /* Desenho em pixel: a paleta C e os helpers genéricos (retângulo, círculo, elipse, triângulo,
-   contorno, matriz de letras, miudezas, sorte fixa por posição, misturar/escurecer/clarear).
-   Fonte única destes helpers (vieram de motor/interiores.js): Reino.Desenho.
+   contorno, matriz de letras, miudezas, sorte fixa por posição, sorteio com semente,
+   misturar/escurecer/clarear).
+   Fonte única destes helpers (vieram de motor/interiores.js): Reino.Desenho. Quem desenha pega
+   daqui (PA.cor, mundo/mapa-desenho.js, os prédios...); o que ficou separado e por quê está em
+   docs/decisoes/helpers-de-desenho.md.
    Reino.Interiores.desenho expõe as mesmas funções para os prédios (js/interiores/).
+   Carrega antes de js/arte/pixelart.js (PA.cor usa estas cores).
    No carregamento NADA de DOM ou canvas: as ferramentas em Node carregam este arquivo num vm. */
 (function () {
   var R = window.Reino = window.Reino || {};
@@ -74,6 +78,11 @@
     n = Math.imul(n ^ (n >>> 13), 1274126177);
     n = n ^ (n >>> 16);
     return (n >>> 0) / 4294967296;
+  }
+  // gerador pseudoaleatório com semente: rng(semente)() dá a sequência de sempre (o reino e o céu saem iguais)
+  function rng(semente) {
+    var s = semente >>> 0;
+    return function () { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; };
   }
   function brilho(ctx, x, y, cor) { ret(ctx, x, y - 1, 1, 3, cor || C.branco); ret(ctx, x - 1, y, 3, 1, cor || C.branco); }
 
@@ -159,6 +168,6 @@
     K: K, FUNDO: FUNDO, C: C,
     hexRgb: hexRgb, misturar: misturar, escurecer: escurecer, clarear: clarear,
     ret: ret, circulo: circulo, elipse: elipse, triangulo: triangulo, contornoRet: contornoRet, matriz: matriz,
-    sorte: sorte, brilho: brilho, miudeza: miudeza,
+    sorte: sorte, rng: rng, brilho: brilho, miudeza: miudeza,
   };
 })();

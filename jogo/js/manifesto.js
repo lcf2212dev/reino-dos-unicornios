@@ -52,6 +52,8 @@
       { js: 'js/arte/icones/portugues.js', grupo: 'icones', node: true },
       { js: 'js/arte/icones/portugues-palavras.js', grupo: 'icones', node: true },
       { js: 'js/arte/icones/portugues-salas.js', grupo: 'icones', node: true },
+      // desenho.js antes da pixel art: Reino.Desenho (paleta e helpers) é a fonte das cores do PA.cor
+      { js: 'js/arte/desenho.js', grupo: 'arte', node: true },
       // pixelart.js (base) primeiro: cria window.PA e PA._interno, que as outras partes usam
       { js: 'js/arte/pixelart.js', grupo: 'pixelart' },
       { js: 'js/arte/pixelart-unicornio-moldes.js', grupo: 'pixelart' },
@@ -59,7 +61,6 @@
       { js: 'js/arte/pixelart-personagens.js', grupo: 'pixelart' },
       { js: 'js/arte/pixelart-ovos.js', grupo: 'pixelart' },
       { js: 'js/arte/pixelart-icones.js', grupo: 'pixelart' },
-      { js: 'js/arte/desenho.js', grupo: 'arte', node: true },
       { js: 'js/conteudo/loja-itens.js', grupo: 'conteudo', node: true },
       { js: 'js/personagens/unicornios.js', grupo: 'personagens', node: true },
       // registro.js antes das matérias: cada sala (e o livro) se registra e <m>.js junta tudo na matéria

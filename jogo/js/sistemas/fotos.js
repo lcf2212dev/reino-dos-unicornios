@@ -13,7 +13,7 @@
   var Reino = window.Reino = window.Reino || {};
   var F = {};
   var I = Reino._fotos = { F: F };   // o que as partes das fotos dividem (ver o cabeçalho)
-  var K = '#3a2446';
+  var K = Reino.Desenho.K;
   var FONTE_PIXEL = '"Press Start 2P", "Trebuchet MS", sans-serif';
 
   // falas novas (pacote geral): o que aparece escrito na própria tela também é falado (só a voz)

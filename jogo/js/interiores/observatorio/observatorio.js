@@ -10,7 +10,7 @@
   var I = R.Interiores, D = I.desenho, C = D.C;
   var ret = D.ret, circulo = D.circulo, elipse = D.elipse, triangulo = D.triangulo, contornoRet = D.contornoRet;
   var T = 16;
-  var K = '#3a2446';
+  var K = R.Desenho.K;
   var ELENCO = (R.NPCs && R.NPCs.ELENCO) || {};
   var S = R._predios.observatorio;
   var AZUL_CLARO = S.AZUL_CLARO, falas = S.falas, GALAXIA = S.GALAXIA, GAL = S.GAL, CUP = S.CUP, PLA = S.PLA;

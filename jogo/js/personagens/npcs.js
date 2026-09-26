@@ -26,7 +26,7 @@
   var TOPO = 6;                // linhas livres em cima para chapéu, coque, pluma...
   var HY = TOPO;               // primeira linha da cabeça (7 linhas, como a Mariana)
   var BY = HY + 7;             // primeira linha do corpo
-  var CONTORNO = '#3a2446';
+  var CONTORNO = Reino.Desenho.K;
 
   function cor() { return window.PA.cor; }
   function esc(c, t) { return cor().escurecer(c, t); }

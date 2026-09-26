@@ -2,7 +2,7 @@
    Reino.NPCs. Só registra a função: nada de DOM nem canvas no carregamento. */
 (function () {
   var Reino = window.Reino = window.Reino || {};
-  var CONTORNO = '#3a2446';
+  var CONTORNO = Reino.Desenho.K;
   /* ================= ROBÔ COSMO (base 'robo') ================= */
   // 19 colunas, como os outros; linhas a partir do alto da grade (antena nas linhas livres de cima)
   var ROBO = [

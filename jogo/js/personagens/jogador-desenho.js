@@ -171,7 +171,7 @@
     if (bolhas[icone] !== undefined) return bolhas[icone];
     var ic = PA.iconeDesenho ? PA.iconeDesenho(icone.replace(/\uFE0F/g, '')) : null;
     if (!ic) return null;                           // ícone ainda não desenhado: tenta de novo depois
-    var K = '#3a2446', w = 20, h = 23, c = PA.novoCanvas(w, h), ctx = c.getContext('2d');
+    var K = Reino.Desenho.K, w = 20, h = 23, c = PA.novoCanvas(w, h), ctx = c.getContext('2d');
     function r(x, y, a, b, k) { ctx.fillStyle = k; ctx.fillRect(x, y, a, b); }
     // o mesmo balãozinho do status dos NPCs: caixa arredondada com contorno + rabinho
     r(2, 0, 16, 1, K); r(2, 19, 16, 1, K); r(0, 2, 1, 16, K); r(19, 2, 1, 16, K);

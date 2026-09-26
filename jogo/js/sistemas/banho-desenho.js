@@ -6,7 +6,7 @@
   var R = window.Reino;
   var I = R._banho, B = I.B;
   var trecho = I.trecho, suave = I.suave, lerp = I.lerp, agora = I.agora;
-  var K = '#3a2446';
+  var K = R.Desenho.K;
   var BRANCO = '#ffffff', AGUA = '#5fc8e8', AGUA2 = '#a8ecff', AGUA3 = '#2f9ec4';
   var ROSA = '#ff9cc6', ROSA2 = '#ff7eb6', OURO = '#ffd34d', LAR = '#ff8a3d', MAD = '#c98a4b', METAL = '#d9e2ee', METAL2 = '#9aa7ba';
   // espuma da banheira: as mesmas bolhas do desenho parado (petshop.js), em px a partir do canto da banheira
@@ -19,10 +19,7 @@
     if (!cache[chave]) { var c = PA.novoCanvas(w, h); pintar(c.getContext('2d')); cache[chave] = c; }
     return cache[chave];
   }
-  function circ(ctx, cx, cy, r, cor) {
-    ctx.fillStyle = cor;
-    for (var j = -r; j <= r; j++) { var m = Math.floor(Math.sqrt(r * r - j * j) + 0.35); ctx.fillRect(cx - m, cy + j, m * 2 + 1, 1); }
-  }
+  var circ = R.Desenho.circulo;   // círculo em pixel (o mesmo das bolhas da banheira parada)
   // bolha de espuma de raio r (igual à da banheira parada)
   function bolha(r) {
     return canvasDe('bolha' + r, r * 2 + 1, r * 2 + 1, function (ctx) {
@@ -32,12 +29,7 @@
     });
   }
   function mapaPixels(linhas, cores) {
-    return function (ctx) {
-      for (var j = 0; j < linhas.length; j++) for (var i = 0; i < linhas[j].length; i++) {
-        var c = cores[linhas[j][i]];
-        if (c) { ctx.fillStyle = c; ctx.fillRect(i, j, 1, 1); }
-      }
-    };
+    return function (ctx) { R.Desenho.matriz(ctx, 0, 0, linhas, cores); };
   }
   // patinho amarelo (o mesmo da banheira parada), 11 × 8
   var PATINHO = [
@@ -76,7 +68,7 @@
   ];
   function chuveiro() { return canvasDe('chuveiro', 16, 11, mapaPixels(CHUVEIRO, { K: K, m: METAL, g: METAL2, a: AGUA3, b: BRANCO, r: ROSA, R: ROSA2 })); }
 
-  // brilho em cruz (tam 1: 3 px; tam 2: 5 px com o miolo branco)
+  // brilho em cruz (tam 1: 3 px; tam 2: 5 px com o miolo branco); no pintor, por isso não é o Reino.Desenho.brilho
   function brilho(p, x, y, tam, cor) {
     if (tam <= 0) return;
     if (tam === 1) { p.ret(x - 1, y, 3, 1, cor); p.ret(x, y - 1, 1, 3, cor); return; }

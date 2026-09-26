@@ -7,7 +7,7 @@
    Nunca há cena do Sol pelo telescópio: olhar o Sol por um telescópio é perigoso. */
 (function () {
   var Reino = window.Reino = window.Reino || {};
-  var CONTORNO = '#3a2446';
+  var CONTORNO = Reino.Desenho.K;
   var S = Reino._predios.observatorioCenas;
   var esc = S.esc, mis = S.mis, rng = S.rng, Buf = S.Buf, discoBuf = S.discoBuf, estrela = S.estrela,
       dentroDisco = S.dentroDisco, corPlaneta = S.corPlaneta, pintarPlaneta = S.pintarPlaneta,

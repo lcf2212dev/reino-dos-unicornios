@@ -9,7 +9,7 @@
   var I = R.Interiores, D = I.desenho, C = D.C;
   var ret = D.ret, circulo = D.circulo, elipse = D.elipse, triangulo = D.triangulo, contornoRet = D.contornoRet;
   var T = 16;
-  var K = '#3a2446';
+  var K = R.Desenho.K;
   var ELENCO = (R.NPCs && R.NPCs.ELENCO) || {};
   // o que as partes do prédio compartilham (criado aqui; cada parte põe o seu no fim do arquivo)
   var S = (R._predios = R._predios || {}).observatorio = {};
@@ -21,6 +21,8 @@
 
   function falas() { return (R.FALAS_INTERIORES && R.FALAS_INTERIORES.observatorio) || {}; }
   function v(o, k, padrao) { return (o && o.var && o.var[k] !== undefined) ? o.var[k] : padrao; }
+  // hexRgb/misturar/escurecer/clarear próprios: este hexRgb não expande cor de 3 dígitos ('#fff'),
+  // o de Reino.Desenho expande (as cores dos pisos e paredes podem vir de fora deste arquivo)
   function hexRgb(h) {
     h = String(h).replace('#', '');
     var n = parseInt(h, 16);
@@ -36,12 +38,8 @@
   function escurecer(c, t) { return misturar(c, K, t); }
   function clarear(c, t) { return misturar(c, '#ffffff', t); }
   // número pseudoaleatório fixo por posição (o desenho sai sempre igual)
-  function sorte(x, y, s) {
-    var n = Math.imul(x | 0, 374761393) + Math.imul(y | 0, 668265263) + Math.imul((s || 0) | 0, 1442695041);
-    n = Math.imul(n ^ (n >>> 13), 1274126177);
-    n = n ^ (n >>> 16);
-    return (n >>> 0) / 4294967296;
-  }
+  var sorte = D.sorte;
+  // brilho próprio: sem cor, usa a ESTRELA (o de Reino.Desenho usa o branco)
   function brilho(ctx, x, y, cor) { ret(ctx, x, y - 1, 1, 3, cor || ESTRELA); ret(ctx, x - 1, y, 3, 1, cor || ESTRELA); }
   // tempo das animações: parado (t = 0) sem animação ou com "reduzir movimento" do aparelho
   function tempo(t) { return (R.util && R.util.reduzMovimentoSistema) ? 0 : (t || 0); }

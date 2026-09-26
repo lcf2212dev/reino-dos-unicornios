@@ -2,28 +2,14 @@
    a cúpula e o telescópio, e as estrelinhas que cintilam no prédio (Mapa.PREDIOS_ANIM.observatorio). */
 (function () {
   var Reino = window.Reino = window.Reino || {};
-  var CONTORNO = '#3a2446';
+  var CONTORNO = Reino.Desenho.K;
   var S = Reino._predios.observatorioCenas;
   var esc = S.esc, mis = S.mis, BAYER4 = S.BAYER4, CINTILA = S.CINTILA;
 
   /* ================= DESENHO DE FORA (mapa) ================= */
-  function ret(ctx, x, y, w, h, cor) { ctx.fillStyle = cor; ctx.fillRect(x, y, w, h); }
-  function circulo(ctx, cx, cy, raio, cor) {
-    ctx.fillStyle = cor;
-    for (var j = -raio; j <= raio; j++) {
-      var meia = Math.floor(Math.sqrt(raio * raio - j * j) + 0.35);
-      ctx.fillRect(cx - meia, cy + j, meia * 2 + 1, 1);
-    }
-  }
-  function elipse(ctx, cx, cy, rx, ry, cor) {
-    ctx.fillStyle = cor;
-    for (var j = -ry; j <= ry; j++) {
-      var meia = Math.floor(rx * Math.sqrt(Math.max(0, 1 - (j * j) / (ry * ry))) + 0.3);
-      ctx.fillRect(cx - meia, cy + j, meia * 2 + 1, 1);
-    }
-  }
-  function contornoRet(ctx, x, y, w, h, cor) { ret(ctx, x, y, w, h, CONTORNO); ret(ctx, x + 1, y + 1, w - 2, h - 2, cor); }
-  function brilho(ctx, x, y, cor) { ret(ctx, x, y - 1, 1, 3, cor); ret(ctx, x - 1, y, 3, 1, cor); }
+  // helpers de pixel: os de Reino.Desenho (contornoRet e brilho aqui sempre recebem a cor)
+  var D = Reino.Desenho;
+  var ret = D.ret, circulo = D.circulo, elipse = D.elipse, contornoRet = D.contornoRet, brilho = D.brilho;
 
   function desenharObservatorio(ctx, px, py, w, h) {
     var cx = px + Math.floor(w / 32) * 16 + 8;   // meio do tile da porta (a escada desce até ele)

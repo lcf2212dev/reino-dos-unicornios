@@ -5,7 +5,7 @@
   var R = window.Reino;
   var I = R.Interiores, D = I.desenho, C = D.C;
   var ret = D.ret, circulo = D.circulo, elipse = D.elipse, contornoRet = D.contornoRet;
-  var K = '#3a2446';
+  var K = R.Desenho.K;
   var F = (R.FALAS_INTERIORES && R.FALAS_INTERIORES.loja) || { npcs: {}, objetos: {} };
   var ELENCO = (R.NPCs && R.NPCs.ELENCO) || {};
   // o que as partes do prédio compartilham (criado aqui; cada parte põe o seu no fim do arquivo)
@@ -16,7 +16,7 @@
   function enfeites() { return (R.LojaItens && R.LojaItens.ENFEITES) || []; }
 
   function v(o, k, padrao) { return (o && o.var && o.var[k] !== undefined) ? o.var[k] : padrao; }
-  function brilho(ctx, x, y, c) { ret(ctx, x, y - 1, 1, 3, c); ret(ctx, x - 1, y, 3, 1, c); }
+  var brilho = R.Desenho.brilho;   // brilho em cruz (aqui sempre com a cor)
   function est(P) { try { return P && P.estado ? P.estado() : null; } catch (e) { return null; } }
   function comprados(P) { var e = est(P); return (e && e.loja) || {}; }
   function premios() { try { return R.LojaItens ? R.LojaItens.premios() : []; } catch (e) { return []; } }

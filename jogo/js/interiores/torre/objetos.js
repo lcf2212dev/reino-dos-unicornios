@@ -5,7 +5,7 @@
   var R = window.Reino;
   var I = R.Interiores, D = I.desenho, C = D.C;
   var ret = D.ret, circulo = D.circulo, elipse = D.elipse, triangulo = D.triangulo, contornoRet = D.contornoRet;
-  var K = '#3a2446';
+  var K = R.Desenho.K;
   var F = (R.FALAS_INTERIORES && R.FALAS_INTERIORES.torre) || { npcs: {}, objetos: {} };
   var ELENCO = (R.NPCs && R.NPCs.ELENCO) || {};
   // o que as partes do prédio compartilham (criado aqui; cada parte põe o seu no fim do arquivo)
@@ -14,12 +14,7 @@
 
   function v(o, k, padrao) { return (o && o.var && o.var[k] !== undefined) ? o.var[k] : padrao; }
   // desenho pequeno à mão: uma letra por pixel
-  function matriz(ctx, x, y, linhas, pal) {
-    for (var j = 0; j < linhas.length; j++) for (var i = 0; i < linhas[j].length; i++) {
-      var c = pal[linhas[j][i]];
-      if (c) ret(ctx, x + i, y + j, 1, 1, c);
-    }
-  }
+  var matriz = D.matriz;
   // engrenagem: dentes em volta de um disco, girada pelo ângulo `a` (só ret/circulo: serve no pintor)
   function engrenagem(ctx, cx, cy, r, dentes, a, cor, luz) {
     for (var i = 0; i < dentes; i++) {
