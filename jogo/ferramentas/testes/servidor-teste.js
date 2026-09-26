@@ -1,28 +1,20 @@
 // Servidor de TESTE do jogo: sobe o mesmo servidor/servidor.js numa porta livre (nunca a 80)
 // com um banco novo em /tmp. O servidor de casa (porta 80, banco em servidor/dados/) nunca é tocado.
-// Uso: node ferramentas/testes/servidor-teste.js [--porta 8800] [--raiz <pasta jogo>]
-//      (fica rodando e mostra o endereço; Ctrl+C para parar)
+// Uso: node jogo/ferramentas/testes/servidor-teste.js [--porta 8800] [--raiz <pasta jogo>] [--banco /tmp/…/x.db] [--fundo]
+//   sem --fundo: fica rodando e mostra o endereço; Ctrl+C (ou kill <pid>) para parar
+//   --fundo: o servidor fica rodando sozinho (grupo de processos próprio, log em /tmp/reino-testes/),
+//            este comando sai com 0 e mostra o PID para `kill <pid>` (o jeito certo em tarefa de segundo plano)
 // Em código: const { iniciar } = require('./servidor-teste'); const s = await iniciar(); … s.parar();
+// O servidor filho morre junto com o pai (vigia-pai.js, canal IPC): nenhum servidor órfão fica
+// para trás se o pai cair, mesmo com kill -9.
 const fs = require('fs');
 const net = require('net');
 const path = require('path');
 const { spawn } = require('child_process');
+const { PASTA_TESTES, conferirPorta, conferirBanco } = require('./guardas');
 
-const PASTA_TMP = '/tmp/reino-testes';
 const RAIZ_PADRAO = path.join(__dirname, '..', '..');
-
-// recusa tudo o que poderia chegar no progresso de verdade
-function conferirPorta(porta) {
-  porta = Number(porta);
-  if (!Number.isInteger(porta) || porta < 1024 || porta > 65535) throw new Error(`porta de teste inválida: ${porta} (use uma livre acima de 1024, nunca a 80)`);
-  return porta;
-}
-function conferirBanco(banco) {
-  const abs = path.resolve(banco);
-  if (!abs.startsWith('/tmp/')) throw new Error(`o banco de teste fica sempre em /tmp (recebido: ${abs})`);
-  if (/servidor[\\/]dados/.test(abs)) throw new Error('o banco de teste nunca pode ficar em servidor/dados');
-  return abs;
-}
+const VIGIA = path.join(__dirname, 'vigia-pai.js');
 
 function portaLivre(de) {
   return new Promise((resolver, falhar) => {
@@ -32,7 +24,7 @@ function portaLivre(de) {
       s.once('error', () => tentar(p + 1));
       s.listen(p, '127.0.0.1', () => s.close(() => resolver(p)));
     };
-    tentar(de);
+    tentar(conferirPorta(de));
   });
 }
 
@@ -44,22 +36,35 @@ async function iniciar(op = {}) {
 }
 async function subir(op) {
   const raiz = path.resolve(op.raiz || RAIZ_PADRAO);
+  const servidorJs = path.join(raiz, 'servidor', 'servidor.js');
+  if (!fs.existsSync(servidorJs)) throw new Error(`não achei ${servidorJs} (--raiz deve ser a pasta jogo/)`);
   const porta = conferirPorta(op.porta || await portaLivre(8800 + Math.floor(Math.random() * 900)));
-  fs.mkdirSync(PASTA_TMP, { recursive: true });
-  const banco = conferirBanco(op.banco || fs.mkdtempSync(path.join(PASTA_TMP, 'banco-')) + '/reino-teste.db');
-  const proc = spawn(process.execPath, [path.join(raiz, 'servidor', 'servidor.js')], {
-    env: Object.assign({}, process.env, { PORTA: String(porta), BANCO: banco, RAIZ: raiz }),
-    stdio: ['ignore', 'pipe', 'pipe'],
-  });
+  fs.mkdirSync(PASTA_TESTES, { recursive: true });
+  const banco = conferirBanco(op.banco || fs.mkdtempSync(path.join(PASTA_TESTES, 'banco-')) + '/reino-teste.db');
+  // PORTA e BANCO sempre explícitos: o padrão do servidor.js é a porta 80 e o banco de casa
+  const env = Object.assign({}, process.env, { PORTA: String(porta), BANCO: banco, RAIZ: raiz });
+  let proc, log = null;
+  if (op.fundo) {
+    log = path.join(PASTA_TESTES, `servidor-${porta}.log`);
+    const fd = fs.openSync(log, 'w');
+    proc = spawn(process.execPath, [servidorJs], { env, stdio: ['ignore', fd, fd], detached: true });
+    fs.closeSync(fd);
+  } else {
+    proc = spawn(process.execPath, ['-r', VIGIA, servidorJs], { env, stdio: ['ignore', 'pipe', 'pipe', 'ipc'] });
+  }
   await new Promise((resolver, falhar) => {
     let saida = '';
     const tempo = setTimeout(() => falhar(new Error('servidor de teste não subiu: ' + saida)), 10000);
     const ler = (b) => { saida += b; if (/na porta/.test(saida)) { clearTimeout(tempo); resolver(); } };
-    proc.stdout.on('data', ler); proc.stderr.on('data', ler);
     proc.once('exit', (c) => { clearTimeout(tempo); falhar(new Error(`servidor de teste saiu (${c}): ${saida}`)); });
+    if (!op.fundo) { proc.stdout.on('data', ler); proc.stderr.on('data', ler); return; }
+    const olhar = setInterval(() => { try { ler(fs.readFileSync(log, 'utf8').slice(saida.length)); } catch (e) { /* ainda sem log */ } if (/na porta/.test(saida)) clearInterval(olhar); }, 100);
+    proc.once('exit', () => clearInterval(olhar));
   });
+  proc.removeAllListeners('exit');
+  if (op.fundo) proc.unref();
   return {
-    porta, banco, raiz, url: `http://127.0.0.1:${porta}/`,
+    porta, banco, raiz, log, pid: proc.pid, proc, url: `http://127.0.0.1:${porta}/`,
     parar() { try { proc.kill(); } catch (e) { /* já parou */ } },
   };
 }
@@ -68,9 +73,24 @@ module.exports = { iniciar, portaLivre, conferirPorta, conferirBanco };
 
 if (require.main === module) {
   const arg = (n) => { const i = process.argv.indexOf(n); return i > 0 ? process.argv[i + 1] : undefined; };
-  iniciar({ porta: arg('--porta'), raiz: arg('--raiz'), banco: arg('--banco') }).then((s) => {
+  const fundo = process.argv.includes('--fundo');
+  iniciar({ porta: arg('--porta'), raiz: arg('--raiz'), banco: arg('--banco'), fundo }).then((s) => {
     console.log(`Servidor de TESTE em ${s.url} (banco ${s.banco})`);
     console.log(`Jogo em modo de teste: ${s.url}?debug=1   ·   determinístico: ${s.url}?debug=1&congelar=1`);
-    process.on('SIGINT', () => { s.parar(); process.exit(0); });
+    if (fundo) {
+      console.log(`Rodando sozinho: PID ${s.pid} (log em ${s.log}). Para parar: kill ${s.pid}`);
+      process.exit(0);
+    }
+    console.log(`PID ${process.pid} (servidor ${s.pid}). Para parar: Ctrl+C ou kill ${process.pid}`);
+    // o servidor caiu sozinho: avisa e sai com erro (antes o comando ficava parado sem servidor)
+    s.proc.once('exit', (c, sinal) => { console.error(`✘ o servidor de teste parou (${sinal || 'código ' + c})`); process.exit(1); });
+    // parado de fora (Ctrl+C, kill, fim da tarefa de segundo plano): diz por quê e leva o servidor junto
+    const CODIGOS = { SIGINT: 130, SIGTERM: 143, SIGHUP: 129 };
+    Object.keys(CODIGOS).forEach((sinal) => process.on(sinal, () => {
+      console.log(`Recebi ${sinal}: servidor de teste parado.`);
+      s.proc.removeAllListeners('exit');
+      s.parar();
+      process.exit(CODIGOS[sinal]);
+    }));
   }, (e) => { console.error('✘ ' + e.message); process.exit(1); });
 }

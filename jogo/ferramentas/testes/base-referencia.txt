@@ -1,0 +1,7 @@
+# Commit BASE das referências do e2e (npm run e2e / node jogo/ferramentas/testes/e2e.js).
+# O e2e compara o jogo atual com o jogo deste commit: tem que dar idêntico.
+# Formato: a primeira linha que não começa com # é o hash; o resto é comentário.
+# Trocar a base só quando uma mudança de comportamento for de propósito e já estiver num commit:
+# ponha aqui o hash desse commit (o jogo dele passa a ser a referência). Para um teste só: --base <hash>.
+# 982f1ed = modo determinístico (?debug=1&congelar=1), antes da refatoração.
+982f1ed

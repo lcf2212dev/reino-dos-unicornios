@@ -1,0 +1,8 @@
+{
+ "leia": "Arquivos do jogo conferidos pelo npm run tipos (TypeScript só confere, não gera nada). Caminhos a partir da raiz do repositório. Para acrescentar: anote o arquivo com JSDoc, ponha aqui e rode npm run tipos até passar sem erro.",
+ "arquivos": [
+  "jogo/js/nucleo/config.js",
+  "jogo/js/nucleo/registros.js",
+  "jogo/js/nucleo/util.js"
+ ]
+}
