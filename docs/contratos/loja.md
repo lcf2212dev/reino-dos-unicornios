@@ -113,5 +113,5 @@ node jogo/ferramentas/testes/testar-save.js
 node jogo/ferramentas/testes/referencias.js capturar /tmp/<voce>/nova --raiz jogo --so dados,imagens
 npm test
 ```
-Abra `jogo/ferramentas/previas/acessorios.html` direto no Chromium (file://) para conferir os enfeites (o servidor
-de teste só entrega `index.html`, `css/` e `js/`).
+Abra `jogo/ferramentas/previas/acessorios.html` por `file://` (o servidor de teste só entrega `index.html`, `css/` e `js/`)
+para conferir os enfeites: passo a passo em `docs/receitas/enfeite-novo.md`.

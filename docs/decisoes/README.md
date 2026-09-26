@@ -1,0 +1,20 @@
+# Decisões (índice)
+
+Para que serve: o porquê das escolhas do projeto, um registro curto por decisão (Contexto / Decisão /
+Consequências). Para o "como", veja `docs/receitas/`; para as regras, `docs/contratos/`.
+
+| Decisão | Arquivo |
+|---|---|
+| Scripts clássicos, sem módulos e sem build | `scripts-classicos-sem-build.md` |
+| Um manifesto só para a ordem de carga (index.html gerado) | `manifesto-unico.md` |
+| Limites de tamanho, divisão em arquivos e objetos internos | `divisao-em-arquivos.md` |
+| Vozes achadas pelo texto exato, em pacotes de nome fixo | `vozes-pelo-texto.md` |
+| Regras de `P.mesclar` e por que não mudam sem teste | `mescla-do-save.md` |
+| Segurança do progresso real (3 lugares, proibições, guardas) | `seguranca-do-progresso.md` |
+| Plano da refatoração para IA (fases, caminhos antigo → novo) — histórico | `refatoracao-plano.md` |
+| Ruído de antialiasing nas referências de imagem | `referencias-ruido.md` |
+| Contratos consolidados por subsistema — histórico | `contratos-consolidados.md` |
+| Bugs encontrados na refatoração (abertos) | `bugs-encontrados.md` |
+
+Arquivos marcados "histórico" citam caminhos de antes da refatoração; `npm run validar` não os confere
+(lista `HISTORICOS` em `jogo/ferramentas/validar/validar-docs.js`).

@@ -31,8 +31,10 @@ Personagens: `npcs-e-dialogo.md`. Prédios: `interiores.md`. Vozes: `som-musica-
    cores: { corpo, crina: [3 cores], chifre, asa? }, frase }]`).
 4. Estilo dos arquivos de sala: igual aos que já existem (ex.: `historia/h1.js`): indentação de 4 espaços na sala,
    8 nos desafios.
+   <!-- validar-docs: ignorar -->
 5. O Português era montado de `rascunho/` por `ferramentas/montar-portugues.js`: os dois foram removidos (estão no
    histórico do git). Edite direto as salas `portugues/p1.js`…`p5.js`, `livro.js` e `portugues.js`.
+   <!-- validar-docs: fim -->
 
 ## 3. Tipos de desafio e campos
 1. Tipos: escolha, vf, varias, ligar, ordenar, frase, separar, vfLista, completar, copiar, memoria, desenho.

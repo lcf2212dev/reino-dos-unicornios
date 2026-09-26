@@ -30,3 +30,10 @@
 - Texto original: `git show 626513e:CONTRATOS-<nome>.md`.
 - Removidas: só narrativa (cabeçalhos de branch, tabelas de donos por fase) e o que deixou de existir
   (interior de teste da primeira fase, placa da Loja no mapa depois que as placas do mapa saíram).
+
+## Ajustes depois da consolidação (Fase 4, validador de docs)
+- `conteudo.md` §2.5: o parágrafo sobre `rascunho/` e `montar-portugues.js` (removidos) ficou entre marcadores
+  `<!-- validar-docs: ignorar -->` … `fim` (histórico).
+- `interiores.md` §8.7 e §9.5.4: `PROFESSORES`/`CAVALEIROS` fixos não existem mais; o texto aponta para
+  `paraProva`/`paraMateria` do elenco (`Reino.NPCs.doElenco`), como no código desde f8e280a.
+- `loja.md` §7 e `interiores.md` §10: as prévias abrem por `file://` (o servidor de teste não entrega `ferramentas/`).
