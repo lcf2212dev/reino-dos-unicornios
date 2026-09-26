@@ -11,7 +11,7 @@ Ferramentas de desenvolvimento (Node). Nenhuma entra no jogo. Comandos: `CLAUDE.
 - Nada de Firefox, WebKit, nem emulação de iPhone/iPad com WebKit.
 - Saves 100% sintéticos: `testes/saves.js`. Nunca copie o save real.
 - Nunca leia, copie ou grave em `jogo/servidor/dados/`. Nunca publique o artifact
-  (`gerar-artifact.js` só grava em `/tmp`; publicar é da skill `publicar-artifact`, com pedido do Leandro).
+  (`gerar-artifact.js` só grava em `/tmp`; publicar é da skill `publicar-artifact`, depois de cada merge que muda o jogo).
 - Derrube só os seus servidores, pelo PID ou `s.parar()`. Nunca `pkill`/`killall` por nome.
 - Temporários em `/tmp/reino-testes/`, sem apagar (`rm` só com caminho literal: `CLAUDE.md` da raiz). Exceção: as ferramentas de voz (`vozes/`) gravam o venv do
   transcritor e os temporários em `<raiz>/.vozes/` (ignorado pelo git; o /tmp é memória).
@@ -66,7 +66,7 @@ Ferramentas de desenvolvimento (Node). Nenhuma entra no jogo. Comandos: `CLAUDE.
 - `validar/` (`npm run validar`, por `validar-tudo.js`): conteúdo, interiores, `validar-nomes.js` (nome repetido:
   erro no mesmo prédio, aviso entre prédios) e `validar-docs.js` (pastas de material vêm do disco, sem lista fixa).
   Contraste do chão x contorno da Mariana: `contraste-pisos.navegador.test.js`, com regra e exceções em
-  `validar/contraste.js` (exceção só com motivo; não mude cor do jogo para passar sem o Leandro).
+  `validar/contraste.js` (exceção só com motivo escrito; não mude cor do jogo só para passar).
 - `gerado/`: GERADO (`falas.json`, `vozes-indice.json`, `vozes-cache/`). Não abra (enorme).
 - `jogo-no-node.js` carrega os scripts `node: true` do manifesto num `vm`. Nenhuma ferramenta guarda lista
   própria de scripts: use o manifesto (`scripts({ grupos, nomes })`; prévias: `previas/previa.js`).

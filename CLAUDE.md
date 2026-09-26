@@ -10,24 +10,35 @@ Este arquivo tem as regras invioláveis e o índice. As regras de código de cad
   de cada aparelho.
 - Nada disso se abre, testa, lê, copia, grava, publica ou apaga. Nada de `localStorage.clear()`, "Apagar tudo",
   "Novo ciclo" ou pagamento fora do ambiente de teste.
-- Docker, container e o serviço `reino-nome`: só o Leandro.
+- Docker, container e o serviço `reino-nome`: nunca se mexe. Não precisa: o servidor de casa serve a árvore
+  principal ao vivo, e o merge na main já o atualiza.
 - A árvore principal `/home/leandro/Mariana Revisões` é servida AO VIVO pelo container: não escreva nela.
   Trabalhe numa worktree (`npm run worktree -- <tema> [--material <Pasta>]`).
 - Detalhes: `docs/contratos/save-e-mescla.md` §9.
 
-## Pedido do Leandro: ponta a ponta, sem perguntar
-- Feature, ajuste ou correção pedidos pelo Leandro vão até o fim sem pedir decisão nem confirmação: decida com o
+## Fluxo 100% autônomo
+- Feature, ajuste ou correção vão até o fim sem pedir decisão, confirmação nem ajuda a ninguém: decida com o
   padrão mais sensato (a opção que você recomendaria), construa numa worktree, feche com `validar-tudo`, faça o commit,
   integre na main e dê push (skill `entregar`: `npm run integrar -- <branch> --commit --merge --push`).
   Depois do push, se o jogo mudou, republique o artifact do claude.ai (skill `publicar-artifact`).
-  Esta é a autorização escrita dele para commit, merge na main, push, troca da base do e2e e artifact.
-- Não use AskUserQuestion nem pare para aprovar plano. O que você decidiu vai no relatório final, curto.
+  Commit, merge na main, push, troca da base do e2e e artifact estão autorizados por escrito, sempre.
+- Nunca use AskUserQuestion, nunca pare para aprovar plano, amostra ou resultado. O que você decidiu vai no
+  relatório final, curto.
 - Merge só com `npm test` e `npm run e2e` verdes; diferença no e2e fora do que a feature explica é defeito: corrija.
   Mudança de propósito no e2e: troque a base (`--trocar-base`) na mesma integração.
-- Só pare e pergunte o que não tem volta ou não é seu: o progresso da Mariana (nunca), Docker e servidor de casa,
-  apagar o que não é temporário, material do Leandro que colide com outro conteúdo, `git push --force`.
+- O que não tem volta não se faz, e o trabalho segue pelo outro caminho:
+  - progresso da Mariana, Docker, servidor de casa: não se tocam (acima);
+  - apagar o que não é temporário: não apague; deixe o arquivo e anote em `docs/pendencias.md`;
+  - material em `matérias/` que colide com outro conteúdo: vale o da árvore principal (é o mais novo); leve-o para a
+    integração e integre de novo;
+  - push recusado porque o GitHub andou: traga o `origin/main` e integre de novo por cima; nunca `git push --force`;
+  - artifact com versão viva diferente da registrada: a main é a fonte da verdade do jogo; leia o que o claude.ai
+    pedir e publique a versão da main (skill `publicar-artifact`), sem `force`.
+- Travou em algo que não está aqui: escolha a saída segura que não perde nada (deixar, não apagar, não sobrescrever
+  o que não é seu), siga com o resto e explique no relatório.
 - O artifact publica só o jogo (o delta desde `jogo/ferramentas/artifact-publicado.txt`); o doc `progresso/mariana`
   nunca se toca. Mudança só em docs ou ferramentas: sem publicar.
+- Voz nova: escolha pelo `npm run vozes-elenco` e aprove pela conferência por transcrição (skill `validar-vozes`).
 - Frentes (workers) não fazem commit; quem orquestra integra. Commit no estilo `Reino dos Unicórnios: <o que mudou>`.
 - O `node_modules` da worktree é um link: nunca `git add` dele.
 
@@ -43,7 +54,8 @@ Este arquivo tem as regras invioláveis e o índice. As regras de código de cad
 ## Comandos de shell
 - Não apague temporários: deixe-os em `/tmp` (o sistema limpa ao reiniciar).
 - Se precisar apagar, só com o caminho escrito por extenso (`rm -rf /tmp/val1/jogo`). Nunca `rm` com alvo vindo de
-  variável ou de `$(...)`, nem com guarda: o Claude Code para e pergunta. Se for inevitável, peça ao Leandro.
+  variável ou de `$(...)`, nem com guarda (o Claude Code para e pergunta). Alvo que só se conhece na hora: não apague,
+  deixe em `/tmp`.
 
 ## Gerados: não abra, não edite à mão
 `jogo/js/voz/*.js` (pacotes de áudio enormes), `jogo/ferramentas/gerado/**`, `.vozes/` e `jogo/index.html`
@@ -80,7 +92,7 @@ docs/                      ARQUITETURA.md (mapa; §5.1 quero X → qual registro
 | regras de código de uma pasta | `CLAUDE.md` da pasta |
 | invariantes e APIs de um assunto (leia antes de mexer) | `docs/contratos/` (índice em `README.md`) |
 | como fazer X (matéria, prova, prédio, personagem, enfeite, comida, música, fala) | `docs/receitas/` |
-| procedimento disparado por um pedido | skills em `.claude/skills/` (pedido do Leandro: `preparar-pedido` ou `nova-feature`) |
+| procedimento disparado por um pedido | skills em `.claude/skills/` (pedido: `preparar-pedido` ou `nova-feature`) |
 | por que foi assim | `docs/decisoes/`; defeitos conhecidos em `docs/pendencias.md` |
 | guia do Leandro (usar o jogo) | `COMO-USAR.md`; modelo de pedido em `PEDIDO-DE-FEATURE.md` |
 

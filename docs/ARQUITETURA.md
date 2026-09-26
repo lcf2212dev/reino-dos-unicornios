@@ -15,7 +15,7 @@ em código. Ela anda num mapa, entra nos prédios, conversa com personagens e fa
 | Jeito | Como | Quem usa |
 |---|---|---|
 | `file://` | abrir `jogo/index.html` direto | abrir o jogo e as prévias à mão (os testes usam o servidor de TESTE: `jogo/ferramentas/CLAUDE.md`) |
-| servidor de casa | container Docker `reino-unicornios`, porta 80 | **só o Leandro e a Mariana** (NUNCA abra nem teste) |
+| servidor de casa | container Docker `reino-unicornios`, porta 80 | **só a família** (NUNCA abra nem teste) |
 | artifact do claude.ai | página montada por `npm run artifact` e publicada pelo orquestrador | a Mariana, fora de casa |
 
 O que isso impõe ao código (scripts clássicos, sem `fetch` local, o que o servidor entrega): `jogo/js/CLAUDE.md`.

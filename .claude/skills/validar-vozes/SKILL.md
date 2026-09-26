@@ -1,6 +1,6 @@
 ---
 name: validar-vozes
-description: Use no Reino dos Unicórnios depois de criar personagem novo ou trocar um perfil de voz (checar o elenco e gerar amostras para o Leandro ANTES de gravar tudo), e depois do `npm run vozes` para ler a conferência por transcrição (reprovadas, 2ª passada, palavra solta para ouvir). Completa a gravar-vozes, não a substitui; não use só para mudar o texto de uma fala (isso é gravar-vozes).
+description: Use no Reino dos Unicórnios depois de criar personagem novo ou trocar um perfil de voz (checar o elenco ANTES de gravar tudo), e depois do `npm run vozes` para ler a conferência por transcrição (reprovadas, 2ª passada, palavra solta para ouvir). Completa a gravar-vozes, não a substitui; não use só para mudar o texto de uma fala (isso é gravar-vozes).
 ---
 # Validar vozes
 
@@ -14,10 +14,10 @@ Gravação, amostras e conferência: só quem integra (o orquestrador). NUNCA ab
    - `!` mesmo prédio (pacote `interior-*`) com a mesma voz base, tom a até 8 Hz e velocidade a até 8 pontos;
      mesmo nome próprio no mesmo prédio ("Doutora Lia" x "Jardineira Lia"); voz de gênero trocado
      ("eu sou a …", Doutora, Professora… com voz masculina). Personagem NOVO: corrija. Perfil já aprovado: só informe.
-2. **Amostras para o Leandro** (precisa de internet): `node jogo/ferramentas/vozes/listar-falas.js` e
+2. **Amostras** (precisa de internet; sem esperar ninguém): `node jogo/ferramentas/vozes/listar-falas.js` e
    `uv run --with edge-tts python jogo/ferramentas/vozes/amostras.py 'npc-lab-.*' npc-nasa-lia`
-   → `amostras-de-voz/NN-<Lugar>-<Nome>.mp3` (numeração segue a última) e um AMOSTRAS-NN-a-MM com todas.
-   Mande para o Leandro e espere ele aprovar ANTES de gravar tudo.
+   → `amostras-de-voz/NN-<Lugar>-<Nome>.mp3` (numeração segue a última) e um AMOSTRAS-NN-a-MM com todas. Confira as
+   amostras pela transcrição (abaixo); a aprovação é o elenco limpo mais a transcrição sem `✘`.
 3. **Gravar**: `npm run vozes` (skill gravar-vozes).
 
 ## Conferência (passo 4 do `npm run vozes`)

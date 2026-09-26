@@ -5,7 +5,7 @@ description: Use no Reino dos Unicórnios, como orquestrador, quando as frentes 
 # Entregar (integrar frentes na main)
 
 Para quem coordena. Ferramentas em `jogo/ferramentas/fluxo/` (Node, sem dependência). O histórico é LINEAR:
-cherry-pick, nunca merge commit. Pedido do Leandro vai ponta a ponta (`CLAUDE.md` da raiz): commit, troca da base
+cherry-pick, nunca merge commit. O fluxo é 100% autônomo (`CLAUDE.md` da raiz): commit, troca da base
 do e2e, merge, push e artifact (se o jogo mudou) sem perguntar.
 
 ## Começar uma frente
@@ -45,7 +45,8 @@ npm run worktree -- <tema> --material <Pasta>
 6. Diferença no e2e: confira cada uma com o que as frentes disseram. Diferença não explicada = volte à frente.
 7. Colisões: arquivo NÃO rastreado na árvore principal (ex.: a pasta de prints) que a integração passa a
    rastrear. Igual byte a byte = "mover" (só com `--merge`, para `/tmp/reino-testes/antes-do-merge/<data>/`);
-   diferente = a ferramenta para e lista: é material do Leandro, pergunte qual vale.
+   diferente = a ferramenta para e lista: vale o da árvore principal (o mais novo); copie-o para a worktree de
+   integração, `git add` e `--continuar`.
 
 ## Entregar (sem perguntar, com tudo verde)
 1. **Commit:** `--commit` (ou commits à mão na worktree de integração).
@@ -53,13 +54,16 @@ npm run worktree -- <tema> --material <Pasta>
    `--trocar-base "<descrição curta>"` (commit "Reino dos Unicórnios: base do e2e em <hash> (<descrição>)").
 3. **Merge:** `--merge` move as colisões iguais e faz `merge --ff-only` na árvore principal (servida ao vivo); exige
    `npm test` verde e a integração sem mudança solta. Se a árvore principal tiver mudança em arquivo rastreado, veja
-   o que é: o Leandro pode ter mexido nela (ex.: moveu uma pasta de material); leve a mudança para a integração e
-   restaure a árvore principal ao que está no git antes do merge; se não der para entender, pare e conte.
-4. **Push:** `--push` (`git push origin main`, nunca `--force`).
+   o que é: alguém pode ter mexido nela (ex.: moveu uma pasta de material); leve a mudança para a integração e
+   restaure a árvore principal ao que está no git antes do merge. Mudança que você não entende: leve-a igual
+   para a integração (nada se perde) e explique no relatório.
+4. **Push:** `--push` (`git push origin main`, nunca `--force`). Recusado porque o GitHub andou: `git fetch`,
+   `merge --ff-only origin/main` na árvore principal (se não for fast-forward, integre de novo por cima do
+   `origin/main`) e push de novo.
 As flags vão juntas numa chamada só: `--commit --trocar-base … --merge --push`.
 5. **Artifact:** depois do push, se `npm run artifact -- --desde publicado` mostra arquivo do jogo → skill
    `publicar-artifact`. Só docs ou ferramentas: não publique.
-6. **Relatório final ao Leandro:** o que entrou, o que você decidiu sozinho, o hash da main, a versão do artifact e
+6. **Relatório final:** o que entrou, o que você decidiu sozinho, o hash da main, a versão do artifact e
    o servidor de teste.
 
 ## Nunca
