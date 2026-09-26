@@ -346,7 +346,7 @@
     if (novo) {
       tutorial = Reino.Claude.falar(Reino.Falas.tutorialMapa(Reino.materias[0]))
         .then(function () { return Reino.Claude.falar(Reino.Claude.frase('dica')); });
-    } else {
+    } else if (!Reino.congelado) {   // modo determinístico dos testes (js/congelar.js): sem boas-vindas
       var ovos = P.ovosParaChocar().length;
       var oi = Reino.Claude.frase('boasVindas');
       Reino.Claude.falar(oi + (ovos ? ' E você tem ' + (ovos === 1 ? 'um ovo' : ovos + ' ovos') + ' para chocar! 🥚' : ''), { fala: [oi, ovos ? Reino.Falas.fixas.ovosParaChocar : null] });
@@ -423,7 +423,7 @@
 
     esperarProgresso().then(function () {
       var novo = !est().comecou;
-      (novo ? primeiraVez() : telaInicio()).then(function () { entrarNoReino(novo); });
+      (novo ? primeiraVez() : Reino.congelado ? Promise.resolve() : telaInicio()).then(function () { entrarNoReino(novo); });
     });
   }
 
