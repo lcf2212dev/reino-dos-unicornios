@@ -7,6 +7,15 @@
     "pngjs": "7.0.0"
   },
   "scripts": {
-    "index": "node jogo/ferramentas/gerar-index.js"
+    "test": "node jogo/ferramentas/testar-tudo.js",
+    "unidade": "node --test 'jogo/ferramentas/testes/unidade/*.test.js'",
+    "e2e": "node jogo/ferramentas/testes/e2e.js",
+    "servidor-teste": "node jogo/ferramentas/testes/servidor-teste.js",
+    "validar": "node jogo/ferramentas/validar/validar-tudo.js",
+    "vozes": "node jogo/ferramentas/vozes/vozes.js",
+    "index": "node jogo/ferramentas/gerar-index.js",
+    "artifact": "node jogo/ferramentas/gerar-artifact.js",
+    "tamanho": "node jogo/ferramentas/tamanho.js",
+    "tipos": "node jogo/ferramentas/testes/tipos.js"
   }
 }
