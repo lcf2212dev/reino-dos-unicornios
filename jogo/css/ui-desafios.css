@@ -1,0 +1,180 @@
+/* Desafios mais novos (inglês, desenho, texto de apoio, completar, copiar, maiúsculas acentuadas) e os avisos do menu Lugares: vêm depois de ui-animacoes.css, na ordem de antes. */
+/* ---------- inglês: trechos «...» viram <span class="en"> ---------- */
+.en {
+  color: #3b2fc4;
+  background: rgba(124, 92, 255, 0.13);
+  border-radius: 4px;
+  padding: 0 0.15em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  text-decoration: underline dotted rgba(59, 47, 196, 0.45);
+  text-underline-offset: 0.25em;
+}
+/* sobre fundo escuro/colorido (botão marcado, principal, balão): herda a cor */
+[aria-pressed="true"] .en, .btn-principal .en, .vf-botao .en, .seq-item .en, .chip-palavra .en {
+  color: inherit; background: rgba(255, 255, 255, 0.22); text-decoration-color: currentColor;
+}
+.en canvas.pixel { background: none; }
+.vf-rotulo { font-family: var(--fonte-pixel), "Trebuchet MS", sans-serif; }
+
+/* ---------- desenho: prancheta de pixel art ---------- */
+.desenho { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+.desenho-ferramentas, .desenho-paleta { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+.desenho-ferr {
+  display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 56px; padding: 6px 4px;
+  border: 3px solid var(--borda); border-radius: 10px; background: #fff; box-shadow: 0 3px 0 var(--borda); color: var(--tinta);
+}
+.desenho-ferr small { font-size: 0.55em; }
+.desenho-ferr[aria-pressed="true"] { background: var(--lavanda-clara); outline: 3px solid var(--roxo); outline-offset: 1px; }
+.desenho-icone-forma { width: 24px; height: 24px; image-rendering: pixelated; }
+.desenho-limpar { background: var(--quase-fundo); }
+.desenho-cor { width: 36px; height: 36px; border: 3px solid var(--borda); border-radius: 50%; box-shadow: 0 3px 0 var(--borda); }
+.desenho-cor[aria-pressed="true"] { outline: 4px solid var(--roxo); outline-offset: 2px; }
+.desenho-moldura { width: min(100%, 360px); border: 4px solid var(--borda); border-radius: 8px; background: #fff; line-height: 0; }
+.desenho-tela {
+  width: 100%; height: auto; aspect-ratio: 1; image-rendering: pixelated; touch-action: none;
+  cursor: crosshair; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none;
+}
+.desenho-lista { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; justify-content: center; font-size: 0.8em; }
+.desenho-requisitos { display: flex; gap: 10px; list-style: none; margin: 0; padding: 0; flex-wrap: wrap; }
+.desenho-req { display: flex; align-items: center; gap: 6px; padding: 4px 8px; border: 2px solid var(--borda); border-radius: 8px; background: #fff; color: var(--tinta-suave); }
+.desenho-req.feito { background: var(--certo-fundo); color: var(--certo); }
+.req-marca { flex: none; width: 22px; height: 22px; display: grid; place-items: center; border: 2px solid var(--borda); border-radius: 4px; background: #fff; overflow: hidden; line-height: 0; }
+/* o ✓ vira ícone de pixel: cabe dentro da caixinha, sem invadir a palavra */
+.req-marca > * { width: 16px !important; height: 16px !important; margin: 0 !important; vertical-align: 0; }
+.desenho-mini, .correcao-desenho canvas { width: 96px; height: 96px; image-rendering: pixelated; border: 3px solid var(--borda); border-radius: 6px; }
+.correcao-desenho { margin: 6px 0; }
+@media (max-width: 480px) {
+  .desenho-ferr { min-width: 46px; padding: 4px 2px; }
+  .desenho-cor { width: 30px; height: 30px; }
+  /* prancheta menor e folga embaixo: a lista de requisitos não some atrás do rodapé */
+  .desenho-moldura { width: min(100%, 300px); }
+  .missao-corpo:has(.desenho) { padding-bottom: 40px; }
+}
+
+/* texto de apoio (d.apoio): a caixa do texto que a questão manda ler, acima do enunciado */
+.apoio { padding: 14px 16px 16px; border: 3px solid var(--borda); border-radius: 18px; background: #fffef8; box-shadow: 0 4px 0 var(--borda); }
+.apoio-rotulo { display: inline-block; margin: 0 0 6px; padding: 2px 10px; border: 2px solid var(--borda); border-radius: 999px; background: var(--ouro-claro); font-size: 0.7em; font-weight: 700; line-height: 1.8; }
+.apoio-titulo { margin: 6px 0 4px; font-family: var(--fonte-titulo); font-size: 1.05em; line-height: 1.6; text-align: center; color: var(--roxo); }
+.apoio-parte { margin-top: 12px; }
+.apoio-parte-titulo { margin: 0 0 4px; font-weight: 700; font-size: 0.9em; color: var(--rosa-forte); }
+.apoio-lista { margin: 0; padding-left: 1.5em; font-size: 0.9em; line-height: 2; }
+.apoio-texto { margin: 0; font-size: 0.9em; line-height: 2.1; overflow-wrap: break-word; }
+.btn-ouvir-apoio { margin-top: 0; flex: none; }
+.apoio-topo { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 10px; }
+.apoio-topo .apoio-rotulo { margin: 0; }
+.apoio-abrir { min-height: 44px; padding: 4px 12px; border: 2px solid var(--borda); border-radius: 12px; background: var(--ouro-claro); font-weight: 700; font-size: 0.8em; }
+/* celular e tablet em pé: caixa recolhível numa linha (📖 abrir/esconder + 🔊); aberta, o texto rola dentro dela
+   para a pergunta caber na primeira tela */
+@media (max-width: 999.98px) {
+  .apoio { padding: 10px 12px 12px; }
+  .apoio-topo { flex-wrap: nowrap; }
+  .apoio-topo .apoio-rotulo { display: none; }
+  .apoio-abrir { flex: 1 1 auto; min-width: 0; }
+  .apoio-ouvir-rotulo { display: none; }
+  .btn-ouvir-apoio { min-width: 52px; font-size: 1em; }
+  .apoio-corpo { max-height: calc(18vh * var(--escala-texto)); max-height: calc(18dvh * var(--escala-texto)); overflow: auto; margin-top: 8px; padding: 0 6px 4px 2px; border-bottom: 2px dashed var(--lavanda); overscroll-behavior: contain; }
+  .apoio-corpo .apoio-titulo { margin-top: 0; }
+  .apoio-fechado .apoio-corpo { display: none; }
+  .desafio.com-apoio { gap: 10px; }
+}
+/* celular, nas salas (não na prova): a caixa cresce até mostrar o trecho inteiro quando ele é curto (~350 px em 844);
+   só textos maiores que isso rolam dentro dela */
+@media (max-width: 639.98px) {
+  .tela-missao .apoio-corpo { max-height: min(calc(42vh * var(--escala-texto)), 46vh); max-height: min(calc(42dvh * var(--escala-texto)), 46dvh); }
+}
+@media (min-width: 640px) and (max-width: 999.98px) { .apoio-ouvir-rotulo { display: inline; } .apoio-corpo { max-height: 30vh; max-height: 30dvh; } }
+/* tablet em pé: pouco escondido (ou espaço livre na tela) → o texto inteiro, sem rolagem dentro da caixa (js: caber) */
+@media (min-width: 640px) and (max-width: 999.98px) { .apoio-inteiro .apoio-corpo { max-height: none; overflow: visible; } }
+/* tela larga (notebook, tablet deitado): o texto de apoio ao lado da pergunta, sempre aberto */
+@media (min-width: 1000px) {
+  .missao-corpo > .desafio.com-apoio, .missao-corpo:has(> .desafio.com-apoio) > * { max-width: 1180px; }
+  .desafio.com-apoio { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); grid-template-rows: auto 1fr; align-items: start; column-gap: 20px; }
+  .desafio.com-apoio > .apoio { grid-column: 1; grid-row: 1 / span 2; }
+  .desafio.com-apoio > :not(.apoio) { grid-column: 2; }
+  .apoio-abrir { display: none; }
+}
+
+/* instrucao (opcional): como responder no jogo, numa linha própria logo abaixo da pergunta */
+.instrucao { display: flex; align-items: baseline; gap: 6px; margin: 8px 0 0; font-size: 0.9em; font-style: italic; font-weight: 700; color: var(--tinta-suave); }
+.instrucao-icone { flex: none; font-style: normal; }
+
+/* completar: lacuna dentro da palavra (colado) e grade compacta (itens com figura) */
+.completar-itens { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 10em), 1fr)); gap: 8px; }
+.completar-grade .frase-completar { align-items: center; gap: 6px; padding: 8px 6px 10px; text-align: center; }
+.completar-grade .frase-texto { margin: 0; font-size: 0.8em; line-height: 2; }
+.completar-grade .frase-opcoes { display: flex; flex-wrap: nowrap; gap: 5px; width: 100%; justify-content: center; }
+.completar-grade .chip-palavra { flex: 1 1 0; min-width: 0; max-width: 5.5em; min-height: 48px; padding: 6px 2px; }
+/* botões de letra (S, Z, X, R…) com no mínimo 48×48: na grade, a coluna cresce conforme o número de botões (--opcoes) */
+.completar-grade .completar-itens { grid-template-columns: repeat(auto-fill, minmax(min(100%, max(10em, calc(var(--opcoes, 1) * 53px + 13px))), 1fr)); }
+.completar-colado .chip-palavra, .completar-grade .chip-palavra { min-width: 48px; }
+.completar-img { display: inline-flex; line-height: 0; min-height: 64px; align-items: center; justify-content: center; font-size: 2em; }
+.palavra-colada { white-space: nowrap; }
+.lacuna.lacuna-colada { min-width: 2em; margin: 0; padding: 0 1px; line-height: 1.5; }
+.lacuna.lacuna-colada.preenchida { min-width: 0; padding: 0; }
+/* colado com frase inteira: caixa na largura toda, a frase quebra nos espaços (só a palavra da lacuna fica inteira) */
+.completar-colado-longo .frase-texto { overflow-wrap: break-word; }
+.completar-colado-longo .lacuna.lacuna-colada { min-width: 1.6em; }
+.completar-colado-longo .lacuna.lacuna-colada.preenchida { min-width: 0; }
+
+/* copiar: marcar a escrita certa entre duas e escrever a palavra com peças de letras */
+.copiar { display: flex; flex-direction: column; gap: 14px; }
+.copiar-item { display: flex; flex-direction: column; gap: 10px; padding: 12px 14px 14px; border: 3px solid var(--borda); border-radius: 16px; background: var(--papel); }
+.copiar-escolha { display: grid; grid-template-columns: auto 1fr 1fr; align-items: center; gap: 8px; }
+.copiar-letra { font-size: 1em; }
+.copiar-opcao { display: flex; align-items: center; justify-content: center; gap: 8px; min-width: 0; min-height: 52px; padding: 6px 8px; border: 3px solid var(--borda); border-radius: 12px; background: #fff; box-shadow: 0 3px 0 var(--borda); font-weight: 700; }
+.copiar-marca { display: inline-flex; align-items: center; justify-content: center; width: 1.9em; height: 1.9em; flex: none; border: 3px solid var(--borda); border-radius: 50%; background: #fff; color: #fff; font-size: 0.8em; line-height: 1; }
+.copiar-opcao[aria-pressed="true"] { background: var(--lavanda-clara); border-color: var(--roxo); box-shadow: 0 3px 0 var(--roxo); outline: 3px solid var(--roxo); outline-offset: 0; }
+.copiar-opcao[aria-pressed="true"] .copiar-marca { background: var(--roxo); border-color: var(--roxo); }
+.copiar-palavra { letter-spacing: 0.06em; }
+.copiar-resposta { display: flex; flex-direction: column; gap: 4px; }
+.copiar-rotulo { font-size: 0.8em; font-weight: 700; color: var(--tinta-suave); }
+.copiar-linha {
+  display: flex; flex-wrap: wrap; align-items: flex-end; gap: 4px;
+  min-height: 62px; padding: 6px 8px 8px 14px;
+  border-left: 3px solid #ff9db5; border-radius: 4px;
+  background: linear-gradient(to bottom, transparent calc(100% - 4px), #7fb2ff calc(100% - 4px)), #fbfdff;
+}
+.copiar-linha.pisca { animation: piscar 0.6s ease-in-out 2; }
+.copiar-vazia { align-self: center; color: #a597bd; font-weight: 700; font-size: 0.72em; line-height: 1.7; }
+.copiar-vaga { width: 44px; height: 44px; border: 2px dashed #cdbff5; border-radius: 8px; }
+.copiar-pecas { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; padding: 10px 8px; border: 3px dashed var(--lavanda); border-radius: 14px; background: var(--papel-2); }
+.copiar-peca { min-width: 48px; height: 48px; padding: 0 6px; border: 3px solid var(--borda); border-radius: 10px; background: #fff3c4; box-shadow: 0 3px 0 var(--borda); font-weight: 700; font-size: 1.05em; line-height: 1; }
+.copiar-peca.colocada { min-width: 44px; height: 44px; background: #fff; border-color: var(--roxo); color: var(--roxo); box-shadow: 0 3px 0 var(--roxo); }
+.copiar-peca.usada { border: 2px dashed #d9cfee; background: transparent; box-shadow: none; color: transparent; }
+.tudo-certo .copiar-item { background: var(--certo-fundo); }
+@media (max-width: 480px) {
+  .copiar-item { padding: 10px 6px 12px; }
+  /* 7 letras de 44px na mesma linha da resposta (PASSEIO não quebra no meio) */
+  .copiar-linha { gap: 3px; padding: 6px 4px 8px 6px; }
+  .copiar-opcao { gap: 6px; padding: 6px 4px; font-size: 0.8em; }
+  .copiar-pecas { gap: 6px; padding: 8px 4px; }
+}
+
+/* maiúsculas acentuadas na fonte pixel (js/atividades/desafios.js): a letra de verdade fica invisível e por cima vêm
+   a maiúscula sem acento (::before) e o acento da fonte uma linha de pixels acima dela (::after).
+   "span.mai-acento.mai-acento" + all: unset: nenhuma regra de "... span" do jogo muda este span. */
+span.mai-acento-texto.mai-acento-texto { all: unset; }
+span.mai-acento.mai-acento { all: unset; position: relative; -webkit-text-fill-color: transparent; }
+span.mai-acento.mai-acento::before, span.mai-acento.mai-acento::after {
+  position: absolute; left: 0; top: 0; line-height: normal; white-space: pre;
+  -webkit-text-fill-color: currentColor; pointer-events: none;
+}
+span.mai-acento.mai-acento::before { content: attr(data-b); content: attr(data-b) / ""; }
+span.mai-acento.mai-acento::after { content: attr(data-a); content: attr(data-a) / ""; top: -0.375em; }
+
+/* completar colado na grade: "a)" e a palavra na mesma linha; se não couberem, a fonte encolhe só o necessário
+   (--letras vem de js/atividades/desafios.js; onde já cabia, min() mantém os 0.8em de antes). A linha pode usar até
+   ~2px de cada lado do respiro da caixa (6px): "__ELICÓPTERO" no celular cabe inteira nos 0.8em e não encolhe */
+.completar-grade.completar-colado:not(.completar-colado-longo) .frase-completar { container-type: inline-size; }
+.completar-grade.completar-colado:not(.completar-colado-longo) .frase-colada { font-size: min(0.8em, calc((100cqi - 1px) / var(--letras, 1))); }
+
+/* ---------- menu Lugares: os avisos que as placas do mapa davam (UI.avisosDoLugar) ---------- */
+.lugar-avisos { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+.lugar-aviso {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 1px 8px; border: 2px solid #b58cff; border-radius: 999px;
+  background: #efe4ff; color: #5a3cc4; font-size: 0.75em; font-weight: 700; line-height: 1.5;
+}
+.lugar-aviso > canvas { flex: none; display: block; }
+.lugar-aviso.aviso-pronto { border-color: #4fb37a; background: #e2f7e9; color: #1b6e45; }

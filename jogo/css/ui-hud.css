@@ -1,0 +1,95 @@
+/* HUD: chips de cima, montaria, dock do menu, tela cheia/câmera e setas. */
+/* ---------- HUD ---------- */
+#hud { position: fixed; inset: 0; pointer-events: none; z-index: 10; }
+#hud > * { pointer-events: auto; }
+/* a faixa de cima só pega o toque nos botões (senão o topo do mapa não recebe toques) */
+#hud > .hud-topo { pointer-events: none; }
+.hud-topo {
+  position: absolute;
+  top: calc(env(safe-area-inset-top, 0px) + 10px); left: 10px; right: 10px;
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;
+  pointer-events: none;
+}
+/* só os botões e chips pegam o toque: os blocos em volta (.hud-esq, .hud-dir, .hud-botoes) deixam passar
+   para o mapa (no celular o 📷 embaixo da tela cheia deixava o bloco da direita mais alto que o chip,
+   e a faixa vazia embaixo do chip não chegava ao mapa) */
+.hud-topo > *, .hud-botoes { pointer-events: none; }
+.hud-topo > * > *:not(.hud-botoes), .hud-botoes > * { pointer-events: auto; }
+.hud-esq { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+.hud-dir { display: flex; align-items: flex-start; gap: 8px; min-width: 0; } /* encolhe o chip em vez de passar da tela */
+.btn-tela-cheia {
+  display: grid; place-items: center;
+  width: 48px; height: 48px; flex: none;
+  border: 3px solid var(--borda); border-radius: 14px;
+  background: var(--papel); color: var(--tinta);
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.85), 0 3px 0 var(--borda);
+}
+.btn-tela-cheia:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--borda); }
+/* tela cheia e câmera (📷, js/sistemas/fotos.js) lado a lado; no celular, um embaixo do outro (telas pequenas) */
+.hud-botoes { display: flex; gap: 8px; flex: none; }
+.btn-foto { touch-action: none; -webkit-touch-callout: none; user-select: none; -webkit-user-select: none; }
+/* sem poder tirar foto agora (transição, tela aberta, balão): apagado, mas ainda focável pelo Tab */
+.btn-foto.desligado { opacity: 0.45; filter: grayscale(0.6); box-shadow: 0 3px 0 var(--borda); }
+.btn-foto.desligado:active { transform: none; }
+.chip {
+  min-height: 44px; padding: 6px 14px;
+  border: 3px solid var(--borda); border-radius: 999px;
+  background: var(--papel); font-weight: 700; font-size: 0.95em;
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.9), 0 3px 0 var(--borda);
+  font-variant-numeric: tabular-nums;
+}
+.chip-dinheiro { background: linear-gradient(180deg, #fff6d4 0%, var(--ouro-claro) 48%, #ffd56a 100%); }
+.chip-ovos { background: linear-gradient(180deg, #fff 0%, var(--rosa-clara) 48%, #ffc0db 100%); animation: pulsar 1.4s ease-in-out infinite; }
+.chip-montaria {
+  display: flex; align-items: center; gap: 8px;
+  max-width: min(54vw, 280px);
+  padding: 6px 12px 6px 8px;
+  border: 3px solid var(--borda); border-radius: 18px;
+  background: var(--papel); box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.85), 0 3px 0 var(--borda); text-align: left;
+}
+.chip-montaria { min-width: 0; }
+.chip-montaria canvas { flex: none; }
+.montaria-info { display: flex; flex-direction: column; min-width: 0; font-size: 0.8em; line-height: 1.2; }
+.montaria-info b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.montaria-estagio { color: var(--tinta-suave); }
+.barrinha { display: block; height: 8px; margin-top: 4px; border: 2px solid var(--borda); border-radius: 6px; background: #fff; overflow: hidden; min-width: 60px; }
+.barrinha > span { display: block; height: 100%; background: linear-gradient(90deg, var(--rosa), var(--lavanda)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55); }
+
+.dock {
+  position: absolute;
+  left: 50%; transform: translateX(-50%);
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 10px);
+  display: flex; gap: 4px; padding: 4px;
+  border: 3px solid var(--borda); border-radius: 4px;
+  background: #fff8ee;
+  box-shadow: 0 4px 0 var(--borda);
+}
+.dock-btn {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  width: 92px; min-height: 72px; padding: 4px 4px 6px;
+  border: 0; border-radius: 2px;
+  background: transparent;
+}
+.dock-btn canvas { display: block; }
+.dock-rotulo {
+  font-family: var(--fonte-pixel);
+  font-weight: 400;
+  font-size: 8px;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  color: var(--tinta);
+  text-align: center;
+}
+.dock-btn:active { background: var(--lavanda-clara); }
+
+#setas {
+  position: fixed; z-index: 11;
+  left: 12px; bottom: calc(env(safe-area-inset-bottom, 0px) + 92px);
+  display: grid; grid-template-columns: repeat(3, 56px); grid-template-rows: repeat(3, 56px); gap: 4px;
+}
+.seta { border: 3px solid var(--borda); border-radius: 14px; background: rgba(255, 250, 253, 0.92); font-size: 1.1em; box-shadow: 0 3px 0 var(--borda); touch-action: none; }
+.seta-cima { grid-column: 2; grid-row: 1; }
+.seta-esq { grid-column: 1; grid-row: 2; }
+.seta-dir { grid-column: 3; grid-row: 2; }
+.seta-baixo { grid-column: 2; grid-row: 3; }
+

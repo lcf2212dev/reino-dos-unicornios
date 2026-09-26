@@ -1,0 +1,61 @@
+/* Animações (keyframes), sem-animacao e reduzir movimento, e as telas pequenas (max-width 480px): vêm depois das regras que elas mudam. */
+/* ---------- animações ---------- */
+@keyframes aparecer { from { opacity: 0; } to { opacity: 1; } }
+@keyframes subir { from { transform: translateY(24px); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes pulsar { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.04); } }
+@keyframes piscar { 50% { opacity: 0.3; } }
+@keyframes flutuar { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes balancar { 0%, 100% { transform: rotate(0); } 25% { transform: rotate(-9deg); } 75% { transform: rotate(9deg); } }
+@keyframes brilhar { from { filter: brightness(2.2); transform: scale(0.6); } to { filter: none; transform: none; } }
+@keyframes tremer { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
+.treme { animation: tremer 0.4s ease-in-out; }
+
+body.sem-animacao *:not(.balao-respira), body.sem-animacao *::before, body.sem-animacao *::after { animation: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  *:not(.balao-respira) { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+}
+
+/* ---------- telas pequenas ---------- */
+@media (max-width: 480px) {
+  body { font-size: calc(16px * var(--escala-texto)); }
+  .painel-conteudo { padding: 14px 14px 18px; }
+  .dock-btn { width: 78px; min-height: 64px; }
+  .dock-rotulo { font-size: 8px; }
+  .missao-pontos .ponto { width: 11px; height: 11px; border-width: 2px; }
+  .missao-rodape .sem-relogio { display: none; }
+  .btn-conferir { flex: 1; }
+  /* coluna com a palavra mais comprida fica mais larga (1fr com mínimo automático) e a letra do Ligar para em
+     ~24 letras nas duas palavras mais compridas juntas ("nascimento" + "acontecimentos"): nada vaza nem corta palavra */
+  .ligar-colunas { grid-template-columns: 1fr 1fr; gap: 8px; container-type: inline-size; }
+  .ligar-item { font-size: min(0.8em, calc((100cqi - 44px) / 24)); padding: 8px 6px; gap: 6px; }
+  /* baús um embaixo do outro: lado a lado, "Ingredientes"/"Sentimentos" na letra pixel não cabiam */
+  .baus { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .bau { min-height: 120px; }
+  .chip { padding: 4px 10px; font-size: 0.85em; }
+  .montaria-info { font-size: 0.72em; }
+  .hud-botoes { flex-direction: column; gap: 6px; }
+  /* lista de salas da matéria: "Entrar →"/"Jogar de novo" descem para a linha de baixo */
+  .sala-card { gap: 10px; }
+  .sala-card.ir-embaixo { flex-wrap: wrap; row-gap: 4px; }
+  .sala-card.ir-embaixo .sala-info { flex: 1 1 0; }
+  .sala-card.ir-embaixo .sala-ir { flex-basis: 100%; text-align: right; }
+  /* trilha de estágios em 2 × 2 (em 4 colunas o "Adulto" passava da borda) */
+  .trilha-estagios { grid-template-columns: 1fr 1fr; }
+  .trilha-estagios li { flex-direction: row; justify-content: center; gap: 6px; padding: 6px 4px; }
+  .trilha-estagios span { font-size: 1.2em; }
+  .trilha-estagios small { font-size: 0.75em; }
+  .titulo-jogo { padding: 8px 14px 10px; }
+  .titulo-jogo::before { left: 16px; }
+  .titulo-jogo::after { right: 16px; }
+  .titulo-jogo span { font-size: 16px; }
+  .titulo-jogo small { font-size: 8px; }
+  .prova-rodape .btn-grande { min-width: 0; flex: 1; padding: 10px 12px; }
+  .tela-prova .missao-pontos { gap: 3px; }
+  .tela-prova .missao-pontos .ponto { width: 9px; height: 9px; }
+  .tela-prova .missao-titulo { font-size: 0.8em; }
+  .vf-botao { width: 44px; height: 48px; }
+  .vf-linha { gap: 8px; padding: 8px; }
+  .vf-texto { font-size: 0.85em; }
+  .faixa-valendo { font-size: 0.7em; }
+}
+

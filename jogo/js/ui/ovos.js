@@ -1,0 +1,107 @@
+/* Chocar ovos: os 3 toques no ovo, o nascimento e o cartão que encolhe para caber. */
+(function () {
+  var U = Reino.util, el = U.el, P = Reino.Progresso;
+  var UI = Reino.UI, R = Reino._ui;
+  var est = R.est, topo = R.topo, mostrarFoco = R.mostrarFoco;
+
+  /* ---------- chocar ovos ---------- */
+  UI.chocarOvos = function (ids) {
+    ids = (ids || []).filter(function (id) { return est().unis[id] && !est().unis[id].chocado; });
+    var seq = Promise.resolve();
+    ids.forEach(function (id) { seq = seq.then(function () { return chocarUm(id); }); });
+    return seq.then(function () { UI.atualizarHUD(); });
+  };
+
+  function chocarUm(id, opcoes) {
+    opcoes = opcoes || {};
+    return new Promise(function (resolver) {
+      var d = P.defUni(id);
+      var rar = Reino.Unicornios.RARIDADES[d.raridade];
+      var t = UI.abrirTela('ovo');
+      var toques = 0;
+      var ovoBox = el('button.ovo-grande.rar-' + d.raridade, { type: 'button', 'aria-label': 'Toque no ovo' });
+      function pintarOvo() { ovoBox.innerHTML = ''; ovoBox.appendChild(PA.paraDOM(PA.ovo(d.raridade, toques), 10)); }
+      pintarOvo();
+      var texto = el('p.ovo-texto', Reino.Falas.ovo(d.raridade));
+      var card = el('div.painel.painel-ovo.rar-' + d.raridade, el('h2.titulo-pixel', rar.emoji + ' Ovo ' + rar.nome), ovoBox, texto);
+      t.appendChild(card);
+      Reino.Som.falar(texto.textContent, { voz: 'claude' });
+      ovoBox.addEventListener('click', function () {
+        if (toques >= 3) return;
+        toques++;
+        ovoBox.classList.remove('balanca'); void ovoBox.offsetWidth; ovoBox.classList.add('balanca');
+        Reino.Som.tocar('rachar');
+        pintarOvo();
+        if (toques < 3) { texto.textContent = toques === 1 ? 'Está mexendo! Mais 2 toques!' : 'Quase! Mais 1 toque!'; return; }
+        setTimeout(nasceu, 450);
+      });
+      function nasceu() {
+        P.chocar(id); P.salvar();
+        Reino.Som.tocar('chocar');
+        UI.confete(d.raridade === 'lendario' ? 160 : 90);
+        card.innerHTML = '';
+        card.appendChild(el('h2.titulo-pixel', d.raridade === 'lendario' ? '🌈 UM LENDÁRIO! 🌈' : 'Nasceu!'));
+        card.appendChild(el('div.detalhe-sprite.nascimento.rar-' + d.raridade, PA.paraDOM(PA.unicornio(d, 0, 0), 9)));
+        card.appendChild(el('p.detalhe-rar.rar-' + d.raridade, rar.emoji + ' ' + rar.nome));
+        card.appendChild(el('p.ovo-nome', opcoes.primeiro ? 'Seu primeiro unicórnio!' : P.nomeUni(id)));
+        card.appendChild(el('p.detalhe-frase', '"' + d.frase + '"'));
+        card.appendChild(el('p.detalhe-dica', '🍼 Ele nasceu bebê! Quanto mais você acerta com ele de montaria, mais ele cresce.'));
+        var botoes = el('div.intro-botoes');
+        if (opcoes.primeiro) {
+          var ok = el('button.btn-grande.btn-principal', { type: 'button' }, 'Dar um nome ✏️');
+          ok.addEventListener('click', function () {
+            UI.pedirNome('Qual vai ser o nome do seu unicórnio?', 'Estrelinha').then(function (nome) {
+              est().unis[id].nome = nome || 'Estrelinha'; P.salvar();
+              UI.fecharTela(t); resolver();
+            });
+          });
+          botoes.appendChild(ok);
+        } else {
+          var montar = el('button.btn-grande.btn-principal', { type: 'button' }, 'Passear com ele 🐾');
+          var guardar = el('button.btn-grande.btn-secundario', { type: 'button' }, 'Guardar no estábulo');
+          montar.addEventListener('click', function () { est().montaria = id; P.salvar(); UI.fecharTela(t); U.emit('mapaMudou'); resolver(); });
+          guardar.addEventListener('click', function () { UI.fecharTela(t); resolver(); });
+          botoes.appendChild(guardar); botoes.appendChild(montar);
+        }
+        card.appendChild(botoes);
+        // o ovo (com o foco) sumiu: pelo teclado, o foco vai para o botão principal, não para o body
+        var principal = botoes.querySelector('.btn-principal');
+        compactarNascimento(t, card, principal);
+        if (UI.porTeclado()) UI.focarTeclado(principal, 600);
+        Reino.Som.falar([d.raridade === 'lendario' ? Reino.Falas.fixas.lendario : Reino.Falas.fixas.nasceu, { texto: d.frase, voz: 'unicornio' }], { voz: 'claude' });
+      }
+    });
+  }
+  UI.chocarUm = chocarUm;
+  /* O cartão de quem nasceu (o do lendário, no celular e no notebook) passava da altura da tela, e o
+     texto ainda cresce um pouco quando a fonte termina de carregar. Quando não cabe, ele fica mais
+     compacto, um passo de cada vez (espaços, depois o desenho, depois as letras), até o título e o
+     botão principal aparecerem inteiros sem rolar: é a hora da comemoração, nada de rolar o título.
+     Mede de novo quando a fonte carrega e quando o conteúdo muda de tamanho no primeiro instante.
+     Se nem assim couber, por toque fica como está (título inteiro); pelo teclado, o botão com o
+     foco aparece inteiro (mostrarFoco rola o cartão por dentro). */
+  function compactarNascimento(t, card, botao) {
+    var sprite = card.querySelector('.detalhe-sprite'), tela = sprite && sprite.querySelector('canvas');
+    var dica = card.querySelector('.detalhe-dica'), nome = card.querySelector('.ovo-nome'), botoes = botao && botao.parentElement;
+    function escala(k) { if (tela) { tela.style.width = (tela.width * k) + 'px'; tela.style.height = (tela.height * k) + 'px'; } }
+    var passos = [
+      function () { card.style.gap = '8px'; card.style.paddingTop = card.style.paddingBottom = '14px'; if (botoes) botoes.style.marginTop = '6px'; },
+      function () { escala(7); if (sprite) sprite.style.minHeight = '0'; },
+      function () { escala(5.5); if (nome) nome.style.fontSize = '1.3em'; if (dica) dica.style.fontSize = '0.82em'; },
+      function () { escala(4.5); },
+    ];
+    var feito = 0;
+    function cabe() { return card.scrollHeight <= card.clientHeight + 1; }
+    function ajustar() {
+      if (!card.isConnected) return;
+      while (!cabe() && feito < passos.length) passos[feito++]();
+      if (feito && UI.porTeclado() && document.activeElement === botao && t === topo()) mostrarFoco(botao);
+    }
+    ajustar();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(ajustar);
+    if (!window.ResizeObserver) { setTimeout(ajustar, 300); return; }
+    var obs = new ResizeObserver(ajustar);
+    Array.prototype.forEach.call(card.children, function (filho) { obs.observe(filho); });
+    setTimeout(function () { obs.disconnect(); ajustar(); }, 1500);
+  }
+})();
