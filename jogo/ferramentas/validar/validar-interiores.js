@@ -1,13 +1,14 @@
 // Confere os interiores (construções por dentro) antes de publicar.
 // Uso: node ferramentas/validar/validar-interiores.js
-// Carrega config, unicórnios, Loja, cuidados, matérias, provas, motor/interiores.js, npcs.js e os
+// Carrega config, unicórnios, Loja, cuidados, matérias, provas, arte/desenho.js, motor/interiores-*.js, npcs.js e os
 // prédios (js/interiores/) num vm SEM DOM (como listar-falas.js), pelo manifesto (ferramentas/jogo-no-node.js).
 // Os prédios em ordem alfabética (padrao.js por último), como a lista de vozes. Sai com código 1 se houver erro.
 const Jogo = require('../jogo-no-node');
 
 const ctx = Jogo.contexto({ console, setTimeout, clearTimeout });
 Jogo.carregar(ctx, Jogo.ordemDosPredios(Jogo.scripts({
-  nomes: ['nucleo/config', 'personagens/unicornios', 'conteudo/loja-itens', 'sistemas/cuidados', 'motor/interiores', 'personagens/npcs',
+  nomes: ['nucleo/config', 'personagens/unicornios', 'conteudo/loja-itens', 'sistemas/cuidados', 'arte/desenho',
+      'motor/interiores-base', 'motor/interiores-pisos', 'motor/interiores-objetos-parede', 'motor/interiores-objetos-moveis', 'motor/interiores-objetos-enfeites', 'motor/interiores-grade', 'motor/interiores-estatico', 'motor/interiores-placas', 'motor/interiores-toque', 'motor/interiores-cena', 'personagens/npcs',
     'personagens/npcs-corpo', 'personagens/npcs-cabeca', 'personagens/npcs-sprites', 'personagens/npcs-status', 'personagens/npcs-falas',
     'personagens/npcs-conversa', 'personagens/elenco'],
   grupos: ['materias', 'provas', 'interiores'],
