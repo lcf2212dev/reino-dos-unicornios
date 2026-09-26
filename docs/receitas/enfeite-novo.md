@@ -21,18 +21,23 @@ enfeite só aparece na tela; a fala "faltam estrelas" é fixa).
 ## Passo a passo
 ### 0. Onde trabalhar
 - Na sua worktree (ex.: `/home/leandro/reino-<tarefa>`), nunca em `/home/leandro/Mariana Revisões`.
-- Rascunho em `/tmp` (se pedirem): copie a SUA worktree inteira, sem `node_modules`, sem `.git` e sem
+- Recomendado: uma worktree NOVA para a tarefa (o orquestrador cria; `node_modules` é um link). Nela tudo
+  roda, inclusive `npm test` inteiro e `npm run e2e` (que precisam do git para ler o commit base).
+- Rascunho em `/tmp` (só se pedirem): copie a SUA worktree inteira, sem `node_modules`, sem `.git` e sem
   `jogo/servidor/dados` (banco da Mariana: nunca copie), e ligue o `node_modules`:
   ```
   rsync -a --exclude=/node_modules --exclude=/.git --exclude=/jogo/servidor/dados /home/leandro/<sua-worktree>/ /tmp/<voce>/repo/
   ln -s /home/leandro/<sua-worktree>/node_modules /tmp/<voce>/repo/node_modules
   ```
-  Todos os comandos abaixo rodam da raiz dessa cópia (ou da worktree).
+  No rascunho (sem `.git`) rode só `npm run unidade`, `npm run validar`, `npm run tamanho` e o §6. As
+  referências (`npm run e2e` e o passo *referências de dados* do `npm test`) rodam na worktree, depois de
+  levar a mudança para lá.
 
 ### 1. Escolha os dados
 - `id`: minúsculas com hífen, único entre enfeites E prêmios das provas (ex.: `margarida-orelha`).
 - `nome`: pt-BR, curto, sem repetir nome de enfeite ou prêmio (ex.: "Margarida na orelha").
-- `preco`: inteiro de 10 a 45.
+- `preco`: inteiro; hoje os preços vão de 8 a 45 (a regra de 10–45 de `docs/contratos/loja.md` §4.1 valeu
+  para a leva das novidades); o teste só exige inteiro > 0.
 - `slot`: um encaixe com âncora (lista acima). Um enfeite por encaixe: comprar troca o do mesmo encaixe.
 - `espaco: true` só se for do tema espaço.
 
@@ -72,9 +77,10 @@ No começo do objeto, junto dos outros `"enfeite:…"`, no mesmo formato:
 npm run unidade      # loja.test.js e loja-enfeites-completos.test.js: id único, preço, encaixe, ícone e desenho
 npm run validar      # conteúdo, interiores (carrega a Loja), index x manifesto, docs
 npm run tamanho      # moldes e ícones são dados: até 800 linhas por arquivo
-npm test             # tudo o que é rápido
+npm test             # tudo o que é rápido (só na worktree: o último passo precisa do git)
 ```
-Tudo tem que sair ✔. `loja-enfeites-completos.test.js` acusa: ícone que falta, desenho que falta e `ancora`
+Unidade, validadores e tamanho têm que sair ✔. Em `npm test`, o passo *referências de dados* mostra a
+diferença esperada da Loja (§7); os outros passos têm que sair ✔. `loja-enfeites-completos.test.js` acusa: ícone que falta, desenho que falta e `ancora`
 diferente do `slot`.
 
 ### 6. Conferir no jogo (visual), com save sintético
@@ -158,9 +164,14 @@ Olhe as fotos (ex.: com a ferramenta de ler imagem): o enfeite aparece em cada v
 olho; no mapa, na montaria; na Loja, o cartão com o ícone e "Usando".
 
 ### 7. Referências (prova de que o resto não mudou)
-`npm run e2e` compara com o commit base. Diferenças ESPERADAS: os dados da Loja (o item novo) e, se o enfeite
-entrou entre os 6 primeiros da lista, as imagens com a montaria enfeitada (os saves sintéticos vestem os
-primeiros da lista). Qualquer outra diferença é defeito. Registre as esperadas para quem integra.
+`npm run e2e` (na worktree) compara com o commit base de `jogo/ferramentas/testes/base-referencia.txt`.
+Diferenças ESPERADAS:
+- os dados da Loja (o item novo), também no passo *referências de dados* do `npm test`;
+- a imagem `loja` muda sempre (a grade se desloca);
+- as imagens com a montaria mudam se o enfeite cair nas posições 0–5 da lista (os saves sintéticos de
+  `jogo/ferramentas/testes/saves.js` compram as posições 0–5 e vestem 0–1 e 2–4).
+Qualquer outra diferença é defeito. Registre as esperadas para quem integra. A base só muda por commit (quem
+integra troca o hash em `base-referencia.txt` depois do commit do enfeite); não edite esse arquivo na tarefa.
 
 ## Armadilhas
 - `'<id>': { linhas` aparece também em `enfeites:` de cada vista: o desenho principal vai no bloco
@@ -173,6 +184,8 @@ primeiros da lista). Qualquer outra diferença é defeito. Registre as esperadas
 - Save: nada novo. Nunca teste com o save real; só `jogo/ferramentas/testes/saves.js`.
 - Aba com a versão antiga do jogo não conhece o id novo: ao trocar de enfeite, ela o tira do unicórnio (a
   compra fica). Por isso servidor de casa e artifact são atualizados no mesmo dia (quem faz é o orquestrador).
+- "Page crashed"/"Target crashed" no Chromium: confira `df -h /tmp`; se estiver cheio, rode com
+  `TMPDIR=/dev/shm/<pasta>` (não apague temporários de outros).
 - No zsh deste PC, `cp` pede confirmação ao sobrescrever: use `command cp -f` em scripts.
 - Temporários ficam em `/tmp`; não apague (se precisar, só com o caminho escrito por extenso).
 - Testes só no Chromium de `jogo/ferramentas/testes/navegador.js`; nunca a porta 80 nem outro navegador.

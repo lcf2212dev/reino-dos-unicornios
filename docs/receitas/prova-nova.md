@@ -31,6 +31,14 @@ npm run unidade        # loja.test.js: um prêmio por raridade de cada prova, pr
 npm test
 npm run e2e            # esperado: dados das provas, da loja e da Escola
 ```
+
+Referências (na worktree; precisam do git): em `npm test`, o passo *referências de dados* mostra a diferença
+esperada abaixo; os outros passos têm que sair ✔. Diferenças esperadas no `npm run e2e`:
+- dados: `falas`, `provas`, `interiores` (sala nova na Escola), `loja` (prêmios à venda, acessórios) e `vozes`;
+- imagens: `tela-escola`, `tela-loja`, o interior da Escola e a Loja por dentro (vitrine de prêmios).
+A base do e2e só muda por commit: quem integra troca o hash em `jogo/ferramentas/testes/base-referencia.txt`
+depois do commit da mudança; não edite esse arquivo na tarefa. Qualquer diferença fora da lista acima é defeito.
+
 Conferir: servidor de TESTE, `__reino.entrar('escola')`, e a prova por `Reino.Provas.iniciar`.
 
 ## Armadilhas

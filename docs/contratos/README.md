@@ -87,6 +87,8 @@ Resumo (detalhes em `save-e-mescla.md` §9):
 7. Temporários ficam em `/tmp` e não são apagados; `rm` só com caminho literal, nunca com alvo de `$(...)`.
 8. Depuração: `?debug=1` → `window.__reino` (`jogo/js/debug.js`); modo determinístico: `?debug=1&congelar=1`
    (`jogo/js/nucleo/congelar.js`, `__congelar.avancar(ms)`).
+9. "Page crashed"/"Target crashed" no Chromium: confira `df -h /tmp`; se estiver cheio, rode com
+   `TMPDIR=/dev/shm/<pasta>` (não apague temporários de outros).
 
 ## 6. Comandos que existem hoje
 ```

@@ -53,6 +53,14 @@ npm run vozes    # listar → gravar (só o que falta) → empacotar → conferi
 npm run validar        # validar-interiores avisa fala > 44 letras e «» desbalanceado
 npm test               # inclui as referências de dados e vozes (lista de falas) contra o commit base
 ```
+
+Referências (na worktree; precisam do git): em `npm test`, o passo *referências de dados* mostra a diferença
+esperada abaixo; os outros passos têm que sair ✔. Diferenças esperadas no `npm run e2e`:
+- dados: `falas` (e `interiores`/`elenco`/`materias`, conforme onde o texto mora);
+- vozes: os pacotes regravados (`vozes`); imagens: só as telas e balões que mostram o texto mudado.
+A base do e2e só muda por commit: quem integra troca o hash em `jogo/ferramentas/testes/base-referencia.txt`
+depois do commit da mudança; não edite esse arquivo na tarefa. Qualquer diferença fora da lista acima é defeito.
+
 No jogo (servidor de TESTE): `__reino.faltando` lista as falas pedidas sem áudio (tem que ficar vazio).
 
 ## Armadilhas

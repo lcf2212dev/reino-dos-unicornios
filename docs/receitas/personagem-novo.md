@@ -34,6 +34,15 @@ npm run validar        # validar-interiores: NPC em chão livre, voz no config (
 node jogo/ferramentas/vozes/listar-falas.js
 npm test
 ```
+
+Referências (na worktree; precisam do git): em `npm test`, o passo *referências de dados* mostra a diferença
+esperada abaixo; os outros passos têm que sair ✔. Diferenças esperadas no `npm run e2e`:
+- dados: `elenco`, `interiores` (o NPC no prédio), `falas`, `loja` (a `config` entra aí: o perfil de voz novo)
+  e `vozes`;
+- imagens: as do interior onde o personagem mora (e a conversa com ele).
+A base do e2e só muda por commit: quem integra troca o hash em `jogo/ferramentas/testes/base-referencia.txt`
+depois do commit da mudança; não edite esse arquivo na tarefa. Qualquer diferença fora da lista acima é defeito.
+
 Conferir: servidor de TESTE, `__reino.entrar('<lugar>')`, `__reino.npcs()` (id, tile, status).
 
 ## Armadilhas

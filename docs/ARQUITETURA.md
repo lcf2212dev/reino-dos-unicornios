@@ -13,7 +13,7 @@ em código. Ela anda num mapa, entra nos prédios, conversa com personagens e fa
 ## 2. Os 3 jeitos de rodar (e o que isso impõe)
 | Jeito | Como | Quem usa |
 |---|---|---|
-| `file://` | abrir `jogo/index.html` direto | testes, prévias |
+| `file://` | abrir `jogo/index.html` direto | abrir o jogo e as prévias à mão (os testes usam o servidor de TESTE, §10) |
 | servidor de casa | container Docker `reino-unicornios`, porta 80 | **só o Leandro e a Mariana** (NUNCA abra nem teste) |
 | artifact do claude.ai | página montada por `npm run artifact` e publicada pelo orquestrador | a Mariana, fora de casa |
 

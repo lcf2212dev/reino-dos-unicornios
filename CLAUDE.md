@@ -35,7 +35,7 @@ Este arquivo é o índice. Cada pasta principal tem um `CLAUDE.md` com as regras
 - `npm run unidade` — só os testes de unidade (`node --test`).
 - `npm run e2e` — referências do jogo atual x commit base, no Chromium; tem que dar idêntico (`--so-dados`, `--desempenho`).
 - `npm run validar` — conteúdo, interiores, index x manifesto e docs.
-- `npm run servidor-teste` — servidor de TESTE (porta livre > 1024, banco novo em `/tmp/reino-testes/`).
+- `npm run servidor-teste` — servidor de TESTE (porta livre ≥ 1024 (nunca 80), banco novo em `/tmp/reino-testes/`).
 - `npm run index` — refaz o `jogo/index.html` a partir do manifesto.
 - `npm run vozes` — lista as falas, grava as novas e empacota (`jogo/js/voz/`).
 - `npm run artifact` — monta a página do artifact em `/tmp/reino-testes/artifact/` (nunca publica).

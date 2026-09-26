@@ -52,6 +52,15 @@ node jogo/ferramentas/vozes/listar-falas.js
 npm test
 npm run e2e           # esperado: dados de conteúdo/mapa/interiores mudam; mapa ganha o prédio
 ```
+
+Referências (na worktree; precisam do git): em `npm test`, o passo *referências de dados* mostra a diferença
+esperada abaixo; os outros passos têm que sair ✔. Diferenças esperadas no `npm run e2e`:
+- dados: `falas`, `materias`, `mapa` (lugar novo), `interiores` (interior padrão, ala do Castelo, baias),
+  `loja` (unicórnios da matéria) e `vozes` (pacotes novos);
+- imagens: o mapa onde o prédio aparece, a tela `lugares`, `castelo`, `plano` e os interiores gerados.
+A base do e2e só muda por commit: quem integra troca o hash em `jogo/ferramentas/testes/base-referencia.txt`
+depois do commit da mudança; não edite esse arquivo na tarefa. Qualquer diferença fora da lista acima é defeito.
+
 Conferir no jogo: servidor de TESTE + save sintético (modelo do script em `enfeite-novo.md` §6), `__reino.entrar('materia:<m>')`.
 
 ## Armadilhas

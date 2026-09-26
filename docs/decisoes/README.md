@@ -14,7 +14,8 @@ Consequências). Para o "como", veja `docs/receitas/`; para as regras, `docs/con
 | Plano da refatoração para IA (fases, caminhos antigo → novo) — histórico | `refatoracao-plano.md` |
 | Ruído de antialiasing nas referências de imagem | `referencias-ruido.md` |
 | Contratos consolidados por subsistema — histórico | `contratos-consolidados.md` |
-| Bugs encontrados na refatoração (abertos) | `bugs-encontrados.md` |
+| Helpers de desenho: uma fonte só (`jogo/js/arte/desenho.js`) | `helpers-de-desenho.md` |
+| Bugs encontrados na refatoração (abertos e corrigidos) | `bugs-encontrados.md` |
 
 Arquivos marcados "histórico" citam caminhos de antes da refatoração; `npm run validar` não os confere
 (lista `HISTORICOS` em `jogo/ferramentas/validar/validar-docs.js`).

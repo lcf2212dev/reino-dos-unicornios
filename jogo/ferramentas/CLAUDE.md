@@ -4,7 +4,7 @@ Ferramentas de desenvolvimento (Node). Nenhuma entra no jogo. Comandos: `CLAUDE.
 
 ## Guardas (nada chega no progresso da Mariana)
 - Nunca a porta 80, `reinodosunicornios.local`, `localhost` sem porta de teste nem o IP do PC.
-- Servidor: só `testes/servidor-teste.js` (porta livre > 1024; banco novo em `/tmp/reino-testes/`;
+- Servidor: só `testes/servidor-teste.js` (porta livre ≥ 1024 (nunca 80); banco novo em `/tmp/reino-testes/`;
   recusa banco fora de `/tmp` ou em `servidor/dados`).
 - Navegador: só `testes/navegador.js` (Playwright, só Chromium, preso à porta de teste; bloqueia o resto).
   Tamanhos: celular 390×844, tablet 820×1180, notebook 1366×768 (`TAMANHOS`).

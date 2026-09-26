@@ -8,7 +8,7 @@ Regras: `jogo/ferramentas/CLAUDE.md` e `docs/contratos/README.md` §5.
 
 1. Na raiz da worktree:
    ```
-   npm run servidor-teste                      # porta livre > 1024, banco novo em /tmp/reino-testes/
+   npm run servidor-teste                      # porta livre ≥ 1024 (nunca 80), banco novo em /tmp/reino-testes/
    npm run servidor-teste -- --porta 8801      # porta escolhida (nunca a 80)
    ```
    Ele mostra o endereço: `http://127.0.0.1:<porta>/?debug=1` (determinístico: `&congelar=1`).

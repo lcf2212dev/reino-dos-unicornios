@@ -13,6 +13,14 @@ const { conferirUrl, conferirPorta, conferirBanco, conferirPastaTmp } = require(
 const navegador = require('../navegador');
 const servidorTeste = require('../servidor-teste');
 
+// caminhos relativos ('reino.db', 'relativa') são resolvidos a partir da pasta atual: roda com a pasta
+// atual FORA de /tmp (/usr), para o teste valer também numa cópia do repositório dentro de /tmp
+function foraDeTmp(fn) {
+  const antes = process.cwd();
+  process.chdir('/usr');
+  try { return fn(); } finally { process.chdir(antes); }
+}
+
 const PROIBIDAS = [
   'http://127.0.0.1/', 'http://127.0.0.1:80/', 'http://127.0.0.1:80/?debug=1', 'http://127.0.0.1:443/',
   'http://localhost/', 'http://localhost:80/', 'http://localhost:8800/', 'http://jogo.localhost:8800/',
@@ -39,20 +47,21 @@ test('conferirPorta: nunca a 80 nem portas baixas ou inválidas', () => {
 
 test('conferirBanco: sempre em /tmp, nunca em servidor/dados (nem por link simbólico)', () => {
   const casa = path.join(FERRAMENTAS, '..', 'servidor', 'dados', 'reino.db');
-  [casa, '/dados/reino.db', 'reino.db', '/tmp/x/servidor/dados/reino.db', '/home/leandro/reino.db', '', null]
-    .forEach((b) => assert.throws(() => conferirBanco(b), /proibido/, String(b)));
+  foraDeTmp(() => [casa, '/dados/reino.db', 'reino.db', '/tmp/x/servidor/dados/reino.db', '/home/leandro/reino.db', '', null]
+    .forEach((b) => assert.throws(() => conferirBanco(b), /proibido/, String(b))));
   const pasta = fs.mkdtempSync('/tmp/reino-testes-guardas-');
   fs.mkdirSync(path.join(pasta, 'servidor', 'dados'), { recursive: true });
   fs.symlinkSync(path.join(pasta, 'servidor', 'dados'), path.join(pasta, 'atalho'));
-  fs.symlinkSync(path.dirname(FERRAMENTAS), path.join(pasta, 'fora'));
+  // link em /tmp para uma pasta FORA de /tmp (fixa: /usr; o repositório pode estar numa cópia em /tmp)
+  fs.symlinkSync('/usr', path.join(pasta, 'fora'));
   assert.throws(() => conferirBanco(path.join(pasta, 'atalho', 'reino.db')), /servidor\/dados/);
   assert.throws(() => conferirBanco(path.join(pasta, 'fora', 'x.db')), /\/tmp/);
   assert.strictEqual(conferirBanco(path.join(pasta, 'novo', 'reino-teste.db')), path.join(pasta, 'novo', 'reino-teste.db'));
 });
 
 test('conferirPastaTmp: só dentro de /tmp/reino-testes/', () => {
-  ['/tmp/reino-testes', '/tmp/reino-testes/', '/tmp', '/tmp/outra', '/tmp/reino-testes/../x', '/home/leandro', 'relativa', '', null]
-    .forEach((p) => assert.throws(() => conferirPastaTmp(p), /proibido/, String(p)));
+  foraDeTmp(() => ['/tmp/reino-testes', '/tmp/reino-testes/', '/tmp', '/tmp/outra', '/tmp/reino-testes/../x', '/home/leandro', 'relativa', '', null]
+    .forEach((p) => assert.throws(() => conferirPastaTmp(p), /proibido/, String(p))));
   assert.strictEqual(conferirPastaTmp('/tmp/reino-testes/base-982f1ed'), '/tmp/reino-testes/base-982f1ed');
 });
 

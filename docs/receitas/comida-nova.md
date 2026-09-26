@@ -26,6 +26,14 @@ npm run validar
 npm test
 npm run e2e            # esperado: dados da config/Pet Shop mudam
 ```
+
+Referências (na worktree; precisam do git): em `npm test`, o passo *referências de dados* mostra a diferença
+esperada abaixo; os outros passos têm que sair ✔. Diferenças esperadas no `npm run e2e`:
+- dados: `loja` (`comidas` e `config`);
+- imagens: `tela-petshop` (e o Estábulo, se a comida estiver na despensa do save sintético: só as 3 primeiras estão).
+A base do e2e só muda por commit: quem integra troca o hash em `jogo/ferramentas/testes/base-referencia.txt`
+depois do commit da mudança; não edite esse arquivo na tarefa. Qualquer diferença fora da lista acima é defeito.
+
 Conferir: servidor de TESTE + save sintético com estrelas (modelo em `enfeite-novo.md` §6), `__reino.entrar('petshop')`,
 `Reino.UI.telaPetShop()`, `__reino.cuidados()` (despensa).
 

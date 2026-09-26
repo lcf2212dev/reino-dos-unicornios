@@ -47,6 +47,15 @@ node jogo/ferramentas/vozes/listar-falas.js
 npm test
 npm run e2e -- --desempenho   # esperado: mapa e dados de interiores/lugares mudam; desempenho ≤ 5% pior
 ```
+
+Referências (na worktree; precisam do git): em `npm test`, o passo *referências de dados* mostra a diferença
+esperada abaixo; os outros passos têm que sair ✔. Diferenças esperadas no `npm run e2e`:
+- dados: `falas`, `mapa` (lugar e prédio novos), `interiores`, `elenco` (personagens novos), `loja`
+  (a `config` entra aí: perfis de voz) e `vozes`;
+- imagens: o mapa onde o prédio aparece e a tela `lugares`; desempenho no máximo 5% pior.
+A base do e2e só muda por commit: quem integra troca o hash em `jogo/ferramentas/testes/base-referencia.txt`
+depois do commit da mudança; não edite esse arquivo na tarefa. Qualquer diferença fora da lista acima é defeito.
+
 Conferir: `jogo/ferramentas/previas/interiores.html` por `file://` (acha o prédio pelo grupo do manifesto);
 no jogo, servidor de TESTE + save sintético (modelo em `enfeite-novo.md` §6) e `__reino.entrar('<p>')`;
 `__reino.tempoQuadro()` ≤ 16,7 ms com a CPU 4× mais lenta.
