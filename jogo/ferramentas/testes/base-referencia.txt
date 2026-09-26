@@ -5,4 +5,5 @@
 # ponha aqui o hash desse commit (o jogo dele passa a ser a referência). Para um teste só: --base <hash>.
 # 982f1ed = modo determinístico (?debug=1&congelar=1), antes da refatoração.
 # f8e280a = cavaleiros e professoras no elenco (paraMateria/paraProva): única diferença, dados/elenco.json.
-f8e280a
+# e954b33 = tela dos pais cita js/nucleo/config.js (bug 2): só tela-pais nos 3 tamanhos muda.
+e954b33
