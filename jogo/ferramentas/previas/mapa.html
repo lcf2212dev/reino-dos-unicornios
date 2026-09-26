@@ -5,7 +5,9 @@
 <canvas id="c"></canvas>
 <script src="../../js/manifesto.js"></script>
 <script src="previa.js"></script>
-<script>Previa.carregar({ nomes: ['nucleo/config', 'arte/pixelart', 'mundo/mapa', 'conteudo/materias/historia/historia'] });</script>
+<script>Previa.carregar({ nomes: ['nucleo/config', 'arte/pixelart',
+  'conteudo/materias/registro',
+  'conteudo/materias/historia/h1', 'conteudo/materias/historia/h2', 'conteudo/materias/historia/h3', 'conteudo/materias/historia/h4', 'conteudo/materias/historia/h5', 'conteudo/materias/historia/livro', 'conteudo/materias/historia/historia'], grupos: ['mundo'] });</script>
 <script>
 Mapa.criar(Reino.materias);
 var e = Mapa.prerender();

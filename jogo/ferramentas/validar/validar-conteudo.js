@@ -5,13 +5,20 @@ const path = require('path');
 const Jogo = require('../jogo-no-node');
 
 const ctx = Jogo.contexto({ console });
-// --materia <arquivo>: usa esse arquivo no lugar da matéria de mesmo nome em js/conteudo/materias/ (ex.: a matéria montada à parte)
+// --materia <arquivo>: usa esse arquivo no lugar do arquivo de mesmo nome em js/conteudo/materias/: a matéria
+// (portugues.js; um arquivo com a matéria inteira, salas dentro, também serve) ou uma sala (p3.js). livro.js
+// existe em toda matéria: vale a pasta de cima (ex.: /tmp/x/portugues/livro.js).
 const iMateria = process.argv.indexOf('--materia');
 const materiaFora = iMateria >= 0 ? path.resolve(process.argv[iMateria + 1]) : null;
 const materias = Jogo.scripts({ grupos: ['materias'] });
 const provas = Jogo.scripts({ grupos: ['provas'] });
 const trocar = {};
-materias.forEach((s) => { if (materiaFora && path.basename(materiaFora) === path.basename(s.js)) trocar[Jogo.nome(s)] = materiaFora; });
+if (materiaFora) {
+  let alvos = materias.filter((s) => path.basename(materiaFora) === path.basename(s.js));
+  if (alvos.length > 1) alvos = alvos.filter((s) => path.basename(path.dirname(materiaFora)) === path.basename(path.dirname(s.js)));
+  if (alvos.length !== 1) { console.log('✘ --materia: ' + (alvos.length ? 'mais de um' : 'nenhum') + ' arquivo de js/conteudo/materias/ com esse nome (livro.js: ponha na pasta da matéria)'); process.exit(1); }
+  trocar[Jogo.nome(alvos[0])] = materiaFora;
+}
 Jogo.carregar(ctx, Jogo.scripts({ nomes: ['nucleo/config'], grupos: ['materias', 'provas'] }), { trocar });
 
 const Reino = ctx.Reino;
