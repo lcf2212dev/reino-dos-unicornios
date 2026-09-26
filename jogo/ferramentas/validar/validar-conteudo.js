@@ -200,7 +200,8 @@ Reino.provas.forEach((pv) => {
   const semDesenho = new Set();
   const arquivos = materias.map((s) => trocar[Jogo.nome(s)] || Jogo.caminho(s.js))
     .concat(provas.map((s) => Jogo.caminho(s.js)))
-    .concat(['atividades/provas', 'sistemas/falas', 'ui/ui'].map(Jogo.arquivo));
+    .concat(['atividades/provas', 'sistemas/falas'].map(Jogo.arquivo))
+    .concat(Jogo.manifesto.scripts.filter((s) => s.grupo === 'ui').map((s) => Jogo.caminho(s.js)));
   arquivos.forEach((f) => {
     for (const m of fs.readFileSync(f, 'utf8').matchAll(RE)) {
       const k = m[0].replace(/\uFE0F/g, '');
