@@ -7,7 +7,9 @@ const Jogo = require('../jogo-no-node');
 
 const ctx = Jogo.contexto({ console, setTimeout, clearTimeout });
 Jogo.carregar(ctx, Jogo.ordemDosPredios(Jogo.scripts({
-  nomes: ['nucleo/config', 'personagens/unicornios', 'conteudo/loja-itens', 'sistemas/cuidados', 'motor/interiores', 'personagens/npcs'],
+  nomes: ['nucleo/config', 'personagens/unicornios', 'conteudo/loja-itens', 'sistemas/cuidados', 'motor/interiores', 'personagens/npcs',
+    'personagens/npcs-corpo', 'personagens/npcs-cabeca', 'personagens/npcs-sprites', 'personagens/npcs-status', 'personagens/npcs-falas',
+    'personagens/npcs-conversa', 'personagens/elenco'],
   grupos: ['materias', 'provas', 'interiores'],
 })));
 const temNpcs = Boolean(ctx.Reino.NPCs);
