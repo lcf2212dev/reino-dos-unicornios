@@ -41,15 +41,32 @@ Nada toca em DOM, canvas, PA, Progresso ou Cena no carregamento.
 ## 5. Álbum
 1. IndexedDB próprio `config.fotos.banco` ('reino-fotos'), só no aparelho, até `maxAlbum` (40) fotos (avisa
    quando lotar).
-2. Grade, ver grande, salvar, apagar com confirmação.
+2. Grade, ver grande, compartilhar, salvar, apagar com confirmação.
+5. Vazio: "O álbum ainda está vazio. Vamos tirar uma foto?" (escrito e falado).
+6. Compartilhar (foto grande), LIVRE, sem PIN: Web Share API com arquivo (`File` PNG, nome de §4.3):
+   `navigator.canShare({ files })` → `navigator.share({ files, title })`. Só aparece onde `canShare` diz sim
+   (celular, tablet); aí ele é o principal e o Salvar vira secundário. No resto (ex.: Chrome no notebook
+   Linux) o botão nem aparece e fica só o "Salvar no aparelho" (um botão que salvaria com outro nome
+   confundiria a criança). Cancelar (`AbortError`) não diz nada; outro erro cai no salvar (e avisa "salva").
+7. Onde cada jeito funciona. No artifact do claude.ai (`window.claude.use` existe) a plataforma recusa o share e
+   bloqueia o download: "Compartilhar" e "Salvar no aparelho" ficam escondidos (prévia e foto grande); "Apagar" fica.
+   No servidor de casa (http) não há Web Share API; o Salvar funciona. O Compartilhar só aparece em https fora do
+   claude.ai. Em todo lugar, a foto (`.fotos-img` da prévia e da foto grande, `<img>` com URL `blob:`) deixa o menu
+   do navegador: segurar (toque) ou botão direito. Sem `-webkit-touch-callout: none` nem `contextmenu` bloqueado
+   nela (o 📷 do HUD continua sem menu).
+8. Dica `.fotos-dica` embaixo da foto sempre que o Compartilhar não aparece (na prévia, sempre): com toque
+   (`pointer: coarse`) "Segure a foto para compartilhar ou salvar."; com mouse "Clique com o botão direito na foto
+   para salvar.". É legenda fixa, como lugar e data: NÃO é falada (não é aviso de algo que aconteceu; falar a cada
+   foto aberta repetiria a mesma frase sem parar e taparia a voz das frases de §4.4).
 3. NUNCA no save nem no servidor.
 4. Sem IndexedDB (ou erro): só salvar no aparelho, com aviso gentil.
 
 ## 6. Botão 📷
-1. No HUD de cima, perto da tela cheia: toque → `Fotos.tirar()`; toque longo (`config.fotos.toqueLongoMs`) →
+1. No HUD de cima, perto da tela cheia (tela cheia, 📷, álbum): toque → `Fotos.tirar()`; toque longo (`config.fotos.toqueLongoMs`) →
    `Fotos.abrirAlbum()`. Desabilitado quando `!Fotos.podeTirar()` e apagado durante a transição (evento `Reino.EVENTOS.TRANSICAO`).
-2. O Álbum NÃO está no menu de baixo (com 5 botões o menu ficava com 420 px numa tela de 390 e cortava):
-   abre pela prévia e segurando o 📷. No celular o 📷 fica embaixo do botão de tela cheia; no tablet/notebook, ao lado.
+2. Botão do álbum (`.btn-album`, ícone `menu:album`) logo depois do 📷: um toque → `Fotos.abrirAlbum()`, apagado
+   junto com o 📷. NÃO fica no menu de baixo (com 5 botões o menu ficava com 420 px numa tela de 390 e cortava).
+   Também abre pela prévia e segurando o 📷. No celular os três ficam um embaixo do outro; no tablet/notebook, lado a lado.
 3. Os blocos do HUD de cima deixam o toque passar (`loja.md` §6, regra 9).
 
 ## 7. Antes de mexer, rode

@@ -44,6 +44,39 @@
     setTimeout(function () { URL.revokeObjectURL(url); if (a.parentNode) a.parentNode.removeChild(a); }, 4000);
   }
 
+  /* ---------- compartilhar (Web Share API com arquivo; livre, sem PIN) ----------
+     Só onde o navegador compartilha arquivo (celular, tablet); nos outros o botão nem aparece e
+     fica o "Salvar no aparelho". */
+  function arquivoDe(f) {
+    try { return new File([f.png], nomeArquivo(f), { type: 'image/png' }); } catch (e) { return null; }
+  }
+  // no artifact do claude.ai a plataforma recusa o share e bloqueia o download: lá só o menu da própria imagem
+  function noArtifact() { return !!(window.claude && typeof window.claude.use === 'function'); }
+  function podeCompartilhar(f) {
+    if (noArtifact()) return false;
+    try {
+      var n = navigator, arq = arquivoDe(f);
+      return !!(arq && n.share && n.canShare && n.canShare({ files: [arq] }));
+    } catch (e) { return false; }
+  }
+  // 'ok' | 'cancelou' (AbortError: nada a dizer) | 'erro'; sem canShare aqui, nem chama
+  function compartilhar(f) {
+    var arq = arquivoDe(f);
+    if (!arq || !podeCompartilhar(f)) return Promise.resolve('erro');
+    var p;
+    try { p = navigator.share({ files: [arq], title: 'Foto do Reino dos Unicórnios' }); } catch (e) { return Promise.resolve('erro'); }
+    return Promise.resolve(p).then(function () { return 'ok'; }, function (e) {
+      return e && e.name === 'AbortError' ? 'cancelou' : 'erro';
+    });
+  }
+
+  // sem o Compartilhar: segurar a foto (toque) ou o botão direito (mouse) abre o menu do navegador
+  function dica() {
+    var toque = false;
+    try { toque = window.matchMedia('(pointer: coarse)').matches; } catch (e) {}
+    return U().el('p.fotos-legenda.fotos-dica', toque ? 'Segure a foto para compartilhar ou salvar.' : 'Clique com o botão direito na foto para salvar.');
+  }
+
   function botao(rotulo, principal, classe) {
     return U().el('button.btn-grande' + (principal ? '.btn-principal' : '.btn-secundario') + (classe ? '.' + classe : ''), { type: 'button' }, rotulo);
   }
@@ -100,7 +133,7 @@
       var salvar = botao('💾 Salvar no aparelho', false, 'fotos-salvar');
       var apagar = botao('🗑 Apagar', false, 'fotos-apagar');
       album.hidden = true;
-      var corpo = el('div.fotos-previa-corpo', el('div.fotos-moldura-img', img), msg, el('div.intro-botoes.fotos-botoes', guardar, album, salvar, apagar));
+      var corpo = el('div.fotos-previa-corpo', el('div.fotos-moldura-img', img), dica(), msg, el('div.intro-botoes.fotos-botoes', guardar, album, salvar, apagar));
       pn.conteudo.appendChild(corpo);
       function avisar(texto) { U().preencher(msg, texto); msg.hidden = !texto; corpo.classList.toggle('com-msg', !!texto); if (texto) falarVoz(texto); }
       function focarBotao(b) { if (UI.porTeclado && UI.porTeclado()) setTimeout(function () { try { b.focus({ preventScroll: true }); } catch (e) {} }, 30); }
@@ -110,6 +143,7 @@
         // sem álbum neste aparelho, o "Salvar no aparelho" vira o botão principal
         salvar.classList.toggle('btn-principal', banco.estado !== 'ok');
         salvar.classList.toggle('btn-secundario', banco.estado === 'ok');
+        salvar.hidden = noArtifact();
         if (banco.estado !== 'ok') { guardar.hidden = true; album.hidden = true; avisar(FRASES.semBanco); return; }
         guardar.hidden = cheio; album.hidden = !cheio;
         if (cheio) avisar(FRASES.cheio); else { msg.hidden = true; corpo.classList.remove('com-msg'); falarVoz(FRASES.previa); }
@@ -209,7 +243,7 @@
     });
   };
 
-  // a foto grande, com ◀ ▶ (e as setas do teclado), Salvar no aparelho e Apagar (com confirmação)
+  // a foto grande, com ◀ ▶ (e as setas do teclado), Compartilhar (onde der), Salvar no aparelho e Apagar (com confirmação)
   function verGrande(lista, i, aoFechar) {
     var UI = Reino.UI, el = U().el;
     var apagou = false, url = null;
@@ -218,12 +252,18 @@
     var legenda = el('p.fotos-legenda');
     var ant = el('button.btn-icone.fotos-nav', { type: 'button', 'aria-label': 'Foto anterior' }, '◀');
     var prox = el('button.btn-icone.fotos-nav', { type: 'button', 'aria-label': 'Próxima foto' }, '▶');
+    var comp = botao('💌 Compartilhar', true, 'fotos-compartilhar');
     var salvar = botao('💾 Salvar no aparelho', true, 'fotos-salvar');
     var apagar = botao('🗑 Apagar', false, 'fotos-apagar');
     var msg = el('p.fotos-msg', { role: 'status', hidden: true });
-    pn.conteudo.appendChild(el('div.fotos-ver-corpo',
+    // com o Compartilhar, ele é o principal e o Salvar fica secundário
+    comp.hidden = !podeCompartilhar(lista[i]);
+    salvar.classList.toggle('btn-principal', comp.hidden);
+    salvar.classList.toggle('btn-secundario', !comp.hidden);
+    salvar.hidden = noArtifact();
+    pn.conteudo.appendChild(el('div.fotos-ver-corpo' + (comp.hidden ? '' : '.com-compartilhar'),
       el('div.fotos-ver-linha', ant, el('div.fotos-moldura-img', img), prox),
-      legenda, msg, el('div.intro-botoes.fotos-botoes', salvar, apagar)));
+      legenda, comp.hidden ? dica() : null, msg, el('div.intro-botoes.fotos-botoes', comp, salvar, apagar)));
     function mostrar() {
       var f = lista[i];
       if (url) URL.revokeObjectURL(url);
@@ -243,12 +283,22 @@
       if (e.key === 'ArrowLeft' && lista.length > 1) { e.preventDefault(); andar(-1); }
       if (e.key === 'ArrowRight' && lista.length > 1) { e.preventDefault(); andar(1); }
     });
-    salvar.addEventListener('click', function () {
-      som('toque');
+    function salvarAqui() {
       var f = lista[i];
       baixar(f.png, nomeArquivo(f));
       U().preencher(msg, FRASES.salva); msg.hidden = false;
       falarVoz(FRASES.salva);
+    }
+    salvar.addEventListener('click', function () { som('toque'); salvarAqui(); });
+    // cancelou: nada; deu erro de verdade: salva no aparelho (a foto não se perde)
+    comp.addEventListener('click', function () {
+      if (comp.disabled) return;
+      som('toque');
+      comp.disabled = true;
+      compartilhar(lista[i]).then(function (r) {
+        comp.disabled = false;
+        if (r === 'erro') salvarAqui();
+      });
     });
     apagar.addEventListener('click', function () {
       som('toque');

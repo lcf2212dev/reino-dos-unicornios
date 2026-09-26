@@ -1,4 +1,4 @@
-/* dados: desenhos dos ícones de prêmios e magia (unicórnio, estrelas, medalhas, dinheiro, ovo, corações, festa) e os do menu (menu:<id>).
+/* dados: desenhos dos ícones de prêmios e magia (unicórnio, estrelas, medalhas, dinheiro, ovo, corações, festa) e os do menu (menu:<id>; menu:album é o botão do álbum no HUD).
    Formato em js/arte/icones/icones.js (que cria window.ICONES). */
 Object.assign(window.ICONES, {
   "🦄": { n: "unicórnio", p: { k: '#3a2446', w: '#ffffff', g: '#e8dcf5', s: '#c9b3e6', y: '#ffe066', o: '#f0a04a', r: '#ff7eb6', p: '#b58cff', b: '#5fb4ff', e: '#2a1838', c: '#ffb3d9', n: '#b88ab8' }, d: [
@@ -684,5 +684,23 @@ Object.assign(window.ICONES, {
     '...kPkPPPPkPk...',
     '....kkPPPPkk....',
     '......kkkk......',
+  ] },
+  "menu:album": { n: "álbum de fotos", p: { k: '#3a2446', r: '#ff9cc6', R: '#e070a8', w: '#fff8ee', s: '#a8d8ff', y: '#ffe066', g: '#6fdc8c', G: '#3aa860', l: '#ffc4e0' }, d: [
+    '................',
+    '.kkkkkkkkkkkkkk.',
+    'klrrrrrrrrrrrrRk',
+    'krkkkkkkkkkkkrRk',
+    'krkwwwwwwwwwkrRk',
+    'krkwssssssswkrRk',
+    'krkwsssssyywkrRk',
+    'krkwsssssyywkrRk',
+    'krkwssgsssswkrRk',
+    'krkwsgggssgwkrRk',
+    'krkwgggggggwkrRk',
+    'krkwGGGGGGGwkrRk',
+    'krkwwwwwwwwwkrRk',
+    'krkkkkkkkkkkkrRk',
+    'kRRRRRRRRRRRRRRk',
+    '.kkkkkkkkkkkkkk.',
   ] },
 });

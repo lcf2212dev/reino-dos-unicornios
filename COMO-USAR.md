@@ -208,11 +208,16 @@
 - São fotos do **jogo**, não da câmera: o aparelho nunca pede para usar a câmera.
 - Ao tocar: um flash branco, um clique, e a foto sai só com o cenário (sem os botões do topo e do menu), numa moldura cor-de-rosa com o nome do lugar e a data. O tamanho máximo é 1600 pixels no lado maior (PNG).
 - Na prévia "Que foto linda!": **Guardar no álbum**, **Salvar no aparelho** (baixa um arquivo `reino-<lugar>-<data>.png`) ou **Apagar**.
-- **Álbum:** abre pela prévia ou **segurando** o botão 📷. Mostra as fotos em grade; tocar numa abre grande, com setas, salvar e apagar (o apagar pergunta antes).
+- **Álbum:** o botão com um quadrinho, logo ao lado do 📷 no topo, abre o álbum com um toque (também abre pela prévia ou **segurando** o 📷). Vazio, ele diz "O álbum ainda está vazio. Vamos tirar uma foto?". Mostra as fotos em grade; tocar numa abre grande, com setas, compartilhar, salvar e apagar (o apagar pergunta antes).
+  - **Compartilhar** (livre, sem PIN): abre o compartilhar do celular ou tablet (WhatsApp, e-mail...) com a foto. Só aparece onde o navegador sabe mandar arquivo; no notebook normalmente não aparece e fica o "Salvar no aparelho". Se ela desistir, nada acontece.
+  - **Onde cada jeito funciona:**
+    - **No claude.ai** (onde ela joga): lá o "Compartilhar" e o "Salvar no aparelho" não funcionam e ficam escondidos. Ela **segura o dedo na foto** (celular/tablet) e escolhe "Compartilhar imagem" ou "Baixar imagem"; no notebook, **botão direito** na foto → "Salvar imagem como". Embaixo da foto aparece a dica "Segure a foto para compartilhar ou salvar." (ou "Clique com o botão direito na foto para salvar.").
+    - **No servidor de casa** (`reinodosunicornios.local`): "Salvar no aparelho" funciona, e segurar a foto também. O "Compartilhar" não aparece (o navegador só compartilha em página https).
+    - O **Compartilhar** só aparece em página https fora do claude.ai, num aparelho que compartilha arquivo.
   - Guarda até **40 fotos**. Cheio, o jogo avisa e pede para apagar uma antes de guardar outra.
   - O álbum fica **só naquele aparelho** (no próprio navegador). Não vai para o progresso, nem para o computador de casa, nem para o claude.ai. Outro aparelho tem o seu próprio álbum, e limpar os dados do navegador apaga o álbum dele.
   - Se o navegador não deixar guardar (modo anônimo, por exemplo), ainda dá para salvar a foto no aparelho, e o jogo avisa com carinho.
-- O menu de baixo não ganhou um botão de álbum porque não cabia no celular.
+- O botão do álbum fica no topo, e não no menu de baixo, porque um 5º botão no menu não cabia no celular.
 
 ## Música
 - **Ligar e desligar:** ⚙️ Ajustes → "🎵 Musiquinha". Começa desligada. Desligar o "Som" (os efeitos) não desliga a música, e vice-versa.

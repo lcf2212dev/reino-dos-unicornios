@@ -20,6 +20,9 @@
   filter: drop-shadow(0 5px 0 rgba(58, 36, 70, 0.3));
   -webkit-user-select: none; user-select: none; -webkit-touch-callout: none;
 }
+/* na prévia e na foto grande, segurar a foto (ou o botão direito) abre o menu do navegador: compartilhar/salvar */
+.tela-fotos-previa .fotos-img, .tela-fotos-ver .fotos-img { -webkit-touch-callout: default; }
+.fotos-dica { color: var(--tinta-suave); }
 .tela-fotos-previa .fotos-img { max-height: calc(100vh - 380px); max-height: calc(100dvh - 380px); min-height: 120px; object-fit: contain; }
 .tela-fotos-ver .fotos-img { max-height: calc(100vh - 330px); max-height: calc(100dvh - 330px); min-height: 120px; object-fit: contain; }
 
@@ -84,3 +87,6 @@ body.sem-animacao .fotos-mini, body.sem-animacao .fotos-mini:active { transition
 @media (prefers-reduced-motion: reduce) {
   .fotos-mini, .fotos-mini:active { transition: none; transform: none; }
 }
+
+/* foto grande com o Compartilhar (um botão a mais): a foto encolhe para os três caberem */
+.tela-fotos-ver .com-compartilhar .fotos-img { max-height: calc(100vh - 400px); max-height: calc(100dvh - 400px); }

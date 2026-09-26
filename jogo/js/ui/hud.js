@@ -1,5 +1,5 @@
-/* HUD: chips de cima (dinheiro, estrelas, ovos, montaria), dock do menu, tela cheia e o botão
-   das fotos (Reino.Fotos). */
+/* HUD: chips de cima (dinheiro, estrelas, ovos, montaria), dock do menu, tela cheia e os botões
+   das fotos (Reino.Fotos): 📷 e o álbum. */
 (function () {
   var U = Reino.util, el = U.el, P = Reino.Progresso;
   var EV = Reino.EVENTOS;
@@ -43,13 +43,15 @@
     try { return !!(F && (typeof F.podeTirar !== 'function' || F.podeTirar())); } catch (e) { return false; }
   }
   function pintarBotaoFoto() {
-    var b = U.$('#hud .btn-foto');
-    if (!b) return;
-    b.hidden = !fotos();
     var pode = podeFotografar();
-    if (b.classList.contains('desligado') === !pode) return;
-    b.classList.toggle('desligado', !pode);
-    b.setAttribute('aria-disabled', String(!pode));
+    ['#hud .btn-foto', '#hud .btn-album'].forEach(function (sel) {
+      var b = U.$(sel);
+      if (!b) return;
+      b.hidden = !fotos();
+      if (b.classList.contains('desligado') === !pode) return;
+      b.classList.toggle('desligado', !pode);
+      b.setAttribute('aria-disabled', String(!pode));
+    });
   }
   UI.pintarBotaoFoto = pintarBotaoFoto;
   [EV.CENA, EV.TELAS, EV.OCUPADA, EV.TRANSICAO].forEach(function (ev) { U.on(ev, function () { pintarBotaoFoto(); }); });
@@ -91,6 +93,20 @@
     });
     return b;
   }
+  // o álbum à vista (um toque): o mesmo apagado do 📷; segurar o 📷 continua abrindo também
+  function botaoAlbum() {
+    var b = el('button.btn-tela-cheia.btn-album', { type: 'button', 'aria-label': 'Álbum de fotos', 'aria-disabled': 'false', title: 'Álbum de fotos' });
+    b.appendChild(PA.paraDOM(PA.iconeMenu('album'), 2, 'hud-icone'));
+    b.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') e.stopPropagation(); });
+    b.addEventListener('click', function () {
+      var F = fotos();
+      pintarBotaoFoto();
+      if (!F || UI.temTela() || !podeFotografar() || typeof F.abrirAlbum !== 'function') return;
+      Reino.Som.tocar('toque');
+      F.abrirAlbum();
+    });
+    return b;
+  }
 
   /* ---------- HUD ---------- */
   UI.montarHUD = function () {
@@ -102,9 +118,9 @@
     var montaria = el('button.chip-montaria', { type: 'button', 'aria-label': 'Estábulo' });
     var telaCheia = el('button.btn-tela-cheia', { type: 'button', hidden: !UI.telaCheiaDisponivel() });
     telaCheia.addEventListener('click', function () { Reino.Som.tocar('toque'); UI.telaCheia(); });
-    // tela cheia e câmera juntos (no celular, um embaixo do outro, ao lado do chip da montaria)
-    var foto = botaoFoto();
-    hud.appendChild(el('div.hud-topo', el('div.hud-esq', dinheiro, estrelas, ovos), el('div.hud-dir', el('div.hud-botoes', telaCheia, foto), montaria)));
+    // tela cheia, câmera e álbum juntos (no celular, um embaixo do outro, ao lado do chip da montaria)
+    var foto = botaoFoto(), album = botaoAlbum();
+    hud.appendChild(el('div.hud-topo', el('div.hud-esq', dinheiro, estrelas, ovos), el('div.hud-dir', el('div.hud-botoes', telaCheia, foto, album), montaria)));
     function botaoDock(acao, icone, linhas, aria) {
       var rot = el('small.dock-rotulo');
       linhas.forEach(function (l, i) {
