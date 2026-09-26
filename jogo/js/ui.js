@@ -1511,7 +1511,12 @@
   /* ---------- ajustes ---------- */
   UI.telaAjustes = function () {
     var pn = painel('ajustes', '⚙️ Ajustes');
-    var a = est().ajustes;
+    var a = est().ajustes;   // só para desenhar os interruptores ao abrir
+    // cada toque lê e grava nos ajustes do estado de AGORA: com a tela aberta, o progresso pode ser
+    // recarregado ou mesclado (a aba volta do fundo, outro aparelho) e o objeto de antes fica solto.
+    // O valor novo é o contrário do que o interruptor mostra (o que ela viu é o que ela quis mudar)
+    function atuais() { return est().ajustes; }
+    function ligado(b) { return b.getAttribute('aria-checked') === 'true'; }
     // no 1º segundo depois de abrir, um toque (o dedo ainda batendo no menu) não muda nenhum
     // interruptor: ficava gravado ("Letras grandes" ligava sozinho no tablet)
     var abriuAjustes = performance.now();
@@ -1523,7 +1528,8 @@
     function interruptor(chave, rotulo, desc, depois) {
       var b = el('button.interruptor', { type: 'button', role: 'switch', 'aria-checked': String(!!a[chave]) }, el('span.interruptor-texto', el('b', rotulo), el('small', desc)), el('span.interruptor-bola'));
       b.addEventListener('click', function () {
-        a[chave] = !a[chave]; b.setAttribute('aria-checked', String(!!a[chave])); P.salvar(); Reino.Som.tocar('toque'); if (depois) depois(a[chave]);
+        var v = !ligado(b), aj = atuais();
+        aj[chave] = v; b.setAttribute('aria-checked', String(v)); P.salvar(); Reino.Som.tocar('toque'); if (depois) depois(v);
       });
       return b;
     }
@@ -1535,7 +1541,7 @@
     c.appendChild(interruptor('setas', '🕹️ Setas na tela', 'Botões de seta para andar pelo reino.', function () { U.emit('setas'); }));
     c.appendChild(interruptor('surpresa', '❓ Perguntas surpresa', 'De vez em quando, uma pergunta valendo ' + ((Reino.config.surpresa && Reino.config.surpresa.estrelas) || 2) + ' estrelas.'));
     var tam = el('button.interruptor', { type: 'button', role: 'switch', 'aria-checked': String(a.texto > 1) }, el('span.interruptor-texto', el('b', '🔠 Letras grandes'), el('small', 'Deixa os textos maiores.')), el('span.interruptor-bola'));
-    tam.addEventListener('click', function () { a.texto = a.texto > 1 ? 1 : 1.15; tam.setAttribute('aria-checked', String(a.texto > 1)); UI.aplicarAjustes(); P.salvar(); });
+    tam.addEventListener('click', function () { var v = !ligado(tam); atuais().texto = v ? 1.15 : 1; tam.setAttribute('aria-checked', String(v)); UI.aplicarAjustes(); P.salvar(); });
     c.appendChild(tam);
     var pers = el('button.btn-grande.btn-secundario', { type: 'button' }, '👧 Mudar minha personagem');
     pers.addEventListener('click', function () { UI.fecharTela(pn.tela); UI.telaAparencia().then(function () { U.emit('mapaMudou'); }); });

@@ -41,6 +41,22 @@
   }
   // 💧/🍎/🛁 do unicórnio da baia quando a sede, a fome ou o banho está baixo (Reino.Cuidados.icone, nessa
   // prioridade; ausente nas ferramentas)
+  // última coluna e última linha com desenho de um ícone (os ícones têm margem transparente diferente)
+  var caixas = typeof WeakMap === 'function' ? new WeakMap() : null;
+  function caixaVisivel(img) {
+    var c = caixas && caixas.get(img);
+    if (c) return c;
+    c = { dir: img.width - 1, baixo: img.height - 1 };
+    try {
+      var d = img.getContext('2d').getImageData(0, 0, img.width, img.height).data, dir = -1, baixo = -1;
+      for (var y = 0; y < img.height; y++) for (var x = 0; x < img.width; x++) {
+        if (d[(y * img.width + x) * 4 + 3] > 0) { if (x > dir) dir = x; if (y > baixo) baixo = y; }
+      }
+      if (dir >= 0) c = { dir: dir, baixo: baixo };
+    } catch (e) {}
+    if (caixas) caixas.set(img, c);
+    return c;
+  }
   function iconeCuidado(id) {
     try { return (R.Cuidados && R.Cuidados.icone) ? R.Cuidados.icone(id) : null; } catch (e) { return null; }
   }
@@ -89,10 +105,15 @@
       ret(ctx, px + 1, py + 26, 30, 2, K); ret(ctx, px + 2, py + 26, 28, 1, C.madeiraClara);
       ret(ctx, px + 1, py + 30, 30, 2, K);
       for (var x = px + 4; x < px + 30; x += 6) ret(ctx, x, py + 26, 2, 6, K);
-      // fome ou sede baixa: o ícone (1 px = 1 px do jogo, nítido) no canto de cima da baia
+      // sede, fome ou banho baixo: o ícone (1 px = 1 px do jogo, nítido) no canto de cima da baia, com a
+      // parte desenhada terminando logo acima da plaquinha (py + 3) e encostada na parede da direita:
+      // a banheira (16 px de largura) cobria metade da plaquinha quando ficava no mesmo nível
       var ic = d ? iconeCuidado(d.id) : null, img = ic && window.PA && PA.iconeDesenho ? PA.iconeDesenho(ic) : null;
       img = img && (img.canvas || img);
-      if (img) ctx.drawImage(img, px + 32 - img.width, py - 2);
+      if (img) {
+        var vis = caixaVisivel(img);
+        ctx.drawImage(img, px + 31 - vis.dir, py + 2 - vis.baixo);
+      }
     } });
   // ninho de palha com os ovos que ainda não chocaram
   I.objeto('estabulo-ninho', { w: 2, h: 1, topo: 8, solido: true,
