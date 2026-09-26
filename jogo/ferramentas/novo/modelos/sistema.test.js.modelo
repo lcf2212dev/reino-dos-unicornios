@@ -1,0 +1,20 @@
+// Testes de unidade: o sistema {{id}} (js/sistemas/{{id}}.js), carregado com o jogo no vm (todos os `node: true`).
+// Esqueleto do `npm run novo`: acrescente os testes das regras. Modelo: unidade/modulos.test.js.
+// Rodar: node --test jogo/ferramentas/testes/unidade/{{id}}.test.js   (tudo: npm test)
+const { test } = require('node:test');
+const assert = require('assert');
+const Jogo = require('../../jogo-no-node');
+
+function carregar() {
+  const ctx = Jogo.contexto({ console, Math, Date });
+  Jogo.carregar(ctx, Jogo.ordemDosPredios(Jogo.scripts()));
+  return ctx.Reino;
+}
+
+test('{{id}}: o módulo se registra e o depurar responde', () => {
+  const R = carregar();
+  const m = R.modulo('{{id}}');
+  assert.ok(m, 'módulo {{id}} não registrado');
+  assert.strictEqual(typeof m.depurar(), 'object');
+  assert.ok(Array.isArray(m.falas()));
+});

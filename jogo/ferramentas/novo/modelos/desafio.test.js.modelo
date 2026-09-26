@@ -1,0 +1,29 @@
+// Testes de unidade: o tipo de desafio {{tipo}} (js/atividades/desafios/{{tipo}}.js). Modelo: desafio-tipo.test.js.
+// Esqueleto do `npm run novo`: acrescente os casos do tipo de verdade.
+// Rodar: node --test jogo/ferramentas/testes/unidade/desafio-{{tipo}}.test.js   (tudo: npm test)
+const { test } = require('node:test');
+const assert = require('assert');
+const Jogo = require('../../jogo-no-node');
+
+const ctx = Jogo.contexto({ console, Math, Date, JSON });
+Jogo.carregar(ctx, Jogo.scripts({ nomes: ['nucleo/config', 'nucleo/registros', 'nucleo/util', 'nucleo/eventos', 'sistemas/falas'], grupos: ['atividades'] }));
+const R = ctx.Reino, D = R.Desafios;
+// um desafio de exemplo no formato do cabeçalho do tipo
+const d = { id: 'x-01', tipo: '{{tipo}}', livro: 'x', pergunta: 'Qual é a certa?', explica: 'A primeira é a certa.',
+  opcoes: [{ t: 'Certa' }, { t: 'Errada' }], certa: 0 };
+
+test('{{tipo}}: registrado, pontuação certa e errada, textos da correção', () => {
+  assert.ok(R.tiposDesafio['{{tipo}}']);
+  assert.deepStrictEqual([0, 1, null].map((v) => D.pontuar(d, v)), [1, 0, 0]);
+  assert.strictEqual(D.respostaCertaTexto(d), 'Certa');
+  assert.strictEqual(D.respostaTexto(d, 1), 'Errada');
+});
+
+test('{{tipo}}: o validador aceita o exemplo e recusa sem opções', () => {
+  const erros = [];
+  const v = { checar: (c, m) => { if (!c) erros.push(m); }, avisar() {}, naProva: false, icones: {}, textoOk: (t) => typeof t === 'string' && t.trim().length > 0 };
+  R.tiposDesafio['{{tipo}}'].validar(d, v);
+  assert.deepStrictEqual(erros, []);
+  R.tiposDesafio['{{tipo}}'].validar(Object.assign({}, d, { opcoes: [] }), v);
+  assert.ok(erros.length > 0);
+});

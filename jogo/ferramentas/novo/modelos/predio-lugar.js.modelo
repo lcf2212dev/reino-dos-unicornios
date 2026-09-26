@@ -1,0 +1,13 @@
+/* {{nome}}, parte 5: o lugar no mapa (Reino.registrarLugar, docs/contratos/interiores.md §9.7).
+   rect em tiles (a porta fica no meio da última fileira); caminho = tiles da rua até a frente da porta.
+   Sem caminho o lugar é recusado; confira com node jogo/ferramentas/validar/validar-interiores.js. */
+Reino.registrarLugar({
+  id: '{{id}}', nome: '{{nome}}', sprite: '{{id}}', placa: 'acima',
+  rect: {{rect}},{{comentarioRect}}
+  caminho: {{caminho}},
+  menu: {
+    emoji: '{{emoji}}',
+    // a linha de baixo no menu Lugares
+    info: function () { return '(preencher) o que tem aqui'; },
+  },
+});

@@ -1,0 +1,30 @@
+/* {{nome}} ({{id}}): mecânica nova, registrada como módulo (Reino.registrarModulo, js/nucleo/modulos.js).
+   Contrato: docs/contratos/cena-e-motor.md §14; receita: docs/receitas/sistema-novo.md.
+   node: true: só dados, regras e registros; nada de DOM, PA, Reino.Progresso nem Reino.Cena no carregamento
+   (só dentro das funções). Esqueleto do `npm run novo`: troque cada marcador de preencher (o validador recusa o marcador). */
+(function () {
+  var R = window.Reino;
+  // o que as partes do sistema dividem ({{id}}-desenho.js, painéis…)
+  var S = R._{{nomeJs}} = { iniciado: false };
+
+  /* ================= FALAS ================= */
+  // todo texto que o sistema fala (texto exato: é por ele que a voz é achada; npm run vozes)
+  var FALAS = {
+    oi: '(preencher) uma fala curtinha',
+  };
+{{campo}}
+  /* ================= REGRAS ================= */
+  // (preencher: as regras do sistema; em funções, chamadas pelos ganchos ou pela Mariana)
+  R.{{Nome}} = {
+    falas: FALAS,
+  };
+
+  R.registrarModulo({
+    id: '{{id}}',
+    // ao entrar no Reino, antes das boas-vindas (ctx.novo = save novo)
+    iniciar: function () { S.iniciado = true; },
+    falas: function () { return Object.keys(FALAS).map(function (k) { return { texto: FALAS[k] }; }); },
+    // o estado para os testes e para __reino.modulo('{{id}}')
+    depurar: function () { return { iniciado: S.iniciado{{depurarCampo}} }; },{{camada}}
+  });
+})();

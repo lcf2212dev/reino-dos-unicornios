@@ -1,0 +1,92 @@
+/* {{nome}}, parte 3: o layout e o registro do interior (um cômodo de 11×11, esqueleto do `npm run novo`).
+   Já passa no validador ("rico", alcançável, saída e spawn): mexa aos poucos e rode
+   node jogo/ferramentas/validar/validar-interiores.js. Formato: docs/contratos/interiores.md §3.
+   As falas moram em {{id}}/falas.js; os objetos próprios em {{id}}/objetos.js; o de fora em {{id}}/fora.js. */
+(function () {
+  var R = window.Reino;
+  var I = R.Interiores;
+  var F = (R.FALAS_INTERIORES && R.FALAS_INTERIORES['{{id}}']) || { npcs: {}, objetos: {} };
+  var S = R._predios['{{id}}'];
+  var ELENCO = (R.NPCs && R.NPCs.ELENCO) || {};
+  // objeto que se toca: nome e as falas de F.objetos[chave]
+  function inter(chave, nome, o) {
+    return Object.assign(o, { chave: chave, nome: nome, fala: F.objetos[chave] || '(fala de ' + chave + ')' });
+  }
+
+  /** NPC do interior com sprite e voz do elenco (Reino.registrarPersonagem, {{id}}/personagens.js).
+      @param {string} id @param {number} x @param {number} y @param {AcaoNpc} acao @returns {Npc} */
+  function npc(id, x, y, acao) {
+    /** @type {Partial<PersonagemElenco>} */
+    var e = ELENCO[id] || {};
+    return { id: id, nome: e.nome || id, sprite: e.sprite ? Object.assign({ base: 'pessoa' }, e.sprite) : { base: 'pessoa' },
+      voz: e.voz || 'npc-' + id, x: x, y: y, acao: acao, falas: F.npcs[id] || {} };
+  }
+  // chão livre perto da entrada para quem chega por `npm run novo -- personagem` sem x/y (do 2º em diante, nesta ordem)
+  var VAGAS = [{ x: 3, y: 7 }, { x: 10, y: 8 }, { x: 2, y: 7 }];
+  var GUIA = { tipo: 'guia', lugar: '{{id}}' };
+
+  /* ================= LAYOUT ================= */
+  // cruz livre no meio (corredores) e os cantos cheios; a Mariana entra por baixo, no meio
+  var objetos = [
+    // parede do fundo (y 1-2)
+    { tipo: 'janela', x: 1, y: 1 }, { tipo: 'vitral', x: 2, y: 1 },
+    { tipo: 'estandarte', x: 3, y: 1, var: { cor: S.COR2, emblema: 'estrela' } },
+    { tipo: '{{id}}-placa', x: 4, y: 1 }, { tipo: 'arandela', x: 5, y: 1 },
+    { tipo: 'arandela', x: 7, y: 1 }, { tipo: 'relogio-parede', x: 8, y: 1 },
+    { tipo: 'estandarte', x: 9, y: 1, var: { cor: S.COR, emblema: 'coracao' } }, { tipo: 'vitral', x: 10, y: 1 }, { tipo: 'janela', x: 11, y: 1 },
+    // canto de cima à esquerda
+    { tipo: 'vaso-planta', x: 1, y: 3 }, { tipo: 'pilha-livros', x: 2, y: 3 }, { tipo: 'estante', x: 3, y: 3 },
+    inter('pedestal', '(preencher)', { tipo: 'pedestal', x: 2, y: 5 }),
+    { tipo: 'tapete', x: 1, y: 4, w: 1, h: 3, var: { cor: '#ffd0e4', borda: S.COR } }, { tipo: 'papeis', x: 4, y: 5 },
+    // canto de cima à direita
+    { tipo: 'flores', x: 8, y: 3 }, { tipo: 'globo', x: 9, y: 3 }, { tipo: 'armario', x: 10, y: 3 },
+    inter('vitrine', '(preencher)', { tipo: 'vitrine', x: 9, y: 5 }),
+    { tipo: 'planta-alta', x: 11, y: 6 }, { tipo: 'almofada', x: 8, y: 5, var: { cor: '#e9dcff' } },
+    // embaixo à esquerda
+    inter('bebedouro', 'Bebedouro', { tipo: 'bebedouro', x: 1, y: 9 }),
+    { tipo: 'tapete-listrado', x: 2, y: 9, w: 3, h: 1, var: { cores: [S.COR2, '#fff8ee', S.COR, '#fff8ee'] } },
+    { tipo: 'banco', x: 1, y: 11 }, { tipo: 'luminaria-pe', x: 4, y: 11 }, { tipo: 'cesto', x: 3, y: 11 },
+    { tipo: 'vaso-grande', x: 3, y: 10 },
+    // embaixo à direita (quem recebe fica em 8,9)
+    { tipo: 'sofa', x: 9, y: 11 }, { tipo: 'cabideiro', x: 11, y: 9 },
+    { tipo: 'vaso-planta', x: 11, y: 10 }, { tipo: 'relogio-pe', x: 11, y: 11 }, { tipo: 'tapete-redondo', x: 9, y: 9, w: 2, h: 1 },
+  ];
+
+  // os personagens registrados com predio: '{{id}}' (npm run novo -- personagem … --predio {{id}}), sem editar
+  // este layout. O 1º sem x/y toma o lugar e a ação do guia; enquanto não há nenhum, fica o guia de marcador.
+  var REG = R.personagensDoPredio ? R.personagensDoPredio('{{id}}') : [];
+  var npcs = REG.map(function (p, i) {
+    var v = i === 0 ? { x: 8, y: 9 } : VAGAS[(i - 1) % VAGAS.length];
+    return npc(p.id, p.x != null ? p.x : v.x, p.y != null ? p.y : v.y, p.acao || GUIA);
+  });
+  if (!npcs.length) {
+    // guia de marcador: some sozinho com o 1º personagem (docs/receitas/personagem-novo.md). O marcador é montado
+    // aqui (não literal) para não sobrar no arquivo depois; enquanto o guia aparece, o validador o acusa
+    var M = '(' + 'preencher)';
+    npcs.push({ id: '{{id}}-guia', nome: M, voz: 'npc-padrao-guia',
+      sprite: { base: 'pessoa', pele: '#f1c7a5', cabelo: '#5a3825', penteado: 'rabo', roupa: S.COR, roupa2: '#5a4a8a', cor2: S.COR2, perna: 'saia' },
+      x: 8, y: 9, acao: GUIA, falas: { oi: [M + ' quem é você?', M + ' o que tem aqui?'], depois: [M + ' uma fala curtinha.'] } });
+  }
+
+  Reino.registrarInterior({
+    id: '{{id}}',
+    lugar: '{{id}}',
+    nome: '{{nome}}',
+    entrada: true,
+    pacote: 'interior-{{id}}',
+    tamanho: { w: 13, h: 13 },
+    saida: { x: 6, y: 11 },
+    spawn: { x: 6, y: 10 },
+    comodos: [
+      { id: 'salao', nome: '{{nome}}', placa: '{{nome}}', rect: { x: 1, y: 1, w: 11, h: 11 },
+        piso: 'taco', parede: 'papel',
+        paleta: { piso: '#f3cfa0', piso2: '#dcae78', parede: S.PAREDE, parede2: '#e9dcff', rodape: S.COR, detalhe: S.COR2 } },
+    ],
+    corredores: [
+      { x: 1, y: 7, w: 11, h: 2 },     // faixa do meio
+      { x: 5, y: 3, w: 3, h: 9 },      // da porta até o fundo
+    ],
+    objetos: objetos,
+    npcs: npcs,
+  });
+})();

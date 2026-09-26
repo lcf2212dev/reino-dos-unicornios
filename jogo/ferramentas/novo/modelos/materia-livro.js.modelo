@@ -1,0 +1,6 @@
+/* {{nome}}: o livro da matéria (resumos para ler antes ou quando errar). Uma carta por sala para começar
+   (o id é o da sala; os desafios apontam para ela em `livro`). Esqueleto do `npm run novo`: troque cada marcador de preencher. */
+Reino.registrarLivro('{{id}}',
+  [
+{{cartas}}
+  ]);

@@ -1,0 +1,60 @@
+/* Desafio do tipo {{tipo}}: (preencher: o que a Mariana faz e para que serve).
+   Registrado com Reino.registrarTipoDesafio (js/atividades/desafios.js; contrato docs/contratos/conteudo.md §3.7).
+   Esqueleto do `npm run novo`: por enquanto a tela é igual à do escolha (botões de opção); troque o `montar`.
+   Formato do desafio (numa sala ou prova):
+     { id, tipo: '{{tipo}}', livro, explica,
+       pergunta: 'o enunciado',
+       opcoes: [{ e: '🍎', t: 'texto da opção' }, …],   // (preencher: os campos que este tipo usa)
+       certa: 0 }                                        // índice da opção certa
+   node: true: DOM só dentro do montar (o validador e as falas rodam no Node). */
+(function () {
+  var U = Reino.util, el = U.el, _d = Reino._desafios;
+
+  // a tela: devolve o controle { el, valor, pronto, conferir, marcarErro, marcarCerto, revelar }
+  // (troque os botões pelo controle do tipo; estilo em css/ui-desafios.css)
+  function montar(d, opts) {
+    var ordem = opts.ordem || U.embaralhar(d.opcoes.map(function (_, i) { return i; }));
+    var sel = opts.valorInicial != null ? opts.valorInicial : null;
+    var lista = el('div.opcoes'), botoes = {};
+    ordem.forEach(function (i) {
+      var b = _d.botaoOpcao(d.opcoes[i]);
+      b.addEventListener('click', function () {
+        if (ctrl.travado || b.disabled) return;
+        sel = i; Reino.Som.tocar('selecionar'); pintar(); opts.onMudar();
+      });
+      botoes[i] = b; lista.appendChild(b);
+    });
+    function pintar() { Object.keys(botoes).forEach(function (k) { botoes[k].setAttribute('aria-pressed', String(+k === sel)); }); }
+    pintar();
+    var ctrl = {
+      el: lista, ordem: ordem,
+      valor: function () { return sel; },
+      pronto: function () { return sel !== null; },
+      conferir: function () { return { ok: sel === d.certa }; },
+      marcarErro: function () { if (sel === null) return; botoes[sel].classList.add('errada'); botoes[sel].disabled = true; sel = null; pintar(); },
+      marcarCerto: function () { botoes[d.certa].classList.add('certa'); },
+      revelar: function () { botoes[d.certa].classList.add('certa'); if (sel !== null && sel !== d.certa) botoes[sel].classList.add('errada'); },
+    };
+    return ctrl;
+  }
+
+  Reino.registrarTipoDesafio('{{tipo}}', {
+    montar: montar,{{flags}}
+    // exemplos para os testes (desafios-pontuacao.test.js percorre todos os tipos): um desafio sintético, a resposta
+    // certa de qualquer desafio e respostas estranhas (nenhuma quebra nem sai de 0..1). Troque junto com o formato.
+    exemplos: { desafio: { id: 'x', tipo: '{{tipo}}', opcoes: [{ t: 'a' }, { t: 'b' }, { t: 'c' }], certa: 1 },
+      certa: function (d) { return d.certa; }, estranhos: [-1, 99, '0', true, null] },
+    // 0 a 1 (meio ponto vale, se o tipo tiver partes)
+    pontuar: function (d, valor) { return valor === d.certa ? 1 : 0; },
+    // textos da correção: a resposta certa e a que ela deu
+    textoCerto: function (d) { return d.opcoes[d.certa].t; },
+    textoResposta: function (d, valor) { return d.opcoes[valor].t; },
+    // 🔊: depois da pergunta, as opções na ordem da tela
+    falas: function (d, todos, segs) { todos(d.opcoes).forEach(function (i) { segs.push(d.opcoes[i].t); }); return segs; },
+    // validador (Node): os campos do formato acima
+    validar: function (d, v) {
+      v.checar(Array.isArray(d.opcoes) && d.opcoes.length >= 2 && d.opcoes.every(function (o) { return o && v.textoOk(o.t); }), d.id + ': {{tipo}} precisa de 2+ opções com texto');
+      v.checar(Array.isArray(d.opcoes) && Number.isInteger(d.certa) && d.certa >= 0 && d.certa < d.opcoes.length, d.id + ': {{tipo}} com índice certo inválido');
+    },
+  });
+})();

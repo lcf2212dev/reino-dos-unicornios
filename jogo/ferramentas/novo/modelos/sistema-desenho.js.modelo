@@ -1,0 +1,8 @@
+/* {{nome}} ({{id}}), parte de desenho: o que usa canvas ou PA (sem node: true no manifesto).
+   Divide o estado com {{id}}.js em Reino._{{nomeJs}}. Nada de canvas novo por quadro; animação só com `animar`. */
+(function () {
+  var R = window.Reino;
+  var S = R._{{nomeJs}};
+  // (preencher: desenhos do sistema; ex.: S.desenhar = function (ctx, px, py, t) { … })
+  S.desenhar = function () {};
+})();

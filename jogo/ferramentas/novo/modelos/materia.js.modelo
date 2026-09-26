@@ -1,0 +1,27 @@
+/* {{NOME}} — (preencher: série, apostila, capítulos e páginas).
+   Salas em {{arquivosSalas}} e o livro em livro.js (carregados antes deste arquivo, na ordem do
+   manifesto; ver conteudo/materias/registro.js). Esqueleto do `npm run novo`: troque cada marcador de preencher. */
+Reino.registrarMateria({
+  id: '{{id}}',
+  nome: '{{nome}}',
+  emoji: '{{emoji}}',
+  nomeLivro: 'Livro de {{nome}}',
+  lugar: {
+    nome: '(preencher) nome do prédio',
+    sprite: 'torre',   // desenho de fora (Mapa.PREDIOS); um próprio: npm run novo -- predio …
+    rect: {{rect}},{{comentarioRect}}
+    placa: 'acima',
+    porCima: true,     // entra depois do sorteio dos enfeites: o resto do reino fica igual (js/mundo/mapa.js)
+    cores: { parede: '#fff6e4', telhado: '#9b6bd6', detalhe: '#ff8ac4' },
+  },
+  guia: '(preencher) a fala do guia',
+
+  salas: Reino.salasDa('{{id}}'),         // {{arquivosSalas}}, na ordem do manifesto
+
+  livro: Reino.livroDa('{{id}}'),         // livro.js
+
+  /* Unicórnios: 1 comum e 1 raro por sala, 2 épicos e o lendário. */
+  unicornios: [
+{{unicornios}}
+  ],
+});
