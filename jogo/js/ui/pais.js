@@ -18,7 +18,7 @@
     var digitado = '';
     var visor = el('div.pin-visor', '• • • •');
     var teclado = el('div.pin-teclado');
-    c.appendChild(el('p', 'Digite o PIN dos pais (definido em js/config.js).'));
+    c.appendChild(el('p', 'Digite o PIN dos pais (definido em js/nucleo/config.js).'));
     c.appendChild(visor);
     ['1', '2', '3', '4', '5', '6', '7', '8', '9', '⌫', '0', 'OK'].forEach(function (k) {
       var b = el('button.pin-tecla', { type: 'button' }, k);
