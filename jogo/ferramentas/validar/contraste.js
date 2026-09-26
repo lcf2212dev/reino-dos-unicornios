@@ -6,7 +6,7 @@ const MINIMO = 2.9;          // mediana da razão de contraste dos pixels do pis
 const CONTORNO = '#3a2446';  // Reino.Desenho.K
 
 const EXCECOES = {
-  'observatorio:planetario': 'chão clareado aprovado pelo pai (interiores.md §9.4)',
+  'observatorio:planetario': 'chão clareado aprovado pelo pai (interiores.md §6.7)',
   // medidas em 2026-09-26 (mediana 2,90 arredondada e 2,87)
   'torre-2:andar': 'aceito pelo Leandro em 2026-09-26',
   'observatorio:cupula': 'aceito pelo Leandro em 2026-09-26',

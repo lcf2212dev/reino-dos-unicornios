@@ -10,7 +10,7 @@ Personagem novo ou perfil de voz trocado: ANTES, a skill `validar-vozes` (checag
 o Leandro aprovar). Depois de gravar, ela também explica o resultado da conferência.
 
 - As vozes são achadas pelo TEXTO EXATO: mudou uma vírgula, grava de novo.
-- Falas de personagem até 30 letras por página; frases de 3 palavras ou mais; inglês entre «».
+- Como escrever (tamanho do balão, frases, inglês entre «»): `docs/receitas/licoes-de-voz.md`.
 - Gravação e conferência: só quem integra (o orquestrador). Quem escreve falas entrega o texto.
 - NUNCA abra `jogo/js/voz/*.js` nem `jogo/ferramentas/gerado/**` (enormes).
 
@@ -22,6 +22,12 @@ npm run vozes
 O transcritor roda pelo `.vozes/venv-whisper` (se existir), senão por `uv run --with faster-whisper`, senão o
 `npm run vozes` cria o venv em `.vozes/`. Temporários das vozes (índice de antes etc.) ficam em `.vozes/` (ignorado
 pelo git), não no /tmp; o modelo do whisper fica em `~/.cache/huggingface`.
-Para conferir sem tocar no jogo: `npm run vozes -- --saida /tmp/reino-testes/vozes/<pasta>`.
+Para conferir sem tocar no jogo: `npm run vozes -- --saida /tmp/reino-testes/vozes/<pasta>` (compara com `jogo/js/voz/`).
+Precisa de internet (edge-tts), `uv` e `ffmpeg`.
+Passos avulsos: `node jogo/ferramentas/vozes/listar-falas.js`,
+`cd jogo && uv run --with edge-tts python ferramentas/vozes/gerar-vozes.py`,
+`node jogo/ferramentas/vozes/empacotar-vozes.js`, `jogo/ferramentas/vozes/conferir-vozes.py`.
+Ler a conferência (`✘`, `?`, 2ª passada com `medium`): skill `validar-vozes`. Voz embolada: reescreva a frase
+(`licoes-de-voz.md`) ou acrescente a pronúncia em `PRONUNCIA` do `listar-falas.js`.
 
 Depois: `npm test` e `npm run e2e -- --so-dados` (a lista de falas entra nas referências).

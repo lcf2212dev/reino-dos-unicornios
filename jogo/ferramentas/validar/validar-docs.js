@@ -24,13 +24,11 @@ const arg = (n) => { const i = process.argv.indexOf(n); return i > 0 ? process.a
 const RAIZ = path.resolve(arg('--raiz') || path.join(__dirname, '..', '..', '..'));
 const DETALHES = process.argv.includes('--detalhes');
 
-// trechos históricos (caminhos de antes da refatoração): arquivo inteiro (secao: null) ou a seção cujo título casa
-// (rastreio.md: regras antigas → novas; refatoracao-plano.md: o plano com a tabela "antigo → novo";
-// contratos-consolidados.md: por que os 4 contratos antigos, com os caminhos de então, foram juntados)
+// trechos históricos (caminhos de antes da refatoração): arquivo inteiro (secao: null) ou a seção cujo título casa;
+// `arquivo` terminado em / vale para a pasta toda (docs/decisoes/historico/: o plano da refatoração, os contratos
+// consolidados e os bugs achados nela, com os caminhos de então)
 const HISTORICOS = [
-  { arquivo: 'docs/contratos/rastreio.md', secao: null },
-  { arquivo: 'docs/decisoes/refatoracao-plano.md', secao: null },
-  { arquivo: 'docs/decisoes/contratos-consolidados.md', secao: null },
+  { arquivo: 'docs/decisoes/historico/', secao: null },
 ];
 // entregues por outro construtor na mesma fase: enquanto não existem, aviso (não erro).
 // Hoje vazia: tudo o que estava aqui já existe (faltar é erro). Só para uso temporário entre construtores.
@@ -55,7 +53,7 @@ const indice = [];            // caminhos relativos à raiz, de arquivos e pasta
     if (pasta) { indice.push(r + '/'); andar(r); } else indice.push(r);
   });
 })('');
-// raízes de caminho: as fixas + as pastas de primeiro nível do disco (as de material: História/, Geografia/…)
+// raízes de caminho: as fixas + as pastas de primeiro nível do disco (ex.: matérias/, a dos prints)
 const RAIZES_FIXAS = ['./', '../', '/home/', '/tmp/', 'jogo/', 'js/', 'css/', 'docs/', 'ferramentas/', '.claude/', 'amostras-de-voz/'];
 const RAIZES_DISCO = indice.filter((p) => /^[^/]+\/$/.test(p));
 const RAIZES = RAIZES_FIXAS.concat(RAIZES_DISCO.filter((p) => !RAIZES_FIXAS.includes(p)));
@@ -132,7 +130,7 @@ function conferirArquivo(rel) {
   const texto = fs.readFileSync(path.join(RAIZ, rel), 'utf8');
   const problemas = [];
   if (texto.includes('<!-- validar-docs: ignorar-arquivo -->')) return { problemas, refs: 0 };
-  const hist = HISTORICOS.filter((h) => h.arquivo === rel);
+  const hist = HISTORICOS.filter((h) => h.arquivo === rel || (h.arquivo.endsWith('/') && rel.startsWith(h.arquivo)));
   if (hist.some((h) => h.secao === null)) return { problemas, refs: 0 };
   const docDir = path.dirname(rel);
   let ignorando = false, cerca = false, secaoHist = false, nivelHist = 0, refs = 0;

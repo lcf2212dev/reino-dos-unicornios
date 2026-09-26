@@ -4,7 +4,7 @@
 //      node ferramentas/tamanho.js --raiz <pasta jogo>   (confere outra cópia do jogo; usado pelos testes)
 // Sai com código 1 e lista os arquivos que passam do limite. Só olha js/, css/, ferramentas/ e o index.html
 // (nunca entra em servidor/: o banco da Mariana mora em servidor/dados/).
-// Arquivo grande demais: divida por responsabilidade (ver docs/decisoes/refatoracao-plano.md). Exceção só
+// Arquivo grande demais: divida por responsabilidade (ver docs/decisoes/divisao-em-arquivos.md). Exceção só
 // com motivo, na lista EXCECOES abaixo, e temporária.
 const fs = require('fs');
 const path = require('path');
@@ -112,7 +112,7 @@ if (require.main === module) {
   if (r.passam.length) {
     console.log(`✘ ${r.passam.length} arquivo(s) acima do limite (código ${LIMITE.codigo}, dados ${LIMITE.dados}, tipos ${LIMITE.tipos} linhas):`);
     r.passam.sort((a, b) => b.linhas - a.linhas).forEach((t) => console.log(`  ${t.rel}: ${t.linhas} linhas (${t.tipo}, limite ${t.limite})`));
-    console.log('  Divida o arquivo por responsabilidade (docs/decisoes/refatoracao-plano.md).');
+    console.log('  Divida o arquivo por responsabilidade (docs/decisoes/divisao-em-arquivos.md).');
     process.exit(1);
   }
   console.log(`✔ tamanho: ${r.todos.length - r.excecoes.length} arquivos dentro do limite${r.excecoes.length ? ` e ${r.excecoes.length} exceção(ões)` : ''} (código ${LIMITE.codigo}, dados ${LIMITE.dados}, tipos ${LIMITE.tipos} linhas; gerados fora)`);

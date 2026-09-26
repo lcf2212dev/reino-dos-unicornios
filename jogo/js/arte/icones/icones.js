@@ -5,7 +5,7 @@
    que se somam a ele na ordem do manifesto (a ordem das chaves é a de sempre: a prévia lista nela).
    Ícone novo: no lote do tema (ou no fim do último), no formato dos outros; ou, de uma feature na própria
    pasta (ex.: o 🥐 da Padaria), Reino.registrarIcones({ '🥐': { n, p, d } }) — sem editar os lotes.
-   Contrato: docs/contratos/README.md §2.5. */
+   Regra: jogo/js/CLAUDE.md (Arte). */
 window.ICONES = {};
 window.Reino = window.Reino || {};
 

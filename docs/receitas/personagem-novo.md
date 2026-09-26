@@ -33,7 +33,7 @@ de prova nova: no arquivo da prova (`prova-nova.md`).
    `perfil` vira `Reino.config.vozes['npc-<id>']`. Id repetido lança erro.
 2. Voz (`perfil`): voz, velocidade e tom diferentes dos outros do MESMO prédio. Vozes que já funcionam: as de
    `jogo/js/nucleo/config.js`. Nunca reaproveite `npc-teste-*`.
-3. Falas: frases curtas (≤ 30 letras por página, 3+ palavras: `licoes-de-voz.md`).
+3. Falas: curtas, como manda `licoes-de-voz.md`.
 4. No interior: com `predio` (e `x`, `y`, `acao`) no registro, o `<p>.js` que lê `Reino.personagensDoPredio('<p>')`
    (todo prédio do gerador) já o põe lá. Nos outros, use o ajudante do próprio prédio (ex.: `npc(id, x, y, acao)` em
    `jogo/js/interiores/petshop/petshop.js`), que lê sprite, nome e voz do elenco. Ações: `sala`, `treino`,
@@ -47,13 +47,10 @@ node jogo/ferramentas/vozes/listar-falas.js
 npm test
 ```
 
-Referências (na worktree; precisam do git): em `npm test`, o passo *referências de dados* mostra a diferença
-esperada abaixo; os outros passos têm que sair ✔. Diferenças esperadas no `npm run e2e`:
+Diferenças esperadas no `npm run e2e` (como ler e o que é defeito: `README.md`):
 - dados: `elenco`, `interiores` (o NPC no prédio), `falas`, `loja` (a `config` entra aí: o perfil de voz novo)
   e `vozes`;
 - imagens: as do interior onde o personagem mora (e a conversa com ele).
-A base do e2e só muda por commit: quem integra troca o hash em `jogo/ferramentas/testes/base-referencia.txt`
-depois do commit da mudança; não edite esse arquivo na tarefa. Qualquer diferença fora da lista acima é defeito.
 
 Conferir: `npm run ver -- --ir <lugar> --nome <id>` (fotos nos 3 tamanhos; `--js 'console.log(JSON.stringify(__reino.npcs()))'`
 mostra id, tile e status). Em script: `abrirCenario()` de `jogo/ferramentas/testes/cenario.js`.

@@ -13,7 +13,7 @@ Receitas: `docs/receitas/predio-novo.md`, `docs/receitas/personagem-novo.md`.
 - `acoes.js` — ações, telas e status dos NPCs do prédio (quando houver).
 - `fora.js` — o prédio de fora, no mapa (`Mapa.PREDIOS.<p>`), quando houver.
 - `<p>/lugar.js` — prédio novo: `Reino.registrarLugar({ …, caminho, menu })` (`interiores.md` §9.7); nada em `mundo/lugares.js`, `ui/lugares.js`, `validar-interiores.js`.
-- As partes dividem o que precisam em `Reino._predios.<p>`. Cada arquivo até ~400 linhas.
+- As partes dividem o que precisam em `Reino._predios.<p>`.
 - A ordem exata de cada prédio é a do manifesto (o Observatório tem partes extras: planetas, cenas, robo, ceu).
 
 ## Manifesto
@@ -23,8 +23,8 @@ Receitas: `docs/receitas/predio-novo.md`, `docs/receitas/personagem-novo.md`.
 - A prévia `jogo/ferramentas/previas/interiores.html` acha os prédios pelo grupo. Não há lista para atualizar.
 
 ## Regras
-- Nada de canvas, `PA` ou DOM no carregamento: só dentro das funções.
-- Falas de personagem: até 30 letras por página (sem contar «» e emoji); frases de 3 palavras ou mais.
+- Regras de `node: true`, tamanho e arte: `jogo/js/CLAUDE.md`.
+- Falas de personagem (tamanho da página, frases): `docs/receitas/licoes-de-voz.md`.
 - NPC com sprite e voz de `Reino.NPCs.ELENCO[id]` (perfil de voz `npc-<id>`).
 - Voz pelo TEXTO EXATO: mudou a fala, precisa gravar de novo (pacote `interior-<p>`).
 - `padrao.js` monta o interior de toda matéria sem prédio próprio.

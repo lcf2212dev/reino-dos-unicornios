@@ -35,7 +35,7 @@ test('árvore inventada: acusa cada referência quebrada com arquivo:linha e ign
   escrever(raiz, 'jogo/js/nucleo/coisa.js', 'Reino.Coisa = { fazer: function () {} };\nwindow.__reino = {};\n');
   escrever(raiz, 'jogo/ferramentas/ferramenta.js', '// nada\n');
   escrever(raiz, 'docs/outro.md', '# Outro\n');
-  escrever(raiz, 'docs/contratos/rastreio.md', 'Histórico: `js/que-nao-existe.js`\n');
+  escrever(raiz, 'docs/decisoes/historico/velho.md', 'Histórico: `js/que-nao-existe.js`\n');
   escrever(raiz, 'CLAUDE.md', 'Regras: `npm test` e `npm run validar`.\nQuebrado: `npm run nao-existe`.\n');
   escrever(raiz, 'docs/guia.md', [
     '# Guia',                                                   // 1

@@ -68,50 +68,14 @@ O que o NPC já disse na sessão fica só na memória (nada no save).
 6. O balãozinho de status é tocável (conta como toque no NPC).
 
 ## 5. Elenco (ids fixos; perfil de voz `npc-<id>`)
-| Prédio | id | Nome | Ação |
-|---|---|---|---|
-| Museu (História) | `memoria` | Dona Memória | guia `materia:historia`, livro |
-| | `antonio` | Seu Antônio | sala h1 |
-| | `chico` | Carteiro Chico | sala h2 |
-| | `taina` | Guia Tainá | sala h3 |
-| | `contadeira` | Vovó Contadeira | sala h4 |
-| | `nina` | Restauradora Nina | sala h5 |
-| Torre (Inglês) | `ponteiro` | Relojoeiro Seu Ponteiro | guia `materia:ingles`, livro |
-| | `ben` | «Coach Ben» | sala i1 |
-| | `stella` | «Miss Stella» | sala i2 |
-| | `smile` | «Doctor Smile» | sala i3 |
-| | `moon` | «Miss Moon» | sala i4 |
-| | `joy` | «Mister Joy» | sala i5 |
-| Casa das Palavras (Português) | `palavrinha` | Dona Palavrinha | Hall; `{ tipo: 'guia', lugar: 'materia:portugues', livro: 'portugues' }` |
-| | `manu` | Chef Manu | Cozinha das Receitas; sala p1 |
-| | `heitor` | Jardineiro Heitor | Horta do H; sala p2 |
-| | `chocalho` | Palhaço Chocalho | Pátio do Circo; sala p3 |
-| | `brisa` | Capitã Brisa | Porto da Expedição; sala p4 |
-| | `carlos` | Seu Carlos do Carrossel | Parque do Carrossel; sala p5 |
-| Laboratório de Ciências (3º andar do Observatório; `registrarPersonagem` em `observatorio/lab-falas.js`) | `lab-iris` | Professora Íris | Hall; `{ tipo: 'guia', lugar: 'materia:ciencias', livro: 'ciencias' }` |
-| | `lab-bento` | Biólogo Bento | Vivo ou Não Vivo?; sala c1 |
-| | `lab-jana` | Guarda Jana | Quem Ganha, Quem Perde; sala c2 |
-| | `lab-malu` | Jardineira Malu | Amigos da Natureza; sala c3 |
-| | `lab-ravi` | Explorador Ravi | Cada Um no Seu Hábitat; sala c4 |
-| | `lab-lupa` | Detetive Lupa | Detetives da Natureza; sala c5 |
-| Castelo | `serena` | Princesa Serena | guia `castelo` |
-| | `aurora` | Cavaleira Aurora | treino historia |
-| | `oliver` | «Sir Oliver» | treino ingles |
-| | `clara` | Cavaleira Clara | ala de Português; `{ tipo: 'treino', materia: 'portugues' }` |
-| | `lab-cavaleira` | Cavaleira Jade | ala de Ciências; `{ tipo: 'treino', materia: 'ciencias' }` (registrada em `castelo/castelo.js`) |
-| Escola | `margarida` | Diretora Margarida | guia `escola` |
-| | `helena` | Professora Helena | prova historia-3bim |
-| | `emma` | «Teacher Emma» | prova ingles-3bim |
-| | `lucia` | Professora Lúcia | sala da prova; `{ tipo: 'prova', prova: 'portugues-3bim' }` |
-| Estábulo | `feno` | Seu Feno | tela estabulo |
-| Loja | `petala` | Fada Pétala | tela loja |
-| Baú | `tostao` | Dragãozinho Tostão | tela bau |
-| Pet Shop | `aveia` | Dona Aveia | tela petshop |
-| Observatório | `vega` | Doutora Vega | curiosidade (guia) |
-| | `cosmo` | Robô Cosmo (`base: 'robo'`) | piada |
+A lista está em `personagens/elenco.js` (`Reino.NPCs.ELENCO`), mais os registrados com `Reino.registrarPersonagem`
+(item 4). Cada entrada: `{ nome, sprite, paraMateria?, paraProva? }`, com a voz em `Reino.config.vozes['npc-<id>']`.
+O que o NPC faz (sala, guia, treino…) está no `npcs` do interior onde ele aparece, não no elenco.
 
-1. Opções do gerador de sprites (sem mudar as de antes): `chapeu: 'chef'` (touca alta branca),
-   `chapeu: 'quepe'` (quepe de capitã, com `chapeuCor`) e `nariz: '<cor>'` (nariz redondo de palhaço).
+1. Ids fixos: nunca renomeie (as falas gravadas e o `falas.json` usam o id). Nome visível entre «» quando for em inglês.
+   Vozes (conferidas por `npm run vozes-elenco`, `vozes/elenco-vozes.js`): ninguém com a voz do Claude (ERRO); no
+   mesmo pacote `interior-*`, nada de duas vozes iguais (mesma voz base, tom a até 8 Hz e velocidade a até 8 pontos),
+   nome próprio repetido nem voz de gênero diferente do jeito que o personagem se apresenta (avisos).
 2. Personagens não imitam pessoas reais (nem os autores da apostila).
 3. Personagem novo = entrada em `elenco.js` + perfil `npc-<id>` em `Reino.config.vozes`. Cavaleiro ou professora:
    `paraMateria` / `paraProva` na entrada do elenco (`Reino.NPCs.doElenco(filtro)`).
@@ -209,7 +173,7 @@ Reino.Claude.falar(texto, opcoes) → Promise<valor>
   resolve com o valor do botão tocado; com null se o balão for limpo (Claude.limpar/fechar)
 Reino.Claude.dialogoAberto() → bool   // o balão aberto é modal
 ```
-1. Botões grandes, fáceis de tocar; o principal recebe o foco (Enter/Espaço funcionam); Esc aciona `'nao'`.
+1. Botões grandes, fáceis de tocar; o principal recebe o foco (Enter/Espaço funcionam); Esc aciona `'nao'` (balão por cima de uma tela: `ui.md` §3.2).
 2. Falas maiores que uma página são paginadas pelo NPC (Continuar →).
 3. Falas fixas do Claude que citam só uma matéria ("revisar História", "ótima historiadora", "esse museu",
    "O Museu e a Torre…"): genéricas ou só na matéria certa; nenhuma numa sala de outra matéria.

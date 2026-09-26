@@ -1,4 +1,5 @@
 /* Mariana e o Reino dos Unicórnios — configuração (só DADOS: é aqui que se troca o PIN, os valores etc.).
+   Números que dá para mudar: estão comentados ao lado de cada bloco. Depois de mudar, peça ao Claude para republicar.
    Scripts clássicos (sem módulos) para funcionar abrindo o arquivo direto.
    As utilidades comuns (Reino.util) estão em js/nucleo/util.js; o registro das matérias e das provas,
    em js/nucleo/registros.js. */
@@ -14,23 +15,25 @@ Reino.config = {
   // provas bimestrais (Escola do Reino): o acessório só vem com esta nota ou mais.
   // 10 = acertar tudo. Tentativa 1 → lendário, 2 → raro, depois → comum.
   notaSucessoProva: 10,
-  // caminho da persistência: jogar várias vezes também faz nascer o raro/épico
+  // caminho da persistência: jogar várias vezes também faz nascer o raro/épico.
+  // sala: vezes jogando a sala → raro; treinoOuro / treinoPerfeito: treinos terminados → cada um dos 2 épicos
   persistencia: { sala: 3, treinoOuro: 3, treinoPerfeito: 5 },
-  chaveSave: 'mariana-reino-v1',
+  chaveSave: 'mariana-reino-v1', // NÃO troque: é onde mora o progresso da Mariana em cada aparelho
   // fome e sede da montaria (js/sistemas/cuidados.js): só gastam com o jogo aberto e ela jogando.
   // 100 = satisfeito. Abaixo de `baixo`, ela anda a `fatorLento` da velocidade até comer/beber.
   cuidados: {
     minutosFome: 120,          // de 100 a 0 em 120 minutos de jogo
     minutosSede: 60,           // de 100 a 0 em 60 minutos de jogo
     minutosBanho: 180,         // banho: de 100 (limpinho) a 0 em 180 minutos de jogo (sujinho não fica lento)
-    baixo: 25,
-    fatorLento: 0.7,
+    baixo: 25,                 // abaixo disso aparece o aviso (fome/sede: fica lenta; banho: só sujinho)
+    fatorLento: 0.7,           // velocidade com fome ou sede baixa (70%)
     semToqueMs: 5 * 60 * 1000, // sem toque nem tecla há 5 minutos: parou de jogar, não gasta
     lembreteMs: 10 * 60 * 1000,// no máximo 1 lembrete do Claude a cada 10 minutos
     gravarMs: 60 * 1000,       // grava no máximo a cada 60 s...
-    gravarPontos: 10,          // ...ou a cada 10 pontos de mudança (e sempre ao comer/beber)
+    gravarPontos: 10,          // ...ou a cada 10 pontos de mudança (e sempre ao comer/beber). Melhor não mexer.
   },
-  // comidas da Pet Shop (preço em estrelas; `fome` = quanto enche; `enche` = vai a 100)
+  // comidas da Pet Shop (preço em estrelas; `fome` = quanto enche, 0 a 100; `enche` = vai a 100).
+  // NÃO troque o `id`: a despensa guarda a comida por ele
   comidas: [
     { id: 'cenoura', nome: 'Cenoura crocante', icone: '🥕', preco: 2, fome: 20 },
     { id: 'maca', nome: 'Maçã do Reino', icone: '🍎', preco: 3, fome: 30 },
@@ -41,11 +44,14 @@ Reino.config = {
   // banho de espuma na Pet Shop (js/sistemas/banho.js): de graça, animação de ~6 s (curta ~1 s sem Animações);
   // depois de `pularDepoisMs`, um toque pula para o fim
   banho: { duracaoMs: 6000, duracaoCurtaMs: 1000, pularDepoisMs: 2000 },
-  // fotos do jogo (js/sistemas/fotos.js): só no aparelho (IndexedDB 'reino-fotos'), nunca no save nem no servidor
+  // fotos do jogo (js/sistemas/fotos.js): só no aparelho (IndexedDB 'reino-fotos'), nunca no save nem no servidor.
+  // maxLado: px do lado maior; maxAlbum: fotos por aparelho; toqueLongoMs: segurar o 📷 abre o álbum.
+  // NÃO troque o `banco`, senão o álbum parece vazio
   fotos: { maxLado: 1600, maxAlbum: 40, banco: 'reino-fotos', toqueLongoMs: 600 },
-  // música por ambiente (js/sistemas/som.js + js/sistemas/musicas.js)
+  // música por ambiente (js/sistemas/som.js + js/sistemas/musicas.js): volume; crossfadeS = segundos da troca;
+  // comVoz = volume enquanto uma voz fala (30%). Melhor não mexer em lookaheadS e intervaloMs
   musica: { volume: 0.22, crossfadeS: 1.5, comVoz: 0.3, lookaheadS: 0.25, intervaloMs: 60 },
-  // nadar no lago: velocidade na água e quanto a água "custa" na busca de caminho
+  // nadar no lago: fator = velocidade na água (60%); custo = quanto a água "pesa" no caminho (3: prefere a terra)
   nado: { fator: 0.6, custo: 3 },
   // controles de andar (js/motor/entrada.js e css/ui-hud.css): mouse segurado e thumbstick do toque
   controles: {
@@ -57,7 +63,8 @@ Reino.config = {
     base: 110, pino: 48,             // px do thumbstick no celular...
     baseTablet: 130, pinoTablet: 56, // ...e em tela a partir de 700×700
   },
-  // pergunta surpresa (js/sistemas/surpresa.js): de 3 a 10 minutos de jogo livre, vale 2 estrelas de primeira
+  // pergunta surpresa (js/sistemas/surpresa.js): de 3 a 10 minutos de jogo livre, vale 2 estrelas de primeira;
+  // esperaLivreMs: livre e parada há isso antes de aparecer. Se mudar `estrelas`, regrave as vozes (o Claude fala o valor)
   surpresa: { minMinutos: 3, maxMinutos: 10, estrelas: 2, esperaLivreMs: 4000, tipos: ['escolha', 'vf', 'varias'] },
   // versão nova no servidor de casa (js/sistemas/versao.js): confere o js/versao.json a cada `intervaloMs` e ao
   // voltar para a aba; só acredita depois de ver a mudança 2 vezes (`confirmarMs` entre elas) e de `cacheMs` de
@@ -67,7 +74,8 @@ Reino.config = {
   versao: { intervaloMs: 10 * 60000, confirmarMs: 60000, cacheMs: 330000, paradaMs: 8000, avisoMs: 4500, esperaMs: 2500 },
   // acessórios das provas à venda na Loja (só depois de ganhar um da mesma prova)
   precoPremio: { comum: 25, raro: 40, lendario: 70 },
-  // vozes naturais (gravadas por ferramentas/vozes/gerar-vozes.py)
+  // vozes naturais (gravadas por ferramentas/vozes/gerar-vozes.py). Trocou voz, velocidade ou tom: `npm run vozes`
+  // (regrava) e peça para republicar
   vozes: {
     claude: { voz: 'pt-BR-AntonioNeural', velocidade: '-5%', tom: '+0Hz' },
     narradora: { voz: 'pt-BR-FranciscaNeural', velocidade: '-8%', tom: '+0Hz' },

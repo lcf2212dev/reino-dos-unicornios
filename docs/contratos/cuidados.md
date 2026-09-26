@@ -103,7 +103,7 @@ evento: U.emit(Reino.EVENTOS.CUIDADOS, depurar())  // a cada ponto inteiro que m
      (sem "Comprar e dar": 4 botões não cabiam em tela pequena).
 5. Depois: dar da despensa (`Cuidados.alimentar` + `nhac` + `comeu`); ou `Cuidados.comprar(id)` → dar
    (`alimentar` + `nhac` + `comeu`) ou guardar (fala `guardado`). Nunca comprar primeiro e perguntar depois
-   (a guarda de toque, `loja.md` §6, resolveu a compra sem querer).
+   (a guarda de toque, `ui.md` §5, resolveu a compra sem querer).
 6. Faltando estrelas e sem nada guardado (antes ou na compra): o número só na tela e a voz fala
    `frases.faltamEstrelas`, como na Loja.
 7. Despedida: `UI.visitaPetShop = { comprou, deu }` conta o que aconteceu na última visita à tela (zera a cada

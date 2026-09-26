@@ -35,7 +35,7 @@ manifesto e o index. À mão: preencher os `(preencher)`, mais cômodos e objeto
    (`docs/contratos/interiores.md` §9.7). A porta fica no meio da última linha do `rect`. `caminho` (obrigatório) =
    tiles de rua, da rua até a frente da porta. Espaço livre: `npm run ver -- --previa mapa`.
    `menu` dá o emoji, a linha de informação e os chips do menu Lugares; `abrir` só se o prédio tiver tela própria.
-   Não edite `mundo/lugares.js`, `ui/lugares.js` nem `validar-interiores.js`.
+   Arquivos que o prédio não edita: `jogo/js/interiores/CLAUDE.md`.
 2. Falas (`falas.js`): curtas (`licoes-de-voz.md`). Objetos: `objetos.<chave>` = lista de falas. O `falas.js` gerado chama
    `Reino.falasDoPredio('<p>', { npcs, objetos, extras })`. Se as falas passarem de um arquivo (um andar, uma ala), crie
    outra parte (ex.: `<p>/ala-falas.js`, com `node: true` no manifesto) que também chama `Reino.falasDoPredio('<p>', { … })`
@@ -69,13 +69,10 @@ npm test
 npm run e2e -- --desempenho   # esperado: mapa e dados de interiores/lugares mudam; desempenho ≤ 5% pior
 ```
 
-Referências (na worktree; precisam do git): em `npm test`, o passo *referências de dados* mostra a diferença
-esperada abaixo; os outros passos têm que sair ✔. Diferenças esperadas no `npm run e2e`:
+Diferenças esperadas no `npm run e2e` (como ler e o que é defeito: `README.md`):
 - dados: `falas`, `mapa` (lugar e prédio novos), `interiores`, `elenco` (personagens novos), `loja`
   (a `config` entra aí: perfis de voz) e `vozes`;
 - imagens: o mapa onde o prédio aparece e a tela `lugares`; desempenho no máximo 5% pior.
-A base do e2e só muda por commit: quem integra troca o hash em `jogo/ferramentas/testes/base-referencia.txt`
-depois do commit da mudança; não edite esse arquivo na tarefa. Qualquer diferença fora da lista acima é defeito.
 
 Conferir (fotos em `/tmp/reino-testes/ver/<nome>/`):
 ```

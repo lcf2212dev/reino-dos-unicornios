@@ -109,6 +109,23 @@ function naoRastreados(arvore, sub) {
 }
 const rastreados = (arvore, sub) => git(arvore, 'ls-files', '-z', '--', sub).split('\0').filter(Boolean);
 
+// pasta de material (prints e fotos) relativa à raiz da árvore: o caminho como veio ("matérias/ciências/Revisão")
+// ou, senão, o nome da matéria dentro de matérias/ sem diferença de maiúsculas ("Geografia" → "matérias/geografia",
+// "Ciências/Revisão" → "matérias/ciências/Revisão"); null se não achar ou se o nome sair da árvore
+const PASTA_MATERIAS = 'matérias';
+function pastaMaterial(arvore, nome) {
+  const rel = String(nome).normalize('NFC').replace(/\/+$/, '');
+  if (!rel || path.isAbsolute(rel) || rel.split('/').includes('..')) return null;
+  const ehPasta = (r) => fs.existsSync(path.join(arvore, r)) && fs.statSync(path.join(arvore, r)).isDirectory();
+  if (ehPasta(rel)) return rel;
+  const [prim, ...resto] = rel.split('/');
+  let nomes = [];
+  try { nomes = fs.readdirSync(path.join(arvore, PASTA_MATERIAS)); } catch (e) { return null; }
+  const achada = nomes.find((n) => n.normalize('NFC').toLowerCase() === prim.toLowerCase());
+  const r = achada && [PASTA_MATERIAS, achada, ...resto].join('/');
+  return r && ehPasta(r) ? r : null;
+}
+
 // copia arquivos (relativos) de uma árvore para outra, com a data original; não sobrescreve arquivo diferente
 function copiarArquivos(de, para, lista) {
   const r = { copiados: [], iguais: [], diferentes: [] };
@@ -168,5 +185,5 @@ const slug = (s) => semAcento(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').repla
 
 module.exports = {
   PASTA_TESTES, rodar, git, gitOk, lerArgs, raizes, worktrees, acharNodeModules, prepararNodeModules,
-  naoRastreados, rastreados, copiarArquivos, mesmoConteudo, processosNaPasta, hoje, horaCurta, slug, ambiente,
+  PASTA_MATERIAS, pastaMaterial, naoRastreados, rastreados, copiarArquivos, mesmoConteudo, processosNaPasta, hoje, horaCurta, slug, ambiente,
 };

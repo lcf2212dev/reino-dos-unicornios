@@ -113,14 +113,12 @@ olho; na montaria, nas vistas em que o encaixe aparece (enfeite de `cauda` some 
 costas: para esses encaixes vale a vista de lado e a prévia); na Loja, o cartão com o ícone e "Usando".
 
 ### 7. Referências (prova de que o resto não mudou)
-`npm run e2e` (na worktree) compara com o commit base de `jogo/ferramentas/testes/base-referencia.txt`.
-Diferenças ESPERADAS:
+Regras gerais das referências: `README.md`. Diferenças ESPERADAS no `npm run e2e`:
 - os dados da Loja (o item novo), também no passo *referências de dados* do `npm test`;
 - a imagem `loja` muda sempre (a grade se desloca);
 - as imagens com a montaria mudam se o enfeite cair nas posições 0–5 da lista (os saves sintéticos de
   `jogo/ferramentas/testes/saves.js` compram as posições 0–5 e vestem 0–1 e 2–4).
-Qualquer outra diferença é defeito. Registre as esperadas para quem integra. A base só muda por commit (quem
-integra troca o hash em `base-referencia.txt` depois do commit do enfeite); não edite esse arquivo na tarefa.
+Registre as esperadas para quem integra.
 
 ## Armadilhas
 - `'<id>': { linhas` aparece também em `enfeites:` de cada vista: o desenho principal vai no bloco

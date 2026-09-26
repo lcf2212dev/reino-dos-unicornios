@@ -7,7 +7,7 @@ const path = require('path');
 const { spawnSync } = require('child_process');
 
 const repo = path.join(__dirname, '../../../..');
-// em os.tmpdir() (TMPDIR=/dev/shm/… quando o /tmp enche, docs/contratos/README.md §5)
+// em os.tmpdir() (TMPDIR=/dev/shm/… quando o /tmp enche, jogo/ferramentas/CLAUDE.md)
 const copia = path.join(require('os').tmpdir(), `reino-testes/novo-${process.pid}`);
 const novo = path.join(repo, 'jogo/ferramentas/novo/novo.js');
 const rodar = (arq, args = []) => spawnSync(process.execPath, [arq, ...args], { encoding: 'utf8' });

@@ -8,7 +8,7 @@ const vm = require('vm');
 const Manifesto = require('./manifesto-editar');
 
 const MODELOS = path.join(__dirname, 'modelos');
-const EMOJIS = 'emojis: os que já têm desenho em npm run ver -- --previa icones; emoji novo: Reino.registrarIcones na pasta da feature (docs/contratos/README.md §2 item 5)';
+const EMOJIS = 'emojis: os que já têm desenho em npm run ver -- --previa icones; emoji novo: Reino.registrarIcones na pasta da feature (jogo/js/CLAUDE.md, Arte)';
 const UNI_NPC = 'unicórnios: o nome de cada um não pode repetir nome de NPC (o validar-interiores acusa)';
 const ID_OK = /^[a-z0-9-]+$/;
 const SEM_RECT = { rect: '{ x: -1, y: -1, w: 4, h: 3 }', comentario: '   // marcador de preencher; o validador recusa. Área livre: --rect x,y,w,h' };

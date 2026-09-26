@@ -3,7 +3,9 @@
    Vivo ou Não Vivo?, Quem Ganha, Quem Perde, Amigos da Natureza, Cada Um no Seu Hábitat e Detetives da Natureza.
    Sem porta para o mapa: ela chega pelo menu Lugares (no spawn) ou subindo do 2º andar; sai pela escada que desce.
    Os objetos ficam em lab-objetos-*.js; as falas e os personagens, em lab-falas.js (carregados antes).
-   Só dados, objetos e registros; nada de DOM, PA ou Progresso no carregamento. */
+   Só dados, objetos e registros; nada de DOM, PA ou Progresso no carregamento.
+   Laboratório claro (branco, verde-água e amarelo) e estático, sem animações, para contrastar com a noite
+   dos andares de baixo; a planta (37×25) é a mesma da Casa das Palavras. */
 (function () {
   var R = window.Reino;
   var S = R._predios.observatorio;

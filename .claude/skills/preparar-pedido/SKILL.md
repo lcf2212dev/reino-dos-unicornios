@@ -13,8 +13,8 @@ Aqui não se escreve código: só se lê o jogo e se escreve o pedido.
    `CLAUDE.md` da pasta; em pedido grande, um agente `Explore` por feature, em paralelo):
    - onde mora hoje (prédio, andar, cômodo, tela, ajuste) e o que já existe parecido;
    - o que o texto chama de um jeito e o código de outro (ex.: "setas" = `#setas` e o ajuste `ajustes.setas`);
-   - a pasta de material na raiz (ex.: a pasta Ciências): o que tem nela e se uma subpasta pede outra coisa
-     (ex.: Ciências/Revisão é folha de prova: pergunte se vira prova);
+   - a pasta de material em `matérias/` (ex.: `matérias/ciências/`): o que tem nela e se uma subpasta pede outra
+     coisa (ex.: `matérias/ciências/Revisão/` é folha de prova: pergunte se vira prova);
    - `npm run ver -- --ir <lugar>` para olhar o lugar quando ajudar.
 3. **Preencher o modelo completo** de cada feature (o curto para ajuste pequeno). Campo sem nada a dizer fica fora,
    como no exemplo do modelo. Não repita "O que já vale sempre". Decisão que o texto não fecha e que muda o trabalho
@@ -49,7 +49,7 @@ Texto do Leandro: Ciências no 3º andar do Observatório e o 2º andar como cen
 ver as fotos e compartilhar; tirar as setas e andar seguindo o mouse, com thumbstick no celular e no tablet.
 - Virou 3 pedidos: `ciencias-observatorio`, `album-compartilhar`, `andar-thumbstick`.
 - Investigado: o Observatório só tinha o térreo com 3 cômodos; o álbum só abria segurando o 📷; "setas" = `#setas`
-  e `ajustes.setas`; tocar para andar já existia; Ciências/Revisão era folha de prova.
+  e `ajustes.setas`; tocar para andar já existia; ciências/Revisão era folha de prova.
 - `(responda)`: compartilhar livre ou com PIN? Tocar para andar continua? Thumbstick fixo ou onde o dedo encosta?
   A folha de revisão vira prova?
 - Trecho do pedido 1:
@@ -57,7 +57,7 @@ ver as fotos e compartilhar; tirar as setas e andar seguindo o mouse, com thumbs
   # 6. Onde fica no reino
   Observatório: 2º andar NASA, 3º andar Ciências. Pelo menu Lugares, "Ciências" leva direto ao 3º andar.
   # 7. Material
-  Pasta Ciências/ (apostila, cap. 8 e 9). Ciências/Revisão/ vira a prova ciencias-3bim (resposta do Leandro).
+  Pasta matérias/ciências/ (apostila, cap. 8 e 9). matérias/ciências/Revisão/ vira a prova ciencias-3bim (resposta do Leandro).
   # 14. Decisões
   Me pergunte antes: as vozes novas (amostras) e o número de salas, se os prints pedirem mais ou menos que 5.
   ```

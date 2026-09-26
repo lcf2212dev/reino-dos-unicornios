@@ -1,5 +1,6 @@
 /* CIÊNCIAS — sala 3 (c3): Amigos da Natureza. A matéria (registro, livro, unicórnios) fica em ciencias.js;
-   Reino.registrarSala está em conteudo/materias/registro.js. */
+   Reino.registrarSala está em conteudo/materias/registro.js.
+   Os pássaros adultos (p. 21, b) competem (comem o mesmo alimento), como o bugio e a arara (p. 16). */
 Reino.registrarSala('ciencias',
     {
       id: 'c3', nome: 'Amigos da Natureza', emoji: '🐃', paginas: 'pp. 18 a 22',

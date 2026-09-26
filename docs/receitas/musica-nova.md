@@ -26,12 +26,9 @@ npm run unidade
 npm test
 ```
 
-Referências (na worktree; precisam do git): em `npm test`, o passo *referências de dados* mostra a diferença
-esperada abaixo; os outros passos têm que sair ✔. Diferenças esperadas no `npm run e2e`:
+Diferenças esperadas no `npm run e2e` (como ler e o que é defeito: `README.md`):
 - dados: `loja` só se mudou `Reino.config.musica` (a `config` entra aí); faixas novas não entram nos dados;
 - imagens: nenhuma (música não aparece na tela).
-A base do e2e só muda por commit: quem integra troca o hash em `jogo/ferramentas/testes/base-referencia.txt`
-depois do commit da mudança; não edite esse arquivo na tarefa. Qualquer diferença fora da lista acima é defeito.
 
 Conferir: `npm run ver -- --ajustes '{"musica":true}' --ir <lugar> --js 'console.log(JSON.stringify(__reino.musicaAtual()))'`
 mostra `faixa: '<amb>'`. Ouvir mesmo, só o Leandro.

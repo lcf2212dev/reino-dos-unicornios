@@ -140,6 +140,8 @@ Para cada comida, `compradas` = maior e `usadas` = maior (contador estragado con
 5. Rede lenta: cada gravação e cada fetch do servidor desistem em `limiteRedeMs` (15 s; o fetch é cancelado
    com `AbortController`); depois de um erro, tenta de novo sozinha em `novaTentativaMs` (15 s). A busca
    inicial (`iniciarNuvem`) desiste em 12 s e rejeita; o jogo pode tentar de novo.
+   O jogo só começa depois dela (`jogo/js/motor/main.js`): se falhar, a tela de início mostra "O reino não abriu
+   agora" e "Tentar de novo", e nada anda até dar certo.
 6. Cuidados gravam no máximo a cada 60 s (ou 10 pontos), nunca a cada quadro: cada `P.salvar()` sincroniza
    (`cuidados.md` §4).
 

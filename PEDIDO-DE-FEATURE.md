@@ -5,9 +5,9 @@ Como usar:
 2. Preencha só o que importa. Campo em branco vale o padrão escrito nele. Não precisa repetir o que está em "O que já vale sempre".
 3. Cole na conversa com o Claude. A primeira linha, `/nova-feature`, chama a skill que segue este modelo.
 
-Sem tempo para o modelo? Escreva do seu jeito (lista, texto ou áudio) e comece com `/preparar-pedido`. O Claude separa em pedidos, preenche este modelo, pergunta o que faltar e mostra para você conferir.
+Sem tempo para o modelo? Escreva do seu jeito e comece com `/preparar-pedido`.
 
-Fotos e prints vão numa pasta na raiz do projeto. Exemplo: `Mariana Revisões/Geografia/`. No pedido, escreva só o nome da pasta.
+Fotos e prints vão numa pasta dentro de `matérias/`. Exemplo: `Mariana Revisões/matérias/geografia/`. No pedido, escreva só o nome da pasta.
 
 ## Modelo curto (ajuste pequeno ou correção)
 ```
@@ -109,19 +109,11 @@ Me pergunte antes:
 - **Vozes:** toda fala nova ganha voz gravada e conferida.
 - **Tamanhos:** funciona no celular, no tablet e no notebook, e também pelo teclado (Tab, Enter e Esc).
 - **Dinheiro:** vale a regra de hoje (R$ 20 por matéria, salas de R$ 0,50 em R$ 0,50). Só muda se você pedir.
-- **Números:** os que dá para ajustar vão para `jogo/js/nucleo/config.js` e para a lista do `COMO-USAR.md`.
+- **Números:** os ajustáveis ficam em `jogo/js/nucleo/config.js`.
 
 ## O que o Claude faz com o pedido
-0. **Texto livre?** A skill `preparar-pedido` transforma em pedidos neste modelo, pergunta o que faltar e, com o seu sinal, segue para os passos abaixo.
-1. **Lê e pergunta.** Se faltar algo que muda o trabalho, pergunta tudo de uma vez só. O resto ele decide e avisa no plano.
-2. **Manda um plano curto:** o que ela vai ver, o que muda no jogo e o que ele decidiu sozinho.
-3. **Constrói numa worktree.** A pasta principal fica intocada, porque o servidor de casa serve essa pasta ao vivo.
-4. **Entrega:**
-   - o endereço de um servidor de teste para você jogar;
-   - fotos nos 3 tamanhos;
-   - o "Pronto quando" item a item;
-   - os testes passando.
-5. **Para no que estiver marcado em "Até onde ir".** Merge, push e artifact só acontecem com a sua marcação ou com um pedido por escrito.
+O Claude pergunta o que faltar de uma vez, manda um plano curto, constrói à parte e te dá um servidor de teste para
+jogar; não passa do que você marcou em "Até onde ir".
 
 ## Exemplo preenchido
 ```

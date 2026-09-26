@@ -30,5 +30,5 @@ Para que serve: resume as regras da mescla do save e diz por que mexer nelas é 
   (versão antiga e nova num `vm`, como em `jogo/ferramentas/testes/unidade/banho-versao-antiga.test.js`).
 - Campo novo: só aditivo (`estadoNovo` + `completar`), com regra de mescla própria e teste.
 - Defeito conhecido e NÃO corrigido na refatoração: `P.mesclar` lança erro com save sem `salas`/`unis`
-  (`docs/decisoes/bugs-encontrados.md` #1).
+  (`docs/pendencias.md`).
 - Testes: `npm run unidade` (save-*.test.js, cuidados-*.test.js, banho*.test.js), saves sintéticos em `vm`.

@@ -10,11 +10,11 @@ antes de cada um.
 
 ## Começar uma frente
 ```
-node jogo/ferramentas/fluxo/worktree.js <tema> --material <Pasta>
+npm run worktree -- <tema> --material <Pasta>
 ```
 - Cria `/home/leandro/reino-<tema>` na branch `feat/<tema>` a partir da main (`--base <ref>` para outra), com
-  `node_modules` por link (`--ci` faz `npm ci`) e cópia dos arquivos NÃO rastreados de `<Pasta>/` (prints de uma
-  matéria ou prova). Só lê a árvore principal.
+  `node_modules` por link (`--ci` faz `npm ci`) e cópia dos arquivos NÃO rastreados de `matérias/<pasta>/` (prints de uma
+  matéria ou prova; `<Pasta>` é o nome da matéria, ex.: `Geografia` ou `ciências/Revisão`). Só lê a árvore principal.
 - Prints e fotos: `node jogo/ferramentas/fluxo/material.js <Pasta> --folha` grava cópias reduzidas, índice e
   folhas de contato em `/tmp/reino-testes/material/<pasta>/`. Agente lê só essas.
 

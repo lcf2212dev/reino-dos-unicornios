@@ -13,12 +13,12 @@ Contratos: `docs/contratos/cena-e-motor.md` (cena, íris, câmera, pintor, laço
   objetos-moveis, objetos-enfeites, grade, estatico, placas, toque, cena. Dividem `Reino._interiores`.
 
 ## Regras
-- `interiores-*.js`: nada de DOM, canvas, `PA` ou `Reino.Progresso` no carregamento.
+- `interiores-*.js` são `node: true` (regra em `jogo/js/CLAUDE.md`).
 - Os outros arquivos do motor carregam no fim do manifesto (depois da UI e dos prédios). Não mude a ordem.
 - Ordem de cada quadro: fundo → itens por Y → `desenharSobre` → luz → íris (`cena-e-motor.md` §5).
 - Desempenho: média até 16,7 ms por quadro com CPU 4× mais lenta. Nada de canvas criado por quadro;
   o estático é pré-renderizado.
-- Animação só com `animar` (Ajustes → Animações e movimento reduzido).
+- Animação só com `animar` (Ajustes → Animações e movimento reduzido; regra em `jogo/js/CLAUDE.md`, Arte).
 - Helpers de desenho ficam em `js/arte/desenho.js` (uma implementação só).
 
 ## Antes de entregar

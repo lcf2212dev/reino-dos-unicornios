@@ -3,7 +3,12 @@
    (I.PISOS/I.PAREDES observatorio-*), os planetas (desenho do observatorio/cenas.js ou reserva) e o
    toque no desenho do planeta e do Sol.
    O que as outras partes usam fica em Reino._predios.observatorio (ver o fim do arquivo).
-   No carregamento NADA de DOM, canvas ou PA (as ferramentas em Node carregam este arquivo). */
+   No carregamento NADA de DOM, canvas ou PA (as ferramentas em Node carregam este arquivo).
+   Paleta de galáxia (pedido do Leandro): azul-marinho → #2f3fb8 → #6c3fd4 → #b24fe0, toques #6fd6ff e rosa;
+   a mesma nos 3 cômodos, no telescópio e no prédio do mapa. Céu e nebulosas pré-renderizados; no máximo ~80
+   partículas animadas no prédio todo (hoje ~78); parado e colorido sem Animações.
+   Piso em galáxia CLARA por causa do contraste com a Mariana (≥ 2,9): a Cúpula mede 2,87, exceção aceita pelo
+   Leandro em 2026-09-26; o Planetário mantém o chão clareado que o pai aprovou (validar/contraste.js). */
 (function () {
   var R = window.Reino;
   var I = R.Interiores, D = I.desenho, C = D.C;

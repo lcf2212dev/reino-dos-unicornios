@@ -43,5 +43,5 @@ Diferença esperada no e2e: <cenas/imagens que podem mudar, ou "idêntico">
 Workers não gravam. Na integração: skill `gravar-vozes` e, com personagem novo ou perfil trocado, `validar-vozes`.
 
 ## Entrega e artifact
-Commit, merge e push só com autorização do Leandro. Integração e entrega, e publicação do artifact, terão skills
-próprias (entregar, publicar-artifact); até lá, siga o `CLAUDE.md` e `docs/decisoes/seguranca-do-progresso.md`.
+Commit, merge e push só com autorização do Leandro. Integração e entrega: skill `entregar`; publicação do
+artifact: skill `publicar-artifact` (só com pedido escrito do Leandro).
