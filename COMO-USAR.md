@@ -28,7 +28,7 @@
 ## Nova matéria
 1. Salve os prints numa pasta `Mariana Revisões/<Matéria>/`, por exemplo `Mariana Revisões/Geografia/`.
 2. Peça ao Claude para criar a matéria no reino.
-3. O Claude cria um lugar novo no mapa, com salas que somam R$20, os desafios da apostila, o livro-resumo e os unicórnios da matéria. Sobrou uma clareira livre no mapa, a de cima à direita (23,4). O lugar novo entra "por cima" do mapa: as árvores e as flores do resto do reino não mudam.
+3. O Claude cria um lugar novo no mapa, com salas que somam R$20, os desafios da apostila, o livro-resumo e os unicórnios da matéria (em `jogo/js/conteudo/materias/<matéria>/`; cada arquivo novo ganha uma linha em `jogo/js/manifesto.js` e o `jogo/index.html` é refeito com `npm run index`). Sobrou uma clareira livre no mapa, a de cima à direita (23,4). O lugar novo entra "por cima" do mapa: as árvores e as flores do resto do reino não mudam.
 4. O Claude grava as vozes das falas novas e republica no mesmo link. O progresso da Mariana é mantido.
 5. A matéria também ganha um prédio por dentro. Se o Claude ainda não desenhou um prédio próprio, entra um interior padrão automático: hall com guia e livro, uma sala com um personagem para cada sala, uma ala no Castelo e baias no Estábulo. O ideal é pedir ao Claude um prédio próprio com personagens, como o Museu e a Torre.
 
@@ -46,6 +46,7 @@
   ```
   node ferramentas/vozes/listar-falas.js && uv run --with edge-tts python ferramentas/vozes/gerar-vozes.py && node ferramentas/vozes/empacotar-vozes.js
   ```
+  Atalho, na raiz do repositório: `npm run vozes` (faz os três passos).
   Só as falas novas são gravadas; as antigas ficam em `ferramentas/gerado/vozes-cache/`.
 - Se a rede cair e um pacote de vozes não chegar, o jogo tenta de novo sozinho, e na hora em que a rede volta.
 - Para trocar de voz ou velocidade, edite `vozes` em `jogo/js/nucleo/config.js` e rode os mesmos comandos.
@@ -268,7 +269,7 @@
   - A regra da prova não muda: o prêmio de verdade continua sendo só com nota 10.
   - Comprar não conta como prêmio: não muda a Área dos pais, o mural nem o arco-íris da Escola.
 - **Área dos pais:** mostra as tentativas, as notas de cada tentativa e o prêmio ganho.
-- **Nova prova:** mande as fotos da folha para o Claude. Ele cria `jogo/js/conteudo/provas/<matéria>-<bimestre>.js` com três acessórios novos, grava as vozes e republica. A prova nova ganha uma sala de aula na Escola do Reino, com um professor (um padrão, se não houver um próprio).
+- **Nova prova:** mande as fotos da folha para o Claude. Ele cria `jogo/js/conteudo/provas/<matéria>-<bimestre>.js` com três acessórios novos, acrescenta a linha no `jogo/js/manifesto.js`, roda `npm run index`, grava as vozes e republica. A prova nova ganha uma sala de aula na Escola do Reino, com um professor (um padrão, se não houver um próprio).
 
 ## Jogo no computador de casa
 - Endereço na rede de casa: **http://reinodosunicornios.local** (ou pelo IP do PC, ex.: http://192.168.1.247).
