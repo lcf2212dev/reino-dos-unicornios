@@ -1,6 +1,7 @@
 /* Pet Shop: a Loja (balcão da Dona Aveia, comidinhas, aquário, casinha) e o Cantinho da Água
    (o bebedouro grande, toalhas e a banheira de espuma). O bebedouro é o ÚNICO lugar com água:
    enche a sede da montaria na hora, de graça (Reino.Cuidados.beber), com som e animação.
+   A banheira dá o banho de espuma, também de graça (Reino.Banho, js/banho.js).
    Também desenha a Pet Shop de fora, no mapa (Mapa.PREDIOS.petshop).
    Só dados, objetos e registros (funções guardadas); nada de DOM, PA ou Progresso no carregamento.
    As falas moram em petshop-falas.js. */
@@ -361,7 +362,26 @@
         }
       }
     } });
-  // banheira de espuma com patinho (bolhas sobem com Animações)
+  // banheira de espuma com patinho (bolhas sobem com Animações). É onde a montaria toma banho
+  // (acao { tipo: 'banho' }, js/banho.js): enquanto o banho desenha a espuma e o patinho, os daqui somem.
+  // Por isso a espuma e o patinho ficam no anim (um canvas pronto, feito uma vez), fora do desenho parado.
+  var espumaParada = null;
+  function espumaEPatinho() {
+    if (espumaParada) return espumaParada;
+    espumaParada = PA.novoCanvas(48, 18);
+    var cx = espumaParada.getContext('2d');
+    cx.translate(0, 10);
+    [[10, 3, 4], [16, 1, 5], [23, 2, 4], [29, 0, 5], [36, 2, 4], [41, 4, 3], [13, -2, 3], [26, -3, 3], [33, -3, 3]].forEach(function (b) {
+      bolha(cx, b[0], b[1], b[2]);
+    });
+    // patinho amarelo
+    ret(cx, 20, -7, 8, 5, K); ret(cx, 21, -6, 6, 3, C.ouro);
+    ret(cx, 25, -10, 4, 4, K); ret(cx, 26, -9, 2, 2, C.ouro); ret(cx, 29, -8, 2, 1, LAR); ret(cx, 27, -9, 1, 1, K);
+    return espumaParada;
+  }
+  function banhoNaBanheira() {
+    try { return !!(R.Banho && R.Banho.desenhandoUni && R.Banho.desenhandoUni()); } catch (e) { return false; }
+  }
   I.objeto('petshop-banheira', { w: 3, h: 2, topo: 12, solido: true,
     desenhar: function (ctx, px, py) {
       // pezinhos dourados
@@ -374,15 +394,12 @@
       for (var x = px + 12; x < px + 40; x += 9) coracao(ctx, x, py + 13, C.branco);
       // torneira à esquerda
       ret(ctx, px + 3, py - 6, 3, 10, K); ret(ctx, px + 3, py - 7, 8, 3, K); ret(ctx, px + 4, py - 6, 6, 1, C.metal); ret(ctx, px + 4, py - 5, 1, 8, C.metal);
-      // espuma por cima
-      [[10, 3, 4], [16, 1, 5], [23, 2, 4], [29, 0, 5], [36, 2, 4], [41, 4, 3], [13, -2, 3], [26, -3, 3], [33, -3, 3]].forEach(function (b) {
-        bolha(ctx, px + b[0], py + b[1], b[2]);
-      });
-      // patinho amarelo
-      ret(ctx, px + 20, py - 7, 8, 5, K); ret(ctx, px + 21, py - 6, 6, 3, C.ouro);
-      ret(ctx, px + 25, py - 10, 4, 4, K); ret(ctx, px + 26, py - 9, 2, 2, C.ouro); ret(ctx, px + 29, py - 8, 2, 1, LAR); ret(ctx, px + 27, py - 9, 1, 1, K);
+      // (a espuma e o patinho vêm no anim)
     },
     anim: function (ctx, px, py, t) {
+      // durante o banho, quem desenha a espuma, o patinho e as bolhas é o banho
+      if (banhoNaBanheira()) return;
+      if (window.PA && PA.novoCanvas) ctx.drawImage(espumaEPatinho(), px, py - 10);
       if (!t) return;
       for (var i = 0; i < 4; i++) {
         var s = (t / 1400 + i * 0.27) % 1, x = px + 12 + i * 8 + Math.round(Math.sin(t / 300 + i) * 2);
@@ -600,7 +617,8 @@
     { tipo: 'petshop-tapete-banho', x: 19, y: 5, w: 3, h: 1 },
     { tipo: 'flores', x: 24, y: 5, var: { vaso: '#9fdcff' } },
     // banheira de espuma à direita
-    inter('banheira', 'Banheira de espuma', { tipo: 'petshop-banheira', x: 22, y: 6 }),
+    // banheira de espuma: o banho da montaria, de graça (js/banho.js); ela para à esquerda, no corredor
+    { tipo: 'petshop-banheira', x: 22, y: 6, nome: 'Banho de espuma', acao: { tipo: 'banho' } },
     { tipo: 'petshop-balde-espuma', x: 16, y: 7 },
     { tipo: 'petshop-espuma', x: 21, y: 7 },
     // frente
@@ -688,14 +706,27 @@
     R.NPCs.registrarTela('petshop', function () { if (R.UI && R.UI.telaPetShop) R.UI.telaPetShop(); }, (F.npcs.aveia && F.npcs.aveia.nova && F.npcs.aveia.nova[0]) || 'Quer ver as comidinhas? 🥕');
   }
   if (R.NPCs && R.NPCs.registrarAcao) R.NPCs.registrarAcao('beber', beber);
-  // a Dona Aveia mostra 🍎/💧 quando a montaria está com fome ou sede
+  // banho de espuma na banheira (de graça): a animação, o banho = 100 e as falas são do Reino.Banho
+  function banho(acao, ctx) {
+    var P = R.Progresso, o = ctx && ctx.objeto;
+    var id = P && P.montaria ? P.montaria() : null;
+    var banheira = o ? { x: o.x, y: o.y, w: o.w || 3, h: o.h || 2 } : null;
+    if (R.Banho && R.Banho.iniciar) return R.Banho.iniciar(id, { banheira: banheira });
+    // sem o módulo do banho: banha direto, sem animação
+    var Cu = R.Cuidados, r = Cu && Cu.banhar ? Cu.banhar(id) : null;
+    if (r && r.ok) return falarFrase('banhou', id);
+    if (r && r.motivo === 'cheio') return falarFrase('jaLimpinho', id);
+    return Promise.resolve(null);
+  }
+  if (R.NPCs && R.NPCs.registrarAcao) R.NPCs.registrarAcao('banho', banho);
+  // a Dona Aveia mostra 🍎/💧/🛁 quando a montaria está com fome, sede ou sujinha
   if (R.NPCs && R.NPCs.registrarStatus) {
     R.NPCs.registrarStatus(function (n) {
       if (!n || n.id !== 'aveia' || !R.Cuidados || !R.Cuidados.iconeMontaria) return null;
       var ic = R.Cuidados.iconeMontaria();
       if (!ic || !(window.PA && PA.iconeDesenho && PA.iconeDesenho(ic))) return null;
       var b = R.Cuidados.baixo ? R.Cuidados.baixo() : null;
-      return { icone: ic, rotulo: b && b.fome && b.sede ? 'Com fome e sede' : (ic === '💧' ? 'Com sede' : 'Com fome') };
+      return { icone: ic, rotulo: b && b.fome && b.sede ? 'Com fome e sede' : (ic === '💧' ? 'Com sede' : ic === '🛁' ? 'Precisa de banho' : 'Com fome') };
     });
   }
   /* ================= DE FORA: o prédio no mapa (80 × 64 px) ================= */

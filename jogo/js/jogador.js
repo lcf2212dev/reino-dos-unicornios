@@ -32,6 +32,86 @@
     return e;
   }
 
+  /* ---------- sujinho (banho < 25: Cuidados.sujo) ----------
+     Manchinhas de lama no pelo: cada sprite ganha, UMA vez, uma cópia com manchas (cache por canvas,
+     como o espelho), nada de canvas novo por quadro. O pelo é a cor mais comum do sprite (sem o
+     contorno); as manchas só caem em blocos 2×2 de pelo, espalhadas, sempre nos mesmos pontos. */
+  var sujos = new WeakMap();
+  var LAMA = [138, 100, 70], LAMA2 = [104, 72, 50];
+  function misturarRGB(a, b, k) { return [0, 1, 2].map(function (i) { return Math.round(a[i] + (b[i] - a[i]) * k); }); }
+  function sujar(c) {
+    var s = sujos.get(c);
+    if (s) return s;
+    s = PA.novoCanvas(c.width, c.height);
+    var sc = s.getContext('2d');
+    sc.drawImage(c, 0, 0);
+    try {
+      var w = c.width, h = c.height, img = sc.getImageData(0, 0, w, h), d = img.data;
+      var conta = {}, pelo = -1, max = 0;
+      for (var i = 0; i < d.length; i += 4) {
+        if (d[i + 3] < 200) continue;
+        var k = (d[i] << 16) | (d[i + 1] << 8) | d[i + 2];
+        if (k === 0x3a2446) continue;
+        conta[k] = (conta[k] || 0) + 1;
+        if (conta[k] > max) { max = conta[k]; pelo = k; }
+      }
+      var ehPelo = function (x, y) {
+        if (x < 0 || y < 0 || x >= w || y >= h) return false;
+        var o = (y * w + x) * 4;
+        return d[o + 3] >= 200 && ((d[o] << 16) | (d[o + 1] << 8) | d[o + 2]) === pelo;
+      };
+      var cand = [];
+      for (var y = 0; y < h - 1; y++) for (var x = 0; x < w - 1; x++) {
+        if (ehPelo(x, y) && ehPelo(x + 1, y) && ehPelo(x, y + 1) && ehPelo(x + 1, y + 1)) cand.push({ x: x, y: y, o: ((x * 73) ^ (y * 151) ^ (x * y * 7)) % 97 });
+      }
+      cand.sort(function (a, b) { return a.o - b.o; });
+      var quantas = Math.max(4, Math.min(7, Math.round(max / 30))), manchas = [];
+      for (var j = 0; j < cand.length && manchas.length < quantas; j++) {
+        var q = cand[j];
+        if (manchas.every(function (m) { return Math.abs(m.x - q.x) + Math.abs(m.y - q.y) >= 5; })) manchas.push(q);
+      }
+      var cor = [(pelo >> 16) & 255, (pelo >> 8) & 255, pelo & 255];
+      var clara = misturarRGB(cor, LAMA, 0.5), escura = misturarRGB(cor, LAMA2, 0.75);
+      var pintar = function (x, y, rgb) { var o = (y * w + x) * 4; d[o] = rgb[0]; d[o + 1] = rgb[1]; d[o + 2] = rgb[2]; };
+      manchas.forEach(function (m, n) {
+        // mancha de 3 pixels claros e 1 escuro (o canto que falta muda de uma para outra)
+        pintar(m.x, m.y, n % 2 ? escura : clara); pintar(m.x + 1, m.y + 1, n % 2 ? clara : escura);
+        if (n % 3 !== 0) pintar(m.x + 1, m.y, clara);
+        if (n % 3 !== 1) pintar(m.x, m.y + 1, clara);
+      });
+      sc.putImageData(img, 0, 0);
+    } catch (e) {}
+    sujos.set(c, s);
+    return s;
+  }
+  J.sujar = sujar;
+  function montariaSuja() {
+    try { return !!(Reino.Cuidados && Reino.Cuidados.sujo && Reino.Cuidados.sujo()); } catch (e) { return false; }
+  }
+  // o banho de espuma (js/banho.js) desenha o unicórnio enquanto dura: ela fica a pé, ao lado
+  function banhoComUni() {
+    var B = Reino.Banho;
+    try { return !!(B && B.desenhandoUni && B.desenhandoUni()); } catch (e) { return false; }
+  }
+  // nuvenzinha de poeira do sujinho: 3 fiapos cinza-terra atrás do unicórnio (px do jogo, pintor.ret).
+  // Com Animações, sobem e somem devagar; sem, ficam parados. forca 0–1 (na água some)
+  var POEIRA = ['rgba(150,120,92,', 'rgba(196,172,140,'];
+  function poeira(p, x, yPes, larg, alto, lado, animar, forca) {
+    if (forca <= 0.05) return;
+    for (var i = 0; i < 3; i++) {
+      var f = animar ? (J.t / 1.8 + i / 3) % 1 : [0.25, 0.5, 0.75][i];
+      var a = Math.sin(f * Math.PI) * 0.75 * forca;
+      if (a < 0.04) continue;
+      var r = 1 + f * 2.2;
+      var cx = x - lado * (larg * 0.45 + f * 4) + (i - 1) * 3, cy = yPes - 3 - alto * 0.18 - f * 7 - (i % 2) * 2;
+      for (var j = -Math.ceil(r); j <= Math.ceil(r); j++) {
+        var m = Math.sqrt(Math.max(0, r * r - j * j));
+        if (m < 0.4) continue;
+        p.ret(cx - m, cy + j, m * 2, 1, POEIRA[j < 0 ? 1 : 0] + a.toFixed(3) + ')');
+      }
+    }
+  }
+
   // a cena ativa (mapa ou interior); antes de a cena existir, o próprio Mapa
   function cena() { return (Reino.Cena && Reino.Cena.atual()) || Mapa; }
   // gatilho no tile: porta de prédio (mapa), tapete de saída ou escada (interior)
@@ -422,6 +502,9 @@
     if (Reino.util.reduzMovimentoSistema) animar = false;
     var particulas = animar;
     var icone = iconeMontaria();
+    var sujo = montariaSuja();
+    // lado para onde o unicórnio olha (a poeira fica atrás dele): 0 de frente ou de costas
+    function ladoDe(o) { return o.vista === 'frente' || o.vista === 'costas' ? 0 : (o.espelhar ? -1 : 1); }
 
     // faíscas do rastro de estrelinhas
     J.faiscas = J.faiscas.filter(function (f) { f.v += 0.016; return f.v < 0.7; });
@@ -434,15 +517,25 @@
     }
 
     var itens, sobre = null;
+    if (banhoComUni()) {
+      // banho de espuma: o unicórnio está na banheira (quem desenha é o banho) e ela fica a pé, ao lado
+      var aPe = PA.mariana(est.aparencia, false, 0, { capa: usa.capa, vista: olhar.vista });
+      return [{ y: J.y, desenhar: function () {
+        sombra(p, J.x, J.y, 5);
+        desenharSprite(p, aPe.canvas, J.x, J.y + 1, olhar.espelhar);
+      } }];
+    }
     if (estagio >= 1) {
       var spr = PA.montada(def, estagio, quadro, est.aparencia, opcoes);
       var prof = fundura(J.x, J.y), corte = estagio >= 2 ? CORTE.montadaGrande : CORTE.montadaPequena;
       var puloM = pulo * (1 - prof);                 // na água o trote vira deslizar
       var raio = (estagio >= 2 ? 28 : 20) / 2.6 * SOMBRA[olhar.vista];
+      var imgM = sujo ? sujar(spr.canvas) : spr.canvas;
       itens = [{ y: J.y, desenhar: function () {
         sombra(p, J.x, J.y, raio, 1 - prof);
         ondinhas(p, J.x, linhaDagua(J.y + 1, prof, corte), raio + 2, prof, animar);
-        desenharNaAgua(p, spr.canvas, J.x, J.y + 1 - puloM, olhar.espelhar, prof, corte);
+        desenharNaAgua(p, imgM, J.x, J.y + 1 - puloM, olhar.espelhar, prof, corte);
+        if (sujo) poeira(p, J.x, J.y + 1 - puloM, spr.w, spr.h, ladoDe(olhar), animar, 1 - prof * 1.5);
       } }];
       if (icone) {
         var hM = alturaEstavel(['m', def.id, estagio, (usa.enfeites || []).join('+')].join('|'), function (v) {
@@ -462,11 +555,13 @@
       var ry = r.y;
       var profB = fundura(r.x, ry), profM = fundura(J.x, J.y);
       var puloB = pulo * (1 - profB);
+      var imgB = sujo ? sujar(bebe.canvas) : bebe.canvas;
       itens = [
         { y: ry - 1, desenhar: function () {
           sombra(p, r.x, ry, 7 * SOMBRA[olharB.vista], 1 - profB);
           ondinhas(p, r.x, linhaDagua(ry + 1, profB, CORTE.bebe), 9 * SOMBRA[olharB.vista] + 1, profB, animar);
-          desenharNaAgua(p, bebe.canvas, r.x, ry + 1 - puloB, olharB.espelhar, profB, CORTE.bebe);
+          desenharNaAgua(p, imgB, r.x, ry + 1 - puloB, olharB.espelhar, profB, CORTE.bebe);
+          if (sujo) poeira(p, r.x, ry + 1 - puloB, bebe.w, bebe.h, ladoDe(olharB), animar, 1 - profB * 1.5);
         } },
         { y: J.y, desenhar: function () {
           sombra(p, J.x, J.y, 5, 1 - profM);
@@ -498,6 +593,28 @@
     if (J.faiscas.length) itens.unshift({ y: menor - 0.00001, desenhar: faiscas });
     return itens;
   };
+
+  /* ---------- para o banho de espuma (js/banho.js) ---------- */
+  // onde o unicórnio está agora (pés, px do jogo) e para onde olha: montada, com ela; bebê, no rastro
+  J.posMontaria = function () {
+    if (J.montado()) {
+      var o = PA.vistaDaDirecao(J.olharX, J.olharY);
+      return { x: J.x, y: J.y + 1, montado: true, vista: o.vista, espelhar: o.espelhar };
+    }
+    var r = pontoAtras(DIST_BEBE), ob = J.olharBebe || PA.vistaDaDirecao(J.olharX, J.olharY);
+    return { x: r.x, y: r.y + 1, montado: false, vista: ob.vista, espelhar: ob.espelhar };
+  };
+  // o bebê volta do banho: fica a DIST_BEBE dela, na direção de (x, y), olhando para ela
+  // (o rastro vira uma reta dela até um pouco além dele: pontoAtras cai exatamente ali)
+  J.bebeVoltou = function (x, y) {
+    var d = Math.hypot(x - J.x, y - J.y);
+    var ux = d > 0.5 ? (x - J.x) / d : -1, uy = d > 0.5 ? (y - J.y) / d : 0;
+    J.rastro = [{ x: J.x + ux * (DIST_BEBE + 8), y: J.y + uy * (DIST_BEBE + 8) }, { x: J.x, y: J.y }];
+    J.olharBebe = PA.vistaDaDirecao(-ux, -uy);
+  };
+  J.DIST_BEBE = DIST_BEBE;
+  // desenha um sprite com os pés em (x, yPes), espelhado pelo cache de espelhos
+  J.desenharSprite = function (p, c, x, yPes, espelhar) { desenharSprite(p, c, x, yPes, espelhar); };
 
   // desenha a Mariana (e o bebê) na ordem certa, sem mais ninguém
   J.desenhar = function (p, animar) {
