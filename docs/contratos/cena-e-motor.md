@@ -332,7 +332,7 @@ abas que ficaram abertas nos aparelhos percebem e recarregam sozinhas (decisão 
   `{ versao, gerado }`, com `versao` = sha256 de `index.html` + `css/**` + `js/**` (inclusive `js/voz/`, fora o próprio
   `versao.json`), caminho e conteúdo, em ordem alfabética: a mesma árvore dá sempre o mesmo hash. O arquivo está no
   `.gitignore` (cada checkout gera o seu; `gerar-index.js --conferir` não olha para ele) e o `npm run index` (modo de
-  escrita) também o grava. No dia de atualizar: `npm run versao` depois do merge.
+  escrita) também o grava. O `--merge` do `npm run integrar` o grava na árvore principal logo depois do merge.
 - **Desligado** (`Reino.Versao.motivoDesligado(amb)`): no artifact (`window.claude.use` existe: a plataforma já entrega
   a versão nova), aberto do arquivo (`file:`) e no modo determinístico (`Reino.congelado`), a menos que a URL tenha
   `&versao=1` (o teste deste módulo). O e2e não faz fetch nenhum.

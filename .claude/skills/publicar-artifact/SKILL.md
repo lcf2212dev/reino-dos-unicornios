@@ -1,11 +1,11 @@
 ---
 name: publicar-artifact
-description: Use SÓ quando o Leandro pedir, por escrito, para publicar (atualizar) o artifact do Reino dos Unicórnios no claude.ai. Publica apenas o que mudou desde a versão registrada, em lotes, sem mexer no progresso da Mariana. Só o orquestrador; nunca um worker nem um subagente.
+description: Use depois de cada merge na main que muda o jogo (entrega ponta a ponta) ou quando o Leandro pedir, para publicar (atualizar) o artifact do Reino dos Unicórnios no claude.ai. Publica apenas o que mudou desde a versão registrada, em lotes, sem mexer no progresso da Mariana. Só o orquestrador; nunca um worker nem um subagente.
 ---
 
 # Publicar o artifact por delta
 
-Só com pedido explícito do Leandro. Só o orquestrador. Nunca abra o jogo publicado, nunca use `ArtifactData`,
+Depois de cada merge que muda o jogo (autorizado pelo `CLAUDE.md` da raiz) ou a pedido do Leandro. Só o orquestrador. Nunca abra o jogo publicado, nunca use `ArtifactData`,
 nunca leia nem grave o doc `progresso/mariana`. Nunca `force`. Nunca o campo `capabilities` (omitir mantém o `db`).
 
 1. **Ler antes.** `jogo/ferramentas/artifact-publicado.txt` tem `<hash> <url> <versão>`. Faça
@@ -22,7 +22,8 @@ nunca leia nem grave o doc `progresso/mariana`. Nunca `force`. Nunca o campo `ca
 5. **Conferir**: `Artifact action "list"`, `scope "files"`, na `url`: a contagem bate com a lista inteira
    (`npm run artifact` sem `--desde` mostra o total) e os removidos sumiram. Anote a versão que o resultado
    do último publish mostrou.
-6. **Avisar o Leandro**: fechar as abas antigas do artifact (uma aba velha pode pedir arquivo que mudou).
+6. **Avisar o Leandro** no relatório: fechar e abrir de novo as abas do claude.ai (uma aba velha pode pedir arquivo
+   que mudou).
    As abas do servidor de casa se atualizam sozinhas quando existir o módulo de versão (frente A2, módulo versao.js).
 7. **Registrar**: `npm run artifact -- --registrar <hash do HEAD publicado> --versao vN`. Deixe o
    `artifact-publicado.txt` alterado e faça o commit dele na main, com push (pedir o artifact já autoriza).

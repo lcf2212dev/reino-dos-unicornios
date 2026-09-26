@@ -6,7 +6,7 @@ description: Use no Reino dos Unicórnios, como orquestrador, quando as frentes 
 
 Para quem coordena. Ferramentas em `jogo/ferramentas/fluxo/` (Node, sem dependência). O histórico é LINEAR:
 cherry-pick, nunca merge commit. Pedido do Leandro vai ponta a ponta (`CLAUDE.md` da raiz): commit, troca da base
-do e2e, merge e push sem perguntar. Artifact só quando ele pedir.
+do e2e, merge, push e artifact (se o jogo mudou) sem perguntar.
 
 ## Começar uma frente
 ```
@@ -57,8 +57,10 @@ npm run worktree -- <tema> --material <Pasta>
    restaure a árvore principal ao que está no git antes do merge; se não der para entender, pare e conte.
 4. **Push:** `--push` (`git push origin main`, nunca `--force`).
 As flags vão juntas numa chamada só: `--commit --trocar-base … --merge --push`.
-5. **Artifact:** só quando o Leandro pedir → skill `publicar-artifact`.
-6. **Relatório final ao Leandro:** o que entrou, o que você decidiu sozinho, o hash da main e o servidor de teste.
+5. **Artifact:** depois do push, se `npm run artifact -- --desde publicado` mostra arquivo do jogo → skill
+   `publicar-artifact`. Só docs ou ferramentas: não publique.
+6. **Relatório final ao Leandro:** o que entrou, o que você decidiu sozinho, o hash da main, a versão do artifact e
+   o servidor de teste.
 
 ## Nunca
 - Escrever na árvore principal fora do `--merge`; `git push --force`; merge commit; `rm` com caminho variável.

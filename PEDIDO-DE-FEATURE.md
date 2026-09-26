@@ -15,7 +15,7 @@ Fotos e prints vão numa pasta dentro de `matérias/`. Exemplo: `Mariana Revisõ
 O que quero:
 Onde aparece:
 Pronto quando:
-Parar antes? (em branco = até a main e o GitHub)
+Parar antes? (em branco = até a main, o GitHub e o claude.ai)
 ```
 
 ## Modelo completo (novidade de verdade)
@@ -91,9 +91,10 @@ Onde ela joga (se usa recurso do aparelho, como compartilhar, baixar ou câmera)
 O que você já sabe que quer (o resto o Claude decide):
 
 # 15. Até onde ir
-Padrão: construir, testar, pôr na main (o servidor de casa passa a servir a novidade) e mandar para o GitHub.
+Padrão: construir, testar, pôr na main (o servidor de casa passa a servir a novidade), mandar para o GitHub e
+republicar o claude.ai.
 [ ] Parar antes: só servidor de teste para eu jogar
-[ ] Também republicar o artifact do claude.ai
+[ ] Não republicar o claude.ai desta vez
 ```
 
 ## O que já vale sempre (não precisa escrever)
@@ -109,7 +110,7 @@ Padrão: construir, testar, pôr na main (o servidor de casa passa a servir a no
 - **Números:** os ajustáveis ficam em `jogo/js/nucleo/config.js`.
 
 ## O que o Claude faz com o pedido
-O Claude não pergunta nada: decide o que faltar, constrói à parte, testa, põe na main e manda para o GitHub. No fim
+O Claude não pergunta nada: decide o que faltar, constrói à parte, testa, põe na main, manda para o GitHub e republica o claude.ai. No fim
 te conta o que ficou pronto, o que ele decidiu e o endereço de um servidor de teste para você jogar.
 
 ## Exemplo preenchido

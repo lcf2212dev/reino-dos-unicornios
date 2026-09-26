@@ -29,9 +29,8 @@ Guia de uso para o Leandro. As regras técnicas ficam em `docs/contratos/`.
 ## Pedir uma novidade
 - Copie o modelo `PEDIDO-DE-FEATURE.md`, preencha e cole na conversa.
 - Sem tempo? Escreva do seu jeito começando com `/preparar-pedido`.
-- O Claude não pergunta nada: decide o que faltar, constrói, testa, põe na main e manda para o GitHub. O computador
-  de casa passa a servir a novidade na hora (as abas abertas se atualizam sozinhas quando ela para no mapa). No fim
-  ele conta o que fez e o que decidiu. O claude.ai só muda quando você pedir para republicar.
+- O Claude não pergunta nada: decide o que faltar, constrói, testa, põe na main, manda para o GitHub e republica o
+  claude.ai no mesmo link. No fim ele conta o que fez e o que decidiu.
 
 ## Nova matéria
 1. Salve os prints em `Mariana Revisões/matérias/<matéria>/` (ex.: `matérias/geografia/`). A folha de revisão da
@@ -74,21 +73,15 @@ Guia de uso para o Leandro. As regras técnicas ficam em `docs/contratos/`.
 - O progresso fica no banco `jogo/servidor/dados/reino.db`, com as últimas 50 versões guardadas como backup.
 - O nome `reinodosunicornios.local` vem do serviço `systemctl --user status reino-nome`.
 
-## Dia de atualizar o jogo
-O servidor de casa e o claude.ai guardam o progresso em lugares separados, mas precisam ser atualizados no mesmo
-dia. Uma aba antiga aberta pode tirar enfeites novos ou apagar comida comprada.
-1. Escolha um horário em que a Mariana não esteja jogando.
-2. Em **todos** os aparelhos, feche as abas do jogo (servidor de casa e claude.ai), inclusive no seletor de abas e de
-   apps do celular e do tablet. Não deixe nenhuma aba antiga esquecida.
-3. Peça ao Claude para republicar o claude.ai (o computador de casa já serve o jogo novo desde o merge, sem
-   reiniciar o Docker; abas abertas lá se atualizam sozinhas quando ela para no mapa).
-4. Espere **uns 5 minutos** (o navegador guarda os arquivos antigos por até 5 minutos).
-5. Abra um aparelho só, no computador de casa. Confira o que a novidade trouxe e se estrelas, salas e unicórnios
-   estão como antes. Se algo estiver estranho, recarregue a página.
-6. Depois abra o claude.ai num aparelho e confira do mesmo jeito.
-7. Só então libere os outros aparelhos, abrindo o jogo numa aba nova.
+## Quando chega uma novidade
+O Claude atualiza o computador de casa e o claude.ai juntos, no fim do pedido. O progresso da Mariana fica como está.
+- **Computador de casa:** as abas abertas se atualizam sozinhas quando ela para no mapa.
+- **claude.ai:** quando o Claude avisar que republicou, feche as abas do jogo no claude.ai em todos os aparelhos
+  (inclusive no seletor de abas e de apps do celular e do tablet) e abra de novo. Uma aba antiga pode tirar enfeites
+  novos do unicórnio ou apagar comida comprada.
+- Se preferir que nada mude enquanto ela joga, peça a novidade num horário em que ela não esteja jogando.
 - **Se algo parecer errado:** não apague nada nem use "Apagar tudo". Deixe o jogo fechado e peça ao Claude para
-  olhar.
+  olhar. O computador de casa guarda as últimas 50 versões do progresso.
 
 ## Limitações conhecidas
 - Dois aparelhos gastando estrelas quase ao mesmo tempo: as duas compras podem virar uma só. As estrelas nunca ficam

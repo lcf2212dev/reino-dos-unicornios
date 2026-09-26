@@ -43,5 +43,5 @@ Diferença esperada no e2e: <cenas/imagens que podem mudar, ou "idêntico">
 Workers não gravam. Na integração: skill `gravar-vozes` e, com personagem novo ou perfil trocado, `validar-vozes`.
 
 ## Entrega e artifact
-Integração e entrega, até o merge na main e o push, sem perguntar: skill `entregar`. Artifact: skill
-`publicar-artifact`, só quando o Leandro pedir.
+Integração e entrega, até o merge na main, o push e o artifact, sem perguntar: skill `entregar` (artifact pela
+skill `publicar-artifact`).
