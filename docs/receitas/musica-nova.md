@@ -31,7 +31,7 @@ Diferenças esperadas no `npm run e2e` (como ler e o que é defeito: `README.md`
 - imagens: nenhuma (música não aparece na tela).
 
 Conferir: `npm run ver -- --ajustes '{"musica":true}' --ir <lugar> --js 'console.log(JSON.stringify(__reino.musicaAtual()))'`
-mostra `faixa: '<amb>'`. Ouvir mesmo, só o Leandro.
+mostra `faixa: '<amb>'`. Ouvir de verdade não dá daqui: confira pelos testes e pela `faixa` certa.
 
 ## Armadilhas
 - `musicas-faixas.js` é `node: true`: só dados, nada de áudio no carregamento.

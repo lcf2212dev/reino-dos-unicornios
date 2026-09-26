@@ -65,7 +65,7 @@ Como ela acha a novidade: (o caminho até ela: porta, escada, menu Lugares, bot�
 Quem aparece:
 Jeito de falar:
 Textos:     [ ] escrevo eu (abaixo)   [ ] escreva você
-Voz nova:   [ ] quero ouvir amostras e escolher   [ ] use uma que já existe
+Voz nova:   [ ] crie uma nova (o Claude escolhe e confere)   [ ] use uma que já existe
 
 # 9. Prêmios
 (estrelas, R$, unicórnio, acessório, enfeite. Se não tiver prêmio, escreva "nenhum")

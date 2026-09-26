@@ -6,7 +6,7 @@ Para que serve: explica por que o jogo é HTML/CSS/JS puro, carregado em ordem, 
 - O jogo roda de 3 jeitos: `jogo/index.html` aberto direto (`file://`), o servidor de casa (container
   `reino-unicornios`) e o artifact do claude.ai.
 - `file://` bloqueia módulos ES e `fetch` de arquivo local. O artifact recebe uma página e arquivos soltos.
-- O servidor de casa só entrega `index.html`, `css/<arquivo>` e `js/**`, e não muda sem o Leandro
+- O servidor de casa só entrega `index.html`, `css/<arquivo>` e `js/**`, e não muda (é intocável)
   (`jogo/servidor/` é lido pelo container; mudar exige restart, proibido para agentes).
 - Quem mantém é uma IA por vez, sem contexto: menos peças = menos erro.
 

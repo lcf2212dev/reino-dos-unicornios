@@ -22,7 +22,7 @@ sem `--x/--y` o gerador escolhe um chão livre alcançável perto da entrada e d
 |---|---|
 | `jogo/js/interiores/<p>/personagens.js` | `Reino.registrarPersonagem({ id, nome, sprite, perfil, predio?, x?, y?, acao?, paraMateria?, paraProva? })` e as falas `npcs.<id> = { oi, nova, feita, bloqueada, depois }` |
 | `jogo/js/interiores/<p>/<p>.js` | só em prédio de antes: o NPC na lista `npcs` (com `x`, `y` e `acao`) |
-| `amostras-de-voz/` (opcional, quem integra) | amostra da voz para o Leandro ouvir |
+| `amostras-de-voz/` (opcional, quem integra) | amostra da voz, conferida por transcrição |
 Personagem novo NÃO edita `personagens/elenco.js` nem `nucleo/config.js` (os de hoje continuam lá). Professora
 de prova nova: no arquivo da prova (`prova-nova.md`).
 
