@@ -15863,6 +15863,15 @@
    "fala": "Cuido da comida e da água."
   },
   {
+   "chave": "30633eda12",
+   "voz": "npc-aveia",
+   "texto": "E do banho de espuma também!",
+   "pacotes": [
+    "interior-petshop"
+   ],
+   "fala": "E do banho de espuma também!"
+  },
+  {
    "chave": "e92e4167x",
    "voz": "npc-aveia",
    "texto": "Quer ver as comidinhas?",
@@ -15897,6 +15906,24 @@
     "interior-petshop"
    ],
    "fala": "Volte sempre, viu?"
+  },
+  {
+   "chave": "62b9e93011",
+   "voz": "npc-aveia",
+   "texto": "Banho de espuma é de graça!",
+   "pacotes": [
+    "interior-petshop"
+   ],
+   "fala": "Banho de espuma é de graça!"
+  },
+  {
+   "chave": "e1a5fc7112",
+   "voz": "npc-aveia",
+   "texto": "A banheira fica ali do lado!",
+   "pacotes": [
+    "interior-petshop"
+   ],
+   "fala": "A banheira fica ali do lado!"
   },
   {
    "chave": "a8ffb21cz",
@@ -16005,24 +16032,6 @@
     "interior-petshop"
    ],
    "fala": "Para secar a crina toda."
-  },
-  {
-   "chave": "d3330b6fv",
-   "voz": "narradora",
-   "texto": "A banheira de espuma!",
-   "pacotes": [
-    "interior-petshop"
-   ],
-   "fala": "A banheira de espuma!"
-  },
-  {
-   "chave": "7058acb210",
-   "voz": "narradora",
-   "texto": "Banho morninho e cheiroso.",
-   "pacotes": [
-    "interior-petshop"
-   ],
-   "fala": "Banho morninho e cheiroso."
   },
   {
    "chave": "dc354bec18",
@@ -20795,6 +20804,15 @@
    "fala": "Os unicórnios bebem água aqui."
   },
   {
+   "chave": "c4a4a93114",
+   "voz": "narradora",
+   "texto": "Aqui é o banho dos unicórnios!",
+   "pacotes": [
+    "interior-petshop"
+   ],
+   "fala": "Aqui é o banho dos unicórnios!"
+  },
+  {
    "chave": "0cd57bb61x",
    "voz": "claude",
    "texto": "Seu unicórnio está com fome. A Pet Shop tem comidinha gostosa!",
@@ -20894,6 +20912,33 @@
    "fala": "A despensa está vazia. Vamos comprar comidinha na Pet Shop?"
   },
   {
+   "chave": "c32e02c923",
+   "voz": "claude",
+   "texto": "Seu unicórnio está precisando de um banho. Tem banheira na Pet Shop!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Seu unicórnio está precisando de um banho. Tem banheira na Pet Shop!"
+  },
+  {
+   "chave": "d7b488661f",
+   "voz": "unicornio",
+   "texto": "Que banho cheiroso! Agora estou limpinho!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Que banho cheiroso! Agora estou limpinho!"
+  },
+  {
+   "chave": "d24022341g",
+   "voz": "claude",
+   "texto": "Ele já está limpinho! Pode brincar à vontade.",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Ele já está limpinho! Pode brincar à vontade."
+  },
+  {
    "chave": "cb4dc16e1e",
    "voz": "claude",
    "texto": "Oba, uma pergunta surpresa! Leia com calma.",
@@ -20955,6 +21000,60 @@
     "geral"
    ],
    "fala": "Não foi dessa vez, e está tudo bem! Olha a explicação."
+  },
+  {
+   "chave": "4e7b52c411",
+   "voz": "claude",
+   "texto": "Que foto linda! Vamos guardar?",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Que foto linda! Vamos guardar?"
+  },
+  {
+   "chave": "b1781b55u",
+   "voz": "claude",
+   "texto": "Foto guardada no álbum!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Foto guardada no álbum!"
+  },
+  {
+   "chave": "9202b1f11q",
+   "voz": "claude",
+   "texto": "O álbum está cheio. Apague uma foto para guardar outra.",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "O álbum está cheio. Apague uma foto para guardar outra."
+  },
+  {
+   "chave": "84356ec11b",
+   "voz": "claude",
+   "texto": "Neste aparelho só dá para salvar a foto.",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Neste aparelho só dá para salvar a foto."
+  },
+  {
+   "chave": "d6d3cf3518",
+   "voz": "claude",
+   "texto": "Pronto! A foto foi salva no aparelho.",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Pronto! A foto foi salva no aparelho."
+  },
+  {
+   "chave": "2a7e190e1i",
+   "voz": "claude",
+   "texto": "O álbum ainda está vazio. Vamos tirar uma foto?",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "O álbum ainda está vazio. Vamos tirar uma foto?"
   },
   {
    "chave": "6a4a021b1r",
