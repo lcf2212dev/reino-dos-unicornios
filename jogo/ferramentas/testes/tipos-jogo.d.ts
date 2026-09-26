@@ -144,6 +144,7 @@ interface Ajustes {
   animacoes: boolean;
   /** escala do texto (1 = normal) */
   texto: number;
+  /** antigo (setas na tela): fica no save, o jogo ignora */
   setas: boolean;
   /** perguntas surpresa (campo aditivo) */
   surpresa: boolean;
@@ -952,8 +953,6 @@ interface EventosReino {
   PROGRESSO_REMOTO: 'progressoRemoto';
   /** sem carga */
   MAPA_MUDOU: 'mapaMudou';
-  /** sem carga */
-  SETAS: 'setas';
   /** carga: boolean (começou/terminou) */
   TRANSICAO: 'transicao';
   /** carga: Reino.Cuidados.depurar() */

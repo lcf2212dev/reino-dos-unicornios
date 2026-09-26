@@ -21,9 +21,6 @@ Reino.EVENTOS = {
      depois da Aparência), atividades/provas.js, personagens/npcs-conversa.js.
      Ouve: motor/main.js (HUD e redesenho), motor/interiores-cena.js (redesenha o fundo do interior). */
   MAPA_MUDOU: 'mapaMudou',
-  /* O interruptor "Setas na tela" mudou. Sem carga.
-     Emite: ui/ajustes.js. Ouve: motor/main.js (mostra/esconde #setas). */
-  SETAS: 'setas',
   /* Começou (true) ou terminou (false) a transição em íris. Carga: boolean.
      Emite: motor/transicao.js. Ouve: ui/hud.js (botão das fotos). */
   TRANSICAO: 'transicao',

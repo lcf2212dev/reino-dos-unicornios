@@ -37,6 +37,17 @@
     var n = Math.hypot(dx, dy);
     if (n > 0.001) { J.olharX = dx / n; J.olharY = dy / n; }
   };
+  // vira para a mais próxima das 8 direções, com folga (histerese): só troca quando o ângulo passa
+  // 10° além da metade do caminho até a vizinha, para não piscar entre duas (thumbstick e mouse)
+  var OITAVO = Math.PI / 4, FOLGA = Math.PI / 18;
+  J.virar8 = function (dx, dy) {
+    if (Math.hypot(dx, dy) < 0.001) return;
+    var ang = Math.atan2(dy, dx), atual = Math.round(Math.atan2(J.olharY, J.olharX) / OITAVO);
+    var dif = Math.atan2(Math.sin(ang - atual * OITAVO), Math.cos(ang - atual * OITAVO));
+    if (Math.abs(dif) <= OITAVO / 2 + FOLGA) return J.virar(Math.cos(atual * OITAVO), Math.sin(atual * OITAVO));
+    var novo = Math.round(ang / OITAVO) * OITAVO;
+    J.virar(Math.cos(novo), Math.sin(novo));
+  };
   J.posicionar = function (tx, ty) {
     J.x = tx * T + 8; J.y = ty * T + 12;
     // teleporte ou troca de cena: nada de respingo nem gotinhas; o estado da água recomeça calado
@@ -131,7 +142,7 @@
   };
   J.parar = function () { J.caminho = []; J.aoChegar = null; J.marcador = null; };
 
-  // teclas: {x: -1..1, y: -1..1}
+  // teclas: {x: -1..1, y: -1..1, livre?} (livre: direção analógica do thumbstick/mouse, vira em 8 com folga)
   J.atualizar = function (dt, teclas, aoPisarPorta) {
     mover(dt, teclas, aoPisarPorta);
     atualizarAgua(dt);
@@ -173,10 +184,11 @@
       if (livre(nx, J.y)) J.x = nx;
       if (livre(J.x, ny)) J.y = ny;
       // olha para onde anda de verdade (encostada numa parede, desliza de lado)
-      if (J.x !== x0 || J.y !== y0) J.virar(J.x - x0, J.y - y0); else J.virar(vx, vy);
+      var virar = teclas.livre ? J.virar8 : J.virar;
+      if (J.x !== x0 || J.y !== y0) virar(J.x - x0, J.y - y0); else virar(vx, vy);
       J.andando = true;
       guardarRastro();
-      // pisou numa porta, tapete ou escada andando com as setas
+      // pisou numa porta, tapete ou escada andando com as setas, o mouse ou o thumbstick
       var tl = J.tile();
       var porta = gatilhoEm(tl.x, tl.y);
       if (porta && J.portaIgnorada !== porta.id && aoPisarPorta) { J.portaIgnorada = porta.id; aoPisarPorta(porta); }

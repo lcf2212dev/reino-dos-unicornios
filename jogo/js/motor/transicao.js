@@ -146,7 +146,7 @@
   function bloquearHud(e) {
     if (!S.trans) return;
     var alvo = e.target;
-    if (alvo && alvo.closest && alvo.closest('#hud, #setas')) { e.stopPropagation(); e.preventDefault(); }
+    if (alvo && alvo.closest && alvo.closest('#hud')) { e.stopPropagation(); e.preventDefault(); }
   }
   ['click', 'pointerdown', 'pointerup', 'touchstart'].forEach(function (tipo) {
     document.addEventListener(tipo, bloquearHud, { capture: true, passive: false });

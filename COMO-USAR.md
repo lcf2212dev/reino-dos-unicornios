@@ -5,6 +5,10 @@
   - Precisa estar logado no claude.ai com a sua conta nesses aparelhos, porque o link é privado.
   - O progresso é sincronizado entre os aparelhos. Quando um aparelho junta o que veio de outro lugar (outro aparelho, outra aba), ele reenvia o resultado ao servidor.
   - Duas abas do jogo no mesmo navegador juntam o progresso uma da outra, sem perder nada.
+  - **Como andar:**
+    - **Notebook:** clique num lugar e ela vai sozinha até lá; clique numa pessoa ou objeto e ela vai e conversa ou usa. Segurando o botão do mouse, ela anda para onde o ponteiro está e segue o ponteiro; soltou, ela para. As setas do teclado (ou W, A, S, D) também andam.
+    - **Celular e tablet:** toque num lugar e ela vai sozinha até lá; toque numa pessoa ou objeto e ela age. Encostando o dedo na metade esquerda da tela e arrastando, aparece um controle redondo (joystick) no lugar do dedo, e ela anda para qualquer lado; soltou, o controle some e ela para.
+    - Não existem mais as setas na tela (nem o item "Setas na tela" nos Ajustes).
   - **Teclado:** uma tela aberta pelo teclado mostra um contorno roxo em volta dela (o Tab leva ao primeiro botão), e o Esc fecha os balões do Claude e dos personagens.
   - **Teclado nas provas, salas e treino:** o foco acompanha. A tela rola até o botão focado; depois de escolher um bloco, o foco fica no monte de blocos; ao trocar de questão (ou sair do ritual de respirar), o foco vai para a questão nova. O Enter que chega logo depois da troca não escolhe nada sem ela ver.
   - **Letras da fonte do jogo:** as maiúsculas com acento saem certas em todo o jogo (HISTÓRIA, NÃO, ÁFRICA). Antes, a letra acentuada aparecia minúscula no meio da palavra.
@@ -106,7 +110,7 @@
   - a medalha é dada só pelos acertos;
   - o balão "REVISAR!" some quando ela começa a revisar, para não cobrir as questões.
 - **Medalha da escola:** a medalha de ouro da prova real (R$100) é combinada fora do jogo. O jogo só lembra a Mariana de ir com calma e revisar.
-- **Nadar no lago:** ela toca na água ou anda com as setas até o lago, e nada, montada ou a pé. Na água anda mais devagar (60% da velocidade). Se a montaria estiver com fome ou sede, as duas lentidões se somam: na água fica com cerca de 42% da velocidade. Se ela toca em terra, o caminho dá a volta por terra. Para mudar, edite `nado` em `jogo/js/nucleo/config.js`.
+- **Nadar no lago:** ela toca na água, ou anda até o lago (mouse segurado, joystick do toque ou setas do teclado), e nada, montada ou a pé. Na água anda mais devagar (60% da velocidade). Se a montaria estiver com fome ou sede, as duas lentidões se somam: na água fica com cerca de 42% da velocidade. Se ela toca em terra, o caminho dá a volta por terra. Para mudar, edite `nado` em `jogo/js/nucleo/config.js`.
 
 ## Pergunta surpresa
 - De vez em quando (entre 3 e 10 minutos de jogo livre), o Claude aparece com uma pergunta das salas que ela já fez: escolha, verdadeiro/falso ou várias respostas. Sem nenhuma sala feita, a pergunta não aparece.

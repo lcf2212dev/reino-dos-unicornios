@@ -102,7 +102,7 @@
     V.jogoAtivo = true;
     U.$('#hud').hidden = false;
     UI.montarHUD();
-    V.montarSetas();
+    V.montarControle();
     J.posicionar(17, 10);
     V.desenhar(performance.now());
     // fome e sede da montaria (módulo cuidados) só contam daqui em diante (jogo aberto e ela jogando)
@@ -184,7 +184,6 @@
     U.on(EV.PROGRESSO, function () { UI.atualizarHUD(); });
     U.on(EV.PROGRESSO_REMOTO, function () { UI.aplicarAjustes(); if (V.jogoAtivo) UI.atualizarHUD(); });
     U.on(EV.MAPA_MUDOU, function () { UI.atualizarHUD(); V.desenhar(performance.now()); });
-    U.on(EV.SETAS, function () { U.$('#setas').hidden = !est().ajustes.setas; });
 
     // vozes gravadas: frases do Claude e de cada matéria (as salas carregam quando abrem)
     Reino.Voz.carregarVarios(['geral'].concat(Reino.materias.map(function (m) { return m.id + '-extra'; })));

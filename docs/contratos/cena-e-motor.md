@@ -15,7 +15,7 @@ Regras gerais (ambiente, convenções, testes): `README.md`.
 - `jogo/js/motor/transicao.js` — íris (`TEMPO`, `TEMPO_RAPIDO`, `COR_IRIS`), evento `Reino.EVENTOS.TRANSICAO`.
 - `jogo/js/motor/camera.js` — canvas, escala, câmera, pintor, `margemBaixoMapa` (cria `Reino._motor`).
 - `jogo/js/motor/laco.js` — o quadro (camadas) e o laço (`requestAnimationFrame`).
-- `jogo/js/motor/entrada.js` — teclado, toque no canvas, setas na tela, agir no alvo.
+- `jogo/js/motor/entrada.js` — teclado, toque/clique no canvas, mouse segurado, thumbstick do toque, agir no alvo.
 - `jogo/js/motor/main.js` — início do jogo e telas de entrada.
 - `jogo/js/personagens/jogador.js`, `jogador-desenho.js` — `Jogador` (movimento, caminho, água, desenho).
 - `jogo/js/mundo/mapa.js` (grade, lugares, caminho), `lugares.js` (`Mapa.LUGARES_FIXOS`), `mapa-desenho.js`
@@ -126,13 +126,26 @@ alvo = { tipo: 'npc'|'objeto'|'saida'|'escada'|'lugar'|'claude', id,
 ```
 1. Controle genérico: toque → `alvoEm`; com alvo, `Jogador.irPara(tile)` e, ao chegar,
    `Jogador.virar(olhar)` e `agir()`; sem alvo, anda até o tile (ou `maisPerto`).
-2. Enter/Espaço → `alvoPerto`.
-3. Tudo ignorado quando `Reino.Cena.bloqueado()`.
+2. Enter/Espaço → `alvoPerto`. Setas do teclado e WASD andam (`V.teclas`); Tab/Enter/Esc como sempre.
+3. Tudo ignorado quando `Reino.Cena.bloqueado()`; com tela DOM aberta (pausado), nada de gesto.
+4. Controles de ponteiro (`entrada.js`; não há mais setas na tela; `ajustes.setas` fica no save e é ignorado):
+   - Toque/clique RÁPIDO em qualquer lugar = o item 1 (vai até o ponto ou age). Mouse e dedo na metade
+     esquerda esperam o `pointerup` (pode virar arrasto); dedo na metade direita age já no `pointerdown`.
+   - Mouse (`pointerType 'mouse'`, botão principal): arrastou mais de 6 px CSS ou segurou 300 ms → segue o
+     ponteiro enquanto o botão está apertado; soltou → para. Perto do ponteiro (6 px do jogo) ela para e só
+     volta a andar a 12 px (sem tremer em volta dele).
+   - Toque/caneta (`'touch'`/`'pen'`, não o tamanho da tela): dedo na metade esquerda arrastado mais de 12 px
+     CSS → thumbstick em `#controle` (base 110 px, pino 48 px; tablet ≥ 700×700: 130/56), centrado onde o
+     dedo encostou; direção livre, zona morta 10 px; soltou → some e ela para. Um `pointerId` por vez; outros
+     dedos fazem o toque rápido. `#controle` fica com z-index 5 (embaixo do HUD, balões e telas), sem toque.
+   - A direção entra no laço por `V.direcaoLivre()` (só sem tecla apertada) como `{x, y, livre: true}`;
+     `Jogador.virar8` vira para a mais próxima das 8 direções com folga de 10° (histerese).
+   - Transição, diálogo, tela aberta ou `blur` → `V.soltarLivre()` (o gesto acaba).
 
 ## 7. Jogador — `Jogador` (`personagens/jogador.js`)
 1. Consulta sempre `Reino.Cena.atual()` (com `Mapa` como reserva antes de a cena existir) para `solido`,
    `caminho`, `portaEm`/`saidaEm`.
-2. `J.atualizar(dt, teclas, aoPisar)`: andando com as setas, ao pisar num tile com `portaEm` ou `saidaEm`,
+2. `J.atualizar(dt, teclas, aoPisar)`: andando com as setas, o mouse ou o thumbstick, ao pisar num tile com `portaEm` ou `saidaEm`,
    chama `aoPisar(gatilhoOuLugar)` uma vez (`J.portaIgnorada` = id até sair do tile).
 3. `J.itensDesenho(pintor, animar) → [{ y, desenhar() }]`: Mariana e bebê como itens separados; montada =
    um item. `J.desenhar(pintor, animar)` continua existindo (desenha os próprios itens em ordem).

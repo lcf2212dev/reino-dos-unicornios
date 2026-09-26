@@ -28,7 +28,7 @@ ${MARCA}
 <body>
 <canvas id="reino" aria-label="Mapa do Reino dos Unicórnios"></canvas>
 <div id="hud" hidden></div>
-<div id="setas" hidden></div>
+<div id="controle" hidden></div>
 <div id="telas"></div>
 
 {{SCRIPTS}}

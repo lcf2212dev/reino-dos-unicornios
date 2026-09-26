@@ -64,13 +64,16 @@
     if (!V.jogoAtivo || V.pausado) return;
     // em transição ou com um diálogo aberto ela não anda nem aciona portas
     if (Cena.bloqueado()) {
+      if (V.soltarLivre) V.soltarLivre();   // transição ou diálogo: o thumbstick some e o mouse solta
       if (Cena.estado() === Cena.DIALOGO && (J.caminho.length || J.aoChegar)) J.parar();
       J.atualizar(dt, { x: 0, y: 0 }, null);
     }
     else {
       var tx = (V.teclas.dir ? 1 : 0) - (V.teclas.esq ? 1 : 0);
       var ty = (V.teclas.baixo ? 1 : 0) - (V.teclas.cima ? 1 : 0);
-      J.atualizar(dt, { x: tx, y: ty }, Cena.acionar);
+      // sem tecla: a direção do mouse segurado ou do thumbstick (entrada.js)
+      var dir = !tx && !ty && V.direcaoLivre && V.direcaoLivre();
+      J.atualizar(dt, dir ? { x: dir.x, y: dir.y, livre: true } : { x: tx, y: ty }, Cena.acionar);
     }
     desenhar(t);
   }

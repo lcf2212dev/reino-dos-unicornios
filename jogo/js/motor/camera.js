@@ -4,7 +4,7 @@
      canvas, ctx, buffer, bctx, escala, dpr   o canvas da tela e o buffer em px do jogo (main.iniciar)
      cam, pintor                             a câmera (px do jogo) e o pintor (passado à Cena e às cenas)
      teclas, ultimo, pausado, jogoAtivo      controles e laço
-     est(), redimensionar(), atualizarCamera(), desenhar(t) (laco.js), ligarControles(), montarSetas() (entrada.js) */
+     est(), redimensionar(), atualizarCamera(), desenhar(t) (laco.js), ligarControles(), montarControle() (entrada.js) */
 (function () {
   var U = Reino.util, P = Reino.Progresso, J = Jogador, T = Mapa.T, Cena = Reino.Cena;
   var V = Reino._motor = {
