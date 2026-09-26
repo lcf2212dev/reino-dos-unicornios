@@ -7,4 +7,5 @@
 # f8e280a = cavaleiros e professoras no elenco (paraMateria/paraProva): única diferença, dados/elenco.json.
 # e954b33 = tela dos pais cita js/nucleo/config.js (bug 2): só tela-pais nos 3 tamanhos muda.
 # d0f1239 = cabeçalho da prova com o emoji dela (📜 História, 🔠 Inglês): só as telas de prova dessas duas mudam.
-d0f1239
+# edb2623 = controles (mouse e thumbstick, sem setas), botão do álbum, Ciências no Observatório, andar da NASA e prova de Ciências.
+edb2623
