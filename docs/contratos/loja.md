@@ -1,12 +1,13 @@
 # Contrato: loja (enfeites, comidas, prêmios)
 
 Cobre a lista única do que se compra com estrelas (`Reino.LojaItens`), os enfeites e seus slots, os
-prêmios da escola à venda, os preços, as comidas da Pet Shop e a guarda de toque de toda tela que gasta.
-Estrelas no save: `save-e-mescla.md`. Compra de comida: `cuidados.md` §6.
+prêmios da escola à venda, os preços, as comidas da Pet Shop e a guarda da compra na Loja.
+Estrelas no save: `save-e-mescla.md`. Compra de comida: `cuidados.md` §6. Guarda de toque de toda tela que
+gasta: `ui.md` §5.
 
 ## Índice
 1. Onde está no código · 2. `Reino.LojaItens` · 3. Prêmios da escola à venda · 4. Enfeites e slots ·
-5. Comidas · 6. Guarda de toque (compras e telas) · 7. Antes de mexer
+5. Comidas · 6. Guarda de toque na Loja · 7. Antes de mexer
 
 ## 1. Onde está no código
 - `jogo/js/conteudo/loja-itens.js` — `Reino.LojaItens` (dados, sem DOM).
@@ -14,7 +15,7 @@ Estrelas no save: `save-e-mescla.md`. Compra de comida: `cuidados.md` §6.
 - `jogo/js/interiores/loja/` — a Loja das Fadas por dentro. `jogo/js/interiores/escola/objetos.js` — mural.
 - `jogo/js/arte/pixelart-unicornio-moldes.js` — `PA.ENFEITES_MONTARIA`, moldes `UNI.adulto`/`UNI.filhote`.
 - `jogo/js/arte/pixelart-unicornio.js` — cache de sprites com enfeites (`TETO_COMBOS`).
-- `jogo/js/ui/base.js` — guarda de toque (`UI.segurarToques`, `UI.toqueSegurado`, `UI.escolher`, `UI.confirmar`, `ARMAR_MS`).
+- `jogo/js/ui/base.js` — guarda de toque (`ui.md` §5) e `logoDepoisDaCompra`.
 - Preços: `Reino.config.precoPremio`, `Reino.config.comidas` (`jogo/js/nucleo/config.js`).
 - Prévia: `jogo/ferramentas/previas/acessorios.html`.
 
@@ -74,40 +75,13 @@ Reino.LojaItens = {
 1. Lista e preços em `Reino.config.comidas` (`{ id, nome, icone, preco, fome, enche? }`; `enche` = vai a 100).
 2. Compra, despensa e "dar": `cuidados.md` §2 e §6. A água é de graça.
 
-## 6. Guarda de toque (vale para toda tela que gasta estrela ou comida)
-Por quê: um botão que some no 1º toque deixava o 2º toque cair no que aparece embaixo (já comprou comida,
-trocou enfeite e ligou interruptor sem ela querer).
-```
-UI.segurarToques(ms = 800)   // abriu ou fechou uma tela por toque (até 600 ms antes): cliques PERTO (40 px) desse
-                             // toque ficam ignorados por 800 ms; cada toque ignorado no mesmo lugar estica a guarda
-                             // (+800 ms), até 2 s depois da troca de tela. Longe dele, vale na hora
-UI.toqueSegurado(x, y) → bool   // o toque em (x, y) está segurado agora? (e estica a guarda). O pointerdown do
-                             // mapa usa (motor/entrada.js): o 2º toque no "Ir" do Lugares não troca o destino
-UI.escolher(msg, [{ rotulo, valor, principal?, seguro?, gasta? }], classe?) → Promise(valor)
-                             // o `seguro` (ou o 1º) recebe o foco e é o que o Esc escolhe
-UI.confirmar(msg, sim, nao, gasta?)   // atalho de UI.escolher com dois botões ("não" é o seguro)
-```
-1. Tudo vale só para toque e mouse de verdade (`isTrusted`, `detail > 0`); o toque ignorado afunda o botão de
-   leve, sem som.
-2. Botões que gastam (`gasta: true`; estrela ou comida guardada): nascem apagados (`.armando`,
-   `aria-disabled`) e só acendem depois de 1,1 s (`ARMAR_MS`) SEM nenhum toque na tela; cada toque nesse
-   tempo recomeça a espera. Uma barrinha enche durante a espera (com "reduzir movimento", o texto "Espera um
-   pouquinho…"). O "Agora não" vale na hora.
-3. Sob o dedo: se o toque que abriu o diálogo (até 600 ms antes) cai a 40 px de um botão que gasta, esse
-   botão troca de lugar com o seguro; se ainda sobrar um embaixo do dedo, o diálogo se move até o "Agora não"
-   ficar sob o dedo; se nem assim, um toque a 40 px dali não gasta.
-4. Ajustes: no 1º segundo depois de abrir, nenhum toque muda interruptor.
-5. Loja: logo depois de uma compra, o cartão comprado (só ele) ignora toques perto do ponto da compra até
-   1,1 s (`ARMAR_MS`) sem nenhum toque na tela; cada toque nesse tempo recomeça a espera (`logoDepoisDaCompra`).
-6. Teclado sem trava: Enter/Espaço (clique com `detail` 0) e `.click()` de código passam sempre, inclusive num
-   botão apagado (ela chega nele com um Tab de propósito); Enter/Espaço segurados (repetição automática) não
-   acionam de novo.
-7. Tela nova que não põe o foco em nada recebe o foco NELA MESMA (como um diálogo), não no 1º botão: um Enter
-   logo depois não age sozinho; o Tab leva ao 1º botão. (O `UI.escolher` foca o seguro.)
-8. Toda compra nova pergunta ANTES de gastar, com os botões de gastar marcados `gasta: true` e um botão
-   `seguro`. Nunca gastar e perguntar depois.
-9. HUD de cima: os blocos (`.hud-esq`, `.hud-dir`, `.hud-botoes`) têm `pointer-events: none`; só botões e
-   chips pegam toque (senão o 📷 criava uma faixa morta sob o chip da montaria no celular).
+## 6. Guarda de toque na Loja
+A guarda de toque de toda tela que gasta (`UI.segurarToques`, `UI.toqueSegurado`, `UI.escolher` com `gasta`,
+`ARMAR_MS`, teclado sem espera, perguntar antes de gastar) e as regras do HUD de cima: `ui.md` §5 e §6.
+Só da Loja:
+1. Toda compra pergunta ANTES de gastar (`ui.md` §5.5), com os botões de gastar `gasta: true` e um `seguro`.
+2. Logo depois de uma compra, o cartão comprado (só ele) ignora toques perto do ponto da compra até 1,1 s
+   (`ARMAR_MS`) sem nenhum toque na tela; cada toque nesse tempo recomeça a espera (`logoDepoisDaCompra`).
 
 ## 7. Antes de mexer, rode
 ```

@@ -1,6 +1,6 @@
 // Teste de NAVEGADOR (Chromium, servidor de TESTE, save sintético, modo determinístico ?debug=1&congelar=1):
 // no desafio de ligar, a classe `treme` de um par errado sai dos DOIS botões (bug 3 de
-// docs/decisoes/bugs-encontrados.md). Antes, o par era apagado aos 450 ms e o botão da direita, procurado
+// docs/decisoes/historico/bugs-da-refatoracao.md). Antes, o par era apagado aos 450 ms e o botão da direita, procurado
 // pelo par já apagado aos 600 ms, ficava com `treme` para sempre (e não tremia de novo num erro novo).
 // Monta um ligar sintético com Reino.Desafios.render, erra um par, anda o relógio 1 s e confere; erra de novo
 // com o mesmo botão e confere que ele treme e depois para.

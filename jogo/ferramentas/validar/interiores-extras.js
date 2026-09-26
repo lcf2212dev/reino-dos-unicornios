@@ -22,7 +22,7 @@ function emojiDoMenu(ctx, lugar) {
   const e = lugar && lugar.menu && lugar.menu.emoji;
   if (!e || !ctx.ICONES) return [];
   const k = String(e).replace(/️/g, '');
-  return ctx.ICONES[k] ? [] : [`lugar ${lugar.id}: o emoji do menu ${e} não tem desenho (Reino.registrarIcones na pasta do prédio; docs/contratos/README.md §2 item 5)`];
+  return ctx.ICONES[k] ? [] : [`lugar ${lugar.id}: o emoji do menu ${e} não tem desenho (Reino.registrarIcones na pasta do prédio; jogo/js/CLAUDE.md, Arte)`];
 }
 
 module.exports = { chavesDoSprite, emojiDoMenu };

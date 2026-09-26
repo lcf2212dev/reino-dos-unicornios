@@ -74,8 +74,8 @@ Progresso, Cena ou `document` no carregamento.
    - nos dois, o enunciado se repete no topo do resultado e o painel rola até ele;
    - "Agora não", ✕ ou Esc: fecha sem nada e a pergunta volta para o fim da fila (não conta como feita).
 5. Em todos os casos, sorteia o próximo tempo.
-6. Ao fechar, o foco vai para o mapa (o painel não tem `_focoAntes`), nunca de volta ao botão do HUD (o Espaço
-   de andar abriria o Estábulo).
+6. Ao fechar, o foco vai para o mapa (o painel zera `_focoAntes`, `ui.md` §4.4), nunca de volta ao botão do HUD
+   (o Espaço de andar abriria o Estábulo).
 7. Fechou com o dedo ("Ok!", "Agora não" ou ✕) e ela continua tocando perto dali (40 px, último toque há
    menos de 800 ms): 1 s depois de fechar, `UI.segurarToques(1)` renova a guarda, que dura até 3 s no total;
    o botão do menu que estava embaixo do painel não abre. Toque longe e teclado valem na hora.

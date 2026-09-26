@@ -27,12 +27,9 @@ npm test
 npm run e2e            # esperado: dados da config/Pet Shop mudam
 ```
 
-Referências (na worktree; precisam do git): em `npm test`, o passo *referências de dados* mostra a diferença
-esperada abaixo; os outros passos têm que sair ✔. Diferenças esperadas no `npm run e2e`:
+Diferenças esperadas no `npm run e2e` (como ler e o que é defeito: `README.md`):
 - dados: `loja` (`comidas` e `config`);
 - imagens: `tela-petshop` (e o Estábulo, se a comida estiver na despensa do save sintético: só as 3 primeiras estão).
-A base do e2e só muda por commit: quem integra troca o hash em `jogo/ferramentas/testes/base-referencia.txt`
-depois do commit da mudança; não edite esse arquivo na tarefa. Qualquer diferença fora da lista acima é defeito.
 
 Conferir (fotos em `/tmp/reino-testes/ver/<nome>/`; `<nome>/estado.json` traz `__reino.cuidados()` com a despensa):
 ```
@@ -44,5 +41,5 @@ Em script: `abrirCenario()` de `jogo/ferramentas/testes/cenario.js`.
 ## Armadilhas
 - Id de comida nunca muda nem é reaproveitado: a despensa do save guarda contadores por id (ids
   desconhecidos ficam guardados e sem efeito numa versão antiga).
-- Toda compra pergunta ANTES de gastar, com a guarda de toque (`docs/contratos/loja.md` §6): use a tela que existe.
+- Toda compra pergunta ANTES de gastar, com a guarda de toque (`docs/contratos/ui.md` §5): use a tela que existe.
 - Água é de graça e só no bebedouro; comida não mexe na sede.

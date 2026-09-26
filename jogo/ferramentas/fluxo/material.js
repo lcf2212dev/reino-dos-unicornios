@@ -1,7 +1,9 @@
 // Cópias reduzidas do material de uma matéria ou prova (prints e fotos) para os agentes lerem sem gastar:
 //   node jogo/ferramentas/fluxo/material.js <Pasta> [--lado 1100] [--folha]      (npm run material -- <Pasta>)
-// Lê <raiz da árvore principal>/<Pasta> (recursivo; se não existir lá, a da worktree atual; ou um caminho
-// absoluto) e grava em /tmp/reino-testes/material/<pasta sem acento>/:
+// Lê <Pasta> da árvore principal (recursivo; se não existir lá, da worktree atual; ou um caminho absoluto) e grava
+// em /tmp/reino-testes/material/<pasta sem acento>/. <Pasta> é o nome da matéria em matérias/ ("Geografia",
+// "ciências/Revisão") ou um caminho a partir da raiz; a pasta de saída é o caminho abaixo de matérias/
+// ("ciencias-revisao"):
 //   NN-<nome>.jpg   magick <arq> -auto-orient -resize <lado>x<lado>> -quality 82 (HEIC também; plano B:
 //                   heif-convert), na ordem da data EXIF e, sem data, do nome
 //   indice.txt      número, original, dimensões (original → reduzida), KB (original → reduzida), data EXIF
@@ -15,7 +17,7 @@ const IMAGEM = /\.(jpe?g|png|heic|heif|webp|gif|bmp|tiff?|avif)$/i;
 const HEIC = /\.(heic|heif)$/i;
 const POR_FOLHA = 12;
 const AJUDA = `Uso: node jogo/ferramentas/fluxo/material.js <Pasta> [--lado 1100] [--folha]
-  <Pasta>   pasta na raiz da árvore principal (ex.: Ciências) ou caminho absoluto
+  <Pasta>   matéria em matérias/ (ex.: Ciências, ciências/Revisão), caminho a partir da raiz ou caminho absoluto
   --lado    maior lado das cópias, em px (padrão 1100; só reduz, nunca amplia)
   --folha   também folhas de contato com 12 fotos cada (folha-01.jpg…)`;
 
@@ -25,14 +27,21 @@ function conferirMagick() {
   }
 }
 
-// pasta de origem: a da árvore principal, senão a da worktree atual, ou um caminho absoluto
+// pasta de origem: a da árvore principal, senão a da worktree atual, ou um caminho absoluto;
+// nome: o da pasta de saída (o caminho abaixo de matérias/, ou o último pedaço do caminho absoluto)
 function origem(nome, cwd) {
   let r = null;
   try { r = C.raizes(cwd); } catch (e) { /* fora de um repositório git */ }
-  const cands = path.isAbsolute(nome) ? [nome] : r ? [path.join(r.principal, nome), path.join(r.repo, nome)] : [path.resolve(cwd, nome)];
-  const achada = cands.find((p) => fs.existsSync(p) && fs.statSync(p).isDirectory());
-  if (!achada) throw new Error(`pasta de material não encontrada: ${cands.join(' nem ')}`);
-  return achada;
+  if (path.isAbsolute(nome) || !r) {
+    const abs = path.resolve(cwd, nome);
+    if (!fs.existsSync(abs) || !fs.statSync(abs).isDirectory()) throw new Error(`pasta de material não encontrada: ${abs}`);
+    return { abs, nome: path.basename(abs) };
+  }
+  for (const arvore of [r.principal, r.repo]) {
+    const rel = C.pastaMaterial(arvore, nome);
+    if (rel) return { abs: path.join(arvore, rel), nome: rel.replace(new RegExp(`^${C.PASTA_MATERIAS}/`), '') };
+  }
+  throw new Error(`pasta de material não encontrada: ${nome} (nem em ${r.principal}/${C.PASTA_MATERIAS}/ nem na worktree atual)`);
 }
 
 function listar(raiz, rel = '') {
@@ -78,8 +87,9 @@ function gerarMaterial(argv, cwd = process.cwd()) {
   const lado = Number(op.lado || 1100);
   if (!Number.isInteger(lado) || lado < 100 || lado > 8000) throw new Error(`--lado inválido: ${op.lado}`);
   conferirMagick();
-  const de = origem(op._[0].replace(/\/+$/, ''), cwd);
-  const para = path.join(C.PASTA_TESTES, 'material', C.slug(path.basename(de)));
+  const o = origem(op._[0].replace(/\/+$/, ''), cwd);
+  const de = o.abs;
+  const para = path.join(C.PASTA_TESTES, 'material', C.slug(o.nome));
   fs.mkdirSync(para, { recursive: true });
 
   const todos = listar(de);

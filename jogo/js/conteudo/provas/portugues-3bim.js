@@ -3,6 +3,7 @@
    O que muda é só o jeito de responder: tocar, montar a frase ou completar com as letras.
    Na folha, o título da receita e os itens 8e a 8g foram escritos à mão pela professora;
    o 8h (riscado, "REPETIDA") ficou de fora e o "13.e)" impresso na questão 12 virou "e)".
+   Fotos em matérias/português/Revisão/ (IMG_7486 a 7488). As raras 8e CASSA, 8g CASSACO e 12f FERO não são aceitas.
    Acessórios: lendário (acertou tudo na 1ª tentativa), raro (na 2ª), comum (depois). */
 (function () {
   // texto de apoio das questões 1 a 4 (mostrado acima do enunciado)

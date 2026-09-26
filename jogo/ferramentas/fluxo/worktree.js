@@ -4,8 +4,8 @@
 //    (recusa se a pasta ou a branch já existem)
 // 2. node_modules = link para um já instalado (o da árvore principal, senão o de outra worktree registrada);
 //    com --ci, `npm ci` na pasta nova
-// 3. --material <Pasta>: copia da árvore principal os arquivos NÃO rastreados de <Pasta>/ (os prints de uma
-//    matéria ou prova nova), com a data original; pasta já rastreada vem pela própria branch
+// 3. --material <Pasta>: copia da árvore principal os arquivos NÃO rastreados de matérias/<Pasta>/ (os prints de
+//    uma matéria ou prova nova), com a data original; pasta já rastreada vem pela própria branch
 // Só LÊ a árvore principal. Imprime o caminho e os próximos comandos.
 const fs = require('fs');
 const path = require('path');
@@ -13,7 +13,7 @@ const C = require('./comum');
 
 const AJUDA = `Uso: node jogo/ferramentas/fluxo/worktree.js <tema> [--material <Pasta>]… [--base <ref>] [--ci]
   <tema>      letras minúsculas, números e hífen (vira reino-<tema> e feat/<tema>)
-  --material  pasta de material na raiz da árvore principal (repita para mais de uma)
+  --material  matéria em matérias/ da árvore principal, ex.: Geografia (repita para mais de uma)
   --base      de onde a branch nasce (padrão: main)
   --ci        npm ci na worktree nova em vez do link para um node_modules já instalado`;
 
@@ -51,10 +51,9 @@ function criarWorktree(argv, cwd = process.cwd()) {
 
 // quais arquivos de <Pasta> copiar: só os não rastreados (a pasta tem de existir na árvore principal)
 function planoMaterial(principal, nome) {
-  const rel = nome.replace(/\/+$/, '');
-  if (!rel || path.isAbsolute(rel) || rel.split('/').includes('..')) throw new Error(`--material: use o nome da pasta na raiz da árvore principal (recebido: "${nome}")`);
-  const abs = path.join(principal, rel);
-  if (!fs.existsSync(abs) || !fs.statSync(abs).isDirectory()) throw new Error(`--material: a pasta ${abs} não existe`);
+  if (!nome || path.isAbsolute(nome) || nome.split('/').includes('..')) throw new Error(`--material: use o nome da matéria em ${C.PASTA_MATERIAS}/ (recebido: "${nome}")`);
+  const rel = C.pastaMaterial(principal, nome);
+  if (!rel) throw new Error(`--material: a pasta ${nome} não existe em ${path.join(principal, C.PASTA_MATERIAS)}/ nem na raiz`);
   const lista = C.naoRastreados(principal, rel);
   const motivo = C.rastreados(principal, rel).length ? 'já rastreada no git (vem pela branch), nada a copiar' : 'vazia, nada a copiar';
   return { pasta: rel, lista, motivo };

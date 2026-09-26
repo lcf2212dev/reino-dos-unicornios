@@ -6,10 +6,9 @@ description: Use antes de entregar ou fazer commit de qualquer mudança no Reino
 
 Na raiz da worktree (nunca na árvore principal), nesta ordem:
 ```
-npm test            # unidade, validadores, tamanho, referências de dados
+npm test            # unidade, validadores, tamanho (código 420, dados 800), referências de dados
 npm run validar     # conteúdo, interiores, index x manifesto, docs
 npm run e2e         # jogo atual x base, no Chromium (dados, imagens nos 3 tamanhos, vozes)
-npm run tamanho     # código até 420 linhas, dados até 800
 npm run tipos       # TypeScript nos arquivos com JSDoc
 ```
 - Mexeu em desenho, motor ou interiores: também `npm run e2e -- --desempenho`.

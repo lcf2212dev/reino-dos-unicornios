@@ -1,7 +1,7 @@
 # Receita: prova bimestral nova (Escola do Reino)
 
 Para que serve: pôr uma prova da escola (folha real) no jogo, com os 3 acessórios de prêmio.
-Regras: `docs/contratos/conteudo.md` §5 e §8 (exemplo: Português), `docs/contratos/loja.md` §3.
+Regras: `docs/contratos/conteudo.md` §5 e §6 (exemplo: `provas/portugues-3bim.js`), `docs/contratos/loja.md` §3.
 
 ## Comece pelo gerador
 ```
@@ -23,7 +23,9 @@ Prova nova NÃO edita `pixelart-unicornio-moldes.js`, os lotes de `jogo/js/arte/
 (`prof-<prova>`, voz `npc-padrao-3`).
 
 ## Passo a passo
-1. Leia a folha (fotos na pasta da matéria). Enunciados e alternativas iguais aos da folha, na mesma ordem.
+1. Leia a folha: `npm run material -- <Pasta> --folha` e só as reduzidas em `/tmp/reino-testes/material/`, nunca
+   os originais. O que a criança respondeu à mão NUNCA é gabarito: o enunciado vem do impresso.
+   Enunciados e alternativas iguais aos da folha, na mesma ordem.
 2. Questões com ids únicos (`<sigla>-01`…), `livro` (carta do livro da matéria) e `explica`. Formato:
    `jogo/js/conteudo/provas/historia-3bim.js`.
 3. Acessórios `{ lendario, raro, comum }`, cada um `{ id, nome, desenho, icone }` no próprio arquivo
@@ -43,12 +45,9 @@ npm test
 npm run e2e            # esperado: dados das provas, da loja e da Escola
 ```
 
-Referências (na worktree; precisam do git): em `npm test`, o passo *referências de dados* mostra a diferença
-esperada abaixo; os outros passos têm que sair ✔. Diferenças esperadas no `npm run e2e`:
+Diferenças esperadas no `npm run e2e` (como ler e o que é defeito: `README.md`):
 - dados: `falas`, `provas`, `elenco` (professora), `interiores` (sala nova na Escola), `loja` (prêmios à venda, acessórios) e `vozes`;
 - imagens: `tela-escola`, `tela-loja`, o interior da Escola e a Loja por dentro (vitrine de prêmios).
-A base do e2e só muda por commit: quem integra troca o hash em `jogo/ferramentas/testes/base-referencia.txt`
-depois do commit da mudança; não edite esse arquivo na tarefa. Qualquer diferença fora da lista acima é defeito.
 
 Conferir: `npm run ver -- --previa acessorios:<id do acessório>` (o desenho), `npm run ver -- --previa icones`,
 `npm run ver -- --ir escola --nome escola` (a sala de aula) e `npm run ver -- --tela prova:<id> --tamanhos celular`

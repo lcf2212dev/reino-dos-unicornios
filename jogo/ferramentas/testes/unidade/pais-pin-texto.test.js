@@ -1,5 +1,5 @@
 // Testes de unidade: o texto da tela dos pais aponta o arquivo onde o PIN mora de verdade (bug 2 de
-// docs/decisoes/bugs-encontrados.md: dizia js/config.js, que virou js/nucleo/config.js na refatoração).
+// docs/decisoes/historico/bugs-da-refatoracao.md: dizia js/config.js, que virou js/nucleo/config.js na refatoração).
 // Rodar (da raiz): node --test jogo/ferramentas/testes/unidade/pais-pin-texto.test.js   (tudo: npm test)
 const { test } = require('node:test');
 const assert = require('assert');

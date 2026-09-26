@@ -90,8 +90,8 @@ resolver `null`, a ação não roda).
    (um passo: `{x:±1,y:0}` ou `{x:0,y:±1}`; padrão `{ x: 0, y: 1 }`, logo abaixo). `olhar` é da escada de
    **origem**: para onde ela olha ao chegar.
 3. O lado de chegada (escada + `chegar`) é andável, fora de escada e do tapete de saída do andar.
-4. Sem par, ela chega no `spawn` do destino. `chegada: { x, y }` explícita (jeito antigo) ainda vale e ganha do
-   par; com par também, o validador dá aviso (tire a `chegada`).
+4. Sem par, ela chega no `spawn` do destino. `chegada: { x, y }` explícita ganha do par; com par também,
+   o validador dá aviso (tire a `chegada`).
 5. Onde ela chega de fato: `Reino.Interiores.chegadaDaEscada(origemId, i)` (validador, e2e, testes);
    `Reino.Interiores.chegadaVindoDe(paraId, deId)` é o que o motor usa (`cena-e-motor.md` §3).
 6. Conferido por `validar/validar-escadas.js` (chamado pelo `validar-interiores.js`) e pela tabela congelada de
@@ -144,6 +144,8 @@ Reino.Interiores.objeto('escrivaninha', {
    (pela `caixaParada` do HUD: a caixa sem o transform da animação, remedida a cada 500 ms); se não couber,
    some enquanto estiver coberta.
 6. O ícone de status do NPC é desenhado em px da tela (via `pintor.ctx`).
+7. Piso com contraste ≥ 2,9 com o contorno da Mariana (mediana dos pixels desenhados), em todo cômodo
+   (`contraste-pisos.navegador.test.js`); exceção só com motivo em `validar/contraste.js`.
 
 ## 7. Critério de "rico" (conferido por `validar-interiores.js`)
 1. Cada cômodo: ≥15 TIPOS de objeto distintos (pegada tocando o `rect`, parede inclusa).
@@ -177,10 +179,9 @@ Reino.Interiores.objeto('escrivaninha', {
    cômodo por sala; ala no Castelo e baias no Estábulo vêm dos geradores.
 
 ## 9. Prédios
-Lugares: museu (`materia:historia`), torre + torre-1..5 + torre-relogio (`materia:ingles`), escola, castelo,
-estabulo, loja, bau, petshop, observatorio (andares `observatorio`, `observatorio-2`; e `observatorio-3`, que é o
-lugar `materia:ciencias`: matéria dentro do Observatório, sem prédio no mapa, `docs/contratos/conteudo.md` §2 item 6),
-portugues (`materia:portugues`). Escada entre andares de lugares diferentes vale se um for matéria `dentro` do outro.
+Cômodos, objetos e paleta de cada prédio estão no próprio código (`jogo/js/interiores/<p>/`, cabeçalho de cada
+parte). Aqui só o que outros arquivos usam. Escada entre andares de lugares diferentes vale se um for matéria
+`dentro` do outro (Ciências no 3º andar do Observatório, `conteudo.md` §2 item 6).
 
 ### 9.1 Estábulo
 1. Ação de objeto `{ tipo: 'unicornio', indice }` (baia; índice em `Reino.NPCs.unicornioDaBaia(n)`: baia fixa
@@ -193,22 +194,18 @@ portugues (`materia:portugues`). Escada entre andares de lugares diferentes vale
    (`P.regProva(prova).premio === r`), não a compra.
 
 ### 9.3 Pet Shop (lugar `petshop`)
-1. Mapa: `Mapa.LUGARES_FIXOS` (`mundo/lugares.js`): rect `{ x: 2, y: 21, w: 5, h: 4 }`, porta (4, 24), caminho
-   de rua até a rua de baixo, em frente ao Estábulo. A porta desenhada fica no meio do tile (4, 24).
-2. Desenho de fora: `Mapa.PREDIOS.petshop`, registrado pelo próprio prédio (`petshop/fora.js`).
-3. Interior: `petshop/falas.js`, `objetos-loja.js`, `objetos-agua.js`, `petshop.js`, `acoes.js`, `fora.js`;
-   pacote `interior-petshop`; critério de "rico"; 2 cômodos:
-   - `loja` (na tela: "Pet Shop"): balcão, prateleiras de comida, sacos de feno, cestas de cenoura e maçã,
-     potes de biscoito, escovas de crina, coleiras, casinha, aquário, balança. A `estante` e a vitrine do
-     `bolo` também abrem a tela (`acao: { tipo: 'tela', tela: 'petshop' }`);
-   - `agua` (Cantinho da Água): bebedouro grande, toalhas e banheira de espuma.
-4. NPC `aveia` e as ações `beber`/`banho`: `cuidados.md` §6 e §7.
+1. Posição no mapa em `Mapa.LUGARES_FIXOS` (`mundo/lugares.js`); desenho de fora `Mapa.PREDIOS.petshop`
+   registrado pelo próprio prédio (`petshop/fora.js`).
+2. A `estante` e a vitrine do `bolo` também abrem a tela (`acao: { tipo: 'tela', tela: 'petshop' }`).
+3. NPC `aveia` e as ações `beber`/`banho`: `cuidados.md` §6 e §7.
+
+### 9.3.1 Baú do Tesouro (lugar `bau`)
+1. Monte grande (`bau/bau.js`): escala fixa de 2 matérias, cheio em R$40 (`valorPorMateria` × 2); matéria nova
+   nunca faz o mesmo dinheiro parecer menor. Cada `bau-pilha` cresce com o dinheiro da própria matéria.
 
 ### 9.4 Observatório (lugar `observatorio`)
-1. Mapa: rect `{ x: 28, y: 21, w: 6, h: 5 }`, porta (31, 25), no morro a leste do lago (o ponto alto do reino).
-2. Desenho de fora: `Mapa.PREDIOS.observatorio` (morro, cúpula, telescópio) e o cintilar em
-   `Mapa.PREDIOS_ANIM.observatorio`, em `observatorio/fora.js`.
-3. Cenas do telescópio e robô:
+1. Desenho de fora e cintilar (`Mapa.PREDIOS.observatorio`, `Mapa.PREDIOS_ANIM.observatorio`) em `observatorio/fora.js`.
+2. Cenas do telescópio e robô:
    ```
    Reino.ObservatorioCenas = {                      // observatorio/cenas.js (+ planetas.js)
      temas() → ['lua','saturno','jupiter','marte','cruzeiro','cometa','galaxia','venus','pleiades']
@@ -218,72 +215,21 @@ portugues (`materia:portugues`). Escada entre andares de lugares diferentes vale
      desenharPlaneta(ctx, id, cx, cy, raio)       // Sol, 8 planetas e Plutão, para o Planetário
    }
    Reino.NPCs.registrarBase('robo', fn)            // observatorio/robo.js: o Robô Cosmo (corpo, detalhe, antena)
+   Reino.ObservatorioInterior = { retratoDe, abrirTelescopio, temaDaCena }   // observatorio/acoes.js
    ```
-4. Interior noturno (`falas.js`, `ceu.js`, `objetos-*.js`, `acoes.js`, `observatorio.js`; pacote
-   `interior-observatorio`), estrelas piscando (só com animações), 3 cômodos:
-   - `cupula` (Cúpula do Telescópio): olhar no telescópio abre uma cena em pixel art com uma curiosidade;
-   - `planetario` (Planetário): o Sol e os 8 planetas em órbita (animação leve); Plutão como planeta-anão.
-     Cada planeta é objeto interativo; a animação não tira o planeta da própria pegada (o toque sempre o acha);
-   - `galeria` (Galeria do Espaço): foguete, traje de astronauta, pedra da Lua, meteorito e mapa das
-     constelações, cada um interativo.
-5. Telescópio: painel do DOM (`UI.painel('telescopio')`) com a cena animada a 5 quadros/s, só com animações
-   ligadas e o painel aberto. `Reino.ObservatorioInterior = { retratoDe, abrirTelescopio, temaDaCena }` (`acoes.js`).
-6. Visual de galáxia: paleta azul-marinho → azul `#2f3fb8` → roxo `#6c3fd4` → magenta `#b24fe0`, toques ciano
-   `#6fd6ff` e rosa; faixa de Via Láctea na cúpula; halos em anéis de pixel; estrelas em cruz; poeira
-   cintilante; estrelas que trocam de cor (branco → ciano → lilás) em ritmos diferentes; estrela cadente a
-   cada 8–15 s. Nos 3 cômodos, na cena do telescópio e no prédio do mapa.
-7. Nebulosas e céu pré-renderizados (canvas cacheado); no máximo ~80 partículas animadas (hoje ~78 no prédio
-   todo); parado e colorido sem Animações. Balões, placas dos cômodos e ícones de status legíveis.
-8. Piso da Cúpula e da Galeria em galáxia clara (contraste com o contorno da Mariana ≥ 2,9, mediana dos pixels
-   desenhados, conferida em todo cômodo por `contraste-pisos.navegador.test.js`; exceções com motivo em
-   `validar/contraste.js`: a Cúpula mede 2,87, exceção aceita pelo Leandro em 2026-09-26); o Planetário mantém o
-   chão clareado que o pai aprovou.
-9. NPCs, ações e curiosidades: `npcs-e-dialogo.md` §9.
-10. 2º andar `observatorio-2`, Centro de Pesquisas Avançadas da NASA (`nasa-falas.js`, `nasa-personagens.js`,
-   `nasa-objetos.js`, `nasa-experiencias.js`, `nasa-andar.js`): só diversão, sem
-   pergunta, estrela, dinheiro ou save. Sobe pelo arco no fundo da Cúpula (26, 3); chega à direita do vão que
-   desce, (21, 12) com `chegar: { x: 1, y: 0 }` = (22, 12); sobe para `observatorio-3` pelo arco (26, 3); quem
-   desce do 3º chega logo abaixo dele (26, 4) (escadas pareadas, §3.1). Visual branco/cinza/azul, "NASA" em
-   letras próprias 5×7 (`S.escreverNasa`, nunca o logotipo). Cômodos: `hangar` (foguete grande com torre, traje,
-   tanques), `controle` (telões, consoles, relógio, NASA no chão, escadas), `experiencias`. Experiências (ação
-   `nasa-experiencia`, animação no próprio objeto só com Animações): foguete que decola, pena e martelo na câmara
-   sem ar, fases da Lua com a lâmpada, horta espacial.
+3. Telescópio: painel do DOM (`UI.painel('telescopio')`) com a cena animada a 5 quadros/s, só com animações
+   ligadas e o painel aberto. Planetas animados nunca saem da própria pegada (o toque sempre os acha).
+4. Andares `observatorio-2` (NASA: só diversão, sem pergunta, estrela, dinheiro ou save; "NASA" em letras
+   próprias, nunca o logotipo) e `observatorio-3` (lugar `materia:ciencias`, sem saída para o mapa). NPCs, ações e
+   curiosidades: `npcs-e-dialogo.md` §9.
+5. Os andares 1 e 2 são só curiosidade: `observatorio/acoes.js` só LÊ o progresso (nada de estrela, dinheiro ou save).
 
 ### 9.5 Casa das Palavras (lugar `materia:portugues`)
-1. Desenho de fora: `Mapa.PREDIOS.palavras`, registrado pelo próprio prédio (`portugues/fora.js`): livro
-   aberto com "Aa" na fachada, porta roxa, mastro com a flâmula do lápis; cores próprias.
-2. Interior: `portugues/falas.js` (`Reino.FALAS_INTERIORES.portugues = { npcs, objetos, extras? }`) e as partes
-   `objetos-hall-cozinha.js`, `objetos-horta-circo.js`, `objetos-porto.js`, `objetos-parque.js`, `portugues.js`,
-   `fora.js`. Ids `portugues` (entrada) e, se houver andares ou alas, `portugues-<n>`; todos com
-   `pacote: 'interior-portugues'`. Objetos temáticos `portugues-<nome>`.
-3. Cômodos: Hall (Dona Palavrinha, lista das salas e Livro das Letras no púlpito), Cozinha das Receitas,
-   Horta do H, Pátio do Circo (amarelinha no chão), Porto da Expedição (icebergs, pinguins, focas,
-   albatroz), Parque do Carrossel. Critério de "rico", objetos da apostila, quadro do unicórnio raro em cada sala.
-4. Castelo: `clara` com `paraMateria: 'portugues'` no elenco e um tema de ala `TEMAS.portugues`
-   (`castelo/castelo.js`). Escola: `lucia` com `paraProva: 'portugues-3bim'` no elenco. Falas próprias no
-   `falas.js` de cada prédio.
-
-### Laboratório de Ciências (lugar `materia:ciencias`, 3º andar do Observatório)
-1. Sem prédio no mapa: a matéria mora no Observatório (`lugar.dentro: 'observatorio'`, `interior: 'observatorio-3'`).
-   O interior `observatorio-3` é o de entrada do lugar `materia:ciencias` (o menu Lugares leva ao `spawn`), sem
-   saída para o mapa: só a escada `desce` (vão no chão do Hall, em (18, 23)) para `observatorio-2` (lá ela chega
-   em (26, 4)). Quem sobe chega logo acima do vão (`chegar: { x: 0, y: -1 }` = (18, 22), igual ao `spawn`)
-   (escadas pareadas, §3.1). Pacote `interior-observatorio`.
-2. Partes: `lab-falas.js` (personagens e falas, acrescentadas ao
-   `Reino.FALAS_INTERIORES.observatorio`), `lab-objetos-1.js`, `lab-objetos-2.js`, `lab-objetos-3.js` (objetos
-   `lab-<nome>`, cores e ajudantes em `S.lab`) e `lab-andar3.js` (layout e registro). Laboratório claro (branco,
-   verde-água e amarelo), estático, sem animações.
-3. Cômodos (37×25, a mesma planta da Casa das Palavras): Hall (Professora Íris, mapa das salas, Livro de Ciências
-   no púlpito, microscópio, tubos de ensaio); sala 1 Vivo ou Não Vivo? (formigueiro de vidro, brotinho de feijão,
-   pedra, galão de água); sala 2 Quem Ganha, Quem Perde (onça, jacaré no rio, gafanhoto, cachorrinho com pulgas,
-   colmeia); sala 3 Amigos da Natureza (búfalo com o passarinho, beija-flor, flores e abelha, jogo da memória no
-   chão); sala 4 Cada Um no Seu Hábitat (iglu com urso-polar, aquário com aguapé e peixe, mandacaru, camelo,
-   Caatinga, termômetro); sala 5 Detetives da Natureza (mesa do detetive com a lupa, bicho-preguiça, pinguim,
-   tartaruga marinha, feneco, lagarto-de-colar, lobo-do-ártico, pegadas). Critério de "rico" e o quadro do
-   unicórnio raro de cada sala (id lido da matéria: o raro com `sala: 'c<n>'`).
-4. Castelo: `lab-cavaleira` (Cavaleira Jade, `paraMateria: 'ciencias'`), registrada e com falas no próprio
-   `castelo/castelo.js` (o Castelo carrega antes do Observatório), e o tema de ala `TEMAS.ciencias`, que usa
-   objetos `lab-*`.
+1. Desenho de fora `Mapa.PREDIOS.palavras`, em `portugues/fora.js`. Ids `portugues` e, se houver andares ou alas,
+   `portugues-<n>`, todos com `pacote: 'interior-portugues'`.
+2. Cavaleira e professora vêm do elenco (`paraMateria` / `paraProva`, §8.7); o tema da ala em `TEMAS.<matéria>`
+   (`castelo/castelo.js`). O mesmo vale para Ciências (`lab-cavaleira`, registrada no `castelo/castelo.js`, que
+   carrega antes do Observatório).
 
 ### 9.6 Interior de teste
 O interior de teste da primeira fase (`teste`, lugar `bau`, NPCs `teste-guia`/`teste-sala`) foi trocado pelo

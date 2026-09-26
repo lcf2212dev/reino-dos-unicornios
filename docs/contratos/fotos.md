@@ -10,7 +10,7 @@ Cobre `Reino.Fotos`: tirar foto da cena do jogo (📷), a moldura com carimbo, a
 - `jogo/js/sistemas/fotos.js` — frases, banco (IndexedDB), lugar e data, captura (`Reino._fotos` interno).
 - `jogo/js/sistemas/fotos-moldura.js` — moldura em pixel e carimbo.
 - `jogo/js/sistemas/fotos-telas.js` — tirar (flash, prévia), álbum, foto grande, salvar, `depurar`.
-- `css/ui-fotos.css`. Botão 📷: `jogo/js/ui/hud.js`. Números: `Reino.config.fotos`
+- `css/ui-fotos.css`. Botão 📷: `jogo/js/ui/hud-fotos.js`. Números: `Reino.config.fotos`
   (`maxLado` 1600, `maxAlbum` 40, `banco` 'reino-fotos', `toqueLongoMs` 600).
 
 ## 2. API `Reino.Fotos`
@@ -71,9 +71,10 @@ Nada toca em DOM, canvas, PA, Progresso ou Cena no carregamento.
 1. No HUD de cima, perto da tela cheia (tela cheia, 📷, álbum): toque → `Fotos.tirar()`; toque longo (`config.fotos.toqueLongoMs`) →
    `Fotos.abrirAlbum()`. Desabilitado quando `!Fotos.podeTirar()` e apagado durante a transição (evento `Reino.EVENTOS.TRANSICAO`).
 2. Botão do álbum (`.btn-album`, ícone `menu:album`) logo depois do 📷: um toque → `Fotos.abrirAlbum()`, apagado
-   junto com o 📷. NÃO fica no menu de baixo (com 5 botões o menu ficava com 420 px numa tela de 390 e cortava).
+   junto com o 📷. NÃO fica no menu de baixo (limite do dock: `ui.md` §6).
    Também abre pela prévia e segurando o 📷. No celular os três ficam um embaixo do outro; no tablet/notebook, lado a lado.
-3. Os blocos do HUD de cima deixam o toque passar (`loja.md` §6, regra 9).
+3. Os dois entram por `UI.registrarBotaoHud` (`ui/hud-fotos.js`); regras do HUD de cima (blocos que deixam o
+   toque passar, apagado com `aria-disabled`, limite no celular): `ui.md` §6.
 
 ## 7. Antes de mexer, rode
 ```

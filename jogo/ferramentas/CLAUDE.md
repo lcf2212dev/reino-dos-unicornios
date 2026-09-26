@@ -13,7 +13,7 @@ Ferramentas de desenvolvimento (Node). Nenhuma entra no jogo. Comandos: `CLAUDE.
 - Nunca leia, copie ou grave em `jogo/servidor/dados/`. Nunca publique o artifact
   (`gerar-artifact.js` só grava em `/tmp`; publicar é da skill `publicar-artifact`, com pedido do Leandro).
 - Derrube só os seus servidores, pelo PID ou `s.parar()`. Nunca `pkill`/`killall` por nome.
-- Temporários em `/tmp/reino-testes/`, sem apagar. Exceção: as ferramentas de voz (`vozes/`) gravam o venv do
+- Temporários em `/tmp/reino-testes/`, sem apagar (`rm` só com caminho literal: `CLAUDE.md` da raiz). Exceção: as ferramentas de voz (`vozes/`) gravam o venv do
   transcritor e os temporários em `<raiz>/.vozes/` (ignorado pelo git; o /tmp é memória).
 
 ## Testes que não travam
@@ -23,14 +23,36 @@ Ferramentas de desenvolvimento (Node). Nenhuma entra no jogo. Comandos: `CLAUDE.
   concorrência até 4, `--so <regex>`, `--sem-navegador`.
 - Trava por worktree (`testes/trava.js`, `/tmp/reino-testes/travas/`): `npm test`, `unidade` e `e2e` esperam até
   10 min se outro teste roda na mesma worktree (`--sem-esperar` falha logo). Trava de PID morto é assumida.
+- "Page crashed"/"Target crashed" no Chromium: confira `df -h /tmp`; se estiver cheio, rode com
+  `TMPDIR=/dev/shm/<pasta>` (não apague temporários de outros). A pasta de testes pode ir junto:
+  `REINO_TESTES=/dev/shm/reino-testes` (só dentro de `/tmp` ou `/dev/shm`; `guardas.js`).
 - O servidor de teste mostra também `http://<IP da rede>:<porta>/`: só para o pai abrir à mão no celular/tablet.
   Scripts e Playwright seguem em 127.0.0.1.
 
 ## Ver o jogo
-- `npm run ver` (`testes/ver.js`) ou, em script, `abrirCenario()` de `testes/cenario.js`; não escreva outro ajudante de Playwright.
+- Ver e fotografar uma cena com UM comando: `npm run ver -- --ir petshop --estrelas 500 --tamanhos celular`
+  (`testes/ver.js`; `--tela loja|sala:h1|prova:<id>|desafio:h1-03` (esse desafio, sem sorteio), `--passos`, `--js`,
+  `--previa`, `--recorte`, `--ampliar`; `--ajuda` tem exemplos). Sai em `/tmp/reino-testes/ver/<nome>/` (PNG,
+  erros.txt, estado.json e console.txt, o console todo da página) e com código ≠ 0 se houve erro de console. O
+  `console.log` de cada `--js`/`--passos` e o valor que cada `--js` devolve saem no fim da saída.
+- `--previa mapa` traz a grade (coluna/linha, rect e id de cada lugar e clareira, áreas livres em azul); `--livres 5x4`
+  lista rects livres com o `caminho` sugerido até a rua (sem navegador; `docs/contratos/cena-e-motor.md` §9).
+- Em script: `abrirCenario()` de `testes/cenario.js` (servidor e banco novos por cenário, save de `saves-compor.js`);
+  não escreva outro ajudante de Playwright.
+
+## Conferir enquanto constrói
+- Rápido: `npm run ver -- …` (fotos), `npm run validar` (só erros e avisos; `--so <id>` num validador para olhar uma
+  feature, `--detalhes` para a lista inteira), `npm run e2e -- --cenas '<regex>'` (só as imagens daquela parte).
+- No fim: `npm test` e o `npm run e2e` completo (cada imagem diferente sai com a da base, a atual e uma imagem de
+  diferença em magenta; diferença esperada: registre).
 
 ## Gerador
-- `novo/` (`npm run novo`): cria os arquivos de prédio, matéria, sala, prova, personagem e sistema a partir de `novo/modelos/`, com as linhas do manifesto.
+- `novo/` (`npm run novo`): prédio, matéria, sala, prova, personagem, sistema, desafio… começam com UM comando, ex.:
+  `npm run novo -- predio padaria --nome "Padaria" --rect 10,10,5,4 --caminho "14,14;13,14;12,14"`,
+  `npm run novo -- materia geografia --nome "Geografia" --emoji 🌍` ou `npm run novo -- sala historia h6`
+  (`--lista`, `--ajuda`, `--seco`, `--raiz`).
+- Cria os arquivos dos modelos (`novo/modelos/`), põe as linhas no manifesto na ordem certa, refaz o index e imprime o
+  que falta. O que só a pessoa escreve sai como `(preencher)`, que os validadores recusam ("falta preencher").
 
 ## Artifact por delta
 - `npm run artifact -- --desde <commit|publicado>` (`artifact-delta.js`): só novos, mudados e removidos
@@ -61,7 +83,17 @@ Ferramentas de desenvolvimento (Node). Nenhuma entra no jogo. Comandos: `CLAUDE.
 - Save `completo` (`testes/saves.js`) só marca salas das matérias fixas (história, inglês, português): matéria nova
   não muda o dinheiro do HUD.
 
+## Tipos (`npm run tipos`)
+- Só conferência, nunca build nem arquivo carregado pelo jogo. Nos arquivos do jogo os tipos entram só em comentários
+  JSDoc (`/** @param {Materia} m */`).
+- Formas principais em `testes/tipos-jogo.d.ts`: `EstadoSave` (e `RegSala`, `RegTreino`, `RegProva`, `RegUni`,
+  `RegCuidado`, `RegDespensa`, `Ajustes`, `Usando`), `Materia`, `Sala`, `Desafio` (união por `tipo`), `Prova`,
+  `InteriorDef`, `ObjetoInterior`, `Npc`, `PersonagemElenco`, `Fala`, `Enfeite`/`Comida`/`ItemLoja`, `Musica`,
+  `EventosReino`, e as APIs `ProgressoApi`, `FalasApi`, `LojaItensApi`, `MusicasApi`. APIs de extensão em
+  `testes/tipos-extensoes.d.ts`; as globais (`Reino.*` com tipo) em `testes/tipos-globais.d.ts`; a lista conferida em
+  `testes/tipos.json` (`fora` = os que ainda têm erro).
+
 ## Regras
-- Limite: 420 linhas por ferramenta (`npm run tamanho`).
+- Tamanho: 420 linhas por ferramenta (regra completa em `jogo/js/CLAUDE.md`, Tamanho).
 - Teste de unidade novo: `testes/unidade/<assunto>.test.js` (`npm run unidade -- --so <assunto>`).
 - Ferramenta que abre navegador ou sobe servidor usa as guardas acima.

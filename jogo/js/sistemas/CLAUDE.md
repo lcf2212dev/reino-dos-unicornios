@@ -18,13 +18,13 @@ Contratos: `docs/contratos/save-e-mescla.md`, `cuidados.md`, `surpresa.md`, `som
 - `Reino.registrarModulo` no fim do arquivo (receita `docs/receitas/sistema-novo.md`); não edite `motor/main.js`, `motor/laco.js`, `falas.js` nem `debug.js`.
 
 ## Outros sistemas
-- `cuidados.js` (fome, sede, banho, despensa), `banho.js` + `banho-desenho.js`, `surpresa*.js`, `fotos*.js`.
+- `cuidados.js` (fome, sede, banho, despensa), `banho.js` + `banho-desenho.js` (regra de `node: true` sem o ser:
+  `jogo/js/CLAUDE.md`), `surpresa*.js`, `fotos*.js`.
 - `versao.js`: percebe o jogo novo no servidor de casa (`js/versao.json`, `npm run versao`) e, parada no mapa, avisa,
   grava e recarrega a aba sozinho (`docs/contratos/cena-e-motor.md` §15). Desligado no artifact, em `file:` e no
   modo congelado (a menos de `&versao=1`). Nunca recarregue sem `P.salvar()` antes.
 - `som*.js` (efeitos sintetizados), `musicas*.js` (música por ambiente), `voz.js` (toca áudios gravados).
 - `falas.js`: tudo o que o jogo fala. Voz pelo TEXTO EXATO; texto novo precisa de `npm run vozes`.
-- `banho.js` e `banho-desenho.js` não tocam em DOM no carregamento (mesmo sem `node: true`).
 
 ## Antes de entregar
 - `npm test` (unidade: `save-*.test.js`, `cuidados-*`, `banho*`, `surpresa`, `musicas`).

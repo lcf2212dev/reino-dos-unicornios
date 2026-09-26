@@ -4,7 +4,7 @@ description: Use para abrir, ver, testar ou tirar print do jogo Reino dos Unicó
 ---
 # Ver o jogo (servidor de teste)
 
-Regras: `jogo/ferramentas/CLAUDE.md` e `docs/contratos/README.md` §5.
+Regras: `jogo/ferramentas/CLAUDE.md`.
 
 1. PRIMEIRO `npm run ver` (na raiz da worktree): sobe servidor de TESTE e banco novos, põe um save sintético,
    vai ao lugar/tela, roda passos e fotografa nos 3 tamanhos em `/tmp/reino-testes/ver/<nome>/` (PNG, `<nome>/erros.txt`,

@@ -21,13 +21,14 @@ Qual registro cada feature usa: `docs/ARQUITETURA.md` §5.1.
 | Escrever falas que a voz lê bem | `licoes-de-voz.md` | `docs/contratos/som-musica-e-voz.md` §5 |
 
 ## Regras que valem em todas
-- Trabalhe na sua worktree; nunca em `/home/leandro/Mariana Revisões` (servida ao vivo para a Mariana).
-- Nunca abra o servidor de casa (porta 80, `reinodosunicornios.local`, `localhost` sem porta de teste), nem
-  `jogo/servidor/dados/`, nem o artifact publicado. Para ver o jogo: `npm run ver` (servidor de TESTE,
-  Chromium e save sintético num comando; `--ajuda`); em script, `abrirCenario()` de `jogo/ferramentas/testes/cenario.js`.
-- Testes só no Chromium (celular 390×844, tablet 820×1180, notebook 1366×768). Nada de Firefox/WebKit.
-- Arquivo `.js` novo = uma linha em `jogo/js/manifesto.js` + `npm run index`.
+- Regras gerais (worktree, servidor de TESTE, só Chromium, manifesto + index, temporários, commit): `CLAUDE.md` da raiz.
 - Emoji novo na tela = desenho em `jogo/js/arte/icones/<lote>.js`.
-- Texto falado novo = voz gravada (`fala-nova-e-vozes.md`); quem grava é o orquestrador.
-- No fim: `npm test`; `npm run e2e` mostra o que mudou contra o commit base (só o esperado).
-- Temporários em `/tmp`, sem apagar. Commit: só o orquestrador.
+- Texto falado novo = texto exato listado no retorno (`fala-nova-e-vozes.md`); quem grava é quem integra.
+- No fim: `npm test` e `npm run e2e`.
+
+## Referências (e2e)
+- Rodam na worktree (precisam do git). Em `npm test`, o passo *referências de dados* mostra só a diferença
+  esperada da receita; os outros passos têm que sair ✔.
+- Cada receita lista as diferenças esperadas no `npm run e2e`; qualquer diferença fora da lista é defeito.
+- A base do e2e só muda por commit: quem integra troca o hash em `jogo/ferramentas/testes/base-referencia.txt`
+  depois do commit da mudança; não edite esse arquivo na tarefa.

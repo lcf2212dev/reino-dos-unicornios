@@ -1,6 +1,7 @@
 /* CIÊNCIAS — 2º ano, Volume 3, Ciências, Capítulos 8 e 9 (pp. 13 a 32 da apostila).
    Capítulo 8, "Seres vivos e suas relações" (pp. 13 a 22); Capítulo 9, "Características dos seres vivos" (pp. 23 a 32).
    Lugar no reino: Laboratório de Ciências, no 3º andar do Observatório (lugar.dentro; sem rect nem sprite).
+   Fotos em matérias/ciências/ (IMG_7528 a 7538); o que está marcado à mão nelas é da Mariana (não é gabarito).
    5 salas que dividem os R$20, na ordem do livro. Salas em c1.js … c5.js e o livro em livro.js (carregados antes
    deste arquivo, na ordem do manifesto; ver conteudo/materias/registro.js). Ícones novos em icones.js. */
 Reino.registrarMateria({

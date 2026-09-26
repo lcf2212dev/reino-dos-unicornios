@@ -11,11 +11,10 @@ Consequências). Para o "como", veja `docs/receitas/`; para as regras, `docs/con
 | Vozes achadas pelo texto exato, em pacotes de nome fixo | `vozes-pelo-texto.md` |
 | Regras de `P.mesclar` e por que não mudam sem teste | `mescla-do-save.md` |
 | Segurança do progresso real (3 lugares, proibições, guardas) | `seguranca-do-progresso.md` |
-| Plano da refatoração para IA (fases, caminhos antigo → novo) — histórico | `refatoracao-plano.md` |
 | Ruído de antialiasing nas referências de imagem | `referencias-ruido.md` |
-| Contratos consolidados por subsistema — histórico | `contratos-consolidados.md` |
 | Helpers de desenho: uma fonte só (`jogo/js/arte/desenho.js`) | `helpers-de-desenho.md` |
-| Bugs encontrados na refatoração (abertos e corrigidos) | `bugs-encontrados.md` |
 
-Arquivos marcados "histórico" citam caminhos de antes da refatoração; `npm run validar` não os confere
-(lista `HISTORICOS` em `jogo/ferramentas/validar/validar-docs.js`).
+Histórico em `historico/` (caminhos de antes da refatoração; `npm run validar` não confere a pasta, lista
+`HISTORICOS` em `jogo/ferramentas/validar/validar-docs.js`): o plano da refatoração (`refatoracao-plano.md`), os
+contratos consolidados (`contratos-consolidados.md`) e os bugs achados nela (`bugs-da-refatoracao.md`).
+Defeitos conhecidos que ficaram abertos: `docs/pendencias.md`.

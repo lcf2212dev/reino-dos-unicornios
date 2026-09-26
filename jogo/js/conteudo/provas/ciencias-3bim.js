@@ -2,6 +2,7 @@
    Os enunciados e as alternativas são os da folha, na mesma ordem. O que muda é só o jeito de responder:
    tocar, pôr em ordem ou completar com as palavras (as questões 03 e 04 são pessoais: qualquer ser da lista vale).
    Na folha as respostas foram escritas à mão pela Mariana: não são gabarito (o gabarito vem da apostila, cap. 8 e 9).
+   Fotos em matérias/ciências/Revisão/ (IMG_7539 e 7540).
    Acessórios: lendário (acertou tudo na 1ª tentativa), raro (na 2ª), comum (depois), com desenho e ícone aqui mesmo. */
 (function () {
   // as situações das questões 07 e 11 (na folha vêm num quadro, acima das perguntas)

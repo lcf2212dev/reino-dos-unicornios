@@ -1,8 +1,9 @@
 # Arquitetura do jogo
 
 Para que serve: o mapa do código para quem chega sem contexto. Diz onde mora cada coisa, em que ordem
-carrega, como um quadro é desenhado e o que é gerado. As regras de cada assunto ficam nos contratos
-(`docs/contratos/`); o passo a passo das tarefas comuns, nas receitas (`docs/receitas/`); o porquê, nas
+carrega, como um quadro é desenhado e o que é gerado. Regras aqui não: as de código ficam no `CLAUDE.md` de cada
+pasta (as gerais em `jogo/js/CLAUDE.md`), as de cada assunto nos contratos (`docs/contratos/README.md`), os comandos
+e o fluxo de trabalho no `CLAUDE.md` da raiz; o passo a passo nas receitas (`docs/receitas/`); o porquê nas
 decisões (`docs/decisoes/`).
 
 ## 1. O jogo em uma frase
@@ -13,29 +14,22 @@ em código. Ela anda num mapa, entra nos prédios, conversa com personagens e fa
 ## 2. Os 3 jeitos de rodar (e o que isso impõe)
 | Jeito | Como | Quem usa |
 |---|---|---|
-| `file://` | abrir `jogo/index.html` direto | abrir o jogo e as prévias à mão (os testes usam o servidor de TESTE, §10) |
+| `file://` | abrir `jogo/index.html` direto | abrir o jogo e as prévias à mão (os testes usam o servidor de TESTE: `jogo/ferramentas/CLAUDE.md`) |
 | servidor de casa | container Docker `reino-unicornios`, porta 80 | **só o Leandro e a Mariana** (NUNCA abra nem teste) |
 | artifact do claude.ai | página montada por `npm run artifact` e publicada pelo orquestrador | a Mariana, fora de casa |
 
-Consequências (valem para todo arquivo do jogo):
-- Scripts clássicos, carregados em ordem. Sem módulos ES, sem bundler, sem passo de build.
-- Sem `fetch` de arquivo local: dado novo mora num `.js` que se registra (ex.: `Reino.registrarSala`).
-- O servidor só entrega `index.html`, `css/<arquivo>` e `js/**`: CSS é plano (sem subpasta) e todo script
-  fica sob `jogo/js/`. Nada de `jogo/ferramentas/` chega ao navegador pelo servidor.
-- `jogo/servidor/` não muda sem o Leandro (o container só relê com restart, que é proibido para nós).
-- Progresso real em 3 lugares, intocáveis: ver `docs/decisoes/seguranca-do-progresso.md`.
+O que isso impõe ao código (scripts clássicos, sem `fetch` local, o que o servidor entrega): `jogo/js/CLAUDE.md`.
+Progresso real e servidor de casa, intocáveis: `docs/contratos/save-e-mescla.md` §9 (o porquê:
+`docs/decisoes/seguranca-do-progresso.md`).
 
 ## 3. Ordem de carga
-- A ÚNICA lista de CSS e scripts, na ordem, é `jogo/js/manifesto.js`. O `jogo/index.html` é GERADO dela
-  (`npm run index`; `node jogo/ferramentas/gerar-index.js --conferir` acusa diferença).
-- Cada linha: `{ js, grupo, node? }`. `node: true` = roda num `vm` do Node sem DOM (ferramentas).
+- A lista é `jogo/js/manifesto.js` (regras do manifesto e de `node: true`: `jogo/js/CLAUDE.md`).
 - Grupos, na ordem: `nucleo` → `icones` → `pixelart` → `arte` → `conteudo` → `personagens` (unicórnios) →
   `materias` → `provas` → `sistemas` (progresso, som, músicas, voz; `personagens/claude.js`; falas, cuidados,
   surpresa) → `mundo` →
   `personagens` (jogador) → `atividades` → `ui` → `sistemas` (fotos) → `motor` (interiores-*) →
   `personagens` (npcs, elenco) → `interiores` (um prédio por vez, `padrao.js` por último) → `sistemas`
   (banho) → `motor` (cena, transição, câmera, laço, entrada, main) → `debug`.
-- Cada arquivo usa o que os de cima registraram em `window.Reino`. Trocar a ordem quebra.
 - As ferramentas escolhem arquivos por grupo ou por nome (`jogo/ferramentas/jogo-no-node.js`,
   `jogo/ferramentas/previas/previa.js`). Nome = caminho sob `js/` sem `.js` (ex.: `sistemas/progresso`).
 
@@ -80,7 +74,8 @@ docs/  ARQUITETURA.md  contratos/  receitas/  decisoes/
 | Som, música, voz | `jogo/js/sistemas/som*.js`, `musicas-faixas.js`, `musicas.js`, `voz.js`, `falas.js` | `docs/contratos/som-musica-e-voz.md` |
 | Fotos | `jogo/js/sistemas/fotos.js`, `fotos-moldura.js`, `fotos-telas.js` | `docs/contratos/fotos.md` |
 | Matérias, salas, provas, desafios | `jogo/js/conteudo/`, `jogo/js/atividades/` | `docs/contratos/conteudo.md` |
-| Ícones em pixel | `jogo/js/arte/icones/<lote>.js` (prévia `jogo/ferramentas/previas/icones.html`) | `docs/contratos/README.md` §2.5 |
+| Telas, HUD, foco, guarda de toque, Área dos pais | `jogo/js/ui/` | `docs/contratos/ui.md` |
+| Ícones em pixel | `jogo/js/arte/icones/<lote>.js` (prévia `jogo/ferramentas/previas/icones.html`) | `jogo/js/CLAUDE.md` (Arte) |
 | Configuração (números, PIN, vozes) | `jogo/js/nucleo/config.js` | — |
 
 ## 5.1 Pontos de extensão (quero X → faço Y)
@@ -100,17 +95,14 @@ linhas do manifesto e o index, e deixa `(preencher)` onde só a pessoa escreve (
 | Música | — | `jogo/js/sistemas/musicas-faixas.js` | `musicas.js` | `musica-nova.md` |
 | Fala | — | dados do dono (`falas.js` do prédio, `falas()` do módulo) | `sistemas/falas.js` | `fala-nova-e-vozes.md` |
 | Tipo de desafio (ex.: conta armada) | `novo desafio` | `Reino.registrarTipoDesafio` em `jogo/js/atividades/desafios/<tipo>.js` (tela, pontos, textos, voz, validador) | `atividades/desafios.js`, `atividades/provas.js`, `sistemas/falas.js`, `validar-conteudo.js` | `desafio-novo.md` |
-| Ícone de emoji novo | — | `Reino.registrarIcones({ '<emoji>': { n, p, d } })` num arquivo da pasta da feature | `arte/icones/<lote>.js` | `docs/contratos/README.md` §2 |
+| Ícone de emoji novo | — | `Reino.registrarIcones({ '<emoji>': { n, p, d } })` num arquivo da pasta da feature | `arte/icones/<lote>.js` | `jogo/js/CLAUDE.md` (Arte) |
 | Ação de NPC de um sistema | `novo sistema` | `acoes: { <tipo>: fn }` no `Reino.registrarModulo` | `personagens/npcs-conversa.js` | `cena-e-motor.md` §14 |
 | Botão no HUD | — | `UI.registrarBotaoHud({ id, ordem, criar, pintar?, eventos? })` num arquivo da feature (ex.: `ui/hud-fotos.js`) | `ui/hud.js` | `jogo/js/ui/CLAUDE.md` |
 | Saber onde o jogo roda (artifact, `file:`, https, servidor de casa, toque, compartilhar, baixar) | — | `Reino.ambiente` (`jogo/js/nucleo/ambiente.js`), funções avaliadas na hora | checar `window.claude`/`navigator.share` de novo | `fotos.md` |
 | Falas de um prédio em vários arquivos | `novo predio` | `Reino.falasDoPredio(id, parte)` (`nucleo/registros.js`) em cada parte | `Reino.FALAS_INTERIORES.<p> = …` | `npcs-e-dialogo.md` §10.5 |
 | Andar novo com escadas | — | `escadas: [{ x, y, para, chegar, olhar, sentido }]` com par no outro andar (sem `chegada`) | arquivos de coordenação entre andares | `interiores.md` §3.1 |
 
-Conferir enquanto constrói (rápido): `npm run ver -- …` (fotos), `npm run validar` (só erros e avisos; `--so <id>` num
-validador para olhar uma feature, `--detalhes` para a lista inteira), `npm run e2e -- --cenas '<regex>'` (só as imagens
-daquela parte). No fim: `npm test` e o `npm run e2e` completo (cada imagem diferente sai com a da base, a atual e uma
-imagem de diferença em magenta).
+Conferir enquanto constrói e no fim: `jogo/ferramentas/CLAUDE.md` (Conferir enquanto constrói).
 
 ## 6. Ciclo de um quadro (`jogo/js/motor/laco.js`)
 `laco(t)` roda a cada `requestAnimationFrame`:
@@ -131,8 +123,8 @@ imagem de diferença em magenta).
 - Nada de canvas novo por quadro; o estático é pré-renderizado (`motor/interiores-estatico.js`).
 
 ## 7. Objetos internos e a divisão de IIFE
-Arquivo grande foi dividido em partes que carregam em sequência. O que era privado vira um objeto INTERNO,
-criado pela primeira parte e documentado no cabeçalho dela. Não é API: só as partes usam.
+Arquivo grande foi dividido em partes que carregam em sequência; o que era privado vira um objeto INTERNO
+(regra: `jogo/js/CLAUDE.md`, Objetos internos). Quem cria e quem usa cada um:
 
 | Interno | Criado em | Usado por |
 |---|---|---|
@@ -149,12 +141,8 @@ criado pela primeira parte e documentado no cabeçalho dela. Não é API: só as
 | `Reino._banho`, `Reino._fotos`, `Reino._surpresa`, `Reino._jogador` | a primeira parte de cada um | as outras partes |
 | `PA._interno`, `Mapa._interno` | `jogo/js/arte/pixelart.js`, `jogo/js/mundo/mapa.js` | `arte/pixelart-*.js`, `mundo/*.js` |
 
-Convenção para dividir de novo: a 1ª parte cria o interno e diz no cabeçalho o que ele guarda; cada parte
-diz de onde veio e o que registra; a API pública (`Reino.*`, `Mapa`, `Jogador`, `PA`, `window.__reino`) não
-muda. Limites: `docs/decisoes/divisao-em-arquivos.md`.
-
 ## 8. Eventos (`Reino.EVENTOS`, `jogo/js/nucleo/eventos.js`)
-Barramento `Reino.util` (`U.on`, `U.emit`). Sempre pela constante: `U.on(Reino.EVENTOS.CENA, fn)`.
+Barramento `Reino.util` (`U.on`, `U.emit`); como usar e criar evento: `jogo/js/CLAUDE.md`.
 | Constante | Nome | Carga |
 |---|---|---|
 | `PROGRESSO` | `progresso` | o estado salvo |
@@ -170,7 +158,7 @@ Barramento `Reino.util` (`U.on`, `U.emit`). Sempre pela constante: `U.on(Reino.E
 | `NUVEM` | `nuvem` | `'sincronizado'`, `'erro'` ou `'local'` |
 Quem emite e quem ouve: o comentário de cada constante no arquivo.
 
-## 9. Arquivos gerados (não edite à mão; não abra os enormes)
+## 9. Arquivos gerados (quais não se abrem: `CLAUDE.md` da raiz)
 | Gerado | De onde | Regenerar |
 |---|---|---|
 | `jogo/index.html` | `jogo/js/manifesto.js` | `npm run index` |
@@ -178,47 +166,3 @@ Quem emite e quem ouve: o comentário de cada constante no arquivo.
 | `jogo/ferramentas/gerado/falas.json` | `Reino.Falas.todas()` | `node jogo/ferramentas/vozes/listar-falas.js` |
 | `jogo/ferramentas/gerado/vozes-indice.json`, `vozes-cache/` | gravações (edge-tts) | `npm run vozes` |
 | página do artifact | `jogo/index.html` + arquivos do manifesto | `npm run artifact` (grava em `/tmp/reino-testes/artifact/`; nunca publica) |
-NUNCA abra `jogo/js/voz/*.js`, `falas.json`, `vozes-indice.json` nem `vozes-cache/` (dezenas de MB).
-
-## 10. Modo de teste, modo determinístico e depuração
-- `?debug=1` liga `window.__reino` (`jogo/js/debug.js`): `cena()`, `estado()`, `pos()`, `entrar(lugarId)`,
-  `sair()`, `npcs()`, `progresso()`, `cuidados()`, `musicaAtual()`, `fotos()`… Lista: `docs/contratos/cena-e-motor.md` §12.
-- `?debug=1&congelar=1` liga o modo determinístico (`jogo/js/nucleo/congelar.js`, primeiro script): relógio,
-  timers e rAF virtuais (`window.__congelar.avancar(ms)`), `Math.random` com semente, animações desligadas,
-  começo direto no mapa. É o que as referências (`npm run e2e`) usam.
-- Servidor de TESTE: `npm run servidor-teste` (porta livre, banco novo em `/tmp/reino-testes/`).
-- Navegador de teste: `jogo/ferramentas/testes/navegador.js` (só Chromium; bloqueia rede fora da porta de teste).
-- Saves sintéticos: `jogo/ferramentas/testes/saves.js` (compostos por `saves-compor.js`).
-- Ver uma cena com um comando: `npm run ver -- --ir petshop --tamanhos celular` (`jogo/ferramentas/testes/ver.js`,
-  `--ajuda`); em script, `abrirCenario()` de `jogo/ferramentas/testes/cenario.js`. `docs/contratos/README.md` §5.
-- Módulos: `__reino.modulo(id)` devolve o `depurar()` do sistema (`docs/contratos/cena-e-motor.md` §14).
-
-## 11. Comandos (`package.json`, da raiz)
-| Comando | O que faz |
-|---|---|
-| `npm test` | unidade + validadores + tamanho + referências de dados (rápido) |
-| `npm run unidade` | testes de unidade (`jogo/ferramentas/testes/unidade/*.test.js`) |
-| `npm run validar` | conteúdo, interiores, index x manifesto, docs |
-| `npm run e2e` | referências completas contra o commit base (dados, imagens nos 3 tamanhos, vozes) |
-| `npm run novo` | gerador: `predio`, `materia`, `sala`, `prova`, `personagem`, `sistema` (`--lista`, `--seco`) |
-| `npm run ver` | abre uma cena (save sintético, lugar, tela, passos) e fotografa nos 3 tamanhos (`--ajuda`) |
-| `npm run servidor-teste` | sobe o servidor de TESTE (para o que o `ver` não cobre) |
-| `npm run index` | gera `jogo/index.html` |
-| `npm run vozes` | listar → gravar → empacotar → conferir por transcrição |
-| `npm run artifact` | monta a página do artifact em `/tmp` (não publica) |
-| `npm run tamanho` | código ≤ 420 linhas, dados ≤ 800 |
-| `npm run tipos` | JSDoc + TypeScript só nos arquivos listados |
-
-Tipos (só conferência, nunca build nem arquivo carregado pelo jogo): as formas principais ficam em
-`jogo/ferramentas/testes/tipos-jogo.d.ts` — `EstadoSave` (e `RegSala`, `RegTreino`, `RegProva`, `RegUni`,
-`RegCuidado`, `RegDespensa`, `Ajustes`, `Usando`), `Materia`, `Sala`, `Desafio` (união por `tipo`), `Prova`,
-`InteriorDef`, `ObjetoInterior`, `Npc`, `PersonagemElenco`, `Fala`, `Enfeite`/`Comida`/`ItemLoja`, `Musica`,
-`EventosReino`, e as APIs `ProgressoApi`, `FalasApi`, `LojaItensApi`, `MusicasApi`. As globais (`Reino.*`
-com tipo) ficam em `tipos-globais.d.ts`; a lista conferida, em `tipos.json` (`fora` = os que ainda têm erro).
-Nos arquivos do jogo os tipos entram só em comentários JSDoc (`/** @param {Materia} m */`).
-
-## 12. Fluxo de trabalho
-1. Worktree própria (nunca a árvore principal `/home/leandro/Mariana Revisões`, servida ao vivo).
-2. Mude; rode `npm test` e o que a receita pedir; confira no servidor de TESTE com save sintético.
-3. `npm run e2e` para provar que o resto não mudou (diferença esperada: registre).
-4. Quem faz commit e integra é o orquestrador.
