@@ -47,12 +47,100 @@
   function brilho(ctx, x, y, cor) { ret(ctx, x, y - 1, 1, 3, cor || ESTRELA); ret(ctx, x - 1, y, 3, 1, cor || ESTRELA); }
   // tempo das animações: parado (t = 0) sem animação ou com "reduzir movimento" do aparelho
   function tempo(t) { return (R.util && R.util.reduzMovimentoSistema) ? 0 : (t || 0); }
-  // estrela que pisca: acesa, meia ou apagada (com t = 0 fica sempre no mesmo jeito)
+
+  /* ---------- galáxia: azul-marinho → azul → roxo → magenta, com toques de ciano e rosa ---------- */
+  var MARINHO = '#0e1240', G_AZUL = '#2f3fb8', G_ROXO = '#6c3fd4', G_MAGENTA = '#b24fe0';
+  var G_CIANO = '#6fd6ff', G_ROSA = '#ff9ad8', G_LILAS = '#c9b6ff';
+  // [fraca, forte] de cada família da nebulosa
+  var NEBULOSA = [['#1c2580', G_AZUL], ['#2e2388', G_ROXO], ['#3c2280', G_MAGENTA]];
+  // cores da estrela que cintila (branco → ciano → lilás)
+  var CINTILA = [C.branco, G_CIANO, G_LILAS];
+  var BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5];
+  function limiar(x, y) { return (BAYER[(y & 3) * 4 + (x & 3)] + 0.5) / 16; }
+  // cor da nebulosa no ponto (X, Y) do mundo, em pontilhado (null = céu liso); `forca` 0-1
+  function corNebulosa(X, Y, forca, escala) {
+    var l = limiar(X, Y);
+    if (escala) { X = X * escala; Y = Y * escala; }
+    var d = 0.55 * Math.sin(X * 0.043 + 1.3 * Math.sin(X * 0.011)) + 0.35 * Math.sin(X * 0.017 + Y * 0.21 + 2) + 0.1;
+    d = d * forca;
+    var nivel = d > 0.28 + l * 0.5 ? 1 : d > -0.22 + l * 0.5 ? 0 : -1;
+    if (nivel < 0) return null;
+    var h = 0.5 + 0.5 * Math.sin(X * 0.02 + 0.8 + Y * 0.02) + (l - 0.5) * 0.25;
+    return NEBULOSA[h < 0.36 ? 0 : h < 0.68 ? 1 : 2][nivel];
+  }
+  // canvas pronto (criado uma vez por tile e paleta): a faixa de céu de 16×14 px da parede, com a
+  // nebulosa em pontilhado e, na Cúpula, a Via Láctea atravessando a parede toda
+  var cacheFaixa = {};
+  function faixaCeu(tx, base, via) {
+    var k = tx + base + (via ? 'v' : '');
+    if (cacheFaixa[k]) return cacheFaixa[k];
+    var c = document.createElement('canvas');
+    c.width = 16; c.height = 14;
+    var x = c.getContext('2d');
+    ret(x, 0, 0, 16, 14, base);
+    for (var j = 0; j < 14; j++) for (var i = 0; i < 16; i++) {
+      var X = tx * 16 + i, Y = j + 19;
+      // a nebulosa some perto das beiradas da faixa (em cima e embaixo)
+      var borda = Math.min(j, 13 - j) < 2 ? 0.55 : 1;
+      var cor = corNebulosa(X, Y, borda);
+      if (via) {
+        var meio = 3 + (X - via) * 8 / 208, dist = Math.abs(j - meio), l = limiar(X, Y);
+        if (dist < 1.2 && l < 0.7) cor = l < 0.25 ? '#e8e0ff' : G_LILAS;
+        else if (dist < 3 && l < 0.55) cor = cor ? misturar(cor, '#b8b0ff', 0.45) : '#4a4aa8';
+      }
+      if (cor) ret(x, i, j, 1, 1, cor);
+    }
+    // estrelinhas fixas: branca, ciano e rosa
+    for (var s = 0; s < 4; s++) {
+      var sx = 1 + Math.floor(sorte(tx, s, 31) * 14), sy = 1 + Math.floor(sorte(s, tx, 37) * 12);
+      ret(x, sx, sy, 1, 1, [C.branco, G_CIANO, G_ROSA, ESTRELA][s]);
+    }
+    cacheFaixa[k] = c;
+    return c;
+  }
+  // estrela que cintila: troca de cor (branco → ciano → lilás) e pisca num ritmo só dela; `fase` diferencia.
+  // Com t = 0 fica parada, acesa numa das três cores.
   function piscar(ctx, x, y, t, fase, grande) {
-    var s = t ? Math.sin(t / (520 + fase * 37) + fase * 1.9) : ((fase % 3) - 1) * 0.6;
-    if (s > 0.35) { if (grande) brilho(ctx, x, y, ESTRELA); else ret(ctx, x, y, 1, 1, ESTRELA); ret(ctx, x, y, 1, 1, C.branco); }
-    else if (s > -0.4) ret(ctx, x, y, 1, 1, LILAS);
+    var cor, s;
+    if (!t) { cor = CINTILA[fase % 3]; s = fase % 4 === 3 ? 0 : 1; }
+    else {
+      var per = 1300 + (fase * 397) % 1900;
+      var f = (t / per + fase * 0.137) % 1;
+      s = f < 0.5 ? f * 2 : 2 - f * 2;
+      cor = CINTILA[Math.floor(t / (per * 1.7) + fase * 0.61) % 3];
+    }
+    if (s > 0.62) {
+      if (grande) { brilho(ctx, x, y, cor); ret(ctx, x, y - 2, 1, 1, misturar(cor, MARINHO, 0.45)); ret(ctx, x, y + 2, 1, 1, misturar(cor, MARINHO, 0.45)); ret(ctx, x - 2, y, 1, 1, misturar(cor, MARINHO, 0.45)); ret(ctx, x + 2, y, 1, 1, misturar(cor, MARINHO, 0.45)); }
+      else brilho(ctx, x, y, misturar(cor, MARINHO, 0.35));
+      ret(ctx, x, y, 1, 1, C.branco);
+    } else if (s > 0.28) ret(ctx, x, y, 1, 1, cor);
     else ret(ctx, x, y, 1, 1, '#4a4f9a');
+  }
+  // halo de anel em pixels (pontilhado) em volta de (cx, cy); `pula(ang)` = true deixa o ângulo sem pixel
+  function haloAnel(ctx, cx, cy, raio, cor, passo, giro, pula) {
+    var n = Math.max(12, Math.round(raio * 6.3));
+    for (var i = 0; i < n; i++) {
+      if ((i + (giro || 0)) % (passo || 2)) continue;
+      var a = i / n * Math.PI * 2;
+      if (pula && pula(a)) continue;
+      ret(ctx, Math.round(cx + Math.cos(a) * raio), Math.round(cy + Math.sin(a) * raio), 1, 1, cor);
+    }
+  }
+  // estrela cadente: passa uma vez a cada 8 a 15 s (fatias de 11,5 s, começando de 0 a 3,5 s dentro de
+  // cada uma), em 1 s, de (x0, y0) a (x1, y1), com o rastro branco → ciano → lilás
+  var RASTRO = [C.branco, '#fff6c8', G_CIANO, '#b8a8ff', '#8a70e0', '#5a4ab0'];
+  function estrelaCadente(ctx, t, x0, y0, x1, y1) {
+    if (!t) return;
+    var k = Math.floor(t / 11500), dt = t - k * 11500 - 3500 * sorte(k, 7, 77);
+    if (dt < 0 || dt >= 1000) return;
+    var f = dt / 1000, dx = x1 - x0, dy = y1 - y0, n = Math.max(Math.abs(dx), Math.abs(dy));
+    for (var i = RASTRO.length - 1; i >= 0; i--) {
+      var g = f - i * 2.2 / n;
+      if (g < 0) continue;
+      ret(ctx, Math.round(x0 + dx * g), Math.round(y0 + dy * g), 1, 1, RASTRO[i]);
+    }
+    var hx = Math.round(x0 + dx * f), hy = Math.round(y0 + dy * f);
+    brilho(ctx, hx, hy, '#dff4ff'); ret(ctx, hx, hy, 1, 1, C.branco);
   }
 
   /* ================= PISOS E PAREDE DA NOITE ================= */
@@ -111,11 +199,15 @@
   I.PAREDES['observatorio-noite'] = { cores: { parede: '#262a6a', parede2: '#1d2056', rodape: '#5a4a9a', detalhe: '#ffd34d' },
     desenhar: function (ctx, px, py, tx, p) {
       ret(ctx, px, py, 16, 32, p.parede);
-      ret(ctx, px, py + 3, 16, 5, misturar(p.parede, p.parede2, 0.6));
-      for (var k = 0; k < 3; k++) {
-        var sx = px + 1 + Math.floor(sorte(tx, k, 3) * 14), sy = py + 4 + Math.floor(sorte(tx, k, 5) * 12);
-        if (k === 0 && sorte(tx, 7, 1) < 0.45) brilho(ctx, sx, sy, misturar(ESTRELA, p.parede, 0.35));
-        else ret(ctx, sx, sy, 1, 1, k === 1 ? LILAS : misturar(ESTRELA, p.parede, 0.2));
+      // o céu pintado: faixa de galáxia pronta (nebulosa em pontilhado; Via Láctea na Cúpula)
+      var via = (tx >= CUP.x && tx < CUP.x + 13) ? CUP.x * 16 : 0;
+      if (typeof document !== 'undefined' && ctx.drawImage) ctx.drawImage(faixaCeu(tx, misturar(p.parede, MARINHO, 0.55), via), px, py + 3);
+      else ret(ctx, px, py + 3, 16, 14, misturar(p.parede, MARINHO, 0.55));
+      // uma estrela grande em cruz a cada tanto
+      if (sorte(tx, 7, 1) < 0.4) {
+        var sx = px + 3 + Math.floor(sorte(tx, 0, 3) * 10), sy = py + 6 + Math.floor(sorte(tx, 0, 5) * 8);
+        var cs = [C.branco, G_CIANO, G_ROSA][Math.floor(sorte(tx, 2, 9) * 3)];
+        brilho(ctx, sx, sy, misturar(cs, MARINHO, 0.3)); ret(ctx, sx, sy, 1, 1, C.branco);
       }
       ret(ctx, px + 15, py + 3, 1, 15, escurecer(p.parede, 0.18));
       ret(ctx, px, py + 17, 16, 1, clarear(p.detalhe, 0.3));
@@ -234,14 +326,15 @@
       ret(ctx, px + 3, py + 2, 10, 25, METAL2); ret(ctx, px + W - 13, py + 2, 10, 25, METAL2);
       ret(ctx, px + 3, py + 2, 2, 25, METAL); ret(ctx, px + W - 13, py + 2, 2, 25, METAL);
       for (var r = 0; r < 4; r++) { ret(ctx, px + 7, py + 5 + r * 6, 1, 1, METAL3); ret(ctx, px + W - 8, py + 5 + r * 6, 1, 1, METAL3); }
-      // o céu
+      // o céu: pronto uma vez (azul-marinho, nebulosa e a Via Láctea na diagonal)
       ret(ctx, x0 - 1, py, w + 2, 28, K);
-      ret(ctx, x0, py + 1, w, 26, CEU);
-      ret(ctx, x0, py + 19, w, 8, CEU2);
-      ret(ctx, x0, py + 24, w, 3, CEU3);
-      FENDA_ESTRELAS.forEach(function (s, i) { if (i % 2) ret(ctx, x0 + s[0], py + 1 + s[1], 1, 1, i % 4 === 1 ? LILAS : '#8a90d8'); });
-      // Lua crescente
-      circulo(ctx, x0 + w - 7, py + 7, 4, '#fff3c8'); circulo(ctx, x0 + w - 5, py + 6, 3, CEU);
+      if (typeof document !== 'undefined' && ctx.drawImage) ctx.drawImage(ceuFenda(w), x0, py + 1);
+      else ret(ctx, x0, py + 1, w, 26, MARINHO);
+      FENDA_ESTRELAS.forEach(function (s, i) { if (i % 2) ret(ctx, x0 + s[0], py + 1 + s[1], 1, 1, [G_LILAS, G_CIANO, C.branco, G_ROSA][i % 4]); });
+      // Lua crescente com halo em anéis de pixel
+      var lx = x0 + w - 7, ly = py + 7;
+      haloAnel(ctx, lx, ly, 6, '#8f86e0', 2);
+      circulo(ctx, lx, ly, 4, '#fff3c8'); circulo(ctx, lx + 2, ly - 1, 3, MARINHO);
       // trilho embaixo
       ret(ctx, x0 - 1, py + 27, w + 2, 2, K); ret(ctx, x0, py + 27, w, 1, METAL);
     },
@@ -249,22 +342,66 @@
       t = tempo(t);
       var W = (o.w || 4) * T, x0 = px + 14, w = W - 28;
       for (var i = 0; i < FENDA_ESTRELAS.length; i += 2) piscar(ctx, x0 + FENDA_ESTRELAS[i][0], py + 1 + FENDA_ESTRELAS[i][1], t, i, i % 4 === 0);
-      // estrela cadente: 700 ms a cada 7 s
-      if (t) {
-        var f = (t % 7000) / 700;
-        if (f < 1) {
-          var sx = x0 + 3 + Math.round(f * (w - 12)), sy = py + 4 + Math.round(f * 9);
-          ret(ctx, sx, sy, 1, 1, C.branco); ret(ctx, sx - 1, sy - 1, 1, 1, ESTRELA); ret(ctx, sx - 2, sy - 1, 1, 1, LILAS); ret(ctx, sx - 3, sy - 2, 1, 1, '#6a70c0');
-        }
-      }
+      // as estrelas que cintilam no céu pintado da parede da Cúpula
+      cintilarParede(ctx, 'cupula', t);
+      // estrela cadente atravessando a Cúpula: do céu da parede até a fenda (a cada 8 a 15 s)
+      estrelaCadente(ctx, t, px - 5 * T - 8, py + 5, x0 + w - 4, py + 20);
     } });
+  // céu da fenda pronto (criado uma vez)
+  var cacheFenda = {};
+  function ceuFenda(w) {
+    if (cacheFenda[w]) return cacheFenda[w];
+    var c = document.createElement('canvas');
+    c.width = w; c.height = 26;
+    var x = c.getContext('2d');
+    ret(x, 0, 0, w, 26, MARINHO);
+    for (var j = 0; j < 26; j++) for (var i = 0; i < w; i++) {
+      var l = limiar(i, j), cor = corNebulosa(i + 200, j + 17, j > 18 ? 1 : 0.8, 3);
+      var dist = Math.abs(j - (22 - i * 0.62));   // Via Láctea subindo para a direita
+      if (dist < 1.5 && l < 0.7) cor = l < 0.3 ? '#efe8ff' : G_LILAS;
+      else if (dist < 4 && l < 0.6) cor = cor ? misturar(cor, '#b8b0ff', 0.45) : '#46469e';
+      if (cor) ret(x, i, j, 1, 1, cor);
+    }
+    for (var s = 0; s < 10; s++) ret(x, Math.floor(sorte(s, 1, 43) * w), Math.floor(sorte(1, s, 47) * 26), 1, 1, [C.branco, G_CIANO, G_ROSA, '#e8e0ff'][s % 4]);
+    cacheFenda[w] = c;
+    return c;
+  }
+  // estrelas que cintilam nas faixas de céu da parede, só nos tiles de parede sem enfeite (a lista sai
+  // dos objetos do interior na primeira vez); 2 por tile livre
+  var estrelasParede = null;
+  function cintilarParede(ctx, comodo, t) {
+    if (!estrelasParede) {
+      estrelasParede = { cupula: [], galeria: [], planetario: [] };
+      var ocup = {};
+      objetos.forEach(function (o) {
+        var lib = I.OBJETOS[o.tipo] || {};
+        if (!(o.parede !== undefined ? o.parede : lib.parede)) return;
+        for (var i = 0; i < (o.w || lib.w || 1); i++) ocup[o.x + i] = true;
+      });
+      [['galeria', GAL, 13], ['cupula', CUP, 13], ['planetario', PLA, 15]].forEach(function (c) {
+        for (var x = c[1].x; x < c[1].x + c[2]; x++) {
+          if (ocup[x]) continue;
+          for (var k = 0; k < 2; k++) estrelasParede[c[0]].push([x * T + 2 + Math.floor(sorte(x, k, 53) * 12), c[1].y * T + 5 + k * 6 + Math.floor(sorte(k, x, 59) * 5), x + k * 5]);
+        }
+      });
+    }
+    var lista = estrelasParede[comodo] || [];
+    for (var i = 0; i < lista.length; i++) piscar(ctx, lista[i][0], lista[i][1], t, lista[i][2], i % 2 === 0);
+  }
   // janela redonda (escotilha) com o céu da noite
   I.objeto('observatorio-janela', { w: 1, h: 2, parede: true, solido: false,
     desenhar: function (ctx, px, py) {
       var cx = px + 8, cy = py + 13;
       circulo(ctx, cx, cy, 7, K); circulo(ctx, cx, cy, 6, METAL); circulo(ctx, cx, cy, 5, METAL2);
-      circulo(ctx, cx, cy, 4, K); circulo(ctx, cx, cy, 3, CEU);
-      ret(ctx, cx - 3, cy + 1, 7, 2, CEU2);
+      circulo(ctx, cx, cy, 4, K); circulo(ctx, cx, cy, 3, MARINHO);
+      // nebulinha em pontilhado: roxo embaixo, magenta no meio, um fio ciano
+      for (var j = -3; j <= 3; j++) for (var i = -3; i <= 3; i++) {
+        if (i * i + j * j > 10) continue;
+        var l = limiar(cx + i, cy + j);
+        if (j >= 1 && l < 0.7) ret(ctx, cx + i, cy + j, 1, 1, l < 0.3 ? G_MAGENTA : G_ROXO);
+        else if (j === 0 && l < 0.35) ret(ctx, cx + i, cy + j, 1, 1, G_AZUL);
+      }
+      ret(ctx, cx - 2, cy - 1, 1, 1, G_CIANO);
       ret(ctx, cx + 1, cy - 2, 1, 1, LILAS);
       ret(ctx, cx - 5, cy - 5, 1, 1, C.branco); ret(ctx, cx + 5, cy + 4, 1, 1, METAL3);
       ret(ctx, cx - 4, py + 22, 9, 2, K); ret(ctx, cx - 3, py + 22, 7, 1, METAL);
@@ -278,13 +415,21 @@
   I.objeto('observatorio-ceu', { w: 2, h: 2, parede: true, solido: false,
     desenhar: function (ctx, px, py, o) {
       var W = (o.w || 2) * T;
-      ret(ctx, px + 1, py + 3, W - 2, 14, CEU);
+      ret(ctx, px + 1, py + 3, W - 2, 14, MARINHO);
+      // nebulosa em pontilhado (a mesma conta da parede: continua de um pedaço de céu para o outro)
+      for (var jj = 0; jj < 14; jj++) for (var ii = 0; ii < W - 2; ii++) {
+        var cn = corNebulosa(px + 1 + ii, py + 3 + jj, 1.1);
+        if (cn) ret(ctx, px + 1 + ii, py + 3 + jj, 1, 1, cn);
+      }
+      // a Via Láctea: faixa clara em pontilhado, subindo para a direita
       for (var i = 0; i < W - 2; i++) {
         var y = py + 12 - Math.round(i * 7 / (W - 2));
-        ret(ctx, px + 1 + i, y, 1, 3, '#2a2f78');
-        if (sorte(i, o.x, 3) < 0.35) ret(ctx, px + 1 + i, y + 1, 1, 1, '#8a84d8');
+        for (var d = -2; d <= 2; d++) {
+          var l = limiar(px + 1 + i, y + d);
+          if (Math.abs(d) <= 1 ? l < 0.75 : l < 0.3) ret(ctx, px + 1 + i, y + d, 1, 1, d === 0 ? (l < 0.3 ? '#efe8ff' : G_LILAS) : '#8f86e0');
+        }
       }
-      for (var k = 0; k < 6; k++) ret(ctx, px + 2 + Math.floor(sorte(o.x, k, 7) * (W - 4)), py + 4 + Math.floor(sorte(k, o.x, 9) * 12), 1, 1, k % 2 ? LILAS : '#7a80c8');
+      for (var k = 0; k < 6; k++) ret(ctx, px + 2 + Math.floor(sorte(o.x, k, 7) * (W - 4)), py + 4 + Math.floor(sorte(k, o.x, 9) * 12), 1, 1, [LILAS, G_CIANO, C.branco, G_ROSA][k % 4]);
       ret(ctx, px + 1, py + 17, W - 2, 1, AMARELA);
     },
     anim: function (ctx, px, py, t, o) {
@@ -294,6 +439,8 @@
         var x = px + 3 + Math.floor(sorte(o.x, k, 21) * (W - 6)), y = py + 5 + Math.floor(sorte(k, o.x, 23) * 10);
         piscar(ctx, x, y, t, o.x + k * 3, k === 0);
       }
+      // o primeiro pedaço de céu também cuida das estrelas da parede do Planetário
+      if (o.x === PLA.x + 1) cintilarParede(ctx, 'planetario', t);
     } });
   // quadros do espaço: Lua, cometa, galáxia, astronauta e foguete
   var QUADROS = {
@@ -355,8 +502,12 @@
       var W = (o.w || 3) * T, x = px + 2, y = py + 4, w = W - 4;
       ret(ctx, x - 1, y - 1, w + 2, 24, K);
       ret(ctx, x, y, w, 22, C.ouro2); ret(ctx, x, y, w, 1, C.ouro);
-      ret(ctx, x + 2, y + 2, w - 4, 18, '#1a2060');
-      ret(ctx, x + 2, y + 14, w - 4, 6, '#222a74');
+      ret(ctx, x + 2, y + 2, w - 4, 18, MARINHO);
+      // nebulosa bem de leve no fundo do mapa (as constelações continuam na frente)
+      for (var nj = 0; nj < 18; nj++) for (var ni = 0; ni < w - 4; ni++) {
+        var cn = corNebulosa(x + 2 + ni, y + 2 + nj, 0.55);
+        if (cn && limiar(ni, nj) < 0.6) ret(ctx, x + 2 + ni, y + 2 + nj, 1, 1, misturar(cn, MARINHO, 0.35));
+      }
       linhaPontos(ctx, [x + 2 + 9, y + 2 + 4], [x + 2 + 9, y + 2 + 15], '#5a64b8');
       linhaPontos(ctx, [x + 2 + 5, y + 2 + 9], [x + 2 + 13, y + 2 + 8], '#5a64b8');
       for (var i = 0; i < MAPA_ESCORPIAO.length - 1; i++) linhaPontos(ctx, [x + 2 + MAPA_ESCORPIAO[i][0], y + 2 + MAPA_ESCORPIAO[i][1]], [x + 2 + MAPA_ESCORPIAO[i + 1][0], y + 2 + MAPA_ESCORPIAO[i + 1][1]], '#6a5aa8');
@@ -372,6 +523,7 @@
       t = tempo(t);
       var x = px + 4, y = py + 6;
       MAPA_CRUZ.forEach(function (p, i) { piscar(ctx, x + p[0], y + p[1], t, i * 2 + 1, i < 2); });
+      cintilarParede(ctx, 'galeria', t);
     } });
 
   /* ================= OBJETOS: CHÃO ================= */
@@ -402,7 +554,9 @@
       });
       // lente
       var lx = x0 + dx, ly = y0 + dy;
-      circulo(ctx, lx, ly, 5, K); circulo(ctx, lx, ly, 4, AZUL2); circulo(ctx, lx, ly, 3, '#1a2060');
+      circulo(ctx, lx, ly, 5, K); circulo(ctx, lx, ly, 4, AZUL2); circulo(ctx, lx, ly, 3, MARINHO);
+      // a galáxia refletida no vidro da lente
+      ret(ctx, lx - 1, ly + 1, 3, 1, G_ROXO); ret(ctx, lx, ly + 2, 2, 1, G_MAGENTA); ret(ctx, lx + 1, ly, 1, 1, G_AZUL); ret(ctx, lx + 2, ly + 1, 1, 1, G_ROSA);
       ret(ctx, lx - 2, ly - 2, 2, 1, '#bfe9ff'); ret(ctx, lx - 2, ly - 1, 1, 1, '#bfe9ff');
       // ocular
       ret(ctx, x0 - 8, y0 + 1, 6, 4, K); ret(ctx, x0 - 7, y0 + 2, 4, 2, METAL3);
@@ -412,6 +566,13 @@
     },
     anim: function (ctx, px, py, t) {
       t = tempo(t);
+      // halo da lente: dois anéis em pixel (o de dentro ciano, o de fora lilás), sem passar por cima do tubo;
+      // com animação, os pontinhos dão a volta devagar
+      var lx = px + 26, ly = py - 28, g = t ? Math.floor(t / 400) : 0;
+      function tubo(a) { var d = Math.abs(((a - 1.99) + Math.PI * 3) % (Math.PI * 2) - Math.PI); return d < 0.75; }
+      haloAnel(ctx, lx, ly, 7, G_CIANO, 2, g % 2, tubo);
+      haloAnel(ctx, lx, ly, 9, G_LILAS, 3, g % 3, tubo);
+      ret(ctx, lx - 2, ly - 2, 1, 1, g % 4 === 1 ? C.branco : '#bfe9ff');
       var on = !t || Math.floor(t / 650) % 2 === 0;
       ret(ctx, px + 17, py + 12, 2, 2, on ? '#ff5c6a' : '#7a2a3a');
       ret(ctx, px + 17, py + 15, 2, 1, (!t || Math.floor(t / 900) % 3) ? C.verde : '#2a5a3a');
@@ -525,7 +686,7 @@
     for (var k = 0; k < 46; k++) {
       var a = sorte(k, 3, 61) * Math.PI * 2, q = Math.sqrt(sorte(k, 5, 67)) * 0.95;
       var x = Math.round(sx + Math.cos(a) * q * d.rx), y = Math.round(sy + Math.sin(a) * q * d.ry);
-      if (k % 9 === 0) brilho(ctx, x, y, ESTRELA); else ret(ctx, x, y, 1, 1, k % 3 ? LILAS : ESTRELA);
+      if (k % 9 === 0) brilho(ctx, x, y, ESTRELA); else ret(ctx, x, y, 1, 1, k % 5 === 1 ? '#bff0ff' : k % 7 === 2 ? '#ffd0ee' : k % 3 ? LILAS : ESTRELA);
     }
   }
   // chão do Planetário: disco da projeção com as órbitas pontilhadas (Plutão tracejada)
@@ -546,6 +707,19 @@
         }
       });
       ctx.restore();
+    },
+    // poeira cintilante sobre o disco da galáxia (14 pontinhos claros, cada um no seu ritmo)
+    anim: function (ctx, px, py, t, o) {
+      t = tempo(t);
+      var sx = v(o, 'sx', px), sy = v(o, 'sy', py), disco = v(o, 'disco', { rx: 120, ry: 66 });
+      for (var k = 0; k < 14; k++) {
+        var a = sorte(k, 9, 71) * Math.PI * 2, q = 0.3 + sorte(k, 4, 73) * 0.55;
+        var x = Math.round(sx + Math.cos(a) * q * Math.min(disco.rx, 105)), y = Math.round(sy + Math.sin(a) * q * disco.ry);
+        var per = 900 + k * 173, f = t ? ((t / per) + k * 0.29) % 1 : (k % 3) / 3;
+        if (f > 0.66) continue;
+        var cor = [C.branco, '#dff8ff', '#ffe0f4'][k % 3];
+        if (f > 0.25 && f < 0.42 && k % 2 === 0) brilho(ctx, x, y, cor); else ret(ctx, x, y, 1, 1, cor);
+      }
     } });
   // o Sol, no meio do Planetário (raios girando devagar)
   I.objeto('observatorio-sol', { w: 2, h: 2, topo: 4, solido: true, semSombra: true,
@@ -570,7 +744,10 @@
   I.objeto('observatorio-planeta', { w: 1, h: 1, topo: 6, solido: true, semSombra: true,
     toque: toquePlaneta,
     desenhar: function (ctx, px, py, o) {
-      var cx = px + 8;
+      var cx = px + 8, r = RAIOS[v(o, 'id', 'terra')] || 4;
+      // halo em anéis de pixel em volta do planeta (o planeta vem por cima, na animação)
+      haloAnel(ctx, cx, py + 6, r + 3, '#9fe8ff', 2);
+      haloAnel(ctx, cx, py + 6, r + 5, '#e0c8ff', 3, 1);
       elipse(ctx, cx, py + 13, 5, 1, 'rgba(127,224,255,0.20)');
       elipse(ctx, cx, py + 13, 3, 1, 'rgba(127,224,255,0.22)');
       if (v(o, 'id', '') === 'plutao') { ret(ctx, cx - 5, py + 13, 1, 1, '#9a86c8'); ret(ctx, cx + 5, py + 13, 1, 1, '#9a86c8'); }
@@ -708,6 +885,14 @@
         if ((a + f) % 2) continue;
         var ang = a / 28 * Math.PI * 2;
         ret(ctx, Math.round(cx + Math.cos(ang) * 8), Math.round(cy + Math.sin(ang) * 8), 1, 1, a % 4 === f * 2 ? '#ffe680' : '#ffb347');
+      }
+      // segundo anel, lilás e ciano, mais espaçado (o halo da galáxia)
+      haloAnel(ctx, cx, cy, 11, f ? G_LILAS : G_CIANO, 4, f * 2);
+      // poeira cintilante em volta da lua: 3 pontinhos que dão a volta devagar
+      for (var p = 0; p < 3; p++) {
+        var ap = (t / 5200) + p * 2.09 + (o ? (o.x || 0) : 0), rp = 14 + p % 2;
+        var cor = CINTILA[(p + (t ? Math.floor(t / 700) : 0)) % 3];
+        ret(ctx, Math.round(cx + Math.cos(ap) * rp), Math.round(cy + Math.sin(ap) * rp * 0.8), 1, 1, cor);
       }
       ret(ctx, cx - 2, cy - 2, 1, 1, f ? C.branco : '#fff6c8');
     } });
