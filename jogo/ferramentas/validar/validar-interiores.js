@@ -7,7 +7,7 @@ const Jogo = require('../jogo-no-node');
 
 const ctx = Jogo.contexto({ console, setTimeout, clearTimeout });
 Jogo.carregar(ctx, Jogo.ordemDosPredios(Jogo.scripts({
-  nomes: ['nucleo/config', 'personagens/unicornios', 'conteudo/loja-itens', 'sistemas/cuidados', 'arte/desenho',
+  nomes: ['nucleo/config', 'nucleo/registros', 'nucleo/util', 'personagens/unicornios', 'conteudo/loja-itens', 'sistemas/cuidados', 'arte/desenho',
       'motor/interiores-base', 'motor/interiores-pisos', 'motor/interiores-objetos-parede', 'motor/interiores-objetos-moveis', 'motor/interiores-objetos-enfeites', 'motor/interiores-grade', 'motor/interiores-estatico', 'motor/interiores-placas', 'motor/interiores-toque', 'motor/interiores-cena', 'personagens/npcs',
     'personagens/npcs-corpo', 'personagens/npcs-cabeca', 'personagens/npcs-sprites', 'personagens/npcs-status', 'personagens/npcs-falas',
     'personagens/npcs-conversa', 'personagens/elenco'],

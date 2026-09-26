@@ -43,7 +43,7 @@ function montar(opcoes = {}) {
   ctx.window = ctx;
   vm.createContext(ctx);
   Jogo.carregar(ctx, Jogo.scripts({
-    nomes: ['nucleo/config', 'personagens/unicornios', 'sistemas/progresso', 'sistemas/cuidados'],
+    nomes: ['nucleo/config', 'nucleo/registros', 'nucleo/util', 'personagens/unicornios', 'sistemas/progresso', 'sistemas/progresso-mescla', 'sistemas/progresso-nuvem', 'sistemas/progresso-regras', 'sistemas/cuidados'],
     grupos: ['materias', 'provas'],
   }));
   const R = ctx.Reino;

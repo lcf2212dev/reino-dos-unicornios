@@ -47,7 +47,9 @@ function montar(opcoes = {}) {
   vm.createContext(ctx);
   const trocar = opcoes.antigo ? { 'sistemas/progresso': path.join(opcoes.antigo, 'progresso.js'), 'sistemas/cuidados': path.join(opcoes.antigo, 'cuidados.js') } : {};
   Jogo.carregar(ctx, Jogo.scripts({
-    nomes: ['nucleo/config', 'personagens/unicornios', 'sistemas/progresso', 'sistemas/cuidados'],
+    // o progresso.js antigo (inteiro, de antes da divisão) entra sozinho no lugar das quatro partes de hoje
+    nomes: ['nucleo/config', 'nucleo/registros', 'nucleo/util', 'personagens/unicornios'].concat(opcoes.antigo ? ['sistemas/progresso']
+      : ['sistemas/progresso', 'sistemas/progresso-mescla', 'sistemas/progresso-nuvem', 'sistemas/progresso-regras'], ['sistemas/cuidados']),
     grupos: ['materias', 'provas'],
   }), { trocar });
   const R = ctx.Reino;

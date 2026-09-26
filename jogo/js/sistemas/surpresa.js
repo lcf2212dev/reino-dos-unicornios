@@ -8,9 +8,16 @@
    diálogo ou transição.
    Nada aqui toca em DOM, Progresso, Cena ou document no carregamento: ferramentas/vozes/listar-falas.js
    carrega este arquivo num vm sem DOM. Nada vai para o save nem para o localStorage: a lista de
-   perguntas já feitas vale só para esta sessão. */
+   perguntas já feitas vale só para esta sessão.
+   Em dois arquivos, nesta ordem (Reino.Surpresa é um só):
+     surpresa.js         frases, perguntas, relógio de jogo livre, abrir, terminar, depurar
+     surpresa-painel.js  o painel da pergunta (mostrar, acerto, erro, retorno, fechar)
+   O que as duas dividem mora em Reino._surpresa (interno): `painelAberto` (o painel na tela ou null;
+   sempre ler I.painelAberto), `S` e as funções que cada parte publica no fim dela. */
 (function () {
   var S = {};
+  // o que as partes da surpresa dividem (ver o cabeçalho)
+  var I = Reino._surpresa = { painelAberto: null, S: S };
 
   function cfg() { return Reino.config.surpresa; }
   // relógio monotônico: o relógio do aparelho voltando (ajuste manual, NTP) não trava nem adianta
@@ -124,7 +131,7 @@
   var iniciado = false, esperandoTutorial = false, relogio = null, ultimoTique = 0, ultimoToque = 0;
   var alvo = 0, contado = 0, venceu = false, livreDesde = null;
   var forcado = null;          // { resolver } quando __reino.surpresa() pediu
-  var abrindo = false, painelAberto = null;
+  var abrindo = false;
 
   function ligado() {
     var e = Reino.Progresso && Reino.Progresso.estado ? est() : null;
@@ -158,7 +165,7 @@
     var t = agora();
     var dt = Math.max(0, Math.min(5000, t - ultimoTique));   // aba que volta do fundo não dá salto
     ultimoTique = t;
-    if (painelAberto || abrindo) return;
+    if (I.painelAberto || abrindo) return;
     // pedido do debug: assim que ela estiver livre (sem esperar os segundos)
     if (forcado) { if (livre() && !andando() && visivel()) abrir(); return; }
     if (!ligado()) { livreDesde = null; return; }
@@ -182,26 +189,6 @@
     relogio = setInterval(tique, 1000);
   }
 
-  var OK_TRAVA_MS = 600;
-  // fechou a pergunta com o dedo e continua tocando ali: a guarda do ui.js (UI.segurarToques) segura
-  // os toques perto dela até 2 s depois de fechar; aqui ela é renovada uma vez, aos
-  // GUARDA_FECHAR_MS - 2000, para durar até 3 s (o botão do menu que estava embaixo não abre).
-  // Só se o último toque foi perto do fechamento e há pouco (a guarda ainda de pé): ms 1 não cria
-  // guarda nova, só estica a que existe. Toque longe e teclado continuam valendo na hora.
-  var GUARDA_FECHAR_MS = 3000, TOQUE_PERTO_PX = 40, TOQUE_SEGUIDO_MS = 800;
-  function segurarAoFechar(e) {
-    var UI = Reino.UI;
-    if (!e || !e.isTrusted || !e.detail || !UI.segurarToques) return;
-    var ponto = { x: e.clientX, y: e.clientY }, ultimo = null;
-    function marcar(ev) { if (ev.isTrusted) ultimo = { x: ev.clientX, y: ev.clientY, t: agora() }; }
-    document.addEventListener('pointerdown', marcar, true);
-    setTimeout(function () {
-      document.removeEventListener('pointerdown', marcar, true);
-      if (!ultimo || agora() - ultimo.t > TOQUE_SEGUIDO_MS || document.querySelector('#telas > .tela')) return;
-      if (Math.abs(ultimo.x - ponto.x) >= TOQUE_PERTO_PX || Math.abs(ultimo.y - ponto.y) >= TOQUE_PERTO_PX) return;
-      UI.segurarToques(1);
-    }, GUARDA_FECHAR_MS - 2000);
-  }
   var TUTORIAL_LIVRE_MS = 10000, TUTORIAL_MAX_MS = 2 * 60000;
   // main.js chama no fim de entrarNoReino; tutorial = Promise da 1ª vez (ou null)
   S.iniciar = function (opcoes) {
@@ -245,13 +232,13 @@
     if (venceu) return 0;
     return Math.max(0, alvo - contado);
   };
-  S.aberta = function () { return !!painelAberto; };
+  S.aberta = function () { return !!I.painelAberto; };
 
   // debug: sorteia e mostra agora (se ela estiver ocupada, assim que ficar livre).
   // A promessa resolve quando o painel ABRE (não quando fecha), com { materia, sala, desafio, tipo }
   // (ids), ou null se não houver pergunta. Com o painel já aberto, resolve na hora com o dele.
   S.forcar = function () {
-    if (painelAberto) return Promise.resolve(painelAberto.info);
+    if (I.painelAberto) return Promise.resolve(I.painelAberto.info);
     if (forcado) return forcado.promessa;
     var f = {};
     f.promessa = new Promise(function (r) { f.resolver = r; });
@@ -266,7 +253,7 @@
   function esperar(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
 
   function abrir() {
-    if (abrindo || painelAberto) return;
+    if (abrindo || I.painelAberto) return;
     var p = S.proximaPergunta();
     if (!p) {
       var semPergunta = forcado;
@@ -281,195 +268,15 @@
       // o pedido do debug é o que estiver pendente AGORA (pode ter chegado durante o carregamento)
       var pedido = forcado;
       // no meio da espera ela entrou numa porta, abriu uma tela, escondeu a aba...: espera de novo
-      if (!livre() || andando() || !visivel() || painelAberto) { livreDesde = null; return; }
+      if (!livre() || andando() || !visivel() || I.painelAberto) { livreDesde = null; return; }
       if (!pedido && (!ligado() || !ativo() || !venceu)) { livreDesde = null; return; }
       forcado = null;
       usadas[chave(p)] = true;
       ultimaChave = chave(p);
       guardada = null;
-      mostrar(p);
-      if (pedido) pedido.resolver(painelAberto.info);
+      I.mostrar(p);
+      if (pedido) pedido.resolver(I.painelAberto.info);
     });
-  }
-
-  function reduzMovimento() {
-    try { return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches); } catch (e) { return false; }
-  }
-
-  // celular em pé ou deitado: mesmo corte do @media compacto de css/ui-novidades.css
-  function compacto() { return window.innerWidth <= 480 || window.innerHeight <= 500; }
-  // o Claude com escala inteira de pixel da tela (nítido): menor no celular, sem transform fracionário
-  function claudeNitido() {
-    var spr = PA.claude(0), src = spr.canvas || spr;
-    var alvo = (compacto() ? 2 : 3) * src.width;
-    return PA.paraDOM(spr, PA.escalaNitida(alvo, src.width), 'surpresa-claude');
-  }
-
-  function mostrar(p) {
-    var U = Reino.util, el = U.el, UI = Reino.UI, D = Reino.Desafios, d = p.desafio;
-    var fase = 'pergunta', ctrl = null;
-    var info = { materia: p.materia.id, sala: p.sala.id, desafio: d.id, tipo: d.tipo };
-    var resultado = null;
-
-    Reino.Claude.limpar();
-    // ela podia estar andando até uma porta: para ali, senão entraria sozinha ao fechar a pergunta
-    var J = window.Jogador;
-    if (J && J.parar) J.parar();
-    var pn = UI.painel('surpresa', '❓ Pergunta surpresa', { aoFechar: function () { soltar(); terminar(resultado || 'agoraNao'); } });
-    painelAberto = { info: info, pn: pn, encerrar: function () { soltar(); terminar(resultado || 'agoraNao'); } };
-    vigiarTelas();
-    pn.tela.setAttribute('aria-label', 'Pergunta surpresa');
-    // ela não abriu a surpresa por um botão: ao fechar, o foco vai para o mapa (UI.fecharTela sem
-    // _focoAntes), nunca de volta ao botão do HUD que estava focado (o Espaço abriria o Estábulo)
-    pn.tela._focoAntes = null;
-
-    var abertura = sortearFrase(S.frases().abertura, 'abertura');
-    var vale = S.frases().vale;
-    var cabeca = el('div.surpresa-cabeca',
-      claudeNitido(),
-      el('div.surpresa-balao',
-        el('p.surpresa-fala', abertura),
-        el('p.surpresa-vale', vale)));
-    var origem = el('p.surpresa-origem', p.materia.emoji + ' ' + p.materia.nome + ' • ' + p.sala.nome);
-    // no celular (CSS compacto) o balão e a origem dão lugar a uma linha só: Claude, matéria e o prêmio;
-    // a frase de abertura e o "se acertar..." continuam na voz
-    var curta = el('div.surpresa-curta',
-      claudeNitido(),
-      el('p.surpresa-curta-materia', el('span', p.materia.emoji), el('span.surpresa-curta-nome', ' ' + p.materia.nome)),
-      el('p.surpresa-curta-vale', '+' + cfg().estrelas + ' ⭐'));
-
-    var btnConferir = el('button.btn-grande.btn-principal.surpresa-conferir', { type: 'button', disabled: true }, 'Conferir ✓');
-    var btnDepois = el('button.btn-grande.btn-secundario.surpresa-depois', { type: 'button' }, 'Agora não');
-    // os botões ficam num rodapé fixo do painel: sempre à vista, mesmo com a pergunta rolando
-    var botoes = el('footer.surpresa-botoes', btnDepois, btnConferir);
-
-    ctrl = D.render(d, { modo: 'surpresa', onMudar: function () { btnConferir.disabled = fase !== 'pergunta' || !ctrl.pronto(); } });
-    var retorno = el('div.surpresa-retorno', { hidden: true, 'aria-live': 'polite' });
-
-    // compacto: o 🔊 Ouvir sobe para a linha curta (economiza uma linha inteira antes das alternativas)
-    var ouvir = ctrl.card.querySelector('.btn-ouvir');
-    if (ouvir && compacto()) curta.insertBefore(ouvir, curta.lastChild);
-
-    pn.conteudo.classList.add('surpresa-conteudo');
-    pn.conteudo.appendChild(cabeca);
-    pn.conteudo.appendChild(curta);
-    pn.conteudo.appendChild(origem);
-    pn.conteudo.appendChild(ctrl.card);
-    pn.conteudo.appendChild(retorno);
-    pn.card.appendChild(botoes);
-
-    Reino.Som.tocar('porta');
-    Reino.Som.falar([abertura, vale], { voz: 'claude' });
-    setTimeout(function () {
-      var primeira = ctrl.card.querySelector('.opcao');
-      if (primeira && fase === 'pergunta') primeira.focus({ preventScroll: true });   // o Claude continua à vista
-    }, 60);
-
-    // Esc = "Agora não" (ou fecha, depois da resposta); só com este painel por cima de tudo
-    function aoTeclar(e) {
-      if (e.key !== 'Escape' || !pn.tela.parentNode || document.querySelector('#telas > .tela:last-child') !== pn.tela) return;
-      e.preventDefault(); fechar();
-    }
-    document.addEventListener('keydown', aoTeclar);
-    // tocar fora do cartão (no fundo escuro) NÃO fecha a pergunta: só o ✕, "Agora não" e Esc.
-    // Captura no document: roda antes do ouvinte de fundo que o UI.painel põe na tela.
-    function foraDoCartao(e) { if (e.target === pn.tela) e.stopPropagation(); }
-    document.addEventListener('click', foraDoCartao, true);
-
-    btnDepois.addEventListener('click', function (e) { if (btnDepois.disabled) return; Reino.Som.tocar('toque'); fechar(e); });
-    // "Agora não" e ✕ travados nos primeiros OK_TRAVA_MS: um toque no menu do celular no instante em
-    // que o painel abre (o "Agora não" fica em cima de Lugares e Estábulo) não fecha a pergunta sem
-    // ela ver. O Esc continua valendo.
-    var btnX = pn.card.querySelector('.btn-fechar');
-    btnDepois.disabled = true;
-    if (btnX) btnX.disabled = true;
-    // o ✕ fecha pelo UI.painel (aoFechar): aqui só a guarda do dedo que continua tocando
-    if (btnX) btnX.addEventListener('click', function (e) { if (!btnX.disabled) segurarAoFechar(e); });
-    setTimeout(function () { btnDepois.disabled = false; if (btnX) btnX.disabled = false; }, OK_TRAVA_MS);
-
-    btnConferir.addEventListener('click', function () {
-      if (fase !== 'pergunta' || !ctrl.pronto()) return;
-      fase = 'resposta';
-      ctrl.travado = true;
-      var ok = D.pontuar(d, ctrl.valor()) === 1;
-      resultado = ok ? 'acerto' : 'erro';
-      Array.prototype.forEach.call(ctrl.card.querySelectorAll('button.opcao'), function (b) { b.setAttribute('aria-disabled', 'true'); });
-      if (ok) acertou(); else errou();
-    });
-
-    function acertou() {
-      var n = cfg().estrelas;
-      Reino.Progresso.ganharEstrelas(n);
-      Reino.Progresso.salvar();
-      if (UI.atualizarHUD) UI.atualizarHUD();
-      ctrl.marcarCerto();
-      Reino.Som.tocar('acerto');
-      setTimeout(function () { Reino.Som.tocar('estrela'); }, 350);
-      if (!reduzMovimento()) UI.confete(24);
-      var elogio = elogioAcerto();
-      var ganhou = S.frases().ganhou;
-      mostrarRetorno(true, '✨ Isso! +' + n + ' ⭐', elogio, ganhou);
-      Reino.Som.falar([elogio, ganhou], { voz: 'claude' });
-    }
-
-    function errou() {
-      if (ctrl.revelar) ctrl.revelar(); else ctrl.marcarCerto();
-      Reino.Som.tocar('erro');
-      var fala = sortearFrase(S.frases().erro, 'erro');
-      mostrarRetorno(false, '💭 Quase!', fala, null);
-      Reino.Som.falar([fala], { voz: 'claude' });
-    }
-
-    function mostrarRetorno(ok, titulo, fala, extra) {
-      retorno.innerHTML = '';
-      retorno.className = 'surpresa-retorno ' + (ok ? 'retorno-certo' : 'retorno-quase');
-      // o enunciado de novo, curto, em cima: a explicação não fica solta quando o painel rola até aqui
-      retorno.appendChild(el('p.surpresa-eco', '❓ ' + D.enunciado(d)));
-      retorno.appendChild(el('div.retorno-cabeca',
-        claudeNitido(),
-        el('div',
-          el('h3', titulo),
-          el('p.retorno-fala', fala),
-          extra ? el('p.surpresa-ganhou', extra) : null)));
-      if (!ok) retorno.appendChild(el('p.surpresa-certa', D.linhaCerta(d)));
-      if (d.explica) retorno.appendChild(el('p.retorno-explica', '📌 ' + d.explica));
-      // o "Ok!" nasce no lugar do "Conferir": fica travado por OK_TRAVA_MS para um toque duplo
-      // no "Conferir" não fechar o resultado antes de ela ler (principalmente a explicação do erro)
-      var okBtn = el('button.btn-grande.btn-principal.surpresa-ok', { type: 'button', disabled: true }, 'Ok! 👍');
-      okBtn.addEventListener('click', function (e) { if (okBtn.disabled) return; Reino.Som.tocar('toque'); fechar(e); });
-      botoes.innerHTML = '';
-      botoes.appendChild(okBtn);
-      // o cabeçalho de abertura sai: o retorno do Claude fica no lugar dele
-      cabeca.hidden = true;
-      curta.hidden = true;
-      retorno.hidden = false;
-      setTimeout(function () {
-        okBtn.disabled = false;
-        okBtn.focus();
-      }, OK_TRAVA_MS);
-      setTimeout(function () {
-        // rola até o COMEÇO do resultado (o enunciado repetido); se assim a explicação ficar abaixo
-        // da dobra (celular deitado), rola mais até ela aparecer inteira: antes do Ok destravar
-        var c = pn.conteudo, cr = c.getBoundingClientRect(), rr = retorno.getBoundingClientRect();
-        var fim = (retorno.querySelector('.retorno-explica') || retorno.lastChild).getBoundingClientRect();
-        var topo = c.scrollTop + rr.top - cr.top - 8, ateExplica = c.scrollTop + fim.bottom - cr.bottom + 8;
-        // sem passar do começo da explicação (letras grandes no celular deitado: ela não cabe inteira)
-        // (celular deitado: o "✓ Certo" fica em cima dela, na mesma coluna, e também não passa do topo)
-        var certa = retorno.querySelector('.surpresa-certa'), cb = certa && certa.getBoundingClientRect();
-        var inicioExplica = c.scrollTop + (cb && cb.left > rr.left + rr.width / 3 ? cb.top : fim.top) - cr.top - 8;
-        var alvo = Math.max(0, Math.min(Math.max(topo, ateExplica), Math.max(topo, inicioExplica)));
-        if (c.scrollTo) c.scrollTo({ top: alvo, behavior: reduzMovimento() ? 'auto' : 'smooth' }); else c.scrollTop = alvo;
-      }, 60);
-    }
-
-    function soltar() { document.removeEventListener('keydown', aoTeclar); document.removeEventListener('click', foraDoCartao, true); }
-    function fechar(e) {
-      soltar();
-      Reino.Som.calar();
-      UI.fecharTela(pn.tela);
-      segurarAoFechar(e);
-      terminar(resultado || 'agoraNao');
-    }
   }
 
   // painel fechado por fora dos botões (UI.fecharTodas(), outra tela fechando a pilha...):
@@ -482,11 +289,11 @@
     if (vigiando || !Reino.util || !Reino.util.on) return;
     vigiando = true;
     Reino.util.on('telas', function () {
-      if (painelAberto && !painelAberto.pn.tela.parentNode) painelAberto.encerrar();
+      if (I.painelAberto && !I.painelAberto.pn.tela.parentNode) I.painelAberto.encerrar();
       if (telaDeEstudo()) estudando = true;
       else if (estudando) {
         estudando = false;
-        if (iniciado && !painelAberto) sortearTempo();
+        if (iniciado && !I.painelAberto) sortearTempo();
       }
     });
   }
@@ -494,15 +301,15 @@
   // em todos os casos (acerto, erro, "Agora não" ou ✕): sorteia o próximo tempo
   var ultimoResultado = null;
   function terminar(res) {
-    if (!painelAberto) return;
+    if (!I.painelAberto) return;
     // "Agora não" (ou ✕, Esc): a pergunta não se perde, volta para o fim da fila
     if (res === 'agoraNao') {
-      var i = painelAberto.info, k = i.materia + '|' + i.sala + '|' + i.desafio;
+      var i = I.painelAberto.info, k = i.materia + '|' + i.sala + '|' + i.desafio;
       delete usadas[k];
       adiadas[k] = ++nAdiadas;
     }
-    ultimoResultado = { resultado: res, pergunta: painelAberto.info };
-    painelAberto = null;
+    ultimoResultado = { resultado: res, pergunta: I.painelAberto.info };
+    I.painelAberto = null;
     sortearTempo();
     ultimoTique = agora();
   }
@@ -511,8 +318,12 @@
   S._ultimo = function () { return ultimoResultado; };
   // para os testes: o tempo sorteado e o tempo livre já contado
   S._depurar = function () {
-    return { iniciado: iniciado, ligado: ligado(), estudando: estudando, andando: andando(), alvo: alvo, contado: contado, venceu: venceu, livreDesde: livreDesde, aberta: !!painelAberto, pergunta: painelAberto ? painelAberto.info : null, usadas: Object.keys(usadas).length, adiadas: Object.keys(adiadas).length, possiveis: dasFeitas().length };
+    return { iniciado: iniciado, ligado: ligado(), estudando: estudando, andando: andando(), alvo: alvo, contado: contado, venceu: venceu, livreDesde: livreDesde, aberta: !!I.painelAberto, pergunta: I.painelAberto ? I.painelAberto.info : null, usadas: Object.keys(usadas).length, adiadas: Object.keys(adiadas).length, possiveis: dasFeitas().length };
   };
+
+  // para a outra parte
+  I.cfg = cfg; I.agora = agora; I.sortearFrase = sortearFrase; I.elogioAcerto = elogioAcerto;
+  I.vigiarTelas = vigiarTelas; I.terminar = terminar;
 
   Reino.Surpresa = S;
 })();
