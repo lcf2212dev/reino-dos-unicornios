@@ -29,6 +29,12 @@ enfeite só aparece na tela; a fala "faltam estrelas" é fixa).
   rsync -a --exclude=/node_modules --exclude=/.git --exclude=/jogo/servidor/dados /home/leandro/<sua-worktree>/ /tmp/<voce>/repo/
   ln -s /home/leandro/<sua-worktree>/node_modules /tmp/<voce>/repo/node_modules
   ```
+  Alternativa equivalente ao rsync (a cópia de um commit, sem `.git` e sem `jogo/servidor/dados`, que não está no git):
+  ```
+  mkdir -p /tmp/<voce>/repo && git -C /home/leandro/<sua-worktree> archive <commit> | tar -x -C /tmp/<voce>/repo
+  ln -s /home/leandro/<sua-worktree>/node_modules /tmp/<voce>/repo/node_modules
+  ```
+  (o `archive` leva só o que já está no commit: mudanças ainda não commitadas ficam de fora).
   No rascunho (sem `.git`) rode só `npm run unidade`, `npm run validar`, `npm run tamanho` e o §6. As
   referências (`npm run e2e` e o passo *referências de dados* do `npm test`) rodam na worktree, depois de
   levar a mudança para lá.
@@ -42,11 +48,14 @@ enfeite só aparece na tela; a fala "faltam estrelas" é fixa).
 - `espaco: true` só se for do tema espaço.
 
 ### 2. `jogo/js/conteudo/loja-itens.js`
-Acrescente em `L.ENFEITES`, na ordem de preço (a ordem da lista é a ordem da tela da Loja e da vitrine):
+Acrescente em `L.ENFEITES`, na ordem de preço; em empate de preço, depois dos que já existem (a ordem da
+lista é a ordem da tela da Loja e da vitrine):
 ```
 { id: 'margarida-orelha', nome: 'Margarida na orelha', preco: 19, slot: 'orelha', icone: 'enfeite:margarida-orelha' },
 ```
 - `icone` sempre `'enfeite:<id>'` (o desenho do passo 4). Emoji solto só se já existir desenho dele.
+- Anote o índice do item na lista (0 = o primeiro): se for ≤ 5, espere mudança também nas imagens com a
+  montaria no e2e (§7).
 
 ### 3. Desenho no unicórnio (`jogo/js/arte/pixelart-unicornio-moldes.js`)
 No bloco `var ENFEITES = {`, no fim do grupo `// enfeites da Loja das Fadas`, antes de
@@ -94,7 +103,8 @@ Salve o script abaixo em `/tmp/<voce>/conferir-enfeite.js` e rode
 2. sobe um servidor de TESTE (porta livre, banco em `/tmp/reino-testes/`), gera os saves sintéticos do
    próprio jogo (`jogo/ferramentas/testes/saves.js`), compra e veste o enfeite num unicórnio adulto;
 3. abre o jogo no Chromium de teste (celular e notebook, `?debug=1&congelar=1`) → `mapa-<tamanho>.png` e a
-   Loja rolada até o cartão do enfeite → `loja-<tamanho>.png`. Mostra os erros de página (tem que ser "nenhum").
+   montaria recortada de frente, de lado e de costas → `montaria-<vista>-<tamanho>.png`, e a Loja rolada até o
+   cartão do enfeite → `loja-<tamanho>.png`. Mostra os erros de página (tem que ser "nenhum").
 ```js
 // Fotos para conferir um enfeite: a prévia (file://) e o jogo no servidor de TESTE com save sintético.
 // Uso: node conferir-enfeite.js <raiz do repositório> <id do enfeite> <pasta de saída em /tmp>
@@ -152,6 +162,15 @@ async function noMapa(page) {
       const b = await abrir({ browser, url: s.url, tamanho, save, query: '?debug=1&congelar=1' });
       await noMapa(b.page);
       await b.page.screenshot({ path: path.join(saida, `mapa-${tamanho}.png`) });
+      // a Mariana montada vista de frente, de lado e de costas (cauda e olho não aparecem em todas as vistas),
+      // cada uma recortada em volta dela
+      for (const [vista, dx, dy] of [['frente', 0, 1], ['lado', 1, 0], ['costas', 0, -1]]) {
+        await b.page.evaluate(([x, y]) => Jogador.virar(x, y), [dx, dy]);
+        await avancar(b.page, 300);
+        const c = await b.page.evaluate(() => Reino.Cena.paraTela(Jogador.x, Jogador.y));
+        const clip = { x: Math.max(0, c.x - 100), y: Math.max(0, c.y - 160), width: 200, height: 200 };
+        await b.page.screenshot({ path: path.join(saida, `montaria-${vista}-${tamanho}.png`), clip });
+      }
       await b.page.evaluate((id) => {
         Reino.UI.telaLoja();
         try { Reino.Claude.limpar(); } catch (e) { /* sem balão */ }
@@ -172,7 +191,8 @@ async function noMapa(page) {
 })().catch((e) => { console.error('✘ ' + e.message); process.exit(1); });
 ```
 Olhe as fotos (ex.: com a ferramenta de ler imagem): o enfeite aparece em cada vista da prévia, sem cobrir o
-olho; no mapa, na montaria; na Loja, o cartão com o ícone e "Usando".
+olho; na montaria, nas vistas em que o encaixe aparece (enfeite de `cauda` some de frente e o de `olho`, de
+costas: para esses encaixes vale a vista de lado e a prévia); na Loja, o cartão com o ícone e "Usando".
 
 ### 7. Referências (prova de que o resto não mudou)
 `npm run e2e` (na worktree) compara com o commit base de `jogo/ferramentas/testes/base-referencia.txt`.
