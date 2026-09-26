@@ -362,8 +362,25 @@
   Cena.emTransicao = function () { return !!trans; };
   // fase da transição em curso ('fechando' | 'fechada' | 'abrindo'), para o debug e os testes
   Cena.faseTransicao = function () { return trans ? trans.fase : null; };
+  /* Cena ocupada por uma animação no canvas (o banho de espuma, js/banho.js): o estado vira 'atividade'
+     (ela não anda, não toca em nada, as teclas não agem) e o jogo continua desenhando.
+     ocupar(motivo) → liga; liberar(motivo) → desliga só se for o mesmo motivo. Evento 'ocupada' (motivo | null). */
+  var ocupadaPor = null;
+  Cena.ocupar = function (motivo) {
+    ocupadaPor = motivo || 'atividade';
+    if (J() && J().parar) J().parar();
+    if (vista && vista.soltarTeclas) vista.soltarTeclas();
+    U.emit('ocupada', ocupadaPor);
+  };
+  Cena.liberar = function (motivo) {
+    if (!ocupadaPor || (motivo && motivo !== ocupadaPor)) return;
+    ocupadaPor = null;
+    U.emit('ocupada', null);
+  };
+  Cena.ocupada = function () { return ocupadaPor; };
   Cena.estado = function () {
     if (trans) return Cena.TRANSICAO;
+    if (ocupadaPor) return Cena.ATIVIDADE;
     if (UI() && UI().temTela && UI().temTela()) return Cena.ATIVIDADE;
     if (dialogoModal()) return Cena.DIALOGO;
     return Cena.atual().tipo === 'interior' ? Cena.INTERIOR : Cena.MAPA;

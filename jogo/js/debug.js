@@ -52,6 +52,11 @@
     avancarJogo: function (ms) { return Reino.Cuidados ? Reino.Cuidados.avancar(ms) : null; },
     cuidados: function () { return Reino.Cuidados ? Reino.Cuidados.depurar() : null; },
     surpresa: function () { return Reino.Surpresa ? Reino.Surpresa.forcar() : null; },
+    // banho, fotos e música (CONTRATOS-BANHO-FOTOS-MUSICA.md): cada um devolve o depurar() do módulo
+    banho: function (uniId) { return Reino.Cuidados && Reino.Cuidados.banhar ? Reino.Cuidados.banhar(uniId) : null; },
+    animacaoBanho: function () { return Reino.Banho ? Reino.Banho.depurar() : null; },
+    musicaAtual: function () { return Reino.Som && Reino.Som.musicaAtual ? Reino.Som.musicaAtual() : null; },
+    fotos: function () { return Reino.Fotos ? Reino.Fotos.depurar() : null; },
     // agua(tx, ty): o tile do mapa é água do lago? Sem argumentos: ela está nadando agora?
     agua: function (tx, ty) {
       if (tx === undefined) return !!(Jogador.nadando && Jogador.nadando());

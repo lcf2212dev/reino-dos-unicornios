@@ -20,6 +20,7 @@ Reino.config = {
   cuidados: {
     minutosFome: 120,          // de 100 a 0 em 120 minutos de jogo
     minutosSede: 60,           // de 100 a 0 em 60 minutos de jogo
+    minutosBanho: 180,         // banho: de 100 (limpinho) a 0 em 180 minutos de jogo (sujinho não fica lento)
     baixo: 25,
     fatorLento: 0.7,
     semToqueMs: 5 * 60 * 1000, // sem toque nem tecla há 5 minutos: parou de jogar, não gasta
@@ -35,6 +36,13 @@ Reino.config = {
     { id: 'biscoito', nome: 'Biscoito de aveia', icone: '🍪', preco: 5, fome: 60 },
     { id: 'bolo', nome: 'Bolo arco-íris', icone: '🎂', preco: 8, fome: 100, enche: true },
   ],
+  // banho de espuma na Pet Shop (js/banho.js): de graça, animação de ~6 s (curta ~1 s sem Animações);
+  // depois de `pularDepoisMs`, um toque pula para o fim
+  banho: { duracaoMs: 6000, duracaoCurtaMs: 1000, pularDepoisMs: 2000 },
+  // fotos do jogo (js/fotos.js): só no aparelho (IndexedDB 'reino-fotos'), nunca no save nem no servidor
+  fotos: { maxLado: 1600, maxAlbum: 40, banco: 'reino-fotos', toqueLongoMs: 600 },
+  // música por ambiente (js/audio.js + js/musicas.js)
+  musica: { volume: 0.22, crossfadeS: 1.5, comVoz: 0.3, lookaheadS: 0.25, intervaloMs: 60 },
   // nadar no lago: velocidade na água e quanto a água "custa" na busca de caminho
   nado: { fator: 0.6, custo: 3 },
   // pergunta surpresa (js/surpresa.js): de 3 a 10 minutos de jogo livre, vale 2 estrelas de primeira
