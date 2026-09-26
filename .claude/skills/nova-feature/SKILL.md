@@ -4,6 +4,8 @@ description: Use quando o Leandro pedir uma novidade, um ajuste ou uma correçã
 ---
 # Nova feature (pedido pelo modelo)
 
+Pedido em texto livre, sem o modelo: primeiro a skill `preparar-pedido`, que preenche o modelo e volta aqui.
+
 O modelo que o Leandro preenche: `PEDIDO-DE-FEATURE.md` (raiz). Campo em branco vale o padrão escrito no modelo;
 "O que já vale sempre" vale em todo pedido, mesmo sem estar escrito.
 
@@ -35,6 +37,7 @@ O modelo que o Leandro preenche: `PEDIDO-DE-FEATURE.md` (raiz). Campo em branco 
    - servidor de teste para ele jogar: `npm run servidor-teste -- --fundo`, com o endereço e o PID;
    - as fotos;
    - o "Pronto quando" item a item (feito / não feito / como conferir);
+   - quando a novidade usa recurso do aparelho, onde funciona (claude.ai x servidor de casa, campo 12);
    - o `COMO-USAR.md` atualizado quando a novidade muda o que ele precisa saber.
 8. **Até onde ir:** só o que estiver marcado no campo 15 (no modelo curto, a linha "Até onde ir"). Commit no estilo
    `Reino dos Unicórnios: <o que mudou>`. Merge, push e artifact só marcados ou pedidos por escrito. O artifact segue

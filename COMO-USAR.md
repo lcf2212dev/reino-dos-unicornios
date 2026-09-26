@@ -31,6 +31,7 @@
 
 ## Pedir uma novidade ao Claude
 - Use o modelo `PEDIDO-DE-FEATURE.md`, que fica na pasta do projeto: copie, preencha e cole na conversa.
+- Sem tempo para o modelo? Escreva do seu jeito (lista, texto ou áudio transcrito) começando com `/preparar-pedido`. O Claude separa em pedidos, olha o que o jogo já tem, preenche o modelo, pergunta tudo o que faltar de uma vez e, se você disser para seguir, começa a construir.
 - Para ajuste pequeno, use o modelo curto, de 4 linhas. Para novidade de verdade, use o completo.
 - Campo em branco vale o padrão escrito nele. O que vale sempre (vozes, ícones, persistência, os 3 aparelhos) já está no modelo.
 - O Claude constrói à parte e te dá um servidor de teste para jogar. Merge, GitHub e artifact só com a sua marcação em "Até onde ir".

@@ -102,5 +102,5 @@ docs/                      ARQUITETURA.md, contratos/, receitas/, decisoes/
 - Decisões: `docs/decisoes/README.md`; plano da refatoração: `docs/decisoes/refatoracao-plano.md`.
 - Guia do Leandro (o que o jogo faz, números que dá para mudar): `COMO-USAR.md`.
 - Pedido de novidade do Leandro: modelo em `PEDIDO-DE-FEATURE.md`, seguido pela skill nova-feature.
-- Skills do projeto: `.claude/skills/` (nova-feature, nova-materia, nova-prova, novo-predio, gravar-vozes,
-  validar-vozes, validar-tudo, servidor-de-teste).
+- Skills do projeto: `.claude/skills/` (preparar-pedido, nova-feature, nova-materia, nova-prova, novo-predio,
+  gravar-vozes, validar-vozes, validar-tudo, servidor-de-teste).

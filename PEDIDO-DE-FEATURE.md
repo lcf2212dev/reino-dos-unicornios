@@ -5,6 +5,8 @@ Como usar:
 2. Preencha só o que importa. Campo em branco vale o padrão escrito nele. Não precisa repetir o que está em "O que já vale sempre".
 3. Cole na conversa com o Claude. A primeira linha, `/nova-feature`, chama a skill que segue este modelo.
 
+Sem tempo para o modelo? Escreva do seu jeito (lista, texto ou áudio) e comece com `/preparar-pedido`. O Claude separa em pedidos, preenche este modelo, pergunta o que faltar e mostra para você conferir.
+
 Fotos e prints vão numa pasta na raiz do projeto. Exemplo: `Mariana Revisões/Geografia/`. No pedido, escreva só o nome da pasta.
 
 ## Modelo curto (ajuste pequeno ou correção)
@@ -52,6 +54,7 @@ Para quando: (se tiver data. Exemplo: "prova na sexta")
 
 # 6. Onde fica no reino
 (mapa, dentro de qual prédio, qual menu ou tela. Se não fizer diferença, escreva "você escolhe")
+Como ela acha a novidade: (o caminho até ela: porta, escada, menu Lugares, botão)
 
 
 # 7. Material
@@ -77,6 +80,7 @@ Caminho por persistência (ganhar sem acertar tudo):   [ ] você propõe   [ ] q
 
 # 12. Aparelhos
 [x] celular   [x] tablet   [x] notebook
+Onde ela joga (se usa recurso do aparelho, como compartilhar, baixar ou câmera):   [ ] claude.ai   [ ] servidor de casa
 
 # 13. Pronto quando (o que eu vou conferir)
 - [ ]
@@ -108,6 +112,7 @@ Me pergunte antes:
 - **Números:** os que dá para ajustar vão para `jogo/js/nucleo/config.js` e para a lista do `COMO-USAR.md`.
 
 ## O que o Claude faz com o pedido
+0. **Texto livre?** A skill `preparar-pedido` transforma em pedidos neste modelo, pergunta o que faltar e, com o seu sinal, segue para os passos abaixo.
 1. **Lê e pergunta.** Se faltar algo que muda o trabalho, pergunta tudo de uma vez só. O resto ele decide e avisa no plano.
 2. **Manda um plano curto:** o que ela vai ver, o que muda no jogo e o que ele decidiu sozinho.
 3. **Constrói numa worktree.** A pasta principal fica intocada, porque o servidor de casa serve essa pasta ao vivo.
