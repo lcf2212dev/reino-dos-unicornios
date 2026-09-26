@@ -48,11 +48,11 @@
     paraTela: function (wx, wy) { return Reino.Cena ? Reino.Cena.paraTela(wx, wy) : null; },
     get faltando() { return Reino.Voz.faltando; },
     progresso: function () { return Reino.util.copia(Reino.Progresso.estado()); },
-    // novidades (CONTRATOS-NOVIDADES.md): fome e sede, pergunta surpresa e nado
+    // novidades (docs/contratos/cuidados.md e surpresa.md): fome e sede, pergunta surpresa e nado
     avancarJogo: function (ms) { return Reino.Cuidados ? Reino.Cuidados.avancar(ms) : null; },
     cuidados: function () { return Reino.Cuidados ? Reino.Cuidados.depurar() : null; },
     surpresa: function () { return Reino.Surpresa ? Reino.Surpresa.forcar() : null; },
-    // banho, fotos e música (CONTRATOS-BANHO-FOTOS-MUSICA.md): cada um devolve o depurar() do módulo
+    // banho, fotos e música (docs/contratos/cuidados.md, fotos.md, som-musica-e-voz.md): cada um devolve o depurar() do módulo
     banho: function (uniId) { return Reino.Cuidados && Reino.Cuidados.banhar ? Reino.Cuidados.banhar(uniId) : null; },
     animacaoBanho: function () { return Reino.Banho ? Reino.Banho.depurar() : null; },
     musicaAtual: function () { return Reino.Som && Reino.Som.musicaAtual ? Reino.Som.musicaAtual() : null; },

@@ -1,4 +1,4 @@
-/* Banho de espuma na banheira da Pet Shop (Reino.Banho) — CONTRATOS-BANHO-FOTOS-MUSICA.md, seção 3.
+/* Banho de espuma na banheira da Pet Shop (Reino.Banho) — docs/contratos/cuidados.md.
    Tocar na banheira: ela anda até o lado dela (posto), a montaria pula na banheira e toma banho
    (~6 s, config.banho.duracaoMs): entrar (cortado na linha da espuma, como no nado), espuma crescendo
    com bolhas que sobem e estouram, escova indo e vindo, patinho balançando o tempo todo, chuveirinho

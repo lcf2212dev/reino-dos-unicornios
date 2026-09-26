@@ -1,4 +1,4 @@
-/* Pergunta surpresa (Reino.Surpresa) — CONTRATOS-NOVIDADES.md, seção 5.
+/* Pergunta surpresa (Reino.Surpresa) — docs/contratos/surpresa.md.
    De tempos em tempos (3 a 10 minutos de jogo LIVRE) aparece um painel com o Claude e uma
    pergunta das salas, valendo 2 estrelas no acerto de primeira.
    O relógio só conta com ela livre: depois de iniciar (e do tutorial da primeira vez), com o

@@ -5,7 +5,7 @@
      objetos-enfeites (biblioteca de objetos), grade (grade de tiles e caminho), estatico (desenho
      pré-renderizado), placas (placas dos cômodos e HUD), toque (quem recebe o toque, falas e ações),
      cena (a cena do interior, NPC genérico e a API Reino.Interiores; interface da seção 2 de
-     CONTRATOS-INTERIORES.md). Os helpers de desenho e a paleta ficam em js/arte/desenho.js.
+     docs/contratos/interiores.md). Os helpers de desenho e a paleta ficam em js/arte/desenho.js.
    Reino._interiores (INTERNO, só destes arquivos): T, K, FUNDO, LIVROS, OBJETOS, objeto, larg, cor,
      progresso e o que cada parte registra (PISOS, PAREDES, grade, caminhoNa, desenharEstatico...).
    No carregamento NADA de DOM, canvas, PA ou Progresso: as ferramentas em Node carregam

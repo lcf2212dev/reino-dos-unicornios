@@ -1,7 +1,7 @@
 /* Interiores: a cena de um interior (o que o motor/laco.js desenha e a Cena usa: grade, caminho, alvos,
    desenho do fundo, dos móveis altos e dos NPCs, placas por cima), o NPC genérico e a API pública
    Reino.Interiores. Veio de motor/interiores.js. A interface da cena é a da seção 2 de
-   CONTRATOS-INTERIORES.md. O estado de cada cena que as outras partes usam fica em E
+   docs/contratos/cena-e-motor.md §6. O estado de cada cena que as outras partes usam fica em E
    (ver interiores-toque.js). Nada de DOM no carregamento: só monta a API. */
 (function () {
   var R = window.Reino;

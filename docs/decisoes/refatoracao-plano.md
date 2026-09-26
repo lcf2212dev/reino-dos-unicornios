@@ -144,3 +144,6 @@ Novos na Fase 1: `js/manifesto.js`, `ferramentas/gerar-index.js` (gera e confere
 - **Construtores em worktrees próprias** e o orquestrador integra: eles podem mexer na cópia
   local do manifesto para testar; a versão integrada do manifesto é só do orquestrador.
 - **Limite de código ~400**: `npm run tamanho` usa 420 para código e 800 para dados; gerados fora.
+- **Referência atualizada no elenco (f8e280a):** CAVALEIROS e PROFESSORES viraram campos do elenco
+  (`paraMateria`, `paraProva`). A única diferença contra a base 982f1ed é `dados/elenco.json` com
+  esses 6 campos (provado: sem eles, igual). A partir daí a referência é a captura de f8e280a.

@@ -1,5 +1,4 @@
-/* Fome, sede e banho dos unicórnios (Reino.Cuidados) — CONTRATOS-NOVIDADES.md, seção 2, e
-   CONTRATOS-BANHO-FOTOS-MUSICA.md, seção 2.
+/* Fome, sede e banho dos unicórnios (Reino.Cuidados) — docs/contratos/cuidados.md.
    Cada unicórnio chocado tem fome, sede e banho de 0 a 100 (100 = satisfeito/limpinho; sem registro ou
    sem o campo = 100). Só a montaria gasta, e só com o jogo aberto e ela jogando (aba visível e toque/tecla
    nos últimos minutos). Com fome OU sede abaixo de 25, ela anda mais devagar até comer ou beber; sujinho
