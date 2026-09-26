@@ -36,6 +36,12 @@ Para que serve: escrever ou mudar um texto que o jogo fala e deixar a voz gravad
    (Nunca abra `falas.json`: é enorme. Use o resumo e o `--mostrar`.)
 4. Entregue o texto; a gravação é de quem integra.
 
+## Personagem novo ou perfil trocado (antes de gravar)
+1. `npm run vozes-elenco` (`jogo/ferramentas/vozes/elenco-vozes.js`): erro se a voz lembra a do Claude; aviso
+   para vozes iguais no mesmo prédio, nome repetido no mesmo prédio e gênero trocado.
+2. Amostras para o Leandro escolher: `uv run --with edge-tts python jogo/ferramentas/vozes/amostras.py <perfil|regex> …`
+   (grava em `amostras-de-voz/`). Só depois da aprovação, o `npm run vozes`. Detalhes: skill `validar-vozes`.
+
 ## Passo a passo (quem integra: gravar)
 ```
 npm run vozes    # listar → gravar (só o que falta) → empacotar → conferir por transcrição
@@ -44,8 +50,10 @@ npm run vozes    # listar → gravar (só o que falta) → empacotar → conferi
 - Passos avulsos: `node jogo/ferramentas/vozes/listar-falas.js`,
   `cd jogo && uv run --with edge-tts python ferramentas/vozes/gerar-vozes.py`,
   `node jogo/ferramentas/vozes/empacotar-vozes.js`, conferência (`jogo/ferramentas/vozes/conferir-vozes.py`).
-- A conferência transcreve (faster-whisper) SÓ as gravações novas e acusa as que não batem com o texto. Voz
-  embolada: reescreva a frase (`licoes-de-voz.md`) ou acrescente a pronúncia em `listar-falas.js` (`PRONUNCIA`).
+- A conferência transcreve (faster-whisper `small`) SÓ as gravações novas; as que divergem passam de novo com o
+  `medium` e, se ainda divergirem, frase de 3+ palavras reprova (`✘`) e palavra solta (1–2) vai para "conferir de
+  ouvido" (`?`, com o arquivo), sem reprovar. Algarismo x extenso, "R$ N" x "N reais" e "pro" x "para o" não
+  contam como erro. Voz embolada: reescreva a frase (`licoes-de-voz.md`) ou acrescente a pronúncia em `listar-falas.js` (`PRONUNCIA`).
 - Precisa de internet (edge-tts), `uv` e `ffmpeg`.
 
 ## Validadores

@@ -23,7 +23,18 @@ curiosidade ou enunciado. Contrato: `docs/contratos/som-musica-e-voz.md` §5 e `
 9. **Lacuna** (`__`) vira pausa; no `completar` com `colado: true` a narradora lê só o enunciado.
 10. **Conferência por transcrição**: toda gravação nova passa pela conferência do `npm run vozes`
     (faster-whisper). Divergiu: reescreva a frase (regra 2) ou use a pronúncia (regra 8), e grave de novo.
-11. **Tom**: pt-BR correto e carinhoso, para uma criança de 7 anos. Personagem não imita pessoa real.
+11. **Palavra solta** (1–2 palavras, como opções de desafio): o transcritor erra mesmo com a voz certa
+    ("peixe" → "Deixe", "Rochas" → "Horses", "Hábitat" → "A Habitácia"), até com silêncio em volta; a mesma
+    palavra dentro de frase passa. A conferência lista essas em "conferir de ouvido" sem reprovar: ouça.
+12. **Diferença só de escrita não é erro**: "pro" x "para o", "16 reais" x "R$16,00", "três, dois, um" x
+    "3, 2, 1", colmeia x coméia. A conferência já aceita; as reprovadas passam de novo com o modelo `medium`
+    (na Ciências, 64 reprovadas no `small` viraram 21, todas limite do transcritor).
+13. **Voz de personagem novo**: não use a voz base do Claude (`pt-BR-AntonioNeural`) com tom e velocidade
+    perto dos dele; no mesmo prédio, vozes bem diferentes e nomes próprios diferentes; voz do gênero com que o
+    personagem se apresenta (a Detetive Lupa estava com a voz Giuseppe). `npm run vozes-elenco` confere, e
+    `jogo/ferramentas/vozes/amostras.py` grava amostras para o Leandro aprovar ANTES de gravar tudo
+    (skill `validar-vozes`).
+14. **Tom**: pt-BR correto e carinhoso, para uma criança de 7 anos. Personagem não imita pessoa real.
 
 ## Antes de entregar
 ```

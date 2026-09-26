@@ -83,4 +83,5 @@ async def principal():
         sys.exit(1)
 
 
-asyncio.run(principal())
+if __name__ == '__main__':   # o amostras.py importa o FILTRO e os EFEITOS sem gravar
+    asyncio.run(principal())

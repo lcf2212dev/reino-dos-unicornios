@@ -43,6 +43,7 @@ Este arquivo é o índice. Cada pasta principal tem um `CLAUDE.md` com as regras
 - `npm run servidor-teste` — servidor de TESTE (porta livre ≥ 1024 (nunca 80), banco novo em `/tmp/reino-testes/`).
 - `npm run index` — refaz o `jogo/index.html` a partir do manifesto.
 - `npm run vozes` — lista as falas, grava as novas e empacota (`jogo/js/voz/`).
+- `npm run vozes-elenco` — confere as vozes dos personagens (parecida com o Claude, iguais no prédio, gênero, nome).
 - `npm run artifact` — monta a página do artifact em `/tmp/reino-testes/artifact/` (nunca publica).
 - `npm run tamanho` — código até 420 linhas, dados até 800.
 - `npm run tipos` — TypeScript confere os arquivos anotados com JSDoc (lista em `jogo/ferramentas/testes/tipos.json`;
@@ -102,4 +103,4 @@ docs/                      ARQUITETURA.md, contratos/, receitas/, decisoes/
 - Guia do Leandro (o que o jogo faz, números que dá para mudar): `COMO-USAR.md`.
 - Pedido de novidade do Leandro: modelo em `PEDIDO-DE-FEATURE.md`, seguido pela skill nova-feature.
 - Skills do projeto: `.claude/skills/` (nova-feature, nova-materia, nova-prova, novo-predio, gravar-vozes,
-  validar-tudo, servidor-de-teste).
+  validar-vozes, validar-tudo, servidor-de-teste).

@@ -6,6 +6,8 @@ description: Use depois de criar ou mudar qualquer texto falado do Reino dos Uni
 
 Receitas: `docs/receitas/fala-nova-e-vozes.md` e `docs/receitas/licoes-de-voz.md`.
 Contrato: `docs/contratos/som-musica-e-voz.md` §4–§7.
+Personagem novo ou perfil de voz trocado: ANTES, a skill `validar-vozes` (checagens do elenco e amostras para
+o Leandro aprovar). Depois de gravar, ela também explica o resultado da conferência.
 
 - As vozes são achadas pelo TEXTO EXATO: mudou uma vírgula, grava de novo.
 - Falas de personagem até 30 letras por página; frases de 3 palavras ou mais; inglês entre «».
