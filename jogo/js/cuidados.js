@@ -130,7 +130,7 @@
     var ficouBaixo = baixos({ fome: r.fome, sede: r.sede, banho: banho });
     var pontoInteiro = Math.floor(antes.fome) !== Math.floor(r.fome) || Math.floor(antes.sede) !== Math.floor(r.sede) ||
       Math.floor(antes.banho) !== Math.floor(banho);
-    // cruzou o 25: grava na hora (as baias e a placa da Pet Shop se redesenham)
+    // cruzou o 25: grava na hora (as baias e os avisos do menu Lugares se redesenham)
     if (eraBaixo !== ficouBaixo || pendente >= cfg().gravarPontos || agora() - ultimaGravacao >= cfg().gravarMs) gravar();
     if (pontoInteiro || eraBaixo !== ficouBaixo) emitir();
   }

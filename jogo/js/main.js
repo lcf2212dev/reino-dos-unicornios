@@ -1,5 +1,5 @@
 /* Início do jogo: carrega o progresso, desenha a cena ativa (mapa ou interior) e liga os controles.
-   O que é de cada cena (placas, Claude, portas, NPCs) fica em cena.js e nos interiores. */
+   O que é de cada cena (placas dos cômodos, Claude, portas, NPCs) fica em cena.js e nos interiores. */
 (function () {
   var U = Reino.util, el = U.el, P = Reino.Progresso, UI = Reino.UI, J = Jogador, T = Mapa.T, Cena = Reino.Cena;
   var canvas, ctx, buffer, bctx, escala = 3, dpr = 1;
@@ -43,7 +43,7 @@
   // a última fileira (portas da Pet Shop e do Observatório no celular; no notebook, o menu fica
   // centrado bem em cima do lago e esconderia quem nada na última fileira dele).
   // Em cima não: a coluna de chips da esquerda é alta e deixaria meia tela de grama vazia; as
-  // placas já descem para fugir do HUD de cima.
+  // placas dos cômodos já descem para fugir do HUD de cima.
   // A medida é guardada (getBoundingClientRect por quadro é caro) e refeita a cada meio segundo ou
   // quando a tela muda de tamanho; a margem usada desliza até a nova medida, para a câmera não pular.
   var mapaBaixo = { alvo: 0, atual: 0, medidoEm: -1e9, t: 0, chave: '' };
@@ -221,7 +221,7 @@
       var wy = cam.y + ((e.clientY - r.top) * dpr) / escala;
       var tx = Math.floor(wx / T), ty = Math.floor(wy / T);
       var cena = Cena.atual();
-      // tocou em alguém ou em algo (Claude, prédio, placa, NPC, objeto, tapete, escada)
+      // tocou em alguém ou em algo (Claude, prédio, NPC, objeto, tapete, escada)
       var alvo = cena.alvoEm(wx, wy);
       if (alvo) { Cena.irAoAlvo(alvo); return; }
       var destino = cena.solido(tx, ty) ? cena.maisPerto(tx, ty, J.tile()) : { x: tx, y: ty };

@@ -1326,7 +1326,7 @@
     return { esq: a.x, cima: a.y, dir: b.x, baixo: b.y };
   }
   // caixa de um elemento do HUD sem o transform da animação (o chip do ovo pulsa: medir com
-  // getBoundingClientRect fazia a placa tremer 1-2 px); a mesma ideia do caixaParada do mapa (cena.js),
+  // getBoundingClientRect fazia a placa tremer 1-2 px); a mesma ideia que o mapa usava para as placas dos prédios,
   // com 2% de folga para caber o pulso
   function caixaParada(e) {
     var anima = getComputedStyle(e).animationName, pai = e.offsetParent;
@@ -1336,7 +1336,7 @@
     var w = e.offsetWidth, h = e.offsetHeight, dx = w * 0.02, dy = h * 0.02;
     return { left: left - dx, right: left + w + dx, top: top - dy, bottom: top + h + dy };
   }
-  // retângulos do HUD em px do canvas, medidos no máximo a cada 500 ms (como as placas do mapa)
+  // retângulos do HUD em px do canvas, medidos no máximo a cada 500 ms (como o mapa fazia com as placas dos prédios)
   var hudMedido = { chave: '', medidoEm: -1e9, rects: [] };
   function retangulosHud(canvas, dpr) {
     if (typeof document === 'undefined' || !canvas || !canvas.getBoundingClientRect) return [];

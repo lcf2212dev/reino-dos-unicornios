@@ -1187,7 +1187,7 @@
       el('div.petshop-uni-info', el('b', P.nomeUni(d.id)), barrasCuidado(d.id, 'grande'))));
     if (!lista.length) {
       c.appendChild(el('p.petshop-vazia', '🧺 A despensa está vazia.'));
-      c.appendChild(el('p.bau-nota', 'A Dona Aveia vende comidinhas na Pet Shop, em frente ao Estábulo. Lá também tem água fresquinha! 🐾'));
+      c.appendChild(el('p.bau-nota', 'A Dona Aveia vende comidinhas na Pet Shop, em frente ao Estábulo. Lá também tem água fresquinha e banho de espuma! 🐾'));
       var ir = el('button.btn-grande.btn-principal', { type: 'button' }, '🐾 Ir até a Pet Shop');
       ir.addEventListener('click', function () {
         var l = Mapa.lugares().find(function (x) { return x.tipo === 'petshop'; });
