@@ -450,18 +450,25 @@
     var cf = cfgMusica(), v = cf.volume == null ? 0.22 : cf.volume;
     return v * (MUS.abafada ? (cf.comVoz == null ? 0.3 : cf.comVoz) : 1);
   }
-  // rampa linear a partir do valor de agora (sem estalo, mesmo no meio de outra rampa)
-  function rampa(param, alvo, s) {
-    var t = ac.currentTime;
-    if (param.cancelAndHoldAtTime) param.cancelAndHoldAtTime(t);
-    else { var v = param.value; param.cancelScheduledValues(t); param.setValueAtTime(v, t); }
-    param.linearRampToValueAtTime(alvo, t + Math.max(0.02, s));
+  // rampa linear a partir do valor de agora (sem estalo, mesmo no meio de outra rampa). Não usa
+  // cancelAndHoldAtTime: no Chromium ele segura um valor errado quando a rampa anterior já terminou (a faixa
+  // que sai caía 8–17 dB de uma vez, e a volta da voz pulava de 30% para ~90%). Lê o valor de agora
+  // (param.value é o valor calculado no último bloco de áudio) e recomeça dali.
+  // `exp`: rampa exponencial (o mesmo tanto de dB a cada instante), para as mudanças de volume que não vão
+  // a zero (a voz): sem degrau nem aceleração perto do fim
+  function rampa(param, alvo, s, exp) {
+    var t = ac.currentTime, v = param.value, fim = t + Math.max(0.02, s);
+    param.cancelScheduledValues(t);
+    param.setValueAtTime(v, t);
+    if (exp && v > 1e-4 && alvo > 1e-4) param.exponentialRampToValueAtTime(alvo, fim);
+    else param.linearRampToValueAtTime(alvo, fim);
   }
-  function aplicarVolume(s) { if (ac && MUS.saida) rampa(MUS.saida.saida.gain, alvoMusica(), s); }
+  function aplicarVolume(s, exp) { if (ac && MUS.saida) rampa(MUS.saida.saida.gain, alvoMusica(), s, exp); }
+  // voz: desce em 0,6 s e volta em 0,8 s, em dB constantes (menos de 1 dB a cada 50 ms)
   function abafarMusica(sim) {
     if (MUS.abafada === sim) return;
     MUS.abafada = sim;
-    aplicarVolume(sim ? 0.25 : 0.8);
+    aplicarVolume(sim ? 0.6 : 0.8, true);
   }
 
   function posicaoDe(tc) { return (((ac.currentTime - tc.inicio) % tc.dur) + tc.dur) % tc.dur; }

@@ -10,6 +10,8 @@
      de batida em batida, olhando o loop como um círculo), as notas de [t, t+X) não podem ser iguais às de
      [t+X, t+2X). Confere com todas as partes juntas e também só com a melodia (a frase não pode ser curta
      e repetida). O volume não conta (volume diferente não faz a frase ser outra);
+   - nenhum motivo curto da melodia (1 batida até menos de 1 compasso) se repete 4 vezes seguidas;
+   - tempos comparados em tiques inteiros da grade de batidas (48 por batida), nunca em ms arredondados;
    - o loop não é periódico com período < 20 s (caso particular do item acima, conferido à parte);
    - as notas são válidas (tempo dentro do loop, duração > 0, frequência audível, parte e volume válidos);
    - o fim emenda no começo: a última nota da melodia termina até o fim do loop (nada fica cortado no meio
@@ -42,43 +44,45 @@ if (!M || typeof M.expandir !== 'function' || typeof M.duracao !== 'function' ||
 }
 for (const a of AMBIENTES) if (!M.faixas[a]) falha('ambiente sem faixa: ' + a);
 
-const chave = (e) => [e.parte, e.onda || '', e.freq.toFixed(2), e.dur.toFixed(3)].join('|');
-const ms = (x) => Math.round(x * 1000);
+// Tudo em TIQUES inteiros da grade (TPB por batida), nunca em ms: com 104 bpm a batida não dá um número
+// inteiro de ms, e comparar tempos arredondados em ms deixava as chaves 1 ms desalinhadas (nada batia).
+const TPB = 48;                               // tiques por batida (cobre semicolcheia, tercina e o 0,03 da batida)
+const tiquesDe = (bpm) => (x) => Math.round(x * bpm / 60 * TPB);
+const chave = (e, tk) => [e.parte, e.onda || '', e.freq.toFixed(2), tk(e.dur)].join('|');
 
+// eventos por tique (vetor do tamanho do loop, com a lista de chaves de quem começa ali)
+function porTique(ev, durT, tk, soMelodia) {
+  const v = new Array(durT).fill(null);
+  for (const e of ev) {
+    if (soMelodia && e.parte !== 'melodia') continue;
+    const k = ((tk(e.t) % durT) + durT) % durT;
+    (v[k] = v[k] || []).push(chave(e, tk));
+  }
+  return v;
+}
 // eventos que começam em [a, a+X) no loop circular, com o tempo relativo ao começo da janela
-function janela(porMs, dur, a, X) {
-  const r = [];
+function janela(v, a, X) {
+  const n = v.length, r = [];
   for (let k = 0; k < X; k++) {
-    const lista = porMs.get(((a + k) % dur + dur) % dur);
+    const lista = v[(((a + k) % n) + n) % n];
     if (lista) for (const c of lista) r.push(k + ':' + c);
   }
   return r.sort().join('\n');
 }
-
-function conferirRepeticao(id, ev, durS, batidaS, compassoS, soMelodia) {
-  const dur = ms(durS);
-  const porMs = new Map();
-  for (const e of ev) {
-    if (soMelodia && e.parte !== 'melodia') continue;
-    const k = ms(e.t) % dur;
-    if (!porMs.has(k)) porMs.set(k, []);
-    porMs.get(k).push(chave(e));
-  }
-  const passo = batidaS;
-  const nPassos = Math.round(durS / passo);
-  const achados = [];
-  for (let X = compassoS; X < MIN_S - 1e-6; X += passo) {
-    const Xms = ms(X);
-    for (let i = 0; i < nPassos; i++) {
-      const a = ms(i * passo);
-      const j1 = janela(porMs, dur, a, Xms);
+// menor X (em tiques, de batida em batida, de xMin até < 20 s) em que algum trecho [a, a+X) se repete
+// `copias` vezes seguidas (a em cada batida, loop circular)
+function conferirRepeticao(v, batT, xMin, xMax, copias) {
+  const n = v.length;
+  for (let X = xMin; X < xMax; X += batT) {
+    for (let a = 0; a < n; a += batT) {
+      const j1 = janela(v, a, X);
       if (!j1) continue;                     // janela sem nota nenhuma não é "frase"
-      const j2 = janela(porMs, dur, a + Xms, Xms);
-      if (j1 === j2) { achados.push({ t: i * passo, X }); break; }
+      let c = 1;
+      while (c < copias && janela(v, a + c * X, X) === j1) c++;
+      if (c >= copias) return { a, X };
     }
-    if (achados.length) break;
   }
-  return achados;
+  return null;
 }
 
 let resumo = [];
@@ -122,25 +126,29 @@ for (const id of Object.keys(M.faixas)) {
     if (a === b) falha(`${id}: seção ${fx.ordem[i]} repetida em seguida`);
   }
 
+  const tk = tiquesDe(fx.bpm), durT = tk(dur), batT = TPB, compT = TPB * (fx.compasso || 4);
+  const xMax = tk(MIN_S - 1e-6) + 1;         // X < 20 s
+  const seg = (T) => (T / TPB * 60 / fx.bpm).toFixed(2);
+  if (Math.abs(durT - dur * fx.bpm / 60 * TPB) > 0.01) falha(`${id}: o loop não fecha na grade de batidas`);
+  const vTodos = porTique(ev, durT, tk, false), vMel = porTique(ev, durT, tk, true);
+
   // período curto (o loop inteiro igual a ele mesmo deslocado de X < 20 s)
-  const todos = new Map();
-  for (const e of ev) { const k = ms(e.t); todos.set(k, (todos.get(k) || []).concat(chave(e))); }
-  const dms = ms(dur);
-  for (let X = batidaS; X < MIN_S; X += batidaS) {
-    const Xms = ms(X);
-    let igual = true;
-    for (const [k, l] of todos) {
-      const o = todos.get((k + Xms) % dms);
-      if (!o || o.slice().sort().join() !== l.slice().sort().join()) { igual = false; break; }
-    }
-    if (igual) { falha(`${id}: o loop se repete a cada ${X.toFixed(2)} s`); break; }
+  for (let X = batT; X < xMax; X += batT) {
+    const igual = vTodos.every((l, i) => {
+      const o = vTodos[(i + X) % durT];
+      return (!l && !o) || (l && o && l.slice().sort().join() === o.slice().sort().join());
+    });
+    if (igual) { falha(`${id}: o loop se repete a cada ${seg(X)} s`); break; }
   }
 
-  // trechos curtos repetidos em seguida
-  const r1 = conferirRepeticao(id, ev, dur, batidaS, compassoS, false);
-  if (r1.length) falha(`${id}: trecho de ${r1[0].X.toFixed(2)} s repetido em seguida a partir de ${r1[0].t.toFixed(2)} s (todas as partes)`);
-  const r2 = conferirRepeticao(id, ev, dur, batidaS, compassoS, true);
-  if (r2.length) falha(`${id}: frase de ${r2[0].X.toFixed(2)} s da melodia repetida em seguida a partir de ${r2[0].t.toFixed(2)} s`);
+  // trechos repetidos em seguida: de 1 compasso até < 20 s, 2 cópias coladas (todas as partes e só a melodia)
+  const r1 = conferirRepeticao(vTodos, batT, compT, xMax, 2);
+  if (r1) falha(`${id}: trecho de ${seg(r1.X)} s repetido em seguida a partir de ${seg(r1.a)} s (todas as partes)`);
+  const r2 = conferirRepeticao(vMel, batT, compT, xMax, 2);
+  if (r2) falha(`${id}: frase de ${seg(r2.X)} s da melodia repetida em seguida a partir de ${seg(r2.a)} s`);
+  // motivo curto da melodia (1 batida até menos de 1 compasso) repetido 4 vezes seguidas
+  const r3 = conferirRepeticao(vMel, batT, batT, compT, 4);
+  if (r3) falha(`${id}: motivo de ${seg(r3.X)} s da melodia repetido 4 vezes a partir de ${seg(r3.a)} s`);
 
   // emenda: a melodia não fica cortada no fim do loop
   const mel = ev.filter((e) => e.parte === 'melodia');
