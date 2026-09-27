@@ -94,13 +94,13 @@
         U.el('p.claude-texto'),
         U.el('div.claude-extra', { hidden: true }),
         U.el('div.claude-acoes',
-          U.el('button.btn-ouvir-claude', { type: 'button', 'aria-label': 'Ouvir o Claude', text: '🔊' }),
+          U.el('button.btn-ouvir-claude.livre-na-fala', { type: 'button', 'aria-label': 'Ouvir o Claude', text: '🔊' }),
           U.el('button.btn-ok-claude', { type: 'button', text: 'Ok! 👍' }))));
     document.body.appendChild(bal);
-    bal.querySelector('.btn-ouvir-claude').addEventListener('click', function () { if (aberto) Reino.Som.falar(aberto.fala || aberto.texto, { voz: vozDe(aberto) }); });
+    bal.querySelector('.btn-ouvir-claude').addEventListener('click', function () { if (!aberto) return; var segs = aberto.fala || aberto.texto, op = { voz: vozDe(aberto) }; if (Reino.UI && Reino.UI.ouvirDeNovo) Reino.UI.ouvirDeNovo(segs, op); else Reino.Som.falar(segs, op); });
     bal.querySelector('.claude-acoes').addEventListener('click', function (e) {
       var b = e.target.closest('button[data-valor]');
-      if (!b || !aberto) return;
+      if (!b || !aberto || b.disabled) return;
       // toque de dedo/mouse (não o Enter): o próximo balão nasce no mesmo lugar, e o 2º toque de um toque
       // duplo pulava a página sem ela ler (ou apertava o "Ok! 👍"/"Vamos!"). A guarda do ui/base.js segura
       // os toques perto deste por um instante; toque noutro lugar e o teclado valem na hora.
@@ -124,6 +124,13 @@
           e.preventDefault(); e.stopPropagation();
           try { bts[prox].focus({ preventScroll: true }); } catch (x) { bts[prox].focus(); }
         }
+        return;
+      }
+      // ouvir antes de seguir: enquanto a fala toca, Esc/Enter/Espaço não fazem nada
+      // (o 🔊 focado segue livre: Enter/Espaço nele repetem a fala)
+      var noOuvir = at && at.classList && at.classList.contains('livre-na-fala') && bal.contains(at);
+      if (aberto.esperando && (e.key === 'Escape' || (!noOuvir && (e.key === 'Enter' || e.key === ' ')))) {
+        e.preventDefault(); e.stopPropagation();
         return;
       }
       // Esc fecha qualquer balão aberto (o "não", se houver): sem isso, quem joga só com o teclado ficava
@@ -206,9 +213,19 @@
     bal.hidden = false;
     bal.classList.remove('entrando'); void bal.offsetWidth; bal.classList.add('entrando');
     if (foco) try { foco.focus({ preventScroll: true }); } catch (e) { foco.focus(); }
-    if (item.falar !== false) Reino.Som.falar(item.fala || item.texto, { voz: vozDe(item) });
+    if (item.falar !== false) falarNoBalao(bal, item, foco);
     clearTimeout(item.timer);
     if (item.tempo) item.timer = setTimeout(fechar, item.tempo);
+  }
+  // balão que espera resposta (sem `tempo`): os botões (menos o 🔊) só liberam quando a fala acaba
+  function falarNoBalao(bal, item, foco) {
+    var segs = item.fala || item.texto, op = { voz: vozDe(item) };
+    if (item.tempo || !Reino.UI || !Reino.UI.esperarFala) { Reino.Som.falar(segs, op); return; }
+    item.esperando = true;
+    Reino.UI.esperarFala(bal.querySelector('.claude-acoes'), segs, op).then(function () {
+      item.esperando = false;
+      if (aberto === item && foco && foco.isConnected) try { foco.focus({ preventScroll: true }); } catch (e) { foco.focus(); }
+    });
   }
   function fechar(valor) {
     var bal = U.$('#claude-balao');
