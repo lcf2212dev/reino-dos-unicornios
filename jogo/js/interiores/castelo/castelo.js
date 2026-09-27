@@ -43,7 +43,7 @@
   }
   F.npcs['lab-cavaleira'] = F.npcs['lab-cavaleira'] || {
     oi: ['Eu sou a Cavaleira Jade! 🛡️', 'Eu treino Ciências com você.'],
-    nova: ['Vamos treinar Ciências? 🥇', 'Pense como {uma cientista|um cientista}!'],
+    nova: ['Vamos treinar Ciências? 🥇', 'Pense como {uma cientista|um cientista} de verdade!'],
     feita: ['Quer treinar mais uma vez? ✨', 'Vamos buscar o ouro com calma?'],
     bloqueada: ['Primeiro, as salas do Laboratório.', 'O Laboratório vem antes.'],
     depois: ['Que cientista {caprichosa|caprichoso}! ✨', 'Você sabe muito da natureza! 🏆'],

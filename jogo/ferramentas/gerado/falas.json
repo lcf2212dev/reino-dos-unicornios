@@ -447,6 +447,15 @@
    "fala": "Perfeito! Você é uma ótima estudante!"
   },
   {
+   "chave": "dd88cd1d17",
+   "voz": "claude",
+   "texto": "Perfeito! Você é um ótimo estudante!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Perfeito! Você é um ótimo estudante!"
+  },
+  {
    "chave": "4f325533x",
    "voz": "claude",
    "texto": "Mandou muito bem, Mariana!",
@@ -526,6 +535,15 @@
     "geral"
    ],
    "fala": "Opa! Toda campeã erra às vezes. Você consegue!"
+  },
+  {
+   "chave": "16b3a7261i",
+   "voz": "claude",
+   "texto": "Opa! Todo campeão erra às vezes. Você consegue!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Opa! Todo campeão erra às vezes. Você consegue!"
   },
   {
    "chave": "a5e448be1q",
@@ -643,6 +661,15 @@
     "geral"
    ],
    "fala": "Terminar por último é coisa de campeã!"
+  },
+  {
+   "chave": "c1099dcd1a",
+   "voz": "claude",
+   "texto": "Terminar por último é coisa de campeão!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Terminar por último é coisa de campeão!"
   },
   {
    "chave": "e12c7e521p",
@@ -910,6 +937,15 @@
    "fala": "Meu plano da prova. Um: respiro três vezes. Dois: leio cada pergunta duas vezes. Três: respondo com calma. Quatro: reviso tudo, do começo ao fim. Cinco: só entrego depois de revisar. Terminar por último é coisa de campeã!"
   },
   {
+   "chave": "ed6109206d",
+   "voz": "claude",
+   "texto": "Meu plano da prova. Um: respiro três vezes. Dois: leio cada pergunta duas vezes. Três: respondo com calma. Quatro: reviso tudo, do começo ao fim. Cinco: só entrego depois de revisar. Terminar por último é coisa de campeão!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Meu plano da prova. Um: respiro três vezes. Dois: leio cada pergunta duas vezes. Três: respondo com calma. Quatro: reviso tudo, do começo ao fim. Cinco: só entrego depois de revisar. Terminar por último é coisa de campeão!"
+  },
+  {
    "chave": "d2da874e3h",
    "voz": "claude",
    "texto": "Chegou a parte mais importante: REVISAR! É aqui que as campeãs encontram os errinhos. Toque em cada questão com calma.",
@@ -917,6 +953,15 @@
     "geral"
    ],
    "fala": "Chegou a parte mais importante: revisar! É aqui que as campeãs encontram os errinhos. Toque em cada questão com calma."
+  },
+  {
+   "chave": "5de3baaf3i",
+   "voz": "claude",
+   "texto": "Chegou a parte mais importante: REVISAR! É aqui que os campeões encontram os errinhos. Toque em cada questão com calma.",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Chegou a parte mais importante: revisar! É aqui que os campeões encontram os errinhos. Toque em cada questão com calma."
   },
   {
    "chave": "e1bb9fbe2n",
@@ -1007,6 +1052,15 @@
     "geral"
    ],
    "fala": "Você terminou e revisou, isso já é de campeã! Vamos revisar as salas e tentar de novo?"
+  },
+  {
+   "chave": "e31bfb6d2m",
+   "voz": "claude",
+   "texto": "Você terminou e revisou, isso já é de campeão! Vamos revisar as salas e tentar de novo?",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Você terminou e revisou, isso já é de campeão! Vamos revisar as salas e tentar de novo?"
   },
   {
    "chave": "1fc993961g",
@@ -1216,6 +1270,15 @@
    "fala": "Fui o seu primeiro unicórnio. Vamos crescer juntas!"
   },
   {
+   "chave": "fa8d6b6f1p",
+   "voz": "unicornio",
+   "texto": "Fui o seu primeiro unicórnio. Vamos crescer juntos!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Fui o seu primeiro unicórnio. Vamos crescer juntos!"
+  },
+  {
    "chave": "ec3bb5e63p",
    "voz": "claude",
    "texto": "Bem-vinda à Escola do Reino! Aqui ficam as provas bimestrais. Acertou tudo na primeira tentativa? Ganha um acessório lendário!",
@@ -1223,6 +1286,15 @@
     "geral"
    ],
    "fala": "Bem-vinda à Escola do Reino! Aqui ficam as provas bimestrais. Acertou tudo na primeira tentativa? Ganha um acessório lendário!"
+  },
+  {
+   "chave": "8771410c3p",
+   "voz": "claude",
+   "texto": "Bem-vindo à Escola do Reino! Aqui ficam as provas bimestrais. Acertou tudo na primeira tentativa? Ganha um acessório lendário!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Bem-vindo à Escola do Reino! Aqui ficam as provas bimestrais. Acertou tudo na primeira tentativa? Ganha um acessório lendário!"
   },
   {
    "chave": "d747994545",
@@ -1340,6 +1412,15 @@
     "geral"
    ],
    "fala": "Treino feito! Cada revisão deixa você mais preparada para a prova da escola."
+  },
+  {
+   "chave": "d45314e22b",
+   "voz": "claude",
+   "texto": "Treino feito! Cada revisão deixa você mais preparado para a prova da escola.",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Treino feito! Cada revisão deixa você mais preparado para a prova da escola."
   },
   {
    "chave": "d1f1d3a43k",
@@ -23452,6 +23533,15 @@
    "fala": "Revisar é coisa de campeã!"
   },
   {
+   "chave": "53d915d312",
+   "voz": "npc-aurora",
+   "texto": "Revisar é coisa de campeão!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Revisar é coisa de campeão!"
+  },
+  {
    "chave": "a5d0ef9d15",
    "voz": "npc-aurora",
    "texto": "Tudo bem, volte quando quiser!",
@@ -24037,13 +24127,22 @@
    "fala": "Vamos treinar Ciências?"
   },
   {
-   "chave": "e0527dcc17",
+   "chave": "53ffd2041i",
    "voz": "npc-lab-cavaleira",
-   "texto": "Pense como uma cientista!",
+   "texto": "Pense como uma cientista de verdade!",
    "pacotes": [
     "interior-castelo"
    ],
-   "fala": "Pense como uma cientista!"
+   "fala": "Pense como uma cientista de verdade!"
+  },
+  {
+   "chave": "2f97b74f1h",
+   "voz": "npc-lab-cavaleira",
+   "texto": "Pense como um cientista de verdade!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Pense como um cientista de verdade!"
   },
   {
    "chave": "9aa0bc5a18",
@@ -24089,6 +24188,15 @@
     "interior-castelo"
    ],
    "fala": "Que cientista caprichosa!"
+  },
+  {
+   "chave": "df065edc17",
+   "voz": "npc-lab-cavaleira",
+   "texto": "Que cientista caprichoso!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Que cientista caprichoso!"
   },
   {
    "chave": "993992ee1a",
@@ -24308,6 +24416,15 @@
    "fala": "Revisar é coisa de campeã!"
   },
   {
+   "chave": "dea627dc14",
+   "voz": "npc-padrao-1",
+   "texto": "Revisar é coisa de campeão!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Revisar é coisa de campeão!"
+  },
+  {
    "chave": "a0ba939417",
    "voz": "npc-padrao-1",
    "texto": "Tudo bem, volte quando quiser!",
@@ -24452,6 +24569,16 @@
     "interior-padrao-matematica"
    ],
    "fala": "Vamos ler juntas com calma?"
+  },
+  {
+   "chave": "5031d63d11",
+   "voz": "narradora",
+   "texto": "Vamos ler juntos com calma?",
+   "pacotes": [
+    "interior-castelo",
+    "interior-padrao-matematica"
+   ],
+   "fala": "Vamos ler juntos com calma?"
   },
   {
    "chave": "b0e81989t",
@@ -24671,6 +24798,15 @@
    "fala": "Vamos ver os prêmios juntas?"
   },
   {
+   "chave": "1760ab8816",
+   "voz": "npc-margarida",
+   "texto": "Vamos ver os prêmios juntos?",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Vamos ver os prêmios juntos?"
+  },
+  {
    "chave": "8ceedef1e",
    "voz": "npc-helena",
    "texto": "Oi!",
@@ -24723,6 +24859,15 @@
     "interior-escola"
    ],
    "fala": "Vamos treinar a prova juntas?"
+  },
+  {
+   "chave": "06e5fdae14",
+   "voz": "npc-helena",
+   "texto": "Vamos treinar a prova juntos?",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Vamos treinar a prova juntos?"
   },
   {
    "chave": "b25d3d1b13",
@@ -24833,6 +24978,15 @@
    "fala": "Vamos fazer a prova juntas?"
   },
   {
+   "chave": "5128ea7c10",
+   "voz": "npc-emma",
+   "texto": "Vamos fazer a prova juntos?",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Vamos fazer a prova juntos?"
+  },
+  {
    "chave": "d1901ee513",
    "voz": "npc-emma",
    "texto": "Escute cada palavra com calma.",
@@ -24849,6 +25003,15 @@
     "interior-escola"
    ],
    "fala": "Vamos treinar a prova juntas?"
+  },
+  {
+   "chave": "e5a32e9f12",
+   "voz": "npc-emma",
+   "texto": "Vamos treinar a prova juntos?",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Vamos treinar a prova juntos?"
   },
   {
    "chave": "0abbd85d15",
@@ -24966,6 +25129,15 @@
     "interior-escola"
    ],
    "fala": "Vamos treinar a prova juntas?"
+  },
+  {
+   "chave": "869aaa7713",
+   "voz": "npc-lucia",
+   "texto": "Vamos treinar a prova juntos?",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Vamos treinar a prova juntos?"
   },
   {
    "chave": "84aaf937z",
@@ -26417,6 +26589,15 @@
     "interior-geografia"
    ],
    "fala": "Que pedestre caprichosa!"
+  },
+  {
+   "chave": "5a1f332411",
+   "voz": "npc-geo-beto",
+   "texto": "Que pedestre caprichoso!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Que pedestre caprichoso!"
   },
   {
    "chave": "e653662117",
@@ -28152,6 +28333,15 @@
    "fala": "Vamos descobrir o céu juntas?"
   },
   {
+   "chave": "4468c69112",
+   "voz": "npc-vega",
+   "texto": "Vamos descobrir o céu juntos?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos descobrir o céu juntos?"
+  },
+  {
    "chave": "d2c622ba13",
    "voz": "npc-vega",
    "texto": "Eu tenho um segredo do espaço!",
@@ -28186,6 +28376,15 @@
     "interior-observatorio"
    ],
    "fala": "Até logo, pequena astrônoma!"
+  },
+  {
+   "chave": "04b0cf7c11",
+   "voz": "npc-vega",
+   "texto": "Até logo, pequeno astrônomo!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Até logo, pequeno astrônomo!"
   },
   {
    "chave": "1a27c79713",
@@ -28377,6 +28576,15 @@
    "fala": "Até logo, pequena astronauta!"
   },
   {
+   "chave": "e07ced1817",
+   "voz": "npc-nasa-davi",
+   "texto": "Até logo, pequeno astronauta!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Até logo, pequeno astronauta!"
+  },
+  {
    "chave": "94f248d9k",
    "voz": "npc-nasa-davi",
    "texto": "Tchau!",
@@ -28440,6 +28648,15 @@
    "fala": "Vamos descobrir juntas?"
   },
   {
+   "chave": "7f04a42610",
+   "voz": "npc-nasa-bia",
+   "texto": "Vamos descobrir juntos?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos descobrir juntos?"
+  },
+  {
    "chave": "6862694614",
    "voz": "npc-nasa-bia",
    "texto": "Você é uma ótima cientista!",
@@ -28447,6 +28664,15 @@
     "interior-observatorio"
    ],
    "fala": "Você é uma ótima cientista!"
+  },
+  {
+   "chave": "d275cc6513",
+   "voz": "npc-nasa-bia",
+   "texto": "Você é um ótimo cientista!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Você é um ótimo cientista!"
   },
   {
    "chave": "b535d9ba11",
@@ -28845,6 +29071,15 @@
    "fala": "Que guarda caprichosa!"
   },
   {
+   "chave": "9a597640z",
+   "voz": "npc-lab-jana",
+   "texto": "Que guarda caprichoso!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Que guarda caprichoso!"
+  },
+  {
    "chave": "23eaa14b17",
    "voz": "npc-lab-jana",
    "texto": "Tudo bem, volte quando quiser!",
@@ -28969,6 +29204,15 @@
     "interior-observatorio"
    ],
    "fala": "Você é amiga da natureza!"
+  },
+  {
+   "chave": "c051ce2812",
+   "voz": "npc-lab-malu",
+   "texto": "Você é amigo da natureza!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Você é amigo da natureza!"
   },
   {
    "chave": "ae64184817",
@@ -29230,6 +29474,15 @@
     "interior-observatorio"
    ],
    "fala": "Você é uma ótima detetive!"
+  },
+  {
+   "chave": "b841411712",
+   "voz": "npc-lab-lupa",
+   "texto": "Você é um ótimo detetive!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Você é um ótimo detetive!"
   },
   {
    "chave": "889fd34317",
@@ -30655,6 +30908,15 @@
    "fala": "Vamos ver os icebergs juntas?"
   },
   {
+   "chave": "bd116a3713",
+   "voz": "npc-brisa",
+   "texto": "Vamos ver os icebergs juntos?",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Vamos ver os icebergs juntos?"
+  },
+  {
    "chave": "57600a9a11",
    "voz": "npc-brisa",
    "texto": "Quer viajar de novo comigo?",
@@ -31958,6 +32220,15 @@
     "interior-torre"
    ],
    "fala": "Vamos olhar o céu juntas?"
+  },
+  {
+   "chave": "141dc80210",
+   "voz": "npc-stella",
+   "texto": "Vamos olhar o céu juntos?",
+   "pacotes": [
+    "interior-torre"
+   ],
+   "fala": "Vamos olhar o céu juntos?"
   },
   {
    "chave": "577b98fb11",
