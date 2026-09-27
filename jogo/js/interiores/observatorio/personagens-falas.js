@@ -4,13 +4,13 @@
    ETs da Lua (planeta-lua, viagem de foguete; docs/contratos/viagem.md). */
 Reino.falasDoPredio('observatorio', { npcs: {
   'lua-lumi': {
-    oi: ['Oi! Eu sou a Lumi.', 'Eu sou uma ET da Lua!', 'Que bom que você veio!'],
+    oi: ['Oi! Eu me chamo Lumi.', 'Eu sou uma ET da Lua!', 'Que bom que você veio!'],
     depois: ['Aqui a gente pula bem alto!', 'Pule na cratera. É divertido!'],
   },
 } });
 Reino.falasDoPredio('observatorio', { npcs: {
   'lua-pipo': {
-    oi: ['Oi! Eu sou o Pipo.', 'Eu adoro esconde-esconde!', 'Será que você me acha?'],
+    oi: ['Oi! Eu sou o Pipo.', 'Eu adoro brincar de esconder!', 'Será que você me acha?'],
     depois: ['Eu me escondo muito bem!', 'Vamos brincar de novo?'],
   },
 } });
