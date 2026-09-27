@@ -32,6 +32,7 @@
 //   3. e2e-<data>/atual/   = referências do jogo atual (sempre novas; apagadas se idêntico, salvo --manter)
 //   4. compara (referencias-comparar.js) e diz o resultado; código de saída 0 = idêntico
 // Seguro: servidores de teste em portas livres com banco em /tmp, navegador isolado (ver guardas.js).
+if (require.main === module) require('../ajuda').ajuda(__filename);
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
@@ -152,6 +153,10 @@ async function e2e(op) {
 module.exports = { e2e, hashBase, extrairBase };
 
 if (require.main === module) {
+  // opção desconhecida (ou com erro de digitação) para aqui: antes ela era ignorada e o e2e inteiro rodava
+  require('../ajuda').conferirOpcoes(process.argv.slice(2), {
+    valores: ['--base', '--raiz', '--tamanhos', '--cenas', '--paralelo'], duplas: ['--trocar-base'],
+    booleanas: ['--so-dados', '--desempenho', '--manter', '--podar', '--sem-esperar'] });
   const arg = (n) => { const i = process.argv.indexOf(n); return i > 0 ? process.argv[i + 1] : undefined; };
   const soDados = process.argv.includes('--so-dados'), cenas = arg('--cenas');
   if (soDados && cenas) { console.error('✘ --cenas é só para imagens; --so-dados não tem imagens'); process.exit(2); }

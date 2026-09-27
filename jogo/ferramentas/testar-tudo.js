@@ -13,6 +13,7 @@
 // da worktree (testes/trava.js): outro `npm test` na mesma worktree espera (ou falha com --sem-esperar).
 // Nada aqui toca no servidor de casa, no artifact publicado nem no save da Mariana: os testes usam saves
 // sintéticos em vm, cópias em /tmp e o servidor de teste (porta livre, banco em /tmp).
+if (require.main === module) require('./ajuda').ajuda(__filename);
 const fs = require('fs');
 const path = require('path');
 const { rodar } = require('./testes/processo');

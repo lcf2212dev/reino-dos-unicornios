@@ -2,6 +2,7 @@
 // Uso: node ferramentas/validar/validar-tudo.js [--detalhes]   (npm run validar, na raiz do repositório)
 // Cada validador roda à parte (eles terminam com process.exit); a saída inteira só aparece quando um
 // falha (ou com --detalhes). Validador que não existe é erro. Sai com código 1 se algum falhar.
+if (require.main === module) require('../ajuda').ajuda(__filename);
 const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');

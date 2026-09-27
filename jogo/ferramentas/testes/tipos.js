@@ -10,6 +10,7 @@
 // As formas (EstadoSave, Materia, Desafio…) estão em tipos-jogo.d.ts, puxado por tipos-globais.d.ts.
 // O tsconfig é gerado numa pasta própria de cada execução, /tmp/reino-testes/tipos-<pid>/ (duas execuções
 // ao mesmo tempo não se atropelam; nada é escrito no repositório).
+if (require.main === module) require('../ajuda').ajuda(__filename);
 const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');

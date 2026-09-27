@@ -3,6 +3,7 @@
 // lá sincronizaria com o progresso real da Mariana. Toda rede fora da porta de teste é bloqueada.
 const { chromium } = require('playwright');
 const { conferirUrl } = require('./guardas');
+const { vigiar } = require('./vigia-memoria');
 
 // tamanhos do CLAUDE.md: celular, tablet e notebook
 const TAMANHOS = {
@@ -19,7 +20,26 @@ const ARGS_FIXOS = ['--disable-gpu', '--disable-gpu-rasterization', '--disable-p
 // e falha; o loopback (127.0.0.1) vai direto e é filtrado por origem em abrir() (só a porta de teste)
 const ARGS_REDE = ['--proxy-server=http://127.0.0.1:9'];
 // op.args: argumentos extras do Chromium (ex.: desempenho.js usa --js-flags=--expose-gc)
-async function lancar(op = {}) { return chromium.launch({ headless: true, args: ARGS_FIXOS.concat(ARGS_REDE, op.args || []) }); }
+// todo Chromium de teste fica sob o vigia de memória e de travamento (vigia-memoria.js)
+async function lancar(op = {}) { vigiar(); return chromium.launch({ headless: true, args: ARGS_FIXOS.concat(ARGS_REDE, op.args || []) }); }
+
+// Roda antes de tudo em cada carga (antes do save e dos scripts do jogo):
+// - o buffer do Resource Timing (250 entradas) enchia durante a própria carga do jogo (scripts + CSS + pacotes de voz)
+//   e o que chegava depois sumia dele; o avancar do e2e (referencias-pagina.js) esperava para sempre um pacote de voz
+//   "que não chegou", girando e alocando até o Chromium passar de 10 GB. Aumentar o buffer depois da carga era tarde;
+// - __scriptsProntos: todo <script src> que terminou (carregou ou falhou), visto pelo evento no document (captura),
+//   sem depender do buffer: é o que o avancar consulta;
+// - __agoraReal: o relógio de verdade, guardado antes do congelar.js trocar Date e performance.now pelo virtual (o teto
+//   de espera do avancar é em tempo real).
+function antesDeTudo() {
+  try { performance.setResourceTimingBufferSize(5000); } catch (e) { /* navegador sem Resource Timing */ }
+  var agora = performance.now.bind(performance);
+  window.__agoraReal = function () { return agora(); };
+  var prontos = window.__scriptsProntos = new Set();
+  var marcar = function (e) { var t = e.target; if (t && t.tagName === 'SCRIPT' && t.src) prontos.add(t.src); };
+  document.addEventListener('load', marcar, true);
+  document.addEventListener('error', marcar, true);
+}
 
 // op: { browser, url (do servidor de teste), tamanho, save (objeto sintético), query, contexto,
 //       scripts (funções/textos que rodam antes do jogo em cada carga, depois do save) }
@@ -34,6 +54,7 @@ async function abrir(op) {
     if (base.protocol === 'file:' ? u.startsWith('file:') || u.startsWith('data:') : u.startsWith(origem + '/')) return r.continue();
     return r.abort();
   });
+  await context.addInitScript(antesDeTudo);
   if (op.save) {
     // só na primeira carga da aba: o save sintético entra antes do jogo ler o localStorage
     await context.addInitScript(([chave, texto]) => {

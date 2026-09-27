@@ -5,6 +5,7 @@
 //        (fora de js/voz/ e do próprio manifesto) que não está no manifesto.
 // O cabeçalho e o corpo fixos do HTML estão no MODELO abaixo. O ferramentas/gerar-artifact.js
 // tira doctype, <html>, <head>, <body> e as metas charset/viewport desta mesma página.
+if (require.main === module) require('./ajuda').ajuda(__filename);
 const fs = require('fs');
 const path = require('path');
 

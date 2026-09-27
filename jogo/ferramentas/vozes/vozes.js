@@ -12,6 +12,7 @@
 //                 O modelo do whisper fica no cache do usuário (~/.cache/huggingface).
 // Temporários das vozes em <raiz do repositório>/.vozes/ (ignorado pelo git; o /tmp é memória).
 // Cada passo pode ser pulado. As vozes são achadas pelo TEXTO EXATO: texto falado mudou = gravação nova.
+if (require.main === module) require('../ajuda').ajuda(__filename);
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');

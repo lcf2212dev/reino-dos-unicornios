@@ -7,6 +7,7 @@
 // Em código: const { iniciar } = require('./servidor-teste'); const s = await iniciar(); … s.parar();
 // O servidor filho morre junto com o pai (vigia-pai.js, canal IPC): nenhum servidor órfão fica
 // para trás se o pai cair, mesmo com kill -9.
+if (require.main === module) require('../ajuda').ajuda(__filename);
 const fs = require('fs');
 const net = require('net');
 const os = require('os');
@@ -83,6 +84,7 @@ async function subir(op) {
 module.exports = { iniciar, portaLivre, enderecosRede, conferirPorta, conferirBanco };
 
 if (require.main === module) {
+  require('../ajuda').conferirOpcoes(process.argv.slice(2), { valores: ['--porta', '--raiz', '--banco'], booleanas: ['--fundo'] });
   const arg = (n) => { const i = process.argv.indexOf(n); return i > 0 ? process.argv[i + 1] : undefined; };
   const fundo = process.argv.includes('--fundo');
   iniciar({ porta: arg('--porta'), raiz: arg('--raiz'), banco: arg('--banco'), fundo }).then((s) => {
