@@ -187,6 +187,13 @@
       var l = fixo(f);
       lugares.push(l);
       assentar(l);
+      // no terreno reservado para ele (Mapa.RESERVADOS), a mesma cerquinha dos prédios de hoje, com o portão na porta
+      if (!(Mapa.RESERVADOS || []).some(function (res) { return res.id === l.id; })) return;
+      var fy = l.rect.y + l.rect.h;
+      for (var fx = l.rect.x; fx < l.rect.x + l.rect.w; fx++) {
+        if (fx === l.porta.x || !dentro(fx, fy) || tipo[fy][fx] !== 'g' || solido[fy][fx]) continue;
+        decor[fy][fx] = 'cerca'; solido[fy][fx] = true;
+      }
     });
     lugares.forEach(function (l) { delete l.novo; });
     // matérias dentro de um prédio: só para o menu Lugares, com a porta (e a área) do anfitrião;
