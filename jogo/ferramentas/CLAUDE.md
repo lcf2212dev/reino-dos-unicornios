@@ -26,6 +26,18 @@ Ferramentas de desenvolvimento (Node). Nenhuma entra no jogo. Comandos: `CLAUDE.
 - "Page crashed"/"Target crashed" no Chromium: confira `df -h /tmp`; se estiver cheio, rode com
   `TMPDIR=/dev/shm/<pasta>` (não apague temporários de outros). A pasta de testes pode ir junto:
   `REINO_TESTES=/dev/shm/reino-testes` (só dentro de `/tmp` ou `/dev/shm`; `guardas.js`).
+- Vigia (`testes/vigia-memoria.js`, ligado por `navegador.js` em todo Chromium de teste): processo acima de
+  `REINO_MEMORIA_GB` (4), soma acima de `REINO_MEMORIA_TOTAL_GB` (24) ou aba do e2e sem foto há `REINO_TRAVADO_MIN`
+  (5) min: mostra o que cada aba fazia (também em `/tmp/reino-testes/vigia/`), derruba os processos DAQUELE teste e
+  sai com código 3. O `avancar` do e2e espera um pacote de voz no máximo 20 s (`REINO_ESPERA_VOZ_MS`) e diz qual.
+- Hook do Claude Code (`.claude/settings.json` → `fluxo/vigia-travamento.js`, depois de cada ferramenta e a cada
+  mensagem): avisa Chromium de teste acima de `REINO_MEMORIA_GB` (4), os de um mesmo teste somando mais de
+  `REINO_VIGIA_TOTAL_GB` (24), teste rodando há mais de `REINO_VIGIA_TESTE_MIN` (30) min, memória livre abaixo de 10%
+  e diagnóstico novo do vigia; o mesmo aviso volta ao mesmo agente só depois de 10 min. Na mão: `--agora`.
+- Investigar e corrigir: skill `investigar-vazamento`; `npm run memoria` (`testes/sonda-memoria.js`) mede uma aba passo
+  a passo e compara duas cópias do jogo.
+- Todo comando do `package.json` responde a `--ajuda` sem fazer mais nada (`ajuda.js`; `unidade/ajuda.test.js`
+  confere); o e2e e o servidor de teste recusam opção desconhecida.
 - O servidor de teste mostra também `http://<IP da rede>:<porta>/`: só para o pai abrir à mão no celular/tablet.
   Scripts e Playwright seguem em 127.0.0.1.
 

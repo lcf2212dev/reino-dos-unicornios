@@ -8,6 +8,7 @@
 //   aviso o mesmo nome visível (o nome próprio, sem "Doutora", "Seu"…) em dois personagens do mesmo pacote
 //   aviso voz masculina para quem se apresenta no feminino ("eu sou a", Doutora, Professora…) ou o contrário
 // Limiares: no edge-tts, menos de ~15 Hz e ~10% de diferença na MESMA voz soa como a mesma pessoa.
+if (require.main === module) require('../ajuda').ajuda(__filename);
 const path = require('path');
 
 const LIMITE_CLAUDE = { tom: 15, velocidade: 10 };

@@ -6,6 +6,7 @@
 // Uso: node jogo/ferramentas/gerar-versao.js            → grava jogo/js/versao.json (npm run versao)
 //      node jogo/ferramentas/gerar-versao.js --raiz <pasta jogo>   → outra cópia do jogo (testes)
 //      node jogo/ferramentas/gerar-versao.js --imprimir → só mostra o hash, sem gravar
+if (require.main === module) require('./ajuda').ajuda(__filename);
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');

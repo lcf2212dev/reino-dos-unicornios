@@ -46,6 +46,8 @@ Este arquivo tem as regras invioláveis e o índice. As regras de código de cad
 - Só no Chrome (Chromium do Playwright), nos tamanhos de celular, tablet e notebook. Nada de Firefox,
   Safari/WebKit nem emulação de iPhone ou iPad com o motor WebKit.
 - Fecho de qualquer mudança: skill `validar-tudo` (`npm test` e `npm run e2e`).
+- Teste travado, memória explodindo ou aviso "VIGIA": skill `investigar-vazamento` (os vigias e os limites deles:
+  `jogo/ferramentas/CLAUDE.md`).
 
 ## Agentes
 - Até 8 subagentes e workers ao mesmo tempo. Quando um termina e há trabalho independente, outro entra no lugar.
@@ -68,7 +70,7 @@ Este arquivo tem as regras invioláveis e o índice. As regras de código de cad
 - `npm test` (unidade, validadores, tamanho, referências de dados) · `npm run e2e` (jogo x commit base, tem que dar
   idêntico) · `npm run unidade` · `npm run validar` · `npm run tamanho` · `npm run tipos`
 - `npm run novo -- <tipo> <id>` (gerador; `--lista`) · `npm run ver` (fotografa uma cena nos 3 tamanhos) ·
-  `npm run servidor-teste` (skill `servidor-de-teste`)
+  `npm run servidor-teste` (skill `servidor-de-teste`) · `npm run memoria` (memória de uma aba, passo a passo)
 - `npm run index` · `npm run versao` · `npm run vozes` e `npm run vozes-elenco` (skills `gravar-vozes`, `validar-vozes`)
 - `npm run worktree` · `npm run material -- <Pasta>` (prints de `matérias/<pasta>/` reduzidos) · `npm run integrar`
   (skill `entregar`) · `npm run artifact` (skill `publicar-artifact`)

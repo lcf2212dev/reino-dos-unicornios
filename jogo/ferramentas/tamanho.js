@@ -6,6 +6,7 @@
 // (nunca entra em servidor/: o banco da Mariana mora em servidor/dados/).
 // Arquivo grande demais: divida por responsabilidade (ver docs/decisoes/divisao-em-arquivos.md). Exceção só
 // com motivo, na lista EXCECOES abaixo, e temporária.
+if (require.main === module) require('./ajuda').ajuda(__filename);
 const fs = require('fs');
 const path = require('path');
 

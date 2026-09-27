@@ -9,6 +9,7 @@
 // Na pasta: index.html, lote-1.json…lote-N.json (mapas `files` com ≤250 entradas; removidos = null; a página
 // e os removidos vão no ÚLTIMO lote) e resumo.txt. Sem --desde, também arquivos.txt e arquivos.json (tudo).
 // Publicar: skill publicar-artifact (só o orquestrador, com pedido do Leandro).
+if (require.main === module) require('./ajuda').ajuda(__filename);
 const fs = require('fs');
 const path = require('path');
 const D = require('./artifact-delta.js');

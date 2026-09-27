@@ -14,6 +14,7 @@ const os = require('os');
 const path = require('path');
 const { iniciar } = require('./servidor-teste');
 const { abrir, lancar, TAMANHOS } = require('./navegador');
+const { registrar } = require('./vigia-memoria');
 const { gerarSaves } = require('./saves');
 const { estavel, abrirJogo, foto } = require('./referencias-pagina');
 const { cenasMapaEInteriores, cenasTelas, cenasSalas, cenasProvasEDesafios } = require('./referencias-cenas');
@@ -64,6 +65,7 @@ async function capturar(saida, op) {
           while (prox < tarefas.length) {
             const { tamanho, save, fn } = tarefas[prox++];
             const { context, page } = await abrirJogo(nav, raiz, tamanho, saves[save]);
+            registrar(page, `${tamanho}/${save} ${fn.nome || ''}`.trim());
             if (op.filtro) page.__filtro = op.filtro;
             if (op.faltam) page.__faltam = op.faltam[tamanho];
             const t0 = Date.now();

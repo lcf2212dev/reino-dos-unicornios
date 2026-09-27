@@ -4,6 +4,7 @@
 //   --so <regex>     só os arquivos cujo nome casa (ex.: --so 'save|loja')
 //   --sem-navegador  pula os *.navegador.test.js
 // Tempo total: 6 min (REINO_TEMPO=2 dobra). Estourou: derruba o grupo e sai com 1.
+if (require.main === module) require('../ajuda').ajuda(__filename);
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
