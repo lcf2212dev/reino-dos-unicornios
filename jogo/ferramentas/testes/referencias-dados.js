@@ -7,20 +7,27 @@ const { iniciar } = require('./servidor-teste');
 const { abrir } = require('./navegador');
 const { gerarSaves } = require('./saves');
 const { gravarJson, abrirJogo } = require('./referencias-pagina');
+const { registrar, marcar } = require('./vigia-memoria');
 
 /* ---------- dados ---------- */
+// cada aba desta fase fica no vigia (vigia-memoria.js), com marca antes de cada evaluate longo: um laço no jogo
+// (evaluate que não volta) é derrubado pelo REINO_TRAVADO_MIN como nas fotos, em vez de parar o e2e para sempre
 async function capturarDados(browser, raiz, pasta) {
   const servidor = await iniciar({ raiz }), url = servidor.url;
   // 1) jogo novo, sem save: estadoNovo() completado, antes de qualquer toque
   let { context, page } = await abrir({ browser, url, tamanho: 'notebook', query: '?debug=1&congelar=1' });
+  registrar(page, 'dados/estado-novo');
   await page.waitForFunction(() => window.__congelar && window.Reino && Reino.Progresso && Reino.Progresso.estado(), null, { timeout: 30000 });
   const novo = await page.evaluate(() => Reino.util.copia(Reino.Progresso.estado()));
   gravarJson(path.join(pasta, 'save-estado-novo.json'), novo);
+  marcar(page, 'saves sintéticos');
   const saves = await page.evaluate(`(${gerarSaves.toString()})()`);
   await context.close();
 
   // 2) com o save completo: conteúdo, mapa, interiores, elenco, loja, mescla
   ({ context, page } = await abrirJogo(browser, raiz, 'notebook', saves.completo));
+  registrar(page, 'dados/completo');
+  marcar(page, 'conteúdo, mapa, interiores, elenco, loja');
   const d = await page.evaluate(() => {
     var R = Reino;
     var falas = R.Falas.todas().map((f) => ({ texto: f.texto, voz: f.voz, pacote: f.pacote }));
@@ -54,6 +61,7 @@ async function capturarDados(browser, raiz, pasta) {
   // grade pode ter Uint8Array/objetos grandes: JSON puro já basta para comparar
   for (const [k, v] of Object.entries(d)) gravarJson(path.join(pasta, k + '.json'), JSON.parse(JSON.stringify(v)));
 
+  marcar(page, 'mescla e carregar do corpus');
   // mescla: todos os pares do corpus (saves sintéticos + variações de borda), nos dois sentidos
   const mescla = await page.evaluate((saves) => {
     var P = Reino.Progresso, c = Reino.util.copia, T = 1790000000000;
@@ -85,6 +93,8 @@ async function capturarDados(browser, raiz, pasta) {
   const status = {};
   for (const [nome, save] of Object.entries(saves)) {
     ({ context, page } = await abrirJogo(browser, raiz, 'notebook', save));
+    registrar(page, `dados/${nome}`);
+    marcar(page, 'status dos NPCs');
     status[nome] = await page.evaluate(() => {
       var r = {};
       Reino.interiores.forEach((def) => {

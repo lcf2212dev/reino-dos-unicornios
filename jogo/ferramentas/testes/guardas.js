@@ -50,11 +50,22 @@ function conferirUrl(url) {
   return u;
 }
 
-// symlink em /tmp apontando para servidor/dados também é recusado (confere o caminho real da pasta)
-function caminhoReal(abs) {
-  let d = path.dirname(abs);
-  while (!fs.existsSync(d)) d = path.dirname(d);
-  return path.join(fs.realpathSync(d), path.relative(d, abs));
+// symlink em /tmp apontando para servidor/dados também é recusado: resolve a pasta e, se o próprio arquivo for link
+// (mesmo pendente, ou link de link), segue cada salto; cada caminho passa por `conferir` ANTES de olhar o disco nele
+function caminhoReal(abs, conferir) {
+  let p = abs;
+  for (let saltos = 0; saltos < 40; saltos++) {
+    let d = path.dirname(p);
+    while (!fs.existsSync(d)) d = path.dirname(d);
+    p = path.join(fs.realpathSync(d), path.relative(d, p));
+    conferir(p);
+    let st;
+    try { st = fs.lstatSync(p); } catch (e) { return p; }
+    if (!st.isSymbolicLink()) return p;
+    p = path.resolve(path.dirname(p), fs.readlinkSync(p));
+    conferir(p);
+  }
+  throw new Error(`proibido: o banco de teste é um link com saltos demais (${abs})`);
 }
 function conferirBanco(banco) {
   if (!banco || typeof banco !== 'string') throw new Error('proibido: banco de teste sem caminho');
@@ -62,11 +73,12 @@ function conferirBanco(banco) {
   // 1º o TEXTO do caminho (sem olhar o disco: nem um stat em servidor/dados); depois o caminho real (links)
   const dados = /servidor[\\/]+dados([\\/]|$)/;
   if (dados.test(banco) || dados.test(abs)) throw new Error('proibido: o banco de teste nunca pode ficar em servidor/dados');
-  if (!abs.startsWith('/tmp/')) throw new Error(`proibido: o banco de teste fica sempre em /tmp (recebido: ${abs})`);
-  for (const p of [abs, caminhoReal(abs)]) {
-    if (/servidor[\\/]+dados([\\/]|$)/.test(p)) throw new Error('proibido: o banco de teste nunca pode ficar em servidor/dados');
+  const conferir = (p) => {
+    if (dados.test(p)) throw new Error('proibido: o banco de teste nunca pode ficar em servidor/dados');
     if (!p.startsWith('/tmp/')) throw new Error(`proibido: o banco de teste fica sempre em /tmp (recebido: ${p})`);
-  }
+  };
+  conferir(abs);
+  caminhoReal(abs, conferir);
   return abs;
 }
 

@@ -22,7 +22,7 @@ test('planoPoda: e2e-* velhos e ref de harness antigo; mantém o atual, o da mai
   criar('e2e-velho', 2); criar('e2e-novo', 0);
   criar('ref-abc1234/dados-imagens-vozes-h11111111');          // antigo: sai
   criar('ref-abc1234/dados-imagens-vozes-h22222222');          // atual: fica
-  criar(`ref-abc1234/dados-imagens-vozes-h${disco.HARNESS_MAIN}`); // da main: fica
+  criar(`ref-abc1234/dados-imagens-vozes-h${disco.harnessMain()}`); // da main: fica
   criar('ref-abc1234/dados-vozes-h22222222.parcial-99', 2);    // captura interrompida velha: sai
   criar('base-abc1234/jogo');                                   // cópia da base: fica
   const plano = disco.planoPoda(RAIZ, { harness: '22222222' });

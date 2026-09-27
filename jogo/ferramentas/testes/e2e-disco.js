@@ -3,16 +3,33 @@
 //   livre(pasta)                        bytes livres no sistema de arquivos da pasta
 //   conferirEspaco(pasta, minimo)       lança erro claro (com o que podar) abaixo do mínimo
 //   planoPoda(pasta, { harness, manter, agora, idadeMs })   [{ caminho, bytes, motivo }] — só o que o e2e criou:
-//     e2e-* com mais de idadeMs; ref-<base>/<partes>-h<hash> (e .parcial-*) de harness fora de [harness, ...manter]
+//     e2e-* com mais de idadeMs; ref-<base>/<partes>-h<hash> (e .parcial-*) de harness fora de [harness, main, ...manter]
+//   hashHarness(ler)                    versão do harness: sha256 de ARQS_HARNESS (ler(f) dá o conteúdo de cada um)
+//   harnessMain()                       o harness como está na main (git show), calculado na hora; null sem main
 //   podar(plano)                        apaga (cada caminho passa por conferirPastaTmp)
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
+const { execFileSync } = require('child_process');
 const { conferirPastaTmp } = require('./guardas');
 
 const MINIMO = 1.5 * 1024 ** 3;
 const UMA_HORA = 60 * 60 * 1000;
-// harness da main (a árvore principal usa essa cache): nunca é podado
-const HARNESS_MAIN = '83b7a60d';
+const REPO = path.resolve(__dirname, '..', '..', '..');
+// o que o e2e.js chama de harness: mudou um destes, muda a pasta das referências da base
+const ARQS_HARNESS = ['referencias.js', 'referencias-pagina.js', 'referencias-cenas.js', 'referencias-dados.js', 'saves.js', 'navegador.js'];
+function hashHarness(ler) {
+  const h = crypto.createHash('sha256');
+  ARQS_HARNESS.forEach((f) => h.update(f + '\0' + ler(f)));
+  return h.digest('hex').slice(0, 8);
+}
+// harness da main (a árvore principal usa essa cache): nunca é podado. Na hora, nunca constante (ficava velha e a
+// poda de uma worktree apagava a cache da main); sem main legível: null, e nenhuma referência é podada
+function harnessMain() {
+  try {
+    return hashHarness((f) => execFileSync('git', ['-C', REPO, 'show', `main:jogo/ferramentas/testes/${f}`], { stdio: ['ignore', 'pipe', 'ignore'] }));
+  } catch (e) { return null; }
+}
 
 function livre(pasta) {
   let d = pasta;
@@ -38,7 +55,8 @@ function tamanho(p) {
 
 function planoPoda(pasta, op = {}) {
   const agora = op.agora || Date.now(), idade = op.idadeMs == null ? UMA_HORA : op.idadeMs;
-  const manter = new Set([op.harness, HARNESS_MAIN].concat(op.manter || []).filter(Boolean));
+  const main = harnessMain();
+  const manter = new Set([op.harness, main].concat(op.manter || []).filter(Boolean));
   const plano = [];
   if (!fs.existsSync(pasta)) return plano;
   for (const nome of fs.readdirSync(pasta).sort()) {
@@ -50,7 +68,7 @@ function planoPoda(pasta, op = {}) {
       const m = /-h([0-9a-f]{8})(\.parcial-\d+)?$/.exec(sub);
       if (!m) continue;
       if (m[2] && agora - fs.statSync(path.join(p, sub)).mtimeMs > idade) plano.push({ caminho: path.join(p, sub), motivo: 'captura interrompida' });
-      else if (!m[2] && !manter.has(m[1])) plano.push({ caminho: path.join(p, sub), motivo: `harness antigo h${m[1]}` });
+      else if (!m[2] && main && !manter.has(m[1])) plano.push({ caminho: path.join(p, sub), motivo: `harness antigo h${m[1]}` });
     }
   }
   plano.forEach((x) => { x.bytes = tamanho(x.caminho); });
@@ -62,4 +80,4 @@ function podar(plano) {
   return plano.reduce((n, x) => n + x.bytes, 0);
 }
 
-module.exports = { livre, conferirEspaco, planoPoda, podar, gb, MINIMO, HARNESS_MAIN };
+module.exports = { livre, conferirEspaco, planoPoda, podar, gb, MINIMO, ARQS_HARNESS, hashHarness, harnessMain };
