@@ -17,7 +17,7 @@
       "perfil": {
         "voz": "fr-FR-VivienneMultilingualNeural",
         "velocidade": "+0%",
-        "tom": "+20Hz"
+        "tom": "+34Hz"
       }
     },
     {
@@ -33,9 +33,9 @@
         "b": "esconde"
       },
       "perfil": {
-        "voz": "ko-KR-HyunsuMultilingualNeural",
-        "velocidade": "+0%",
-        "tom": "+30Hz"
+        "voz": "pt-BR-AntonioNeural",
+        "velocidade": "+6%",
+        "tom": "+45Hz"
       }
     },
     {

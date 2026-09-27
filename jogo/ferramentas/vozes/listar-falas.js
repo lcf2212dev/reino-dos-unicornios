@@ -62,6 +62,8 @@ function prepararFala(texto, voz, pacotes) {
   // "3 × 5": a voz lia "multiplicação"; na apostila se lê "vezes"
   t = t.replace(/\s*×\s*/g, ' vezes ');
   t = t.replace(/\bCPF\b/g, 'cê pê éfe').replace(/\bRG\b/g, 'erre gê');
+  // "ET" (extraterrestre) era lido "Ida": do jeito que a gente fala
+  t = t.replace(/\bETs\b/g, 'etês').replace(/\bET\b/g, 'etê');
   t = t.replace(/\bpp\.\s*/g, 'páginas ').replace(/\bcaps\.\s*/g, 'capítulos ');
   t = t.replace(/_{2,}/g, '…').replace(/…\./g, '…').replace(/,,/g, ',');
   // palavras em MAIÚSCULAS seriam soletradas: vira minúscula

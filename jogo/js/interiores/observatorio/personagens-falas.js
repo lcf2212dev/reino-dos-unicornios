@@ -10,7 +10,7 @@ Reino.falasDoPredio('observatorio', { npcs: {
 } });
 Reino.falasDoPredio('observatorio', { npcs: {
   'lua-pipo': {
-    oi: ['Oi! Eu sou o Pipo.', 'Eu adoro brincar de esconder!', 'Será que você me acha?'],
+    oi: ['Oi! Eu sou o Pipo.', 'Eu adoro esconde-esconde!', 'Será que você me acha?'],
     depois: ['Eu me escondo muito bem!', 'Vamos brincar de novo?'],
   },
 } });
