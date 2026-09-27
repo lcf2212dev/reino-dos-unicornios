@@ -45,13 +45,13 @@
       oi: ['Olá, eu sou a Guarda Jana!', 'Eu cuido dos bichos do parque.'],
       nova: ['Quem ganha e quem perde?', 'Vamos ver a onça e o jacaré?'],
       feita: ['Quer voltar ao parque comigo?', 'Vamos ver os bichos de novo?'],
-      depois: ['Você entendeu os bichos! 🐾', 'Que guarda caprichosa! ✨'],
+      depois: ['Você entendeu os bichos! 🐾', 'Que guarda {caprichosa|caprichoso}! ✨'],
     },
     'lab-malu': {
       oi: ['Oi, eu sou a Malu! 🌸', 'Meu amigo é o beija-flor.'],
       nova: ['Vamos ver amigos da natureza?', 'Vamos jogar a memória?'],
       feita: ['Quer brincar de novo comigo?', 'Vamos jogar outra vez? 🌸'],
-      depois: ['Todo mundo se ajudou! 🌸', 'Você é amiga da natureza! ✨'],
+      depois: ['Todo mundo se ajudou! 🌸', 'Você é {amiga|amigo} da natureza! ✨'],
     },
     'lab-ravi': {
       oi: ['Olá, eu sou o Explorador Ravi!', 'Já fui do deserto ao gelo!'],
@@ -63,7 +63,7 @@
       oi: ['Olá, eu sou a Detetive Lupa!', 'Eu sigo as pistas dos bichos.'],
       nova: ['Vamos resolver um mistério?', 'Quem mora aqui? Vamos ver?'],
       feita: ['Quer investigar de novo?', 'Vamos seguir mais pistas?'],
-      depois: ['O mistério foi resolvido!', 'Você é uma ótima detetive! ✨'],
+      depois: ['O mistério foi resolvido!', 'Você é {uma ótima|um ótimo} detetive! ✨'],
     },
   } });
 

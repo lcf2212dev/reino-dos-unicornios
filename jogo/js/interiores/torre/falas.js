@@ -16,7 +16,7 @@ Reino.FALAS_INTERIORES.torre = {
     // andar 2: «Here Comes the Sun»
     stella: {
       oi: ['«Hello!» Eu sou a «Miss Stella».', 'O sol é uma estrela! ☀️'],
-      nova: ['Vamos olhar o céu juntas?', 'Quer conhecer os planetas?'],
+      nova: ['Vamos olhar o céu {juntas|juntos}?', 'Quer conhecer os planetas?'],
       feita: ['Quer ver os planetas de novo?', 'Vamos olhar o sol outra vez?'],
       depois: ['Você olhou tudo com calma! ✨', '«Amazing!» Que viagem linda!'],
     },

@@ -31,7 +31,7 @@ Reino.FALAS_INTERIORES.portugues = {
     // sala 4: Expedição Antártida (Porto da Expedição)
     brisa: {
       oi: ['Olá, eu sou a Capitã Brisa!', 'Já naveguei até a Antártida!'],
-      nova: ['Vamos para a expedição? 🐧', 'Vamos ver os icebergs juntas?'],
+      nova: ['Vamos para a expedição? 🐧', 'Vamos ver os icebergs {juntas|juntos}?'],
       feita: ['Quer viajar de novo comigo?', 'Vamos navegar outra vez? 🌊'],
       depois: ['Que expedição corajosa! 🐧', 'Você relatou tudo direitinho!'],
     },

@@ -60,7 +60,7 @@
     var C = Reino.Claude, todas = (C && C.FALAS && C.FALAS.acerto) || [];
     var lista = todas.filter(function (t) { return !SO_DE_UMA_MATERIA.test(t); });
     if (!lista.length) return C.frase('acerto');
-    return sortearFrase(lista, 'acerto').replace(/\{nome\}/g, Reino.config.nomeJogadora);
+    return Reino.Genero.texto(sortearFrase(lista, 'acerto'));   // {nome} e gênero de quem joga
   }
   var ultimaFrase = {};
   function sortearFrase(lista, tipo) {

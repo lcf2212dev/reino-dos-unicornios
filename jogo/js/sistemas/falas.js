@@ -18,8 +18,8 @@
     ritualPuxa: 'Puxa o ar pelo nariz... 🌬️',
     ritualSolta: 'Solta devagarinho pela boca... 🎈',
     ritualFim: 'Muito bem! Agora o cérebro está calminho e pronto. 🧠✨',
-    plano: 'Meu plano da prova. Um: respiro três vezes. Dois: leio cada pergunta duas vezes. Três: respondo com calma. Quatro: reviso tudo, do começo ao fim. Cinco: só entrego depois de revisar. Terminar por último é coisa de campeã!',
-    revisar: 'Chegou a parte mais importante: REVISAR! É aqui que as campeãs encontram os errinhos. Toque em cada questão com calma. 👀',
+    plano: 'Meu plano da prova. Um: respiro três vezes. Dois: leio cada pergunta duas vezes. Três: respondo com calma. Quatro: reviso tudo, do começo ao fim. Cinco: só entrego depois de revisar. Terminar por último é coisa de {campeã|campeão}!',
+    revisar: 'Chegou a parte mais importante: REVISAR! É aqui que {as campeãs|os campeões} encontram os errinhos. Toque em cada questão com calma. 👀',
     pistaEspecial: 'Os que estavam certos ficaram no lugar. Leia de novo com calma e tente só os que faltam.',
     pistaVarias: 'Os errados foram tirados. Veja se falta marcar algum!',
     pistaSimples: 'Leia a pergunta de novo, devagarinho.',
@@ -29,12 +29,12 @@
   F.medalhas = {
     ouro: { emoji: '🥇', titulo: 'MEDALHA DE OURO!', frase: 'Viu? O ouro veio de acertar com calma, não de terminar primeiro! Na prova da escola é igualzinho. 💛' },
     prata: { emoji: '🥈', titulo: 'Medalha de prata!', frase: 'Muito bem! Vamos ler o livro da matéria e tentar o ouro de novo? Com calma você chega lá!' },
-    bronze: { emoji: '🥉', titulo: 'Medalha de bronze!', frase: 'Você terminou e revisou, isso já é de campeã! Vamos revisar as salas e tentar de novo?' },
+    bronze: { emoji: '🥉', titulo: 'Medalha de bronze!', frase: 'Você terminou e revisou, isso já é de {campeã|campeão}! Vamos revisar as salas e tentar de novo?' },
   };
 
   // Escola do Reino: provas bimestrais valendo acessório (lendário na 1ª tentativa, raro na 2ª, comum depois)
   F.provas = {
-    escola: 'Bem-vinda à Escola do Reino! Aqui ficam as provas bimestrais. Acertou tudo na primeira tentativa? Ganha um acessório lendário! 🌈',
+    escola: '{Bem-vinda|Bem-vindo} à Escola do Reino! Aqui ficam as provas bimestrais. Acertou tudo na primeira tentativa? Ganha um acessório lendário! 🌈',
     valendo: {
       lendario: 'Esta é a sua primeira tentativa! Se acertar tudo, você ganha um acessório lendário para o seu unicórnio. Leia cada pergunta com muita atenção! 🌈',
       raro: 'Esta é a sua segunda tentativa! Se acertar tudo agora, você ganha um acessório raro. Leia cada pergunta com muita atenção! 💙',
@@ -53,9 +53,29 @@
       comum: 'Quase lá! Para ganhar o acessório, precisa acertar tudo. Na próxima tentativa, o prêmio vai ser comum. 🤍',
     },
     treinoDez: 'Nota dez de novo! Você está craque nesta prova! 🏆',
-    treinoFeito: 'Treino feito! Cada revisão deixa você mais preparada para a prova da escola. 💪',
+    treinoFeito: 'Treino feito! Cada revisão deixa você mais {preparada|preparado} para a prova da escola. 💪',
     lojaPremio: 'Esse acessório é prêmio da Escola do Reino! Acerte tudo na prova para ganhar. Na primeira tentativa, o prêmio é lendário! 🏫',
   };
+
+  /* Falas com marcador de gênero ({campeã|campeão}, sistemas/genero.js): quem lê F.fixas.plano recebe a versão de
+     quem joga (um getter); a gravação (F.todas) lê o texto cru e grava as duas versões. */
+  var CRUS = [];
+  function comGenero(o) {
+    var crus = {};
+    Object.keys(o).forEach(function (k) {
+      var v = o[k];
+      if (typeof v === 'string' && /\{[^{}|]*\|[^{}|]*\}/.test(v)) {
+        crus[k] = v;
+        Object.defineProperty(o, k, { enumerable: true, configurable: true, get: function () { return Reino.Genero.genero(crus[k]); } });
+      } else if (v && typeof v === 'object') comGenero(v);
+    });
+    CRUS.push({ o: o, crus: crus });
+  }
+  function cru(o, k) {
+    for (var i = 0; i < CRUS.length; i++) if (CRUS[i].o === o && Object.prototype.hasOwnProperty.call(CRUS[i].crus, k)) return CRUS[i].crus[k];
+    return o[k];
+  }
+  [F.fixas, F.medalhas, F.provas].forEach(comGenero);
 
   var NOME_RARIDADE = { comum: 'comum', raro: 'raro', epico: 'épico', lendario: 'lendário' };
   F.ovo = function (raridade) { return 'Um ovo ' + NOME_RARIDADE[raridade] + '! Toque nele 3 vezes para chocar!'; };
@@ -118,23 +138,25 @@
   F.todas = function () {
     /** @type {Fala[]} */
     var lista = [];
-    // cada trecho «em inglês» vira uma fala separada da voz 'ingles' (mesma divisão de Voz.falar)
+    // cada trecho «em inglês» vira uma fala separada da voz 'ingles' (mesma divisão de Voz.falar); texto com
+    // marcador de gênero vira as duas versões, e {nome} vira o da Mariana (Reino.Genero.versoes)
     function add(texto, voz, pacote) {
-      if (texto) Reino.Voz.dividir(texto, voz).forEach(function (p) { lista.push({ texto: p.texto, voz: p.voz, pacote: pacote }); });
+      if (texto) Reino.Genero.versoes(texto).forEach(function (t) {
+        Reino.Voz.dividir(t, voz).forEach(function (p) { lista.push({ texto: p.texto, voz: p.voz, pacote: pacote }); });
+      });
     }
-    var nome = Reino.config.nomeJogadora;
 
     // Claude: banco de frases e frases fixas
     var bancos = Reino.Claude.FALAS;
-    Object.keys(bancos).forEach(function (k) { bancos[k].forEach(function (t) { add(t.replace(/\{nome\}/g, nome), 'claude', 'geral'); }); });
-    Object.keys(F.fixas).forEach(function (k) { add(F.fixas[k], k === 'verdadeiroOuFalso' ? 'narradora' : 'claude', 'geral'); });
-    Object.keys(F.medalhas).forEach(function (k) { add(F.medalhas[k].titulo, 'claude', 'geral'); add(F.medalhas[k].frase, 'claude', 'geral'); });
+    Object.keys(bancos).forEach(function (k) { bancos[k].forEach(function (t) { add(t, 'claude', 'geral'); }); });
+    Object.keys(F.fixas).forEach(function (k) { add(cru(F.fixas, k), k === 'verdadeiroOuFalso' ? 'narradora' : 'claude', 'geral'); });
+    Object.keys(F.medalhas).forEach(function (k) { add(F.medalhas[k].titulo, 'claude', 'geral'); add(cru(F.medalhas[k], 'frase'), 'claude', 'geral'); });
     ['comum', 'raro', 'epico', 'lendario'].forEach(function (r) { add(F.ovo(r), 'claude', 'geral'); });
     for (var n = 0; n <= Reino.config.desafiosPorSala; n++) add(F.acertouDePrimeira(n), 'claude', 'geral');
     for (var a = 0; a <= Reino.config.perguntasTreino; a++) add(F.acertouDeTotal(a, Reino.config.perguntasTreino), 'claude', 'geral');
-    if (Reino.Unicornios) add(Reino.Unicornios.def('inicial').frase, 'unicornio', 'geral');
+    if (Reino.Unicornios) { var ini = /** @type {any} */ (Reino.Unicornios.def('inicial')); add(ini.fraseCrua || ini.frase, 'unicornio', 'geral'); }
 
-    function addGrupo(o) { Object.keys(o).forEach(function (k) { if (typeof o[k] === 'string') add(o[k], 'claude', 'geral'); else addGrupo(o[k]); }); }
+    function addGrupo(o) { Object.keys(o).forEach(function (k) { var v = cru(o, k); if (typeof v === 'string') add(v, 'claude', 'geral'); else addGrupo(v); }); }
     addGrupo(F.provas);
     (Reino.provas || []).forEach(function (pv) {
       pv.questoes.forEach(function (d) {

@@ -1,5 +1,5 @@
 /* Pixel art dos personagens: Mariana (moldes das 5 vistas, aparência padrão e opções,
-   PA.mariana; corte e roupa do Salão em pixelart-mariana-visual.js), Mariana montada no unicórnio (PA.montada, com a cabeça do unicórnio por cima
+   PA.mariana; corte, roupa e laço do Salão em pixelart-mariana-visual.js, os de menino em pixelart-menino-moldes.js), Mariana montada no unicórnio (PA.montada, com a cabeça do unicórnio por cima
    dela) e o Claude, mascote (PA.claude). */
 (function () {
   var PA = window.PA, I = PA._interno;
@@ -253,6 +253,8 @@
       C: ap.roupa, D: escurecer(ap.roupa, 0.2), A: escurecer(ap.roupa, 0.34), S: '#6b3b5a', B: ap.laco,
       // só nos cortes e roupas do Salão (pixelart-mariana-visual.js)
       W: misturar(ap.roupa, '#ffffff', 0.72), M: misturar(ap.roupa, '#ffffff', 0.42), G: '#ffd34d', T: '#ffffff',
+      // só nos de menino (pixelart-menino-moldes.js): raspado, jeans, cinto, prata e prata escura
+      Z: misturar(ap.cabelo, ap.pele, 0.55), J: '#4f74c4', Q: '#6b4430', O: '#dfe6f2', V: '#8e9ab4',
     };
   }
 
@@ -260,16 +262,16 @@
     opcoes = opcoes || {};
     ap = ap || PA.APARENCIA_PADRAO;
     var vista = opcoes.vista || 'lado';
-    // corte e roupa do Salão; o de hoje ('solto' + 'vestido') não passa pelo aplicarVisual (pixel a pixel igual)
-    var vis = PA.visualMariana ? PA.visualMariana(ap) : { corte: 'solto', modelo: 'vestido' };
-    var especial = !!I.aplicarVisual && (vis.corte !== 'solto' || vis.modelo !== 'vestido');
+    // corte, roupa e laço do Salão; o de hoje ('solto' + 'vestido' + laço) não passa pelo aplicarVisual (pixel a pixel igual)
+    var vis = PA.visualMariana ? PA.visualMariana(ap) : { corte: 'solto', modelo: 'vestido', laco: true };
+    var especial = !!I.aplicarVisual && (vis.corte !== 'solto' || vis.modelo !== 'vestido' || !vis.laco);
     var chave = ['mar', ap.pele, ap.cabelo, ap.roupa, ap.laco, sentada ? 1 : 0, quadro % 3, opcoes.capa ? 1 : 0, vista,
-      vis.corte, vis.modelo].join('|');
+      vis.corte, vis.modelo, vis.laco ? 1 : 0].join('|');
     if (cache[chave]) return cache[chave];
     var molde = MARI[vista];
     var corpo = sentada ? molde.sentada : (molde.emPe[quadro % 3] || molde.emPe[1]);
     var linhas = molde.cabeca.concat(corpo);
-    if (especial) linhas = I.aplicarVisual(linhas, vista, !!sentada, vis.corte, vis.modelo);
+    if (especial) linhas = I.aplicarVisual(linhas, vista, !!sentada, vis.corte, vis.modelo, vis.laco);
     var base = novoCanvas(linhas[0].length, linhas.length);
     var ctx = base.getContext('2d');
     var capa = opcoes.capa && molde.capa;
@@ -289,7 +291,7 @@
     var combo = (opcoes.enfeites || []).join('+');
     var vis = PA.visualMariana ? PA.visualMariana(ap) : {};
     var chave = ['mont', def.id, estagio, quadro % 3, ap.pele, ap.cabelo, ap.roupa, ap.laco,
-      combo, opcoes.capa ? 1 : 0, opcoes.asasFada ? 1 : 0, vista, vis.corte, vis.modelo].join('|');
+      combo, opcoes.capa ? 1 : 0, opcoes.asasFada ? 1 : 0, vista, vis.corte, vis.modelo, vis.laco ? 1 : 0].join('|');
     if (cache[chave]) { usarCombo(combo); return cache[chave]; }
     var uni = PA.unicornio(def, estagio, quadro, opcoes);
     var cav = PA.mariana(ap, true, 0, { capa: opcoes.capa, vista: vista });

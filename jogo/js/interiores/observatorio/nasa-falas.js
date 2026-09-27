@@ -19,13 +19,13 @@
   npcs['nasa-davi'] = {
     oi: ['Oi! Eu sou o astronauta Davi.', 'Eu já morei no espaço!'],
     nova: ['Quer saber como é lá em cima?', 'Vou contar da minha viagem!'],
-    depois: ['Até logo, pequena astronauta!', 'Tchau! Eu vou voar de novo!'],
+    depois: ['Até logo, {pequena astronauta|pequeno astronauta}!', 'Tchau! Eu vou voar de novo!'],
   };
   // a engenheira do Laboratório: a Estação Espacial e as experiências (voz npc-nasa-bia)
   npcs['nasa-bia'] = {
     oi: ['Oi! Eu sou a engenheira Bia.', 'Eu adoro fazer experiências!'],
-    nova: ['Toque nas experiências! ✨', 'Vamos descobrir juntas?'],
-    depois: ['Você é uma ótima cientista! ⭐', 'Volte para experimentar!'],
+    nova: ['Toque nas experiências! ✨', 'Vamos descobrir {juntas|juntos}?'],
+    depois: ['Você é {uma ótima|um ótimo} cientista! ⭐', 'Volte para experimentar!'],
   };
 
   var nasa = {

@@ -1,6 +1,7 @@
-/* Visual da Mariana do Salão de Beleza: FORMATO do corte de cabelo e MODELO da roupa (as cores continuam as de
-   PA.OPCOES_APARENCIA). Salvos em aparencia.corte / aparencia.modelo; ausente ou desconhecido = o de hoje
-   ('solto' e 'vestido'), que não passa por aqui: o desenho padrão sai pixel a pixel igual.
+/* Visual da personagem do Salão de Beleza e da criação: FORMATO do corte de cabelo, MODELO da roupa e o laço
+   (as cores continuam as de PA.OPCOES_APARENCIA). Salvos em aparencia.corte / aparencia.modelo / aparencia.semLaco;
+   ausente ou desconhecido = o padrão do sexo (menina: 'solto' + 'vestido' + laço, que não passa por aqui: o desenho
+   padrão sai pixel a pixel igual; menino: 'curto' + 'camiseta', sem laço). Os de menino: pixelart-menino-moldes.js.
    PA.mariana (pixelart-personagens.js) chama PA._interno.aplicarVisual nos moldes já montados (cabeça + corpo,
    11 colunas: linhas 0–6 cabeça, 7+ corpo), então vale a pé, montada (sentada) e nas 5 vistas.
    Letras novas da paleta: W roupa bem clarinha, M roupa clara, G dourado, T branco (tênis). */
@@ -19,12 +20,26 @@
     { id: 'princesa', nome: 'Princesa' }, { id: 'bailarina', nome: 'Bailarina' },
     { id: 'esporte', nome: 'Esportivo' }, { id: 'festa', nome: 'Festa' },
   ];
+  PA.CORTES.forEach(function (o) { o.sexo = 'menina'; });
+  PA.MODELOS.forEach(function (o) { o.sexo = 'menina'; });
   PA.VISUAL_PADRAO = { corte: 'solto', modelo: 'vestido' };
+  // o padrão de cada sexo (o menino ganha ao escolher "Menino" na criação, e quando não há escolha salva)
+  PA.VISUAL_SEXO = { menina: { corte: 'solto', modelo: 'vestido', laco: true }, menino: { corte: 'curto', modelo: 'camiseta', laco: false } };
   function existe(lista, id) { return lista.some(function (o) { return o.id === id; }); }
-  // o visual valendo: o que não existe (save antigo, versão mais nova) cai no de hoje, sem mexer no save
+  // sexo de quem joga (perfil de Reino.Jogadores, lido na hora); sem perfil = menina (a Mariana)
+  PA.sexoJogador = function () {
+    var J = window.Reino && window.Reino.Jogadores, p = null;
+    try { p = J && J.perfil ? J.perfil() : null; } catch (e) { p = null; }
+    return p && p.sexo === 'menino' ? 'menino' : 'menina';
+  };
+  // o visual valendo: o que não existe (save antigo, versão mais nova) cai no padrão, sem mexer no save.
+  // ap.sexo (a prévia da criação) vale no lugar do sexo do perfil.
   PA.visualMariana = function (ap) {
     ap = ap || {};
-    return { corte: existe(PA.CORTES, ap.corte) ? ap.corte : 'solto', modelo: existe(PA.MODELOS, ap.modelo) ? ap.modelo : 'vestido' };
+    var c = existe(PA.CORTES, ap.corte) ? ap.corte : null, m = existe(PA.MODELOS, ap.modelo) ? ap.modelo : null;
+    var laco = typeof ap.semLaco === 'boolean' ? !ap.semLaco : null;
+    var pad = c && m && laco !== null ? null : PA.VISUAL_SEXO[ap.sexo === 'menino' || ap.sexo === 'menina' ? ap.sexo : PA.sexoJogador()];
+    return { corte: c || pad.corte, modelo: m || pad.modelo, laco: laco !== null ? laco : pad.laco };
   };
 
   /* ---------- CABELO ---------- */
@@ -160,18 +175,33 @@
     for (var i = 0; i < linha.length; i++) if (linha[i] !== '.') { if (a < 0) a = i; b = i; }
     return [a, b];
   }
-  function vestir(g, sentada, m) {
+  var DE_FRENTE = { frente: true, diagFrente: true };   // onde aparecem gola, botões, zíper, estampa e fivela
+  function meio(linha) { var l = limites(linha); return Math.floor((l[0] + l[1]) / 2); }
+  function pintarSe(linha, x, letra) { if (x >= 0 && x < linha.length && 'CADW'.indexOf(linha[x]) >= 0) linha[x] = letra; }
+  function vestir(g, sentada, m, vista) {
     var papeis = sentada ? PAPEIS_SENTADA : PAPEIS_PE, iSaia = 7 + papeis.indexOf('saia');
+    var iCin = 7 + papeis.indexOf('cintura'), iTronco = 7 + papeis.lastIndexOf('tronco'), frente = !!DE_FRENTE[vista];
+    // estampa da camiseta (no peito, antes de o tronco perder os detalhes do vestido)
+    if (m.estampa && frente && !sentada) { var mt = meio(g[iTronco]); [mt - 1, mt + 1].forEach(function (x) { pintarSe(g[iTronco], x, m.estampa); }); pintarSe(g[iTronco], mt, 'G'); }
     papeis.forEach(function (p, i) { if (p !== 'saia') trocar(g[7 + i], m[p]); });
+    // o pé levantado do passo fica numa linha de perna: o sapato troca igual ao do chão
+    if (m.pe && m.pe.S) papeis.forEach(function (p, i) { if (p === 'perna') trocar(g[7 + i], { S: m.pe.S }); });
     if (m.mangas) trocar(g[8], { K: m.mangas });   // a 1ª linha do tronco: o braço de cima vira manga
+    if (m.gola && frente) { var mg = meio(g[7]); [mg - 1, mg, mg + 1].forEach(function (x) { pintarSe(g[7], x, m.gola); }); }
+    if (m.cinto) {
+      trocar(g[iCin], { C: m.cinto[0], A: m.cinto[0], D: m.cinto[0] });
+      if (frente) g[iCin][meio(g[iCin])] = m.cinto[1];
+    }
+    for (var t = 8; frente && (m.botoes || m.ziper) && t <= (m.ziper ? iCin : iTronco); t++) pintarSe(g[t], meio(g[t]), m.botoes || m.ziper);
     if (m.laco) {
       // laço: nó no meio da cintura e as duas voltas saindo para os lados
-      var cin = g[7 + papeis.indexOf('cintura')], lc = limites(cin), meio = Math.floor((lc[0] + lc[1]) / 2);
-      cin[meio] = 'A';
-      [meio - 1, meio + 1, lc[0] - 1, lc[1] + 1].forEach(function (x) { if (x >= 0 && x < cin.length) cin[x] = m.laco; });
+      var cin = g[iCin], lc = limites(cin), mc = Math.floor((lc[0] + lc[1]) / 2);
+      cin[mc] = 'A';
+      [mc - 1, mc + 1, lc[0] - 1, lc[1] + 1].forEach(function (x) { if (x >= 0 && x < cin.length) cin[x] = m.laco; });
     }
     var saia = g[iSaia], ls = limites(saia);
     trocar(saia, m.saia);
+    if (m.calca) calca(g, sentada, m, iSaia, ls);
     if (m.largura && ls[0] > 0 && ls[1] < saia.length - 1) { saia[ls[0] - 1] = saia[ls[0]]; saia[ls[1] + 1] = saia[ls[1]]; ls = [ls[0] - 1, ls[1] + 1]; }
     if (m.pregas) for (var x = ls[0]; x <= ls[1]; x++) saia[x] = m.pregas[x % 2];
     // saia comprida em pé: as linhas de perna viram saia, cada uma um pouco mais rodada
@@ -182,22 +212,52 @@
     }
     if (m.brilho) for (x = ls[0] + 1; x < ls[1]; x += 3) saia[x] = m.brilho;
   }
+  // calça ou bermuda: a linha da saia vira quadril (em pé, estreito como as pernas) e as pernas se cobrem
+  function calca(g, sentada, m, iSaia, ls) {
+    var saia = g[iSaia], cor = m.calca;
+    if (sentada) {
+      trocar(saia, { C: cor, D: cor, A: cor });
+      trocar(g[iSaia + 1], { D: cor, K: cor });
+      trocar(g[iSaia + 2], m.pernas >= 2 ? { D: cor, K: cor } : { D: 'K' });
+      return;
+    }
+    var lp = limites(g[iSaia + 1]), a = Math.max(ls[0], lp[0]), b = Math.min(ls[1], lp[1]);
+    for (var x = 0; x < saia.length; x++) saia[x] = x >= a && x <= b ? cor : '.';
+    for (var j = 1; j <= m.pernas; j++) trocar(g[iSaia + j], { K: cor });
+  }
 
-  /** Aplica corte e modelo nas linhas da Mariana (cabeça + corpo) e devolve linhas novas.
-      @param {string[]} linhas @param {string} vista @param {boolean} sentada @param {string} corte @param {string} modelo */
-  I.aplicarVisual = function (linhas, vista, sentada, corte, modelo) {
+  /* ---------- LAÇO ---------- */
+  // sem laço: o laço do cabelo vira cabelo, e a ponta que sai para fora some (a cabeça fica com o contorno certo)
+  function tirarLaco(g) {
+    for (var y = 0; y < 7; y++) {
+      var r = g[y], o = r.slice();
+      for (var x = 0; x < r.length; x++) if (o[x] === 'B') r[x] = x === 0 || x === r.length - 1 || o[x - 1] === '.' || o[x + 1] === '.' ? '.' : 'H';
+    }
+  }
+  // corte de menino com laço: o lacinho fica no mesmo lugar do da Mariana
+  var LACO = { frente: [[0, 7], [0, 8], [1, 8], [1, 9]], lado: [[0, 2], [1, 1], [1, 2]], costas: [[0, 2], [0, 3], [1, 1], [1, 2]],
+    diagFrente: [[0, 2], [1, 1], [1, 2]], diagCostas: [[0, 2], [1, 1], [1, 2]] };
+
+  /** Aplica corte, modelo e laço nas linhas da Mariana (cabeça + corpo) e devolve linhas novas.
+      @param {string[]} linhas @param {string} vista @param {boolean} sentada @param {string} corte @param {string} modelo
+      @param {boolean} [laco] false = sem laço (padrão: com) */
+  I.aplicarVisual = function (linhas, vista, sentada, corte, modelo, laco) {
     var g = linhas.map(function (l) { return l.split(''); });
-    var c = CORTES[corte], m = MODELOS[modelo];
+    var c = CORTES[corte], m = MODELOS[modelo], comLaco = laco !== false;
     if (c && c.curto) (NU[vista] || []).forEach(function (l, j) {
       var r = g[7 + j];
       for (var i = 0; i < r.length; i++) if (r[i] === 'H' || r[i] === 'L') r[i] = l[i];
     });
-    if (m) vestir(g, sentada, m);
+    if (m) vestir(g, sentada, m, vista);
     if (c && c.cabeca && c.cabeca[vista]) c.cabeca[vista].forEach(function (l, j) { g[j] = l.split(''); });
+    if (!comLaco) tirarLaco(g);
+    else if (c && c.menino) (LACO[vista] || []).forEach(function (p) { if ('.HLZ'.indexOf(g[p[0]][p[1]]) >= 0) g[p[0]][p[1]] = 'B'; });
     if (c && c.corpo && c.corpo[vista]) c.corpo[vista].forEach(function (l, j) {
       var r = g[7 + j];
-      if (r) for (var i = 0; i < l.length; i++) if (l[i] !== '.') r[i] = l[i];
+      if (r) for (var i = 0; i < l.length; i++) if (l[i] !== '.') r[i] = l[i] === 'B' && !comLaco ? 'H' : l[i];
     });
     return g.map(function (r) { return r.join(''); });
   };
+  I.CORTES_VISUAL = CORTES;
+  I.MODELOS_VISUAL = MODELOS;
 })();

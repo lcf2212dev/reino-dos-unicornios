@@ -20,7 +20,7 @@
       depois: ['Você foi muito bem! 🎉', 'Que orgulho de você! 💖'],
     },
     objetos: {
-      livro: ['Aqui mora o livro da matéria! 📖', 'Vamos ler juntas com calma?'],
+      livro: ['Aqui mora o livro da matéria! 📖', 'Vamos ler {juntas|juntos} com calma?'],
       bebedouro: ['Um golinho de água fresca! 💧', 'Beber água faz muito bem.'],
       bancada: ['Olha que desenho bonito! 🎨', 'Ele fala desta sala aqui.'],
       hall: ['Olha que desenho bonito! 🎨', 'Ele fala desta matéria.'],

@@ -1,5 +1,5 @@
 /* Salão de Beleza: escolher o FORMATO do corte de cabelo (cadeira da Dona Lulu) ou o MODELO da roupa (arara),
-   com a prévia grande (de frente, de lado, de costas e montada). Grátis. As cores continuam na tela de aparência
+   todos (os de menina e os de menino, os do sexo de quem joga primeiro), com a prévia grande (de frente, de lado, de costas e montada). Grátis. As cores continuam na tela de aparência
    (Ajustes). Grava em aparencia.corte / aparencia.modelo (os ids de PA.CORTES / PA.MODELOS) ao fechar. */
 (function () {
   var U = Reino.util, el = U.el, P = Reino.Progresso;
@@ -41,7 +41,11 @@
         if (m) vistas.appendChild(el('div.salao-vista.salao-montada', PA.paraDOM(PA.montada(m.def, m.estagio, 0, ap, { vista: 'lado' }), 2)));
       }
       var grade = el('div.salao-opcoes', { role: 'group', 'aria-label': T.rotulo });
-      T.lista().forEach(function (o) {
+      // todos os cortes e roupas, os do sexo de quem joga primeiro (a ordem de cada grupo fica a de sempre)
+      var sexo = PA.sexoJogador();
+      var lista = T.lista().filter(function (o) { return (o.sexo || 'menina') === sexo; })
+        .concat(T.lista().filter(function (o) { return (o.sexo || 'menina') !== sexo; }));
+      lista.forEach(function (o) {
         var ap = aparencia(), prova = Object.assign({}, ap);
         prova[T.campo] = o.id;
         var b = el('button.salao-opcao', { type: 'button', 'aria-pressed': String(PA.visualMariana(ap)[T.campo] === o.id) },

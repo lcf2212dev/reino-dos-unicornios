@@ -18,7 +18,7 @@ Reino.FALAS_INTERIORES.castelo = {
       nova: ['Vamos treinar a História? 🥇', 'Vamos ler cada pergunta? 📖'],
       feita: ['Quer treinar mais uma vez?', 'Vamos buscar o ouro com calma?'],
       bloqueada: ['Primeiro, as salas do museu. 🏛️', 'O museu vem antes do treino.'],
-      depois: ['Você revisou tudo com calma! ✨', 'Revisar é coisa de campeã! 🏆'],
+      depois: ['Você revisou tudo com calma! ✨', 'Revisar é coisa de {campeã|campeão}! 🏆'],
     },
     // ala do Inglês
     oliver: {
@@ -43,11 +43,11 @@ Reino.FALAS_INTERIORES.castelo = {
     nova: ['Vamos treinar sem pressa? 🥇', 'Vamos ler cada pergunta? 📖'],
     feita: ['Quer treinar mais uma vez?', 'Vamos buscar o ouro com calma?'],
     bloqueada: ['Primeiro, termine as salas. 🔒'],
-    depois: ['Você revisou tudo com calma! ✨', 'Revisar é coisa de campeã! 🏆'],
+    depois: ['Você revisou tudo com calma! ✨', 'Revisar é coisa de {campeã|campeão}! 🏆'],
   },
   objetos: {
     // salão do trono
-    'tapecaria': ['É o Plano da Prova! 📜', 'Vamos ler juntas com calma?'],
+    'tapecaria': ['É o Plano da Prova! 📜', 'Vamos ler {juntas|juntos} com calma?'],
     'medalhas': ['Aqui ficam as suas medalhas! 🏅', 'Todas vieram dos seus acertos.'],
     'lareira': ['Que fogo quentinho! 🔥', 'Descanse um pouquinho aqui.'],
     // ala da História
