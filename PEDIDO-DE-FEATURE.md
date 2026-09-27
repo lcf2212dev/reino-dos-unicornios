@@ -7,7 +7,7 @@ Como usar:
 
 Sem tempo para o modelo? Escreva do seu jeito e comece com `/preparar-pedido`.
 
-Fotos e prints vão numa pasta dentro de `matérias/`. Exemplo: `Mariana Revisões/matérias/geografia/`. No pedido, escreva só o nome da pasta.
+Fotos e prints vão numa pasta dentro de `matérias/`. Exemplo: `reino-dos-unicornios/matérias/geografia/`. No pedido, escreva só o nome da pasta.
 
 ## Modelo curto (ajuste pequeno ou correção)
 ```

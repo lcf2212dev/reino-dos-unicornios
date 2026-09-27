@@ -96,7 +96,8 @@ UI.registrarBotaoHud({ id, ordem, criar() → botão, pintar?(), eventos?: [Rein
 3. `pintar` roda na montagem, nos eventos `CENA`, `TELAS`, `OCUPADA`, `TRANSICAO` (ou nos `eventos` dados) e de
    500 em 500 ms: só mexa no DOM quando o estado mudar.
 4. Botão indisponível fica apagado com `aria-disabled` e continua focável (não `disabled`).
-5. Enter/Espaço num botão do HUD não chegam ao `motor/entrada.js` (`stopPropagation` no keydown do botão).
+5. Enter/Espaço com o foco num controle (botão do HUD, chip, "Ok!" do balão, campo) são dele: o `motor/entrada.js` não age
+   no alvo perto da Mariana (os botões 📷 e álbum ainda param o keydown com `stopPropagation`).
 6. Os blocos do HUD (`.hud-esq`, `.hud-dir`, `.hud-botoes`) têm `pointer-events: none`; só botões e chips pegam
    toque (senão o 📷 criava uma faixa morta sob o chip da montaria no celular).
 7. Celular (≤ 480 px): `.hud-botoes` vira coluna ao lado do chip da montaria; hoje são 3 (tela cheia, 📷,

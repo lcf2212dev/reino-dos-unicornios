@@ -32,10 +32,11 @@ const PASSOS = [
   { nome: 'referências de dados', min: 4, arq: 'jogo/ferramentas/testes/e2e.js', extra: ['--so-dados'], aoVivo: true },
 ];
 
-// resumo de um passo: as linhas "ℹ tests/pass/fail" do node:test ou a última linha da saída
+// resumo de um passo: as linhas "ℹ tests/pass/fail" do node:test (e "todo", quando há: defeitos conhecidos,
+// docs/pendencias.md) ou a última linha da saída
 function resumo(saida) {
-  const nt = saida.match(/^ℹ (tests|pass|fail) \d+$/gm);
-  if (nt) return nt.map((l) => l.slice(2)).join(', ');
+  const nt = saida.match(/^ℹ (tests|pass|fail|todo) \d+$/gm);
+  if (nt) return nt.filter((l) => l !== 'ℹ todo 0').map((l) => l.slice(2)).join(', ');
   return saida.trim().split('\n').pop() || '';
 }
 

@@ -19,7 +19,7 @@ espalha o estrago para os outros aparelhos.
 - `docker compose restart/down/up/build`, mexer no container ou no serviço `reino-nome`.
 - Publicar ou republicar o artifact, ou abrir o jogo publicado (só o orquestrador publica, pela skill `publicar-artifact`).
 - `localStorage.clear()`, `removeItem` em chave existente, "Apagar tudo", "Novo ciclo" ou pagamento fora do teste.
-- Escrever na árvore principal `/home/leandro/Mariana Revisões` (servida ao vivo pelo container).
+- Escrever na árvore principal `/home/leandro/reino-dos-unicornios` (servida ao vivo pelo container).
 
 ## Decisão: as guardas (como testar)
 | Guarda | Onde | O que impede |

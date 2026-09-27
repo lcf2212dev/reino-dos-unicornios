@@ -33,7 +33,7 @@ Guia de uso para o Leandro. As regras técnicas ficam em `docs/contratos/`.
   claude.ai no mesmo link. No fim ele conta o que fez e o que decidiu.
 
 ## Nova matéria
-1. Salve os prints em `Mariana Revisões/matérias/<matéria>/` (ex.: `matérias/geografia/`). A folha de revisão da
+1. Salve os prints em `reino-dos-unicornios/matérias/<matéria>/` (ex.: `matérias/geografia/`). A folha de revisão da
    prova vai numa subpasta, ex.: `matérias/geografia/Revisão/`.
 2. Peça ao Claude para criar a matéria. Ele faz o lugar no reino, as salas, o livro, os unicórnios e as vozes, e
    republica no mesmo link. O progresso dela é mantido.

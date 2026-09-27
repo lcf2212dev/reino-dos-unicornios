@@ -174,7 +174,7 @@ Para cada comida, `compradas` = maior e `usadas` = maior (contador estragado con
    - saves 100% sintéticos (`jogo/ferramentas/testes/saves.js`); nunca copie o save real;
    - testes sem navegador num `vm` com localStorage de mentira (`testar-save.js`, `testar-banho.js`);
    - derrube só os seus servidores, pelo PID; nunca `pkill`/`killall` por nome.
-4. Nada é escrito na árvore principal `/home/leandro/Mariana Revisões` (servida ao vivo pelo container).
+4. Nada é escrito na árvore principal `/home/leandro/reino-dos-unicornios` (servida ao vivo pelo container).
 
 ## 10. Antes de mexer, rode
 ```
