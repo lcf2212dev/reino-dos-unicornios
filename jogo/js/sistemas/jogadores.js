@@ -1,7 +1,10 @@
 /* Jogadores (docs/contratos/save-e-mescla.md §12): quem está jogando, as contas (login e senha em texto, SEM
    segurança, como o Leandro pediu) e o perfil (nome e sexo) no save.
    - A Mariana é o jogador 'mariana': o save de sempre (chaveSave 'mariana-reino-v1', doc progresso/mariana, linha
-     'mariana' do banco). Login reservado, sem senha: entra direto.
+     'mariana' do banco). Login reservado. A conta dela mora no banco como as outras (servidor de casa: linha
+     'mariana' da tabela jogadores, semeada pelo servidor; claude.ai: doc jogadores/mariana, criado pelo jogo com
+     `config.jogadores.senhaMariana` se faltar); sem banco, confere com `senhaMariana`. O aparelho que tem o save dela
+     (ou a lembra) entra direto; os outros pedem a senha. "Sair" marca SAIU e o próximo carregamento pede login.
    - Outro jogador: 'reino-v1-<login>' no aparelho, progresso/<login> no claude.ai, /api/progresso/<login> no servidor
      de casa (só no servidor que anuncia vários jogadores: sistemas/progresso-nuvem.js).
    - Neste aparelho: 'reino-jogador-atual' (o login lembrado) e 'reino-jogadores' ({ login: { senha, criado } }, as
@@ -15,6 +18,7 @@
   var MARIANA = 'mariana';
   var CHAVE_ATUAL = 'reino-jogador-atual';
   var CHAVE_CONTAS = 'reino-jogadores';
+  var SAIU = ':saiu';   // em CHAVE_ATUAL depois de "Sair" (nunca é login: tem ':'); o próximo carregamento pede login
   function cfg() { return R.config.jogadores || { loginMin: 2, loginMax: 20, senhaMin: 3, senhaMax: 30 }; }
   function P() { return R.Progresso; }
   function objeto(x) { return !!x && typeof x === 'object' && !Array.isArray(x); }
@@ -134,7 +138,13 @@
     var c = contasLocais()[login];
     P().usarJogador(login, login === MARIANA ? null : c ? c.senha : null);
   };
-  J.lembrado = function (login) { return login === MARIANA || !!contasLocais()[login]; };
+  // a Mariana é lembrada no aparelho que tem o save dela ou que a escolheu por último (só leitura)
+  function marianaAqui() {
+    try { var a = localStorage.getItem(CHAVE_ATUAL); return a === MARIANA || (a !== SAIU && !!lerTexto(R.config.chaveSave)); } catch (e) { return true; }
+  }
+  // senha da Mariana: sem `senhaMariana` no config ela entra direto, como antes
+  function senhaMarianaCerta(senha) { var s = cfg().senhaMariana; return !s || senha === s; }
+  J.lembrado = function (login) { return login === MARIANA ? marianaAqui() : !!contasLocais()[login]; };
   // os lembrados neste aparelho (a Mariana sempre, primeiro)
   J.listarLocais = function () { return [MARIANA].concat(Object.keys(contasLocais()).sort()); };
   // os lembrados mais os do banco (sem banco ou sem resposta: só os daqui)
@@ -174,13 +184,15 @@
     });
   };
 
-  /* Entra: { ok: true } ou { erro: 'senha' | 'naoExiste' | 'rede' }. A Mariana e quem este aparelho lembra entram sem
-     senha (senha undefined); os outros conferem no banco e, sem ele (ou conta só deste aparelho), aqui. */
+  /* Entra: { ok: true } ou { erro: 'senha' | 'naoExiste' | 'rede' }. Quem este aparelho lembra entra sem senha (senha
+     undefined); a Mariana, fora do aparelho dela, confere com `senhaMariana`; os outros conferem no banco e, sem ele (ou
+     conta só deste aparelho), aqui. */
   J.entrar = function (login, senha) {
     var local = contasLocais()[login];
     function aqui() { return !local ? { erro: 'naoExiste' } : local.senha === senha ? { ok: true } : { erro: 'senha' }; }
     var r;
-    if (login === MARIANA || (local && senha === undefined)) r = Promise.resolve({ ok: true });
+    if (login === MARIANA) r = senha === undefined ? Promise.resolve(marianaAqui() ? { ok: true } : { erro: 'senha' }) : entrarMariana(senha);
+    else if (local && senha === undefined) r = Promise.resolve({ ok: true });
     else if (!valido(login)) r = Promise.resolve({ erro: 'naoExiste' });
     else {
       r = fonte().then(function (f) {
@@ -203,18 +215,45 @@
     });
   };
 
+  /* A senha da Mariana, conferida no banco: servidor de casa (/api/jogadores/entrar, a linha dela), claude.ai (doc
+     jogadores/mariana; sem o doc, o jogo o cria com `senhaMariana`, nunca por cima de um que exista) ou, sem banco
+     (arquivo, servidor antigo), `senhaMariana`. Nada disso toca no progresso dela. */
+  function entrarMariana(senha) {
+    var certo = { ok: true }, errado = { erro: 'senha' };
+    return fonte().then(function (f) {
+      if (!f) return senhaMarianaCerta(senha) ? certo : errado;
+      if (f.tipo === 'servidor') {
+        return postar('api/jogadores/entrar', { login: MARIANA, senha: String(senha) }).then(function (x) {
+          return x.status === 200 ? certo : x.status === 403 ? errado : { erro: 'rede' };
+        });
+      }
+      var doc = f.db.doc('jogadores/' + MARIANA);
+      return comLimite(doc.get()).then(function (s) {
+        if (s.exists) { var d = s.data(); return d && d.senha === senha ? certo : errado; }
+        var padrao = cfg().senhaMariana;
+        if (!padrao) return certo;
+        return comLimite(doc.set({ login: MARIANA, senha: padrao, criado: agora() })).then(function () { return senha === padrao ? certo : errado; });
+      });
+    }).catch(function () { return { erro: 'rede' }; });
+  }
+
   /* Troca de jogador com o jogo aberto: grava o de agora no aparelho, ENVIA já para o banco e espera a resposta
      (no máximo o limite de rede ou 5 s; o envio normal sai 1,8 s depois e o reload o perderia), lembra o novo e
      recarrega (o save é lido do zero). Cumpre com false se já é ele. */
-  J.trocarPara = function (login) {
-    if (login === J.atual()) return Promise.resolve(false);
+  function guardarERecarregar(marca) {
     var e = P().estado();
     if (e && e.comecou) P().salvar(true);
     var espera = new Promise(function (ok) { setTimeout(ok, Math.min(limite(), 5000)); });
     return Promise.race([P().enviarAgora().catch(function () {}), espera]).then(function () {
-      try { localStorage.setItem(CHAVE_ATUAL, login); } catch (err) { /* sem armazenamento */ }
+      try { localStorage.setItem(CHAVE_ATUAL, marca); } catch (err) { /* sem armazenamento */ }
       location.reload();
       return true;
     });
+  }
+  J.trocarPara = function (login) {
+    if (login === J.atual()) return Promise.resolve(false);
+    return guardarERecarregar(login);
   };
+  // "Sair": guarda, marca SAIU (o save fica onde está) e recarrega; o próximo carregamento mostra o login
+  J.sair = function () { return guardarERecarregar(SAIU); };
 })();

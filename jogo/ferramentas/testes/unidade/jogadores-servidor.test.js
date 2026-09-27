@@ -74,7 +74,9 @@ test('servidor novo: contas, um progresso por login e /api/progresso continua se
     assert.strictEqual((await pedir(s, 'POST', 'api/jogadores/entrar', { login: 'joao', senha: 'abc' })).status, 200);
     assert.strictEqual((await pedir(s, 'POST', 'api/jogadores/entrar', { login: 'joao', senha: 'errada' })).status, 403);
     assert.strictEqual((await pedir(s, 'POST', 'api/jogadores/entrar', { login: 'ninguem', senha: 'abc' })).status, 404);
-    assert.strictEqual((await pedir(s, 'POST', 'api/jogadores/entrar', { login: 'mariana' })).status, 200, 'a Mariana entra sem senha');
+    assert.strictEqual((await pedir(s, 'POST', 'api/jogadores/entrar', { login: 'mariana' })).status, 403, 'a Mariana tem senha no banco');
+    assert.strictEqual((await pedir(s, 'POST', 'api/jogadores/entrar', { login: 'mariana', senha: 'errada' })).status, 403);
+    assert.strictEqual((await pedir(s, 'POST', 'api/jogadores/entrar', { login: 'mariana', senha: 'unicorlice77' })).status, 200);
     assert.strictEqual((await pedir(s, 'DELETE', 'api/jogadores')).status, 405);
     // progresso: cada login na sua linha
     const m = docDe(saveSintetico(11)), jo = docDe(saveSintetico(22));
@@ -99,7 +101,7 @@ test('servidor novo: contas, um progresso por login e /api/progresso continua se
     const contar = (id) => banco.prepare('SELECT COUNT(*) AS n FROM historico WHERE id = ?').get(id).n;
     assert.strictEqual(contar('joao'), 50);
     assert.strictEqual(contar('mariana'), 1);
-    assert.deepStrictEqual(banco.prepare('SELECT login, senha FROM jogadores ORDER BY login').all().map((l) => ({ ...l })), [{ login: 'ana', senha: 'a1' }, { login: 'joao', senha: 'abc' }]);
+    assert.deepStrictEqual(banco.prepare('SELECT login, senha FROM jogadores ORDER BY login').all().map((l) => ({ ...l })), [{ login: 'ana', senha: 'a1' }, { login: 'joao', senha: 'abc' }, { login: 'mariana', senha: 'unicorlice77' }]);
     banco.close();
   } finally { s.parar(); }
 });
@@ -138,6 +140,11 @@ test('jogo: a Mariana grava em /api/progresso; outro jogador cria a conta e grav
     await o.P.iniciarNuvem();
     assert.strictEqual(o.P.statusNuvem(), 'local');
     assert.strictEqual((await pedir(s, 'GET', 'api/progresso/bia')).json().estado.estrelas.ganhas, 33);
+    // a senha da Mariana é conferida na linha dela do banco
+    const sm = jogoHttp(s);
+    assert.deepStrictEqual(copia(await sm.R.Jogadores.entrar('mariana', 'errada')), { erro: 'senha' });
+    assert.deepStrictEqual(copia(await sm.R.Jogadores.entrar('mariana', 'unicorlice77')), { ok: true });
+    assert.ok(sm.chamadas.some((c) => c.url === 'api/jogadores/entrar'));
     // a Mariana: /api/progresso, como sempre
     const mj = jogoHttp(s, { save: saveSintetico(12) });
     mj.R.Jogadores.usar('mariana');
@@ -185,6 +192,11 @@ test('SERVIDOR ANTIGO + jogador novo: nenhum PUT sai e a linha da Mariana fica b
     assert.deepStrictEqual(copia(await k.R.Jogadores.entrar('joao', 'errada')), { erro: 'senha' });
     assert.deepStrictEqual(copia(await k.R.Jogadores.entrar('joao', 'abc')), { ok: true });
     assert.strictEqual((await pedir(s, 'GET', 'api/progresso')).texto, antes);
+    // senha da Mariana no servidor antigo (sem contas): confere com config.jogadores.senhaMariana, sem POST
+    const sm = jogoHttp(s);
+    assert.deepStrictEqual(copia(await sm.R.Jogadores.entrar('mariana', 'errada')), { erro: 'senha' });
+    assert.deepStrictEqual(copia(await sm.R.Jogadores.entrar('mariana', 'unicorlice77')), { ok: true });
+    assert.ok(sm.chamadas.every((c) => c.metodo === 'HEAD'));
     // a Mariana no servidor antigo: igual a sempre
     const mj = jogoHttp(s, { save: saveSintetico(12) });
     mj.R.Jogadores.usar('mariana');
@@ -192,4 +204,35 @@ test('SERVIDOR ANTIGO + jogador novo: nenhum PUT sai e a linha da Mariana fica b
     await mj.P.iniciarNuvem();
     await ate(async () => (await pedir(s, 'GET', 'api/progresso')).json().estado.estrelas.ganhas === 12);
   } finally { s.parar(); }
+});
+
+test('conta da Mariana no banco: semeada no banco novo, nunca sobrescrita; o progresso dela fica intacto', async () => {
+  // banco que já tem a linha dela com outra senha (e um progresso): o servidor sobe e não muda nada
+  const pasta = fs.mkdtempSync('/tmp/reino-testes/banco-mariana-');
+  const arq = path.join(pasta, 'reino-teste.db');
+  const pre = new DatabaseSync(arq);
+  pre.exec('CREATE TABLE progresso (id TEXT PRIMARY KEY, dados TEXT NOT NULL, atualizado INTEGER NOT NULL); CREATE TABLE jogadores (login TEXT PRIMARY KEY, senha TEXT NOT NULL, criado INTEGER NOT NULL);');
+  const doc = JSON.stringify(docDe(saveSintetico(21)));
+  pre.prepare('INSERT INTO progresso VALUES (?, ?, ?)').run('mariana', doc, 5);
+  pre.prepare('INSERT INTO jogadores VALUES (?, ?, ?)').run('mariana', 'outra', 7);
+  pre.close();
+  const s = await iniciar({ banco: arq });
+  try {
+    assert.strictEqual((await pedir(s, 'POST', 'api/jogadores/entrar', { login: 'mariana', senha: 'unicorlice77' })).status, 403, 'a senha que já estava vale');
+    assert.strictEqual((await pedir(s, 'POST', 'api/jogadores/entrar', { login: 'mariana', senha: 'outra' })).status, 200);
+    assert.strictEqual((await pedir(s, 'GET', 'api/progresso')).texto, doc, 'progresso dela byte a byte igual');
+    assert.strictEqual((await pedir(s, 'POST', 'api/jogadores', { login: 'mariana', senha: 'x1x' })).status, 409);
+  } finally { s.parar(); }
+  const depois = new DatabaseSync(arq, { readOnly: true });
+  assert.deepStrictEqual({ ...depois.prepare('SELECT senha, criado FROM jogadores WHERE login = ?').get('mariana') }, { senha: 'outra', criado: 7 });
+  depois.close();
+  // banco novo: a linha nasce com a senha dela
+  const n = await iniciar();
+  try {
+    const b = new DatabaseSync(n.banco, { readOnly: true });
+    assert.strictEqual(b.prepare('SELECT senha FROM jogadores WHERE login = ?').get('mariana').senha, 'unicorlice77');
+    assert.strictEqual(b.prepare('SELECT COUNT(*) AS n FROM progresso').get().n, 0, 'semear a conta não cria progresso');
+    b.close();
+    assert.deepStrictEqual((await pedir(n, 'GET', 'api/jogadores')).json(), ['mariana']);
+  } finally { n.parar(); }
 });

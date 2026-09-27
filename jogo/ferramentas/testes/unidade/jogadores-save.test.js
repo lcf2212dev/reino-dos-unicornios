@@ -127,15 +127,17 @@ test('contas só no aparelho (file:): criar, repetido, senha, entrar lembrado e 
   assert.strictEqual(loja['reino-jogador-atual'], 'joao', 'criou e ficou lembrado');
   assert.deepStrictEqual(copia(await J.criar('joao', 'xyz')), { erro: 'existe' });
   assert.deepStrictEqual(copia(await J.listar()), ['mariana', 'joao']);
-  assert.ok(J.lembrado('joao') && J.lembrado('mariana') && !J.lembrado('ana'));
+  assert.ok(J.lembrado('joao') && !J.lembrado('mariana') && !J.lembrado('ana'), 'a Mariana não é lembrada num aparelho sem ela');
   // outro aparelho (loja nova) não conhece: pede a senha e não acha
   const k = jogo({ loja: {} });
   assert.deepStrictEqual(copia(await k.R.Jogadores.entrar('joao', 'abc')), { erro: 'naoExiste' });
   // neste: lembrado entra sem senha; com senha, confere
   assert.deepStrictEqual(copia(await J.entrar('joao')), { ok: true });
   assert.deepStrictEqual(copia(await J.entrar('joao', 'errada')), { erro: 'senha' });
-  assert.deepStrictEqual(copia(await J.entrar('mariana')), { ok: true });
+  assert.deepStrictEqual(copia(await J.entrar('mariana')), { erro: 'senha' }, 'fora do aparelho dela, a Mariana pede a senha');
+  assert.deepStrictEqual(copia(await J.entrar('mariana', 'unicorlice77')), { ok: true });
   assert.strictEqual(loja['reino-jogador-atual'], 'mariana');
+  assert.ok(J.lembrado('mariana'), 'depois de entrar, este aparelho lembra dela');
   assert.strictEqual(loja['mariana-reino-v1'], undefined, 'entrar não cria save');
   // contas estragadas não quebram
   const e = jogo({ loja: { 'reino-jogadores': '{"__proto__":{"senha":"x"},"ok":{"senha":1},"bia":{"senha":"sol"},"mariana":{"senha":"x"}}' } });
@@ -217,4 +219,71 @@ test('enviarAgora cumpre mesmo quando o banco revoga no meio (com envio pendente
   falhar();
   await new Promise((r) => setTimeout(r, 50));
   assert.ok(cumpriu, 'não ficou esperando à toa');
+});
+
+test('senha da Mariana: aparelho dela entra direto, os outros conferem config.jogadores.senhaMariana', async () => {
+  // aparelho com o save dela: lembrada, entra sem senha (e nada é gravado no save)
+  const salvo = JSON.stringify({ v: 1, comecou: true });
+  const loja = { 'mariana-reino-v1': salvo };
+  const a = jogo({ loja });
+  assert.ok(a.R.Jogadores.lembrado('mariana'));
+  assert.deepStrictEqual(copia(await a.R.Jogadores.entrar('mariana')), { ok: true });
+  assert.strictEqual(loja['mariana-reino-v1'], salvo, 'o save dela não mudou');
+  // aparelho sem ela: senha errada recusa, a certa entra
+  const b = jogo({ loja: {} });
+  assert.strictEqual(b.R.config.jogadores.senhaMariana, 'unicorlice77');
+  assert.ok(!b.R.Jogadores.lembrado('mariana'));
+  assert.deepStrictEqual(copia(await b.R.Jogadores.entrar('mariana', 'errada')), { erro: 'senha' });
+  assert.deepStrictEqual(copia(await b.R.Jogadores.entrar('mariana', '')), { erro: 'senha' });
+  assert.deepStrictEqual(copia(await b.R.Jogadores.entrar('mariana', 'unicorlice77')), { ok: true });
+  // sem senhaMariana no config: entra direto, como antes
+  const c = jogo({ loja: {} });
+  c.R.config.jogadores.senhaMariana = '';
+  assert.deepStrictEqual(copia(await c.R.Jogadores.entrar('mariana', 'qualquer')), { ok: true });
+});
+
+test('senha da Mariana no claude.ai: doc jogadores/mariana (criado com senhaMariana se faltar, nunca por cima)', async () => {
+  const docMariana = { estado: save(11), atualizado: 1 };
+  const docs = { 'progresso/mariana': docMariana };
+  const j = jogo({ loja: {} });
+  const pedidos = artifact(j, docs);
+  assert.deepStrictEqual(copia(await j.R.Jogadores.entrar('mariana', 'errada')), { erro: 'senha' });
+  assert.deepStrictEqual(copia(docs['jogadores/mariana']).senha, 'unicorlice77', 'o jogo criou a conta dela');
+  assert.deepStrictEqual(copia(await j.R.Jogadores.entrar('mariana', 'unicorlice77')), { ok: true });
+  // doc que já existe com outra senha: vale ele, e ninguém escreve por cima
+  docs['jogadores/mariana'] = { login: 'mariana', senha: 'nova', criado: 3 };
+  const k = jogo({ loja: {} });
+  const pk = artifact(k, docs);
+  assert.deepStrictEqual(copia(await k.R.Jogadores.entrar('mariana', 'unicorlice77')), { erro: 'senha' });
+  assert.deepStrictEqual(copia(await k.R.Jogadores.entrar('mariana', 'nova')), { ok: true });
+  assert.ok(!pk.some((p) => p.startsWith('set ')), 'nada gravado: ' + pk.join(', '));
+  assert.deepStrictEqual(docs['progresso/mariana'], docMariana, 'o progresso dela não foi tocado');
+  assert.ok(!pedidos.concat(pk).some((p) => /progresso\//.test(p)), 'entrar nem lê o progresso');
+});
+
+test('Sair: o aparelho da Mariana pede login no próximo carregamento, sem apagar o save', async () => {
+  const salvo = JSON.stringify(save(9));
+  const loja = { 'mariana-reino-v1': salvo };
+  const j = jogo({ loja });
+  let recarregou = 0;
+  j.ctx.location = { protocol: 'file:', search: '', reload: () => { recarregou++; } };
+  assert.strictEqual(j.R.Jogadores.decidirSemTela(), 'mariana', 'antes de sair: direto nela');
+  j.R.Jogadores.usar('mariana');
+  j.P.carregar();
+  await j.R.Jogadores.sair();
+  assert.strictEqual(recarregou, 1);
+  assert.strictEqual(loja['reino-jogador-atual'], ':saiu');
+  assert.ok(loja['mariana-reino-v1'], 'o save dela continua lá');
+  assert.strictEqual(JSON.parse(loja['mariana-reino-v1']).estrelas.ganhas, 9);
+  const depois = jogo({ loja });
+  assert.strictEqual(depois.R.Jogadores.decidirSemTela(), null, 'depois de sair: tela de login');
+  assert.ok(!depois.R.Jogadores.lembrado('mariana'), 'e o cartão dela pede a senha');
+  assert.deepStrictEqual(copia(await depois.R.Jogadores.entrar('mariana')), { erro: 'senha' });
+  assert.deepStrictEqual(copia(await depois.R.Jogadores.entrar('mariana', 'unicorlice77')), { ok: true });
+  assert.strictEqual(loja['reino-jogador-atual'], 'mariana');
+  assert.strictEqual(jogo({ loja }).R.Jogadores.decidirSemTela(), 'mariana', 'entrou de novo: volta a entrar direto');
+  // congelado (e2e) ignora a marca
+  const cong = jogo({ loja: { 'mariana-reino-v1': salvo, 'reino-jogador-atual': ':saiu' } });
+  cong.R.congelado = true;
+  assert.strictEqual(cong.R.Jogadores.decidirSemTela(), 'mariana');
 });
