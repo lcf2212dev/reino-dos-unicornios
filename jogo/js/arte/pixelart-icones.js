@@ -1,7 +1,7 @@
 /* Ícones em pixel art e utilidades para a interface (DOM): desenhos de window.ICONES
    (js/arte/icones/*.js) como canvas (PA.iconeDesenho, PA.iconeMenu), emoji sem desenho reduzido
    a uma grade (PA.iconeEmoji), PA.paraDOM, PA.silhueta, PA.escalaNitida e o ícone dentro de texto
-   (PA.iconeTexto), que um MutationObserver ajusta ao tamanho da fonte. */
+   (PA.iconeTexto), que um MutationObserver ajusta ao tamanho da fonte, e o thumbstick do toque (PA.controle). */
 (function () {
   var PA = window.PA, I = PA._interno;
   var CONTORNO = I.CONTORNO, cache = I.cache;
@@ -37,6 +37,52 @@
     ctx.fillStyle = '#b9a8cc';
     ctx.fillRect(0, 0, c.width, c.height);
     return c;
+  };
+
+  /* ---------- thumbstick do toque (js/motor/entrada.js): base 22×22 e pino 10×10, na mesma grade ---------- */
+  // f: fundo claro meio transparente; b/d: anel de brilho em cima e de sombra embaixo; a: as quatro setinhas;
+  // no pino, c creme com brilho w em cima e sombra o embaixo
+  var CONTROLE = {
+    base: { p: { k: CONTORNO, f: 'rgba(255, 250, 253, 0.35)', b: 'rgba(255, 255, 255, 0.8)',
+      d: 'rgba(58, 36, 70, 0.2)', a: 'rgba(58, 36, 70, 0.45)' }, d: [
+      '........kkkkkk........',
+      '.....kkkbbbbbbkkk.....',
+      '....kbbbffffffbbbk....',
+      '...kbfffffaafffffbk...',
+      '..kbfffffaaaafffffbk..',
+      '.kbffffffffffffffffbk.',
+      '.kbffffffffffffffffbk.',
+      '.kbffffffffffffffffbk.',
+      'kbffffffffffffffffffbk',
+      'kbffaffffffffffffaffbk',
+      'kbfaaffffffffffffaafbk',
+      'kbfaaffffffffffffaafbk',
+      'kdffaffffffffffffaffdk',
+      'kdffffffffffffffffffdk',
+      '.kdffffffffffffffffdk.',
+      '.kdffffffffffffffffdk.',
+      '.kdffffffffffffffffdk.',
+      '..kdfffffaaaafffffdk..',
+      '...kdfffffaafffffdk...',
+      '....kdddffffffdddk....',
+      '.....kkkddddddkkk.....',
+      '........kkkkkk........'] },
+    pino: { p: { k: CONTORNO, c: '#fff1d0', w: '#ffffff', o: '#f0a04a' }, d: [
+      '...kkkk...',
+      '.kkcccckk.',
+      '.kcwwccck.',
+      'kcwcccccok',
+      'kcccccccok',
+      'kcccccccok',
+      'kccccccook',
+      '.kooooook.',
+      '.kkooookk.',
+      '...kkkk...'] }
+  };
+  PA.controle = function (parte) {
+    var k = 'controle|' + parte;
+    if (!cache[k]) cache[k] = matriz(CONTROLE[parte].d, CONTROLE[parte].p);
+    return cache[k];
   };
 
   /* Um emoji vira pixel art: desenho próprio; se ainda não houver, o glifo reduzido a uma grade. */
