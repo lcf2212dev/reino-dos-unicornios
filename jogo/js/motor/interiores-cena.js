@@ -32,7 +32,7 @@
     var estatico = null, chaveFeita = null, sujo = true;
     var tAtual = 0, animarAtual = false;
     // estado desta cena usado pelas funções de interiores-toque.js (pintorAtual: o pintor do último quadro;
-    // mascaras: máscaras do desenho dos objetos, refeitas em renderizar; retratos: retrato de cada objeto que fala)
+    // mascaras: máscaras do desenho dos objetos, refeitas em renderizar; retratos: retrato de cada objeto que fala, idem)
     var E = { def: def, g: g, npcs: npcs, objs: objs, cena: null, pintorAtual: null, mascaras: {}, retratos: {} };
 
     function chaveEstado() {
@@ -45,7 +45,7 @@
       var P = progresso();
       var chave = chaveEstado();
       if (estatico && chave === chaveFeita) { sujo = false; return; }
-      E.mascaras = {};
+      E.mascaras = {}; E.retratos = {};
       if (!estatico) estatico = PA.novoCanvas(g.w * T, g.h * T);
       var ctx = estatico.getContext('2d');
       desenharEstatico(ctx, def, g, P, objs);

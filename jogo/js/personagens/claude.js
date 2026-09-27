@@ -101,6 +101,10 @@
     bal.querySelector('.claude-acoes').addEventListener('click', function (e) {
       var b = e.target.closest('button[data-valor]');
       if (!b || !aberto) return;
+      // toque de dedo/mouse (não o Enter): o próximo balão nasce no mesmo lugar, e o 2º toque de um toque
+      // duplo pulava a página sem ela ler (ou apertava o "Ok! 👍"/"Vamos!"). A guarda do ui/base.js segura
+      // os toques perto deste por um instante; toque noutro lugar e o teclado valem na hora.
+      if (e.isTrusted && e.detail && Reino.UI && Reino.UI.segurarToques) Reino.UI.segurarToques();
       Reino.Som.tocar('toque'); fechar(b.dataset.valor);
     });
     // teclado no balão (sem tela por cima): Tab fica preso no balão com botões; Esc fecha qualquer
