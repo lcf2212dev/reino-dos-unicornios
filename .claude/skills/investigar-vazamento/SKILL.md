@@ -29,6 +29,7 @@ até ~6 min.
 | Sintoma | Causa | Correção |
 |---|---|---|
 | Chromium de teste a 10–17 GB, "Target crashed", e2e sem fim quando entram scripts novos | O buffer do Resource Timing (250) enchia na carga; o `avancar` esperava para sempre um pacote de voz "sumido" e abria um `MessageChannel` por volta | Corrigido na ferramenta (2026-09-27): `navegador.js` marca os scripts antes da carga e o `avancar` tem teto e um canal só |
+| `npm run ver`/cenário parado sem gastar memória | `--js`/`js:` esperando uma Promise do jogo congelado (ex.: `Reino.Cena.sair()`) | `void <código>` + `esperar:<ms>`; a espera tem teto de 15 s com mensagem (`jogo/ferramentas/CLAUDE.md`) |
 | Ferramenta roda de verdade ao pedir ajuda | `--ajuda` ignorado | Todo comando do package.json responde a `--ajuda` (`ferramentas/ajuda.js`) |
 | Heap sobe a cada quadro | cache cuja chave muda sempre (hora, `Math.random`, objeto na chave); `canvas` novo por quadro guardado numa lista | chave estável; criar uma vez e reusar |
 | Ouvintes ou nós do DOM sobem ao abrir e fechar telas | `addEventListener` sem remover; tela fechada ainda referenciada | remover no fechar; não guardar o elemento |

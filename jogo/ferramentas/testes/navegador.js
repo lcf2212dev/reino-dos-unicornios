@@ -29,12 +29,13 @@ async function lancar(op = {}) { vigiar(); return chromium.launch({ headless: tr
 //   "que não chegou", girando e alocando até o Chromium passar de 10 GB. Aumentar o buffer depois da carga era tarde;
 // - __scriptsProntos: todo <script src> que terminou (carregou ou falhou), visto pelo evento no document (captura),
 //   sem depender do buffer: é o que o avancar consulta;
-// - __agoraReal: o relógio de verdade, guardado antes do congelar.js trocar Date e performance.now pelo virtual (o teto
-//   de espera do avancar é em tempo real).
+// - __agoraReal / __esperarReal: o relógio e o setTimeout de verdade, guardados antes do congelar.js trocá-los pelos
+//   virtuais (o teto de espera do avancar e do js do cenário é em tempo real).
 function antesDeTudo() {
   try { performance.setResourceTimingBufferSize(5000); } catch (e) { /* navegador sem Resource Timing */ }
-  var agora = performance.now.bind(performance);
+  var agora = performance.now.bind(performance), temporizador = setTimeout.bind(window);
   window.__agoraReal = function () { return agora(); };
+  window.__esperarReal = function (ms) { return new Promise(function (r) { temporizador(r, ms); }); };
   var prontos = window.__scriptsProntos = new Set();
   var marcar = function (e) { var t = e.target; if (t && t.tagName === 'SCRIPT' && t.src) prontos.add(t.src); };
   document.addEventListener('load', marcar, true);

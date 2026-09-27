@@ -49,6 +49,9 @@ Ferramentas de desenvolvimento (Node). Nenhuma entra no jogo. Comandos: `CLAUDE.
   `console.log` de cada `--js`/`--passos` e o valor que cada `--js` devolve saem no fim da saída.
 - `--previa mapa` traz a grade (coluna/linha, rect e id de cada lugar e clareira, áreas livres em azul); `--livres 5x4`
   lista rects livres com o `caminho` sugerido até a rua (sem navegador; `docs/contratos/cena-e-motor.md` §9).
+- `--js`/`js:` (e o `js()` do cenário) com código que devolve Promise: no jogo congelado, Promise que depende do relógio
+  (`Reino.Cena.sair()`, telas) só termina quando o relógio anda. Use `void <código>` e depois `esperar:<ms>`; sem o
+  `void`, a espera para em 15 s (`REINO_ESPERA_JS_MS`) com essa explicação.
 - Em script: `abrirCenario()` de `testes/cenario.js` (servidor e banco novos por cenário, save de `saves-compor.js`);
   não escreva outro ajudante de Playwright.
 

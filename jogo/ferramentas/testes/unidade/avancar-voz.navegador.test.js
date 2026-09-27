@@ -2,6 +2,7 @@
 // com o buffer do Resource Timing cheio, o pacote que chegava "sumia" e o avancar girava sem fim, abrindo um
 // MessageChannel por volta, até o Chromium passar de 10 GB. Agora a espera olha window.__scriptsProntos (navegador.js).
 process.env.REINO_ESPERA_VOZ_MS = '1500'; // teto curto aqui (antes de carregar referencias-pagina.js)
+process.env.REINO_ESPERA_JS_MS = '1500';  // idem para o js() do cenário
 const { test } = require('node:test');
 const assert = require('assert');
 const { abrirCenario } = require('../cenario');
@@ -44,5 +45,14 @@ test('pacote de voz que falha (404) não trava o avancar', async () => {
     await c.page.route('**/js/voz/nao-existe.js', (r) => r.fulfill({ status: 404, body: '' }));
     await c.js(PEDIR('nao-existe'));
     await c.avancar(500);
+  });
+});
+
+test('js() do cenário com Promise que só anda com o relógio congelado vira erro em segundos (antes travava)', async () => {
+  await comCenario(async (c) => {
+    const t0 = Date.now();
+    await assert.rejects(c.js('new Promise(function (r) { setTimeout(r, 1000); })'), /void <código>/);
+    assert.ok(Date.now() - t0 < 10000, `o erro levou ${Date.now() - t0} ms`);
+    assert.strictEqual(await c.js('void new Promise(function () {}); 7'), 7, 'com void segue normal');
   });
 });
