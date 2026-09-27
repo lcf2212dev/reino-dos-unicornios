@@ -18,4 +18,5 @@
 # 3274afc = ouvir antes de seguir: resumo da sala antes das questões, intro sem o botão do resumo, config.esperaFala
 # 727115a = jogadores com login, abertura animada e criar personagem: tela de personagem, botão Trocar jogador, campo perfil, falas no masculino
 # 8c6e239 = conta da Mariana no banco e tela Entrar no Reino: senhaMariana no config e botão Sair nos Ajustes
-8c6e239
+# 75f0be8 = joystick em pixel art: config.controles.pixel e pixelTablet no lugar de base/pino
+75f0be8
