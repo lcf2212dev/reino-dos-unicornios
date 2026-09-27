@@ -143,9 +143,15 @@ async function integrar(argv, op2 = {}) {
 
   const integ = estado.pasta;
   const parar = (res, passo) => {
+    passo.applyFalhou = !!res.applyFalhou;   // o --continuar deste passo tenta o apply de novo
     estado.pendente = true; salvar();
     log(`✘ conflito ao aplicar ${passo.entrada}` + (res.erro ? `:\n${res.erro}` : ''));
     res.conflitos.forEach((f) => log(`  - ${f}`));
+    if (res.applyFalhou) {
+      log(`⚠ o apply falhou inteiro: NADA das mudanças em arquivos rastreados de ${passo.entrada} entrou (só os arquivos novos foram copiados).`);
+      log(`  Traga-as para ${integ} (veja \`git -C ${passo.pasta} diff HEAD\`; ex.: restaure o arquivo que falta): o --continuar tenta o apply`);
+      log('  de novo e só segue quando elas estiverem lá. Se NÃO devem entrar, não siga: integre de novo (outro --nome) sem esta frente ou com ela ajustada.');
+    }
     log(`Resolva em ${integ} (conflito na lista de skills do CLAUDE.md = junte as duas listas), \`git add\` os arquivos e rode:`);
     log(`  node jogo/ferramentas/fluxo/integrar.js --continuar --nome ${nome}`);
     return fim(2);
@@ -155,7 +161,7 @@ async function integrar(argv, op2 = {}) {
   if (estado.pendente) {
     if (!op.continuar) throw new Error(`a integração "${nome}" parou num conflito: resolva e use --continuar`);
     const passo = estado.passos[estado.feito];
-    const res = G.continuar(integ, log);
+    const res = passo.applyFalhou ? G.aplicarSolto(integ, passo.pasta, log) : G.continuar(integ, log);
     if (!res.ok) return parar(res, passo);
     if (passo.tipo === 'solto' && estado.commit) log(`  • commit ${G.commitFrente(integ, passo.assunto) || '(nada a commitar)'}: ${passo.assunto}`);
     estado.feito++; estado.pendente = false; salvar();
@@ -166,6 +172,12 @@ async function integrar(argv, op2 = {}) {
     const res = passo.tipo === 'commits' ? G.aplicarCommits(integ, passo.commits, log) : G.aplicarSolto(integ, passo.pasta, log);
     if (!res.ok) return parar(res, passo);
     if (passo.tipo === 'solto' && estado.commit) log(`  • commit ${G.commitFrente(integ, passo.assunto) || '(nada a commitar)'}: ${passo.assunto}`);
+  }
+
+  // o que a pessoa resolveu à mão (ex.: colisão diferente: o da árvore principal copiado + git add) vira commit;
+  // só em integração começada com --commit (sem ele, as mudanças soltas das frentes não viram um commit só)
+  if (op.continuar && estado.commit && G.mudancas(integ).length) {
+    log(`  • commit ${G.commitFrente(integ, `resolução da integração ${nome}`)}: resolução da integração ${nome}`);
   }
 
   /* ---------- d: index, falas, test, e2e ---------- */
@@ -255,7 +267,8 @@ async function integrar(argv, op2 = {}) {
   }
 
   if (!op.merge) {
-    log('', 'Próximos passos (cada flag só com autorização escrita do Leandro):');
+    log('');
+    log('Próximos passos (cada flag só com autorização escrita do Leandro):');
     if (!estado.commit && G.mudancas(integ).length) log(`  commit: refaça com --commit, ou faça os commits em ${integ}`);
     log(`  node jogo/ferramentas/fluxo/integrar.js --nome ${nome} [--trocar-base "<descrição>"] --merge [--push]`);
   }

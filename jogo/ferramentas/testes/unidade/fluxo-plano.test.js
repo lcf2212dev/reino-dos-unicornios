@@ -233,3 +233,16 @@ Textos:     [x] escreva você
   assert.ok(erros.length && erros.every((e) => /preencha/.test(e)), erros.join('\n'));
   assert.ok(erros.some((e) => /padaria-da-vila-lulu: preencha "predio"/.test(e)));
 });
+
+// auditoria de bugs: "depende" em texto fazia a conferir lançar (…filter is not a function) em vez de listar o erro
+test('plano conferir: "depende" em texto vira problema listado, não exceção', () => {
+  const plano = { nome: 'x', personagens: [], tarefas: [
+    { id: 'contrato', tipo: 'contrato', quem: 'orquestrador', worktree: 'x', arquivos: ['jogo/js/a.js'], depende: [] },
+    { id: 'mec', tipo: 'mecanica', quem: 'worker-low', worktree: 'mec', arquivos: ['jogo/js/b.js'], depende: 'contrato' },
+    { id: 'integracao', tipo: 'integracao', quem: 'orquestrador', worktree: 'x', depende: ['contrato', 'mec'] },
+    { id: 'entrega', tipo: 'entrega', quem: 'orquestrador', worktree: 'x', depende: ['integracao'] },
+  ] };
+  let erros;
+  assert.doesNotThrow(() => { erros = P.conferir(plano); });
+  assert.ok(erros.some((e) => /"depende" tem de ser uma lista/.test(e)), JSON.stringify(erros));
+});

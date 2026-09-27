@@ -107,23 +107,31 @@ function continuar(integ, log) {
   return conf.length ? { ok: false, conflitos: conf } : { ok: true };
 }
 
-// worktree sem commit: diff dela contra o próprio HEAD, aplicado com --3way, + cópia dos não rastreados
+// worktree sem commit: diff dela contra o próprio HEAD, aplicado com --3way, + cópia dos não rastreados (também
+// quando o apply falha: os arquivos novos não somem; `applyFalhou` avisa que as mudanças rastreadas não entraram)
 function aplicarSolto(integ, wt, log) {
   const diff = C.rodar('git', ['-C', wt, 'diff', '--binary', 'HEAD'], { binario: true });
   if (!diff.ok) throw new Error(`git diff em ${wt} falhou: ${diff.erro}`);
-  let conf = [];
+  let conf = []; let falhou = null;
   if (diff.saida.length) {
     const a = C.rodar('git', ['-C', integ, 'apply', '--3way', '--whitespace=nowarn'], { input: diff.saida });
     conf = conflitos(integ);
-    if (!a.ok && !conf.length) return { ok: false, conflitos: [], erro: String(a.erro).trim() };
-    if (conf.length && conf.every((f) => f === INDEX)) { refazerIndex(integ, log); conf = []; }
-    log(`  • apply --3way das mudanças soltas de ${wt}` + (conf.length ? ' (com conflito)' : ''));
+    if (!a.ok && !conf.length) {
+      // falhou inteiro, sem conflito marcado (ex.: arquivo apagado por uma frente anterior): nada entrou, a não
+      // ser que as mudanças já estejam na integração (postas à mão antes do --continuar)
+      if (C.rodar('git', ['-C', integ, 'apply', '--reverse', '--check'], { input: diff.saida }).ok) log(`  • as mudanças soltas de ${wt} já estão na integração`);
+      else falhou = String(a.erro).trim();
+    } else {
+      if (conf.length && conf.every((f) => f === INDEX)) { refazerIndex(integ, log); conf = []; }
+      log(`  • apply --3way das mudanças soltas de ${wt}` + (conf.length ? ' (com conflito)' : ''));
+    }
   }
   const novos = C.naoRastreados(wt);
   const c = C.copiarArquivos(wt, integ, novos);
   if (c.copiados.length) C.git(integ, 'add', '--', ...c.copiados);
   if (novos.length) log(`  • ${c.copiados.length} arquivo(s) novo(s) copiado(s)` + (c.iguais.length ? `, ${c.iguais.length} já iguais` : ''));
   const diferentes = c.diferentes.map((f) => `${f} (novo na frente e diferente do que já está na integração)`);
+  if (falhou) return { ok: false, conflitos: diferentes, erro: falhou, applyFalhou: true };
   return conf.length || diferentes.length ? { ok: false, conflitos: conf.concat(diferentes) } : { ok: true };
 }
 
