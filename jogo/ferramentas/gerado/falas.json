@@ -30329,13 +30329,13 @@
    "fala": "Oi!"
   },
   {
-   "chave": "b0d64798r",
+   "chave": "cd99ca14u",
    "voz": "npc-lua-lumi",
-   "texto": "Eu sou a Lumi.",
+   "texto": "Eu me chamo Lumi.",
    "pacotes": [
     "interior-observatorio"
    ],
-   "fala": "Eu sou a Lumi."
+   "fala": "Eu me chamo Lumi."
   },
   {
    "chave": "afada574y",
@@ -30410,13 +30410,13 @@
    "fala": "Eu sou o Pipo."
   },
   {
-   "chave": "5adb58b112",
+   "chave": "d97d693116",
    "voz": "npc-lua-pipo",
-   "texto": "Eu adoro esconde-esconde!",
+   "texto": "Eu adoro brincar de esconder!",
    "pacotes": [
     "interior-observatorio"
    ],
-   "fala": "Eu adoro esconde-esconde!"
+   "fala": "Eu adoro brincar de esconder!"
   },
   {
    "chave": "6473d7a4z",
