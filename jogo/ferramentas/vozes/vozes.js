@@ -36,13 +36,17 @@ function rodar(titulo, cmd, args) {
 const existe = (cmd) => spawnSync('sh', ['-c', 'command -v "$0"', cmd]).status === 0;
 
 // mesma regra do gerar-vozes.py (arquivo()): o áudio de uma fala é <voz>/<sha1(voz|velocidade|tom|fala[|efeito])[:16]>.mp3
+// Pendente: sem esse mp3 no cache OU sem ele na chave da fala no vozes-indice.json (o empacotar acha o áudio pelo
+// índice, e só o gerar-vozes.py o reescreve; ex.: texto que voltou ao de antes, dois textos que viram a mesma fala)
 function pendentes() {
   const { vozes, falas } = JSON.parse(fs.readFileSync(path.join(GERADO, 'falas.json'), 'utf8'));
+  const arqIndice = path.join(GERADO, 'vozes-indice.json');
+  const indice = fs.existsSync(arqIndice) ? JSON.parse(fs.readFileSync(arqIndice, 'utf8')) : {};
   return falas.filter((f) => {
     const v = vozes[f.voz];
     const partes = [v.voz, v.velocidade, v.tom, f.fala].concat(v.efeito ? [v.efeito] : []);
     const h = crypto.createHash('sha1').update(partes.join('|'), 'utf8').digest('hex').slice(0, 16);
-    return !fs.existsSync(path.join(GERADO, 'vozes-cache', f.voz, h + '.mp3'));
+    return !fs.existsSync(path.join(GERADO, 'vozes-cache', f.voz, h + '.mp3')) || indice[f.chave] !== `${f.voz}/${h}.mp3`;
   });
 }
 
@@ -77,7 +81,7 @@ function principal() {
 
   if (!tem('--sem-gravar')) {
     const novas = pendentes();
-    console.log(`\n▶ 2. gravar: ${novas.length} fala(s) sem áudio no cache`);
+    console.log(`\n▶ 2. gravar: ${novas.length} fala(s) sem áudio no cache ou fora do vozes-indice.json`);
     if (novas.length) {
       novas.slice(0, 20).forEach((f) => console.log(`    ${f.voz}: ${f.fala}`));
       if (novas.length > 20) console.log(`    … e mais ${novas.length - 20}`);

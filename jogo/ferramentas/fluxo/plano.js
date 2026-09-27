@@ -116,6 +116,8 @@ function conferir(plano) {
     }
     donos.push({ t: t.id, a });
   }
+  // "depende" fora de lista: o grafo não dá para percorrer; os erros de forma saem primeiro
+  if (plano.tarefas.some((t) => !Array.isArray(t.depende || []))) return erros;
   // §6.2: dependências existem e não fecham ciclo
   for (const t of plano.tarefas) for (const d of t.depende || []) {
     if (d === t.id) erros.push(`tarefa ${t.id} depende dela mesma`);
