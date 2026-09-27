@@ -295,7 +295,7 @@
       var profB = fundura(r.x, ry), profM = fundura(J.x, J.y);
       var puloB = pulo * (1 - profB) + alto;
       var imgB = sujo ? sujar(bebe.canvas) : bebe.canvas;
-      marcarSilhueta(menina.canvas, J.x, J.y + 1, olhar.espelhar, profM, CORTE.mariana);
+      marcarSilhueta(menina.canvas, J.x, J.y + 1 - alto, olhar.espelhar, profM, CORTE.mariana);
       itens = [
         { y: ry - 1, desenhar: function () {
           sombra(p, r.x, ry, 7 * SOMBRA[olharB.vista] * encolhe, 1 - profB);
