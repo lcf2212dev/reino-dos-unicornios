@@ -63,7 +63,7 @@ async function subir(op) {
   } else {
     proc = spawn(process.execPath, ['-r', VIGIA, servidorJs], { env, stdio: ['ignore', 'pipe', 'pipe', 'ipc'] });
   }
-  await new Promise((resolver, falhar) => {
+  const subiu = new Promise((resolver, falhar) => {
     let saida = '';
     const tempo = setTimeout(() => falhar(new Error('servidor de teste não subiu: ' + saida)), 10000);
     const ler = (b) => { saida += b; if (/na porta/.test(saida)) { clearTimeout(tempo); resolver(); } };
@@ -72,6 +72,13 @@ async function subir(op) {
     const olhar = setInterval(() => { try { ler(fs.readFileSync(log, 'utf8').slice(saida.length)); } catch (e) { /* ainda sem log */ } if (/na porta/.test(saida)) clearInterval(olhar); }, 100);
     proc.once('exit', () => clearInterval(olhar));
   });
+  // não subiu a tempo (ou caiu): o processo não pode ficar para trás (com --fundo, o grupo inteiro; órfão para sempre)
+  try { await subiu; } catch (e) {
+    // só com o filho ainda vivo: o PID de um filho já recolhido pode ser de outro processo (ou grupo)
+    const vivo = proc.exitCode === null && proc.signalCode === null;
+    if (vivo) try { if (op.fundo) process.kill(-proc.pid, 'SIGKILL'); else proc.kill('SIGKILL'); } catch (e2) { /* já saiu */ }
+    throw e;
+  }
   proc.removeAllListeners('exit');
   if (op.fundo) proc.unref();
   return {

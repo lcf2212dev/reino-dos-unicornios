@@ -22,7 +22,7 @@
 //   … --trocar-base <hash> "<descrição>"   só troca a base (trocar-base.js: commit ancestral de HEAD, comentários
 //                            intactos, "# <curto> = <descrição>" acima do hash, grava atômico, mostra o diff; sem commit)
 //   … --podar                só poda e sai: e2e-* com mais de 1 h e ref-<base>/…-h<hash> de harness que não é o
-//                            atual nem o da main (h83b7a60d); lista antes o que apaga e quanto libera
+//                            atual nem o da main (calculado na hora: git show main); lista antes o que apaga e quanto libera
 // Disco: abaixo de 1,5 GB livres o e2e nem começa (diz o que podar). A pasta é /tmp/reino-testes ou a de
 // REINO_TESTES (só dentro de /tmp ou /dev/shm; ver guardas.js), ex.: REINO_TESTES=/dev/shm/reino-testes.
 // Como funciona (tudo na pasta de testes; com diferença, a captura do atual fica para inspecionar):
@@ -35,7 +35,6 @@
 if (require.main === module) require('../ajuda').ajuda(__filename);
 const fs = require('fs');
 const path = require('path');
-const crypto = require('crypto');
 const { execFileSync, spawnSync } = require('child_process');
 const { PASTA_TESTES, conferirPastaTmp } = require('./guardas');
 const { capturar, PARALELO_PADRAO } = require('./referencias');
@@ -46,7 +45,6 @@ const REPO = path.resolve(__dirname, '..', '..', '..');
 const ARQ_BASE = path.join(__dirname, 'base-referencia.txt');
 // o que o harness usa do jogo: o resto (ferramentas, vozes-cache) fica de fora da cópia
 const PARTES_JOGO = ['jogo/index.html', 'jogo/css', 'jogo/js', 'jogo/servidor'];
-const ARQS_HARNESS = ['referencias.js', 'referencias-pagina.js', 'referencias-cenas.js', 'referencias-dados.js', 'saves.js', 'navegador.js'];
 
 const git = (...a) => execFileSync('git', ['-C', REPO, ...a], { encoding: 'utf8' }).trim();
 
@@ -74,11 +72,8 @@ function extrairBase(base) {
   return path.join(destino, 'jogo');
 }
 
-function hashHarness() {
-  const h = crypto.createHash('sha256');
-  ARQS_HARNESS.forEach((f) => h.update(f + '\0' + fs.readFileSync(path.join(__dirname, f))));
-  return h.digest('hex').slice(0, 8);
-}
+// mesma conta do harnessMain() da poda (e2e-disco.js), sobre os arquivos desta worktree
+const hashHarness = () => disco.hashHarness((f) => fs.readFileSync(path.join(__dirname, f)));
 
 // 2. referências da base (cache por partes, tamanhos e versão do harness)
 function pastaRefBase(base, op) {
@@ -158,6 +153,10 @@ if (require.main === module) {
     valores: ['--base', '--raiz', '--tamanhos', '--cenas', '--paralelo'], duplas: ['--trocar-base'],
     booleanas: ['--so-dados', '--desempenho', '--manter', '--podar', '--sem-esperar'] });
   const arg = (n) => { const i = process.argv.indexOf(n); return i > 0 ? process.argv[i + 1] : undefined; };
+  // tamanho com erro de digitação também para: antes virava a janela padrão (1280×720) e o e2e dizia OK
+  const { TAMANHOS } = require('./navegador');
+  const tamanhoRuim = (arg('--tamanhos') || '').split(',').filter(Boolean).find((t) => !Object.prototype.hasOwnProperty.call(TAMANHOS, t));
+  if (tamanhoRuim) { console.error(`✘ tamanho desconhecido: ${tamanhoRuim} (${Object.keys(TAMANHOS).join(', ')})`); process.exit(2); }
   const soDados = process.argv.includes('--so-dados'), cenas = arg('--cenas');
   if (soDados && cenas) { console.error('✘ --cenas é só para imagens; --so-dados não tem imagens'); process.exit(2); }
   const so = soDados ? 'dados,vozes' : cenas ? 'imagens' : 'dados,imagens,vozes';

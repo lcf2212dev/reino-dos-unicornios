@@ -1,6 +1,6 @@
 // Uma trava por worktree para os testes de navegador: dois `npm test`/`npm run e2e` na mesma worktree ao
 // mesmo tempo disputam portas, Chromium e /tmp e ficam presos. Arquivo em /tmp/reino-testes/travas/<sha1 da raiz>.json
-// com { pid, nome, desde }. Trava de PID morto é assumida. Solta sozinha no `exit`.
+// com { pid, nome, desde }. Trava de PID morto é assumida (por um só). Solta sozinha no `exit`.
 // Filhos de quem tem a trava (REINO_TRAVA_DONA no ambiente) passam direto (ex.: testar-tudo → e2e --so-dados).
 // Em código: await require('./trava').pegar('npm test', { esperarMs: 600000 });  (--sem-esperar: esperarMs 0)
 const fs = require('fs');
@@ -28,20 +28,59 @@ function ler(arq) {
   try { return JSON.parse(fs.readFileSync(arq, 'utf8')); } catch (e) { return null; }
 }
 
-// tenta criar o arquivo (wx: atômico); trava de dono morto ou ilegível é trocada
+// a trava nasce completa: os dados vão num temporário e o link para o nome é atômico (EEXIST se já existe), então
+// ninguém vê a trava vazia. Arquivo vazio/ilegível recente (outra versão criando) é ocupado, nunca morto.
+// Trava de dono morto ou parado: só quem cria o `.assumindo` (o mesmo link atômico) troca, e com ele na mão confere
+// de novo que o arquivo ainda é o do dono morto (mesmo inode). Dois assumindo juntos davam dois donos (auditoria).
+const RECENTE_MS = 2000, ASSUMINDO_MS = 10000;
+function criar(de, para) {
+  try { fs.linkSync(de, para); return true; } catch (e) { if (e.code !== 'EEXIST') throw e; return false; }
+}
+function recente(arq, ms) {
+  try { return Date.now() - fs.statSync(arq).mtimeMs < ms; } catch (e) { return false; }
+}
+// o que impede de assumir a trava (dono vivo com batida, ou trava sendo criada); null = morta ou parada
+function impede(arq, dono) {
+  if (!dono) return recente(arq, RECENTE_MS) ? { pid: '?', nome: 'trava sendo criada', desde: '?' } : null;
+  return vivo(dono.pid) && !parado(arq) ? dono : null;
+}
 function tentar(arq, nome) {
-  const dados = JSON.stringify({ pid: process.pid, nome, desde: new Date().toISOString() });
-  try { fs.writeFileSync(arq, dados, { flag: 'wx' }); return null; } catch (e) { if (e.code !== 'EEXIST') throw e; }
+  const tmp = arq + '.' + process.pid;
+  fs.writeFileSync(tmp, JSON.stringify({ pid: process.pid, nome, desde: new Date().toISOString() }));
+  try { return tentarCom(arq, tmp); } finally { try { fs.unlinkSync(tmp); } catch (e) { /* já saiu */ } }
+}
+function tentarCom(arq, tmp) {
+  if (criar(tmp, arq)) return null;
   const dono = ler(arq);
   if (dono && dono.pid === process.pid) return null;
-  if (dono && vivo(dono.pid) && !parado(arq)) return dono;
-  if (dono && vivo(dono.pid)) console.log(`⚠ a trava de "${dono.nome}" (PID ${dono.pid}) está sem batida há mais de ${SEM_BATIDA_MS / 60000} min: assumo`);
-  // morto ou parado: assume (renomeia por cima; se outro assumiu junto, confere quem ficou)
-  const tmp = arq + '.' + process.pid;
-  fs.writeFileSync(tmp, dados);
-  fs.renameSync(tmp, arq);
-  const agora = ler(arq);
-  return agora && agora.pid === process.pid ? null : agora;
+  if (impede(arq, dono)) return impede(arq, dono);
+  const assumindo = arq + '.assumindo';
+  if (!criar(tmp, assumindo)) {
+    const outro = ler(assumindo);
+    if (outro && vivo(outro.pid) && recente(assumindo, ASSUMINDO_MS)) return Object.assign({}, outro, { nome: `${outro.nome} (assumindo a trava)` });
+    // quem assumia morreu no meio: libera para a próxima volta
+    if (!recente(assumindo, RECENTE_MS)) try { fs.unlinkSync(assumindo); } catch (e) { /* já saiu */ }
+    return { pid: outro ? outro.pid : '?', nome: 'trava sendo assumida', desde: '?' };
+  }
+  try {
+    let ino = null;
+    try { ino = fs.statSync(arq).ino; } catch (e) { /* o dono soltou: só criar */ }
+    const agora = ler(arq);
+    if (ino !== null && agora && agora.pid === process.pid) return null;
+    if (ino !== null && impede(arq, agora)) return impede(arq, agora);
+    if (agora && vivo(agora.pid)) console.log(`⚠ a trava de "${agora.nome}" (PID ${agora.pid}) está sem batida há mais de ${SEM_BATIDA_MS / 60000} min: assumo`);
+    const fora = arq + '.morto.' + process.pid;
+    if (ino !== null) {
+      try { fs.renameSync(arq, fora); } catch (e) { if (e.code !== 'ENOENT') throw e; }
+      // tirou do caminho a trava de outro (criada depois da conferência): devolve e não assume
+      if (fs.existsSync(fora) && fs.statSync(fora).ino !== ino) { criar(fora, arq); fs.unlinkSync(fora); return ler(arq) || { pid: '?', nome: 'outro processo', desde: '?' }; }
+      try { fs.unlinkSync(fora); } catch (e) { /* não havia */ }
+    }
+    return criar(tmp, arq) ? null : (ler(arq) || { pid: '?', nome: 'outro processo', desde: '?' });
+  } finally {
+    const d = ler(assumindo);
+    if (d && d.pid === process.pid) try { fs.unlinkSync(assumindo); } catch (e) { /* já saiu */ }
+  }
 }
 
 async function pegar(nome, op = {}) {
