@@ -73,7 +73,7 @@
     c.appendChild(el('p.pais-nota', nuvem === 'local'
       ? '💾 O progresso está salvo neste aparelho.'
       : '☁️ O progresso está sincronizado entre os aparelhos pelo claude.ai.'));
-    c.appendChild(el('p.pais-nota', 'A medalha de ouro da escola (R$' + Reino.config.medalhaEscolaValor + ') é combinada fora do jogo. O jogo só lembra a Mariana de fazer a prova com calma.'));
+    c.appendChild(el('p.pais-nota', 'A medalha de ouro da escola (R$' + Reino.config.medalhaEscolaValor + ') é combinada fora do jogo. O jogo só lembra ' + Reino.Genero.nome() + ' de fazer a prova com calma.'));
     var ciclo = el('button.btn-grande.btn-secundario', { type: 'button' }, '🔄 Começar novo ciclo de provas');
     ciclo.addEventListener('click', function () {
       UI.confirmar('Zerar salas, treinos, dinheiro e pagamentos para um novo ciclo de provas? Os unicórnios, as estrelas e os enfeites continuam.', 'Sim, zerar', 'Cancelar').then(function (sim) {
@@ -84,7 +84,7 @@
     apagar.addEventListener('click', function () {
       UI.confirmar('Apagar TODO o progresso, inclusive unicórnios e estrelas? Isso não dá para desfazer.', 'Apagar tudo', 'Cancelar').then(function (sim) {
         if (!sim) return;
-        UI.confirmar('Tem certeza mesmo? A Mariana vai começar do zero.', 'Sim, apagar', 'Não').then(function (sim2) {
+        UI.confirmar('Tem certeza mesmo? ' + Reino.Genero.nome() + ' vai começar do zero.', 'Sim, apagar', 'Não').then(function (sim2) {
           if (!sim2) return; P.apagarTudo(); location.reload();
         });
       });

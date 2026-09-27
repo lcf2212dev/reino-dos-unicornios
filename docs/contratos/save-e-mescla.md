@@ -116,6 +116,9 @@ Para cada comida, `compradas` = maior e `usadas` = maior (contador estragado con
    do lado mais recente). Enquanto uma antiga estiver aberta, a escolha feita na versão nova pode perder para o
    estado dela (a regra de antes, pelo `atualizado`): a nova insiste uma vez por troca e depois cede (§4.8).
    Fechada a antiga, a próxima troca feita num aparelho novo volta à regra dos carimbos (§4.8.6).
+7. `aparencia` ganha só ids novos de `corte`/`modelo` (cortes e roupas de menino) e a chave opcional `semLaco`; o sexo
+   mora em `perfil` (§12). Sem corte/modelo salvo vale o padrão do sexo (`PA.VISUAL_SEXO`). A Mariana sem `perfil.sexo`
+   é menina: o sprite dela não muda.
 ### 4.7 `pago` (carimbos em `pagoEm`)
 1. `P.registrarPagamento` carimba a matéria (`max(Date.now(), carimbo + 1)`), também para menos (40 → 4).
 2. Mesmo ciclo: vale o valor do lado com o carimbo maior; sem carimbo nos dois ou empate = o maior (a regra de antes).

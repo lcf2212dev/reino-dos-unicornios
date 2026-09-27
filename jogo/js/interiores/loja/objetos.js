@@ -109,7 +109,7 @@
       var m = espelhoInfo(P);
       var ap = (m && m.aparencia) || {};
       return m ? 'esp:' + m.id + ':' + m.estagio + ':' + m.enfeites.join(',') + ':' + (m.capa ? 1 : 0) + (m.asasFada ? 1 : 0) +
-        ':' + [ap.pele, ap.cabelo, ap.roupa, ap.laco, ap.corte, ap.modelo].join(',') : 'esp:-';
+        ':' + [ap.pele, ap.cabelo, ap.roupa, ap.laco, ap.corte, ap.modelo, ap.semLaco ? 1 : 0, PA.sexoJogador()].join(',') : 'esp:-';
     },
     desenhar: function (ctx, px, py, o, P) {
       var cx = px + 32, top = py - 30;
