@@ -53,6 +53,7 @@ button { font: inherit; color: inherit; cursor: pointer; touch-action: manipulat
 button:disabled { cursor: default; }
 /* ouvir antes de seguir (UI.esperarFala): o botão espera a fala acabar, apagado e com uma bolinha pulsando */
 button.esperando-fala { opacity: 0.45; position: relative; }
+canvas.esperando-fala { pointer-events: none; opacity: 0.6; }
 button.esperando-fala::after {
   content: ''; position: absolute; top: -5px; right: -5px; width: 10px; height: 10px; border-radius: 50%;
   background: var(--borda); animation: esperando-fala 0.8s ease-in-out infinite alternate;

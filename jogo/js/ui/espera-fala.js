@@ -1,8 +1,8 @@
 /* Ouvir antes de seguir (Reino.UI.esperarFala, UI.ouvirDeNovo, UI.esperandoFala).
    Contrato: docs/contratos/som-musica-e-voz.md §4 item 11. Carrega logo depois de ui/base.js.
    UI.esperarFala(alvos, segmentos, opcoes) fala (Som.falarEsperando) e, se vale esperar, desabilita os
-   botões e campos de `alvos` (elemento, seletor ou lista; num contêiner, os de dentro) até a fala acabar
-   ou o teto de tempo. O que tem a classe `livre-na-fala` (o 🔊 Ouvir) fica livre. Enquanto espera,
+   botões, campos e canvas (desenho) de `alvos` (elemento, seletor ou lista; num contêiner, os de dentro)
+   até a fala acabar ou o teto de tempo. O que tem a classe `livre-na-fala` (o 🔊 Ouvir) fica livre. Enquanto espera,
    UI.esperandoFala() é true e o Esc não fecha nada (ui/base.js). O 🔊 usa UI.ouvirDeNovo (repete sem soltar
    a espera). Nada muda no DOM quando não há espera (voz desligada, sem gravação, áudio bloqueado).
    Devolve a Promise do fim (já resolvida sem espera). */
@@ -27,8 +27,8 @@
       if (!a) return;
       (a.length !== undefined ? Array.prototype.slice.call(a) : [a]).forEach(function (x) {
         if (!x || !x.matches) return;
-        if (x.matches('button, input, select, textarea')) lista.push(x);
-        else Array.prototype.push.apply(lista, x.querySelectorAll('button, input, select, textarea'));
+        if (x.matches('button, input, select, textarea, canvas')) lista.push(x);
+        else Array.prototype.push.apply(lista, x.querySelectorAll('button, input, select, textarea, canvas'));
       });
     });
     var travados = lista.filter(function (b) { return !b.disabled && !b.classList.contains('livre-na-fala'); });
