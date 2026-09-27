@@ -13,7 +13,14 @@
   /* ================= estado das experiências (só na memória da sessão) ================= */
   var DURACAO = { foguete: 6000, pena: 2600, fases: 8000, horta: 5000 };
   var ativas = {};   // exp → { inicio } (o início é o t do primeiro quadro depois do toque)
-  function ativar(exp) { ativas[exp] = { inicio: null }; }
+  // o mesmo critério do motor para passar t (motor/laco.js): sem Animações o toque não fica guardado para depois
+  function animacoesLigadas() {
+    try {
+      var e = R.Progresso && R.Progresso.estado && R.Progresso.estado();
+      return !!(e && e.ajustes && e.ajustes.animacoes) && !(R.util && R.util.reduzMovimentoSistema);
+    } catch (err) { return false; }
+  }
+  function ativar(exp) { if (animacoesLigadas()) ativas[exp] = { inicio: null }; }
   // progresso de 0 a 1 enquanto roda; null parada (ou sem animação)
   function progresso(exp, t) {
     var e = ativas[exp];

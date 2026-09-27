@@ -12,7 +12,7 @@
       v = S.v, brilho = S.brilho, comprados = S.comprados, premios = S.premios, estadoPremio = S.estadoPremio,
       icone = S.icone, caber = S.caber, estrelinha = S.estrelinha, etiquetaPreco = S.etiquetaPreco,
       cadeado = S.cadeado, medalha = S.medalha, lacinho = S.lacinho, espelhoInfo = S.espelhoInfo,
-      cenaEspelho = S.cenaEspelho;
+      cenaEspelho = S.cenaEspelho, larguraEtiqueta = S.larguraEtiqueta, moedinha = S.moedinha;
 
   /* ================= OBJETOS DA LOJA ================= */
   // vitrine dos enfeites: três prateleiras de 6 ícones; os comprados ganham fundo rosa e selo ✓. A lista tem
@@ -90,7 +90,9 @@
           cadeado(ctx, cx - 2, base + 1);
         } else {
           caber(ctx, img, cx, base, mw, 12);
-          if (st === 'aVenda') etiquetaPreco(ctx, cx - 5, base, a.preco);
+          // à venda: a etiqueta com o preço; com muitas colunas ela passaria da vizinha, e vai a moedinha
+          if (st === 'aVenda' && larguraEtiqueta(a.preco) <= esp) etiquetaPreco(ctx, cx - 5, base, a.preco);
+          else if (st === 'aVenda') moedinha(ctx, cx, base + 2);
           else {
             brilho(ctx, cx + 6, y0 + 1, C.branco);
             if (st === 'ganho') medalha(ctx, cx - 3, base);
