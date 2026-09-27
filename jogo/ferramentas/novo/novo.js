@@ -245,9 +245,11 @@ function areaDaMateria(raiz, ex) {
   const txt = (c) => `${c.x},${c.y},${c.w},${c.h}`;
   const cl = ex.clareiras.find((c) => !ocupados.some((o) => cruza(o, c)));
   if (cl) return { rect: txt(cl), de: `a clareira livre ${txt(cl)}` };
-  const l = L.livres(ctx, 5, 5)[0];
-  if (!l) throw new Error('materia: nenhuma clareira nem área 5×5 livre no mapa; passe --rect x,y,w,h');
-  return { rect: txt(l.rect), de: `a área livre ${txt(l.rect)} (npm run ver -- --livres 5x5)` };
+  // o mapa encheu (Matemática já mora num 4×5): 5×5, senão 5×4, 4×5 ou 4×4
+  const tam = [[5, 5], [5, 4], [4, 5], [4, 4]].find(([w, h]) => L.livres(ctx, w, h).length);
+  if (!tam) throw new Error('materia: nenhuma clareira nem área 4×4 livre no mapa; passe --rect x,y,w,h ou --dentro');
+  const l = L.livres(ctx, tam[0], tam[1])[0];
+  return { rect: txt(l.rect), de: `a área livre ${txt(l.rect)} (npm run ver -- --livres ${tam[0]}x${tam[1]})` };
 }
 // põe `bloco` na linha antes do último "]);" do arquivo (o fim da lista de Reino.registrarLivro)
 function inserirNoFim(txt, bloco, rel) {
