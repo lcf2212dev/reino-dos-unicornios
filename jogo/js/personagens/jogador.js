@@ -57,7 +57,7 @@
     J.molhado = { ela: null, bebe: null };
     J.gotasAte = { ela: 0, bebe: 0 };
     J.respingos = [];
-    J.vel = null;
+    J.vel = null; J.salto = null;
     J.caminho = []; J.aoChegar = null; J.marcador = null; J.olharBebe = null;
     J.virar(0, 1);   // chega olhando para quem está jogando
     // o bebê começa um pouquinho à esquerda, olhando para ela
@@ -145,6 +145,26 @@
     return true;
   };
   J.parar = function () { J.caminho = []; J.aoChegar = null; J.marcador = null; };
+
+  // pulo alto (gravidade baixa da Lua): sobe e desce devagar em ms; o relógio é J.t (o do quadro).
+  // Sem Animações ou com movimento reduzido não pula; pular no meio do pulo não reinicia.
+  J.pular = function (op) {
+    op = op || {};
+    var est = Reino.Progresso && Reino.Progresso.estado();
+    if (!est || !est.ajustes.animacoes || Reino.util.reduzMovimentoSistema || J.pulando()) return false;
+    J.salto = { t0: J.t, altura: op.altura || 28, ms: op.ms || 900 };
+    return true;
+  };
+  J.pulando = function () {
+    if (J.salto && (J.t - J.salto.t0) * 1000 >= J.salto.ms) J.salto = null;
+    return !!J.salto;
+  };
+  // quantos px ela está acima do chão agora (0 fora do pulo); curva (1 - cos)/2: devagar nas pontas
+  J.alturaPulo = function () {
+    if (!J.pulando()) return 0;
+    var k = (J.t - J.salto.t0) * 1000 / J.salto.ms;
+    return J.salto.altura * (1 - Math.cos(2 * Math.PI * k)) / 2;
+  };
 
   // teclas: {x: -1..1, y: -1..1, livre?} (livre: direção analógica do thumbstick/mouse, vira em 8 com folga)
   J.atualizar = function (dt, teclas, aoPisarPorta) {
