@@ -142,7 +142,9 @@
       { js: 'js/mundo/lago.js', grupo: 'mundo' },
       { js: 'js/mundo/cidade-desenho.js', grupo: 'mundo' },
       { js: 'js/mundo/contorno.js', grupo: 'mundo' },
+      { js: 'js/mundo/fachadas.js', grupo: 'mundo' },
       { js: 'js/mundo/predios.js', grupo: 'mundo' },
+      { js: 'js/mundo/predios-2.js', grupo: 'mundo' },
       { js: 'js/personagens/jogador.js', grupo: 'personagens' },
       { js: 'js/personagens/jogador-desenho.js', grupo: 'personagens' },
       // node: true: o validador e as falas usam os ganchos dos tipos (no carregamento, nada de document)

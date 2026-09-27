@@ -136,17 +136,22 @@
     circulo(ctx, cx - 2, by + 8, 2, '#ffe066'); ret(ctx, cx - 1, by + 6, 2, 3, '#2a2050'); ret(ctx, cx, by + 9, 1, 1, '#2a2050');
     brilho(ctx, cx + 3, by + 7, '#ffffff');
     var dx = cx - 6, dyy = by + 12, dw = 12, dh = bh - 12;
-    ret(ctx, dx - 1, dyy + 2, dw + 2, dh - 2, '#ffd34d');
-    elipse(ctx, dx + dw / 2 - 0.5, dyy + 3, dw / 2, 3, '#ffd34d');
-    ret(ctx, dx, dyy + 3, dw, dh - 3, '#7c5cff');
-    elipse(ctx, dx + dw / 2 - 0.5, dyy + 4, dw / 2 - 1, 3, '#7c5cff');
+    // arco em linhas inteiras (sem meio pixel): moldura dourada e a porta roxa
+    [[dx - 1, dw + 2, dyy, '#ffd34d'], [dx, dw, dyy + 1, '#7c5cff']].forEach(function (a) {
+      [3, 1, 1].forEach(function (ins, r) { ret(ctx, a[0] + ins, a[2] + r, a[1] - ins * 2, 1, a[3]); });
+      ret(ctx, a[0], a[2] + 3, a[1], dyy + dh - a[2] - 3, a[3]);
+    });
     ret(ctx, dx + dw / 2 - 1, dyy + 5, 1, dh - 5, esc('#7c5cff', 0.25));
-    ret(ctx, dx + dw - 4, dyy + dh / 2 + 2, 2, 2, '#ffd34d');
+    ret(ctx, dx + dw - 4, dyy + Math.floor(dh / 2) + 2, 2, 2, '#ffd34d');
     ret(ctx, dx + 2, dyy + 6, 1, 1, '#ffe066');
     [bx + 9, bx + bw - 9].forEach(function (jx) {
       circulo(ctx, jx, by + 13, 4, CONTORNO); circulo(ctx, jx, by + 13, 3, '#ffd34d'); circulo(ctx, jx, by + 13, 2, '#2a2050');
       ret(ctx, jx - 1, by + 12, 1, 1, '#ffffff'); ret(ctx, jx + 1, by + 14, 1, 1, '#ffe066');
     });
+
+    // ---- arbustos floridos dos dois lados do prédio (Mapa.fachada) ----
+    window.Mapa.fachada.vaso(ctx, bx - 5, by + bh + 1, '#ff8ac6');
+    window.Mapa.fachada.vaso(ctx, bx + bw + 4, by + bh + 1, '#ffe066');
 
     // ---- escada do morro, da porta até embaixo ----
     var sy = by + bh;

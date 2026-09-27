@@ -13,18 +13,15 @@
   /* ================= DE FORA: o prédio no mapa (80 × 64 px) ================= */
   function desenharFora(ctx, px, py, w, h) {
     var cx = px + 40;                      // meio do tile da porta (tile 4 de 2..6)
-    var parede = '#fff4e6', parede2 = '#f3dcc0', telhado = '#4fbfae', telhado2 = '#2f9e90';
+    var parede = '#fff4e6', telhado = '#4fbfae', telhado2 = '#2f9e90', Fa = window.Mapa.fachada;
     // corpo da loja com tábuas
     contornoRet(ctx, px + 4, py + 24, w - 8, h - 24, parede);
-    for (var j = py + 29; j < py + h - 2; j += 5) ret(ctx, px + 5, j, w - 10, 1, parede2);
-    ret(ctx, px + w - 12, py + 25, 7, h - 26, '#f6e6d0');
+    Fa.tabuas(ctx, px + 5, py + 25, w - 10, h - 26, parede, true);
+    ret(ctx, px + w - 12, py + 25, 7, h - 26, 'rgba(79,191,174,0.08)');
     // telhado de telhas menta com beiral
     triangulo(ctx, px, py + 4, w, 23, K);
     triangulo(ctx, px + 3, py + 7, w - 6, 19, telhado);
-    for (var tj = py + 13; tj < py + 25; tj += 4) {
-      var meia = Math.round((w - 6) / 2 * (tj - py - 7 + 1) / 19) - 3;
-      for (var tx = cx - meia + 2; tx < cx + meia - 2; tx += 6) ret(ctx, tx, tj, 3, 1, telhado2);
-    }
+    Fa.telhas(ctx, px + 3, py + 7, w - 6, 19, telhado, 4);
     ret(ctx, px + 1, py + 23, w - 2, 3, K); ret(ctx, px + 2, py + 24, w - 4, 1, telhado2);
     // placa da patinha no telhado: plaquinha redonda clarinha com uma patinha escura e bem marcada
     // (4 dedinhos separados + almofada), que se lê mesmo em 1× e não vira carinha de porquinho
@@ -78,5 +75,15 @@
     // brilhinhos
     [[6, 34], [74, 36]].forEach(function (b) { brilho(ctx, px + b[0], py + b[1], C.branco); });
   }
-  if (window.Mapa && Mapa.PREDIOS) Mapa.PREDIOS.petshop = desenharFora;
+  // o peixinho do aquário da vitrine nada de um lado para o outro (camada animada do mapa)
+  function animarFora(ctx, px, py, w, h, t) {
+    var vx = px + 8, vy = py + 39, f = Math.floor(t / 400) % 6, pos = f < 3 ? f : 6 - f;
+    ret(ctx, vx + 3, vy + 8, 7, 5, AGUA);
+    ret(ctx, vx + 4 + pos, vy + 9, 3, 2, LAR); ret(ctx, vx + 3 + pos, vy + 9, 1, 2, LAR);
+    ret(ctx, vx + 6 + pos, vy + 9, 1, 1, K);
+  }
+  if (window.Mapa && Mapa.PREDIOS) {
+    Mapa.PREDIOS.petshop = desenharFora;
+    if (Mapa.PREDIOS_ANIM) Mapa.PREDIOS_ANIM.petshop = animarFora;
+  }
 })();
