@@ -3,4 +3,4 @@
 # publicação, o endereço do artifact e a versão que o claude.ai mostrou. Só a skill publicar-artifact
 # troca esta linha, depois de publicar e conferir (npm run artifact -- --registrar <hash> --versao vN).
 # daa3e6e = main com controles, álbum e Ciências no Observatório (Version 22, publicada por delta).
-930299d https://claude.ai/artifact/CQUd5TWJQW3fWWw5Cvg77U v32
+186c189 https://claude.ai/artifact/CQUd5TWJQW3fWWw5Cvg77U v33
