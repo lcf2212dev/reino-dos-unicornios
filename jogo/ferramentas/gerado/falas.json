@@ -269,14 +269,44 @@
    "tom": "+6Hz"
   },
   "npc-prof-celia": {
-   "voz": "pt-BR-FranciscaNeural",
-   "velocidade": "+4%",
-   "tom": "-8Hz"
+   "voz": "pt-BR-ThalitaMultilingualNeural",
+   "velocidade": "-6%",
+   "tom": "+2Hz"
   },
   "npc-lab-cavaleira": {
    "voz": "en-US-EmmaMultilingualNeural",
    "velocidade": "+0%",
    "tom": "-8Hz"
+  },
+  "npc-geo-marco": {
+   "voz": "it-IT-GiuseppeMultilingualNeural",
+   "velocidade": "+0%",
+   "tom": "-2Hz"
+  },
+  "npc-geo-lais": {
+   "voz": "pt-BR-ThalitaMultilingualNeural",
+   "velocidade": "-4%",
+   "tom": "+6Hz"
+  },
+  "npc-geo-duda": {
+   "voz": "en-US-EmmaMultilingualNeural",
+   "velocidade": "+6%",
+   "tom": "+4Hz"
+  },
+  "npc-geo-teo": {
+   "voz": "en-US-BrianMultilingualNeural",
+   "velocidade": "+2%",
+   "tom": "+2Hz"
+  },
+  "npc-geo-beto": {
+   "voz": "fr-FR-RemyMultilingualNeural",
+   "velocidade": "-2%",
+   "tom": "-6Hz"
+  },
+  "npc-geo-cora": {
+   "voz": "de-DE-SeraphinaMultilingualNeural",
+   "velocidade": "+4%",
+   "tom": "+12Hz"
   },
   "npc-nasa-lia": {
    "voz": "en-US-EmmaMultilingualNeural",
@@ -761,7 +791,12 @@
     "matematica-m3",
     "matematica-m4",
     "matematica-m5",
-    "matematica-m6"
+    "matematica-m6",
+    "geografia-g1",
+    "geografia-g2",
+    "geografia-g3",
+    "geografia-g4",
+    "geografia-g5"
    ],
    "fala": "Verdadeiro ou falso?"
   },
@@ -1463,7 +1498,8 @@
    "voz": "narradora",
    "texto": "Carta",
    "pacotes": [
-    "prova-historia-3bim"
+    "prova-historia-3bim",
+    "geografia-g2"
    ],
    "fala": "Carta"
   },
@@ -1682,7 +1718,9 @@
    "pacotes": [
     "prova-historia-3bim",
     "ciencias-c1",
-    "matematica-m1"
+    "matematica-m1",
+    "geografia-g1",
+    "geografia-g2"
    ],
    "fala": "Complete as frases com as palavras do quadro."
   },
@@ -3753,7 +3791,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "3 × 2 = …"
+   "fala": "3 vezes 2 = …"
   },
   {
    "chave": "0d110012o",
@@ -3762,7 +3800,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "4 × 3 = …"
+   "fala": "4 vezes 3 = …"
   },
   {
    "chave": "6bafb944o",
@@ -3771,7 +3809,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "3 × 6 = …"
+   "fala": "3 vezes 6 = …"
   },
   {
    "chave": "565b8591o",
@@ -3780,7 +3818,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "2 × 2 = …"
+   "fala": "2 vezes 2 = …"
   },
   {
    "chave": "ff976d52o",
@@ -3789,7 +3827,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "3 × 4 = …"
+   "fala": "3 vezes 4 = …"
   },
   {
    "chave": "03fb30f2o",
@@ -3798,7 +3836,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "2 × 5 = …"
+   "fala": "2 vezes 5 = …"
   },
   {
    "chave": "d47a37a8o",
@@ -3807,7 +3845,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "4 × 5 = …"
+   "fala": "4 vezes 5 = …"
   },
   {
    "chave": "26ac3525o",
@@ -3816,7 +3854,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "5 × 9 = …"
+   "fala": "5 vezes 9 = …"
   },
   {
    "chave": "51daa4d31s",
@@ -3866,7 +3904,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "Morangos: 3 caixas com 5. 5 + 5 + 5 = 3 × 5 = …"
+   "fala": "Morangos: 3 caixas com 5. 5 + 5 + 5 = 3 vezes 5 = …"
   },
   {
    "chave": "5fb3f42f2a",
@@ -3875,7 +3913,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "Laranjas: 8 caixas com 3. 3 + 3 + 3 + 3 + 3 + 3 + 3 + 3 = 8 × 3 = …"
+   "fala": "Laranjas: 8 caixas com 3. 3 + 3 + 3 + 3 + 3 + 3 + 3 + 3 = 8 vezes 3 = …"
   },
   {
    "chave": "b1dfdc1f1o",
@@ -3884,7 +3922,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "Limões: 3 caixas com 6. 6 + 6 + 6 = 3 × 6 = …"
+   "fala": "Limões: 3 caixas com 6. 6 + 6 + 6 = 3 vezes 6 = …"
   },
   {
    "chave": "8d158d0d1u",
@@ -3893,7 +3931,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "Abacaxis: 4 caixas com 4. 4 + 4 + 4 + 4 = 4 × 4 = …"
+   "fala": "Abacaxis: 4 caixas com 4. 4 + 4 + 4 + 4 = 4 vezes 4 = …"
   },
   {
    "chave": "3aae44b4q",
@@ -3911,7 +3949,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "Maçãs: 3 caixas com 2. 2 + 2 + 2 = 6 e 3 × 2 = 6."
+   "fala": "Maçãs: 3 caixas com 2. 2 + 2 + 2 = 6 e 3 vezes 2 = 6."
   },
   {
    "chave": "cab91d2a29",
@@ -3949,7 +3987,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "O dobro de 4 é 4 × 2 = …"
+   "fala": "O dobro de 4 é 4 vezes 2 = …"
   },
   {
    "chave": "eff6ec6b14",
@@ -3958,7 +3996,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "O triplo de 2 é 2 × 3 = …"
+   "fala": "O triplo de 2 é 2 vezes 3 = …"
   },
   {
    "chave": "540627f213",
@@ -3967,7 +4005,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "O dobro de 6 é 6 × 2 = …"
+   "fala": "O dobro de 6 é 6 vezes 2 = …"
   },
   {
    "chave": "a0cdce3b14",
@@ -3976,7 +4014,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "O triplo de 5 é 5 × 3 = …"
+   "fala": "O triplo de 5 é 5 vezes 3 = …"
   },
   {
    "chave": "6436c11213",
@@ -3985,7 +4023,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "O dobro de 9 é 9 × 2 = …"
+   "fala": "O dobro de 9 é 9 vezes 2 = …"
   },
   {
    "chave": "0d7bf11b14",
@@ -3994,7 +4032,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "O triplo de 7 é 7 × 3 = …"
+   "fala": "O triplo de 7 é 7 vezes 3 = …"
   },
   {
    "chave": "82897c5e1k",
@@ -4031,7 +4069,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "2 × 1 = …"
+   "fala": "2 vezes 1 = …"
   },
   {
    "chave": "7c13a588o",
@@ -4040,7 +4078,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "2 × 3 = …"
+   "fala": "2 vezes 3 = …"
   },
   {
    "chave": "fc1a063bo",
@@ -4049,7 +4087,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "2 × 4 = …"
+   "fala": "2 vezes 4 = …"
   },
   {
    "chave": "0a41122do",
@@ -4058,7 +4096,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "2 × 6 = …"
+   "fala": "2 vezes 6 = …"
   },
   {
    "chave": "a2134c64o",
@@ -4067,7 +4105,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "2 × 7 = …"
+   "fala": "2 vezes 7 = …"
   },
   {
    "chave": "8254e7d7o",
@@ -4076,7 +4114,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "2 × 8 = …"
+   "fala": "2 vezes 8 = …"
   },
   {
    "chave": "57807e4eo",
@@ -4085,7 +4123,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "2 × 9 = …"
+   "fala": "2 vezes 9 = …"
   },
   {
    "chave": "3aba9928p",
@@ -4094,7 +4132,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "2 × 10 = …"
+   "fala": "2 vezes 10 = …"
   },
   {
    "chave": "a48bf07b1k",
@@ -4150,7 +4188,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "3 × 1 = …"
+   "fala": "3 vezes 1 = …"
   },
   {
    "chave": "747ba671o",
@@ -4159,7 +4197,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "3 × 3 = …"
+   "fala": "3 vezes 3 = …"
   },
   {
    "chave": "6a2ac09bo",
@@ -4169,7 +4207,7 @@
     "prova-matematica-3bim",
     "matematica-m6"
    ],
-   "fala": "3 × 5 = …"
+   "fala": "3 vezes 5 = …"
   },
   {
    "chave": "20a8560do",
@@ -4178,7 +4216,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "3 × 7 = …"
+   "fala": "3 vezes 7 = …"
   },
   {
    "chave": "d8e278aeo",
@@ -4187,7 +4225,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "3 × 8 = …"
+   "fala": "3 vezes 8 = …"
   },
   {
    "chave": "1cfdb737o",
@@ -4196,7 +4234,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "3 × 9 = …"
+   "fala": "3 vezes 9 = …"
   },
   {
    "chave": "a5c2038fp",
@@ -4205,7 +4243,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "3 × 10 = …"
+   "fala": "3 vezes 10 = …"
   },
   {
    "chave": "228468101k",
@@ -4262,7 +4300,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "4 × 1 = …"
+   "fala": "4 vezes 1 = …"
   },
   {
    "chave": "de996a5bo",
@@ -4272,7 +4310,7 @@
     "prova-matematica-3bim",
     "matematica-m5"
    ],
-   "fala": "4 × 2 = …"
+   "fala": "4 vezes 2 = …"
   },
   {
    "chave": "c15f2e31o",
@@ -4282,7 +4320,7 @@
     "prova-matematica-3bim",
     "matematica-m6"
    ],
-   "fala": "4 × 4 = …"
+   "fala": "4 vezes 4 = …"
   },
   {
    "chave": "0a0df5ffo",
@@ -4291,7 +4329,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "4 × 6 = …"
+   "fala": "4 vezes 6 = …"
   },
   {
    "chave": "cf747ef6o",
@@ -4300,7 +4338,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "4 × 7 = …"
+   "fala": "4 vezes 7 = …"
   },
   {
    "chave": "17a112c5o",
@@ -4309,7 +4347,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "4 × 8 = …"
+   "fala": "4 vezes 8 = …"
   },
   {
    "chave": "d57e867co",
@@ -4318,7 +4356,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "4 × 9 = …"
+   "fala": "4 vezes 9 = …"
   },
   {
    "chave": "d5df0fa2p",
@@ -4327,7 +4365,7 @@
    "pacotes": [
     "prova-matematica-3bim"
    ],
-   "fala": "4 × 10 = …"
+   "fala": "4 vezes 10 = …"
   },
   {
    "chave": "0a9940072j",
@@ -7235,7 +7273,8 @@
     "ingles-i5",
     "portugues-p1",
     "portugues-p2",
-    "portugues-p5"
+    "portugues-p5",
+    "geografia-g5"
    ],
    "fala": "Monte a frase tocando nos blocos na ordem certa:"
   },
@@ -15044,7 +15083,8 @@
    "texto": "Vire duas cartas e ache a figura com o nome.",
    "pacotes": [
     "ciencias-c1",
-    "ciencias-c3"
+    "ciencias-c3",
+    "geografia-g1"
    ],
    "fala": "Vire duas cartas e ache a figura com o nome."
   },
@@ -17038,7 +17078,7 @@
    "pacotes": [
     "matematica-livro"
    ],
-   "fala": "O sinal × se lê \"vezes\" e indica uma multiplicação. 3 grupos de 2 pompons: 3 × 2 = 6. Na adição 3 + 3 + 3 + 3 + 3 = 15, o 3 se repete 5 vezes: 5 × 3 = 15. Somar várias vezes o mesmo número é o mesmo que multiplicar."
+   "fala": "O sinal vezes se lê \"vezes\" e indica uma multiplicação. 3 grupos de 2 pompons: 3 vezes 2 = 6. Na adição 3 + 3 + 3 + 3 + 3 = 15, o 3 se repete 5 vezes: 5 vezes 3 = 15. Somar várias vezes o mesmo número é o mesmo que multiplicar."
   },
   {
    "chave": "395b2b812c",
@@ -17066,7 +17106,7 @@
    "pacotes": [
     "matematica-livro"
    ],
-   "fala": "O dobro de uma quantidade é essa quantidade 2 vezes. O dobro de 4 é 2 × 4 = 8. O dobro de 6 é 2 × 6 = 12. Para achar o dobro, é só somar o número com ele mesmo: 6 + 6 = 12."
+   "fala": "O dobro de uma quantidade é essa quantidade 2 vezes. O dobro de 4 é 2 vezes 4 = 8. O dobro de 6 é 2 vezes 6 = 12. Para achar o dobro, é só somar o número com ele mesmo: 6 + 6 = 12."
   },
   {
    "chave": "5dcb497b2d",
@@ -17094,7 +17134,7 @@
    "pacotes": [
     "matematica-livro"
    ],
-   "fala": "O triplo de uma quantidade é essa quantidade 3 vezes. O triplo de 2 é 3 × 2 = 6. O triplo de 6 é 3 × 6 = 18, porque 6 + 6 + 6 = 18. O triplo de 7 é 21."
+   "fala": "O triplo de uma quantidade é essa quantidade 3 vezes. O triplo de 2 é 3 vezes 2 = 6. O triplo de 6 é 3 vezes 6 = 18, porque 6 + 6 + 6 = 18. O triplo de 7 é 21."
   },
   {
    "chave": "06b9ccc12p",
@@ -17175,7 +17215,7 @@
    "pacotes": [
     "matematica-livro"
    ],
-   "fala": "Para resolver um problema, primeiro identificamos as informações que ele apresenta. Depois pensamos no que precisamos descobrir e qual operação usar. Felipe comprou 2 pacotes com 5 cartinhas: 2 × 5 = 10 cartinhas. Carina comprou o triplo: 10 × 3 = 30 cartinhas."
+   "fala": "Para resolver um problema, primeiro identificamos as informações que ele apresenta. Depois pensamos no que precisamos descobrir e qual operação usar. Felipe comprou 2 pacotes com 5 cartinhas: 2 vezes 5 = 10 cartinhas. Carina comprou o triplo: 10 vezes 3 = 30 cartinhas."
   },
   {
    "chave": "69e3715b1l",
@@ -18705,7 +18745,7 @@
    "pacotes": [
     "matematica-m4"
    ],
-   "fala": "Como lemos o sinal × da multiplicação?"
+   "fala": "Como lemos o sinal vezes da multiplicação?"
   },
   {
    "chave": "b167c547e",
@@ -18741,7 +18781,7 @@
    "pacotes": [
     "matematica-m4"
    ],
-   "fala": "5 × 3"
+   "fala": "5 vezes 3"
   },
   {
    "chave": "ec7e6af6f",
@@ -18750,7 +18790,7 @@
    "pacotes": [
     "matematica-m4"
    ],
-   "fala": "3 × 3"
+   "fala": "3 vezes 3"
   },
   {
    "chave": "ac426b16f",
@@ -18759,7 +18799,7 @@
    "pacotes": [
     "matematica-m4"
    ],
-   "fala": "5 × 5"
+   "fala": "5 vezes 5"
   },
   {
    "chave": "535c72232n",
@@ -18885,7 +18925,7 @@
    "pacotes": [
     "matematica-m4"
    ],
-   "fala": "A adição 5 + 5 = 10 pode ser representada pela multiplicação 2 × 5 = 10."
+   "fala": "A adição 5 + 5 = 10 pode ser representada pela multiplicação 2 vezes 5 = 10."
   },
   {
    "chave": "3871a7131d",
@@ -19002,7 +19042,7 @@
    "pacotes": [
     "matematica-m4"
    ],
-   "fala": "2 copos: 2 + 2 = 2 × 2 = … palitos"
+   "fala": "2 copos: 2 + 2 = 2 vezes 2 = … palitos"
   },
   {
    "chave": "877983081h",
@@ -19011,7 +19051,7 @@
    "pacotes": [
     "matematica-m4"
    ],
-   "fala": "3 copos: 2 + 2 + 2 = 3 × 2 = … palitos"
+   "fala": "3 copos: 2 + 2 + 2 = 3 vezes 2 = … palitos"
   },
   {
    "chave": "437cf3ef1l",
@@ -19020,7 +19060,7 @@
    "pacotes": [
     "matematica-m4"
    ],
-   "fala": "4 copos: 2 + 2 + 2 + 2 = 4 × 2 = … palitos"
+   "fala": "4 copos: 2 + 2 + 2 + 2 = 4 vezes 2 = … palitos"
   },
   {
    "chave": "06c956eb13",
@@ -19029,7 +19069,7 @@
    "pacotes": [
     "matematica-m4"
    ],
-   "fala": "Qual adição representa 4 × 5?"
+   "fala": "Qual adição representa 4 vezes 5?"
   },
   {
    "chave": "b29eef5df",
@@ -19281,7 +19321,7 @@
    "pacotes": [
     "matematica-m5"
    ],
-   "fala": "7 × 2 = …"
+   "fala": "7 vezes 2 = …"
   },
   {
    "chave": "bb6ba524o",
@@ -19290,7 +19330,7 @@
    "pacotes": [
     "matematica-m5"
    ],
-   "fala": "6 × 3 = …"
+   "fala": "6 vezes 3 = …"
   },
   {
    "chave": "a04605beo",
@@ -19299,7 +19339,7 @@
    "pacotes": [
     "matematica-m5"
    ],
-   "fala": "8 × 3 = …"
+   "fala": "8 vezes 3 = …"
   },
   {
    "chave": "13e64b0f34",
@@ -19524,7 +19564,7 @@
    "pacotes": [
     "matematica-m6"
    ],
-   "fala": "6 × 4 = …"
+   "fala": "6 vezes 4 = …"
   },
   {
    "chave": "b5498d36o",
@@ -19533,7 +19573,7 @@
    "pacotes": [
     "matematica-m6"
    ],
-   "fala": "7 × 4 = …"
+   "fala": "7 vezes 4 = …"
   },
   {
    "chave": "5d444bcco",
@@ -19542,7 +19582,7 @@
    "pacotes": [
     "matematica-m6"
    ],
-   "fala": "9 × 4 = …"
+   "fala": "9 vezes 4 = …"
   },
   {
    "chave": "8013c8ed1n",
@@ -19578,7 +19618,7 @@
    "pacotes": [
     "matematica-m6"
    ],
-   "fala": "5 × 5 = …"
+   "fala": "5 vezes 5 = …"
   },
   {
    "chave": "b7dfef3fo",
@@ -19587,7 +19627,7 @@
    "pacotes": [
     "matematica-m6"
    ],
-   "fala": "7 × 5 = …"
+   "fala": "7 vezes 5 = …"
   },
   {
    "chave": "c4563115o",
@@ -19596,7 +19636,7 @@
    "pacotes": [
     "matematica-m6"
    ],
-   "fala": "9 × 5 = …"
+   "fala": "9 vezes 5 = …"
   },
   {
    "chave": "d912b3732w",
@@ -19623,7 +19663,7 @@
    "pacotes": [
     "matematica-m6"
    ],
-   "fala": "8 × 4 = 36."
+   "fala": "8 vezes 4 = 36."
   },
   {
    "chave": "86b0409938",
@@ -19867,6 +19907,2446 @@
     "matematica-m6"
    ],
    "fala": "A tia deu 3 notas de 2 reais a Vítor. Para Carina, deu o dobro da quantia do Vítor. Para Rafael, deu o triplo."
+  },
+  {
+   "chave": "6ab17ce934",
+   "voz": "claude",
+   "texto": "Toque no chão para andar (ou use as setas do teclado). Vamos até a Estação dos Caminhos? É só tocar nela!",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Toque no chão para andar (ou use as setas do teclado). Vamos até a Estação dos Caminhos? É só tocar nela!"
+  },
+  {
+   "chave": "97d41ecc2q",
+   "voz": "claude",
+   "texto": "Eu sou o guia da Estação dos Caminhos! Aqui tem comunicação, telefone, internet e trânsito.",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Eu sou o guia da Estação dos Caminhos! Aqui tem comunicação, telefone, internet e trânsito."
+  },
+  {
+   "chave": "489a2cb837",
+   "voz": "claude",
+   "texto": "O treino de Geografia abre quando você terminar as salas da Estação dos Caminhos. Falta só 1! Você consegue!",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "O treino de Geografia abre quando você terminar as salas da Estação dos Caminhos. Falta só 1! Você consegue!"
+  },
+  {
+   "chave": "e4b14e3c35",
+   "voz": "claude",
+   "texto": "O treino de Geografia abre quando você terminar as salas da Estação dos Caminhos. Faltam 2! Você consegue!",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "O treino de Geografia abre quando você terminar as salas da Estação dos Caminhos. Faltam 2! Você consegue!"
+  },
+  {
+   "chave": "b8a6a8f335",
+   "voz": "claude",
+   "texto": "O treino de Geografia abre quando você terminar as salas da Estação dos Caminhos. Faltam 3! Você consegue!",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "O treino de Geografia abre quando você terminar as salas da Estação dos Caminhos. Faltam 3! Você consegue!"
+  },
+  {
+   "chave": "b468724635",
+   "voz": "claude",
+   "texto": "O treino de Geografia abre quando você terminar as salas da Estação dos Caminhos. Faltam 4! Você consegue!",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "O treino de Geografia abre quando você terminar as salas da Estação dos Caminhos. Faltam 4! Você consegue!"
+  },
+  {
+   "chave": "b0f3083535",
+   "voz": "claude",
+   "texto": "O treino de Geografia abre quando você terminar as salas da Estação dos Caminhos. Faltam 5! Você consegue!",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "O treino de Geografia abre quando você terminar as salas da Estação dos Caminhos. Faltam 5! Você consegue!"
+  },
+  {
+   "chave": "bea8b7292o",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"O que é comunicação\".",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"O que é comunicação\"."
+  },
+  {
+   "chave": "2caf4400t",
+   "voz": "narradora",
+   "texto": "O que é comunicação",
+   "pacotes": [
+    "geografia-livro"
+   ],
+   "fala": "O que é comunicação"
+  },
+  {
+   "chave": "ce41e5209p",
+   "voz": "narradora",
+   "texto": "No dia a dia, encontramos pessoas e nos comunicamos com elas: dizemos \"bom dia\" ou \"boa tarde\", perguntamos para tirar dúvidas e compramos produtos. A comunicação permite que nos expressemos e comuniquemos o que pensamos a outras pessoas. Ela está presente em quase todas as atividades do dia a dia e conecta pessoas em lugares diferentes.",
+   "pacotes": [
+    "geografia-livro"
+   ],
+   "fala": "No dia a dia, encontramos pessoas e nos comunicamos com elas: dizemos \"bom dia\" ou \"boa tarde\", perguntamos para tirar dúvidas e compramos produtos. A comunicação permite que nos expressemos e comuniquemos o que pensamos a outras pessoas. Ela está presente em quase todas as atividades do dia a dia e conecta pessoas em lugares diferentes."
+  },
+  {
+   "chave": "8abe763c2r",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Formas de se comunicar\".",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Formas de se comunicar\"."
+  },
+  {
+   "chave": "917ae6dbw",
+   "voz": "narradora",
+   "texto": "Formas de se comunicar",
+   "pacotes": [
+    "geografia-livro"
+   ],
+   "fala": "Formas de se comunicar"
+  },
+  {
+   "chave": "33a7413d6a",
+   "voz": "narradora",
+   "texto": "A comunicação ocorre por meio de fala, escrita, desenhos, pinturas, símbolos e sinais. Conversar com os amigos é comunicação pela fala. Escrever é comunicação pela escrita. Mostrar um desenho é comunicação pela arte.",
+   "pacotes": [
+    "geografia-livro"
+   ],
+   "fala": "A comunicação ocorre por meio de fala, escrita, desenhos, pinturas, símbolos e sinais. Conversar com os amigos é comunicação pela fala. Escrever é comunicação pela escrita. Mostrar um desenho é comunicação pela arte."
+  },
+  {
+   "chave": "c501c8702d",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"A Libras\".",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"A Libras\"."
+  },
+  {
+   "chave": "f3085887i",
+   "voz": "narradora",
+   "texto": "A Libras",
+   "pacotes": [
+    "geografia-livro"
+   ],
+   "fala": "A Libras"
+  },
+  {
+   "chave": "ceff28c54y",
+   "voz": "narradora",
+   "texto": "Libras quer dizer Língua Brasileira de Sinais. Com ela, as pessoas se comunicam usando sinais feitos com as mãos. É uma forma de comunicação muito importante no Brasil.",
+   "pacotes": [
+    "geografia-livro"
+   ],
+   "fala": "Libras quer dizer Língua Brasileira de Sinais. Com ela, as pessoas se comunicam usando sinais feitos com as mãos. É uma forma de comunicação muito importante no Brasil."
+  },
+  {
+   "chave": "4392491a2s",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Os meios de comunicação\".",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Os meios de comunicação\"."
+  },
+  {
+   "chave": "af96debbx",
+   "voz": "narradora",
+   "texto": "Os meios de comunicação",
+   "pacotes": [
+    "geografia-livro"
+   ],
+   "fala": "Os meios de comunicação"
+  },
+  {
+   "chave": "28c99f9484",
+   "voz": "narradora",
+   "texto": "Para que a comunicação entre pessoas que estão longe seja mais rápida, usamos os meios de comunicação, que usam escrita, som e imagem. Eles podem ser individuais ou coletivos. O rádio usa sons; jornais e revistas usam escrita e imagens; a televisão e a internet usam sons e imagens.",
+   "pacotes": [
+    "geografia-livro"
+   ],
+   "fala": "Para que a comunicação entre pessoas que estão longe seja mais rápida, usamos os meios de comunicação, que usam escrita, som e imagem. Eles podem ser individuais ou coletivos. O rádio usa sons; jornais e revistas usam escrita e imagens; a televisão e a internet usam sons e imagens."
+  },
+  {
+   "chave": "c5f6103d2r",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Comunicação individual\".",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Comunicação individual\"."
+  },
+  {
+   "chave": "5f144d52w",
+   "voz": "narradora",
+   "texto": "Comunicação individual",
+   "pacotes": [
+    "geografia-livro"
+   ],
+   "fala": "Comunicação individual"
+  },
+  {
+   "chave": "f376f63a67",
+   "voz": "narradora",
+   "texto": "Nos meios de comunicação individual, a interação ocorre entre duas ou poucas pessoas. Exemplos: escrever cartas numa folha de papel, enviar mensagens pelo celular e computador, mandar e-mail e fazer videochamadas.",
+   "pacotes": [
+    "geografia-livro"
+   ],
+   "fala": "Nos meios de comunicação individual, a interação ocorre entre duas ou poucas pessoas. Exemplos: escrever cartas numa folha de papel, enviar mensagens pelo celular e computador, mandar e-mail e fazer videochamadas."
+  },
+  {
+   "chave": "edf6c9712p",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Comunicação coletiva\".",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Comunicação coletiva\"."
+  },
+  {
+   "chave": "39061b5eu",
+   "voz": "narradora",
+   "texto": "Comunicação coletiva",
+   "pacotes": [
+    "geografia-livro"
+   ],
+   "fala": "Comunicação coletiva"
+  },
+  {
+   "chave": "0dfca69181",
+   "voz": "narradora",
+   "texto": "Nos meios de comunicação coletiva, a informação é transmitida a muitas pessoas. Exemplos: livros, revistas e jornais, placas de trânsito e de sinalização, rádio, televisão e internet. Pela internet vemos filmes, desenhos, músicas, vídeos, jogos, estudos e notícias em tempo real.",
+   "pacotes": [
+    "geografia-livro"
+   ],
+   "fala": "Nos meios de comunicação coletiva, a informação é transmitida a muitas pessoas. Exemplos: livros, revistas e jornais, placas de trânsito e de sinalização, rádio, televisão e internet. Pela internet vemos filmes, desenhos, músicas, vídeos, jogos, estudos e notícias em tempo real."
+  },
+  {
+   "chave": "93f676712q",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Como enviar uma carta\".",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Como enviar uma carta\"."
+  },
+  {
+   "chave": "9fe639e4v",
+   "voz": "narradora",
+   "texto": "Como enviar uma carta",
+   "pacotes": [
+    "geografia-livro"
+   ],
+   "fala": "Como enviar uma carta"
+  },
+  {
+   "chave": "dd50235e7t",
+   "voz": "narradora",
+   "texto": "Podemos enviar cartas para lugares dentro e fora do Brasil, até para o Japão! Para isso, é preciso saber o endereço da pessoa: o número da moradia, o nome da rua, a cidade, o estado e o país. Tem também um número que ajuda a achar o endereço: no Brasil, ele se chama CEP.",
+   "pacotes": [
+    "geografia-livro"
+   ],
+   "fala": "Podemos enviar cartas para lugares dentro e fora do Brasil, até para o Japão! Para isso, é preciso saber o endereço da pessoa: o número da moradia, o nome da rua, a cidade, o estado e o país. Tem também um número que ajuda a achar o endereço: no Brasil, ele se chama cep."
+  },
+  {
+   "chave": "f043eb3b2r",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Do telefone ao celular\".",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Do telefone ao celular\"."
+  },
+  {
+   "chave": "0a33c840w",
+   "voz": "narradora",
+   "texto": "Do telefone ao celular",
+   "pacotes": [
+    "geografia-livro"
+   ],
+   "fala": "Do telefone ao celular"
+  },
+  {
+   "chave": "be003beeav",
+   "voz": "narradora",
+   "texto": "O cientista Alexander Graham Bell inventou o primeiro telefone em 1876. Os telefones antigos transmitiam apenas som e tinham um fio que ligava cada aparelho a uma central: não dava para levá-los a qualquer lugar. Hoje o celular transmite sons, mensagens de texto, imagens e vídeos e acessa a internet. A brincadeira do telefone de copos mostra como a comunicação pelo som funciona.",
+   "pacotes": [
+    "geografia-livro"
+   ],
+   "fala": "O cientista Alexander Graham Bell inventou o primeiro telefone em 1876. Os telefones antigos transmitiam apenas som e tinham um fio que ligava cada aparelho a uma central: não dava para levá-los a qualquer lugar. Hoje o celular transmite sons, mensagens de texto, imagens e vídeos e acessa a internet. A brincadeira do telefone de copos mostra como a comunicação pelo som funciona."
+  },
+  {
+   "chave": "c7323a922r",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Uso seguro da internet\".",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Uso seguro da internet\"."
+  },
+  {
+   "chave": "85b064e5w",
+   "voz": "narradora",
+   "texto": "Uso seguro da internet",
+   "pacotes": [
+    "geografia-livro"
+   ],
+   "fala": "Uso seguro da internet"
+  },
+  {
+   "chave": "d52c7ab7c5",
+   "voz": "narradora",
+   "texto": "A internet conecta pessoas em todo o mundo, mas é preciso ter cuidado. Sempre acesse com a ajuda de um adulto de confiança. Nunca compartilhe dados pessoais nem fotos (nome, endereço, escola, rotina) sem permissão. Deixe a câmera desligada. Tenha cuidado com links: alguns sites copiam seus dados. Para jogar on-line, pergunte a um adulto se o jogo é adequado à sua idade. Se algo der medo, peça ajuda a um adulto de confiança.",
+   "pacotes": [
+    "geografia-livro"
+   ],
+   "fala": "A internet conecta pessoas em todo o mundo, mas é preciso ter cuidado. Sempre acesse com a ajuda de um adulto de confiança. Nunca compartilhe dados pessoais nem fotos (nome, endereço, escola, rotina) sem permissão. Deixe a câmera desligada. Tenha cuidado com links: alguns sites copiam seus dados. Para jogar on-line, pergunte a um adulto se o jogo é adequado à sua idade. Se algo der medo, peça ajuda a um adulto de confiança."
+  },
+  {
+   "chave": "aab9cd732l",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Leis de trânsito\".",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Leis de trânsito\"."
+  },
+  {
+   "chave": "39f38528q",
+   "voz": "narradora",
+   "texto": "Leis de trânsito",
+   "pacotes": [
+    "geografia-livro"
+   ],
+   "fala": "Leis de trânsito"
+  },
+  {
+   "chave": "0737ba6152",
+   "voz": "narradora",
+   "texto": "As leis de trânsito são um conjunto de regras para tornar o trânsito seguro. Todas as pessoas, motoristas ou pedestres, devem obedecer a essas regras para evitar acidentes.",
+   "pacotes": [
+    "geografia-livro"
+   ],
+   "fala": "As leis de trânsito são um conjunto de regras para tornar o trânsito seguro. Todas as pessoas, motoristas ou pedestres, devem obedecer a essas regras para evitar acidentes."
+  },
+  {
+   "chave": "34df6fdf2f",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"O semáforo\".",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"O semáforo\"."
+  },
+  {
+   "chave": "8f69d8cck",
+   "voz": "narradora",
+   "texto": "O semáforo",
+   "pacotes": [
+    "geografia-livro"
+   ],
+   "fala": "O semáforo"
+  },
+  {
+   "chave": "4a7faee376",
+   "voz": "narradora",
+   "texto": "Os semáforos ajudam na segurança do trânsito. Luz vermelha: os motoristas devem parar. Luz verde: podem seguir. Luz amarela: fica acesa entre o verde e o vermelho, e os motoristas devem reduzir a velocidade e ter atenção, pois o sinal logo fechará.",
+   "pacotes": [
+    "geografia-livro"
+   ],
+   "fala": "Os semáforos ajudam na segurança do trânsito. Luz vermelha: os motoristas devem parar. Luz verde: podem seguir. Luz amarela: fica acesa entre o verde e o vermelho, e os motoristas devem reduzir a velocidade e ter atenção, pois o sinal logo fechará."
+  },
+  {
+   "chave": "bcd5d4882y",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Semáforo e faixa de pedestres\".",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Semáforo e faixa de pedestres\"."
+  },
+  {
+   "chave": "eebad92113",
+   "voz": "narradora",
+   "texto": "Semáforo e faixa de pedestres",
+   "pacotes": [
+    "geografia-livro"
+   ],
+   "fala": "Semáforo e faixa de pedestres"
+  },
+  {
+   "chave": "2985da2f7p",
+   "voz": "narradora",
+   "texto": "Também existem semáforos para os pedestres. O sinal vermelho quer dizer que o pedestre deve esperar, porque os carros estão passando. O sinal verde mostra que é seguro atravessar. Para atravessar a rua, use a faixa de pedestres e espere o semáforo indicar a passagem.",
+   "pacotes": [
+    "geografia-livro"
+   ],
+   "fala": "Também existem semáforos para os pedestres. O sinal vermelho quer dizer que o pedestre deve esperar, porque os carros estão passando. O sinal verde mostra que é seguro atravessar. Para atravessar a rua, use a faixa de pedestres e espere o semáforo indicar a passagem."
+  },
+  {
+   "chave": "5b8621a02q",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"As placas de trânsito\".",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"As placas de trânsito\"."
+  },
+  {
+   "chave": "c358de29v",
+   "voz": "narradora",
+   "texto": "As placas de trânsito",
+   "pacotes": [
+    "geografia-livro"
+   ],
+   "fala": "As placas de trânsito"
+  },
+  {
+   "chave": "ba326b657e",
+   "voz": "narradora",
+   "texto": "As placas de trânsito também são importantes. A letra E quer dizer permitido estacionar. A letra E cortada quer dizer proibido estacionar. O número 80 mostra a velocidade máxima de 80 km/h. A seta para a direita cortada quer dizer proibido virar à direita.",
+   "pacotes": [
+    "geografia-livro"
+   ],
+   "fala": "As placas de trânsito também são importantes. A letra E quer dizer permitido estacionar. A letra E cortada quer dizer proibido estacionar. O número 80 mostra a velocidade máxima de 80 km/h. A seta para a direita cortada quer dizer proibido virar à direita."
+  },
+  {
+   "chave": "0c1790d62p",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Trânsito nas cidades\".",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Trânsito nas cidades\"."
+  },
+  {
+   "chave": "b27eeacdu",
+   "voz": "narradora",
+   "texto": "Trânsito nas cidades",
+   "pacotes": [
+    "geografia-livro"
+   ],
+   "fala": "Trânsito nas cidades"
+  },
+  {
+   "chave": "2b9cd70d8h",
+   "voz": "narradora",
+   "texto": "Os meios de transporte são essenciais para as cidades, mas podem trazer problemas quando as cidades crescem muito e sem planejamento, com excesso de automóveis nas ruas. Quando o trânsito é bem organizado e o transporte público é eficiente, a cidade fica mais acolhedora para os seus habitantes.",
+   "pacotes": [
+    "geografia-livro"
+   ],
+   "fala": "Os meios de transporte são essenciais para as cidades, mas podem trazer problemas quando as cidades crescem muito e sem planejamento, com excesso de automóveis nas ruas. Quando o trânsito é bem organizado e o transporte público é eficiente, a cidade fica mais acolhedora para os seus habitantes."
+  },
+  {
+   "chave": "3e55880a2m",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Congestionamentos\".",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Congestionamentos\"."
+  },
+  {
+   "chave": "c2e3385br",
+   "voz": "narradora",
+   "texto": "Congestionamentos",
+   "pacotes": [
+    "geografia-livro"
+   ],
+   "fala": "Congestionamentos"
+  },
+  {
+   "chave": "6cc7230f9o",
+   "voz": "narradora",
+   "texto": "Quando muitos veículos circulam ao mesmo tempo, acontecem congestionamentos, também chamados de engarrafamentos. Eles acontecem nos horários em que muitas pessoas estão indo para o trabalho ou para a escola (início da manhã), no almoço e quando voltam para casa (fim da tarde). A apostila mostra um congestionamento em Salvador, na Bahia.",
+   "pacotes": [
+    "geografia-livro"
+   ],
+   "fala": "Quando muitos veículos circulam ao mesmo tempo, acontecem congestionamentos, também chamados de engarrafamentos. Eles acontecem nos horários em que muitas pessoas estão indo para o trabalho ou para a escola (início da manhã), no almoço e quando voltam para casa (fim da tarde). A apostila mostra um congestionamento em Salvador, na Bahia."
+  },
+  {
+   "chave": "f3621e722j",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Poluição do ar\".",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Poluição do ar\"."
+  },
+  {
+   "chave": "22db1625o",
+   "voz": "narradora",
+   "texto": "Poluição do ar",
+   "pacotes": [
+    "geografia-livro",
+    "geografia-g5"
+   ],
+   "fala": "Poluição do ar"
+  },
+  {
+   "chave": "f2b9ff174z",
+   "voz": "narradora",
+   "texto": "Outro problema causado pelo trânsito de automóveis é a poluição do ar. Dá para ver essa poluição quando sai fumaça preta ou cinza dos escapamentos dos veículos nas ruas.",
+   "pacotes": [
+    "geografia-livro"
+   ],
+   "fala": "Outro problema causado pelo trânsito de automóveis é a poluição do ar. Dá para ver essa poluição quando sai fumaça preta ou cinza dos escapamentos dos veículos nas ruas."
+  },
+  {
+   "chave": "6a2372772r",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Como ajudar o trânsito\".",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Como ajudar o trânsito\"."
+  },
+  {
+   "chave": "ddf06f58w",
+   "voz": "narradora",
+   "texto": "Como ajudar o trânsito",
+   "pacotes": [
+    "geografia-livro"
+   ],
+   "fala": "Como ajudar o trânsito"
+  },
+  {
+   "chave": "4c642fc46a",
+   "voz": "narradora",
+   "texto": "Para diminuir os problemas no trânsito, podemos usar transportes coletivos, como ônibus e metrô, e veículos não motorizados, como a bicicleta. A bicicleta é um veículo de uso individual que não emite gases poluentes.",
+   "pacotes": [
+    "geografia-livro"
+   ],
+   "fala": "Para diminuir os problemas no trânsito, podemos usar transportes coletivos, como ônibus e metrô, e veículos não motorizados, como a bicicleta. A bicicleta é um veículo de uso individual que não emite gases poluentes."
+  },
+  {
+   "chave": "a36317c519",
+   "voz": "unicornio",
+   "texto": "Eu converso com as mãos, em Libras!",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Eu converso com as mãos, em Libras!"
+  },
+  {
+   "chave": "5339dda11b",
+   "voz": "unicornio",
+   "texto": "Bom dia! Deixei um desenho para você!",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Bom dia! Deixei um desenho para você!"
+  },
+  {
+   "chave": "1b77b2f715",
+   "voz": "unicornio",
+   "texto": "Levo notícias para muita gente!",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Levo notícias para muita gente!"
+  },
+  {
+   "chave": "f8d0412516",
+   "voz": "unicornio",
+   "texto": "Aumenta o som que eu vou cantar!",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Aumenta o som que eu vou cantar!"
+  },
+  {
+   "chave": "472264f716",
+   "voz": "unicornio",
+   "texto": "Alô, alô! Tem alguém no copinho?",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Alô, alô! Tem alguém no copinho?"
+  },
+  {
+   "chave": "92f395501b",
+   "voz": "unicornio",
+   "texto": "Na internet, eu navego com um adulto!",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Na internet, eu navego com um adulto!"
+  },
+  {
+   "chave": "d96b087315",
+   "voz": "unicornio",
+   "texto": "Verde: pode seguir com cuidado!",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Verde: pode seguir com cuidado!"
+  },
+  {
+   "chave": "7cf493ad14",
+   "voz": "unicornio",
+   "texto": "Atravesse sempre na faixa, tá?",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Atravesse sempre na faixa, tá?"
+  },
+  {
+   "chave": "9279d67713",
+   "voz": "unicornio",
+   "texto": "Vou de bicicleta, sem fumaça!",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Vou de bicicleta, sem fumaça!"
+  },
+  {
+   "chave": "6caf14d517",
+   "voz": "unicornio",
+   "texto": "Sem fumaça, o céu fica azulzinho!",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Sem fumaça, o céu fica azulzinho!"
+  },
+  {
+   "chave": "81beba801f",
+   "voz": "unicornio",
+   "texto": "Ganhei asas para achar todos os caminhos!",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Ganhei asas para achar todos os caminhos!"
+  },
+  {
+   "chave": "0145ac951e",
+   "voz": "unicornio",
+   "texto": "Norte, sul, leste e oeste: acertou tudo!",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Norte, sul, leste e oeste: acertou tudo!"
+  },
+  {
+   "chave": "7437ff441d",
+   "voz": "unicornio",
+   "texto": "Eu cuido de todos os caminhos do reino!",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Eu cuido de todos os caminhos do reino!"
+  },
+  {
+   "chave": "2b96b2aft",
+   "voz": "claude",
+   "texto": "Formas de se Comunicar",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Formas de se Comunicar"
+  },
+  {
+   "chave": "a9d647142k",
+   "voz": "claude",
+   "texto": "Vamos descobrir os jeitos de conversar: falando, escrevendo, desenhando e com sinais!",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Vamos descobrir os jeitos de conversar: falando, escrevendo, desenhando e com sinais!"
+  },
+  {
+   "chave": "d68ba83225",
+   "voz": "narradora",
+   "texto": "No dia a dia, como podemos cumprimentar as pessoas que encontramos?",
+   "pacotes": [
+    "geografia-g1"
+   ],
+   "fala": "No dia a dia, como podemos cumprimentar as pessoas que encontramos?"
+  },
+  {
+   "chave": "77ecb9bc16",
+   "voz": "narradora",
+   "texto": "Dizendo \"bom dia\" ou \"boa tarde\"",
+   "pacotes": [
+    "geografia-g1"
+   ],
+   "fala": "Dizendo \"bom dia\" ou \"boa tarde\""
+  },
+  {
+   "chave": "5cd8d768u",
+   "voz": "narradora",
+   "texto": "Fingindo que não viu",
+   "pacotes": [
+    "geografia-g1"
+   ],
+   "fala": "Fingindo que não viu"
+  },
+  {
+   "chave": "e1894ae1p",
+   "voz": "narradora",
+   "texto": "Saindo correndo",
+   "pacotes": [
+    "geografia-g1"
+   ],
+   "fala": "Saindo correndo"
+  },
+  {
+   "chave": "90377bc518",
+   "voz": "narradora",
+   "texto": "Complete: a comunicação permite...",
+   "pacotes": [
+    "geografia-g1"
+   ],
+   "fala": "Complete: a comunicação permite..."
+  },
+  {
+   "chave": "c61f60a4v",
+   "voz": "narradora",
+   "texto": "ouvir somente os sons",
+   "pacotes": [
+    "geografia-g1"
+   ],
+   "fala": "ouvir somente os sons"
+  },
+  {
+   "chave": "5d28913bw",
+   "voz": "narradora",
+   "texto": "ver somente as imagens",
+   "pacotes": [
+    "geografia-g1"
+   ],
+   "fala": "ver somente as imagens"
+  },
+  {
+   "chave": "9fcd6f7f1f",
+   "voz": "narradora",
+   "texto": "comunicar o que pensamos a outras pessoas",
+   "pacotes": [
+    "geografia-g1"
+   ],
+   "fala": "comunicar o que pensamos a outras pessoas"
+  },
+  {
+   "chave": "a6e32efb1a",
+   "voz": "narradora",
+   "texto": "nos comunicar só por meio da escrita",
+   "pacotes": [
+    "geografia-g1"
+   ],
+   "fala": "nos comunicar só por meio da escrita"
+  },
+  {
+   "chave": "026bda5f23",
+   "voz": "narradora",
+   "texto": "Por meio de que a comunicação acontece? Toque em TODAS as certas.",
+   "pacotes": [
+    "geografia-g1"
+   ],
+   "fala": "Por meio de que a comunicação acontece? Toque em todas as certas."
+  },
+  {
+   "chave": "470b392fe",
+   "voz": "narradora",
+   "texto": "Fala",
+   "pacotes": [
+    "geografia-g1"
+   ],
+   "fala": "Fala"
+  },
+  {
+   "chave": "f5d9fd10h",
+   "voz": "narradora",
+   "texto": "Escrita",
+   "pacotes": [
+    "geografia-g1"
+   ],
+   "fala": "Escrita"
+  },
+  {
+   "chave": "eae4ab51t",
+   "voz": "narradora",
+   "texto": "Desenhos e pinturas",
+   "pacotes": [
+    "geografia-g1"
+   ],
+   "fala": "Desenhos e pinturas"
+  },
+  {
+   "chave": "f0a5fde4g",
+   "voz": "narradora",
+   "texto": "Sinais",
+   "pacotes": [
+    "geografia-g1"
+   ],
+   "fala": "Sinais"
+  },
+  {
+   "chave": "f17ba9a3i",
+   "voz": "narradora",
+   "texto": "Dormindo",
+   "pacotes": [
+    "geografia-g1"
+   ],
+   "fala": "Dormindo"
+  },
+  {
+   "chave": "17c9bad31h",
+   "voz": "narradora",
+   "texto": "Como se chama a língua de sinais do Brasil?",
+   "pacotes": [
+    "geografia-g1"
+   ],
+   "fala": "Como se chama a língua de sinais do Brasil?"
+  },
+  {
+   "chave": "04a49cbeg",
+   "voz": "narradora",
+   "texto": "Libras",
+   "pacotes": [
+    "geografia-g1"
+   ],
+   "fala": "Libras"
+  },
+  {
+   "chave": "5dea21fdi",
+   "voz": "narradora",
+   "texto": "Alfabeto",
+   "pacotes": [
+    "geografia-g1"
+   ],
+   "fala": "Alfabeto"
+  },
+  {
+   "chave": "ae1ab05eg",
+   "voz": "narradora",
+   "texto": "Música",
+   "pacotes": [
+    "geografia-g1"
+   ],
+   "fala": "Música"
+  },
+  {
+   "chave": "a6a589812b",
+   "voz": "narradora",
+   "texto": "Na Libras, as pessoas se comunicam por meio de sinais feitos com as mãos.",
+   "pacotes": [
+    "geografia-g1"
+   ],
+   "fala": "Na Libras, as pessoas se comunicam por meio de sinais feitos com as mãos."
+  },
+  {
+   "chave": "e444086a1k",
+   "voz": "narradora",
+   "texto": "A comunicação só acontece quando a gente fala.",
+   "pacotes": [
+    "geografia-g1"
+   ],
+   "fala": "A comunicação só acontece quando a gente fala."
+  },
+  {
+   "chave": "464a5e631y",
+   "voz": "narradora",
+   "texto": "A comunicação por meio de desenhos é uma comunicação pela...",
+   "pacotes": [
+    "geografia-g1"
+   ],
+   "fala": "A comunicação por meio de desenhos é uma comunicação pela..."
+  },
+  {
+   "chave": "3ec51f05e",
+   "voz": "narradora",
+   "texto": "arte",
+   "pacotes": [
+    "geografia-g1"
+   ],
+   "fala": "arte"
+  },
+  {
+   "chave": "c9b1ee4fe",
+   "voz": "narradora",
+   "texto": "fala",
+   "pacotes": [
+    "geografia-g1"
+   ],
+   "fala": "fala"
+  },
+  {
+   "chave": "566d33f3q",
+   "voz": "narradora",
+   "texto": "língua de sinais",
+   "pacotes": [
+    "geografia-g1"
+   ],
+   "fala": "língua de sinais"
+  },
+  {
+   "chave": "34b23fab1d",
+   "voz": "narradora",
+   "texto": "Ligue cada cena à forma de comunicação:",
+   "pacotes": [
+    "geografia-g1"
+   ],
+   "fala": "Ligue cada cena à forma de comunicação:"
+  },
+  {
+   "chave": "70c845262h",
+   "voz": "narradora",
+   "texto": "Desembaralhe as sílabas e descubra o que conecta pessoas em lugares diferentes:",
+   "pacotes": [
+    "geografia-g1"
+   ],
+   "fala": "Desembaralhe as sílabas e descubra o que conecta pessoas em lugares diferentes:"
+  },
+  {
+   "chave": "921b5d752e",
+   "voz": "narradora",
+   "texto": "A comunicação está presente em quase todas as atividades do nosso dia a dia.",
+   "pacotes": [
+    "geografia-g1"
+   ],
+   "fala": "A comunicação está presente em quase todas as atividades do nosso dia a dia."
+  },
+  {
+   "chave": "8627d49827",
+   "voz": "narradora",
+   "texto": "Na imagem do parque, as pessoas estavam fazendo a mesma coisa. O quê?",
+   "pacotes": [
+    "geografia-g1"
+   ],
+   "fala": "Na imagem do parque, as pessoas estavam fazendo a mesma coisa. O quê?"
+  },
+  {
+   "chave": "4c2ad701o",
+   "voz": "narradora",
+   "texto": "Se comunicando",
+   "pacotes": [
+    "geografia-g1"
+   ],
+   "fala": "Se comunicando"
+  },
+  {
+   "chave": "94758982n",
+   "voz": "narradora",
+   "texto": "Comendo pizza",
+   "pacotes": [
+    "geografia-g1"
+   ],
+   "fala": "Comendo pizza"
+  },
+  {
+   "chave": "4bc2ff721o",
+   "voz": "narradora",
+   "texto": "Jogo da memória da comunicação! Encontre os pares:",
+   "pacotes": [
+    "geografia-g1"
+   ],
+   "fala": "Jogo da memória da comunicação! Encontre os pares:"
+  },
+  {
+   "chave": "0fce053bl",
+   "voz": "narradora",
+   "texto": "expressemos",
+   "pacotes": [
+    "geografia-g1"
+   ],
+   "fala": "expressemos"
+  },
+  {
+   "chave": "36bb0b04g",
+   "voz": "narradora",
+   "texto": "sinais",
+   "pacotes": [
+    "geografia-g1"
+   ],
+   "fala": "sinais"
+  },
+  {
+   "chave": "d346e08af",
+   "voz": "narradora",
+   "texto": "longe",
+   "pacotes": [
+    "geografia-g1"
+   ],
+   "fala": "longe"
+  },
+  {
+   "chave": "7ce9ef031b",
+   "voz": "narradora",
+   "texto": "A comunicação permite que nos ______.",
+   "pacotes": [
+    "geografia-g1"
+   ],
+   "fala": "A comunicação permite que nos …"
+  },
+  {
+   "chave": "e8a874421u",
+   "voz": "narradora",
+   "texto": "Ela ocorre por meio de fala, escrita, desenhos e ______.",
+   "pacotes": [
+    "geografia-g1"
+   ],
+   "fala": "Ela ocorre por meio de fala, escrita, desenhos e …"
+  },
+  {
+   "chave": "aadeeeca1m",
+   "voz": "narradora",
+   "texto": "Os meios de comunicação ajudam quem está ______.",
+   "pacotes": [
+    "geografia-g1"
+   ],
+   "fala": "Os meios de comunicação ajudam quem está …"
+  },
+  {
+   "chave": "c64eca57r",
+   "voz": "claude",
+   "texto": "Meios de Comunicação",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Meios de Comunicação"
+  },
+  {
+   "chave": "a32657362m",
+   "voz": "claude",
+   "texto": "Carta, rádio, televisão, internet... Vamos separar os meios individuais e os coletivos!",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Carta, rádio, televisão, internet... Vamos separar os meios individuais e os coletivos!"
+  },
+  {
+   "chave": "d862a7c71e",
+   "voz": "narradora",
+   "texto": "Para que usamos os meios de comunicação?",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "Para que usamos os meios de comunicação?"
+  },
+  {
+   "chave": "4977db0e1s",
+   "voz": "narradora",
+   "texto": "Para a comunicação com quem está longe ser mais rápida",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "Para a comunicação com quem está longe ser mais rápida"
+  },
+  {
+   "chave": "f276186bx",
+   "voz": "narradora",
+   "texto": "Para dormir mais rápido",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "Para dormir mais rápido"
+  },
+  {
+   "chave": "89330943w",
+   "voz": "narradora",
+   "texto": "Para cozinhar a comida",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "Para cozinhar a comida"
+  },
+  {
+   "chave": "ac9d6f1f2m",
+   "voz": "narradora",
+   "texto": "Quando a interação acontece entre duas ou poucas pessoas, o meio de comunicação é...",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "Quando a interação acontece entre duas ou poucas pessoas, o meio de comunicação é..."
+  },
+  {
+   "chave": "ee45f11ek",
+   "voz": "narradora",
+   "texto": "individual",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "individual"
+  },
+  {
+   "chave": "e8e2b2e8i",
+   "voz": "narradora",
+   "texto": "coletivo",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "coletivo"
+  },
+  {
+   "chave": "911e438a2j",
+   "voz": "narradora",
+   "texto": "Quando a informação é transmitida para muitas pessoas, o meio de comunicação é...",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "Quando a informação é transmitida para muitas pessoas, o meio de comunicação é..."
+  },
+  {
+   "chave": "24374bc31e",
+   "voz": "narradora",
+   "texto": "Individual ou coletivo? Separe nos baús!",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "Individual ou coletivo? Separe nos baús!"
+  },
+  {
+   "chave": "70fd5fe51k",
+   "voz": "narradora",
+   "texto": "A televisão é um meio de comunicação coletiva.",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "A televisão é um meio de comunicação coletiva."
+  },
+  {
+   "chave": "6cf9ecfd2b",
+   "voz": "narradora",
+   "texto": "Escrever uma carta numa folha de papel é um meio de comunicação coletiva.",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "Escrever uma carta numa folha de papel é um meio de comunicação coletiva."
+  },
+  {
+   "chave": "f4f782481w",
+   "voz": "narradora",
+   "texto": "Quais são meios de comunicação individual? Toque em TODOS.",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "Quais são meios de comunicação individual? Toque em todos."
+  },
+  {
+   "chave": "131f224ft",
+   "voz": "narradora",
+   "texto": "Mensagem no celular",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "Mensagem no celular"
+  },
+  {
+   "chave": "98b98a43m",
+   "voz": "narradora",
+   "texto": "Videochamada",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "Videochamada"
+  },
+  {
+   "chave": "7cb01d03j",
+   "voz": "narradora",
+   "texto": "Televisão",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "Televisão"
+  },
+  {
+   "chave": "3701e773g",
+   "voz": "narradora",
+   "texto": "Jornal",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "Jornal"
+  },
+  {
+   "chave": "28bb00b81i",
+   "voz": "narradora",
+   "texto": "O rádio transmite informações por meio de...",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "O rádio transmite informações por meio de..."
+  },
+  {
+   "chave": "098e1600e",
+   "voz": "narradora",
+   "texto": "sons",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "sons"
+  },
+  {
+   "chave": "9cef6f65h",
+   "voz": "narradora",
+   "texto": "imagens",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "imagens"
+  },
+  {
+   "chave": "7ef53ab0h",
+   "voz": "narradora",
+   "texto": "escrita",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "escrita"
+  },
+  {
+   "chave": "601bb1a31w",
+   "voz": "narradora",
+   "texto": "Com a internet, qual destas coisas a gente consegue fazer?",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "Com a internet, qual destas coisas a gente consegue fazer?"
+  },
+  {
+   "chave": "86a4f0f51c",
+   "voz": "narradora",
+   "texto": "Ver filmes, músicas, vídeos e notícias",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "Ver filmes, músicas, vídeos e notícias"
+  },
+  {
+   "chave": "75800956z",
+   "voz": "narradora",
+   "texto": "Comer uma pizza pela tela",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "Comer uma pizza pela tela"
+  },
+  {
+   "chave": "595532d5w",
+   "voz": "narradora",
+   "texto": "Voar como um unicórnio",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "Voar como um unicórnio"
+  },
+  {
+   "chave": "e6e2afc2i",
+   "voz": "narradora",
+   "texto": "coletiva",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "coletiva"
+  },
+  {
+   "chave": "7890115b1y",
+   "voz": "narradora",
+   "texto": "Os meios de comunicação ______ ligam duas ou poucas pessoas.",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "Os meios de comunicação … ligam duas ou poucas pessoas."
+  },
+  {
+   "chave": "691c36d024",
+   "voz": "narradora",
+   "texto": "Os meios de comunicação ______ levam informações a muitas pessoas.",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "Os meios de comunicação … levam informações a muitas pessoas."
+  },
+  {
+   "chave": "359daaae29",
+   "voz": "narradora",
+   "texto": "No Brasil, como se chama o código postal que ajuda a achar um endereço?",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "No Brasil, como se chama o código postal que ajuda a achar um endereço?"
+  },
+  {
+   "chave": "f6753257d",
+   "voz": "narradora",
+   "texto": "CEP",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "cep"
+  },
+  {
+   "chave": "19748517c",
+   "voz": "narradora",
+   "texto": "TV",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "tv"
+  },
+  {
+   "chave": "50a6dc46f",
+   "voz": "narradora",
+   "texto": "Senha",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "Senha"
+  },
+  {
+   "chave": "a4eb64a927",
+   "voz": "narradora",
+   "texto": "O que faz parte de um endereço para enviar uma carta? Toque em TODOS.",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "O que faz parte de um endereço para enviar uma carta? Toque em todos."
+  },
+  {
+   "chave": "cf0cb48ar",
+   "voz": "narradora",
+   "texto": "Número da moradia",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "Número da moradia"
+  },
+  {
+   "chave": "d60e51fbl",
+   "voz": "narradora",
+   "texto": "Nome da rua",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "Nome da rua"
+  },
+  {
+   "chave": "91fe3010p",
+   "voz": "narradora",
+   "texto": "Cidade e estado",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "Cidade e estado"
+  },
+  {
+   "chave": "a3a93440p",
+   "voz": "narradora",
+   "texto": "Idade da pessoa",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "Idade da pessoa"
+  },
+  {
+   "chave": "a9a80031m",
+   "voz": "narradora",
+   "texto": "Cor favorita",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "Cor favorita"
+  },
+  {
+   "chave": "eab55aa61t",
+   "voz": "narradora",
+   "texto": "Podemos enviar cartas para outros países, como o Japão.",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "Podemos enviar cartas para outros países, como o Japão."
+  },
+  {
+   "chave": "a4ead00b1g",
+   "voz": "narradora",
+   "texto": "Ligue cada meio ao jeito que ele comunica:",
+   "pacotes": [
+    "geografia-g2"
+   ],
+   "fala": "Ligue cada meio ao jeito que ele comunica:"
+  },
+  {
+   "chave": "d716cfc6x",
+   "voz": "claude",
+   "texto": "Telefone e Internet Segura",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Telefone e Internet Segura"
+  },
+  {
+   "chave": "d71e7d6023",
+   "voz": "claude",
+   "texto": "Do telefone de fio ao celular, e como usar a internet com segurança!",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Do telefone de fio ao celular, e como usar a internet com segurança!"
+  },
+  {
+   "chave": "58468fc41h",
+   "voz": "narradora",
+   "texto": "Quem inventou o primeiro telefone, em 1876?",
+   "pacotes": [
+    "geografia-g3"
+   ],
+   "fala": "Quem inventou o primeiro telefone, em 1876?"
+  },
+  {
+   "chave": "0eb017c2v",
+   "voz": "narradora",
+   "texto": "Alexander Graham Bell",
+   "pacotes": [
+    "geografia-g3"
+   ],
+   "fala": "Alexander Graham Bell"
+  },
+  {
+   "chave": "be1249ffn",
+   "voz": "narradora",
+   "texto": "Um astronauta",
+   "pacotes": [
+    "geografia-g3"
+   ],
+   "fala": "Um astronauta"
+  },
+  {
+   "chave": "8fdb3603g",
+   "voz": "narradora",
+   "texto": "Um rei",
+   "pacotes": [
+    "geografia-g3"
+   ],
+   "fala": "Um rei"
+  },
+  {
+   "chave": "201ec2bb1y",
+   "voz": "narradora",
+   "texto": "Os telefones antigos transmitiam apenas som e tinham um fio.",
+   "pacotes": [
+    "geografia-g3"
+   ],
+   "fala": "Os telefones antigos transmitiam apenas som e tinham um fio."
+  },
+  {
+   "chave": "f75d6e221q",
+   "voz": "narradora",
+   "texto": "O que o celular consegue transmitir? Toque em TODOS.",
+   "pacotes": [
+    "geografia-g3"
+   ],
+   "fala": "O que o celular consegue transmitir? Toque em todos."
+  },
+  {
+   "chave": "8961c9e0e",
+   "voz": "narradora",
+   "texto": "Sons",
+   "pacotes": [
+    "geografia-g3"
+   ],
+   "fala": "Sons"
+  },
+  {
+   "chave": "851e4563s",
+   "voz": "narradora",
+   "texto": "Mensagens de texto",
+   "pacotes": [
+    "geografia-g3"
+   ],
+   "fala": "Mensagens de texto"
+  },
+  {
+   "chave": "22e28592q",
+   "voz": "narradora",
+   "texto": "Imagens e vídeos",
+   "pacotes": [
+    "geografia-g3"
+   ],
+   "fala": "Imagens e vídeos"
+  },
+  {
+   "chave": "b599e8cfp",
+   "voz": "narradora",
+   "texto": "Bolo de verdade",
+   "pacotes": [
+    "geografia-g3"
+   ],
+   "fala": "Bolo de verdade"
+  },
+  {
+   "chave": "fbd8f7031s",
+   "voz": "narradora",
+   "texto": "No telefone de copos, como a mensagem chega ao colega?",
+   "pacotes": [
+    "geografia-g3"
+   ],
+   "fala": "No telefone de copos, como a mensagem chega ao colega?"
+  },
+  {
+   "chave": "1a251690q",
+   "voz": "narradora",
+   "texto": "Por meio de sons",
+   "pacotes": [
+    "geografia-g3"
+   ],
+   "fala": "Por meio de sons"
+  },
+  {
+   "chave": "078f4935t",
+   "voz": "narradora",
+   "texto": "Por meio de imagens",
+   "pacotes": [
+    "geografia-g3"
+   ],
+   "fala": "Por meio de imagens"
+  },
+  {
+   "chave": "e9629533s",
+   "voz": "narradora",
+   "texto": "Por meio de cartas",
+   "pacotes": [
+    "geografia-g3"
+   ],
+   "fala": "Por meio de cartas"
+  },
+  {
+   "chave": "c7f42db22b",
+   "voz": "narradora",
+   "texto": "Antes dos celulares, os telefones podiam ser levados para qualquer lugar.",
+   "pacotes": [
+    "geografia-g3"
+   ],
+   "fala": "Antes dos celulares, os telefones podiam ser levados para qualquer lugar."
+  },
+  {
+   "chave": "6d70bde21a",
+   "voz": "narradora",
+   "texto": "Com quem devemos acessar a internet?",
+   "pacotes": [
+    "geografia-g3"
+   ],
+   "fala": "Com quem devemos acessar a internet?"
+  },
+  {
+   "chave": "d3e67e591b",
+   "voz": "narradora",
+   "texto": "Com a ajuda de um adulto de confiança",
+   "pacotes": [
+    "geografia-g3"
+   ],
+   "fala": "Com a ajuda de um adulto de confiança"
+  },
+  {
+   "chave": "01ce9ce9s",
+   "voz": "narradora",
+   "texto": "Sozinha, escondida",
+   "pacotes": [
+    "geografia-g3"
+   ],
+   "fala": "Sozinha, escondida"
+  },
+  {
+   "chave": "4fc40576t",
+   "voz": "narradora",
+   "texto": "Com um desconhecido",
+   "pacotes": [
+    "geografia-g3"
+   ],
+   "fala": "Com um desconhecido"
+  },
+  {
+   "chave": "cc960d271p",
+   "voz": "narradora",
+   "texto": "Quais são usos seguros da internet? Toque em TODOS.",
+   "pacotes": [
+    "geografia-g3"
+   ],
+   "fala": "Quais são usos seguros da internet? Toque em todos."
+  },
+  {
+   "chave": "a0eb950818",
+   "voz": "narradora",
+   "texto": "Navegar com um adulto de confiança",
+   "pacotes": [
+    "geografia-g3"
+   ],
+   "fala": "Navegar com um adulto de confiança"
+  },
+  {
+   "chave": "8481daf5z",
+   "voz": "narradora",
+   "texto": "Manter a câmera desligada",
+   "pacotes": [
+    "geografia-g3"
+   ],
+   "fala": "Manter a câmera desligada"
+  },
+  {
+   "chave": "0d24fbff14",
+   "voz": "narradora",
+   "texto": "Pedir ajuda para jogar on-line",
+   "pacotes": [
+    "geografia-g3"
+   ],
+   "fala": "Pedir ajuda para jogar on-line"
+  },
+  {
+   "chave": "27a8298919",
+   "voz": "narradora",
+   "texto": "Contar meu endereço para todo mundo",
+   "pacotes": [
+    "geografia-g3"
+   ],
+   "fala": "Contar meu endereço para todo mundo"
+  },
+  {
+   "chave": "78b9613e2m",
+   "voz": "narradora",
+   "texto": "Posso contar meu nome, meu endereço e minha escola para qualquer pessoa na internet.",
+   "pacotes": [
+    "geografia-g3"
+   ],
+   "fala": "Posso contar meu nome, meu endereço e minha escola para qualquer pessoa na internet."
+  },
+  {
+   "chave": "545bf92f1q",
+   "voz": "narradora",
+   "texto": "Você viu algo na internet que deu medo. O que fazer?",
+   "pacotes": [
+    "geografia-g3"
+   ],
+   "fala": "Você viu algo na internet que deu medo. O que fazer?"
+  },
+  {
+   "chave": "1fe1241c18",
+   "voz": "narradora",
+   "texto": "Contar para um adulto de confiança",
+   "pacotes": [
+    "geografia-g3"
+   ],
+   "fala": "Contar para um adulto de confiança"
+  },
+  {
+   "chave": "da0e0d0cp",
+   "voz": "narradora",
+   "texto": "Guardar segredo",
+   "pacotes": [
+    "geografia-g3"
+   ],
+   "fala": "Guardar segredo"
+  },
+  {
+   "chave": "c0e3646av",
+   "voz": "narradora",
+   "texto": "Mandar para os amigos",
+   "pacotes": [
+    "geografia-g3"
+   ],
+   "fala": "Mandar para os amigos"
+  },
+  {
+   "chave": "443d9a8d2o",
+   "voz": "narradora",
+   "texto": "É preciso ter muito cuidado com os links, porque alguns sites podem copiar seus dados.",
+   "pacotes": [
+    "geografia-g3"
+   ],
+   "fala": "É preciso ter muito cuidado com os links, porque alguns sites podem copiar seus dados."
+  },
+  {
+   "chave": "38a9e1891y",
+   "voz": "narradora",
+   "texto": "Quando você quiser jogar on-line, o que deve fazer primeiro?",
+   "pacotes": [
+    "geografia-g3"
+   ],
+   "fala": "Quando você quiser jogar on-line, o que deve fazer primeiro?"
+  },
+  {
+   "chave": "6e3771821v",
+   "voz": "narradora",
+   "texto": "Perguntar a um adulto se o jogo é adequado para sua idade",
+   "pacotes": [
+    "geografia-g3"
+   ],
+   "fala": "Perguntar a um adulto se o jogo é adequado para sua idade"
+  },
+  {
+   "chave": "ab3edda9u",
+   "voz": "narradora",
+   "texto": "Baixar qualquer jogo",
+   "pacotes": [
+    "geografia-g3"
+   ],
+   "fala": "Baixar qualquer jogo"
+  },
+  {
+   "chave": "295006e917",
+   "voz": "narradora",
+   "texto": "Pegar o cartão da mamãe escondido",
+   "pacotes": [
+    "geografia-g3"
+   ],
+   "fala": "Pegar o cartão da mamãe escondido"
+  },
+  {
+   "chave": "a099e3c821",
+   "voz": "narradora",
+   "texto": "Coloque os telefones na ordem, do mais antigo para o mais novo:",
+   "pacotes": [
+    "geografia-g3"
+   ],
+   "fala": "Coloque os telefones na ordem, do mais antigo para o mais novo:"
+  },
+  {
+   "chave": "5a2604da1m",
+   "voz": "narradora",
+   "texto": "Seguro ou perigoso na internet? Separe nos baús!",
+   "pacotes": [
+    "geografia-g3"
+   ],
+   "fala": "Seguro ou perigoso na internet? Separe nos baús!"
+  },
+  {
+   "chave": "f0b93d71m",
+   "voz": "claude",
+   "texto": "Trânsito Seguro",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Trânsito Seguro"
+  },
+  {
+   "chave": "ecfbc7d72b",
+   "voz": "claude",
+   "texto": "Semáforo, faixa de pedestres e placas: vamos atravessar a rua com segurança!",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Semáforo, faixa de pedestres e placas: vamos atravessar a rua com segurança!"
+  },
+  {
+   "chave": "2c56cf8614",
+   "voz": "narradora",
+   "texto": "O que são as leis de trânsito?",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "O que são as leis de trânsito?"
+  },
+  {
+   "chave": "a1cafb0e1a",
+   "voz": "narradora",
+   "texto": "Regras para tornar o trânsito seguro",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "Regras para tornar o trânsito seguro"
+  },
+  {
+   "chave": "005b2804u",
+   "voz": "narradora",
+   "texto": "Um jogo de tabuleiro",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "Um jogo de tabuleiro"
+  },
+  {
+   "chave": "1d989ba9t",
+   "voz": "narradora",
+   "texto": "Uma música de carro",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "Uma música de carro"
+  },
+  {
+   "chave": "004f40621v",
+   "voz": "narradora",
+   "texto": "Só os motoristas precisam obedecer às regras de trânsito.",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "Só os motoristas precisam obedecer às regras de trânsito."
+  },
+  {
+   "chave": "6c85cbef1t",
+   "voz": "narradora",
+   "texto": "No semáforo para veículos, a luz vermelha quer dizer...",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "No semáforo para veículos, a luz vermelha quer dizer..."
+  },
+  {
+   "chave": "0ce6ca9af",
+   "voz": "narradora",
+   "texto": "Pare!",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "Pare!"
+  },
+  {
+   "chave": "8134ca10f",
+   "voz": "narradora",
+   "texto": "Siga!",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "Siga!"
+  },
+  {
+   "chave": "c3289c99i",
+   "voz": "narradora",
+   "texto": "Acelere!",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "Acelere!"
+  },
+  {
+   "chave": "7e0543cb1m",
+   "voz": "narradora",
+   "texto": "Ligue cada cor do semáforo ao que ela significa:",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "Ligue cada cor do semáforo ao que ela significa:"
+  },
+  {
+   "chave": "2d31d1b51z",
+   "voz": "narradora",
+   "texto": "Quando a luz amarela acende, o que os motoristas devem fazer?",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "Quando a luz amarela acende, o que os motoristas devem fazer?"
+  },
+  {
+   "chave": "b06a9ab418",
+   "voz": "narradora",
+   "texto": "Reduzir a velocidade e ter atenção",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "Reduzir a velocidade e ter atenção"
+  },
+  {
+   "chave": "ecf28227r",
+   "voz": "narradora",
+   "texto": "Correr bem rápido",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "Correr bem rápido"
+  },
+  {
+   "chave": "d5a6da1bq",
+   "voz": "narradora",
+   "texto": "Mexer no celular",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "Mexer no celular"
+  },
+  {
+   "chave": "2fedea622b",
+   "voz": "narradora",
+   "texto": "No semáforo para pedestres, o sinal verde mostra que é seguro atravessar.",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "No semáforo para pedestres, o sinal verde mostra que é seguro atravessar."
+  },
+  {
+   "chave": "6f0584551s",
+   "voz": "narradora",
+   "texto": "Para atravessar a rua com segurança, é preciso usar...",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "Para atravessar a rua com segurança, é preciso usar..."
+  },
+  {
+   "chave": "55773c29u",
+   "voz": "narradora",
+   "texto": "a faixa de pedestres",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "a faixa de pedestres"
+  },
+  {
+   "chave": "39fd6a09i",
+   "voz": "narradora",
+   "texto": "um skate",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "um skate"
+  },
+  {
+   "chave": "7b1ec56dw",
+   "voz": "narradora",
+   "texto": "uma corrida bem rápida",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "uma corrida bem rápida"
+  },
+  {
+   "chave": "51833a1f27",
+   "voz": "narradora",
+   "texto": "Para o pedestre: pode atravessar ou tem que esperar? Separe nos baús!",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "Para o pedestre: pode atravessar ou tem que esperar? Separe nos baús!"
+  },
+  {
+   "chave": "b9dd346923",
+   "voz": "narradora",
+   "texto": "A placa com a letra E dentro de um círculo vermelho quer dizer...",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "A placa com a letra E dentro de um círculo vermelho quer dizer..."
+  },
+  {
+   "chave": "430f6941u",
+   "voz": "narradora",
+   "texto": "Permitido estacionar",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "Permitido estacionar"
+  },
+  {
+   "chave": "b4573177p",
+   "voz": "narradora",
+   "texto": "Proibido passar",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "Proibido passar"
+  },
+  {
+   "chave": "35e91fdcg",
+   "voz": "narradora",
+   "texto": "Escola",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "Escola"
+  },
+  {
+   "chave": "55fab6a51d",
+   "voz": "narradora",
+   "texto": "Ligue cada placa ao que ela quer dizer:",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "Ligue cada placa ao que ela quer dizer:"
+  },
+  {
+   "chave": "26aab47c20",
+   "voz": "narradora",
+   "texto": "A placa com o número 80 mostra a velocidade máxima de 80 km/h.",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "A placa com o número 80 mostra a velocidade máxima de 80 km/h."
+  },
+  {
+   "chave": "87c86c5c1x",
+   "voz": "narradora",
+   "texto": "O que deixa o trânsito organizado e seguro? Toque em TODOS.",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "O que deixa o trânsito organizado e seguro? Toque em todos."
+  },
+  {
+   "chave": "c49025d1u",
+   "voz": "narradora",
+   "texto": "Respeitar o semáforo",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "Respeitar o semáforo"
+  },
+  {
+   "chave": "93032da2z",
+   "voz": "narradora",
+   "texto": "Usar a faixa de pedestres",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "Usar a faixa de pedestres"
+  },
+  {
+   "chave": "4345a2ads",
+   "voz": "narradora",
+   "texto": "Obedecer às placas",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "Obedecer às placas"
+  },
+  {
+   "chave": "7d7bd230m",
+   "voz": "narradora",
+   "texto": "Correr muito",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "Correr muito"
+  },
+  {
+   "chave": "fd4297c410",
+   "voz": "narradora",
+   "texto": "Dirigir mexendo no celular",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "Dirigir mexendo no celular"
+  },
+  {
+   "chave": "236eca811r",
+   "voz": "narradora",
+   "texto": "Jogo do semáforo! Complete com as palavras do quadro.",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "Jogo do semáforo! Complete com as palavras do quadro."
+  },
+  {
+   "chave": "328ee3b1e",
+   "voz": "narradora",
+   "texto": "siga",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "siga"
+  },
+  {
+   "chave": "9344f186h",
+   "voz": "narradora",
+   "texto": "atenção",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "atenção"
+  },
+  {
+   "chave": "f591df3fe",
+   "voz": "narradora",
+   "texto": "pare",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "pare"
+  },
+  {
+   "chave": "c48e3c05o",
+   "voz": "narradora",
+   "texto": "Verde: ______.",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "Verde: …"
+  },
+  {
+   "chave": "09e63ac0q",
+   "voz": "narradora",
+   "texto": "Amarelo: ______.",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "Amarelo: …"
+  },
+  {
+   "chave": "4df84c39r",
+   "voz": "narradora",
+   "texto": "Vermelho: ______.",
+   "pacotes": [
+    "geografia-g4"
+   ],
+   "fala": "Vermelho: …"
+  },
+  {
+   "chave": "9f00ddf2s",
+   "voz": "claude",
+   "texto": "Problemas no Trânsito",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Problemas no Trânsito"
+  },
+  {
+   "chave": "4ebfa1992i",
+   "voz": "claude",
+   "texto": "Engarrafamento e fumaça! Vamos ver os problemas do trânsito e como ajudar a cidade.",
+   "pacotes": [
+    "geografia-extra"
+   ],
+   "fala": "Engarrafamento e fumaça! Vamos ver os problemas do trânsito e como ajudar a cidade."
+  },
+  {
+   "chave": "c5ecf5401j",
+   "voz": "narradora",
+   "texto": "Quando o trânsito fica bagunçado nas cidades?",
+   "pacotes": [
+    "geografia-g5"
+   ],
+   "fala": "Quando o trânsito fica bagunçado nas cidades?"
+  },
+  {
+   "chave": "98836f1d1l",
+   "voz": "narradora",
+   "texto": "Quando a cidade cresce muito e sem planejamento",
+   "pacotes": [
+    "geografia-g5"
+   ],
+   "fala": "Quando a cidade cresce muito e sem planejamento"
+  },
+  {
+   "chave": "27db7832y",
+   "voz": "narradora",
+   "texto": "Quando plantamos árvores",
+   "pacotes": [
+    "geografia-g5"
+   ],
+   "fala": "Quando plantamos árvores"
+  },
+  {
+   "chave": "2a2c690511",
+   "voz": "narradora",
+   "texto": "Quando andamos de bicicleta",
+   "pacotes": [
+    "geografia-g5"
+   ],
+   "fala": "Quando andamos de bicicleta"
+  },
+  {
+   "chave": "cf0d76621p",
+   "voz": "narradora",
+   "texto": "Muitos veículos circulando ao mesmo tempo causam...",
+   "pacotes": [
+    "geografia-g5"
+   ],
+   "fala": "Muitos veículos circulando ao mesmo tempo causam..."
+  },
+  {
+   "chave": "7c07e4fbr",
+   "voz": "narradora",
+   "texto": "congestionamentos",
+   "pacotes": [
+    "geografia-g5"
+   ],
+   "fala": "congestionamentos"
+  },
+  {
+   "chave": "abd98818j",
+   "voz": "narradora",
+   "texto": "arco-íris",
+   "pacotes": [
+    "geografia-g5"
+   ],
+   "fala": "arco-íris"
+  },
+  {
+   "chave": "d95b9877g",
+   "voz": "narradora",
+   "texto": "festas",
+   "pacotes": [
+    "geografia-g5"
+   ],
+   "fala": "festas"
+  },
+  {
+   "chave": "325d03ff1q",
+   "voz": "narradora",
+   "texto": "Congestionamento e engarrafamento são a mesma coisa.",
+   "pacotes": [
+    "geografia-g5"
+   ],
+   "fala": "Congestionamento e engarrafamento são a mesma coisa."
+  },
+  {
+   "chave": "d536bcd82a",
+   "voz": "narradora",
+   "texto": "Em que horários costumam acontecer os congestionamentos? Toque em TODOS.",
+   "pacotes": [
+    "geografia-g5"
+   ],
+   "fala": "Em que horários costumam acontecer os congestionamentos? Toque em todos."
+  },
+  {
+   "chave": "b7e6e769s",
+   "voz": "narradora",
+   "texto": "No início da manhã",
+   "pacotes": [
+    "geografia-g5"
+   ],
+   "fala": "No início da manhã"
+  },
+  {
+   "chave": "cc5fed34r",
+   "voz": "narradora",
+   "texto": "Na hora do almoço",
+   "pacotes": [
+    "geografia-g5"
+   ],
+   "fala": "Na hora do almoço"
+  },
+  {
+   "chave": "a789fec9p",
+   "voz": "narradora",
+   "texto": "No fim da tarde",
+   "pacotes": [
+    "geografia-g5"
+   ],
+   "fala": "No fim da tarde"
+  },
+  {
+   "chave": "731f5276m",
+   "voz": "narradora",
+   "texto": "De madrugada",
+   "pacotes": [
+    "geografia-g5"
+   ],
+   "fala": "De madrugada"
+  },
+  {
+   "chave": "6806e8b81o",
+   "voz": "narradora",
+   "texto": "Que outro problema o trânsito de automóveis causa?",
+   "pacotes": [
+    "geografia-g5"
+   ],
+   "fala": "Que outro problema o trânsito de automóveis causa?"
+  },
+  {
+   "chave": "9293ba0el",
+   "voz": "narradora",
+   "texto": "Mais flores",
+   "pacotes": [
+    "geografia-g5"
+   ],
+   "fala": "Mais flores"
+  },
+  {
+   "chave": "b0befcdaq",
+   "voz": "narradora",
+   "texto": "Mais passarinhos",
+   "pacotes": [
+    "geografia-g5"
+   ],
+   "fala": "Mais passarinhos"
+  },
+  {
+   "chave": "44f286aa27",
+   "voz": "narradora",
+   "texto": "A fumaça que sai dos escapamentos dos veículos deixa o ar mais limpo.",
+   "pacotes": [
+    "geografia-g5"
+   ],
+   "fala": "A fumaça que sai dos escapamentos dos veículos deixa o ar mais limpo."
+  },
+  {
+   "chave": "30093e2922",
+   "voz": "narradora",
+   "texto": "O que ajuda a diminuir os problemas no trânsito? Toque em TODOS.",
+   "pacotes": [
+    "geografia-g5"
+   ],
+   "fala": "O que ajuda a diminuir os problemas no trânsito? Toque em todos."
+  },
+  {
+   "chave": "f2d6c7e4g",
+   "voz": "narradora",
+   "texto": "Ônibus",
+   "pacotes": [
+    "geografia-g5"
+   ],
+   "fala": "Ônibus"
+  },
+  {
+   "chave": "fd77a3f7f",
+   "voz": "narradora",
+   "texto": "Metrô",
+   "pacotes": [
+    "geografia-g5"
+   ],
+   "fala": "Metrô"
+  },
+  {
+   "chave": "02226129j",
+   "voz": "narradora",
+   "texto": "Bicicleta",
+   "pacotes": [
+    "geografia-g5"
+   ],
+   "fala": "Bicicleta"
+  },
+  {
+   "chave": "9a850b7cy",
+   "voz": "narradora",
+   "texto": "Cada pessoa no seu carro",
+   "pacotes": [
+    "geografia-g5"
+   ],
+   "fala": "Cada pessoa no seu carro"
+  },
+  {
+   "chave": "bf33367a1n",
+   "voz": "narradora",
+   "texto": "A bicicleta é um veículo de uso individual que...",
+   "pacotes": [
+    "geografia-g5"
+   ],
+   "fala": "A bicicleta é um veículo de uso individual que..."
+  },
+  {
+   "chave": "a62d97f7z",
+   "voz": "narradora",
+   "texto": "não emite gases poluentes",
+   "pacotes": [
+    "geografia-g5"
+   ],
+   "fala": "não emite gases poluentes"
+  },
+  {
+   "chave": "a4fdb09fs",
+   "voz": "narradora",
+   "texto": "solta muita fumaça",
+   "pacotes": [
+    "geografia-g5"
+   ],
+   "fala": "solta muita fumaça"
+  },
+  {
+   "chave": "b7584ea3t",
+   "voz": "narradora",
+   "texto": "precisa de gasolina",
+   "pacotes": [
+    "geografia-g5"
+   ],
+   "fala": "precisa de gasolina"
+  },
+  {
+   "chave": "21bfad4e1t",
+   "voz": "narradora",
+   "texto": "Transporte coletivo ou não motorizado? Separe nos baús!",
+   "pacotes": [
+    "geografia-g5"
+   ],
+   "fala": "Transporte coletivo ou não motorizado? Separe nos baús!"
+  },
+  {
+   "chave": "5fb3783829",
+   "voz": "narradora",
+   "texto": "A foto de trânsito congestionado da apostila foi tirada em qual cidade?",
+   "pacotes": [
+    "geografia-g5"
+   ],
+   "fala": "A foto de trânsito congestionado da apostila foi tirada em qual cidade?"
+  },
+  {
+   "chave": "98622ecbs",
+   "voz": "narradora",
+   "texto": "Salvador, na Bahia",
+   "pacotes": [
+    "geografia-g5"
+   ],
+   "fala": "Salvador, na Bahia"
+  },
+  {
+   "chave": "32f000c8f",
+   "voz": "narradora",
+   "texto": "Paris",
+   "pacotes": [
+    "geografia-g5"
+   ],
+   "fala": "Paris"
+  },
+  {
+   "chave": "6dfbc4fan",
+   "voz": "narradora",
+   "texto": "No Polo Norte",
+   "pacotes": [
+    "geografia-g5"
+   ],
+   "fala": "No Polo Norte"
+  },
+  {
+   "chave": "27d8a9a82z",
+   "voz": "narradora",
+   "texto": "Quando o trânsito é organizado e o transporte público é eficiente, a cidade fica mais acolhedora.",
+   "pacotes": [
+    "geografia-g5"
+   ],
+   "fala": "Quando o trânsito é organizado e o transporte público é eficiente, a cidade fica mais acolhedora."
+  },
+  {
+   "chave": "acd4780d1t",
+   "voz": "narradora",
+   "texto": "Quais são problemas comuns no trânsito? Toque em TODOS.",
+   "pacotes": [
+    "geografia-g5"
+   ],
+   "fala": "Quais são problemas comuns no trânsito? Toque em todos."
+  },
+  {
+   "chave": "771a23b1o",
+   "voz": "narradora",
+   "texto": "Engarrafamento",
+   "pacotes": [
+    "geografia-g5"
+   ],
+   "fala": "Engarrafamento"
+  },
+  {
+   "chave": "f1ee414cm",
+   "voz": "narradora",
+   "texto": "Fumaça no ar",
+   "pacotes": [
+    "geografia-g5"
+   ],
+   "fala": "Fumaça no ar"
+  },
+  {
+   "chave": "5e2b7c3cs",
+   "voz": "narradora",
+   "texto": "Faixa de pedestres",
+   "pacotes": [
+    "geografia-g5"
+   ],
+   "fala": "Faixa de pedestres"
+  },
+  {
+   "chave": "37bdead5u",
+   "voz": "narradora",
+   "texto": "Semáforo funcionando",
+   "pacotes": [
+    "geografia-g5"
+   ],
+   "fala": "Semáforo funcionando"
   },
   {
    "chave": "ee369e4ee",
@@ -22038,6 +24518,7 @@
    "texto": "Um golinho de água?",
    "pacotes": [
     "interior-escola",
+    "interior-geografia",
     "interior-museu"
    ],
    "fala": "Um golinho de água?"
@@ -22473,6 +24954,1064 @@
     "interior-estabulo"
    ],
    "fala": "Beber água é na Pet Shop!"
+  },
+  {
+   "chave": "56e1adba18",
+   "voz": "npc-geo-marco",
+   "texto": "Oi, eu sou o Maquinista Marco!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Oi, eu sou o Maquinista Marco!"
+  },
+  {
+   "chave": "7d0e724218",
+   "voz": "npc-geo-marco",
+   "texto": "Todos os caminhos passam aqui!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Todos os caminhos passam aqui!"
+  },
+  {
+   "chave": "6dbb20f6v",
+   "voz": "npc-geo-marco",
+   "texto": "Quer ver a lista?",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Quer ver a lista?"
+  },
+  {
+   "chave": "1f39d00513",
+   "voz": "npc-geo-marco",
+   "texto": "Você ainda não fez salas.",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Você ainda não fez salas."
+  },
+  {
+   "chave": "81016d8217",
+   "voz": "npc-geo-marco",
+   "texto": "O treino do Castelo já abriu!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "O treino do Castelo já abriu!"
+  },
+  {
+   "chave": "eae7089b14",
+   "voz": "npc-geo-marco",
+   "texto": "Já fez uma de cinco salas.",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Já fez uma de cinco salas."
+  },
+  {
+   "chave": "756bcd1fw",
+   "voz": "npc-geo-marco",
+   "texto": "Já ganhou R$ 4,00!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Já ganhou 4 reais!"
+  },
+  {
+   "chave": "9300f26f15",
+   "voz": "npc-geo-marco",
+   "texto": "Já fez duas de cinco salas.",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Já fez duas de cinco salas."
+  },
+  {
+   "chave": "f2b926dbw",
+   "voz": "npc-geo-marco",
+   "texto": "Já ganhou R$ 8,00!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Já ganhou 8 reais!"
+  },
+  {
+   "chave": "829f41b515",
+   "voz": "npc-geo-marco",
+   "texto": "Já fez três de cinco salas.",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Já fez três de cinco salas."
+  },
+  {
+   "chave": "8b5c9658x",
+   "voz": "npc-geo-marco",
+   "texto": "Já ganhou R$ 12,00!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Já ganhou 12 reais!"
+  },
+  {
+   "chave": "8d41094817",
+   "voz": "npc-geo-marco",
+   "texto": "Já fez quatro de cinco salas.",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Já fez quatro de cinco salas."
+  },
+  {
+   "chave": "2f5de384x",
+   "voz": "npc-geo-marco",
+   "texto": "Já ganhou R$ 16,00!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Já ganhou 16 reais!"
+  },
+  {
+   "chave": "b4d5a49912",
+   "voz": "npc-geo-marco",
+   "texto": "Você fez as cinco salas!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Você fez as cinco salas!"
+  },
+  {
+   "chave": "ef0c6c9dx",
+   "voz": "npc-geo-marco",
+   "texto": "Já ganhou R$ 20,00!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Já ganhou 20 reais!"
+  },
+  {
+   "chave": "e35f749010",
+   "voz": "npc-geo-marco",
+   "texto": "A primeira é a Sala 1!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "A primeira é a Sala 1!"
+  },
+  {
+   "chave": "810f05e514",
+   "voz": "npc-geo-marco",
+   "texto": "Agora vamos para a Sala 1!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Agora vamos para a Sala 1!"
+  },
+  {
+   "chave": "190c239614",
+   "voz": "npc-geo-marco",
+   "texto": "Agora vamos para a Sala 2!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Agora vamos para a Sala 2!"
+  },
+  {
+   "chave": "f509ac5314",
+   "voz": "npc-geo-marco",
+   "texto": "Agora vamos para a Sala 3!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Agora vamos para a Sala 3!"
+  },
+  {
+   "chave": "fd1b020c14",
+   "voz": "npc-geo-marco",
+   "texto": "Agora vamos para a Sala 4!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Agora vamos para a Sala 4!"
+  },
+  {
+   "chave": "1918ef8914",
+   "voz": "npc-geo-marco",
+   "texto": "Agora vamos para a Sala 5!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Agora vamos para a Sala 5!"
+  },
+  {
+   "chave": "c79ac40a16",
+   "voz": "npc-geo-lais",
+   "texto": "Oi, eu sou a Intérprete Laís!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Oi, eu sou a Intérprete Laís!"
+  },
+  {
+   "chave": "76d37313z",
+   "voz": "npc-geo-lais",
+   "texto": "Eu converso em Libras!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Eu converso em Libras!"
+  },
+  {
+   "chave": "a7d2ea8e14",
+   "voz": "npc-geo-lais",
+   "texto": "Vamos aprender a comunicar?",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Vamos aprender a comunicar?"
+  },
+  {
+   "chave": "e0ad502414",
+   "voz": "npc-geo-lais",
+   "texto": "Vamos conversar com sinais?",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Vamos conversar com sinais?"
+  },
+  {
+   "chave": "6bfcd6ee17",
+   "voz": "npc-geo-lais",
+   "texto": "Quer conversar de novo comigo?",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Quer conversar de novo comigo?"
+  },
+  {
+   "chave": "ec1b3e6415",
+   "voz": "npc-geo-lais",
+   "texto": "Vamos brincar com os sinais?",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Vamos brincar com os sinais?"
+  },
+  {
+   "chave": "e59ca39812",
+   "voz": "npc-geo-lais",
+   "texto": "Que conversa mais bonita!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Que conversa mais bonita!"
+  },
+  {
+   "chave": "a02c915b15",
+   "voz": "npc-geo-lais",
+   "texto": "Você se comunicou muito bem!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Você se comunicou muito bem!"
+  },
+  {
+   "chave": "2b8eb09c17",
+   "voz": "npc-geo-lais",
+   "texto": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Tudo bem, volte quando quiser!"
+  },
+  {
+   "chave": "191bb13f15",
+   "voz": "npc-geo-lais",
+   "texto": "Mais uma vez e o raro nasce!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Mais uma vez e o raro nasce!"
+  },
+  {
+   "chave": "3f77d52514",
+   "voz": "npc-geo-lais",
+   "texto": "Faltam duas vezes pro raro!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Faltam duas vezes pro raro!"
+  },
+  {
+   "chave": "e5db81d714",
+   "voz": "npc-geo-lais",
+   "texto": "Faltam três vezes pro raro!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Faltam três vezes pro raro!"
+  },
+  {
+   "chave": "cdac800813",
+   "voz": "npc-geo-lais",
+   "texto": "Ou de primeira, com calma!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Ou de primeira, com calma!"
+  },
+  {
+   "chave": "3303c5da15",
+   "voz": "npc-geo-lais",
+   "texto": "O raro desta sala já nasceu!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "O raro desta sala já nasceu!"
+  },
+  {
+   "chave": "36b130c115",
+   "voz": "npc-geo-duda",
+   "texto": "Olá, eu sou a Locutora Duda!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Olá, eu sou a Locutora Duda!"
+  },
+  {
+   "chave": "be822ce6u",
+   "voz": "npc-geo-duda",
+   "texto": "Eu falo no rádio!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Eu falo no rádio!"
+  },
+  {
+   "chave": "921301a010",
+   "voz": "npc-geo-duda",
+   "texto": "Individual ou coletivo?",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Individual ou coletivo?"
+  },
+  {
+   "chave": "ae69c10aj",
+   "voz": "npc-geo-duda",
+   "texto": "Vamos?",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Vamos?"
+  },
+  {
+   "chave": "d938de3f10",
+   "voz": "npc-geo-duda",
+   "texto": "Vamos separar os meios?",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Vamos separar os meios?"
+  },
+  {
+   "chave": "72fae8f413",
+   "voz": "npc-geo-duda",
+   "texto": "Quer separar tudo de novo?",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Quer separar tudo de novo?"
+  },
+  {
+   "chave": "3f10518317",
+   "voz": "npc-geo-duda",
+   "texto": "Vamos ouvir o rádio outra vez?",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Vamos ouvir o rádio outra vez?"
+  },
+  {
+   "chave": "2e96c80a13",
+   "voz": "npc-geo-duda",
+   "texto": "Notícia boa: você acertou!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Notícia boa: você acertou!"
+  },
+  {
+   "chave": "35172ee312",
+   "voz": "npc-geo-duda",
+   "texto": "Você separou com atenção!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Você separou com atenção!"
+  },
+  {
+   "chave": "6957122117",
+   "voz": "npc-geo-duda",
+   "texto": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Tudo bem, volte quando quiser!"
+  },
+  {
+   "chave": "714812ee15",
+   "voz": "npc-geo-duda",
+   "texto": "Mais uma vez e o raro nasce!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Mais uma vez e o raro nasce!"
+  },
+  {
+   "chave": "61a9cd4614",
+   "voz": "npc-geo-duda",
+   "texto": "Faltam duas vezes pro raro!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Faltam duas vezes pro raro!"
+  },
+  {
+   "chave": "c5f097b014",
+   "voz": "npc-geo-duda",
+   "texto": "Faltam três vezes pro raro!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Faltam três vezes pro raro!"
+  },
+  {
+   "chave": "097c434113",
+   "voz": "npc-geo-duda",
+   "texto": "Ou de primeira, com calma!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Ou de primeira, com calma!"
+  },
+  {
+   "chave": "f75a35db15",
+   "voz": "npc-geo-duda",
+   "texto": "O raro desta sala já nasceu!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "O raro desta sala já nasceu!"
+  },
+  {
+   "chave": "4afbf64911",
+   "voz": "npc-geo-teo",
+   "texto": "Oi, eu sou o Técnico Téo!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Oi, eu sou o Técnico Téo!"
+  },
+  {
+   "chave": "5d168355z",
+   "voz": "npc-geo-teo",
+   "texto": "Eu cuido dos telefones!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Eu cuido dos telefones!"
+  },
+  {
+   "chave": "534d2ccf16",
+   "voz": "npc-geo-teo",
+   "texto": "Do telefone ao celular: vamos?",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Do telefone ao celular: vamos?"
+  },
+  {
+   "chave": "ce61407d15",
+   "voz": "npc-geo-teo",
+   "texto": "Internet segura é com adulto!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Internet segura é com adulto!"
+  },
+  {
+   "chave": "05bc1ba212",
+   "voz": "npc-geo-teo",
+   "texto": "Vamos navegar com cuidado?",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Vamos navegar com cuidado?"
+  },
+  {
+   "chave": "2cc5d8d412",
+   "voz": "npc-geo-teo",
+   "texto": "Vamos brincar de telefone?",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Vamos brincar de telefone?"
+  },
+  {
+   "chave": "1cfce91711",
+   "voz": "npc-geo-teo",
+   "texto": "Você navegou com cuidado!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Você navegou com cuidado!"
+  },
+  {
+   "chave": "42709497z",
+   "voz": "npc-geo-teo",
+   "texto": "Que ligação caprichada!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Que ligação caprichada!"
+  },
+  {
+   "chave": "5cea4b1b16",
+   "voz": "npc-geo-teo",
+   "texto": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Tudo bem, volte quando quiser!"
+  },
+  {
+   "chave": "cb63f2b814",
+   "voz": "npc-geo-teo",
+   "texto": "Mais uma vez e o raro nasce!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Mais uma vez e o raro nasce!"
+  },
+  {
+   "chave": "41070f7413",
+   "voz": "npc-geo-teo",
+   "texto": "Faltam duas vezes pro raro!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Faltam duas vezes pro raro!"
+  },
+  {
+   "chave": "dcbaeb8613",
+   "voz": "npc-geo-teo",
+   "texto": "Faltam três vezes pro raro!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Faltam três vezes pro raro!"
+  },
+  {
+   "chave": "e42b3dfb12",
+   "voz": "npc-geo-teo",
+   "texto": "Ou de primeira, com calma!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Ou de primeira, com calma!"
+  },
+  {
+   "chave": "56b6ab1d14",
+   "voz": "npc-geo-teo",
+   "texto": "O raro desta sala já nasceu!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "O raro desta sala já nasceu!"
+  },
+  {
+   "chave": "1745735213",
+   "voz": "npc-geo-beto",
+   "texto": "Olá, eu sou o Guarda Beto!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Olá, eu sou o Guarda Beto!"
+  },
+  {
+   "chave": "1f2cd84cy",
+   "voz": "npc-geo-beto",
+   "texto": "Eu cuido do trânsito!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Eu cuido do trânsito!"
+  },
+  {
+   "chave": "7530ef2013",
+   "voz": "npc-geo-beto",
+   "texto": "Vamos atravessar na faixa?",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Vamos atravessar na faixa?"
+  },
+  {
+   "chave": "04af08ed14",
+   "voz": "npc-geo-beto",
+   "texto": "Vermelho, amarelo ou verde?",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Vermelho, amarelo ou verde?"
+  },
+  {
+   "chave": "92ed1ea811",
+   "voz": "npc-geo-beto",
+   "texto": "Quer revisar o semáforo?",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Quer revisar o semáforo?"
+  },
+  {
+   "chave": "9bb255ac15",
+   "voz": "npc-geo-beto",
+   "texto": "Vamos ler as placas de novo?",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Vamos ler as placas de novo?"
+  },
+  {
+   "chave": "ec1a42c515",
+   "voz": "npc-geo-beto",
+   "texto": "Você atravessou com cuidado!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Você atravessou com cuidado!"
+  },
+  {
+   "chave": "45fc816611",
+   "voz": "npc-geo-beto",
+   "texto": "Que pedestre caprichosa!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Que pedestre caprichosa!"
+  },
+  {
+   "chave": "e653662117",
+   "voz": "npc-geo-beto",
+   "texto": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Tudo bem, volte quando quiser!"
+  },
+  {
+   "chave": "128f46ee15",
+   "voz": "npc-geo-beto",
+   "texto": "Mais uma vez e o raro nasce!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Mais uma vez e o raro nasce!"
+  },
+  {
+   "chave": "a196494614",
+   "voz": "npc-geo-beto",
+   "texto": "Faltam duas vezes pro raro!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Faltam duas vezes pro raro!"
+  },
+  {
+   "chave": "05dd13b014",
+   "voz": "npc-geo-beto",
+   "texto": "Faltam três vezes pro raro!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Faltam três vezes pro raro!"
+  },
+  {
+   "chave": "1e9b574113",
+   "voz": "npc-geo-beto",
+   "texto": "Ou de primeira, com calma!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Ou de primeira, com calma!"
+  },
+  {
+   "chave": "98a169db15",
+   "voz": "npc-geo-beto",
+   "texto": "O raro desta sala já nasceu!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "O raro desta sala já nasceu!"
+  },
+  {
+   "chave": "e567ef0e14",
+   "voz": "npc-geo-cora",
+   "texto": "Oi, eu sou a Ciclista Cora!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Oi, eu sou a Ciclista Cora!"
+  },
+  {
+   "chave": "82043c9cx",
+   "voz": "npc-geo-cora",
+   "texto": "Eu vou de bicicleta!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Eu vou de bicicleta!"
+  },
+  {
+   "chave": "b4ad28f211",
+   "voz": "npc-geo-cora",
+   "texto": "Vamos ajudar o trânsito?",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Vamos ajudar o trânsito?"
+  },
+  {
+   "chave": "0799110e12",
+   "voz": "npc-geo-cora",
+   "texto": "Vamos pedalar sem fumaça?",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Vamos pedalar sem fumaça?"
+  },
+  {
+   "chave": "62efa81415",
+   "voz": "npc-geo-cora",
+   "texto": "Quer pedalar de novo comigo?",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Quer pedalar de novo comigo?"
+  },
+  {
+   "chave": "65bb938210",
+   "voz": "npc-geo-cora",
+   "texto": "Vamos cuidar da cidade?",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Vamos cuidar da cidade?"
+  },
+  {
+   "chave": "b30da57f12",
+   "voz": "npc-geo-cora",
+   "texto": "O ar ficou mais limpinho!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "O ar ficou mais limpinho!"
+  },
+  {
+   "chave": "ff4c5290y",
+   "voz": "npc-geo-cora",
+   "texto": "Você ajudou a cidade!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Você ajudou a cidade!"
+  },
+  {
+   "chave": "7585441417",
+   "voz": "npc-geo-cora",
+   "texto": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Tudo bem, volte quando quiser!"
+  },
+  {
+   "chave": "0e0ab5e715",
+   "voz": "npc-geo-cora",
+   "texto": "Mais uma vez e o raro nasce!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Mais uma vez e o raro nasce!"
+  },
+  {
+   "chave": "945521fd14",
+   "voz": "npc-geo-cora",
+   "texto": "Faltam duas vezes pro raro!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Faltam duas vezes pro raro!"
+  },
+  {
+   "chave": "47047f7f14",
+   "voz": "npc-geo-cora",
+   "texto": "Faltam três vezes pro raro!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Faltam três vezes pro raro!"
+  },
+  {
+   "chave": "c168a4f013",
+   "voz": "npc-geo-cora",
+   "texto": "Ou de primeira, com calma!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Ou de primeira, com calma!"
+  },
+  {
+   "chave": "1f8cb7c215",
+   "voz": "npc-geo-cora",
+   "texto": "O raro desta sala já nasceu!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "O raro desta sala já nasceu!"
+  },
+  {
+   "chave": "58a5f89a11",
+   "voz": "narradora",
+   "texto": "A linha do tempo dos meios!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "A linha do tempo dos meios!"
+  },
+  {
+   "chave": "3ff44ba412",
+   "voz": "narradora",
+   "texto": "Carta, telefone, rádio e TV.",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Carta, telefone, rádio e tv."
+  },
+  {
+   "chave": "ff779dfaw",
+   "voz": "narradora",
+   "texto": "Depois veio o celular!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Depois veio o celular!"
+  },
+  {
+   "chave": "23eb14c9v",
+   "voz": "narradora",
+   "texto": "O Livro dos Caminhos!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "O Livro dos Caminhos!"
+  },
+  {
+   "chave": "e465e04au",
+   "voz": "narradora",
+   "texto": "Vamos ler com calma?",
+   "pacotes": [
+    "interior-geografia",
+    "interior-museu",
+    "interior-observatorio",
+    "interior-portugues",
+    "interior-torre"
+   ],
+   "fala": "Vamos ler com calma?"
+  },
+  {
+   "chave": "a345d3ee11",
+   "voz": "narradora",
+   "texto": "Descanse os olhos um pouco.",
+   "pacotes": [
+    "interior-geografia",
+    "interior-museu"
+   ],
+   "fala": "Descanse os olhos um pouco."
+  },
+  {
+   "chave": "7e255cc4z",
+   "voz": "narradora",
+   "texto": "As mãos também conversam!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "As mãos também conversam!"
+  },
+  {
+   "chave": "93c06120q",
+   "voz": "narradora",
+   "texto": "Isso é a Libras.",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Isso é a Libras."
+  },
+  {
+   "chave": "4f0fbc3e13",
+   "voz": "narradora",
+   "texto": "O rádio fala com muita gente!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "O rádio fala com muita gente!"
+  },
+  {
+   "chave": "67a66121t",
+   "voz": "narradora",
+   "texto": "Ele usa só os sons.",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Ele usa só os sons."
+  },
+  {
+   "chave": "0a2f6f15t",
+   "voz": "narradora",
+   "texto": "A caixa de correio!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "A caixa de correio!"
+  },
+  {
+   "chave": "1889b4edx",
+   "voz": "narradora",
+   "texto": "A carta precisa do CEP.",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "A carta precisa do cep."
+  },
+  {
+   "chave": "06934e4111",
+   "voz": "narradora",
+   "texto": "Um telefone antigo, de fio!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Um telefone antigo, de fio!"
+  },
+  {
+   "chave": "d478fc44w",
+   "voz": "narradora",
+   "texto": "Ele só transmitia som.",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Ele só transmitia som."
+  },
+  {
+   "chave": "d5e8e75b10",
+   "voz": "narradora",
+   "texto": "Internet só com um adulto!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Internet só com um adulto!"
+  },
+  {
+   "chave": "5395453a10",
+   "voz": "narradora",
+   "texto": "E a câmera fica desligada.",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "E a câmera fica desligada."
+  },
+  {
+   "chave": "900e2330p",
+   "voz": "narradora",
+   "texto": "Vermelho: pare!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Vermelho: pare!"
+  },
+  {
+   "chave": "95f3932cr",
+   "voz": "narradora",
+   "texto": "Amarelo: atenção!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Amarelo: atenção!"
+  },
+  {
+   "chave": "2497cdd6m",
+   "voz": "narradora",
+   "texto": "Verde: siga!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Verde: siga!"
+  },
+  {
+   "chave": "294ca6f8v",
+   "voz": "narradora",
+   "texto": "A faixa de pedestres!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "A faixa de pedestres!"
+  },
+  {
+   "chave": "fff8e95010",
+   "voz": "narradora",
+   "texto": "Atravesse sempre por aqui.",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Atravesse sempre por aqui."
+  },
+  {
+   "chave": "86c5346513",
+   "voz": "narradora",
+   "texto": "A bicicleta não solta fumaça!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "A bicicleta não solta fumaça!"
+  },
+  {
+   "chave": "61a0d91fz",
+   "voz": "narradora",
+   "texto": "Ela ajuda o ar da cidade.",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "Ela ajuda o ar da cidade."
+  },
+  {
+   "chave": "169e57e5s",
+   "voz": "narradora",
+   "texto": "O ponto de ônibus!",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "O ponto de ônibus!"
+  },
+  {
+   "chave": "3b19259e10",
+   "voz": "narradora",
+   "texto": "O ônibus leva muita gente.",
+   "pacotes": [
+    "interior-geografia"
+   ],
+   "fala": "O ônibus leva muita gente."
   },
   {
    "chave": "ee05c45be",
@@ -23537,18 +27076,6 @@
    "fala": "O Livro das Memórias!"
   },
   {
-   "chave": "e465e04au",
-   "voz": "narradora",
-   "texto": "Vamos ler com calma?",
-   "pacotes": [
-    "interior-museu",
-    "interior-observatorio",
-    "interior-portugues",
-    "interior-torre"
-   ],
-   "fala": "Vamos ler com calma?"
-  },
-  {
    "chave": "1678f3e1s",
    "voz": "narradora",
    "texto": "É o mapa do museu!",
@@ -23574,15 +27101,6 @@
     "interior-museu"
    ],
    "fala": "Entre numa sala sem pressa."
-  },
-  {
-   "chave": "a345d3ee11",
-   "voz": "narradora",
-   "texto": "Descanse os olhos um pouco.",
-   "pacotes": [
-    "interior-museu"
-   ],
-   "fala": "Descanse os olhos um pouco."
   },
   {
    "chave": "0c84ed01y",

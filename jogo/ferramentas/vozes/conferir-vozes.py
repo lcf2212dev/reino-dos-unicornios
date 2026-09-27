@@ -44,7 +44,7 @@ DEZENAS = ' dez vinte trinta quarenta cinquenta sessenta setenta oitenta noventa
 CENTENAS = ' cento duzentos trezentos quatrocentos quinhentos seiscentos setecentos oitocentos novecentos'.split(' ')
 # o transcritor escreve diferente do texto, mas a voz disse certo
 TROCAS = {'pro': 'para o', 'pra': 'para a', 'pros': 'para os', 'pras': 'para as', 'uma': 'um', 'catorze': 'quatorze',
-          'comeia': 'colmeia', 'comeias': 'colmeias', 'real': 'reais'}
+          'comeia': 'colmeia', 'comeias': 'colmeias', 'real': 'reais', 'duas': 'dois'}
 
 
 def extenso(n):
@@ -62,11 +62,16 @@ def extenso(n):
 def normalizar(t):
     t = re.sub(r'R\$\s?(\d+)(?:,(\d{2}))?', lambda m: m.group(1) + ' reais' + (' e ' + m.group(2) + ' centavos' if m.group(2) and m.group(2) != '00' else ''), t)
     t = re.sub(r'(\d),00\b', r'\1', t)
+    # contas e horas da Matemática: "3 × 5 = 15" é lido "3 vezes 5 é igual a 15"; "09:00" e "9h" são "9 horas"
+    t = t.replace('+', ' mais ').replace('×', ' vezes ').replace('=', ' igual ')
+    t = re.sub(r'\b0?(\d{1,2})(?::|h)(\d{2})\b', lambda m: m.group(1) + ' horas' + ('' if m.group(2) == '00' else ' e ' + str(int(m.group(2)))), t)
+    t = re.sub(r'\b0?(\d{1,2})h\b', r'\1 horas', t)
     t = unicodedata.normalize('NFD', t.lower())
     t = ''.join(c for c in t if unicodedata.category(c) != 'Mn')
     t = re.sub(r"[^a-z0-9]+", ' ', t)
     t = re.sub(r'\b(\d+)\b', lambda m: extenso(int(m.group(1))), t)
-    return ' '.join(TROCAS.get(p, p) for p in t.split())
+    t = ' '.join(TROCAS.get(p, p) for p in t.split())
+    return re.sub(r'\be igual a\b', 'igual', t)
 
 
 def parecido(a, b):

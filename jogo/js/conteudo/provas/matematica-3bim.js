@@ -7,7 +7,7 @@
 // a professora da prova (docs/contratos/npcs-e-dialogo.md §5): voz que nenhuma outra professora nem ninguém da Escola usa
 Reino.registrarPersonagem({ id: 'prof-celia', nome: 'Professora Célia', paraProva: 'matematica-3bim',
   sprite: { pele: '#c98e62', cabelo: '#2b1a12', penteado: 'coque', roupa: '#3f7fe0', roupa2: '#ffc93c', perna: 'saia' },
-  perfil: { voz: 'pt-BR-FranciscaNeural', velocidade: '+4%', tom: '-8Hz' } });
+  perfil: { voz: 'pt-BR-ThalitaMultilingualNeural', velocidade: '-6%', tom: '+2Hz' } });
 Reino.registrarProva({
   id: 'matematica-3bim',
   materiaId: 'matematica',
