@@ -332,6 +332,7 @@
   window.addEventListener('keydown', function (e) {
     var t = topo();
     if (!t || e.defaultPrevented || e.key !== 'Escape' || e.repeat) return;
+    if (UI.esperandoFala()) { e.preventDefault(); return; }
     if (campoDeTexto(document.activeElement)) return;
     // balão do Claude por cima da tela: o 1º Esc fecha o balão; o seguinte, a tela
     if (Reino.Claude && Reino.Claude.aberto && Reino.Claude.aberto()) { e.preventDefault(); Reino.Claude.fechar(); return; }
@@ -358,6 +359,40 @@
     focar(lista[prox]);
     mostrarFoco(lista[prox]);
   });
+
+  /* ---------- ouvir antes de seguir ----------
+     UI.esperarFala(alvos, segmentos, opcoes) fala (Som.falarEsperando) e, se vale esperar, desabilita os
+     botões e campos de `alvos` (elemento, seletor ou lista; num contêiner, os de dentro) até a fala acabar
+     ou o teto de tempo. O que tem a classe `livre-na-fala` (o 🔊 Ouvir) fica livre. Enquanto espera,
+     UI.esperandoFala() é true e o Esc não fecha nada. Nada muda no DOM quando não há espera (voz
+     desligada, sem gravação, áudio bloqueado). Devolve a Promise do fim (já resolvida sem espera). */
+  var esperas = 0;
+  UI.esperandoFala = function () { return esperas > 0; };
+  UI.esperarFala = function (alvos, segmentos, opcoes) {
+    var r = Reino.Som.falarEsperando(segmentos, opcoes);
+    if (!r.espera) return r.fim;
+    var lista = [];
+    (Array.isArray(alvos) ? alvos : [alvos]).forEach(function (a) {
+      if (typeof a === 'string') a = document.querySelectorAll(a);
+      if (!a) return;
+      (a.length !== undefined ? Array.prototype.slice.call(a) : [a]).forEach(function (x) {
+        if (!x || !x.matches) return;
+        if (x.matches('button, input, select, textarea')) lista.push(x);
+        else Array.prototype.push.apply(lista, x.querySelectorAll('button, input, select, textarea'));
+      });
+    });
+    var travados = lista.filter(function (b) { return !b.disabled && !b.classList.contains('livre-na-fala'); });
+    travados.forEach(function (b) { b.disabled = true; b.classList.add('esperando-fala'); });
+    esperas++;
+    return r.fim.then(function () {
+      esperas = Math.max(0, esperas - 1);
+      travados.forEach(function (b) {
+        if (!b.classList.contains('esperando-fala')) return;
+        b.classList.remove('esperando-fala');
+        b.disabled = false;
+      });
+    });
+  };
 
   window.Reino.UI = UI;
   /* Reino._ui: o que as partes de js/ui/ dividem entre si (interno, não é API do jogo).

@@ -51,6 +51,15 @@ body {
 input { -webkit-user-select: text; user-select: text; }
 button { font: inherit; color: inherit; cursor: pointer; touch-action: manipulation; }
 button:disabled { cursor: default; }
+/* ouvir antes de seguir (UI.esperarFala): o botão espera a fala acabar, apagado e com uma bolinha pulsando */
+button.esperando-fala { opacity: 0.45; position: relative; }
+button.esperando-fala::after {
+  content: ''; position: absolute; top: -5px; right: -5px; width: 10px; height: 10px; border-radius: 50%;
+  background: var(--borda); animation: esperando-fala 0.8s ease-in-out infinite alternate;
+}
+@keyframes esperando-fala { from { opacity: 0.3; transform: scale(0.7); } to { opacity: 1; transform: scale(1); } }
+body.sem-animacao button.esperando-fala::after { animation: none; }
+@media (prefers-reduced-motion: reduce) { button.esperando-fala::after { animation: none; } }
 :focus-visible { outline: 4px solid var(--roxo); outline-offset: 3px; }
 .pixel, canvas { image-rendering: pixelated; image-rendering: crisp-edges; }
 .icone-px { vertical-align: -0.3em; }

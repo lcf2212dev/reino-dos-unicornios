@@ -237,5 +237,31 @@
   V.falando = function () { return !!tocando; };
   V.tem = function (voz, texto) { return V.dividir(texto, voz).every(function (p) { return !!clips[V.chave(p.voz, p.texto)]; }); };
 
+  /* Fala e diz se vale esperar por ela (UI.esperarFala trava os botões até o fim).
+     → { espera: bool, fim: Promise }. espera = false (e fim já resolvida) quando nada vai soar:
+     voz desligada, sem AudioContext ou com ele parado (autoplay bloqueado: `onended` nunca viria),
+     nenhum pedaço gravado (ou o pacote ainda não chegou). Com espera, `fim` resolve no fim da fala,
+     quando outra fala a corta, ou no teto (config.esperaFala: tempo estimado pelo tamanho do texto),
+     para ela nunca ficar presa se o áudio travar. */
+  V.falarEsperando = function (segmentos, opcoes) {
+    var cfg = (Reino.config && Reino.config.esperaFala) || {};
+    var lista = [];
+    (Array.isArray(segmentos) ? segmentos : [segmentos]).filter(Boolean).forEach(function (s) {
+      var voz = (typeof s === 'string' ? null : s.voz) || (opcoes && opcoes.voz) || 'claude';
+      lista = lista.concat(V.dividir(typeof s === 'string' ? s : s.texto, voz));
+    });
+    var fala = V.falar(segmentos, opcoes);
+    var ac = Reino.Som && Reino.Som.contexto ? Reino.Som.contexto() : null;
+    var gravados = lista.filter(function (p) { return !!clips[V.chave(p.voz, p.texto)]; });
+    if (ajustes().voz === false || !ac || ac.state !== 'running' || !gravados.length) {
+      return { espera: false, fim: Promise.resolve() };
+    }
+    var letras = gravados.reduce(function (n, p) { return n + V.normalizar(p.texto).length; }, 0);
+    var tetoMs = Math.min((cfg.maxS || 30) * 1000,
+      Math.max((cfg.minS || 2) * 1000, letras * (cfg.msPorLetra || 75) * (cfg.folga || 1.6) + gravados.length * 250));
+    var teto = new Promise(function (r) { setTimeout(r, tetoMs); });
+    return { espera: true, fim: Promise.race([fala, teto]) };
+  };
+
   Reino.Voz = V;
 })();

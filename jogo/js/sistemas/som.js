@@ -180,6 +180,9 @@
   };
   S.temVoz = function () { return true; };
   S.falar = function (segmentos, opcoes) { return Reino.Voz ? Reino.Voz.falar(segmentos, opcoes) : Promise.resolve(); };
+  S.falarEsperando = function (segmentos, opcoes) {
+    return Reino.Voz ? Reino.Voz.falarEsperando(segmentos, opcoes) : { espera: false, fim: Promise.resolve() };
+  };
   S.calar = function () { if (Reino.Voz) Reino.Voz.calar(); };
 
   Reino.Som = S;
