@@ -59,6 +59,8 @@ function prepararFala(texto, voz, pacotes) {
     return todo.slice(0, pos).endsWith(ESTADOS[uf]) ? '' : ', ' + ESTADOS[uf] + ',';
   });
   // siglas de documentos: soletradas do jeito que a gente fala
+  // "3 × 5": a voz lia "multiplicação"; na apostila se lê "vezes"
+  t = t.replace(/\s*×\s*/g, ' vezes ');
   t = t.replace(/\bCPF\b/g, 'cê pê éfe').replace(/\bRG\b/g, 'erre gê');
   t = t.replace(/\bpp\.\s*/g, 'páginas ').replace(/\bcaps\.\s*/g, 'capítulos ');
   t = t.replace(/_{2,}/g, '…').replace(/…\./g, '…').replace(/,,/g, ',');
