@@ -9,25 +9,34 @@
   var V = Reino._motor, est = V.est, pintor = V.pintor;
 
   /* ---------- telas de entrada ---------- */
+  // a abertura (js/ui/abertura.js): cena animada na tela inteira + o título "Reino dos Unicórnios"
   function logo() {
-    var d = Reino.Unicornios.def('inicial', est().corInicial);
-    return el('div.logo',
-      el('div.logo-arco'),
-      PA.paraDOM(PA.montada(d, 3, 0, est().aparencia, {}), 6, 'logo-uni'),
-      el('h1.titulo-jogo', el('span', 'Mariana'), el('small', 'e o Reino dos Unicórnios')));
+    return UI.abertura({ montaria: Reino.Unicornios.def('inicial', est().corInicial), aparencia: est().aparencia }).el;
   }
 
   function telaInicio() {
     return new Promise(function (resolver) {
       var t = UI.abrirTela('inicio');
-      var ir = el('button.btn-grande.btn-principal.btn-comecar', { type: 'button' }, 'Entrar no Reino ✨');
-      t.appendChild(el('div.inicio', logo(), ir,
-        el('p.inicio-sub', 'Revisão de ' + Reino.materias.map(function (m) { return m.nome; }).join(' e '))));
+      var cena = UI.abertura({ montaria: Reino.Unicornios.def('inicial', est().corInicial), aparencia: est().aparencia });
+      var ir = el('button.btn-grande.btn-principal.btn-comecar.btn-pulsar', { type: 'button' }, 'Entrar no Reino ✨');
+      var botoes = el('div.inicio-botoes', ir);
+      var nomes = Reino.materias.map(function (m) { return m.nome; });
+      // contrato com a tela de jogadores: o botão só aparece quando ela existe
+      if (typeof UI.trocarJogador === 'function') {
+        var trocar = el('button.btn-pequeno.btn-trocar-jogador', { type: 'button' }, 'Trocar jogador');
+        trocar.addEventListener('click', function () { UI.trocarJogador(); });
+        botoes.appendChild(trocar);
+      }
+      t.appendChild(el('div.inicio', cena.el, el('div.inicio-baixo', botoes,
+        el('p.inicio-sub.inicio-materias', 'Revisão de ' + nomes.slice(0, -1).join(', ') + (nomes.length > 1 ? ' e ' : '') + nomes[nomes.length - 1]))));
+      var foi = false;
       ir.addEventListener('click', function () {
+        if (foi) return;
+        foi = true;
         Reino.Som.ativar(); Reino.Som.tocar('porta');
         UI.telaCheia(true);
         if (est().ajustes.musica) Reino.Som.musica(true);
-        UI.fecharTela(t); resolver();
+        cena.entrar().then(function () { UI.fecharTela(t); resolver(); });   // brilho e zoom no castelo
       });
       setTimeout(function () { ir.focus(); }, 50);
     });

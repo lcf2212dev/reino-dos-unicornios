@@ -33,6 +33,7 @@
       'css/ui-fotos.css',
       'css/ui-salao.css',
       'css/ui-jogadores.css',
+      'css/ui-abertura.css',
     ],
     scripts: [
       { js: 'js/nucleo/congelar.js', grupo: 'nucleo' },
@@ -188,6 +189,8 @@
       { js: 'js/ui/salao.js', grupo: 'ui' },
       { js: 'js/ui/pais.js', grupo: 'ui' },
       { js: 'js/ui/jogadores.js', grupo: 'ui' },
+      { js: 'js/ui/abertura-desenho.js', grupo: 'ui' },
+      { js: 'js/ui/abertura.js', grupo: 'ui' },
       { js: 'js/sistemas/fotos.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/fotos-moldura.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/fotos-telas.js', grupo: 'sistemas', node: true },
