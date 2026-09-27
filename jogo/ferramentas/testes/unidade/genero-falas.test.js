@@ -47,7 +47,7 @@ test('gênero: falas fixas, Claude e NPCs mudam com o perfil; a gravação tem a
     'Que pedestre caprichosa!', 'Que pedestre caprichoso!',
     'Você é uma ótima cientista!', 'Você é um ótimo cientista!',
     'Fui o seu primeiro unicórnio. Vamos crescer juntas!', 'Fui o seu primeiro unicórnio. Vamos crescer juntos!',
-    'Até logo, pequeno astrônomo!', 'Vamos treinar a prova juntos?', 'Pense como um cientista!'].forEach((t) => {
+    'Até logo, pequeno astrônomo!', 'Vamos treinar a prova juntos?', 'Pense como um cientista de verdade!'].forEach((t) => {
     assert.ok(textos.some((x) => x === t || x.indexOf(t) === 0), 'na gravação: ' + t);
   });
   assert.ok(!textos.some((t) => /\{[^{}]*\|[^{}]*\}|\{nome\}/.test(t)), 'nenhum marcador na lista de gravação');
