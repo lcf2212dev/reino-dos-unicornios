@@ -8,6 +8,8 @@ Este arquivo tem as regras invioláveis e o índice. As regras de código de cad
   `reinodosunicornios.local`, banco em `jogo/servidor/dados/reino.db`); o artifact publicado no claude.ai
   (capacidade `db`, doc `progresso/mariana`); o localStorage `mariana-reino-v1` e `mariana-reino-v1-novidades`
   de cada aparelho.
+- Outros jogadores (login/senha) têm save próprio, tão real quanto o dela: `reino-v1-<login>`, doc `progresso/<login>`,
+  linha `<login>` do banco e contas em `jogadores` (`docs/contratos/save-e-mescla.md` §12). Mesmas regras.
 - Nada disso se abre, testa, lê, copia, grava, publica ou apaga. Nada de `localStorage.clear()`, "Apagar tudo",
   "Novo ciclo" ou pagamento fora do ambiente de teste.
 - Docker, container e o serviço `reino-nome`: nunca se mexe. Não precisa: o servidor de casa serve a árvore
