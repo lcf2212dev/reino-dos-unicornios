@@ -73,8 +73,8 @@ Reino.config = {
     zonaMorta: 10,                   // px CSS do thumbstick sem andar
     paraPerto: 6, voltaLonge: 12,    // px do jogo: mouse perto dela para (e só volta mais longe)
     folgaGraus: 10,                  // folga para virar entre as 8 direções (não pisca entre duas)
-    base: 110, pino: 48,             // px do thumbstick no celular...
-    baseTablet: 130, pinoTablet: 56, // ...e em tela a partir de 700×700
+    pixel: 5, pixelTablet: 6,        // px de cada pixel do thumbstick (pixel art: base de 22, pino de 10) no
+                                     // celular (110 px) e em tela a partir de 700×700 (132 px); número inteiro
   },
   // Aura (js/sistemas/aura.js): cada pergunta certa soma `passo`, cada errada tira `passo` × `penalidade` (mínimo 0).
   // O passo começa em `passoInicial` e cresce × `multiplicador` a cada faixa: a 1ª faixa começa em `primeiraFaixa`

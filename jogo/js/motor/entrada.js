@@ -89,7 +89,8 @@
   /* ---------- mouse segurado e thumbstick do toque ---------- */
   // números em Reino.config.controles, lidos na hora de usar (com os de sempre se faltar)
   var PADRAO = { limiarMouse: 6, limiarToque: 12, segurarMs: 300, zonaMorta: 10, paraPerto: 6, voltaLonge: 12,
-    base: 110, pino: 48, baseTablet: 130, pinoTablet: 56 };
+    pixel: 5, pixelTablet: 6 };
+  var GRADE_BASE = 22, GRADE_PINO = 10;      // pixels do desenho (PA.controle, js/arte/pixelart-icones.js)
   function num(k) {
     var c = (Reino.config && Reino.config.controles) || {};
     return typeof c[k] === 'number' ? c[k] : PADRAO[k];
@@ -101,18 +102,24 @@
     g.arrastando = true;
     J.parar();
     if (g.mouse) return;
-    // tamanhos do thumbstick (variáveis CSS de ui-hud.css); tablet na mesma condição do CSS
+    // tamanhos do thumbstick (variáveis CSS de ui-hud.css): pixel inteiro, base e pino na mesma grade;
+    // tablet na mesma condição do CSS
     var tablet = window.matchMedia('(min-width: 700px) and (min-height: 700px)').matches;
-    caixa.style.setProperty('--cb', num(tablet ? 'baseTablet' : 'base') + 'px');
-    caixa.style.setProperty('--cp', num(tablet ? 'pinoTablet' : 'pino') + 'px');
+    var px = Math.max(1, Math.round(num(tablet ? 'pixelTablet' : 'pixel')));
+    caixa.style.setProperty('--px', px + 'px');
+    caixa.style.setProperty('--cb', GRADE_BASE * px + 'px');
+    caixa.style.setProperty('--cp', GRADE_PINO * px + 'px');
     base.style.left = g.x0 + 'px'; base.style.top = g.y0 + 'px';
     caixa.hidden = false;
   }
   function moverPino() {
     var dx = g.x - g.x0, dy = g.y - g.y0, d = Math.hypot(dx, dy);
-    var raio = (base.offsetWidth - pino.offsetWidth) / 2 || 31;
+    var raio = (base.offsetWidth - pino.offsetWidth) / 2 || 30;
     if (d > raio) { dx *= raio / d; dy *= raio / d; }
-    pino.style.transform = 'translate(' + Math.round(dx) + 'px,' + Math.round(dy) + 'px)';
+    // anda de pixel em pixel do desenho (em direção ao centro, para não sair da base)
+    var px = base.offsetWidth / GRADE_BASE || 5;
+    dx = Math.trunc(dx / px) * px; dy = Math.trunc(dy / px) * px;
+    pino.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
   }
   function soltar() {
     if (g) { try { V.canvas.releasePointerCapture(g.id); } catch (e) { /* já solto */ } }
@@ -142,11 +149,16 @@
     return { x: dx / d, y: dy / d };
   }
 
+  function desenho(parte) {
+    var c = PA.paraDOM(PA.controle(parte), 1, 'controle-desenho');
+    c.style.width = c.style.height = '';     // o tamanho vem do CSS (--cb/--cp)
+    return c;
+  }
   function montarControle() {
     caixa = U.$('#controle');
     caixa.innerHTML = '';
-    pino = el('div.controle-pino');
-    base = el('div.controle-base', pino);
+    pino = el('div.controle-pino', desenho('pino'));
+    base = el('div.controle-base', desenho('base'), pino);
     caixa.appendChild(base);
     caixa.hidden = true;
   }
