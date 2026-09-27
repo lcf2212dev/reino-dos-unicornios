@@ -287,6 +287,8 @@
       { js: 'js/interiores/geografia/geografia.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/geografia/fora.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/planetas/planetas-comum.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/planetas/ets.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/planetas/personagens.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/planetas/lua-brincadeiras.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/planetas/lua.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/salao/icones.js', grupo: 'interiores', node: true },
