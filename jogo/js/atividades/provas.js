@@ -133,7 +133,9 @@
       document.body.classList.remove('em-missao');
       Reino.UI.fecharTela(tela);
     }
+    var botaoFim = null;   // no resultado, o "Voltar à Escola": a tentativa já contou e o ✕ faz o mesmo que ele
     sair.addEventListener('click', function () {
+      if (botaoFim) { botaoFim.click(); return; }
       Reino.UI.confirmar('Quer sair da prova? Esta tentativa não vai contar e as respostas não ficam guardadas.', 'Sair', 'Continuar').then(function (sim) {
         if (sim) { fechar(); if (aoTerminar) aoTerminar(null); }
       });
@@ -355,6 +357,7 @@
 
       var voltar = el('button.btn-grande' + (a ? '.btn-secundario' : '.btn-principal'), { type: 'button' }, 'Voltar à Escola');
       voltar.addEventListener('click', function () { fechar(); if (aoTerminar) aoTerminar(premios); });
+      botaoFim = voltar;
       botoes.appendChild(voltar);
       if (!premios.sucesso) {
         var denovo = el('button.btn-grande.btn-secundario', { type: 'button' }, 'Tentar de novo ✏️');

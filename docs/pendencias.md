@@ -21,11 +21,5 @@ Confirmou com teste que falha: vira linha da tabela de cima ou correção.
 
 | Onde | Suspeita | O que falta para confirmar |
 |---|---|---|
-| `sistemas/som.js` (`S.ativar`) | Só retoma o `AudioContext` em `'suspended'`; o Safari (iPad/iPhone) usa `'interrupted'` (tela bloqueada, ligação, outro app tocando): efeitos, música e voz podem ficar mudos até recarregar. | Um iPad de verdade (os testes são só Chromium). |
-| `ui/hud-fotos.js`, `sistemas/fotos-telas.js` | Toque duplo no álbum antes de o IndexedDB abrir (1ª vez na sessão) abre dois álbuns, um em cima do outro. | Medir a 1ª abertura do banco num tablet lento (aqui abre em menos de 15 ms). |
-| `atividades/provas.js`, `treino.js`, `missao.js` | O ✕ da tela de resultado diz que "a tentativa não vai contar", mas ela já contou (e o "Chocar o ovo" é pulado). | Um teste de navegador que feche o resultado pelo ✕. |
 | `atividades/treino.js` (`Pr.balaoQueSome`) | O intervalo de 200 ms nunca é limpo se o balão não chega a aparecer (ficou na fila e o `Claude.limpar()` a descartou). | Um caminho real com outro balão aberto na hora do "Hora de revisar!". |
-| `sistemas/cuidados.js` (`C.ativo`) | Com o relógio do aparelho voltando no tempo, os cuidados gastam sem toque por até o salto + 5 min. | Relógio do aparelho mudado com o jogo aberto (fuso e horário de verão não mudam o `Date.now()`). |
-| `sistemas/progresso-nuvem.js` | Depois do erro `invalid_argument` do claude.ai, a nuvem fica desligada até recarregar a página. | O erro real do claude.ai (não se abre o artifact publicado). |
-| `personagens/npcs-conversa.js` (`quebrarNaTela`) | Uma "palavra" de mais de 30 letras recursa sem fim. | Nenhuma fala chega perto hoje. |
-| `ferramentas/artifact-delta.js` | Nome de arquivo com acento sai entre aspas do `git diff` (sem `core.quotePath=false`) e some do delta. | Nenhum arquivo do jogo tem acento, e o gerador só aceita `[a-z0-9-]`. |
+| `personagens/npcs-conversa.js` (`quebrarNaTela`) | Uma "palavra" de mais de 30 letras recursa sem fim. | Um caminho que leve texto dinâmico até ela: hoje só passam as frases fixas dos unicórnios e a da baia vazia (maior palavra: 14 letras); o nome que ela digita (até 18 letras) vai só no cabeçalho do balão. |

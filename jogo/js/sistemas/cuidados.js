@@ -134,6 +134,7 @@
     var ficouBaixo = baixos({ fome: r.fome, sede: r.sede, banho: banho });
     var pontoInteiro = Math.floor(antes.fome) !== Math.floor(r.fome) || Math.floor(antes.sede) !== Math.floor(r.sede) ||
       Math.floor(antes.banho) !== Math.floor(banho);
+    if (ultimaGravacao > agora()) ultimaGravacao = agora();   // relógio que voltou no tempo (ver C.ativo)
     // cruzou o 25: grava na hora (as baias e os avisos do menu Lugares se redesenham)
     if (eraBaixo !== ficouBaixo || pendente >= cfg().gravarPontos || agora() - ultimaGravacao >= cfg().gravarMs) gravar();
     if (pontoInteiro || eraBaixo !== ficouBaixo) emitir();
@@ -213,6 +214,8 @@
   C.ativo = function () {
     if (!iniciado) return false;
     if (typeof document !== 'undefined' && document.hidden) return false;
+    // relógio do aparelho que voltou no tempo (acertado pela rede): o toque "no futuro" vale como agora
+    if (ultimoToque > agora()) ultimoToque = agora();
     return agora() - ultimoToque < cfg().semToqueMs;
   };
 
@@ -223,6 +226,7 @@
     return !(Reino.Claude && Reino.Claude.aberto && Reino.Claude.aberto());
   }
   function lembrar() {
+    if (ultimoLembrete > agora()) ultimoLembrete = agora();   // relógio que voltou no tempo (ver C.ativo)
     if (agora() - ultimoLembrete < cfg().lembreteMs) return;
     var b = C.baixo(montaria());
     if (!b.fome && !b.sede && !b.banho) return;

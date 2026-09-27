@@ -27,7 +27,9 @@
     document.body.classList.add('em-missao');
     D.ajustarTitulo(titulo, materia && materia.id);
 
+    var botaoFim = null;   // no fim da sala, o "Voltar"/"Chocar o ovo": a sala já contou e o ✕ faz o mesmo
     sair.addEventListener('click', function () {
+      if (botaoFim) { botaoFim.click(); return; }
       Reino.UI.confirmar('Quer sair da sala agora? Você pode voltar e fazer de novo depois.', 'Sair', 'Continuar aqui').then(function (sim) {
         if (!sim) return;
         fechar();
@@ -217,6 +219,7 @@
         if (premios.ovos.length) Reino.UI.chocarOvos(premios.ovos).then(depois);
         else depois();
       });
+      botaoFim = btn;
     }
 
     intro();
