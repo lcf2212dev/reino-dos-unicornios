@@ -4,9 +4,8 @@
    cria window.Mapa e o Mapa._interno que as outras partes usam. */
 (function () {
   var T = 16;               // tamanho do tile em pixels
-  var W = 36, H = 28;       // tamanho do mapa em tiles
+  var W = 56, H = 42;       // tamanho do mapa em tiles (o traçado da cidade está em mundo/lugares.js)
   var Mapa = { T: T, W: W, H: H };
-  Mapa.claudeTile = { x: 20, y: 12 };
   // gerador pseudoaleatório com semente (o reino sai sempre igual): o de Reino.Desenho
   var rng = window.Reino.Desenho.rng;
 
@@ -14,10 +13,13 @@
      Mapa.criar troca as grades e a lista de lugares a cada chamada: leia sempre I.tipo etc. na hora
      de usar, nunca guarde a grade numa variável que dure mais que uma chamada. */
   var I = Mapa._interno = {
-    tipo: [],               // letra do chão
+    tipo: [],               // letra do chão: 'g' grama, 'f' tapete de flores, 'c' rua, 'p' praça, 'a' água
     solido: [],             // true = não dá para andar
-    tipoSorteio: [], decorSorteio: [],   // cópia do reino sem os lugares novos: o sorteio das flores segue ela
-    decor: [],              // enfeite do tile: 'arvore', 'flor', 'cristal', 'arbusto', 'cogumelo'
+    tipoSorteio: [], decorSorteio: [],   // cópia do reino antes dos lugares novos: o sorteio das flores segue ela
+    // enfeite do tile: 'arvore', 'flor', 'cristal', 'arbusto', 'cogumelo', 'pedra' (sorteados);
+    // 'poste', 'banco', 'canteiro', 'cerca' (postos à mão: Mapa.CIDADE e a frente dos prédios)
+    decor: [],
+    objetos: [],            // peças grandes da praça (Mapa.CIDADE.objetos): fonte, coreto, canteiros
     lugares: [],            // os lugares desenhados no mapa (Mapa.lugares() junta os de dentro)
     lugaresDentro: [],      // matérias com lugar.dentro: só menu, sem desenho nem colisão
     estatico: null,         // canvas com tudo o que não se mexe (mundo/mapa-desenho.js)
@@ -30,21 +32,22 @@
   function noRect(x, y, r) { return x >= r.x && y >= r.y && x < r.x + r.w && y < r.y + r.h; }
   function porta(r) { return { x: r.x + Math.floor(r.w / 2), y: r.y + r.h - 1 }; }
 
-  // ids das matérias porCima que já estavam no reino quando o sorteio das flores passou a seguir a cópia
-  // (I.tipoSorteio/I.decorSorteio): elas entram antes da cópia, para o mapa de hoje sair igual.
-  // Matéria nova NÃO entra aqui: fica fora da cópia e não mexe nas flores do resto do reino.
-  Mapa.LEGADO_SORTEIO = ['portugues'];
+  // ids das matérias porCima que já estão no traçado de hoje: entram antes do sorteio dos enfeites, como os
+  // lugares fixos. Matéria nova NÃO entra aqui: fica fora da cópia e não mexe nas flores do resto do reino.
+  Mapa.LEGADO_SORTEIO = ['portugues', 'geografia', 'matematica'];
 
   Mapa.criar = function (materias) {
     var tipo = I.tipo = [], solido = I.solido = [], decor = I.decor = [], lugares = I.lugares = [];
+    var reservado = [];
     for (var y = 0; y < H; y++) {
-      tipo.push([]); solido.push([]); decor.push([]);
-      for (var x = 0; x < W; x++) { tipo[y].push('g'); solido[y].push(false); decor[y].push(null); }
+      tipo.push([]); solido.push([]); decor.push([]); reservado.push([]);
+      for (var x = 0; x < W; x++) { tipo[y].push('g'); solido[y].push(false); decor[y].push(null); reservado[y].push(false); }
     }
-    // lugares: fixos (os sem `caminho` da lista de mundo/lugares.js) + um por matéria
-    Mapa.LUGARES_FIXOS.forEach(function (f) { if (!f.caminho) lugares.push(Object.assign({ tipo: f.id, porta: porta(f.rect) }, f)); });
-    // matéria com lugar.porCima entra depois do sorteio dos enfeites (como os lugares com caminho), para as árvores
-    // e flores do resto do reino continuarem iguais: o sorteio ainda vê a clareira livre
+    var CID = Mapa.CIDADE;
+    I.objetos = CID.objetos;
+    // lugares, na ordem de Mapa.lugares(); `novo` = entra depois da cópia do sorteio
+    var fixo = function (f) { return Object.assign({ tipo: f.id, porta: porta(f.rect) }, f); };
+    Mapa.LUGARES_FIXOS.forEach(function (f) { if (!f.caminho) lugares.push(fixo(f)); });
     // matéria com lugar.dentro mora num prédio que já existe: nada no mapa (entra no fim, em I.lugaresDentro)
     // e não conta na vez das clareiras, para as outras não mudarem de lugar
     var porCima = [], k = 0, deDentro = [];
@@ -54,26 +57,20 @@
       var l = { id: 'materia:' + m.id, tipo: 'materia', materiaId: m.id, nome: m.lugar.nome,
         sprite: m.lugar.sprite || 'torre', cores: m.lugar.cores, rect: r, porta: porta(r), placa: m.lugar.placa,
         novidade: m.lugar.novidade };
-      if (m.lugar.porCima) porCima.push(l); else lugares.push(l);
+      if (m.lugar.porCima) { l.novo = Mapa.LEGADO_SORTEIO.indexOf(m.id) < 0; porCima.push(l); } else lugares.push(l);
     });
+    porCima.forEach(function (l) { lugares.push(l); });
+    Mapa.LUGARES_FIXOS.forEach(function (f) { if (f.caminho) lugares.push(fixo(f)); });
+    var hoje = lugares.filter(function (l) { return !l.novo; });
 
     function pintar(x, y, t) { if (dentro(x, y)) tipo[y][x] = t; }
-    // ruas principais
-    for (var x2 = 2; x2 <= 33; x2++) { pintar(x2, 9, 'c'); pintar(x2, 20, 'c'); }
-    // praça
-    for (var py = 11; py <= 17; py++) for (var px = 15; px <= 20; px++) pintar(px, py, 'p');
-    for (var vy = 6; vy <= 19; vy++) { if (tipo[vy][17] !== 'p') { pintar(17, vy, 'c'); pintar(18, vy, 'c'); } }
-    // ligação de cada porta até a rua mais próxima
-    lugares.forEach(function (l) {
-      var p = l.porta;
-      var rua = p.y < 9 ? 9 : (p.y < 20 ? 20 : 20);
-      if (p.y <= 9) { for (var yy = p.y + 1; yy < 9; yy++) pintar(p.x, yy, 'c'); }
-      else { for (var yy2 = p.y + 1; yy2 < rua; yy2++) pintar(p.x, yy2, 'c'); }
-    });
-    // lago: dá para nadar nele (a Mariana e a montaria), então a água não é sólida.
-    // O sorteio dos enfeites pula a água pelo tipo ('a'), não pela solidez: o reino sai igual.
-    for (var ly = 21; ly < H - 1; ly++) for (var lx = 1; lx < W - 1; lx++) {
-      var dx = (lx + 0.5 - 18) / 6.5, dy = (ly + 0.5 - 24.6) / 2.4;
+    function pintarRect(r, t) { for (var yy = r.y; yy < r.y + r.h; yy++) for (var xx = r.x; xx < r.x + r.w; xx++) pintar(xx, yy, t); }
+    CID.ruas.forEach(function (r) { pintarRect(r, 'c'); });
+    pintarRect(CID.praca, 'p');
+    // lago: dá para nadar nele (a Mariana e a montaria), então a água não é sólida
+    var L = CID.lago;
+    for (var ly = 1; ly < H - 1; ly++) for (var lx = 1; lx < W - 1; lx++) {
+      var dx = (lx + 0.5 - L.cx) / L.rx, dy = (ly + 0.5 - L.cy) / L.ry;
       if (dx * dx + dy * dy <= 1) tipo[ly][lx] = 'a';
     }
     // clareiras livres ganham um tapete de flores
@@ -85,27 +82,66 @@
         if (ddx * ddx + ddy * ddy <= 1.05) tipo[yy][xx] = 'f';
       }
     });
-    // prédios são sólidos, menos a porta
-    lugares.forEach(function (l) {
+    // terreno reservado: grama lisa, nada sorteado nele nem no caminho dele
+    (Mapa.RESERVADOS || []).forEach(function (rs) {
+      for (var yy = rs.rect.y; yy < rs.rect.y + rs.rect.h; yy++) for (var xx = rs.rect.x; xx < rs.rect.x + rs.rect.w; xx++) reservado[yy][xx] = true;
+      rs.caminho.forEach(function (p) { reservado[p[1]][p[0]] = true; });
+    });
+
+    // o terreno do lugar (sólido, menos a porta) e a ligação da frente da porta até a rua
+    function assentar(l) {
       var r = l.rect;
       for (var yy = r.y; yy < r.y + r.h; yy++) for (var xx = r.x; xx < r.x + r.w; xx++) {
-        solido[yy][xx] = !(xx === l.porta.x && yy === l.porta.y);
+        decor[yy][xx] = null;
         tipo[yy][xx] = 'g';
+        solido[yy][xx] = !(xx === l.porta.x && yy === l.porta.y);
       }
+      var cam = l.caminho || ligacao(l.porta);
+      cam.forEach(function (p) { decor[p[1]][p[0]] = null; tipo[p[1]][p[0]] = 'c'; solido[p[1]][p[0]] = false; });
+    }
+    // da frente da porta descendo reto até a primeira rua ou praça (no máximo 8 tiles)
+    function ligacao(p) {
+      var cam = [];
+      for (var yy = p.y + 1; yy < H - 1 && cam.length < 8; yy++) {
+        if (tipo[yy][p.x] === 'c' || tipo[yy][p.x] === 'p') return cam;
+        cam.push([p.x, yy]);
+      }
+      return [];
+    }
+    hoje.forEach(assentar);
+    // peças grandes da praça e o Claude: sólidos, sem enfeite (o validador os vê como terreno)
+    CID.objetos.forEach(function (o) {
+      for (var yy = o.y; yy < o.y + o.h; yy++) for (var xx = o.x; xx < o.x + o.w; xx++) solido[yy][xx] = true;
     });
-    // fonte e Claude
-    [[17, 13], [18, 13], [17, 14], [18, 14]].forEach(function (p) { solido[p[1]][p[0]] = true; });
     solido[Mapa.claudeTile.y][Mapa.claudeTile.x] = true;
 
-    // bordas de árvores e enfeites
+    // enfeites postos à mão: só em tile de chão livre, fora de prédio e de terreno reservado
+    function por(t, x, y) {
+      if (!dentro(x, y) || solido[y][x] || reservado[y][x] || decor[y][x]) return;
+      if (tipo[y][x] === 'c' || tipo[y][x] === 'a') return;
+      if (lugares.some(function (l) { return noRect(x, y, l.rect); })) return;
+      decor[y][x] = t; solido[y][x] = true;
+    }
+    CID.enfeites.forEach(function (e) { por(e[0], e[1], e[2]); });
+    // cerquinha na frente de cada prédio de hoje (o castelo tem a alameda), com o portão na porta
+    hoje.forEach(function (l) {
+      if (l.tipo === 'castelo') return;
+      var fy = l.rect.y + l.rect.h;
+      for (var fx = l.rect.x; fx < l.rect.x + l.rect.w; fx++) if (fx !== l.porta.x) por('cerca', fx, fy);
+    });
+
+    // bordas de árvores, bosques e enfeites sorteados
     var r = rng(20260923);
+    // enfeite posto à mão que sobe para o tile de cima (poste, banco, canteiro, cerca): nada sorteado atrás dele
+    var ALTO = { poste: true, banco: true, canteiro: true, cerca: true };
     function livreParaEnfeite(x, y) {
-      if (tipo[y][x] !== 'g' || solido[y][x]) return false;
+      if (tipo[y][x] !== 'g' || solido[y][x] || decor[y][x] || reservado[y][x]) return false;
+      if (y + 1 < H && ALTO[decor[y + 1][x]]) return false;
       for (var j = -1; j <= 1; j++) for (var i = -1; i <= 1; i++) {
         var nx = x + i, ny = y + j;
         if (!dentro(nx, ny)) continue;
-        if (tipo[ny][nx] === 'c' || tipo[ny][nx] === 'p' || tipo[ny][nx] === 'f') return false;
-        if (lugares.some(function (l) { return noRect(nx, ny, l.rect); })) return false;
+        if (tipo[ny][nx] === 'c' || tipo[ny][nx] === 'p' || tipo[ny][nx] === 'f' || reservado[ny][nx]) return false;
+        if (lugares.some(function (l) { return !l.novo && noRect(nx, ny, l.rect); })) return false;
       }
       return true;
     }
@@ -120,55 +156,39 @@
       var borda = bx === 0 || by === 0 || bx === W - 1 || by === H - 1;
       if (borda) { decor[by][bx] = 'arvore'; solido[by][bx] = true; continue; }
       if (!livreParaEnfeite(bx, by)) {
-        if (tipo[by][bx] === 'g' && !solido[by][bx] && r() < 0.18) decor[by][bx] = 'flor';
+        if (tipo[by][bx] === 'g' && !solido[by][bx] && !decor[by][bx] && !reservado[by][bx] && r() < 0.18) decor[by][bx] = 'flor';
         continue;
       }
+      // bosque: as duas faixas junto da borda ficam cheias de árvores
+      var bosque = bx <= 2 || by <= 2 || bx >= W - 3 || by >= H - 2;
       var v = r();
+      if (bosque) {
+        if (v < 0.62) { decor[by][bx] = 'arvore'; solido[by][bx] = true; }
+        else if (v < 0.70) { decor[by][bx] = 'arbusto'; solido[by][bx] = true; }
+        else if (v < 0.90) decor[by][bx] = 'flor';
+        continue;
+      }
       if (v < 0.07) { decor[by][bx] = 'arvore'; solido[by][bx] = true; }
       else if (v < 0.085) { decor[by][bx] = 'cristal'; solido[by][bx] = true; }
       else if (v < 0.11) { decor[by][bx] = 'arbusto'; solido[by][bx] = true; }
+      else if (v < 0.125) { decor[by][bx] = 'pedra'; solido[by][bx] = true; }
       else if (v < 0.36) decor[by][bx] = 'flor';
       else if (v < 0.40 && !pertoDaAgua(bx, by)) decor[by][bx] = 'cogumelo';
     }
-    // lugares novos por cima do reino já enfeitado: tiram só o enfeite do próprio terreno e do caminho
-    function porCimaNoMapa(l) {
-      var r = l.rect, p = l.porta;
-      for (var yy = r.y; yy < r.y + r.h; yy++) for (var xx = r.x; xx < r.x + r.w; xx++) {
-        decor[yy][xx] = null;
-        tipo[yy][xx] = 'g';
-        solido[yy][xx] = !(xx === p.x && yy === p.y);
-      }
-      // da porta até a rua (a mesma ligação dos outros lugares)
-      var rua = p.y < 9 ? 9 : 20;
-      for (var cy = p.y + 1; cy < rua; cy++) { decor[cy][p.x] = null; tipo[cy][p.x] = 'c'; solido[cy][p.x] = false; }
-    }
-    function comCaminho(f) {
-      var l = Object.assign({ tipo: f.id, porta: porta(f.rect) }, f);
-      lugares.push(l);
-      var r = f.rect;
-      for (var yy = r.y; yy < r.y + r.h; yy++) for (var xx = r.x; xx < r.x + r.w; xx++) {
-        decor[yy][xx] = null;
-        tipo[yy][xx] = 'g';
-        solido[yy][xx] = !(xx === l.porta.x && yy === l.porta.y);
-      }
-      f.caminho.forEach(function (p) { decor[p[1]][p[0]] = null; tipo[p[1]][p[0]] = 'c'; solido[p[1]][p[0]] = false; });
-    }
-    // as matérias porCima de hoje (LEGADO_SORTEIO) entram já; as novas só depois da cópia de sorteio (abaixo)
-    var novas = [];
-    porCima.forEach(function (l) {
-      lugares.push(l);
-      if (Mapa.LEGADO_SORTEIO.indexOf(l.materiaId) >= 0) porCimaNoMapa(l); else novas.push(l);
-    });
-    // os que têm `caminho` chegaram depois: por cima do reino já enfeitado
-    Mapa.LUGARES_FIXOS.forEach(function (f) { if (f.caminho) comCaminho(f); });
     // cópia do reino de hoje: o Mapa.prerender tira os sorteios das flores dela, para um lugar novo
     // não mudar as flores longe dele (contrato cena-e-motor.md §9)
     I.tipoSorteio = tipo.map(function (l) { return l.slice(); });
     I.decorSorteio = decor.map(function (l) { return l.slice(); });
-    // lugares novos: matérias porCima de fora do legado e os registrados pelos prédios (Reino.registrarLugar),
-    // sempre com caminho, na ordem de registro
-    novas.forEach(porCimaNoMapa);
-    (Reino.lugaresRegistrados || []).forEach(function (f) { if (f.caminho) comCaminho(f); });
+    // lugares novos, por cima do reino já enfeitado (tiram só o enfeite do próprio terreno e do caminho):
+    // matérias porCima de fora do legado e os registrados pelos prédios (Reino.registrarLugar), na ordem de registro
+    lugares.forEach(function (l) { if (l.novo) assentar(l); });
+    (Reino.lugaresRegistrados || []).forEach(function (f) {
+      if (!f.caminho) return;
+      var l = fixo(f);
+      lugares.push(l);
+      assentar(l);
+    });
+    lugares.forEach(function (l) { delete l.novo; });
     // matérias dentro de um prédio: só para o menu Lugares, com a porta (e a área) do anfitrião;
     // não desenham nem fazem colisão (ficam fora de I.lugares)
     I.lugaresDentro = [];

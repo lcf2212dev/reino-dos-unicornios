@@ -15,7 +15,7 @@ Reino.registrarMateria({
     nome: 'Casa das Palavras',
     artigo: 'a',   // "até a Casa das Palavras", "as salas da Casa das Palavras" (js/sistemas/falas.js)
     sprite: 'palavras',
-    rect: { x: 22, y: 15, w: 5, h: 5 },   // clareira de baixo: na (23,4) a placa do Castelo cobria o telhado
+    rect: { x: 4, y: 24, w: 5, h: 5 },   // fileira de baixo, a oeste; a porta (6,28) desce até a Avenida do Lago
     placa: 'acima',   // no telhado; a placa do Castelo que desvia do chip dos ovos não cai mais sobre ela (js/motor/cena.js)
     porCima: true,   // entra depois do sorteio dos enfeites: o resto do reino fica igual (js/mundo/mapa.js)
     cores: { parede: '#fff4ec', telhado: '#e0433f', detalhe: '#39a860' },

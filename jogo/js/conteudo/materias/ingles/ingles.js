@@ -11,7 +11,7 @@ Reino.registrarMateria({
   lugar: {
     nome: 'Torre do Relógio',
     sprite: 'relogio',
-    rect: { x: 10, y: 4, w: 5, h: 5 },
+    rect: { x: 14, y: 5, w: 5, h: 5 },   // fileira de cima, entre o Museu e o Castelo
     placa: 'acima',   // ao lado cobriria o castelo ou o museu
     cores: { parede: '#eef3ff', telhado: '#4a6cd4', detalhe: '#ffcf3d' },
   },

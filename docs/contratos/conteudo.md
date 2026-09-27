@@ -47,7 +47,7 @@ Personagens: `npcs-e-dialogo.md`. Prédios: `interiores.md`. Vozes: `som-musica-
    menu Lugares (o que desenha e faz colisão usa `Mapa._interno.lugares`, sem ela). "Ir" anda até a porta do
    anfitrião e entra direto no `interior` (`Cena.entrar`); de dentro do anfitrião vai direto, sem sair
    (`Cena.irAoLugar`); sair do andar dela volta à porta do anfitrião. O andar é um `Reino.registrarInterior` com
-   `lugar: 'materia:<m>'` e `entrada: true` (pode não ter `saida` se tiver escada). O arco-íris de matéria completa
+   `lugar: 'materia:<m>'` e `entrada: true` (pode não ter `saida` se tiver escada). O contorno dourado de matéria completa
    aparece no anfitrião. `validar-interiores.js` acusa anfitrião ou andar inexistente. Gerador:
    `npm run novo -- materia <m> --nome … --emoji … --dentro <lugar> --interior <id>`. Ex.: Ciências
    (`dentro: 'observatorio'`, `interior: 'observatorio-3'`).

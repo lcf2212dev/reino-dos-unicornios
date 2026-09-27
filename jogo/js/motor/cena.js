@@ -27,13 +27,13 @@
   Cena.ligar = function (v) { S.vista = v; };
   function pintor() { return S.vista && S.vista.pintor; }
 
-  /* ---------- lugares concluídos ganham arco-íris ---------- */
+  /* ---------- lugares concluídos ganham o contorno dourado (mundo/contorno.js) ---------- */
   function concluidos() {
     var p = P(), est = p.estado(), ids = [];
     Reino.materias.forEach(function (m) { if (p.materiaCompleta(m)) ids.push('materia:' + m.id); });
     var ouro = Reino.materias.some(function (m) { var t = est.treinos[m.id]; return t && t.melhor === 'ouro'; });
     if (ouro) ids.push('castelo');
-    // escola ganha arco-íris quando todas as provas já deram acessório
+    // escola ganha o contorno dourado quando todas as provas já deram acessório
     if (Reino.provas.length && Reino.provas.every(function (pv) { return p.regProva(pv).premio; })) ids.push('escola');
     return ids;
   }

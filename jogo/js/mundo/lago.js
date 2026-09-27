@@ -10,7 +10,7 @@
   // tile de água do lago (a fonte da praça não é água e continua sólida)
   Mapa.agua = function (x, y) { return I.dentro(x, y) && I.tipo[y][x] === 'a'; };
 
-  var LAGO = { cx: 18, cy: 24.6, rx: 6.5, ry: 2.4 };
+  var LAGO = Mapa.CIDADE.lago;   // em tiles (mundo/lugares.js)
   // a água como desenhada (a elipse de desenharLago), em px do jogo
   var ESPELHO = { cx: Math.round(LAGO.cx * T), cy: Math.round(LAGO.cy * T), rx: Math.round(LAGO.rx * T), ry: Math.round(LAGO.ry * T) };
   // quantos px o ponto (wx, wy) está para dentro da água desenhada (negativo = fora, na margem).
@@ -30,20 +30,27 @@
   function desenharLago(ctx) {
     var cx = Math.round(LAGO.cx * T), cy = Math.round(LAGO.cy * T);
     var rx = Math.round(LAGO.rx * T), ry = Math.round(LAGO.ry * T);
+    // os enfeites foram desenhados à mão num lago de 104×38 px com centro em (288, 394): P leva para este
+    var sx = rx / 104, sy = ry / 38;
+    function P(x, y) { return [Math.round(cx + (x - 288) * sx), Math.round(cy + (y - 394) * sy)]; }
     elipse(ctx, cx, cy, rx + 4, ry + 4, C.margem);
     elipse(ctx, cx, cy, rx + 1, ry + 1, '#e8d090');
     elipse(ctx, cx, cy, rx, ry, C.agua);
     elipse(ctx, cx, cy + 1, rx - 20, ry - 12, C.agua3);
-    elipse(ctx, cx, cy + 3, 48, 13, '#2a7f78');
-    elipse(ctx, cx - 2, cy - 4, 16, 3, C.agua2);
+    elipse(ctx, cx, cy + 3, Math.round(48 * sx), Math.round(13 * sy), '#2a7f78');
+    elipse(ctx, cx - 2, cy - 4, Math.round(16 * sx), 3, C.agua2);
     [[192, 386, 10, '#ffffff'], [194, 400, 8, C.agua2], [376, 388, 12, C.agua2], [374, 400, 14, '#ffffff']].forEach(function (s) {
-      ret(ctx, s[0], s[1], s[2], 1, s[3]);
+      var q = P(s[0], s[1]);
+      ret(ctx, q[0], q[1], s[2], 1, s[3]);
     });
     [[286, 353], [180, 392], [393, 400], [286, 433], [338, 357], [228, 427]].forEach(function (p) {
-      ret(ctx, p[0], p[1], 2, 1, C.margem);
-      ret(ctx, p[0], p[1] + 1, 2, 1, '#cbb892');
+      var q = P(p[0], p[1]);
+      ret(ctx, q[0], q[1], 2, 1, C.margem);
+      ret(ctx, q[0], q[1] + 1, 2, 1, '#cbb892');
     });
-    [[-60, -8, 6, 3, '#ff8a3d'], [-40, 12, 5, 3, '#ffe066'], [52, 4, 7, 3, null], [70, -10, 5, 2, '#ff8a3d']].forEach(function (v) {
+    [[-60, -8, 6, 3, '#ff8a3d'], [-40, 12, 5, 3, '#ffe066'], [52, 4, 7, 3, null], [70, -10, 5, 2, '#ff8a3d'],
+      [-86, 2, 5, 2, '#ffe066'], [20, -16, 5, 2, null]].forEach(function (v) {
+      v = [Math.round(v[0] * sx), Math.round(v[1] * sy)].concat(v.slice(2));
       elipse(ctx, cx + v[0] + 1, cy + v[1] + 1, v[2], v[3], '#2a7f78');
       elipse(ctx, cx + v[0], cy + v[1], v[2], v[3], '#8fb83a');
       elipse(ctx, cx + v[0] - 1, cy + v[1] - 1, Math.max(2, v[2] - 2), 1, '#b6d24e');
@@ -58,7 +65,7 @@
       [184, 388, 7], [182, 386, 9], [186, 390, 6],
       [390, 388, 7], [392, 385, 10], [388, 391, 5],
       [256, 426, 7], [258, 423, 9], [261, 428, 6],
-      [336, 422, 8], [338, 420, 10], [341, 424, 6]].forEach(function (h) { hasteJunco(ctx, h[0], h[1], h[2]); });
+      [336, 422, 8], [338, 420, 10], [341, 424, 6]].forEach(function (h) { var q = P(h[0], h[1]); hasteJunco(ctx, q[0], q[1], h[2]); });
   }
   I.desenharLago = desenharLago;
 })();

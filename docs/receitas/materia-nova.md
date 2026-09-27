@@ -42,7 +42,7 @@ completar a matéria; `P.valorSala`/`P.bonusMateria` em `progresso-regras.js`), 
    - ≥ 12 desafios por sala, ≥ 6 de `escolha`/`vf`/`varias` (a surpresa e o treino usam só esses).
 3. Livro: `livro.js` como `jogo/js/conteudo/materias/historia/livro.js` (ids fixos; o livro de cada desafio aponta para eles).
 4. Matéria `<m>.js` como `jogo/js/conteudo/materias/historia/historia.js`:
-   - `lugar: { nome, sprite, rect, porCima: true, cores, placa }`. Clareira livre hoje: `rect: { x: 23, y: 4, w: 5, h: 5 }`.
+   - `lugar: { nome, sprite, rect, porCima: true, cores, placa }`. Clareiras livres: `Mapa.CLAREIRAS` (`mundo/lugares.js`), ex.: `rect: { x: 37, y: 24, w: 5, h: 5 }`.
    - `porCima: true` é obrigatório: o lugar entra depois do sorteio das árvores e flores (`Math.random` em
      ordem); sem ele o reino inteiro muda de lugar.
    - `sprite`: sem desenho próprio usa a torre padrão; desenho próprio = `Mapa.PREDIOS.<sprite>` (`predio-novo.md` passo 5).

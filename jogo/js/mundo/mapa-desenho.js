@@ -1,7 +1,8 @@
-/* Desenho do mapa: cores e ajudantes de pixel, chão, enfeites (árvore, flor, cristal, arbusto,
-   cogumelo), fonte da praça, a imagem fixa (Mapa.prerender) e as partes animadas
-   (Mapa.desenharAnimado). O lago fica em mundo/lago.js e os prédios em mundo/predios.js; os dois
-   usam as cores e os ajudantes que este arquivo põe em Mapa._interno. */
+/* Desenho do mapa: cores e ajudantes de pixel, chão (com meio-fio nas ruas), enfeites sorteados (árvore,
+   flor, cristal, arbusto, cogumelo, pedra), a imagem fixa (Mapa.prerender) e as partes animadas
+   (Mapa.desenharAnimado). O lago fica em mundo/lago.js, a praça e os enfeites postos à mão em
+   mundo/cidade-desenho.js, o contorno dourado dos concluídos em mundo/contorno.js e os prédios em
+   mundo/predios.js; todos usam as cores e os ajudantes que este arquivo põe em Mapa._interno. */
 (function () {
   var Mapa = window.Mapa, I = Mapa._interno;
   var T = Mapa.T, W = Mapa.W, H = Mapa.H;
@@ -9,7 +10,7 @@
 
   var C = {
     grama: '#c6e15a', grama2: '#a8cc48', grama3: '#e4f59a',
-    rua: '#f7d7a8', rua2: '#e4c07a', rua3: '#fff8e8',
+    rua: '#f7d7a8', rua2: '#e4c07a', rua3: '#fff8e8', meioFio: '#d4ad6c', meioFio2: '#b98f55',
     praca: '#ffe6b0', praca2: '#f0c56e', praca3: '#fff8e8',
     agua: '#7ed9c8', agua2: '#d9fff4', agua3: '#3eaea3', margem: '#f8e2a8',
     tronco: '#a0745a', contorno: '#3a2446',
@@ -52,6 +53,14 @@
       ret(ctx, px + 9, py + (3 - topo), 6, 13, C.rua);
       ret(ctx, px + 1, py + topo, 6, 1, C.rua3);
       ret(ctx, px + 9, py + (3 - topo), 6, 1, C.rua3);
+      // meio-fio: onde a rua encosta na grama, uma borda de pedra (a rua fica bem traçada)
+      if (!forcado) {
+        var rua = function (nx, ny) { var k2 = I.dentro(nx, ny) ? I.tipo[ny][nx] : 'c'; return k2 === 'c' || k2 === 'p'; };
+        if (!rua(x, y - 1)) { ret(ctx, px, py, T, 2, C.meioFio); ret(ctx, px, py, T, 1, C.rua3); }
+        if (!rua(x, y + 1)) { ret(ctx, px, py + 14, T, 2, C.meioFio); ret(ctx, px, py + 15, T, 1, C.meioFio2); }
+        if (!rua(x - 1, y)) { ret(ctx, px, py, 2, T, C.meioFio); ret(ctx, px, py, 1, T, C.rua3); }
+        if (!rua(x + 1, y)) { ret(ctx, px + 14, py, 2, T, C.meioFio); ret(ctx, px + 15, py, 1, T, C.meioFio2); }
+      }
     } else if (t === 'p') {
       ret(ctx, px, py, T, T, par ? C.praca2 : C.praca);
       ret(ctx, px, py + 15, T, 1, C.praca2);
@@ -153,29 +162,13 @@
   I.ret = ret; I.circulo = circulo; I.elipse = elipse; I.triangulo = triangulo;
   I.contornoRet = contornoRet; I.portaArco = portaArco;
 
-  function desenharFonte(ctx) {
-    var cx = 18 * T, cy = 14 * T;
-    elipse(ctx, cx, cy + 2, 15, 11, C.contorno);
-    elipse(ctx, cx, cy + 2, 14, 10, '#f3e6c8');
-    elipse(ctx, cx, cy + 2, 12, 8, '#e4d0a4');
-    elipse(ctx, cx, cy + 2, 11, 7, C.agua);
-    elipse(ctx, cx, cy + 3, 8, 4, C.agua3);
-    elipse(ctx, cx, cy + 4, 4, 2, '#2a7f78');
-    elipse(ctx, cx - 2, cy, 4, 1, C.agua2);
-    [[12, 1], [9, 8], [-1, 10], [-11, 8], [-14, 1], [9, -4], [-11, -4]].forEach(function (p) {
-      ret(ctx, cx + p[0], cy + p[1], 2, 1, '#fff8e8');
-      ret(ctx, cx + p[0], cy + p[1] + 1, 2, 1, '#cfc4e2');
-    });
-    ret(ctx, cx - 2, cy - 10, 4, 12, C.contorno); ret(ctx, cx - 1, cy - 10, 2, 12, '#ffffff');
-    elipse(ctx, cx, cy - 10, 5, 2, C.contorno); elipse(ctx, cx, cy - 10, 4, 1, '#f3e6c8');
-  }
-
   function sombraBase(ctx, px, py, w, h) {
     elipse(ctx, px + w / 2, py + h - 1, Math.round(w * 0.38), 3, 'rgba(58,36,70,0.10)');
     elipse(ctx, px + w / 2, py + h - 1, Math.round(w * 0.30), 1, 'rgba(58,36,70,0.18)');
   }
 
-  // enfeites do chão, tile a tile. O sorteio das flores anda pela cópia do reino de hoje (I.decorSorteio):
+  // enfeites do chão, tile a tile (os altos, postos à mão, vão na ordem de cima para baixo do Mapa.prerender).
+  // O sorteio das flores anda pela cópia do reino de hoje (I.decorSorteio):
   // um lugar novo não desloca as flores do resto; flor que só existe no estado final usa sorteio da coordenada
   I.desenharEnfeites = function (ctx) {
     var r = I.rng(4242), base = I.decorSorteio;
@@ -186,6 +179,7 @@
       if (d === 'cristal') desenharCristal(ctx, x, y);
       else if (d === 'arbusto') desenharArbusto(ctx, x, y);
       else if (d === 'cogumelo') desenharCogumelo(ctx, x, y);
+      else if (d === 'pedra' && I.desenharPeca) I.desenharPeca(ctx, 'pedra', x, y);
     }
   };
 
@@ -197,79 +191,60 @@
     var r = I.rng(777);
     for (var y = 0; y < H; y++) for (var x = 0; x < W; x++) desenharChao(ctx, x, y, r);
     for (var yb = H; yb < H + BORDA_BAIXO; yb++) for (var xb = 0; xb < W; xb++) desenharChao(ctx, xb, yb, r, 'g');
+    if (I.desenharPraca) I.desenharPraca(ctx);
     I.desenharEnfeites(ctx);
     I.desenharLago(ctx);
-    desenharFonte(ctx);
-    // prédios e árvores em ordem de cima para baixo
+    I.contornos = {};
+    // prédios, peças da praça, enfeites altos e árvores em ordem de cima para baixo
     var itens = [];
     I.lugares.forEach(function (l) { itens.push({ y: l.rect.y + l.rect.h, f: function () {
       var fn = Mapa.PREDIOS[l.sprite] || Mapa.PREDIOS.torre;
       sombraBase(ctx, l.rect.x * T, l.rect.y * T, l.rect.w * T, l.rect.h * T);
       fn(ctx, l.rect.x * T, l.rect.y * T, l.rect.w * T, l.rect.h * T, l.cores);
     } }); });
+    (I.objetos || []).forEach(function (o) { itens.push({ y: o.y + o.h, f: function () { I.desenharObjeto(ctx, o); } }); });
     for (var y3 = 0; y3 < H; y3++) for (var x3 = 0; x3 < W; x3++) {
-      if (I.decor[y3][x3] === 'arvore') (function (xx, yy) { itens.push({ y: yy + 1, f: function () { desenharArvore(ctx, xx, yy, I.rng(xx * 131 + yy * 71)); } }); })(x3, y3);
+      var d3 = I.decor[y3][x3];
+      if (d3 === 'arvore') (function (xx, yy) { itens.push({ y: yy + 1, f: function () { desenharArvore(ctx, xx, yy, I.rng(xx * 131 + yy * 71)); } }); })(x3, y3);
+      else if (I.PECAS_ALTAS && I.PECAS_ALTAS[d3]) (function (tp, xx, yy) { itens.push({ y: yy + 1, f: function () { I.desenharPeca(ctx, tp, xx, yy); } }); })(d3, x3, y3);
     }
     itens.sort(function (a, b) { return a.y - b.y; }).forEach(function (i) { i.f(); });
     I.estatico = c;
     return c;
   };
 
-  // partes animadas: brilho da água, jato da fonte, arco-íris dos lugares concluídos
+  // partes animadas: brilho da água, fonte e lampiões (mundo/cidade-desenho.js), ganchos dos prédios e o
+  // contorno dourado dos lugares concluídos (mundo/contorno.js; parado sem Animações)
   Mapa.desenharAnimado = function (ctx, t, opcoes) {
     opcoes = opcoes || {};
     if (!I.estatico) Mapa.prerender();
     ctx.drawImage(I.estatico, 0, 0);
     if (!opcoes.semAnimacao) {
       // brilhos na água
-      for (var i = 0; i < 14; i++) {
+      var L = Mapa.CIDADE.lago, x0 = (L.cx - L.rx) * T, y0 = (L.cy - L.ry) * T;
+      var lw = Math.round(L.rx * 2 * T), lh = Math.round(L.ry * 2 * T);
+      for (var i = 0; i < 18; i++) {
         var fase = (t / 1400 + i * 0.37) % 1;
-        var ax = 12 * T + ((i * 53) % (12 * T)), ay = 22 * T + 6 + ((i * 29) % (4 * T - 10));
-        if (Mapa.agua(Math.floor(ax / T), Math.floor(ay / T)) && fase < 0.5) {
+        var ax = Math.round(x0 + ((i * 53) % lw)), ay = Math.round(y0 + 6 + ((i * 29) % (lh - 10)));
+        if (Mapa.fundura(ax, ay) > 3 && fase < 0.5) {
           ctx.fillStyle = 'rgba(255,255,255,' + (0.9 - fase * 1.6).toFixed(2) + ')';
           ctx.fillRect(ax, ay, 3, 1);
         }
       }
-      // jato da fonte
-      var cx = 18 * T, cy = 14 * T - 12;
-      for (var g = 0; g < 8; g++) {
-        var f = ((t / 700) + g / 8) % 1;
-        var lado = g % 2 ? 1 : -1;
-        var gx = cx + lado * f * 9, gy = cy - Math.sin(f * Math.PI) * 9 + f * 10;
-        ctx.fillStyle = f < 0.8 ? '#bfe7ff' : '#ffffff';
-        ctx.fillRect(Math.round(gx), Math.round(gy), 2, 2);
-        var fio = ((t / 700) + g / 4) % 1;
-        ctx.fillStyle = fio < 0.75 ? '#bfe7ff' : '#ffffff';
-        ctx.fillRect(287 + (g % 2), Math.round(210 + fio * 14), 1, 2);
-      }
-      var anel = (t / 700) % 1;
-      var meio = 2 + Math.round(anel * 7);
-      var alfa = (0.85 * (1 - anel)).toFixed(2);
-      ctx.fillStyle = anel < 0.5 ? 'rgba(255,255,255,' + alfa + ')' : 'rgba(217,255,244,' + alfa + ')';
-      ctx.fillRect(18 * T - meio, 14 * T + 1, meio * 2, 1);
-      ctx.fillRect(18 * T - meio, 14 * T + 2, meio * 2, 1);
-      ctx.fillRect(18 * T - meio, 14 * T + 3, meio * 2, 1);
+      if (I.animarCidade) I.animarCidade(ctx, t);
       I.lugares.forEach(function (l) {
         var fa = Mapa.PREDIOS_ANIM[l.sprite];
         if (fa) fa(ctx, l.rect.x * T, l.rect.y * T, l.rect.w * T, l.rect.h * T, t);
       });
     }
-    // arco-íris sobre os lugares concluídos
+    // matéria de dentro de um prédio: brilha o prédio anfitrião (uma vez só)
+    var feitos = {};
     (opcoes.concluidos || []).forEach(function (id) {
       var l = Mapa.lugar(id);
-      if (!l) return;
-      var cx2 = (l.rect.x + l.rect.w / 2) * T, base = l.rect.y * T + 10;
-      var cores = ['#ff6b8a', '#ffb020', '#ffe066', '#6fdc8c', '#5fb4ff', '#a66bff'];
-      var raio = l.rect.w * T / 2 + 6;
-      for (var k = 0; k < cores.length; k++) {
-        ctx.strokeStyle = cores[k];
-        ctx.globalAlpha = 0.85;
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.arc(cx2, base, raio - k * 2, Math.PI, 2 * Math.PI);
-        ctx.stroke();
-      }
-      ctx.globalAlpha = 1;
+      if (l && l.dentro) l = I.lugares.find(function (o) { return o.id === l.dentro; });
+      if (!l || feitos[l.id] || !I.desenharContorno) return;
+      feitos[l.id] = true;
+      I.desenharContorno(ctx, l, t, !opcoes.semAnimacao);
     });
   };
 })();

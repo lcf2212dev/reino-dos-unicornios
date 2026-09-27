@@ -8,7 +8,7 @@ const fs = require('fs');
 const vm = require('vm');
 const Jogo = require('../jogo-no-node');
 
-// tamanho do mapa em tiles, do próprio mundo/mapa.js (var W = 36, H = 28)
+// tamanho do mapa em tiles, do próprio mundo/mapa.js (var W = 56, H = 42)
 function tamanho() {
   const t = fs.readFileSync(Jogo.arquivo('mundo/mapa'), 'utf8').match(/var W = (\d+), H = (\d+)/);
   if (!t) throw new Error('lugares-do-mapa: não achei "var W = .., H = .." em mundo/mapa.js');
