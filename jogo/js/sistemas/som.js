@@ -16,7 +16,8 @@
   var ajustes = function () { return (Reino.Progresso && Reino.Progresso.estado() && Reino.Progresso.estado().ajustes) || {}; };
 
   S.ativar = function () {
-    if (I.ac) { if (I.ac.state === 'suspended') I.ac.resume(); return; }
+    // 'interrupted': o Safari do iPad/iPhone (tela bloqueada, ligação, outro app tocando); 'closed' não volta
+    if (I.ac) { if (I.ac.state === 'suspended' || I.ac.state === 'interrupted') I.ac.resume(); return; }
     try {
       I.ac = new (window.AudioContext || window.webkitAudioContext)();
       mestre = I.ac.createGain();

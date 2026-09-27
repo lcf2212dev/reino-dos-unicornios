@@ -185,10 +185,15 @@
   }
 
   /* ---------- álbum ---------- */
+  // o álbum que ainda espera o banco abrir (sem painel, o UI.temTela() do botão não barra): o 2º toque
+  // nessa hora (tablet lento, 1ª vez na sessão) recebe o mesmo, em vez de abrir outro por cima
+  var albumAbrindo = null;
   F.abrirAlbum = function () {
     var UI = Reino.UI, el = U().el;
     if (!UI || typeof document === 'undefined') return Promise.resolve();
-    return abrirBanco().then(function () {
+    if (albumAbrindo) return albumAbrindo;
+    return (albumAbrindo = abrirBanco().then(function () {
+      albumAbrindo = null;
       return new Promise(function (resolver) {
         var urls = [];
         function soltar() { urls.forEach(function (u) { URL.revokeObjectURL(u); }); urls = []; }
@@ -236,7 +241,7 @@
         }
         montar();
       });
-    });
+    }));
   };
 
   // a foto grande, com ◀ ▶ (e as setas do teclado), Compartilhar (onde der), Salvar no aparelho e Apagar (com confirmação)

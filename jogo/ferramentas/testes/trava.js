@@ -32,6 +32,8 @@ function ler(arq) {
 // ninguém vê a trava vazia. Arquivo vazio/ilegível recente (outra versão criando) é ocupado, nunca morto.
 // Trava de dono morto ou parado: só quem cria o `.assumindo` (o mesmo link atômico) troca, e com ele na mão confere
 // de novo que o arquivo ainda é o do dono morto (mesmo inode). Dois assumindo juntos davam dois donos (auditoria).
+// Criar a trava livre também só com o `.assumindo` na mão: quem assume tira do caminho, por um instante, a trava de
+// outro criada depois da conferência, e ninguém pode criar a sua nesse vão (a devolução dava EEXIST: dois donos).
 const RECENTE_MS = 2000, ASSUMINDO_MS = 10000;
 function criar(de, para) {
   try { fs.linkSync(de, para); return true; } catch (e) { if (e.code !== 'EEXIST') throw e; return false; }
@@ -50,7 +52,6 @@ function tentar(arq, nome) {
   try { return tentarCom(arq, tmp); } finally { try { fs.unlinkSync(tmp); } catch (e) { /* já saiu */ } }
 }
 function tentarCom(arq, tmp) {
-  if (criar(tmp, arq)) return null;
   const dono = ler(arq);
   if (dono && dono.pid === process.pid) return null;
   if (impede(arq, dono)) return impede(arq, dono);
@@ -109,9 +110,24 @@ async function pegar(nome, op = {}) {
   return { arquivo: arq, herdada: false };
 }
 
+// solta com o `.assumindo` na mão (como quem cria ou assume): ler e apagar em dois passos deixava um dono parado que
+// acorda apagar a trava NOVA de quem acabou de assumi-la (auditoria). Ocupado por mais de 2 s: não apaga (trava de
+// PID morto, que o próximo assume).
 function soltar(arq = arquivoDa()) {
   const d = ler(arq);
-  if (d && d.pid === process.pid) try { fs.unlinkSync(arq); } catch (e) { /* já saiu */ }
+  if (!d || d.pid !== process.pid) return;
+  const tmp = arq + '.' + process.pid, assumindo = arq + '.assumindo', fim = Date.now() + RECENTE_MS;
+  try {
+    fs.writeFileSync(tmp, JSON.stringify({ pid: process.pid, nome: 'soltando', desde: new Date().toISOString() }));
+    while (!criar(tmp, assumindo)) {
+      if (Date.now() > fim) return;
+      Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 10);   // espera síncrona (roda no 'exit')
+    }
+    try {
+      const agora = ler(arq);
+      if (agora && agora.pid === process.pid) fs.unlinkSync(arq);
+    } finally { try { fs.unlinkSync(assumindo); } catch (e) { /* já saiu */ } }
+  } catch (e) { /* já saiu */ } finally { try { fs.unlinkSync(tmp); } catch (e) { /* já saiu */ } }
 }
 
 module.exports = { pegar, soltar, arquivoDa, vivo, parado, SEM_BATIDA_MS };

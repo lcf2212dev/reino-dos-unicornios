@@ -12,7 +12,8 @@ const REGISTRO = path.join(__dirname, 'artifact-publicado.txt');
 const MAX_LOTE = 250;   // entradas por publicação (limite do claude.ai é 255; os null contam)
 const PASTAS = ['jogo/js', 'jogo/css', 'jogo/index.html'];
 
-const git = (repo, args) => execFileSync('git', args, { cwd: repo, encoding: 'utf8', maxBuffer: 64 << 20 });
+// quotePath=false: nome com acento sai como está, e não entre aspas com \303\247 (sumia do delta; auditoria)
+const git = (repo, args) => execFileSync('git', ['-c', 'core.quotePath=false', ...args], { cwd: repo, encoding: 'utf8', maxBuffer: 64 << 20 });
 
 // manifesto de um commit, avaliado num vm (dados puros, sem DOM)
 function manifestoDe(commit, repo) {

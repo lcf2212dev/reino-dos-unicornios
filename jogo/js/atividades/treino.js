@@ -125,7 +125,9 @@
       document.body.classList.remove('em-missao');
       Reino.UI.fecharTela(tela);
     }
+    var botaoFim = null;   // no resultado, o "Voltar ao castelo"/"Chocar o ovo": o treino já contou e o ✕ faz o mesmo
     sair.addEventListener('click', function () {
+      if (botaoFim) { botaoFim.click(); return; }
       Reino.UI.confirmar('Quer sair do treino? As respostas desta vez não serão guardadas.', 'Sair', 'Continuar').then(function (sim) {
         if (sim) { fechar(); if (aoTerminar) aoTerminar(null); }
       });
@@ -300,6 +302,7 @@
         var depois = function () { if (aoTerminar) aoTerminar(premios); };
         if (premios.ovos.length) Reino.UI.chocarOvos(premios.ovos).then(depois); else depois();
       });
+      botaoFim = voltar;
     }
 
     Pr.ritual(corpo, est.ritualVisto).then(function () {
