@@ -27,7 +27,7 @@ const podar = db.prepare('DELETE FROM historico WHERE id = ? AND n NOT IN (SELEC
 const listarJogadores = db.prepare('SELECT login FROM jogadores ORDER BY criado, login');
 const lerJogador = db.prepare('SELECT senha FROM jogadores WHERE login = ?');
 const criarJogador = db.prepare('INSERT INTO jogadores (login, senha, criado) VALUES (?, ?, ?) ON CONFLICT(login) DO NOTHING');
-// login: minúsculas, números, - e _ (2 a 20); 'mariana' é o save dela (existe sem senha)
+// login: minúsculas, números, - e _ (2 a 20); 'mariana' é o save dela (conta semeada abaixo, sem sobrescrever)
 const LOGIN = /^[a-z0-9_-]{2,20}$/;
 const MARIANA = 'mariana';
 // a conta da Mariana também mora na tabela (pedido do Leandro): semeada ao iniciar, NUNCA sobrescrita se já existe
@@ -86,7 +86,7 @@ function json(res, status, d) {
   res.end(JSON.stringify(d));
 }
 // GET /api/jogadores: os logins (a Mariana primeiro); POST: cria { login, senha } (409 se existe);
-// POST /api/jogadores/entrar: confere a senha (200 certa, 403 errada, 404 não existe; a Mariana entra direto)
+// POST /api/jogadores/entrar: confere a senha (200 certa, 403 errada, 404 não existe; a Mariana confere com a linha dela; sem a linha, entra)
 function apiJogadores(req, res, entrar) {
   res.setHeader('X-Reino', '1');
   res.setHeader('X-Reino-Jogadores', '1');
