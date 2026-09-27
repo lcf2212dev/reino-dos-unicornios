@@ -45,6 +45,65 @@
     { id: 'anel-saturno', nome: 'Anel de Saturno no chifre', preco: 40, slot: 'chifre', icone: 'enfeite:anel-saturno', espaco: true },
     { id: 'cometa-cauda', nome: 'Cometa na cauda', preco: 42, slot: 'cauda', icone: 'enfeite:cometa-cauda', espaco: true },
     { id: 'asasFada', nome: 'Asinhas de fada', preco: 45, slot: 'asas', icone: '🧚' },
+    // segunda leva (50 enfeites, de 6 a 80 ⭐). Vão no fim, e não na ordem de preço, para as posições 0–5
+    // (as que os saves sintéticos dos testes compram e vestem) não mudarem; a tela da Loja agrupa por
+    // encaixe e ordena por preço. Ícone: 'enfeite:<id>' (js/arte/icones/loja-enfeites.js) ou emoji com desenho
+    // orelha
+    { id: 'tulipa-orelha', nome: 'Tulipa na orelha', preco: 6, slot: 'orelha', icone: '🌷' },
+    { id: 'morango-orelha', nome: 'Moranguinho na orelha', preco: 9, slot: 'orelha', icone: '🍓' },
+    { id: 'abelhinha-orelha', nome: 'Abelhinha na orelha', preco: 13, slot: 'orelha', icone: '🐝' },
+    { id: 'joaninha-orelha', nome: 'Joaninha na orelha', preco: 17, slot: 'orelha', icone: '🐞' },
+    { id: 'concha-orelha', nome: 'Conchinha na orelha', preco: 21, slot: 'orelha', icone: '🐚' },
+    { id: 'floco-neve-orelha', nome: 'Floquinho de neve', preco: 27, slot: 'orelha', icone: 'enfeite:floco-neve-orelha' },
+    { id: 'nota-musical-orelha', nome: 'Nota musical na orelha', preco: 33, slot: 'orelha', icone: '🎵' },
+    { id: 'borboleta-orelha', nome: 'Borboleta na orelha', preco: 44, slot: 'orelha', icone: 'enfeite:borboleta-orelha' },
+    { id: 'brinco-diamante', nome: 'Brinco de diamante', preco: 62, slot: 'orelha', icone: '💎' },
+    // olhos
+    { id: 'oculos-redondos', nome: 'Óculos redondinhos', preco: 11, slot: 'olho', icone: 'enfeite:oculos-redondos' },
+    { id: 'oculos-flor', nome: 'Óculos de flor', preco: 19, slot: 'olho', icone: 'enfeite:oculos-flor' },
+    { id: 'oculos-arco-iris', nome: 'Óculos de arco-íris', preco: 29, slot: 'olho', icone: 'enfeite:oculos-arco-iris' },
+    { id: 'oculos-melancia', nome: 'Óculos de melancia', preco: 37, slot: 'olho', icone: '🍉' },
+    { id: 'oculos-gatinho', nome: 'Óculos de gatinho', preco: 48, slot: 'olho', icone: '🐱' },
+    { id: 'oculos-diamante', nome: 'Óculos de brilhante', preco: 70, slot: 'olho', icone: 'enfeite:oculos-diamante' },
+    // cabeça
+    { id: 'faixa-bolinhas', nome: 'Faixa de bolinhas', preco: 7, slot: 'cabeca', icone: 'enfeite:faixa-bolinhas' },
+    { id: 'chapeu-cogumelo', nome: 'Chapéu de cogumelo', preco: 15, slot: 'cabeca', icone: '🍄' },
+    { id: 'tiara-coracoes', nome: 'Tiara de corações', preco: 20, slot: 'cabeca', icone: 'enfeite:tiara-coracoes' },
+    { id: 'orelhinhas-coelho', nome: 'Orelhinhas de coelho', preco: 24, slot: 'cabeca', icone: '🐰' },
+    { id: 'touca-pompom', nome: 'Touca de pompom', preco: 31, slot: 'cabeca', icone: 'enfeite:touca-pompom' },
+    { id: 'chapeu-aniversario', nome: 'Chapéu de aniversário', preco: 36, slot: 'cabeca', icone: 'enfeite:chapeu-aniversario' },
+    { id: 'arquinho-arco-iris', nome: 'Arquinho de arco-íris', preco: 41, slot: 'cabeca', icone: '🌈' },
+    { id: 'tiara-perolas-mar', nome: 'Tiara de pérolas do mar', preco: 52, slot: 'cabeca', icone: 'enfeite:tiara-perolas-mar' },
+    { id: 'coroa-diamantes', nome: 'Coroa de diamantes', preco: 80, slot: 'cabeca', icone: 'enfeite:coroa-diamantes' },
+    // chifre
+    { id: 'estrelinha-chifre', nome: 'Estrelinha no chifre', preco: 8, slot: 'chifre', icone: '⭐' },
+    { id: 'lacinho-chifre', nome: 'Lacinho no chifre', preco: 14, slot: 'chifre', icone: 'enfeite:lacinho-chifre' },
+    { id: 'raminho-chifre', nome: 'Raminho no chifre', preco: 18, slot: 'chifre', icone: '🌿' },
+    { id: 'coracao-chifre', nome: 'Coração dourado no chifre', preco: 26, slot: 'chifre', icone: '💛' },
+    { id: 'anel-arco-iris-chifre', nome: 'Anel de arco-íris no chifre', preco: 39, slot: 'chifre', icone: 'enfeite:anel-arco-iris-chifre' },
+    { id: 'sininho-chifre', nome: 'Sininho no chifre', preco: 50, slot: 'chifre', icone: '🔔' },
+    { id: 'cristal-gelo-chifre', nome: 'Cristal de gelo no chifre', preco: 66, slot: 'chifre', icone: '🧊' },
+    // pescoço
+    { id: 'lenco-bolinhas', nome: 'Lencinho de bolinhas', preco: 6, slot: 'pescoco', icone: 'enfeite:lenco-bolinhas' },
+    { id: 'colar-margaridas', nome: 'Colar de margaridas', preco: 10, slot: 'pescoco', icone: 'enfeite:colar-margaridas' },
+    { id: 'colar-cerejas', nome: 'Colar de cerejinhas', preco: 16, slot: 'pescoco', icone: 'enfeite:colar-cerejas' },
+    { id: 'medalhinha-ouro', nome: 'Medalhinha de ouro', preco: 23, slot: 'pescoco', icone: '🥇' },
+    { id: 'cachecol-listrado', nome: 'Cachecol listrado', preco: 28, slot: 'pescoco', icone: 'enfeite:cachecol-listrado' },
+    { id: 'colar-conchinhas', nome: 'Colar de conchinhas', preco: 34, slot: 'pescoco', icone: 'enfeite:colar-conchinhas' },
+    { id: 'colar-balinhas', nome: 'Colar de balinhas', preco: 40, slot: 'pescoco', icone: 'enfeite:colar-balinhas' },
+    { id: 'pingente-coracao', nome: 'Pingente de coração azul', preco: 46, slot: 'pescoco', icone: '💙' },
+    { id: 'colar-notas', nome: 'Colar de notas musicais', preco: 55, slot: 'pescoco', icone: '🎶' },
+    { id: 'colar-rubis', nome: 'Colar de rubis', preco: 75, slot: 'pescoco', icone: 'enfeite:colar-rubis' },
+    // cauda
+    { id: 'laco-xadrez-cauda', nome: 'Laço xadrez na cauda', preco: 7, slot: 'cauda', icone: 'enfeite:laco-xadrez-cauda' },
+    { id: 'flores-cauda', nome: 'Flores na cauda', preco: 12, slot: 'cauda', icone: 'enfeite:flores-cauda' },
+    { id: 'peixinho-cauda', nome: 'Peixinho na cauda', preco: 16, slot: 'cauda', icone: '🐟' },
+    { id: 'estrelas-cauda', nome: 'Estrelinhas na cauda', preco: 22, slot: 'cauda', icone: '💫' },
+    { id: 'fita-arco-iris-cauda', nome: 'Fita de arco-íris na cauda', preco: 30, slot: 'cauda', icone: 'enfeite:fita-arco-iris-cauda' },
+    { id: 'pena-cauda', nome: 'Peninha na cauda', preco: 35, slot: 'cauda', icone: '🪶' },
+    { id: 'balao-cauda', nome: 'Balãozinho na cauda', preco: 43, slot: 'cauda', icone: '🎈' },
+    { id: 'barbatana-sereia', nome: 'Barbatana de sereia', preco: 58, slot: 'cauda', icone: 'enfeite:barbatana-sereia' },
+    { id: 'estrela-cadente-cauda', nome: 'Estrela cadente na cauda', preco: 78, slot: 'cauda', icone: '🌠' },
   ];
 
   // o que a Loja fala de novo (o orquestrador grava; Falas.todas põe no pacote geral)

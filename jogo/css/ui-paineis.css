@@ -123,3 +123,8 @@
 /* confete */
 .confete { position: fixed; inset: 0; z-index: 60; pointer-events: none; }
 
+
+/* ---------- loja: atalhos para cada encaixe (com 68 enfeites, a tela rola) ---------- */
+.loja-atalhos { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.loja-atalhos .btn-pequeno { min-height: 44px; padding: 4px 12px; font-size: 0.9em; }
+.loja-grupo { scroll-margin-top: 8px; }

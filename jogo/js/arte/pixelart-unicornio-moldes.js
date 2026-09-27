@@ -44,6 +44,8 @@
   // filhote: a pontinha é mais curta (o pinguim logo abaixo da volta); de costas e 3/4 de costas só a volta
   var CACHECOL_PINGUIM_FILHOTE = ['BcBcBcBcB', 'DBDBDcDBD', '...kdddk.', '...dwdwd.', '...dwowd.', '....kkk..'];
   var CACHECOL_COSTAS = ['BcBcBcBcB', 'DBDBDBDBD'];
+  // cachecol listrado (Loja): nas vistas em que o de pinguim tem desenho próprio, vai no mesmo lugar (de costas, só a volta)
+  var CACHECOL_LISTRADO = ['PVPVPVPVP', 'VPVPVPVPV', '....PV...', '....VP...'];
   var LACINHO_MORANGO = ['rR.g.Rr', 'RyRGRyR', 'RRdGdRR', 'yRd.dRy', 'dd...dd'];
   var COLAR_PLANETAS = ['ykkykkykky', 'krRkbBkoOk', 'kRRkBBkOOk', '.kk.kk.kk.'];
   var COMETA_CAUDA_TRAS = ['kk....', 'kck...', 'kCck..', '.kCWk.', '.kWWWk', '.kYWYk', '..kkk.'];
@@ -501,6 +503,59 @@
     // lilás quando ela está montada de frente) passa por cima dele; o filhote usa o lilás claro 'a'
     // (e um risquinho de contorno embaixo dele onde encosta na crina, para não se misturar com ela)
     'anel-saturno': { linhas: ['.AA..AA.', 'AAWWWWAA', '..k..k..'], paleta: { k: '#3a2446', A: '#9a6cf5', a: '#d9c2ff', W: '#ffffff' }, ancora: 'chifre', dx: -3, dy: 0 },
+    // segunda leva da Loja das Fadas (50): pequenos (até 9 px de largura e 6 de altura); onde passariam da borda do quadro, o laço
+    // depois deste bloco lhes dá lugar próprio mais para dentro (cabem inteiros em todo molde e vista);
+    // óculos: a lente de lado (3×3 no olho); de frente e 3/4 de frente, duas lentes e a ponte (OCULOS2, abaixo)
+    'tulipa-orelha': { linhas: ['R.r.R', 'RRrRR', 'kRRRk', '.kGk.'], paleta: { k: '#3a2446', R: '#ff4f6d', r: '#ff9cb0', G: '#3fae4f' }, ancora: 'orelha', dx: -2, dy: 0 },
+    'morango-orelha': { linhas: ['.gGg.', 'kRRRk', 'kRyRk', '.kRk.'], paleta: { k: '#3a2446', g: '#8fe07a', G: '#3fae4f', R: '#ee3b50', y: '#ffe98a' }, ancora: 'orelha', dx: -2, dy: 0 },
+    'abelhinha-orelha': { linhas: ['.w.w.', 'kYkYk', 'kYkYk', '.kkk.'], paleta: { k: '#3a2446', w: '#d8f4ff', Y: '#ffd34d' }, ancora: 'orelha', dx: -2, dy: 0 },
+    'joaninha-orelha': { linhas: ['.kkk.', 'kWkRk', 'kRkRk', '.RkR.'], paleta: { k: '#3a2446', R: '#ff3b3b', W: '#ffffff' }, ancora: 'orelha', dx: -2, dy: 0 },
+    'concha-orelha': { linhas: ['.kkk.', 'kPpPk', 'kpPpk', '.kPk.'], paleta: { k: '#3a2446', P: '#ff9cc6', p: '#ffd1e6' }, ancora: 'orelha', dx: -2, dy: 1 },
+    'floco-neve-orelha': { linhas: ['C.W.C', '.CWC.', 'WWkWW', '.CWC.', 'C.W.C'], paleta: { k: '#3a2446', C: '#3d8ee8', W: '#ffffff' }, ancora: 'orelha', dx: -2, dy: 0 },
+    'nota-musical-orelha': { linhas: ['..PPP', '..P.P', '..P..', 'PPP..', 'PPP..'], paleta: { P: '#6a3fd0' }, ancora: 'orelha', dx: -2, dy: 0 },
+    'borboleta-orelha': { linhas: ['PPkPP', 'PYkYP', '.pkp.', 'pp.pp'], paleta: { k: '#3a2446', P: '#3d8ee8', Y: '#ffffff', p: '#ffb020' }, ancora: 'orelha', dx: -2, dy: 0 },
+    'brinco-diamante': { linhas: ['.Y.', 'kCk', 'CWC', 'kCk', '.k.'], paleta: { k: '#3a2446', Y: '#ffd34d', C: '#5fd6ff', W: '#ffffff' }, ancora: 'orelha', dx: -1, dy: 1 },
+    'oculos-redondos': { linhas: ['kkk', 'kCk', 'kkk'], paleta: { k: '#3a2446', C: '#cfefff' }, ancora: 'olho', dx: -1, dy: -1 },
+    'oculos-flor': { linhas: ['.O.', 'OYO', '.O.'], paleta: { O: '#ff8a1c', Y: '#ffe066', G: '#3fae4f' }, ancora: 'olho', dx: -1, dy: -1 },
+    'oculos-arco-iris': { linhas: ['ror', 'yWy', 'gbg'], paleta: { r: '#ff5a6e', o: '#ffa53a', y: '#ffe14d', g: '#5fd07a', b: '#5fb4ff', W: '#e8f6ff' }, ancora: 'olho', dx: -1, dy: -1 },
+    'oculos-melancia': { linhas: ['GGG', 'RkR', '.R.'], paleta: { k: '#3a2446', G: '#3fae4f', R: '#ff5a6e' }, ancora: 'olho', dx: -1, dy: -1 },
+    'oculos-gatinho': { linhas: ['P.P', 'PWP', 'PPP'], paleta: { P: '#9b59d0', W: '#e8f6ff' }, ancora: 'olho', dx: -1, dy: -1 },
+    'oculos-diamante': { linhas: ['.C.', 'CWC', '.C.'], paleta: { C: '#3fb4e0', W: '#ffffff', Y: '#ffd34d' }, ancora: 'olho', dx: -1, dy: -1 },
+    'faixa-bolinhas': { linhas: ['PWPWPWP', 'dPdPdPd'], paleta: { P: '#ff7eb6', W: '#ffffff', d: '#c92f73' }, ancora: 'cabeca', dx: -3, dy: 0 },
+    'chapeu-cogumelo': { linhas: ['.kRRRk.', 'kRWRRWk', 'ccccccc'], paleta: { k: '#3a2446', R: '#ff4f4f', W: '#ffffff', c: '#fff3dc' }, ancora: 'cabeca', dx: -3, dy: -2 },
+    'tiara-coracoes': { linhas: ['R.R.R.R', 'RRR.RRR', '.R...R.', 'YYYYYYY'], paleta: { R: '#ff4f7b', Y: '#ffd34d' }, ancora: 'cabeca', dx: -3, dy: -2 },
+    'orelhinhas-coelho': { linhas: ['kk...kk', 'kPk.kPk', 'kPk.kPk', 'kPkkkPk'], paleta: { k: '#3a2446', P: '#ff9cc6' }, ancora: 'cabeca', dx: -3, dy: -3 },
+    'touca-pompom': { linhas: ['..kWk..', '.kBcBk.', 'kBcBcBk', 'WWWWWWW'], paleta: { k: '#3a2446', W: '#ffffff', B: '#3d8ee8', c: '#bfe4ff' }, ancora: 'cabeca', dx: -3, dy: -2 },
+    'chapeu-aniversario': { linhas: ['...P...', '..kBk..', '.kBYBk.', 'kYYYYYk'], paleta: { k: '#3a2446', Y: '#ffd34d', P: '#ff4f9a', B: '#3d8ee8' }, ancora: 'cabeca', dx: -3, dy: -3 },
+    'arquinho-arco-iris': { linhas: ['.rrrrr.', 'rooooor', 'oy...yo'], paleta: { r: '#ff5a6e', o: '#ffa53a', y: '#ffe14d' }, ancora: 'cabeca', dx: -3, dy: -2 },
+    'tiara-perolas-mar': { linhas: ['..kPk..', 'LkPpPkL', 'cLcLcLc'], paleta: { k: '#3a2446', P: '#ff4f9a', p: '#ffc2e0', c: '#fff8ee', L: '#8a6fb0' }, ancora: 'cabeca', dx: -3, dy: -2 },
+    'coroa-diamantes': { linhas: ['C..C..C', 'Y.YCY.Y', 'YYYYYYY', 'YRYCYRY'], paleta: { Y: '#ffd34d', C: '#7fe3ff', R: '#ff5c8a' }, ancora: 'cabeca', dx: -3, dy: -2 },
+    'estrelinha-chifre': { linhas: ['kYk', 'YWY', 'kYk'], paleta: { k: '#3a2446', Y: '#ffe14d', W: '#ffffff' }, ancora: 'chifre', dx: -1, dy: -1 },
+    'lacinho-chifre': { linhas: ['PP.PP', 'PPDPP', 'P...P'], paleta: { P: '#ff4f9a', D: '#c92f73' }, ancora: 'chifre', dx: -2, dy: 1 },
+    'raminho-chifre': { linhas: ['g.g', 'GgG', '.G.'], paleta: { G: '#3fae4f', g: '#8fe07a' }, ancora: 'chifre', dx: -1, dy: 1 },
+    'coracao-chifre': { linhas: ['kYkYk', 'kYYYk', '.kYk.'], paleta: { k: '#3a2446', Y: '#ffc21a' }, ancora: 'chifre', dx: -2, dy: 1 },
+    'anel-arco-iris-chifre': { linhas: ['.rr..bb.', 'rroyygbb', '..k..k..'], paleta: { k: '#3a2446', r: '#ff5a6e', o: '#ffa53a', y: '#ffe14d', g: '#5fd07a', b: '#5fb4ff' }, ancora: 'chifre', dx: -3, dy: 0 },
+    'sininho-chifre': { linhas: ['.k.', 'kYk', 'kYk', 'YYy', '.k.'], paleta: { k: '#3a2446', Y: '#f5a300', y: '#b87400' }, ancora: 'chifre', dx: 0, dy: 1 },
+    'cristal-gelo-chifre': { linhas: ['.W.', 'CWC', 'CCC', '.C.'], paleta: { C: '#3fa0f0', W: '#bff0ff' }, ancora: 'chifre', dx: -1, dy: -1 },
+    'lenco-bolinhas': { linhas: ['RWRWRWR', '.RRWRR.', '..RWR..', '...R...'], paleta: { R: '#ff4f4f', W: '#ffffff' }, ancora: 'pescoco', dx: -3, dy: 0 },
+    'colar-margaridas': { linhas: ['kWkGkWk', 'WYWkWYW', 'kWk.kWk'], paleta: { k: '#3a2446', G: '#3fae4f', W: '#ffffff', Y: '#ffc21a' }, ancora: 'pescoco', dx: -3, dy: 0 },
+    'colar-cerejas': { linhas: ['GGGGGGG', 'R.R.R.R', 'd.d.d.d'], paleta: { G: '#3fae4f', R: '#ee3b50', d: '#b3203a' }, ancora: 'pescoco', dx: -3, dy: 0 },
+    'medalhinha-ouro': { linhas: ['B.....B', '.B...B.', '..kYk..', '..YWY..', '..kYk..'], paleta: { k: '#3a2446', B: '#3d8ee8', Y: '#ffd34d', W: '#fff6c8' }, ancora: 'pescoco', dx: -3, dy: 0 },
+    'cachecol-listrado': { linhas: CACHECOL_LISTRADO, paleta: { P: '#ff7eb6', V: '#9b6cf0' }, ancora: 'pescoco', dx: -4, dy: -1 },
+    'colar-conchinhas': { linhas: ['LcLcLcL', '.P.O.P.', '.p.o.p.'], paleta: { L: '#8a6fb0', c: '#fff8ee', P: '#ff7eb6', p: '#ffc2e0', O: '#ff9a3a', o: '#ffd08a' }, ancora: 'pescoco', dx: -3, dy: 0 },
+    'colar-balinhas': { linhas: ['LLLLLLL', 'PWPLBWB', '..YWY..'], paleta: { L: '#8a6fb0', P: '#ff4f9a', B: '#3fb4e0', Y: '#f2b400', W: '#ffffff' }, ancora: 'pescoco', dx: -3, dy: 0 },
+    'pingente-coracao': { linhas: ['LcLcLcL', '..B.B..', '..WBB..', '...B...'], paleta: { L: '#8a6fb0', c: '#fff8ee', B: '#3d8ee8', W: '#cfe9ff' }, ancora: 'pescoco', dx: -3, dy: 0 },
+    'colar-notas': { linhas: ['YYYYYYY', '.P...P.', 'PP..PP.'], paleta: { Y: '#ffd34d', P: '#6a3fd0' }, ancora: 'pescoco', dx: -3, dy: 0 },
+    'colar-rubis': { linhas: ['YRYRYRY', '..kYk..', '..RWR..', '..dRd..', '...d...'], paleta: { k: '#3a2446', Y: '#ffd34d', R: '#ff3b5c', d: '#b3203a', W: '#ffd1dc' }, ancora: 'pescoco', dx: -3, dy: 0 },
+    'laco-xadrez-cauda': { linhas: ['RW.WR', 'WRDRW', 'RW.WR'], paleta: { R: '#e02a4a', W: '#ffffff', D: '#8c1c33' }, ancora: 'cauda', dx: -2, dy: -1 },
+    'flores-cauda': { linhas: ['.P...', 'PYP..', '.P.V.', '..VYV', '...V.'], paleta: { P: '#ff7eb6', V: '#b58cff', Y: '#ffe066' }, ancora: 'cauda', dx: -2, dy: -2 },
+    'peixinho-cauda': { linhas: ['.OOO.O', 'OkOOOO', '.OOO.O'], paleta: { k: '#3a2446', O: '#ffa020' }, ancora: 'cauda', dx: -3, dy: -1 },
+    'estrelas-cauda': { linhas: ['.Y...', 'YWY..', '.Y.Y.', '..YWY', '...Y.'], paleta: { Y: '#ffc21a', W: '#fffbe0' }, ancora: 'cauda', dx: -2, dy: -2 },
+    'fita-arco-iris-cauda': { linhas: ['kk.kk', 'kPDPk', 'kk.kk', 'roygb', 'r.y.b'], paleta: { k: '#3a2446', P: '#ff7eb6', D: '#c92f73', r: '#ff5a6e', o: '#ffa53a', y: '#ffe14d', g: '#5fd07a', b: '#5fb4ff' }, ancora: 'cauda', dx: -2, dy: -1 },
+    'pena-cauda': { linhas: ['..kk', '.kGk', 'kGBk', 'kBYk', 'kk..'], paleta: { k: '#3a2446', G: '#8f6cf0', B: '#5fb4ff', Y: '#ffd34d' }, ancora: 'cauda', dx: -2, dy: -3 },
+    'balao-cauda': { linhas: ['.kRk.', 'kRWRk', 'kRRRk', '.kRk.', '..k..', '..k..'], paleta: { k: '#3a2446', R: '#ff4f6d', W: '#ffffff' }, ancora: 'cauda', dx: -2, dy: -5 },
+    'barbatana-sereia': { linhas: ['kT.Tk', 'TtTtT', '.TTT.', '..k..'], paleta: { k: '#3a2446', T: '#34d0c0', t: '#9ff0e6' }, ancora: 'cauda', dx: -2, dy: 0 },
+    'estrela-cadente-cauda': { linhas: ['....p', '...pP', 'kYkP.', 'YWY..', 'kYk..'], paleta: { k: '#3a2446', Y: '#ffd34d', W: '#ffffff', p: '#ffd1e6', P: '#ff7eb6' }, ancora: 'cauda', dx: -2, dy: -2 },
     // prêmios da prova de Português (js/conteudo/provas/portugues-3bim.js)
     // touca de chef branca e fofa (dois gomos, dobras e lado da sombra em lilás L) com faixa de arco-íris
     // de 2 px (a de baixo mais escura): assim a touca não se confunde com a cabeça de um unicórnio branco
@@ -510,6 +565,42 @@
     // lacinho vermelho de morango com sementinhas e o nó de folhinha verde
     'lacinho-morango': { linhas: LACINHO_MORANGO, paleta: { k: '#3a2446', r: '#ff8a96', R: '#ee3b50', d: '#b3203a', y: '#ffe98a', G: '#3fae4f', g: '#8fe07a' }, ancora: 'orelha', dx: -4, dy: 1 },
   };
+  // óculos da segunda leva de frente e em 3/4 de frente: a lente de lado em cada olho e a ponte no meio
+  // (a ponte usa a letra P2 da lista, que está na paleta do enfeite; '.' = sem ponte)
+  var OCULOS2 = { 'oculos-redondos': 'k', 'oculos-flor': 'G', 'oculos-arco-iris': 'r', 'oculos-melancia': 'G', 'oculos-gatinho': 'P', 'oculos-diamante': 'Y' };
+  // [estágio, vista, x, y, vão entre as lentes]: os mesmos lugares dos óculos de coração
+  [['adulto', 'frente', 4, 6, 4], ['adulto', 'diagFrente', 11, 6, 4], ['filhote', 'frente', 3, 5, 4], ['filhote', 'diagFrente', 7, 5, 2]].forEach(function (v) {
+    Object.keys(OCULOS2).forEach(function (id) {
+      var l = ENFEITES[id].linhas, vao = new Array(v[4] + 1).join('.'), ponte = new Array(v[4] + 1).join(OCULOS2[id]);
+      UNI[v[0]][v[1]].enfeites[id] = { linhas: [l[0] + vao + l[0], l[1] + ponte + l[1], l[2] + vao + l[2]], x: v[2], y: v[3] };
+    });
+  });
+  Object.keys(UNI).forEach(function (est) {
+    Object.keys(UNI[est]).forEach(function (vista) {
+      var m = UNI[est][vista], pg = m.enfeites && m.enfeites['cachecol-pinguim'];
+      if (pg) m.enfeites['cachecol-listrado'] = { linhas: pg.linhas === CACHECOL_COSTAS ? CACHECOL_LISTRADO.slice(0, 2) : CACHECOL_LISTRADO, x: pg.x, y: pg.y };
+    });
+  });
+  // a segunda leva cabe inteira no quadro em todo molde e vista: onde o desenho passaria da borda (orelha no
+  // 3/4 de frente, cauda do filhote de lado, topo do filhote), ganha lugar próprio o mínimo para dentro
+  var ks = Object.keys(ENFEITES), LEVA2 = ks.slice(ks.indexOf('tulipa-orelha'), ks.indexOf('estrela-cadente-cauda') + 1);
+  Object.keys(UNI).forEach(function (est) {
+    Object.keys(UNI[est]).forEach(function (vista) {
+      var m = UNI[est][vista], w = m.corpo[0].length, h = m.corpo.length + m.pernas[0].length;
+      LEVA2.forEach(function (id) {
+        var e = ENFEITES[id], d = m.enfeites[id], a = m.ancoras[e.ancora];
+        if (!d && !a) return;
+        d = d || { linhas: e.linhas, x: a[0] + e.dx, y: a[1] + e.dy };
+        var x0 = 99, x1 = -99, y0 = 99, y1 = -99;
+        d.linhas.forEach(function (l, j) {
+          for (var i = 0; i < l.length; i++) if (l[i] !== '.') { x0 = Math.min(x0, i); x1 = Math.max(x1, i); y0 = Math.min(y0, j); y1 = Math.max(y1, j); }
+        });
+        var dx = Math.max(0, -(d.x + x0)) - Math.max(0, d.x + x1 - (w - 1));
+        var dy = Math.max(0, -(d.y + y0)) - Math.max(0, d.y + y1 - (h - 1));
+        if (dx || dy) m.enfeites[id] = { linhas: d.linhas, x: d.x + dx, y: d.y + dy };
+      });
+    });
+  });
   PA.ENFEITES_MONTARIA = ENFEITES;
   // acessórios de prova com desenho no próprio arquivo (Reino.registrarProva), se já registrados
   Object.assign(ENFEITES, (window.Reino && window.Reino.desenhosAcessorios) || {});

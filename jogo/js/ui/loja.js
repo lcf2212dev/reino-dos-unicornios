@@ -68,13 +68,31 @@
     });
   }
   var avisouPremios = false;   // a regra nova dos prêmios é falada uma vez por sessão
+  // a vitrine da tela, por encaixe (com 68 enfeites, uma grade só ficava comprida demais); em cada grupo,
+  // do mais barato ao mais caro (empate: a ordem da lista). Capa, rastro e asas vão juntos no fim
+  var GRUPOS = ['orelha', 'olho', 'cabeca', 'chifre', 'pescoco', 'cauda'].map(function (s) {
+    return { id: s, titulo: LI.SLOTS[s].nome, slots: [s] };
+  }).concat([{ id: 'especiais', titulo: 'Capa, rastro e asas', slots: ['capa', 'rastro', 'asas'] }]);
+  function itensDoGrupo(g) {
+    return ITENS.filter(function (it) { return g.slots.indexOf(it.slot) >= 0; })
+      .sort(function (a, b) { return a.preco - b.preco || ITENS.indexOf(a) - ITENS.indexOf(b); });
+  }
 
   UI.telaLoja = function () {
     var pn = painel('lugar', '🧚 Loja das Fadas');
     var c = pn.conteudo;
     var saldo = el('div.saldo-estrelas');
     var vitrine = el('div.vitrine-previa');
-    var grade = el('div.grade-loja');
+    // um título e uma grade por encaixe; os atalhos de cima rolam até o grupo
+    var grupos = GRUPOS.map(function (g) {
+      return { g: g, titulo: el('h3.estabulo-grupo.loja-grupo', { id: 'loja-grupo-' + g.id, tabindex: '-1' }, g.titulo), grade: el('div.grade-loja') };
+    });
+    var atalhos = el('nav.loja-atalhos', { 'aria-label': 'Ir para o encaixe' }, grupos.map(function (x) {
+      return el('button.btn-pequeno', { type: 'button', on: { click: function () {
+        // o foco vai para o título do grupo: o Tab seguinte entra nos cartões dele (e a tela não volta ao topo)
+        x.titulo.scrollIntoView({ block: 'start' }); x.titulo.focus({ preventScroll: true });
+      } } }, x.g.titulo);
+    }));
     var premiosBox = el('div');
     function pintar() {
       // o repintar troca os botões: o foco volta para o mesmo item (senão cai no body)
@@ -89,8 +107,11 @@
         ? PA.montada(P.defUni(id), e, 0, aparencia(), { enfeites: est().usando.enfeites, capa: est().usando.capa, asasFada: est().usando.asasFada })
         : PA.unicornio(P.defUni(id), e, 0, { enfeites: est().usando.enfeites, asasFada: est().usando.asasFada });
       vitrine.appendChild(PA.paraDOM(spr, 5));
-      grade.innerHTML = '';
-      ITENS.forEach(function (item) {
+      grupos.forEach(function (x) {
+        x.grade.innerHTML = '';
+        itensDoGrupo(x.g).forEach(function (item) { x.grade.appendChild(cartao(item)); });
+      });
+      function cartao(item) {
         var tem = !!est().loja[item.id];
         var b = el('button.item-loja' + (tem ? '.comprado' : '') + (usando(item) ? '.usando' : ''),
           { type: 'button', 'data-item': item.id, 'aria-label': item.nome + ', ' + (tem ? (usando(item) ? 'usando' : 'comprado, tocar para usar') : item.preco + ' estrelas') },
@@ -101,8 +122,8 @@
           if (tem) { alternar(item); Reino.Som.tocar('selecionar'); P.salvar(); pintar(); U.emit(EV.MAPA_MUDOU); return; }
           comprar(item, pintar);
         });
-        grade.appendChild(b);
-      });
+        return b;
+      }
       // prêmios da Escola do Reino: ganha 1 acertando TUDO na prova; os outros 2 da mesma prova ficam à venda
       premiosBox.innerHTML = '';
       (Reino.provas || []).forEach(function (pv) {
@@ -145,7 +166,8 @@
     }
     c.appendChild(saldo);
     c.appendChild(vitrine);
-    c.appendChild(grade);
+    c.appendChild(atalhos);
+    grupos.forEach(function (x) { c.appendChild(x.titulo); c.appendChild(x.grade); });
     c.appendChild(el('h3.estabulo-grupo', '🏫 Prêmios da Escola do Reino'));
     c.appendChild(el('p.bau-nota', 'Acerte TUDO numa prova e ganhe um prêmio; os outros se trocam por estrelas. 🌈'));
     c.appendChild(premiosBox);
