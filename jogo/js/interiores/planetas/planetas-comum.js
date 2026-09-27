@@ -145,4 +145,18 @@
     } });
 
   P.estrelas = estrelas; P.terra = terra; P.tempo = tempo; P.animando = animando; P.nebulosa = nebulosa;
+
+  /* ================= ETs DOS PLANETAS ================= */
+  // o ET reservado (observatorio/reservas.js) no interior do planeta: nome, sprite e voz do elenco, falas do prédio
+  // (observatorio/personagens-falas.js); `acao` da reserva. Chamada no carregamento do planeta (o elenco já existe).
+  P.npcsDoPlaneta = function (interior) {
+    var ELENCO = (R.NPCs && R.NPCs.ELENCO) || {}, S = R._predios.observatorio, f = (S && S.falas().npcs) || {};
+    return R.personagensDoPredio(interior).filter(function (p) { return p.x != null && p.y != null; }).map(function (p) {
+      var e = ELENCO[p.id] || {};
+      var n = { id: p.id, nome: e.nome || p.id, sprite: e.sprite || { base: 'pessoa' }, voz: e.voz || 'npc-' + p.id,
+        x: p.x, y: p.y, falas: f[p.id] || {} };
+      if (p.acao) n.acao = p.acao;
+      return n;
+    });
+  };
 })();

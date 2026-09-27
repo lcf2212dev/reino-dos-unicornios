@@ -99,7 +99,11 @@ Reino.config = {
   // decolar gasta o tanque cheio e a volta é de graça. `cheioNoComeco`: save sem o campo começa com o tanque cheio.
   // O voo dura `vooSegundos` (sem pressa: o mesmo tempo aconteça o que acontecer) e as estrelas pegas viram estrelas
   // de verdade, até `estrelasPorVoo`. Se mudar `tanque`, regrave as vozes (o painel fala quantas faltam)
-  viagem: { tanque: 10, cheioNoComeco: true, vooSegundos: 30, estrelasPorVoo: 5 },
+  // 2ª versão: no voo para um planeta com matéria, `portaisPorVoo` portais de resposta (certo = `estrelasPorPortal`
+  // estrela a mais e conta na Aura; errado não tira nada). O ET do desafio faz `desafioPerguntas` perguntas da matéria
+  // (cada acerto de primeira vale `estrelasPorAcertoET`; errada mostra a certa); ajudar até o fim faz dele um amigo
+  viagem: { tanque: 10, cheioNoComeco: true, vooSegundos: 30, estrelasPorVoo: 5, portaisPorVoo: 3, estrelasPorPortal: 1,
+    desafioPerguntas: 3, estrelasPorAcertoET: 1 },
   novidadeDias: 45,   // dias em que o selo "✨ Novo!" aparece num lugar novo (lugar.novidade)
   versao: { intervaloMs: 10 * 60000, confirmarMs: 60000, cacheMs: 330000, paradaMs: 8000, avisoMs: 4500, esperaMs: 2500 },
   // acessórios das provas à venda na Loja (só depois de ganhar um da mesma prova)

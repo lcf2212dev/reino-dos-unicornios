@@ -1,0 +1,303 @@
+{
+  "nome": "viagem-marte-saturno",
+  "pedido": "pedidos/2026-09-27-viagem-marte-saturno.md",
+  "personagens": [
+    {
+      "id": "marte-rubi",
+      "nome": "Rubi",
+      "genero": "f",
+      "idade": "crianca",
+      "predio": "planeta-marte",
+      "x": 8,
+      "y": 7
+    },
+    {
+      "id": "marte-faisca",
+      "nome": "Faísca",
+      "genero": "m",
+      "idade": "crianca",
+      "predio": "planeta-marte",
+      "x": 16,
+      "y": 9
+    },
+    {
+      "id": "marte-vovo",
+      "nome": "Vovô Vulcão",
+      "genero": "m",
+      "idade": "idoso",
+      "predio": "planeta-marte",
+      "x": 5,
+      "y": 12
+    },
+    {
+      "id": "saturno-sky",
+      "nome": "«Sky»",
+      "genero": "f",
+      "idade": "crianca",
+      "predio": "planeta-saturno",
+      "x": 8,
+      "y": 7
+    },
+    {
+      "id": "saturno-nico",
+      "nome": "Nico",
+      "genero": "m",
+      "idade": "crianca",
+      "predio": "planeta-saturno",
+      "x": 16,
+      "y": 9
+    },
+    {
+      "id": "saturno-vovo",
+      "nome": "Vovó Anel",
+      "genero": "f",
+      "idade": "idoso",
+      "predio": "planeta-saturno",
+      "x": 5,
+      "y": 12
+    }
+  ],
+  "tarefas": [
+    {
+      "id": "contrato",
+      "tipo": "contrato",
+      "titulo": "Reservas dos 6 ETs, esqueletos de Marte e Saturno, stubs das ações, config, contrato",
+      "quem": "orquestrador",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/interiores/observatorio/reservas.js",
+        "jogo/js/nucleo/config.js",
+        "docs/contratos/viagem.md",
+        "jogo/js/manifesto.js",
+        "jogo/index.html",
+        "pedidos/",
+        "amostras-de-voz/"
+      ],
+      "worktree": "viagem-marte-saturno",
+      "personagens": [
+        "marte-rubi",
+        "marte-faisca",
+        "marte-vovo",
+        "saturno-sky",
+        "saturno-nico",
+        "saturno-vovo"
+      ],
+      "pronto": [
+        "vagas tracejadas",
+        "vozes-elenco limpo"
+      ],
+      "estimativa": 40
+    },
+    {
+      "id": "falas-ets",
+      "tipo": "falas",
+      "titulo": "Falas dos 6 ETs",
+      "quem": "orquestrador",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/interiores/observatorio/personagens-falas.js"
+      ],
+      "worktree": "viagem-marte-saturno",
+      "personagens": [
+        "marte-rubi",
+        "marte-faisca",
+        "marte-vovo",
+        "saturno-sky",
+        "saturno-nico",
+        "saturno-vovo"
+      ],
+      "pronto": [
+        "30 letras, 3+ palavras"
+      ],
+      "estimativa": 10
+    },
+    {
+      "id": "vozes",
+      "tipo": "vozes",
+      "titulo": "Amostras dos 6 ETs",
+      "quem": "orquestrador",
+      "depende": [
+        "falas-ets"
+      ],
+      "arquivos": [
+        "jogo/js/voz/",
+        "jogo/ferramentas/gerado/"
+      ],
+      "worktree": "viagem-marte-saturno",
+      "personagens": [
+        "marte-rubi",
+        "marte-faisca",
+        "marte-vovo",
+        "saturno-sky",
+        "saturno-nico",
+        "saturno-vovo"
+      ],
+      "pronto": [
+        "transcrição sem ✘"
+      ],
+      "estimativa": 10
+    },
+    {
+      "id": "portais",
+      "tipo": "mecanica",
+      "titulo": "Perguntas da viagem, portais no voo, fluxo com portais, cadeado no painel",
+      "quem": "worker-low",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/sistemas/viagem-perguntas.js",
+        "jogo/js/sistemas/viagem.js",
+        "jogo/js/sistemas/viagem-fluxo.js",
+        "jogo/js/atividades/voo.js",
+        "jogo/js/atividades/voo-desenho.js",
+        "jogo/js/atividades/voo-portais.js",
+        "jogo/css/ui-voo.css",
+        "jogo/js/ui/foguete.js",
+        "jogo/css/ui-foguete.css",
+        "jogo/ferramentas/testes/unidade/voo.test.js",
+        "jogo/ferramentas/testes/unidade/viagem.test.js",
+        "jogo/ferramentas/testes/unidade/viagem-perguntas.test.js"
+      ],
+      "worktree": "viagem-portais",
+      "pronto": [
+        "3 portais lidos",
+        "certo: estrela e Aura; errado nada",
+        "cadeado Lua→Marte→Saturno"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "desafio",
+      "tipo": "mecanica",
+      "titulo": "Desafio do ET e campo etsAmigos",
+      "quem": "worker-low",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/sistemas/viagem-desafio.js",
+        "jogo/js/ui/et-desafio.js",
+        "jogo/css/ui-et-desafio.css",
+        "jogo/ferramentas/testes/unidade/viagem-desafio.test.js"
+      ],
+      "worktree": "viagem-desafio",
+      "pronto": [
+        "3 perguntas da matéria",
+        "terminar = amigo",
+        "acerto de primeira = estrela"
+      ],
+      "estimativa": 45
+    },
+    {
+      "id": "cenario-marte",
+      "tipo": "cenario",
+      "titulo": "Marte: chão, horizonte, objetos e brincadeiras",
+      "quem": "worker-low",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/interiores/planetas/marte.js",
+        "jogo/js/interiores/planetas/marte-objetos.js",
+        "jogo/js/interiores/planetas/marte-brincadeiras.js",
+        "jogo/js/interiores/planetas/marte-falas.js"
+      ],
+      "worktree": "viagem-marte",
+      "pronto": [
+        "vagas livres",
+        "brincadeiras",
+        "curiosidades corretas"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "cenario-saturno",
+      "tipo": "cenario",
+      "titulo": "Saturno: chão de gelo, horizonte, objetos e brincadeiras",
+      "quem": "worker-low",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/interiores/planetas/saturno.js",
+        "jogo/js/interiores/planetas/saturno-objetos.js",
+        "jogo/js/interiores/planetas/saturno-brincadeiras.js",
+        "jogo/js/interiores/planetas/saturno-falas.js"
+      ],
+      "worktree": "viagem-saturno",
+      "pronto": [
+        "vagas livres",
+        "brincadeiras",
+        "curiosidades corretas"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "npc-ets",
+      "tipo": "npc",
+      "titulo": "Sprites dos 6 ETs",
+      "quem": "worker-low",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/interiores/planetas/personagens.js",
+        "jogo/js/interiores/planetas/ets.js"
+      ],
+      "worktree": "viagem-ets2",
+      "personagens": [
+        "marte-rubi",
+        "marte-faisca",
+        "marte-vovo",
+        "saturno-sky",
+        "saturno-nico",
+        "saturno-vovo"
+      ],
+      "pronto": [
+        "6 ETs nas vagas, 3 tamanhos"
+      ],
+      "estimativa": 30
+    },
+    {
+      "id": "integracao",
+      "tipo": "integracao",
+      "titulo": "Juntar, vozes, e2e",
+      "quem": "orquestrador",
+      "depende": [
+        "falas-ets",
+        "vozes",
+        "portais",
+        "desafio",
+        "cenario-marte",
+        "cenario-saturno",
+        "npc-ets"
+      ],
+      "arquivos": [
+        "jogo/ferramentas/testes/referencias-cenas.js"
+      ],
+      "worktree": "viagem-marte-saturno",
+      "pronto": [
+        "validar-tudo"
+      ],
+      "estimativa": 40
+    },
+    {
+      "id": "entrega",
+      "tipo": "entrega",
+      "titulo": "Merge, push, artifact",
+      "quem": "orquestrador",
+      "depende": [
+        "integracao"
+      ],
+      "arquivos": [],
+      "worktree": "viagem-marte-saturno",
+      "pronto": [
+        "main e artifact"
+      ],
+      "estimativa": 20
+    }
+  ]
+}
