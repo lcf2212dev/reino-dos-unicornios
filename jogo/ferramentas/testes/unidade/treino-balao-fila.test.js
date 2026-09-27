@@ -1,5 +1,5 @@
 // Prova.balaoQueSome (treino.js): o "Hora de revisar!" do treino some sozinho, vigiado por um setInterval de 200 ms.
-// Bug (docs/pendencias.md): se o balão nunca aparece (ficou na fila atrás de outro, e o Claude.limpar() de quem abre
+// Bug da auditoria de 27/09/2026: se o balão nunca aparece (ficou na fila atrás de outro, e o Claude.limpar() de quem abre
 // uma questão descartou a fila), o intervalo nunca era limpo. Caminho real: a dica do Claude depois de uma sala
 // (Claude.depoisDaMissao, sem tempo) ainda aberta quando ela toca em "Treino" na mesma tela da matéria.
 // Agora o intervalo desiste depois de um tempo máximo na fila; o balão que aparece some como antes.

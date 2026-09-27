@@ -28,7 +28,7 @@ Este arquivo tem as regras invioláveis e o índice. As regras de código de cad
   Mudança de propósito no e2e: troque a base (`--trocar-base`) na mesma integração.
 - O que não tem volta não se faz, e o trabalho segue pelo outro caminho:
   - progresso da Mariana, Docker, servidor de casa: não se tocam (acima);
-  - apagar o que não é temporário: não apague; deixe o arquivo e anote em `docs/pendencias.md`;
+  - apagar o que não é temporário: não apague; deixe o arquivo e cite no relatório final;
   - material em `matérias/` que colide com outro conteúdo: vale o da árvore principal (é o mais novo); leve-o para a
     integração e integre de novo;
   - push recusado porque o GitHub andou: traga o `origin/main` e integre de novo por cima; nunca `git push --force`;
@@ -101,7 +101,7 @@ docs/                      ARQUITETURA.md (mapa; §5.1 quero X → qual registro
 | invariantes e APIs de um assunto (leia antes de mexer) | `docs/contratos/` (índice em `README.md`) |
 | como fazer X (matéria, prova, prédio, personagem, enfeite, comida, música, fala) | `docs/receitas/` |
 | procedimento disparado por um pedido | skills em `.claude/skills/` (pedido: `preparar-pedido` ou `nova-feature`) |
-| por que foi assim | `docs/decisoes/`; defeitos conhecidos em `docs/pendencias.md` |
+| por que foi assim | `docs/decisoes/` |
 | guia do Leandro (usar o jogo) | `COMO-USAR.md`; modelo de pedido em `PEDIDO-DE-FEATURE.md` |
 
 Cada regra fica num lugar só; nos outros, um ponteiro. Nada de changelog nem catálogo de dados nos docs: o que o

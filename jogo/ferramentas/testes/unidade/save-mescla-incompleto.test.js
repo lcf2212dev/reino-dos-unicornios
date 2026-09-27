@@ -1,5 +1,5 @@
 // Testes de unidade: P.mesclar com um lado incompleto ou estragado (campo ausente, null, número, texto, lista).
-// Bug (docs/pendencias.md): P.mesclar lançava TypeError quando um lado era um save sem `salas` ou sem `unis`
+// Bug da auditoria de 27/09/2026: P.mesclar lançava TypeError quando um lado era um save sem `salas` ou sem `unis`
 // (e sem `treinos`, `pago`, `loja`), e um campo que não é objeto no lado mais recente engolia o do outro lado.
 // Regra: campo ausente ou estragado conta como vazio, e nada do lado bom se perde; saves válidos, como antes
 // (conferido fora daqui contra a função antiga, com pares aleatórios).

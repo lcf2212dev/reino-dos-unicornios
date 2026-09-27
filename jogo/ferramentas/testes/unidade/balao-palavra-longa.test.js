@@ -1,5 +1,5 @@
 // A conversa da baia (npcs-conversa.js) quebra a frase em páginas de até 30 letras só para a TELA (quebrarNaTela).
-// Bug (docs/pendencias.md): uma "palavra" sem espaço maior que a página recursava sem fim (RangeError, estouro de
+// Bug da auditoria de 27/09/2026: uma "palavra" sem espaço maior que a página recursava sem fim (RangeError, estouro de
 // pilha). Hoje nenhum texto real chega lá, mas a função não pode travar: palavra maior que a página é cortada em
 // pedaços do tamanho da página. As frases de hoje (unicórnios e baia vazia) saem como antes (conferido fora daqui
 // contra a função antiga). Pelo caminho real: N.executar({ tipo: 'unicornio' }) numa baia vazia, com o balão de mentira.
