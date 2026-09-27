@@ -11,4 +11,5 @@
 # a1b50ad = lições de 26/09: desafios reembaralhados no teste, Lugares com andar e selo, falas e config novos, vozes reordenadas
 # d3bb5ed = Geografia e Matemática
 # 9040d16 = cidade ampla, fachadas novas, 50 enfeites e Salão de Beleza
-9040d16
+# cce5481 = auditoria de bugs: emoji no fim da fala dos NPCs, mural da Escola e vitrine da Loja
+cce5481
