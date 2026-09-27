@@ -53,6 +53,9 @@ async function abrirJogo(browser, raiz, tamanho, save) {
   const { context, page } = await abrir({ browser, url: servidor.url, tamanho, save, query: '?debug=1&congelar=1' });
   context.on('close', () => servidor.parar());
   await page.waitForFunction(() => window.__congelar && window.__reino, null, { timeout: 30000 });
+  // o buffer padrão do Resource Timing (250) enche com os scripts + pacotes de voz e o `chegaram` do avancar
+  // nunca mais vê um pacote novo: aumenta antes das cenas
+  await page.evaluate(() => performance.setResourceTimingBufferSize(5000));
   // o progresso vem do servidor de teste (rede de verdade): anda o relógio até entrar no mapa
   for (let i = 0; i < 400; i++) {
     const pronto = await page.evaluate(() => {

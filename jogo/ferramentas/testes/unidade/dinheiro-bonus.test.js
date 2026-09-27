@@ -25,10 +25,13 @@ test('valor por sala redondo e bônus que fecha R$ 20 para 1 a 12 salas', () => 
 
 test('as matérias de hoje não mudam: R$ 4,00 por sala e nenhum bônus', () => {
   const { P, R } = montar();
-  R.materias.forEach((m) => {
+  R.materias.filter((m) => m.salas.length === 5).forEach((m) => {
     assert.strictEqual(P.valorSala(m), R.config.valorPorMateria / m.salas.length, m.id);
     assert.strictEqual(P.bonusMateria(m), 0, m.id);
   });
+  // Matemática tem 6 salas: R$ 3,00 por sala e R$ 2,00 de bônus
+  const mat = R.materias.find((m) => m.id === 'matematica');
+  assert.deepStrictEqual([P.valorSala(mat), P.bonusMateria(mat)], [3, 2], 'matematica');
 });
 
 test('o bônus entra só quando a matéria fica completa, e o prêmio da última sala o traz', () => {

@@ -240,8 +240,8 @@
   },
   "npc-padrao-1": {
    "voz": "pt-BR-AntonioNeural",
-   "velocidade": "-12%",
-   "tom": "-14Hz"
+   "velocidade": "-16%",
+   "tom": "-40Hz"
   },
   "npc-padrao-2": {
    "voz": "pt-BR-ThalitaMultilingualNeural",
@@ -267,6 +267,11 @@
    "voz": "de-DE-SeraphinaMultilingualNeural",
    "velocidade": "-2%",
    "tom": "+6Hz"
+  },
+  "npc-prof-celia": {
+   "voz": "pt-BR-FranciscaNeural",
+   "velocidade": "+4%",
+   "tom": "-8Hz"
   },
   "npc-lab-cavaleira": {
    "voz": "en-US-EmmaMultilingualNeural",
@@ -750,7 +755,13 @@
     "ciencias-c2",
     "ciencias-c3",
     "ciencias-c4",
-    "ciencias-c5"
+    "ciencias-c5",
+    "matematica-m1",
+    "matematica-m2",
+    "matematica-m3",
+    "matematica-m4",
+    "matematica-m5",
+    "matematica-m6"
    ],
    "fala": "Verdadeiro ou falso?"
   },
@@ -1670,7 +1681,8 @@
    "texto": "Complete as frases com as palavras do quadro.",
    "pacotes": [
     "prova-historia-3bim",
-    "ciencias-c1"
+    "ciencias-c1",
+    "matematica-m1"
    ],
    "fala": "Complete as frases com as palavras do quadro."
   },
@@ -3474,6 +3486,944 @@
    "fala": "O passarinho anu-branco pousa nas costas do boi e come os carrapatos que incomodam o animal."
   },
   {
+   "chave": "4d4ce2cd18",
+   "voz": "narradora",
+   "texto": "Escreva em ordem, os meses do ano:",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "Escreva em ordem, os meses do ano:"
+  },
+  {
+   "chave": "246467ee1m",
+   "voz": "narradora",
+   "texto": "Toque nos meses na ordem, de janeiro a dezembro.",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "Toque nos meses na ordem, de janeiro a dezembro."
+  },
+  {
+   "chave": "c25d548a12",
+   "voz": "narradora",
+   "texto": "Quantos dias tem uma semana?",
+   "pacotes": [
+    "prova-matematica-3bim",
+    "matematica-m1"
+   ],
+   "fala": "Quantos dias tem uma semana?"
+  },
+  {
+   "chave": "e97e45f3g",
+   "voz": "narradora",
+   "texto": "5 dias",
+   "pacotes": [
+    "prova-matematica-3bim",
+    "matematica-m1"
+   ],
+   "fala": "5 dias"
+  },
+  {
+   "chave": "54d128e1g",
+   "voz": "narradora",
+   "texto": "7 dias",
+   "pacotes": [
+    "prova-matematica-3bim",
+    "matematica-m1"
+   ],
+   "fala": "7 dias"
+  },
+  {
+   "chave": "200705b5h",
+   "voz": "narradora",
+   "texto": "12 dias",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "12 dias"
+  },
+  {
+   "chave": "43b57e3b13",
+   "voz": "narradora",
+   "texto": "Qual é o primeiro mês do ano?",
+   "pacotes": [
+    "prova-matematica-3bim",
+    "matematica-m1"
+   ],
+   "fala": "Qual é o primeiro mês do ano?"
+  },
+  {
+   "chave": "341eb70fi",
+   "voz": "narradora",
+   "texto": "Dezembro",
+   "pacotes": [
+    "prova-matematica-3bim",
+    "matematica-m1"
+   ],
+   "fala": "Dezembro"
+  },
+  {
+   "chave": "ec501929f",
+   "voz": "narradora",
+   "texto": "Março",
+   "pacotes": [
+    "prova-matematica-3bim",
+    "matematica-m1"
+   ],
+   "fala": "Março"
+  },
+  {
+   "chave": "c2c7480bh",
+   "voz": "narradora",
+   "texto": "Janeiro",
+   "pacotes": [
+    "prova-matematica-3bim",
+    "matematica-m1"
+   ],
+   "fala": "Janeiro"
+  },
+  {
+   "chave": "16773348z",
+   "voz": "narradora",
+   "texto": "Quantos meses tem um ano?",
+   "pacotes": [
+    "prova-matematica-3bim",
+    "matematica-m1"
+   ],
+   "fala": "Quantos meses tem um ano?"
+  },
+  {
+   "chave": "4e93fb95h",
+   "voz": "narradora",
+   "texto": "7 meses",
+   "pacotes": [
+    "prova-matematica-3bim",
+    "matematica-m1"
+   ],
+   "fala": "7 meses"
+  },
+  {
+   "chave": "06c69911i",
+   "voz": "narradora",
+   "texto": "12 meses",
+   "pacotes": [
+    "prova-matematica-3bim",
+    "matematica-m1"
+   ],
+   "fala": "12 meses"
+  },
+  {
+   "chave": "4e1dd1e5i",
+   "voz": "narradora",
+   "texto": "30 meses",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "30 meses"
+  },
+  {
+   "chave": "039f51a311",
+   "voz": "narradora",
+   "texto": "Qual é o último mês do ano?",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "Qual é o último mês do ano?"
+  },
+  {
+   "chave": "423baadbi",
+   "voz": "narradora",
+   "texto": "Novembro",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "Novembro"
+  },
+  {
+   "chave": "45505ca81b",
+   "voz": "narradora",
+   "texto": "Quais são os dias da semana? Escreva:",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "Quais são os dias da semana? Escreva:"
+  },
+  {
+   "chave": "564fb1f01m",
+   "voz": "narradora",
+   "texto": "Toque nos dias na ordem, começando pelo domingo.",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "Toque nos dias na ordem, começando pelo domingo."
+  },
+  {
+   "chave": "45a806ec1k",
+   "voz": "narradora",
+   "texto": "Leia os horários abaixo e escreva por extenso:",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "Leia os horários abaixo e escreva por extenso:"
+  },
+  {
+   "chave": "b012061710",
+   "voz": "narradora",
+   "texto": "Resolva as multiplicações:",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "Resolva as multiplicações:"
+  },
+  {
+   "chave": "59eae31bb",
+   "voz": "narradora",
+   "texto": "4",
+   "pacotes": [
+    "prova-matematica-3bim",
+    "matematica-m4"
+   ],
+   "fala": "4"
+  },
+  {
+   "chave": "5beae641b",
+   "voz": "narradora",
+   "texto": "6",
+   "pacotes": [
+    "prova-matematica-3bim",
+    "matematica-m4",
+    "matematica-m5"
+   ],
+   "fala": "6"
+  },
+  {
+   "chave": "29cb0becc",
+   "voz": "narradora",
+   "texto": "10",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "10"
+  },
+  {
+   "chave": "2bcb0f12c",
+   "voz": "narradora",
+   "texto": "12",
+   "pacotes": [
+    "prova-matematica-3bim",
+    "matematica-m5"
+   ],
+   "fala": "12"
+  },
+  {
+   "chave": "31cb1884c",
+   "voz": "narradora",
+   "texto": "18",
+   "pacotes": [
+    "prova-matematica-3bim",
+    "matematica-m5"
+   ],
+   "fala": "18"
+  },
+  {
+   "chave": "bbd2ad87c",
+   "voz": "narradora",
+   "texto": "20",
+   "pacotes": [
+    "prova-matematica-3bim",
+    "matematica-m5",
+    "matematica-m6"
+   ],
+   "fala": "20"
+  },
+  {
+   "chave": "bac3a16ac",
+   "voz": "narradora",
+   "texto": "45",
+   "pacotes": [
+    "prova-matematica-3bim",
+    "matematica-m6"
+   ],
+   "fala": "45"
+  },
+  {
+   "chave": "ee069be8o",
+   "voz": "narradora",
+   "texto": "3 × 2 = ______",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "3 × 2 = …"
+  },
+  {
+   "chave": "0d110012o",
+   "voz": "narradora",
+   "texto": "4 × 3 = ______",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "4 × 3 = …"
+  },
+  {
+   "chave": "6bafb944o",
+   "voz": "narradora",
+   "texto": "3 × 6 = ______",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "3 × 6 = …"
+  },
+  {
+   "chave": "565b8591o",
+   "voz": "narradora",
+   "texto": "2 × 2 = ______",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "2 × 2 = …"
+  },
+  {
+   "chave": "ff976d52o",
+   "voz": "narradora",
+   "texto": "3 × 4 = ______",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "3 × 4 = …"
+  },
+  {
+   "chave": "03fb30f2o",
+   "voz": "narradora",
+   "texto": "2 × 5 = ______",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "2 × 5 = …"
+  },
+  {
+   "chave": "d47a37a8o",
+   "voz": "narradora",
+   "texto": "4 × 5 = ______",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "4 × 5 = …"
+  },
+  {
+   "chave": "26ac3525o",
+   "voz": "narradora",
+   "texto": "5 × 9 = ______",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "5 × 9 = …"
+  },
+  {
+   "chave": "51daa4d31s",
+   "voz": "narradora",
+   "texto": "Resolva as adições e multiplicações de números iguais:",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "Resolva as adições e multiplicações de números iguais:"
+  },
+  {
+   "chave": "26cb0733c",
+   "voz": "narradora",
+   "texto": "15",
+   "pacotes": [
+    "prova-matematica-3bim",
+    "matematica-m5",
+    "matematica-m6"
+   ],
+   "fala": "15"
+  },
+  {
+   "chave": "27cb08c6c",
+   "voz": "narradora",
+   "texto": "16",
+   "pacotes": [
+    "prova-matematica-3bim",
+    "matematica-m6"
+   ],
+   "fala": "16"
+  },
+  {
+   "chave": "b7d2a73bc",
+   "voz": "narradora",
+   "texto": "24",
+   "pacotes": [
+    "prova-matematica-3bim",
+    "matematica-m5",
+    "matematica-m6"
+   ],
+   "fala": "24"
+  },
+  {
+   "chave": "613b81eb1q",
+   "voz": "narradora",
+   "texto": "Morangos: 3 caixas com 5. 5 + 5 + 5 = 3 × 5 = ______",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "Morangos: 3 caixas com 5. 5 + 5 + 5 = 3 × 5 = …"
+  },
+  {
+   "chave": "5fb3f42f2a",
+   "voz": "narradora",
+   "texto": "Laranjas: 8 caixas com 3. 3 + 3 + 3 + 3 + 3 + 3 + 3 + 3 = 8 × 3 = ______",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "Laranjas: 8 caixas com 3. 3 + 3 + 3 + 3 + 3 + 3 + 3 + 3 = 8 × 3 = …"
+  },
+  {
+   "chave": "b1dfdc1f1o",
+   "voz": "narradora",
+   "texto": "Limões: 3 caixas com 6. 6 + 6 + 6 = 3 × 6 = ______",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "Limões: 3 caixas com 6. 6 + 6 + 6 = 3 × 6 = …"
+  },
+  {
+   "chave": "8d158d0d1u",
+   "voz": "narradora",
+   "texto": "Abacaxis: 4 caixas com 4. 4 + 4 + 4 + 4 = 4 × 4 = ______",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "Abacaxis: 4 caixas com 4. 4 + 4 + 4 + 4 = 4 × 4 = …"
+  },
+  {
+   "chave": "3aae44b4q",
+   "voz": "narradora",
+   "texto": "Exemplo da folha",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "Exemplo da folha"
+  },
+  {
+   "chave": "a9afb9bc1n",
+   "voz": "narradora",
+   "texto": "Maçãs: 3 caixas com 2. 2 + 2 + 2 = 6 e 3 × 2 = 6.",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "Maçãs: 3 caixas com 2. 2 + 2 + 2 = 6 e 3 × 2 = 6."
+  },
+  {
+   "chave": "cab91d2a29",
+   "voz": "narradora",
+   "texto": "Responda os itens, calculando o dobro e o triplo de cada número abaixo:",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "Responda os itens, calculando o dobro e o triplo de cada número abaixo:"
+  },
+  {
+   "chave": "55eadccfb",
+   "voz": "narradora",
+   "texto": "8",
+   "pacotes": [
+    "prova-matematica-3bim",
+    "matematica-m4",
+    "matematica-m5"
+   ],
+   "fala": "8"
+  },
+  {
+   "chave": "bad2abf4c",
+   "voz": "narradora",
+   "texto": "21",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "21"
+  },
+  {
+   "chave": "dde62ad213",
+   "voz": "narradora",
+   "texto": "O dobro de 4 é 4 × 2 = ______",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "O dobro de 4 é 4 × 2 = …"
+  },
+  {
+   "chave": "eff6ec6b14",
+   "voz": "narradora",
+   "texto": "O triplo de 2 é 2 × 3 = ______",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "O triplo de 2 é 2 × 3 = …"
+  },
+  {
+   "chave": "540627f213",
+   "voz": "narradora",
+   "texto": "O dobro de 6 é 6 × 2 = ______",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "O dobro de 6 é 6 × 2 = …"
+  },
+  {
+   "chave": "a0cdce3b14",
+   "voz": "narradora",
+   "texto": "O triplo de 5 é 5 × 3 = ______",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "O triplo de 5 é 5 × 3 = …"
+  },
+  {
+   "chave": "6436c11213",
+   "voz": "narradora",
+   "texto": "O dobro de 9 é 9 × 2 = ______",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "O dobro de 9 é 9 × 2 = …"
+  },
+  {
+   "chave": "0d7bf11b14",
+   "voz": "narradora",
+   "texto": "O triplo de 7 é 7 × 3 = ______",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "O triplo de 7 é 7 × 3 = …"
+  },
+  {
+   "chave": "82897c5e1k",
+   "voz": "narradora",
+   "texto": "Complete a tabuada de 2,3 e 4: a tabuada do 2.",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "Complete a tabuada de 2,3 e 4: a tabuada do 2."
+  },
+  {
+   "chave": "5feaec8db",
+   "voz": "narradora",
+   "texto": "2",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "2"
+  },
+  {
+   "chave": "25cb05a0c",
+   "voz": "narradora",
+   "texto": "14",
+   "pacotes": [
+    "prova-matematica-3bim",
+    "matematica-m5"
+   ],
+   "fala": "14"
+  },
+  {
+   "chave": "614216d6o",
+   "voz": "narradora",
+   "texto": "2 × 1 = ______",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "2 × 1 = …"
+  },
+  {
+   "chave": "7c13a588o",
+   "voz": "narradora",
+   "texto": "2 × 3 = ______",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "2 × 3 = …"
+  },
+  {
+   "chave": "fc1a063bo",
+   "voz": "narradora",
+   "texto": "2 × 4 = ______",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "2 × 4 = …"
+  },
+  {
+   "chave": "0a41122do",
+   "voz": "narradora",
+   "texto": "2 × 6 = ______",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "2 × 6 = …"
+  },
+  {
+   "chave": "a2134c64o",
+   "voz": "narradora",
+   "texto": "2 × 7 = ______",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "2 × 7 = …"
+  },
+  {
+   "chave": "8254e7d7o",
+   "voz": "narradora",
+   "texto": "2 × 8 = ______",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "2 × 8 = …"
+  },
+  {
+   "chave": "57807e4eo",
+   "voz": "narradora",
+   "texto": "2 × 9 = ______",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "2 × 9 = …"
+  },
+  {
+   "chave": "3aba9928p",
+   "voz": "narradora",
+   "texto": "2 × 10 = ______",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "2 × 10 = …"
+  },
+  {
+   "chave": "a48bf07b1k",
+   "voz": "narradora",
+   "texto": "Complete a tabuada de 2,3 e 4: a tabuada do 3.",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "Complete a tabuada de 2,3 e 4: a tabuada do 3."
+  },
+  {
+   "chave": "5eeaeafab",
+   "voz": "narradora",
+   "texto": "3",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "3"
+  },
+  {
+   "chave": "54eadb3cb",
+   "voz": "narradora",
+   "texto": "9",
+   "pacotes": [
+    "prova-matematica-3bim",
+    "matematica-m5"
+   ],
+   "fala": "9"
+  },
+  {
+   "chave": "b8d2a8cec",
+   "voz": "narradora",
+   "texto": "27",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "27"
+  },
+  {
+   "chave": "35cf9bfec",
+   "voz": "narradora",
+   "texto": "30",
+   "pacotes": [
+    "prova-matematica-3bim",
+    "matematica-m6"
+   ],
+   "fala": "30"
+  },
+  {
+   "chave": "6bd9113fo",
+   "voz": "narradora",
+   "texto": "3 × 1 = ______",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "3 × 1 = …"
+  },
+  {
+   "chave": "747ba671o",
+   "voz": "narradora",
+   "texto": "3 × 3 = ______",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "3 × 3 = …"
+  },
+  {
+   "chave": "6a2ac09bo",
+   "voz": "narradora",
+   "texto": "3 × 5 = ______",
+   "pacotes": [
+    "prova-matematica-3bim",
+    "matematica-m6"
+   ],
+   "fala": "3 × 5 = …"
+  },
+  {
+   "chave": "20a8560do",
+   "voz": "narradora",
+   "texto": "3 × 7 = ______",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "3 × 7 = …"
+  },
+  {
+   "chave": "d8e278aeo",
+   "voz": "narradora",
+   "texto": "3 × 8 = ______",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "3 × 8 = …"
+  },
+  {
+   "chave": "1cfdb737o",
+   "voz": "narradora",
+   "texto": "3 × 9 = ______",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "3 × 9 = …"
+  },
+  {
+   "chave": "a5c2038fp",
+   "voz": "narradora",
+   "texto": "3 × 10 = ______",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "3 × 10 = …"
+  },
+  {
+   "chave": "228468101k",
+   "voz": "narradora",
+   "texto": "Complete a tabuada de 2,3 e 4: a tabuada do 4.",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "Complete a tabuada de 2,3 e 4: a tabuada do 4."
+  },
+  {
+   "chave": "b3d2a0efc",
+   "voz": "narradora",
+   "texto": "28",
+   "pacotes": [
+    "prova-matematica-3bim",
+    "matematica-m6"
+   ],
+   "fala": "28"
+  },
+  {
+   "chave": "33cf98d8c",
+   "voz": "narradora",
+   "texto": "32",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "32"
+  },
+  {
+   "chave": "37cf9f24c",
+   "voz": "narradora",
+   "texto": "36",
+   "pacotes": [
+    "prova-matematica-3bim",
+    "matematica-m6"
+   ],
+   "fala": "36"
+  },
+  {
+   "chave": "b7c39cb1c",
+   "voz": "narradora",
+   "texto": "40",
+   "pacotes": [
+    "prova-matematica-3bim",
+    "matematica-m6"
+   ],
+   "fala": "40"
+  },
+  {
+   "chave": "d45bf204o",
+   "voz": "narradora",
+   "texto": "4 × 1 = ______",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "4 × 1 = …"
+  },
+  {
+   "chave": "de996a5bo",
+   "voz": "narradora",
+   "texto": "4 × 2 = ______",
+   "pacotes": [
+    "prova-matematica-3bim",
+    "matematica-m5"
+   ],
+   "fala": "4 × 2 = …"
+  },
+  {
+   "chave": "c15f2e31o",
+   "voz": "narradora",
+   "texto": "4 × 4 = ______",
+   "pacotes": [
+    "prova-matematica-3bim",
+    "matematica-m6"
+   ],
+   "fala": "4 × 4 = …"
+  },
+  {
+   "chave": "0a0df5ffo",
+   "voz": "narradora",
+   "texto": "4 × 6 = ______",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "4 × 6 = …"
+  },
+  {
+   "chave": "cf747ef6o",
+   "voz": "narradora",
+   "texto": "4 × 7 = ______",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "4 × 7 = …"
+  },
+  {
+   "chave": "17a112c5o",
+   "voz": "narradora",
+   "texto": "4 × 8 = ______",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "4 × 8 = …"
+  },
+  {
+   "chave": "d57e867co",
+   "voz": "narradora",
+   "texto": "4 × 9 = ______",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "4 × 9 = …"
+  },
+  {
+   "chave": "d5df0fa2p",
+   "voz": "narradora",
+   "texto": "4 × 10 = ______",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "4 × 10 = …"
+  },
+  {
+   "chave": "0a9940072j",
+   "voz": "narradora",
+   "texto": "Lucas começou a estudar às 15:00 e terminou às 16:00. Quanto tempo Lucas estudou?",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "Lucas começou a estudar às 15:00 e terminou às 16:00. Quanto tempo Lucas estudou?"
+  },
+  {
+   "chave": "50d424a9k",
+   "voz": "narradora",
+   "texto": "30 minutos",
+   "pacotes": [
+    "prova-matematica-3bim",
+    "matematica-m2"
+   ],
+   "fala": "30 minutos"
+  },
+  {
+   "chave": "f126aac0g",
+   "voz": "narradora",
+   "texto": "1 hora",
+   "pacotes": [
+    "prova-matematica-3bim",
+    "matematica-m2"
+   ],
+   "fala": "1 hora"
+  },
+  {
+   "chave": "b76dfd3ch",
+   "voz": "narradora",
+   "texto": "2 horas",
+   "pacotes": [
+    "prova-matematica-3bim",
+    "matematica-m2"
+   ],
+   "fala": "2 horas"
+  },
+  {
+   "chave": "eba432412n",
+   "voz": "narradora",
+   "texto": "O filme começou às 19:00 e terá duração de 2 horas. A que horas o filme vai terminar?",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "O filme começou às 19:00 e terá duração de 2 horas. A que horas o filme vai terminar?"
+  },
+  {
+   "chave": "64791a3ff",
+   "voz": "narradora",
+   "texto": "20:00",
+   "pacotes": [
+    "prova-matematica-3bim",
+    "matematica-m2"
+   ],
+   "fala": "20:00"
+  },
+  {
+   "chave": "99649e9af",
+   "voz": "narradora",
+   "texto": "21:00",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "21:00"
+  },
+  {
+   "chave": "2d5c4054f",
+   "voz": "narradora",
+   "texto": "19:30",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "19:30"
+  },
+  {
+   "chave": "6a49092a2j",
+   "voz": "narradora",
+   "texto": "A aula de música começou às 10:00 e terminou às 10:30. Quanto tempo durou a aula?",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "A aula de música começou às 10:00 e terminou às 10:30. Quanto tempo durou a aula?"
+  },
+  {
+   "chave": "43bfd6a3k",
+   "voz": "narradora",
+   "texto": "10 minutos",
+   "pacotes": [
+    "prova-matematica-3bim"
+   ],
+   "fala": "10 minutos"
+  },
+  {
    "chave": "3909f17932",
    "voz": "claude",
    "texto": "Toque no chão para andar (ou use as setas do teclado). Vamos até o Museu das Memórias? É só tocar nele!",
@@ -4561,7 +5511,8 @@
    "pacotes": [
     "historia-h1",
     "historia-h2",
-    "portugues-p3"
+    "portugues-p3",
+    "matematica-m4"
    ],
    "fala": "Monte a frase da apostila tocando nos blocos na ordem certa:"
   },
@@ -15693,6 +16644,3231 @@
    "fala": "Precisa ficar dentro da água"
   },
   {
+   "chave": "dd2037f931",
+   "voz": "claude",
+   "texto": "Toque no chão para andar (ou use as setas do teclado). Vamos até a Torre dos Números? É só tocar nela!",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Toque no chão para andar (ou use as setas do teclado). Vamos até a Torre dos Números? É só tocar nela!"
+  },
+  {
+   "chave": "124518792v",
+   "voz": "claude",
+   "texto": "Eu sou o guia da Torre dos Números! Aqui tem calendário, relógio, chances e muita multiplicação.",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Eu sou o guia da Torre dos Números! Aqui tem calendário, relógio, chances e muita multiplicação."
+  },
+  {
+   "chave": "1a1ab0b335",
+   "voz": "claude",
+   "texto": "O treino de Matemática abre quando você terminar as salas da Torre dos Números. Falta só 1! Você consegue!",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "O treino de Matemática abre quando você terminar as salas da Torre dos Números. Falta só 1! Você consegue!"
+  },
+  {
+   "chave": "3bed62e733",
+   "voz": "claude",
+   "texto": "O treino de Matemática abre quando você terminar as salas da Torre dos Números. Faltam 2! Você consegue!",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "O treino de Matemática abre quando você terminar as salas da Torre dos Números. Faltam 2! Você consegue!"
+  },
+  {
+   "chave": "30f2f18033",
+   "voz": "claude",
+   "texto": "O treino de Matemática abre quando você terminar as salas da Torre dos Números. Faltam 3! Você consegue!",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "O treino de Matemática abre quando você terminar as salas da Torre dos Números. Faltam 3! Você consegue!"
+  },
+  {
+   "chave": "f3b7e61133",
+   "voz": "claude",
+   "texto": "O treino de Matemática abre quando você terminar as salas da Torre dos Números. Faltam 4! Você consegue!",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "O treino de Matemática abre quando você terminar as salas da Torre dos Números. Faltam 4! Você consegue!"
+  },
+  {
+   "chave": "b8c5f9c233",
+   "voz": "claude",
+   "texto": "O treino de Matemática abre quando você terminar as salas da Torre dos Números. Faltam 5! Você consegue!",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "O treino de Matemática abre quando você terminar as salas da Torre dos Números. Faltam 5! Você consegue!"
+  },
+  {
+   "chave": "0bfc4b0333",
+   "voz": "claude",
+   "texto": "O treino de Matemática abre quando você terminar as salas da Torre dos Números. Faltam 6! Você consegue!",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "O treino de Matemática abre quando você terminar as salas da Torre dos Números. Faltam 6! Você consegue!"
+  },
+  {
+   "chave": "f55101d12m",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Os dias da semana\".",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Os dias da semana\"."
+  },
+  {
+   "chave": "f73e1b84r",
+   "voz": "narradora",
+   "texto": "Os dias da semana",
+   "pacotes": [
+    "matematica-livro"
+   ],
+   "fala": "Os dias da semana"
+  },
+  {
+   "chave": "ad24ed094i",
+   "voz": "narradora",
+   "texto": "Uma semana tem 7 dias: domingo, segunda-feira, terça-feira, quarta-feira, quinta-feira, sexta-feira e sábado. No calendário, a semana começa no domingo.",
+   "pacotes": [
+    "matematica-livro"
+   ],
+   "fala": "Uma semana tem 7 dias: domingo, segunda-feira, terça-feira, quarta-feira, quinta-feira, sexta-feira e sábado. No calendário, a semana começa no domingo."
+  },
+  {
+   "chave": "2086aae82k",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Os meses do ano\".",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Os meses do ano\"."
+  },
+  {
+   "chave": "cba7a98dp",
+   "voz": "narradora",
+   "texto": "Os meses do ano",
+   "pacotes": [
+    "matematica-livro"
+   ],
+   "fala": "Os meses do ano"
+  },
+  {
+   "chave": "602485405e",
+   "voz": "narradora",
+   "texto": "Um ano tem 12 meses, nesta ordem: janeiro, fevereiro, março, abril, maio, junho, julho, agosto, setembro, outubro, novembro e dezembro. Janeiro é o 1º mês e dezembro é o 12º, o último.",
+   "pacotes": [
+    "matematica-livro"
+   ],
+   "fala": "Um ano tem 12 meses, nesta ordem: janeiro, fevereiro, março, abril, maio, junho, julho, agosto, setembro, outubro, novembro e dezembro. Janeiro é o 1º mês e dezembro é o 12º, o último."
+  },
+  {
+   "chave": "dc37c6932m",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Escrevendo a data\".",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Escrevendo a data\"."
+  },
+  {
+   "chave": "621933b2r",
+   "voz": "narradora",
+   "texto": "Escrevendo a data",
+   "pacotes": [
+    "matematica-livro"
+   ],
+   "fala": "Escrevendo a data"
+  },
+  {
+   "chave": "c43ea1d455",
+   "voz": "narradora",
+   "texto": "Para escrever uma data de forma abreviada, escrevemos primeiro o dia e depois o número do mês, separados por um traço inclinado. 10/09 é 10 de setembro. 25/10 é 25 de outubro.",
+   "pacotes": [
+    "matematica-livro"
+   ],
+   "fala": "Para escrever uma data de forma abreviada, escrevemos primeiro o dia e depois o número do mês, separados por um traço inclinado. 10/09 é 10 de setembro. 25/10 é 25 de outubro."
+  },
+  {
+   "chave": "54e074fb2h",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"O calendário\".",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"O calendário\"."
+  },
+  {
+   "chave": "faea3cd8m",
+   "voz": "narradora",
+   "texto": "O calendário",
+   "pacotes": [
+    "matematica-livro"
+   ],
+   "fala": "O calendário"
+  },
+  {
+   "chave": "f941dd2696",
+   "voz": "narradora",
+   "texto": "O calendário é um instrumento para medir o tempo. Ele marca o tempo em dias, semanas e meses. Os meses têm 30 ou 31 dias, menos fevereiro. Os domingos e os feriados costumam aparecer em vermelho, como o 7 de setembro, dia da Independência do Brasil. Uma semana depois de um dia é 7 dias depois; duas semanas são 14 dias.",
+   "pacotes": [
+    "matematica-livro"
+   ],
+   "fala": "O calendário é um instrumento para medir o tempo. Ele marca o tempo em dias, semanas e meses. Os meses têm 30 ou 31 dias, menos fevereiro. Os domingos e os feriados costumam aparecer em vermelho, como o 7 de setembro, dia da Independência do Brasil. Uma semana depois de um dia é 7 dias depois; duas semanas são 14 dias."
+  },
+  {
+   "chave": "96aca4e22v",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Fevereiro e o ano bissexto\".",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Fevereiro e o ano bissexto\"."
+  },
+  {
+   "chave": "469b302d10",
+   "voz": "narradora",
+   "texto": "Fevereiro e o ano bissexto",
+   "pacotes": [
+    "matematica-livro"
+   ],
+   "fala": "Fevereiro e o ano bissexto"
+  },
+  {
+   "chave": "04a8006b4i",
+   "voz": "narradora",
+   "texto": "Fevereiro é o mês mais curto do ano: tem 28 dias. Mas, a cada quatro anos, ele ganha mais um dia e fica com 29 dias. Esse ano é chamado de ano bissexto.",
+   "pacotes": [
+    "matematica-livro"
+   ],
+   "fala": "Fevereiro é o mês mais curto do ano: tem 28 dias. Mas, a cada quatro anos, ele ganha mais um dia e fica com 29 dias. Esse ano é chamado de ano bissexto."
+  },
+  {
+   "chave": "d13e21f02n",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"As 24 horas do dia\".",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"As 24 horas do dia\"."
+  },
+  {
+   "chave": "6f12cc67s",
+   "voz": "narradora",
+   "texto": "As 24 horas do dia",
+   "pacotes": [
+    "matematica-livro"
+   ],
+   "fala": "As 24 horas do dia"
+  },
+  {
+   "chave": "f9b032386n",
+   "voz": "narradora",
+   "texto": "Um dia inteiro tem 24 horas. Antes do meio-dia, o relógio digital marca de 1 a 12: 12:00 é meio-dia. Depois, ele continua contando: 13:00 é 1 hora da tarde, 18:00 é 6 horas da tarde, 21:00 é 9 horas da noite e 24:00 é meia-noite.",
+   "pacotes": [
+    "matematica-livro"
+   ],
+   "fala": "Um dia inteiro tem 24 horas. Antes do meio-dia, o relógio digital marca de 1 a 12: 12:00 é meio-dia. Depois, ele continua contando: 13:00 é 1 hora da tarde, 18:00 é 6 horas da tarde, 21:00 é 9 horas da noite e 24:00 é meia-noite."
+  },
+  {
+   "chave": "fc5812d22m",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"O relógio digital\".",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"O relógio digital\"."
+  },
+  {
+   "chave": "ddabe8dfr",
+   "voz": "narradora",
+   "texto": "O relógio digital",
+   "pacotes": [
+    "matematica-livro"
+   ],
+   "fala": "O relógio digital"
+  },
+  {
+   "chave": "9a6cf4725z",
+   "voz": "narradora",
+   "texto": "No relógio digital, os números antes dos dois pontos são as horas e os números depois dos dois pontos são os minutos. Em 09:30 são 9 horas e 30 minutos. Uma hora tem 60 minutos, e meia hora tem 30 minutos.",
+   "pacotes": [
+    "matematica-livro"
+   ],
+   "fala": "No relógio digital, os números antes dos dois pontos são as horas e os números depois dos dois pontos são os minutos. Em 09:30 são 9 horas e 30 minutos. Uma hora tem 60 minutos, e meia hora tem 30 minutos."
+  },
+  {
+   "chave": "1c664c7f2p",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Quanto tempo passou?\".",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Quanto tempo passou?\"."
+  },
+  {
+   "chave": "a191c10cu",
+   "voz": "narradora",
+   "texto": "Quanto tempo passou?",
+   "pacotes": [
+    "matematica-livro"
+   ],
+   "fala": "Quanto tempo passou?"
+  },
+  {
+   "chave": "32a28a5b71",
+   "voz": "narradora",
+   "texto": "Para saber quanto tempo durou uma coisa, contamos do horário de início até o horário de fim. De 09:00 até 13:00 passaram 4 horas. De 14:00 até 15:30 passou uma hora e meia. Meia hora depois das 11:00 é 11:30. Meia hora antes das 19:30 é 19:00.",
+   "pacotes": [
+    "matematica-livro"
+   ],
+   "fala": "Para saber quanto tempo durou uma coisa, contamos do horário de início até o horário de fim. De 09:00 até 13:00 passaram 4 horas. De 14:00 até 15:30 passou uma hora e meia. Meia hora depois das 11:00 é 11:30. Meia hora antes das 19:30 é 19:00."
+  },
+  {
+   "chave": "88779a0d32",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Muito provável ou pouco provável?\".",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Muito provável ou pouco provável?\"."
+  },
+  {
+   "chave": "bfce05c017",
+   "voz": "narradora",
+   "texto": "Muito provável ou pouco provável?",
+   "pacotes": [
+    "matematica-livro"
+   ],
+   "fala": "Muito provável ou pouco provável?"
+  },
+  {
+   "chave": "bdd294987z",
+   "voz": "narradora",
+   "texto": "Em nosso dia a dia, existem situações muito prováveis de acontecer e situações pouco prováveis. Numa piscina com muitas bolinhas amarelas e poucas vermelhas, pegar uma amarela sem olhar é muito provável; pegar uma vermelha é pouco provável. Pouco provável ainda pode acontecer!",
+   "pacotes": [
+    "matematica-livro"
+   ],
+   "fala": "Em nosso dia a dia, existem situações muito prováveis de acontecer e situações pouco prováveis. Numa piscina com muitas bolinhas amarelas e poucas vermelhas, pegar uma amarela sem olhar é muito provável; pegar uma vermelha é pouco provável. Pouco provável ainda pode acontecer!"
+  },
+  {
+   "chave": "44cb162d2f",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Impossível\".",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Impossível\"."
+  },
+  {
+   "chave": "cc89badak",
+   "voz": "narradora",
+   "texto": "Impossível",
+   "pacotes": [
+    "matematica-livro",
+    "matematica-m3"
+   ],
+   "fala": "Impossível"
+  },
+  {
+   "chave": "c9b05aff6c",
+   "voz": "narradora",
+   "texto": "Também existem situações impossíveis de acontecer: elas nunca acontecem. Brincar na cama elástica e na piscina de bolinhas ao mesmo tempo é impossível. Com 20 reais, comprar uma revista de 25 reais também é impossível.",
+   "pacotes": [
+    "matematica-livro"
+   ],
+   "fala": "Também existem situações impossíveis de acontecer: elas nunca acontecem. Brincar na cama elástica e na piscina de bolinhas ao mesmo tempo é impossível. Com 20 reais, comprar uma revista de 25 reais também é impossível."
+  },
+  {
+   "chave": "d8c8e0852u",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Adição de parcelas iguais\".",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Adição de parcelas iguais\"."
+  },
+  {
+   "chave": "f818f3ecz",
+   "voz": "narradora",
+   "texto": "Adição de parcelas iguais",
+   "pacotes": [
+    "matematica-livro"
+   ],
+   "fala": "Adição de parcelas iguais"
+  },
+  {
+   "chave": "122a55905n",
+   "voz": "narradora",
+   "texto": "Em uma adição, os números que estão sendo somados recebem o nome de parcelas. Em 2 + 2 + 2 = 6, as parcelas são iguais a 2. Quando as parcelas são iguais, a adição pode virar uma multiplicação.",
+   "pacotes": [
+    "matematica-livro"
+   ],
+   "fala": "Em uma adição, os números que estão sendo somados recebem o nome de parcelas. Em 2 + 2 + 2 = 6, as parcelas são iguais a 2. Quando as parcelas são iguais, a adição pode virar uma multiplicação."
+  },
+  {
+   "chave": "6e0bdcbe2k",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"A multiplicação\".",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"A multiplicação\"."
+  },
+  {
+   "chave": "f6666abbp",
+   "voz": "narradora",
+   "texto": "A multiplicação",
+   "pacotes": [
+    "matematica-livro"
+   ],
+   "fala": "A multiplicação"
+  },
+  {
+   "chave": "1abcb56c69",
+   "voz": "narradora",
+   "texto": "O sinal × se lê \"vezes\" e indica uma multiplicação. 3 grupos de 2 pompons: 3 × 2 = 6. Na adição 3 + 3 + 3 + 3 + 3 = 15, o 3 se repete 5 vezes: 5 × 3 = 15. Somar várias vezes o mesmo número é o mesmo que multiplicar.",
+   "pacotes": [
+    "matematica-livro"
+   ],
+   "fala": "O sinal × se lê \"vezes\" e indica uma multiplicação. 3 grupos de 2 pompons: 3 × 2 = 6. Na adição 3 + 3 + 3 + 3 + 3 = 15, o 3 se repete 5 vezes: 5 × 3 = 15. Somar várias vezes o mesmo número é o mesmo que multiplicar."
+  },
+  {
+   "chave": "395b2b812c",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"O dobro\".",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"O dobro\"."
+  },
+  {
+   "chave": "b54eb918h",
+   "voz": "narradora",
+   "texto": "O dobro",
+   "pacotes": [
+    "matematica-livro",
+    "matematica-m5"
+   ],
+   "fala": "O dobro"
+  },
+  {
+   "chave": "50ca09cb52",
+   "voz": "narradora",
+   "texto": "O dobro de uma quantidade é essa quantidade 2 vezes. O dobro de 4 é 2 × 4 = 8. O dobro de 6 é 2 × 6 = 12. Para achar o dobro, é só somar o número com ele mesmo: 6 + 6 = 12.",
+   "pacotes": [
+    "matematica-livro"
+   ],
+   "fala": "O dobro de uma quantidade é essa quantidade 2 vezes. O dobro de 4 é 2 × 4 = 8. O dobro de 6 é 2 × 6 = 12. Para achar o dobro, é só somar o número com ele mesmo: 6 + 6 = 12."
+  },
+  {
+   "chave": "5dcb497b2d",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"O triplo\".",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"O triplo\"."
+  },
+  {
+   "chave": "3b355a28i",
+   "voz": "narradora",
+   "texto": "O triplo",
+   "pacotes": [
+    "matematica-livro",
+    "matematica-m5"
+   ],
+   "fala": "O triplo"
+  },
+  {
+   "chave": "3074eb614h",
+   "voz": "narradora",
+   "texto": "O triplo de uma quantidade é essa quantidade 3 vezes. O triplo de 2 é 3 × 2 = 6. O triplo de 6 é 3 × 6 = 18, porque 6 + 6 + 6 = 18. O triplo de 7 é 21.",
+   "pacotes": [
+    "matematica-livro"
+   ],
+   "fala": "O triplo de uma quantidade é essa quantidade 3 vezes. O triplo de 2 é 3 × 2 = 6. O triplo de 6 é 3 × 6 = 18, porque 6 + 6 + 6 = 18. O triplo de 7 é 21."
+  },
+  {
+   "chave": "06b9ccc12p",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Tabuadas do 2 e do 3\".",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Tabuadas do 2 e do 3\"."
+  },
+  {
+   "chave": "88acbadeu",
+   "voz": "narradora",
+   "texto": "Tabuadas do 2 e do 3",
+   "pacotes": [
+    "matematica-livro"
+   ],
+   "fala": "Tabuadas do 2 e do 3"
+  },
+  {
+   "chave": "0efdaaa45q",
+   "voz": "narradora",
+   "texto": "As tabelas com os resultados das multiplicações são chamadas de tabuadas. Tabuada do 2, de 2 em 2: 2, 4, 6, 8, 10, 12, 14, 16, 18, 20. Tabuada do 3, de 3 em 3: 3, 6, 9, 12, 15, 18, 21, 24, 27, 30.",
+   "pacotes": [
+    "matematica-livro"
+   ],
+   "fala": "As tabelas com os resultados das multiplicações são chamadas de tabuadas. Tabuada do 2, de 2 em 2: 2, 4, 6, 8, 10, 12, 14, 16, 18, 20. Tabuada do 3, de 3 em 3: 3, 6, 9, 12, 15, 18, 21, 24, 27, 30."
+  },
+  {
+   "chave": "5917c8812p",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Tabuadas do 4 e do 5\".",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Tabuadas do 4 e do 5\"."
+  },
+  {
+   "chave": "7aca4e82u",
+   "voz": "narradora",
+   "texto": "Tabuadas do 4 e do 5",
+   "pacotes": [
+    "matematica-livro"
+   ],
+   "fala": "Tabuadas do 4 e do 5"
+  },
+  {
+   "chave": "5ac68ea35e",
+   "voz": "narradora",
+   "texto": "Tabuada do 4, de 4 em 4: 4, 8, 12, 16, 20, 24, 28, 32, 36, 40. Tabuada do 5, de 5 em 5: 5, 10, 15, 20, 25, 30, 35, 40, 45, 50. Na tabuada do 5, os resultados terminam sempre em 0 ou 5.",
+   "pacotes": [
+    "matematica-livro"
+   ],
+   "fala": "Tabuada do 4, de 4 em 4: 4, 8, 12, 16, 20, 24, 28, 32, 36, 40. Tabuada do 5, de 5 em 5: 5, 10, 15, 20, 25, 30, 35, 40, 45, 50. Na tabuada do 5, os resultados terminam sempre em 0 ou 5."
+  },
+  {
+   "chave": "aaea417a2p",
+   "voz": "claude",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Resolvendo problemas\".",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Resolvendo problemas\"."
+  },
+  {
+   "chave": "6153347du",
+   "voz": "narradora",
+   "texto": "Resolvendo problemas",
+   "pacotes": [
+    "matematica-livro"
+   ],
+   "fala": "Resolvendo problemas"
+  },
+  {
+   "chave": "f05e473c7j",
+   "voz": "narradora",
+   "texto": "Para resolver um problema, primeiro identificamos as informações que ele apresenta. Depois pensamos no que precisamos descobrir e qual operação usar. Felipe comprou 2 pacotes com 5 cartinhas: 2 × 5 = 10 cartinhas. Carina comprou o triplo: 10 × 3 = 30 cartinhas.",
+   "pacotes": [
+    "matematica-livro"
+   ],
+   "fala": "Para resolver um problema, primeiro identificamos as informações que ele apresenta. Depois pensamos no que precisamos descobrir e qual operação usar. Felipe comprou 2 pacotes com 5 cartinhas: 2 × 5 = 10 cartinhas. Carina comprou o triplo: 10 × 3 = 30 cartinhas."
+  },
+  {
+   "chave": "69e3715b1l",
+   "voz": "unicornio",
+   "texto": "Domingo, segunda, terça... a semana tem 7 dias!",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Domingo, segunda, terça... a semana tem 7 dias!"
+  },
+  {
+   "chave": "ca39aae91r",
+   "voz": "unicornio",
+   "texto": "Eu só faço aniversário a cada quatro anos, no dia 29!",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Eu só faço aniversário a cada quatro anos, no dia 29!"
+  },
+  {
+   "chave": "3c9793061b",
+   "voz": "unicornio",
+   "texto": "Tique-taque! Uma hora tem 60 minutos!",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Tique-taque! Uma hora tem 60 minutos!"
+  },
+  {
+   "chave": "49907b801e",
+   "voz": "unicornio",
+   "texto": "Quando o relógio marca 24:00, eu acordo!",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Quando o relógio marca 24:00, eu acordo!"
+  },
+  {
+   "chave": "25ad01ae15",
+   "voz": "unicornio",
+   "texto": "Muito provável que você acerte!",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Muito provável que você acerte!"
+  },
+  {
+   "chave": "5988ed081a",
+   "voz": "unicornio",
+   "texto": "Impossível não gostar de matemática!",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Impossível não gostar de matemática!"
+  },
+  {
+   "chave": "a00ba0a618",
+   "voz": "unicornio",
+   "texto": "2 + 2 + 2 é o mesmo que 3 vezes 2!",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "2 + 2 + 2 é o mesmo que 3 vezes 2!"
+  },
+  {
+   "chave": "d7f3aa761f",
+   "voz": "unicornio",
+   "texto": "Meu chifre tem a forma do sinal de vezes!",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Meu chifre tem a forma do sinal de vezes!"
+  },
+  {
+   "chave": "da5aac4015",
+   "voz": "unicornio",
+   "texto": "Tudo que eu ganho vem em dobro!",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Tudo que eu ganho vem em dobro!"
+  },
+  {
+   "chave": "7dd090e01h",
+   "voz": "unicornio",
+   "texto": "Um, dois, três: eu sou o triplo de alegria!",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Um, dois, três: eu sou o triplo de alegria!"
+  },
+  {
+   "chave": "cc64bb1dz",
+   "voz": "unicornio",
+   "texto": "De 5 em 5: 5, 10, 15, 20!",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "De 5 em 5: 5, 10, 15, 20!"
+  },
+  {
+   "chave": "2bcb8eaa1y",
+   "voz": "unicornio",
+   "texto": "Primeiro as informações, depois a conta. Problema resolvido!",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Primeiro as informações, depois a conta. Problema resolvido!"
+  },
+  {
+   "chave": "4cfa9a2c13",
+   "voz": "unicornio",
+   "texto": "Conta certa, medalha de ouro!",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Conta certa, medalha de ouro!"
+  },
+  {
+   "chave": "7a21acb11f",
+   "voz": "unicornio",
+   "texto": "Tudo certinho! Minha alegria não tem fim!",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Tudo certinho! Minha alegria não tem fim!"
+  },
+  {
+   "chave": "2a6fc27c1g",
+   "voz": "unicornio",
+   "texto": "Você conquistou todos os números da Torre!",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Você conquistou todos os números da Torre!"
+  },
+  {
+   "chave": "338e41dcj",
+   "voz": "claude",
+   "texto": "O Calendário",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "O Calendário"
+  },
+  {
+   "chave": "b42f6cde23",
+   "voz": "claude",
+   "texto": "Vamos passear pelo calendário: dias da semana, meses do ano e datas!",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Vamos passear pelo calendário: dias da semana, meses do ano e datas!"
+  },
+  {
+   "chave": "a80b7a57h",
+   "voz": "narradora",
+   "texto": "10 dias",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "10 dias"
+  },
+  {
+   "chave": "045c53332b",
+   "voz": "narradora",
+   "texto": "Coloque os dias da semana na ordem do calendário, começando pelo domingo:",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "Coloque os dias da semana na ordem do calendário, começando pelo domingo:"
+  },
+  {
+   "chave": "e5d8206bi",
+   "voz": "narradora",
+   "texto": "10 meses",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "10 meses"
+  },
+  {
+   "chave": "1325ca8f1v",
+   "voz": "narradora",
+   "texto": "Coloque estes meses na ordem em que eles aparecem no ano:",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "Coloque estes meses na ordem em que eles aparecem no ano:"
+  },
+  {
+   "chave": "354567c116",
+   "voz": "narradora",
+   "texto": "Ligue cada ordem ao nome do mês:",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "Ligue cada ordem ao nome do mês:"
+  },
+  {
+   "chave": "ea332fcf15",
+   "voz": "narradora",
+   "texto": "Dezembro é o último mês do ano.",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "Dezembro é o último mês do ano."
+  },
+  {
+   "chave": "0e714a9525",
+   "voz": "narradora",
+   "texto": "A professora Carla escreveu a data 10/09 na lousa. Que data é essa?",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "A professora Carla escreveu a data 10/09 na lousa. Que data é essa?"
+  },
+  {
+   "chave": "9b2dad7eo",
+   "voz": "narradora",
+   "texto": "10 de setembro",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "10 de setembro"
+  },
+  {
+   "chave": "f8b51eefm",
+   "voz": "narradora",
+   "texto": "9 de outubro",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "9 de outubro"
+  },
+  {
+   "chave": "569f42eem",
+   "voz": "narradora",
+   "texto": "10 de agosto",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "10 de agosto"
+  },
+  {
+   "chave": "7915f3b31n",
+   "voz": "narradora",
+   "texto": "Como escrevemos 25 de outubro de forma abreviada?",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "Como escrevemos 25 de outubro de forma abreviada?"
+  },
+  {
+   "chave": "4175ea2cf",
+   "voz": "narradora",
+   "texto": "10/25",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "10/25"
+  },
+  {
+   "chave": "4d327604f",
+   "voz": "narradora",
+   "texto": "25/10",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "25/10"
+  },
+  {
+   "chave": "4f32792af",
+   "voz": "narradora",
+   "texto": "25/12",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "25/12"
+  },
+  {
+   "chave": "6471066816",
+   "voz": "narradora",
+   "texto": "Quantos dias tem o mês de março?",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "Quantos dias tem o mês de março?"
+  },
+  {
+   "chave": "7d843bd2h",
+   "voz": "narradora",
+   "texto": "28 dias",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "28 dias"
+  },
+  {
+   "chave": "b51db031h",
+   "voz": "narradora",
+   "texto": "30 dias",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "30 dias"
+  },
+  {
+   "chave": "2dbcd2a4h",
+   "voz": "narradora",
+   "texto": "31 dias",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "31 dias"
+  },
+  {
+   "chave": "40a22abct",
+   "voz": "narradora",
+   "texto": "Calendário de março",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "Calendário de março"
+  },
+  {
+   "chave": "ae14f3742b",
+   "voz": "narradora",
+   "texto": "O dia 1 cai num domingo. O último dia do mês é o dia 31, uma terça-feira.",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "O dia 1 cai num domingo. O último dia do mês é o dia 31, uma terça-feira."
+  },
+  {
+   "chave": "10e90cd42z",
+   "voz": "narradora",
+   "texto": "No calendário de março, os sábados vêm de 7 em 7 dias. Quais dias caem no sábado? Toque em TODOS.",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "No calendário de março, os sábados vêm de 7 em 7 dias. Quais dias caem no sábado? Toque em todos."
+  },
+  {
+   "chave": "e98dbef8f",
+   "voz": "narradora",
+   "texto": "Dia 7",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "Dia 7"
+  },
+  {
+   "chave": "7a326bfag",
+   "voz": "narradora",
+   "texto": "Dia 14",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "Dia 14"
+  },
+  {
+   "chave": "6f301c12g",
+   "voz": "narradora",
+   "texto": "Dia 21",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "Dia 21"
+  },
+  {
+   "chave": "78302a3dg",
+   "voz": "narradora",
+   "texto": "Dia 28",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "Dia 28"
+  },
+  {
+   "chave": "763265aeg",
+   "voz": "narradora",
+   "texto": "Dia 10",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "Dia 10"
+  },
+  {
+   "chave": "6b3015c6g",
+   "voz": "narradora",
+   "texto": "Dia 25",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "Dia 25"
+  },
+  {
+   "chave": "32085c6824",
+   "voz": "narradora",
+   "texto": "O dia 1 cai num domingo. Então o dia 7 é o primeiro sábado do mês.",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "O dia 1 cai num domingo. Então o dia 7 é o primeiro sábado do mês."
+  },
+  {
+   "chave": "f377c7563i",
+   "voz": "narradora",
+   "texto": "Felipe faz aniversário no dia 20 e Duda no dia 27 do mesmo mês. Quantos dias se passaram entre os dois aniversários?",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "Felipe faz aniversário no dia 20 e Duda no dia 27 do mesmo mês. Quantos dias se passaram entre os dois aniversários?"
+  },
+  {
+   "chave": "8f8968183a",
+   "voz": "narradora",
+   "texto": "Diego e o pai partiram de viagem no dia 25/10. Duas semanas depois, eles voltaram. Em que dia eles voltaram?",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "Diego e o pai partiram de viagem no dia 25/10. Duas semanas depois, eles voltaram. Em que dia eles voltaram?"
+  },
+  {
+   "chave": "884e1f2ce",
+   "voz": "narradora",
+   "texto": "2/11",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "2/11"
+  },
+  {
+   "chave": "0a5a7376e",
+   "voz": "narradora",
+   "texto": "8/11",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "8/11"
+  },
+  {
+   "chave": "f95e0c93e",
+   "voz": "narradora",
+   "texto": "1/11",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "1/11"
+  },
+  {
+   "chave": "91c03a4a21",
+   "voz": "narradora",
+   "texto": "No calendário, os feriados aparecem com os números em vermelho.",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "No calendário, os feriados aparecem com os números em vermelho."
+  },
+  {
+   "chave": "6c6eeaaa1a",
+   "voz": "narradora",
+   "texto": "Fevereiro é o mês mais curto do ano.",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "Fevereiro é o mês mais curto do ano."
+  },
+  {
+   "chave": "6a1cc94f1n",
+   "voz": "narradora",
+   "texto": "Como se chama o ano em que fevereiro tem 29 dias?",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "Como se chama o ano em que fevereiro tem 29 dias?"
+  },
+  {
+   "chave": "f3724c9em",
+   "voz": "narradora",
+   "texto": "Ano bissexto",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "Ano bissexto"
+  },
+  {
+   "chave": "b8df12a5i",
+   "voz": "narradora",
+   "texto": "Ano novo",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "Ano novo"
+  },
+  {
+   "chave": "9b78e7f8j",
+   "voz": "narradora",
+   "texto": "Ano curto",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "Ano curto"
+  },
+  {
+   "chave": "17da1542e",
+   "voz": "narradora",
+   "texto": "dias",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "dias"
+  },
+  {
+   "chave": "bb5641b3h",
+   "voz": "narradora",
+   "texto": "semanas",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "semanas"
+  },
+  {
+   "chave": "a8d640a0f",
+   "voz": "narradora",
+   "texto": "meses",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "meses"
+  },
+  {
+   "chave": "4291c9cc1s",
+   "voz": "narradora",
+   "texto": "O calendário marca o tempo em ______, semanas e meses.",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "O calendário marca o tempo em …, semanas e meses."
+  },
+  {
+   "chave": "c32021b8v",
+   "voz": "narradora",
+   "texto": "Um ano tem 12 ______.",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "Um ano tem 12 …"
+  },
+  {
+   "chave": "93f5154118",
+   "voz": "narradora",
+   "texto": "Um mês tem mais ou menos 4 ______.",
+   "pacotes": [
+    "matematica-m1"
+   ],
+   "fala": "Um mês tem mais ou menos 4 …"
+  },
+  {
+   "chave": "187b1b20f",
+   "voz": "claude",
+   "texto": "As Horas",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "As Horas"
+  },
+  {
+   "chave": "d83b5f622c",
+   "voz": "claude",
+   "texto": "Tique-taque! Vamos ler as horas no relógio digital e ver quanto tempo passou!",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Tique-taque! Vamos ler as horas no relógio digital e ver quanto tempo passou!"
+  },
+  {
+   "chave": "b0ea275617",
+   "voz": "narradora",
+   "texto": "Quantas horas tem um dia inteiro?",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "Quantas horas tem um dia inteiro?"
+  },
+  {
+   "chave": "20424ff3i",
+   "voz": "narradora",
+   "texto": "12 horas",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "12 horas"
+  },
+  {
+   "chave": "37726b76i",
+   "voz": "narradora",
+   "texto": "24 horas",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "24 horas"
+  },
+  {
+   "chave": "564a059ei",
+   "voz": "narradora",
+   "texto": "60 horas",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "60 horas"
+  },
+  {
+   "chave": "68c6c06d2k",
+   "voz": "narradora",
+   "texto": "No relógio digital marcando 09:30, o que mostram os números antes dos dois pontos?",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "No relógio digital marcando 09:30, o que mostram os números antes dos dois pontos?"
+  },
+  {
+   "chave": "0650e4a4i",
+   "voz": "narradora",
+   "texto": "As horas",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "As horas"
+  },
+  {
+   "chave": "75f16880k",
+   "voz": "narradora",
+   "texto": "Os minutos",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "Os minutos"
+  },
+  {
+   "chave": "8aaedf21m",
+   "voz": "narradora",
+   "texto": "O dia do mês",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "O dia do mês"
+  },
+  {
+   "chave": "d825f5e713",
+   "voz": "narradora",
+   "texto": "Quantos minutos tem uma hora?",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "Quantos minutos tem uma hora?"
+  },
+  {
+   "chave": "f5b5ca14k",
+   "voz": "narradora",
+   "texto": "24 minutos",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "24 minutos"
+  },
+  {
+   "chave": "8372de7ck",
+   "voz": "narradora",
+   "texto": "60 minutos",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "60 minutos"
+  },
+  {
+   "chave": "6c398653z",
+   "voz": "narradora",
+   "texto": "Meia hora tem 30 minutos.",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "Meia hora tem 30 minutos."
+  },
+  {
+   "chave": "0a21a86c1u",
+   "voz": "narradora",
+   "texto": "Ligue cada horário do relógio digital ao jeito de falar:",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "Ligue cada horário do relógio digital ao jeito de falar:"
+  },
+  {
+   "chave": "5b7079f11j",
+   "voz": "narradora",
+   "texto": "O relógio digital marca 24:00. Que horas são?",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "O relógio digital marca 24:00. Que horas são?"
+  },
+  {
+   "chave": "63792edci",
+   "voz": "narradora",
+   "texto": "Meio-dia",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "Meio-dia"
+  },
+  {
+   "chave": "bee69239k",
+   "voz": "narradora",
+   "texto": "Meia-noite",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "Meia-noite"
+  },
+  {
+   "chave": "c45e6e7cq",
+   "voz": "narradora",
+   "texto": "4 horas da manhã",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "4 horas da manhã"
+  },
+  {
+   "chave": "288ca38521",
+   "voz": "narradora",
+   "texto": "Quais horários são de manhã, antes do meio-dia? Toque em TODOS.",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "Quais horários são de manhã, antes do meio-dia? Toque em todos."
+  },
+  {
+   "chave": "590bd785f",
+   "voz": "narradora",
+   "texto": "07:30",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "07:30"
+  },
+  {
+   "chave": "78620f20f",
+   "voz": "narradora",
+   "texto": "09:00",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "09:00"
+  },
+  {
+   "chave": "57dd4449f",
+   "voz": "narradora",
+   "texto": "10:30",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "10:30"
+  },
+  {
+   "chave": "314d9068f",
+   "voz": "narradora",
+   "texto": "15:30",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "15:30"
+  },
+  {
+   "chave": "9f63af8ff",
+   "voz": "narradora",
+   "texto": "19:00",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "19:00"
+  },
+  {
+   "chave": "8e7c18081k",
+   "voz": "narradora",
+   "texto": "Que aula começa meia hora depois das 10 horas?",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "Que aula começa meia hora depois das 10 horas?"
+  },
+  {
+   "chave": "c2ac2055k",
+   "voz": "narradora",
+   "texto": "Matemática",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "Matemática"
+  },
+  {
+   "chave": "a0938222f",
+   "voz": "narradora",
+   "texto": "Artes",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "Artes"
+  },
+  {
+   "chave": "26822c09i",
+   "voz": "narradora",
+   "texto": "Ciências",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "Ciências"
+  },
+  {
+   "chave": "70d58614r",
+   "voz": "narradora",
+   "texto": "As aulas da Bruna",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "As aulas da Bruna"
+  },
+  {
+   "chave": "bdf56a97z",
+   "voz": "narradora",
+   "texto": "Aula de Matemática: 07:30",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "Aula de Matemática: 07:30"
+  },
+  {
+   "chave": "93aa12fbu",
+   "voz": "narradora",
+   "texto": "Aula de Artes: 09:00",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "Aula de Artes: 09:00"
+  },
+  {
+   "chave": "25a2cdd3x",
+   "voz": "narradora",
+   "texto": "Aula de Ciências: 10:30",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "Aula de Ciências: 10:30"
+  },
+  {
+   "chave": "b75328af26",
+   "voz": "narradora",
+   "texto": "A aula de Ciências começa quanto tempo depois da aula de Matemática?",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "A aula de Ciências começa quanto tempo depois da aula de Matemática?"
+  },
+  {
+   "chave": "c89c5f1bh",
+   "voz": "narradora",
+   "texto": "3 horas",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "3 horas"
+  },
+  {
+   "chave": "2db01a4e34",
+   "voz": "narradora",
+   "texto": "Daniela chegou à casa do Cassiano às 11:00. Eles almoçaram meia hora depois. Que horas eles almoçaram?",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "Daniela chegou à casa do Cassiano às 11:00. Eles almoçaram meia hora depois. Que horas eles almoçaram?"
+  },
+  {
+   "chave": "43e2a51cf",
+   "voz": "narradora",
+   "texto": "11:30",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "11:30"
+  },
+  {
+   "chave": "0d8f8e38f",
+   "voz": "narradora",
+   "texto": "12:00",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "12:00"
+  },
+  {
+   "chave": "54e73d0df",
+   "voz": "narradora",
+   "texto": "11:15",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "11:15"
+  },
+  {
+   "chave": "9234d2982y",
+   "voz": "narradora",
+   "texto": "O balé da Olívia começa às 09:00 e a escola às 13:00. Coloque as horas em ordem, de 1 em 1 hora:",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "O balé da Olívia começa às 09:00 e a escola às 13:00. Coloque as horas em ordem, de 1 em 1 hora:"
+  },
+  {
+   "chave": "8bca8c3e2k",
+   "voz": "narradora",
+   "texto": "O recreio da Olívia começa às 15:30 e dura meia hora. Que horas o recreio termina?",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "O recreio da Olívia começa às 15:30 e dura meia hora. Que horas o recreio termina?"
+  },
+  {
+   "chave": "a354ffa3f",
+   "voz": "narradora",
+   "texto": "15:00",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "15:00"
+  },
+  {
+   "chave": "c9b52db4f",
+   "voz": "narradora",
+   "texto": "16:00",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "16:00"
+  },
+  {
+   "chave": "3bbc9ceff",
+   "voz": "narradora",
+   "texto": "16:30",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "16:30"
+  },
+  {
+   "chave": "72d04d832q",
+   "voz": "narradora",
+   "texto": "A aula de desenho da Nicole começa às 14:00 e acaba às 15:30. Quanto tempo durou a aula?",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "A aula de desenho da Nicole começa às 14:00 e acaba às 15:30. Quanto tempo durou a aula?"
+  },
+  {
+   "chave": "a17eaf33j",
+   "voz": "narradora",
+   "texto": "Meia hora",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "Meia hora"
+  },
+  {
+   "chave": "a0450c8ai",
+   "voz": "narradora",
+   "texto": "Uma hora",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "Uma hora"
+  },
+  {
+   "chave": "3267ab17p",
+   "voz": "narradora",
+   "texto": "Uma hora e meia",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "Uma hora e meia"
+  },
+  {
+   "chave": "1fe271e832",
+   "voz": "narradora",
+   "texto": "O filme começa às 19:30. Betina e a tia chegaram meia hora antes. Que horas elas chegaram ao cinema?",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "O filme começa às 19:30. Betina e a tia chegaram meia hora antes. Que horas elas chegaram ao cinema?"
+  },
+  {
+   "chave": "9e616f65f",
+   "voz": "narradora",
+   "texto": "19:15",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "19:15"
+  },
+  {
+   "chave": "0f6142e21v",
+   "voz": "narradora",
+   "texto": "Um ônibus sai de meia em meia hora. Complete os horários:",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "Um ônibus sai de meia em meia hora. Complete os horários:"
+  },
+  {
+   "chave": "df0ee90ef",
+   "voz": "narradora",
+   "texto": "07:00",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "07:00"
+  },
+  {
+   "chave": "5a5ca59df",
+   "voz": "narradora",
+   "texto": "08:00",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "08:00"
+  },
+  {
+   "chave": "7baf4d801j",
+   "voz": "narradora",
+   "texto": "Depois do ônibus das 06:30, sai o das ______.",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "Depois do ônibus das 06:30, sai o das …"
+  },
+  {
+   "chave": "566984261j",
+   "voz": "narradora",
+   "texto": "Depois do ônibus das 07:00, sai o das ______.",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "Depois do ônibus das 07:00, sai o das …"
+  },
+  {
+   "chave": "046e55471j",
+   "voz": "narradora",
+   "texto": "Depois do ônibus das 07:30, sai o das ______.",
+   "pacotes": [
+    "matematica-m2"
+   ],
+   "fala": "Depois do ônibus das 07:30, sai o das …"
+  },
+  {
+   "chave": "94d2be9ae",
+   "voz": "claude",
+   "texto": "Chances",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Chances"
+  },
+  {
+   "chave": "7b040e8426",
+   "voz": "claude",
+   "texto": "Muito provável, pouco provável ou impossível? Vamos pensar nas chances!",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Muito provável, pouco provável ou impossível? Vamos pensar nas chances!"
+  },
+  {
+   "chave": "427ade572e",
+   "voz": "narradora",
+   "texto": "Paula vai pegar uma bolinha amarela da piscina sem olhar. Essa situação é...",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "Paula vai pegar uma bolinha amarela da piscina sem olhar. Essa situação é..."
+  },
+  {
+   "chave": "f3dccc1711",
+   "voz": "narradora",
+   "texto": "Muito provável de acontecer",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "Muito provável de acontecer"
+  },
+  {
+   "chave": "fc7d5b0d11",
+   "voz": "narradora",
+   "texto": "Pouco provável de acontecer",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "Pouco provável de acontecer"
+  },
+  {
+   "chave": "fb26e21dx",
+   "voz": "narradora",
+   "texto": "Impossível de acontecer",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "Impossível de acontecer"
+  },
+  {
+   "chave": "fb56a20av",
+   "voz": "narradora",
+   "texto": "A piscina de bolinhas",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "A piscina de bolinhas"
+  },
+  {
+   "chave": "e5a383b22w",
+   "voz": "narradora",
+   "texto": "Na piscina de bolinhas do parque tem muitas bolinhas amarelas e só algumas bolinhas vermelhas.",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "Na piscina de bolinhas do parque tem muitas bolinhas amarelas e só algumas bolinhas vermelhas."
+  },
+  {
+   "chave": "2f1422172e",
+   "voz": "narradora",
+   "texto": "Davi vai pegar uma bolinha vermelha da piscina sem olhar. Essa situação é...",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "Davi vai pegar uma bolinha vermelha da piscina sem olhar. Essa situação é..."
+  },
+  {
+   "chave": "c3c8acc32a",
+   "voz": "narradora",
+   "texto": "Davi vai pegar uma bolinha azul da piscina sem olhar. Essa situação é...",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "Davi vai pegar uma bolinha azul da piscina sem olhar. Essa situação é..."
+  },
+  {
+   "chave": "06c977c52w",
+   "voz": "narradora",
+   "texto": "Elisa vai brincar na cama elástica e na piscina de bolinhas ao mesmo tempo. Essa situação é...",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "Elisa vai brincar na cama elástica e na piscina de bolinhas ao mesmo tempo. Essa situação é..."
+  },
+  {
+   "chave": "102b2505x",
+   "voz": "narradora",
+   "texto": "Improvável de acontecer",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "Improvável de acontecer"
+  },
+  {
+   "chave": "e23922992y",
+   "voz": "narradora",
+   "texto": "Bruno disse: \"Amanhã o céu ficará...\" Quais frases são IMPOSSÍVEIS de acontecer? Toque em TODAS.",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "Bruno disse: \"Amanhã o céu ficará...\" Quais frases são impossíveis de acontecer? Toque em todas."
+  },
+  {
+   "chave": "13d9d9791n",
+   "voz": "narradora",
+   "texto": "...cheio de balões coloridos no lugar das nuvens.",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "...cheio de balões coloridos no lugar das nuvens."
+  },
+  {
+   "chave": "a83ff0301j",
+   "voz": "narradora",
+   "texto": "...com estrelas brilhando ao meio-dia de sol.",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "...com estrelas brilhando ao meio-dia de sol."
+  },
+  {
+   "chave": "3bd6e60213",
+   "voz": "narradora",
+   "texto": "...azul e com algumas nuvens.",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "...azul e com algumas nuvens."
+  },
+  {
+   "chave": "1bfc13a720",
+   "voz": "narradora",
+   "texto": "Qual frase de Bruno é MUITO PROVÁVEL? \"Amanhã o céu ficará...\"",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "Qual frase de Bruno é muito provável? \"Amanhã o céu ficará...\""
+  },
+  {
+   "chave": "0ee778b013",
+   "voz": "narradora",
+   "texto": "...cheio de balões coloridos.",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "...cheio de balões coloridos."
+  },
+  {
+   "chave": "fdff5afd14",
+   "voz": "narradora",
+   "texto": "...com estrelas durante o dia.",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "...com estrelas durante o dia."
+  },
+  {
+   "chave": "932a134233",
+   "voz": "narradora",
+   "texto": "Ângela tem 6 pirulitos para dar a mesma quantidade a cada um de seus 3 sobrinhos. O que é impossível?",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "Ângela tem 6 pirulitos para dar a mesma quantidade a cada um de seus 3 sobrinhos. O que é impossível?"
+  },
+  {
+   "chave": "e49208dc16",
+   "voz": "narradora",
+   "texto": "Cada sobrinho ganhar 2 pirulitos",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "Cada sobrinho ganhar 2 pirulitos"
+  },
+  {
+   "chave": "20303fd316",
+   "voz": "narradora",
+   "texto": "Cada sobrinho ganhar 3 pirulitos",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "Cada sobrinho ganhar 3 pirulitos"
+  },
+  {
+   "chave": "4f57245b3f",
+   "voz": "narradora",
+   "texto": "Fábio levou uma cédula de 20 reais para a banca de revistas. O que é IMPOSSÍVEL ele comprar só com esse dinheiro?",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "Fábio levou uma cédula de 20 reais para a banca de revistas. O que é impossível ele comprar só com esse dinheiro?"
+  },
+  {
+   "chave": "fd54eb6e1c",
+   "voz": "narradora",
+   "texto": "Uma revista de super-herói de 25 reais",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "Uma revista de super-herói de 25 reais"
+  },
+  {
+   "chave": "aa4af41418",
+   "voz": "narradora",
+   "texto": "Um pacote de figurinhas de 5 reais",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "Um pacote de figurinhas de 5 reais"
+  },
+  {
+   "chave": "32f8c71b3l",
+   "voz": "narradora",
+   "texto": "Larissa quer chegar à casa do Pedro às 10:30. Ela pegou o ônibus às 09:00 e a viagem dura 2 horas. Chegar às 10:30 é...",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "Larissa quer chegar à casa do Pedro às 10:30. Ela pegou o ônibus às 09:00 e a viagem dura 2 horas. Chegar às 10:30 é..."
+  },
+  {
+   "chave": "dcd1b53620",
+   "voz": "narradora",
+   "texto": "Essas situações podem ou não podem acontecer? Separe nos baús!",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "Essas situações podem ou não podem acontecer? Separe nos baús!"
+  },
+  {
+   "chave": "b8ed74371j",
+   "voz": "narradora",
+   "texto": "Uma situação impossível nunca pode acontecer.",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "Uma situação impossível nunca pode acontecer."
+  },
+  {
+   "chave": "abb31d731h",
+   "voz": "narradora",
+   "texto": "Uma situação pouco provável nunca acontece.",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "Uma situação pouco provável nunca acontece."
+  },
+  {
+   "chave": "c90ac18223",
+   "voz": "narradora",
+   "texto": "Apontando para um círculo sem olhar, acertar o círculo verde é...",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "Apontando para um círculo sem olhar, acertar o círculo verde é..."
+  },
+  {
+   "chave": "c8d45264o",
+   "voz": "narradora",
+   "texto": "Muito provável",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "Muito provável"
+  },
+  {
+   "chave": "cfb2daaao",
+   "voz": "narradora",
+   "texto": "Pouco provável",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "Pouco provável"
+  },
+  {
+   "chave": "f1d3829dv",
+   "voz": "narradora",
+   "texto": "Os círculos coloridos",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "Os círculos coloridos"
+  },
+  {
+   "chave": "e4bc5c091e",
+   "voz": "narradora",
+   "texto": "São 20 círculos: 19 vermelhos e 1 verde.",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "São 20 círculos: 19 vermelhos e 1 verde."
+  },
+  {
+   "chave": "1ad5d7ea19",
+   "voz": "narradora",
+   "texto": "Complete com as palavras do quadro.",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "Complete com as palavras do quadro."
+  },
+  {
+   "chave": "540d1a84o",
+   "voz": "narradora",
+   "texto": "muito provável",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "muito provável"
+  },
+  {
+   "chave": "be6e554ao",
+   "voz": "narradora",
+   "texto": "pouco provável",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "pouco provável"
+  },
+  {
+   "chave": "0f8542fak",
+   "voz": "narradora",
+   "texto": "impossível",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "impossível"
+  },
+  {
+   "chave": "50fd341d1c",
+   "voz": "narradora",
+   "texto": "Fazer calor num dia de verão é ______.",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "Fazer calor num dia de verão é …"
+  },
+  {
+   "chave": "11efdd6d1b",
+   "voz": "narradora",
+   "texto": "Achar uma moeda na rua hoje é ______.",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "Achar uma moeda na rua hoje é …"
+  },
+  {
+   "chave": "6f83d7abx",
+   "voz": "narradora",
+   "texto": "Um gato falar é ______.",
+   "pacotes": [
+    "matematica-m3"
+   ],
+   "fala": "Um gato falar é …"
+  },
+  {
+   "chave": "6be4d56em",
+   "voz": "claude",
+   "texto": "Parcelas Iguais",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Parcelas Iguais"
+  },
+  {
+   "chave": "0c16fd3b25",
+   "voz": "claude",
+   "texto": "Somar o mesmo número várias vezes é multiplicar! Vamos descobrir como?",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Somar o mesmo número várias vezes é multiplicar! Vamos descobrir como?"
+  },
+  {
+   "chave": "104b29ab2r",
+   "voz": "narradora",
+   "texto": "Gabriela, Diego e Murilo fizeram 2 pompons cada um. Quantos pompons eles fizeram ao todo?",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "Gabriela, Diego e Murilo fizeram 2 pompons cada um. Quantos pompons eles fizeram ao todo?"
+  },
+  {
+   "chave": "3b8eac46j",
+   "voz": "narradora",
+   "texto": "5 pompons",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "5 pompons"
+  },
+  {
+   "chave": "85141fd3j",
+   "voz": "narradora",
+   "texto": "6 pompons",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "6 pompons"
+  },
+  {
+   "chave": "0956ede1j",
+   "voz": "narradora",
+   "texto": "8 pompons",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "8 pompons"
+  },
+  {
+   "chave": "236445162d",
+   "voz": "narradora",
+   "texto": "Na adição 2 + 2 + 2 = 6, como se chamam os números que estão sendo somados?",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "Na adição 2 + 2 + 2 = 6, como se chamam os números que estão sendo somados?"
+  },
+  {
+   "chave": "bb18d088i",
+   "voz": "narradora",
+   "texto": "Parcelas",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "Parcelas"
+  },
+  {
+   "chave": "9f9a97e2f",
+   "voz": "narradora",
+   "texto": "Vezes",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "Vezes"
+  },
+  {
+   "chave": "e417617fh",
+   "voz": "narradora",
+   "texto": "Dezenas",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "Dezenas"
+  },
+  {
+   "chave": "906f60bd1c",
+   "voz": "narradora",
+   "texto": "Como lemos o sinal × da multiplicação?",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "Como lemos o sinal × da multiplicação?"
+  },
+  {
+   "chave": "b167c547e",
+   "voz": "narradora",
+   "texto": "Mais",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "Mais"
+  },
+  {
+   "chave": "001907f5f",
+   "voz": "narradora",
+   "texto": "Menos",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "Menos"
+  },
+  {
+   "chave": "571e21471l",
+   "voz": "narradora",
+   "texto": "Qual multiplicação é igual a 3 + 3 + 3 + 3 + 3?",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "Qual multiplicação é igual a 3 + 3 + 3 + 3 + 3?"
+  },
+  {
+   "chave": "ae426e3cf",
+   "voz": "narradora",
+   "texto": "5 × 3",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "5 × 3"
+  },
+  {
+   "chave": "ec7e6af6f",
+   "voz": "narradora",
+   "texto": "3 × 3",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "3 × 3"
+  },
+  {
+   "chave": "ac426b16f",
+   "voz": "narradora",
+   "texto": "5 × 5",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "5 × 5"
+  },
+  {
+   "chave": "535c72232n",
+   "voz": "narradora",
+   "texto": "Na gincana, 5 alunos encheram 3 balões cada um. Quantos balões eles encheram ao todo?",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "Na gincana, 5 alunos encheram 3 balões cada um. Quantos balões eles encheram ao todo?"
+  },
+  {
+   "chave": "8658757fi",
+   "voz": "narradora",
+   "texto": "8 balões",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "8 balões"
+  },
+  {
+   "chave": "0a3ca263j",
+   "voz": "narradora",
+   "texto": "15 balões",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "15 balões"
+  },
+  {
+   "chave": "72318fbdj",
+   "voz": "narradora",
+   "texto": "53 balões",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "53 balões"
+  },
+  {
+   "chave": "c934d1f11k",
+   "voz": "narradora",
+   "texto": "Ligue cada adição à multiplicação igual a ela:",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "Ligue cada adição à multiplicação igual a ela:"
+  },
+  {
+   "chave": "7a7ac86b1g",
+   "voz": "narradora",
+   "texto": "A torcida de qual equipe fez MAIS pompons?",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "A torcida de qual equipe fez mais pompons?"
+  },
+  {
+   "chave": "9e8ee144h",
+   "voz": "narradora",
+   "texto": "Amarela",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "Amarela"
+  },
+  {
+   "chave": "4a81e483e",
+   "voz": "narradora",
+   "texto": "Azul",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "Azul"
+  },
+  {
+   "chave": "24d86a6fi",
+   "voz": "narradora",
+   "texto": "Vermelha",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "Vermelha"
+  },
+  {
+   "chave": "f2b7b294w",
+   "voz": "narradora",
+   "texto": "As torcidas da gincana",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "As torcidas da gincana"
+  },
+  {
+   "chave": "55c181d41b",
+   "voz": "narradora",
+   "texto": "Equipe amarela: 2 grupos de 4 pompons",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "Equipe amarela: 2 grupos de 4 pompons"
+  },
+  {
+   "chave": "43f8ca9d18",
+   "voz": "narradora",
+   "texto": "Equipe azul: 3 grupos de 3 pompons",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "Equipe azul: 3 grupos de 3 pompons"
+  },
+  {
+   "chave": "687f5b1c1c",
+   "voz": "narradora",
+   "texto": "Equipe vermelha: 5 grupos de 2 pompons",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "Equipe vermelha: 5 grupos de 2 pompons"
+  },
+  {
+   "chave": "077e382b2a",
+   "voz": "narradora",
+   "texto": "A adição 5 + 5 = 10 pode ser representada pela multiplicação 2 × 5 = 10.",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "A adição 5 + 5 = 10 pode ser representada pela multiplicação 2 × 5 = 10."
+  },
+  {
+   "chave": "3871a7131d",
+   "voz": "narradora",
+   "texto": "A adição 2 + 3 + 4 tem parcelas iguais.",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "A adição 2 + 3 + 4 tem parcelas iguais."
+  },
+  {
+   "chave": "086be7092g",
+   "voz": "narradora",
+   "texto": "Quais adições têm parcelas iguais e podem virar multiplicação? Toque em TODAS.",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "Quais adições têm parcelas iguais e podem virar multiplicação? Toque em todas."
+  },
+  {
+   "chave": "debd440bj",
+   "voz": "narradora",
+   "texto": "4 + 4 + 4",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "4 + 4 + 4"
+  },
+  {
+   "chave": "c5f14d8af",
+   "voz": "narradora",
+   "texto": "6 + 6",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "6 + 6"
+  },
+  {
+   "chave": "0b56efdan",
+   "voz": "narradora",
+   "texto": "2 + 2 + 2 + 2",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "2 + 2 + 2 + 2"
+  },
+  {
+   "chave": "3339b388f",
+   "voz": "narradora",
+   "texto": "3 + 5",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "3 + 5"
+  },
+  {
+   "chave": "e1e76ef7j",
+   "voz": "narradora",
+   "texto": "1 + 2 + 3",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "1 + 2 + 3"
+  },
+  {
+   "chave": "09d993e42l",
+   "voz": "narradora",
+   "texto": "Diego colocou 3 carrinhos em cada uma das 4 prateleiras. Quantos carrinhos ele tem?",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "Diego colocou 3 carrinhos em cada uma das 4 prateleiras. Quantos carrinhos ele tem?"
+  },
+  {
+   "chave": "3b1b5af9l",
+   "voz": "narradora",
+   "texto": "7 carrinhos",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "7 carrinhos"
+  },
+  {
+   "chave": "b71a285dm",
+   "voz": "narradora",
+   "texto": "12 carrinhos",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "12 carrinhos"
+  },
+  {
+   "chave": "d55ad2afm",
+   "voz": "narradora",
+   "texto": "10 carrinhos",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "10 carrinhos"
+  },
+  {
+   "chave": "c8faed921x",
+   "voz": "narradora",
+   "texto": "Em cada copo há 2 palitos. Complete com o total de palitos:",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "Em cada copo há 2 palitos. Complete com o total de palitos:"
+  },
+  {
+   "chave": "e72fbf2f1d",
+   "voz": "narradora",
+   "texto": "2 copos: 2 + 2 = 2 × 2 = ______ palitos",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "2 copos: 2 + 2 = 2 × 2 = … palitos"
+  },
+  {
+   "chave": "877983081h",
+   "voz": "narradora",
+   "texto": "3 copos: 2 + 2 + 2 = 3 × 2 = ______ palitos",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "3 copos: 2 + 2 + 2 = 3 × 2 = … palitos"
+  },
+  {
+   "chave": "437cf3ef1l",
+   "voz": "narradora",
+   "texto": "4 copos: 2 + 2 + 2 + 2 = 4 × 2 = ______ palitos",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "4 copos: 2 + 2 + 2 + 2 = 4 × 2 = … palitos"
+  },
+  {
+   "chave": "06c956eb13",
+   "voz": "narradora",
+   "texto": "Qual adição representa 4 × 5?",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "Qual adição representa 4 × 5?"
+  },
+  {
+   "chave": "b29eef5df",
+   "voz": "narradora",
+   "texto": "4 + 5",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "4 + 5"
+  },
+  {
+   "chave": "6061107an",
+   "voz": "narradora",
+   "texto": "5 + 5 + 5 + 5",
+   "pacotes": [
+    "matematica-m4"
+   ],
+   "fala": "5 + 5 + 5 + 5"
+  },
+  {
+   "chave": "5fed2accl",
+   "voz": "claude",
+   "texto": "Dobro e Triplo",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Dobro e Triplo"
+  },
+  {
+   "chave": "9fd55e632e",
+   "voz": "claude",
+   "texto": "Dobro é duas vezes, triplo é três vezes! Vamos treinar as tabuadas do 2 e do 3?",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Dobro é duas vezes, triplo é três vezes! Vamos treinar as tabuadas do 2 e do 3?"
+  },
+  {
+   "chave": "3de58a3018",
+   "voz": "narradora",
+   "texto": "O que é o dobro de uma quantidade?",
+   "pacotes": [
+    "matematica-m5"
+   ],
+   "fala": "O que é o dobro de uma quantidade?"
+  },
+  {
+   "chave": "9b4b9951u",
+   "voz": "narradora",
+   "texto": "A quantidade 2 vezes",
+   "pacotes": [
+    "matematica-m5"
+   ],
+   "fala": "A quantidade 2 vezes"
+  },
+  {
+   "chave": "afd29b3eu",
+   "voz": "narradora",
+   "texto": "A quantidade 3 vezes",
+   "pacotes": [
+    "matematica-m5"
+   ],
+   "fala": "A quantidade 3 vezes"
+  },
+  {
+   "chave": "21452744s",
+   "voz": "narradora",
+   "texto": "A quantidade 1 vez",
+   "pacotes": [
+    "matematica-m5"
+   ],
+   "fala": "A quantidade 1 vez"
+  },
+  {
+   "chave": "9d92ccfa19",
+   "voz": "narradora",
+   "texto": "O que é o triplo de uma quantidade?",
+   "pacotes": [
+    "matematica-m5"
+   ],
+   "fala": "O que é o triplo de uma quantidade?"
+  },
+  {
+   "chave": "b06e22c6v",
+   "voz": "narradora",
+   "texto": "A quantidade 10 vezes",
+   "pacotes": [
+    "matematica-m5"
+   ],
+   "fala": "A quantidade 10 vezes"
+  },
+  {
+   "chave": "fd77e4282m",
+   "voz": "narradora",
+   "texto": "Ana juntou 6 moedas de um real. Daniel juntou o dobro. Quantas moedas Daniel juntou?",
+   "pacotes": [
+    "matematica-m5"
+   ],
+   "fala": "Ana juntou 6 moedas de um real. Daniel juntou o dobro. Quantas moedas Daniel juntou?"
+  },
+  {
+   "chave": "4e1e5154i",
+   "voz": "narradora",
+   "texto": "8 moedas",
+   "pacotes": [
+    "matematica-m5"
+   ],
+   "fala": "8 moedas"
+  },
+  {
+   "chave": "ba678427j",
+   "voz": "narradora",
+   "texto": "12 moedas",
+   "pacotes": [
+    "matematica-m5"
+   ],
+   "fala": "12 moedas"
+  },
+  {
+   "chave": "512d87adj",
+   "voz": "narradora",
+   "texto": "18 moedas",
+   "pacotes": [
+    "matematica-m5"
+   ],
+   "fala": "18 moedas"
+  },
+  {
+   "chave": "821d838c2p",
+   "voz": "narradora",
+   "texto": "A cantina precisa do triplo de 6 bananas para a vitamina. Quantas bananas ela vai usar?",
+   "pacotes": [
+    "matematica-m5"
+   ],
+   "fala": "A cantina precisa do triplo de 6 bananas para a vitamina. Quantas bananas ela vai usar?"
+  },
+  {
+   "chave": "86a61a72j",
+   "voz": "narradora",
+   "texto": "9 bananas",
+   "pacotes": [
+    "matematica-m5"
+   ],
+   "fala": "9 bananas"
+  },
+  {
+   "chave": "a4f91250k",
+   "voz": "narradora",
+   "texto": "12 bananas",
+   "pacotes": [
+    "matematica-m5"
+   ],
+   "fala": "12 bananas"
+  },
+  {
+   "chave": "317d91fak",
+   "voz": "narradora",
+   "texto": "18 bananas",
+   "pacotes": [
+    "matematica-m5"
+   ],
+   "fala": "18 bananas"
+  },
+  {
+   "chave": "e33fbffc15",
+   "voz": "narradora",
+   "texto": "Ligue cada número ao seu dobro:",
+   "pacotes": [
+    "matematica-m5"
+   ],
+   "fala": "Ligue cada número ao seu dobro:"
+  },
+  {
+   "chave": "d9a6fab816",
+   "voz": "narradora",
+   "texto": "Ligue cada número ao seu triplo:",
+   "pacotes": [
+    "matematica-m5"
+   ],
+   "fala": "Ligue cada número ao seu triplo:"
+  },
+  {
+   "chave": "fe805d83s",
+   "voz": "narradora",
+   "texto": "O dobro de 8 é 16.",
+   "pacotes": [
+    "matematica-m5"
+   ],
+   "fala": "O dobro de 8 é 16."
+  },
+  {
+   "chave": "6ce93f0bs",
+   "voz": "narradora",
+   "texto": "O triplo de 3 é 6.",
+   "pacotes": [
+    "matematica-m5"
+   ],
+   "fala": "O triplo de 3 é 6."
+  },
+  {
+   "chave": "acdcaaed1z",
+   "voz": "narradora",
+   "texto": "Quais números são resultados da tabuada do 2? Toque em TODOS.",
+   "pacotes": [
+    "matematica-m5"
+   ],
+   "fala": "Quais números são resultados da tabuada do 2? Toque em todos."
+  },
+  {
+   "chave": "5aeae4aeb",
+   "voz": "narradora",
+   "texto": "7",
+   "pacotes": [
+    "matematica-m5"
+   ],
+   "fala": "7"
+  },
+  {
+   "chave": "c02b9d881o",
+   "voz": "narradora",
+   "texto": "Conte de 3 em 3, começando no 0. Coloque em ordem:",
+   "pacotes": [
+    "matematica-m5"
+   ],
+   "fala": "Conte de 3 em 3, começando no 0. Coloque em ordem:"
+  },
+  {
+   "chave": "afd0c1f72w",
+   "voz": "narradora",
+   "texto": "Quais números são resultados da tabuada do 2 E da tabuada do 3 ao mesmo tempo? Toque em TODOS.",
+   "pacotes": [
+    "matematica-m5"
+   ],
+   "fala": "Quais números são resultados da tabuada do 2 E da tabuada do 3 ao mesmo tempo? Toque em todos."
+  },
+  {
+   "chave": "14b62ba11i",
+   "voz": "narradora",
+   "texto": "Complete a tabuada com os números do quadro.",
+   "pacotes": [
+    "matematica-m5"
+   ],
+   "fala": "Complete a tabuada com os números do quadro."
+  },
+  {
+   "chave": "b7b69744o",
+   "voz": "narradora",
+   "texto": "7 × 2 = ______",
+   "pacotes": [
+    "matematica-m5"
+   ],
+   "fala": "7 × 2 = …"
+  },
+  {
+   "chave": "bb6ba524o",
+   "voz": "narradora",
+   "texto": "6 × 3 = ______",
+   "pacotes": [
+    "matematica-m5"
+   ],
+   "fala": "6 × 3 = …"
+  },
+  {
+   "chave": "a04605beo",
+   "voz": "narradora",
+   "texto": "8 × 3 = ______",
+   "pacotes": [
+    "matematica-m5"
+   ],
+   "fala": "8 × 3 = …"
+  },
+  {
+   "chave": "13e64b0f34",
+   "voz": "narradora",
+   "texto": "Samira escreveu uma sequência: a partir do 1, escreveu o dobro do número anterior. Qual é a sequência?",
+   "pacotes": [
+    "matematica-m5"
+   ],
+   "fala": "Samira escreveu uma sequência: a partir do 1, escreveu o dobro do número anterior. Qual é a sequência?"
+  },
+  {
+   "chave": "d5cea141o",
+   "voz": "narradora",
+   "texto": "1, 2, 4, 8, 16",
+   "pacotes": [
+    "matematica-m5"
+   ],
+   "fala": "1, 2, 4, 8, 16"
+  },
+  {
+   "chave": "c29ec788n",
+   "voz": "narradora",
+   "texto": "1, 2, 3, 4, 5",
+   "pacotes": [
+    "matematica-m5"
+   ],
+   "fala": "1, 2, 3, 4, 5"
+  },
+  {
+   "chave": "cadf2054n",
+   "voz": "narradora",
+   "texto": "1, 3, 5, 7, 9",
+   "pacotes": [
+    "matematica-m5"
+   ],
+   "fala": "1, 3, 5, 7, 9"
+  },
+  {
+   "chave": "5e151a5c3z",
+   "voz": "narradora",
+   "texto": "O grupo do Daniel fez 7 barquinhos. O resto da turma fez 21. A quantidade do resto da turma é o quê da quantidade do grupo do Daniel?",
+   "pacotes": [
+    "matematica-m5"
+   ],
+   "fala": "O grupo do Daniel fez 7 barquinhos. O resto da turma fez 21. A quantidade do resto da turma é o quê da quantidade do grupo do Daniel?"
+  },
+  {
+   "chave": "7453085a30",
+   "voz": "narradora",
+   "texto": "Helena contou 5 joaninhas. Lucas contou o dobro. Quantas joaninhas Lucas e Helena contaram juntos?",
+   "pacotes": [
+    "matematica-m5"
+   ],
+   "fala": "Helena contou 5 joaninhas. Lucas contou o dobro. Quantas joaninhas Lucas e Helena contaram juntos?"
+  },
+  {
+   "chave": "0d892c69m",
+   "voz": "narradora",
+   "texto": "10 joaninhas",
+   "pacotes": [
+    "matematica-m5"
+   ],
+   "fala": "10 joaninhas"
+  },
+  {
+   "chave": "05143a8em",
+   "voz": "narradora",
+   "texto": "15 joaninhas",
+   "pacotes": [
+    "matematica-m5"
+   ],
+   "fala": "15 joaninhas"
+  },
+  {
+   "chave": "ca854b1am",
+   "voz": "narradora",
+   "texto": "20 joaninhas",
+   "pacotes": [
+    "matematica-m5"
+   ],
+   "fala": "20 joaninhas"
+  },
+  {
+   "chave": "22ac3666r",
+   "voz": "claude",
+   "texto": "Tabuadas do 4 e do 5",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Tabuadas do 4 e do 5"
+  },
+  {
+   "chave": "2623fcbd23",
+   "voz": "claude",
+   "texto": "Vamos multiplicar por 4 e por 5 e resolver problemas como detetives!",
+   "pacotes": [
+    "matematica-extra"
+   ],
+   "fala": "Vamos multiplicar por 4 e por 5 e resolver problemas como detetives!"
+  },
+  {
+   "chave": "b01b75e92m",
+   "voz": "narradora",
+   "texto": "A professora organizou a turma em 3 grupos com 4 alunos. Quantos alunos são ao todo?",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "A professora organizou a turma em 3 grupos com 4 alunos. Quantos alunos são ao todo?"
+  },
+  {
+   "chave": "4d161342i",
+   "voz": "narradora",
+   "texto": "7 alunos",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "7 alunos"
+  },
+  {
+   "chave": "530769dej",
+   "voz": "narradora",
+   "texto": "12 alunos",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "12 alunos"
+  },
+  {
+   "chave": "5a8a169aj",
+   "voz": "narradora",
+   "texto": "16 alunos",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "16 alunos"
+  },
+  {
+   "chave": "5cc23ba31z",
+   "voz": "narradora",
+   "texto": "Cada caixa tem 5 gizes de cera. Quantos gizes há em 4 caixas?",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "Cada caixa tem 5 gizes de cera. Quantos gizes há em 4 caixas?"
+  },
+  {
+   "chave": "d8cd2ec6h",
+   "voz": "narradora",
+   "texto": "9 gizes",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "9 gizes"
+  },
+  {
+   "chave": "b5abf989i",
+   "voz": "narradora",
+   "texto": "20 gizes",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "20 gizes"
+  },
+  {
+   "chave": "9a7dd360i",
+   "voz": "narradora",
+   "texto": "45 gizes",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "45 gizes"
+  },
+  {
+   "chave": "f22881a72d",
+   "voz": "narradora",
+   "texto": "Cíntia colocou 5 flores em cada um dos 6 vasos. Quantas flores ela colocou?",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "Cíntia colocou 5 flores em cada um dos 6 vasos. Quantas flores ela colocou?"
+  },
+  {
+   "chave": "2b437096j",
+   "voz": "narradora",
+   "texto": "11 flores",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "11 flores"
+  },
+  {
+   "chave": "81b61427j",
+   "voz": "narradora",
+   "texto": "25 flores",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "25 flores"
+  },
+  {
+   "chave": "9fab58d9j",
+   "voz": "narradora",
+   "texto": "30 flores",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "30 flores"
+  },
+  {
+   "chave": "8176e24a1n",
+   "voz": "narradora",
+   "texto": "Complete a tabuada do 4 com os números do quadro.",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "Complete a tabuada do 4 com os números do quadro."
+  },
+  {
+   "chave": "5af8021fo",
+   "voz": "narradora",
+   "texto": "6 × 4 = ______",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "6 × 4 = …"
+  },
+  {
+   "chave": "b5498d36o",
+   "voz": "narradora",
+   "texto": "7 × 4 = ______",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "7 × 4 = …"
+  },
+  {
+   "chave": "5d444bcco",
+   "voz": "narradora",
+   "texto": "9 × 4 = ______",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "9 × 4 = …"
+  },
+  {
+   "chave": "8013c8ed1n",
+   "voz": "narradora",
+   "texto": "Complete a tabuada do 5 com os números do quadro.",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "Complete a tabuada do 5 com os números do quadro."
+  },
+  {
+   "chave": "b6d2a5a8c",
+   "voz": "narradora",
+   "texto": "25",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "25"
+  },
+  {
+   "chave": "3acfa3ddc",
+   "voz": "narradora",
+   "texto": "35",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "35"
+  },
+  {
+   "chave": "e4ef7511o",
+   "voz": "narradora",
+   "texto": "5 × 5 = ______",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "5 × 5 = …"
+  },
+  {
+   "chave": "b7dfef3fo",
+   "voz": "narradora",
+   "texto": "7 × 5 = ______",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "7 × 5 = …"
+  },
+  {
+   "chave": "c4563115o",
+   "voz": "narradora",
+   "texto": "9 × 5 = ______",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "9 × 5 = …"
+  },
+  {
+   "chave": "d912b3732w",
+   "voz": "narradora",
+   "texto": "Quais números são resultados da tabuada do 4 E da tabuada do 5 ao mesmo tempo? Toque em TODOS.",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "Quais números são resultados da tabuada do 4 E da tabuada do 5 ao mesmo tempo? Toque em todos."
+  },
+  {
+   "chave": "d0277b071x",
+   "voz": "narradora",
+   "texto": "Na tabuada do 5, todos os resultados terminam em 0 ou em 5.",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "Na tabuada do 5, todos os resultados terminam em 0 ou em 5."
+  },
+  {
+   "chave": "6c2eed2cl",
+   "voz": "narradora",
+   "texto": "8 × 4 = 36.",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "8 × 4 = 36."
+  },
+  {
+   "chave": "86b0409938",
+   "voz": "narradora",
+   "texto": "Felipe vai comprar 2 pacotes de cartinhas. Cada pacote tem 5 cartinhas. Quantas cartinhas ele vai comprar?",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "Felipe vai comprar 2 pacotes de cartinhas. Cada pacote tem 5 cartinhas. Quantas cartinhas ele vai comprar?"
+  },
+  {
+   "chave": "8e6b77adl",
+   "voz": "narradora",
+   "texto": "7 cartinhas",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "7 cartinhas"
+  },
+  {
+   "chave": "1179b673m",
+   "voz": "narradora",
+   "texto": "10 cartinhas",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "10 cartinhas"
+  },
+  {
+   "chave": "d235efffm",
+   "voz": "narradora",
+   "texto": "25 cartinhas",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "25 cartinhas"
+  },
+  {
+   "chave": "60def1b12s",
+   "voz": "narradora",
+   "texto": "Carina vai comprar o triplo das 10 cartinhas do Felipe. Quantas cartinhas ela vai comprar?",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "Carina vai comprar o triplo das 10 cartinhas do Felipe. Quantas cartinhas ela vai comprar?"
+  },
+  {
+   "chave": "65fd1422m",
+   "voz": "narradora",
+   "texto": "13 cartinhas",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "13 cartinhas"
+  },
+  {
+   "chave": "2c403c34m",
+   "voz": "narradora",
+   "texto": "20 cartinhas",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "20 cartinhas"
+  },
+  {
+   "chave": "de82bc1dm",
+   "voz": "narradora",
+   "texto": "30 cartinhas",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "30 cartinhas"
+  },
+  {
+   "chave": "5801df3241",
+   "voz": "narradora",
+   "texto": "João, Carlos e Rodrigo têm 5 bolinhas de gude em cada saquinho, um saquinho cada. Quais são as informações do problema? Toque em TODAS.",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "João, Carlos e Rodrigo têm 5 bolinhas de gude em cada saquinho, um saquinho cada. Quais são as informações do problema? Toque em todas."
+  },
+  {
+   "chave": "307b61fd18",
+   "voz": "narradora",
+   "texto": "São 3 meninos, com 1 saquinho cada",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "São 3 meninos, com 1 saquinho cada"
+  },
+  {
+   "chave": "b3f0863b12",
+   "voz": "narradora",
+   "texto": "Cada saquinho tem 5 bolinhas",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "Cada saquinho tem 5 bolinhas"
+  },
+  {
+   "chave": "a6416c691g",
+   "voz": "narradora",
+   "texto": "Quantas bolinhas eles ganharam de presente",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "Quantas bolinhas eles ganharam de presente"
+  },
+  {
+   "chave": "474b69b720",
+   "voz": "narradora",
+   "texto": "E quantas bolinhas de gude João, Carlos e Rodrigo têm ao todo?",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "E quantas bolinhas de gude João, Carlos e Rodrigo têm ao todo?"
+  },
+  {
+   "chave": "c9626377k",
+   "voz": "narradora",
+   "texto": "8 bolinhas",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "8 bolinhas"
+  },
+  {
+   "chave": "617579ebl",
+   "voz": "narradora",
+   "texto": "15 bolinhas",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "15 bolinhas"
+  },
+  {
+   "chave": "122ecb41l",
+   "voz": "narradora",
+   "texto": "35 bolinhas",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "35 bolinhas"
+  },
+  {
+   "chave": "f396cc463k",
+   "voz": "narradora",
+   "texto": "Sofia e o pai plantaram 8 mudas num canteiro e o dobro disso em outro canteiro. Quantas mudas eles plantaram no total?",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "Sofia e o pai plantaram 8 mudas num canteiro e o dobro disso em outro canteiro. Quantas mudas eles plantaram no total?"
+  },
+  {
+   "chave": "fe6fd4a4i",
+   "voz": "narradora",
+   "texto": "16 mudas",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "16 mudas"
+  },
+  {
+   "chave": "f8daf3cdi",
+   "voz": "narradora",
+   "texto": "24 mudas",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "24 mudas"
+  },
+  {
+   "chave": "91012ff6i",
+   "voz": "narradora",
+   "texto": "10 mudas",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "10 mudas"
+  },
+  {
+   "chave": "e12613222f",
+   "voz": "narradora",
+   "texto": "Clara fez 4 gols. Bruno fez o dobro de gols de Clara. Quantos gols Bruno fez?",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "Clara fez 4 gols. Bruno fez o dobro de gols de Clara. Quantos gols Bruno fez?"
+  },
+  {
+   "chave": "6acd7c84g",
+   "voz": "narradora",
+   "texto": "6 gols",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "6 gols"
+  },
+  {
+   "chave": "0806c37ag",
+   "voz": "narradora",
+   "texto": "8 gols",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "8 gols"
+  },
+  {
+   "chave": "6fc39091h",
+   "voz": "narradora",
+   "texto": "12 gols",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "12 gols"
+  },
+  {
+   "chave": "1e6de7001h",
+   "voz": "narradora",
+   "texto": "Ligue cada primo aos reais que ele recebeu:",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "Ligue cada primo aos reais que ele recebeu:"
+  },
+  {
+   "chave": "a487009fj",
+   "voz": "narradora",
+   "texto": "Os primos",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "Os primos"
+  },
+  {
+   "chave": "3d5af4e83c",
+   "voz": "narradora",
+   "texto": "A tia deu 3 notas de 2 reais a Vítor. Para Carina, deu o dobro da quantia do Vítor. Para Rafael, deu o triplo.",
+   "pacotes": [
+    "matematica-m6"
+   ],
+   "fala": "A tia deu 3 notas de 2 reais a Vítor. Para Carina, deu o dobro da quantia do Vítor. Para Rafael, deu o triplo."
+  },
+  {
    "chave": "ee369e4ee",
    "voz": "npc-tostao",
    "texto": "Oi!",
@@ -16845,6 +21021,224 @@
    "fala": "Ou acerte as dez, com calma!"
   },
   {
+   "chave": "7f47a66bg",
+   "voz": "npc-padrao-1",
+   "texto": "Oi!",
+   "pacotes": [
+    "interior-castelo",
+    "interior-padrao-matematica"
+   ],
+   "fala": "Oi!"
+  },
+  {
+   "chave": "368b32ab13",
+   "voz": "npc-padrao-1",
+   "texto": "Sou um cavaleiro do Reino.",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Sou um cavaleiro do Reino."
+  },
+  {
+   "chave": "06b3793b16",
+   "voz": "npc-padrao-1",
+   "texto": "Eu cuido do treino desta ala.",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Eu cuido do treino desta ala."
+  },
+  {
+   "chave": "a02f673312",
+   "voz": "npc-padrao-1",
+   "texto": "Vamos treinar sem pressa?",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Vamos treinar sem pressa?"
+  },
+  {
+   "chave": "3f9b910d11",
+   "voz": "npc-padrao-1",
+   "texto": "Vamos ler cada pergunta?",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Vamos ler cada pergunta?"
+  },
+  {
+   "chave": "6d39ec5313",
+   "voz": "npc-padrao-1",
+   "texto": "Quer treinar mais uma vez?",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Quer treinar mais uma vez?"
+  },
+  {
+   "chave": "5cc8a44e17",
+   "voz": "npc-padrao-1",
+   "texto": "Vamos buscar o ouro com calma?",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Vamos buscar o ouro com calma?"
+  },
+  {
+   "chave": "eea2fbb114",
+   "voz": "npc-padrao-1",
+   "texto": "Primeiro, termine as salas.",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Primeiro, termine as salas."
+  },
+  {
+   "chave": "bda4175b15",
+   "voz": "npc-padrao-1",
+   "texto": "Você revisou tudo com calma!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Você revisou tudo com calma!"
+  },
+  {
+   "chave": "0940f9fb13",
+   "voz": "npc-padrao-1",
+   "texto": "Revisar é coisa de campeã!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Revisar é coisa de campeã!"
+  },
+  {
+   "chave": "a0ba939417",
+   "voz": "npc-padrao-1",
+   "texto": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-castelo",
+    "interior-padrao-matematica"
+   ],
+   "fala": "Tudo bem, volte quando quiser!"
+  },
+  {
+   "chave": "fa5f3979v",
+   "voz": "npc-padrao-1",
+   "texto": "Falta só uma sala!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Falta só uma sala!"
+  },
+  {
+   "chave": "d8c096c5v",
+   "voz": "npc-padrao-1",
+   "texto": "Faltam duas salas!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Faltam duas salas!"
+  },
+  {
+   "chave": "053f7c53v",
+   "voz": "npc-padrao-1",
+   "texto": "Faltam três salas!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Faltam três salas!"
+  },
+  {
+   "chave": "af9a8940x",
+   "voz": "npc-padrao-1",
+   "texto": "Faltam quatro salas!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Faltam quatro salas!"
+  },
+  {
+   "chave": "bcb29f2aw",
+   "voz": "npc-padrao-1",
+   "texto": "Faltam cinco salas!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Faltam cinco salas!"
+  },
+  {
+   "chave": "4dafcdf4v",
+   "voz": "npc-padrao-1",
+   "texto": "Faltam seis salas!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Faltam seis salas!"
+  },
+  {
+   "chave": "2a36779d16",
+   "voz": "npc-padrao-1",
+   "texto": "Falta um treino para o épico!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Falta um treino para o épico!"
+  },
+  {
+   "chave": "944c630915",
+   "voz": "npc-padrao-1",
+   "texto": "Mais dois treinos pro épico!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Mais dois treinos pro épico!"
+  },
+  {
+   "chave": "116c7b7515",
+   "voz": "npc-padrao-1",
+   "texto": "Mais três treinos pro épico!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Mais três treinos pro épico!"
+  },
+  {
+   "chave": "9837e30711",
+   "voz": "npc-padrao-1",
+   "texto": "Ou tire ouro, com calma!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Ou tire ouro, com calma!"
+  },
+  {
+   "chave": "4a49290617",
+   "voz": "npc-padrao-1",
+   "texto": "Mais quatro treinos pro épico!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Mais quatro treinos pro épico!"
+  },
+  {
+   "chave": "90c0363616",
+   "voz": "npc-padrao-1",
+   "texto": "Mais cinco treinos pro épico!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Mais cinco treinos pro épico!"
+  },
+  {
+   "chave": "c8bc057915",
+   "voz": "npc-padrao-1",
+   "texto": "Ou acerte as dez, com calma!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Ou acerte as dez, com calma!"
+  },
+  {
    "chave": "fbdb9995t",
    "voz": "narradora",
    "texto": "É o Plano da Prova!",
@@ -16858,7 +21252,8 @@
    "voz": "narradora",
    "texto": "Vamos ler juntas com calma?",
    "pacotes": [
-    "interior-castelo"
+    "interior-castelo",
+    "interior-padrao-matematica"
    ],
    "fala": "Vamos ler juntas com calma?"
   },
@@ -17532,6 +21927,105 @@
   {
    "chave": "519f742016",
    "voz": "npc-prof-flora",
+   "texto": "Agora vale um prêmio comum!",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Agora vale um prêmio comum!"
+  },
+  {
+   "chave": "0c85e888i",
+   "voz": "npc-prof-celia",
+   "texto": "Oi!",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Oi!"
+  },
+  {
+   "chave": "c1c9a49210",
+   "voz": "npc-prof-celia",
+   "texto": "Eu cuido desta prova.",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Eu cuido desta prova."
+  },
+  {
+   "chave": "53afd0ce19",
+   "voz": "npc-prof-celia",
+   "texto": "Vamos fazer a prova com calma?",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Vamos fazer a prova com calma?"
+  },
+  {
+   "chave": "b611df7cs",
+   "voz": "npc-prof-celia",
+   "texto": "Prêmio ganho!",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Prêmio ganho!"
+  },
+  {
+   "chave": "782edc91t",
+   "voz": "npc-prof-celia",
+   "texto": "Vamos treinar?",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Vamos treinar?"
+  },
+  {
+   "chave": "1f6c5616p",
+   "voz": "npc-prof-celia",
+   "texto": "Muito bem!",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Muito bem!"
+  },
+  {
+   "chave": "9f523817u",
+   "voz": "npc-prof-celia",
+   "texto": "Tudo com calma!",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Tudo com calma!"
+  },
+  {
+   "chave": "daaf02d519",
+   "voz": "npc-prof-celia",
+   "texto": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Tudo bem, volte quando quiser!"
+  },
+  {
+   "chave": "05373f6319",
+   "voz": "npc-prof-celia",
+   "texto": "Agora vale um prêmio lendário!",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Agora vale um prêmio lendário!"
+  },
+  {
+   "chave": "0a5b4e0b15",
+   "voz": "npc-prof-celia",
+   "texto": "Agora vale um prêmio raro!",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Agora vale um prêmio raro!"
+  },
+  {
+   "chave": "b246ee2816",
+   "voz": "npc-prof-celia",
    "texto": "Agora vale um prêmio comum!",
    "pacotes": [
     "interior-escola"
@@ -24013,6 +28507,951 @@
     "interior-torre"
    ],
    "fala": "Ele toca na hora certa."
+  },
+  {
+   "chave": "f955bc90j",
+   "voz": "npc-padrao-guia",
+   "texto": "Oi!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Oi!"
+  },
+  {
+   "chave": "7e31780910",
+   "voz": "npc-padrao-guia",
+   "texto": "Eu sou a guia daqui.",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Eu sou a guia daqui."
+  },
+  {
+   "chave": "b409bdab16",
+   "voz": "npc-padrao-guia",
+   "texto": "Cada sala tem um ajudante.",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Cada sala tem um ajudante."
+  },
+  {
+   "chave": "206aa8b6x",
+   "voz": "npc-padrao-guia",
+   "texto": "Quer ver a lista?",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Quer ver a lista?"
+  },
+  {
+   "chave": "84e5a54515",
+   "voz": "npc-padrao-guia",
+   "texto": "Você ainda não fez salas.",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Você ainda não fez salas."
+  },
+  {
+   "chave": "d595d04219",
+   "voz": "npc-padrao-guia",
+   "texto": "O treino do Castelo já abriu!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "O treino do Castelo já abriu!"
+  },
+  {
+   "chave": "1db59a8115",
+   "voz": "npc-padrao-guia",
+   "texto": "Já fez uma de seis salas.",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Já fez uma de seis salas."
+  },
+  {
+   "chave": "40008cc0y",
+   "voz": "npc-padrao-guia",
+   "texto": "Já ganhou R$ 3,33!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Já ganhou 3 reais e 33 centavos!"
+  },
+  {
+   "chave": "0c611f3516",
+   "voz": "npc-padrao-guia",
+   "texto": "Já fez duas de seis salas.",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Já fez duas de seis salas."
+  },
+  {
+   "chave": "a10aa0b4y",
+   "voz": "npc-padrao-guia",
+   "texto": "Já ganhou R$ 6,67!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Já ganhou 6 reais e 67 centavos!"
+  },
+  {
+   "chave": "07904f7716",
+   "voz": "npc-padrao-guia",
+   "texto": "Já fez três de seis salas.",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Já fez três de seis salas."
+  },
+  {
+   "chave": "68a707cez",
+   "voz": "npc-padrao-guia",
+   "texto": "Já ganhou R$ 10,00!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Já ganhou 10 reais!"
+  },
+  {
+   "chave": "064a205418",
+   "voz": "npc-padrao-guia",
+   "texto": "Já fez quatro de seis salas.",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Já fez quatro de seis salas."
+  },
+  {
+   "chave": "4da2ac45z",
+   "voz": "npc-padrao-guia",
+   "texto": "Já ganhou R$ 13,33!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Já ganhou 13 reais e 33 centavos!"
+  },
+  {
+   "chave": "83188fce17",
+   "voz": "npc-padrao-guia",
+   "texto": "Já fez cinco de seis salas.",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Já fez cinco de seis salas."
+  },
+  {
+   "chave": "b397fb21z",
+   "voz": "npc-padrao-guia",
+   "texto": "Já ganhou R$ 16,67!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Já ganhou 16 reais e 67 centavos!"
+  },
+  {
+   "chave": "565cbadd13",
+   "voz": "npc-padrao-guia",
+   "texto": "Você fez as seis salas!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Você fez as seis salas!"
+  },
+  {
+   "chave": "b068e95dz",
+   "voz": "npc-padrao-guia",
+   "texto": "Já ganhou R$ 20,00!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Já ganhou 20 reais!"
+  },
+  {
+   "chave": "495412d012",
+   "voz": "npc-padrao-guia",
+   "texto": "A primeira é a Sala 1!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "A primeira é a Sala 1!"
+  },
+  {
+   "chave": "2483e32516",
+   "voz": "npc-padrao-guia",
+   "texto": "Agora vamos para a Sala 1!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Agora vamos para a Sala 1!"
+  },
+  {
+   "chave": "bc8100d616",
+   "voz": "npc-padrao-guia",
+   "texto": "Agora vamos para a Sala 2!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Agora vamos para a Sala 2!"
+  },
+  {
+   "chave": "987e899316",
+   "voz": "npc-padrao-guia",
+   "texto": "Agora vamos para a Sala 3!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Agora vamos para a Sala 3!"
+  },
+  {
+   "chave": "a08fdf4c16",
+   "voz": "npc-padrao-guia",
+   "texto": "Agora vamos para a Sala 4!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Agora vamos para a Sala 4!"
+  },
+  {
+   "chave": "bc8dccc916",
+   "voz": "npc-padrao-guia",
+   "texto": "Agora vamos para a Sala 5!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Agora vamos para a Sala 5!"
+  },
+  {
+   "chave": "548aea7a16",
+   "voz": "npc-padrao-guia",
+   "texto": "Agora vamos para a Sala 6!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Agora vamos para a Sala 6!"
+  },
+  {
+   "chave": "d346136dw",
+   "voz": "npc-padrao-1",
+   "texto": "Eu cuido da Sala 1.",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Eu cuido da Sala 1."
+  },
+  {
+   "chave": "cdb5d18912",
+   "voz": "npc-padrao-1",
+   "texto": "Vamos aprender com calma?",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Vamos aprender com calma?"
+  },
+  {
+   "chave": "5f17c223z",
+   "voz": "npc-padrao-1",
+   "texto": "Vamos fazer esta sala?",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Vamos fazer esta sala?"
+  },
+  {
+   "chave": "49fa830c13",
+   "voz": "npc-padrao-1",
+   "texto": "Quer começar agora comigo?",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Quer começar agora comigo?"
+  },
+  {
+   "chave": "c6ef73ba13",
+   "voz": "npc-padrao-1",
+   "texto": "Quer brincar de novo aqui?",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Quer brincar de novo aqui?"
+  },
+  {
+   "chave": "e61a19e911",
+   "voz": "npc-padrao-1",
+   "texto": "Vamos repetir com calma?",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Vamos repetir com calma?"
+  },
+  {
+   "chave": "e933a0abw",
+   "voz": "npc-padrao-1",
+   "texto": "Você foi muito bem!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Você foi muito bem!"
+  },
+  {
+   "chave": "2b03d40bx",
+   "voz": "npc-padrao-1",
+   "texto": "Que orgulho de você!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Que orgulho de você!"
+  },
+  {
+   "chave": "da70996715",
+   "voz": "npc-padrao-1",
+   "texto": "Mais uma vez e o raro nasce!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Mais uma vez e o raro nasce!"
+  },
+  {
+   "chave": "8873e07d14",
+   "voz": "npc-padrao-1",
+   "texto": "Faltam duas vezes pro raro!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Faltam duas vezes pro raro!"
+  },
+  {
+   "chave": "5889e6ff14",
+   "voz": "npc-padrao-1",
+   "texto": "Faltam três vezes pro raro!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Faltam três vezes pro raro!"
+  },
+  {
+   "chave": "509ffc7013",
+   "voz": "npc-padrao-1",
+   "texto": "Ou de primeira, com calma!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Ou de primeira, com calma!"
+  },
+  {
+   "chave": "a331a84215",
+   "voz": "npc-padrao-1",
+   "texto": "O raro desta sala já nasceu!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "O raro desta sala já nasceu!"
+  },
+  {
+   "chave": "2cddfb3eg",
+   "voz": "npc-padrao-2",
+   "texto": "Oi!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Oi!"
+  },
+  {
+   "chave": "285df4b3w",
+   "voz": "npc-padrao-2",
+   "texto": "Eu cuido da Sala 2.",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Eu cuido da Sala 2."
+  },
+  {
+   "chave": "24a8980812",
+   "voz": "npc-padrao-2",
+   "texto": "Vamos aprender com calma?",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Vamos aprender com calma?"
+  },
+  {
+   "chave": "764a40f8z",
+   "voz": "npc-padrao-2",
+   "texto": "Vamos fazer esta sala?",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Vamos fazer esta sala?"
+  },
+  {
+   "chave": "dfac924713",
+   "voz": "npc-padrao-2",
+   "texto": "Quer começar agora comigo?",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Quer começar agora comigo?"
+  },
+  {
+   "chave": "56c55f5d13",
+   "voz": "npc-padrao-2",
+   "texto": "Quer brincar de novo aqui?",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Quer brincar de novo aqui?"
+  },
+  {
+   "chave": "63524fbe11",
+   "voz": "npc-padrao-2",
+   "texto": "Vamos repetir com calma?",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Vamos repetir com calma?"
+  },
+  {
+   "chave": "456a3552w",
+   "voz": "npc-padrao-2",
+   "texto": "Você foi muito bem!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Você foi muito bem!"
+  },
+  {
+   "chave": "668e4bd4x",
+   "voz": "npc-padrao-2",
+   "texto": "Que orgulho de você!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Que orgulho de você!"
+  },
+  {
+   "chave": "09f5e01317",
+   "voz": "npc-padrao-2",
+   "texto": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Tudo bem, volte quando quiser!"
+  },
+  {
+   "chave": "4d9b7f4015",
+   "voz": "npc-padrao-2",
+   "texto": "Mais uma vez e o raro nasce!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Mais uma vez e o raro nasce!"
+  },
+  {
+   "chave": "435a75cc14",
+   "voz": "npc-padrao-2",
+   "texto": "Faltam duas vezes pro raro!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Faltam duas vezes pro raro!"
+  },
+  {
+   "chave": "e68369ce14",
+   "voz": "npc-padrao-2",
+   "texto": "Faltam três vezes pro raro!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Faltam três vezes pro raro!"
+  },
+  {
+   "chave": "0c5ca90313",
+   "voz": "npc-padrao-2",
+   "texto": "Ou de primeira, com calma!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Ou de primeira, com calma!"
+  },
+  {
+   "chave": "80c50da515",
+   "voz": "npc-padrao-2",
+   "texto": "O raro desta sala já nasceu!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "O raro desta sala já nasceu!"
+  },
+  {
+   "chave": "a226378dg",
+   "voz": "npc-padrao-3",
+   "texto": "Oi!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Oi!"
+  },
+  {
+   "chave": "e2f9f401w",
+   "voz": "npc-padrao-3",
+   "texto": "Eu cuido da Sala 3.",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Eu cuido da Sala 3."
+  },
+  {
+   "chave": "a4e4ce0f12",
+   "voz": "npc-padrao-3",
+   "texto": "Vamos aprender com calma?",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Vamos aprender com calma?"
+  },
+  {
+   "chave": "1f132091z",
+   "voz": "npc-padrao-3",
+   "texto": "Vamos fazer esta sala?",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Vamos fazer esta sala?"
+  },
+  {
+   "chave": "87bf0e7a13",
+   "voz": "npc-padrao-3",
+   "texto": "Quer começar agora comigo?",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Quer começar agora comigo?"
+  },
+  {
+   "chave": "bd84f7f013",
+   "voz": "npc-padrao-3",
+   "texto": "Quer brincar de novo aqui?",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Quer brincar de novo aqui?"
+  },
+  {
+   "chave": "9cc0e67f11",
+   "voz": "npc-padrao-3",
+   "texto": "Vamos repetir com calma?",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Vamos repetir com calma?"
+  },
+  {
+   "chave": "9ea4e8a1w",
+   "voz": "npc-padrao-3",
+   "texto": "Você foi muito bem!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Você foi muito bem!"
+  },
+  {
+   "chave": "58b08c1dx",
+   "voz": "npc-padrao-3",
+   "texto": "Que orgulho de você!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Que orgulho de você!"
+  },
+  {
+   "chave": "20bf0e9e17",
+   "voz": "npc-padrao-3",
+   "texto": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Tudo bem, volte quando quiser!"
+  },
+  {
+   "chave": "2801150915",
+   "voz": "npc-padrao-3",
+   "texto": "Mais uma vez e o raro nasce!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Mais uma vez e o raro nasce!"
+  },
+  {
+   "chave": "df6627db14",
+   "voz": "npc-padrao-3",
+   "texto": "Faltam duas vezes pro raro!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Faltam duas vezes pro raro!"
+  },
+  {
+   "chave": "416b32dd14",
+   "voz": "npc-padrao-3",
+   "texto": "Faltam três vezes pro raro!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Faltam três vezes pro raro!"
+  },
+  {
+   "chave": "11f6285213",
+   "voz": "npc-padrao-3",
+   "texto": "Ou de primeira, com calma!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Ou de primeira, com calma!"
+  },
+  {
+   "chave": "3b2c2be415",
+   "voz": "npc-padrao-3",
+   "texto": "O raro desta sala já nasceu!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "O raro desta sala já nasceu!"
+  },
+  {
+   "chave": "a129cfc0g",
+   "voz": "npc-padrao-4",
+   "texto": "Oi!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Oi!"
+  },
+  {
+   "chave": "39e0a48bw",
+   "voz": "npc-padrao-4",
+   "texto": "Eu cuido da Sala 4.",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Eu cuido da Sala 4."
+  },
+  {
+   "chave": "0a5a19f612",
+   "voz": "npc-padrao-4",
+   "texto": "Vamos aprender com calma?",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Vamos aprender com calma?"
+  },
+  {
+   "chave": "0abbf626z",
+   "voz": "npc-padrao-4",
+   "texto": "Vamos fazer esta sala?",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Vamos fazer esta sala?"
+  },
+  {
+   "chave": "3e61cd0d13",
+   "voz": "npc-padrao-4",
+   "texto": "Quer começar agora comigo?",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Quer começar agora comigo?"
+  },
+  {
+   "chave": "4804c76b13",
+   "voz": "npc-padrao-4",
+   "texto": "Quer brincar de novo aqui?",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Quer brincar de novo aqui?"
+  },
+  {
+   "chave": "9ec936dc11",
+   "voz": "npc-padrao-4",
+   "texto": "Vamos repetir com calma?",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Vamos repetir com calma?"
+  },
+  {
+   "chave": "bd619508w",
+   "voz": "npc-padrao-4",
+   "texto": "Você foi muito bem!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Você foi muito bem!"
+  },
+  {
+   "chave": "f1f2fdd6x",
+   "voz": "npc-padrao-4",
+   "texto": "Que orgulho de você!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Que orgulho de você!"
+  },
+  {
+   "chave": "3c36295d17",
+   "voz": "npc-padrao-4",
+   "texto": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Tudo bem, volte quando quiser!"
+  },
+  {
+   "chave": "487f8a9a15",
+   "voz": "npc-padrao-4",
+   "texto": "Mais uma vez e o raro nasce!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Mais uma vez e o raro nasce!"
+  },
+  {
+   "chave": "a9b1bfd214",
+   "voz": "npc-padrao-4",
+   "texto": "Faltam duas vezes pro raro!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Faltam duas vezes pro raro!"
+  },
+  {
+   "chave": "b41b2e2414",
+   "voz": "npc-padrao-4",
+   "texto": "Faltam três vezes pro raro!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Faltam três vezes pro raro!"
+  },
+  {
+   "chave": "faa8153513",
+   "voz": "npc-padrao-4",
+   "texto": "Ou de primeira, com calma!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Ou de primeira, com calma!"
+  },
+  {
+   "chave": "a8c699ff15",
+   "voz": "npc-padrao-4",
+   "texto": "O raro desta sala já nasceu!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "O raro desta sala já nasceu!"
+  },
+  {
+   "chave": "a177d2e7g",
+   "voz": "npc-padrao-5",
+   "texto": "Oi!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Oi!"
+  },
+  {
+   "chave": "aad19fc5w",
+   "voz": "npc-padrao-5",
+   "texto": "Eu cuido da Sala 5.",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Eu cuido da Sala 5."
+  },
+  {
+   "chave": "017957ed12",
+   "voz": "npc-padrao-5",
+   "texto": "Vamos aprender com calma?",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Vamos aprender com calma?"
+  },
+  {
+   "chave": "0dffb5e7z",
+   "voz": "npc-padrao-5",
+   "texto": "Vamos fazer esta sala?",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Vamos fazer esta sala?"
+  },
+  {
+   "chave": "d7cc8dc013",
+   "voz": "npc-padrao-5",
+   "texto": "Quer começar agora comigo?",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Quer começar agora comigo?"
+  },
+  {
+   "chave": "94728b8e13",
+   "voz": "npc-padrao-5",
+   "texto": "Quer brincar de novo aqui?",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Quer brincar de novo aqui?"
+  },
+  {
+   "chave": "b14d153d11",
+   "voz": "npc-padrao-5",
+   "texto": "Vamos repetir com calma?",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Vamos repetir com calma?"
+  },
+  {
+   "chave": "6e5065cfw",
+   "voz": "npc-padrao-5",
+   "texto": "Você foi muito bem!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Você foi muito bem!"
+  },
+  {
+   "chave": "9911831fx",
+   "voz": "npc-padrao-5",
+   "texto": "Que orgulho de você!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Que orgulho de você!"
+  },
+  {
+   "chave": "8cd1eab017",
+   "voz": "npc-padrao-5",
+   "texto": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Tudo bem, volte quando quiser!"
+  },
+  {
+   "chave": "675f8f0315",
+   "voz": "npc-padrao-5",
+   "texto": "Mais uma vez e o raro nasce!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Mais uma vez e o raro nasce!"
+  },
+  {
+   "chave": "44b19b1914",
+   "voz": "npc-padrao-5",
+   "texto": "Faltam duas vezes pro raro!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Faltam duas vezes pro raro!"
+  },
+  {
+   "chave": "d2ea298314",
+   "voz": "npc-padrao-5",
+   "texto": "Faltam três vezes pro raro!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Faltam três vezes pro raro!"
+  },
+  {
+   "chave": "e4c853e413",
+   "voz": "npc-padrao-5",
+   "texto": "Ou de primeira, com calma!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Ou de primeira, com calma!"
+  },
+  {
+   "chave": "3a9f74c615",
+   "voz": "npc-padrao-5",
+   "texto": "O raro desta sala já nasceu!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "O raro desta sala já nasceu!"
+  },
+  {
+   "chave": "b1481c7ew",
+   "voz": "npc-padrao-1",
+   "texto": "Eu cuido da Sala 6.",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Eu cuido da Sala 6."
+  },
+  {
+   "chave": "8c22fcd013",
+   "voz": "narradora",
+   "texto": "Aqui mora o livro da matéria!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Aqui mora o livro da matéria!"
+  },
+  {
+   "chave": "dc6ad288y",
+   "voz": "narradora",
+   "texto": "Olha que desenho bonito!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Olha que desenho bonito!"
+  },
+  {
+   "chave": "b3e36927x",
+   "voz": "narradora",
+   "texto": "Ele fala desta matéria.",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Ele fala desta matéria."
+  },
+  {
+   "chave": "c9d78d7710",
+   "voz": "narradora",
+   "texto": "Um golinho de água fresca!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Um golinho de água fresca!"
+  },
+  {
+   "chave": "9c9b41b2z",
+   "voz": "narradora",
+   "texto": "Beber água faz muito bem.",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Beber água faz muito bem."
+  },
+  {
+   "chave": "9b098ba9z",
+   "voz": "narradora",
+   "texto": "Ele fala desta sala aqui.",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Ele fala desta sala aqui."
   },
   {
    "chave": "f4cabefdt",
