@@ -2,7 +2,7 @@
 (function () {
   var R = window.Reino;
   var I = R.Interiores, D = I.desenho, C = D.C;
-  var ret = D.ret, circulo = D.circulo, elipse = D.elipse, triangulo = D.triangulo, contornoRet = D.contornoRet;
+  var ret = D.ret, circulo = D.circulo, triangulo = D.triangulo, contornoRet = D.contornoRet;
   var clarear = D.clarear, escurecer = D.escurecer;
   var K = R.Desenho.K;
   var F = (R.FALAS_INTERIORES && R.FALAS_INTERIORES.portugues) || { npcs: {}, objetos: {} };
@@ -15,8 +15,8 @@
   function desenharFora(ctx, px, py, w, h, cores) {
     cores = cores || {};
     var parede = cores.parede || CREME, telhado = cores.telhado || VERM, det = cores.detalhe || VERDE;
-    var parede2 = '#f3dccb', telhado2 = escurecer(telhado, 0.22), telhadoL = clarear(telhado, 0.3), det2 = escurecer(det, 0.25);
-    var cx = px + w / 2;
+    var telhado2 = escurecer(telhado, 0.22), telhadoL = clarear(telhado, 0.3), det2 = escurecer(det, 0.25);
+    var cx = px + w / 2, Fa = window.Mapa.fachada;
     // chaminé de tijolinho (atrás do telhado, à direita) com a fumacinha parada
     ret(ctx, px + 55, py + 6, 11, 20, K); ret(ctx, px + 56, py + 7, 9, 19, '#d9785a');
     for (var tj = py + 9; tj < py + 24; tj += 3) ret(ctx, px + 56 + ((tj / 3) % 2 ? 0 : 4), tj, 4, 1, '#b85a40');
@@ -24,8 +24,10 @@
     [[61, 1, 3], [65, -4, 4], [60, -8, 3]].forEach(function (f) { circulo(ctx, px + f[0], py + f[1], f[2], '#f1eef8'); ret(ctx, px + f[0] - 1, py + f[1] - 1, 1, 1, C.branco); });
     // corpo da casa com as tábuas
     contornoRet(ctx, px + 6, py + 34, w - 12, h - 34, parede);
-    for (var j = py + 40; j < py + h - 2; j += 6) ret(ctx, px + 7, j, w - 14, 1, parede2);
-    ret(ctx, px + w - 14, py + 35, 7, h - 36, '#f7e6da');
+    Fa.tabuas(ctx, px + 7, py + 35, w - 14, h - 36, parede, true);
+    ret(ctx, px + w - 14, py + 35, 7, h - 36, 'rgba(224,67,63,0.06)');
+    Fa.tijolos(ctx, px + 7, py + h - 7, w - 14, 6, '#e8957a', 3);
+    ret(ctx, px + 7, py + h - 8, w - 14, 1, K);
     // telhado vermelho com fileiras de telhas redondinhas
     triangulo(ctx, px + 1, py + 8, w - 2, 28, K);
     triangulo(ctx, px + 4, py + 11, w - 8, 24, telhado);
@@ -77,15 +79,8 @@
     circulo(ctx, rx, ry, 7, K); circulo(ctx, rx, ry, 6, det); circulo(ctx, rx, ry, 4, K); circulo(ctx, rx, ry, 3, '#eef9ff');
     ret(ctx, rx - 2, ry, 4, 3, '#ff7eb6'); ret(ctx, rx + 2, ry + 1, 1, 1, '#ff7eb6'); ret(ctx, rx - 1, ry - 2, 1, 1, C.branco);
     // degrau de pedra e a porta roxa de arco com moldura dourada (como todas as entradas do reino)
-    ret(ctx, cx - 12, py + h - 5, 25, 5, K); ret(ctx, cx - 11, py + h - 4, 23, 3, '#e8d3a8');
-    ret(ctx, cx - 11, py + h - 4, 23, 1, '#fff0d0'); ret(ctx, cx - 11, py + h - 2, 23, 1, '#d4bc8c');
-    for (var dg = cx - 7; dg < cx + 11; dg += 6) ret(ctx, dg, py + h - 3, 1, 2, '#c9ae80');
-    var dx = cx - 7, dy = py + h - 26, dw = 14, dh = 21, roxo = '#7c5cff';
-    ret(ctx, dx - 1, dy + 2, dw + 2, dh - 2, C.ouro); elipse(ctx, dx + dw / 2 - 0.5, dy + 3, dw / 2, 3, C.ouro);
-    ret(ctx, dx, dy + 3, dw, dh - 3, roxo); elipse(ctx, dx + dw / 2 - 0.5, dy + 4, dw / 2 - 1, 3, roxo);
-    ret(ctx, dx + dw / 2 - 1, dy + 5, 1, dh - 5, escurecer(roxo, 0.25));
-    ret(ctx, dx + 1, dy + 6, 1, dh - 7, clarear(roxo, 0.3));
-    ret(ctx, dx + dw - 4, dy + dh / 2 + 2, 2, 2, C.ouro);
+    Fa.degrau(ctx, cx, py + h - 5, 25, 5);
+    Fa.porta(ctx, cx - 7, py + h - 26, 14, 21, '#7c5cff');
     // sombra de 2 px na base da casa
     ret(ctx, px + 7, py + h, w - 14, 1, 'rgba(58,36,70,0.28)'); ret(ctx, px + 9, py + h + 1, w - 18, 1, 'rgba(58,36,70,0.14)');
     // pilha de livros ao lado da porta (esquerda) e um vaso de hortelã (direita)
@@ -98,5 +93,15 @@
     // brilhinhos
     [[4, 30], [76, 40]].forEach(function (b) { brilho(ctx, px + b[0], py + b[1], C.branco); });
   }
-  if (window.Mapa && Mapa.PREDIOS) Mapa.PREDIOS.palavras = desenharFora;
+  // uma fumacinha a mais sobe da chaminé e some (camada animada do mapa)
+  function animarFora(ctx, px, py, w, h, t) {
+    var f = (t / 2600) % 1, raio = f < 0.5 ? 2 : 3;
+    ctx.globalAlpha = 0.85 * (1 - f);
+    circulo(ctx, px + 62 + Math.round(Math.sin(f * 6) * 2), py - 10 - Math.round(f * 14), raio, '#f1eef8');
+    ctx.globalAlpha = 1;
+  }
+  if (window.Mapa && Mapa.PREDIOS) {
+    Mapa.PREDIOS.palavras = desenharFora;
+    if (Mapa.PREDIOS_ANIM) Mapa.PREDIOS_ANIM.palavras = animarFora;
+  }
 })();
