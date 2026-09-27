@@ -28564,22 +28564,22 @@
    "fala": "Eu já morei no espaço!"
   },
   {
-   "chave": "ebfda4e217",
+   "chave": "8293911b18",
    "voz": "npc-nasa-davi",
-   "texto": "Quer saber como é lá em cima?",
+   "texto": "O foguete agora voa até a Lua!",
    "pacotes": [
     "interior-observatorio"
    ],
-   "fala": "Quer saber como é lá em cima?"
+   "fala": "O foguete agora voa até a Lua!"
   },
   {
-   "chave": "f4b12a0215",
+   "chave": "edf15c5515",
    "voz": "npc-nasa-davi",
-   "texto": "Vou contar da minha viagem!",
+   "texto": "Cada acerto enche o tanque!",
    "pacotes": [
     "interior-observatorio"
    ],
-   "fala": "Vou contar da minha viagem!"
+   "fala": "Cada acerto enche o tanque!"
   },
   {
    "chave": "d57bfe7617",
@@ -30509,22 +30509,58 @@
    "fala": "Ela brilha com a luz do Sol!"
   },
   {
-   "chave": "3a126222w",
+   "chave": "99820978z",
    "voz": "narradora",
-   "texto": "Lá longe está a Terra!",
+   "texto": "Bem-vinda à Lua, Mariana!",
    "pacotes": [
     "interior-observatorio"
    ],
-   "fala": "Lá longe está a Terra!"
+   "fala": "Bem-vinda à Lua, Mariana!"
   },
   {
-   "chave": "d253c7cer",
+   "chave": "b7cfd07bw",
    "voz": "narradora",
-   "texto": "Uma pedra da Lua!",
+   "texto": "Aqui é bom de brincar!",
    "pacotes": [
     "interior-observatorio"
    ],
-   "fala": "Uma pedra da Lua!"
+   "fala": "Aqui é bom de brincar!"
+  },
+  {
+   "chave": "71769ecf10",
+   "voz": "narradora",
+   "texto": "A bandeira do nosso Reino!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "A bandeira do nosso Reino!"
+  },
+  {
+   "chave": "49455762v",
+   "voz": "narradora",
+   "texto": "Na Lua não tem vento.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Na Lua não tem vento."
+  },
+  {
+   "chave": "c2875dfe12",
+   "voz": "narradora",
+   "texto": "Ela fica esticada na vareta.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Ela fica esticada na vareta."
+  },
+  {
+   "chave": "a5d03dae12",
+   "voz": "narradora",
+   "texto": "Um jipe para passear na Lua!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Um jipe para passear na Lua!"
   },
   {
    "chave": "dc354bec18",
@@ -36800,6 +36836,393 @@
    "fala": "Lá já colheram alface!"
   },
   {
+   "chave": "bd189b78y",
+   "voz": "npc-lua-lumi",
+   "texto": "Vamos pular bem alto!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos pular bem alto!"
+  },
+  {
+   "chave": "1f29e8f712",
+   "voz": "npc-lua-lumi",
+   "texto": "Na Lua a gente pula alto!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Na Lua a gente pula alto!"
+  },
+  {
+   "chave": "e1ffe5b916",
+   "voz": "npc-lua-lumi",
+   "texto": "Seis vezes mais que na Terra!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Seis vezes mais que na Terra!"
+  },
+  {
+   "chave": "08d535d1z",
+   "voz": "narradora",
+   "texto": "A cratera é um pula-pula!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "A cratera é um pula-pula!"
+  },
+  {
+   "chave": "3f70a29bz",
+   "voz": "narradora",
+   "texto": "Na Lua a gente pula alto!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Na Lua a gente pula alto!"
+  },
+  {
+   "chave": "cf2f95ccw",
+   "voz": "narradora",
+   "texto": "A pedra ficou levinha!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "A pedra ficou levinha!"
+  },
+  {
+   "chave": "ec250d0dx",
+   "voz": "narradora",
+   "texto": "Na Lua tudo pesa menos.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Na Lua tudo pesa menos."
+  },
+  {
+   "chave": "e9da4ca9z",
+   "voz": "narradora",
+   "texto": "Ela sobe e desce devagar.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Ela sobe e desce devagar."
+  },
+  {
+   "chave": "b81e045013",
+   "voz": "npc-lua-pipo",
+   "texto": "Meu irmãozinho Tico sumiu!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Meu irmãozinho Tico sumiu!"
+  },
+  {
+   "chave": "b3880b2e15",
+   "voz": "npc-lua-pipo",
+   "texto": "Ele está atrás de uma pedra.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Ele está atrás de uma pedra."
+  },
+  {
+   "chave": "64dcb00212",
+   "voz": "npc-lua-pipo",
+   "texto": "Toque nas pedras grandes!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Toque nas pedras grandes!"
+  },
+  {
+   "chave": "9b58c4ca14",
+   "voz": "npc-lua-pipo",
+   "texto": "Procure nas pedras grandes!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Procure nas pedras grandes!"
+  },
+  {
+   "chave": "65f64c58y",
+   "voz": "npc-lua-pipo",
+   "texto": "Aqui não tem ninguém!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Aqui não tem ninguém!"
+  },
+  {
+   "chave": "9a3f54e112",
+   "voz": "npc-lua-pipo",
+   "texto": "Tente outra pedra grande!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Tente outra pedra grande!"
+  },
+  {
+   "chave": "2435fdc210",
+   "voz": "npc-lua-pipo",
+   "texto": "Oba! Você achou o Tico!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Oba! Você achou o Tico!"
+  },
+  {
+   "chave": "b46d3dccw",
+   "voz": "npc-lua-pipo",
+   "texto": "Você é ótima nisso!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Você é ótima nisso!"
+  },
+  {
+   "chave": "70f4c70014",
+   "voz": "npc-lua-pipo",
+   "texto": "O Tico se escondeu de novo!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O Tico se escondeu de novo!"
+  },
+  {
+   "chave": "7c5f37f2z",
+   "voz": "narradora",
+   "texto": "Uma pedra lunar grandona.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Uma pedra lunar grandona."
+  },
+  {
+   "chave": "a53d8f18w",
+   "voz": "narradora",
+   "texto": "Você pegou um cristal!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Você pegou um cristal!"
+  },
+  {
+   "chave": "9cc8fbe8u",
+   "voz": "narradora",
+   "texto": "Falta só um cristal!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Falta só um cristal!"
+  },
+  {
+   "chave": "172fa9a6v",
+   "voz": "narradora",
+   "texto": "Faltam dois cristais!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Faltam dois cristais!"
+  },
+  {
+   "chave": "53191d82v",
+   "voz": "narradora",
+   "texto": "Faltam três cristais!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Faltam três cristais!"
+  },
+  {
+   "chave": "20cdae53x",
+   "voz": "narradora",
+   "texto": "Faltam quatro cristais!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Faltam quatro cristais!"
+  },
+  {
+   "chave": "713f54cau",
+   "voz": "narradora",
+   "texto": "Você pegou os cinco!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Você pegou os cinco!"
+  },
+  {
+   "chave": "20ebbb07r",
+   "voz": "narradora",
+   "texto": "Que brilho lindo!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Que brilho lindo!"
+  },
+  {
+   "chave": "7337cc79z",
+   "voz": "narradora",
+   "texto": "Eles vão brilhar de novo.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eles vão brilhar de novo."
+  },
+  {
+   "chave": "9a3e802b11",
+   "voz": "narradora",
+   "texto": "Esse cristal você já pegou!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Esse cristal você já pegou!"
+  },
+  {
+   "chave": "017b280415",
+   "voz": "npc-lua-vovo",
+   "texto": "Na Lua não tem ar nem vento.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Na Lua não tem ar nem vento."
+  },
+  {
+   "chave": "7ee4731416",
+   "voz": "npc-lua-vovo",
+   "texto": "As pegadas duram muito tempo!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "As pegadas duram muito tempo!"
+  },
+  {
+   "chave": "edbb230916",
+   "voz": "npc-lua-vovo",
+   "texto": "A Lua gira em volta da Terra.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "A Lua gira em volta da Terra."
+  },
+  {
+   "chave": "9a68be7213",
+   "voz": "npc-lua-vovo",
+   "texto": "A volta leva quase um mês.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "A volta leva quase um mês."
+  },
+  {
+   "chave": "50ac8e7313",
+   "voz": "npc-lua-vovo",
+   "texto": "Em 1969, gente pisou aqui!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Em 1969, gente pisou aqui!"
+  },
+  {
+   "chave": "470fa2f813",
+   "voz": "npc-lua-vovo",
+   "texto": "Foi a primeira vez na Lua.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Foi a primeira vez na Lua."
+  },
+  {
+   "chave": "b896210911",
+   "voz": "npc-lua-vovo",
+   "texto": "Aqui a gente pesa menos.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Aqui a gente pesa menos."
+  },
+  {
+   "chave": "c729089013",
+   "voz": "npc-lua-vovo",
+   "texto": "Pula seis vezes mais alto!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Pula seis vezes mais alto!"
+  },
+  {
+   "chave": "1fefd53511",
+   "voz": "npc-lua-vovo",
+   "texto": "As crateras são buracos.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "As crateras são buracos."
+  },
+  {
+   "chave": "7408d10517",
+   "voz": "npc-lua-vovo",
+   "texto": "Pedras do espaço bateram aqui.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Pedras do espaço bateram aqui."
+  },
+  {
+   "chave": "a3cc4b1513",
+   "voz": "npc-lua-vovo",
+   "texto": "Aqui o céu é sempre preto.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Aqui o céu é sempre preto."
+  },
+  {
+   "chave": "b16967ddx",
+   "voz": "npc-lua-vovo",
+   "texto": "É porque não tem ar!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "É porque não tem ar!"
+  },
+  {
+   "chave": "d7c8637410",
+   "voz": "npc-lua-vovo",
+   "texto": "Na Lua não tem barulho.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Na Lua não tem barulho."
+  },
+  {
+   "chave": "f643ef90x",
+   "voz": "npc-lua-vovo",
+   "texto": "O som precisa de ar!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O som precisa de ar!"
+  },
+  {
+   "chave": "d84676fd13",
+   "voz": "npc-lua-vovo",
+   "texto": "A Lua é menor que a Terra.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "A Lua é menor que a Terra."
+  },
+  {
+   "chave": "2d7e062a15",
+   "voz": "npc-lua-vovo",
+   "texto": "Cabem umas 50 Luas na Terra!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Cabem umas 50 Luas na Terra!"
+  },
+  {
    "chave": "40923a7514",
    "voz": "narradora",
    "texto": "Os unicórnios bebem água aqui.",
@@ -37140,6 +37563,222 @@
     "geral"
    ],
    "fala": "Uau! Sua aura ficou arco-íris!"
+  },
+  {
+   "chave": "6d3ad452r",
+   "voz": "claude",
+   "texto": "O tanque está cheio!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "O tanque está cheio!"
+  },
+  {
+   "chave": "d38ed381u",
+   "voz": "claude",
+   "texto": "Escolha para onde voar!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Escolha para onde voar!"
+  },
+  {
+   "chave": "a97e241ey",
+   "voz": "claude",
+   "texto": "Carimbo novo no passaporte!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Carimbo novo no passaporte!"
+  },
+  {
+   "chave": "d53dc204r",
+   "voz": "claude",
+   "texto": "Voltar para o Reino?",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Voltar para o Reino?"
+  },
+  {
+   "chave": "385dd314z",
+   "voz": "claude",
+   "texto": "O foguete da NASA agora voa!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "O foguete da nasa agora voa!"
+  },
+  {
+   "chave": "d5173c0f10",
+   "voz": "claude",
+   "texto": "Vá ao Observatório, 2º andar.",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Vá ao Observatório, 2º andar."
+  },
+  {
+   "chave": "6a0a5d0du",
+   "voz": "claude",
+   "texto": "Falta 1 resposta certa!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Falta 1 resposta certa!"
+  },
+  {
+   "chave": "17d0e6a410",
+   "voz": "claude",
+   "texto": "Acerte nas salas e no treino.",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Acerte nas salas e no treino."
+  },
+  {
+   "chave": "8c21ee3611",
+   "voz": "claude",
+   "texto": "Nas provas e surpresas também!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Nas provas e surpresas também!"
+  },
+  {
+   "chave": "70844495x",
+   "voz": "claude",
+   "texto": "Faltam 2 respostas certas!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Faltam 2 respostas certas!"
+  },
+  {
+   "chave": "700efc06x",
+   "voz": "claude",
+   "texto": "Faltam 3 respostas certas!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Faltam 3 respostas certas!"
+  },
+  {
+   "chave": "1d7b49d7x",
+   "voz": "claude",
+   "texto": "Faltam 4 respostas certas!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Faltam 4 respostas certas!"
+  },
+  {
+   "chave": "20105e40x",
+   "voz": "claude",
+   "texto": "Faltam 5 respostas certas!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Faltam 5 respostas certas!"
+  },
+  {
+   "chave": "bcee5009x",
+   "voz": "claude",
+   "texto": "Faltam 6 respostas certas!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Faltam 6 respostas certas!"
+  },
+  {
+   "chave": "3eed48aax",
+   "voz": "claude",
+   "texto": "Faltam 7 respostas certas!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Faltam 7 respostas certas!"
+  },
+  {
+   "chave": "f9975debx",
+   "voz": "claude",
+   "texto": "Faltam 8 respostas certas!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Faltam 8 respostas certas!"
+  },
+  {
+   "chave": "2b5140f4x",
+   "voz": "claude",
+   "texto": "Faltam 9 respostas certas!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Faltam 9 respostas certas!"
+  },
+  {
+   "chave": "ec07f65ey",
+   "voz": "claude",
+   "texto": "Faltam 10 respostas certas!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Faltam 10 respostas certas!"
+  },
+  {
+   "chave": "8ee3c141t",
+   "voz": "claude",
+   "texto": "Você ganhou 1 estrela!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Você ganhou 1 estrela!"
+  },
+  {
+   "chave": "88dd89f7u",
+   "voz": "claude",
+   "texto": "Você ganhou 2 estrelas!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Você ganhou 2 estrelas!"
+  },
+  {
+   "chave": "4e82c240u",
+   "voz": "claude",
+   "texto": "Você ganhou 3 estrelas!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Você ganhou 3 estrelas!"
+  },
+  {
+   "chave": "9f2539a1u",
+   "voz": "claude",
+   "texto": "Você ganhou 4 estrelas!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Você ganhou 4 estrelas!"
+  },
+  {
+   "chave": "5f55483au",
+   "voz": "claude",
+   "texto": "Você ganhou 5 estrelas!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Você ganhou 5 estrelas!"
+  },
+  {
+   "chave": "4cf830f4n",
+   "voz": "claude",
+   "texto": "Chegamos na Lua!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Chegamos na Lua!"
   },
   {
    "chave": "6a4a021b1r",
