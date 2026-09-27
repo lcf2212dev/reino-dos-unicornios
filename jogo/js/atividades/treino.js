@@ -64,6 +64,8 @@
       var ritual = el('div.ritual', titulo, balao, texto, contagem, el('div.intro-botoes', comecar, pular));
       cont.appendChild(ritual);
       var fim = false;
+      // saiu do treino/da prova no meio (✕): a tela fechou e o ritual para calado, sem resolver
+      function parou() { return fim || !cont.isConnected; }
       pular.addEventListener('click', function () { fim = true; resolver(); });
       comecar.addEventListener('click', function (ev) {
         comecar.hidden = true;
@@ -72,12 +74,12 @@
         if (ev && !ev.detail) Reino.UI.focarTroca(ritual, titulo, CALMA_TROCA);
         var ciclo = 0;
         function passo() {
-          if (fim) return;
+          if (parou()) return;
           if (ciclo >= 3) {
             Reino.util.preencher(texto, Reino.Falas.fixas.ritualFim);
             contagem.textContent = '';
             Reino.Som.falar(texto.textContent, { voz: 'claude' });
-            setTimeout(function () { if (!fim) { fim = true; resolver(); } }, 1800);
+            setTimeout(function () { if (!parou()) { fim = true; resolver(); } }, 1800);
             return;
           }
           ciclo++;
@@ -87,7 +89,7 @@
           balao.classList.remove('esvazia'); balao.classList.add('enche');
           Reino.Som.tocar('respira');
           setTimeout(function () {
-            if (fim) return;
+            if (parou()) return;
             Reino.util.preencher(texto, Reino.Falas.fixas.ritualSolta);
             Reino.Som.falar(texto.textContent, { voz: 'claude' });
             balao.classList.remove('enche'); balao.classList.add('esvazia');
@@ -301,7 +303,7 @@
     }
 
     Pr.ritual(corpo, est.ritualVisto).then(function () {
-      est.ritualVisto = true; P.salvar();
+      P.estado().ritualVisto = true; P.salvar();   // lido na hora (save-e-mescla.md §8.2)
       plano();
     });
   };

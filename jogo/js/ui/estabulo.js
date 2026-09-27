@@ -106,7 +106,8 @@
     renomear.addEventListener('click', function () {
       UI.pedirNome('Qual vai ser o novo nome?', P.nomeUni(d.id)).then(function (nome) {
         if (!nome) return;
-        u.nome = nome; P.salvar(); UI.fecharTela(pn.tela); detalheUni(d, aoMudar); U.emit(EV.MAPA_MUDOU);
+        // lido na hora: uma mescla com a caixa aberta troca o objeto do estado (save-e-mescla.md §8.2)
+        est().unis[d.id].nome = nome; P.salvar(); UI.fecharTela(pn.tela); detalheUni(d, aoMudar); U.emit(EV.MAPA_MUDOU);
       });
     });
     botoes.appendChild(renomear);
