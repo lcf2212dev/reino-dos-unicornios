@@ -3,8 +3,9 @@
    Sem caminho o lugar é recusado; confira com node jogo/ferramentas/validar/validar-interiores.js. */
 Reino.registrarLugar({
   id: 'salao', nome: 'Salão de Beleza', sprite: 'salao', placa: 'acima',
-  rect: { x: 10, y: 10, w: 5, h: 4 },
-  caminho: [[14, 14], [13, 14], [12, 14]],
+  // o terreno reservado para o salão no mapa (mundo/lugares.js): à esquerda e embaixo da praça, porta na Avenida do Lago
+  rect: { x: 13, y: 24, w: 6, h: 5 },
+  caminho: [[16, 29]],
   novidade: '2026-09-27',   // selo "✨ Novo!" no menu Lugares até ela entrar (ou config.novidadeDias dias)
   menu: {
     emoji: '✂',
