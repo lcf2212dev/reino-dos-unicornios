@@ -112,11 +112,21 @@
         diagFrente: ['HLHH.......', 'HHL........', '.H.........'],
         diagCostas: ['HLHHLHH....', 'HHLHHLH....', '.HHLHH.....', '..HH.......'],
       } },
-    franjinha: {
+    // franja grossa, cabelo na altura do ombro com as pontas viradas para fora e presilhas dos dois lados
+    franjinha: { curto: true,
       cabeca: {
-        frente: ['...HHHHBB..', '..HHHHHHBB.', '.HHHHHHHHH.', '.HHLHHHLHH.', '.HKEKKKEKH.', '.HRKKKKKRH.', '.HHKKKKKHH.'],
-        lado: ['..BHHHH....', '.BBHHHHHH..', '..HHHHHHHH.', '..HHHHHHLK.', '..HHKKKEKK.', '..HHKKKKRK.', '..HHHKKKK..'],
-        diagFrente: ['..BHHHHH...', '.BBHHHHHHH.', '..HHHHHHHH.', '..HHHLHHLH.', '..HHKEKKEK.', '..HHKKKKRK.', '..HHHKKKK..'],
+        frente: ['...HHHHH...', '..HHLHHHH..', '.BHHHHHHHB.', '.HHHLHLHHH.', '.HKEKKKEKH.', '.HRKKKKKRH.', 'HHHKKKKKHHH'],
+        costas: ['...HHHHH...', '..HHHHHHH..', '.BHHLLHHHB.', '.HHLHHHHHH.', '.HHHHHHHHH.', '.HHHHHHHHH.', 'HHHHHHHHHHH'],
+        lado: ['...HHHH....', '..HHHHHHH..', '..HBHHHHHH.', '..HHHHHHLK.', '..HHKKKEKK.', '..HHKKKKRK.', '.HHHHKKKK..'],
+        diagFrente: ['...HHHHH...', '..HHHHHHHH.', '..HBHHHHHB.', '..HHHLHHLH.', '..HHKEKKEK.', '..HHKKKKRK.', '.HHHHKKKK..'],
+        diagCostas: ['...HHHH....', '..HHHHHHH..', '..HBHLLHHB.', '..HHLHHHHH.', '..HHHHHHHK.', '..HHHHHHKK.', '.HHHHHHKK..'],
+      },
+      corpo: {
+        frente: ['H.........H'],
+        costas: ['H.........H'],
+        lado: ['H..........'],
+        diagFrente: ['H..........'],
+        diagCostas: ['H..........'],
       } },
   };
 
@@ -125,19 +135,21 @@
   var PAPEIS_PE = ['ombro', 'tronco', 'tronco', 'cintura', 'saia', 'perna', 'perna', 'pe'];
   var PAPEIS_SENTADA = ['ombro', 'tronco', 'cintura', 'saia', 'coxa', 'perna', 'pe'];
   /* Cada modelo: troca de letras por papel ({ C: 'W' } = a roupa vira branquinha) e ajustes de forma:
-     pregas (a saia listrada), largura (saia mais rodada), comprida (quantas linhas de perna a saia cobre, em pé). */
+     pregas (a saia listrada), largura (saia mais rodada), comprida (quantas linhas de perna a saia cobre, em pé),
+     barra (a última linha da saia comprida), mangas (o braço de cima), laco (laço na cintura), brilho (pontinhos na saia). */
   var MODELOS = {
     macacao: { ombro: { C: 'W' }, tronco: { A: 'D' }, cintura: { A: 'D' }, perna: { K: 'D' } },
     saiaBlusa: { ombro: { C: 'W' }, tronco: { C: 'W', A: 'C' }, cintura: { C: 'W', A: 'C' }, pregas: ['C', 'D'],
       coxa: { D: 'C' }, perna: { D: 'K' } },
     jardineira: { ombro: { C: 'W' }, tronco: { C: 'W', A: 'D' }, cintura: { C: 'D', A: 'G' }, perna: { D: 'K' } },
-    princesa: { ombro: { C: 'M' }, tronco: { A: 'W' }, cintura: { A: 'W' }, saia: { D: 'C' }, largura: 1, comprida: 2,
-      brilho: 'W', perna: { K: 'C' } },
+    // longo até os pés, mangas bufantes, saia rodada com barrado dourado
+    princesa: { ombro: { C: 'M' }, mangas: 'M', tronco: { A: 'W' }, cintura: { A: 'W' }, saia: { D: 'C' }, largura: 1,
+      comprida: 2, barra: 'G', perna: { K: 'C' } },
     bailarina: { ombro: { C: 'C' }, tronco: { A: 'M' }, cintura: { A: 'M' }, pregas: ['W', 'M'], largura: 1,
       coxa: { D: 'M' }, perna: { K: 'M', D: 'M' }, pe: { S: 'C' } },
     esporte: { ombro: { C: 'C' }, tronco: { A: 'W' }, cintura: { A: 'W', C: 'W' }, perna: { K: 'D' }, pe: { S: 'T' } },
-    festa: { tronco: { A: 'G' }, cintura: { C: 'A', A: 'A' }, saia: { D: 'C' }, comprida: 1, brilho: 'G',
-      pe: { S: 'A' } },
+    // curto, com laço grande na cintura (na cor do laço do cabelo) e brilhos na saia
+    festa: { tronco: { A: 'M' }, cintura: { A: 'B' }, laco: 'B', saia: { D: 'C' }, brilho: 'G', pe: { S: 'A' } },
   };
   function trocar(linha, mapa) {
     if (!mapa) return;
@@ -151,6 +163,13 @@
   function vestir(g, sentada, m) {
     var papeis = sentada ? PAPEIS_SENTADA : PAPEIS_PE, iSaia = 7 + papeis.indexOf('saia');
     papeis.forEach(function (p, i) { if (p !== 'saia') trocar(g[7 + i], m[p]); });
+    if (m.mangas) trocar(g[8], { K: m.mangas });   // a 1ª linha do tronco: o braço de cima vira manga
+    if (m.laco) {
+      // laço: nó no meio da cintura e as duas voltas saindo para os lados
+      var cin = g[7 + papeis.indexOf('cintura')], lc = limites(cin), meio = Math.floor((lc[0] + lc[1]) / 2);
+      cin[meio] = 'A';
+      [meio - 1, meio + 1, lc[0] - 1, lc[1] + 1].forEach(function (x) { if (x >= 0 && x < cin.length) cin[x] = m.laco; });
+    }
     var saia = g[iSaia], ls = limites(saia);
     trocar(saia, m.saia);
     if (m.largura && ls[0] > 0 && ls[1] < saia.length - 1) { saia[ls[0] - 1] = saia[ls[0]]; saia[ls[1] + 1] = saia[ls[1]]; ls = [ls[0] - 1, ls[1] + 1]; }
@@ -159,7 +178,7 @@
     for (var j = 1; !sentada && j <= (m.comprida || 0); j++) {
       var l = g[iSaia + j], a = Math.max(0, ls[0] - (j - 1)), b = Math.min(l.length - 1, ls[1] + (j - 1));
       for (var k = 0; k < l.length; k++) l[k] = k >= a && k <= b ? 'C' : (l[k] === 'K' ? '.' : l[k]);
-      if (j === m.comprida) for (k = a; k <= b; k++) if ((k + j) % 3 === 0) l[k] = 'D';
+      if (j === m.comprida) for (k = a; k <= b; k++) l[k] = m.barra || ((k + j) % 3 === 0 ? 'D' : 'C');
     }
     if (m.brilho) for (x = ls[0] + 1; x < ls[1]; x += 3) saia[x] = m.brilho;
   }
