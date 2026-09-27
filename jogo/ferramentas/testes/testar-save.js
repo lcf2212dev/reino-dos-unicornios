@@ -8,4 +8,6 @@ const { spawnSync } = require('child_process');
 
 const pasta = path.join(__dirname, 'unidade');
 const arquivos = fs.readdirSync(pasta).filter((f) => /^(save-|cuidados-|banho).*\.test\.js$/.test(f)).sort().map((f) => path.join(pasta, f));
-process.exit(spawnSync(process.execPath, ['--test'].concat(arquivos), { stdio: 'inherit' }).status);
+// morto por sinal (status null) conta como falha, como em processo.js
+const { status } = spawnSync(process.execPath, ['--test'].concat(arquivos), { stdio: 'inherit' });
+process.exit(status === null ? 1 : status);

@@ -4,4 +4,6 @@ const path = require('path');
 const { spawnSync } = require('child_process');
 
 const arquivos = ['banho.test.js', 'banho-versao-antiga.test.js'].map((f) => path.join(__dirname, 'unidade', f));
-process.exit(spawnSync(process.execPath, ['--test'].concat(arquivos), { stdio: 'inherit' }).status);
+// morto por sinal (status null) conta como falha, como em processo.js
+const { status } = spawnSync(process.execPath, ['--test'].concat(arquivos), { stdio: 'inherit' });
+process.exit(status === null ? 1 : status);

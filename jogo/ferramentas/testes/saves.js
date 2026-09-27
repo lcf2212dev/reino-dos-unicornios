@@ -20,11 +20,15 @@ function gerarSaves() {
       ritualVisto: true, cuidados: {}, despensa: {},
     }, extra || {});
   }
+  var nota = R.config.notaSucessoProva;
+  // o acessório do prêmio vai para a loja, como em P.registrarProva
+  function premiar(save) { Object.keys(save.provas).forEach(function (id) { save.loja[R.prova(id).acessorios[save.provas[id].premio].id] = true; }); }
   function sala(k, n) { return { feita: T - (40 - n) * H, melhor: 5 - (n % 2), perfeita: n % 3 === 0, calma: n % 2 === 0, vezes: 1 + (n % 3) }; }
   var completo = base({
     aparencia: { pele: '#e0a77f', cabelo: '#2b1a12', roupa: '#7c5cff', laco: '#ffd34d' },
-    salas: {}, treinos: { historia: { melhor: 8, ouro: true, perfeito: false, vezes: 3 }, ingles: { melhor: 6, ouro: false, perfeito: false, vezes: 1 } },
-    provas: { 'historia-3bim': { tentativas: 1, notas: [10], melhor: 10, premio: 'lendario', premioEm: T - 5 * H } },
+    // no formato de P.registrarTreino/registrarProva: medalha, carimbos e prêmio só com a nota de sucesso
+    salas: {}, treinos: { historia: { melhor: 'ouro', ouro: T - 6 * H, vezes: 3 }, ingles: { melhor: 'bronze', vezes: 1 } },
+    provas: { 'historia-3bim': { tentativas: 1, notas: [nota], melhor: nota, premio: 'lendario', premioEm: T - 5 * H } },
     unis: {}, montaria: 'inicial', estrelas: { ganhas: 140, gastas: 35 },
     loja: {}, usando: { enfeites: enfeites.slice(0, 2), capa: true, asasFada: false, estrelinhas: false },
     pago: { historia: 10 },
@@ -37,13 +41,16 @@ function gerarSaves() {
   unis.slice(0, 9).forEach(function (id, n) { completo.unis[id] = { em: T - (50 - n) * H, nome: n ? '' : 'Teste Lua', xp: [220, 10, 35, 90, 160, 0, 5, 60, 0][n], chocado: n < 7 }; });
   enfeites.slice(0, 6).forEach(function (id) { completo.loja[id] = true; });
   comidas.slice(0, 3).forEach(function (id, n) { completo.despensa[id] = { compradas: 3 + n, usadas: n }; });
+  premiar(completo);
 
   var avancado = JSON.parse(JSON.stringify(completo));
   salas.forEach(function (x, n) { avancado.salas[x.s] = sala(x.s, n); });
   unis.forEach(function (id, n) { avancado.unis[id] = { em: T - (80 - n) * H, nome: '', xp: 30 * n, chocado: true }; });
   avancado.unis.inicial.nome = 'Teste Sol';
-  R.provas.forEach(function (p, n) { avancado.provas[p.id] = { tentativas: 2, notas: [7.5, 9.5 + n * 0.1], melhor: 9.5 + n * 0.1, premio: 'raro', premioEm: T - 3 * H }; });
+  R.provas.forEach(function (p) { avancado.provas[p.id] = { tentativas: 2, notas: [7.5, nota], melhor: nota, premio: 'raro', premioEm: T - 3 * H }; });
+  avancado.loja = {};   // sem o lendário do completo: aqui todas as provas deram o raro
   enfeites.forEach(function (id) { avancado.loja[id] = true; });
+  premiar(avancado);
   avancado.usando = { enfeites: enfeites.slice(2, 5), capa: false, asasFada: true, estrelinhas: true };
   avancado.montaria = unis[3];
   avancado.estrelas = { ganhas: 400, gastas: 390 };
