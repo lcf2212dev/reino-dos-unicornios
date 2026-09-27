@@ -8,9 +8,10 @@
   UI.telaAparencia = function (primeiraVez) {
     return new Promise(function (resolver) {
       var pn = painel('aparencia', primeiraVez ? 'Como você é?' : '👧 Minha personagem', { semFechar: !!primeiraVez, aoFechar: resolver });
+      // a aparência é lida NA HORA (save-e-mescla.md §8.2): uma mescla com a tela aberta troca o objeto do estado
       var ap = aparencia();
       var previa = el('div.previa-personagem');
-      function pintar() { previa.innerHTML = ''; previa.appendChild(PA.paraDOM(PA.mariana(ap, false, 0), 8)); }
+      function pintar() { previa.innerHTML = ''; previa.appendChild(PA.paraDOM(PA.mariana(aparencia(), false, 0), 8)); }
       var grupos = [['pele', 'Pele'], ['cabelo', 'Cabelo'], ['roupa', 'Roupa'], ['laco', 'Laço']];
       pn.conteudo.appendChild(previa);
       grupos.forEach(function (g) {
@@ -18,7 +19,7 @@
         PA.OPCOES_APARENCIA[g[0]].forEach(function (cor) {
           var b = el('button.bolinha-cor', { type: 'button', 'aria-label': g[1] + ' ' + cor, 'aria-pressed': String(ap[g[0]] === cor), style: { background: cor } });
           b.addEventListener('click', function () {
-            ap[g[0]] = cor; Reino.Som.tocar('selecionar'); pintar();
+            aparencia()[g[0]] = cor; Reino.Som.tocar('selecionar'); pintar();
             U.$$('button', linha).forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
           });
           linha.appendChild(b);

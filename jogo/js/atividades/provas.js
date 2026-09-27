@@ -219,7 +219,7 @@
         ultima ? (revisando ? 'Entregar a prova 📝' : 'Terminei ✓') : 'Próxima →');
       function atualizar() { prox.disabled = !ctrl.pronto(); }
       ant.addEventListener('click', function () { Reino.Som.tocar('toque'); respostas[i] = ctrl.valor(); mostrarQuestao(i - 1, revisando); });
-      prox.addEventListener('click', function () {
+      prox.addEventListener('click', function (ev) {
         if (!ctrl.pronto()) return;
         respostas[i] = ctrl.valor();
         if (!revisando && !avisou && avisosPressa < MAX_AVISOS_PRESSA && Date.now() - inicio < tempoMinimo(d)) {
@@ -229,6 +229,9 @@
           return;
         }
         Reino.Som.tocar('toque');
+        // toque (não teclado): o botão da questão nova nasce sob o dedo ("Próxima" da penúltima vira
+        // "Entregar a prova"); o 2º toque de um toque duplo ali não vale (guarda do ui/base.js)
+        if (ev && ev.isTrusted && ev.detail) Reino.UI.segurarToques();
         if (!ultima) mostrarQuestao(i + 1, revisando);
         else if (revisando) entregar();
         else perguntarRevisao();

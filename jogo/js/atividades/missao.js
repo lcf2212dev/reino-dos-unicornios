@@ -68,7 +68,10 @@
         el('div.intro-botoes', comecar, livro)));
       comecar.addEventListener('click', function () { Reino.Som.tocar('porta'); mostrarDesafio(); });
       livro.addEventListener('click', function () { Reino.UI.abrirLivro(materia, sala.desafios[0].livro); });
-      Reino.Voz.carregarSala(materia, sala).then(function () { Reino.Som.falar([sala.nome, sala.intro], { voz: 'claude' }); });
+      // o pacote de voz pode chegar tarde (rede lenta): só fala se a introdução ainda está na tela
+      Reino.Voz.carregarSala(materia, sala).then(function () {
+        if (comecar.isConnected) Reino.Som.falar([sala.nome, sala.intro], { voz: 'claude' });
+      });
     }
 
     function mostrarDesafio() {
