@@ -168,6 +168,7 @@
       { js: 'js/atividades/treino.js', grupo: 'atividades' },
       { js: 'js/atividades/provas.js', grupo: 'atividades' },
       { js: 'js/ui/base.js', grupo: 'ui' },
+      { js: 'js/ui/espera-fala.js', grupo: 'ui' },
       { js: 'js/ui/pecas.js', grupo: 'ui' },
       { js: 'js/ui/cuidados.js', grupo: 'ui' },
       { js: 'js/ui/hud.js', grupo: 'ui' },
