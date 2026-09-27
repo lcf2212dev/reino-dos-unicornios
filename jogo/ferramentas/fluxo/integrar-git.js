@@ -129,7 +129,7 @@ function aplicarSolto(integ, wt, log) {
 
 // commit da frente sem commit (com --commit); nada preparado = nada a fazer
 function commitFrente(integ, assunto) {
-  C.git(integ, 'add', '-A', '--', '.', ':!node_modules');
+  C.git(integ, 'add', '-A', '--', '.');   // o link node_modules já está no .gitignore (a exclusão ':!' dá erro no git 2.55)
   if (C.gitOk(integ, 'diff', '--cached', '--quiet')) return null;
   C.git(integ, 'commit', '-q', '--no-verify', '-m', mensagem(assunto));
   return C.git(integ, 'rev-parse', '--short', 'HEAD');
