@@ -91,6 +91,11 @@ Reino.config = {
   versao: { intervaloMs: 10 * 60000, confirmarMs: 60000, cacheMs: 330000, paradaMs: 8000, avisoMs: 4500, esperaMs: 2500 },
   // acessórios das provas à venda na Loja (só depois de ganhar um da mesma prova)
   precoPremio: { comum: 25, raro: 40, lendario: 70 },
+  // ouvir antes de seguir (Reino.Voz.falarEsperando + UI.esperarFala): enquanto a voz fala, os botões de seguir e de
+  // sair ficam desabilitados. Teto da espera = letras × msPorLetra × folga (+250 ms por pedaço), entre minS e maxS
+  // segundos: libera mesmo se o áudio travar. lerQuestoes: cada questão (sala, treino, prova) é lida sozinha ao
+  // aparecer; resumoNaSala: as cartas do livro usadas pela sala aparecem (e são lidas) antes da 1ª questão
+  esperaFala: { msPorLetra: 75, folga: 1.6, minS: 2, maxS: 30, lerQuestoes: true, resumoNaSala: true },
   // vozes naturais (gravadas por ferramentas/vozes/gerar-vozes.py). Trocou voz, velocidade ou tom: `npm run vozes`
   // (regrava) e peça para republicar
   vozes: {
