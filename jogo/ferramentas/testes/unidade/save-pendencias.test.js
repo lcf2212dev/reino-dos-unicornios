@@ -1,4 +1,4 @@
-// Dois defeitos do save que eram pendências (docs/pendencias.md) e foram corrigidos com carimbos por escolha
+// Dois defeitos do save que eram pendências da auditoria de 27/09/2026 e foram corrigidos com carimbos por escolha
 // (`escolhasEm`, marcado pelo P.salvar) e por pagamento (`pagoEm`, marcado pelo P.registrarPagamento), com a regra
 // nova do P.mesclar autorizada pelo Leandro (docs/contratos/save-e-mescla.md §4.6 e §4.7):
 //   1. escolha feita num aparelho voltava atrás quando o outro, sem tê-la recebido, gravava depois;

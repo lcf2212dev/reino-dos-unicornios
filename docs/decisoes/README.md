@@ -19,4 +19,3 @@ Consequências). Para o "como", veja `docs/receitas/`; para as regras, `docs/con
 Histórico em `historico/` (caminhos de antes da refatoração; `npm run validar` não confere a pasta, lista
 `HISTORICOS` em `jogo/ferramentas/validar/validar-docs.js`): o plano da refatoração (`refatoracao-plano.md`), os
 contratos consolidados (`contratos-consolidados.md`) e os bugs achados nela (`bugs-da-refatoracao.md`).
-Defeitos conhecidos que ficaram abertos: `docs/pendencias.md`.

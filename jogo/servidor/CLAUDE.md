@@ -4,7 +4,7 @@
 Guarda o progresso REAL da Mariana em `dados/reino.db` (SQLite, com as últimas 50 versões).
 
 ## Proibido
-- Mudar `servidor.js`, `Dockerfile`, `docker-compose.yml`, `publicar-nome.sh` ou `reino-nome.service`.
+- Mudar `servidor.js`, `Dockerfile`, `docker-compose.yml` ou `publicar-nome.sh`.
 - Ler, copiar, gravar ou apagar qualquer coisa em `dados/`.
 - `docker compose restart/down/up/build`, mexer no container ou no serviço `reino-nome`.
   Reiniciar é só o Leandro.
