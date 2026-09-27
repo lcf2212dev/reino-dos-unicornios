@@ -11,18 +11,15 @@
     linear-gradient(180deg, #2a1850 0%, #57307e 35%, #b0508f 68%, #ff9aa6 88%, #ffc98a 100%);
   background-size: 230px 170px, 310px 210px, 190px 150px, 270px 240px, 150px 130px, 210px 190px, 100% 100%;
 }
-.tela-jogadores .painel,
-.tela-jogador-senha .painel,
-.tela-jogador-criar .painel {
+.tela-jogadores .painel {
   border-radius: 8px;
   box-shadow: 0 0 0 4px #fff4d6, 4px 4px 0 4px var(--borda), 8px 8px 0 4px rgba(42, 24, 80, 0.45);
 }
 .tela-jogadores .painel { width: min(780px, 100%); }
-.tela-jogador-senha .painel, .tela-jogador-criar .painel { width: min(480px, 100%); }
-.tela-jogadores .painel-topo, .tela-jogador-senha .painel-topo, .tela-jogador-criar .painel-topo {
+.tela-jogadores .painel-topo {
   justify-content: center; background: linear-gradient(180deg, #ffe4f4, #f1e4ff);
 }
-.tela-jogador-senha .painel-topo, .tela-jogador-criar .painel-topo { justify-content: space-between; }
+.tela-jogadores .painel-topo:has(.btn-fechar) { justify-content: space-between; }
 .jogadores { display: flex; flex-direction: column; align-items: stretch; gap: 14px; }
 .jogadores-grade {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 180px)); justify-content: center; gap: 14px;
@@ -43,7 +40,19 @@
 .jogadores-cadeado { font-size: 0.78em; opacity: 0.85; }
 .jogadores-estado { margin: 0; text-align: center; font-size: 0.85em; opacity: 0.8; }
 .jogadores .intro-botoes { justify-content: center; }
-.jogadores-form { display: flex; flex-direction: column; gap: 10px; }
+.jogadores-secao { display: flex; flex-direction: column; gap: 8px; }
+.jogadores-secao[hidden] { display: none; }
+.jogadores-subtitulo { margin: 0; font-size: 0.95em; text-align: center; opacity: 0.85; }
+.jogadores-abas { display: flex; justify-content: center; gap: 0; margin-top: 4px; border-bottom: 4px solid var(--borda); }
+.jogadores-aba {
+  flex: 1 1 0; max-width: 240px; min-height: 52px; padding: 8px 12px; margin-bottom: -4px;
+  border: 3px solid var(--borda); border-bottom-width: 4px; border-radius: 10px 10px 0 0; background: #eadff7;
+  font: inherit; font-weight: 700; color: inherit; cursor: pointer;
+}
+.jogadores-aba + .jogadores-aba { margin-left: 6px; }
+.jogadores-aba[aria-selected="true"] { background: var(--papel); border-bottom-color: var(--papel); }
+.jogadores-form { display: flex; flex-direction: column; gap: 10px; width: min(460px, 100%); margin-left: auto; margin-right: auto; }
+.jogadores-form[hidden] { display: none; }
 .jogadores-linha { display: flex; flex-direction: column; gap: 4px; font-weight: 700; }
 .jogadores-rotulo { font-size: 0.9em; }
 .jogadores-campo { min-height: 52px; font-size: 1.05em; }
@@ -55,4 +64,18 @@
   .jogadores-grade { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   .jogadores-cartao { min-height: 128px; }
   .jogadores-nome { font-size: 1.15em; }
+}
+/* entrada com abas: cartões mais baixos, para as abas aparecerem sem rolar */
+.tela-jogadores .painel-conteudo { padding-top: 12px; }
+.jogadores-grade { grid-template-columns: repeat(auto-fit, minmax(118px, 150px)); gap: 10px; }
+.jogadores-cartao { min-height: 112px; padding: 8px 6px; gap: 4px; }
+.jogadores-retrato { min-height: 56px; }
+.jogadores-retrato canvas { height: 56px; width: auto; }
+.jogadores-nome { font-size: 1.15em; }
+@media (max-width: 480px) {
+  .jogadores-grade { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .jogadores-cartao { min-height: 100px; }
+  .jogadores-retrato canvas { height: 44px; }
+  .jogadores-nome { font-size: 0.95em; }
+  .jogadores-cadeado { font-size: 0.7em; }
 }

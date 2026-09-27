@@ -33,19 +33,31 @@ test('jogadores: aparelho da Mariana entra direto; criar, trocar e entrar com se
     await telaInicial(m.page);
     assert.deepStrictEqual(await m.page.evaluate(() => ({ jogadores: !!document.querySelector('.tela-jogadores'), atual: Reino.Jogadores.atual(), chave: Reino.Progresso.chaveSave(), nome: Reino.Jogadores.perfil().nome, lembrado: localStorage.getItem('reino-jogador-atual') })),
       { jogadores: false, atual: 'mariana', chave: 'mariana-reino-v1', nome: 'Mariana', lembrado: null });
+    // "Sair" no aparelho dela: guarda, e o próximo carregamento pede login (o save fica)
+    await m.page.evaluate(() => { Reino.UI.fecharTodas(); Reino.UI.sairDoJogador(); });
+    await m.page.waitForSelector('.tela-jogadores .jogadores-cartao[data-login="mariana"] .jogadores-cadeado', { timeout: 30000 });
+    const saiu = await m.page.evaluate(() => ({ atual: localStorage.getItem('reino-jogador-atual'), save: JSON.parse(localStorage.getItem('mariana-reino-v1')).estrelas.ganhas }));
+    assert.deepStrictEqual(saiu, { atual: ':saiu', save: save.estrelas.ganhas }, 'saiu sem apagar o save dela');
+    await m.page.click('.jogadores-cartao[data-login="mariana"]');   // abre o Entrar com o login dela
+    assert.strictEqual(await m.page.inputValue('#jogador-entrar-login'), 'mariana');
+    await m.page.fill('#jogador-entrar-senha', 'unicorlice77');
+    await m.page.press('#jogador-entrar-senha', 'Enter');
+    await telaInicial(m.page);
+    await esperar(m.page, () => document.querySelector('.tela-inicio .btn-comecar') && Reino.Jogadores.atual() === 'mariana' && Reino.Progresso.estado());
+    assert.strictEqual(await m.page.evaluate(() => Reino.Progresso.estado().estrelas.ganhas), save.estrelas.ganhas);
     assert.deepStrictEqual(m.page.__erros, []);
     await m.context.close();
 
     // 2) aparelho novo: Quem vai jogar? → Criar jogador
     const a = await abrir({ browser, url: servidor.url, query: '?debug=1' });
     await a.page.waitForSelector('.tela-jogadores .jogadores-cartao[data-login="mariana"]', { timeout: 30000 });
-    await a.page.click('.jogadores-criar');
+    await a.page.click('#jogadores-aba-criar');
     await a.page.fill('#jogador-login', 'Léo 1');   // vira "leo1" enquanto digita
     assert.strictEqual(await a.page.inputValue('#jogador-login'), 'leo1');
     await a.page.fill('#jogador-senha1', 'abc');
     await a.page.fill('#jogador-senha2', 'abd');
-    await a.page.click('.tela-jogador-criar .btn-principal');
-    await a.page.waitForSelector('.tela-jogador-criar .jogadores-erro:not([hidden])');
+    await a.page.click('.jogadores-criar');
+    await a.page.waitForSelector('#jogadores-painel-criar .jogadores-erro:not([hidden])');
     await a.page.fill('#jogador-senha2', 'abc');
     await a.page.press('#jogador-senha2', 'Enter');
     // segue a primeira vez de hoje: boas-vindas com o nome dele
@@ -55,9 +67,15 @@ test('jogadores: aparelho da Mariana entra direto; criar, trocar e entrar com se
     assert.strictEqual((await api('api/jogadores/entrar', { method: 'POST', body: JSON.stringify({ login: 'leo1', senha: 'abc' }) })).status, 200, 'a conta nasceu no servidor');
     // ele joga (sintético): começou e ganhou 7 estrelas, e troca LOGO (antes do envio atrasado de 1,8 s)
     await a.page.evaluate(() => { var e = Reino.Progresso.estado(); e.comecou = true; e.estrelas.ganhas = 7; Reino.Progresso.salvar(); });
-    // trocar para a Mariana (lembrada: sem senha) → "Guardando...", envia já e recarrega nela
+    // trocar para a Mariana (aparelho sem ela: pede a senha, conferida no banco) → "Guardando...", envia já e recarrega nela
     await a.page.evaluate(() => { Reino.UI.fecharTodas(); Reino.UI.trocarJogador(); });
     await a.page.click('.tela-jogadores .jogadores-cartao[data-login="mariana"]');
+    // pelo teclado (o toque logo depois de trocar de tela cai na guarda do toque fantasma, ui/base.js)
+    await a.page.fill('#jogador-entrar-senha', 'errada');
+    await a.page.press('#jogador-entrar-senha', 'Enter');
+    await a.page.waitForSelector('#jogadores-painel-entrar .jogadores-erro:not([hidden])');
+    await a.page.fill('#jogador-entrar-senha', 'unicorlice77');
+    await a.page.press('#jogador-entrar-senha', 'Enter');
     await esperar(a.page, () => window.Reino && Reino.Progresso && Reino.Progresso.estado() && Reino.Jogadores.atual() === 'mariana');
     const recebido = await (await api('api/progresso/leo1')).json();
     assert.strictEqual(recebido.estado.estrelas.ganhas, 7, 'o servidor recebeu o PUT antes do reload');
@@ -80,11 +98,12 @@ test('jogadores: aparelho da Mariana entra direto; criar, trocar e entrar com se
     const b = await abrir({ browser, url: servidor.url, query: '?debug=1' });
     await b.page.waitForSelector('.tela-jogadores .jogadores-cartao[data-login="leo1"] .jogadores-cadeado', { timeout: 30000 });
     await b.page.click('.jogadores-cartao[data-login="leo1"]');
-    await b.page.fill('#jogador-senha-campo', 'errada');
-    await b.page.press('#jogador-senha-campo', 'Enter');
-    await b.page.waitForSelector('.tela-jogador-senha .jogadores-erro:not([hidden])');
-    await b.page.fill('#jogador-senha-campo', 'abc');
-    await b.page.click('.tela-jogador-senha .btn-principal');
+    assert.strictEqual(await b.page.inputValue('#jogador-entrar-login'), 'leo1');
+    await b.page.fill('#jogador-entrar-senha', 'errada');
+    await b.page.press('#jogador-entrar-senha', 'Enter');
+    await b.page.waitForSelector('#jogadores-painel-entrar .jogadores-erro:not([hidden])');
+    await b.page.fill('#jogador-entrar-senha', 'abc');
+    await b.page.click('.jogadores-entrar');
     await esperar(b.page, () => window.Reino && Reino.Progresso && Reino.Progresso.estado() && Reino.Progresso.estado().estrelas.ganhas === 7);
     assert.strictEqual(await b.page.evaluate(() => localStorage.getItem('mariana-reino-v1')), null, 'nada na chave da Mariana');
     assert.deepStrictEqual(b.page.__erros, []);

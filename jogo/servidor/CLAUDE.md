@@ -21,9 +21,11 @@ Guarda o progresso REAL da Mariana em `dados/reino.db` (SQLite, com as últimas 
     login fora de `^[a-z0-9_-]{2,20}$` = 404; PUT de login sem conta na tabela `jogadores` = 404 (o jogo cria a conta
     antes de sincronizar). `/api/progresso/mariana` = a linha dela.
   - Endereço com `%` malformado: 400 (antes derrubava o processo).
+  - A conta `'mariana'` (senha `unicorlice77`) é semeada na tabela ao iniciar, com `ON CONFLICT DO NOTHING`: nunca
+    sobrescreve a que já existe. O progresso dela não muda de lugar (linha `'mariana'` de `progresso`).
   - `GET /api/jogadores`: os logins (`'mariana'` primeiro). `POST /api/jogadores` `{ login, senha }`: 201 criada,
-    409 já existe (ou `'mariana'`), 400 inválido. `POST /api/jogadores/entrar`: 200 certa (a Mariana sempre),
-    403 senha errada, 404 não existe.
+    409 já existe (ou `'mariana'`), 400 inválido. `POST /api/jogadores/entrar`: 200 certa, 403 senha errada,
+    404 não existe (a Mariana confere a linha dela; sem a linha, 200).
   - Toda resposta da API manda `X-Reino-Jogadores: 1`: é por ele que o jogo sabe que o servidor não é o antigo
     (que grava tudo na linha `'mariana'`).
 

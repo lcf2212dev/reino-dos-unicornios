@@ -45,7 +45,9 @@
     pais.addEventListener('click', function () { UI.fecharTela(pn.tela); UI.telaPais(); });
     var trocar = el('button.btn-grande.btn-secundario', { type: 'button' }, '🔄 Trocar jogador');
     trocar.addEventListener('click', function () { UI.fecharTela(pn.tela); UI.trocarJogador(); });
-    c.appendChild(el('div.intro-botoes.coluna', pers, trocar, pais));
+    var sair = el('button.btn-grande.btn-secundario.btn-sair', { type: 'button' }, '🚪 Sair');
+    sair.addEventListener('click', function () { UI.fecharTela(pn.tela); UI.sairDoJogador(); });
+    c.appendChild(el('div.intro-botoes.coluna', pers, trocar, sair, pais));
   };
 
   UI.aplicarAjustes = function () {

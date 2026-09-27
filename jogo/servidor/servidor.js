@@ -30,6 +30,11 @@ const criarJogador = db.prepare('INSERT INTO jogadores (login, senha, criado) VA
 // login: minúsculas, números, - e _ (2 a 20); 'mariana' é o save dela (existe sem senha)
 const LOGIN = /^[a-z0-9_-]{2,20}$/;
 const MARIANA = 'mariana';
+// a conta da Mariana também mora na tabela (pedido do Leandro): semeada ao iniciar, NUNCA sobrescrita se já existe
+// (a mesma senha de config.jogadores.senhaMariana; mudar aqui só vale para banco novo). O progresso dela continua
+// na linha 'mariana' de `progresso` e em /api/progresso.
+const SENHA_MARIANA = 'unicorlice77';
+db.prepare('INSERT INTO jogadores (login, senha, criado) VALUES (?, ?, ?) ON CONFLICT(login) DO NOTHING').run(MARIANA, SENHA_MARIANA, Date.now());
 
 const TIPOS = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json', '.png': 'image/png', '.svg': 'image/svg+xml', '.mp3': 'audio/mpeg', '.ico': 'image/x-icon' };
 // só o que o jogo precisa fica público
@@ -93,8 +98,8 @@ function apiJogadores(req, res, entrar) {
     const senha = d && typeof d.senha === 'string' ? d.senha : null;
     if (!LOGIN.test(login)) return json(res, 400, { erro: 'login' });
     if (entrar) {
-      if (login === MARIANA) return json(res, 200, { ok: true });
       const j = lerJogador.get(login);
+      if (!j && login === MARIANA) return json(res, 200, { ok: true });   // banco sem a linha dela: entra, como antes
       if (!j) return json(res, 404, { erro: 'nao-existe' });
       return j.senha === senha ? json(res, 200, { ok: true }) : json(res, 403, { erro: 'senha' });
     }

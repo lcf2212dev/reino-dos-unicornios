@@ -305,14 +305,25 @@ Código: `jogo/js/sistemas/jogadores.js` (`Reino.Jogadores`, contas, perfil), `u
    | claude.ai | doc `progresso/mariana` | doc `progresso/<login>`; conta em `jogadores/<login>` (`{ login, senha, criado }`) |
    | servidor de casa | `/api/progresso`, linha `'mariana'` | `/api/progresso/<login>`, linha `<login>`; conta na tabela `jogadores` |
    | fotos (IndexedDB) | `reino-fotos` (as de antes) | `reino-fotos-<login>` |
-   Login: `^[a-z0-9_-]{2,20}$`, fora dos nomes de `Object.prototype`; `'mariana'` é reservado (existe sem senha).
+   Login: `^[a-z0-9_-]{2,20}$`, fora dos nomes de `Object.prototype`; `'mariana'` é reservado (criar dá "já existe").
+   A conta dela mora no banco como as outras (o progresso dela, NÃO: continua onde sempre esteve):
+   - servidor de casa: linha `'mariana'` da tabela `jogadores`, semeada pelo `servidor.js` ao iniciar com
+     `ON CONFLICT DO NOTHING` (nunca sobrescreve; banco sem a linha = entra, como antes);
+   - claude.ai: doc `jogadores/mariana`; se faltar, o jogo o cria com `config.jogadores.senhaMariana` na primeira
+     conferência (nunca por cima de um que exista);
+   - sem banco (arquivo, servidor antigo): confere com `config.jogadores.senhaMariana` (vazio = sem senha).
+   O aparelho com o save dela (ou com ela em `reino-jogador-atual`) entra direto, sem senha; nos outros o cartão dela
+   pede a senha. "Sair" (Ajustes, `Jogadores.sair`) guarda e marca `reino-jogador-atual = ':saiu'` (nunca é login):
+   o próximo carregamento mostra "Entrar no Reino" e a Mariana volta a pedir a senha; o save fica onde está.
 2. O jogador é escolhido ANTES do `P.carregar()` (`motor/main.js`: `Jogadores.decidirSemTela()` ou a tela) e não muda
    com o jogo aberto: `P.usarJogador` depois do carregar lança erro; trocar (`UI.trocarJogador`) grava, mostra
    "Guardando...", envia já (`P.enviarAgora`, espera no máximo 5 s), marca e recarrega.
    O evento `storage` só junta a chave do jogador atual.
 3. Quem joga sem perguntar: modo congelado (e2e) = a Mariana, sem ler nada; o login lembrado em `reino-jogador-atual`
    (se o aparelho conhece a conta; senão pergunta, nunca cai na Mariana); aparelho com `mariana-reino-v1` e nada
-   lembrado = a Mariana; sem localStorage = a Mariana. Aparelho novo: "Quem vai jogar?".
+   lembrado = a Mariana; sem localStorage = a Mariana; `':saiu'` = pergunta. Aparelho novo: "Entrar no Reino"
+   (cartões "Neste aparelho", que entram direto, e "No reino", que abrem o Entrar com o login; abas "Entrar" e
+   "Criar conta").
 4. Contas: senha em TEXTO, sem segurança (pedido do Leandro; no claude.ai qualquer visitante lê). Lembradas no aparelho
    em `reino-jogadores` (`{ login: { senha, criado } }`): lembrada entra sem senha. Com banco, a conta nasce e é
    conferida nele; sem banco (arquivo, servidor antigo), só no aparelho.
