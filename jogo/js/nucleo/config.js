@@ -68,6 +68,18 @@ Reino.config = {
     base: 110, pino: 48,             // px do thumbstick no celular...
     baseTablet: 130, pinoTablet: 56, // ...e em tela a partir de 700×700
   },
+  // Aura (js/sistemas/aura.js): cada pergunta certa soma `passo`, cada errada tira `passo` × `penalidade` (mínimo 0).
+  // O passo começa em `passoInicial` e cresce × `multiplicador` a cada faixa: a 1ª faixa começa em `primeiraFaixa`
+  // (10), a 2ª em 100, a 3ª em 1000… `cores`: a cor da aura em volta da Mariana em cada faixa (a última vale daí em
+  // diante; 'arco-iris' = as cores passando). Se mudar os nomes das cores, regrave as vozes (o Claude fala a cor)
+  aura: {
+    passoInicial: 0.2, primeiraFaixa: 10, multiplicador: 10, penalidade: 2,
+    cores: [
+      { nome: 'branca', cor: '#ffffff' }, { nome: 'amarela', cor: '#ffe45c' }, { nome: 'verde', cor: '#6ee07a' },
+      { nome: 'azul', cor: '#5cb8ff' }, { nome: 'roxa', cor: '#b57cff' }, { nome: 'rosa', cor: '#ff7ec4' },
+      { nome: 'dourada', cor: '#ffb830' }, { nome: 'arco-íris', cor: 'arco-iris' },
+    ],
+  },
   // pergunta surpresa (js/sistemas/surpresa.js): de 3 a 10 minutos de jogo livre, vale 2 estrelas de primeira;
   // esperaLivreMs: livre e parada há isso antes de aparecer. Se mudar `estrelas`, regrave as vozes (o Claude fala o valor)
   surpresa: { minMinutos: 3, maxMinutos: 10, estrelas: 2, esperaLivreMs: 4000, tipos: ['escolha', 'vf', 'varias'] },

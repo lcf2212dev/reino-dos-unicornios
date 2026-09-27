@@ -274,6 +274,8 @@
     function entregar() {
       Reino.Claude.limpar();
       var pts = questoes.map(function (d, i) { return D.pontuar(d, respostas[i]); });
+      // Aura: questão inteira certa soma, toda errada tira; nota parcial não conta
+      Reino.Aura.contar(pts.map(function (p) { return p === 1 ? true : p === 0 ? false : null; }));
       // nota de 0 a 10, qualquer que seja o número de questões (Inglês tem 11)
       var soma = pts.reduce(function (t, p) { return t + p; }, 0);
       var nota = soma === pts.length ? 10 : Math.min(9.9, Math.round(soma / pts.length * 100) / 10);

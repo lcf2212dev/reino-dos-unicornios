@@ -251,7 +251,9 @@
       fase = 'resultado';
       Reino.Claude.limpar();   // entregou: o balão da revisão não fica por cima do resultado
       rodape.hidden = true;
-      var acertos = questoes.filter(function (d, i) { return D.conferirValor(d, respostas[i]); }).length;
+      var certas = questoes.map(function (d, i) { return D.conferirValor(d, respostas[i]); });
+      var acertos = certas.filter(Boolean).length;
+      Reino.Aura.contar(certas);
       var premios = P.registrarTreino(materia, acertos, questoes.length);
       var med = premios.medalha;
       var M = Reino.Falas.medalhas[med];

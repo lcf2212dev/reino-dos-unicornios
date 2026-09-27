@@ -128,6 +128,7 @@
       ctrl.travado = true;
       var ok = D.pontuar(d, ctrl.valor()) === 1;
       resultado = ok ? 'acerto' : 'erro';
+      Reino.Aura.contar(ok);
       Array.prototype.forEach.call(ctrl.card.querySelectorAll('button.opcao'), function (b) { b.setAttribute('aria-disabled', 'true'); });
       if (ok) acertou(); else errou();
     });
