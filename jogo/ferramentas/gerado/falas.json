@@ -36586,6 +36586,69 @@
    "fala": "O que você fez fica guardado."
   },
   {
+   "chave": "776b079bz",
+   "voz": "claude",
+   "texto": "Uau! Sua aura ficou amarela!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Uau! Sua aura ficou amarela!"
+  },
+  {
+   "chave": "ed7a31b8x",
+   "voz": "claude",
+   "texto": "Uau! Sua aura ficou verde!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Uau! Sua aura ficou verde!"
+  },
+  {
+   "chave": "c7e8dcb2w",
+   "voz": "claude",
+   "texto": "Uau! Sua aura ficou azul!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Uau! Sua aura ficou azul!"
+  },
+  {
+   "chave": "8ff535d4w",
+   "voz": "claude",
+   "texto": "Uau! Sua aura ficou roxa!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Uau! Sua aura ficou roxa!"
+  },
+  {
+   "chave": "907290c5w",
+   "voz": "claude",
+   "texto": "Uau! Sua aura ficou rosa!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Uau! Sua aura ficou rosa!"
+  },
+  {
+   "chave": "c868a408z",
+   "voz": "claude",
+   "texto": "Uau! Sua aura ficou dourada!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Uau! Sua aura ficou dourada!"
+  },
+  {
+   "chave": "7b56485711",
+   "voz": "claude",
+   "texto": "Uau! Sua aura ficou arco-íris!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Uau! Sua aura ficou arco-íris!"
+  },
+  {
    "chave": "6a4a021b1r",
    "voz": "claude",
    "texto": "Os outros prêmios da prova agora se trocam por estrelas!",

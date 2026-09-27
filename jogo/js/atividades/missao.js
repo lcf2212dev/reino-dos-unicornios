@@ -123,12 +123,14 @@
         var dePrimeira = !errouAtual;
         if (dePrimeira) acertosPrimeira++;
         var cresceu = Reino.Progresso.xpMontaria(dePrimeira ? 5 : 2);
+        Reino.Aura.contar(true);
         Reino.Progresso.salvar();
         Reino.Som.tocar('acerto');
         if (dePrimeira) setTimeout(function () { Reino.Som.tocar('estrela'); }, 350);
         mostrarRetorno(true, d, dePrimeira, cresceu);
       } else {
         errouAtual = true;
+        Reino.Aura.contar(false);
         Reino.Som.tocar('erro');
         ctrl.marcarErro(res);
         mostrarRetorno(false, d, false, null, res);
