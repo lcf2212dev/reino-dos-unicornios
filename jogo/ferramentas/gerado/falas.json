@@ -30356,13 +30356,13 @@
    "fala": "Que bom que você veio!"
   },
   {
-   "chave": "924178b6u",
+   "chave": "cb18b182y",
    "voz": "npc-lua-lumi",
-   "texto": "Quer ver a lista?",
+   "texto": "Vamos pular bem alto?",
    "pacotes": [
     "interior-observatorio"
    ],
-   "fala": "Quer ver a lista?"
+   "fala": "Vamos pular bem alto?"
   },
   {
    "chave": "ba19abd214",
@@ -30428,13 +30428,13 @@
    "fala": "Será que você me acha?"
   },
   {
-   "chave": "cb9bc331u",
+   "chave": "0aaa648912",
    "voz": "npc-lua-pipo",
-   "texto": "Quer ver a lista?",
+   "texto": "Quer brincar de esconder?",
    "pacotes": [
     "interior-observatorio"
    ],
-   "fala": "Quer ver a lista?"
+   "fala": "Quer brincar de esconder?"
   },
   {
    "chave": "60e6450811",
@@ -30491,13 +30491,13 @@
    "fala": "Moro na Lua faz muito tempo."
   },
   {
-   "chave": "63bb6a3bu",
+   "chave": "99869b9e14",
    "voz": "npc-lua-vovo",
-   "texto": "Quer ver a lista?",
+   "texto": "Quer ouvir uma curiosidade?",
    "pacotes": [
     "interior-observatorio"
    ],
-   "fala": "Quer ver a lista?"
+   "fala": "Quer ouvir uma curiosidade?"
   },
   {
    "chave": "96359d7913",
