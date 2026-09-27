@@ -221,8 +221,8 @@
     })(0);
     if (Reino.Som.temVoz()) {
       // no topo da caixa, à vista mesmo com o texto fechado
-      var ouvir = el('button.btn-ouvir.btn-ouvir-apoio', { type: 'button', 'aria-label': 'Ouvir o texto de apoio' }, '🔊', el('span.apoio-ouvir-rotulo', ' Ouvir o texto'));
-      ouvir.addEventListener('click', function () { Reino.Som.falar(Reino.Falas.segmentosApoio(apoio), { voz: 'narradora' }); });
+      var ouvir = el('button.btn-ouvir.btn-ouvir-apoio.livre-na-fala', { type: 'button', 'aria-label': 'Ouvir o texto de apoio' }, '🔊', el('span.apoio-ouvir-rotulo', ' Ouvir o texto'));
+      ouvir.addEventListener('click', function () { Reino.UI.ouvirDeNovo(Reino.Falas.segmentosApoio(apoio), { voz: 'narradora' }); });
       topo.appendChild(ouvir);
     }
     return caixa;
@@ -239,12 +239,22 @@
     (def && def.enunciadoTela ? def.enunciadoTela(d) : [el('p.pergunta', d.pergunta)]).forEach(function (n) { enun.appendChild(n); });
     // instrucao (opcional): o jeito de responder no jogo, numa linha própria logo abaixo da pergunta
     if (d.instrucao) enun.appendChild(el('p.instrucao', el('span.instrucao-icone', { 'aria-hidden': 'true' }, '👉'), el('span', d.instrucao)));
-    var ouvir = el('button.btn-ouvir', { type: 'button', 'aria-label': 'Ouvir a pergunta' }, '🔊 Ouvir');
-    ouvir.addEventListener('click', function () { Reino.Som.falar(Reino.Falas.segmentosDesafio(d, ctrl.ordem), { voz: 'narradora' }); });
+    var ouvir = el('button.btn-ouvir.livre-na-fala', { type: 'button', 'aria-label': 'Ouvir a pergunta' }, '🔊 Ouvir');
+    ouvir.addEventListener('click', function () { Reino.UI.ouvirDeNovo(Reino.Falas.segmentosDesafio(d, ctrl.ordem), { voz: 'narradora' }); });
     if (Reino.Som.temVoz()) enun.appendChild(ouvir);
     card.appendChild(enun);
     card.appendChild(ctrl.el);
     ctrl.card = card;
+    // opts.lerSozinho (true ou lista de alvos a mais, ex.: ✕ e "Conferir"): lê a questão ao aparecer e trava as
+    // respostas (e os alvos) até a fala acabar (UI.esperarFala); ctrl.leitura é a Promise do fim. Sem a opção, nada muda.
+    if (opts.lerSozinho) {
+      var extras = Array.isArray(opts.lerSozinho) ? opts.lerSozinho : [];
+      ctrl.leitura = Reino.UI.esperarFala([card].concat(extras), Reino.Falas.segmentosDesafio(d, ctrl.ordem), { voz: 'narradora' }).then(function () {
+        // o foco estava no 🔊 ou em lugar nenhum: vai para a 1ª resposta
+        var a = document.activeElement;
+        if (card.isConnected && (!a || a === document.body || a === ouvir)) Reino.UI.focarTroca(ctrl.el, null, 0);
+      });
+    }
     return ctrl;
   };
 

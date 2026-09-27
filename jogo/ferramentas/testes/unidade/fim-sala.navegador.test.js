@@ -18,7 +18,10 @@ async function premios(op, iniciar) {
   const c = await abrirCenario(Object.assign({ tamanho: 'celular', pasta: '/tmp/reino-testes/ver/teste-fim-sala' }, op));
   try {
     await c.js(FALSO + iniciar);
-    for (const t of ['Começar', 'Conferir', 'Terminar a sala']) { await c.tocar(t); await c.avancar(800); }
+    await c.tocar('Começar'); await c.avancar(800);
+    // o resumo (cartas do livro da sala) vem antes das questões
+    for (let k = 0; k < 40 && await c.js("!!document.querySelector('.resumo-sala')"); k++) { await c.tocar('.resumo-botoes .btn-principal'); await c.avancar(400); }
+    for (const t of ['Conferir', 'Terminar a sala']) { await c.tocar(t); await c.avancar(800); }
     const itens = await c.js("[...document.querySelectorAll('.fim-sala .premios li')].map(function (l) { return l.textContent.trim(); })");
     assert.deepStrictEqual(c.erros, []);
     return itens;

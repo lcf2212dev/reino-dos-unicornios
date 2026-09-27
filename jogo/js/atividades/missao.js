@@ -57,7 +57,6 @@
       corpo.innerHTML = '';
       var claudeMini = PA.paraDOM(PA.claude(0), 4, 'claude-intro');
       var comecar = el('button.btn-grande.btn-principal', { type: 'button' }, 'Começar 🦄');
-      var livro = el('button.btn-grande.btn-secundario', { type: 'button' }, '📖 Ler o resumo antes');
       corpo.appendChild(el('div.intro-sala',
         el('div.intro-emoji', sala.emoji),
         el('h2.titulo-pixel', sala.nome),
@@ -67,12 +66,46 @@
           el('li', '⏳ Aqui não tem relógio. Pode ir devagar!'),
           el('li', '👀 Leia cada pergunta com calma e depois toque em "Conferir".'),
           el('li', '⭐ Acertou de primeira? Ganha estrela!')),
-        el('div.intro-botoes', comecar, livro)));
-      comecar.addEventListener('click', function () { Reino.Som.tocar('porta'); mostrarDesafio(); });
-      livro.addEventListener('click', function () { Reino.UI.abrirLivro(materia, sala.desafios[0].livro); });
+        el('div.intro-botoes', comecar)));
+      comecar.addEventListener('click', function () { Reino.Som.tocar('porta'); if (cartas.length) resumo(0); else mostrarDesafio(); });
+      if (cartas.length) Reino.Voz.carregar(materia.id + '-livro');
       // o pacote de voz pode chegar tarde (rede lenta): só fala se a introdução ainda está na tela
       Reino.Voz.carregarSala(materia, sala).then(function () {
-        if (comecar.isConnected) Reino.Som.falar([sala.nome, sala.intro], { voz: 'claude' });
+        if (comecar.isConnected) Reino.UI.esperarFala([comecar, sair], [sala.nome, sala.intro], { voz: 'claude' });
+      });
+    }
+
+    // resumo antes das questões: as cartas do livro que a sala usa (campo `livro`, sem repetir, na ordem)
+    var cartas = [];
+    if (Reino.config.esperaFala.resumoNaSala && materia && materia.livro) {
+      sala.desafios.forEach(function (d) {
+        var c = materia.livro.find(function (x) { return x.id === d.livro; });
+        if (c && cartas.indexOf(c) < 0) cartas.push(c);
+      });
+    }
+    function resumo(i) {
+      rodape.hidden = true;
+      Reino.Som.calar();
+      corpo.innerHTML = '';
+      var area = el('div.livro-carta');
+      Reino.UI.desenharCarta(area, cartas[i]);
+      var ultima = i === cartas.length - 1;
+      var seguir = el('button.btn-grande.btn-principal', { type: 'button' }, ultima ? 'Começar as perguntas 🦄' : 'Continuar →');
+      var voltar = i > 0 ? el('button.btn-grande.btn-secundario', { type: 'button' }, '← Voltar') : null;
+      var botoes = el('div.resumo-botoes', voltar, seguir);
+      var titulo = el('h2.titulo-pixel', '📖 Resumo');
+      corpo.appendChild(el('div.resumo-sala', titulo,
+        el('p.resumo-pag', 'Carta ' + (i + 1) + ' de ' + cartas.length), area, botoes));
+      seguir.addEventListener('click', function () { Reino.Som.tocar('toque'); if (ultima) mostrarDesafio(); else resumo(i + 1); });
+      if (voltar) voltar.addEventListener('click', function () { Reino.Som.tocar('toque'); resumo(i - 1); });
+      corpo.scrollTop = 0;
+      Reino.UI.focarTroca(seguir, titulo, CALMA_TROCA);
+      // lê a carta (pacote <matéria>-livro) e trava os botões e o ✕ até a leitura acabar
+      Reino.Voz.carregar(materia.id + '-livro').then(function () {
+        if (!seguir.isConnected) return;
+        Reino.UI.esperarFala([botoes, sair], Reino.UI.falaCarta(cartas[i]), { voz: 'narradora' }).then(function () {
+          if (seguir.isConnected) Reino.UI.focarTroca(seguir, titulo, 0);
+        });
       });
     }
 
@@ -86,6 +119,7 @@
       corpo.innerHTML = '';
       ctrl = D.render(d, {
         modo: 'missao',
+        lerSozinho: Reino.config.esperaFala.lerQuestoes ? [sair] : null,
         onMudar: function () { btnConferir.disabled = !ctrl.pronto(); },
         onCompleto: function () { conferir(true); },
       });
@@ -175,8 +209,10 @@
       retorno.appendChild(botoes);
       retorno.hidden = false;
       btnConferir.disabled = true;
-      Reino.Som.falar(ok ? [fala] : [fala, pista(d)], { voz: 'claude' });
-      setTimeout(function () { var b = retorno.querySelector('.btn-principal'); if (b) b.focus(); }, 60);
+      function focarBotao() { var b = retorno.querySelector('.btn-principal'); if (b && !retorno.hidden) b.focus(); }
+      // "Continuar"/"Tentar de novo"/"Ver no livro" e o ✕ esperam a fala do retorno
+      Reino.UI.esperarFala([botoes, sair], ok ? [fala] : [fala, pista(d)], { voz: 'claude' }).then(focarBotao);
+      setTimeout(focarBotao, 60);
     }
 
     // pista depois de um erro: primeira frase da explicação, sem a resposta pronta
@@ -214,7 +250,7 @@
         itens, dicaRaro, btn));
       Reino.UI.focarTroca(btn, corpo.querySelector('.fim-sala h2'), CALMA_TROCA);
       if (premios.primeiraVez) setTimeout(function () { Reino.Som.tocar('moeda'); }, 900);
-      Reino.Som.falar([premios.materiaCompleta ? Reino.Falas.fixas.revisaoCompleta : Reino.Falas.fixas.salaConcluida, Reino.Falas.acertouDePrimeira(acertosPrimeira)], { voz: 'claude' });
+      Reino.UI.esperarFala([btn, sair], [premios.materiaCompleta ? Reino.Falas.fixas.revisaoCompleta : Reino.Falas.fixas.salaConcluida, Reino.Falas.acertouDePrimeira(acertosPrimeira)], { voz: 'claude' });
       btn.addEventListener('click', function () {
         fechar();
         var depois = function () { if (aoTerminar) aoTerminar(premios); };

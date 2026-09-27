@@ -179,3 +179,10 @@
 .premio-ovo { background: var(--rosa-clara) !important; }
 .dica-raro { font-weight: 700; color: var(--raro); }
 
+
+/* resumo antes das questões (cartas do livro que a sala usa) */
+.resumo-sala { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.resumo-sala .livro-carta { width: 100%; max-width: 720px; box-sizing: border-box; }
+.resumo-pag { color: var(--tinta-suave); font-weight: 700; font-size: 0.85em; margin: 0; }
+.resumo-botoes { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; width: 100%; max-width: 720px; }
+.resumo-botoes .btn-grande { flex: 1 1 200px; }

@@ -78,6 +78,11 @@ async function cenasSalas(page, pasta) {
     await page.evaluate(([m, s]) => { var mt = Reino.materia(m); Reino.Missao.iniciar(mt, mt.salas.find((x) => x.id === s)); }, [m, s]);
     await foto(page, pasta, `sala-${s}-intro`);
     await clicarBotao(page, '.intro-botoes .btn-principal');
+    // o resumo (cartas do livro da sala) vem antes das questões: fotografa a 1ª carta e passa por todas
+    if (await page.evaluate(() => !!document.querySelector('.resumo-sala'))) await foto(page, pasta, `sala-${s}-resumo`);
+    for (let k = 0; k < 40 && await page.evaluate(() => !!document.querySelector('.resumo-sala')); k++) {
+      await clicarBotao(page, '.resumo-botoes .btn-principal');
+    }
     await foto(page, pasta, `sala-${s}-desafio1`);
     await sairComConfirmar(page);
   }

@@ -59,6 +59,14 @@
   // cada matéria pode dar nome ao seu livro (nomeLivro); o padrão é o da História
   function nomeLivro(materia) { return materia.nomeLivro || 'Livro das Memórias'; }
   UI.nomeLivro = nomeLivro;
+  // desenho e fala de uma carta do livro (o livro pela estante e o resumo antes das questões da sala)
+  UI.desenharCarta = function (area, c) {
+    area.innerHTML = '';
+    area.appendChild(el('div.livro-emoji', c.e));
+    area.appendChild(el('h3', c.titulo));
+    area.appendChild(el('p', c.texto));
+  };
+  UI.falaCarta = function (c) { return [c.titulo, c.texto]; };
 
   UI.abrirLivro = function (materia, cartaoId) {
     Reino.Voz.carregar(materia.id + '-livro');
@@ -72,17 +80,14 @@
     var pag = el('span.livro-pag');
     function mostrar() {
       var c = cartas[i];
-      area.innerHTML = '';
-      area.appendChild(el('div.livro-emoji', c.e));
-      area.appendChild(el('h3', c.titulo));
-      area.appendChild(el('p', c.texto));
+      UI.desenharCarta(area, c);
       pag.textContent = (i + 1) + ' de ' + cartas.length;
       ant.disabled = i === 0; prox.disabled = i === cartas.length - 1;
       Reino.Som.calar();
     }
     ant.addEventListener('click', function () { if (i > 0) { i--; Reino.Som.tocar('toque'); mostrar(); } });
     prox.addEventListener('click', function () { if (i < cartas.length - 1) { i++; Reino.Som.tocar('toque'); mostrar(); } });
-    ouvir.addEventListener('click', function () { Reino.Voz.carregar(materia.id + '-livro').then(function () { Reino.Som.falar([cartas[i].titulo, cartas[i].texto], { voz: 'narradora' }); }); });
+    ouvir.addEventListener('click', function () { Reino.Voz.carregar(materia.id + '-livro').then(function () { Reino.Som.falar(UI.falaCarta(cartas[i]), { voz: 'narradora' }); }); });
     pn.conteudo.appendChild(area);
     pn.conteudo.appendChild(el('div.livro-nav', ant, pag, prox));
     if (Reino.Som.temVoz()) pn.conteudo.appendChild(el('div.intro-botoes', ouvir));
