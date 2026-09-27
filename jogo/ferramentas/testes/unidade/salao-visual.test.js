@@ -20,6 +20,7 @@ function arteMariana() {
   ctx.PA = { _interno: { CONTORNO: '#3a2446', cache: {} }, cor: { misturar: (a) => a, escurecer: (a) => a } };
   vm.createContext(ctx);
   vm.runInContext(fs.readFileSync(path.join(JS, 'arte/pixelart-mariana-visual.js'), 'utf8'), ctx);
+  vm.runInContext(fs.readFileSync(path.join(JS, 'arte/pixelart-menino-moldes.js'), 'utf8'), ctx);
   return ctx.PA;
 }
 // os moldes de hoje (MARI), lidos do próprio arquivo sem executar o desenho
@@ -31,12 +32,12 @@ function moldes() {
   vm.runInContext(fonte.slice(ini, fim) + '; this.MARI = MARI;', ctx);
   return ctx.MARI;
 }
-const LETRAS = new Set('.HLKERCDASBWMGT'.split(''));
+const LETRAS = new Set('.HLKERCDASBWMGTZJQOV'.split(''));
 
 test('salão: todo corte e roupa, em toda vista, a pé e sentada, mantém o tamanho e só usa letras da paleta', () => {
   const PA = arteMariana(), MARI = moldes();
-  assert.strictEqual(PA.CORTES.length, 8, '8 cortes');
-  assert.strictEqual(PA.MODELOS.length, 8, '8 roupas');
+  assert.strictEqual(PA.CORTES.length, 13, '8 cortes de menina + 5 de menino');
+  assert.strictEqual(PA.MODELOS.length, 12, '8 roupas de menina + 4 de menino');
   assert.strictEqual(PA.CORTES[0].id, 'solto'); assert.strictEqual(PA.MODELOS[0].id, 'vestido');
   Object.keys(MARI).forEach((vista) => {
     const m = MARI[vista];
@@ -62,7 +63,7 @@ test('salão: todo corte e roupa, em toda vista, a pé e sentada, mantém o tama
 
 test('salão: sem campo, id desconhecido ou estragado = o visual de hoje', () => {
   const PA = arteMariana();
-  const v = (ap) => copia(PA.visualMariana(ap));
+  const v = (ap) => { const r = copia(PA.visualMariana(ap)); assert.strictEqual(r.laco, true, 'menina: com laço'); delete r.laco; return r; };
   assert.deepStrictEqual(v(undefined), { corte: 'solto', modelo: 'vestido' });
   assert.deepStrictEqual(v({ pele: '#f1c7a5' }), { corte: 'solto', modelo: 'vestido' });
   assert.deepStrictEqual(v({ corte: 'moicano-do-futuro', modelo: 42 }), { corte: 'solto', modelo: 'vestido' });

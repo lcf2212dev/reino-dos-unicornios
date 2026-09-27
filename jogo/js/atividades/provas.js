@@ -279,7 +279,7 @@
         el('div.intro-emoji', '👀'),
         el('h2.titulo-pixel', 'Terminou!'),
         el('div.intro-claude', PA.paraDOM(PA.claude(0), 4, 'claude-intro'), el('p', Reino.Falas.provas.perguntaRevisar)),
-        el('p.dica-revisao', 'As campeãs revisam antes de entregar: é aí que a gente acha os errinhos.'),
+        el('p.dica-revisao', Reino.Genero.genero('{As campeãs|Os campeões} revisam antes de entregar: é aí que a gente acha os errinhos.')),
         el('div.intro-botoes', nao, sim)));
       Reino.UI.focarTroca(sim, corpo.querySelector('.pergunta-revisao h2'), CALMA_TROCA);
       Reino.UI.esperarFala([sim, nao, sair], [Reino.Falas.provas.perguntaRevisar], { voz: 'claude' });

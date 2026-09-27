@@ -12,8 +12,8 @@
       // a astrônoma, guia do Observatório: conta curiosidades (voz npc-vega)
       vega: {
         oi: ['Olá, eu sou a Doutora Vega! 🔭', 'Eu estudo as estrelas do céu.'],
-        nova: ['Quer ouvir uma curiosidade? ✨', 'Vamos descobrir o céu juntas?', 'Eu tenho um segredo do espaço!'],
-        depois: ['Volte para olhar o céu! 🌙', 'O céu tem muitos segredos.', 'Até logo, pequena astrônoma! ⭐'],
+        nova: ['Quer ouvir uma curiosidade? ✨', 'Vamos descobrir o céu {juntas|juntos}?', 'Eu tenho um segredo do espaço!'],
+        depois: ['Volte para olhar o céu! 🌙', 'O céu tem muitos segredos.', 'Até logo, {pequena astrônoma|pequeno astrônomo}! ⭐'],
       },
       // o ajudante engraçado: conta piadas (voz npc-cosmo, com efeito de robô)
       cosmo: {

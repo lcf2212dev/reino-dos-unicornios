@@ -57,7 +57,7 @@
         oi: ['Olá, eu sou o Guarda Beto!', 'Eu cuido do trânsito! 🚦'],
         nova: ['Vamos atravessar na faixa?', 'Vermelho, amarelo ou verde?'],
         feita: ['Quer revisar o semáforo?', 'Vamos ler as placas de novo?'],
-        depois: ['Você atravessou com cuidado! 🚦', 'Que pedestre caprichosa! ✨'],
+        depois: ['Você atravessou com cuidado! 🚦', 'Que pedestre {caprichosa|caprichoso}! ✨'],
       },
       'geo-cora': {
         oi: ['Oi, eu sou a Ciclista Cora!', 'Eu vou de bicicleta! 🚲'],

@@ -9,7 +9,8 @@
 
   /* ================= FALAS ================= */
   function U() { return Reino.util; }
-  function nomeJogadora(t) { return String(t).replace(/\{nome\}/g, Reino.config.nomeJogadora); }
+  // {nome} e o gênero ({campeã|campeão}) de quem joga: Reino.Genero (sistemas/genero.js)
+  function nomeJogadora(t) { return Reino.Genero.texto(t); }
   function reais(v) { return U().reais(v); }
 
   // falas padrão (curtas: até ~30 letras por balão, que no celular dá 2 linhas)
@@ -24,7 +25,7 @@
       nova: ['Vamos treinar, sem pressa? 🥇'],
       feita: ['Quer treinar de novo? 🥇'],
       bloqueada: ['Primeiro, termine as salas. 🔒'],
-      depois: ['Revisou tudo? Coisa de campeã! 🏆'],
+      depois: ['Revisou tudo? Coisa de {campeã|campeão}! 🏆'],
     },
     prova: {
       oi: ['Oi! Eu cuido desta prova. 📝'],
@@ -80,10 +81,12 @@
   var RESUMO_ZERO = 'Você ainda não fez salas.';
   var RESUMO_FIM = 'O treino do Castelo já abriu! 🥇';
 
-  // lista de falas do NPC para um momento (as dele, ou as padrão)
-  function falas(npc, tipo) {
+  // lista de falas do NPC para um momento (as dele, ou as padrão), prontas para a tela
+  function falas(npc, tipo) { return falasCruas(npc, tipo).map(nomeJogadora); }
+  // as mesmas, ainda com {nome} e os marcadores de gênero (a gravação leva as duas versões)
+  function falasCruas(npc, tipo) {
     var l = (npc.falas && npc.falas[tipo]) || [];
-    if (l.length) return l.map(nomeJogadora);
+    if (l.length) return l.slice();
     var a = npc.acao || {};
     if (tipo === 'oi' && a.tipo === 'sala') { var s = salaDe(a); return s ? [s.intro] : []; }
     var pad = PADRAO[a.tipo] || PADRAO.guia;
@@ -203,7 +206,9 @@
     var out = [], a = npc.acao || {}, voz = npc.voz || 'narradora', pers = Reino.config.persistencia;
     // mesmos segmentos que o balão fala: cada texto dividido em frases
     function add(t) { frases(t).forEach(function (f) { if (!out.some(function (o) { return o.texto === f; })) out.push({ texto: f, voz: voz }); }); }
-    ['oi', 'nova', 'feita', 'bloqueada', 'depois'].forEach(function (tipo) { falas(npc, tipo).forEach(add); });
+    ['oi', 'nova', 'feita', 'bloqueada', 'depois'].forEach(function (tipo) {
+      falasCruas(npc, tipo).forEach(function (t) { Reino.Genero.versoes(t).forEach(add); });
+    });
     if (a.tipo === 'sala' || a.tipo === 'treino' || a.tipo === 'prova') add(SAIU);
     if (a.tipo === 'sala') {
       var m = materiaDe(a), s = salaDe(a);

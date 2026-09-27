@@ -110,7 +110,7 @@
     pn.conteudo.appendChild(el('div.aviso-medalha',
       el('span.aviso-medalha-icone', '🥇'),
       el('p', 'A medalha de ouro da escola vale ', el('b', U.reais(Reino.config.medalhaEscolaValor)), '! Ela vem das respostas certas, não de terminar primeiro.')));
-    pn.conteudo.appendChild(el('p.plano-frase', '"Terminar por último é coisa de campeã!" 🏆'));
+    pn.conteudo.appendChild(el('p.plano-frase', Reino.Genero.genero('"Terminar por último é coisa de {campeã|campeão}!" 🏆')));
     var ouvir = el('button.btn-grande.btn-principal', { type: 'button' }, '🔊 Ouvir o plano');
     ouvir.addEventListener('click', function () { Reino.Som.falar(Reino.Falas.fixas.plano, { voz: 'claude' }); });
     if (Reino.Som.temVoz()) pn.conteudo.appendChild(el('div.intro-botoes', ouvir));

@@ -230,7 +230,7 @@
         : '✅ Tudo revisado! Agora sim, pode entregar com orgulho.');
       corpo.appendChild(el('div.revisao',
         el('h2.titulo-pixel', 'Hora de revisar!'),
-        el('p', 'As campeãs revisam a prova inteirinha antes de entregar. Toque em cada questão.'),
+        el('p', Reino.Genero.genero('{As campeãs|Os campeões} revisam a prova inteirinha antes de entregar. Toque em cada questão.')),
         aviso, lista));
       rodape.hidden = false;
       rodape.appendChild(el('span.sem-relogio', revisadas.filter(Boolean).length + ' de ' + questoes.length + ' revisadas'));

@@ -28,7 +28,7 @@ test('sal√£o: escolher corte e roupa, gravar, recarregar; teclado; desenho padr√
     // cortes pelo toque
     await c.js("void Reino.UI.telaSalao('cabelo')");
     await c.avancar(600);
-    assert.strictEqual(await c.js("document.querySelectorAll('.tela-salao .salao-opcao').length"), 8);
+    assert.strictEqual(await c.js("document.querySelectorAll('.tela-salao .salao-opcao').length"), 13);
     await c.tocar('Coque');
     assert.strictEqual(await c.js("document.querySelector('.salao-opcao[aria-pressed=true]').textContent"), 'Coque');
     await c.tocar('Pronto!');

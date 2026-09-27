@@ -2,13 +2,13 @@
 (function () {
   var U = Reino.util;
   var C = {};
-  var nome = function () { return Reino.config.nomeJogadora; };
+  // {nome} e o gênero ({campeã|campeão}) de quem joga: Reino.Genero (sistemas/genero.js)
 
   var FALAS = {
     boasVindas: [
       'Oi, {nome}! Que bom te ver! Vamos passear pelo Reino e revisar um pouquinho?',
       'Olá, {nome}! Seu unicórnio estava com saudade de você! 🦄',
-      'Oba, a {nome} chegou! As salas do Reino estão te esperando.',
+      'Oba, {a|o} {nome} chegou! As salas do Reino estão te esperando.',
     ],
     acerto: [
       'Isso, {nome}! Você leu com calma e acertou! ✨',
@@ -16,7 +16,7 @@
       'Que orgulho! Você pensou direitinho.',
       'Acertou! Seu unicórnio está pulando de alegria!',
       'Muito bem! Ler com atenção funciona mesmo!',
-      'Perfeito! Você é uma ótima estudante! ⭐',
+      'Perfeito! Você é {uma ótima estudante|um ótimo estudante}! ⭐',
       'Mandou muito bem, {nome}! 💛',
       'Show! Você lembrou direitinho da apostila!',
     ],
@@ -29,7 +29,7 @@
       'Quase! Leia a pista com calma e tente de novo. 📖',
       'Tudo bem errar! Errar faz parte de aprender.',
       'Hmm, não foi essa. Respira fundo e olha de novo com calma. 🌬️',
-      'Opa! Toda campeã erra às vezes. Você consegue!',
+      'Opa! {Toda campeã|Todo campeão} erra às vezes. Você consegue!',
     ],
     pressa: [
       'Ei, {nome}! Leu tudinho? Lê mais uma vez com o dedinho 👀',
@@ -46,7 +46,7 @@
       'A prova não é uma corrida! Cada um tem o seu tempo, e está tudo bem.',
       'Se sobrar tempo na prova, use para revisar. É aí que a gente encontra os errinhos!',
       'Antes de começar a prova, respira fundo três vezes. O cérebro fica tranquilo e lembra melhor.',
-      'Terminar por último é coisa de campeã! 🏆',
+      'Terminar por último é coisa de {campeã|campeão}! 🏆',
       'Seu unicórnio fica orgulhoso quando você lê com calma. 🦄',
       'Quem acerta com calma ganha o ouro. Quem corre pode errar bobeira. Qual você prefere?',
     ],
@@ -77,7 +77,7 @@
     var i, tent = 0;
     do { i = Math.floor(Math.random() * lista.length); tent++; } while (lista.length > 1 && i === ultimo[tipo] && tent < 10);
     ultimo[tipo] = i;
-    return lista[i].replace(/\{nome\}/g, nome());
+    return Reino.Genero.texto(lista[i]);
   };
 
   /* ---------- balão ---------- */
@@ -241,10 +241,12 @@
   }
 
   // Claude.falar('texto', {tipo, tempo, falar, fala: [segmentos], voz, agora, quem, botoes, extra, modal}) -> Promise<valor do botão | null>
+  // todo balão passa por aqui: {nome} e gênero ({campeã|campeão}) de quem joga, no texto e na fala (a voz acha pelo texto)
+  function pronto(t) { return typeof t === 'string' ? Reino.Genero.texto(t) : Array.isArray(t) ? t.map(pronto) : t; }
   C.falar = function (texto, opcoes) {
     opcoes = opcoes || {};
     return new Promise(function (resolver) {
-      var item = { texto: texto, fala: opcoes.fala, voz: opcoes.voz, tipo: opcoes.tipo, tempo: opcoes.tempo || 0, falar: opcoes.falar, resolver: resolver,
+      var item = { texto: pronto(texto), fala: pronto(opcoes.fala), voz: opcoes.voz, tipo: opcoes.tipo, tempo: opcoes.tempo || 0, falar: opcoes.falar, resolver: resolver,
         quem: opcoes.quem || null, botoes: opcoes.botoes && opcoes.botoes.length ? opcoes.botoes : null, extra: opcoes.extra || null, modal: !!opcoes.modal };
       if (opcoes.agora && aberto) { fila.unshift(item); fechar(); return; }
       // modal passa na frente de um balão comum, para ela não sair andando

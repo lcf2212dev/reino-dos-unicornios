@@ -11,27 +11,27 @@ Reino.FALAS_INTERIORES.escola = {
         'Na segunda vez, vale o raro. 💙',
         'Depois, vale o comum. 🤍',
       ],
-      nova: ['Quer ver as provas da Escola?', 'Vamos ver os prêmios juntas?'],
+      nova: ['Quer ver as provas da Escola?', 'Vamos ver os prêmios {juntas|juntos}?'],
     },
     // sala de História
     helena: {
       oi: ['Oi! Sou a Professora Helena. 📜', 'Eu adoro contar histórias.'],
       nova: ['Vamos fazer a prova com calma?', 'Leia cada pergunta devagar.'],
-      feita: ['Vamos treinar a prova juntas?', 'Quer revisar a prova comigo?'],
+      feita: ['Vamos treinar a prova {juntas|juntos}?', 'Quer revisar a prova comigo?'],
       depois: ['Você leu com muita atenção!', 'Que prova caprichada! ✨'],
     },
     // sala de Inglês
     emma: {
       oi: ['Oi! Eu sou a «Teacher Emma»! 🍎', 'Eu ensino Inglês com carinho.'],
-      nova: ['Vamos fazer a prova juntas?', 'Escute cada palavra com calma.'],
-      feita: ['Vamos treinar a prova juntas?', 'Quer revisar as palavras comigo?'],
+      nova: ['Vamos fazer a prova {juntas|juntos}?', 'Escute cada palavra com calma.'],
+      feita: ['Vamos treinar a prova {juntas|juntos}?', 'Quer revisar as palavras comigo?'],
       depois: ['«Good job!» Você foi muito bem!', 'Você revisou com calma! ✨'],
     },
     // sala de Português
     lucia: {
       oi: ['Eu sou a Professora Lúcia! 📝', 'Eu adoro ler e escrever.'],
       nova: ['Vamos fazer a prova com calma?', 'Leia o texto duas vezes. 📖'],
-      feita: ['Vamos treinar a prova juntas?', 'Revise antes de entregar. ✏️'],
+      feita: ['Vamos treinar a prova {juntas|juntos}?', 'Revise antes de entregar. ✏️'],
       depois: ['Você leu tudo com atenção!', 'Revisar ajudou muito! ✨'],
     },
   },
@@ -39,7 +39,7 @@ Reino.FALAS_INTERIORES.escola = {
   professorPadrao: {
     oi: ['Oi! Sou a Professora do Reino.', 'Cuido desta sala de aula. 📝'],
     nova: ['Vamos fazer a prova com calma?', 'Leia tudo antes de responder.'],
-    feita: ['Vamos treinar a prova juntas?', 'Quer revisar a prova comigo?'],
+    feita: ['Vamos treinar a prova {juntas|juntos}?', 'Quer revisar a prova comigo?'],
     depois: ['Você fez tudo com carinho! 💛'],
   },
   objetos: {

@@ -43,10 +43,10 @@
   }
   F.npcs['lab-cavaleira'] = F.npcs['lab-cavaleira'] || {
     oi: ['Eu sou a Cavaleira Jade! 🛡️', 'Eu treino Ciências com você.'],
-    nova: ['Vamos treinar Ciências? 🥇', 'Pense como uma cientista!'],
+    nova: ['Vamos treinar Ciências? 🥇', 'Pense como {uma cientista|um cientista}!'],
     feita: ['Quer treinar mais uma vez? ✨', 'Vamos buscar o ouro com calma?'],
     bloqueada: ['Primeiro, as salas do Laboratório.', 'O Laboratório vem antes.'],
-    depois: ['Que cientista caprichosa! ✨', 'Você sabe muito da natureza! 🏆'],
+    depois: ['Que cientista {caprichosa|caprichoso}! ✨', 'Você sabe muito da natureza! 🏆'],
   };
   F.objetos['ciencias-microscopio'] = F.objetos['ciencias-microscopio'] || ['Um microscópio na ala!', 'Ele mostra o bem pequeninho.'];
   // { historia: 'aurora', ingles: 'oliver', portugues: 'clara' }: gancho de teste (I.castelo), tirado do elenco

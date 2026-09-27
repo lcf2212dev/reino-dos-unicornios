@@ -34,6 +34,7 @@
       'css/ui-salao.css',
       'css/ui-jogadores.css',
       'css/ui-abertura.css',
+      'css/ui-personagem.css',
     ],
     scripts: [
       { js: 'js/nucleo/congelar.js', grupo: 'nucleo' },
@@ -67,6 +68,7 @@
       { js: 'js/arte/pixelart-unicornio.js', grupo: 'pixelart' },
       { js: 'js/arte/pixelart-personagens.js', grupo: 'pixelart' },
       { js: 'js/arte/pixelart-mariana-visual.js', grupo: 'pixelart' },
+      { js: 'js/arte/pixelart-menino-moldes.js', grupo: 'pixelart' },
       { js: 'js/arte/pixelart-ovos.js', grupo: 'pixelart' },
       { js: 'js/arte/pixelart-icones.js', grupo: 'pixelart' },
       { js: 'js/conteudo/loja-itens.js', grupo: 'conteudo', node: true },
@@ -138,6 +140,7 @@
       { js: 'js/sistemas/musicas-faixas.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/musicas.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/voz.js', grupo: 'sistemas', node: true },
+      { js: 'js/sistemas/genero.js', grupo: 'sistemas', node: true },
       { js: 'js/personagens/claude.js', grupo: 'personagens', node: true },
       { js: 'js/sistemas/falas.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/cuidados.js', grupo: 'sistemas', node: true },
