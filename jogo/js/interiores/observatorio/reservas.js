@@ -1,16 +1,17 @@
 /* Reservas de personagem do prédio observatorio: o contrato de cada NPC (quem é, voz e vaga),
    escrito antes das frentes que o constroem em paralelo (docs/contratos/plano-paralelo.md §2). É do orquestrador:
    as frentes só leem. O visual vem de Reino.registrarPersonagem({ id, sprite }) no personagens.js. */
-// ETs da Lua (planeta-lua, viagem de foguete): vozes estrangeiras falando português, com sotaque de outro planeta
+// ETs da Lua (planeta-lua, viagem de foguete): Lumi e Vovó Cratera com vozes estrangeiras falando português
+// (sotaque de outro planeta); o Pipo, com sotaque, não se entendia na transcrição: voz brasileira bem aguda
 // lua-lumi: Lumi, a ET lunar que recebe a Mariana
 Reino.reservarPersonagem({ id: 'lua-lumi', nome: 'Lumi', genero: 'f', idade: 'crianca',
-  perfil: { voz: 'fr-FR-VivienneMultilingualNeural', velocidade: '+0%', tom: '+20Hz' },
+  perfil: { voz: 'fr-FR-VivienneMultilingualNeural', velocidade: '+0%', tom: '+34Hz' },
   predio: 'planeta-lua', x: 8, y: 7, acao: { tipo: 'lua-brincadeira', b: 'pulo' },
 });
 
 // lua-pipo: Pipo, o ET que brinca de esconde-esconde
 Reino.reservarPersonagem({ id: 'lua-pipo', nome: 'Pipo', genero: 'm', idade: 'crianca',
-  perfil: { voz: 'ko-KR-HyunsuMultilingualNeural', velocidade: '+0%', tom: '+30Hz' },
+  perfil: { voz: 'pt-BR-AntonioNeural', velocidade: '+6%', tom: '+45Hz' },
   predio: 'planeta-lua', x: 16, y: 9, acao: { tipo: 'lua-brincadeira', b: 'esconde' },
 });
 

@@ -313,6 +313,21 @@
    "velocidade": "+4%",
    "tom": "+12Hz"
   },
+  "npc-lua-lumi": {
+   "voz": "fr-FR-VivienneMultilingualNeural",
+   "velocidade": "+0%",
+   "tom": "+34Hz"
+  },
+  "npc-lua-pipo": {
+   "voz": "pt-BR-AntonioNeural",
+   "velocidade": "+6%",
+   "tom": "+45Hz"
+  },
+  "npc-lua-vovo": {
+   "voz": "de-DE-SeraphinaMultilingualNeural",
+   "velocidade": "-8%",
+   "tom": "-6Hz"
+  },
   "npc-nasa-lia": {
    "voz": "en-US-EmmaMultilingualNeural",
    "velocidade": "+4%",
@@ -30303,6 +30318,213 @@
     "interior-petshop"
    ],
    "fala": "Para secar a crina toda."
+  },
+  {
+   "chave": "111d0c90g",
+   "voz": "npc-lua-lumi",
+   "texto": "Oi!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Oi!"
+  },
+  {
+   "chave": "b0d64798r",
+   "voz": "npc-lua-lumi",
+   "texto": "Eu sou a Lumi.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eu sou a Lumi."
+  },
+  {
+   "chave": "afada574y",
+   "voz": "npc-lua-lumi",
+   "texto": "Eu sou uma ET da Lua!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eu sou uma etê da Lua!"
+  },
+  {
+   "chave": "0d27fe99z",
+   "voz": "npc-lua-lumi",
+   "texto": "Que bom que você veio!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Que bom que você veio!"
+  },
+  {
+   "chave": "924178b6u",
+   "voz": "npc-lua-lumi",
+   "texto": "Quer ver a lista?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Quer ver a lista?"
+  },
+  {
+   "chave": "ba19abd214",
+   "voz": "npc-lua-lumi",
+   "texto": "Aqui a gente pula bem alto!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Aqui a gente pula bem alto!"
+  },
+  {
+   "chave": "f2da264at",
+   "voz": "npc-lua-lumi",
+   "texto": "Pule na cratera.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Pule na cratera."
+  },
+  {
+   "chave": "f6267b49p",
+   "voz": "npc-lua-lumi",
+   "texto": "É divertido!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "É divertido!"
+  },
+  {
+   "chave": "1bc06107g",
+   "voz": "npc-lua-pipo",
+   "texto": "Oi!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Oi!"
+  },
+  {
+   "chave": "c59f8826r",
+   "voz": "npc-lua-pipo",
+   "texto": "Eu sou o Pipo.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eu sou o Pipo."
+  },
+  {
+   "chave": "5adb58b112",
+   "voz": "npc-lua-pipo",
+   "texto": "Eu adoro esconde-esconde!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eu adoro esconde-esconde!"
+  },
+  {
+   "chave": "6473d7a4z",
+   "voz": "npc-lua-pipo",
+   "texto": "Será que você me acha?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Será que você me acha?"
+  },
+  {
+   "chave": "cb9bc331u",
+   "voz": "npc-lua-pipo",
+   "texto": "Quer ver a lista?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Quer ver a lista?"
+  },
+  {
+   "chave": "60e6450811",
+   "voz": "npc-lua-pipo",
+   "texto": "Eu me escondo muito bem!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eu me escondo muito bem!"
+  },
+  {
+   "chave": "fa0571fdz",
+   "voz": "npc-lua-pipo",
+   "texto": "Vamos brincar de novo?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos brincar de novo?"
+  },
+  {
+   "chave": "788b6a83w",
+   "voz": "npc-lua-vovo",
+   "texto": "Olá, minha querida!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Olá, minha querida!"
+  },
+  {
+   "chave": "7f241ebaz",
+   "voz": "npc-lua-vovo",
+   "texto": "Eu sou a Vovó Cratera.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eu sou a Vovó Cratera."
+  },
+  {
+   "chave": "b97ff5cc15",
+   "voz": "npc-lua-vovo",
+   "texto": "Moro na Lua faz muito tempo.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Moro na Lua faz muito tempo."
+  },
+  {
+   "chave": "63bb6a3bu",
+   "voz": "npc-lua-vovo",
+   "texto": "Quer ver a lista?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Quer ver a lista?"
+  },
+  {
+   "chave": "96359d7913",
+   "voz": "npc-lua-vovo",
+   "texto": "A Lua não tem luz própria.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "A Lua não tem luz própria."
+  },
+  {
+   "chave": "79b5c2d315",
+   "voz": "npc-lua-vovo",
+   "texto": "Ela brilha com a luz do Sol!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Ela brilha com a luz do Sol!"
+  },
+  {
+   "chave": "3a126222w",
+   "voz": "narradora",
+   "texto": "Lá longe está a Terra!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Lá longe está a Terra!"
+  },
+  {
+   "chave": "d253c7cer",
+   "voz": "narradora",
+   "texto": "Uma pedra da Lua!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Uma pedra da Lua!"
   },
   {
    "chave": "dc354bec18",
