@@ -48,11 +48,12 @@
     r(ctx, cx - 11, py + 47, 22, 9, K); r(ctx, cx - 10, py + 48, 20, 7, det);
     r(ctx, cx - 10, py + 48, 20, 1, '#fff3a0'); r(ctx, cx - 7, py + 45, 1, 2, K); r(ctx, cx + 6, py + 45, 1, 2, K);
     digito(ctx, cx - 8, py + 49, '1', K); digito(ctx, cx - 2, py + 49, 'x', '#e0433f'); digito(ctx, cx + 4, py + 49, '2', K);
-    // porta em arco com o degrau
-    F.porta(ctx, cx - 6, py + h - 19, 12, 16, '#8a5cff', det);
-    F.degrau(ctx, cx, py + h - 3, 18, 3);
-    // blocos de contar dos dois lados da porta
-    [['#e0433f', 11, 6], ['#3fbf7f', 11, 12], ['#ffc93c', 17, 6], ['#2f6fd6', w - 23, 6], ['#ff8ac4', w - 17, 6], ['#3fbf7f', w - 17, 12]]
+    // porta em arco com o degrau, no meio do tile da porta (x + floor(w/2), onde chegam o portão e o caminho)
+    var cp = px + Math.floor(w / 32) * 16 + 8;
+    F.porta(ctx, cp - 6, py + h - 19, 12, 16, '#8a5cff', det);
+    F.degrau(ctx, cp, py + h - 3, 18, 3);
+    // blocos de contar dos dois lados da porta (à direita, empilhados entre a porta e a quina)
+    [['#e0433f', 11, 6], ['#3fbf7f', 11, 12], ['#ffc93c', 17, 6], ['#2f6fd6', w - 15, 6], ['#ff8ac4', w - 15, 12]]
       .forEach(function (b) {
         r(ctx, px + b[1], py + h - b[2] - 6, 6, 6, K); r(ctx, px + b[1] + 1, py + h - b[2] - 5, 4, 4, b[0]);
         r(ctx, px + b[1] + 1, py + h - b[2] - 5, 4, 1, D.clarear(b[0], 0.4)); r(ctx, px + b[1] + 2, py + h - b[2] - 3, 2, 1, D.escurecer(b[0], 0.25));

@@ -217,14 +217,22 @@
     return P.regProva(prova).premio === r;
   }
   function larguraMural(n) { return n <= 1 ? 4 : 7; }
-  I.objeto('escola-mural', { w: 7, h: 1, topo: 32, solido: true, alto: true,   // 32: a faixa dourada sobe 2 px acima da moldura
+  // a grade tem 2 colunas de provas; na cortiça de hoje cabem 2 linhas: cada linha a mais aumenta o quadro 18 px.
+  // Quadro alto fica sem pés (desce 4 px até o chão), para a faixa não passar da borda do alto da parede
+  function sobraMural() {
+    var n = (R.provas || []).length, cols = Math.min(2, Math.max(1, n));
+    return Math.max(0, Math.ceil(n / cols) - 2) * 18;
+  }
+  function descidaMural(extra) { return extra ? 4 : 0; }
+  I.objeto('escola-mural', { w: 7, h: 1, solido: true, alto: true,
+    get topo() { var e = sobraMural(); return 32 + e - descidaMural(e); },   // 32: a faixa dourada sobe 2 px acima da moldura
     chave: function (P) {
       return 'mural:' + (R.provas || []).map(function (pv) {
         return pv.id + '=' + RARIDADES.map(function (r) { return ganhou(P, pv, r) ? 1 : 0; }).join('');
       }).join(',');
     },
     desenhar: function (ctx, px, py, o, P) {
-      var W = (o.w || 7) * 16, top = py - 30, H = 45;
+      var extra = sobraMural(), W = (o.w || 7) * 16, top = py - 30 - extra + descidaMural(extra), H = 45 + extra;
       // pés e moldura de madeira com cortiça
       ret(ctx, px + 4, py + 10, 3, 5, K); ret(ctx, px + W - 7, py + 10, 3, 5, K);
       ret(ctx, px + 1, top, W - 2, H - 4, K);

@@ -54,9 +54,14 @@
   // etiqueta de preço (creme, com o número): canto de baixo à direita em (x, y)
   // (contorno de 1 px e 1 px de margem creme em volta dos algarismos: 11×9 para dois algarismos)
   function etiquetaPreco(ctx, x, y, n) {
-    var w = String(n).length * 4 + 3;
+    var w = larguraEtiqueta(n);
     ret(ctx, x, y, w, 9, K); ret(ctx, x + 1, y + 1, w - 2, 7, C.creme);
     numero(ctx, x + 2, y + 2, n, K);
+  }
+  function larguraEtiqueta(n) { return String(n).length * 4 + 3; }
+  // moedinha de estrela (5×5, a mesma da vitrine dos enfeites) centrada em cx: "à venda" onde a etiqueta não cabe
+  function moedinha(ctx, cx, y) {
+    ret(ctx, cx - 2, y, 5, 5, K); ret(ctx, cx - 1, y + 1, 3, 3, C.ouro2); ret(ctx, cx, y + 2, 1, 1, C.ouro3);
   }
   // cadeado pequeno (prêmio que ainda não dá para comprar)
   function cadeado(ctx, x, y) {
@@ -171,5 +176,6 @@
   S.LILAS = LILAS; S.LILAS2 = LILAS2; S.MUSGO = MUSGO; S.MUSGO2 = MUSGO2; S.ROSA = ROSA; S.enfeites = enfeites;
   S.v = v; S.brilho = brilho; S.comprados = comprados; S.premios = premios; S.estadoPremio = estadoPremio;
   S.icone = icone; S.caber = caber; S.estrelinha = estrelinha; S.etiquetaPreco = etiquetaPreco; S.cadeado = cadeado;
+  S.larguraEtiqueta = larguraEtiqueta; S.moedinha = moedinha;
   S.medalha = medalha; S.lacinho = lacinho; S.espelhoInfo = espelhoInfo; S.cenaEspelho = cenaEspelho;
 })();
