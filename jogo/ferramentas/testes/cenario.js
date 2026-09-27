@@ -121,7 +121,16 @@ async function abrirCenario(op = {}) {
       page, context, browser, servidor, pasta, tamanho, congelar,
       get erros() { return page.__erros; },
       avancar,
-      js: (codigo) => page.evaluate((js) => (0, eval)(js), codigo),
+      // código que devolve uma Promise: espera no máximo 15 s de verdade (REINO_ESPERA_JS_MS). No jogo congelado a Promise que depende do
+      // relógio (ex.: Reino.Cena.sair()) nunca termina enquanto se espera por ela: antes o comando ficava parado sem aviso
+      js: (codigo) => page.evaluate(([js, ms]) => {
+        var v = (0, eval)(js);
+        if (!v || typeof v.then !== 'function' || !window.__esperarReal) return v;
+        return Promise.race([v, window.__esperarReal(ms).then(function () {
+          throw new Error('o código devolveu uma Promise que não terminou em ' + ms / 1000 + ' s; com o jogo congelado ela só anda '
+            + 'com o relógio: use "void <código>" e depois esperar:<ms> (ou c.avancar)');
+        })]);
+      }, [codigo, Number(process.env.REINO_ESPERA_JS_MS) || 15000]),
       // lugar: 'mapa', id de interior ('petshop'), 'materia:<id>' (o prédio da matéria) ou id de lugar do mapa
       async ir(lugar) {
         const r = await page.evaluate((l) => {
