@@ -36,6 +36,7 @@
       'css/ui-jogadores.css',
       'css/ui-abertura.css',
       'css/ui-personagem.css',
+      'css/ui-voo.css',
     ],
     scripts: [
       { js: 'js/nucleo/congelar.js', grupo: 'nucleo' },
@@ -174,6 +175,8 @@
       { js: 'js/atividades/missao.js', grupo: 'atividades' },
       { js: 'js/atividades/treino.js', grupo: 'atividades' },
       { js: 'js/atividades/provas.js', grupo: 'atividades' },
+      { js: 'js/atividades/voo.js', grupo: 'atividades', node: true },
+      { js: 'js/atividades/voo-desenho.js', grupo: 'atividades' },
       { js: 'js/ui/base.js', grupo: 'ui' },
       { js: 'js/ui/espera-fala.js', grupo: 'ui' },
       { js: 'js/ui/pecas.js', grupo: 'ui' },
