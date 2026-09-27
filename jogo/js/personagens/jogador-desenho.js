@@ -164,6 +164,11 @@
     p.ret(x - img.width / 2 + 3, linha, img.width - 6, 1, 'rgba(217,255,244,' + (0.55 * prof).toFixed(3) + ')');
   }
   function linhaDagua(yPes, prof, corte) { return yPes - prof * corte * (1 - AFUNDA); }
+  // a figura dela neste quadro (o sprite já espelhado, onde fica e a linha d'água), para a Aura contornar
+  function marcarSilhueta(img, x, yPes, espelhar, prof, corte) {
+    var fundo = prof > 0 ? prof * corte * AFUNDA : 0;
+    J.silhueta = { img: espelhar ? espelho(img) : img, x: x, yPes: yPes + fundo, linha: prof > 0 ? linhaDagua(yPes, prof, corte) : null };
+  }
 
   /* ---------- ícone de fome/sede acima do unicórnio (px da tela, nítido) ---------- */
   var bolhas = {};
@@ -248,9 +253,11 @@
     }
 
     var itens, sobre = null;
+    J.silhueta = null;
     if (banhoComUni()) {
       // banho de espuma: o unicórnio está na banheira (quem desenha é o banho) e ela fica a pé, ao lado
       var aPe = PA.mariana(est.aparencia, false, 0, { capa: usa.capa, vista: olhar.vista });
+      marcarSilhueta(aPe.canvas, J.x, J.y + 1, olhar.espelhar, 0, 0);
       return [{ y: J.y, desenhar: function () {
         sombra(p, J.x, J.y, 5);
         desenharSprite(p, aPe.canvas, J.x, J.y + 1, olhar.espelhar);
@@ -262,6 +269,7 @@
       var puloM = pulo * (1 - prof) + alto;          // na água o trote vira deslizar
       var raio = (estagio >= 2 ? 28 : 20) / 2.6 * SOMBRA[olhar.vista];
       var imgM = sujo ? sujar(spr.canvas) : spr.canvas;
+      marcarSilhueta(spr.canvas, J.x, J.y + 1 - puloM, olhar.espelhar, prof, corte);
       itens = [{ y: J.y, desenhar: function () {
         sombra(p, J.x, J.y, raio * encolhe, 1 - prof);
         ondinhas(p, J.x, linhaDagua(J.y + 1, prof, corte), raio + 2, prof, animar);
@@ -287,6 +295,7 @@
       var profB = fundura(r.x, ry), profM = fundura(J.x, J.y);
       var puloB = pulo * (1 - profB) + alto;
       var imgB = sujo ? sujar(bebe.canvas) : bebe.canvas;
+      marcarSilhueta(menina.canvas, J.x, J.y + 1, olhar.espelhar, profM, CORTE.mariana);
       itens = [
         { y: ry - 1, desenhar: function () {
           sombra(p, r.x, ry, 7 * SOMBRA[olharB.vista] * encolhe, 1 - profB);
