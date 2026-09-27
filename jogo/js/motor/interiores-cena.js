@@ -68,7 +68,7 @@
     var ctxPintor = { fillStyle: '#000', fillRect: function (x, y, w, h) { E.pintorAtual.ret(x, y, w, h, this.fillStyle); } };
 
     var cena = {
-      id: def.id, tipo: 'interior', lugarId: def.lugar, nome: def.nome, def: def, corFundo: FUNDO,
+      id: def.id, tipo: 'interior', lugarId: def.lugar, nome: def.nome, def: def, corFundo: (def.fundo && II.FUNDOS[def.fundo] || {}).cor || FUNDO,
       spawn: def.spawn, grade: g,
       largura: function () { return g.w * T; },
       altura: function () { return g.h * T; },
@@ -193,7 +193,7 @@
     },
     grade: grade,
     objeto: objeto,
-    OBJETOS: OBJETOS, PISOS: II.PISOS, PAREDES: II.PAREDES,
+    OBJETOS: OBJETOS, PISOS: II.PISOS, PAREDES: II.PAREDES, FUNDOS: II.FUNDOS,
     desenho: { C: C, ret: D.ret, circulo: D.circulo, elipse: D.elipse, triangulo: D.triangulo, contornoRet: D.contornoRet, matriz: D.matriz, miudeza: D.miudeza, sorte: D.sorte,
       misturar: D.misturar, escurecer: D.escurecer, clarear: D.clarear },
     // utilidades para as ferramentas e o validador (puras)

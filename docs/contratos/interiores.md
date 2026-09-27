@@ -32,7 +32,7 @@ Reino.Interiores = {
   cena(id) → cena (cena-e-motor.md §6), criada uma vez e reaproveitada
   grade(def) → { w, h, solido[y][x], chao[y][x], comodo[y][x] }   // puro, sem DOM (usado pelo validador)
   objeto(tipo, defObjeto)             // registra um tipo de objeto; cada prédio pode registrar os seus
-  OBJETOS, PISOS, PAREDES             // bibliotecas
+  OBJETOS, PISOS, PAREDES, FUNDOS     // bibliotecas (FUNDOS: céu aberto, abaixo)
   desenho: { C, ret, circulo, elipse, triangulo, contornoRet, … }   // os helpers de arte/desenho.js
   chegadaDaEscada(origemId, i) → {x,y} | null   // onde ela chega pela escada i de origemId (§3.1)
   chegadaVindoDe(paraId, deId) → {x,y} | null   // ao lado da escada de paraId que volta para deId (§3.1)
@@ -50,7 +50,9 @@ Reino.registrarInterior({
   pacote: 'interior-museu',           // pacote de voz; andares do mesmo prédio usam o mesmo
   tamanho: { w, h },                  // em tiles
   saida: { x, y },                    // tapete de saída (só no de entrada): tile de chão na última fileira do cômodo
-  spawn: { x, y },                    // 1 tile acima do tapete
+  spawn: { x, y },                    // 1 tile acima do tapete (planeta, sem entrada: onde o e2e e o irPara sem chegada põem)
+  fundo?: 'espaco',                   // céu aberto: I.FUNDOS[id] = { cor, desenhar(ctx, w, h) } pinta o vão em volta
+                                      // dos cômodos (em vez do roxo-escuro, sem lábios) e `cor` é a cor fora do interior
   escadas: [{ x, y, para: 'torre-1', chegar: { x: 0, y: 1 }, olhar: { x: 0, y: 1 }, sentido: 'sobe'|'desce' }],
                                       // 'sobe' = arco na parede, 'desce' = vão no chão; pareadas (abaixo)
   comodos: [{

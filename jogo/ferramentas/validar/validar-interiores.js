@@ -10,6 +10,7 @@ const LugaresDoMapa = require('./lugares-do-mapa');
 const Preencher = require('./preencher');
 const Extras = require('./interiores-extras');
 const Escadas = require('./validar-escadas');
+const Viagem = require('./validar-viagem');
 
 const iSo = process.argv.indexOf('--so');
 const SO = iSo >= 0 ? process.argv[iSo + 1] : null;
@@ -297,17 +298,21 @@ Object.keys(esperadas).filter(doSo).forEach((l) => {
 
 // escadas pareadas: par no destino e lado de chegada (validar-escadas.js)
 Escadas.checar({ Reino, defs, grades, erros, avisos });
+Viagem.checar({ Reino, defs, grades, erros });   // fundo (céu aberto) e destinos da viagem de foguete
 
-// alcançabilidade a partir do spawn da entrada, atravessando escadas
+// alcançabilidade a partir do spawn da entrada, atravessando escadas e viagens de foguete
 const chave = (id, x, y) => id + ':' + x + ',' + y;
 Object.keys(porLugar).filter(doSo).forEach((l) => {
   const ent = porLugar[l].find((d) => d.entrada);
   if (!ent || !ent.spawn || !grades.get(ent.id)) return;
-  const visto = new Set();
-  const fila = [[ent.id, ent.spawn.x, ent.spawn.y]];
+  const visto = new Set(), fila = [[ent.id, ent.spawn.x, ent.spawn.y]];
   visto.add(chave(ent.id, ent.spawn.x, ent.spawn.y));
   const DIRS = [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1]];
-  while (fila.length) {
+  const vizAlc0 = (d, ts) => ts.some((t) => [[0, 1], [0, -1], [1, 0], [-1, 0], [0, 0]].some(([dx, dy]) => visto.has(chave(d.id, t.x + dx, t.y + dy))));
+  const viajar = () => Viagem.destinos(Reino, porLugar[l], vizAlc0).forEach(([id, x, y]) => {   // o foguete leva como uma escada
+    if (grades.get(id) && !visto.has(chave(id, x, y))) { visto.add(chave(id, x, y)); fila.push([id, x, y]); }
+  });
+  do { while (fila.length) {
     const [id, x, y] = fila.shift();
     const d = porId.get(id), g = grades.get(id);
     const ie = (d.escadas || []).findIndex((e) => e.x === x && e.y === y), e = d.escadas && d.escadas[ie];
@@ -324,12 +329,12 @@ Object.keys(porLugar).filter(doSo).forEach((l) => {
       const k = chave(id, nx, ny);
       if (!visto.has(k)) { visto.add(k); fila.push([id, nx, ny]); }
     });
-  }
+  } viajar(); } while (fila.length);
   porLugar[l].forEach((d) => {
     const g = grades.get(d.id);
     if (!g) return;
     const alc = (x, y) => visto.has(chave(d.id, x, y));
-    const vizAlc = (tiles) => tiles.some((t) => [[0, 1], [0, -1], [1, 0], [-1, 0], [0, 0]].some(([dx, dy]) => alc(t.x + dx, t.y + dy)));
+    const vizAlc = (tiles) => vizAlc0(d, tiles);
     if (d.saida) checar(alc(d.saida.x, d.saida.y), `${d.id}: a saída não é alcançável a partir do spawn`);
     (d.escadas || []).forEach((e, i) => checar(alc(e.x, e.y), `${d.id}: escada ${i} não é alcançável a partir do spawn`));
     (d.npcs || []).forEach((n) => checar(vizAlc([{ x: n.x, y: n.y }]), `${d.id}: NPC ${n.id} sem vizinho livre alcançável`));

@@ -1,0 +1,301 @@
+{
+  "nome": "viagem-espacial",
+  "pedido": "pedidos/2026-09-27-viagem-espacial.md",
+  "personagens": [
+    {
+      "id": "lua-lumi",
+      "nome": "Lumi",
+      "genero": "f",
+      "idade": "crianca",
+      "predio": "planeta-lua",
+      "x": 8,
+      "y": 7,
+      "acao": {
+        "tipo": "lua-brincadeira",
+        "b": "pulo"
+      },
+      "perfil": {
+        "voz": "fr-FR-VivienneMultilingualNeural",
+        "velocidade": "+0%",
+        "tom": "+20Hz"
+      }
+    },
+    {
+      "id": "lua-pipo",
+      "nome": "Pipo",
+      "genero": "m",
+      "idade": "crianca",
+      "predio": "planeta-lua",
+      "x": 16,
+      "y": 9,
+      "acao": {
+        "tipo": "lua-brincadeira",
+        "b": "esconde"
+      },
+      "perfil": {
+        "voz": "ko-KR-HyunsuMultilingualNeural",
+        "velocidade": "+0%",
+        "tom": "+30Hz"
+      }
+    },
+    {
+      "id": "lua-vovo",
+      "nome": "Vovó Cratera",
+      "genero": "f",
+      "idade": "idoso",
+      "predio": "planeta-lua",
+      "x": 5,
+      "y": 12,
+      "acao": {
+        "tipo": "lua-brincadeira",
+        "b": "curiosidade"
+      },
+      "perfil": {
+        "voz": "de-DE-SeraphinaMultilingualNeural",
+        "velocidade": "-8%",
+        "tom": "-6Hz"
+      }
+    }
+  ],
+  "tarefas": [
+    {
+      "id": "contrato",
+      "tipo": "contrato",
+      "titulo": "Reservas e falas dos ETs, evento RESPOSTAS, config.viagem, fundo de céu aberto no motor, validador da viagem, esqueleto da Lua e de Reino.Viagem, contrato viagem.md",
+      "quem": "orquestrador",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/interiores/observatorio/reservas.js",
+        "jogo/js/nucleo/eventos.js",
+        "jogo/js/sistemas/aura.js",
+        "jogo/js/nucleo/config.js",
+        "jogo/js/motor/interiores-pisos.js",
+        "jogo/js/motor/interiores-estatico.js",
+        "jogo/js/motor/interiores-cena.js",
+        "jogo/ferramentas/validar/validar-interiores.js",
+        "jogo/ferramentas/validar/validar-viagem.js",
+        "jogo/js/interiores/observatorio/nasa-andar.js",
+        "docs/contratos/viagem.md",
+        "docs/contratos/README.md",
+        "docs/contratos/interiores.md",
+        "jogo/ferramentas/testes/tipos-jogo.d.ts",
+        "jogo/js/manifesto.js",
+        "jogo/index.html",
+        "pedidos/"
+      ],
+      "worktree": "viagem-espacial",
+      "personagens": [
+        "lua-lumi",
+        "lua-pipo",
+        "lua-vovo"
+      ],
+      "pronto": [
+        "vagas tracejadas dos 3 ETs na Lua",
+        "npm run vozes-elenco limpo",
+        "validar-interiores segue a viagem"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "falas-ets",
+      "tipo": "falas",
+      "titulo": "Falas dos 3 ETs da Lua (oi, depois), escritas pelo orquestrador junto do contrato",
+      "quem": "orquestrador",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/interiores/observatorio/personagens-falas.js"
+      ],
+      "worktree": "viagem-espacial",
+      "personagens": [
+        "lua-lumi",
+        "lua-pipo",
+        "lua-vovo"
+      ],
+      "pronto": [
+        "até 30 letras por página, frases de 3+ palavras"
+      ],
+      "estimativa": 10
+    },
+    {
+      "id": "mecanica",
+      "tipo": "mecanica",
+      "titulo": "Reino.Viagem completo (tanque, passaporte, fluxo decolar-voo-chegada, volta, aviso do Claude) e o painel do foguete",
+      "quem": "worker-low",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/sistemas/viagem.js",
+        "jogo/js/sistemas/viagem-fluxo.js",
+        "jogo/js/ui/foguete.js",
+        "jogo/js/ui/foguete-icones.js",
+        "jogo/css/ui-foguete.css",
+        "jogo/ferramentas/testes/unidade/viagem.test.js",
+        "jogo/js/interiores/observatorio/nasa-falas.js"
+      ],
+      "worktree": "viagem-mecanica",
+      "pronto": [
+        "resposta certa enche 1 gotinha; errada não tira",
+        "painel abre pelo foguete do Hangar; cheio decola, vazio explica",
+        "chegada carimba e dá estrelas; volta de graça"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "voo",
+      "tipo": "mecanica",
+      "titulo": "Reino.Voo: minijogo de voo em tela própria com canvas",
+      "quem": "worker-low",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/atividades/voo.js",
+        "jogo/js/atividades/voo-desenho.js",
+        "jogo/js/atividades/voo-icones.js",
+        "jogo/css/ui-voo.css",
+        "jogo/ferramentas/testes/unidade/voo.test.js",
+        "jogo/ferramentas/testes/unidade/voo.navegador.test.js"
+      ],
+      "worktree": "viagem-voo",
+      "pronto": [
+        "voo roda nos 3 tamanhos com toque e setas",
+        "asteroide só treme; estrelas contam",
+        "Esc sai sem chegar"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "pulo",
+      "tipo": "mecanica",
+      "titulo": "Jogador.pular: a Mariana (e a montaria) pula alto",
+      "quem": "worker-low",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/personagens/jogador.js",
+        "jogo/js/personagens/jogador-desenho.js",
+        "jogo/ferramentas/testes/unidade/pulo.test.js",
+        "docs/contratos/cena-e-motor.md"
+      ],
+      "worktree": "viagem-pulo",
+      "pronto": [
+        "Jogador.pular() sobe e desce com a sombra no chão",
+        "sem Animações não pula"
+      ],
+      "estimativa": 25
+    },
+    {
+      "id": "cenario-lua",
+      "tipo": "cenario",
+      "titulo": "A Lua: fundo, chão, horizonte, foguete de pouso, objetos e as brincadeiras",
+      "quem": "worker-low",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/interiores/planetas/planetas-comum.js",
+        "jogo/js/interiores/planetas/lua.js",
+        "jogo/js/interiores/planetas/lua-objetos.js",
+        "jogo/js/interiores/planetas/lua-brincadeiras.js",
+        "jogo/js/interiores/planetas/lua-falas.js"
+      ],
+      "worktree": "viagem-lua",
+      "pronto": [
+        "vagas dos ETs livres e alcançáveis",
+        "pulo, pedra flutuante, esconde-esconde, cristais e curiosidades",
+        "foguete de pouso volta ao Hangar"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "npc-ets",
+      "tipo": "npc",
+      "titulo": "Base de sprite et e o visual dos 3 ETs da Lua",
+      "quem": "worker-low",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/interiores/planetas/ets.js",
+        "jogo/js/interiores/planetas/personagens.js"
+      ],
+      "worktree": "viagem-ets",
+      "personagens": [
+        "lua-lumi",
+        "lua-pipo",
+        "lua-vovo"
+      ],
+      "pronto": [
+        "os 3 ETs no lugar das vagas, nos 3 tamanhos, com retrato no balão"
+      ],
+      "estimativa": 30
+    },
+    {
+      "id": "vozes",
+      "tipo": "vozes",
+      "titulo": "Amostras e gravação das vozes dos ETs e do Claude",
+      "quem": "orquestrador",
+      "depende": [
+        "falas-ets"
+      ],
+      "arquivos": [
+        "jogo/js/voz/",
+        "jogo/ferramentas/vozes/listar-falas.js"
+      ],
+      "worktree": "viagem-espacial",
+      "personagens": [
+        "lua-lumi",
+        "lua-pipo",
+        "lua-vovo"
+      ],
+      "pronto": [
+        "transcrição sem ✘"
+      ],
+      "estimativa": 20
+    },
+    {
+      "id": "integracao",
+      "tipo": "integracao",
+      "titulo": "Juntar as frentes, e2e (telas novas nas referências), vozes de novo",
+      "quem": "orquestrador",
+      "depende": [
+        "mecanica",
+        "voo",
+        "pulo",
+        "cenario-lua",
+        "npc-ets",
+        "vozes",
+        "falas-ets"
+      ],
+      "arquivos": [
+        "jogo/ferramentas/testes/referencias-cenas.js",
+        "jogo/ferramentas/testes/cenario.js",
+        "jogo/ferramentas/testes/cenario-telas.js"
+      ],
+      "worktree": "viagem-espacial",
+      "pronto": [
+        "validar-tudo verde"
+      ],
+      "estimativa": 40
+    },
+    {
+      "id": "entrega",
+      "tipo": "entrega",
+      "titulo": "Merge, push e artifact",
+      "quem": "orquestrador",
+      "depende": [
+        "integracao"
+      ],
+      "arquivos": [],
+      "worktree": "viagem-espacial",
+      "pronto": [
+        "main com a viagem, artifact publicado"
+      ],
+      "estimativa": 20
+    }
+  ]
+}
