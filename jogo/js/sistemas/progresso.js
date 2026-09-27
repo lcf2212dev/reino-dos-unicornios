@@ -20,7 +20,7 @@
   var nuvem = { ref: null, ok: false, gravando: false, pendente: false, timer: null, status: 'local', lutas: 0, cedeu: false };
   // o que as partes do progresso dividem (ver o cabeçalho)
   /** @type {ProgressoInterno} */
-  var I = Reino._progresso = { estado: null, nuvem: nuvem, P: P, campos: {} };
+  var I = Reino._progresso = { estado: null, nuvem: nuvem, P: P, campos: {}, jogador: 'mariana', senha: null };
   // os campos de P.registrarCampo (progresso-campos.js); sem nenhum, nada muda no save
   /** @param {(nome: string, def: CampoSave) => void} f */
   function cadaCampo(f) { Object.keys(I.campos).forEach(function (n) { f(n, I.campos[n]); }); }
@@ -62,8 +62,24 @@
      antes de gravar por cima esta aba junta o que ela fez (P.mesclar, as mesmas regras de sempre).
      O evento `storage` (abaixo) faz a mesma junção assim que a outra aba grava. */
   var vistoLocal = null;
+  /* Jogadores (docs/contratos/save-e-mescla.md §12): a Mariana mora em `chaveSave` ('mariana-reino-v1', NUNCA muda);
+     cada outro jogador em 'reino-v1-<login>'. O jogador é escolhido ANTES do carregar (P.usarJogador) e não muda
+     com o jogo aberto (trocar de jogador recarrega a página). */
+  var LOGIN = /^[a-z0-9_-]{2,20}$/;
+  function chaveSave() {
+    return I.jogador === 'mariana' ? Reino.config.chaveSave : ((Reino.config.jogadores && Reino.config.jogadores.prefixoSave) || 'reino-v1-') + I.jogador;
+  }
+  /** @param {string} login @param {string | null} [senha] a senha da conta (para conferir no servidor/claude.ai antes de sincronizar) */
+  P.usarJogador = function (login, senha) {
+    if (I.estado) throw new Error('usarJogador: só antes de P.carregar()');
+    if (typeof login !== 'string' || !LOGIN.test(login)) throw new Error('usarJogador: login inválido');
+    I.jogador = login;
+    I.senha = login === 'mariana' ? null : typeof senha === 'string' ? senha : null;
+  };
+  P.jogador = function () { return I.jogador; };
+  P.chaveSave = chaveSave;
   function lerBruto() {
-    try { return localStorage.getItem(Reino.config.chaveSave); } catch (e) { return null; }
+    try { return localStorage.getItem(chaveSave()); } catch (e) { return null; }
   }
   function lerLocal() {
     var bruto = lerBruto();
@@ -83,7 +99,7 @@
     // a cópia entra antes da normalização (como em carregar e na mescla, onde o completar() vem depois)
     I.estado = normalizarNovos(comCopia(I.estado));
     var texto = JSON.stringify(I.estado);
-    try { localStorage.setItem(Reino.config.chaveSave, texto); vistoLocal = texto; } catch (e) {}
+    try { localStorage.setItem(chaveSave(), texto); vistoLocal = texto; } catch (e) {}
     gravarCopia();
   }
   /* Conteúdo que importa para saber se uma mescla trouxe algo novo: tudo menos `atualizado` e a
@@ -122,7 +138,8 @@
      o que faltar volta daqui, com as mesmas regras da mescla. Só vale na MESMA geração: depois de
      "Apagar tudo" a cópia fica velha e é ignorada (e regravada na próxima gravação).
      O ciclo vai junto só como informação: "Novo ciclo" mantém cuidados e despensa. */
-  var CHAVE_NOVIDADES = Reino.config.chaveSave + '-novidades';
+  // a da Mariana continua 'mariana-reino-v1-novidades'; a de outro jogador, 'reino-v1-<login>-novidades'
+  function chaveNovidades() { return chaveSave() + '-novidades'; }
   function objeto(x) { return !!x && typeof x === 'object' && !Array.isArray(x); }
   // ids que vêm de fora (servidor, doc, cópia) viram chaves de objeto: só as próprias e nunca as que
   // mexem no protótipo (`{"__proto__": …}` de um save estragado não pode sujar Object.prototype)
@@ -137,7 +154,7 @@
   }
   function lerCopia() {
     try {
-      var bruto = localStorage.getItem(CHAVE_NOVIDADES);
+      var bruto = localStorage.getItem(chaveNovidades());
       if (!bruto) return null;
       var c = JSON.parse(bruto);
       return objeto(c) ? c : null;
@@ -153,7 +170,7 @@
     };
     // campos registrados que pediram a cópia, em `campos` (sem nenhum, a cópia sai igual à de sempre)
     cadaCampo(function (n, def) { if (def.copiaSeguranca) (copia.campos = copia.campos || {})[n] = I.estado[n]; });
-    try { localStorage.setItem(CHAVE_NOVIDADES, JSON.stringify(copia)); } catch (e) {}
+    try { localStorage.setItem(chaveNovidades(), JSON.stringify(copia)); } catch (e) {}
   }
   // da cópia só entram registros com números de verdade (cópia estragada não vira NaN no jogo)
   function numero(x) { return typeof x === 'number' && isFinite(x) && x >= 0; }
@@ -268,7 +285,7 @@
     U.emit(EV.PROGRESSO_REMOTO, I.estado);
   }
   if (typeof window !== 'undefined' && window.addEventListener) window.addEventListener('storage', function (ev) {
-    if (ev.key === Reino.config.chaveSave) juntarDoAparelho(ev.newValue);
+    if (I.estado && ev.key === chaveSave()) juntarDoAparelho(ev.newValue);
   });
   if (typeof document !== 'undefined' && document.addEventListener) document.addEventListener('visibilitychange', function () {
     if (!document.hidden) juntarDoAparelho(lerBruto());

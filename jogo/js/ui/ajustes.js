@@ -43,7 +43,9 @@
     pers.addEventListener('click', function () { UI.fecharTela(pn.tela); UI.telaAparencia().then(function () { U.emit(EV.MAPA_MUDOU); }); });
     var pais = el('button.btn-grande.btn-secundario', { type: 'button' }, '🔒 Área dos pais');
     pais.addEventListener('click', function () { UI.fecharTela(pn.tela); UI.telaPais(); });
-    c.appendChild(el('div.intro-botoes.coluna', pers, pais));
+    var trocar = el('button.btn-grande.btn-secundario', { type: 'button' }, '🔄 Trocar jogador');
+    trocar.addEventListener('click', function () { UI.fecharTela(pn.tela); UI.trocarJogador(); });
+    c.appendChild(el('div.intro-botoes.coluna', pers, trocar, pais));
   };
 
   UI.aplicarAjustes = function () {

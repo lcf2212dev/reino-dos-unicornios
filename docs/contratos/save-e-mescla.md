@@ -7,7 +7,7 @@ do progresso real. Mudança aqui só com muito cuidado e testes.
 ## Índice
 1. Onde está no código · 2. O que nunca muda · 3. Campos aditivos · 4. Mescla · 5. Cópia `-novidades` ·
 6. Normalização · 7. Sincronização · 8. Novo ciclo, Apagar tudo, quem lê o estado · 9. Segurança do progresso real ·
-10. Antes de mexer · 11. Campo novo (`registrarCampo`)
+10. Antes de mexer · 11. Campo novo (`registrarCampo`) · 12. Jogadores
 
 ## 1. Onde está no código
 - `jogo/js/sistemas/progresso.js` — estado, `estadoNovo`, `completar`, `normalizarNovos`, `numeroOu`,
@@ -289,3 +289,40 @@ Reino.Progresso.registrarCampo('jardim', {
    `normalizarNovos`, da linha em `comCopia`/`gravarCopia` e do comentário no `P.novoCiclo`.
 7. Gravar depois de mudar o campo (nos ganchos ou quando a Mariana age, nunca no carregamento): mude
    `Reino.Progresso.estado().<campo>` e chame `Reino.Progresso.salvar()` (grava no aparelho e agenda a nuvem).
+
+## 12. Jogadores
+Cada jogador tem o seu save; a Mariana é o jogador `'mariana'`, e o dela não muda de lugar nem de formato.
+Código: `jogo/js/sistemas/jogadores.js` (`Reino.Jogadores`, contas, perfil), `ui/jogadores.js` ("Quem vai jogar?"),
+`P.usarJogador`/`P.jogador`/`P.chaveSave` (progresso.js), a sincronização em progresso-nuvem.js e as rotas em
+`jogo/servidor/servidor.js`.
+1. Onde mora cada save:
+   | | Mariana (`'mariana'`) | outro jogador (`<login>`) |
+   |---|---|---|
+   | aparelho | `mariana-reino-v1` (+ `-novidades`) | `reino-v1-<login>` (+ `-novidades`; `config.jogadores.prefixoSave`) |
+   | claude.ai | doc `progresso/mariana` | doc `progresso/<login>`; conta em `jogadores/<login>` (`{ login, senha, criado }`) |
+   | servidor de casa | `/api/progresso`, linha `'mariana'` | `/api/progresso/<login>`, linha `<login>`; conta na tabela `jogadores` |
+   | fotos (IndexedDB) | `reino-fotos` (as de antes) | `reino-fotos-<login>` |
+   Login: `^[a-z0-9_-]{2,20}$`, fora dos nomes de `Object.prototype`; `'mariana'` é reservado (existe sem senha).
+2. O jogador é escolhido ANTES do `P.carregar()` (`motor/main.js`: `Jogadores.decidirSemTela()` ou a tela) e não muda
+   com o jogo aberto: `P.usarJogador` depois do carregar lança erro; trocar (`UI.trocarJogador`) grava, mostra
+   "Guardando...", envia já (`P.enviarAgora`, espera no máximo 5 s), marca e recarrega.
+   O evento `storage` só junta a chave do jogador atual.
+3. Quem joga sem perguntar: modo congelado (e2e) = a Mariana, sem ler nada; o login lembrado em `reino-jogador-atual`
+   (se o aparelho conhece a conta; senão pergunta, nunca cai na Mariana); aparelho com `mariana-reino-v1` e nada
+   lembrado = a Mariana; sem localStorage = a Mariana. Aparelho novo: "Quem vai jogar?".
+4. Contas: senha em TEXTO, sem segurança (pedido do Leandro; no claude.ai qualquer visitante lê). Lembradas no aparelho
+   em `reino-jogadores` (`{ login: { senha, criado } }`): lembrada entra sem senha. Com banco, a conta nasce e é
+   conferida nele; sem banco (arquivo, servidor antigo), só no aparelho.
+5. Servidor antigo (grava tudo na linha `'mariana'`, inclusive `api/progresso?x`): outro jogador SÓ sincroniza com
+   servidor que manda `X-Reino-Jogadores: 1` no HEAD de `/api/progresso`; sem ele, o save fica no aparelho. Segunda
+   barreira: antes de sincronizar, `conferirConta` confere a conta no banco (`/api/jogadores/entrar`, ou o doc
+   `jogadores/<login>`); conta só do aparelho é criada lá; senha diferente (outra pessoa com o mesmo login) = fica no
+   aparelho. A Mariana não passa por nada disso (o caminho dela é o de sempre).
+6. Campo `perfil: { nome, sexo: 'menina' | 'menino', em }` (`registrarCampo`, mescla própria: vence o `em` maior,
+   empate = a base; Novo ciclo mantém). Padrão: Mariana → `{ nome: 'Mariana', sexo: 'menina', em: 0 }`; outro → nome
+   vazio (`Jogadores.perfil()` mostra o login com a inicial maiúscula). Nada gravado no carregamento: entra no save da
+   Mariana quando o jogo grava. `Jogadores.definirPerfil({ nome, sexo })` carimba, grava e emite `EVENTOS.PERFIL`.
+7. Nenhuma ferramenta migra, copia ou regrava o save da Mariana.
+8. Testes: `testes/unidade/jogadores-save.test.js` (chaves, decidir, perfil, contas, claude.ai, fotos),
+   `jogadores-servidor.test.js` (rotas; servidor ANTIGO do commit 98e606f + jogador novo = linha `'mariana'` igual),
+   `jogadores.navegador.test.js` (criar, trocar, entrar com senha no Chromium).

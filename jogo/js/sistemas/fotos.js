@@ -32,7 +32,11 @@
 
   function cfg() {
     var c = (Reino.config && Reino.config.fotos) || {};
-    return { maxLado: c.maxLado || 1600, maxAlbum: c.maxAlbum || 40, banco: c.banco || 'reino-fotos', toqueLongoMs: c.toqueLongoMs || 600 };
+    // cada jogador com o seu álbum: a Mariana no banco de sempre ('reino-fotos', com as fotos de hoje), os outros em
+    // 'reino-fotos-<login>' (save-e-mescla.md §12)
+    var jog = Reino.Jogadores ? Reino.Jogadores.atual() : 'mariana';
+    var banco = (c.banco || 'reino-fotos') + (jog === 'mariana' ? '' : '-' + jog);
+    return { maxLado: c.maxLado || 1600, maxAlbum: c.maxAlbum || 40, banco: banco, toqueLongoMs: c.toqueLongoMs || 600 };
   }
   function U() { return Reino.util; }
   function falarVoz(texto) { try { if (Reino.Som && Reino.Som.falar) Reino.Som.falar(texto, { voz: 'claude' }); } catch (e) {} }
