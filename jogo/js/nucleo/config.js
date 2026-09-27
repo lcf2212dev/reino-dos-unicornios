@@ -19,6 +19,10 @@ Reino.config = {
   // sala: vezes jogando a sala → raro; treinoOuro / treinoPerfeito: treinos terminados → cada um dos 2 épicos
   persistencia: { sala: 3, treinoOuro: 3, treinoPerfeito: 5 },
   chaveSave: 'mariana-reino-v1', // NÃO troque: é onde mora o progresso da Mariana em cada aparelho
+  // jogadores (js/sistemas/jogadores.js, docs/contratos/save-e-mescla.md §12): login de loginMin a loginMax letras
+  // (minúsculas, números, - e _; o servidor de casa confere 2 a 20), senha de senhaMin a senhaMax (texto, sem segurança).
+  // NÃO troque o prefixoSave: é onde mora o progresso de cada outro jogador ('reino-v1-<login>')
+  jogadores: { loginMin: 2, loginMax: 20, senhaMin: 3, senhaMax: 30, prefixoSave: 'reino-v1-' },
   // fome e sede da montaria (js/sistemas/cuidados.js): só gastam com o jogo aberto e ela jogando.
   // 100 = satisfeito. Abaixo de `baixo`, ela anda a `fatorLento` da velocidade até comer/beber.
   cuidados: {

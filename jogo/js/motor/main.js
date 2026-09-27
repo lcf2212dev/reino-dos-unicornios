@@ -39,7 +39,7 @@
       var ir = el('button.btn-grande.btn-principal.btn-comecar', { type: 'button' }, 'Vamos lá! ✨');
       t.appendChild(el('div.inicio', logo(),
         el('div.intro-claude.intro-claude-grande', PA.paraDOM(PA.claude(0), 5, 'claude-intro'),
-          el('p', 'Oi, ' + Reino.config.nomeJogadora + '! Eu sou o Claude! Vou ser o seu guia neste reino mágico cheio de unicórnios. Aqui a gente revisa a matéria da escola brincando!')),
+          el('p', 'Oi, ' + Reino.Jogadores.perfil().nome + '! Eu sou o Claude! Vou ser o seu guia neste reino mágico cheio de unicórnios. Aqui a gente revisa a matéria da escola brincando!')),
         ir));
       ir.addEventListener('click', function () {
         Reino.Som.ativar(); Reino.Som.tocar('porta');
@@ -162,7 +162,14 @@
   }
 
   /* ---------- início ---------- */
+  /* Quem joga vem antes de tudo (sistemas/jogadores.js): o save lido é o dele. Aparelho da Mariana (e o modo
+     congelado dos testes) segue direto, sem tela; aparelho novo pergunta "Quem vai jogar?" (ui/jogadores.js). */
   function iniciar() {
+    var login = Reino.Jogadores.decidirSemTela();
+    if (login) { Reino.Jogadores.usar(login); comecar(); return; }
+    UI.telaQuemVaiJogar().then(function (l) { Reino.Jogadores.usar(l); comecar(); });
+  }
+  function comecar() {
     P.carregar();
     UI.aplicarAjustes();
     Mapa.criar(Reino.materias);

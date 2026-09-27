@@ -254,6 +254,8 @@ interface ProgressoApi {
   mesclar(a: EstadoSave, b: EstadoSave): EstadoSave;
   // progresso-nuvem.js
   iniciarNuvem(): Promise<void>;
+  /** envia já o estado de agora e cumpre quando o banco respondeu (ou falhou); sem nuvem, na hora */
+  enviarAgora(): Promise<void>;
   statusNuvem(): StatusNuvem;
   // progresso-regras.js
   valorSala(materia: Materia): number;
@@ -291,6 +293,11 @@ interface ProgressoApi {
   // progresso-campos.js
   registrarCampo(nome: string, def: CampoSave): void;
   camposRegistrados(): string[];
+  // progresso.js: jogadores (save-e-mescla.md §12)
+  /** escolhe o jogador (só antes de carregar): 'mariana' fica em chaveSave, os outros em 'reino-v1-<login>' */
+  usarJogador(login: string, senha?: string | null): void;
+  jogador(): string;
+  chaveSave(): string;
   /** nomes do save de hoje, que um campo registrado não pode usar (progresso-campos.js) */
   NOMES_DO_SAVE: string[];
 }
@@ -329,6 +336,9 @@ interface ProgressoInterno {
   agendarNuvem?(): void;
   // progresso-campos.js (o registro `campos` nasce vazio em progresso.js)
   campos: { [nome: string]: CampoSave };
+  /** login do jogador deste carregamento ('mariana' = o save dela) e a senha da conta (null na Mariana) */
+  jogador: string;
+  senha: string | null;
   cadaCampo?(f: (nome: string, def: CampoSave) => void): void;
   ESTRATEGIAS?: { [nome: string]: EstrategiaMescla };
   limparCampo?(def: CampoSave, v: any): any;
@@ -980,6 +990,8 @@ interface EventosReino {
   IR_PARA: 'irPara';
   /** carga: StatusNuvem */
   NUVEM: 'nuvem';
+  /** carga: { nome, sexo } */
+  PERFIL: 'perfil';
 }
 /** Nome de um evento ('progresso', 'cena'…). */
 type Evento = EventosReino[keyof EventosReino];

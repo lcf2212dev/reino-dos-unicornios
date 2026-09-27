@@ -1,0 +1,58 @@
+/* "Quem vai jogar?", pedir a senha, criar jogador e "Guardando..." (js/ui/jogadores.js).
+   Fundo: céu do entardecer (roxo → rosa) com estrelinhas em CSS; painel central com borda em degraus de pixel. */
+.tela-jogadores {
+  background:
+    radial-gradient(circle at 12% 18%, #fff 0 1.5px, transparent 2px),
+    radial-gradient(circle at 78% 9%, #fff 0 2px, transparent 2.5px),
+    radial-gradient(circle at 42% 30%, #ffe9a8 0 1.5px, transparent 2px),
+    radial-gradient(circle at 90% 36%, #fff 0 1.5px, transparent 2px),
+    radial-gradient(circle at 25% 44%, #ffd6f0 0 1px, transparent 1.5px),
+    radial-gradient(circle at 63% 52%, #fff 0 1px, transparent 1.5px),
+    linear-gradient(180deg, #2a1850 0%, #57307e 35%, #b0508f 68%, #ff9aa6 88%, #ffc98a 100%);
+  background-size: 230px 170px, 310px 210px, 190px 150px, 270px 240px, 150px 130px, 210px 190px, 100% 100%;
+}
+.tela-jogadores .painel,
+.tela-jogador-senha .painel,
+.tela-jogador-criar .painel {
+  border-radius: 8px;
+  box-shadow: 0 0 0 4px #fff4d6, 4px 4px 0 4px var(--borda), 8px 8px 0 4px rgba(42, 24, 80, 0.45);
+}
+.tela-jogadores .painel { width: min(780px, 100%); }
+.tela-jogador-senha .painel, .tela-jogador-criar .painel { width: min(480px, 100%); }
+.tela-jogadores .painel-topo, .tela-jogador-senha .painel-topo, .tela-jogador-criar .painel-topo {
+  justify-content: center; background: linear-gradient(180deg, #ffe4f4, #f1e4ff);
+}
+.tela-jogador-senha .painel-topo, .tela-jogador-criar .painel-topo { justify-content: space-between; }
+.jogadores { display: flex; flex-direction: column; align-items: stretch; gap: 14px; }
+.jogadores-grade {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 180px)); justify-content: center; gap: 14px;
+}
+.jogadores-cartao {
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 6px;
+  min-height: 150px; padding: 12px 8px 10px; border: 3px solid var(--borda); border-radius: 10px;
+  background: radial-gradient(circle at 50% 35%, #fff 25%, #ffe0f0 70%, #e5d8ff); box-shadow: var(--sombra-botao);
+  font: inherit; color: inherit; cursor: pointer; line-height: 1.15;
+}
+.jogadores-cartao:hover { background: radial-gradient(circle at 50% 35%, #fff 30%, #ffd0ea 70%, #d8c6ff); }
+.jogadores-cartao:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--borda); }
+.jogadores-cartao[aria-current="true"] { outline: 4px solid var(--roxo); outline-offset: 2px; }
+.jogadores-retrato { display: grid; place-items: end center; min-height: 84px; }
+.jogadores-retrato canvas { image-rendering: pixelated; max-width: 100%; height: auto; }
+.jogadores-icone { font-size: 2.4em; line-height: 1; }
+.jogadores-nome { font-size: 1.35em; overflow-wrap: anywhere; text-align: center; }
+.jogadores-cadeado { font-size: 0.78em; opacity: 0.85; }
+.jogadores-estado { margin: 0; text-align: center; font-size: 0.85em; opacity: 0.8; }
+.jogadores .intro-botoes { justify-content: center; }
+.jogadores-form { display: flex; flex-direction: column; gap: 10px; }
+.jogadores-linha { display: flex; flex-direction: column; gap: 4px; font-weight: 700; }
+.jogadores-rotulo { font-size: 0.9em; }
+.jogadores-campo { min-height: 52px; font-size: 1.05em; }
+.jogadores-dica { margin: 0; font-size: 0.85em; text-align: center; }
+.jogadores-erro { margin: 0; padding: 8px 10px; border: 3px solid var(--borda); border-radius: 8px; background: #ffe0e0; font-weight: 700; text-align: center; }
+.jogadores-erro[hidden] { display: none; }
+.jogadores-guardando { color: #fff; text-shadow: 3px 3px 0 var(--borda); font-size: 1.3em; text-align: center; }
+@media (max-width: 480px) {
+  .jogadores-grade { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .jogadores-cartao { min-height: 128px; }
+  .jogadores-nome { font-size: 1.15em; }
+}

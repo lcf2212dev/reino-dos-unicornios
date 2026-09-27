@@ -32,6 +32,7 @@
       'css/ui-petshop.css',
       'css/ui-fotos.css',
       'css/ui-salao.css',
+      'css/ui-jogadores.css',
     ],
     scripts: [
       { js: 'js/nucleo/congelar.js', grupo: 'nucleo' },
@@ -129,6 +130,7 @@
       { js: 'js/sistemas/progresso-regras.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/progresso-campos.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/visitados.js', grupo: 'sistemas', node: true },
+      { js: 'js/sistemas/jogadores.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/som.js', grupo: 'sistemas' },
       { js: 'js/sistemas/som-instrumentos.js', grupo: 'sistemas' },
       { js: 'js/sistemas/som-musica.js', grupo: 'sistemas' },
@@ -185,6 +187,7 @@
       { js: 'js/ui/aparencia.js', grupo: 'ui' },
       { js: 'js/ui/salao.js', grupo: 'ui' },
       { js: 'js/ui/pais.js', grupo: 'ui' },
+      { js: 'js/ui/jogadores.js', grupo: 'ui' },
       { js: 'js/sistemas/fotos.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/fotos-moldura.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/fotos-telas.js', grupo: 'sistemas', node: true },

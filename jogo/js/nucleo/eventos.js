@@ -46,4 +46,7 @@ Reino.EVENTOS = {
   /* O status da sincronização mudou. Carga: 'sincronizado' | 'erro' | 'local' (nuvem.status).
      Emite: sistemas/progresso-nuvem.js. Ouve: ninguém no jogo (os testes em ferramentas/testes ouvem). */
   NUVEM: 'nuvem',
+  /* O nome ou o sexo do jogador mudou (Reino.Jogadores.definirPerfil). Carga: { nome, sexo }.
+     Emite: sistemas/jogadores.js. Ouve: quem mostra o nome ou desenha o personagem (a tela de criar personagem). */
+  PERFIL: 'perfil',
 };
