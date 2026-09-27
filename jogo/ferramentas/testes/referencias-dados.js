@@ -123,6 +123,14 @@ async function capturarDesempenho(browser, raiz, saves, arq) {
   const { context, page } = await abrir({ browser, url, tamanho: 'notebook', save, query: '?debug=1', reducedMotion: 'no-preference' });
   await page.waitForFunction(() => window.__reino && document.querySelector('.btn-comecar'), null, { timeout: 30000 });
   await page.click('.btn-comecar');
+  // jogo com login (save-e-mescla.md §12): depois da abertura, a senha da Mariana (o login dela vem preenchido,
+  // o save sintético está na chave dela); jogo de antes do login vai direto ao mapa
+  await page.waitForFunction(() => window.__reino.estado() === 'mapa' || !!document.querySelector('#jogador-entrar-senha'), null, { timeout: 30000 });
+  if (await page.$('#jogador-entrar-senha')) {
+    await page.fill('#jogador-entrar-login', 'mariana');
+    await page.fill('#jogador-entrar-senha', 'unicorlice77');
+    await page.press('#jogador-entrar-senha', 'Enter');
+  }
   await page.waitForFunction(() => window.__reino.estado() === 'mapa', null, { timeout: 30000 });
   const cdp = await context.newCDPSession(page);
   await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });

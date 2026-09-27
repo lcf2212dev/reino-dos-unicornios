@@ -6,6 +6,9 @@ Guia de uso para o Leandro. As regras técnicas ficam em `docs/contratos/`.
 - **Tablet, celular ou notebook (recomendado):** abra https://claude.ai/artifact/CQUd5TWJQW3fWWw5Cvg77U
   - Precisa estar logado no claude.ai com a sua conta, porque o link é privado.
   - O progresso é sincronizado entre os aparelhos e entre abas. Um aparelho novo já abre com o progresso dela.
+  - **Entrar:** toda vez que o jogo abre, toque em "Entrar no Reino" e digite a senha. Mariana: login `mariana`,
+    senha `unicorlice77` (o login de quem jogou por último já vem preenchido). Outros jogadores usam "Criar conta".
+    Para sair: ⚙️ Ajustes → 🚪 Sair.
 - **Como andar:**
   - **Notebook:** clique num lugar e ela vai até lá; clique numa pessoa ou objeto e ela conversa ou usa. Segurando o
     botão do mouse, ela segue o ponteiro. As setas (ou W, A, S, D) também andam.

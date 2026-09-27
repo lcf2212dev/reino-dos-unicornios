@@ -14,19 +14,18 @@
     return UI.abertura({ montaria: Reino.Unicornios.def('inicial', est().corInicial), aparencia: est().aparencia }).el;
   }
 
+  /* A abertura vem ANTES do login (e do P.carregar): o visual é o de quem jogou por último neste aparelho, só lido
+     do save dele (Jogadores.visualGuardado); sem save, o padrão. A música (ajuste do save) liga depois de carregar. */
   function telaInicio() {
     return new Promise(function (resolver) {
       var t = UI.abrirTela('inicio');
-      var cena = UI.abertura({ montaria: Reino.Unicornios.def('inicial', est().corInicial), aparencia: est().aparencia });
+      var ultimo = Reino.Jogadores.ultimo(), vis = (ultimo && Reino.Jogadores.visualGuardado(ultimo)) || {};
+      var ap = Object.assign({}, PA.APARENCIA_PADRAO, vis.aparencia || {});
+      var cena = UI.abertura({ montaria: Reino.Unicornios.def('inicial', vis.corInicial || 'rosa'), aparencia: ap });
       var ir = el('button.btn-grande.btn-principal.btn-comecar.btn-pulsar', { type: 'button' }, 'Entrar no Reino ✨');
+      // (sem "Trocar jogador" aqui: o login vem logo depois do toque)
       var botoes = el('div.inicio-botoes', ir);
       var nomes = Reino.materias.map(function (m) { return m.nome; });
-      // contrato com a tela de jogadores: o botão só aparece quando ela existe
-      if (typeof UI.trocarJogador === 'function') {
-        var trocar = el('button.btn-pequeno.btn-trocar-jogador', { type: 'button' }, 'Trocar jogador');
-        trocar.addEventListener('click', function () { UI.trocarJogador(); });
-        botoes.appendChild(trocar);
-      }
       t.appendChild(el('div.inicio', cena.el, el('div.inicio-baixo', botoes,
         el('p.inicio-sub.inicio-materias', 'Revisão de ' + nomes.slice(0, -1).join(', ') + (nomes.length > 1 ? ' e ' : '') + nomes[nomes.length - 1]))));
       var foi = false;
@@ -35,7 +34,6 @@
         foi = true;
         Reino.Som.ativar(); Reino.Som.tocar('porta');
         UI.telaCheia(true);
-        if (est().ajustes.musica) Reino.Som.musica(true);
         cena.entrar().then(function () { UI.fecharTela(t); resolver(); });   // brilho e zoom no castelo
       });
       setTimeout(function () { ir.focus(); }, 50);
@@ -171,15 +169,29 @@
   }
 
   /* ---------- início ---------- */
-  /* Quem joga vem antes de tudo (sistemas/jogadores.js): o save lido é o dele. Aparelho da Mariana (e o modo
-     congelado dos testes) segue direto, sem tela; aparelho novo pergunta "Quem vai jogar?" (ui/jogadores.js). */
+  /* Abertura → toque em "Entrar no Reino" → login com senha (ui/jogadores.js; o login de quem jogou por último vem
+     preenchido) → só então o save DESSE jogador é escolhido e lido (P.usarJogador antes do P.carregar) → jogo.
+     Nada do save é lido para jogar nem gravado antes da senha certa. Modo congelado dos testes: a Mariana direto. */
   function iniciar() {
     var login = Reino.Jogadores.decidirSemTela();
-    if (login) { Reino.Jogadores.usar(login); comecar(); return; }
-    UI.telaQuemVaiJogar().then(function (l) { Reino.Jogadores.usar(l); comecar(); });
+    // (fora do congelado, só o "Trocar jogador" que acabou de conferir a senha: a música espera o 1º toque)
+    if (login) { Reino.Jogadores.usar(login); comecar(false, !Reino.congelado); return; }
+    telaInicio()
+      .then(function () { return UI.telaQuemVaiJogar({ ultimo: Reino.Jogadores.ultimo() }); })
+      .then(function (l) { Reino.Jogadores.usar(l); comecar(true); });
   }
-  function comecar() {
+  // abriu: veio da abertura (o toque já liberou o som); musicaNoToque: sem toque nesta página ainda, a música liga no 1º
+  function comecar(abriu, musicaNoToque) {
     P.carregar();
+    if (abriu && est().ajustes.musica) Reino.Som.musica(true);
+    if (musicaNoToque) {
+      var primeiro = function () {
+        ['pointerdown', 'keydown'].forEach(function (ev) { window.removeEventListener(ev, primeiro, true); });
+        Reino.Som.ativar();
+        if (est().ajustes.musica) Reino.Som.musica(true);
+      };
+      ['pointerdown', 'keydown'].forEach(function (ev) { window.addEventListener(ev, primeiro, true); });
+    }
     UI.aplicarAjustes();
     Mapa.criar(Reino.materias);
     Mapa.prerender();
@@ -206,7 +218,7 @@
 
     esperarProgresso().then(function () {
       var novo = !est().comecou;
-      (novo ? primeiraVez() : Reino.congelado ? Promise.resolve() : telaInicio()).then(function () { entrarNoReino(novo); });
+      (novo ? primeiraVez() : Promise.resolve()).then(function () { entrarNoReino(novo); });
     });
   }
 

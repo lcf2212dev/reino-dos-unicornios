@@ -37,7 +37,6 @@
 .jogadores-retrato canvas { image-rendering: pixelated; max-width: 100%; height: auto; }
 .jogadores-icone { font-size: 2.4em; line-height: 1; }
 .jogadores-nome { font-size: 1.35em; overflow-wrap: anywhere; text-align: center; }
-.jogadores-cadeado { font-size: 0.78em; opacity: 0.85; }
 .jogadores-estado { margin: 0; text-align: center; font-size: 0.85em; opacity: 0.8; }
 .jogadores .intro-botoes { justify-content: center; }
 .jogadores-secao { display: flex; flex-direction: column; gap: 8px; }
@@ -77,5 +76,24 @@
   .jogadores-cartao { min-height: 100px; }
   .jogadores-retrato canvas { height: 44px; }
   .jogadores-nome { font-size: 0.95em; }
-  .jogadores-cadeado { font-size: 0.7em; }
+}
+/* duas colunas em tela larga e baixa (notebook): cartões à esquerda, abas e formulário à direita, sem rolar */
+.jogadores-lado-cartoes, .jogadores-lado-form { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+@media (min-width: 760px) and (max-height: 900px) {
+  .tela-jogadores .painel { width: min(1040px, 100%); }
+  .jogadores { display: grid; grid-template-columns: minmax(250px, 0.9fr) minmax(360px, 1.1fr); gap: 22px; align-items: start; }
+  .jogadores-lado-cartoes { max-height: calc(100vh - 150px); overflow: auto; padding: 4px; }
+  .jogadores-lado-form .jogadores-form { width: 100%; }
+  .jogadores-grade { grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); }
+}
+/* altura curta: cartões e campos menores */
+@media (max-height: 820px) {
+  .jogadores-cartao { min-height: 88px; padding: 6px 4px; }
+  .jogadores-retrato { min-height: 40px; }
+  .jogadores-retrato canvas { height: 40px; }
+  .jogadores-nome { font-size: 1em; }
+  .jogadores-campo { min-height: 44px; }
+  .jogadores-aba { min-height: 44px; }
+  .jogadores-form { gap: 6px; }
+  .tela-jogadores .painel-topo { padding-top: 8px; padding-bottom: 8px; }
 }
