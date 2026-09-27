@@ -103,8 +103,18 @@ test('versão nova: sem fetch no e2e; tela aberta e andando esperam; parada no m
     let texto = await page.evaluate(() => document.querySelector('#claude-balao .claude-texto').textContent);
     assert.match(texto, /Chegou novidade no Reino!/);
     assert.match(texto, /O que você fez fica guardado\./);
-    await page.evaluate(() => Reino._motor.canvas.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, pointerType: 'touch', clientX: 5, clientY: 400 })));
-    await page.evaluate(() => Reino._motor.canvas.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, pointerType: 'touch', clientX: 5, clientY: 400 })));
+    // o toque vai num chão livre a poucos tiles dela (um ponto fixo da tela podia cair num prédio, e ela entrava nele)
+    const toque = await page.evaluate(() => {
+      var t = Jogador.tile(), c = Reino.Cena.atual(), T = Mapa.T;
+      for (var d = 2; d < 8; d++) for (var s = -1; s <= 1; s += 2) {
+        var x = t.x + s * d;
+        if (!c.solido(x, t.y) && c.caminho(t, { x: x, y: t.y })) return Reino.Cena.paraTela(x * T + T / 2, t.y * T + T / 2);
+      }
+      return null;
+    });
+    assert.ok(toque, 'achou um chão livre perto dela para tocar');
+    await page.evaluate((q) => Reino._motor.canvas.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, pointerType: 'touch', clientX: q.x, clientY: q.y })), toque);
+    await page.evaluate((q) => Reino._motor.canvas.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, pointerType: 'touch', clientX: q.x, clientY: q.y })), toque);
     d = await dep(page);
     assert.strictEqual(d.fase, 'nova', 'mexeu no aviso: desiste por agora');
     assert.strictEqual(d.cancelados, 1);
