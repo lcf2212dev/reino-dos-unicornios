@@ -7,7 +7,7 @@
    personagens/jogador-desenho.js, que usa Reino._jogador (INTERNO: J, DIST_BEBE, pontoAtras, fundura). */
 (function () {
   var T = Mapa.T;
-  var J = { tPulo: 0, x: 0, y: 0, olharX: 0, olharY: 1, andando: false, caminho: [], aoChegar: null, t: 0, rastro: [], faiscas: [], portaIgnorada: null, marcador: null };
+  var J = { tPulo: 0, x: 0, y: 0, olharX: 0, olharY: 1, andando: false, caminho: [], aoChegar: null, t: 0, rastro: [], faiscas: [], portaIgnorada: null, marcador: null, silhueta: null };
   var DIST_BEBE = 17;   // quantos pixels o bebê anda atrás da Mariana
 
   /* ---------- nado ----------

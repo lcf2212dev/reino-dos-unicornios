@@ -1,5 +1,6 @@
-/* Aura (aura): a pontuação que cresce com cada pergunta certa e cai com cada errada (o dobro), e o brilho em
-   volta da Mariana, que muda de cor a cada faixa (branca no começo). Números em Reino.config.aura.
+/* Aura (aura): a pontuação que cresce com cada pergunta certa e cai com cada errada (o dobro), e o brilho que
+   contorna a figura da Mariana (J.silhueta, de personagens/jogador-desenho.js), que muda de cor a cada faixa (branca
+   no começo). Números em Reino.config.aura.
    Cada contagem também avisa o barramento (Reino.EVENTOS.RESPOSTAS: { certas, erradas }), para o foguete.
    Quem conta: atividades/missao.js (cada Conferir da sala), atividades/treino.js e atividades/provas.js (na entrega,
    questão por questão), sistemas/surpresa-painel.js (cada resposta), por Reino.Aura.contar(certas).
@@ -126,49 +127,94 @@
     if (c !== 'arco-iris') return c;
     return ARCO[animar ? Math.floor(t / 250) % ARCO.length : 0];
   }
-  // uma oval de pixels (meia-largura rx, meia-altura ry) centrada em (cx, cy), só a borda (esp px) ou cheia
-  function oval(p, cx, cy, rx, ry, cor, esp) {
-    for (var yy = -ry; yy <= ry; yy++) {
-      var w = Math.round(rx * Math.sqrt(Math.max(0, 1 - (yy * yy) / (ry * ry))));
-      if (w <= 0) continue;
-      if (!esp) { p.ret(cx - w, cy + yy, w * 2, 1, cor); continue; }
-      var dentro = Math.round((rx - esp) * Math.sqrt(Math.max(0, 1 - (yy * yy) / ((ry - esp) * (ry - esp)))));
-      if (Math.abs(yy) > ry - esp) dentro = 0;
-      var lado = Math.max(1, w - dentro);
-      p.ret(cx - w, cy + yy, lado, 1, cor);
-      p.ret(cx + w - lado, cy + yy, lado, 1, cor);
+  // contorno da figura: para cada sprite (o canvas já espelhado, em cache no desenho dela), UMA vez, os pixels vazios
+  // colados na figura (anel 1, cheio) e os do anel seguinte (anel 2, clarinho); depois, um canvas por cor, também
+  // guardado. Nada de getImageData por quadro.
+  var BORDA = 2, contornos = new WeakMap();
+  function mascara(img) {
+    var m = contornos.get(img);
+    if (m) return m;
+    var w = img.width, h = img.height, W = w + BORDA * 2, H = h + BORDA * 2;
+    var cheio = new Uint8Array(W * H), anel = new Uint8Array(W * H), pontos = [];
+    try {
+      var d = img.getContext('2d').getImageData(0, 0, w, h).data;
+      for (var y = 0; y < h; y++) for (var x = 0; x < w; x++) if (d[(y * w + x) * 4 + 3] > 40) cheio[(y + BORDA) * W + x + BORDA] = 1;
+    } catch (e) { cheio = null; }
+    if (cheio) {
+      // anel k: vazio, a no máximo k pixels (em volta, com diagonal) de um pixel da figura
+      for (var k = 1; k <= BORDA; k++) {
+        for (var yy = 0; yy < H; yy++) for (var xx = 0; xx < W; xx++) {
+          var i = yy * W + xx;
+          if (cheio[i] || anel[i]) continue;
+          var perto = false;
+          for (var dy = -1; dy <= 1 && !perto; dy++) for (var dx = -1; dx <= 1 && !perto; dx++) {
+            var x2 = xx + dx, y2 = yy + dy;
+            if (x2 < 0 || y2 < 0 || x2 >= W || y2 >= H) continue;
+            var j = y2 * W + x2;
+            if (cheio[j] || (anel[j] && anel[j] < k)) perto = true;
+          }
+          if (perto) { anel[i] = k; if (k === 1) pontos.push(i); }
+        }
+      }
     }
+    m = { W: W, H: H, anel: cheio ? anel : null, pontos: pontos, cores: {} };
+    contornos.set(img, m);
+    return m;
   }
-  // o tamanho do corpo em volta do qual a aura brilha (a pé, montada no unicórnio pequeno ou grande)
-  function tamanho() {
-    var J = window.Jogador;
-    // no banho de espuma o unicórnio está na banheira e ela fica a pé, ao lado
-    var B = R.Banho, noBanho = false;
-    try { noBanho = !!(B && B.desenhandoUni && B.desenhandoUni()); } catch (e) { noBanho = false; }
-    if (noBanho || !J.montado || !J.montado()) return { rx: 9, ry: 14, alto: 26 };
-    var P = R.Progresso, u = P.estado().unis[P.montaria()];
-    var grande = R.Unicornios.estagio(u ? u.xp : 0) >= 2;
-    return grande ? { rx: 19, ry: 20, alto: 38 } : { rx: 15, ry: 16, alto: 30 };
+  function contornoNaCor(m, cor) {
+    if (m.cores[cor]) return m.cores[cor];
+    var c = window.PA.novoCanvas(m.W, m.H), ctx = c.getContext('2d'), img = ctx.createImageData(m.W, m.H), d = img.data;
+    var n = parseInt(cor.slice(1), 16), rgb = [n >> 16, (n >> 8) & 255, n & 255];
+    for (var i = 0; i < m.anel.length; i++) {
+      if (!m.anel[i]) continue;
+      d[i * 4] = rgb[0]; d[i * 4 + 1] = rgb[1]; d[i * 4 + 2] = rgb[2];
+      d[i * 4 + 3] = m.anel[i] === 1 ? 235 : 90;
+    }
+    ctx.putImageData(img, 0, 0);
+    m.cores[cor] = c;
+    return c;
+  }
+  // brilhinho de 1 px com bracinhos na cor, no ponto k do anel 1 (px do jogo)
+  function brilhinho(p, s, m, k, cor, a) {
+    var i = m.pontos[k % m.pontos.length];
+    var bx = s.x - m.W / 2 + (i % m.W), by = s.yPes + BORDA - m.H + Math.floor(i / m.W);
+    if (s.linha !== null && by >= s.linha) return;
+    p.ret(bx, by, 1, 1, 'rgba(255,255,255,' + a + ')');
+    var c = rgba(cor, 0.8 * a);
+    p.ret(bx - 1, by, 1, 1, c); p.ret(bx + 1, by, 1, 1, c); p.ret(bx, by - 1, 1, 1, c); p.ret(bx, by + 1, 1, 1, c);
   }
   A.itensDesenho = function (p, t, animar) {
-    var J = window.Jogador;
+    var J = window.Jogador, s = J.silhueta;
+    if (!s || !s.img || !window.PA) return [];
     if (R.util && R.util.reduzMovimentoSistema) animar = false;
-    var f = A.faixa(A.decimos()), cor = corAgora(f, t, animar), tam = tamanho();
-    var pulsa = animar ? Math.round(Math.sin(t / 420)) : 0;
-    var x = Math.round(J.x), yPe = Math.round(J.y), cy = yPe - Math.round(tam.alto / 2);
-    var rx = tam.rx + pulsa, ry = tam.ry + pulsa;
-    // atrás dela (y um pouco menor que o dos pés: o sort do laço a põe antes da Mariana e do unicórnio)
+    var m = mascara(s.img);
+    if (!m.anel) return [];
+    var cor = corAgora(A.faixa(A.decimos()), t, animar), img = contornoNaCor(m, cor);
+    var onda = animar ? (Math.sin(t / 420) + 1) / 2 : 0.5;   // 0..1: o brilho respira devagar
+    // logo atrás dela (y um pouco menor que o dos pés: o sort do laço a põe antes da Mariana e do unicórnio)
     return [{ y: J.y - 0.5, desenhar: function () {
-      oval(p, x, cy, rx + 2, ry + 2, rgba(cor === '#ffffff' ? '#fff8d8' : cor, 0.2), 0);
-      oval(p, x, cy, rx, ry, rgba(cor, 0.3), 0);
-      oval(p, x, cy, rx + 2, ry + 2, rgba(cor, 0.8), 1);
-      // brilhinhos girando em volta (parados com animações desligadas)
-      for (var i = 0; i < 3; i++) {
-        var ang = (animar ? t / 900 : 0.6) + i * 2.094;
-        var bx = Math.round(x + Math.cos(ang) * (rx + 3)), by = Math.round(cy + Math.sin(ang) * (ry + 3));
-        p.ret(bx, by, 1, 1, '#ffffff');
-        p.ret(bx - 1, by, 1, 1, rgba(cor, 0.8)); p.ret(bx + 1, by, 1, 1, rgba(cor, 0.8));
-        p.ret(bx, by - 1, 1, 1, rgba(cor, 0.8)); p.ret(bx, by + 1, 1, 1, rgba(cor, 0.8));
+      var ctx = p.ctx;
+      ctx.save();
+      if (s.linha !== null) {
+        // na água, só o que está acima da linha d'água (como a figura)
+        ctx.beginPath();
+        ctx.rect(0, 0, ctx.canvas.width, Math.max(0, p.tela(s.x, s.linha).y));
+        ctx.clip();
+      }
+      // o halo: o próprio contorno desfocado na cor (px da tela), por baixo do contorno nítido
+      ctx.shadowColor = rgba(cor === '#ffffff' ? '#fff8d8' : cor, 0.75 + 0.25 * onda);
+      ctx.shadowBlur = (3 + 3 * onda) * (p.escala || 3);
+      p.sprite(img, s.x, s.yPes + BORDA);
+      ctx.shadowBlur = 0;
+      ctx.globalAlpha = 0.85 + 0.15 * onda;
+      p.sprite(img, s.x, s.yPes + BORDA);
+      ctx.restore();
+      // brilhinhos acendendo e apagando em pontos do contorno (parados com animações desligadas)
+      if (!m.pontos.length) return;
+      for (var b = 0; b < 3; b++) {
+        var fase = animar ? t / 700 + b / 3 : 0.5, vez = Math.floor(fase);
+        var a = animar ? Math.sin((fase - vez) * Math.PI) : 1;
+        brilhinho(p, s, m, vez * 7919 + b * Math.floor(m.pontos.length / 3), cor, a.toFixed(3));
       }
     } }];
   };
