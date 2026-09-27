@@ -14,4 +14,5 @@
 # cce5481 = auditoria de bugs: emoji no fim da fala dos NPCs, mural da Escola e vitrine da Loja
 # 0c25e4f = mescla de save incompleto grava o resultado em vez de ERRO
 # 4954a3f = prova de Geografia
-4954a3f
+# e0622c8 = Aura: brilho em volta da Mariana, chip no HUD, campo aura no save e 7 falas
+e0622c8
