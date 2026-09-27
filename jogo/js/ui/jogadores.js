@@ -1,6 +1,6 @@
 /* "Entrar no Reino" (UI.telaQuemVaiJogar), "Trocar jogador" (UI.trocarJogador) e "Sair" (UI.sairDoJogador): cartões
-   com quem este aparelho lembra ("Neste aparelho", entram direto) e os outros do banco ("No reino"), e as abas
-   "Entrar" (login e senha) e "Criar conta" (login, senha e repetir a senha, só texto).
+   com quem este aparelho lembra ("Neste aparelho") e os outros do banco ("No reino"), que só preenchem o login (todo
+   mundo entra com senha), e as abas "Entrar" (login e senha) e "Criar conta" (login, senha e repetir, só texto).
    As regras (contas, onde mora cada save) ficam em sistemas/jogadores.js; aqui, só as telas.
    Roda também ANTES do P.carregar (aparelho novo): nada aqui lê o estado do save. CSS: css/ui-jogadores.css. */
 (function () {
@@ -127,10 +127,10 @@
         var login = eLogin.input.value, senha = eSenha.input.value;
         if (!J().valido(login)) { aviso(eErro, 'login'); eLogin.input.focus(); return; }
         ocupado(eIr, true);
-        J().entrar(login, senha === '' && J().lembrado(login) ? undefined : senha).then(function (r) {
+        J().entrar(login, senha).then(function (r) {
           ocupado(eIr, false);
           if (r.ok) { som('selecionar'); entrou(login); return; }
-          aviso(eErro, r.erro === 'senha' ? 'senhaErrada' : r.erro);
+          aviso(eErro, r.erro === 'senha' ? 'senhaErrada' : r.erro); mostrarBotao(eIr);
           (r.erro === 'naoExiste' ? eLogin : eSenha).input.select();
         });
       }
@@ -155,7 +155,7 @@
         J().criar(login, senha).then(function (r) {
           ocupado(cIr, false);
           if (r.ok) { som('moeda'); entrou(login); return; }
-          aviso(cErro, r.erro); (r.erro === 'senha' ? s1 : cLogin).input.focus();
+          aviso(cErro, r.erro); (r.erro === 'senha' ? s1 : cLogin).input.focus(); mostrarBotao(cIr);
         });
       }
       cIr.addEventListener('click', tentarCriar);
@@ -172,18 +172,21 @@
       }
       mostrarAba('entrar', false);
 
+      // cartão = atalho do login (todo mundo entra com senha): preenche o login e leva à senha
+      function destacar() {
+        pn.conteudo.querySelectorAll('.jogadores-cartao').forEach(function (b) {
+          b.setAttribute('aria-current', String(b.getAttribute('data-login') === eLogin.input.value));
+        });
+      }
       function cartao(login) {
-        var lembrado = J().lembrado(login), atual = opcoes.podeFechar && login === J().atual();
-        var b = el('button.jogadores-cartao', { type: 'button', role: 'listitem', 'data-login': login, 'aria-current': atual ? 'true' : null },
+        var b = el('button.jogadores-cartao', { type: 'button', role: 'listitem', 'data-login': login },
           el('span.jogadores-retrato', { 'aria-hidden': 'true' }, arteDoCartao(login)),
-          el('b.jogadores-nome', J().nomeDoLogin(login)),
-          lembrado ? null : el('small.jogadores-cadeado', '🔒 senha'));
+          el('b.jogadores-nome', J().nomeDoLogin(login)));
         b.addEventListener('click', function () {
           som('toque');
-          if (lembrado) { J().entrar(login).then(function (r) { if (r.ok) entrou(login); }); return; }
           aviso(eErro, null);
           eLogin.input.value = login; eSenha.input.value = '';
-          mostrarAba('entrar', true);
+          mostrarAba('entrar', false); destacar(); eSenha.input.focus();
         });
         return b;
       }
@@ -193,16 +196,25 @@
         lista.forEach(function (l) { (J().lembrado(l) ? gradeAqui : gradeReino).appendChild(cartao(l)); });
         secAqui.hidden = !gradeAqui.firstChild; secReino.hidden = !gradeReino.firstChild;
         if (foco) { var f = pn.conteudo.querySelector('.jogadores-cartao[data-login="' + foco + '"]'); if (f) f.focus(); }
+        destacar();
       }
-      pn.conteudo.appendChild(el('div.jogadores', secAqui, secReino, estado, barra, paineis.entrar, paineis.criar));
+      eLogin.input.addEventListener('input', destacar);
+      // quem jogou por último neste aparelho vem preenchido, e o foco vai para a senha
+      if (opcoes.ultimo && J().valido(opcoes.ultimo)) eLogin.input.value = opcoes.ultimo;
+      // duas colunas em tela larga e baixa (cartões à esquerda, formulário à direita: ui-jogadores.css)
+      pn.conteudo.appendChild(el('div.jogadores', el('div.jogadores-lado-cartoes', secAqui, secReino, estado),
+        el('div.jogadores-lado-form', barra, paineis.entrar, paineis.criar)));
+      // o botão sempre à vista quando a senha tem o foco ou aparece um erro (telas baixas)
+      function mostrarBotao(b) { try { b.scrollIntoView({ block: 'nearest' }); } catch (x) { /* navegador antigo */ } }
+      eSenha.input.addEventListener('focus', function () { mostrarBotao(eIr); });
+      s2.input.addEventListener('focus', function () { mostrarBotao(cIr); });
       mostrar(J().listarLocais());
       J().listar().then(function (lista) { if (fim) return; mostrar(lista); estado.hidden = true; });
       // Esc na tela sem ✕ (entrada do jogo): volta de "Criar conta" para "Entrar"
       if (!opcoes.podeFechar) pn.tela._aoEsc = function () { if (paineis.entrar.hidden) mostrarAba('entrar', true); };
       setTimeout(function () {
         if (fim || pn.conteudo.contains(document.activeElement)) return;
-        var primeiro = gradeAqui.querySelector('.jogadores-cartao');
-        (primeiro || eLogin.input).focus();
+        (eLogin.input.value ? eSenha : eLogin).input.focus();
       }, 80);
     });
   };

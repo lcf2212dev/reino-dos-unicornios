@@ -37,6 +37,11 @@ async function comBancoLento(fn) {
   try {
     // vivo, a tela de início espera o "Entrar no Reino"
     await c.js("(function () { var b = document.querySelector('.tela-inicio .btn-comecar'); if (b) b.click(); })()");
+    // depois da abertura, o login com a senha da Mariana (o save sintético é dela; save-e-mescla.md §12)
+    await c.page.waitForSelector('#jogador-entrar-senha', { timeout: 20000 });
+    await c.page.fill('#jogador-entrar-login', 'mariana');
+    await c.page.fill('#jogador-entrar-senha', 'unicorlice77');
+    await c.page.press('#jogador-entrar-senha', 'Enter');
     await c.page.waitForFunction(() => window.__reino.estado() === 'mapa' && !document.querySelector('#hud').hidden && !Reino.UI.temTela(), null, { timeout: 20000 });
     await c.avancar(1000);
     await c.js(BANCO_LENTO);

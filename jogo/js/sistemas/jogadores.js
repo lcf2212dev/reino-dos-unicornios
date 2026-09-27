@@ -3,8 +3,9 @@
    - A Mariana é o jogador 'mariana': o save de sempre (chaveSave 'mariana-reino-v1', doc progresso/mariana, linha
      'mariana' do banco). Login reservado. A conta dela mora no banco como as outras (servidor de casa: linha
      'mariana' da tabela jogadores, semeada pelo servidor; claude.ai: doc jogadores/mariana, criado pelo jogo com
-     `config.jogadores.senhaMariana` se faltar); sem banco, confere com `senhaMariana`. O aparelho que tem o save dela
-     (ou a lembra) entra direto; os outros pedem a senha. "Sair" marca SAIU e o próximo carregamento pede login.
+     `config.jogadores.senhaMariana` se faltar); sem banco, confere com `senhaMariana`.
+   - Ninguém entra sem senha (fora do modo congelado dos testes): toda abertura do jogo pede login e senha; o login de
+     quem jogou por último vem preenchido (J.ultimo). "Sair" marca SAIU: nem esse login vem preenchido.
    - Outro jogador: 'reino-v1-<login>' no aparelho, progresso/<login> no claude.ai, /api/progresso/<login> no servidor
      de casa (só no servidor que anuncia vários jogadores: sistemas/progresso-nuvem.js).
    - Neste aparelho: 'reino-jogador-atual' (o login lembrado) e 'reino-jogadores' ({ login: { senha, criado } }, as
@@ -18,7 +19,8 @@
   var MARIANA = 'mariana';
   var CHAVE_ATUAL = 'reino-jogador-atual';
   var CHAVE_CONTAS = 'reino-jogadores';
-  var SAIU = ':saiu';   // em CHAVE_ATUAL depois de "Sair" (nunca é login: tem ':'); o próximo carregamento pede login
+  var SAIU = ':saiu';   // em CHAVE_ATUAL depois de "Sair" (nunca é login: tem ':'); o próximo login vem em branco
+  var CHAVE_ENTROU = 'reino-entrou';   // sessionStorage: login que acabou de passar pela senha no "Trocar jogador"
   function cfg() { return R.config.jogadores || { loginMin: 2, loginMax: 20, senhaMin: 3, senhaMax: 30 }; }
   function P() { return R.Progresso; }
   function objeto(x) { return !!x && typeof x === 'object' && !Array.isArray(x); }
@@ -121,17 +123,32 @@
     R.util.emit(R.EVENTOS.PERFIL, J.perfil());
   };
 
-  /* Quem joga sem perguntar nada (null = mostrar "Quem vai jogar?"):
-     modo congelado (testes) = a Mariana, sem ler nada; o login lembrado neste aparelho; aparelho com o save da
-     Mariana e sem jogador lembrado = a Mariana; sem armazenamento = a Mariana (como sempre foi). Aparelho novo = null. */
+  /* Quem joga sem perguntar nada: só o modo congelado dos testes (a Mariana, sem ler nada). Fora dele, null: a tela
+     "Entrar no Reino" pede a senha, em todo aparelho (inclusive o que tem o save da Mariana). */
   J.decidirSemTela = function () {
     if (R.congelado) return MARIANA;
-    var lembrado;
-    try { lembrado = localStorage.getItem(CHAVE_ATUAL); } catch (e) { return MARIANA; }
-    if (lembrado === MARIANA) return MARIANA;
-    // lembrado que este aparelho não conhece mais: pergunta (nunca cai no save da Mariana por engano)
-    if (lembrado) return valido(lembrado) && contasLocais()[lembrado] ? lembrado : null;
+    // "Trocar jogador" acabou de conferir a senha nesta aba e recarregou: não pede de novo (vale uma vez só)
+    var entrou = null;
+    try { entrou = sessionStorage.getItem(CHAVE_ENTROU); if (entrou !== null) sessionStorage.removeItem(CHAVE_ENTROU); } catch (e) { entrou = null; }
+    return valido(entrou) && entrou === J.ultimo() ? entrou : null;
+  };
+  /* Quem jogou por último neste aparelho (vem preenchido no login): o login lembrado; sem ele, a Mariana se o save
+     dela está aqui; depois de "Sair", ninguém. Só leitura. */
+  J.ultimo = function () {
+    var a = null;
+    try { a = localStorage.getItem(CHAVE_ATUAL); } catch (e) { return null; }
+    if (a === SAIU) return null;
+    if (a === MARIANA || (valido(a) && contasLocais()[a])) return a;
     return lerTexto(R.config.chaveSave) ? MARIANA : null;
+  };
+  /* O visual guardado de um jogador (aparência e cor do unicórnio), para a abertura antes do login: só LEITURA do
+     save dele neste aparelho, nada é gravado. null = sem save aqui (a abertura usa o padrão). */
+  J.visualGuardado = function (login) {
+    if (!valido(login)) return null;
+    var e = null;
+    try { e = JSON.parse(lerTexto(login === MARIANA ? R.config.chaveSave : (cfg().prefixoSave || 'reino-v1-') + login) || 'null'); } catch (x) { e = null; }
+    if (!objeto(e)) return null;
+    return { aparencia: objeto(e.aparencia) ? e.aparencia : null, corInicial: typeof e.corInicial === 'string' ? e.corInicial : null };
   };
   // escolhe o jogador deste carregamento (antes do P.carregar)
   J.usar = function (login) {
@@ -142,8 +159,8 @@
   function marianaAqui() {
     try { var a = localStorage.getItem(CHAVE_ATUAL); return a === MARIANA || (a !== SAIU && !!lerTexto(R.config.chaveSave)); } catch (e) { return true; }
   }
-  // senha da Mariana: sem `senhaMariana` no config ela entra direto, como antes
-  function senhaMarianaCerta(senha) { var s = cfg().senhaMariana; return !s || senha === s; }
+  // senha da Mariana sem banco: a do config (nunca sem senha: config vazio = ninguém entra por aqui)
+  function senhaMarianaCerta(senha) { var s = cfg().senhaMariana; return !!s && senha === s; }
   J.lembrado = function (login) { return login === MARIANA ? marianaAqui() : !!contasLocais()[login]; };
   // os lembrados neste aparelho (a Mariana sempre, primeiro)
   J.listarLocais = function () { return [MARIANA].concat(Object.keys(contasLocais()).sort()); };
@@ -184,15 +201,14 @@
     });
   };
 
-  /* Entra: { ok: true } ou { erro: 'senha' | 'naoExiste' | 'rede' }. Quem este aparelho lembra entra sem senha (senha
-     undefined); a Mariana, fora do aparelho dela, confere com `senhaMariana`; os outros conferem no banco e, sem ele (ou
-     conta só deste aparelho), aqui. */
+  /* Entra: { ok: true } ou { erro: 'senha' | 'naoExiste' | 'rede' }. Sempre com senha (sem senha = 'senha'): a Mariana
+     confere no banco (entrarMariana); os outros no banco e, sem ele (ou conta só deste aparelho), aqui. */
   J.entrar = function (login, senha) {
     var local = contasLocais()[login];
     function aqui() { return !local ? { erro: 'naoExiste' } : local.senha === senha ? { ok: true } : { erro: 'senha' }; }
     var r;
-    if (login === MARIANA) r = senha === undefined ? Promise.resolve(marianaAqui() ? { ok: true } : { erro: 'senha' }) : entrarMariana(senha);
-    else if (local && senha === undefined) r = Promise.resolve({ ok: true });
+    if (typeof senha !== 'string' || !senha) r = Promise.resolve({ erro: 'senha' });
+    else if (login === MARIANA) r = entrarMariana(senha);
     else if (!valido(login)) r = Promise.resolve({ erro: 'naoExiste' });
     else {
       r = fonte().then(function (f) {
@@ -207,10 +223,13 @@
           var d = s.data();
           return d && d.senha === senha ? { ok: true } : { erro: 'senha' };
         });
-      }).catch(function () { return { erro: 'rede' }; });
+      }).catch(function () { return { erro: 'rede' }; }).then(function (x) {
+        // sem resposta do banco: quem este aparelho lembra confere com a senha guardada aqui
+        return x.erro === 'rede' && local && local.senha === senha ? { ok: true } : x;
+      });
     }
     return r.then(function (x) {
-      if (x.ok) lembrar(login, login === MARIANA ? '' : senha === undefined ? local.senha : senha);
+      if (x.ok) lembrar(login, login === MARIANA ? '' : senha);
       return x;
     });
   };
@@ -231,28 +250,31 @@
       return comLimite(doc.get()).then(function (s) {
         if (s.exists) { var d = s.data(); return d && d.senha === senha ? certo : errado; }
         var padrao = cfg().senhaMariana;
-        if (!padrao) return certo;
+        if (!padrao) return errado;
         return comLimite(doc.set({ login: MARIANA, senha: padrao, criado: agora() })).then(function () { return senha === padrao ? certo : errado; });
       });
-    }).catch(function () { return { erro: 'rede' }; });
+    }).catch(function () { return { erro: 'rede' }; }).then(function (x) {
+      // o banco não respondeu (rede, não senha errada): confere com a senha do config; o save sincroniza depois
+      return x.erro === 'rede' && senhaMarianaCerta(senha) ? certo : x;
+    });
   }
 
   /* Troca de jogador com o jogo aberto: grava o de agora no aparelho, ENVIA já para o banco e espera a resposta
      (no máximo o limite de rede ou 5 s; o envio normal sai 1,8 s depois e o reload o perderia), lembra o novo e
      recarrega (o save é lido do zero). Cumpre com false se já é ele. */
-  function guardarERecarregar(marca) {
+  function guardarERecarregar(marca, entrou) {
     var e = P().estado();
     if (e && e.comecou) P().salvar(true);
     var espera = new Promise(function (ok) { setTimeout(ok, Math.min(limite(), 5000)); });
     return Promise.race([P().enviarAgora().catch(function () {}), espera]).then(function () {
-      try { localStorage.setItem(CHAVE_ATUAL, marca); } catch (err) { /* sem armazenamento */ }
+      try { localStorage.setItem(CHAVE_ATUAL, marca); if (entrou) sessionStorage.setItem(CHAVE_ENTROU, marca); } catch (err) { /* sem armazenamento */ }
       location.reload();
       return true;
     });
   }
   J.trocarPara = function (login) {
     if (login === J.atual()) return Promise.resolve(false);
-    return guardarERecarregar(login);
+    return guardarERecarregar(login, true);   // só chamado depois da senha certa (UI.trocarJogador)
   };
   // "Sair": guarda, marca SAIU (o save fica onde está) e recarrega; o próximo carregamento mostra o login
   J.sair = function () { return guardarERecarregar(SAIU); };

@@ -76,19 +76,31 @@ test('usarJogador só antes de carregar e só com login válido', () => {
   assert.ok(m.R.Jogadores.ehMariana());
 });
 
-test('quem joga sem perguntar: congelado, lembrado, aparelho da Mariana, aparelho novo', () => {
-  const J = (loja, op = {}) => { const j = jogo({ loja, ...op }); if (op.congelado) j.R.congelado = true; return j.R.Jogadores.decidirSemTela(); };
-  assert.strictEqual(J({}), null, 'aparelho novo: pergunta');
-  assert.strictEqual(J({ 'mariana-reino-v1': JSON.stringify(save(1)) }), 'mariana', 'aparelho da Mariana: entra nela');
+test('ninguém entra sem perguntar (só o modo congelado); o login de quem jogou por último vem preenchido', () => {
+  const j = (loja, op = {}) => { const x = jogo({ loja, ...op }); if (op.congelado) x.R.congelado = true; return x.R.Jogadores; };
   const contas = JSON.stringify({ joao: { senha: 'abc', criado: 1 } });
-  assert.strictEqual(J({ 'mariana-reino-v1': '{}', 'reino-jogador-atual': 'joao', 'reino-jogadores': contas }), 'joao');
-  assert.strictEqual(J({ 'reino-jogador-atual': 'mariana' }), 'mariana');
-  assert.strictEqual(J({ 'mariana-reino-v1': '{}', 'reino-jogador-atual': 'joao' }), null, 'lembrado sem conta: pergunta (nunca cai na Mariana)');
-  assert.strictEqual(J({ 'mariana-reino-v1': '{}', 'reino-jogador-atual': '__proto__', 'reino-jogadores': '{"__proto__":{"senha":"x"}}' }), null);
-  assert.strictEqual(J({ 'reino-jogador-atual': 'joao', 'reino-jogadores': contas }, { congelado: true }), 'mariana', 'congelado: sempre a Mariana');
-  assert.strictEqual(J(null, { semArmazenamento: true }), 'mariana', 'sem armazenamento: como sempre');
+  const salvo = JSON.stringify(save(1));
+  // decidirSemTela: só o congelado
+  assert.strictEqual(j({}).decidirSemTela(), null, 'aparelho novo: login');
+  assert.strictEqual(j({ 'mariana-reino-v1': salvo }).decidirSemTela(), null, 'aparelho da Mariana: login também');
+  assert.strictEqual(j({ 'reino-jogador-atual': 'joao', 'reino-jogadores': contas }).decidirSemTela(), null);
+  assert.strictEqual(j(null, { semArmazenamento: true }).decidirSemTela(), null, 'sem armazenamento: login');
+  assert.strictEqual(j({ 'reino-jogador-atual': 'joao', 'reino-jogadores': contas, 'mariana-reino-v1': salvo }, { congelado: true }).decidirSemTela(), 'mariana', 'congelado: sempre a Mariana');
+  // ultimo: quem vem preenchido
+  assert.strictEqual(j({}).ultimo(), null);
+  assert.strictEqual(j({ 'mariana-reino-v1': salvo }).ultimo(), 'mariana', 'aparelho com o save dela: o login dela');
+  assert.strictEqual(j({ 'mariana-reino-v1': salvo, 'reino-jogador-atual': 'joao', 'reino-jogadores': contas }).ultimo(), 'joao');
+  assert.strictEqual(j({ 'mariana-reino-v1': salvo, 'reino-jogador-atual': 'joao' }).ultimo(), 'mariana', 'lembrado sem conta: cai no save que existe');
+  assert.strictEqual(j({ 'mariana-reino-v1': salvo, 'reino-jogador-atual': ':saiu' }).ultimo(), null, 'depois de Sair: ninguém');
+  assert.strictEqual(j({ 'reino-jogador-atual': '__proto__', 'reino-jogadores': '{"__proto__":{"senha":"x"}}' }).ultimo(), null);
+  assert.strictEqual(j(null, { semArmazenamento: true }).ultimo(), null);
+  // visualGuardado: só leitura do save, nada gravado
+  const loja = { 'mariana-reino-v1': JSON.stringify({ aparencia: { cabelo: '#111111' }, corInicial: 'menta' }) };
+  const x = jogo({ loja });
+  assert.deepStrictEqual(copia(x.R.Jogadores.visualGuardado('mariana')), { aparencia: { cabelo: '#111111' }, corInicial: 'menta' });
+  assert.strictEqual(x.R.Jogadores.visualGuardado('ninguem'), null);
+  assert.deepStrictEqual(Object.keys(x.gravacoes), [], 'nada gravado');
 });
-
 test('perfil: padrão por jogador, definirPerfil carimba e avisa, nome vazio mostra o login, mescla pelo em', () => {
   const j = jogo();
   j.R.Jogadores.usar('ana');
@@ -115,7 +127,7 @@ test('perfil: padrão por jogador, definirPerfil carimba e avisa, nome vazio mos
   assert.ok(j.P.camposRegistrados().includes('perfil'));
 });
 
-test('contas só no aparelho (file:): criar, repetido, senha, entrar lembrado e com senha', async () => {
+test('contas só no aparelho (file:): criar, repetido, senha, entrar sempre com senha', async () => {
   const loja = {};
   const j = jogo({ loja });
   const J = j.R.Jogadores;
@@ -131,10 +143,12 @@ test('contas só no aparelho (file:): criar, repetido, senha, entrar lembrado e 
   // outro aparelho (loja nova) não conhece: pede a senha e não acha
   const k = jogo({ loja: {} });
   assert.deepStrictEqual(copia(await k.R.Jogadores.entrar('joao', 'abc')), { erro: 'naoExiste' });
-  // neste: lembrado entra sem senha; com senha, confere
-  assert.deepStrictEqual(copia(await J.entrar('joao')), { ok: true });
+  // neste: sempre com senha (lembrado não entra sem ela)
+  assert.deepStrictEqual(copia(await J.entrar('joao')), { erro: 'senha' });
+  assert.deepStrictEqual(copia(await J.entrar('joao', '')), { erro: 'senha' });
+  assert.deepStrictEqual(copia(await J.entrar('joao', 'abc')), { ok: true });
   assert.deepStrictEqual(copia(await J.entrar('joao', 'errada')), { erro: 'senha' });
-  assert.deepStrictEqual(copia(await J.entrar('mariana')), { erro: 'senha' }, 'fora do aparelho dela, a Mariana pede a senha');
+  assert.deepStrictEqual(copia(await J.entrar('mariana')), { erro: 'senha' }, 'a Mariana pede a senha');
   assert.deepStrictEqual(copia(await J.entrar('mariana', 'unicorlice77')), { ok: true });
   assert.strictEqual(loja['reino-jogador-atual'], 'mariana');
   assert.ok(J.lembrado('mariana'), 'depois de entrar, este aparelho lembra dela');
@@ -221,27 +235,25 @@ test('enviarAgora cumpre mesmo quando o banco revoga no meio (com envio pendente
   assert.ok(cumpriu, 'não ficou esperando à toa');
 });
 
-test('senha da Mariana: aparelho dela entra direto, os outros conferem config.jogadores.senhaMariana', async () => {
-  // aparelho com o save dela: lembrada, entra sem senha (e nada é gravado no save)
+test('senha da Mariana sem banco: config.jogadores.senhaMariana, também no aparelho dela, e nunca sem senha', async () => {
   const salvo = JSON.stringify({ v: 1, comecou: true });
   const loja = { 'mariana-reino-v1': salvo };
   const a = jogo({ loja });
-  assert.ok(a.R.Jogadores.lembrado('mariana'));
-  assert.deepStrictEqual(copia(await a.R.Jogadores.entrar('mariana')), { ok: true });
+  assert.deepStrictEqual(copia(await a.R.Jogadores.entrar('mariana')), { erro: 'senha' }, 'aparelho dela: sem senha não entra');
+  assert.deepStrictEqual(copia(await a.R.Jogadores.entrar('mariana', 'errada')), { erro: 'senha' });
   assert.strictEqual(loja['mariana-reino-v1'], salvo, 'o save dela não mudou');
-  // aparelho sem ela: senha errada recusa, a certa entra
+  assert.strictEqual(loja['reino-jogador-atual'], undefined, 'nada marcado com a senha errada');
+  assert.deepStrictEqual(copia(await a.R.Jogadores.entrar('mariana', 'unicorlice77')), { ok: true });
+  assert.strictEqual(loja['mariana-reino-v1'], salvo, 'entrar não grava no save');
   const b = jogo({ loja: {} });
   assert.strictEqual(b.R.config.jogadores.senhaMariana, 'unicorlice77');
-  assert.ok(!b.R.Jogadores.lembrado('mariana'));
-  assert.deepStrictEqual(copia(await b.R.Jogadores.entrar('mariana', 'errada')), { erro: 'senha' });
   assert.deepStrictEqual(copia(await b.R.Jogadores.entrar('mariana', '')), { erro: 'senha' });
   assert.deepStrictEqual(copia(await b.R.Jogadores.entrar('mariana', 'unicorlice77')), { ok: true });
-  // sem senhaMariana no config: entra direto, como antes
+  // sem senhaMariana no config: ninguém entra na Mariana sem banco
   const c = jogo({ loja: {} });
   c.R.config.jogadores.senhaMariana = '';
-  assert.deepStrictEqual(copia(await c.R.Jogadores.entrar('mariana', 'qualquer')), { ok: true });
+  assert.deepStrictEqual(copia(await c.R.Jogadores.entrar('mariana', 'qualquer')), { erro: 'senha' });
 });
-
 test('senha da Mariana no claude.ai: doc jogadores/mariana (criado com senhaMariana se faltar, nunca por cima)', async () => {
   const docMariana = { estado: save(11), atualizado: 1 };
   const docs = { 'progresso/mariana': docMariana };
@@ -261,29 +273,85 @@ test('senha da Mariana no claude.ai: doc jogadores/mariana (criado com senhaMari
   assert.ok(!pedidos.concat(pk).some((p) => /progresso\//.test(p)), 'entrar nem lê o progresso');
 });
 
-test('Sair: o aparelho da Mariana pede login no próximo carregamento, sem apagar o save', async () => {
+test('Sair: nada vem preenchido no próximo login, sem apagar o save', async () => {
   const salvo = JSON.stringify(save(9));
-  const loja = { 'mariana-reino-v1': salvo };
+  const loja = { 'mariana-reino-v1': salvo, 'reino-jogador-atual': 'mariana' };
   const j = jogo({ loja });
   let recarregou = 0;
   j.ctx.location = { protocol: 'file:', search: '', reload: () => { recarregou++; } };
-  assert.strictEqual(j.R.Jogadores.decidirSemTela(), 'mariana', 'antes de sair: direto nela');
+  assert.strictEqual(j.R.Jogadores.ultimo(), 'mariana');
   j.R.Jogadores.usar('mariana');
   j.P.carregar();
   await j.R.Jogadores.sair();
   assert.strictEqual(recarregou, 1);
   assert.strictEqual(loja['reino-jogador-atual'], ':saiu');
-  assert.ok(loja['mariana-reino-v1'], 'o save dela continua lá');
-  assert.strictEqual(JSON.parse(loja['mariana-reino-v1']).estrelas.ganhas, 9);
+  assert.strictEqual(JSON.parse(loja['mariana-reino-v1']).estrelas.ganhas, 9, 'o save dela continua lá');
   const depois = jogo({ loja });
-  assert.strictEqual(depois.R.Jogadores.decidirSemTela(), null, 'depois de sair: tela de login');
-  assert.ok(!depois.R.Jogadores.lembrado('mariana'), 'e o cartão dela pede a senha');
-  assert.deepStrictEqual(copia(await depois.R.Jogadores.entrar('mariana')), { erro: 'senha' });
+  assert.strictEqual(depois.R.Jogadores.decidirSemTela(), null);
+  assert.strictEqual(depois.R.Jogadores.ultimo(), null, 'depois de sair: login em branco');
   assert.deepStrictEqual(copia(await depois.R.Jogadores.entrar('mariana', 'unicorlice77')), { ok: true });
-  assert.strictEqual(loja['reino-jogador-atual'], 'mariana');
-  assert.strictEqual(jogo({ loja }).R.Jogadores.decidirSemTela(), 'mariana', 'entrou de novo: volta a entrar direto');
-  // congelado (e2e) ignora a marca
-  const cong = jogo({ loja: { 'mariana-reino-v1': salvo, 'reino-jogador-atual': ':saiu' } });
-  cong.R.congelado = true;
-  assert.strictEqual(cong.R.Jogadores.decidirSemTela(), 'mariana');
+  assert.strictEqual(jogo({ loja }).R.Jogadores.ultimo(), 'mariana', 'entrou de novo: volta a vir preenchido');
+});
+
+test('Trocar jogador: depois da senha, o recarregar entra nele UMA vez (sessionStorage), e só nele', async () => {
+  const sessao = {};
+  const falsa = { getItem: (k) => (k in sessao ? sessao[k] : null), setItem: (k, v) => { sessao[k] = String(v); }, removeItem: (k) => { delete sessao[k]; } };
+  const loja = { 'reino-jogadores': JSON.stringify({ joao: { senha: 'abc', criado: 1 } }) };
+  const j = jogo({ loja });
+  j.ctx.sessionStorage = falsa;
+  j.ctx.location = { protocol: 'file:', search: '', reload: () => {} };
+  j.R.Jogadores.usar('joao');
+  j.P.carregar();
+  await j.R.Jogadores.trocarPara('mariana');
+  assert.strictEqual(sessao['reino-entrou'], 'mariana');
+  const depois = jogo({ loja });
+  depois.ctx.sessionStorage = falsa;
+  assert.strictEqual(depois.R.Jogadores.decidirSemTela(), 'mariana', 'recarregou direto nela');
+  assert.strictEqual(sessao['reino-entrou'], undefined, 'e o atalho foi gasto');
+  const outra = jogo({ loja });
+  outra.ctx.sessionStorage = falsa;
+  assert.strictEqual(outra.R.Jogadores.decidirSemTela(), null, 'o próximo carregamento pede a senha');
+  // atalho que não bate com o lembrado (forjado) não vale
+  sessao['reino-entrou'] = 'joao';
+  const forjado = jogo({ loja });
+  forjado.ctx.sessionStorage = falsa;
+  assert.strictEqual(forjado.R.Jogadores.decidirSemTela(), null);
+  // Sair não deixa atalho
+  const s = jogo({ loja });
+  s.ctx.sessionStorage = falsa;
+  s.ctx.location = { protocol: 'file:', search: '', reload: () => {} };
+  s.R.Jogadores.usar('joao'); s.P.carregar();
+  await s.R.Jogadores.sair();
+  assert.strictEqual(sessao['reino-entrou'], undefined);
+});
+
+test('banco sem resposta na hora de conferir a senha: a Mariana confere com o config; os lembrados, com a senha daqui', async () => {
+  // servidor novo que responde o HEAD mas cai no POST de entrar
+  const servidorQueCai = (j) => {
+    j.ctx.location = { protocol: 'http:', search: '' };
+    j.ctx.fetch = (url, o = {}) => (o.method === 'HEAD'
+      ? Promise.resolve({ status: 200, ok: true, headers: { get: (h) => (/X-Reino/i.test(h) ? '1' : null) } })
+      : Promise.reject(new Error('rede fora')));
+  };
+  const a = jogo({ loja: {} });
+  servidorQueCai(a);
+  assert.deepStrictEqual(copia(await a.R.Jogadores.entrar('mariana', 'unicorlice77')), { ok: true }, 'a do config entra');
+  assert.deepStrictEqual(copia(await a.R.Jogadores.entrar('mariana', 'errada')), { erro: 'rede' }, 'outra: continua erro de rede');
+  const contas = JSON.stringify({ joao: { senha: 'abc', criado: 1 } });
+  const b = jogo({ loja: { 'reino-jogadores': contas } });
+  servidorQueCai(b);
+  assert.deepStrictEqual(copia(await b.R.Jogadores.entrar('joao', 'abc')), { ok: true }, 'lembrado: a senha guardada aqui');
+  assert.deepStrictEqual(copia(await b.R.Jogadores.entrar('joao', 'xyz')), { erro: 'rede' });
+  assert.deepStrictEqual(copia(await b.R.Jogadores.entrar('bia', 'sol')), { erro: 'rede' }, 'não lembrado: erro de rede');
+  // claude.ai que não responde o doc
+  const c = jogo({ loja: {} });
+  c.ctx.claude = { use: () => Promise.resolve({ doc: () => ({ get: () => Promise.reject(new Error('fora')), set: () => Promise.reject(new Error('fora')) }) }) };
+  assert.deepStrictEqual(copia(await c.R.Jogadores.entrar('mariana', 'unicorlice77')), { ok: true });
+  assert.deepStrictEqual(copia(await c.R.Jogadores.entrar('mariana', 'x1')), { erro: 'rede' });
+  // senha errada de verdade (o banco respondeu 403) não cai no config
+  const d = jogo({ loja: {} });
+  d.ctx.location = { protocol: 'http:', search: '' };
+  d.ctx.fetch = (url, o = {}) => Promise.resolve(o.method === 'HEAD'
+    ? { status: 200, ok: true, headers: { get: () => '1' } } : { status: 403, ok: false, json: () => Promise.resolve({}) });
+  assert.deepStrictEqual(copia(await d.R.Jogadores.entrar('mariana', 'unicorlice77')), { erro: 'senha' }, 'o banco diz que não: não entra');
 });
