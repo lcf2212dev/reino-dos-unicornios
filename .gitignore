@@ -2,3 +2,4 @@ jogo/servidor/dados/
 node_modules
 .DS_Store
 jogo/js/versao.json
+__pycache__/
