@@ -30,7 +30,8 @@ O modelo que o Leandro preenche: `PEDIDO-DE-FEATURE.md` (raiz). Campo em branco 
 5. **Construir** começando pelo gerador quando houver: `npm run novo -- <tipo> <id>`. Cada item de "O que já vale
    sempre" é requisito: caminho por persistência em todo prêmio, nada que premie pressa, emoji novo = ícone, fala nova =
    texto listado no retorno (quem integra grava e confere com `gravar-vozes` e `validar-vozes`), número do campo 10 em `jogo/js/nucleo/config.js`, comentado.
-6. **Conferir** cada passo do campo 5 com `npm run ver` nos aparelhos do campo 12; feche com a skill `validar-tudo`.
+6. **Conferir** cada passo do campo 5 com `npm run ver` nos aparelhos do campo 12, por um subagent conferente
+   (skill `orquestrar-frentes`, "Quando cada agente volta"); feche com a skill `validar-tudo`.
    Diferença no `npm run e2e` só a que a novidade explica.
 7. **Mostrar:**
    - servidor de teste para ele jogar: `npm run servidor-teste -- --fundo`, com o endereço e o PID;

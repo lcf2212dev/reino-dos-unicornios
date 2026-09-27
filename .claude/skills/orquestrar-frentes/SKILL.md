@@ -32,12 +32,20 @@ Diferença esperada no e2e: <cenas/imagens que podem mudar, ou "idêntico">
 ```
 
 ## Quando cada agente volta
-1. **Afirmações:** confira reabrindo o arquivo ou rodando o comando. Já houve agente afirmando errado que
-   `npm test` não roda os testes de navegador.
-2. **Processos presos:** `ps -eo pid,args | grep reino-<tema>`; derrube só pelo PID (nunca `pkill`/`killall`).
-3. **Nomes e vozes repetidos entre frentes:** `npm run vozes-elenco` depois de juntar os personagens.
-4. **Arquivos fora da propriedade:** `git status` na worktree; o que não era dele volta ou vira linha sua.
-5. **Integração** só com as worktrees paradas (nenhum agente rodando nelas); depois a skill `validar-tudo`.
+A conferência vai para um subagent conferente (regra do `CLAUDE.md` da raiz), lançado assim que a frente termina,
+sem esperar as outras. Ele não fez o trabalho, não edita nem faz commit: só lê e roda comandos. O briefing leva a
+worktree, o pedido, o retorno do worker (as afirmações a conferir) e a lista de arquivos da frente. Ele confere:
+1. **Afirmações:** reabrindo o arquivo ou rodando o comando (`npm test`, `npm run e2e` uma vez). Já houve agente
+   afirmando errado que `npm test` não roda os testes de navegador.
+2. **Fotos e jogo:** o "Pronto quando" do pedido, item a item, nas fotos e com `npm run ver` nos 3 tamanhos; teclado.
+3. **Diferenças no e2e:** cada uma explicada pela feature; o resto é defeito.
+4. **Arquivos fora da propriedade:** `git status` na worktree.
+5. **Processos presos:** `ps -eo pid,args | grep reino-<tema>`; derruba só os seus, pelo PID (nunca `pkill`/`killall`).
+
+Retorno: veredito (aprovado / com ressalvas / reprovado) e defeitos com arquivo:linha e foto. Defeito volta para a
+frente que fez (retomada dela) e passa por outra conferência. Com você fica: nomes e vozes repetidos entre frentes
+(`npm run vozes-elenco` depois de juntar os personagens) e a integração, só com as worktrees paradas (nenhum agente
+rodando nelas), fechada pela skill `validar-tudo`.
 
 ## Falas e vozes
 Workers não gravam. Na integração: skill `gravar-vozes` e, com personagem novo ou perfil trocado, `validar-vozes`.

@@ -50,6 +50,9 @@ Este arquivo tem as regras invioláveis e o índice. As regras de código de cad
 ## Agentes
 - Até 8 subagentes e workers ao mesmo tempo. Quando um termina e há trabalho independente, outro entra no lugar.
 - Se o teto mudar, os que já rodavam continuam até terminar. Retomar um agente que terminou conta como lançar um novo.
+- A conferência de um trabalho é sempre delegada a um subagent conferente, que não fez o trabalho e só lê e roda comandos
+  (como fazer: skill `orquestrar-frentes`, "Quando cada agente volta"). Integração, vozes, merge, push e artifact ficam
+  com quem orquestra.
 
 ## Comandos de shell
 - Não apague temporários: deixe-os em `/tmp` (o sistema limpa ao reiniciar).
