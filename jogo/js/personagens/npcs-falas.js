@@ -10,7 +10,6 @@
   /* ================= FALAS ================= */
   function U() { return Reino.util; }
   function nomeJogadora(t) { return String(t).replace(/\{nome\}/g, Reino.config.nomeJogadora); }
-  function valorSala(m) { return Reino.config.valorPorMateria / m.salas.length; }
   function reais(v) { return U().reais(v); }
 
   // falas padrão (curtas: até ~30 letras por balão, que no celular dá 2 linhas)
@@ -100,7 +99,8 @@
   var LIMITE = 30;
   // divide um texto em frases (o emoji fica com a frase dele); frase longa demais
   // ainda é cortada nos dois-pontos / ponto e vírgula. Cada frase é um segmento gravado.
-  var RE_FRASE = /([.!?…]+[»"”)]*(?:\s*[\u{1F000}-\u{1FAFF}\u{2190}-\u{21FF}\u{2300}-\u{23FF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}\u{20E3}]+)*)\s+/gu;
+  // O fim do texto também fecha frase (senão o emoji final virava um pedaço sozinho e sumia).
+  var RE_FRASE = /([.!?…]+[»"”)]*(?:\s*[\u{1F000}-\u{1FAFF}\u{2190}-\u{21FF}\u{2300}-\u{23FF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}\u{20E3}]+)*)(?:\s+|$)/gu;
   function frases(t) {
     t = String(t || '').trim();
     var out = [], ult = 0, m;
@@ -228,9 +228,10 @@
     if (a.tipo === 'guia') {
       var mg = materiaDoLugar(a.lugar);
       if (mg) {
-        var total = mg.salas.length;
+        // o dinheiro do balão (P.dinheiroMateria) com i salas feitas: a sala redonda e, na última, o bônus
+        var total = mg.salas.length, cSala = Math.round(P().valorSala(mg) * 100), cBonus = Math.round(P().bonusMateria(mg) * 100);
         add(RESUMO_ZERO); add(RESUMO_FIM);
-        for (var i = 1; i <= total; i++) { add(resumoFeitas(i, total)); add(resumoDinheiro(Math.round(valorSala(mg) * i * 100) / 100)); }
+        for (var i = 1; i <= total; i++) { add(resumoFeitas(i, total)); add(resumoDinheiro((cSala * i + (i === total ? cBonus : 0)) / 100)); }
         mg.salas.forEach(function (s2, j) { if (j === 0) add(resumoProxima(mg, s2, true)); add(resumoProxima(mg, s2, false)); });
       }
     }
