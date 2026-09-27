@@ -49,4 +49,8 @@ Reino.EVENTOS = {
   /* O nome ou o sexo do jogador mudou (Reino.Jogadores.definirPerfil). Carga: { nome, sexo }.
      Emite: sistemas/jogadores.js. Ouve: quem mostra o nome ou desenha o personagem (a tela de criar personagem). */
   PERFIL: 'perfil',
+  /* Respostas conferidas (as mesmas que contam na Aura: salas, treino, provas, pergunta surpresa).
+     Carga: { certas, erradas } (números; nota parcial não entra). Emite: sistemas/aura.js (Reino.Aura.contar,
+     antes de gravar a Aura). Ouve: sistemas/viagem.js (o combustível do foguete). */
+  RESPOSTAS: 'respostas',
 };

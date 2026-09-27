@@ -14,6 +14,7 @@ contrato dele. Mudança de contrato: só o orquestrador. Histórico da refatora�
 | fome, sede, banho, despensa, Pet Shop, banheira | `cuidados.md` |
 | loja, enfeites, comidas, preços, prêmios da escola | `loja.md` |
 | pergunta surpresa | `surpresa.md` |
+| viagem de foguete: combustível, painel, voo, planetas, ETs, pulo | `viagem.md` |
 | som, música por ambiente, vozes gravadas (achadas pelo texto exato), pacotes, lições de voz | `som-musica-e-voz.md` |
 | fotos e álbum | `fotos.md` |
 | matérias, salas, desafios e tipos, livro, provas, treino, Português | `conteudo.md` |

@@ -100,7 +100,9 @@
   function desenharEstatico(ctx, def, g, P, objs) {
     var W = g.w, H = g.h;
     ctx.clearRect(0, 0, W * T, H * T);
-    ret(ctx, 0, 0, W * T, H * T, FUNDO);
+    var ceu = def.fundo && II.FUNDOS[def.fundo];   // céu aberto (um planeta): sem vão roxo nem lábios
+    if (ceu) { ret(ctx, 0, 0, W * T, H * T, ceu.cor); ceu.desenhar(ctx, W * T, H * T); }
+    else ret(ctx, 0, 0, W * T, H * T, FUNDO);
     var pal = {};
     (def.comodos || []).forEach(function (c) { pal[c.id] = paletaComodo(c); });
     function palTile(x, y) { var c = comodoDoTile(def, g, x, y); return c ? pal[c.id] : paletaComodo({}); }
@@ -133,7 +135,7 @@
     // lábios: a espessura das paredes vista de cima, no vão escuro em volta dos cômodos
     var saida = def.saida;
     for (var y3 = -1; y3 <= H; y3++) for (var x3 = -1; x3 <= W; x3++) {
-      if (!vazio(x3, y3)) continue;
+      if (ceu || !vazio(x3, y3)) continue;
       var bx = x3 * T, by = y3 * T;
       var cima = !vazio(x3, y3 - 1), baixo = !vazio(x3, y3 + 1), esq = !vazio(x3 - 1, y3), dir = !vazio(x3 + 1, y3);
       if (cima && !(saida && saida.x === x3 && saida.y === y3 - 1)) { ret(ctx, bx, by, 16, 1, C.labioLuz); ret(ctx, bx, by + 1, 16, 3, C.labio); ret(ctx, bx, by + 4, 16, 1, K); }

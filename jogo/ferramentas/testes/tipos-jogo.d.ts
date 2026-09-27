@@ -992,6 +992,7 @@ interface EventosReino {
   NUVEM: 'nuvem';
   /** carga: { nome, sexo } */
   PERFIL: 'perfil';
+  RESPOSTAS: 'respostas';
 }
 /** Nome de um evento ('progresso', 'cena'…). */
 type Evento = EventosReino[keyof EventosReino];

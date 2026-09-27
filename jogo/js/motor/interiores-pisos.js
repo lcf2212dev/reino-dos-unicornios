@@ -178,4 +178,7 @@
 
   R._interiores.PISOS = PISOS;
   R._interiores.PAREDES = PAREDES;
+  // fundos de céu aberto (def.fundo = id): { cor, desenhar(ctx, w, h) } pinta o vão em volta dos cômodos (em
+  // vez do roxo-escuro, sem os lábios das paredes); `cor` é a cor da cena fora do interior. Os prédios registram.
+  R._interiores.FUNDOS = {};
 })();

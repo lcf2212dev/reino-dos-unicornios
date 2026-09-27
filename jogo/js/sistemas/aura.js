@@ -1,5 +1,6 @@
 /* Aura (aura): a pontuação que cresce com cada pergunta certa e cai com cada errada (o dobro), e o brilho em
    volta da Mariana, que muda de cor a cada faixa (branca no começo). Números em Reino.config.aura.
+   Cada contagem também avisa o barramento (Reino.EVENTOS.RESPOSTAS: { certas, erradas }), para o foguete.
    Quem conta: atividades/missao.js (cada Conferir da sala), atividades/treino.js e atividades/provas.js (na entrega,
    questão por questão), sistemas/surpresa-painel.js (cada resposta), por Reino.Aura.contar(certas).
    Guarda em décimos inteiros (sem erro de ponto flutuante): 0,2 = 2. Chip do HUD: ui/hud-aura.js.
@@ -68,10 +69,14 @@
   // conta as respostas (true = certa, false = errada, null = não conta), em ordem, grava e
   // guarda a cor nova para o Claude comemorar ao voltar ao mapa. Devolve { antes, depois } em décimos.
   A.contar = function (respostas) {
+    var lista = [].concat(respostas);
+    if (R.util && R.util.emit) R.util.emit(R.EVENTOS.RESPOSTAS, {
+      certas: lista.filter(function (r) { return r === true; }).length,
+      erradas: lista.filter(function (r) { return r === false; }).length });
     var est = estado();
     if (!est) return null;
     var antes = A.decimos(), d = antes;
-    [].concat(respostas).forEach(function (r) { if (r === true || r === false) d = A.aplicar(d, r); });
+    lista.forEach(function (r) { if (r === true || r === false) d = A.aplicar(d, r); });
     if (d === antes) return { antes: antes, depois: d };
     var mar = est.aura && est.aura.mariana;
     est.aura = est.aura || {};

@@ -95,6 +95,11 @@ Reino.config = {
   // voltar para a aba; só acredita depois de ver a mudança 2 vezes (`confirmarMs` entre elas) e de `cacheMs` de
   // aba aberta (o servidor guarda css/js em cache por 300 s); parada no mapa há `paradaMs`, o Claude avisa num
   // balão de `avisoMs`, o jogo grava e recarrega `esperaMs` depois (depois do envio ao servidor, que sai em 1,8 s)
+  // viagem de foguete (js/sistemas/viagem.js, atividades/voo.js): cada resposta certa põe 1 no tanque (até `tanque`);
+  // decolar gasta o tanque cheio e a volta é de graça. `cheioNoComeco`: save sem o campo começa com o tanque cheio.
+  // O voo dura `vooSegundos` (sem pressa: o mesmo tempo aconteça o que acontecer) e as estrelas pegas viram estrelas
+  // de verdade, até `estrelasPorVoo`. Se mudar `tanque`, regrave as vozes (o painel fala quantas faltam)
+  viagem: { tanque: 10, cheioNoComeco: true, vooSegundos: 30, estrelasPorVoo: 5 },
   novidadeDias: 45,   // dias em que o selo "✨ Novo!" aparece num lugar novo (lugar.novidade)
   versao: { intervaloMs: 10 * 60000, confirmarMs: 60000, cacheMs: 330000, paradaMs: 8000, avisoMs: 4500, esperaMs: 2500 },
   // acessórios das provas à venda na Loja (só depois de ganhar um da mesma prova)

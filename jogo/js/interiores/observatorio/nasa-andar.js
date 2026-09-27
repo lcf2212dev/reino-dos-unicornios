@@ -1,6 +1,7 @@
 /* Observatório, 2º andar (NASA), parte 3 de 3: o Centro de Pesquisas Avançadas da NASA, 3 cômodos lado a lado —
    Hangar dos Foguetes (esquerda) | Sala de Controle (meio, com as escadas) | Laboratório de Experiências (direita).
-   Só para brincar: curiosidades e experiências, sem pergunta, estrela, dinheiro ou save.
+   Só para brincar: curiosidades e experiências, sem pergunta, estrela, dinheiro ou save. O foguete grande do
+   Hangar abre a viagem de foguete (ação `viagem`, sistemas/viagem.js).
    Escadas: desce para o térreo e sobe para o 3º andar (observatorio-3). Quem chega aparece ao lado da escada
    que volta para o andar de onde veio (`chegar`; padrão: logo abaixo). */
 (function () {
@@ -32,8 +33,8 @@
       { tipo: 'nasa-letreiro', x: 0, y: 0 },
       { tipo: 'nasa-painel', x: 4, y: 0 }, cur('Satélite', ['missoes'], { tipo: 'nasa-satelite', x: 8, y: 0 }),
       { tipo: 'nasa-cartaz', x: 10, y: 0, var: { desenho: 'foguete' } }, { tipo: 'janela', x: 11, y: 0 }, { tipo: 'nasa-cartaz', x: 12, y: 0, var: { desenho: 'lua' } },
-      // o foguete grande na plataforma, com a torre ao lado
-      exp('nasa-foguete', 'foguete', { tipo: 'nasa-foguete', x: 5, y: 5 }),
+      // o foguete grande na plataforma, com a torre ao lado: abre a viagem (painel do foguete, sistemas/viagem.js)
+      { tipo: 'nasa-foguete', x: 5, y: 5, chave: 'nasa-foguete', nome: nomeDe('nasa-foguete', 'nasa-foguete'), acao: { tipo: 'viagem' } },
       { tipo: 'nasa-torre', x: 4, y: 6 },
       { tipo: 'nasa-tanque', x: 0, y: 2 }, { tipo: 'nasa-tanque', x: 1, y: 2 }, { tipo: 'nasa-caixa', x: 2, y: 2 },
       { tipo: 'nasa-caixa', x: 3, y: 2 }, { tipo: 'vaso-planta', x: 4, y: 2 }, { tipo: 'nasa-caixa', x: 6, y: 2 }, { tipo: 'caixote', x: 7, y: 2, var: { item: 'estrela' } },
