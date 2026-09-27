@@ -6,6 +6,7 @@ Contrato da camada: `docs/contratos/ui.md` (pilha de telas, `UI.painel`, Esc/Tab
 
 ## Estrutura
 - `base.js` cria `Reino.UI` (pilha de telas, painel, `escolher`/`confirmar`, foco, teclado) e `Reino._ui`.
+- `espera-fala.js` (logo depois): `UI.esperarFala`, `UI.ouvirDeNovo`, `UI.esperandoFala` (ouvir antes de seguir).
 - As outras partes acrescentam telas a `Reino.UI`, nesta ordem (manifesto): pecas, cuidados, hud, hud-fotos, materia,
   bau, loja, estabulo, petshop, ovos, lugares, ajustes, aparencia, pais.
 - O que cada parte publica em `Reino._ui` está no fim de `base.js`. Tela nova = arquivo novo + linha no manifesto.
