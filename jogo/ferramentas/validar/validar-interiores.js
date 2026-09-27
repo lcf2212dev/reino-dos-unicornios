@@ -42,8 +42,10 @@ const predio = (l) => ANFITRIAO[l] || l;
 // telas e ações registradas pelos prédios novos (Reino.NPCs.registrarTela / registrarAcao)
 const TELAS = ['livro', 'plano', 'estabulo', 'loja', 'bau', 'ovos'].concat(temNpcs && Reino.NPCs.telas ? Reino.NPCs.telas() : []);
 const ACOES_EXTRAS = temNpcs && Reino.NPCs.acoes ? Reino.NPCs.acoes() : [];
-// --so: só os interiores daquele prédio (as conferências entre prédios ficam só entre eles)
-const defs = SO ? Reino.interiores.filter((d) => d.id === SO || d.lugar === SO) : Reino.interiores;
+// --so: só os interiores daquele prédio, todos os andares (e os andares de matéria `dentro` dele); as conferências
+// entre prédios ficam só entre eles, mas escadas e lugares enxergam todos os interiores (porId, porLugar)
+const PREDIOS_SO = new Set(Reino.interiores.filter((d) => d.id === SO || d.lugar === SO).map((d) => predio(d.lugar)));
+const defs = SO ? Reino.interiores.filter((d) => PREDIOS_SO.has(predio(d.lugar))) : Reino.interiores;
 const doSo = (id) => !SO || defs.some((d) => d.id === id || d.lugar === id);
 if (SO && !defs.length) erros.push(`--so ${SO}: nenhum interior nem lugar com esse id (${[...new Set(Reino.interiores.map((d) => d.lugar))].join(', ')})`);
 const porId = new Map();
@@ -88,18 +90,18 @@ Object.keys(Reino.FALAS_INTERIORES || {}).filter(doSo).forEach((p) => Preencher.
 (Reino.lugaresRegistrados || []).filter((l) => doSo(l.id)).forEach((l) => Preencher.faltas(l, `lugar ${l.id}`, ['info']).forEach((e) => erros.push(e)));
 
 // ids únicos
-defs.forEach((d) => {
-  checar(d.id && !porId.has(d.id), `interior com id repetido ou vazio: ${d.id}`);
+Reino.interiores.forEach((d) => {
+  if (defs.includes(d)) checar(d.id && !porId.has(d.id), `interior com id repetido ou vazio: ${d.id}`);
   porId.set(d.id, d);
 });
 
 // um interior de entrada por lugar
 const porLugar = {};
-defs.forEach((d) => {
-  checar(LUGARES.has(d.lugar), `${d.id}: lugar "${d.lugar}" não existe (${[...LUGARES].join(', ')})`);
+Reino.interiores.forEach((d) => {
+  if (defs.includes(d)) checar(LUGARES.has(d.lugar), `${d.id}: lugar "${d.lugar}" não existe (${[...LUGARES].join(', ')})`);
   (porLugar[d.lugar] = porLugar[d.lugar] || []).push(d);
 });
-Object.keys(porLugar).forEach((l) => {
+Object.keys(porLugar).filter(doSo).forEach((l) => {
   const n = porLugar[l].filter((d) => d.entrada).length;
   checar(n === 1, `lugar ${l}: precisa de exatamente 1 interior com entrada: true (tem ${n})`);
   const pacotes = new Set(porLugar[l].map((d) => d.pacote));
@@ -202,6 +204,9 @@ defs.forEach((d) => {
   (d.npcs || []).forEach((n) => {
     const s = I.grade(Object.assign({}, d, { npcs: [] }));
     checar(s.dentro(n.x, n.y) && s.chao[n.y][n.x] && !s.solido[n.y][n.x], `${onde}: NPC ${n.id} em (${n.x},${n.y}) fora do chão livre`);
+    // a grade torna saída, spawn e escadas andáveis depois dos NPCs: ali o NPC não fica sólido
+    const pisa = (p) => p && p.x === n.x && p.y === n.y;
+    checar(!pisa(d.saida) && !pisa(d.spawn) && !(d.escadas || []).some(pisa), `${onde}: NPC ${n.id} em (${n.x},${n.y}): em cima da saída, do spawn ou de escada`);
   });
 });
 
@@ -295,7 +300,7 @@ Escadas.checar({ Reino, defs, grades, erros, avisos });
 
 // alcançabilidade a partir do spawn da entrada, atravessando escadas
 const chave = (id, x, y) => id + ':' + x + ',' + y;
-Object.keys(porLugar).forEach((l) => {
+Object.keys(porLugar).filter(doSo).forEach((l) => {
   const ent = porLugar[l].find((d) => d.entrada);
   if (!ent || !ent.spawn || !grades.get(ent.id)) return;
   const visto = new Set();

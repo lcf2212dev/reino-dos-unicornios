@@ -119,6 +119,10 @@ MATERIAS.forEach((m) => {
     ids.add(u.id);
     checar(u.cores && u.cores.corpo && Array.isArray(u.cores.crina), `${u.id}: cores incompletas`);
     checar(u.frase, `${u.id}: sem frase`);
+    // só nasce o que o jogo dá: comum/raro de uma sala desta matéria, épico do treino ouro/perfeito, o lendário
+    checar(['comum', 'raro', 'epico', 'lendario'].includes(u.raridade), `${u.id}: raridade desconhecida "${u.raridade}" (comum, raro, epico ou lendario)`);
+    if (u.raridade === 'comum' || u.raridade === 'raro') checar(m.salas.some((s) => s.id === u.sala), `${u.id}: sala "${u.sala}" não existe em ${m.id} (o unicórnio nunca nasce)`);
+    if (u.raridade === 'epico') checar(['ouro', 'perfeito'].includes(u.treino), `${u.id}: treino "${u.treino}" desconhecido (ouro ou perfeito)`);
   });
   const treinaveis = m.salas.flatMap((s) => s.desafios).filter((d) => Reino.Desafios.TREINAVEIS.includes(d.tipo) && !d.livre).length;
   checar(treinaveis >= Reino.config.perguntasTreino, `${m.id}: só ${treinaveis} perguntas para o treino`);

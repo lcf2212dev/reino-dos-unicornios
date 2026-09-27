@@ -44,7 +44,11 @@ const TELAS_COM_ID = {
 /* ---------- PNG: recorte e ampliação (vizinho mais próximo) ---------- */
 function recortarPng(arq, [x, y, w, h], saida) {
   const img = PNG.sync.read(fs.readFileSync(arq));
-  x = Math.max(0, x); y = Math.max(0, y); w = Math.min(w, img.width - x); h = Math.min(h, img.height - y);
+  // a parte fora da borda de cima/esquerda sai da largura/altura (senão o recorte sai deslocado)
+  if (x < 0) { w += x; x = 0; }
+  if (y < 0) { h += y; y = 0; }
+  w = Math.min(w, img.width - x); h = Math.min(h, img.height - y);
+  if (w <= 0 || h <= 0) throw new Error('--recorte fora da imagem');
   const out = new PNG({ width: w, height: h });
   PNG.bitblt(img, out, x, y, w, h, 0, 0);
   fs.writeFileSync(saida, PNG.sync.write(out));
