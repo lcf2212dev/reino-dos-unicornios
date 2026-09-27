@@ -9,4 +9,5 @@
 # d0f1239 = cabeçalho da prova com o emoji dela (📜 História, 🔠 Inglês): só as telas de prova dessas duas mudam.
 # edb2623 = controles (mouse e thumbstick, sem setas), botão do álbum, Ciências no Observatório, andar da NASA e prova de Ciências.
 # a1b50ad = lições de 26/09: desafios reembaralhados no teste, Lugares com andar e selo, falas e config novos, vozes reordenadas
-a1b50ad
+# d3bb5ed = Geografia e Matemática
+d3bb5ed
