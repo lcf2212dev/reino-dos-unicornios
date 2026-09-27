@@ -14,7 +14,7 @@ Reino.registrarMateria({
     nome: 'Torre dos Números',
     artigo: 'a',
     sprite: 'numeros',  // desenho próprio: interiores/matematica/fora.js (Mapa.PREDIOS.numeros)
-    rect: { x: 26, y: 10, w: 4, h: 5 },   // faixa do meio, à direita da praça; a porta (28,14) desce reto até a rua de baixo
+    rect: { x: 46, y: 15, w: 4, h: 5 },   // fileira do meio, a leste da praça; a porta (48,19) desce até a Rua da Praça
     placa: 'acima',
     porCima: true,     // entra depois do sorteio dos enfeites: o resto do reino fica igual (js/mundo/mapa.js)
     cores: { parede: '#eaf4ff', telhado: '#3f7fe0', detalhe: '#ffc93c' },

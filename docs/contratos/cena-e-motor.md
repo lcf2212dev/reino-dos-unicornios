@@ -168,21 +168,27 @@ alvo = { tipo: 'npc'|'objeto'|'saida'|'escada'|'lugar'|'claude', id,
 ## 9. Mapa: placas, lugares e prédios
 1. O mapa NÃO tem placas de prédio: sem desenho, sem toque na placa, sem desvio do HUD. O campo `placa`
    dos dados de lugar fica sem uso; `mapa.desenharTela` é vazio (o laço ainda chama).
-2. Ficam: toque no prédio, arco-íris dos concluídos, placas DOS CÔMODOS nos interiores (`interiores.md` §6).
+2. Ficam: toque no prédio, contorno dourado dos concluídos (`mundo/contorno.js`: segue o desenho do prédio, pulsa
+   e solta faíscas; parado sem Animações; números em `config.mapa.contorno`; matéria de dentro brilha o anfitrião),
+   placas DOS CÔMODOS nos interiores (`interiores.md` §6).
 3. O menu Lugares mostra o nome e os avisos que a placa dava (`UI.avisosDoLugar(l)`, `ui/lugares.js`):
    `0/5`/`Pronto` (matéria), `Ovo` (Estábulo), `Prova` (Escola), `Sede`/`Fome`/`Banho` (Pet Shop).
    Pet Shop (🐾) e Observatório (🔭) com uma linha de informação cada.
-4. Prédio novo no mapa = entrada em `Mapa.LUGARES_FIXOS` (`mundo/lugares.js`) COM `caminho` (lista
-   explícita dos tiles de rua) + o desenho em `Mapa.PREDIOS[sprite]` (`mundo/predios.js` ou o arquivo `fora.js`
-   do prédio). Lugar com `caminho` (ou matéria com `porCima: true`) entra depois do sorteio dos enfeites:
-   o resto do reino fica com as mesmas árvores e flores.
-   - O desenho das flores (`Mapa.prerender` → `I.desenharEnfeites`) tira os números do sorteio sequencial
-     (`rng(4242)`) de uma CÓPIA do reino de hoje (`I.tipoSorteio`/`I.decorSorteio`, feita no `Mapa.criar` depois
-     dos lugares de hoje e antes dos novos). Flor que um lugar novo tirou gasta os mesmos números sem pintar: as
-     flores longe dele não mudam. (O chão não usa sorteio.) Teste: `unidade/mapa-sorteio.test.js`.
-   - Entram ANTES da cópia: `LUGARES_FIXOS` e as matérias `porCima` listadas em `Mapa.LEGADO_SORTEIO`
-     (`mundo/mapa.js`, hoje `['portugues']`). Depois: matéria `porCima` nova e `Reino.registrarLugar`.
-     Não acrescente id ao `LEGADO_SORTEIO` nem lugar com caminho ao `LUGARES_FIXOS`: prédio novo usa `registrarLugar`.
+4. O mapa (56×42, `mundo/mapa.js`) é desenhado a partir dos DADOS de `mundo/lugares.js`: `Mapa.CIDADE` (ruas,
+   praça, lago, peças grandes da praça em `objetos`, enfeites postos à mão, `inicio` = onde ela aparece ao abrir o
+   jogo, `claude`), `Mapa.LUGARES_FIXOS`, `Mapa.CLAREIRAS` e `Mapa.RESERVADOS` (terreno guardado para um prédio que
+   vem por `registrarLugar`: só grama, com o rect e o caminho que ele deve usar). A posição dela não é salva: ao
+   abrir, `Mapa.inicio`. Desenho: `mapa-desenho.js` (chão, meio-fio, enfeites sorteados), `lago.js`,
+   `cidade-desenho.js` (piso da praça, fonte grande animada, coreto, canteiros, postes, bancos, cercas, pedras),
+   `contorno.js`, `predios.js`. Cada prédio de hoje ganha uma cerquinha na frente, com o portão na porta.
+   Prédio novo no mapa = `Reino.registrarLugar` (com `caminho`) + o desenho em `Mapa.PREDIOS[sprite]` (o arquivo
+   `fora.js` do prédio). Lugar sem `caminho` (clareira, matéria) desce reto da frente da porta até a rua.
+   - Entram ANTES do sorteio dos enfeites (o reino é enfeitado em volta deles): `LUGARES_FIXOS`, as matérias sem
+     `porCima` e as `porCima` listadas em `Mapa.LEGADO_SORTEIO` (`mundo/mapa.js`, as de hoje). Depois de uma CÓPIA do
+     reino (`I.tipoSorteio`/`I.decorSorteio`): matéria `porCima` nova e `Reino.registrarLugar`. O desenho das flores
+     (`Mapa.prerender` → `I.desenharEnfeites`) tira os números do sorteio (`rng(4242)`) da cópia; flor que um lugar
+     novo tirou gasta os mesmos números sem pintar: as flores longe dele não mudam. Teste: `unidade/mapa-sorteio.test.js`.
+   - Não acrescente id ao `LEGADO_SORTEIO` nem entrada ao `LUGARES_FIXOS`: prédio novo usa `registrarLugar`.
 5. `Mapa.PREDIOS_ANIM[sprite](ctx, px, py, w, h, t)`: gancho na camada animada do mapa (só com Animações);
    o Observatório usa para cintilar.
 6. O registro do desenho de fora pelo próprio prédio: `if (window.Mapa && Mapa.PREDIOS) Mapa.PREDIOS.<sprite> = function (ctx, px, py, w, h) {…}`.
@@ -194,7 +200,8 @@ alvo = { tipo: 'npc'|'objeto'|'saida'|'escada'|'lugar'|'claude', id,
    (árvore, arbusto, cristal). O caminho sugerido pode passar por árvore (o mapa tira o enfeite do caminho).
 8. O validador (`lugares-do-mapa.js`, chamado por `validar-interiores.js`) confere cada rect (fixos, matérias e
    registrados) contra os outros lugares E contra o terreno fixo (rua, praça, água do lago, fonte, Claude, borda),
-   e cada `caminho` contra os rects, a água, a fonte e a borda.
+   e cada `caminho` contra os rects, a água, a fonte e a borda. "Fonte ou Claude" = tile sólido sem enfeite: as
+   peças grandes da praça (`Mapa.CIDADE.objetos`) e o Claude.
 
 ## 10. Nadar no lago
 ```

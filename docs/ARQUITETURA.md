@@ -46,7 +46,7 @@ jogo/
     conteudo/           loja-itens.js, materias/<m>/ (uma sala por arquivo), provas/<prova>.js
     personagens/        unicornios, jogador*, claude (balão), npcs-* (motor dos NPCs), elenco (dados)
     sistemas/           progresso-*, som-*, musicas*, voz, falas, cuidados, surpresa*, fotos*, banho*
-    mundo/              mapa, lugares (dados), mapa-desenho, lago, predios
+    mundo/              mapa, lugares (dados), mapa-desenho, lago, cidade-desenho, contorno, predios
     atividades/         desafios.js + desafios/<tipo>.js, missao (sala), treino (Castelo), provas (Escola)
     ui/                 base (telas, foco, guarda de toque), hud e uma tela por arquivo
     motor/              interiores-* (motor dos prédios), cena, transicao, camera, laco, entrada, main

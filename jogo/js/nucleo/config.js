@@ -51,6 +51,11 @@ Reino.config = {
   // música por ambiente (js/sistemas/som.js + js/sistemas/musicas.js): volume; crossfadeS = segundos da troca;
   // comVoz = volume enquanto uma voz fala (30%). Melhor não mexer em lookaheadS e intervaloMs
   musica: { volume: 0.22, crossfadeS: 1.5, comVoz: 0.3, lookaheadS: 0.25, intervaloMs: 60 },
+  // mapa da cidade (js/mundo/): o tamanho (56×42 tiles) e o traçado ficam em js/mundo/mapa.js e js/mundo/lugares.js.
+  // contorno dourado do prédio de lugar concluído (js/mundo/contorno.js): espessura em px da linha forte;
+  // o brilho pulsa entre brilhoMin e brilhoMax (0 a 1) a cada periodoMs; faiscas = quantas faíscas ao mesmo
+  // tempo, cada uma acende e apaga em faiscaMs. Sem Animações: parado no meio do brilho, sem faíscas
+  mapa: { contorno: { espessura: 3, brilhoMin: 0.65, brilhoMax: 1, periodoMs: 1800, faiscas: 5, faiscaMs: 900 } },
   // nadar no lago: fator = velocidade na água (60%); custo = quanto a água "pesa" no caminho (3: prefere a terra)
   nado: { fator: 0.6, custo: 3 },
   // controles de andar (js/motor/entrada.js e css/ui-hud.css): mouse segurado e thumbstick do toque

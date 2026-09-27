@@ -35,8 +35,8 @@ test('lugar sem caminho é recusado e acusado', () => {
 
 test('rect por cima de outro lugar, fora do mapa e id repetido são acusados', () => {
   const ctx = reino();
-  ctx.Reino.registrarLugar({ id: 'petshop', nome: 'x', sprite: 'x', rect: { x: 33, y: 26, w: 5, h: 5 }, caminho: [[1, 1]] });
-  ctx.Reino.registrarLugar({ id: 'encosto', nome: 'x', sprite: 'x', rect: { x: 3, y: 22, w: 2, h: 2 }, caminho: [[1, 1]] });
+  ctx.Reino.registrarLugar({ id: 'petshop', nome: 'x', sprite: 'x', rect: { x: 53, y: 40, w: 5, h: 5 }, caminho: [[1, 1]] });
+  ctx.Reino.registrarLugar({ id: 'encosto', nome: 'x', sprite: 'x', rect: { x: 3, y: 35, w: 2, h: 2 }, caminho: [[1, 1]] });
   const e = Lugares.checar(ctx).join('\n');
   assert.match(e, /petshop: id repetido/);
   assert.match(e, /petshop: rect fora do mapa/);
@@ -57,11 +57,11 @@ test('--livres: a lista não é vazia e cada rect, com o caminho sugerido, passa
 
 test('rect em cima da rua ou do lago, e caminho pela água, são acusados', () => {
   const ctx = reino();
-  ctx.Reino.registrarLugar({ id: 'narua', nome: 'x', sprite: 'x', rect: { x: 3, y: 8, w: 3, h: 2 }, caminho: [[4, 10]] });
-  ctx.Reino.registrarLugar({ id: 'nolago', nome: 'x', sprite: 'x', rect: { x: 12, y: 22, w: 4, h: 3 }, caminho: [[16, 21]] });
-  ctx.Reino.registrarLugar({ id: 'nado', nome: 'x', sprite: 'x', rect: { x: 1, y: 26, w: 1, h: 1 }, caminho: [[18, 24]] });
+  ctx.Reino.registrarLugar({ id: 'narua', nome: 'x', sprite: 'x', rect: { x: 2, y: 10, w: 2, h: 2 }, caminho: [[2, 12]] });
+  ctx.Reino.registrarLugar({ id: 'nolago', nome: 'x', sprite: 'x', rect: { x: 24, y: 35, w: 4, h: 3 }, caminho: [[26, 38]] });
+  ctx.Reino.registrarLugar({ id: 'nado', nome: 'x', sprite: 'x', rect: { x: 1, y: 26, w: 1, h: 1 }, caminho: [[27, 36]] });
   const e = Lugares.checar(ctx).join('\n');
-  assert.match(e, /narua: rect por cima de rua em 3,9/);
+  assert.match(e, /narua: rect por cima de rua em 3,11/);
   assert.match(e, /nolago: rect por cima de água do lago/);
-  assert.match(e, /nado: caminho passa por água do lago em 18,24/);
+  assert.match(e, /nado: caminho passa por água do lago em 27,36/);
 });

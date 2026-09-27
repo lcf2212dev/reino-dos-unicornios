@@ -9,7 +9,7 @@ Reino.registrarMateria({
   lugar: {
     nome: 'Museu das Memórias',
     sprite: 'museu',
-    rect: { x: 3, y: 3, w: 6, h: 5 },   // em tiles; a porta fica no meio da última linha
+    rect: { x: 4, y: 5, w: 6, h: 5 },   // em tiles; a porta fica no meio da última linha (fileira de cima, a oeste)
     placa: 'acima',   // ao lado cobriria a Torre do Relógio
     cores: { parede: '#fff6e4', telhado: '#f0a04a', detalhe: '#ff8a3d' },
   },

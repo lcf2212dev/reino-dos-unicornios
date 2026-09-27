@@ -27,12 +27,13 @@ async function abrirMapa(browser, url, save, tamanho) {
       return { x: Jogador.x, y: Jogador.y, tx: t.x, ty: t.y, ox: Jogador.olharX, oy: Jogador.olharY, andando: Jogador.andando, caminho: Jogador.caminho.length };
     };
     window.__tela = function (wx, wy) { return Reino.Cena.paraTela(wx, wy); };
-    // um tile livre na mesma linha, a `lado` tiles (procura mais longe se o primeiro for sólido)
+    // um tile livre na mesma linha, a `lado` tiles, com a linha reta até ele livre (a seta do teclado volta por ela)
     window.__livre = function (lado) {
       var t = Jogador.tile(), c = Reino.Cena.atual(), s = lado > 0 ? 1 : -1;
-      for (var d = Math.abs(lado); d < Math.abs(lado) + 6; d++) {
+      for (var d = 1; d < Math.abs(lado) + 6; d++) {
         var x = t.x + s * d;
-        if (!c.solido(x, t.y) && c.caminho(t, { x: x, y: t.y })) return { x: x, y: t.y };
+        if (c.solido(x, t.y)) return null;
+        if (d >= Math.abs(lado) && c.caminho(t, { x: x, y: t.y })) return { x: x, y: t.y };
       }
       return null;
     };

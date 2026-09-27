@@ -13,7 +13,7 @@ Reino.registrarMateria({
     nome: 'Estação dos Caminhos',
     artigo: 'a',   // "até a Estação dos Caminhos"
     sprite: 'caminhos',   // desenho de fora em interiores/geografia/fora.js
-    rect: { x: 24, y: 4, w: 5, h: 5 },   // clareira de cima: um tile à direita, longe da placa do Castelo
+    rect: { x: 36, y: 5, w: 5, h: 5 },   // fileira de cima, entre o Castelo e o Baú
     placa: 'acima',
     porCima: true,     // entra depois do sorteio dos enfeites: o resto do reino fica igual (js/mundo/mapa.js)
     cores: { parede: '#eaf6ff', telhado: '#2f8fd6', detalhe: '#39a860' },

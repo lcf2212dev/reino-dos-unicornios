@@ -103,7 +103,7 @@
     U.$('#hud').hidden = false;
     UI.montarHUD();
     V.montarControle();
-    J.posicionar(17, 10);
+    J.posicionar(Mapa.inicio.x, Mapa.inicio.y);
     V.desenhar(performance.now());
     // fome e sede da montaria (módulo cuidados) só contam daqui em diante (jogo aberto e ela jogando)
     // módulos (js/nucleo/modulos.js): iniciar antes das boas-vindas, depoisDasBoasVindas depois
@@ -167,7 +167,7 @@
     UI.aplicarAjustes();
     Mapa.criar(Reino.materias);
     Mapa.prerender();
-    if (!est().comecou) J.posicionar(17, 10);
+    if (!est().comecou) J.posicionar(Mapa.inicio.x, Mapa.inicio.y);
     V.canvas = U.$('#reino');
     V.ctx = V.canvas.getContext('2d');
     V.buffer = PA.novoCanvas(10, 10);

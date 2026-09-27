@@ -140,6 +140,8 @@
       { js: 'js/mundo/lugares.js', grupo: 'mundo' },
       { js: 'js/mundo/mapa-desenho.js', grupo: 'mundo' },
       { js: 'js/mundo/lago.js', grupo: 'mundo' },
+      { js: 'js/mundo/cidade-desenho.js', grupo: 'mundo' },
+      { js: 'js/mundo/contorno.js', grupo: 'mundo' },
       { js: 'js/mundo/predios.js', grupo: 'mundo' },
       { js: 'js/personagens/jogador.js', grupo: 'personagens' },
       { js: 'js/personagens/jogador-desenho.js', grupo: 'personagens' },
