@@ -85,7 +85,11 @@ falas (até 30 letras por página, frases de 3+ palavras, conferência por trans
    (`listar-falas.js`). No `completar` com `colado: true` a narradora lê só o enunciado.
 10. Texto de apoio: lido pela narradora com `Reino.Falas.segmentosApoio(apoio)` (título, título de cada parte,
     cada item da lista, o texto), no pacote da sala ou da prova.
-11. Amostras em `amostras-de-voz/` (13 a 44; 34 Dona Aveia, 35 Doutora Vega, 36 Robô Cosmo, 37 a 44 Casa das
+11. Ouvir antes de seguir: `Reino.Voz.falarEsperando(segs, op) → { espera, fim }` (espera = false quando nada vai
+    soar: voz desligada, sem gravação, AudioContext parado) e `Reino.UI.esperarFala(alvos, segs, op)`, que trava os
+    botões dos alvos (classe `esperando-fala`; `.livre-na-fala` fica livre; Esc bloqueado) até o fim ou o teto de
+    `config.esperaFala`. Toda fala que tem botão de seguir ou sair (balão, sala, treino, prova) passa por ela.
+12. Amostras em `amostras-de-voz/` (13 a 44; 34 Dona Aveia, 35 Doutora Vega, 36 Robô Cosmo, 37 a 44 Casa das
     Palavras, Cavaleira Clara e Professora Lúcia).
 
 ## 5. Lições de voz e texto
