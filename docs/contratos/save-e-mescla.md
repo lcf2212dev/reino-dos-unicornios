@@ -23,8 +23,8 @@ do progresso real. Mudança aqui só com muito cuidado e testes.
 
 ## 2. O que nunca muda
 1. `chaveSave`, `v`, `geracao`, `ciclo` e o formato dos campos existentes.
-2. As regras de `P.mesclar()` para os campos existentes (só o endurecimento de `estrelas`, §4.5, e os carimbos das
-   escolhas e do `pago`, §4.6 e §4.7, autorizados pelo Leandro).
+2. As regras de `P.mesclar()` para os campos existentes (só o endurecimento de `estrelas`, §4.5, o do lado
+   incompleto, §4.4.4, e os carimbos das escolhas e do `pago`, §4.6 e §4.7, autorizados pelo Leandro).
 3. Campo novo só aditivo, e declarado com `P.registrarCampo` (§11): o padrão, a limpeza, a mescla, o Novo ciclo
    e a cópia saem de uma declaração, e os testes de contrato valem para ele. Os campos de hoje ficam como estão.
 4. Dinheiro e prêmios são DERIVADOS das conquistas, nunca guardados soltos. Status de NPC, medalhas,
@@ -91,6 +91,10 @@ Para cada comida, `compradas` = maior e `usadas` = maior (contador estragado con
    desligaram). `estadoNovo()` não tem carimbo (um aparelho novo não "ganha" de quem desligou);
    `completar()` põe `surpresa: true` se faltar.
 3. Geração diferente: vence o estado inteiro da geração maior.
+4. Lado incompleto ou estragado: `salas`, `treinos`, `provas`, `unis`, `loja` ou `pago` ausente ou que não é objeto
+   conta como vazio nos dois lados (sem erro, sem engolir o do outro lado); `usando`, `aparencia` ou `ajustes` que não
+   é objeto, ou `montaria` que não é texto, no lado mais recente: vale o do outro lado. Com saves válidos, o resultado
+   é o de antes (`testes/unidade/save-mescla-incompleto.test.js`).
 ### 4.5 Endurecimento de `estrelas`
 `estrelas.ganhas`/`gastas` estragados (texto sem número, null, NaN) contam como 0 na mescla (`numeroOu`;
 `estrelas` que não é objeto conta como vazio; `gastas` ≥ 0) e em `P.estrelas`/`P.ganharEstrelas`/

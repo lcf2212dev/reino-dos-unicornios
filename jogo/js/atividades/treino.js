@@ -15,11 +15,12 @@
      tempo: entre um pedaço e outro da fala há pausas curtas, por isso espera um pouquinho de
      silêncio). Quem chama também o fecha antes (Claude.limpar) quando ela abre uma questão, entrega
      ou chega ao resultado. Se o balão estiver na fila atrás de outro, o tempo só conta quando ele
-     aparecer; se outro balão tomou o lugar, não fecha nada. */
-  var SILENCIO_BALAO = 1200;
+     aparecer; se outro balão tomou o lugar, não fecha nada. Na fila por mais de ESPERA_BALAO (ou
+     descartado dela pelo Claude.limpar, que não avisa), a vigia desiste. */
+  var SILENCIO_BALAO = 1200, ESPERA_BALAO = 60000;
   Pr.balaoQueSome = function (texto, opcoes) {
     var minimo = U.clamp(texto.length * 45, 4000, 9000);
-    var visto = 0, ultimaVoz = 0;
+    var visto = 0, ultimaVoz = 0, pedido = Date.now();
     var inicio = texto.slice(0, 30);   // o começo (sem emoji: o fim pode virar ícone de pixel art)
     function meu() {
       var bal = document.getElementById('claude-balao'), t = bal && bal.querySelector('.claude-texto');
@@ -27,7 +28,7 @@
     }
     var espera = setInterval(function () {
       var agora = Date.now();
-      if (!meu()) { if (visto) clearInterval(espera); return; }
+      if (!meu()) { if (visto || agora - pedido >= ESPERA_BALAO) clearInterval(espera); return; }
       if (!visto) visto = ultimaVoz = agora;
       if (Reino.Voz && Reino.Voz.falando()) ultimaVoz = agora;
       if (agora - visto >= minimo && agora - ultimaVoz >= SILENCIO_BALAO) { clearInterval(espera); Reino.Claude.fechar(); }

@@ -40,6 +40,12 @@
     if (partes.length === 1) {
       // sem vírgula: corta entre palavras perto do meio (as duas metades ficam parecidas)
       var pal = t.split(/\s+/), melhor = 1, pior = Infinity;
+      // uma "palavra" só, maior que a página: corta em pedaços do tamanho da página (senão recursa sem fim)
+      if (pal.length === 1) {
+        var letras = Array.from(t), ped = [];
+        for (var c = 0; c < letras.length; c += LIMITE) ped.push(letras.slice(c, c + LIMITE).join(''));
+        return ped;
+      }
       for (var k = 1; k < pal.length; k++) {
         var m = Math.max(tamanho(pal.slice(0, k).join(' ')), tamanho(pal.slice(k).join(' ')));
         if (m < pior) { pior = m; melhor = k; }
