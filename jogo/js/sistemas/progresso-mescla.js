@@ -10,6 +10,7 @@
   function minPos(a, b) { if (!a) return b; if (!b) return a; return Math.min(a, b); }
   var ORDEM_MEDALHA = { bronze: 1, prata: 2, ouro: 3 };
   var ORDEM_PREMIO = { comum: 1, raro: 2, lendario: 3 };
+  var MAPAS = ['salas', 'treinos', 'provas', 'unis', 'loja', 'pago'];   // id -> registro (ou valor), em P.mesclar
 
   // as regras dos campos novos, usadas pela mescla e pela cópia de segurança: `base` ganha no empate
   /* cuidados: um carimbo por campo, `acaoFome` (hora do último comer) e `acaoSede` (do último beber); o gasto
@@ -143,6 +144,12 @@
     var recente = (a.atualizado || 0) >= (b.atualizado || 0) ? a : b;
     var antigo = recente === a ? b : a;
     var r = U.copia(recente);
+    // mapa ausente ou estragado (não é objeto) conta como vazio: não lança erro nem engole o do outro lado
+    // (os dois lados sem ele: continua como veio); escolha ausente ou estragada no lado mais recente: vale a do outro
+    antigo = Object.assign({}, antigo);
+    MAPAS.forEach(function (m) { if (!objeto(antigo[m])) antigo[m] = {}; else if (!objeto(r[m])) r[m] = {}; });
+    ['usando', 'aparencia', 'ajustes'].forEach(function (ch) { if (!objeto(r[ch]) && objeto(antigo[ch])) r[ch] = U.copia(antigo[ch]); });
+    if (typeof r.montaria !== 'string' && typeof antigo.montaria === 'string') r.montaria = antigo.montaria;
 
     // novo ciclo de provas: salas, treinos e pagamentos vêm do ciclo mais novo
     var mesmoCiclo = (a.ciclo || 1) === (b.ciclo || 1);

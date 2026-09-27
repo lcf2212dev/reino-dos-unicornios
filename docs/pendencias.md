@@ -5,7 +5,6 @@ teste, e a linha sai daqui. Os já corrigidos estão em `docs/decisoes/historico
 
 | Onde | O que acontece | Por que fica |
 |---|---|---|
-| `sistemas/progresso-mescla.js` (`P.mesclar`) | Lança `TypeError` quando um lado é um save sem `salas` ou sem `unis` (visto nos pares com `lixo` das referências de dados do e2e). Na prática o jogo só mescla estados completados. | As regras de `P.mesclar` só mudam com teste de dois aparelhos (`docs/decisoes/mescla-do-save.md`). |
 | `atividades/desafios.js` (`D.pontuar`) | `memoria` sempre vale 0; valor em formato inesperado (ex.: `{}` num `varias`) lança erro. | A missão confere a memória pelo controle, e os valores reais vêm dos controles. |
 | `motor/interiores-estatico.js` (`desenharSaida`) | `if (g.dentro(s.x, s.y + 1) \|\| true)` é sempre verdadeiro. | Tirar mudaria o desenho. |
 | `sistemas/surpresa.js`, `sistemas/banho.js` | `elogioAcerto` chama `C.frase` sem checar `Reino.Claude`; `B.iniciar` usa `Jogador` sem checar. | Só importa fora do jogo. |
@@ -17,7 +16,4 @@ teste, e a linha sai daqui. Os já corrigidos estão em `docs/decisoes/historico
 Mecanismo visto no código, mas sem reprodução aqui (só Chromium, sem aparelho de verdade) ou sem caso real hoje.
 Confirmou com teste que falha: vira linha da tabela de cima ou correção.
 
-| Onde | Suspeita | O que falta para confirmar |
-|---|---|---|
-| `atividades/treino.js` (`Pr.balaoQueSome`) | O intervalo de 200 ms nunca é limpo se o balão não chega a aparecer (ficou na fila e o `Claude.limpar()` a descartou). | Um caminho real com outro balão aberto na hora do "Hora de revisar!". |
-| `personagens/npcs-conversa.js` (`quebrarNaTela`) | Uma "palavra" de mais de 30 letras recursa sem fim. | Um caminho que leve texto dinâmico até ela: hoje só passam as frases fixas dos unicórnios e a da baia vazia (maior palavra: 14 letras); o nome que ela digita (até 18 letras) vai só no cabeçalho do balão. |
+Nenhuma no momento.
