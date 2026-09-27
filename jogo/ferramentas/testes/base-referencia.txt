@@ -20,4 +20,5 @@
 # 8c6e239 = conta da Mariana no banco e tela Entrar no Reino: senhaMariana no config e botão Sair nos Ajustes
 # 75f0be8 = joystick em pixel art: config.controles.pixel e pixelTablet no lugar de base/pino
 # 5aefcd1 = viagem de foguete: Lua com 3 ETs, telas do painel do foguete e do voo, campos combustivel e passaporte no save, falas e vozes novas
-5aefcd1
+# f72c387 = aura contorna a figura da Mariana, com halo
+f72c387
