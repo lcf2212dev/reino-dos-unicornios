@@ -15,11 +15,18 @@
       cenaEspelho = S.cenaEspelho;
 
   /* ================= OBJETOS DA LOJA ================= */
-  // vitrine dos enfeites: três prateleiras com os ícones de toda a lista; os comprados ganham fundo rosa e selo ✓
+  // vitrine dos enfeites: três prateleiras de 6 ícones; os comprados ganham fundo rosa e selo ✓. A lista tem
+  // mais do que cabe (68): vão os comprados primeiro e o resto completa, na ordem da lista (a tela da Loja tem todos)
+  var NA_VITRINE = 18;
+  function naVitrine(c) {
+    var todos = enfeites(), meus = todos.filter(function (it) { return c[it.id]; });
+    var escolha = meus.slice(0, NA_VITRINE).concat(todos.filter(function (it) { return !c[it.id]; })).slice(0, NA_VITRINE);
+    return todos.filter(function (it) { return escolha.indexOf(it) >= 0; });
+  }
   I.objeto('loja-vitrine-enfeites', { w: 5, h: 1, topo: 44, solido: true, alto: true,
-    chave: function (P) { var c = comprados(P); return 'enf:' + enfeites().map(function (it) { return c[it.id] ? 1 : 0; }).join(''); },
+    chave: function (P) { var c = comprados(P); return 'enf:' + naVitrine(c).map(function (it) { return it.id + (c[it.id] ? 1 : 0); }).join(','); },
     desenhar: function (ctx, px, py, o, P) {
-      var W = 80, top = py - 44, c = comprados(P), lista = enfeites();
+      var W = 80, top = py - 44, c = comprados(P), lista = naVitrine(c);
       // móvel de madeira lilás com vidro
       ret(ctx, px + 1, top, W - 2, 60, K);
       ret(ctx, px + 2, top + 1, W - 4, 58, LILAS2);
