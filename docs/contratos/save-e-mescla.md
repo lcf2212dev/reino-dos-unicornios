@@ -23,7 +23,8 @@ do progresso real. Mudança aqui só com muito cuidado e testes.
 
 ## 2. O que nunca muda
 1. `chaveSave`, `v`, `geracao`, `ciclo` e o formato dos campos existentes.
-2. As regras de `P.mesclar()` para os campos existentes (só o endurecimento de `estrelas`, §4.5).
+2. As regras de `P.mesclar()` para os campos existentes (só o endurecimento de `estrelas`, §4.5, e os carimbos das
+   escolhas e do `pago`, §4.6 e §4.7, autorizados pelo Leandro).
 3. Campo novo só aditivo, e declarado com `P.registrarCampo` (§11): o padrão, a limpeza, a mescla, o Novo ciclo
    e a cópia saem de uma declaração, e os testes de contrato valem para ele. Os campos de hoje ficam como estão.
 4. Dinheiro e prêmios são DERIVADOS das conquistas, nunca guardados soltos. Status de NPC, medalhas,
@@ -42,7 +43,12 @@ cuidados: { <uniId>: { fome, sede, banho, em, acao, acaoFome, acaoSede, acaoBanh
 despensa: { <comidaId>: { compradas, usadas } }   // contadores que só crescem; quantidade = compradas − usadas
 ajustes.surpresa: true                            // interruptor "❓ Perguntas surpresa" (padrão ligado)
 ajustes.surpresaEm: <Date.now()>                  // carimbo da última troca de verdade do interruptor (só P.salvar marca)
+escolhasEm: { <escolha>: <Date.now()> }           // última troca de cada escolha (§4.6; só P.salvar marca)
+pagoEm: { <materiaId>: <Date.now()> }             // último "Já pago" dos pais (§4.7; P.registrarPagamento marca)
 ```
+`escolhasEm` e `pagoEm` só aparecem na primeira troca (save sem troca sai igual ao de antes); ficam fora de
+`estadoNovo()`, da cópia `-novidades` (§5.7) e de `P.NOMES_DO_SAVE` (não registre campo com esses nomes). Carimbo
+estragado (não número ≥ 0, chave insegura) é limpo em `normalizarNovos` e conta como sem carimbo.
 1. Unicórnio sem registro em `cuidados` = fome 100, sede 100 e banho 100 (nasce satisfeito).
 2. `banho` ausente = 100 na leitura. Carregar o save, comer ou beber NÃO cria o campo `banho`; só o gasto
    (ou o banho) cria.
@@ -79,7 +85,7 @@ Para cada comida, `compradas` = maior e `usadas` = maior (contador estragado con
 ### 4.4 Lado sem o campo e `ajustes`
 1. Um lado sem o campo (aparelho antigo, que pode apagá-lo): vale o outro lado inteiro. Um aparelho antigo
    nunca faz a Mariana perder comida comprada nem acessório (`loja` já é união).
-2. `ajustes` vem do lado mais recente, com uma exceção para `surpresa` (`juntarSurpresa`, a mesma regra na
+2. `ajustes` vem do lado mais recente (cada ajuste, pelo carimbo dele, §4.6), com uma exceção para `surpresa` (`juntarSurpresa`, a mesma regra na
    mescla e na cópia): vale o lado com o carimbo `surpresaEm` maior; sem carimbo nos dois, o lado que fica só
    recebe o `surpresa` do outro se não tiver o campo (aparelho antigo não religa as perguntas que os pais
    desligaram). `estadoNovo()` não tem carimbo (um aparelho novo não "ganha" de quem desligou);
@@ -89,6 +95,53 @@ Para cada comida, `compradas` = maior e `usadas` = maior (contador estragado con
 `estrelas.ganhas`/`gastas` estragados (texto sem número, null, NaN) contam como 0 na mescla (`numeroOu`;
 `estrelas` que não é objeto conta como vazio; `gastas` ≥ 0) e em `P.estrelas`/`P.ganharEstrelas`/
 `P.gastarEstrelas`. Número em texto ("12") vale o número. Com números válidos, o resultado é o de antes.
+
+### 4.6 Escolhas (`juntarEscolhas`, carimbos em `escolhasEm`)
+1. Escolhas: `montaria`, `usando` (inteiro), `aparencia` (inteira), cada `ajustes.<k>` fora `surpresa`/`surpresaEm`
+   (`ajuste:<k>`) e o `nome` de cada unicórnio (`nome:<uniId>`).
+2. Carimbar: `P.salvar` compara cada escolha (em JSON) com a que esta aba viu por último (`vigiarSurpresa`, no
+   carregar, em cada mescla e em cada gravação) e carimba a que mudou com `max(Date.now(), carimbo + 1)`. Nenhuma
+   tela carimba. Carregar, mesclar e "Apagar tudo" trocam o objeto e não carimbam (como a surpresa).
+3. Mescla: por escolha, vale o valor do lado com o carimbo MAIOR; sem carimbo conta 0; empate (inclusive 0 e 0)
+   = o lado mais recente (a regra de antes). Os carimbos: por chave, o maior. Nome ausente com carimbo maior
+   (apagado de propósito) apaga o do outro lado; unicórnio só de um lado vem inteiro, com o nome.
+4. Trocas quase simultâneas em dois aparelhos (a segunda feita antes de o aparelho receber a primeira) seguem o
+   relógio de cada um: vale o carimbo maior, mesmo que o relógio dele esteja adiantado (o mesmo limite do
+   `surpresaEm`). Troca feita depois de receber a outra sempre vence (`carimbo + 1`).
+5. Versão antiga (sem carimbos): guarda `escolhasEm` sem mexer (completar e gravar mantêm; a mescla antiga leva os
+   do lado mais recente). Enquanto uma antiga estiver aberta, a escolha feita na versão nova pode perder para o
+   estado dela (a regra de antes, pelo `atualizado`): a nova insiste uma vez por troca e depois cede (§4.8).
+   Fechada a antiga, a próxima troca feita num aparelho novo volta à regra dos carimbos (§4.8.6).
+### 4.7 `pago` (carimbos em `pagoEm`)
+1. `P.registrarPagamento` carimba a matéria (`max(Date.now(), carimbo + 1)`), também para menos (40 → 4).
+2. Mesmo ciclo: vale o valor do lado com o carimbo maior; sem carimbo nos dois ou empate = o maior (a regra de antes).
+   `pagoEm`: por chave, o maior. Ciclo diferente: `pago` e `pagoEm` vêm do ciclo mais novo; o Novo ciclo apaga `pagoEm`.
+3. Limite conhecido: um aparelho da versão ANTIGA aberto junta `pago` pelo maior e leva o carimbo junto. Enquanto
+   ele estiver aberto, a correção para menos pode voltar ao maior (a regra de antes; a nova cede, §4.8). Com ele
+   fechado (ou recarregado na versão nova), a correção seguinte vale. Duas correções quase simultâneas em dois
+   aparelhos seguem o relógio de cada um, como as escolhas (§4.6.4).
+4. Testes: `testes/unidade/save-pendencias.test.js`, `save-escolhas-mescla.test.js`, `save-escolhas-versao-antiga.test.js`,
+   `save-escolhas-vaivem.test.js`.
+### 4.8 Sem vaivém com a versão antiga (`progresso-nuvem.js`, `juntarRemoto`)
+A antiga decide escolhas e pago pelo `atualizado` (relógio dela) e reenvia o que juntou; a nova, pelos carimbos.
+Com relógios diferentes, as duas se desfariam para sempre. Por isso:
+1. O doc que a nova envia leva `versaoMescla: 2` (fora do `estado`: o save não muda) e, se o estado dela já foi
+   decidido pela regra da antiga (`nuvem.cedeu`), `cedeu: true`. O doc da antiga não tem `versaoMescla`.
+2. Doc limpo (`versaoMescla` sem `cedeu`): regra dos carimbos (§4.6, §4.7), e quem o junta fica limpo.
+3. Doc da antiga: quem o junta fica `cedeu` (o estado dela não segue os carimbos, e carimbos podem ter ficado para trás).
+4. Doc da antiga ou com `cedeu`: a nova compara a mescla com carimbos e a regra de antes (`I.mesclarSemCarimbos`).
+   Se diferem, insiste (`nuvem.lutas` 1; vira 2 quando a insistência é ENVIADA). Se o conflito voltar depois do
+   envio, cede (a regra de antes) e fica `cedeu`. Receber o mesmo doc duas vezes antes de enviar não conta.
+   Conquistas saem iguais nas duas regras.
+5. Uma troca feita no aparelho (escolha ou "Já pago") zera `lutas` e `cedeu`: cada aparelho novo insiste no máximo
+   uma vez por troca, e com uma antiga aberta todos acabam na regra dela (a de antes, que converge).
+6. Sem antiga aberta (ex.: logo depois da atualização, com o banco gravado pela antiga): os aparelhos ficam `cedeu`
+   só até o primeiro doc limpo (o de quem trocou algo); daí em diante vale a regra dos carimbos, e o banco termina limpo.
+7. O que volta ao banco depois de uma junção leva `atualizado = max(agora, atualizado do banco + 1)`: a antiga adota
+   a insistência mesmo com o relógio adiantado.
+8. Conferido (`save-escolhas-vaivem.test.js`): misturas 2N, 3N, 1N1V, 2N1V, 1N2V e 2N2V, relógios de −60 s a +60 s,
+   voltas em ordem fixa e sorteada: converge, ninguém diverge, nenhuma conquista some; só novos com banco inicial
+   sem marca e relógios iguais: nenhuma escolha nem pago volta atrás e o banco termina limpo.
 
 ## 5. Cópia de segurança `-novidades`
 1. Chave `Reino.config.chaveSave + '-novidades'` (constante em progresso.js). Guarda
@@ -101,6 +154,8 @@ Para cada comida, `compradas` = maior e `usadas` = maior (contador estragado con
    com `compradas` e `usadas` numéricos ≥ 0. O banho volta dela pela mesma regra de mescla (§4.2).
 5. Só vale na mesma `geracao` ("Apagar tudo" não traz nada de volta).
 6. Sem `removeItem` nem `clear`.
+7. `escolhasEm` e `pagoEm` NÃO entram: um carimbo velho devolvido pela cópia colaria num valor que uma aba antiga
+   trocou sem carimbar. Sem carimbo, a troca da versão nova (carimbada) vence na mescla (§4.6).
 
 ## 6. Normalização (`normalizarNovos`, no fim de `completar()` e em `gravarLocal`)
 1. Só chaves próprias; nunca `__proto__`, `constructor`, `prototype` nem outro nome de `Object.prototype`

@@ -22,6 +22,17 @@ Para que serve: resume as regras da mescla do save e diz por que mexer nelas é 
 - `despensa`: maior `compradas` e maior `usadas`, por comida.
 - Lado sem o campo (aparelho antigo): vale o outro lado inteiro.
 - `ajustes` do lado mais recente; `surpresa` pelo carimbo `surpresaEm`.
+- Escolhas (montaria, usando, aparência, cada ajuste, nome de cada unicórnio): por escolha, o carimbo maior em
+  `escolhasEm` (P.salvar marca a troca sozinho); sem carimbo ou empate, o lado mais recente. `pago`: o carimbo maior
+  em `pagoEm` (P.registrarPagamento), também para menos; sem carimbo ou empate, o maior. Mudança de regra em campos
+  existentes autorizada pelo Leandro (27/09/2026) porque a regra do `atualizado` desfazia a escolha feita num
+  aparelho quando outro gravava depois (gravação dos cuidados) e o "Já pago" corrigido para menos voltava ao maior.
+  Carimbo (e não "vale o mais recente" por campo) porque só a troca de verdade pode vencer: gravar cuidados não é escolha.
+- Versão antiga aberta (sem carimbos): a nova insiste uma vez por troca (contada depois de enviada) e depois cede à
+  regra de antes; o doc diz de quem veio (`versaoMescla`, e `cedeu` quando o estado já seguiu a regra da antiga), para
+  a nova só ceder a quem a segue; senão as duas regras se desfariam em vaivém para sempre com relógios diferentes, ou
+  o banco de antes da atualização faria os aparelhos novos cederem entre si (`save-e-mescla.md` §4.8). Preço aceito:
+  com a antiga aberta, a escolha e o pago corrigido podem voltar à regra de antes.
 - Cópia `mariana-reino-v1-novidades`: devolve o que faltar, com as mesmas regras (`save-e-mescla.md` §5).
 - Dinheiro e prêmios nunca são guardados: são derivados das conquistas.
 

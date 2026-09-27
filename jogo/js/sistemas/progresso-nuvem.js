@@ -3,10 +3,38 @@
 (function () {
   var U = Reino.util, I = Reino._progresso, P = I.P, nuvem = I.nuvem;
   var EV = Reino.EVENTOS;
-  var agora = I.agora, objeto = I.objeto, completar = I.completar, comCopia = I.comCopia, conteudo = I.conteudo;
+  var agora = I.agora, numeroOu = I.numeroOu, objeto = I.objeto, completar = I.completar, comCopia = I.comCopia, conteudo = I.conteudo;
   var trouxeAlgo = I.trouxeAlgo, gravarLocal = I.gravarLocal, vigiarSurpresa = I.vigiarSurpresa;
 
   /* ---------- sincronização com o claude.ai (capacidade db) ---------- */
+  /* Vaivém com a versão ANTIGA (sem carimbos; docs/contratos/save-e-mescla.md §4.8). A antiga decide as escolhas e
+     o pago pelo `atualizado` (com o relógio dela); esta, pelos carimbos. O doc que esta versão grava leva
+     `versaoMescla` (o da antiga, não) e, se o estado daqui já foi decidido pela regra da antiga, `cedeu: true`:
+     - doc limpo (`versaoMescla` sem `cedeu`): regra dos carimbos, e este aparelho fica limpo;
+     - doc da antiga: este aparelho fica `cedeu` (o estado dela não segue os carimbos);
+     - doc da antiga ou de quem cedeu, quando os carimbos mudam o resultado (a regra de antes daria outro): esta
+       insiste UMA vez (`lutas` 1; 2 depois de ENVIAR a insistência, com `atualizado` acima do banco, para a antiga
+       adotar); se o conflito voltar depois do envio, cede (`I.mesclarSemCarimbos`) e fica `cedeu`.
+     Uma troca feita aqui (escolha ou "Já pago") zera `lutas` e `cedeu`. Com uma antiga aberta, cada aparelho novo
+     insiste no máximo uma vez por troca e depois segue a regra dela (a de antes, que converge); sem antiga, o
+     `cedeu` que o doc de antes da atualização deixou some no primeiro doc limpo, e a regra dos carimbos volta a valer.
+     Conquistas não mudam com isso: só as escolhas e o pago. */
+  var VERSAO_MESCLA = 2;
+  /** @param {EstadoSave} remoto @param {any} dados o doc inteiro (`versaoMescla`, `cedeu`) */
+  function juntarRemoto(remoto, dados) {
+    var m = P.mesclar(I.estado, remoto), novo = !!dados && dados.versaoMescla >= VERSAO_MESCLA;
+    if (novo && !dados.cedeu) { nuvem.cedeu = false; return m; }
+    if (!novo) nuvem.cedeu = true;
+    var velho = I.mesclarSemCarimbos(I.estado, remoto);
+    if (conteudo(completar(U.copia(m))) === conteudo(completar(U.copia(velho)))) return m;
+    if (nuvem.lutas >= 2) { nuvem.cedeu = true; return velho; }
+    nuvem.lutas = 1;
+    return m;
+  }
+  // `atualizado` do que volta ao banco: acima do que veio (relógio da antiga adiantado não faz ela ficar com o dela)
+  /** @param {EstadoSave} remoto */
+  function novoAtualizado(remoto) { return Math.max(agora(), numeroOu(remoto.atualizado, 0) + 1); }
+
   function agendarNuvem() {
     if (!nuvem.ok) return;
     clearTimeout(nuvem.timer);
@@ -23,7 +51,11 @@
     if (nuvem.gravando) { nuvem.pendente = true; return; }
     nuvem.gravando = true;
     var falhou = false;
-    comLimite(nuvem.ref.set({ estado: U.copia(I.estado), atualizado: I.estado.atualizado }), limiteRede())
+    // sem campo `undefined` no doc (um banco pode recusar); a insistência contra a antiga conta depois de enviada
+    var doc = { estado: U.copia(I.estado), atualizado: I.estado.atualizado, versaoMescla: VERSAO_MESCLA };
+    if (nuvem.cedeu) doc.cedeu = true;
+    if (nuvem.lutas === 1) nuvem.lutas = 2;
+    comLimite(nuvem.ref.set(doc), limiteRede())
       .then(function () { nuvem.status = 'sincronizado'; U.emit(EV.NUVEM, nuvem.status); })
       .catch(function (e) {
         nuvem.status = 'erro'; U.emit(EV.NUVEM, nuvem.status);
@@ -109,11 +141,11 @@
           // aparelho que nunca começou não tem nada a somar: fica com o guardado inteiro
           // (senão a aparência e as escolhas em branco dele, mais recentes, venceriam)
           var emBranco = !I.estado.comecou && (I.estado.geracao || 1) <= (guardado.geracao || 1);
-          I.estado = completar(comCopia(emBranco ? U.copia(guardado) : P.mesclar(I.estado, guardado)));
+          I.estado = completar(comCopia(emBranco ? U.copia(guardado) : juntarRemoto(guardado, snap.data())));
           P.conferirPersistencia();
           // este aparelho tinha algo que o banco não tem: carimbo novo, para os outros aparelhos
           // não ignorarem o envio abaixo como "já visto" (mesmo `atualizado`)
-          if (trouxeAlgo(I.estado, guardado)) I.estado.atualizado = agora();
+          if (trouxeAlgo(I.estado, guardado)) I.estado.atualizado = novoAtualizado(guardado);
           gravarLocal();
           vigiarSurpresa();
           U.emit(EV.PROGRESSO, I.estado);
@@ -127,9 +159,9 @@
           // nada de novo no banco (pelo conteúdo, não pelo `atualizado`: dois aparelhos podem mandar
           // estados diferentes com o mesmo carimbo)
           if (!objeto(remoto) || conteudo(completar(U.copia(remoto))) === conteudo(I.estado)) return;
-          I.estado = completar(comCopia(P.mesclar(I.estado, remoto)));
+          I.estado = completar(comCopia(juntarRemoto(remoto, s.data())));
           // a junção trouxe algo que o banco não tem: devolve ao banco com carimbo novo
-          if (P.conferirPersistencia().length || trouxeAlgo(I.estado, remoto)) { I.estado.atualizado = agora(); agendarNuvem(); }
+          if (P.conferirPersistencia().length || trouxeAlgo(I.estado, remoto)) { I.estado.atualizado = novoAtualizado(remoto); agendarNuvem(); }
           gravarLocal();
           vigiarSurpresa();
           U.emit(EV.PROGRESSO, I.estado);
