@@ -1,0 +1,95 @@
+{
+  "nome": "salao-beleza",
+  "pedido": "pedidos/2026-09-27-salao-beleza.md",
+  "personagens": [
+    {
+      "id": "salao-lulu", "nome": "Dona Lulu", "genero": "f", "idade": "adulto",
+      "predio": "salao", "x": 3, "y": 5,
+      "acao": { "tipo": "tela", "tela": "salao-cabelo" },
+      "perfil": { "voz": "en-US-AvaMultilingualNeural", "velocidade": "+12%", "tom": "+24Hz" }
+    }
+  ],
+  "tarefas": [
+    {
+      "id": "contrato", "tipo": "contrato", "titulo": "Reserva da Dona Lulu, lugar do salão e ids das telas salao-cabelo e salao-roupa",
+      "quem": "orquestrador", "depende": [],
+      "arquivos": ["jogo/js/interiores/salao/reservas.js", "jogo/js/interiores/salao/lugar.js", "jogo/js/manifesto.js", "jogo/index.html"],
+      "worktree": "salao-beleza", "personagens": ["salao-lulu"],
+      "pronto": ["vaga tracejada da Dona Lulu no salão (3,5)", "salão no mapa e no menu Lugares", "npm run vozes-elenco limpo"],
+      "estimativa": 10
+    },
+    {
+      "id": "icones", "tipo": "arte", "titulo": "Ícones pixel art dos emojis do salão",
+      "quem": "worker-low", "depende": [],
+      "arquivos": ["jogo/js/interiores/salao/icones.js"],
+      "worktree": "salao-icones",
+      "pronto": ["todo emoji do salão (✂, 👗, 💇) tem ícone pixel art"],
+      "estimativa": 10
+    },
+    {
+      "id": "fachada", "tipo": "fachada", "titulo": "Fachada do Salão de Beleza no terreno da praça",
+      "quem": "worker-low", "depende": ["contrato"],
+      "arquivos": ["jogo/js/interiores/salao/fora.js"],
+      "worktree": "salao-fachada",
+      "pronto": ["fachada caprichada, com cerquinha e portão, nos 3 tamanhos", "porta alcançável andando"],
+      "estimativa": 20
+    },
+    {
+      "id": "cenario", "tipo": "cenario", "titulo": "Interior do salão: cadeira, arara, provador, pia, secador e as falas dos objetos",
+      "quem": "worker-low", "depende": ["contrato"],
+      "arquivos": ["jogo/js/interiores/salao/salao.js", "jogo/js/interiores/salao/objetos.js", "jogo/js/interiores/salao/falas.js"],
+      "worktree": "salao-cenario",
+      "pronto": ["vaga da Dona Lulu (3,5) livre e alcançável", "cadeira abre salao-cabelo; arara e provador abrem salao-roupa"],
+      "estimativa": 25
+    },
+    {
+      "id": "npc-lulu", "tipo": "npc", "titulo": "Visual e ação da Dona Lulu",
+      "quem": "worker-low", "depende": ["contrato"],
+      "arquivos": ["jogo/js/interiores/salao/personagens.js"],
+      "worktree": "salao-npcs", "personagens": ["salao-lulu"],
+      "pronto": ["a Dona Lulu aparece no lugar da vaga, nos 3 tamanhos", "conversar com ela abre salao-cabelo"],
+      "estimativa": 20
+    },
+    {
+      "id": "falas-lulu", "tipo": "falas", "titulo": "Falas da Dona Lulu (oi, nova, depois)",
+      "quem": "worker-low", "depende": ["contrato"],
+      "arquivos": ["jogo/js/interiores/salao/personagens-falas.js"],
+      "worktree": "salao-beleza", "personagens": ["salao-lulu"],
+      "pronto": ["até 30 letras por página, frases de 3+ palavras, carinhosas"],
+      "estimativa": 10
+    },
+    {
+      "id": "telas", "tipo": "mecanica", "titulo": "Telas de corte de cabelo e de roupa, com prévia, e o desenho da Mariana com formatos",
+      "quem": "worker-low", "depende": ["contrato"],
+      "arquivos": ["jogo/js/ui/salao.js", "jogo/css/ui-salao.css", "jogo/js/interiores/salao/acoes.js", "jogo/js/arte/pixelart-mariana-visual.js",
+        "jogo/ferramentas/testes/unidade/salao.navegador.test.js", "jogo/ferramentas/testes/unidade/salao-visual.test.js"],
+      "worktree": "salao-telas",
+      "pronto": ["uns 8 cortes e 8 roupas, visíveis a pé, montada e em todas as vistas", "escolha salva e vale depois de recarregar",
+        "teclado (Tab, Enter, Esc) funciona"],
+      "estimativa": 45
+    },
+    {
+      "id": "vozes", "tipo": "vozes", "titulo": "Voz da Dona Lulu: perfil, amostra, gravação e conferência por transcrição",
+      "quem": "orquestrador", "depende": ["contrato", "falas-lulu"],
+      "arquivos": ["jogo/js/voz/interior-salao.js"],
+      "worktree": "salao-beleza", "personagens": ["salao-lulu"],
+      "pronto": ["voz diferente da do Claude e dos outros NPCs", "transcrição sem ✘"],
+      "estimativa": 20
+    },
+    {
+      "id": "integracao", "tipo": "integracao", "titulo": "Juntar as frentes, gravar as vozes dos objetos, npm test e e2e",
+      "quem": "orquestrador", "depende": ["contrato", "icones", "fachada", "cenario", "npc-lulu", "falas-lulu", "telas", "vozes"],
+      "arquivos": [],
+      "worktree": "salao-beleza",
+      "pronto": ["npm test e npm run e2e verdes; diferenças do e2e explicadas (base trocada)"],
+      "estimativa": 30
+    },
+    {
+      "id": "entrega", "tipo": "entrega", "titulo": "Merge na main, push e artifact",
+      "quem": "orquestrador", "depende": ["integracao"],
+      "arquivos": [],
+      "worktree": "salao-beleza",
+      "estimativa": 10
+    }
+  ]
+}
