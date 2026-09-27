@@ -24,8 +24,10 @@ O modelo que o Leandro preenche: `PEDIDO-DE-FEATURE.md` (raiz). Campo em branco 
    | Ajuste ou correção | o `CLAUDE.md` da pasta do assunto e o contrato; bug: primeiro um teste que reproduz, depois a correção |
 
 3. **Plano** (para você, sem esperar aprovação): o que ela vai ver, arquivos novos e mexidos, o que decidiu.
-   Pedido pequeno: faça você mesmo. Pedido com várias frentes: orquestre com agentes `worker-low` (teto no `CLAUDE.md`
-   da raiz), cada um com seus arquivos.
+   Pedido pequeno: faça você mesmo. Pedido com duas frentes ou mais (prédio + personagem, personagem + voz, tela +
+   conteúdo…): plano paralelo (`npm run plano -- rascunho`, `conferir`, `ondas`; skill `orquestrar-frentes`,
+   "Plano paralelo"), contrato na onda 0 (reservas de personagem) e agentes `worker-low` pelo `proximas`, cada um
+   com seus arquivos, conferidos em pipeline. O plano (`pedidos/<data>-<nome>.plano.json`) entra no commit.
 4. **Worktree** com o nome do campo 1: `npm run worktree -- <nome> [--material <Pasta>]`. Nunca escreva na árvore principal.
 5. **Construir** começando pelo gerador quando houver: `npm run novo -- <tipo> <id>`. Cada item de "O que já vale
    sempre" é requisito: caminho por persistência em todo prêmio, nada que premie pressa, emoji novo = ícone, fala nova =

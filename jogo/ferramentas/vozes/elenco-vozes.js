@@ -35,8 +35,10 @@ function nomeProprio(nome) {
   while (p.length > 1 && titulo(p[0])) p.shift();
   return p.join(' ').toLowerCase();
 }
-// gênero pelo título e pelas falas ("eu sou a …"); sinais em conflito = não decide
+// gênero da reserva (Reino.reservarPersonagem: é o contrato); sem reserva, pelo título e pelas falas ("eu sou a …");
+// sinais em conflito = não decide
 function generoDoPersonagem(pers) {
+  if (pers.genero === 'f' || pers.genero === 'm') return pers.genero;
   const sinais = new Set();
   const t = limpar(pers.nome).split(/\s+/)[0] || '';
   if (TITULO_F.test(t)) sinais.add('f');
@@ -99,6 +101,7 @@ function personagensDoJogo() {
     Object.values(n.falas || {}).forEach((l) => [].concat(l).forEach((f) => typeof f === 'string' && p.falas.push(f)));
   }));
   Object.values((R.NPCs && R.NPCs.ELENCO) || {}).forEach((e) => { if (e.voz) achar(e.voz, e.nome); });
+  Object.values(R.reservas || {}).forEach((r) => { achar('npc-' + r.id, r.nome).genero = r.genero; });
   return { personagens: [...porVoz.values()], vozes: R.config.vozes };
 }
 

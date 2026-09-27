@@ -92,7 +92,9 @@ O que o NPC faz (sala, guia, treino…) está no `npcs` do interior onde ele apa
    (`[{ id, x, y, acao }]`, na ordem de registro). O `<p>.js` feito por `npm run novo -- predio` soma esses à lista
    `npcs` (pelo ajudante `npc()`, que lê sprite e voz do elenco; sem `x/y`, uma vaga livre perto da entrada; sem
    `acao`, `guia`). Os prédios de antes também somam, mas só com `x` e `y` (tile do interior; não têm vagas): sem
-   eles o `validar-interiores` acusa; sem `acao`, a do guia do prédio. O id é SEMPRE o do interior
+   eles o `validar-interiores` acusa; sem `acao`, a do guia do prédio. Personagem feito em frentes paralelas:
+   primeiro `Reino.reservarPersonagem` (o contrato, com a vaga tracejada até o registro), depois o registro só com
+   o sprite (`plano-paralelo.md` §2). O id é SEMPRE o do interior
    (`registrarInterior({ id })`): `'museu'`, `'escola'`…; na Torre, o de cada andar (`'torre'`, `'torre-1'`…
    `'torre-relogio'`); no interior padrão, `'padrao-<matéria>'`. `npm run novo -- personagem <id> --predio <p>`
    escreve o registro em `jogo/js/interiores/<p>/personagens.js` (depois do `falas.js`, antes do `<p>.js`).

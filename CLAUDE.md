@@ -50,6 +50,9 @@ Este arquivo tem as regras invioláveis e o índice. As regras de código de cad
   `jogo/ferramentas/CLAUDE.md`).
 
 ## Agentes
+- Pedido com várias frentes: plano paralelo antes de lançar (`npm run plano`; skill `orquestrar-frentes`): contrato
+  na onda 0 (reservas de personagem), cada frente lançada quando as dependências dela são aprovadas, e o conferente
+  de cada uma lançado assim que ela termina.
 - Até 8 subagentes e workers ao mesmo tempo. Quando um termina e há trabalho independente, outro entra no lugar.
 - Se o teto mudar, os que já rodavam continuam até terminar. Retomar um agente que terminou conta como lançar um novo.
 - A conferência de um trabalho é sempre delegada a um subagent conferente, que não fez o trabalho e só lê e roda comandos
@@ -72,8 +75,8 @@ Este arquivo tem as regras invioláveis e o índice. As regras de código de cad
 - `npm run novo -- <tipo> <id>` (gerador; `--lista`) · `npm run ver` (fotografa uma cena nos 3 tamanhos) ·
   `npm run servidor-teste` (skill `servidor-de-teste`) · `npm run memoria` (memória de uma aba, passo a passo)
 - `npm run index` · `npm run versao` · `npm run vozes` e `npm run vozes-elenco` (skills `gravar-vozes`, `validar-vozes`)
-- `npm run worktree` · `npm run material -- <Pasta>` (prints de `matérias/<pasta>/` reduzidos) · `npm run integrar`
-  (skill `entregar`) · `npm run artifact` (skill `publicar-artifact`)
+- `npm run worktree` · `npm run material -- <Pasta>` (prints de `matérias/<pasta>/` reduzidos) · `npm run plano`
+  (frentes paralelas de um pedido) · `npm run integrar` (skill `entregar`) · `npm run artifact` (skill `publicar-artifact`)
 
 ## Mapa de pastas
 ```

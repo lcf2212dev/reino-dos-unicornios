@@ -22,7 +22,9 @@ Aqui não se escreve código: só se lê o jogo e se escreve o pedido.
 4. **Checar** cada pedido (lições de 2026-09-26):
    - **Como ela acha a novidade** (campo 6): o caminho até ela (porta, escada, menu Lugares, botão). O Leandro não
      achou o laboratório de primeira.
-   - **Personagens:** nome que já existe no mesmo prédio; voz igual à do Claude ou à de outro personagem do mesmo
+   - **Personagens:** um por linha em "Quem aparece", no formato `Nome, gênero, idade` (ex.: `Dona Lulu, mulher,
+     adulta`): o `npm run plano -- rascunho` lê essa linha para reservar cada um e as frentes começarem juntas;
+     nome que já existe no mesmo prédio; voz igual à do Claude ou à de outro personagem do mesmo
      prédio, ou de gênero trocado (vozes em `vozes` do `jogo/js/nucleo/config.js`; para conferir, a skill `validar-vozes`
      se existir, senão `gravar-vozes`).
    - **Recurso do aparelho** (compartilhar, baixar, câmera, vibrar, tela cheia): dizer no campo 12 onde funciona.

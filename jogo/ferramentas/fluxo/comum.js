@@ -8,10 +8,11 @@ const path = require('path');
 const { spawnSync } = require('child_process');
 const { PASTA_TESTES } = require('../testes/guardas');
 
-// sem as variáveis GIT_* herdadas (um hook ou outro git por cima mudaria o repositório de cada comando)
+// sem as variáveis GIT_* herdadas (um hook ou outro git por cima mudaria o repositório de cada comando) e sem
+// REINO_RESERVAS_ABERTAS (só vale nas frentes: na integração, reserva sem registro é erro; plano-paralelo.md §2)
 function ambiente(extra) {
   const env = { ...process.env, ...(extra || {}) };
-  Object.keys(env).filter((k) => /^GIT_(DIR|WORK_TREE|INDEX_FILE|PREFIX)$/.test(k)).forEach((k) => delete env[k]);
+  Object.keys(env).filter((k) => /^GIT_(DIR|WORK_TREE|INDEX_FILE|PREFIX)$|^REINO_RESERVAS_ABERTAS$/.test(k)).forEach((k) => delete env[k]);
   return env;
 }
 

@@ -28,6 +28,12 @@ Você é um worker executando uma tarefa delimitada no jogo "Mariana e o Reino d
 - No fim, uma vez: `npm test`, `npm run validar`, `npm run tamanho`, `npm run tipos` e `npm run e2e`
   (cada diferença com o porquê; diferença não explicada = defeito seu).
 
+## Frente de um plano paralelo (`docs/contratos/plano-paralelo.md`)
+- A reserva (`<p>/reservas.js`: nome, gênero, idade, voz, vaga) é contrato: só leia. Precisa mudar? Diga no retorno.
+- Frente do NPC: `Reino.registrarPersonagem({ id, sprite })` (mais `acao` se a reserva não tiver); nada de nome,
+  voz, x/y. Frente do cenário: deixe livre o tile de cada vaga (a vaga tracejada já ocupa o lugar).
+- Rode os testes com `REINO_RESERVAS_ABERTAS=1` (a vaga ainda sem registro é de outra frente: vira aviso).
+
 ## Vários agentes na mesma worktree
 - Ids novos (salas, NPCs, objetos, falas) com o prefixo do briefing (ex.: `nasa-`, `lab-`).
 - Falas num arquivo seu, indicado no briefing; não edite o `falas.js` compartilhado do prédio.

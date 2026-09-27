@@ -62,7 +62,7 @@ Como ela acha a novidade: (o caminho até ela: porta, escada, menu Lugares, bot�
 
 
 # 8. Personagens e falas
-Quem aparece:
+Quem aparece: (um por linha: nome, gênero, idade. Exemplo: "Dona Lulu, mulher, adulta")
 Jeito de falar:
 Textos:     [ ] escrevo eu (abaixo)   [ ] escreva você
 Voz nova:   [ ] crie uma nova (o Claude escolhe e confere)   [ ] use uma que já existe
