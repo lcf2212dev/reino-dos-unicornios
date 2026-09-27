@@ -29,6 +29,8 @@ const TELAS = {
   petshop: 'Reino.UI.telaPetShop()', album: 'Reino.Fotos && Reino.Fotos.abrirAlbum()',
   castelo: 'Reino.UI.telaCastelo()', plano: 'Reino.UI.telaPlano()', aparencia: 'Reino.UI.telaAparencia(false)',
   escola: 'Reino.Provas.telaEscola()',
+  foguete: 'Reino.UI.telaFoguete && Reino.UI.telaFoguete()',
+  voo: "Reino.Voo && Reino.Voo.iniciar({ planeta: Reino.Viagem.planeta('lua') })",
 };
 // telas com argumento: 'materia:historia', 'livro:historia', 'sala:h1', 'prova:historia-3bim', 'treino:historia'
 // (e 'desafio:h1-03', tratado em tela(): um desafio certo, sem sorteio)

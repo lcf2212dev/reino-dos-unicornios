@@ -16,7 +16,7 @@ Reino.falasDoPredio('observatorio', { npcs: {
 } });
 Reino.falasDoPredio('observatorio', { npcs: {
   'lua-vovo': {
-    oi: ['Olá, minha querida!', 'Eu sou a Vovó Cratera.', 'Moro na Lua faz muito tempo.'],
+    oi: ['{Olá, minha querida!|Olá, meu querido!}', 'Eu sou a Vovó Cratera.', 'Moro na Lua faz muito tempo.'],
     depois: ['A Lua não tem luz própria.', 'Ela brilha com a luz do Sol!'],
   },
 } });

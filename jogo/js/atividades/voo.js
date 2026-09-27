@@ -200,7 +200,7 @@
       document.removeEventListener('keyup', sobe);
       window.removeEventListener('resize', redimensionar);
       if (!chegou && R.Som && R.Som.calar) R.Som.calar();
-      UI.fecharTela(t);
+      if (t.isConnected) UI.fecharTela(t);
       resolver({ chegou: chegou, estrelas: s.estrelas, batidas: s.batidas });
     }
     fechar.addEventListener('click', function () { som('toque'); terminar(false); });
@@ -221,6 +221,7 @@
     function quadro(agora) {
       raf = 0;
       if (!atual) return;
+      if (!t.isConnected) { terminar(false); return; }   // a tela foi fechada por fora (UI.fecharTodas)
       var dt = ultimo == null ? 0 : agora - ultimo;
       ultimo = agora;
       var dir = (teclas.dir ? 1 : 0) - (teclas.esq ? 1 : 0);

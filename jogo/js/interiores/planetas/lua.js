@@ -16,7 +16,8 @@
     return n;
   }
 
-  R.Viagem.registrarPlaneta({ id: 'lua', nome: 'Lua', interior: 'planeta-lua', chegada: CHEGADA, ordem: 1, cor: '#c9c9d6' });
+  // sem o sistema da viagem (a prévia dos interiores só carrega os prédios), o interior existe mesmo assim
+  if (R.Viagem) R.Viagem.registrarPlaneta({ id: 'lua', nome: 'Lua', interior: 'planeta-lua', chegada: CHEGADA, ordem: 1, cor: '#c9c9d6' });
 
   R.registrarInterior({
     id: 'planeta-lua',
@@ -35,7 +36,7 @@
     objetos: [
       // o foguete de pouso, ao lado da chegada: volta ao Hangar
       { tipo: 'planeta-foguete', x: 12, y: 13, nome: 'Foguete', acao: { tipo: 'viagem', para: 'observatorio-2', chegada: { x: 7, y: 9 } } },
-      { tipo: 'lua-placa', x: 9, y: 13, nome: 'Placa', fala: ['Bem-vinda à Lua, Mariana!', 'Aqui é bom de brincar! 🌙'] },
+      { tipo: 'lua-placa', x: 9, y: 13, nome: 'Placa', fala: ['{Bem-vinda|Bem-vindo} à Lua, {nome}!', 'Aqui é bom de brincar! 🌙'] },
       // brincadeiras
       { tipo: 'lua-cratera', x: 10, y: 6, nome: 'Cratera pula-pula', var: { pula: true }, acao: { tipo: 'lua-brincadeira', b: 'pulo' } },
       { tipo: 'lua-pedra-flutua', x: 19, y: 6, nome: 'Pedra levinha', acao: { tipo: 'lua-brincadeira', b: 'flutua' } },
@@ -49,12 +50,12 @@
       { tipo: 'lua-cristal', x: 6, y: 15, nome: 'Cristal', acao: { tipo: 'lua-brincadeira', b: 'cristal', n: 4 } },
       { tipo: 'lua-telescopio', x: 4, y: 4, nome: 'Telescópio', acao: { tipo: 'lua-brincadeira', b: 'curiosidade' } },
       { tipo: 'lua-modulo', x: 17, y: 3, nome: 'Módulo lunar', acao: { tipo: 'lua-brincadeira', b: 'curiosidade' } },
-      { tipo: 'lua-bandeira', x: 11, y: 3, nome: 'Bandeira', fala: ['A bandeira do nosso Reino!', 'Na Lua não tem vento.', 'Ela fica esticada na vareta.'] },
+      { tipo: 'lua-bandeira', x: 9, y: 3, nome: 'Bandeira', fala: ['A bandeira do nosso Reino!', 'Na Lua não tem vento.', 'Ela fica esticada na vareta.'] },
       { tipo: 'lua-jipe', x: 7, y: 10, nome: 'Jipe lunar', fala: ['Um jipe para passear na Lua!'] },
       // enfeites
       { tipo: 'lua-antena', x: 2, y: 3 }, { tipo: 'lua-rocha-alta', x: 6, y: 3 }, { tipo: 'lua-pegadas', x: 13, y: 4 },
       { tipo: 'lua-pedra', x: 14, y: 3 }, { tipo: 'lua-cratera-p', x: 16, y: 5 }, { tipo: 'lua-caixa', x: 20, y: 3 },
-      { tipo: 'lua-seixos', x: 22, y: 5 }, { tipo: 'lua-poeira', x: 5, y: 7 }, { tipo: 'lua-pegadas', x: 12, y: 8, var: { giro: 1 } },
+      { tipo: 'lua-seixos', x: 22, y: 5 }, { tipo: 'lua-seixos', x: 11, y: 4 }, { tipo: 'lua-poeira', x: 5, y: 7 }, { tipo: 'lua-pegadas', x: 12, y: 8, var: { giro: 1 } },
       { tipo: 'lua-pegadas', x: 17, y: 9 }, { tipo: 'lua-seixos', x: 5, y: 9 }, { tipo: 'lua-pedra', x: 12, y: 10 },
       { tipo: 'lua-poeira', x: 15, y: 11 }, { tipo: 'lua-cratera', x: 19, y: 10 }, { tipo: 'lua-rocha-alta', x: 22, y: 12 },
       { tipo: 'lua-cratera-p', x: 3, y: 12 }, { tipo: 'lua-pegadas', x: 8, y: 14, var: { giro: 1 } }, { tipo: 'lua-poeira', x: 15, y: 14 },

@@ -31,7 +31,7 @@
       var P = R.Progresso;
       if (est > 0) { P.ganharEstrelas(est); P.salvar(); if (R.UI && R.UI.atualizarHUD) R.UI.atualizarHUD(); }
       return Promise.resolve(R.Cena.irPara(planeta.interior, planeta.chegada, { x: 0, y: 1 })).then(function () {
-        var novo = V.carimbar(planeta.id), F = V.frases, t = [F.chegou(planeta.nome)];
+        var novo = V.carimbar(planeta.id), F = V.frases, t = [F.chegou(planeta.nome, planeta.artigo)];
         if (novo) t.push(F.carimbo);
         if (est > 0) t.push(F.estrelas(est));
         if (R.Som && R.Som.tocar) R.Som.tocar('estrela');

@@ -42,6 +42,9 @@ const TELAS = [
   ['petshop', 'Reino.UI.telaPetShop()'], ['album', 'Reino.Fotos && Reino.Fotos.abrirAlbum()'],
   ['castelo', 'Reino.UI.telaCastelo()'], ['plano', 'Reino.UI.telaPlano()'], ['aparencia', 'Reino.UI.telaAparencia(false)'],
   ['escola', 'Reino.Provas.telaEscola()'],
+  // viagem de foguete (docs/contratos/viagem.md): o painel e o voo na contagem (a base antiga não tem: guarda)
+  ['foguete', 'Reino.UI.telaFoguete && Reino.UI.telaFoguete()'],
+  ['voo', "Reino.Voo && Reino.Voo.iniciar({ planeta: Reino.Viagem.planeta('lua') })"],
 ];
 async function cenasTelas(page, pasta) {
   for (const [nome, js] of TELAS) {
