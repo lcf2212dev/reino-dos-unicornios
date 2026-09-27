@@ -52,6 +52,10 @@ interface EstadoSave {
   cuidados: { [uniId: string]: RegCuidado };
   /** comidaId → contadores (campo aditivo) */
   despensa: { [comidaId: string]: RegDespensa };
+  /** escolha ('montaria', 'usando', 'aparencia', 'ajuste:<k>', 'nome:<uniId>') → Date.now() da última troca (só P.salvar marca; ausente até a primeira) */
+  escolhasEm?: { [escolha: string]: number };
+  /** materiaId → Date.now() do último "Já pago" (P.registrarPagamento; ausente até o primeiro; o Novo ciclo apaga) */
+  pagoEm?: { [materiaId: string]: number };
 }
 
 /** Cores da Mariana (PA.APARENCIA_PADRAO em js/arte/pixelart-personagens.js). */
@@ -233,6 +237,10 @@ interface EstadoNuvem {
   pendente: boolean;
   timer: any;
   status: StatusNuvem;
+  /** contra a versão antiga (progresso-nuvem.js, juntarRemoto): 0 nada; 1 insistindo; 2 insistência já enviada (cede no próximo conflito) */
+  lutas: number;
+  /** o estado daqui foi decidido pela regra da versão antiga: o doc sai com cedeu: true até juntar um doc limpo ou trocar algo aqui */
+  cedeu: boolean;
 }
 
 /** Reino.Progresso: a API do save, montada nas quatro partes (progresso.js, -mescla, -nuvem, -regras). */
@@ -308,6 +316,7 @@ interface ProgressoInterno {
   trouxeAlgo?(mesclado: EstadoSave, recebido: EstadoSave): boolean;
   gravarLocal?(): void;
   vigiarSurpresa?(): void;
+  soCarimbos?(o: any): { [chave: string]: number };
   // progresso-mescla.js
   CAMPOS_CUIDADO?: string[][];
   carimbo?(r: Partial<RegCuidado>, chave: string): number | null;
@@ -315,6 +324,7 @@ interface ProgressoInterno {
   juntarCuidados?(base: { [uniId: string]: RegCuidado }, outro: any): { [uniId: string]: RegCuidado };
   juntarDespensa?(base: { [comidaId: string]: RegDespensa }, outro: any): { [comidaId: string]: RegDespensa };
   juntarSurpresa?(base: any, outro: any): any;
+  mesclarSemCarimbos?(a: EstadoSave, b: EstadoSave): EstadoSave;
   // progresso-nuvem.js
   agendarNuvem?(): void;
   // progresso-campos.js (o registro `campos` nasce vazio em progresso.js)

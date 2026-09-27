@@ -17,7 +17,7 @@
   /** @type {ProgressoApi} */
   var P = {};
   /** @type {EstadoNuvem} */
-  var nuvem = { ref: null, ok: false, gravando: false, pendente: false, timer: null, status: 'local' };
+  var nuvem = { ref: null, ok: false, gravando: false, pendente: false, timer: null, status: 'local', lutas: 0, cedeu: false };
   // o que as partes do progresso dividem (ver o cabeçalho)
   /** @type {ProgressoInterno} */
   var I = Reino._progresso = { estado: null, nuvem: nuvem, P: P, campos: {} };
@@ -49,6 +49,9 @@
       cuidados: {},     // uniId -> {fome, sede, banho, em, acao, acaoFome, acaoSede, acaoBanho} (0–100, 100 = satisfeito/limpinho; sem registro ou sem banho = 100; acaoFome/acaoSede = carimbo do último comer/beber, acao = o maior dos dois (o banho não mexe nele), acaoBanho = do último banho, 0 = nenhum) — js/sistemas/cuidados.js
       despensa: {},     // comidaId -> {compradas, usadas} (contadores que só crescem; quantidade = compradas − usadas)
     };
+    // carimbos que só aparecem na primeira troca (como ajustes.surpresaEm; save sem troca fica igual ao de antes):
+    //   escolhasEm: escolha -> Date.now() da última troca ('montaria', 'usando', 'aparencia', 'ajuste:<k>', 'nome:<uniId>'; P.salvar)
+    //   pagoEm:     materiaId -> Date.now() do último "Já pago" dos pais (P.registrarPagamento; o Novo ciclo o apaga)
     cadaCampo(function (n, def) { e[n] = def.padrao(); });
     return e;
   }
@@ -154,6 +157,14 @@
   }
   // da cópia só entram registros com números de verdade (cópia estragada não vira NaN no jogo)
   function numero(x) { return typeof x === 'number' && isFinite(x) && x >= 0; }
+  // carimbos `escolhasEm` e `pagoEm`: só chaves seguras com número ≥ 0 (o resto conta como sem carimbo)
+  /** @param {any} o @returns {Object<string, number>} */
+  function soCarimbos(o) {
+    /** @type {Object<string, number>} */
+    var r = {};
+    if (objeto(o)) Object.keys(o).forEach(function (k) { if (chaveSegura(o, k) && numero(o[k])) r[k] = o[k]; });
+    return r;
+  }
   function filtrar(o, campos) {
     var r = {};
     if (objeto(o)) Object.keys(o).forEach(function (k) {
@@ -223,6 +234,7 @@
     });
     e.cuidados = cuidados;
     e.despensa = despensa;
+    ['escolhasEm', 'pagoEm'].forEach(function (c) { if (e[c] !== undefined) e[c] = soCarimbos(e[c]); });
     var s = e.ajustes.surpresa;
     if (typeof s !== 'boolean') e.ajustes.surpresa = s === 'false' ? false : s === 'true' ? true : estadoNovo().ajustes.surpresa;
     cadaCampo(function (n, def) { var v = I.limparCampo(def, e[n]); e[n] = v === undefined ? def.padrao() : v; });
@@ -265,18 +277,48 @@
   /* O interruptor da surpresa muda nos dois sentidos: quando ela o troca (ui/ajustes.js só muda o valor e
      chama P.salvar), ganha o carimbo `ajustes.surpresaEm`, e na mescla vale o carimbo maior.
      Só conta a troca no MESMO objeto de estado: carregar, mesclar e "Apagar tudo" trocam o objeto e
-     não carimbam (o padrão de estadoNovo() nunca tem carimbo, senão um aparelho novo venceria). */
-  var vigiaSurpresa = { estado: null, valor: undefined };
+     não carimbam (o padrão de estadoNovo() nunca tem carimbo, senão um aparelho novo venceria).
+     As outras escolhas (montaria, usando, aparência, cada ajuste, o nome de cada unicórnio) seguem a mesma
+     regra, com o carimbo em `escolhasEm`: a tela só muda o valor e chama P.salvar, que compara com o que
+     esta aba viu por último (nenhuma tela precisa carimbar). */
+  var vigiaSurpresa = { estado: null, valor: undefined, escolhas: {} };
   function marcarSurpresa() {
     var a = I.estado && I.estado.ajustes;
     if (!a) return;
     if (vigiaSurpresa.estado === I.estado && vigiaSurpresa.valor !== undefined && a.surpresa !== vigiaSurpresa.valor) a.surpresaEm = agora();
   }
-  function vigiarSurpresa() { vigiaSurpresa = { estado: I.estado, valor: I.estado && I.estado.ajustes ? I.estado.ajustes.surpresa : undefined }; }
+  // cada escolha em texto (JSON), pela chave do carimbo; a surpresa tem o carimbo dela
+  /** @param {EstadoSave} e @returns {Object<string, string | undefined>} */
+  function escolhas(e) {
+    /** @type {Object<string, any>} */
+    var r = { montaria: e.montaria, usando: e.usando, aparencia: e.aparencia };
+    /** @type {Object<string, string | undefined>} */
+    var t = {};
+    if (objeto(e.ajustes)) Object.keys(e.ajustes).forEach(function (k) { if (k !== 'surpresa' && k !== 'surpresaEm') r['ajuste:' + k] = e.ajustes[k]; });
+    if (objeto(e.unis)) Object.keys(e.unis).forEach(function (k) { if (objeto(e.unis[k])) r['nome:' + k] = e.unis[k].nome; });
+    Object.keys(r).forEach(function (k) { t[k] = JSON.stringify(r[k]); });
+    return t;
+  }
+  // carimbo sempre crescente (relógio de um aparelho atrasado não perde para o carimbo que ele mesmo já viu)
+  function marcarEscolhas() {
+    var e = I.estado;
+    if (!e || vigiaSurpresa.estado !== e) return;
+    var antes = vigiaSurpresa.escolhas, agoraE = escolhas(e);
+    Object.keys(Object.assign({}, antes, agoraE)).forEach(function (k) {
+      if (agoraE[k] === antes[k]) return;
+      nuvem.lutas = 0; nuvem.cedeu = false;   // troca nova aqui: pode insistir de novo contra a versão antiga (progresso-nuvem.js)
+      var em = e.escolhasEm = soCarimbos(e.escolhasEm);
+      em[k] = Math.max(agora(), (em[k] || 0) + 1);
+    });
+  }
+  function vigiarSurpresa() {
+    vigiaSurpresa = { estado: I.estado, valor: I.estado && I.estado.ajustes ? I.estado.ajustes.surpresa : undefined, escolhas: I.estado ? escolhas(I.estado) : {} };
+  }
 
   P.salvar = function (semNuvem) {
     I.estado.atualizado = agora();
     marcarSurpresa();
+    marcarEscolhas();
     gravarLocal();
     vigiarSurpresa();
     U.emit(EV.PROGRESSO, I.estado);
@@ -287,6 +329,7 @@
   I.agora = agora; I.estadoNovo = estadoNovo; I.objeto = objeto; I.numero = numero; I.numeroOu = numeroOu;
   I.chaveSegura = chaveSegura; I.proprio = proprio; I.completar = completar; I.comCopia = comCopia;
   I.conteudo = conteudo; I.cadaCampo = cadaCampo; I.trouxeAlgo = trouxeAlgo; I.gravarLocal = gravarLocal; I.vigiarSurpresa = vigiarSurpresa;
+  I.soCarimbos = soCarimbos;
 
   Reino.Progresso = P;
 })();

@@ -203,13 +203,17 @@
   };
 
   /* ---------- área dos pais ---------- */
+  // o carimbo `pagoEm` faz a correção dos pais valer na mescla, também para MENOS (40 digitado no lugar de 4)
   P.registrarPagamento = function (materiaId, valor) {
     I.estado.pago[materiaId] = Math.max(0, valor);
+    var em = I.estado.pagoEm = I.soCarimbos(I.estado.pagoEm);
+    em[materiaId] = Math.max(agora(), (em[materiaId] || 0) + 1);
+    I.nuvem.lutas = 0; I.nuvem.cedeu = false;   // troca nova: pode insistir de novo contra a versão antiga (progresso-nuvem.js)
     P.salvar();
   };
   P.novoCiclo = function () {
     I.estado.ciclo = (I.estado.ciclo || 1) + 1;
-    I.estado.salas = {}; I.estado.treinos = {}; I.estado.pago = {};
+    I.estado.salas = {}; I.estado.treinos = {}; I.estado.pago = {}; delete I.estado.pagoEm;
     // fome e sede (cuidados) e a despensa continuam: são do unicórnio, não do ciclo de provas
     I.cadaCampo(function (n, def) { if (def.novoCiclo === 'zera') I.estado[n] = def.padrao(); });
     P.salvar();

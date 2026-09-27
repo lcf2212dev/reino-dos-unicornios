@@ -1,7 +1,9 @@
-// Defeitos CONFIRMADOS do save que ficam de propósito (docs/pendencias.md): corrigir exige mudar a regra do
-// P.mesclar para campos que já existem, o que só o Leandro decide (jogo/js/sistemas/CLAUDE.md). Os testes afirmam o
-// comportamento certo e estão marcados `todo`: rodam e mostram a falha sem reprovar o npm test. Quem corrigir tira
-// o `todo` (corrigido, o teste aparece como ✔ com `# TODO`).
+// Dois defeitos do save que eram pendências (docs/pendencias.md) e foram corrigidos com carimbos por escolha
+// (`escolhasEm`, marcado pelo P.salvar) e por pagamento (`pagoEm`, marcado pelo P.registrarPagamento), com a regra
+// nova do P.mesclar autorizada pelo Leandro (docs/contratos/save-e-mescla.md §4.6 e §4.7):
+//   1. escolha feita num aparelho voltava atrás quando o outro, sem tê-la recebido, gravava depois;
+//   2. "Já pago" corrigido para MENOS voltava ao maior na sincronização.
+// Mais casos (versão antiga, comutatividade, cópia): save-escolhas-mescla.test.js e save-escolhas-versao-antiga.test.js.
 // Dois aparelhos no mesmo doc (claude.ai de mentira: o banco guarda o último envio, como o servidor de casa).
 // Saves 100% sintéticos, num vm (ajudantes/jogo-save.js).
 const { test } = require('node:test');
@@ -39,11 +41,10 @@ async function doisAparelhos() {
   return { A, B, dA, dB };
 }
 
-// o P.salvar envia o estado inteiro e o P.mesclar pega nome, montaria, usando, aparência e ajustes do lado com
-// `atualizado` maior: a gravação sozinha do outro aparelho (cuidados, a cada 60 s) desfaz a escolha dela
-const TODO_ESCOLHAS = 'pendência: escolha volta atrás com dois aparelhos (docs/pendencias.md)';
+// o P.salvar envia o estado inteiro e o P.mesclar pegava nome, montaria, usando, aparência e ajustes do lado com
+// `atualizado` maior: a gravação sozinha do outro aparelho (cuidados, a cada 60 s) desfazia a escolha dela
 
-test('nome dado ao unicórnio num aparelho não some quando o outro grava os cuidados sozinho', { todo: TODO_ESCOLHAS }, async () => {
+test('nome dado ao unicórnio num aparelho não some quando o outro grava os cuidados sozinho', async () => {
   const { A, B, dA, dB } = await doisAparelhos();
   A.relogio.agora += 1000; B.relogio.agora += 1000;
   A.P.estado().unis.inicial.nome = 'Pipoca';   // tablet: ui/estabulo.js
@@ -52,12 +53,13 @@ test('nome dado ao unicórnio num aparelho não some quando o outro grava os cui
   A.relogio.agora += 5000; B.relogio.agora += 5000;
   B.P.salvar();                                // notebook, ainda sem conferir o banco: a gravação dos cuidados
   await dB.enviar();
-  await dA.conferir(); await dB.conferir();
+  await dA.conferir(); await dA.enviar();      // o tablet junta e devolve o nome ao banco (agendarNuvem, 1,8 s)
+  await dB.conferir();
   assert.strictEqual(A.P.estado().unis.inicial.nome, 'Pipoca', 'o nome que ela deu no tablet continua no tablet');
   assert.strictEqual(B.P.estado().unis.inicial.nome, 'Pipoca', 'e chega ao notebook');
 });
 
-test('montaria escolhida num aparelho não volta atrás quando o outro grava os cuidados sozinho', { todo: TODO_ESCOLHAS }, async () => {
+test('montaria escolhida num aparelho não volta atrás quando o outro grava os cuidados sozinho', async () => {
   const { A, B, dA, dB } = await doisAparelhos();
   A.relogio.agora += 1000; B.relogio.agora += 1000;
   A.P.estado().montaria = 'h-cartinha';        // ui/estabulo.js "Montar"
@@ -70,8 +72,8 @@ test('montaria escolhida num aparelho não volta atrás quando o outro grava os 
   assert.strictEqual(A.P.estado().montaria, 'h-cartinha', 'a montaria que ela escolheu continua');
 });
 
-// `pago` se junta pelo MAIOR (progresso-mescla.js): o 40 digitado por engano volta do outro aparelho
-test('pagamento corrigido para menos na Área dos pais vale nos dois aparelhos', { todo: 'pendência: pago corrigido para menos (docs/pendencias.md)' }, async () => {
+// `pago` se juntava pelo MAIOR (progresso-mescla.js): o 40 digitado por engano voltava do outro aparelho
+test('pagamento corrigido para menos na Área dos pais vale nos dois aparelhos', async () => {
   const { A, B, dA, dB } = await doisAparelhos();   // pago.historia = 4 no save sintético
   A.relogio.agora += 1000; B.relogio.agora += 1000;
   A.P.registrarPagamento('historia', 40);          // notebook do pai: 40 por engano (ui/pais.js)

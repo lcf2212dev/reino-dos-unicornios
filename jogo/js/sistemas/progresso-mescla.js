@@ -99,10 +99,44 @@
     return base;
   }
 
+  /* escolhas (montaria, usando, aparência, cada ajuste fora a surpresa, o nome de cada unicórnio): carimbo por
+     escolha em `escolhasEm` (P.salvar marca a troca). Vale o valor do lado com o carimbo MAIOR daquela escolha;
+     sem carimbo conta 0; empate (inclusive sem carimbo nos dois) = o lado que fica (o mais recente, a regra de
+     antes). Um aparelho da versão antiga não carimba: a troca dele só vale onde ninguém carimbou aquela escolha.
+     `r` é a cópia do lado mais recente (é mudado); `antigo` não muda. */
+  /** @param {EstadoSave} r @param {EstadoSave} recente @param {EstadoSave} antigo */
+  function juntarEscolhas(r, recente, antigo) {
+    var cr = I.soCarimbos(recente.escolhasEm), ca = I.soCarimbos(antigo.escolhasEm);
+    function doAntigo(ch) { return (ca[ch] || 0) > (cr[ch] || 0); }
+    ['montaria', 'usando', 'aparencia'].forEach(function (ch) {
+      if (doAntigo(ch) && antigo[ch] !== undefined) r[ch] = U.copia(antigo[ch]);
+    });
+    if (objeto(r.ajustes) && objeto(antigo.ajustes)) Object.keys(antigo.ajustes).forEach(function (k) {
+      if (k !== 'surpresa' && k !== 'surpresaEm' && chaveSegura(antigo.ajustes, k) && doAntigo('ajuste:' + k)) r.ajustes[k] = U.copia(antigo.ajustes[k]);
+    });
+    // nome: o unicórnio já está nos dois lados (só de um lado, ele veio inteiro com o nome)
+    if (objeto(r.unis) && objeto(antigo.unis)) Object.keys(antigo.unis).forEach(function (k) {
+      var x = proprio(r.unis, k), y = antigo.unis[k];
+      if (!chaveSegura(antigo.unis, k) || !objeto(x) || !objeto(y) || !doAntigo('nome:' + k)) return;
+      if (y.nome === undefined) delete x.nome; else x.nome = y.nome;
+    });
+  }
+  // carimbos dos dois lados, por chave o maior
+  function juntarCarimbos(a, b) {
+    var r = I.soCarimbos(a), o = I.soCarimbos(b);
+    Object.keys(o).forEach(function (k) { r[k] = Math.max(r[k] || 0, o[k]); });
+    return r;
+  }
+
   /** Junta dois estados da mesma Mariana (regras em docs/contratos/save-e-mescla.md §4). Não muda `a` nem `b`,
       exceto quando devolve um deles inteiro (lado vazio ou geração diferente).
       @param {EstadoSave} a @param {EstadoSave} b @returns {EstadoSave} */
-  P.mesclar = function (a, b) {
+  P.mesclar = function (a, b) { return mesclar(a, b, false); };
+  /* `semCarimbos`: as escolhas e o pago pela regra de antes (lado mais recente; pago, o maior), como a versão
+     antiga decide; os carimbos continuam juntos pelo maior. Só para o aparelho novo ceder a um banco que a versão
+     antiga gravou (progresso-nuvem.js, contra o vaivém). */
+  /** @param {EstadoSave} a @param {EstadoSave} b @param {boolean} semCarimbos @returns {EstadoSave} */
+  function mesclar(a, b, semCarimbos) {
     if (!a) return b; if (!b) return a;
     // quem "apagou tudo" por último vence inteiro
     if ((a.geracao || 1) !== (b.geracao || 1)) return (a.geracao || 1) > (b.geracao || 1) ? a : b;
@@ -125,9 +159,17 @@
         if ((ORDEM_MEDALHA[y.melhor] || 0) > (ORDEM_MEDALHA[x.melhor] || 0)) x.melhor = y.melhor;
         x.ouro = minPos(x.ouro, y.ouro); x.perfeito = minPos(x.perfeito, y.perfeito); x.vezes = max(x.vezes, y.vezes);
       });
-      Object.keys(antigo.pago || {}).forEach(function (k) { r.pago[k] = max(r.pago[k], antigo.pago[k]); });
+      // pago: vale o lado com o carimbo `pagoEm` maior (a correção dos pais, também para menos); sem carimbo
+      // nos dois (ou empate), o maior, como antes
+      var pr = I.soCarimbos(!semCarimbos && recente.pagoEm), pa = I.soCarimbos(!semCarimbos && antigo.pagoEm);
+      Object.keys(antigo.pago || {}).forEach(function (k) {
+        var tr = pr[k] || 0, ta = pa[k] || 0;
+        r.pago[k] = ta > tr ? antigo.pago[k] : tr > ta && r.pago[k] !== undefined ? r.pago[k] : max(r.pago[k], antigo.pago[k]);
+      });
+      if (recente.pagoEm || antigo.pagoEm) r.pagoEm = juntarCarimbos(recente.pagoEm, antigo.pagoEm);
     } else if ((antigo.ciclo || 1) > (recente.ciclo || 1)) {
       r.ciclo = antigo.ciclo; r.salas = U.copia(antigo.salas || {}); r.treinos = U.copia(antigo.treinos || {}); r.pago = U.copia(antigo.pago || {});
+      if (antigo.pagoEm) r.pagoEm = U.copia(antigo.pagoEm); else delete r.pagoEm;
     }
     // provas bimestrais: vale o aparelho com mais tentativas e o melhor prêmio
     r.provas = r.provas || {};
@@ -159,6 +201,9 @@
     // interruptor novo das perguntas surpresa: vale o lado com o carimbo `surpresaEm` maior (troca feita por
     // último); sem carimbo dos dois lados, se o lado mais recente não conhece (versão antiga), vale o do outro
     if (r.ajustes) juntarSurpresa(r.ajustes, antigo.ajustes);
+    // escolhas: por escolha, o carimbo maior em `escolhasEm` (juntarEscolhas); os carimbos, por chave o maior
+    if (!semCarimbos) juntarEscolhas(r, recente, antigo);
+    if (a.escolhasEm || b.escolhasEm) r.escolhasEm = juntarCarimbos(recente.escolhasEm, antigo.escolhasEm);
     // campos de P.registrarCampo: a estratégia de cada um (base = o lado mais recente, como a despensa);
     // o que zera no Novo ciclo vem inteiro do ciclo mais novo (como as salas)
     I.cadaCampo(function (n, def) {
@@ -171,9 +216,10 @@
     r.comecou = !!(a.comecou || b.comecou);
     r.ritualVisto = !!(a.ritualVisto || b.ritualVisto);
     return r;
-  };
+  }
 
   // para as outras partes
   I.CAMPOS_CUIDADO = CAMPOS_CUIDADO; I.carimbo = carimbo; I.ORDEM_MEDALHA = ORDEM_MEDALHA;
   I.juntarCuidados = juntarCuidados; I.juntarDespensa = juntarDespensa; I.juntarSurpresa = juntarSurpresa;
+  I.mesclarSemCarimbos = function (a, b) { return mesclar(a, b, true); };
 })();
