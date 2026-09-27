@@ -122,6 +122,7 @@
       { js: 'js/conteudo/provas/portugues-3bim.js', grupo: 'provas', node: true },
       { js: 'js/conteudo/provas/ciencias-3bim.js', grupo: 'provas', node: true },
       { js: 'js/conteudo/provas/matematica-3bim.js', grupo: 'provas', node: true },
+      { js: 'js/conteudo/provas/geografia-3bim.js', grupo: 'provas', node: true },
       { js: 'js/sistemas/progresso.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/progresso-mescla.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/progresso-nuvem.js', grupo: 'sistemas', node: true },
