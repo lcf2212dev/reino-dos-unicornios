@@ -227,6 +227,8 @@
     var olhar = PA.vistaDaDirecao(J.olharX, J.olharY);
     var opcoes = { enfeites: usa.enfeites, capa: usa.capa, asasFada: usa.asasFada, vista: olhar.vista };
     var pulo = animar ? Math.abs(Math.sin(J.tPulo * 10)) : 0;
+    // pulo alto (J.pular): o corpo sobe, a sombra fica no chão e encolhe um pouco no alto
+    var alto = J.alturaPulo(), encolhe = alto ? 1 - 0.3 * alto / J.salto.altura : 1;
     // prefers-reduced-motion também para tudo o que é da água (ondinhas, partículas, ícone balançando)
     if (Reino.util.reduzMovimentoSistema) animar = false;
     var particulas = animar;
@@ -257,11 +259,11 @@
     if (estagio >= 1) {
       var spr = PA.montada(def, estagio, quadro, est.aparencia, opcoes);
       var prof = fundura(J.x, J.y), corte = estagio >= 2 ? CORTE.montadaGrande : CORTE.montadaPequena;
-      var puloM = pulo * (1 - prof);                 // na água o trote vira deslizar
+      var puloM = pulo * (1 - prof) + alto;          // na água o trote vira deslizar
       var raio = (estagio >= 2 ? 28 : 20) / 2.6 * SOMBRA[olhar.vista];
       var imgM = sujo ? sujar(spr.canvas) : spr.canvas;
       itens = [{ y: J.y, desenhar: function () {
-        sombra(p, J.x, J.y, raio, 1 - prof);
+        sombra(p, J.x, J.y, raio * encolhe, 1 - prof);
         ondinhas(p, J.x, linhaDagua(J.y + 1, prof, corte), raio + 2, prof, animar);
         desenharNaAgua(p, imgM, J.x, J.y + 1 - puloM, olhar.espelhar, prof, corte);
         if (sujo) poeira(p, J.x, J.y + 1 - puloM, spr.w, spr.h, ladoDe(olhar), animar, 1 - prof * 1.5);
@@ -270,7 +272,7 @@
         var hM = alturaEstavel(['m', def.id, estagio, (usa.enfeites || []).join('+')].join('|'), function (v) {
           return PA.montada(def, estagio, 0, est.aparencia, Object.assign({}, opcoes, { vista: v }));
         });
-        sobre = function () { desenharIcone(p, icone, J.x, J.y + 1 + prof * corte * AFUNDA - hM, animar); };
+        sobre = function () { desenharIcone(p, icone, J.x, J.y + 1 + prof * corte * AFUNDA - hM - alto, animar); };
       }
     } else {
       // bebê vem atrás, seguindo o rastro, e olha para onde ele mesmo está indo
@@ -283,26 +285,26 @@
       pulo *= 1.5;
       var ry = r.y;
       var profB = fundura(r.x, ry), profM = fundura(J.x, J.y);
-      var puloB = pulo * (1 - profB);
+      var puloB = pulo * (1 - profB) + alto;
       var imgB = sujo ? sujar(bebe.canvas) : bebe.canvas;
       itens = [
         { y: ry - 1, desenhar: function () {
-          sombra(p, r.x, ry, 7 * SOMBRA[olharB.vista], 1 - profB);
+          sombra(p, r.x, ry, 7 * SOMBRA[olharB.vista] * encolhe, 1 - profB);
           ondinhas(p, r.x, linhaDagua(ry + 1, profB, CORTE.bebe), 9 * SOMBRA[olharB.vista] + 1, profB, animar);
           desenharNaAgua(p, imgB, r.x, ry + 1 - puloB, olharB.espelhar, profB, CORTE.bebe);
           if (sujo) poeira(p, r.x, ry + 1 - puloB, bebe.w, bebe.h, ladoDe(olharB), animar, 1 - profB * 1.5);
         } },
         { y: J.y, desenhar: function () {
-          sombra(p, J.x, J.y, 5, 1 - profM);
+          sombra(p, J.x, J.y, 5 * encolhe, 1 - profM);
           ondinhas(p, J.x, linhaDagua(J.y + 1, profM, CORTE.mariana), 7, profM, animar);
-          desenharNaAgua(p, menina.canvas, J.x, J.y + 1, olhar.espelhar, profM, CORTE.mariana);
+          desenharNaAgua(p, menina.canvas, J.x, J.y + 1 - alto, olhar.espelhar, profM, CORTE.mariana);
         } },
       ];
       if (icone) {
         var hB = alturaEstavel(['b', def.id, (usa.enfeites || []).join('+'), usa.asasFada ? 1 : 0].join('|'), function (v) {
           return PA.unicornio(def, 0, 0, Object.assign({}, opcoes, { vista: v }));
         });
-        sobre = function () { desenharIcone(p, icone, r.x, ry + 1 + profB * CORTE.bebe * AFUNDA - hB, animar); };
+        sobre = function () { desenharIcone(p, icone, r.x, ry + 1 + profB * CORTE.bebe * AFUNDA - hB - alto, animar); };
       }
     }
     // respingo e gotinhas: logo na frente de quem está na água

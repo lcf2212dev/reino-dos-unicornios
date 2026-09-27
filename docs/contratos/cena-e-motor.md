@@ -154,6 +154,8 @@ alvo = { tipo: 'npc'|'objeto'|'saida'|'escada'|'lugar'|'claude', id,
 3. `J.itensDesenho(pintor, animar) → [{ y, desenhar() }]`: Mariana e bebê como itens separados; montada =
    um item. `J.desenhar(pintor, animar)` continua existindo (desenha os próprios itens em ordem).
 4. `Jogador.gatilhoEm(tx, ty)` existe e pode ser usado.
+   `Jogador.pular({ altura: 28, ms: 900 }) → bool` e `Jogador.pulando()`: sobe e desce devagar no relógio `J.t`; a sombra fica
+   no chão (encolhe no alto); não reinicia no meio; sem Animações ou com movimento reduzido devolve false.
 5. Ícone da fome/sede/banho (`Cuidados.iconeMontaria()`) desenhado acima do unicórnio (montada: acima do
    conjunto; bebê: acima do bebê), em px da tela e nítido (inteiro de px por px do ícone), como a bolha de
    status dos NPCs. Em todas as cenas (`jogador-desenho.js`).
