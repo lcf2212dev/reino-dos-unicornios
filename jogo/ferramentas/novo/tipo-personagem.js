@@ -90,7 +90,12 @@ function acaoDe(a, p) {
   throw new Error('personagem: --acao guia, um nome de ação (ex.: sorvete) ou um JSON com tipo ({"tipo":"tela","tela":"loja"})');
 }
 
+// onde mora a reserva de um personagem (o reservas.js ao lado do personagens.js)
+const d0 = (op) => ({ arqReservas: () => op.dadosPersonagem.L.arq.replace(/personagens\.js$/, 'reservas.js') });
+
+const exportados = { lugarDoInterior, chaoLivre, dados };
 module.exports = {
+  ...exportados,
   ajuda: 'personagem <id> --predio <interior> [--tambem (a mesma pessoa em mais um interior)] [--nome "Seu Trigo"] [--voz feminina|masculina] [--x 5 --y 6] [--acao guia|sorvete|\'{"tipo":"tela","tela":"loja"}\']',
   cria: 'personagens.js do interior (ou acrescenta nele): Reino.registrarPersonagem com predio/x/y, voz ainda não usada ali e as falas (preencher)',
   conferir(id, op, ex, raiz) {
@@ -101,6 +106,16 @@ module.exports = {
     op.generoVoz = op.tambem ? { g: null, aviso: '' } : Vozes.generoPedido(op, op.nome);
     const d = op.dadosPersonagem = dados(raiz, p, op.generoVoz.g);
     const existe = (d.R.NPCs && d.R.NPCs.ELENCO && d.R.NPCs.ELENCO[id]) || d.R.personagens[id] || d.V['npc-' + id];
+    // reservado (npm run novo -- reserva): nome, voz, lugar e falas já existem; aqui só o visual (e a ação)
+    const r = d.R.reservas && d.R.reservas[id];
+    if (r && !r.preenchida && !op.tambem) {
+      if (r.predio !== p) throw new Error(`personagem: ${id} está reservado em ${r.predio} (use --predio ${r.predio})`);
+      if (op.nome || op.voz || op.x !== undefined) throw new Error(`personagem: ${id} está reservado; nome, voz e lugar vêm da reserva (sem --nome/--voz/--x/--y)`);
+      if (r.acao && op.acao) throw new Error(`personagem: ${id} já tem ação na reserva; sem --acao (mude a reserva, que é o contrato)`);
+      op.reserva = r;
+      op.acaoObj = r.acao ? null : acaoDe(op.acao, d.L.def.lugar || p);
+      return;
+    }
     if (op.tambem) {
       // a mesma pessoa em mais um interior: sem voz nova
       if (!existe) throw new Error(`personagem --tambem: "${id}" não existe (crie antes: npm run novo -- personagem ${id} --predio <p>)`);
@@ -150,7 +165,13 @@ ${falas}`;
 Reino.FALAS_INTERIORES = Reino.FALAS_INTERIORES || {};
 Reino.FALAS_INTERIORES['${L.falas}'] = Reino.FALAS_INTERIORES['${L.falas}'] || { npcs: {}, objetos: {} };
 `;
-    const b = op.tambem ? blocoTambem : bloco;
+    const blocoReserva = op.reserva && `
+// ${id}: ${op.reserva.nome} (reservado em ${d0(op).arqReservas()}: nome, voz, lugar e falas vêm de lá; aqui o visual (idade ${op.reserva.idade}))
+Reino.registrarPersonagem({ id: '${id}',
+  sprite: { pele: '#e0ac86', cabelo: '#2b1b17', penteado: 'curto', roupa: '#5fb4ff', roupa2: '#2f4a6a', cor2: '#ffd34d' },${op.acaoObj ? `\n  acao: ${novo().literal(op.acaoObj)},` : ''}
+});
+`;
+    const b = op.reserva ? blocoReserva : op.tambem ? blocoTambem : bloco;
     return [[L.arq, existe ? { acrescentar: b } : cab + b.slice(1)]];
   },
   manifesto(id, op) {
@@ -160,6 +181,11 @@ Reino.FALAS_INTERIORES['${L.falas}'] = Reino.FALAS_INTERIORES['${L.falas}'] || {
   },
   checklist(id, op) {
     const d = op.dadosPersonagem;
+    if (op.reserva) return [
+      `visual de ${id} (${op.reserva.nome}, ${op.reserva.genero === 'f' ? 'feminino' : 'masculino'}, ${op.reserva.idade}): troque o sprite em ${d.L.arq}`,
+      `nome, voz, vaga (${op.reserva.x}, ${op.reserva.y}) e falas: da reserva e do personagens-falas.js (não mude aqui)`,
+      `confira com node jogo/ferramentas/validar/validar-interiores.js e npm run ver -- --ir ${d.L.def.lugar || op.predio} --nome ${id}`,
+    ];
     return [
       `falas: troque cada (preencher) em ${d.L.arq} (até 30 letras por página)`,
       op.tambem ? `mesma pessoa de ${op.origem}: sprite, nome e voz vêm de lá; aqui só o lugar e as falas`

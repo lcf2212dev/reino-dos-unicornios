@@ -200,6 +200,7 @@
       { js: 'js/personagens/npcs-corpo.js', grupo: 'personagens', node: true },
       { js: 'js/personagens/npcs-cabeca.js', grupo: 'personagens', node: true },
       { js: 'js/personagens/npcs-sprites.js', grupo: 'personagens', node: true },
+      { js: 'js/personagens/npcs-reserva.js', grupo: 'personagens', node: true },
       { js: 'js/personagens/npcs-status.js', grupo: 'personagens', node: true },
       { js: 'js/personagens/npcs-falas.js', grupo: 'personagens', node: true },
       { js: 'js/personagens/npcs-conversa.js', grupo: 'personagens', node: true },

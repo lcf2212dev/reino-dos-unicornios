@@ -116,5 +116,20 @@ interface PersonagemRegistrado {
   /** outros interiores onde a mesma pessoa aparece (mesma voz; ver Reino.personagemTambemEm) */
   lugares?: LugarPersonagem[];
 }
+/** reserva de personagem (Reino.reservarPersonagem): o contrato de um NPC antes das frentes que o constroem
+    (docs/contratos/plano-paralelo.md §2) */
+interface ReservaPersonagem {
+  id: string;
+  nome: string;
+  genero: 'f' | 'm';
+  idade: 'crianca' | 'jovem' | 'adulto' | 'idoso';
+  perfil?: PerfilVoz;
+  predio?: string;
+  x?: number;
+  y?: number;
+  acao?: AcaoNpc;
+  /** true depois do registrarPersonagem que a preenche */
+  preenchida?: boolean;
+}
 /** um lugar de um personagem registrado: o interior, o tile e a ação */
 interface LugarPersonagem { predio: string; x?: number; y?: number; acao?: AcaoNpc; }

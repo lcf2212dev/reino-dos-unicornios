@@ -387,6 +387,9 @@ defs.forEach((d) => {
   checar((d.npcs || []).some((n) => n.id === r.id), `personagem ${r.id}: registrado em '${r.predio}' sem x/y, e esse prédio não tem vagas (prédio antigo): dê x e y (tile de chão livre do interior)`);
 });
 
+// reservas de personagem (plano paralelo): completas e preenchidas
+{ const r = Extras.reservas(Reino, doSo); erros.push(...r.erros); avisos.push(...r.avisos); }
+
 // sprites do elenco e de registrarPersonagem; emoji do menu sem desenho (Reino.registrarLugar)
 if (!SO && temNpcs) Object.keys(Reino.NPCs.ELENCO).forEach((id) => Extras.chavesDoSprite(Reino, Reino.NPCs.ELENCO[id].sprite, `elenco ${id}`).forEach((a) => avisos.push(a)));
 (Reino.lugaresRegistrados || []).filter((l) => doSo(l.id)).forEach((l) => Extras.emojiDoMenu(ctx, l).forEach((a) => avisos.push(a)));

@@ -63,6 +63,7 @@ const TIPOS = {
   sistema: require('./tipo-sistema'),
   prova: require('./tipo-prova'),
   personagem: require('./tipo-personagem'),
+  reserva: require('./tipo-reserva'),
   desafio: require('./tipo-desafio'),
   arquivo: require('./tipo-arquivo'),
   predio: {
@@ -269,7 +270,7 @@ const nomesSalas = (id, op, n) => Array.from({ length: n }, (_, i) => prefixo(id
 /* ================= LINHA DE COMANDO ================= */
 function lerArgs(argv) {
   const op = { pos: [] };
-  const valor = { '--voz': 'voz', '--antes-de': 'antesDe', '--depois-de': 'depoisDe', '--x': 'x', '--y': 'y', '--acao': 'acao', '--predio': 'predio', '--professora': 'professora', '--nome-professora': 'nomeProfessora', '--campo': 'campo', '--estrategia': 'estrategia', '--nome': 'nome', '--rect': 'rect', '--caminho': 'caminho', '--emoji': 'emoji', '--salas': 'salas', '--prefixo': 'prefixo', '--raiz': 'raiz', '--dentro': 'dentro', '--interior': 'interior' };
+  const valor = { '--voz': 'voz', '--antes-de': 'antesDe', '--depois-de': 'depoisDe', '--x': 'x', '--y': 'y', '--acao': 'acao', '--predio': 'predio', '--professora': 'professora', '--nome-professora': 'nomeProfessora', '--campo': 'campo', '--estrategia': 'estrategia', '--nome': 'nome', '--rect': 'rect', '--caminho': 'caminho', '--emoji': 'emoji', '--salas': 'salas', '--prefixo': 'prefixo', '--raiz': 'raiz', '--dentro': 'dentro', '--interior': 'interior', '--genero': 'genero', '--idade': 'idade' };
   for (let i = 0; i < argv.length; i++) {
     const k = argv[i];
     if (valor[k]) { if (argv[i + 1] === undefined) throw new Error(`${k} precisa de um valor`); op[valor[k]] = argv[++i]; }
@@ -299,6 +300,7 @@ function ajuda() {
     '  npm run novo -- sala historia h6',
     '  npm run novo -- prova historia 4 --professora rosa --nome-professora "Professora Rosa"',
     '  npm run novo -- personagem trigo --predio petshop --nome "Seu Trigo"',
+    '  npm run novo -- reserva salao-lulu --predio salao --nome "Dona Lulu" --genero f --idade adulto --x 3 --y 5',
     '  npm run novo -- desafio contaArmada --treinavel',
     '  npm run novo -- arquivo interiores/petshop/icones.js'].join('\n');
 }

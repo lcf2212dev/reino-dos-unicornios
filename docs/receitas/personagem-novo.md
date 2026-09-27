@@ -17,6 +17,15 @@ Prédio de antes (Pet Shop, Museu, Torre…, e o padrão das matérias): também
 sem `--x/--y` o gerador escolhe um chão livre alcançável perto da entrada e diz qual. `--predio` é o id do INTERIOR
 (`torre-1`, `padrao-<m>`). À mão: sprite, falas e as vozes.
 
+## Em frentes paralelas (pedido com plano)
+O orquestrador reserva antes (onda 0), e cada parte vira uma frente (`docs/contratos/plano-paralelo.md`):
+```
+npm run novo -- reserva <id> --predio <p> --nome "Dona Lulu" --genero f --idade adulto [--x 3 --y 5] [--acao …]
+npm run novo -- personagem <id> --predio <p>      # a frente do NPC: só o sprite (e a ação, se a reserva não tiver)
+```
+A reserva (`<p>/reservas.js`) fixa nome, gênero, idade, voz e vaga; as falas ficam em `<p>/personagens-falas.js`
+(frente das falas; as vozes são gravadas sem esperar o visual). Até o registro, a vaga tracejada ocupa o tile.
+
 ## Checklist de arquivos (`<id>` = id do personagem, ex.: `rosa`)
 | Arquivo | O que muda |
 |---|---|

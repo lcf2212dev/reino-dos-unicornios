@@ -264,3 +264,35 @@ test('sala: a carta do livro entra no fim do livro.js da matéria; livres ignora
   assert.deepStrictEqual(L.ignorados(ctx), ['materia:zzfora']);
   assert.ok(Array.isArray(L.livres(ctx, 5, 5)));
 });
+
+test('reserva: contrato primeiro (vaga tracejada + falas à parte), o personagem preenche só o visual', () => {
+  const r = rodar(novo, ['reserva', 'zztestenina', '--predio', 'loja', '--nome', 'Dona Nina', '--genero', 'f', '--idade', 'idoso', '--raiz', copia]);
+  assert.strictEqual(r.status, 0, r.stderr);
+  assert.strictEqual(naCopia('ferramentas/gerar-index.js', ['--conferir']).status, 0);
+  semCache();
+  const man = require(path.join(copia, 'jogo/js/manifesto.js')).scripts.map((s) => s.js);
+  const daLoja = man.filter((s) => s.startsWith('js/interiores/loja/'));
+  assert.strictEqual(daLoja[0], 'js/interiores/loja/reservas.js', 'a reserva é a primeira do prédio');
+  assert.strictEqual(man[man.indexOf('js/interiores/loja/personagens-falas.js') - 1], 'js/interiores/loja/falas.js');
+  let R = reinoDaCopia();
+  const vaga = R.interiores.find((d) => d.id === 'loja').npcs.find((n) => n.id === 'zztestenina');
+  assert.ok(vaga, 'a vaga não apareceu na loja');
+  assert.deepStrictEqual([vaga.nome, vaga.sprite.base, vaga.sprite.genero], ['Dona Nina', 'reserva', 'f']);
+  assert.strictEqual(require(path.join(repo, 'jogo/ferramentas/novo/vozes.js')).genero(R.config.vozes['npc-zztestenina']), 'feminina');
+  assert.ok(R.FALAS_INTERIORES.loja.npcs.zztestenina, 'as falas da reserva não chegaram ao prédio');
+  const semReg = (v) => erros(v).filter((l) => /zztestenina: ainda sem registrarPersonagem/.test(l));
+  assert.strictEqual(semReg(naCopia('ferramentas/validar/validar-interiores.js')).length, 1, 'reserva sem registro é erro');
+  const aberta = spawnSync(process.execPath, [path.join(copia, 'jogo/ferramentas/validar/validar-interiores.js')], { encoding: 'utf8', env: { ...process.env, REINO_RESERVAS_ABERTAS: '1' } });
+  assert.strictEqual(semReg(aberta).length, 0, 'nas frentes, só aviso');
+  // o visual: nome, voz e lugar vêm da reserva
+  assert.notStrictEqual(rodar(novo, ['personagem', 'zztestenina', '--predio', 'loja', '--nome', 'Outra', '--raiz', copia]).status, 0);
+  assert.notStrictEqual(rodar(novo, ['personagem', 'zztestenina', '--predio', 'museu', '--raiz', copia]).status, 0);
+  const p = rodar(novo, ['personagem', 'zztestenina', '--predio', 'loja', '--raiz', copia]);
+  assert.strictEqual(p.status, 0, p.stderr);
+  R = reinoDaCopia();
+  const n = R.interiores.find((d) => d.id === 'loja').npcs.find((x) => x.id === 'zztestenina');
+  assert.deepStrictEqual([n.nome, n.sprite.base, n.x, n.y], ['Dona Nina', 'pessoa', vaga.x, vaga.y]);
+  assert.strictEqual(R.reservas.zztestenina.preenchida, true);
+  const v = naCopia('ferramentas/validar/validar-interiores.js');
+  assert.deepStrictEqual(erros(v).filter((l) => /zztestenina|loja/.test(l) && !l.startsWith('✘ falta preencher: ')), [], v.stdout);
+});

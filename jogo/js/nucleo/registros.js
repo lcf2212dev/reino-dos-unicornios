@@ -53,7 +53,8 @@ Reino.registrarLugar = function (def) {
 Reino.personagens = {};
 /** @param {PersonagemRegistrado} def */
 Reino.registrarPersonagem = function (def) {
-  var N = Reino.NPCs;
+  var N = Reino.NPCs, r = Reino.reservas[def.id];
+  if (r && !r.preenchida) return preencherReserva(r, def);
   if (Reino.personagens[def.id] || (N && N.ELENCO && N.ELENCO[def.id])) throw new Error('registrarPersonagem: id repetido "' + def.id + '"');
   var voz = 'npc-' + def.id;
   if (def.perfil) Reino.config.vozes[voz] = def.perfil;
@@ -67,6 +68,50 @@ Reino.registrarPersonagem = function (def) {
   if (def.predio) Reino.personagemTambemEm(def.id, { predio: def.predio, x: def.x, y: def.y, acao: def.acao });
   (def.lugares || []).forEach(function (l) { Reino.personagemTambemEm(def.id, l); });
 };
+
+// Reserva: o contrato de um NPC (quem é, voz e vaga no interior), escrito antes das frentes que o constroem em
+// paralelo. Até o registro, ele aparece como vaga tracejada (base de sprite 'reserva') com o nome e as falas reais.
+// registrarPersonagem({ id, sprite, … }) preenche; campo repetido tem de ser igual. Contrato: docs/contratos/plano-paralelo.md §2.
+/** @type {{ [id: string]: ReservaPersonagem }} */
+Reino.reservas = {};
+/** @param {ReservaPersonagem} def */
+Reino.reservarPersonagem = function (def) {
+  var N = Reino.NPCs;
+  if (Reino.reservas[def.id] || Reino.personagens[def.id] || (N && N.ELENCO && N.ELENCO[def.id])) throw new Error('reservarPersonagem: id repetido "' + def.id + '"');
+  var voz = 'npc-' + def.id;
+  if (def.perfil) Reino.config.vozes[voz] = def.perfil;
+  Reino.reservas[def.id] = Object.assign({}, def, { preenchida: false });
+  /** @type {PersonagemElenco} */
+  // a vaga tracejada; 'jovem' desenha como adulto (as idades do sprite: npcs.js, OPCOES_SPRITE)
+  var p = { nome: def.nome, voz: voz, sprite: { base: 'reserva', genero: def.genero, idade: def.idade === 'jovem' ? 'adulto' : def.idade } };
+  Reino.personagens[def.id] = p;
+  if (N && N.ELENCO) N.ELENCO[def.id] = p;
+  if (def.predio) Reino.personagemTambemEm(def.id, { predio: def.predio, x: def.x, y: def.y, acao: def.acao });
+};
+// o registro que preenche a reserva: mesmo lugar no ELENCO e no interior, como se não houvesse reserva
+/** @param {ReservaPersonagem} r @param {PersonagemRegistrado} def */
+function preencherReserva(r, def) {
+  ['nome', 'perfil', 'predio', 'x', 'y', 'acao'].forEach(function (k) {
+    if (def[k] !== undefined && r[k] !== undefined && JSON.stringify(def[k]) !== JSON.stringify(r[k])) {
+      throw new Error('registrarPersonagem: "' + def.id + '".' + k + ' difere da reserva (a reserva é o contrato: mude-a no reservas.js)');
+    }
+  });
+  // o que é contrato vem só da reserva: campo que ela não tem não entra pelo registro (a ação é a exceção, abaixo)
+  ['nome', 'perfil', 'predio', 'x', 'y'].forEach(function (k) {
+    if (def[k] !== undefined && r[k] === undefined) throw new Error('registrarPersonagem: "' + def.id + '".' + k + ' falta na reserva (ponha-o no reservas.js)');
+  });
+  /** @type {PersonagemElenco} */
+  var p = { nome: r.nome, voz: 'npc-' + def.id, sprite: def.sprite };
+  if (def.paraMateria) p.paraMateria = def.paraMateria;
+  if (def.paraProva) p.paraProva = def.paraProva;
+  Reino.personagens[def.id] = p;
+  var N = Reino.NPCs;
+  if (N && N.ELENCO && N.ELENCO[def.id]) N.ELENCO[def.id] = p;
+  // sem ação na reserva: a do registro vale no lugar reservado
+  if (def.acao && !r.acao) Reino._personagensPredio.forEach(function (l) { if (l.id === def.id && l.predio === r.predio) l.acao = def.acao; });
+  (def.lugares || []).forEach(function (l) { Reino.personagemTambemEm(def.id, l); });
+  r.preenchida = true;
+}
 Reino._personagensPredio = [];
 /** a mesma pessoa (mesma voz e sprite) em mais um interior; as falas de lá em FALAS_INTERIORES.<p>.npcs.<id>
     @param {string} id @param {LugarPersonagem} l */

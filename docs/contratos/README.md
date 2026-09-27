@@ -17,6 +17,7 @@ contrato dele. Mudança de contrato: só o orquestrador. Histórico da refatora�
 | som, música por ambiente, vozes gravadas (achadas pelo texto exato), pacotes, lições de voz | `som-musica-e-voz.md` |
 | fotos e álbum | `fotos.md` |
 | matérias, salas, desafios e tipos, livro, provas, treino, Português | `conteudo.md` |
+| plano de frentes paralelas, reserva de personagem (vaga tracejada), ondas, conferência em pipeline | `plano-paralelo.md` |
 | regras gerais de código, ordem de carga, testes | tabela abaixo |
 
 ## Onde mora cada regra geral (uma fonte só)

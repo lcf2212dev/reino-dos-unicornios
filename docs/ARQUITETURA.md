@@ -91,6 +91,7 @@ linhas do manifesto e o index, e deixa `(preencher)` onde só a pessoa escreve (
 | Matéria / sala | `novo materia`, `novo sala` | `Reino.registrarMateria` / `Reino.registrarSala` em `jogo/js/conteudo/materias/<m>/` | telas e desafios | `materia-nova.md` |
 | Prova | `novo prova` | `Reino.registrarProva` (acessórios com `desenho` e `icone` inline) em `jogo/js/conteudo/provas/` | Escola, `arte/pixelart-unicornio-moldes.js`, `arte/icones/` | `prova-nova.md` |
 | Personagem | `novo personagem` | `Reino.registrarPersonagem` (com o perfil de voz) em `jogo/js/interiores/<p>/personagens.js` | `personagens/elenco.js`, `nucleo/config.js` | `personagem-novo.md` |
+| Personagem feito em paralelo (plano) | `novo reserva`, depois `novo personagem` | `Reino.reservarPersonagem` em `<p>/reservas.js` (contrato: nome, gênero, idade, voz, vaga) + só o sprite no `personagens.js` | o `<p>/reservas.js` (nas frentes) | `contratos/plano-paralelo.md` |
 | Enfeite / comida | — | `Reino.LojaItens` (`jogo/js/conteudo/loja-itens.js`) | telas da Loja e Pet Shop | `enfeite-novo.md`, `comida-nova.md` |
 | Música | — | `jogo/js/sistemas/musicas-faixas.js` | `musicas.js` | `musica-nova.md` |
 | Fala | — | dados do dono (`falas.js` do prédio, `falas()` do módulo) | `sistemas/falas.js` | `fala-nova-e-vozes.md` |

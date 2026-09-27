@@ -66,6 +66,9 @@ Ferramentas de desenvolvimento (Node). Nenhuma entra no jogo. Comandos: `CLAUDE.
   `npm run novo -- predio padaria --nome "Padaria" --rect 10,10,5,4 --caminho "14,14;13,14;12,14"`,
   `npm run novo -- materia geografia --nome "Geografia" --emoji 🌍` ou `npm run novo -- sala historia h6`
   (`--lista`, `--ajuda`, `--seco`, `--raiz`).
+- `npm run novo -- reserva <id> …`: o contrato de um NPC para frentes paralelas (vaga tracejada até o
+  `novo personagem` preencher); nas frentes, `REINO_RESERVAS_ABERTAS=1` rebaixa a reserva sem registro a aviso, e
+  o `fluxo/comum.js` apaga essa variável na integração (`docs/contratos/plano-paralelo.md`).
 - Cria os arquivos dos modelos (`novo/modelos/`), põe as linhas no manifesto na ordem certa, refaz o index e imprime o
   que falta. O que só a pessoa escreve sai como `(preencher)`, que os validadores recusam ("falta preencher").
 

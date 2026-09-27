@@ -29,6 +29,8 @@ interface ReinoGlobal {
   desenhosAcessorios?: { [id: string]: DesenhoEnfeite };
   personagens?: { [id: string]: PersonagemElenco };
   registrarPersonagem?(def: PersonagemRegistrado): void;
+  reservas?: { [id: string]: ReservaPersonagem };
+  reservarPersonagem?(def: ReservaPersonagem): void;
   _personagensPredio?: { id: string; predio: string; x?: number; y?: number; acao?: AcaoNpc }[];
   personagemTambemEm?(id: string, l: LugarPersonagem): void;
   personagensDoPredio?(p: string): { id: string; x?: number; y?: number; acao?: AcaoNpc }[];
