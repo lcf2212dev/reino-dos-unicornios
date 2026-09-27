@@ -5,18 +5,21 @@
 Reino.falasDoPredio('observatorio', { npcs: {
   'lua-lumi': {
     oi: ['Oi! Eu me chamo Lumi.', 'Eu sou uma ET da Lua!', 'Que bom que você veio!'],
+    nova: ['Vamos pular bem alto?'],
     depois: ['Aqui a gente pula bem alto!', 'Pule na cratera. É divertido!'],
   },
 } });
 Reino.falasDoPredio('observatorio', { npcs: {
   'lua-pipo': {
     oi: ['Oi! Eu sou o Pipo.', 'Eu adoro brincar de esconder!', 'Será que você me acha?'],
+    nova: ['Quer brincar de esconder?'],
     depois: ['Eu me escondo muito bem!', 'Vamos brincar de novo?'],
   },
 } });
 Reino.falasDoPredio('observatorio', { npcs: {
   'lua-vovo': {
     oi: ['{Olá, minha querida!|Olá, meu querido!}', 'Eu sou a Vovó Cratera.', 'Moro na Lua faz muito tempo.'],
+    nova: ['Quer ouvir uma curiosidade?'],
     depois: ['A Lua não tem luz própria.', 'Ela brilha com a luz do Sol!'],
   },
 } });
