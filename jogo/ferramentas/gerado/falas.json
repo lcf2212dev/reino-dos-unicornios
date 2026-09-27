@@ -328,6 +328,36 @@
    "velocidade": "-8%",
    "tom": "-6Hz"
   },
+  "npc-marte-rubi": {
+   "voz": "pt-BR-ThalitaMultilingualNeural",
+   "velocidade": "+4%",
+   "tom": "+28Hz"
+  },
+  "npc-marte-faisca": {
+   "voz": "en-US-BrianMultilingualNeural",
+   "velocidade": "+6%",
+   "tom": "+30Hz"
+  },
+  "npc-marte-vovo": {
+   "voz": "de-DE-FlorianMultilingualNeural",
+   "velocidade": "-12%",
+   "tom": "-16Hz"
+  },
+  "npc-saturno-sky": {
+   "voz": "en-US-AvaMultilingualNeural",
+   "velocidade": "+4%",
+   "tom": "+22Hz"
+  },
+  "npc-saturno-nico": {
+   "voz": "fr-FR-RemyMultilingualNeural",
+   "velocidade": "+8%",
+   "tom": "+26Hz"
+  },
+  "npc-saturno-vovo": {
+   "voz": "en-US-EmmaMultilingualNeural",
+   "velocidade": "-10%",
+   "tom": "-8Hz"
+  },
   "npc-nasa-lia": {
    "voz": "en-US-EmmaMultilingualNeural",
    "velocidade": "+4%",
@@ -24681,7 +24711,8 @@
    "voz": "ingles",
    "texto": "Hello",
    "pacotes": [
-    "interior-castelo"
+    "interior-castelo",
+    "interior-observatorio"
    ],
    "fala": "Hello"
   },
@@ -30570,6 +30601,393 @@
     "interior-observatorio"
    ],
    "fala": "Um jipe para passear na Lua!"
+  },
+  {
+   "chave": "d4dfe682i",
+   "voz": "npc-marte-rubi",
+   "texto": "Oi!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Oi!"
+  },
+  {
+   "chave": "a5884c41w",
+   "voz": "npc-marte-rubi",
+   "texto": "Eu me chamo Rubi.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eu me chamo Rubi."
+  },
+  {
+   "chave": "34f1983011",
+   "voz": "npc-marte-rubi",
+   "texto": "Eu moro aqui em Marte!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eu moro aqui em Marte!"
+  },
+  {
+   "chave": "3fb4da66y",
+   "voz": "npc-marte-rubi",
+   "texto": "Minha nave quebrou!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Minha nave quebrou!"
+  },
+  {
+   "chave": "9becd7aa17",
+   "voz": "npc-marte-rubi",
+   "texto": "Você me ajuda com as contas?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Você me ajuda com as contas?"
+  },
+  {
+   "chave": "844a80ac12",
+   "voz": "npc-marte-rubi",
+   "texto": "Minha nave voa de novo!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Minha nave voa de novo!"
+  },
+  {
+   "chave": "05532b0cv",
+   "voz": "npc-marte-rubi",
+   "texto": "Obrigada, amiga!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Obrigada, amiga!"
+  },
+  {
+   "chave": "9158849ev",
+   "voz": "npc-marte-rubi",
+   "texto": "Obrigada, amigo!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Obrigada, amigo!"
+  },
+  {
+   "chave": "74f1dc63k",
+   "voz": "npc-marte-faisca",
+   "texto": "Oi!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Oi!"
+  },
+  {
+   "chave": "63ea1b33x",
+   "voz": "npc-marte-faisca",
+   "texto": "Eu sou o Faísca.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eu sou o Faísca."
+  },
+  {
+   "chave": "82f8644915",
+   "voz": "npc-marte-faisca",
+   "texto": "Aqui a areia é vermelha!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Aqui a areia é vermelha!"
+  },
+  {
+   "chave": "3d86b45213",
+   "voz": "npc-marte-faisca",
+   "texto": "Vamos rolar nas dunas?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos rolar nas dunas?"
+  },
+  {
+   "chave": "19e91b2915",
+   "voz": "npc-marte-faisca",
+   "texto": "Marte é muito divertido!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Marte é muito divertido!"
+  },
+  {
+   "chave": "26b2243518",
+   "voz": "npc-marte-faisca",
+   "texto": "Volte para brincar de novo!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Volte para brincar de novo!"
+  },
+  {
+   "chave": "f0f462faj",
+   "voz": "npc-marte-vovo",
+   "texto": "Olá!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Olá!"
+  },
+  {
+   "chave": "6c202a72x",
+   "voz": "npc-marte-vovo",
+   "texto": "Sou o Vovô Vulcão.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Sou o Vovô Vulcão."
+  },
+  {
+   "chave": "2a501e5418",
+   "voz": "npc-marte-vovo",
+   "texto": "Moro perto do vulcão gigante.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Moro perto do vulcão gigante."
+  },
+  {
+   "chave": "68367bfd16",
+   "voz": "npc-marte-vovo",
+   "texto": "Quer ouvir uma curiosidade?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Quer ouvir uma curiosidade?"
+  },
+  {
+   "chave": "1bc7622716",
+   "voz": "npc-marte-vovo",
+   "texto": "Marte é o planeta vermelho.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Marte é o planeta vermelho."
+  },
+  {
+   "chave": "8b11717311",
+   "voz": "npc-marte-vovo",
+   "texto": "A cor vem da ferrugem!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "A cor vem da ferrugem!"
+  },
+  {
+   "chave": "9c1c2389t",
+   "voz": "narradora",
+   "texto": "Um globo do espaço!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Um globo do espaço!"
+  },
+  {
+   "chave": "68302ddfu",
+   "voz": "narradora",
+   "texto": "Uma pedra do espaço!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Uma pedra do espaço!"
+  },
+  {
+   "chave": "db289b6bo",
+   "voz": "npc-saturno-sky",
+   "texto": "Eu sou a",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eu sou a"
+  },
+  {
+   "chave": "7bcd372ca",
+   "voz": "ingles",
+   "texto": "Sky",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Sky"
+  },
+  {
+   "chave": "f8855826v",
+   "voz": "npc-saturno-sky",
+   "texto": "quer dizer olá.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "quer dizer olá."
+  },
+  {
+   "chave": "2f38083b12",
+   "voz": "npc-saturno-sky",
+   "texto": "Eu falo inglês, sabia?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eu falo inglês, sabia?"
+  },
+  {
+   "chave": "dc587ea618",
+   "voz": "npc-saturno-sky",
+   "texto": "Quer praticar inglês comigo?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Quer praticar inglês comigo?"
+  },
+  {
+   "chave": "b68435b2g",
+   "voz": "ingles",
+   "texto": "Thank you",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Thank you"
+  },
+  {
+   "chave": "ce9e8a7110",
+   "voz": "npc-saturno-sky",
+   "texto": "Quer dizer obrigada.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Quer dizer obrigada."
+  },
+  {
+   "chave": "e3eee13717",
+   "voz": "npc-saturno-sky",
+   "texto": "Você fala inglês muito bem!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Você fala inglês muito bem!"
+  },
+  {
+   "chave": "e48c4358k",
+   "voz": "npc-saturno-nico",
+   "texto": "Oi!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Oi!"
+  },
+  {
+   "chave": "8a063c50v",
+   "voz": "npc-saturno-nico",
+   "texto": "Eu sou o Nico.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eu sou o Nico."
+  },
+  {
+   "chave": "bade31ca1a",
+   "voz": "npc-saturno-nico",
+   "texto": "Eu moro nos anéis de Saturno!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eu moro nos anéis de Saturno!"
+  },
+  {
+   "chave": "709c6ead13",
+   "voz": "npc-saturno-nico",
+   "texto": "Vamos patinar no gelo?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos patinar no gelo?"
+  },
+  {
+   "chave": "bee4ee0a17",
+   "voz": "npc-saturno-nico",
+   "texto": "O gelo daqui brilha muito!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O gelo daqui brilha muito!"
+  },
+  {
+   "chave": "0fd015e917",
+   "voz": "npc-saturno-nico",
+   "texto": "Volte para patinar comigo!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Volte para patinar comigo!"
+  },
+  {
+   "chave": "16731e9d10",
+   "voz": "npc-saturno-vovo",
+   "texto": "Olá, minha querida!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Olá, minha querida!"
+  },
+  {
+   "chave": "4a7460c9y",
+   "voz": "npc-saturno-vovo",
+   "texto": "Olá, meu querido!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Olá, meu querido!"
+  },
+  {
+   "chave": "25cf23bc10",
+   "voz": "npc-saturno-vovo",
+   "texto": "Eu sou a Vovó Anel.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eu sou a Vovó Anel."
+  },
+  {
+   "chave": "45e614a716",
+   "voz": "npc-saturno-vovo",
+   "texto": "Moro nos anéis faz tempo.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Moro nos anéis faz tempo."
+  },
+  {
+   "chave": "71bb625018",
+   "voz": "npc-saturno-vovo",
+   "texto": "Quer ouvir uma curiosidade?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Quer ouvir uma curiosidade?"
+  },
+  {
+   "chave": "01b6d9621a",
+   "voz": "npc-saturno-vovo",
+   "texto": "Os anéis são de gelo e pedra.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Os anéis são de gelo e pedra."
+  },
+  {
+   "chave": "561f7e0f1b",
+   "voz": "npc-saturno-vovo",
+   "texto": "Eles brilham com a luz do Sol!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eles brilham com a luz do Sol!"
   },
   {
    "chave": "dc354bec18",
@@ -37797,6 +38215,24 @@
     "geral"
    ],
    "fala": "Chegamos na Lua!"
+  },
+  {
+   "chave": "86e4dde2p",
+   "voz": "claude",
+   "texto": "Chegamos em Marte!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Chegamos em Marte!"
+  },
+  {
+   "chave": "74c19f87r",
+   "voz": "claude",
+   "texto": "Chegamos em Saturno!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Chegamos em Saturno!"
   },
   {
    "chave": "2c8fc6a3s",

@@ -11,6 +11,8 @@ o minijogo de voo e os planetas (interiores do Observatório com céu aberto e E
 | Arquivo | O quê |
 |---|---|
 | `jogo/js/sistemas/viagem.js` (+ partes `viagem-*.js`) | `Reino.Viagem`: planetas, tanque, passaporte, ação `viagem`, fluxo decolar → voo → chegada; falas do Claude |
+| `jogo/js/sistemas/viagem-perguntas.js` | `Reino.Viagem.perguntas(materia, n, chave)`: perguntas curtas das salas para os portais (§4.1) |
+| `jogo/js/sistemas/viagem-desafio.js`, `jogo/js/ui/et-desafio.js`, `css/ui-et-desafio.css` | o desafio do ET (ação `viagem-desafio`) e o campo `etsAmigos` (§6.1) |
 | `jogo/js/ui/foguete.js`, `css/ui-foguete.css` | painel do foguete (`Reino.UI.telaFoguete()`): tanque, destinos, passaporte |
 | `jogo/js/atividades/voo.js`, `voo-desenho.js`, `css/ui-voo.css` | `Reino.Voo`: o minijogo de voo em tela própria com canvas |
 | `jogo/js/interiores/planetas/` | `planetas-comum.js` (fundo `espaco`, pisos, horizonte, foguete de pouso), um arquivo (ou mais) por planeta |
@@ -43,7 +45,9 @@ falas() → [{ texto, voz? }]   // tudo o que o painel e o fluxo falam (voz 'cla
 ```
 - Ouve `Reino.EVENTOS.RESPOSTAS` (`{ certas, erradas }`, emitido por `Reino.Aura.contar`): `ganhar(certas)`. Errada
   não tira. O tanque nunca passa de `config.viagem.tanque`.
-- `materia` (2ª versão): a matéria das perguntas dos portais do voo e dos ETs daquele planeta. A Lua não tem.
+- `materia` (2ª versão): a matéria das perguntas dos portais do voo e do ET do desafio daquele planeta. A Lua não tem.
+- `artigo` ('na' | 'em'): "Chegamos na Lua!", "Chegamos em Marte!". `depois` (id): o planeta só abre depois do
+  carimbo desse (o painel mostra o cadeado e diz qual visitar antes). Lua → Marte → Saturno.
 
 ## 4. `Reino.Voo` (`atividades/voo.js`)
 ```
@@ -57,7 +61,19 @@ aberto() → bool
 - Asteroide: só uma tremidinha (conta em `batidas`). Estrelas: somam em `estrelas`.
 - Relógio do rAF (congela no modo determinístico); sorteio por `Reino.sorteioDaChave`; sem Animações, a física
   roda (é a atividade) sem partículas, parallax nem tremida.
-- 2ª versão: portais de resposta no caminho (`iniciar({ planeta, perguntas })`); a 1ª versão deixa o espaço para isso.
+- Portais (2ª versão): `iniciar({ planeta, perguntas })`, `perguntas` de `Reino.Viagem.perguntas` (§4.1). Um portal por
+  pergunta, espalhados no voo: a pergunta aparece (e a narradora lê) um pouco antes; as opções (2 ou 3) viram faixas
+  lado a lado; passar pela certa = estrela a mais (`config.viagem.estrelasPorPortal`) e `Reino.Aura.contar([true])`
+  (enche o tanque e a Aura); pela errada = "Quase!" com a certa, sem tirar nada. Resolve também `portais: { certos, erros }`.
+
+### 4.1 Perguntas da viagem (`Reino.Viagem.perguntas`)
+```
+perguntas(materia, n, chave) → [{ id, materia, sala, texto, opcoes: [texto], certa, desafio }]
+```
+- Das salas da matéria (primeiro as que ela já fez; senão todas): `escolha` com até 3 opções curtas (até 16 letras,
+  sem `apoio`) e `vf` (Verdadeiro/Falso). `texto` é o enunciado (`Reino.Desafios.enunciado`); `desafio` é o original
+  (para ler com a voz gravada: `Reino.Falas.segmentosDesafio`, voz 'narradora', pacote da sala).
+- Sorteio por `U.embaralhar(lista, chave)` (determinístico no modo congelado); sem repetir dentro da mesma lista.
 
 ## 5. Planetas (`interiores/planetas/`)
 - Interior com `lugar: 'observatorio'`, sem `entrada`, `pacote: 'interior-observatorio'`, `fundo: 'espaco'`,
@@ -73,6 +89,18 @@ aberto() → bool
   (`Reino.registrarPersonagem({ id, sprite: { base: 'et', … } })`), falas em `observatorio/personagens-falas.js`.
 - Vozes: multilíngues falando português (sotaque de outro planeta), aprovadas pela transcrição.
 - Lua: `lua-lumi` (Lumi) (8, 7), `lua-pipo` (Pipo) (16, 9), `lua-vovo` (Vovó Cratera) (5, 12).
+- Marte (Matemática): `marte-rubi` (Rubi, desafio) (8, 7), `marte-faisca` (Faísca) (16, 9), `marte-vovo` (Vovô Vulcão) (5, 12).
+- Saturno (Inglês): `saturno-sky` («Sky», desafio) (8, 7), `saturno-nico` (Nico) (16, 9), `saturno-vovo` (Vovó Anel) (5, 12).
+- Os planetas montam os NPCs por `Reino._predios.planetas.npcsDoPlaneta(interior)` (planetas-comum.js).
+
+### 6.1 O desafio do ET (`viagem-desafio`)
+- Ação `{ tipo: 'viagem-desafio', materia }` no ET com um problema (Rubi: a nave quebrou; «Sky»: quer praticar inglês).
+- Painel (`Reino.UI.telaDesafioET(npc, materia)`) com `config.viagem.desafioPerguntas` perguntas de
+  `Reino.Viagem.perguntas`, uma por vez, com o card de `Reino.Desafios.render` (o mesmo da pergunta surpresa).
+  Cada Conferir conta na Aura (`Reino.Aura.contar(ok)`); acerto de primeira vale `estrelasPorAcertoET` estrela;
+  errada mostra a certa e a explicação e segue. Terminar (acertando ou não) faz do ET um amigo.
+- Falas do ET no desafio: as do módulo (`falas()`), na voz do ET (`npc-<id>`), texto exato.
+- Save: `etsAmigos: { <npcId>: true }` (uniao, `novoCiclo: 'mantem'`). 3ª versão: o álbum de ETs e o ET que acompanha.
 
 ## 7. Pulo (`Jogador.pular`)
 ```
@@ -85,6 +113,7 @@ Sem Animações ou com movimento reduzido: não pula (devolve false). Ela pode a
 - `combustivel: { mariana: { n, em } }`: mesclar `carimbo` (sobe e desce), `novoCiclo: 'mantem'`, `limpar` prende
   entre 0 e o máximo. Sem o campo: `config.viagem.cheioNoComeco` → tanque cheio.
 - `passaporte: { <planeta>: true }`: mesclar `uniao`, `novoCiclo: 'mantem'`. Só cresce.
+- `etsAmigos: { <npcId>: true }`: mesclar `uniao`, `novoCiclo: 'mantem'` (§6.1).
 - Nada mais vai para o save (cristais, esconde-esconde: memória da sessão).
 
 ## 9. Antes de mexer
