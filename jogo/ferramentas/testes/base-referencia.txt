@@ -15,4 +15,5 @@
 # 0c25e4f = mescla de save incompleto grava o resultado em vez de ERRO
 # 4954a3f = prova de Geografia
 # e0622c8 = Aura: brilho em volta da Mariana, chip no HUD, campo aura no save e 7 falas
-e0622c8
+# 3274afc = ouvir antes de seguir: resumo da sala antes das questões, intro sem o botão do resumo, config.esperaFala
+3274afc
