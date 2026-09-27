@@ -32203,13 +32203,13 @@
    "fala": "Já fez uma de seis salas."
   },
   {
-   "chave": "40008cc0y",
+   "chave": "8aad3766y",
    "voz": "npc-padrao-guia",
-   "texto": "Já ganhou R$ 3,33!",
+   "texto": "Já ganhou R$ 3,00!",
    "pacotes": [
     "interior-padrao-matematica"
    ],
-   "fala": "Já ganhou 3 reais e 33 centavos!"
+   "fala": "Já ganhou 3 reais!"
   },
   {
    "chave": "0c611f3516",
@@ -32221,13 +32221,13 @@
    "fala": "Já fez duas de seis salas."
   },
   {
-   "chave": "a10aa0b4y",
+   "chave": "92b0671dy",
    "voz": "npc-padrao-guia",
-   "texto": "Já ganhou R$ 6,67!",
+   "texto": "Já ganhou R$ 6,00!",
    "pacotes": [
     "interior-padrao-matematica"
    ],
-   "fala": "Já ganhou 6 reais e 67 centavos!"
+   "fala": "Já ganhou 6 reais!"
   },
   {
    "chave": "07904f7716",
@@ -32239,13 +32239,13 @@
    "fala": "Já fez três de seis salas."
   },
   {
-   "chave": "68a707cez",
+   "chave": "7da90ef8y",
    "voz": "npc-padrao-guia",
-   "texto": "Já ganhou R$ 10,00!",
+   "texto": "Já ganhou R$ 9,00!",
    "pacotes": [
     "interior-padrao-matematica"
    ],
-   "fala": "Já ganhou 10 reais!"
+   "fala": "Já ganhou 9 reais!"
   },
   {
    "chave": "064a205418",
@@ -32257,13 +32257,13 @@
    "fala": "Já fez quatro de seis salas."
   },
   {
-   "chave": "4da2ac45z",
+   "chave": "4cb91318z",
    "voz": "npc-padrao-guia",
-   "texto": "Já ganhou R$ 13,33!",
+   "texto": "Já ganhou R$ 12,00!",
    "pacotes": [
     "interior-padrao-matematica"
    ],
-   "fala": "Já ganhou 13 reais e 33 centavos!"
+   "fala": "Já ganhou 12 reais!"
   },
   {
    "chave": "83188fce17",
@@ -32275,13 +32275,13 @@
    "fala": "Já fez cinco de seis salas."
   },
   {
-   "chave": "b397fb21z",
+   "chave": "9b789665z",
    "voz": "npc-padrao-guia",
-   "texto": "Já ganhou R$ 16,67!",
+   "texto": "Já ganhou R$ 15,00!",
    "pacotes": [
     "interior-padrao-matematica"
    ],
-   "fala": "Já ganhou 16 reais e 67 centavos!"
+   "fala": "Já ganhou 15 reais!"
   },
   {
    "chave": "565cbadd13",
