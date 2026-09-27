@@ -12,7 +12,7 @@ Este arquivo tem as regras invioláveis e o índice. As regras de código de cad
   "Novo ciclo" ou pagamento fora do ambiente de teste.
 - Docker, container e o serviço `reino-nome`: nunca se mexe. Não precisa: o servidor de casa serve a árvore
   principal ao vivo, e o merge na main já o atualiza.
-- A árvore principal `/home/leandro/Mariana Revisões` é servida AO VIVO pelo container: não escreva nela.
+- A árvore principal `/home/leandro/reino-dos-unicornios` é servida AO VIVO pelo container: não escreva nela.
   Trabalhe numa worktree (`npm run worktree -- <tema> [--material <Pasta>]`).
 - Detalhes: `docs/contratos/save-e-mescla.md` §9.
 
