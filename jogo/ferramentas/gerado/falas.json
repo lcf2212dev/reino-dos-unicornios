@@ -352,6 +352,11 @@
    "voz": "pt-BR-FranciscaNeural",
    "velocidade": "+4%",
    "tom": "+18Hz"
+  },
+  "npc-salao-lulu": {
+   "voz": "en-US-AvaMultilingualNeural",
+   "velocidade": "+12%",
+   "tom": "+24Hz"
   }
  },
  "falas": [
@@ -30495,6 +30500,114 @@
     "interior-portugues"
    ],
    "fala": "O éle no fim soa como u."
+  },
+  {
+   "chave": "5ca132d312",
+   "voz": "npc-salao-lulu",
+   "texto": "Oi, eu sou a Dona Lulu!",
+   "pacotes": [
+    "interior-salao"
+   ],
+   "fala": "Oi, eu sou a Dona Lulu!"
+  },
+  {
+   "chave": "382d7fad14",
+   "voz": "npc-salao-lulu",
+   "texto": "Aqui o cabelo fica lindo!",
+   "pacotes": [
+    "interior-salao"
+   ],
+   "fala": "Aqui o cabelo fica lindo!"
+  },
+  {
+   "chave": "5cdfb08014",
+   "voz": "npc-salao-lulu",
+   "texto": "Vamos mudar o seu cabelo?",
+   "pacotes": [
+    "interior-salao"
+   ],
+   "fala": "Vamos mudar o seu cabelo?"
+  },
+  {
+   "chave": "cca8311c13",
+   "voz": "npc-salao-lulu",
+   "texto": "Ficou lindo demais, viu?",
+   "pacotes": [
+    "interior-salao"
+   ],
+   "fala": "Ficou lindo demais, viu?"
+  },
+  {
+   "chave": "15a94e7614",
+   "voz": "npc-salao-lulu",
+   "texto": "A arara tem roupas novas!",
+   "pacotes": [
+    "interior-salao"
+   ],
+   "fala": "A arara tem roupas novas!"
+  },
+  {
+   "chave": "e0865c8112",
+   "voz": "narradora",
+   "texto": "Xampu com cheirinho de flor!",
+   "pacotes": [
+    "interior-salao"
+   ],
+   "fala": "Xampu com cheirinho de flor!"
+  },
+  {
+   "chave": "e24831b6x",
+   "voz": "narradora",
+   "texto": "Senta aqui para cortar!",
+   "pacotes": [
+    "interior-salao"
+   ],
+   "fala": "Senta aqui para cortar!"
+  },
+  {
+   "chave": "f6445099y",
+   "voz": "narradora",
+   "texto": "Pente, escova e tesoura!",
+   "pacotes": [
+    "interior-salao"
+   ],
+   "fala": "Pente, escova e tesoura!"
+  },
+  {
+   "chave": "834b91aa12",
+   "voz": "narradora",
+   "texto": "Ele seca o cabelo rapidinho.",
+   "pacotes": [
+    "interior-salao"
+   ],
+   "fala": "Ele seca o cabelo rapidinho."
+  },
+  {
+   "chave": "dca9629411",
+   "voz": "narradora",
+   "texto": "Aqui a gente lava o cabelo.",
+   "pacotes": [
+    "interior-salao"
+   ],
+   "fala": "Aqui a gente lava o cabelo."
+  },
+  {
+   "chave": "78434478x",
+   "voz": "narradora",
+   "texto": "Vamos provar uma roupa?",
+   "pacotes": [
+    "interior-salao"
+   ],
+   "fala": "Vamos provar uma roupa?"
+  },
+  {
+   "chave": "2b8d9c7aw",
+   "voz": "narradora",
+   "texto": "Quantas roupas lindas!",
+   "pacotes": [
+    "interior-salao"
+   ],
+   "fala": "Quantas roupas lindas!"
   },
   {
    "chave": "2e0b4123l",

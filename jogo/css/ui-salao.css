@@ -1,0 +1,23 @@
+/* Salão de Beleza: a tela de escolher o corte de cabelo e a roupa (UI.telaSalao, js/ui/salao.js):
+   prévia grande da Mariana (de frente, de lado, de costas e montada) e a grade de opções com retrato. */
+.salao-previa {
+  display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap;
+  padding: 10px; border: 3px solid var(--borda); border-radius: 18px;
+  background: radial-gradient(circle, #fff 35%, var(--rosa-clara));
+}
+.salao-grande { display: grid; place-items: center; min-height: 140px; }
+.salao-vistas { display: flex; align-items: flex-end; gap: 10px; }
+.salao-vista { display: grid; place-items: end center; }
+.salao-opcoes { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: 8px; }
+.salao-opcao {
+  display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 4px 6px;
+  border: 3px solid var(--borda); border-radius: 14px; background: var(--papel); box-shadow: 0 3px 0 var(--borda);
+  font: inherit; font-size: 0.85em; font-weight: 700; color: inherit; cursor: pointer; line-height: 1.15;
+}
+.salao-opcao[aria-pressed="true"] { background: var(--rosa-clara); outline: 4px solid var(--roxo); outline-offset: 2px; }
+.salao-retrato { display: grid; place-items: end center; min-height: 54px; }
+.salao-nome { text-align: center; overflow-wrap: anywhere; }
+@media (max-width: 480px) {
+  .salao-opcoes { grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .salao-opcao { font-size: 0.72em; padding: 6px 2px 4px; }
+}
