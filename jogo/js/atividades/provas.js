@@ -166,7 +166,8 @@
           el('li', '👀 No fim, você pode revisar antes de ver a nota.')),
         el('div.intro-botoes', ir)));
       corpo.scrollTop = 0;
-      Reino.Som.falar(fala, { voz: 'claude' });
+      // ouvir antes de seguir: "Começar" e ✕ esperam a fala acabar
+      Reino.UI.esperarFala([ir, sair], [fala], { voz: 'claude' });
       ir.addEventListener('click', function () {
         Reino.Som.tocar('porta');
         Reino.Prova.ritual(corpo, est().ritualVisto).then(function () {
@@ -194,7 +195,9 @@
       return U.clamp(1500 + t.length * 32, 2500, 9000);
     }
 
-    function mostrarQuestao(i, revisando) {
+    var leitura = 0;   // a leitura em curso (uma questão nova cancela a anterior)
+    // antes: fala do Claude num balão antes da leitura (o começo da revisão); a questão é lida quando ela acaba
+    function mostrarQuestao(i, revisando, antes) {
       var d = questoes[i];
       Reino.Claude.limpar(); Reino.Som.calar();
       corpo.innerHTML = '';
@@ -219,7 +222,8 @@
       var ultima = i + 1 === questoes.length;
       var prox = el('button.btn-grande.btn-principal', { type: 'button' },
         ultima ? (revisando ? 'Entregar a prova 📝' : 'Terminei ✓') : 'Próxima →');
-      function atualizar() { prox.disabled = !ctrl.pronto(); }
+      // travado pela fala (esperando-fala): quem solta é o fim da fala
+      function atualizar() { if (!prox.classList.contains('esperando-fala')) prox.disabled = !ctrl.pronto(); }
       ant.addEventListener('click', function () { Reino.Som.tocar('toque'); respostas[i] = ctrl.valor(); mostrarQuestao(i - 1, revisando); });
       prox.addEventListener('click', function (ev) {
         if (!ctrl.pronto()) return;
@@ -246,6 +250,22 @@
       // teclado ("Próxima", "Anterior", "Começar a prova", "Sim, quero revisar"): o foco vai para o
       // 1º controle da questão (ou para o número dela), não para o body
       Reino.UI.focarTroca(ctrl.card, num, CALMA_TROCA);
+      // a questão é lida sozinha (a mesma fala do 🔊); respostas, navegação e ✕ esperam o fim. O 🔊 fica livre
+      var vez = ++leitura, alvos = [ctrl.card, ant, prox, sair];
+      Array.prototype.forEach.call(ctrl.card.querySelectorAll('.btn-ouvir'), function (b) { b.classList.add('livre-na-fala'); });
+      function ler() {
+        if (vez !== leitura || !ctrl.card.isConnected || !Reino.config.esperaFala.lerQuestoes) return;
+        Reino.UI.esperarFala(alvos, Reino.Falas.segmentosDesafio(d, ctrl.ordem), { voz: 'narradora' });
+      }
+      if (antes) {
+        // o balão só mostra (falar: false); a voz vem da espera, que trava a questão até ela acabar
+        Reino.Prova.balaoQueSome(antes, { falar: false });
+        Reino.UI.esperarFala(alvos, [antes], { voz: 'claude' }).then(function () {
+          // o balão fecha antes da leitura (fechar cala a voz: não pode cortar a questão)
+          if (vez === leitura && Reino.Claude.aberto()) Reino.Claude.fechar();
+          ler();
+        });
+      } else ler();
     }
 
     function perguntarRevisao() {
@@ -262,11 +282,10 @@
         el('p.dica-revisao', 'As campeãs revisam antes de entregar: é aí que a gente acha os errinhos.'),
         el('div.intro-botoes', nao, sim)));
       Reino.UI.focarTroca(sim, corpo.querySelector('.pergunta-revisao h2'), CALMA_TROCA);
-      Reino.Som.falar(Reino.Falas.provas.perguntaRevisar, { voz: 'claude' });
+      Reino.UI.esperarFala([sim, nao, sair], [Reino.Falas.provas.perguntaRevisar], { voz: 'claude' });
       sim.addEventListener('click', function () {
         Reino.Som.tocar('porta');
-        mostrarQuestao(0, true);
-        Reino.Prova.balaoQueSome(Reino.Falas.provas.comecaRevisao);
+        mostrarQuestao(0, true, Reino.Falas.provas.comecaRevisao);
       });
       nao.addEventListener('click', function () { Reino.Som.tocar('toque'); entregar(); });
     }
@@ -373,7 +392,7 @@
 
       Reino.Som.tocar(a ? 'fanfarra' : premios.sucesso ? 'acerto' : 'toque');
       if (a) { Reino.UI.confete(premios.raridade === 'lendario' ? 160 : 90); setTimeout(function () { Reino.Som.tocar('estrela'); }, 700); }
-      Reino.Som.falar(fala, { voz: 'claude' });
+      Reino.UI.esperarFala([botoes, sair], [fala], { voz: 'claude' });
     }
 
     capa();
