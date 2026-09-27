@@ -18,6 +18,7 @@
 
   /* ---------- controles ---------- */
   var MAPA_TECLAS = { ArrowLeft: 'esq', a: 'esq', A: 'esq', ArrowRight: 'dir', d: 'dir', D: 'dir', ArrowUp: 'cima', w: 'cima', W: 'cima', ArrowDown: 'baixo', s: 'baixo', S: 'baixo' };
+  var CONTROLES = 'button, a[href], [role="button"], input, select, textarea, [contenteditable="true"]';
   function ligarControles() {
     window.addEventListener('keydown', function (e) {
       if (!V.jogoAtivo || Cena.bloqueado()) return;
@@ -30,6 +31,8 @@
         if (foco && foco !== document.body && foco.closest && foco.closest('#hud')) foco.blur();
       }
       if (e.key === 'Enter' || e.key === ' ') {
+        // com o foco num controle (botão do HUD, chip, "Ok!" do balão), Enter/Espaço são dele, não do alvo perto dela
+        if (e.target && e.target.closest && e.target.closest(CONTROLES)) return;
         var alvo = Cena.atual().alvoPerto(J.tile(), { x: J.olharX, y: J.olharY });
         if (alvo) { e.preventDefault(); agirNoAlvo(alvo); }
       }

@@ -140,7 +140,8 @@
     J.caminho = suavizar(cam);
     J.aoChegar = aoChegar || null;
     J.marcador = { x: tx, y: ty, t: 0 };
-    if (!cam.length && aoChegar) { var f = aoChegar; J.aoChegar = null; J.marcador = null; f(); }
+    // já está no destino: o marcador apaga (e o aoChegar, se houver, roda na hora)
+    if (!cam.length) { var f = aoChegar; J.aoChegar = null; J.marcador = null; if (f) f(); }
     return true;
   };
   J.parar = function () { J.caminho = []; J.aoChegar = null; J.marcador = null; };
@@ -279,7 +280,7 @@
       }
     }
     var usa = Reino.Progresso.estado().usando;
-    if (usa.estrelinhas && Math.random() < 0.35) J.faiscas.push({ x: J.x - J.olharX * 8 + (Math.random() * 6 - 3), y: J.y - 6 - J.olharY * 4 - Math.random() * 10, v: 0 });
+    if (usa.estrelinhas && animacoesLigadas() && Math.random() < 0.35) J.faiscas.push({ x: J.x - J.olharX * 8 + (Math.random() * 6 - 3), y: J.y - 6 - J.olharY * 4 - Math.random() * 10, v: 0 });
   }
 
   // ponto do rastro a uma distância exata atrás da Mariana (interpolado, sem saltos)

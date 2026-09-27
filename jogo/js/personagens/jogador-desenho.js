@@ -319,7 +319,7 @@
     if (sobre) itens.push({ y: 1e9, desenhar: sobre });
     // as faíscas ficam logo antes do primeiro item dela (atrás dela e do unicórnio)
     var menor = Math.min.apply(null, itens.map(function (i) { return i.y; }));
-    if (J.faiscas.length) itens.unshift({ y: menor - 0.00001, desenhar: faiscas });
+    if (J.faiscas.length && particulas) itens.unshift({ y: menor - 0.00001, desenhar: faiscas });
     return itens;
   };
 
