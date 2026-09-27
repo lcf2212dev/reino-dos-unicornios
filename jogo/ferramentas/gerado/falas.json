@@ -273,6 +273,11 @@
    "velocidade": "-6%",
    "tom": "+2Hz"
   },
+  "npc-prof-samylly": {
+   "voz": "pt-BR-FranciscaNeural",
+   "velocidade": "-4%",
+   "tom": "+8Hz"
+  },
   "npc-lab-cavaleira": {
    "voz": "en-US-EmmaMultilingualNeural",
    "velocidade": "+0%",
@@ -1613,7 +1618,8 @@
    "texto": "Marque V para verdadeiro e F para falso:",
    "pacotes": [
     "prova-historia-3bim",
-    "prova-ciencias-3bim"
+    "prova-ciencias-3bim",
+    "prova-geografia-3bim"
    ],
    "fala": "Marque V para verdadeiro e F para falso:"
   },
@@ -4465,6 +4471,738 @@
     "prova-matematica-3bim"
    ],
    "fala": "10 minutos"
+  },
+  {
+   "chave": "58a298351e",
+   "voz": "narradora",
+   "texto": "Para que servem os meios de comunicação?",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "Para que servem os meios de comunicação?"
+  },
+  {
+   "chave": "f7218053p",
+   "voz": "narradora",
+   "texto": "Para as pessoas",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "Para as pessoas"
+  },
+  {
+   "chave": "27f7d1e2o",
+   "voz": "narradora",
+   "texto": "se comunicarem",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "se comunicarem"
+  },
+  {
+   "chave": "20abcc19k",
+   "voz": "narradora",
+   "texto": "e trocarem",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "e trocarem"
+  },
+  {
+   "chave": "d9567eb3y",
+   "voz": "narradora",
+   "texto": "mensagens e informações.",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "mensagens e informações."
+  },
+  {
+   "chave": "c050a7a117",
+   "voz": "narradora",
+   "texto": "O rádio é um meio de comunicação.",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "O rádio é um meio de comunicação."
+  },
+  {
+   "chave": "7245d5441m",
+   "voz": "narradora",
+   "texto": "O telefone permite conversar com outras pessoas.",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "O telefone permite conversar com outras pessoas."
+  },
+  {
+   "chave": "f443bb7219",
+   "voz": "narradora",
+   "texto": "O jornal serve apenas para brincar.",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "O jornal serve apenas para brincar."
+  },
+  {
+   "chave": "272516771b",
+   "voz": "narradora",
+   "texto": "A televisão pode transmitir notícias.",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "A televisão pode transmitir notícias."
+  },
+  {
+   "chave": "769bcdd41n",
+   "voz": "narradora",
+   "texto": "Escreva os nomes dos meios de comunicação abaixo:",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "Escreva os nomes dos meios de comunicação abaixo:"
+  },
+  {
+   "chave": "ae004d4315",
+   "voz": "narradora",
+   "texto": "Ligue cada figura ao nome dela.",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "Ligue cada figura ao nome dela."
+  },
+  {
+   "chave": "3701e773g",
+   "voz": "narradora",
+   "texto": "Jornal",
+   "pacotes": [
+    "prova-geografia-3bim",
+    "geografia-g2"
+   ],
+   "fala": "Jornal"
+  },
+  {
+   "chave": "ada1c46cf",
+   "voz": "narradora",
+   "texto": "Rádio",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "Rádio"
+  },
+  {
+   "chave": "7cb01d03j",
+   "voz": "narradora",
+   "texto": "Televisão",
+   "pacotes": [
+    "prova-geografia-3bim",
+    "geografia-g2"
+   ],
+   "fala": "Televisão"
+  },
+  {
+   "chave": "8883e673f",
+   "voz": "narradora",
+   "texto": "Livro",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "Livro"
+  },
+  {
+   "chave": "63b1b973i",
+   "voz": "narradora",
+   "texto": "Telefone",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "Telefone"
+  },
+  {
+   "chave": "eb2859dbk",
+   "voz": "narradora",
+   "texto": "Computador",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "Computador"
+  },
+  {
+   "chave": "26d5eace19",
+   "voz": "narradora",
+   "texto": "Complete com as palavras do quadro:",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "Complete com as palavras do quadro:"
+  },
+  {
+   "chave": "65766e02f",
+   "voz": "narradora",
+   "texto": "CARTA",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "carta"
+  },
+  {
+   "chave": "af5b6653i",
+   "voz": "narradora",
+   "texto": "TELEFONE",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "telefone"
+  },
+  {
+   "chave": "afb0906cf",
+   "voz": "narradora",
+   "texto": "RÁDIO",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "rádio"
+  },
+  {
+   "chave": "8d398103j",
+   "voz": "narradora",
+   "texto": "TELEVISÃO",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "televisão"
+  },
+  {
+   "chave": "d5726d3f1f",
+   "voz": "narradora",
+   "texto": "Podemos conversar com alguém pelo ______.",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "Podemos conversar com alguém pelo …"
+  },
+  {
+   "chave": "14e1652016",
+   "voz": "narradora",
+   "texto": "Podemos ouvir músicas no ______.",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "Podemos ouvir músicas no …"
+  },
+  {
+   "chave": "8623e5521c",
+   "voz": "narradora",
+   "texto": "Podemos assistir a notícias na ______.",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "Podemos assistir a notícias na …"
+  },
+  {
+   "chave": "988429ee1i",
+   "voz": "narradora",
+   "texto": "Podemos escrever uma mensagem em uma ______.",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "Podemos escrever uma mensagem em uma …"
+  },
+  {
+   "chave": "e2951d1a1x",
+   "voz": "narradora",
+   "texto": "O que mudou nos meios de comunicação com o passar do tempo?",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "O que mudou nos meios de comunicação com o passar do tempo?"
+  },
+  {
+   "chave": "22f4f42d28",
+   "voz": "narradora",
+   "texto": "As pessoas passaram a conseguir se comunicar de maneiras mais rápidas.",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "As pessoas passaram a conseguir se comunicar de maneiras mais rápidas."
+  },
+  {
+   "chave": "ef51da901a",
+   "voz": "narradora",
+   "texto": "As pessoas deixaram de se comunicar.",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "As pessoas deixaram de se comunicar."
+  },
+  {
+   "chave": "906689361c",
+   "voz": "narradora",
+   "texto": "Os meios de comunicação desapareceram.",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "Os meios de comunicação desapareceram."
+  },
+  {
+   "chave": "dd5b23911l",
+   "voz": "narradora",
+   "texto": "Vamos formar palavras com as sílabas do quadro:",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "Vamos formar palavras com as sílabas do quadro:"
+  },
+  {
+   "chave": "aae796e41y",
+   "voz": "narradora",
+   "texto": "Junte as sílabas pelos números e toque na palavra que forma.",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "Junte as sílabas pelos números e toque na palavra que forma."
+  },
+  {
+   "chave": "8e984613g",
+   "voz": "narradora",
+   "texto": "JORNAL",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "jornal"
+  },
+  {
+   "chave": "c430bd4fe",
+   "voz": "narradora",
+   "texto": "FALA",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "fala"
+  },
+  {
+   "chave": "c20f56d9e",
+   "voz": "narradora",
+   "texto": "TELA",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "tela"
+  },
+  {
+   "chave": "04a1203be",
+   "voz": "narradora",
+   "texto": "FONE",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "fone"
+  },
+  {
+   "chave": "7bc4f2d5u",
+   "voz": "narradora",
+   "texto": "1, 7, 4 e 10: ______",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "1, 7, 4 e 10: …"
+  },
+  {
+   "chave": "8d390547n",
+   "voz": "narradora",
+   "texto": "6 e 3: ______",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "6 e 3: …"
+  },
+  {
+   "chave": "95932880n",
+   "voz": "narradora",
+   "texto": "5 e 9: ______",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "5 e 9: …"
+  },
+  {
+   "chave": "19dc2186n",
+   "voz": "narradora",
+   "texto": "2 e 8: ______",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "2 e 8: …"
+  },
+  {
+   "chave": "abf5ad67r",
+   "voz": "narradora",
+   "texto": "Quadro de sílabas",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "Quadro de sílabas"
+  },
+  {
+   "chave": "43a63da7e",
+   "voz": "narradora",
+   "texto": "1 TE",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "1 te"
+  },
+  {
+   "chave": "6997b8cff",
+   "voz": "narradora",
+   "texto": "2 CAR",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "2 car"
+  },
+  {
+   "chave": "d68dcf6df",
+   "voz": "narradora",
+   "texto": "3 NAL",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "3 nal"
+  },
+  {
+   "chave": "2e24ba9ee",
+   "voz": "narradora",
+   "texto": "4 FO",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "4 fo"
+  },
+  {
+   "chave": "59f93ec1e",
+   "voz": "narradora",
+   "texto": "5 FA",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "5 fa"
+  },
+  {
+   "chave": "2c5bc40af",
+   "voz": "narradora",
+   "texto": "6 JOR",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "6 jor"
+  },
+  {
+   "chave": "c9c95cd5e",
+   "voz": "narradora",
+   "texto": "7 LE",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "7 le"
+  },
+  {
+   "chave": "0c707abee",
+   "voz": "narradora",
+   "texto": "8 TA",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "8 ta"
+  },
+  {
+   "chave": "14d3af6be",
+   "voz": "narradora",
+   "texto": "9 LA",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "9 la"
+  },
+  {
+   "chave": "5ab12801f",
+   "voz": "narradora",
+   "texto": "10 NE",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "10 ne"
+  },
+  {
+   "chave": "948c6ffb2l",
+   "voz": "narradora",
+   "texto": "Marque I para meio de comunicação individual e C para meio de comunicação coletivo:",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "Marque I para meio de comunicação individual e C para meio de comunicação coletivo:"
+  },
+  {
+   "chave": "8dfed629n",
+   "voz": "narradora",
+   "texto": "Carta pessoal",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "Carta pessoal"
+  },
+  {
+   "chave": "e0067be2v",
+   "voz": "narradora",
+   "texto": "Mensagem pelo celular",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "Mensagem pelo celular"
+  },
+  {
+   "chave": "2b633b041t",
+   "voz": "narradora",
+   "texto": "Marque um X na alternativa correta em cada item abaixo:",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "Marque um X na alternativa correta em cada item abaixo:"
+  },
+  {
+   "chave": "649ba7941h",
+   "voz": "narradora",
+   "texto": "Toque no significado certo de cada palavra.",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "Toque no significado certo de cada palavra."
+  },
+  {
+   "chave": "6888c3301t",
+   "voz": "narradora",
+   "texto": "Comunicação entre uma pessoa e outra ou poucas pessoas.",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "Comunicação entre uma pessoa e outra ou poucas pessoas."
+  },
+  {
+   "chave": "5e519f401d",
+   "voz": "narradora",
+   "texto": "Comunicação destinada a muitas pessoas.",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "Comunicação destinada a muitas pessoas."
+  },
+  {
+   "chave": "fb9db2c01c",
+   "voz": "narradora",
+   "texto": "Comunicação feita somente por jornais.",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "Comunicação feita somente por jornais."
+  },
+  {
+   "chave": "a2cb31b01j",
+   "voz": "narradora",
+   "texto": "Comunicação que pode alcançar muitas pessoas.",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "Comunicação que pode alcançar muitas pessoas."
+  },
+  {
+   "chave": "c3ec98e41d",
+   "voz": "narradora",
+   "texto": "Comunicação feita somente por telefone.",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "Comunicação feita somente por telefone."
+  },
+  {
+   "chave": "7896f70615",
+   "voz": "narradora",
+   "texto": "Comunicação entre duas pessoas.",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "Comunicação entre duas pessoas."
+  },
+  {
+   "chave": "eac7ceaf12",
+   "voz": "narradora",
+   "texto": "Individual significa: ______",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "Individual significa: …"
+  },
+  {
+   "chave": "e33a713110",
+   "voz": "narradora",
+   "texto": "Coletivo significa: ______",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "Coletivo significa: …"
+  },
+  {
+   "chave": "ac3aed4f1a",
+   "voz": "narradora",
+   "texto": "Complete com INDIVIDUAL ou COLETIVO:",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "Complete com individual ou coletivo:"
+  },
+  {
+   "chave": "a08e561ek",
+   "voz": "narradora",
+   "texto": "INDIVIDUAL",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "individual"
+  },
+  {
+   "chave": "e19300a8i",
+   "voz": "narradora",
+   "texto": "COLETIVO",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "coletivo"
+  },
+  {
+   "chave": "a5eb8bba1h",
+   "voz": "narradora",
+   "texto": "O telefone é um meio de comunicação ______.",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "O telefone é um meio de comunicação …"
+  },
+  {
+   "chave": "70d7a57e1i",
+   "voz": "narradora",
+   "texto": "A televisão é um meio de comunicação ______.",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "A televisão é um meio de comunicação …"
+  },
+  {
+   "chave": "c8238fa51e",
+   "voz": "narradora",
+   "texto": "O rádio é um meio de comunicação ______.",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "O rádio é um meio de comunicação …"
+  },
+  {
+   "chave": "0ab21ac61o",
+   "voz": "narradora",
+   "texto": "Uma carta pessoal é um meio de comunicação ______.",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "Uma carta pessoal é um meio de comunicação …"
+  },
+  {
+   "chave": "9b879a4d1r",
+   "voz": "narradora",
+   "texto": "Qual o meio de comunicação você mais usa diariamente?",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "Qual o meio de comunicação você mais usa diariamente?"
+  },
+  {
+   "chave": "ac8b9eb31l",
+   "voz": "narradora",
+   "texto": "Toque no meio de comunicação que você mais usa.",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "Toque no meio de comunicação que você mais usa."
+  },
+  {
+   "chave": "dfc821a3j",
+   "voz": "narradora",
+   "texto": "televisão",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "televisão"
+  },
+  {
+   "chave": "a175c299h",
+   "voz": "narradora",
+   "texto": "celular",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "celular"
+  },
+  {
+   "chave": "b37b0a93i",
+   "voz": "narradora",
+   "texto": "telefone",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "telefone"
+  },
+  {
+   "chave": "271e250cf",
+   "voz": "narradora",
+   "texto": "rádio",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "rádio"
+  },
+  {
+   "chave": "051b90fbk",
+   "voz": "narradora",
+   "texto": "computador",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "computador"
+  },
+  {
+   "chave": "26d78d93g",
+   "voz": "narradora",
+   "texto": "jornal",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "jornal"
+  },
+  {
+   "chave": "4131b413f",
+   "voz": "narradora",
+   "texto": "livro",
+   "pacotes": [
+    "prova-geografia-3bim",
+    "portugues-p5"
+   ],
+   "fala": "livro"
+  },
+  {
+   "chave": "fcf34fe2f",
+   "voz": "narradora",
+   "texto": "carta",
+   "pacotes": [
+    "prova-geografia-3bim"
+   ],
+   "fala": "carta"
   },
   {
    "chave": "3909f17932",
@@ -13746,15 +14484,6 @@
    "fala": "barco"
   },
   {
-   "chave": "4131b413f",
-   "voz": "narradora",
-   "texto": "livro",
-   "pacotes": [
-    "portugues-p5"
-   ],
-   "fala": "livro"
-  },
-  {
    "chave": "d6c9239de",
    "voz": "narradora",
    "texto": "bola",
@@ -21058,24 +21787,6 @@
    "fala": "Videochamada"
   },
   {
-   "chave": "7cb01d03j",
-   "voz": "narradora",
-   "texto": "Televisão",
-   "pacotes": [
-    "geografia-g2"
-   ],
-   "fala": "Televisão"
-  },
-  {
-   "chave": "3701e773g",
-   "voz": "narradora",
-   "texto": "Jornal",
-   "pacotes": [
-    "geografia-g2"
-   ],
-   "fala": "Jornal"
-  },
-  {
    "chave": "28bb00b81i",
    "voz": "narradora",
    "texto": "O rádio transmite informações por meio de...",
@@ -24511,6 +25222,105 @@
   {
    "chave": "b246ee2816",
    "voz": "npc-prof-celia",
+   "texto": "Agora vale um prêmio comum!",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Agora vale um prêmio comum!"
+  },
+  {
+   "chave": "a4420517k",
+   "voz": "npc-prof-samylly",
+   "texto": "Oi!",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Oi!"
+  },
+  {
+   "chave": "9a30e27d12",
+   "voz": "npc-prof-samylly",
+   "texto": "Eu cuido desta prova.",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Eu cuido desta prova."
+  },
+  {
+   "chave": "a70ce44b1b",
+   "voz": "npc-prof-samylly",
+   "texto": "Vamos fazer a prova com calma?",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Vamos fazer a prova com calma?"
+  },
+  {
+   "chave": "82d27fabu",
+   "voz": "npc-prof-samylly",
+   "texto": "Prêmio ganho!",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Prêmio ganho!"
+  },
+  {
+   "chave": "6c30eb90v",
+   "voz": "npc-prof-samylly",
+   "texto": "Vamos treinar?",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Vamos treinar?"
+  },
+  {
+   "chave": "c0bcd27br",
+   "voz": "npc-prof-samylly",
+   "texto": "Muito bem!",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Muito bem!"
+  },
+  {
+   "chave": "41104988w",
+   "voz": "npc-prof-samylly",
+   "texto": "Tudo com calma!",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Tudo com calma!"
+  },
+  {
+   "chave": "68c937c01b",
+   "voz": "npc-prof-samylly",
+   "texto": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Tudo bem, volte quando quiser!"
+  },
+  {
+   "chave": "e95774da1b",
+   "voz": "npc-prof-samylly",
+   "texto": "Agora vale um prêmio lendário!",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Agora vale um prêmio lendário!"
+  },
+  {
+   "chave": "58d66a1617",
+   "voz": "npc-prof-samylly",
+   "texto": "Agora vale um prêmio raro!",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Agora vale um prêmio raro!"
+  },
+  {
+   "chave": "de5830cb18",
+   "voz": "npc-prof-samylly",
    "texto": "Agora vale um prêmio comum!",
    "pacotes": [
     "interior-escola"
