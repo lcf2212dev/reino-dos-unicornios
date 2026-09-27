@@ -18,7 +18,7 @@
       comeco: ['Meu irmãozinho Tico sumiu!', 'Ele está atrás de uma pedra.', 'Toque nas pedras grandes!'],
       procurando: ['Procure nas pedras grandes!'],
       errou: ['Aqui não tem ninguém!', 'Tente outra pedra grande!'],
-      achou: ['Oba! Você achou o Tico! 🎉', 'Você é ótima nisso!'],
+      achou: ['Oba! Você achou o Tico! 🎉', 'Você é {ótima|ótimo} nisso!'],
       denovo: ['O Tico se escondeu de novo!'],
       pedra: ['Uma pedra lunar grandona.'],
     },

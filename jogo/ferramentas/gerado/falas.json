@@ -30464,6 +30464,15 @@
    "fala": "Olá, minha querida!"
   },
   {
+   "chave": "41c4ac67u",
+   "voz": "npc-lua-vovo",
+   "texto": "Olá, meu querido!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Olá, meu querido!"
+  },
+  {
    "chave": "7f241ebaz",
    "voz": "npc-lua-vovo",
    "texto": "Eu sou a Vovó Cratera.",
@@ -36980,6 +36989,15 @@
    "fala": "Você é ótima nisso!"
   },
   {
+   "chave": "08d49686w",
+   "voz": "npc-lua-pipo",
+   "texto": "Você é ótimo nisso!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Você é ótimo nisso!"
+  },
+  {
    "chave": "70f4c70014",
    "voz": "npc-lua-pipo",
    "texto": "O Tico se escondeu de novo!",
@@ -37779,6 +37797,15 @@
     "geral"
    ],
    "fala": "Chegamos na Lua!"
+  },
+  {
+   "chave": "2c8fc6a3s",
+   "voz": "claude",
+   "texto": "Três, dois, um... já!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Três, dois, um... já!"
   },
   {
    "chave": "6a4a021b1r",

@@ -97,7 +97,7 @@
       return [n === 1 ? 'Falta 1 resposta certa!' : 'Faltam ' + n + ' respostas certas!',
         'Acerte nas salas e no treino.', 'Nas provas e surpresas também!'];
     },
-    chegou: function (nome) { return 'Chegamos na ' + nome + '!'; },
+    chegou: function (nome, artigo) { return 'Chegamos ' + (artigo || 'na') + ' ' + nome + '!'; },
     carimbo: 'Carimbo novo no passaporte!',
     estrelas: function (n) { return n === 1 ? 'Você ganhou 1 estrela!' : 'Você ganhou ' + n + ' estrelas!'; },
     voltar: 'Voltar para o Reino?',
@@ -107,7 +107,9 @@
     var F = V.frases, t = [].concat(F.cheio, F.carimbo, F.voltar, F.aviso);
     for (var n = 1; n <= max(); n++) t = t.concat(F.faltam(n));
     for (var e = 1; e <= cfg().estrelasPorVoo; e++) t.push(F.estrelas(e));
-    planetas.forEach(function (p) { t.push(F.chegou(p.nome)); });
+    planetas.forEach(function (p) { t.push(F.chegou(p.nome, p.artigo)); });
+    // o que o voo fala (atividades/voo.js carrega depois; falas() só é chamada depois de tudo carregado)
+    if (R.Voo && R.Voo.falas) R.Voo.falas().forEach(function (f) { t.push(f.texto); });
     var vistos = {};
     return t.filter(function (x) { if (vistos[x]) return false; vistos[x] = true; return true; })
       .map(function (x) { return { texto: x, voz: 'claude' }; });
