@@ -1,0 +1,107 @@
+/* Abertura (tela de início, espera e boas-vindas): a cena em canvas na tela inteira (js/ui/abertura.js),
+   o título "Reino dos Unicórnios" com as letras caindo e o brilho passando, o botão que pulsa e o zoom
+   no castelo ao entrar. Sem animação: tudo parado no lugar final. */
+.tela-inicio { background: #2a1b52; align-items: flex-start; overflow-x: hidden; }
+.tela-inicio .inicio {
+  position: relative;
+  width: 100%; min-height: 100%;
+  justify-content: space-between; gap: 14px;
+  padding: 2vh 0 1vh;
+}
+.abertura { position: static; width: 100%; }
+.abertura-cena {
+  position: fixed; left: 0; top: 0; z-index: -1;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+.abertura-veu {   /* cantos mais escuros e um chão mais fundo atrás do botão: o texto lê bem */
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 70% at 50% 45%, transparent 60%, rgba(20, 10, 40, 0.45) 100%),
+    linear-gradient(180deg, transparent 72%, rgba(20, 12, 40, 0.35) 100%);
+}
+.abertura-flash {
+  position: fixed; inset: 0; z-index: 5; pointer-events: none; opacity: 0;
+  background: radial-gradient(circle at 50% 50%, #fffbe8 0%, #fff3c4 45%, #ffd6ec 100%);
+}
+
+/* título: duas linhas em letra pixel, contorno escuro e o degradê rosa-dourado por cima de cada letra */
+.titulo-abertura {
+  display: flex; flex-direction: column; align-items: center; gap: 0.35em;
+  margin: 0; padding: 8px 4px 0;
+  font-family: var(--fonte-pixel); font-weight: 400; letter-spacing: 0; line-height: 1.15;
+  user-select: none;
+}
+.titulo-linha { display: block; white-space: nowrap; }
+.titulo-linha-1 { font-size: clamp(15px, 4.6vw, 30px); color: #fff3c4; }
+.titulo-linha-2 { font-size: clamp(24px, 8.4vw, 60px); color: #ff6fae; }
+.titulo-espaco { display: inline-block; width: 0.45em; }
+/* linha de cima é pequena (15-30px): contorno fino, sombra curta e cor lisa (sem a camada do degradê) */
+.titulo-linha-1 .titulo-letra { --o: 1px; text-shadow: 1px 0 0 var(--borda), -1px 0 0 var(--borda), 0 1px 0 var(--borda), 0 -1px 0 var(--borda), 1px 1px 0 var(--borda), -1px 1px 0 var(--borda), 1px -1px 0 var(--borda), -1px -1px 0 var(--borda), 0 3px 0 var(--borda), 1px 3px 0 var(--borda), -1px 3px 0 var(--borda); }
+.titulo-letra {
+  position: relative; display: inline-block;
+  --o: max(2px, 0.08em);
+  text-shadow:
+    var(--o) 0 0 var(--borda), calc(-1 * var(--o)) 0 0 var(--borda), 0 var(--o) 0 var(--borda), 0 calc(-1 * var(--o)) 0 var(--borda),
+    var(--o) var(--o) 0 var(--borda), calc(-1 * var(--o)) var(--o) 0 var(--borda),
+    var(--o) calc(-1 * var(--o)) 0 var(--borda), calc(-1 * var(--o)) calc(-1 * var(--o)) 0 var(--borda),
+    0 calc(2.4 * var(--o)) 0 var(--borda), var(--o) calc(2.4 * var(--o)) 0 var(--borda), calc(-1 * var(--o)) calc(2.4 * var(--o)) 0 var(--borda);
+  animation: letra-cai 0.6s cubic-bezier(0.3, 1.6, 0.55, 1) var(--atraso, 0ms) both,
+    letra-brilha 3.8s ease-in-out var(--brilho, 1600ms) infinite;
+}
+.titulo-linha-2 .titulo-letra::after {
+  content: attr(data-l);
+  position: absolute; left: 0; top: 0;
+  background: linear-gradient(180deg, #fff6c8 0%, #ffd0e6 30%, #ff8fc4 55%, #e24c9a 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  text-shadow: none;
+}
+@keyframes letra-cai {
+  0% { opacity: 0; transform: translateY(-1.4em) scale(0.4); }
+  60% { opacity: 1; }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes letra-brilha {
+  0%, 16%, 100% { filter: none; }
+  6% { filter: brightness(1.7) drop-shadow(0 0 4px #fff6c8); }
+}
+
+/* embaixo: o botão de entrar (pulsa com um halo, sem mudar de tamanho) e o resto */
+.inicio-baixo { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 100%; }
+.inicio-botoes { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.tela-inicio .inicio-sub {
+  margin: 0; padding: 6px 14px;
+  background: rgba(255, 248, 238, 0.92); color: var(--tinta);
+  border: 3px solid var(--borda); border-radius: 14px;
+}
+.tela-inicio .btn-comecar { font-size: 18px; padding: 16px 28px; }
+.btn-pulsar { animation: halo-pulsa 1.8s ease-out infinite; }
+@keyframes halo-pulsa {
+  0% { box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.65), var(--sombra-botao), 0 0 0 0 rgba(255, 224, 102, 0.85); }
+  70%, 100% { box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.65), var(--sombra-botao), 0 0 0 16px rgba(255, 224, 102, 0); }
+}
+.btn-trocar-jogador { font-size: 0.85em; background: rgba(255, 248, 238, 0.92); }
+
+/* entrar: zoom no castelo, a tela clareia e o texto some */
+.abertura.entrando .abertura-cena { transform: scale(2.6); transition: transform var(--entrar-ms, 600ms) cubic-bezier(0.45, 0, 0.8, 0.5); }
+.abertura.entrando .abertura-flash { opacity: 1; transition: opacity var(--entrar-ms, 600ms) ease-in; }
+.abertura-entrando .titulo-abertura, .abertura-entrando .inicio-baixo { opacity: 0; transition: opacity 0.25s ease-out; }
+
+/* celular deitado: título e botão menores para a cena aparecer */
+@media (max-height: 500px) {
+  .titulo-linha-1 { font-size: clamp(12px, 3.4vh, 20px); }
+  .titulo-linha-2 { font-size: clamp(20px, 8.5vh, 40px); }
+  .tela-inicio .btn-comecar { min-height: 50px; padding: 10px 22px; font-size: 16px; }
+  .tela-inicio .inicio { gap: 8px; }
+  .inicio-baixo { gap: 8px; }
+  /* celular deitado: sem a caixa "Revisão de…" (cobria a Mariana) e o botão mais embaixo (a porta do castelo aparece) */
+  .tela-inicio .inicio-materias { display: none; }
+  .tela-inicio .inicio { padding-bottom: 0; }
+}
+
+/* sem animação: letras e botão parados no lugar final */
+.abertura-parada .titulo-letra, .tela-inicio:has(.abertura-parada) .btn-pulsar,
+body.sem-animacao .titulo-letra, body.sem-animacao .btn-pulsar { animation: none; }
+@media (prefers-reduced-motion: reduce) {
+  .titulo-letra, .btn-pulsar { animation: none; }
+}
