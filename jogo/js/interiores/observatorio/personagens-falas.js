@@ -56,3 +56,51 @@ Reino.falasDoPredio('observatorio', { npcs: {
     depois: ['Os anéis são de gelo e pedra.', 'Eles brilham com a luz do Sol!'],
   },
 } });
+// ETs de Júpiter, Vênus e Netuno (3ª versão da viagem)
+Reino.falasDoPredio('observatorio', { npcs: {
+  'jupiter-tinta': {
+    oi: ['Oi! Eu me chamo Tinta.', 'Eu escrevo cartas nas nuvens.'],
+    nova: ['Você me ajuda com as palavras?'],
+    depois: ['Minha carta ficou linda!', 'Obrigada, {amiga|amigo}!'],
+  },
+  'jupiter-bolha': {
+    oi: ['Oi! Eu sou o Bolha.', 'Eu pulo de nuvem em nuvem!'],
+    nova: ['Vamos pular nas nuvens?'],
+    depois: ['Júpiter é fofo como algodão!', 'Volte para pular comigo!'],
+  },
+  'jupiter-vovo': {
+    oi: ['Olá! Sou o Vovô Tempestade.', 'Eu conheço todos os ventos.'],
+    nova: ['Vamos ouvir uma curiosidade?'],
+    depois: ['Júpiter é o maior planeta.', 'Ele é gigante de verdade!'],
+  },
+  'venus-mapi': {
+    oi: ['Oi! Eu me chamo Mapi.', 'Eu adoro mapas e viagens!', 'Mas hoje eu me perdi!'],
+    nova: ['Você me ajuda com o mapa?'],
+    depois: ['Agora eu sei o caminho!', 'Obrigada, {amiga|amigo}!'],
+  },
+  'venus-quentinho': {
+    oi: ['Oi! Eu sou o Quentinho.', 'Aqui em Vênus é bem quente!'],
+    nova: ['Vamos brincar no vapor?'],
+    depois: ['Que calorzinho gostoso!', 'Volte para brincar de novo!'],
+  },
+  'venus-vovo': {
+    oi: ['{Olá, minha querida!|Olá, meu querido!}', 'Eu sou a Vovó Nuvem.', 'Moro no meio das nuvens.'],
+    nova: ['Vamos ouvir uma curiosidade?'],
+    depois: ['Vênus é o planeta mais quente.', 'Mais quente até que Mercúrio!'],
+  },
+  'netuno-gota': {
+    oi: ['Oi! Eu me chamo Gota.', 'Eu sou cientista, sabia?'],
+    nova: ['Vamos fazer uma experiência?'],
+    depois: ['A ciência é muito divertida!', 'Obrigada, {amiga|amigo}!'],
+  },
+  'netuno-memo': {
+    oi: ['Oi! Eu sou o Memo.', 'Eu guardo histórias antigas.'],
+    nova: ['Vamos lembrar da história?'],
+    depois: ['Você lembra muita coisa!', 'Obrigado, {amiga|amigo}!'],
+  },
+  'netuno-vovo': {
+    oi: ['{Olá, minha querida!|Olá, meu querido!}', 'Eu sou a Vovó Ventania.', 'Aqui venta muito, muito!'],
+    nova: ['Vamos ouvir uma curiosidade?'],
+    depois: ['Netuno é bem azulzinho.', 'E fica longe do Sol!'],
+  },
+} });

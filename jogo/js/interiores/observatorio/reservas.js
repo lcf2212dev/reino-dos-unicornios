@@ -56,3 +56,57 @@ Reino.reservarPersonagem({ id: 'saturno-vovo', nome: 'Vovó Anel', genero: 'f', 
   perfil: { voz: 'en-US-EmmaMultilingualNeural', velocidade: '-10%', tom: '-8Hz' },
   predio: 'planeta-saturno', x: 5, y: 12, acao: { tipo: 'saturno-brincadeira', b: 'curiosidade' },
 });
+
+// jupiter-tinta: Tinta, a ET que escreve cartas e perdeu as letras (desafio de Português)
+Reino.reservarPersonagem({ id: 'jupiter-tinta', nome: 'Tinta', genero: 'f', idade: 'crianca',
+  perfil: { voz: 'pt-BR-FranciscaNeural', velocidade: '+6%', tom: '+30Hz' },
+  predio: 'planeta-jupiter', x: 8, y: 7, acao: { tipo: 'viagem-desafio', materia: 'portugues' },
+});
+
+// jupiter-bolha: Bolha, o ET que pula de nuvem em nuvem
+Reino.reservarPersonagem({ id: 'jupiter-bolha', nome: 'Bolha', genero: 'm', idade: 'crianca',
+  perfil: { voz: 'pt-BR-AntonioNeural', velocidade: '+12%', tom: '+30Hz' },
+  predio: 'planeta-jupiter', x: 16, y: 9, acao: { tipo: 'jupiter-brincadeira', b: 'bolha' },
+});
+
+// jupiter-vovo: Vovô Tempestade, que conta curiosidades de Júpiter
+Reino.reservarPersonagem({ id: 'jupiter-vovo', nome: 'Vovô Tempestade', genero: 'm', idade: 'idoso',
+  perfil: { voz: 'en-AU-WilliamMultilingualNeural', velocidade: '-18%', tom: '-22Hz' },
+  predio: 'planeta-jupiter', x: 5, y: 12, acao: { tipo: 'jupiter-brincadeira', b: 'curiosidade' },
+});
+
+// venus-mapi: Mapi, a ET que se perdeu e precisa do mapa (desafio de Geografia)
+Reino.reservarPersonagem({ id: 'venus-mapi', nome: 'Mapi', genero: 'f', idade: 'crianca',
+  perfil: { voz: 'pt-BR-ThalitaMultilingualNeural', velocidade: '+4%', tom: '+14Hz' },
+  predio: 'planeta-venus', x: 8, y: 7, acao: { tipo: 'viagem-desafio', materia: 'geografia' },
+});
+
+// venus-quentinho: Quentinho, o ET que brinca no calor de Vênus
+Reino.reservarPersonagem({ id: 'venus-quentinho', nome: 'Quentinho', genero: 'm', idade: 'crianca',
+  perfil: { voz: 'en-US-AndrewMultilingualNeural', velocidade: '+4%', tom: '+24Hz' },
+  predio: 'planeta-venus', x: 16, y: 9, acao: { tipo: 'venus-brincadeira', b: 'quentinho' },
+});
+
+// venus-vovo: Vovó Nuvem, que conta curiosidades de Vênus
+Reino.reservarPersonagem({ id: 'venus-vovo', nome: 'Vovó Nuvem', genero: 'f', idade: 'idoso',
+  perfil: { voz: 'fr-FR-VivienneMultilingualNeural', velocidade: '-14%', tom: '-10Hz' },
+  predio: 'planeta-venus', x: 5, y: 12, acao: { tipo: 'venus-brincadeira', b: 'curiosidade' },
+});
+
+// netuno-gota: Gota, a ET cientista (desafio de Ciências)
+Reino.reservarPersonagem({ id: 'netuno-gota', nome: 'Gota', genero: 'f', idade: 'crianca',
+  perfil: { voz: 'en-US-EmmaMultilingualNeural', velocidade: '+6%', tom: '+24Hz' },
+  predio: 'planeta-netuno', x: 8, y: 7, acao: { tipo: 'viagem-desafio', materia: 'ciencias' },
+});
+
+// netuno-memo: Memo, o ET que guarda histórias antigas (desafio de História)
+Reino.reservarPersonagem({ id: 'netuno-memo', nome: 'Memo', genero: 'm', idade: 'crianca',
+  perfil: { voz: 'it-IT-GiuseppeMultilingualNeural', velocidade: '+4%', tom: '+24Hz' },
+  predio: 'planeta-netuno', x: 16, y: 9, acao: { tipo: 'viagem-desafio', materia: 'historia' },
+});
+
+// netuno-vovo: Vovó Ventania, que conta curiosidades de Netuno
+Reino.reservarPersonagem({ id: 'netuno-vovo', nome: 'Vovó Ventania', genero: 'f', idade: 'idoso',
+  perfil: { voz: 'pt-BR-ThalitaMultilingualNeural', velocidade: '-14%', tom: '-14Hz' },
+  predio: 'planeta-netuno', x: 5, y: 12, acao: { tipo: 'netuno-brincadeira', b: 'curiosidade' },
+});

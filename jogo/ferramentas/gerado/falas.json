@@ -358,6 +358,51 @@
    "velocidade": "-10%",
    "tom": "-8Hz"
   },
+  "npc-jupiter-tinta": {
+   "voz": "pt-BR-FranciscaNeural",
+   "velocidade": "+6%",
+   "tom": "+30Hz"
+  },
+  "npc-jupiter-bolha": {
+   "voz": "pt-BR-AntonioNeural",
+   "velocidade": "+12%",
+   "tom": "+30Hz"
+  },
+  "npc-jupiter-vovo": {
+   "voz": "en-AU-WilliamMultilingualNeural",
+   "velocidade": "-18%",
+   "tom": "-22Hz"
+  },
+  "npc-venus-mapi": {
+   "voz": "pt-BR-ThalitaMultilingualNeural",
+   "velocidade": "+4%",
+   "tom": "+14Hz"
+  },
+  "npc-venus-quentinho": {
+   "voz": "en-US-AndrewMultilingualNeural",
+   "velocidade": "+4%",
+   "tom": "+24Hz"
+  },
+  "npc-venus-vovo": {
+   "voz": "fr-FR-VivienneMultilingualNeural",
+   "velocidade": "-14%",
+   "tom": "-10Hz"
+  },
+  "npc-netuno-gota": {
+   "voz": "en-US-EmmaMultilingualNeural",
+   "velocidade": "+6%",
+   "tom": "+24Hz"
+  },
+  "npc-netuno-memo": {
+   "voz": "it-IT-GiuseppeMultilingualNeural",
+   "velocidade": "+4%",
+   "tom": "+24Hz"
+  },
+  "npc-netuno-vovo": {
+   "voz": "pt-BR-ThalitaMultilingualNeural",
+   "velocidade": "-14%",
+   "tom": "-14Hz"
+  },
   "npc-nasa-lia": {
    "voz": "en-US-EmmaMultilingualNeural",
    "velocidade": "+4%",
@@ -31125,6 +31170,573 @@
    "fala": "Ele desliza pelo anel."
   },
   {
+   "chave": "c497646al",
+   "voz": "npc-jupiter-tinta",
+   "texto": "Oi!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Oi!"
+  },
+  {
+   "chave": "dd7d511b10",
+   "voz": "npc-jupiter-tinta",
+   "texto": "Eu me chamo Tinta.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eu me chamo Tinta."
+  },
+  {
+   "chave": "68e04f911b",
+   "voz": "npc-jupiter-tinta",
+   "texto": "Eu escrevo cartas nas nuvens.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eu escrevo cartas nas nuvens."
+  },
+  {
+   "chave": "0fbaf00a1c",
+   "voz": "npc-jupiter-tinta",
+   "texto": "Você me ajuda com as palavras?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Você me ajuda com as palavras?"
+  },
+  {
+   "chave": "b7e83b6016",
+   "voz": "npc-jupiter-tinta",
+   "texto": "Minha carta ficou linda!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Minha carta ficou linda!"
+  },
+  {
+   "chave": "2a75ced4y",
+   "voz": "npc-jupiter-tinta",
+   "texto": "Obrigada, amiga!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Obrigada, amiga!"
+  },
+  {
+   "chave": "16531d16y",
+   "voz": "npc-jupiter-tinta",
+   "texto": "Obrigada, amigo!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Obrigada, amigo!"
+  },
+  {
+   "chave": "50caf3ecl",
+   "voz": "npc-jupiter-bolha",
+   "texto": "Oi!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Oi!"
+  },
+  {
+   "chave": "09b76465x",
+   "voz": "npc-jupiter-bolha",
+   "texto": "Eu sou o Bolha.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eu sou o Bolha."
+  },
+  {
+   "chave": "52d31c3918",
+   "voz": "npc-jupiter-bolha",
+   "texto": "Eu pulo de nuvem em nuvem!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eu pulo de nuvem em nuvem!"
+  },
+  {
+   "chave": "2badaae915",
+   "voz": "npc-jupiter-bolha",
+   "texto": "Vamos pular nas nuvens?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos pular nas nuvens?"
+  },
+  {
+   "chave": "f2b8d4a21a",
+   "voz": "npc-jupiter-bolha",
+   "texto": "Júpiter é fofo como algodão!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Júpiter é fofo como algodão!"
+  },
+  {
+   "chave": "8417922216",
+   "voz": "npc-jupiter-bolha",
+   "texto": "Volte para pular comigo!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Volte para pular comigo!"
+  },
+  {
+   "chave": "3a0f3da0l",
+   "voz": "npc-jupiter-vovo",
+   "texto": "Olá!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Olá!"
+  },
+  {
+   "chave": "5fce580013",
+   "voz": "npc-jupiter-vovo",
+   "texto": "Sou o Vovô Tempestade.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Sou o Vovô Tempestade."
+  },
+  {
+   "chave": "433f4e8618",
+   "voz": "npc-jupiter-vovo",
+   "texto": "Eu conheço todos os ventos.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eu conheço todos os ventos."
+  },
+  {
+   "chave": "29bae5ac19",
+   "voz": "npc-jupiter-vovo",
+   "texto": "Vamos ouvir uma curiosidade?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos ouvir uma curiosidade?"
+  },
+  {
+   "chave": "ad4e0d1417",
+   "voz": "npc-jupiter-vovo",
+   "texto": "Júpiter é o maior planeta.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Júpiter é o maior planeta."
+  },
+  {
+   "chave": "ac770c4816",
+   "voz": "npc-jupiter-vovo",
+   "texto": "Ele é gigante de verdade!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Ele é gigante de verdade!"
+  },
+  {
+   "chave": "9c1c2389t",
+   "voz": "narradora",
+   "texto": "Um globo do espaço!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Um globo do espaço!"
+  },
+  {
+   "chave": "68302ddfu",
+   "voz": "narradora",
+   "texto": "Uma pedra do espaço!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Uma pedra do espaço!"
+  },
+  {
+   "chave": "b51e53d1i",
+   "voz": "npc-venus-mapi",
+   "texto": "Oi!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Oi!"
+  },
+  {
+   "chave": "f83bf7b1w",
+   "voz": "npc-venus-mapi",
+   "texto": "Eu me chamo Mapi.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eu me chamo Mapi."
+  },
+  {
+   "chave": "a122aa5614",
+   "voz": "npc-venus-mapi",
+   "texto": "Eu adoro mapas e viagens!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eu adoro mapas e viagens!"
+  },
+  {
+   "chave": "c59ac35210",
+   "voz": "npc-venus-mapi",
+   "texto": "Mas hoje eu me perdi!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Mas hoje eu me perdi!"
+  },
+  {
+   "chave": "695b5a6514",
+   "voz": "npc-venus-mapi",
+   "texto": "Você me ajuda com o mapa?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Você me ajuda com o mapa?"
+  },
+  {
+   "chave": "9a89259212",
+   "voz": "npc-venus-mapi",
+   "texto": "Agora eu sei o caminho!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Agora eu sei o caminho!"
+  },
+  {
+   "chave": "7b520605v",
+   "voz": "npc-venus-mapi",
+   "texto": "Obrigada, amiga!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Obrigada, amiga!"
+  },
+  {
+   "chave": "f76ace1fv",
+   "voz": "npc-venus-mapi",
+   "texto": "Obrigada, amigo!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Obrigada, amigo!"
+  },
+  {
+   "chave": "57abb693n",
+   "voz": "npc-venus-quentinho",
+   "texto": "Oi!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Oi!"
+  },
+  {
+   "chave": "0846512713",
+   "voz": "npc-venus-quentinho",
+   "texto": "Eu sou o Quentinho.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eu sou o Quentinho."
+  },
+  {
+   "chave": "82b46eda1b",
+   "voz": "npc-venus-quentinho",
+   "texto": "Aqui em Vênus é bem quente!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Aqui em Vênus é bem quente!"
+  },
+  {
+   "chave": "ce0803cf17",
+   "voz": "npc-venus-quentinho",
+   "texto": "Vamos brincar no vapor?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos brincar no vapor?"
+  },
+  {
+   "chave": "3c7bc32717",
+   "voz": "npc-venus-quentinho",
+   "texto": "Que calorzinho gostoso!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Que calorzinho gostoso!"
+  },
+  {
+   "chave": "9bb4e9051b",
+   "voz": "npc-venus-quentinho",
+   "texto": "Volte para brincar de novo!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Volte para brincar de novo!"
+  },
+  {
+   "chave": "4baf0c2ey",
+   "voz": "npc-venus-vovo",
+   "texto": "Olá, minha querida!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Olá, minha querida!"
+  },
+  {
+   "chave": "933a5aaaw",
+   "voz": "npc-venus-vovo",
+   "texto": "Olá, meu querido!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Olá, meu querido!"
+  },
+  {
+   "chave": "df26d0a2z",
+   "voz": "npc-venus-vovo",
+   "texto": "Eu sou a Vovó Nuvem.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eu sou a Vovó Nuvem."
+  },
+  {
+   "chave": "766ee56613",
+   "voz": "npc-venus-vovo",
+   "texto": "Moro no meio das nuvens.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Moro no meio das nuvens."
+  },
+  {
+   "chave": "30967e5817",
+   "voz": "npc-venus-vovo",
+   "texto": "Vamos ouvir uma curiosidade?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos ouvir uma curiosidade?"
+  },
+  {
+   "chave": "68498d9c19",
+   "voz": "npc-venus-vovo",
+   "texto": "Vênus é o planeta mais quente.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vênus é o planeta mais quente."
+  },
+  {
+   "chave": "f9d8c53a18",
+   "voz": "npc-venus-vovo",
+   "texto": "Mais quente até que Mercúrio!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Mais quente até que Mercúrio!"
+  },
+  {
+   "chave": "3e9d36e7j",
+   "voz": "npc-netuno-gota",
+   "texto": "Oi!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Oi!"
+  },
+  {
+   "chave": "1a4d00cfx",
+   "voz": "npc-netuno-gota",
+   "texto": "Eu me chamo Gota.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eu me chamo Gota."
+  },
+  {
+   "chave": "aa93764014",
+   "voz": "npc-netuno-gota",
+   "texto": "Eu sou cientista, sabia?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eu sou cientista, sabia?"
+  },
+  {
+   "chave": "ba7661e818",
+   "voz": "npc-netuno-gota",
+   "texto": "Vamos fazer uma experiência?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos fazer uma experiência?"
+  },
+  {
+   "chave": "a5dd20d218",
+   "voz": "npc-netuno-gota",
+   "texto": "A ciência é muito divertida!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "A ciência é muito divertida!"
+  },
+  {
+   "chave": "c67ca04fw",
+   "voz": "npc-netuno-gota",
+   "texto": "Obrigada, amiga!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Obrigada, amiga!"
+  },
+  {
+   "chave": "4a63d835w",
+   "voz": "npc-netuno-gota",
+   "texto": "Obrigada, amigo!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Obrigada, amigo!"
+  },
+  {
+   "chave": "11e6573cj",
+   "voz": "npc-netuno-memo",
+   "texto": "Oi!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Oi!"
+  },
+  {
+   "chave": "92e00b7fu",
+   "voz": "npc-netuno-memo",
+   "texto": "Eu sou o Memo.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eu sou o Memo."
+  },
+  {
+   "chave": "84a5078818",
+   "voz": "npc-netuno-memo",
+   "texto": "Eu guardo histórias antigas.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eu guardo histórias antigas."
+  },
+  {
+   "chave": "43aabeab16",
+   "voz": "npc-netuno-memo",
+   "texto": "Vamos lembrar da história?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos lembrar da história?"
+  },
+  {
+   "chave": "09bc3baa14",
+   "voz": "npc-netuno-memo",
+   "texto": "Você lembra muita coisa!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Você lembra muita coisa!"
+  },
+  {
+   "chave": "3a5416a4w",
+   "voz": "npc-netuno-memo",
+   "texto": "Obrigado, amiga!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Obrigado, amiga!"
+  },
+  {
+   "chave": "263164e6w",
+   "voz": "npc-netuno-memo",
+   "texto": "Obrigado, amigo!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Obrigado, amigo!"
+  },
+  {
+   "chave": "e1139c90z",
+   "voz": "npc-netuno-vovo",
+   "texto": "Olá, minha querida!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Olá, minha querida!"
+  },
+  {
+   "chave": "b999760cx",
+   "voz": "npc-netuno-vovo",
+   "texto": "Olá, meu querido!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Olá, meu querido!"
+  },
+  {
+   "chave": "db53c55913",
+   "voz": "npc-netuno-vovo",
+   "texto": "Eu sou a Vovó Ventania.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eu sou a Vovó Ventania."
+  },
+  {
+   "chave": "ccfb0aca14",
+   "voz": "npc-netuno-vovo",
+   "texto": "Aqui venta muito, muito!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Aqui venta muito, muito!"
+  },
+  {
+   "chave": "00f6275e18",
+   "voz": "npc-netuno-vovo",
+   "texto": "Vamos ouvir uma curiosidade?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos ouvir uma curiosidade?"
+  },
+  {
+   "chave": "db459b7313",
+   "voz": "npc-netuno-vovo",
+   "texto": "Netuno é bem azulzinho.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Netuno é bem azulzinho."
+  },
+  {
+   "chave": "3389204410",
+   "voz": "npc-netuno-vovo",
+   "texto": "E fica longe do Sol!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "E fica longe do Sol!"
+  },
+  {
    "chave": "dc354bec18",
    "voz": "npc-palavrinha",
    "texto": "Oi, eu sou a Dona Palavrinha!",
@@ -39025,6 +39637,60 @@
     "geral"
    ],
    "fala": "Visite Marte primeiro!"
+  },
+  {
+   "chave": "bd325d65r",
+   "voz": "claude",
+   "texto": "Chegamos em Júpiter!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Chegamos em Júpiter!"
+  },
+  {
+   "chave": "5bbd183bv",
+   "voz": "claude",
+   "texto": "Visite Saturno primeiro!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Visite Saturno primeiro!"
+  },
+  {
+   "chave": "8f99eb3dp",
+   "voz": "claude",
+   "texto": "Chegamos em Vênus!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Chegamos em Vênus!"
+  },
+  {
+   "chave": "baeefff1v",
+   "voz": "claude",
+   "texto": "Visite Júpiter primeiro!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Visite Júpiter primeiro!"
+  },
+  {
+   "chave": "0d25ce1cq",
+   "voz": "claude",
+   "texto": "Chegamos em Netuno!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Chegamos em Netuno!"
+  },
+  {
+   "chave": "a83710bdt",
+   "voz": "claude",
+   "texto": "Visite Vênus primeiro!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Visite Vênus primeiro!"
   },
   {
    "chave": "2c8fc6a3s",
