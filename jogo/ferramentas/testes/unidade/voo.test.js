@@ -80,3 +80,45 @@ test('falas: contagem e chegada no planeta', () => {
   assert.strictEqual(V.falaChegada({ nome: 'Lua' }), 'Chegamos na Lua!');
   assert.strictEqual(V.falaChegada({ nome: 'Marte', artigo: 'em' }), 'Chegamos em Marte!');
 });
+
+// portais: 3 perguntas (a certa na faixa do meio, na 1ª; na da esquerda nas outras)
+const PERG = [
+  { id: 'a', texto: 'A?', opcoes: ['x', 'y', 'z'], certa: 1 },
+  { id: 'b', texto: 'B?', opcoes: ['Verdadeiro', 'Falso'], certa: 0 },
+  { id: 'c', texto: 'C?', opcoes: ['x', 'y', 'z'], certa: 0 },
+];
+test('portais: espalhados no voo, pergunta antes, faixa do foguete = resposta; não muda a duração', () => {
+  const evs = [];
+  const s = V.novoEstado({ segundos: 30, rng: semente(9), perguntas: PERG });
+  assert.deepStrictEqual(s.portais.map((o) => o.quando), [7500, 15000, 22500]);
+  let ms = 0;
+  while (s.fase !== 'fim') {
+    // no meio até o 1º portal passar; depois, na direita (erra o 2º e o 3º)
+    const alvoX = s.portais[0].fase === 'passou' ? V.L - 8 : V.L / 2;
+    V.passo(s, 16, { alvoX }).forEach((e) => evs.push([s.fase === 'voo' ? s.t : -1, e]));
+    ms += 16;
+  }
+  assert.ok(Math.abs(ms - (V.CONTAGEM_MS + 30000 + V.CHEGADA_MS)) <= 16);
+  const perg = evs.filter(([, e]) => e.tipo === 'pergunta'), port = evs.filter(([, e]) => e.tipo === 'portal');
+  assert.strictEqual(perg.length, 3);
+  assert.ok(perg.every(([t, e]) => Math.abs(e.portal.quando - t - V.PERGUNTA_ANTES_MS) <= 16));
+  assert.deepStrictEqual(port.map(([, e]) => e.certo), [true, false, false]);
+  assert.deepStrictEqual([s.portaisCertos, s.portaisErros], [1, 2]);
+});
+
+test('portais: nenhum objeto cruza o foguete perto de um portal; sem perguntas, nenhum portal', () => {
+  const s = V.novoEstado({ segundos: 30, rng: semente(10), perguntas: PERG });
+  while (s.fase !== 'chegada') {
+    V.passo(s, 16, {});
+    s.objs.forEach((o) => {
+      if (Math.abs(o.y - V.FOGUETE_Y) < 2) assert.ok(s.portais.every((p) => Math.abs(p.quando - s.t) > 1000), 'objeto perto do portal em ' + s.t);
+    });
+  }
+  assert.strictEqual(V.novoEstado({ segundos: 30 }).portais.length, 0);
+  assert.strictEqual(V.faixa(8, 3), 0); assert.strictEqual(V.faixa(60, 3), 1); assert.strictEqual(V.faixa(112, 2), 1);
+});
+
+test('falas dos portais: 3+ palavras, até 30 letras', () => {
+  const t = V.falas().map((f) => f.texto);
+  ['Isso! Você acertou!', 'Quase! Veja a certa ali.'].forEach((x) => { assert.ok(t.includes(x)); assert.ok(x.length <= 30 && x.split(' ').length >= 3); });
+});

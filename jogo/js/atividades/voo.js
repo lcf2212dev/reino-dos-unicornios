@@ -3,7 +3,7 @@
    → chegada (o planeta cresce no alto). Asteroide só dá uma tremidinha (conta `batidas`); estrela soma `estrelas`.
    A física (V.novoEstado/V.passo) é pura e roda no Node (teste: ferramentas/testes/unidade/voo.test.js).
    O desenho mora em voo-desenho.js (Reino.VooDesenho). 2ª versão: `perguntas` vira portais de resposta
-   (objeto com tipo 'portal' na mesma lista `objs`); a 1ª só aceita e ignora. */
+   (s.portais; física e tela em voo-portais.js). */
 (function () {
   var R = window.Reino;
   var V = {};
@@ -13,16 +13,19 @@
   // foguete 16×26 (centro do corpo em FOGUETE_Y); estrela 11 px; asteroide 10, 13 ou 16 px
   var FOGUETE_Y = V.A - 40, FOGUETE_MEIO_L = 7, FOGUETE_MEIO_A = 11, TAMANHOS = [10, 13, 16];
   V.FOGUETE_Y = FOGUETE_Y;
-  var VEL_FOGUETE = 90, VEL_OBJ = 50, INTERVALO = 1000, SEM_OBJ_NO_FIM = 3000;
+  var VEL_FOGUETE = 90, VEL_OBJ = V.VEL_OBJ = 50, INTERVALO = 1000, SEM_OBJ_NO_FIM = 3000;
 
   function segundos() { var c = R.config && R.config.viagem; return (c && c.vooSegundos) || 30; }
 
   // rng: função 0..1 (Reino.sorteioDaChave no jogo; qualquer uma com semente no teste)
+  // perguntas: de Reino.Viagem.perguntas (viram portais; sem elas, nenhum portal)
   V.novoEstado = function (op) {
     op = op || {};
+    var vooMs = (op.segundos || segundos()) * 1000;
     return {
-      fase: 'contagem', t: 0, total: 0, vooMs: (op.segundos || segundos()) * 1000,
+      fase: 'contagem', t: 0, total: 0, vooMs: vooMs,
       x: V.L / 2, objs: [], proximo: 600, estrelas: 0, batidas: 0, tremer: 0, brilhos: [],
+      portais: V.novosPortais ? V.novosPortais(op.perguntas, vooMs) : [], portaisCertos: 0, portaisErros: 0,
       rng: op.rng || Math.random,
     };
   };
@@ -71,7 +74,7 @@
     // objetos descendo
     if (s.t < s.vooMs - SEM_OBJ_NO_FIM) {
       s.proximo -= dt;
-      while (s.proximo <= 0) { sortear(s); s.proximo += INTERVALO; }
+      while (s.proximo <= 0) { if (!V.pertoDePortal || !V.pertoDePortal(s)) sortear(s); s.proximo += INTERVALO; }
     }
     var cai = VEL_OBJ * dt / 1000;
     s.objs = s.objs.filter(function (o) {
@@ -83,6 +86,7 @@
       }
       return o.y < V.A + 10;
     });
+    if (V.passoPortais) V.passoPortais(s, ev);
     if (s.t >= s.vooMs) { s.fase = 'chegada'; s.t = 0; s.objs = []; ev.push({ tipo: 'fase', fase: 'chegada' }); }
     return ev;
   };
@@ -95,7 +99,9 @@
   };
   V.falas = function () {
     var ps = (R.Viagem && R.Viagem.planetas && R.Viagem.planetas()) || [{ nome: 'Lua' }];
-    return [{ texto: V.FALA_CONTAGEM, voz: 'claude' }].concat(ps.map(function (p) { return { texto: V.falaChegada(p), voz: 'claude' }; }));
+    var t = [V.FALA_CONTAGEM].concat(ps.map(V.falaChegada));
+    if (V.FALA_CERTO) t.push(V.FALA_CERTO, V.FALA_ERRADO);   // portais (voo-portais.js)
+    return t.map(function (x) { return { texto: x, voz: 'claude' }; });
   };
   function falar(texto) {
     try { if (R.Som && R.Som.falar) R.Som.falar(texto, { voz: 'claude' }); } catch (e) { if (window.console) console.error(e); }
@@ -109,6 +115,7 @@
   /* ---------- a tela ---------- */
   var atual = null;
   V.aberto = function () { return !!atual; };
+  var porPortal = 1;
   function el(tag, classe, texto) {
     var e = document.createElement(tag);
     if (classe) e.className = classe;
@@ -116,11 +123,11 @@
     return e;
   }
   // ampliação por fator inteiro em pixels do aparelho, cabendo na tela (como o telescópio do Observatório)
-  function ajustar(cv) {
+  function ajustar(cv, comPortais) {
     var dpr = window.devicePixelRatio || 1;
     // deitado (notebook): a barra vai para o lado e o canvas usa a altura toda (ui-voo.css)
     var deitado = window.innerWidth > window.innerHeight;
-    var larg = window.innerWidth - (deitado ? 280 : 30), alt = window.innerHeight - (deitado ? 36 : 120);
+    var larg = window.innerWidth - (deitado ? 280 : 30), alt = window.innerHeight - (deitado ? 36 : 120) - (comPortais ? 112 : 0);
     var k = Math.max(1, Math.min(Math.floor(larg * dpr / V.L), Math.floor(alt * dpr / V.A)));
     cv.style.width = (V.L * k / dpr) + 'px'; cv.style.height = (V.A * k / dpr) + 'px';
   }
@@ -130,10 +137,14 @@
     if (atual) return atual.promessa;
     var UI = R.UI, planeta = op.planeta || { id: 'lua', nome: 'Lua', cor: '#c9c9d6' };
     var rng = R.sorteioDaChave ? R.sorteioDaChave('voo:' + (planeta.id || '')) : Math.random;
-    var s = V.novoEstado({ rng: rng });
+    porPortal = (R.config.viagem && R.config.viagem.estrelasPorPortal) || 1;
+    var s = V.novoEstado({ rng: rng, perguntas: planeta.materia ? op.perguntas : null });
     var resolver;
     var promessa = new Promise(function (r) { resolver = r; });
-    if (!UI || typeof document === 'undefined') { resolver({ chegou: false, estrelas: 0, batidas: 0 }); return promessa; }
+    function resultado(chegou) {
+      return { chegou: chegou, estrelas: s.estrelas, batidas: s.batidas, portais: { certos: s.portaisCertos, erros: s.portaisErros } };
+    }
+    if (!UI || typeof document === 'undefined') { resolver(resultado(false)); return promessa; }
 
     var t = UI.abrirTela('voo');
     var topo = el('div', 'voo-topo');
@@ -152,9 +163,14 @@
     var aviso = el('div', 'voo-aviso');
     var palco = el('div', 'voo-palco');
     palco.appendChild(cv); palco.appendChild(aviso);
+    // com portais: a faixa da pergunta acima do canvas (coluna = faixa + palco)
+    var coluna = el('div', 'voo-coluna'), faixa = s.portais.length ? el('div', 'voo-pergunta') : null;
+    if (faixa) coluna.appendChild(faixa);
+    coluna.appendChild(palco);
     var dica = el('p', 'voo-dica', 'Arraste o dedo ou use as setas para pegar estrelas!');
-    topo.appendChild(dica); t.appendChild(topo); t.appendChild(palco);
-    ajustar(cv);
+    topo.appendChild(dica); t.appendChild(topo); t.appendChild(coluna);
+    var comPortais = !!faixa;
+    ajustar(cv, comPortais);
     var ctx = cv.getContext('2d');
     ctx.imageSmoothingEnabled = false;
 
@@ -187,10 +203,11 @@
     palco.addEventListener('pointermove', mover);
     palco.addEventListener('pointerup', soltar);
     palco.addEventListener('pointercancel', soltar);
-    function redimensionar() { ajustar(cv); }
+    function redimensionar() { ajustar(cv, comPortais); }
     window.addEventListener('resize', redimensionar);
 
     var raf = 0, ultimo = null, animar = animacoes(), faseAntes = '', contaAntes = -1;
+    var portais = faixa && V.portaisTela ? V.portaisTela({ faixa: faixa, palco: palco, cv: cv, s: s, animar: animar }) : null;
     function terminar(chegou) {
       if (!atual) return;
       atual = null;
@@ -200,8 +217,9 @@
       document.removeEventListener('keyup', sobe);
       window.removeEventListener('resize', redimensionar);
       if (!chegou && R.Som && R.Som.calar) R.Som.calar();
+      if (portais) portais.fim();
       if (t.isConnected) UI.fecharTela(t);
-      resolver({ chegou: chegou, estrelas: s.estrelas, batidas: s.batidas });
+      resolver(resultado(chegou));
     }
     fechar.addEventListener('click', function () { som('toque'); terminar(false); });
     t._aoEsc = function () { fechar.click(); };
@@ -216,7 +234,7 @@
       var pct = Math.round(V.distancia(s) * 100);
       enche.style.width = pct + '%';
       barra.setAttribute('aria-valuenow', String(pct));
-      conta.textContent = '⭐ ' + s.estrelas;
+      conta.textContent = '⭐ ' + (s.estrelas + s.portaisCertos * porPortal);
     }
     function quadro(agora) {
       raf = 0;
@@ -229,12 +247,15 @@
       ev.forEach(function (e) {
         if (e.tipo === 'estrela') som('estrela');
         else if (e.tipo === 'batida') som('toque');
+        else if (e.tipo === 'portal') { som(e.certo ? 'estrela' : 'toque'); if (portais) portais.evento(e); }
+        else if (e.tipo === 'pergunta') { if (portais) portais.evento(e); }
         else if (e.fase === 'chegada') { som('fanfarra'); falar(V.falaChegada(planeta)); }
       });
       if (R.VooDesenho) {
         try { R.VooDesenho.quadro(ctx, s, planeta, animar, agora); } catch (x) { if (window.console) console.error(x); }
       }
       textos();
+      if (portais) portais.quadro();
       if (s.fase === 'fim') { terminar(true); return; }
       raf = requestAnimationFrame(quadro);
     }

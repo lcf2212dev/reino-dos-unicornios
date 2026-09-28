@@ -12,7 +12,32 @@
 .voo-barra-enche { height: 100%; width: 0; background: linear-gradient(90deg, #8fd3ff, #c89bff); }
 .voo-estrelas { font-weight: 800; font-size: 1.15em; min-width: 3.2em; text-align: right; }
 .voo-fechar { color: #3a2446; flex: none; width: 44px; height: 44px; min-width: 44px; min-height: 44px; }
-.voo-palco { order: 2; position: relative; touch-action: none; cursor: pointer; }
+.voo-coluna { order: 2; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.voo-palco { position: relative; overflow: hidden; touch-action: none; cursor: pointer; }
+/* portais: a pergunta acima do canvas (altura fixa, 4 linhas; mais rola: o canvas nunca pula) e os rótulos das opções por cima das faixas */
+.voo-pergunta {
+  display: flex; align-items: safe center; gap: 8px; box-sizing: border-box;
+  width: min(560px, calc(100vw - 20px)); height: 104px; overflow-y: auto; padding: 6px 10px;
+  border: 3px solid #3a2446; border-radius: 12px; background: #fffaf0; color: #3a2446;
+  visibility: hidden;
+}
+.voo-pergunta-ligada { visibility: visible; }
+.voo-pergunta-texto { flex: 1; margin: auto 0; font-weight: 800; font-size: 1em; line-height: 1.2; }
+/* celular: letra um pouco menor para a pergunta mais longa (≈135 letras) caber em 104 px sem rolar */
+@media (max-width: 480px) { .voo-pergunta-texto { font-size: 0.86em; line-height: 1.15; } }
+.voo-ouvir { flex: none; width: 44px; height: 44px; min-width: 44px; min-height: 44px; }
+.voo-pergunta-certo { background: #e3f7df; border-color: #2f8a3c; }
+.voo-pergunta-quase { background: #fff1d6; border-color: #c07a12; }
+.voo-brilho { box-shadow: 0 0 0 4px #fff6a8, 0 0 18px 6px #ffd34d; }
+.voo-portal { position: absolute; display: flex; pointer-events: none; }
+.voo-opcao {
+  display: flex; align-items: center; justify-content: center; box-sizing: border-box; padding: 0 4px;
+  text-align: center; font-weight: 800; font-size: clamp(0.8em, 2.4vmin, 1.15em); line-height: 1.1; color: #fff;
+  overflow-wrap: anywhere;
+  text-shadow: -2px 0 0 #3a2446, 2px 0 0 #3a2446, 0 -2px 0 #3a2446, 0 2px 0 #3a2446, 2px 2px 0 #3a2446;
+}
+.voo-opcao-certa { outline: 4px solid #fff6a8; outline-offset: -4px; }
+.voo-opcao-errada { opacity: 0.55; }
 .voo-cena {
   display: block; image-rendering: pixelated; image-rendering: crisp-edges;
   border: 3px solid #3a2446; border-radius: 12px; touch-action: none;
@@ -38,4 +63,7 @@
   .voo-estrelas { text-align: left; }
   .voo-fechar { align-self: flex-end; order: -1; }
   .voo-dica { flex: none; text-align: left; }
+  .voo-pergunta { width: min(560px, calc(100vw - 300px)); }
 }
+/* inglês nas faixas coloridas: branco como o resto do rótulo (o destaque fica no fundo claro e no sublinhado) */
+.voo-opcao .en { color: inherit; background: rgba(255, 255, 255, 0.22); text-decoration-color: currentColor; }

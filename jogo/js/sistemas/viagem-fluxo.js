@@ -12,22 +12,27 @@
     return R.Claude.falar(pags.join(' '), { fala: pags, voz: 'claude', modal: op.modal, botoes: op.botoes, tempo: op.tempo });
   }
   // o voo; sem Reino.Voo (outra frente), vai direto
+  // com matéria: config.viagem.portaisPorVoo perguntas viram portais (a Lua não tem)
   function voar(planeta) {
     var Voo = R.Voo;
     if (!Voo || typeof Voo.iniciar !== 'function') return Promise.resolve({ chegou: true, estrelas: 0, batidas: 0 });
-    return Promise.resolve(Voo.iniciar({ planeta: planeta })).catch(function () { return { chegou: false, estrelas: 0, batidas: 0 }; });
+    var perguntas = planeta.materia && V.perguntas ? V.perguntas(planeta.materia, R.config.viagem.portaisPorVoo, 'voo:' + planeta.id) : [];
+    return Promise.resolve(Voo.iniciar({ planeta: planeta, perguntas: perguntas })).catch(function () { return { chegou: false, estrelas: 0, batidas: 0 }; });
   }
 
   // o painel já fechou: voa e, se chegou, gasta o tanque, dá as estrelas, entra no planeta e carimba
   V.decolar = function (id) {
     var planeta = V.planeta(id);
-    if (!planeta || S.voando || !V.cheio()) return Promise.resolve(false);
+    if (!planeta || S.voando || !V.cheio() || !V.aberto(planeta.id)) return Promise.resolve(false);
     S.voando = true;
     return voar(planeta).then(function (r) {
       S.voando = false;
       if (!r || !r.chegou) return false;   // saiu no meio: nada se gasta
       V.gastar();
-      var c = R.config.viagem, est = Math.max(0, Math.min(Math.floor(r.estrelas || 0), c.estrelasPorVoo));
+      // portal certo: estrela a mais; e a Aura.contar do voo caiu no tanque ainda cheio: volta depois de gastar
+      var certos = Math.max(0, Math.floor((r.portais && r.portais.certos) || 0));
+      if (certos) V.ganhar(certos);
+      var c = R.config.viagem, est = Math.max(0, Math.min(Math.floor(r.estrelas || 0), c.estrelasPorVoo)) + certos * (c.estrelasPorPortal || 0);
       var P = R.Progresso;
       if (est > 0) { P.ganharEstrelas(est); P.salvar(); if (R.UI && R.UI.atualizarHUD) R.UI.atualizarHUD(); }
       return Promise.resolve(R.Cena.irPara(planeta.interior, planeta.chegada, { x: 0, y: 1 })).then(function () {

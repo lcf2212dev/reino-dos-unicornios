@@ -117,6 +117,25 @@
     x.fillStyle = K; x.fillRect(V.L / 2 - 14, V.A - 14, 28, 1);
   }
 
+  // portal: uma faixa colorida por opção (os textos vão em DOM por cima, voo-portais.js); bordas e postes em pixel
+  function portal(x, s, o, animar, t, V) {
+    var n = o.p.opcoes.length, a = V.PORTAL_A, y0 = Math.round(o.y - a / 2), lw = V.L / n;
+    if (y0 > V.A || y0 + a < 0) return;
+    for (var i = 0; i < n; i++) {
+      var x0 = Math.round(i * lw), x1 = Math.round((i + 1) * lw);
+      x.fillStyle = V.CORES_PORTAL[i % V.CORES_PORTAL.length]; x.fillRect(x0, y0, x1 - x0, a);
+      x.fillStyle = 'rgba(255,255,255,0.3)'; x.fillRect(x0, y0 + 1, x1 - x0, 2);
+      x.fillStyle = K; x.fillRect(x0, y0, 1, a); x.fillRect(x1 - 1, y0, 1, a);
+    }
+    x.fillStyle = K; x.fillRect(0, y0, V.L, 1); x.fillRect(0, y0 + a - 1, V.L, 1);
+    // passou pela certa: moldura de luz na faixa (só com Animações, piscando)
+    if (animar && o.fase === 'passou' && o.escolha === o.p.certa && Math.floor(t / 120) % 2) {
+      var c0 = Math.round(o.escolha * lw);
+      x.fillStyle = '#fff6a8';
+      x.fillRect(c0, y0 - 2, Math.round(lw), 2); x.fillRect(c0, y0 + a, Math.round(lw), 2);
+    }
+  }
+
   R.VooDesenho = {
     quadro: function (x, s, p, animar, t) {
       var V = R.Voo;
@@ -126,6 +145,7 @@
       ceu(x, s, animar, V);
       planeta(x, s, p, V);
       if (s.fase === 'contagem') plataforma(x, V);
+      if (s.fase === 'voo') (s.portais || []).forEach(function (o) { portal(x, s, o, animar, t, V); });
       s.objs.forEach(function (o) {
         if (o.tipo !== 'estrela') { pedra(x, o); return; }
         var ox = Math.round(o.x), oy = Math.round(o.y);
