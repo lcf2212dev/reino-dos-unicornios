@@ -45,6 +45,7 @@
   padding: 8px; border: 3px dashed var(--tinta-suave); border-radius: 12px; min-width: 72px;
 }
 .foguete-passaporte li.carimbado { border-style: solid; border-color: var(--certo); background: var(--certo-fundo); }
+.foguete-album { width: 100%; margin-top: 10px; }
 
 @media (max-width: 480px), (max-height: 500px) {
   .foguete-gotas { gap: 2px; }
