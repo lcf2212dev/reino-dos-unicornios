@@ -1,5 +1,6 @@
 /* Planetas: a base de sprite 'et' (ET fofinho de desenho infantil), com chaves para variar por planeta:
-   pele, barriga, antenas (0-2, com bolinha 'antena'), olhos (1-3), orelhas, enfeite (+ enfeiteCor), cabelo.
+   pele, barriga, antenas (0-2, com bolinha 'antena'), olhos (1-3), orelhas, enfeite (+ enfeiteCor), cabelo,
+   e as roupas opcionais macacao, cachecol e barba (cores; sem elas o desenho não muda).
    Só registra: nada de DOM nem canvas no carregamento. */
 (function () {
   var Reino = window.Reino;
@@ -89,11 +90,18 @@
       r(6, 4, 7, 2, br); [5, 8, 11].forEach(function (x) { r(x, 3, 3, 1, br); }); r(7, 2, 5, 1, br);
       g.p(7, 5, brs); g.p(10, 5, brs);
     }
+    if (cru.macacao) {   // macacão de peitilho (engenheira)
+      var mc = cru.macacao; r(6, 16, 7, 3, mc); g.p(7, 15, mc); g.p(11, 15, mc); g.p(9, 17, G.esc(mc, 0.35));
+    }
+    if (cru.cachecol) {   // cachecol no pescoço, com a ponta caindo
+      var cc = cru.cachecol; r(5, 14, 9, 1, cc); r(11, 15, 2, 2, cc); g.p(12, 16, G.esc(cc, 0.3)); g.p(7, 14, G.cla(cc, 0.4));
+    }
+    if (cru.barba) { r(8, bY + 2, 3, 2, cru.barba); g.p(9, bY + 4, cru.barba); }   // barbicha
     g0.fecharCorte();
     return { g: g0, busto: 17 };
   }
   if (Reino.NPCs && Reino.NPCs.registrarBase) Reino.NPCs.registrarBase('et', gradeEt, {
     antenas: [0, 1, 2], olhos: [1, 2, 3], orelhas: ['coelho', 'caida', 'redonda', 'nenhuma'],
-    enfeite: ['laco', 'oculos', 'cabelo-branco'], antena: 'cor', enfeiteCor: 'cor',
+    enfeite: ['laco', 'oculos', 'cabelo-branco'], antena: 'cor', enfeiteCor: 'cor', macacao: 'cor', cachecol: 'cor', barba: 'cor',
   });
 })();
