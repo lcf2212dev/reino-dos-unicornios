@@ -99,6 +99,38 @@
       fim: ['«Thank you», {amiga|amigo}!', 'Você é {uma ótima amiga|um ótimo amigo}!', 'Agora somos {amigas|amigos}!'],
       fimDeNovo: ['«Great job»! Você foi demais!', '«See you»! Volte sempre!'],
     },
+    'jupiter-tinta': {
+      abertura: ['Minha carta perdeu as letras!', 'Cada palavra volta ao papel.', 'Vamos escrever {juntas|juntos}?'],
+      aberturaDeNovo: ['Oi de novo, {amiga|amigo}!', 'Tenho outra carta para você!'],
+      acerto: ['Isso! A palavra voltou!', 'Muito bem escrito! Obrigada!', 'Uau! A carta está bonita!'],
+      erro: ['Ops! Veja a palavra certa.', 'Quase! Olhe como se escreve.'],
+      fim: ['A minha carta ficou pronta!', 'Você é {uma ótima amiga|um ótimo amigo}!', 'Agora somos {amigas|amigos}!'],
+      fimDeNovo: ['A carta ficou ainda melhor!', 'Obrigada de novo, {amiga|amigo}!'],
+    },
+    'venus-mapi': {
+      abertura: ['Eu me perdi em Vênus!', 'Cada acerto mostra o caminho.', 'Vamos olhar o mapa?'],
+      aberturaDeNovo: ['Oi de novo, {amiga|amigo}!', 'Vamos achar outro caminho!'],
+      acerto: ['Isso! Achei o caminho!', 'Isso mesmo! Obrigada!', 'Uau! O mapa ficou claro!'],
+      erro: ['Ops! Veja a resposta certa.', 'Quase! Olhe no mapa comigo.'],
+      fim: ['Agora sei voltar para casa!', 'Você é {uma ótima amiga|um ótimo amigo}!', 'Agora somos {amigas|amigos}!'],
+      fimDeNovo: ['Mais um caminho descoberto!', 'Obrigada de novo, {amiga|amigo}!'],
+    },
+    'netuno-gota': {
+      abertura: ['Tenho umas experiências aqui!', 'Me ajude a descobrir tudo.', 'Vamos fazer ciência?'],
+      aberturaDeNovo: ['Oi de novo, cientista!', 'Mais experiências para fazer!'],
+      acerto: ['Isso! A experiência deu certo!', 'Descoberta certinha! Obrigada!', 'Uau! Você pensa muito bem!'],
+      erro: ['Ops! Veja a resposta certa.', 'Quase! Olhe o que acontece.'],
+      fim: ['Descobrimos tudo {juntas|juntos}!', 'Você é {uma ótima amiga|um ótimo amigo}!', 'Agora somos {amigas|amigos}!'],
+      fimDeNovo: ['Que experiências legais!', 'Obrigada de novo, {amiga|amigo}!'],
+    },
+    'netuno-memo': {
+      abertura: ['Eu esqueci umas lembranças!', 'Me ajude a lembrar do passado.', 'Vamos contar histórias?'],
+      aberturaDeNovo: ['Oi de novo, {amiga|amigo}!', 'Tenho mais histórias antigas!'],
+      acerto: ['Isso! Agora eu me lembro!', 'Isso mesmo! Obrigado!', 'Uau! Você sabe história!'],
+      erro: ['Ops! Veja a resposta certa.', 'Quase! Olhe como foi.'],
+      fim: ['Minhas lembranças voltaram!', 'Você é {uma ótima amiga|um ótimo amigo}!', 'Agora somos {amigas|amigos}!'],
+      fimDeNovo: ['Que histórias bonitas!', 'Obrigado de novo, {amiga|amigo}!'],
+    },
   };
   var PADRAO = FRASES['marte-rubi'];
   function frasesDe(npcId) { return FRASES[npcId] || PADRAO; }

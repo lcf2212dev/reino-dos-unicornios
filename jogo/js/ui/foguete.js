@@ -74,6 +74,16 @@
         var ok = !!carimbos[p.id];
         return el('li' + (ok ? '.carimbado' : ''), bola(p, ok), el('small', ok ? p.nome : '?'));
       })));
+    // o álbum de ETs (ui/album-ets.js): fecha o painel e abre o álbum
+    if (UI.telaAlbumETs) {
+      var album = el('button.btn-grande.foguete-album', { type: 'button' }, '👽 Álbum de ETs');
+      album.addEventListener('click', function () {
+        Reino.Som.tocar('toque'); Reino.Som.calar();
+        UI.fecharTela(pn.tela);
+        UI.telaAlbumETs();
+      });
+      passaporte.appendChild(album);
+    }
 
     pn.conteudo.classList.add('foguete-conteudo');
     [balao, tanque, destinos, passaporte].forEach(function (x) { pn.conteudo.appendChild(x); });

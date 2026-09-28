@@ -136,6 +136,8 @@
   R.NPCs.registrarAcao('lua-brincadeira', function (acao, ctx) {
     var F = falas(), fn = B[acao && acao.b];
     if (!F || !fn) return Promise.resolve(null);
+    // brincar com um ET faz dele um amigo (viagem.md §6.2)
+    if (ctx && ctx.npc && R.Viagem && R.Viagem.fazerAmigo) R.Viagem.fazerAmigo(ctx.npc.id);
     return fn(acao, ctx || {}, F);
   });
 })();
