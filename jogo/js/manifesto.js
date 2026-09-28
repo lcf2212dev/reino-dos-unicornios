@@ -306,6 +306,8 @@
       { js: 'js/interiores/planetas/saturno-falas.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/planetas/saturno-brincadeiras.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/planetas/saturno.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/planetas/jupiter-objetos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/planetas/jupiter-falas.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/planetas/jupiter-brincadeiras.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/planetas/jupiter.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/planetas/venus-brincadeiras.js', grupo: 'interiores', node: true },

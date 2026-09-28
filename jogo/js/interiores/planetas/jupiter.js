@@ -1,11 +1,21 @@
 /* Planeta Júpiter (viagem de foguete): interior do Observatório alcançado só pelo foguete do Hangar.
-   CONTRATO (onda 0 da 2ª versão): layout provisório; a frente do cenário de Júpiter o refaz. Fixos (contrato): id
-   'planeta-jupiter', o spawn/chegada (11, 14), o foguete de pouso em (12, 13) e as vagas dos ETs (observatorio/reservas.js):
-   Tinta (8, 7), Bolha (16, 9), Vovô Tempestade (5, 12). Matéria dos portais do voo e do ET do desafio: portugues. */
+   Júpiter é de gás: a Mariana passeia em ilhas de nuvens fofas, com Júpiter de faixas e a Grande Mancha Vermelha no
+   céu. Fixos (contrato): id 'planeta-jupiter', o spawn/chegada (11, 14), o foguete de pouso em (12, 13) e as vagas dos
+   ETs (observatorio/reservas.js): Tinta (8, 7), Bolha (16, 9), Vovô Tempestade (5, 12). Matéria dos portais do voo e
+   do ET do desafio: portugues. Objetos e céu em jupiter-objetos.js, brincadeiras em jupiter-brincadeiras.js, falas em
+   jupiter-falas.js. */
 (function () {
   var R = window.Reino;
   var CHEGADA = { x: 11, y: 14 };
   var P = R._predios.planetas;
+  function letra(x, y, l) {
+    return { tipo: 'jupiter-letra', x: x, y: y, nome: 'Letra ' + l, var: { l: l }, acao: { tipo: 'jupiter-brincadeira', b: 'letra', l: l } };
+  }
+  function cristal(x, y, n) {
+    return { tipo: 'jupiter-cristal', x: x, y: y, nome: 'Cristal de amônia', acao: { tipo: 'jupiter-brincadeira', b: 'cristal', n: n } };
+  }
+  var BALAO = ['Um balão flutuando no céu!', 'Aqui tudo flutua de leve.'];
+  var RAIO = ['Um raio de tempestade!', 'Ele é pequeno e não machuca.'];
 
   // sem o sistema da viagem (a prévia dos interiores só carrega os prédios), o interior existe mesmo assim
   if (R.Viagem) R.Viagem.registrarPlaneta({ id: 'jupiter', nome: 'Júpiter', artigo: 'em', interior: 'planeta-jupiter',
@@ -20,21 +30,43 @@
     tamanho: { w: 24, h: 17 },
     spawn: CHEGADA,
     comodos: [
-      { id: 'jupiter', nome: 'Júpiter', placa: 'Júpiter', rect: { x: 1, y: 1, w: 22, h: 15 }, piso: 'lua-rocha', parede: 'planeta-horizonte',
-        paleta: { piso: '#e8cfa8', piso2: '#dcc096', detalhe: '#c4a57a' } },
+      { id: 'jupiter', nome: 'Júpiter', placa: 'Júpiter', rect: { x: 1, y: 1, w: 22, h: 15 }, piso: 'jupiter-nuvem', parede: 'jupiter-horizonte' },
     ],
-    corredores: [{ x: 1, y: 3, w: 22, h: 13 }],
+    // o caminho da chegada ao foguete e aos ETs
+    corredores: [{ x: 9, y: 11, w: 5, h: 5 }],
     objetos: [
+      // o foguete de pouso, ao lado da chegada: volta ao Hangar
       { tipo: 'planeta-foguete', x: 12, y: 13, nome: 'Foguete', acao: { tipo: 'viagem', para: 'observatorio-2', chegada: { x: 7, y: 9 } } },
-      { tipo: 'globo', x: 2, y: 3, nome: 'Globo', fala: 'Um globo do espaço!' },
-      { tipo: 'pedestal', x: 20, y: 3, nome: 'Pedra', fala: 'Uma pedra do espaço!' },
-      { tipo: 'caixote', x: 4, y: 3 }, { tipo: 'barril', x: 6, y: 3 }, { tipo: 'vaso-planta', x: 8, y: 3 },
-      { tipo: 'banco', x: 13, y: 3 }, { tipo: 'cesto', x: 17, y: 3 }, { tipo: 'balde', x: 18, y: 3 },
-      { tipo: 'flores', x: 2, y: 15 }, { tipo: 'planta-alta', x: 21, y: 14 }, { tipo: 'almofada', x: 4, y: 15 },
-      { tipo: 'luminaria-pe', x: 19, y: 15 }, { tipo: 'pilha-livros', x: 16, y: 15 }, { tipo: 'placa-chao', x: 9, y: 15 },
-      { tipo: 'papeis', x: 7, y: 15 },
+      { tipo: 'jupiter-placa', x: 9, y: 13, nome: 'Placa', fala: ['{Bem-vinda|Bem-vindo} a Júpiter, {nome}!', 'Aqui a gente anda nas nuvens!'] },
+      // brincadeiras
+      { tipo: 'jupiter-trampolim', x: 18, y: 4, nome: 'Nuvem-trampolim', acao: { tipo: 'jupiter-brincadeira', b: 'trampolim' } },
+      { tipo: 'jupiter-redemoinho', x: 13, y: 7, nome: 'Redemoinho', acao: { tipo: 'jupiter-brincadeira', b: 'redemoinho' } },
+      { tipo: 'jupiter-redemoinho', x: 20, y: 13, nome: 'Redemoinho', acao: { tipo: 'jupiter-brincadeira', b: 'redemoinho' } },
+      cristal(3, 4, 0), cristal(21, 8, 1), cristal(2, 9, 2), cristal(17, 12, 3), cristal(7, 15, 4),
+      // letras que flutuam: cada uma ensina uma palavra
+      letra(6, 4, 'A'), letra(15, 4, 'B'), letra(22, 11, 'E'), letra(2, 14, 'I'), letra(15, 14, 'U'),
+      { tipo: 'jupiter-luneta', x: 3, y: 11, nome: 'Luneta', acao: { tipo: 'jupiter-brincadeira', b: 'curiosidade' } },
+      { tipo: 'jupiter-correio', x: 10, y: 6, nome: 'Correio', fala: ['A caixa de cartas da Tinta!', 'Ela adora escrever cartas.'] },
+      { tipo: 'jupiter-nuvem-grande', x: 20, y: 5, nome: 'Nuvem fofa', fala: ['Uma nuvem de algodão!', 'Parece um travesseiro macio!'] },
+      { tipo: 'jupiter-balao', x: 11, y: 4, nome: 'Balão', var: { c: 0 }, fala: BALAO },
+      { tipo: 'jupiter-balao', x: 7, y: 11, nome: 'Balão', var: { c: 1 }, fala: BALAO },
+      { tipo: 'jupiter-balao', x: 19, y: 10, nome: 'Balão', var: { c: 3 }, fala: BALAO },
+      { tipo: 'jupiter-raio', x: 8, y: 3, nome: 'Raio', fala: RAIO },
+      { tipo: 'jupiter-raio', x: 22, y: 14, nome: 'Raio', fala: RAIO },
+      // enfeites
+      { tipo: 'jupiter-algodao', x: 1, y: 3 }, { tipo: 'jupiter-algodao', x: 13, y: 3 }, { tipo: 'jupiter-algodao', x: 22, y: 3 },
+      { tipo: 'jupiter-algodao', x: 5, y: 8 }, { tipo: 'jupiter-algodao', x: 16, y: 6 }, { tipo: 'jupiter-algodao', x: 1, y: 12 },
+      { tipo: 'jupiter-algodao', x: 22, y: 8 }, { tipo: 'jupiter-algodao', x: 5, y: 15 }, { tipo: 'jupiter-algodao', x: 18, y: 15 },
+      { tipo: 'jupiter-ponte', x: 3, y: 6 }, { tipo: 'jupiter-ponte', x: 14, y: 10 }, { tipo: 'jupiter-ponte', x: 19, y: 7 },
+      { tipo: 'jupiter-cartas', x: 9, y: 8 }, { tipo: 'jupiter-cartas', x: 11, y: 7 },
+      { tipo: 'jupiter-fiapo', x: 4, y: 3 }, { tipo: 'jupiter-fiapo', x: 17, y: 3 }, { tipo: 'jupiter-fiapo', x: 12, y: 9 },
+      { tipo: 'jupiter-fiapo', x: 3, y: 13 }, { tipo: 'jupiter-fiapo', x: 21, y: 11 }, { tipo: 'jupiter-fiapo', x: 16, y: 15 },
+      { tipo: 'jupiter-gotas', x: 9, y: 4 }, { tipo: 'jupiter-gotas', x: 1, y: 7 }, { tipo: 'jupiter-gotas', x: 18, y: 9 },
+      { tipo: 'jupiter-gotas', x: 6, y: 13 }, { tipo: 'jupiter-gotas', x: 20, y: 15 },
+      { tipo: 'jupiter-vento', x: 11, y: 5 }, { tipo: 'jupiter-vento', x: 7, y: 9 }, { tipo: 'jupiter-vento', x: 17, y: 11 },
+      { tipo: 'jupiter-algodao', x: 6, y: 6 }, { tipo: 'jupiter-fiapo', x: 5, y: 10 }, { tipo: 'jupiter-gotas', x: 15, y: 12 },
+      { tipo: 'jupiter-vento', x: 3, y: 15 }, { tipo: 'jupiter-vento', x: 14, y: 5 }, { tipo: 'jupiter-vento', x: 22, y: 6 },
     ],
     npcs: P.npcsDoPlaneta('planeta-jupiter'),
   });
 })();
-
