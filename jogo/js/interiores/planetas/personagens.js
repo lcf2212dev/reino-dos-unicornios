@@ -22,4 +22,25 @@
     sprite: { base: 'et', pele: '#bfeaf5', barriga: '#f0fbff', antenas: 0, olhos: 2, orelhas: 'redonda', cachecol: '#ff6f6f' } });
   Reino.registrarPersonagem({ id: 'saturno-vovo', // bege-dourado, cabelo branco e óculos
     sprite: { base: 'et', pele: '#e3c79a', barriga: '#f8ecd6', antenas: 1, antena: '#cfa7ff', olhos: 2, orelhas: 'coelho', enfeite: 'oculos', enfeiteCor: '#9a7a3a', cabelo: '#f4f2fa' } });
+  /* ================= JÚPITER: os ETs das nuvens listradas ================= */
+  Reino.registrarPersonagem({ id: 'jupiter-tinta', // laranja-creme, lacinho vinho e lápis na mão
+    sprite: { base: 'et', pele: '#f7b27a', barriga: '#fff0dc', antenas: 2, antena: '#c0503a', olhos: 2, orelhas: 'caida', enfeite: 'laco', enfeiteCor: '#b0306a', lapis: '#4f7fd0' } });
+  Reino.registrarPersonagem({ id: 'jupiter-bolha', // bege redondinho, um olhão e antena de bolha
+    sprite: { base: 'et', pele: '#e8c49a', barriga: '#fff6e8', antenas: 1, antena: '#9fe8ff', olhos: 1, orelhas: 'nenhuma' } });
+  Reino.registrarPersonagem({ id: 'jupiter-vovo', // laranja-escuro, barba e cabelo brancos, 3 olhos
+    sprite: { base: 'et', pele: '#d9803f', barriga: '#f6d2a8', antenas: 0, olhos: 3, orelhas: 'redonda', cabelo: '#f4f2fa', barba: '#f4f2fa' } });
+  /* ================= VÊNUS: os ETs dourados das nuvens quentes ================= */
+  Reino.registrarPersonagem({ id: 'venus-mapi',   // amarela, mochila verde de exploradora
+    sprite: { base: 'et', pele: '#ffe066', barriga: '#fffbe0', antenas: 2, antena: '#ff8a3d', olhos: 2, orelhas: 'coelho', mochila: '#3f9f5f' } });
+  Reino.registrarPersonagem({ id: 'venus-quentinho', // dourado-avermelhado, 3 olhos
+    sprite: { base: 'et', pele: '#f29a4a', barriga: '#ffe2b8', antenas: 1, antena: '#ff4f4f', olhos: 3, orelhas: 'redonda', cachecol: '#ffd34d' } });
+  Reino.registrarPersonagem({ id: 'venus-vovo',   // dourada clara, cabelo branco fofo e óculos
+    sprite: { base: 'et', pele: '#e6c25a', barriga: '#fbf0c8', antenas: 0, olhos: 2, orelhas: 'caida', enfeite: 'cabelo-branco' } });
+  /* ================= NETUNO: os ETs dos mares azuis ================= */
+  Reino.registrarPersonagem({ id: 'netuno-gota',  // azul, jaleco branco e óculos de cientista
+    sprite: { base: 'et', pele: '#6fa8f0', barriga: '#dcecff', antenas: 2, antena: '#7cf0d0', olhos: 2, orelhas: 'nenhuma', enfeite: 'oculos', enfeiteCor: '#2a3f80', jaleco: '#ffffff' } });
+  Reino.registrarPersonagem({ id: 'netuno-memo',  // azul-turquesa, boina vermelha
+    sprite: { base: 'et', pele: '#5cc6c8', barriga: '#dbf7f5', antenas: 0, olhos: 2, orelhas: 'redonda', boina: '#d0405a' } });
+  Reino.registrarPersonagem({ id: 'netuno-vovo',  // azul-marinho claro, cachecol e cabelo branco
+    sprite: { base: 'et', pele: '#7f8fe0', barriga: '#e0e4fb', antenas: 1, antena: '#bfe8ff', olhos: 2, orelhas: 'coelho', cachecol: '#ffb84d', cabelo: '#f4f2fa' } });
 })();
