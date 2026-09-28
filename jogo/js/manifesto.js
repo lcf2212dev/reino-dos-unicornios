@@ -314,6 +314,8 @@
       { js: 'js/interiores/planetas/venus-falas.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/planetas/venus-brincadeiras.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/planetas/venus.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/planetas/netuno-objetos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/planetas/netuno-falas.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/planetas/netuno-brincadeiras.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/planetas/netuno.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/salao/icones.js', grupo: 'interiores', node: true },
