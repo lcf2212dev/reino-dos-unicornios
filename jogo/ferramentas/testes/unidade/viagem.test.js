@@ -113,3 +113,39 @@ test('viagem: a volta pergunta e só vai com "sim", de graça', async () => {
   assert.deepStrictEqual(idas, ['observatorio-2']);
   assert.strictEqual(V.tanque().n, 0);
 });
+
+test('viagem: cadeado — Marte só abre com o carimbo da Lua; o painel diz qual visitar', async () => {
+  const j = comSave(), V = j.R.Viagem;
+  j.R.Cena.irPara = () => Promise.resolve();
+  V.registrarPlaneta({ id: 'marte', nome: 'Marte', artigo: 'em', depois: 'lua', interior: 'planeta-marte', chegada: { x: 1, y: 1 }, ordem: 2, cor: '#c44' });
+  V.registrarPlaneta({ id: 'saturno', nome: 'Saturno', artigo: 'em', depois: 'marte', interior: 'planeta-saturno', chegada: { x: 1, y: 1 }, ordem: 3, cor: '#dc8' });
+  assert.deepStrictEqual([V.aberto('lua'), V.aberto('marte'), V.aberto('saturno'), V.aberto('pluto')], [true, false, false, false]);
+  assert.strictEqual(await V.decolar('marte'), false);
+  assert.strictEqual(V.tanque().n, 10);
+  V.carimbar('lua');
+  assert.deepStrictEqual([V.aberto('marte'), V.aberto('saturno')], [true, false]);
+  const t = V.falas().map((f) => f.texto);
+  assert.ok(t.includes('Visite a Lua primeiro!') && t.includes('Visite Marte primeiro!'));
+});
+
+test('viagem: portais — perguntas da matéria no voo; certo = estrela a mais e volta ao tanque', async () => {
+  const j = comSave(), V = j.R.Viagem;
+  j.R.Cena.irPara = () => Promise.resolve();
+  V.registrarPlaneta({ id: 'marte', nome: 'Marte', artigo: 'em', materia: 'matematica', interior: 'planeta-marte', chegada: { x: 1, y: 1 }, ordem: 2, cor: '#c44' });
+  let pedido = null;
+  V.perguntas = (m, n, k) => { pedido = [m, n, k]; return [{ id: 'x' }]; };
+  let recebeu = null;
+  j.R.Voo = { iniciar: (op) => { recebeu = op; return Promise.resolve({ chegou: true, estrelas: 9, batidas: 0, portais: { certos: 2, erros: 1 } }); } };
+  const antes = j.P.estado().estrelas.ganhas || 0;
+  assert.strictEqual(await V.decolar('marte'), true);
+  assert.deepStrictEqual(pedido, ['matematica', 3, 'voo:marte']);
+  assert.strictEqual(recebeu.perguntas.length, 1);
+  assert.strictEqual(j.P.estado().estrelas.ganhas - antes, 7);
+  assert.strictEqual(V.tanque().n, 2);
+  assert.ok(j.balao.falas.some((f) => /Você ganhou 7 estrelas!/.test(f.t)));
+  // a Lua (sem matéria) não pede perguntas
+  pedido = null; V.ganhar(10);
+  await V.decolar('lua');
+  assert.strictEqual(pedido, null);
+  assert.strictEqual(recebeu.perguntas.length, 0);
+});

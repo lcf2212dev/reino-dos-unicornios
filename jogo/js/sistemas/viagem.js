@@ -11,7 +11,8 @@
 
   var V = R.Viagem = {};
   /** Registra um planeta (arquivo do planeta, no carregamento). @param {{ id: string, nome: string,
-      interior: string, chegada: {x: number, y: number}, ordem: number, cor: string }} p */
+      interior: string, chegada: {x: number, y: number}, ordem: number, cor: string, materia?: string,
+      artigo?: string, depois?: string }} p */
   V.registrarPlaneta = function (p) {
     if (!p || !p.id || !p.interior) throw new Error('registrarPlaneta: falta id ou interior');
     if (planetas.some(function (o) { return o.id === p.id; })) throw new Error('registrarPlaneta: id repetido ' + p.id);
@@ -20,6 +21,11 @@
   };
   V.planetas = function () { return planetas.slice(); };
   V.planeta = function (id) { return planetas.find(function (p) { return p.id === id || p.interior === id; }) || null; };
+  // o destino está aberto? (`depois`: só com o carimbo daquele planeta; o painel mostra o cadeado)
+  V.aberto = function (id) {
+    var p = V.planeta(id);
+    return !!p && (!p.depois || !!V.carimbos()[p.depois]);
+  };
 
   /* ================= NO SAVE ================= */
   // combustivel: { mariana: { n, em } } (save-e-mescla.md §11): entre aparelhos vale o mais recente (o tanque
@@ -101,13 +107,21 @@
     carimbo: 'Carimbo novo no passaporte!',
     estrelas: function (n) { return n === 1 ? 'Você ganhou 1 estrela!' : 'Você ganhou ' + n + ' estrelas!'; },
     voltar: 'Voltar para o Reino?',
+    // o cadeado do painel: "Visite a Lua primeiro!", "Visite Marte primeiro!"
+    antes: function (nome, artigo) { return 'Visite ' + (artigo === 'em' ? '' : 'a ') + nome + ' primeiro!'; },
     aviso: ['O foguete da NASA agora voa!', 'Vá ao Observatório, 2º andar.'],
   };
   V.falas = function () {
     var F = V.frases, t = [].concat(F.cheio, F.carimbo, F.voltar, F.aviso);
     for (var n = 1; n <= max(); n++) t = t.concat(F.faltam(n));
-    for (var e = 1; e <= cfg().estrelasPorVoo; e++) t.push(F.estrelas(e));
-    planetas.forEach(function (p) { t.push(F.chegou(p.nome, p.artigo)); });
+    // estrelas da chegada: as do voo mais as dos portais
+    var maxEst = cfg().estrelasPorVoo + (cfg().portaisPorVoo || 0) * (cfg().estrelasPorPortal || 0);
+    for (var e = 1; e <= maxEst; e++) t.push(F.estrelas(e));
+    planetas.forEach(function (p) {
+      t.push(F.chegou(p.nome, p.artigo));
+      var antes = p.depois && V.planeta(p.depois);
+      if (antes) t.push(F.antes(antes.nome, antes.artigo));
+    });
     // o que o voo fala (atividades/voo.js carrega depois; falas() só é chamada depois de tudo carregado)
     if (R.Voo && R.Voo.falas) R.Voo.falas().forEach(function (f) { t.push(f.texto); });
     var vistos = {};

@@ -1,6 +1,7 @@
 /* Painel do foguete (Reino.UI.telaFoguete), aberto pelo foguete do Hangar (ação `viagem`, sistemas/viagem.js):
    o tanque em gotinhas, os destinos (Reino.Viagem.planetas()) com "Decolar!" quando cheio, e o passaporte (um
    carimbo por planeta; sem carimbo, a silhueta com "?"). Não cheio: o Claude diz quantas certas faltam.
+   Destino com `depois` ainda sem aquele carimbo: cadeado; tocar nele faz o Claude dizer qual visitar antes.
    Contrato: docs/contratos/viagem.md §2. Estilos: css/ui-foguete.css. */
 (function () {
   var U = Reino.util, el = U.el;
@@ -37,16 +38,29 @@
 
     // o Claude: cheio, "escolha"; não cheio, quantas faltam e onde conseguir
     var fala = cheio ? F.cheio : F.faltam(t.max - t.n);
-    var balao = el('div.foguete-cabeca', claude(),
-      el('div.foguete-balao', fala.map(function (x) { return el('p', x); })));
+    var texto = el('div.foguete-balao', fala.map(function (x) { return el('p', x); }));
+    var balao = el('div.foguete-cabeca', claude(), texto);
+    function dizer(pags) {
+      texto.textContent = '';
+      pags.forEach(function (x) { texto.appendChild(el('p', x)); });
+      Reino.Som.falar(pags, { voz: 'claude' });
+    }
 
     // os destinos
     var destinos = el('section.foguete-destinos', el('h3.foguete-sub', 'Destinos'),
       el('ul', V.planetas().map(function (p) {
+        var para = (p.artigo === 'em' ? '' : 'a ') + p.nome;
+        if (!V.aberto(p.id)) {
+          var antes = V.planeta(p.depois) || { nome: p.depois }, frase = F.antes(antes.nome, antes.artigo);
+          var tranca = el('button.btn-grande.foguete-cadeado', { type: 'button' }, '🔒');
+          tranca.setAttribute('aria-label', p.nome + ' trancado. ' + frase);
+          tranca.addEventListener('click', function () { Reino.Som.tocar('toque'); dizer([frase]); });
+          return el('li.foguete-destino.foguete-trancado', bola(p, true), el('b', p.nome), tranca);
+        }
         var btn = el('button.btn-grande.btn-principal.foguete-decolar', { type: 'button', disabled: !cheio }, 'Decolar! 🚀');
-        btn.setAttribute('aria-label', 'Decolar para a ' + p.nome);
+        btn.setAttribute('aria-label', 'Decolar para ' + para);
         btn.addEventListener('click', function () {
-          if (!V.cheio()) return;
+          if (!V.cheio() || !V.aberto(p.id)) return;
           Reino.Som.tocar('toque'); Reino.Som.calar();
           UI.fecharTela(pn.tela);
           V.decolar(p.id);
