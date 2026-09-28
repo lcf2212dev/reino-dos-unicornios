@@ -302,6 +302,8 @@
       { js: 'js/interiores/planetas/marte-falas.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/planetas/marte-brincadeiras.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/planetas/marte.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/planetas/saturno-objetos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/planetas/saturno-falas.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/planetas/saturno-brincadeiras.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/planetas/saturno.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/salao/icones.js', grupo: 'interiores', node: true },
