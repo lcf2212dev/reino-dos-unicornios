@@ -60,15 +60,18 @@
       grade.textContent = '';
       ets.forEach(function (e) {
         var planeta = nomePlaneta(e.planeta), nome = U.semEn ? U.semEn(e.nome) : e.nome;
+        // com artigo quando o planeta pede ("Visite a Lua", "ET da Lua"; "Visite Marte", "ET de Marte")
+        var pl = (Reino.Viagem.planeta && Reino.Viagem.planeta(e.planeta)) || {};
+        var comA = (pl.artigo || 'na') === 'na';   // o mesmo padrão da chegada ("Chegamos na Lua!")
         var fig = el('div.album-figura', figura(e), e.amigo ? '' : el('span.album-interroga', { 'aria-hidden': 'true' }, '?'));
         var li = el('li.album-cartao' + (e.amigo ? '.amigo' : '.silhueta') + (junto === e.id ? '.junto' : ''), fig);
         // o cartão recebe foco (Tab) e rola para a vista
         li.tabIndex = 0;
-        li.setAttribute('aria-label', e.amigo ? nome + ', ' + planeta + ', amigo' : 'ET de ' + planeta + ', ainda não é amigo. Visite ' + planeta);
+        li.setAttribute('aria-label', e.amigo ? nome + ', ' + planeta + ', amigo' : (comA ? 'ET da ' : 'ET de ') + planeta + ', ainda não é amigo. Visite ' + (comA ? 'a ' : '') + planeta);
         li.addEventListener('focus', function () { try { li.scrollIntoView({ block: 'nearest' }); } catch (err) { /* navegador antigo */ } });
         if (!e.amigo) {
           li.appendChild(el('b', '?'));
-          li.appendChild(el('small', 'Visite ' + planeta));
+          li.appendChild(el('small', 'Visite ' + (comA ? 'a ' : '') + planeta));
           grade.appendChild(li);
           return;
         }
