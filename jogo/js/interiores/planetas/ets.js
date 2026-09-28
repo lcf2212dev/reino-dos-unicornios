@@ -1,6 +1,6 @@
 /* Planetas: a base de sprite 'et' (ET fofinho de desenho infantil), com chaves para variar por planeta:
    pele, barriga, antenas (0-2, com bolinha 'antena'), olhos (1-3), orelhas, enfeite (+ enfeiteCor), cabelo,
-   e as roupas opcionais macacao, cachecol e barba (cores; sem elas o desenho não muda).
+   e as roupas opcionais macacao, cachecol, barba, jaleco, mochila, boina e lapis (cores; sem elas o desenho não muda).
    Só registra: nada de DOM nem canvas no carregamento. */
 (function () {
   var Reino = window.Reino;
@@ -96,6 +96,18 @@
     if (cru.cachecol) {   // cachecol no pescoço, com a ponta caindo
       var cc = cru.cachecol; r(5, 14, 9, 1, cc); r(11, 15, 2, 2, cc); g.p(12, 16, G.esc(cc, 0.3)); g.p(7, 14, G.cla(cc, 0.4));
     }
+    if (cru.jaleco) {   // jaleco de cientista aberto, com golinha
+      var jl = cru.jaleco, jls = G.esc(jl, 0.15); r(4, 15, 2, 4, jl); r(13, 15, 2, 4, jl); g.p(6, 15, jls); g.p(12, 15, jls);
+    }
+    if (cru.mochila) {   // alças da mochila de exploradora e a mochilinha aparecendo do lado
+      var mo = cru.mochila; r(6, 15, 1, 4, mo); r(12, 15, 1, 4, mo); r(15, 14, 3, 4, mo); g.p(16, 15, G.cla(mo, 0.4));
+    }
+    if (cru.boina) {   // boina caída de lado, com o cabinho
+      var bo = cru.boina; r(5, 4, 10, 2, bo); r(7, 3, 6, 1, bo); g.p(10, 2, G.esc(bo, 0.3)); r(5, 5, 10, 1, G.esc(bo, 0.2));
+    }
+    if (cru.lapis) {   // lápis-pena na mãozinha
+      r(18, 12, 1, 5, cru.lapis); g.p(18, 17, '#3a2446'); g.p(18, 11, '#ff9cc6');
+    }
     if (cru.barba) { r(8, bY + 2, 3, 2, cru.barba); g.p(9, bY + 4, cru.barba); }   // barbicha
     g0.fecharCorte();
     return { g: g0, busto: 17 };
@@ -103,5 +115,6 @@
   if (Reino.NPCs && Reino.NPCs.registrarBase) Reino.NPCs.registrarBase('et', gradeEt, {
     antenas: [0, 1, 2], olhos: [1, 2, 3], orelhas: ['coelho', 'caida', 'redonda', 'nenhuma'],
     enfeite: ['laco', 'oculos', 'cabelo-branco'], antena: 'cor', enfeiteCor: 'cor', macacao: 'cor', cachecol: 'cor', barba: 'cor',
+    jaleco: 'cor', mochila: 'cor', boina: 'cor', lapis: 'cor',
   });
 })();
