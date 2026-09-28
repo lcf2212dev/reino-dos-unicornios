@@ -30,7 +30,7 @@
       // o foguete de pouso, ao lado da chegada: volta ao Hangar
       { tipo: 'planeta-foguete', x: 12, y: 13, nome: 'Foguete', acao: { tipo: 'viagem', para: 'observatorio-2', chegada: { x: 7, y: 9 } } },
       { tipo: 'netuno-placa', x: 9, y: 13, nome: 'Placa', fala: ['{Bem-vinda|Bem-vindo} a Netuno, {nome}!', 'Aqui é Tritão, lua de Netuno.'] },
-      { tipo: 'netuno-placa', x: 20, y: 3, nome: 'Placa de Tritão', fala: ['Netuno é de gás, sem chão.', 'Por isso a gente pousou aqui.', 'Olhe Netuno azul no céu!'] },
+      { tipo: 'netuno-placa', x: 20, y: 3, nome: 'Placa de Tritão', fala: ['Netuno é feito só de gás.', 'Por isso a gente pousou aqui.', 'Olhe Netuno azul no céu!'] },
       // vento
       { tipo: 'netuno-catavento', x: 10, y: 6, nome: 'Cata-vento', acao: { tipo: 'netuno-brincadeira', b: 'catavento' } },
       { tipo: 'netuno-biruta', x: 4, y: 3, nome: 'Biruta', fala: ['A biruta mostra o vento.', 'Olhe como ela está esticada!'] },

@@ -81,7 +81,7 @@ Reino.falasDoPredio('observatorio', { npcs: {
   'venus-quentinho': {
     oi: ['Oi! Eu sou o Quentinho.', 'Aqui em Vênus é bem quente!'],
     nova: ['Vamos brincar no vapor?'],
-    depois: ['Que calorzinho gostoso!', 'Volte para brincar de novo!'],
+    depois: ['Que calor mais gostoso!', 'Volte para brincar de novo!'],
   },
   'venus-vovo': {
     oi: ['{Olá, minha querida!|Olá, meu querido!}', 'Eu sou a Vovó Nuvem.', 'Moro no meio das nuvens.'],

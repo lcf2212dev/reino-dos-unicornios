@@ -9,7 +9,7 @@
 
   var venus = {
     quentinho: ['Vamos pular no vapor! ✨', 'O vapor me joga lá no alto!', 'Você pulou muito alto!'],
-    geiser: ['O gêiser soltou vapor! ✨', 'Fiuuu! Que vapor quentinho!'],
+    geiser: ['O vapor saiu do chão! ✨', 'Que vapor mais quentinho!'],
     vulcao: ['O vulcãozinho soltou vapor!', 'Ele faz fumacinha quente.'],
     cristais: {
       pegou: 'Você pegou um cristal quente!',
@@ -29,7 +29,7 @@
     // placas de direção, cada uma no seu lado do planeta
     direcoes: {
       norte: ['Esta seta aponta o Norte!', 'Será que a Mapi foi para lá?'],
-      sul: ['Esta seta aponta o Sul!', 'Lá tem um monte de vulcão!'],
+      sul: ['Esta seta mostra o Sul!', 'Lá tem um monte de vulcão!'],
       leste: ['Esta seta aponta o Leste!', 'Lá tem pedra bem quentinha!'],
       oeste: ['Esta seta aponta o Oeste!', 'Aqui em Vênus, o Sol nasce lá!'],
     },
