@@ -71,8 +71,11 @@
       btn.textContent = 'Conferir ✓';
       btn.disabled = true;
       atualizarPlacar();
-      var d = atual, c = ctrl;
-      Promise.resolve(ler).then(function () {
+      var d = atual, c = ctrl, q = des.perguntas[i];
+      // carrega o pacote de voz da sala antes de ler (como a pergunta surpresa); no máximo 4 s de espera
+      var voz = q && q.materia && q.sala && Reino.Voz && Reino.Voz.carregarSala
+        ? Promise.race([Reino.Voz.carregarSala(q.materia, q.sala), new Promise(function (r) { setTimeout(r, 4000); })]) : null;
+      Promise.all([ler, voz]).then(function () {
         if (c === ctrl && fase === 'pergunta' && pn.tela.isConnected) Reino.Som.falar(Reino.Falas.segmentosDesafio(d, c.ordem), { voz: 'narradora' });
       });
       setTimeout(function () {
