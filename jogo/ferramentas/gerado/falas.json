@@ -30756,13 +30756,13 @@
    "fala": "Moro perto do vulcão gigante."
   },
   {
-   "chave": "68367bfd16",
+   "chave": "296b34f617",
    "voz": "npc-marte-vovo",
-   "texto": "Quer ouvir uma curiosidade?",
+   "texto": "Vamos ouvir uma curiosidade?",
    "pacotes": [
     "interior-observatorio"
    ],
-   "fala": "Quer ouvir uma curiosidade?"
+   "fala": "Vamos ouvir uma curiosidade?"
   },
   {
    "chave": "1bc7622716",
@@ -30783,22 +30783,103 @@
    "fala": "A cor vem da ferrugem!"
   },
   {
-   "chave": "9c1c2389t",
+   "chave": "c8771ee611",
    "voz": "narradora",
-   "texto": "Um globo do espaço!",
+   "texto": "Bem-vinda a Marte, Mariana!",
    "pacotes": [
     "interior-observatorio"
    ],
-   "fala": "Um globo do espaço!"
+   "fala": "Bem-vinda a Marte, Mariana!"
   },
   {
-   "chave": "68302ddfu",
+   "chave": "cda122c4t",
    "voz": "narradora",
-   "texto": "Uma pedra do espaço!",
+   "texto": "O planeta vermelho!",
    "pacotes": [
     "interior-observatorio"
    ],
-   "fala": "Uma pedra do espaço!"
+   "fala": "O planeta vermelho!"
+  },
+  {
+   "chave": "5462c2cbx",
+   "voz": "narradora",
+   "texto": "A nave da Rubi quebrou!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "A nave da Rubi quebrou!"
+  },
+  {
+   "chave": "3cff9efdz",
+   "voz": "narradora",
+   "texto": "Ajude a Rubi a consertar.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Ajude a Rubi a consertar."
+  },
+  {
+   "chave": "43077c8e10",
+   "voz": "narradora",
+   "texto": "Um pedaço da nave da Rubi!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Um pedaço da nave da Rubi!"
+  },
+  {
+   "chave": "b4394f2ey",
+   "voz": "narradora",
+   "texto": "O motor da nave da Rubi!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O motor da nave da Rubi!"
+  },
+  {
+   "chave": "8079139810",
+   "voz": "narradora",
+   "texto": "Parafusos da nave da Rubi!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Parafusos da nave da Rubi!"
+  },
+  {
+   "chave": "5331d5e4x",
+   "voz": "narradora",
+   "texto": "Um painel que pega sol.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Um painel que pega sol."
+  },
+  {
+   "chave": "73d57fd2x",
+   "voz": "narradora",
+   "texto": "Ele dá energia ao robô.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Ele dá energia ao robô."
+  },
+  {
+   "chave": "3fd15b7c10",
+   "voz": "narradora",
+   "texto": "Cristais de gelo de Marte!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Cristais de gelo de Marte!"
+  },
+  {
+   "chave": "98a088c9y",
+   "voz": "narradora",
+   "texto": "Eles são bem geladinhos.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eles são bem geladinhos."
   },
   {
    "chave": "db289b6bo",
@@ -30963,13 +31044,13 @@
    "fala": "Moro nos anéis faz tempo."
   },
   {
-   "chave": "71bb625018",
+   "chave": "c29c972919",
    "voz": "npc-saturno-vovo",
-   "texto": "Quer ouvir uma curiosidade?",
+   "texto": "Vamos ouvir uma curiosidade?",
    "pacotes": [
     "interior-observatorio"
    ],
-   "fala": "Quer ouvir uma curiosidade?"
+   "fala": "Vamos ouvir uma curiosidade?"
   },
   {
    "chave": "01b6d9621a",
@@ -30988,6 +31069,69 @@
     "interior-observatorio"
    ],
    "fala": "Eles brilham com a luz do Sol!"
+  },
+  {
+   "chave": "9a98d26913",
+   "voz": "narradora",
+   "texto": "Bem-vinda a Saturno, Mariana!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Bem-vinda a Saturno, Mariana!"
+  },
+  {
+   "chave": "a601638513",
+   "voz": "narradora",
+   "texto": "Aqui a gente passeia no anel!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Aqui a gente passeia no anel!"
+  },
+  {
+   "chave": "35fc82e6u",
+   "voz": "narradora",
+   "texto": "Uma casinha de gelo!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Uma casinha de gelo!"
+  },
+  {
+   "chave": "edd4c21911",
+   "voz": "narradora",
+   "texto": "Os ETs brincam aqui dentro.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Os etês brincam aqui dentro."
+  },
+  {
+   "chave": "2dfd5927x",
+   "voz": "narradora",
+   "texto": "Ela fica firme no gelo.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Ela fica firme no gelo."
+  },
+  {
+   "chave": "f7674334v",
+   "voz": "narradora",
+   "texto": "Um trenó para o gelo!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Um trenó para o gelo!"
+  },
+  {
+   "chave": "e9b191f5w",
+   "voz": "narradora",
+   "texto": "Ele desliza pelo anel.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Ele desliza pelo anel."
   },
   {
    "chave": "dc354bec18",
@@ -37659,6 +37803,618 @@
    "fala": "Cabem umas 50 Luas na Terra!"
   },
   {
+   "chave": "d24db77011",
+   "voz": "npc-marte-faisca",
+   "texto": "Vamos rolar na duna!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos rolar na duna!"
+  },
+  {
+   "chave": "946e786817",
+   "voz": "npc-marte-faisca",
+   "texto": "Uiii! Que tobogã de areia!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Uiii! Que tobogã de areia!"
+  },
+  {
+   "chave": "2e8ca85a16",
+   "voz": "npc-marte-faisca",
+   "texto": "A areia de Marte é macia!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "A areia de Marte é macia!"
+  },
+  {
+   "chave": "66f508ad12",
+   "voz": "narradora",
+   "texto": "Um tobogã de areia vermelha!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Um tobogã de areia vermelha!"
+  },
+  {
+   "chave": "ee03dd04w",
+   "voz": "narradora",
+   "texto": "Escorregar aqui é bom!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Escorregar aqui é bom!"
+  },
+  {
+   "chave": "5b2017e713",
+   "voz": "narradora",
+   "texto": "O jipe-robô deu uma voltinha!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O jipe-robô deu uma voltinha!"
+  },
+  {
+   "chave": "ae74676d10",
+   "voz": "narradora",
+   "texto": "Ele explora Marte sozinho.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Ele explora Marte sozinho."
+  },
+  {
+   "chave": "183294a5y",
+   "voz": "narradora",
+   "texto": "Um redemoinho de poeira!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Um redemoinho de poeira!"
+  },
+  {
+   "chave": "2cf52e50x",
+   "voz": "narradora",
+   "texto": "Ele gira, gira e passa.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Ele gira, gira e passa."
+  },
+  {
+   "chave": "e108020ey",
+   "voz": "narradora",
+   "texto": "Você pegou uma pedrinha!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Você pegou uma pedrinha!"
+  },
+  {
+   "chave": "31c30cfew",
+   "voz": "narradora",
+   "texto": "Falta só uma pedrinha!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Falta só uma pedrinha!"
+  },
+  {
+   "chave": "205ba332w",
+   "voz": "narradora",
+   "texto": "Faltam duas pedrinhas!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Faltam duas pedrinhas!"
+  },
+  {
+   "chave": "d0996674w",
+   "voz": "narradora",
+   "texto": "Faltam três pedrinhas!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Faltam três pedrinhas!"
+  },
+  {
+   "chave": "a8718fcfy",
+   "voz": "narradora",
+   "texto": "Faltam quatro pedrinhas!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Faltam quatro pedrinhas!"
+  },
+  {
+   "chave": "c9f9c5d614",
+   "voz": "narradora",
+   "texto": "Você pegou as cinco pedrinhas!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Você pegou as cinco pedrinhas!"
+  },
+  {
+   "chave": "1cfb053dy",
+   "voz": "narradora",
+   "texto": "Que pedrinhas coloridas!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Que pedrinhas coloridas!"
+  },
+  {
+   "chave": "f1dc8ba5z",
+   "voz": "narradora",
+   "texto": "Elas vão brilhar de novo.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Elas vão brilhar de novo."
+  },
+  {
+   "chave": "a96f6bf812",
+   "voz": "narradora",
+   "texto": "Essa pedrinha você já pegou!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Essa pedrinha você já pegou!"
+  },
+  {
+   "chave": "e515508315",
+   "voz": "npc-marte-vovo",
+   "texto": "O chão tem muita ferrugem!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O chão tem muita ferrugem!"
+  },
+  {
+   "chave": "b8164a6913",
+   "voz": "npc-marte-vovo",
+   "texto": "Aqui tem o maior vulcão!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Aqui tem o maior vulcão!"
+  },
+  {
+   "chave": "a5f6f3bc15",
+   "voz": "npc-marte-vovo",
+   "texto": "É o Monte Olimpo, olha lá!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "É o Monte Olimpo, olha lá!"
+  },
+  {
+   "chave": "1362ca7614",
+   "voz": "npc-marte-vovo",
+   "texto": "O maior do Sistema Solar.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O maior do Sistema Solar."
+  },
+  {
+   "chave": "a6ff992618",
+   "voz": "npc-marte-vovo",
+   "texto": "Marte tem duas luas pequenas.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Marte tem duas luas pequenas."
+  },
+  {
+   "chave": "69a2934813",
+   "voz": "npc-marte-vovo",
+   "texto": "Elas são Fobos e Deimos.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Elas são Fobos e Deimos."
+  },
+  {
+   "chave": "76384edc14",
+   "voz": "npc-marte-vovo",
+   "texto": "O dia aqui é quase igual.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O dia aqui é quase igual."
+  },
+  {
+   "chave": "a3535e2d14",
+   "voz": "npc-marte-vovo",
+   "texto": "Só uns minutinhos a mais!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Só uns minutinhos a mais!"
+  },
+  {
+   "chave": "eee5f5a915",
+   "voz": "npc-marte-vovo",
+   "texto": "Marte é muito, muito frio.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Marte é muito, muito frio."
+  },
+  {
+   "chave": "0fb5162e15",
+   "voz": "npc-marte-vovo",
+   "texto": "Bem mais frio que a Terra!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Bem mais frio que a Terra!"
+  },
+  {
+   "chave": "9505a4eb17",
+   "voz": "npc-marte-vovo",
+   "texto": "Tem gelo nos polos de Marte.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Tem gelo nos polos de Marte."
+  },
+  {
+   "chave": "e1991fa214",
+   "voz": "npc-marte-vovo",
+   "texto": "Os polos são branquinhos!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Os polos são branquinhos!"
+  },
+  {
+   "chave": "5cafdebd14",
+   "voz": "npc-marte-vovo",
+   "texto": "Marte é o quarto planeta.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Marte é o quarto planeta."
+  },
+  {
+   "chave": "34f4820a14",
+   "voz": "npc-marte-vovo",
+   "texto": "Contando a partir do Sol!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Contando a partir do Sol!"
+  },
+  {
+   "chave": "59a6b7a617",
+   "voz": "npc-marte-vovo",
+   "texto": "Robôs de verdade andam aqui.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Robôs de verdade andam aqui."
+  },
+  {
+   "chave": "4c44c37716",
+   "voz": "npc-marte-vovo",
+   "texto": "Eles tiram fotos e estudam!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eles tiram fotos e estudam!"
+  },
+  {
+   "chave": "529c3f7313",
+   "voz": "npc-saturno-nico",
+   "texto": "Vamos patinar no gelo!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos patinar no gelo!"
+  },
+  {
+   "chave": "56ea4db819",
+   "voz": "npc-saturno-nico",
+   "texto": "Eu deslizo e dou um pulinho!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Eu deslizo e dou um pulinho!"
+  },
+  {
+   "chave": "c65001cf13",
+   "voz": "npc-saturno-nico",
+   "texto": "Você patina muito bem!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Você patina muito bem!"
+  },
+  {
+   "chave": "01434b6410",
+   "voz": "narradora",
+   "texto": "Uma pista de gelo lisinha!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Uma pista de gelo lisinha!"
+  },
+  {
+   "chave": "4f2b1cb1w",
+   "voz": "narradora",
+   "texto": "Você deslizou no gelo!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Você deslizou no gelo!"
+  },
+  {
+   "chave": "5e935494y",
+   "voz": "narradora",
+   "texto": "O boneco de gelo acenou!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O boneco de gelo acenou!"
+  },
+  {
+   "chave": "2e49eca8x",
+   "voz": "narradora",
+   "texto": "Ele disse oi para você!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Ele disse oi para você!"
+  },
+  {
+   "chave": "ad9f437814",
+   "voz": "narradora",
+   "texto": "Você pegou um cristal de gelo!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Você pegou um cristal de gelo!"
+  },
+  {
+   "chave": "16bd0dbfy",
+   "voz": "narradora",
+   "texto": "Que gelo mais brilhante!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Que gelo mais brilhante!"
+  },
+  {
+   "chave": "c3763c42a",
+   "voz": "ingles",
+   "texto": "Ice",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Ice"
+  },
+  {
+   "chave": "af620c59q",
+   "voz": "narradora",
+   "texto": "quer dizer gelo.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "quer dizer gelo."
+  },
+  {
+   "chave": "366d1b1ew",
+   "voz": "narradora",
+   "texto": "O anel tem muito gelo!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O anel tem muito gelo!"
+  },
+  {
+   "chave": "989645a3b",
+   "voz": "ingles",
+   "texto": "Star",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Star"
+  },
+  {
+   "chave": "a13a1380t",
+   "voz": "narradora",
+   "texto": "quer dizer estrela.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "quer dizer estrela."
+  },
+  {
+   "chave": "068306f9y",
+   "voz": "narradora",
+   "texto": "Olhe as estrelas no céu!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Olhe as estrelas no céu!"
+  },
+  {
+   "chave": "552f2f01b",
+   "voz": "ingles",
+   "texto": "Ring",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Ring"
+  },
+  {
+   "chave": "92c9bee4q",
+   "voz": "narradora",
+   "texto": "quer dizer anel.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "quer dizer anel."
+  },
+  {
+   "chave": "7691c4ce10",
+   "voz": "narradora",
+   "texto": "Você está em cima do anel!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Você está em cima do anel!"
+  },
+  {
+   "chave": "751be756b",
+   "voz": "ingles",
+   "texto": "Moon",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Moon"
+  },
+  {
+   "chave": "03937e4cp",
+   "voz": "narradora",
+   "texto": "quer dizer lua.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "quer dizer lua."
+  },
+  {
+   "chave": "82311b5c14",
+   "voz": "narradora",
+   "texto": "Saturno tem um montão de luas!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Saturno tem um montão de luas!"
+  },
+  {
+   "chave": "7a807a7b1a",
+   "voz": "npc-saturno-vovo",
+   "texto": "Tem pedaço pequeno e grandão!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Tem pedaço pequeno e grandão!"
+  },
+  {
+   "chave": "5b16ff0e14",
+   "voz": "npc-saturno-vovo",
+   "texto": "Saturno é feito de gás.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Saturno é feito de gás."
+  },
+  {
+   "chave": "b5973fb914",
+   "voz": "npc-saturno-vovo",
+   "texto": "Não dá para pisar nele!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Não dá para pisar nele!"
+  },
+  {
+   "chave": "73d04edc19",
+   "voz": "npc-saturno-vovo",
+   "texto": "Saturno é feito de gás leve.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Saturno é feito de gás leve."
+  },
+  {
+   "chave": "5ac35a1e1b",
+   "voz": "npc-saturno-vovo",
+   "texto": "Boiaria numa banheira gigante!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Boiaria numa banheira gigante!"
+  },
+  {
+   "chave": "94d42b9e1a",
+   "voz": "npc-saturno-vovo",
+   "texto": "Saturno tem mais de 100 luas!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Saturno tem mais de 100 luas!"
+  },
+  {
+   "chave": "cb4dc4cf16",
+   "voz": "npc-saturno-vovo",
+   "texto": "É lua que não acaba mais!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "É lua que não acaba mais!"
+  },
+  {
+   "chave": "7f4d3c7b17",
+   "voz": "npc-saturno-vovo",
+   "texto": "A maior lua se chama Titã.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "A maior lua se chama Titã."
+  },
+  {
+   "chave": "83641e5917",
+   "voz": "npc-saturno-vovo",
+   "texto": "Ela é laranjinha, olhe lá!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Ela é laranjinha, olhe lá!"
+  },
+  {
+   "chave": "0b17f31c17",
+   "voz": "npc-saturno-vovo",
+   "texto": "Saturno é o sexto planeta.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Saturno é o sexto planeta."
+  },
+  {
+   "chave": "3c8dd9c716",
+   "voz": "npc-saturno-vovo",
+   "texto": "Contando a partir do Sol!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Contando a partir do Sol!"
+  },
+  {
+   "chave": "7021e15316",
+   "voz": "npc-saturno-vovo",
+   "texto": "Um ano aqui demora muito!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Um ano aqui demora muito!"
+  },
+  {
+   "chave": "1118707719",
+   "voz": "npc-saturno-vovo",
+   "texto": "Dura quase 30 anos da Terra!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Dura quase 30 anos da Terra!"
+  },
+  {
    "chave": "40923a7514",
    "voz": "narradora",
    "texto": "Os unicórnios bebem água aqui.",
@@ -38208,6 +38964,33 @@
    "fala": "Você ganhou 5 estrelas!"
   },
   {
+   "chave": "5ca99043u",
+   "voz": "claude",
+   "texto": "Você ganhou 6 estrelas!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Você ganhou 6 estrelas!"
+  },
+  {
+   "chave": "cdb46edcu",
+   "voz": "claude",
+   "texto": "Você ganhou 7 estrelas!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Você ganhou 7 estrelas!"
+  },
+  {
+   "chave": "708289fdu",
+   "voz": "claude",
+   "texto": "Você ganhou 8 estrelas!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Você ganhou 8 estrelas!"
+  },
+  {
    "chave": "4cf830f4n",
    "voz": "claude",
    "texto": "Chegamos na Lua!",
@@ -38226,6 +39009,15 @@
    "fala": "Chegamos em Marte!"
   },
   {
+   "chave": "9e896a6at",
+   "voz": "claude",
+   "texto": "Visite a Lua primeiro!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Visite a Lua primeiro!"
+  },
+  {
    "chave": "74c19f87r",
    "voz": "claude",
    "texto": "Chegamos em Saturno!",
@@ -38235,6 +39027,15 @@
    "fala": "Chegamos em Saturno!"
   },
   {
+   "chave": "ebcaeef4t",
+   "voz": "claude",
+   "texto": "Visite Marte primeiro!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Visite Marte primeiro!"
+  },
+  {
    "chave": "2c8fc6a3s",
    "voz": "claude",
    "texto": "Três, dois, um... já!",
@@ -38242,6 +39043,411 @@
     "geral"
    ],
    "fala": "Três, dois, um... já!"
+  },
+  {
+   "chave": "9a7fd958q",
+   "voz": "claude",
+   "texto": "Isso! Você acertou!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Isso! Você acertou!"
+  },
+  {
+   "chave": "ba2ead3dv",
+   "voz": "claude",
+   "texto": "Quase! Veja a certa ali.",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Quase! Veja a certa ali."
+  },
+  {
+   "chave": "8718609e18",
+   "voz": "npc-marte-rubi",
+   "texto": "Cada conta conserta uma peça.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Cada conta conserta uma peça."
+  },
+  {
+   "chave": "0a11449611",
+   "voz": "npc-marte-rubi",
+   "texto": "Vamos fazer as contas?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos fazer as contas?"
+  },
+  {
+   "chave": "bc6f1b2ax",
+   "voz": "npc-marte-rubi",
+   "texto": "Oi de novo, amiga!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Oi de novo, amiga!"
+  },
+  {
+   "chave": "a07df9a0x",
+   "voz": "npc-marte-rubi",
+   "texto": "Oi de novo, amigo!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Oi de novo, amigo!"
+  },
+  {
+   "chave": "ddc81ad715",
+   "voz": "npc-marte-rubi",
+   "texto": "Mais peças para consertar!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Mais peças para consertar!"
+  },
+  {
+   "chave": "1004b15513",
+   "voz": "npc-marte-rubi",
+   "texto": "Isso! A peça ficou nova!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Isso! A peça ficou nova!"
+  },
+  {
+   "chave": "5c4220c914",
+   "voz": "npc-marte-rubi",
+   "texto": "Conta certinha! Obrigada!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Conta certinha! Obrigada!"
+  },
+  {
+   "chave": "b5ee05ad13",
+   "voz": "npc-marte-rubi",
+   "texto": "Uau! A nave já faz vrum!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Uau! A nave já faz vrum!"
+  },
+  {
+   "chave": "88f122bd13",
+   "voz": "npc-marte-rubi",
+   "texto": "Ops! Veja a conta certa.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Ops! Veja a conta certa."
+  },
+  {
+   "chave": "c4eb3f3813",
+   "voz": "npc-marte-rubi",
+   "texto": "Quase! Olhe como se faz.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Quase! Olhe como se faz."
+  },
+  {
+   "chave": "699b34cb14",
+   "voz": "npc-marte-rubi",
+   "texto": "A minha nave voa de novo!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "A minha nave voa de novo!"
+  },
+  {
+   "chave": "0491d56112",
+   "voz": "npc-marte-rubi",
+   "texto": "Você é uma ótima amiga!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Você é uma ótima amiga!"
+  },
+  {
+   "chave": "b298016c11",
+   "voz": "npc-marte-rubi",
+   "texto": "Você é um ótimo amigo!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Você é um ótimo amigo!"
+  },
+  {
+   "chave": "412e7107y",
+   "voz": "npc-marte-rubi",
+   "texto": "Agora somos amigas!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Agora somos amigas!"
+  },
+  {
+   "chave": "62f8253dy",
+   "voz": "npc-marte-rubi",
+   "texto": "Agora somos amigos!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Agora somos amigos!"
+  },
+  {
+   "chave": "32401db915",
+   "voz": "npc-marte-rubi",
+   "texto": "A nave ficou ainda melhor!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "A nave ficou ainda melhor!"
+  },
+  {
+   "chave": "167b553113",
+   "voz": "npc-marte-rubi",
+   "texto": "Obrigada de novo, amiga!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Obrigada de novo, amiga!"
+  },
+  {
+   "chave": "0258a37313",
+   "voz": "npc-marte-rubi",
+   "texto": "Obrigada de novo, amigo!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Obrigada de novo, amigo!"
+  },
+  {
+   "chave": "f2f6bcf4x",
+   "voz": "npc-saturno-sky",
+   "texto": "! Que bom te ver!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "! Que bom te ver!"
+  },
+  {
+   "chave": "4e0dd01d12",
+   "voz": "npc-saturno-sky",
+   "texto": "Vamos praticar inglês?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos praticar inglês?"
+  },
+  {
+   "chave": "725f3c2015",
+   "voz": "npc-saturno-sky",
+   "texto": "Me ajude com as palavras!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Me ajude com as palavras!"
+  },
+  {
+   "chave": "d64e1f2cv",
+   "voz": "npc-saturno-sky",
+   "texto": "de novo, amiga!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "de novo, amiga!"
+  },
+  {
+   "chave": "e252af3ev",
+   "voz": "npc-saturno-sky",
+   "texto": "de novo, amigo!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "de novo, amigo!"
+  },
+  {
+   "chave": "dcb897e116",
+   "voz": "npc-saturno-sky",
+   "texto": "Mais inglês para praticar!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Mais inglês para praticar!"
+  },
+  {
+   "chave": "9e283f8cc",
+   "voz": "ingles",
+   "texto": "Great",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Great"
+  },
+  {
+   "chave": "f7345289s",
+   "voz": "npc-saturno-sky",
+   "texto": "! Muito bem!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "! Muito bem!"
+  },
+  {
+   "chave": "e855cff2a",
+   "voz": "ingles",
+   "texto": "Yes",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Yes"
+  },
+  {
+   "chave": "c9be6b62w",
+   "voz": "npc-saturno-sky",
+   "texto": "! Está certinho!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "! Está certinho!"
+  },
+  {
+   "chave": "bd76e5c6a",
+   "voz": "ingles",
+   "texto": "Wow",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Wow"
+  },
+  {
+   "chave": "7fb8493bz",
+   "voz": "npc-saturno-sky",
+   "texto": "! Você sabe inglês!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "! Você sabe inglês!"
+  },
+  {
+   "chave": "5c66449cb",
+   "voz": "ingles",
+   "texto": "Oops",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Oops"
+  },
+  {
+   "chave": "ea79c006v",
+   "voz": "npc-saturno-sky",
+   "texto": "! Veja a certa.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "! Veja a certa."
+  },
+  {
+   "chave": "9a45bd6f15",
+   "voz": "npc-saturno-sky",
+   "texto": "Quase! Olhe esta palavra.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Quase! Olhe esta palavra."
+  },
+  {
+   "chave": "c6230477o",
+   "voz": "npc-saturno-sky",
+   "texto": ", amiga!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": ", amiga!"
+  },
+  {
+   "chave": "ea3247ado",
+   "voz": "npc-saturno-sky",
+   "texto": ", amigo!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": ", amigo!"
+  },
+  {
+   "chave": "b1f5a96513",
+   "voz": "npc-saturno-sky",
+   "texto": "Você é uma ótima amiga!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Você é uma ótima amiga!"
+  },
+  {
+   "chave": "9c8f13d812",
+   "voz": "npc-saturno-sky",
+   "texto": "Você é um ótimo amigo!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Você é um ótimo amigo!"
+  },
+  {
+   "chave": "5aae0433z",
+   "voz": "npc-saturno-sky",
+   "texto": "Agora somos amigas!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Agora somos amigas!"
+  },
+  {
+   "chave": "6355bbf1z",
+   "voz": "npc-saturno-sky",
+   "texto": "Agora somos amigos!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Agora somos amigos!"
+  },
+  {
+   "chave": "9119a507g",
+   "voz": "ingles",
+   "texto": "Great job",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Great job"
+  },
+  {
+   "chave": "284775fey",
+   "voz": "npc-saturno-sky",
+   "texto": "! Você foi demais!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "! Você foi demais!"
+  },
+  {
+   "chave": "ece68529e",
+   "voz": "ingles",
+   "texto": "See you",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "See you"
+  },
+  {
+   "chave": "a0f77487v",
+   "voz": "npc-saturno-sky",
+   "texto": "! Volte sempre!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "! Volte sempre!"
   },
   {
    "chave": "6a4a021b1r",

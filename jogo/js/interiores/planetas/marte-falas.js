@@ -17,7 +17,7 @@
     pedrinhas: {
       pegou: 'Você pegou uma pedrinha! ✨',
       faltam: { 4: 'Faltam quatro pedrinhas!', 3: 'Faltam três pedrinhas!', 2: 'Faltam duas pedrinhas!', 1: 'Falta só uma pedrinha!' },
-      todas: ['Você pegou as cinco! 🎉', 'Que pedrinhas coloridas!', 'Elas vão brilhar de novo.'],
+      todas: ['Você pegou as cinco pedrinhas! 🎉', 'Que pedrinhas coloridas!', 'Elas vão brilhar de novo.'],
       ja: ['Essa pedrinha você já pegou!'],
     },
     // curiosidades de verdade (voz do Vovô Vulcão), sorteadas sem repetir na sessão
@@ -27,7 +27,7 @@
       // fonte: NASA Science — Olympus Mons é o maior vulcão do Sistema Solar
       { id: 'olimpo', paginas: ['Aqui tem o maior vulcão!', 'É o Monte Olimpo, olha lá!', 'O maior do Sistema Solar.'] },
       // fonte: NASA Science — as luas de Marte são Fobos e Deimos
-      { id: 'luas', paginas: ['Marte tem duas luazinhas.', 'Elas são Fobos e Deimos.'] },
+      { id: 'luas', paginas: ['Marte tem duas luas pequenas.', 'Elas são Fobos e Deimos.'] },
       // fonte: NASA Science — o dia de Marte (sol) dura 24 h 37 min
       { id: 'dia', paginas: ['O dia aqui é quase igual.', 'Só uns minutinhos a mais!'] },
       // fonte: NASA Science — a temperatura média de Marte é de uns 60 graus abaixo de zero
