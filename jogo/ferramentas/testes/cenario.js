@@ -31,6 +31,7 @@ const TELAS = {
   escola: 'Reino.Provas.telaEscola()',
   foguete: 'Reino.UI.telaFoguete && Reino.UI.telaFoguete()',
   voo: "Reino.Voo && Reino.Voo.iniciar({ planeta: Reino.Viagem.planeta('lua') })",
+  'album-ets': 'Reino.UI.telaAlbumETs && Reino.UI.telaAlbumETs()',
 };
 // telas com argumento: 'materia:historia', 'livro:historia', 'sala:h1', 'prova:historia-3bim', 'treino:historia'
 // (e 'desafio:h1-03', tratado em tela(): um desafio certo, sem sorteio)

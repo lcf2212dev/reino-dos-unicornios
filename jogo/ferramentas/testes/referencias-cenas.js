@@ -45,6 +45,7 @@ const TELAS = [
   // viagem de foguete (docs/contratos/viagem.md): o painel e o voo na contagem (a base antiga não tem: guarda)
   ['foguete', 'Reino.UI.telaFoguete && Reino.UI.telaFoguete()'],
   ['voo', "Reino.Voo && Reino.Voo.iniciar({ planeta: Reino.Viagem.planeta('lua') })"],
+  ['album-ets', 'Reino.UI.telaAlbumETs && Reino.UI.telaAlbumETs()'],
 ];
 async function cenasTelas(page, pasta) {
   for (const [nome, js] of TELAS) {
