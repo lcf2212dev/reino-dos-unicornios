@@ -104,6 +104,8 @@
     { id: 'balao-cauda', nome: 'Balãozinho na cauda', preco: 43, slot: 'cauda', icone: '🎈' },
     { id: 'barbatana-sereia', nome: 'Barbatana de sereia', preco: 58, slot: 'cauda', icone: 'enfeite:barbatana-sereia' },
     { id: 'estrela-cadente-cauda', nome: 'Estrela cadente na cauda', preco: 78, slot: 'cauda', icone: '🌠' },
+    // viagem espacial (3ª versão): no fim, para não mexer nas posições dos saves sintéticos
+    { id: 'capacete-astronauta', nome: 'Capacete de astronauta', preco: 38, slot: 'cabeca', icone: 'enfeite:capacete-astronauta', espaco: true },
   ];
 
   // o que a Loja fala de novo (o orquestrador grava; Falas.todas põe no pacote geral)

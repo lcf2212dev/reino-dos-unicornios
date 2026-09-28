@@ -51,6 +51,10 @@
   var COMETA_CAUDA_TRAS = ['kk....', 'kck...', 'kCck..', '.kCWk.', '.kWWWk', '.kYWYk', '..kkk.'];
 
   // Adulto / jovem (26 x 21)
+  // capacete de astronauta (bolha de frente; de lado a viseira fica virada para a cara)
+  var CAPACETE_ASTRONAUTA = ['....kRk....', '.....k.....', '..kkkkkkk..', '.kWCCCCCwk.', 'kWCcCCCCBwk', 'GWCCCCCBBwG', 'kgggggggggk', '.kkkkkkkkk.'];
+  var CAPACETE_ASTRONAUTA_LADO = ['....kRk....', '.....k.....', '..kkkkkkk..', '.kWWWCCCCk.', 'kWWWCcCCCBk', 'GWWwCCCCBBk', 'kgggggggggk', '.kkkkkkkkk.'];
+  var CAPACETE_ASTRONAUTA_COSTAS = ['....kRk....', '.....k.....', '..kkkkkkk..', '.kWWWWWWwk.', 'kWWWWWWWwwk', 'GWWWWWWwwwG', 'kgggggggggk', '.kkkkkkkkk.'];
   UNI.adulto.lado = {
     corpo: [
       '......................k...',
@@ -85,7 +89,7 @@
     ancoras: { orelha: [15, 1], olho: [19, 6], cabeca: [17, 3],
       pescoco: [16, 11], cauda: [2, 13], chifre: [21, 1] },
     // de lado o chifre é inclinado: o anel não leva o risquinho (embaixo dele só há o próprio chifre)
-    enfeites: { 'anel-saturno': { linhas: ['.AA..AA.', 'AAWWWWAA'], x: 18, y: 1 },
+    enfeites: { 'anel-saturno': { linhas: ['.AA..AA.', 'AAWWWWAA'], x: 18, y: 1 }, 'capacete-astronauta': { linhas: CAPACETE_ASTRONAUTA_LADO, x: 12, y: 1 },
       'cometa-cauda': { linhas: COMETA_CAUDA_TRAS, x: 0, y: 8 } },
     brilhos: [[12, 6], [11, 9], [2, 13], [13, 4]],
     cavaleira: [2, 2],
@@ -177,7 +181,7 @@
       pescoco: [9, 10], cauda: [8, 16], chifre: [8, 1] },
     // de costas o laço da gravata e o pingente do colar ficam escondidos: só a tirinha e o fio
     // (os desenhos próprios usam a paleta do enfeite em PA.ENFEITES_MONTARIA)
-    enfeites: { 'cachecol-pinguim': { linhas: CACHECOL_COSTAS, x: 5, y: 9 }, 'chapeu-chef-arco-iris': { linhas: CHAPEU_CHEF_FRENTE, x: 5, y: 1 }, 'gravata-borboleta': { linhas: ['RRRRR'], x: 5, y: 10 },
+    enfeites: { 'cachecol-pinguim': { linhas: CACHECOL_COSTAS, x: 5, y: 9 }, 'capacete-astronauta': { linhas: CAPACETE_ASTRONAUTA_COSTAS, x: 3, y: 1 }, 'chapeu-chef-arco-iris': { linhas: CHAPEU_CHEF_FRENTE, x: 5, y: 1 }, 'gravata-borboleta': { linhas: ['RRRRR'], x: 5, y: 10 },
       'colar-perolas': { linhas: ['LcrcrcL', '.LLLLL.'], x: 6, y: 10 } },
     brilhos: [[10, 6], [11, 9], [8, 15]],
     cavaleira: [3, 6],
@@ -258,7 +262,7 @@
     asas: [{ linhas: ASA_ADULTO, x: 5, y: 4, atras: true, escura: true }, { linhas: ASA_ADULTO, x: 6, y: 5 }],
     ancoras: { orelha: [13, 2], olho: null, cabeca: [16, 4],
       pescoco: [15, 9], cauda: [2, 14], chifre: [18, 1] },
-    enfeites: { 'cachecol-pinguim': { linhas: CACHECOL_COSTAS, x: 11, y: 8 }, 'gravata-borboleta': { linhas: ['RRRR'], x: 11, y: 9 },
+    enfeites: { 'cachecol-pinguim': { linhas: CACHECOL_COSTAS, x: 11, y: 8 }, 'capacete-astronauta': { linhas: CAPACETE_ASTRONAUTA_COSTAS, x: 11, y: 2 }, 'gravata-borboleta': { linhas: ['RRRR'], x: 11, y: 9 },
       'colar-perolas': { linhas: ['LcrcrcL', '.LLLLL.'], x: 12, y: 9 },
       // o anel 1 px mais estreito na frente, para caber na borda direita
       'anel-saturno': { linhas: ['..AA..AA', '.AAWWWAA'], x: 14, y: 1 } },
@@ -300,7 +304,7 @@
       pescoco: [10, 10], cauda: [1, 9], chifre: [12, 1] },
     // filhote: o anel de Saturno é um aro pequeno em volta da base do chifrinho, visto um pouco de
     // cima (pontas ao lado do chifre, arco da frente embaixo): no bebê o toquinho aparece dentro dele
-    enfeites: { 'cachecol-pinguim': { linhas: CACHECOL_PINGUIM_FILHOTE, x: 6, y: 9 }, 'anel-saturno': { linhas: ['A...A', '.AaA.'], x: 10, y: 2 },
+    enfeites: { 'cachecol-pinguim': { linhas: CACHECOL_PINGUIM_FILHOTE, x: 6, y: 9 }, 'capacete-astronauta': { linhas: CAPACETE_ASTRONAUTA_LADO, x: 5, y: 0 }, 'anel-saturno': { linhas: ['A...A', '.AaA.'], x: 10, y: 2 },
       // enfeites de cauda 1 px para dentro (cauda + dx −1), para não cortar na borda esquerda
       'fitinha-cauda': { linhas: FITINHA_CAUDA, x: 0, y: 8 },
       'pompom-cauda': { linhas: POMPOM_CAUDA, x: 0, y: 7 },
@@ -384,7 +388,7 @@
     ],
     ancoras: { orelha: [12, 2], olho: null, cabeca: [7, 3],
       pescoco: [8, 9], cauda: [7, 12], chifre: [7, 1] },
-    enfeites: { 'cachecol-pinguim': { linhas: CACHECOL_COSTAS, x: 4, y: 8 }, 'chapeu-chef-arco-iris': { linhas: CHAPEU_CHEF_FRENTE, x: 4, y: 1 }, 'gravata-borboleta': { linhas: ['RRRRR'], x: 5, y: 9 },
+    enfeites: { 'cachecol-pinguim': { linhas: CACHECOL_COSTAS, x: 4, y: 8 }, 'capacete-astronauta': { linhas: CAPACETE_ASTRONAUTA_COSTAS, x: 2, y: 1 }, 'chapeu-chef-arco-iris': { linhas: CHAPEU_CHEF_FRENTE, x: 4, y: 1 }, 'gravata-borboleta': { linhas: ['RRRRR'], x: 5, y: 9 },
       'colar-perolas': { linhas: ['LcrcrcL', '.LLLLL.'], x: 5, y: 9 },
       'anel-saturno': { linhas: ['A....A', '.AaaA.'], x: 5, y: 2, bebe: ANEL_BEBE_FRENTE } },
     brilhos: [[10, 6], [11, 8]],
@@ -457,7 +461,7 @@
     asas: [{ linhas: ASA_FILHOTE, x: 3, y: 5, atras: true, escura: true }, { linhas: ASA_FILHOTE, x: 4, y: 6 }],
     ancoras: { orelha: [9, 2], olho: null, cabeca: [12, 3],
       pescoco: [10, 8], cauda: [2, 10], chifre: [12, 1] },
-    enfeites: { 'cachecol-pinguim': { linhas: CACHECOL_COSTAS, x: 6, y: 7 }, 'gravata-borboleta': { linhas: ['RRRR'], x: 8, y: 8 },
+    enfeites: { 'cachecol-pinguim': { linhas: CACHECOL_COSTAS, x: 6, y: 7 }, 'capacete-astronauta': { linhas: CAPACETE_ASTRONAUTA_COSTAS, x: 7, y: 1 }, 'gravata-borboleta': { linhas: ['RRRR'], x: 8, y: 8 },
       'colar-perolas': { linhas: ['LcrcrcL', '.LLLLL.'], x: 7, y: 8 },
       'anel-saturno': { linhas: ['A....A', '.AaaA.'], x: 10, y: 2, bebe: ANEL_BEBE_DIAG } },
     brilhos: [[7, 5], [6, 7], [1, 10]],
@@ -556,6 +560,9 @@
     'balao-cauda': { linhas: ['.kRk.', 'kRWRk', 'kRRRk', '.kRk.', '..k..', '..k..'], paleta: { k: '#3a2446', R: '#ff4f6d', W: '#ffffff' }, ancora: 'cauda', dx: -2, dy: -5 },
     'barbatana-sereia': { linhas: ['kT.Tk', 'TtTtT', '.TTT.', '..k..'], paleta: { k: '#3a2446', T: '#34d0c0', t: '#9ff0e6' }, ancora: 'cauda', dx: -2, dy: 0 },
     'estrela-cadente-cauda': { linhas: ['....p', '...pP', 'kYkP.', 'YWY..', 'kYk..'], paleta: { k: '#3a2446', Y: '#ffd34d', W: '#ffffff', p: '#ffd1e6', P: '#ff7eb6' }, ancora: 'cauda', dx: -2, dy: -2 },
+    // capacete de astronauta: bolha branca com viseira azul, aro cinza com parafusos e antena de bolinha rosa.
+    // dy -2 para a bolinha caber no quadro do filhote (âncora cabeca em y=2); de lado a viseira vai para a cara
+    'capacete-astronauta': { linhas: CAPACETE_ASTRONAUTA, paleta: { k: '#3a2446', W: '#ffffff', w: '#dfe6f2', C: '#8fd8ff', c: '#eafaff', B: '#4fa8e8', g: '#b8c2d6', G: '#7d88a3', R: '#ff5c8a' }, ancora: 'cabeca', dx: -5, dy: -2 },
     // prêmios da prova de Português (js/conteudo/provas/portugues-3bim.js)
     // touca de chef branca e fofa (dois gomos, dobras e lado da sombra em lilás L) com faixa de arco-íris
     // de 2 px (a de baixo mais escura): assim a touca não se confunde com a cabeça de um unicórnio branco
