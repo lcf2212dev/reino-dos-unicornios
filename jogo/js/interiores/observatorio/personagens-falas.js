@@ -37,7 +37,7 @@ Reino.falasDoPredio('observatorio', { npcs: {
   },
   'marte-vovo': {
     oi: ['Olá! Sou o Vovô Vulcão.', 'Moro perto do vulcão gigante.'],
-    nova: ['Quer ouvir uma curiosidade?'],
+    nova: ['Vamos ouvir uma curiosidade?'],
     depois: ['Marte é o planeta vermelho.', 'A cor vem da ferrugem!'],
   },
   'saturno-sky': {
@@ -52,7 +52,7 @@ Reino.falasDoPredio('observatorio', { npcs: {
   },
   'saturno-vovo': {
     oi: ['{Olá, minha querida!|Olá, meu querido!}', 'Eu sou a Vovó Anel.', 'Moro nos anéis faz tempo.'],
-    nova: ['Quer ouvir uma curiosidade?'],
+    nova: ['Vamos ouvir uma curiosidade?'],
     depois: ['Os anéis são de gelo e pedra.', 'Eles brilham com a luz do Sol!'],
   },
 } });

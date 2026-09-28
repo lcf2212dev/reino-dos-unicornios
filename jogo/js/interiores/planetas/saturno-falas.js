@@ -23,8 +23,8 @@
     palavras: {
       ice: ['«Ice» quer dizer gelo.', 'O anel tem muito gelo!'],
       star: ['«Star» quer dizer estrela.', 'Olhe as estrelas no céu!'],
-      ring: ['«Ring» quer dizer anel.', 'Você está num anel!'],
-      moon: ['«Moon» quer dizer lua.', 'Saturno tem muitas luas!'],
+      ring: ['«Ring» quer dizer anel.', 'Você está em cima do anel!'],
+      moon: ['«Moon» quer dizer lua.', 'Saturno tem um montão de luas!'],
     },
     // curiosidades de verdade (voz da Vovó Anel), sorteadas sem repetir na sessão
     curiosidades: [
