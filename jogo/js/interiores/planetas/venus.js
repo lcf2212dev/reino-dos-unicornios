@@ -50,7 +50,7 @@
       { tipo: 'venus-direcao', x: 1, y: 8, nome: 'Placa do Oeste', var: { p: 'oeste' }, acao: b({ b: 'direcao', p: 'oeste' }) },
       { tipo: 'venus-luneta', x: 4, y: 4, nome: 'Luneta', acao: b({ b: 'curiosidade' }) },
       { tipo: 'venus-globo', x: 9, y: 3, nome: 'Globo', fala: ['O globo mostra a Terra toda!', 'Ela é redondinha assim.'] },
-      { tipo: 'venus-mapa', x: 7, y: 10, nome: 'Mapa-múndi', fala: ['Um mapa-múndi do mundo todo!', 'Tem terra e muito mar azul.'] },
+      { tipo: 'venus-mapa', x: 7, y: 10, nome: 'Mapa-múndi', fala: ['Um mapa com o mundo todo!', 'Tem terra e muito mar azul.'] },
       { tipo: 'venus-bussola', x: 14, y: 3, nome: 'Bússola', fala: ['Uma bússola bem grandona!', 'A agulha aponta o Norte.'] },
       // enfeites
       { tipo: 'venus-pedra-alta', x: 6, y: 3 }, { tipo: 'venus-pedra-alta', x: 2, y: 3 }, { tipo: 'venus-rachadura', x: 13, y: 4 },

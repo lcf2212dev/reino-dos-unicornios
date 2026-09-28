@@ -23,7 +23,7 @@
     letras: {
       A: ['Amigo começa com A!', 'Você é {minha amiga|meu amigo}! 💛'],
       B: ['Bola começa com B!', 'Vamos jogar bola na nuvem?'],
-      E: ['Estrela começa com E!', 'Olhe as estrelas no céu!'],
+      E: ['Estrela começa com a letra E!', 'Olhe as estrelas no céu!'],
       I: ['Ilha começa com I!', 'Aqui tem ilha de nuvem!'],
       U: ['Unicórnio começa com U!', 'Os unicórnios do seu Reino!'],
     },
@@ -34,11 +34,11 @@
       // fonte: NASA Science — gigante gasoso, sem chão firme
       { id: 'gas', paginas: ['Júpiter é feito de gás.', 'Por isso andamos na nuvem!'] },
       // fonte: NASA Science — https://science.nasa.gov/jupiter/ (Grande Mancha Vermelha, maior que a Terra)
-      { id: 'mancha', paginas: ['Olhe a mancha vermelha no céu!', 'É uma tempestade enorme.', 'Ela é maior que a Terra!'] },
+      { id: 'mancha', paginas: ['Veja a mancha vermelha lá em cima!', 'É uma tempestade enorme.', 'Ela é maior que a Terra!'] },
       // fonte: NASA Science — https://science.nasa.gov/jupiter/jupiter-moons/ (95 luas oficiais)
       { id: 'luas', paginas: ['Júpiter tem mais de 90 luas!', 'É lua para todo lado!'] },
       // fonte: NASA Science — as luas galileanas: Io, Europa, Ganimedes e Calisto
-      { id: 'quatro', paginas: ['Quatro luas são bem grandes.', 'Io, Europa e Ganimedes.', 'E a quarta é Calisto!'] },
+      { id: 'quatro', paginas: ['Quatro luas são bem grandes.', 'Europa, Ganimedes e Calisto.', 'E a lua Io, bem amarelinha!'] },
       // fonte: NASA Science — um dia de Júpiter dura cerca de 10 horas
       { id: 'dia', paginas: ['Aqui o dia é bem curto.', 'Dura umas dez horas só!'] },
       // fonte: NASA Science — Júpiter é o 5º planeta a partir do Sol
