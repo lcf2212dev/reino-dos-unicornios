@@ -1,0 +1,381 @@
+{
+  "nome": "viagem-v3",
+  "pedido": "pedidos/2026-09-27-viagem-v3.md",
+  "personagens": [
+    {
+      "id": "jupiter-tinta",
+      "nome": "Tinta",
+      "genero": "f",
+      "idade": "crianca",
+      "predio": "planeta-jupiter",
+      "x": 8,
+      "y": 7
+    },
+    {
+      "id": "jupiter-bolha",
+      "nome": "Bolha",
+      "genero": "m",
+      "idade": "crianca",
+      "predio": "planeta-jupiter",
+      "x": 16,
+      "y": 9
+    },
+    {
+      "id": "jupiter-vovo",
+      "nome": "Vovô Tempestade",
+      "genero": "m",
+      "idade": "idoso",
+      "predio": "planeta-jupiter",
+      "x": 5,
+      "y": 12
+    },
+    {
+      "id": "venus-mapi",
+      "nome": "Mapi",
+      "genero": "f",
+      "idade": "crianca",
+      "predio": "planeta-venus",
+      "x": 8,
+      "y": 7
+    },
+    {
+      "id": "venus-quentinho",
+      "nome": "Quentinho",
+      "genero": "m",
+      "idade": "crianca",
+      "predio": "planeta-venus",
+      "x": 16,
+      "y": 9
+    },
+    {
+      "id": "venus-vovo",
+      "nome": "Vovó Nuvem",
+      "genero": "f",
+      "idade": "idoso",
+      "predio": "planeta-venus",
+      "x": 5,
+      "y": 12
+    },
+    {
+      "id": "netuno-gota",
+      "nome": "Gota",
+      "genero": "f",
+      "idade": "crianca",
+      "predio": "planeta-netuno",
+      "x": 8,
+      "y": 7
+    },
+    {
+      "id": "netuno-memo",
+      "nome": "Memo",
+      "genero": "m",
+      "idade": "crianca",
+      "predio": "planeta-netuno",
+      "x": 16,
+      "y": 9
+    },
+    {
+      "id": "netuno-vovo",
+      "nome": "Vovó Ventania",
+      "genero": "f",
+      "idade": "idoso",
+      "predio": "planeta-netuno",
+      "x": 5,
+      "y": 12
+    }
+  ],
+  "tarefas": [
+    {
+      "id": "contrato",
+      "tipo": "contrato",
+      "titulo": "Reservas dos 9 ETs, esqueletos de Júpiter, Vênus e Netuno, config, contrato",
+      "quem": "orquestrador",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/interiores/observatorio/reservas.js",
+        "jogo/js/nucleo/config.js",
+        "docs/contratos/viagem.md",
+        "jogo/js/manifesto.js",
+        "jogo/index.html",
+        "pedidos/",
+        "amostras-de-voz/"
+      ],
+      "worktree": "viagem-v3",
+      "personagens": [
+        "jupiter-tinta",
+        "jupiter-bolha",
+        "jupiter-vovo",
+        "venus-mapi",
+        "venus-quentinho",
+        "venus-vovo",
+        "netuno-gota",
+        "netuno-memo",
+        "netuno-vovo"
+      ],
+      "pronto": [
+        "vagas",
+        "vozes-elenco limpo"
+      ],
+      "estimativa": 40
+    },
+    {
+      "id": "falas-ets",
+      "tipo": "falas",
+      "titulo": "Falas dos 9 ETs",
+      "quem": "orquestrador",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/interiores/observatorio/personagens-falas.js"
+      ],
+      "worktree": "viagem-v3",
+      "personagens": [
+        "jupiter-tinta",
+        "jupiter-bolha",
+        "jupiter-vovo",
+        "venus-mapi",
+        "venus-quentinho",
+        "venus-vovo",
+        "netuno-gota",
+        "netuno-memo",
+        "netuno-vovo"
+      ],
+      "pronto": [
+        "30 letras"
+      ],
+      "estimativa": 10
+    },
+    {
+      "id": "vozes",
+      "tipo": "vozes",
+      "titulo": "Amostras dos 9 ETs",
+      "quem": "orquestrador",
+      "depende": [
+        "falas-ets"
+      ],
+      "arquivos": [
+        "jogo/js/voz/",
+        "jogo/ferramentas/gerado/"
+      ],
+      "worktree": "viagem-v3",
+      "personagens": [
+        "jupiter-tinta",
+        "jupiter-bolha",
+        "jupiter-vovo",
+        "venus-mapi",
+        "venus-quentinho",
+        "venus-vovo",
+        "netuno-gota",
+        "netuno-memo",
+        "netuno-vovo"
+      ],
+      "pronto": [
+        "transcrição sem ✘"
+      ],
+      "estimativa": 10
+    },
+    {
+      "id": "cenario-jupiter",
+      "tipo": "cenario",
+      "titulo": "Júpiter: chão, horizonte, objetos e brincadeiras",
+      "quem": "worker-low",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/interiores/planetas/jupiter.js",
+        "jogo/js/interiores/planetas/jupiter-objetos.js",
+        "jogo/js/interiores/planetas/jupiter-brincadeiras.js",
+        "jogo/js/interiores/planetas/jupiter-falas.js"
+      ],
+      "worktree": "viagem-jupiter",
+      "pronto": [
+        "vagas livres",
+        "brincadeiras",
+        "curiosidades corretas"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "cenario-venus",
+      "tipo": "cenario",
+      "titulo": "Vênus: chão, horizonte, objetos e brincadeiras",
+      "quem": "worker-low",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/interiores/planetas/venus.js",
+        "jogo/js/interiores/planetas/venus-objetos.js",
+        "jogo/js/interiores/planetas/venus-brincadeiras.js",
+        "jogo/js/interiores/planetas/venus-falas.js"
+      ],
+      "worktree": "viagem-venus",
+      "pronto": [
+        "vagas livres",
+        "brincadeiras",
+        "curiosidades corretas"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "cenario-netuno",
+      "tipo": "cenario",
+      "titulo": "Netuno: chão, horizonte, objetos e brincadeiras",
+      "quem": "worker-low",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/interiores/planetas/netuno.js",
+        "jogo/js/interiores/planetas/netuno-objetos.js",
+        "jogo/js/interiores/planetas/netuno-brincadeiras.js",
+        "jogo/js/interiores/planetas/netuno-falas.js"
+      ],
+      "worktree": "viagem-netuno",
+      "pronto": [
+        "vagas livres",
+        "brincadeiras",
+        "curiosidades corretas"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "npc-ets",
+      "tipo": "npc",
+      "titulo": "Sprites dos 9 ETs",
+      "quem": "worker-low",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/interiores/planetas/personagens.js",
+        "jogo/js/interiores/planetas/ets.js"
+      ],
+      "worktree": "viagem-ets3",
+      "personagens": [
+        "jupiter-tinta",
+        "jupiter-bolha",
+        "jupiter-vovo",
+        "venus-mapi",
+        "venus-quentinho",
+        "venus-vovo",
+        "netuno-gota",
+        "netuno-memo",
+        "netuno-vovo"
+      ],
+      "pronto": [
+        "9 ETs nas vagas"
+      ],
+      "estimativa": 30
+    },
+    {
+      "id": "album",
+      "tipo": "mecanica",
+      "titulo": "Álbum de ETs, regra de amizade e falas de desafio dos ETs novos",
+      "quem": "worker-low",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/sistemas/viagem-amigos.js",
+        "jogo/js/ui/album-ets.js",
+        "jogo/css/ui-album-ets.css",
+        "jogo/js/ui/foguete.js",
+        "jogo/css/ui-foguete.css",
+        "jogo/js/sistemas/viagem-desafio.js",
+        "jogo/js/interiores/planetas/lua-brincadeiras.js",
+        "jogo/js/interiores/planetas/marte-brincadeiras.js",
+        "jogo/js/interiores/planetas/saturno-brincadeiras.js",
+        "jogo/ferramentas/testes/unidade/viagem-amigos.test.js"
+      ],
+      "worktree": "viagem-album",
+      "pronto": [
+        "álbum",
+        "amigo ao brincar",
+        "Levar comigo"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "companheiro",
+      "tipo": "mecanica",
+      "titulo": "O ET que acompanha a Mariana",
+      "quem": "worker-low",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/sistemas/et-companheiro.js",
+        "jogo/js/sistemas/et-companheiro-desenho.js",
+        "jogo/ferramentas/testes/unidade/et-companheiro.test.js"
+      ],
+      "worktree": "viagem-companheiro",
+      "pronto": [
+        "segue no mapa e interiores",
+        "sem Animações parado"
+      ],
+      "estimativa": 45
+    },
+    {
+      "id": "capacete",
+      "tipo": "arte",
+      "titulo": "Capacete de astronauta do unicórnio na Loja",
+      "quem": "worker-low",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/conteudo/loja-itens.js",
+        "jogo/js/arte/pixelart-unicornio-moldes.js",
+        "jogo/js/arte/icones/loja-petshop.js"
+      ],
+      "worktree": "viagem-capacete",
+      "pronto": [
+        "à venda e desenhado"
+      ],
+      "estimativa": 30
+    },
+    {
+      "id": "integracao",
+      "tipo": "integracao",
+      "titulo": "Juntar, vozes, e2e",
+      "quem": "orquestrador",
+      "depende": [
+        "falas-ets",
+        "vozes",
+        "cenario-jupiter",
+        "cenario-venus",
+        "cenario-netuno",
+        "npc-ets",
+        "album",
+        "companheiro",
+        "capacete"
+      ],
+      "arquivos": [
+        "jogo/ferramentas/testes/referencias-cenas.js"
+      ],
+      "worktree": "viagem-v3",
+      "pronto": [
+        "validar-tudo"
+      ],
+      "estimativa": 40
+    },
+    {
+      "id": "entrega",
+      "tipo": "entrega",
+      "titulo": "Merge, push, artifact",
+      "quem": "orquestrador",
+      "depende": [
+        "integracao"
+      ],
+      "arquivos": [],
+      "worktree": "viagem-v3",
+      "pronto": [
+        "main e artifact"
+      ],
+      "estimativa": 20
+    }
+  ]
+}

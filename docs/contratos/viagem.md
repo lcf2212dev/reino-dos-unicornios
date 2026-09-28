@@ -13,6 +13,8 @@ o minijogo de voo e os planetas (interiores do Observatório com céu aberto e E
 | `jogo/js/sistemas/viagem.js` (+ partes `viagem-*.js`) | `Reino.Viagem`: planetas, tanque, passaporte, ação `viagem`, fluxo decolar → voo → chegada; falas do Claude |
 | `jogo/js/sistemas/viagem-perguntas.js` | `Reino.Viagem.perguntas(materia, n, chave)`: perguntas curtas das salas para os portais (§4.1) |
 | `jogo/js/sistemas/viagem-desafio.js`, `jogo/js/ui/et-desafio.js`, `css/ui-et-desafio.css` | o desafio do ET (ação `viagem-desafio`) e o campo `etsAmigos` (§6.1) |
+| `jogo/js/sistemas/viagem-amigos.js`, `jogo/js/ui/album-ets.js`, `css/ui-album-ets.css` | o álbum de ETs e a regra de amizade (§6.2) |
+| `jogo/js/sistemas/et-companheiro.js` (+ `-desenho.js`) | o ET que acompanha a Mariana no mapa e nos interiores (§6.3) |
 | `jogo/js/ui/foguete.js`, `css/ui-foguete.css` | painel do foguete (`Reino.UI.telaFoguete()`): tanque, destinos, passaporte |
 | `jogo/js/atividades/voo.js`, `voo-desenho.js`, `css/ui-voo.css` | `Reino.Voo`: o minijogo de voo em tela própria com canvas |
 | `jogo/js/interiores/planetas/` | `planetas-comum.js` (fundo `espaco`, pisos, horizonte, foguete de pouso), um arquivo (ou mais) por planeta |
@@ -91,6 +93,11 @@ perguntas(materia, n, chave) → [{ id, materia, sala, texto, opcoes: [texto], c
 - Lua: `lua-lumi` (Lumi) (8, 7), `lua-pipo` (Pipo) (16, 9), `lua-vovo` (Vovó Cratera) (5, 12).
 - Marte (Matemática): `marte-rubi` (Rubi, desafio) (8, 7), `marte-faisca` (Faísca) (16, 9), `marte-vovo` (Vovô Vulcão) (5, 12).
 - Saturno (Inglês): `saturno-sky` («Sky», desafio) (8, 7), `saturno-nico` (Nico) (16, 9), `saturno-vovo` (Vovó Anel) (5, 12).
+- Júpiter (Português): `jupiter-tinta` (Tinta, desafio) (8, 7), `jupiter-bolha` (Bolha) (16, 9), `jupiter-vovo` (Vovô Tempestade) (5, 12).
+- Vênus (Geografia): `venus-mapi` (Mapi, desafio) (8, 7), `venus-quentinho` (Quentinho) (16, 9), `venus-vovo` (Vovó Nuvem) (5, 12).
+- Netuno (Ciências e História): `netuno-gota` (Gota, desafio de Ciências) (8, 7), `netuno-memo` (Memo, desafio de
+  História) (16, 9), `netuno-vovo` (Vovó Ventania) (5, 12). Portais do voo com Ciências.
+- Ordem de abertura: Lua → Marte → Saturno → Júpiter → Vênus → Netuno (`depois`).
 - Os planetas montam os NPCs por `Reino._predios.planetas.npcsDoPlaneta(interior)` (planetas-comum.js).
 
 ### 6.1 O desafio do ET (`viagem-desafio`)
@@ -100,7 +107,24 @@ perguntas(materia, n, chave) → [{ id, materia, sala, texto, opcoes: [texto], c
   Cada Conferir conta na Aura (`Reino.Aura.contar(ok)`); acerto de primeira vale `estrelasPorAcertoET` estrela;
   errada mostra a certa e a explicação e segue. Terminar (acertando ou não) faz do ET um amigo.
 - Falas do ET no desafio: as do módulo (`falas()`), na voz do ET (`npc-<id>`), texto exato.
-- Save: `etsAmigos: { <npcId>: true }` (uniao, `novoCiclo: 'mantem'`). 3ª versão: o álbum de ETs e o ET que acompanha.
+- Save: `etsAmigos: { <npcId>: true }` (uniao, `novoCiclo: 'mantem'`).
+
+### 6.2 Amizade e álbum de ETs (3ª versão)
+- Regra: o ET do desafio vira amigo ao terminar o desafio (§6.1); os outros ETs viram amigos quando ela brinca ou
+  ouve a curiosidade com eles: toda ação de ET de planeta chama `Reino.Viagem.fazerAmigo(npcId)` (se existir).
+- `Reino.Viagem.ets() → [{ id, nome, planeta, amigo }]` (todos os ETs dos planetas, na ordem dos planetas).
+- Álbum (`Reino.UI.telaAlbumETs()`), aberto por um botão no painel do foguete: um cartão por ET (sprite, nome,
+  planeta); amigo em cores, ainda não = silhueta com "?". No cartão de um amigo: "Levar comigo" (§6.3).
+
+### 6.3 O ET que acompanha
+- `Reino.Viagem.companheiro() → id | null`, `escolherCompanheiro(id | null)` (só amigo). Save: `etCompanheiro:
+  { mariana: { id, em } }` (carimbo, `novoCiclo: 'mantem'`).
+- Camada de desenho (`registrarModulo` com `camada`): o ET flutua um pouco atrás da Mariana, no mapa e nos
+  interiores, seguindo o caminho dela (rastro próprio; recomeça ao trocar de cena), balançando devagar (parado sem
+  Animações). Não conversa nem bloqueia nada. Número em `config.viagem.companheiroDistancia`.
+
+### 6.4 Capacete de astronauta (Loja)
+- Enfeite do unicórnio no encaixe `cabeca` (receita `docs/receitas/enfeite-novo.md`), tema espaço (`espaco: true`).
 
 ## 7. Pulo (`Jogador.pular`)
 ```
