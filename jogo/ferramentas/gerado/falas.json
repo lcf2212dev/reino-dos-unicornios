@@ -30630,15 +30630,6 @@
    "fala": "Eu moro aqui em Marte!"
   },
   {
-   "chave": "3fb4da66y",
-   "voz": "npc-marte-rubi",
-   "texto": "Minha nave quebrou!",
-   "pacotes": [
-    "interior-observatorio"
-   ],
-   "fala": "Minha nave quebrou!"
-  },
-  {
    "chave": "9becd7aa17",
    "voz": "npc-marte-rubi",
    "texto": "Você me ajuda com as contas?",
@@ -39061,6 +39052,15 @@
     "geral"
    ],
    "fala": "Quase! Veja a certa ali."
+  },
+  {
+   "chave": "3fb4da66y",
+   "voz": "npc-marte-rubi",
+   "texto": "Minha nave quebrou!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Minha nave quebrou!"
   },
   {
    "chave": "8718609e18",
