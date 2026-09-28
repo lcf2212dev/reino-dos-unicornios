@@ -298,6 +298,8 @@
       { js: 'js/interiores/planetas/lua-falas.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/planetas/lua-brincadeiras.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/planetas/lua.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/planetas/marte-objetos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/planetas/marte-falas.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/planetas/marte-brincadeiras.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/planetas/marte.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/planetas/saturno-brincadeiras.js', grupo: 'interiores', node: true },
