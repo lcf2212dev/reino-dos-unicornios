@@ -101,6 +101,6 @@ Reino.falasDoPredio('observatorio', { npcs: {
   'netuno-vovo': {
     oi: ['{Olá, minha querida!|Olá, meu querido!}', 'Eu sou a Vovó Ventania.', 'Aqui venta muito, muito!'],
     nova: ['Vamos ouvir uma curiosidade?'],
-    depois: ['Netuno é bem azulzinho.', 'E fica longe do Sol!'],
+    depois: ['Que bom que você veio!', 'Volte para ouvir mais!'],
   },
 } });
