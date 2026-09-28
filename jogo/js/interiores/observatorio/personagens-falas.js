@@ -26,7 +26,7 @@ Reino.falasDoPredio('observatorio', { npcs: {
 // ETs de Marte (planeta-marte) e de Saturno (planeta-saturno), 2ª versão da viagem
 Reino.falasDoPredio('observatorio', { npcs: {
   'marte-rubi': {
-    oi: ['Oi! Eu me chamo Rubi.', 'Eu moro aqui em Marte!', 'Minha nave quebrou!'],
+    oi: ['Oi! Eu me chamo Rubi.', 'Eu moro aqui em Marte!'],
     nova: ['Você me ajuda com as contas?'],
     depois: ['Minha nave voa de novo!', 'Obrigada, {amiga|amigo}!'],
   },
