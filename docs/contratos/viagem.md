@@ -14,7 +14,7 @@ o minijogo de voo e os planetas (interiores do Observatório com céu aberto e E
 | `jogo/js/sistemas/viagem-perguntas.js` | `Reino.Viagem.perguntas(materia, n, chave)`: perguntas curtas das salas para os portais (§4.1) |
 | `jogo/js/sistemas/viagem-desafio.js`, `jogo/js/ui/et-desafio.js`, `css/ui-et-desafio.css` | o desafio do ET (ação `viagem-desafio`) e o campo `etsAmigos` (§6.1) |
 | `jogo/js/sistemas/viagem-amigos.js`, `jogo/js/ui/album-ets.js`, `css/ui-album-ets.css` | o álbum de ETs e a regra de amizade (§6.2) |
-| `jogo/js/sistemas/et-companheiro.js` (+ `-desenho.js`) | o ET que acompanha a Mariana no mapa e nos interiores (§6.3) |
+| `jogo/js/sistemas/et-companheiro.js`, `jogo/js/sistemas/et-companheiro-desenho.js` | o ET que acompanha a Mariana no mapa e nos interiores (§6.3) |
 | `jogo/js/ui/foguete.js`, `css/ui-foguete.css` | painel do foguete (`Reino.UI.telaFoguete()`): tanque, destinos, passaporte |
 | `jogo/js/atividades/voo.js`, `voo-desenho.js`, `css/ui-voo.css` | `Reino.Voo`: o minijogo de voo em tela própria com canvas |
 | `jogo/js/interiores/planetas/` | `planetas-comum.js` (fundo `espaco`, pisos, horizonte, foguete de pouso), um arquivo (ou mais) por planeta |
