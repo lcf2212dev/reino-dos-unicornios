@@ -21,4 +21,5 @@
 # 75f0be8 = joystick em pixel art: config.controles.pixel e pixelTablet no lugar de base/pino
 # 5aefcd1 = viagem de foguete: Lua com 3 ETs, telas do painel do foguete e do voo, campos combustivel e passaporte no save, falas e vozes novas
 # f72c387 = aura contorna a figura da Mariana, com halo
-f72c387
+# 588a534 = viagem 2ª versão: Marte e Saturno com 6 ETs, portais no voo, desafio do ET, cadeado no painel, campo etsAmigos, falas e vozes novas
+588a534
