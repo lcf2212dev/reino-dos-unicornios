@@ -1,7 +1,8 @@
 /* Planeta Saturno (viagem de foguete): interior do Observatório alcançado só pelo foguete do Hangar.
-   CONTRATO (onda 0 da 2ª versão): layout provisório; a frente do cenário de Saturno o refaz. Fixos (contrato): id
+   Só brincar nos anéis (Saturno é de gás): gelo e pedra no chão, Saturno gigante no céu. Fixos (contrato): id
    'planeta-saturno', o spawn/chegada (11, 14), o foguete de pouso em (12, 13) e as vagas dos ETs (observatorio/reservas.js):
-   «Sky» (8, 7), Nico (16, 9), Vovó Anel (5, 12). Matéria dos portais do voo e do ET do desafio: ingles. */
+   «Sky» (8, 7), Nico (16, 9), Vovó Anel (5, 12). Matéria dos portais do voo e do ET do desafio: ingles.
+   Objetos e céu em saturno-objetos.js, brincadeiras em saturno-brincadeiras.js, falas em saturno-falas.js. */
 (function () {
   var R = window.Reino;
   var CHEGADA = { x: 11, y: 14 };
@@ -20,19 +21,45 @@
     tamanho: { w: 24, h: 17 },
     spawn: CHEGADA,
     comodos: [
-      { id: 'saturno', nome: 'Saturno', placa: 'Saturno', rect: { x: 1, y: 1, w: 22, h: 15 }, piso: 'lua-rocha', parede: 'planeta-horizonte',
-        paleta: { piso: '#dfe8f2', piso2: '#cfdcea', detalhe: '#aebfd4' } },
+      { id: 'saturno', nome: 'Saturno', placa: 'Saturno', rect: { x: 1, y: 1, w: 22, h: 15 }, piso: 'saturno-gelo', parede: 'saturno-horizonte' },
     ],
-    corredores: [{ x: 1, y: 3, w: 22, h: 13 }],
+    // o caminho da chegada ao foguete e aos ETs
+    corredores: [{ x: 9, y: 11, w: 5, h: 5 }],
     objetos: [
+      // o foguete de pouso, ao lado da chegada: volta ao Hangar
       { tipo: 'planeta-foguete', x: 12, y: 13, nome: 'Foguete', acao: { tipo: 'viagem', para: 'observatorio-2', chegada: { x: 7, y: 9 } } },
-      { tipo: 'globo', x: 2, y: 3, nome: 'Globo', fala: 'Um globo do espaço!' },
-      { tipo: 'pedestal', x: 20, y: 3, nome: 'Pedra', fala: 'Uma pedra do espaço!' },
-      { tipo: 'caixote', x: 4, y: 3 }, { tipo: 'barril', x: 6, y: 3 }, { tipo: 'vaso-planta', x: 8, y: 3 },
-      { tipo: 'banco', x: 13, y: 3 }, { tipo: 'cesto', x: 17, y: 3 }, { tipo: 'balde', x: 18, y: 3 },
-      { tipo: 'flores', x: 2, y: 15 }, { tipo: 'planta-alta', x: 21, y: 14 }, { tipo: 'almofada', x: 4, y: 15 },
-      { tipo: 'luminaria-pe', x: 19, y: 15 }, { tipo: 'pilha-livros', x: 16, y: 15 }, { tipo: 'placa-chao', x: 9, y: 15 },
-      { tipo: 'papeis', x: 7, y: 15 },
+      { tipo: 'saturno-placa', x: 9, y: 13, nome: 'Placa', fala: ['{Bem-vinda|Bem-vindo} a Saturno, {nome}!', 'Aqui a gente passeia no anel!'] },
+      // brincadeiras
+      { tipo: 'saturno-pista', x: 10, y: 6, nome: 'Pista de patinação', acao: { tipo: 'saturno-brincadeira', b: 'pista' } },
+      { tipo: 'saturno-boneco', x: 2, y: 6, nome: 'Boneco de gelo', acao: { tipo: 'saturno-brincadeira', b: 'boneco', i: 0 } },
+      { tipo: 'saturno-boneco', x: 21, y: 8, nome: 'Boneco de gelo', acao: { tipo: 'saturno-brincadeira', b: 'boneco', i: 1 } },
+      { tipo: 'saturno-boneco', x: 3, y: 14, nome: 'Boneco de gelo', acao: { tipo: 'saturno-brincadeira', b: 'boneco', i: 2 } },
+      { tipo: 'saturno-cristal', x: 8, y: 4, nome: 'Cristal de gelo', acao: { tipo: 'saturno-brincadeira', b: 'cristal', n: 0 } },
+      { tipo: 'saturno-cristal', x: 14, y: 7, nome: 'Cristal de gelo', acao: { tipo: 'saturno-brincadeira', b: 'cristal', n: 1 } },
+      { tipo: 'saturno-cristal', x: 2, y: 10, nome: 'Cristal de gelo', acao: { tipo: 'saturno-brincadeira', b: 'cristal', n: 2 } },
+      { tipo: 'saturno-cristal', x: 17, y: 12, nome: 'Cristal de gelo', acao: { tipo: 'saturno-brincadeira', b: 'cristal', n: 3 } },
+      { tipo: 'saturno-cristal', x: 6, y: 15, nome: 'Cristal de gelo', acao: { tipo: 'saturno-brincadeira', b: 'cristal', n: 4 } },
+      // placas de palavras em inglês
+      { tipo: 'saturno-palavra', x: 2, y: 3, nome: 'Placa de inglês', var: { p: 'ice' }, acao: { tipo: 'saturno-brincadeira', b: 'palavra', p: 'ice' } },
+      { tipo: 'saturno-palavra', x: 19, y: 6, nome: 'Placa de inglês', var: { p: 'star' }, acao: { tipo: 'saturno-brincadeira', b: 'palavra', p: 'star' } },
+      { tipo: 'saturno-palavra', x: 20, y: 3, nome: 'Placa de inglês', var: { p: 'ring' }, acao: { tipo: 'saturno-brincadeira', b: 'palavra', p: 'ring' } },
+      { tipo: 'saturno-palavra', x: 22, y: 12, nome: 'Placa de inglês', var: { p: 'moon' }, acao: { tipo: 'saturno-brincadeira', b: 'palavra', p: 'moon' } },
+      { tipo: 'saturno-telescopio', x: 4, y: 4, nome: 'Telescópio', acao: { tipo: 'saturno-brincadeira', b: 'curiosidade' } },
+      { tipo: 'saturno-iglu', x: 17, y: 3, nome: 'Iglu', fala: ['Uma casinha de gelo!', 'Os ETs brincam aqui dentro.'] },
+      { tipo: 'saturno-bandeira', x: 9, y: 3, nome: 'Bandeira', fala: ['A bandeira do nosso Reino!', 'Ela fica firme no gelo.'] },
+      { tipo: 'saturno-treno', x: 7, y: 10, nome: 'Trenó', fala: ['Um trenó para o gelo!', 'Ele desliza pelo anel.'] },
+      // enfeites
+      { tipo: 'saturno-cristal-alto', x: 6, y: 3 }, { tipo: 'saturno-risco', x: 13, y: 4 },
+      { tipo: 'saturno-bloco', x: 14, y: 3 }, { tipo: 'saturno-poca', x: 16, y: 5 },
+      { tipo: 'saturno-pedrinhas', x: 22, y: 5 }, { tipo: 'saturno-pedrinhas', x: 11, y: 4 }, { tipo: 'saturno-neve', x: 5, y: 7 }, { tipo: 'saturno-risco', x: 12, y: 8, var: { giro: 1 } },
+      { tipo: 'saturno-risco', x: 17, y: 9 }, { tipo: 'saturno-pedrinhas', x: 5, y: 9 }, { tipo: 'saturno-pedra', x: 12, y: 10 },
+      { tipo: 'saturno-neve', x: 15, y: 11 }, { tipo: 'saturno-blocos', x: 19, y: 10 },
+      { tipo: 'saturno-poca', x: 3, y: 12 }, { tipo: 'saturno-risco', x: 8, y: 14, var: { giro: 1 } }, { tipo: 'saturno-neve', x: 15, y: 14 },
+      { tipo: 'saturno-pedrinhas', x: 18, y: 15 }, { tipo: 'saturno-pedra', x: 20, y: 14 }, { tipo: 'saturno-poca', x: 22, y: 15 },
+      { tipo: 'saturno-neve', x: 1, y: 12 }, { tipo: 'saturno-pedrinhas', x: 9, y: 8 }, { tipo: 'saturno-bloco', x: 22, y: 10 },
+      { tipo: 'saturno-poca', x: 16, y: 7 }, { tipo: 'saturno-risco', x: 1, y: 15 },
+      { tipo: 'saturno-pedrinhas', x: 6, y: 5 }, { tipo: 'saturno-poca', x: 3, y: 8 }, { tipo: 'saturno-neve', x: 19, y: 8 },
+      { tipo: 'saturno-pedrinhas', x: 14, y: 9 }, { tipo: 'saturno-poca', x: 7, y: 12 },
     ],
     npcs: P.npcsDoPlaneta('planeta-saturno'),
   });
