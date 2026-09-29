@@ -12,6 +12,9 @@ const path = require('path');
 const raiz = path.join(__dirname, '..');
 const MANIFESTO = require(path.join(raiz, 'js/manifesto.js'));
 
+// o favicon (um só, também no app da Vercel): a cabeça do unicórnio em 16×16, feita por ferramentas/pwa/gerar-icones.js
+const FAVICON = 'data:image/svg+xml,' + fs.readFileSync(path.join(__dirname, 'pwa', 'favicon.svg'), 'utf8').trim()
+  .replace(/[%#<>"]/g, encodeURIComponent);
 const MARCA = '<!-- Gerado por ferramentas/gerar-index.js a partir de js/manifesto.js. Não edite à mão: mude o manifesto e rode o gerador. -->';
 const MODELO = `<!doctype html>
 ${MARCA}
@@ -20,7 +23,7 @@ ${MARCA}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Reino dos Unicórnios</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect fill='%23c6e15a' width='16' height='16'/%3E%3Ccircle cx='8' cy='9' r='4' fill='%23fff8ee' stroke='%233a2446'/%3E%3Cpath d='M8 2l1 3h-2z' fill='%23f0a04a'/%3E%3C/svg%3E">
+<link rel="icon" href="${FAVICON}">
 <link rel="preload" href="css/press-start-2p.woff2" as="font" type="font/woff2" crossorigin>
 {{CSS}}
 </head>
