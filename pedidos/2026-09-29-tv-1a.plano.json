@@ -1,0 +1,165 @@
+{
+  "nome": "2026-09-29-tv-1a",
+  "pedido": "pedidos/2026-09-29-tv-1a.md",
+  "personagens": [],
+  "tarefas": [
+    {
+      "id": "texto",
+      "tipo": "mecanica",
+      "titulo": "D12b-05, D5-07 e D7-10: número, artigo, emoji e R$ colados à palavra vizinha",
+      "quem": "worker-low",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/nucleo/util.js",
+        "jogo/js/atividades/provas.js",
+        "jogo/js/atividades/missao.js",
+        "jogo/js/personagens/claude.js",
+        "jogo/js/interiores/padrao.js",
+        "jogo/js/ui/materia.js",
+        "jogo/js/ui/bau.js",
+        "jogo/js/ui/base.js",
+        "jogo/js/atividades/desafios/escolha.js",
+        "jogo/ferramentas/testes/unidade/colar.test.js"
+      ],
+      "worktree": "tv-1a-texto",
+      "pronto": [
+        "D12b-05: prova-ingles-3bim-capa, sala-g3-intro, sala-i2-desafio1, prova-portugues-3bim-capa e sala-p3-intro (celular) sem número, artigo ou 'íris' sozinhos no começo de linha",
+        "D5-07: 0 linhas só com um emoji ou só com um número nas páginas de NPC (celular e notebook); a fala do Tostão em 2 linhas",
+        "D7-10: 'R$ 100,00' e o 🏆 sem quebrar sozinhos em --tela plano (3 tamanhos); R$ 36,00 e R$ 100,00 numa linha no Baú (celular)"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "css-base",
+      "tipo": "mecanica",
+      "titulo": "D10-01, D6-02, D10-B01, D8B-01, D8B-02, D13-04 e D8B-04: tokens renomeados, ligaduras, quebra de palavra",
+      "quem": "general-purpose",
+      "depende": [],
+      "arquivos": [
+        "jogo/css/",
+        "jogo/js/motor/interiores-placas.js",
+        "jogo/js/sistemas/fotos-moldura.js",
+        "jogo/js/ui/pecas.js",
+        "jogo/js/ui/aparencia.js",
+        "jogo/js/ui/salao.js",
+        "jogo/js/ui/jogadores.js"
+      ],
+      "worktree": "tv-1a-css",
+      "pronto": [
+        "o 'Pronto quando' de D10-01 (e2e idêntico só por ele), D6-02, D10-B01, D8B-01, D8B-02, D13-04 e D8B-04 no TODO"
+      ],
+      "estimativa": 120
+    },
+    {
+      "id": "caracteres",
+      "tipo": "conteudo",
+      "titulo": "D12b-02: √ e − fora da fonte viram ✓ e -, e o validador de caracteres",
+      "quem": "worker-low",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/atividades/desafios/vfLista.js",
+        "jogo/js/conteudo/provas/ingles-3bim.js",
+        "jogo/js/conteudo/materias/matematica/m1.js",
+        "jogo/ferramentas/validar/validar-conteudo.js"
+      ],
+      "worktree": "tv-1a-caracteres",
+      "pronto": [
+        "D12b-02: ✓ e X do mesmo tamanho e traço em prova:ingles-3bim:9; o validador acusa um √ novo"
+      ],
+      "estimativa": 40
+    },
+    {
+      "id": "estavel",
+      "tipo": "mecanica",
+      "titulo": "O-11: cena sala-p4-desafio1 instável no e2e (título quebra de jeitos diferentes)",
+      "quem": "general-purpose",
+      "depende": [],
+      "arquivos": [
+        "jogo/ferramentas/testes/referencias-cenas.js",
+        "jogo/ferramentas/testes/referencias-pagina.js",
+        "jogo/ferramentas/testes/referencias.js",
+        "jogo/ferramentas/testes/cenario.js"
+      ],
+      "worktree": "tv-1a-estavel",
+      "pronto": [
+        "a cena sala-p4-desafio1 (celular) sai igual em 20 rodadas seguidas contra a base, e a causa está explicada"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "shm",
+      "tipo": "mecanica",
+      "titulo": "O-13: REINO_TESTES em /dev/shm funciona também nos testes de navegador (banco de teste junto)",
+      "quem": "general-purpose",
+      "depende": [],
+      "arquivos": [
+        "jogo/ferramentas/testes/guardas.js",
+        "jogo/ferramentas/testes/servidor-teste.js",
+        "jogo/ferramentas/testes/navegador.js",
+        "jogo/ferramentas/testes/unidade/guardas.test.js",
+        "jogo/ferramentas/testes/unidade/ver.navegador.test.js",
+        "jogo/ferramentas/vozes/empacotar-vozes.js",
+        "jogo/ferramentas/testes/unidade/vozes-pendentes.test.js"
+      ],
+      "worktree": "tv-1a-shm",
+      "pronto": [
+        "com REINO_TESTES=/dev/shm/reino-testes, npm test e npm run e2e rodam inteiros, com o banco dentro dessa pasta; a guarda continua recusando servidor/dados e qualquer pasta fora de /tmp e /dev/shm"
+      ],
+      "estimativa": 45
+    },
+    {
+      "id": "poda",
+      "tipo": "mecanica",
+      "titulo": "O-15: e2e --podar também apaga os temporários velhos de teste (banco-*, fluxo-*, …) com mais de 1 h",
+      "quem": "worker-low",
+      "depende": [],
+      "arquivos": [
+        "jogo/ferramentas/testes/e2e-disco.js",
+        "jogo/ferramentas/testes/unidade/e2e-disco.test.js",
+        "jogo/ferramentas/testes/e2e.js"
+      ],
+      "worktree": "tv-1a-poda",
+      "pronto": [
+        "npm run e2e -- --podar lista e apaga banco-* e demais pastas temporárias de teste com mais de 1 h (nunca travas/, planos/, integrar/, ver/ nem o que tem menos de 1 h), cada caminho passando por conferirPastaTmp"
+      ],
+      "estimativa": 40
+    },
+    {
+      "id": "integracao",
+      "tipo": "integracao",
+      "titulo": "Juntar as frentes, vozes se o texto falado mudar, npm test e e2e, marcar o TODO",
+      "quem": "orquestrador",
+      "depende": [
+        "texto",
+        "css-base",
+        "caracteres",
+        "estavel",
+        "shm",
+        "poda"
+      ],
+      "arquivos": [
+        "TODO-VISUAL.md",
+        "jogo/js/manifesto.js",
+        "jogo/index.html",
+        "jogo/ferramentas/testes/base-referencia.txt"
+      ],
+      "worktree": "tv-1a",
+      "pronto": [
+        "npm test e npm run e2e verdes; cada diferença explicada por um item (base trocada)"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "entrega",
+      "tipo": "entrega",
+      "titulo": "Merge na main, push e conferência da Vercel",
+      "quem": "orquestrador",
+      "depende": [
+        "integracao"
+      ],
+      "arquivos": [],
+      "worktree": "tv-1a",
+      "estimativa": 15
+    }
+  ]
+}
