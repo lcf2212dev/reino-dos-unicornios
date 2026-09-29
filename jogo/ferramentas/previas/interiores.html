@@ -27,21 +27,19 @@
 <script src="../../js/manifesto.js"></script>
 <script src="previa.js"></script>
 <script>
-  // o jogo sem a interface, com as matérias e provas de História e Inglês e todos os prédios (grupo interiores)
+  // o jogo sem a interface, com todas as matérias e provas (o padrao.js monta o prédio das que não têm um próprio,
+  // ex.: padrao-matematica) e todos os prédios (grupo interiores)
   Previa.carregar({
     nomes: ['nucleo/config', 'nucleo/registros', 'nucleo/util', 'nucleo/eventos', 'conteudo/loja-itens', 'personagens/unicornios',
-      'conteudo/materias/registro',
-      'conteudo/materias/historia/h1', 'conteudo/materias/historia/h2', 'conteudo/materias/historia/h3', 'conteudo/materias/historia/h4', 'conteudo/materias/historia/h5', 'conteudo/materias/historia/livro', 'conteudo/materias/historia/historia',
-      'conteudo/materias/ingles/i1', 'conteudo/materias/ingles/i2', 'conteudo/materias/ingles/i3', 'conteudo/materias/ingles/i4', 'conteudo/materias/ingles/i5', 'conteudo/materias/ingles/livro', 'conteudo/materias/ingles/ingles',
-      'conteudo/provas/historia-3bim', 'conteudo/provas/ingles-3bim',
       'sistemas/progresso', 'sistemas/progresso-mescla', 'sistemas/progresso-nuvem', 'sistemas/progresso-regras', 'sistemas/voz', 'personagens/claude', 'sistemas/falas', 'sistemas/cuidados', 'arte/desenho',
       'motor/interiores-base', 'motor/interiores-pisos', 'motor/interiores-objetos-parede', 'motor/interiores-objetos-moveis', 'motor/interiores-objetos-enfeites', 'motor/interiores-grade', 'motor/interiores-estatico', 'motor/interiores-placas', 'motor/interiores-toque', 'motor/interiores-cena', 'personagens/npcs',
       'personagens/npcs-corpo', 'personagens/npcs-cabeca', 'personagens/npcs-sprites', 'personagens/npcs-status', 'personagens/npcs-falas',
       'personagens/npcs-conversa', 'personagens/elenco'],
-    grupos: ['icones', 'pixelart', 'interiores'],
+    grupos: ['icones', 'pixelart', 'materias', 'provas', 'interiores'],
   });
 </script>
 <script>
+window.__pronto = false;   // o npm run ver -- --previa espera virar true
 (function () {
   var q = new URLSearchParams(location.search);
   var E = Math.max(1, parseInt(q.get('e') || '3', 10));

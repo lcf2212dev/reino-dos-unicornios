@@ -4,7 +4,8 @@
 //   const c = await abrirCenario({ save: 'completo', estrelas: 500, tamanho: 'celular' });
 //   await c.ir('petshop'); await c.tela('loja'); await c.foto('loja', { recorte: [0, 0, 200, 100], ampliar: 4 });
 //   console.log(await c.estado(), c.erros); await c.fechar();
-// Congelado por padrão (?debug=1&congelar=1: relógio só anda com c.avancar); `congelar: false` = jogo vivo.
+// Congelado por padrão (?debug=1&congelar=1: relógio só anda com c.avancar); `congelar: false` = jogo vivo
+// (com `entrarDireto: true`, vivo já no mapa, sem a abertura e o login).
 // Um servidor e um banco por cenário: o servidor mescla ajustes entre abas e daria falhas falsas.
 const fs = require('fs');
 const path = require('path');
@@ -109,7 +110,11 @@ async function abrirCenario(op = {}) {
     } finally { gerador.parar(); }
     const save = comporSave(bases, op, dados);
 
-    const { context, page } = await abrir({ browser, url: servidor.url, tamanho, save, query, reducedMotion: congelar ? 'reduce' : 'no-preference' });
+    // entrarDireto (vivo): o jogo pediria a senha ("Entrar no Reino"); o save sintético é o da chave da Mariana, então a
+    // aba finge que acabou de passar pela senha dela (jogadores.js, decidirSemTela; só neste Chromium de teste).
+    // Congelado não pergunta; sem a opção, o vivo passa pela abertura e pelo login (os testes do login usam isso)
+    const scripts = congelar || !op.entrarDireto ? [] : [() => { try { sessionStorage.setItem('reino-entrou', 'mariana'); } catch (e) { /* sem storage */ } }];
+    const { context, page } = await abrir({ browser, url: servidor.url, tamanho, save, query, scripts, reducedMotion: congelar ? 'reduce' : 'no-preference' });
     await page.waitForFunction(() => window.__reino && window.Reino && Reino.UI, null, { timeout: 30000 });
     const avancar = async (ms) => {
       if (congelar) await avancarSemPintura(page, ms);
@@ -151,6 +156,16 @@ async function abrirCenario(op = {}) {
         }, lugar);
         if (r !== 'ok') throw new Error(r);
         await avancar(2500);
+        // o --js/--passos que vem depois roda com a cena já trocada e fora da transição (vivo ou relógio lento: espera até 10 s)
+        for (let i = 0; i < 100; i++) {
+          const ok = await page.evaluate((l) => {
+            var r = window.__reino, cena = r.cena(), est = r.estado();
+            return est !== 'transicao' && (l === 'mapa' ? cena === 'mapa' : cena !== 'mapa');
+          }, lugar);
+          if (ok) break;
+          await avancar(100);
+          await page.waitForTimeout(congelar ? 15 : 0);
+        }
       },
       // tela por cima do mapa: 'loja', 'sala:h1', 'prova:historia-3bim', 'treino:historia', 'materia:historia', 'livro:…'
       async tela(nome) {
@@ -205,13 +220,16 @@ async function abrirCenario(op = {}) {
       },
       estado: () => page.evaluate(() => {
         var r = window.__reino, p = r.progresso() || {}, e = p.estrelas || {};
+        // sem progresso ainda (abertura, login): os cuidados leem a montaria do save e quebrariam
+        var cuidados = null;
+        try { cuidados = r.progresso() ? r.cuidados() : null; } catch (x) { cuidados = 'erro: ' + x.message; }
         return {
           cena: r.cena(), estado: r.estado(), pos: r.pos(),
           telas: [...document.querySelectorAll('.tela:not([hidden])')].map(function (t) { return t.className; }),
           progresso: {
             estrelas: (e.ganhas || 0) - (e.gastas || 0), montaria: p.montaria,
             salas: Object.keys(p.salas || {}).length, unicornios: Object.keys(p.unis || {}).length,
-            provas: Object.keys(p.provas || {}), cuidados: r.cuidados(),
+            provas: Object.keys(p.provas || {}), cuidados: cuidados,
           },
         };
       }),

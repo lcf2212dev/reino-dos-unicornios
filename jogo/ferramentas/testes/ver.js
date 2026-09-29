@@ -23,13 +23,18 @@ const AJUDA = `Uso: node jogo/ferramentas/testes/ver.js [opções]   (npm run ve
             ;arrastar:x1,y1,x2,y2[,ms][,toque|mouse][,preso]   gesto de verdade (padrão: toque no celular/tablet,
                                                  mouse no notebook; preso = não solta, a foto sai com o thumbstick)
             ;segurar:<seletor|x,y>,ms                  dedo (ou mouse) parado ms milissegundos
+            ;perguntas                                 na sala (--tela sala:<id>): toca "Começar" e passa o resumo
+                                                 do livro até a 1ª pergunta (ver "Cuidados" abaixo)
+  ordem: --ir (espera a cena trocar e a transição acabar), --tela, cada --js, --passos, foto
   --tamanhos celular,tablet,notebook   (padrão: os 3, em paralelo)
-  --vivo                    jogo vivo (sem congelar; animações ligadas)
+  --vivo                    jogo vivo (sem congelar; animações ligadas; entra direto no mapa, sem a senha)
   --nome <n>                pasta de saída (padrão: data e hora)
   --raiz <pasta jogo>       outra cópia do jogo (padrão: a desta worktree)
   --recorte x,y,w,h         em px CSS       --ampliar 4   (vizinho mais próximo)
   --previa interiores:petshop | acessorios:<id> | icones | sprites | mapa | direcoes   (abre por file://;
-                            o mapa sai com a grade: números de coluna/linha, rect de cada lugar e áreas livres)
+                            o mapa sai com a grade: números de coluna/linha, rect de cada lugar e áreas livres,
+                            e as fachadas de js/interiores/<p>/fora.js; interiores:padrao-<matéria> = prédio padrão;
+                            em interiores:<id> o --recorte conta do canto do desenho do interior, 48 px por tile)
   --livres 5x4              lista os rects livres de 5×4 tiles no mapa, com o caminho sugerido até a rua
                             (sem navegador; o mesmo que node jogo/ferramentas/validar/lugares-do-mapa.js --livres 5x4)
 Exemplos:
@@ -37,12 +42,22 @@ Exemplos:
   npm run ver -- --ir petshop --nome petshop
   npm run ver -- --estrelas 500 --tela loja --tamanhos celular
   npm run ver -- --tela desafio:h1-03 --tamanhos celular
-  npm run ver -- --tela sala:h1 --passos 'tocar:.intro-botoes .btn-principal;esperar:600'
+  npm run ver -- --tela sala:h1 --passos 'perguntas'      (a 1ª pergunta, passando a intro e o resumo)
   npm run ver -- --tamanhos celular --passos 'arrastar:100,600,160,600,500,preso'   (o thumbstick e a Mariana andando)
   npm run ver -- --tela album:2 --tamanhos celular      npm run ver -- --tela prova:historia-3bim:2
   npm run ver -- --cuidados fome=5,sede=5 --js 'Reino.UI.telaPetShop()'
   npm run ver -- --previa interiores:petshop --recorte 0,0,200,150 --ampliar 4
-  npm run ver -- --tamanhos celular --js 'console.log(Mapa.lugares().length)' --js 'Reino.materias.length'`;
+  npm run ver -- --tamanhos celular --js 'console.log(Mapa.lugares().length)' --js 'Reino.materias.length'
+  npm run ver -- --vivo --tamanhos celular --ajustes '{"animacoes":true}'
+Cuidados:
+  1) --js depois de --ir: o --ir só acaba com a cena já trocada, então o --js vê o prédio:
+       npm run ver -- --ir petshop --js '__reino.cena()'            (→ petshop)
+     Para rodar algo DURANTE a entrada, não use --ir: entre pelo --js e siga nos --passos (a foto espera 600 ms):
+       npm run ver -- --js 'void __reino.entrar("petshop")' --passos 'js:console.log(__reino.estado())'   (→ transicao)
+  2) --tela sala:<id> numa matéria com livro: "Começar" abre o RESUMO (as cartas), não a 1ª pergunta; tocar só a
+     intro fotografa o resumo. Para chegar à pergunta, use o passo pronto 'perguntas':
+       npm run ver -- --tela sala:h1 --passos 'perguntas'                      (1ª pergunta da sala)
+       npm run ver -- --tela sala:h1 --passos 'tocar:.intro-sala .btn-principal;esperar:600'   (a 1ª carta do resumo)`;
 
 function lerArgs(argv) {
   const a = { js: [], tamanhos: Object.keys(TAMANHOS) };
@@ -86,6 +101,15 @@ async function marcado(page, marca, fazer, valores) {
 }
 function textoConsole(page) { return page.__console.map((m) => `[${m.tipo}]${m.marca ? ` (${m.marca})` : ''} ${m.texto}`); }
 
+// passo 'perguntas': na sala aberta (--tela sala:<id>), toca "Começar" e passa as cartas do resumo (sala com livro)
+// até a 1ª pergunta; tocar só a intro para no resumo quando a matéria tem livro
+async function passarIntro(c) {
+  if (await c.js("!!document.querySelector('.intro-sala .btn-principal')")) await c.tocar('.intro-sala .btn-principal');
+  for (let i = 0; i < 40 && await c.js("!!document.querySelector('.resumo-sala .btn-principal')"); i++) await c.tocar('.resumo-sala .btn-principal');
+  if (await c.js("!!document.querySelector('.intro-sala, .resumo-sala')")) throw new Error('perguntas: a intro ou o resumo não passou');
+  await c.avancar(600);
+}
+
 async function rodarPassos(c, texto) {
   for (const p of texto.split(';').map((s) => s.trim()).filter(Boolean)) {
     const [tipo, resto] = p.split(/:(.*)/s);
@@ -95,13 +119,14 @@ async function rodarPassos(c, texto) {
     else if (tipo === 'js') await c.js(resto);
     else if (tipo === 'arrastar') await c.arrastar(resto);
     else if (tipo === 'segurar') await c.segurar(resto);
+    else if (tipo === 'perguntas') await passarIntro(c);
     else throw new Error(`passo desconhecido: ${p}`);
   }
 }
 
 async function umTamanho(a, browser, tamanho, pasta) {
   const c = await abrirCenario({
-    browser, tamanho, pasta, raiz: a.raiz, congelar: !a.vivo, save: a.save, mudar: a.mudar,
+    browser, tamanho, pasta, raiz: a.raiz, congelar: !a.vivo, entrarDireto: a.vivo, save: a.save, mudar: a.mudar,
     estrelas: a.estrelas, cuidados: a.cuidados, materiasCompletas: a.materiasCompletas, ajustes: a.ajustes,
   });
   const falhas = [], valores = [];
@@ -132,14 +157,22 @@ async function umaPrevia(a, browser, tamanho, pasta) {
   const url = 'file://' + arq + (id ? (QUERY[nome] || QUERY.interiores)(encodeURIComponent(id)) : (nome === 'mapa' ? '?grade=1' : ''));
   const { context, page } = await abrir({ browser, url, tamanho });
   await page.waitForLoadState('load');
+  // as prévias que desenham depois de carregar (interiores: fontes e preparar()) avisam com window.__pronto
+  await page.waitForFunction(() => window.__pronto !== false, null, { timeout: 15000 }).catch(() => {});
   await page.waitForTimeout(500);
   fs.mkdirSync(pasta, { recursive: true });
   const png = path.join(pasta, tamanho + '.png');
   await page.screenshot({ path: png, fullPage: true, animations: 'disabled' });
+  // interiores:<id>: o --recorte conta a partir do canto do desenho do interior (não do título da página)
+  const canto = nome === 'interiores' && id ? await page.evaluate(() => {
+    const cv = document.querySelector('canvas[id^="interior-"]'), r = cv && cv.getBoundingClientRect();
+    return r ? [r.left + scrollX, r.top + scrollY] : null;
+  }) : null;
+  const op = a.recorte && canto ? { ...a, recorte: [a.recorte[0] + canto[0], a.recorte[1] + canto[1], a.recorte[2], a.recorte[3]] } : a;
   const erros = page.__erros.slice();
   const consoleTxt = textoConsole(page);
   await context.close();
-  return { tamanho, fotos: tratarFoto(png, a, TAMANHOS[tamanho].deviceScaleFactor), estado: { previa: a.previa }, erros, console: consoleTxt, saidaJs: [] };
+  return { tamanho, fotos: tratarFoto(png, op, TAMANHOS[tamanho].deviceScaleFactor), estado: { previa: a.previa }, erros, console: consoleTxt, saidaJs: [] };
 }
 
 async function main() {
