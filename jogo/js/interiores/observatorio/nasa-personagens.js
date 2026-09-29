@@ -51,16 +51,16 @@
   if (Reino.NPCs && Reino.NPCs.registrarBase) Reino.NPCs.registrarBase('astronauta', gradeAstronauta, { emblema: 'cor' });
 
   /* ================= PESSOAS DO ANDAR (vozes diferentes da Vega e do Cosmo) ================= */
-  // Sala de Controle: foguetes e missões
+  // Sala de Controle: foguetes e missões (colete e maquete de foguete; o jaleco fica com a Vega)
   Reino.registrarPersonagem({ id: 'nasa-lia', nome: 'Doutora Lia',
-    sprite: { pele: '#f1c7a5', cabelo: '#2b1b17', penteado: 'rabo', jaleco: true, roupa: '#5fb4ff', roupa2: '#2f4f8a', cracha: true, cor2: '#e0433f', oculos: true, oculosCor: '#2f5fd6' },
+    sprite: { pele: '#f1c7a5', cabelo: '#2b1b17', penteado: 'rabo', roupa: '#5fb4ff', roupa2: '#2f4f8a', colete: '#2f4f8a', cracha: true, cor2: '#e0433f', oculos: true, oculosCor: '#2f5fd6', foguete: true },
     perfil: { voz: 'en-US-EmmaMultilingualNeural', velocidade: '+4%', tom: '+6Hz' } });       // cientista animada
   // Hangar: o astronauta
   Reino.registrarPersonagem({ id: 'nasa-davi', nome: 'Astronauta Davi',
     sprite: { base: 'astronauta', pele: '#a86b4a', cabelo: '#1f1414' },
     perfil: { voz: 'ko-KR-HyunsuMultilingualNeural', velocidade: '-4%', tom: '-8Hz' } });      // calmo e firme, de piloto (não a voz do Claude)
-  // Laboratório de Experiências
+  // Laboratório de Experiências (jardineira e chave inglesa de engenheira)
   Reino.registrarPersonagem({ id: 'nasa-bia', nome: 'Engenheira Bia',
-    sprite: { pele: '#c68a5e', cabelo: '#5a3825', penteado: 'cacheado', jaleco: true, roupa: '#f4f2fa', roupa2: '#3a4396', oculos: true, oculosCor: '#e0433f', presilha: true, cor2: '#6fdc8c' },
+    sprite: { pele: '#c68a5e', cabelo: '#5a3825', penteado: 'cacheado', jardineira: true, roupa: '#ffb020', roupa2: '#3a4396', oculos: true, oculosCor: '#e0433f', presilha: true, cor2: '#6fdc8c', chave: true },
     perfil: { voz: 'de-DE-SeraphinaMultilingualNeural', velocidade: '+6%', tom: '+0Hz' } });   // engenheira curiosa e alegre
 })();

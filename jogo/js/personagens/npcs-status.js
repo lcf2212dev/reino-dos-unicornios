@@ -17,6 +17,32 @@
   function materiaDoLugar(lugar) { return /^materia:/.test(lugar || '') ? Reino.materia(lugar.slice(8)) : null; }
   var MEDALHA = { ouro: '🥇', prata: '🥈', bronze: '🥉' };
   var VALENDO = { lendario: '🌈', raro: '💙', comum: '🤍' };
+  // quem abre uma tela de serviço mostra o ofício no balãozinho (D4-11): loja, salão e baú
+  var OFICIO = {
+    loja: { icone: '🛍️', rotulo: 'Loja' }, bau: { icone: '🪙', rotulo: 'Baú de moedas' },
+    'salao-cabelo': { icone: '✂️', rotulo: 'Salão' }, 'salao-roupa': { icone: '✂️', rotulo: 'Salão' },
+  };
+  // a sacola de compras (o ✂ é do Salão, salao/icones.js; a 🪙, de arte/icones/premios.js)
+  if (Reino.registrarIcones && !(window.ICONES && window.ICONES['🛍'])) Reino.registrarIcones({
+    '🛍': { n: 'sacola de compras', p: { k: '#3a2446', p: '#ff7eb6', P: '#d8588f', w: '#ffd1e6', y: '#ffd34d' }, d: [
+      '................',
+      '.....kkkkkk.....',
+      '....kk....kk....',
+      '....k......k....',
+      '..kkkkkkkkkkkk..',
+      '..kwwpppppppPk..',
+      '..kwpppppppPPk..',
+      '..kpppkyykpPPk..',
+      '..kpppkyykpPPk..',
+      '..kppppkkppPPk..',
+      '..kpppppppPPPk..',
+      '..kpppppppPPPk..',
+      '..kppppppPPPPk..',
+      '..kPPPPPPPPPPk..',
+      '..kkkkkkkkkkkk..',
+      '................',
+    ] },
+  });
 
   // status vindos de outros módulos (ex.: Dona Aveia com a montaria faminta): fn(npc) → {icone, rotulo} | null
   var STATUS = [];
@@ -49,6 +75,7 @@
       return v ? { icone: VALENDO[v], rotulo: 'Valendo ' + v } : { icone: '✓', rotulo: 'Acessório ganho' };
     }
     if (a.tipo === 'tela' && (a.tela === 'estabulo' || a.tela === 'ovos') && p.ovosParaChocar().length) return { icone: '🥚', rotulo: 'Ovos para chocar' };
+    if (a.tipo === 'tela' && OFICIO[a.tela]) return OFICIO[a.tela];
     return { icone: '💬', rotulo: 'Conversar' };
   };
 
