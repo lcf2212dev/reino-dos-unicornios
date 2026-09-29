@@ -21,8 +21,10 @@
 //   … --manter               guarda a captura do atual mesmo quando dá idêntico (sem ele, idêntico = apagada)
 //   … --trocar-base <hash> "<descrição>"   só troca a base (trocar-base.js: commit ancestral de HEAD, comentários
 //                            intactos, "# <curto> = <descrição>" acima do hash, grava atômico, mostra o diff; sem commit)
-//   … --podar                só poda e sai: e2e-* com mais de 1 h e ref-<base>/…-h<hash> de harness que não é o
-//                            atual nem o da main (calculado na hora: git show main); lista antes o que apaga e quanto libera
+//   … --podar                só poda e sai, tudo parado há mais de 1 h: e2e-*, temporárias dos testes (lista
+//                            TEMPORARIAS do e2e-disco.js) e ref-<base>/…-h<hash> de harness que não é o atual nem o da
+//                            main (git show main, na hora) e sem nada mudado dentro há 1 h (outra worktree pode usar);
+//                            lista antes o que apaga (resumo por tipo acima de 50) e quanto libera
 // Disco: abaixo de 1,5 GB livres o e2e nem começa (diz o que podar). A pasta é /tmp/reino-testes ou a de
 // REINO_TESTES (só dentro de /tmp ou /dev/shm; ver guardas.js), ex.: REINO_TESTES=/dev/shm/reino-testes.
 // Como funciona (tudo na pasta de testes; com diferença, a captura do atual fica para inspecionar):
@@ -85,7 +87,10 @@ function pastaRefBase(base, op) {
 async function refBase(base, raizBase, op) {
   const { so, destino } = pastaRefBase(base, op);
   op = { ...op, so };
-  if (fs.existsSync(path.join(destino, 'erros.txt'))) { console.log(`• referências da base: reusando ${destino}`); return destino; }
+  if (fs.existsSync(path.join(destino, 'erros.txt'))) {
+    disco.marcarUso(destino); // em uso: a poda de outra worktree não a apaga no meio da comparação
+    console.log(`• referências da base: reusando ${destino}`); return destino;
+  }
   console.log(`• referências da base: capturando uma vez em ${destino}`);
   const parcial = conferirPastaTmp(`${destino}.parcial-${process.pid}`);
   await capturar(parcial, { raiz: raizBase, so: op.so, tamanhos: op.tamanhos, paralelo: op.paralelo });
@@ -97,7 +102,17 @@ async function refBase(base, raizBase, op) {
 function podar() {
   const plano = disco.planoPoda(PASTA_TESTES, { harness: hashHarness() });
   if (!plano.length) { console.log(`• nada a podar em ${PASTA_TESTES} (${disco.gb(disco.livre(PASTA_TESTES))} livres)`); return true; }
-  plano.forEach((x) => console.log(`  apagar ${x.caminho}  (${disco.gb(x.bytes)}; ${x.motivo})`));
+  if (plano.length <= 50) plano.forEach((x) => console.log(`  apagar ${x.caminho}  (${disco.gb(x.bytes)}; ${x.motivo})`));
+  else { // muitas: resumo por tipo (nome sem o sufixo aleatório)
+    const tipos = {};
+    plano.forEach((x) => {
+      const t = path.relative(PASTA_TESTES, x.caminho).replace(/-(?:[A-Za-z0-9]{6}|\d+|[0-9a-f]{8})$/, '-*');
+      tipos[t] = tipos[t] || { n: 0, bytes: 0, motivo: x.motivo };
+      tipos[t].n++; tipos[t].bytes += x.bytes;
+    });
+    Object.keys(tipos).sort((a, b) => tipos[b].bytes - tipos[a].bytes).forEach((t) =>
+      console.log(`  apagar ${tipos[t].n}× ${path.join(PASTA_TESTES, t)}  (${disco.gb(tipos[t].bytes)}; ${tipos[t].motivo})`));
+  }
   const total = disco.podar(plano);
   console.log(`✔ podado: ${plano.length} pasta(s), ${disco.gb(total)} liberados; ${disco.gb(disco.livre(PASTA_TESTES))} livres agora`);
   return true;

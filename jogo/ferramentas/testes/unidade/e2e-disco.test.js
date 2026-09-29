@@ -15,12 +15,12 @@ const criar = (rel, horas = 0) => {
   fs.mkdirSync(p, { recursive: true });
   fs.writeFileSync(path.join(p, 'x.png'), 'abc');
   const t = new Date(Date.now() - horas * 3600e3);
-  fs.utimesSync(p, t, t);
+  fs.utimesSync(path.join(p, 'x.png'), t, t); fs.utimesSync(p, t, t);
 };
 
 test('planoPoda: e2e-* velhos e ref de harness antigo; mantém o atual, o da main e o recente', () => {
   criar('e2e-velho', 2); criar('e2e-novo', 0);
-  criar('ref-abc1234/dados-imagens-vozes-h11111111');          // antigo: sai
+  criar('ref-abc1234/dados-imagens-vozes-h11111111', 2);       // antigo e parado: sai
   criar('ref-abc1234/dados-imagens-vozes-h22222222');          // atual: fica
   criar(`ref-abc1234/dados-imagens-vozes-h${disco.harnessMain()}`); // da main: fica
   criar('ref-abc1234/dados-vozes-h22222222.parcial-99', 2);    // captura interrompida velha: sai
@@ -32,6 +32,36 @@ test('planoPoda: e2e-* velhos e ref de harness antigo; mantém o atual, o da mai
   assert.strictEqual(disco.podar(plano), 9);
   assert.ok(!fs.existsSync(path.join(RAIZ, 'e2e-velho')) && fs.existsSync(path.join(RAIZ, 'e2e-novo')));
   assert.deepStrictEqual(disco.planoPoda(RAIZ, { harness: '22222222' }), []);
+});
+
+test('planoPoda: temporárias de teste velhas saem; recentes, fixas e desconhecidas ficam', () => {
+  const velhas = ['banco-a1B2c3', 'fluxo-intr-Zz9x8Y', 'validar-docs-copia-q1w2e3', 'trava-abcdef', 'planos-xyz123',
+    'novo-12345', 'tipos-678', 'autocontido-0123abcd', 'artifact-delta-acento-AaBbCc'];
+  velhas.forEach((n) => criar(n, 2));
+  ['banco-recen1', 'entrada-recen2'].forEach((n) => criar(n, 0));                   // menos de 1 h: ficam
+  ['travas', 'planos', 'integrar', 'ver', 'auditoria', 'vercel', 'base-abc1234', 'trava', 'banco',
+    'banco-curto', 'banco-comprido1', 'outra-coisa-abcdef', 'novo-abc'].forEach((n) => criar(n, 5)); // fixas ou desconhecidas
+  const rel = disco.planoPoda(RAIZ, { harness: '22222222' }).map((x) => path.relative(RAIZ, x.caminho)).sort();
+  assert.deepStrictEqual(rel, velhas.slice().sort());
+});
+
+test('planoPoda: referência de harness antigo em uso (pasta ou arquivo dentro < 1 h) nunca sai', () => {
+  criar('ref-def5678/dados-h33333333', 0);                      // recém-criada por outra worktree: fica
+  criar('ref-def5678/dados-h44444444', 2);                      // pasta velha, mas um arquivo dentro acabou de mudar
+  fs.writeFileSync(path.join(RAIZ, 'ref-def5678/dados-h44444444/novo.png'), 'x');
+  const t = new Date(Date.now() - 2 * 3600e3); fs.utimesSync(path.join(RAIZ, 'ref-def5678/dados-h44444444'), t, t);
+  criar('ref-def5678/dados-h55555555.parcial-7', 0);            // captura em andamento: fica
+  criar('ref-def5678/dados-h66666666', 2);                      // antigo e parado: sai
+  const rel = disco.planoPoda(RAIZ, { harness: '22222222' }).map((x) => path.relative(RAIZ, x.caminho));
+  assert.deepStrictEqual(rel.filter((r) => r.startsWith('ref-def5678')), ['ref-def5678/dados-h66666666']);
+});
+
+test('planoPoda: ref velha reusada agora (marcarUso) não sai', () => {
+  criar('ref-fed9876/dados-h77777777', 3);
+  const rel = () => disco.planoPoda(RAIZ, { harness: '22222222' }).map((x) => path.relative(RAIZ, x.caminho));
+  assert.ok(rel().includes('ref-fed9876/dados-h77777777'));
+  disco.marcarUso(path.join(RAIZ, 'ref-fed9876/dados-h77777777'));
+  assert.ok(!rel().includes('ref-fed9876/dados-h77777777'));
 });
 
 test('conferirEspaco: abaixo do mínimo para com a dica do --podar', () => {

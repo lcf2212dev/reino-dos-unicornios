@@ -29,7 +29,8 @@ test('poda numa worktree de harness diferente não apaga a cache do harness da m
   fs.mkdirSync(path.join(pasta, 'ref-9040d16', `dados-vozes-h${main}`), { recursive: true });
   fs.mkdirSync(path.join(pasta, 'ref-9040d16', 'dados-vozes-hffffffff'), { recursive: true });
   fs.mkdirSync(path.join(pasta, 'ref-9040d16', 'dados-vozes-h00000000'), { recursive: true });
-  const plano = planoPoda(pasta, { harness: 'ffffffff' }).map((x) => path.basename(x.caminho));
+  // idadeMs -1: pastas recém-criadas contam como paradas (a regra do uso recente tem teste próprio em e2e-disco.test.js)
+  const plano = planoPoda(pasta, { harness: 'ffffffff', idadeMs: -1 }).map((x) => path.basename(x.caminho));
   assert.ok(!plano.includes(`dados-vozes-h${main}`), `apagaria a cache da main (h${main}): ${plano.join(', ')}`);
   assert.deepStrictEqual(plano, ['dados-vozes-h00000000']);
 });
