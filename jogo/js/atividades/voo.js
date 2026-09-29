@@ -119,7 +119,7 @@
   function el(tag, classe, texto) {
     var e = document.createElement(tag);
     if (classe) e.className = classe;
-    if (texto !== undefined) e.textContent = texto;
+    if (texto !== undefined) R.util.preencher(e, texto);   // emoji vira o ícone pixel
     return e;
   }
   // ampliação por fator inteiro em pixels do aparelho, cabendo na tela (como o telescópio do Observatório)
@@ -234,7 +234,7 @@
       var pct = Math.round(V.distancia(s) * 100);
       enche.style.width = pct + '%';
       barra.setAttribute('aria-valuenow', String(pct));
-      conta.textContent = '⭐ ' + (s.estrelas + s.portaisCertos * porPortal);
+      R.util.preencher(conta, '⭐ ' + (s.estrelas + s.portaisCertos * porPortal));
     }
     function quadro(agora) {
       raf = 0;

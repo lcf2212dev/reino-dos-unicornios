@@ -49,7 +49,7 @@
   function el(tag, classe, texto) {
     var e = document.createElement(tag);
     if (classe) e.className = classe;
-    if (texto !== undefined) e.textContent = texto;
+    if (texto !== undefined) R.util.preencher(e, texto);   // emoji vira o ícone pixel
     return e;
   }
   function genero(t) { return R.Genero && R.Genero.texto ? R.Genero.texto(t) : t; }

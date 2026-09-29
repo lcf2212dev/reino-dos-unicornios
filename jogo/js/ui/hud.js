@@ -7,10 +7,11 @@
   var est = R.est, iconePequeno = R.iconePequeno, barrasCuidado = R.barrasCuidado, rotularMontaria = R.rotularMontaria;
   var cuidadosProntos = R.cuidadosProntos, uniChocado = R.uniChocado;
 
-  /* ---------- tela cheia (esconde a barra do claude.ai em volta do jogo) ---------- */
-  var ICONE_ABRIR = '<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>';
-  var ICONE_FECHAR = '<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg>';
-  UI.telaCheiaDisponivel = function () { return !!(document.fullscreenEnabled || document.webkitFullscreenEnabled); };
+  /* ---------- tela cheia (o navegador some; no app instalado já é tela cheia: sem botão) ---------- */
+  function instalado() {
+    try { return !!(window.matchMedia && window.matchMedia('(display-mode: standalone)').matches); } catch (e) { return false; }
+  }
+  UI.telaCheiaDisponivel = function () { return !instalado() && !!(document.fullscreenEnabled || document.webkitFullscreenEnabled); };
   UI.emTelaCheia = function () { return !!(document.fullscreenElement || document.webkitFullscreenElement); };
   UI.telaCheia = function (ligar) {
     var d = document, raiz = d.documentElement, p = null;
@@ -27,7 +28,7 @@
     if (!b) return;
     var cheia = UI.emTelaCheia();
     b.textContent = '';
-    b.appendChild(PA.iconeEmoji(cheia ? '↙' : '↗', 2));
+    b.appendChild(PA.iconeEmoji(cheia ? 'tela-cheia:sair' : 'tela-cheia:abrir', 2));
     b.setAttribute('aria-label', cheia ? 'Sair da tela cheia' : 'Tela cheia');
     b.title = cheia ? 'Sair da tela cheia' : 'Tela cheia';
   }

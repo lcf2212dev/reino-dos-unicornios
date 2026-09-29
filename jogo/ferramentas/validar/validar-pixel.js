@@ -8,7 +8,9 @@
 //   - sombra (box-shadow, text-shadow, drop-shadow) sem desfoque, e nada de blur();
 //   - rotate só em múltiplos de 90° (girar pixel em outro ângulo borra).
 // JS (js/**, fora js/voz/): createLinearGradient, createRadialGradient, shadowBlur diferente de 0, .arc( e
-//   .ellipse( no canvas. Exceção de propósito: "// pixel-ok: <motivo>" na mesma linha.
+//   .ellipse( no canvas; emoji em texto fora do Reino.util.preencher/el (textContent/innerText com emoji, ou helper
+//   el() próprio que usa textContent): sai o glifo do sistema no lugar do ícone 16×16.
+//   Exceção de propósito: "// pixel-ok: <motivo>" na mesma linha.
 if (require.main === module) require('../ajuda').ajuda(__filename);
 const fs = require('fs');
 const path = require('path');
@@ -98,12 +100,18 @@ const CANVAS = [
   [/shadowBlur\s*=(?!\s*0\s*[;,)])/, 'shadowBlur (desfoque)'],
   [/\.(arc|ellipse)\(/, 'arco/elipse liso no canvas'],
 ];
+// o mesmo conjunto do RE_ICONE de js/nucleo/util.js (o que o preencher troca pelo desenho)
+const EMOJI = /\p{RI}\p{RI}|\p{Extended_Pictographic}|[✓✕✔✘←→↑↓▲▼◀▶⌫↙↗]/u;
 function checarJs(nome, texto, erros) {
   texto.split('\n').forEach((l, i) => {
     if (/pixel-ok:/.test(l)) return;
     const codigo = l.replace(/\/\/.*$/, '');
     for (const [re, o] of CANVAS) if (re.test(codigo)) erros.push(`${nome}:${i + 1}: ${o} (use os helpers pixel ou marque "// pixel-ok: <motivo>")`);
+    if (/\.(textContent|innerText)\s*=/.test(codigo) && EMOJI.test(codigo)) erros.push(`${nome}:${i + 1}: emoji por textContent sai com o glifo do sistema (use Reino.util.preencher ou Reino.util.el)`);
   });
+  for (const m of texto.matchAll(/function el\([^)]*\)\s*\{[^}]*?\.textContent\s*=/g)) {
+    erros.push(`${nome}:${linhaDe(texto, m.index)}: helper el() próprio com textContent (o emoji sai do sistema: use Reino.util.preencher)`);
+  }
 }
 
 function arquivosJs(dir, lista = []) {

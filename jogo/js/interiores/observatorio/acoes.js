@@ -195,7 +195,7 @@
   function el(tag, estilo, texto) {
     var e = document.createElement(tag);
     if (estilo) e.setAttribute('style', estilo);
-    if (texto !== undefined) e.textContent = texto;
+    if (texto !== undefined) Reino.util.preencher(e, texto);   // emoji vira o ícone pixel
     return e;
   }
   function abrirTelescopio(ctx) {
