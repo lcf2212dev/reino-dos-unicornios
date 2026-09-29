@@ -60,11 +60,42 @@
   function nomeLivro(materia) { return materia.nomeLivro || 'Livro das Memórias'; }
   UI.nomeLivro = nomeLivro;
   // desenho e fala de uma carta do livro (o livro pela estante e o resumo antes das questões da sala)
+  // o texto vira blocos de até 3 frases (só na tela: a fala continua sendo c.texto inteiro)
+  var FRASE = /[.!?…]["”»)]?\s+(?=["“«(]?[A-ZÁÉÍÓÚÂÊÔÃÕÀÇ0-9])/g;
+  function blocosCarta(texto) {
+    var frases = [], ini = 0, m, alvo = texto.replace(/«[^«»]*?([.!?…]?»)/g, function (m, fim) { return '«' + m.slice(1, -fim.length).replace(/./g, 'X') + fim; });
+    FRASE.lastIndex = 0; // só corta fora do «inglês» (ou logo depois dele)
+    while ((m = FRASE.exec(alvo))) { frases.push(texto.slice(ini, m.index + m[0].length).trim()); ini = m.index + m[0].length; }
+    frases.push(texto.slice(ini));
+    var n = Math.ceil(frases.length / 3), tam = Math.ceil(frases.length / n), out = [];
+    for (var j = 0; j < frases.length; j += tam) out.push(frases.slice(j, j + tam).join(' '));
+    return out;
+  }
+  // termo destacado: c.destaque ou a palavra mais longa do título que aparece no texto
+  var PALAVRA = '[A-Za-zÀ-ÿ]';
+  // trecho «inglês» vira '#' (mesmo tamanho): o destaque nunca corta o span.en
+  function semIngles(t) { return t.replace(/«[^«»]*»/g, function (m) { return m.replace(/./g, '#'); }); }
+  function termoCarta(c) {
+    var cands = c.destaque ? [c.destaque] : c.titulo.split(/[^A-Za-zÀ-ÿ]+/)
+      .filter(function (w) { return w.length >= 4; }).sort(function (a, b) { return b.length - a.length; });
+    for (var k = 0; k < cands.length; k++) {
+      var m = new RegExp('(^|[^A-Za-zÀ-ÿ])(' + cands[k] + PALAVRA + '{0,2})(?![A-Za-zÀ-ÿ])', 'i').exec(semIngles(c.texto));
+      if (m) return m[2];
+    }
+    return null;
+  }
+  UI.blocosCarta = blocosCarta; UI.termoCarta = termoCarta;
   UI.desenharCarta = function (area, c) {
     area.innerHTML = '';
     area.appendChild(el('div.livro-emoji', c.e));
     area.appendChild(el('h3', c.titulo));
-    area.appendChild(el('p', c.texto));
+    var termo = termoCarta(c);
+    blocosCarta(c.texto).forEach(function (b) {
+      var i = termo ? semIngles(b).indexOf(termo) : -1;
+      if (i < 0) { area.appendChild(el('p', b)); return; }
+      area.appendChild(el('p', b.slice(0, i), el('span.destaque', termo), b.slice(i + termo.length)));
+      termo = null; // só a primeira vez
+    });
   };
   UI.falaCarta = function (c) { return [c.titulo, c.texto]; };
 
