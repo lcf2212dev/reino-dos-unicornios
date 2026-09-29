@@ -53,11 +53,11 @@
     // o ET fala (balão + voz) e depois, se pedir, a narradora lê a pergunta
     function dizer(linhas) {
       linhas = linhas.map(fala);
-      U.preencher(balao, linhas.join(' '));
+      U.preencher(balao, compacto() ? linhas[linhas.length - 1] : linhas.join(' '));   // no celular, só a última frase (o resto vai na voz)
       return Reino.Som.falar(linhas, { voz: voz });
     }
     function atualizarPlacar() {
-      U.preencher(placar, 'Pergunta ' + Math.min(i + 1, des.perguntas.length) + ' de ' + des.perguntas.length + ' • ' + des.estrelas + ' ⭐');
+      U.preencher(placar, (compacto() ? '' : 'Pergunta ') + Math.min(i + 1, des.perguntas.length) + ' de ' + des.perguntas.length + ' • ' + des.estrelas + ' ⭐');
     }
 
     function mostrarPergunta(ler) {
@@ -80,7 +80,7 @@
       });
       setTimeout(function () {
         var p = ctrl.card.querySelector('.opcao');
-        if (p && fase === 'pergunta') p.focus({ preventScroll: true });
+        if (p && fase === 'pergunta' && UI.porTeclado()) p.focus({ preventScroll: true });   // no toque, nada contornado
       }, 60);
     }
 
