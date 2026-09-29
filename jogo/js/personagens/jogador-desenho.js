@@ -84,21 +84,26 @@
     var B = Reino.Banho;
     try { return !!(B && B.desenhandoUni && B.desenhandoUni()); } catch (e) { return false; }
   }
-  // nuvenzinha de poeira do sujinho: 3 fiapos cinza-terra atrás do unicórnio (px do jogo, pintor.ret).
-  // Com Animações, sobem e somem devagar; sem, ficam parados. forca 0–1 (na água some)
+  // nuvenzinha de poeira do sujinho: 3 fiapos cinza-terra junto dos cascos (yPes −1 … −5), atrás do unicórnio
+  // de lado e dos dois lados das patas de frente ou de costas; em blocos de px inteiros do sprite (a mesma grade
+  // dele: borda esquerda x − larg/2). Com Animações, sobem e somem devagar; sem, ficam parados.
+  // forca 0–1 (na água some)
   var POEIRA = ['rgba(150,120,92,', 'rgba(196,172,140,'];
   function poeira(p, x, yPes, larg, alto, lado, animar, forca) {
     if (forca <= 0.05) return;
+    var esq = x - larg / 2;
     for (var i = 0; i < 3; i++) {
       var f = animar ? (J.t / 1.8 + i / 3) % 1 : [0.25, 0.5, 0.75][i];
       var a = Math.sin(f * Math.PI) * 0.75 * forca;
       if (a < 0.04) continue;
-      var r = 1 + f * 2.2;
-      var cx = x - lado * (larg * 0.45 + f * 4) + (i - 1) * 3, cy = yPes - 3 - alto * 0.18 - f * 7 - (i % 2) * 2;
-      for (var j = -Math.ceil(r); j <= Math.ceil(r); j++) {
-        var m = Math.sqrt(Math.max(0, r * r - j * j));
-        if (m < 0.4) continue;
-        p.ret(cx - m, cy + j, m * 2, 1, POEIRA[j < 0 ? 1 : 0] + a.toFixed(3) + ')');
+      var r = 1 + Math.round(f);                               // raio 1 ou 2
+      var ox = lado ? Math.round(larg / 2 - lado * (larg * 0.45 + f * 4)) + (i - 1) * 3
+        : Math.round(larg / 2 + (i - 1) * larg * 0.4);
+      var oy = -1 - r - Math.round(f * (4 - 2 * r));           // centro: as linhas ficam entre −1 e −5
+      for (var j = -r; j <= r; j++) {
+        var m = Math.round(Math.sqrt(r * r - j * j));
+        if (m < 1) continue;
+        p.ret(esq + ox - m, yPes + oy + j, m * 2, 1, POEIRA[j < 0 ? 1 : 0] + a.toFixed(3) + ')');
       }
     }
   }

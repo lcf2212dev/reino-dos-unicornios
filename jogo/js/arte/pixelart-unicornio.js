@@ -1,5 +1,6 @@
 /* Pixel art do unicórnio: paleta pelas cores do unicórnio, PA.unicornio (corpo, asas, brilhos,
-   enfeites e contorno, com cache) e o teto do cache por combinação de enfeites (usarCombo, que
+   enfeites e contorno, com cache; lugarDoEnfeite põe o enfeite o mínimo para dentro do quadro e
+   enfeitesNaFrente diz quais a montada repinta por cima da cavaleira) e o teto do cache por combinação de enfeites (usarCombo, que
    PA.montada também usa via PA._interno.usarCombo). Moldes em pixelart-unicornio-moldes.js. */
 (function () {
   var PA = window.PA, I = PA._interno;
@@ -45,6 +46,32 @@
     }
   }
 
+  // onde o enfeite vai neste molde: desenho próprio (o do bebê, se houver) ou âncora + dx/dy; e, se passaria
+  // da borda do quadro (o canvas cortaria), o mínimo para dentro. null = a vista não mostra o encaixe
+  function lugarDoEnfeite(molde, nome, e, estagio, w, h) {
+    var d = molde.enfeites && molde.enfeites[nome];
+    if (d && estagio === 0 && d.bebe) d = d.bebe;
+    if (!d) {
+      var a = molde.ancoras[e.ancora];
+      if (!a) return null;
+      d = { linhas: e.linhas, x: a[0] + e.dx, y: a[1] + e.dy };
+    }
+    var x0 = 99, x1 = -99, y0 = 99, y1 = -99;
+    d.linhas.forEach(function (l, j) {
+      for (var i = 0; i < l.length; i++) if (l[i] !== '.') { x0 = Math.min(x0, i); x1 = Math.max(x1, i); y0 = Math.min(y0, j); y1 = Math.max(y1, j); }
+    });
+    var dx = Math.max(0, -(d.x + x0)) - Math.max(0, d.x + x1 - (w - 1));
+    var dy = Math.max(0, -(d.y + y0)) - Math.max(0, d.y + y1 - (h - 1));
+    return { linhas: d.linhas, x: d.x + dx, y: d.y + dy, naFrente: !!d.naFrente };
+  }
+  // retângulo [x0, y0, x1, y1] de 1 pixel pintado do desenho
+  function umPixel(d) {
+    for (var j = 0; j < d.linhas.length; j++) for (var i = 0; i < d.linhas[j].length; i++) {
+      if (d.paleta[d.linhas[j][i]]) return [d.x + i, d.y + j, d.x + i, d.y + j];
+    }
+    return null;
+  }
+
   // estagio: 0 bebê, 1 pequeno, 2 jovem, 3 adulto • opcoes.vista: uma de PA.VISTAS
   PA.unicornio = function (def, estagio, quadro, opcoes) {
     opcoes = opcoes || {};
@@ -85,21 +112,30 @@
       molde.brilhos.forEach(function (pt) { ctx.fillRect(pt[0], pt[1], 1, 1); });
     }
 
-    var enfNaFrente = [];
+    // montada: enfeites pintados de novo por cima da cavaleira (senão somem atrás dela): os das âncoras de
+    // molde.enfeitesNaFrente e os de desenho próprio com naFrente
+    var enfNaFrente = [], ancorasNaFrente = molde.enfeitesNaFrente || [];
     enf.forEach(function (nome) {
       var e = ENFEITES[nome];
       if (!e) return;
-      var proprio = molde.enfeites && molde.enfeites[nome];
-      if (proprio && estagio === 0 && proprio.bebe) proprio = proprio.bebe;
-      if (proprio && proprio.naFrente) enfNaFrente.push({ linhas: proprio.linhas, paleta: e.paleta, x: proprio.x, y: proprio.y });
-      if (proprio) { pintarMatriz(ctx, proprio.linhas, e.paleta, proprio.x, proprio.y); return; }
-      var a = molde.ancoras[e.ancora];
-      if (a) pintarMatriz(ctx, e.linhas, e.paleta, a[0] + e.dx, a[1] + e.dy);
+      var d = lugarDoEnfeite(molde, nome, e, estagio, w, h);
+      if (!d) return;
+      pintarMatriz(ctx, d.linhas, e.paleta, d.x, d.y);
+      if (d.naFrente || ancorasNaFrente.indexOf(e.ancora) >= 0) enfNaFrente.push({ linhas: d.linhas, paleta: e.paleta, x: d.x, y: d.y });
     });
+    // pedaços do corpo que a montada também repinta por cima dela (a ponta da cauda do filhote de lado)
+    (molde.pedacosNaFrente || []).forEach(function (r) {
+      var linhas = corpoLinhas.slice(r[1], r[3] + 1).map(function (l) { return l.slice(r[0], r[2] + 1); });
+      enfNaFrente.unshift({ linhas: linhas, paleta: pal, x: r[0], y: r[1] });
+    });
+    // vista sem pedaço na frente mas com enfeite por cima dela: o "pedaço" vira 1 pixel desse enfeite
+    // (PA.montada só repinta quando há naFrente; o enfeite cobre esse pixel de novo, então nada muda)
+    var naFrente = molde.naFrente || null;
+    if (!naFrente && enfNaFrente.length) naFrente = umPixel(enfNaFrente[0]);
 
     var final = contornar(base, CONTORNO);
     var res = { canvas: final, w: final.width, h: final.height, grande: grande, base: base,
-      cavaleira: molde.cavaleira, naFrente: molde.naFrente || null, enfeitesNaFrente: enfNaFrente };
+      cavaleira: molde.cavaleira, naFrente: naFrente, enfeitesNaFrente: enfNaFrente };
     cache[chave] = res;
     usarCombo(combo, chave);
     return res;
