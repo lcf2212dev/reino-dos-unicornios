@@ -257,6 +257,10 @@ interface ProgressoApi {
   /** envia já o estado de agora e cumpre quando o banco respondeu (ou falhou); sem nuvem, na hora */
   enviarAgora(): Promise<void>;
   statusNuvem(): StatusNuvem;
+  /** sem rede ao abrir: o save deste jogador já está no aparelho (comecou) */
+  podeJogarSemNuvem(): boolean;
+  /** tenta a nuvem de novo (evento online e a cada config.reconectarMs) até o iniciarNuvem dar certo */
+  reconectarNuvem(): void;
   // progresso-regras.js
   valorSala(materia: Materia): number;
   bonusMateria(materia: Materia): number;
