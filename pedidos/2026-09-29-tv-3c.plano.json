@@ -1,0 +1,15 @@
+{
+  "nome": "2026-09-29-tv-3c",
+  "pedido": "pedidos/2026-09-29-tv-3c.md",
+  "personagens": [],
+  "tarefas": [
+    { "id": "pwa", "tipo": "arte", "titulo": "D11-04, D11-08, D11-09, D11-10, D11-12, D11-14: ícones do app em pixel art com gerador, favicon único, nome curto, abertura animada",
+      "quem": "general-purpose", "depende": [],
+      "arquivos": ["vercel/pwa/", "vercel/montar.js", "jogo/ferramentas/gerar-index.js", "jogo/ferramentas/pwa/", "jogo/js/motor/main.js"],
+      "worktree": "tv-3c-pwa", "pronto": ["o 'Pronto quando' completo de cada item no TODO"], "estimativa": 150 },
+    { "id": "integracao", "tipo": "integracao", "titulo": "Juntar, npm test e e2e, marcar o TODO", "quem": "orquestrador", "depende": ["pwa"],
+      "arquivos": ["TODO-VISUAL.md", "jogo/js/manifesto.js", "jogo/index.html", "jogo/ferramentas/testes/base-referencia.txt"],
+      "worktree": "tv-3c", "pronto": ["npm test e npm run e2e verdes; publicado e conferido na Vercel"], "estimativa": 45 },
+    { "id": "entrega", "tipo": "entrega", "titulo": "Merge, push e Vercel", "quem": "orquestrador", "depende": ["integracao"], "arquivos": [], "worktree": "tv-3c", "estimativa": 15 }
+  ]
+}
