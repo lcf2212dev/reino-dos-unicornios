@@ -19,7 +19,7 @@ const botao = (page, re) => page.evaluate((r) => {
   var b = [...document.querySelectorAll('.tela-prova button')].find((x) => new RegExp(r).test(x.textContent) && !x.hidden && x.offsetParent);
   if (!b) return null;
   var q = b.getBoundingClientRect();
-  return { x: q.left + q.width / 2, y: q.top + q.height / 2 };
+  return { x: q.left + q.width / 2, y: q.top + q.height / 2, esq: q.left, dir: q.right, topo: q.top, base: q.bottom };
 }, re);
 // passos de preparo: clique de código (o botão pode estar fora da vista); só o toque duplo é de mouse de verdade
 async function tocar(page, re) {
@@ -76,7 +76,8 @@ test('prova: toque duplo no "Próxima" da revisão não entrega a prova sem quer
       // o 👀 vira ícone pixel art (fora do textContent)
       num: ((document.querySelector('.tela-prova .desafio-num') || {}).textContent || '').trim() || null,
     }));
-    assert.ok(entregar && Math.abs(entregar.x - p.x) < 40 && Math.abs(entregar.y - p.y) < 40, 'o "Entregar" nasce sob o dedo do "Próxima"');
+    // o dedo do "Próxima" cai dentro do "Entregar" (com a fonte pixel ele é mais largo: o centro muda, o dedo não sai)
+    assert.ok(entregar && p.x > entregar.esq && p.x < entregar.dir && p.y > entregar.topo && p.y < entregar.base, 'o "Entregar" nasce sob o dedo do "Próxima"');
     assert.deepStrictEqual(r, { tentativas: 0, resultado: false, num: 'Revisando a questão 3 de 3' }, 'o 2º toque não entregou a prova');
     assert.deepStrictEqual(page.__erros, []);
   } finally {
