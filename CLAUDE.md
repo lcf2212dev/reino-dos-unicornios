@@ -4,9 +4,10 @@ Jogo "Mariana e o Reino dos Unicórnios": revisão escolar da Mariana (7 anos). 
 Este arquivo tem as regras invioláveis e o índice. As regras de código de cada pasta estão no `CLAUDE.md` dela.
 
 ## O progresso da Mariana é intocável
-- Ele vive em 3 lugares: o servidor de casa (container `reino-unicornios`, porta 80,
+- Ele vive em 4 lugares: o servidor de casa (container `reino-unicornios`, porta 80,
   `reinodosunicornios.local`, banco em `jogo/servidor/dados/reino.db`); o artifact publicado no claude.ai
-  (capacidade `db`, doc `progresso/mariana`); o localStorage `mariana-reino-v1` e `mariana-reino-v1-novidades`
+  (capacidade `db`, doc `progresso/mariana`); o banco Postgres (Neon) da Vercel (`reino-dos-unicornios.vercel.app`,
+  mesmas tabelas do servidor de casa; `vercel/`); o localStorage `mariana-reino-v1` e `mariana-reino-v1-novidades`
   de cada aparelho.
 - Outros jogadores (login/senha) têm save próprio, tão real quanto o dela: `reino-v1-<login>`, doc `progresso/<login>`,
   linha `<login>` do banco e contas em `jogadores` (`docs/contratos/save-e-mescla.md` §12). Mesmas regras.
@@ -22,8 +23,9 @@ Este arquivo tem as regras invioláveis e o índice. As regras de código de cad
 - Feature, ajuste ou correção vão até o fim sem pedir decisão, confirmação nem ajuda a ninguém: decida com o
   padrão mais sensato (a opção que você recomendaria), construa numa worktree, feche com `validar-tudo`, faça o commit,
   integre na main e dê push (skill `entregar`: `npm run integrar -- <branch> --commit --merge --push`).
-  Depois do push, se o jogo mudou, republique o artifact do claude.ai (skill `publicar-artifact`).
-  Commit, merge na main, push, troca da base do e2e e artifact estão autorizados por escrito, sempre.
+  Depois do push, se o jogo mudou, republique o artifact do claude.ai (skill `publicar-artifact`) e a Vercel
+  (`npm run vercel`, na main). Commit, merge na main, push, troca da base do e2e, artifact e Vercel estão autorizados
+  por escrito, sempre.
 - Nunca use AskUserQuestion, nunca pare para aprovar plano, amostra ou resultado. O que você decidiu vai no
   relatório final, curto.
 - Merge só com `npm test` e `npm run e2e` verdes; diferença no e2e fora do que a feature explica é defeito: corrija.
@@ -78,7 +80,7 @@ Este arquivo tem as regras invioláveis e o índice. As regras de código de cad
   `npm run servidor-teste` (skill `servidor-de-teste`) · `npm run memoria` (memória de uma aba, passo a passo)
 - `npm run index` · `npm run versao` · `npm run vozes` e `npm run vozes-elenco` (skills `gravar-vozes`, `validar-vozes`)
 - `npm run worktree` · `npm run material -- <Pasta>` (prints de `matérias/<pasta>/` reduzidos) · `npm run plano`
-  (frentes paralelas de um pedido) · `npm run integrar` (skill `entregar`) · `npm run artifact` (skill `publicar-artifact`)
+  (frentes paralelas de um pedido) · `npm run integrar` (skill `entregar`) · `npm run artifact` (skill `publicar-artifact`) · `npm run vercel`
 
 ## Mapa de pastas
 ```
@@ -92,6 +94,7 @@ jogo/js/interiores/<p>/    cada prédio por dentro;  jogo/js/conteudo/: matéria
 jogo/css/                  plano, sem subpasta; ordem da cascata = manifesto
 jogo/ferramentas/          testes, validadores, vozes, fluxo (worktree, integrar), gerado/ (GERADO)
 jogo/servidor/             servidor de casa: intocável
+vercel/                    o jogo na Vercel: API do servidor de casa sobre Postgres (build copia jogo/)
 matérias/<matéria>/        prints e fotos da escola (apostila; Revisão/ = folha de prova)
 docs/                      ARQUITETURA.md (mapa; §5.1 quero X → qual registro), contratos/, receitas/, decisoes/
 ```

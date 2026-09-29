@@ -9,6 +9,8 @@ Guia de uso para o Leandro. As regras técnicas ficam em `docs/contratos/`.
   - **Entrar:** toda vez que o jogo abre, toque em "Entrar no Reino" e digite a senha. Mariana: login `mariana`,
     senha `unicorlice77` (o login de quem jogou por último já vem preenchido). Outros jogadores usam "Criar conta".
     Para sair: ⚙️ Ajustes → 🚪 Sair.
+- **Na internet, sem login no claude.ai:** https://reino-dos-unicornios.vercel.app (mesmo jogo, mesmas contas por
+  login/senha, mas com banco próprio: o progresso de lá não se mistura com o do artifact nem com o do servidor de casa).
 - **Como andar:**
   - **Notebook:** clique num lugar e ela vai até lá; clique numa pessoa ou objeto e ela conversa ou usa. Segurando o
     botão do mouse, ela segue o ponteiro. As setas (ou W, A, S, D) também andam.

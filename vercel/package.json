@@ -1,0 +1,14 @@
+{
+  "name": "reino-dos-unicornios-vercel",
+  "private": true,
+  "description": "O Reino dos Unicórnios na Vercel: o jogo (copiado de ../jogo no build) e a API do servidor de casa sobre Postgres (Neon).",
+  "scripts": {
+    "build": "node montar.js"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "1.1.0"
+  },
+  "engines": {
+    "node": "22.x"
+  }
+}
