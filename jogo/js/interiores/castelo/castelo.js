@@ -38,7 +38,7 @@
   // ala de Ciências: a cavaleira é registrada aqui (o Laboratório, no Observatório, carrega depois do Castelo)
   if (!ELENCO['lab-cavaleira']) {
     R.registrarPersonagem({ id: 'lab-cavaleira', nome: 'Cavaleira Jade', paraMateria: 'ciencias',
-      sprite: { pele: '#e0ac86', cabelo: '#7a3a1a', penteado: 'rabo', chapeu: 'elmo', cor2: '#39c5bb', armadura: true, roupa: '#39c5bb', capa: true, capaCor: '#5fb85a' },
+      sprite: { pele: '#e0ac86', cabelo: '#7a3a1a', penteado: 'rabo', chapeu: 'elmo', cor2: '#39c5bb', armadura: true, roupa: '#39c5bb', capa: true, capaCor: '#5fb85a', armaduraCor: '#139a8c' },
       perfil: { voz: 'en-US-EmmaMultilingualNeural', velocidade: '+0%', tom: '-8Hz' } });
   }
   F.npcs['lab-cavaleira'] = F.npcs['lab-cavaleira'] || {
@@ -55,19 +55,19 @@
     var m = ELENCO[id].paraMateria;
     if (m && !(m in CAVALEIROS)) CAVALEIROS[m] = id;
   });
-  // tema de cada ala: enfeite largo (2) e estreito (1) da parede, 4 peças de chão (A..D), piso e paleta
+  // tema de cada ala: enfeite largo (2) e estreito (1) da parede, 5 peças de chão (A..E; E baixa, da matéria), piso e paleta
   var TEMAS = {
     historia: {
       paredeLarga: { tipo: 'castelo-mapa-antigo' }, paredeEstreita: { tipo: 'quadro', var: { cena: 'paisagem' } },
       a: inter('historia-ampulheta', 'Ampulheta antiga', { tipo: 'castelo-ampulheta' }),
-      b: { tipo: 'castelo-pergaminhos' }, c: { tipo: 'pilha-livros' }, d: { tipo: 'globo' },
+      b: { tipo: 'castelo-pergaminhos' }, c: { tipo: 'pilha-livros' }, d: { tipo: 'globo' }, e: { tipo: 'museu-anfora' },
       cor: '#ff7eb6', piso: 'tabuas', parede: 'pedra',
       paleta: { piso: '#e8b888', piso2: '#c98a5a', parede: '#fbe6cc', parede2: '#f0c8a0', rodape: '#8a4a3a' },
     },
     ingles: {
       paredeLarga: { tipo: 'castelo-bandeirolas' }, paredeEstreita: { tipo: 'relogio-parede' },
       a: inter('ingles-cartaz', 'Cartaz em inglês', { tipo: 'castelo-cartaz-ingles' }),
-      b: { tipo: 'relogio-pe' }, c: { tipo: 'pilha-livros' }, d: { tipo: 'globo' },
+      b: { tipo: 'relogio-pe' }, c: { tipo: 'pilha-livros' }, d: { tipo: 'globo' }, e: { tipo: 'torre-blocos-abc' },
       cor: '#2f6fd6', piso: 'pedra', parede: 'tijolo',
       paleta: { piso: '#dfe6f2', piso2: '#aebcd8', parede: '#f4e4d8', parede2: '#d8b0a0', rodape: '#2f4f8a' },
     },
@@ -75,23 +75,27 @@
       paredeLarga: { tipo: 'castelo-quadro-palavras' }, paredeEstreita: { tipo: 'cartaz', var: { desenho: 'abc' } },
       a: inter('portugues-livro', 'Livro aberto', { tipo: 'castelo-livro-aberto' }),
       b: { tipo: 'castelo-blocos-letras' }, c: { tipo: 'pilha-livros' }, d: { tipo: 'castelo-cavalete-receita' },
+      e: { tipo: 'portugues-cesta-frutas' },
       cor: PT_VERMELHO, piso: 'taco', parede: 'pedra',
       paleta: { piso: '#e4f0d4', piso2: '#b4d49a', parede: '#fff1ea', parede2: '#f2c4b8', rodape: '#2e7a45' },
     },
     ciencias: {
       paredeLarga: { tipo: 'lab-quadro', var: { desenho: 'seres' } }, paredeEstreita: { tipo: 'lab-cartaz', var: { desenho: 'vivo' } },
       a: inter('ciencias-microscopio', 'Microscópio', { tipo: 'lab-microscopio' }),
-      b: { tipo: 'lab-formigueiro' }, c: { tipo: 'lab-tubos' }, d: { tipo: 'lab-cacto' },
+      b: { tipo: 'lab-formigueiro' }, c: { tipo: 'lab-tubos' }, d: { tipo: 'lab-cacto' }, e: { tipo: 'castelo-pergaminhos' },
       cor: '#39c5bb', piso: 'azulejo', parede: 'pedra',
       paleta: { piso: '#eefaf6', piso2: '#c4ece2', parede: '#f4fbff', parede2: '#cfe8ee', rodape: '#1f9a92' },
     },
   };
   var PISOS_PADRAO = ['palha', 'taco', 'azulejo', 'carpete', 'mosaico'];
+  // peça baixa da matéria para as alas sem tema próprio (objeto do prédio dela; desenhado depois que tudo carregou)
+  var PECA_E = { matematica: 'matematica-blocos', geografia: 'geografia-telefone' };
   function temaPadrao(m, i) {
     var cores = (m.lugar && m.lugar.cores) || {};
     return {
       paredeLarga: { tipo: 'mapa-parede' }, paredeEstreita: { tipo: 'cartaz' },
       a: { tipo: 'planta-alta' }, b: { tipo: 'castelo-pergaminhos' }, c: { tipo: 'pilha-livros' }, d: { tipo: 'globo' },
+      e: { tipo: PECA_E[m.id] || 'castelo-elmo' },
       cor: cores.detalhe || '#6fdc8c', piso: PISOS_PADRAO[i % PISOS_PADRAO.length], parede: 'pedra',
       paleta: { parede: cores.parede || '#f4eee0', rodape: cores.detalhe || '#6b5a4a' },
     };
@@ -108,7 +112,8 @@
     var acao = { tipo: 'treino', materia: m.id }, id = cavaleiroDoElenco(m.id);
     if (id) return npc(id, x, y, acao);
     return { id: 'cav-' + m.id, nome: 'Cavaleiro do Reino', voz: 'npc-padrao-1', x: x, y: y, acao: acao, falas: F.cavaleiro || {},
-      sprite: { base: 'pessoa', pele: '#e0ac86', cabelo: '#5a3825', penteado: 'curto', chapeu: 'elmo', armadura: true, roupa: cor, cor2: C.ouro } };
+      sprite: { base: 'pessoa', pele: '#e0ac86', cabelo: '#5a3825', penteado: 'curto', chapeu: 'elmo', armadura: true, roupa: cor, cor2: C.ouro,
+        armaduraCor: ({ matematica: '#3f7fe0', geografia: '#39a860' })[m.id] || cor } };
   }
 
   // GERADOR: uma ala 11×11 para a matéria m (i = posição em Reino.materias), com o canto em (ox, oy).
@@ -118,20 +123,19 @@
     function peca(p, x, y) { return Object.assign({}, p, { x: x, y: y }); }
     var objetos = sala(ox, oy, [
       // parede do fundo
-      { tipo: 'vitral', x: 0, y: 0 }, { tipo: 'estandarte', x: 1, y: 0, var: { cor: t.cor, emblema: 'estrela' } },
-      { tipo: 'castelo-escudo', x: 2, y: 0, var: { cor: t.cor } }, peca(t.paredeLarga, 3, 0),
-      { tipo: 'arandela', x: 5, y: 0 }, { tipo: 'castelo-escudo', x: 6, y: 0, var: { cor: '#ff5c6a' } },
-      peca(t.paredeEstreita, 7, 0), { tipo: 'estandarte', x: 8, y: 0, var: { cor: t.cor, emblema: 'coracao' } },
-      { tipo: 'vitral', x: 9, y: 0 }, { tipo: 'arandela', x: 10, y: 0 },
+      // (só nas colunas sem móvel alto embaixo: 0 armadura, 2–3 espadas, 5 peça A, 7 candelabro)
+      { tipo: 'estandarte', x: 1, y: 0, var: { cor: t.cor, emblema: 'estrela' } }, peca(t.paredeEstreita, 4, 0),
+      { tipo: 'castelo-escudo', x: 6, y: 0, var: { cor: t.cor } }, peca(t.paredeLarga, 8, 0),
+      { tipo: 'vitral', x: 10, y: 0 },
       // metade de cima: armas de treino e o tema
       { tipo: 'castelo-armadura', x: 0, y: 2, var: { pluma: t.cor } }, { tipo: 'castelo-suporte-espadas', x: 2, y: 2 },
-      peca(t.a, 5, 2), { tipo: 'castelo-candelabro', x: 7, y: 2 }, { tipo: 'caixote', x: 9, y: 2 }, { tipo: 'barril', x: 10, y: 2 },
+      peca(t.a, 5, 2), { tipo: 'castelo-candelabro', x: 7, y: 2 }, { tipo: 'caixote', x: 9, y: 2 }, { tipo: 'castelo-elmo', x: 10, y: 2, var: { pluma: t.cor } },
       { tipo: 'castelo-boneco', x: 1, y: 4 }, { tipo: 'castelo-alvo', x: 4, y: 4 },
       peca(t.b, 8, 4), { tipo: 'castelo-feno', x: 10, y: 4 },
       { tipo: 'tapete', x: 5, y: 5, w: 3, h: 1, var: { cor: t.cor, borda: C.ouro } },
       // metade de baixo (depois do corredor das fileiras 6 e 7)
-      { tipo: 'banco', x: 0, y: 8 }, { tipo: 'castelo-feno', x: 4, y: 8 }, peca(t.d, 7, 8), { tipo: 'balde', x: 10, y: 8 },
-      { tipo: 'vaso-grande', x: 0, y: 10 }, { tipo: 'cesto', x: 2, y: 10 }, peca(t.c, 5, 10),
+      { tipo: 'castelo-arca', x: 0, y: 8 }, { tipo: 'castelo-feno', x: 4, y: 8 }, peca(t.d, 7, 8), peca(t.e, 10, 8),
+      { tipo: 'castelo-aljava', x: 0, y: 10 }, { tipo: 'castelo-pergaminhos', x: 2, y: 10 }, peca(t.c, 5, 10),
       { tipo: 'castelo-alvo', x: 7, y: 10 }, { tipo: 'castelo-candelabro', x: 8, y: 10 }, { tipo: 'castelo-armadura', x: 10, y: 10, var: { pluma: t.cor } },
     ]);
     return {
@@ -152,37 +156,54 @@
 
   var objetos = sala(SX, 1, [
     /* ---------- SALÃO DO TRONO: parede ---------- */
-    { tipo: 'vitral', x: 0, y: 0 },
     inter('tapecaria', 'Plano da Prova', { tipo: 'castelo-tapecaria', x: 2, y: 0, acao: { tipo: 'tela', tela: 'plano' } }),
     { tipo: 'estandarte', x: 4, y: 0, var: { cor: '#ff8a3d', emblema: 'estrela' } },
-    { tipo: 'vitral', x: 5, y: 0 }, { tipo: 'castelo-brasao', x: 6, y: 0 }, { tipo: 'vitral', x: 7, y: 0 },
+    { tipo: 'castelo-brasao', x: 6, y: 0 },
     { tipo: 'estandarte', x: 8, y: 0, var: { cor: '#8a5cff', emblema: 'estrela' } }, { tipo: 'arandela', x: 9, y: 0 },
     { tipo: 'castelo-escudo', x: 10, y: 0, var: { cor: '#ff8a3d' } }, { tipo: 'vitral', x: 11, y: 0 },
     { tipo: 'estandarte', x: 12, y: 0, var: { cor: '#ff8a3d', emblema: 'coracao' } },
     /* ---------- chão de cima ---------- */
     inter('lareira', 'Lareira', { tipo: 'lareira', x: 0, y: 2 }),
-    { tipo: 'castelo-candelabro', x: 4, y: 2 }, { tipo: 'castelo-trono', x: 5, y: 2 }, { tipo: 'castelo-candelabro', x: 8, y: 2 },
-    inter('medalhas', 'Estante de medalhas', { tipo: 'castelo-estante-medalhas', x: 9, y: 2 }),
-    { tipo: 'castelo-armadura', x: 12, y: 2 },
-    { tipo: 'castelo-armadura', x: 0, y: 4 }, { tipo: 'banco', x: 1, y: 4, var: { cor: '#e060a0' } },
-    { tipo: 'banco', x: 9, y: 4, var: { cor: '#e060a0' } }, { tipo: 'vaso-planta', x: 8, y: 5 }, { tipo: 'castelo-armadura', x: 12, y: 4 },
+    // o encosto do trono sobe na frente do brasão de propósito (junto); os candelabros e a estante descem uma
+    // fileira para não cobrir os estandartes, a arandela, o escudo e o vitral
+    { tipo: 'castelo-candelabro', x: 4, y: 3 }, { tipo: 'castelo-trono', x: 5, y: 2, junto: true }, { tipo: 'castelo-candelabro', x: 8, y: 3 },
+    inter('medalhas', 'Estante de medalhas', { tipo: 'castelo-estante-medalhas', x: 9, y: 3 }),
+    { tipo: 'castelo-armadura', x: 0, y: 4 }, { tipo: 'castelo-arca', x: 1, y: 4, var: { cor: '#8a4a3a' } },
+    { tipo: 'castelo-arca', x: 9, y: 4, var: { cor: '#8a4a3a' } }, { tipo: 'vaso-planta', x: 8, y: 5 }, { tipo: 'castelo-armadura', x: 12, y: 5 },
     { tipo: 'castelo-tapete-real', x: 5, y: 4, w: 3, h: baixo - 5 },
     /* ---------- chão de baixo (depois do corredor das portas) ---------- */
-    { tipo: 'vaso-grande', x: 0, y: 8 }, { tipo: 'castelo-candelabro', x: 2, y: 8 }, { tipo: 'flores', x: 4, y: 8 },
-    { tipo: 'flores', x: 8, y: 8 }, { tipo: 'castelo-candelabro', x: 10, y: 8 }, { tipo: 'vaso-grande', x: 12, y: 8 },
-    { tipo: 'bau', x: 0, y: 10 }, { tipo: 'banco', x: 1, y: 10 }, { tipo: 'cesto', x: 3, y: 10 },
-    { tipo: 'cesto', x: 9, y: 10 }, { tipo: 'banco', x: 10, y: 10 }, { tipo: 'barril', x: 12, y: 10 },
+    { tipo: 'castelo-coroa-almofada', x: 0, y: 8 }, { tipo: 'castelo-candelabro', x: 2, y: 8 }, { tipo: 'flores', x: 4, y: 8 },
+    { tipo: 'flores', x: 8, y: 8 }, { tipo: 'castelo-candelabro', x: 10, y: 8 }, { tipo: 'castelo-coroa-almofada', x: 12, y: 8 },
+    { tipo: 'bau', x: 0, y: 10 }, { tipo: 'castelo-arca', x: 1, y: 10 }, { tipo: 'castelo-pergaminhos', x: 3, y: 10 },
+    { tipo: 'castelo-pergaminhos', x: 9, y: 10 }, { tipo: 'castelo-arca', x: 10, y: 10 }, { tipo: 'castelo-elmo', x: 12, y: 10 },
   ]);
-  // blocos extras do salão (3+ matérias): guarda de honra ao longo do tapete
-  for (var k = 1; k < andares; k++) {
-    var b = 12 * k;   // fileira local onde começa o andar k (a porta dele fica em b+6 e b+7)
-    objetos = objetos.concat(sala(SX, 1, [
+  // blocos extras do salão (3+ matérias), cada andar com um tema (D2A-05): banquete, jardim da fonte e guarda
+  // de honra, em rodízio. Livres: as colunas 5–7 (tapete vermelho) e as fileiras b+6 e b+7 (portas das alas).
+  var BLOCOS_SALAO = [
+    function (b) { return [   // banquete
+      { tipo: 'cadeira', x: 0, y: b, var: { almofada: '#e060a0' } }, { tipo: 'mesa', x: 1, y: b, var: { toalha: '#fff1d0', itens: ['bolo', 'bule'] } },
+      { tipo: 'cadeira', x: 3, y: b, var: { almofada: '#e060a0' } },
+      { tipo: 'cadeira', x: 9, y: b, var: { almofada: '#8a5cff' } }, { tipo: 'mesa', x: 10, y: b, var: { toalha: '#fff1d0', itens: ['xicara', 'bolo'] } },
+      { tipo: 'cadeira', x: 12, y: b, var: { almofada: '#8a5cff' } },
+      { tipo: 'pedestal', x: 1, y: b + 3, var: { item: 'coroa' } }, { tipo: 'flores', x: 3, y: b + 3 },
+      { tipo: 'flores', x: 9, y: b + 3 }, { tipo: 'pedestal', x: 11, y: b + 3, var: { item: 'medalha' } },
+      { tipo: 'vitrine', x: 0, y: b + 9, var: { itens: ['coroa', 'gema', 'medalha'] } }, { tipo: 'castelo-candelabro', x: 3, y: b + 9 },
+      { tipo: 'castelo-candelabro', x: 9, y: b + 9 }, { tipo: 'vitrine', x: 11, y: b + 9, var: { itens: ['estrela', 'coroa', 'gema'] } },
+    ]; },
+    function (b) { return [   // jardim da fonte
+      { tipo: 'fonte', x: 1, y: b }, { tipo: 'fonte', x: 10, y: b },
+      { tipo: 'globo', x: 0, y: b + 3 }, { tipo: 'flores', x: 3, y: b + 3 }, { tipo: 'flores', x: 9, y: b + 3 }, { tipo: 'globo', x: 12, y: b + 3 },
+      { tipo: 'castelo-armadura', x: 0, y: b + 9 }, { tipo: 'estante', x: 1, y: b + 9 }, { tipo: 'vaso-planta', x: 3, y: b + 9 },
+      { tipo: 'vaso-planta', x: 9, y: b + 9 }, { tipo: 'estante', x: 10, y: b + 9 }, { tipo: 'castelo-armadura', x: 12, y: b + 9 },
+    ]; },
+    function (b) { return [   // guarda de honra
       { tipo: 'castelo-armadura', x: 0, y: b }, { tipo: 'castelo-candelabro', x: 3, y: b }, { tipo: 'castelo-candelabro', x: 9, y: b }, { tipo: 'castelo-armadura', x: 12, y: b },
-      { tipo: 'planta-alta', x: 0, y: b + 3 }, { tipo: 'banco', x: 2, y: b + 3 }, { tipo: 'banco', x: 9, y: b + 3 }, { tipo: 'planta-alta', x: 12, y: b + 3 },
-      { tipo: 'vaso-grande', x: 1, y: b + 5 }, { tipo: 'vaso-grande', x: 11, y: b + 5 },
-      { tipo: 'barril', x: 0, y: b + 9 }, { tipo: 'castelo-candelabro', x: 3, y: b + 9 }, { tipo: 'castelo-candelabro', x: 9, y: b + 9 }, { tipo: 'bau', x: 12, y: b + 9 },
-    ]));
-  }
+      { tipo: 'planta-alta', x: 0, y: b + 3 }, { tipo: 'castelo-suporte-espadas', x: 2, y: b + 3 }, { tipo: 'castelo-suporte-espadas', x: 9, y: b + 3 }, { tipo: 'planta-alta', x: 12, y: b + 3 },
+      { tipo: 'castelo-coroa-almofada', x: 1, y: b + 5 }, { tipo: 'castelo-coroa-almofada', x: 11, y: b + 5 },
+      { tipo: 'castelo-elmo', x: 0, y: b + 9 }, { tipo: 'castelo-alvo', x: 3, y: b + 9 }, { tipo: 'castelo-alvo', x: 9, y: b + 9 }, { tipo: 'bau', x: 12, y: b + 9 },
+    ]; },
+  ];
+  for (var k = 1; k < andares; k++) objetos = objetos.concat(sala(SX, 1, BLOCOS_SALAO[(k - 1) % BLOCOS_SALAO.length](12 * k)));
 
   var comodos = [
     { id: 'salao', nome: 'Salão do Trono', placa: 'Salão do Trono', rect: { x: SX, y: 1, w: SW, h: SH },

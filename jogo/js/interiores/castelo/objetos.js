@@ -102,7 +102,7 @@
       ret(ctx, cx - 6, py - 1, 1, 5, C.metal2); ret(ctx, cx + 6, py - 1, 1, 5, C.metal2);
       ret(ctx, cx - 4, py - 11, 9, 9, K); ret(ctx, cx - 3, py - 10, 7, 7, C.metal); ret(ctx, cx - 3, py - 7, 7, 1, K);
       ret(ctx, cx - 3, py - 10, 2, 3, '#dfe6f0');
-      ret(ctx, cx - 1, py - 14, 3, 4, K); ret(ctx, cx, py - 14, 1, 3, pluma);
+      ret(ctx, cx - 1, py - 12, 3, 2, K); ret(ctx, cx, py - 12, 1, 1, pluma);
       ret(ctx, cx, py + 1, 1, 1, C.ouro);
     } });
   I.objeto('castelo-candelabro', { w: 1, h: 1, topo: 12, solido: true, alto: true,
@@ -280,6 +280,49 @@
       // ingredientes com tracinhos
       for (var i = 0; i < 3; i++) { ret(ctx, cx + 1, py - 7 + i * 3, 1, 1, PT_VERMELHO); ret(ctx, cx + 3, py - 7 + i * 3, 3 - (i % 2), 1, '#8a7aa8'); }
       ret(ctx, cx - 5, py - 1, 11, 1, '#8a7aa8');
+    } });
+
+  /* ================= NO LUGAR DO "KIT DE ENCHIMENTO" (D2B-03) ================= */
+  // elmo de treino apoiado no chão, com a pluma (var.pluma)
+  I.objeto('castelo-elmo', { w: 1, h: 1, topo: 6, solido: true,
+    desenhar: function (ctx, px, py, o) {
+      var cx = px + 8;
+      ret(ctx, cx - 1, py - 6, 3, 4, K); ret(ctx, cx, py - 5, 1, 3, v(o, 'pluma', '#ff5c6a'));
+      circulo(ctx, cx, py + 4, 6, K); circulo(ctx, cx, py + 4, 5, C.metal);
+      ret(ctx, cx - 6, py + 5, 13, 9, K); ret(ctx, cx - 5, py + 5, 11, 8, C.metal);
+      ret(ctx, cx - 3, py, 3, 1, C.branco); ret(ctx, cx - 5, py + 5, 1, 7, '#dfe6f0');   // luz de cima e da esquerda
+      ret(ctx, cx - 4, py + 6, 9, 2, K); ret(ctx, cx - 1, py + 8, 2, 4, K);              // viseira
+      ret(ctx, cx - 5, py + 12, 11, 1, C.metal2);
+    } });
+  // arca de madeira com ferragens douradas (no lugar do banco; w em tiles, padrão 2)
+  I.objeto('castelo-arca', { w: 2, h: 1, topo: 6, solido: true,
+    desenhar: function (ctx, px, py, o) {
+      var W = (o.w || 2) * 16, c = v(o, 'cor', C.madeira2);
+      ret(ctx, px + 1, py - 5, W - 2, 20, K); ret(ctx, px + 2, py - 4, W - 4, 18, c);
+      ret(ctx, px + 2, py - 4, W - 4, 1, C.madeiraClara); ret(ctx, px + 2, py + 2, W - 4, 1, K);
+      ret(ctx, px + 5, py - 4, 2, 18, C.ouro2); ret(ctx, px + W - 7, py - 4, 2, 18, C.ouro2);
+      ret(ctx, px + W / 2 - 2, py + 1, 4, 4, K); ret(ctx, px + W / 2 - 1, py + 2, 2, 2, C.ouro);
+    } });
+  // almofada real num pedestal baixo com a coroa em cima
+  I.objeto('castelo-coroa-almofada', { w: 1, h: 1, topo: 8, solido: true, alto: true,
+    desenhar: function (ctx, px, py) {
+      var cx = px + 8;
+      ret(ctx, cx - 5, py + 4, 11, 11, K); ret(ctx, cx - 4, py + 5, 9, 9, C.pedra); ret(ctx, cx - 4, py + 5, 9, 1, C.creme);
+      ret(ctx, cx - 7, py - 1, 15, 6, K); ret(ctx, cx - 6, py, 13, 4, '#c8324a'); ret(ctx, cx - 6, py, 13, 1, '#e8607a');
+      ret(ctx, cx - 7, py + 4, 2, 2, C.ouro); ret(ctx, cx + 6, py + 4, 2, 2, C.ouro);   // borlas
+      ret(ctx, cx - 4, py - 5, 9, 5, K); ret(ctx, cx - 3, py - 4, 7, 3, C.ouro);
+      ret(ctx, cx - 4, py - 7, 1, 2, K); ret(ctx, cx, py - 8, 1, 3, K); ret(ctx, cx + 4, py - 7, 1, 2, K);
+      ret(ctx, cx - 3, py - 4, 7, 1, C.ouro3); ret(ctx, cx, py - 3, 1, 1, '#ff5c6a');
+    } });
+  // aljava de flechas de treino
+  I.objeto('castelo-aljava', { w: 1, h: 1, topo: 8, solido: true, alto: true,
+    desenhar: function (ctx, px, py, o) {
+      var cx = px + 8, c = v(o, 'cor', '#8a4a3a');
+      [[-3, '#ff5c6a'], [0, C.ouro], [3, '#5fb4ff']].forEach(function (f) {
+        ret(ctx, cx + f[0], py - 7, 1, 8, K); ret(ctx, cx + f[0] - 1, py - 8, 3, 2, f[1]);
+      });
+      ret(ctx, cx - 5, py - 1, 11, 16, K); ret(ctx, cx - 4, py, 9, 14, c);
+      ret(ctx, cx - 4, py, 9, 1, '#c07a5a'); ret(ctx, cx - 4, py + 4, 9, 1, C.ouro2); ret(ctx, cx - 4, py + 10, 9, 1, C.ouro2);
     } });
 
   // para as outras partes (R._predios.castelo)
