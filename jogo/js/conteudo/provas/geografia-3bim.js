@@ -6,7 +6,7 @@
    Acessórios: lendário (acertou tudo na 1ª tentativa), raro (na 2ª), comum (depois), com desenho e ícone aqui mesmo. */
 // a professora da prova (docs/contratos/npcs-e-dialogo.md §5): voz brasileira que nenhuma outra professora usa
 Reino.registrarPersonagem({ id: 'prof-samylly', nome: 'Professora Samylly', paraProva: 'geografia-3bim',
-  sprite: { pele: '#c68a5e', cabelo: '#2b1b17', penteado: 'cacheado', roupa: '#5fb4ff', roupa2: '#2f4f8a', perna: 'saia', cor2: '#ffd34d', colar: '#ff7eb6' },
+  sprite: { pele: '#c68a5e', cabelo: '#2b1b17', penteado: 'cacheado', roupa: '#5fb4ff', roupa2: '#2f4f8a', perna: 'saia', livro: '#39a860', cor2: '#ffd34d', colar: '#ff7eb6' },
   perfil: { voz: 'pt-BR-FranciscaNeural', velocidade: '-4%', tom: '+8Hz' } });
 Reino.registrarProva({
   id: 'geografia-3bim',
@@ -96,7 +96,7 @@ Reino.registrarProva({
       explica: 'Só a terceira é falsa: o jornal serve para informar as pessoas, trazendo notícias.' },
 
     { id: 'gb3-03', tipo: 'ligar', livro: 'meios', lerItens: true,
-      pergunta: 'Escreva os nomes dos meios de comunicação abaixo:',
+      pergunta: 'Ligue os meios de comunicação aos nomes:',
       instrucao: 'Ligue cada figura ao nome dela.',
       pares: [
         [{ img: '📰', alt: 'jornal' }, { t: 'Jornal' }],

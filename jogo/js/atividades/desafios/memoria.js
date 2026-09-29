@@ -2,13 +2,19 @@
    Não tem pontuação própria: D.pontuar dá 0 (ele só aparece na missão, que não pontua). */
 (function () {
   var U = Reino.util, el = U.el, D = Reino.Desafios, _d = Reino._desafios;
+  // letras que cabem numa carta do celular (1em por letra): 16 px até 4; em 12 px, 4 colunas até 5, 3 até 8, senão 2
+  var LETRAS_MEM = [4, 5, 8];
 
   var montar = function (d, opts) {
     var cartas = [];
     d.pares.forEach(function (p, i) { cartas.push({ par: i, face: p[0], emoji: true }); cartas.push({ par: i, face: p[1] }); });
     cartas = U.embaralhar(cartas, ['memoria', d]);
     var abertas = [], achados = {}, travar = false, completo = false;
-    var grade = el('div.memoria');
+    // palavra mais longa das cartas (sem as marcas «»): passou de LETRAS_MEM, a fonte desce (css)
+    var maior = Math.max.apply(null, d.pares.map(function (p) {
+      return Math.max.apply(null, String(p[1]).replace(/[«»]/g, '').split(/\s+/).map(function (w) { return w.length; }));
+    }));
+    var grade = el('div.memoria' + (maior > LETRAS_MEM[2] ? '.mem-longa.mem-2col' : maior > LETRAS_MEM[1] ? '.mem-longa.mem-3col' : maior > LETRAS_MEM[0] ? '.mem-longa' : ''));
     var botoes = cartas.map(function (c, idx) {
       var b = el('button.carta-mem', { type: 'button', 'aria-label': 'Carta virada' },
         el('span.mem-verso', '🦄'), el('span.mem-face' + (c.emoji ? '.mem-emoji' : ''), c.face));

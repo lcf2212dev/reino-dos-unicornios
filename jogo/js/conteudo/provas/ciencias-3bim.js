@@ -10,7 +10,7 @@
 
   // a professora da prova (docs/contratos/npcs-e-dialogo.md §5): voz brasileira que nenhuma outra professora usa
   Reino.registrarPersonagem({ id: 'prof-flora', nome: 'Professora Flora', paraProva: 'ciencias-3bim',
-    sprite: { pele: '#f1c7a5', cabelo: '#5a3825', penteado: 'chanel', roupa: '#39a860', roupa2: '#6b4a9a', perna: 'saia' },
+    sprite: { pele: '#f1c7a5', cabelo: '#5a3825', penteado: 'chanel', roupa: '#39a860', roupa2: '#6b4a9a', perna: 'saia', livro: '#139a8c' },
     perfil: { voz: 'de-DE-SeraphinaMultilingualNeural', velocidade: '-2%', tom: '+6Hz' } });
 
   Reino.registrarProva({

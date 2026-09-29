@@ -72,6 +72,7 @@
 .dica-toque.pisca { animation: piscar 0.6s ease-in-out 2; color: var(--rosa-forte); }
 
 /* ligar */
+.ligar { display: flex; flex-direction: column; gap: 12px; }
 .ligar-colunas { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
 .ligar-col { display: flex; flex-direction: column; gap: 10px; }
 .ligar-item {
@@ -132,16 +133,17 @@
 .bau-itens .sep-item { font-size: 0.85em; min-height: 44px; }
 
 /* memória */
-.memoria { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.memoria { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
 .carta-mem { position: relative; aspect-ratio: 3 / 4; max-width: 100%; border: 3px solid var(--borda); border-radius: var(--canto); background: var(--lavanda); box-shadow: 0 4px 0 var(--borda); font-weight: 700; padding: 4px; }
 .mem-verso { font-size: 1.8em; }
-.mem-face { display: none; font-size: 0.95em; }
+.mem-face { display: none; font-size: 16px; }
 .mem-face.mem-emoji { font-size: 2em; }
 .carta-mem.virada { background: var(--papel); }
 .carta-mem.virada .mem-verso { display: none; }
 .carta-mem.virada .mem-face { display: block; }
 .carta-mem.achada { background: var(--certo-fundo); border-color: var(--certo); }
-@media (max-width: 420px) { .memoria { grid-template-columns: repeat(4, 1fr); gap: 6px; } .mem-face { font-size: 0.8em; } }
+/* palavra longa (.mem-longa, memoria.js): 16 → 12 px no celular; não cabe em 4 colunas: 3 ou 2 (sem partir a palavra) */
+@media (max-width: 420px) { .memoria { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; } .memoria.mem-longa { gap: 4px; } .memoria.mem-longa .carta-mem { padding: 2px; } .memoria.mem-longa .mem-face:not(.mem-emoji) { font-size: 12px; font-weight: 400; } .memoria.mem-3col { grid-template-columns: repeat(3, minmax(0, 1fr)); } .memoria.mem-2col { grid-template-columns: repeat(2, minmax(0, 1fr)); } .memoria.mem-3col .carta-mem, .memoria.mem-2col .carta-mem { aspect-ratio: auto; min-height: 52px; } }
 
 /* retorno */
 .missao-retorno {
