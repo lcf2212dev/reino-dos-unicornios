@@ -94,8 +94,8 @@ Reino.registrarProva({
       itens: ['«Mercury»', '«Venus»', '«Earth»', '«Mars»', '«Jupiter»', '«Saturn»', '«Uranus»', '«Neptune»'],
       explica: 'A ordem a partir do sol é: «Mercury», «Venus», «Earth», «Mars», «Jupiter», «Saturn», «Uranus» e «Neptune».' },
 
-    { id: 'ib3-09', tipo: 'vfLista', rotulos: ['√', 'X'], livro: 'sol',
-      pergunta: '«Put a tick (√) for the good effects of the sun and a cross (X) for the bad effects:»',
+    { id: 'ib3-09', tipo: 'vfLista', rotulos: ['✓', 'X'], livro: 'sol',
+      pergunta: '«Put a tick (✓) for the good effects of the sun and a cross (X) for the bad effects:»',
       itens: [
         { t: '«Solar radiation can generate energy.»', v: true },
         { t: '«Overexposure to the sun can cause eye diseases.»', v: false },
@@ -103,7 +103,7 @@ Reino.registrarProva({
         { t: '«Our body needs the sunlight to make vitamin D.»', v: true },
         { t: '«Overexposure to the sun may cause sunburn.»', v: false },
       ],
-      explica: 'Energia, plantas crescendo e vitamina D são efeitos bons do sol (√). Doenças nos olhos e queimadura de sol («sunburn») são efeitos ruins (X).' },
+      explica: 'Energia, plantas crescendo e vitamina D são efeitos bons do sol (✓). Doenças nos olhos e queimadura de sol («sunburn») são efeitos ruins (X).' },
 
     { id: 'ib3-10', tipo: 'frase', livro: 'sol', lerItens: true,
       pergunta: '«Why is it important to wear sunscreen?» Monte a resposta com os blocos.',
