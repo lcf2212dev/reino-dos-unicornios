@@ -200,7 +200,7 @@
     bal.classList.toggle('com-quem', !!item.quem);
     bal.classList.toggle('com-botoes', !!item.botoes);
     U.preencher(bal.querySelector('.claude-nome'), item.quem ? item.quem.nome : 'Claude');
-    U.preencher(bal.querySelector('.claude-texto'), item.texto);
+    U.preencherColado(bal.querySelector('.claude-texto'), item.texto);   // emoji, número e "Sala N" colados (ui.md §10.17)
     var extra = bal.querySelector('.claude-extra');
     extra.innerHTML = '';
     if (item.extra) extra.appendChild(item.extra);

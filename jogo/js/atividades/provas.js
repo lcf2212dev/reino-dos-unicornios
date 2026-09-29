@@ -53,7 +53,7 @@
       lista.appendChild(el('li.linha-premio.rar-' + r + (agora ? '.agora' : '') + (passou ? '.passou' : '') + (ganhou ? '.ganhou' : ''),
         el('span.premio-quando', QUANDO[r]),
         Pv.icone(a.id, 40),
-        el('span.premio-info', rotuloRaridade(r), el('b', a.nome)),
+        el('span.premio-info', rotuloRaridade(r), el('b', U.colado(a.nome))),
         status));
     });
     return el('div.quadro-premios-caixa',
@@ -153,13 +153,13 @@
       var ir = el('button.btn-grande.btn-principal', { type: 'button' }, 'Começar a prova ✏️');
       corpo.appendChild(el('div.intro-sala.capa-prova',
         el('div.intro-emoji', prova.emoji),
-        el('h2.titulo-pixel', prova.nome),
-        el('p.intro-paginas', materia.nome + ' • ' + prova.bimestre + ' • ' + questoes.length + ' questões'),
+        el('h2.titulo-pixel', U.colado(prova.nome)),
+        el('p.intro-paginas', U.colado(materia.nome + ' • ' + prova.bimestre + ' • ' + questoes.length + ' questões')),
         el('div.selo-tentativa' + (valendo ? '.rar-' + valendo : ''), el('small', 'Esta é a sua'), el('b', tentativa + 'ª tentativa')),
         valendo ? el('div.previa-valendo.rar-' + valendo, Pv.previa(prova.acessorios[valendo].id, 6),
-          el('p', 'Valendo agora: ', el('b', prova.acessorios[valendo].nome), ' ', rotuloRaridade(valendo))) : null,
+          el('p', 'Valendo agora: ', el('b', U.colado(prova.acessorios[valendo].nome)), ' ', rotuloRaridade(valendo))) : null,
         Pv.quadroPremios(prova),
-        el('div.intro-claude', PA.paraDOM(PA.claude(0), 4, 'claude-intro'), el('p', fala)),
+        el('div.intro-claude', PA.paraDOM(PA.claude(0), 4, 'claude-intro'), el('p', U.colado(fala))),
         el('ul.intro-regras',
           el('li', '📝 Uma questão de cada vez.'),
           el('li', '⏳ Sem relógio. Pode ir devagar!'),
