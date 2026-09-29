@@ -1,0 +1,306 @@
+{
+  "nome": "2026-09-29-tv-0",
+  "pedido": "pedidos/2026-09-29-tv-0.md",
+  "personagens": [],
+  "tarefas": [
+    {
+      "id": "regras",
+      "tipo": "contrato",
+      "titulo": "D10-19: regras de direção de arte no ui.md §10 (paleta, tipo, pixel, luz, movimento, estados, componentes, alturas, escala do mundo, festa)",
+      "quem": "general-purpose",
+      "depende": [],
+      "arquivos": [
+        "docs/contratos/ui.md",
+        "docs/decisoes/direcao-de-arte.md",
+        "docs/contratos/interiores.md"
+      ],
+      "worktree": "tv-0-regras",
+      "pronto": [
+        "D10-19 do TODO: o §10 tem as subseções do guia (§2 do TODO) com os números decididos",
+        "npm run validar (validar-docs) passa",
+        "cada item 'Depende de: D10-19' tem a regra que usa escrita (inclui a exceção de 12 px da memória, D6-01)",
+        "e2e idêntico (só docs)"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "ver",
+      "tipo": "mecanica",
+      "titulo": "F-01, F-05, F-06, F-07: npm run ver (vivo entra no mapa, prévia do mapa com fachadas, prévia da Matemática, --recorte nas prévias de interior, ajuda)",
+      "quem": "general-purpose",
+      "depende": [],
+      "arquivos": [
+        "jogo/ferramentas/testes/ver.js",
+        "jogo/ferramentas/testes/cenario.js",
+        "jogo/ferramentas/testes/cenario-telas.js",
+        "jogo/ferramentas/previas/mapa.html",
+        "jogo/ferramentas/previas/interiores.html",
+        "jogo/ferramentas/previas/previa.js"
+      ],
+      "worktree": "tv-0-ver",
+      "pronto": [
+        "F-01: npm run ver -- --vivo --tamanhos celular sai com 'cena mapa, 0 erro(s)' sem --js",
+        "F-05: --previa mapa mostra as 13 fachadas do jogo",
+        "F-06: --previa interiores:padrao-matematica --recorte 0,0,200,150 --ampliar 4 devolve o recorte",
+        "F-07: --ajuda explica --js × --ir e intro/resumo da sala com livro",
+        "e2e idêntico"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "fotos",
+      "tipo": "mecanica",
+      "titulo": "F-02, F-03, F-04 e D4-01 (tile ao lado): fotos do e2e com a moldura real e a Mariana onde o jogo a põe; NPC inteiro na conversa",
+      "quem": "general-purpose",
+      "depende": [],
+      "arquivos": [
+        "jogo/ferramentas/testes/referencias-cenas.js",
+        "jogo/ferramentas/testes/referencias-pagina.js",
+        "jogo/ferramentas/testes/referencias.js",
+        "jogo/ferramentas/testes/referencias-regioes.js",
+        "jogo/js/motor/interiores-toque.js",
+        "jogo/js/interiores/torre/torre.js"
+      ],
+      "worktree": "tv-0-fotos",
+      "pronto": [
+        "F-02: prova-historia-3bim-q02 mostra o título da prova, a faixa 'Valendo' e '← Anterior'",
+        "D4-01: conversa com a Professora Helena vindo de baixo mostra o corpo inteiro dela nos 3 tamanhos",
+        "F-03: fotos npc-* com a Mariana no tile que o toque real escolheria",
+        "F-04: interior-torre-1…5 com a Mariana ao lado da escada, sem NPC sobreposto",
+        "diferenças do e2e só nas cenas desafio-*, prova-*-qNN, npc-*, interior-torre-*"
+      ],
+      "estimativa": 90
+    },
+    {
+      "id": "desafios",
+      "tipo": "conteudo",
+      "titulo": "D6-01 (P0 memória), D6-03, D12b-01, D6-28 e D4-03: desafios e provas",
+      "quem": "worker-low",
+      "depende": [],
+      "arquivos": [
+        "jogo/css/ui-missao.css",
+        "jogo/css/ui-prova.css",
+        "jogo/js/atividades/desafios/memoria.js",
+        "jogo/js/atividades/desafios/ligar.js",
+        "jogo/js/atividades/desafios/completar.js",
+        "jogo/js/conteudo/provas/",
+        "jogo/js/conteudo/materias/portugues/p1.js",
+        "jogo/js/personagens/elenco.js",
+        "jogo/ferramentas/validar/validar-conteudo.js"
+      ],
+      "worktree": "tv-0-desafios",
+      "pronto": [
+        "D6-01: memória p4-20 virada com as 4 colunas inteiras no celular e no tablet; grep overflow-wrap anywhere continua 0",
+        "D6-03: prova:ingles-3bim:1 com a última linha da dica inteira no celular e no notebook",
+        "D12b-01: nenhuma linha do quadro começa ou termina com '–'",
+        "D6-28: prova-geografia-3bim-q03 sem 'Escreva'; sala-p1-desafio1 sem o mesmo ícone nas 3 opções",
+        "D4-03: Flora, Célia e Samylly com o acessório de professora das outras três"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "menus",
+      "tipo": "mecanica",
+      "titulo": "D8B-03, D8B-06, D8B-07 e D8B-08: aparência, Área dos pais e abertura no celular",
+      "quem": "worker-low",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/ui/aparencia.js",
+        "jogo/js/ui/pais.js",
+        "jogo/js/ui/abertura.js",
+        "jogo/js/ui/abertura-desenho.js",
+        "jogo/css/ui-abertura.css",
+        "jogo/css/ui-paineis.css",
+        "jogo/js/debug.js",
+        "jogo/js/motor/main.js"
+      ],
+      "worktree": "tv-0-menus",
+      "pronto": [
+        "D8B-03: as 4 linhas da aparência com seleção no save completo (sem reescrever a cor salva)",
+        "D8B-06: 'Digite o PIN dos pais.' em 1 linha no notebook e até 2 no celular",
+        "D8B-07: nota sem 'claude.ai', com os 3 estados (e o de erro)",
+        "D8B-08: __reino.telaInicio (só ?debug=1); no celular a Mariana inteira e o botão em 1 linha"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "login",
+      "tipo": "mecanica",
+      "titulo": "D11-01: a atualização automática não devolve à abertura nem pede a senha",
+      "quem": "general-purpose",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/sistemas/versao.js",
+        "jogo/js/sistemas/jogadores.js",
+        "docs/contratos/save-e-mescla.md",
+        "jogo/ferramentas/testes/unidade/versao-entrou.navegador.test.js"
+      ],
+      "worktree": "tv-0-login",
+      "pronto": [
+        "D11-01: no vivo, com ?versao=1 e _recarregar simulado, sessionStorage reino-entrou === Jogadores.ultimo() antes do reload e nenhuma .tela-inicio depois",
+        "save-e-mescla.md atualizado (exceção reino-entrou)",
+        "e2e idêntico"
+      ],
+      "estimativa": 45
+    },
+    {
+      "id": "unicornio",
+      "tipo": "arte",
+      "titulo": "D3-01, D3-02, D3-03, D3-04 e D3-06: enfeites visíveis montada, prêmios sem corte, poeira nos cascos, pernas de frente; validador de oclusão",
+      "quem": "general-purpose",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/arte/pixelart-unicornio-moldes.js",
+        "jogo/js/arte/pixelart-unicornio.js",
+        "jogo/js/personagens/jogador-desenho.js",
+        "jogo/ferramentas/validar/validar-enfeites.js",
+        "jogo/ferramentas/validar/validar-tudo.js"
+      ],
+      "worktree": "tv-0-unicornio",
+      "pronto": [
+        "D3-01: validador de oclusão ≥ 60 % visível (orelha, cabeça, chifre) nas vistas lado e diagCostas",
+        "D3-06: ≥ 50 % visível para enfeites de cauda em costas e diagCostas",
+        "D3-02: validador lista 0 pixels fora do molde",
+        "D3-03: olhos e focinho inteiros com banho=10; poeira no tamanho do pixel do sprite",
+        "D3-04: chifre não cobre o tronco (S, SE, SO) e as pernas aparecem",
+        "prévias antes e depois (acessorios, direcoes)"
+      ],
+      "estimativa": 120
+    },
+    {
+      "id": "interiores",
+      "tipo": "cenario",
+      "titulo": "D2A-02 e D2B-07: móveis que atravessam o vizinho ou cobrem peça de parede",
+      "quem": "worker-low",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/interiores/estabulo/",
+        "jogo/js/interiores/bau/",
+        "jogo/js/interiores/loja/",
+        "jogo/js/interiores/salao/",
+        "jogo/js/interiores/petshop/",
+        "jogo/js/interiores/escola/",
+        "jogo/js/interiores/geografia/",
+        "jogo/ferramentas/validar/interiores-extras.js",
+        "jogo/ferramentas/validar/validar-interiores.js"
+      ],
+      "worktree": "tv-0-interiores",
+      "pronto": [
+        "D2A-02: nenhuma prévia interiores:<id> dos 7 prédios com objeto por cima de outro ou de peça de parede",
+        "D2B-07: interiores:geografia sem objeto cobrindo o livro nem o correio",
+        "prévias antes e depois"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "mapa",
+      "tipo": "arte",
+      "titulo": "D1-02 (borda da fonte), F-08 (portaArco) e F-09 (regras do HUD do celular em ui-hud.css)",
+      "quem": "worker-low",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/mundo/cidade-desenho.js",
+        "jogo/js/mundo/mapa-desenho.js",
+        "jogo/css/ui-animacoes.css",
+        "jogo/css/ui-hud.css"
+      ],
+      "worktree": "tv-0-mapa",
+      "pronto": [
+        "D1-02: recorte da fonte no tablet com elipse fechada, sem pixel escuro solto",
+        "F-08: grep portaArco jogo/js dá 0",
+        "F-09: grep '\\.chip\\|dock' ui-animacoes.css vazio",
+        "e2e: só as cenas de mapa com a fonte mudam"
+      ],
+      "estimativa": 45
+    },
+    {
+      "id": "materia",
+      "tipo": "mecanica",
+      "titulo": "D7-01, D7-04 e D8A-01: livro volta ao topo; barra de dinheiro inteira no celular (matéria e Baú)",
+      "quem": "worker-low",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/ui/materia.js",
+        "jogo/js/ui/bau.js",
+        "jogo/css/ui-telas.css"
+      ],
+      "worktree": "tv-0-materia",
+      "pronto": [
+        "D7-01: livro:historia no celular, depois de rolar e tocar →, mostra '2 de 16' com ícone e título no topo",
+        "D7-04: trilho ≥ 250 px em materia:historia no celular",
+        "D8A-01: barra ≥ 120 px em cada matéria no Baú no celular e numa linha no notebook"
+      ],
+      "estimativa": 40
+    },
+    {
+      "id": "glifos",
+      "tipo": "arte",
+      "titulo": "D10-B06, D2B-06, D8A-12 e D11-15: glifo do sistema vira ícone pixel (voo, ET, portais), estrela do voo, ícone da tela cheia + O-03 (Observatório)",
+      "quem": "worker-low",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/atividades/voo.js",
+        "jogo/js/atividades/voo-portais.js",
+        "jogo/js/ui/et-desafio.js",
+        "jogo/js/ui/hud.js",
+        "jogo/js/arte/icones/interface.js",
+        "jogo/ferramentas/validar/validar-pixel.js",
+        "jogo/css/ui-voo.css",
+        "jogo/js/interiores/observatorio/acoes.js"
+      ],
+      "worktree": "tv-0-glifos",
+      "pronto": [
+        "D10-B06: o validador acusa texto de botão com emoji fora do Reino.util.el/preencher; tela-voo e o desafio do ET sem glifo do sistema",
+        "D2B-06: estrela do contador do voo em pixel com contorno #3a2446",
+        "D8A-12: botão de tela cheia com os 4 cantos em pixel",
+        "D11-15: botão escondido no app instalado; comentário sem claude.ai"
+      ],
+      "estimativa": 45
+    },
+    {
+      "id": "integracao",
+      "tipo": "integracao",
+      "titulo": "Juntar as frentes, gravar a voz do enunciado da Geografia q3, npm test e e2e, marcar o TODO",
+      "quem": "orquestrador",
+      "depende": [
+        "regras",
+        "ver",
+        "fotos",
+        "desafios",
+        "menus",
+        "login",
+        "unicornio",
+        "interiores",
+        "mapa",
+        "materia",
+        "glifos"
+      ],
+      "arquivos": [
+        "TODO-VISUAL.md",
+        "COMO-USAR.md",
+        "jogo/js/CLAUDE.md",
+        "jogo/js/manifesto.js",
+        "jogo/index.html",
+        "jogo/ferramentas/testes/base-referencia.txt"
+      ],
+      "worktree": "tv-0",
+      "pronto": [
+        "npm test e npm run e2e verdes; cada diferença explicada por um item (base trocada)",
+        "TODO com os itens marcados e a linha Progresso"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "entrega",
+      "tipo": "entrega",
+      "titulo": "Merge na main, push e conferência da Vercel",
+      "quem": "orquestrador",
+      "depende": [
+        "integracao"
+      ],
+      "arquivos": [],
+      "worktree": "tv-0",
+      "estimativa": 15
+    }
+  ]
+}
