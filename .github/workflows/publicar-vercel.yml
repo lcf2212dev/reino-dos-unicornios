@@ -1,3 +1,6 @@
+# DESLIGADA (gh workflow disable, 29/09/2026): as Actions do GitHub estão bloqueadas pela cobrança da conta e quem
+# publica é a integração da Vercel com o GitHub (vercel/README.md). Religar: gh workflow enable publicar-vercel.yml, e
+# desligar a integração da Vercel, senão cada push publica duas vezes.
 # Publica o jogo na Vercel (https://reino-dos-unicornios.vercel.app) a cada push na main que muda o jogo.
 # Mesmo caminho do `npm run vercel` (jogo/ferramentas/fluxo/vercel.js: vercel pull, build --prod e deploy --prebuilt).
 # Mudança só em docs ou ferramentas não publica (CLAUDE.md da raiz). Só produção, sem preview: o banco da Vercel

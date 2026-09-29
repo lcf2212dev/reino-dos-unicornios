@@ -21,8 +21,8 @@ Este arquivo tem as regras invioláveis e o índice. As regras de código de cad
 - Feature, ajuste ou correção vão até o fim sem pedir decisão, confirmação nem ajuda a ninguém: decida com o
   padrão mais sensato (a opção que você recomendaria), construa numa worktree, feche com `validar-tudo`, faça o commit,
   integre na main e dê push (skill `entregar`: `npm run integrar -- <branch> --commit --merge --push`).
-  O push na main que muda o jogo publica sozinho na Vercel (action `.github/workflows/publicar-vercel.yml`); confira
-  que ela passou (`gh run list -w publicar-vercel.yml`) e, se falhar, publique com `npm run vercel` (na main). Commit, merge na main, push,
+  O push na main que muda o jogo publica sozinho: a Vercel está ligada ao GitHub (só main, só quando o jogo muda:
+  `vercel/ignorar-build.sh`). Confira com `npm run vercel -- --conferir` e, se falhar, publique com `npm run vercel`. Commit, merge na main, push,
   troca da base do e2e e Vercel estão autorizados por escrito, sempre.
 - Nunca use AskUserQuestion, nunca pare para aprovar plano, amostra ou resultado. O que você decidiu vai no
   relatório final, curto.
