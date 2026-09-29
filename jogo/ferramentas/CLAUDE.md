@@ -43,7 +43,8 @@ Ferramentas de desenvolvimento (Node). Nenhuma entra no jogo. Comandos: `CLAUDE.
 
 ## Ver o jogo
 - Ver e fotografar uma cena com UM comando: `npm run ver -- --ir petshop --estrelas 500 --tamanhos celular`
-  (`testes/ver.js`; `--tela loja|sala:h1|prova:<id>|desafio:h1-03` (esse desafio, sem sorteio), `--passos`, `--js`,
+  (`testes/ver.js`; `--tela loja|sala:h1|prova:<id>|desafio:h1-03` (esse desafio em 1º no sorteio, na tela real), `--passos` (passo
+  `perguntas`: passa a intro e o resumo da sala), `--js`,
   `--previa`, `--recorte`, `--ampliar`; `--ajuda` tem exemplos). Sai em `/tmp/reino-testes/ver/<nome>/` (PNG,
   erros.txt, estado.json e console.txt, o console todo da página) e com código ≠ 0 se houve erro de console. O
   `console.log` de cada `--js`/`--passos` e o valor que cada `--js` devolve saem no fim da saída.

@@ -15,6 +15,7 @@ Consequências). Para o "como", veja `docs/receitas/`; para as regras, `docs/con
 | Helpers de desenho: uma fonte só (`jogo/js/arte/desenho.js`) | `helpers-de-desenho.md` |
 | Vigias de memória e de travamento nos testes (e o vazamento de 2026-09-27) | `vigias-de-memoria.md` |
 | Plano paralelo: reserva de personagem no jogo, plano e pipeline nas ferramentas | `plano-paralelo.md` |
+| Direção de arte: escala do mundo, cor por matéria, festa | `direcao-de-arte.md` |
 
 Histórico em `historico/` (caminhos de antes da refatoração; `npm run validar` não confere a pasta, lista
 `HISTORICOS` em `jogo/ferramentas/validar/validar-docs.js`): o plano da refatoração (`refatoracao-plano.md`), os

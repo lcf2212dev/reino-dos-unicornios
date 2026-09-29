@@ -65,6 +65,8 @@ O servidor entrega `js/**`, este arquivo também: nada de segredo aqui.
 
 ## Arte
 - Pixel art desenhada em código, sem imagens: contorno `#3a2446`, tile de 16 px. Texto no canvas: "Press Start 2P".
+- Direção de arte (cor, texto, pixel da interface, escala do mundo, alturas, luz, contorno, movimento, festa, estados e
+  componentes comuns): `docs/contratos/ui.md` §10.
 - Todo emoji que aparece na tela ou no canvas tem ícone desenhado em `js/arte/icones/<lote>.js` (confira em
   `jogo/ferramentas/previas/icones.html` ou `npm run ver -- --previa icones`). Emoji novo sem desenho: avise quem integra.
 - Feature com emoji próprio (ex.: o 🥐 da Padaria) desenha na PRÓPRIA pasta, sem editar os lotes:

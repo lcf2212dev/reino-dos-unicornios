@@ -16,7 +16,7 @@ Contrato da camada: `docs/contratos/ui.md` (pilha de telas, `UI.painel`, Esc/Tab
 ## Regras
 - Toda tela que gasta estrela ou comida usa `gasta: true` e a guarda de toque (`ui.md` §5).
 - Teclado sim, leitor de tela não (`ui.md` §8).
-- Texto para criança: `hifenizar` para a fonte pixel (tom: `docs/receitas/licoes-de-voz.md`).
+- Texto para criança: quebra de palavra e `hifenizar` pelo `ui.md` §10.17 (tom: `docs/receitas/licoes-de-voz.md`).
 - "Apagar tudo", "Novo ciclo" e pagamentos (`pais.js`): só no ambiente de teste.
 
 ## Antes de entregar

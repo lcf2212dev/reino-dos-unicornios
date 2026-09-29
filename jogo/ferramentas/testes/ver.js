@@ -14,7 +14,7 @@ const AJUDA = `Uso: node jogo/ferramentas/testes/ver.js [opções]   (npm run ve
   --ir <lugar>              mapa | petshop | museu | materia:historia | escola …
   --tela <nome>             loja | estabulo | bau | ajustes | pais | lugares | petshop | album | castelo | plano
                             | aparencia | escola | foguete | voo | album-ets | materia:<id> | livro:<id> | sala:<id> | prova:<id> | treino:<id>
-                            | desafio:<id do desafio> (ex.: desafio:h1-03: esse desafio, sem o sorteio da sala)
+                            | desafio:<id do desafio> (ex.: desafio:h1-03: esse desafio em 1º no sorteio da sala, na tela real da missão)
                             | foto (a prévia da foto) | album:<n> (tira n fotos e abre a n-ésima grande)
                             | prova:<id>:<n> (a questão n, como as imagens prova-<id>-qNN do e2e)
   --js '<código>'           roda na página (repetível, na ordem); o valor devolvido e o console.log dele
