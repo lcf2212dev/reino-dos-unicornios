@@ -25,12 +25,12 @@
 .cuid-barra > canvas { flex: none; }
 .cuid-trilho {
   position: relative; display: block; flex: 1; min-width: 0;
-  border: 2px solid var(--borda); border-radius: 6px; background: #fff; overflow: hidden;
+  border: 2px solid var(--borda); border-radius: var(--canto); background: #fff; overflow: hidden;
 }
 .cuid-cheio { display: block; height: 100%; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5); transition: width 0.4s ease; }
-.cuid-fome .cuid-cheio { background: linear-gradient(90deg, var(--fome), var(--fome-clara)); }
-.cuid-sede .cuid-cheio { background: linear-gradient(90deg, var(--sede), var(--sede-clara)); }
-.cuid-banho .cuid-cheio { background: linear-gradient(90deg, var(--banho), var(--banho-clara)); }
+.cuid-fome .cuid-cheio { background: linear-gradient(90deg, var(--fome) 0 50%, var(--fome-clara) 50%); }
+.cuid-sede .cuid-cheio { background: linear-gradient(90deg, var(--sede) 0 50%, var(--sede-clara) 50%); }
+.cuid-banho .cuid-cheio { background: linear-gradient(90deg, var(--banho) 0 50%, var(--banho-clara) 50%); }
 /* baixa (< 25): trilho listrado quentinho (o listrado se vê com qualquer daltonismo), barra na cor
    de sempre, sem vermelho de alarme; o ícone chama com 3 pulinhos de 2px (em degrau, sem escala:
    o pixel continua nítido) e para */
@@ -47,7 +47,7 @@ body.sem-animacao .cuid-cheio { transition: none; }
 /* mini: HUD e cartas do Estábulo */
 .cuid-par-mini { width: 100%; margin-top: 2px; }
 .cuid-par-mini .cuid-barra { flex: 1; }
-.cuid-mini .cuid-trilho { height: 8px; border-radius: 5px; }
+.cuid-mini .cuid-trilho { height: 8px; border-radius: var(--canto); }
 #hud .cuid-mini .cuid-trilho { min-width: 28px; }   /* no HUD a barrinha nunca some espremida */
 /* tablet e notebook: as 3 barrinhas (fome, sede e banho) lado a lado; o chip alarga um pouco para
    cada trilho ficar com 40px (no celular elas ficam uma sobre a outra, lá embaixo) */
@@ -68,16 +68,16 @@ body.sem-animacao .cuid-cheio { transition: none; }
 .cuid-grande { display: grid; grid-template-columns: auto 1fr; align-items: center; column-gap: 10px; row-gap: 2px; }
 .cuid-grande .cuid-rotulo { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; font-size: 0.85em; min-width: 6.5em; }
 .cuid-grande .cuid-rotulo canvas { flex: none; vertical-align: middle; }
-.cuid-grande .cuid-trilho { height: 16px; border-width: 3px; border-radius: 8px; }
+.cuid-grande .cuid-trilho { height: 16px; border-width: 3px; border-radius: var(--canto); }
 .cuid-grande .cuid-aviso { grid-column: 2; font-size: 0.75em; font-weight: 700; color: var(--cuid-aviso); }
 .cuid-grande .cuid-aviso:empty { display: none; }
-.cuid-detalhe { padding: 12px 14px; border: 3px solid var(--borda); border-radius: 16px; background: var(--papel); }
+.cuid-detalhe { padding: 12px 14px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); }
 
 /* ---------- tela da Pet Shop ---------- */
 .petshop-uni {
   display: flex; align-items: center; gap: 14px;
-  padding: 10px 14px; border: 3px solid var(--borda); border-radius: 18px;
-  background: radial-gradient(circle at 20% 50%, #fff 20%, var(--lavanda-clara));
+  padding: 10px 14px; border: 3px solid var(--borda); border-radius: var(--canto-grande);
+  background: linear-gradient(90deg, #fff 0 30%, var(--lavanda-clara) 30%);
 }
 .petshop-uni > canvas { flex: none; }
 .petshop-uni-info { display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 0; }
@@ -100,7 +100,7 @@ body.sem-animacao .cuid-cheio { transition: none; }
 .item-comida .comida-tem { font-size: 0.86em; } /* ≥ 12px */
 .petshop-despensa {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px;
-  padding: 10px 14px; border: 3px dashed var(--borda); border-radius: 16px; background: var(--papel-2);
+  padding: 10px 14px; border: 3px dashed var(--borda); border-radius: var(--canto-grande); background: var(--papel-2);
 }
 .petshop-despensa p { margin: 0; }
 .petshop-despensa .chip-mini { font-size: 0.8em; }
