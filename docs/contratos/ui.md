@@ -131,3 +131,16 @@ npm test
 npm run e2e
 ```
 Ver uma tela nos 3 tamanhos: `npm run ver -- --ir <lugar>` (ou `--tela`, cenários em `jogo/ferramentas/testes/cenario-telas.js`).
+
+## 10. Pixel art na moldura (cantos, cores, brilhos)
+Tudo na tela é pixel art, também o que é CSS e o que é desenhado no canvas.
+1. Cantos: `border-radius` só com `var(--canto)`, `var(--canto-grande)` ou `var(--redondo)` (o antigo círculo), ou 0.
+   `ui-base.css` põe `corner-shape: notch` em tudo: o canto vira um degrau reto e a borda e a sombra o seguem.
+   Sem suporte (Safari), canto reto. Nada de `999px` (pílula) nem `50%`.
+2. Cor: nada de degradê liso. Faixas chapadas com paradas duras (`#a 0 33%, #b 33% 66%, #c 66%`), de 2 a 4 faixas.
+3. Sombra e brilho: deslocamento duro, sem desfoque (`0 5px 0`); brilho = contorno de 1 pixel com `drop-shadow`
+   sem desfoque nos 4 lados. Nada de `blur`, desfoque em `box-shadow`/`text-shadow`/`drop-shadow` nem `shadowBlur`.
+4. Nada de girar desenho pixel (`rotate` borra os pixels): balanço é deslocamento em degraus.
+5. Canvas: sem `arc`/`ellipse`/degradê/`shadowBlur` que apareçam lisos na tela; forma redonda vem dos helpers
+   pixel (`js/arte/desenho.js`) e luz em faixas.
+6. Emoji na tela: sempre com desenho 16×16 (`js/arte/icones/`); o glifo reduzido é só a rede de segurança.

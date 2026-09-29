@@ -29,8 +29,17 @@
   --fonte-titulo: "Press Start 2P", "Trebuchet MS", sans-serif;
   --fonte-pixel: "Press Start 2P", "Trebuchet MS", sans-serif;
   --sombra-botao: 0 5px 0 var(--borda);
+  /* Pixel art também na moldura (docs/contratos/ui.md §10): cantos só com estas medidas, e em degrau (abaixo) */
+  --canto: 6px;          /* botões, chips, cartões pequenos */
+  --canto-grande: 9px;   /* painéis, balões, telas */
+  --redondo: 22%;        /* o que era círculo: um "círculo" de pixels (quadrado sem os cantos) */
   color-scheme: light;
 }
+
+/* Canto em degrau: o border-radius vira um corte reto (a borda e a sombra acompanham). Navegador sem
+   corner-shape: canto reto, nunca redondo liso. */
+*, *::before, *::after { corner-shape: notch; }
+@supports not (corner-shape: notch) { *, *::before, *::after { border-radius: 0 !important; } }
 
 * { box-sizing: border-box; font-synthesis: none; }
 html, body { height: 100%; }

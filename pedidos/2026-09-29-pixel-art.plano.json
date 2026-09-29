@@ -1,0 +1,166 @@
+{
+  "nome": "pixel-art",
+  "pedido": "pedidos/2026-09-29-pixel-art.md",
+  "personagens": [],
+  "tarefas": [
+    {
+      "id": "contrato",
+      "tipo": "contrato",
+      "titulo": "Canto em degrau global e medidas de canto (ui-base.css), regra em ui.md §10",
+      "quem": "orquestrador",
+      "depende": [],
+      "arquivos": [
+        "docs/contratos/ui.md"
+      ],
+      "worktree": "pixel",
+      "pronto": [
+        "corner-shape: notch em tudo, canto reto sem suporte",
+        "--canto, --canto-grande, --redondo"
+      ],
+      "estimativa": 10
+    },
+    {
+      "id": "emojis",
+      "tipo": "arte",
+      "titulo": "Desenhos 16x16 dos 22 emojis sem pixel art e validador de emoji sem desenho no jogo todo",
+      "quem": "worker-low",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/arte/icones/",
+        "jogo/ferramentas/validar/validar-conteudo.js"
+      ],
+      "worktree": "pixel-emojis",
+      "pronto": [
+        "todo emoji usado no jogo tem desenho",
+        "validador acusa emoji sem desenho em qualquer js"
+      ],
+      "estimativa": 40
+    },
+    {
+      "id": "css-a",
+      "tipo": "arte",
+      "titulo": "Moldura pixel: base, HUD, telas, painéis, animações, abertura, álbum de ETs, desafio do ET",
+      "quem": "worker-low",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/css/ui-base.css",
+        "jogo/css/ui-hud.css",
+        "jogo/css/ui-telas.css",
+        "jogo/css/ui-paineis.css",
+        "jogo/css/ui-animacoes.css",
+        "jogo/css/ui-abertura.css",
+        "jogo/css/ui-album-ets.css",
+        "jogo/css/ui-et-desafio.css"
+      ],
+      "worktree": "pixel-css-a",
+      "pronto": [
+        "sem canto liso, degradê liso, desfoque nem rotação nesses arquivos"
+      ],
+      "estimativa": 40
+    },
+    {
+      "id": "css-b",
+      "tipo": "arte",
+      "titulo": "Moldura pixel: missão, desafios, voo, foguete, salão, fotos",
+      "quem": "worker-low",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/css/ui-missao.css",
+        "jogo/css/ui-desafios.css",
+        "jogo/css/ui-voo.css",
+        "jogo/css/ui-foguete.css",
+        "jogo/css/ui-salao.css",
+        "jogo/css/ui-fotos.css"
+      ],
+      "worktree": "pixel-css-b",
+      "pronto": [
+        "sem canto liso, degradê liso, desfoque nem rotação nesses arquivos"
+      ],
+      "estimativa": 40
+    },
+    {
+      "id": "css-c",
+      "tipo": "arte",
+      "titulo": "Moldura pixel: prova, personagem, pet shop, jogadores, novidades",
+      "quem": "worker-low",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/css/ui-prova.css",
+        "jogo/css/ui-personagem.css",
+        "jogo/css/ui-petshop.css",
+        "jogo/css/ui-jogadores.css",
+        "jogo/css/ui-novidades.css"
+      ],
+      "worktree": "pixel-css-c",
+      "pronto": [
+        "sem canto liso, degradê liso, desfoque nem rotação nesses arquivos"
+      ],
+      "estimativa": 40
+    },
+    {
+      "id": "canvas",
+      "tipo": "mecanica",
+      "titulo": "Canvas em pixel: vinheta em faixas, halo da aura em contorno de pixel, recortes redondos em degrau",
+      "quem": "general-purpose",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/motor/laco.js",
+        "jogo/js/sistemas/aura.js",
+        "jogo/js/interiores/loja/objetos.js",
+        "jogo/js/ui/abertura.js"
+      ],
+      "worktree": "pixel-canvas",
+      "pronto": [
+        "sem degradê, shadowBlur, arc nem ellipse lisos na tela"
+      ],
+      "estimativa": 30
+    },
+    {
+      "id": "integracao",
+      "tipo": "integracao",
+      "titulo": "Juntar as frentes, validador de CSS/canvas liso, npm test e e2e com base trocada",
+      "quem": "orquestrador",
+      "depende": [
+        "emojis",
+        "css-a",
+        "css-b",
+        "css-c",
+        "canvas"
+      ],
+      "arquivos": [
+        "jogo/ferramentas/validar/validar-pixel.js",
+        "jogo/ferramentas/validar/validar-tudo.js"
+      ],
+      "worktree": "pixel",
+      "pronto": [
+        "npm test e e2e verdes"
+      ],
+      "estimativa": 30
+    },
+    {
+      "id": "entrega",
+      "tipo": "entrega",
+      "titulo": "Merge, push e Vercel",
+      "quem": "orquestrador",
+      "depende": [
+        "integracao"
+      ],
+      "arquivos": [],
+      "worktree": "pixel",
+      "pronto": [
+        "main e Vercel com a versão"
+      ],
+      "estimativa": 10
+    }
+  ]
+}
