@@ -140,7 +140,8 @@ Reino.Interiores.objeto('escrivaninha', {
    das `chave(P)`) muda, conferida nos eventos `progresso`/`progressoRemoto`/`mapaMudou`.
 2. Nada de criar canvas a cada quadro. Móveis altos viram sprites pré-renderizados.
 3. Animações (vela, pêndulo, brilho, água) só com `animar`.
-4. Placas dos cômodos: em px da tela, fonte pixel, tamanho `8 * max(2, round(escala/2))`, desenhadas por
+4. Placas dos cômodos: em px da tela, fonte pixel, tamanho do texto pela regra do `ui.md` §10.9.5 (o código de hoje
+   ainda usa a escala do mundo; muda no D10-05), desenhadas por
    cima dos itens (`desenharSobre`) e quase transparentes quando cobrem a Mariana.
 5. Quando o HUD de cima cobre a placa de um cômodo, ela desvia só dentro da parede do próprio cômodo
    (pela `caixaParada` do HUD: a caixa sem o transform da animação, remedida a cada 500 ms); se não couber,
