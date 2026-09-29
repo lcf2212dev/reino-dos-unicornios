@@ -45,6 +45,13 @@ async function conferir(sha) {
     if (estado === 'READY') { console.log(`✔ publicado ${sha.slice(0, 7)} em https://reino-dos-unicornios.vercel.app`); return 0; }
     if (estado === 'CANCELED') { console.log('✔ ignorado pela Vercel (o jogo não mudou: vercel/ignorar-build.sh); nada a publicar'); return 0; }
     if (estado === 'ERROR') { console.log(`✘ a publicação de ${sha.slice(0, 7)} falhou (veja https://${d.url}): publique com npm run vercel`); return 1; }
+    // BLOCKED: a Vercel não reconheceu o autor do commit como alguém do time (o e-mail do commit tem que ser da conta
+    // lcf2212dev no GitHub: git config user.email deste repositório, o noreply dela)
+    if (estado === 'BLOCKED') {
+      const autor = (d.meta && (d.meta.githubCommitAuthorLogin || d.meta.githubCommitAuthorEmail)) || '?';
+      console.log(`✘ a Vercel bloqueou a publicação de ${sha.slice(0, 7)}: autor do commit não reconhecido (${autor}); publique com npm run vercel`);
+      return 1;
+    }
     await new Promise((ok) => setTimeout(ok, 10000));
   }
   console.log(`✘ nenhuma publicação de ${sha.slice(0, 7)} terminou em 15 min (o push chegou ao GitHub?): publique com npm run vercel`);
