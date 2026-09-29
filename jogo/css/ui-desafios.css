@@ -60,9 +60,9 @@
 /* texto de apoio (d.apoio): a caixa do texto que a questão manda ler, acima do enunciado */
 .apoio { padding: 14px 16px 16px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: #fffef8; box-shadow: 0 4px 0 var(--borda); }
 .apoio-rotulo { display: inline-block; margin: 0 0 6px; padding: 2px 10px; border: 2px solid var(--borda); border-radius: var(--canto); background: var(--ouro-claro); font-size: 0.7em; font-weight: 700; line-height: 1.8; }
-.apoio-titulo { margin: 6px 0 4px; font-family: var(--fonte-titulo); font-size: 1.05em; line-height: 1.6; text-align: center; color: var(--roxo); }
+.apoio-titulo { margin: 6px 0 4px; font-family: var(--fonte-titulo); font-size: 1.05em; line-height: 1.6; text-align: center; color: var(--roxo-texto); }
 .apoio-parte { margin-top: 12px; }
-.apoio-parte-titulo { margin: 0 0 4px; font-weight: 700; font-size: 0.9em; color: var(--laranja-forte); }
+.apoio-parte-titulo { margin: 0 0 4px; font-weight: 700; font-size: 0.9em; color: var(--laranja-escuro); }
 .apoio-lista { margin: 0; padding-left: 1.5em; font-size: 0.9em; line-height: 2; }
 .apoio-texto { margin: 0; font-size: 0.9em; line-height: 2.1; overflow-wrap: break-word; }
 .btn-ouvir-apoio { margin-top: 0; flex: none; }
@@ -130,7 +130,7 @@
 .copiar-opcao { display: flex; align-items: center; justify-content: center; gap: 8px; min-width: 0; min-height: 52px; padding: 6px 8px; border: 3px solid var(--borda); border-radius: var(--canto); background: #fff; box-shadow: 0 3px 0 var(--borda); font-weight: 700; }
 .copiar-marca { display: inline-flex; align-items: center; justify-content: center; width: 1.9em; height: 1.9em; flex: none; border: 3px solid var(--borda); border-radius: var(--redondo); background: #fff; color: #fff; font-size: 0.8em; line-height: 1; }
 .copiar-opcao[aria-pressed="true"] { background: var(--ambar-claro); border-color: var(--roxo); box-shadow: 0 3px 0 var(--roxo); outline: 3px solid var(--roxo); outline-offset: 0; }
-.copiar-opcao[aria-pressed="true"] .copiar-marca { background: var(--roxo); border-color: var(--roxo); }
+.copiar-opcao[aria-pressed="true"] .copiar-marca { background: var(--roxo-texto); border-color: var(--roxo-texto); }   /* o "X" branco: 6,9:1 */
 .copiar-palavra { letter-spacing: 0.06em; }
 .copiar-resposta { display: flex; flex-direction: column; gap: 4px; }
 .copiar-rotulo { font-size: 0.8em; font-weight: 700; color: var(--tinta-suave); }
@@ -141,11 +141,11 @@
   background: linear-gradient(to bottom, transparent calc(100% - 4px), #7fb2ff calc(100% - 4px)), #fbfdff;
 }
 .copiar-linha.pisca { animation: piscar 0.6s ease-in-out 2; }
-.copiar-vazia { align-self: center; color: #a597bd; font-weight: 700; font-size: 0.72em; line-height: 1.7; }
+.copiar-vazia { align-self: center; padding: 0 6px; border: 2px dashed var(--tinta-suave); border-radius: var(--canto); color: var(--tinta-suave); font-weight: 700; font-size: 0.72em; line-height: 1.7; }
 .copiar-vaga { width: 44px; height: 44px; border: 2px dashed #cdbff5; border-radius: var(--canto); }
-.copiar-pecas { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; padding: 10px 8px; border: 3px dashed var(--ambar); border-radius: var(--canto); background: var(--papel-2); }
+.copiar-pecas { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; padding: 10px 8px; border: 3px dashed var(--ambar); border-radius: var(--canto); background: var(--papel-leve); }
 .copiar-peca { min-width: 48px; height: 48px; padding: 0 6px; border: 3px solid var(--borda); border-radius: var(--canto); background: #fff3c4; box-shadow: 0 3px 0 var(--borda); font-weight: 700; font-size: 1.05em; line-height: 1; }
-.copiar-peca.colocada { min-width: 44px; height: 44px; background: #fff; border-color: var(--roxo); color: var(--roxo); box-shadow: 0 3px 0 var(--roxo); }
+.copiar-peca.colocada { min-width: 44px; height: 44px; background: #fff; border-color: var(--roxo); color: var(--roxo-texto); box-shadow: 0 3px 0 var(--roxo); }
 .copiar-peca.usada { border: 2px dashed #d9cfee; background: transparent; box-shadow: none; color: transparent; }
 .tudo-certo .copiar-item { background: var(--certo-fundo); }
 @media (max-width: 480px) {
@@ -179,11 +179,11 @@ span.mai-acento.mai-acento::after { content: attr(data-a); content: attr(data-a)
 .lugar-aviso {
   display: inline-flex; align-items: center; gap: 4px;
   padding: 1px 8px; border: 2px solid #b58cff; border-radius: var(--canto);
-  background: #efe4ff; color: #5a3cc4; font-size: 0.75em; font-weight: 700; line-height: 1.5;
+  background: #efe4ff; color: var(--roxo-texto); font-size: 0.75em; font-weight: 700; line-height: 1.5;
 }
 .lugar-aviso > canvas { flex: none; display: block; }
-.lugar-aviso.aviso-pronto { border-color: #4fb37a; background: #e2f7e9; color: #1b6e45; }
+.lugar-aviso.aviso-pronto { border-color: #4fb37a; background: #e2f7e9; color: var(--certo); }
 /* selo "✨ Novo!" (lugar com novidade que ela ainda não visitou) e onde fica a matéria de dentro de um prédio */
-.lugar-aviso.aviso-novo { border-color: #f0b400; background: #fff6cc; color: #8a5a00; }
+.lugar-aviso.aviso-novo { border-color: #f0b400; background: #fff6cc; color: var(--lendario-texto); }
 .lugar-onde { display: flex; align-items: center; gap: 4px; margin-top: 2px; }
 .lugar-onde > canvas { flex: none; display: block; }

@@ -10,15 +10,18 @@
   --tinta: #3a2446;
   --tinta-suave: #6b5378;
   --papel: #fff8ee;
-  --papel-2: #fff6e4;
+  --papel-leve: #fff6e4;    /* o creme que era --papel-2 (mesmo valor); cada uso vai para --papel ou --papel-quente (ui.md §10.8) */
+  --papel-2: #efe8e2;       /* fundo do estado indisponível (ui.md §10.19.1); --tinta-suave sobre ele: 5,5:1 */
   --papel-quente: #fff1cc;
   --borda: #3a2446;
   --ambar: #f0a04a;
   --ambar-claro: #fff1d0;
-  --roxo: #7c5cff;
+  --roxo: #7c5cff;          /* seleção (borda e fundo); nunca cor de texto */
+  --roxo-texto: #5a3cc4;    /* link e texto roxo: 6,9:1 no --papel (ui.md §10.8) */
   --laranja: #ff8a3d;
   --laranja-claro: #ffe4c2;
   --laranja-forte: #e06a12;
+  --laranja-escuro: #a8480a;   /* laranja de texto: 5,5:1 no --papel */
   --verde-folha: #9ccc4a;
   /* cor de desenho, nunca de moldura (docs/contratos/ui.md §10.8) */
   --rosa: #ff7eb6;
@@ -26,12 +29,13 @@
   --ouro: #ffc94a;
   --ouro-claro: #fff4cc;
   --ceu: #bfe9ff;
-  --certo: #238a57;
+  --certo: #1b6e45;         /* 5,6:1 no --certo-fundo */
   --certo-fundo: #dff8e8;
   --quase-fundo: #fff0c2;
-  --raro: #3d8bff;
-  --epico: #8a4dff;
-  --lendario: #e59400;
+  /* texto de raridade (fundo e desenho de cada uma: ui.md §10.8) */
+  --raro-texto: #2b5ea8;
+  --epico-texto: #5b2aa8;
+  --lendario-texto: #8a5200;
   --grama: #c6e15a;
   --escala-texto: 1;
   --fonte-texto: "Press Start 2P", "Trebuchet MS", sans-serif;
@@ -77,12 +81,14 @@ button.esperando-fala { opacity: 0.45; position: relative; }
 canvas.esperando-fala { pointer-events: none; opacity: 0.6; }
 button.esperando-fala::after {
   content: ''; position: absolute; top: -5px; right: -5px; width: 10px; height: 10px; border-radius: var(--redondo);
-  background: var(--borda); animation: esperando-fala 0.8s ease-in-out infinite alternate;
+  background: var(--borda); animation: esperando-fala 1.2s step-end infinite;
 }
-@keyframes esperando-fala { from { opacity: 0.3; transform: scale(0.7); } to { opacity: 1; transform: scale(1); } }
+@keyframes esperando-fala { 50% { transform: translateY(-2px); } }   /* a bolinha pula 1 pixel de arte, em degrau */
 body.sem-animacao button.esperando-fala::after { animation: none; }
 @media (prefers-reduced-motion: reduce) { button.esperando-fala::after { animation: none; } }
-:focus-visible { outline: 4px solid var(--roxo); outline-offset: 3px; }
+/* foco (ui.md §10.19.4): tracejado de 4 px em --tinta com folga de 2 px, diferente da seleção (--roxo). O :root
+   [aria-pressed] passa na frente do contorno roxo da opção marcada, que vem depois na cascata */
+:focus-visible, :root [aria-pressed]:focus-visible, :root .ligar-item:focus-visible { outline: 4px dashed var(--tinta); outline-offset: 2px; }
 .pixel, canvas { image-rendering: pixelated; image-rendering: crisp-edges; }
 .icone-px { vertical-align: -0.3em; }
 .seta canvas, .btn-icone canvas, .btn-tela-cheia canvas, .chip canvas, .dock-btn canvas { display: block; }

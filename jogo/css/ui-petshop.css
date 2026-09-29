@@ -93,14 +93,14 @@ body.sem-animacao .cuid-cheio { transition: none; }
 .item-comida:has(.comida-tem) .item-preco { margin-top: 4px; }     /* preços na mesma altura */
 .item-comida .sem-quebra { white-space: nowrap; }   /* "arco-íris" não quebra no hífen */
 .item-comida:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--borda); }
-.item-comida:focus-visible { outline: 4px solid var(--roxo); outline-offset: 2px; }
+.item-comida:focus-visible { outline: 4px dashed var(--tinta); outline-offset: 2px; }
 .item-comida b { text-align: center; line-height: 1.5; max-width: 100%; }
-.comida-enche { font-size: 0.85em; font-weight: 700; color: #1b6e45; }   /* verde mais escuro: 5,8:1 no papel */
+.comida-enche { font-size: 0.85em; font-weight: 700; color: var(--certo); }   /* 5,8:1 no papel */
 .item-comida.falta .item-preco { background: #f1edf5; color: var(--tinta-suave); }
 .item-comida .comida-tem { font-size: 0.86em; } /* ≥ 12px */
 .petshop-despensa {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px;
-  padding: 10px 14px; border: 3px dashed var(--borda); border-radius: var(--canto-grande); background: var(--papel-2);
+  padding: 10px 14px; border: 3px dashed var(--borda); border-radius: var(--canto-grande); background: var(--papel-leve);
 }
 .petshop-despensa p { margin: 0; }
 .petshop-despensa .chip-mini { font-size: 0.8em; }

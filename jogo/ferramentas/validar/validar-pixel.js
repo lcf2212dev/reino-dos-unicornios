@@ -6,7 +6,9 @@
 //   - degradê só linear e com paradas duras (cada cor começa onde a anterior termina: "#a 0 40%, #b 40% 100%");
 //     radial-gradient desenha círculo de borda lisa: não vale;
 //   - sombra (box-shadow, text-shadow, drop-shadow) sem desfoque, e nada de blur();
-//   - rotate só em múltiplos de 90° (girar pixel em outro ângulo borra).
+//   - rotate só em múltiplos de 90° (girar pixel em outro ângulo borra);
+//   - scale()/scaleX()/scaleY() só com fator inteiro (em @keyframes e fora), e conic-gradient nenhum, a não ser nas
+//     exceções escritas do ui.md §10.15.5 (EXCECOES_MOVIMENTO, abaixo).
 // JS (js/**, fora js/voz/): createLinearGradient, createRadialGradient, shadowBlur diferente de 0, .arc( e
 //   .ellipse( no canvas; emoji em texto fora do Reino.util.preencher/el (textContent/innerText com emoji, ou helper
 //   el() próprio que usa textContent): sai o glifo do sistema no lugar do ícone 16×16.
@@ -41,6 +43,25 @@ function dentroDe(s, i) {
   }
   return s.slice(i + 1);
 }
+// ui.md §10.15.5: onde scale fracionário e conic-gradient valem (chave: @keyframes ou trecho do seletor)
+const EXCECOES_MOVIMENTO = {
+  scale: ['@keyframes armar-encher', '.balao-respira'],
+  conic: ['.aura-arco-iris'],
+};
+// o @keyframes (ou o seletor da regra) em volta da posição i do CSS sem comentários
+function contextoDe(t, i) {
+  for (const m of t.matchAll(/@keyframes\s+([\w-]+)\s*\{/g)) {
+    const ini = m.index + m[0].length - 1;
+    if (ini > i) break;
+    let prof = 0, fim = t.length;
+    for (let j = ini; j < t.length; j++) { if (t[j] === '{') prof++; else if (t[j] === '}' && --prof === 0) { fim = j; break; } }
+    if (i < fim) return '@keyframes ' + m[1];
+  }
+  const abre = t.lastIndexOf('{', i);
+  const antes = Math.max(t.lastIndexOf('}', abre), t.lastIndexOf(';', abre));
+  return t.slice(antes + 1, abre).trim();
+}
+function excecao(tipo, ctx) { return EXCECOES_MOVIMENTO[tipo].some((k) => (k.startsWith('@') ? ctx === k : ctx.includes(k))); }
 const COMPRIMENTO = /^-?(\d*\.)?\d+(px|%|em|rem|vh|vw|vmin|vmax|deg)?$|^var\(|^calc\(|^min\(|^max\(|^clamp\(/;
 
 // degradê: a lista de paradas é dura? (a 1ª parte pode ser direção/forma)
@@ -93,6 +114,16 @@ function checarCss(nome, texto, erros) {
     const graus = m[2] === 'turn' ? +m[1] * 360 : +m[1];
     if (graus % 90 !== 0) erros.push(`${nome}:${linhaDe(t, m.index)}: rotate(${m[1]}${m[2] || ''}) borra os pixels`);
   }
+  for (const m of t.matchAll(/(?<![\w-])scale(X|Y|3d)?\(([^)]*)\)/g)) {
+    const fatores = m[2].split(',').map((v) => v.trim()).filter(Boolean);
+    if (fatores.every((v) => /^-?\d+$/.test(v))) continue;
+    const ctx = contextoDe(t, m.index);
+    if (!excecao('scale', ctx)) erros.push(`${nome}:${linhaDe(t, m.index)}: ${m[0]} em "${ctx}": scale só com fator inteiro; pulso = 1 pixel de deslocamento ou troca de quadro (ui.md §10.15)`);
+  }
+  for (const m of t.matchAll(/(repeating-)?conic-gradient\(/g)) {
+    const ctx = contextoDe(t, m.index);
+    if (!excecao('conic', ctx)) erros.push(`${nome}:${linhaDe(t, m.index)}: conic-gradient em "${ctx}" (fora das exceções do ui.md §10.15.5)`);
+  }
 }
 
 const CANVAS = [
@@ -135,7 +166,7 @@ if (require.main === module) {
   const erros = validar(i >= 0 ? path.resolve(process.argv[i + 1]) : jogo);
   erros.forEach((e) => console.log('✘ ' + e));
   if (erros.length) { console.log(`✘ ${erros.length} ponto(s) sem pixel art (docs/contratos/ui.md §10)`); process.exit(1); }
-  console.log('✔ tudo em pixel art: cantos, faixas, sombras, rotações e canvas');
+  console.log('✔ tudo em pixel art: cantos, faixas, sombras, rotações, escalas e canvas');
 }
 
-module.exports = { validar, checarCss, checarJs, degradeDuro, sombraBorrada };
+module.exports = { validar, checarCss, checarJs, degradeDuro, sombraBorrada, EXCECOES_MOVIMENTO };

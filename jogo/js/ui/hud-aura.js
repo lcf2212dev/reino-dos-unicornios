@@ -41,7 +41,7 @@
     pn.conteudo.appendChild(el('div.aura-painel',
       el('p.aura-valor', bolinha(cor.cor), el('b', A.texto(d))),
       el('p', 'Sua aura está ' + cor.nome + '.'),
-      el('p', 'Pergunta certa: +' + A.texto(passo) + '. Errada: −' + A.texto(passo * pen) + '.'),
+      el('p', 'Pergunta certa: +' + A.texto(passo) + '. Errada: -' + A.texto(passo * pen) + '.'),
       corProx !== cor ? el('p', 'Faltam ' + A.texto(prox - d) + ' para a aura ficar ' + corProx.nome + '!') : null,
       el('ul.aura-cores', Reino.config.aura.cores.map(function (c, i) {
         return el('li' + (i === Math.min(f, Reino.config.aura.cores.length - 1) ? '.aura-agora' : ''), bolinha(c.cor), el('small', c.nome));

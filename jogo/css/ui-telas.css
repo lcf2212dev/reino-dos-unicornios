@@ -10,7 +10,7 @@
   animation: aparecer 0.18s ease-out;
 }
 .tela:focus { outline: none; }   /* a tela recebe o foco ao abrir (ui.js, abrirTela); pelo teclado ganha a marca abaixo */
-.tela.foco-teclado:focus-visible { outline: 3px solid var(--roxo); outline-offset: -3px; }   /* aberta pelo teclado: marca de foco à vista */
+.tela.foco-teclado:focus-visible { outline: 4px dashed var(--tinta); outline-offset: -6px; }   /* aberta pelo teclado: marca de foco à vista */
 .painel {
   position: relative;
   width: min(720px, 100%);
@@ -115,7 +115,7 @@ body.em-missao #claude-balao { bottom: calc(env(safe-area-inset-bottom, 0px) + 1
 /* nomes compridos (fonte pixel larga) quebram nas sílabas marcadas por hifenizar() (ui/pecas.js); o resto é a
    regra do body (ui.md §10.17) */
 .sala-info small { color: var(--tinta-suave); font-size: 0.8em; }
-.sala-ir { flex: none; font-weight: 700; font-size: 0.85em; color: var(--roxo); }
+.sala-ir { flex: none; font-weight: 700; font-size: 0.85em; color: var(--roxo-texto); }
 .sala-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 3px; }
 .chip-mini { display: inline-block; padding: 1px 9px; border: 2px solid var(--borda); border-radius: var(--canto); font-size: 0.72em; font-weight: 700; background: var(--papel); }
 .chip-mini.ok { background: var(--certo-fundo); }

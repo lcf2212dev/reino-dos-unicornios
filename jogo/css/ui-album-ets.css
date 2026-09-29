@@ -7,7 +7,7 @@
 }
 .album-cartao {
   display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center;
-  padding: 10px 8px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel-2);
+  padding: 10px 8px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel-leve);
 }
 .album-cartao small { color: var(--tinta-suave); }
 .album-figura { position: relative; display: flex; align-items: flex-end; justify-content: center; min-height: 64px; }

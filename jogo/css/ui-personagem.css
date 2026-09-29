@@ -63,12 +63,12 @@
   display: flex; gap: 8px; min-width: 0; padding: 8px 8px 12px; scroll-padding-inline: 8px 64px;   /* a faixa (48, 8 dela sob a folga) + 8 + o anel de foco (4 + 3) */
   /* sem scroll-snap: ele puxava o cartão com foco de volta para baixo da faixa */
   overflow-x: auto; scrollbar-width: thin;
-  border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel-2);
+  border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel-leve);
 }
 .criar-mais {   /* a faixa de "tem mais", com o ícone ▶ (aparencia.js); a borda é a da fileira */
   /* os 8 px da direita ficam sob a folga da fileira (o sticky para na borda do conteúdo): o ícone centra no resto */
   position: sticky; right: -8px; flex: 0 0 48px; align-self: stretch; margin: -8px 0 -12px; padding-right: 8px;
-  display: grid; place-items: center; border-left: 3px solid var(--borda); background: var(--papel-2);
+  display: grid; place-items: center; border-left: 3px solid var(--borda); background: var(--papel-leve);
 }
 .criar-opcoes.no-fim .criar-mais { visibility: hidden; }
 /* só uma lasca à vista, colada à faixa: some (continua focável: o Tab rola até ele e ele volta) */

@@ -244,6 +244,27 @@ function glifosDaFonte(arq) {
   }
   return s;
 }
+// strings literais ('…', "…", `…` sem as partes ${…}) de um arquivo JS, com os \uXXXX lidos; comentários ficam de fora
+function stringsDoCodigo(src) {
+  const out = [];
+  const esc = (t) => t.replace(/\\u\{([0-9a-f]+)\}|\\u([0-9a-f]{4})|\\(.)/gi, (m, a, b, c) => (a || b ? String.fromCodePoint(parseInt(a || b, 16)) : c === 'n' ? '\n' : c));
+  for (let i = 0; i < src.length; i++) {
+    const ch = src[i];
+    if (ch === '/' && src[i + 1] === '/') { i = src.indexOf('\n', i); if (i < 0) break; continue; }
+    if (ch === '/' && src[i + 1] === '*') { i = src.indexOf('*/', i + 2); if (i < 0) break; i++; continue; }
+    if (ch !== "'" && ch !== '"' && ch !== '`') continue;
+    let j = i + 1, t = '';
+    while (j < src.length && src[j] !== ch) {
+      if (src[j] === '\\') { t += src[j] + src[j + 1]; j += 2; continue; }
+      if (ch !== '`' && src[j] === '\n') break;   // não era string (ex.: aspa dentro de regex)
+      if (ch === '`' && src[j] === '$' && src[j + 1] === '{') { let n = 1; j += 2; while (j < src.length && n) { if (src[j] === '{') n++; else if (src[j] === '}') n--; j++; } t += ' '; continue; }
+      t += src[j++];
+    }
+    out.push(esc(t));
+    i = j;
+  }
+  return out;
+}
 const arqFonte = path.join(Jogo.raiz, 'css', 'press-start-2p.woff2');   // a cópia do jogo de um teste pode vir sem css/
 if (!fs.existsSync(arqFonte)) avisos.push('sem css/press-start-2p.woff2: caracteres fora da fonte não conferidos');
 else {
@@ -264,6 +285,22 @@ else {
   };
   MATERIAS.forEach((m) => olhar(m, m.id));
   PROVAS.forEach((pv) => olhar(pv, pv.id));
+  // textos fixos da interface (js/ui/*.js): as strings do código, sem os comentários (O-14: o "−" do chip da Aura)
+  if (!SO) {
+    const pastaUi = path.join(Jogo.raiz, 'js', 'ui');
+    (fs.existsSync(pastaUi) ? fs.readdirSync(pastaUi).filter((f) => f.endsWith('.js')).sort() : []).forEach((f) => {
+      stringsDoCodigo(fs.readFileSync(path.join(pastaUi, f), 'utf8')).forEach((s) => olhar(s, 'js/ui/' + f));
+    });
+  }
+  // já na fila de um item do TODO-VISUAL.md: aviso até o item sair (o validador acusa o caractere em qualquer outro lugar)
+  const CONHECIDOS = { 'js/ui/pais.js ●': 'D8B-16 (o visor do PIN vira casas desenhadas)' };
+  Object.keys(CONHECIDOS).forEach((k) => {
+    const [onde, ch] = k.split(' ');
+    if (!fora.has(ch) || !fora.get(ch).has(onde)) { avisos.push(`exceção de caractere sem uso (${k}): tire-a de CONHECIDOS em validar-conteudo.js`); return; }
+    fora.get(ch).delete(onde);
+    avisos.push(`caractere "${ch}" fora da fonte em ${onde}: conhecido, ${CONHECIDOS[k]}`);
+    if (!fora.get(ch).size) fora.delete(ch);
+  });
   fora.forEach((onde, ch) => erros.push(`caractere "${ch}" (U+${ch.codePointAt(0).toString(16).toUpperCase().padStart(4, '0')}) fora da fonte e sem desenho (em ${[...onde].join(', ')}): troque por um da fonte`));
 }
 // falas dos módulos (sistemas: Reino.registrarModulo) com `(preencher)`: carregam com todos os `node: true`

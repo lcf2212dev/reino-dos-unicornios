@@ -3,6 +3,8 @@
 .livro-carta { text-align: center; padding: 18px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: #fffbe8; }
 .livro-carta h3 { font-family: var(--fonte-titulo); font-size: 1.3em; margin: 6px 0 10px; }
 .livro-carta p { text-align: left; font-size: 1.05em; max-width: 62ch; margin: 0 auto; }
+.livro-carta p + p { margin-top: 16px; }   /* a carta em blocos curtos (D7-05) */
+.destaque { color: var(--laranja-escuro); }   /* termo em destaque só pela cor (o roxo se confunde com o .en do Inglês) */
 .livro-emoji { font-size: 2.6em; }
 .livro-nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .livro-pag { font-weight: 700; color: var(--tinta-suave); }
@@ -33,7 +35,7 @@
 .item-loja.usando { background: var(--certo-fundo); }
 
 /* ---------- estábulo ---------- */
-.btn-ovos { width: 100%; animation: pulsar 1.4s ease-in-out infinite; }
+.btn-ovos { width: 100%; animation: pulsar 1.2s step-end 3; }
 .estabulo-contagem { text-align: center; font-weight: 700; }
 .estabulo-grupo { font-family: var(--fonte-titulo); font-size: 1.1em; margin-top: 18px !important; }
 .grade-unis { display: grid; grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: 12px; }
@@ -48,7 +50,7 @@
 .carta-uni.rar-raro { background: linear-gradient(180deg, #fff 0 45%, #dcebff 45%); border-color: #2b5ea8; }
 .carta-uni.rar-epico { background: linear-gradient(180deg, #fff 0 45%, #eadcff 45%); border-color: #5b2aa8; }
 .carta-uni.rar-lendario { background: linear-gradient(180deg, #fffbe6 0 45%, #ffe39a 45%); border-color: #a86a00; }
-.carta-uni.rar-lendario:not(.escondida)::after { content: ""; position: absolute; inset: -4px; border-radius: var(--canto-grande); padding: 4px; background: linear-gradient(90deg, #ff6b8a 0 17%, #ffb020 17% 33%, #ffe066 33% 50%, #6fdc8c 50% 67%, #5fb4ff 67% 83%, #a66bff 83%); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
+.carta-uni.rar-lendario:not(.escondida)::after { content: ""; position: absolute; inset: -4px; border-radius: var(--canto-grande); padding: 4px; background: linear-gradient(90deg, #ff6b8a 0 25%, #ffb020 25% 50%, #6fdc8c 50% 75%, #5fb4ff 75%); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
 .carta-uni.escondida { background: #f1edf5; }
 .carta-uni.montado { outline: 4px solid var(--laranja-forte); outline-offset: 2px; }
 .carta-nome { font-size: 8px; text-align: center; line-height: 1.6; }
@@ -67,17 +69,18 @@
     linear-gradient(#fff, #fff) center / 134px 114px no-repeat, linear-gradient(#fff, #fff) center / 150px 74px no-repeat, var(--ambar-claro);
 }
 .detalhe-sprite.rar-lendario { background-color: #ffe39a; }
-.detalhe-sprite.nascimento { animation: brilhar 1.2s ease-out; }
+.detalhe-sprite.nascimento { animation: brilhar 1.2s step-end; }
 .detalhe-rar { text-align: center; font-weight: 700; font-size: 1.05em; }
-.detalhe-rar.rar-raro { color: var(--raro); }
-.detalhe-rar.rar-epico { color: var(--epico); }
-.detalhe-rar.rar-lendario { color: var(--lendario); }
+.detalhe-rar.rar-raro { color: var(--raro-texto); }
+.detalhe-rar.rar-epico { color: var(--epico-texto); }
+.detalhe-rar.rar-lendario { color: var(--lendario-texto); }
 .detalhe-frase { text-align: center; font-style: italic; font-weight: 700; }
 .detalhe-como, .detalhe-xp, .detalhe-dica { text-align: center; }
 .detalhe-dica { color: var(--tinta-suave); font-size: 0.9em; }
 .trilha-estagios { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-.trilha-estagios li { display: flex; flex-direction: column; align-items: center; padding: 8px 4px; border: 3px solid #cfc3e6; border-radius: var(--canto); background: #f6f3fa; opacity: 0.6; }
-.trilha-estagios li.alcancado { border-color: var(--borda); background: var(--papel); opacity: 1; }
+.trilha-estagios li { display: flex; flex-direction: column; align-items: center; padding: 8px 4px; border: 3px solid #cfc3e6; border-radius: var(--canto); background: #f6f3fa; color: var(--tinta-suave); }
+.trilha-estagios li:not(.alcancado) > :not(small) { opacity: 0.6; }   /* só o desenho apaga; o texto fica suave (ui.md §10.19.1) */
+.trilha-estagios li.alcancado { border-color: var(--borda); background: var(--papel); color: var(--tinta); }
 .trilha-estagios span { font-size: 1.5em; }
 .trilha-estagios small { font-weight: 700; font-size: 0.72em; }
 .silhueta { opacity: 0.85; }
@@ -95,7 +98,7 @@
 .ovo-grande.balanca { animation: balancar 0.45s steps(1); }
 .ovo-grande.rar-lendario canvas, .ovo-grande.rar-epico canvas { filter: drop-shadow(2px 0 0 rgba(255, 196, 60, 0.9)) drop-shadow(-2px 0 0 rgba(255, 196, 60, 0.9)) drop-shadow(0 2px 0 rgba(255, 196, 60, 0.9)) drop-shadow(0 -2px 0 rgba(255, 196, 60, 0.9)); }
 .ovo-texto { font-size: 1.1em; font-weight: 700; }
-.ovo-nome { font-family: var(--fonte-titulo); font-size: 1.6em; font-weight: 700; color: var(--laranja-forte); }
+.ovo-nome { font-family: var(--fonte-titulo); font-size: 1.6em; font-weight: 700; color: var(--laranja-escuro); }
 
 /* nome */
 .campo-nome { width: 100%; min-height: 58px; padding: 10px 14px; border: 3px solid var(--borda); border-radius: var(--canto-grande); font: inherit; font-size: 1.15em; font-weight: 700; text-align: center; background: #fff; color: var(--tinta); }
