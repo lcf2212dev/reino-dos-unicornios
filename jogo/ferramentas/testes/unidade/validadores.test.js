@@ -88,7 +88,7 @@ test('validar-interiores: personagem registrado com predio museu e x/y passa; se
   assert.match(r.saida, /personagem visitante-teste: registrado em 'museu' sem x\/y, e esse prédio não tem vagas/);
 });
 
-test('validar-conteudo: emoji com ícone registrado num prédio (Reino.registrarIcones em interiores/) não vira aviso', () => {
+test('validar-conteudo: emoji sem desenho é erro; com ícone registrado num prédio (Reino.registrarIcones em interiores/) passa', () => {
   const copia = copiaDoJogo('icone');
   const sala = path.join(copia, 'js/conteudo/materias/historia/h1.js');
   const falas = path.join(copia, 'js/interiores/museu/falas.js');
@@ -96,7 +96,8 @@ test('validar-conteudo: emoji com ícone registrado num prédio (Reino.registrar
   fs.writeFileSync(falas, original);   // a cópia é reaproveitada: sempre do jogo de hoje
   plantar(sala, "explica: '", "explica: '🍦 ");
   const sem = node('ferramentas/validar/validar-conteudo.js', [], copia);
-  assert.match(sem.saida, /emojis sem pixel art em js\/arte\/icones\/:.*🍦/);
+  assert.strictEqual(sem.status, 1, sem.saida);
+  assert.match(sem.saida, /emoji 🍦 sem pixel art em js\/arte\/icones\/ \(em js\/conteudo\/materias\/historia\/h1\.js\)/);
   const d = Array.from({ length: 16 }, () => '..aaaaaaaaaaaa..');
   fs.writeFileSync(falas, `Reino.registrarIcones({ '🍦': { n: 'sorvete', p: { a: '#ffd1e0' }, d: ${JSON.stringify(d)} } });\n` + original);
   const com = node('ferramentas/validar/validar-conteudo.js', [], copia);

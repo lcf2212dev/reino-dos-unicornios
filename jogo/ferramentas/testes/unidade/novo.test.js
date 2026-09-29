@@ -32,7 +32,7 @@ function areaLivre() {
 
 test('prédio com rect e caminho: index confere e o interior só pede o que falta preencher', () => {
   const a = areaLivre();
-  const r = rodar(novo, ['predio', 'zztestepredio', '--nome', 'Prédio de Teste', '--rect', a.rect, '--caminho', a.caminho, '--emoji', '🥐', '--raiz', copia]);
+  const r = rodar(novo, ['predio', 'zztestepredio', '--nome', 'Prédio de Teste', '--rect', a.rect, '--caminho', a.caminho, '--emoji', '🌼', '--raiz', copia]);
   assert.strictEqual(r.status, 0, r.stderr);
   ['falas', 'objetos', 'zztestepredio', 'fora', 'lugar'].forEach((f) => assert.ok(fs.existsSync(path.join(copia, `jogo/js/interiores/zztestepredio/${f}.js`))));
   assert.strictEqual(naCopia('ferramentas/gerar-index.js', ['--conferir']).status, 0);
