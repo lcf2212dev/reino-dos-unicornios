@@ -25,4 +25,5 @@
 # 5eefce3 = viagem 3ª versão: Júpiter, Vênus e Netuno com 9 ETs, álbum de ETs, ET companheiro, capacete de astronauta, falas e vozes novas
 # 74faf4d = config ganhou reconectarMs (jogo sem rede)
 # f543d1a = tudo em pixel art (cantos em degrau, faixas, halo e vinheta em pixel, emojis desenhados)
-f543d1a
+# 5d12782 = tudo em pixel art: cantos em degrau, faixas, halo e vinheta em pixel, emojis desenhados, fonte pixel local
+5d12782
