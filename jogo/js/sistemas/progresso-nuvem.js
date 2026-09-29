@@ -235,6 +235,25 @@
   };
   P.statusNuvem = function () { return nuvem.ok ? nuvem.status : 'local'; };
 
+  /* Sem rede ao abrir (o app instalado, offline): quem já tem o save no aparelho joga com ele (P.podeJogarSemNuvem),
+     e o jogo tenta a nuvem de novo quando a rede volta (evento online) e a cada config.reconectarMs. Quando ela
+     responde, junta como na abertura (P.iniciarNuvem, que também envia o que foi feito sem rede) e para de tentar. */
+  P.podeJogarSemNuvem = function () { return !!(I.estado && I.estado.comecou); };
+  var reconectando = false;
+  P.reconectarNuvem = function () {
+    if (reconectando || nuvem.ok) return;
+    reconectando = true;
+    var emCurso = false, t = setInterval(tentar, Reino.config.reconectarMs || 30000);
+    function parar() { clearInterval(t); window.removeEventListener('online', tentar); reconectando = false; }
+    function tentar() {
+      if (nuvem.ok) return parar();
+      if (emCurso) return;
+      emCurso = true;
+      P.iniciarNuvem().then(function () { emCurso = false; if (nuvem.ok) parar(); }, function () { emCurso = false; });
+    }
+    window.addEventListener('online', tentar);
+  };
+
   // para as outras partes
   I.agendarNuvem = agendarNuvem;
 })();

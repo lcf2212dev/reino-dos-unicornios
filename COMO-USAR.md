@@ -3,14 +3,18 @@
 Guia de uso para o Leandro. As regras técnicas ficam em `docs/contratos/`.
 
 ## Como jogar
-- **Tablet, celular ou notebook (recomendado):** abra https://claude.ai/artifact/CQUd5TWJQW3fWWw5Cvg77U
-  - Precisa estar logado no claude.ai com a sua conta, porque o link é privado.
+- **Tablet, celular ou notebook:** abra https://reino-dos-unicornios.vercel.app
+  - **Instalar como app:** no Chrome do Android, menu ⋮ → "Instalar app" (ou "Adicionar à tela inicial"); no iPhone/iPad,
+    Safari → Compartilhar → "Adicionar à Tela de Início"; no notebook, o ícone de instalar na barra de endereço.
+  - **Sem internet:** abra uma vez com internet e espere uns minutos (o jogo inteiro, com as vozes, fica guardado no
+    aparelho). Depois ele abre e joga sem rede; o progresso fica no aparelho e vai para o banco sozinho quando a
+    internet volta. Um aparelho que nunca abriu o jogo precisa de internet na primeira vez.
   - O progresso é sincronizado entre os aparelhos e entre abas. Um aparelho novo já abre com o progresso dela.
   - **Entrar:** toda vez que o jogo abre, toque em "Entrar no Reino" e digite a senha. Mariana: login `mariana`,
     senha `unicorlice77` (o login de quem jogou por último já vem preenchido). Outros jogadores usam "Criar conta".
     Para sair: ⚙️ Ajustes → 🚪 Sair.
-- **Na internet, sem login no claude.ai:** https://reino-dos-unicornios.vercel.app (mesmo jogo, mesmas contas por
-  login/senha, mas com banco próprio: o progresso de lá não se mistura com o do artifact nem com o do servidor de casa).
+- O servidor de casa (`reinodosunicornios.local`) e o link do claude.ai foram aposentados: o progresso de lá foi
+  copiado para a Vercel em 29/09/2026 e o que for feito neles não chega mais ao banco.
 - **Como andar:**
   - **Notebook:** clique num lugar e ela vai até lá; clique numa pessoa ou objeto e ela conversa ou usa. Segurando o
     botão do mouse, ela segue o ponteiro. As setas (ou W, A, S, D) também andam.

@@ -202,8 +202,11 @@ Com relógios diferentes, as duas se desfariam para sempre. Por isso:
 5. Rede lenta: cada gravação e cada fetch do servidor desistem em `limiteRedeMs` (15 s; o fetch é cancelado
    com `AbortController`); depois de um erro, tenta de novo sozinha em `novaTentativaMs` (15 s). A busca
    inicial (`iniciarNuvem`) desiste em 12 s e rejeita; o jogo pode tentar de novo.
-   O jogo só começa depois dela (`jogo/js/motor/main.js`): se falhar, a tela de início mostra "O reino não abriu
-   agora" e "Tentar de novo", e nada anda até dar certo.
+   O jogo só começa depois dela (`jogo/js/motor/main.js`), com uma exceção: sem resposta e com o save deste jogador
+   já no aparelho (`P.podeJogarSemNuvem`: `comecou`), joga com ele e `P.reconectarNuvem` tenta de novo no evento
+   `online` e a cada `reconectarMs` (30 s) até o `iniciarNuvem` dar certo (junta e envia o que foi feito sem rede).
+   Sem o save (aparelho que nunca começou), a tela de início mostra "O reino não abriu agora" (ou "Sem internet")
+   e "Tentar de novo", e nada anda até dar certo. Teste: `testes/unidade/nuvem-reconectar.test.js`.
 6. Cuidados gravam no máximo a cada 60 s (ou 10 pontos), nunca a cada quadro: cada `P.salvar()` sincroniza
    (`cuidados.md` §4).
 
@@ -216,13 +219,13 @@ Com relógios diferentes, as duas se desfariam para sempre. Por isso:
    guardava o objeto e, depois de uma mescla com a tela aberta, o 🎵 parava a música mas o save continuava ligado).
 
 ## 9. Segurança do progresso real (inegociável)
-1. O progresso real vive em três lugares, e nenhum teste ou ferramenta toca neles:
-   - servidor de casa: container Docker `reino-unicornios`, porta 80 (`reinodosunicornios.local`,
-     `localhost`, `127.0.0.1` e o IP do PC na rede), banco em `jogo/servidor/dados/reino.db`;
-   - o artifact publicado no claude.ai (capacidade `db`, doc `progresso/mariana`);
-   - o localStorage `mariana-reino-v1` (e a cópia `mariana-reino-v1-novidades`) de cada aparelho.
+1. O progresso real vive no banco da Vercel (Postgres/Neon de `reino-dos-unicornios.vercel.app`, API em `vercel/`,
+   mesmas rotas do servidor de casa) e no localStorage `mariana-reino-v1` (e a cópia `mariana-reino-v1-novidades`) de
+   cada aparelho; nenhum teste ou ferramenta toca neles. Aposentados em 29/09/2026 e guardados como cópia, também
+   intocáveis: o servidor de casa (container Docker `reino-unicornios` desligado, banco em
+   `jogo/servidor/dados/reino.db`, copiado para a Vercel) e o artifact do claude.ai (doc `progresso/mariana`).
 2. Proibido:
-   - abrir, chamar ou testar qualquer endereço do servidor de casa;
+   - abrir, chamar ou testar qualquer endereço do servidor de casa, ou ler e gravar o banco da Vercel;
    - ler, copiar, gravar ou apagar qualquer coisa em `jogo/servidor/dados/`;
    - `docker compose restart/down/up/build`, mexer no container ou no serviço `reino-nome`;
    - publicar ou republicar o artifact, ou abrir o jogo publicado;

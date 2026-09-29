@@ -4,44 +4,39 @@ Jogo "Mariana e o Reino dos Unicórnios": revisão escolar da Mariana (7 anos). 
 Este arquivo tem as regras invioláveis e o índice. As regras de código de cada pasta estão no `CLAUDE.md` dela.
 
 ## O progresso da Mariana é intocável
-- Ele vive em 4 lugares: o servidor de casa (container `reino-unicornios`, porta 80,
-  `reinodosunicornios.local`, banco em `jogo/servidor/dados/reino.db`); o artifact publicado no claude.ai
-  (capacidade `db`, doc `progresso/mariana`); o banco Postgres (Neon) da Vercel (`reino-dos-unicornios.vercel.app`,
-  mesmas tabelas do servidor de casa; `vercel/`); o localStorage `mariana-reino-v1` e `mariana-reino-v1-novidades`
-  de cada aparelho.
+- Ele vive no banco Postgres (Neon) da Vercel (`reino-dos-unicornios.vercel.app`, o ÚNICO banco em uso; `vercel/`)
+  e no localStorage `mariana-reino-v1` e `mariana-reino-v1-novidades` de cada aparelho (inclusive o app instalado).
+- Aposentados (pedido do Leandro, 29/09/2026), guardados como cópia: o servidor de casa (container `reino-unicornios`
+  desligado, banco em `jogo/servidor/dados/reino.db`, já copiado para a Vercel) e o artifact do claude.ai (doc
+  `progresso/mariana`). Não se religam nem se republicam.
 - Outros jogadores (login/senha) têm save próprio, tão real quanto o dela: `reino-v1-<login>`, doc `progresso/<login>`,
   linha `<login>` do banco e contas em `jogadores` (`docs/contratos/save-e-mescla.md` §12). Mesmas regras.
 - Nada disso se abre, testa, lê, copia, grava, publica ou apaga. Nada de `localStorage.clear()`, "Apagar tudo",
   "Novo ciclo" ou pagamento fora do ambiente de teste.
-- Docker, container e o serviço `reino-nome`: nunca se mexe. Não precisa: o servidor de casa serve a árvore
-  principal ao vivo, e o merge na main já o atualiza.
-- A árvore principal `/home/leandro/reino-dos-unicornios` é servida AO VIVO pelo container: não escreva nela.
-  Trabalhe numa worktree (`npm run worktree -- <tema> [--material <Pasta>]`).
+- Docker, container e o serviço `reino-nome`: desligados; nunca se mexe.
+- Na árvore principal `/home/leandro/reino-dos-unicornios` não se escreve: trabalhe numa worktree (`npm run worktree -- <tema> [--material <Pasta>]`).
 - Detalhes: `docs/contratos/save-e-mescla.md` §9.
 
 ## Fluxo 100% autônomo
 - Feature, ajuste ou correção vão até o fim sem pedir decisão, confirmação nem ajuda a ninguém: decida com o
   padrão mais sensato (a opção que você recomendaria), construa numa worktree, feche com `validar-tudo`, faça o commit,
   integre na main e dê push (skill `entregar`: `npm run integrar -- <branch> --commit --merge --push`).
-  Depois do push, se o jogo mudou, republique o artifact do claude.ai (skill `publicar-artifact`) e a Vercel
-  (`npm run vercel`, na main). Commit, merge na main, push, troca da base do e2e, artifact e Vercel estão autorizados
-  por escrito, sempre.
+  Depois do push, se o jogo mudou, publique na Vercel (`npm run vercel`, na main). Commit, merge na main, push,
+  troca da base do e2e e Vercel estão autorizados por escrito, sempre.
 - Nunca use AskUserQuestion, nunca pare para aprovar plano, amostra ou resultado. O que você decidiu vai no
   relatório final, curto.
 - Merge só com `npm test` e `npm run e2e` verdes; diferença no e2e fora do que a feature explica é defeito: corrija.
   Mudança de propósito no e2e: troque a base (`--trocar-base`) na mesma integração.
 - O que não tem volta não se faz, e o trabalho segue pelo outro caminho:
-  - progresso da Mariana, Docker, servidor de casa: não se tocam (acima);
+  - progresso da Mariana, banco da Vercel, Docker, servidor de casa, artifact: não se tocam (acima);
   - apagar o que não é temporário: não apague; deixe o arquivo e cite no relatório final;
   - material em `matérias/` que colide com outro conteúdo: vale o da árvore principal (é o mais novo); leve-o para a
     integração e integre de novo;
   - push recusado porque o GitHub andou: traga o `origin/main` e integre de novo por cima; nunca `git push --force`;
-  - artifact com versão viva diferente da registrada: a main é a fonte da verdade do jogo; leia o que o claude.ai
-    pedir e publique a versão da main (skill `publicar-artifact`), sem `force`.
 - Travou em algo que não está aqui: escolha a saída segura que não perde nada (deixar, não apagar, não sobrescrever
   o que não é seu), siga com o resto e explique no relatório.
-- O artifact publica só o jogo (o delta desde `jogo/ferramentas/artifact-publicado.txt`); o doc `progresso/mariana`
-  nunca se toca. Mudança só em docs ou ferramentas: sem publicar.
+- A Vercel publica o jogo e o app instalável (PWA: `vercel/pwa/`, o jogo inteiro sem rede); o banco dela nunca se toca.
+  Mudança só em docs ou ferramentas: sem publicar.
 - Voz nova: escolha pelo `npm run vozes-elenco` e aprove pela conferência por transcrição (skill `validar-vozes`).
 - Frentes (workers) não fazem commit; quem orquestra integra. Commit no estilo `Reino dos Unicórnios: <o que mudou>`.
 - O `node_modules` da worktree é um link: nunca `git add` dele.
@@ -80,7 +75,7 @@ Este arquivo tem as regras invioláveis e o índice. As regras de código de cad
   `npm run servidor-teste` (skill `servidor-de-teste`) · `npm run memoria` (memória de uma aba, passo a passo)
 - `npm run index` · `npm run versao` · `npm run vozes` e `npm run vozes-elenco` (skills `gravar-vozes`, `validar-vozes`)
 - `npm run worktree` · `npm run material -- <Pasta>` (prints de `matérias/<pasta>/` reduzidos) · `npm run plano`
-  (frentes paralelas de um pedido) · `npm run integrar` (skill `entregar`) · `npm run artifact` (skill `publicar-artifact`) · `npm run vercel`
+  (frentes paralelas de um pedido) · `npm run integrar` (skill `entregar`) · `npm run vercel` (publica na Vercel)
 
 ## Mapa de pastas
 ```
@@ -93,8 +88,8 @@ jogo/js/atividades/ ui/    desafios, missão, treino, provas; telas por cima do 
 jogo/js/interiores/<p>/    cada prédio por dentro;  jogo/js/conteudo/: matérias, provas, loja
 jogo/css/                  plano, sem subpasta; ordem da cascata = manifesto
 jogo/ferramentas/          testes, validadores, vozes, fluxo (worktree, integrar), gerado/ (GERADO)
-jogo/servidor/             servidor de casa: intocável
-vercel/                    o jogo na Vercel: API do servidor de casa sobre Postgres (build copia jogo/)
+jogo/servidor/             servidor de casa (aposentado): intocável
+vercel/                    o jogo na Vercel: API sobre Postgres, PWA (pwa/), build copia jogo/
 matérias/<matéria>/        prints e fotos da escola (apostila; Revisão/ = folha de prova)
 docs/                      ARQUITETURA.md (mapa; §5.1 quero X → qual registro), contratos/, receitas/, decisoes/
 ```

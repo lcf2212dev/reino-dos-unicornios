@@ -45,6 +45,7 @@ function montar(opcoes = {}) {
       setItem: (k, v) => { gravacoes[k] = (gravacoes[k] || 0) + 1; guardado[k] = String(v); },
     },
     addEventListener(ev, fn) { (ouvintes['win:' + ev] = ouvintes['win:' + ev] || []).push(fn); },
+    removeEventListener(ev, fn) { const l = ouvintes['win:' + ev] || []; if (l.indexOf(fn) >= 0) l.splice(l.indexOf(fn), 1); },
     PA: { APARENCIA_PADRAO: { pele: '#f1c7a3', cabelo: '#5a3825', roupa: '#ff7eb6', laco: '#ffd34d' } },
   };
   ctx.window = ctx;

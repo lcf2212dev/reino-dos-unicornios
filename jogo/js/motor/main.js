@@ -130,8 +130,8 @@
     Reino.modulos.forEach(function (m) { if (m.depoisDasBoasVindas) m.depoisDasBoasVindas(ctxModulo); });
   }
 
-  /* o jogo só começa com o progresso guardado em mãos (servidor de casa ou claude.ai):
-     sem ele, um aparelho novo abriria a primeira vez e trocaria as escolhas dela */
+  /* o jogo só começa com o progresso guardado em mãos (o banco da Vercel ou o claude.ai): sem ele, um aparelho novo
+     abriria a primeira vez e trocaria as escolhas dela. Sem rede, quem já tem o save no aparelho joga com ele. */
   function esperarProgresso() {
     return new Promise(function (resolver) {
       var t = null, msg = null, botao = null;
@@ -158,8 +158,16 @@
           resolver();
         }, function () {
           clearTimeout(espera);
+          // sem rede, mas o save deste jogador já está no aparelho: joga com ele e sincroniza quando a rede voltar
+          if (P.podeJogarSemNuvem()) {
+            if (t) UI.fecharTela(t);
+            P.reconectarNuvem();
+            resolver();
+            return;
+          }
           mostrar();
-          aviso('O reino não abriu agora. Chame o papai e tente de novo.');
+          aviso(navigator.onLine === false ? 'Sem internet. Na primeira vez neste aparelho, o reino precisa da internet.'
+            : 'O reino não abriu agora. Chame o papai e tente de novo.');
           botao.hidden = false;
           botao.focus();
         });
