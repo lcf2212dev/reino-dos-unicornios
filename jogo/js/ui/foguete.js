@@ -1,6 +1,7 @@
 /* Painel do foguete (Reino.UI.telaFoguete), aberto pelo foguete do Hangar (ação `viagem`, sistemas/viagem.js):
    o tanque em gotinhas, os destinos (Reino.Viagem.planetas()) com "Decolar!" quando cheio, e o passaporte (um
-   carimbo por planeta; sem carimbo, a silhueta com "?"). Não cheio: o Claude diz quantas certas faltam.
+   carimbo por planeta, selo com o planeta dentro; sem carimbo, o planeta em silhueta e "?"). O desenho dos planetas
+   é o do Planetário (Reino.IconesPlanetas, arte/icones/planetas.js). Não cheio: o Claude diz quantas certas faltam.
    Destino com `depois` ainda sem aquele carimbo: cadeado; tocar nele faz o Claude dizer qual visitar antes.
    Contrato: docs/contratos/viagem.md §2. Estilos: css/ui-foguete.css. */
 (function () {
@@ -15,11 +16,22 @@
       return PA.paraDOM(spr, PA.escalaNitida(2 * src.width, src.width), 'foguete-claude');
     } catch (e) { return null; }
   }
-  // a bolinha colorida do planeta (com "?" quando ainda não foi carimbado)
+  // o planeta (o mesmo desenho do Planetário, 16×16: arte/icones/planetas.js); sem ele, a bolinha na cor do planeta
+  var IP = function () { return Reino.IconesPlanetas; };
   function bola(p, carimbado) {
+    if (IP()) {
+      try { var c = IP().iconeDOM(p, 'foguete-planeta'); c.setAttribute('aria-hidden', 'true'); return c; } catch (e) { if (window.console) console.error(e); }
+    }
     var b = el('span.foguete-bola' + (carimbado ? '' : '.foguete-silhueta'), { 'aria-hidden': 'true' }, carimbado ? '' : '?');
     if (carimbado) b.style.background = p.cor || '#d8d8e8';
     return b;
+  }
+  // o carimbo do passaporte: selo de borda picotada com o planeta dentro (sem carimbo: o planeta em silhueta)
+  function carimbo(p, ok) {
+    if (IP()) {
+      try { var c = IP().carimboDOM(p, ok, 'foguete-carimbo'); c.setAttribute('aria-hidden', 'true'); return c; } catch (e) { if (window.console) console.error(e); }
+    }
+    return bola(p, ok);
   }
 
   function telaFoguete() {
@@ -72,7 +84,7 @@
     var passaporte = el('section.foguete-passaporte', el('h3.foguete-sub', '🛂 Passaporte'),
       el('ul', V.planetas().map(function (p) {
         var ok = !!carimbos[p.id];
-        return el('li' + (ok ? '.carimbado' : ''), bola(p, ok), el('small', ok ? p.nome : '?'));
+        return el('li' + (ok ? '.carimbado' : ''), carimbo(p, ok), el('small', ok ? p.nome : '?'));
       })));
     // o álbum de ETs (ui/album-ets.js): fecha o painel e abre o álbum
     if (UI.telaAlbumETs) {
