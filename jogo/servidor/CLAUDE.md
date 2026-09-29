@@ -1,5 +1,8 @@
 # jogo/servidor — INTOCÁVEL sem o Leandro
 
+APOSENTADO em 29/09/2026 (pedido do Leandro): o banco foi copiado para a Vercel (`vercel/`), o container e o
+`reino-nome` foram desligados. Não religue. O que segue descreve como ele era.
+
 É o servidor de casa: container `reino-unicornios`, porta 80, `reinodosunicornios.local`.
 Guarda o progresso REAL da Mariana em `dados/reino.db` (SQLite, com as últimas 50 versões).
 

@@ -26,6 +26,8 @@ Reino.config = {
   abertura: { tituloMs: 1600, estrelas: 70, unicornios: 3, arcoMs: 1800, entrarMs: 600, pixelsAlvo: 70000 },
   // jogadores: tamanho do login e da senha; senhaMariana = senha da conta 'mariana' (sem segurança). Ninguém entra
   // direto: vale quando não há banco ou ele não responde (com banco, vale a senha guardada nele); vazio = não entra
+  // sem rede ao abrir, com o save no aparelho: joga e tenta a nuvem de novo a cada reconectarMs (e quando a rede volta)
+  reconectarMs: 30000,
   jogadores: { loginMin: 2, loginMax: 20, senhaMin: 3, senhaMax: 30, prefixoSave: 'reino-v1-', senhaMariana: 'unicorlice77' },
   // fome e sede da montaria (js/sistemas/cuidados.js): só gastam com o jogo aberto e ela jogando.
   // 100 = satisfeito. Abaixo de `baixo`, ela anda a `fatorLento` da velocidade até comer/beber.
