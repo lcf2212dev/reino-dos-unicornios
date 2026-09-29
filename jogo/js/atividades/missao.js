@@ -59,9 +59,9 @@
       var comecar = el('button.btn-grande.btn-principal', { type: 'button' }, 'Começar 🦄');
       corpo.appendChild(el('div.intro-sala',
         el('div.intro-emoji', sala.emoji),
-        el('h2.titulo-pixel', sala.nome),
-        el('p.intro-paginas', 'Apostila: ' + sala.paginas),
-        el('div.intro-claude', claudeMini, el('p', sala.intro)),
+        el('h2.titulo-pixel', U.colado(sala.nome)),
+        el('p.intro-paginas', U.colado('Apostila: ' + sala.paginas)),
+        el('div.intro-claude', claudeMini, el('p', U.colado(sala.intro))),
         el('ul.intro-regras',
           el('li', '⏳ Aqui não tem relógio. Pode ir devagar!'),
           el('li', '👀 Leia cada pergunta com calma e depois toque em "Conferir".'),

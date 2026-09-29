@@ -12,7 +12,7 @@
     var lista = el('div.opcoes' + (d.opcoes.length === 2 ? '.opcoes-duas' : ''));
     var botoes = {};
     ordem.forEach(function (i) {
-      var b = botaoOpcao(d.opcoes[i]);
+      var o = d.opcoes[i], b = botaoOpcao({ e: o.e, t: U.colado(o.t) });   // colado: ui.md §10.17
       b.addEventListener('click', function () {
         if (bloqueadas[i] || ctrl.travado) return;
         sel = i; Reino.Som.tocar('selecionar'); pintar(); opts.onMudar();
