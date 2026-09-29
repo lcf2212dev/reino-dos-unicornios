@@ -28,4 +28,5 @@
 # 5d12782 = tudo em pixel art: cantos em degrau, faixas, halo e vinheta em pixel, emojis desenhados, fonte pixel local
 # b7e4f5d = questão livre durante a leitura, pontilhado do inglês em pixel
 # 0c13e75 = fala sem trava (config.esperaFala.travar)
-0c13e75
+# 0d6a20c = onda 0a do backlog visual (D10-19, F-01 a F-07, D11-01, D4-01, D8B-03, D8B-06, D8B-07, D8B-08, D7-01, D7-04, D8A-01)
+0d6a20c
