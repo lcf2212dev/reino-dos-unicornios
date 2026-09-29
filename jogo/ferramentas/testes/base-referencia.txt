@@ -24,4 +24,5 @@
 # 588a534 = viagem 2ª versão: Marte e Saturno com 6 ETs, portais no voo, desafio do ET, cadeado no painel, campo etsAmigos, falas e vozes novas
 # 5eefce3 = viagem 3ª versão: Júpiter, Vênus e Netuno com 9 ETs, álbum de ETs, ET companheiro, capacete de astronauta, falas e vozes novas
 # 74faf4d = config ganhou reconectarMs (jogo sem rede)
-74faf4d
+# f543d1a = tudo em pixel art (cantos em degrau, faixas, halo e vinheta em pixel, emojis desenhados)
+f543d1a
