@@ -1,10 +1,11 @@
 /* Planeta Lua (viagem de foguete): interior do Observatório alcançado só pelo foguete do Hangar. Só brincar.
-   Fixos (contrato): id 'planeta-lua', o spawn/chegada (11, 14), o foguete de volta ao lado dela e as vagas dos ETs
-   (reservas.js): Lumi (8, 7), Pipo (16, 9), Vovó Cratera (5, 12). Céu aberto (fundo 'espaco') com a Terra no
+   Fixos (contrato): id 'planeta-lua', o spawn/chegada (13, 4), o foguete de volta ao lado dela e as vagas dos ETs
+   (reservas.js): Lumi (8, 7), Pipo (16, 9), Vovó Cratera (5, 12). Céu aberto (fundo 'planeta-lua', planetas-comum.js) com a Terra no
    horizonte; objetos em lua-objetos.js, brincadeiras em lua-brincadeiras.js. */
 (function () {
   var R = window.Reino;
-  var CHEGADA = { x: 11, y: 14 };
+  var CHEGADA = { x: 13, y: 4 };
+  var P = R._predios.planetas;
   var ELENCO = (R.NPCs && R.NPCs.ELENCO) || {};
   var S = R._predios.observatorio;
   // ET reservado (observatorio/reservas.js): nome, sprite e voz do elenco, falas do prédio (personagens-falas.js)
@@ -19,24 +20,24 @@
   // sem o sistema da viagem (a prévia dos interiores só carrega os prédios), o interior existe mesmo assim
   if (R.Viagem) R.Viagem.registrarPlaneta({ id: 'lua', nome: 'Lua', interior: 'planeta-lua', chegada: CHEGADA, ordem: 1, cor: '#c9c9d6' });
 
+  var COMODO = { id: 'lua', nome: 'Lua', placa: 'Lua', rect: { x: 1, y: 1, w: 22, h: 15 }, piso: 'lua-rocha', parede: 'planeta-horizonte', paleta: { terra: 9 } };   // a Terra à esquerda do foguete (em 14-15 ela ficava coberta)
   R.registrarInterior({
     id: 'planeta-lua',
     lugar: 'observatorio',
     nome: 'Lua',
     pacote: 'interior-observatorio',
-    fundo: 'espaco',
-    tamanho: { w: 24, h: 17 },
+    fundo: P.fundo('planeta-lua', COMODO),   // o chão vai até a borda (planetas-comum.js)
+    tamanho: { w: 24, h: 28 },   // da fileira 16 para baixo, só o chão (a câmera nunca mostra o espaço embaixo)
     spawn: CHEGADA,
-    comodos: [
-      { id: 'lua', nome: 'Lua', placa: 'Lua', rect: { x: 1, y: 1, w: 22, h: 15 }, piso: 'lua-rocha', parede: 'planeta-horizonte',
-        paleta: { terra: 15 } },
-    ],
+    comodos: [COMODO],
     // o caminho da chegada ao foguete e aos ETs
-    corredores: [{ x: 9, y: 11, w: 5, h: 5 }],
+    corredores: [{ x: 11, y: 3, w: 5, h: 4 }],
     objetos: [
       // o foguete de pouso, ao lado da chegada: volta ao Hangar
-      { tipo: 'planeta-foguete', x: 12, y: 13, nome: 'Foguete', acao: { tipo: 'viagem', para: 'observatorio-2', chegada: { x: 7, y: 9 } } },
-      { tipo: 'lua-placa', x: 9, y: 13, nome: 'Placa', fala: ['{Bem-vinda|Bem-vindo} à Lua, {nome}!', 'Aqui é bom de brincar! 🌙'] },
+      { tipo: 'planeta-foguete', x: 14, y: 3, nome: 'Foguete', acao: { tipo: 'viagem', para: 'observatorio-2', chegada: { x: 7, y: 9 } } },
+      { tipo: 'lua-placa', x: 12, y: 3, nome: 'Placa', fala: ['{Bem-vinda|Bem-vindo} à Lua, {nome}!', 'Aqui é bom de brincar! 🌙'] },
+      // no lugar antigo da chegada
+      { tipo: 'lua-poeira', x: 10, y: 11 },
       // brincadeiras
       { tipo: 'lua-cratera', x: 10, y: 6, nome: 'Cratera pula-pula', var: { pula: true }, acao: { tipo: 'lua-brincadeira', b: 'pulo' } },
       { tipo: 'lua-pedra-flutua', x: 19, y: 6, nome: 'Pedra levinha', acao: { tipo: 'lua-brincadeira', b: 'flutua' } },
@@ -50,11 +51,11 @@
       { tipo: 'lua-cristal', x: 6, y: 15, nome: 'Cristal', acao: { tipo: 'lua-brincadeira', b: 'cristal', n: 4 } },
       { tipo: 'lua-telescopio', x: 4, y: 4, nome: 'Telescópio', acao: { tipo: 'lua-brincadeira', b: 'curiosidade' } },
       { tipo: 'lua-modulo', x: 17, y: 3, nome: 'Módulo lunar', acao: { tipo: 'lua-brincadeira', b: 'curiosidade' } },
-      { tipo: 'lua-bandeira', x: 9, y: 3, nome: 'Bandeira', fala: ['A bandeira do nosso Reino!', 'Na Lua não tem vento.', 'Ela fica esticada na vareta.'] },
+      { tipo: 'lua-bandeira', x: 7, y: 3, nome: 'Bandeira', fala: ['A bandeira do nosso Reino!', 'Na Lua não tem vento.', 'Ela fica esticada na vareta.'] },
       { tipo: 'lua-jipe', x: 7, y: 10, nome: 'Jipe lunar', fala: ['Um jipe para passear na Lua!'] },
       // enfeites
-      { tipo: 'lua-antena', x: 2, y: 3 }, { tipo: 'lua-rocha-alta', x: 6, y: 3 }, { tipo: 'lua-pegadas', x: 13, y: 4 },
-      { tipo: 'lua-pedra', x: 14, y: 3 }, { tipo: 'lua-cratera-p', x: 16, y: 5 }, { tipo: 'lua-caixa', x: 20, y: 3 },
+      { tipo: 'lua-antena', x: 2, y: 3 }, { tipo: 'lua-rocha-alta', x: 6, y: 3 }, { tipo: 'lua-pegadas', x: 12, y: 13 },
+      { tipo: 'lua-pedra', x: 11, y: 14 }, { tipo: 'lua-cratera-p', x: 16, y: 5 }, { tipo: 'lua-caixa', x: 20, y: 3 },
       { tipo: 'lua-seixos', x: 22, y: 5 }, { tipo: 'lua-seixos', x: 11, y: 4 }, { tipo: 'lua-poeira', x: 5, y: 7 }, { tipo: 'lua-pegadas', x: 12, y: 8, var: { giro: 1 } },
       { tipo: 'lua-pegadas', x: 17, y: 9 }, { tipo: 'lua-seixos', x: 5, y: 9 }, { tipo: 'lua-pedra', x: 12, y: 10 },
       { tipo: 'lua-poeira', x: 15, y: 11 }, { tipo: 'lua-cratera', x: 19, y: 10 }, { tipo: 'lua-rocha-alta', x: 22, y: 12 },

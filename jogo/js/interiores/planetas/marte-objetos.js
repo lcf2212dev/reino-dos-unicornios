@@ -17,7 +17,7 @@
   var OURO = '#ffc94d', ROSA = '#ff8ac4', CIANO = '#6fd6ff', GELO = '#e8f6ff', METAL = '#d8dce8', METAL2 = '#9aa4bc';
 
   /* ---------- o chão: areia vermelha com pedrinhas e marcas de vento (contraste com a Mariana ≥ 2,9) ---------- */
-  I.PISOS['marte-areia'] = { cores: { piso: '#e7a070', piso2: '#dc9062', detalhe: '#b8643e', luz: '#f6c29a' },
+  I.PISOS['marte-areia'] = { cores: { piso: '#cf6a42', piso2: '#c25c38', detalhe: '#8e3a24', luz: '#e68a62' },
     desenhar: function (ctx, px, py, tx, ty, p) {
       ret(ctx, px, py, 16, 16, p.piso);
       var s = sorte(tx, ty, 1);
@@ -52,7 +52,7 @@
     }
     ret(ctx, cx - 6, base - 16, 12, 2, '#6e2c20'); ret(ctx, cx - 5, base - 16, 10, 1, '#4e1c16');
   }
-  I.PAREDES['marte-horizonte'] = { cores: { parede: '#1a0c24', parede2: '#b8583a', rodape: '#dc9062', detalhe: '#8a3a2c' },
+  I.PAREDES['marte-horizonte'] = { cores: { parede: '#1a0c24', parede2: '#b8583a', rodape: '#c25c38', detalhe: '#8a3a2c' },
     desenhar: function (ctx, px, py, tx, p) {
       ret(ctx, px, py, 16, 32, p.parede);
       if (P.estrelas) P.estrelas(ctx, px, py, 16, 14, 70, 300 + tx);

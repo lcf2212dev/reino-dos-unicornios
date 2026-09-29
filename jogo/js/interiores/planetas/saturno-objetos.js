@@ -1,5 +1,5 @@
 /* Planeta Saturno, os objetos (prefixo saturno-): o chão de gelo do anel ('saturno-gelo'), o horizonte com Saturno
-   gigante, as bordas dos anéis e a lua Titã ('saturno-horizonte'), blocos e cristais de gelo, pedras do anel, pista
+   gigante, as bordas dos anéis e a lua Titã ('saturno-horizonte'), rochas douradas e cristais de gelo, pedras do anel, pista
    de patinação, bonecos de gelo, placas de palavras em inglês, iglu, trenó, telescópio, bandeira e placa.
    Os bonecos e os cristais desenham o estado das brincadeiras (Reino._predios.planetas.saturno, de
    saturno-brincadeiras.js) no `anim`, que roda a cada quadro também sem Animações (com t = 0: parado).
@@ -15,6 +15,7 @@
   // cores do gelo e das pedras do anel
   var GE = { luz: '#f6fcff', claro: '#d4ebfa', meio: '#9fc8e8', escuro: '#6a96c2' };
   var PE = { luz: '#f2e8d4', claro: '#dccba8', meio: '#b9a07a', escuro: '#86704f' };
+  var OURO2 = { luz: '#fff2c8', claro: '#e8c070', meio: '#c89a48', escuro: '#8a6430' };
   var OURO = '#ffc94d', ROSA = '#ff8ac4', CIANO = '#6fd6ff', LILAS = '#c9a8ff', LARANJA = '#f08a3c';
   var CEU = '#0b0820';
 
@@ -31,8 +32,8 @@
     ret(ctx, x + w - 3, y + 4, 1, h - 6, GE.escuro);
   }
 
-  /* ---------- o chão do anel: gelo azulado com manchas bege, pedrinhas e brilhos ---------- */
-  I.PISOS['saturno-gelo'] = { cores: { piso: '#d3e3f1', piso2: '#e3d9c4', detalhe: '#a6bdd6', luz: '#f6fcff' },
+  /* ---------- o chão do anel: poeira creme e dourada (D2B-10: não confunde com o gelo de Netuno), pedrinhas e brilhos ---------- */
+  I.PISOS['saturno-gelo'] = { cores: { piso: '#f0d088', piso2: '#e4bf70', detalhe: '#b8955a', luz: '#fff0c4' },
     desenhar: function (ctx, px, py, tx, ty, p) {
       ret(ctx, px, py, 16, 16, p.piso);
       var s = sorte(tx, ty, 1);
@@ -78,7 +79,7 @@
     circulo(ctx, cx, cy, 5, 'rgba(240,138,60,0.25)'); circulo(ctx, cx, cy, 4, K);
     circulo(ctx, cx, cy, 3, LARANJA); ret(ctx, cx - 2, cy - 2, 2, 1, '#ffc48a');
   }
-  I.PAREDES['saturno-horizonte'] = { cores: { parede: CEU, parede2: '#e6d6b4', rodape: '#d3e3f1', detalhe: '#b39c78' },
+  I.PAREDES['saturno-horizonte'] = { cores: { parede: CEU, parede2: '#e6d6b4', rodape: '#e4bf70', detalhe: '#b39c78' },
     desenhar: function (ctx, px, py, tx, p) {
       ret(ctx, px, py, 16, 32, p.parede);
       if (P.estrelas) P.estrelas(ctx, px, py, 16, 20, 60, 300 + tx);
@@ -97,15 +98,21 @@
       ret(ctx, px, py + 29, 16, 3, p.rodape);
     } };
 
-  /* ---------- gelo ---------- */
+  /* ---------- rochas do anel (os cubos de gelo ficaram só em Netuno: D2B-10) ---------- */
+  // rocha dourada do anel, arredondada, com a luz de cima
+  function rocha(ctx, cx, cy, rx, ry) {
+    elipse(ctx, cx, cy, rx + 1, ry + 1, K); elipse(ctx, cx, cy, rx, ry, OURO2.meio);
+    elipse(ctx, cx - 1, cy - 2, rx - 2, ry - 2, OURO2.claro); ret(ctx, cx - Math.round(rx / 2), cy - ry + 1, 3, 1, OURO2.luz);
+    ret(ctx, cx + rx - 3, cy + 1, 2, ry - 1, OURO2.escuro);
+  }
   I.objeto('saturno-bloco', { w: 1, h: 1, topo: 4, solido: true,
-    desenhar: function (ctx, px, py) { sombra(ctx, px + 8, py + 14, 7); bloco(ctx, px + 2, py + 1, 12, 12); brilho(ctx, px + 12, py + 2, '#ffffff'); } });
-  // pilha de blocos de gelo (2×2)
+    desenhar: function (ctx, px, py) { sombra(ctx, px + 8, py + 14, 7); rocha(ctx, px + 8, py + 8, 6, 5); brilho(ctx, px + 12, py + 3, '#fff6d8'); } });
+  // monte de rochas do anel (2×2)
   I.objeto('saturno-blocos', { w: 2, h: 2, topo: 10, solido: true,
     desenhar: function (ctx, px, py) {
       sombra(ctx, px + 16, py + 29, 14);
-      bloco(ctx, px + 2, py + 14, 14, 14); bloco(ctx, px + 16, py + 14, 14, 14);
-      bloco(ctx, px + 9, py + 1, 14, 14); brilho(ctx, px + 25, py + 4, '#ffffff');
+      rocha(ctx, px + 9, py + 22, 8, 6); rocha(ctx, px + 23, py + 23, 7, 5);
+      rocha(ctx, px + 16, py + 11, 8, 7); brilho(ctx, px + 22, py + 5, '#fff6d8');
     } });
   I.objeto('saturno-cristal-alto', { w: 1, h: 1, topo: 18, solido: true,
     desenhar: function (ctx, px, py) {

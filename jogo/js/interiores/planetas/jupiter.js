@@ -1,12 +1,12 @@
 /* Planeta Júpiter (viagem de foguete): interior do Observatório alcançado só pelo foguete do Hangar.
    Júpiter é de gás: a Mariana passeia em ilhas de nuvens fofas, com Júpiter de faixas e a Grande Mancha Vermelha no
-   céu. Fixos (contrato): id 'planeta-jupiter', o spawn/chegada (11, 14), o foguete de pouso em (12, 13) e as vagas dos
+   céu. Fixos (contrato): id 'planeta-jupiter', o spawn/chegada (13, 4), o foguete de pouso em (14, 3), perto do horizonte (a chegada mostra o céu) e as vagas dos
    ETs (observatorio/reservas.js): Tinta (8, 7), Bolha (16, 9), Vovô Tempestade (5, 12). Matéria dos portais do voo e
    do ET do desafio: portugues. Objetos e céu em jupiter-objetos.js, brincadeiras em jupiter-brincadeiras.js, falas em
    jupiter-falas.js. */
 (function () {
   var R = window.Reino;
-  var CHEGADA = { x: 11, y: 14 };
+  var CHEGADA = { x: 13, y: 4 };
   var P = R._predios.planetas;
   function letra(x, y, l) {
     return { tipo: 'jupiter-letra', x: x, y: y, nome: 'Letra ' + l, var: { l: l }, acao: { tipo: 'jupiter-brincadeira', b: 'letra', l: l } };
@@ -21,30 +21,31 @@
   if (R.Viagem) R.Viagem.registrarPlaneta({ id: 'jupiter', nome: 'Júpiter', artigo: 'em', interior: 'planeta-jupiter',
     chegada: CHEGADA, ordem: 4, cor: '#d9a066', materia: 'portugues', depois: 'saturno' });
 
+  var COMODO = { id: 'jupiter', nome: 'Júpiter', placa: 'Júpiter', rect: { x: 1, y: 1, w: 22, h: 15 }, piso: 'jupiter-nuvem', parede: 'jupiter-horizonte' };
   R.registrarInterior({
     id: 'planeta-jupiter',
     lugar: 'observatorio',
     nome: 'Júpiter',
     pacote: 'interior-observatorio',
-    fundo: 'espaco',
-    tamanho: { w: 24, h: 17 },
+    fundo: P.fundo('planeta-jupiter', COMODO),   // o chão vai até a borda (planetas-comum.js)
+    tamanho: { w: 24, h: 28 },   // da fileira 16 para baixo, só o chão (a câmera nunca mostra o espaço embaixo)
     spawn: CHEGADA,
-    comodos: [
-      { id: 'jupiter', nome: 'Júpiter', placa: 'Júpiter', rect: { x: 1, y: 1, w: 22, h: 15 }, piso: 'jupiter-nuvem', parede: 'jupiter-horizonte' },
-    ],
+    comodos: [COMODO],
     // o caminho da chegada ao foguete e aos ETs
-    corredores: [{ x: 9, y: 11, w: 5, h: 5 }],
+    corredores: [{ x: 11, y: 3, w: 5, h: 4 }],
     objetos: [
       // o foguete de pouso, ao lado da chegada: volta ao Hangar
-      { tipo: 'planeta-foguete', x: 12, y: 13, nome: 'Foguete', acao: { tipo: 'viagem', para: 'observatorio-2', chegada: { x: 7, y: 9 } } },
-      { tipo: 'jupiter-placa', x: 9, y: 13, nome: 'Placa', fala: ['{Bem-vinda|Bem-vindo} a Júpiter, {nome}!', 'Aqui a gente anda nas nuvens!'] },
+      { tipo: 'planeta-foguete', x: 14, y: 3, nome: 'Foguete', acao: { tipo: 'viagem', para: 'observatorio-2', chegada: { x: 7, y: 9 } } },
+      { tipo: 'jupiter-placa', x: 12, y: 3, nome: 'Placa', fala: ['{Bem-vinda|Bem-vindo} a Júpiter, {nome}!', 'Aqui a gente anda nas nuvens!'] },
+      // no lugar antigo da chegada
+      { tipo: 'jupiter-fiapo', x: 10, y: 11 }, { tipo: 'jupiter-gotas', x: 10, y: 13 }, { tipo: 'jupiter-gotas', x: 12, y: 11 }, { tipo: 'jupiter-fiapo', x: 8, y: 13 },
       // brincadeiras
       { tipo: 'jupiter-trampolim', x: 18, y: 4, nome: 'Nuvem-trampolim', acao: { tipo: 'jupiter-brincadeira', b: 'trampolim' } },
       { tipo: 'jupiter-redemoinho', x: 13, y: 7, nome: 'Redemoinho', acao: { tipo: 'jupiter-brincadeira', b: 'redemoinho' } },
       { tipo: 'jupiter-redemoinho', x: 20, y: 13, nome: 'Redemoinho', acao: { tipo: 'jupiter-brincadeira', b: 'redemoinho' } },
       cristal(3, 4, 0), cristal(21, 8, 1), cristal(2, 9, 2), cristal(17, 12, 3), cristal(7, 15, 4),
       // letras que flutuam: cada uma ensina uma palavra
-      letra(6, 4, 'A'), letra(15, 4, 'B'), letra(22, 11, 'E'), letra(2, 14, 'I'), letra(15, 14, 'U'),
+      letra(6, 4, 'A'), letra(12, 13, 'B'), letra(22, 11, 'E'), letra(2, 14, 'I'), letra(15, 14, 'U'),
       { tipo: 'jupiter-luneta', x: 3, y: 11, nome: 'Luneta', acao: { tipo: 'jupiter-brincadeira', b: 'curiosidade' } },
       { tipo: 'jupiter-correio', x: 10, y: 6, nome: 'Correio', fala: ['A caixa de cartas da Tinta!', 'Ela adora escrever cartas.'] },
       { tipo: 'jupiter-nuvem-grande', x: 20, y: 5, nome: 'Nuvem fofa', fala: ['Uma nuvem de algodão!', 'Parece um travesseiro macio!'] },

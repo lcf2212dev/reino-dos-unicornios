@@ -71,13 +71,15 @@
       { tipo: 'arandela', x: 8, y: 0 },
       { tipo: 'observatorio-fenda', x: 9, y: 0 },
       // o telescópio embaixo da fenda (à direita: a placa do cômodo fica no meio da parede)
-      cur('telescopio', 'Telescópio', 'telescopio', { tipo: 'observatorio-telescopio', x: 9, y: 2 }),
-      { tipo: 'escrivaninha', x: 0, y: 2, var: { cor: '#5a4a8a', abajur: '#ffd34d' } }, { tipo: 'papeis', x: 0, y: 3 },
+      cur('telescopio', 'Telescópio', 'telescopio', { tipo: 'observatorio-telescopio', x: 9, y: 2, junto: true }),   // junto: aponta pela fenda
+      // encostado na parede, só móvel baixo (não cobre os quadros; O-12); os altos ficam mais para a frente
+      { tipo: 'mesa', x: 0, y: 2, var: { cor: '#5a4a8a' } }, { tipo: 'papeis', x: 0, y: 3 },
       { tipo: 'cadeira', x: 1, y: 3, var: { almofada: '#7c5cff' } }, { tipo: 'pilha-livros', x: 2, y: 2 },
-      { tipo: 'observatorio-painel', x: 3, y: 2 }, { tipo: 'cadeira', x: 4, y: 3, var: { almofada: '#5fb4ff' } },
-      { tipo: 'observatorio-luneta', x: 5, y: 2 },
-      { tipo: 'estante', x: 6, y: 2, var: { cor: '#5a4a8a' } }, { tipo: 'observatorio-globo', x: 12, y: 2 },
-      { tipo: 'caixote', x: 12, y: 3, var: { item: 'estrela' } },
+      { tipo: 'sofa', x: 3, y: 2, var: { cor: AZUL_CLARO, almofada: '#b58cff' } }, { tipo: 'vaso-grande', x: 5, y: 2, var: { cor: AZUL_CLARO } },
+      { tipo: 'mesa-centro', x: 6, y: 2 }, { tipo: 'caixote', x: 8, y: 2, var: { item: 'estrela' } },
+      { tipo: 'observatorio-painel', x: 3, y: 7 }, { tipo: 'cadeira', x: 4, y: 8, var: { almofada: '#5fb4ff' } },
+      { tipo: 'observatorio-luneta', x: 1, y: 8 },
+      { tipo: 'estante', x: 10, y: 8, var: { cor: '#5a4a8a' } }, { tipo: 'observatorio-globo', x: 12, y: 3 },
       { tipo: 'tapete-redondo', x: 9, y: 4, w: 2, h: 2, var: { cores: ['#3a3f8a', '#ffd34d', '#5a6ad0'] } },
       { tipo: 'vaso-planta', x: 0, y: 5 }, { tipo: 'observatorio-placa', x: 2, y: 5 },
       { tipo: 'tapete', x: 0, y: 6, w: 3, h: 1, var: { cor: '#3a3f8a', borda: '#ffd34d' } },
@@ -85,7 +87,7 @@
       { tipo: 'poltrona', x: 11, y: 5, var: { cor: '#b58cff' } }, { tipo: 'mesa-centro', x: 11, y: 6 },
       // luminárias em tile próprio, nunca em cima de vaso ou cesto
       { tipo: 'observatorio-luminaria', x: 12, y: 5 }, { tipo: 'cesto', x: 12, y: 7 }, { tipo: 'pilha-livros', x: 9, y: 7 },
-      { tipo: 'globo', x: 4, y: 4 },
+      { tipo: 'globo', x: 3, y: 5 },
       { tipo: 'sofa', x: 0, y: 12, var: { cor: AZUL_CLARO, almofada: '#ffd34d' } }, { tipo: 'planta-alta', x: 0, y: 10 },
       { tipo: 'observatorio-luminaria', x: 5, y: 12 }, { tipo: 'cesto', x: 2, y: 12 },
       { tipo: 'tapete', x: 1, y: 10, w: 3, h: 1, var: { cor: '#2d3580', borda: '#b58cff' } },
@@ -106,11 +108,12 @@
       { tipo: 'observatorio-quadro', x: 10, y: 0, var: { cena: 'astronauta' } }, { tipo: 'observatorio-carta', x: 11, y: 0, var: { desenho: 'ursa' } },
       { tipo: 'observatorio-janela', x: 12, y: 0 },
       { tipo: 'vaso-planta', x: 0, y: 2 }, { tipo: 'pilha-livros', x: 1, y: 2 },
-      { tipo: 'observatorio-placa', x: 6, y: 2 }, { tipo: 'estante', x: 7, y: 2, var: { cor: '#5a4a8a' } },
-      { tipo: 'planta-alta', x: 12, y: 2 },
-      // foguete (bem alto) com cordão na frente
-      cur('foguete', 'Foguete', 'foguetes', { tipo: 'observatorio-foguete', x: 9, y: 4 }),
-      { tipo: 'observatorio-cordao', x: 9, y: 5 }, { tipo: 'observatorio-placa', x: 11, y: 5 },
+      { tipo: 'observatorio-placa', x: 6, y: 2 }, { tipo: 'estante', x: 7, y: 3, var: { cor: '#5a4a8a' } },
+      { tipo: 'vaso-grande', x: 12, y: 2, var: { cor: AZUL_CLARO } },
+      // foguete (bem alto) com cordão na frente; o chão atrás dele fica livre (não cobre a parede; O-12)
+      cur('foguete', 'Foguete', 'foguetes', { tipo: 'observatorio-foguete', x: 9, y: 5 }),
+      { tipo: 'observatorio-cordao', x: 9, y: 6 }, { tipo: 'observatorio-placa', x: 11, y: 6 },
+      { tipo: 'tapete', x: 9, y: 3, w: 2, h: 1, var: { cor: '#3a3f8a', borda: '#ffd34d' } },
       // traje de astronauta
       cur('traje', 'Traje de astronauta', 'astronautas', { tipo: 'observatorio-traje', x: 2, y: 4 }),
       { tipo: 'observatorio-placa', x: 3, y: 4, var: { cor: '#3a3f8a' } },
@@ -126,7 +129,7 @@
       { tipo: 'observatorio-luminaria', x: 11, y: 12 }, { tipo: 'vaso-grande', x: 12, y: 12, var: { cor: AZUL_CLARO } },
       { tipo: 'caixote', x: 0, y: 12, var: { item: 'estrela' } }, { tipo: 'cesto', x: 1, y: 12 },
       { tipo: 'almofada', x: 3, y: 11, var: { cor: '#b58cff' } }, { tipo: 'globo', x: 0, y: 6 },
-      { tipo: 'vaso-planta', x: 8, y: 12 }, { tipo: 'pedestal', x: 4, y: 2, var: { item: 'gema' } },
+      { tipo: 'vaso-planta', x: 8, y: 12 }, { tipo: 'pedestal', x: 4, y: 3, var: { item: 'gema' } },
     ]),
     /* ---------- PLANETÁRIO ---------- */
     [orbitas],
@@ -140,9 +143,9 @@
       { tipo: 'observatorio-janela', x: 14, y: 0 },
       cur('sol', 'Sol', 'sol', { tipo: 'observatorio-sol', x: SOL_LOCAL.x, y: SOL_LOCAL.y }),
       // plateia em volta (encostada nas paredes)
-      { tipo: 'vaso-planta', x: 0, y: 2 }, { tipo: 'banco', x: 1, y: 2, var: { cor: AZUL_CLARO } },
+      { tipo: 'vaso-grande', x: 0, y: 2, var: { cor: AZUL_CLARO } }, { tipo: 'banco', x: 1, y: 2, var: { cor: AZUL_CLARO } },
       { tipo: 'observatorio-projetor', x: 7, y: 2 }, { tipo: 'banco', x: 9, y: 2, var: { cor: AZUL_CLARO } },
-      { tipo: 'estante', x: 12, y: 2, var: { cor: '#5a4a8a' } }, { tipo: 'planta-alta', x: 14, y: 2 },
+      { tipo: 'bau', x: 12, y: 2 }, { tipo: 'vaso-grande', x: 14, y: 2, var: { cor: AZUL_CLARO } },   // baixos: embaixo dos quadros
       { tipo: 'poltrona', x: 14, y: 4, var: { cor: '#7c5cff' } }, { tipo: 'observatorio-luminaria', x: 14, y: 6 },
       { tipo: 'poltrona', x: 0, y: 4, var: { cor: '#7c5cff' } }, { tipo: 'cesto', x: 0, y: 6 },
       { tipo: 'globo', x: 0, y: 11 }, { tipo: 'banco', x: 2, y: 12, var: { cor: AZUL_CLARO } },

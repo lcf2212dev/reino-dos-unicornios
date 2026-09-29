@@ -29,26 +29,30 @@
 
   var objetos = [].concat(
     /* ---------- HANGAR DOS FOGUETES ---------- */
+    // o foguete e a torre ficam com a parede e o chão atrás livres (desenho alto: nada por baixo; O-12); na
+    // fileira do fundo, só coisa baixa embaixo dos enfeites da parede; as caixas vão em pilhas (D2B-11)
     sala(HAN.x, HAN.y, [
       { tipo: 'nasa-letreiro', x: 0, y: 0 },
-      { tipo: 'nasa-painel', x: 4, y: 0 }, cur('Satélite', ['missoes'], { tipo: 'nasa-satelite', x: 8, y: 0 }),
+      cur('Satélite', ['missoes'], { tipo: 'nasa-satelite', x: 8, y: 0 }),
       { tipo: 'nasa-cartaz', x: 10, y: 0, var: { desenho: 'foguete' } }, { tipo: 'janela', x: 11, y: 0 }, { tipo: 'nasa-cartaz', x: 12, y: 0, var: { desenho: 'lua' } },
       // o foguete grande na plataforma, com a torre ao lado: abre a viagem (painel do foguete, sistemas/viagem.js)
       { tipo: 'nasa-foguete', x: 5, y: 5, chave: 'nasa-foguete', nome: nomeDe('nasa-foguete', 'nasa-foguete'), acao: { tipo: 'viagem' } },
       { tipo: 'nasa-torre', x: 4, y: 6 },
-      { tipo: 'nasa-tanque', x: 0, y: 2 }, { tipo: 'nasa-tanque', x: 1, y: 2 }, { tipo: 'nasa-caixa', x: 2, y: 2 },
-      { tipo: 'nasa-caixa', x: 3, y: 2 }, { tipo: 'vaso-planta', x: 4, y: 2 }, { tipo: 'nasa-caixa', x: 6, y: 2 }, { tipo: 'caixote', x: 7, y: 2, var: { item: 'estrela' } },
-      { tipo: 'estante', x: 9, y: 2, var: { cor: '#6a7390' } }, { tipo: 'observatorio-luminaria', x: 11, y: 2 }, { tipo: 'nasa-caixa', x: 12, y: 2 },
-      { tipo: 'nasa-capacete', x: 3, y: 3 }, { tipo: 'pilha-livros', x: 9, y: 4 },
-      { tipo: 'nasa-computador', x: 0, y: 5 }, { tipo: 'nasa-caixa', x: 1, y: 5 }, { tipo: 'almofada', x: 2, y: 7, var: { cor: N.azul } },
+      { tipo: 'tapete-listrado', x: 4, y: 3, w: 3, h: 1, var: { cores: [N.amarelo, '#3a3f5a', N.amarelo, '#3a3f5a'] } },
+      { tipo: 'caixote', x: 0, y: 2, var: { item: 'estrela' } }, { tipo: 'nasa-capacete', x: 1, y: 2 },
+      { tipo: 'nasa-computador', x: 2, y: 2 }, { tipo: 'nasa-cadeira', x: 2, y: 3 },
+      { tipo: 'estante', x: 9, y: 3, var: { cor: '#6a7390' } }, { tipo: 'observatorio-luminaria', x: 11, y: 3 }, { tipo: 'nasa-pilha-caixas', x: 12, y: 3 },
+      { tipo: 'nasa-tanque', x: 0, y: 4 }, { tipo: 'nasa-tanque', x: 1, y: 4 },
       cur('Traje de astronauta', ['astronautas'], { tipo: 'observatorio-traje', x: 10, y: 5 }),
       { tipo: 'observatorio-placa', x: 11, y: 5, var: { cor: N.azul2 } }, { tipo: 'nasa-tanque', x: 12, y: 5 },
-      { tipo: 'observatorio-cordao', x: 8, y: 6 },
+      { tipo: 'nasa-computador', x: 0, y: 6 }, { tipo: 'nasa-cadeira', x: 0, y: 7 }, { tipo: 'observatorio-cordao', x: 8, y: 6 },
+      { tipo: 'almofada', x: 2, y: 7, var: { cor: N.azul } },
       { tipo: 'tapete-listrado', x: 5, y: 8, w: 3, h: 1, var: { cores: [N.amarelo, '#3a3f5a', N.amarelo, '#3a3f5a'] } },
-      { tipo: 'caixote', x: 0, y: 7, var: { item: 'estrela' } }, { tipo: 'nasa-caixa', x: 3, y: 9 },
-      { tipo: 'observatorio-foguete', x: 1, y: 10 }, { tipo: 'nasa-caixa', x: 5, y: 10 },
+      { tipo: 'nasa-pilha-caixas', x: 3, y: 9 },
+      { tipo: 'observatorio-foguete', x: 1, y: 10 }, { tipo: 'nasa-tanque', x: 5, y: 10 },
+      { tipo: 'nasa-computador', x: 10, y: 10 }, { tipo: 'nasa-cadeira', x: 10, y: 11 },
       { tipo: 'planta-alta', x: 0, y: 12 }, { tipo: 'banco', x: 3, y: 12, var: { cor: N.azul } }, { tipo: 'vaso-planta', x: 7, y: 12 },
-      { tipo: 'nasa-computador', x: 10, y: 10 }, { tipo: 'nasa-cadeira', x: 9, y: 12 }, { tipo: 'pilha-livros', x: 12, y: 12 },
+      { tipo: 'pilha-livros', x: 8, y: 12 }, { tipo: 'pilha-livros', x: 12, y: 12 },
     ]),
     /* ---------- SALA DE CONTROLE (com as escadas) ---------- */
     sala(CTL.x, CTL.y, [
@@ -58,33 +62,36 @@
       { tipo: 'nasa-painel', x: 9, y: 0 }, { tipo: 'nasa-cartaz', x: 10, y: 0, var: { desenho: 'marte' } },
       { tipo: 'nasa-cartaz', x: 12, y: 0, var: { desenho: 'foguete' } },
       { tipo: 'nasa-console', x: 0, y: 2 }, { tipo: 'nasa-computador', x: 4, y: 2 }, { tipo: 'nasa-console', x: 6, y: 2 },
-      { tipo: 'nasa-caixa', x: 9, y: 2 }, { tipo: 'planta-alta', x: 12, y: 2 },
+      { tipo: 'nasa-caixa', x: 9, y: 2 }, { tipo: 'planta-alta', x: 12, y: 3 },
       { tipo: 'nasa-cadeira', x: 1, y: 4 }, { tipo: 'nasa-cadeira', x: 7, y: 4 },
       { tipo: 'nasa-console', x: 0, y: 5 }, { tipo: 'nasa-cadeira', x: 1, y: 7 },
       cur('Telão de Marte', ['missoes'], { tipo: 'nasa-telao', x: 9, y: 5, var: { tela: 'marte' }, parede: false, solido: true, w: 3, h: 2 }),
       // NASA escrito no chão, no meio da sala
       { tipo: 'nasa-piso-letreiro', x: 4, y: 6 },
-      { tipo: 'nasa-computador', x: 3, y: 10 }, { tipo: 'nasa-capacete', x: 9, y: 10 }, { tipo: 'observatorio-luminaria', x: 12, y: 10 },
+      { tipo: 'nasa-computador', x: 3, y: 10 }, { tipo: 'nasa-cadeira', x: 3, y: 11 }, { tipo: 'nasa-capacete', x: 9, y: 10 }, { tipo: 'observatorio-luminaria', x: 12, y: 10 },
       { tipo: 'vaso-planta', x: 0, y: 12 }, { tipo: 'observatorio-globo', x: 3, y: 12 },
       { tipo: 'tapete', x: 8, y: 11, w: 2, h: 1, var: { cor: N.azul2, borda: N.vermelho } },
-      { tipo: 'pilha-livros', x: 10, y: 12 }, { tipo: 'nasa-caixa', x: 12, y: 12 },
+      { tipo: 'pilha-livros', x: 10, y: 12 }, { tipo: 'nasa-pilha-caixas', x: 12, y: 12 },
     ]),
     /* ---------- LABORATÓRIO DE EXPERIÊNCIAS ---------- */
+    // duas bancadas com experiência, cada uma com as cadeiras encostadas (D2B-11)
     sala(LAB.x, LAB.y, [
       { tipo: 'nasa-cartaz', x: 0, y: 0, var: { desenho: 'lua' } }, { tipo: 'lousa', x: 1, y: 0, w: 2 },
       { tipo: 'nasa-painel', x: 3, y: 0 }, { tipo: 'arandela', x: 5, y: 0 }, { tipo: 'arandela', x: 7, y: 0 },
       { tipo: 'nasa-letreiro', x: 9, y: 0 },
-      exp('nasa-pena', 'pena', { tipo: 'nasa-camara', x: 1, y: 4 }),
+      exp('nasa-pena', 'pena', { tipo: 'nasa-camara', x: 0, y: 5 }),
       exp('nasa-fases', 'fases', { tipo: 'nasa-fases', x: 5, y: 4 }),
       exp('nasa-horta', 'horta', { tipo: 'nasa-horta', x: 9, y: 4 }),
-      { tipo: 'estante', x: 0, y: 2, var: { cor: '#6a7390' } }, { tipo: 'nasa-computador', x: 3, y: 2 },
-      { tipo: 'pilha-livros', x: 4, y: 2 }, { tipo: 'vaso-planta', x: 7, y: 2 }, { tipo: 'nasa-tanque', x: 11, y: 2 }, { tipo: 'nasa-caixa', x: 12, y: 2 },
-      { tipo: 'mesa', x: 2, y: 6, var: { cor: '#c8d0e0' } }, { tipo: 'nasa-caixa', x: 0, y: 6 }, { tipo: 'nasa-caixa', x: 3, y: 4 },
-      { tipo: 'nasa-cadeira', x: 5, y: 6 }, { tipo: 'nasa-caixa', x: 6, y: 9 },
-      { tipo: 'vaso-planta', x: 8, y: 6 }, { tipo: 'nasa-computador', x: 10, y: 7 }, { tipo: 'globo', x: 12, y: 6 },
-      { tipo: 'nasa-capacete', x: 12, y: 9 },
+      { tipo: 'nasa-caixa', x: 0, y: 2 }, { tipo: 'pilha-livros', x: 1, y: 3 },
+      { tipo: 'nasa-computador', x: 3, y: 2 }, { tipo: 'nasa-cadeira', x: 3, y: 3 }, { tipo: 'pilha-livros', x: 4, y: 2 },
+      { tipo: 'vaso-planta', x: 6, y: 2 }, { tipo: 'cesto', x: 8, y: 2 },
+      { tipo: 'nasa-tanque', x: 11, y: 3 }, { tipo: 'nasa-pilha-caixas', x: 12, y: 3 },
+      { tipo: 'nasa-bancada', x: 1, y: 5, var: { exp: 'microscopio' } }, { tipo: 'nasa-cadeira', x: 1, y: 6 }, { tipo: 'nasa-cadeira', x: 3, y: 6 },
+      { tipo: 'papeis', x: 5, y: 6 }, { tipo: 'vaso-planta', x: 8, y: 6 }, { tipo: 'globo', x: 12, y: 6 },
+      { tipo: 'nasa-bancada', x: 9, y: 7, var: { exp: 'tubos' } }, { tipo: 'nasa-cadeira', x: 9, y: 8 }, { tipo: 'nasa-cadeira', x: 11, y: 8 },
+      { tipo: 'nasa-pilha-caixas', x: 6, y: 9 }, { tipo: 'nasa-capacete', x: 12, y: 9 },
       { tipo: 'tapete-redondo', x: 8, y: 9, w: 2, h: 2, var: { cores: [N.azul2, N.branco, N.azul] } },
-      { tipo: 'nasa-cadeira', x: 3, y: 10 }, { tipo: 'banco', x: 1, y: 11, var: { cor: N.azul } }, { tipo: 'papeis', x: 5, y: 11 },
+      { tipo: 'banco', x: 1, y: 11, var: { cor: N.azul } }, { tipo: 'papeis', x: 5, y: 11 },
       { tipo: 'planta-alta', x: 0, y: 12 }, { tipo: 'cesto', x: 6, y: 12 }, { tipo: 'observatorio-luminaria', x: 10, y: 12 }, { tipo: 'nasa-tanque', x: 12, y: 12 },
     ])
   );

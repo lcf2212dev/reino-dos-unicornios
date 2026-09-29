@@ -1,4 +1,4 @@
-/* Planetas (viagem de foguete), o que todos dividem: o céu aberto em volta (fundo 'espaco'), o chão e o horizonte
+/* Planetas (viagem de foguete), o que todos dividem: o céu aberto (fundo 'espaco' e o fundo próprio de cada planeta, P.fundo: o chão até a borda), o chão e o horizonte
    de cada planeta e o foguete de pouso ('planeta-foguete'). Os planetas são interiores do Observatório (lugar
    'observatorio', sem entrada), alcançados só pelo foguete do Hangar (ação `viagem`; docs/contratos/viagem.md).
    Horizonte: a paleta do cômodo escolhe as cores dos morros e, com `terra: <coluna>`, a Terra no céu.
@@ -55,7 +55,7 @@
 
   // chão da Lua: rocha cinza clara com manchas, crateras pequenas e poeira (contraste com a Mariana ≥ 2,9)
   var sorte = R.Desenho.sorte;
-  I.PISOS['lua-rocha'] = { cores: { piso: '#cfcfdc', piso2: '#c2c2d2', detalhe: '#a2a2b8', luz: '#e4e4ee' },
+  I.PISOS['lua-rocha'] = { cores: { piso: '#bcbdc6', piso2: '#b0b1bc', detalhe: '#8e8fa0', luz: '#d6d7de' },
     desenhar: function (ctx, px, py, tx, ty, p) {
       ret(ctx, px, py, 16, 16, p.piso);
       // manchas suaves (sem xadrez)
@@ -143,6 +143,42 @@
       // bocal
       ret(ctx, cx - 5, base - 3, 10, 4, K); ret(ctx, cx - 4, base - 2, 8, 2, F.cinza2);
     } });
+
+  /* ---------- o chão até a borda (D2B-09) ---------- */
+  // Cada planeta tem o próprio fundo (I.FUNDOS['planeta-<id>']): o céu em cima do horizonte (estrelas, ou a cor
+  // `ceu` do planeta), o horizonte e o chão continuando até a borda do interior, e uma fileira de pedras no
+  // contorno do cômodo (onde ela não passa). Assim a câmera nunca mostra o espaço embaixo do chão.
+  // c = { piso, parede, paleta?, rect, ceu? } (os mesmos do cômodo)
+  function pedraDaBorda(ctx, x, y, r, p) {
+    D.elipse(ctx, x, y, r + 1, r, K);
+    D.elipse(ctx, x, y, r, r - 1, p.detalhe);
+    D.elipse(ctx, x - 1, y - 1, r - 1, r - 2, p.piso2 || p.piso);
+    ret(ctx, x - Math.round(r / 2), y - r + 1, 2, 1, p.luz || p.piso);
+  }
+  P.fundo = function (id, c) {
+    var piso = I.PISOS[c.piso], parede = I.PAREDES[c.parede];
+    var p = Object.assign({}, parede.cores, piso.cores, c.paleta || {});
+    var r = c.rect, chao0 = r.y + 2;
+    function dentro(tx, ty) { return tx >= r.x && tx < r.x + r.w && ty >= r.y && ty < r.y + r.h; }
+    I.FUNDOS[id] = { cor: c.ceu || CEU, desenhar: function (ctx, w, h) {
+      var W = Math.ceil(w / 16), H = Math.ceil(h / 16), tx, ty;
+      if (c.ceu) ret(ctx, 0, 0, w, r.y * 16, c.ceu);
+      else I.FUNDOS.espaco.desenhar(ctx, w, h);
+      for (tx = 0; tx < W; tx++) if (!dentro(tx, r.y)) parede.desenhar(ctx, tx * 16, r.y * 16, tx, p);
+      for (ty = chao0; ty < H; ty++) for (tx = 0; tx < W; tx++) if (!dentro(tx, ty)) piso.desenhar(ctx, tx * 16, ty * 16, tx, ty, p);
+      // pedras no contorno: embaixo do cômodo e dos dois lados
+      var sorteP = R.Desenho.sorte, fundoY = (r.y + r.h) * 16;
+      for (var x = (r.x - 1) * 16 + 4; x < (r.x + r.w + 1) * 16; x += 9) {
+        pedraDaBorda(ctx, x + Math.floor(sorteP(x, 1, 7) * 3), fundoY + 4 + Math.floor(sorteP(x, 2, 7) * 3), 3 + Math.floor(sorteP(x, 3, 7) * 3), p);
+      }
+      for (var y = chao0 * 16 + 4; y < fundoY; y += 9) {
+        [r.x * 16 - 5, (r.x + r.w) * 16 + 4].forEach(function (bx, k) {
+          pedraDaBorda(ctx, bx + Math.floor(sorteP(y, k, 8) * 3) - 1, y, 3 + Math.floor(sorteP(y, k + 2, 8) * 2), p);
+        });
+      }
+    } };
+    return id;
+  };
 
   P.estrelas = estrelas; P.terra = terra; P.tempo = tempo; P.animando = animando; P.nebulosa = nebulosa;
 

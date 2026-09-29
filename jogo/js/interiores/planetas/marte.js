@@ -1,35 +1,35 @@
 /* Planeta Marte (viagem de foguete): interior do Observatório alcançado só pelo foguete do Hangar.
    Areia vermelha, o Monte Olimpo e as luazinhas Fobos e Deimos no horizonte; objetos em marte-objetos.js,
    brincadeiras em marte-brincadeiras.js, falas em marte-falas.js. Fixos (contrato): id
-   'planeta-marte', o spawn/chegada (11, 14), o foguete de pouso em (12, 13) e as vagas dos ETs (observatorio/reservas.js):
+   'planeta-marte', o spawn/chegada (13, 4), o foguete de pouso em (14, 3), perto do horizonte (a chegada mostra o céu) e as vagas dos ETs (observatorio/reservas.js):
    Rubi (8, 7), Faísca (16, 9), Vovô Vulcão (5, 12). Matéria dos portais do voo e do ET do desafio: matematica. */
 (function () {
   var R = window.Reino;
-  var CHEGADA = { x: 11, y: 14 };
+  var CHEGADA = { x: 13, y: 4 };
   var P = R._predios.planetas;
 
   // sem o sistema da viagem (a prévia dos interiores só carrega os prédios), o interior existe mesmo assim
   if (R.Viagem) R.Viagem.registrarPlaneta({ id: 'marte', nome: 'Marte', artigo: 'em', interior: 'planeta-marte',
     chegada: CHEGADA, ordem: 2, cor: '#d8613c', materia: 'matematica', depois: 'lua' });
 
+  var COMODO = { id: 'marte', nome: 'Marte', placa: 'Marte', rect: { x: 1, y: 1, w: 22, h: 15 }, piso: 'marte-areia', parede: 'marte-horizonte', paleta: { olimpo: 6, fobos: 15, deimos: 19 } };
   R.registrarInterior({
     id: 'planeta-marte',
     lugar: 'observatorio',
     nome: 'Marte',
     pacote: 'interior-observatorio',
-    fundo: 'espaco',
-    tamanho: { w: 24, h: 17 },
+    fundo: P.fundo('planeta-marte', COMODO),   // o chão vai até a borda (planetas-comum.js)
+    tamanho: { w: 24, h: 28 },   // da fileira 16 para baixo, só o chão (a câmera nunca mostra o espaço embaixo)
     spawn: CHEGADA,
-    comodos: [
-      { id: 'marte', nome: 'Marte', placa: 'Marte', rect: { x: 1, y: 1, w: 22, h: 15 }, piso: 'marte-areia', parede: 'marte-horizonte',
-        paleta: { olimpo: 6, fobos: 15, deimos: 19 } },
-    ],
+    comodos: [COMODO],
     // o caminho da chegada ao foguete e aos ETs
-    corredores: [{ x: 9, y: 11, w: 5, h: 5 }],
+    corredores: [{ x: 11, y: 3, w: 5, h: 4 }],
     objetos: [
       // o foguete de pouso, ao lado da chegada: volta ao Hangar
-      { tipo: 'planeta-foguete', x: 12, y: 13, nome: 'Foguete', acao: { tipo: 'viagem', para: 'observatorio-2', chegada: { x: 7, y: 9 } } },
-      { tipo: 'marte-placa', x: 9, y: 13, nome: 'Placa', fala: ['{Bem-vinda|Bem-vindo} a Marte, {nome}!', 'O planeta vermelho! ✨'] },
+      { tipo: 'planeta-foguete', x: 14, y: 3, nome: 'Foguete', acao: { tipo: 'viagem', para: 'observatorio-2', chegada: { x: 7, y: 9 } } },
+      { tipo: 'marte-placa', x: 12, y: 3, nome: 'Placa', fala: ['{Bem-vinda|Bem-vindo} a Marte, {nome}!', 'O planeta vermelho! ✨'] },
+      // no lugar antigo da chegada
+      { tipo: 'marte-poeira', x: 10, y: 11 },
       // brincadeiras
       { tipo: 'marte-duna', x: 10, y: 6, nome: 'Tobogã de areia', acao: { tipo: 'marte-brincadeira', b: 'duna' } },
       { tipo: 'marte-redemoinho', x: 19, y: 6, nome: 'Redemoinho', acao: { tipo: 'marte-brincadeira', b: 'redemoinho' } },
@@ -49,8 +49,8 @@
       { tipo: 'marte-gelo', x: 20, y: 3, nome: 'Gelo', fala: ['Cristais de gelo de Marte!', 'Eles são bem geladinhos.'] },
       // enfeites
       { tipo: 'marte-gelo', x: 2, y: 3 }, { tipo: 'marte-seixos', x: 6, y: 3 }, { tipo: 'marte-rastro', x: 16, y: 5 },
-      { tipo: 'marte-rocha', x: 14, y: 3 }, { tipo: 'marte-cratera-p', x: 13, y: 5 }, { tipo: 'marte-duninha', x: 11, y: 4 },
-      { tipo: 'marte-seixos', x: 22, y: 5 }, { tipo: 'marte-seixos', x: 13, y: 4 }, { tipo: 'marte-poeira', x: 5, y: 7 },
+      { tipo: 'marte-rocha', x: 11, y: 14 }, { tipo: 'marte-cratera-p', x: 13, y: 5 }, { tipo: 'marte-duninha', x: 11, y: 4 },
+      { tipo: 'marte-seixos', x: 22, y: 5 }, { tipo: 'marte-seixos', x: 12, y: 13 }, { tipo: 'marte-poeira', x: 5, y: 7 },
       { tipo: 'marte-rastro', x: 12, y: 8, var: { giro: 1 } },
       { tipo: 'marte-rastro', x: 17, y: 9 }, { tipo: 'marte-seixos', x: 5, y: 9 }, { tipo: 'marte-seixos', x: 12, y: 10 }, { tipo: 'marte-rocha-alta', x: 1, y: 9 }, { tipo: 'marte-rocha', x: 20, y: 12 },
       { tipo: 'marte-duninha', x: 15, y: 11 }, { tipo: 'marte-cratera', x: 19, y: 10 }, { tipo: 'marte-rocha-alta', x: 22, y: 12 },
