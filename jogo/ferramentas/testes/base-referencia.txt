@@ -32,4 +32,5 @@
 # e3f0878 = onda 0b do backlog visual (D6-01, D6-03, D12b-01, D6-28, D4-03, D1-02, F-08, F-09, D3-01 a D3-04, D3-06, D10-B06, D2B-06, D8A-12, D11-15, D2A-02, D2B-07, O-03)
 # fdfd54c = onda 1a, parte 1, do backlog visual (D12b-05, D5-07, D7-10, D12b-02, O-11, O-13)
 # f7dca13 = onda 1a, parte 2, do backlog visual (D10-01, D6-02, D10-B01, D8B-01, D8B-02, D13-04, D8B-04)
-f7dca13
+# a1d1184 = onda 3b, parte 1, do backlog visual (D4-06, D4-07, D4-10, D4-11, D4-13, D4-15, D4-16, D2B-04, D2B-05, D2B-09, D2B-10, D2B-11, D2B-18, D10-B07, D8B-29, O-15)
+a1d1184
