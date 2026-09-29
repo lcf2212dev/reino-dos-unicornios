@@ -1,6 +1,6 @@
-// Ouvir antes de seguir na sala (atividades/missao.js, desafios.js lerSozinho): a intro, o RESUMO (cartas do livro
-// que a sala usa, antes da 1ª questão) e o retorno travam os botões e o ✕ enquanto a voz fala; a questão é lida
-// sozinha (Som.falar) sem travar as respostas, a menos que config.esperaFala.travarQuestoes (o teste do 🔊 liga).
+// Ouvir antes de seguir na sala (atividades/missao.js, desafios.js lerSozinho): com config.esperaFala.travar (desligada
+// no jogo; os testes da trava a ligam), a intro, o RESUMO (cartas do livro que a sala usa, antes da 1ª questão), cada
+// questão e o retorno travam os botões e o ✕ enquanto a voz fala. Sem ela (o padrão), tudo fala e nada trava.
 // Reino.Som.falarEsperando é trocado por um de mentira com o fim controlado pelo teste; com { espera: false }
 // nada trava. Servidor e banco de TESTE novos (cenario.js); saves 100% sintéticos (voz desligada).
 const { test } = require('node:test');
@@ -17,8 +17,6 @@ const STUB = (espera) => `
     var r; var p = new Promise(function (x) { r = x; }); window.__fins.push(r);
     return { espera: true, fim: p };
   };
-  // fala que não trava (a leitura da questão): só anota
-  Reino.Som.falar = function (seg) { window.__falas.push('livre:' + JSON.stringify(seg).slice(0, 60)); return new Promise(function () {}); };
   var m = Reino.materia('historia'), s = m.salas[0];
   // questões de escolher conhecidas, presas a 2 cartas reais do livro (a 1ª repetida: vira 1 carta só)
   var q = function (n, livro) { return { id: 'os-' + n, tipo: 'escolha', pergunta: 'Pergunta ' + n + '?', opcoes: [{ t: 'Sim' }, { t: 'Não' }], certa: 0, explica: 'Porque sim.', livro: livro }; };
@@ -32,14 +30,15 @@ const BOTOES = `(function (sel) {
 const botoes = (c, sel) => c.js(`${BOTOES}(${JSON.stringify(sel)})`);
 const tem = (c, sel) => c.js(`!!document.querySelector(${JSON.stringify(sel)})`);
 const soltar = async (c) => { await c.js('window.__soltar()'); await c.avancar(300); };
+const TRAVAR = '; Reino.config.esperaFala.travar = true;';
 
 function travadoTudo(r, onde) { assert.ok(r.total > 0 && r.travados === r.total, onde + ': ' + JSON.stringify(r)); }
 function livreTudo(r, onde) { assert.strictEqual(r.travados, 0, onde + ': ' + JSON.stringify(r)); }
 
-test('com a voz falando: intro, resumo, questão e retorno só liberam no fim da fala', async () => {
+test('com a trava e a voz falando: intro, resumo, questão e retorno só liberam no fim da fala', async () => {
   const c = await abrirCenario({ save: 'completo', tamanho: 'celular', pasta: '/tmp/reino-testes/ver/ouvir-sala' });
   try {
-    await c.js(STUB('true'));
+    await c.js(STUB('true') + TRAVAR);
     await c.avancar(1500);
     travadoTudo(await botoes(c, '.intro-botoes button, .btn-sair'), 'intro');
     await soltar(c);
@@ -58,12 +57,11 @@ test('com a voz falando: intro, resumo, questão e retorno só liberam no fim da
       if (++cartas > 30) throw new Error('resumo sem fim');
     }
     assert.strictEqual(cartas, 2, 'as 2 cartas da sala, sem repetir');
-    // a questão é lida sozinha, mas respostas e ✕ ficam livres com a voz ainda falando (a fala não acaba aqui)
+    // a questão é lida sozinha: respostas e ✕ travados
     assert.ok(await tem(c, '.tela-missao .desafio'), 'a 1ª questão depois do resumo');
-    assert.ok(/^livre:.*Pergunta 1\?/.test(await c.js('window.__falas[window.__falas.length - 1]')), 'a questão foi lida');
-    livreTudo(await botoes(c, '.desafio button, .btn-sair'), 'questão com a voz falando');
-    assert.strictEqual(await c.js('Reino.UI.esperandoFala()'), false, 'a leitura da questão não é espera (Esc livre)');
-    await c.avancar(300);
+    travadoTudo(await botoes(c, '.desafio button, .btn-sair'), 'questão');
+    await soltar(c);
+    livreTudo(await botoes(c, '.desafio button, .btn-sair'), 'questão depois da fala');
     // responde qualquer coisa (1ª opção) e confere: o retorno espera a fala
     await c.js("[...document.querySelectorAll('.tela-missao .desafio .opcao')].find(function (o) { return /Sim/.test(o.textContent); }).click()");
     await c.avancar(400);
@@ -82,7 +80,7 @@ test('com a voz falando: intro, resumo, questão e retorno só liberam no fim da
 test('o 🔊 durante a leitura da questão repete a fala sem soltar a trava; solta no fim da repetição', async () => {
   const c = await abrirCenario({ save: 'completo', tamanho: 'celular', pasta: '/tmp/reino-testes/ver/ouvir-sala' });
   try {
-    await c.js(STUB('true') + '; Reino.config.esperaFala.travarQuestoes = true;');
+    await c.js(STUB('true') + TRAVAR);
     await c.avancar(1500); await soltar(c);
     await c.tocar('.intro-botoes .btn-principal'); await c.avancar(1500);
     while (await tem(c, '.resumo-sala')) { await soltar(c); await c.tocar('.resumo-botoes .btn-principal'); await c.avancar(1500); }
@@ -94,6 +92,39 @@ test('o 🔊 durante a leitura da questão repete a fala sem soltar a trava; sol
     await c.js('window.__B.forEach(function (f) { f(); })');
     await c.avancar(300);
     livreTudo(await botoes(c, '.desafio button, .btn-sair'), 'depois de B');
+    assert.deepStrictEqual(c.erros, []);
+  } finally { await c.fechar(); }
+});
+
+test('padrão (sem a trava), com a voz falando sem parar: intro, resumo, questão e retorno falam e ficam livres', async () => {
+  const c = await abrirCenario({ save: 'completo', tamanho: 'celular', pasta: '/tmp/reino-testes/ver/ouvir-sala' });
+  try {
+    await c.js(STUB('true'));
+    await c.avancar(1500);
+    const falas = () => c.js('window.__falas.length');
+    assert.strictEqual(await falas(), 1, 'a intro foi falada');
+    livreTudo(await botoes(c, '.intro-botoes button, .btn-sair'), 'intro com a voz falando');
+    assert.strictEqual(await c.js('Reino.UI.esperandoFala()'), false, 'nada espera (o Esc fecha)');
+    await c.tocar('.intro-botoes .btn-principal');
+    await c.avancar(1500);
+    assert.ok(await tem(c, '.resumo-sala'), 'resumo');
+    while (await tem(c, '.resumo-sala')) {
+      livreTudo(await botoes(c, '.resumo-botoes button, .btn-sair'), 'resumo com a voz falando');
+      await c.tocar('.resumo-botoes .btn-principal');
+      await c.avancar(1500);
+    }
+    assert.ok(await tem(c, '.tela-missao .desafio'), 'a 1ª questão');
+    assert.ok(/Pergunta 1\?/.test(await c.js('window.__falas[window.__falas.length - 1]')), 'a questão foi lida');
+    livreTudo(await botoes(c, '.desafio button, .btn-sair'), 'questão com a voz lendo');
+    // o tempo de leitura da questão (senão vem o aviso gentil de pressa, que não depende da voz)
+    await c.avancar(8000);
+    await c.js("[...document.querySelectorAll('.tela-missao .desafio .opcao')].find(function (o) { return /Sim/.test(o.textContent); }).click()");
+    await c.avancar(400);
+    if (!(await tem(c, '.missao-retorno:not([hidden])'))) await c.js("var b = document.querySelector('.btn-conferir'); if (!b.disabled) b.click();");
+    await c.avancar(400);
+    assert.ok(await tem(c, '.missao-retorno:not([hidden])'), 'o retorno apareceu');
+    livreTudo(await botoes(c, '.retorno-botoes button, .btn-sair'), 'retorno com a voz falando');
+    assert.strictEqual(await c.js("document.querySelectorAll('.esperando-fala').length"), 0);
     assert.deepStrictEqual(c.erros, []);
   } finally { await c.fechar(); }
 });

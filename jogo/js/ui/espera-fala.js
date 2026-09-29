@@ -1,6 +1,7 @@
-/* Ouvir antes de seguir (Reino.UI.esperarFala, UI.lerQuestao, UI.ouvirDeNovo, UI.esperandoFala).
+/* Ouvir antes de seguir (Reino.UI.esperarFala, UI.ouvirDeNovo, UI.esperandoFala).
    Contrato: docs/contratos/som-musica-e-voz.md §4 item 11. Carrega logo depois de ui/base.js.
-   UI.esperarFala(alvos, segmentos, opcoes) fala (Som.falarEsperando) e, se vale esperar, desabilita os
+   UI.esperarFala(alvos, segmentos, opcoes) fala (Som.falarEsperando) e devolve a Promise do fim da fala. Só com
+   config.esperaFala.travar (desligado: ela pula ou sai quando quiser) e se vale esperar, desabilita os
    botões, campos e canvas (desenho) de `alvos` (elemento, seletor ou lista; num contêiner, os de dentro)
    até a fala acabar ou o teto de tempo. O que tem a classe `livre-na-fala` (o 🔊 Ouvir) fica livre. Enquanto espera,
    UI.esperandoFala() é true e o Esc não fecha nada (ui/base.js). O 🔊 usa UI.ouvirDeNovo (repete sem soltar
@@ -20,7 +21,7 @@
   }
   UI.esperarFala = function (alvos, segmentos, opcoes) {
     var r = Reino.Som.falarEsperando(segmentos, opcoes);
-    if (!r.espera) return r.fim;
+    if (!r.espera || !Reino.config.esperaFala.travar) return r.fim;
     var lista = [];
     (Array.isArray(alvos) ? alvos : [alvos]).forEach(function (a) {
       if (typeof a === 'string') a = document.querySelectorAll(a);
@@ -44,12 +45,6 @@
         b.disabled = false;
       });
     });
-  };
-  // a leitura de uma questão (sala, treino, prova): trava as respostas como UI.esperarFala só se
-  // config.esperaFala.travarQuestoes; senão só fala, e ela responde sem esperar a voz acabar
-  UI.lerQuestao = function (alvos, segmentos, opcoes) {
-    if (Reino.config.esperaFala.travarQuestoes) return UI.esperarFala(alvos, segmentos, opcoes);
-    return Reino.Som.falar(segmentos, opcoes);
   };
   // o 🔊 (repetir a fala): durante uma espera, a repetição toma o lugar da fala e a espera vai até o fim
   // dela (senão tocar no 🔊 cortava a fala e liberava os botões na hora); fora de espera, só fala

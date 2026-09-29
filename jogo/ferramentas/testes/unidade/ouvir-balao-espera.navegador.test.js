@@ -1,6 +1,7 @@
 // Teste de NAVEGADOR (Chromium, servidor de TESTE, save sintético, ?debug=1&congelar=1): no balão de conversa,
 // os botões (menos o 🔊) ficam desabilitados enquanto a fala toca; Enter, Esc e clique não avançam; tudo
-// libera quando a fala acaba. Sem espera (voz desligada), nada fica desabilitado.
+// libera quando a fala acaba. Sem espera (voz desligada), nada fica desabilitado. Essa trava só existe com
+// config.esperaFala.travar (desligada no jogo): o teste a liga e, no fim, confere que sem ela nada trava.
 // Reino.Som.falarEsperando vira um stub com o fim controlado pelo teste.
 const { test } = require('node:test');
 const assert = require('assert');
@@ -24,6 +25,7 @@ test('balão espera a fala antes de liberar Continuar, Esc e Enter', async () =>
     await page.waitForTimeout(1500);
     await page.evaluate(() => {
       Reino.Claude.limpar();
+      Reino.config.esperaFala.travar = true;
       window.__resp = [];
       Reino.Som.falarEsperando = function () {
         return { espera: true, fim: new Promise(function (r) { window.__liberar = r; }) };
@@ -98,6 +100,29 @@ test('balão espera a fala antes de liberar Continuar, Esc e Enter', async () =>
     assert.deepStrictEqual(e.travados, [], 'sem espera, nada desabilitado');
     await page.keyboard.press('Escape');
     await page.waitForFunction(() => window.__resp.length === 3);
+
+    // padrão (sem a trava), com a voz falando sem parar: nada desabilitado, o Esc fecha e cala a voz
+    await page.evaluate(() => {
+      Reino.config.esperaFala.travar = false;
+      window.__faladas = []; window.__calou = 0;
+      Reino.Som.falarEsperando = function () { return { espera: true, fim: new Promise(function () {}) }; };
+      Reino.Som.falar = function (segs) { window.__faladas.push(segs); return new Promise(function () {}); };
+      var calar = Reino.Som.calar;
+      Reino.Som.calar = function () { window.__calou++; return calar.apply(this, arguments); };
+      Reino.Claude.falar('Sem esperar!', { modal: true,
+        botoes: [{ texto: 'Continuar →', valor: 'ok', principal: true }, { texto: 'Agora não', valor: 'nao' }] })
+        .then(function (v) { window.__resp.push(v); });
+    });
+    await page.waitForTimeout(400);
+    e = await estado();
+    assert.ok(e.aberto);
+    assert.strictEqual(await page.evaluate(() => window.__faladas.length), 1, 'o balão falou');
+    assert.deepStrictEqual(e.travados, [], 'sem a trava, nada desabilitado com a voz falando');
+    assert.ok(!e.esperando, 'nada espera');
+    await page.keyboard.press('Escape');
+    await page.waitForFunction(() => window.__resp.length === 4);
+    assert.ok(!(await estado()).aberto, 'o Esc fechou durante a fala');
+    assert.ok(await page.evaluate(() => window.__calou > 0), 'fechar calou a voz');
   } finally {
     await browser.close();
     servidor.parar();

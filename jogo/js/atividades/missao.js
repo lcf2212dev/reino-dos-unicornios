@@ -100,7 +100,7 @@
       if (voltar) voltar.addEventListener('click', function () { Reino.Som.tocar('toque'); resumo(i - 1); });
       corpo.scrollTop = 0;
       Reino.UI.focarTroca(seguir, titulo, CALMA_TROCA);
-      // lê a carta (pacote <matéria>-livro) e trava os botões e o ✕ até a leitura acabar
+      // lê a carta (pacote <matéria>-livro); com config.esperaFala.travar, botões e ✕ esperam a leitura acabar
       Reino.Voz.carregar(materia.id + '-livro').then(function () {
         if (!seguir.isConnected) return;
         Reino.UI.esperarFala([botoes, sair], Reino.UI.falaCarta(cartas[i]), { voz: 'narradora' }).then(function () {
