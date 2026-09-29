@@ -1,6 +1,6 @@
 /* dados: moldes do unicórnio em pixel art (adulto 26x21 e filhote 18x16, nas 5 vistas):
    corpo, pernas, asas, âncoras dos enfeites, desenhos próprios de enfeites por vista, brilhos,
-   onde a cavaleira senta; e ENFEITES (PA.ENFEITES_MONTARIA), o desenho de cada enfeite.
+   onde a cavaleira senta (e que enfeites ficam por cima dela); e ENFEITES (PA.ENFEITES_MONTARIA), o desenho de cada enfeite.
    Guarda os moldes em PA._interno.UNI (quem desenha é pixelart-unicornio.js). Sem DOM. */
 (function () {
   var PA = window.PA, I = PA._interno;
@@ -136,8 +136,10 @@
       pescoco: [9, 13], cauda: null, chifre: [8, 1] },
     enfeites: { 'chapeu-chef-arco-iris': { linhas: CHAPEU_CHEF_FRENTE, x: 5, y: 1 }, oculos: { linhas: OCULOS_FRENTE, x: 4, y: 6 }, 'oculos-estrela': { linhas: OCULOS_ESTRELA_FRENTE, x: 4, y: 6 } },
     brilhos: [[0, 7], [1, 10], [7, 4]],
-    cavaleira: [3, -8],
-    naFrente: [0, 0, 17, 12],
+    // montada: ela senta no alto da cabeça, com as pernas dos dois lados da crina; na frente dela só a cara do
+    // unicórnio (dos olhos para baixo): o chifre e os enfeites da cabeça ficam atrás do tronco dela
+    cavaleira: [3, -7],
+    naFrente: [0, 7, 17, 12],
   };
   UNI.adulto.costas = {
     corpo: [
@@ -185,6 +187,8 @@
       'colar-perolas': { linhas: ['LcrcrcL', '.LLLLL.'], x: 6, y: 10 } },
     brilhos: [[10, 6], [11, 9], [8, 15]],
     cavaleira: [3, 6],
+    // montada, a cauda fica entre ela e quem olha: o enfeite dela vai por cima da cavaleira
+    enfeitesNaFrente: ['cauda'],
   };
   UNI.adulto.diagFrente = {
     corpo: [
@@ -268,6 +272,8 @@
       'anel-saturno': { linhas: ['..AA..AA', '.AAWWWAA'], x: 14, y: 1 } },
     brilhos: [[10, 7], [9, 10], [1, 14]],
     cavaleira: [5, 1],
+    // montada: enfeites da cabeça e da cauda por cima da cavaleira (a cabeça dela tampava a orelha)
+    enfeitesNaFrente: ['orelha', 'cabeca', 'chifre', 'cauda'],
   };
 
   // Filhote (18 x 16): bebê e pequeno
@@ -312,7 +318,12 @@
       // de lado o filhote mostra só dois planetas, no peito (os três viravam um cinto na barriga)
       'colar-planetas': { linhas: ['ykkykky', 'krRkbBk', 'kRRkBBk', '.kk.kk.'], x: 7, y: 9 } },
     brilhos: [[5, 5], [1, 9], [6, 3]],
-    cavaleira: [1, -1],
+    // montada: ela senta 1 px mais para trás e 1 mais baixo, no dorso; os enfeites da orelha, da cabeça, do
+    // chifre e da cauda vão por cima dela (a cabeça dela tampava a orelha do filhote),
+    cavaleira: [0, 0],
+    enfeitesNaFrente: ['orelha', 'cabeca', 'chifre', 'cauda'],
+    // e a ponta da cauda também (as costas dela a tampavam): [x0, y0, x1, y1] do corpo repintado por cima
+    pedacosNaFrente: [[0, 8, 2, 11]],
   };
   UNI.filhote.frente = {
     corpo: [
@@ -352,8 +363,9 @@
       // lua 1 linha mais curta e encostada na borda, com 1 px livre até o olho esquerdo
       'brinco-lua': { linhas: ['.kYk', 'kYk.', 'kYYk', '.kk.'], x: 0, y: 3 } },
     brilhos: [[0, 6], [1, 8], [7, 4]],
-    cavaleira: [2, -9],
-    naFrente: [0, 0, 15, 10],
+    // montada: como no adulto (pernas dos dois lados da crina, chifre e enfeites atrás do tronco dela)
+    cavaleira: [2, -8],
+    naFrente: [0, 6, 15, 10],
   };
   UNI.filhote.costas = {
     corpo: [
@@ -393,6 +405,7 @@
       'anel-saturno': { linhas: ['A....A', '.AaaA.'], x: 5, y: 2, bebe: ANEL_BEBE_FRENTE } },
     brilhos: [[10, 6], [11, 8]],
     cavaleira: [2, 3],
+    enfeitesNaFrente: ['cauda'],
   };
   UNI.filhote.diagFrente = {
     corpo: [
@@ -466,6 +479,7 @@
       'anel-saturno': { linhas: ['A....A', '.AaaA.'], x: 10, y: 2, bebe: ANEL_BEBE_DIAG } },
     brilhos: [[7, 5], [6, 7], [1, 10]],
     cavaleira: [3, 0],
+    enfeitesNaFrente: ['orelha', 'cabeca', 'chifre', 'cauda'],
   };
 
   var ENFEITES = {
@@ -507,8 +521,7 @@
     // lilás quando ela está montada de frente) passa por cima dele; o filhote usa o lilás claro 'a'
     // (e um risquinho de contorno embaixo dele onde encosta na crina, para não se misturar com ela)
     'anel-saturno': { linhas: ['.AA..AA.', 'AAWWWWAA', '..k..k..'], paleta: { k: '#3a2446', A: '#9a6cf5', a: '#d9c2ff', W: '#ffffff' }, ancora: 'chifre', dx: -3, dy: 0 },
-    // segunda leva da Loja das Fadas (50): pequenos (até 9 px de largura e 6 de altura); onde passariam da borda do quadro, o laço
-    // depois deste bloco lhes dá lugar próprio mais para dentro (cabem inteiros em todo molde e vista);
+    // segunda leva da Loja das Fadas (50): pequenos (até 9 px de largura e 6 de altura);
     // óculos: a lente de lado (3×3 no olho); de frente e 3/4 de frente, duas lentes e a ponte (OCULOS2, abaixo)
     'tulipa-orelha': { linhas: ['R.r.R', 'RRrRR', 'kRRRk', '.kGk.'], paleta: { k: '#3a2446', R: '#ff4f6d', r: '#ff9cb0', G: '#3fae4f' }, ancora: 'orelha', dx: -2, dy: 0 },
     'morango-orelha': { linhas: ['.gGg.', 'kRRRk', 'kRyRk', '.kRk.'], paleta: { k: '#3a2446', g: '#8fe07a', G: '#3fae4f', R: '#ee3b50', y: '#ffe98a' }, ancora: 'orelha', dx: -2, dy: 0 },
@@ -588,26 +601,8 @@
       if (pg) m.enfeites['cachecol-listrado'] = { linhas: pg.linhas === CACHECOL_COSTAS ? CACHECOL_LISTRADO.slice(0, 2) : CACHECOL_LISTRADO, x: pg.x, y: pg.y };
     });
   });
-  // a segunda leva cabe inteira no quadro em todo molde e vista: onde o desenho passaria da borda (orelha no
-  // 3/4 de frente, cauda do filhote de lado, topo do filhote), ganha lugar próprio o mínimo para dentro
-  var ks = Object.keys(ENFEITES), LEVA2 = ks.slice(ks.indexOf('tulipa-orelha'), ks.indexOf('estrela-cadente-cauda') + 1);
-  Object.keys(UNI).forEach(function (est) {
-    Object.keys(UNI[est]).forEach(function (vista) {
-      var m = UNI[est][vista], w = m.corpo[0].length, h = m.corpo.length + m.pernas[0].length;
-      LEVA2.forEach(function (id) {
-        var e = ENFEITES[id], d = m.enfeites[id], a = m.ancoras[e.ancora];
-        if (!d && !a) return;
-        d = d || { linhas: e.linhas, x: a[0] + e.dx, y: a[1] + e.dy };
-        var x0 = 99, x1 = -99, y0 = 99, y1 = -99;
-        d.linhas.forEach(function (l, j) {
-          for (var i = 0; i < l.length; i++) if (l[i] !== '.') { x0 = Math.min(x0, i); x1 = Math.max(x1, i); y0 = Math.min(y0, j); y1 = Math.max(y1, j); }
-        });
-        var dx = Math.max(0, -(d.x + x0)) - Math.max(0, d.x + x1 - (w - 1));
-        var dy = Math.max(0, -(d.y + y0)) - Math.max(0, d.y + y1 - (h - 1));
-        if (dx || dy) m.enfeites[id] = { linhas: d.linhas, x: d.x + dx, y: d.y + dy };
-      });
-    });
-  });
+  // todo enfeite (inclusive os prêmios das provas, que se registram depois) cabe inteiro no quadro: onde o
+  // desenho passaria da borda, pixelart-unicornio.js o põe o mínimo para dentro (lugarDoEnfeite)
   PA.ENFEITES_MONTARIA = ENFEITES;
   // acessórios de prova com desenho no próprio arquivo (Reino.registrarProva), se já registrados
   Object.assign(ENFEITES, (window.Reino && window.Reino.desenhosAcessorios) || {});
