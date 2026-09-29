@@ -82,12 +82,27 @@ async function abrirJogo(browser, raiz, tamanho, save) {
   await avancar(page, 1000);
   return { context, page };
 }
+// Um quadro de verdade do Chromium (layout + ResizeObserver). O ResizeObserver só dispara no quadro real, e o
+// avancar (MessageChannel) não garante nenhum; o jogo responde a ele com um requestAnimationFrame, que é VIRTUAL
+// (congelar.js) e só roda no próximo avancar. Ex.: D.ajustarTitulo (atividades/desafios.js) diminui a fonte do
+// título da sala quando as bolinhas entram; sem este quadro, o observador disparava ou não antes da última pintura
+// conforme a carga da máquina e "Expedição Antártida" saía em 2 ou 3 linhas (O-11). Um ResizeObserver novo, criado
+// depois dos do jogo, é entregue no MESMO quadro e depois deles: quando ele chega, os do jogo já pediram o rAF.
+const quadroReal = (page) => page.evaluate(() => new Promise((r) => {
+  var feito = false, fim = () => { if (!feito) { feito = true; ro.disconnect(); r(); } };
+  var ro = new ResizeObserver(fim);
+  ro.observe(document.documentElement);
+  (window.__esperarReal || ((ms) => new Promise((ok) => setTimeout(ok, ms))))(2000).then(fim);
+}));
 // page.__filtro (RegExp, --cenas do e2e): nome que não casa anda o relógio igual, mas não é fotografado.
 // page.__faltam (Set dos nomes pedidos neste tamanho): vazio, a aba para (erro .chega) — já saiu tudo
 async function foto(page, pasta, nome) {
   if (page.__faltam && !page.__faltam.size) throw Object.assign(new Error('chega'), { chega: true });
   marcar(page, nome); // o vigia (vigia-memoria.js) acusa a aba que fica minutos sem foto nova
-  await avancar(page, 600);
+  // 600 ms como antes (37 passos de 16 e um de 8), com um quadro de verdade antes do último passo (quadroReal)
+  await avancar(page, 592);
+  await quadroReal(page);
+  await avancar(page, 8);
   await page.evaluate(() => window.__congelar.respirar(8));
   if (page.__filtro && !page.__filtro.test(nome)) return;
   if (page.__faltam) page.__faltam.delete(nome);
