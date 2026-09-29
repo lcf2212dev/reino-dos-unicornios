@@ -158,8 +158,8 @@ A moldura (painel, botão, chip, balão, cabeçalho) usa creme, laranja e âmbar
 desenho, de raridade e de matéria, nunca de moldura. Toda cor de CSS vem de um token do `:root` de `ui-base.css`;
 literal fora do `:root` só em desenho feito em código (paletas de sprite e de ícone).
 
-A tabela usa os nomes finais, que chegam com o D10-01: hoje `--rosa` é o laranja (vira `--laranja`), `--lavanda` é
-o âmbar (vira `--ambar`) e `--papel-quente` ainda se chama `--papel-3`. O `--papel-2` de hoje é outro creme
+Os nomes da tabela já valem (D10-01): `--laranja*`, `--ambar*`, `--verde-folha` e `--papel-quente`; `--rosa` e `--lilas`
+são as cores reais de desenho. O `--papel-2` de hoje é outro creme
 (`#fff6e4`, 10 usos; conte com `grep -rn 'var(--papel-2)' jogo/css`, ex.: o fundo do painel da missão em
 `ui-missao.css`): esses usos passam para `--papel` ou `--papel-quente` ANTES de o nome receber o valor novo
 `#efe8e2`, senão viram cinza sem querer.
@@ -216,7 +216,8 @@ O lendário é sempre dourado; o arco-íris só entra como brilho. Cor de matér
 6. Caracteres: a fonte não tem "√", "−", "●", "✓" nem o hífen inquebrável (U+2011). Use "-" no lugar de "−", o ✓
    com desenho 16×16 (§10.6), casa cheia desenhada em CSS no lugar de "●"; "–" e "×" existem. Caractere novo em
    texto de tela: confira que a fonte o tem.
-7. Ligaduras desligadas no `body` (`font-variant-ligatures: none`): com elas "fi" vira um glifo só e o "i" some.
+7. Ligaduras desligadas no seletor `*` (`font-variant-ligatures: none`; campos sem `font: inherit` também) e, no canvas,
+   `ctx.textRendering = 'optimizeSpeed'` antes do `fillText`: com elas "fi" vira um glifo só e o "i" some.
 
 ### 10.10 Pixel da interface: bordas, sombras, ícones e retratos
 1. Na interface, 1 pixel de arte = 2 px CSS. Toda medida de desenho é múltiplo de 2 px CSS.
