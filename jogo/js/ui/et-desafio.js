@@ -57,7 +57,7 @@
       return Reino.Som.falar(linhas, { voz: voz });
     }
     function atualizarPlacar() {
-      placar.textContent = 'Pergunta ' + Math.min(i + 1, des.perguntas.length) + ' de ' + des.perguntas.length + ' • ' + des.estrelas + ' ⭐';
+      U.preencher(placar, 'Pergunta ' + Math.min(i + 1, des.perguntas.length) + ' de ' + des.perguntas.length + ' • ' + des.estrelas + ' ⭐');
     }
 
     function mostrarPergunta(ler) {
@@ -68,7 +68,7 @@
       retorno.innerHTML = '';
       ctrl = D.render(atual, { modo: 'surpresa', onMudar: function () { btn.disabled = fase !== 'pergunta' || !ctrl.pronto(); } });
       area.appendChild(ctrl.card);
-      btn.textContent = 'Conferir ✓';
+      U.preencher(btn, 'Conferir ✓');
       btn.disabled = true;
       atualizarPlacar();
       var d = atual, c = ctrl, q = des.perguntas[i];
@@ -110,7 +110,7 @@
       if (atual.explica) retorno.appendChild(el('p.retorno-explica', '📌 ' + atual.explica));
       retorno.hidden = false;
       atualizarPlacar();
-      btn.textContent = i + 1 < des.perguntas.length ? 'Próxima →' : 'Terminar ✓';
+      U.preencher(btn, i + 1 < des.perguntas.length ? 'Próxima →' : 'Terminar ✓');
       travar();
       setTimeout(function () { if (retorno.scrollIntoView) retorno.scrollIntoView({ block: 'nearest', behavior: reduzMovimento() ? 'auto' : 'smooth' }); }, 60);
     }
@@ -126,13 +126,13 @@
       var novo = X.terminar(des);
       area.innerHTML = '';
       retorno.hidden = true;
-      placar.textContent = des.certas + ' de ' + des.perguntas.length + ' certas • +' + des.estrelas + ' ⭐';
+      U.preencher(placar, des.certas + ' de ' + des.perguntas.length + ' certas • +' + des.estrelas + ' ⭐');
       var amiga = npc.genero === 'm' ? 'seu amigo' : 'sua amiga';
       area.appendChild(el('p.et-amigo', '💛 ' + (npc.nome || 'ET') + (novo ? ' virou ' : ' é ') + amiga + '!'));
       Reino.Som.tocar('estrela');
       if (!reduzMovimento()) UI.confete(30);
       dizer(des.amigoAntes ? F.fimDeNovo : F.fim);
-      btn.textContent = 'Tchau! 💛';
+      U.preencher(btn, 'Tchau! 💛');
       travar();
     }
 
