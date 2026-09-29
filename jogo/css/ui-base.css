@@ -1,5 +1,11 @@
 /* Base da interface: cores (variáveis), corpo, mapa, toque que não valeu, botão que gasta e botões. Vem antes das outras ui-*.css (ordem da cascata: js/manifesto.js). */
 /* Mariana e o Reino dos Unicórnios — um mundo único, pastel, sempre claro. */
+/* A fonte pixel mora no jogo (funciona sem rede e no app instalado): Press Start 2P, de CodeMan38, licença SIL Open
+   Font License 1.1 (https://openfontlicense.org), subconjunto latino do Google Fonts. */
+@font-face {
+  font-family: "Press Start 2P"; font-style: normal; font-weight: 400; font-display: block;
+  src: url("press-start-2p.woff2") format("woff2");
+}
 :root {
   --tinta: #3a2446;
   --tinta-suave: #6b5378;
@@ -32,7 +38,7 @@
   /* Pixel art também na moldura (docs/contratos/ui.md §10): cantos só com estas medidas, e em degrau (abaixo) */
   --canto: 6px;          /* botões, chips, cartões pequenos */
   --canto-grande: 9px;   /* painéis, balões, telas */
-  --redondo: 22%;        /* o que era círculo: um "círculo" de pixels (quadrado sem os cantos) */
+  --redondo: 14%;        /* o que era círculo: um "círculo" de pixels (quadrado sem os cantos) */
   color-scheme: light;
 }
 

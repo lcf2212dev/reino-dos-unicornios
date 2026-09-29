@@ -22,6 +22,7 @@ test('pixel: degradê só em faixas com paradas duras', () => {
   assert.ok(!degradeDuro('90deg, var(--rosa), var(--lavanda)'));
   assert.ok(!degradeDuro('circle at 12% 18%, #fff 0 1.5px, transparent 2px'));
   assert.strictEqual(errosCss('.a { background: linear-gradient(90deg, red, blue); }').length, 1);
+  assert.strictEqual(errosCss('.a { background: radial-gradient(circle, #fff 0 45%, #eee 45%); }').length, 1, 'radial é círculo liso');
 });
 
 test('pixel: sombra sem desfoque, sem blur, rotação só de 90 em 90', () => {
