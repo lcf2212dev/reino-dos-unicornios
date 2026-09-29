@@ -83,7 +83,8 @@ Ferramentas de desenvolvimento (Node). Nenhuma entra no jogo. Comandos: `CLAUDE.
 ## Pastas
 - `vozes/` (listar, gravar, empacotar), `validar/`, `testes/` (unidade, referências, e2e), `previas/` (file://).
 - `validar/` (`npm run validar`, por `validar-tudo.js`): conteúdo, interiores, `validar-nomes.js` (nome repetido:
-  erro no mesmo prédio, aviso entre prédios) e `validar-docs.js` (pastas de material vêm do disco, sem lista fixa).
+  erro no mesmo prédio, aviso entre prédios), `validar-enfeites.js` (enfeite fora do molde e oclusão montada) e
+  `validar-docs.js` (pastas de material vêm do disco, sem lista fixa).
   Contraste do chão x contorno da Mariana: `contraste-pisos.navegador.test.js`, com regra e exceções em
   `validar/contraste.js` (exceção só com motivo escrito; não mude cor do jogo só para passar).
 - `gerado/`: GERADO (`falas.json`, `vozes-indice.json`, `vozes-cache/`). Não abra (enorme).
