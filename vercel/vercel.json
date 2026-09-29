@@ -3,6 +3,13 @@
   "framework": null,
   "buildCommand": "npm run build",
   "outputDirectory": "public",
+  "ignoreCommand": "sh ignorar-build.sh",
+  "git": {
+    "deploymentEnabled": {
+      "*": false,
+      "main": true
+    }
+  },
   "cleanUrls": false,
   "rewrites": [
     {
