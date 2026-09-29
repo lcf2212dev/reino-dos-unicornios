@@ -162,6 +162,8 @@
     return bal.querySelector('.claude-acoes .btn-dialogo.principal') || bal.querySelector('.claude-acoes .btn-dialogo') || bal.querySelector('.btn-ok-claude');
   }
 
+  // foco no botão só se a última entrada foi o teclado (no toque, nada contornado)
+  function porTeclado() { return !!(Reino.UI && Reino.UI.porTeclado && Reino.UI.porTeclado()); }
   function vozDe(item) { return item.voz || (item.quem && item.quem.voz) || 'claude'; }
 
   // retrato: Claude (padrão) ou o da personagem, ampliado nítido
@@ -212,7 +214,7 @@
     bal.classList.toggle('dica-pressa', item.tipo === 'pressa');
     bal.hidden = false;
     bal.classList.remove('entrando'); void bal.offsetWidth; bal.classList.add('entrando');
-    if (foco) try { foco.focus({ preventScroll: true }); } catch (e) { foco.focus(); }
+    if (foco && porTeclado()) try { foco.focus({ preventScroll: true }); } catch (e) { foco.focus(); }
     if (item.falar !== false) falarNoBalao(bal, item, foco);
     clearTimeout(item.timer);
     if (item.tempo) item.timer = setTimeout(fechar, item.tempo);
@@ -225,7 +227,7 @@
     item.esperando = true;
     Reino.UI.esperarFala(bal.querySelector('.claude-acoes'), segs, op).then(function () {
       item.esperando = false;
-      if (aberto === item && foco && foco.isConnected) try { foco.focus({ preventScroll: true }); } catch (e) { foco.focus(); }
+      if (aberto === item && foco && foco.isConnected && porTeclado()) try { foco.focus({ preventScroll: true }); } catch (e) { foco.focus(); }
     });
   }
   function fechar(valor) {

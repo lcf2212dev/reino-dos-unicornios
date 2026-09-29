@@ -97,7 +97,7 @@
     Reino.Som.falar([abertura, vale], { voz: 'claude' });
     setTimeout(function () {
       var primeira = ctrl.card.querySelector('.opcao');
-      if (primeira && fase === 'pergunta') primeira.focus({ preventScroll: true });   // o Claude continua à vista
+      if (primeira && fase === 'pergunta' && Reino.UI.porTeclado()) primeira.focus({ preventScroll: true });   // o Claude continua à vista
     }, 60);
 
     // Esc = "Agora não" (ou fecha, depois da resposta); só com este painel por cima de tudo
