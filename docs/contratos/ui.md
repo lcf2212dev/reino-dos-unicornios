@@ -6,7 +6,9 @@ assunto (`loja.md`, `cuidados.md`, `surpresa.md`, `fotos.md`); regras locais da 
 
 ## Índice
 1. Onde está no código · 2. Pilha de telas · 3. Teclado: Esc e Tab · 4. Foco · 5. Guarda de toque ·
-6. HUD e `UI.registrarBotaoHud` · 7. Área dos pais · 8. Acessibilidade · 9. Antes de mexer
+6. HUD e `UI.registrarBotaoHud` · 7. Área dos pais · 8. Acessibilidade · 9. Antes de mexer ·
+10. Pixel art e direção de arte (10.1–10.7 moldura; 10.8 em diante: cor, texto, pixel, escala, luz, movimento,
+   estados e componentes)
 
 ## 1. Onde está no código
 - `jogo/js/ui/base.js` — cria `Reino.UI` e `Reino._ui`: pilha, `UI.painel`, `UI.escolher`/`UI.confirmar`, foco,
@@ -61,8 +63,8 @@ UI.confirmar(msg, sim, nao, gasta?) → Promise(bool)   // atalho: dois botões,
    nova (`UI.focarTroca`, `CALMA_TROCA` 400 ms: o Enter que chega logo depois não escolhe nada); depois de
    escolher um bloco (`desafios/sequencia.js`) o foco fica no monte (o bloco que ficou no lugar; monte vazio: a
    última peça posta). Nada disso muda pelo toque.
-6. Contorno de foco: `:focus-visible` com 4 px roxo e folga de 3 px (`ui-base.css`); tela aberta pelo teclado
-   ganha `.foco-teclado` e contorno próprio (`ui-telas.css`). Botão `.armando` com foco aparece aceso.
+6. Como o foco aparece (anel diferente da seleção, só pelo teclado): §10.19. Tela aberta pelo teclado ganha
+   `.foco-teclado` e contorno próprio (`ui-telas.css`). Botão `.armando` com foco aparece aceso.
 
 ## 5. Guarda de toque (toda tela que gasta estrela ou comida)
 Por quê: um botão que some no 1º toque deixava o 2º toque cair no que aparece embaixo (comprou comida, trocou
@@ -122,7 +124,7 @@ UI.registrarBotaoHud({ id, ordem, criar() → botão, pintar?(), eventos?: [Rein
 2. Leitor de tela não: itens que só servem a leitor de tela (regiões ao vivo, textos escondidos, anúncios)
    ficam de fora. `aria-label` em botão só de ícone e `role`/`aria-checked` dos interruptores continuam.
 3. Animações desligadas e "reduzir movimento" valem nas telas (`body.sem-animacao`, `prefers-reduced-motion`).
-4. Texto para criança: pt-BR correto e carinhoso; `hifenizar` para a fonte pixel; emoji com desenho
+4. Texto para criança: pt-BR correto e carinhoso; quebra de palavra: §10.17; emoji com desenho
    (`jogo/js/CLAUDE.md`, Arte).
 
 ## 9. Antes de mexer, rode
@@ -132,8 +134,11 @@ npm run e2e
 ```
 Ver uma tela nos 3 tamanhos: `npm run ver -- --ir <lugar>` (ou `--tela`, cenários em `jogo/ferramentas/testes/cenario-telas.js`).
 
-## 10. Pixel art na moldura (cantos, cores, brilhos)
-Tudo na tela é pixel art, também o que é CSS e o que é desenhado no canvas.
+## 10. Pixel art e direção de arte
+Tudo na tela é pixel art, também o que é CSS e o que é desenhado no canvas. Os itens 1 a 7 são a moldura (citados
+como §10.1 a §10.7); as subseções 10.8 em diante são a direção de arte. Código novo já nasce nelas; onde o código de
+hoje ainda não segue, o item do `TODO-VISUAL.md` leva até a regra. O porquê das escolhas de produto (escala do mundo,
+cor por matéria, festa): `docs/decisoes/direcao-de-arte.md`.
 1. Cantos: `border-radius` só com `var(--canto)`, `var(--canto-grande)` ou `var(--redondo)` (o antigo círculo), ou 0.
    `ui-base.css` põe `corner-shape: notch` em tudo: o canto vira um degrau reto e a borda e a sombra o seguem.
    Sem suporte (Safari), canto reto. Nada de `999px` (pílula) nem `50%`.
@@ -147,3 +152,238 @@ Tudo na tela é pixel art, também o que é CSS e o que é desenhado no canvas.
 6. Emoji na tela: sempre com desenho 16×16 (`js/arte/icones/`); o glifo reduzido é só a rede de segurança.
 7. Fonte: a Press Start 2P mora no jogo (`css/press-start-2p.woff2`, `@font-face` em `ui-base.css`, `font-display:
    block`): sem rede e no app instalado o texto continua pixel. Nada de fonte de fora.
+
+### 10.8 Cor: tokens e papéis
+A moldura (painel, botão, chip, balão, cabeçalho) usa creme, laranja e âmbar. Rosa, lilás, azul e verde são cor de
+desenho, de raridade e de matéria, nunca de moldura. Toda cor de CSS vem de um token do `:root` de `ui-base.css`;
+literal fora do `:root` só em desenho feito em código (paletas de sprite e de ícone).
+
+A tabela usa os nomes finais, que chegam com o D10-01: hoje `--rosa` é o laranja (vira `--laranja`), `--lavanda` é
+o âmbar (vira `--ambar`) e `--papel-quente` ainda se chama `--papel-3`. O `--papel-2` de hoje é outro creme
+(`#fff6e4`, 10 usos; conte com `grep -rn 'var(--papel-2)' jogo/css`, ex.: o fundo do painel da missão em
+`ui-missao.css`): esses usos passam para `--papel` ou `--papel-quente` ANTES de o nome receber o valor novo
+`#efe8e2`, senão viram cinza sem querer.
+
+| Token | Hex | Papel |
+|---|---|---|
+| `--tinta` | `#3a2446` | contorno, texto, sombra dura (o `#2a1838` fica só no olho dos sprites) |
+| `--tinta-suave` | `#6b5378` | texto secundário, placeholder, texto do estado indisponível (6,35:1 no `--papel`) |
+| `--noite` | `#24162e` | fundo das telas escuras (lista abaixo) |
+| `--noite-2` | `#33224a` | degrau de `--noite`: cartão, faixa e estrela sobre fundo escuro |
+| `--papel` | `#fff8ee` | fundo de painel |
+| `--papel-quente` | `#fff1cc` | cabeçalho, chip, balão |
+| `--papel-2` | `#efe8e2` | fundo do estado indisponível (§10.19); `--tinta-suave` sobre ele: 5,5:1 |
+| `--laranja`, `--laranja-escuro`, `--laranja-claro` | `#ff8a3d`, `#a8480a`, `#ffe4c2` | ação principal; o escuro é o laranja de texto (5,5:1 no `--papel`, 5,2:1 no `--papel-quente`) |
+| `--ambar`, `--ambar-claro` | `#f0a04a`, `#fff1d0` | enfeite secundário da moldura |
+| `--ouro` | `#ffd34d` | estrela, moeda |
+| `--roxo`, `--roxo-texto` | `#7c5cff`, `#5a3cc4` | seleção; link e texto roxo (6,9:1). `--roxo` nunca é cor de texto |
+| `--certo`, `--certo-fundo` | `#1b6e45`, `#dff8e8` | acerto (5,6:1 no fundo verde) |
+| `--erro`, `--erro-fundo` | `#b02c47`, `#ffe0e0` | erro de item, sair, perigo (5,1:1 no fundo, 6,0:1 no `--papel`) |
+| `--rosa`, `--lilas` | `#ff7eb6`, `#b58cff` | cor de desenho (nunca moldura); `--lilas` é o texto secundário em tela escura (6,6:1 no `--noite`) |
+
+Raridade (texto, fundo, desenho), em cartas, ovos, prova, loja e prêmios; o contorno continua `--tinta` e a cor vai
+no fundo ou numa faixa interna:
+
+| Raridade | Texto | Fundo | Desenho |
+|---|---|---|---|
+| comum | `#6b5378` | `#fff8ee` | `#ff9cc6` |
+| raro | `#2b5ea8` (5,3:1) | `#dcebff` | `#5fb4ff` |
+| épico | `#5b2aa8` (6,9:1) | `#eadcff` | `#a66bff` |
+| lendário | `#8a5200` (5,1:1) | `#ffe39a` | `#ffb020` |
+
+O lendário é sempre dourado; o arco-íris só entra como brilho. Cor de matéria: §10.22.
+
+1. Contraste: texto ≥ 4,5:1 sobre o fundo real (≥ 3:1 só com 24 px ou mais). `--tinta` no `--papel` dá 13,1:1. O
+   texto do botão laranja é `--tinta` (5,9:1): não há texto branco sobre laranja.
+2. Estado pela cor (seleção, certo, erro) muda fundo e borda do controle; o contorno de desenho continua `--tinta`.
+3. Telas escuras, só estas: voo, espaço e planetas, o vão dos interiores e a tela de jogadores. Todas com `--noite`
+   (degrau `--noite-2`); o resto do jogo é claro. Nelas o texto é `--papel`, o secundário `--lilas`
+   (`--tinta-suave` não se usa: 2,6:1), e ícone ou sprite de contorno escuro ganha brilho de 1 pixel em `--papel`
+   (§10.3).
+
+### 10.9 Tipografia
+1. Escala na grade de 8 px da Press Start 2P: 8, 16 e 24 px (32 e 48 só na abertura e na festa, §10.16). Texto que
+   a criança precisa ler: 16 px. 12 px só em rótulo auxiliar (dock, data, legenda de chip) e na carta da memória
+   quando a palavra mais longa não cabe (desce 16 → 12, sem partir a palavra). 8 px só em número sobreposto a ícone
+   (contador, selo); palavra nunca abaixo de 12 px. Nada de `em` nem de tamanho fora da escala.
+2. Entrelinha: 1,5 no corpo e 1,25 no título.
+3. Sem negrito: só o peso 400 (a fonte não tem outro). Hierarquia por tamanho, por cor (`--tinta` e
+   `--tinta-suave`) e por faixa.
+4. "Letras grandes" (Ajustes, `ajustes.js`) sobe cada tamanho um degrau da escala (12 → 16, 16 → 24, 24 → 32; o
+   8 do selo fica), nunca um multiplicador.
+5. Texto do canvas (placa do cômodo, moldura da foto) usa o mesmo token do DOM em px CSS: tamanho em px de aparelho
+   = token × `devicePixelRatio`, arredondado ao múltiplo de 8 mais perto. A placa tem 16 px CSS nos 3 tamanhos.
+6. Caracteres: a fonte não tem "√", "−", "●", "✓" nem o hífen inquebrável (U+2011). Use "-" no lugar de "−", o ✓
+   com desenho 16×16 (§10.6), casa cheia desenhada em CSS no lugar de "●"; "–" e "×" existem. Caractere novo em
+   texto de tela: confira que a fonte o tem.
+7. Ligaduras desligadas no `body` (`font-variant-ligatures: none`): com elas "fi" vira um glifo só e o "i" some.
+
+### 10.10 Pixel da interface: bordas, sombras, ícones e retratos
+1. Na interface, 1 pixel de arte = 2 px CSS. Toda medida de desenho é múltiplo de 2 px CSS.
+2. Borda: 2 px; 4 px em moldura grande (painel, balão, tela, retrato). Nada de 1, 3 ou 5 px.
+3. Sombra dura para baixo: 2 px (chip, botão pequeno) ou 4 px (botão grande, painel). Botão apertado desce 2 px e
+   perde a sombra na mesma medida.
+4. Canto: `--canto-pequeno` (4 px) em botão de até 56 px de lado (✕, tela cheia, 📷, álbum): com `--canto-grande`
+   o degrau de 9 px desenha um "+". Acima disso, `--canto` e `--canto-grande` (§10.1).
+5. Ícone 16×16 a 32 px CSS; 64 px em destaque; dentro de uma linha de texto, do tamanho da letra (16 ou 24 px).
+   Sempre em escala inteira (`PA.escalaNitida`); `paraDOM` só com escala par.
+6. Retrato de personagem (balão de NPC e do Claude): 4 px CSS por pixel, o mesmo para todos, em quadro com borda de
+   4 px e fundo chapado; a cabeça ocupa de 60 a 80 % da altura do quadro, sem cortar chapéu nem antena.
+
+### 10.11 Escala do mundo (câmera)
+O mundo (mapa e interiores) desenha em px de aparelho com escala inteira (`camera.js`, `redimensionar`). Regra:
+```
+escala = round(altura da tela em px de aparelho / (16 × 18))        // alvo: 18 tiles de altura
+escala = max(escala, round(2 × dpr))                                 // nunca menos de 2 px CSS por pixel
+escala = min(escala, floor(menor lado em px de aparelho / (16 × 8)))   // o lado menor mostra ≥ 8 tiles
+escala = max(escala, round(2 × dpr))                                 // de novo: o mínimo de 2 px CSS vence
+```
+Quando o "lado menor ≥ 8 tiles" pediria menos de 2 px CSS por pixel (tela muito estreita), vence o mínimo de 2 px
+CSS: o personagem continua grande para o toque e a tela mostra menos de 8 tiles.
+| Tamanho | Escala (aparelho → CSS) | Tiles visíveis (altura × largura) | Criança (17 px) |
+|---|---|---|---|
+| celular 390×844, dpr 3 | 9 → 3 px | 17,6 × 8,1 | 51 px CSS |
+| tablet 820×1180, dpr 2 | 8 → 4 px (igual a hoje) | 18,4 × 12,8 | 68 px CSS |
+| notebook 1366×768, dpr 1 | 3 → 3 px | 16 × 28,5 | 51 px CSS |
+
+Resultado: o notebook mostra de 16 a 20 tiles de altura e, no celular, todo personagem tem ≥ 44 px CSS (e o ícone
+de status, 48 px CSS). O ícone de status do NPC acompanha essa escala.
+
+### 10.12 Tabela de alturas (px de arte, contorno incluído)
+Medida no sprite, da primeira à última linha com desenho (`npm run ver -- --previa sprites`,
+`npm run ver -- --previa interiores:castelo`).
+
+| Peça | Faixa | Hoje (medido em 29/09) |
+|---|---|---|
+| criança (Mariana a pé, NPC criança, ET criança, fada) | 16–18 | Mariana 17, `lab-malu` 17, ETs crianças 17–18, fada 17 |
+| adulto e idoso sem chapéu | 21–24 | 19–22 (sobem no D4-15) |
+| chapéu, coque, pluma, antena | até +4 sobre a faixa, nunca acima de 2 tiles (32) | até 25 |
+| ET adulto e vovó | 21–24 e ≥ 2 a mais que a criança do planeta | vovós 21 |
+| unicórnio filhote (estágios 0 e 1) | 16–18 | 17–18 |
+| unicórnio adulto (estágios 2 e 3) | 22–24 | 23 |
+| Mariana montada no filhote | 19–22 | 19 |
+| Mariana montada no adulto | altura do unicórnio até +4 (23–28) | 23 |
+| bicho e criatura grande (dragão, robô) | faixa de adulto | dragão 21, robô 17 |
+| estátua e armadura de enfeite | ≤ o adulto ao lado | — |
+| porta de prédio (mapa) | 22–28 | 18–26 |
+| poste | 32–36 | 34 |
+| arvoreta (1 tile) | 16–20 | 17 |
+| árvore comum (copa de 2 a 3 tiles) | ≥ 40 | não existe ainda (D1-06) |
+
+Adulto e criança diferem ≥ 4 px. Peça nova entra na faixa do papel dela; papel novo, linha nova aqui.
+
+### 10.13 Luz, sombra e véu
+1. Luz de cima (e da esquerda): brilho de 1 pixel em cima e à esquerda do objeto; a luz nunca é pintada por cima do
+   contorno.
+2. Sombra de chão reta, embaixo e centrada, em toda peça sólida do mundo: elipse de pixel com alfa de 0,15 a 0,25,
+   no máximo 2 níveis, 2 a 3 px de arte fora da base (a sombra coberta pelo próprio desenho não conta).
+3. No CSS, sombra só para baixo (`0 4px 0`): nada de deslocamento lateral.
+4. Véu de luz (vinheta, halo, escurecer atrás do painel): degraus na grade de pixel, com diferença de alfa ≤ 0,04
+   entre vizinhos, ou pontilhado ordenado 2×2 entre dois níveis. Faixa dura de alfa maior aparece como defeito.
+
+### 10.14 Contorno
+1. Todo desenho sólido tem contorno de 1 pixel em `--tinta` (`#3a2446`; `PA.contornar` no canvas).
+2. Exceções: água, luz (chama, brilho, raio de luz), céu e nuvem, sombra de chão e partícula de 1 a 2 pixels
+   (confete, brilhinho). Mesmo assim, a água ganha linha d'água de 1 pixel e a luz, borda de brilho.
+3. Silhueta de trancado ou vazio: preenchimento `--tinta-suave` com contorno `--tinta`; o "?" (≥ 7 px de arte de
+   altura) sai em `--papel` com contorno `--tinta`. Nada de silhueta clara sem contorno.
+
+### 10.15 Movimento
+1. `scale` só por fator inteiro em desenho pixel (e nunca em texto); pulso = deslocamento de 1 pixel de arte ou
+   troca de quadro.
+2. Desenho pixel anda em degraus: `steps()` ou deslocamento inteiro. Translação suave só em painel inteiro.
+3. Durações só por token: `--rapido` 120 ms (resposta ao toque), `--normal` 240 ms (abrir, fechar, trocar),
+   `--lento` 600 ms (chegada, festa curta). Repetição infinita tem período de 2 × `--lento` ou mais, e o chamado de
+   atenção repete poucas vezes e para.
+4. `opacity` só em véu, em partícula e na entrada e saída de uma tela inteira (≤ `--normal`); nunca como estado
+   parado (§10.19).
+5. Exceções escritas (o validador de pixel aceita só estas):
+   - `armar-encher` (`ui-base.css`): barra de preenchimento em `scaleX`, dura `ARMAR_MS`;
+   - `.balao-respira` (Ritual da Calma, `ui-prova.css`): cresce e encolhe contínuo, de propósito, no ritmo da
+     respiração (3,1 s);
+   - `conic-gradient` da aura (`ui-hud.css`): até o D8A-09 redesenhar o chip;
+   - confete e festa: duração da escala de festa (§10.16).
+6. Toda animação tem saída em `body.sem-animacao` e `prefers-reduced-motion` (§8.3); o que o canvas desenha fica
+   parado quando as animações estão desligadas.
+
+### 10.16 Escala de festa
+A festa cresce com o feito: acerto < sala < prova < matéria completa. Compra é festa de acerto.
+
+| Nível | Quando | Título | Movimento | Som |
+|---|---|---|---|---|
+| 1 | acerto, compra, cuidado feito | não muda | brilho de 3 quadros no item; sem confete | curto |
+| 2 | sala concluída, treino | 24 px | pulinho do emoji em degraus e brilhinhos; confete 40 | fanfarra |
+| 3 | prova terminada, ovo que nasce | 32 px | confete 90 | fanfarra |
+| 4 | matéria completa | 48 px (32 no celular, se não couber) | confete 160 e emoji grande | fanfarra longa |
+
+Com animações desligadas fica só o título e o som. O ovo nasce no nível 3 em toda raridade; o lendário ganha o
+brilho arco-íris, não mais confete.
+
+### 10.17 Quebra de palavra
+1. No `body`: `overflow-wrap: break-word` e `hyphens: manual`. `overflow-wrap: anywhere` é proibido.
+2. Palavra longa (9 letras ou mais) só quebra na sílaba, com o hífen à vista (o hífen suave do `hifenizar`,
+   `ui/pecas.js`). Nunca no meio sem hífen.
+3. Nome próprio e rótulo curto (até 12 letras: botão, chip, título de cabeçalho) não quebram (`nowrap`); se não
+   couber, descem um degrau da escala (16 → 12), nunca para tamanho fora dela.
+4. Número, artigo e preposição de 1 a 2 letras, "R$" e o emoji do fim ficam colados à palavra vizinha com espaço
+   inquebrável (U+00A0). Palavra composta ("arco-íris") fica num `span` com `nowrap`.
+
+### 10.18 Área útil
+1. O JS escreve no `:root` três variáveis, em px CSS: `--hud-topo` (fim do HUD de cima), `--dock-altura` (altura do
+   dock de baixo) e `--balao-altura` (altura do balão aberto; 0 fechado).
+2. Área útil = a tela menos `--hud-topo` em cima e o maior entre `--dock-altura` e `--balao-altura` embaixo, com
+   folga de 8 px de cada lado.
+3. A câmera do mapa e dos interiores, o balão e os painéis leem essas mesmas variáveis (nenhum mede o HUD por
+   conta própria). Objeto de toque e texto ficam dentro da área útil.
+
+### 10.19 Estados de controle: indisponível, erro de item e foco
+1. Indisponível (trancado, desligado, sem estrelas, esperando a voz): fundo `--papel-2` chapado, texto
+   `--tinta-suave`, borda `--tinta`, sombra de 2 px, e um ícone 16×16 que diz por quê (🔒 trancado, relógio
+   esperando, estrela vazia sem estrelas). Nada de `opacity` nem `grayscale` no texto. O botão segue focável, com
+   `aria-disabled` (§6.4).
+2. Erro de item (opção errada, par errado, peça fora do lugar): estado parado, com fundo `--erro-fundo` e borda
+   `--erro`, até o item ser apagado ou até o próximo toque; o tremor vem por cima só com animação. A opção errada
+   que fica na tela vem riscada, sem `opacity`, com ≥ 4,5:1.
+3. Acerto: fundo `--certo-fundo` e borda `--certo`.
+4. Seleção: `--roxo` (borda e fundo). Foco: anel tracejado de 4 px em `--tinta` com folga de 2 px
+   (`:focus-visible`), diferente da seleção. O foco por programa só acontece quando a última entrada foi o teclado
+   (`UI.porTeclado`, §4.2): depois de um toque, nenhum anel.
+
+### 10.20 Rodapé de ação
+1. Uma linha só, fixo no pé do painel (fora do que rola), altura fixa; botões com alvo ≥ 44 px de altura, texto de
+   16 px e `nowrap`.
+2. Até 3 botões. O que não couber vira só a seta ou o ícone ("←" no lugar de "← Anterior"); o principal fica à
+   direita.
+3. Serve à prova (`.prova-rodape`, o primeiro), às intros e resumos das salas, à capa da prova, ao "Pronto!" da
+   aparência, aos botões da foto e ao fim do guia. No celular, o botão principal aparece sem rolar.
+
+### 10.21 Cabeçalho e larguras de painel
+1. Cabeçalho: ícone 16×16 em 32 px à esquerda, título de 16 px numa linha (§10.17.3), ✕ à direita (§10.10.4),
+   fundo `--papel-quente`. Com matéria, uma faixa de 8 px na cor dela logo abaixo do cabeçalho (§10.22).
+2. Larguras de painel: 560 px (diálogo, escolha, cartão simples) e 720 px (listas, matéria, livro, loja). No
+   celular, a largura da tela menos 8 px de cada lado.
+3. Na tela baixa e larga (notebook: `min-width: 1000px` e `max-height: 820px`), as listas dentro do painel de 720
+   px vão em 2 colunas de cartão.
+4. Exceção: a tela de pergunta (sala, prova, treino; não é painel sobre o mapa) vai até 1180 px nessa tela baixa e
+   larga, em 2 colunas (enunciado e banco de palavras à esquerda, casas e opções à direita; D12e-02).
+
+### 10.22 Matéria: cor e ícone
+Cada matéria tem uma cor e um ícone, os mesmos em todo o caminho: telhado do prédio, cabeçalho da tela da matéria,
+livro, sala, prova e prêmio.
+
+| Matéria | Cor |
+|---|---|
+| Português | `#e0433f` |
+| Matemática | `#3f7fe0` |
+| Geografia | `#39a860` |
+| Ciências | `#139a8c` |
+| História | `#b95a36` |
+| Inglês | `#e0a020` |
+
+1. O ícone é o `emoji` da própria matéria, com desenho 16×16; nada de ícone genérico (o 📜 da prova) no lugar dele.
+2. A cor vai no telhado, na faixa do cabeçalho, numa faixa interna do painel e das cartas do livro. É cor de faixa e
+   de desenho: nunca cor de texto nem fundo de texto de 16 px. Motivo: nenhuma serve ao mesmo tempo como texto no
+   `--papel` e como fundo de texto `--tinta` (todas ficam abaixo de 4,5:1 no `--papel`; algumas passam sozinhas
+   com `--tinta`, como Inglês com 6,1:1 e Geografia com 4,6:1, mas a regra é uma só para as seis).
+   O contorno continua `--tinta`.
+3. Matéria nova ganha cor que não repita a família de nenhuma destas (um azul só, um verde e um verde-azulado).
