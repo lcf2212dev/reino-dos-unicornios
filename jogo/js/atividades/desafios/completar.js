@@ -28,8 +28,8 @@
     // com figura ou com a lacuna dentro da palavra solta: os itens ficam numa grade compacta
     var comFigura = d.frases.some(function (f) { return f.img; }) || (!!d.colado && !coladoLongo);
     var wrap = el('div.completar' + (d.colado ? '.completar-colado' : '') + (coladoLongo ? '.completar-colado-longo' : '') + (comFigura ? '.completar-grade' : ''));
-    wrap.appendChild(el('div.quadro-palavras', d.palavras.map(function (p, i) {
-      return [i ? el('span.quadro-traco', '–') : null, el('b', p)];
+    wrap.appendChild(el('div.quadro-palavras', d.palavras.map(function (p) {
+      return el('b.quadro-etiqueta', p);
     })));
     var grade = comFigura ? el('div.completar-itens') : wrap;
     // quantos botões cada item tem: a coluna da grade fica larga o bastante para botões de 48 px (css)
