@@ -1,4 +1,5 @@
-// Roda todos os validadores e resume: conteúdo das matérias, interiores, nomes repetidos, index.html x manifesto e docs.
+// Roda todos os validadores e resume: conteúdo das matérias, interiores, nomes repetidos, index.html x manifesto, docs
+// e pixel art.
 // Uso: node ferramentas/validar/validar-tudo.js [--detalhes]   (npm run validar, na raiz do repositório)
 // Cada validador roda à parte (eles terminam com process.exit); a saída inteira só aparece quando um
 // falha (ou com --detalhes). Validador que não existe é erro. Sai com código 1 se algum falhar.
@@ -14,6 +15,7 @@ const VALIDADORES = [
   { nome: 'index.html x manifesto', arq: 'ferramentas/gerar-index.js', args: ['--conferir'] },
   { nome: 'nomes repetidos', arq: 'ferramentas/validar/validar-nomes.js' },
   { nome: 'docs', arq: 'ferramentas/validar/validar-docs.js' },
+  { nome: 'pixel art (cantos, faixas, sombras, canvas)', arq: 'ferramentas/validar/validar-pixel.js' },
 ];
 
 // detalhes: repassa --detalhes a quem aceita (a lista "✔ …" por matéria, prova e interior)
