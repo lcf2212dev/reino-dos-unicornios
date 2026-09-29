@@ -26,4 +26,5 @@
 # 74faf4d = config ganhou reconectarMs (jogo sem rede)
 # f543d1a = tudo em pixel art (cantos em degrau, faixas, halo e vinheta em pixel, emojis desenhados)
 # 5d12782 = tudo em pixel art: cantos em degrau, faixas, halo e vinheta em pixel, emojis desenhados, fonte pixel local
-5d12782
+# b7e4f5d = questão livre durante a leitura, pontilhado do inglês em pixel
+b7e4f5d
