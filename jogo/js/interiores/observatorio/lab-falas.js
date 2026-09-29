@@ -7,7 +7,7 @@
   /* ---------- personagens (voz pt-BR do edge-tts; diferentes da Vega e do Cosmo) ---------- */
   // guia do Hall
   R.registrarPersonagem({ id: 'lab-iris', nome: 'Professora Íris',
-    sprite: { pele: '#c68a62', cabelo: '#3a2418', penteado: 'coque', oculos: true, oculosCor: '#2f6fd6', jaleco: true, roupa: '#39c5bb', roupa2: '#3a3a5a', perna: 'saia', cracha: true },
+    sprite: { pele: '#c68a62', cabelo: '#3a2418', penteado: 'coque', oculos: true, oculosCor: '#2f6fd6', roupa: '#137a70', roupa2: '#3a3a5a', perna: 'saia', cracha: true, livro: '#139a8c' },
     perfil: { voz: 'pt-BR-ThalitaMultilingualNeural', velocidade: '-8%', tom: '+10Hz' } });
   // sala c1: Vivo ou Não Vivo?
   R.registrarPersonagem({ id: 'lab-bento', nome: 'Biólogo Bento',
@@ -15,7 +15,7 @@
     perfil: { voz: 'en-US-AndrewMultilingualNeural', velocidade: '+2%', tom: '+6Hz' } });
   // sala c2: Quem Ganha, Quem Perde
   R.registrarPersonagem({ id: 'lab-jana', nome: 'Guarda Jana',
-    sprite: { pele: '#8a5a3a', cabelo: '#1f1410', penteado: 'trancas', chapeu: 'bone', chapeuCor: '#6b8a3a', roupa: '#a8b86a', roupa2: '#5a4a2a', apito: true },
+    sprite: { pele: '#8a5a3a', cabelo: '#1f1410', penteado: 'trancas', chapeu: 'chapeu', chapeuCor: '#6b8a3a', roupa: '#a8b86a', roupa2: '#5a4a2a', apito: true },
     perfil: { voz: 'en-US-AvaMultilingualNeural', velocidade: '+2%', tom: '-6Hz' } });
   // sala c3: Amigos da Natureza
   R.registrarPersonagem({ id: 'lab-malu', nome: 'Jardineira Malu',

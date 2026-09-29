@@ -5,7 +5,7 @@
   var R = window.Reino;
   R.registrarPersonagem({ id: 'salao-lulu', nome: 'Dona Lulu',
     sprite: { pele: '#a86b4a', cabelo: '#9b6bd6', penteado: 'coque', roupa: '#ff8ac4', roupa2: '#6b4a8a', perna: 'saia',
-      avental: true, aventalCor: '#fff0f7', colar: '#ffd34d', presilha: true, cor2: '#ffd34d' },
+      avental: true, aventalCor: '#fff0f7', colar: '#ffd34d', presilha: true, cor2: '#ffd34d', tesoura: true },
     // alegre e caprichosa: a Ava mais rápida e aguda (longe do Claude, da Nina e da Stella)
     perfil: { voz: 'en-US-AvaMultilingualNeural', velocidade: '+12%', tom: '+24Hz' },
     predio: 'salao', x: 3, y: 5, acao: { tipo: 'tela', tela: 'salao-cabelo' },

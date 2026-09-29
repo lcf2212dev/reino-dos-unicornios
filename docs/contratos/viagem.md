@@ -78,11 +78,12 @@ perguntas(materia, n, chave) → [{ id, materia, sala, texto, opcoes: [texto], c
 - Sorteio por `U.embaralhar(lista, chave)` (determinístico no modo congelado); sem repetir dentro da mesma lista.
 
 ## 5. Planetas (`interiores/planetas/`)
-- Interior com `lugar: 'observatorio'`, sem `entrada`, `pacote: 'interior-observatorio'`, `fundo: 'espaco'`,
+- Interior com `lugar: 'observatorio'`, sem `entrada`, `pacote: 'interior-observatorio'`, `fundo: 'planeta-<id>'`
+  (`P.fundo` em `planetas-comum.js`: o chão do planeta vai até a borda, sem espaço embaixo),
   `spawn` = a chegada. Não aparece no menu Lugares; entrar marca `visitados`.
 - Um cômodo aberto (as 2 fileiras de "parede" são o horizonte), piso do planeta com contraste com a Mariana.
 - Obrigatório: o foguete de pouso com a ação de volta (§2.4) ao lado da chegada; as vagas dos ETs livres.
-- Lua (`planeta-lua`, 24×17, chegada (11, 14)): só brincar. Brincadeiras: pular alto (`Jogador.pular`), pedra que
+- Lua (`planeta-lua`, 24×28, chegada (13, 4), diante do horizonte): só brincar. Brincadeiras: pular alto (`Jogador.pular`), pedra que
   flutua, esconde-esconde com o Pipo, cristais para pegar (memória da sessão), curiosidades de verdade.
 
 ## 6. ETs
