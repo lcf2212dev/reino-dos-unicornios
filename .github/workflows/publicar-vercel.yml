@@ -1,0 +1,34 @@
+# Publica o jogo na Vercel (https://reino-dos-unicornios.vercel.app) a cada push na main que muda o jogo.
+# Mesmo caminho do `npm run vercel` (jogo/ferramentas/fluxo/vercel.js: vercel pull, build --prod e deploy --prebuilt).
+# Mudança só em docs ou ferramentas não publica (CLAUDE.md da raiz). Só produção, sem preview: o banco da Vercel
+# guarda saves reais e nada aqui o toca. Segredo: VERCEL_TOKEN (Settings → Secrets → Actions).
+name: Publicar na Vercel
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'jogo/index.html'
+      - 'jogo/css/**'
+      - 'jogo/js/**'
+      - 'vercel/**'
+  workflow_dispatch:
+
+# um push novo espera o anterior terminar (nunca duas publicações ao mesmo tempo, nenhuma cancelada no meio)
+concurrency:
+  group: publicar-vercel
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Publicar
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: node jogo/ferramentas/fluxo/vercel.js --ref HEAD
