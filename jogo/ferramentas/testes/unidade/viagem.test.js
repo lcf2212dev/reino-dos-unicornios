@@ -30,7 +30,7 @@ function comSave(save) {
   ['sistemas/progresso-campos', 'sistemas/aura', 'sistemas/viagem', 'sistemas/viagem-fluxo']
     .forEach((n) => vm.runInContext(fs.readFileSync(JS.arquivo(n), 'utf8'), j.ctx, { filename: n }));
   j.P.carregar();
-  j.R.Viagem.registrarPlaneta({ id: 'lua', nome: 'Lua', interior: 'planeta-lua', chegada: { x: 11, y: 14 }, ordem: 1, cor: '#ddd' });
+  j.R.Viagem.registrarPlaneta({ id: 'lua', nome: 'Lua', interior: 'planeta-lua', chegada: { x: 13, y: 4 }, ordem: 1, cor: '#ddd' });
   return j;
 }
 const vazio = (j) => { j.R.Viagem.gastar(); assert.strictEqual(j.R.Viagem.tanque().n, 0); };
@@ -78,7 +78,7 @@ test('viagem: decolar sem Voo vai à Lua, gasta e carimba; vazio não decola', a
   const j = comSave(), V = j.R.Viagem, idas = [];
   j.R.Cena.irPara = (i, c) => { idas.push([i, c.x, c.y]); return Promise.resolve(); };
   assert.strictEqual(await V.decolar('lua'), true);
-  assert.deepStrictEqual(idas, [['planeta-lua', 11, 14]]);
+  assert.deepStrictEqual(idas, [['planeta-lua', 13, 4]]);
   assert.strictEqual(V.tanque().n, 0);
   assert.deepStrictEqual(copia(V.carimbos()), { lua: true });
   assert.ok(j.balao.falas.some((f) => /Chegamos na Lua!/.test(f.t) && /Carimbo novo/.test(f.t)));

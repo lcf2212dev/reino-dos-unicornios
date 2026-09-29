@@ -196,13 +196,56 @@
       circulo(ctx, px + 8, py - 1, 7, K); circulo(ctx, px + 8, py - 1, 6, N.branco);
       elipse(ctx, px + 8, py, 4, 3, N.azul2); ret(ctx, px + 6, py - 2, 2, 1, N.ciano);
     } });
-  // computador numa mesinha
+  // computador na escrivaninha (tampo, gaveteiro e perna: o monitor nunca fica solto; D2B-11)
   I.objeto('nasa-computador', { w: 1, h: 1, topo: 6, solido: true,
     desenhar: function (ctx, px, py) {
-      ret(ctx, px + 1, py + 6, 14, 3, K); ret(ctx, px + 2, py + 7, 12, 1, N.cinza);
-      ret(ctx, px + 3, py + 9, 2, 5, K); ret(ctx, px + 11, py + 9, 2, 5, K);
+      ret(ctx, px, py + 5, 16, 4, K); ret(ctx, px + 1, py + 6, 14, 2, N.branco); ret(ctx, px + 1, py + 6, 14, 1, '#ffffff');
+      ret(ctx, px + 1, py + 9, 3, 5, K); ret(ctx, px + 2, py + 9, 1, 4, N.cinza2);
+      ret(ctx, px + 8, py + 9, 7, 5, K); ret(ctx, px + 9, py + 9, 5, 4, N.cinza); ret(ctx, px + 10, py + 11, 3, 1, N.cinza3);
       ret(ctx, px + 3, py - 6, 10, 10, K); ret(ctx, px + 4, py - 5, 8, 7, N.tela); ret(ctx, px + 7, py + 4, 2, 2, K);
       ret(ctx, px + 5, py - 3, 5, 1, N.verde); ret(ctx, px + 5, py - 1, 3, 1, N.ciano);
+    } });
+  // pilha de caixas de equipamento (as caixas ficam juntas, não soltas pelo chão)
+  I.objeto('nasa-pilha-caixas', { w: 1, h: 1, topo: 12, solido: true,
+    desenhar: function (ctx, px, py) {
+      ret(ctx, px + 1, py + 2, 14, 12, K); ret(ctx, px + 2, py + 3, 12, 10, N.cinza); ret(ctx, px + 2, py + 3, 12, 2, N.branco);
+      for (var i = 0; i < 4; i++) ret(ctx, px + 2 + i * 3, py + 10, 2, 3, i % 2 ? K : N.amarelo);
+      // a de cima, menor e um pouco para o lado, com a mesma faixa de aviso
+      ret(ctx, px + 1, py - 10, 12, 13, K); ret(ctx, px + 2, py - 9, 10, 11, N.cinza); ret(ctx, px + 2, py - 9, 10, 2, N.branco);
+      for (var j = 0; j < 3; j++) ret(ctx, px + 3 + j * 3, py - 2, 2, 3, j % 2 ? K : N.amarelo);
+      ret(ctx, px + 5, py - 6, 4, 1, N.cinza3);
+    } });
+  // bancada do laboratório com uma experiência em cima: var.exp = 'tubos' | 'microscopio'
+  I.objeto('nasa-bancada', { w: 3, h: 1, topo: 14, solido: true,
+    desenhar: function (ctx, px, py, o) {
+      // armário embaixo, com três portinhas
+      ret(ctx, px + 2, py + 3, 44, 12, K); ret(ctx, px + 3, py + 3, 42, 10, N.cinza);
+      ret(ctx, px + 17, py + 4, 1, 9, N.cinza2); ret(ctx, px + 31, py + 4, 1, 9, N.cinza2);
+      ret(ctx, px + 9, py + 7, 3, 1, N.cinza3); ret(ctx, px + 23, py + 7, 3, 1, N.cinza3); ret(ctx, px + 37, py + 7, 3, 1, N.cinza3);
+      // tampo branco
+      ret(ctx, px + 1, py - 1, 46, 5, K); ret(ctx, px + 2, py, 44, 3, N.branco); ret(ctx, px + 2, py, 44, 1, '#ffffff');
+      if (v(o, 'exp', 'tubos') === 'tubos') {
+        // suporte com tubos de ensaio coloridos, béquer borbulhando e um frasco
+        ret(ctx, px + 5, py - 5, 14, 5, K); ret(ctx, px + 6, py - 4, 12, 3, N.cinza2);
+        [N.verde, '#ff8ac4', N.ciano, N.amarelo].forEach(function (c, i) {
+          var x = px + 7 + i * 3;
+          ret(ctx, x - 1, py - 13, 3, 11, K); ret(ctx, x, py - 12, 1, 5, '#eef6ff'); ret(ctx, x, py - 7, 1, 4, c);
+        });
+        ret(ctx, px + 23, py - 11, 11, 11, K); ret(ctx, px + 24, py - 10, 9, 9, '#e6f6ff');
+        ret(ctx, px + 24, py - 6, 9, 5, N.verde); ret(ctx, px + 24, py - 6, 9, 1, '#b8f5c8');
+        ret(ctx, px + 26, py - 9, 1, 1, '#ffffff'); ret(ctx, px + 30, py - 8, 1, 1, '#ffffff');
+        ret(ctx, px + 38, py - 13, 4, 5, K); ret(ctx, px + 39, py - 12, 2, 4, '#e6f6ff');
+        ret(ctx, px + 36, py - 8, 8, 8, K); ret(ctx, px + 37, py - 7, 6, 6, '#ff8ac4'); ret(ctx, px + 37, py - 7, 6, 1, '#ffc4e0');
+      } else {
+        // microscópio, placas com amostras e o caderno de anotações
+        ret(ctx, px + 5, py - 4, 12, 4, K); ret(ctx, px + 6, py - 3, 10, 2, N.cinza3);
+        ret(ctx, px + 12, py - 13, 4, 10, K); ret(ctx, px + 13, py - 12, 2, 8, N.cinza2);
+        ret(ctx, px + 7, py - 15, 6, 8, K); ret(ctx, px + 8, py - 14, 4, 6, N.branco); ret(ctx, px + 8, py - 14, 4, 1, '#ffffff');
+        ret(ctx, px + 6, py - 7, 9, 2, K);
+        D.elipse(ctx, px + 24, py - 2, 5, 2, K); D.elipse(ctx, px + 24, py - 2, 4, 1, '#e6f6ff'); ret(ctx, px + 23, py - 2, 2, 1, N.verde);
+        D.elipse(ctx, px + 33, py - 2, 5, 2, K); D.elipse(ctx, px + 33, py - 2, 4, 1, '#e6f6ff'); ret(ctx, px + 33, py - 2, 2, 1, '#ff8ac4');
+        ret(ctx, px + 38, py - 4, 7, 4, K); ret(ctx, px + 39, py - 3, 5, 2, '#fff8ee'); ret(ctx, px + 40, py - 3, 3, 1, N.azul);
+      }
     } });
   // faixa de chão com NASA escrito (pintura no piso)
   I.objeto('nasa-piso-letreiro', { w: 4, h: 2, solido: false, semSombra: true,

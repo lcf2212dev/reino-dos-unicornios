@@ -37,7 +37,7 @@
   }
 
   /* ---------- o chão de Tritão: gelo azul com rachaduras e neve ---------- */
-  I.PISOS['netuno-gelo'] = { cores: { piso: '#bcd8f2', piso2: '#e6f3ff', detalhe: '#6f9fd2', luz: '#ffffff' },
+  I.PISOS['netuno-gelo'] = { cores: { piso: '#8e94e2', piso2: '#a8a0ee', detalhe: '#5a5cb8', luz: '#d4d8ff' },
     desenhar: function (ctx, px, py, tx, ty, p) {
       ret(ctx, px, py, 16, 16, p.piso);
       var s = sorte(tx, ty, 1);
@@ -79,7 +79,7 @@
     }
   }
   function sol(ctx, cx, cy) { circulo(ctx, cx, cy, 3, 'rgba(255,230,140,0.3)'); circulo(ctx, cx, cy, 2, '#fff2b0'); ret(ctx, cx, cy, 1, 1, '#ffffff'); }
-  I.PAREDES['netuno-horizonte'] = { cores: { parede: CEU, parede2: '#dcecff', rodape: '#bcd8f2', detalhe: '#7da9dc' },
+  I.PAREDES['netuno-horizonte'] = { cores: { parede: CEU, parede2: '#b4b0f0', rodape: '#8e94e2', detalhe: '#6a6cc8' },
     desenhar: function (ctx, px, py, tx, p) {
       ret(ctx, px, py, 16, 32, p.parede);
       if (P.estrelas) P.estrelas(ctx, px, py, 16, 20, 60, 600 + tx);
@@ -93,7 +93,7 @@
         ret(ctx, px + i, py + h, 1, 32 - h, p.detalhe);
         ret(ctx, px + i, py + h + 1, 1, 2, p.parede2);
       }
-      ret(ctx, px, py + 28, 16, 1, '#4f78b0');
+      ret(ctx, px, py + 28, 16, 1, '#5a5cb8');
       ret(ctx, px, py + 29, 16, 3, p.rodape);
     } };
 

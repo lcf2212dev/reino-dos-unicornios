@@ -40,8 +40,8 @@
     ret(ctx, px + 1, py - 13, 14, 2, faixa);
   }
 
-  /* ---------- o chão: rocha amarelo-alaranjada com rachaduras e pedrinhas ---------- */
-  I.PISOS['venus-rocha'] = { cores: { piso: '#e6b865', piso2: '#d9a352', detalhe: '#9a6232', luz: '#f7d98f' },
+  /* ---------- o chão: rocha amarelo-esverdeada (enxofre; D2B-10: não confunde com Marte) com rachaduras e pedrinhas ---------- */
+  I.PISOS['venus-rocha'] = { cores: { piso: '#b8c864', piso2: '#a8b656', detalhe: '#6e7430', luz: '#d8e090' },
     desenhar: function (ctx, px, py, tx, ty, p) {
       ret(ctx, px, py, 16, 16, p.piso);
       var s = sorte(tx, ty, 1);
@@ -69,7 +69,7 @@
     VULCOES.forEach(function (v) { var d = Math.abs(X - v.x); if (d < v.larg) h = Math.min(h, 23 - Math.round(v.alt * (1 - d / v.larg))); });
     return h;
   }
-  I.PAREDES['venus-horizonte'] = { cores: { parede: '#e8a94a', parede2: '#f4c96a', rodape: '#e6b865', detalhe: '#8a5530' },
+  I.PAREDES['venus-horizonte'] = { cores: { parede: '#e8a94a', parede2: '#f4c96a', rodape: '#a8b656', detalhe: '#8a5530' },
     desenhar: function (ctx, px, py, tx, p) {
       // o céu: faixas de nuvem amarela, mais clara no alto
       ret(ctx, px, py, 16, 32, p.parede);

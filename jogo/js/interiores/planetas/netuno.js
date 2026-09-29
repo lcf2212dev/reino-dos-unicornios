@@ -1,35 +1,36 @@
 /* Planeta Netuno (viagem de foguete): interior do Observatório alcançado só pelo foguete do Hangar.
    Netuno é de gás e gelado: o passeio é em Tritão, a maior lua dele, com Netuno azul gigante no céu. Fixos
-   (contrato): id 'planeta-netuno', o spawn/chegada (11, 14), o foguete de pouso em (12, 13) e as vagas dos ETs
+   (contrato): id 'planeta-netuno', o spawn/chegada (13, 4), o foguete de pouso em (14, 3), perto do horizonte (a chegada mostra o céu) e as vagas dos ETs
    (observatorio/reservas.js): Gota (8, 7), Memo (16, 9), Vovó Ventania (5, 12). Matéria dos portais do voo e do
    ET do desafio: ciencias. Objetos e céu em netuno-objetos.js, brincadeiras em netuno-brincadeiras.js, falas em
    netuno-falas.js. */
 (function () {
   var R = window.Reino;
-  var CHEGADA = { x: 11, y: 14 };
+  var CHEGADA = { x: 13, y: 4 };
   var P = R._predios.planetas;
 
   // sem o sistema da viagem (a prévia dos interiores só carrega os prédios), o interior existe mesmo assim
   if (R.Viagem) R.Viagem.registrarPlaneta({ id: 'netuno', nome: 'Netuno', artigo: 'em', interior: 'planeta-netuno',
     chegada: CHEGADA, ordem: 6, cor: '#4a6fd8', materia: 'ciencias', depois: 'venus' });
 
+  var COMODO = { id: 'netuno', nome: 'Netuno', placa: 'Netuno', rect: { x: 1, y: 1, w: 22, h: 15 }, piso: 'netuno-gelo', parede: 'netuno-horizonte' };
   R.registrarInterior({
     id: 'planeta-netuno',
     lugar: 'observatorio',
     nome: 'Netuno',
     pacote: 'interior-observatorio',
-    fundo: 'espaco',
-    tamanho: { w: 24, h: 17 },
+    fundo: P.fundo('planeta-netuno', COMODO),   // o chão vai até a borda (planetas-comum.js)
+    tamanho: { w: 24, h: 28 },   // da fileira 16 para baixo, só o chão (a câmera nunca mostra o espaço embaixo)
     spawn: CHEGADA,
-    comodos: [
-      { id: 'netuno', nome: 'Netuno', placa: 'Netuno', rect: { x: 1, y: 1, w: 22, h: 15 }, piso: 'netuno-gelo', parede: 'netuno-horizonte' },
-    ],
+    comodos: [COMODO],
     // o caminho da chegada ao foguete e aos ETs
-    corredores: [{ x: 9, y: 11, w: 5, h: 5 }],
+    corredores: [{ x: 11, y: 3, w: 5, h: 4 }],
     objetos: [
       // o foguete de pouso, ao lado da chegada: volta ao Hangar
-      { tipo: 'planeta-foguete', x: 12, y: 13, nome: 'Foguete', acao: { tipo: 'viagem', para: 'observatorio-2', chegada: { x: 7, y: 9 } } },
-      { tipo: 'netuno-placa', x: 9, y: 13, nome: 'Placa', fala: ['{Bem-vinda|Bem-vindo} a Netuno, {nome}!', 'Aqui é Tritão, lua de Netuno.'] },
+      { tipo: 'planeta-foguete', x: 14, y: 3, nome: 'Foguete', acao: { tipo: 'viagem', para: 'observatorio-2', chegada: { x: 7, y: 9 } } },
+      { tipo: 'netuno-placa', x: 12, y: 3, nome: 'Placa', fala: ['{Bem-vinda|Bem-vindo} a Netuno, {nome}!', 'Aqui é Tritão, lua de Netuno.'] },
+      // no lugar antigo da chegada
+      { tipo: 'netuno-neve', x: 10, y: 11 }, { tipo: 'netuno-racha', x: 10, y: 13 }, { tipo: 'netuno-pedrinhas', x: 13, y: 12 }, { tipo: 'netuno-neve', x: 12, y: 14 },
       { tipo: 'netuno-placa', x: 20, y: 3, nome: 'Placa de Tritão', fala: ['Netuno é feito só de gás.', 'Por isso a gente pousou aqui.', 'Olhe Netuno azul no céu!'] },
       // vento
       { tipo: 'netuno-catavento', x: 10, y: 6, nome: 'Cata-vento', acao: { tipo: 'netuno-brincadeira', b: 'catavento' } },
@@ -39,7 +40,7 @@
       { tipo: 'netuno-geiser', x: 21, y: 8, nome: 'Gêiser de gelo', acao: { tipo: 'netuno-brincadeira', b: 'geiser', i: 1 } },
       { tipo: 'netuno-geiser', x: 3, y: 14, nome: 'Gêiser de gelo', acao: { tipo: 'netuno-brincadeira', b: 'geiser', i: 2 } },
       // cristais azuis para pegar
-      { tipo: 'netuno-cristal', x: 12, y: 4, nome: 'Cristal azul', acao: { tipo: 'netuno-brincadeira', b: 'cristal', n: 0 } },
+      { tipo: 'netuno-cristal', x: 9, y: 12, nome: 'Cristal azul', acao: { tipo: 'netuno-brincadeira', b: 'cristal', n: 0 } },
       { tipo: 'netuno-cristal', x: 13, y: 7, nome: 'Cristal azul', acao: { tipo: 'netuno-brincadeira', b: 'cristal', n: 1 } },
       { tipo: 'netuno-cristal', x: 2, y: 10, nome: 'Cristal azul', acao: { tipo: 'netuno-brincadeira', b: 'cristal', n: 2 } },
       { tipo: 'netuno-cristal', x: 18, y: 13, nome: 'Cristal azul', acao: { tipo: 'netuno-brincadeira', b: 'cristal', n: 3 } },
@@ -59,7 +60,7 @@
       { tipo: 'netuno-bandeira', x: 8, y: 3, nome: 'Bandeira', fala: ['A bandeira do nosso Reino!', 'Ela fica firme no vento.'] },
       // enfeites de gelo
       { tipo: 'netuno-cristal-alto', x: 2, y: 3 }, { tipo: 'netuno-cristal-alto', x: 22, y: 5 }, { tipo: 'netuno-blocos', x: 20, y: 11 },
-      { tipo: 'netuno-bloco', x: 14, y: 3 }, { tipo: 'netuno-bloco', x: 2, y: 8 }, { tipo: 'netuno-bloco', x: 22, y: 14 },
+      { tipo: 'netuno-bloco', x: 11, y: 14 }, { tipo: 'netuno-bloco', x: 2, y: 8 }, { tipo: 'netuno-bloco', x: 22, y: 14 },
       { tipo: 'netuno-cristal-alto', x: 7, y: 11 }, { tipo: 'netuno-bloco', x: 16, y: 14 },
       { tipo: 'netuno-neve', x: 5, y: 7 }, { tipo: 'netuno-neve', x: 11, y: 9 }, { tipo: 'netuno-neve', x: 19, y: 4 }, { tipo: 'netuno-neve', x: 1, y: 12 },
       { tipo: 'netuno-neve', x: 15, y: 14 }, { tipo: 'netuno-neve', x: 21, y: 9 }, { tipo: 'netuno-neve', x: 4, y: 10 },

@@ -28,8 +28,8 @@
     ret(ctx, cx - r - 2, cy + r - 1, 2 * r + 4, 1, NU.escuro);
   }
 
-  /* ---------- o chão: ilhas de nuvem creme, fofinhas, com fiapos bege e brilhos ---------- */
-  I.PISOS['jupiter-nuvem'] = { cores: { piso: '#f3e4c8', piso2: '#fff6e4', detalhe: '#d8bb8e', luz: '#fffdf6' },
+  /* ---------- o chão: ilhas de nuvem rosadas, fofinhas, com fiapos bege e brilhos ---------- */
+  I.PISOS['jupiter-nuvem'] = { cores: { piso: '#f7c0b4', piso2: '#fbd6cc', detalhe: '#d8907e', luz: '#fff0ea' },
     desenhar: function (ctx, px, py, tx, ty, p) {
       ret(ctx, px, py, 16, 16, p.piso);
       var s = sorte(tx, ty, 1);
@@ -66,7 +66,7 @@
     circulo(ctx, cx, cy, 4, K); circulo(ctx, cx, cy, 3, cor);
     ret(ctx, cx - 1, cy, 2, 1, mancha); ret(ctx, cx + 1, cy - 2, 1, 1, mancha); ret(ctx, cx - 2, cy - 2, 1, 1, '#ffffff');
   }
-  I.PAREDES['jupiter-horizonte'] = { cores: { parede: CEU, parede2: '#fff6e4', rodape: '#f3e4c8', detalhe: '#e6cfa6' },
+  I.PAREDES['jupiter-horizonte'] = { cores: { parede: CEU, parede2: '#fff6e4', rodape: '#f7c0b4', detalhe: '#e6cfa6' },
     desenhar: function (ctx, px, py, tx, p) {
       ret(ctx, px, py, 16, 32, p.parede);
       if (P.estrelas) P.estrelas(ctx, px, py, 16, 20, 60, 400 + tx);

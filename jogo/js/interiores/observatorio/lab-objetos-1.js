@@ -124,7 +124,8 @@
       ret(ctx, px + 7, py - 1, 2, 1, C.ouro);
     } });
   // bancada 2×1 com miudezas: frascos, vasinhos ou pedras (var.itens)
-  I.objeto('lab-bancada', { w: 2, h: 1, topo: 10, solido: true, alto: true,
+  I.objeto('lab-bancada', { w: 2, h: 1, topo: 8,   // baixa: as miudezas não passam de 8 px (cabe embaixo dos quadros; O-12)
+    solido: true, alto: true,
     desenhar: function (ctx, px, py, o) {
       tampo(ctx, px, py, py + 2, 2);
       ret(ctx, px + 5, py + 8, 20, 6, K); ret(ctx, px + 6, py + 9, 18, 4, LAB2); ret(ctx, px + 15, py + 9, 1, 4, K);
@@ -150,12 +151,12 @@
       elipse(ctx, px + 5, py + 6, 3, 2, C.pedra2); elipse(ctx, px + 10, py + 5, 3, 3, C.metal2); elipse(ctx, px + 8, py + 3, 2, 2, '#c8b0e0');
       ret(ctx, px + 9, py + 3, 1, 1, C.branco);
     } });
-  I.objeto('lab-broto', { w: 1, h: 1, topo: 10, solido: true, alto: true,
+  I.objeto('lab-broto', { w: 1, h: 1, topo: 8, solido: true, alto: true,
     desenhar: function (ctx, px, py) {
       ret(ctx, px + 3, py + 6, 10, 9, K); ret(ctx, px + 4, py + 7, 8, 7, C.terracota); ret(ctx, px + 2, py + 5, 12, 3, K); ret(ctx, px + 3, py + 6, 10, 1, C.terracota2);
-      ret(ctx, px + 7, py - 6, 2, 12, FOLHA2);
+      ret(ctx, px + 7, py - 5, 2, 11, FOLHA2);
       elipse(ctx, px + 4, py - 3, 3, 2, K); elipse(ctx, px + 4, py - 3, 2, 1, FOLHA);
-      elipse(ctx, px + 11, py - 7, 3, 2, K); elipse(ctx, px + 11, py - 7, 2, 1, FOLHA);
+      elipse(ctx, px + 11, py - 5, 3, 2, K); elipse(ctx, px + 11, py - 5, 2, 1, FOLHA);
       elipse(ctx, px + 8, py + 4, 2, 1, '#f3e6c8');   // o feijão que brotou
     } });
   I.objeto('lab-pedra', { w: 1, h: 1, topo: 6, solido: true,
