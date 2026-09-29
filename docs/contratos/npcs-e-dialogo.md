@@ -122,6 +122,8 @@ O que o NPC faz (sala, guia, treino…) está no `npcs` do interior onde ele apa
    | sim ou cor | `barba`, `bigode` (padrão: cor do cabelo), `nariz`, `colar`, `gravata`, `gola`, `livro`, `livroAberto` (padrão: `cor2`) |
    | dragão | `corpo`, `barriga`, `asa` (cores), `moeda` (`false` tira a moeda) |
    | robô | `corpo`, `detalhe`, `antena` (cores; `observatorio/robo.js`) |
+   | ofício | `armaduraCor` (cor da matéria na `armadura`), `foguete`, `chave`, `mapa`, `tesoura` (sim: objeto na mão) |
+   | ET (`base: 'et'`) | `idade` (criança −2 linhas de corpo, idoso +2), `planeta` (traço fixo do planeta), `xale`, `bengala` |
 
    Base nova: `registrarBase(nome, fn, chaves?)`, com `chaves = { detalhe: 'cor', … }` (as que ela lê de `o.cru`),
    para o validador não avisar.
