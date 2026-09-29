@@ -4725,13 +4725,13 @@
    "fala": "A televisão pode transmitir notícias."
   },
   {
-   "chave": "769bcdd41n",
+   "chave": "e297e3b01e",
    "voz": "narradora",
-   "texto": "Escreva os nomes dos meios de comunicação abaixo:",
+   "texto": "Ligue os meios de comunicação aos nomes:",
    "pacotes": [
     "prova-geografia-3bim"
    ],
-   "fala": "Escreva os nomes dos meios de comunicação abaixo:"
+   "fala": "Ligue os meios de comunicação aos nomes:"
   },
   {
    "chave": "ae004d4315",
