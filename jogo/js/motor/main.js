@@ -135,34 +135,63 @@
 
   /* o jogo só começa com o progresso guardado em mãos (o banco da Vercel ou o claude.ai): sem ele, um aparelho novo
      abriria a primeira vez e trocaria as escolhas dela. Sem rede, quem já tem o save no aparelho joga com ele. */
+  var ESPERA_PASSO_MS = 600;   // uma estrelinha a mais na espera (--lento, ui.md §10.15: volta inteira em 1,8 s)
+  V.esperarProgresso = esperarProgresso;   // para ver a espera nas fotos (npm run ver -- --vivo --js …)
   function esperarProgresso() {
     return new Promise(function (resolver) {
-      var t = null, msg = null, botao = null;
-      function aviso(texto) {
-        var novo = el('p.inicio-sub', texto);
+      var t = null, msg = null, botao = null, timer = 0;
+      function aviso(novo) {
+        if (typeof novo === 'string') novo = el('p.inicio-sub', novo);
+        clearInterval(timer); timer = 0;
         msg.parentNode.replaceChild(novo, msg);
         msg = novo;
+      }
+      /* "Abrindo o reino" + três estrelinhas que acendem uma a uma (troca de quadro a cada ESPERA_PASSO_MS, em
+         degraus); com Animações desligadas (ou reduzir movimento, ou os testes congelados) as três ficam acesas, paradas */
+      function abrindo() {
+        var estrelas = [0, 1, 2].map(function () { return el('span.inicio-estrela', '⭐'); });
+        // as estrelas numa linha só, embaixo do texto (no celular não cabem ao lado sem quebrar)
+        var fila = el('span.inicio-espera', { 'aria-hidden': 'true' }, estrelas[0], estrelas[1], estrelas[2]);
+        fila.style.display = 'block'; fila.style.whiteSpace = 'nowrap';
+        var p = el('p.inicio-sub.inicio-abrindo', 'Abrindo o reino', fila);
+        var anima = !Reino.congelado && !U.reduzMovimentoSistema && !document.body.classList.contains('sem-animacao');
+        if (anima) {
+          var passo = 0;
+          var mostrarPasso = function () {
+            estrelas.forEach(function (e, i) { e.style.visibility = i <= passo ? '' : 'hidden'; });
+            passo = (passo + 1) % estrelas.length;
+          };
+          mostrarPasso();
+          p._timer = setInterval(function () {
+            if (!p.isConnected) { clearInterval(p._timer); return; }
+            mostrarPasso();
+          }, ESPERA_PASSO_MS);
+        }
+        return p;
       }
       function mostrar() {
         if (t) return;
         t = UI.abrirTela('inicio');
-        msg = el('p.inicio-sub', 'Abrindo o reino...');
+        msg = abrindo();
+        timer = msg._timer || 0;
         botao = el('button.btn-grande.btn-principal.btn-comecar', { type: 'button' }, 'Tentar de novo 🔄');
         botao.hidden = true;
         botao.addEventListener('click', tentar);
         t.appendChild(el('div.inicio', logo(), msg, botao));
       }
       function tentar() {
-        if (t) { aviso('Abrindo o reino...'); botao.hidden = true; }
+        if (t) { aviso(abrindo()); timer = msg._timer || 0; botao.hidden = true; }
         var espera = setTimeout(mostrar, 400);   // resposta rápida: nem aparece
         P.iniciarNuvem().then(function () {
           clearTimeout(espera);
+          clearInterval(timer);
           if (t) UI.fecharTela(t);
           resolver();
         }, function () {
           clearTimeout(espera);
           // sem rede, mas o save deste jogador já está no aparelho: joga com ele e sincroniza quando a rede voltar
           if (P.podeJogarSemNuvem()) {
+            clearInterval(timer);
             if (t) UI.fecharTela(t);
             P.reconectarNuvem();
             resolver();

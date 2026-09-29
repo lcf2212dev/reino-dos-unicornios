@@ -22,14 +22,16 @@ fs.readdirSync(path.join(JOGO, 'css'), { withFileTypes: true })
 fs.cpSync(path.join(JOGO, 'js'), path.join(SAIDA, 'js'), { recursive: true, filter: (o) => !o.endsWith('versao.json') });
 execFileSync(process.execPath, [path.join(JOGO, 'ferramentas', 'gerar-versao.js'), '--raiz', SAIDA], { stdio: 'inherit' });
 
-// PWA: manifesto e ícones na raiz; o index.html os anuncia e registra o sw.js
+// PWA: manifesto e ícones na raiz (os PNG saem de jogo/ferramentas/pwa/gerar-icones.js); o index.html os anuncia e
+// registra o sw.js. O favicon é o do próprio jogo (index.html); o nome curto é o do manifesto (um lugar só).
+const NOME_CURTO = JSON.parse(fs.readFileSync(path.join(PWA, 'manifest.webmanifest'), 'utf8')).short_name;
 fs.readdirSync(PWA).filter((n) => n !== 'sw.js').forEach((n) => fs.copyFileSync(path.join(PWA, n), path.join(SAIDA, n)));
 const cabeca = [
   '<link rel="manifest" href="manifest.webmanifest">',
   `<meta name="theme-color" content="${COR}">`,
-  '<link rel="icon" type="image/png" sizes="192x192" href="icone-192.png">',
   '<link rel="apple-touch-icon" href="apple-touch-icon.png">',
   '<meta name="apple-mobile-web-app-capable" content="yes">',
+  `<meta name="apple-mobile-web-app-title" content="${NOME_CURTO}">`,
   '<script>if ("serviceWorker" in navigator) addEventListener("load", function () {'
     + ' navigator.serviceWorker.register("sw.js").then(function (r) {'
     + ' document.addEventListener("visibilitychange", function () { if (!document.hidden) r.update().catch(function () {}); });'
