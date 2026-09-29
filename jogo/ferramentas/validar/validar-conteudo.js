@@ -181,24 +181,37 @@ PROVAS.forEach((pv) => {
   detalhe(`✔ ${pv.nome} (${pv.bimestre}): ${pv.questoes.length} questões, acessórios ${pv.acessorios.lendario.nome} / ${pv.acessorios.raro.nome} / ${pv.acessorios.comum.nome}`);
 });
 
-// emoji de matéria sem desenho em js/arte/icones/ aparece como emoji reduzido (feio): desenhar antes de publicar
+// emoji sem desenho em js/arte/icones/ (ou Reino.registrarIcones) aparece como emoji reduzido (feio): é erro.
+// Confere todo js/**/*.js (fora js/voz/) e css/*.css, sem os comentários; com --so, só a matéria ou prova.
+// --emojis-extra <arquivo>: confere também esse arquivo (o teste de unidade planta um)
 {
   const ic = icones;
-  const RE = /(\p{RI}\p{RI}|\p{Extended_Pictographic}(?:\uFE0F|\uFE0E)?(?:\u200D\p{Extended_Pictographic}(?:\uFE0F|\uFE0E)?)*)/gu;
-  const semDesenho = new Set();
+  const RE = /(\p{RI}\p{RI}|\p{Extended_Pictographic}(?:\uFE0F|\uFE0E)?(?:\u200D\p{Extended_Pictographic}(?:\uFE0F|\uFE0E)?)*|[0-9#*]\uFE0F?\u20E3)/gu;
+  const semDesenho = new Map();   // emoji → arquivos
   // com --so, só os arquivos daquela matéria (js/conteudo/materias/<id>/) ou prova (js/conteudo/provas/<id>.js)
   const daVez = (s) => !SO || s.js.split('/').includes(SO) || s.js.endsWith('/' + SO + '.js');
-  const arquivos = materias.filter(daVez).map((s) => trocar[Jogo.nome(s)] || Jogo.caminho(s.js))
-    .concat(provas.filter(daVez).map((s) => Jogo.caminho(s.js)))
-    .concat(SO ? [] : ['atividades/provas', 'sistemas/falas'].map(Jogo.arquivo))
-    .concat(SO ? [] : Jogo.manifesto.scripts.filter((s) => s.grupo === 'ui').map((s) => Jogo.caminho(s.js)));
-  arquivos.forEach((f) => {
-    for (const m of fs.readFileSync(f, 'utf8').matchAll(RE)) {
+  const todos = (pasta, ext) => (fs.existsSync(pasta) ? fs.readdirSync(pasta, { recursive: true }) : []).filter((f) => f.endsWith(ext)).map((f) => path.join(pasta, f));
+  const raizJs = path.join(Jogo.raiz, 'js'), voz = path.join(raizJs, 'voz') + path.sep;
+  const trocado = (f) => { const s = materias.find((x) => Jogo.caminho(x.js) === f); return (s && trocar[Jogo.nome(s)]) || f; };
+  const arquivos = SO
+    ? materias.filter(daVez).map((s) => trocar[Jogo.nome(s)] || Jogo.caminho(s.js)).concat(provas.filter(daVez).map((s) => Jogo.caminho(s.js)))
+    : todos(raizJs, '.js').filter((f) => !f.startsWith(voz)).map(trocado).concat(todos(path.join(Jogo.raiz, 'css'), '.css'));
+  const iExtra = process.argv.indexOf('--emojis-extra');
+  if (iExtra >= 0) arquivos.push(path.resolve(process.argv[iExtra + 1]));
+  // tira /* */ e // de fim de linha (fora de "http://", ':' antes) sem mexer no resto
+  const semComentarios = (t) => t.replace(/\/\*[\s\S]*?\*\//g, '').replace(/(^|[^:'"`\\])\/\/.*$/gm, '$1');
+  // desenho registrado dentro de uma tela (Reino.registrarIcones numa função que o node não roda): '<emoji>': { n:
+  const textos = arquivos.map((f) => [f, semComentarios(fs.readFileSync(f, 'utf8'))]);
+  const registrados = new Set(textos.flatMap(([, t]) => [...t.matchAll(/['"]([^'"\n]{1,12})['"]\s*:\s*\{\s*n\s*:/g)].map((m) => m[1].replace(/\uFE0F/g, ''))));
+  textos.forEach(([f, t]) => {
+    for (const m of t.matchAll(RE)) {
       const k = m[0].replace(/\uFE0F/g, '');
-      if (!ic.window.ICONES[k]) semDesenho.add(k);
+      if (ic.window.ICONES[k] || registrados.has(k)) continue;
+      if (!semDesenho.has(k)) semDesenho.set(k, new Set());
+      semDesenho.get(k).add(path.relative(Jogo.raiz, f));
     }
   });
-  if (semDesenho.size) avisos.push(`emojis sem pixel art em js/arte/icones/: ${[...semDesenho].join(' ')}`);
+  semDesenho.forEach((onde, k) => erros.push(`emoji ${k} sem pixel art em js/arte/icones/ (em ${[...onde].join(', ')})`));
 }
 // falas dos módulos (sistemas: Reino.registrarModulo) com `(preencher)`: carregam com todos os `node: true`
 if (!SO) {
