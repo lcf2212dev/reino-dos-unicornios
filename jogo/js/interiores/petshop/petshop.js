@@ -43,23 +43,23 @@
     { tipo: 'petshop-coleiras', x: 13, y: 1 },
     // fundo: nada que se toca nos cantos de cima, que somem sob as colunas do HUD (à esquerda os avisos,
     // como "🥚 1 ovo!"; à direita o ↙ e o cartão da montaria). A estante fica uma fileira à frente, à direita
-    { tipo: 'petshop-sacos-feno', x: 1, y: 3 },
-    { tipo: 'planta-alta', x: 2, y: 3 },
+    { tipo: 'petshop-cesta-macas', x: 1, y: 3 },
+    { tipo: 'flores', x: 2, y: 3 },
     { tipo: 'petshop-potes-biscoito', x: 3, y: 3 },
     { tipo: 'petshop-cesta-cenouras', x: 4, y: 3 },
     { tipo: 'petshop-cesta-macas', x: 5, y: 3 },
     { tipo: 'flores', x: 6, y: 3, var: { vaso: '#ff9cc6' } },
-    { tipo: 'petshop-sacos-feno', x: 9, y: 3 },
+    { tipo: 'petshop-cesta-cenouras', x: 9, y: 3 },
     { tipo: 'caixote', x: 10, y: 3, var: { item: 'estrela' } },
     { tipo: 'petshop-potes-biscoito', x: 11, y: 3 },
-    { tipo: 'petshop-sacos-feno', x: 12, y: 3 },
-    { tipo: 'planta-alta', x: 13, y: 3 },
-    { tipo: 'petshop-sacos-feno', x: 14, y: 3 },
-    { tipo: 'petshop-balcao', x: 9, y: 4 },
+    { tipo: 'caixote', x: 12, y: 3 },
+    { tipo: 'caixote', x: 13, y: 3 },   // atrás da estante: só peça baixa, que some inteira
+    { tipo: 'caixote', x: 14, y: 3 },
+    { tipo: 'petshop-balcao', x: 9, y: 4, junto: true },   // junto: o balcão fica de propósito na frente das cestas
     // lado esquerdo
     { tipo: 'cesto', x: 1, y: 4 },
     { tipo: 'petshop-tapete-patinhas', x: 3, y: 5, w: 3, h: 2 },
-    { tipo: 'petshop-sacos-feno', x: 1, y: 6 },
+    { tipo: 'petshop-sacos-feno', x: 7, y: 6 },
     inter('aquario', 'Aquário', { tipo: 'petshop-aquario', x: 1, y: 8 }),
     { tipo: 'flores', x: 3, y: 8, var: { vaso: '#8fe0d0' } },
     inter('casinha', 'Casinha', { tipo: 'petshop-casinha', x: 4, y: 10 }),
@@ -70,10 +70,10 @@
     // lado direito: atrás da estante, só enfeites (o chão ali ficaria preso)
     { tipo: 'petshop-potes-biscoito', x: 13, y: 4 },
     { tipo: 'cesto', x: 14, y: 4 },
-    inter('estante', 'Estante das comidinhas', { tipo: 'petshop-estante-comida', x: 13, y: 5, acao: TELA }),
+    inter('estante', 'Estante das comidinhas', { tipo: 'petshop-estante-comida', x: 13, y: 5, junto: true, acao: TELA }),
     inter('bolo', 'Bolo arco-íris', { tipo: 'petshop-vitrine-bolo', x: 10, y: 6, acao: TELA }),
     inter('balanca', 'Balança', { tipo: 'petshop-balanca', x: 14, y: 7 }),
-    { tipo: 'flores', x: 14, y: 6, var: { vaso: '#b58cff' } },
+    { tipo: 'flores', x: 12, y: 9, var: { vaso: '#b58cff' } },
     { tipo: 'almofada', x: 12, y: 7, var: { cor: '#ff9cc6' } },
     { tipo: 'petshop-tapete-patinhas', x: 10, y: 10, w: 3, h: 2 },
     { tipo: 'vaso-planta', x: 14, y: 10, var: { vaso: '#8fe0d0' } },
@@ -88,17 +88,16 @@
     { tipo: 'espelho', x: 22, y: 1 },
     inter('toalhas', 'Toalhas', { tipo: 'petshop-toalhas', x: 23, y: 1 }),
     // fundo: o bebedouro grande no meio
-    { tipo: 'petshop-xampus', x: 16, y: 3 },
-    { tipo: 'petshop-pilha-toalhas', x: 17, y: 3 },
-    { tipo: 'petshop-balde-espuma', x: 18, y: 3 },
+    { tipo: 'petshop-pilha-toalhas', x: 16, y: 3 },
+    { tipo: 'balde', x: 17, y: 3 },
+    { tipo: 'petshop-patinhos', x: 18, y: 3 },   // baixo: o chuveirinho aparece inteiro
     { tipo: 'petshop-bebedouro', x: 19, y: 3, nome: 'Bebedouro', acao: { tipo: 'beber' } },
     { tipo: 'balde', x: 22, y: 3 },
     { tipo: 'flores', x: 24, y: 3, var: { vaso: '#ff9cc6' } },
-    { tipo: 'petshop-xampus', x: 18, y: 4 },
+    { tipo: 'petshop-xampus', x: 19, y: 8 },
     { tipo: 'vaso-planta', x: 16, y: 5, var: { vaso: '#5fb4ff' } },   // 1 fileira abaixo: os xampus aparecem inteiros
     { tipo: 'tapete-redondo', x: 17, y: 5, w: 2, h: 2, var: { cores: ['#5fb4ff', '#bfe9ff', '#ffffff', '#9fdcff'] } },
     { tipo: 'petshop-tapete-banho', x: 19, y: 5, w: 3, h: 1 },
-    { tipo: 'flores', x: 24, y: 5, var: { vaso: '#9fdcff' } },
     // banheira de espuma à direita
     // banheira de espuma: o banho da montaria, de graça (js/sistemas/banho.js); ela para à esquerda, no corredor
     { tipo: 'petshop-banheira', x: 22, y: 6, nome: 'Banho de espuma', acao: { tipo: 'banho' } },

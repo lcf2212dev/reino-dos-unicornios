@@ -16,6 +16,22 @@
     ret(ctx, cx - 1, py + 12 - alto, 3, alto, K); ret(ctx, cx, py + 12 - alto, 1, alto - 1, C.metal);
   }
 
+  // púlpito do Livro dos Caminhos: livro aberto com um mapinha e uma trilha tracejada
+  I.objeto('geografia-pulpito', { w: 1, h: 1, topo: 12, solido: true, alto: true,
+    desenhar: function (ctx, px, py) {
+      var cx = px + 8;
+      ret(ctx, cx - 5, py + 11, 11, 4, K); ret(ctx, cx - 4, py + 12, 9, 2, C.madeira2);
+      ret(ctx, cx - 2, py - 3, 5, 15, K); ret(ctx, cx - 1, py - 3, 3, 14, C.madeira); ret(ctx, cx - 1, py - 3, 1, 14, C.madeiraClara);
+      ret(ctx, cx - 7, py - 5, 15, 3, K); ret(ctx, cx - 6, py - 4, 13, 1, VERDE);
+      ret(ctx, cx - 7, py - 12, 15, 8, K);
+      ret(ctx, cx - 6, py - 11, 6, 6, '#9fcfff'); ret(ctx, cx + 1, py - 11, 6, 6, '#9fcfff');
+      ret(ctx, cx, py - 11, 1, 7, AZUL);
+      // terra verde e a trilha vermelha passando pelas duas páginas
+      ret(ctx, cx - 5, py - 10, 3, 3, VERDE); ret(ctx, cx + 3, py - 9, 3, 3, VERDE);
+      ret(ctx, cx - 3, py - 7, 1, 1, VERM); ret(ctx, cx - 1, py - 8, 1, 1, VERM); ret(ctx, cx + 2, py - 8, 1, 1, VERM);
+      ret(ctx, cx + 4, py - 13, 1, 3, AMAR);
+    } });
+
   /* ================= TRÂNSITO ================= */
   // semáforo de carros (var.pedestre: o de pedestres, com o bonequinho)
   I.objeto('geografia-semaforo', { w: 1, h: 1, topo: 18, solido: true, alto: true,
