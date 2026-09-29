@@ -1,18 +1,23 @@
 /* Desafios mais novos (inglês, desenho, texto de apoio, completar, copiar, maiúsculas acentuadas) e os avisos do menu Lugares: vêm depois de ui-animacoes.css, na ordem de antes. */
 /* ---------- inglês: trechos «...» viram <span class="en"> ---------- */
 .en {
+  --en-ponto: rgba(59, 47, 196, 0.45);
   color: #3b2fc4;
-  background: rgba(124, 92, 255, 0.13);
+  /* pontilhado em pixel no pé do trecho (2px ligado, 2px desligado): o `underline dotted` do Chromium saía com
+     os pontos em fase diferente a cada execução e sujava o e2e */
+  background: linear-gradient(90deg, var(--en-ponto) 50%, transparent 50%) 0 100% / 4px 2px repeat-x,
+    rgba(124, 92, 255, 0.13);
   border-radius: var(--canto);
-  padding: 0 0.15em;
+  padding: 0 0.15em 0.2em;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
-  text-decoration: underline dotted rgba(59, 47, 196, 0.45);
-  text-underline-offset: 0.25em;
 }
 /* sobre fundo escuro/colorido (botão marcado, principal, balão): herda a cor */
 [aria-pressed="true"] .en, .btn-principal .en, .vf-botao .en, .seq-item .en, .chip-palavra .en {
-  color: inherit; background: rgba(255, 255, 255, 0.22); text-decoration-color: currentColor;
+  --en-ponto: currentColor;
+  color: inherit;
+  background: linear-gradient(90deg, var(--en-ponto) 50%, transparent 50%) 0 100% / 4px 2px repeat-x,
+    rgba(255, 255, 255, 0.22);
 }
 .en canvas.pixel { background: none; }
 .vf-rotulo { font-family: var(--fonte-pixel), "Trebuchet MS", sans-serif; }
