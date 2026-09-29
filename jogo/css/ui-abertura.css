@@ -17,12 +17,12 @@
 .abertura-veu {   /* cantos mais escuros e um chão mais fundo atrás do botão: o texto lê bem */
   position: fixed; inset: 0; z-index: -1; pointer-events: none;
   background:
-    radial-gradient(ellipse 80% 70% at 50% 45%, transparent 60%, rgba(20, 10, 40, 0.45) 100%),
-    linear-gradient(180deg, transparent 72%, rgba(20, 12, 40, 0.35) 100%);
+    radial-gradient(ellipse 80% 70% at 50% 45%, transparent 0 72%, rgba(20, 10, 40, 0.22) 72% 88%, rgba(20, 10, 40, 0.45) 88%),
+    linear-gradient(180deg, transparent 0 80%, rgba(20, 12, 40, 0.18) 80% 90%, rgba(20, 12, 40, 0.35) 90%);
 }
 .abertura-flash {
   position: fixed; inset: 0; z-index: 5; pointer-events: none; opacity: 0;
-  background: radial-gradient(circle at 50% 50%, #fffbe8 0%, #fff3c4 45%, #ffd6ec 100%);
+  background: radial-gradient(circle at 50% 50%, #fffbe8 0 30%, #fff3c4 30% 65%, #ffd6ec 65%);
 }
 
 /* título: duas linhas em letra pixel, contorno escuro e o degradê rosa-dourado por cima de cada letra */
@@ -52,7 +52,7 @@
 .titulo-linha-2 .titulo-letra::after {
   content: attr(data-l);
   position: absolute; left: 0; top: 0;
-  background: linear-gradient(180deg, #fff6c8 0%, #ffd0e6 30%, #ff8fc4 55%, #e24c9a 100%);
+  background: linear-gradient(180deg, #fff6c8 0 25%, #ffd0e6 25% 45%, #ff8fc4 45% 70%, #e24c9a 70%);
   -webkit-background-clip: text; background-clip: text; color: transparent;
   text-shadow: none;
 }
@@ -63,7 +63,7 @@
 }
 @keyframes letra-brilha {
   0%, 16%, 100% { filter: none; }
-  6% { filter: brightness(1.7) drop-shadow(0 0 4px #fff6c8); }
+  6% { filter: brightness(1.7) drop-shadow(1px 0 0 #fff6c8) drop-shadow(-1px 0 0 #fff6c8) drop-shadow(0 1px 0 #fff6c8) drop-shadow(0 -1px 0 #fff6c8); }
 }
 
 /* embaixo: o botão de entrar (pulsa com um halo, sem mudar de tamanho) e o resto */
@@ -72,7 +72,7 @@
 .tela-inicio .inicio-sub {
   margin: 0; padding: 6px 14px;
   background: rgba(255, 248, 238, 0.92); color: var(--tinta);
-  border: 3px solid var(--borda); border-radius: 14px;
+  border: 3px solid var(--borda); border-radius: var(--canto-grande);
 }
 .tela-inicio .btn-comecar { font-size: 18px; padding: 16px 28px; }
 .btn-pulsar { animation: halo-pulsa 1.8s ease-out infinite; }

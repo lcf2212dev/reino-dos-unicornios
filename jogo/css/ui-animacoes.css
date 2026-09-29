@@ -5,7 +5,7 @@
 @keyframes pulsar { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.04); } }
 @keyframes piscar { 50% { opacity: 0.3; } }
 @keyframes flutuar { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-@keyframes balancar { 0%, 100% { transform: rotate(0); } 25% { transform: rotate(-9deg); } 75% { transform: rotate(9deg); } }
+@keyframes balancar { 0%, 100% { transform: none; } 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
 @keyframes brilhar { from { filter: brightness(2.2); transform: scale(0.6); } to { filter: none; transform: none; } }
 @keyframes tremer { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
 .treme { animation: tremer 0.4s ease-in-out; }
