@@ -16,6 +16,7 @@
 
   /* A abertura vem ANTES do login (e do P.carregar): o visual é o de quem jogou por último neste aparelho, só lido
      do save dele (Jogadores.visualGuardado); sem save, o padrão. A música (ajuste do save) liga depois de carregar. */
+  V.telaInicio = telaInicio;   // para os testes (debug.js: __reino.telaInicio)
   function telaInicio() {
     return new Promise(function (resolver) {
       var t = UI.abrirTela('inicio');
@@ -27,7 +28,9 @@
       var botoes = el('div.inicio-botoes', ir);
       var nomes = Reino.materias.map(function (m) { return m.nome; });
       t.appendChild(el('div.inicio', cena.el, el('div.inicio-baixo', botoes,
-        el('p.inicio-sub.inicio-materias', 'Revisão de ' + nomes.slice(0, -1).join(', ') + (nomes.length > 1 ? ' e ' : '') + nomes[nomes.length - 1]))));
+        el('p.inicio-sub.inicio-materias',
+          el('span.inicio-materias-longa', 'Revisão de ' + nomes.slice(0, -1).join(', ') + (nomes.length > 1 ? ' e ' : '') + nomes[nomes.length - 1]),
+          el('span.inicio-materias-curta', 'Revisão das ' + nomes.length + ' matérias da escola')))));   // curta: celular em pé
       var foi = false;
       ir.addEventListener('click', function () {
         if (foi) return;

@@ -18,7 +18,7 @@
     var digitado = '';
     var visor = el('div.pin-visor', '• • • •');
     var teclado = el('div.pin-teclado');
-    c.appendChild(el('p', 'Digite o PIN dos pais (definido em js/nucleo/config.js).'));
+    c.appendChild(el('p', 'Digite o PIN dos pais.'));
     c.appendChild(visor);
     ['1', '2', '3', '4', '5', '6', '7', '8', '9', '⌫', '0', 'OK'].forEach(function (k) {
       var b = el('button.pin-tecla', { type: 'button' }, k);
@@ -70,9 +70,11 @@
     });
     c.appendChild(el('div.bau-total', el('span.bau-moeda', '🪙'), el('div', el('small', 'Total ganho no jogo'), el('b', U.reais(total)), el('small', 'A pagar: ' + U.reais(Math.max(0, total - pagoTotal))))));
     var nuvem = P.statusNuvem();
-    c.appendChild(el('p.pais-nota', nuvem === 'local'
-      ? '💾 O progresso está salvo neste aparelho.'
-      : '☁️ O progresso está sincronizado entre os aparelhos pelo claude.ai.'));
+    c.appendChild(el('p.pais-nota', nuvem === 'erro'
+      ? '🔄 Não conseguimos enviar o progresso agora. O jogo tenta de novo sozinho.'
+      : nuvem === 'local'
+        ? '💾 O progresso está salvo só neste aparelho. Ele é enviado quando a internet voltar.'
+        : '☁️ O progresso está sincronizado com o banco do Reino.'));
     c.appendChild(el('p.pais-nota', 'A medalha de ouro da escola (R$' + Reino.config.medalhaEscolaValor + ') é combinada fora do jogo. O jogo só lembra ' + Reino.Genero.nome() + ' de fazer a prova com calma.'));
     var ciclo = el('button.btn-grande.btn-secundario', { type: 'button' }, '🔄 Começar novo ciclo de provas');
     ciclo.addEventListener('click', function () {
