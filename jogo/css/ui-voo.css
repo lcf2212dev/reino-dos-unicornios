@@ -6,10 +6,10 @@
 }
 .voo-topo { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; width: min(560px, 100%); color: #fff; }
 .voo-barra {
-  flex: 1; height: 18px; border: 3px solid #3a2446; border-radius: 10px;
+  flex: 1; height: 18px; border: 3px solid #3a2446; border-radius: var(--canto);
   background: #2b2452; overflow: hidden;
 }
-.voo-barra-enche { height: 100%; width: 0; background: linear-gradient(90deg, #8fd3ff, #c89bff); }
+.voo-barra-enche { height: 100%; width: 0; background: linear-gradient(90deg, #8fd3ff 0 50%, #c89bff 50%); }
 .voo-estrelas { font-weight: 800; font-size: 1.15em; min-width: 3.2em; text-align: right; }
 .voo-fechar { color: #3a2446; flex: none; width: 44px; height: 44px; min-width: 44px; min-height: 44px; }
 .voo-coluna { order: 2; display: flex; flex-direction: column; align-items: center; gap: 6px; }
@@ -18,7 +18,7 @@
 .voo-pergunta {
   display: flex; align-items: safe center; gap: 8px; box-sizing: border-box;
   width: min(560px, calc(100vw - 20px)); height: 104px; overflow-y: auto; padding: 6px 10px;
-  border: 3px solid #3a2446; border-radius: 12px; background: #fffaf0; color: #3a2446;
+  border: 3px solid #3a2446; border-radius: var(--canto); background: #fffaf0; color: #3a2446;
   visibility: hidden;
 }
 .voo-pergunta-ligada { visibility: visible; }
@@ -28,7 +28,7 @@
 .voo-ouvir { flex: none; width: 44px; height: 44px; min-width: 44px; min-height: 44px; }
 .voo-pergunta-certo { background: #e3f7df; border-color: #2f8a3c; }
 .voo-pergunta-quase { background: #fff1d6; border-color: #c07a12; }
-.voo-brilho { box-shadow: 0 0 0 4px #fff6a8, 0 0 18px 6px #ffd34d; }
+.voo-brilho { box-shadow: 0 0 0 4px #fff6a8, 0 0 0 8px #ffd34d; }
 .voo-portal { position: absolute; display: flex; pointer-events: none; }
 .voo-opcao {
   display: flex; align-items: center; justify-content: center; box-sizing: border-box; padding: 0 4px;
@@ -40,7 +40,7 @@
 .voo-opcao-errada { opacity: 0.55; }
 .voo-cena {
   display: block; image-rendering: pixelated; image-rendering: crisp-edges;
-  border: 3px solid #3a2446; border-radius: 12px; touch-action: none;
+  border: 3px solid #3a2446; border-radius: var(--canto); touch-action: none;
 }
 .voo-aviso {
   position: absolute; left: 0; right: 0; top: 38%; text-align: center; pointer-events: none;
@@ -51,7 +51,7 @@
 /* a chegada fica abaixo do planeta, num fundo, sem cobrir a borda dele */
 .voo-aviso-chegada {
   top: 58%; left: 8%; right: 8%; padding: 10px 8px;
-  background: rgba(58, 36, 70, 0.85); border: 3px solid #3a2446; border-radius: 12px;
+  background: rgba(58, 36, 70, 0.85); border: 3px solid #3a2446; border-radius: var(--canto);
 }
 .voo-aviso-numero { font-size: 3em; }
 .voo-dica { flex: 1 0 100%; order: 3; margin: 0; color: #d9d2ff; font-size: 0.95em; text-align: center; }

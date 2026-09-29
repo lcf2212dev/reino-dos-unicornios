@@ -5,7 +5,7 @@
 .foguete-balao {
   flex: 1; min-width: 0;
   padding: 10px 14px;
-  border: 3px solid var(--borda); border-radius: 16px;
+  border: 3px solid var(--borda); border-radius: var(--canto-grande);
   background: var(--papel-3);
 }
 .foguete-balao p + p { margin-top: 6px; }
@@ -15,7 +15,7 @@
 .foguete-gotas { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 4px; }
 .foguete-gota {
   display: flex; align-items: center; justify-content: center;
-  aspect-ratio: 1; border: 2px solid var(--borda); border-radius: 10px;
+  aspect-ratio: 1; border: 2px solid var(--borda); border-radius: var(--canto);
   background: #e8e2ee; font-size: 1.1em;
   filter: grayscale(1); opacity: 0.35;
 }
@@ -25,7 +25,7 @@
 .foguete-destinos ul, .foguete-passaporte ul { list-style: none; margin: 0; padding: 0; }
 .foguete-destino {
   display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-  padding: 8px 10px; border: 3px solid var(--borda); border-radius: 14px; background: var(--papel-2);
+  padding: 8px 10px; border: 3px solid var(--borda); border-radius: var(--canto); background: var(--papel-2);
 }
 .foguete-destino b { flex: 1; min-width: 4em; }
 .foguete-decolar[disabled] { opacity: 0.45; }
@@ -35,20 +35,20 @@
 .foguete-cadeado { min-width: 56px; }
 .foguete-bola {
   flex: none; display: inline-flex; align-items: center; justify-content: center;
-  width: 32px; height: 32px; border: 3px solid var(--borda); border-radius: 50%;
+  width: 32px; height: 32px; border: 3px solid var(--borda); border-radius: var(--redondo);
   font-weight: 700; color: var(--papel);
 }
 .foguete-silhueta { background: #6b5378; }
 .foguete-passaporte ul { display: flex; flex-wrap: wrap; gap: 10px; }
 .foguete-passaporte li {
   display: flex; flex-direction: column; align-items: center; gap: 4px;
-  padding: 8px; border: 3px dashed var(--tinta-suave); border-radius: 12px; min-width: 72px;
+  padding: 8px; border: 3px dashed var(--tinta-suave); border-radius: var(--canto); min-width: 72px;
 }
 .foguete-passaporte li.carimbado { border-style: solid; border-color: var(--certo); background: var(--certo-fundo); }
 .foguete-album { width: 100%; margin-top: 10px; }
 
 @media (max-width: 480px), (max-height: 500px) {
   .foguete-gotas { gap: 2px; }
-  .foguete-gota { border-radius: 6px; font-size: 0.8em; }
+  .foguete-gota { border-radius: var(--canto); font-size: 0.8em; }
   .foguete-balao { padding: 8px 10px; }
 }

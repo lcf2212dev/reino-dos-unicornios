@@ -3,7 +3,7 @@
 .en {
   color: #3b2fc4;
   background: rgba(124, 92, 255, 0.13);
-  border-radius: 4px;
+  border-radius: var(--canto);
   padding: 0 0.15em;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
@@ -22,27 +22,27 @@
 .desenho-ferramentas, .desenho-paleta { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
 .desenho-ferr {
   display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 56px; padding: 6px 4px;
-  border: 3px solid var(--borda); border-radius: 10px; background: #fff; box-shadow: 0 3px 0 var(--borda); color: var(--tinta);
+  border: 3px solid var(--borda); border-radius: var(--canto); background: #fff; box-shadow: 0 3px 0 var(--borda); color: var(--tinta);
 }
 .desenho-ferr small { font-size: 0.55em; }
 .desenho-ferr[aria-pressed="true"] { background: var(--lavanda-clara); outline: 3px solid var(--roxo); outline-offset: 1px; }
 .desenho-icone-forma { width: 24px; height: 24px; image-rendering: pixelated; }
 .desenho-limpar { background: var(--quase-fundo); }
-.desenho-cor { width: 36px; height: 36px; border: 3px solid var(--borda); border-radius: 50%; box-shadow: 0 3px 0 var(--borda); }
+.desenho-cor { width: 36px; height: 36px; border: 3px solid var(--borda); border-radius: var(--redondo); box-shadow: 0 3px 0 var(--borda); }
 .desenho-cor[aria-pressed="true"] { outline: 4px solid var(--roxo); outline-offset: 2px; }
-.desenho-moldura { width: min(100%, 360px); border: 4px solid var(--borda); border-radius: 8px; background: #fff; line-height: 0; }
+.desenho-moldura { width: min(100%, 360px); border: 4px solid var(--borda); border-radius: var(--canto); background: #fff; line-height: 0; }
 .desenho-tela {
   width: 100%; height: auto; aspect-ratio: 1; image-rendering: pixelated; touch-action: none;
   cursor: crosshair; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none;
 }
 .desenho-lista { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; justify-content: center; font-size: 0.8em; }
 .desenho-requisitos { display: flex; gap: 10px; list-style: none; margin: 0; padding: 0; flex-wrap: wrap; }
-.desenho-req { display: flex; align-items: center; gap: 6px; padding: 4px 8px; border: 2px solid var(--borda); border-radius: 8px; background: #fff; color: var(--tinta-suave); }
+.desenho-req { display: flex; align-items: center; gap: 6px; padding: 4px 8px; border: 2px solid var(--borda); border-radius: var(--canto); background: #fff; color: var(--tinta-suave); }
 .desenho-req.feito { background: var(--certo-fundo); color: var(--certo); }
-.req-marca { flex: none; width: 22px; height: 22px; display: grid; place-items: center; border: 2px solid var(--borda); border-radius: 4px; background: #fff; overflow: hidden; line-height: 0; }
+.req-marca { flex: none; width: 22px; height: 22px; display: grid; place-items: center; border: 2px solid var(--borda); border-radius: var(--canto); background: #fff; overflow: hidden; line-height: 0; }
 /* o ✓ vira ícone de pixel: cabe dentro da caixinha, sem invadir a palavra */
 .req-marca > * { width: 16px !important; height: 16px !important; margin: 0 !important; vertical-align: 0; }
-.desenho-mini, .correcao-desenho canvas { width: 96px; height: 96px; image-rendering: pixelated; border: 3px solid var(--borda); border-radius: 6px; }
+.desenho-mini, .correcao-desenho canvas { width: 96px; height: 96px; image-rendering: pixelated; border: 3px solid var(--borda); border-radius: var(--canto); }
 .correcao-desenho { margin: 6px 0; }
 @media (max-width: 480px) {
   .desenho-ferr { min-width: 46px; padding: 4px 2px; }
@@ -53,8 +53,8 @@
 }
 
 /* texto de apoio (d.apoio): a caixa do texto que a questão manda ler, acima do enunciado */
-.apoio { padding: 14px 16px 16px; border: 3px solid var(--borda); border-radius: 18px; background: #fffef8; box-shadow: 0 4px 0 var(--borda); }
-.apoio-rotulo { display: inline-block; margin: 0 0 6px; padding: 2px 10px; border: 2px solid var(--borda); border-radius: 999px; background: var(--ouro-claro); font-size: 0.7em; font-weight: 700; line-height: 1.8; }
+.apoio { padding: 14px 16px 16px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: #fffef8; box-shadow: 0 4px 0 var(--borda); }
+.apoio-rotulo { display: inline-block; margin: 0 0 6px; padding: 2px 10px; border: 2px solid var(--borda); border-radius: var(--canto); background: var(--ouro-claro); font-size: 0.7em; font-weight: 700; line-height: 1.8; }
 .apoio-titulo { margin: 6px 0 4px; font-family: var(--fonte-titulo); font-size: 1.05em; line-height: 1.6; text-align: center; color: var(--roxo); }
 .apoio-parte { margin-top: 12px; }
 .apoio-parte-titulo { margin: 0 0 4px; font-weight: 700; font-size: 0.9em; color: var(--rosa-forte); }
@@ -63,7 +63,7 @@
 .btn-ouvir-apoio { margin-top: 0; flex: none; }
 .apoio-topo { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 10px; }
 .apoio-topo .apoio-rotulo { margin: 0; }
-.apoio-abrir { min-height: 44px; padding: 4px 12px; border: 2px solid var(--borda); border-radius: 12px; background: var(--ouro-claro); font-weight: 700; font-size: 0.8em; }
+.apoio-abrir { min-height: 44px; padding: 4px 12px; border: 2px solid var(--borda); border-radius: var(--canto); background: var(--ouro-claro); font-weight: 700; font-size: 0.8em; }
 /* celular e tablet em pé: caixa recolhível numa linha (📖 abrir/esconder + 🔊); aberta, o texto rola dentro dela
    para a pergunta caber na primeira tela */
 @media (max-width: 999.98px) {
@@ -119,11 +119,11 @@
 
 /* copiar: marcar a escrita certa entre duas e escrever a palavra com peças de letras */
 .copiar { display: flex; flex-direction: column; gap: 14px; }
-.copiar-item { display: flex; flex-direction: column; gap: 10px; padding: 12px 14px 14px; border: 3px solid var(--borda); border-radius: 16px; background: var(--papel); }
+.copiar-item { display: flex; flex-direction: column; gap: 10px; padding: 12px 14px 14px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); }
 .copiar-escolha { display: grid; grid-template-columns: auto 1fr 1fr; align-items: center; gap: 8px; }
 .copiar-letra { font-size: 1em; }
-.copiar-opcao { display: flex; align-items: center; justify-content: center; gap: 8px; min-width: 0; min-height: 52px; padding: 6px 8px; border: 3px solid var(--borda); border-radius: 12px; background: #fff; box-shadow: 0 3px 0 var(--borda); font-weight: 700; }
-.copiar-marca { display: inline-flex; align-items: center; justify-content: center; width: 1.9em; height: 1.9em; flex: none; border: 3px solid var(--borda); border-radius: 50%; background: #fff; color: #fff; font-size: 0.8em; line-height: 1; }
+.copiar-opcao { display: flex; align-items: center; justify-content: center; gap: 8px; min-width: 0; min-height: 52px; padding: 6px 8px; border: 3px solid var(--borda); border-radius: var(--canto); background: #fff; box-shadow: 0 3px 0 var(--borda); font-weight: 700; }
+.copiar-marca { display: inline-flex; align-items: center; justify-content: center; width: 1.9em; height: 1.9em; flex: none; border: 3px solid var(--borda); border-radius: var(--redondo); background: #fff; color: #fff; font-size: 0.8em; line-height: 1; }
 .copiar-opcao[aria-pressed="true"] { background: var(--lavanda-clara); border-color: var(--roxo); box-shadow: 0 3px 0 var(--roxo); outline: 3px solid var(--roxo); outline-offset: 0; }
 .copiar-opcao[aria-pressed="true"] .copiar-marca { background: var(--roxo); border-color: var(--roxo); }
 .copiar-palavra { letter-spacing: 0.06em; }
@@ -132,14 +132,14 @@
 .copiar-linha {
   display: flex; flex-wrap: wrap; align-items: flex-end; gap: 4px;
   min-height: 62px; padding: 6px 8px 8px 14px;
-  border-left: 3px solid #ff9db5; border-radius: 4px;
+  border-left: 3px solid #ff9db5; border-radius: var(--canto);
   background: linear-gradient(to bottom, transparent calc(100% - 4px), #7fb2ff calc(100% - 4px)), #fbfdff;
 }
 .copiar-linha.pisca { animation: piscar 0.6s ease-in-out 2; }
 .copiar-vazia { align-self: center; color: #a597bd; font-weight: 700; font-size: 0.72em; line-height: 1.7; }
-.copiar-vaga { width: 44px; height: 44px; border: 2px dashed #cdbff5; border-radius: 8px; }
-.copiar-pecas { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; padding: 10px 8px; border: 3px dashed var(--lavanda); border-radius: 14px; background: var(--papel-2); }
-.copiar-peca { min-width: 48px; height: 48px; padding: 0 6px; border: 3px solid var(--borda); border-radius: 10px; background: #fff3c4; box-shadow: 0 3px 0 var(--borda); font-weight: 700; font-size: 1.05em; line-height: 1; }
+.copiar-vaga { width: 44px; height: 44px; border: 2px dashed #cdbff5; border-radius: var(--canto); }
+.copiar-pecas { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; padding: 10px 8px; border: 3px dashed var(--lavanda); border-radius: var(--canto); background: var(--papel-2); }
+.copiar-peca { min-width: 48px; height: 48px; padding: 0 6px; border: 3px solid var(--borda); border-radius: var(--canto); background: #fff3c4; box-shadow: 0 3px 0 var(--borda); font-weight: 700; font-size: 1.05em; line-height: 1; }
 .copiar-peca.colocada { min-width: 44px; height: 44px; background: #fff; border-color: var(--roxo); color: var(--roxo); box-shadow: 0 3px 0 var(--roxo); }
 .copiar-peca.usada { border: 2px dashed #d9cfee; background: transparent; box-shadow: none; color: transparent; }
 .tudo-certo .copiar-item { background: var(--certo-fundo); }
@@ -173,7 +173,7 @@ span.mai-acento.mai-acento::after { content: attr(data-a); content: attr(data-a)
 .lugar-avisos { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
 .lugar-aviso {
   display: inline-flex; align-items: center; gap: 4px;
-  padding: 1px 8px; border: 2px solid #b58cff; border-radius: 999px;
+  padding: 1px 8px; border: 2px solid #b58cff; border-radius: var(--canto);
   background: #efe4ff; color: #5a3cc4; font-size: 0.75em; font-weight: 700; line-height: 1.5;
 }
 .lugar-aviso > canvas { flex: none; display: block; }
