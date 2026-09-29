@@ -3,8 +3,22 @@
   var U = Reino.util, el = U.el, D = Reino.Desafios, _d = Reino._desafios;
   var fracao = _d.fracao;
 
-  // rótulos dos botões do vfLista: d.rotulos (ex.: ['T', 'F'], ['√', 'X']); sem rotulos, V/F
-  var NOME_ROTULO = { T: 'True', '√': 'Certo', X: 'Errado' };
+  // rótulos dos botões do vfLista: d.rotulos (ex.: ['T', 'F'], ['✓', 'X']); sem rotulos, V/F
+  var NOME_ROTULO = { T: 'True', '✓': 'Certo', X: 'Errado' };
+  // rótulos com desenho (ex.: ✓): os dois viram desenho (X → ✘, mesma família) a 32 px, 1 pixel de arte = 2 px
+  // CSS em escala inteira (ui.md §10.10); o nome falado continua no aria-label
+  var DESENHO_ROTULO = { X: '✘' };
+  function comDesenho(r) { return !!(window.ICONES && window.ICONES[r] && window.PA && PA.iconeEmoji); }
+  function rotuloEl(d, v) {
+    var rot = rotulosVF(d), r = rot[v];
+    if (!rot.some(comDesenho)) return el('span.vf-rotulo', r);
+    var k = comDesenho(r) ? r : DESENHO_ROTULO[r];
+    if (!k || !comDesenho(k)) return el('span.vf-rotulo', r);
+    var c = PA.iconeEmoji(k, 2), t = 16 * PA.escalaNitida(32, 16);
+    c.style.width = c.style.height = t + 'px';
+    c.style.display = 'block';
+    return el('span.vf-rotulo', c);
+  }
   function rotulosVF(d) { return d.rotulos || ['V', 'F']; }
   function nomeRotulo(d, v) {
     var r = rotulosVF(d)[v];
@@ -19,8 +33,10 @@
     var lista = el('div.vf-lista');
     var linhas = d.itens.map(function (it, i) {
       var rot = rotulosVF(d);
-      var bV = el('button.vf-botao', { type: 'button', 'aria-label': nomeRotulo(d, 0) }, el('span.vf-rotulo', rot[0]));
-      var bF = el('button.vf-botao', { type: 'button', 'aria-label': nomeRotulo(d, 1) }, el('span.vf-rotulo', rot[1]));
+      var bV = el('button.vf-botao', { type: 'button', 'aria-label': nomeRotulo(d, 0) }, rotuloEl(d, 0));
+      if (rot.some(comDesenho)) bV.classList.add('vf-com-icone');
+      var bF = el('button.vf-botao', { type: 'button', 'aria-label': nomeRotulo(d, 1) }, rotuloEl(d, 1));
+      if (rot.some(comDesenho)) bF.classList.add('vf-com-icone');   // botão com desenho: CSS centraliza (padding 0)
       [bV, bF].forEach(function (b, v) {
         b.addEventListener('click', function () {
           if (ctrl.travado) return;

@@ -216,6 +216,56 @@ PROVAS.forEach((pv) => {
   });
   semDesenho.forEach((onde, k) => erros.push(`emoji ${k} sem pixel art em js/arte/icones/ (em ${[...onde].join(', ')})`));
 }
+// texto do conteúdo só com caracteres da Press Start 2P (css/press-start-2p.woff2, glifos lidos do cmap) ou com
+// desenho em ICONES (emoji ou símbolo, ex.: ✓): fora disso o navegador cai na fonte do sistema (fino, sem pixel)
+function glifosDaFonte(arq) {
+  const b = fs.readFileSync(arq), KN = ['cmap', 'head', 'hhea', 'hmtx', 'maxp', 'name', 'OS/2', 'post', 'cvt ', 'fpgm', 'glyf', 'loca', 'prep'];
+  let p = 48;
+  const b128 = () => { let v = 0; for (let i = 0; i < 5; i++) { const c = b[p++]; v = v * 128 + (c & 0x7f); if (!(c & 0x80)) return v; } return v; };
+  const tabelas = [];
+  for (let i = 0, n = b.readUInt16BE(12); i < n; i++) {   // diretório do WOFF2: tag, tamanho e (se transformada) tamanho novo
+    const f = b[p++], tag = (f & 63) === 63 ? b.toString('latin1', p, (p += 4)) : KN[f & 63], tr = (f >> 6) & 3;
+    let tam = b128();
+    if ((tag === 'glyf' || tag === 'loca') ? tr === 0 : tr !== 0) tam = b128();
+    tabelas.push({ tag, tam });
+  }
+  const dados = require('zlib').brotliDecompressSync(b.subarray(p, p + b.readUInt32BE(20)));
+  let o = 0, cm = null;
+  tabelas.forEach((t) => { if (t.tag === 'cmap') cm = dados.subarray(o, o + t.tam); o += t.tam; });
+  const s = new Set();
+  for (let i = 0, n = cm.readUInt16BE(2); i < n; i++) {
+    const off = cm.readUInt32BE(8 + i * 8), fmt = cm.readUInt16BE(off);
+    if (fmt === 4) {
+      const seg = cm.readUInt16BE(off + 6) / 2;
+      for (let k = 0; k < seg; k++) for (let c = cm.readUInt16BE(off + 16 + seg * 2 + k * 2), fim = cm.readUInt16BE(off + 14 + k * 2); c <= fim && c < 0xffff; c++) s.add(c);
+    } else if (fmt === 12) {
+      for (let k = 0, g = cm.readUInt32BE(off + 12); k < g; k++) for (let c = cm.readUInt32BE(off + 16 + k * 12), fim = cm.readUInt32BE(off + 20 + k * 12); c <= fim; c++) s.add(c);
+    }
+  }
+  return s;
+}
+const arqFonte = path.join(Jogo.raiz, 'css', 'press-start-2p.woff2');   // a cópia do jogo de um teste pode vir sem css/
+if (!fs.existsSync(arqFonte)) avisos.push('sem css/press-start-2p.woff2: caracteres fora da fonte não conferidos');
+else {
+  const FONTE = glifosDaFonte(arqFonte);
+  const ICS = icones.window.ICONES;
+  const RE_EMOJI = /(\p{RI}\p{RI}|\p{Extended_Pictographic}(?:️|︎)?(?:‍\p{Extended_Pictographic}(?:️|︎)?)*|[0-9#*]️?⃣)/gu;
+  const fora = new Map();   // caractere → onde
+  const olhar = (v, onde) => {
+    if (typeof v === 'string') {
+      for (const ch of v.replace(RE_EMOJI, '')) {   // emoji: a checagem de desenho é a de baixo
+        const c = ch.codePointAt(0);
+        if (FONTE.has(c) || ICS[ch] || ch === '\n' || ch === '️' || ch === '‍') continue;
+        if (!fora.has(ch)) fora.set(ch, new Set());
+        fora.get(ch).add(onde);
+      }
+    } else if (Array.isArray(v)) v.forEach((x) => olhar(x, onde));
+    else if (v && typeof v === 'object') Object.keys(v).forEach((k) => olhar(v[k], v.id || onde));
+  };
+  MATERIAS.forEach((m) => olhar(m, m.id));
+  PROVAS.forEach((pv) => olhar(pv, pv.id));
+  fora.forEach((onde, ch) => erros.push(`caractere "${ch}" (U+${ch.codePointAt(0).toString(16).toUpperCase().padStart(4, '0')}) fora da fonte e sem desenho (em ${[...onde].join(', ')}): troque por um da fonte`));
+}
 // falas dos módulos (sistemas: Reino.registrarModulo) com `(preencher)`: carregam com todos os `node: true`
 if (!SO) {
   const todos = icones;

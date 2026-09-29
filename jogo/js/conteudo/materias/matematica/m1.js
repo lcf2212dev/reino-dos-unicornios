@@ -94,7 +94,7 @@ Reino.registrarSala('matematica',
             { e: '📅', t: '7 dias' },
             { e: '📅', t: '10 dias' },
           ], certa: 1,
-          explica: 'De 20 até 27 são 7 dias: uma semana inteirinha! 27 − 20 = 7.' },
+          explica: 'De 20 até 27 são 7 dias: uma semana inteirinha! 27 - 20 = 7.' },
         { id: 'm1-13', tipo: 'escolha', livro: 'calendario',
           pergunta: 'Diego e o pai partiram de viagem no dia 25/10. Duas semanas depois, eles voltaram. Em que dia eles voltaram?',
           opcoes: [
