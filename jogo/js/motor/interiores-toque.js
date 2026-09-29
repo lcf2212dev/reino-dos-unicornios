@@ -59,8 +59,12 @@
     try { if (J && J.tile) { var t = J.tile(); if (t && E.g.dentro(t.x, t.y)) return t; } } catch (e) {}
     return E.def.spawn || { x: 0, y: 0 };
   }
+  // Para um NPC, o tile de baixo custa PENA_BAIXO_NPC passos a mais: montada (34 px) ela cobriria o
+  // adulto (~18 px) na conversa; ao lado (ou acima, atrás dele) ele fica inteiro. Só se o lado for longe demais
+  // (ou fechado), ela para embaixo.
+  var PENA_BAIXO_NPC = 3;
   // vizinho livre (4 vizinhos) de um conjunto de tiles, alcançável e mais perto da Mariana
-  function melhorVizinho(E, tiles, alvoCentro) {
+  function melhorVizinho(E, tiles, ehNpc) {
     var de = ondeEsta(E), cand = [], vistos = {};
     tiles.forEach(function (t) {
       [[0, 1], [0, -1], [1, 0], [-1, 0]].forEach(function (d) {
@@ -68,14 +72,14 @@
         if (vistos[k] || !E.g.dentro(nx, ny) || E.g.solido[ny][nx]) return;
         if (tiles.some(function (o) { return o.x === nx && o.y === ny; }) && E.g.solido[t.y][t.x]) return;
         vistos[k] = true;
-        cand.push({ x: nx, y: ny, olhar: { x: -d[0], y: -d[1] } });
+        cand.push({ x: nx, y: ny, olhar: { x: -d[0], y: -d[1] }, pena: ehNpc && d[1] === 1 ? PENA_BAIXO_NPC : 0 });
       });
       if (!E.g.solido[t.y][t.x]) { var k2 = t.x + ',' + t.y; if (!vistos[k2]) { vistos[k2] = true; cand.push({ x: t.x, y: t.y, olhar: { x: 0, y: -1 } }); } }
     });
     var melhor = null, custo = Infinity;
     cand.forEach(function (c) {
       var cam = caminhoNa(E.g, de, c);
-      var k = cam ? (cam.custo || 0) : 1e6 + Math.abs(c.x - de.x) + Math.abs(c.y - de.y);
+      var k = (cam ? (cam.custo || 0) : 1e6 + Math.abs(c.x - de.x) + Math.abs(c.y - de.y)) + (c.pena || 0);
       if (k < custo) { custo = k; melhor = c; }
     });
     return melhor;
@@ -146,7 +150,7 @@
     return p.then(function (v) { if (v !== null && npc.acao && npc.acao.tipo === 'tela') return executarAcao(npc.acao, {}); });
   }
   function alvoNpc(E, npc, tileFixo, olharFixo) {
-    var v = tileFixo ? { x: tileFixo.x, y: tileFixo.y, olhar: olharFixo } : melhorVizinho(E, [{ x: npc.x, y: npc.y }]);
+    var v = tileFixo ? { x: tileFixo.x, y: tileFixo.y, olhar: olharFixo } : melhorVizinho(E, [{ x: npc.x, y: npc.y }], true);
     if (!v) return null;
     return { tipo: 'npc', id: npc.id, npc: npc, tile: { x: v.x, y: v.y }, olhar: v.olhar, agir: function () { return falarNpc(E, npc); } };
   }

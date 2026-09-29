@@ -10,6 +10,8 @@ async function cenasMapaEInteriores(page, pasta) {
     await page.evaluate((id) => { Reino.Cena.irPara(id); }, d.id);
     await avancar(page, 2500);
     await foto(page, pasta, `interior-${d.id}`);
+    // onde ela chegou: cada conversa sai daqui, com o tile que o toque no NPC escolheria (cena.alvoEm)
+    const chegada = await page.evaluate(() => Jogador.tile());
     for (const c of d.comodos) {
       await page.evaluate(([id, c]) => {
         var cena = Reino.Cena.atual();
@@ -21,12 +23,16 @@ async function cenasMapaEInteriores(page, pasta) {
     }
     const npcs = await page.evaluate(() => (Reino.Cena.atual().npcs ? Reino.Cena.atual().npcs() : []).map((n) => n.id));
     for (const npcId of npcs) {
-      await page.evaluate(([id, npcId]) => {
+      await page.evaluate(([id, npcId, chegada]) => {
         var cena = Reino.Cena.atual(), def = Reino.Interiores.def(id);
         var npc = cena.npcs().find((n) => n.id === npcId);
-        Jogador.posicionar(npc.x, Math.min(npc.y + 1, cena.altura() / 16 - 1));
+        Jogador.posicionar(chegada.x, chegada.y);
+        // toque no meio do corpo do NPC (px do jogo); se o toque não fosse dele, fica logo abaixo
+        var alvo = cena.alvoEm(npc.x * 16 + 8, npc.y * 16 + 4);
+        if (alvo && alvo.tipo === 'npc' && alvo.npc === npc) { Jogador.posicionar(alvo.tile.x, alvo.tile.y); Jogador.virar(alvo.olhar.x, alvo.olhar.y); }
+        else Jogador.posicionar(npc.x, Math.min(npc.y + 1, cena.altura() / 16 - 1));
         Reino.NPCs.interagir(npc, { interior: def, cena: cena });
-      }, [d.id, npcId]);
+      }, [d.id, npcId, chegada]);
       await avancar(page, 1200);
       await foto(page, pasta, `npc-${d.id}-${npcId}`);
       await limpar(page);
@@ -99,26 +105,49 @@ async function cenasSalas(page, pasta) {
   }
 }
 
-// uma questão numa tela igual à da prova/missão (mesma estrutura e classes), sem responder as anteriores
+// uma questão na tela de verdade (Reino.Provas / Reino.Missao: título, faixa "Valendo", pontos, "← Anterior"),
+// sem responder as anteriores. Prova: começa (ritual pulado) e anda até a questão i com as anteriores dadas por
+// prontas (o render delas é embrulhado só aqui); a pressa do "Próxima" pede um 2º toque, como no jogo.
+// Missão: o sorteio da sala põe o desafio pedido em 1º; passa pela introdução e pelo resumo.
 async function mostrarDesafio(page, modo, ref) {
-  await page.evaluate(([modo, ref]) => {
-    var U = Reino.util, el = U.el, D = Reino.Desafios;
-    var d = ref.prova ? Reino.prova(ref.prova).questoes[ref.i] : Reino.materia(ref.m).salas.find((s) => s.id === ref.s).desafios[ref.i];
-    var tela = Reino.UI.abrirTela(modo === 'prova' ? 'prova' : 'missao');
-    var corpo = el('div.missao-corpo');
-    var rodape = el('footer.missao-rodape' + (modo === 'prova' ? '.prova-rodape' : ''));
-    tela.appendChild(el('header.missao-topo', el('button.btn-icone.btn-sair', { type: 'button' }, '✕'), el('div.missao-titulo', el('span', 'Referência'))));
-    tela.appendChild(corpo); tela.appendChild(rodape);
-    document.body.classList.add('em-missao');
-    var ordem = d.opcoes ? d.opcoes.map((_, i) => i) : null;
-    var monte = ordem;
-    if (d.tipo === 'ordenar' || d.tipo === 'frase') monte = (d.blocos || d.itens).map((_, i) => i).reverse();
-    if (d.tipo === 'copiar') monte = d.itens.map((it) => D.ordemPecasCopiar(it));
-    var ctrl = D.render(d, { modo: modo, ordem: modo === 'prova' ? monte : ordem, monte: monte, onMudar: function () {}, onCompleto: function () {} });
-    corpo.appendChild(el('div.desafio-num', 'Questão ' + (ref.i + 1)));
-    corpo.appendChild(ctrl.card);
-    rodape.appendChild(el('span.sem-relogio', '⏳ Sem relógio'));
-    rodape.appendChild(el('button.btn-grande.btn-principal', { type: 'button' }, 'Próxima →'));
+  await page.evaluate(async ([modo, ref]) => {
+    var D = Reino.Desafios, P = Reino.Progresso;
+    if (modo === 'prova') {
+      var prova = Reino.prova(ref.prova), render = D.render, ritual = Reino.Prova.ritual, visto = P.estado().ritualVisto, feitos = 0;
+      D.render = function (d, o) {
+        var c = render.call(D, d, o);
+        if (feitos++ < ref.i) c.pronto = function () { return true; };
+        return c;
+      };
+      Reino.Prova.ritual = function () { return Promise.resolve(); };
+      try {
+        Reino.Provas.iniciar(prova);
+        [...document.querySelectorAll('.tela-prova .btn-principal')].pop().click();
+        await Promise.resolve(); await Promise.resolve();
+        var num = () => (document.querySelector('.tela-prova .desafio-num') || {}).textContent || '';
+        for (var k = 0; k < ref.i; k++) {
+          var antes = num();
+          for (var t = 0; t < 3 && num() === antes; t++) {
+            var prox = document.querySelector('.tela-prova .prova-rodape .btn-principal');
+            prox.disabled = false; prox.click();
+          }
+          if (num() === antes) throw new Error('prova ' + ref.prova + ': não passou da questão ' + (k + 1));
+        }
+      } finally {
+        D.render = render; Reino.Prova.ritual = ritual;
+        // o "ritual visto" que a prova marcou volta ao que era (as fotos seguintes são as de antes)
+        if (P.estado().ritualVisto !== visto) { P.estado().ritualVisto = visto; P.salvar(); }
+      }
+      return;
+    }
+    var mt = Reino.materia(ref.m), sala = mt.salas.find((x) => x.id === ref.s), alvo = sala.desafios[ref.i], sortear = D.sortear;
+    D.sortear = function (s, n) {
+      var l = sortear.call(D, s, n);
+      return [alvo].concat(l.filter((d) => d !== alvo)).slice(0, Math.max(1, l.length));
+    };
+    try { Reino.Missao.iniciar(mt, sala); } finally { D.sortear = sortear; }
+    document.querySelector('.tela-missao .intro-botoes .btn-principal').click();
+    for (var j = 0; j < 40 && document.querySelector('.resumo-sala'); j++) document.querySelector('.resumo-botoes .btn-principal').click();
   }, [modo, ref]);
 }
 

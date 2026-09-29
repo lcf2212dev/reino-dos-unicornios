@@ -41,7 +41,10 @@
     return e;
   }
   function andar(i, nome, comodo, objetos, npcs, extra) {
-    Reino.registrarInterior(Object.assign({
+    // acima do térreo, o spawn é a chegada pela escada de baixo (à direita do vão): onde o irPara sem
+    // chegada e as fotos do e2e a põem (sem ele, cairia em cima de quem estiver no tile padrão)
+    var chegadaDeBaixo = i > 0 ? { spawn: { x: DESCE.x + 1, y: DESCE.y } } : {};
+    Reino.registrarInterior(Object.assign(chegadaDeBaixo, {
       id: ANDARES[i],
       lugar: 'materia:ingles',
       nome: nome,
