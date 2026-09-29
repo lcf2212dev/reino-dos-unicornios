@@ -35,6 +35,8 @@
       if (Reino.Cena) return Reino.Cena.entrar(lugarId);
       return Reino.UI.abrirLugar(Mapa.lugar(lugarId));
     },
+    // a tela de abertura (motor/main.js), para fotografar no celular
+    telaInicio: function () { return Reino._motor.telaInicio(); },
     sair: function () { return Reino.Cena ? Reino.Cena.sair() : null; },
     // NPCs da cena ativa: id, nome, tile e ícone de status
     npcs: function () {

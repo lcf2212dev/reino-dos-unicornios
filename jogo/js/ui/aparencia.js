@@ -139,14 +139,26 @@
       function marcar() {
         var ap = aparencia(), vis = PA.visualMariana(prova());
         linhas.forEach(function (l) {
+          var perto = maisPerto(U.$$('button[data-cor]', l), ap[l._campo]);
           U.$$('button', l).forEach(function (b) {
-            var sim = b.dataset.sem ? !vis.laco : (b.dataset.cor === ap[l._campo] && (l !== linhaLaco || vis.laco));
+            var sim = b.dataset.sem ? !vis.laco : (b === perto && (l !== linhaLaco || vis.laco));
             b.setAttribute('aria-pressed', String(sim));
           });
         });
         [[grupoCorte, 'corte'], [grupoRoupa, 'modelo']].forEach(function (g) {
           U.$$('button', g[0]).forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.id === vis[g[1]])); });
         });
+      }
+      // cor salva fora da paleta: marca a bolinha mais parecida (só a marcação; o save não muda)
+      function maisPerto(bs, cor) {
+        function rgb(h) { var n = parseInt(String(h || '').replace('#', ''), 16) || 0; return [n >> 16, (n >> 8) & 255, n & 255]; }
+        var alvo = rgb(cor), melhor = null, dMin = Infinity;
+        bs.forEach(function (b) {
+          if (b.dataset.cor === cor) { melhor = b; dMin = -1; return; }
+          var c = rgb(b.dataset.cor), d = Math.pow(c[0] - alvo[0], 2) + Math.pow(c[1] - alvo[1], 2) + Math.pow(c[2] - alvo[2], 2);
+          if (d < dMin) { dMin = d; melhor = b; }
+        });
+        return melhor;
       }
       function recolorir() { montarOpcoes(); marcar(); }
       linhas.forEach(function (l) { l.addEventListener('click', function (e) { if (e.target.closest('button')) recolorir(); }); });

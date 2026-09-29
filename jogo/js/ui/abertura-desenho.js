@@ -24,7 +24,7 @@
       W: W, H: H, emPe: emPe, yH: yH, cx: cx, colina: colina, topoColina: topoColina, castelo: castelo,
       sol: { x: cx, y: yH - Math.round(colina * 0.4), r: Math.max(12, Math.round(Math.min(W, H) * 0.11)) },
       arco: { x: cx, y: yH + 6, r: raio, faixa: Math.max(3, Math.round(raio / 24)) },
-      frente: yH + Math.round((H - yH) * (emPe ? 0.45 : 0.42)),  // linha dos pés da Mariana
+      frente: yH + Math.round((H - yH) * (emPe ? 0.3 : 0.42)),  // linha dos pés da Mariana (em pé: acima do botão)
     };
   }
 
