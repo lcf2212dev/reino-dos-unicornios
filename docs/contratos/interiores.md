@@ -113,6 +113,8 @@ Reino.Interiores.objeto('escrivaninha', {
   desenhar(ctx, px, py, obj, P)   // px do jogo; P = Reino.Progresso (objetos derivados do estado)
   chave?(P, obj) → string         // objetos que mostram o estado: muda a chave → pré-render de novo
   topo?: px                       // móveis altos: quanto o desenho passa acima da pegada
+  junto?: true                    // par de propósito (cadeira na frente do espelho): o aviso de móvel alto
+                                  // cobrindo o vizinho ou a parede (interiores-extras.js) não se aplica
   anim?(ctx, px, py, t, obj)      // animação leve por quadro (só com Animações)
   semSombra?: bool                // a sombra sob o móvel é automática
   toque?(wx, wy, px, py, obj, folga) → bool   // área de toque própria, em px do jogo (ex.: planetas desenhados

@@ -62,6 +62,9 @@ Reino.LojaItens = {
    lado/frente/costas/diagFrente/diagCostas). As direções da esquerda são o espelho.
 4. Vista que não mostra o encaixe: âncora `null` (como `olho` de costas e `cauda` de frente, nos dois
    estágios), e o enfeite não aparece nela.
+   Montada, `enfeitesNaFrente: [âncoras]` no molde repinta esses enfeites por cima da cavaleira; enfeite que
+   passaria da borda vai o mínimo para dentro (`lugarDoEnfeite`, `pixelart-unicornio.js`), e
+   `validar-enfeites.js` confere (0 px fora do molde, oclusão montada, nada sobre o tronco dela de frente).
 5. Tudo continua em `usando.enfeites` (lista de ids): nenhum campo novo no save.
    Id que esta versão não conhece (enfeite ou prêmio de uma versão nova, vindo pela mescla) fica em
    `usando.enfeites` e em `loja`: o desenho o pula, e trocar um enfeite só tira do encaixe os ids conhecidos
