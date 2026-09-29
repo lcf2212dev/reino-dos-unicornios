@@ -52,6 +52,8 @@ test('prova: cada fala trava os botões até acabar (e sem espera nada trava)', 
     await avancar(page, 3000);
     await page.evaluate(() => {
       window.__fala = { espera: true, pendentes: [], segs: [] };
+      // a trava da leitura da questão é opcional (desligada no jogo): aqui ela vale, para conferir a opção
+      Reino.config.esperaFala.travarQuestoes = true;
       Reino.Som.falarEsperando = function (segs) {
         window.__fala.segs.push(segs);
         if (!window.__fala.espera) return { espera: false, fim: Promise.resolve() };

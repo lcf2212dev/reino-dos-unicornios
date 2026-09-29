@@ -250,17 +250,18 @@
       // teclado ("Próxima", "Anterior", "Começar a prova", "Sim, quero revisar"): o foco vai para o
       // 1º controle da questão (ou para o número dela), não para o body
       Reino.UI.focarTroca(ctrl.card, num, CALMA_TROCA);
-      // a questão é lida sozinha (a mesma fala do 🔊); respostas, navegação e ✕ esperam o fim. O 🔊 fica livre
+      // a questão é lida sozinha (a mesma fala do 🔊); UI.lerQuestao só trava respostas, navegação e ✕ se
+      // config.esperaFala.travarQuestoes. O 🔊 fica livre
       var vez = ++leitura, alvos = [ctrl.card, ant, prox, sair];
       Array.prototype.forEach.call(ctrl.card.querySelectorAll('.btn-ouvir'), function (b) { b.classList.add('livre-na-fala'); });
       function ler() {
         if (vez !== leitura || !ctrl.card.isConnected || !Reino.config.esperaFala.lerQuestoes) return;
-        Reino.UI.esperarFala(alvos, Reino.Falas.segmentosDesafio(d, ctrl.ordem), { voz: 'narradora' });
+        Reino.UI.lerQuestao(alvos, Reino.Falas.segmentosDesafio(d, ctrl.ordem), { voz: 'narradora' });
       }
       if (antes) {
-        // o balão só mostra (falar: false); a voz vem da espera, que trava a questão até ela acabar
+        // o balão só mostra (falar: false); a voz vem da leitura (trava a questão só com travarQuestoes)
         Reino.Prova.balaoQueSome(antes, { falar: false });
-        Reino.UI.esperarFala(alvos, [antes], { voz: 'claude' }).then(function () {
+        Reino.UI.lerQuestao(alvos, [antes], { voz: 'claude' }).then(function () {
           // o balão fecha antes da leitura (fechar cala a voz: não pode cortar a questão)
           if (vez === leitura && Reino.Claude.aberto()) Reino.Claude.fechar();
           ler();

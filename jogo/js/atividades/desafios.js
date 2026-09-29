@@ -245,11 +245,11 @@
     card.appendChild(enun);
     card.appendChild(ctrl.el);
     ctrl.card = card;
-    // opts.lerSozinho (true ou lista de alvos a mais, ex.: ✕ e "Conferir"): lê a questão ao aparecer e trava as
-    // respostas (e os alvos) até a fala acabar (UI.esperarFala); ctrl.leitura é a Promise do fim. Sem a opção, nada muda.
+    // opts.lerSozinho (true ou lista de alvos a mais, ex.: ✕ e "Conferir"): lê a questão ao aparecer (UI.lerQuestao:
+    // só trava as respostas e os alvos se config.esperaFala.travarQuestoes); ctrl.leitura é a Promise do fim.
     if (opts.lerSozinho) {
       var extras = Array.isArray(opts.lerSozinho) ? opts.lerSozinho : [];
-      ctrl.leitura = Reino.UI.esperarFala([card].concat(extras), Reino.Falas.segmentosDesafio(d, ctrl.ordem), { voz: 'narradora' }).then(function () {
+      ctrl.leitura = Reino.UI.lerQuestao([card].concat(extras), Reino.Falas.segmentosDesafio(d, ctrl.ordem), { voz: 'narradora' }).then(function () {
         // o foco estava no 🔊 ou em lugar nenhum: vai para a 1ª resposta
         var a = document.activeElement;
         if (card.isConnected && (!a || a === document.body || a === ouvir)) Reino.UI.focarTroca(ctrl.el, null, 0);

@@ -66,4 +66,7 @@
   .voo-pergunta { width: min(560px, calc(100vw - 300px)); }
 }
 /* inglês nas faixas coloridas: branco como o resto do rótulo (o destaque fica no fundo claro e no sublinhado) */
-.voo-opcao .en { color: inherit; background: rgba(255, 255, 255, 0.22); text-decoration-color: currentColor; }
+.voo-opcao .en {
+  --en-ponto: currentColor; color: inherit;
+  background: linear-gradient(90deg, var(--en-ponto) 50%, transparent 50%) 0 100% / 4px 2px repeat-x, rgba(255, 255, 255, 0.22);
+}

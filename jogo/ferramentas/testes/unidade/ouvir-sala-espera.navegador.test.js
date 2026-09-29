@@ -1,5 +1,6 @@
 // Ouvir antes de seguir na sala (atividades/missao.js, desafios.js lerSozinho): a intro, o RESUMO (cartas do livro
-// que a sala usa, antes da 1ª questão), cada questão e o retorno travam os botões e o ✕ enquanto a voz fala.
+// que a sala usa, antes da 1ª questão) e o retorno travam os botões e o ✕ enquanto a voz fala; a questão é lida
+// sozinha (Som.falar) sem travar as respostas, a menos que config.esperaFala.travarQuestoes (o teste do 🔊 liga).
 // Reino.Som.falarEsperando é trocado por um de mentira com o fim controlado pelo teste; com { espera: false }
 // nada trava. Servidor e banco de TESTE novos (cenario.js); saves 100% sintéticos (voz desligada).
 const { test } = require('node:test');
@@ -16,6 +17,8 @@ const STUB = (espera) => `
     var r; var p = new Promise(function (x) { r = x; }); window.__fins.push(r);
     return { espera: true, fim: p };
   };
+  // fala que não trava (a leitura da questão): só anota
+  Reino.Som.falar = function (seg) { window.__falas.push('livre:' + JSON.stringify(seg).slice(0, 60)); return new Promise(function () {}); };
   var m = Reino.materia('historia'), s = m.salas[0];
   // questões de escolher conhecidas, presas a 2 cartas reais do livro (a 1ª repetida: vira 1 carta só)
   var q = function (n, livro) { return { id: 'os-' + n, tipo: 'escolha', pergunta: 'Pergunta ' + n + '?', opcoes: [{ t: 'Sim' }, { t: 'Não' }], certa: 0, explica: 'Porque sim.', livro: livro }; };
@@ -55,11 +58,12 @@ test('com a voz falando: intro, resumo, questão e retorno só liberam no fim da
       if (++cartas > 30) throw new Error('resumo sem fim');
     }
     assert.strictEqual(cartas, 2, 'as 2 cartas da sala, sem repetir');
-    // a questão é lida sozinha: respostas e ✕ travados
+    // a questão é lida sozinha, mas respostas e ✕ ficam livres com a voz ainda falando (a fala não acaba aqui)
     assert.ok(await tem(c, '.tela-missao .desafio'), 'a 1ª questão depois do resumo');
-    travadoTudo(await botoes(c, '.desafio button, .btn-sair'), 'questão');
-    await soltar(c);
-    livreTudo(await botoes(c, '.desafio button, .btn-sair'), 'questão depois da fala');
+    assert.ok(/^livre:.*Pergunta 1\?/.test(await c.js('window.__falas[window.__falas.length - 1]')), 'a questão foi lida');
+    livreTudo(await botoes(c, '.desafio button, .btn-sair'), 'questão com a voz falando');
+    assert.strictEqual(await c.js('Reino.UI.esperandoFala()'), false, 'a leitura da questão não é espera (Esc livre)');
+    await c.avancar(300);
     // responde qualquer coisa (1ª opção) e confere: o retorno espera a fala
     await c.js("[...document.querySelectorAll('.tela-missao .desafio .opcao')].find(function (o) { return /Sim/.test(o.textContent); }).click()");
     await c.avancar(400);
@@ -78,7 +82,7 @@ test('com a voz falando: intro, resumo, questão e retorno só liberam no fim da
 test('o 🔊 durante a leitura da questão repete a fala sem soltar a trava; solta no fim da repetição', async () => {
   const c = await abrirCenario({ save: 'completo', tamanho: 'celular', pasta: '/tmp/reino-testes/ver/ouvir-sala' });
   try {
-    await c.js(STUB('true'));
+    await c.js(STUB('true') + '; Reino.config.esperaFala.travarQuestoes = true;');
     await c.avancar(1500); await soltar(c);
     await c.tocar('.intro-botoes .btn-principal'); await c.avancar(1500);
     while (await tem(c, '.resumo-sala')) { await soltar(c); await c.tocar('.resumo-botoes .btn-principal'); await c.avancar(1500); }

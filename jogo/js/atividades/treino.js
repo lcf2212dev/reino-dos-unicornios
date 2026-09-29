@@ -197,10 +197,11 @@
       // teclado ("Começar o treino", "Próxima", "Anterior", uma questão da lista de revisão): o foco
       // vai para o 1º controle da questão (ou para o número dela), não para o body. Toque: nada muda
       Reino.UI.focarTroca(ctrl.card, num, CALMA_TROCA);
-      // a questão é lida sozinha (a mesma fala do 🔊); respostas, rodapé e ✕ esperam o fim. O 🔊 fica livre
+      // a questão é lida sozinha (a mesma fala do 🔊); UI.lerQuestao só trava respostas, rodapé e ✕ se
+      // config.esperaFala.travarQuestoes. O 🔊 fica livre
       if (Reino.config.esperaFala.lerQuestoes) {
         Array.prototype.forEach.call(ctrl.card.querySelectorAll('.btn-ouvir'), function (b) { b.classList.add('livre-na-fala'); });
-        Reino.UI.esperarFala([ctrl.card, rodape, sair], Reino.Falas.segmentosDesafio(d, ctrl.ordem), { voz: 'narradora' });
+        Reino.UI.lerQuestao([ctrl.card, rodape, sair], Reino.Falas.segmentosDesafio(d, ctrl.ordem), { voz: 'narradora' });
       }
     }
 
