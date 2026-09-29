@@ -30,7 +30,7 @@
   display: flex; flex-wrap: wrap; gap: 12px; justify-content: flex-end;
   padding: 12px 20px 16px;
   border-top: 3px solid var(--borda);
-  background: var(--papel-2);
+  background: var(--papel-leve);
 }
 .surpresa-botoes .btn-grande { flex: 1 1 200px; }
 .surpresa-conferir { background: var(--verde-folha); font-size: 1.1em; }
@@ -48,8 +48,8 @@
   font-size: 0.85em; font-weight: 700; color: var(--tinta-suave);
   display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
 }
-.surpresa-ganhou { margin-top: 6px; font-weight: 700; color: #8a5200; }   /* 5,7:1 no fundo verde */
-.surpresa-certa { font-weight: 700; color: #1b6e45; }                    /* 5,5:1 no fundo "Quase!" */
+.surpresa-ganhou { margin-top: 6px; font-weight: 700; color: var(--lendario-texto); }   /* 5,7:1 no fundo verde */
+.surpresa-certa { font-weight: 700; color: var(--certo); }                    /* 5,5:1 no fundo "Quase!" */
 @keyframes surpresa-surgir { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
 /* opções sempre dentro do painel: colunas que encolhem (minmax 0) e texto que quebra */
@@ -66,7 +66,7 @@
 /* a errada continua legível (5,8:1, com o risco) e a certa ganha um selo ✓, não só a cor
    (no ::before: o ::after é o quadradinho das de marcar).
    Só aqui: a regra de ui-jogo.css (.opcao.errada) é das provas e fica como está. */
-.tela-surpresa .opcao.errada { opacity: 1; color: #6b5378; background: #f1edf5; }
+.tela-surpresa .opcao.errada { opacity: 1; color: var(--tinta-suave); background: #f1edf5; }
 .tela-surpresa .opcao.certa { position: relative; }
 .tela-surpresa .opcao.certa::before {
   content: "✓"; position: absolute; top: -10px; right: 6px;

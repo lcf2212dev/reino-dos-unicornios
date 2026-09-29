@@ -2,11 +2,15 @@
 /* ---------- animações ---------- */
 @keyframes aparecer { from { opacity: 0; } to { opacity: 1; } }
 @keyframes subir { from { transform: translateY(24px); opacity: 0; } to { transform: none; opacity: 1; } }
-@keyframes pulsar { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.04); } }
+@keyframes pulsar { 0%, 50%, 100% { transform: none; } 25% { transform: translateY(-2px); } }   /* pulo de 1 pixel de arte, em degrau (step-end) */
 @keyframes piscar { 50% { opacity: 0.3; } }
 @keyframes flutuar { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 @keyframes balancar { 0%, 100% { transform: none; } 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
-@keyframes brilhar { from { filter: brightness(2.2); transform: scale(0.6); } to { filter: none; transform: none; } }
+/* chegada: contorno claro de 1 pixel que acende e apaga 2 vezes, sem crescer nem clarear o desenho (use com step-end) */
+@keyframes brilhar {
+  0%, 50% { filter: drop-shadow(2px 0 0 #fff6c8) drop-shadow(-2px 0 0 #fff6c8) drop-shadow(0 2px 0 #fff6c8) drop-shadow(0 -2px 0 #fff6c8); }
+  25%, 75%, 100% { filter: none; }
+}
 @keyframes tremer { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
 .treme { animation: tremer 0.4s ease-in-out; }
 
@@ -19,7 +23,6 @@ body.sem-animacao *:not(.balao-respira), body.sem-animacao *::before, body.sem-a
 @media (max-width: 480px) {
   body { font-size: calc(16px * var(--escala-texto)); }
   .painel-conteudo { padding: 14px 14px 18px; }
-  .missao-pontos .ponto { width: 11px; height: 11px; border-width: 2px; }
   .missao-rodape .sem-relogio { display: none; }
   .btn-conferir { flex: 1; }
   /* coluna com a palavra mais comprida fica mais larga (1fr com mínimo automático) e a letra do Ligar para em
@@ -47,7 +50,6 @@ body.sem-animacao *:not(.balao-respira), body.sem-animacao *::before, body.sem-a
   .titulo-jogo small { font-size: 8px; }
   .prova-rodape .btn-grande { min-width: 0; flex: 1; padding: 10px 12px; }
   .tela-prova .missao-pontos { gap: 3px; }
-  .tela-prova .missao-pontos .ponto { width: 9px; height: 9px; }
   .tela-prova .missao-titulo { font-size: 0.8em; }
   .vf-botao { width: 44px; height: 48px; }
   .vf-linha { gap: 8px; padding: 8px; }

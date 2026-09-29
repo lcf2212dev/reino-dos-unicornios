@@ -52,15 +52,27 @@
     return U.embaralhar(lista, 'treino:' + materia.id);
   }
 
+  // o balão de arco-íris do Ritual da Calma em pixel art (16×20: oval em 4 faixas, nó e cordão); o mesmo no botão
+  var BALAO = {
+    p: { k: '#3a2446', w: '#ffffff', R: '#ff6b8a', O: '#ffb020', G: '#6fdc8c', B: '#5fb4ff' },
+    d: [
+      '.....kkkkkk.....', '...kkRRRRRRkk...', '..kRRwwRRRRRRk..', '.kRRwwRRRRRRRRk.', '.kOwOOOOOOOOOOk.',
+      'kOOwOOOOOOOOOOOk', 'kOOOOOOOOOOOOOOk', 'kGGGGGGGGGGGGGGk', 'kGGGGGGGGGGGGGGk', 'kGGGGGGGGGGGGGGk',
+      '.kBBBBBBBBBBBBk.', '.kBBBBBBBBBBBBk.', '..kBBBBBBBBBBk..', '...kBBBBBBBBk...', '....kkBBBBkk....',
+      '......kkkk......', '......kRRk......', '.......kk.......', '........k.......', '.......k........',
+    ],
+  };
+  function desenhoBalao(escala, classe) { return window.PA.paraDOM(window.PA.matriz(BALAO.d, BALAO.p), escala, classe); }
+
   // Ritual da Calma: 3 respirações com o balão de arco-íris
   Pr.ritual = function (cont, podePular) {
     return new Promise(function (resolver) {
       cont.innerHTML = '';
-      var balao = el('div.balao-respira', el('div.balao-cor'));
+      var balao = el('div.balao-respira', desenhoBalao(8, 'balao-cor'));
       var texto = el('p.respira-texto', 'Vamos respirar fundo antes da prova?');
       var contagem = el('p.respira-conta', '');
       var pular = el('button.btn-grande.btn-secundario', { type: 'button', hidden: !podePular }, 'Já respirei, pular');
-      var comecar = el('button.btn-grande.btn-principal', { type: 'button' }, 'Começar a respirar 🎈');
+      var comecar = el('button.btn-grande.btn-principal', { type: 'button' }, 'Começar a respirar', desenhoBalao(2, 'balao-botao'));
       var titulo = el('h2.titulo-pixel', 'Ritual da Calma');
       var ritual = el('div.ritual', titulo, balao, texto, contagem, el('div.intro-botoes', comecar, pular));
       cont.appendChild(ritual);

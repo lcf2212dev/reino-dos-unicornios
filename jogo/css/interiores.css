@@ -13,7 +13,7 @@
 }
 .claude-acoes .btn-dialogo.principal { background: var(--laranja); color: #2b1233; }
 .claude-acoes .btn-dialogo:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--borda); }
-.claude-acoes button:focus-visible { outline: 3px solid var(--roxo); outline-offset: 2px; }
+.claude-acoes button:focus-visible { outline: 4px dashed var(--tinta); outline-offset: 2px; }   /* o anel de foco (ui.md §10.19.4) */
 #claude-balao.com-botoes .btn-ouvir-claude { min-height: 52px; min-width: 52px; }
 
 /* personagem falando */
