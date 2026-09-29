@@ -12,7 +12,7 @@
 .surpresa-balao {
   flex: 1; min-width: 0;
   padding: 12px 14px;
-  border: 3px solid var(--borda); border-radius: 16px;
+  border: 3px solid var(--borda); border-radius: var(--canto-grande);
   background: var(--papel-3);
 }
 .surpresa-fala { font-weight: 700; }
@@ -38,7 +38,7 @@
 /* resposta: mesmas cores da missão (retorno-certo / retorno-quase), dentro do painel */
 .surpresa-retorno {
   padding: 16px;
-  border: 3px solid var(--borda); border-radius: 18px;
+  border: 3px solid var(--borda); border-radius: var(--canto-grande);
   animation: surpresa-surgir 0.22s ease-out;
 }
 .surpresa-retorno > * + * { margin-top: 12px; }
@@ -71,7 +71,7 @@
 .tela-surpresa .opcao.certa::before {
   content: "✓"; position: absolute; top: -10px; right: 6px;
   width: 26px; height: 26px; display: grid; place-items: center;
-  border: 3px solid var(--borda); border-radius: 50%;
+  border: 3px solid var(--borda); border-radius: var(--redondo);
   background: var(--certo); color: #fff; font-size: 14px;
 }
 
@@ -110,16 +110,16 @@
   .surpresa-curta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
   .surpresa-curta[hidden] { display: none; }
   .surpresa-curta-materia { flex: 1; min-width: 0; font-size: 0.85em; font-weight: 700; color: var(--tinta-suave); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .surpresa-curta-vale { flex: none; padding: 2px 8px; border: 2px solid var(--borda); border-radius: 10px; background: var(--ouro-claro); font-size: 0.85em; font-weight: 700; white-space: nowrap; }
+  .surpresa-curta-vale { flex: none; padding: 2px 8px; border: 2px solid var(--borda); border-radius: var(--canto); background: var(--ouro-claro); font-size: 0.85em; font-weight: 700; white-space: nowrap; }
   .surpresa-curta .btn-ouvir { flex: none; margin-top: 0; }
-  .tela-surpresa .enunciado { padding: 10px 12px; border-radius: 14px; }
+  .tela-surpresa .enunciado { padding: 10px 12px; border-radius: var(--canto-grande); }
   .tela-surpresa .pergunta { font-size: 1em; }
   .tela-surpresa .afirmacao { margin-top: 6px; padding: 8px 10px; font-size: 1em; }
   /* no verdadeiro ou falso, o "Verdadeiro ou falso?" é só o rótulo: a frase é que importa */
   .tela-surpresa .desafio-vf .pergunta { font-size: 0.85em; color: var(--tinta-suave); }
   .tela-surpresa .btn-ouvir { margin-top: 6px; min-height: 40px; padding: 2px 10px; font-size: 0.8em; }
   .tela-surpresa .opcoes { gap: 8px; }
-  .tela-surpresa .opcao { min-height: 48px; padding: 6px 10px; gap: 8px; border-radius: 12px; font-size: 0.9em; }
+  .tela-surpresa .opcao { min-height: 48px; padding: 6px 10px; gap: 8px; border-radius: var(--canto); font-size: 0.9em; }
   .tela-surpresa .opcao-emoji { font-size: 1.3em; }
   .tela-surpresa .opcao-marcar::after { width: 24px; height: 24px; }
   .tela-surpresa .opcoes-vf .opcao { font-size: 1em; }
@@ -127,7 +127,7 @@
   .surpresa-botoes { flex-wrap: nowrap; padding: 8px 12px 10px; gap: 10px; border-top-width: 3px; }
   .surpresa-botoes .btn-grande { flex: 1 1 0; min-width: 0; min-height: 50px; padding: 6px 8px; font-size: 0.85em; }
   .surpresa-conferir { font-size: 0.95em; }
-  .surpresa-retorno { padding: 10px 12px; border-radius: 14px; }
+  .surpresa-retorno { padding: 10px 12px; border-radius: var(--canto-grande); }
   .surpresa-retorno > * + * { margin-top: 8px; }
   .surpresa-retorno .retorno-cabeca { gap: 10px; }
   .surpresa-retorno .retorno-cabeca h3 { font-size: 1.1em; }
