@@ -27,7 +27,9 @@ Personagens: `npcs-e-dialogo.md`. Prédios: `interiores.md`. Vozes: `som-musica-
 1. Sala nova = um arquivo `<m>/<id>.js` com `Reino.registrarSala('<m>', { id, nome, emoji, paginas, intro,
    desafios: [...] })` + uma linha no `jogo/js/manifesto.js` (grupo `'materias'`, `node: true`) depois da
    última sala e antes de `<m>/livro.js` e `<m>/<m>.js`. A ordem das salas é a do manifesto.
-2. Livro: `<m>/livro.js` com `Reino.registrarLivro('<m>', [{ id, e, titulo, texto }, …])`.
+2. Livro: `<m>/livro.js` com `Reino.registrarLivro('<m>', [{ id, e, titulo, texto, destaque? }, …])`
+   (a tela divide o `texto` em blocos de até 3 frases e destaca o termo; `destaque` escolhe o termo quando o
+   automático não serve; o texto falado é o `texto` inteiro).
 3. Unicórnios da matéria: no `<m>/<m>.js` (`unicornios: [{ id, nome, raridade, sala | treino | materiaCompleta,
    cores: { corpo, crina: [3 cores], chifre, asa? }, frase }]`).
    Dinheiro da matéria (`Reino.config.valorPorMateria`, derivado, nunca no save): cada sala vale um valor redondo,

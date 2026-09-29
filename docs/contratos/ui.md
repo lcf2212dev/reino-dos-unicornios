@@ -159,10 +159,10 @@ desenho, de raridade e de matéria, nunca de moldura. Toda cor de CSS vem de um 
 literal fora do `:root` só em desenho feito em código (paletas de sprite e de ícone).
 
 Os nomes da tabela já valem (D10-01): `--laranja*`, `--ambar*`, `--verde-folha` e `--papel-quente`; `--rosa` e `--lilas`
-são as cores reais de desenho. O `--papel-2` de hoje é outro creme
-(`#fff6e4`, 10 usos; conte com `grep -rn 'var(--papel-2)' jogo/css`, ex.: o fundo do painel da missão em
-`ui-missao.css`): esses usos passam para `--papel` ou `--papel-quente` ANTES de o nome receber o valor novo
-`#efe8e2`, senão viram cinza sem querer.
+são as cores reais de desenho. `--papel-2` já é o `#efe8e2` do estado indisponível; o creme `#fff6e4` que ele era
+vive em `--papel-leve` (temporário: os usos passam para `--papel` ou `--papel-quente` no D10-14). Texto de
+raridade: `--raro-texto`, `--epico-texto`, `--lendario-texto`; texto laranja: `--laranja-escuro`. Seleção roxa
+cheia com texto branco usa fundo `--roxo-texto` (branco sobre `--roxo` dá 4,3:1).
 
 | Token | Hex | Papel |
 |---|---|---|
@@ -215,7 +215,7 @@ O lendário é sempre dourado; o arco-íris só entra como brilho. Cor de matér
    = token × `devicePixelRatio`, arredondado ao múltiplo de 8 mais perto. A placa tem 16 px CSS nos 3 tamanhos.
 6. Caracteres: a fonte não tem "√", "−", "●", "✓" nem o hífen inquebrável (U+2011). Use "-" no lugar de "−", o ✓
    com desenho 16×16 (§10.6), casa cheia desenhada em CSS no lugar de "●"; "–" e "×" existem. Caractere novo em
-   texto de tela: confira que a fonte o tem.
+   texto de tela: confira que a fonte o tem (o `validar-conteudo.js` confere matérias, provas e os textos de `js/ui/`).
 7. Ligaduras desligadas no seletor `*` (`font-variant-ligatures: none`; campos sem `font: inherit` também) e, no canvas,
    `ctx.textRendering = 'optimizeSpeed'` antes do `fillText`: com elas "fi" vira um glifo só e o "i" some.
 
