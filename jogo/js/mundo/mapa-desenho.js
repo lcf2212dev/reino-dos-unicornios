@@ -148,19 +148,10 @@
   /* ----- ajudantes dos prédios (mundo/predios.js) ----- */
   var contornoRet = D.contornoRet;   // contorno em D.K, a mesma cor de C.contorno
 
-  function portaArco(ctx, x, y, w, h, cor, moldura) {
-    ret(ctx, x - 1, y + 2, w + 2, h - 2, moldura || '#ffd34d');
-    elipse(ctx, x + w / 2 - 0.5, y + 3, w / 2, 3, moldura || '#ffd34d');
-    ret(ctx, x, y + 3, w, h - 3, cor);
-    elipse(ctx, x + w / 2 - 0.5, y + 4, w / 2 - 1, 3, cor);
-    ret(ctx, x + w / 2 - 1, y + 5, 1, h - 5, PA.cor.escurecer(cor, 0.25));
-    ret(ctx, x + w - 4, y + h / 2 + 2, 2, 2, '#ffd34d');
-  }
-
   // para mundo/lago.js e mundo/predios.js
   I.C = C;
   I.ret = ret; I.circulo = circulo; I.elipse = elipse; I.triangulo = triangulo;
-  I.contornoRet = contornoRet; I.portaArco = portaArco;
+  I.contornoRet = contornoRet;
 
   function sombraBase(ctx, px, py, w, h) {
     elipse(ctx, px + w / 2, py + h - 1, Math.round(w * 0.38), 3, 'rgba(58,36,70,0.10)');

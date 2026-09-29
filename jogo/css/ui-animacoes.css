@@ -19,8 +19,6 @@ body.sem-animacao *:not(.balao-respira), body.sem-animacao *::before, body.sem-a
 @media (max-width: 480px) {
   body { font-size: calc(16px * var(--escala-texto)); }
   .painel-conteudo { padding: 14px 14px 18px; }
-  .dock-btn { width: 78px; min-height: 64px; }
-  .dock-rotulo { font-size: 8px; }
   .missao-pontos .ponto { width: 11px; height: 11px; border-width: 2px; }
   .missao-rodape .sem-relogio { display: none; }
   .btn-conferir { flex: 1; }
@@ -31,9 +29,7 @@ body.sem-animacao *:not(.balao-respira), body.sem-animacao *::before, body.sem-a
   /* baús um embaixo do outro: lado a lado, "Ingredientes"/"Sentimentos" na letra pixel não cabiam */
   .baus { grid-template-columns: minmax(0, 1fr); gap: 10px; }
   .bau { min-height: 120px; }
-  .chip { padding: 4px 10px; font-size: 0.85em; }
   .montaria-info { font-size: 0.72em; }
-  .hud-botoes { flex-direction: column; gap: 6px; }
   /* lista de salas da matéria: "Entrar →"/"Jogar de novo" descem para a linha de baixo */
   .sala-card { gap: 10px; }
   .sala-card.ir-embaixo { flex-wrap: wrap; row-gap: 4px; }
