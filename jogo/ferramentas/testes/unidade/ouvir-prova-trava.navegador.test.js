@@ -1,7 +1,8 @@
 // Teste de NAVEGADOR (Chromium, servidor de TESTE, save sintético, ?debug=1&congelar=1): ouvir antes de seguir
 // na prova da Escola (js/atividades/provas.js). Com Reino.Som.falarEsperando trocado por um stub que devolve
 // { espera: true, fim: <promise controlada> }, a capa, cada questão (lida sozinha) e o resultado travam os
-// botões (e o ✕) até a fala acabar; o 🔊 da questão fica livre. Com { espera: false } nada trava.
+// botões (e o ✕) até a fala acabar; o 🔊 da questão fica livre. Com { espera: false } nada trava. A trava só existe
+// com config.esperaFala.travar (desligada no jogo): o 1º teste a liga; o 2º confere que, sem ela, nada trava.
 // Rodar (da raiz): node --test jogo/ferramentas/testes/unidade/ouvir-prova-trava.navegador.test.js   (tudo: npm test)
 const { test } = require('node:test');
 const assert = require('assert');
@@ -52,8 +53,8 @@ test('prova: cada fala trava os botões até acabar (e sem espera nada trava)', 
     await avancar(page, 3000);
     await page.evaluate(() => {
       window.__fala = { espera: true, pendentes: [], segs: [] };
-      // a trava da leitura da questão é opcional (desligada no jogo): aqui ela vale, para conferir a opção
-      Reino.config.esperaFala.travarQuestoes = true;
+      // a trava é opcional (desligada no jogo): aqui ela vale, para conferir a opção
+      Reino.config.esperaFala.travar = true;
       Reino.Som.falarEsperando = function (segs) {
         window.__fala.segs.push(segs);
         if (!window.__fala.espera) return { espera: false, fim: Promise.resolve() };
@@ -126,6 +127,47 @@ test('prova: cada fala trava os botões até acabar (e sem espera nada trava)', 
     await soltar(page);
     e = await estado(page);
     assert.deepStrictEqual([e.voltar, e.sair], [false, false], 'resultado: livre no fim da fala');
+    assert.deepStrictEqual(page.__erros, []);
+  } finally {
+    await browser.close();
+    servidor.parar();
+  }
+});
+
+test('prova, padrão (sem config.esperaFala.travar): capa, questão e ✕ livres com a voz ainda falando', async () => {
+  const servidor = await iniciar();
+  const browser = await lancar();
+  try {
+    const a = await abrir({ browser, url: servidor.url, query: '?debug=1&congelar=1' });
+    await esperarJogo(a.page);
+    const save = (await a.page.evaluate(`(${gerarSaves.toString()})()`)).completo;
+    await a.context.close();
+    const { page } = await abrir({ browser, url: servidor.url, save, query: '?debug=1&congelar=1' });
+    await esperarJogo(page);
+    await avancar(page, 3000);
+    await page.evaluate(() => {
+      // a voz "fala" e não acaba nunca: nada pode esperar por ela
+      window.__fala = { espera: true, pendentes: [], segs: [] };
+      Reino.Som.falarEsperando = function (segs) {
+        window.__fala.segs.push(segs);
+        return { espera: true, fim: new Promise((r) => window.__fala.pendentes.push(r)) };
+      };
+      Reino.Progresso.estado().ritualVisto = true;
+      var q = function (n) { return { id: 'op-' + n, tipo: 'escolha', pergunta: 'Pergunta ' + n + '?', opcoes: [{ t: 'Sim' }, { t: 'Não' }], certa: 0, explica: 'x' }; };
+      var pv = Object.assign({}, Reino.provas[0], { id: 'teste-ouvir-prova-livre', questoes: [q(1), q(2)] });
+      Reino.Provas.iniciar(pv, function () {});
+    });
+    await avancar(page, 600);
+    let e = await estado(page);
+    assert.deepStrictEqual([e.comecar, e.sair, e.esperando], [false, false, false], 'capa: livre com a voz falando');
+    assert.strictEqual(await page.evaluate(() => window.__fala.segs.length), 1, 'a capa foi falada');
+    await tocar(page, 'Começar a prova');
+    await tocar(page, 'Já respirei');
+    await avancar(page, 600);
+    e = await estado(page);
+    assert.deepStrictEqual([e.opcao, e.proxima, e.sair, e.esperando], [false, false, false, false], 'questão: livre com a voz lendo');
+    assert.ok(/Pergunta 1\?/.test(await page.evaluate(() => JSON.stringify(window.__fala.segs[window.__fala.segs.length - 1]))), 'a questão foi lida');
+    assert.strictEqual(await page.evaluate(() => document.querySelectorAll('.esperando-fala').length), 0);
     assert.deepStrictEqual(page.__erros, []);
   } finally {
     await browser.close();

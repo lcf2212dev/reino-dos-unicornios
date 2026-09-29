@@ -126,7 +126,7 @@
         }
         return;
       }
-      // ouvir antes de seguir: enquanto a fala toca, Esc/Enter/Espaço não fazem nada
+      // ouvir antes de seguir (só com config.esperaFala.travar): enquanto a fala toca, Esc/Enter/Espaço não fazem nada
       // (o 🔊 focado segue livre: Enter/Espaço nele repetem a fala)
       var noOuvir = at && at.classList && at.classList.contains('livre-na-fala') && bal.contains(at);
       if (aberto.esperando && (e.key === 'Escape' || (!noOuvir && (e.key === 'Enter' || e.key === ' ')))) {
@@ -217,10 +217,11 @@
     clearTimeout(item.timer);
     if (item.tempo) item.timer = setTimeout(fechar, item.tempo);
   }
-  // balão que espera resposta (sem `tempo`): os botões (menos o 🔊) só liberam quando a fala acaba
+  // balão que espera resposta (sem `tempo`): com config.esperaFala.travar, os botões (menos o 🔊) só liberam
+  // quando a fala acaba; sem ela (o padrão), a fala toca e ela responde ou fecha quando quiser (fechar cala a voz)
   function falarNoBalao(bal, item, foco) {
     var segs = item.fala || item.texto, op = { voz: vozDe(item) };
-    if (item.tempo || !Reino.UI || !Reino.UI.esperarFala) { Reino.Som.falar(segs, op); return; }
+    if (item.tempo || !Reino.UI || !Reino.UI.esperarFala || !Reino.config.esperaFala.travar) { Reino.Som.falar(segs, op); return; }
     item.esperando = true;
     Reino.UI.esperarFala(bal.querySelector('.claude-acoes'), segs, op).then(function () {
       item.esperando = false;

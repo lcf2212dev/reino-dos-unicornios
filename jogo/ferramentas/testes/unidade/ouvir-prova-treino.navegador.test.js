@@ -1,7 +1,8 @@
 // Teste de NAVEGADOR (Chromium, servidor de TESTE, save sintético, ?debug=1&congelar=1): ouvir antes de seguir
 // no Treino da Medalha (js/atividades/treino.js). Com Reino.Som.falarEsperando trocado por um stub que devolve
 // { espera: true, fim: <promise controlada> }, o plano, cada questão (lida sozinha) e o resultado travam os
-// botões (e o ✕) até a fala acabar. Matéria sintética: a 1ª do jogo com 2 questões de escolha.
+// botões (e o ✕) até a fala acabar. Matéria sintética: a 1ª do jogo com 2 questões de escolha. A trava só existe
+// com config.esperaFala.travar (desligada no jogo): o 1º teste a liga; o 2º confere que, sem ela, nada trava.
 // Rodar (da raiz): node --test jogo/ferramentas/testes/unidade/ouvir-prova-treino.navegador.test.js   (tudo: npm test)
 const { test } = require('node:test');
 const assert = require('assert');
@@ -42,8 +43,8 @@ test('treino: plano, questão e resultado travam até a fala acabar', async () =
     await avancar(page, 3000);
     await page.evaluate(() => {
       window.__fala = { espera: true, pendentes: [], segs: [] };
-      // a trava da leitura da questão é opcional (desligada no jogo): aqui ela vale, para conferir a opção
-      Reino.config.esperaFala.travarQuestoes = true;
+      // a trava é opcional (desligada no jogo): aqui ela vale, para conferir a opção
+      Reino.config.esperaFala.travar = true;
       Reino.Som.falarEsperando = function (segs) {
         window.__fala.segs.push(segs);
         if (!window.__fala.espera) return { espera: false, fim: Promise.resolve() };
@@ -87,6 +88,44 @@ test('treino: plano, questão e resultado travam até a fala acabar', async () =
     await soltar(page);
     assert.strictEqual(await trav(page, '.resultado-prova button'), false, 'resultado: livre no fim');
     assert.strictEqual(await trav(page, '.btn-sair'), false);
+    assert.deepStrictEqual(page.__erros, []);
+  } finally {
+    await browser.close();
+    servidor.parar();
+  }
+});
+
+test('treino, padrão (sem config.esperaFala.travar): plano, questão e ✕ livres com a voz ainda falando', async () => {
+  const servidor = await iniciar();
+  const browser = await lancar();
+  try {
+    const a = await abrir({ browser, url: servidor.url, query: '?debug=1&congelar=1' });
+    await esperarJogo(a.page);
+    const save = (await a.page.evaluate(`(${gerarSaves.toString()})()`)).completo;
+    await a.context.close();
+    const { page } = await abrir({ browser, url: servidor.url, save, query: '?debug=1&congelar=1' });
+    await esperarJogo(page);
+    await avancar(page, 3000);
+    await page.evaluate(() => {
+      // a voz "fala" e não acaba nunca: nada pode esperar por ela
+      window.__fala = { espera: true, pendentes: [], segs: [] };
+      Reino.Som.falarEsperando = function (segs) {
+        window.__fala.segs.push(segs);
+        return { espera: true, fim: new Promise((r) => window.__fala.pendentes.push(r)) };
+      };
+      Reino.Progresso.estado().ritualVisto = true;
+      var q = function (n) { return { id: 'ot-' + n, tipo: 'escolha', pergunta: 'Treino ' + n + '?', opcoes: [{ t: 'Sim' }, { t: 'Não' }], certa: 0, explica: 'x' }; };
+      var m = Object.assign({}, Reino.materias[0], { salas: [{ id: 'ot-sala', desafios: [q(1), q(2)] }] });
+      Reino.Prova.iniciar(m, function () {});
+    });
+    await avancar(page, 600);
+    await tocar(page, 'Já respirei');
+    await avancar(page, 600);
+    assert.deepStrictEqual([await trav(page, 'button', 'Começar o treino'), await trav(page, '.btn-sair')], [false, false], 'plano: livre com a voz falando');
+    assert.strictEqual(await page.evaluate(() => Reino.UI.esperandoFala()), false);
+    await tocar(page, 'Começar o treino');
+    assert.ok(/Treino \d\?/.test(await page.evaluate(() => JSON.stringify(window.__fala.segs[window.__fala.segs.length - 1]))), 'a questão foi lida');
+    assert.deepStrictEqual([await trav(page, '.opcao'), await trav(page, 'button', 'Próxima'), await trav(page, '.btn-sair')], [false, false, false], 'questão: livre com a voz lendo');
     assert.deepStrictEqual(page.__erros, []);
   } finally {
     await browser.close();

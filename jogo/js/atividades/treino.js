@@ -145,7 +145,7 @@
           el('p', 'Aqui é igual à prova da escola: você responde tudo, REVISA tudo e só depois entrega. A medalha vem dos acertos, não da pressa!')),
         el('div.intro-botoes', ir)));
       ir.addEventListener('click', function () { Reino.Som.tocar('porta'); fase = 'prova'; mostrarQuestao(0); });
-      // ouvir antes de seguir: "Começar" e ✕ esperam a fala acabar
+      // ouvir antes de seguir: com config.esperaFala.travar, "Começar" e ✕ esperam a fala acabar
       Reino.UI.esperarFala([ir, sair], [Reino.Falas.fixas.plano], { voz: 'claude' });
       // teclado: o ritual saiu da tela e o foco ia para o body; vai para "Começar o treino"
       Reino.UI.focarTroca(ir, corpo.querySelector('.intro-sala h2'), CALMA_TROCA);
@@ -197,11 +197,11 @@
       // teclado ("Começar o treino", "Próxima", "Anterior", uma questão da lista de revisão): o foco
       // vai para o 1º controle da questão (ou para o número dela), não para o body. Toque: nada muda
       Reino.UI.focarTroca(ctrl.card, num, CALMA_TROCA);
-      // a questão é lida sozinha (a mesma fala do 🔊); UI.lerQuestao só trava respostas, rodapé e ✕ se
-      // config.esperaFala.travarQuestoes. O 🔊 fica livre
+      // a questão é lida sozinha (a mesma fala do 🔊); UI.esperarFala só trava respostas, rodapé e ✕ com
+      // config.esperaFala.travar. O 🔊 fica livre
       if (Reino.config.esperaFala.lerQuestoes) {
         Array.prototype.forEach.call(ctrl.card.querySelectorAll('.btn-ouvir'), function (b) { b.classList.add('livre-na-fala'); });
-        Reino.UI.lerQuestao([ctrl.card, rodape, sair], Reino.Falas.segmentosDesafio(d, ctrl.ordem), { voz: 'narradora' });
+        Reino.UI.esperarFala([ctrl.card, rodape, sair], Reino.Falas.segmentosDesafio(d, ctrl.ordem), { voz: 'narradora' });
       }
     }
 
