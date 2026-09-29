@@ -1,0 +1,29 @@
+{
+  "nome": "2026-09-29-tv-1b",
+  "pedido": "pedidos/2026-09-29-tv-1b.md",
+  "personagens": [],
+  "tarefas": [
+    { "id": "css-cor", "tipo": "mecanica", "titulo": "D10-03, D7-07, D7-C1 e o anel de foco do D10-B05: texto com contraste AA e validador; O-14",
+      "quem": "general-purpose", "depende": [],
+      "arquivos": ["jogo/css/", "jogo/ferramentas/validar/validar-contraste-texto.js", "jogo/ferramentas/testes/unidade/contraste-texto.navegador.test.js",
+        "jogo/ferramentas/validar/validar-tudo.js", "jogo/js/ui/hud-aura.js", "jogo/ferramentas/validar/validar-conteudo.js"],
+      "worktree": "tv-1b-css", "pronto": ["o 'Pronto quando' completo de D10-03, D7-07, D7-C1, O-14 e a parte CSS do D10-B05"], "estimativa": 150 },
+    { "id": "css-mov", "tipo": "mecanica", "titulo": "D10-11, D9-01, D9-07, D6-29, D12b-04 e o CSS do D6-21: sem scale fracionário, pulso em degraus, validador de pixel",
+      "quem": "general-purpose", "depende": ["css-cor"],
+      "arquivos": ["jogo/ferramentas/validar/validar-pixel.js", "jogo/js/atividades/treino.js", "jogo/js/arte/icones/interface.js"],
+      "worktree": "tv-1b-css", "pronto": ["o 'Pronto quando' completo de D10-11, D9-01, D9-07, D6-29, D12b-04 e a parte CSS do D6-21"], "estimativa": 150 },
+    { "id": "foco", "tipo": "mecanica", "titulo": "D10-B05 (foco só pelo teclado), D5-12, D6-04 e o JS do D6-21",
+      "quem": "worker-low", "depende": [],
+      "arquivos": ["jogo/js/personagens/claude.js", "jogo/js/sistemas/surpresa-painel.js", "jogo/js/ui/et-desafio.js", "jogo/js/ui/base.js"],
+      "worktree": "tv-1b-foco", "pronto": ["o 'Pronto quando' completo de D5-12, D6-04, a parte JS do D10-B05 e do D6-21"], "estimativa": 60 },
+    { "id": "livro", "tipo": "conteudo", "titulo": "D7-05: cartas do livro e do resumo em blocos de até 3 frases, com o termo destacado",
+      "quem": "worker-low", "depende": [],
+      "arquivos": ["jogo/js/ui/materia.js", "jogo/js/conteudo/materias/"],
+      "worktree": "tv-1b-livro", "pronto": ["o 'Pronto quando' completo do D7-05; texto falado das cartas idêntico"], "estimativa": 90 },
+    { "id": "integracao", "tipo": "integracao", "titulo": "Juntar, npm test e e2e, marcar o TODO", "quem": "orquestrador",
+      "depende": ["css-cor", "css-mov", "foco", "livro"],
+      "arquivos": ["TODO-VISUAL.md", "jogo/js/manifesto.js", "jogo/index.html", "jogo/ferramentas/testes/base-referencia.txt"],
+      "worktree": "tv-1b", "pronto": ["npm test e npm run e2e verdes; diferenças explicadas (base trocada)"], "estimativa": 60 },
+    { "id": "entrega", "tipo": "entrega", "titulo": "Merge, push e Vercel", "quem": "orquestrador", "depende": ["integracao"], "arquivos": [], "worktree": "tv-1b", "estimativa": 15 }
+  ]
+}
