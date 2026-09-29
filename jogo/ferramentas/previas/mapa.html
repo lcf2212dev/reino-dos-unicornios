@@ -6,15 +6,18 @@
 <script src="../../js/manifesto.js"></script>
 <script src="previa.js"></script>
 <script>
-// ?grade=1: todas as matérias e os lugares registrados (js/interiores/<p>/lugar.js), com números de coluna/linha,
+// ?grade=1: com números de coluna/linha,
 // o rect de cada lugar (e das clareiras) com o id, e as áreas livres pintadas de leve (`npm run ver -- --previa mapa`)
 var GRADE = /[?&]grade=1/.test(location.search);
-var HISTORIA = ['conteudo/materias/registro', 'conteudo/materias/historia/h1', 'conteudo/materias/historia/h2', 'conteudo/materias/historia/h3',
-  'conteudo/materias/historia/h4', 'conteudo/materias/historia/h5', 'conteudo/materias/historia/livro', 'conteudo/materias/historia/historia'];
-var LUGARES_JS = Reino.MANIFESTO.scripts.filter(function (s) { return /^js\/interiores\/[^/]+\/lugar\.js$/.test(s.js); })
-  .map(function (s) { return s.js.replace(/^js\//, '').replace(/\.js$/, ''); });
-Previa.carregar({ nomes: ['nucleo/config', 'nucleo/registros', 'nucleo/util', 'nucleo/eventos', 'arte/desenho'].concat(GRADE ? LUGARES_JS : HISTORIA),
-  grupos: ['pixelart', 'mundo'].concat(GRADE ? ['materias'] : []) });</script>
+// todas as matérias e provas e o grupo interiores inteiro (com o que ele pede, como em interiores.html): os prédios com
+// desenho próprio registram a fachada em js/interiores/<p>/fora.js, depois das partes de dentro que ela usa
+Previa.carregar({
+  nomes: ['nucleo/config', 'nucleo/registros', 'nucleo/util', 'nucleo/eventos', 'conteudo/loja-itens', 'personagens/unicornios',
+    'sistemas/progresso', 'sistemas/progresso-mescla', 'sistemas/progresso-nuvem', 'sistemas/progresso-regras', 'sistemas/voz', 'personagens/claude', 'sistemas/falas', 'sistemas/cuidados', 'arte/desenho',
+    'motor/interiores-base', 'motor/interiores-pisos', 'motor/interiores-objetos-parede', 'motor/interiores-objetos-moveis', 'motor/interiores-objetos-enfeites', 'motor/interiores-grade', 'motor/interiores-estatico', 'motor/interiores-placas', 'motor/interiores-toque', 'motor/interiores-cena', 'personagens/npcs',
+    'personagens/npcs-corpo', 'personagens/npcs-cabeca', 'personagens/npcs-sprites', 'personagens/npcs-status', 'personagens/npcs-falas',
+    'personagens/npcs-conversa', 'personagens/elenco'],
+  grupos: ['icones', 'pixelart', 'mundo', 'materias', 'provas', 'interiores'] });</script>
 <script>
 Mapa.criar(Reino.materias);
 var e = Mapa.prerender();
