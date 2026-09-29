@@ -1,0 +1,168 @@
+{
+  "nome": "2026-09-29-tv-3b",
+  "pedido": "pedidos/2026-09-29-tv-3b.md",
+  "personagens": [],
+  "tarefas": [
+    {
+      "id": "personagens",
+      "tipo": "arte",
+      "titulo": "D4-05, D4-06, D4-07, D4-09, D4-10, D4-11, D4-13, D4-15, D4-16: NPCs com ofício, ETs com o planeta, alturas da tabela",
+      "quem": "general-purpose",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/personagens/elenco.js",
+        "jogo/js/personagens/npcs.js",
+        "jogo/js/personagens/npcs-cabeca.js",
+        "jogo/js/personagens/npcs-corpo.js",
+        "jogo/js/personagens/npcs-sprites.js",
+        "jogo/js/personagens/npcs-status.js",
+        "jogo/js/personagens/npcs-reserva.js",
+        "jogo/js/arte/pixelart-personagens.js",
+        "jogo/js/arte/pixelart-menino-moldes.js",
+        "jogo/js/interiores/planetas/ets.js",
+        "jogo/js/interiores/planetas/personagens.js",
+        "jogo/js/interiores/observatorio/nasa-personagens.js"
+      ],
+      "worktree": "tv-3b-personagens",
+      "pronto": [
+        "o 'Pronto quando' completo de cada item no TODO"
+      ],
+      "estimativa": 180
+    },
+    {
+      "id": "materias-1",
+      "tipo": "cenario",
+      "titulo": "D2B-03 e D2B-02: prédios de matéria com planta e kit próprios; Matemática com identidade",
+      "quem": "general-purpose",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/interiores/padrao.js",
+        "jogo/js/interiores/matematica/",
+        "jogo/js/interiores/portugues/",
+        "jogo/js/interiores/torre/",
+        "jogo/js/interiores/museu/",
+        "jogo/js/interiores/castelo/",
+        "jogo/js/conteudo/materias/"
+      ],
+      "worktree": "tv-3b-materias",
+      "pronto": [
+        "o 'Pronto quando' completo de D2B-03 e D2B-02 no TODO"
+      ],
+      "estimativa": 240
+    },
+    {
+      "id": "materias-2",
+      "tipo": "cenario",
+      "titulo": "D2B-13, D2B-12, D4-14, D2A-05 e O-12 (castelo, matemática, português, museu, torre)",
+      "quem": "general-purpose",
+      "depende": [
+        "materias-1"
+      ],
+      "arquivos": [
+        "jogo/js/interiores/geografia/"
+      ],
+      "worktree": "tv-3b-materias",
+      "pronto": [
+        "o 'Pronto quando' completo de cada item no TODO (O-12 sem aviso nesses prédios)"
+      ],
+      "estimativa": 180
+    },
+    {
+      "id": "ceu",
+      "tipo": "cenario",
+      "titulo": "D2B-09, D2B-10, D2B-11 e O-12 (observatório e planetas)",
+      "quem": "general-purpose",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/interiores/observatorio/nasa-andar.js",
+        "jogo/js/interiores/observatorio/nasa-experiencias.js",
+        "jogo/js/interiores/observatorio/nasa-objetos.js",
+        "jogo/js/interiores/observatorio/lab-andar3.js",
+        "jogo/js/interiores/observatorio/lab-objetos-1.js",
+        "jogo/js/interiores/observatorio/lab-objetos-2.js",
+        "jogo/js/interiores/observatorio/lab-objetos-3.js",
+        "jogo/js/interiores/observatorio/observatorio.js",
+        "jogo/js/interiores/observatorio/objetos-cupula-planetario.js",
+        "jogo/js/interiores/observatorio/objetos-galeria.js",
+        "jogo/js/interiores/observatorio/objetos-parede.js",
+        "jogo/js/interiores/planetas/planetas-comum.js",
+        "jogo/js/interiores/planetas/lua.js",
+        "jogo/js/interiores/planetas/lua-objetos.js",
+        "jogo/js/interiores/planetas/marte.js",
+        "jogo/js/interiores/planetas/marte-objetos.js",
+        "jogo/js/interiores/planetas/saturno.js",
+        "jogo/js/interiores/planetas/saturno-objetos.js",
+        "jogo/js/interiores/planetas/jupiter.js",
+        "jogo/js/interiores/planetas/jupiter-objetos.js",
+        "jogo/js/interiores/planetas/venus.js",
+        "jogo/js/interiores/planetas/venus-objetos.js",
+        "jogo/js/interiores/planetas/netuno.js",
+        "jogo/js/interiores/planetas/netuno-objetos.js",
+        "jogo/ferramentas/testes/unidade/viagem.test.js"
+      ],
+      "worktree": "tv-3b-ceu",
+      "pronto": [
+        "o 'Pronto quando' completo de cada item no TODO (O-12 sem aviso nesses prédios)"
+      ],
+      "estimativa": 180
+    },
+    {
+      "id": "voo",
+      "tipo": "arte",
+      "titulo": "D2B-04, D10-B07, D8B-29, D2B-05, D2B-18: um planeta só (o do Planetário) no voo, no foguete, no passaporte e no álbum; piloto; decolagem",
+      "quem": "general-purpose",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/atividades/voo.js",
+        "jogo/js/atividades/voo-portais.js",
+        "jogo/js/interiores/observatorio/cenas.js",
+        "jogo/js/interiores/observatorio/planetas.js",
+        "jogo/js/ui/foguete.js",
+        "jogo/js/ui/album-ets.js",
+        "jogo/js/arte/icones/planetas.js",
+        "jogo/js/atividades/voo-desenho.js"
+      ],
+      "worktree": "tv-3b-voo",
+      "pronto": [
+        "o 'Pronto quando' completo de cada item no TODO"
+      ],
+      "estimativa": 180
+    },
+    {
+      "id": "integracao",
+      "tipo": "integracao",
+      "titulo": "Juntar, npm test e e2e, marcar o TODO",
+      "quem": "orquestrador",
+      "depende": [
+        "personagens",
+        "materias-1",
+        "materias-2",
+        "ceu",
+        "voo"
+      ],
+      "arquivos": [
+        "TODO-VISUAL.md",
+        "jogo/js/manifesto.js",
+        "jogo/index.html",
+        "jogo/ferramentas/testes/base-referencia.txt"
+      ],
+      "worktree": "tv-3b",
+      "pronto": [
+        "npm test e npm run e2e verdes; diferenças explicadas (base trocada)"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "entrega",
+      "tipo": "entrega",
+      "titulo": "Merge, push e Vercel",
+      "quem": "orquestrador",
+      "depende": [
+        "integracao"
+      ],
+      "arquivos": [],
+      "worktree": "tv-3b",
+      "estimativa": 15
+    }
+  ]
+}
