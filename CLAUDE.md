@@ -76,7 +76,8 @@ Este arquivo tem as regras invioláveis e o índice. As regras de código de cad
   `npm run servidor-teste` (skill `servidor-de-teste`) · `npm run memoria` (memória de uma aba, passo a passo)
 - `npm run index` · `npm run versao` · `npm run vozes` e `npm run vozes-elenco` (skills `gravar-vozes`, `validar-vozes`)
 - `npm run worktree` · `npm run material -- <Pasta>` (prints de `matérias/<pasta>/` reduzidos) · `npm run plano`
-  (frentes paralelas de um pedido) · `npm run integrar` (skill `entregar`) · `npm run vercel` (publica na Vercel)
+  (frentes paralelas de um pedido) · `npm run integrar` (skill `entregar`) · `npm run vercel` (publica na Vercel) ·
+  `npm run icones` (ícones do app instalado, de `jogo/ferramentas/pwa/`)
 
 ## Mapa de pastas
 ```

@@ -26,6 +26,7 @@
     "material": "node jogo/ferramentas/fluxo/material.js",
     "integrar": "node jogo/ferramentas/fluxo/integrar.js",
     "plano": "node jogo/ferramentas/fluxo/plano.js",
-    "vercel": "node jogo/ferramentas/fluxo/vercel.js"
+    "vercel": "node jogo/ferramentas/fluxo/vercel.js",
+    "icones": "node jogo/ferramentas/pwa/gerar-icones.js"
   }
 }
