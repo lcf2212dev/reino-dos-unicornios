@@ -422,6 +422,8 @@ interface CartaLivro {
   e: string;
   titulo: string;
   texto: string;
+  /** termo destacado na tela (padrão: palavra mais longa do título que aparece no texto) */
+  destaque?: string;
 }
 
 /** Uma sala (js/conteudo/materias/<m>/<sala>.js, Reino.registrarSala). */

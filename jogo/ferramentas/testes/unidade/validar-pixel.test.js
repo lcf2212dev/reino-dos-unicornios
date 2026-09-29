@@ -44,3 +44,9 @@ test('pixel: canvas sem degradê, desfoque, arco nem elipse (com exceção marca
   assert.deepStrictEqual(errosJs('ctx.arc(1, 1, 3, 0, 7); // pixel-ok: canvas pequeno na grade'), []);
   assert.deepStrictEqual(errosJs('// ctx.arc( só no comentário'), []);
 });
+
+test('pixel: scale só inteiro e conic-gradient só nas exceções (D10-11)', () => {
+  assert.strictEqual(errosCss('@keyframes a { 50% { transform: scale(1.04) } }').length, 1);
+  assert.strictEqual(errosCss('@keyframes a { 50% { transform: scale(2) } }').length, 0);
+  assert.ok(errosCss('.x { background: conic-gradient(red, blue) }').length >= 1);
+});
