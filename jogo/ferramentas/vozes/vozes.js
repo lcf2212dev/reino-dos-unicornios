@@ -54,10 +54,11 @@ function pendentes() {
 function pythonDoConferir() {
   const py = path.join(VENV, 'bin', 'python');
   if (fs.existsSync(py)) return { cmd: py, pre: [] };
-  if (existe('uv')) return { cmd: 'uv', pre: ['run', '--with', 'faster-whisper', 'python'] };
+  // av < 14: o av mais novo recusa o metadata_errors que o faster-whisper passa (quebrou em 29/09/2026)
+  if (existe('uv')) return { cmd: 'uv', pre: ['run', '--with', 'faster-whisper', '--with', 'av<14', 'python'] };
   console.log(`\n⚠ sem o ${path.relative(RAIZ, VENV)} e sem uv: vou criar o venv e instalar o faster-whisper (baixa pacotes da internet)`);
   if (rodar('4. conferir (criar venv)', 'python3', ['-m', 'venv', VENV]) !== 0) return null;
-  if (rodar('4. conferir (pip install)', path.join(VENV, 'bin', 'pip'), ['install', 'faster-whisper']) !== 0) return null;
+  if (rodar('4. conferir (pip install)', path.join(VENV, 'bin', 'pip'), ['install', 'faster-whisper', 'av<14']) !== 0) return null;
   return { cmd: py, pre: [] };
 }
 
