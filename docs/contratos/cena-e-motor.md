@@ -123,7 +123,9 @@ cena = {
   itensDesenho(pintor, t, animar) → [{ y, desenhar() }]   // NPCs, móveis altos, Claude
 }
 alvo = { tipo: 'npc'|'objeto'|'saida'|'escada'|'lugar'|'claude', id,
-         tile: {x, y},   // onde ela para (vizinho livre alcançável; gatilho: o próprio tile)
+         tile: {x, y},   // onde ela para (vizinho livre alcançável; gatilho: o próprio tile). NPC: o tile do
+                         // lado vence o de baixo, salvo se ficar mais de 3 passos mais longe (PENA_BAIXO_NPC em
+                         // interiores-toque.js), para a Mariana montada não cobrir o NPC na conversa
          olhar: {x, y},  // para onde vira ao chegar
          agir(),         // o que acontece ao chegar
          semCaminho? }   // opcional: o que fazer se não houver caminho
@@ -355,7 +357,8 @@ abas que ficaram abertas nos aparelhos percebem e recarregam sozinhas (decisão 
 - **Como**: o Claude fala num balão que fecha sozinho em `avisoMs` ("Chegou novidade no Reino! ✨" + "O que você fez
   fica guardado.", `falas()` do módulo, pacote `geral`); fechado o balão (sozinho ou no "Ok!"), `P.salvar()` e,
   `esperaMs` depois (o envio ao servidor sai 1,8 s depois de gravar), `Reino.Versao._recarregar()` (= `location.reload()`;
-  os testes trocam). Tocar fora do balão, tecla, andar ou sair do mapa durante o aviso ou a espera: desiste e tenta de
+  os testes trocam), com `Jogadores.lembrarEntrada()` antes: o reload entra direto no mapa, sem abertura nem senha
+  (`save-e-mescla.md` §12). Tocar fora do balão, tecla, andar ou sair do mapa durante o aviso ou a espera: desiste e tenta de
   novo na próxima parada. Nada vai para o save.
 - Números: `config.versao = { intervaloMs, confirmarMs, cacheMs, paradaMs, avisoMs, esperaMs }` (o módulo tem os
   mesmos valores padrão se faltar). Depuração: `__reino.modulo('versao')` → `{ ligado, motivo, fase, base, suspeita,

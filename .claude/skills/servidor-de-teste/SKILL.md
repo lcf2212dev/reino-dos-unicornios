@@ -13,7 +13,7 @@ Regras: `jogo/ferramentas/CLAUDE.md`.
    npm run ver -- --ir petshop --nome petshop
    npm run ver -- --estrelas 500 --tela loja --tamanhos celular
    npm run ver -- --cuidados fome=5,sede=5 --js 'Reino.UI.telaPetShop()'
-   npm run ver -- --tela sala:h1 --passos 'tocar:.intro-botoes .btn-principal;esperar:600'
+   npm run ver -- --tela sala:h1 --passos 'perguntas'
    npm run ver -- --previa interiores:petshop --recorte 0,0,200,150 --ampliar 4
    npm run ver -- --tamanhos celular --passos 'arrastar:100,600,170,600,600,preso'   # thumbstick na foto
    npm run ver -- --tamanhos notebook --passos 'arrastar:600,400,800,400,500,mouse'

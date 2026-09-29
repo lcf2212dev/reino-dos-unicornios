@@ -75,7 +75,7 @@ Conferir no jogo (fotos em `/tmp/reino-testes/ver/<nome>/`):
 ```
 npm run ver -- --ir materia:<m> --nome <m>                   # o prédio por dentro
 npm run ver -- --tela materia:<m> --tamanhos celular         # a tela da matéria
-npm run ver -- --tela sala:<sala> --passos 'tocar:.intro-botoes .btn-principal;esperar:600'
+npm run ver -- --tela sala:<sala> --passos 'perguntas'
 npm run ver -- --tela livro:<m>                              # o livro
 ```
 Em script: `abrirCenario()` de `jogo/ferramentas/testes/cenario.js`.
