@@ -70,6 +70,7 @@
     var l = lugar;
     for (var fonte = m.fonte; fonte >= 8; fonte -= 8) {
       ctx.font = fonte + 'px ' + FONTE_PIXEL;
+      ctx.textRendering = 'optimizeSpeed';   // sem ligadura "fi"/"fl" (ui.md §10.9)
       var pad = Math.max(6, Math.round(fonte * 0.6)), vao = 3 * m.u;
       var tentativas = l.comodo ? [nomeLugar(l), l.predio] : [l.predio];   // o cômodo só se couber
       for (var i = 0; i < tentativas.length; i++) {
@@ -80,6 +81,7 @@
       }
     }
     ctx.font = '8px ' + FONTE_PIXEL;
+    ctx.textRendering = 'optimizeSpeed';   // sem ligadura "fi"/"fl" (ui.md §10.9)
     return { fonte: 8, pad: 6, linhas: [[l.predio], [data]], wl: larguraUtil, wd: Math.ceil(ctx.measureText(data).width) + 12, vao: 3 * m.u, texto: l.predio };
   }
 
@@ -97,6 +99,7 @@
     ctx.fillRect(x + w - pt * 2, y + pt, pt, pt);
     ctx.fillStyle = K;
     ctx.font = fonte + 'px ' + FONTE_PIXEL;
+    ctx.textRendering = 'optimizeSpeed';   // sem ligadura "fi"/"fl" (ui.md §10.9)
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(texto, Math.round(x + w / 2), Math.round(y + h / 2 + fonte * 0.06));

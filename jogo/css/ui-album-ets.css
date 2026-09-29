@@ -12,7 +12,7 @@
 .album-cartao small { color: var(--tinta-suave); }
 .album-figura { position: relative; display: flex; align-items: flex-end; justify-content: center; min-height: 64px; }
 .album-sprite { image-rendering: pixelated; }
-.album-cartao.silhueta { border-style: dashed; background: var(--papel-3); }
+.album-cartao.silhueta { border-style: dashed; background: var(--papel-quente); }
 .album-cartao.silhueta .album-sprite { filter: brightness(0); opacity: 0.55; }
 .album-interroga {
   position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;

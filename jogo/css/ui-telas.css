@@ -25,7 +25,7 @@
 .painel-topo {
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
   padding: 14px 14px 12px 20px;
-  background: var(--lavanda-clara);
+  background: var(--ambar-claro);
   border-bottom: 4px solid var(--borda);
 }
 .painel-conteudo { padding: 18px 20px 22px; overflow: auto; }
@@ -60,13 +60,13 @@
 }
 .titulo-jogo::before { left: 28px; }
 .titulo-jogo::after { right: 28px; }
-.titulo-jogo span { display: block; font-family: var(--fonte-pixel); font-size: 32px; line-height: 1.4; color: var(--rosa-forte); text-shadow: 4px 4px 0 var(--borda); letter-spacing: 0; }
+.titulo-jogo span { display: block; font-family: var(--fonte-pixel); font-size: 32px; line-height: 1.4; color: var(--laranja-forte); text-shadow: 4px 4px 0 var(--borda); letter-spacing: 0; }
 .titulo-jogo small { display: block; font-size: 16px; font-weight: 400; line-height: 1.7; margin-top: 10px; }
 .inicio-sub { color: var(--tinta-suave); font-weight: 700; }
 .btn-comecar { font-size: 16px; padding: 16px 22px; }
 
 /* Claude */
-.intro-claude { display: flex; align-items: center; gap: 14px; padding: 14px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel-3); text-align: left; }
+.intro-claude { display: flex; align-items: center; gap: 14px; padding: 14px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel-quente); text-align: left; }
 .intro-claude p { font-weight: 700; }
 .intro-claude-grande { max-width: 560px; background: var(--papel); }
 .claude-intro { flex: none; }
@@ -95,7 +95,7 @@ body.em-missao #claude-balao { bottom: calc(env(safe-area-inset-bottom, 0px) + 1
 .claude-fala::before { content: ""; position: absolute; left: -14px; bottom: 18px; border: 10px solid transparent; border-right-color: var(--borda); }
 .claude-texto { font-weight: 700; font-size: 1em; }
 .claude-acoes { display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px; }
-.claude-acoes button { min-height: 48px; padding: 6px 16px; border: 3px solid var(--borda); border-radius: var(--canto); background: var(--rosa); font-weight: 700; box-shadow: 0 3px 0 var(--borda); }
+.claude-acoes button { min-height: 48px; padding: 6px 16px; border: 3px solid var(--borda); border-radius: var(--canto); background: var(--laranja); font-weight: 700; box-shadow: 0 3px 0 var(--borda); }
 .claude-acoes .btn-ouvir-claude { background: var(--papel); }
 #claude-balao.dica-pressa .claude-fala { background: var(--ouro-claro); }
 
@@ -112,15 +112,14 @@ body.em-missao #claude-balao { bottom: calc(env(safe-area-inset-bottom, 0px) + 1
 .sala-card.bloqueada { background: #f3f0f5; }
 .sala-emoji { font-size: 2em; flex: none; width: 1.4em; text-align: center; }
 .sala-info { flex: 1; display: flex; flex-direction: column; gap: 3px; min-width: 0; }
-/* nomes compridos (fonte pixel larga) quebram nas sílabas marcadas por hifenizar() em ui.js;
-   anywhere é só a última garantia para não passar por cima do "Ir →" */
-.sala-info b, .sala-info small { overflow-wrap: anywhere; hyphens: manual; }
+/* nomes compridos (fonte pixel larga) quebram nas sílabas marcadas por hifenizar() (ui/pecas.js); o resto é a
+   regra do body (ui.md §10.17) */
 .sala-info small { color: var(--tinta-suave); font-size: 0.8em; }
 .sala-ir { flex: none; font-weight: 700; font-size: 0.85em; color: var(--roxo); }
 .sala-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 3px; }
 .chip-mini { display: inline-block; padding: 1px 9px; border: 2px solid var(--borda); border-radius: var(--canto); font-size: 0.72em; font-weight: 700; background: var(--papel); }
 .chip-mini.ok { background: var(--certo-fundo); }
-.chip-mini.nova { background: var(--rosa-clara); }
+.chip-mini.nova { background: var(--laranja-claro); }
 .chip-mini.raro { background: #dcebff; }
 .chip-mini.calma { background: #e6e9ff; }
 /* trilho de 250 px ou mais; se o texto não couber ao lado (celular), desce para a linha de baixo */

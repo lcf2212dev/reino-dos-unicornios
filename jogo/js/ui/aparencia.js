@@ -58,7 +58,7 @@
         c.clearRect(0, 0, spr.w, spr.h); c.drawImage(spr.canvas, 0, 0);
         tela.style.width = (spr.w * escala) + 'px'; tela.style.height = (spr.h * escala) + 'px';
         tela.style.transform = v[1] ? 'scaleX(-1)' : '';
-        U.preencher(plaquinha, (nome.value.trim() || rascunho.nome).slice(0, NOME_MAX));
+        preencherPlaquinha();
       }
       function girar() {
         // a tela saiu sem passar pelo Pronto nem pelo ✕ (UI.limpar): o relógio para sozinho
@@ -72,7 +72,12 @@
       // ---------- nome e sexo ----------
       var nome = el('input#campo-nome-jogador.campo-nome.criar-nome', { type: 'text', maxlength: NOME_MAX, value: rascunho.nome,
         autocomplete: 'off', spellcheck: 'false', 'aria-label': 'Nome', placeholder: 'Seu nome' });
-      nome.addEventListener('input', function () { U.preencher(plaquinha, (nome.value.trim() || rascunho.nome).slice(0, NOME_MAX)); });
+      // até 12 letras numa linha, inteiro; mais comprido (nome antigo) quebra só na sílaba, com hífen (ui.md §10.17)
+      function preencherPlaquinha() {
+        var t = nome.value.trim() || rascunho.nome;
+        U.preencher(plaquinha, t.length > NOME_MAX ? R.hifenizar(t) : t);
+      }
+      nome.addEventListener('input', preencherPlaquinha);
       nome.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); var b = U.$('.criar-sexo-btn', pn.tela); if (b) b.focus(); } });
       var sexo = el('div.criar-sexo', { role: 'group', 'aria-label': 'Menina ou menino' });
       SEXOS.forEach(function (s) {
@@ -121,6 +126,29 @@
       // ---------- corte e roupa ----------
       var grupoCorte = el('div.criar-opcoes', { role: 'group', 'aria-label': 'Corte de cabelo' });
       var grupoRoupa = el('div.criar-opcoes', { role: 'group', 'aria-label': 'Roupa' });
+      // a faixa de "tem mais" (▶) some quando a fileira chega ao último cartão; o cartão que só aparece como uma
+      // lasca colada à faixa fica escondido (a faixa cobre o resto dele)
+      var LASCA = 24;
+      function fimDaFileira(f) {
+        f.classList.toggle('no-fim', f.scrollLeft + f.clientWidth >= f.scrollWidth - 2);
+        var faixa = U.$('.criar-mais', f);
+        if (!faixa) return;
+        var borda = faixa.getBoundingClientRect().left, noFim = f.classList.contains('no-fim');
+        U.$$('.criar-opcao', f).forEach(function (b) {
+          var visto = borda - b.getBoundingClientRect().left;
+          b.classList.toggle('criar-lasca', !noFim && visto > 0 && visto < LASCA);
+        });
+      }
+      [grupoCorte, grupoRoupa].forEach(function (f) {
+        f.addEventListener('scroll', function () { fimDaFileira(f); }, { passive: true });
+        // pelo teclado: o cartão com foco rola para dentro da fileira, fora da faixa (scroll-padding no css)
+        f.addEventListener('focusin', function (e) {
+          var b = e.target.closest && e.target.closest('.criar-opcao');
+          if (!b) return;
+          b.scrollIntoView({ inline: 'nearest', block: 'nearest' });
+          fimDaFileira(f);
+        });
+      });
       function montarOpcoes() {
         [[grupoCorte, PA.CORTES, 'corte', 0, 11], [grupoRoupa, PA.MODELOS, 'modelo', 4, 99]].forEach(function (g) {
           g[0].innerHTML = '';
@@ -129,10 +157,11 @@
             ap[g[2]] = o.id;
             var b = el('button.criar-opcao', { type: 'button', 'data-id': o.id },
               el('span.criar-retrato', recorte(PA.mariana(ap, false, 0, { vista: 'frente' }), g[3], g[4], 3)),
-              el('span.criar-opcao-nome', R.hifenizar(o.nome)));
+              el('span.criar-opcao-nome', o.nome));
             b.addEventListener('click', function () { aparencia()[g[2]] = o.id; Reino.Som.tocar('selecionar'); marcar(); desenhar(); });
             g[0].appendChild(b);
           });
+          g[0].appendChild(el('span.criar-mais', { 'aria-hidden': 'true' }, PA.iconeEmoji('▶', 32 / 18)));
         });
       }
       // os retratos mudam com as cores; o marcado segue a aparência (lida na hora)
@@ -194,6 +223,7 @@
         U.$$('.criar-opcao[aria-pressed="true"]', pn.tela).forEach(function (b) {
           var f = b.parentNode; f.scrollLeft = Math.max(0, b.offsetLeft - f.offsetLeft - 8);
         });
+        [grupoCorte, grupoRoupa].forEach(fimDaFileira);
       }, 0);
     });
   };

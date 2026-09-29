@@ -178,10 +178,12 @@
           b.setAttribute('aria-current', String(b.getAttribute('data-login') === eLogin.input.value));
         });
       }
+      // até 12 letras, inteiro numa linha (css); o login vai a 20: acima de 12, só quebra na sílaba, com hífen
+      function nomeCartao(n) { n = String(n || ''); return n.length > 12 ? Reino._ui.hifenizar(n) : n; }
       function cartao(login) {
         var b = el('button.jogadores-cartao', { type: 'button', role: 'listitem', 'data-login': login },
           el('span.jogadores-retrato', { 'aria-hidden': 'true' }, arteDoCartao(login)),
-          el('b.jogadores-nome', J().nomeDoLogin(login)));
+          el('b.jogadores-nome', nomeCartao(J().nomeDoLogin(login))));
         b.addEventListener('click', function () {
           som('toque');
           aviso(eErro, null);

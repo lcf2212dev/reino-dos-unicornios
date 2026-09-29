@@ -7,12 +7,13 @@
 .missao-topo {
   display: flex; align-items: center; gap: 12px;
   padding: calc(env(safe-area-inset-top, 0px) + 10px) 14px 10px;
-  background: var(--lavanda-clara); border-bottom: 4px solid var(--borda);
+  background: var(--ambar-claro); border-bottom: 4px solid var(--borda);
 }
-.missao-titulo { flex: 1; min-width: 0; font-family: var(--fonte-titulo); font-weight: 600; font-size: 1.05em; line-height: 1.15; }
+.missao-titulo { flex: 1; min-width: 0; font-family: var(--fonte-titulo); font-weight: 600; font-size: 1.05em; line-height: 1.15;
+  overflow-wrap: normal; }   /* título sem hífen suave: palavra inteira (ui.md §10.17) */
 .missao-pontos { display: flex; gap: 6px; flex: none; }
 .ponto { width: 14px; height: 14px; border: 3px solid var(--borda); border-radius: var(--redondo); background: #fff; }
-.ponto.feito { background: var(--rosa); }
+.ponto.feito { background: var(--laranja); }
 .ponto.atual { background: var(--ouro); transform: scale(1.2); }
 .missao-corpo { flex: 1; overflow: auto; padding: 18px 16px 24px; }
 .missao-corpo > * { max-width: 760px; margin-left: auto; margin-right: auto; }
@@ -22,7 +23,7 @@
   background: var(--papel); border-top: 4px solid var(--borda);
 }
 .sem-relogio { font-size: 0.8em; font-weight: 700; color: var(--tinta-suave); }
-.btn-conferir { min-width: 190px; font-size: 1.1em; background: var(--menta); flex-shrink: 0; }
+.btn-conferir { min-width: 190px; font-size: 1.1em; background: var(--verde-folha); flex-shrink: 0; }
 /* letras grandes no tablet: "Conferir ✓" não quebra e o "Sem relógio…" cabe numa linha (bordas do rodapé 16 → 10 px) */
 @media (min-width: 640px) { .missao-rodape { padding-left: calc(16px - (var(--escala-texto) - 1) * 40px); padding-right: calc(16px - (var(--escala-texto) - 1) * 40px); } }
 .desafio-num { font-weight: 700; color: var(--tinta-suave); font-size: 0.85em; margin-bottom: 8px; }
@@ -30,7 +31,7 @@
 .desafio { display: flex; flex-direction: column; gap: 16px; }
 .enunciado { padding: 16px 18px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); }
 .pergunta { font-size: 1.15em; font-weight: 700; }
-.afirmacao { margin: 10px 0 0; padding: 12px 14px; border-left: 6px solid var(--lavanda); background: var(--papel-2); border-radius: var(--canto); font-size: 1.1em; font-weight: 700; }
+.afirmacao { margin: 10px 0 0; padding: 12px 14px; border-left: 6px solid var(--ambar); background: var(--papel-2); border-radius: var(--canto); font-size: 1.1em; font-weight: 700; }
 .btn-ouvir { margin-top: 10px; min-height: 44px; padding: 4px 14px; border: 2px solid var(--borda); border-radius: var(--canto); background: var(--papel-2); font-weight: 700; font-size: 0.85em; }
 
 .opcoes { display: grid; grid-template-columns: 1fr; gap: 12px; }
@@ -53,7 +54,7 @@
    empurrar o botão para fora da tela; palavras que cabem não mudam (break-word só age quando a palavra não cabe) */
 .opcoes-varias > .opcao { min-width: 0; }
 .opcoes-varias .opcao-texto { min-width: 0; overflow-wrap: break-word; }
-.opcao[aria-pressed="true"] { background: var(--lavanda-clara); border-color: var(--roxo); box-shadow: 0 4px 0 var(--roxo); outline: 3px solid var(--roxo); outline-offset: 0; }
+.opcao[aria-pressed="true"] { background: var(--ambar-claro); border-color: var(--roxo); box-shadow: 0 4px 0 var(--roxo); outline: 3px solid var(--roxo); outline-offset: 0; }
 .opcao-marcar::after { content: ""; flex: none; width: 28px; height: 28px; border: 3px solid var(--borda); border-radius: var(--canto); background: #fff; }
 .opcao-marcar[aria-pressed="true"]::after {
   content: "";
@@ -69,7 +70,7 @@
 .opcoes-vf .opcao { justify-content: center; font-size: 1.15em; }
 
 .dica-toque { font-size: 0.85em; font-weight: 700; color: var(--tinta-suave); }
-.dica-toque.pisca { animation: piscar 0.6s ease-in-out 2; color: var(--rosa-forte); }
+.dica-toque.pisca { animation: piscar 0.6s ease-in-out 2; color: var(--laranja-forte); }
 
 /* ligar */
 .ligar { display: flex; flex-direction: column; gap: 12px; }
@@ -87,13 +88,13 @@
 /* o texto desce para baixo da bolinha/figura só quando a palavra mais comprida não cabe ao lado */
 .ligar-item > span:last-child:not(.ligar-img) { flex: 1 1 0; max-width: 100%; overflow-wrap: break-word; }
 .ligar-marca { flex: none; width: 26px; height: 26px; border-radius: var(--redondo); border: 3px solid var(--borda); background: var(--cor-par); color: #fff; font-size: 0.8em; display: grid; place-items: center; }
-.ligar-item.escolhida { outline: 4px solid var(--roxo); outline-offset: 2px; background: var(--lavanda-clara); }
+.ligar-item.escolhida { outline: 4px solid var(--roxo); outline-offset: 2px; background: var(--ambar-claro); }
 .ligar-item.ligado { background: color-mix(in srgb, var(--cor-par) 16%, white); }
 .tudo-certo .ligar-item, .tudo-certo .seq-item, .tudo-certo .sep-item { background: var(--certo-fundo); }
 
 /* sequência / frase */
 .sequencia { display: flex; flex-direction: column; gap: 12px; }
-.seq-alvo { list-style: none; margin: 0; padding: 12px; display: flex; flex-direction: column; gap: 8px; border: 3px dashed var(--lavanda); border-radius: var(--canto-grande); background: var(--papel); min-height: 70px; }
+.seq-alvo { list-style: none; margin: 0; padding: 12px; display: flex; flex-direction: column; gap: 8px; border: 3px dashed var(--ambar); border-radius: var(--canto-grande); background: var(--papel); min-height: 70px; }
 .seq-alvo li { display: flex; }
 .seq-vaga { align-items: center; gap: 10px; min-height: 44px; padding: 8px 12px; border: 2px dashed #cdbff5; border-radius: var(--canto); color: #b3a6cc; font-weight: 700; }
 .seq-num { flex: none; width: 30px; height: 30px; display: grid; place-items: center; border-radius: var(--redondo); background: var(--ouro); border: 3px solid var(--borda); font-weight: 700; font-size: 0.85em; color: var(--tinta); }
@@ -104,7 +105,7 @@
   background: var(--papel); box-shadow: 0 3px 0 var(--borda);
   font-weight: 700;
 }
-.seq-alvo .seq-item { width: 100%; background: var(--lavanda-clara); }
+.seq-alvo .seq-item { width: 100%; background: var(--ambar-claro); }
 .seq-monte { display: flex; flex-wrap: wrap; gap: 10px; }
 .frase-linha { flex-direction: row; flex-wrap: wrap; align-items: center; }
 .frase-linha .seq-item { width: auto; }
@@ -112,9 +113,9 @@
 
 /* separar */
 .separar { display: flex; flex-direction: column; gap: 14px; }
-.separar-monte { display: flex; flex-wrap: wrap; gap: 10px; min-height: 60px; padding: 10px; border: 3px dashed var(--lavanda); border-radius: var(--canto-grande); background: var(--papel); }
+.separar-monte { display: flex; flex-wrap: wrap; gap: 10px; min-height: 60px; padding: 10px; border: 3px dashed var(--ambar); border-radius: var(--canto-grande); background: var(--papel); }
 .sep-item { display: flex; align-items: center; gap: 8px; min-height: 52px; padding: 6px 12px; border: 3px solid var(--borda); border-radius: var(--canto); background: var(--papel); box-shadow: 0 3px 0 var(--borda); font-weight: 700; }
-.sep-item.escolhido { outline: 4px solid var(--roxo); outline-offset: 2px; background: var(--lavanda-clara); transform: translateY(-2px); }
+.sep-item.escolhido { outline: 4px solid var(--roxo); outline-offset: 2px; background: var(--ambar-claro); transform: translateY(-2px); }
 .baus { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
 .bau {
   display: flex; flex-direction: column; align-items: stretch; gap: 6px;
@@ -134,7 +135,7 @@
 
 /* memória */
 .memoria { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
-.carta-mem { position: relative; aspect-ratio: 3 / 4; max-width: 100%; border: 3px solid var(--borda); border-radius: var(--canto); background: var(--lavanda); box-shadow: 0 4px 0 var(--borda); font-weight: 700; padding: 4px; }
+.carta-mem { position: relative; aspect-ratio: 3 / 4; max-width: 100%; border: 3px solid var(--borda); border-radius: var(--canto); background: var(--ambar); box-shadow: 0 4px 0 var(--borda); font-weight: 700; padding: 4px; }
 .mem-verso { font-size: 1.8em; }
 .mem-face { display: none; font-size: 16px; }
 .mem-face.mem-emoji { font-size: 2em; }
@@ -178,7 +179,7 @@
 .premios li { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 3px solid var(--borda); border-radius: var(--canto); background: var(--papel); }
 .premio-icone { font-size: 1.6em; flex: none; }
 .premio-dinheiro { background: var(--ouro-claro) !important; }
-.premio-ovo { background: var(--rosa-clara) !important; }
+.premio-ovo { background: var(--laranja-claro) !important; }
 .dica-raro { font-weight: 700; color: var(--raro); }
 
 

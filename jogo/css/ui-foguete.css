@@ -6,7 +6,7 @@
   flex: 1; min-width: 0;
   padding: 10px 14px;
   border: 3px solid var(--borda); border-radius: var(--canto-grande);
-  background: var(--papel-3);
+  background: var(--papel-quente);
 }
 .foguete-balao p + p { margin-top: 6px; }
 .foguete-balao p:first-child { font-weight: 700; }
@@ -30,7 +30,7 @@
 .foguete-destino b { flex: 1; min-width: 4em; }
 .foguete-decolar[disabled] { opacity: 0.45; }
 .foguete-destino + .foguete-destino { margin-top: 8px; }
-.foguete-trancado { border-style: dashed; background: var(--papel-3); }
+.foguete-trancado { border-style: dashed; background: var(--papel-quente); }
 .foguete-trancado .foguete-bola, .foguete-trancado b { opacity: 0.55; }
 .foguete-cadeado { min-width: 56px; }
 .foguete-bola {
