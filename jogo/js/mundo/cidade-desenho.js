@@ -10,7 +10,7 @@
   var T = Mapa.T;
   var C = I.C, ret = I.ret, circulo = I.circulo, elipse = I.elipse, triangulo = I.triangulo;
   var K = C.contorno;
-  var PEDRA = '#fff4dc', PEDRA2 = '#e8cf9c', PEDRA3 = '#c9a978', TERRA = '#b07a52';
+  var PEDRA = '#fff4dc', PEDRA2 = '#e8cf9c', PEDRA3 = '#c9a978', TERRA = '#b07a52', BORDA = '#f3dfb4';
   var MADEIRA = '#c98a5a', MADEIRA2 = '#9c6446';
 
   // triângulo apontando para baixo (bandeirinha, ponta do coração)
@@ -92,15 +92,23 @@
   };
 
   /* ----- peças grandes ----- */
+  // elipse com contorno K fechado: cada linha fecha o degrau até a vizinha (sem furo na borda)
+  function elipseContornada(ctx, cx, cy, rx, ry, cor) {
+    function meia(j) { return Math.abs(j) > ry ? -1 : Math.floor(rx * Math.sqrt(Math.max(0, 1 - (j * j) / (ry * ry))) + 0.3); }
+    for (var j = -ry; j <= ry; j++) {
+      var a = meia(j), dentro = Math.min(a - 1, meia(j - 1), meia(j + 1));
+      ret(ctx, cx - a, cy + j, a * 2 + 1, 1, K);
+      if (dentro >= 0) ret(ctx, cx - dentro, cy + j, dentro * 2 + 1, 1, cor);
+    }
+  }
+
   // a fonte grande (5×4 tiles): bacia larga de pedra, pé com bacia do meio, taça de cima e a estrela dourada
   function desenharFonte(ctx, o) {
     var c = centroDe(o), cx = c.x, cy = c.y + 12;
     elipse(ctx, cx, cy + 6, 40, 18, 'rgba(58,36,70,0.16)');
-    elipse(ctx, cx, cy, 39, 19, K);
-    elipse(ctx, cx, cy, 38, 18, PEDRA2);
-    elipse(ctx, cx, cy - 2, 38, 16, PEDRA);
-    elipse(ctx, cx, cy, 33, 14, K);
-    elipse(ctx, cx, cy, 32, 13, C.agua);
+    elipseContornada(ctx, cx, cy, 39, 19, PEDRA2);
+    elipse(ctx, cx, cy - 2, 36, 15, BORDA);   // faixa de pedra mais escura que o anel do chão
+    elipseContornada(ctx, cx, cy, 33, 14, C.agua);
     elipse(ctx, cx, cy + 2, 26, 9, C.agua3);
     elipse(ctx, cx, cy + 3, 16, 5, '#2a7f78');
     elipse(ctx, cx - 12, cy - 7, 9, 1, C.agua2);
@@ -117,11 +125,11 @@
     // pé e bacia do meio
     ret(ctx, cx - 6, cy - 22, 12, 22, K); ret(ctx, cx - 5, cy - 22, 10, 22, PEDRA); ret(ctx, cx + 2, cy - 22, 3, 22, PEDRA2);
     for (var an = cy - 18; an < cy; an += 6) ret(ctx, cx - 5, an, 10, 1, PEDRA3);
-    elipse(ctx, cx, cy - 23, 17, 6, K); elipse(ctx, cx, cy - 23, 16, 5, PEDRA); elipse(ctx, cx, cy - 21, 16, 2, PEDRA2);
+    elipseContornada(ctx, cx, cy - 23, 17, 6, BORDA); elipse(ctx, cx, cy - 21, 15, 2, PEDRA2);
     elipse(ctx, cx, cy - 25, 13, 3, C.agua); ret(ctx, cx - 9, cy - 27, 6, 1, C.agua2);
     // pé e taça de cima, com a estrela dourada no alto
     ret(ctx, cx - 3, cy - 42, 6, 18, K); ret(ctx, cx - 2, cy - 42, 4, 18, '#ffffff'); ret(ctx, cx + 1, cy - 42, 1, 18, '#e8e0f0');
-    elipse(ctx, cx, cy - 42, 9, 3, K); elipse(ctx, cx, cy - 42, 8, 2, PEDRA); ret(ctx, cx - 6, cy - 43, 12, 1, C.agua);
+    elipseContornada(ctx, cx, cy - 42, 9, 3, BORDA); ret(ctx, cx - 6, cy - 43, 12, 1, C.agua);
     ret(ctx, cx - 1, cy - 52, 2, 9, K); ret(ctx, cx, cy - 52, 1, 9, '#ffd34d');
     // estrela de 5 pontas (linha a linha: meia-largura por linha, de cima para baixo)
     var ESTRELA = [[0, 1], [-1, 1], [-1, 1], [-5, 5], [-4, 4], [-3, 3], [-3, 3], [-4, -1, 1, 4], [-4, -2, 2, 4]];
