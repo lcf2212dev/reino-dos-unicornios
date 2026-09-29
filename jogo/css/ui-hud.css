@@ -20,7 +20,7 @@
 .btn-tela-cheia {
   display: grid; place-items: center;
   width: 48px; height: 48px; flex: none;
-  border: 3px solid var(--borda); border-radius: 14px;
+  border: 3px solid var(--borda); border-radius: var(--canto-grande);
   background: var(--papel); color: var(--tinta);
   box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.85), 0 3px 0 var(--borda);
 }
@@ -33,18 +33,18 @@
 .btn-foto.desligado:active, .btn-album.desligado:active { transform: none; }
 .chip {
   min-height: 44px; padding: 6px 14px;
-  border: 3px solid var(--borda); border-radius: 999px;
+  border: 3px solid var(--borda); border-radius: var(--canto);
   background: var(--papel); font-weight: 700; font-size: 0.95em;
   box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.9), 0 3px 0 var(--borda);
   font-variant-numeric: tabular-nums;
 }
-.chip-dinheiro { background: linear-gradient(180deg, #fff6d4 0%, var(--ouro-claro) 48%, #ffd56a 100%); }
-.chip-ovos { background: linear-gradient(180deg, #fff 0%, var(--rosa-clara) 48%, #ffc0db 100%); animation: pulsar 1.4s ease-in-out infinite; }
+.chip-dinheiro { background: linear-gradient(180deg, #fff6d4 0 30%, var(--ouro-claro) 30% 70%, #ffd56a 70%); }
+.chip-ovos { background: linear-gradient(180deg, #fff 0 30%, var(--rosa-clara) 30% 70%, #ffc0db 70%); animation: pulsar 1.4s ease-in-out infinite; }
 .chip-montaria {
   display: flex; align-items: center; gap: 8px;
   max-width: min(54vw, 280px);
   padding: 6px 12px 6px 8px;
-  border: 3px solid var(--borda); border-radius: 18px;
+  border: 3px solid var(--borda); border-radius: var(--canto-grande);
   background: var(--papel); box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.85), 0 3px 0 var(--borda); text-align: left;
 }
 .chip-montaria { min-width: 0; }
@@ -52,22 +52,22 @@
 .montaria-info { display: flex; flex-direction: column; min-width: 0; font-size: 0.8em; line-height: 1.2; }
 .montaria-info b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .montaria-estagio { color: var(--tinta-suave); }
-.barrinha { display: block; height: 8px; margin-top: 4px; border: 2px solid var(--borda); border-radius: 6px; background: #fff; overflow: hidden; min-width: 60px; }
-.barrinha > span { display: block; height: 100%; background: linear-gradient(90deg, var(--rosa), var(--lavanda)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55); }
+.barrinha { display: block; height: 8px; margin-top: 4px; border: 2px solid var(--borda); border-radius: var(--canto); background: #fff; overflow: hidden; min-width: 60px; }
+.barrinha > span { display: block; height: 100%; background: linear-gradient(90deg, var(--rosa) 0 50%, var(--lavanda) 50%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55); }
 
 .dock {
   position: absolute;
   left: 50%; transform: translateX(-50%);
   bottom: calc(env(safe-area-inset-bottom, 0px) + 10px);
   display: flex; gap: 4px; padding: 4px;
-  border: 3px solid var(--borda); border-radius: 4px;
+  border: 3px solid var(--borda); border-radius: var(--canto);
   background: #fff8ee;
   box-shadow: 0 4px 0 var(--borda);
 }
 .dock-btn {
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
   width: 92px; min-height: 72px; padding: 4px 4px 6px;
-  border: 0; border-radius: 2px;
+  border: 0; border-radius: var(--canto);
   background: transparent;
 }
 .dock-btn canvas { display: block; }
@@ -103,10 +103,10 @@
 .chip-aura { display: inline-flex; align-items: center; gap: 6px; }
 .aura-bolinha {
   display: inline-block; width: 14px; height: 14px; flex: none;
-  border: 2px solid var(--borda); border-radius: 50%;
-  box-shadow: 0 0 6px 2px rgba(255, 255, 255, 0.9);
+  border: 2px solid var(--borda); border-radius: var(--redondo);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.9);
 }
-.aura-arco-iris { background: conic-gradient(#ff6b6b, #ffb830, #ffe45c, #6ee07a, #5cb8ff, #b57cff, #ff7ec4, #ff6b6b); }
+.aura-arco-iris { background: conic-gradient(#ff6b6b 0 14%, #ffb830 14% 28%, #ffe45c 28% 43%, #6ee07a 43% 57%, #5cb8ff 57% 71%, #b57cff 71% 86%, #ff7ec4 86%); }
 .aura-painel { text-align: center; }
 .aura-valor { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 1.8em; margin: 4px 0 8px; }
 .aura-valor .aura-bolinha { width: 26px; height: 26px; }

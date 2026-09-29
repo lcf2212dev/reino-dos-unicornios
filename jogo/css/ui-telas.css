@@ -18,7 +18,7 @@
   display: flex; flex-direction: column;
   background: var(--papel);
   border: 4px solid var(--borda);
-  border-radius: 22px;
+  border-radius: var(--canto-grande);
   box-shadow: 0 8px 0 rgba(58, 36, 70, 0.35);
   overflow: hidden;
 }
@@ -34,12 +34,12 @@
 .confirmar-msg { font-size: 1.05em; font-weight: 700; text-align: center; }
 
 /* início */
-.tela-inicio { background: linear-gradient(180deg, #bfe9ff 0%, #fff4c8 70%, #c6e15a 100%); }
+.tela-inicio { background: linear-gradient(180deg, #bfe9ff 0 40%, #fff4c8 40% 85%, #c6e15a 85%); }
 .inicio { display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center; max-width: 620px; }
 .logo { position: relative; display: flex; flex-direction: column; align-items: center; }
 .logo-arco {
   width: 280px; height: 140px; margin-bottom: -96px;
-  border-radius: 140px 140px 0 0;
+  border-radius: 0;
   background: radial-gradient(circle at 50% 100%, transparent 58%, #a66bff 58%, #a66bff 62%, #5fb4ff 62%, #5fb4ff 66%, #6fdc8c 66%, #6fdc8c 70%, #ffe066 70%, #ffe066 74%, #ffb020 74%, #ffb020 78%, #ff6b8a 78%, #ff6b8a 82%, transparent 82%);
 }
 .logo-uni { position: relative; animation: flutuar 2.6s ease-in-out infinite; }
@@ -47,13 +47,13 @@
   position: relative;
   font-family: var(--fonte-titulo); line-height: 1.7;
   margin-top: 16px; padding: 14px 18px 16px; max-width: min(94vw, 560px);
-  background: var(--papel); border: 4px solid var(--borda); border-radius: 18px;
+  background: var(--papel); border: 4px solid var(--borda); border-radius: var(--canto-grande);
   box-shadow: var(--sombra-botao);
 }
 .titulo-jogo::before, .titulo-jogo::after {
   content: "";
   position: absolute; top: -16px; width: 14px; height: 18px;
-  background: var(--ouro); border: 3px solid var(--borda); border-radius: 4px;
+  background: var(--ouro); border: 3px solid var(--borda); border-radius: var(--canto);
   box-shadow: 0 3px 0 var(--borda);
 }
 .titulo-jogo::before { left: 28px; }
@@ -64,7 +64,7 @@
 .btn-comecar { font-size: 16px; padding: 16px 22px; }
 
 /* Claude */
-.intro-claude { display: flex; align-items: center; gap: 14px; padding: 14px; border: 3px solid var(--borda); border-radius: 18px; background: var(--papel-3); text-align: left; }
+.intro-claude { display: flex; align-items: center; gap: 14px; padding: 14px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel-3); text-align: left; }
 .intro-claude p { font-weight: 700; }
 .intro-claude-grande { max-width: 560px; background: var(--papel); }
 .claude-intro { flex: none; }
@@ -83,17 +83,17 @@
 body.em-missao #claude-balao { bottom: calc(env(safe-area-inset-bottom, 0px) + 104px); }
 #claude-balao.entrando { animation: subir 0.25s ease-out; }
 .claude-mascote { display: flex; flex-direction: column; align-items: center; flex: none; }
-.claude-nome { font-family: var(--fonte-titulo); font-weight: 700; font-size: 0.8em; background: var(--papel); border: 2px solid var(--borda); border-radius: 8px; padding: 0 6px; margin-top: -4px; }
+.claude-nome { font-family: var(--fonte-titulo); font-weight: 700; font-size: 0.8em; background: var(--papel); border: 2px solid var(--borda); border-radius: var(--canto); padding: 0 6px; margin-top: -4px; }
 .claude-fala {
   position: relative; flex: 1;
   padding: 14px 16px 12px;
-  background: var(--papel); border: 4px solid var(--borda); border-radius: 18px;
+  background: var(--papel); border: 4px solid var(--borda); border-radius: var(--canto-grande);
   box-shadow: 0 5px 0 rgba(58, 36, 70, 0.3);
 }
 .claude-fala::before { content: ""; position: absolute; left: -14px; bottom: 18px; border: 10px solid transparent; border-right-color: var(--borda); }
 .claude-texto { font-weight: 700; font-size: 1em; }
 .claude-acoes { display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px; }
-.claude-acoes button { min-height: 48px; padding: 6px 16px; border: 3px solid var(--borda); border-radius: 12px; background: var(--rosa); font-weight: 700; box-shadow: 0 3px 0 var(--borda); }
+.claude-acoes button { min-height: 48px; padding: 6px 16px; border: 3px solid var(--borda); border-radius: var(--canto); background: var(--rosa); font-weight: 700; box-shadow: 0 3px 0 var(--borda); }
 .claude-acoes .btn-ouvir-claude { background: var(--papel); }
 #claude-balao.dica-pressa .claude-fala { background: var(--ouro-claro); }
 
@@ -102,7 +102,7 @@ body.em-missao #claude-balao { bottom: calc(env(safe-area-inset-bottom, 0px) + 1
 .sala-card {
   display: flex; align-items: center; gap: 14px; width: 100%;
   padding: 12px 14px; text-align: left;
-  border: 3px solid var(--borda); border-radius: 18px;
+  border: 3px solid var(--borda); border-radius: var(--canto-grande);
   background: var(--papel); box-shadow: 0 4px 0 var(--borda);
 }
 .sala-card:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--borda); }
@@ -116,13 +116,13 @@ body.em-missao #claude-balao { bottom: calc(env(safe-area-inset-bottom, 0px) + 1
 .sala-info small { color: var(--tinta-suave); font-size: 0.8em; }
 .sala-ir { flex: none; font-weight: 700; font-size: 0.85em; color: var(--roxo); }
 .sala-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 3px; }
-.chip-mini { display: inline-block; padding: 1px 9px; border: 2px solid var(--borda); border-radius: 999px; font-size: 0.72em; font-weight: 700; background: var(--papel); }
+.chip-mini { display: inline-block; padding: 1px 9px; border: 2px solid var(--borda); border-radius: var(--canto); font-size: 0.72em; font-weight: 700; background: var(--papel); }
 .chip-mini.ok { background: var(--certo-fundo); }
 .chip-mini.nova { background: var(--rosa-clara); }
 .chip-mini.raro { background: #dcebff; }
 .chip-mini.calma { background: #e6e9ff; }
 .barra-dinheiro { display: flex; align-items: center; gap: 10px; }
-.barra-dinheiro-trilho { flex: 1; height: 18px; border: 3px solid var(--borda); border-radius: 10px; background: #fff; overflow: hidden; }
+.barra-dinheiro-trilho { flex: 1; height: 18px; border: 3px solid var(--borda); border-radius: var(--canto); background: #fff; overflow: hidden; }
 .barra-dinheiro-trilho span { display: block; height: 100%; background: repeating-linear-gradient(90deg, var(--ouro) 0 14px, #ffdb70 14px 18px); }
 .barra-dinheiro-texto { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; font-size: 0.9em; }
 
