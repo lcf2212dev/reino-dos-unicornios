@@ -20,7 +20,7 @@
   var CHAVE_ATUAL = 'reino-jogador-atual';
   var CHAVE_CONTAS = 'reino-jogadores';
   var SAIU = ':saiu';   // em CHAVE_ATUAL depois de "Sair" (nunca é login: tem ':'); o próximo login vem em branco
-  var CHAVE_ENTROU = 'reino-entrou';   // sessionStorage: login que acabou de passar pela senha no "Trocar jogador"
+  var CHAVE_ENTROU = 'reino-entrou';   // sessionStorage: login que acabou de passar pela senha ("Trocar jogador") ou que já jogava (versão nova)
   function cfg() { return R.config.jogadores || { loginMin: 2, loginMax: 20, senhaMin: 3, senhaMax: 30 }; }
   function P() { return R.Progresso; }
   function objeto(x) { return !!x && typeof x === 'object' && !Array.isArray(x); }
@@ -131,6 +131,14 @@
     var entrou = null;
     try { entrou = sessionStorage.getItem(CHAVE_ENTROU); if (entrou !== null) sessionStorage.removeItem(CHAVE_ENTROU); } catch (e) { entrou = null; }
     return valido(entrou) && entrou === J.ultimo() ? entrou : null;
+  };
+  /* A versão nova recarrega a aba (sistemas/versao.js): quem já está jogando entra direto de novo, sem abertura nem
+     senha, pelo mesmo atalho de uma vez do "Trocar jogador". Só grava se o login de agora é o lembrado (o que o
+     decidirSemTela confere); não toca em save nenhum. */
+  J.lembrarEntrada = function () {
+    var a = J.atual();
+    if (!valido(a) || a !== J.ultimo()) return false;
+    try { sessionStorage.setItem(CHAVE_ENTROU, a); return true; } catch (e) { return false; }
   };
   /* Quem jogou por último neste aparelho (vem preenchido no login): o login lembrado; sem ele, a Mariana se o save
      dela está aqui; depois de "Sair", ninguém. Só leitura. */

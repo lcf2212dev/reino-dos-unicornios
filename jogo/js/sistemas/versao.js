@@ -6,7 +6,8 @@
    2. só acredita na mudança vista 2 vezes, com `confirmarMs` entre elas, e com a aba aberta há mais de `cacheMs`
       (o servidor deixa css/js 300 s em cache: recarregar antes misturaria arquivos novos e velhos);
    3. espera ela ficar PARADA NO MAPA por `paradaMs` (sem tela, sem balão, sem caminho, aba visível);
-   4. o Claude avisa num balão curto que fecha sozinho, o jogo grava (P.salvar) e recarrega `esperaMs` depois.
+   4. o Claude avisa num balão curto que fecha sozinho, o jogo grava (P.salvar) e recarrega `esperaMs` depois,
+      direto no mapa (Jogadores.lembrarEntrada: sem abertura nem senha de novo).
       Se ela mexer (tocar fora do balão, tecla, andar) no aviso, desiste e tenta de novo na próxima parada.
    Desligado no artifact do claude.ai (a plataforma já entrega a versão nova), aberto do arquivo (file:) e no
    modo determinístico dos testes (?congelar=1), a menos que a URL tenha &versao=1 (teste deste módulo).
@@ -135,6 +136,8 @@
         if (minha !== vezAviso) return;
         if (!noMapa() || andando()) { cancelar(); return; }
         fase = 'recarregando';
+        // o reload cai direto no mapa, sem abertura nem senha (docs/contratos/save-e-mescla.md §12)
+        if (Reino.Jogadores && Reino.Jogadores.lembrarEntrada) Reino.Jogadores.lembrarEntrada();
         V._recarregar();
       }, cfg('esperaMs'));
     });

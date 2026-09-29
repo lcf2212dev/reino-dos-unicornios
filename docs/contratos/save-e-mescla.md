@@ -325,8 +325,13 @@ Código: `jogo/js/sistemas/jogadores.js` (`Reino.Jogadores`, contas, perfil), `u
    com o jogo aberto: `P.usarJogador` depois do carregar lança erro; trocar (`UI.trocarJogador`) grava, mostra
    "Guardando...", envia já (`P.enviarAgora`, espera no máximo 5 s), marca e recarrega; o recarregar entra direto em
    quem acabou de passar pela senha (sessionStorage `reino-entrou`, vale uma vez, só se bater com o lembrado).
+   A versão nova (`sistemas/versao.js`, `cena-e-motor.md` §15) usa o mesmo atalho: logo antes de recarregar,
+   `Jogadores.lembrarEntrada()` grava `reino-entrou` com o login de agora, só se ele é o lembrado
+   (`=== Jogadores.ultimo()`; depois de "Sair" não grava), e o reload cai direto no mapa, sem abertura nem senha.
+   É só sessionStorage da aba: nenhum save é lido, migrado nem regravado.
    O evento `storage` só junta a chave do jogador atual.
-3. Entrar sem perguntar: só o modo congelado (e2e) = a Mariana, sem ler nada (e o atalho de uma vez do item 2).
+3. Entrar sem perguntar: só o modo congelado (e2e) = a Mariana, sem ler nada (e o atalho de uma vez do item 2: Trocar
+   jogador e versão nova).
    Login preenchido (`Jogadores.ultimo`): o lembrado em `reino-jogador-atual` (se o aparelho conhece a conta); sem ele,
    a Mariana se `mariana-reino-v1` está no aparelho; depois de `':saiu'`, em branco. Tela "Entrar no Reino": cartões
    "Neste aparelho" e "No reino" (atalhos: preenchem o login e levam à senha; o do login preenchido fica destacado),
@@ -349,4 +354,5 @@ Código: `jogo/js/sistemas/jogadores.js` (`Reino.Jogadores`, contas, perfil), `u
 7. Nenhuma ferramenta migra, copia ou regrava o save da Mariana.
 8. Testes: `testes/unidade/jogadores-save.test.js` (chaves, decidir, perfil, contas, claude.ai, fotos),
    `jogadores-servidor.test.js` (rotas; servidor ANTIGO do commit 98e606f + jogador novo = linha `'mariana'` igual),
-   `jogadores.navegador.test.js` (criar, trocar, entrar com senha no Chromium).
+   `jogadores.navegador.test.js` (criar, trocar, entrar com senha no Chromium),
+   `versao-entrou.navegador.test.js` (versão nova no modo vivo: reload direto no mapa, uma vez só).
