@@ -34,26 +34,26 @@
     inter('prateleira', 'Produtos', { tipo: 'salao-prateleira', x: 6, y: 1 }),
     { tipo: 'bandeirinhas', x: 8, y: 1, w: 2 },
     { tipo: 'relogio-parede', x: 10, y: 1 }, { tipo: 'janela', x: 11, y: 1 },
-    // canto do cabelo (esquerda, em cima): duas cadeiras, carrinho e secador
-    { tipo: 'vaso-planta', x: 1, y: 3 },
-    inter('cadeira', 'Cadeira da Lulu', { tipo: 'salao-cadeira', x: 2, y: 3, acao: CABELO }),
+    // canto do cabelo (esquerda, em cima): duas cadeiras, carrinho e secador (junto: a cadeira fica de propósito na frente do espelho)
+    { tipo: 'flores', x: 1, y: 3 },
+    inter('cadeira', 'Cadeira da Lulu', { tipo: 'salao-cadeira', x: 2, y: 3, junto: true, acao: CABELO }),
     inter('carrinho', 'Carrinho', { tipo: 'salao-carrinho', x: 3, y: 3 }),
-    inter('cadeira', 'Cadeira da Lulu', { tipo: 'salao-cadeira', x: 4, y: 3, acao: CABELO }),
-    inter('secador', 'Secador', { tipo: 'salao-secador', x: 5, y: 3 }),
+    inter('cadeira', 'Cadeira da Lulu', { tipo: 'salao-cadeira', x: 4, y: 3, junto: true, acao: CABELO }),
+    inter('secador', 'Secador', { tipo: 'salao-secador', x: 5, y: 4 }),
     { tipo: 'tapete-listrado', x: 1, y: 4, w: 4, h: 1, var: { cores: [S.COR2, '#fff8ee', S.COR, '#fff8ee'] } },
     { tipo: 'cesto', x: 1, y: 5 }, { tipo: 'almofada', x: 1, y: 6, var: { cor: S.ROSA2 } },
     // canto das roupas (direita): lavatório, provador e a arara
     { tipo: 'flores', x: 7, y: 3 },
-    inter('pia', 'Lavatório', { tipo: 'salao-pia', x: 8, y: 3 }),
-    { tipo: 'planta-alta', x: 11, y: 3 },
+    inter('pia', 'Lavatório', { tipo: 'salao-pia', x: 8, y: 3, junto: true }),
+    { tipo: 'flores', x: 11, y: 3 },
     inter('provador', 'Provador', { tipo: 'salao-provador', x: 10, y: 5, acao: ROUPA }),
     inter('arara', 'Arara de roupas', { tipo: 'salao-arara', x: 7, y: 7, acao: ROUPA }),
-    { tipo: 'cabideiro', x: 11, y: 7 }, { tipo: 'tapete-redondo', x: 7, y: 9, w: 2, h: 2, var: { cor: '#e9d4f7' } },
+    { tipo: 'cabideiro', x: 5, y: 8 }, { tipo: 'tapete-redondo', x: 7, y: 9, w: 2, h: 2, var: { cor: '#e9d4f7' } },
     // salinha de espera (embaixo)
     { tipo: 'sofa', x: 1, y: 9 }, { tipo: 'mesa-centro', x: 1, y: 10 }, { tipo: 'papeis', x: 3, y: 10 },
     { tipo: 'luminaria-pe', x: 3, y: 9 }, { tipo: 'vaso-grande', x: 1, y: 11 }, { tipo: 'salao-secador', x: 4, y: 11 },
     { tipo: 'poltrona', x: 9, y: 10, var: { cor: S.LILAS } }, { tipo: 'poltrona', x: 10, y: 10, var: { cor: S.ROSA } },
-    { tipo: 'mesa-centro', x: 9, y: 11 }, { tipo: 'vaso-planta', x: 11, y: 11 }, { tipo: 'relogio-pe', x: 11, y: 10 },
+    { tipo: 'mesa-centro', x: 9, y: 11 }, { tipo: 'relogio-pe', x: 11, y: 10 }, { tipo: 'cesto', x: 11, y: 11 },
     { tipo: 'tapete', x: 5, y: 5, w: 3, h: 2, var: { cor: S.ROSA3, borda: S.COR } },
   ];
 

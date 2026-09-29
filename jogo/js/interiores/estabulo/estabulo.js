@@ -302,8 +302,9 @@
   var ALAS = Math.ceil(TOTAL / POR_ALA);
   var ALT_BAIAS = 2 + ALAS * 4;              // parede + alas
   var HALL_Y = 1 + ALT_BAIAS + 1;             // 1 tile de vão entre os cômodos
-  var ESQ = ['estabulo-feno', 'balde', 'estabulo-cenouras', 'estabulo-escovas', 'cesto', 'estabulo-feno', 'caixote'];
-  var DIR = ['estabulo-sela', 'barril', 'estabulo-ferramentas', 'estabulo-feno', 'caixote', 'balde', 'estabulo-cenouras'];
+  // pontas das fileiras: só coisa baixa (uma por ala, sem tapar a vizinha nem a parede)
+  var ESQ = ['cesto', 'estabulo-feno', 'caixote', 'balde', 'cesto', 'estabulo-escovas', 'caixote'];
+  var DIR = ['caixote', 'barril', 'cesto', 'estabulo-feno', 'caixote', 'balde', 'cesto'];
   var PAREDE = ['janela', 'estabulo-lanterna', 'estabulo-ferraduras', 'estabulo-catavento', 'estabulo-lanterna', 'janela',
     'estabulo-mangueira', 'estabulo-lanterna', 'estabulo-ferraduras', 'janela', 'estabulo-lanterna', 'estabulo-catavento',
     'estabulo-ferraduras', 'estabulo-lanterna', 'janela'];
@@ -321,12 +322,12 @@
       } else {
         // fim da última fileira: cantinho de guardados (só enfeite, sem baia vazia prometendo alguém)
         var k = n % SOBRA.length;
-        lista.push({ tipo: SOBRA[k][0], x: bx, y: by }, { tipo: SOBRA[k][1], x: bx + 1, y: by },
-          { tipo: SOBRA[(k + 1) % SOBRA.length][1], x: bx, y: by + 1 }, { tipo: SOBRA[(k + 2) % SOBRA.length][0], x: bx + 1, y: by + 1 });
+        lista.push({ tipo: SOBRA[k][0], x: bx, y: by }, { tipo: SOBRA[k][1], x: bx + 1, y: by });   // só uma fileira: nada empilhado
       }
     }
-    // enfeites nas pontas de cada fileira (coluna 0 e coluna 17)
+    // enfeites nas pontas de cada fileira (coluna 0 e coluna 17), na 1ª fileira de cada ala; atrás e à frente fica livre
     for (var y = 2; y < ALT_BAIAS; y++) {
+      if ((y - 2) % 4) continue;
       lista.push({ tipo: ESQ[y % ESQ.length], x: 0, y: y });
       lista.push({ tipo: DIR[y % DIR.length], x: 17, y: y });
     }
@@ -344,27 +345,27 @@
     { tipo: 'estabulo-vitral', x: 13, y: 0 }, { tipo: 'estabulo-lanterna', x: 17, y: 0 },
     // fundo
     { tipo: 'estabulo-feno', x: 0, y: 2 }, { tipo: 'estabulo-feno', x: 1, y: 2 },
-    inter('cenouras', 'Saco de cenouras', { tipo: 'estabulo-cenouras', x: 1, y: 3 }), { tipo: 'balde', x: 0, y: 3 },
+    inter('cenouras', 'Saco de cenouras', { tipo: 'estabulo-cenouras', x: 1, y: 4 }), { tipo: 'balde', x: 4, y: 2 },
     { tipo: 'barril', x: 5, y: 2 }, { tipo: 'estabulo-sela', x: 6, y: 2 },
     { tipo: 'flores', x: 8, y: 2 }, { tipo: 'cesto', x: 10, y: 2 },
     inter('escovas', 'Escovas de crina', { tipo: 'estabulo-escovas', x: 11, y: 2 }),
-    { tipo: 'estabulo-carrinho', x: 13, y: 2 }, { tipo: 'estabulo-ferramentas', x: 17, y: 2 },
+    { tipo: 'estabulo-carrinho', x: 13, y: 3 }, { tipo: 'barril', x: 17, y: 2 },
     // meio: Seu Feno, ninho e cocho
     { tipo: 'tapete', x: 2, y: 4, w: 3, h: 2, var: { cor: '#ffc2d8', borda: '#b95a36' } },
     inter('ninho', 'Ninho de ovos', { tipo: 'estabulo-ninho', x: 6, y: 4, acao: { tipo: 'tela', tela: 'ovos' } }),
     { tipo: 'tapete-redondo', x: 6, y: 5, w: 2, h: 2 },
     inter('cocho', 'Cocho de água', { tipo: 'estabulo-cocho', x: 10, y: 4 }),
-    { tipo: 'balde', x: 12, y: 4 }, { tipo: 'estabulo-feno', x: 13, y: 4 }, { tipo: 'barril', x: 17, y: 4 },
-    { tipo: 'vaso-planta', x: 0, y: 4 }, { tipo: 'estabulo-escovas', x: 0, y: 5 },
+    { tipo: 'balde', x: 12, y: 4 }, { tipo: 'estabulo-feno', x: 14, y: 5 }, { tipo: 'barril', x: 17, y: 4 },
+    { tipo: 'vaso-planta', x: 0, y: 4 }, { tipo: 'estabulo-escovas', x: 0, y: 6 },
     { tipo: 'caixote', x: 2, y: 6, var: { item: 'estrela' } }, { tipo: 'estabulo-cenouras', x: 9, y: 6 },
     { tipo: 'tapete-listrado', x: 11, y: 6, w: 3, h: 1, var: { cores: ['#ff9cc6', '#fff8ee', '#ffd34d', '#fff8ee'] } },
     { tipo: 'estabulo-sela', x: 17, y: 6, var: { cor: '#9b6bd6' } },
-    { tipo: 'cesto', x: 0, y: 7 }, { tipo: 'estabulo-feno', x: 4, y: 7 }, { tipo: 'caixote', x: 14, y: 7 }, { tipo: 'caixote', x: 17, y: 7 },
+    { tipo: 'cesto', x: 3, y: 8 }, { tipo: 'estabulo-feno', x: 4, y: 7 }, { tipo: 'caixote', x: 14, y: 7 }, { tipo: 'caixote', x: 16, y: 8 },
     // frente
-    { tipo: 'bau', x: 0, y: 8 }, { tipo: 'banco', x: 1, y: 9 }, { tipo: 'estabulo-escovas', x: 0, y: 9 }, { tipo: 'almofada', x: 4, y: 9, var: { cor: '#ffd34d' } },
-    { tipo: 'barril', x: 0, y: 10 }, { tipo: 'estabulo-feno', x: 1, y: 10 }, { tipo: 'balde', x: 4, y: 10 }, { tipo: 'cesto', x: 6, y: 10 },
+    { tipo: 'bau', x: 0, y: 8 }, { tipo: 'banco', x: 6, y: 8 }, { tipo: 'estabulo-escovas', x: 3, y: 10 }, { tipo: 'almofada', x: 5, y: 9, var: { cor: '#ffd34d' } },
+    { tipo: 'barril', x: 0, y: 10 }, { tipo: 'balde', x: 4, y: 10 }, { tipo: 'cesto', x: 6, y: 10 },
     { tipo: 'estabulo-carrinho', x: 10, y: 10 }, { tipo: 'vaso-planta', x: 12, y: 10 }, { tipo: 'estabulo-feno', x: 13, y: 10 },
-    { tipo: 'estabulo-feno', x: 17, y: 10 }, { tipo: 'estabulo-ferramentas', x: 17, y: 9 },
+    { tipo: 'estabulo-feno', x: 17, y: 10 }, { tipo: 'estabulo-ferramentas', x: 16, y: 10 },
   ]);
 
   Reino.registrarInterior({

@@ -105,8 +105,8 @@
       inter('lousa', 'Lousa', { tipo: 'lousa', x: 4, y: 0, w: 3 }),
       { tipo: 'relogio-parede', x: 7, y: 0 },
       // frente da sala
-      { tipo: 'armario', x: 0, y: 2, var: { cor: tema.paleta.parede2 } },
-      inter('globo', 'Globo', { tipo: 'globo', x: 2, y: 2 }),
+      { tipo: 'bau', x: 0, y: 2 },               // baixo: não tapa a janela nem o alfabeto
+      inter('globo', 'Globo', { tipo: 'globo', x: 2, y: 3 }),
       { tipo: 'escola-mesa-prof', x: 8, y: 3, var: { livro: tema.cortina } },
       { tipo: 'vaso-planta', x: 10, y: 5 },
       // carteiras em duas fileiras, com o corredor no meio
@@ -114,11 +114,11 @@
       { tipo: 'escola-carteira', x: 7, y: 5, var: { cadeira: cm, caderno: C.verde } }, { tipo: 'escola-carteira', x: 9, y: 5, var: { cadeira: cm } }, { tipo: 'flores', x: 3, y: 2 },
       { tipo: 'escola-carteira', x: 1, y: 7, var: { cadeira: cm, caderno: C.lilas } }, { tipo: 'escola-carteira', x: 3, y: 7, var: { cadeira: cm } },
       { tipo: 'escola-carteira', x: 7, y: 7, var: { cadeira: cm, caderno: C.ouro } }, { tipo: 'escola-carteira', x: 9, y: 7, var: { cadeira: cm, caderno: C.azul } },
-      { tipo: 'escola-mochila', x: 0, y: 6, var: { cor: MOCHILAS[(n + 1) % 5] } }, { tipo: 'escola-mochila', x: 10, y: 5, var: { cor: MOCHILAS[(n + 3) % 5] } },
+      { tipo: 'escola-mochila', x: 0, y: 6, var: { cor: MOCHILAS[(n + 1) % 5] } }, { tipo: 'escola-mochila', x: 10, y: 3, var: { cor: MOCHILAS[(n + 3) % 5] } },
       inter('mochila', 'Mochila', { tipo: 'escola-mochila', x: 4, y: 7, var: { cor: MOCHILAS[n % 5] } }),
       // fundo da sala
       { tipo: 'cesto', x: 1, y: 9 }, { tipo: 'pilha-livros', x: 3, y: 9 }, { tipo: 'escola-lixeira', x: 2, y: 9 },
-      { tipo: 'estante', x: 9, y: 9 }, { tipo: 'cabideiro', x: 0, y: 10 },
+      { tipo: 'estante', x: 9, y: 9 },
       { tipo: 'papeis', x: 8, y: 10 },
     ].concat(tema.enfeites));
     return {
@@ -137,16 +137,15 @@
     var mw = larguraMural(nProvas);
     return sala(bx, by, [
       // parede do hall: janela, sino, relógio e o brasão em cima da mesa da Diretora
-      { tipo: 'janela', x: 0, y: 0 }, { tipo: 'escola-sino', x: 1, y: 0 }, { tipo: 'relogio-parede', x: 2, y: 0 },
+      { tipo: 'escola-sino', x: 0, y: 0 }, { tipo: 'relogio-parede', x: 1, y: 0 },   // 2 livre: o bebedouro encosta ali
       { tipo: 'escola-brasao', x: 3, y: 0 },
-      { tipo: 'planta-alta', x: 0, y: 2 },
+      { tipo: 'flores', x: 0, y: 2 },
       inter('bebedouro', 'Bebedouro', { tipo: 'bebedouro', x: 2, y: 2 }),
-      { tipo: 'escrivaninha', x: 3, y: 2, var: { abajur: '#39a860' } },
+      { tipo: 'escrivaninha', x: 3, y: 2, junto: true, var: { abajur: '#39a860' } },   // junto: embaixo do brasão, de propósito
       // o mural dos prêmios fica à direita e uma fileira à frente da parede: no canto de cima à esquerda
-      // ele sumia sob os avisos do HUD (⭐, "🥚 1 ovo!"). Bandeirinhas na parede em cima dele; atrás dele,
+      // ele sumia sob os avisos do HUD (⭐, "🥚 1 ovo!"). A parede em cima dele fica lisa (a plaquinha sobe até ela); atrás dele,
       // só caixotes (o chão ali ficaria preso)
-      { tipo: 'bandeirinhas', x: 5, y: 0 }, { tipo: 'bandeirinhas', x: 7, y: 0 }, { tipo: 'bandeirinhas', x: 9, y: 0 },
-      inter('mural', 'Prêmios da Escola do Reino', { tipo: 'escola-mural', x: 12 - mw, y: 3, w: mw }),
+      inter('mural', 'Prêmios da Escola do Reino', { tipo: 'escola-mural', x: 12 - mw, y: 3, w: mw, junto: true }),
       { tipo: 'caixote', x: 12 - mw, y: 2, w: mw },
       // passadeira no corredor (não bloqueia)
       { tipo: 'tapete', x: 0, y: 4, w: 12, h: 2, var: { cor: '#9fe0a0', borda: '#ffd34d' } },
@@ -159,14 +158,14 @@
   }
   function trechoSala(bx, by, n, ultimo) {
     var lista = [
-      { tipo: 'janela', x: 0, y: 0 }, { tipo: 'cartaz', x: 1, y: 0, var: { desenho: ['abc', 'numeros', 'arcoiris'][n % 3] } },
-      { tipo: 'quadro', x: 2, y: 0 }, { tipo: 'arandela', x: 4, y: 0 }, { tipo: 'arandela', x: 6, y: 0 },
+      // 0-1 livres atrás dos armários; a janela fica sobre o tapete redondo
+      { tipo: 'quadro', x: 2, y: 0 }, { tipo: 'arandela', x: 4, y: 0 }, { tipo: 'janela', x: 5, y: 0 }, { tipo: 'arandela', x: 6, y: 0 },
       { tipo: 'cartaz', x: 7, y: 0, var: { desenho: ['coracao', 'estrela'][n % 2] } }, { tipo: 'janela', x: 8, y: 0 },
       { tipo: 'estandarte', x: 9, y: 0, var: { cor: '#39a860', emblema: n % 2 ? 'coracao' : 'estrela' } },
       { tipo: 'cortina', x: 10, y: 0, var: { cor: '#6fdc8c' } },
       n === 0 ? inter('escaninhos', 'Armários dos alunos', { tipo: 'escola-escaninhos', x: 0, y: 2 })
         : { tipo: 'escola-escaninhos', x: 0, y: 2, var: { cores: [C.lilas, C.laranja, C.azul, C.rosa] } },
-      { tipo: 'vaso-planta', x: 2, y: 2 }, { tipo: 'cabideiro', x: 8, y: 2 }, { tipo: 'banco', x: 9, y: 2 },
+      { tipo: 'flores', x: 2, y: 2 }, { tipo: 'caixote', x: 8, y: 2 }, { tipo: 'banco', x: 9, y: 2 },
       // passadeira listrada no corredor, com um tapete redondo na frente da porta
       { tipo: 'tapete-listrado', x: 0, y: 4, w: ultimo ? 11 : 12, h: 1, var: { cores: ['#39a860', '#fff8ee', '#ffd34d', '#fff8ee'] } },
       { tipo: 'tapete-listrado', x: 0, y: 5, w: ultimo ? 11 : 12, h: 1, var: { cores: ['#ffd34d', '#fff8ee', '#39a860', '#fff8ee'] } },
@@ -176,7 +175,7 @@
       { tipo: 'flores', x: 9, y: 8 }, { tipo: 'cesto', x: 10, y: 8 },
       { tipo: 'tapete-listrado', x: 4, y: 6, w: 3, h: 1, var: { cores: ['#39a860', '#fff8ee', '#ffd34d', '#fff8ee'] } },
     ];
-    if (!ultimo) lista.push({ tipo: 'bandeirinhas', x: 10, y: 0, w: 2 }, { tipo: 'planta-alta', x: 11, y: 2 });
+    if (!ultimo) lista.push({ tipo: 'bandeirinhas', x: 10, y: 0, w: 2 }, { tipo: 'flores', x: 11, y: 2 });
     return sala(bx, by, lista);
   }
 

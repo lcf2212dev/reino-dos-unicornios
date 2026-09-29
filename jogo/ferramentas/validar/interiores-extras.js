@@ -3,6 +3,8 @@
 //     (Reino.NPCs.OPCOES_SPRITE, js/personagens/npcs.js; tabela em docs/contratos/npcs-e-dialogo.md §5)
 //   reservas: Reino.reservarPersonagem completo e preenchido por um registrarPersonagem (docs/contratos/plano-paralelo.md §2);
 //     sem registro é erro, ou aviso com REINO_RESERVAS_ABERTAS=1 (só nas frentes; a integração roda sem)
+//   altosCobrindo: móvel alto (topo > 8 px) com o tile de cima ocupado por outro móvel ou peça de parede
+//     (o desenho passaria por cima do vizinho; TODO-VISUAL D2A-02); `junto: true` no objeto marca o par de propósito
 //   emojiDoMenu: `menu.emoji` de Reino.registrarLugar sem desenho em window.ICONES (vira emoji borrado)
 const COR = /^#[0-9a-fA-F]{6}$/;
 
@@ -44,4 +46,32 @@ function reservas(Reino, doSo, abertas = process.env.REINO_RESERVAS_ABERTAS === 
   return { erros, avisos };
 }
 
-module.exports = { chavesDoSprite, emojiDoMenu, reservas };
+function altosCobrindo(I, d, g, onde, detalhes) {
+  const dono = new Map(), avisos = [];
+  const marca = (x, y, i) => { const k = x + ',' + y; if (!dono.has(k)) dono.set(k, []); dono.get(k).push(i); };
+  (d.objetos || []).forEach((o, i) => {
+    if (!I.OBJETOS[o.tipo]) return;
+    const dm = I.dimensoes(o), parede = I.ehParede(o);
+    if (!parede && I.solidoDe(o) === false && !dm.topo) return;   // tapete e afins (chatos): ficam por baixo
+    for (let x = o.x; x < o.x + dm.w; x++) {
+      for (let y = o.y; y < o.y + dm.h; y++) marca(x, y, i);
+      if (parede) for (let y = o.y + dm.h; g.dentro(x, y) && g.parede[y][x]; y++) marca(x, y, i);   // desce até o fim da parede
+    }
+  });
+  (d.objetos || []).forEach((o, i) => {
+    if (!I.OBJETOS[o.tipo] || I.ehParede(o) || o.junto) return;   // junto: par de propósito (cadeira na frente do espelho)
+    const dm = I.dimensoes(o), vistos = new Set();
+    for (let k = 1; dm.topo > 16 * (k - 1) + 8; k++) {
+      for (let x = o.x; x < o.x + dm.w; x++) (dono.get(x + ',' + (o.y - k)) || []).forEach((j) => {
+        if (j === i || vistos.has(j)) return;
+        vistos.add(j);
+        const v = d.objetos[j];
+        avisos.push(`${onde}: ${o.tipo} (${o.x},${o.y}) alto passa por cima de ${v.tipo} (${v.x},${v.y}): afaste um tile ou troque por objeto baixo`);
+      });
+    }
+  });
+  if (detalhes || !avisos.length) return avisos;
+  return [`${onde}: ${avisos.length} móveis altos cobrindo o vizinho ou a parede (lista: --detalhes)`];
+}
+
+module.exports = { chavesDoSprite, emojiDoMenu, reservas, altosCobrindo };

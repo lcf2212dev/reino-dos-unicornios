@@ -1,7 +1,7 @@
 // Confere os interiores (construções por dentro) antes de publicar.
 // Uso: node ferramentas/validar/validar-interiores.js [--so <id>] [--detalhes]
 //   --so <id>    só aquele prédio: o id de um interior ou do lugar (todos os andares dele)
-//   --detalhes   também a lista "✔ <interior> …" por cômodo (sem ele: só erros, avisos e a linha de resumo)
+//   --detalhes   também a lista "✔ <interior> …" por cômodo e cada móvel alto cobrindo o vizinho (sem ele: resumos)
 // Carrega todos os scripts `node: true` do manifesto num vm SEM DOM (ferramentas/jogo-no-node.js): núcleo,
 // ícones, sistemas (as `acoes` dos módulos), motor dos interiores, NPCs e os prédios (js/interiores/), estes em
 // ordem alfabética (padrao.js por último), como a lista de vozes. Sai com código 1 se houver erro.
@@ -12,9 +12,7 @@ const Extras = require('./interiores-extras');
 const Escadas = require('./validar-escadas');
 const Viagem = require('./validar-viagem');
 
-const iSo = process.argv.indexOf('--so');
-const SO = iSo >= 0 ? process.argv[iSo + 1] : null;
-const DETALHES = process.argv.includes('--detalhes');
+const iSo = process.argv.indexOf('--so'), SO = iSo >= 0 ? process.argv[iSo + 1] : null, DETALHES = process.argv.includes('--detalhes');
 const ctx = Jogo.contexto({ console, setTimeout, clearTimeout, Math, Date });
 Jogo.carregar(ctx, Jogo.ordemDosPredios(Jogo.scripts()));
 const temNpcs = Boolean(ctx.Reino.NPCs);
@@ -201,6 +199,8 @@ defs.forEach((d) => {
     }
   });
   checar(interativos >= 3, `${onde}: só ${interativos} objetos interativos (mínimo 3)`);
+  // móvel alto por cima do vizinho ou da parede: resumo por interior; um a um com --detalhes
+  avisos.push(...Extras.altosCobrindo(I, d, g, onde, DETALHES));
   // NPCs sem sobrepor
   (d.npcs || []).forEach((n) => {
     const s = I.grade(Object.assign({}, d, { npcs: [] }));

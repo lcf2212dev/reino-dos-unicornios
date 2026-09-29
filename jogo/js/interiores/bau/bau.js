@@ -268,6 +268,7 @@
   MATS.forEach(function (m, i) {
     var o = inter('pilha', 'Moedas de ' + String(m.nome).replace(/[«»]/g, ''),
       { tipo: 'bau-pilha', x: XS[i % POR], y: fileiraY(Math.floor(i / POR)), var: { materia: m.id }, acao: TELA });
+    o.junto = true;              // pilhas de propósito uma atrás da outra, encostadas na parede
     o.chave = 'pilha-' + m.id;   // mesma fala para todas as pilhas
     o.fala = F.objetos.pilha;
     pilhas.push(o);
@@ -276,7 +277,7 @@
   for (var f = 0; f <= EXTRA; f++) {
     var y = fileiraY(f), ini = f === 0 ? 5 : 4;
     for (var x = ini; x <= 11; x++) {
-      if (!ocupada(x, y)) entre.push({ tipo: x % 2 ? 'bau-gemas' : 'bau-saco', x: x, y: y });
+      if (!ocupada(x, y)) entre.push({ tipo: ['bau-saco', 'bau-gemas', 'caixote'][x % 3], x: x, y: y });
     }
     if (f > 0) {
       // pontas da faixa: cristais e barris; a passagem acima fica livre
@@ -294,9 +295,8 @@
   // um salão de 18×13 (fileiras 0 e 1 = parede de pedra); coordenadas locais, deslocadas por (1, 1)
   var objetos = sala(1, 1, desce([
     // parede
-    { tipo: 'bau-tocha', x: 0, y: 0 }, { tipo: 'bau-veio', x: 1, y: 0 },
+    { tipo: 'bau-tocha', x: 0, y: 0 },
     inter('mapa', 'Mapa do tesouro', { tipo: 'bau-mapa-tesouro', x: 3, y: 0 }),
-    { tipo: 'bau-tocha', x: 2, y: 0 },
     { tipo: 'estandarte', x: 5, y: 0, var: { cor: '#7c5cff', emblema: 'estrela' } },
     { tipo: 'bau-veio', x: 6, y: 0, var: { cor: '#9fdcff' } }, { tipo: 'bau-tocha', x: 7, y: 0 },
     { tipo: 'bau-veio', x: 8, y: 0, var: { cor: '#ff9cc6' } }, { tipo: 'bau-tocha', x: 10, y: 0 },
@@ -306,14 +306,14 @@
     { tipo: 'bau-veio', x: 15, y: 0, var: { cor: '#6fdc8c' } }, { tipo: 'prateleira-parede', x: 16, y: 0 },
     { tipo: 'bau-tocha', x: 17, y: 0 }, { tipo: 'bau-veio', x: 9, y: 0, var: { cor: '#ffd34d' } },
     // fundo (fileira 2): pilhas no meio, livros à esquerda, cristais nas pontas
-    { tipo: 'bau-cristal', x: 0, y: 2 },
+    { tipo: 'bau', x: 0, y: 2 },
     inter('livros', 'Livros de contas', { tipo: 'bau-estante', x: 1, y: 2 }),
-    { tipo: 'bau-taca', x: 14, y: 2 }, { tipo: 'bau', x: 15, y: 2 }, { tipo: 'vaso-grande', x: 16, y: 2 },
-    { tipo: 'bau-cristal', x: 17, y: 2, var: { cor: '#9fdcff' } },
+    { tipo: 'bau-gemas', x: 14, y: 2 }, { tipo: 'bau', x: 15, y: 2 }, { tipo: 'vaso-grande', x: 16, y: 2 },
+    { tipo: 'bau-gemas', x: 17, y: 2 },
     // meio: o monte, a balança, o ninho do dragão
     { tipo: 'tapete-redondo', x: 7, y: 6, w: 3, h: 1 },
     inter('monte', 'Monte de moedas', { tipo: 'bau-monte', x: 7, y: 5, acao: TELA }),
-    { tipo: 'pilha-livros', x: 0, y: 3 }, { tipo: 'bau-saco', x: 0, y: 4, var: { cor: '#a8b8d8' } },
+    { tipo: 'pilha-livros', x: 4, y: 2 }, { tipo: 'bau-saco', x: 0, y: 4, var: { cor: '#a8b8d8' } },
     inter('balanca', 'Balança de moedas', { tipo: 'bau-balanca', x: 3, y: 4 }),
     { tipo: 'caixote', x: 2, y: 4, var: { item: 'moedas' } }, { tipo: 'almofada', x: 4, y: 4, var: { cor: '#ffd34d' } },
     { tipo: 'bau-gemas', x: 5, y: 3 },
@@ -328,7 +328,7 @@
     { tipo: 'tapete-listrado', x: 11, y: 9, w: 3, h: 1, var: { cores: ['#9b6bd6', '#ffd34d', '#c8324a', '#fff8ee'] } },
     inter('porquinho', 'Cofrinho de porquinho', { tipo: 'bau-porquinho', x: 13, y: 10 }),
     { tipo: 'bau-gemas', x: 12, y: 11 }, { tipo: 'bau-saco', x: 15, y: 11 }, { tipo: 'vaso-grande', x: 17, y: 11 },
-    { tipo: 'bau', x: 16, y: 10, var: { moedas: true } }, { tipo: 'bau-cristal', x: 17, y: 10, var: { cor: '#ffd34d' } },
+    { tipo: 'bau', x: 16, y: 10, var: { moedas: true } }, { tipo: 'bau-cristal', x: 15, y: 9, var: { cor: '#ffd34d' } },
   ]).concat(pilhas, entre));
 
   Reino.registrarInterior({
