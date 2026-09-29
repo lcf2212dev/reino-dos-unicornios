@@ -83,6 +83,7 @@
       UI.desenharCarta(area, c);
       pag.textContent = (i + 1) + ' de ' + cartas.length;
       ant.disabled = i === 0; prox.disabled = i === cartas.length - 1;
+      pn.conteudo.scrollTop = 0; // carta nova abre do topo
       Reino.Som.calar();
     }
     ant.addEventListener('click', function () { if (i > 0) { i--; Reino.Som.tocar('toque'); mostrar(); } });
