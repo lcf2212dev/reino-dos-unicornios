@@ -115,6 +115,8 @@
   var MARTE_ESCURO = [[0.15, 0.05, 0.3, 0.16], [-0.35, 0.25, 0.25, 0.14], [0.45, 0.35, 0.18, 0.12], [-0.2, -0.2, 0.2, 0.1]];
   var LUA_MARES = [[-0.3, -0.35, 0.26, 0.22], [0.12, -0.3, 0.17, 0.15], [0.26, -0.05, 0.2, 0.17], [0.62, -0.22, 0.12, 0.11],
     [-0.58, 0.0, 0.22, 0.34], [-0.4, 0.28, 0.2, 0.15], [-0.12, 0.34, 0.15, 0.12], [0.5, 0.17, 0.13, 0.12], [0.3, 0.26, 0.1, 0.09], [-0.08, -0.62, 0.38, 0.07]];
+  // Lua pequena (raio < 12: ícone, voo de longe): as crateras de cima somem (menos de 1 px), então 3 maiores
+  var LUA_CRATERAS_P = [[0.34, 0.3, 0.3], [-0.38, 0.42, 0.24], [0.3, -0.42, 0.22]];
   var LUA_CRATERAS = [[-0.08, 0.72, 0.07], [-0.26, -0.06, 0.06], [0.3, 0.6, 0.09], [0.55, 0.48, 0.07], [-0.45, 0.6, 0.08], [0.1, 0.55, 0.06], [0.7, -0.5, 0.06], [-0.1, 0.9, 0.05], [0.2, 0.82, 0.05], [-0.7, -0.45, 0.06]];
 
   // cor base de um pixel do planeta (antes da sombra); null = fora
@@ -156,6 +158,13 @@
         if (r >= 12 && cor * cor * cor - hx * hx * hy * hy * hy <= 0) return '#fff4e0';   // o "coração" (nos pequenos, molde de pixels)
         return manchas([[-0.62, 0.28, 0.5, 0.42]], u, v) ? '#a57a5a' : '#e3c9a2';     // a região escura à esquerda
       case 'lua':
+        if (r < 12) {   // pequena: sem os mares, 3 crateras bem marcadas (miolo escuro, beirada de baixo clara)
+          for (var q = 0; q < LUA_CRATERAS_P.length; q++) {
+            var cq = LUA_CRATERAS_P[q], dq = Math.sqrt((u - cq[0]) * (u - cq[0]) + (v - cq[1]) * (v - cq[1])) / cq[2];
+            if (dq < 1) return dq > 0.55 && (u - cq[0]) + (v - cq[1]) > 0.3 * cq[2] ? '#fffaf0' : '#b3aa96';
+          }
+          return '#e8e2cc';
+        }
         var cr = cratera(LUA_CRATERAS, u, v, '#f4efdc', r);
         if (cr) return cr;
         return manchas(LUA_MARES, u, v) ? '#cfc8b6' : '#f4efdc';

@@ -61,6 +61,7 @@
       { js: 'js/arte/icones/loja-petshop.js', grupo: 'icones', node: true },
       { js: 'js/arte/icones/loja-enfeites.js', grupo: 'icones', node: true },
       { js: 'js/arte/icones/espaco.js', grupo: 'icones', node: true },
+      { js: 'js/arte/icones/planetas.js', grupo: 'icones', node: true },
       { js: 'js/arte/icones/portugues.js', grupo: 'icones', node: true },
       { js: 'js/arte/icones/portugues-palavras.js', grupo: 'icones', node: true },
       { js: 'js/arte/icones/portugues-salas.js', grupo: 'icones', node: true },

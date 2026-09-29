@@ -1,5 +1,5 @@
 /* Álbum de ETs (Reino.UI.telaAlbumETs), aberto pelo botão do painel do foguete (ui/foguete.js): um cartão por ET
-   (Reino.Viagem.ets()) com o sprite nítido, nome e planeta; amigo em cores, ainda não = silhueta com "?".
+   (Reino.Viagem.ets()) com o sprite nítido, nome e planeta (com o desenho dele, Reino.IconesPlanetas); amigo em cores, ainda não = silhueta com "?".
    No cartão de um amigo: "Levar comigo" / "Deixar em casa" (Reino.Viagem.escolherCompanheiro, §6.3; sem ela, sem
    botão). Contrato: docs/contratos/viagem.md §6.2. Estilos: css/ui-album-ets.css. */
 (function () {
@@ -69,13 +69,19 @@
         li.tabIndex = 0;
         li.setAttribute('aria-label', e.amigo ? nome + ', ' + planeta + ', amigo' : (comA ? 'ET da ' : 'ET de ') + planeta + ', ainda não é amigo. Visite ' + (comA ? 'a ' : '') + planeta);
         li.addEventListener('focus', function () { try { li.scrollIntoView({ block: 'nearest' }); } catch (err) { /* navegador antigo */ } });
+        // o planeta dele (o mesmo desenho do Planetário: arte/icones/planetas.js), acima do nome do planeta
+        var icone = null;
+        try { icone = Reino.IconesPlanetas ? Reino.IconesPlanetas.iconeDOM(pl.id ? pl : e.planeta, 'album-planeta') : null; } catch (err) { icone = null; }
+        if (icone) icone.setAttribute('aria-hidden', 'true');
         if (!e.amigo) {
           li.appendChild(el('b', '?'));
+          if (icone) li.appendChild(icone);
           li.appendChild(el('small', 'Visite ' + (comA ? 'a ' : '') + planeta));
           grade.appendChild(li);
           return;
         }
         li.appendChild(el('b', e.nome));
+        if (icone) li.appendChild(icone);
         li.appendChild(el('small', planeta));
         if (junto === e.id) li.appendChild(el('span.album-selo', 'Está com você'));
         if (podeLevar()) {
