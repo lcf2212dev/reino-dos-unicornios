@@ -4,7 +4,7 @@
 // Estas funções só conferem e lançam erro; quem abre navegador, sobe servidor ou apaga pasta chama antes.
 //   conferirUrl(url)      só http://127.0.0.1:<porta de teste>/… (ou file://); o resto é recusado
 //   conferirPorta(porta)  porta de teste: inteira, 1024–65535 (nunca a 80)
-//   conferirBanco(arq)    banco de teste: sempre em /tmp, nunca em servidor/dados
+//   conferirBanco(arq)    banco de teste: sempre em /tmp (ou dentro de REINO_TESTES em /dev/shm), nunca em servidor/dados
 //   conferirPastaTmp(p)   pasta que uma ferramenta pode criar/limpar: só dentro de /tmp/reino-testes/ (ou REINO_TESTES)
 // Teste: node --test jogo/ferramentas/testes/unidade/guardas.test.js
 const fs = require('fs');
@@ -20,6 +20,8 @@ function pastaTestes(pedida) {
   }
   return abs.replace(/\/+$/, '');
 }
+// pasta de testes em /dev/shm: o banco pode ficar dentro dela (só dela; o resto do /dev/shm continua proibido)
+const SHM = PASTA_TESTES.startsWith('/dev/shm/');
 
 // IPv4 da rede local / privados (a "rede" onde o PC é achado pelo IP)
 function ipDaRede(host) {
@@ -75,7 +77,9 @@ function conferirBanco(banco) {
   if (dados.test(banco) || dados.test(abs)) throw new Error('proibido: o banco de teste nunca pode ficar em servidor/dados');
   const conferir = (p) => {
     if (dados.test(p)) throw new Error('proibido: o banco de teste nunca pode ficar em servidor/dados');
-    if (!p.startsWith('/tmp/')) throw new Error(`proibido: o banco de teste fica sempre em /tmp (recebido: ${p})`);
+    if (!p.startsWith('/tmp/') && !(SHM && p.startsWith(PASTA_TESTES + '/'))) {
+      throw new Error(`proibido: o banco de teste fica sempre em /tmp${SHM ? ` ou em ${PASTA_TESTES}/` : ''} (recebido: ${p})`);
+    }
   };
   conferir(abs);
   caminhoReal(abs, conferir);

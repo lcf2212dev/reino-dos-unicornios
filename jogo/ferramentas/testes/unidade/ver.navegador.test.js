@@ -6,11 +6,12 @@ const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
+const { PASTA_TESTES } = require('../guardas');
 
 const VER = path.join(__dirname, '..', 'ver.js');
 const rodar = (nome, args) => {
   const saida = execFileSync(process.execPath, [VER, '--tamanhos', 'celular', '--nome', nome].concat(args), { encoding: 'utf8', timeout: 90000 });
-  const pasta = path.join('/tmp/reino-testes/ver', nome);
+  const pasta = path.join(PASTA_TESTES, 'ver', nome);
   return { saida, pasta, estado: JSON.parse(fs.readFileSync(path.join(pasta, 'estado.json'), 'utf8')).celular };
 };
 const id = Date.now();

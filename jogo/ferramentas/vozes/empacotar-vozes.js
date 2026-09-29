@@ -13,8 +13,13 @@ if (iSaida >= 0) {
   const pedida = process.argv[iSaida + 1];
   const abs = pedida && !pedida.startsWith('--') ? path.resolve(pedida) : '';
   const real = (p) => { let d = p; while (!fs.existsSync(d)) d = path.dirname(d); return path.join(fs.realpathSync(d), path.relative(d, p)); };
-  if (!abs || !abs.startsWith('/tmp/') || abs.split('/').includes('..') || !real(abs).startsWith('/tmp/')) {
-    console.error(`✘ proibido: --saida precisa ser uma pasta dentro de /tmp (ex.: /tmp/reino-testes/vozes/saida); recebido: ${pedida || '(nada)'}`);
+  // ou dentro da pasta de testes (REINO_TESTES, que pode estar em /dev/shm; guardas.js). Cópia fora do repositório
+  // (teste): sem guardas.js, só /tmp
+  let PASTA_TESTES = '/tmp/reino-testes';
+  try { PASTA_TESTES = require('../testes/guardas').PASTA_TESTES; } catch (e) { if (e.code !== 'MODULE_NOT_FOUND') throw e; }
+  const pode = (p) => p.startsWith('/tmp/') || p.startsWith(PASTA_TESTES + '/');
+  if (!abs || !pode(abs) || abs.split('/').includes('..') || !pode(real(abs))) {
+    console.error(`✘ proibido: --saida precisa ser uma pasta dentro de /tmp ou de ${PASTA_TESTES}/ (ex.: /tmp/reino-testes/vozes/saida); recebido: ${pedida || '(nada)'}`);
     process.exit(2);
   }
   saida = abs;
