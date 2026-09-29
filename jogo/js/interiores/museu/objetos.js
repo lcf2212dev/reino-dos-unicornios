@@ -230,29 +230,48 @@
       // esteira de palha
       ret(ctx, px + 1, py + 9, 30, 6, K); ret(ctx, px + 2, py + 10, 28, 4, '#f5d77a');
       for (var x = px + 3; x < px + 30; x += 3) ret(ctx, x, py + 10, 1, 4, '#d9ab45');
-      function panela(cx, cy, rx, ry, tampa) {
-        elipse(ctx, cx, cy, rx + 1, ry + 1, K); elipse(ctx, cx, cy, rx, ry, '#b95a36');
-        ret(ctx, cx - rx + 1, cy - 1, 2, 2, '#e07a4a');
-        elipse(ctx, cx, cy - ry, rx - 1, 1, K); ret(ctx, cx - rx + 2, cy - ry, 2 * rx - 3, 1, '#8a3a26');
-        ret(ctx, cx - rx - 1, cy - 1, 2, 2, K); ret(ctx, cx + rx, cy - 1, 2, 2, K);
-        if (tampa) { elipse(ctx, cx, cy - ry - 1, rx - 1, 1, '#e07a4a'); ret(ctx, cx, cy - ry - 3, 1, 2, K); }
+      // panela de barro: corpo com luz em cima, 2 alças, borda clara larga e a boca aberta (escura por dentro)
+      function panela(cx, cy, rx, ry) {
+        var BARRO = '#b95a36', LUZ = '#e07a4a', BORDA = '#f4b48a', top = cy - ry;
+        ret(ctx, cx - rx - 3, cy - 2, 3, 4, K); ret(ctx, cx - rx - 2, cy - 1, 1, 2, LUZ);   // alça da esquerda
+        ret(ctx, cx + rx + 1, cy - 2, 3, 4, K); ret(ctx, cx + rx + 2, cy - 1, 1, 2, LUZ);   // alça da direita
+        elipse(ctx, cx, cy, rx + 1, ry + 1, K); elipse(ctx, cx, cy, rx, ry, BARRO);
+        ret(ctx, cx - rx + 1, cy - 1, 2, 2, LUZ); ret(ctx, cx - rx + 1, cy + ry - 1, 2 * rx - 1, 1, '#8a3a26');
+        // borda clara em elipse (5 fileiras) com a boca escura no meio
+        var LB = [2 * rx - 3, 2 * rx - 1, 2 * rx + 1, 2 * rx - 1, 2 * rx - 3], BOCA = [0, 3, 5, 3, 0];
+        LB.forEach(function (w, k) {
+          var y = top - 2 + k;
+          ret(ctx, cx - (w >> 1) - 1, y, w + 2, 1, K); ret(ctx, cx - (w >> 1), y, w, 1, k < 2 ? '#ffd8bc' : BORDA);
+          if (BOCA[k]) ret(ctx, cx - (BOCA[k] >> 1), y, BOCA[k], 1, '#5a2a1a');
+        });
+        ret(ctx, cx - (LB[0] >> 1), top - 3, LB[0], 1, K); ret(ctx, cx - (LB[0] >> 1), top + 3, LB[0], 1, K);
       }
-      panela(px + 8, py + 6, 6, 5, true); panela(px + 22, py + 8, 5, 4, false); panela(px + 16, py + 12, 3, 2, false);
+      panela(px + 8, py + 7, 4, 4); panela(px + 23, py + 8, 4, 3);
     } });
-  I.objeto('museu-saia', { w: 1, h: 1, topo: 16, solido: true, alto: true,
+  // vestido de carimbó num manequim de busto: blusa de mangas bufantes, cintura marcada pelo cinto dourado,
+  // saia rodada vermelha com pregas e a barra florida de babados, no pé de metal
+  I.objeto('museu-saia', { w: 1, h: 1, topo: 17, solido: true, alto: true,
     desenhar: function (ctx, px, py) {
-      var cx = px + 8;
-      ret(ctx, cx - 1, py + 3, 3, 12, K); ret(ctx, cx - 4, py + 13, 9, 2, K);
-      // manequim com blusa e saia rodada colorida do carimbó
-      ret(ctx, cx - 3, py - 16, 7, 8, K); ret(ctx, cx - 2, py - 15, 5, 6, C.branco);
-      circulo(ctx, cx, py - 18, 2, K); circulo(ctx, cx, py - 18, 1, '#f3e6c8');
-      var cs = [C.vermelho, C.ouro, C.verde, C.azul, C.rosa, C.laranja, C.lilas];
-      for (var j = 0; j < 10; j++) {
-        var m = 2 + Math.round(j * 0.7);
-        ret(ctx, cx - m - 1, py - 8 + j, 2 * m + 3, 1, K);
-        for (var i = -m; i <= m; i++) ret(ctx, cx + i, py - 8 + j, 1, 1, cs[(i + 7 + (j >> 2)) % cs.length]);
+      var cx = px + 8, VERM = '#e0433f', PREGA = '#a8302c', LUZ = '#ff7a6a';
+      ret(ctx, cx - 1, py + 4, 3, 10, K); ret(ctx, cx, py + 4, 1, 9, C.metal2); ret(ctx, cx - 4, py + 13, 9, 2, K);
+      ret(ctx, cx - 1, py - 17, 3, 3, K); ret(ctx, cx, py - 16, 1, 1, '#f3e6c8');                 // pescoço do manequim
+      // blusa: ombros largos afinando até a cintura
+      [[-14, 5], [-13, 5], [-12, 4], [-11, 4], [-10, 3], [-9, 2]].forEach(function (r) {
+        ret(ctx, cx - r[1] - 1, py + r[0], 2 * r[1] + 3, 1, K); ret(ctx, cx - r[1], py + r[0], 2 * r[1] + 1, 1, C.branco);
+      });
+      ret(ctx, cx - 4, py - 13, 1, 3, '#e6dccb');
+      ret(ctx, cx - 8, py - 14, 3, 4, K); ret(ctx, cx - 7, py - 13, 1, 2, C.branco);            // mangas bufantes
+      ret(ctx, cx + 6, py - 14, 3, 4, K); ret(ctx, cx + 7, py - 13, 1, 2, C.branco);
+      ret(ctx, cx - 3, py - 8, 7, 1, K); ret(ctx, cx - 2, py - 8, 5, 1, C.ouro);                // cinto (5 px)
+      // saia rodada: abre de 7 a 19 px, com pregas escuras e luz à esquerda
+      for (var j = 0; j < 11; j++) {
+        var m = 3 + Math.round(j * 0.6), y = py - 7 + j;
+        ret(ctx, cx - m - 1, y, 2 * m + 3, 1, K); ret(ctx, cx - m, y, 2 * m + 1, 1, VERM);
+        ret(ctx, cx - m, y, 1, 1, LUZ);
+        if (j > 1 && j < 9) for (var i = -m + 2; i < m; i += 3) ret(ctx, cx + i, y, 1, 1, PREGA);
+        if (j >= 9) for (var f = -m; f <= m; f += 2) ret(ctx, cx + f, y, 1, 1, [C.ouro, C.verde, C.azul][((f + m) >> 1) % 3]);
       }
-      ret(ctx, cx - 9, py + 2, 19, 1, K);
+      for (var h = -9; h <= 9; h += 2) ret(ctx, cx + h, py + 4, 1, 1, K);                       // babado da barra
     } });
   I.objeto('museu-fitas', { w: 1, h: 2, parede: true, solido: false,
     desenhar: function (ctx, px, py) {

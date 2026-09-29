@@ -185,4 +185,30 @@
       QU.desenhar(ctx, px + (v(o, 'lado', 'dir') === 'dir' ? 4 : 0), py, Object.assign({}, o, { w: 1.75 }), P);
     } });
 
+  /* ================= NO LUGAR DO "KIT DE ENCHIMENTO" (D2B-03) ================= */
+  // tapete de letras no chão (w×h em tiles; var.letras, uma por tile; var.cor)
+  I.objeto('portugues-tapete-letras', { w: 1, h: 1, solido: false, semSombra: true, plano: true,
+    desenhar: function (ctx, px, py, o) {
+      var W = (o.w || 1) * 16, H = (o.h || 1) * 16, c = v(o, 'cor', '#ffd6d2'), l = String(v(o, 'letras', 'A'));
+      ret(ctx, px + 1, py + 2, W - 2, H - 3, K); ret(ctx, px + 2, py + 3, W - 4, H - 5, c);
+      ret(ctx, px + 3, py + 4, W - 6, 1, clarear(c, 0.45));
+      for (var i = 0; i < (o.w || 1); i++) for (var j = 0; j < (o.h || 1); j++) {
+        var ch = l[(i + j * (o.w || 1)) % l.length];
+        letra(ctx, ch, px + i * 16 + 7, py + j * 16 + 7, (i + j) % 2 ? VERDE2 : VERM2);
+      }
+    } });
+  // baú de letras móveis: a tampa aberta e as letras de madeira aparecendo (w em tiles, padrão 2)
+  I.objeto('portugues-bau-letras', { w: 2, h: 1, topo: 6, solido: true,
+    desenhar: function (ctx, px, py, o) {
+      var W = (o.w || 2) * 16;
+      ret(ctx, px + 2, py - 6, W - 4, 5, K); ret(ctx, px + 3, py - 5, W - 6, 3, C.madeira2);   // tampa aberta, atrás
+      [['A', VERM, 5], ['B', BANANA, 12], ['C', VERDE, 19], ['D', '#5fb4ff', 25]].forEach(function (b) {
+        var x = px + b[2]; if (x + 6 > px + W - 2) return;
+        ret(ctx, x, py - 2, 6, 7, K); ret(ctx, x + 1, py - 1, 4, 5, b[1]); letra(ctx, b[0], x + 1, py - 1, C.branco);
+      });
+      ret(ctx, px + 1, py + 3, W - 2, 12, K); ret(ctx, px + 2, py + 4, W - 4, 10, C.madeira);
+      ret(ctx, px + 2, py + 4, W - 4, 1, C.madeiraClara); ret(ctx, px + 2, py + 9, W - 4, 1, C.madeira3);
+      ret(ctx, px + W / 2 - 2, py + 7, 4, 3, K); ret(ctx, px + W / 2 - 1, py + 8, 2, 1, C.ouro);
+    } });
+
 })();

@@ -6,7 +6,7 @@
   /* ---------- personagens (vozes diferentes entre si) ---------- */
   // guia do hall
   R.registrarPersonagem({ id: 'geo-marco', nome: 'Maquinista Marco',
-    sprite: { pele: '#c68a5e', cabelo: '#2b1b17', penteado: 'curto', chapeu: 'bone', chapeuCor: '#2f8fd6', roupa: '#2f8fd6', roupa2: '#3a3a5a', apito: true },
+    sprite: { pele: '#c68a5e', cabelo: '#2b1b17', penteado: 'curto', chapeu: 'bone', chapeuCor: '#2f8fd6', roupa: '#2f8fd6', roupa2: '#3a3a5a', mapa: true },
     perfil: { voz: 'it-IT-GiuseppeMultilingualNeural', velocidade: '+0%', tom: '-2Hz' } });
   // sala g1: Formas de se Comunicar
   R.registrarPersonagem({ id: 'geo-lais', nome: 'Intérprete Laís',

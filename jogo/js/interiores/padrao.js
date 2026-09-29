@@ -1,5 +1,11 @@
 /* Interior padrão: toda matéria sem interior próprio ganha um prédio gerado dos dados.
    Hall (guia + Livro da matéria) embaixo no meio e um cômodo por sala, em fileiras de 3.
+   Planta própria (opcional): Reino._predios.<matéria>.planta = { hall: P, salas: { <id da sala>: P } }, com
+   P = { piso?, parede?, paleta?, objetos: [...] } em tiles do cômodo (0–10; a cruz das fileiras 6–7 e colunas 4–6
+   fica livre, o guia em (7,8) e o monitor em (7,5)). Marcadores nos objetos: '@livro' (o púlpito do Livro),
+   '@bancada' (o desenho da sala ou da matéria, interativo), '@quadro' (o quadro do unicórnio raro da sala) e
+   '@bebedouro' (hall).
+   Os ids, NPCs, falas e ações não mudam com a planta (ex.: interiores/matematica/salas.js).
    Carrega por último (depois de todos os prédios). Só dados e funções: nada de DOM no carregamento. */
 (function () {
   var R = window.Reino;
@@ -122,6 +128,24 @@
   function pos(ox, oy, lista) {
     return lista.map(function (o) { var n = Object.assign({}, o); n.x = o.x + ox; n.y = o.y + oy; return n; });
   }
+  // troca os marcadores '@livro', '@bancada' e '@quadro' da planta própria pelos objetos do gerador
+  function marcadores(lista, M) {
+    return lista.map(function (o) {
+      var m = M[o.tipo];
+      if (!m) return o;
+      var n = Object.assign({}, m); n.x = o.x; n.y = o.y;
+      if (o.var) n.var = Object.assign({}, m.var, o.var);
+      return n;
+    });
+  }
+  // cômodo com a planta própria por cima do padrão (piso, parede e paleta)
+  function comPlanta(c, P) {
+    if (!P) return c;
+    if (P.piso) c.piso = P.piso;
+    if (P.parede) c.parede = P.parede;
+    if (P.paleta) c.paleta = Object.assign({}, c.paleta, P.paleta);
+    return c;
+  }
 
   /** @param {Materia} m @returns {InteriorDef} */
   function gerar(m) {
@@ -130,6 +154,8 @@
     var cores = (m.lugar && m.lugar.cores) || {};
     var cP = cores.parede || '#fff6e4', cT = cores.telhado || '#9b6bd6', cD = cores.detalhe || '#ff8ac4';
     var nomeLugar = (m.lugar && m.lugar.nome) || m.nome;
+    /** @type {any} */
+    var planta = ((R._predios || {})[m.id] || {}).planta || null;
     // posições: fileira de baixo = [sala 1, hall, sala 2]; acima, fileiras de até 3 (o meio sempre ocupado)
     var U = Math.ceil(Math.max(0, N - 2) / 3), H = 12 * (U + 1) + 1, yBase = 1 + 12 * U;
     var vagas = [];   // {col, fil} por sala (fil 0 = embaixo)
@@ -158,10 +184,16 @@
 
     /* ---------- HALL ---------- */
     var h = xy(1, 0), temCima = !!ocupada['1:1'];
-    comodos.push({ id: 'hall', nome: 'Hall', placa: 'Hall • ' + nomeLugar, rect: { x: h.x, y: h.y, w: 11, h: 11 },
-      piso: 'mosaico', parede: 'papel', paleta: paleta(0) });
+    var livroHall = { tipo: 'padrao-pulpito', nome: m.nomeLivro || 'Livro da matéria', fala: FALAS.objetos.livro,
+      acao: { tipo: 'tela', tela: 'livro', materia: m.id }, var: { cor: cT } };
+    var bancadaHall = { tipo: 'padrao-bancada', nome: 'Desenho da matéria', fala: FALAS.objetos.hall, var: { emoji: semFE0F(m.emoji), cor: cD } };
+    var bebedouro = { tipo: 'bebedouro', nome: 'Bebedouro', fala: FALAS.objetos.bebedouro };
+    var PH = planta && planta.hall;
+    comodos.push(comPlanta({ id: 'hall', nome: 'Hall', placa: 'Hall • ' + nomeLugar, rect: { x: h.x, y: h.y, w: 11, h: 11 },
+      piso: 'mosaico', parede: 'papel', paleta: paleta(0) }, PH));
     cruz(h);
-    objetos = objetos.concat(pos(h.x, h.y, [
+    if (PH) objetos = objetos.concat(pos(h.x, h.y, marcadores(PH.objetos, { '@livro': livroHall, '@bancada': bancadaHall, '@bebedouro': bebedouro })));
+    else objetos = objetos.concat(pos(h.x, h.y, [
       { tipo: 'janela', x: 0, y: 0 }, { tipo: 'vitral', x: 1, y: 0 },
       { tipo: 'estandarte', x: 2, y: 0, var: { cor: cD, emblema: 'estrela' } },
       { tipo: 'padrao-cartaz', x: 3, y: 0, var: { emoji: semFE0F(m.emoji), cor: cT } }, { tipo: 'arandela', x: 4, y: 0 },
@@ -169,15 +201,14 @@
       { tipo: 'estandarte', x: 8, y: 0, var: { cor: cT, emblema: 'coracao' } }, { tipo: 'vitral', x: 9, y: 0 }, { tipo: 'janela', x: 10, y: 0 },
       // canto de cima à esquerda: o Livro
       { tipo: 'vaso-planta', x: 0, y: 2 }, { tipo: 'pilha-livros', x: 1, y: 2 }, { tipo: 'estante', x: 2, y: 2 },
-      { tipo: 'padrao-pulpito', x: 1, y: 4, nome: m.nomeLivro || 'Livro da matéria', fala: FALAS.objetos.livro,
-        acao: { tipo: 'tela', tela: 'livro', materia: m.id }, var: { cor: cT } },
+      Object.assign({ x: 1, y: 4 }, livroHall),
       { tipo: 'tapete', x: 0, y: 3, w: 1, h: 3, var: { cor: clara(cD, 0.4), borda: cT } }, { tipo: 'papeis', x: 3, y: 4 },
       // canto de cima à direita
       { tipo: 'flores', x: 7, y: 2 }, { tipo: 'globo', x: 8, y: 2 }, { tipo: 'armario', x: 9, y: 2 },
-      { tipo: 'padrao-bancada', x: 8, y: 4, nome: 'Desenho da matéria', fala: FALAS.objetos.hall, var: { emoji: semFE0F(m.emoji), cor: cD } },
+      Object.assign({ x: 8, y: 4 }, bancadaHall),
       { tipo: 'planta-alta', x: 10, y: 5 }, { tipo: 'almofada', x: 7, y: 4, var: { cor: clara(cT, 0.3) } },
       // embaixo à esquerda
-      { tipo: 'bebedouro', x: 0, y: 8, nome: 'Bebedouro', fala: FALAS.objetos.bebedouro },
+      Object.assign({ x: 0, y: 8 }, bebedouro),
       { tipo: 'tapete-listrado', x: 1, y: 8, w: 3, h: 1, var: { cores: [cD, '#fff8ee', cT, '#fff8ee'] } },
       { tipo: 'banco', x: 0, y: 10 }, { tipo: 'luminaria-pe', x: 3, y: 10 }, { tipo: 'cesto', x: 2, y: 10 },
       { tipo: 'vaso-grande', x: 2, y: 9 },
@@ -194,13 +225,16 @@
       var p = vagas[i], o = xy(p.col, p.fil), n = i + 1, pal = paleta(i + 1);
       var raro = (m.unicornios || []).find(function (u) { return u.sala === s.id && u.raridade === 'raro'; });
       var emo = semFE0F(s.emoji || m.emoji), item = ITENS[i % ITENS.length], vozN = (i % 5) + 1, ele = !!MASCULINO[vozN];
-      comodos.push({ id: 'sala' + n, nome: String(s.nome || '').replace(/[«»]/g, ''), placa: placa(n, s.nome),
-        rect: { x: o.x, y: o.y, w: 11, h: 11 }, piso: PISOS[(i + 1) % PISOS.length], parede: PAREDES[i % PAREDES.length], paleta: pal });
+      var PS = planta && planta.salas && planta.salas[s.id];
+      comodos.push(comPlanta({ id: 'sala' + n, nome: String(s.nome || '').replace(/[«»]/g, ''), placa: placa(n, s.nome),
+        rect: { x: o.x, y: o.y, w: 11, h: 11 }, piso: PISOS[(i + 1) % PISOS.length], parede: PAREDES[i % PAREDES.length], paleta: pal }, PS));
       cruz(o);
+      var bancada = { tipo: 'padrao-bancada', nome: 'Desenho da Sala ' + n, fala: FALAS.objetos.bancada, var: { emoji: emo, cor: pal.detalhe } };
+      var quadro = raro ? { tipo: 'quadro-unicornio', var: { uni: raro.id } } : { tipo: 'mapa-parede' };
       /** @type {ObjetoInterior[]} */
       var parede = [
         { tipo: 'janela', x: 0, y: 0 },
-        raro ? { tipo: 'quadro-unicornio', x: 1, y: 0, var: { uni: raro.id } } : { tipo: 'mapa-parede', x: 1, y: 0 },
+        Object.assign({ x: 1, y: 0 }, quadro),
         { tipo: 'padrao-cartaz', x: 3, y: 0, var: { emoji: emo, cor: pal.detalhe } },
         { tipo: i % 2 ? 'relogio-parede' : 'arandela', x: 4, y: 0 },
         { tipo: 'arandela', x: 6, y: 0 },
@@ -211,7 +245,7 @@
       var chao = [
         // em cima à esquerda
         { tipo: 'estante', x: 0, y: 2 }, { tipo: 'pilha-livros', x: 2, y: 2 }, { tipo: 'planta-alta', x: 3, y: 2 },
-        { tipo: 'padrao-bancada', x: 1, y: 4, nome: 'Desenho da Sala ' + n, fala: FALAS.objetos.bancada, var: { emoji: emo, cor: pal.detalhe } },
+        Object.assign({ x: 1, y: 4 }, bancada),
         { tipo: 'papeis', x: 0, y: 3 }, { tipo: 'cadeira', x: 3, y: 4, var: { almofada: cD } },
         // em cima à direita (o NPC fica em 7,5)
         { tipo: 'cesto', x: 7, y: 2 }, { tipo: 'flores', x: 8, y: 2, var: { vaso: cT } }, { tipo: 'armario', x: 9, y: 2 },
@@ -227,7 +261,8 @@
         { tipo: 'vitrine', x: 7, y: 10, var: { itens: [item, ITENS[(i + 3) % ITENS.length], item] } },
         { tipo: 'pedestal', x: 9, y: 10, var: { item: ITENS[(i + 5) % ITENS.length] } }, { tipo: 'vaso-planta', x: 10, y: 10 },
       ];
-      objetos = objetos.concat(pos(o.x, o.y, parede.concat(chao)));
+      var lista = PS ? marcadores(PS.objetos, { '@bancada': bancada, '@quadro': quadro }) : parede.concat(chao);
+      objetos = objetos.concat(pos(o.x, o.y, lista));
       npcs.push({ id: 'sala-' + m.id + '-' + s.id, nome: (ele ? 'Monitor' : 'Monitora') + ' da Sala ' + n,
         voz: 'npc-padrao-' + vozN, sprite: sprite(m, i, ele), x: o.x + 7, y: o.y + 5,
         acao: { tipo: 'sala', materia: m.id, sala: s.id },
