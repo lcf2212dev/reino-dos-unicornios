@@ -123,8 +123,9 @@ body.em-missao #claude-balao { bottom: calc(env(safe-area-inset-bottom, 0px) + 1
 .chip-mini.nova { background: var(--rosa-clara); }
 .chip-mini.raro { background: #dcebff; }
 .chip-mini.calma { background: #e6e9ff; }
-.barra-dinheiro { display: flex; align-items: center; gap: 10px; }
-.barra-dinheiro-trilho { flex: 1; height: 18px; border: 3px solid var(--borda); border-radius: var(--canto); background: #fff; overflow: hidden; }
+/* trilho de 250 px ou mais; se o texto não couber ao lado (celular), desce para a linha de baixo */
+.barra-dinheiro { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+.barra-dinheiro-trilho { flex: 1 1 250px; min-width: 120px; height: 18px; border: 3px solid var(--borda); border-radius: var(--canto); background: #fff; overflow: hidden; }
 .barra-dinheiro-trilho span { display: block; height: 100%; background: repeating-linear-gradient(90deg, var(--ouro) 0 14px, #ffdb70 14px 18px); }
 .barra-dinheiro-texto { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; font-size: 0.9em; }
 
