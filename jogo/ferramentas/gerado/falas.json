@@ -2449,13 +2449,13 @@
    "fala": "Toque nos planetas do mais perto ao mais longe do sol."
   },
   {
-   "chave": "70aeeb022i",
+   "chave": "f97d00d02h",
    "voz": "ingles",
-   "texto": "Put a tick (√) for the good effects of the sun and a cross (X) for the bad effects:",
+   "texto": "Put a tick () for the good effects of the sun and a cross (X) for the bad effects:",
    "pacotes": [
     "prova-ingles-3bim"
    ],
-   "fala": "Put a tick for the good effects of the sun and a cross for the bad effects:"
+   "fala": "Put a tick () for the good effects of the sun and a cross for the bad effects:"
   },
   {
    "chave": "01f0caae17",

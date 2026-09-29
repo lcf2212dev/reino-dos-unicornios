@@ -107,6 +107,7 @@
 .vf-linha { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); }
 .vf-botoes { display: flex; gap: 6px; flex: none; }
 .vf-botao { width: 52px; height: 52px; border: 3px solid var(--borda); border-radius: var(--canto); background: #fff; font-weight: 700; font-size: 1.1em; box-shadow: 0 3px 0 var(--borda); }
+.vf-botao.vf-com-icone { padding: 0; display: flex; align-items: center; justify-content: center; }   /* ✓ e ✘ desenhados, centrados (D12b-02) */
 .vf-botao[aria-pressed="true"] { background: var(--roxo); color: #fff; box-shadow: 0 3px 0 var(--borda); outline: 3px solid var(--roxo); outline-offset: 1px; }
 .vf-texto { flex: 1; font-weight: 700; font-size: 0.95em; }
 .tudo-certo .vf-linha { background: var(--certo-fundo); }

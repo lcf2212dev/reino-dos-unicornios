@@ -25,7 +25,8 @@ Ferramentas de desenvolvimento (Node). Nenhuma entra no jogo. Comandos: `CLAUDE.
   10 min se outro teste roda na mesma worktree (`--sem-esperar` falha logo). Trava de PID morto é assumida.
 - "Page crashed"/"Target crashed" no Chromium: confira `df -h /tmp`; se estiver cheio, rode com
   `TMPDIR=/dev/shm/<pasta>` (não apague temporários de outros). A pasta de testes pode ir junto:
-  `REINO_TESTES=/dev/shm/reino-testes` (só dentro de `/tmp` ou `/dev/shm`; `guardas.js`).
+  `REINO_TESTES=/dev/shm/reino-testes` (só dentro de `/tmp` ou `/dev/shm`; com ela em `/dev/shm`, o banco de teste,
+  a base e as referências do e2e e o `--saida` das vozes ficam dentro dela; `guardas.js`).
 - Vigia (`testes/vigia-memoria.js`, ligado por `navegador.js` em todo Chromium de teste): processo acima de
   `REINO_MEMORIA_GB` (4), soma acima de `REINO_MEMORIA_TOTAL_GB` (24) ou aba do e2e sem foto há `REINO_TRAVADO_MIN`
   (5) min: mostra o que cada aba fazia (também em `/tmp/reino-testes/vigia/`), derruba os processos DAQUELE teste e
