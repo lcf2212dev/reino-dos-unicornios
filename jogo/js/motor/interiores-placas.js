@@ -95,6 +95,7 @@
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.font = fonte + 'px ' + FONTE_PIXEL;
+    ctx.textRendering = 'optimizeSpeed';   // sem ligadura: com ela "fi"/"fl" viram um glifo só (o CSS não vale no canvas)
     var hud = retangulosHud(ctx.canvas, pintor.dpr || 1);
     var mari = caixaMariana(pintor);
     (def.comodos || []).forEach(function (c) {

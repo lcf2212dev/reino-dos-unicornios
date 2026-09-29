@@ -5,21 +5,23 @@
   padding: 10px; border: 3px solid var(--borda); border-radius: var(--canto-grande);
   background:
     linear-gradient(#fff, #fff) center / 200px 92% no-repeat, linear-gradient(#fff, #fff) center / 250px 80% no-repeat,
-    linear-gradient(#fff, #fff) center / 290px 62% no-repeat, linear-gradient(#fff, #fff) center / 310px 40% no-repeat, var(--rosa-clara);
+    linear-gradient(#fff, #fff) center / 290px 62% no-repeat, linear-gradient(#fff, #fff) center / 310px 40% no-repeat, var(--laranja-claro);
 }
 .salao-grande { display: grid; place-items: center; min-height: 140px; }
 .salao-vistas { display: flex; align-items: flex-end; gap: 10px; }
 .salao-vista { display: grid; place-items: end center; }
-.salao-opcoes { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: 8px; }
+/* coluna larga o bastante para a maior palavra ("Cacheadinho": 11 letras de 12 px) inteira, com 8 px até o contorno
+   (ui.md §10.17) */
+.salao-opcoes { display: grid; grid-template-columns: repeat(auto-fill, minmax(156px, 1fr)); gap: 8px; }
 .salao-opcao {
-  display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 4px 6px;
+  display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 8px 6px;
   border: 3px solid var(--borda); border-radius: var(--canto); background: var(--papel); box-shadow: 0 3px 0 var(--borda);
-  font: inherit; font-size: 0.85em; font-weight: 700; color: inherit; cursor: pointer; line-height: 1.15;
+  font: inherit; font-size: 12px; font-weight: 700; color: inherit; cursor: pointer; line-height: 1.25;
 }
-.salao-opcao[aria-pressed="true"] { background: var(--rosa-clara); outline: 4px solid var(--roxo); outline-offset: 2px; }
+.salao-opcao[aria-pressed="true"] { background: var(--laranja-claro); outline: 4px solid var(--roxo); outline-offset: 2px; }
 .salao-retrato { display: grid; place-items: end center; min-height: 54px; }
-.salao-nome { text-align: center; overflow-wrap: anywhere; }
+.salao-nome { text-align: center; overflow-wrap: normal; }   /* quebra só entre palavras */
 @media (max-width: 480px) {
-  .salao-opcoes { grid-template-columns: repeat(4, 1fr); gap: 6px; }
-  .salao-opcao { font-size: 0.72em; padding: 6px 2px 4px; }
+  .salao-opcoes { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+  .salao-opcao { padding: 6px 8px 4px; }
 }

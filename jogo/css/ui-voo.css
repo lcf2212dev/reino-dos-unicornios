@@ -33,7 +33,6 @@
 .voo-opcao {
   display: flex; align-items: center; justify-content: center; box-sizing: border-box; padding: 0 4px;
   text-align: center; font-weight: 800; font-size: clamp(0.8em, 2.4vmin, 1.15em); line-height: 1.1; color: #fff;
-  overflow-wrap: anywhere;
   text-shadow: -2px 0 0 #3a2446, 2px 0 0 #3a2446, 0 -2px 0 #3a2446, 0 2px 0 #3a2446, 2px 2px 0 #3a2446;
 }
 .voo-opcao-certa { outline: 4px solid #fff6a8; outline-offset: -4px; }

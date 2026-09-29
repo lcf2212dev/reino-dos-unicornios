@@ -35,8 +35,8 @@
 .criar-plaquinha {
   min-width: 60%; max-width: 100%; padding: 8px 14px; text-align: center;
   border: 3px solid var(--borda); border-radius: var(--canto); background: var(--ouro-claro);
-  font-family: var(--fonte-pixel); font-size: 0.9em; box-shadow: 0 3px 0 var(--borda);
-  overflow-wrap: anywhere;
+  font-family: var(--fonte-pixel); font-size: 16px; box-shadow: 0 3px 0 var(--borda);
+  /* até 12 letras (NOME_MAX) cabe inteiro numa linha; mais comprido quebra na sílaba, com hífen (aparencia.js) */
 }
 
 /* ---------- campos ---------- */
@@ -55,22 +55,35 @@
   flex: 1 1 0; min-height: 48px; padding: 8px 10px; font: inherit; font-weight: 700; color: inherit; cursor: pointer;
   border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); box-shadow: 0 3px 0 var(--borda);
 }
-.criar-sexo-btn[aria-pressed="true"] { background: var(--rosa-clara); outline: 4px solid var(--roxo); outline-offset: 2px; }
+.criar-sexo-btn[aria-pressed="true"] { background: var(--laranja-claro); outline: 4px solid var(--roxo); outline-offset: 2px; }
 .criar-grupo > .criar-opcoes { flex: 1 1 auto; }
+/* a fileira: folga de 8 px em volta (o contorno roxo do escolhido tem 4 + 1 px e fica dentro da moldura) e, no fim,
+   a setinha de "tem mais" grudada na borda da direita enquanto a fileira não chegou ao último cartão */
 .criar-opcoes {
-  display: flex; gap: 8px; min-width: 0; padding: 6px 6px 10px;
-  overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: thin;
+  display: flex; gap: 8px; min-width: 0; padding: 8px 8px 12px; scroll-padding-inline: 8px 64px;   /* a faixa (48, 8 dela sob a folga) + 8 + o anel de foco (4 + 3) */
+  /* sem scroll-snap: ele puxava o cartão com foco de volta para baixo da faixa */
+  overflow-x: auto; scrollbar-width: thin;
   border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel-2);
 }
-.criar-opcao {
-  flex: 0 0 auto; width: 78px; scroll-snap-align: start;
-  display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 2px 4px;
-  border: 3px solid var(--borda); border-radius: var(--canto); background: var(--papel); box-shadow: 0 3px 0 var(--borda);
-  font: inherit; font-size: 0.7em; font-weight: 700; color: inherit; cursor: pointer; line-height: 1.15;
+.criar-mais {   /* a faixa de "tem mais", com o ícone ▶ (aparencia.js); a borda é a da fileira */
+  /* os 8 px da direita ficam sob a folga da fileira (o sticky para na borda do conteúdo): o ícone centra no resto */
+  position: sticky; right: -8px; flex: 0 0 48px; align-self: stretch; margin: -8px 0 -12px; padding-right: 8px;
+  display: grid; place-items: center; border-left: 3px solid var(--borda); background: var(--papel-2);
 }
-.criar-opcao[aria-pressed="true"] { background: var(--rosa-clara); outline: 4px solid var(--roxo); outline-offset: 1px; }
+.criar-opcoes.no-fim .criar-mais { visibility: hidden; }
+/* só uma lasca à vista, colada à faixa: some (continua focável: o Tab rola até ele e ele volta) */
+.criar-opcao.criar-lasca { opacity: 0; }
+.criar-opcao.criar-lasca:focus-visible { opacity: 1; }
+.criar-opcao {
+  flex: 0 0 auto; width: min-content; min-width: 118px;   /* 8 letras de 12 px por linha */
+  display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 8px 4px;   /* 8 px entre o nome e o contorno */
+  border: 3px solid var(--borda); border-radius: var(--canto); background: var(--papel); box-shadow: 0 3px 0 var(--borda);
+  font: inherit; font-size: 12px; font-weight: 700; color: inherit; cursor: pointer; line-height: 1.25;
+}
+.criar-opcao[aria-pressed="true"] { background: var(--laranja-claro); outline: 4px solid var(--roxo); outline-offset: 1px; }
 .criar-retrato { display: grid; place-items: end center; min-height: 40px; }
-.criar-opcao-nome { text-align: center; overflow-wrap: anywhere; }
+/* nome do corte e da roupa: quebra só entre palavras (e no hífen de "Maria-chiquinha"); o cartão cresce até a maior */
+.criar-opcao-nome { text-align: center; overflow-wrap: normal; }
 
 @keyframes criar-brilho { 50% { opacity: 0.15; } }
 body.sem-animacao .criar-palco::before, body.sem-animacao .criar-palco::after { animation: none; }
@@ -82,9 +95,12 @@ body.sem-animacao .criar-palco::before, body.sem-animacao .criar-palco::after { 
   .criar-vitrine { position: static; flex-direction: row; justify-content: center; }
   .criar-palco { width: auto; min-width: 150px; min-height: 150px; padding: 10px 14px 18px; }
   .criar-chao { width: 80px; height: 12px; bottom: 12px; }
-  .criar-plaquinha { min-width: 0; }
-  .tela-aparencia .rotulo-cor { flex-basis: 64px; width: 64px; font-size: 0.72em; }
+  .criar-plaquinha { min-width: 0; padding: 8px; font-size: 12px; }
+  .tela-aparencia .criar-nome { padding: 8px; font-size: 16px; }   /* 12 letras inteiras no campo */
+  /* Corte e Roupa: o rótulo em cima e a fileira na largura toda (cabem 3 cartões, cada nome inteiro) */
+  .criar-grupo:has(> .criar-opcoes) { flex-direction: column; align-items: stretch; gap: 4px; }
+  .tela-aparencia .criar-grupo:has(> .criar-opcoes) > .rotulo-cor { flex: none; width: auto; }
+  .tela-aparencia .rotulo-cor { flex-basis: 76px; width: 76px; font-size: 12px; overflow-wrap: normal; }   /* "Cabelo" inteiro */
   .tela-aparencia .bolinha-cor { width: 34px; height: 34px; border-width: 2px; }
-  .criar-opcao { width: 64px; font-size: 0.62em; }
   .criar-sexo-btn { min-height: 44px; font-size: 0.85em; padding: 6px; }
 }

@@ -13,7 +13,7 @@
   flex: 1; min-width: 0;
   padding: 12px 14px;
   border: 3px solid var(--borda); border-radius: var(--canto-grande);
-  background: var(--papel-3);
+  background: var(--papel-quente);
 }
 .surpresa-fala { font-weight: 700; }
 .surpresa-vale { margin-top: 6px; font-size: 0.9em; font-weight: 700; color: var(--tinta-suave); }
@@ -33,7 +33,7 @@
   background: var(--papel-2);
 }
 .surpresa-botoes .btn-grande { flex: 1 1 200px; }
-.surpresa-conferir { background: var(--menta); font-size: 1.1em; }
+.surpresa-conferir { background: var(--verde-folha); font-size: 1.1em; }
 
 /* resposta: mesmas cores da missão (retorno-certo / retorno-quase), dentro do painel */
 .surpresa-retorno {
@@ -59,7 +59,7 @@
 /* telas largas: as alternativas em duas colunas (assim cabem sem rolar no notebook e no celular deitado) */
 @media (min-width: 640px) { .tela-surpresa .opcoes-varias, .tela-surpresa .opcoes { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .tela-surpresa .opcao { min-width: 0; }
-.tela-surpresa .opcao-texto { min-width: 0; overflow-wrap: anywhere; }
+.tela-surpresa .opcao-texto { min-width: 0; }
 
 /* depois de responder, as opções ficam paradas */
 .tela-surpresa .opcao[aria-disabled="true"] { cursor: default; }
