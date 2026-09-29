@@ -3,7 +3,8 @@
 // CSS (css/*.css, sem os comentários):
 //   - border-radius só com 0, var(--canto), var(--canto-grande) ou var(--redondo) (o corner-shape: notch de
 //     ui-base.css faz o degrau);
-//   - degradê só com paradas duras (cada cor começa onde a anterior termina: "#a 0 40%, #b 40% 100%");
+//   - degradê só linear e com paradas duras (cada cor começa onde a anterior termina: "#a 0 40%, #b 40% 100%");
+//     radial-gradient desenha círculo de borda lisa: não vale;
 //   - sombra (box-shadow, text-shadow, drop-shadow) sem desfoque, e nada de blur();
 //   - rotate só em múltiplos de 90° (girar pixel em outro ângulo borra).
 // JS (js/**, fora js/voz/): createLinearGradient, createRadialGradient, shadowBlur diferente de 0, .arc( e
@@ -73,7 +74,8 @@ function checarCss(nome, texto, erros) {
     const ruins = dividir(m[4].replace(/!important/, '').replace(/\//g, ' '), ' ').filter((v) => !CANTOS.has(v));
     if (ruins.length) erros.push(`${nome}:${linhaDe(t, m.index)}: border-radius "${m[4].trim()}" (use 0, var(--canto), var(--canto-grande) ou var(--redondo))`);
   }
-  for (const m of t.matchAll(/(repeating-)?(linear|radial|conic)-gradient\(/g)) {
+  for (const m of t.matchAll(/(repeating-)?radial-gradient\(/g)) erros.push(`${nome}:${linhaDe(t, m.index)}: radial-gradient (círculo de borda lisa: faixas lineares ou forma em degrau)`);
+  for (const m of t.matchAll(/(repeating-)?(linear|conic)-gradient\(/g)) {
     const args = dentroDe(t, m.index + m[0].length - 1);
     if (!degradeDuro(args)) erros.push(`${nome}:${linhaDe(t, m.index)}: degradê liso "${m[0]}${args.slice(0, 60)}..." (faixas com paradas duras)`);
   }
