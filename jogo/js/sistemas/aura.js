@@ -157,7 +157,7 @@
         }
       }
     }
-    m = { W: W, H: H, anel: cheio ? anel : null, pontos: pontos, cores: {} };
+    m = { W: W, H: H, anel: cheio ? anel : null, fig: cheio, pontos: pontos, cores: {} };
     contornos.set(img, m);
     return m;
   }
@@ -172,6 +172,41 @@
     }
     ctx.putImageData(img, 0, 0);
     m.cores[cor] = c;
+    return c;
+  }
+  // o halo em pixel (sem desfoque): a figura com o contorno, deslocada 1 e 2 px nos 4 lados, menos ela mesma.
+  // Faixa 1 (a 1 px) mais forte, faixa 2 (a 2 px) mais clara. Calculado UMA vez por sprite; um canvas por cor.
+  var HALO = 2;
+  function halo(m) {
+    if (m.halo) return m.halo;
+    var W = m.W + HALO * 2, H = m.H + HALO * 2, faixa = new Uint8Array(W * H), cheio = new Uint8Array(W * H);
+    var fig = m.fig;
+    for (var y = 0; y < m.H; y++) for (var x = 0; x < m.W; x++) {
+      var i = y * m.W + x;
+      if (m.anel[i] || (fig && fig[i])) cheio[(y + HALO) * W + x + HALO] = 1;
+    }
+    for (var k = 1; k <= HALO; k++) {
+      for (var yy = 0; yy < H; yy++) for (var xx = 0; xx < W; xx++) {
+        var j = yy * W + xx;
+        if (cheio[j] || faixa[j]) continue;
+        if ((xx >= k && cheio[j - k]) || (xx + k < W && cheio[j + k]) ||
+            (yy >= k && cheio[j - k * W]) || (yy + k < H && cheio[j + k * W])) faixa[j] = k;
+      }
+    }
+    m.halo = { W: W, H: H, faixa: faixa, cores: {} };
+    return m.halo;
+  }
+  function haloNaCor(h, cor) {
+    if (h.cores[cor]) return h.cores[cor];
+    var c = window.PA.novoCanvas(h.W, h.H), ctx = c.getContext('2d'), img = ctx.createImageData(h.W, h.H), d = img.data;
+    var n = parseInt(cor.slice(1), 16), rgb = [n >> 16, (n >> 8) & 255, n & 255];
+    for (var i = 0; i < h.faixa.length; i++) {
+      if (!h.faixa[i]) continue;
+      d[i * 4] = rgb[0]; d[i * 4 + 1] = rgb[1]; d[i * 4 + 2] = rgb[2];
+      d[i * 4 + 3] = h.faixa[i] === 1 ? 150 : 70;
+    }
+    ctx.putImageData(img, 0, 0);
+    h.cores[cor] = c;
     return c;
   }
   // brilhinho de 1 px com bracinhos na cor, no ponto k do anel 1 (px do jogo)
@@ -201,11 +236,9 @@
         ctx.rect(0, 0, ctx.canvas.width, Math.max(0, p.tela(s.x, s.linha).y));
         ctx.clip();
       }
-      // o halo: o próprio contorno desfocado na cor (px da tela), por baixo do contorno nítido
-      ctx.shadowColor = rgba(cor === '#ffffff' ? '#fff8d8' : cor, 0.75 + 0.25 * onda);
-      ctx.shadowBlur = (3 + 3 * onda) * (p.escala || 3);
-      p.sprite(img, s.x, s.yPes + BORDA);
-      ctx.shadowBlur = 0;
+      // o halo: faixas de pixel em volta do contorno, respirando no alfa, por baixo do contorno nítido
+      ctx.globalAlpha = 0.75 + 0.25 * onda;
+      p.sprite(haloNaCor(halo(m), cor === '#ffffff' ? '#fff8d8' : cor), s.x, s.yPes + BORDA + HALO);
       ctx.globalAlpha = 0.85 + 0.15 * onda;
       p.sprite(img, s.x, s.yPes + BORDA);
       ctx.restore();

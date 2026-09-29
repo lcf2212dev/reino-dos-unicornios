@@ -141,13 +141,25 @@
       ctx.drawImage(c, -Math.round(off), y);
       ctx.drawImage(c, c.width - Math.round(off), y);
     }
+    // o arco-íris vai aparecendo da esquerda: recorte em degrau, linha a linha na grade do desenho (sem arco liso):
+    // em cada linha acima do centro, fica só o que está antes do ângulo ang (de PI, à esquerda, até 2·PI, à direita)
+    function recorteDoArco(a, ang) {
+      var x0 = Math.round(a.x - a.r - 3), cy = Math.round(a.y), sen = Math.sin(ang), cos = Math.cos(ang);
+      ctx.beginPath();
+      for (var y = Math.round(a.y - a.r - 3); y < cy; y++) {
+        var dy = y + 0.5 - a.y;
+        var x1 = sen > -1e-6 ? a.x + a.r + 3 : a.x + dy * cos / sen;
+        var w = Math.round(x1) - x0;
+        if (w > 0) ctx.rect(x0, y, w, 1);
+      }
+    }
     function arco(t) {
       var a = m.arco, p = anima || t < POSE ? Math.min(1, Math.max(0, (t - 0.35) / (cfg.arcoMs / 1000))) : 1;
       if (p <= 0) return;
       p = 1 - Math.pow(1 - p, 2.2);
       if (p >= 1) { ctx.drawImage(cam.arco, a.x - a.r, a.y - a.r); return; }
       ctx.save();
-      ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.arc(a.x, a.y, a.r + 2, Math.PI, Math.PI * (1 + p)); ctx.closePath(); ctx.clip();
+      recorteDoArco(a, Math.PI * (1 + p)); ctx.clip();
       ctx.drawImage(cam.arco, a.x - a.r, a.y - a.r);
       ctx.restore();
       var ang = Math.PI * (1 + p), rr = a.r - a.faixa * 3;

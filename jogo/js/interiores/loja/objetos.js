@@ -14,6 +14,15 @@
       cadeado = S.cadeado, medalha = S.medalha, lacinho = S.lacinho, espelhoInfo = S.espelhoInfo,
       cenaEspelho = S.cenaEspelho, larguraEtiqueta = S.larguraEtiqueta, moedinha = S.moedinha;
 
+  // recorte em degrau: as mesmas linhas do helper pixel elipse (js/arte/desenho.js), como caminho de retângulos
+  function mascaraElipse(ctx, cx, cy, rx, ry) {
+    ctx.beginPath();
+    for (var j = -ry; j <= ry; j++) {
+      var meia = Math.floor(rx * Math.sqrt(Math.max(0, 1 - (j * j) / (ry * ry))) + 0.3);
+      ctx.rect(cx - meia, cy + j, meia * 2 + 1, 1);
+    }
+  }
+
   /* ================= OBJETOS DA LOJA ================= */
   // vitrine dos enfeites: três prateleiras de 6 ícones; os comprados ganham fundo rosa e selo ✓. A lista tem
   // mais do que cabe (68): vão os comprados primeiro e o resto completa, na ordem da lista (a tela da Loja tem todos)
@@ -125,7 +134,7 @@
       var m = espelhoInfo(P), cena = null;
       if (m && window.PA) { try { cena = cenaEspelho(m, cx, top); } catch (e) { cena = null; } }
       if (cena) {
-        ctx.save(); ctx.beginPath(); ctx.ellipse(cx, top + 30, 26, 25, 0, 0, Math.PI * 2); ctx.clip();
+        ctx.save(); mascaraElipse(ctx, cx, top + 30, 26, 25); ctx.clip();
         ret(ctx, cx - 26, top + 44, 52, 12, '#d8f0c8');
         var lig = ctx.imageSmoothingEnabled; ctx.imageSmoothingEnabled = false;
         var u = cena.uni, mi = cena.mariana;

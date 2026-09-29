@@ -6,14 +6,37 @@
   var EV = Reino.EVENTOS;
   var V = Reino._motor, cam = V.cam, pintor = V.pintor, est = V.est, atualizarCamera = V.atualizarCamera;
 
+  // luz em faixas de pixel: o clarão quente no meio e a vinheta escura nas bordas, calculados na grade de pixels da
+  // cena (canvas pequeno, alfa em poucos níveis) e ampliados sem suavizar. Um só cache, refeito quando o tamanho muda.
+  var luz = { w: 0, h: 0, escala: 0, img: null };
+  function faixaLuz(t) {
+    if (t < 0.42) return [255, 236, 200, Math.ceil((1 - t / 0.42) * 2) * 0.04];   // 0,08 · 0,04
+    if (t > 0.72) return [58, 36, 70, Math.ceil((t - 0.72) / 0.28 * 4) * 0.04];    // 0,04 … 0,16
+    return null;
+  }
+  function imagemLuz() {
+    var W = V.canvas.width, H = V.canvas.height, e = V.escala || 1;
+    if (luz.img && luz.w === W && luz.h === H && luz.escala === e) return luz.img;
+    var w = Math.ceil(W / e), h = Math.ceil(H / e);
+    var c = luz.img && luz.img.width === w && luz.img.height === h ? luz.img : document.createElement('canvas');
+    c.width = w; c.height = h;
+    var ctx = c.getContext('2d'), img = ctx.createImageData(w, h), d = img.data;
+    var cx = W / 2, cy = H / 2, raio = Math.max(W, H) * 0.62;
+    for (var y = 0; y < h; y++) for (var x = 0; x < w; x++) {
+      var dx = (x + 0.5) * e - cx, dy = (y + 0.5) * e - cy;
+      var f = faixaLuz(Math.min(1, Math.sqrt(dx * dx + dy * dy) / raio));
+      if (!f || !f[3]) continue;
+      var i = (y * w + x) * 4;
+      d[i] = f[0]; d[i + 1] = f[1]; d[i + 2] = f[2]; d[i + 3] = Math.round(f[3] * 255);
+    }
+    ctx.putImageData(img, 0, 0);
+    luz.w = W; luz.h = H; luz.escala = e; luz.img = c;
+    return c;
+  }
   function desenharLuz() {
-    var g = V.ctx.createRadialGradient(V.canvas.width / 2, V.canvas.height / 2, 0, V.canvas.width / 2, V.canvas.height / 2, Math.max(V.canvas.width, V.canvas.height) * 0.62);
-    g.addColorStop(0, 'rgba(255,236,200,0.08)');
-    g.addColorStop(0.42, 'rgba(255,236,200,0)');
-    g.addColorStop(0.72, 'rgba(58,36,70,0)');
-    g.addColorStop(1, 'rgba(58,36,70,0.16)');
-    V.ctx.fillStyle = g;
-    V.ctx.fillRect(0, 0, V.canvas.width, V.canvas.height);
+    var c = imagemLuz(), e = V.escala || 1;
+    V.ctx.imageSmoothingEnabled = false;
+    V.ctx.drawImage(c, 0, 0, c.width * e, c.height * e);
   }
 
   function ordemY(a, b) { return a.y - b.y; }
