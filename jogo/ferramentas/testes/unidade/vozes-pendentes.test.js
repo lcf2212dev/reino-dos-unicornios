@@ -21,6 +21,8 @@ test('npm run vozes: fala com mp3 no cache e sem chave no índice não reprova o
   fs.mkdirSync(path.join(raiz, 'jogo/js/voz'), { recursive: true });
   fs.copyFileSync(path.join(W, 'ajuda.js'), path.join(F, 'ajuda.js'));
   ['vozes.js', 'empacotar-vozes.js'].forEach((a) => fs.copyFileSync(path.join(W, 'vozes', a), path.join(F, 'vozes', a)));
+  fs.mkdirSync(path.join(F, 'testes'), { recursive: true });   // guardas.js: o --saida pode ficar na REINO_TESTES
+  fs.copyFileSync(path.join(W, 'testes', 'guardas.js'), path.join(F, 'testes', 'guardas.js'));
   // dublê do gerar-vozes.py: índice = chave → <voz>/<sha1>.mp3 para o que está no cache (sem rede)
   fs.writeFileSync(path.join(F, 'vozes', 'gerar-vozes.py'), `import hashlib, json, os
 B = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'gerado')

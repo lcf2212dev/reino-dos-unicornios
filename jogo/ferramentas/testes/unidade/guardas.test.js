@@ -9,7 +9,7 @@ const path = require('path');
 
 const TESTES = path.join(__dirname, '..');
 const FERRAMENTAS = path.join(TESTES, '..');
-const { conferirUrl, conferirPorta, conferirBanco, conferirPastaTmp } = require('../guardas');
+const { PASTA_TESTES, conferirUrl, conferirPorta, conferirBanco, conferirPastaTmp } = require('../guardas');
 const navegador = require('../navegador');
 const servidorTeste = require('../servidor-teste');
 
@@ -59,10 +59,11 @@ test('conferirBanco: sempre em /tmp, nunca em servidor/dados (nem por link simb�
   assert.strictEqual(conferirBanco(path.join(pasta, 'novo', 'reino-teste.db')), path.join(pasta, 'novo', 'reino-teste.db'));
 });
 
-test('conferirPastaTmp: só dentro de /tmp/reino-testes/', () => {
-  foraDeTmp(() => ['/tmp/reino-testes', '/tmp/reino-testes/', '/tmp', '/tmp/outra', '/tmp/reino-testes/../x', '/home/leandro', 'relativa', '', null]
+test('conferirPastaTmp: só dentro de /tmp/reino-testes/ (ou da REINO_TESTES)', () => {
+  const T = PASTA_TESTES;
+  foraDeTmp(() => [T, T + '/', '/tmp', '/tmp/outra', '/dev/shm', T + '/../x', '/home/leandro', 'relativa', '', null]
     .forEach((p) => assert.throws(() => conferirPastaTmp(p), /proibido/, String(p))));
-  assert.strictEqual(conferirPastaTmp('/tmp/reino-testes/base-982f1ed'), '/tmp/reino-testes/base-982f1ed');
+  assert.strictEqual(conferirPastaTmp(T + '/base-982f1ed'), T + '/base-982f1ed');
 });
 
 // navegador falso: se a guarda deixasse passar, abrir() chamaria newContext e o teste acusaria
