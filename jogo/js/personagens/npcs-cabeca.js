@@ -10,7 +10,7 @@
     g.l(y, x - 2, x + 2, K); g.l(y + 1, x - 3, x + 3, K);
     for (var j = 2; j <= 5; j++) g.l(y + j, x - 4, x + 4, K);
     g.l(y + 6, x - 3, x + 3, K);
-    var olho = piscar ? esc(K, 0.4) : '#2a1838';
+    var olho = piscar ? esc(K, 0.4) : OLHO;
     g.p(x - 2, y + 4, olho); g.p(x + 2, y + 4, olho);
     var bochecha = mis(K, '#ff6b8a', 0.42);
     g.p(x - 3, y + 5, bochecha); g.p(x + 3, y + 5, bochecha);
@@ -84,6 +84,17 @@
     }
   }
 
+  // luminância relativa (WCAG) de '#rrggbb' e a armação clareada até dar 3:1 com o olho
+  function lum(h) {
+    var v = [1, 3, 5].map(function (i) { var c = parseInt(h.substr(i, 2), 16) / 255; return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); });
+    return 0.2126 * v[0] + 0.7152 * v[1] + 0.0722 * v[2];
+  }
+  var OLHO = '#2a1838';
+  function armacao(c) {
+    for (var t = 0; t < 0.9 && (lum(c) + 0.05) / (lum(OLHO) + 0.05) < 3; t += 0.1) c = cla(c, 0.1);
+    return c;
+  }
+
   function pintarRosto(g, o) {
     var x = CX, y = HY, H = o.cabelo;
     if (o.barba) {
@@ -96,10 +107,11 @@
       g.l(y + 5, x - 2, x + 2, Bg); g.p(x, y + 5, esc(Bg, 0.15));
     }
     if (o.oculos) {
-      // armação fina na linha dos olhos (os olhos continuam aparecendo) e um brilho na lente
-      var Oc = o.oculosCor || '#8a6bb0';
-      g.p(x - 3, y + 4, Oc); g.p(x - 1, y + 4, Oc); g.p(x, y + 4, Oc); g.p(x + 1, y + 4, Oc); g.p(x + 3, y + 4, Oc);
-      g.p(x - 2, y + 3, cla(o.pele, 0.5)); g.p(x + 2, y + 3, cla(o.pele, 0.5));
+      // armação em cima e dos lados de cada olho, ponte no alto; as colunas x±1 ficam com a pele (com elas a
+      // armação lia como uma faixa nos olhos). A cor clareia até contrastar 3:1 com o olho (D4-16)
+      var Oc = armacao(o.oculosCor || '#8a6bb0');
+      g.l(y + 3, x - 3, x - 2, Oc); g.l(y + 3, x + 2, x + 3, Oc); g.p(x, y + 3, Oc);
+      g.p(x - 3, y + 4, Oc); g.p(x + 3, y + 4, Oc);
     }
     if (o.nariz) {
       // nariz redondo de palhaço, entre os olhos e a boca, com um brilhinho
@@ -153,12 +165,13 @@
         g.l(y + 1, x - 3, x + 3, '#ffd34d'); g.p(x, y, '#ff4f9a'); g.p(x - 1, y, '#ffd34d'); g.p(x + 1, y, '#ffd34d');
         break;
       case 'elmo':
-        var M = '#c3cde0', Md = '#8791ad', Ml = '#eef2fa';
+        var AC = o.armaduraCor, M = AC ? mis('#c3cde0', AC, 0.7) : '#c3cde0', Md = AC ? esc(M, 0.3) : '#8791ad', Ml = AC ? cla(M, 0.6) : '#eef2fa';
         g.l(y - 1, x - 3, x + 3, M); g.l(y, x - 4, x + 4, M); g.l(y + 1, x - 4, x + 4, M); g.l(y + 2, x - 4, x + 4, Md);
         for (var j = 3; j <= 5; j++) { g.p(x - 4, y + j, M); g.p(x + 4, y + j, M); }
         g.p(x - 3, y + 3, Md); g.p(x + 3, y + 3, Md);
         g.p(x - 2, y, Ml); g.p(x - 3, y + 1, Ml); g.p(x, y + 1, Md);
-        // pluma
+        // pluma alta (o cavaleiro fica da altura da estátua de armadura da ala, ui.md §10.12)
+        g.l(y - 6, x + 1, x + 2, c2); g.l(y - 5, x, x + 2, c2);
         g.l(y - 4, x, x + 2, c2); g.l(y - 3, x - 1, x + 2, c2); g.l(y - 2, x - 1, x + 1, c2); g.p(x + 1, y - 4, cla(c2, 0.4));
         break;
       case 'turbante':

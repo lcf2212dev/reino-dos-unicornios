@@ -12,7 +12,7 @@
      Cada entrada é um PersonagemElenco (jogo/ferramentas/testes/tipos-jogo.d.ts). */
   N.ELENCO = {
     // Museu das Memórias (História)
-    memoria: { nome: 'Dona Memória', voz: 'npc-memoria', sprite: { idade: 'idoso', pele: '#f1c7a5', cabelo: '#e4e0ec', penteado: 'coque', roupa: '#9b6bd6', roupa2: '#6b4a9a', perna: 'saia', oculos: true, colar: true, cor2: '#ff9cc6', cracha: true } },
+    memoria: { nome: 'Dona Memória', voz: 'npc-memoria', sprite: { idade: 'idoso', pele: '#f1c7a5', cabelo: '#e4e0ec', penteado: 'coque', roupa: '#9a4428', roupa2: '#6b2e1c', perna: 'saia', oculos: true, colar: true, cor2: '#ff9cc6', cracha: true } },
     antonio: { nome: 'Seu Antônio', voz: 'npc-antonio', sprite: { idade: 'idoso', pele: '#e0ac86', cabelo: '#d8d4e0', penteado: 'careca', bigode: true, roupa: '#7aa37a', roupa2: '#6b5a4a', bengala: true, carta: true, colete: '#a86b4a' } },
     chico: { nome: 'Carteiro Chico', voz: 'npc-chico', sprite: { pele: '#a86b4a', cabelo: '#2b1b17', penteado: 'curto', chapeu: 'bone', chapeuCor: '#2f6fd6', cor2: '#ffd34d', roupa: '#8fd0ff', roupa2: '#2f4f8a', bolsa: true, bolsaCor: '#c9733a' } },
     taina: { nome: 'Guia Tainá', voz: 'npc-taina', sprite: { pele: '#c68a5e', cabelo: '#1f1414', penteado: 'chanel', roupa: '#39c5bb', roupa2: '#2d6b66', cracha: true, cor2: '#ff9d2e', colar: '#ff6b8a' } },
@@ -27,8 +27,8 @@
     joy: { nome: '«Mister Joy»', voz: 'npc-joy', sprite: { pele: '#d9a07a', cabelo: '#5a3825', penteado: 'cacheado', chapeu: 'cartola', chapeuCor: '#ff4f9a', cor2: '#ffd34d', roupa: '#ffd34d', roupa2: '#6b3fc4', gravata: '#ff4f9a', violao: true } },
     // Castelo da Medalha
     serena: { nome: 'Princesa Serena', voz: 'npc-serena', sprite: { pele: '#ffe0c7', cabelo: '#f2c14e', penteado: 'longo', chapeu: 'coroa', roupa: '#ffb3d9', roupa2: '#ff8ac4', perna: 'vestido', colar: true, cor2: '#b58cff' } },
-    aurora: { nome: 'Cavaleira Aurora', voz: 'npc-aurora', paraMateria: 'historia', sprite: { pele: '#d9a07a', cabelo: '#a0673a', penteado: 'rabo', chapeu: 'elmo', cor2: '#ff6b8a', armadura: true, roupa: '#ff7eb6' } },
-    oliver: { nome: '«Sir Oliver»', voz: 'npc-oliver', paraMateria: 'ingles', sprite: { pele: '#f1c7a5', cabelo: '#c2532b', penteado: 'curto', bigode: true, chapeu: 'elmo', cor2: '#5fb4ff', armadura: true, roupa: '#2f6fd6', capa: true, capaCor: '#c9365a' } },
+    aurora: { nome: 'Cavaleira Aurora', voz: 'npc-aurora', paraMateria: 'historia', sprite: { pele: '#d9a07a', cabelo: '#a0673a', penteado: 'rabo', chapeu: 'elmo', cor2: '#ff6b8a', armadura: true, armaduraCor: '#b95a36', roupa: '#ff7eb6' } },
+    oliver: { nome: '«Sir Oliver»', voz: 'npc-oliver', paraMateria: 'ingles', sprite: { pele: '#f1c7a5', cabelo: '#c2532b', penteado: 'curto', bigode: true, chapeu: 'elmo', cor2: '#5fb4ff', armadura: true, armaduraCor: '#e0a020', roupa: '#2f6fd6', capa: true, capaCor: '#c9365a' } },
     // Escola do Reino
     margarida: { nome: 'Diretora Margarida', voz: 'npc-margarida', sprite: { pele: '#d9a07a', cabelo: '#6b5a66', penteado: 'coque', oculos: true, flor: true, roupa: '#39a860', roupa2: '#2d6b4a', perna: 'saia', cor2: '#ffd34d', colar: true } },
     helena: { nome: 'Professora Helena', voz: 'npc-helena', paraProva: 'historia-3bim', sprite: { pele: '#f1c7a5', cabelo: '#5a3825', penteado: 'chanel', roupa: '#ff9d2e', roupa2: '#6b4a9a', perna: 'saia', livro: '#5fb4ff', cor2: '#5fb4ff', oculos: true, oculosCor: '#c9365a' } },
@@ -51,7 +51,7 @@
     brisa: { nome: 'Capitã Brisa', voz: 'npc-brisa', sprite: { pele: '#d9a07a', cabelo: '#5a3825', penteado: 'trancas', chapeu: 'quepe', chapeuCor: '#f4f2fa', roupa: '#2f6fd6', roupa2: '#2a2f66', cachecol: true, cachecolCor: '#e0433f', cor2: '#ffd34d' } },
     carlos: { nome: 'Seu Carlos do Carrossel', voz: 'npc-carlos', sprite: { idade: 'idoso', pele: '#e0ac86', cabelo: '#d8d4e0', penteado: 'careca', bigode: true, chapeu: 'boina', chapeuCor: '#c9365a', roupa: '#fff1d0', colete: '#c9365a', roupa2: '#3a3a5a', gravata: '#ffd34d' } },
     // Castelo (treino de Português) e Escola (prova de Português)
-    clara: { nome: 'Cavaleira Clara', voz: 'npc-clara', paraMateria: 'portugues', sprite: { pele: '#a86b4a', cabelo: '#2b1b17', penteado: 'black', chapeu: 'elmo', cor2: '#39a860', armadura: true, roupa: '#39a860', emblema: 'A', capa: true, capaCor: '#ffd34d' } },
+    clara: { nome: 'Cavaleira Clara', voz: 'npc-clara', paraMateria: 'portugues', sprite: { pele: '#a86b4a', cabelo: '#2b1b17', penteado: 'black', chapeu: 'elmo', cor2: '#39a860', armadura: true, armaduraCor: '#e0433f', roupa: '#39a860', emblema: 'A', capa: true, capaCor: '#ffd34d' } },
     lucia: { nome: 'Professora Lúcia', voz: 'npc-lucia', paraProva: 'portugues-3bim', sprite: { pele: '#ffe0c7', cabelo: '#2b1b17', penteado: 'longo', oculos: true, roupa: '#e0433f', roupa2: '#3a3a5a', perna: 'saia', livro: '#ffd34d', cor2: '#ffd34d', colar: '#39c5bb' } },
   };
 

@@ -33,13 +33,15 @@
   // criança: a mesma silhueta sem 3 linhas do meio (cabeça e corpo), com 3 linhas vazias em cima (mesma altura de grade)
   var VAZIA = '...................';
   var CRIANCA = [VAZIA, VAZIA, VAZIA].concat(VAGA.filter(function (l, j) { return j !== 9 && j !== 13 && j !== 19; }));
+  // adulto: 1 linha a mais de corpo (21 px com o contorno, como o NPC adulto: ui.md §10.12)
+  var ADULTO = VAGA.slice(0, 20).concat(['...B...........B...'], VAGA.slice(20));
 
   function gradeReserva(o, quadro) {
     var G = Reino.NPCs.gradeSprite, cru = o.cru || {};
     // tom da vaga pelo gênero da reserva (só para ajudar quem monta o cenário a ler a cena)
     var tinta = cru.genero === 'm' ? '#7fa6e8' : cru.genero === 'f' ? '#e88fc0' : '#a99ad6';
     var pal = { B: tinta, b: G.cla(tinta, 0.45), q: G.esc(tinta, 0.25) };
-    var linhas = cru.idade === 'crianca' ? CRIANCA : VAGA;
+    var linhas = cru.idade === 'crianca' ? CRIANCA : ADULTO;
     var g = new G.Grade(linhas.length, 0, 0);
     // papel claro por dentro (sem ele, o tracejado vazaria o chão e o contorno riscaria o miolo);
     // piscar: o "?" some por um quadro, para se ver que é provisório

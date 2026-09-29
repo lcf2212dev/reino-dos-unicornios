@@ -71,7 +71,9 @@
   /* ---------- corpo ---------- */
   function pintarCorpo(g, o, m) {
     var x = CX, R = o.roupa, Rd = esc(R, 0.22), R2 = o.roupa2, R2d = esc(R2, 0.22), K = o.pele, S = o.sapato;
-    if (o.armadura) { R2 = '#aab4cc'; R2d = '#7c86a3'; S = '#5f6a84'; }
+    // armadura: cinza de metal, ou na cor da matéria do cavaleiro (armaduraCor, ui.md §10.22)
+    var AC = o.armaduraCor;
+    if (o.armadura) { R2 = AC ? esc(mis('#c3cde0', AC, 0.7), 0.12) : '#aab4cc'; R2d = AC ? esc(R2, 0.25) : '#7c86a3'; S = AC ? esc(R2, 0.5) : '#5f6a84'; }
     var b = BY, nT = m.nT, maos = m.maos;
     // tronco
     g.l(b, x - 3, x + 3, R);
@@ -93,7 +95,7 @@
       }
     }
     // pernas (conforme o tipo e o tamanho)
-    var L0 = m.corte, crianca = m.nL === 4;
+    var L0 = m.corte, crianca = m.crianca;
     function pernas(y, c, w) { w = w || (crianca ? 2 : 3); g.l(y, x - w, x - 1, c); g.l(y, x + 1, x + w, c); }
     function sapatos(y) { pernas(y, S, crianca ? 2 : 3); }
     var tipo = o.armadura ? 'calca' : o.perna;
@@ -104,14 +106,17 @@
       sapatos(m.h - 1);
     } else if (tipo === 'saia') {
       g.l(L0, x - 3, x + 3, R2);
-      if (!crianca) { g.l(L0 + 1, x - 4, x + 4, R2); g.l(L0 + 2, x - 4, x + 4, R2d); g.l(L0 + 3, x - 2, x - 1, K); g.l(L0 + 3, x + 1, x + 2, K); }
-      else { g.l(L0 + 1, x - 4, x + 4, R2d); g.l(L0 + 2, x - 2, x - 1, K); g.l(L0 + 2, x + 1, x + 2, K); }
+      if (!crianca) { g.l(L0 + 1, x - 4, x + 4, R2); g.l(L0 + 2, x - 4, x + 4, R2d); }
+      else g.l(L0 + 1, x - 4, x + 4, R2d);
+      for (y = L0 + (crianca ? 2 : 3); y < m.h - 1; y++) { g.l(y, x - 2, x - 1, K); g.l(y, x + 1, x + 2, K); }
       g.l(m.h - 1, x - 2, x - 1, S); g.l(m.h - 1, x + 1, x + 2, S);
     } else if (tipo === 'vestido') {
       if (!crianca) {
         g.l(L0, x - 4, x + 4, R2); g.l(L0 + 1, x - 4, x + 4, R2);
-        g.l(L0 + 2, x - 5, x + 5, R2); g.l(L0 + 3, x - 5, x + 5, R2); g.l(L0 + 4, x - 5, x + 5, R2d);
+        for (y = L0 + 2; y < m.h - 2; y++) g.l(y, x - 5, x + 5, R2);
+        g.l(m.h - 2, x - 5, x + 5, R2d);
         g.p(x - 2, L0 + 1, cla(R2, 0.3)); g.p(x + 3, L0 + 3, cla(R2, 0.3));
+        g.l(m.h - 1, x - 2, x - 1, S); g.l(m.h - 1, x + 1, x + 2, S);
       } else {
         g.l(L0, x - 3, x + 3, R2); g.l(L0 + 1, x - 4, x + 4, R2); g.l(L0 + 2, x - 4, x + 4, R2d);
         g.l(m.h - 1, x - 2, x - 1, S); g.l(m.h - 1, x + 1, x + 2, S);
@@ -120,7 +125,8 @@
       g.l(L0, x - 3, x + 3, R2);
       var yy = L0 + 1;
       if (!crianca) { pernas(yy, R2); yy++; }
-      pernas(yy, K, 2); pernas(yy + 1, '#ffffff', 2);
+      for (; yy < m.h - 2; yy++) pernas(yy, K, 2);
+      pernas(m.h - 2, '#ffffff', 2);
       sapatos(m.h - 1);
     }
     // sapatões de palhaço: 1 px a mais para cada lado e a biqueira clarinha
@@ -160,7 +166,7 @@
       g.l(L0, x - 1, x + 1, Ad); g.p(x - 3, maos, Ad); g.p(x + 3, maos, Ad);
     }
     if (o.armadura) {
-      var M = '#c3cde0', Md = '#8791ad', Ml = '#eef2fa';
+      var M = AC ? mis('#c3cde0', AC, 0.7) : '#c3cde0', Md = AC ? esc(M, 0.3) : '#8791ad', Ml = AC ? cla(M, 0.6) : '#eef2fa';
       g.l(b, x - 4, x + 4, M); g.l(b + 1, x - 5, x + 5, M); g.p(x - 5, b + 2, Md); g.p(x + 5, b + 2, Md);
       for (y = b + 2; y < maos; y++) g.l(y, x - 4, x + 4, M);
       for (y = b + 2; y < maos; y++) { g.p(x - 3, y, Md); g.p(x + 3, y, Md); }
@@ -255,6 +261,32 @@
       g.p(x + 3, HY - 1, Lp); g.p(x + 4, HY - 2, Lp); g.p(x + 5, HY - 3, Lp);
       g.p(x + 4, HY - 1, Lpd); g.p(x + 5, HY - 2, Lpd); g.p(x + 6, HY - 3, Lpd);
       g.p(x + 6, HY - 4, '#c3cde0'); g.p(x + 7, HY - 4, '#8791ad'); g.p(x + 7, HY - 5, '#ff8fb8');
+    }
+    if (o.tesoura) {
+      // tesoura de cabeleireira na mão direita: lâminas prateadas para cima, argolas cor-de-rosa
+      var Ts = '#d8e0ec', Tp = o.tesoura === true ? '#ff8ac4' : o.tesoura;
+      g.p(x + 5, maos - 5, Ts); g.p(x + 7, maos - 5, Ts); g.p(x + 5, maos - 4, Ts); g.p(x + 7, maos - 4, Ts);
+      g.p(x + 6, maos - 3, '#ffd34d'); g.p(x + 5, maos - 2, Tp); g.p(x + 7, maos - 2, Tp); g.p(x + 5, maos - 1, Tp); g.p(x + 7, maos - 1, Tp);
+      g.p(x + 5, maos, K); g.p(x + 4, maos, K);
+    }
+    if (o.foguete) {
+      // maquete de foguete na mão esquerda: bico e aletas vermelhos, janelinha azul e o foguinho embaixo
+      var Fv = '#e0433f', Fb = '#f4f6fb';
+      g.p(x - 5, maos - 4, Fv); g.p(x - 5, maos - 3, Fb); g.p(x - 5, maos - 2, '#5fb4ff'); g.p(x - 5, maos - 1, Fb);
+      g.p(x - 6, maos - 1, Fv); g.p(x - 6, maos, Fv); g.p(x - 5, maos, '#c8d0e0'); g.p(x - 5, maos + 1, '#ffb020');
+      g.p(x - 4, maos, K);
+    }
+    if (o.chave) {
+      // chave inglesa na mão direita, com a boca aberta para cima
+      var Ch = '#a9b4c8', Chd = '#6a7390';
+      g.p(x + 4, maos - 4, Ch); g.p(x + 6, maos - 4, Ch); g.l(maos - 3, x + 4, x + 6, Ch);
+      for (var yc = maos - 2; yc <= maos + 1; yc++) g.p(x + 5, yc, Chd);
+      g.p(x + 4, maos, K);
+    }
+    if (o.mapa) {
+      // mapa dobrado na mão esquerda: papel, terra verde, mar azul e o X vermelho
+      g.r(x - 7, maos - 1, 3, 3, '#fff1c4'); g.p(x - 7, maos - 1, '#6fbf5a'); g.p(x - 6, maos, '#5fb4ff');
+      g.p(x - 5, maos + 1, '#e0433f'); g.p(x - 7, maos + 1, '#e8d49a'); g.p(x - 4, maos, K);
     }
     if (o.carta) {
       g.r(x - 7, maos - 1, 3, 2, '#fffaf0'); g.p(x - 6, maos - 1, '#e0433f'); g.p(x - 4, maos, K);

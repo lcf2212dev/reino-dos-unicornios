@@ -71,9 +71,9 @@
      pelo desenho, e o validar-interiores avisa. Bases registradas (N.registrarBase) somam as suas. */
   var EXTRAS = ['oculos', 'oculosCor', 'barba', 'bigode', 'avental', 'aventalCor', 'capa', 'capaCor', 'capaEstrelas', 'jaleco', 'apito',
     'bengala', 'bolsa', 'bolsaCor', 'colar', 'gravata', 'cachecol', 'cachecolCor', 'cracha', 'livro', 'carta', 'pincel',
-    'violao', 'varinha', 'presilha', 'flor', 'espelhoTesta', 'armadura', 'jardineira', 'colete', 'corrente', 'asas',
+    'violao', 'varinha', 'presilha', 'flor', 'espelhoTesta', 'armadura', 'armaduraCor', 'jardineira', 'colete', 'corrente', 'asas',
     'corpo', 'barriga', 'asa', 'moeda', 'nariz',
-    'regador', 'regadorCor', 'gola', 'emblema', 'emblemaCor', 'livroAberto', 'lapis', 'palhaco', 'sapatoes'];
+    'regador', 'regadorCor', 'gola', 'emblema', 'emblemaCor', 'livroAberto', 'lapis', 'palhaco', 'sapatoes', 'foguete', 'chave', 'mapa', 'tesoura'];
   N.OPCOES_SPRITE = {
     base: ['pessoa', 'fada', 'dragao'], idade: ['adulto', 'crianca', 'idoso'],
     penteado: ['curto', 'careca', 'cachos', 'espetado', 'longo', 'trancas', 'chanel', 'rabo', 'rabos', 'coque', 'black', 'cacheado'],
@@ -107,10 +107,12 @@
     return o;
   }
 
+  // alturas pela tabela do docs/contratos/ui.md §10.12: criança 17 px de arte (com contorno), adulto e idoso 21
+  // sem chapéu (diferença de 4 px: 1 linha a mais de tronco e 1 de perna no adulto)
   function medidas(o) {
     var crianca = o.idade === 'crianca';
-    var nT = crianca ? 4 : 5, nL = crianca ? 4 : 5;
-    return { nT: nT, nL: nL, maos: BY + nT - 1, corte: BY + nT, h: BY + nT + nL };
+    var nT = crianca ? 4 : 6, nL = crianca ? 4 : 6;
+    return { nT: nT, nL: nL, crianca: crianca, maos: BY + nT - 1, corte: BY + nT, h: BY + nT + nL };
   }
 
   // partes compartilhadas com os outros arquivos npcs-*.js
