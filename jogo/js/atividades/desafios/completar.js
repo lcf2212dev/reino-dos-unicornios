@@ -66,7 +66,7 @@
     });
     function pintar() {
       frases.forEach(function (f, i) {
-        U.preencher(f.lacuna, escolha[i] === null ? (d.colado ? '  ' : '______') : d.palavras[escolha[i]]);
+        U.preencher(f.lacuna, escolha[i] === null ? (d.colado ? '  ' : ' ') : d.palavras[escolha[i]]);
         f.lacuna.classList.toggle('preenchida', escolha[i] !== null);
         f.botoes.forEach(function (b, j) { b.setAttribute('aria-pressed', String(escolha[i] === j)); });
       });

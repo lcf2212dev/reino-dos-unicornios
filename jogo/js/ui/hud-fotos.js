@@ -26,7 +26,7 @@
   UI.pintarBotaoFoto = pintarBotaoFoto;
   function botaoFoto() {
     var b = el('button.btn-tela-cheia.btn-foto', { type: 'button', 'aria-label': 'Tirar foto', 'aria-disabled': 'false', title: 'Tirar foto (segure para ver o álbum)' });
-    b.appendChild(PA.iconeEmoji('📷', 2));
+    b.appendChild(UI.iconeHud('📷'));
     var timer = null, longoEm = -1e9;
     function soltar() { if (timer) { clearTimeout(timer); timer = null; } }
     b.addEventListener('pointerdown', function (e) {
