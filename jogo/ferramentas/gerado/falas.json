@@ -37,8 +37,8 @@
   },
   "npc-taina": {
    "voz": "pt-BR-ThalitaMultilingualNeural",
-   "velocidade": "+6%",
-   "tom": "+6Hz"
+   "velocidade": "+10%",
+   "tom": "+26Hz"
   },
   "npc-contadeira": {
    "voz": "pt-BR-ThalitaMultilingualNeural",
@@ -90,14 +90,14 @@
   },
   "npc-moon": {
    "voz": "en-US-AvaMultilingualNeural",
-   "velocidade": "-15%",
-   "tom": "-8Hz",
+   "velocidade": "-6%",
+   "tom": "+24Hz",
    "ingles": "npc-moon-en"
   },
   "npc-moon-en": {
    "voz": "en-US-AvaMultilingualNeural",
-   "velocidade": "-20%",
-   "tom": "-8Hz"
+   "velocidade": "-12%",
+   "tom": "+24Hz"
   },
   "npc-joy": {
    "voz": "en-AU-WilliamMultilingualNeural",
@@ -200,8 +200,8 @@
   },
   "npc-manu": {
    "voz": "en-US-EmmaMultilingualNeural",
-   "velocidade": "+6%",
-   "tom": "+12Hz"
+   "velocidade": "+10%",
+   "tom": "+28Hz"
   },
   "npc-heitor": {
    "voz": "pt-BR-AntonioNeural",
@@ -320,8 +320,43 @@
   },
   "npc-geo-cora": {
    "voz": "de-DE-SeraphinaMultilingualNeural",
+   "velocidade": "+10%",
+   "tom": "+28Hz"
+  },
+  "npc-mat-isa": {
+   "voz": "fr-FR-VivienneMultilingualNeural",
+   "velocidade": "+2%",
+   "tom": "-4Hz"
+  },
+  "npc-mat-cecilia": {
+   "voz": "pt-BR-ThalitaMultilingualNeural",
+   "velocidade": "+10%",
+   "tom": "+28Hz"
+  },
+  "npc-mat-otavio": {
+   "voz": "it-IT-GiuseppeMultilingualNeural",
+   "velocidade": "-6%",
+   "tom": "-14Hz"
+  },
+  "npc-mat-tito": {
+   "voz": "fr-FR-RemyMultilingualNeural",
    "velocidade": "+4%",
-   "tom": "+12Hz"
+   "tom": "+34Hz"
+  },
+  "npc-mat-lara": {
+   "voz": "en-US-AvaMultilingualNeural",
+   "velocidade": "+4%",
+   "tom": "+6Hz"
+  },
+  "npc-mat-zuzu": {
+   "voz": "de-DE-SeraphinaMultilingualNeural",
+   "velocidade": "+10%",
+   "tom": "+26Hz"
+  },
+  "npc-mat-tadeu": {
+   "voz": "fr-FR-RemyMultilingualNeural",
+   "velocidade": "-6%",
+   "tom": "-10Hz"
   },
   "npc-lua-lumi": {
    "voz": "fr-FR-VivienneMultilingualNeural",
@@ -33842,13 +33877,13 @@
    "fala": "Suba a escada sem pressa."
   },
   {
-   "chave": "ccc144a9v",
+   "chave": "cb45b1f1s",
    "voz": "narradora",
-   "texto": "O Livro das Palavras!",
+   "texto": "O Livro do Inglês!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "O Livro das Palavras!"
+   "fala": "O Livro do Inglês!"
   },
   {
    "chave": "1358081fx",
@@ -35156,8 +35191,8 @@
    "fala": "Ele toca na hora certa."
   },
   {
-   "chave": "f955bc90j",
-   "voz": "npc-padrao-guia",
+   "chave": "f6a9f98af",
+   "voz": "npc-mat-isa",
    "texto": "Oi!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35165,17 +35200,26 @@
    "fala": "Oi!"
   },
   {
-   "chave": "7e31780910",
-   "voz": "npc-padrao-guia",
-   "texto": "Eu sou a guia daqui.",
+   "chave": "4a4af35410",
+   "voz": "npc-mat-isa",
+   "texto": "Eu sou a Professora Isa.",
    "pacotes": [
     "interior-padrao-matematica"
    ],
-   "fala": "Eu sou a guia daqui."
+   "fala": "Eu sou a Professora Isa."
   },
   {
-   "chave": "b409bdab16",
-   "voz": "npc-padrao-guia",
+   "chave": "7d5c02f0y",
+   "voz": "npc-mat-isa",
+   "texto": "Os números moram aqui!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Os números moram aqui!"
+  },
+  {
+   "chave": "80ddddb912",
+   "voz": "npc-mat-isa",
    "texto": "Cada sala tem um ajudante.",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35183,8 +35227,8 @@
    "fala": "Cada sala tem um ajudante."
   },
   {
-   "chave": "206aa8b6x",
-   "voz": "npc-padrao-guia",
+   "chave": "e7f37780t",
+   "voz": "npc-mat-isa",
    "texto": "Quer ver a lista?",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35192,8 +35236,8 @@
    "fala": "Quer ver a lista?"
   },
   {
-   "chave": "84e5a54515",
-   "voz": "npc-padrao-guia",
+   "chave": "601953ef11",
+   "voz": "npc-mat-isa",
    "texto": "Você ainda não fez salas.",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35201,8 +35245,8 @@
    "fala": "Você ainda não fez salas."
   },
   {
-   "chave": "d595d04219",
-   "voz": "npc-padrao-guia",
+   "chave": "009ab50415",
+   "voz": "npc-mat-isa",
    "texto": "O treino do Castelo já abriu!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35210,8 +35254,8 @@
    "fala": "O treino do Castelo já abriu!"
   },
   {
-   "chave": "1db59a8115",
-   "voz": "npc-padrao-guia",
+   "chave": "4467115711",
+   "voz": "npc-mat-isa",
    "texto": "Já fez uma de seis salas.",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35219,8 +35263,8 @@
    "fala": "Já fez uma de seis salas."
   },
   {
-   "chave": "8aad3766y",
-   "voz": "npc-padrao-guia",
+   "chave": "4fef0988u",
+   "voz": "npc-mat-isa",
    "texto": "Já ganhou R$ 3,00!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35228,8 +35272,8 @@
    "fala": "Já ganhou 3 reais!"
   },
   {
-   "chave": "0c611f3516",
-   "voz": "npc-padrao-guia",
+   "chave": "3c15f36b12",
+   "voz": "npc-mat-isa",
    "texto": "Já fez duas de seis salas.",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35237,8 +35281,8 @@
    "fala": "Já fez duas de seis salas."
   },
   {
-   "chave": "92b0671dy",
-   "voz": "npc-padrao-guia",
+   "chave": "1e20a277u",
+   "voz": "npc-mat-isa",
    "texto": "Já ganhou R$ 6,00!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35246,8 +35290,8 @@
    "fala": "Já ganhou 6 reais!"
   },
   {
-   "chave": "07904f7716",
-   "voz": "npc-padrao-guia",
+   "chave": "82c8783d12",
+   "voz": "npc-mat-isa",
    "texto": "Já fez três de seis salas.",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35255,8 +35299,8 @@
    "fala": "Já fez três de seis salas."
   },
   {
-   "chave": "7da90ef8y",
-   "voz": "npc-padrao-guia",
+   "chave": "e803bfb6u",
+   "voz": "npc-mat-isa",
    "texto": "Já ganhou R$ 9,00!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35264,8 +35308,8 @@
    "fala": "Já ganhou 9 reais!"
   },
   {
-   "chave": "064a205418",
-   "voz": "npc-padrao-guia",
+   "chave": "e270abd614",
+   "voz": "npc-mat-isa",
    "texto": "Já fez quatro de seis salas.",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35273,8 +35317,8 @@
    "fala": "Já fez quatro de seis salas."
   },
   {
-   "chave": "4cb91318z",
-   "voz": "npc-padrao-guia",
+   "chave": "31b7781ev",
+   "voz": "npc-mat-isa",
    "texto": "Já ganhou R$ 12,00!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35282,8 +35326,8 @@
    "fala": "Já ganhou 12 reais!"
   },
   {
-   "chave": "83188fce17",
-   "voz": "npc-padrao-guia",
+   "chave": "db8f72b413",
+   "voz": "npc-mat-isa",
    "texto": "Já fez cinco de seis salas.",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35291,8 +35335,8 @@
    "fala": "Já fez cinco de seis salas."
   },
   {
-   "chave": "9b789665z",
-   "voz": "npc-padrao-guia",
+   "chave": "22be4c97v",
+   "voz": "npc-mat-isa",
    "texto": "Já ganhou R$ 15,00!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35300,8 +35344,8 @@
    "fala": "Já ganhou 15 reais!"
   },
   {
-   "chave": "565cbadd13",
-   "voz": "npc-padrao-guia",
+   "chave": "9b77d697z",
+   "voz": "npc-mat-isa",
    "texto": "Você fez as seis salas!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35309,8 +35353,8 @@
    "fala": "Você fez as seis salas!"
   },
   {
-   "chave": "b068e95dz",
-   "voz": "npc-padrao-guia",
+   "chave": "79541013v",
+   "voz": "npc-mat-isa",
    "texto": "Já ganhou R$ 20,00!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35318,8 +35362,8 @@
    "fala": "Já ganhou 20 reais!"
   },
   {
-   "chave": "495412d012",
-   "voz": "npc-padrao-guia",
+   "chave": "b3469c56y",
+   "voz": "npc-mat-isa",
    "texto": "A primeira é a Sala 1!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35327,8 +35371,8 @@
    "fala": "A primeira é a Sala 1!"
   },
   {
-   "chave": "2483e32516",
-   "voz": "npc-padrao-guia",
+   "chave": "262d8ef712",
+   "voz": "npc-mat-isa",
    "texto": "Agora vamos para a Sala 1!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35336,8 +35380,8 @@
    "fala": "Agora vamos para a Sala 1!"
   },
   {
-   "chave": "bc8100d616",
-   "voz": "npc-padrao-guia",
+   "chave": "9634fb0c12",
+   "voz": "npc-mat-isa",
    "texto": "Agora vamos para a Sala 2!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35345,8 +35389,8 @@
    "fala": "Agora vamos para a Sala 2!"
   },
   {
-   "chave": "987e899316",
-   "voz": "npc-padrao-guia",
+   "chave": "b232e88912",
+   "voz": "npc-mat-isa",
    "texto": "Agora vamos para a Sala 3!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35354,8 +35398,8 @@
    "fala": "Agora vamos para a Sala 3!"
   },
   {
-   "chave": "a08fdf4c16",
-   "voz": "npc-padrao-guia",
+   "chave": "b2261c9612",
+   "voz": "npc-mat-isa",
    "texto": "Agora vamos para a Sala 4!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35363,8 +35407,8 @@
    "fala": "Agora vamos para a Sala 4!"
   },
   {
-   "chave": "bc8dccc916",
-   "voz": "npc-padrao-guia",
+   "chave": "8e23a55312",
+   "voz": "npc-mat-isa",
    "texto": "Agora vamos para a Sala 5!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35372,8 +35416,8 @@
    "fala": "Agora vamos para a Sala 5!"
   },
   {
-   "chave": "548aea7a16",
-   "voz": "npc-padrao-guia",
+   "chave": "3e2b762812",
+   "voz": "npc-mat-isa",
    "texto": "Agora vamos para a Sala 6!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35381,8 +35425,8 @@
    "fala": "Agora vamos para a Sala 6!"
   },
   {
-   "chave": "7f47a66bg",
-   "voz": "npc-padrao-1",
+   "chave": "29568ecfj",
+   "voz": "npc-mat-cecilia",
    "texto": "Oi!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35390,26 +35434,35 @@
    "fala": "Oi!"
   },
   {
-   "chave": "d346136dw",
-   "voz": "npc-padrao-1",
-   "texto": "Eu cuido da Sala 1.",
+   "chave": "a9f59389x",
+   "voz": "npc-mat-cecilia",
+   "texto": "Eu sou a Cecília!",
    "pacotes": [
     "interior-padrao-matematica"
    ],
-   "fala": "Eu cuido da Sala 1."
+   "fala": "Eu sou a Cecília!"
   },
   {
-   "chave": "cdb5d18912",
-   "voz": "npc-padrao-1",
-   "texto": "Vamos aprender com calma?",
+   "chave": "5dc86f0314",
+   "voz": "npc-mat-cecilia",
+   "texto": "Eu conto os dias do mês.",
    "pacotes": [
     "interior-padrao-matematica"
    ],
-   "fala": "Vamos aprender com calma?"
+   "fala": "Eu conto os dias do mês."
   },
   {
-   "chave": "5f17c223z",
-   "voz": "npc-padrao-1",
+   "chave": "df9c175913",
+   "voz": "npc-mat-cecilia",
+   "texto": "Vamos ver o calendário?",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Vamos ver o calendário?"
+  },
+  {
+   "chave": "258b4d0f12",
+   "voz": "npc-mat-cecilia",
    "texto": "Vamos fazer esta sala?",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35417,8 +35470,8 @@
    "fala": "Vamos fazer esta sala?"
   },
   {
-   "chave": "49fa830c13",
-   "voz": "npc-padrao-1",
+   "chave": "5e956a1816",
+   "voz": "npc-mat-cecilia",
    "texto": "Quer começar agora comigo?",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35426,8 +35479,8 @@
    "fala": "Quer começar agora comigo?"
   },
   {
-   "chave": "c6ef73ba13",
-   "voz": "npc-padrao-1",
+   "chave": "38af9c7616",
+   "voz": "npc-mat-cecilia",
    "texto": "Quer brincar de novo aqui?",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35435,8 +35488,8 @@
    "fala": "Quer brincar de novo aqui?"
   },
   {
-   "chave": "e61a19e911",
-   "voz": "npc-padrao-1",
+   "chave": "46daad1514",
+   "voz": "npc-mat-cecilia",
    "texto": "Vamos repetir com calma?",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35444,8 +35497,8 @@
    "fala": "Vamos repetir com calma?"
   },
   {
-   "chave": "e933a0abw",
-   "voz": "npc-padrao-1",
+   "chave": "91bb8897z",
+   "voz": "npc-mat-cecilia",
    "texto": "Você foi muito bem!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35453,8 +35506,8 @@
    "fala": "Você foi muito bem!"
   },
   {
-   "chave": "2b03d40bx",
-   "voz": "npc-padrao-1",
+   "chave": "fba603f710",
+   "voz": "npc-mat-cecilia",
    "texto": "Que orgulho de você!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35462,8 +35515,8 @@
    "fala": "Que orgulho de você!"
   },
   {
-   "chave": "a0ba939417",
-   "voz": "npc-padrao-1",
+   "chave": "152bb3281a",
+   "voz": "npc-mat-cecilia",
    "texto": "Tudo bem, volte quando quiser!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35471,8 +35524,8 @@
    "fala": "Tudo bem, volte quando quiser!"
   },
   {
-   "chave": "da70996715",
-   "voz": "npc-padrao-1",
+   "chave": "ad28fa2b18",
+   "voz": "npc-mat-cecilia",
    "texto": "Mais uma vez e o raro nasce!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35480,8 +35533,8 @@
    "fala": "Mais uma vez e o raro nasce!"
   },
   {
-   "chave": "8873e07d14",
-   "voz": "npc-padrao-1",
+   "chave": "9fd50b1117",
+   "voz": "npc-mat-cecilia",
    "texto": "Faltam duas vezes pro raro!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35489,8 +35542,8 @@
    "fala": "Faltam duas vezes pro raro!"
   },
   {
-   "chave": "5889e6ff14",
-   "voz": "npc-padrao-1",
+   "chave": "7fa58aab17",
+   "voz": "npc-mat-cecilia",
    "texto": "Faltam três vezes pro raro!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35498,8 +35551,8 @@
    "fala": "Faltam três vezes pro raro!"
   },
   {
-   "chave": "509ffc7013",
-   "voz": "npc-padrao-1",
+   "chave": "27fd4e6c16",
+   "voz": "npc-mat-cecilia",
    "texto": "Ou de primeira, com calma!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35507,8 +35560,8 @@
    "fala": "Ou de primeira, com calma!"
   },
   {
-   "chave": "a331a84215",
-   "voz": "npc-padrao-1",
+   "chave": "259009ae18",
+   "voz": "npc-mat-cecilia",
    "texto": "O raro desta sala já nasceu!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35516,8 +35569,152 @@
    "fala": "O raro desta sala já nasceu!"
   },
   {
-   "chave": "2cddfb3eg",
-   "voz": "npc-padrao-2",
+   "chave": "c69cc6dbj",
+   "voz": "npc-mat-otavio",
+   "texto": "Olá!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Olá!"
+  },
+  {
+   "chave": "a2aefa4dz",
+   "voz": "npc-mat-otavio",
+   "texto": "Eu sou o Seu Otávio.",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Eu sou o Seu Otávio."
+  },
+  {
+   "chave": "7eb8472814",
+   "voz": "npc-mat-otavio",
+   "texto": "Meu relógio nunca atrasa!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Meu relógio nunca atrasa!"
+  },
+  {
+   "chave": "4f77955f13",
+   "voz": "npc-mat-otavio",
+   "texto": "Vamos aprender as horas?",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Vamos aprender as horas?"
+  },
+  {
+   "chave": "8a37429511",
+   "voz": "npc-mat-otavio",
+   "texto": "Vamos fazer esta sala?",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Vamos fazer esta sala?"
+  },
+  {
+   "chave": "f6eb7e7e15",
+   "voz": "npc-mat-otavio",
+   "texto": "Quer começar agora comigo?",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Quer começar agora comigo?"
+  },
+  {
+   "chave": "4bf5a19415",
+   "voz": "npc-mat-otavio",
+   "texto": "Quer brincar de novo aqui?",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Quer brincar de novo aqui?"
+  },
+  {
+   "chave": "d036ddd313",
+   "voz": "npc-mat-otavio",
+   "texto": "Vamos repetir com calma?",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Vamos repetir com calma?"
+  },
+  {
+   "chave": "6da885a5y",
+   "voz": "npc-mat-otavio",
+   "texto": "Você foi muito bem!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Você foi muito bem!"
+  },
+  {
+   "chave": "318738e1z",
+   "voz": "npc-mat-otavio",
+   "texto": "Que orgulho de você!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Que orgulho de você!"
+  },
+  {
+   "chave": "cea1968a19",
+   "voz": "npc-mat-otavio",
+   "texto": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Tudo bem, volte quando quiser!"
+  },
+  {
+   "chave": "016cfa3517",
+   "voz": "npc-mat-otavio",
+   "texto": "Mais uma vez e o raro nasce!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Mais uma vez e o raro nasce!"
+  },
+  {
+   "chave": "1398454716",
+   "voz": "npc-mat-otavio",
+   "texto": "Faltam duas vezes pro raro!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Faltam duas vezes pro raro!"
+  },
+  {
+   "chave": "7579721116",
+   "voz": "npc-mat-otavio",
+   "texto": "Faltam três vezes pro raro!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Faltam três vezes pro raro!"
+  },
+  {
+   "chave": "f0f12d4615",
+   "voz": "npc-mat-otavio",
+   "texto": "Ou de primeira, com calma!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Ou de primeira, com calma!"
+  },
+  {
+   "chave": "776f476817",
+   "voz": "npc-mat-otavio",
+   "texto": "O raro desta sala já nasceu!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "O raro desta sala já nasceu!"
+  },
+  {
+   "chave": "c3f0d3abg",
+   "voz": "npc-mat-tito",
    "texto": "Oi!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35525,26 +35722,35 @@
    "fala": "Oi!"
   },
   {
-   "chave": "285df4b3w",
-   "voz": "npc-padrao-2",
-   "texto": "Eu cuido da Sala 2.",
+   "chave": "52722197y",
+   "voz": "npc-mat-tito",
+   "texto": "Eu sou o Mágico Tito!",
    "pacotes": [
     "interior-padrao-matematica"
    ],
-   "fala": "Eu cuido da Sala 2."
+   "fala": "Eu sou o Mágico Tito!"
   },
   {
-   "chave": "24a8980812",
-   "voz": "npc-padrao-2",
-   "texto": "Vamos aprender com calma?",
+   "chave": "23d392df12",
+   "voz": "npc-mat-tito",
+   "texto": "Será que vai sair o seis?",
    "pacotes": [
     "interior-padrao-matematica"
    ],
-   "fala": "Vamos aprender com calma?"
+   "fala": "Será que vai sair o seis?"
   },
   {
-   "chave": "764a40f8z",
-   "voz": "npc-padrao-2",
+   "chave": "92cd67e312",
+   "voz": "npc-mat-tito",
+   "texto": "Vamos pensar nas chances?",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Vamos pensar nas chances?"
+  },
+  {
+   "chave": "4960c4e3z",
+   "voz": "npc-mat-tito",
    "texto": "Vamos fazer esta sala?",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35552,8 +35758,8 @@
    "fala": "Vamos fazer esta sala?"
   },
   {
-   "chave": "dfac924713",
-   "voz": "npc-padrao-2",
+   "chave": "abc8f1cc13",
+   "voz": "npc-mat-tito",
    "texto": "Quer começar agora comigo?",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35561,8 +35767,8 @@
    "fala": "Quer começar agora comigo?"
   },
   {
-   "chave": "56c55f5d13",
-   "voz": "npc-padrao-2",
+   "chave": "60132efa13",
+   "voz": "npc-mat-tito",
    "texto": "Quer brincar de novo aqui?",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35570,8 +35776,8 @@
    "fala": "Quer brincar de novo aqui?"
   },
   {
-   "chave": "63524fbe11",
-   "voz": "npc-padrao-2",
+   "chave": "09eb02a911",
+   "voz": "npc-mat-tito",
    "texto": "Vamos repetir com calma?",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35579,8 +35785,8 @@
    "fala": "Vamos repetir com calma?"
   },
   {
-   "chave": "456a3552w",
-   "voz": "npc-padrao-2",
+   "chave": "4581516bw",
+   "voz": "npc-mat-tito",
    "texto": "Você foi muito bem!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35588,8 +35794,8 @@
    "fala": "Você foi muito bem!"
   },
   {
-   "chave": "668e4bd4x",
-   "voz": "npc-padrao-2",
+   "chave": "069257cbx",
+   "voz": "npc-mat-tito",
    "texto": "Que orgulho de você!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35597,8 +35803,8 @@
    "fala": "Que orgulho de você!"
   },
   {
-   "chave": "09f5e01317",
-   "voz": "npc-padrao-2",
+   "chave": "1c2b545417",
+   "voz": "npc-mat-tito",
    "texto": "Tudo bem, volte quando quiser!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35606,8 +35812,8 @@
    "fala": "Tudo bem, volte quando quiser!"
   },
   {
-   "chave": "4d9b7f4015",
-   "voz": "npc-padrao-2",
+   "chave": "37f984a715",
+   "voz": "npc-mat-tito",
    "texto": "Mais uma vez e o raro nasce!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35615,8 +35821,8 @@
    "fala": "Mais uma vez e o raro nasce!"
   },
   {
-   "chave": "435a75cc14",
-   "voz": "npc-padrao-2",
+   "chave": "3c5b58bd14",
+   "voz": "npc-mat-tito",
    "texto": "Faltam duas vezes pro raro!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35624,8 +35830,8 @@
    "fala": "Faltam duas vezes pro raro!"
   },
   {
-   "chave": "e68369ce14",
-   "voz": "npc-padrao-2",
+   "chave": "a427543f14",
+   "voz": "npc-mat-tito",
    "texto": "Faltam três vezes pro raro!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35633,8 +35839,8 @@
    "fala": "Faltam três vezes pro raro!"
   },
   {
-   "chave": "0c5ca90313",
-   "voz": "npc-padrao-2",
+   "chave": "6a66dd3013",
+   "voz": "npc-mat-tito",
    "texto": "Ou de primeira, com calma!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35642,8 +35848,8 @@
    "fala": "Ou de primeira, com calma!"
   },
   {
-   "chave": "80c50da515",
-   "voz": "npc-padrao-2",
+   "chave": "ede91f0215",
+   "voz": "npc-mat-tito",
    "texto": "O raro desta sala já nasceu!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35651,8 +35857,8 @@
    "fala": "O raro desta sala já nasceu!"
   },
   {
-   "chave": "a226378dg",
-   "voz": "npc-padrao-3",
+   "chave": "25bdff13g",
+   "voz": "npc-mat-lara",
    "texto": "Oi!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35660,26 +35866,35 @@
    "fala": "Oi!"
   },
   {
-   "chave": "e2f9f401w",
-   "voz": "npc-padrao-3",
-   "texto": "Eu cuido da Sala 3.",
+   "chave": "3842e04f13",
+   "voz": "npc-mat-lara",
+   "texto": "Eu sou a Confeiteira Lara.",
    "pacotes": [
     "interior-padrao-matematica"
    ],
-   "fala": "Eu cuido da Sala 3."
+   "fala": "Eu sou a Confeiteira Lara."
   },
   {
-   "chave": "a4e4ce0f12",
-   "voz": "npc-padrao-3",
-   "texto": "Vamos aprender com calma?",
+   "chave": "c7a355e816",
+   "voz": "npc-mat-lara",
+   "texto": "Cada prato com o mesmo tanto.",
    "pacotes": [
     "interior-padrao-matematica"
    ],
-   "fala": "Vamos aprender com calma?"
+   "fala": "Cada prato com o mesmo tanto."
   },
   {
-   "chave": "1f132091z",
-   "voz": "npc-padrao-3",
+   "chave": "6de1d54513",
+   "voz": "npc-mat-lara",
+   "texto": "Vamos somar grupos iguais?",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Vamos somar grupos iguais?"
+  },
+  {
+   "chave": "c3316c2bz",
+   "voz": "npc-mat-lara",
    "texto": "Vamos fazer esta sala?",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35687,8 +35902,8 @@
    "fala": "Vamos fazer esta sala?"
   },
   {
-   "chave": "87bf0e7a13",
-   "voz": "npc-padrao-3",
+   "chave": "e0fbcd4413",
+   "voz": "npc-mat-lara",
    "texto": "Quer começar agora comigo?",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35696,8 +35911,8 @@
    "fala": "Quer começar agora comigo?"
   },
   {
-   "chave": "bd84f7f013",
-   "voz": "npc-padrao-3",
+   "chave": "d19cf4c213",
+   "voz": "npc-mat-lara",
    "texto": "Quer brincar de novo aqui?",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35705,8 +35920,8 @@
    "fala": "Quer brincar de novo aqui?"
   },
   {
-   "chave": "9cc0e67f11",
-   "voz": "npc-padrao-3",
+   "chave": "298b38c111",
+   "voz": "npc-mat-lara",
    "texto": "Vamos repetir com calma?",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35714,8 +35929,8 @@
    "fala": "Vamos repetir com calma?"
   },
   {
-   "chave": "9ea4e8a1w",
-   "voz": "npc-padrao-3",
+   "chave": "0ebdb593w",
+   "voz": "npc-mat-lara",
    "texto": "Você foi muito bem!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35723,8 +35938,8 @@
    "fala": "Você foi muito bem!"
   },
   {
-   "chave": "58b08c1dx",
-   "voz": "npc-padrao-3",
+   "chave": "bfbb2ce3x",
+   "voz": "npc-mat-lara",
    "texto": "Que orgulho de você!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35732,8 +35947,8 @@
    "fala": "Que orgulho de você!"
   },
   {
-   "chave": "20bf0e9e17",
-   "voz": "npc-padrao-3",
+   "chave": "eb12cc4c17",
+   "voz": "npc-mat-lara",
    "texto": "Tudo bem, volte quando quiser!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35741,8 +35956,8 @@
    "fala": "Tudo bem, volte quando quiser!"
   },
   {
-   "chave": "2801150915",
-   "voz": "npc-padrao-3",
+   "chave": "390dc08f15",
+   "voz": "npc-mat-lara",
    "texto": "Mais uma vez e o raro nasce!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35750,8 +35965,8 @@
    "fala": "Mais uma vez e o raro nasce!"
   },
   {
-   "chave": "df6627db14",
-   "voz": "npc-padrao-3",
+   "chave": "e8f01df514",
+   "voz": "npc-mat-lara",
    "texto": "Faltam duas vezes pro raro!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35759,8 +35974,8 @@
    "fala": "Faltam duas vezes pro raro!"
   },
   {
-   "chave": "416b32dd14",
-   "voz": "npc-padrao-3",
+   "chave": "9289684714",
+   "voz": "npc-mat-lara",
    "texto": "Faltam três vezes pro raro!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35768,8 +35983,8 @@
    "fala": "Faltam três vezes pro raro!"
   },
   {
-   "chave": "11f6285213",
-   "voz": "npc-padrao-3",
+   "chave": "e5febaf813",
+   "voz": "npc-mat-lara",
    "texto": "Ou de primeira, com calma!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35777,8 +35992,8 @@
    "fala": "Ou de primeira, com calma!"
   },
   {
-   "chave": "3b2c2be415",
-   "voz": "npc-padrao-3",
+   "chave": "5d235f6a15",
+   "voz": "npc-mat-lara",
    "texto": "O raro desta sala já nasceu!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35786,8 +36001,8 @@
    "fala": "O raro desta sala já nasceu!"
   },
   {
-   "chave": "a129cfc0g",
-   "voz": "npc-padrao-4",
+   "chave": "d97e59edg",
+   "voz": "npc-mat-zuzu",
    "texto": "Oi!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35795,26 +36010,35 @@
    "fala": "Oi!"
   },
   {
-   "chave": "39e0a48bw",
-   "voz": "npc-padrao-4",
-   "texto": "Eu cuido da Sala 4.",
+   "chave": "1293d8ca15",
+   "voz": "npc-mat-zuzu",
+   "texto": "Eu sou a Zuzu, a palhacinha.",
    "pacotes": [
     "interior-padrao-matematica"
    ],
-   "fala": "Eu cuido da Sala 4."
+   "fala": "Eu sou a Zuzu, a palhacinha."
   },
   {
-   "chave": "0a5a19f612",
-   "voz": "npc-padrao-4",
-   "texto": "Vamos aprender com calma?",
+   "chave": "89eafc46w",
+   "voz": "npc-mat-zuzu",
+   "texto": "Dobro é duas vezes!",
    "pacotes": [
     "interior-padrao-matematica"
    ],
-   "fala": "Vamos aprender com calma?"
+   "fala": "Dobro é duas vezes!"
   },
   {
-   "chave": "0abbf626z",
-   "voz": "npc-padrao-4",
+   "chave": "4453ef4b15",
+   "voz": "npc-mat-zuzu",
+   "texto": "Triplo é três vezes o mesmo.",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Triplo é três vezes o mesmo."
+  },
+  {
+   "chave": "37dee2f1z",
+   "voz": "npc-mat-zuzu",
    "texto": "Vamos fazer esta sala?",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35822,8 +36046,8 @@
    "fala": "Vamos fazer esta sala?"
   },
   {
-   "chave": "3e61cd0d13",
-   "voz": "npc-padrao-4",
+   "chave": "b04e03da13",
+   "voz": "npc-mat-zuzu",
    "texto": "Quer começar agora comigo?",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35831,8 +36055,8 @@
    "fala": "Quer começar agora comigo?"
   },
   {
-   "chave": "4804c76b13",
-   "voz": "npc-padrao-4",
+   "chave": "9f4688d013",
+   "voz": "npc-mat-zuzu",
    "texto": "Quer brincar de novo aqui?",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35840,8 +36064,8 @@
    "fala": "Quer brincar de novo aqui?"
   },
   {
-   "chave": "9ec936dc11",
-   "voz": "npc-padrao-4",
+   "chave": "d332f65f11",
+   "voz": "npc-mat-zuzu",
    "texto": "Vamos repetir com calma?",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35849,8 +36073,8 @@
    "fala": "Vamos repetir com calma?"
   },
   {
-   "chave": "bd619508w",
-   "voz": "npc-padrao-4",
+   "chave": "b0ae6101w",
+   "voz": "npc-mat-zuzu",
    "texto": "Você foi muito bem!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35858,8 +36082,8 @@
    "fala": "Você foi muito bem!"
   },
   {
-   "chave": "f1f2fdd6x",
-   "voz": "npc-padrao-4",
+   "chave": "9ceceb7dx",
+   "voz": "npc-mat-zuzu",
    "texto": "Que orgulho de você!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35867,8 +36091,8 @@
    "fala": "Que orgulho de você!"
   },
   {
-   "chave": "3c36295d17",
-   "voz": "npc-padrao-4",
+   "chave": "0c51fafe17",
+   "voz": "npc-mat-zuzu",
    "texto": "Tudo bem, volte quando quiser!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35876,8 +36100,8 @@
    "fala": "Tudo bem, volte quando quiser!"
   },
   {
-   "chave": "487f8a9a15",
-   "voz": "npc-padrao-4",
+   "chave": "f6385f6915",
+   "voz": "npc-mat-zuzu",
    "texto": "Mais uma vez e o raro nasce!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35885,8 +36109,8 @@
    "fala": "Mais uma vez e o raro nasce!"
   },
   {
-   "chave": "a9b1bfd214",
-   "voz": "npc-padrao-4",
+   "chave": "818acdbb14",
+   "voz": "npc-mat-zuzu",
    "texto": "Faltam duas vezes pro raro!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35894,8 +36118,8 @@
    "fala": "Faltam duas vezes pro raro!"
   },
   {
-   "chave": "b41b2e2414",
-   "voz": "npc-padrao-4",
+   "chave": "dd28ad3d14",
+   "voz": "npc-mat-zuzu",
    "texto": "Faltam três vezes pro raro!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35903,8 +36127,8 @@
    "fala": "Faltam três vezes pro raro!"
   },
   {
-   "chave": "faa8153513",
-   "voz": "npc-padrao-4",
+   "chave": "56faf23213",
+   "voz": "npc-mat-zuzu",
    "texto": "Ou de primeira, com calma!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35912,8 +36136,8 @@
    "fala": "Ou de primeira, com calma!"
   },
   {
-   "chave": "a8c699ff15",
-   "voz": "npc-padrao-4",
+   "chave": "dba6ecc415",
+   "voz": "npc-mat-zuzu",
    "texto": "O raro desta sala já nasceu!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35921,35 +36145,44 @@
    "fala": "O raro desta sala já nasceu!"
   },
   {
-   "chave": "a177d2e7g",
-   "voz": "npc-padrao-5",
-   "texto": "Oi!",
+   "chave": "483dc99ai",
+   "voz": "npc-mat-tadeu",
+   "texto": "Olá!",
    "pacotes": [
     "interior-padrao-matematica"
    ],
-   "fala": "Oi!"
+   "fala": "Olá!"
   },
   {
-   "chave": "aad19fc5w",
-   "voz": "npc-padrao-5",
-   "texto": "Eu cuido da Sala 5.",
+   "chave": "f5dee25b13",
+   "voz": "npc-mat-tadeu",
+   "texto": "Eu sou o Professor Tadeu.",
    "pacotes": [
     "interior-padrao-matematica"
    ],
-   "fala": "Eu cuido da Sala 5."
+   "fala": "Eu sou o Professor Tadeu."
   },
   {
-   "chave": "017957ed12",
-   "voz": "npc-padrao-5",
-   "texto": "Vamos aprender com calma?",
+   "chave": "796c8f0c16",
+   "voz": "npc-mat-tadeu",
+   "texto": "Adoro a tabuada do 4 e do 5!",
    "pacotes": [
     "interior-padrao-matematica"
    ],
-   "fala": "Vamos aprender com calma?"
+   "fala": "Adoro a tabuada do 4 e do 5!"
   },
   {
-   "chave": "0dffb5e7z",
-   "voz": "npc-padrao-5",
+   "chave": "c24024ab18",
+   "voz": "npc-mat-tadeu",
+   "texto": "Vamos pular de cinco em cinco?",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Vamos pular de cinco em cinco?"
+  },
+  {
+   "chave": "37f6c9b810",
+   "voz": "npc-mat-tadeu",
    "texto": "Vamos fazer esta sala?",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35957,8 +36190,8 @@
    "fala": "Vamos fazer esta sala?"
   },
   {
-   "chave": "d7cc8dc013",
-   "voz": "npc-padrao-5",
+   "chave": "c6212a0714",
+   "voz": "npc-mat-tadeu",
    "texto": "Quer começar agora comigo?",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35966,8 +36199,8 @@
    "fala": "Quer começar agora comigo?"
   },
   {
-   "chave": "94728b8e13",
-   "voz": "npc-padrao-5",
+   "chave": "44675c9d14",
+   "voz": "npc-mat-tadeu",
    "texto": "Quer brincar de novo aqui?",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35975,8 +36208,8 @@
    "fala": "Quer brincar de novo aqui?"
   },
   {
-   "chave": "b14d153d11",
-   "voz": "npc-padrao-5",
+   "chave": "baf8087e12",
+   "voz": "npc-mat-tadeu",
    "texto": "Vamos repetir com calma?",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35984,8 +36217,8 @@
    "fala": "Vamos repetir com calma?"
   },
   {
-   "chave": "6e5065cfw",
-   "voz": "npc-padrao-5",
+   "chave": "b0bf2e12x",
+   "voz": "npc-mat-tadeu",
    "texto": "Você foi muito bem!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -35993,8 +36226,8 @@
    "fala": "Você foi muito bem!"
   },
   {
-   "chave": "9911831fx",
-   "voz": "npc-padrao-5",
+   "chave": "1b96ac94y",
+   "voz": "npc-mat-tadeu",
    "texto": "Que orgulho de você!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -36002,8 +36235,8 @@
    "fala": "Que orgulho de você!"
   },
   {
-   "chave": "8cd1eab017",
-   "voz": "npc-padrao-5",
+   "chave": "3eeeb9d318",
+   "voz": "npc-mat-tadeu",
    "texto": "Tudo bem, volte quando quiser!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -36011,8 +36244,8 @@
    "fala": "Tudo bem, volte quando quiser!"
   },
   {
-   "chave": "675f8f0315",
-   "voz": "npc-padrao-5",
+   "chave": "35a5fd8016",
+   "voz": "npc-mat-tadeu",
    "texto": "Mais uma vez e o raro nasce!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -36020,8 +36253,8 @@
    "fala": "Mais uma vez e o raro nasce!"
   },
   {
-   "chave": "44b19b1914",
-   "voz": "npc-padrao-5",
+   "chave": "63e6cf0c15",
+   "voz": "npc-mat-tadeu",
    "texto": "Faltam duas vezes pro raro!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -36029,8 +36262,8 @@
    "fala": "Faltam duas vezes pro raro!"
   },
   {
-   "chave": "d2ea298314",
-   "voz": "npc-padrao-5",
+   "chave": "6041280e15",
+   "voz": "npc-mat-tadeu",
    "texto": "Faltam três vezes pro raro!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -36038,8 +36271,8 @@
    "fala": "Faltam três vezes pro raro!"
   },
   {
-   "chave": "e4c853e413",
-   "voz": "npc-padrao-5",
+   "chave": "e85f72c314",
+   "voz": "npc-mat-tadeu",
    "texto": "Ou de primeira, com calma!",
    "pacotes": [
     "interior-padrao-matematica"
@@ -36047,22 +36280,13 @@
    "fala": "Ou de primeira, com calma!"
   },
   {
-   "chave": "3a9f74c615",
-   "voz": "npc-padrao-5",
+   "chave": "2c77e16516",
+   "voz": "npc-mat-tadeu",
    "texto": "O raro desta sala já nasceu!",
    "pacotes": [
     "interior-padrao-matematica"
    ],
    "fala": "O raro desta sala já nasceu!"
-  },
-  {
-   "chave": "b1481c7ew",
-   "voz": "npc-padrao-1",
-   "texto": "Eu cuido da Sala 6.",
-   "pacotes": [
-    "interior-padrao-matematica"
-   ],
-   "fala": "Eu cuido da Sala 6."
   },
   {
    "chave": "8c22fcd013",

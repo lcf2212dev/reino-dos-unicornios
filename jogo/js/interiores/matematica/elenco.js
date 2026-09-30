@@ -51,8 +51,8 @@
       'sala-matematica-m1': { oi: ['Oi! Eu sou a Cecília! 📅', 'Eu conto os dias do mês.', 'Vamos ver o calendário?'] },
       'sala-matematica-m2': { oi: ['Olá! Eu sou o Seu Otávio. ⏰', 'Meu relógio nunca atrasa!', 'Vamos aprender as horas?'] },
       'sala-matematica-m3': { oi: ['Oi! Eu sou o Mágico Tito! 🎲', 'Será que vai sair o seis?', 'Vamos pensar nas chances?'] },
-      'sala-matematica-m4': { oi: ['Oi! Eu sou a Confeiteira Lara.', 'Cada prato com o mesmo tanto.', 'Vamos somar grupinhos iguais?'] },
-      'sala-matematica-m5': { oi: ['Oi! Eu sou a Palhacinha Zuzu.', 'Dobro é duas vezes! ✌️', 'Triplo é três vezes o mesmo.'] },
+      'sala-matematica-m4': { oi: ['Oi! Eu sou a Confeiteira Lara.', 'Cada prato com o mesmo tanto.', 'Vamos somar grupos iguais?'] },
+      'sala-matematica-m5': { oi: ['Oi! Eu sou a Zuzu, a palhacinha.', 'Dobro é duas vezes! ✌️', 'Triplo é três vezes o mesmo.'] },
       'sala-matematica-m6': { oi: ['Olá! Eu sou o Professor Tadeu.', 'Adoro a tabuada do 4 e do 5!', 'Vamos pular de cinco em cinco?'] },
     },
   });
