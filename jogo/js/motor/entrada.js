@@ -83,8 +83,28 @@
     var alvo = cena.alvoEm(wx, wy);
     if (alvo) { Cena.irAoAlvo(alvo); return; }
     var destino = cena.solido(tx, ty) ? cena.maisPerto(tx, ty, J.tile()) : { x: tx, y: ty };
-    if (destino) J.irPara(destino.x, destino.y);
+    if (!destino || !J.irPara(destino.x, destino.y)) naoDa(tx, ty);
   }
+
+  // sem caminho: um ✗ cinza parado ~400 ms no tile tocado (igual com ou sem animação)
+  var NAO_DA_MS = 400, sinal = null;
+  function naoDa(tx, ty) { sinal = { x: tx, y: ty, ate: performance.now() + NAO_DA_MS }; }
+  function sinalVivo() { if (sinal && performance.now() > sinal.ate) sinal = null; return sinal; }
+  var XIS = [-2, -1, 0, 1, 2];
+  if (Reino.registrarModulo) Reino.registrarModulo({ id: 'toque-sem-caminho',
+    depurar: function () { var s = sinalVivo(); return { sinal: s ? { x: s.x, y: s.y } : null }; },
+    camada: {
+      ativo: function () { return !!sinalVivo(); },
+      itensDesenho: function () { return []; },
+      sobre: function (ctx, p) {
+        var cx = sinal.x * T + 8, cy = sinal.y * T + 8;
+        // contorno em cruz (1 pixel de cada lado), depois o traço cinza
+        XIS.forEach(function (i) {
+          [i, -i].forEach(function (j) { p.ret(cx + i - 1, cy + j, 3, 1, '#3a2446'); p.ret(cx + i, cy + j - 1, 1, 3, '#3a2446'); });
+        });
+        XIS.forEach(function (i) { p.ret(cx + i, cy + i, 1, 1, '#b8b0c4'); p.ret(cx + i, cy - i, 1, 1, '#b8b0c4'); });
+      },
+    } });
 
   /* ---------- mouse segurado e thumbstick do toque ---------- */
   // números em Reino.config.controles, lidos na hora de usar (com os de sempre se faltar)

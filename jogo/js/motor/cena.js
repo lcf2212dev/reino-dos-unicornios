@@ -201,6 +201,12 @@
     if (de !== para) U.emit(EV.CENA, { de: de, para: para });
   }
 
+  // o balão não modal do Claude some durante a íris e volta depois (se ainda estiver aberto)
+  U.on(EV.TRANSICAO, function (em) {
+    var bal = document.getElementById('claude-balao');
+    if (bal) bal.style.visibility = em ? 'hidden' : '';
+  });
+
   /* ---------- lugar sem interior: o painel de sempre ---------- */
   var esperandoFechar = null;
   U.on(EV.TELAS, function (n) {
