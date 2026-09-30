@@ -44,6 +44,47 @@
     ] },
   });
 
+  // desenhos só do balãozinho de status (D4-12), por cima do ícone de mesmo emoji: o ❗ com traço de 4 px e o 🤍
+  // escurecido (3,1:1 com o #fff8ee do balão; o 🤍 claro das cartas de raridade fica como está)
+  if (Reino.registrarIcones && !(window.ICONES && window.ICONES['status:❗'])) Reino.registrarIcones({
+    'status:❗': { n: 'exclamação (status)', p: { k: '#3a2446', w: '#ffffff', R: '#ffb3c1', r: '#ff6b8a', d: '#d63d63' }, d: [
+      '................',
+      '.....kkkkkk.....',
+      '.....kwRrrk.....',
+      '.....kRrrdk.....',
+      '.....kRrrdk.....',
+      '.....kRrrdk.....',
+      '.....kRrrdk.....',
+      '.....krrddk.....',
+      '.....krdddk.....',
+      '.....kkkkkk.....',
+      '................',
+      '.....kkkkkk.....',
+      '.....kRwrdk.....',
+      '.....krdddk.....',
+      '.....kkkkkk.....',
+      '................',
+    ] },
+    'status:🤍': { n: 'coração branco (status)', p: { k: '#3a2446', w: '#e6dcef', l: '#c4b4d4', p: '#9a86ad', P: '#7d6a92' }, d: [
+      '................',
+      '................',
+      '..kkkk....kkkk..',
+      '.kwlppk..kpppPk.',
+      'kwlpppPkkppppPPk',
+      'klpppppppppppPPk',
+      'klpppppppppppPPk',
+      'kppppppppppppPPk',
+      '.kpppppppppppPk.',
+      '..kpppppppPPPk..',
+      '...kpppppPPPk...',
+      '....kpppPPPk....',
+      '.....kppPPk.....',
+      '......kpPk......',
+      '.......kk.......',
+      '................',
+    ] },
+  });
+
   // status vindos de outros módulos (ex.: Dona Aveia com a montaria faminta): fn(npc) → {icone, rotulo} | null
   var STATUS = [];
   N.registrarStatus = function (fn) { STATUS.push(fn); };
@@ -56,7 +97,8 @@
       var m = materiaDe(a), s = salaDe(a);
       if (!s) return { icone: '💬', rotulo: 'Conversar' };
       var raro = raroDaSala(m, s);
-      if (raro && p.temUni(raro.id)) return { icone: '💙', rotulo: 'Raro já nasceu' };
+      // 💙 é só "valendo raro" (prova); o raro da sala que já nasceu é o 🦄 (D4-12)
+      if (raro && p.temUni(raro.id)) return { icone: '🦄', rotulo: 'Raro já nasceu' };
       var reg = est.salas[s.id];
       return reg && reg.feita ? { icone: '✓', rotulo: 'Sala feita' } : { icone: '❗', rotulo: 'Sala nova' };
     }
@@ -84,7 +126,7 @@
   function bolha(icone) {
     if (bolhas[icone]) return bolhas[icone];
     var PA = window.PA;
-    var ic = PA.iconeDesenho(icone.replace(/️/g, ''));
+    var chave = icone.replace(/️/g, ''), ic = PA.iconeDesenho('status:' + chave) || PA.iconeDesenho(chave);
     var w = 20, h = 23, c = PA.novoCanvas(w, h), ctx = c.getContext('2d');
     function r(x, y, a, b, k) { ctx.fillStyle = k; ctx.fillRect(x, y, a, b); }
     // caixa arredondada com contorno + rabinho
@@ -124,7 +166,14 @@
     return { quadro: 4 | (Math.floor(ta / 240) % 2 ? 8 : 0), dy: 0 };
   }
 
+  // os balãozinhos e os corpos desenhados neste quadro (px do canvas): as placas dos cômodos desviam dos balõezinhos
+  // e, quando descem da parede, também dos corpos (interiores-placas.js)
+  var bolhasQuadro = { rects: [], corpos: [] };
+  _n.bolhasQuadro = bolhasQuadro;
   N.desenhar = function (pintor, npc, x, yPes, t, animar) {
+    // quem lê (as placas) esvazia a lista a cada quadro; sem leitor (mapa), no máximo 64
+    if (bolhasQuadro.rects.length >= 64) bolhasQuadro.rects = [];
+    if (bolhasQuadro.corpos.length >= 64) bolhasQuadro.corpos = [];
     var f = fase(npc);
     var quadro = 0, dy = 0;
     var ac = animar ? acao(npc, t, f) : null;
@@ -136,11 +185,12 @@
     if (window.Jogador && window.Jogador.sombra) window.Jogador.sombra(pintor, x, yPes, 5);
     var spr = gerar(npc.sprite, quadro);
     pintor.sprite(spr, x, yPes + 1 + dy);
-    // ícone de status acima da cabeça, em px da tela (nítido: inteiro de px por px do ícone)
+    // ícone de status acima da cabeça, em px da tela, na densidade da interface (ui.md §10.11): 2 px CSS por px
+    // do balãozinho (s = 2 × dpr px de aparelho), 46 px CSS de altura nos 3 tamanhos, menor que o NPC
     var st = N.status(npc);
     var b = bolha(st.icone), ctx = pintor.ctx;
     if (!ctx) return;
-    var s = Math.max(1, Math.round((pintor.escala || 3) / 2));
+    var s = Math.max(1, Math.round(2 * (pintor.dpr || 1)));
     var cabeca = pintor.tela(x, yPes + 1 - spr.height + (spr.topo || 0));
     var bob = animar ? Math.round(Math.sin(t / 420 + (f % 10))) * s : 0;
     var bx = Math.round(cabeca.x - (b.width * s) / 2), by = Math.round(cabeca.y - b.height * s - s + bob);
@@ -148,11 +198,15 @@
     // some enquanto cobre a Mariana: ela já está encostada no personagem. A conta é em px do jogo, com o
     // quadro parado e sem o balanço: câmera deslizando, respiração e sobe-e-desce não fazem o balãozinho piscar
     var spr0 = gerar(npc.sprite, 0), esc = pintor.escala || 3, meia = bw / 2 / esc;
+    // o corpo parado (quadro 0, sem o pulinho), da cabeça aos pés, com a sombra de chão (3 px abaixo, 2 de cada lado)
+    var c0 = pintor.tela(x - spr0.width / 2 - 2, yPes + 1 - spr0.height + (spr0.topo || 0)), c1 = pintor.tela(x + spr0.width / 2 + 2, yPes + 4);
+    bolhasQuadro.corpos.push({ canvas: ctx.canvas, left: c0.x, top: c0.y, right: c1.x, bottom: c1.y });
     var baixo = yPes + 1 - spr0.height + (spr0.topo || 0) - s / esc;
     if (cobreMariana(x - meia, baixo - bh / esc, x + meia, baixo)) return;
     var antes = ctx.imageSmoothingEnabled;
     ctx.imageSmoothingEnabled = false;
     ctx.drawImage(b, bx, by, bw, bh);
+    bolhasQuadro.rects.push({ canvas: ctx.canvas, left: bx, top: by, right: bx + bw, bottom: by + bh });
     ctx.imageSmoothingEnabled = antes;
   };
 
