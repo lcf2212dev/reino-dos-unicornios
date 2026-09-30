@@ -136,7 +136,10 @@ body.em-missao #claude-balao { bottom: calc(env(safe-area-inset-bottom, 0px) + 1
    regra do body (ui.md §10.17) */
 .sala-info small { color: var(--tinta-suave); font-size: var(--texto-aux); }
 .sala-ir { flex: none; font-size: var(--texto); color: var(--roxo-texto); }
+/* chips centrados na altura: o texto e o desenho na mesma linha (D7-08) */
 .sala-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 3px; }
+.lista-materia .sala-chips { align-items: center; }
+.lista-materia .sala-chips .chip-mini { display: inline-flex; align-items: center; gap: 4px; }
 .chip-mini { display: inline-block; padding: 2px 8px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); font-size: var(--texto-aux); line-height: var(--entrelinha); background: var(--papel); }
 .chip-mini.ok { background: var(--certo-fundo); }
 .chip-mini.nova { background: var(--laranja-claro); }
@@ -147,6 +150,34 @@ body.em-missao #claude-balao { bottom: calc(env(safe-area-inset-bottom, 0px) + 1
 .barra-dinheiro-trilho { flex: 1 1 250px; min-width: 120px; height: 18px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--branco); overflow: hidden; }
 .barra-dinheiro-trilho span { display: block; height: 100%; background: repeating-linear-gradient(90deg, var(--ouro) 0 14px, var(--ouro-claro) 14px 18px); }
 .barra-dinheiro-texto { font-variant-numeric: tabular-nums; white-space: nowrap; font-size: var(--texto); }
+/* matéria: barra de dinheiro e o livro lado a lado no alto (D7-15); a próxima sala com borda grossa (D7-14) */
+.materia-topo { position: sticky; top: -18px; z-index: 1; margin-left: -20px; margin-right: -20px; padding: 8px 20px; background: var(--papel); display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.materia-topo .barra-dinheiro { flex: 1 1 320px; }
+.btn-livro-topo { flex: none; min-height: 48px; padding: 6px 14px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel-quente); box-shadow: var(--sombra-pequena); font-size: var(--texto); white-space: nowrap; }
+.btn-livro-topo:active { transform: translateY(2px); box-shadow: none; }
+.lista-materia .sala-card.proxima { border-width: var(--borda-grossa); }
+.chip-mini.nova { white-space: nowrap; }
+.seta-celular { display: none; }
+@media (max-width: 480px) {
+  .materia-topo { top: -14px; margin-left: -14px; margin-right: -14px; padding: 6px 14px; }
+  .materia-topo .barra-dinheiro { flex-basis: 100%; min-width: 0; }
+  .materia-topo .barra-dinheiro-texto { white-space: normal; }   /* Letras grandes: "de R$ 20,00" desce inteiro (colado) */
+  .btn-livro-topo { flex: 1 1 100%; min-width: 0; min-height: 44px; white-space: normal; }
+  /* cartão compacto (D7-09): ícone ao lado do nome, apostila e chips em linhas cheias, "Entrar →" à direita */
+  .lista-materia { gap: 8px; }
+  .lista-materia .sala-card.ir-embaixo { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 2px 8px; padding: 8px 10px; }
+  .lista-materia .sala-info { display: contents; }
+  .lista-materia .sala-emoji { grid-column: 1; grid-row: 1 / 3; font-size: var(--texto-g); width: auto; }
+  .lista-materia .sala-info b { grid-column: 2; grid-row: 1; }
+  .lista-materia .sala-info small { grid-column: 2; grid-row: 2; }
+  .lista-materia .sala-chips { grid-column: 1 / -1; }
+  .lista-materia .sala-card.ir-embaixo .sala-ir { grid-column: 3; grid-row: 1 / 3; flex-basis: auto; }
+  .lista-materia .seta-celular { display: inline; }
+  .lista-materia .sala-chips { gap: 4px; margin-top: 2px; }
+  .lista-materia .sala-chips .chip-mini { padding: 0 4px; gap: 2px; }
+  .lista-materia .rotulo-chip { display: none; }
+}
+
 /* Lugares compacto (D8B-14): cabem 5 cartões no celular */
 .tela-lugares .lista-salas { gap: 8px; }
 .tela-lugares .sala-card { padding: 6px 10px; gap: 8px; }
