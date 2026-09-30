@@ -1,20 +1,19 @@
 /* Desafio do ET (js/ui/et-desafio.js): o retrato e a fala do ET, a pergunta, o retorno e o amigo no fim. */
 .tela-et-desafio .painel { max-width: 600px; }
 .et-cabeca { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
-.et-retrato { flex: none; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--noite); }
+.et-retrato { flex: none; border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto-grande); background: var(--noite); }
 .et-balao {
   flex: 1; min-width: 0;
   padding: 8px 12px;
-  border: 3px solid var(--borda); border-radius: var(--canto-grande);
+  border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto-grande);
   background: var(--papel-quente);
 }
-.et-fala { font-weight: 700; }
-.et-placar { font-size: 0.85em; margin-top: 4px; }
-@media (max-width: 480px), (max-height: 500px) { .et-placar { white-space: nowrap; font-size: 12px; } }   /* o placar numa linha só (D6-21), no tamanho de rótulo auxiliar (ui.md §10.9.1) */
-.et-retorno { margin-top: 10px; padding: 8px 12px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); }
+.et-placar { font-size: var(--texto-aux); margin-top: 4px; }
+@media (max-width: 480px), (max-height: 500px) { .et-placar { white-space: nowrap; } }   /* o placar numa linha só (D6-21), no tamanho de rótulo auxiliar (ui.md §10.9.1) */
+.et-retorno { margin-top: 10px; padding: 8px 12px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); }
 .et-retorno h3 { margin: 0 0 4px; }
 .et-retorno p + p { margin-top: 6px; }
-.et-amigo { text-align: center; font-size: 1.3em; font-weight: 700; padding: 18px 8px; }
+.et-amigo { text-align: center; font-size: var(--texto-g); padding: 18px 8px; }
 .et-botoes { display: flex; justify-content: flex-end; gap: 10px; padding: 10px 16px 14px; }
 @media (max-width: 480px), (max-height: 500px) {
   .et-cabeca { gap: 8px; margin-bottom: 6px; }
@@ -40,20 +39,26 @@
   .et-conteudo:has(.et-retorno:not([hidden])) .et-area { grid-column: 3; grid-row: 1; }
   .et-retorno { grid-column: 2; grid-row: 1; margin: 0; padding: 4px 8px; }
   .et-retorno:not([hidden]) { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
-  .et-retorno h3 { margin: 0; font-size: 16px; }
+  .et-retorno h3 { margin: 0; font-size: var(--texto); }
   .et-retorno p { margin: 0; padding: 4px 8px; }
   .et-retorno p + p, .et-retorno .retorno-explica { flex: 1 1 100%; margin-top: 0; }
   .tela-et-desafio .painel:has(.et-retorno:not([hidden])) .et-botoes { width: 172px; }   /* o Próxima sob o ET */
   .tela-et-desafio .painel:has(.et-retorno:not([hidden])) .et-botoes .btn-grande { min-width: 0; padding-left: 4px; padding-right: 4px; }
-  .et-fala { font-size: 16px; }
+  .et-fala { font-size: var(--texto); }
   /* como no Desafio Surpresa: o Ouvir ao lado da pergunta, a frase embaixo, tudo justo */
   .et-area .enunciado { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; padding: 6px 10px; }
-  .et-area .pergunta { flex: 1 1 160px; min-width: 0; margin: 0; font-size: 16px; }
-  .et-area .btn-ouvir { flex: none; margin-top: 0; min-height: 40px; padding: 2px 10px; }
-  .et-area .afirmacao { flex: 1 1 100%; order: 2; margin: 0; padding: 6px 10px; font-size: 16px; }
+  .et-area .pergunta { flex: 1 1 160px; min-width: 0; margin: 0; font-size: var(--texto); }
+  .et-area .btn-ouvir { flex: none; margin-top: 0; min-height: 44px; padding: 2px 10px; }
+  .et-area .afirmacao { flex: 1 1 100%; order: 2; margin: 0; padding: 6px 10px; font-size: var(--texto); }
   .et-area .opcoes { margin-top: 8px; gap: 10px; }
   .et-area .opcao { min-height: 52px; padding: 4px 8px; }
   /* Conferir sob o balão, na coluna do ET: a pergunta ganha a altura toda */
   .tela-et-desafio .painel { position: relative; }
   .et-botoes { position: absolute; left: 0; bottom: 0; width: 256px; padding: 0 16px 10px; }
+  /* a coluna do ET guarda o lugar do Conferir (botão de 52 px + 10 de pé + 6 de folga): o balão e o placar não ficam embaixo dele */
+  .et-cabeca { padding-bottom: 68px; }
+  /* letras grandes: a fala e o Conferir um degrau abaixo (a coluna tem 220 px e a tela 390 de altura); o placar quebra */
+  .letras-grandes .et-fala { font-size: var(--texto-aux); }
+  .letras-grandes .et-placar { white-space: normal; }
+  .letras-grandes .et-botoes .btn-grande { font-size: var(--texto-aux); white-space: nowrap; }
 }

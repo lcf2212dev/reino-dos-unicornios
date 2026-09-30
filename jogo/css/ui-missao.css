@@ -7,40 +7,47 @@
 .missao-topo {
   display: flex; align-items: center; gap: 12px;
   padding: calc(env(safe-area-inset-top, 0px) + 10px) 14px 10px;
-  background: var(--ambar-claro); border-bottom: 4px solid var(--borda);
+  background: var(--ambar-claro); border-bottom: var(--borda-grossa) solid var(--borda);
 }
-.missao-titulo { flex: 1; min-width: 0; font-family: var(--fonte-titulo); font-weight: 600; font-size: 1.05em; line-height: 1.15;
+.missao-titulo { flex: 1; min-width: 0; font-family: var(--fonte-titulo); font-size: var(--texto); line-height: var(--entrelinha-titulo);
   overflow-wrap: normal; }   /* título sem hífen suave: palavra inteira (ui.md §10.17) */
+/* degrau do título que não cabe (D.ajustarTitulo, js/atividades/desafios.js): um token abaixo, nunca fator */
+.missao-topo .missao-titulo.titulo-aux { font-size: var(--texto-aux); }
+.titulo-cola { white-space: nowrap; }   /* o ícone preso à 1ª palavra (D.ajustarTitulo) */
+.titulo-resto { white-space: normal; }   /* o resto do «inglês» do título, dentro do mesmo span.en, quebra normal */
+/* letras grandes no celular: o título do topo fica no degrau de baixo (16), como o cabeçalho que não cabe (ui.md §10.21) */
+@media (max-width: 480px) { .letras-grandes .missao-titulo { font-size: var(--texto-aux); } }
 .missao-pontos { display: flex; align-items: center; gap: 6px; flex: none; }
-.ponto { width: 12px; height: 12px; border: 2px solid var(--borda); border-radius: var(--redondo); background: var(--branco); }
+.ponto { width: 12px; height: 12px; border: var(--borda-fina) solid var(--borda); border-radius: var(--redondo); background: var(--branco); }
 .ponto.feito { background: var(--laranja); }
 .ponto.atual { width: 16px; height: 16px; background: var(--ouro); }   /* a atual: maior e dourada, sem scale */
 /* mais de 10 questões: uma barra contínua de trechos, a atual mais alta */
-.missao-pontos:has(> .ponto:nth-child(11)) { gap: 0; width: min(40vw, 240px); height: 12px; border: 2px solid var(--borda); background: var(--branco); }
+.missao-pontos:has(> .ponto:nth-child(11)) { gap: 0; width: min(40vw, 240px); height: 12px; border: var(--borda-fina) solid var(--borda); background: var(--branco); }
 .missao-pontos:has(> .ponto:nth-child(11)) .ponto { flex: 1 1 0; width: auto; height: 8px; border: 0; border-radius: 0; background: transparent; }
 .missao-pontos:has(> .ponto:nth-child(11)) .ponto.feito { background: var(--laranja); }
-.missao-pontos:has(> .ponto:nth-child(11)) .ponto.atual { height: 16px; margin: -4px 0; background: var(--ouro); box-shadow: 0 0 0 2px var(--borda); }
+.missao-pontos:has(> .ponto:nth-child(11)) .ponto.atual { height: 16px; margin: -4px 0; background: var(--ouro); outline: var(--borda-fina) solid var(--borda); }
 .missao-corpo { flex: 1; overflow: auto; padding: 18px 16px 24px; }
 .missao-corpo > * { max-width: 760px; margin-left: auto; margin-right: auto; }
 .missao-rodape {
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
   padding: 10px 16px calc(env(safe-area-inset-bottom, 0px) + 12px);
-  background: var(--papel); border-top: 4px solid var(--borda);
+  background: var(--papel); border-top: var(--borda-grossa) solid var(--borda);
 }
-.sem-relogio { font-size: 0.8em; font-weight: 700; color: var(--tinta-suave); }
+.sem-relogio { font-size: var(--texto-aux); color: var(--tinta-suave); }
 /* Conferir: a mesma classe e a mesma cor na sala, na surpresa e no ET (ui.md §10.8): laranja, e desabilitado (sem
    resposta) no estado indisponível de ui-base.css */
 .btn-conferir { background: var(--laranja); color: var(--tinta); }
-.missao-rodape .btn-conferir { min-width: 190px; font-size: 1.1em; flex-shrink: 0; }
+.missao-rodape .btn-conferir { min-width: 190px; font-size: var(--texto); flex-shrink: 0; }
 /* letras grandes no tablet: "Conferir ✓" não quebra e o "Sem relógio…" cabe numa linha (bordas do rodapé 16 → 10 px) */
-@media (min-width: 640px) { .missao-rodape { padding-left: calc(16px - (var(--escala-texto) - 1) * 40px); padding-right: calc(16px - (var(--escala-texto) - 1) * 40px); } }
-.desafio-num { font-weight: 700; color: var(--tinta-suave); font-size: 0.85em; margin-bottom: 8px; }
+@media (min-width: 640px) { .letras-grandes .missao-rodape { padding-left: 10px; padding-right: 10px; } }
+.desafio-num { color: var(--tinta-suave); font-size: var(--texto-aux); margin-bottom: 8px; }
 
 .desafio { display: flex; flex-direction: column; gap: 16px; }
-.enunciado { padding: 16px 18px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); }
-.pergunta { font-size: 1.15em; font-weight: 700; }
-.afirmacao { margin: 10px 0 0; padding: 12px 14px; border-left: 6px solid var(--ambar); background: var(--papel-quente); border-radius: var(--canto); font-size: 1.1em; font-weight: 700; }
-.btn-ouvir { margin-top: 10px; min-height: 44px; padding: 4px 14px; border: 2px solid var(--borda); border-radius: var(--canto); background: var(--papel-quente); font-weight: 700; font-size: 0.85em; }
+.enunciado { padding: 16px 18px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); }
+.pergunta { font-size: var(--texto); }   /* enunciado: 16 no celular, 24 a partir de 640 px (ui.md §10.9.1) */
+@media (min-width: 640px) { .pergunta { font-size: var(--texto-g); } }
+.afirmacao { margin: 10px 0 0; padding: 12px 14px; border-left: var(--borda-grossa) solid var(--ambar); background: var(--papel-quente); border-radius: var(--canto); font-size: var(--texto); }
+.btn-ouvir { margin-top: 10px; min-height: 44px; padding: 4px 14px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel-quente); font-size: var(--texto); }
 
 .opcoes { display: grid; grid-template-columns: 1fr; gap: 12px; }
 /* Verdadeiro/Falso e duas opções lado a lado só a partir de 640 px: no celular, "Verdadeiro" na letra pixel
@@ -49,21 +56,21 @@
 .opcao {
   display: flex; align-items: center; gap: 12px;
   min-height: 64px; padding: 12px 16px; text-align: left;
-  border: 3px solid var(--borda); border-radius: var(--canto-grande);
-  background: var(--papel); box-shadow: 0 4px 0 var(--borda);
-  font-weight: 700; font-size: 1.02em;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande);
+  background: var(--papel); box-shadow: var(--sombra-grande);
+  font-size: var(--texto);
 }
 .opcao-emoji, .sala-emoji, .bau-emoji, .intro-emoji, .fim-emoji, .livro-emoji, .premio-icone, .regra-icone, .aviso-medalha-icone, .item-icone {
-  display: inline-flex; align-items: center; justify-content: center; flex: none; line-height: 0;
+  display: inline-flex; align-items: center; justify-content: center; flex: none; line-height: 1;
 }
-.opcao-emoji { font-size: 1.6em; }
+.opcao-emoji { font-size: var(--texto-g); }
 .opcao-texto { flex: 1; }
 /* palavra comprida (ex.: "acontecimentos" com letras grandes no celular): quebra dentro do texto da opção em vez de
    empurrar o botão para fora da tela; palavras que cabem não mudam (break-word só age quando a palavra não cabe) */
 .opcoes-varias > .opcao { min-width: 0; }
 .opcoes-varias .opcao-texto { min-width: 0; overflow-wrap: break-word; }
-.opcao[aria-pressed="true"] { background: var(--ambar-claro); border-color: var(--roxo); box-shadow: 0 4px 0 var(--roxo); outline: 3px solid var(--roxo); outline-offset: 0; }
-.opcao-marcar::after { content: ""; flex: none; width: 28px; height: 28px; border: 3px solid var(--borda); border-radius: var(--canto); background: var(--branco); }
+.opcao[aria-pressed="true"] { background: var(--ambar-claro); border-color: var(--roxo); box-shadow: var(--sombra-grande); outline: var(--borda-fina) solid var(--roxo); outline-offset: 0; }
+.opcao-marcar::after { content: ""; flex: none; width: 28px; height: 28px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--branco); }
 .opcao-marcar[aria-pressed="true"]::after {
   content: "";
   background:
@@ -73,14 +80,14 @@
     linear-gradient(var(--branco), var(--branco)) 18px 5px / 4px 6px no-repeat,
     var(--roxo);
 }
-.opcao.certa, .opcao-marcar.certa { background: var(--certo-fundo); border-color: var(--certo); box-shadow: 0 4px 0 var(--certo); outline: none; color: var(--tinta); }
+.opcao.certa, .opcao-marcar.certa { background: var(--certo-fundo); border-color: var(--certo); box-shadow: var(--sombra-grande); outline: none; color: var(--tinta); }
 /* erro de item (ui.md §10.19.2): a opção errada fica na tela riscada, em --erro-fundo com borda --erro, sem transparência */
 .opcao.errada { background: var(--erro-fundo); border-color: var(--erro); color: var(--tinta); text-decoration: line-through; box-shadow: none; }
 /* a opção travada depois da resposta (aria-disabled) que é a certa, a errada ou a marcada: o desenho não apaga */
 .opcao.certa canvas, .opcao.errada canvas, .opcao[aria-pressed="true"] canvas { filter: none; }
-.opcoes-vf .opcao { justify-content: center; font-size: 1.15em; }
+.opcoes-vf .opcao { justify-content: center; font-size: var(--texto); }
 
-.dica-toque { font-size: 0.85em; font-weight: 700; color: var(--tinta-suave); }
+.dica-toque { font-size: var(--texto-aux); color: var(--tinta-suave); }
 .dica-toque.pisca { animation: piscar 0.6s ease-in-out 2; color: var(--laranja-escuro); }
 
 /* ligar */
@@ -91,79 +98,82 @@
   --cor-par: transparent;
   display: flex; align-items: center; gap: 8px;
   min-height: 60px; padding: 10px 12px; text-align: left;
-  border: 3px solid var(--borda); border-radius: var(--canto);
-  background: var(--papel); box-shadow: 0 4px 0 var(--borda);
-  font-weight: 700; font-size: 0.92em;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
+  background: var(--papel); box-shadow: var(--sombra-grande);
+  font-size: var(--texto);
   flex-wrap: wrap;
 }
 /* o texto desce para baixo da bolinha/figura só quando a palavra mais comprida não cabe ao lado */
 .ligar-item > span:last-child:not(.ligar-img) { flex: 1 1 0; max-width: 100%; overflow-wrap: break-word; }
-.ligar-marca { flex: none; width: 26px; height: 26px; border-radius: var(--redondo); border: 3px solid var(--borda); background: linear-gradient(var(--papel), var(--papel)) center / 14px 14px no-repeat, var(--cor-par); color: var(--tinta); font-size: 0.8em; display: grid; place-items: center; }
+.ligar-marca { flex: none; width: 26px; height: 26px; border-radius: var(--redondo); border: var(--borda-fina) solid var(--borda); background: linear-gradient(var(--papel), var(--papel)) center / 14px 14px no-repeat, var(--cor-par); color: var(--tinta); font-size: var(--texto-aux); display: grid; place-items: center; }
 .ligar-item.escolhida { outline: 4px solid var(--roxo); outline-offset: 2px; background: var(--ambar-claro); }
 .ligar-item.ligado { background: color-mix(in srgb, var(--cor-par) 16%, var(--branco)); }
 .tudo-certo .ligar-item, .tudo-certo .seq-item, .tudo-certo .sep-item { background: var(--certo-fundo); }
 
 /* sequência / frase */
 .sequencia { display: flex; flex-direction: column; gap: 12px; }
-.seq-alvo { list-style: none; margin: 0; padding: 12px; display: flex; flex-direction: column; gap: 8px; border: 3px dashed var(--ambar); border-radius: var(--canto-grande); background: var(--papel); min-height: 70px; }
+.seq-alvo { list-style: none; margin: 0; padding: 12px; display: flex; flex-direction: column; gap: 8px; border: var(--borda-fina) dashed var(--ambar); border-radius: var(--canto-grande); background: var(--papel); min-height: 70px; }
 .seq-alvo li { display: flex; }
-.seq-vaga { align-items: center; gap: 10px; min-height: 44px; padding: 8px 12px; border: 2px dashed var(--tinta-suave); border-radius: var(--canto); color: var(--tinta-suave); font-weight: 700; }
-.seq-num { flex: none; width: 30px; height: 30px; display: grid; place-items: center; border-radius: var(--redondo); background: var(--ouro); border: 3px solid var(--borda); font-weight: 700; font-size: 0.85em; color: var(--tinta); }
+.seq-vaga { align-items: center; gap: 10px; min-height: 44px; padding: 8px 12px; border: var(--borda-fina) dashed var(--tinta-suave); border-radius: var(--canto); color: var(--tinta-suave); }
+.seq-num { flex: none; width: 30px; height: 30px; display: grid; place-items: center; border-radius: var(--redondo); background: var(--ouro); border: var(--borda-fina) solid var(--borda); font-size: var(--texto-aux); color: var(--tinta); }
 .seq-item {
   display: flex; align-items: center; gap: 10px;
   min-height: 52px; padding: 8px 14px; text-align: left;
-  border: 3px solid var(--borda); border-radius: var(--canto);
-  background: var(--papel); box-shadow: 0 3px 0 var(--borda);
-  font-weight: 700;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
+  background: var(--papel); box-shadow: var(--sombra-pequena);
+  
 }
 .seq-alvo .seq-item { width: 100%; background: var(--ambar-claro); }
 .seq-monte { display: flex; flex-wrap: wrap; gap: 10px; }
 .frase-linha { flex-direction: row; flex-wrap: wrap; align-items: center; }
 .frase-linha .seq-item { width: auto; }
-.frase-vazia { color: var(--tinta-suave); font-weight: 700; font-size: 0.9em; padding: 4px 6px; border: 2px dashed var(--tinta-suave); border-radius: var(--canto); }   /* vaga: tinta suave com tracejado (ui.md §10.8) */
+.frase-vazia { color: var(--tinta-suave); font-size: var(--texto); padding: 4px 6px; border: var(--borda-fina) dashed var(--tinta-suave); border-radius: var(--canto); }   /* vaga: tinta suave com tracejado (ui.md §10.8) */
 
 /* separar */
 .separar { display: flex; flex-direction: column; gap: 14px; }
-.separar-monte { display: flex; flex-wrap: wrap; gap: 10px; min-height: 60px; padding: 10px; border: 3px dashed var(--ambar); border-radius: var(--canto-grande); background: var(--papel); }
-.sep-item { display: flex; align-items: center; gap: 8px; min-height: 52px; padding: 6px 12px; border: 3px solid var(--borda); border-radius: var(--canto); background: var(--papel); box-shadow: 0 3px 0 var(--borda); font-weight: 700; }
+.separar-monte { display: flex; flex-wrap: wrap; gap: 10px; min-height: 60px; padding: 10px; border: var(--borda-fina) dashed var(--ambar); border-radius: var(--canto-grande); background: var(--papel); }
+.sep-item { display: flex; align-items: center; gap: 8px; min-height: 52px; padding: 6px 12px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel); box-shadow: var(--sombra-pequena); }
 .sep-item.escolhido { outline: 4px solid var(--roxo); outline-offset: 2px; background: var(--ambar-claro); transform: translateY(-2px); }
 .baus { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
 .bau {
   display: flex; flex-direction: column; align-items: stretch; gap: 6px;
   min-height: 170px; padding: 12px; text-align: left;
-  border: 4px solid var(--borda); border-radius: var(--canto-grande);
+  border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto-grande);
   background: linear-gradient(180deg, var(--laranja-claro) 0 34px, var(--papel) 34px);
-  box-shadow: 0 5px 0 var(--borda);
+  box-shadow: var(--sombra-grande);
 }
 .bau:nth-child(2) { background: linear-gradient(180deg, var(--ambar-claro) 0 34px, var(--papel) 34px); }
-.com-escolha .bau { box-shadow: 0 0 0 4px var(--laranja), 0 5px 0 4px var(--borda); animation: pulsar 1.2s step-end 3; }   /* "toque aqui": o contorno fica mesmo sem animação */
-.bau-titulo { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 1.05em; }
+.com-escolha .bau { box-shadow: 0 0 0 4px var(--laranja), 0 4px 0 4px var(--borda); animation: pulsar 1.2s step-end 3; }   /* tipografia-ok: anel de "toque aqui" (não é sombra), com a sombra de 4 px por baixo; o contorno fica mesmo sem animação */
+.bau-titulo { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: var(--texto); }
 .bau-titulo b, .sep-item { max-width: 100%; overflow-wrap: break-word; }
-.bau-emoji { font-size: 1.5em; }
-.bau-dica { font-size: 0.78em; font-weight: 700; color: var(--tinta-suave); }
+.bau-emoji { font-size: var(--texto-g); }
+.bau-dica { font-size: var(--texto-aux); color: var(--tinta-suave); }
 .bau-itens { display: flex; flex-wrap: wrap; gap: 6px; }
-.bau-itens .sep-item { font-size: 0.85em; min-height: 44px; }
+.bau-itens .sep-item { font-size: var(--texto-aux); min-height: 44px; }
 
 /* memória */
 .memoria { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
-.carta-mem { position: relative; aspect-ratio: 3 / 4; max-width: 100%; border: 3px solid var(--borda); border-radius: var(--canto); background: var(--ambar); box-shadow: 0 4px 0 var(--borda); font-weight: 700; padding: 4px; }
-.mem-verso { font-size: 1.8em; }
-.mem-face { display: none; font-size: 16px; }
-.mem-face.mem-emoji { font-size: 2em; }
+.carta-mem { position: relative; aspect-ratio: 3 / 4; max-width: 100%; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--ambar); box-shadow: var(--sombra-grande); padding: 4px; }
+.mem-verso { font-size: var(--texto-t); }
+.mem-face { display: none; font-size: var(--texto); }
+/* letras grandes: a palavra da carta fica em 16 (--texto-aux sobe a 16): a carta não tem lugar para 24 */
+.letras-grandes .mem-face:not(.mem-emoji) { font-size: var(--texto-aux); }
+.mem-face.mem-emoji { font-size: var(--texto-t); }
 .carta-mem.virada { background: var(--papel); }
 .carta-mem.virada .mem-verso { display: none; }
 .carta-mem.virada .mem-face { display: block; }
 .carta-mem.achada { background: var(--certo-fundo); border-color: var(--certo); }
 /* palavra longa (.mem-longa, memoria.js): 16 → 12 px no celular; não cabe em 4 colunas: 3 ou 2 (sem partir a palavra) */
-@media (max-width: 420px) { .memoria { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; } .memoria.mem-longa { gap: 4px; } .memoria.mem-longa .carta-mem { padding: 2px; } .memoria.mem-longa .mem-face:not(.mem-emoji) { font-size: 12px; font-weight: 400; } .memoria.mem-3col { grid-template-columns: repeat(3, minmax(0, 1fr)); } .memoria.mem-2col { grid-template-columns: repeat(2, minmax(0, 1fr)); } .memoria.mem-3col .carta-mem, .memoria.mem-2col .carta-mem { aspect-ratio: auto; min-height: 52px; } }
+@media (max-width: 420px) { .memoria { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; } .memoria.mem-longa { gap: 4px; } .memoria.mem-longa .carta-mem { padding: 2px; } .memoria.mem-longa .mem-face:not(.mem-emoji) { font-size: var(--texto-aux); } .memoria.mem-3col { grid-template-columns: repeat(3, minmax(0, 1fr)); } .memoria.mem-2col { grid-template-columns: repeat(2, minmax(0, 1fr)); } .memoria.mem-3col .carta-mem, .memoria.mem-2col .carta-mem { aspect-ratio: auto; min-height: 52px; } }
+/* letras grandes no celular: a palavra longa fica em 16 (não há 12 nesse modo): uma coluna a menos */
+@media (max-width: 420px) { .letras-grandes .memoria.mem-longa { grid-template-columns: repeat(3, minmax(0, 1fr)); } .letras-grandes .memoria.mem-3col, .letras-grandes .memoria.mem-2col { grid-template-columns: repeat(2, minmax(0, 1fr)); } .letras-grandes .memoria.mem-longa .carta-mem { aspect-ratio: auto; min-height: 52px; } }
 
 /* retorno */
 .missao-retorno {
   position: absolute; left: 0; right: 0; bottom: 0; z-index: 5;
   max-height: 78%; overflow: auto;
   padding: 18px 18px calc(env(safe-area-inset-bottom, 0px) + 18px);
-  border-top: 4px solid var(--borda); border-radius: var(--canto-grande) var(--canto-grande) 0 0;
-  box-shadow: 0 -4px 0 var(--sombra-chao);
+  border-top: var(--borda-grossa) solid var(--borda); border-radius: var(--canto-grande) var(--canto-grande) 0 0;
   animation: subir 0.22s ease-out;
 }
 .missao-retorno > * { max-width: 760px; margin-left: auto; margin-right: auto; }
@@ -171,35 +181,34 @@
 .retorno-certo { background: var(--certo-fundo); }
 .retorno-quase { background: var(--quase-fundo); }
 .retorno-cabeca { display: flex; align-items: center; gap: 14px; }
-.retorno-cabeca h3 { font-family: var(--fonte-titulo); font-size: 1.4em; }
-.retorno-fala { font-weight: 700; }
-.retorno-explica { padding: 12px 14px; background: var(--papel); border: 2px solid var(--borda); border-radius: var(--canto); }
-.retorno-extra { font-weight: 700; color: var(--roxo-texto); }
-.retorno-cresceu { font-weight: 700; color: var(--epico-texto); }
+.retorno-cabeca h3 { font-family: var(--fonte-titulo); font-size: var(--texto-g); }
+.retorno-explica { padding: 12px 14px; background: var(--papel); border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); }
+.retorno-extra { color: var(--roxo-texto); }
+.retorno-cresceu { color: var(--epico-texto); }
 .retorno-botoes { display: flex; flex-wrap: wrap; gap: 12px; justify-content: flex-end; }
 .retorno-botoes .btn-grande { flex: 1 1 200px; }
 
 /* intro e fim de sala */
 .intro-sala, .fim-sala, .ritual, .revisao { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
-.intro-emoji, .fim-emoji { font-size: 3.2em; line-height: 1; }
-.intro-paginas { color: var(--tinta-suave); font-weight: 700; font-size: 0.85em; }
-.intro-regras { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; text-align: left; font-weight: 700; }
-.intro-regras li { padding: 10px 14px; background: var(--papel); border: 2px solid var(--borda); border-radius: var(--canto); }
+.intro-emoji, .fim-emoji { font-size: var(--texto-festa); line-height: 1; }
+.intro-paginas { color: var(--tinta-suave); font-size: var(--texto-aux); }
+.intro-regras { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; text-align: left; }
+.intro-regras li { padding: 10px 14px; background: var(--papel); border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); }
 /* as 3 regras da sala: a frase inteira; no celular, uma linha de 3 ícones com o nome curto (rótulo de 12 px) */
 .regras-da-sala .regra-curta { display: none; }
 @media (max-width: 480px) {
   .intro-regras.regras-da-sala { flex-direction: row; gap: 8px; width: 100%; text-align: center; }
   .regras-da-sala li { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 4px; }
   .regras-da-sala .regra-longa { display: none; }
-  .regras-da-sala .regra-curta { display: block; font-size: 12px; line-height: 1.5; overflow-wrap: normal; }
+  .regras-da-sala .regra-curta { display: block; font-size: var(--texto-aux); line-height: var(--entrelinha); overflow-wrap: normal; }
 }
-.fim-grande { font-size: 1.15em; font-weight: 700; }
+.fim-grande { font-size: var(--texto); }
 .premios { list-style: none; padding: 0; margin: 0; width: 100%; display: flex; flex-direction: column; gap: 10px; text-align: left; }
-.premios li { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 3px solid var(--borda); border-radius: var(--canto); background: var(--papel); }
-.premio-icone { font-size: 1.6em; flex: none; }
+.premios li { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel); }
+.premio-icone { font-size: var(--texto-g); flex: none; }
 .premio-dinheiro { background: var(--ouro-claro) !important; }
 .premio-ovo { background: var(--laranja-claro) !important; }
-.dica-raro { font-weight: 700; color: var(--raro-texto); }
+.dica-raro { color: var(--raro-texto); }
 
 
 /* resumo antes das questões (cartas do livro que a sala usa) */
@@ -211,9 +220,9 @@
   footer.rodape-acao.resumo-botoes > * { flex: 0 0 260px; min-width: 0; }
   footer.rodape-acao.resumo-botoes > .btn-principal { flex-basis: 420px; }
 }
-.resumo-pag { color: var(--tinta-suave); font-weight: 700; font-size: 0.85em; margin: 0; }
+.resumo-pag { color: var(--tinta-suave); font-size: var(--texto-aux); margin: 0; }
 /* contador da revisão do treino (D6-11): letra pequena suave; no celular ganha linha própria acima do Entregar */
-.contador-revisao { font-size: 12px; color: var(--tinta-suave); }
+.contador-revisao { font-size: var(--texto-aux); color: var(--tinta-suave); }
 @media (max-width: 480px) {
   .missao-rodape:has(.contador-revisao) { flex-wrap: wrap; row-gap: 6px; height: auto; }
   .missao-rodape .contador-revisao { flex-basis: 100%; text-align: center; }

@@ -1,120 +1,121 @@
 /* Prova: treino do Castelo e Escola do Reino (provas bimestrais: marcar X, V ou F, completar do quadro, ligar com desenho) e os prêmios da escola na loja. */
 /* ---------- prova ---------- */
 .plano-prova { list-style: none; counter-reset: passo; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; width: 100%; text-align: left; }
-.plano-prova li { counter-increment: passo; display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); font-weight: 700; }
-.plano-prova li::before { content: counter(passo); flex: none; width: 32px; height: 32px; display: grid; place-items: center; border-radius: var(--redondo); background: var(--ouro); border: 3px solid var(--borda); }
-.plano-prova li span { font-size: 1.4em; }
-.plano-frase { text-align: center; font-weight: 700; color: var(--roxo-texto); }
-.aviso-medalha { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--ouro-claro); font-weight: 700; }
-.aviso-medalha-icone { font-size: 2.4em; flex: none; }
+.plano-prova li { counter-increment: passo; display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); }
+.plano-prova li::before { content: counter(passo); flex: none; width: 32px; height: 32px; display: grid; place-items: center; border-radius: var(--redondo); background: var(--ouro); border: var(--borda-fina) solid var(--borda); }
+.plano-prova li span { font-size: var(--texto-g); }
+.plano-frase { text-align: center; color: var(--roxo-texto); }
+.aviso-medalha { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--ouro-claro); }
+.aviso-medalha-icone { font-size: var(--texto-t); flex: none; }
 
 .balao-respira { width: 150px; height: 180px; display: grid; place-items: center; transform: scale(0.55); transition: transform 3.1s ease-in-out; }
 .balao-cor { display: block; }   /* o balão em pixel art 16×20 (treino.js, BALAO), a 8 px por pixel */
 .balao-botao { vertical-align: middle; margin-left: 8px; }   /* o mesmo balão no botão, a 2 px por pixel */
 .balao-respira.enche { transform: scale(1.05); }
 .balao-respira.esvazia { transform: scale(0.55); }
-.respira-texto { font-size: 1.2em; font-weight: 700; }
-.respira-conta { color: var(--tinta-suave); font-weight: 700; }
+.respira-texto { font-size: var(--texto); }
+.respira-conta { color: var(--tinta-suave); }
 
 .prova-rodape .btn-grande { min-width: 140px; }
-.dica-revisao { text-align: center; font-weight: 700; color: var(--roxo-texto); margin-top: 14px; }
+.dica-revisao { text-align: center; color: var(--roxo-texto); margin-top: 14px; }
 .lista-revisao { list-style: none; padding: 0; margin: 0; width: 100%; display: flex; flex-direction: column; gap: 10px; }
-.item-revisao { display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px 12px; text-align: left; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); box-shadow: 0 3px 0 var(--borda); }
+.item-revisao { display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px 12px; text-align: left; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); box-shadow: var(--sombra-pequena); }
 .item-revisao.revisado { background: var(--certo-fundo); }
 .item-revisao.vazio { background: var(--papel-2); }
-.rev-num { flex: none; width: 34px; height: 34px; display: grid; place-items: center; border-radius: var(--redondo); background: var(--ambar); border: 3px solid var(--borda); font-weight: 700; }
-.rev-texto { flex: 1; font-size: 0.85em; }
+.rev-num { flex: none; width: 34px; height: 34px; display: grid; place-items: center; border-radius: var(--redondo); background: var(--ambar); border: var(--borda-fina) solid var(--borda); }
+.rev-texto { flex: 1; font-size: var(--texto); }
 .rev-resp { color: var(--tinta-suave); }
-.rev-status { flex: none; font-weight: 700; font-size: 0.8em; }
-.aviso-revisao { font-weight: 700; padding: 10px 14px; border-radius: var(--canto); background: var(--ouro-claro); border: 2px solid var(--borda); }
-.medalha-grande { font-size: 5em; line-height: 1; animation: flutuar 2s ease-in-out infinite; }
+.rev-status { flex: none; font-size: var(--texto-aux); }
+.aviso-revisao { padding: 10px 14px; border-radius: var(--canto); background: var(--ouro-claro); border: var(--borda-fina) solid var(--borda); }
+.medalha-grande { font-size: var(--texto-festa); line-height: 1; animation: flutuar 2s ease-in-out infinite; }
 .medalha-ouro { filter: drop-shadow(2px 0 0 var(--ouro)) drop-shadow(-2px 0 0 var(--ouro)) drop-shadow(0 2px 0 var(--ouro)) drop-shadow(0 -2px 0 var(--ouro)); }
 .lista-erros { display: flex; flex-direction: column; gap: 10px; width: 100%; text-align: left; }
-.erro-item { padding: 12px 14px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); }
+.erro-item { padding: 12px 14px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); }
 .erro-item > * + * { margin-top: 4px; }
 .erro-sua { color: var(--tinta-suave); }
-.erro-certa { color: var(--certo); font-weight: 700; }
-.erro-explica { font-size: 0.9em; }
+.erro-certa { color: var(--certo); }
+.erro-explica { font-size: var(--texto); }
 
 /* ---------- escola do reino (provas bimestrais) ---------- */
-.chip-rar { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border: 2px solid var(--borda); border-radius: var(--canto); font-size: 0.8em; font-weight: 700; white-space: nowrap; background: var(--rar-fundo, var(--comum-fundo)); color: var(--rar-texto, var(--tinta)); }
+.chip-rar { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); font-size: var(--texto-aux); white-space: nowrap; background: var(--rar-fundo, var(--comum-fundo)); color: var(--rar-texto, var(--tinta)); }
 .sala-chips .chip-mini { border-radius: var(--canto); }
 .cartao-prova { flex-wrap: wrap; }
 .cartao-prova .sala-info { flex: 1 1 60%; }
 .cartao-prova .sala-ir { flex-basis: 100%; text-align: right; }
 .chip-mini.valendo { background: var(--rar-fundo, var(--comum-fundo)); color: var(--rar-texto, var(--tinta)); }
 /* raridade: fundo chapado e a faixa interna de 4 px em --rar-desenho (lendário dourado, sem o arco-íris: ui.md §10.8) */
-.faixa-valendo { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 6px 14px; border-bottom: 4px solid var(--borda); font-size: 0.8em; font-weight: 700; text-align: center; background: var(--rar-fundo, var(--comum-fundo)); box-shadow: inset 0 -4px 0 var(--rar-desenho, var(--comum-desenho)); }
+.faixa-valendo { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 6px 14px; border-bottom: var(--borda-grossa) solid var(--borda); font-size: var(--texto-aux); text-align: center; background: var(--rar-fundo, var(--comum-fundo)); box-shadow: inset 0 -4px 0 var(--rar-desenho, var(--comum-desenho)); }   /* tipografia-ok: faixa interna da raridade (ui.md §10.8) */
 .faixa-valendo.treino { background: var(--papel); color: var(--tinta-suave); box-shadow: none; }
 .faixa-valendo canvas { flex: none; }
-.selo-tentativa { display: flex; flex-direction: column; align-items: center; padding: 10px 22px; border: 4px solid var(--borda); border-radius: var(--canto-grande); background: var(--rar-fundo, var(--comum-fundo)); box-shadow: inset 0 0 0 4px var(--rar-desenho, var(--comum-desenho)), 0 4px 0 var(--borda); }
-.selo-tentativa small { font-size: 0.75em; color: var(--tinta-suave); font-weight: 700; }
-.selo-tentativa b { font-family: var(--fonte-titulo); font-size: 1.3em; }
-.previa-valendo { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%; padding: 24px 16px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--rar-fundo, var(--comum-fundo)); box-shadow: inset 0 0 0 4px var(--rar-desenho, var(--comum-desenho)); }
+.selo-tentativa { display: flex; flex-direction: column; align-items: center; padding: 10px 22px; border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto-grande); background: var(--rar-fundo, var(--comum-fundo)); box-shadow: inset 0 0 0 4px var(--rar-desenho, var(--comum-desenho)), var(--sombra-grande); }   /* tipografia-ok: faixa interna da raridade (ui.md §10.8) */
+.selo-tentativa small { font-size: var(--texto-aux); color: var(--tinta-suave); }
+.selo-tentativa b { font-family: var(--fonte-titulo); font-size: var(--texto-g); }
+.previa-valendo { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%; padding: 24px 16px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--rar-fundo, var(--comum-fundo)); box-shadow: inset 0 0 0 4px var(--rar-desenho, var(--comum-desenho)); }   /* tipografia-ok: faixa interna da raridade (ui.md §10.8) */
 .previa-valendo.ganhou { animation: brilhar 1.2s step-end; }
-.previa-valendo p { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; font-weight: 700; }
+.previa-valendo p { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; }
 .quadro-premios-caixa { width: 100%; display: flex; flex-direction: column; gap: 10px; text-align: left; }
-.quadro-premios-titulo { font-weight: 700; text-align: center; }
-.quadro-premios-nota { font-size: 0.8em; font-weight: 700; color: var(--tinta-suave); text-align: center; }
+.quadro-premios-titulo { text-align: center; }
+.quadro-premios-nota { font-size: var(--texto-aux); color: var(--tinta-suave); text-align: center; }
 .quadro-premios { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
-.linha-premio { display: grid; grid-template-columns: auto 1fr auto; grid-template-areas: "quando quando status" "icone info info"; align-items: center; gap: 6px 12px; padding: 10px 12px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); }
+.linha-premio { display: grid; grid-template-columns: auto 1fr auto; grid-template-areas: "quando quando status" "icone info info"; align-items: center; gap: 6px 12px; padding: 10px 12px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); }
 .linha-premio > canvas { grid-area: icone; }
 /* o selo (VALENDO AGORA…) não passa por cima do "1ª tentativa": a coluna dele deixa ~90 px para o rótulo com letra
    normal (igual a antes) e ~150 px com letras grandes; sem espaço, o selo quebra em 2 linhas */
-.linha-premio { grid-template-columns: auto 1fr fit-content(calc(100% - 12px - 90px - (var(--escala-texto) - 1) * 400px)); }
+.linha-premio { grid-template-columns: auto 1fr fit-content(calc(100% - 12px - 90px)); }
+.letras-grandes .linha-premio { grid-template-columns: auto 1fr fit-content(calc(100% - 12px - 150px)); }
 .linha-premio[class*="rar-"] { background: var(--rar-fundo); }
-.linha-premio.agora { outline: 4px solid var(--roxo); outline-offset: 2px; box-shadow: 0 4px 0 var(--roxo); }
+.linha-premio.agora { outline: 4px solid var(--roxo); outline-offset: 2px; box-shadow: var(--sombra-grande); }
 .linha-premio.passou { background: var(--papel-2); color: var(--tinta-suave); }   /* já passou: texto suave, sem transparência (ui.md §10.19.1); só o desenho apaga */
 .linha-premio.passou canvas { filter: var(--apagado); }
 .linha-premio.passou .chip-rar { background: var(--papel); color: var(--tinta-suave); }   /* a raridade também apaga: não parece prêmio em jogo */
 .linha-premio.ganhou { background: var(--certo-fundo); }
-.premio-quando { grid-area: quando; font-size: 0.75em; font-weight: 700; line-height: 1.4; overflow-wrap: normal; }   /* "tentativa" inteira */
-.premio-info { grid-area: info; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; font-size: 0.85em; min-width: 0; }
-.premio-status { grid-area: status; justify-self: end; font-size: 0.72em; font-weight: 700; padding: 2px 10px; border-radius: var(--canto); border: 2px solid var(--borda); background: var(--branco); }
+.premio-quando { grid-area: quando; font-size: var(--texto-aux); line-height: var(--entrelinha); overflow-wrap: normal; }   /* "tentativa" inteira */
+.premio-info { grid-area: info; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; font-size: var(--texto); min-width: 0; }
+.premio-status { grid-area: status; justify-self: end; font-size: var(--texto-aux); padding: 2px 10px; border-radius: var(--canto); border: var(--borda-fina) solid var(--borda); background: var(--branco); }
 .premio-status.agora { background: var(--ouro); }
 .premio-status.ganhou { background: var(--certo-fundo); color: var(--certo); }
-.nota-folha { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 150px; height: 150px; border: 5px solid var(--erro); border-radius: var(--redondo); background: var(--branco); color: var(--erro); box-shadow: 0 5px 0 var(--borda); animation: brilhar 1.2s step-end; }
-.nota-folha b { font-family: var(--fonte-titulo); font-size: 2.2em; line-height: 1.2; }
-.nota-folha small { font-weight: 700; font-size: 0.75em; }
+.nota-folha { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 150px; height: 150px; border: var(--borda-grossa) solid var(--erro); border-radius: var(--redondo); background: var(--branco); color: var(--erro); box-shadow: var(--sombra-grande); animation: brilhar 1.2s step-end; }
+.nota-folha b { font-family: var(--fonte-titulo); font-size: var(--texto-t); line-height: var(--entrelinha-titulo); }
+.nota-folha small { font-size: var(--texto-aux); }
 .nota-folha.nota-dez { border-color: var(--certo); color: var(--certo); }
-.proximo-premio { display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px 14px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--rar-fundo, var(--comum-fundo)); box-shadow: inset 0 0 0 4px var(--rar-desenho, var(--comum-desenho)); text-align: left; font-weight: 700; }
+.proximo-premio { display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px 14px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--rar-fundo, var(--comum-fundo)); box-shadow: inset 0 0 0 4px var(--rar-desenho, var(--comum-desenho)); text-align: left; }   /* tipografia-ok: faixa interna da raridade (ui.md §10.8) */
 .proximo-premio canvas { flex: none; }
 .proximo-premio p { display: block; }
 .proximo-premio .chip-rar { vertical-align: middle; }
 .correcao { list-style: none; padding: 0; margin: 0; width: 100%; display: flex; flex-direction: column; gap: 8px; text-align: left; }
-.correcao-item { padding: 10px 14px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--certo-fundo); }
+.correcao-item { padding: 10px 14px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--certo-fundo); }
 .correcao-item.errinho { background: var(--quase-fundo); }
 .correcao-item > * + * { margin-top: 6px; }
-.correcao-enunciado { font-size: 0.85em; }
+.correcao-enunciado { font-size: var(--texto); }
 .pergunta-revisao .intro-botoes .btn-grande { flex: 1 1 220px; }
 
 /* marcar X e circular (como na folha) */
-.estilo-marcar-x .opcao:not(.opcao-marcar)::before { content: "( )"; flex: none; white-space: pre; font-weight: 700; }
+.estilo-marcar-x .opcao:not(.opcao-marcar)::before { content: "( )"; flex: none; white-space: pre; }
 .estilo-marcar-x .opcao:not(.opcao-marcar)[aria-pressed="true"]::before { content: "(X)"; color: var(--roxo-texto); }
 .estilo-circular .opcao-marcar::after { display: none; }
 .estilo-circular .opcao { justify-content: center; text-align: center; }
-.estilo-circular .opcao[aria-pressed="true"] { border-color: var(--laranja-forte); border-radius: var(--canto); outline: 4px solid var(--laranja-forte); outline-offset: 0; background: var(--laranja-claro); box-shadow: 0 4px 0 var(--laranja-forte); }
+.estilo-circular .opcao[aria-pressed="true"] { border-color: var(--laranja-forte); border-radius: var(--canto); outline: 4px solid var(--laranja-forte); outline-offset: 0; background: var(--laranja-claro); box-shadow: var(--sombra-grande); }
 
 /* V ou F em cada frase */
 .vf-lista { display: flex; flex-direction: column; gap: 10px; }
-.vf-linha { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); }
+.vf-linha { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); }
 .vf-botoes { display: flex; gap: 6px; flex: none; }
-.vf-botao { width: 52px; height: 52px; border: 3px solid var(--borda); border-radius: var(--canto); background: var(--branco); font-weight: 700; font-size: 1.1em; box-shadow: 0 3px 0 var(--borda); }
+.vf-botao { width: 52px; height: 52px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--branco); font-size: var(--texto); box-shadow: var(--sombra-pequena); }
 .vf-botao.vf-com-icone { padding: 0; display: flex; align-items: center; justify-content: center; }   /* ✓ e ✘ desenhados, centrados (D12b-02) */
-.vf-botao[aria-pressed="true"] { background: var(--roxo-texto); color: var(--branco); box-shadow: 0 3px 0 var(--borda); outline: 3px solid var(--roxo); outline-offset: 1px; }
-.vf-texto { flex: 1; font-weight: 700; font-size: 0.95em; }
+.vf-botao[aria-pressed="true"] { background: var(--roxo-texto); color: var(--branco); box-shadow: var(--sombra-pequena); outline: var(--borda-fina) solid var(--roxo); outline-offset: 2px; }
+.vf-texto { flex: 1; font-size: var(--texto); }
 .tudo-certo .vf-linha { background: var(--certo-fundo); }
 
 /* completar com as palavras do quadro */
 .completar { display: flex; flex-direction: column; gap: 12px; }
-.quadro-palavras { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; padding: 12px; border: 3px solid var(--borda); border-radius: var(--canto); background: var(--papel); font-size: 0.9em; }
-.quadro-etiqueta { padding: 4px 10px; border: 2px solid var(--borda); border-radius: var(--canto); background: var(--papel); text-align: center; }
-.frase-completar { display: flex; flex-direction: column; gap: 10px; padding: 12px 14px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); }
-.frase-texto { font-weight: 700; line-height: 2.2; }
-.lacuna { display: inline-block; min-width: 7em; padding: 0 8px; border-bottom: 3px dashed var(--tinta-suave); color: var(--tinta-suave); text-align: center; line-height: 1.6; }
+.quadro-palavras { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; padding: 12px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel); font-size: var(--texto); }
+.quadro-etiqueta { padding: 4px 10px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel); text-align: center; }
+.frase-completar { display: flex; flex-direction: column; gap: 10px; padding: 12px 14px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); }
+.frase-texto { line-height: var(--entrelinha); }
+.lacuna { display: inline-block; min-width: 7em; padding: 0 8px; border-bottom: var(--borda-fina) dashed var(--tinta-suave); color: var(--tinta-suave); text-align: center; line-height: var(--entrelinha); margin: 4px 0; }
 .lacuna.preenchida { border-bottom-style: solid; border-bottom-color: var(--borda); color: var(--roxo-texto); background: var(--ambar-claro); border-radius: var(--canto) var(--canto) 0 0; }
 .frase-opcoes { display: flex; flex-wrap: wrap; gap: 8px; }
-.chip-palavra { min-height: 48px; padding: 6px 12px; border: 3px solid var(--borda); border-radius: var(--canto); background: var(--branco); font-weight: 700; font-size: 0.8em; box-shadow: 0 3px 0 var(--borda); }
+.chip-palavra { min-height: 48px; padding: 6px 12px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--branco); font-size: var(--texto); box-shadow: var(--sombra-pequena); }
 .chip-palavra[aria-pressed="true"] { background: var(--roxo-texto); color: var(--branco); }   /* branco no --roxo dá 4,3:1 */
 .completar .chip-palavra { min-width: 48px; }
 /* lista longa (5+ frases, as contas curtas da Matemática): 2 colunas quando a caixa comporta 2 de 340 px (D6-27);
@@ -125,7 +126,16 @@
 
 /* ligar com desenho (documentos) */
 .ligar-item.com-img { justify-content: flex-start; min-height: 84px; }
-.ligar-img { display: inline-flex; line-height: 0; }
+.ligar-img { display: inline-flex; line-height: 1; }
 
 /* prêmios da escola na loja: em ui-paineis.css, depois do .item-loja (a raridade vem por cima dele) */
 
+/* letras grandes no celular: as palavras do quadro e das escolhas ficam em 16 ("liquidificador" cabe na linha) */
+@media (max-width: 480px) { .letras-grandes .quadro-palavras, .letras-grandes .chip-palavra { font-size: var(--texto-aux); } }
+/* letras grandes no celular: o selo da tentativa numa linha e a linha do prêmio em três faixas (quando, selo, prêmio) */
+@media (max-width: 480px) {
+  .letras-grandes .selo-tentativa b { font-size: var(--texto); }
+  .letras-grandes .linha-premio { grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "quando quando" "status status" "icone info"; }
+  .letras-grandes .premio-status { justify-self: start; }
+  .letras-grandes .premio-info { font-size: var(--texto-aux); }
+}

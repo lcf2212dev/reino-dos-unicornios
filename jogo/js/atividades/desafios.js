@@ -75,18 +75,64 @@
   }
   D.acentuarMaiusculas = acentuarDentro;
 
-  /* Título do topo da sala/prova que não cabe: no celular, com as bolinhas ao lado, "Revisão Bimestral de
-     Português" ia a 4 linhas e o ícone de "Expedição Antártida" ficava sozinho em cima do nome. Se o título
-     passa de 2 linhas, a fonte desce aos poucos (até 70%) e fica o tamanho com menos linhas.
-     Só nas matérias desta lista: História e Inglês têm o mesmo aperto, mas as telas delas ficam como estão. */
+  /* Título do topo da sala/prova. Em toda matéria, o ícone fica preso à primeira palavra (nunca sozinho numa
+     linha, como no "Expedição Antártida" do celular com letras grandes). Se o título passa de 2 linhas, a letra desce
+     um degrau da escala (ui.md §10.9.8): o título nasce em --texto (16; 24 com "Letras grandes") e desce para
+     --texto-aux (12; 16), por classe (css/ui-missao.css), nunca por fator; fica o degrau com menos linhas.
+     O encolher é só nas matérias desta lista: História e Inglês têm o mesmo aperto, mas as telas delas ficam como estão. */
   D.MATERIAS_TITULO_AJUSTAVEL = ['portugues'];
+  // degraus abaixo do corpo do título, do maior ao menor: [classe, token]; só entram os menores que a letra de agora
+  D.DEGRAUS_TITULO = [['titulo-aux', '--texto-aux']];
+  // o ícone (canvas do emoji, trocado depois pelo pixelart-icones.js) e a 1ª palavra num span sem quebra. A palavra
+  // pode estar dentro do 1º elemento (o «inglês» das salas de Inglês: span.en): o span fica inteiro (voz e estilo) e o
+  // resto dele vai num span que quebra. Devolve true quando não há mais o que esperar (colou, ou não há ícone).
+  var RE_PALAVRA = /^(\s*\S+)([\s\S]*)$/;
+  function colarIcone(alvo) {
+    if (alvo.querySelector('.titulo-cola')) return true;
+    var ic = alvo.firstChild;
+    if (!ic) return false;
+    if (ic.nodeType === 3) return /^\s*[\p{L}\p{N}«"(]/u.test(ic.nodeValue);   // começa por letra: sem ícone
+    var prox = ic.nextSibling, espacos = [];
+    while (prox && prox.nodeType === 3 && !/\S/.test(prox.nodeValue)) { espacos.push(prox); prox = prox.nextSibling; }
+    if (!prox) return true;
+    var cola = document.createElement('span');
+    cola.className = 'titulo-cola';
+    alvo.insertBefore(cola, ic);
+    cola.appendChild(ic);
+    espacos.forEach(function (e) { cola.appendChild(e); });
+    if (prox.nodeType === 3) {
+      var m = RE_PALAVRA.exec(prox.nodeValue);
+      cola.appendChild(document.createTextNode(m[1]));
+      prox.nodeValue = m[2];
+    } else {
+      var t = prox.firstChild, mt = t && t.nodeType === 3 && RE_PALAVRA.exec(t.nodeValue);
+      cola.appendChild(prox);
+      if (mt && (mt[2] || t.nextSibling)) {
+        t.nodeValue = mt[1];
+        var resto = document.createElement('span');
+        resto.className = 'titulo-resto';
+        if (mt[2]) resto.appendChild(document.createTextNode(mt[2]));
+        while (t.nextSibling) resto.appendChild(t.nextSibling);
+        prox.appendChild(resto);
+      }
+    }
+    return true;
+  }
   D.ajustarTitulo = function (titulo, materiaId) {
+    var alvoCola = titulo.firstElementChild || titulo;
+    if (!colarIcone(alvoCola) && window.MutationObserver) {
+      // desliga quando colar, quando o título sair da tela ou em 3 s
+      var mo = new MutationObserver(function () { if (!titulo.isConnected || colarIcone(alvoCola)) mo.disconnect(); });
+      mo.observe(alvoCola, { childList: true });
+      setTimeout(function () { mo.disconnect(); }, 3000);   // o ícone troca logo; emoji sem desenho não prende o observer
+    }
     if (D.MATERIAS_TITULO_AJUSTAVEL.indexOf(materiaId) < 0) return;
     // palavra curtinha no fim não desce sozinha: "L, R e RR" ia com o "RR" sozinho embaixo; agora "e RR" vai junto
     var fim = (titulo.firstElementChild || titulo).lastChild;
     if (fim && fim.nodeType === 3) fim.nodeValue = fim.nodeValue.replace(/ (\S{1,3})$/, '\u00a0$1');
     if (!window.ResizeObserver) return;
     var largura = -1, pedido = 0;
+    var classes = D.DEGRAUS_TITULO.map(function (g) { return g[0]; });
     function linhas() {
       var alvo = titulo.firstElementChild || titulo, topos = [];
       Array.prototype.forEach.call(alvo.getClientRects(), function (r) {
@@ -94,20 +140,25 @@
       });
       return topos.length;
     }
+    function usar(classe) {
+      classes.forEach(function (c) { titulo.classList.toggle(c, c === classe); });
+    }
     function medir() {
       pedido = 0;
       if (!titulo.isConnected) return;
-      titulo.style.fontSize = '';
+      usar(null);
       var n = linhas();
       if (n <= 2) return;
-      var base = parseFloat(getComputedStyle(titulo).fontSize), melhor = { k: 1, n: n };
-      [0.9, 0.8, 0.7].some(function (k) {
-        titulo.style.fontSize = (base * k) + 'px';
+      // só os degraus menores que o corpo de agora (o valor do token no :root, que "Letras grandes" troca)
+      var base = parseFloat(getComputedStyle(titulo).fontSize), raiz = getComputedStyle(document.documentElement);
+      var melhor = { c: null, n: n };
+      D.DEGRAUS_TITULO.filter(function (g) { return parseFloat(raiz.getPropertyValue(g[1])) < base; }).some(function (g) {
+        usar(g[0]);
         var nk = linhas();
-        if (nk < melhor.n) melhor = { k: k, n: nk };
+        if (nk < melhor.n) melhor = { c: g[0], n: nk };
         return nk <= 2;
       });
-      titulo.style.fontSize = melhor.k === 1 ? '' : (base * melhor.k) + 'px';
+      usar(melhor.c);
     }
     function pedir() { if (!pedido) pedido = requestAnimationFrame(medir); }
     new ResizeObserver(function () {

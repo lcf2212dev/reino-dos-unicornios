@@ -25,49 +25,51 @@
 /* ---------- desenho: prancheta de pixel art ---------- */
 .desenho { display: flex; flex-direction: column; gap: 10px; align-items: center; }
 .desenho-ferramentas, .desenho-paleta { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+.desenho-paleta { gap: 12px; }
 .desenho-ferr {
   display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 56px; padding: 6px 4px;
-  border: 3px solid var(--borda); border-radius: var(--canto); background: var(--branco); box-shadow: 0 3px 0 var(--borda); color: var(--tinta);
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--branco); box-shadow: var(--sombra-pequena); color: var(--tinta);
 }
-.desenho-ferr small { font-size: 0.55em; }
-.desenho-ferr[aria-pressed="true"] { background: var(--ambar-claro); outline: 3px solid var(--roxo); outline-offset: 1px; }
+.desenho-ferr small { font-size: var(--texto-aux); }
+.desenho-ferr[aria-pressed="true"] { background: var(--ambar-claro); outline: var(--borda-fina) solid var(--roxo); outline-offset: 2px; }
 .desenho-limpar { background: var(--quase-fundo); }
-.desenho-cor { width: 36px; height: 36px; border: 3px solid var(--borda); border-radius: var(--redondo); box-shadow: 0 3px 0 var(--borda); }
+/* a cor desenhada em 32 px; o toque pega 44 (6 px em volta: a metade do vão de 12) */
+.desenho-cor { position: relative; width: 32px; height: 32px; border: var(--borda-fina) solid var(--borda); border-radius: var(--redondo); box-shadow: var(--sombra-pequena); }
+.desenho-cor::after { content: ""; position: absolute; inset: -6px; }
 .desenho-cor[aria-pressed="true"] { outline: 4px solid var(--roxo); outline-offset: 2px; }
-.desenho-moldura { width: min(100%, 360px); border: 4px solid var(--borda); border-radius: var(--canto); background: var(--branco); line-height: 0; }
+.desenho-moldura { width: min(100%, 360px); border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto); background: var(--branco); }
 .desenho-tela {
-  width: 100%; height: auto; aspect-ratio: 1; image-rendering: pixelated; touch-action: none;
+  display: block; width: 100%; height: auto; aspect-ratio: 1; image-rendering: pixelated; touch-action: none;
   cursor: crosshair; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none;
 }
-.desenho-lista { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; justify-content: center; font-size: 0.8em; }
+.desenho-lista { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; justify-content: center; font-size: var(--texto); }
 .desenho-requisitos { display: flex; gap: 10px; list-style: none; margin: 0; padding: 0; flex-wrap: wrap; }
-.desenho-req { display: flex; align-items: center; gap: 6px; padding: 4px 8px; border: 2px solid var(--borda); border-radius: var(--canto); background: var(--branco); color: var(--tinta-suave); }
+.desenho-req { display: flex; align-items: center; gap: 6px; padding: 4px 8px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--branco); color: var(--tinta-suave); }
 .desenho-req.feito { background: var(--certo-fundo); color: var(--certo); }
-.req-marca { flex: none; width: 22px; height: 22px; display: grid; place-items: center; border: 2px solid var(--borda); border-radius: var(--canto); background: var(--branco); overflow: hidden; line-height: 0; }
+.req-marca { flex: none; width: 22px; height: 22px; display: grid; place-items: center; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--branco); overflow: hidden; line-height: 1; }
 /* o ✓ vira ícone de pixel: cabe dentro da caixinha, sem invadir a palavra */
 .req-marca > * { width: 16px !important; height: 16px !important; margin: 0 !important; vertical-align: 0; }
-.desenho-mini, .correcao-desenho canvas { width: 96px; height: 96px; image-rendering: pixelated; border: 3px solid var(--borda); border-radius: var(--canto); }
+.desenho-mini, .correcao-desenho canvas { width: 96px; height: 96px; image-rendering: pixelated; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); }
 .correcao-desenho { margin: 6px 0; }
 @media (max-width: 480px) {
   .desenho-ferr { min-width: 46px; padding: 4px 2px; }
-  .desenho-cor { width: 30px; height: 30px; }
   /* prancheta menor e folga embaixo: a lista de requisitos não some atrás do rodapé */
   .desenho-moldura { width: min(100%, 300px); }
   .missao-corpo:has(.desenho) { padding-bottom: 40px; }
 }
 
 /* texto de apoio (d.apoio): a caixa do texto que a questão manda ler, acima do enunciado */
-.apoio { padding: 14px 16px 16px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); box-shadow: 0 4px 0 var(--borda); }
-.apoio-rotulo { display: inline-block; margin: 0 0 6px; padding: 2px 10px; border: 2px solid var(--borda); border-radius: var(--canto); background: var(--ouro-claro); font-size: 0.7em; font-weight: 700; line-height: 1.8; }
-.apoio-titulo { margin: 6px 0 4px; font-family: var(--fonte-titulo); font-size: 1.05em; line-height: 1.6; text-align: center; color: var(--roxo-texto); }
+.apoio { padding: 14px 16px 16px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); box-shadow: var(--sombra-grande); }
+.apoio-rotulo { display: inline-block; margin: 0 0 6px; padding: 2px 10px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--ouro-claro); font-size: var(--texto-aux); line-height: var(--entrelinha); }
+.apoio-titulo { margin: 6px 0 4px; font-family: var(--fonte-titulo); font-size: var(--texto); line-height: var(--entrelinha); text-align: center; color: var(--roxo-texto); }
 .apoio-parte { margin-top: 12px; }
-.apoio-parte-titulo { margin: 0 0 4px; font-weight: 700; font-size: 0.9em; color: var(--laranja-escuro); }
-.apoio-lista { margin: 0; padding-left: 1.5em; font-size: 0.9em; line-height: 2; }
-.apoio-texto { margin: 0; font-size: 0.9em; line-height: 2.1; overflow-wrap: break-word; }
+.apoio-parte-titulo { margin: 0 0 4px; font-size: var(--texto); color: var(--laranja-escuro); }
+.apoio-lista { margin: 0; padding-left: 1.5em; font-size: var(--texto); line-height: var(--entrelinha); }
+.apoio-texto { margin: 0; font-size: var(--texto); line-height: var(--entrelinha); overflow-wrap: break-word; }
 .btn-ouvir-apoio { margin-top: 0; flex: none; }
 .apoio-topo { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 10px; }
 .apoio-topo .apoio-rotulo { margin: 0; }
-.apoio-abrir { min-height: 44px; padding: 4px 12px; border: 2px solid var(--borda); border-radius: var(--canto); background: var(--ouro-claro); font-weight: 700; font-size: 0.8em; }
+.apoio-abrir { min-height: 44px; padding: 4px 12px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--ouro-claro); font-size: var(--texto); }
 /* celular e tablet em pé: caixa recolhível numa linha (📖 abrir/esconder + 🔊); aberta, o texto rola dentro dela
    para a pergunta caber na primeira tela */
 @media (max-width: 999.98px) {
@@ -76,8 +78,8 @@
   .apoio-topo .apoio-rotulo { display: none; }
   .apoio-abrir { flex: 1 1 auto; min-width: 0; }
   .apoio-ouvir-rotulo { display: none; }
-  .btn-ouvir-apoio { min-width: 52px; font-size: 1em; }
-  .apoio-corpo { max-height: calc(18vh * var(--escala-texto)); max-height: calc(18dvh * var(--escala-texto)); overflow: auto; margin-top: 8px; padding: 0 6px 4px 2px; border-bottom: 2px dashed var(--ambar); overscroll-behavior: contain; }
+  .btn-ouvir-apoio { min-width: 52px; font-size: var(--texto); }
+  .apoio-corpo { max-height: 18vh; max-height: 18dvh; overflow: auto; margin-top: 8px; padding: 0 6px 4px 2px; border-bottom: var(--borda-fina) dashed var(--ambar); overscroll-behavior: contain; }
   .apoio-corpo .apoio-titulo { margin-top: 0; }
   .apoio-fechado .apoio-corpo { display: none; }
   .desafio.com-apoio { gap: 10px; }
@@ -85,7 +87,11 @@
 /* celular, nas salas (não na prova): a caixa cresce até mostrar o trecho inteiro quando ele é curto (~350 px em 844);
    só textos maiores que isso rolam dentro dela */
 @media (max-width: 639.98px) {
-  .tela-missao .apoio-corpo { max-height: min(calc(42vh * var(--escala-texto)), 46vh); max-height: min(calc(42dvh * var(--escala-texto)), 46dvh); }
+  .tela-missao .apoio-corpo { max-height: 42vh; max-height: 42dvh; }
+  /* letras grandes: a caixa um pouco mais alta (era a conta com a escala de 1,15) */
+  .letras-grandes .apoio-corpo { max-height: 21vh; max-height: 21dvh; }
+  .letras-grandes .tela-missao .apoio-corpo { max-height: 46vh; max-height: 46dvh; }
+  .letras-grandes .apoio-abrir { font-size: var(--texto-aux); white-space: nowrap; }   /* "📖 Esconder" numa linha */
 }
 @media (min-width: 640px) and (max-width: 999.98px) { .apoio-ouvir-rotulo { display: inline; } .apoio-corpo { max-height: 30vh; max-height: 30dvh; } }
 /* tablet em pé: pouco escondido (ou espaço livre na tela) → o texto inteiro, sem rolagem dentro da caixa (js: caber) */
@@ -100,19 +106,19 @@
 }
 
 /* instrucao (opcional): como responder no jogo, numa linha própria logo abaixo da pergunta */
-.instrucao { display: flex; align-items: baseline; gap: 6px; margin: 8px 0 0; font-size: 0.9em; font-style: italic; font-weight: 700; color: var(--tinta-suave); }
+.instrucao { display: flex; align-items: baseline; gap: 6px; margin: 8px 0 0; font-size: var(--texto); font-style: italic; color: var(--tinta-suave); }
 .instrucao-icone { flex: none; font-style: normal; }
 
 /* completar: lacuna dentro da palavra (colado) e grade compacta (itens com figura) */
 .completar-itens { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 10em), 1fr)); gap: 8px; }
 .completar-grade .frase-completar { align-items: center; gap: 6px; padding: 8px 6px 10px; text-align: center; }
-.completar-grade .frase-texto { margin: 0; font-size: 0.8em; line-height: 2; }
+.completar-grade .frase-texto { margin: 0; font-size: var(--texto-aux); line-height: var(--entrelinha); }
 .completar-grade .frase-opcoes { display: flex; flex-wrap: nowrap; gap: 5px; width: 100%; justify-content: center; }
 .completar-grade .chip-palavra { flex: 1 1 0; min-width: 0; max-width: 5.5em; min-height: 48px; padding: 6px 2px; }
 /* botões de letra (S, Z, X, R…) com no mínimo 48×48: na grade, a coluna cresce conforme o número de botões (--opcoes) */
 .completar-grade .completar-itens { grid-template-columns: repeat(auto-fill, minmax(min(100%, max(10em, calc(var(--opcoes, 1) * 53px + 13px))), 1fr)); }
 .completar-colado .chip-palavra, .completar-grade .chip-palavra { min-width: 48px; }
-.completar-img { display: inline-flex; line-height: 0; min-height: 64px; align-items: center; justify-content: center; font-size: 2em; }
+.completar-img { display: inline-flex; line-height: 1; min-height: 64px; align-items: center; justify-content: center; font-size: var(--texto-t); }
 .palavra-colada { white-space: nowrap; }
 .lacuna.lacuna-colada { min-width: 2em; margin: 0; padding: 0 1px; line-height: 1.5; }
 .lacuna.lacuna-colada.preenchida { min-width: 0; padding: 0; }
@@ -123,35 +129,35 @@
 
 /* copiar: marcar a escrita certa entre duas e escrever a palavra com peças de letras */
 .copiar { display: flex; flex-direction: column; gap: 14px; }
-.copiar-item { display: flex; flex-direction: column; gap: 10px; padding: 12px 14px 14px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); }
+.copiar-item { display: flex; flex-direction: column; gap: 10px; padding: 12px 14px 14px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); }
 .copiar-escolha { display: grid; grid-template-columns: auto 1fr 1fr; align-items: center; gap: 8px; }
-.copiar-letra { font-size: 1em; }
-.copiar-opcao { display: flex; align-items: center; justify-content: center; gap: 8px; min-width: 0; min-height: 52px; padding: 6px 8px; border: 3px solid var(--borda); border-radius: var(--canto); background: var(--branco); box-shadow: 0 3px 0 var(--borda); font-weight: 700; }
-.copiar-marca { display: inline-flex; align-items: center; justify-content: center; width: 1.9em; height: 1.9em; flex: none; border: 3px solid var(--borda); border-radius: var(--redondo); background: var(--branco); color: var(--branco); font-size: 0.8em; line-height: 1; }
-.copiar-opcao[aria-pressed="true"] { background: var(--ambar-claro); border-color: var(--roxo); box-shadow: 0 3px 0 var(--roxo); outline: 3px solid var(--roxo); outline-offset: 0; }
+.copiar-letra { font-size: var(--texto); }
+.copiar-opcao { display: flex; align-items: center; justify-content: center; gap: 8px; min-width: 0; min-height: 52px; padding: 6px 8px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--branco); box-shadow: var(--sombra-pequena); }
+.copiar-marca { display: inline-flex; align-items: center; justify-content: center; width: 1.9em; height: 1.9em; flex: none; border: var(--borda-fina) solid var(--borda); border-radius: var(--redondo); background: var(--branco); color: var(--branco); font-size: var(--texto-aux); line-height: 1; }
+.copiar-opcao[aria-pressed="true"] { background: var(--ambar-claro); border-color: var(--roxo); box-shadow: var(--sombra-pequena); outline: var(--borda-fina) solid var(--roxo); outline-offset: 0; }
 .copiar-opcao[aria-pressed="true"] .copiar-marca { background: var(--roxo-texto); border-color: var(--roxo-texto); }   /* o "X" branco: 6,9:1 */
 .copiar-palavra { letter-spacing: 0.06em; }
 .copiar-resposta { display: flex; flex-direction: column; gap: 4px; }
-.copiar-rotulo { font-size: 0.8em; font-weight: 700; color: var(--tinta-suave); }
+.copiar-rotulo { font-size: var(--texto-aux); color: var(--tinta-suave); }
 .copiar-linha {
   display: flex; flex-wrap: wrap; align-items: flex-end; gap: 4px;
   min-height: 62px; padding: 6px 8px 8px 14px;
-  border-left: 3px solid var(--rosa); border-radius: var(--canto);
+  border-left: var(--borda-fina) solid var(--rosa); border-radius: var(--canto);
   background: linear-gradient(to bottom, transparent calc(100% - 4px), var(--azul) calc(100% - 4px)), var(--papel);
 }
 .copiar-linha.pisca { animation: piscar 0.6s ease-in-out 2; }
-.copiar-vazia { align-self: center; padding: 0 6px; border: 2px dashed var(--tinta-suave); border-radius: var(--canto); color: var(--tinta-suave); font-weight: 700; font-size: 0.72em; line-height: 1.7; }
-.copiar-vaga { width: 44px; height: 44px; border: 2px dashed var(--tinta-suave); border-radius: var(--canto); }
-.copiar-pecas { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; padding: 10px 8px; border: 3px dashed var(--ambar); border-radius: var(--canto); background: var(--papel); }
-.copiar-peca { min-width: 48px; height: 48px; padding: 0 6px; border: 3px solid var(--borda); border-radius: var(--canto); background: var(--papel-quente); box-shadow: 0 3px 0 var(--borda); font-weight: 700; font-size: 1.05em; line-height: 1; }
-.copiar-peca.colocada { min-width: 44px; height: 44px; background: var(--branco); border-color: var(--roxo); color: var(--roxo-texto); box-shadow: 0 3px 0 var(--roxo); }
-.copiar-peca.usada { border: 2px dashed var(--tinta-suave); background: transparent; box-shadow: none; color: transparent; }
+.copiar-vazia { align-self: center; padding: 0 6px; border: var(--borda-fina) dashed var(--tinta-suave); border-radius: var(--canto); color: var(--tinta-suave); font-size: var(--texto-aux); line-height: var(--entrelinha); }
+.copiar-vaga { width: 44px; height: 44px; border: var(--borda-fina) dashed var(--tinta-suave); border-radius: var(--canto); }
+.copiar-pecas { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; padding: 10px 8px; border: var(--borda-fina) dashed var(--ambar); border-radius: var(--canto); background: var(--papel); }
+.copiar-peca { min-width: 48px; height: 48px; padding: 0 6px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel-quente); box-shadow: var(--sombra-pequena); font-size: var(--texto); line-height: 1; }
+.copiar-peca.colocada { min-width: 44px; height: 44px; background: var(--branco); border-color: var(--roxo); color: var(--roxo-texto); box-shadow: var(--sombra-pequena); }
+.copiar-peca.usada { border: var(--borda-fina) dashed var(--tinta-suave); background: transparent; box-shadow: none; color: transparent; }
 .tudo-certo .copiar-item { background: var(--certo-fundo); }
 @media (max-width: 480px) {
   .copiar-item { padding: 10px 6px 12px; }
   /* 7 letras de 44px na mesma linha da resposta (PASSEIO não quebra no meio) */
   .copiar-linha { gap: 3px; padding: 6px 4px 8px 6px; }
-  .copiar-opcao { gap: 6px; padding: 6px 4px; font-size: 0.8em; }
+  .copiar-opcao { gap: 6px; padding: 6px 4px; font-size: var(--texto-aux); }
   .copiar-pecas { gap: 6px; padding: 8px 4px; }
 }
 
@@ -161,24 +167,22 @@
 span.mai-acento-texto.mai-acento-texto { all: unset; }
 span.mai-acento.mai-acento { all: unset; position: relative; -webkit-text-fill-color: transparent; }
 span.mai-acento.mai-acento::before, span.mai-acento.mai-acento::after {
-  position: absolute; left: 0; top: 0; line-height: normal; white-space: pre;
+  position: absolute; left: 0; top: 0; line-height: 1; white-space: pre;
   -webkit-text-fill-color: currentColor; pointer-events: none;
 }
 span.mai-acento.mai-acento::before { content: attr(data-b); content: attr(data-b) / ""; }
 span.mai-acento.mai-acento::after { content: attr(data-a); content: attr(data-a) / ""; top: -0.375em; }
 
-/* completar colado na grade: "a)" e a palavra na mesma linha; se não couberem, a fonte encolhe só o necessário
-   (--letras vem de js/atividades/desafios.js; onde já cabia, min() mantém os 0.8em de antes). A linha pode usar até
-   ~2px de cada lado do respiro da caixa (6px): "__ELICÓPTERO" no celular cabe inteira nos 0.8em e não encolhe */
-.completar-grade.completar-colado:not(.completar-colado-longo) .frase-completar { container-type: inline-size; }
-.completar-grade.completar-colado:not(.completar-colado-longo) .frase-colada { font-size: min(0.8em, calc((100cqi - 1px) / var(--letras, 1))); }
+/* completar colado na grade: "a)" e a palavra na mesma linha, no rótulo de 12 px da grade (ui.md §10.9.1: nada de
+   encolher por conta): "__ELICÓPTERO" no celular cabe inteira */
+.completar-grade.completar-colado:not(.completar-colado-longo) .frase-colada { font-size: var(--texto-aux); }
 
 /* ---------- menu Lugares: os avisos que as placas do mapa davam (UI.avisosDoLugar) ---------- */
 .lugar-avisos { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
 .lugar-aviso {
   display: inline-flex; align-items: center; gap: 4px;
-  padding: 1px 8px; border: 2px solid var(--ambar); border-radius: var(--canto);
-  background: var(--ambar-claro); color: var(--laranja-escuro); font-size: 0.75em; font-weight: 700; line-height: 1.5;
+  padding: 1px 8px; border: var(--borda-fina) solid var(--ambar); border-radius: var(--canto);
+  background: var(--ambar-claro); color: var(--laranja-escuro); font-size: var(--texto-aux); line-height: 1.5;
 }
 .lugar-aviso > canvas { flex: none; display: block; }
 .lugar-aviso.aviso-pronto { border-color: var(--certo); background: var(--certo-fundo); color: var(--certo); }
@@ -189,5 +193,16 @@ span.mai-acento.mai-acento::after { content: attr(data-a); content: attr(data-a)
 /* D12d-02: frase colada curta numa linha só */
 .completar-grade.completar-colado:not(.completar-colado-longo) .frase-colada { white-space: nowrap; }
 /* D6-22: 7 ferramentas do desenho do mesmo tamanho, ícone de 32 px */
-.desenho-ferr { width: 96px; padding: 6px 4px; justify-content: center; }
+/* o rótulo em 12 px (--texto-aux): "Triângulo" (9 letras, 108 px) com 8 px de folga de cada lado = 128 px;
+   letras grandes (16 px, 144 px): 168 px */
+.desenho-ferr { width: 128px; padding: 6px 8px; justify-content: center; }
 .desenho-ferr small { white-space: nowrap; }
+.letras-grandes .desenho-ferr { width: 168px; }
+/* as 7 não cabem numa linha (760 px): 4 + 3, em vez de 6 e uma sozinha */
+.desenho-ferramentas { max-width: 530px; margin-left: auto; margin-right: auto; }
+.letras-grandes .desenho-ferramentas { max-width: 690px; }
+/* celular: 2 por linha na largura toda (3 não deixam a folga de 8 px no "Triângulo") */
+@media (max-width: 480px) {
+  .desenho-ferr, .letras-grandes .desenho-ferr { width: calc((100% - 6px) / 2); min-width: 0; padding: 4px 8px; }
+  .desenho-ferramentas, .letras-grandes .desenho-ferramentas { max-width: none; }
+}
