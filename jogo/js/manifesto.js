@@ -252,6 +252,7 @@
       { js: 'js/interiores/castelo/objetos.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/castelo/castelo.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/estabulo/falas.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/estabulo/baias.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/estabulo/estabulo.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/loja/falas.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/loja/desenhos.js', grupo: 'interiores', node: true },

@@ -70,6 +70,19 @@
       ret(ctx, cx - 3, py - 5, 7, 3, K); ret(ctx, cx - 2, py - 4, 5, 1, D.escurecer(c, 0.3));
       ret(ctx, cx + 2, py + 1, 2, 2, C.ouro3);
     } });
+  // passadeira do corredor: uma peça só, de uma parede à outra (sem emendas), luz de cima
+  I.objeto('escola-passadeira', { w: 12, h: 2, solido: false, semSombra: true, plano: true,
+    desenhar: function (ctx, px, py, o) {
+      var W = (o.w || 12) * 16, y = py + 2;
+      ret(ctx, px, y, W, 28, K);
+      ret(ctx, px, y + 1, W, 3, '#ffd34d'); ret(ctx, px, y + 1, W, 1, '#fff0a8'); ret(ctx, px, y + 4, W, 1, '#39a860');
+      ret(ctx, px, y + 5, W, 18, '#9fe0a0'); ret(ctx, px, y + 5, W, 1, '#c8f0c0');
+      ret(ctx, px, y + 23, W, 1, '#39a860'); ret(ctx, px, y + 24, W, 3, '#e0b030'); ret(ctx, px, y + 24, W, 1, '#ffd34d');
+      for (var x = px + 8; x < px + W - 4; x += 16) {
+        for (var j = -3; j <= 3; j++) { var m = 3 - Math.abs(j); ret(ctx, x - m, y + 14 + j, m * 2 + 1, 1, j < 0 ? '#fff8ee' : '#ffe9a8'); }
+        ret(ctx, x + 8, y + 13, 1, 3, '#39a860'); ret(ctx, x + 7, y + 14, 3, 1, '#39a860');
+      }
+    } });
   // lixeira de papel
   I.objeto('escola-lixeira', { w: 1, h: 1, topo: 3, solido: true,
     desenhar: function (ctx, px, py, o) {

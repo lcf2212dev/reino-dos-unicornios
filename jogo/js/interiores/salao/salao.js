@@ -53,7 +53,7 @@
     { tipo: 'sofa', x: 1, y: 9 }, { tipo: 'mesa-centro', x: 1, y: 10 }, { tipo: 'papeis', x: 3, y: 10 },
     { tipo: 'luminaria-pe', x: 3, y: 9 }, { tipo: 'vaso-grande', x: 1, y: 11 }, { tipo: 'salao-secador', x: 4, y: 11 },
     { tipo: 'poltrona', x: 9, y: 10, var: { cor: S.LILAS } }, { tipo: 'poltrona', x: 10, y: 10, var: { cor: S.ROSA } },
-    { tipo: 'mesa-centro', x: 9, y: 11 }, { tipo: 'relogio-pe', x: 11, y: 10 }, { tipo: 'cesto', x: 11, y: 11 },
+    { tipo: 'mesa-centro', x: 9, y: 11 }, { tipo: 'salao-vitrine', x: 11, y: 10 }, { tipo: 'cesto', x: 11, y: 11 },
     { tipo: 'tapete', x: 5, y: 5, w: 3, h: 2, var: { cor: S.ROSA3, borda: S.COR } },
   ];
 
