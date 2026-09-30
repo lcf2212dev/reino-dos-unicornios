@@ -186,7 +186,7 @@ Reino.Interiores.objeto('escrivaninha', {
 ## 9. Prédios
 Cômodos, objetos e paleta de cada prédio estão no próprio código (`jogo/js/interiores/<p>/`, cabeçalho de cada
 parte). Aqui só o que outros arquivos usam. Escada entre andares de lugares diferentes vale se um for matéria
-`dentro` do outro (Ciências no 3º andar do Observatório, `conteudo.md` §2 item 6).
+`dentro` do outro (Ciências no 3º andar do Observatório, `conteudo.md` §2 item 7).
 
 ### 9.1 Estábulo
 1. Ação de objeto `{ tipo: 'unicornio', indice }` (baia; índice em `Reino.NPCs.unicornioDaBaia(n)`: baia fixa
