@@ -156,8 +156,8 @@
   }
   function trechoSala(bx, by, n, ultimo) {
     var lista = [
-      // 0-1 livres atrás dos armários; a janela fica sobre o tapete redondo
-      { tipo: 'quadro', x: 2, y: 0 }, { tipo: 'arandela', x: 4, y: 0 }, { tipo: 'janela', x: 5, y: 0 }, { tipo: 'arandela', x: 6, y: 0 },
+      // 0-1 livres atrás dos armários; 5 é o vão da porta da sala (as arandelas o ladeiam)
+      { tipo: 'quadro', x: 2, y: 0 }, { tipo: 'janela', x: 3, y: 0 }, { tipo: 'arandela', x: 4, y: 0 }, { tipo: 'arandela', x: 6, y: 0 },
       { tipo: 'cartaz', x: 7, y: 0, var: { desenho: ['coracao', 'estrela'][n % 2] } }, { tipo: 'janela', x: 8, y: 0 },
       { tipo: 'estandarte', x: 9, y: 0, var: { cor: '#39a860', emblema: n % 2 ? 'coracao' : 'estrela' } },
       { tipo: 'cortina', x: 10, y: 0, var: { cor: '#6fdc8c' } },
