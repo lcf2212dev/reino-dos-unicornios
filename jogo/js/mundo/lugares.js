@@ -48,23 +48,26 @@
      ruas: rects de rua ('c'); praca: o rect da praça ('p'); lago: a elipse da água, em tiles (dá para nadar);
      objetos: peças grandes e sólidas da praça (fonte, coreto, canteiro redondo), sem enfeite no tile;
      enfeites: [tipo, x, y] de 1 tile ('poste', 'banco', 'canteiro', 'arvore'), sólidos. Tile que cair em rua,
-     prédio, reservado ou outro enfeite é pulado. As cercas saem sozinhas na frente de cada prédio de hoje. */
+     prédio, reservado ou outro enfeite é pulado. As cercas saem sozinhas na frente de cada prédio de hoje.
+     motivos: como enfeites, mas postos depois do sorteio (um campo vazio ganha peça sem mudar o resto do reino). */
   Mapa.CIDADE = {
     inicio: { x: 27, y: 28 },       // onde ela aparece ao abrir o jogo: na saída sul da praça, com a fonte à vista
     claude: { x: 30, y: 23 },       // o Claude, ao lado da fonte
     praca: { x: 21, y: 15, w: 13, h: 13 },
+    // estilo do calçamento (mundo/mapa-desenho.js): 'pedra' = paralelepípedo (avenidas), 'ladrilho' = ladrilho claro
+    // (travessas, alameda, eixos e os caminhos até as portas), 'terra' = terra batida (trilhas do sul)
     ruas: [
-      { x: 3, y: 11, w: 50, h: 2 },    // Avenida das Flores
-      { x: 26, y: 8, w: 3, h: 3 },     // alameda do castelo
-      { x: 26, y: 13, w: 3, h: 2 },    // eixo: avenida → praça
-      { x: 3, y: 21, w: 18, h: 2 },    // Rua da Praça (oeste)
-      { x: 34, y: 21, w: 19, h: 2 },   // Rua da Praça (leste)
-      { x: 26, y: 28, w: 3, h: 2 },    // eixo: praça → avenida
-      { x: 3, y: 30, w: 50, h: 2 },    // Avenida do Lago
-      { x: 11, y: 13, w: 1, h: 8 }, { x: 11, y: 23, w: 1, h: 7 }, { x: 11, y: 32, w: 1, h: 7 },   // travessa oeste
-      { x: 44, y: 13, w: 1, h: 8 }, { x: 44, y: 23, w: 1, h: 7 }, { x: 44, y: 32, w: 1, h: 7 },   // travessa leste
-      { x: 4, y: 39, w: 14, h: 1 },    // trilha do sul (oeste)
-      { x: 38, y: 39, w: 7, h: 1 },    // trilha do sul (leste)
+      { x: 3, y: 11, w: 50, h: 2, estilo: 'pedra' },    // Avenida das Flores
+      { x: 26, y: 8, w: 3, h: 3, estilo: 'ladrilho' },  // alameda do castelo
+      { x: 26, y: 13, w: 3, h: 2, estilo: 'ladrilho' }, // eixo: avenida → praça
+      { x: 3, y: 21, w: 18, h: 2, estilo: 'pedra' },    // Rua da Praça (oeste)
+      { x: 34, y: 21, w: 19, h: 2, estilo: 'pedra' },   // Rua da Praça (leste)
+      { x: 26, y: 28, w: 3, h: 2, estilo: 'ladrilho' }, // eixo: praça → avenida
+      { x: 3, y: 30, w: 50, h: 2, estilo: 'pedra' },    // Avenida do Lago
+      { x: 11, y: 13, w: 1, h: 8, estilo: 'ladrilho' }, { x: 11, y: 23, w: 1, h: 7, estilo: 'ladrilho' }, { x: 11, y: 32, w: 1, h: 7, estilo: 'ladrilho' },   // travessa oeste
+      { x: 44, y: 13, w: 1, h: 8, estilo: 'ladrilho' }, { x: 44, y: 23, w: 1, h: 7, estilo: 'ladrilho' }, { x: 44, y: 32, w: 1, h: 7, estilo: 'ladrilho' },   // travessa leste
+      { x: 4, y: 39, w: 14, h: 1, estilo: 'terra' },    // trilha do sul (oeste)
+      { x: 38, y: 39, w: 7, h: 1, estilo: 'terra' },    // trilha do sul (leste)
     ],
     lago: { cx: 27.5, cy: 35.6, rx: 7.5, ry: 2.9 },
     objetos: [
@@ -93,6 +96,21 @@
       ['poste', 10, 29], ['poste', 20, 29], ['poste', 34, 29], ['poste', 43, 29],
       ['banco', 21, 32], ['banco', 33, 32],
       ['canteiro', 12, 29], ['canteiro', 36, 29],
+    ],
+    // um motivo em cada campo vazio, posto depois do sorteio das flores e árvores (mundo/mapa.js): [tipo, x, y].
+    // 'frutifera' (árvore com fruta), 'poco', 'correio', 'placa' (de direção): sólidos; 'pedrinhas': chão, dá para pisar
+    motivos: [
+      ['poco', 22, 7],                                             // ao lado do castelo, a oeste
+      ['frutifera', 32, 4], ['frutifera', 34, 4], ['frutifera', 33, 6],   // o pomar, a leste do castelo
+      ['correio', 51, 18],                                         // ao lado da Matemática
+      ['placa', 48, 35],                                           // o campo a leste do Observatório
+      ['canteiro', 19, 17],                                        // entre a Escola e a praça
+      ['pedrinhas', 26, 32], ['pedrinhas', 27, 32], ['pedrinhas', 28, 32],   // o eixo da praça segue até o lago
+      // as pontas das ruas: as avenidas acabam num arco de árvores junto do bosque; as trilhas, numa peça
+      ['arvore', 2, 11], ['arvore', 2, 12], ['arvore', 53, 11], ['arvore', 53, 12],
+      ['arvore', 2, 21], ['arvore', 2, 22], ['arvore', 53, 21], ['arvore', 53, 22],
+      ['arvore', 2, 30], ['arvore', 2, 31], ['arvore', 53, 30], ['arvore', 53, 31],
+      ['arvore', 3, 39], ['canteiro', 18, 39], ['placa', 37, 39],
     ],
   };
   Mapa.claudeTile = Mapa.CIDADE.claude;

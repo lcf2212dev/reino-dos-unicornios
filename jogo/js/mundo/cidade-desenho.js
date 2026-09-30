@@ -1,10 +1,13 @@
 /* Desenho da cidade (o que Mapa.CIDADE põe à mão, mundo/lugares.js): o piso da praça, a fonte grande
    (e o jato animado), o coreto, os canteiros redondos, e os enfeites de 1 tile (poste, banco, canteiro,
-   cerca, pedra). Usa as cores e os ajudantes que mundo/mapa-desenho.js põe em Mapa._interno e entrega:
+   cerca, pedra) e os motivos dos campos (poço, caixa de correio, placa de direção, pedrinhas).
+   Usa as cores e os ajudantes que mundo/mapa-desenho.js põe em Mapa._interno e entrega:
      I.desenharPraca(ctx)             o piso desenhado da praça (depois do chão, antes dos enfeites)
      I.desenharObjeto(ctx, o)         uma peça grande da praça ({ tipo, x, y, w, h } em tiles)
      I.desenharPeca(ctx, tipo, x, y)  um enfeite posto à mão (tile x, y)
-     I.animarCidade(ctx, t)           a água da fonte e o brilho dos lampiões (só com Animações) */
+     I.animarCidade(ctx, t)           a água da fonte e o brilho dos lampiões (só com Animações)
+     I.animarObjeto(ctx, o, t)        a água da fonte (também por cima da Mariana, quando ela passa atrás)
+     I.chavePeca(tipo, x, y)          peças iguais dividem o sprite (mundo/mapa-desenho.js, peças altas) */
 (function () {
   var Mapa = window.Mapa, I = Mapa._interno;
   var T = Mapa.T;
@@ -51,11 +54,24 @@
   /* ----- piso da praça: borda de pedra, eixos de ladrilho e a rosa dos ventos em volta da fonte ----- */
   I.desenharPraca = function (ctx) {
     var p = Mapa.CIDADE.praca, x0 = p.x * T, y0 = p.y * T, w = p.w * T, h = p.h * T;
-    // meio-fio: moldura de pedra clara com sombra por dentro
-    ret(ctx, x0, y0, w, 3, PEDRA3); ret(ctx, x0, y0 + h - 3, w, 3, PEDRA3);
-    ret(ctx, x0, y0, 3, h, PEDRA3); ret(ctx, x0 + w - 3, y0, 3, h, PEDRA3);
-    ret(ctx, x0 + 1, y0 + 1, w - 2, 1, PEDRA); ret(ctx, x0 + 1, y0 + 1, 1, h - 2, PEDRA);
-    ret(ctx, x0 + 3, y0 + 3, w - 6, 1, 'rgba(58,36,70,0.10)');
+    // meio-fio: moldura de pedra clara com sombra por dentro, aberta onde uma rua chega (ali, uma soleira de 1 fileira
+    // entre a rua e o ladrilho). Pedaço a pedaço, tile a tile do contorno
+    function rua(tx, ty) { return I.dentro(tx, ty) && I.tipo[ty][tx] === 'c'; }
+    for (var tx = p.x; tx < p.x + p.w; tx++) [[p.y, -1, y0], [p.y + p.h - 1, 1, y0 + h - 3]].forEach(function (l) {
+      var bx = tx * T;
+      if (rua(tx, l[0] + l[1])) { ret(ctx, bx, l[1] < 0 ? y0 : y0 + h - 1, T, 1, PEDRA2); return; }
+      ret(ctx, bx, l[2], T, 3, PEDRA3);
+      if (l[1] < 0) { ret(ctx, bx, y0 + 1, T, 1, PEDRA); ret(ctx, bx, y0 + 3, T, 1, 'rgba(58,36,70,0.10)'); }
+    });
+    for (var ty = p.y; ty < p.y + p.h; ty++) [[p.x, -1, x0], [p.x + p.w - 1, 1, x0 + w - 3]].forEach(function (l) {
+      var by = ty * T;
+      if (rua(l[0] + l[1], ty)) { ret(ctx, l[1] < 0 ? x0 : x0 + w - 1, by, 1, T, PEDRA2); return; }
+      ret(ctx, l[2], by, 3, T, PEDRA3);
+      if (l[1] < 0) ret(ctx, x0 + 1, by, 1, T, PEDRA);
+    });
+    // as quinas fecham a moldura
+    [[x0, y0], [x0 + w - 3, y0], [x0, y0 + h - 3], [x0 + w - 3, y0 + h - 3]].forEach(function (q) { ret(ctx, q[0], q[1], 3, 3, PEDRA3); });
+    ret(ctx, x0 + 1, y0 + 1, 2, 1, PEDRA); ret(ctx, x0 + 1, y0 + 1, 1, 2, PEDRA);
     // eixos em cruz (do castelo ao lago e de rua a rua), com ladrilho de junta desencontrada
     var f = fonte(), c = centroDe(f);
     function ladrilhos(ax, ay, aw, ah) {
@@ -236,50 +252,139 @@
     elipse(ctx, px + 7, py + 8, 3, 2, '#e6e0ee'); ret(ctx, px + 10, py + 11, 2, 1, '#a89cb8');
     ret(ctx, px + 4, py + 12, 2, 1, '#8fb83a'); ret(ctx, px + 11, py + 13, 3, 1, '#8fb83a');
   }
-  var PECAS = { poste: poste, banco: banco, canteiro: canteiro, cerca: cerca, pedra: pedra };
-  I.PECAS_ALTAS = { poste: true, banco: true, canteiro: true, cerca: true };   // entram na ordem de cima para baixo
+  // motivos dos campos (Mapa.CIDADE.motivos): poço, caixa de correio, placa de direção e a trilha de pedras (chão)
+  function poco(ctx, px, py) {
+    ret(ctx, px + 1, py + 15, 14, 1, 'rgba(58,36,70,0.15)'); ret(ctx, px + 3, py + 15, 10, 1, 'rgba(58,36,70,0.12)');
+    ret(ctx, px + 1, py + 5, 14, 10, K); ret(ctx, px + 2, py + 6, 12, 8, PEDRA2); ret(ctx, px + 2, py + 6, 12, 1, PEDRA);
+    ret(ctx, px + 2, py + 10, 12, 1, PEDRA3); ret(ctx, px + 6, py + 7, 1, 3, PEDRA3); ret(ctx, px + 10, py + 11, 1, 3, PEDRA3);
+    ret(ctx, px + 3, py + 4, 10, 3, K); ret(ctx, px + 4, py + 5, 8, 1, '#2a7f78');
+    [2, 11].forEach(function (sx) { ret(ctx, px + sx, py - 7, 3, 12, K); ret(ctx, px + sx + 1, py - 6, 1, 11, MADEIRA); });
+    ret(ctx, px + 4, py - 4, 8, 2, K); ret(ctx, px + 5, py - 4, 6, 1, MADEIRA);
+    ret(ctx, px + 8, py - 2, 1, 3, '#e8d3a8'); ret(ctx, px + 6, py + 1, 5, 4, K); ret(ctx, px + 7, py + 2, 3, 2, '#8e7aa0');
+    triangulo(ctx, px - 1, py - 14, 18, 8, K); triangulo(ctx, px + 1, py - 12, 14, 6, '#ff9cc6');
+    ret(ctx, px - 1, py - 7, 18, 2, K); ret(ctx, px, py - 7, 16, 1, '#e0679a'); ret(ctx, px + 7, py - 11, 2, 1, '#ffd1e6');
+  }
+  function correio(ctx, px, py) {
+    ret(ctx, px + 4, py + 14, 9, 1, 'rgba(58,36,70,0.15)'); ret(ctx, px + 6, py + 15, 5, 1, 'rgba(58,36,70,0.15)');
+    ret(ctx, px + 7, py + 1, 3, 15, K); ret(ctx, px + 8, py + 1, 1, 14, MADEIRA);
+    ret(ctx, px + 2, py - 6, 12, 8, K); ret(ctx, px + 3, py - 7, 10, 1, K);
+    ret(ctx, px + 3, py - 6, 10, 7, '#5fb4ff'); ret(ctx, px + 3, py - 6, 10, 1, '#9fdcff'); ret(ctx, px + 3, py - 6, 1, 7, '#9fdcff');
+    ret(ctx, px + 3, py, 10, 1, '#3f7fe0'); ret(ctx, px + 5, py - 3, 6, 1, K);
+    ret(ctx, px + 13, py - 10, 1, 7, K); ret(ctx, px + 14, py - 10, 2, 3, K); ret(ctx, px + 14, py - 9, 1, 1, '#ff5c6a');
+  }
+  function placa(ctx, px, py) {
+    ret(ctx, px + 4, py + 15, 8, 1, 'rgba(58,36,70,0.15)'); ret(ctx, px + 6, py + 15, 4, 1, 'rgba(58,36,70,0.12)');
+    ret(ctx, px + 6, py - 9, 4, 25, K); ret(ctx, px + 7, py - 9, 2, 24, MADEIRA); ret(ctx, px + 7, py - 9, 1, 24, '#e8b27a');
+    // duas tábuas em seta: à direita (em cima) e à esquerda (embaixo)
+    function tabua(y, dir) {
+      var x0 = dir > 0 ? px + 1 : px + 3;
+      ret(ctx, x0, y, 12, 6, K);
+      ret(ctx, dir > 0 ? x0 + 12 : x0 - 1, y + 1, 1, 4, K); ret(ctx, dir > 0 ? x0 + 13 : x0 - 2, y + 2, 1, 2, K);
+      ret(ctx, x0 + 1, y + 1, 11, 4, '#e8b27a'); ret(ctx, dir > 0 ? x0 + 12 : x0 - 1, y + 2, 1, 2, '#e8b27a');
+      ret(ctx, x0 + 1, y + 4, 11, 1, MADEIRA); ret(ctx, x0 + 3, y + 2, 6, 1, MADEIRA2);
+    }
+    tabua(py - 7, 1); tabua(py + 1, -1);
+  }
+  // pedras chatas de pisar, na metade de cima do tile (a margem do lago cobre a de baixo)
+  function pedrinhas(ctx, px, py, x) {
+    [[2, 2 + (x % 2) * 2], [9, 5 - (x % 2) * 2]].forEach(function (p) {
+      var sx = px + p[0], sy = py + p[1];
+      ret(ctx, sx, sy + 4, 6, 1, 'rgba(58,36,70,0.18)');
+      ret(ctx, sx, sy, 6, 4, K); ret(ctx, sx - 1, sy + 1, 8, 2, K);
+      ret(ctx, sx, sy + 1, 6, 2, PEDRA2); ret(ctx, sx + 1, sy + 1, 3, 1, PEDRA);
+    });
+  }
+  var PECAS = { poste: poste, banco: banco, canteiro: canteiro, cerca: cerca, pedra: pedra,
+    poco: poco, correio: correio, placa: placa, pedrinhas: pedrinhas };
+  // as que entram na ordem de cima para baixo (e voltam por cima da Mariana quando ela passa atrás)
+  I.PECAS_ALTAS = { poste: true, banco: true, canteiro: true, cerca: true, poco: true, correio: true, placa: true };
   I.desenharPeca = function (ctx, tipo, x, y) { if (PECAS[tipo]) PECAS[tipo](ctx, x * T, y * T, x, y); };
+  // peças iguais dividem o mesmo sprite (a cerca muda com os vizinhos)
+  I.chavePeca = function (tipo, x, y) {
+    if (tipo !== 'cerca') return tipo;
+    return 'cerca:' + (x > 0 && I.decor[y][x - 1] === 'cerca') + (x < Mapa.W - 1 && I.decor[y][x + 1] === 'cerca');
+  };
 
   /* ----- animação: água da fonte (jatos, pingos, anéis) e o brilho dos lampiões ----- */
+  // a água da fonte, em px do jogo: no buffer e, quando ela passa atrás da fonte, de novo por cima dela
+  I.animarObjeto = function (ctx, o, t) {
+    if (o.tipo !== 'fonte') return;
+    var c = centroDe(o), cx = c.x, cy = c.y + 12;
+    for (var g = 0; g < 14; g++) {
+      var lado = g % 2 ? 1 : -1;
+      // da taça de cima para a bacia do meio
+      var fa = ((t / 900) + g / 14) % 1;
+      ctx.fillStyle = fa < 0.8 ? '#bfe7ff' : '#ffffff';
+      ctx.fillRect(Math.round(cx + lado * (4 + fa * 10)), Math.round(cy - 45 - Math.sin(fa * Math.PI) * 6 + fa * 20), 1, 2);
+      // da bacia do meio para a de baixo, em cortina
+      var fb = ((t / 1100) + g / 14) % 1;
+      ctx.fillStyle = fb < 0.7 ? '#d9fff4' : '#ffffff';
+      ctx.fillRect(Math.round(cx + lado * (14 + fb * 7) + (g % 3) - 1), Math.round(cy - 23 + fb * fb * 20), 1, 2);
+    }
+    // jato de cima (em volta da estrela)
+    var jato = (t / 500) % 1;
+    ctx.fillStyle = 'rgba(217,255,244,0.9)';
+    ctx.fillRect(cx - 6, cy - 46 - Math.round(Math.sin(jato * Math.PI) * 2), 2, 2);
+    ctx.fillRect(cx + 4, cy - 46 - Math.round(Math.cos(jato * Math.PI) * 2), 2, 2);
+    // anéis na água de baixo
+    for (var k = 0; k < 3; k++) {
+      var an = ((t / 1600) + k / 3) % 1, rx = Math.round(18 + an * 12), ry = Math.round(6 + an * 5);
+      ctx.fillStyle = 'rgba(255,255,255,' + (0.7 * (1 - an)).toFixed(2) + ')';
+      ctx.fillRect(cx - rx, cy + 1, 3, 1); ctx.fillRect(cx + rx - 3, cy + 1, 3, 1);
+      ctx.fillRect(cx - 2, cy + ry, 4, 1);
+    }
+    // brilho que passeia na água
+    var br = (t / 2600) % 1;
+    ctx.fillStyle = 'rgba(255,255,255,0.75)';
+    ctx.fillRect(Math.round(cx - 26 + br * 52), cy + 6, 3, 1);
+  };
+  // halo do lampião: anel de 2 px em volta da lanterna e mais 2 px pontilhados (2×2), só FORA do poste
+  // (não lava o contorno nem se sobrepõe: um nível de alfa só; ui.md §10.13). Feito uma vez, na caixa do sprite do poste
+  var halo = null;
+  function haloPoste() {
+    if (halo) return halo;
+    var w = T + 8, h = T + 26, ox = 4, oy = 24;
+    var base = PA.novoCanvas(w, h), bctx = base.getContext('2d');
+    poste(bctx, ox, oy);
+    var d = bctx.getImageData(0, 0, w, h).data, dist = new Uint8Array(w * h), fila = [], x, y, i;
+    for (y = 0; y < h; y++) for (x = 0; x < w; x++) {
+      i = y * w + x;
+      if (d[i * 4 + 3] === 255 && y <= oy - 6) { dist[i] = 9; fila.push(i); }
+    }
+    for (var anel = 1; anel <= 4; anel++) {
+      var prox = [];
+      fila.forEach(function (k) {
+        var kx = k % w, ky = (k - kx) / w;
+        for (var j = -1; j <= 1; j++) for (var q = -1; q <= 1; q++) {
+          var nx = kx + q, ny = ky + j, nk = ny * w + nx;
+          if (nx < 0 || ny < 0 || nx >= w || ny >= h || dist[nk] || d[nk * 4 + 3]) continue;
+          dist[nk] = anel; prox.push(nk);
+        }
+      });
+      fila = prox;
+    }
+    halo = PA.novoCanvas(w, h);
+    var hctx = halo.getContext('2d');
+    hctx.fillStyle = '#ffe98a';
+    for (y = 0; y < h; y++) for (x = 0; x < w; x++) {
+      var dd = dist[y * w + x];
+      if (dd && dd <= 2 || (dd === 3 || dd === 4) && (x + y) % 2 === 0) hctx.fillRect(x, y, 1, 1);
+    }
+    return halo;
+  }
+  var postes = [], postesDe = null;   // os lampiões do mapa de agora (refeitos quando o Mapa.criar troca a grade)
   I.animarCidade = function (ctx, t) {
     var f = fonte();
-    if (f) {
-      var c = centroDe(f), cx = c.x, cy = c.y + 12;
-      for (var g = 0; g < 14; g++) {
-        var lado = g % 2 ? 1 : -1;
-        // da taça de cima para a bacia do meio
-        var fa = ((t / 900) + g / 14) % 1;
-        ctx.fillStyle = fa < 0.8 ? '#bfe7ff' : '#ffffff';
-        ctx.fillRect(Math.round(cx + lado * (4 + fa * 10)), Math.round(cy - 45 - Math.sin(fa * Math.PI) * 6 + fa * 20), 1, 2);
-        // da bacia do meio para a de baixo, em cortina
-        var fb = ((t / 1100) + g / 14) % 1;
-        ctx.fillStyle = fb < 0.7 ? '#d9fff4' : '#ffffff';
-        ctx.fillRect(Math.round(cx + lado * (14 + fb * 7) + (g % 3) - 1), Math.round(cy - 23 + fb * fb * 20), 1, 2);
-      }
-      // jato de cima (em volta da estrela)
-      var jato = (t / 500) % 1;
-      ctx.fillStyle = 'rgba(217,255,244,0.9)';
-      ctx.fillRect(cx - 6, cy - 46 - Math.round(Math.sin(jato * Math.PI) * 2), 2, 2);
-      ctx.fillRect(cx + 4, cy - 46 - Math.round(Math.cos(jato * Math.PI) * 2), 2, 2);
-      // anéis na água de baixo
-      for (var k = 0; k < 3; k++) {
-        var an = ((t / 1600) + k / 3) % 1, rx = Math.round(18 + an * 12), ry = Math.round(6 + an * 5);
-        ctx.fillStyle = 'rgba(255,255,255,' + (0.7 * (1 - an)).toFixed(2) + ')';
-        ctx.fillRect(cx - rx, cy + 1, 3, 1); ctx.fillRect(cx + rx - 3, cy + 1, 3, 1);
-        ctx.fillRect(cx - 2, cy + ry, 4, 1);
-      }
-      // brilho que passeia na água
-      var br = (t / 2600) % 1;
-      ctx.fillStyle = 'rgba(255,255,255,0.75)';
-      ctx.fillRect(Math.round(cx - 26 + br * 52), cy + 6, 3, 1);
+    if (f) I.animarObjeto(ctx, f, t);
+    // lampiões: o halo morno que respira devagar
+    var img = haloPoste();
+    // respira em 3 degraus de alfa (0,14 · 0,18 · 0,22), não em rampa contínua (ui.md §10.13 e §10.15)
+    ctx.globalAlpha = 0.18 + 0.04 * Math.round(Math.sin(t / 900));
+    if (postesDe !== I.decor) {
+      postesDe = I.decor; postes = [];
+      for (var y = 0; y < Mapa.H; y++) for (var x = 0; x < Mapa.W; x++) if (I.decor[y][x] === 'poste') postes.push([x * T - 4, y * T - 24]);
     }
-    // lampiões: um halo morno que respira devagar
-    var h = 0.18 + 0.08 * Math.sin(t / 900);
-    ctx.fillStyle = 'rgba(255,233,138,' + h.toFixed(3) + ')';
-    for (var y = 0; y < Mapa.H; y++) for (var x = 0; x < Mapa.W; x++) {
-      if (I.decor[y][x] !== 'poste') continue;
-      ctx.fillRect(x * T + 2, y * T - 15, 12, 11);
-      ctx.fillRect(x * T + 4, y * T - 17, 8, 15);
-    }
+    for (var i = 0; i < postes.length; i++) ctx.drawImage(img, postes[i][0], postes[i][1]);
+    ctx.globalAlpha = 1;
   };
 })();

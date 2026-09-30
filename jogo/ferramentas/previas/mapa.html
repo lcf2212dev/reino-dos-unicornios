@@ -22,11 +22,12 @@ Previa.carregar({
 Mapa.criar(Reino.materias);
 var e = Mapa.prerender();
 var c = document.getElementById('c'); var E = 2;
-c.width = e.width*E; c.height = e.height*E;
+// só o mapa: as fileiras de bosque além da borda de baixo (Mapa.prerender) ficam de fora da prévia
+c.width = e.width*E; c.height = Mapa.altura()*E;
 var ctx = c.getContext('2d'); ctx.imageSmoothingEnabled = false;
 var tmp = PA.novoCanvas(e.width, e.height); var tc = tmp.getContext('2d');
 Mapa.desenharAnimado(tc, 1000, {concluidos:['materia:historia']});
-ctx.drawImage(tmp,0,0,c.width,c.height);
+ctx.drawImage(tmp,0,0,e.width*E,e.height*E);
 if (GRADE) desenharGrade();
 
 // livre = a mesma regra de ferramentas/validar/lugares-do-mapa.js (livresGrade): chão 'g', não sólido, fora de todo rect
