@@ -73,8 +73,6 @@
     return U().el('p.fotos-legenda.fotos-dica', toque ? 'Segure a foto para compartilhar ou salvar.' : 'Clique com o botão direito na foto para salvar.');
   }
 
-  // botão do rodapé de ação (ui.md §10.20): o ícone e o rótulo; no rodapé, o secundário mostra só o ícone e o
-  // principal, no celular, o rótulo curto (ui-fotos.css). O nome inteiro fica no aria-label e no title
   // o balão "Foto guardada no álbum!" (ou outro aviso sem botões) fecha quando o álbum ou a foto grande abre: nada
   // cobre o rodapé de ação (ui.md §10.20)
   function fecharAviso() {
@@ -82,6 +80,8 @@
     if (C && C.limpar && !(C.dialogoAberto && C.dialogoAberto())) C.limpar();   // e os avisos na fila (a 2ª foto guardada)
   }
 
+  // botão do rodapé de ação (ui.md §10.20): o ícone e o rótulo; no rodapé, o secundário mostra só o ícone e o
+  // principal, no celular, o rótulo curto (ui-fotos.css). O nome inteiro fica no aria-label e no title
   function botao(icone, rotulo, curto, principal, classe) {
     return U().el('button.btn-grande' + (principal ? '.btn-principal' : '.btn-secundario') + (classe ? '.' + classe : ''),
       { type: 'button', 'aria-label': rotulo, title: rotulo },

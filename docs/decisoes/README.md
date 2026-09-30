@@ -13,6 +13,7 @@ Consequências). Para o "como", veja `docs/receitas/`; para as regras, `docs/con
 | Segurança do progresso real (3 lugares, proibições, guardas) | `seguranca-do-progresso.md` |
 | Ruído de antialiasing nas referências de imagem | `referencias-ruido.md` |
 | Helpers de desenho: uma fonte só (`jogo/js/arte/desenho.js`) | `helpers-de-desenho.md` |
+| Balão sem efeito de digitação (o texto aparece inteiro) | `balao-sem-digitacao.md` |
 | Vigias de memória e de travamento nos testes (e o vazamento de 2026-09-27) | `vigias-de-memoria.md` |
 | Plano paralelo: reserva de personagem no jogo, plano e pipeline nas ferramentas | `plano-paralelo.md` |
 | Direção de arte: escala do mundo, cor por matéria, festa | `direcao-de-arte.md` |
