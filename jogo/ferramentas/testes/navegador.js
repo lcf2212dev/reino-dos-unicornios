@@ -5,12 +5,18 @@ const { chromium } = require('playwright');
 const { conferirUrl } = require('./guardas');
 const { vigiar } = require('./vigia-memoria');
 
-// tamanhos do CLAUDE.md: celular, tablet e notebook
+// tamanhos padrão do CLAUDE.md: celular, tablet e notebook
 const TAMANHOS = {
   celular: { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 3 },
   tablet: { viewport: { width: 820, height: 1180 }, isMobile: true, hasTouch: true, deviceScaleFactor: 2 },
   notebook: { viewport: { width: 1366, height: 768 }, deviceScaleFactor: 1 },
 };
+// disponíveis só a pedido (--tamanhos deitado): não enumeráveis, fora de Object.keys (e2e, ver e referências
+// seguem nos 3 padrão)
+const EXTRAS = {
+  deitado: { viewport: { width: 844, height: 390 }, isMobile: true, hasTouch: true, deviceScaleFactor: 3 },
+};
+for (const [nome, t] of Object.entries(EXTRAS)) Object.defineProperty(TAMANHOS, nome, { value: t, enumerable: false });
 
 // rasterização fixa (sem GPU, uma thread, perfil de cor sRGB): as bordas suaves saem iguais em toda captura
 const ARGS_FIXOS = ['--disable-gpu', '--disable-gpu-rasterization', '--disable-partial-raster', '--num-raster-threads=1',

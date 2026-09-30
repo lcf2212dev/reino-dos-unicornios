@@ -7,7 +7,7 @@ description: Use para abrir, ver, testar ou tirar print do jogo Reino dos Unicó
 Regras: `jogo/ferramentas/CLAUDE.md`.
 
 1. PRIMEIRO `npm run ver` (na raiz da worktree): sobe servidor de TESTE e banco novos, põe um save sintético,
-   vai ao lugar/tela, roda passos e fotografa nos 3 tamanhos em `/tmp/reino-testes/ver/<nome>/` (PNG, `<nome>/erros.txt`,
+   vai ao lugar/tela, roda passos e fotografa nos 3 tamanhos (e `deitado` a pedido: `jogo/ferramentas/CLAUDE.md`) em `/tmp/reino-testes/ver/<nome>/` (PNG, `<nome>/erros.txt`,
    `<nome>/estado.json`; sai com código ≠ 0 se houve erro de console). `npm run ver -- --ajuda` lista tudo.
    ```
    npm run ver -- --ir petshop --nome petshop
