@@ -47,31 +47,32 @@
   };
 
   /* ---------- thumbstick do toque (js/motor/entrada.js): base 22×22 e pino 10×10, na mesma grade ---------- */
-  // f: fundo claro meio transparente; b/d: anel de brilho em cima e de sombra embaixo; a: as quatro setinhas;
+  // f: miolo de tinta meio transparente (aparece na calçada clara); b/d: brilho do anel em cima e embaixo
+  // (o anel aparece até na água funda); w: as quatro setinhas brancas com contorno;
   // no pino, c creme com brilho w em cima e sombra o embaixo
   var CONTROLE = {
-    base: { p: { k: CONTORNO, f: 'rgba(255, 250, 253, 0.35)', b: 'rgba(255, 255, 255, 0.8)',
-      d: 'rgba(58, 36, 70, 0.2)', a: 'rgba(58, 36, 70, 0.45)' }, d: [
+    base: { p: { k: CONTORNO, f: 'rgba(58, 36, 70, 0.25)', b: 'rgba(255, 255, 255, 0.9)',
+      d: 'rgba(255, 255, 255, 0.9)', w: '#ffffff' }, d: [
       '........kkkkkk........',
       '.....kkkbbbbbbkkk.....',
-      '....kbbbffffffbbbk....',
-      '...kbfffffaafffffbk...',
-      '..kbfffffaaaafffffbk..',
+      '....kbbbffkkffbbbk....',
+      '...kbffffkwwkffffbk...',
+      '..kbffffkwwwwkffffbk..',
+      '.kbfffffkkkkkkfffffbk.',
       '.kbffffffffffffffffbk.',
       '.kbffffffffffffffffbk.',
       '.kbffffffffffffffffbk.',
-      'kbffffffffffffffffffbk',
-      'kbffaffffffffffffaffbk',
-      'kbfaaffffffffffffaafbk',
-      'kbfaaffffffffffffaafbk',
-      'kdffaffffffffffffaffdk',
-      'kdffffffffffffffffffdk',
+      'kbfffkffffffffffkfffbk',
+      'kbffkwkffffffffkwkffbk',
+      'kbfkwwkffffffffkwwkfbk',
+      'kbfkwwkffffffffkwwkfbk',
+      'kdffkwkffffffffkwkffdk',
+      'kdfffkffffffffffkfffdk',
       '.kdffffffffffffffffdk.',
-      '.kdffffffffffffffffdk.',
-      '.kdffffffffffffffffdk.',
-      '..kdfffffaaaafffffdk..',
-      '...kdfffffaafffffdk...',
-      '....kdddffffffdddk....',
+      '.kdfffffkkkkkkfffffdk.',
+      '..kdffffkwwwwkffffdk..',
+      '...kdffffkwwkffffdk...',
+      '....kdddffkkffdddk....',
       '.....kkkddddddkkk.....',
       '........kkkkkk........'] },
     pino: { p: { k: CONTORNO, c: '#fff1d0', w: '#ffffff', o: '#f0a04a' }, d: [

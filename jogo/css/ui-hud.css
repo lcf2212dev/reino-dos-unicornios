@@ -49,7 +49,9 @@
 }
 .chip-montaria { min-width: 0; }
 .chip-montaria canvas { flex: none; }
-.montaria-info { display: flex; flex-direction: column; min-width: 0; font-size: 0.8em; line-height: 1.2; }
+.montaria-info { display: flex; flex-direction: column; min-width: 0; font-size: 0.8em; line-height: 1.5; }
+/* o ícone do estágio desce para a linha da barrinha: a barra de crescimento também tem ícone, como a fome e a sede */
+.chip-montaria .montaria-cresce { align-items: flex-end; }
 .montaria-info b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .montaria-estagio { color: var(--tinta-suave); }
 .barrinha { display: block; height: 8px; margin-top: 4px; border: 2px solid var(--borda); border-radius: var(--canto); background: #fff; overflow: hidden; min-width: 60px; }
@@ -88,7 +90,6 @@
 .controle-base {
   position: absolute; width: var(--cb, 110px); height: var(--cb, 110px); margin: calc(var(--cb, 110px) / -2) 0 0 calc(var(--cb, 110px) / -2);
   filter: drop-shadow(0 var(--px, 5px) 0 rgba(58, 36, 70, 0.35));
-  opacity: 0.85;
 }
 .controle-pino {
   position: absolute; left: 50%; top: 50%; width: var(--cp, 50px); height: var(--cp, 50px); margin: calc(var(--cp, 50px) / -2) 0 0 calc(var(--cp, 50px) / -2);
