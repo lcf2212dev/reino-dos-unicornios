@@ -44,4 +44,5 @@
 # a2fabbc = leva 4a (D2B-16, D2B-17, O-19, D8B-23, D8B-19, O-17, D8B-25, D8A-10, D8A-11, D8A-21, D7-20, D11-13, D4-18, D4-19; Castelo do D2A-09; deitado; O-27, D4-02, D2B-01, D1-19 descartados)
 # 0b95967 = onda 2a, paleta (D10-02, D10-14, D10-18, D10-13, D6-20, D10-B04, D8B-12, D5-13, D8A-05, D11-03, D11-11) e lousas das salas de prova (D2A-09)
 # ba40bbb = D11-07 e telhados na cor da matéria (parte do D10-12)
-ba40bbb
+# a579903 = onda 2b, tipografia e pixel (D10-04, D10-06, D10-07, D10-08, D10-05, D12a-01, D9-16, D4-12, D5-06, D13-03, D10-B08, D5-03, D4-08, D8B-11, D8B-17, D8A-04, D8A-03, D8A-14)
+a579903
