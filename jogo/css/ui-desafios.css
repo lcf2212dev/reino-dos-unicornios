@@ -32,13 +32,13 @@
 .desenho-paleta { gap: 12px; }
 .desenho-ferr {
   display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 56px; padding: 6px 4px;
-  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--branco); box-shadow: var(--sombra-pequena); color: var(--tinta);
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--branco); box-shadow: var(--sombra-pequena); --degrau: 2px; color: var(--tinta);
 }
 .desenho-ferr small { font-size: var(--texto-aux); }
 .desenho-ferr[aria-pressed="true"] { background: var(--ambar-claro); outline: var(--borda-fina) solid var(--roxo); outline-offset: 2px; }
 .desenho-limpar { background: var(--quase-fundo); }
 /* cada cor com 44 px, o alvo do dedo (D6-12); no celular, 2 fileiras de 4 */
-.desenho-cor { position: relative; width: 44px; height: 44px; border: var(--borda-fina) solid var(--borda); border-radius: var(--redondo); box-shadow: var(--sombra-pequena); }
+.desenho-cor { position: relative; width: 44px; height: 44px; border: var(--borda-fina) solid var(--borda); border-radius: var(--redondo); box-shadow: var(--sombra-pequena); --degrau: 2px; }
 .desenho-cor[aria-pressed="true"] { outline: 4px solid var(--roxo); outline-offset: 2px; }
 .desenho-moldura { width: min(100%, 360px); border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto); background: var(--branco); }
 .desenho-tela {
@@ -136,9 +136,9 @@
 .copiar-item { display: flex; flex-direction: column; gap: 10px; padding: 12px 14px 14px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); }
 .copiar-escolha { display: grid; grid-template-columns: auto 1fr 1fr; align-items: center; gap: 8px; }
 .copiar-letra { font-size: var(--texto); }
-.copiar-opcao { display: flex; align-items: center; justify-content: center; gap: 8px; min-width: 0; min-height: 52px; padding: 6px 8px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--branco); box-shadow: var(--sombra-pequena); }
+.copiar-opcao { display: flex; align-items: center; justify-content: center; gap: 8px; min-width: 0; min-height: 52px; padding: 6px 8px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--branco); box-shadow: var(--sombra-pequena); --degrau: 2px; }
 .copiar-marca { display: inline-flex; align-items: center; justify-content: center; width: 1.9em; height: 1.9em; flex: none; border: var(--borda-fina) solid var(--borda); border-radius: var(--redondo); background: var(--branco); color: var(--branco); font-size: var(--texto-aux); line-height: 1; }
-.copiar-opcao[aria-pressed="true"] { background: var(--ambar-claro); border-color: var(--roxo); box-shadow: var(--sombra-pequena); outline: var(--borda-fina) solid var(--roxo); outline-offset: 0; }
+.copiar-opcao[aria-pressed="true"] { background: var(--ambar-claro); border-color: var(--roxo); box-shadow: var(--sombra-pequena); --degrau: 2px; outline: var(--borda-fina) solid var(--roxo); outline-offset: 0; }
 .copiar-opcao[aria-pressed="true"] .copiar-marca { background: var(--roxo-texto); border-color: var(--roxo-texto); }   /* o "X" branco: 6,9:1 */
 .copiar-palavra { letter-spacing: 0.06em; }
 .copiar-resposta { display: flex; flex-direction: column; gap: 4px; }
@@ -149,12 +149,12 @@
   border-left: var(--borda-fina) solid var(--rosa); border-radius: var(--canto);
   background: linear-gradient(to bottom, transparent calc(100% - 4px), var(--azul) calc(100% - 4px)), var(--papel);
 }
-.copiar-linha.pisca { animation: piscar 0.6s ease-in-out 2; }
+.copiar-linha.pisca { animation: piscar var(--lento) step-end 2; }
 .copiar-vazia { align-self: center; padding: 0 6px; border: var(--borda-fina) dashed var(--tinta-suave); border-radius: var(--canto); color: var(--tinta-suave); font-size: var(--texto-aux); line-height: var(--entrelinha); }
 .copiar-vaga { width: 44px; height: 44px; border: var(--borda-fina) dashed var(--tinta-suave); border-radius: var(--canto); }
 .copiar-pecas { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; padding: 10px 8px; border: var(--borda-fina) dashed var(--ambar); border-radius: var(--canto); background: var(--papel); }
-.copiar-peca { min-width: 48px; height: 48px; padding: 0 6px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel-quente); box-shadow: var(--sombra-pequena); font-size: var(--texto); line-height: 1; }
-.copiar-peca.colocada { min-width: 44px; height: 44px; background: var(--branco); border-color: var(--roxo); color: var(--roxo-texto); box-shadow: var(--sombra-pequena); }
+.copiar-peca { min-width: 48px; height: 48px; padding: 0 6px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel-quente); box-shadow: var(--sombra-pequena); --degrau: 2px; font-size: var(--texto); line-height: 1; }
+.copiar-peca.colocada { min-width: 44px; height: 44px; background: var(--branco); border-color: var(--roxo); color: var(--roxo-texto); box-shadow: var(--sombra-pequena); --degrau: 2px; }
 .copiar-peca.usada { border: var(--borda-fina) dashed var(--tinta-suave); background: transparent; box-shadow: none; color: transparent; }
 .tudo-certo .copiar-item { background: var(--certo-fundo); }
 @media (max-width: 480px) {

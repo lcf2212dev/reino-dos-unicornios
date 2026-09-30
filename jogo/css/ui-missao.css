@@ -76,7 +76,7 @@
   display: flex; align-items: center; gap: 12px;
   min-height: 64px; padding: 12px 16px; text-align: left;
   border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande);
-  background: var(--papel); box-shadow: var(--sombra-grande);
+  background: var(--papel); box-shadow: var(--sombra-grande); --degrau: 4px;
   font-size: var(--texto);
 }
 .opcao-emoji, .sala-emoji, .bau-emoji, .intro-emoji, .fim-emoji, .livro-emoji, .premio-icone, .regra-icone, .aviso-medalha-icone, .item-icone {
@@ -88,7 +88,7 @@
    empurrar o botão para fora da tela; palavras que cabem não mudam (break-word só age quando a palavra não cabe) */
 .opcoes-varias > .opcao { min-width: 0; }
 .opcoes-varias .opcao-texto { min-width: 0; overflow-wrap: break-word; }
-.opcao[aria-pressed="true"] { background: var(--ambar-claro); border-color: var(--roxo); box-shadow: var(--sombra-grande); outline: var(--borda-fina) solid var(--roxo); outline-offset: 0; }
+.opcao[aria-pressed="true"] { background: var(--ambar-claro); border-color: var(--roxo); box-shadow: var(--sombra-grande); --degrau: 4px; outline: var(--borda-fina) solid var(--roxo); outline-offset: 0; }
 .opcao-marcar::after { content: ""; flex: none; width: 28px; height: 28px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--branco); }
 .opcao-marcar[aria-pressed="true"]::after {
   content: "";
@@ -99,7 +99,7 @@
     linear-gradient(var(--branco), var(--branco)) 18px 5px / 4px 6px no-repeat,
     var(--roxo);
 }
-.opcao.certa, .opcao-marcar.certa { background: var(--certo-fundo); border-color: var(--certo); box-shadow: var(--sombra-grande); outline: none; color: var(--tinta); }
+.opcao.certa, .opcao-marcar.certa { background: var(--certo-fundo); border-color: var(--certo); box-shadow: var(--sombra-grande); --degrau: 4px; outline: none; color: var(--tinta); }
 /* erro de item (ui.md §10.19.2): a opção errada fica na tela riscada, em --erro-fundo com borda --erro, sem transparência */
 .opcao.errada { background: var(--erro-fundo); border-color: var(--erro); color: var(--tinta); text-decoration: line-through; box-shadow: none; }
 /* a opção travada depois da resposta (aria-disabled) que é a certa, a errada ou a marcada: o desenho não apaga */
@@ -107,7 +107,7 @@
 .opcoes-vf .opcao { justify-content: center; font-size: var(--texto); }
 
 .dica-toque { font-size: var(--texto-aux); color: var(--tinta-suave); }
-.dica-toque.pisca { animation: piscar 0.6s ease-in-out 2; color: var(--laranja-escuro); }
+.dica-toque.pisca { animation: piscar var(--lento) step-end 2; color: var(--laranja-escuro); }
 
 /* ligar */
 .ligar { display: flex; flex-direction: column; gap: 12px; }
@@ -122,7 +122,7 @@
   display: flex; flex-wrap: wrap; align-items: flex-start; align-content: center; gap: 8px;
   min-height: 60px; padding: 10px 12px; text-align: left;
   border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
-  background: var(--papel); box-shadow: var(--sombra-grande);
+  background: var(--papel); box-shadow: var(--sombra-grande); --degrau: 4px;
   font-size: var(--texto);
 }
 .ligar-item > span:last-child:not(.ligar-img) { flex: 1 1 0; max-width: 100%; overflow-wrap: break-word; }
@@ -145,7 +145,7 @@
   display: flex; align-items: center; gap: 10px;
   min-height: 52px; padding: 8px 14px; text-align: left;
   border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
-  background: var(--papel); box-shadow: var(--sombra-pequena);
+  background: var(--papel); box-shadow: var(--sombra-pequena); --degrau: 2px;
   
 }
 .seq-alvo .seq-item { width: 100%; background: var(--ambar-claro); }
@@ -157,7 +157,7 @@
 /* separar */
 .separar { display: flex; flex-direction: column; gap: 14px; }
 .separar-monte { display: flex; flex-wrap: wrap; gap: 10px; min-height: 60px; padding: 10px; border: var(--borda-fina) dashed var(--ambar); border-radius: var(--canto-grande); background: var(--papel); }
-.sep-item { display: flex; align-items: center; gap: 8px; min-height: 52px; padding: 6px 12px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel); box-shadow: var(--sombra-pequena); }
+.sep-item { display: flex; align-items: center; gap: 8px; min-height: 52px; padding: 6px 12px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel); box-shadow: var(--sombra-pequena); --degrau: 2px; }
 .sep-item.escolhido { outline: 4px solid var(--roxo); outline-offset: 2px; background: var(--ambar-claro); transform: translateY(-2px); }
 .baus { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
 .bau {
@@ -165,10 +165,10 @@
   min-height: 170px; padding: 12px; text-align: left;
   border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto-grande);
   background: linear-gradient(180deg, var(--laranja-claro) 0 34px, var(--papel) 34px);
-  box-shadow: var(--sombra-grande);
+  box-shadow: var(--sombra-grande); --degrau: 4px;
 }
 .bau:nth-child(2) { background: linear-gradient(180deg, var(--ambar-claro) 0 34px, var(--papel) 34px); }
-.com-escolha .bau { box-shadow: 0 0 0 4px var(--laranja), 0 4px 0 4px var(--borda); animation: pulsar 1.2s step-end 3; }   /* tipografia-ok: anel de "toque aqui" (não é sombra), com a sombra de 4 px por baixo; o contorno fica mesmo sem animação */
+.com-escolha .bau { box-shadow: 0 0 0 4px var(--laranja), 0 4px 0 4px var(--borda); --degrau: 4px; animation: pulsar calc(2 * var(--lento)) step-end 3; }   /* tipografia-ok: anel de "toque aqui" (não é sombra), com a sombra de 4 px por baixo; o contorno fica mesmo sem animação */
 .bau-titulo { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: var(--texto); }
 .bau-titulo b, .sep-item { max-width: 100%; overflow-wrap: break-word; }
 .bau-emoji { font-size: var(--texto-g); }
@@ -178,7 +178,7 @@
 
 /* memória */
 .memoria { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
-.carta-mem { position: relative; aspect-ratio: 3 / 4; max-width: 100%; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--ambar); box-shadow: var(--sombra-grande); padding: 4px; }
+.carta-mem { position: relative; aspect-ratio: 3 / 4; max-width: 100%; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--ambar); box-shadow: var(--sombra-grande); --degrau: 4px; padding: 4px; }
 .mem-verso { font-size: var(--texto-t); }
 .mem-face { display: none; font-size: var(--texto); }
 /* letras grandes: a palavra da carta fica em 16 (--texto-aux sobe a 16): a carta não tem lugar para 24 */
@@ -199,7 +199,7 @@
   max-height: 78%; overflow: auto;
   padding: 18px 18px calc(env(safe-area-inset-bottom, 0px) + 18px);
   border-top: var(--borda-grossa) solid var(--borda); border-radius: var(--canto-grande) var(--canto-grande) 0 0;
-  animation: subir 0.22s ease-out;
+  animation: subir var(--normal) ease-out;
 }
 .missao-retorno > * { max-width: 760px; margin-left: auto; margin-right: auto; }
 .missao-retorno > * + * { margin-top: 12px; }

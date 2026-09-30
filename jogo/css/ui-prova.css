@@ -8,7 +8,7 @@
 .aviso-medalha { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--ouro-claro); }
 .aviso-medalha-icone { font-size: var(--texto-t); flex: none; }
 
-.balao-respira { width: 150px; height: 180px; display: grid; place-items: center; transform: scale(0.55); transition: transform 3.1s ease-in-out; }
+.balao-respira { width: 150px; height: 180px; display: grid; place-items: center; transform: scale(0.55); transition: transform 3.1s ease-in-out; }   /* movimento-ok: respiração do Ritual da Calma, contínua de propósito (ui.md §10.15.5) */
 .balao-cor { display: block; }   /* o balão em pixel art 16×20 (treino.js, BALAO), a 8 px por pixel */
 .balao-botao { vertical-align: middle; margin-left: 8px; }   /* o mesmo balão no botão, a 2 px por pixel */
 .balao-respira.enche { transform: scale(1.05); }
@@ -19,7 +19,7 @@
 .prova-rodape .btn-grande { min-width: 140px; }
 .dica-revisao { text-align: center; color: var(--roxo-texto); margin-top: 14px; }
 .lista-revisao { list-style: none; padding: 0; margin: 0; width: 100%; display: flex; flex-direction: column; gap: 10px; }
-.item-revisao { display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px 12px; text-align: left; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); box-shadow: var(--sombra-pequena); }
+.item-revisao { display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px 12px; text-align: left; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); box-shadow: var(--sombra-pequena); --degrau: 2px; }
 .item-revisao.revisado { background: var(--certo-fundo); }
 .item-revisao.vazio { background: var(--papel-2); }
 .rev-num { flex: none; width: 34px; height: 34px; display: grid; place-items: center; border-radius: var(--redondo); background: var(--ambar); border: var(--borda-fina) solid var(--borda); }
@@ -27,7 +27,7 @@
 .rev-resp { color: var(--tinta-suave); }
 .rev-status { flex: none; font-size: var(--texto-aux); }
 .aviso-revisao { padding: 10px 14px; border-radius: var(--canto); background: var(--ouro-claro); border: var(--borda-fina) solid var(--borda); }
-.medalha-grande { font-size: var(--texto-festa); line-height: 1; animation: flutuar 2s ease-in-out infinite; }
+.medalha-grande { font-size: var(--texto-festa); line-height: 1; animation: flutuar calc(3 * var(--lento)) steps(4) infinite; }
 .medalha-ouro { filter: drop-shadow(2px 0 0 var(--ouro)) drop-shadow(-2px 0 0 var(--ouro)) drop-shadow(0 2px 0 var(--ouro)) drop-shadow(0 -2px 0 var(--ouro)); }
 .lista-erros { display: flex; flex-direction: column; gap: 10px; width: 100%; text-align: left; }
 .erro-item { padding: 12px 14px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); }
@@ -51,7 +51,7 @@
 .selo-tentativa small { font-size: var(--texto-aux); color: var(--tinta-suave); }
 .selo-tentativa b { font-family: var(--fonte-titulo); font-size: var(--texto-g); }
 .previa-valendo { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%; padding: 24px 16px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--rar-fundo, var(--comum-fundo)); box-shadow: inset 0 0 0 4px var(--rar-desenho, var(--comum-desenho)); }   /* tipografia-ok: faixa interna da raridade (ui.md §10.8) */
-.previa-valendo.ganhou { animation: brilhar 1.2s step-end; }
+.previa-valendo.ganhou { animation: brilhar calc(2 * var(--lento)) step-end; }
 .previa-valendo p { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; }
 .quadro-premios-caixa { width: 100%; display: flex; flex-direction: column; gap: 10px; text-align: left; }
 .quadro-premios-titulo { text-align: center; }
@@ -74,7 +74,7 @@
 .premio-status { grid-area: status; justify-self: end; font-size: var(--texto-aux); padding: 2px 10px; border-radius: var(--canto); border: var(--borda-fina) solid var(--borda); background: var(--branco); }
 .premio-status.agora { background: var(--ouro); }
 .premio-status.ganhou { background: var(--certo-fundo); color: var(--certo); }
-.nota-folha { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 150px; height: 150px; border: var(--borda-grossa) solid var(--erro); border-radius: var(--redondo); background: var(--branco); color: var(--erro); box-shadow: var(--sombra-grande); animation: brilhar 1.2s step-end; }
+.nota-folha { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 150px; height: 150px; border: var(--borda-grossa) solid var(--erro); border-radius: var(--redondo); background: var(--branco); color: var(--erro); box-shadow: var(--sombra-grande); animation: brilhar calc(2 * var(--lento)) step-end; }
 .nota-folha b { font-family: var(--fonte-titulo); font-size: var(--texto-t); line-height: var(--entrelinha-titulo); }
 .nota-folha small { font-size: var(--texto-aux); }
 .nota-folha.nota-dez { border-color: var(--certo); color: var(--certo); }
@@ -94,15 +94,15 @@
 .estilo-marcar-x .opcao:not(.opcao-marcar)[aria-pressed="true"]::before { content: "(X)"; color: var(--roxo-texto); }
 .estilo-circular .opcao-marcar::after { display: none; }
 .estilo-circular .opcao { justify-content: center; text-align: center; }
-.estilo-circular .opcao[aria-pressed="true"] { border-color: var(--laranja-forte); border-radius: var(--canto); outline: 4px solid var(--laranja-forte); outline-offset: 0; background: var(--laranja-claro); box-shadow: var(--sombra-grande); }
+.estilo-circular .opcao[aria-pressed="true"] { border-color: var(--laranja-forte); border-radius: var(--canto); outline: 4px solid var(--laranja-forte); outline-offset: 0; background: var(--laranja-claro); box-shadow: var(--sombra-grande); --degrau: 4px; }
 
 /* V ou F em cada frase */
 .vf-lista { display: flex; flex-direction: column; gap: 10px; }
 .vf-linha { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); }
 .vf-botoes { display: flex; gap: 6px; flex: none; }
-.vf-botao { width: 52px; height: 52px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--branco); font-size: var(--texto); box-shadow: var(--sombra-pequena); }
+.vf-botao { width: 52px; height: 52px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--branco); font-size: var(--texto); box-shadow: var(--sombra-pequena); --degrau: 2px; }
 .vf-botao.vf-com-icone { padding: 0; display: flex; align-items: center; justify-content: center; }   /* ✓ e ✘ desenhados, centrados (D12b-02) */
-.vf-botao[aria-pressed="true"] { background: var(--roxo-texto); color: var(--branco); box-shadow: var(--sombra-pequena); outline: var(--borda-fina) solid var(--roxo); outline-offset: 2px; }
+.vf-botao[aria-pressed="true"] { background: var(--roxo-texto); color: var(--branco); box-shadow: var(--sombra-pequena); --degrau: 2px; outline: var(--borda-fina) solid var(--roxo); outline-offset: 2px; }
 .vf-texto { flex: 1; font-size: var(--texto); }
 .tudo-certo .vf-linha { background: var(--certo-fundo); }
 
@@ -115,7 +115,7 @@
 .lacuna { display: inline-block; min-width: 7em; padding: 0 8px; border-bottom: var(--borda-fina) dashed var(--tinta-suave); color: var(--tinta-suave); text-align: center; line-height: var(--entrelinha); margin: 4px 0; }
 .lacuna.preenchida { border-bottom-style: solid; border-bottom-color: var(--borda); color: var(--roxo-texto); background: var(--ambar-claro); border-radius: var(--canto) var(--canto) 0 0; }
 .frase-opcoes { display: flex; flex-wrap: wrap; gap: 8px; }
-.chip-palavra { min-height: 48px; padding: 6px 12px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--branco); font-size: var(--texto); box-shadow: var(--sombra-pequena); }
+.chip-palavra { min-height: 48px; padding: 6px 12px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--branco); font-size: var(--texto); box-shadow: var(--sombra-pequena); --degrau: 2px; }
 .chip-palavra[aria-pressed="true"] { background: var(--roxo-texto); color: var(--branco); }   /* branco no --roxo dá 4,3:1 */
 .completar .chip-palavra { min-width: 48px; }
 /* lista longa (5+ frases, as contas curtas da Matemática): 2 colunas quando a caixa comporta 2 de 340 px (D6-27);
