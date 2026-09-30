@@ -6,7 +6,8 @@
 #hud > .hud-topo { pointer-events: none; }
 .hud-topo {
   position: absolute;
-  top: calc(env(safe-area-inset-top, 0px) + 10px); left: 10px; right: 10px;
+  top: calc(env(safe-area-inset-top, 0px) + 10px);
+  left: calc(env(safe-area-inset-left, 0px) + 10px); right: calc(env(safe-area-inset-right, 0px) + 10px);   /* notch deitado (D11-06) */
   display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;
   pointer-events: none;
 }
@@ -27,8 +28,11 @@
 /* tela cheia, câmera (📷, js/sistemas/fotos.js) e álbum lado a lado; no celular, um embaixo do outro (telas pequenas) */
 .hud-botoes { display: flex; gap: 8px; flex: none; }
 .btn-foto { touch-action: none; -webkit-touch-callout: none; user-select: none; -webkit-user-select: none; }
-/* sem poder tirar foto agora (transição, tela aberta, balão): aria-disabled, no estado indisponível (ui-base.css),
-   mas ainda focável pelo Tab */
+/* 📷 e álbum ficam acesos também na conversa (D8A-15, ui.md §10.19): sem poder tirar, o toque só afunda o botão */
+/* nuvem riscada (D11-05, ui/sem-internet.js): o progresso não subiu. Na fileira dos botões, 32 px, sem toque e sem
+   mudar a altura da fileira */
+.hud-botoes > .hud-nuvem { display: grid; place-items: center; flex: none; width: 32px; align-self: center; pointer-events: none; }
+.hud-botoes > .hud-nuvem[hidden] { display: none; }
 /* chips do HUD em linha (D8A-02): ícone de 32 px ao lado do número, sem quebra, 48 px de altura (44 no celular); o
    espaço entre palavras vai à metade ("R$ 36,00", "5 ovos!": 8 px em vez de 16, a letra da Press Start 2P é larga) */
 .chip {

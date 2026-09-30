@@ -24,17 +24,6 @@
     var a = naTela(pintor, J.x - w / 2, J.y - h), b = naTela(pintor, J.x + w / 2, J.y);
     return { esq: a.x, cima: a.y, dir: b.x, baixo: b.y };
   }
-  // caixa de um elemento do HUD sem o transform da animação (o chip do ovo pulsa: medir com
-  // getBoundingClientRect fazia a placa tremer 1-2 px); a mesma ideia que o mapa usava para as placas dos prédios,
-  // com 2% de folga para caber o pulso
-  function caixaParada(e) {
-    var anima = getComputedStyle(e).animationName, pai = e.offsetParent;
-    if (!anima || anima === 'none' || !pai) return e.getBoundingClientRect();
-    var pr = pai.getBoundingClientRect();
-    var left = pr.left + pai.clientLeft + e.offsetLeft, top = pr.top + pai.clientTop + e.offsetTop;
-    var w = e.offsetWidth, h = e.offsetHeight, dx = w * 0.02, dy = h * 0.02;
-    return { left: left - dx, right: left + w + dx, top: top - dy, bottom: top + h + dy };
-  }
   // retângulos do HUD (e do balão aberto, com o retrato e a plaquinha do nome) em px do canvas, medidos no máximo a
   // cada 500 ms (como o mapa fazia com as placas dos prédios); o balão abrir, fechar ou trocar de texto remede na
   // hora. Cada um leva a folga f de 8 px CSS até a placa (ui.md §10.18.2)
@@ -46,15 +35,21 @@
   function retangulosHud(canvas, dpr) {
     if (typeof document === 'undefined' || !canvas || !canvas.getBoundingClientRect) return hudMedido;
     var bal = balaoAberto(), tx = bal && bal.querySelector('.claude-texto');
-    var agora = performance.now(), chave = canvas.width + 'x' + canvas.height + '@' + dpr + (bal ? '|' + (tx ? tx.textContent.length : 0) : '');
+    var agora = performance.now(), chave = canvas.width + 'x' + canvas.height + '@' + dpr + (bal ? '|' + (tx ? tx.textContent.length : 0) : '')
+      + (R.UI.areaUtil ? '|' + JSON.stringify(R.UI.areaUtil()) : '');
     if (chave === hudMedido.chave && agora - hudMedido.medidoEm <= 500) return hudMedido;
     var c = canvas.getBoundingClientRect();
     if (!c.width) return hudMedido;
     var k = canvas.width / c.width || dpr, f = Math.ceil(FOLGA_HUD * k) + 1;   // +1: arredondamento do zoom não deixa a folga cair abaixo de 8
     function doCanvas(r) { return { left: (r.left - c.left) * k, right: (r.right - c.left) * k, top: (r.top - c.top) * k, bottom: (r.bottom - c.top) * k, f: f }; }
-    var rects = Array.prototype.map.call(document.querySelectorAll('#hud > *:not(.hud-topo), #hud .hud-topo > * > *'), function (e) {
-      return doCanvas(caixaParada(e));
-    });
+    // o HUD pela área útil (ui/hud.js, ui.md §10.18): os chips da esquerda, o bloco da direita (montaria e a fileira
+    // ⛶ 📷 🖼) e o dock, sem medir o HUD aqui
+    var a = R.UI.areaUtil ? R.UI.areaUtil() : null, vw = window.innerWidth, vh = window.innerHeight, rects = [];
+    if (a) {
+      if (a.esqFundo) rects.push(doCanvas({ left: -1e4, right: a.esqLargura, top: -1e4, bottom: a.esqFundo }));
+      if (a.dirFundo) rects.push(doCanvas({ left: vw - a.dirLargura, right: 1e4, top: -1e4, bottom: a.dirFundo }));
+      if (a.dock) rects.push(doCanvas({ left: -1e4, right: 1e4, top: vh - a.dock, bottom: 1e4 }));
+    }
     if (bal) {
       // o balão entra subindo (animação "subir"): mede sem o deslocamento, onde ele vai parar
       var r = bal.getBoundingClientRect(), dy = 0;

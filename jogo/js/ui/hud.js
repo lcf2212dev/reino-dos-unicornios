@@ -67,6 +67,54 @@
     (def.eventos || []).forEach(ouvir);
   };
 
+  /* ---------- área útil (ui.md §10.18): o HUD escreve no :root o que ele cobre, em px CSS ----------
+     --hud-topo (fim do HUD de cima), --dock-altura (do pé da tela ao topo do dock) e, para quem só conta o
+     que cobre a sua coluna (câmera dos interiores, placas), cada bloco de cima: --hud-esq-largura e
+     --hud-esq-fundo (chips da esquerda), --hud-dir-largura (da borda direita) e --hud-dir-fundo (cartão
+     da montaria e a fileira ⛶ 📷 🖼, no celular embaixo dele). Medido por ResizeObserver, na troca de
+     tela/cena, no resize e de 500 em 500 ms (o relógio congelado dos testes não pinta). UI.areaUtil()
+     devolve os mesmos números. Ninguém mais mede o HUD ou o dock. */
+  var area = { topo: 0, dock: 0, esqLargura: 0, esqFundo: 0, dirLargura: 0, dirFundo: 0 };
+  var VARS = { topo: '--hud-topo', dock: '--dock-altura', esqLargura: '--hud-esq-largura', esqFundo: '--hud-esq-fundo',
+    dirLargura: '--hud-dir-largura', dirFundo: '--hud-dir-fundo' };
+  // caixa sem o transform da animação (o chip do ovo pulsa: a medida tremia 1-2 px), com 2% de folga para o pulso
+  function caixaParada(e) {
+    var anima = getComputedStyle(e).animationName, pai = e.offsetParent;
+    if (!anima || anima === 'none' || !pai) return e.getBoundingClientRect();
+    var pr = pai.getBoundingClientRect();
+    var left = pr.left + pai.clientLeft + e.offsetLeft, top = pr.top + pai.clientTop + e.offsetTop;
+    var w = e.offsetWidth, h = e.offsetHeight, dx = w * 0.02, dy = h * 0.02;
+    return { left: left - dx, right: left + w + dx, top: top - dy, bottom: top + h + dy };
+  }
+  function caixas(sel) {
+    return U.$$(sel).map(caixaParada).filter(function (b) { return b.bottom > b.top && b.right > b.left; });
+  }
+  function medirArea() {
+    var hud = U.$('#hud'), vw = window.innerWidth, vh = window.innerHeight;
+    var n = { topo: 0, dock: 0, esqLargura: 0, esqFundo: 0, dirLargura: 0, dirFundo: 0 };
+    if (hud && !hud.hidden) {
+      caixas('#hud .hud-esq > *').forEach(function (b) { n.esqFundo = Math.max(n.esqFundo, b.bottom); n.esqLargura = Math.max(n.esqLargura, b.right); });
+      caixas('#hud .hud-dir > .chip-montaria, #hud .hud-botoes > *').forEach(function (b) {
+        n.dirFundo = Math.max(n.dirFundo, b.bottom); n.dirLargura = Math.max(n.dirLargura, vw - b.left);
+      });
+      caixas('#hud > .dock').forEach(function (b) { n.dock = Math.max(n.dock, vh - b.top); });
+      n.topo = Math.max(n.esqFundo, n.dirFundo);
+    }
+    var raiz = document.documentElement.style;
+    Object.keys(n).forEach(function (k) {
+      var v = Math.max(0, Math.ceil(n[k]));
+      if (v === area[k] && raiz.getPropertyValue(VARS[k])) return;
+      area[k] = v;
+      raiz.setProperty(VARS[k], v + 'px');
+    });
+  }
+  UI.areaUtil = function () { return U.copia(area); };
+  UI.medirAreaUtil = medirArea;
+  var vigia = typeof ResizeObserver === 'function' ? new ResizeObserver(function () { medirArea(); }) : null;
+  window.addEventListener('resize', medirArea);
+  [EV.CENA, EV.TELAS].forEach(function (ev) { U.on(ev, medirArea); });
+  setInterval(medirArea, 500);
+
   /* ---------- HUD ---------- */
   UI.montarHUD = function () {
     var hud = U.$('#hud');
@@ -114,6 +162,7 @@
       if (a === 'ajustes') UI.telaAjustes();
     });
     UI.atualizarHUD();
+    if (vigia) { vigia.disconnect(); [hud, U.$('.hud-esq', hud), U.$('.hud-dir', hud), dock].forEach(function (e) { vigia.observe(e); }); }
   };
 
   UI.atualizarHUD = function () {
@@ -148,5 +197,6 @@
           el('span.carta-cresce', iconePequeno('🌱', 16),
             el('span.barrinha', el('span', { style: { width: Math.round(pe.pct * 100) + '%' } }))))),
       comCuidados ? barrasCuidado(id, 'mini') : null));
+    medirArea();
   };
 })();

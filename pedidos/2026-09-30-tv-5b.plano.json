@@ -1,0 +1,126 @@
+{
+  "nome": "2026-09-30-tv-5b",
+  "pedido": "pedidos/2026-09-30-tv-5b.md",
+  "personagens": [],
+  "tarefas": [
+    {
+      "id": "area",
+      "tipo": "mecanica",
+      "titulo": "D10-B03 (--hud-topo e --dock-altura), D1-10, D1-11, D2A-01, D8A-15, D11-06 (.hud-topo), D11-05: área útil escrita pelo HUD e lida pela câmera e pelas placas, câmera no meio da área útil, BORDA_CIMA, margem só onde o HUD cobre o cômodo, 📷 e álbum acesos na conversa, inset lateral no HUD, nuvem riscada no HUD",
+      "quem": "general-purpose",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/motor/camera.js",
+        "jogo/js/ui/hud.js",
+        "jogo/js/ui/hud-fotos.js",
+        "jogo/css/ui-hud.css",
+        "jogo/js/mundo/lugares.js",
+        "jogo/js/ui/sem-internet.js",
+        "jogo/js/motor/interiores-placas.js",
+        "jogo/ferramentas/testes/unidade/area-util.navegador.test.js"
+      ],
+      "worktree": "tv-5b-area",
+      "pronto": [
+        "o 'Pronto quando' de D1-10, D1-11, D2A-01, D8A-15 e D11-05 (pedido §13, decisões 1 a 7)",
+        "D10-B03 (parte do HUD): --hud-topo e --dock-altura no :root, lidas por camera.js e interiores-placas.js; grep: nenhum getBoundingClientRect do HUD ou do dock em camera.js nem em interiores-placas.js",
+        "D11-06 (parte do HUD): safe-area-inset-left/right no .hud-topo",
+        "teste de navegador area-util: as variáveis batem com os retângulos do HUD e do dock nos 3 tamanhos"
+      ],
+      "estimativa": 240
+    },
+    {
+      "id": "balao",
+      "tipo": "mecanica",
+      "titulo": "D10-B03 (--balao-altura), D5-01, D5-02, D5-05, D5-09, D5-10, D5-11, D11-06 (.tela e #claude-balao): balão no pé com atividade aberta, Claude compacto e paginado no celular (≤ 4 linhas), altura limitada no notebook, rabinho no retrato, folga de 8 px do dock, nome em aba de 1 linha",
+      "quem": "general-purpose",
+      "depende": ["area"],
+      "arquivos": [
+        "jogo/js/personagens/claude.js",
+        "jogo/css/ui-telas.css",
+        "jogo/css/interiores.css",
+        "jogo/css/ui-petshop.css",
+        "jogo/js/ui/cuidados.js",
+        "jogo/js/sistemas/versao.js",
+        "jogo/js/motor/main.js",
+        "jogo/js/atividades/provas.js",
+        "jogo/js/atividades/treino.js",
+        "docs/contratos/npcs-e-dialogo.md",
+        "jogo/ferramentas/testes/unidade/balao-area.navegador.test.js"
+      ],
+      "worktree": "tv-5b-balao",
+      "pronto": [
+        "o 'Pronto quando' de D5-01, D5-02, D5-05, D5-09, D5-10 e D5-11 (pedido §13, decisões 8 a 13)",
+        "D10-B03 (parte do balão): claude.js escreve --balao-altura (0 fechado); o balão lê --dock-altura",
+        "D11-06 (resto): safe-area-inset-left/right em .tela e #claude-balao",
+        "npcs-e-dialogo.md §10.1 com a exceção de até 4 linhas do Claude no celular",
+        "nenhum áudio muda: a paginação é só da exibição (listar-falas sem fala nova)"
+      ],
+      "estimativa": 270
+    },
+    {
+      "id": "retorno",
+      "tipo": "mecanica",
+      "titulo": "D6-08: retorno da sala compacto no celular (Claude, título e 1 linha, pista recolhível) com a opção marcada à vista",
+      "quem": "worker-low",
+      "depende": ["area"],
+      "arquivos": [
+        "jogo/css/ui-missao.css",
+        "jogo/js/atividades/missao.js",
+        "jogo/js/atividades/desafios/escolha.js"
+      ],
+      "worktree": "tv-5b-retorno",
+      "pronto": [
+        "o 'Pronto quando' de D6-08 (pedido §14.14): opção riscada e 'Tentar de novo' juntos em 390×844",
+        "tablet e notebook sem mudança no retorno (e2e)"
+      ],
+      "estimativa": 120
+    },
+    {
+      "id": "loja",
+      "tipo": "mecanica",
+      "titulo": "D8A-06: atalhos da Loja numa faixa rolável de 1 linha, vitrine menor, 1ª fileira de cartas à vista e o balão sem cobrir carta",
+      "quem": "worker-low",
+      "depende": ["area", "balao"],
+      "arquivos": [
+        "jogo/js/ui/loja.js",
+        "jogo/css/ui-paineis.css"
+      ],
+      "worktree": "tv-5b-loja",
+      "pronto": [
+        "o 'Pronto quando' de D8A-06 (pedido §14.15) nos 3 tamanhos"
+      ],
+      "estimativa": 90
+    },
+    {
+      "id": "integracao",
+      "tipo": "integracao",
+      "titulo": "Juntar, npm test e e2e (troca da base), ui.md §10.18 e §10.19, marcar o TODO",
+      "quem": "orquestrador",
+      "depende": ["area", "balao", "retorno", "loja"],
+      "arquivos": [
+        "TODO-VISUAL.md",
+        "jogo/js/manifesto.js",
+        "jogo/index.html",
+        "jogo/js/nucleo/config.js",
+        "jogo/ferramentas/testes/base-referencia.txt",
+        "docs/contratos/ui.md"
+      ],
+      "worktree": "tv-5b",
+      "pronto": [
+        "npm test e e2e verdes, cada diferença explicada por um item da 5b; base trocada",
+        "ui.md §10.18 (quem escreve cada variável, balão no pé com atividade aberta) e §10.19 (nada do HUD apaga na conversa); TODO marcado"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "entrega",
+      "tipo": "entrega",
+      "titulo": "Merge, push e Vercel",
+      "quem": "orquestrador",
+      "depende": ["integracao"],
+      "arquivos": [],
+      "worktree": "tv-5b",
+      "estimativa": 15
+    }
+  ]
+}

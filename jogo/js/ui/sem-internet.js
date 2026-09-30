@@ -3,6 +3,7 @@
    - app guardado: o service worker da Vercel (vercel/pwa/sw.js) conta quanto do jogo já guardou para jogar sem rede
      ({ reino: 'guardando', feitos, total } e { reino: 'guardado', total }); sem service worker (servidor de teste,
      navegador sem suporte), a nota não aparece.
+   No HUD, a mesma nuvem riscada ao lado de 📷 e do álbum (UI.registrarBotaoHud), sem texto nem toque.
    As notas ficam vivas: mudam na hora enquanto a Área dos pais está aberta. UI.notaNuvem(), UI.notaSemInternet(). */
 (function () {
   var U = Reino.util, el = U.el, P = Reino.Progresso;
@@ -58,6 +59,16 @@
     else escrever(no, null, '☁️ O progresso está sincronizado com o banco do Reino.');
   }
   UI.notaNuvem = function () { return nota(desenharNuvem); };
+
+  // no HUD (D11-05): a nuvem riscada na fileira ⛶ 📷 🖼, só depois de um aviso 'erro'/'local' do evento (sem
+  // nuvem nenhuma, o modo sem nuvem, o evento não vem e ela não aparece). Não é tocável nem focável
+  function pintarNuvemHud() {
+    var no = U.$('#hud .hud-nuvem');
+    if (no) no.hidden = !(nuvem === 'erro' || nuvem === 'local');
+  }
+  UI.registrarBotaoHud({ id: 'nuvem', ordem: 40, eventos: [EV.NUVEM], pintar: pintarNuvemHud, criar: function () {
+    return el('span.hud-nuvem', { 'aria-hidden': 'true', title: 'O progresso ainda não foi enviado', hidden: true }, UI.iconeHud('nuvem-riscada'));
+  } });
 
   /* ---------- jogo guardado para jogar sem internet ---------- */
   // pronto: a versão que serve a aba está inteira no cache; novo: { feitos, total, falhou } da que está baixando

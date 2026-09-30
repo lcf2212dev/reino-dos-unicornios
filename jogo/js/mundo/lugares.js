@@ -51,7 +51,7 @@
      prédio, reservado ou outro enfeite é pulado. As cercas saem sozinhas na frente de cada prédio de hoje.
      motivos: como enfeites, mas postos depois do sorteio (um campo vazio ganha peça sem mudar o resto do reino). */
   Mapa.CIDADE = {
-    inicio: { x: 27, y: 28 },       // onde ela aparece ao abrir o jogo: na saída sul da praça, com a fonte à vista
+    inicio: { x: 27, y: 26 },       // onde ela aparece ao abrir o jogo: na saída sul da praça, com a fonte inteira à vista (D1-10)
     claude: { x: 30, y: 23 },       // o Claude, ao lado da fonte
     praca: { x: 21, y: 15, w: 13, h: 13 },
     // estilo do calçamento (mundo/mapa-desenho.js): 'pedra' = paralelepípedo (avenidas), 'ladrilho' = ladrilho claro

@@ -2,30 +2,26 @@
    Repintados nos eventos de cena/telas/ocupada/transição e de 500 em 500 ms (ui/hud.js). */
 (function () {
   var U = Reino.util, el = U.el;
-  var UI = Reino.UI;
+  var UI = Reino.UI, R = Reino._ui;
 
   /* ---------- botão das fotos (Reino.Fotos, js/sistemas/fotos.js) ---------- */
   // toque → tira a foto; toque longo (config.fotos.toqueLongoMs) → abre o álbum, sem tirar a foto.
-  // Apagado (aria-disabled) quando Fotos.podeTirar() diz não: transição, tela aberta, balão, banho.
+  // Sempre aceso, também na conversa (D8A-15: nada do HUD apaga no balão). Quando Fotos.podeTirar() diz não
+  // (transição, tela aberta, balão, banho), o toque só afunda o botão (toqueIgnorado) e nada acontece.
   function fotos() { var F = Reino.Fotos; return F && typeof F.tirar === 'function' ? F : null; }
   function podeFotografar() {
     var F = fotos();
     try { return !!(F && (typeof F.podeTirar !== 'function' || F.podeTirar())); } catch (e) { return false; }
   }
   function pintarBotaoFoto() {
-    var pode = podeFotografar();
     ['#hud .btn-foto', '#hud .btn-album'].forEach(function (sel) {
       var b = U.$(sel);
-      if (!b) return;
-      b.hidden = !fotos();
-      if (b.classList.contains('desligado') === !pode) return;
-      b.classList.toggle('desligado', !pode);
-      b.setAttribute('aria-disabled', String(!pode));
+      if (b) b.hidden = !fotos();
     });
   }
   UI.pintarBotaoFoto = pintarBotaoFoto;
   function botaoFoto() {
-    var b = el('button.btn-tela-cheia.btn-foto', { type: 'button', 'aria-label': 'Tirar foto', 'aria-disabled': 'false', title: 'Tirar foto (segure para ver o álbum)' });
+    var b = el('button.btn-tela-cheia.btn-foto', { type: 'button', 'aria-label': 'Tirar foto', title: 'Tirar foto (segure para ver o álbum)' });
     b.appendChild(UI.iconeHud('📷'));
     var timer = null, longoEm = -1e9;
     function soltar() { if (timer) { clearTimeout(timer); timer = null; } }
@@ -55,20 +51,20 @@
       soltar();
       var F = fotos();
       pintarBotaoFoto();
-      if (!F || !podeFotografar()) return;
+      if (!F || !podeFotografar()) { R.toqueIgnorado(b); return; }
       F.tirar();
     });
     return b;
   }
-  // o álbum à vista (um toque): o mesmo apagado do 📷; segurar o 📷 continua abrindo também
+  // o álbum à vista (um toque): o mesmo aceso do 📷; segurar o 📷 continua abrindo também
   function botaoAlbum() {
-    var b = el('button.btn-tela-cheia.btn-album', { type: 'button', 'aria-label': 'Álbum de fotos', 'aria-disabled': 'false', title: 'Álbum de fotos' });
+    var b = el('button.btn-tela-cheia.btn-album', { type: 'button', 'aria-label': 'Álbum de fotos', title: 'Álbum de fotos' });
     b.appendChild(PA.paraDOM(PA.iconeMenu('album'), 2, 'hud-icone'));
     b.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') e.stopPropagation(); });
     b.addEventListener('click', function () {
       var F = fotos();
       pintarBotaoFoto();
-      if (!F || UI.temTela() || !podeFotografar() || typeof F.abrirAlbum !== 'function') return;
+      if (!F || UI.temTela() || !podeFotografar() || typeof F.abrirAlbum !== 'function') { R.toqueIgnorado(b); return; }
       Reino.Som.tocar('toque');
       F.abrirAlbum();
     });

@@ -16,7 +16,9 @@ const avancar = (page, ms) => page.evaluate((m) => window.__congelar.avancar(m),
 async function abrirMapa(browser, url, save, tamanho) {
   const { context, page } = await abrir({ browser, url, save, tamanho, query: '?debug=1&congelar=1' });
   await page.waitForFunction(() => window.__congelar && window.Jogador && Reino._motor && Reino._motor.jogoAtivo, null, { timeout: 30000 });
-  await avancar(page, 500);
+  // parte da boca do eixo sul (27,28), campo aberto; o início do jogo (lugares.js) fica perto dos postes da praça
+  await page.evaluate(() => Jogador.posicionar(27, 28));
+  await avancar(page, 1500);   // a câmera assenta nela
   await page.evaluate(() => {
     window.__pt = function (tipo, pt, x, y, id) {
       Reino._motor.canvas.dispatchEvent(new PointerEvent(tipo, { bubbles: true, cancelable: true, pointerType: pt,
