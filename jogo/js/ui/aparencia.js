@@ -52,7 +52,7 @@
       function desenhar() {
         var v = VOLTA[volta], andando = relogio !== null;
         var spr = PA.mariana(prova(), false, andando ? [1, 0, 2, 0][passo % 4] : 0, { vista: v[0] });
-        var escala = window.innerWidth < 480 ? 7 : 9;
+        var escala = 8;   // par (ui.md §10.10.7)
         if (tela.width !== spr.w || tela.height !== spr.h) { tela.width = spr.w; tela.height = spr.h; }
         var c = tela.getContext('2d');
         c.clearRect(0, 0, spr.w, spr.h); c.drawImage(spr.canvas, 0, 0);
@@ -161,7 +161,7 @@
             b.addEventListener('click', function () { aparencia()[g[2]] = o.id; Reino.Som.tocar('selecionar'); marcar(); desenhar(); });
             g[0].appendChild(b);
           });
-          g[0].appendChild(el('span.criar-mais', { 'aria-hidden': 'true' }, PA.iconeEmoji('▶', 32 / 18)));
+          g[0].appendChild(el('span.criar-mais', { 'aria-hidden': 'true' }, PA.iconeEmoji('▶', 2)));
         });
       }
       // os retratos mudam com as cores; o marcado segue a aparência (lida na hora)

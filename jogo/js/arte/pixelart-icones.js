@@ -145,46 +145,21 @@
         base = contornar(vazio, CONTORNO);
       } else cacheIcone[chave] = base;
     }
-    // mesmo tamanho na tela para qualquer grade: 18px de base vezes a escala
-    return PA.paraDOM(base, PA.escalaNitida((escala || 2) * 18, base.width), 'icone-px');
+    // mesmo tamanho na tela para qualquer grade: 16 px de base vezes a escala
+    return PA.paraDOM(base, PA.escalaNitida((escala || 2) * 16, base.width), 'icone-px');
   };
 
-  /* Escala que vira um número inteiro de pixels da tela por pixel do desenho:
+  /* Escala par em px CSS por pixel do desenho (ui.md §10.10.7): o par mais perto do alvo, nunca menos de 2;
      assim nenhum pixel sai mais largo que o vizinho. */
   PA.escalaNitida = function (px, grade) {
-    var dpr = window.devicePixelRatio || 1;
-    return Math.max(1, Math.round(px * dpr / grade)) / dpr;
+    return 2 * Math.max(1, Math.round(px / grade / 2));
   };
 
-  /* Ícone dentro de um texto: pelo menos 24px no meio de uma frase e 36px sozinho,
-     crescendo com a fonte onde ela é grande (1.5em / 1.25em, como um emoji).
-     Já na página, vira o tamanho nítido mais próximo. */
-  PA.iconeTexto = function (emoji, sozinho) {
+  /* Ícone dentro de um texto: 32 px (2 px CSS por pixel, como a letra de 16 px), no meio da frase ou sozinho
+     (ui.md §10.10.5). */
+  PA.iconeTexto = function (emoji) {
     var c = PA.iconeEmoji(emoji, 2);
     c.classList.add('icone-em');
-    c.setAttribute('data-em', sozinho ? '1.25' : '1.5');
-    c.setAttribute('data-min', sozinho ? '36' : '24');
-    c.style.width = c.style.height = 'max(' + c.getAttribute('data-min') + 'px, ' + c.getAttribute('data-em') + 'em)';
     return c;
   };
-  function ajustarIcone(c) {
-    var fonte = parseFloat(getComputedStyle(c).fontSize);
-    if (!fonte) return;
-    var alvo = Math.max(parseFloat(c.getAttribute('data-min')), fonte * parseFloat(c.getAttribute('data-em')));
-    var t = c.width * PA.escalaNitida(alvo, c.width);
-    c.style.width = t + 'px';
-    c.style.height = (c.height * t / c.width) + 'px';
-  }
-  function ajustarDentro(no) {
-    if (no.nodeType !== 1) return;
-    if (no.classList.contains('icone-em')) ajustarIcone(no);
-    else if (no.firstElementChild) Array.prototype.forEach.call(no.querySelectorAll('canvas.icone-em'), ajustarIcone);
-  }
-  if (window.MutationObserver) {
-    new MutationObserver(function (mudancas) {
-      mudancas.forEach(function (m) { Array.prototype.forEach.call(m.addedNodes, ajustarDentro); });
-    }).observe(document.documentElement, { childList: true, subtree: true });
-  }
-  // zoom do navegador muda o devicePixelRatio
-  window.addEventListener('resize', function () { ajustarDentro(document.body); });
 })();

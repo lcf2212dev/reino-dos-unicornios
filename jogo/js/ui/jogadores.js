@@ -51,7 +51,7 @@
     return PA.montada(d, 3, 0, ap, {});
   }
   function arteDoCartao(login) {
-    try { return PA.paraDOM(login === J().MARIANA ? arteDaMariana() : PA.unicornio(unicornioDoLogin(login), 3, 0), 3, 'jogadores-arte'); }
+    try { return PA.paraDOM(login === J().MARIANA ? arteDaMariana() : PA.unicornio(unicornioDoLogin(login), 3, 0), 4, 'jogadores-arte'); }
     catch (x) { return el('span.jogadores-icone', { 'aria-hidden': 'true' }, '🦄'); }
   }
 

@@ -49,7 +49,7 @@
         var ap = aparencia(), prova = Object.assign({}, ap);
         prova[T.campo] = o.id;
         var b = el('button.salao-opcao', { type: 'button', 'aria-pressed': String(PA.visualMariana(ap)[T.campo] === o.id) },
-          el('span.salao-retrato', PA.paraDOM(PA.mariana(prova, false, 1, { vista: 'frente' }), 3)),
+          el('span.salao-retrato', PA.paraDOM(PA.mariana(prova, false, 1, { vista: 'frente' }), 4)),
           el('span.salao-nome', o.nome));
         b.addEventListener('click', function () {
           aparencia()[T.campo] = o.id;

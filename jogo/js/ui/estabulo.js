@@ -58,7 +58,7 @@
       carta.appendChild(el('b.carta-nome', 'Ovo ' + rar.nome));
       carta.appendChild(el('span.carta-rar', 'Toque para chocar!'));
     } else {
-      carta.appendChild(PA.paraDOM(PA.silhueta(PA.unicornio(d, 3, 0)), 3, 'silhueta'));
+      carta.appendChild(PA.paraDOM(PA.silhueta(PA.unicornio(d, 3, 0)), 4, 'silhueta'));
       carta.appendChild(el('b.carta-nome', '???'));
       carta.appendChild(el('span.carta-rar', rar.emoji + ' ' + rar.nome));
     }
@@ -77,7 +77,7 @@
     var pn = painel('detalhe', tem ? P.nomeUni(d.id) : 'Unicórnio misterioso');
     var c = pn.conteudo;
     if (!tem) {
-      c.appendChild(el('div.detalhe-sprite', PA.paraDOM(PA.silhueta(PA.unicornio(d, 3, 0)), 7, 'silhueta')));
+      c.appendChild(el('div.detalhe-sprite', PA.paraDOM(PA.silhueta(PA.unicornio(d, 3, 0)), 8, 'silhueta')));
       c.appendChild(el('p.detalhe-rar.rar-' + d.raridade, rar.emoji + ' ' + rar.nome));
       c.appendChild(el('p.detalhe-como', '🔎 Como ganhar: ' + Reino.Unicornios.comoGanhar(d)));
       return;

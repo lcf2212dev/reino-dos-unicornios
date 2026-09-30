@@ -41,13 +41,13 @@
   function iconeItem(item, px) {
     var chave = item.icone || '';
     var d = chave.indexOf(':') > 0 || px ? PA.iconeDesenho(chave) : null;
-    if (d) return PA.paraDOM(d, PA.escalaNitida(px || 36, 16), 'icone-acessorio');
+    if (d) return PA.paraDOM(d, PA.escalaNitida(px || 32, 16), 'icone-acessorio');
     return chave;
   }
   // a pergunta da compra: o desenho do item (48 px, destaque), a pergunta e o preço numa linha só dele,
   // com a ⭐ em pixel (no meio da frase, a ⭐ ficava numa linha e o número na outra)
   function perguntaDaCompra(item) {
-    return [iconeItem(item, 48), el('br'), 'Trocar por ' + item.nome + '?', el('br'), '⭐\u00a0' + item.preco + '\u00a0estrelas'];
+    return [iconeItem(item, 64), el('br'), 'Trocar por ' + item.nome + '?', el('br'), '⭐\u00a0' + item.preco + '\u00a0estrelas'];
   }
   // comprar com estrelas (enfeite ou prêmio à venda): gasta, guarda, já veste e grava
   function comprar(item, depois) {
@@ -114,7 +114,7 @@
       var spr = montada
         ? PA.montada(P.defUni(id), e, 0, aparencia(), { enfeites: est().usando.enfeites, capa: est().usando.capa, asasFada: est().usando.asasFada })
         : PA.unicornio(P.defUni(id), e, 0, { enfeites: est().usando.enfeites, asasFada: est().usando.asasFada });
-      vitrine.appendChild(PA.paraDOM(spr, 5));
+      vitrine.appendChild(PA.paraDOM(spr, 4));
       grupos.forEach(function (x) {
         x.grade.innerHTML = '';
         itensDoGrupo(x.g).forEach(function (item) { x.grade.appendChild(cartao(item)); });
@@ -147,8 +147,8 @@
           var tem = st === 'ganho' || st === 'comprado';
           var rar = Reino.Unicornios.RARIDADES[p.raridade];
           var desenho = st === 'bloqueado'
-            ? PA.paraDOM(PA.silhueta(PA.iconeDesenho('acessorio:' + p.id)), PA.escalaNitida(36, 16), 'icone-acessorio')
-            : Reino.Provas.icone(p.id, 36);
+            ? PA.paraDOM(PA.silhueta(PA.iconeDesenho('acessorio:' + p.id)), PA.escalaNitida(32, 16), 'icone-acessorio')
+            : Reino.Provas.icone(p.id, 32);
           var rotulo = st === 'ganho' ? el('span.chip-mini.ok', '🏫 Ganho na prova')
             : st === 'comprado' ? el('span.chip-mini', '⭐ Comprado')
             : el('span.chip-mini', rar.emoji + ' ' + rar.nome);

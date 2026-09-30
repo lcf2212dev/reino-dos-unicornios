@@ -203,23 +203,26 @@
     if (!UI || !UI.painel || typeof document === 'undefined') return contarCuriosidade({ tipo: 'curiosidade', tema: 'estrelas' }, {});
     var p = UI.painel('telescopio', '🔭 Telescópio', { aoFechar: function () { parar(); } });
     // cena ampliada em pixels inteiros, cabendo na largura e na altura da tela
-    // (a conta é em pixels do aparelho: no celular com dpr 3 a cena sai 5× ou 6×, sempre inteira)
-    var dpr = window.devicePixelRatio || 1;
+    // (escala par em px CSS, 2 ou 4: ui.md §10.10.7)
     var largura = Math.min(window.innerWidth - 56, 700), altura = window.innerHeight - 330;
-    var k = Math.max(Math.ceil(dpr), Math.min(Math.round(4 * dpr), Math.floor(largura * dpr / 160), Math.floor(altura * dpr / 112)));
-    var tela = el('canvas', 'display:block;margin:0 auto;width:' + (160 * k / dpr) + 'px;height:' + (112 * k / dpr) + 'px;image-rendering:pixelated;image-rendering:crisp-edges;border-radius:12px;');
+    var k = Math.max(2, Math.min(4, 2 * Math.floor(largura / 320), 2 * Math.floor(altura / 224)));
+    var tela = el('canvas', 'display:block;flex:none;width:' + (160 * k) + 'px;height:' + (112 * k) + 'px;image-rendering:pixelated;image-rendering:crisp-edges;border-radius:12px;');
     tela.width = 160; tela.height = 112;
     tela.className = 'telescopio-cena';
-    var nome = el('h3', 'margin:12px 0 4px;text-align:center;font-size:1.15em;');
-    var texto = el('p', 'margin:4px auto 0;max-width:34em;text-align:center;font-size:1.15em;line-height:1.45;');
-    texto.className = 'telescopio-texto';
+    // celular estreito (menos de 320 px livres): a cena fica em 2 px e perde as beiradas, centrada, sem estourar a caixa
+    var moldura = el('div', 'display:flex;justify-content:center;overflow:hidden;');
+    moldura.appendChild(tela);
+    var nome = el('h3', 'margin:12px 0 4px;text-align:center;');
+    nome.className = 'observatorio-nome';
+    var texto = el('p', 'margin:4px auto 0;max-width:34em;text-align:center;');
+    texto.className = 'telescopio-texto observatorio-texto';
     var ouvir = el('button', null, '🔊 Ouvir');
     ouvir.type = 'button'; ouvir.className = 'btn-grande btn-secundario';
     var denovo = el('button', null, 'Olhar de novo 🔭');
     denovo.type = 'button'; denovo.className = 'btn-grande btn-principal';
     var botoes = el('div', null); botoes.className = 'intro-botoes';
     botoes.appendChild(ouvir); botoes.appendChild(denovo);
-    p.conteudo.appendChild(tela); p.conteudo.appendChild(nome); p.conteudo.appendChild(texto); p.conteudo.appendChild(botoes);
+    p.conteudo.appendChild(moldura); p.conteudo.appendChild(nome); p.conteudo.appendChild(texto); p.conteudo.appendChild(botoes);
 
     var paginas = [], cenaAtual = null, timer = null;
     function falar() {

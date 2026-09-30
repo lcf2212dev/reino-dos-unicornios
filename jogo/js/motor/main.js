@@ -48,7 +48,7 @@
       var t = UI.abrirTela('inicio');
       var ir = el('button.btn-grande.btn-principal.btn-comecar', { type: 'button' }, 'Vamos lá! ✨');
       t.appendChild(el('div.inicio', logo(),
-        el('div.intro-claude.intro-claude-grande', PA.paraDOM(PA.claude(0), 5, 'claude-intro'),
+        el('div.intro-claude.intro-claude-grande', PA.paraDOM(PA.claude(0), 6, 'claude-intro'),
           el('p', 'Oi, ' + Reino.Jogadores.perfil().nome + '! Eu sou o Claude! Vou ser o seu guia neste reino mágico cheio de unicórnios. Aqui a gente revisa a matéria da escola brincando!')),
         ir));
       ir.addEventListener('click', function () {
@@ -67,7 +67,7 @@
       Object.keys(Reino.Unicornios.CORES_INICIAIS).forEach(function (k) {
         var c = Reino.Unicornios.CORES_INICIAIS[k];
         var d = { id: 'prev-' + k, raridade: 'comum', cores: { corpo: c.corpo, crina: c.crina, chifre: c.chifre } };
-        var b = el('button.carta-uni.rar-comum', { type: 'button' }, PA.paraDOM(PA.unicornio(d, 3, 0), 3), el('b.carta-nome', c.nome));
+        var b = el('button.carta-uni.rar-comum', { type: 'button' }, PA.paraDOM(PA.unicornio(d, 3, 0), 4), el('b.carta-nome', c.nome));
         b.addEventListener('click', function () { Reino.Som.tocar('selecionar'); UI.fecharTela(pn.tela); resolver(k); });
         grade.appendChild(b);
       });

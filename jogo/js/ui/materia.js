@@ -17,7 +17,7 @@
     var pn = painel('lugar', materia.lugar.nome);
     var c = pn.conteudo;
     var feitas = P.salasFeitas(materia);
-    c.appendChild(el('div.lugar-guia', PA.paraDOM(PA.claude(0), 3, 'claude-intro'),
+    c.appendChild(el('div.lugar-guia', PA.paraDOM(PA.claude(0), 4, 'claude-intro'),
       el('p', feitas === 0 ? materia.guia : (feitas === materia.salas.length ? 'Você completou todas as salas! Agora pode treinar no Castelo da Medalha ou jogar as salas de novo para ganhar os raros. 🌈' : 'Você já fez ' + feitas + ' de ' + materia.salas.length + ' salas. Vamos para a próxima?'))));
     c.appendChild(barraDinheiro(materia));
     // a sobra da divisão em valores redondos vem como bônus ao completar (progresso-regras.js)
@@ -156,7 +156,7 @@
   UI.telaCastelo = function () {
     var pn = painel('lugar', 'Castelo da Medalha');
     var c = pn.conteudo;
-    c.appendChild(el('div.lugar-guia', PA.paraDOM(PA.claude(0), 3, 'claude-intro'),
+    c.appendChild(el('div.lugar-guia', PA.paraDOM(PA.claude(0), 4, 'claude-intro'),
       el('p', 'Aqui é o treino para a prova de verdade: sem relógio, com revisão antes de entregar. Na escola, a medalha de ouro vale ' + U.reais(Reino.config.medalhaEscolaValor) + '! 🥇')));
     var lista = el('div.lista-salas');
     Reino.materias.forEach(function (m) {
