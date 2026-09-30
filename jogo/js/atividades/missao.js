@@ -48,6 +48,7 @@
     function fechar() {
       Reino.Som.calar();
       Reino.Claude.limpar();
+      soltarGiro();
       document.body.classList.remove('em-missao');
       Reino.UI.fecharTela(tela);
     }
@@ -229,31 +230,36 @@
     function mostrarRetorno(ok, d, dePrimeira, cresceu, res) {
       retorno.innerHTML = '';
       retorno.className = 'missao-retorno ' + (ok ? 'retorno-certo' : 'retorno-quase');
+      var compacto = window.matchMedia('(max-width: 480px)').matches;
       var fala = ok ? Reino.Claude.frase(dePrimeira ? 'acerto' : 'acertoDepois') : Reino.Claude.frase('erro');
       var extra = null;
       if (!ok && d.tipo === 'varias' && res && res.faltam > 0 && (!res.erradas || !res.erradas.length)) extra = el('p.retorno-extra', 'Dica: ainda falta marcar ' + (res.faltam === 1 ? '1 item' : res.faltam + ' itens') + '!');
       var cab = el('div.retorno-cabeca',
-        PA.paraDOM(PA.claude(0), 4, 'claude-retorno'),
+        PA.paraDOM(PA.claude(0), compacto ? 3 : 4, 'claude-retorno'),
         el('div',
           el('h3', ok ? (dePrimeira ? '✨ Isso! +1 ⭐' : '✨ Isso!') : '💭 Quase!'),
           el('p.retorno-fala', fala)));
       retorno.appendChild(cab);
       if (extra) retorno.appendChild(extra);
       // acertou: reforça com a explicação; errou: só uma pista, sem entregar a resposta
-      if (ok) retorno.appendChild(el('p.retorno-explica', el('b', '📌 Lembrete: '), d.explica));
-      else retorno.appendChild(el('p.retorno-explica', el('b', '📌 Pista: '), pista(d)));
+      // no celular (D6-08) a explicação é recolhível: fechada no erro, aberta no acerto só se couber
+      var explica = el('details.retorno-explica', el('summary', el('b', ok ? '📌 Lembrete' : '📌 Pista')), el('p', ok ? d.explica : pista(d)));
+      explica.open = !compacto || ok;
+      // abrir/fechar a pista muda a altura da folha: refaz a folga e a rolagem (sem animação)
+      if (compacto) explica.addEventListener('toggle', function () { if (!retorno.hidden) ajustarMarca(ok); });
+      retorno.appendChild(explica);
       if (cresceu) retorno.appendChild(el('p.retorno-cresceu', '🌟 ' + Reino.Progresso.nomeUni(cresceu.id) + ' cresceu! Agora é ' + Reino.Unicornios.ESTAGIOS[cresceu.estagio].nome + ' ' + Reino.Unicornios.ESTAGIOS[cresceu.estagio].emoji));
       var botoes = el('div.retorno-botoes');
       if (ok) {
         var cont = el('button.btn-grande.btn-principal', { type: 'button' }, idx + 1 < lista.length ? 'Continuar →' : 'Terminar a sala 🎉');
-        cont.addEventListener('click', function () { Reino.Som.tocar('toque'); retorno.hidden = true; proximo(); });
+        cont.addEventListener('click', function () { Reino.Som.tocar('toque'); retorno.hidden = true; soltarGiro(); corpo.style.paddingBottom = ''; proximo(); });
         botoes.appendChild(cont);
       } else {
         var livro = el('button.btn-grande.btn-secundario', { type: 'button' }, '📖 Ver no livro');
         livro.addEventListener('click', function () { Reino.UI.abrirLivro(materia, d.livro); });
         var denovo = el('button.btn-grande.btn-principal', { type: 'button' }, 'Tentar de novo');
         denovo.addEventListener('click', function () {
-          Reino.Som.tocar('toque'); retorno.hidden = true; Reino.Som.calar();
+          Reino.Som.tocar('toque'); retorno.hidden = true; soltarGiro(); corpo.style.paddingBottom = ''; Reino.Som.calar();
           btnConferir.disabled = !ctrl.pronto();
           // o botão sumiu com o retorno: pelo teclado, o foco volta para o desafio
           Reino.UI.focarTroca(ctrl.card, numAVista(), CALMA_TROCA);
@@ -263,11 +269,37 @@
       retorno.appendChild(botoes);
       retorno.hidden = false;
       btnConferir.disabled = true;
+      if (compacto) { mostrarMarca(ok); vigiarGiro(ok); }
       function focarBotao() { var b = retorno.querySelector('.btn-principal'); if (b && !retorno.hidden) b.focus(); }
       // "Continuar"/"Tentar de novo"/"Ver no livro" e o ✕ esperam a fala do retorno
       Reino.UI.esperarFala([botoes, sair], ok ? [fala] : [fala, pista(d)], { voz: 'claude' }).then(focarBotao);
       setTimeout(focarBotao, 60);
     }
+
+    // celular: a opção marcada fica acima da folha do retorno (o corpo ganha folga e rola até ela)
+    function mostrarMarca(ok) {
+      if (ok && retorno.offsetHeight > tela.clientHeight * 0.5) explicaFechar();
+      ajustarMarca(ok);
+    }
+    function ajustarMarca(ok) {
+      var alto = retorno.offsetHeight;
+      corpo.style.paddingBottom = alto + 'px';
+      var marcas = corpo.querySelectorAll(ok ? '.certa, .tudo-certo' : '.errada, .item-erro');
+      if (!marcas.length) return;
+      var baixo = 0;
+      Array.prototype.forEach.call(marcas, function (m) { baixo = Math.max(baixo, m.getBoundingClientRect().bottom); });
+      var falta = baixo + 8 - retorno.getBoundingClientRect().top;
+      if (falta > 0) corpo.scrollTop += falta;
+    }
+    // girou/redimensionou com a folha aberta: reajusta; o listener sai quando o retorno fecha
+    var giro = null;
+    function vigiarGiro(ok) {
+      soltarGiro();
+      giro = function () { if (retorno.hidden || !retorno.isConnected) soltarGiro(); else ajustarMarca(ok); };
+      window.addEventListener('resize', giro);
+    }
+    function soltarGiro() { if (giro) window.removeEventListener('resize', giro); giro = null; }
+    function explicaFechar() { var e = retorno.querySelector('.retorno-explica'); if (e) e.open = false; }
 
     // pista depois de um erro: primeira frase da explicação, sem a resposta pronta
     function pista(d) { return Reino.Falas.pista(d, materia); }

@@ -208,10 +208,30 @@
 .retorno-cabeca { display: flex; align-items: center; gap: 14px; }
 .retorno-cabeca h3 { font-family: var(--fonte-titulo); font-size: var(--texto-g); }
 .retorno-explica { padding: 12px 14px; background: var(--papel); border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); }
+.retorno-explica > summary { cursor: pointer; list-style: none; }
+.retorno-explica > summary::-webkit-details-marker { display: none; }
+.retorno-explica > summary::after { content: ' ▾'; }
+.retorno-explica[open] > summary::after { content: ' ▴'; }
+.retorno-explica > p { display: inline; }
+.retorno-explica[open] > summary { display: inline; }
 .retorno-extra { color: var(--roxo-texto); }
 .retorno-cresceu { color: var(--epico-texto); }
 .retorno-botoes { display: flex; flex-wrap: wrap; gap: 12px; justify-content: flex-end; }
 .retorno-botoes .btn-grande { flex: 1 1 200px; }
+/* celular (D6-08): folha baixa (Claude, título e 1 linha; pista recolhível) para a opção marcada ficar à vista */
+@media (max-width: 480px) {
+  .missao-retorno { max-height: 60%; padding: 8px 16px calc(env(safe-area-inset-bottom, 0px) + 8px); }
+  .missao-retorno > * + * { margin-top: 8px; }
+  .retorno-cabeca { gap: 8px; }
+  .retorno-cabeca h3 { font-size: var(--texto); }
+  .retorno-explica { padding: 8px 12px; }
+  .retorno-explica > summary { display: block; min-height: 32px; }
+  .retorno-explica[open] > summary { display: block; }
+  .retorno-explica > p { display: block; margin-top: 4px; }
+  .retorno-cabeca .retorno-fala { font-size: var(--texto); line-height: var(--entrelinha); }
+  .retorno-botoes { gap: 8px; flex-wrap: nowrap; }
+  .retorno-botoes .btn-grande { flex: 1 1 0; min-width: 0; width: auto; padding-left: 8px; padding-right: 8px; }
+}
 
 /* intro e fim de sala */
 .intro-sala, .fim-sala, .ritual, .revisao { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
