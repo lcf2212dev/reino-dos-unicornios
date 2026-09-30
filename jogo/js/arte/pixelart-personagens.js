@@ -49,10 +49,11 @@
       ],
       capa: { linhas: CAPA, x: 0, y: 7 },
     },
+    // o laço fica do lado direito dela: à esquerda de quem olha de frente e em 3/4 de frente (o espelho, SO, o põe do outro lado)
     frente: {
       cabeca: [
-        '...HHHHBB..',
-        '..HHHHHHBB.',
+        '..BBHHHH...',
+        '.BBHHHHHH..',
         '.HHHHHHHHH.',
         '.HHKKKKKHH.',
         '.HKEKKKEKH.',

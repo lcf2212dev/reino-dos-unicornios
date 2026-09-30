@@ -56,14 +56,14 @@
   var CORTES = {
     rabo: { curto: true,
       cabeca: {
-        frente: ['...HHHHB...', '..HHHHHHBB.', '.HHHHHHHHHH', '.HHKKKKKHHH', '.HKEKKKEKHL', '..RKKKKKR.H', '...KKKKK..H'],
+        frente: ['...BHHHH...', '.BBHHHHHH..', 'HHHHHHHHHH.', 'HHHKKKKKHH.', 'LHKEKKKEKH.', 'H.RKKKKKR..', 'H..KKKKK...'],
         costas: ['...HHHHH...', '..HHHHHHH..', '.HHHLLHHHH.', '.HHLHHHHHH.', '.HHHBBBHHH.', '..HHHHHHH..', '..KHHLHHK..'],
         lado: ['...HHHH....', '..HHHHHHH..', '.BBHHHHHHH.', 'HHLHHKKKKK.', 'HLHHKKKEKK.', 'HH.HKKKKRK.', 'H...HKKKK..'],
         diagFrente: ['...HHHHH...', '..HHHHHHHH.', '.BBHHHHHHH.', 'HHLHKKKKKH.', 'HLHHKEKKEK.', 'HH.HKKKKRK.', 'H...HKKKK..'],
         diagCostas: ['...HHHH....', '..HHHHHHH..', '..HHHLLHHH.', '..HHLHHHHH.', '..HHBBHHHK.', '...HHHHHKK.', '...KHLHKK..'],
       },
       corpo: {
-        frente: ['..........H'],
+        frente: ['H..........'],
         costas: ['....HLH....', '....HHH....', '.....H.....'],
         lado: ['H..........'],
         diagFrente: ['H..........'],
@@ -86,19 +86,23 @@
       } },
     chanel: { curto: true,
       cabeca: {
-        frente: ['...HHHHBB..', '..HHHHHHBB.', '.HHHHHHHHH.', '.HHKKKKKHH.', '.HKEKKKEKH.', '.HRKKKKKRH.', '.HHKKKKKHH.'],
+        frente: ['..BBHHHH...', '.BBHHHHHH..', '.HHHHHHHHH.', '.HHKKKKKHH.', '.HKEKKKEKH.', '.HRKKKKKRH.', '.HHKKKKKHH.'],
         lado: ['..BHHHH....', '.BBHHHHHH..', '..HHHHHHHH.', '..HHHKKKKK.', '..HHKKKEKK.', '..HHKKKKRK.', '..HHHKKKK..'],
+        // de costas e em 3/4: o cabelo acaba reto na altura do queixo, com as pontas claras, e a nuca aparece
+        costas: ['..BBHHHH...', '.BBHHHHHH..', '.HHHLLHHHH.', '.HHLHHHHHH.', '.HHHHHHHHH.', '.HLHHHHHLH.', '..KKKKKKK..'],
+        diagFrente: ['..BHHHHH...', '.BBHHHHHHH.', '..HHHHHHHH.', '..HHKKKKKH.', '..HHKEKKEK.', '..HLKKKKRK.', '...KKKKKK..'],
+        diagCostas: ['..BHHHH....', '.BBHHHHHH..', '..HHHLLHHH.', '..HHLHHHHH.', '..HHHHHHHK.', '..HLHHHLKK.', '...KKKKKK..'],
       } },
     tranca: { curto: true,
       cabeca: {
-        frente: ['...HHHHH...', '..HHHHHHH..', '.HHHHHHHHH.', '.HHKKKKKHH.', '.HKEKKKEKH.', '..RKKKKKRH.', '...KKKKKHL.'],
+        frente: ['...HHHHH...', '..HHHHHHH..', '.HHHHHHHHH.', '.HHKKKKKHH.', '.HKEKKKEKH.', '.HRKKKKKR..', '.LHKKKKK...'],
         costas: ['...HHHHH...', '..HHHHHHH..', '.HHHLLHHHH.', '.HHLHHHHHH.', '.HHHHHHHHH.', '..HHHHHHH..', '..KHLHHHK..'],
         lado: ['...HHHH....', '..HHHHHHH..', '..HHHHHHHH.', '..HHHKKKKK.', '..HHKKKEKK.', '..HHKKKKRK.', '..LH.KKKK..'],
         diagFrente: ['...HHHHH...', '..HHHHHHHH.', '..HHHHHHHH.', '..HHKKKKKH.', '..HHKEKKEK.', '..HHKKKKRK.', '..LH.KKKK..'],
         diagCostas: ['...HHHH....', '..HHHHHHH..', '..HHHLLHHH.', '..HHLHHHHH.', '..HHHHHHHK.', '...HHHHHKK.', '...HLHHKK..'],
       },
       corpo: {
-        frente: ['........LH.', '........HL.', '........BB.'],
+        frente: ['.HL........', '.LH........', '.BB........'],
         costas: ['....LH.....', '....HL.....', '....LH.....', '....BB.....'],
         lado: ['..HL.......', '..LH.......', '..BB.......'],
         diagFrente: ['..HL.......', '..LH.......', '..BB.......'],
@@ -114,7 +118,7 @@
       } },
     cacheado: {
       cabeca: {
-        frente: ['..HHHHHBB..', '.HHLHHHHBB.', 'HHHHHHLHHHH', 'HLHKKKKKHLH', 'HHKEKKKEKHH', 'HLRKKKKKRLH', 'HHHKKKKKHHH'],
+        frente: ['..BBHHHHH..', '.BBHHHHLHH.', 'HHHHLHHHHHH', 'HLHKKKKKHLH', 'HHKEKKKEKHH', 'HLRKKKKKRLH', 'HHHKKKKKHHH'],
         costas: ['..BBHHHHH..', '.BBHHHLHHH.', 'HHHLHHHHLHH', 'HLHHHLHHHHH', 'HHHHHHHLHLH', 'HLHHLHHHHHH', 'HHHHHHHLHHH'],
         lado: ['.BHHHHH....', 'BBHHLHHHH..', 'HHHHHHHHHH.', 'HLHHHKKKKK.', 'HHHLKKKEKK.', 'HLHHKKKKRK.', 'HHHHHKKKK..'],
         diagFrente: ['.BHHHHHH...', 'BBHHLHHHHH.', 'HHHHHHHHHHH', 'HLHHKKKKKHL', 'HHHLKEKKEKH', 'HLHHKKKKRKH', 'HHHHHKKKK.H'],
@@ -208,7 +212,8 @@
     for (var j = 1; !sentada && j <= (m.comprida || 0); j++) {
       var l = g[iSaia + j], a = Math.max(0, ls[0] - (j - 1)), b = Math.min(l.length - 1, ls[1] + (j - 1));
       for (var k = 0; k < l.length; k++) l[k] = k >= a && k <= b ? 'C' : (l[k] === 'K' ? '.' : l[k]);
-      if (j === m.comprida) for (k = a; k <= b; k++) l[k] = m.barra || ((k + j) % 3 === 0 ? 'D' : 'C');
+      // a barra: só no miolo (a largura da linha de cima), com 1 px de roupa escura nas pontas que rodam para fora
+      if (j === m.comprida) for (k = a; k <= b; k++) l[k] = !m.barra ? ((k + j) % 3 === 0 ? 'D' : 'C') : (k === a || k === b) && j > 1 ? 'D' : m.barra;
     }
     if (m.brilho) for (x = ls[0] + 1; x < ls[1]; x += 3) saia[x] = m.brilho;
   }
@@ -235,7 +240,7 @@
     }
   }
   // corte de menino com laço: o lacinho fica no mesmo lugar do da Mariana
-  var LACO = { frente: [[0, 7], [0, 8], [1, 8], [1, 9]], lado: [[0, 2], [1, 1], [1, 2]], costas: [[0, 2], [0, 3], [1, 1], [1, 2]],
+  var LACO = { frente: [[0, 3], [0, 2], [1, 2], [1, 1]], lado: [[0, 2], [1, 1], [1, 2]], costas: [[0, 2], [0, 3], [1, 1], [1, 2]],
     diagFrente: [[0, 2], [1, 1], [1, 2]], diagCostas: [[0, 2], [1, 1], [1, 2]] };
 
   /** Aplica corte, modelo e laço nas linhas da Mariana (cabeça + corpo) e devolve linhas novas.

@@ -7,7 +7,10 @@
 //     3/4 de costas e no Adulto em 3/4 de costas; cauda ≥ 50 % de costas e em 3/4 de costas (Pequeno e Adulto);
 //   - montada de frente e em 3/4 de frente (Pequeno e Adulto): nenhum pixel do chifre por cima do tronco dela, e
 //     de frente as pernas dela aparecem (≥ 50 % dos pixels das pernas da cavaleira) e nenhum enfeite cobre mais
-//     de 6 px do tronco dela (ela não vira busto).
+//     de 6 px do tronco dela (ela não vira busto);
+//   - chifre livre (D13-06): em todo estágio e vista, nenhum enfeite da orelha ou da cabeça muda um pixel do chifre,
+//     sozinho ou com os 6 encaixes ocupados juntos (menos o capacete, cobreChifre, e o que está quase todo em cima do
+//     chifre, como a antena); e, com todos juntos, os olhos continuam à vista (só os óculos os cobrem).
 // Uso: node jogo/ferramentas/validar/validar-enfeites.js [--raiz <pasta jogo>] [--detalhes]   (npm run validar)
 //   --raiz: outra cópia do jogo (ex.: a de um commit antigo, para ver o validador acusar o defeito).
 if (require.main === module) require('../ajuda').ajuda(__filename);
@@ -173,6 +176,39 @@ function conferir() {
       });
     }
   }));
+  // chifre livre e olhos à vista
+  const UNI = ctx.PA._interno.UNI;
+  const TODOS = ['fitinha-cauda', 'colar-perolas', 'laco', 'coroa', 'anel-saturno'];
+  let chifreOk = 0;
+  [0, 1, 2, 3].forEach((est) => PA.VISTAS.forEach((vista) => {
+    const molde = UNI[est >= 2 ? 'adulto' : 'filhote'][vista];
+    const corpo = molde.corpo.concat(molde.pernas[0]);
+    const sem = PA.unicornio(DEF, est, 0, { vista, enfeites: [] }).canvas;
+    const pontos = (letras) => { const r = []; corpo.forEach((l, y) => { for (let x = 0; x < l.length; x++) if (letras.includes(l[x])) r.push([x + 1, y + 1]); }); return r; };
+    // o bebê só tem o toquinho: sem as 2 linhas de cima e sem o g (como em PA.unicornio)
+    const chifre = pontos('hgk').filter(([x, y]) => !(est === 0 && (y <= 2 || corpo[y - 1][x - 1] === 'g')));
+    const mudou = (c, pts) => pts.filter(([x, y]) => [0, 1, 2, 3].some((k) => c.dados[(y * c.width + x) * 4 + k] !== sem.dados[(y * sem.width + x) * 4 + k])).length;
+    const conferirUm = (lista, rotulo) => {
+      const n = mudou(PA.unicornio(DEF, est, 0, { vista, enfeites: lista }).canvas, chifre);
+      if (n) erros.push(`${rotulo}: cobre ${n} px do chifre (${ESTAGIOS[est]}, ${vista})`); else chifreOk++;
+    };
+    ids.filter((id) => ['orelha', 'cabeca'].includes(ENF[id].ancora) && !ENF[id].cobreChifre).forEach((id) => {
+      // quase todo em cima do chifre (a antena): é feito para ficar ali (a mesma conta da arte, PA._interno.QUASE_NO_CHIFRE)
+      const e = ENF[id];
+      const d = ctx.PA._interno.lugarDoEnfeite(molde, id, e, est, corpo[0].length, corpo.length);
+      if (!d) return;
+      let tot = 0, sobre = 0;
+      d.linhas.forEach((l, j) => { for (let i = 0; i < l.length; i++) if (e.paleta[l[i]]) { tot++; if (chifre.some(([x, y]) => x === d.x + i + 1 && y === d.y + j + 1)) sobre++; } });
+      if (sobre >= tot * ctx.PA._interno.QUASE_NO_CHIFRE) return;
+      conferirUm([id], id);
+    });
+    conferirUm(TODOS.filter((id) => id !== 'anel-saturno'), 'todos os encaixes');
+    const olhos = pontos('el');
+    const todos = PA.unicornio(DEF, est, 0, { vista, enfeites: TODOS }).canvas;
+    const n = mudou(todos, olhos);
+    if (n) erros.push(`todos os encaixes: cobrem ${n} px dos olhos (${ESTAGIOS[est]}, ${vista})`);
+  }));
+  linhas.push(`chifre livre dos enfeites da orelha e da cabeça (${chifreOk} conferências)`);
   return { erros, linhas, totalFora, n: ids.length };
 }
 
