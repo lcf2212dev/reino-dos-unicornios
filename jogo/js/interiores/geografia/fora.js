@@ -8,10 +8,10 @@
   var S = R._predios.geografia;
 
   /* ================= A ESTAÇÃO DE FORA (mapa) ================= */
-  // estação com telhado azul, o globo no alto, antena de rádio, semáforo e placa na calçada; porta roxa no meio da última fileira
+  // estação com telhado azul, o globo no alto (continentes sempre verdes), antena de rádio, semáforo e placa na calçada; porta roxa no meio da última fileira
   function desenharFora(ctx, px, py, w, h, cores) {
     cores = cores || {};
-    var parede = cores.parede || '#eaf6ff', telhado = cores.telhado || S.AZUL, det = cores.detalhe || S.VERDE;
+    var parede = cores.parede || '#eaf6ff', telhado = cores.telhado || S.AZUL, det = '#f0a04a';   // toldos e faixa em âmbar (--ambar): contrastam com o telhado verde da matéria
     var telhado2 = escurecer(telhado, 0.22);
     var cx = px + w / 2, Fa = window.Mapa.fachada;
     // antena de rádio (atrás, à esquerda) com as ondinhas
@@ -42,7 +42,7 @@
       '....#.........',
       '.........##...',
       '........####..',
-      '.........##...'], { '#': det });
+      '.........##...'], { '#': S.VERDE });
     ret(ctx, cx - 5, gy - 7, 2, 1, C.branco); ret(ctx, cx - 7, gy - 5, 1, 2, C.branco);
     ret(ctx, cx - 11, gy - 1, 1, 3, C.ouro2); ret(ctx, cx + 11, gy - 1, 1, 3, C.ouro2);
     // faixa verde com as janelinhas de bilheteria

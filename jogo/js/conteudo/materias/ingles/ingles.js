@@ -14,7 +14,7 @@ Reino.registrarMateria({
     sprite: 'relogio',
     rect: { x: 14, y: 5, w: 5, h: 5 },   // fileira de cima, entre o Museu e o Castelo
     placa: 'acima',   // ao lado cobriria o castelo ou o museu
-    cores: { parede: '#eef3ff', telhado: '#4a6cd4', detalhe: '#ffcf3d' },
+    cores: { parede: '#eef3ff', detalhe: '#ffcf3d' },
   },
   guia: '«Hello!» Eu sou o guia da Torre do Relógio! Aqui a gente brinca de inglês, um pouquinho de cada vez.',
 

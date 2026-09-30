@@ -1,6 +1,6 @@
 # TODO visual: Mariana e o Reino dos Unicórnios
 
-Progresso: 204 de 290 (onda 2a, paleta, 30/09/2026) · itens novos O-03 a O-28: 21 de 26
+Progresso: 205 de 290 (D11-07 e telhados do D10-12, 30/09/2026) · itens novos O-03 a O-28: 21 de 26
 
 > Auditoria visual feita em 29/09/2026, só de leitura, sobre a `main` em `7cbfa9f`. Cobre tudo o que a jogadora vê: mapa, prédios por dentro e por fora, unicórnio, NPCs, diálogo, perguntas, provas, matérias, HUD, loja, menus, movimento, app instalado e coerência de direção de arte.
 > Cada item traz a evidência (`arquivo:linha` e nome de cena do e2e), o tipo, o esforço (P ≤ 1 h, M ≤ 1 dia, G > 1 dia), as dependências e o critério de pronto. Cada relatório e cada critério de pronto passou por um conferente independente.
@@ -854,7 +854,7 @@ As prioridades dizem **quanto importa**. Esta ordem diz **o que vem antes**. A r
   Evidência: `jogo/ferramentas/gerar-index.js:22`, `vercel/montar.js:30`. · Tipo: inconsistência · Esforço: P · Depende de: —
 - [ ] **D11-06 · P2 · Laterais sem área segura (celular deitado com notch)** — Somar `env(safe-area-inset-left/right, 0px)` ao `left/right` do `.hud-topo`, ao padding lateral de `.tela` e ao `#claude-balao` (o manifesto permite `orientation: any` e o jogo usa `viewport-fit=cover`). Pronto quando o grep por `safe-area-inset-left` achar esses três seletores e o e2e sair idêntico (nos 3 tamanhos de teste o inset é 0).
   Evidência: `jogo/css/ui-hud.css:9`, `ui-telas.css:7,78` (só `ui-petshop.css:130,135` usa o inset lateral). · Tipo: bug visual · Esforço: P · Depende de: —
-- [ ] **D11-07 · P2 · iPhone e iPad: sem título curto, sem cor da barra e sem imagem de abertura** — Acrescentar ao `montar.js` `apple-mobile-web-app-title` (o mesmo `short_name`), `apple-mobile-web-app-status-bar-style` `black-translucent` e, se possível, `apple-touch-startup-image` na cor da abertura (D11-03) com o unicórnio; o título usa o `short_name` que existir. (O efeito no iOS não se testa aqui: só Chromium, por regra.) Pronto quando o `index.html` montado pela Vercel tiver as três metas.
+- [x] **D11-07 · P2 · iPhone e iPad: sem título curto, sem cor da barra e sem imagem de abertura** — Acrescentar ao `montar.js` `apple-mobile-web-app-title` (o mesmo `short_name`), `apple-mobile-web-app-status-bar-style` `black-translucent` e, se possível, `apple-touch-startup-image` na cor da abertura (D11-03) com o unicórnio; o título usa o `short_name` que existir. (O efeito no iOS não se testa aqui: só Chromium, por regra.) Pronto quando o `index.html` montado pela Vercel tiver as três metas.
   Evidência: `vercel/montar.js:31-32`. · Tipo: polimento · Esforço: P · Depende de: D11-03
 - [x] **D11-08 · P2 · Fundo dos ícones do app em degradê liso atrás de pixels grandes** — Trocar o fundo por 2 a 4 faixas lisas do roxo (guia §2.1), alinhadas à grade de pixel de cada ícone, ou cor única (se o D11-09 existir, gerar por ele). Hoje a coluna 0 do `icone-512.png` tem 169 tons de `#3b2170` a `#8a3f9e` (contra "sem degradê liso" do `ui.md` §10). Pronto quando cada PNG tiver ≤ 4 cores no fundo e as bordas das faixas caírem em múltiplos do pixel da arte.
   Evidência: `vercel/pwa/icone-192.png`, `icone-512.png`, `icone-maskable-512.png`, `apple-touch-icon.png`. · Tipo: polimento · Esforço: P · Depende de: —

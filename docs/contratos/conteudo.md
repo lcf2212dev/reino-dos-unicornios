@@ -39,7 +39,7 @@ Personagens: `npcs-e-dialogo.md`. Prédios: `interiores.md`. Vozes: `som-musica-
 4. Estilo dos arquivos de sala: igual aos que já existem (ex.: `historia/h1.js`): indentação de 4 espaços na sala,
    8 nos desafios.
 5. Cor da matéria: `cor: '#rrggbb'` (minúsculo) no `<m>/<m>.js`, a da tabela do `ui.md` §10.22 (matéria nova ganha
-   linha lá); `validar-conteudo.js` confere a tabela e a repetição. O telhado ainda vem de `lugar.cores.telhado`.
+   linha lá); `validar-conteudo.js` confere a tabela e a repetição. O telhado do prédio no mapa é essa cor (`js/mundo/mapa.js`); `lugar.cores` só tem parede e detalhe.
 6. Emojis novos da matéria: `<m>/icones.js` com `Reino.registrarIcones`, grupo `'icones'` no manifesto (para o
    validador enxergar).
 7. Onde a matéria fica (`lugar`): um prédio próprio no mapa (`nome`, `artigo`, `sprite`, `rect` ou uma clareira;

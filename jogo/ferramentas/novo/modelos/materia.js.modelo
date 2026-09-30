@@ -13,7 +13,7 @@ Reino.registrarMateria({
     rect: {{rect}},{{comentarioRect}}
     placa: 'acima',
     porCima: true,     // entra depois do sorteio dos enfeites: o resto do reino fica igual (js/mundo/mapa.js)
-    cores: { parede: '#fff6e4', telhado: '#9b6bd6', detalhe: '#ff8ac4' },
+    cores: { parede: '#fff6e4', detalhe: '#ff8ac4' },   // o telhado é a cor da matéria (cor)
     novidade: '{{hoje}}',   // selo "✨ Novo!" no menu Lugares até ela entrar (ou config.novidadeDias dias)
   },
   guia: '(preencher) a fala do guia',
