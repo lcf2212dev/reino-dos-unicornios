@@ -55,10 +55,10 @@
 .selo-tentativa small { font-size: 0.75em; color: var(--tinta-suave); font-weight: 700; }
 .selo-tentativa b { font-family: var(--fonte-titulo); font-size: 1.3em; }
 .selo-tentativa.rar-raro { background: #dcebff; }
-.selo-tentativa.rar-lendario { background: linear-gradient(180deg, #fffbe6 0 50%, #ffe39a 50%); }
-.previa-valendo { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%; padding: 16px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: linear-gradient(180deg, #ffe9f4 0 15%, #fff 15% 85%, #ffe9f4 85%); }
-.previa-valendo.rar-raro { background: linear-gradient(180deg, #dcebff 0 15%, #fff 15% 85%, #dcebff 85%); }
-.previa-valendo.rar-lendario { background: linear-gradient(180deg, #ffe39a 0 15%, #fff 15% 85%, #ffe39a 85%); }
+.selo-tentativa.rar-lendario { background: linear-gradient(180deg, #fffbe6 0 calc(100% - 8px), #ffe39a calc(100% - 8px)); }   /* faixa fixa de 8 px, dentro do padding: o texto não cruza (D6-18) */
+.previa-valendo { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%; padding: 24px 16px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: linear-gradient(180deg, #ffe9f4 0 16px, #fff 16px calc(100% - 16px), #ffe9f4 calc(100% - 16px)); }   /* faixas de 16 px fixos: o texto fica sempre no branco (D6-18) */
+.previa-valendo.rar-raro { background: linear-gradient(180deg, #dcebff 0 16px, #fff 16px calc(100% - 16px), #dcebff calc(100% - 16px)); }
+.previa-valendo.rar-lendario { background: linear-gradient(180deg, #ffe39a 0 16px, #fff 16px calc(100% - 16px), #ffe39a calc(100% - 16px)); }
 .previa-valendo.ganhou { animation: brilhar 1.2s step-end; }
 .previa-valendo p { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; font-weight: 700; }
 .quadro-premios-caixa { width: 100%; display: flex; flex-direction: column; gap: 10px; text-align: left; }
@@ -103,7 +103,7 @@
 .estilo-marcar-x .opcao:not(.opcao-marcar)[aria-pressed="true"]::before { content: "(X)"; color: var(--roxo-texto); }
 .estilo-circular .opcao-marcar::after { display: none; }
 .estilo-circular .opcao { justify-content: center; text-align: center; }
-.estilo-circular .opcao[aria-pressed="true"] { border-radius: var(--canto); outline: 4px solid var(--laranja-forte); outline-offset: 3px; background: var(--laranja-claro); box-shadow: 0 4px 0 var(--laranja-forte); }
+.estilo-circular .opcao[aria-pressed="true"] { border-color: var(--laranja-forte); border-radius: var(--canto); outline: 4px solid var(--laranja-forte); outline-offset: 0; background: var(--laranja-claro); box-shadow: 0 4px 0 var(--laranja-forte); }
 
 /* V ou F em cada frase */
 .vf-lista { display: flex; flex-direction: column; gap: 10px; }
@@ -126,6 +126,11 @@
 .frase-opcoes { display: flex; flex-wrap: wrap; gap: 8px; }
 .chip-palavra { min-height: 48px; padding: 6px 12px; border: 3px solid var(--borda); border-radius: var(--canto); background: #fff; font-weight: 700; font-size: 0.8em; box-shadow: 0 3px 0 var(--borda); }
 .chip-palavra[aria-pressed="true"] { background: var(--roxo-texto); color: #fff; }   /* branco no --roxo dá 4,3:1 */
+.completar .chip-palavra { min-width: 48px; }
+/* lista longa (5+ frases, as contas curtas da Matemática): 2 colunas quando a caixa comporta 2 de 340 px (D6-27);
+   caixa estreita e lista curta (frases longas) ficam em 1 coluna */
+.completar:not(.completar-grade):not(.completar-colado-longo):has(> .frase-completar:nth-child(6)) { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); }
+.completar:not(.completar-grade):not(.completar-colado-longo):has(> .frase-completar:nth-child(6)) > .quadro-palavras { grid-column: 1 / -1; }
 .tudo-certo .frase-completar { background: var(--certo-fundo); }
 
 /* ligar com desenho (documentos) */
