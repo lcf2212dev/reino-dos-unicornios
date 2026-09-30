@@ -1,0 +1,21 @@
+/* Laboratório de Química, parte 2: os objetos próprios do prédio ('quimica-<nome>'). A biblioteca comum
+   (js/motor/interiores-objetos-*.js) já tem janela, estante, sofá, vitrine…: aqui só o que é da cara dele.
+   O que as partes dividem fica em Reino._predios['quimica']. Nada de canvas no carregamento. */
+(function () {
+  var R = window.Reino;
+  var I = R.Interiores, D = I.desenho, C = D.C;
+  var ret = D.ret, contornoRet = D.contornoRet;
+  var K = R.Desenho.K;
+  var S = (R._predios = R._predios || {})['quimica'] = {};
+  // cores do prédio (troque à vontade; fora.js usa as mesmas)
+  S.COR = '#9b6bd6'; S.COR2 = '#ff8ac4'; S.PAREDE = '#fff6e4';
+
+  // na parede: placa com uma faixa colorida (exemplo de objeto próprio; desenhe o seu aqui)
+  I.objeto('quimica-placa', { w: 1, h: 2, parede: true, solido: false,
+    desenhar: function (ctx, px, py) {
+      contornoRet(ctx, px + 1, py + 6, 14, 14, S.COR);
+      ret(ctx, px + 2, py + 8, 12, 9, C.creme);
+      ret(ctx, px + 3, py + 11, 10, 2, S.COR2);
+      ret(ctx, px + 7, py + 3, 2, 4, K);
+    } });
+})();

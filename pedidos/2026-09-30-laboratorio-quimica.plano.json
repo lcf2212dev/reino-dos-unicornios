@@ -1,0 +1,340 @@
+{
+  "nome": "laboratorio-quimica",
+  "pedido": "pedidos/2026-09-30-laboratorio-quimica.md",
+  "personagens": [
+    {
+      "id": "quimica-proveta",
+      "nome": "Doutora Proveta",
+      "genero": "f",
+      "idade": "adulto",
+      "predio": "quimica",
+      "x": 24,
+      "y": 6,
+      "acao": {
+        "tipo": "tela",
+        "tela": "quimica-bancada"
+      },
+      "perfil": {
+        "voz": "pt-BR-ThalitaMultilingualNeural",
+        "velocidade": "+0%",
+        "tom": "-28Hz"
+      }
+    }
+  ],
+  "tarefas": [
+    {
+      "id": "contrato",
+      "tipo": "contrato",
+      "titulo": "Reserva da Doutora Proveta, layout-esqueleto dos 3 cômodos, API Reino.Quimica, save, dados-semente, ids das telas",
+      "quem": "orquestrador",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/interiores/quimica/reservas.js",
+        "jogo/js/interiores/quimica/acoes.js",
+        "jogo/js/sistemas/quimica.js",
+        "jogo/js/conteudo/quimica/ingredientes.js",
+        "jogo/js/conteudo/quimica/frases.js",
+        "docs/contratos/quimica.md",
+        "docs/contratos/README.md",
+        "jogo/js/nucleo/config.js",
+        "jogo/js/manifesto.js",
+        "jogo/index.html",
+        "jogo/ferramentas/testes/cenario.js"
+      ],
+      "worktree": "laboratorio-quimica",
+      "personagens": [
+        "quimica-proveta"
+      ],
+      "pronto": [
+        "vaga tracejada da Doutora Proveta em (24, 6)",
+        "npm run vozes-elenco limpo",
+        "Reino.Quimica.misturar funciona no node"
+      ],
+      "estimativa": 30
+    },
+    {
+      "id": "icones",
+      "tipo": "arte",
+      "titulo": "Ícones pixel art dos emojis novos do laboratório",
+      "quem": "worker-low",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/conteudo/quimica/icones.js"
+      ],
+      "worktree": "quimica-icones",
+      "pronto": [
+        "🧪 ⚗ 💥 🌋 🫙 ⚛ 🍋 🧂 🍬 🧅 ❄ 🥼 🥽 🧫 com desenho 16×16"
+      ],
+      "estimativa": 20
+    },
+    {
+      "id": "conteudo",
+      "tipo": "conteudo",
+      "titulo": "Receitas, elementos, tabela das 118 casas, lições e lâminas, com testes",
+      "quem": "worker-low",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/conteudo/quimica/receitas.js",
+        "jogo/js/conteudo/quimica/elementos.js",
+        "jogo/js/conteudo/quimica/tabela.js",
+        "jogo/js/conteudo/quimica/licoes.js",
+        "jogo/js/conteudo/quimica/laminas.js",
+        "jogo/ferramentas/testes/unidade/quimica.test.js"
+      ],
+      "worktree": "quimica-conteudo",
+      "pronto": [
+        "10 receitas, 24 cartões, 118 casas, 6 lições, 8 lâminas sem bicho",
+        "química correta, até 30 letras por página"
+      ],
+      "estimativa": 40
+    },
+    {
+      "id": "fachada",
+      "tipo": "fachada",
+      "titulo": "Fachada do laboratório e a cerquinha do lugar registrado na clareira",
+      "quem": "worker-low",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/interiores/quimica/fora.js",
+        "jogo/js/interiores/quimica/lugar.js",
+        "jogo/js/mundo/mapa.js",
+        "docs/contratos/cena-e-motor.md"
+      ],
+      "worktree": "quimica-fachada",
+      "pronto": [
+        "fachada caprichada com frascos borbulhando, nos 3 tamanhos",
+        "cerquinha e portão; resto do mapa idêntico"
+      ],
+      "estimativa": 30
+    },
+    {
+      "id": "cenario",
+      "tipo": "cenario",
+      "titulo": "Os 3 cômodos ricos, objetos quimica-*, e as falas dos objetos",
+      "quem": "worker-low",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/interiores/quimica/quimica.js",
+        "jogo/js/interiores/quimica/objetos.js",
+        "jogo/js/interiores/quimica/objetos-2.js",
+        "jogo/js/interiores/quimica/falas.js"
+      ],
+      "worktree": "quimica-cenario",
+      "pronto": [
+        "validar-interiores sem erro (rico, alcançável)",
+        "vaga (24, 6) livre",
+        "bancada, caderno, microscópio e tabela abrem as telas"
+      ],
+      "estimativa": 45
+    },
+    {
+      "id": "npc-proveta",
+      "tipo": "npc",
+      "titulo": "Visual da Doutora Proveta (jaleco, óculos de proteção)",
+      "quem": "worker-low",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/interiores/quimica/personagens.js"
+      ],
+      "worktree": "quimica-npc",
+      "personagens": [
+        "quimica-proveta"
+      ],
+      "pronto": [
+        "a Doutora Proveta aparece na vaga, nos 3 tamanhos"
+      ],
+      "estimativa": 20
+    },
+    {
+      "id": "falas-proveta",
+      "tipo": "falas",
+      "titulo": "Falas da Doutora Proveta (oi, nova, depois)",
+      "quem": "worker-low",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/interiores/quimica/personagens-falas.js"
+      ],
+      "worktree": "laboratorio-quimica",
+      "personagens": [
+        "quimica-proveta"
+      ],
+      "pronto": [
+        "até 30 letras por página, 3+ palavras"
+      ],
+      "estimativa": 10
+    },
+    {
+      "id": "bancada",
+      "tipo": "mecanica",
+      "titulo": "Bancada de misturas: tubos, béquer, as 9 animações e a explosão de confete",
+      "quem": "worker-low",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/ui/quimica-palco.js",
+        "jogo/js/ui/quimica-palco-2.js",
+        "jogo/js/ui/quimica-bancada.js",
+        "jogo/css/ui-quimica-bancada.css",
+        "jogo/js/conteudo/quimica/frases-bancada.js",
+        "jogo/ferramentas/testes/unidade/quimica-bancada.navegador.test.js"
+      ],
+      "worktree": "quimica-bancada",
+      "pronto": [
+        "tocar/arrastar tubo, Misturar!, animação de cada efeito",
+        "sem animação: quadro final",
+        "teclado"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "caderno",
+      "tipo": "mecanica",
+      "titulo": "Caderno de receitas",
+      "quem": "worker-low",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/ui/quimica-caderno.js",
+        "jogo/css/ui-quimica-caderno.css",
+        "jogo/js/conteudo/quimica/frases-caderno.js",
+        "jogo/ferramentas/testes/unidade/quimica-caderno.navegador.test.js"
+      ],
+      "worktree": "quimica-caderno",
+      "pronto": [
+        "1ª receita aberta desde o começo",
+        "segredo com dica",
+        "teclado"
+      ],
+      "estimativa": 35
+    },
+    {
+      "id": "microscopio",
+      "tipo": "mecanica",
+      "titulo": "Microscópio: lâminas, aumento e foco",
+      "quem": "worker-low",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/ui/quimica-microscopio.js",
+        "jogo/js/ui/quimica-laminas.js",
+        "jogo/css/ui-quimica-microscopio.css",
+        "jogo/js/conteudo/quimica/frases-microscopio.js",
+        "jogo/ferramentas/testes/unidade/quimica-microscopio.navegador.test.js"
+      ],
+      "worktree": "quimica-microscopio",
+      "pronto": [
+        "8 lâminas desenhadas, 3 aumentos, foco em mosaico",
+        "teclado"
+      ],
+      "estimativa": 45
+    },
+    {
+      "id": "tabela",
+      "tipo": "mecanica",
+      "titulo": "Tabela periódica: mapa das 118 casas, cartões e lições",
+      "quem": "worker-low",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/ui/quimica-tabela.js",
+        "jogo/js/ui/quimica-tabela-2.js",
+        "jogo/css/ui-quimica-tabela.css",
+        "jogo/js/conteudo/quimica/frases-tabela.js",
+        "jogo/ferramentas/testes/unidade/quimica-tabela.navegador.test.js"
+      ],
+      "worktree": "quimica-tabela",
+      "pronto": [
+        "mapa colorido, 24 cartões, 6 lições",
+        "teclado"
+      ],
+      "estimativa": 45
+    },
+    {
+      "id": "vozes",
+      "tipo": "vozes",
+      "titulo": "Voz da Doutora Proveta e de todas as falas do laboratório",
+      "quem": "orquestrador",
+      "depende": [
+        "contrato",
+        "falas-proveta",
+        "conteudo",
+        "cenario",
+        "bancada",
+        "caderno",
+        "microscopio",
+        "tabela"
+      ],
+      "arquivos": [
+        "jogo/js/voz/interior-quimica.js"
+      ],
+      "worktree": "integracao-laboratorio-quimica",
+      "personagens": [
+        "quimica-proveta"
+      ],
+      "pronto": [
+        "transcrição sem ✘"
+      ],
+      "estimativa": 30
+    },
+    {
+      "id": "integracao",
+      "tipo": "integracao",
+      "titulo": "Juntar as frentes, e2e das telas novas, npm test e e2e",
+      "quem": "orquestrador",
+      "depende": [
+        "contrato",
+        "icones",
+        "conteudo",
+        "fachada",
+        "cenario",
+        "npc-proveta",
+        "falas-proveta",
+        "bancada",
+        "caderno",
+        "microscopio",
+        "tabela",
+        "vozes"
+      ],
+      "arquivos": [
+        "jogo/ferramentas/testes/referencias-cenas.js",
+        "jogo/ferramentas/testes/base-referencia.txt"
+      ],
+      "worktree": "integracao-laboratorio-quimica",
+      "pronto": [
+        "npm test e npm run e2e verdes"
+      ],
+      "estimativa": 40
+    },
+    {
+      "id": "entrega",
+      "tipo": "entrega",
+      "titulo": "Merge na main, push e Vercel",
+      "quem": "orquestrador",
+      "depende": [
+        "integracao"
+      ],
+      "arquivos": [],
+      "worktree": "integracao-laboratorio-quimica",
+      "pronto": [
+        "main no GitHub e Vercel publicada"
+      ],
+      "estimativa": 15
+    }
+  ]
+}
