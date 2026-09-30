@@ -5,12 +5,10 @@
 .tela-aparencia .painel-conteudo { padding: 14px 18px 18px; }
 .criar {
   display: grid; grid-template-columns: minmax(200px, 300px) minmax(0, 1fr); grid-template-rows: auto 1fr;
-  grid-template-areas: 'vitrine campos' 'botoes campos'; column-gap: 18px; row-gap: 14px; align-items: start;
+  grid-template-areas: 'vitrine campos' '. campos'; column-gap: 18px; row-gap: 14px; align-items: start;
 }
 .criar > .criar-vitrine { grid-area: vitrine; }
 .criar > .criar-campos { grid-area: campos; }
-.tela-aparencia .criar > .criar-botoes { grid-area: botoes; margin-top: 0; align-self: start; }
-.criar-botoes .btn-grande { width: 100%; }
 
 /* ---------- vitrine ---------- */
 .criar-vitrine { display: flex; flex-direction: column; align-items: center; gap: 10px; }
@@ -91,11 +89,11 @@ body.sem-animacao .criar-palco::before, body.sem-animacao .criar-palco::after { 
 
 /* celular: a vitrine em cima, menor */
 @media (max-width: 640px) {
-  .criar { grid-template-columns: 1fr; grid-template-rows: none; grid-template-areas: 'vitrine' 'campos' 'botoes'; row-gap: 12px; }
+  .criar { grid-template-columns: 1fr; grid-template-rows: none; grid-template-areas: 'vitrine' 'campos'; row-gap: 12px; }
   .criar-vitrine { position: static; flex-direction: row; justify-content: center; }
   .criar-palco { width: auto; min-width: 150px; min-height: 150px; padding: 10px 14px 18px; }
   .criar-chao { width: 80px; height: 12px; bottom: 12px; }
-  .criar-plaquinha { min-width: 0; padding: 8px; font-size: 12px; }
+  .criar-plaquinha { display: none; }   /* o campo Nome já mostra o nome (D8B-26) */
   .tela-aparencia .criar-nome { padding: 8px; font-size: 16px; }   /* 12 letras inteiras no campo */
   /* Corte e Roupa: o rótulo em cima e a fileira na largura toda (cabem 3 cartões, cada nome inteiro) */
   .criar-grupo:has(> .criar-opcoes) { flex-direction: column; align-items: stretch; gap: 4px; }

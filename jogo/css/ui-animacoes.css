@@ -31,7 +31,16 @@ body.sem-animacao *:not(.balao-respira), body.sem-animacao *::before, body.sem-a
   .ligar-item { font-size: min(0.8em, calc((100cqi - 44px) / 24)); padding: 8px 6px; gap: 6px; }
   /* baús um embaixo do outro: lado a lado, "Ingredientes"/"Sentimentos" na letra pixel não cabiam */
   .baus { grid-template-columns: minmax(0, 1fr); gap: 10px; }
-  .bau { min-height: 120px; }
+  .bau { min-height: 80px; }
+  /* separar (D6-10): os baús logo abaixo da dica e o monte embaixo deles, com itens menores (ícone de 32 px), para o
+     item escolhido e os dois baús caberem juntos na tela */
+  .separar > .dica-toque { order: -2; }
+  .separar > .baus { order: -1; }
+  .separar { gap: 10px; }
+  .separar > .baus { gap: 6px; }
+  .separar-monte { gap: 8px; padding: 8px; }
+  .separar-monte .sep-item { min-height: 44px; padding: 4px 10px; gap: 6px; }
+  .separar-monte .sep-item canvas.icone-em { width: 32px !important; height: 32px !important; }
   .montaria-info { font-size: 0.72em; }
   /* lista de salas da matéria: "Entrar →"/"Jogar de novo" descem para a linha de baixo */
   .sala-card { gap: 10px; }

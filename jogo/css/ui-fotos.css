@@ -35,15 +35,20 @@
   background: #ffe3ef;
 }
 .fotos-nota { text-align: center; font-size: 0.85em; color: var(--tinta-suave); line-height: 1.6; }
-.fotos-botoes { margin-top: 4px; }
 .fotos-botoes .btn-grande[hidden] { display: none; }
+/* botões no rodapé de ação (D8B-05): o principal por último no DOM (à direita) com o rótulo; os secundários só com o
+   ícone (o nome no title) */
+footer.fotos-botoes > :first-child:not(:last-child) { margin-right: 0; }
+footer.fotos-botoes > .btn-secundario { flex: 0 0 64px; min-width: 0; padding: 0; }
+footer.fotos-botoes .btn-secundario .rotulo-longo, footer.fotos-botoes .btn-secundario .rotulo-curto { display: none; }
 .fotos-legenda { text-align: center; font-size: 0.8em; line-height: 1.6; margin: 0; }
 
-/* celular: os botões um embaixo do outro, a largura toda */
+/* celular: painel mais justo e a grade do álbum em 3 colunas */
 @media (max-width: 600px) {
   .tela-fotos-previa .painel-conteudo, .tela-fotos-ver .painel-conteudo, .tela-fotos-album .painel-conteudo { padding: 14px 14px 18px; }
-  .fotos-botoes { flex-direction: column; align-items: stretch; gap: 10px; }
-  .fotos-botoes .btn-grande { min-height: 52px; padding: 10px 14px; }
+  footer.fotos-botoes > .btn-secundario { flex-basis: 56px; }   /* folga para o "Guardar" do principal */
+  /* a foto grande cabe sem rolar (a legenda e a dica quebram em mais linhas no celular) */
+  .tela-fotos-ver .fotos-img { max-height: calc(100vh - 340px); max-height: calc(100dvh - 340px); }
   .tela-fotos-previa .fotos-img { max-height: calc(100vh - 360px); max-height: calc(100dvh - 360px); }
   .fotos-grade { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
 }
@@ -90,3 +95,4 @@ body.sem-animacao .fotos-mini, body.sem-animacao .fotos-mini:active { transition
 
 /* foto grande com o Compartilhar (um botão a mais): a foto encolhe para os três caberem */
 .tela-fotos-ver .com-compartilhar .fotos-img { max-height: calc(100vh - 400px); max-height: calc(100dvh - 400px); }
+@media (max-width: 600px) { .tela-fotos-ver .com-compartilhar .fotos-img { max-height: calc(100vh - 410px); max-height: calc(100dvh - 410px); } }

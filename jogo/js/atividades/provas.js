@@ -120,7 +120,7 @@
       valendo ? [Pv.icone(prova.acessorios[valendo].id, 28), el('span', 'Valendo: acessório ', el('b', rar(valendo).nome.toLowerCase()), '. Acerte TUDO!')]
         : el('span', '✏️ Treino: o acessório desta prova você já ganhou.'));
     var corpo = el('div.missao-corpo');
-    var rodape = el('footer.missao-rodape.prova-rodape', { hidden: true });
+    var rodape = el('footer.missao-rodape.prova-rodape.rodape-acao', { hidden: true });   // rodapé de ação (ui.md §10.20)
     tela.appendChild(el('header.missao-topo', sair, titulo, pontos));
     Reino.Desafios.ajustarTitulo(titulo, prova.materiaId);
     tela.appendChild(faixa);
@@ -147,7 +147,7 @@
     }
 
     function capa() {
-      rodape.hidden = true; faixa.hidden = true;
+      faixa.hidden = true;
       corpo.innerHTML = '';
       var fala = valendo ? Reino.Falas.provas.valendo[valendo] : Reino.Falas.provas.treino;
       var ir = el('button.btn-grande.btn-principal', { type: 'button' }, 'Começar a prova ✏️');
@@ -163,13 +163,17 @@
         el('ul.intro-regras',
           el('li', '📝 Uma questão de cada vez.'),
           el('li', '⏳ Sem relógio. Pode ir devagar!'),
-          el('li', '👀 No fim, você pode revisar antes de ver a nota.')),
-        el('div.intro-botoes', ir)));
+          el('li', '👀 No fim, você pode revisar antes de ver a nota.'))));
+      // "Começar a prova" no rodapé fixo: à vista sem rolar (D6-09)
+      rodape.innerHTML = '';
+      rodape.appendChild(ir);
+      rodape.hidden = false;
       corpo.scrollTop = 0;
       // ouvir antes de seguir: com config.esperaFala.travar, "Começar" e ✕ esperam a fala acabar
       Reino.UI.esperarFala([ir, sair], [fala], { voz: 'claude' });
       ir.addEventListener('click', function () {
         Reino.Som.tocar('porta');
+        rodape.hidden = true;
         Reino.Prova.ritual(corpo, est().ritualVisto).then(function () {
           est().ritualVisto = true; P.salvar();
           mostrarQuestao(0, false);
@@ -218,10 +222,11 @@
       if (revisando) corpo.appendChild(el('p.dica-revisao', 'Leia de novo com calma. Se achar um errinho, é só trocar a resposta.'));
       pintarPontos(i);
 
-      var ant = el('button.btn-grande.btn-secundario', { type: 'button', hidden: i === 0 }, '← Anterior');
+      // no celular, só a seta no "Anterior" e "Entregar 📝" (o .rotulo-longo some: ui.md §10.20)
+      var ant = el('button.btn-grande.btn-secundario.so-seta', { type: 'button', 'aria-label': 'Anterior' }, '←', el('span.rotulo-longo', ' Anterior'));
       var ultima = i + 1 === questoes.length;
       var prox = el('button.btn-grande.btn-principal', { type: 'button' },
-        ultima ? (revisando ? 'Entregar a prova 📝' : 'Terminei ✓') : 'Próxima →');
+        ultima ? (revisando ? ['Entregar', el('span.rotulo-longo', ' a prova'), ' 📝'] : 'Terminei ✓') : 'Próxima →');
       // travado pela fala (esperando-fala): quem solta é o fim da fala
       function atualizar() { if (!prox.classList.contains('esperando-fala')) prox.disabled = !ctrl.pronto(); }
       ant.addEventListener('click', function () { Reino.Som.tocar('toque'); respostas[i] = ctrl.valor(); mostrarQuestao(i - 1, revisando); });
@@ -242,7 +247,8 @@
         else if (revisando) entregar();
         else perguntarRevisao();
       });
-      rodape.appendChild(ant);
+      // na 1ª questão, a vaga guarda o lugar do "Anterior": o "Próxima" não muda de lugar
+      rodape.appendChild(i === 0 ? el('span.rodape-vaga.so-seta', { 'aria-hidden': 'true' }) : ant);
       rodape.appendChild(el('span.sem-relogio', '⏳ Sem relógio'));
       rodape.appendChild(prox);
       atualizar();

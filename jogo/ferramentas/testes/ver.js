@@ -57,7 +57,7 @@ Cuidados:
   2) --tela sala:<id> numa matéria com livro: "Começar" abre o RESUMO (as cartas), não a 1ª pergunta; tocar só a
      intro fotografa o resumo. Para chegar à pergunta, use o passo pronto 'perguntas':
        npm run ver -- --tela sala:h1 --passos 'perguntas'                      (1ª pergunta da sala)
-       npm run ver -- --tela sala:h1 --passos 'tocar:.intro-sala .btn-principal;esperar:600'   (a 1ª carta do resumo)`;
+       npm run ver -- --tela sala:h1 --passos 'tocar:.intro-botoes .btn-principal;esperar:600'   (a 1ª carta do resumo)`;
 
 function lerArgs(argv) {
   const a = { js: [], tamanhos: Object.keys(TAMANHOS) };
@@ -104,8 +104,8 @@ function textoConsole(page) { return page.__console.map((m) => `[${m.tipo}]${m.m
 // passo 'perguntas': na sala aberta (--tela sala:<id>), toca "Começar" e passa as cartas do resumo (sala com livro)
 // até a 1ª pergunta; tocar só a intro para no resumo quando a matéria tem livro
 async function passarIntro(c) {
-  if (await c.js("!!document.querySelector('.intro-sala .btn-principal')")) await c.tocar('.intro-sala .btn-principal');
-  for (let i = 0; i < 40 && await c.js("!!document.querySelector('.resumo-sala .btn-principal')"); i++) await c.tocar('.resumo-sala .btn-principal');
+  if (await c.js("!!document.querySelector('.intro-botoes .btn-principal')")) await c.tocar('.intro-botoes .btn-principal');
+  for (let i = 0; i < 40 && await c.js("!!document.querySelector('.resumo-botoes .btn-principal')"); i++) await c.tocar('.resumo-botoes .btn-principal');
   if (await c.js("!!document.querySelector('.intro-sala, .resumo-sala')")) throw new Error('perguntas: a intro ou o resumo não passou');
   await c.avancar(600);
 }

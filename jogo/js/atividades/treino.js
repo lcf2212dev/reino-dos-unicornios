@@ -127,7 +127,7 @@
     var sair = el('button.btn-icone.btn-sair', { type: 'button', 'aria-label': 'Sair do treino' }, '✕');
     var titulo = el('div.missao-titulo', el('span', '🥇 Treino da Medalha: ' + materia.nome));
     var corpo = el('div.missao-corpo');
-    var rodape = el('footer.missao-rodape.prova-rodape', { hidden: true });
+    var rodape = el('footer.missao-rodape.prova-rodape.rodape-acao', { hidden: true });   // rodapé de ação (ui.md §10.20)
     tela.appendChild(el('header.missao-topo', sair, titulo));
     tela.appendChild(corpo);
     tela.appendChild(rodape);
@@ -180,15 +180,18 @@
       corpo.appendChild(ctrl.card);
       if (modoRevisao) corpo.appendChild(el('p.dica-revisao', 'Leia de novo com calma. Se tiver certeza, toque em "Revisei ✓". Se quiser, pode trocar a resposta.'));
 
-      var ant = el('button.btn-grande.btn-secundario', { type: 'button' }, '← Anterior');
+      // no celular, só a seta no "Anterior" e "Revisão 👀" (o .rotulo-longo some e o .rotulo-curto aparece: ui.md §10.20)
+      var ant = el('button.btn-grande.btn-secundario.so-seta', { type: 'button', 'aria-label': 'Anterior' }, '←', el('span.rotulo-longo', ' Anterior'));
       var prox = el('button.btn-grande.btn-principal', { type: 'button' });
       function atualizarBotoes() {
-        if (modoRevisao) Reino.util.preencher(prox, 'Revisei ✓');
-        else Reino.util.preencher(prox, i + 1 < questoes.length ? 'Próxima →' : 'Ir para a revisão 👀');
+        prox.innerHTML = '';
+        if (modoRevisao) U.preencher(prox, 'Revisei ✓');
+        else if (i + 1 < questoes.length) U.preencher(prox, 'Próxima →');
+        else [el('span.rotulo-longo', 'Ir para a revisão'), el('span.rotulo-curto', 'Revisão'), el('span', ' 👀')].forEach(function (x) { prox.appendChild(x); });
         // travado pela fala (esperando-fala): quem solta é o fim da fala
         if (!prox.classList.contains('esperando-fala')) prox.disabled = modoRevisao ? !ctrl.pronto() : false;
       }
-      ant.hidden = modoRevisao || i === 0;
+      ant.hidden = modoRevisao;
       ant.addEventListener('click', function () { Reino.Som.tocar('toque'); mostrarQuestao(i - 1); });
       prox.addEventListener('click', function () {
         Reino.Som.tocar('toque');
@@ -201,7 +204,7 @@
         var voltar = el('button.btn-grande.btn-secundario', { type: 'button' }, '← Lista');
         voltar.addEventListener('click', function () { telaRevisao(false, i, true); });
         rodape.appendChild(voltar);
-      } else rodape.appendChild(ant);
+      } else rodape.appendChild(i === 0 ? el('span.rodape-vaga.so-seta', { 'aria-hidden': 'true' }) : ant);   // a vaga guarda o lugar do "Anterior"
       rodape.appendChild(el('span.sem-relogio', '⏳ Sem relógio'));
       rodape.appendChild(prox);
       atualizarBotoes();
@@ -237,7 +240,7 @@
         itens.push(item.firstChild);
         lista.appendChild(item);
       });
-      var entregar = el('button.btn-grande.btn-principal.btn-entregar', { type: 'button', disabled: faltamRev > 0 || semResp > 0 }, 'Entregar a prova 📝');
+      var entregar = el('button.btn-grande.btn-principal.btn-entregar', { type: 'button', disabled: faltamRev > 0 || semResp > 0 }, 'Entregar', el('span.rotulo-longo', ' a prova'), ' 📝');
       var aviso = el('p.aviso-revisao', faltamRev > 0
         ? '👀 Falta revisar ' + faltamRev + (faltamRev === 1 ? ' questão' : ' questões') + '. Toque em cada uma, leia de novo e toque em "Revisei ✓".'
         : '✅ Tudo revisado! Agora sim, pode entregar com orgulho.');

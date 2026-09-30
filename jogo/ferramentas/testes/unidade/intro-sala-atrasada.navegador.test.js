@@ -45,7 +45,7 @@ async function comSala(fn) {
 }
 
 test('sala: "Começar" antes do pacote de voz chegar: a introdução não é lida por cima do desafio 1', () => comSala(async (page) => {
-  await page.evaluate(() => [...document.querySelectorAll('.tela-missao .intro-sala button')].find((b) => /Começar/.test(b.textContent)).click());
+  await page.evaluate(() => [...document.querySelectorAll('.tela-missao .intro-botoes button')].find((b) => /Começar/.test(b.textContent)).click());
   await avancar(page, 300);
   await page.waitForTimeout(3000);   // o pacote chega (tempo real)
   await avancar(page, 300);

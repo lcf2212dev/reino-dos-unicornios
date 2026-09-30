@@ -109,9 +109,9 @@
     var cartas = materia.livro;
     var i = Math.max(0, cartas.findIndex(function (c) { return c.id === cartaoId; }));
     var area = el('div.livro-carta');
-    var ant = el('button.btn-grande.btn-secundario', { type: 'button' }, '←');
-    var prox = el('button.btn-grande.btn-secundario', { type: 'button' }, '→');
-    var ouvir = el('button.btn-grande.btn-principal', { type: 'button' }, '🔊 Ouvir');
+    var ant = el('button.btn-grande.btn-secundario', { type: 'button', 'aria-label': 'Carta anterior' }, '←');
+    var prox = el('button.btn-grande.btn-secundario', { type: 'button', 'aria-label': 'Próxima carta' }, '→');
+    var ouvir = el('button.btn-grande.btn-principal.so-seta', { type: 'button', 'aria-label': 'Ouvir' }, '🔊', el('span.rotulo-longo', ' Ouvir'));
     var pag = el('span.livro-pag');
     function mostrar() {
       var c = cartas[i];
@@ -125,8 +125,9 @@
     prox.addEventListener('click', function () { if (i < cartas.length - 1) { i++; Reino.Som.tocar('toque'); mostrar(); } });
     ouvir.addEventListener('click', function () { Reino.Voz.carregar(materia.id + '-livro').then(function () { Reino.Som.falar(UI.falaCarta(cartas[i]), { voz: 'narradora' }); }); });
     pn.conteudo.appendChild(area);
-    pn.conteudo.appendChild(el('div.livro-nav', ant, pag, prox));
-    if (Reino.Som.temVoz()) pn.conteudo.appendChild(el('div.intro-botoes', ouvir));
+    // ← n de N → e o 🔊 Ouvir no rodapé de ação do painel, fora da carta que rola: sempre no mesmo lugar (ui.md §10.20)
+    pn.card.appendChild(el('footer.rodape-acao.livro-rodape', el('div.livro-nav', ant, pag, prox),
+      Reino.Som.temVoz() ? el('div.intro-botoes', ouvir) : null));
     mostrar();
   };
 

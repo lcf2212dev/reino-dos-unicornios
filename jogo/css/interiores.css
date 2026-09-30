@@ -14,7 +14,15 @@
 .claude-acoes .btn-dialogo.principal { background: var(--laranja); color: #2b1233; }
 .claude-acoes .btn-dialogo:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--borda); }
 .claude-acoes button:focus-visible { outline: 4px dashed var(--tinta); outline-offset: 2px; }   /* o anel de foco (ui.md §10.19.4) */
-#claude-balao.com-botoes .btn-ouvir-claude { min-height: 52px; min-width: 52px; }
+#claude-balao.com-botoes .btn-ouvir-claude { min-height: 52px; min-width: 52px; flex: none; }
+/* botões do diálogo, sem escada (D5-04): todos da mesma largura e altura na linha; com 2 secundários (a última página
+   do guia), o principal fica na 1ª linha, ao lado do 🔊, e os secundários lado a lado na 2ª */
+#claude-balao.com-botoes .claude-acoes { align-items: stretch; }
+.claude-acoes:has(.btn-dialogo ~ .btn-dialogo) .btn-dialogo { flex: 1 1 0; }
+.claude-acoes:has(.btn-dialogo:not(.principal) ~ .btn-dialogo:not(.principal)) .btn-dialogo.principal { flex: 1 1 60%; }
+.claude-acoes:has(.btn-dialogo:not(.principal) ~ .btn-dialogo:not(.principal)) .btn-dialogo:not(.principal) { flex: 1 1 40%; order: 1; }
+/* ...e o balão mais largo (painel de 720 px, ui.md §10.21): "📖 Livro das Memórias" em até 2 linhas */
+#claude-balao:has(.btn-dialogo:not(.principal) ~ .btn-dialogo:not(.principal)) { max-width: 720px; }
 
 /* personagem falando */
 #claude-balao.com-quem .claude-avatar { max-width: 88px; height: auto !important; }
@@ -33,4 +41,7 @@
   #claude-balao.com-botoes .claude-texto { font-size: 0.85em; }
   #claude-balao.com-botoes .claude-acoes { gap: 6px; }
   .claude-acoes .btn-dialogo { flex: 1 1 40%; padding: 6px 8px; font-size: 0.8em; }
+  /* 2 secundários lado a lado na largura do celular: letra de 12 px e sem o ícone, o nome inteiro em até 2 linhas */
+  .claude-acoes:has(.btn-dialogo:not(.principal) ~ .btn-dialogo:not(.principal)) .btn-dialogo { font-size: 12px; }
+  .claude-acoes:has(.btn-dialogo:not(.principal) ~ .btn-dialogo:not(.principal)) .btn-dialogo:not(.principal) canvas { display: none; }
 }
