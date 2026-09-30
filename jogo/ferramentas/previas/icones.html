@@ -9,7 +9,9 @@
   .cel { width: 132px; padding: 6px; text-align: center; background: #fff; border: 2px solid #3a2446; }
   .cel canvas { display: block; margin: 0 auto 4px; image-rendering: pixelated; }
   .tira { display: flex; justify-content: center; gap: 6px; padding: 4px; }
-  .tira.escura { background: #2a1838; }
+  .tira.escura { background: #24162e; }   /* --noite */
+  /* a mesma regra da .fundo-escuro do jogo (ui-telas.css, D8A-24): brilho de 1 px de arte em --papel */
+  .tira.escura canvas { filter: drop-shadow(2px 0 0 #fff8ee) drop-shadow(-2px 0 0 #fff8ee) drop-shadow(0 2px 0 #fff8ee) drop-shadow(0 -2px 0 #fff8ee); }
 </style>
 </head>
 <body>

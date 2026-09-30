@@ -1,0 +1,95 @@
+{
+  "nome": "2026-09-30-tv-5d",
+  "pedido": "pedidos/2026-09-30-tv-5d.md",
+  "personagens": [],
+  "tarefas": [
+    {
+      "id": "festa",
+      "tipo": "mecanica",
+      "titulo": "D10-B10, D9-05, D6-26, D6-19, D9-17: UI.festa(nivel) pela tabela do §10.16 em toda tela de fim, fim de sala com pulinho e título de 24 px centrado, resultado da prova com o prêmio à vista e nota em --canto-grande, estrela em degraus até o chip",
+      "quem": "general-purpose",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/ui/pecas.js",
+        "jogo/js/atividades/missao.js",
+        "jogo/js/atividades/provas.js",
+        "jogo/js/atividades/treino.js",
+        "jogo/js/ui/ovos.js",
+        "jogo/js/ui/loja.js",
+        "jogo/js/sistemas/surpresa-painel.js",
+        "jogo/js/ui/et-desafio.js",
+        "jogo/js/sistemas/aura.js",
+        "jogo/js/ui/hud.js",
+        "jogo/css/ui-missao.css",
+        "jogo/css/ui-prova.css",
+        "jogo/css/ui-base.css",
+        "jogo/css/ui-animacoes.css",
+        "jogo/ferramentas/testes/unidade/festa.navegador.test.js"
+      ],
+      "worktree": "tv-5d-festa",
+      "pronto": [
+        "o 'Pronto quando' de D10-B10, D9-05, D6-26, D6-19 e D9-17 (pedido §13, decisões 1 a 5)",
+        "grep 'UI.confete(' fora de ui/pecas.js vazio (todos pelo UI.festa)",
+        "teste de navegador festa: nível de cada tela de fim (confete, título) com animações ligadas e só título e som com elas desligadas"
+      ],
+      "estimativa": 240
+    },
+    {
+      "id": "luz",
+      "tipo": "arte",
+      "titulo": "D10-10, D8A-24: sombras retas e centradas (CSS, móveis e prédios) e brilho de 1 px em --papel nos ícones das telas escuras (.fundo-escuro)",
+      "quem": "worker-low",
+      "depende": [],
+      "arquivos": [
+        "jogo/css/ui-telas.css",
+        "jogo/css/ui-voo.css",
+        "jogo/css/ui-jogadores.css",
+        "jogo/css/ui-album-ets.css",
+        "jogo/css/ui-foguete.css",
+        "jogo/js/motor/interiores-estatico.js",
+        "jogo/js/mundo/predios.js",
+        "jogo/js/mundo/mapa-desenho.js",
+        "jogo/ferramentas/previas/icones.html"
+      ],
+      "worktree": "tv-5d-luz",
+      "pronto": [
+        "o 'Pronto quando' de D10-10 e D8A-24 (pedido §13, decisões 6 e 7)",
+        "grep de text-shadow/box-shadow com deslocamento lateral em jogo/css vazio (fora do contorno de 4 direções)",
+        "fotos antes/depois: mapa, interior-castelo, tela de jogadores, --previa icones (linha escura)"
+      ],
+      "estimativa": 150
+    },
+    {
+      "id": "integracao",
+      "tipo": "integracao",
+      "titulo": "Juntar, npm test e e2e (troca da base), ui.md §10.16 e §10.8.3, marcar o TODO",
+      "quem": "orquestrador",
+      "depende": ["festa", "luz"],
+      "arquivos": [
+        "TODO-VISUAL.md",
+        "jogo/js/manifesto.js",
+        "jogo/index.html",
+        "jogo/js/nucleo/config.js",
+        "jogo/ferramentas/testes/tipos-jogo.d.ts",
+        "jogo/ferramentas/testes/base-referencia.txt",
+        "docs/contratos/ui.md"
+      ],
+      "worktree": "tv-5d",
+      "pronto": [
+        "npm test e e2e verdes, cada diferença explicada por um item da 5d; base trocada",
+        "ui.md §10.16 com UI.festa e os níveis de compra, cuidado, surpresa, ET e Aura; §10.8.3 com .fundo-escuro; TODO marcado"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "entrega",
+      "tipo": "entrega",
+      "titulo": "Merge, push e Vercel",
+      "quem": "orquestrador",
+      "depende": ["integracao"],
+      "arquivos": [],
+      "worktree": "tv-5d",
+      "estimativa": 15
+    }
+  ]
+}
