@@ -16,7 +16,7 @@
 .salao-opcoes { display: grid; grid-template-columns: repeat(auto-fill, minmax(156px, 1fr)); gap: 8px; }
 .salao-opcao {
   display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 8px 6px;
-  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel); box-shadow: var(--sombra-pequena);
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel); box-shadow: var(--sombra-pequena); --degrau: 2px;
   font: inherit; font-size: var(--texto-aux); color: inherit; cursor: pointer; line-height: var(--entrelinha-titulo);
 }
 .salao-opcao[aria-pressed="true"] { background: var(--laranja-claro); outline: 4px solid var(--roxo); outline-offset: 2px; }

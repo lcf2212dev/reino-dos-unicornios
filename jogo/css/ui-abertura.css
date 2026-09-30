@@ -53,8 +53,8 @@
 .titulo-letra {
   position: relative; display: inline-block;
   text-shadow: 4px 0 0 var(--borda), -4px 0 0 var(--borda), 0 4px 0 var(--borda), 0 -4px 0 var(--borda), 4px 4px 0 var(--borda), -4px 4px 0 var(--borda), 4px -4px 0 var(--borda), -4px -4px 0 var(--borda), 0 8px 0 var(--borda), 4px 8px 0 var(--borda), -4px 8px 0 var(--borda);   /* tipografia-ok: contorno e sombra do título da abertura (escala de festa, §10.16) */
-  animation: letra-cai 0.6s step-end var(--atraso, 0ms) both,
-    letra-brilha 3.8s step-end var(--brilho, 1600ms) infinite;
+  animation: letra-cai var(--lento) step-end var(--atraso, 0ms) both,
+    letra-brilha calc(6 * var(--lento)) step-end var(--brilho, 1600ms) infinite;
 }
 .titulo-linha-2 .titulo-letra::after {
   content: attr(data-l);
@@ -98,7 +98,7 @@
 .btn-pulsar::before {
   content: ''; position: absolute; inset: -4px; pointer-events: none;
   border: var(--borda-grossa) solid transparent; border-radius: var(--canto-grande);
-  animation: halo-pulsa 1.8s step-end infinite;
+  animation: halo-pulsa calc(3 * var(--lento)) step-end infinite;
 }
 @keyframes halo-pulsa {
   0% { inset: -4px; border-color: var(--ouro); }
@@ -111,7 +111,8 @@
 /* entrar: zoom no castelo, a tela clareia e o texto some */
 .abertura.entrando .abertura-cena { transform: scale(3); transition: transform var(--entrar-ms, 600ms) cubic-bezier(0.45, 0, 0.8, 0.5); }
 .abertura.entrando .abertura-flash { opacity: 1; transition: opacity var(--entrar-ms, 600ms) ease-in; }
-.abertura-entrando .titulo-abertura, .abertura-entrando .inicio-baixo { opacity: 0; transition: opacity 0.25s ease-out; }
+.abertura-entrando .titulo-abertura, .abertura-entrando .inicio-baixo { opacity: 0; transition: opacity var(--normal) ease-out; }
+body.sem-animacao .abertura-entrando .titulo-abertura, body.sem-animacao .abertura-entrando .inicio-baixo { transition: none; }
 
 /* celular deitado: título e botão menores para a cena aparecer */
 @media (max-height: 500px) {
@@ -131,4 +132,5 @@
 body.sem-animacao .titulo-letra, body.sem-animacao .btn-pulsar::before { animation: none; }
 @media (prefers-reduced-motion: reduce) {
   .titulo-letra, .btn-pulsar::before { animation: none; }
+  .abertura-entrando .titulo-abertura, .abertura-entrando .inicio-baixo { transition: none; }
 }
