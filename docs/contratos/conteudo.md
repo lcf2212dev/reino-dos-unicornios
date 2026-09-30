@@ -61,6 +61,9 @@ Personagens: `npcs-e-dialogo.md`. Prédios: `interiores.md`. Vozes: `som-musica-
      no menu Lugares enquanto ela não entrou e a data tem menos de `config.novidadeDias` dias (padrão 45).
      Visita = entrar no interior ou abrir a tela do lugar; fica no campo `visitados` do save
      (`sistemas/visitados.js`, `Reino.Novidades.ehNovo(lugar)`). O `npm run novo` (matéria e prédio) põe a data de hoje.
+     Novidade dentro de um lugar que ela já visitou (ex.: um andar novo): `novidade: { desde: 'AAAA-MM-DD',
+     interior: '<id do interior>' }`; o selo volta e vale pela data até ela entrar NESSE interior (a visita ao
+     lugar ou a outro interior não conta). Ex.: `interiores/quimica/lugar.js` (`interior: 'quimica-2'`).
 
 ## 3. Tipos de desafio e campos
 1. Tipos: escolha, vf, varias, ligar, ordenar, frase, separar, vfLista, completar, copiar, memoria, desenho.
