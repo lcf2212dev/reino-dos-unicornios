@@ -45,7 +45,8 @@
 .foguete-album { width: 100%; margin-top: 10px; }
 
 @media (max-width: 480px), (max-height: 500px) {
-  .foguete-gotas { gap: 2px; }
+  /* 10 gotas numa linha não cabem o ícone de 32 px (2 px CSS por pixel, §10.10.5): duas linhas de 5 */
+  .foguete-gotas { gap: 2px; grid-template-columns: repeat(5, minmax(0, 1fr)); }
   .foguete-gota { border-radius: var(--canto); font-size: var(--texto-aux); }
   .foguete-balao { padding: 8px 10px; }
 }
