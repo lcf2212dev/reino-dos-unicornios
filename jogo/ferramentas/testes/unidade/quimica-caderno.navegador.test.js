@@ -28,7 +28,7 @@ test('caderno: pof aberta num save novo, segredo com dica, descoberta com selo, 
     const segredo = ids[1], outra = ids[2], total = ids.length;
     await c.tela('quimica-caderno');
     assert.ok(await c.js(aberta), 'o caderno abriu');
-    assert.strictEqual(await texto(c, '.qcad-contador'), `0 de ${total} receitas descobertas`);
+    assert.strictEqual(await texto(c, '.qcad-contador'), `0 de ${total} receitas feitas`);
     // a pof: aberta desde o começo, com "Experimente!"
     assert.ok(await c.js("document.querySelector('.qcad-cartao[data-receita=\"pof\"]').classList.contains('aberta')"));
     assert.match(await texto(c, '.qcad-cartao[data-receita="pof"]'), /Experimente!/);
@@ -41,7 +41,8 @@ test('caderno: pof aberta num save novo, segredo com dica, descoberta com selo, 
     // a página da pof: ingredientes em tubinhos, o aviso e o selo
     await c.tocar('.qcad-cartao[data-receita="pof"]');
     assert.strictEqual(await c.js("document.querySelectorAll('.qcad-tubo').length"), 2);
-    assert.match(await texto(c, '.qcad-pagina'), /Na vida real, só com um adulto\./);
+    const seguranca = await c.js("Reino.Quimica.frase('comum.seguranca')[0]");
+    assert.ok(seguranca && (await texto(c, '.qcad-pagina .qcad-aviso')) === seguranca, 'o aviso de segurança');
     assert.match(await texto(c, '.qcad-pagina .qcad-selo'), /Experimente!/);
     // a página de um segredo: a dica e o convite para a bancada
     await c.tocar('.qcad-voltar');
@@ -59,7 +60,7 @@ test('caderno: pof aberta num save novo, segredo com dica, descoberta com selo, 
     assert.ok(await c.js("!document.querySelector('.qcad-pagina-segredo') && !!document.querySelector('.qcad-pagina')"), 'abriu direto na receita');
     assert.match(await texto(c, '.qcad-pagina .qcad-selo.feita'), /Feita/);
     await c.tocar('.qcad-voltar');
-    assert.strictEqual(await texto(c, '.qcad-contador'), `2 de ${total} receitas descobertas`);
+    assert.strictEqual(await texto(c, '.qcad-contador'), `2 de ${total} receitas feitas`);
     assert.match(await texto(c, '.qcad-cartao[data-receita="pof"]'), /Feita/);
     assert.ok(await c.js(`document.querySelector('.qcad-cartao[data-receita="${outra}"]').classList.contains('segredo')`));
 
@@ -70,6 +71,15 @@ test('caderno: pof aberta num save novo, segredo com dica, descoberta com selo, 
     assert.ok(await c.js("!!document.querySelector('.qcad-pagina')"), 'Enter abriu a receita');
     assert.ok(await c.js("(function (a) { return !!a && (a.classList.contains('qcad-voltar') || a.classList.contains('qcad-titulo')); })(document.activeElement)"),
       'o foco seguiu para a página');
+    // folhear pelo teclado: Enter na seta passa a página e o foco fica na seta (Enter de novo segue folheando)
+    await c.js("document.querySelector('.qcad-seta[aria-label=\"Próxima receita\"]').focus()");
+    await c.tecla('Enter');
+    await c.avancar(200);
+    assert.match(await texto(c, '.qcad-pag'), /^Receita 2 de/);
+    assert.strictEqual(await c.js("document.activeElement.getAttribute('aria-label')"), 'Próxima receita', 'o foco ficou na seta');
+    await c.tecla('Enter');
+    await c.avancar(200);
+    assert.match(await texto(c, '.qcad-pag'), /^Receita 3 de/);
     await c.tecla('Escape');
     assert.ok(!(await c.js(aberta)), 'Esc fechou');
     assert.deepStrictEqual(c.erros, []);

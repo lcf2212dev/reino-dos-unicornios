@@ -45,6 +45,8 @@ test('microscópio: lâmina, aumento, foco em mosaico, descoberta e estrela só 
   const c = await abrirCenario({ tamanho: 'celular', save: 'completo', pasta: pasta() });
   try {
     assert.strictEqual(await c.js(INJETAR), 8, 'as 8 lâminas nos dados');
+    // as falas esperadas vêm dos dados de verdade (conteudo/quimica/laminas.js)
+    const F = await c.js("(function (l) { return { explica: l.explica, a40: l.aumentos[40] }; })(Reino.Quimica.lamina('folha'))");
     await c.js("Reino.UI.telaQuimicaMicroscopio(); 'ok'");
     await c.avancar(100);
     let r = await c.js(OLHAR);
@@ -60,7 +62,7 @@ test('microscópio: lâmina, aumento, foco em mosaico, descoberta e estrela só 
     await c.js("document.querySelector('.micro-lamina[data-id=\"folha\"]').click(); document.querySelector('.micro-aumento[data-aumento=\"40\"]').click(); 'ok'");
     r = await c.js(OLHAR);
     assert.strictEqual(r.lamina, 'folha'); assert.strictEqual(r.aumento, '40'); assert.strictEqual(r.nitida, false);
-    assert.deepStrictEqual(r.falas[r.falas.length - 1], ['Agora dá para ver mais.'], 'trocar o aumento fala o texto dele');
+    assert.deepStrictEqual(r.falas[r.falas.length - 1], [F.a40], 'trocar o aumento fala o texto dele');
     const antes = r.estrelas;
 
     // gira o foco até ficar nítida: descoberta gravada e +1 estrela
@@ -73,7 +75,7 @@ test('microscópio: lâmina, aumento, foco em mosaico, descoberta e estrela só 
     assert.ok(r.premio, 'o selo +1 ⭐ aparece');
     assert.strictEqual(r.igual, true, 'nítida mostra a lâmina sem mosaico');
     const fala = r.falas[r.falas.length - 1];
-    assert.deepStrictEqual(fala.slice(0, 3), ['Olha que coisa bonita!', 'Agora dá para ver mais.', 'Você ganhou 1 estrela!']);
+    assert.deepStrictEqual(fala.slice(0, F.explica.length + 2), F.explica.concat([F.a40, 'Você ganhou 1 estrela!']));
 
     // passou do ponto e voltou: nítida de novo, sem estrela nova
     await c.js("document.querySelector('.micro-foco-mais').click(); 'ok'");
@@ -82,13 +84,13 @@ test('microscópio: lâmina, aumento, foco em mosaico, descoberta e estrela só 
     r = await c.js(OLHAR);
     assert.strictEqual(r.nitida, true);
     assert.strictEqual(r.estrelas, antes + 1, 'a 2ª vez não dá estrela');
-    assert.deepStrictEqual(r.falas[r.falas.length - 1], ['Ficou nítida, sem borrão!', 'Agora dá para ver mais.']);
+    assert.deepStrictEqual(r.falas[r.falas.length - 1], ['Ficou nítida, sem borrão!', F.a40]);
 
     // tocar de novo na lâmina escolhida: continua nítida e só repete a fala
     await c.js("document.querySelector('.micro-lamina[data-id=\"folha\"]').click(); 'ok'");
     r = await c.js(OLHAR);
     assert.strictEqual(r.nitida, true, 'tocar de novo não tira o foco');
-    assert.deepStrictEqual(r.falas[r.falas.length - 1], ['Ficou nítida, sem borrão!', 'Agora dá para ver mais.']);
+    assert.deepStrictEqual(r.falas[r.falas.length - 1], ['Ficou nítida, sem borrão!', F.a40]);
 
     // trocar de lâmina volta o foco para o começo
     await c.js("document.querySelector('.micro-lamina[data-id=\"neve\"]').click(); 'ok'");

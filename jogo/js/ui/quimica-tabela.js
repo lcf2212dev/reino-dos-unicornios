@@ -47,22 +47,17 @@
   }
   function amostra(cor) { return el('span.qt-cor', { 'aria-hidden': 'true', style: { background: cor } }); }
 
-  /* Nome no cartão estreito do celular (4 colunas, 6 letras de 12 px): 7 letras ou mais ganham o hífen suave nas
-     sílabas, pelas mesmas regras do hifenizar (ui/pecas.js), que só parte de 9 letras (ui.md §10.17). */
-  var VOGAL = 'aeiouáéíóúâêôãõàü';
-  function vogal(c) { return !!c && VOGAL.indexOf(c.toLowerCase()) >= 0; }
-  function silabar(w) {
-    if (w.length < 7) return w;
-    var cortes = [];
-    for (var i = 1; i < w.length - 1; i++) {
-      var a = w[i - 1], b = w[i], c = w[i + 1], d = w[i + 2];
-      if (vogal(b) || !vogal(a)) continue;
-      if (vogal(c)) cortes.push(i);
-      else if (vogal(d)) cortes.push(/^(lh|nh|ch|qu|gu)$/i.test(b + c) || (/[lr]/i.test(c) && /[bcdfgkptv]/i.test(b)) ? i : i + 1);
+  /* Nome no cartão: até 8 letras inteiro (numa linha só); de 9 ou mais, das sílabas do hifenizar fica só o corte
+     mais perto do meio ("Hidro-gênio"), para as duas linhas saírem parelhas (ui.md §10.17.2) */
+  function nomeCartao(nome) {
+    var partes = hifenizar(nome).split('\u00ad');
+    if (partes.length < 3) return partes.join('\u00ad');
+    var meio = nome.length / 2, soma = 0, melhor = 1, dist = Infinity;
+    for (var i = 1; i < partes.length; i++) {
+      soma += partes[i - 1].length;
+      if (Math.abs(soma - meio) < dist) { dist = Math.abs(soma - meio); melhor = i; }
     }
-    cortes = cortes.filter(function (k) { return k >= 2 && k <= w.length - 2; });
-    for (var j = cortes.length - 1; j >= 0; j--) w = w.slice(0, cortes[j]) + '­' + w.slice(cortes[j]);
-    return w;
+    return partes.slice(0, melhor).join('') + '\u00ad' + partes.slice(melhor).join('');
   }
 
   /* ---------- o mapa das casas ---------- */
@@ -129,7 +124,7 @@
     var caixa = el('div.qt-mapa-caixa');
     var grade = el('div.qt-grade', Q.elementos().map(function (e) {
       var b = pintar(el('button.qt-cartao', { type: 'button', 'data-z': String(e.z) },
-        el('span.qt-num', String(e.z)), el('span.qt-simb', e.simbolo), el('span.qt-nome', silabar(e.nome))), familia(e.familia).cor);
+        el('span.qt-num', String(e.z)), el('span.qt-simb', e.simbolo), el('span.qt-nome', nomeCartao(e.nome))), familia(e.familia).cor);
       if (e.z === v.aceso) b.setAttribute('aria-current', 'true');
       b.addEventListener('click', function () { R.Som.tocar('toque'); v.rolagem = v.pn.conteudo.scrollTop; abrirCartao(v, e.z); });
       // pelo teclado, a casa do cartão com foco acende no mapa
@@ -161,6 +156,8 @@
   }
 
   /* ---------- a ficha do elemento (no mesmo painel) ---------- */
+  // notebook (tela baixa e larga): a ficha em duas colunas, com o mapinha maior ao lado (css/ui-quimica-tabela.css)
+  function telaBaixaLarga() { return window.matchMedia('(min-width: 1000px) and (max-height: 820px)').matches; }
   function abrirCartao(v, z) {
     var lista = Q.elementos(), i = -1;
     lista.forEach(function (e, k) { if (e.z === z) i = k; });
@@ -176,7 +173,7 @@
           el('p.qt-ficha-fam', amostra(fam.cor), el('span', hifenizar(fam.nome))))),
       el('section.qt-bloco', el('h4', 'Onde a gente encontra'), el('p', hifenizar(e.onde || ''))),
       el('section.qt-bloco', el('h4', 'Curiosidade'), paginas(e.curiosidade).map(function (p) { return el('p', hifenizar(p)); })),
-      el('div.qt-ficha-mapa', el('p.qt-dica', 'A casa dele na tabela:'), desenharMapa(2, e.z)));
+      el('div.qt-ficha-mapa', el('p.qt-dica', 'A casa dele na tabela:'), desenharMapa(telaBaixaLarga() ? 3 : 2, e.z)));
     var voltar = rodapeBotao('← Voltar', null, 'btn-secundario');
     var ant = rodapeBotao('◀', 'Elemento anterior', 'btn-secundario.so-seta');
     var prox = rodapeBotao('▶', 'Próximo elemento', 'btn-principal.so-seta');

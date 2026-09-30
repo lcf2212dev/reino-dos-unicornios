@@ -6,6 +6,7 @@
   var R = window.Reino, U = R.util, el = U.el, UI = R.UI;
   var P = R._quimicaPalco, Q;   // Q = Reino.Quimica (sistemas/, carrega depois da ui/): lido na hora de abrir
   var jaDisseOi = false;   // a Doutora diz oi na 1ª vez que a bancada abre na sessão
+  var ALTURA_FALA = 130;   // px embaixo do palco 4× (a caixa da fala, os vãos e o respiro do painel)
 
   function frase(nome) { return Q.frase('bancada.' + nome); }
   function maxTubos() { return (R.config.quimica && R.config.quimica.maxTubos) || 3; }
@@ -53,7 +54,8 @@
       U.preencher(mistura, tubos.length ? tubos.map(function (id) { return (Q.ingrediente(id) || {}).nome || id; }).join(' + ')
         : 'O béquer está vazio.');
       mistura.classList.toggle('vazio', !tubos.length);
-      btnMisturar.setAttribute('aria-disabled', String(!tubos.length || reagindo));
+      // com o cartão aberto, o principal é o "Outra mistura": o Misturar! se apaga
+      btnMisturar.setAttribute('aria-disabled', String(!tubos.length || reagindo || !!resultado));
       esvaziar.setAttribute('aria-disabled', String(!tubos.length || reagindo));
       caderno.setAttribute('aria-disabled', String(!UI.telaQuimicaCaderno));
       U.$$('.bancada-tubo', prateleira).forEach(function (b) {
@@ -73,7 +75,7 @@
       if (palco.g.tubos.length >= maxTubos()) { R.Som.tocar('toque'); dizer(frase('cheio')); return; }
       palco.despejar(id);
       R.Som.tocar(ing.tipo === 'po' ? 'sacudida' : 'gotas');
-      dizer([ing.fala], ing.nome + ': ' + ing.fala);
+      dizer([ing.fala]);   // a fala já diz o nome do tubo
       atualizar();
     }
     function sobreOPalco(x, y) {
@@ -130,6 +132,7 @@
     /* ---------- misturar e o resultado ---------- */
     function misturar() {
       if (reagindo) return;
+      if (resultado) { R.Som.tocar('toque'); return; }   // apagado: o cartão pede "Outra mistura"
       if (!palco.g.tubos.length) { R.Som.tocar('toque'); dizer(frase('vazio')); return; }
       var r = Q.misturar(palco.g.tubos);
       // a receita vai para o caderno AGORA, antes da animação (fechar no meio não perde a descoberta)
@@ -148,8 +151,10 @@
         emoji = iconeGrande(rec.emoji);
         titulo = el('h3.bancada-titulo', rec.nome);
         var exp = [].concat(rec.explica || []);
-        textos.push(el('p.bancada-acontece', rec.acontece), el('p.bancada-explica', exp.join(' ')),
-          el('p.bancada-seguranca', Q.frase('comum.seguranca').join(' ')));
+        // a explicação recolhida no celular: o cartão cabe sem rolar (a Doutora fala tudo de qualquer jeito)
+        var porque = el('details.bancada-porque', el('summary', el('b', 'Por que acontece?')), el('p.bancada-explica', exp.join(' ')));
+        if (!window.matchMedia || !matchMedia('(max-width: 480px)').matches) porque.open = true;
+        textos.push(el('p.bancada-acontece', rec.acontece), porque, el('p.bancada-seguranca', Q.frase('comum.seguranca').join(' ')));
         paginas = comSeguranca([rec.acontece].concat(exp));
         if (d && d.nova) {
           chip = el('p.chip-mini.bancada-estrelas', 'Receita nova! ⭐ +' + d.estrelas);
@@ -163,7 +168,8 @@
         titulo = el('h3.bancada-titulo', r.tipo === 'nada' ? 'Hmm…' : 'Quase!');
         paginas = r.tipo === 'falta' ? frase('quaseFalta').concat(Q.noCaderno(r.quase.id) ? frase('quaseCaderno') : [r.quase.dica])
           : r.tipo === 'sobra' ? frase('quaseSobra') : frase('nada');
-        textos.push(el('p.bancada-acontece', paginas.join(' ')));
+        // o título já diz "Quase!": o texto não repete
+        textos.push(el('p.bancada-acontece', paginas.join(' ').replace(/^Quase!\s*/, '')));
       }
       var ouvir = el('button.btn-grande.btn-secundario.bancada-ouvir', { type: 'button', 'aria-label': 'Ouvir de novo' }, '🔊', el('span.rotulo-longo', ' Ouvir'));
       var outra = el('button.btn-grande.btn-principal.bancada-outra', { type: 'button' }, 'Outra mistura 🧪');
@@ -198,16 +204,23 @@
       UI.fecharTela(tela); fechou();
       UI.telaQuimicaCaderno(opc);
     });
-    function fechou() { palco.parar(); tirarFantasma(); window.removeEventListener('resize', escala); }
+    function fechou() { palco.parar(); tirarFantasma(); window.removeEventListener('resize', escala); if (vigia) vigia.disconnect(); }
 
-    // ampliação inteira e par do palco (2 ou 4 px CSS por pixel de arte), pela largura da coluna e a altura da tela
+    // ampliação inteira e par do palco (2 ou 4 px CSS por pixel de arte), pela largura da coluna e pela altura que
+    // sobra de verdade para o conteúdo do painel (a tela menos o balão do Claude, o cabeçalho e o rodapé)
     function escala() {
       if (!tela.isConnected) return;
       // em 2 colunas (notebook) a da esquerda mede o próprio palco: conta a largura toda menos a prateleira (≥ 440 px)
       var caixa = palcoBox.parentNode.parentNode, duas = getComputedStyle(caixa).display === 'grid';
-      var larg = duas ? caixa.clientWidth - 460 : caixa.clientWidth, k = larg >= P.W * 4 + 8 && window.innerHeight >= 700 ? 4 : 2;
-      cv.style.width = P.W * k + 'px'; cv.style.height = P.H * k + 'px';
+      var ct = getComputedStyle(tela), moldura = pn.card.offsetHeight - pn.conteudo.clientHeight;
+      var alt = tela.clientHeight - parseFloat(ct.paddingTop) - parseFloat(ct.paddingBottom) - moldura;
+      // 4×: o palco e, embaixo dele, a fala da Doutora (ALTURA_FALA) cabem sem rolar
+      var larg = duas ? caixa.clientWidth - 460 : caixa.clientWidth, k = larg >= P.W * 4 + 8 && alt >= P.H * 4 + ALTURA_FALA ? 4 : 2;
+      if (cv.style.width !== P.W * k + 'px') { cv.style.width = P.W * k + 'px'; cv.style.height = P.H * k + 'px'; }
     }
+    // a tela muda de tamanho sem 'resize' quando o balão do Claude abre ou fecha (padding de --balao-altura)
+    var vigia = window.ResizeObserver ? new ResizeObserver(escala) : null;
+    if (vigia) vigia.observe(tela);
     window.addEventListener('resize', escala);
     escala();
 

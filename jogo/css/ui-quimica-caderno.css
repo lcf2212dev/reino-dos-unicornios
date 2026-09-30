@@ -85,13 +85,22 @@
 .qcad-pagina-segredo .qcad-figura.grande { background: var(--papel-quente); border-style: dashed; }
 .qcad-bloco h4 { margin: 0 0 6px; font-size: var(--texto-aux); color: var(--roxo-texto); }
 .qcad-bloco p { margin: 0; line-height: var(--entrelinha); }
-.qcad-bloco-dica p, .qcad-convite { background: var(--papel-quente); }
-.qcad-convite { margin: 0; padding: 8px 10px; border: var(--borda-fina) dashed var(--borda); border-radius: var(--canto); }
+/* a dica e o convite do segredo: dois quadros iguais em --papel-quente (a dica de borda cheia, o convite tracejado) */
+.qcad-bloco-dica p, .qcad-convite {
+  padding: 8px 10px; background: var(--papel-quente);
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
+}
+.qcad-convite { margin: 12px 0 0; border-style: dashed; }
 
-/* os ingredientes em tubinhos (desenho 10×24 a 4 px CSS por pixel) */
-.qcad-tubos { display: flex; align-items: flex-start; justify-content: center; gap: 8px; }
-.qcad-tubo { flex: 0 1 132px; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; }
-.qcad-tubo small { font-size: var(--texto-aux); line-height: var(--entrelinha); }
+/* os ingredientes em tubinhos (desenho 10×24 a 4 px CSS por pixel). O nome não hifeniza (ui.md §10.17): o tubo tem
+   a largura do nome (96 a 132 px, "Bicarbonato" inteiro) e, sem lugar (celular), o "+" e o tubo seguinte descem juntos */
+.qcad-tubos { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: center; gap: 12px 8px; }
+.qcad-par { display: flex; align-items: flex-start; gap: 8px; }
+.qcad-tubo {
+  flex: none; width: max-content; min-width: 96px; max-width: 132px; display: flex; flex-direction: column;
+  align-items: center; gap: 6px; text-align: center;
+}
+.qcad-tubo small { font-size: var(--texto-aux); line-height: var(--entrelinha); hyphens: none; }
 .qcad-tubo-img { image-rendering: pixelated; }
 .qcad-mais { align-self: center; margin-bottom: 30px; font-size: var(--texto-g); color: var(--tinta-suave); }
 
@@ -130,7 +139,7 @@
   .qcad-cartao .qcad-selo { margin-top: 2px; }
   .qcad-cabeca { gap: 10px; }
   .qcad-figura.grande { width: 76px; height: 76px; }
-  .qcad-tubos { gap: 2px; }
+  .qcad-tubos, .qcad-par { gap: 12px 2px; }
   .qcad-mais { font-size: var(--texto); margin-bottom: 36px; }
   .qcad-rodape > .so-seta { flex: 0 0 64px; }
   .qcad-rodape > .qcad-bancada { flex: 1 1 0; }
@@ -144,7 +153,7 @@
   :root:not(.letras-grandes) .qcad-cartao { padding: 8px 6px 10px; gap: 4px; }
   /* a página em 2 colunas: os tubinhos à esquerda, o texto à direita (sem rolar) */
   :root:not(.letras-grandes) .qcad-pagina:not(.qcad-pagina-segredo) {
-    display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: 24px; align-items: start;
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 24px; align-items: start;
   }
   :root:not(.letras-grandes) .qcad-pagina:not(.qcad-pagina-segredo) > * { grid-column: 2; margin-top: 12px; }
   :root:not(.letras-grandes) .qcad-pagina:not(.qcad-pagina-segredo) > .qcad-folhear { grid-column: 1 / -1; margin-top: 0; }

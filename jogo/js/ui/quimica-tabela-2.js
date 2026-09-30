@@ -30,7 +30,7 @@
   T.abrirLicao = function (v, id) {
     var l = T.Q.licao(id);
     if (!l) return;
-    var pags = T.paginas(l.paginas), i = 0, n = pags.length || 1;
+    var pags = T.paginas(l.paginas), i = 0, n = pags.length || 1, ganhou = false;
     var titulo = el('h3.qt-licao-titulo', (l.emoji ? l.emoji + ' ' : '') + l.titulo);
     var texto = el('p.qt-licao-texto'), selo = el('p.qt-selo', { hidden: true });
     var voltar = T.rodapeBotao(['←', el('span.rotulo-longo', ' Voltar')], 'Voltar', 'btn-secundario.qt-voltar');
@@ -48,9 +48,11 @@
       ant.setAttribute('aria-disabled', String(i === 0));
       prox.setAttribute('aria-disabled', String(i === n - 1));
       var fala = [pags[i]];
-      if (i === n - 1) {   // chegou ao fim: a descoberta (e a estrela da 1ª vez)
+      selo.hidden = !(ganhou && i === n - 1);   // o selo só na última página (◀ o esconde, ▶ o traz de volta)
+      if (i === n - 1 && !ganhou) {   // chegou ao fim: a descoberta (e a estrela da 1ª vez)
         var r = T.Q.descobrir('licoes', l.id);
         if (r.nova) {
+          ganhou = true;
           U.preencher(selo, 'Lição lida! +' + r.estrelas + ' ⭐');
           selo.hidden = false;
           R.Som.tocar('estrela');
@@ -106,14 +108,12 @@
     ret(ctx, x + 1, y + 9, 4, h - 11, liq); ret(ctx, x + 1, y + 9, 4, 1, D.clarear(liq, 0.5));
     ret(ctx, x + 2, y + 3, 1, 4, C.branco);
   }
-  // mini tabela periódica: casas de 3 px; a cor da família quando o dado tem a casa, senão a do bloco
-  function temCasa(l, c) {
-    if (l === 1) return c === 1 || c === 18;
-    if (l <= 3) return c <= 2 || c >= 13;
-    if (l <= 7) return true;
-    return (l === 9 || l === 10) && c >= 3 && c <= 17;
-  }
-  function corBloco(l, c) { return l >= 9 ? C.lilas : c <= 2 ? C.rosa : c <= 12 ? C.azul2 : c === 18 ? C.ouro : C.verde; }
+  // bolha de 5×5 (r 2) ou 7×7 (r 3) px: contorno, miolo e o brilho em cima, à esquerda (sem sobrepor outra bolha)
+  var BOLHAS = {
+    2: ['.kkk.', 'kwbbk', 'kbbbk', 'kbbbk', '.kkk.'],
+    3: ['..kkk..', '.kbbbk.', 'kbwbbbk', 'kbwbbbk', 'kbbbbbk', '.kbbbk.', '..kkk..'],
+  };
+  function bolha(ctx, x, y, r, cor) { D.matriz(ctx, x, y, BOLHAS[r], { k: K, b: cor, w: C.branco }); }
 
   var desenhos = T.desenhos = {
     atomo: function (ctx, t) {
@@ -121,24 +121,23 @@
       var cx = 32, cy = 24, orbitas = [0, Math.PI / 3, 2 * Math.PI / 3];
       function ponto(a, rot) { var x = 21 * Math.cos(a), y = 7 * Math.sin(a); return [Math.round(cx + x * Math.cos(rot) - y * Math.sin(rot)), Math.round(cy + x * Math.sin(rot) + y * Math.cos(rot))]; }
       orbitas.forEach(function (rot) { for (var a = 0; a < 2 * Math.PI; a += 0.02) { var p = ponto(a, rot); ret(ctx, p[0], p[1], 1, 1, C.lilas); } });
-      // o núcleo: prótons (vermelhos) e nêutrons (cinza) juntinhos
       // o núcleo: prótons (vermelhos) e nêutrons (cinza), cada bolinha com o seu contorno, de trás para a frente
       [[-3, -3, 'n'], [3, -3, 'p'], [-4, 2, 'p'], [4, 2, 'n'], [0, 0, 'p'], [0, 4, 'n']].forEach(function (b) {
         bola(ctx, cx + b[0], cy + b[1], 3, b[2] === 'p' ? C.vermelho : C.metal);
       });
       orbitas.forEach(function (rot, k) { var p = ponto(t + k * 2.1, rot); bola(ctx, p[0], p[1], 2, C.azul); });
     },
+    // a tabela em miniatura, igual ao mapa grande: só as casas do dado (casas de 3 px, cor da família), com o vão
+    // antes dos lantanídeos (linha 9) e dos actinídeos (linha 10)
     tabela: function (ctx) {
       quadroFundo(ctx, C.creme);
-      var casas = {}, fs = T.Q.familias();
-      T.Q.tabela().forEach(function (x) { casas[x.linha + ':' + x.coluna] = x; });
-      var x0 = 4, y0 = 9;
-      for (var l = 1; l <= 10; l++) for (var c = 1; c <= 18; c++) {
-        if (l === 8 || !temCasa(l, c)) continue;
-        var x = x0 + (c - 1) * 3, y = y0 + (l <= 7 ? (l - 1) * 3 : 7 * 3 + 2 + (l - 9) * 3);
-        var d = casas[l + ':' + c], cor = d && fs[d.familia] ? fs[d.familia].cor : corBloco(l, c);
-        ret(ctx, x, y, 4, 4, K); ret(ctx, x + 1, y + 1, 2, 2, cor);
-      }
+      var fs = T.Q.familias(), x0 = 5, y0 = 8;
+      T.Q.tabela().forEach(function (d) {
+        var l = d.linha, c = d.coluna;
+        if (!(c >= 1 && c <= 18) || !(l >= 1 && l <= 7 || l === 9 || l === 10)) return;
+        var x = x0 + (c - 1) * 3, y = y0 + (l <= 7 ? (l - 1) * 3 : 7 * 3 + 3 + (l - 9) * 3);
+        ret(ctx, x, y, 4, 4, K); ret(ctx, x + 1, y + 1, 2, 2, fs[d.familia] ? fs[d.familia].cor : C.pedra);
+      });
     },
     h2o: function (ctx) {
       quadroFundo(ctx, C.ceu);
@@ -177,10 +176,10 @@
       copo(ctx, 8, 18, 18, 24, C.azul2, 16);
       [[12, 6], [17, 10], [14, 13], [20, 4]].forEach(function (g) { ret(ctx, g[0] - 1, g[1] - 1, 4, 4, K); ret(ctx, g[0], g[1], 2, 2, C.branco); });
       [[12, 30], [19, 34], [15, 38]].forEach(function (g) { ret(ctx, g[0], g[1], 1, 1, C.branco); });
-      // reação: bolhas novas sobem e a espuma transborda
+      // reação: bolhas novas sobem no líquido e a espuma transborda (cada bolha inteira, lado a lado)
       copo(ctx, 38, 18, 18, 24, C.ouro, 16);
-      [[42, 34, 2], [49, 29, 1], [45, 26, 2], [51, 37, 1]].forEach(function (b) { bola(ctx, b[0], b[1], b[2], C.ouro3); });
-      [[40, 16], [44, 14], [49, 15], [53, 16]].forEach(function (b) { bola(ctx, b[0], b[1], 3, C.branco); });
+      [[40, 34, 2], [47, 27, 3], [49, 35, 2], [41, 27, 2]].forEach(function (b) { bolha(ctx, b[0], b[1], b[2], C.ouro3); });
+      [[37, 12, 3], [44, 14, 2], [49, 11, 3], [45, 6, 2]].forEach(function (b) { bolha(ctx, b[0], b[1], b[2], C.vidro); });
     },
   };
   // o que aparece embaixo de cada desenho (só na tela; a voz lê as páginas)

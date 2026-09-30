@@ -52,6 +52,11 @@ const TELAS = [
   ['foguete', 'Reino.UI.telaFoguete && Reino.UI.telaFoguete()'],
   ['voo', "Reino.Voo && Reino.Voo.iniciar({ planeta: Reino.Viagem.planeta('lua') })"],
   ['album-ets', 'Reino.UI.telaAlbumETs && Reino.UI.telaAlbumETs()'],
+  // Laboratório de Química (docs/contratos/quimica.md §2): as 4 telas num save sem descobertas (a base antiga não tem: guarda)
+  ['quimica-bancada', 'Reino.UI.telaQuimicaBancada && Reino.UI.telaQuimicaBancada()'],
+  ['quimica-caderno', 'Reino.UI.telaQuimicaCaderno && Reino.UI.telaQuimicaCaderno()'],
+  ['quimica-microscopio', 'Reino.UI.telaQuimicaMicroscopio && Reino.UI.telaQuimicaMicroscopio()'],
+  ['quimica-tabela', 'Reino.UI.telaQuimicaTabela && Reino.UI.telaQuimicaTabela()'],
 ];
 async function cenasTelas(page, pasta) {
   for (const [nome, js] of TELAS) {
