@@ -1,8 +1,8 @@
 /* Enfeites de fachada, iguais em todos os prédios do mapa: Mapa.fachada.<enfeite>(ctx, ...), em px do jogo.
-   Janela com moldura e brilho, telhas, tijolos, tábuas, floreira, toldo, porta caprichada, lampião,
-   vaso, brasão, bandeira, degrau e a sombra da base. Quem usa: mundo/predios*.js e os desenhos de fora
-   dos prédios (js/interiores/<p>/fora.js), sempre dentro da função de desenho (nunca no carregamento).
-   Só desenha: nada de Math.random (a textura usa Reino.Desenho.sorte, fixa por posição). */
+   Janela com moldura e brilho, telhas, tijolos, tábuas, floreira, toldo, porta caprichada, lampião, vaso,
+   brasão, bandeira, degrau, a entrada padrão (degrau + porta) e a sombra da base. Quem usa: mundo/predios*.js
+   e os desenhos de fora dos prédios (js/interiores/<p>/fora.js), sempre dentro da função de desenho (nunca no
+   carregamento). Só desenha: nada de Math.random (a textura usa Reino.Desenho.sorte, fixa por posição). */
 (function () {
   var Mapa = window.Mapa, D = window.Reino.Desenho, C = D.C, K = D.K;
   var ret = D.ret, circulo = D.circulo;
@@ -168,6 +168,17 @@
       ret(ctx, x + w - 4, y + (h >> 1) + 1, 2, 2, C.ouro); ret(ctx, x + w - 4, y + (h >> 1) + 1, 1, 1, C.ouro3);
       ret(ctx, x + 2, y + (h >> 1) + 1, 2, 2, C.ouro);
     },
+    // entrada padrão das fachadas (D2A-04): degrau claro embaixo e F.porta em cima (arco, moldura, maçaneta dourada);
+    // cx = meio da porta, yb = chão (py + h). Folha de 14×22 (23 px de arte com o arco; ui.md §10.12: 22 a 28) e
+    // degrau de 3. o: { larg, alto, degrau (0 = sem), largDegrau }. Devolve a folha { x, y, w, h } para os enfeites
+    entrada: function (ctx, cx, yb, cor, moldura, o) {
+      o = o || {};
+      var lw = o.larg || F.PORTA.larg, al = o.alto || F.PORTA.alto, dg = o.degrau === 0 ? 0 : (o.degrau || F.PORTA.degrau);
+      if (dg) F.degrau(ctx, cx, yb - dg, o.largDegrau || lw + 8, dg);
+      var x = cx - (lw >> 1), y = yb - dg - al;
+      F.porta(ctx, x, y, lw, al, cor, moldura);
+      return { x: x, y: y, w: lw, h: al };
+    },
     // degrau de pedra na frente da porta (y = topo do degrau)
     degrau: function (ctx, cx, y, larg, alto) {
       alto = alto || 4;
@@ -206,9 +217,14 @@
       ret(ctx, x + 1, y + 1, 8, 5, K); ret(ctx, x + 1, y + 2, 7, 3, cor); ret(ctx, x + 1, y + 2, 7, 1, clarear(cor, 0.4));
       ret(ctx, x + 6, y + 3, 3, 1, K);
     },
-    // sombra suave colada na base da parede (dentro do rect: y = última linha da parede)
-    sombra: function (ctx, x, y, w) {
-      ret(ctx, x, y, w, 1, 'rgba(58,36,70,0.22)'); ret(ctx, x + 2, y + 1, w - 4, 1, 'rgba(58,36,70,0.12)');
+    // sombra de chão do prédio (ui.md §10.13): faixa reta embaixo e centrada na porta, 3 px de arte para fora da
+    // base (y = py + h, a primeira linha abaixo do rect), em pixel cheio e 2 níveis de alfa. Chamada pelo
+    // Mapa.prerender (mundo/mapa-desenho.js) no chão, antes do prédio: fica fora do sprite e da máscara do contorno
+    sombraBase: function (ctx, px, py, w, h) {
+      var cx = Math.round(px + w / 2 + F.desvio(w)), meia = Math.round(w * 0.38), y = py + h;
+      ret(ctx, cx - meia, y, meia * 2, 1, 'rgba(58,36,70,0.25)');
+      ret(ctx, cx - meia + 2, y + 1, (meia - 2) * 2, 1, 'rgba(58,36,70,0.25)');
+      ret(ctx, cx - meia + 5, y + 2, (meia - 5) * 2, 1, 'rgba(58,36,70,0.15)');
     },
     // tufinhos de grama junto da base
     tufos: function (ctx, pts, yb) {
@@ -216,6 +232,11 @@
     },
     brilho: D.brilho,
     meiaTri: meiaTri,
+    // tamanho mínimo da porta de toda fachada (folha, em px de arte; o degrau é o detalhe comum)
+    PORTA: { larg: 14, alto: 22, degrau: 3 },
+    // quanto o meio do tile da porta (x + floor(w/2), mundo/mapa.js) fica à direita do meio do rect: 8 px nos prédios
+    // de largura par, 0 nos de largura ímpar. O desenho de largura par anda isso para a porta ficar no eixo do telhado
+    desvio: function (w) { return Math.floor(w / 32) * 16 + 8 - w / 2; },
   };
 
   Mapa.fachada = F;

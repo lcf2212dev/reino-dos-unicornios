@@ -12,12 +12,15 @@
     DIG[d].forEach(function (l, j) { for (var i = 0; i < 3; i++) if (l[i] === '#') r(ctx, x + i, y + j, 1, 1, c); });
   }
   // torre de tijolos azuis com telhado pontudo, relógio digital no alto e blocos coloridos de contar na base;
-  // a porta fica no meio da última fileira do rect (4×5 tiles)
+  // a porta fica no meio da última fileira do rect (4×5 tiles): o desenho todo anda 8 px (desvio, o mesmo de
+  // Mapa.fachada.desvio) para o eixo do telhado cair no meio do tile da porta (x + floor(w/2), portão e caminho)
+  function desvio(w) { return Math.floor(w / 32) * 16 + 8 - w / 2; }
   function desenharFora(ctx, px, py, w, h, cores) {
     cores = cores || {};
     var parede = cores.parede || '#eaf4ff', telhado = cores.telhado || '#3f7fe0', det = cores.detalhe || '#ffc93c';
-    var cx = px + w / 2;
     var F = window.Mapa.fachada, D = window.Reino.Desenho;
+    px += desvio(w);
+    var cx = px + w / 2;
     // corpo da torre de tijolinhos azuis, com a luz na esquerda e a sombra na direita
     r(ctx, px + 8, py + 26, w - 16, h - 26, K);
     F.tijolos(ctx, px + 9, py + 27, w - 18, h - 28, parede, 5);
@@ -44,15 +47,13 @@
     r(ctx, cx - 1, py + 36, 1, 1, '#7dff9a'); r(ctx, cx - 1, py + 38, 1, 1, '#7dff9a');
     r(ctx, cx + 2, py + 35, 3, 5, '#7dff9a'); r(ctx, cx + 3, py + 36, 1, 3, '#1d2533');
     r(ctx, cx + 6, py + 35, 3, 5, '#7dff9a'); r(ctx, cx + 7, py + 36, 1, 3, '#1d2533');
-    // placa "1 × 2" em amarelo
-    // (1 px acima do arco da porta, que agora tem 22 px)
-    r(ctx, cx - 11, py + 46, 22, 9, K); r(ctx, cx - 10, py + 47, 20, 7, det);
-    r(ctx, cx - 10, py + 47, 20, 1, '#fff3a0'); r(ctx, cx - 7, py + 44, 1, 2, K); r(ctx, cx + 6, py + 44, 1, 2, K);
-    digito(ctx, cx - 8, py + 48, '1', K); digito(ctx, cx - 2, py + 48, 'x', '#e0433f'); digito(ctx, cx + 4, py + 48, '2', K);
-    // porta em arco com o degrau, no meio do tile da porta (x + floor(w/2), onde chegam o portão e o caminho)
-    var cp = px + Math.floor(w / 32) * 16 + 8;
-    F.porta(ctx, cp - 6, py + h - 24, 12, 21, '#8a5cff', det);
-    F.degrau(ctx, cp, py + h - 3, 18, 3);
+    // placa "1 × 2" em amarelo, pendurada no relógio (1 px acima do arco da porta padrão)
+    r(ctx, cx - 11, py + 45, 22, 9, K); r(ctx, cx - 10, py + 46, 20, 7, det);
+    r(ctx, cx - 10, py + 46, 20, 1, '#fff3a0'); r(ctx, cx - 7, py + 44, 1, 1, K); r(ctx, cx + 6, py + 44, 1, 1, K);
+    digito(ctx, cx - 8, py + 47, '1', K); digito(ctx, cx - 2, py + 47, 'x', '#e0433f'); digito(ctx, cx + 4, py + 47, '2', K);
+    // porta padrão em arco com o degrau (o tamanho de Mapa.fachada.entrada: folha 14×22 e degrau de 3)
+    F.degrau(ctx, cx, py + h - 3, 20, 3);
+    F.porta(ctx, cx - 7, py + h - 25, 14, 22, '#8a5cff', det);
     // blocos de contar dos dois lados da porta (à direita, empilhados entre a porta e a quina)
     [['#e0433f', 11, 6], ['#3fbf7f', 11, 12], ['#ffc93c', 17, 6], ['#2f6fd6', w - 15, 6], ['#ff8ac4', w - 15, 12]]
       .forEach(function (b) {
@@ -68,6 +69,7 @@
   // os dois-pontos do relógio digital piscam (camada animada do mapa)
   function animarFora(ctx, px, py, w, h, t) {
     if (Math.floor(t / 500) % 2) return;
+    px += desvio(w);
     r(ctx, (px + w / 2) - 1, py + 36, 1, 1, '#1d2533'); r(ctx, (px + w / 2) - 1, py + 38, 1, 1, '#1d2533');
   }
   if (window.Mapa && Mapa.PREDIOS) {

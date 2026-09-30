@@ -10,8 +10,9 @@
   var S = R._predios.salao;
 
   function desenharFora(ctx, px, py, w, h) {
+    px += window.Mapa.fachada.desvio(w);                   // largura par: o desenho anda até a porta (D2A-12)
     var meio = px + Math.floor(w / 2);                    // meio do prédio (placa e telhado)
-    var cx = px + Math.floor(w / 32) * 16 + 8;            // meio do tile da porta
+    var cx = meio;                                        // meio do tile da porta
     var yP = py + Math.round(h * 0.34);                    // começo da parede
     var yT = yP + 3, yTb = yP + 12;                        // toldo (em cima e embaixo)
     // parede rosinha com lambri lilás embaixo
@@ -68,15 +69,13 @@
       ret(ctx, x, yTb, 3, 1, cor); ret(ctx, x + 1, yTb + 1, 1, 1, cor);
       ret(ctx, x, yTb + 1, 1, 1, K); ret(ctx, x + 2, yTb + 1, 1, 1, K); ret(ctx, x + 1, yTb + 2, 1, 1, K);
     }
-    // porta de vidro com coração e maçaneta dourada
-    var dy = py + h - 19;
-    ret(ctx, cx - 7, dy - 1, 14, 20, K); ret(ctx, cx - 6, dy, 12, 19, S.COR);
-    ret(ctx, cx - 5, dy + 1, 10, 12, '#d9f3ff'); ret(ctx, cx - 4, dy + 2, 1, 8, C.branco);
-    ret(ctx, cx - 2, dy + 5, 2, 1, S.ROSA); ret(ctx, cx + 1, dy + 5, 2, 1, S.ROSA); ret(ctx, cx - 2, dy + 6, 5, 1, S.ROSA);
-    ret(ctx, cx - 1, dy + 7, 3, 1, S.ROSA); ret(ctx, cx, dy + 8, 1, 1, S.ROSA);
-    ret(ctx, cx + 3, dy + 14, 2, 2, C.ouro);
+    // porta padrão (arco, moldura dourada, maçaneta e degrau: Mapa.fachada.entrada) com o vidro e o coração
+    var fo = window.Mapa.fachada.entrada(ctx, cx, py + h, S.COR, C.ouro), dy = fo.y + 3;
+    ret(ctx, cx - 5, dy, 10, 9, '#d9f3ff'); ret(ctx, cx - 4, dy + 1, 1, 6, C.branco);
+    ret(ctx, cx - 2, dy + 2, 2, 1, S.ROSA); ret(ctx, cx + 1, dy + 2, 2, 1, S.ROSA); ret(ctx, cx - 2, dy + 3, 5, 1, S.ROSA);
+    ret(ctx, cx - 1, dy + 4, 3, 1, S.ROSA); ret(ctx, cx, dy + 5, 1, 1, S.ROSA);
     // floreiras ao lado da porta
-    [cx - 13, cx + 9].forEach(function (fx) {
+    [cx - 14, cx + 9].forEach(function (fx) {
       if (fx < px + 4 || fx + 5 > px + w - 4) return;
       ret(ctx, fx, py + h - 6, 5, 5, K); ret(ctx, fx + 1, py + h - 5, 3, 3, C.terracota);
       circulo(ctx, fx + 2, py + h - 8, 2, K); ret(ctx, fx + 1, py + h - 9, 3, 3, C.folha);
