@@ -1,18 +1,19 @@
 /* "Quem vai jogar?", pedir a senha, criar jogador e "Guardando..." (js/ui/jogadores.js).
-   Fundo: céu do entardecer (roxo → rosa) com estrelinhas em CSS; painel central com borda em degraus de pixel. */
+   Fundo: tela escura (ui.md §10.8.3): céu da noite em 2 faixas (--noite, --noite-2) com estrelinhas em CSS (--papel e
+   --ouro-claro); painel central creme com borda em degraus de pixel. */
 .tela-jogadores {
   background:
     /* estrelinhas: quadradinhos numa folha que se repete */
-    url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='190' shape-rendering='crispEdges'><rect x='28' y='31' width='4' height='4' fill='%23fff'/><rect x='181' y='19' width='4' height='4' fill='%23fff'/><rect x='80' y='45' width='4' height='4' fill='%23ffe9a8'/><rect x='243' y='86' width='4' height='4' fill='%23fff'/><rect x='37' y='57' width='2' height='2' fill='%23ffd6f0'/><rect x='132' y='99' width='2' height='2' fill='%23fff'/><rect x='110' y='150' width='2' height='2' fill='%23fff'/><rect x='210' y='160' width='2' height='2' fill='%23ffe9a8'/></svg>") 0 0 / 260px 190px repeat,
-    linear-gradient(180deg, #2a1850 0 35%, #57307e 35% 68%, #b0508f 68% 88%, #ff9aa6 88%);
+    url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='190' shape-rendering='crispEdges'><rect x='28' y='31' width='4' height='4' fill='%23fff8ee'/><rect x='181' y='19' width='4' height='4' fill='%23fff8ee'/><rect x='80' y='45' width='4' height='4' fill='%23fff4cc'/><rect x='243' y='86' width='4' height='4' fill='%23fff8ee'/><rect x='37' y='57' width='2' height='2' fill='%23fff4cc'/><rect x='132' y='99' width='2' height='2' fill='%23fff8ee'/><rect x='110' y='150' width='2' height='2' fill='%23fff8ee'/><rect x='210' y='160' width='2' height='2' fill='%23fff4cc'/></svg>") 0 0 / 260px 190px repeat,
+    linear-gradient(180deg, var(--noite) 0 60%, var(--noite-2) 60%);
 }
 .tela-jogadores .painel {
   border-radius: var(--canto-grande);
-  box-shadow: 0 0 0 4px #fff4d6, 4px 4px 0 4px var(--borda), 8px 8px 0 4px rgba(42, 24, 80, 0.45);
+  box-shadow: 0 0 0 4px var(--papel-quente), 4px 4px 0 4px var(--borda), 8px 8px 0 4px var(--sombra-veu);
 }
 .tela-jogadores .painel { width: min(780px, 100%); }
 .tela-jogadores .painel-topo {
-  justify-content: center; background: linear-gradient(180deg, #ffe4f4 0 50%, #f1e4ff 50%);
+  justify-content: center; background: var(--papel-quente);
 }
 .tela-jogadores .painel-topo:has(.btn-fechar) { justify-content: space-between; }
 .jogadores { display: flex; flex-direction: column; align-items: stretch; gap: 14px; }
@@ -22,25 +23,25 @@
 .jogadores-cartao {
   display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 6px;
   min-height: 150px; padding: 12px 8px 10px; border: 3px solid var(--borda); border-radius: var(--canto);
-  background: linear-gradient(180deg, #fff 0 45%, #ffe0f0 45% 80%, #e5d8ff 80%); box-shadow: var(--sombra-botao);
+  background: linear-gradient(180deg, var(--papel) 0 45%, var(--laranja-claro) 45% 80%, var(--ambar-claro) 80%); box-shadow: var(--sombra-botao);
   font: inherit; color: inherit; cursor: pointer; line-height: 1.15;
 }
-.jogadores-cartao:hover { background: linear-gradient(180deg, #fff 0 45%, #ffd0ea 45% 80%, #d8c6ff 80%); }
+.jogadores-cartao:hover { background: linear-gradient(180deg, var(--papel) 0 45%, var(--laranja-claro) 45% 80%, var(--ambar) 80%); }
 .jogadores-cartao:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--borda); }
 .jogadores-cartao[aria-current="true"] { outline: 4px solid var(--roxo); outline-offset: 2px; }
 .jogadores-retrato { display: grid; place-items: end center; min-height: 84px; }
 .jogadores-retrato canvas { image-rendering: pixelated; max-width: 100%; height: auto; }
 .jogadores-icone { font-size: 2.4em; line-height: 1; }
 .jogadores-nome { font-size: 1.35em; text-align: center; }
-.jogadores-estado { margin: 0; text-align: center; font-size: 0.85em; opacity: 0.8; }
+.jogadores-estado { margin: 0; text-align: center; font-size: 0.85em; color: var(--tinta-suave); }
 .jogadores .intro-botoes { justify-content: center; }
 .jogadores-secao { display: flex; flex-direction: column; gap: 8px; }
 .jogadores-secao[hidden] { display: none; }
-.jogadores-subtitulo { margin: 0; font-size: 0.95em; text-align: center; opacity: 0.85; }
+.jogadores-subtitulo { margin: 0; font-size: 0.95em; text-align: center; color: var(--tinta-suave); }
 .jogadores-abas { display: flex; justify-content: center; gap: 0; margin-top: 4px; border-bottom: 4px solid var(--borda); }
 .jogadores-aba {
   flex: 1 1 0; max-width: 240px; min-height: 52px; padding: 8px 12px; margin-bottom: -4px;
-  border: 3px solid var(--borda); border-bottom-width: 4px; border-radius: var(--canto) var(--canto) 0 0; background: #eadff7;
+  border: 3px solid var(--borda); border-bottom-width: 4px; border-radius: var(--canto) var(--canto) 0 0; background: var(--papel-quente);
   font: inherit; font-weight: 700; color: inherit; cursor: pointer;
 }
 .jogadores-aba + .jogadores-aba { margin-left: 6px; }
@@ -51,7 +52,7 @@
 .jogadores-rotulo { font-size: 0.9em; }
 .jogadores-campo { min-height: 52px; font-size: 1.05em; }
 .jogadores-dica { margin: 0; font-size: 0.85em; text-align: center; }
-.jogadores-erro { margin: 0; padding: 8px 10px; border: 3px solid var(--borda); border-radius: var(--canto); background: #ffe0e0; font-weight: 700; text-align: center; }
+.jogadores-erro { margin: 0; padding: 8px 10px; border: 3px solid var(--borda); border-radius: var(--canto); background: var(--erro-fundo); font-weight: 700; text-align: center; }
 .jogadores-erro[hidden] { display: none; }
 .jogadores-guardando { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 16px 24px; color: var(--tinta); font-size: 24px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); box-shadow: 0 4px 0 var(--borda); }   /* D8B-24 */
 .guardando-pontos { display: flex; gap: 8px; height: 16px; align-items: flex-end; }

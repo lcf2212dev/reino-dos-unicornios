@@ -2,7 +2,7 @@
 /* ---------- missão ---------- */
 .tela-missao, .tela-prova {
   display: flex; flex-direction: column; align-items: stretch; justify-content: flex-start;
-  padding: 0; background: var(--papel-leve);
+  padding: 0; background: var(--papel);
 }
 .missao-topo {
   display: flex; align-items: center; gap: 12px;
@@ -12,11 +12,11 @@
 .missao-titulo { flex: 1; min-width: 0; font-family: var(--fonte-titulo); font-weight: 600; font-size: 1.05em; line-height: 1.15;
   overflow-wrap: normal; }   /* título sem hífen suave: palavra inteira (ui.md §10.17) */
 .missao-pontos { display: flex; align-items: center; gap: 6px; flex: none; }
-.ponto { width: 12px; height: 12px; border: 2px solid var(--borda); border-radius: var(--redondo); background: #fff; }
+.ponto { width: 12px; height: 12px; border: 2px solid var(--borda); border-radius: var(--redondo); background: var(--branco); }
 .ponto.feito { background: var(--laranja); }
 .ponto.atual { width: 16px; height: 16px; background: var(--ouro); }   /* a atual: maior e dourada, sem scale */
 /* mais de 10 questões: uma barra contínua de trechos, a atual mais alta */
-.missao-pontos:has(> .ponto:nth-child(11)) { gap: 0; width: min(40vw, 240px); height: 12px; border: 2px solid var(--borda); background: #fff; }
+.missao-pontos:has(> .ponto:nth-child(11)) { gap: 0; width: min(40vw, 240px); height: 12px; border: 2px solid var(--borda); background: var(--branco); }
 .missao-pontos:has(> .ponto:nth-child(11)) .ponto { flex: 1 1 0; width: auto; height: 8px; border: 0; border-radius: 0; background: transparent; }
 .missao-pontos:has(> .ponto:nth-child(11)) .ponto.feito { background: var(--laranja); }
 .missao-pontos:has(> .ponto:nth-child(11)) .ponto.atual { height: 16px; margin: -4px 0; background: var(--ouro); box-shadow: 0 0 0 2px var(--borda); }
@@ -28,7 +28,10 @@
   background: var(--papel); border-top: 4px solid var(--borda);
 }
 .sem-relogio { font-size: 0.8em; font-weight: 700; color: var(--tinta-suave); }
-.btn-conferir { min-width: 190px; font-size: 1.1em; background: var(--verde-folha); flex-shrink: 0; }
+/* Conferir: a mesma classe e a mesma cor na sala, na surpresa e no ET (ui.md §10.8): laranja, e desabilitado (sem
+   resposta) no estado indisponível de ui-base.css */
+.btn-conferir { background: var(--laranja); color: var(--tinta); }
+.missao-rodape .btn-conferir { min-width: 190px; font-size: 1.1em; flex-shrink: 0; }
 /* letras grandes no tablet: "Conferir ✓" não quebra e o "Sem relógio…" cabe numa linha (bordas do rodapé 16 → 10 px) */
 @media (min-width: 640px) { .missao-rodape { padding-left: calc(16px - (var(--escala-texto) - 1) * 40px); padding-right: calc(16px - (var(--escala-texto) - 1) * 40px); } }
 .desafio-num { font-weight: 700; color: var(--tinta-suave); font-size: 0.85em; margin-bottom: 8px; }
@@ -36,8 +39,8 @@
 .desafio { display: flex; flex-direction: column; gap: 16px; }
 .enunciado { padding: 16px 18px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); }
 .pergunta { font-size: 1.15em; font-weight: 700; }
-.afirmacao { margin: 10px 0 0; padding: 12px 14px; border-left: 6px solid var(--ambar); background: var(--papel-leve); border-radius: var(--canto); font-size: 1.1em; font-weight: 700; }
-.btn-ouvir { margin-top: 10px; min-height: 44px; padding: 4px 14px; border: 2px solid var(--borda); border-radius: var(--canto); background: var(--papel-leve); font-weight: 700; font-size: 0.85em; }
+.afirmacao { margin: 10px 0 0; padding: 12px 14px; border-left: 6px solid var(--ambar); background: var(--papel-quente); border-radius: var(--canto); font-size: 1.1em; font-weight: 700; }
+.btn-ouvir { margin-top: 10px; min-height: 44px; padding: 4px 14px; border: 2px solid var(--borda); border-radius: var(--canto); background: var(--papel-quente); font-weight: 700; font-size: 0.85em; }
 
 .opcoes { display: grid; grid-template-columns: 1fr; gap: 12px; }
 /* Verdadeiro/Falso e duas opções lado a lado só a partir de 640 px: no celular, "Verdadeiro" na letra pixel
@@ -60,18 +63,21 @@
 .opcoes-varias > .opcao { min-width: 0; }
 .opcoes-varias .opcao-texto { min-width: 0; overflow-wrap: break-word; }
 .opcao[aria-pressed="true"] { background: var(--ambar-claro); border-color: var(--roxo); box-shadow: 0 4px 0 var(--roxo); outline: 3px solid var(--roxo); outline-offset: 0; }
-.opcao-marcar::after { content: ""; flex: none; width: 28px; height: 28px; border: 3px solid var(--borda); border-radius: var(--canto); background: #fff; }
+.opcao-marcar::after { content: ""; flex: none; width: 28px; height: 28px; border: 3px solid var(--borda); border-radius: var(--canto); background: var(--branco); }
 .opcao-marcar[aria-pressed="true"]::after {
   content: "";
   background:
-    linear-gradient(#fff, #fff) 6px 14px / 4px 4px no-repeat,
-    linear-gradient(#fff, #fff) 10px 11px / 4px 7px no-repeat,
-    linear-gradient(#fff, #fff) 14px 8px / 4px 8px no-repeat,
-    linear-gradient(#fff, #fff) 18px 5px / 4px 6px no-repeat,
+    linear-gradient(var(--branco), var(--branco)) 6px 14px / 4px 4px no-repeat,
+    linear-gradient(var(--branco), var(--branco)) 10px 11px / 4px 7px no-repeat,
+    linear-gradient(var(--branco), var(--branco)) 14px 8px / 4px 8px no-repeat,
+    linear-gradient(var(--branco), var(--branco)) 18px 5px / 4px 6px no-repeat,
     var(--roxo);
 }
-.opcao.certa, .opcao-marcar.certa { background: var(--certo-fundo); border-color: var(--certo); box-shadow: 0 4px 0 var(--certo); outline: none; }
-.opcao.errada { opacity: 0.5; background: #f3f0f5; text-decoration: line-through; box-shadow: none; }
+.opcao.certa, .opcao-marcar.certa { background: var(--certo-fundo); border-color: var(--certo); box-shadow: 0 4px 0 var(--certo); outline: none; color: var(--tinta); }
+/* erro de item (ui.md §10.19.2): a opção errada fica na tela riscada, em --erro-fundo com borda --erro, sem transparência */
+.opcao.errada { background: var(--erro-fundo); border-color: var(--erro); color: var(--tinta); text-decoration: line-through; box-shadow: none; }
+/* a opção travada depois da resposta (aria-disabled) que é a certa, a errada ou a marcada: o desenho não apaga */
+.opcao.certa canvas, .opcao.errada canvas, .opcao[aria-pressed="true"] canvas { filter: none; }
 .opcoes-vf .opcao { justify-content: center; font-size: 1.15em; }
 
 .dica-toque { font-size: 0.85em; font-weight: 700; color: var(--tinta-suave); }
@@ -94,7 +100,7 @@
 .ligar-item > span:last-child:not(.ligar-img) { flex: 1 1 0; max-width: 100%; overflow-wrap: break-word; }
 .ligar-marca { flex: none; width: 26px; height: 26px; border-radius: var(--redondo); border: 3px solid var(--borda); background: linear-gradient(var(--papel), var(--papel)) center / 14px 14px no-repeat, var(--cor-par); color: var(--tinta); font-size: 0.8em; display: grid; place-items: center; }
 .ligar-item.escolhida { outline: 4px solid var(--roxo); outline-offset: 2px; background: var(--ambar-claro); }
-.ligar-item.ligado { background: color-mix(in srgb, var(--cor-par) 16%, white); }
+.ligar-item.ligado { background: color-mix(in srgb, var(--cor-par) 16%, var(--branco)); }
 .tudo-certo .ligar-item, .tudo-certo .seq-item, .tudo-certo .sep-item { background: var(--certo-fundo); }
 
 /* sequência / frase */
@@ -126,10 +132,10 @@
   display: flex; flex-direction: column; align-items: stretch; gap: 6px;
   min-height: 170px; padding: 12px; text-align: left;
   border: 4px solid var(--borda); border-radius: var(--canto-grande);
-  background: linear-gradient(180deg, #ffe7b8 0 34px, #fff7e6 34px);
+  background: linear-gradient(180deg, var(--laranja-claro) 0 34px, var(--papel) 34px);
   box-shadow: 0 5px 0 var(--borda);
 }
-.bau:nth-child(2) { background: linear-gradient(180deg, #e3d8ff 0 34px, #f6f1ff 34px); }
+.bau:nth-child(2) { background: linear-gradient(180deg, var(--ambar-claro) 0 34px, var(--papel) 34px); }
 .com-escolha .bau { box-shadow: 0 0 0 4px var(--laranja), 0 5px 0 4px var(--borda); animation: pulsar 1.2s step-end 3; }   /* "toque aqui": o contorno fica mesmo sem animação */
 .bau-titulo { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 1.05em; }
 .bau-titulo b, .sep-item { max-width: 100%; overflow-wrap: break-word; }
@@ -157,7 +163,7 @@
   max-height: 78%; overflow: auto;
   padding: 18px 18px calc(env(safe-area-inset-bottom, 0px) + 18px);
   border-top: 4px solid var(--borda); border-radius: var(--canto-grande) var(--canto-grande) 0 0;
-  box-shadow: 0 -4px 0 rgba(58, 36, 70, 0.2);
+  box-shadow: 0 -4px 0 var(--sombra-chao);
   animation: subir 0.22s ease-out;
 }
 .missao-retorno > * { max-width: 760px; margin-left: auto; margin-right: auto; }
@@ -167,7 +173,7 @@
 .retorno-cabeca { display: flex; align-items: center; gap: 14px; }
 .retorno-cabeca h3 { font-family: var(--fonte-titulo); font-size: 1.4em; }
 .retorno-fala { font-weight: 700; }
-.retorno-explica { padding: 12px 14px; background: rgba(255, 255, 255, 0.75); border: 2px solid var(--borda); border-radius: var(--canto); }
+.retorno-explica { padding: 12px 14px; background: var(--papel); border: 2px solid var(--borda); border-radius: var(--canto); }
 .retorno-extra { font-weight: 700; color: var(--roxo-texto); }
 .retorno-cresceu { font-weight: 700; color: var(--epico-texto); }
 .retorno-botoes { display: flex; flex-wrap: wrap; gap: 12px; justify-content: flex-end; }

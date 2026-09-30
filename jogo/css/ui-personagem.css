@@ -17,18 +17,18 @@
   display: grid; place-items: end center; padding: 18px 10px 26px;
   border: 4px solid var(--borda); border-radius: var(--canto-grande); cursor: pointer; overflow: hidden;
   background:
-    linear-gradient(180deg, #d9c8ff 0 29%, #ffe0f0 29% 58%, #c6e15a 58% 79%, #9ccc4a 79%);
-  box-shadow: inset 0 -6px 0 rgba(58, 36, 70, 0.12), 0 5px 0 var(--borda);
+    linear-gradient(180deg, var(--ceu) 0 29%, var(--laranja-claro) 29% 58%, var(--grama) 58% 79%, var(--verde-folha) 79%);
+  box-shadow: inset 0 -6px 0 var(--sombra-chao), 0 5px 0 var(--borda);
 }
 .criar-palco::before, .criar-palco::after {   /* brilhinhos de estrela no céu da vitrine */
-  content: ''; position: absolute; width: 6px; height: 6px; background: #fff6a8;
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.6);
+  content: ''; position: absolute; width: 6px; height: 6px; background: var(--ouro-claro);
+  box-shadow: 0 0 0 2px var(--brilho);
   animation: criar-brilho 2.4s steps(2) infinite;
 }
 .criar-palco::before { left: 16%; top: 14%; }
 .criar-palco::after { right: 18%; top: 26%; animation-delay: 1.2s; }
 .criar-chao { position: absolute; left: 50%; bottom: 18px; width: 120px; height: 18px; transform: translateX(-50%);
-  border-radius: var(--redondo); background: rgba(58, 36, 70, 0.22); }
+  border-radius: var(--redondo); background: var(--sombra-chao); }
 .criar-sprite { position: relative; image-rendering: pixelated; }
 .criar-plaquinha {
   min-width: 60%; max-width: 100%; padding: 8px 14px; text-align: center;
@@ -43,10 +43,10 @@
 .tela-aparencia .linha-cores, .criar-grupo, .criar-linha-nome { display: flex; align-items: center; gap: 8px; min-width: 0; }
 .tela-aparencia .linha-cores { flex-wrap: wrap; }
 .tela-aparencia .bolinha-cor { width: 40px; height: 40px; flex: 0 0 auto; }
-.bolinha-sem { position: relative; background: repeating-linear-gradient(45deg, #fff 0 5px, #f1e6ff 5px 10px); }
+.bolinha-sem { position: relative; background: repeating-linear-gradient(45deg, var(--branco) 0 5px, var(--papel-2) 5px 10px); }
 .bolinha-sem::after { content: ''; position: absolute; inset: 8px;   /* risco diagonal em degraus de pixel */
   clip-path: polygon(0 0, 25% 0, 50% 25%, 75% 50%, 100% 75%, 100% 100%, 75% 100%, 50% 75%, 25% 50%, 0 25%);
-  background: #e0405a; border-radius: 0; }
+  background: var(--erro); border-radius: 0; }
 .criar-nome { flex: 1 1 auto; min-width: 0; margin: 0; }
 .criar-sexo { display: flex; gap: 8px; flex: 1 1 auto; }
 .criar-sexo-btn {
@@ -61,12 +61,12 @@
   display: flex; gap: 8px; min-width: 0; padding: 8px 8px 12px; scroll-padding-inline: 8px 64px;   /* a faixa (48, 8 dela sob a folga) + 8 + o anel de foco (4 + 3) */
   /* sem scroll-snap: ele puxava o cartão com foco de volta para baixo da faixa */
   overflow-x: auto; scrollbar-width: thin;
-  border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel-leve);
+  border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel);
 }
 .criar-mais {   /* a faixa de "tem mais", com o ícone ▶ (aparencia.js); a borda é a da fileira */
   /* os 8 px da direita ficam sob a folga da fileira (o sticky para na borda do conteúdo): o ícone centra no resto */
   position: sticky; right: -8px; flex: 0 0 48px; align-self: stretch; margin: -8px 0 -12px; padding-right: 8px;
-  display: grid; place-items: center; border-left: 3px solid var(--borda); background: var(--papel-leve);
+  display: grid; place-items: center; border-left: 3px solid var(--borda); background: var(--papel-quente);
 }
 .criar-opcoes.no-fim .criar-mais { visibility: hidden; }
 /* só uma lasca à vista, colada à faixa: some (continua focável: o Tab rola até ele e ele volta) */

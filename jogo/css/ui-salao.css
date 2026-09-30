@@ -4,8 +4,8 @@
   display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap;
   padding: 10px; border: 3px solid var(--borda); border-radius: var(--canto-grande);
   background:
-    linear-gradient(#fff, #fff) center / 200px 92% no-repeat, linear-gradient(#fff, #fff) center / 250px 80% no-repeat,
-    linear-gradient(#fff, #fff) center / 290px 62% no-repeat, linear-gradient(#fff, #fff) center / 310px 40% no-repeat, var(--laranja-claro);
+    linear-gradient(var(--branco), var(--branco)) center / 200px 92% no-repeat, linear-gradient(var(--branco), var(--branco)) center / 250px 80% no-repeat,
+    linear-gradient(var(--branco), var(--branco)) center / 290px 62% no-repeat, linear-gradient(var(--branco), var(--branco)) center / 310px 40% no-repeat, var(--laranja-claro);
 }
 .salao-grande { display: grid; place-items: center; min-height: 140px; }
 .salao-vistas { display: flex; align-items: flex-end; gap: 12px; }

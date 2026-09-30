@@ -65,7 +65,7 @@ test('com a trava e a voz falando: intro, resumo, questão e retorno só liberam
     // responde qualquer coisa (1ª opção) e confere: o retorno espera a fala
     await c.js("[...document.querySelectorAll('.tela-missao .desafio .opcao')].find(function (o) { return /Sim/.test(o.textContent); }).click()");
     await c.avancar(400);
-    if (!(await tem(c, '.missao-retorno:not([hidden])'))) await c.js("var b = document.querySelector('.btn-conferir'); if (!b.disabled) b.click();");
+    if (!(await tem(c, '.missao-retorno:not([hidden])'))) await c.js("var b = document.querySelector('.tela-missao .btn-conferir'); if (!b.disabled) b.click();");
     await c.avancar(400);
     assert.ok(await tem(c, '.missao-retorno:not([hidden])'), 'o retorno apareceu');
     {
@@ -120,7 +120,7 @@ test('padrão (sem a trava), com a voz falando sem parar: intro, resumo, questã
     await c.avancar(8000);
     await c.js("[...document.querySelectorAll('.tela-missao .desafio .opcao')].find(function (o) { return /Sim/.test(o.textContent); }).click()");
     await c.avancar(400);
-    if (!(await tem(c, '.missao-retorno:not([hidden])'))) await c.js("var b = document.querySelector('.btn-conferir'); if (!b.disabled) b.click();");
+    if (!(await tem(c, '.missao-retorno:not([hidden])'))) await c.js("var b = document.querySelector('.tela-missao .btn-conferir'); if (!b.disabled) b.click();");
     await c.avancar(400);
     assert.ok(await tem(c, '.missao-retorno:not([hidden])'), 'o retorno apareceu');
     livreTudo(await botoes(c, '.retorno-botoes button, .btn-sair'), 'retorno com a voz falando');

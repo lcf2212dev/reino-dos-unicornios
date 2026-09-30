@@ -16,29 +16,27 @@
 .foguete-gota {
   display: flex; align-items: center; justify-content: center;
   aspect-ratio: 1; border: 2px solid var(--borda); border-radius: var(--canto);
-  background: #e8e2ee; font-size: 1.1em;
-  filter: grayscale(1); opacity: 0.35;
+  background: var(--papel-2); font-size: 1.1em;
 }
 .foguete-gota > * { max-width: 80%; height: auto; }
-.foguete-gota.cheia { background: var(--ceu); filter: none; opacity: 1; }
+.foguete-gota:not(.cheia) > * { filter: var(--apagado); }   /* gota vazia: o desenho apaga (ui.md §10.19.1) */
+.foguete-gota.cheia { background: var(--ceu); }
 
 .foguete-destinos ul, .foguete-passaporte ul { list-style: none; margin: 0; padding: 0; }
 .foguete-destino {
   display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-  padding: 8px 10px; border: 3px solid var(--borda); border-radius: var(--canto); background: var(--papel-leve);
+  padding: 8px 10px; border: 3px solid var(--borda); border-radius: var(--canto); background: var(--papel);
 }
 .foguete-destino b { flex: 1; min-width: 4em; }
-.foguete-decolar[disabled] { opacity: 0.45; }
 .foguete-destino + .foguete-destino { margin-top: 8px; }
-.foguete-trancado { border-style: dashed; background: var(--papel-quente); }
-.foguete-trancado .foguete-bola, .foguete-trancado b { opacity: 0.55; }
+/* planeta trancado: .indisponivel, no estado indisponível de ui-base.css (nome em --tinta-suave, sem transparência; D8B-12) */
 .foguete-cadeado { min-width: 56px; }
 .foguete-bola {
   flex: none; display: inline-flex; align-items: center; justify-content: center;
   width: 32px; height: 32px; border: 3px solid var(--borda); border-radius: var(--redondo);
   font-weight: 700; color: var(--papel);
 }
-.foguete-silhueta { background: #6b5378; }
+.foguete-silhueta { background: var(--tinta-suave); }
 .foguete-passaporte ul { display: flex; flex-wrap: wrap; gap: 10px; }
 .foguete-passaporte li {
   display: flex; flex-direction: column; align-items: center; gap: 4px;

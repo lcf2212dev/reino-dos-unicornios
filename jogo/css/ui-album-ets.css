@@ -7,7 +7,7 @@
 }
 .album-cartao {
   display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center;
-  padding: 10px 8px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel-leve);
+  padding: 10px 8px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel);
 }
 .album-cartao small { color: var(--tinta-suave); }
 .album-figura { position: relative; display: flex; align-items: flex-end; justify-content: center; min-height: 64px; }
@@ -16,7 +16,7 @@
 .album-interroga {
   position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
   font-size: 2em; font-weight: 700; color: var(--papel);
-  text-shadow: 1px 0 0 #000, -1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000;
+  text-shadow: 1px 0 0 var(--tinta), -1px 0 0 var(--tinta), 0 1px 0 var(--tinta), 0 -1px 0 var(--tinta);
 }
 .album-cartao.amigo { border-color: var(--certo); background: var(--certo-fundo); }
 .album-cartao.junto { box-shadow: 0 0 0 4px var(--ceu); }

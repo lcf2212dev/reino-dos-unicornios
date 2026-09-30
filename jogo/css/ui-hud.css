@@ -22,30 +22,29 @@
   width: 48px; height: 48px; flex: none;
   border: 3px solid var(--borda); border-radius: var(--canto-grande);
   background: var(--papel); color: var(--tinta);
-  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.85), 0 3px 0 var(--borda);
+  box-shadow: inset 0 2px 0 var(--brilho), 0 3px 0 var(--borda);
 }
 .btn-tela-cheia:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--borda); }
 /* tela cheia, câmera (📷, js/sistemas/fotos.js) e álbum lado a lado; no celular, um embaixo do outro (telas pequenas) */
 .hud-botoes { display: flex; gap: 8px; flex: none; }
 .btn-foto { touch-action: none; -webkit-touch-callout: none; user-select: none; -webkit-user-select: none; }
-/* sem poder tirar foto agora (transição, tela aberta, balão): apagado, mas ainda focável pelo Tab */
-.btn-foto.desligado, .btn-album.desligado { opacity: 0.45; filter: grayscale(0.6); box-shadow: 0 3px 0 var(--borda); }
-.btn-foto.desligado:active, .btn-album.desligado:active { transform: none; }
+/* sem poder tirar foto agora (transição, tela aberta, balão): aria-disabled, no estado indisponível (ui-base.css),
+   mas ainda focável pelo Tab */
 .chip {
   min-height: 44px; padding: 6px 14px;
   border: 3px solid var(--borda); border-radius: var(--canto);
   background: var(--papel); font-weight: 700; font-size: 0.95em;
-  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.9), 0 3px 0 var(--borda);
+  box-shadow: inset 0 2px 0 var(--brilho), 0 3px 0 var(--borda);
   font-variant-numeric: tabular-nums;
 }
-.chip-dinheiro { background: linear-gradient(180deg, #fff6d4 0 30%, var(--ouro-claro) 30% 70%, #ffd56a 70%); }
-.chip-ovos { background: linear-gradient(180deg, #fff 0 30%, var(--laranja-claro) 30% 70%, #ffc0db 70%); animation: pulsar 1.2s step-end 3; }
+.chip-dinheiro { background: linear-gradient(180deg, var(--papel-quente) 0 30%, var(--ouro-claro) 30% 70%, var(--ouro) 70%); }
+.chip-ovos { background: linear-gradient(180deg, var(--papel-quente) 0 30%, var(--laranja-claro) 30% 70%, var(--ambar) 70%); animation: pulsar 1.2s step-end 3; }
 .chip-montaria {
   display: flex; align-items: center; gap: 8px;
   max-width: min(54vw, 280px);
   padding: 6px 12px 6px 8px;
   border: 3px solid var(--borda); border-radius: var(--canto-grande);
-  background: var(--papel); box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.85), 0 3px 0 var(--borda); text-align: left;
+  background: var(--papel); box-shadow: inset 0 2px 0 var(--brilho), 0 3px 0 var(--borda); text-align: left;
 }
 .chip-montaria { min-width: 0; }
 .chip-montaria canvas { flex: none; }
@@ -54,8 +53,8 @@
 .chip-montaria .montaria-cresce { align-items: flex-end; }
 .montaria-info b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .montaria-estagio { color: var(--tinta-suave); }
-.barrinha { display: block; height: 8px; margin-top: 4px; border: 2px solid var(--borda); border-radius: var(--canto); background: #fff; overflow: hidden; min-width: 60px; }
-.barrinha > span { display: block; height: 100%; background: linear-gradient(90deg, var(--laranja) 0 50%, var(--ambar) 50%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55); }
+.barrinha { display: block; height: 8px; margin-top: 4px; border: 2px solid var(--borda); border-radius: var(--canto); background: var(--branco); overflow: hidden; min-width: 60px; }
+.barrinha > span { display: block; height: 100%; background: linear-gradient(90deg, var(--laranja) 0 50%, var(--ambar) 50%); box-shadow: inset 0 1px 0 var(--brilho); }
 
 .dock {
   position: absolute;
@@ -63,7 +62,7 @@
   bottom: calc(env(safe-area-inset-bottom, 0px) + 10px);
   display: flex; gap: 4px; padding: 4px;
   border: 3px solid var(--borda); border-radius: var(--canto);
-  background: #fff8ee;
+  background: var(--papel);
   box-shadow: 0 4px 0 var(--borda);
 }
 .dock-btn {
@@ -89,8 +88,9 @@
 #controle { position: fixed; inset: 0; z-index: 5; pointer-events: none; }
 .controle-base {
   position: absolute; width: var(--cb, 110px); height: var(--cb, 110px); margin: calc(var(--cb, 110px) / -2) 0 0 calc(var(--cb, 110px) / -2);
-  filter: drop-shadow(0 var(--px, 5px) 0 rgba(58, 36, 70, 0.35));
+  filter: drop-shadow(0 var(--px, 5px) 0 var(--sombra-veu));
 }
+#controle .controle-base { opacity: 0.85; }   /* translúcido sobre o mapa: exceção escrita do ui.md §10.19.1 */
 .controle-pino {
   position: absolute; left: 50%; top: 50%; width: var(--cp, 50px); height: var(--cp, 50px); margin: calc(var(--cp, 50px) / -2) 0 0 calc(var(--cp, 50px) / -2);
 }
@@ -105,15 +105,15 @@
 .aura-bolinha {
   display: inline-block; width: 14px; height: 14px; flex: none;
   border: 2px solid var(--borda); border-radius: var(--redondo);
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 0 2px var(--brilho);
 }
-.aura-arco-iris { background: conic-gradient(#ff6b6b 0 14%, #ffb830 14% 28%, #ffe45c 28% 43%, #6ee07a 43% 57%, #5cb8ff 57% 71%, #b57cff 71% 86%, #ff7ec4 86%); }
+.aura-arco-iris { background: conic-gradient(var(--arco-iris)); }
 .aura-painel { text-align: center; }
 .aura-valor { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 1.8em; margin: 4px 0 8px; }
 .aura-valor .aura-bolinha { width: 26px; height: 26px; }
 .aura-cores { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 12px; padding: 0; margin: 12px 0 0; list-style: none; }
-.aura-cores li { display: flex; flex-direction: column; align-items: center; gap: 2px; opacity: 0.7; }
-.aura-cores li.aura-agora { opacity: 1; font-weight: 700; }
+.aura-cores li { display: flex; flex-direction: column; align-items: center; gap: 2px; color: var(--tinta-suave); }
+.aura-cores li.aura-agora { color: var(--tinta); font-weight: 700; }
 
 /* celular (max-width 480px): dock mais estreito, chips menores e botões do HUD em coluna */
 @media (max-width: 480px) {
