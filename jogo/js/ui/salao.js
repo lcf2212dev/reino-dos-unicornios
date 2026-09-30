@@ -35,10 +35,10 @@
         grande.innerHTML = ''; vistas.innerHTML = '';
         grande.appendChild(PA.paraDOM(PA.mariana(ap, false, 1, { vista: 'frente' }), 8));
         [['lado', 'De lado'], ['costas', 'De costas']].forEach(function (v) {
-          vistas.appendChild(el('div.salao-vista', PA.paraDOM(PA.mariana(ap, false, 1, { vista: v[0] }), 4)));
+          vistas.appendChild(el('div.salao-vista', PA.paraDOM(PA.mariana(ap, false, 1, { vista: v[0] }), 4), el('small.salao-legenda', v[1])));
         });
         var m = defMontaria();
-        if (m) vistas.appendChild(el('div.salao-vista.salao-montada', PA.paraDOM(PA.montada(m.def, m.estagio, 0, ap, { vista: 'lado' }), 2)));
+        if (m) vistas.appendChild(el('div.salao-vista.salao-montada', PA.paraDOM(PA.montada(m.def, m.estagio, 0, ap, { vista: 'lado' }), 2), el('small.salao-legenda', 'Montada')));
       }
       var grade = el('div.salao-opcoes', { role: 'group', 'aria-label': T.rotulo });
       // todos os cortes e roupas, os do sexo de quem joga primeiro (a ordem de cada grupo fica a de sempre)

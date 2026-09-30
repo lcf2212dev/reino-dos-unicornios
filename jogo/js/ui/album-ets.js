@@ -33,6 +33,7 @@
     var PA = window.PA, N = Reino.NPCs, pe = Reino.personagens[e.id];
     try {
       var c = N.sprite({ id: e.id, sprite: pe.sprite }, 0);
+      if (!e.amigo && PA.silhueta) c = PA.silhueta(c);   // ainda não é amigo: silhueta pintada e contornada (sem filtro de CSS)
       var alvo = compacto() ? 64 : 88;
       var cv = PA.paraDOM(c, PA.escalaNitida(alvo, c.width), 'album-sprite');
       return cv;
@@ -74,7 +75,7 @@
         try { icone = Reino.IconesPlanetas ? Reino.IconesPlanetas.iconeDOM(pl.id ? pl : e.planeta, 'album-planeta') : null; } catch (err) { icone = null; }
         if (icone) icone.setAttribute('aria-hidden', 'true');
         if (!e.amigo) {
-          li.appendChild(el('b', '?'));
+          li.appendChild(el('b', (comA ? 'ET da ' : 'ET de ') + planeta));   // o "?" fica só na figura
           if (icone) li.appendChild(icone);
           li.appendChild(el('small', 'Visite ' + (comA ? 'a ' : '') + planeta));
           grade.appendChild(li);

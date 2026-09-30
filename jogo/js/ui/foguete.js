@@ -84,7 +84,7 @@
     var passaporte = el('section.foguete-passaporte', el('h3.foguete-sub', '🛂 Passaporte'),
       el('ul', V.planetas().map(function (p) {
         var ok = !!carimbos[p.id];
-        return el('li' + (ok ? '.carimbado' : ''), carimbo(p, ok), el('small', ok ? p.nome : '?'));
+        return el('li' + (ok ? '.carimbado' : ''), carimbo(p, ok), el('small' + (ok ? '' : '.falta'), p.nome));   // o "?" fica só no quadrado
       })));
     // o álbum de ETs (ui/album-ets.js): fecha o painel e abre o álbum
     if (UI.telaAlbumETs) {

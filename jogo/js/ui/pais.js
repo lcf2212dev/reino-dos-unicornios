@@ -16,7 +16,15 @@
     var c = pn.conteudo;
     if (desbloqueada) { conteudoPais(c, pn); if (materiaId) mostrarMateriaPaga(c, materiaId); return; }
     var digitado = '';
-    var visor = el('div.pin-visor', '• • • •');
+    var visor = el('div.pin-visor', { 'aria-live': 'polite' });
+    // 4 casas fixas (mais, se o PIN for maior): vazia = só contorno, cheia = quadrado pintado
+    function desenharVisor() {
+      visor.classList.remove('pin-erro');
+      visor.innerHTML = '';
+      for (var i = 0; i < Math.max(4, digitado.length); i++) visor.appendChild(el('span.pin-casa' + (i < digitado.length ? '.cheia' : '')));
+      visor.setAttribute('aria-label', digitado.length + ' de ' + Math.max(4, digitado.length) + ' números');
+    }
+    desenharVisor();
     var teclado = el('div.pin-teclado');
     c.appendChild(el('p', 'Digite o PIN dos pais.'));
     c.appendChild(visor);
@@ -26,14 +34,18 @@
         if (k === '⌫') digitado = digitado.slice(0, -1);
         else if (k === 'OK') { verificar(); return; }
         else if (digitado.length < 8) digitado += k;
-        visor.textContent = digitado ? digitado.replace(/./g, '● ') : '• • • •';
+        desenharVisor();
       });
       teclado.appendChild(b);
     });
     c.appendChild(teclado);
     function verificar() {
       if (digitado === String(Reino.config.pinPais)) { c.innerHTML = ''; conteudoPais(c, pn); }
-      else { visor.textContent = 'PIN errado'; digitado = ''; Reino.Som.tocar('erro'); }
+      else {
+        digitado = ''; visor.removeAttribute('aria-label');
+        visor.textContent = 'PIN errado'; visor.classList.remove('pin-erro'); void visor.offsetWidth; visor.classList.add('pin-erro');   // reinicia a tremida
+        Reino.Som.tocar('erro');
+      }
     }
   }
   // rola só o conteúdo do painel (nada de scrollIntoView) até o bloco da matéria ficar no alto
@@ -57,7 +69,12 @@
       var t = est().treinos[m.id] || {};
       c.appendChild(el('div.pais-materia',
         el('h3', m.emoji + ' ' + m.nome),
-        el('p', 'Salas feitas: ', el('b', P.salasFeitas(m) + ' de ' + m.salas.length), ' • Ganhou: ', el('b', U.reais(ganho)), ' • Já pago: ', el('b', U.reais(pago)), ' • A pagar: ', el('b', U.reais(Math.max(0, ganho - pago)))),
+        // grade rótulo/valor (2 colunas); "A pagar" em destaque
+        el('dl.pais-numeros',
+          el('dt', 'Salas feitas'), el('dd', P.salasFeitas(m) + ' de ' + m.salas.length),
+          el('dt', 'Ganhou'), el('dd', U.reais(ganho)),
+          el('dt', 'Já pago'), el('dd', U.reais(pago)),
+          el('dt.pais-apagar', 'A pagar'), el('dd.pais-apagar', U.reais(Math.max(0, ganho - pago)))),
         el('p', 'Treino da Medalha: ', el('b', t.melhor ? ({ ouro: '🥇 ouro', prata: '🥈 prata', bronze: '🥉 bronze' }[t.melhor]) : 'ainda não fez'), t.vezes ? ' (' + t.vezes + (t.vezes === 1 ? ' vez)' : ' vezes)') : ''),
         Reino.provas.filter(function (pv) { return pv.materiaId === m.id; }).map(function (pv) {
           var r = P.regProva(pv);
