@@ -1,6 +1,6 @@
 # TODO visual: Mariana e o Reino dos Unicórnios
 
-Progresso: 205 de 290 (D11-07 e telhados do D10-12, 30/09/2026) · itens novos O-03 a O-28: 21 de 26
+Progresso: 205 de 290 (desempenho e O-28, 30/09/2026) · itens novos O-03 a O-28: 22 de 26
 
 > Auditoria visual feita em 29/09/2026, só de leitura, sobre a `main` em `7cbfa9f`. Cobre tudo o que a jogadora vê: mapa, prédios por dentro e por fora, unicórnio, NPCs, diálogo, perguntas, provas, matérias, HUD, loja, menus, movimento, app instalado e coerência de direção de arte.
 > Cada item traz a evidência (`arquivo:linha` e nome de cena do e2e), o tipo, o esforço (P ≤ 1 h, M ≤ 1 dia, G > 1 dia), as dependências e o critério de pronto. Cada relatório e cada critério de pronto passou por um conferente independente.
@@ -466,7 +466,7 @@ As prioridades dizem **quanto importa**. Esta ordem diz **o que vem antes**. A r
 
 - [x] ~~**O-27 · P2 · Cartas do Estábulo na mesma fileira com alturas diferentes**~~ *(descartado: não reproduz mais — nos 3 tamanhos as cartas de uma fileira têm a mesma altura e nada vaza (tri2-B-O-27))* — A carta sem barras de cuidado termina antes, e as barras da vizinha vazam da moldura. Pronto quando as cartas de uma fileira tiverem a mesma altura e nada vazar, nos 3 tamanhos.
 
-- [ ] **O-28 · P3 · Arbusto do Observatório atrás da placa, com contorno embolado** — O arbusto que o D2A-12 pôs no tile (37,38) fica atrás da placa de madeira. Pronto quando o tile tiver só um dos dois, sem contorno cruzado.
+- [x] **O-28 · P3 · Arbusto do Observatório atrás da placa, com contorno embolado** — O arbusto que o D2A-12 pôs no tile (37,38) fica atrás da placa de madeira. Pronto quando o tile tiver só um dos dois, sem contorno cruzado.
   Evidência: `jogo/js/arte/pixelart-mariana-visual.js` (onda 3d). · Tipo: inconsistência · Esforço: P · Depende de: D3-09
 
 ### 3.6 NPCs (D4)

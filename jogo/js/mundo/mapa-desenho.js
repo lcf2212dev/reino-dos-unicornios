@@ -108,7 +108,8 @@
       if (antes) desenharFlor(ctx, x, y, r, d !== 'flor');
       else if (d === 'flor') desenharFlor(ctx, x, y, I.rng(x * 89 + y * 47 + 13));
       if (d === 'cristal') desenharCristal(ctx, x, y);
-      else if (d === 'arbusto') desenharArbusto(ctx, x, y);
+      // arbusto com placa de direção logo embaixo: a placa sobe e já ocupa o tile (sólido do mesmo jeito; O-28)
+      else if (d === 'arbusto' && !(y + 1 < H && I.decor[y + 1][x] === 'placa')) desenharArbusto(ctx, x, y);
       else if (d === 'cogumelo') desenharCogumelo(ctx, x, y);
       else if ((d === 'pedra' || d === 'pedrinhas') && I.desenharPeca) I.desenharPeca(ctx, d, x, y);
     }
