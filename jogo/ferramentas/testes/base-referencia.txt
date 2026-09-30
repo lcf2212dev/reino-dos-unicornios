@@ -36,4 +36,5 @@
 # 5e1209e = onda 3b, parte 2, do backlog visual (D2B-03, D2B-02, D2B-13, D2B-12, D4-14, D2A-05, D4-05, D4-09, O-12)
 # 949a621 = onda 1b do backlog visual (D10-03, D7-07, D7-C1, D10-B05, D5-12, D6-04, D6-21, D10-11, D9-01, D9-07, D6-29, D12b-04, D7-05, O-14)
 # ec119a6 = ondas 3a e 3d do backlog visual (mapa D1-01 a D1-18, D1-C1, D1-C2, O-04, O-07; D3-05, D3-09 a D3-12, D13-06, O-10; D2A-06, D2A-07, D2A-11, D2A-15, D2A-16)
-ec119a6
+# 75c0133 = onda 3e do backlog visual (D8A-07, D8A-16, D8A-18, D8A-22, D8A-23, O-01; D8B-14, D8B-15, D8B-16, D8B-20, D8B-22, D8B-24, D8B-27; D9-02, D9-10, D9-14, D9-15; D4-17, D5-14, D5-08; O-08, D12d-01, D6-24, D6-11; D7-16; D10-15, D2B-15; D2A-10)
+75c0133
