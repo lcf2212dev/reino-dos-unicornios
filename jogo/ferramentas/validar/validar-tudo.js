@@ -1,5 +1,5 @@
 // Roda todos os validadores e resume: conteúdo das matérias, interiores, nomes repetidos, index.html x manifesto, docs
-// pixel art, cores (paleta) e enfeites do unicórnio.
+// pixel art, cores (paleta), movimento e enfeites do unicórnio.
 // Uso: node ferramentas/validar/validar-tudo.js [--detalhes]   (npm run validar, na raiz do repositório)
 // Cada validador roda à parte (eles terminam com process.exit); a saída inteira só aparece quando um
 // falha (ou com --detalhes). Validador que não existe é erro. Sai com código 1 se algum falhar.
@@ -18,6 +18,7 @@ const VALIDADORES = [
   { nome: 'pixel art (cantos, faixas, sombras, canvas)', arq: 'ferramentas/validar/validar-pixel.js' },
   { nome: 'cores (tokens do :root, opacity, Reino.config.paleta)', arq: 'ferramentas/validar/validar-cores.js' },
   { nome: 'tipografia e pixel da interface (escala 8/12/16/24/32/48, bordas, sombras)', arq: 'ferramentas/validar/validar-tipografia.js', detalhes: true },
+  { nome: 'movimento (durações em token, --degrau, :active na regra única, :root x config)', arq: 'ferramentas/validar/validar-movimento.js', detalhes: true },
   { nome: 'enfeites do unicórnio (fora do molde, oclusão montada)', arq: 'ferramentas/validar/validar-enfeites.js', detalhes: true },
 ];
 
