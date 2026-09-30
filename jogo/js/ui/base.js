@@ -191,7 +191,7 @@
     var i = pilha.indexOf(t);
     if (i >= 0) pilha.splice(i, 1);
     var tinhaFoco = t.contains(document.activeElement);
-    if (t.parentNode) t.parentNode.removeChild(t);
+    sair(t);
     if (!pilha.length) document.body.classList.remove('com-tela');
     segurarSeFoiToque();
     U.emit(EV.TELAS, pilha.length);
@@ -210,6 +210,15 @@
       }
     }
   };
+  // a tela sai por #telas-saindo (fora da pilha, sem toque nem foco) e some depois de --rapido (§10.15.8)
+  function sair(t) {
+    if (!t.parentNode) return;
+    if (!U.animar()) return t.parentNode.removeChild(t);
+    var s = U.$('#telas-saindo');
+    if (!s) { s = el('div#telas-saindo', { 'aria-hidden': 'true', inert: '', style: 'pointer-events:none' }); U.$('#telas').insertAdjacentElement('beforebegin', s); }
+    t.classList.add('saindo'); s.appendChild(t);
+    setTimeout(function () { if (t.parentNode) t.parentNode.removeChild(t); }, Reino.config.movimento.rapido);
+  }
   // sem tela nenhuma e sem botão para voltar: o foco vai para o mapa, não para o body
   function focarMapa() {
     var cv = document.getElementById('reino');
