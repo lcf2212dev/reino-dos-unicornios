@@ -115,7 +115,7 @@
     return { x: g.fx, y: g.fy, vista: g.vistaFim.vista, espelhar: g.vistaFim.espelhar, quadro: 0, corta: false, dentro: false };
   }
   // sem espuma ele fica mais fundo (as pernas não aparecem em cima da borda); a espuma o levanta devagar
-  function fundo(s) { return Math.round((1 - espuma(s)) * 5 * 3) / 3; }
+  function fundo(s) { return Math.round((1 - espuma(s)) * 5); }   // px inteiro: sobe em degraus
   // quanto de espuma (0–1): cresce na espuma, baixa no enxágue e volta a encher no fim (fica como a parada)
   function espuma(s) {
     if (s < 0.12) return 0;
@@ -130,6 +130,8 @@
     // sujinho até o chuveirinho levar a lama embora
     if (I.st.sujo && s < 0.58 && window.Jogador && Jogador.sujar) img = Jogador.sujar(img);
     var J = window.Jogador, ctx = p.ctx, g = I.st.geo;
+    // na grade de pixel do mundo (O-22): borda esquerda e pés em px inteiro
+    pos = { x: naGrade(pos.x, img.width), y: Math.round(pos.y), espelhar: pos.espelhar, dentro: pos.dentro, corta: pos.corta };
     if (!pos.dentro && s >= 0.74) J.sombra(p, pos.x, pos.y - 1, spr.w / 2.6);
     if (pos.corta) {
       // recorta o buraco da banheira (da linha da espuma para baixo): o resto do sprite aparece inteiro
@@ -167,7 +169,7 @@
       for (var i = 0; i < 12; i++) {
         var lado = i % 2 ? 1 : -1, vx = lado * (18 + (i % 4) * 7), vy = -(48 + (i % 3) * 14);
         var x = g.tx + lado * (5 + (i % 3) * 3) + vx * tl, y = g.linha - 1 + vy * tl + 130 * tl * tl;
-        p.ret(x, y, 1, tl < 0.25 ? 2 : 1, i % 3 ? AGUA2 : BRANCO);
+        p.ret(Math.round(x), Math.round(y), 1, tl < 0.25 ? 2 : 1, i % 3 ? AGUA2 : BRANCO);
       }
     }
     // espuma crescendo, a fileira da frente (a de trás vem antes do unicórnio)
@@ -183,12 +185,12 @@
     }
     // espuminha nas costas e a escova indo e vindo
     // costas: do lado contrário ao da cabeça (virado para a esquerda, o corpo fica à direita)
-    var costas = { x: g.tx + (g.vistaDentro.espelhar ? 4 : -4), y: g.ty + fundo(s) - h * 0.5 };
+    var costas = { x: g.tx + (g.vistaDentro.espelhar ? 4 : -4), y: Math.round(g.ty + fundo(s) - h * 0.5) };
     var fc = s < 0.52 ? suave(trecho(s, 0.30, 0.36)) : 1 - suave(trecho(s, 0.52, 0.58));
     if (s > 0.30 && s < 0.58) {
       [[-5, 0, 2], [3, -1, 2], [8, 1, 1]].forEach(function (bq) {
         var r = Math.round(bq[2] * fc);
-        if (r >= 1) p.sprite(bolha(r), costas.x + bq[0], costas.y + bq[1] + r + 1);
+        if (r >= 1) p.sprite(bolha(r), naGrade(costas.x + bq[0], r * 2 + 1), costas.y + bq[1] + r + 1);
       });
     }
     if (s > 0.30 && s < 0.50) {
@@ -208,8 +210,8 @@
         var de = hy - 1, ate = g.linha - 2, len = ate - de;
         for (var q = 0; q < 10; q++) {
           var fq = (e / 220 + q * 0.37) % 1, col = Math.round(hx - 7) + q;
-          p.ret(col, de + fq * len, 1, 3, q % 2 ? AGUA3 : AGUA2);
-          p.ret(col, de + ((fq + 0.5) % 1) * len, 1, 2, q % 3 ? AGUA2 : BRANCO);
+          p.ret(col, Math.round(de + fq * len), 1, 3, q % 2 ? AGUA3 : AGUA2);
+          p.ret(col, Math.round(de + ((fq + 0.5) % 1) * len), 1, 2, q % 3 ? AGUA2 : BRANCO);
         }
       }
     }
@@ -232,7 +234,7 @@
       for (var i = 0; i < 14; i++) {
         var a = (i / 14) * Math.PI * 2 + leva * 0.22, v = 42 + ((i * 37) % 20);
         var x = cx + Math.cos(a) * (6 + v * tg), y = cy + Math.sin(a) * 4 + (Math.sin(a) * 0.5 - 0.8) * v * tg + 150 * tg * tg;
-        p.ret(x, y, tg < 0.25 ? 2 : 1, 1, i % 3 ? AGUA2 : (i % 2 ? BRANCO : AGUA));
+        p.ret(Math.round(x), Math.round(y), tg < 0.25 ? 2 : 1, 1, i % 3 ? AGUA2 : (i % 2 ? BRANCO : AGUA));
       }
     });
   }
