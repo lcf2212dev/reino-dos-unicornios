@@ -25,7 +25,11 @@
       function pintarOvo() { ovoBox.innerHTML = ''; ovoBox.appendChild(PA.paraDOM(PA.ovo(d.raridade, toques), 10)); }
       pintarOvo();
       var texto = el('p.ovo-texto', Reino.Falas.ovo(d.raridade));
-      var card = el('div.painel.painel-ovo.rar-' + d.raridade, el('h2.titulo-pixel', rar.emoji + ' Ovo ' + rar.nome), ovoBox, texto);
+      // 3 bolinhas embaixo do ovo: acendem a cada toque
+      var marcas = el('div.ovo-marcas', { 'aria-hidden': 'true' });
+      function pintarMarcas() { marcas.innerHTML = ''; for (var i = 0; i < 3; i++) marcas.appendChild(PA.paraDOM(marcaToque(i < toques), 2, 'ovo-marca' + (i < toques ? ' acesa' : ''))); }
+      pintarMarcas();
+      var card = el('div.painel.painel-ovo.rar-' + d.raridade, el('h2.titulo-pixel', rar.emoji + ' Ovo ' + rar.nome), ovoBox, marcas, texto);
       t.appendChild(card);
       Reino.Som.falar(texto.textContent, { voz: 'claude' });
       ovoBox.addEventListener('click', function () {
@@ -33,7 +37,7 @@
         toques++;
         ovoBox.classList.remove('balanca'); void ovoBox.offsetWidth; ovoBox.classList.add('balanca');
         Reino.Som.tocar('rachar');
-        pintarOvo();
+        pintarOvo(); pintarMarcas();
         if (toques < 3) { texto.textContent = toques === 1 ? 'Está mexendo! Mais 2 toques!' : 'Quase! Mais 1 toque!'; return; }
         setTimeout(nasceu, 450);
       });
@@ -75,6 +79,14 @@
     });
   }
   UI.chocarUm = chocarUm;
+  // marcador 8×8 (16 px na tela): bolinha com contorno; acesa é dourada com brilho
+  function marcaToque(acesa) {
+    var c = PA.novoCanvas(8, 8), x = c.getContext('2d');
+    x.fillStyle = '#3a2446'; x.fillRect(2, 0, 4, 8); x.fillRect(0, 2, 8, 4); x.fillRect(1, 1, 6, 6);
+    x.fillStyle = acesa ? '#ffc93c' : '#efe4ff'; x.fillRect(2, 1, 4, 6); x.fillRect(1, 2, 6, 4);
+    if (acesa) { x.fillStyle = '#ffffff'; x.fillRect(2, 2, 2, 1); x.fillRect(2, 3, 1, 1); }
+    return c;
+  }
   /* O cartão de quem nasceu (o do lendário, no celular e no notebook) passava da altura da tela, e o
      texto ainda cresce um pouco quando a fonte termina de carregar. Quando não cabe, ele fica mais
      compacto, um passo de cada vez (espaços, depois o desenho, depois as letras), até o título e o
