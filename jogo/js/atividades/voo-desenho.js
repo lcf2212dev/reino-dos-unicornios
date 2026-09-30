@@ -5,6 +5,9 @@
 (function () {
   var R = window.Reino;
   var K = '#3a2446';
+  // céu do voo: --noite, e a nebulosa no degrau --noite-2 (ui.md §10.8.3), de Reino.config.paleta, lidos na hora;
+  // chave que faltar cai na reserva (o hex do contrato)
+  function noite(k) { var P = (R && R.config && R.config.paleta) || {}; return P[k] || { noite: '#24162e', noite2: '#33224a' }[k]; }
   // foguete 16×26: k contorno, w branco, c cinza claro, r vermelho, R vermelho escuro, b vidro, f fogo, y fogo claro.
   // A janelinha (aro nas linhas 6 e 14, vidro 8×7 nas colunas 4 a 11, linhas 7 a 13) leva a piloto: piloto()
   var FOGUETE = [
@@ -87,7 +90,7 @@
   for (var n = 0; n < 60; n++) FUNDO.push({ x: (n * 37 + 11) % 120, y: (n * 71 + 29) % 180, camada: n % 3 });
 
   function ceu(x, s, animar, V) {
-    x.fillStyle = '#16123a'; x.fillRect(0, 0, V.L, V.A);
+    x.fillStyle = noite('noite'); x.fillRect(0, 0, V.L, V.A);
     var anda = animar && s.fase !== 'contagem';
     for (var i = 0; i < FUNDO.length; i++) {
       var e = FUNDO[i], vel = anda ? [8, 16, 30][e.camada] : 0;
@@ -181,20 +184,22 @@
       }
     });
   }
-  // nebulosa do voo: pontilhado de 2 tons (uma vez, em cache), descendo bem devagar (4 px/s, inteiro)
+  // nebulosa do voo: --noite-2 com pontilhado (uma vez, em cache), descendo bem devagar (4 px/s, inteiro)
   var nebulosa = null;
   function desenhoNebulosa() {
     if (nebulosa || !window.PA) return nebulosa;
     var W = 44, H = 30, c = window.PA.novoCanvas(W, H), cx = c.getContext('2d');
+    var n2 = noite('noite2');
     var bolhas = [[14, 16, 12, 9], [28, 12, 13, 8], [24, 21, 9, 6]];
     for (var y = 0; y < H; y++) for (var i = 0; i < W; i++) {
       var f = 0;
       bolhas.forEach(function (b) { var a = (i - b[0]) / b[2], e = (y - b[1]) / b[3]; f = Math.max(f, 1 - (a * a + e * e)); });
       if (f <= 0) continue;
       var xadrez = (i + y) & 1;
-      if (f > 0.55) ret(cx, xadrez ? '#33276e' : '#2a2262', i, y, 1, 1);
-      else if (f > 0.25 && xadrez) ret(cx, '#241d56', i, y, 1, 1);
-      else if (f > 0 && !(i % 2) && !(y % 2)) ret(cx, '#1f1a4c', i, y, 1, 1);
+      // miolo chapado em --noite-2; em volta, pontilhado ordenado (xadrez, depois 1 a cada 2×2) sobre o --noite
+      if (f > 0.55) ret(cx, n2, i, y, 1, 1);
+      else if (f > 0.25 && xadrez) ret(cx, n2, i, y, 1, 1);
+      else if (f > 0 && !(i % 2) && !(y % 2)) ret(cx, n2, i, y, 1, 1);
     }
     return (nebulosa = c);
   }

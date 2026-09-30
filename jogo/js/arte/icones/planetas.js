@@ -7,6 +7,14 @@
 (function () {
   var R = window.Reino = window.Reino || {};
   var K = '#3a2446';
+  // cores da moldura do carimbo (papel, céu --noite, silhueta): Reino.config.paleta (ui.md §10.8), lida na hora
+  // (chave que faltar: a reserva, com o hex do contrato)
+  var RESERVA = { papel: '#fff8ee', papel2: '#efe8e2', noite: '#24162e', tintaSuave: '#6b5378' };
+  function PAL() {
+    var P = (R.config && R.config.paleta) || {}, o = {};
+    for (var k in RESERVA) o[k] = P[k] || RESERVA[k];
+    return o;
+  }
   // raio no quadro 16×16 (disco de 13 px + contorno); Saturno menor para o anel caber inteiro
   var RAIO = { saturno: 3, sol: 4 }, RAIO_PADRAO = 6;
   var cache = {};
@@ -61,8 +69,8 @@
   }
 
   // carimbo 27×27: papel de selo 23×23 (2 a 24) com a borda picotada (um dente a cada 3 px, simétrico),
-  // contorno por fora, filete na cor do planeta e, dentro, o planeta no céu (--noite). Sem carimbo: papel
-  // lilás, fundo claro e o planeta em silhueta (--tinta-suave com contorno).
+  // contorno por fora, filete na cor do planeta e, dentro, o planeta no céu (--noite). Sem carimbo: o
+  // indisponível (papel --papel-2, ui.md §10.19.1), fundo claro e o planeta em silhueta (--tinta-suave com contorno).
   var S = 27, A = 2, B = 24;
   function papel(x, y) {
     if (x < A || y < A || x > B || y > B) return false;
@@ -75,7 +83,7 @@
     var k = 'c|' + id + '|' + (feito ? 1 : 0);
     if (cache[k]) return cache[k];
     var c = novo(S, S), x = c.getContext('2d');
-    var corPapel = feito ? '#fff8ee' : '#e9e0f2', fundo = feito ? '#24162e' : '#fff8ee';
+    var pal = PAL(), corPapel = feito ? pal.papel : pal.papel2, fundo = feito ? pal.noite : pal.papel;
     var filete = feito ? (cor || '#c9b6ff') : '#b9a8cc';
     for (var y = 0; y < S; y++) for (var i = 0; i < S; i++) {
       var p = papel(i, y);
@@ -90,7 +98,7 @@
     x.fillStyle = filete; x.fillRect(4, 4, 19, 19);
     x.fillStyle = fundo; x.fillRect(5, 5, 17, 17);
     var ic = icone(id, cor);
-    x.drawImage(feito ? ic : silhueta(ic, '#6b5378'), 5, 5);
+    x.drawImage(feito ? ic : silhueta(ic, pal.tintaSuave), 5, 5);
     // no carimbado, 2 estrelinhas no céu
     if (feito) { x.fillStyle = '#fff6a8'; x.fillRect(7, 19, 1, 1); x.fillRect(19, 7, 1, 1); }
     cache[k] = c;

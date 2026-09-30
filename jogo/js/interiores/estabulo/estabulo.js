@@ -6,6 +6,11 @@
   var I = R.Interiores, D = I.desenho, C = D.C;
   var ret = D.ret, circulo = D.circulo, elipse = D.elipse, triangulo = D.triangulo, contornoRet = D.contornoRet;
   var K = R.Desenho.K;
+  // cores da moldura e da raridade: Reino.config.paleta (ui.md §10.8), lida na hora; chave que faltar cai na
+  // reserva (o hex do contrato), nunca num TypeError
+  var RESERVA = { papel: '#fff8ee', tintaSuave: '#6b5378', raridade: { comum: { fundo: '#fff8ee', desenho: '#ff9cc6', texto: '#6b5378' }, raro: { fundo: '#dcebff', desenho: '#5fb4ff', texto: '#2b5ea8' }, epico: { fundo: '#eadcff', desenho: '#a66bff', texto: '#5b2aa8' }, lendario: { fundo: '#ffe39a', desenho: '#ffb020', texto: '#8a5200' } } };
+  function pal(k) { var P = (R.config && R.config.paleta) || {}; return P[k] || RESERVA[k]; }
+  function rar(r, k) { var t = (pal('raridade') || {})[r] || {}; return t[k] || RESERVA.raridade[r][k]; }
   var F = (R.FALAS_INTERIORES && R.FALAS_INTERIORES.estabulo) || { npcs: {}, objetos: {} };
   var ELENCO = (R.NPCs && R.NPCs.ELENCO) || {};
   var PALHA = '#f5d77a', PALHA2 = '#d9ab45', PALHA3 = '#fff0a8';
@@ -78,7 +83,7 @@
       ret(ctx, px, py, 2, 32, K); ret(ctx, px + 30, py, 2, 32, K);
       ret(ctx, px + 1, py, 1, 31, C.madeira); ret(ctx, px + 30, py, 1, 31, C.madeira);
       // plaquinha da baia (cor da raridade): na parede; na baia vazia, pendurada na porteira (a silhueta ocupa a parede)
-      var cr = (window.PA && PA.CORES_RARIDADE && m && PA.CORES_RARIDADE[m.raridade]) || { base: C.creme, borda: '#b8aac8' }, yp = d ? py + 3 : py + 26;
+      var cr = (window.PA && PA.CORES_RARIDADE && m && PA.CORES_RARIDADE[m.raridade]) || { base: rar('comum', 'fundo'), borda: rar('comum', 'desenho') }, yp = d ? py + 3 : py + 26;
       function placa() { ret(ctx, px + 11, yp, 10, 5, K); ret(ctx, px + 12, yp + 1, 8, 3, cr.base); ret(ctx, px + 13, yp + 2, 6, 1, cr.borda); }
       if (d) placa();
       if (d && window.PA && PA.unicornio) {
@@ -94,7 +99,7 @@
         // baia vazia: palha e a silhueta de quem vai morar aqui, com o "?" em --papel
         elipse(ctx, px + 16, py + 26, 9, 3, PALHA2); elipse(ctx, px + 16, py + 25, 7, 2, PALHA3);
         var pose = m && window.PA && PA.unicornio ? poseDaBaia(m, n) : null;
-        if (pose) { ctx.drawImage(pose.c, px + pose.x, py + pose.y); if (pose.qx != null) R.Desenho.matriz(ctx, px + pose.qx, py + pose.qy, INTERROGACAO, { k: K, w: '#fff8ee' }); }
+        if (pose) { ctx.drawImage(pose.c, px + pose.x, py + pose.y); if (pose.qx != null) R.Desenho.matriz(ctx, px + pose.qx, py + pose.qy, INTERROGACAO, { k: K, w: pal('papel') }); }
       }
       // porteira baixa
       ret(ctx, px + 1, py + 26, 30, 2, K); ret(ctx, px + 2, py + 26, 28, 1, C.madeiraClara);
@@ -255,10 +260,10 @@
   I.objeto('estabulo-quadro', { w: 2, h: 2, parede: true, solido: false,
     desenhar: function (ctx, px, py) {
       contornoRet(ctx, px + 2, py + 7, 28, 19, C.madeira2); ret(ctx, px + 3, py + 8, 26, 17, '#e8bd84');
-      var cs = ['#fff4fa', '#e3f3ff', '#efe4ff', '#fff4cc'];
+      var cs = ['comum', 'raro', 'epico', 'lendario'].map(function (r) { return rar(r, 'fundo'); });
       for (var i = 0; i < 4; i++) {
         var x = px + 5 + (i % 2) * 12, y = py + 10 + Math.floor(i / 2) * 7;
-        ret(ctx, x, y, 10, 6, K); ret(ctx, x + 1, y + 1, 8, 4, cs[i]); ret(ctx, x + 2, y + 2, 5, 1, '#b8aac8');
+        ret(ctx, x, y, 10, 6, K); ret(ctx, x + 1, y + 1, 8, 4, cs[i]); ret(ctx, x + 2, y + 2, 5, 1, pal('tintaSuave'));
         ret(ctx, x + 4, y, 1, 1, C.vermelho);
       }
     } });

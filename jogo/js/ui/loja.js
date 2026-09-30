@@ -70,6 +70,11 @@
       depois(); U.emit(EV.MAPA_MUDOU);
     });
   }
+  // caro: ainda não comprado e com preço acima do saldo. A carta fica no estado indisponível (.indisponivel,
+  // ui.md §10.19.1, com aria-disabled e o motivo no aria-label) e 🔒 no preço antes do toque; segue focável e
+  // tocar continua dizendo quantas estrelas faltam
+  function caro(item, tem) { return !tem && P.estrelas() < item.preco; }
+  function faltam(item) { var f = item.preco - P.estrelas(); return f > 0 ? (f === 1 ? ', falta 1 estrela' : ', faltam ' + f + ' estrelas') : ''; }
   var avisouPremios = false;   // a regra nova dos prêmios é falada uma vez por sessão
   // a vitrine da tela, por encaixe (com 68 enfeites, uma grade só ficava comprida demais); em cada grupo,
   // do mais barato ao mais caro (empate: a ordem da lista). Capa, rastro e asas vão juntos no fim
@@ -115,11 +120,11 @@
         itensDoGrupo(x.g).forEach(function (item) { x.grade.appendChild(cartao(item)); });
       });
       function cartao(item) {
-        var tem = !!est().loja[item.id];
-        var b = el('button.item-loja' + (tem ? '.comprado' : '') + (usando(item) ? '.usando' : ''),
-          { type: 'button', 'data-item': item.id, 'aria-label': item.nome + ', ' + (tem ? (usando(item) ? 'usando' : 'comprado, tocar para usar') : item.preco + ' estrelas') },
+        var tem = !!est().loja[item.id], cr = caro(item, tem);
+        var b = el('button.item-loja' + (tem ? '.comprado' : '') + (usando(item) ? '.usando' : '') + (cr ? '.indisponivel' : ''),
+          { type: 'button', 'data-item': item.id, 'aria-disabled': cr ? 'true' : null, 'aria-label': item.nome + ', ' + (tem ? (usando(item) ? 'usando' : 'comprado, tocar para usar') : item.preco + ' estrelas' + faltam(item)) },
           el('span.item-icone', iconeItem(item)), el('b', hifenizar(item.nome)),
-          el('span.item-preco', tem ? (usando(item) ? '✓ Usando' : 'Usar') : '⭐ ' + item.preco));
+          el('span.item-preco', tem ? (usando(item) ? '✓ Usando' : 'Usar') : (cr ? '🔒 ' : '') + '⭐ ' + item.preco));
         b.addEventListener('click', function (e) {
           if (logoDepoisDaCompra(e, item.id)) return;
           if (tem) { alternar(item); Reino.Som.tocar('selecionar'); P.salvar(); pintar(); U.emit(EV.MAPA_MUDOU); return; }
@@ -147,12 +152,13 @@
           var rotulo = st === 'ganho' ? el('span.chip-mini.ok', '🏫 Ganho na prova')
             : st === 'comprado' ? el('span.chip-mini', '⭐ Comprado')
             : el('span.chip-mini', rar.emoji + ' ' + rar.nome);
-          var preco = tem ? (usando(item) ? '✓ Usando' : 'Usar') : st === 'aVenda' ? '⭐ ' + p.preco : '🔒 ' + rar.emoji + ' ' + rar.nome;
-          var b = el('button.item-loja.item-premio.rar-' + p.raridade + '.premio-' + st + (tem ? '.comprado' : st === 'bloqueado' ? '.bloqueado' : '') + (tem && usando(item) ? '.usando' : ''),
-            { type: 'button', 'data-item': p.id, 'data-estado': st,
+          var cr = st === 'aVenda' && caro(p, tem);
+          var preco = tem ? (usando(item) ? '✓ Usando' : 'Usar') : st === 'aVenda' ? (cr ? '🔒 ' : '') + '⭐ ' + p.preco : '🔒 ' + rar.emoji + ' ' + rar.nome;
+          var b = el('button.item-loja.item-premio.rar-' + p.raridade + '.premio-' + st + (tem ? '.comprado' : st === 'bloqueado' ? '.bloqueado' : '') + (tem && usando(item) ? '.usando' : '') + (cr ? '.indisponivel' : ''),
+            { type: 'button', 'data-item': p.id, 'data-estado': st, 'aria-disabled': cr ? 'true' : null,
               'aria-label': p.nome + ', ' + (st === 'bloqueado' ? 'bloqueado, ' + rar.nome.toLowerCase()
                 : tem ? (usando(item) ? 'usando' : (st === 'ganho' ? 'ganho na prova' : 'comprado') + ', tocar para usar')
-                : p.preco + ' estrelas, ' + rar.nome.toLowerCase()) },
+                : p.preco + ' estrelas, ' + rar.nome.toLowerCase() + (st === 'aVenda' ? faltam(p) : '')) },
             el('span.item-icone', desenho), el('b', hifenizar(p.nome)), st === 'bloqueado' ? null : rotulo, el('span.item-preco', preco));
           b.addEventListener('click', function (e) {
             if (logoDepoisDaCompra(e, item.id)) return;
