@@ -72,7 +72,7 @@ docs/  ARQUITETURA.md  contratos/  receitas/  decisoes/
 | Loja e enfeites | `jogo/js/conteudo/loja-itens.js`, `jogo/js/ui/loja.js`, `jogo/js/arte/pixelart-unicornio-moldes.js` | `docs/contratos/loja.md` |
 | Pergunta surpresa | `jogo/js/sistemas/surpresa.js`, `surpresa-painel.js` | `docs/contratos/surpresa.md` |
 | Viagem de foguete (tanque, voo, planetas, ETs) | `jogo/js/sistemas/viagem*.js`, `jogo/js/ui/foguete.js`, `jogo/js/atividades/voo*.js`, `jogo/js/interiores/planetas/` | `docs/contratos/viagem.md` |
-| Laboratório de Química (misturas, caderno, microscópio, tabela periódica) | `jogo/js/sistemas/quimica.js`, `jogo/js/conteudo/quimica/`, `jogo/js/ui/quimica-*.js`, `jogo/js/interiores/quimica/` | `docs/contratos/quimica.md` |
+| Laboratório de Química (misturas, caderno, microscópio, tabela periódica; 2º andar: curiosidades, Fogão dos Estados, Mesa de Separar, livros) | `jogo/js/sistemas/quimica.js`, `quimica-andar2.js`, `jogo/js/conteudo/quimica/`, `jogo/js/ui/quimica-*.js`, `jogo/js/interiores/quimica/` | `docs/contratos/quimica.md` |
 | Som, música, voz | `jogo/js/sistemas/som*.js`, `musicas-faixas.js`, `musicas.js`, `voz.js`, `falas.js` | `docs/contratos/som-musica-e-voz.md` |
 | Fotos | `jogo/js/sistemas/fotos.js`, `fotos-moldura.js`, `fotos-telas.js` | `docs/contratos/fotos.md` |
 | Matérias, salas, provas, desafios | `jogo/js/conteudo/`, `jogo/js/atividades/` | `docs/contratos/conteudo.md` |

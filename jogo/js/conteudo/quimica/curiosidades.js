@@ -94,11 +94,11 @@
     // fonte: Britannica — https://www.britannica.com/science/hydrogen
     { id: 'hidrogenio-universo', tema: 'elementos', paginas: ['O hidrogênio é o elemento', 'que mais tem no Universo!'] },
     // fonte: NASA — https://science.nasa.gov/sun/facts/
-    { id: 'sol-feito', tema: 'elementos', paginas: ['O Sol é feito quase todo', 'de hidrogênio e hélio!'] },
+    { id: 'sol-feito', tema: 'elementos', paginas: ['O Sol é feito quase todo', 'dos gases hidrogênio e hélio!'] },
     // fonte: Britannica — https://www.britannica.com/science/oxygen
     { id: 'oxigenio-crosta', tema: 'elementos', paginas: ['O oxigênio é o elemento', 'que mais tem nas rochas!'] },
     // fonte: Britannica — https://www.britannica.com/science/atom
-    { id: 'tudo-atomos', tema: 'elementos', paginas: ['Tudo à nossa volta tem átomos.', 'Eles são pequenos demais!', 'Nem a lupa consegue ver.'] },
+    { id: 'tudo-atomos', tema: 'elementos', paginas: ['Tudo à nossa volta tem átomos.', 'Eles são pequenos demais!', 'Nem com lupa dá para ver!'] },
     // fonte: Britannica — https://www.britannica.com/science/uranium
     { id: 'nome-planeta', tema: 'elementos', paginas: ['O urânio tem esse nome', 'por causa do planeta Urano!'] },
 
@@ -112,7 +112,7 @@
     // fonte: Britannica — https://www.britannica.com/biography/Rosalind-Franklin
     { id: 'rosalind-franklin', tema: 'cientistas', paginas: ['Rosalind Franklin fez fotos', 'de coisas muito pequenas!', 'Ela ajudou a entender o DNA.'] },
     // fonte: Science History Institute — https://www.sciencehistory.org/education/scientific-biographies/stephanie-l-kwolek/
-    { id: 'stephanie-kwolek', tema: 'cientistas', paginas: ['Stephanie Kwolek inventou', 'um fio mais forte que o aço!'] },
+    { id: 'stephanie-kwolek', tema: 'cientistas', paginas: ['Uma cientista inventou', 'um fio mais forte que o aço!'] },
 
     /* ---------- cristais ---------- */
     // fonte: Britannica — https://www.britannica.com/science/carbon-chemical-element

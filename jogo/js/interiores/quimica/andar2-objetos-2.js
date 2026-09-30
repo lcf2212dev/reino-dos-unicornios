@@ -40,9 +40,9 @@
     corpo: function (ctx, cx, by) {
       // copo alto de vidro, cheio de leite, com a borda de vidro em cima
       ret(ctx, cx - 5, by - 12, 5, 12, K); ret(ctx, cx - 4, by - 11, 3, 10, '#b8d4ec');
-      ret(ctx, cx - 3, by - 9, 1, 8, '#fff8ec'); ret(ctx, cx - 3, by - 9, 1, 1, C.creme2);
-      // banana deitada, curvinha, com o cabinho marrom
-      matriz(ctx, cx, by - 7, ['...km', '..kyk', '..kyk', 'k.kyk', 'kykyk', 'kyyk.', '.kk..'], { k: K, y: LIQ.amarelo, m: '#6b4428' });
+      ret(ctx, cx - 4, by - 9, 2, 8, '#fff8ec'); ret(ctx, cx - 4, by - 9, 2, 1, C.creme2);
+      // banana deitada, curvinha, com o cabinho marrom (a ponta sem contorno do lado do copo, para não grudar nele)
+      matriz(ctx, cx, by - 7, ['...km', '..kyk', '..kyk', '..kyk', '.ykyk', 'kyyk.', '.kk..'], { k: K, y: LIQ.amarelo, m: '#6b4428' });
       ret(ctx, cx + 1, by - 3, 1, 1, D.clarear(LIQ.amarelo, 0.5));
     },
   };

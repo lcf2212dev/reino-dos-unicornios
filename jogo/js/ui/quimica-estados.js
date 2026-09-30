@@ -161,7 +161,7 @@
       var fala = [], ganhou = 0, nova = false;
       passos(de, para).forEach(function (pp) {
         var m = Q().mudancaEntre(st.material, pp[0], pp[1]);
-        if (pp[1] === 'solido') st.forma = 'placa';                  // o que endurece na panela vira placa lisa
+        if (pp[1] === 'solido') st.forma = 'placa';                  // o que endurece na panela vira um tablete
         if (st.material === 'agua') st.gotas = pp[0] === 'gas' && pp[1] === 'liquido';
         if (!m) { fala = fala.concat(Q().frase('estados.endurece')); return; }
         var r = Q().descobrir('estados', m.id);

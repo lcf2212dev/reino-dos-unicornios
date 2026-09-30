@@ -498,6 +498,16 @@
    "velocidade": "+10%",
    "tom": "-34Hz"
   },
+  "npc-quimica-carbono": {
+   "voz": "pt-BR-AntonioNeural",
+   "velocidade": "-10%",
+   "tom": "-38Hz"
+  },
+  "npc-quimica-caramela": {
+   "voz": "pt-BR-FranciscaNeural",
+   "velocidade": "+0%",
+   "tom": "+22Hz"
+  },
   "npc-salao-lulu": {
    "voz": "en-US-AvaMultilingualNeural",
    "velocidade": "+12%",
@@ -33713,6 +33723,15 @@
    "fala": "Na vida real, chame um adulto!"
   },
   {
+   "chave": "c0eb8cae1e",
+   "voz": "npc-quimica-proveta",
+   "texto": "Lá em cima tem mais surpresas!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Lá em cima tem mais surpresas!"
+  },
+  {
    "chave": "afcdaedd13",
    "voz": "narradora",
    "texto": "Aqui diz: segurança primeiro!",
@@ -34134,6 +34153,249 @@
     "interior-quimica"
    ],
    "fala": "Os elétrons giram em volta."
+  },
+  {
+   "chave": "e1d28c62o",
+   "voz": "npc-quimica-carbono",
+   "texto": "Olá!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Olá!"
+  },
+  {
+   "chave": "dfccdaf018",
+   "voz": "npc-quimica-carbono",
+   "texto": "Sou o Professor Carbono.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Sou o Professor Carbono."
+  },
+  {
+   "chave": "ab7bb9961a",
+   "voz": "npc-quimica-carbono",
+   "texto": "Eu coleciono curiosidades!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Eu coleciono curiosidades!"
+  },
+  {
+   "chave": "414c182b19",
+   "voz": "npc-quimica-carbono",
+   "texto": "Adoro o elemento carbono!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Adoro o elemento carbono!"
+  },
+  {
+   "chave": "04a137e51b",
+   "voz": "npc-quimica-carbono",
+   "texto": "Quer ouvir uma curiosidade?",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Quer ouvir uma curiosidade?"
+  },
+  {
+   "chave": "822cc0d11b",
+   "voz": "npc-quimica-carbono",
+   "texto": "Tenho uma curiosidade nova!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Tenho uma curiosidade nova!"
+  },
+  {
+   "chave": "3eba854b1d",
+   "voz": "npc-quimica-carbono",
+   "texto": "Leia os livros da biblioteca!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Leia os livros da biblioteca!"
+  },
+  {
+   "chave": "420a72891d",
+   "voz": "npc-quimica-carbono",
+   "texto": "A química está em todo lugar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A química está em todo lugar."
+  },
+  {
+   "chave": "62622a051d",
+   "voz": "npc-quimica-carbono",
+   "texto": "Volte para mais curiosidades!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Volte para mais curiosidades!"
+  },
+  {
+   "chave": "2af4c4001e",
+   "voz": "npc-quimica-carbono",
+   "texto": "Experimento, só com um adulto!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Experimento, só com um adulto!"
+  },
+  {
+   "chave": "35bc28f2o",
+   "voz": "npc-quimica-caramela",
+   "texto": "Oi!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Oi!"
+  },
+  {
+   "chave": "5bfe001b18",
+   "voz": "npc-quimica-caramela",
+   "texto": "Eu sou a Dona Caramela.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Eu sou a Dona Caramela."
+  },
+  {
+   "chave": "a3c6402c1b",
+   "voz": "npc-quimica-caramela",
+   "texto": "Cozinhar também é química!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Cozinhar também é química!"
+  },
+  {
+   "chave": "c3e8027b1b",
+   "voz": "npc-quimica-caramela",
+   "texto": "Vamos esquentar e esfriar!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Vamos esquentar e esfriar!"
+  },
+  {
+   "chave": "a378087d18",
+   "voz": "npc-quimica-caramela",
+   "texto": "Vamos ver a água mudar?",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Vamos ver a água mudar?"
+  },
+  {
+   "chave": "7e8eb89a18",
+   "voz": "npc-quimica-caramela",
+   "texto": "Já separou uma mistura?",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Já separou uma mistura?"
+  },
+  {
+   "chave": "98e899d41c",
+   "voz": "npc-quimica-caramela",
+   "texto": "A mesa de separar é demais!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A mesa de separar é demais!"
+  },
+  {
+   "chave": "d087c97c1c",
+   "voz": "npc-quimica-caramela",
+   "texto": "O chocolate derrete na mão!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O chocolate derrete na mão!"
+  },
+  {
+   "chave": "dd6d17de1f",
+   "voz": "npc-quimica-caramela",
+   "texto": "Fogão, só com um adulto junto!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Fogão, só com um adulto junto!"
+  },
+  {
+   "chave": "187b4214r",
+   "voz": "narradora",
+   "texto": "A pia da cozinha!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A pia da cozinha!"
+  },
+  {
+   "chave": "5d2bb457u",
+   "voz": "narradora",
+   "texto": "A água lava a louça.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A água lava a louça."
+  },
+  {
+   "chave": "a89c274cu",
+   "voz": "narradora",
+   "texto": "O Fogão dos Estados!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O Fogão dos Estados!"
+  },
+  {
+   "chave": "fcc5958ay",
+   "voz": "narradora",
+   "texto": "O gelo derrete no calor.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O gelo derrete no calor."
+  },
+  {
+   "chave": "57e91a7411",
+   "voz": "narradora",
+   "texto": "A Mesa de Separar Misturas!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A Mesa de Separar Misturas!"
+  },
+  {
+   "chave": "a5bc400210",
+   "voz": "narradora",
+   "texto": "Cada mistura tem um jeito.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Cada mistura tem um jeito."
+  },
+  {
+   "chave": "7e5c1c1d12",
+   "voz": "narradora",
+   "texto": "Uma estante cheia de livros!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Uma estante cheia de livros!"
+  },
+  {
+   "chave": "f7b4138cv",
+   "voz": "narradora",
+   "texto": "Qual livro vamos ler?",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Qual livro vamos ler?"
   },
   {
    "chave": "5ca132d312",
@@ -43460,6 +43722,258 @@
    "fala": "Que cientista incrível!"
   },
   {
+   "chave": "9e4b8c801d",
+   "voz": "npc-quimica-caramela",
+   "texto": "Escolha o que vai na panela.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Escolha o que vai na panela."
+  },
+  {
+   "chave": "8032b2841e",
+   "voz": "npc-quimica-caramela",
+   "texto": "Fogão real, só com um adulto!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Fogão real, só com um adulto!"
+  },
+  {
+   "chave": "7fae23fc1a",
+   "voz": "npc-quimica-caramela",
+   "texto": "O fogo já está no máximo!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O fogo já está no máximo!"
+  },
+  {
+   "chave": "56b5b7a917",
+   "voz": "npc-quimica-caramela",
+   "texto": "Já está bem geladinho!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Já está bem geladinho!"
+  },
+  {
+   "chave": "20a8db431d",
+   "voz": "npc-quimica-caramela",
+   "texto": "Esfriou e endureceu de novo!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Esfriou e endureceu de novo!"
+  },
+  {
+   "chave": "8911ce7b15",
+   "voz": "npc-quimica-caramela",
+   "texto": "Voltou a ser sólido.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Voltou a ser sólido."
+  },
+  {
+   "chave": "c9e117b617",
+   "voz": "npc-quimica-caramela",
+   "texto": "No sólido, as bolinhas",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "No sólido, as bolinhas"
+  },
+  {
+   "chave": "7feececf1b",
+   "voz": "npc-quimica-caramela",
+   "texto": "ficam juntinhas, tremendo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "ficam juntinhas, tremendo."
+  },
+  {
+   "chave": "58b1924918",
+   "voz": "npc-quimica-caramela",
+   "texto": "No líquido, as bolinhas",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "No líquido, as bolinhas"
+  },
+  {
+   "chave": "676192391c",
+   "voz": "npc-quimica-caramela",
+   "texto": "escorregam umas nas outras.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "escorregam umas nas outras."
+  },
+  {
+   "chave": "fc9824c619",
+   "voz": "npc-quimica-caramela",
+   "texto": "No gás, as bolinhas voam",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "No gás, as bolinhas voam"
+  },
+  {
+   "chave": "a603abee1c",
+   "voz": "npc-quimica-caramela",
+   "texto": "para longe umas das outras.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "para longe umas das outras."
+  },
+  {
+   "chave": "e283c85d1c",
+   "voz": "npc-quimica-caramela",
+   "texto": "Mais uma estrela para você!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Mais uma estrela para você!"
+  },
+  {
+   "chave": "00da5cc71c",
+   "voz": "npc-quimica-caramela",
+   "texto": "Você viu todas as mudanças!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Você viu todas as mudanças!"
+  },
+  {
+   "chave": "88e78f8f15",
+   "voz": "npc-quimica-caramela",
+   "texto": "Escolha uma mistura!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Escolha uma mistura!"
+  },
+  {
+   "chave": "fa3f759118",
+   "voz": "npc-quimica-caramela",
+   "texto": "Depois, uma ferramenta.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Depois, uma ferramenta."
+  },
+  {
+   "chave": "d83e1b0c1d",
+   "voz": "npc-quimica-caramela",
+   "texto": "Primeiro, escolha a mistura!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Primeiro, escolha a mistura!"
+  },
+  {
+   "chave": "44787ae61b",
+   "voz": "npc-quimica-caramela",
+   "texto": "Hum, assim não separa bem.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Hum, assim não separa bem."
+  },
+  {
+   "chave": "90fc2fbb14",
+   "voz": "npc-quimica-caramela",
+   "texto": "Vamos tentar outra?",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Vamos tentar outra?"
+  },
+  {
+   "chave": "5f7396131c",
+   "voz": "npc-quimica-caramela",
+   "texto": "Uma estrela nova para você!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Uma estrela nova para você!"
+  },
+  {
+   "chave": "849a63d814",
+   "voz": "npc-quimica-caramela",
+   "texto": "Você separou todas!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Você separou todas!"
+  },
+  {
+   "chave": "e659eb1219",
+   "voz": "npc-quimica-caramela",
+   "texto": "Que trabalho caprichado!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Que trabalho caprichado!"
+  },
+  {
+   "chave": "0e8843cc1b",
+   "voz": "npc-quimica-caramela",
+   "texto": "Essa você já sabe separar!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Essa você já sabe separar!"
+  },
+  {
+   "chave": "1c359f4e1a",
+   "voz": "npc-quimica-carbono",
+   "texto": "Escolha um livro para ler!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Escolha um livro para ler!"
+  },
+  {
+   "chave": "f32ce4b616",
+   "voz": "npc-quimica-carbono",
+   "texto": "Muito bem, livro lido!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Muito bem, livro lido!"
+  },
+  {
+   "chave": "5423179518",
+   "voz": "npc-quimica-carbono",
+   "texto": "Você ganhou uma estrela!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Você ganhou uma estrela!"
+  },
+  {
+   "chave": "9e4ac3c819",
+   "voz": "npc-quimica-carbono",
+   "texto": "Você leu todos os livros!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Você leu todos os livros!"
+  },
+  {
+   "chave": "ceabe1171b",
+   "voz": "npc-quimica-carbono",
+   "texto": "Parabéns, você é cientista!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Parabéns, você é cientista!"
+  },
+  {
    "chave": "cea2c0fe15",
    "voz": "npc-quimica-proveta",
    "texto": "O vinagre é um ácido.",
@@ -45636,6 +46150,2265 @@
     "interior-quimica"
    ],
    "fala": "Vira uma folha bem fininha."
+  },
+  {
+   "chave": "0d22c8ea1b",
+   "voz": "npc-quimica-carbono",
+   "texto": "O milho de pipoca tem água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O milho de pipoca tem água."
+  },
+  {
+   "chave": "41aad08f19",
+   "voz": "npc-quimica-carbono",
+   "texto": "No calor, ela vira vapor.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "No calor, ela vira vapor."
+  },
+  {
+   "chave": "92e97e7e1c",
+   "voz": "npc-quimica-carbono",
+   "texto": "O vapor estoura o grão. Poc!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O vapor estoura o grão. Poc!"
+  },
+  {
+   "chave": "8b76e7e71b",
+   "voz": "npc-quimica-carbono",
+   "texto": "O fermento solta bolhinhas.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O fermento solta bolhinhas."
+  },
+  {
+   "chave": "972791721a",
+   "voz": "npc-quimica-carbono",
+   "texto": "Elas fazem o bolo crescer!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Elas fazem o bolo crescer!"
+  },
+  {
+   "chave": "4c10bcef1b",
+   "voz": "npc-quimica-carbono",
+   "texto": "A maçã cortada fica marrom.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A maçã cortada fica marrom."
+  },
+  {
+   "chave": "c4961dd617",
+   "voz": "npc-quimica-carbono",
+   "texto": "É o ar mexendo com ela!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "É o ar mexendo com ela!"
+  },
+  {
+   "chave": "1f8d4a441b",
+   "voz": "npc-quimica-carbono",
+   "texto": "Umas gotas de limão ajudam.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Umas gotas de limão ajudam."
+  },
+  {
+   "chave": "1470fc7a1e",
+   "voz": "npc-quimica-carbono",
+   "texto": "O açúcar quente vira caramelo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O açúcar quente vira caramelo."
+  },
+  {
+   "chave": "05328d281b",
+   "voz": "npc-quimica-carbono",
+   "texto": "Fica marrom e bem cheiroso!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Fica marrom e bem cheiroso!"
+  },
+  {
+   "chave": "bcf7243e1c",
+   "voz": "npc-quimica-carbono",
+   "texto": "A clara crua é transparente.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A clara crua é transparente."
+  },
+  {
+   "chave": "addb10981e",
+   "voz": "npc-quimica-carbono",
+   "texto": "No calor, ela fica branquinha!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "No calor, ela fica branquinha!"
+  },
+  {
+   "chave": "e1f1744c1c",
+   "voz": "npc-quimica-carbono",
+   "texto": "E não volta mais a ser crua.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "E não volta mais a ser crua."
+  },
+  {
+   "chave": "fc7a6c421b",
+   "voz": "npc-quimica-carbono",
+   "texto": "Cortar cebola solta um gás.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Cortar cebola solta um gás."
+  },
+  {
+   "chave": "e8394f211e",
+   "voz": "npc-quimica-carbono",
+   "texto": "Ele faz os olhos lacrimejarem.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele faz os olhos lacrimejarem."
+  },
+  {
+   "chave": "4a9c3b3a1b",
+   "voz": "npc-quimica-carbono",
+   "texto": "O seu corpo tem muita água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O seu corpo tem muita água."
+  },
+  {
+   "chave": "85d4b3c81b",
+   "voz": "npc-quimica-carbono",
+   "texto": "Mais da metade dele é água!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Mais da metade dele é água!"
+  },
+  {
+   "chave": "e00d2af518",
+   "voz": "npc-quimica-carbono",
+   "texto": "O suor seca na sua pele.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O suor seca na sua pele."
+  },
+  {
+   "chave": "5a47dcef19",
+   "voz": "npc-quimica-carbono",
+   "texto": "Assim ele esfria o corpo!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Assim ele esfria o corpo!"
+  },
+  {
+   "chave": "aaa6e3881e",
+   "voz": "npc-quimica-carbono",
+   "texto": "O estômago tem um ácido forte.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O estômago tem um ácido forte."
+  },
+  {
+   "chave": "9861ebaf1d",
+   "voz": "npc-quimica-carbono",
+   "texto": "Ele ajuda a digerir a comida.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele ajuda a digerir a comida."
+  },
+  {
+   "chave": "58815f521e",
+   "voz": "npc-quimica-carbono",
+   "texto": "Os ossos guardam muito cálcio.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Os ossos guardam muito cálcio."
+  },
+  {
+   "chave": "ff6751ee1d",
+   "voz": "npc-quimica-carbono",
+   "texto": "O leite tem cálcio para eles!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O leite tem cálcio para eles!"
+  },
+  {
+   "chave": "604a80471a",
+   "voz": "npc-quimica-carbono",
+   "texto": "O esmalte cobre os dentes.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O esmalte cobre os dentes."
+  },
+  {
+   "chave": "9e70f0ae1d",
+   "voz": "npc-quimica-carbono",
+   "texto": "É a parte mais dura do corpo!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "É a parte mais dura do corpo!"
+  },
+  {
+   "chave": "2201178719",
+   "voz": "npc-quimica-carbono",
+   "texto": "O sangue tem um pouquinho",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O sangue tem um pouquinho"
+  },
+  {
+   "chave": "aff6c4de15",
+   "voz": "npc-quimica-carbono",
+   "texto": "de ferro dentro dele.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "de ferro dentro dele."
+  },
+  {
+   "chave": "26ddd2a81d",
+   "voz": "npc-quimica-carbono",
+   "texto": "Ele ajuda a levar o oxigênio!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele ajuda a levar o oxigênio!"
+  },
+  {
+   "chave": "80be34ca1a",
+   "voz": "npc-quimica-carbono",
+   "texto": "A água cobre a maior parte",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A água cobre a maior parte"
+  },
+  {
+   "chave": "45484e0017",
+   "voz": "npc-quimica-carbono",
+   "texto": "da superfície da Terra.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "da superfície da Terra."
+  },
+  {
+   "chave": "d4bc371518",
+   "voz": "npc-quimica-carbono",
+   "texto": "Quase toda ela é do mar!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Quase toda ela é do mar!"
+  },
+  {
+   "chave": "96d9cabf14",
+   "voz": "npc-quimica-carbono",
+   "texto": "O gelo boia na água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O gelo boia na água."
+  },
+  {
+   "chave": "fd7114791b",
+   "voz": "npc-quimica-carbono",
+   "texto": "Ele é mais leve que a água!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele é mais leve que a água!"
+  },
+  {
+   "chave": "1c931f341a",
+   "voz": "npc-quimica-carbono",
+   "texto": "O Sol faz a água evaporar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O Sol faz a água evaporar."
+  },
+  {
+   "chave": "1df00a2f1a",
+   "voz": "npc-quimica-carbono",
+   "texto": "Lá no céu, ela vira nuvem.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Lá no céu, ela vira nuvem."
+  },
+  {
+   "chave": "2ec8cc961a",
+   "voz": "npc-quimica-carbono",
+   "texto": "Depois ela cai como chuva!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Depois ela cai como chuva!"
+  },
+  {
+   "chave": "495e59ac18",
+   "voz": "npc-quimica-carbono",
+   "texto": "No alto de uma montanha,",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "No alto de uma montanha,"
+  },
+  {
+   "chave": "916637d11d",
+   "voz": "npc-quimica-carbono",
+   "texto": "a água ferve com menos calor!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "a água ferve com menos calor!"
+  },
+  {
+   "chave": "b24961ce1c",
+   "voz": "npc-quimica-carbono",
+   "texto": "A água dissolve muita coisa.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A água dissolve muita coisa."
+  },
+  {
+   "chave": "81eeefdc1b",
+   "voz": "npc-quimica-carbono",
+   "texto": "Até o sal e o açúcar somem!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Até o sal e o açúcar somem!"
+  },
+  {
+   "chave": "b2f0e2ca1d",
+   "voz": "npc-quimica-carbono",
+   "texto": "Mas eles continuam lá dentro.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Mas eles continuam lá dentro."
+  },
+  {
+   "chave": "b77d301a1c",
+   "voz": "npc-quimica-carbono",
+   "texto": "A água doce é bem pouquinha.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A água doce é bem pouquinha."
+  },
+  {
+   "chave": "73b361751b",
+   "voz": "npc-quimica-carbono",
+   "texto": "Por isso não se desperdiça!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Por isso não se desperdiça!"
+  },
+  {
+   "chave": "1e4c56981b",
+   "voz": "npc-quimica-carbono",
+   "texto": "O fogo precisa de oxigênio.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O fogo precisa de oxigênio."
+  },
+  {
+   "chave": "f3df70e118",
+   "voz": "npc-quimica-carbono",
+   "texto": "Sem ar, a vela se apaga!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Sem ar, a vela se apaga!"
+  },
+  {
+   "chave": "350e50ac1c",
+   "voz": "npc-quimica-carbono",
+   "texto": "O ar é uma mistura de gases.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O ar é uma mistura de gases."
+  },
+  {
+   "chave": "5734b97c1c",
+   "voz": "npc-quimica-carbono",
+   "texto": "O que mais tem é nitrogênio!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O que mais tem é nitrogênio!"
+  },
+  {
+   "chave": "437ce83315",
+   "voz": "npc-quimica-carbono",
+   "texto": "A parte azul da chama",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A parte azul da chama"
+  },
+  {
+   "chave": "42390ece1c",
+   "voz": "npc-quimica-carbono",
+   "texto": "é mais quente que a amarela!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "é mais quente que a amarela!"
+  },
+  {
+   "chave": "e11019c517",
+   "voz": "npc-quimica-carbono",
+   "texto": "A chama derrete a cera.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A chama derrete a cera."
+  },
+  {
+   "chave": "dde8ec8a19",
+   "voz": "npc-quimica-carbono",
+   "texto": "A cera vira gás e queima!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A cera vira gás e queima!"
+  },
+  {
+   "chave": "6af2d8811d",
+   "voz": "npc-quimica-carbono",
+   "texto": "É ela que faz a vela brilhar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "É ela que faz a vela brilhar."
+  },
+  {
+   "chave": "71ebd08715",
+   "voz": "npc-quimica-carbono",
+   "texto": "O ar tem peso, sabia?",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O ar tem peso, sabia?"
+  },
+  {
+   "chave": "8dfea3a719",
+   "voz": "npc-quimica-carbono",
+   "texto": "Ele aperta tudo em volta!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele aperta tudo em volta!"
+  },
+  {
+   "chave": "71d0a5d71e",
+   "voz": "npc-quimica-carbono",
+   "texto": "Uma estátua famosa é de cobre.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Uma estátua famosa é de cobre."
+  },
+  {
+   "chave": "66a77a851c",
+   "voz": "npc-quimica-carbono",
+   "texto": "Ela ficou verde com o tempo!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ela ficou verde com o tempo!"
+  },
+  {
+   "chave": "61ece16515",
+   "voz": "npc-quimica-carbono",
+   "texto": "O ferro com ar e água",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O ferro com ar e água"
+  },
+  {
+   "chave": "3161930b1a",
+   "voz": "npc-quimica-carbono",
+   "texto": "vira ferrugem, bem marrom!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "vira ferrugem, bem marrom!"
+  },
+  {
+   "chave": "e862810715",
+   "voz": "npc-quimica-carbono",
+   "texto": "O ouro não enferruja.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O ouro não enferruja."
+  },
+  {
+   "chave": "019f92b31b",
+   "voz": "npc-quimica-carbono",
+   "texto": "Por isso ele brilha sempre!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Por isso ele brilha sempre!"
+  },
+  {
+   "chave": "f95b23b81e",
+   "voz": "npc-quimica-carbono",
+   "texto": "O mercúrio é um metal líquido.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O mercúrio é um metal líquido."
+  },
+  {
+   "chave": "36fd1bdb1a",
+   "voz": "npc-quimica-carbono",
+   "texto": "Ele é perigoso: não toque!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele é perigoso: não toque!"
+  },
+  {
+   "chave": "ae4318c118",
+   "voz": "npc-quimica-carbono",
+   "texto": "A latinha é de alumínio.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A latinha é de alumínio."
+  },
+  {
+   "chave": "8e22a38519",
+   "voz": "npc-quimica-carbono",
+   "texto": "Dá para reciclar de novo!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Dá para reciclar de novo!"
+  },
+  {
+   "chave": "c70e1e2a1d",
+   "voz": "npc-quimica-carbono",
+   "texto": "Os fios da casa são de cobre.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Os fios da casa são de cobre."
+  },
+  {
+   "chave": "c24b3a6f1c",
+   "voz": "npc-quimica-carbono",
+   "texto": "Ele leva bem a eletricidade.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele leva bem a eletricidade."
+  },
+  {
+   "chave": "0b21007815",
+   "voz": "npc-quimica-carbono",
+   "texto": "Os fogos de artifício",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Os fogos de artifício"
+  },
+  {
+   "chave": "36dba74e18",
+   "voz": "npc-quimica-carbono",
+   "texto": "têm metais dentro deles.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "têm metais dentro deles."
+  },
+  {
+   "chave": "43091f9a16",
+   "voz": "npc-quimica-carbono",
+   "texto": "Cada metal dá uma cor!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Cada metal dá uma cor!"
+  },
+  {
+   "chave": "d548589f19",
+   "voz": "npc-quimica-carbono",
+   "texto": "A folha é verde por causa",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A folha é verde por causa"
+  },
+  {
+   "chave": "d8c5af5a1b",
+   "voz": "npc-quimica-carbono",
+   "texto": "da clorofila, que pega sol!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "da clorofila, que pega sol!"
+  },
+  {
+   "chave": "46c3f0d616",
+   "voz": "npc-quimica-carbono",
+   "texto": "O suco de repolho roxo",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O suco de repolho roxo"
+  },
+  {
+   "chave": "bc91ec5416",
+   "voz": "npc-quimica-carbono",
+   "texto": "fica rosa com o limão!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "fica rosa com o limão!"
+  },
+  {
+   "chave": "4d2f49a51d",
+   "voz": "npc-quimica-carbono",
+   "texto": "A cenoura é laranja por causa",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A cenoura é laranja por causa"
+  },
+  {
+   "chave": "9434546c15",
+   "voz": "npc-quimica-carbono",
+   "texto": "do betacaroteno dela!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "do betacaroteno dela!"
+  },
+  {
+   "chave": "71901b9b18",
+   "voz": "npc-quimica-carbono",
+   "texto": "No outono, o verde some.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "No outono, o verde some."
+  },
+  {
+   "chave": "38636ad41b",
+   "voz": "npc-quimica-carbono",
+   "texto": "Aparece o amarelo da folha!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Aparece o amarelo da folha!"
+  },
+  {
+   "chave": "6c2a0aa913",
+   "voz": "npc-quimica-carbono",
+   "texto": "O tomate é vermelho",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O tomate é vermelho"
+  },
+  {
+   "chave": "592f93f016",
+   "voz": "npc-quimica-carbono",
+   "texto": "por causa do licopeno!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "por causa do licopeno!"
+  },
+  {
+   "chave": "1cec93a616",
+   "voz": "npc-quimica-carbono",
+   "texto": "Existem 118 elementos.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Existem 118 elementos."
+  },
+  {
+   "chave": "5b52e75f16",
+   "voz": "npc-quimica-carbono",
+   "texto": "Todos estão na tabela!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Todos estão na tabela!"
+  },
+  {
+   "chave": "85c8b12619",
+   "voz": "npc-quimica-carbono",
+   "texto": "O hidrogênio é o elemento",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O hidrogênio é o elemento"
+  },
+  {
+   "chave": "37ff1e3b19",
+   "voz": "npc-quimica-carbono",
+   "texto": "que mais tem no Universo!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "que mais tem no Universo!"
+  },
+  {
+   "chave": "61c832a318",
+   "voz": "npc-quimica-carbono",
+   "texto": "O Sol é feito quase todo",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O Sol é feito quase todo"
+  },
+  {
+   "chave": "fe0bf08a1d",
+   "voz": "npc-quimica-carbono",
+   "texto": "dos gases hidrogênio e hélio!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "dos gases hidrogênio e hélio!"
+  },
+  {
+   "chave": "9cc8d9ea17",
+   "voz": "npc-quimica-carbono",
+   "texto": "O oxigênio é o elemento",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O oxigênio é o elemento"
+  },
+  {
+   "chave": "c31c53e118",
+   "voz": "npc-quimica-carbono",
+   "texto": "que mais tem nas rochas!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "que mais tem nas rochas!"
+  },
+  {
+   "chave": "d1f4e89e1e",
+   "voz": "npc-quimica-carbono",
+   "texto": "Tudo à nossa volta tem átomos.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Tudo à nossa volta tem átomos."
+  },
+  {
+   "chave": "bb36ada319",
+   "voz": "npc-quimica-carbono",
+   "texto": "Eles são pequenos demais!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Eles são pequenos demais!"
+  },
+  {
+   "chave": "8a58fb8919",
+   "voz": "npc-quimica-carbono",
+   "texto": "Nem com lupa dá para ver!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Nem com lupa dá para ver!"
+  },
+  {
+   "chave": "ae8cb38016",
+   "voz": "npc-quimica-carbono",
+   "texto": "O urânio tem esse nome",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O urânio tem esse nome"
+  },
+  {
+   "chave": "db0e935b1b",
+   "voz": "npc-quimica-carbono",
+   "texto": "por causa do planeta Urano!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "por causa do planeta Urano!"
+  },
+  {
+   "chave": "fa9b3afa17",
+   "voz": "npc-quimica-carbono",
+   "texto": "A cientista Marie Curie",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A cientista Marie Curie"
+  },
+  {
+   "chave": "dceb001f1a",
+   "voz": "npc-quimica-carbono",
+   "texto": "ganhou dois prêmios Nobel!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "ganhou dois prêmios Nobel!"
+  },
+  {
+   "chave": "77c8672d1b",
+   "voz": "npc-quimica-carbono",
+   "texto": "Mendeleiev montou a tabela.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Mendeleiev montou a tabela."
+  },
+  {
+   "chave": "07a6b63b19",
+   "voz": "npc-quimica-carbono",
+   "texto": "Ele deixou espaços vazios",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele deixou espaços vazios"
+  },
+  {
+   "chave": "b11180bb1b",
+   "voz": "npc-quimica-carbono",
+   "texto": "para elementos não achados!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "para elementos não achados!"
+  },
+  {
+   "chave": "0b6e15d71a",
+   "voz": "npc-quimica-carbono",
+   "texto": "Lavoisier mostrou que nada",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Lavoaziê mostrou que nada"
+  },
+  {
+   "chave": "f441eecf1d",
+   "voz": "npc-quimica-carbono",
+   "texto": "se perde: tudo se transforma!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "se perde: tudo se transforma!"
+  },
+  {
+   "chave": "188b9bb61b",
+   "voz": "npc-quimica-carbono",
+   "texto": "Rosalind Franklin fez fotos",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Rosalind Franklin fez fotos"
+  },
+  {
+   "chave": "bd07d5e319",
+   "voz": "npc-quimica-carbono",
+   "texto": "de coisas muito pequenas!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "de coisas muito pequenas!"
+  },
+  {
+   "chave": "b50f04d31c",
+   "voz": "npc-quimica-carbono",
+   "texto": "Ela ajudou a entender o DNA.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ela ajudou a entender o dna."
+  },
+  {
+   "chave": "fc80379a16",
+   "voz": "npc-quimica-carbono",
+   "texto": "Uma cientista inventou",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Uma cientista inventou"
+  },
+  {
+   "chave": "f42176d11c",
+   "voz": "npc-quimica-carbono",
+   "texto": "um fio mais forte que o aço!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "um fio mais forte que o aço!"
+  },
+  {
+   "chave": "bab8adbe1e",
+   "voz": "npc-quimica-carbono",
+   "texto": "O diamante é feito de carbono.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O diamante é feito de carbono."
+  },
+  {
+   "chave": "1e42b45d18",
+   "voz": "npc-quimica-carbono",
+   "texto": "A ponta do lápis também!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A ponta do lápis também!"
+  },
+  {
+   "chave": "b3df5de812",
+   "voz": "npc-quimica-carbono",
+   "texto": "O sal tem cristais",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O sal tem cristais"
+  },
+  {
+   "chave": "a6e8e50315",
+   "voz": "npc-quimica-carbono",
+   "texto": "em forma de cubinhos!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "em forma de cubinhos!"
+  },
+  {
+   "chave": "89bae7ad1d",
+   "voz": "npc-quimica-carbono",
+   "texto": "O floco de neve é um cristal.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O floco de neve é um cristal."
+  },
+  {
+   "chave": "6ef3c05e1c",
+   "voz": "npc-quimica-carbono",
+   "texto": "Ele costuma ter seis pontas!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele costuma ter seis pontas!"
+  },
+  {
+   "chave": "b0ae1add18",
+   "voz": "npc-quimica-carbono",
+   "texto": "O diamante é o mais duro",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O diamante é o mais duro"
+  },
+  {
+   "chave": "6a75c68415",
+   "voz": "npc-quimica-carbono",
+   "texto": "de todos os minerais!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "de todos os minerais!"
+  },
+  {
+   "chave": "dfce99661a",
+   "voz": "npc-quimica-carbono",
+   "texto": "O açúcar também é cristal!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O açúcar também é cristal!"
+  },
+  {
+   "chave": "39e9ab0118",
+   "voz": "npc-quimica-carbono",
+   "texto": "Olhe com uma lupa forte.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Olhe com uma lupa forte."
+  },
+  {
+   "chave": "c44730041d",
+   "voz": "npc-quimica-carbono",
+   "texto": "A areia da praia tem quartzo,",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A areia da praia tem quartzo,"
+  },
+  {
+   "chave": "0339fd5f15",
+   "voz": "npc-quimica-carbono",
+   "texto": "um cristal bem comum!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "um cristal bem comum!"
+  },
+  {
+   "chave": "ba7846481d",
+   "voz": "npc-quimica-carbono",
+   "texto": "O café coado é uma separação.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O café coado é uma separação."
+  },
+  {
+   "chave": "2a42e2fa15",
+   "voz": "npc-quimica-carbono",
+   "texto": "O coador segura o pó!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O coador segura o pó!"
+  },
+  {
+   "chave": "e17a5cc913",
+   "voz": "npc-quimica-carbono",
+   "texto": "Só o líquido passa.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Só o líquido passa."
+  },
+  {
+   "chave": "4496a1de18",
+   "voz": "npc-quimica-carbono",
+   "texto": "O Sol seca a água do mar",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O Sol seca a água do mar"
+  },
+  {
+   "chave": "4ee9b0eb1a",
+   "voz": "npc-quimica-carbono",
+   "texto": "nas salinas e sobra o sal.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "nas salinas e sobra o sal."
+  },
+  {
+   "chave": "982d7f6119",
+   "voz": "npc-quimica-carbono",
+   "texto": "O Rio Grande do Norte faz",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O Rio Grande do Norte faz"
+  },
+  {
+   "chave": "660b2cfa1b",
+   "voz": "npc-quimica-carbono",
+   "texto": "quase todo o sal do Brasil!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "quase todo o sal do Brasil!"
+  },
+  {
+   "chave": "ac6a11c516",
+   "voz": "npc-quimica-carbono",
+   "texto": "O pão de queijo cresce",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O pão de queijo cresce"
+  },
+  {
+   "chave": "4bc595c814",
+   "voz": "npc-quimica-carbono",
+   "texto": "sem fermento nenhum!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "sem fermento nenhum!"
+  },
+  {
+   "chave": "dd98327b18",
+   "voz": "npc-quimica-carbono",
+   "texto": "Quem faz isso é o vapor!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Quem faz isso é o vapor!"
+  },
+  {
+   "chave": "e637eac81a",
+   "voz": "npc-quimica-carbono",
+   "texto": "O Brasil produz quase todo",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O Brasil produz quase todo"
+  },
+  {
+   "chave": "05b2e8d312",
+   "voz": "npc-quimica-carbono",
+   "texto": "o nióbio do mundo!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "o nióbio do mundo!"
+  },
+  {
+   "chave": "93b172e81b",
+   "voz": "npc-quimica-carbono",
+   "texto": "Ele deixa o aço mais forte.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele deixa o aço mais forte."
+  },
+  {
+   "chave": "c1ef607f17",
+   "voz": "npc-quimica-carbono",
+   "texto": "A borracha vem do látex",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A borracha vem do látex"
+  },
+  {
+   "chave": "a217d1c91c",
+   "voz": "npc-quimica-carbono",
+   "texto": "da seringueira, da Amazônia!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "da seringueira, da Amazônia!"
+  },
+  {
+   "chave": "73c7254b18",
+   "voz": "npc-quimica-carbono",
+   "texto": "Muitos carros aqui andam",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Muitos carros aqui andam"
+  },
+  {
+   "chave": "03f927d115",
+   "voz": "npc-quimica-carbono",
+   "texto": "com o etanol da cana!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "com o etanol da cana!"
+  },
+  {
+   "chave": "e2d2056a1b",
+   "voz": "npc-quimica-carbono",
+   "texto": "A cozinha é um laboratório!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A cozinha é um laboratório!"
+  },
+  {
+   "chave": "57d99e9418",
+   "voz": "npc-quimica-carbono",
+   "texto": "O fermento solta um gás.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O fermento solta um gás."
+  },
+  {
+   "chave": "4b22373319",
+   "voz": "npc-quimica-carbono",
+   "texto": "O gás faz o bolo crescer!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O gás faz o bolo crescer!"
+  },
+  {
+   "chave": "c19b02361b",
+   "voz": "npc-quimica-carbono",
+   "texto": "O milho da pipoca tem água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O milho da pipoca tem água."
+  },
+  {
+   "chave": "aabfe34a1c",
+   "voz": "npc-quimica-carbono",
+   "texto": "No calor, a água vira vapor.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "No calor, a água vira vapor."
+  },
+  {
+   "chave": "e480bcbd1d",
+   "voz": "npc-quimica-carbono",
+   "texto": "O vapor estoura o milho: pop!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O vapor estoura o milho: pop!"
+  },
+  {
+   "chave": "48f9eb011d",
+   "voz": "npc-quimica-carbono",
+   "texto": "Açúcar no fogo vira caramelo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Açúcar no fogo vira caramelo."
+  },
+  {
+   "chave": "74b4bcd91d",
+   "voz": "npc-quimica-carbono",
+   "texto": "Cozinhar transforma a comida!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Cozinhar transforma a comida!"
+  },
+  {
+   "chave": "193d2e821c",
+   "voz": "npc-quimica-carbono",
+   "texto": "Ele é invisível, mas existe.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele é invisível, mas existe."
+  },
+  {
+   "chave": "78fe4e201b",
+   "voz": "npc-quimica-carbono",
+   "texto": "A maior parte é nitrogênio.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A maior parte é nitrogênio."
+  },
+  {
+   "chave": "03b1005c1d",
+   "voz": "npc-quimica-carbono",
+   "texto": "O corpo usa o oxigênio do ar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O corpo usa o oxigênio do ar."
+  },
+  {
+   "chave": "1fb262771e",
+   "voz": "npc-quimica-carbono",
+   "texto": "E a gente solta gás carbônico.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "E a gente solta gás carbônico."
+  },
+  {
+   "chave": "c04db49419",
+   "voz": "npc-quimica-carbono",
+   "texto": "As plantas usam esse gás!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "As plantas usam esse gás!"
+  },
+  {
+   "chave": "8a19cde11d",
+   "voz": "npc-quimica-carbono",
+   "texto": "E devolvem oxigênio para nós.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "E devolvem oxigênio para nós."
+  },
+  {
+   "chave": "814baa801e",
+   "voz": "npc-quimica-carbono",
+   "texto": "O fogo precisa de três coisas.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O fogo precisa de três coisas."
+  },
+  {
+   "chave": "f50e75021c",
+   "voz": "npc-quimica-carbono",
+   "texto": "Combustível, como a madeira.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Combustível, como a madeira."
+  },
+  {
+   "chave": "d74a51a518",
+   "voz": "npc-quimica-carbono",
+   "texto": "Oxigênio, que vem do ar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Oxigênio, que vem do ar."
+  },
+  {
+   "chave": "09b3cda515",
+   "voz": "npc-quimica-carbono",
+   "texto": "E calor para começar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "E calor para começar."
+  },
+  {
+   "chave": "b59eaac21a",
+   "voz": "npc-quimica-carbono",
+   "texto": "Tirando uma, o fogo apaga!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Tirando uma, o fogo apaga!"
+  },
+  {
+   "chave": "283304f219",
+   "voz": "npc-quimica-carbono",
+   "texto": "Abafar tira o ar do fogo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Abafar tira o ar do fogo."
+  },
+  {
+   "chave": "7e82770917",
+   "voz": "npc-quimica-carbono",
+   "texto": "Nunca brinque com fogo!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Nunca brinque com fogo!"
+  },
+  {
+   "chave": "88f7ca9218",
+   "voz": "npc-quimica-carbono",
+   "texto": "Fogo é só com um adulto!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Fogo é só com um adulto!"
+  },
+  {
+   "chave": "b7b3afcc18",
+   "voz": "npc-quimica-carbono",
+   "texto": "O ferro pode enferrujar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O ferro pode enferrujar."
+  },
+  {
+   "chave": "0156297e1e",
+   "voz": "npc-quimica-carbono",
+   "texto": "Ele reage com água e oxigênio.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele reage com água e oxigênio."
+  },
+  {
+   "chave": "56b949ab1d",
+   "voz": "npc-quimica-carbono",
+   "texto": "E vira ferrugem, bem devagar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "E vira ferrugem, bem devagar."
+  },
+  {
+   "chave": "1f3407e918",
+   "voz": "npc-quimica-carbono",
+   "texto": "A tinta protege o ferro.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A tinta protege o ferro."
+  },
+  {
+   "chave": "968cae3d1b",
+   "voz": "npc-quimica-carbono",
+   "texto": "O ouro não enferruja nunca!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O ouro não enferruja nunca!"
+  },
+  {
+   "chave": "498c78b51c",
+   "voz": "npc-quimica-carbono",
+   "texto": "Olha a Estátua da Liberdade!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Olha a Estátua da Liberdade!"
+  },
+  {
+   "chave": "bac85a571d",
+   "voz": "npc-quimica-carbono",
+   "texto": "Ela é de cobre e ficou verde.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ela é de cobre e ficou verde."
+  },
+  {
+   "chave": "dfc500bd1e",
+   "voz": "npc-quimica-carbono",
+   "texto": "Esse verde se chama azinhavre.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Esse verde se chama azinhavre."
+  },
+  {
+   "chave": "c55c7f161d",
+   "voz": "npc-quimica-carbono",
+   "texto": "O sol esquenta a água do mar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O sol esquenta a água do mar."
+  },
+  {
+   "chave": "b1c8cfc216",
+   "voz": "npc-quimica-carbono",
+   "texto": "A água evapora e sobe.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A água evapora e sobe."
+  },
+  {
+   "chave": "db61b5701b",
+   "voz": "npc-quimica-carbono",
+   "texto": "Lá no alto, o vapor esfria.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Lá no alto, o vapor esfria."
+  },
+  {
+   "chave": "415db2611c",
+   "voz": "npc-quimica-carbono",
+   "texto": "Ele condensa: vira gotinhas.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele condensa: vira gotinhas."
+  },
+  {
+   "chave": "288c27421e",
+   "voz": "npc-quimica-carbono",
+   "texto": "Muitas gotinhas fazem a nuvem.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Muitas gotinhas fazem a nuvem."
+  },
+  {
+   "chave": "368fb4ee1d",
+   "voz": "npc-quimica-carbono",
+   "texto": "As gotas pesam e cai a chuva!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "As gotas pesam e cai a chuva!"
+  },
+  {
+   "chave": "047927e61e",
+   "voz": "npc-quimica-carbono",
+   "texto": "A chuva volta ao rio e ao mar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A chuva volta ao rio e ao mar."
+  },
+  {
+   "chave": "f4518f451e",
+   "voz": "npc-quimica-carbono",
+   "texto": "É a mesma água há muito tempo!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "É a mesma água há muito tempo!"
+  },
+  {
+   "chave": "be8ae6311e",
+   "voz": "npc-quimica-carbono",
+   "texto": "A planta faz a própria comida!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A planta faz a própria comida!"
+  },
+  {
+   "chave": "0b6af62b1a",
+   "voz": "npc-quimica-carbono",
+   "texto": "Ela usa luz do sol e água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ela usa luz do sol e água."
+  },
+  {
+   "chave": "d68cddb918",
+   "voz": "npc-quimica-carbono",
+   "texto": "E o gás carbônico do ar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "E o gás carbônico do ar."
+  },
+  {
+   "chave": "28fb0b4119",
+   "voz": "npc-quimica-carbono",
+   "texto": "Com isso, ela faz açúcar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Com isso, ela faz açúcar."
+  },
+  {
+   "chave": "5cb7c36d1b",
+   "voz": "npc-quimica-carbono",
+   "texto": "O açúcar é o alimento dela.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O açúcar é o alimento dela."
+  },
+  {
+   "chave": "0a9ee0031b",
+   "voz": "npc-quimica-carbono",
+   "texto": "E ela solta oxigênio no ar!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "E ela solta oxigênio no ar!"
+  },
+  {
+   "chave": "60291d991b",
+   "voz": "npc-quimica-carbono",
+   "texto": "Isso se chama fotossíntese.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Isso se chama fotossíntese."
+  },
+  {
+   "chave": "f0f7e0fe1b",
+   "voz": "npc-quimica-carbono",
+   "texto": "As plantas são importantes!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "As plantas são importantes!"
+  },
+  {
+   "chave": "ad371c4d1d",
+   "voz": "npc-quimica-carbono",
+   "texto": "Seu corpo é cheio de química!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Seu corpo é cheio de química!"
+  },
+  {
+   "chave": "84d4b2351b",
+   "voz": "npc-quimica-carbono",
+   "texto": "Mais da metade dele é água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Mais da metade dele é água."
+  },
+  {
+   "chave": "7bb0b1d81a",
+   "voz": "npc-quimica-carbono",
+   "texto": "A saliva amolece a comida.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A saliva amolece a comida."
+  },
+  {
+   "chave": "f2518de21c",
+   "voz": "npc-quimica-carbono",
+   "texto": "Isso é o começo da digestão.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Isso é o começo da digestão."
+  },
+  {
+   "chave": "206a73a91c",
+   "voz": "npc-quimica-carbono",
+   "texto": "Ele ajuda a desmanchar tudo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele ajuda a desmanchar tudo."
+  },
+  {
+   "chave": "e3a631cb16",
+   "voz": "npc-quimica-carbono",
+   "texto": "A comida vira energia!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A comida vira energia!"
+  },
+  {
+   "chave": "fa6decec1e",
+   "voz": "npc-quimica-carbono",
+   "texto": "Energia para correr e brincar!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Energia para correr e brincar!"
+  },
+  {
+   "chave": "7b32b27215",
+   "voz": "npc-quimica-carbono",
+   "texto": "O cientista Lavoisier",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O cientista Lavoaziê"
+  },
+  {
+   "chave": "005ac57518",
+   "voz": "npc-quimica-carbono",
+   "texto": "pesava tudo com cuidado.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "pesava tudo com cuidado."
+  },
+  {
+   "chave": "9f2fc1ee1b",
+   "voz": "npc-quimica-carbono",
+   "texto": "Na natureza, nada se perde,",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Na natureza, nada se perde,"
+  },
+  {
+   "chave": "01b663a913",
+   "voz": "npc-quimica-carbono",
+   "texto": "tudo se transforma!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "tudo se transforma!"
+  },
+  {
+   "chave": "634eb1e81e",
+   "voz": "npc-quimica-carbono",
+   "texto": "Marie Curie ganhou dois Nobel.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Marie Curie ganhou dois Nobel."
+  },
+  {
+   "chave": "ea2035311b",
+   "voz": "npc-quimica-carbono",
+   "texto": "A primeira mulher a ganhar!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A primeira mulher a ganhar!"
+  },
+  {
+   "chave": "5d4f8d221a",
+   "voz": "npc-quimica-carbono",
+   "texto": "Achou os elementos polônio",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Achou os elementos polônio"
+  },
+  {
+   "chave": "27e7c61e1d",
+   "voz": "npc-quimica-carbono",
+   "texto": "e rádio, com o marido Pierre.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "e rádio, com o marido Pierre."
+  },
+  {
+   "chave": "553328b41c",
+   "voz": "npc-quimica-carbono",
+   "texto": "Mendeleiev arrumou a tabela.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Mendeleiev arrumou a tabela."
+  },
+  {
+   "chave": "d030d19c1e",
+   "voz": "npc-quimica-carbono",
+   "texto": "E deixou vagas para descobrir!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "E deixou vagas para descobrir!"
+  },
+  {
+   "chave": "1eced44e1b",
+   "voz": "npc-quimica-caramela",
+   "texto": "Um cubo de gelo geladinho!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um cubo de gelo geladinho!"
+  },
+  {
+   "chave": "7e88833d18",
+   "voz": "npc-quimica-caramela",
+   "texto": "Um pedaço de chocolate!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um pedaço de chocolate!"
+  },
+  {
+   "chave": "b8aeb12517",
+   "voz": "npc-quimica-caramela",
+   "texto": "Manteiga da geladeira!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Manteiga da geladeira!"
+  },
+  {
+   "chave": "ba1f8b8619",
+   "voz": "npc-quimica-caramela",
+   "texto": "Um toco de cera de vela!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um toco de cera de vela!"
+  },
+  {
+   "chave": "223d80fe11",
+   "voz": "npc-quimica-caramela",
+   "texto": "O gelo derreteu!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O gelo derreteu!"
+  },
+  {
+   "chave": "5133781114",
+   "voz": "npc-quimica-caramela",
+   "texto": "Virou água líquida.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Virou água líquida."
+  },
+  {
+   "chave": "815c98e916",
+   "voz": "npc-quimica-caramela",
+   "texto": "A água está fervendo!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A água está fervendo!"
+  },
+  {
+   "chave": "670297b418",
+   "voz": "npc-quimica-caramela",
+   "texto": "Ela vira vapor, um gás.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ela vira vapor, um gás."
+  },
+  {
+   "chave": "13c5d0eb1a",
+   "voz": "npc-quimica-caramela",
+   "texto": "O vapor esfriou na tampa.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O vapor esfriou na tampa."
+  },
+  {
+   "chave": "0ba96d3318",
+   "voz": "npc-quimica-caramela",
+   "texto": "Virou gotinhas de água!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Virou gotinhas de água!"
+  },
+  {
+   "chave": "0f53796f11",
+   "voz": "npc-quimica-caramela",
+   "texto": "A água congelou!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A água congelou!"
+  },
+  {
+   "chave": "ce58006e14",
+   "voz": "npc-quimica-caramela",
+   "texto": "Virou gelo de novo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Virou gelo de novo."
+  },
+  {
+   "chave": "7b3d27c916",
+   "voz": "npc-quimica-caramela",
+   "texto": "O chocolate derreteu!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O chocolate derreteu!"
+  },
+  {
+   "chave": "0374661118",
+   "voz": "npc-quimica-caramela",
+   "texto": "Até na mão ele derrete!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Até na mão ele derrete!"
+  },
+  {
+   "chave": "fe9f437f15",
+   "voz": "npc-quimica-caramela",
+   "texto": "A manteiga derreteu!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A manteiga derreteu!"
+  },
+  {
+   "chave": "a701743c1a",
+   "voz": "npc-quimica-caramela",
+   "texto": "Virou um líquido amarelo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Virou um líquido amarelo."
+  },
+  {
+   "chave": "6c31892319",
+   "voz": "npc-quimica-caramela",
+   "texto": "A cera da vela derreteu!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A cera da vela derreteu!"
+  },
+  {
+   "chave": "db6510521d",
+   "voz": "npc-quimica-caramela",
+   "texto": "Ela derrete bem mais quente.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ela derrete bem mais quente."
+  },
+  {
+   "chave": "828cb7ca18",
+   "voz": "npc-quimica-caramela",
+   "texto": "O pano do coador segura",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O pano do coador segura"
+  },
+  {
+   "chave": "d928890410",
+   "voz": "npc-quimica-caramela",
+   "texto": "o que é sólido.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "o que é sólido."
+  },
+  {
+   "chave": "217e62c011",
+   "voz": "npc-quimica-caramela",
+   "texto": "O líquido passa!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O líquido passa!"
+  },
+  {
+   "chave": "1dd0d50a19",
+   "voz": "npc-quimica-caramela",
+   "texto": "Catar é tirar com a mão,",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Catar é tirar com a mão,"
+  },
+  {
+   "chave": "c28dd8551a",
+   "voz": "npc-quimica-caramela",
+   "texto": "um pedacinho de cada vez.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "um pedacinho de cada vez."
+  },
+  {
+   "chave": "c3230ec71d",
+   "voz": "npc-quimica-caramela",
+   "texto": "O que é miúdo cai nos furos.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O que é miúdo cai nos furos."
+  },
+  {
+   "chave": "2eb0433d1a",
+   "voz": "npc-quimica-caramela",
+   "texto": "O graúdo fica na peneira.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O graúdo fica na peneira."
+  },
+  {
+   "chave": "21d3c9bf17",
+   "voz": "npc-quimica-caramela",
+   "texto": "O sol esquenta a água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O sol esquenta a água."
+  },
+  {
+   "chave": "551a3bb517",
+   "voz": "npc-quimica-caramela",
+   "texto": "Ela vira vapor e sobe.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ela vira vapor e sobe."
+  },
+  {
+   "chave": "372ec67b1d",
+   "voz": "npc-quimica-caramela",
+   "texto": "O ímã puxa o que é de ferro.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O ímã puxa o que é de ferro."
+  },
+  {
+   "chave": "90723c4719",
+   "voz": "npc-quimica-caramela",
+   "texto": "Com calma, o mais pesado",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Com calma, o mais pesado"
+  },
+  {
+   "chave": "9a616d7214",
+   "voz": "npc-quimica-caramela",
+   "texto": "desce para o fundo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "desce para o fundo."
+  },
+  {
+   "chave": "801e957719",
+   "voz": "npc-quimica-caramela",
+   "texto": "Café com o pó misturado.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Café com o pó misturado."
+  },
+  {
+   "chave": "c75a23bd14",
+   "voz": "npc-quimica-caramela",
+   "texto": "Como tirar esse pó?",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Como tirar esse pó?"
+  },
+  {
+   "chave": "0c68f1de16",
+   "voz": "npc-quimica-caramela",
+   "texto": "O pó ficou no coador.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O pó ficou no coador."
+  },
+  {
+   "chave": "3efbbf6015",
+   "voz": "npc-quimica-caramela",
+   "texto": "O café coado no pano",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O café coado no pano"
+  },
+  {
+   "chave": "1b2675ed12",
+   "voz": "npc-quimica-caramela",
+   "texto": "é bem brasileiro!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "é bem brasileiro!"
+  },
+  {
+   "chave": "dc7a16981d",
+   "voz": "npc-quimica-caramela",
+   "texto": "Olha o feijão com pedrinhas!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Olha o feijão com pedrinhas!"
+  },
+  {
+   "chave": "dc3c12f71b",
+   "voz": "npc-quimica-caramela",
+   "texto": "Ninguém quer morder pedra!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ninguém quer morder pedra!"
+  },
+  {
+   "chave": "d845b8271b",
+   "voz": "npc-quimica-caramela",
+   "texto": "Pronto! Nada de pedrinhas.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Pronto! Nada de pedrinhas."
+  },
+  {
+   "chave": "af11b0e916",
+   "voz": "npc-quimica-caramela",
+   "texto": "A gente cata o feijão",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A gente cata o feijão"
+  },
+  {
+   "chave": "ef9282ef13",
+   "voz": "npc-quimica-caramela",
+   "texto": "antes de cozinhar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "antes de cozinhar."
+  },
+  {
+   "chave": "a9364d8015",
+   "voz": "npc-quimica-caramela",
+   "texto": "Areia com pedrinhas.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Areia com pedrinhas."
+  },
+  {
+   "chave": "cd1311331d",
+   "voz": "npc-quimica-caramela",
+   "texto": "Uma é miúda, a outra graúda.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Uma é miúda, a outra graúda."
+  },
+  {
+   "chave": "0f1a856115",
+   "voz": "npc-quimica-caramela",
+   "texto": "As pedrinhas saíram!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "As pedrinhas saíram!"
+  },
+  {
+   "chave": "424a6e9517",
+   "voz": "npc-quimica-caramela",
+   "texto": "A areia ficou fininha.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A areia ficou fininha."
+  },
+  {
+   "chave": "a4d512c419",
+   "voz": "npc-quimica-caramela",
+   "texto": "Água com sal dissolvido.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Água com sal dissolvido."
+  },
+  {
+   "chave": "63ebf0721b",
+   "voz": "npc-quimica-caramela",
+   "texto": "O sal se escondeu na água!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O sal se escondeu na água!"
+  },
+  {
+   "chave": "f3c8c51e19",
+   "voz": "npc-quimica-caramela",
+   "texto": "A água foi embora no ar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A água foi embora no ar."
+  },
+  {
+   "chave": "a47ab04018",
+   "voz": "npc-quimica-caramela",
+   "texto": "O sal branquinho ficou!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O sal branquinho ficou!"
+  },
+  {
+   "chave": "5aebc2081c",
+   "voz": "npc-quimica-caramela",
+   "texto": "Nas salinas é assim também.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Nas salinas é assim também."
+  },
+  {
+   "chave": "56a2d1761c",
+   "voz": "npc-quimica-caramela",
+   "texto": "Areia com pozinho de ferro.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Areia com pozinho de ferro."
+  },
+  {
+   "chave": "305941f81b",
+   "voz": "npc-quimica-caramela",
+   "texto": "O ímã puxou o pó de ferro!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O ímã puxou o pó de ferro!"
+  },
+  {
+   "chave": "5b74babc18",
+   "voz": "npc-quimica-caramela",
+   "texto": "A areia ficou limpinha.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A areia ficou limpinha."
+  },
+  {
+   "chave": "dff31bee1a",
+   "voz": "npc-quimica-caramela",
+   "texto": "Água com terra misturada.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Água com terra misturada."
+  },
+  {
+   "chave": "bd22a7061c",
+   "voz": "npc-quimica-caramela",
+   "texto": "A terra se separou da água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A terra se separou da água."
+  },
+  {
+   "chave": "8e5a1c0f1e",
+   "voz": "npc-quimica-caramela",
+   "texto": "Mas essa água não é de beber!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Mas essa água não é de beber!"
   },
   {
    "chave": "6a4a021b1r",

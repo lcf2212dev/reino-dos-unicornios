@@ -106,7 +106,7 @@
       if (cena.fogo === 'quente' && s < 1) ret(x, 59, yv, 10, 1, c.poca);   // escorrendo pela beirada
     }
   }
-  // o que endureceu de novo na panela vira uma placa lisa, do formato da poça
+  // o que endureceu de novo na panela vira um tablete fosco de borda reta, do tamanho da poça
   function placa(x, cena, c, s) {
     var h = Math.max(3, Math.round(nivel(cena) * s)), y = CHAO - h + 1;
     if (cena.material === 'agua') {
