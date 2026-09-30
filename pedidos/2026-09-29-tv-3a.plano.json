@@ -1,0 +1,30 @@
+{
+  "nome": "2026-09-29-tv-3a",
+  "pedido": "pedidos/2026-09-29-tv-3a.md",
+  "personagens": [],
+  "tarefas": [
+    {
+      "id": "mapa-1", "tipo": "arte", "titulo": "D1-01 (ordem de desenho), D1-06, D1-07, D1-C1, D1-C2, D1-08, D1-09, D1-13, D1-16, O-04",
+      "quem": "general-purpose", "depende": [],
+      "arquivos": ["jogo/js/mundo/", "jogo/js/motor/laco.js", "jogo/js/motor/cena.js", "jogo/js/personagens/jogador-desenho.js"],
+      "worktree": "tv-3a-mapa",
+      "pronto": ["o 'Pronto quando' completo de cada item no TODO, com o comando dele, nos 3 tamanhos"],
+      "estimativa": 180
+    },
+    {
+      "id": "mapa-2", "tipo": "arte", "titulo": "D1-03, D1-04, D1-05, D1-12, D1-14, D1-15, D1-17, D1-18: chão, água e ruas",
+      "quem": "general-purpose", "depende": ["mapa-1"],
+      "arquivos": ["jogo/ferramentas/previas/mapa.html"],
+      "worktree": "tv-3a-mapa",
+      "pronto": ["o 'Pronto quando' completo de cada item no TODO, com o comando dele, nos 3 tamanhos"],
+      "estimativa": 150
+    },
+    {
+      "id": "integracao", "tipo": "integracao", "titulo": "Juntar, npm test e e2e, marcar o TODO",
+      "quem": "orquestrador", "depende": ["mapa-1", "mapa-2"],
+      "arquivos": ["TODO-VISUAL.md", "jogo/js/manifesto.js", "jogo/index.html", "jogo/ferramentas/testes/base-referencia.txt"],
+      "worktree": "tv-3a", "pronto": ["npm test e npm run e2e verdes; diferenças explicadas (base trocada)"], "estimativa": 45
+    },
+    { "id": "entrega", "tipo": "entrega", "titulo": "Merge, push e Vercel", "quem": "orquestrador", "depende": ["integracao"], "arquivos": [], "worktree": "tv-3a", "estimativa": 15 }
+  ]
+}
