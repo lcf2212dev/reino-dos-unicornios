@@ -1,6 +1,6 @@
 # TODO visual: Mariana e o Reino dos Unicórnios
 
-Progresso: 276 de 290 (onda 5b, 30/09/2026) · itens novos O-03 a O-35: 29 de 33
+Progresso: 276 de 290 (O-34, 30/09/2026) · itens novos O-03 a O-35: 30 de 33
 
 > Auditoria visual feita em 29/09/2026, só de leitura, sobre a `main` em `7cbfa9f`. Cobre tudo o que a jogadora vê: mapa, prédios por dentro e por fora, unicórnio, NPCs, diálogo, perguntas, provas, matérias, HUD, loja, menus, movimento, app instalado e coerência de direção de arte.
 > Cada item traz a evidência (`arquivo:linha` e nome de cena do e2e), o tipo, o esforço (P ≤ 1 h, M ≤ 1 dia, G > 1 dia), as dependências e o critério de pronto. Cada relatório e cada critério de pronto passou por um conferente independente.
@@ -479,7 +479,7 @@ As prioridades dizem **quanto importa**. Esta ordem diz **o que vem antes**. A r
 
 - [x] **O-33 · P3 · Cogumelo do Observatório 3 pula ~1 px ao ficar na frente da Mariana** — Quando o móvel baixo vira sprite (O-05), ele desce cerca de 1 px de tela em relação ao desenho estático (âncora `it.base + 2` em `interiores-cena.js`). Pronto quando o recorte ampliado de `comodo-observatorio-3-ganha` (notebook) não mudar ao ela chegar perto.
 
-- [ ] **O-34 · P3 · Desenho no celular com Letras grandes: etiquetas do "Use no desenho:" cortadas** — Com `{"texto":1.15}`, o enunciado da prova (7 linhas) empurra a lista para baixo e as etiquetas ficam sob a barra do "Terminei". Pronto quando `npm run ver -- --tela prova:ingles-3bim:11 --ajustes '{"texto":1.15}'` no celular mostrar o título e as 3 etiquetas sem rolar.
+- [x] **O-34 · P3 · Desenho no celular com Letras grandes: etiquetas do "Use no desenho:" cortadas** — Com `{"texto":1.15}`, o enunciado da prova (7 linhas) empurra a lista para baixo e as etiquetas ficam sob a barra do "Terminei". Pronto quando `npm run ver -- --tela prova:ingles-3bim:11 --ajustes '{"texto":1.15}'` no celular mostrar o título e as 3 etiquetas sem rolar.
 
 - [ ] **O-35 · P3 · Retorno da sala no celular deitado cobre a marca do erro** — Em 844×390 a regra do celular (≤ 480 px de largura) não vale e a folha grande do retorno cobre os itens marcados em ligar e separar. Pronto quando, no celular deitado, a marca do erro e o "Tentar de novo" aparecerem juntos (regra por altura baixa, `max-height`).
 
