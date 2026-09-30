@@ -9,7 +9,7 @@
   por('bancada.cheio', ['O béquer já está cheio!', 'Cabem só três tubos.']);
   por('bancada.vazio', ['O béquer está vazio.', 'Escolha um tubo primeiro!']);
   // mistura sem receita: nunca é erro
-  por('bancada.nada', ['Hmm, nada de especial.', 'Cientista testa de tudo!', 'Vamos tentar outra mistura?']);
+  por('bancada.nada', ['Olha, nada de especial.', 'Cientista testa de tudo!', 'Vamos tentar outra mistura?']);
   por('bancada.quaseFalta', ['Quase! Falta um ingrediente.']);
   por('bancada.quaseSobra', ['Quase! Sobrou um ingrediente.', 'Esvazie e tente de novo.']);
   por('bancada.quaseCaderno', ['A receita está no caderno!']);
