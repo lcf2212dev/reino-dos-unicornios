@@ -21,8 +21,8 @@
 .missao-topo .missao-titulo.titulo-aux { font-size: var(--texto-aux); }
 .titulo-cola { white-space: nowrap; }   /* o ícone preso à 1ª palavra (D.ajustarTitulo) */
 .titulo-resto { white-space: normal; }   /* o resto do «inglês» do título, dentro do mesmo span.en, quebra normal */
-/* letras grandes no celular: o título do topo fica no degrau de baixo (16), como o cabeçalho que não cabe (ui.md §10.21) */
-@media (max-width: 480px) { .letras-grandes .missao-titulo { font-size: var(--texto-aux); } }
+/* letras grandes no celular (em pé ou deitado, O-35): o título do topo fica no degrau de baixo (16), como o cabeçalho que não cabe (ui.md §10.21) */
+@media (max-width: 480px), (max-height: 480px) { .letras-grandes .missao-titulo { font-size: var(--texto-aux); } }
 /* trilha da sala (D7-21, D12f-04): "Carta N de M"/"Desafio N de M", um livrinho por carta do resumo e um ponto por
    pergunta, juntos no cabeçalho; no celular o texto fica no corpo (.desafio-num, .resumo-pag) */
 .missao-trilha { display: flex; align-items: center; gap: 10px; flex: none; }
@@ -225,7 +225,7 @@
 .retorno-botoes { display: flex; flex-wrap: wrap; gap: 12px; justify-content: flex-end; }
 .retorno-botoes .btn-grande { flex: 1 1 200px; }
 /* celular (D6-08): folha baixa (Claude, título e 1 linha; pista recolhível) para a opção marcada ficar à vista */
-@media (max-width: 480px) {
+@media (max-width: 480px), (max-height: 480px) {   /* celular em pé ou deitado (O-35) */
   .missao-retorno { max-height: 60%; padding: 8px 16px calc(env(safe-area-inset-bottom, 0px) + 8px); }
   .missao-retorno > * + * { margin-top: 8px; }
   .retorno-cabeca { gap: 8px; }
@@ -238,6 +238,9 @@
   .retorno-botoes { gap: 8px; flex-wrap: nowrap; }
   .retorno-botoes .btn-grande { flex: 1 1 0; min-width: 0; width: auto; padding-left: 8px; padding-right: 8px; }
 }
+
+/* deitado (O-35): no erro o título "Quase!" sai (a fala do Claude basta), para a marca do erro caber acima da folha */
+@media (max-height: 480px) { .retorno-quase .retorno-cabeca h3 { display: none; } }
 
 /* intro e fim de sala */
 .intro-sala, .fim-sala, .ritual, .revisao { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
@@ -264,6 +267,16 @@
 .premio-dinheiro { background: var(--ouro-claro) !important; }
 .premio-ovo { background: var(--laranja-claro) !important; }
 .dica-raro { color: var(--raro-texto); }
+/* matéria completa (O-36): título e ícone do nível 4, com vãos menores e os prêmios em 2 colunas quando cabe,
+   para o botão ficar à vista sem rolar */
+.fim-sala.fim-materia { gap: 8px; }
+.fim-materia .premios { gap: 8px; }
+.fim-materia .premios li { padding: 8px 12px; }
+/* largo: a folha mais larga (título em 2 linhas, prêmio de 1 linha); celular: a frase repete o título e sai */
+.missao-corpo > .fim-sala.fim-materia { max-width: 1000px; }
+@media (min-width: 700px) { .fim-materia .premios { display: grid; grid-template-columns: 1fr 1fr; } }
+/* celular: a frase repete o título e sai; vãos de 4 px para a linha do total da matéria caber */
+@media (max-width: 480px) { .fim-materia .fim-grande { display: none; } .fim-sala.fim-materia, .fim-materia .premios { gap: 4px; } .fim-materia .premios li { padding: 4px 8px; } }
 
 
 /* resumo antes das questões (cartas do livro que a sala usa) */
