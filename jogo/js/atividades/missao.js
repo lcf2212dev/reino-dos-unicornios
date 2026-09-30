@@ -8,6 +8,7 @@
 
   M.iniciar = function (materia, sala, aoTerminar) {
     var tela = Reino.UI.abrirTela('missao');
+    if (materia && materia.cor) tela.style.setProperty('--cor-materia', materia.cor);   // faixa do cabeçalho na cor da matéria (D10-12)
     var lista = D.sortear(sala, Reino.config.desafiosPorSala);
     var idx = 0, acertosPrimeira = 0, pressas = 0, ultimaPressa = -10;
     var errouAtual = false, avisouPressa = false, inicioDesafio = 0, ctrl = null;

@@ -121,6 +121,7 @@
   Pr.iniciar = function (materia, aoTerminar) {
     Reino.Voz.carregarMateria(materia);
     var tela = Reino.UI.abrirTela('prova');
+    if (materia.cor) tela.style.setProperty('--cor-materia', materia.cor);   // faixa do cabeçalho na cor da matéria
     var P = Reino.Progresso, est = P.estado();
     var questoes = sortearQuestoes(materia);
     var respostas = questoes.map(function () { return null; });
@@ -132,7 +133,14 @@
     var titulo = el('div.missao-titulo', el('span', '🥇 Treino da Medalha: ' + materia.nome));
     var corpo = el('div.missao-corpo');
     var rodape = el('footer.missao-rodape.prova-rodape.rodape-acao', { hidden: true });   // rodapé de ação (ui.md §10.20)
-    tela.appendChild(el('header.missao-topo', sair, titulo));
+    // os pontos de progresso, como na prova (D6-23): um por questão, a respondida laranja e a atual dourada
+    var pontos = el('div.missao-pontos', { 'aria-hidden': 'true' });
+    function desenharPontos() {
+      pontos.innerHTML = '';
+      questoes.forEach(function (_, k) { pontos.appendChild(el('span.ponto' + (respostas[k] != null ? '.feito' : '') + (fase === 'prova' && k === atual ? '.atual' : ''))); });
+    }
+    tela.appendChild(el('header.missao-topo', sair, titulo, pontos));
+    desenharPontos();
     tela.appendChild(corpo);
     tela.appendChild(rodape);
     document.body.classList.add('em-missao');
@@ -169,13 +177,14 @@
 
     function mostrarQuestao(i, modoRevisao) {
       atual = i;
+      desenharPontos();
       var d = questoes[i];
       corpo.innerHTML = '';
       rodape.innerHTML = '';
       rodape.hidden = false;
       var ctrl = D.render(d, {
         modo: 'prova', ordem: d.tipo === 'vf' ? [0, 1] : ordens[i], valorInicial: respostas[i],
-        onMudar: function () { respostas[i] = ctrl.valor(); if (modoRevisao) { revisadas[i] = false; } atualizarBotoes(); },
+        onMudar: function () { respostas[i] = ctrl.valor(); if (modoRevisao) { revisadas[i] = false; } atualizarBotoes(); desenharPontos(); },
       });
       // abriu uma questão da lista: o balão "Hora de revisar!" não fica por cima dela
       if (modoRevisao) Reino.Claude.limpar();
@@ -227,6 +236,7 @@
     // de: a questão que ela acabou de revisar (ou de onde voltou com "← Lista"); voltou: foi pelo "← Lista"
     function telaRevisao(primeiraVez, de, voltou) {
       fase = 'revisao';
+      desenharPontos();
       corpo.innerHTML = '';
       rodape.innerHTML = '';
       var faltamRev = revisadas.filter(function (r) { return !r; }).length;

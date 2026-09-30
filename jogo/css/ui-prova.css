@@ -39,9 +39,6 @@
 /* ---------- escola do reino (provas bimestrais) ---------- */
 .chip-rar { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); font-size: var(--texto-aux); white-space: nowrap; background: var(--rar-fundo, var(--comum-fundo)); color: var(--rar-texto, var(--tinta)); }
 .sala-chips .chip-mini { border-radius: var(--canto); }
-.cartao-prova { flex-wrap: wrap; }
-.cartao-prova .sala-info { flex: 1 1 60%; }
-.cartao-prova .sala-ir { flex-basis: 100%; text-align: right; }
 .chip-mini.valendo { background: var(--rar-fundo, var(--comum-fundo)); color: var(--rar-texto, var(--tinta)); }
 /* raridade: fundo chapado e a faixa interna de 4 px em --rar-desenho (lendário dourado, sem o arco-íris: ui.md §10.8) */
 .faixa-valendo { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 6px 14px; border-bottom: var(--borda-grossa) solid var(--borda); font-size: var(--texto-aux); text-align: center; background: var(--rar-fundo, var(--comum-fundo)); box-shadow: inset 0 -4px 0 var(--rar-desenho, var(--comum-desenho)); }   /* tipografia-ok: faixa interna da raridade (ui.md §10.8) */

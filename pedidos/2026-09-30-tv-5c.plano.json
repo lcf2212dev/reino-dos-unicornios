@@ -1,0 +1,85 @@
+{
+  "nome": "2026-09-30-tv-5c",
+  "pedido": "pedidos/2026-09-30-tv-5c.md",
+  "personagens": [],
+  "tarefas": [
+    {
+      "id": "cabecalho",
+      "tipo": "mecanica",
+      "titulo": "D10-B11, D10-12 (resto), D8B-28, D6-23, D7-12, D7-18 e D12f-02 (Escola, Castelo, Lugares, matéria, Foguete e a sombra do pé): cabeçalho padrão do painel com ícone e faixa da matéria, larguras 560/720, emoji da matéria na prova, 'Melhor: Ouro' e selo-botão, índice do livro, 2 colunas de salas no notebook baixo",
+      "quem": "general-purpose",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/ui/base.js",
+        "jogo/css/ui-telas.css",
+        "jogo/js/ui/materia.js",
+        "jogo/js/atividades/provas.js",
+        "jogo/js/atividades/treino.js",
+        "jogo/js/atividades/missao.js",
+        "jogo/css/ui-missao.css",
+        "jogo/css/ui-prova.css",
+        "jogo/css/ui-foguete.css",
+        "jogo/ferramentas/testes/unidade/painel-cabecalho.navegador.test.js"
+      ],
+      "worktree": "tv-5c-cabecalho",
+      "pronto": [
+        "o 'Pronto quando' de D10-B11, D10-12, D8B-28, D6-23, D7-12 e D7-18 (pedido §13, decisões 1 a 6)",
+        "D12f-02 (parte desta frente): Castelo, Escola e Foguete sem rolar e Lugares ≤ 1,3× no notebook; sombra no pé do .painel-conteudo que ainda rola",
+        "painel() põe --cor-materia na tela com a opção materia; nenhum chamador de UI.painel precisou mudar só pelo ícone",
+        "teste de navegador painel-cabecalho: título numa linha nos 3 tamanhos e larguras só 560/720"
+      ],
+      "estimativa": 270
+    },
+    {
+      "id": "listas",
+      "tipo": "mecanica",
+      "titulo": "D12f-02 (Baú, Ajustes, Álbum de ETs, Pet Shop) e D10-12 (cartas do livro na cor da matéria): 2 colunas no notebook baixo, interruptores e botões dos Ajustes sem rolar, borda das cartas pela --cor-materia",
+      "quem": "worker-low",
+      "depende": ["cabecalho"],
+      "arquivos": [
+        "jogo/css/ui-paineis.css",
+        "jogo/js/ui/ajustes.js",
+        "jogo/css/ui-album-ets.css",
+        "jogo/css/ui-petshop.css"
+      ],
+      "worktree": "tv-5c-listas",
+      "pronto": [
+        "D12f-02 (parte desta frente): Baú e Ajustes sem rolar, os 4 botões dos Ajustes à vista, Álbum de ETs ≤ 1,3× no notebook (pedido §14.7)",
+        "D10-12 (parte desta frente): as cartas do livro com a borda na cor da matéria (--cor-materia), sem cor em texto",
+        "celular e tablet sem mudança nessas telas (e2e)"
+      ],
+      "estimativa": 100
+    },
+    {
+      "id": "integracao",
+      "tipo": "integracao",
+      "titulo": "Juntar, npm test e e2e (troca da base), ui.md §10.21 e §10.22, marcar o TODO",
+      "quem": "orquestrador",
+      "depende": ["cabecalho", "listas"],
+      "arquivos": [
+        "TODO-VISUAL.md",
+        "jogo/js/manifesto.js",
+        "jogo/index.html",
+        "jogo/ferramentas/testes/tipos-jogo.d.ts",
+        "jogo/ferramentas/testes/base-referencia.txt",
+        "docs/contratos/ui.md"
+      ],
+      "worktree": "tv-5c",
+      "pronto": [
+        "npm test e e2e verdes, cada diferença explicada por um item da 5c; base trocada",
+        "D12f-02 medido inteiro (as 7 telas) na integração; ui.md §10.21 e §10.22 com as decisões; TODO marcado"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "entrega",
+      "tipo": "entrega",
+      "titulo": "Merge, push e Vercel",
+      "quem": "orquestrador",
+      "depende": ["integracao"],
+      "arquivos": [],
+      "worktree": "tv-5c",
+      "estimativa": 15
+    }
+  ]
+}

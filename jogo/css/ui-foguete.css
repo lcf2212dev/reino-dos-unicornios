@@ -1,5 +1,4 @@
 /* Painel do foguete (js/ui/foguete.js): o Claude, o tanque em gotinhas, os destinos e o passaporte. */
-.tela-foguete .painel { max-width: 560px; }
 .foguete-cabeca { display: flex; align-items: center; gap: 12px; }
 .foguete-claude { flex: none; }
 .foguete-balao {
@@ -38,6 +37,16 @@
 .foguete-destino .foguete-decolar { flex: 1 0 auto; }
 .foguete-decolar > canvas { margin-left: 4px; }
 .foguete-destino + .foguete-destino { margin-top: 8px; }
+/* notebook baixo (D12f-02): os destinos em 2 colunas, o painel inteiro sem rolar */
+@media (min-width: 1000px) and (max-height: 820px) {
+  .foguete-destinos ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .foguete-destino + .foguete-destino { margin-top: 0; }
+  .foguete-destino { padding: 4px 8px; }
+  .foguete-destino .btn-grande { min-height: 48px; padding-top: 4px; padding-bottom: 4px; }
+  .foguete-gota { aspect-ratio: auto; height: 44px; }
+  .foguete-passaporte li { padding: 4px; }
+  .tela-foguete .painel-conteudo > * + * { margin-top: 8px; }
+}
 /* planeta trancado: .indisponivel, no estado indisponível de ui-base.css (nome em --tinta-suave, sem transparência; D8B-12) */
 .foguete-cadeado { min-width: 56px; }
 .foguete-bola {
