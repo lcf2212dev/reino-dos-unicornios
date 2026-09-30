@@ -94,10 +94,19 @@
     var vitrine = el('div.vitrine-previa');
     // um título e uma grade por encaixe; os atalhos de cima rolam até o grupo
     var grupos = GRUPOS.map(function (g) {
-      return { g: g, titulo: el('h3.estabulo-grupo.loja-grupo', { id: 'loja-grupo-' + g.id, tabindex: '-1' }, g.titulo), grade: el('div.grade-loja') };
+      return { g: g, titulo: el('h3.loja-grupo', { id: 'loja-grupo-' + g.id, tabindex: '-1' }, g.titulo), grade: el('div.grade-loja') };
     });
-    var atalhos = el('nav.loja-atalhos', { 'aria-label': 'Ir para o encaixe' }, grupos.map(function (x) {
-      return el('button.btn-pequeno', { type: 'button', on: { click: function () {
+    // D8A-06: faixa de 1 linha que rola de lado; setas andam entre os atalhos e o tocado fica destacado
+    var atalhos = el('nav.loja-atalhos', { 'aria-label': 'Ir para o encaixe', on: { focusin: function (e) {
+      e.target.scrollIntoView({ block: 'nearest', inline: 'nearest' });   // o atalho focado inteiro, com o contorno
+    }, keydown: function (e) {
+      var bs = [].slice.call(atalhos.children), i = bs.indexOf(document.activeElement), d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+      if (i < 0 || !d) return;
+      e.preventDefault(); bs[(i + d + bs.length) % bs.length].focus();
+    } } }, grupos.map(function (x) {
+      return el('button.btn-pequeno', { type: 'button', on: { click: function (e) {
+        [].forEach.call(atalhos.children, function (b) { b.classList.remove('ativo'); b.removeAttribute('aria-current'); });
+        e.currentTarget.classList.add('ativo'); e.currentTarget.setAttribute('aria-current', 'true');
         // o foco vai para o título do grupo: o Tab seguinte entra nos cartões dele (e a tela não volta ao topo)
         x.titulo.scrollIntoView({ block: 'start' }); x.titulo.focus({ preventScroll: true });
       } } }, x.g.titulo);
@@ -118,7 +127,7 @@
       var spr = montada
         ? PA.montada(P.defUni(id), e, 0, aparencia(), { enfeites: est().usando.enfeites, capa: est().usando.capa, asasFada: est().usando.asasFada })
         : PA.unicornio(P.defUni(id), e, 0, { enfeites: est().usando.enfeites, asasFada: est().usando.asasFada });
-      vitrine.appendChild(PA.paraDOM(spr, 4));
+      vitrine.appendChild(PA.paraDOM(spr, 2));   // D8A-06: vitrine menor (escala 2, a da interface), ao lado do saldo
       grupos.forEach(function (x) {
         x.grade.innerHTML = '';
         itensDoGrupo(x.g).forEach(function (item) { x.grade.appendChild(cartao(item)); });
@@ -177,8 +186,7 @@
       });
       if (focoItem) focar(pn.tela.querySelector('[data-item="' + focoItem + '"]'));
     }
-    c.appendChild(saldo);
-    c.appendChild(vitrine);
+    c.appendChild(el('div.loja-topo', vitrine, saldo));
     c.appendChild(atalhos);
     grupos.forEach(function (x) { c.appendChild(x.titulo); c.appendChild(x.grade); });
     c.appendChild(el('h3.estabulo-grupo', '🏫 Prêmios da Escola do Reino'));
