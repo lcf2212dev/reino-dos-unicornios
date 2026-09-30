@@ -294,10 +294,23 @@
       var tocaveis = paraTela(pintor, ch3.moveis.filter(function (o) { return o.toca; }), meio);
       var gente3 = medido.rects.concat(bolhas, genteM);   // Mariana e NPCs com meio tile
       var faixa = { x0: chao.x0, x1: chao.x1, y0: chao.y0, y1: Math.min(fimParede + sh3 + borda * 2, chao.y1) };
+      // a passadeira (tapete de parede a parede, a do corredor da escola) parece a divisa do cômodo: meio em cima e meio
+      // fora, a placa lia como da sala de cima (O-37). Ela fica inteira sobre a passadeira, na largura toda (os chips do
+      // HUD já são obstáculo), a 1 u da Mariana e dos NPCs; senão inteira de um lado dela
+      var divisas = [], sobreDivisa = [], largoC = { x0: xa, x1: xb, y0: chao.y0, y1: chao.y1 };
+      var genteT = gente3.map(function (q) { return q.f === meio ? { left: q.left, top: q.top, right: q.right, bottom: q.bottom, f: borda } : q; });
+      ch3.tapetes.forEach(function (o, i) {
+        if (o.x1 - o.x0 < (r.w - 1) * T) return;
+        var q = tapetes[i], a = { x0: xa, x1: xb, y0: Math.max(chao.y0, q.top), y1: Math.min(chao.y1, q.bottom) };
+        divisas.push({ left: q.left, right: q.right, top: q.top, bottom: q.top }, { left: q.left, right: q.right, top: q.bottom, bottom: q.bottom });
+        sobreDivisa.push(p(m3, sw3, sh3, x3, Math.round((a.y0 + a.y1 - sh3) / 2), genteT.concat(obj, tocaveis), a));
+      });
       return lista.concat([
         // 3a) encostada na parede de cima, fora do tapete; 3b) o fundo do cômodo, fora do tapete; 3c) idem, sobre ele
         p(m3, sw3, sh3, x3, sy, noChao.concat(tapetes), faixa),
         p(m3, sw3, sh3, x3, chao.y1, noChao.concat(tapetes), chao),
+        // 3b') inteira sobre a passadeira; 3b'') inteira de um lado dela (fora dos móveis; depois só fora do que se toca)
+      ], sobreDivisa, divisas.length ? [p(m3, sw3, sh3, x3, sy, noChao.concat(divisas), largoC), p(m3, sw3, sh3, x3, sy, gente3.concat(obj, tocaveis, divisas), largoC)] : [], [
         p(m3, sw3, sh3, x3, chao.y1, noChao, chao),
         // 3d) só fora do que se toca (móvel comum pode ficar embaixo): de novo a faixa de cima e depois o fundo
         p(m3, sw3, sh3, x3, sy, gente3.concat(obj, tocaveis), faixa),
