@@ -9,6 +9,20 @@
     linhas.forEach(function (l, j) { for (var i = 0; i < l.length; i++) if (l[i] === '#') ret(ctx, x + i, y + j, 1, 1, cor); });
   }
 
+  // letras de 5 px de altura para as placas (M, W e N mais largas, para ler bem)
+  var LETRAS = {
+    I: ['###', '.#.', '.#.', '.#.', '###'], J: ['..#', '..#', '..#', '#.#', '.#.'], L: ['#..', '#..', '#..', '#..', '###'],
+    M: ['#...#', '##.##', '#.#.#', '#...#', '#...#'], N: ['#..#', '##.#', '#.##', '#..#', '#..#'],
+    O: ['.#.', '#.#', '#.#', '#.#', '.#.'], S: ['.##', '#..', '.#.', '..#', '##.'], W: ['#...#', '#...#', '#.#.#', '##.##', '#...#']
+  };
+  // uma palavra centrada em cx (1 px entre as letras)
+  function palavra(ctx, txt, cx, y, cor) {
+    var formas = txt.split('').map(function (c) { return LETRAS[c]; });
+    var largura = formas.reduce(function (t, f) { return t + f[0].length + 1; }, -1);
+    var x = Math.round(cx - largura / 2);
+    formas.forEach(function (f) { letra(ctx, f, x, y, cor); x += f[0].length + 1; });
+  }
+
   Mapa.PREDIOS.escola = function (ctx, px, py, w, h) {
     var parede = '#fff1e8', parede2 = '#f6dccb', telhado = '#ff7a8a', telhado2 = '#e0506a';
     var cx = px + w / 2;
@@ -41,15 +55,13 @@
     // arbustos nos cantos
     F.vaso(ctx, px + 5, py + h, '#ff7eb6');
     F.vaso(ctx, px + w - 6, py + h, '#ffe066');
-    // lousa com ABC no telhado, com a moldura de madeira e o giz
-    ret(ctx, cx - 12, py + 27, 24, 13, K);
-    ret(ctx, cx - 11, py + 28, 22, 11, C.madeira);
-    ret(ctx, cx - 10, py + 29, 20, 9, '#4f9a5a');
-    ret(ctx, cx - 10, py + 29, 20, 1, '#8fd08f');
-    letra(ctx, ['.#.', '#.#', '###', '#.#', '#.#'], cx - 7, py + 31, '#ffffff');
-    letra(ctx, ['##.', '#.#', '##.', '#.#', '##.'], cx - 2, py + 31, '#ffffff');
-    letra(ctx, ['.##', '#..', '#..', '#..', '.##'], cx + 3, py + 31, '#ffffff');
-    ret(ctx, cx + 6, py + 38, 3, 1, '#ffffff');
+    // lousa com o nome da escola (JIM WILSON) no telhado, em duas linhas, com a moldura de madeira
+    ret(ctx, cx - 16, py + 27, 32, 17, K);
+    ret(ctx, cx - 15, py + 28, 30, 15, C.madeira);
+    ret(ctx, cx - 14, py + 29, 28, 13, '#4f9a5a');
+    ret(ctx, cx - 14, py + 29, 28, 1, '#8fd08f');
+    palavra(ctx, 'JIM', cx, py + 30, '#ffffff');
+    palavra(ctx, 'WILSON', cx, py + 36, '#ffffff');
     // torre do sino, de tijolinho, com o sino dourado
     contornoRet(ctx, cx - 8, py + 9, 16, 19, '#fff8ee');
     F.tijolos(ctx, cx - 7, py + 10, 14, 17, '#fff0e0', 3);

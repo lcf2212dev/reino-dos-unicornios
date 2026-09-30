@@ -87,14 +87,24 @@
   }
 
   /* ---------- Entrar no Reino: cartões deste aparelho, abas "Entrar" e "Criar conta" ---------- */
-  // resolve com o login de quem entrou (já conferido e lembrado neste aparelho), ou null se fechou (só com podeFechar)
+  // resolve com o login de quem entrou (já conferido e lembrado neste aparelho), ou null se fechou (só com podeFechar).
+  // opcoes.aoEntrar(login): promessa que o painel espera aberto, com o botão em "Abrindo o reino..." (a entrada do
+  // jogo busca o save aqui, sem voltar à abertura entre o login e o mapa)
   UI.telaQuemVaiJogar = function (opcoes) {
     opcoes = opcoes || {};
     return new Promise(function (resolver) {
       var pn = UI.painel('jogadores', '🔑 Entrar no Reino', { semFechar: !opcoes.podeFechar, aoFechar: function () { resolver(null); } });
       var c = Reino.config.jogadores;
       var fim = false;
-      function entrou(login) { if (fim) return; fim = true; UI.fecharTela(pn.tela); resolver(login); }
+      function entrou(login, botao) {
+        if (fim) return;
+        fim = true;
+        var fechar = function () { UI.fecharTela(pn.tela); resolver(login); };
+        if (!opcoes.aoEntrar) return fechar();
+        pn.conteudo.querySelectorAll('button, input').forEach(function (x) { x.disabled = true; });
+        ocupado(botao, true); U.preencher(botao, 'Abrindo o reino... ⭐');
+        opcoes.aoEntrar(login).then(fechar, fechar);
+      }
 
       // cartões: "Neste aparelho" (entram direto) e "No reino" (abrem o Entrar com o login preenchido)
       var gradeAqui = el('div.jogadores-grade', { role: 'list' }), gradeReino = el('div.jogadores-grade', { role: 'list' });
@@ -129,7 +139,7 @@
         ocupado(eIr, true);
         J().entrar(login, senha).then(function (r) {
           ocupado(eIr, false);
-          if (r.ok) { som('selecionar'); entrou(login); return; }
+          if (r.ok) { som('selecionar'); entrou(login, eIr); return; }
           aviso(eErro, r.erro === 'senha' ? 'senhaErrada' : r.erro); mostrarBotao(eIr);
           (r.erro === 'naoExiste' ? eLogin : eSenha).input.select();
         });
@@ -154,7 +164,7 @@
         ocupado(cIr, true);
         J().criar(login, senha).then(function (r) {
           ocupado(cIr, false);
-          if (r.ok) { som('moeda'); entrou(login); return; }
+          if (r.ok) { som('moeda'); entrou(login, cIr); return; }
           aviso(cErro, r.erro); (r.erro === 'senha' ? s1 : cLogin).input.focus(); mostrarBotao(cIr);
         });
       }
