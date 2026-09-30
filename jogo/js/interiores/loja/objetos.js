@@ -95,7 +95,7 @@
         if (!img) return;
         var st = estadoPremio(a, P), mw = Math.min(13, esp - 1);
         if (st === 'bloqueado') {
-          caber(ctx, (window.PA && PA.silhueta) ? PA.silhueta(img) : img, cx, base, mw, 12);
+          caber(ctx, S.silhueta(img), cx, base, mw, 12);
           cadeado(ctx, cx - 2, base + 1);
         } else {
           caber(ctx, img, cx, base, mw, 12);

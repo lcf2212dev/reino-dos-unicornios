@@ -23,16 +23,60 @@
   // 'bloqueado' | 'aVenda' | 'ganho' | 'comprado' (derivado do save, como na tela da Loja)
   function estadoPremio(a, P) { try { return R.LojaItens.estadoPremio(a, P); } catch (e) { return 'bloqueado'; } }
   function icone(chave) { return (window.PA && PA.iconeDesenho) ? PA.iconeDesenho(chave) : null; }
-  // desenha um canvas cabendo numa caixa (sem suavizar), com a base encostada embaixo
-  function caber(ctx, img, cx, base, maxW, maxH) {
-    img = img && (img.canvas || img);
-    if (!img) return;
-    var s = Math.min(1, maxW / img.width, maxH / img.height);
-    var w = Math.round(img.width * s), h = Math.round(img.height * s);
-    var lig = ctx.imageSmoothingEnabled; ctx.imageSmoothingEnabled = false;
-    ctx.drawImage(img, Math.round(cx - w / 2), base - h, w, h);
-    ctx.imageSmoothingEnabled = lig;
+  // desenha um canvas cabendo numa caixa, sempre a 1× (nada de escala fracionária, ui.md §10): o que não
+  // cabe vira uma miniatura própria (loja/desenhos.js), com a base encostada embaixo.
+  // Também usado pelo Estábulo, pelo Baú e pelo cartaz do prédio padrão (I.caberNitido).
+  var MINIS = typeof WeakMap !== 'undefined' ? new WeakMap() : null, KRGB = '58,36,70';
+  function claro(k) { var c = k.split(','); return 0.3 * c[0] + 0.59 * c[1] + 0.11 * c[2] > 200; }
+  // miniatura: 1 pixel por bloco n×n (n inteiro) só do miolo (sem o contorno); a cor é a mais frequente do
+  // bloco, mas uma cor forte com ≥ 25 % vence a clara dominante; depois o contorno de 1 px é redesenhado
+  function miniatura(img, n) {
+    var m = MINIS && MINIS.get(img); if (m && m[n]) return m[n];
+    var W = img.width, H = img.height, w = Math.ceil(W / n), h = Math.ceil(H / n);
+    var c = window.PA.novoCanvas(w, h), x = c.getContext('2d');
+    var src = window.PA.novoCanvas(W, H).getContext('2d'); src.drawImage(img, 0, 0);
+    var dd = src.getImageData(0, 0, W, H).data, out = x.createImageData(w, h);
+    for (var by = 0; by < h; by++) for (var bx = 0; bx < w; bx++) {
+      var cont = {}, cheio = 0, melhor = null, forte = null;
+      for (var yy = by * n; yy < Math.min(H, by * n + n); yy++) for (var xx = bx * n; xx < Math.min(W, bx * n + n); xx++) {
+        var i = (yy * W + xx) * 4; if (dd[i + 3] < 128) continue;
+        var k = dd[i] + ',' + dd[i + 1] + ',' + dd[i + 2]; if (k === KRGB) continue;
+        cont[k] = (cont[k] || 0) + 1; cheio++;
+      }
+      if (cheio * 4 < n * n) continue;
+      Object.keys(cont).forEach(function (k) {
+        if (!melhor || cont[k] > cont[melhor]) melhor = k;
+        if (!claro(k) && cont[k] * 4 >= n * n && (!forte || cont[k] > cont[forte])) forte = k;
+      });
+      if (forte && claro(melhor)) melhor = forte;
+      var o = (by * w + bx) * 4, rgb = melhor.split(',');
+      out.data[o] = +rgb[0]; out.data[o + 1] = +rgb[1]; out.data[o + 2] = +rgb[2]; out.data[o + 3] = 255;
+    }
+    x.putImageData(out, 0, 0);
+    var fim = window.PA.contornar ? window.PA.contornar(c, K) : c;
+    if (MINIS) { if (!m) MINIS.set(img, m = {}); m[n] = fim; }
+    return fim;
   }
+  // a silhueta de cada ícone, feita uma vez só (PA.silhueta cria um canvas novo a cada chamada)
+  var SILHUETAS = typeof WeakMap !== 'undefined' ? new WeakMap() : null;
+  function silhueta(img) {
+    img = img && (img.canvas || img);
+    if (!img || !window.PA || !PA.silhueta) return img;
+    var s = SILHUETAS && SILHUETAS.get(img);
+    if (!s) { s = PA.silhueta(img); if (SILHUETAS) SILHUETAS.set(img, s); }
+    return s;
+  }
+  function caber(ctx, img, cx, base, maxW, maxH, meio) {   // meio: base é o centro vertical
+    img = img && (img.canvas || img);
+    if (!img || !img.width) return;
+    if ((img.width > maxW || img.height > maxH) && window.PA && PA.novoCanvas && typeof document !== 'undefined') {
+      // menor n inteiro com a miniatura (+ 2 px do contorno) dentro da caixa
+      var n = 2; while (n < 16 && (Math.ceil(img.width / n) + 2 > maxW || Math.ceil(img.height / n) + 2 > maxH)) n++;
+      img = miniatura(img, n);
+    }
+    ctx.drawImage(img, Math.round(cx - img.width / 2), meio ? Math.round(base - img.height / 2) : base - img.height);
+  }
+  I.caberNitido = caber;
   // estrelinha de etiqueta (5×5)
   function estrelinha(ctx, x, y, c) {
     ret(ctx, x + 2, y, 1, 5, c); ret(ctx, x, y + 2, 5, 1, c); ret(ctx, x + 1, y + 1, 3, 3, c);
@@ -175,7 +219,7 @@
   // para as outras partes (R._predios.loja)
   S.LILAS = LILAS; S.LILAS2 = LILAS2; S.MUSGO = MUSGO; S.MUSGO2 = MUSGO2; S.ROSA = ROSA; S.enfeites = enfeites;
   S.v = v; S.brilho = brilho; S.comprados = comprados; S.premios = premios; S.estadoPremio = estadoPremio;
-  S.icone = icone; S.caber = caber; S.estrelinha = estrelinha; S.etiquetaPreco = etiquetaPreco; S.cadeado = cadeado;
+  S.icone = icone; S.caber = caber; S.silhueta = silhueta; S.estrelinha = estrelinha; S.etiquetaPreco = etiquetaPreco; S.cadeado = cadeado;
   S.larguraEtiqueta = larguraEtiqueta; S.moedinha = moedinha;
   S.medalha = medalha; S.lacinho = lacinho; S.espelhoInfo = espelhoInfo; S.cenaEspelho = cenaEspelho;
 })();

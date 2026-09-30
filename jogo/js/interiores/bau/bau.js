@@ -45,8 +45,8 @@
       ret(ctx, px + 1, py + 4, 14, 11, K); ret(ctx, px + 2, py + 5, 12, 9, C.madeira); ret(ctx, px + 2, py + 5, 12, 1, C.madeiraClara);
       var ic = iconeMateria(m);
       if (ic) {
-        ctx.imageSmoothingEnabled = false;
-        ctx.drawImage(ic, 0, 0, ic.width, ic.height, px + 3, py + 5, 10, 10);
+        // a 1× ou numa miniatura inteira (nada de escala fracionária)
+        if (I.caberNitido) I.caberNitido(ctx, ic, px + 8, py + 14, 12, 9);
       } else ret(ctx, px + 6, py + 7, 4, 4, C.ouro);
     } });
   I.objeto('bau-monte', { w: 3, h: 1, topo: 20, solido: true, alto: true,
