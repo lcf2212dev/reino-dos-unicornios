@@ -1,6 +1,6 @@
 # TODO visual: Mariana e o Reino dos Unicórnios
 
-Progresso: 145 de 290 (onda 3e, 29/09/2026) · itens novos O-03 a O-28: 10 de 26
+Progresso: 145 de 290 (O-24, 29/09/2026) · itens novos O-03 a O-28: 11 de 26
 
 > Auditoria visual feita em 29/09/2026, só de leitura, sobre a `main` em `7cbfa9f`. Cobre tudo o que a jogadora vê: mapa, prédios por dentro e por fora, unicórnio, NPCs, diálogo, perguntas, provas, matérias, HUD, loja, menus, movimento, app instalado e coerência de direção de arte.
 > Cada item traz a evidência (`arquivo:linha` e nome de cena do e2e), o tipo, o esforço (P ≤ 1 h, M ≤ 1 dia, G > 1 dia), as dependências e o critério de pronto. Cada relatório e cada critério de pronto passou por um conferente independente.
@@ -458,7 +458,7 @@ As prioridades dizem **quanto importa**. Esta ordem diz **o que vem antes**. A r
 
 - [ ] **O-23 · P2 · Ícone do "Ouvir" com 37,33 px** — `icone-em` de 1,25em dá tamanho fracionário ao ícone do botão 🔊. Pronto quando o ícone medir 32 px nos 3 tamanhos.
 
-- [ ] **O-24 · P2 · Ícones 16×16 encolhidos com escala fracionária nos interiores** — O `caber` da Loja (prateleiras, vitrine), o 🔢 dos quadros do Baú e do hall e das salas da Matemática e as baias do Estábulo reduzem o ícone para 10×10 ou 6×6 com escala não inteira. Pronto quando nenhum `drawImage` desses interiores tiver razão de escala fracionária e as miniaturas tiverem contorno fechado.
+- [x] **O-24 · P2 · Ícones 16×16 encolhidos com escala fracionária nos interiores** — O `caber` da Loja (prateleiras, vitrine), o 🔢 dos quadros do Baú e do hall e das salas da Matemática e as baias do Estábulo reduzem o ícone para 10×10 ou 6×6 com escala não inteira. Pronto quando nenhum `drawImage` desses interiores tiver razão de escala fracionária e as miniaturas tiverem contorno fechado.
 
 - [ ] **O-25 · P3 · Óculos de estrela menores que os outros** — `enfeite:oculos-estrela` tem 8 linhas, contra 12 a 14 dos outros óculos do grupo "Olhos". Pronto quando tiver 12 linhas e continuar lendo como estrela.
 
