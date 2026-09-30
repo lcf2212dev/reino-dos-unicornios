@@ -37,6 +37,15 @@
          '...KK...KK.',
          '...KK...KK.',
          '...SS...SS.'],
+        // 3º quadro: as pernas juntas, com o pé da frente no ar (o outro tempo do passo)
+        ['..HH.CCC...',
+         '..HHACACKK.',
+         '...HAAACC..',
+         '...CCACCC..',
+         '...DDDDDD..',
+         '....KK.KK..',
+         '....KK.SS..',
+         '....SS.....'],
       ],
       sentada: [
         '..HH.CCC...',
@@ -97,10 +106,11 @@
       ],
       capa: { linhas: ['P.........P', 'PP.......PP', 'PP.......PP', 'P.........P'], x: 0, y: 7 },
     },
+    // de costas o laço fica à direita de quem olha (o mesmo lado do corpo dela que de frente)
     costas: {
       cabeca: [
-        '..BBHHHH...',
-        '.BBHHHHHH..',
+        '...HHHHBB..',
+        '..HHHHHHBB.',
         '.HHHLLHHHH.',
         '.HHLHHHHHH.',
         '.HHHHHHHHH.',
@@ -193,8 +203,8 @@
     },
     diagCostas: {
       cabeca: [
-        '..BHHHH....',
-        '.BBHHHHHH..',
+        '...HHHHHB..',
+        '..HHHHHHBB.',
         '..HHHLLHHH.',
         '..HHLHHHHH.',
         '..HHHHHHHK.',
@@ -285,18 +295,20 @@
     return res;
   };
 
-  // Mariana montada: composição unicórnio + cavaleira (+ o pedaço do unicórnio que fica na frente dela)
+  // Mariana montada: composição unicórnio + cavaleira (+ o pedaço do unicórnio que fica na frente dela).
+  // quadro PA._interno.PULO: patas encolhidas e ela 1 px mais baixa (agachada no pulo); opcoes.cansado: pose cansada
   PA.montada = function (def, estagio, quadro, ap, opcoes) {
     opcoes = opcoes || {};
     var vista = opcoes.vista || 'lado';
     var combo = (opcoes.enfeites || []).join('+');
     var vis = PA.visualMariana ? PA.visualMariana(ap) : {};
-    var chave = ['mont', def.id, estagio, quadro % 3, ap.pele, ap.cabelo, ap.roupa, ap.laco,
-      combo, opcoes.capa ? 1 : 0, opcoes.asasFada ? 1 : 0, vista, vis.corte, vis.modelo, vis.laco ? 1 : 0].join('|');
+    var pulo = quadro === I.PULO;
+    var chave = ['mont', def.id, estagio, pulo ? 'p' : quadro % 3, ap.pele, ap.cabelo, ap.roupa, ap.laco,
+      combo, opcoes.capa ? 1 : 0, opcoes.asasFada ? 1 : 0, vista, vis.corte, vis.modelo, vis.laco ? 1 : 0, opcoes.cansado ? 'c' : ''].join('|');
     if (cache[chave]) { usarCombo(combo); return cache[chave]; }
     var uni = PA.unicornio(def, estagio, quadro, opcoes);
     var cav = PA.mariana(ap, true, 0, { capa: opcoes.capa, vista: vista });
-    var px = uni.cavaleira[0], py = uni.cavaleira[1];
+    var px = uni.cavaleira[0], py = uni.cavaleira[1] + (pulo ? 1 : 0);
     // o canvas cresce para caber a cavaleira; o centro dos pés continua no meio do unicórnio
     var esq = Math.max(0, -px), dir = Math.max(0, px + cav.w - uni.w);
     // (pelo menos 8px livres em cima, como sempre foi: a logo e o estábulo contam com isso)
