@@ -107,7 +107,9 @@
       inter('estados', 'Sólido, líquido e gás', { tipo: 'quimica-quadro', x: 8, y: 0, var: { desenho: 'estados' } }),
       { tipo: 'janela', x: 10, y: 0 },
       { tipo: 'flores', x: 0, y: 2 }, { tipo: 'pilha-livros', x: 1, y: 2 }, { tipo: 'almofada', x: 4, y: 2, var: { cor: S.COR2 } },
-      { tipo: 'cesto', x: 5, y: 2 },
+      // cesto de bolinhas-átomo; o var próprio o separa do cesto do Observatório 3 no mesmo tile (o sorteio do
+      // conteúdo do cesto é pelo prédio, achado por tipo + x + y + var)
+      { tipo: 'cesto', x: 5, y: 2, var: { conteudo: 'bolinhas', cores: [S.COR, S.COR2] } },
       inter('agua', 'Molécula de água', { tipo: 'quimica-agua', x: 7, y: 2 }),
       { tipo: 'caixote', x: 9, y: 2 }, { tipo: 'estante', x: 11, y: 2 }, 
       { tipo: 'mesa', x: 0, y: 5, var: { toalha: '#e9dcff', itens: ['livro', 'xicara'] } },
