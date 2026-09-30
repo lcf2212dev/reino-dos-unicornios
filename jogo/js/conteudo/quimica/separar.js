@@ -30,8 +30,8 @@
       explica: ['O pó ficou no coador.', 'O café coado no pano', 'é bem brasileiro!'] },
     // mão: feijão e pedrinha têm o mesmo tamanho (a peneira não separa) e nenhum é de ferro: cata-se um a um
     { id: 'feijao', ordem: 2, nome: 'Feijão com pedrinhas', emoji: '🫘', certas: ['mao'],
-      fala: ['Feijão com umas pedrinhas.', 'Ninguém quer morder pedra!'],
-      explica: ['Pronto, sem pedrinhas!', 'A gente cata o feijão', 'antes de cozinhar.'] },
+      fala: ['Olha o feijão com pedrinhas!', 'Ninguém quer morder pedra!'],
+      explica: ['Pronto! Nada de pedrinhas.', 'A gente cata o feijão', 'antes de cozinhar.'] },
     // peneira: a areia é miúda e passa nos furos; as pedrinhas, graúdas, ficam (é o que se faz na obra).
     // mão: as pedrinhas são grandes o bastante para catar uma a uma
     { id: 'areia-pedras', ordem: 3, nome: 'Areia com pedrinhas', emoji: '🪨', certas: ['peneira', 'mao'],

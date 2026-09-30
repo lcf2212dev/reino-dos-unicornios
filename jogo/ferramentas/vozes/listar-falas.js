@@ -26,6 +26,10 @@ const COMPOSTAS = /^(pega-pega|bem-vind[oa]s?|caça-palavras|arco-íris|guarda-c
 const FEM_SEM_A = /^(vez|colher|flor|mulher|luz|noite|tarde|parte|sílaba|árvore|nuvem|viagem)$/i;
 const MASC_EM_A = /^(dia|mapa|planeta|problema|sofá|clima|tema|cometa)$/i;
 const PRONUNCIA = { kiwis: 'kiuís', kiwi: 'kiuí' };
+// nomes próprios que a voz lia mal em qualquer pacote (não só no de Português), conferido por transcrição:
+// Lavoisier saía "Lá vozia" (2º andar da química)
+const PRONUNCIA_NOMES = { lavoisier: 'Lavoaziê' };
+const RE_NOMES = new RegExp('(^|[^\\p{L}])(' + Object.keys(PRONUNCIA_NOMES).join('|') + ')(?=$|[^\\p{L}])', 'giu');
 const PRONOME = /-(se|os|as|o|a|lo|la|los|las|me|te|lhe|lhes|nos)$/i;
 function nomesDasLetras(t) {
   // "R$ 4,00" é dinheiro, não a letra
@@ -43,6 +47,7 @@ function nomesDasLetras(t) {
 function prepararFala(texto, voz, pacotes) {
   let t = Reino.Voz.normalizar(texto);
   if ((pacotes || []).some((p) => /portugues/.test(p)) && !VOZES_INGLESAS.has(voz)) t = nomesDasLetras(t);
+  if (!VOZES_INGLESAS.has(voz)) t = t.replace(RE_NOMES, (_, a, w) => a + PRONUNCIA_NOMES[w.toLowerCase()]);
   // voz inglesa: só lacunas e MAIÚSCULAS (sem as regras do português)
   if (VOZES_INGLESAS.has(voz)) {
     t = t.replace(/_{2,}/g, '…').replace(/…\./g, '…');

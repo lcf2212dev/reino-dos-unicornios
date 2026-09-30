@@ -7,10 +7,10 @@ Reino.reservarPersonagem({ id: 'quimica-proveta', nome: 'Doutora Proveta', gener
   predio: 'quimica', x: 24, y: 6, acao: { tipo: 'tela', tela: 'quimica-bancada' },
 });
 
-// quimica-carbono: Professor Carbono, o vovô cientista das curiosidades e dos livros do 2º andar (Antonio calmo e bem
-// grave: longe do Claude e diferente dos outros Antonio do jogo)
+// quimica-carbono: Professor Carbono, o vovô cientista das curiosidades e dos livros do 2º andar (Antonio calmo e grave,
+// longe do Claude; a -50Hz a transcrição embolava palavras comuns, como "coador" e "suco de repolho roxo")
 Reino.reservarPersonagem({ id: 'quimica-carbono', nome: 'Professor Carbono', genero: 'm', idade: 'idoso',
-  perfil: { voz: 'pt-BR-AntonioNeural', velocidade: '-12%', tom: '-50Hz' },
+  perfil: { voz: 'pt-BR-AntonioNeural', velocidade: '-10%', tom: '-38Hz' },
   predio: 'quimica-2', x: 24, y: 6, acao: { tipo: 'quimica-curiosidade', tema: 'todas' },
 });
 
