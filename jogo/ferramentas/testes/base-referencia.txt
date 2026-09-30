@@ -38,4 +38,5 @@
 # ec119a6 = ondas 3a e 3d do backlog visual (mapa D1-01 a D1-18, D1-C1, D1-C2, O-04, O-07; D3-05, D3-09 a D3-12, D13-06, O-10; D2A-06, D2A-07, D2A-11, D2A-15, D2A-16)
 # 75c0133 = onda 3e do backlog visual (D8A-07, D8A-16, D8A-18, D8A-22, D8A-23, O-01; D8B-14, D8B-15, D8B-16, D8B-20, D8B-22, D8B-24, D8B-27; D9-02, D9-10, D9-14, D9-15; D4-17, D5-14, D5-08; O-08, D12d-01, D6-24, D6-11; D7-16; D10-15, D2B-15; D2A-10)
 # 8b09408 = O-24 (ícones dos interiores sem escala fracionária)
-8b09408
+# 81b308f = D4-04 e O-22 (Cavaleiro Caio e Cavaleira Rosa com voz própria; banho na grade de pixel)
+81b308f
