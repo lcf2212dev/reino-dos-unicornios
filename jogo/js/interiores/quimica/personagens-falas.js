@@ -3,7 +3,9 @@
    Cada página com até 30 letras (sem contar «» e emoji) e frases de 3+ palavras. */
 Reino.falasDoPredio('quimica', { npcs: {
   'quimica-proveta': {
-    oi: ['(preencher) quem é você?', '(preencher) o que faz aqui?'],
-    depois: ['(preencher) uma fala curtinha.'],
+    oi: ['Olá, sou a Doutora Proveta!', 'Bem-{vinda|vindo} ao laboratório!', 'Aqui usamos óculos e jaleco.'],
+    nova: ['Vamos misturar poções?'],
+    depois: ['Já espiou pelo microscópio?', 'Olhe a tabela periódica!', 'O caderno guarda as receitas.',
+      'Na vida real, chame um adulto!'],
   },
 } });
