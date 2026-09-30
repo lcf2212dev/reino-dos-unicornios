@@ -51,7 +51,13 @@ footer.livro-rodape .livro-nav .btn-grande { width: 64px; padding: 0; }
 /* ---------- estábulo ---------- */
 .btn-ovos { width: 100%; animation: pulsar 1.2s step-end 3; }
 .estabulo-contagem { text-align: center; font-weight: 700; }
-.estabulo-grupo { font-family: var(--fonte-titulo); font-size: 1.1em; margin-top: 18px !important; }
+.estabulo-grupo { font-family: var(--fonte-titulo); font-size: 1.1em; margin-top: 18px !important; scroll-margin-top: 128px; }
+/* D13-08: atalhos dos grupos, grudados no topo da área de rolagem (o top negativo cobre o padding dela) */
+.estabulo-atalhos { position: sticky; top: -18px; z-index: 2; display: flex; flex-wrap: wrap; gap: 4px; padding: 22px 0 4px; background: var(--papel); border-bottom: 2px solid var(--borda); }
+@media (max-width: 480px) { .estabulo-atalhos { top: -14px; padding-top: 18px; } }
+.estabulo-atalho { width: 44px; height: 44px; padding: 4px; display: grid; place-items: center; border: 2px solid var(--borda); border-radius: var(--canto-pequeno, 4px); background: var(--papel-quente); cursor: pointer; }
+/* D8A-26: marcas de toque sob o ovo */
+.ovo-marcas { display: flex; justify-content: center; gap: 8px; margin-top: -8px; }
 .grade-unis { display: grid; grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: 12px; }
 .carta-uni {
   position: relative;

@@ -31,7 +31,6 @@
 }
 .desenho-ferr small { font-size: 0.55em; }
 .desenho-ferr[aria-pressed="true"] { background: var(--ambar-claro); outline: 3px solid var(--roxo); outline-offset: 1px; }
-.desenho-icone-forma { width: 24px; height: 24px; image-rendering: pixelated; }
 .desenho-limpar { background: var(--quase-fundo); }
 .desenho-cor { width: 36px; height: 36px; border: 3px solid var(--borda); border-radius: var(--redondo); box-shadow: 0 3px 0 var(--borda); }
 .desenho-cor[aria-pressed="true"] { outline: 4px solid var(--roxo); outline-offset: 2px; }
@@ -187,3 +186,8 @@ span.mai-acento.mai-acento::after { content: attr(data-a); content: attr(data-a)
 .lugar-aviso.aviso-novo { border-color: #f0b400; background: #fff6cc; color: var(--lendario-texto); }
 .lugar-onde { display: flex; align-items: center; gap: 4px; margin-top: 2px; }
 .lugar-onde > canvas { flex: none; display: block; }
+/* D12d-02: frase colada curta numa linha só */
+.completar-grade.completar-colado:not(.completar-colado-longo) .frase-colada { white-space: nowrap; }
+/* D6-22: 7 ferramentas do desenho do mesmo tamanho, ícone de 32 px */
+.desenho-ferr { width: 96px; padding: 6px 4px; justify-content: center; }
+.desenho-ferr small { white-space: nowrap; }
