@@ -199,6 +199,30 @@ test('placa do cômodo: fora do balão, a 8 px do HUD, fora dos objetos da pared
         }
       }
       await cel.js('Reino.Claude.limpar()');
+      // O-37: da entrada, -6, +6 e +12 tiles (como na auditoria), com e sem Letras grandes: a placa do corredor fica
+      // inteira de um lado da passadeira ou sobre ela, e nunca cruza uma sala de cima
+      await cel.ir('escola');
+      const x0 = await cel.js('Jogador.tile().x'), y0 = await cel.js('Jogador.tile().y');
+      for (const grande of [false, true]) {
+        await cel.js(`document.documentElement.classList.toggle('letras-grandes', ${grande})`);
+        for (const x of [x0 - 6, x0, x0 + 12]) {
+          await cel.js(`Jogador.posicionar(${x}, ${y0})`);
+          await cel.avancar(800);
+          const m = await cel.page.evaluate(medirQuadro);
+          const nome = `escola/corredor O-37 x=${x}${grande ? ' LG' : ''}`;
+          conferir(nome, m, falhas);
+          const pas = await cel.js(`(function () { var V = Reino._motor, cv = V.canvas, c = cv.getBoundingClientRect(), k = cv.width / c.width;
+            var o = Reino.Interiores.def('escola').objetos.find(function (q) { return q.tipo === 'escola-passadeira'; });
+            var a = V.pintor.tela(0, o.y * 16), z = V.pintor.tela(0, (o.y + o.h) * 16); return { top: c.top + a.y / k, bottom: c.top + z.y / k }; })()`);
+          m.placas.forEach((p) => {
+            const fora = m.comodos.filter((o) => o.nome !== 'corredor' && cruza(p, o)).map((o) => o.nome);
+            if (fora.length) falhas.push(`${nome}: placa cruza ${fora.join(', ')}`);
+            const meio = (a) => a > p.top + 0.5 && a < p.bottom - 0.5;
+            if (meio(pas.top) || meio(pas.bottom)) falhas.push(`${nome}: placa meio em cima, meio fora da passadeira`);
+          });
+        }
+      }
+      await cel.js(`document.documentElement.classList.remove('letras-grandes')`);
     } finally { await cel.fechar(); }
   } finally { await browser.close(); }
   assert.ok(comPlaca >= 10, 'poucas cenas com placa: ' + comPlaca);
