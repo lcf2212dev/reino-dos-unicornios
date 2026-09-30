@@ -142,12 +142,25 @@ Reino.Interiores.objeto('escrivaninha', {
    das `chave(P)`) muda, conferida nos eventos `progresso`/`progressoRemoto`/`mapaMudou`.
 2. Nada de criar canvas a cada quadro. Móveis altos viram sprites pré-renderizados.
 3. Animações (vela, pêndulo, brilho, água) só com `animar`.
-4. Placas dos cômodos: em px da tela, fonte pixel, tamanho do texto pela regra do `ui.md` §10.9.5 (o código de hoje
-   ainda usa a escala do mundo; muda no D10-05), desenhadas por
-   cima dos itens (`desenharSobre`) e quase transparentes quando cobrem a Mariana.
-5. Quando o HUD de cima cobre a placa de um cômodo, ela desvia primeiro dentro da parede do próprio cômodo
-   (pela `caixaParada` do HUD: a caixa sem o transform da animação, remedida a cada 500 ms); se não couber, desce
-   pela regra do `ui.md` §10.18.4 e nunca some.
+4. Placas dos cômodos: em px da tela, fonte pixel, tamanho do texto pela regra do `ui.md` §10.9.5, desenhadas por
+   cima dos itens (`desenharSobre`), sempre opacas (nada de `globalAlpha` entre 0 e 1). Visual de placa de parede,
+   não de chip: fundo `--laranja-claro` chapado (madeira clara, longe do `--papel-quente` dos chips), borda `--tinta`
+   de 2 px CSS, dois preguinhos `--tinta-suave` de 1 pixel de arte, sem o degrau de sombra. A Mariana é obstáculo:
+   a placa do cômodo dela muda de lugar em vez de sumir; a de um cômodo vizinho que não achar outro lugar some
+   inteira enquanto ela estiver embaixo e volta em degrau (0 ou 1).
+5. Onde a placa fica, nesta ordem (obstáculos: o HUD e o balão aberto de `#claude-balao`, com o retrato e a
+   plaquinha, a 8 px CSS da folga do `ui.md` §10.18.2; os balãozinhos de status e cadeados, a 8 px; a Mariana; os objetos de parede do
+   cômodo, `parede: true`, nas 2 fileiras da parede ou de chão com o desenho subindo até elas, com o desenho inteiro): (a) na parede do fundo do próprio cômodo, deslizando até o
+   vão mais perto do meio; (b) sem vão, na moldura de cima do cômodo (metade sobre a borda, ou inteira acima dela),
+   sem cruzar nenhum outro cômodo; (c) só a do cômodo da Mariana, sem lugar nas duas: desce para o chão (`ui.md`
+   §10.18.4), a meio tile (em px de tela) da Mariana, dos NPCs, do que se toca (objeto com fala/ação, pedestal, tapete de saída, escada) e, se der, dos móveis: primeiro a faixa logo abaixo da parede, depois o fundo do cômodo, fora do tapete (enfeite plano, que ela pode cobrir se não houver outro lugar); depois na tela sem invadir outro cômodo; sem isso, cobre um
+   enfeite de parede (o celular com o balão aberto no corredor da Escola). Ela só some se não houver nenhum
+   retângulo fora do HUD, do balão e da Mariana (exceção). A placa de outro cômodo não aparece com o balão aberto e
+   pode sumir. O HUD é medido pela `caixaParada` (a caixa sem o transform da animação) no máximo a cada 500 ms; o
+   balão abrir, fechar ou trocar de texto remede na hora. A posição fica guardada por cômodo e só se recalcula
+   quando muda a posição do cômodo na tela (câmera), o canvas, os retângulos do HUD/balão, os balãozinhos ou a
+   célula da Mariana (ou ela passa por baixo); ao recalcular, o lugar de antes (preso ao cômodo) vale enquanto
+   continuar livre, para a placa não pular com a câmera. Conferido por `testes/unidade/placas-evitam.navegador.test.js`.
 6. O ícone de status do NPC é desenhado em px da tela (via `pintor.ctx`).
 7. Piso com contraste ≥ 2,9 com o contorno da Mariana (mediana dos pixels desenhados), em todo cômodo
    (`contraste-pisos.navegador.test.js`); exceção só com motivo em `validar/contraste.js`.
