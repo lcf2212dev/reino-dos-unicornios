@@ -117,9 +117,24 @@
 .aura-valor { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; font-size: var(--texto-t); margin: 4px 0 8px; }
 /* o número inteiro passa de 9 letras ("123.456,7"): desce um degrau para caber no painel do celular */
 .aura-valor.aura-longa { font-size: var(--texto-g); }
-.aura-cores { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 12px; padding: 0; margin: 12px 0 0; list-style: none; }
-.aura-cores li { display: flex; flex-direction: column; align-items: center; gap: 2px; color: var(--tinta-suave); }
-.aura-cores li.aura-agora { color: var(--tinta); }
+/* a barra até a próxima cor, com a chama da cor atual e a da próxima nas pontas */
+.aura-barra { display: flex; align-items: center; gap: 6px; max-width: 360px; margin: 0 auto; }
+.aura-barra-trilho {
+  flex: 1; min-width: 0; height: 22px; overflow: hidden;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--branco);
+}
+.aura-barra-cheia { display: block; height: 100%; box-shadow: inset 0 2px 0 var(--brilho); }
+.aura-barra-arco { background: linear-gradient(90deg, var(--arco-iris)); }
+/* o selo da matéria do dia: emoji da matéria + 🔥 + ×4, com um pulinho de 2 px (em degrau) */
+.aura-dia {
+  display: inline-flex; align-items: center; gap: 6px; margin: 14px 0 2px; padding: 4px 12px;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--ambar-claro);
+  font-size: var(--texto-g);
+  animation: aura-dia-brilho calc(6 * var(--lento)) step-end infinite;
+}
+@keyframes aura-dia-brilho { 0%, 100% { transform: none; } 50% { transform: translateY(-2px); } }
+body.sem-animacao .aura-dia { animation: none; }
+@media (prefers-reduced-motion: reduce) { .aura-dia { animation: none; } }
 
 /* Letras grandes (ui.md §10.9.4): o rótulo do dock vai a 16 px e o botão cresce com ele */
 :root.letras-grandes .dock-btn { min-width: 104px; }

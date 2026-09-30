@@ -1,6 +1,7 @@
 /* Chip da Aura no HUD (Reino.Aura, js/sistemas/aura.js), por UI.registrarBotaoHud: fica embaixo das estrelas
    (a montagem põe os registrados à direita; o pintar o leva para a coluna da esquerda). Tocar abre o painel
-   da Aura: o valor, a cor, quanto vale cada pergunta e quanto falta para a próxima cor. */
+   da Aura, sem frases: o valor, a barra até a próxima cor (chama da cor atual e da próxima nas pontas) e, na matéria
+   do dia, o selo "emoji da matéria + 🔥 + ×4". */
 (function () {
   var U = Reino.util, el = U.el;
   var UI = Reino.UI;
@@ -37,7 +38,7 @@
     });
     return (cacheChama[cor] = c);
   }
-  // 32 px no chip e na lista de cores; 64 px no destaque do painel (ui.md §10.10.5)
+  // 32 px no chip, na barra e no selo; 64 px no destaque do painel (ui.md §10.10.5)
   function iconeAura(cor, escala) {
     var c = PA.paraDOM(chama(cor), escala || 2, 'aura-chama');
     c.setAttribute('aria-hidden', 'true');
@@ -64,24 +65,36 @@
   }
   UI.pintarChipAura = pintarChip;
 
+  // a barra da faixa atual: de onde a cor começou até a próxima (cheia na última cor)
+  function barraAura(A, d, f, cor, corProx) {
+    var fim = A.proximaFaixa(d), ini = f === 0 ? 0 : fim / Reino.config.aura.multiplicador;
+    var ultima = corProx === cor, pct = ultima ? 100 : Math.max(0, Math.min(100, (d - ini) / (fim - ini) * 100));
+    var cheio = el('span.aura-barra-cheia');
+    cheio.style.width = pct.toFixed(1) + '%';
+    // a cor vem do save (a faixa dela); a branca um tico lilás, para aparecer no trilho branco
+    if (cor.cor === 'arco-iris') cheio.classList.add('aura-barra-arco');
+    else cheio.style.background = claro(cor.cor) ? misturar(cor.cor, '#3a2446', 0.3) : cor.cor;
+    return el('div.aura-barra', { role: 'img', 'aria-label': ultima ? 'Aura no máximo!' : 'Faltam ' + A.texto(fim - d) + ' para a aura ficar ' + corProx.nome },
+      iconeAura(cor.cor), el('span.aura-barra-trilho', cheio), ultima ? null : iconeAura(corProx.cor));
+  }
+  // o selo da matéria do dia (Reino.config.aura.materiaDoDia): o emoji da matéria, o foguinho e "×4", sem frase
+  function seloDoDia(A) {
+    var hoje = A.materiaDoDia(), m = hoje && Reino.materia && Reino.materia(hoje.materia);
+    if (!m) return null;
+    var dica = 'Hoje, ' + m.nome + ' vale ' + hoje.vezes + ' vezes mais Aura!';
+    return el('div.aura-dia', { role: 'img', 'aria-label': dica, title: dica },
+      PA.iconeEmoji(m.emoji, 2), PA.iconeEmoji('🔥', 2), el('b', '×' + hoje.vezes));
+  }
+
   function telaAura() {
     var A = aura();
     if (!A) return;
     var pn = UI.painel('aura', '✨ Aura');
-    var d = A.decimos(), f = A.faixa(d), cor = A.corDaFaixa(f), passo = A.passo(d);
-    var pen = Reino.config.aura.penalidade;
-    var prox = A.proximaFaixa(d), corProx = A.corDaFaixa(f + 1);
-    // matéria do dia (Reino.config.aura.materiaDoDia): o aviso só no painel (sem voz)
-    var hoje = A.materiaDoDia(), mh = hoje && Reino.materia && Reino.materia(hoje.materia);
+    var d = A.decimos(), f = A.faixa(d), cor = A.corDaFaixa(f), corProx = A.corDaFaixa(f + 1);
     pn.conteudo.appendChild(el('div.aura-painel',
       el('p.aura-valor' + (A.texto(d).length > 9 ? '.aura-longa' : ''), iconeAura(cor.cor, 4), el('b', A.texto(d))),
-      el('p', 'Sua aura está ' + cor.nome + '.'),
-      el('p', 'Pergunta certa: +' + A.texto(passo) + '. Errada: -' + A.texto(passo * pen) + '.'),
-      mh ? el('p.aura-materia-do-dia', '🌟 Hoje, cada pergunta certa de ', el('b', mh.nome), ' vale ', el('b', hoje.vezes + ' vezes'), ': +' + A.texto(passo * hoje.vezes) + '!') : null,
-      corProx !== cor ? el('p', 'Faltam ' + A.texto(prox - d) + ' para a aura ficar ' + corProx.nome + '!') : null,
-      el('ul.aura-cores', Reino.config.aura.cores.map(function (c, i) {
-        return el('li' + (i === Math.min(f, Reino.config.aura.cores.length - 1) ? '.aura-agora' : ''), iconeAura(c.cor), el('small', c.nome));
-      }))));
+      barraAura(A, d, f, cor, corProx),
+      seloDoDia(A)));
   }
 
   function botaoAura() {
