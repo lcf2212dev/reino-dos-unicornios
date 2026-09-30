@@ -496,17 +496,31 @@ brilho arco-íris, não mais confete. O confete é desenhado pela regra do §10.
    aparência, aos botões da foto e ao fim do guia. No celular, o botão principal aparece sem rolar.
 
 ### 10.21 Cabeçalho e larguras de painel
-1. Cabeçalho: ícone 16×16 em 32 px à esquerda, título em `--texto` com `nowrap` (§10.17.3), ✕ à direita
-   (§10.10.4), fundo `--papel-quente`. Título que não cabe (celular): primeiro o nome curto (`opcoes.curto` do
-   `painel()`, com o nome inteiro no `aria-label`), depois 2 linhas no mesmo tamanho (`.titulo-quebra`) e só então
-   `.titulo-longo` desce para `--texto-aux`; o título nunca fica menor que o texto do painel sem precisar. Com matéria, uma faixa de 8 px na cor dela
-   logo abaixo do cabeçalho (§10.22).
-2. Larguras de painel: 560 px (diálogo, escolha, cartão simples) e 720 px (listas, matéria, livro, loja). No
-   celular, a largura da tela menos 8 px de cada lado.
-3. Na tela baixa e larga (notebook: `min-width: 1000px` e `max-height: 820px`), as listas dentro do painel de 720
-   px vão em 2 colunas de cartão.
-4. Exceção: a tela de pergunta (sala, prova, treino; não é painel sobre o mapa) vai até 1180 px nessa tela baixa e
-   larga, em 2 colunas (enunciado e banco de palavras à esquerda, casas e opções à direita; D12e-02).
+1. Cabeçalho (`UI.painel(id, titulo, opcoes)`): ícone 16×16 em 32 px à esquerda, título em `--texto` com `nowrap`
+   (§10.17.3), ✕ à direita (§10.10.4), fundo `--papel-quente`.
+   1. Opções: `icone` (o desenho do cabeçalho), `materia` (a cor e a faixa, §10.22.4), `estreito` (`.painel-estreito`,
+      560 px), `curto` (nome curto do título).
+   2. O emoji no início do título vira o ícone de 32 px; não fica emoji solto no texto.
+   3. Título que não cabe: primeiro o nome curto (`opcoes.curto` ou a tabela `CURTOS`, com o nome inteiro no
+      `aria-label`); depois 2 linhas no mesmo tamanho (`.titulo-quebra`, só entre palavras); só então `.titulo-longo`,
+      um degrau abaixo (24 → 16 px). Nunca 12 px.
+2. Larguras de painel: 560 px (diálogo, escolha, cartão simples; `.painel-estreito`) e 720 px (listas, matéria, livro,
+   loja, Foguete e Álbum de ETs). No celular, a largura da tela menos 8 px de cada lado.
+   1. Na tela baixa e larga (notebook: `min-width: 1000px` e `max-height: 820px`), as listas dentro do painel de 720
+      px vão em 2 colunas de cartão.
+   2. Na tela baixa e larga, Álbum de ETs e Foguete vão até 1180 px (sem Letras grandes; mesma largura, D8B-28) e Pet
+      Shop até 1000 px (a partir de 1000 px de largura).
+   3. A tela de pergunta (sala, prova, treino; não é painel sobre o mapa) vai até 1180 px nessa tela baixa e larga, em
+      2 colunas (enunciado e banco de palavras à esquerda, casas e opções à direita; D12e-02).
+3. Caber na tela:
+   1. Conteúdo que ainda rola mostra a sombra `.rola-mais` no pé; some quando chega ao fim.
+   2. Na tela baixa e larga: o texto-guia que já é falado sai (`.guia-falada`); o que não é falado fica em 1 linha, com
+      o texto inteiro no `title`.
+   3. O cartão de prova diz "Revisão de X" (nome inteiro para o leitor de tela).
+   4. Tela da matéria na tela baixa e larga: o livro vira só o ícone na linha do dinheiro (`aria-label` e `title`) e o
+      retrato do Claude do guia sai.
+   5. Lugares em 2 colunas, com o nome numa linha (o inteiro no `title`); Ajustes com os botões em 2×2.
+   6. Com Letras grandes, essas telas podem rolar.
 
 ### 10.22 Matéria: cor e ícone
 Cada matéria tem uma cor e um ícone, os mesmos em todo o caminho: telhado do prédio, cabeçalho da tela da matéria,
@@ -528,3 +542,5 @@ livro, sala, prova e prêmio.
    com `--tinta`, como Inglês com 6,1:1 e Geografia com 4,6:1, mas a regra é uma só para as seis).
    O contorno continua `--tinta`.
 3. Matéria nova ganha cor que não repita a família de nenhuma destas (um azul só, um verde e um verde-azulado).
+4. A tela aberta com a opção `materia` do `UI.painel` recebe `--cor-materia`; ela pinta a faixa de 8 px logo abaixo do
+   cabeçalho e a faixa sob o subtítulo (topo da missão, cartas do livro); nunca o texto (item 2).

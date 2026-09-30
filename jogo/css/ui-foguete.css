@@ -37,8 +37,11 @@
 .foguete-destino .foguete-decolar { flex: 1 0 auto; }
 .foguete-decolar > canvas { margin-left: 4px; }
 .foguete-destino + .foguete-destino { margin-top: 8px; }
-/* notebook baixo (D12f-02): os destinos em 2 colunas, o painel inteiro sem rolar */
+/* notebook baixo (D12f-02): os destinos em 2 colunas, o painel inteiro sem rolar; sem Letras grandes, o painel
+   a 1180 px como o Álbum de ETs (D8B-28) e os destinos em 3 colunas */
 @media (min-width: 1000px) and (max-height: 820px) {
+  :root:not(.letras-grandes) .tela-foguete .painel { width: min(1180px, 100%); max-width: min(1180px, 100%); }
+  :root:not(.letras-grandes) .foguete-destinos ul { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .foguete-destinos ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
   .foguete-destino + .foguete-destino { margin-top: 0; }
   .foguete-destino { padding: 4px 8px; }
