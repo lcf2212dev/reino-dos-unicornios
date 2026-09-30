@@ -169,6 +169,7 @@ alvo = { tipo: 'npc'|'objeto'|'saida'|'escada'|'lugar'|'claude', id,
 2. Nos interiores pode passar da borda até o fim do HUD de cima e do menu de baixo.
 3. Mapa: `BORDA_BAIXO` (4 fileiras de grama) desenhada abaixo do mapa e margem de baixo medida no HUD
    (`margemBaixoMapa`, `motor/camera.js`), para as portas de baixo e ela nadando não sumirem atrás do menu.
+4. Escala: `escalaDoMundo` (`motor/camera.js`), pela regra do `ui.md` §10.11.
 
 ## 9. Mapa: placas, lugares e prédios
 1. O mapa NÃO tem placas de prédio: sem desenho, sem toque na placa, sem desvio do HUD. O campo `placa`

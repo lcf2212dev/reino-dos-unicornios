@@ -258,18 +258,20 @@ Medida no sprite, da primeira à última linha com desenho (`npm run ver -- --pr
 |---|---|---|
 | criança (Mariana a pé, NPC criança, ET criança, fada) | 16–18 | Mariana 17, `lab-malu` 17, ETs crianças 17–18, fada 17 |
 | adulto e idoso sem chapéu | 21–24 | 21–24 (D4-15) |
-| chapéu, coque, pluma, antena | até +4 sobre a faixa, nunca acima de 2 tiles (32) | até 25 |
-| ET adulto e vovó | 21–24 e ≥ 2 a mais que a criança do planeta | vovós 21 |
+| chapéu, coque, pluma, antena, elmo | até +4 sobre o teto da faixa (adulto: ≤ 28), nunca acima de 2 tiles (32) | até 27 (elmo, chef, festa) |
+| ET adulto e vovó | 21–24 e ≥ 2 a mais que a criança do planeta | 24; 26 com antena ou orelha |
 | unicórnio filhote (estágios 0 e 1) | 16–18 | 17–18 |
 | unicórnio adulto (estágios 2 e 3) | 22–24 | 23 |
-| Mariana montada no filhote | 19–22 | 19 |
-| Mariana montada no adulto | altura do unicórnio até +4 (23–28) | 23 |
-| bicho e criatura grande (dragão, robô) | faixa de adulto | dragão 21, robô 17 |
+| Mariana montada no filhote | 18–22 de lado, de costas e nas diagonais; de frente até 26 (exceção: as pernas dela ficam à vista sobre o unicórnio, D3-04) | lado 18, costas 18, diagonais 19–22, frente 26 |
+| Mariana montada no adulto | altura do unicórnio até +4 (23–28); de frente até 30 (mesma exceção) | 23; diagonal de frente 27; frente 30 |
+| bicho e criatura grande (dragão, robô) | faixa de adulto | dragão 21, robô 24 |
 | estátua e armadura de enfeite | ≤ o adulto ao lado | — |
-| porta de prédio (mapa) | 22–28 | 22–26 (O-04) |
+| porta de prédio (mapa) | 22–28 | 22–25 (D2A-04) |
 | poste | 32–36 | 34 |
 | arvoreta (1 tile) | 16–20 | 20 |
-| árvore comum (copa de 2 a 3 tiles) | ≥ 40 | 44–45; meia altura ~35 onde a copa cobriria rua (D1-06) |
+| árvore comum (copa de 2 a 3 tiles) | ≥ 40 | 43–45 |
+| árvore de meia altura (onde a copa cobriria rua, D1-06) | 34–36 | 35–36 |
+| mascote Claude | faixa de criança | 18 |
 
 Adulto e criança diferem ≥ 4 px. Peça nova entra na faixa do papel dela; papel novo, linha nova aqui.
 

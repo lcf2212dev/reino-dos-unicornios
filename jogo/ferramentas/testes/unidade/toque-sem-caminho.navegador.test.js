@@ -2,11 +2,12 @@
 // Servidor e banco de TESTE novos (cenario.js); save sintético.
 const { test } = require('node:test');
 const assert = require('assert');
-const { abrirCenario } = require('../cenario');
+const path = require('path');
+const { abrirCenario, PASTA_VER } = require('../cenario');
 
 [true, false].forEach((animacoes) => {
   test(`toque sem caminho mostra o sinal ~400 ms (animações ${animacoes ? 'ligadas' : 'desligadas'})`, async () => {
-    const c = await abrirCenario({ tamanho: 'celular', save: 'completo', pasta: '/tmp/reino-testes/ver/teste-toque-sem-caminho' });
+    const c = await abrirCenario({ tamanho: 'celular', save: 'completo', pasta: path.join(PASTA_VER, 'teste-toque-sem-caminho') });
     try {
       await c.js(`Reino.Progresso.estado().ajustes.animacoes = ${animacoes};
         Jogador.irPara = function () { return false; };
