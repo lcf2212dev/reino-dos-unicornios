@@ -52,7 +52,7 @@
       // 🌱 antes do crescimento, como o 🍎 e o 💧 da fome e da sede (na tritanopia as cores se parecem)
       carta.appendChild(el('span.carta-cresce', iconePequeno('🌱', 16), el('span.barrinha', el('span', { style: { width: Math.round(pe.pct * 100) + '%' } }))));
       if (cuidadosProntos()) carta.appendChild(barrasCuidado(d.id, 'mini'));
-      if (d.id === P.montaria()) carta.insertBefore(el('span.selo-montado', '🐴 Montaria'), carta.firstChild);
+      if (d.id === P.montaria()) carta.insertBefore(el('span.selo-montado', '🐎 Montaria'), carta.firstChild);
     } else if (u && !u.chocado) {
       carta.appendChild(PA.paraDOM(PA.ovo(d.raridade, 0), 4));
       carta.appendChild(el('b.carta-nome', 'Ovo ' + rar.nome));
@@ -102,7 +102,7 @@
       botoes.appendChild(comer);
     }
     if (d.id !== P.montaria()) {
-      var montar = el('button.btn-grande.btn-principal', { type: 'button' }, pe.estagio === 0 ? 'Passear junto 🐾' : 'Montar 🐴');
+      var montar = el('button.btn-grande.btn-principal', { type: 'button' }, pe.estagio === 0 ? 'Passear junto 🐾' : 'Montar 🐎');
       montar.addEventListener('click', function () {
         est().montaria = d.id; P.salvar(); Reino.Som.tocar('selecionar');
         UI.fecharTela(pn.tela); if (aoMudar) aoMudar(); U.emit(EV.MAPA_MUDOU);

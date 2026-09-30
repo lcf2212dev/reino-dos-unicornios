@@ -397,7 +397,8 @@ Object.assign(window.ICONES, {
     '.......kk.......',
     '................',
   ] },
-  "🤍": { n: "coração branco", p: { k: '#3a2446', w: '#ffffff', l: '#ffffff', p: '#f4eefa', P: '#cbb8e0' }, d: [
+  // o coração da raridade comum (D8A-19): recheio = config.paleta.raridade.comum.desenho e contorno #3a2446 (o 3:1 com #fff8ee vem do contorno)
+  "🤍": { n: "coração comum", p: { k: '#3a2446', w: '#ffffff', l: '#ffd1e6', get p() { var c = Reino.config; return c && c.paleta ? c.paleta.raridade.comum.desenho : '#ff9cc6'; }, P: '#d8588f' }, d: [
     '................',
     '................',
     '..kkkk....kkkk..',
@@ -414,6 +415,25 @@ Object.assign(window.ICONES, {
     '......kpPk......',
     '.......kk.......',
     '................',
+  ] },
+  // sela da montaria (D8A-19): selo "Montaria" e botão "Montar" do Estábulo
+  "🐎": { n: "sela", p: { k: '#3a2446', l: '#e0a468', s: '#a86a3c', S: '#7a4424', w: '#ffd1e6', P: '#d8588f', y: '#ffd34d' }, d: [
+    '................',
+    '...........kkk..',
+    '..........ksssk.',
+    '.kk......kssSSk.',
+    'kssk.....kssSSk.',
+    'ksSSkkkkkssSSSk.',
+    'ksssllllssSSSSk.',
+    '.kssssssssSSSSk.',
+    'kkkkkkkkkkkkkkkk',
+    'kwwwwwwwwwwwwwwk',
+    'kPPPPPPPPPPPPPPk',
+    '.kkkkkkSSkkkkkk.',
+    '......kSSk......',
+    '....kkkyykkk....',
+    '....kyykkyyk....',
+    '....kkyyyykk....',
   ] },
   "🌸": { n: "flor", p: { k: '#3a2446', l: '#ffe4f1', p: '#ffb3d9', P: '#ff7eb6', D: '#e0508f', y: '#ffe066', o: '#f0a04a', w: '#fff6a8' }, d: [
     '......kk.k......',
