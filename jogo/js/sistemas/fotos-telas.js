@@ -132,7 +132,7 @@
         setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
         resolver(guardou || salvou ? { lugar: foto.lugar, data: foto.data, w: foto.w, h: foto.h, guardada: guardou, salva: salvou } : null);
       }
-      var pn = UI.painel('fotos-previa', 'Que foto linda! 📸', { aoFechar: fim });
+      var pn = UI.painel('fotos-previa', '📸 Que foto linda!', { curto: '📸 Foto nova', aoFechar: fim });
       var img = el('img.fotos-img', { src: url, alt: 'Foto: ' + foto.lugar + ', ' + foto.data, width: foto.w, height: foto.h, draggable: 'false' });
       var msg = el('p.fotos-msg', { role: 'status' });
       var guardar = botao('🖼', 'Guardar no álbum', 'Guardar', true, 'fotos-guardar');
@@ -214,7 +214,7 @@
       return new Promise(function (resolver) {
         var urls = [];
         function soltar() { urls.forEach(function (u) { URL.revokeObjectURL(u); }); urls = []; }
-        var pn = UI.painel('fotos-album', 'Álbum de fotos 🖼', { aoFechar: function () { soltar(); resolver(); } });
+        var pn = UI.painel('fotos-album', '🖼 Álbum de fotos', { curto: '🖼 Álbum', aoFechar: function () { soltar(); resolver(); } });
         var falouVazio = false;
         function montar(focarIndice) {
           soltar();
@@ -230,7 +230,18 @@
             var max = cfg().maxAlbum;
             pn.conteudo.appendChild(el('p.fotos-conta', lista.length + ' de ' + max + (max === 1 ? ' foto' : ' fotos')));
             if (!lista.length) {
-              pn.conteudo.appendChild(el('p.fotos-msg', FRASES.vazio + ' 📸'));
+              // D8B-18: uma moldura vazia desenhada e a ação (fecha o álbum e tira a foto, como o 📷 do HUD)
+              pn.conteudo.appendChild(el('div.fotos-vazio', { 'aria-hidden': 'true' }, el('span.fotos-vazio-icone', '📷')));
+              pn.conteudo.appendChild(el('p.fotos-msg', FRASES.vazio));
+              if (jogoComecou() && !Reino.Cena.emTransicao() && !Reino.Cena.ocupada()) {   // o próprio álbum já põe 'atividade'
+                var tirarJa = botao('📷', 'Tirar foto agora', 'Tirar foto', true, 'fotos-tirar-agora');
+                tirarJa.addEventListener('click', function () {
+                  som('toque');
+                  UI.fecharTela(pn.tela); soltar(); resolver();
+                  if (F.podeTirar()) F.tirar();
+                });
+                pn.conteudo.appendChild(el('div.fotos-vazio-acao', tirarJa));
+              }
               if (!falouVazio) { falouVazio = true; falarVoz(FRASES.vazio); }
               return;
             }
@@ -272,7 +283,7 @@
     var UI = Reino.UI, el = U().el;
     var apagou = false, url = null;
     fecharAviso();
-    var pn = UI.painel('fotos-ver', 'Foto do álbum 🖼', { aoFechar: function () { if (url) URL.revokeObjectURL(url); aoFechar(apagou); } });
+    var pn = UI.painel('fotos-ver', '🖼 Foto do álbum', { aoFechar: function () { if (url) URL.revokeObjectURL(url); aoFechar(apagou); } });
     var img = el('img.fotos-img', { alt: '', draggable: 'false' });
     var legenda = el('p.fotos-legenda');
     var ant = el('button.btn-icone.fotos-nav', { type: 'button', 'aria-label': 'Foto anterior' }, '◀');

@@ -107,6 +107,7 @@
         }
         PA.OPCOES_APARENCIA[campo].forEach(function (cor) {
           var b = el('button.bolinha-cor', { type: 'button', 'aria-label': rotulo + ' ' + cor, 'data-cor': cor, style: { background: cor } });
+          b.style.setProperty('--cor-bolinha', cor);   // no celular a cor vai no desenho (::before) dentro do alvo de 44 px
           b.addEventListener('click', function () {
             var ap = aparencia();
             ap[campo] = cor;
@@ -141,6 +142,23 @@
       }
       [grupoCorte, grupoRoupa].forEach(function (f) {
         f.addEventListener('scroll', function () { fimDaFileira(f); }, { passive: true });
+        // O-16: no fim do arrasto com o dedo, a fileira para com o primeiro cartão inteiro à esquerda (o teclado não
+        // passa por aqui: o foco já rola pelo scrollIntoView)
+        var peloDedo = false;
+        f.addEventListener('pointerdown', function (e) { peloDedo = e.pointerType === 'touch'; }, { passive: true });
+        f.addEventListener('touchstart', function () { peloDedo = true; }, { passive: true });
+        f.addEventListener('scrollend', function () {
+          if (!peloDedo) return;
+          peloDedo = false;
+          if (f.classList.contains('no-fim')) return;
+          var base = f.getBoundingClientRect().left + 8, alvo = null;
+          U.$$('.criar-opcao', f).some(function (b) {
+            var r = b.getBoundingClientRect();
+            if (r.right - r.width / 2 < base) return false;   // mais da metade escondida: fica o próximo
+            alvo = b; return true;
+          });
+          if (alvo) f.scrollBy({ left: alvo.getBoundingClientRect().left - base, behavior: 'smooth' });
+        });
         // pelo teclado: o cartão com foco rola para dentro da fileira, fora da faixa (scroll-padding no css)
         f.addEventListener('focusin', function (e) {
           var b = e.target.closest && e.target.closest('.criar-opcao');

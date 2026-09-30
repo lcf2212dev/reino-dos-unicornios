@@ -99,3 +99,20 @@ body.sem-animacao .fotos-mini, body.sem-animacao .fotos-mini:active { transition
 /* foto grande com o Compartilhar (um botão a mais): a foto encolhe para os três caberem */
 .tela-fotos-ver .com-compartilhar .fotos-img { max-height: calc(100vh - 400px); max-height: calc(100dvh - 400px); }
 @media (max-width: 600px) { .tela-fotos-ver .com-compartilhar .fotos-img { max-height: calc(100vh - 410px); max-height: calc(100dvh - 410px); } }
+
+/* álbum vazio (D8B-18): uma moldura de foto vazia, com a câmera no meio, e o "Tirar foto agora" */
+.fotos-vazio {
+  display: flex; align-items: center; justify-content: center;
+  width: 112px; height: 144px; margin: 4px auto 12px;   /* 12 px embaixo: a sombra não encosta no "está vazio" */
+  border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto);
+  background: var(--papel-2);
+  box-shadow: var(--sombra-grande);
+  outline: 6px solid var(--papel-quente); outline-offset: calc(-6px - var(--borda-grossa));   /* o passe-partout */
+}
+.fotos-vazio-icone { font-size: var(--texto-t); line-height: 1; }
+.fotos-vazio-acao { display: flex; justify-content: center; }
+.fotos-vazio-acao .rotulo-curto { display: none; }
+@media (max-width: 600px) {
+  .fotos-vazio-acao .rotulo-longo { display: none; }
+  .fotos-vazio-acao .rotulo-curto { display: inline; }
+}
