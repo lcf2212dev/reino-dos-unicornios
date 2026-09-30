@@ -91,11 +91,14 @@
   --fonte-texto: "Press Start 2P", "Trebuchet MS", sans-serif;
   --fonte-titulo: "Press Start 2P", "Trebuchet MS", sans-serif;
   --fonte-pixel: "Press Start 2P", "Trebuchet MS", sans-serif;
-  --sombra-botao: var(--sombra-grande);     /* apelido temporário (era 0 5px 0): cada uso troca para um token (§10.10.3) */
   /* Pixel art também na moldura (docs/contratos/ui.md §10): cantos só com estas medidas, e em degrau (abaixo) */
   --canto: 6px;          /* botões, chips, cartões pequenos */
   --canto-grande: 9px;   /* painéis, balões, telas */
   --redondo: 14%;        /* o que era círculo: um "círculo" de pixels (quadrado sem os cantos) */
+  /* durações (ui.md §10.15.3): espelho de Reino.config.movimento (validar-movimento.js confere) */
+  --rapido: 120ms;   /* resposta ao toque */
+  --normal: 240ms;   /* abrir, fechar, trocar */
+  --lento: 600ms;    /* chegada, festa curta */
   color-scheme: light;
 }
 /* "Letras grandes" (ui.md §10.9.4): um degrau por token; --texto-p, --texto-t e --texto-festa ficam */
@@ -145,7 +148,7 @@ canvas.esperando-fala { pointer-events: none; filter: var(--apagado); }
 button.esperando-fala::after {
   content: ''; position: absolute; top: -14px; right: -14px; width: 32px; height: 32px;
   background: center / 100% 100% no-repeat url("data:image/svg+xml,%3Csvg xmlns='http%3A//www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Cpath fill='%233a2446' d='M7 1h5v1h-5zM6 2h1v1h-1zM12 2h1v1h-1zM5 3h1v1h-1zM13 3h1v1h-1zM4 4h1v1h-1zM14 4h1v1h-1zM4 5h1v1h-1zM14 5h1v1h-1zM4 6h1v1h-1zM8 6h2v1h-2zM14 6h1v1h-1zM4 7h1v1h-1zM10 7h1v1h-1zM14 7h1v1h-1zM5 8h1v1h-1zM10 8h1v1h-1zM14 8h1v1h-1zM6 9h4v1h-4zM14 9h1v1h-1zM9 10h1v1h-1zM13 10h1v1h-1zM8 11h1v1h-1zM13 11h1v1h-1zM7 12h1v1h-1zM12 12h1v1h-1zM7 13h1v1h-1zM11 13h1v1h-1zM8 14h3v1h-3z'/%3E%3Cpath fill='%23ffe4c2' d='M7 2h5v1h-5zM6 3h7v1h-7zM5 4h2v1h-2zM11 4h3v1h-3zM5 5h1v1h-1zM7 5h4v1h-4zM12 5h2v1h-2zM5 6h1v1h-1zM7 6h1v1h-1zM10 6h2v1h-2zM13 6h1v1h-1zM5 7h2v1h-2zM8 7h2v1h-2zM11 7h1v1h-1zM13 7h1v1h-1zM6 8h2v1h-2zM11 8h1v1h-1zM13 8h1v1h-1zM10 9h2v1h-2zM13 9h1v1h-1zM10 10h1v1h-1zM12 10h1v1h-1zM9 11h2v1h-2zM12 11h1v1h-1zM8 12h3v1h-3zM8 13h1v1h-1z'/%3E%3Cpath fill='%23a8480a' d='M7 4h4v1h-4zM6 5h1v1h-1zM11 5h1v1h-1zM6 6h1v1h-1zM12 6h1v1h-1zM7 7h1v1h-1zM12 7h1v1h-1zM8 8h2v1h-2zM12 8h1v1h-1zM12 9h1v1h-1zM11 10h1v1h-1zM11 11h1v1h-1zM11 12h1v1h-1zM9 13h2v1h-2z'/%3E%3C/svg%3E");
-  image-rendering: pixelated; animation: esperando-fala 1.2s step-end infinite;
+  image-rendering: pixelated; animation: esperando-fala calc(2 * var(--lento)) step-end infinite;
 }
 @keyframes esperando-fala { 50% { transform: translateY(-2px); } }   /* o ouvido pula 1 pixel de arte, em degrau */
 body.sem-animacao button.esperando-fala::after { animation: none; }
@@ -183,7 +186,7 @@ body.sem-animacao .toque-ignorado { transform: none; }
 .btn-grande.armando .armando-barra {
   display: block; position: absolute; left: 0; right: 0; bottom: 0; height: 6px;
   background: var(--borda); transform-origin: left center; transform: scaleX(0);
-  animation: armar-encher 1.1s linear forwards;
+  animation: armar-encher 1.1s linear forwards;   /* movimento-ok: dura ARMAR_MS (ui/base.js:274) */
 }
 @keyframes armar-encher { to { transform: scaleX(1); } }
 /* pelo teclado a trava não vale (ui.js): com o foco do teclado no botão, ele não parece desligado (o estado
@@ -206,18 +209,18 @@ body.sem-animacao .btn-grande.armando .armando-texto { display: block; }
   background: var(--papel);
   font-size: var(--texto);
   box-shadow: inset 0 2px 0 var(--brilho), var(--sombra-grande);
-  transition: transform 0.08s, box-shadow 0.08s;
+  --degrau: 4px; --brilho-apertado: inset 0 2px 0 var(--brilho-fraco);
 }
-.btn-grande:active:not(:disabled) { transform: translateY(3px); box-shadow: inset 0 1px 0 var(--brilho-fraco), 0 2px 0 var(--borda); }
 .btn-principal { background: var(--laranja); color: var(--tinta); }
 .btn-secundario { background: var(--papel); }
 .btn-perigo { background: var(--erro-fundo); }
-.btn-pequeno { min-height: 44px; padding: 6px 14px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--ambar-claro); box-shadow: var(--sombra-pequena); }
+.btn-pequeno { min-height: 44px; padding: 6px 14px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--ambar-claro); box-shadow: var(--sombra-pequena); --degrau: 2px; }
 .btn-icone {
   width: 52px; height: 52px; flex: none;
   border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-pequeno);   /* ✕ sem "cruz" (D8A-03, §10.10.4) */
   background: var(--papel); font-size: var(--texto);
   box-shadow: inset 0 2px 0 var(--brilho), var(--sombra-grande);
+  --degrau: 4px; --brilho-apertado: inset 0 2px 0 var(--brilho-fraco);
 }
 /* estado indisponível (ui.md §10.19.1): uma regra só para o botão desabilitado (disabled), o travado que segue focável
    (aria-disabled: guarda de toque, foto desligada) e o que não é botão (.indisponivel: carta cara da loja, planeta
@@ -229,7 +232,14 @@ body.sem-animacao .btn-grande.armando .armando-texto { display: block; }
   background: var(--papel-2); color: var(--tinta-suave); border-color: var(--borda); box-shadow: var(--sombra-pequena);
 }
 :is(button:disabled, button[aria-disabled="true"]:not(:where(.armando:focus-visible)), .indisponivel) canvas { filter: var(--apagado); }
-:is(button:disabled, button[aria-disabled="true"], .indisponivel):active { transform: none; }
+/* afundar (ui.md §10.15.7): a regra única. Todo tocável com sombra de degrau declara --degrau (e --brilho-apertado, se
+   tem brilho inset); em :active desce a altura da sombra e a sombra some. Estado, não animação: sem transition, igual
+   com sem-animacao e reduce; a animação que mexe no transform do próprio botão para enquanto aperta. Indisponível
+   não afunda (§10.19.1) */
+:is(button, [role="button"]):active:not(:disabled):not([aria-disabled="true"]):not(.indisponivel) {
+  transform: translateY(var(--degrau, 0px)); box-shadow: var(--brilho-apertado, none);
+}
+:is(button, [role="button"]):is(.bau, .btn-ovos, .chip-ovos, .ovo-grande):active:not(:disabled):not([aria-disabled="true"]):not(.indisponivel) { animation: none; }
 .intro-botoes { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 18px; }
 .intro-botoes.coluna { flex-direction: column; align-items: stretch; }
 

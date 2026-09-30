@@ -1,0 +1,119 @@
+{
+  "nome": "2026-09-29-tv-3i",
+  "pedido": "pedidos/2026-09-29-tv-3i.md",
+  "personagens": [],
+  "tarefas": [
+    {
+      "id": "contrato",
+      "tipo": "contrato",
+      "titulo": "Depois de 2a, 2b e 3h na main: git merge main, inventário refeito; Reino.config.movimento; decisões do pedido §14 no ui.md §10",
+      "quem": "orquestrador",
+      "depende": [],
+      "arquivos": [
+        "docs/contratos/ui.md",
+        "jogo/js/nucleo/config.js",
+        "pedidos/2026-09-29-tv-3i-inventario.md",
+        "pedidos/2026-09-29-tv-3i-medir/"
+      ],
+      "worktree": "tv-3i",
+      "pronto": [
+        "2a, 2b e 3h na main e mergeadas em feat/tv-3i; inventário refeito pelos comandos do topo (tabela e §3 da main nova)",
+        "Reino.config.movimento = { rapido: 120, normal: 240, lento: 600 }",
+        "ui.md §10 com a lista do fim do pedido §14; npm run validar verde"
+      ],
+      "estimativa": 45
+    },
+    {
+      "id": "css",
+      "tipo": "arte",
+      "titulo": "D9-03, D10-16 e o CSS do D9-12: regra única de afundar (--degrau), durações em tokens e steps(), entrada e saída da tela, transições com saída",
+      "quem": "general-purpose",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/css/"
+      ],
+      "worktree": "tv-3i-css",
+      "pronto": [
+        "o 'Pronto quando' do D9-03 e do D10-16 (pedido §13), cada tocável do inventário §3 com --degrau igual à sombra",
+        "#telas-saindo .tela.saindo com a saída do pedido §14.8; .btn-grande sem transition; .interruptor-bola com saída em sem-animacao e reduce",
+        "lista das exceções de duração (arquivo:linha) e dos seletores do §14.5 no retorno, para o §10.15.5"
+      ],
+      "estimativa": 150
+    },
+    {
+      "id": "telas",
+      "tipo": "mecanica",
+      "titulo": "D9-12: UI.fecharTela move a tela para #telas-saindo e tira do DOM depois de --rapido (na hora sem animação)",
+      "quem": "worker-low",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/ui/base.js",
+        "jogo/ferramentas/testes/unidade/tela-saida.navegador.test.js"
+      ],
+      "worktree": "tv-3i-telas",
+      "pronto": [
+        "o 'Pronto quando' do D9-12 (pedido §13) no teste tela-saida.navegador.test.js",
+        "pilha, foco, EV.TELAS e com-tela na hora, como hoje; #telas > .tela só com a pilha viva"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "validador",
+      "tipo": "mecanica",
+      "titulo": "validar-movimento.js: durações só em token, --degrau igual à sombra, :active só na regra única, :root x Reino.config.movimento",
+      "quem": "worker-low",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/ferramentas/validar/validar-movimento.js",
+        "jogo/ferramentas/validar/validar-tudo.js",
+        "jogo/ferramentas/testes/unidade/validar-movimento.test.js"
+      ],
+      "worktree": "tv-3i-validador",
+      "pronto": [
+        "as quatro regras do pedido §14.9, com teste de unidade que acusa um transition: transform 0.08s, uma sombra sem --degrau e um :active solto",
+        "npm run validar no ar (verde depois de juntar com a frente css)"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "integracao",
+      "tipo": "integracao",
+      "titulo": "Juntar, npm test e e2e (idêntico), marcar o TODO",
+      "quem": "orquestrador",
+      "depende": [
+        "css",
+        "telas",
+        "validador"
+      ],
+      "arquivos": [
+        "TODO-VISUAL.md",
+        "jogo/js/manifesto.js",
+        "jogo/index.html",
+        "jogo/ferramentas/testes/base-referencia.txt"
+      ],
+      "worktree": "tv-3i",
+      "pronto": [
+        "npm test e e2e verdes"
+      ],
+      "estimativa": 45
+    },
+    {
+      "id": "entrega",
+      "tipo": "entrega",
+      "titulo": "Merge, push e Vercel",
+      "quem": "orquestrador",
+      "depende": [
+        "integracao"
+      ],
+      "arquivos": [],
+      "worktree": "tv-3i",
+      "estimativa": 15
+    }
+  ]
+}
