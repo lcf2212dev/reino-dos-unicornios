@@ -5,6 +5,7 @@
   var Reino = window.Reino;
   var N = Reino.NPCs, _n = Reino._npcs;
   var P = _n.P, materiaDe = _n.materiaDe, salaDe = _n.salaDe, materiaDoLugar = _n.materiaDoLugar;
+  var CONTORNO = _n.CONTORNO;
   var U = _n.U, PADRAO = _n.PADRAO, LIMITE = _n.LIMITE, tamanho = _n.tamanho, paginas = _n.paginas,
     falas = _n.falas, uma = _n.uma, convite = _n.convite;
 
@@ -61,13 +62,55 @@
     // se ainda sobrou pedaço longo (vírgulas), quebra esse entre palavras
     return [].concat.apply([], out.map(function (o) { return tamanho(o) > LIMITE && /,/.test(t) && o !== t ? quebrarNaTela(o.replace(/,\s*$/, ',')) : [o]; }));
   }
+  /* pontinhos de página no pé do balão (D5-14), em pixel: a página de agora cheia, as outras vazias; na última,
+     o último cheio marca o fim. Conversa de 1 página não tem. 2 px da tela por pixel do desenho (ui.md §10). */
+  function pontos(i, total) {
+    var PA = window.PA;
+    if (total < 2 || !PA || !PA.novoCanvas || !PA.paraDOM) return null;
+    var LADO = 4, VAO = 2, c = PA.novoCanvas(total * (LADO + VAO) - VAO, LADO), ctx = c.getContext('2d');
+    for (var k = 0; k < total; k++) {
+      var x = k * (LADO + VAO);
+      ctx.fillStyle = CONTORNO;
+      ctx.fillRect(x + 1, 0, 2, 1); ctx.fillRect(x + 1, 3, 2, 1); ctx.fillRect(x, 1, 1, 2); ctx.fillRect(x + 3, 1, 1, 2);
+      ctx.fillStyle = k === i ? CONTORNO : '#fff8ee';
+      ctx.fillRect(x + 1, 1, 2, 2);
+    }
+    var el = PA.paraDOM(c, 2, 'pontos-pagina');
+    el.setAttribute('role', 'img');
+    el.setAttribute('aria-label', 'Página ' + (i + 1) + ' de ' + total);
+    return el;
+  }
+  // o extra do balão: os chips da última página (se houver) e os pontinhos
+  function extraCom(el, i, total) {
+    var p = pontos(i, total);
+    if (!p) return el || null;
+    if (!el) return p;
+    var f = document.createDocumentFragment();
+    f.appendChild(el); f.appendChild(p);
+    return f;
+  }
+  /* página de uma frase só maior que o LIMITE (sem ponto nem vírgula para o paginar cortar, ex.: "Pense como uma
+     cientista de verdade!", D5-08): na TELA vira 2+ páginas (quebrarNaTela); a voz fala a frase inteira na 1ª
+     e as outras ficam em silêncio. O gênero entra antes, para medir o texto que aparece. */
+  var TELA = 34;   // ~2 linhas do balão no celular (17 letras cada): até aqui a página fica inteira
+  function naTela(pags) {
+    var G = Reino.Genero;
+    return [].concat.apply([], pags.map(function (segs) {
+      segs = segs.filter(Boolean);
+      if (segs.length !== 1) return [{ segs: segs }];
+      var t = G && G.texto ? G.texto(segs[0]) : segs[0];
+      var partes = tamanho(t) > TELA ? quebrarNaTela(t) : [t];
+      if (partes.length < 2) return [{ segs: segs }];
+      return partes.map(function (p, k) { return k ? { segs: [p], mudo: true } : { segs: [p], fala: [t] }; });
+    }));
+  }
   function falarPaginado(texto, quem) {
     var pags = [].concat.apply([], paginas([texto]).map(function (pg) { return quebrarNaTela(pg.join(' ')).map(function (x) { return [x]; }); })), i = 0;
     if (!pags.length) pags = [[texto]];
     function prox(v) {
       if (v === null || v === undefined) return null;
       var pg = pags[i], ultima = i === pags.length - 1, op = { quem: quem, modal: true, voz: quem.voz,
-        botoes: ultima ? OK : [{ texto: 'Continuar →', valor: 'ok', principal: true }] };
+        botoes: ultima ? OK : [{ texto: 'Continuar →', valor: 'ok', principal: true }], extra: extraCom(null, i, pags.length) };
       if (i === 0) op.fala = [texto]; else op.falar = false;
       i++;
       var r = Reino.Claude.falar(pg.join(' '), op);
@@ -187,42 +230,34 @@
   N.interagir = function (npc, ctx) {
     if (emConversa) return emConversa;
     var a = npc.acao || {};
-    var quem = { nome: npc.nome, retrato: [N.retrato(npc, 0), N.retrato(npc, 1)], voz: npc.voz };
-    function balao(segs, op) {
-      segs = segs.filter(Boolean);
-      return Reino.Claude.falar(segs.join(' '), Object.assign({ quem: quem, fala: segs, modal: true, voz: npc.voz }, op || {}));
+    // retrato: [normal, piscando, boca aberta] (o balão abre a boca enquanto a voz toca, D4-17)
+    var quem = { nome: npc.nome, retrato: [N.retrato(npc, 0), N.retrato(npc, 1), N.retrato(npc, 2)], voz: npc.voz };
+    function balao(pg, op) {
+      var segs = pg.segs.filter(Boolean);
+      var o = Object.assign({ quem: quem, fala: pg.fala || segs, modal: true, voz: npc.voz }, op || {});
+      if (pg.mudo) o.falar = false;
+      return Reino.Claude.falar(segs.join(' '), o);
     }
-    var CONTINUAR = { botoes: [{ texto: 'Continuar →', valor: 'ok', principal: true }] };
-    // mostra as páginas em sequência com "Continuar →"; para se o balão for limpo
-    function emSequencia(pags) {
-      var i = 0;
-      function prox(v) {
-        if (v === null || v === undefined || i >= pags.length) return v;
-        return balao(pags[i++], CONTINUAR).then(prox);
-      }
-      return prox('ok');
-    }
-    var seq = Promise.resolve('ok');
+    var CONTINUAR = [{ texto: 'Continuar →', valor: 'ok', principal: true }];
+    // a conversa inteira de uma vez (apresentação + convite), para os pontinhos saberem o total
+    var pagsOi = [];
     if (!conversou[npc.id]) {
       // a apresentação inteira (todas as falas de `oi`, na ordem), cada uma em sua(s) página(s)
-      var pagsOi = [].concat.apply([], falas(npc, 'oi').map(function (t) { return paginas([t]); }));
+      pagsOi = [].concat.apply([], falas(npc, 'oi').map(function (t) { return paginas([t]); }));
       // só conta como apresentada se ela ouviu tudo com voz; se o pacote de voz ainda está
       // chegando (Wi-Fi fraco), na próxima conversa a apresentação volta, já com voz
       if (apresentacaoComVoz(npc, pagsOi) || ++semVoz[npc.id] >= MAX_SEM_VOZ) conversou[npc.id] = true;
-      seq = emSequencia(pagsOi);
     }
-    emConversa = seq.then(function (v) {
-      if (v === null || v === undefined) return null;     // balão limpo no meio: não segue
-      var c = convite(npc), pags = paginas(c.segs), i = 0;
-      // páginas do meio com "Continuar →"; a última com os botões e os chips
-      function proxima(v2) {
-        if (v2 === null || v2 === undefined) return null;
-        var ultima = i === pags.length - 1, pg = pags[i++];
-        if (ultima) return balao(pg, { botoes: c.botoes, extra: c.extra || null });
-        return balao(pg, { botoes: [{ texto: 'Continuar →', valor: 'ok', principal: true }] }).then(proxima);
-      }
-      return proxima('ok');
-    }).then(function (v) {
+    var c = convite(npc), oi = naTela(pagsOi), conv = naTela(paginas(c.segs)), total = oi.length + conv.length, i = 0;
+    // páginas em sequência com "Continuar →"; a última do convite com os botões e os chips; para se o balão for limpo
+    function proxima(v) {
+      if (v === null || v === undefined) return null;
+      var n = i++, ultima = n === total - 1, pg = n < oi.length ? oi[n] : conv[n - oi.length];
+      if (!pg) return v;
+      if (ultima) return balao(pg, { botoes: c.botoes, extra: extraCom(c.extra || null, n, total) });
+      return balao(pg, { botoes: CONTINUAR, extra: extraCom(null, n, total) }).then(proxima);
+    }
+    emConversa = proxima('ok').then(function (v) {
       if (v === 'livro') {
         var ml = a.livro ? Reino.materia(a.livro) : materiaDoLugar(a.lugar);
         return N.executar({ tipo: 'tela', tela: 'livro', materia: ml && ml.id });
