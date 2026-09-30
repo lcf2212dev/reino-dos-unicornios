@@ -131,6 +131,16 @@
    "velocidade": "-20%",
    "tom": "-12Hz"
   },
+  "npc-caio": {
+   "voz": "de-DE-FlorianMultilingualNeural",
+   "velocidade": "-4%",
+   "tom": "-8Hz"
+  },
+  "npc-rosa": {
+   "voz": "pt-BR-FranciscaNeural",
+   "velocidade": "+6%",
+   "tom": "+14Hz"
+  },
   "npc-margarida": {
    "voz": "de-DE-SeraphinaMultilingualNeural",
    "velocidade": "-12%",
@@ -24415,54 +24425,53 @@
    "fala": "Ou acerte as dez, com calma!"
   },
   {
-   "chave": "7f47a66bg",
-   "voz": "npc-padrao-1",
+   "chave": "c3a724e0c",
+   "voz": "npc-caio",
    "texto": "Oi!",
    "pacotes": [
-    "interior-castelo",
-    "interior-padrao-matematica"
+    "interior-castelo"
    ],
    "fala": "Oi!"
   },
   {
-   "chave": "368b32ab13",
-   "voz": "npc-padrao-1",
-   "texto": "Sou um cavaleiro do Reino.",
+   "chave": "6ab11c8fx",
+   "voz": "npc-caio",
+   "texto": "Eu sou o Cavaleiro Caio.",
    "pacotes": [
     "interior-castelo"
    ],
-   "fala": "Sou um cavaleiro do Reino."
+   "fala": "Eu sou o Cavaleiro Caio."
   },
   {
-   "chave": "06b3793b16",
-   "voz": "npc-padrao-1",
-   "texto": "Eu cuido do treino desta ala.",
+   "chave": "8ffee0cb13",
+   "voz": "npc-caio",
+   "texto": "Eu treino Matemática com você.",
    "pacotes": [
     "interior-castelo"
    ],
-   "fala": "Eu cuido do treino desta ala."
+   "fala": "Eu treino Matemática com você."
   },
   {
-   "chave": "a02f673312",
-   "voz": "npc-padrao-1",
-   "texto": "Vamos treinar sem pressa?",
+   "chave": "3a0cdfde10",
+   "voz": "npc-caio",
+   "texto": "Vamos treinar a Matemática?",
    "pacotes": [
     "interior-castelo"
    ],
-   "fala": "Vamos treinar sem pressa?"
+   "fala": "Vamos treinar a Matemática?"
   },
   {
-   "chave": "3f9b910d11",
-   "voz": "npc-padrao-1",
-   "texto": "Vamos ler cada pergunta?",
+   "chave": "a380b9acw",
+   "voz": "npc-caio",
+   "texto": "Vamos contar com calma?",
    "pacotes": [
     "interior-castelo"
    ],
-   "fala": "Vamos ler cada pergunta?"
+   "fala": "Vamos contar com calma?"
   },
   {
-   "chave": "6d39ec5313",
-   "voz": "npc-padrao-1",
+   "chave": "9a468582z",
+   "voz": "npc-caio",
    "texto": "Quer treinar mais uma vez?",
    "pacotes": [
     "interior-castelo"
@@ -24470,8 +24479,8 @@
    "fala": "Quer treinar mais uma vez?"
   },
   {
-   "chave": "5cc8a44e17",
-   "voz": "npc-padrao-1",
+   "chave": "d04aafa313",
+   "voz": "npc-caio",
    "texto": "Vamos buscar o ouro com calma?",
    "pacotes": [
     "interior-castelo"
@@ -24479,8 +24488,8 @@
    "fala": "Vamos buscar o ouro com calma?"
   },
   {
-   "chave": "eea2fbb114",
-   "voz": "npc-padrao-1",
+   "chave": "d3d4e73210",
+   "voz": "npc-caio",
    "texto": "Primeiro, termine as salas.",
    "pacotes": [
     "interior-castelo"
@@ -24488,45 +24497,35 @@
    "fala": "Primeiro, termine as salas."
   },
   {
-   "chave": "bda4175b15",
-   "voz": "npc-padrao-1",
-   "texto": "Você revisou tudo com calma!",
+   "chave": "1789b4bd10",
+   "voz": "npc-caio",
+   "texto": "Você contou tudo com calma!",
    "pacotes": [
     "interior-castelo"
    ],
-   "fala": "Você revisou tudo com calma!"
+   "fala": "Você contou tudo com calma!"
   },
   {
-   "chave": "0940f9fb13",
-   "voz": "npc-padrao-1",
-   "texto": "Revisar é coisa de campeã!",
+   "chave": "8b95cdc4z",
+   "voz": "npc-caio",
+   "texto": "Conferir a conta dá certo!",
    "pacotes": [
     "interior-castelo"
    ],
-   "fala": "Revisar é coisa de campeã!"
+   "fala": "Conferir a conta dá certo!"
   },
   {
-   "chave": "dea627dc14",
-   "voz": "npc-padrao-1",
-   "texto": "Revisar é coisa de campeão!",
-   "pacotes": [
-    "interior-castelo"
-   ],
-   "fala": "Revisar é coisa de campeão!"
-  },
-  {
-   "chave": "a0ba939417",
-   "voz": "npc-padrao-1",
+   "chave": "6815da7d13",
+   "voz": "npc-caio",
    "texto": "Tudo bem, volte quando quiser!",
    "pacotes": [
-    "interior-castelo",
-    "interior-padrao-matematica"
+    "interior-castelo"
    ],
    "fala": "Tudo bem, volte quando quiser!"
   },
   {
-   "chave": "fa5f3979v",
-   "voz": "npc-padrao-1",
+   "chave": "adcfa0f4r",
+   "voz": "npc-caio",
    "texto": "Falta só uma sala!",
    "pacotes": [
     "interior-castelo"
@@ -24534,8 +24533,8 @@
    "fala": "Falta só uma sala!"
   },
   {
-   "chave": "d8c096c5v",
-   "voz": "npc-padrao-1",
+   "chave": "af530628r",
+   "voz": "npc-caio",
    "texto": "Faltam duas salas!",
    "pacotes": [
     "interior-castelo"
@@ -24543,8 +24542,8 @@
    "fala": "Faltam duas salas!"
   },
   {
-   "chave": "053f7c53v",
-   "voz": "npc-padrao-1",
+   "chave": "f2a64f9er",
+   "voz": "npc-caio",
    "texto": "Faltam três salas!",
    "pacotes": [
     "interior-castelo"
@@ -24552,8 +24551,8 @@
    "fala": "Faltam três salas!"
   },
   {
-   "chave": "af9a8940x",
-   "voz": "npc-padrao-1",
+   "chave": "02a0edfdt",
+   "voz": "npc-caio",
    "texto": "Faltam quatro salas!",
    "pacotes": [
     "interior-castelo"
@@ -24561,8 +24560,8 @@
    "fala": "Faltam quatro salas!"
   },
   {
-   "chave": "bcb29f2aw",
-   "voz": "npc-padrao-1",
+   "chave": "098cb34ds",
+   "voz": "npc-caio",
    "texto": "Faltam cinco salas!",
    "pacotes": [
     "interior-castelo"
@@ -24570,8 +24569,8 @@
    "fala": "Faltam cinco salas!"
   },
   {
-   "chave": "4dafcdf4v",
-   "voz": "npc-padrao-1",
+   "chave": "01f3cef1r",
+   "voz": "npc-caio",
    "texto": "Faltam seis salas!",
    "pacotes": [
     "interior-castelo"
@@ -24579,8 +24578,8 @@
    "fala": "Faltam seis salas!"
   },
   {
-   "chave": "2a36779d16",
-   "voz": "npc-padrao-1",
+   "chave": "a6b6ae1e12",
+   "voz": "npc-caio",
    "texto": "Falta um treino para o épico!",
    "pacotes": [
     "interior-castelo"
@@ -24588,8 +24587,8 @@
    "fala": "Falta um treino para o épico!"
   },
   {
-   "chave": "944c630915",
-   "voz": "npc-padrao-1",
+   "chave": "7b257d7411",
+   "voz": "npc-caio",
    "texto": "Mais dois treinos pro épico!",
    "pacotes": [
     "interior-castelo"
@@ -24597,8 +24596,8 @@
    "fala": "Mais dois treinos pro épico!"
   },
   {
-   "chave": "116c7b7515",
-   "voz": "npc-padrao-1",
+   "chave": "4dc46e7011",
+   "voz": "npc-caio",
    "texto": "Mais três treinos pro épico!",
    "pacotes": [
     "interior-castelo"
@@ -24606,8 +24605,8 @@
    "fala": "Mais três treinos pro épico!"
   },
   {
-   "chave": "9837e30711",
-   "voz": "npc-padrao-1",
+   "chave": "17346822x",
+   "voz": "npc-caio",
    "texto": "Ou tire ouro, com calma!",
    "pacotes": [
     "interior-castelo"
@@ -24615,8 +24614,8 @@
    "fala": "Ou tire ouro, com calma!"
   },
   {
-   "chave": "4a49290617",
-   "voz": "npc-padrao-1",
+   "chave": "990dd07313",
+   "voz": "npc-caio",
    "texto": "Mais quatro treinos pro épico!",
    "pacotes": [
     "interior-castelo"
@@ -24624,8 +24623,8 @@
    "fala": "Mais quatro treinos pro épico!"
   },
   {
-   "chave": "90c0363616",
-   "voz": "npc-padrao-1",
+   "chave": "4abec38512",
+   "voz": "npc-caio",
    "texto": "Mais cinco treinos pro épico!",
    "pacotes": [
     "interior-castelo"
@@ -24633,8 +24632,224 @@
    "fala": "Mais cinco treinos pro épico!"
   },
   {
-   "chave": "c8bc057915",
-   "voz": "npc-padrao-1",
+   "chave": "022efb0811",
+   "voz": "npc-caio",
+   "texto": "Ou acerte as dez, com calma!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Ou acerte as dez, com calma!"
+  },
+  {
+   "chave": "453a4603c",
+   "voz": "npc-rosa",
+   "texto": "Oi!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Oi!"
+  },
+  {
+   "chave": "9086c057x",
+   "voz": "npc-rosa",
+   "texto": "Eu sou a Cavaleira Rosa.",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Eu sou a Cavaleira Rosa."
+  },
+  {
+   "chave": "5ea833ed12",
+   "voz": "npc-rosa",
+   "texto": "Eu treino Geografia com você.",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Eu treino Geografia com você."
+  },
+  {
+   "chave": "55451ab6z",
+   "voz": "npc-rosa",
+   "texto": "Vamos treinar a Geografia?",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Vamos treinar a Geografia?"
+  },
+  {
+   "chave": "13e14005x",
+   "voz": "npc-rosa",
+   "texto": "Vamos ler cada pergunta?",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Vamos ler cada pergunta?"
+  },
+  {
+   "chave": "5d6e816bz",
+   "voz": "npc-rosa",
+   "texto": "Quer treinar mais uma vez?",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Quer treinar mais uma vez?"
+  },
+  {
+   "chave": "3308e91613",
+   "voz": "npc-rosa",
+   "texto": "Vamos buscar o ouro com calma?",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Vamos buscar o ouro com calma?"
+  },
+  {
+   "chave": "e341cec910",
+   "voz": "npc-rosa",
+   "texto": "Primeiro, termine as salas.",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Primeiro, termine as salas."
+  },
+  {
+   "chave": "14a0049311",
+   "voz": "npc-rosa",
+   "texto": "Você revisou tudo com calma!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Você revisou tudo com calma!"
+  },
+  {
+   "chave": "e9886113z",
+   "voz": "npc-rosa",
+   "texto": "Revisar é coisa de campeã!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Revisar é coisa de campeã!"
+  },
+  {
+   "chave": "68724db410",
+   "voz": "npc-rosa",
+   "texto": "Revisar é coisa de campeão!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Revisar é coisa de campeão!"
+  },
+  {
+   "chave": "8b44a91c13",
+   "voz": "npc-rosa",
+   "texto": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Tudo bem, volte quando quiser!"
+  },
+  {
+   "chave": "eba82311r",
+   "voz": "npc-rosa",
+   "texto": "Falta só uma sala!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Falta só uma sala!"
+  },
+  {
+   "chave": "4b9b7bddr",
+   "voz": "npc-rosa",
+   "texto": "Faltam duas salas!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Faltam duas salas!"
+  },
+  {
+   "chave": "efba081br",
+   "voz": "npc-rosa",
+   "texto": "Faltam três salas!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Faltam três salas!"
+  },
+  {
+   "chave": "693c51a8t",
+   "voz": "npc-rosa",
+   "texto": "Faltam quatro salas!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Faltam quatro salas!"
+  },
+  {
+   "chave": "b5063822s",
+   "voz": "npc-rosa",
+   "texto": "Faltam cinco salas!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Faltam cinco salas!"
+  },
+  {
+   "chave": "169e108512",
+   "voz": "npc-rosa",
+   "texto": "Falta um treino para o épico!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Falta um treino para o épico!"
+  },
+  {
+   "chave": "2a443ee111",
+   "voz": "npc-rosa",
+   "texto": "Mais dois treinos pro épico!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Mais dois treinos pro épico!"
+  },
+  {
+   "chave": "2e5578dd11",
+   "voz": "npc-rosa",
+   "texto": "Mais três treinos pro épico!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Mais três treinos pro épico!"
+  },
+  {
+   "chave": "9f8a42ffx",
+   "voz": "npc-rosa",
+   "texto": "Ou tire ouro, com calma!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Ou tire ouro, com calma!"
+  },
+  {
+   "chave": "2d06f7ce13",
+   "voz": "npc-rosa",
+   "texto": "Mais quatro treinos pro épico!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Mais quatro treinos pro épico!"
+  },
+  {
+   "chave": "f804432e12",
+   "voz": "npc-rosa",
+   "texto": "Mais cinco treinos pro épico!",
+   "pacotes": [
+    "interior-castelo"
+   ],
+   "fala": "Mais cinco treinos pro épico!"
+  },
+  {
+   "chave": "752b75f111",
+   "voz": "npc-rosa",
    "texto": "Ou acerte as dez, com calma!",
    "pacotes": [
     "interior-castelo"
@@ -35166,6 +35381,15 @@
    "fala": "Agora vamos para a Sala 6!"
   },
   {
+   "chave": "7f47a66bg",
+   "voz": "npc-padrao-1",
+   "texto": "Oi!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Oi!"
+  },
+  {
    "chave": "d346136dw",
    "voz": "npc-padrao-1",
    "texto": "Eu cuido da Sala 1.",
@@ -35236,6 +35460,15 @@
     "interior-padrao-matematica"
    ],
    "fala": "Que orgulho de você!"
+  },
+  {
+   "chave": "a0ba939417",
+   "voz": "npc-padrao-1",
+   "texto": "Tudo bem, volte quando quiser!",
+   "pacotes": [
+    "interior-padrao-matematica"
+   ],
+   "fala": "Tudo bem, volte quando quiser!"
   },
   {
    "chave": "da70996715",
