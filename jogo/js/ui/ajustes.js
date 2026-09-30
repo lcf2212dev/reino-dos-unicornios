@@ -52,7 +52,9 @@
 
   UI.aplicarAjustes = function () {
     var a = est().ajustes;
-    document.documentElement.style.setProperty('--escala-texto', String(a.texto || 1));
+    // "Letras grandes" (ui.md §10.9.4): classe no <html> que sobe os tokens de letra um degrau. O save guarda
+    // 1.15 (ligado) ou 1 e continua assim: liga com qualquer valor > 1, sem migrar nem normalizar
+    document.documentElement.classList.toggle('letras-grandes', a.texto > 1);
     document.body.classList.toggle('sem-animacao', !a.animacoes);
   };
 })();

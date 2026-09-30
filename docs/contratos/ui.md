@@ -139,12 +139,12 @@ Tudo na tela é pixel art, também o que é CSS e o que é desenhado no canvas. 
 como §10.1 a §10.7); as subseções 10.8 em diante são a direção de arte. Código novo já nasce nelas; onde o código de
 hoje ainda não segue, o item do `TODO-VISUAL.md` leva até a regra. O porquê das escolhas de produto (escala do mundo,
 cor por matéria, festa): `docs/decisoes/direcao-de-arte.md`.
-1. Cantos: `border-radius` só com `var(--canto)`, `var(--canto-grande)` ou `var(--redondo)` (o antigo círculo), ou 0.
+1. Cantos: `border-radius` só com `var(--canto-pequeno)` (botão pequeno, §10.10.4), `var(--canto)`, `var(--canto-grande)` ou `var(--redondo)` (o antigo círculo), ou 0.
    `ui-base.css` põe `corner-shape: notch` em tudo: o canto vira um degrau reto e a borda e a sombra o seguem.
    Sem suporte (Safari), canto reto. Nada de `999px` (pílula) nem `50%`.
 2. Cor: nada de degradê liso. Faixas chapadas com paradas duras (`#a 0 33%, #b 33% 66%, #c 66%`), de 2 a 4 faixas,
    só em `linear-gradient`: `radial-gradient` desenha círculo de borda lisa (mesmo com parada dura), então não se usa.
-3. Sombra e brilho: deslocamento duro, sem desfoque (`0 5px 0`); brilho = contorno de 1 pixel com `drop-shadow`
+3. Sombra e brilho: deslocamento duro, sem desfoque (`var(--sombra-grande)`, §10.10.3); brilho = contorno de 1 pixel com `drop-shadow`
    sem desfoque nos 4 lados. Nada de `blur`, desfoque em `box-shadow`/`text-shadow`/`drop-shadow` nem `shadowBlur`.
 4. Nada de girar desenho pixel (`rotate` borra os pixels): balanço é deslocamento em degraus.
 5. Canvas: sem `arc`/`ellipse`/degradê/`shadowBlur` que apareçam lisos na tela; forma redonda vem dos helpers
@@ -237,34 +237,70 @@ O lendário é sempre dourado (chip, faixa da prova e quadro da Escola também);
    (§10.3).
 
 ### 10.9 Tipografia
-1. Escala na grade de 8 px da Press Start 2P: 8, 16 e 24 px (32 e 48 só na abertura e na festa, §10.16). Texto que
-   a criança precisa ler: 16 px. 12 px só em rótulo auxiliar (dock, data, legenda de chip) e na carta da memória
-   quando a palavra mais longa não cabe (desce 16 → 12, sem partir a palavra). 8 px só em número sobreposto a ícone
-   (contador, selo); palavra nunca abaixo de 12 px. Nada de `em` nem de tamanho fora da escala.
-2. Entrelinha: 1,5 no corpo e 1,25 no título.
-3. Sem negrito: só o peso 400 (a fonte não tem outro). Hierarquia por tamanho, por cor (`--tinta` e
-   `--tinta-suave`) e por faixa.
-4. "Letras grandes" (Ajustes, `ajustes.js`) sobe cada tamanho um degrau da escala (12 → 16, 16 → 24, 24 → 32; o
-   8 do selo fica), nunca um multiplicador.
-5. Texto do canvas (placa do cômodo, moldura da foto) usa o mesmo token do DOM em px CSS: tamanho em px de aparelho
-   = token × `devicePixelRatio`, arredondado ao múltiplo de 8 mais perto. A placa tem 16 px CSS nos 3 tamanhos.
+1. Escala na grade da Press Start 2P, só por token do `:root` de `ui-base.css`:
+
+   | Token | px | Para quê |
+   |---|---|---|
+   | `--texto-p` | 8 | só número sobreposto a ícone (contador, selo com número); palavra nunca |
+   | `--texto-aux` | 12 | rótulo auxiliar: `.chip-mini`, `small`, data, legenda, preço riscado, estágio, raridade, plaquinha do nome, número da questão, dock |
+   | `--texto` | 16 | o que a criança lê: balão, botão, opção, chips do HUD, preço, enunciado, título de painel e de grupo |
+   | `--texto-g` | 24 | título grande (`h3` do livro, visor do PIN); enunciado (`.pergunta`) a partir de 640 px |
+   | `--texto-t` | 32 | abertura e festa (§10.16) |
+   | `--texto-festa` | 48 | abertura e festa (§10.16; 32 no celular, se não couber) |
+
+   Todo `font-size` do CSS é um desses tokens: nada de `em`, `%`, `clamp`, `vw`, `calc` nem px solto. O que muda
+   por tamanho de tela troca de token numa media query. Carta da memória com palavra que não cabe: 16 → 12, sem
+   partir a palavra. O canvas e o JS leem o espelho `Reino.config.texto` (`{ p: 8, aux: 12, corpo: 16, g: 24 }`,
+   `jogo/js/nucleo/config.js`), com o mesmo número: mude os dois juntos. O espelho é só do canvas: JS que muda o
+   tamanho de texto do DOM troca de token (classe ou `var(--texto…)`), nunca escreve px do espelho.
+2. Entrelinha: `--entrelinha` (1,5) no corpo e `--entrelinha-titulo` (1,25) em título (`.titulo-pixel`, `h2`, `h3`,
+   `.missao-titulo`). `line-height: 1` só em peça de uma linha com altura fixa (chip, contador, tecla).
+3. Sem negrito: nenhum `font-weight` diferente de 400 no CSS, e `b, strong { font-weight: 400 }` no `ui-base.css`
+   (a fonte não tem outro peso). Hierarquia por tamanho, por cor (`--tinta` e `--tinta-suave`) e por faixa.
+4. "Letras grandes" (Ajustes): `ajustes.js` põe a classe `letras-grandes` no `<html>` quando `ajustes.texto > 1`. O
+   interruptor segue gravando `1.15` ou `1` no save (nenhuma migração nem normalização). `:root.letras-grandes`
+   sobe cada token um degrau: `--texto-aux` 16, `--texto` 24, `--texto-g` 32; `--texto-p`, `--texto-t` e
+   `--texto-festa` ficam. Nunca um multiplicador: `--escala-texto` não existe, e o layout que muda com as letras
+   grandes usa o seletor `.letras-grandes`. O texto do canvas não cresce (a parede não tem lugar para a placa maior).
+5. Texto do canvas usa o token do DOM em px CSS: tamanho em px de aparelho = token × `devicePixelRatio`,
+   arredondado ao múltiplo de 8 mais perto (vale para todo texto do canvas). A placa do
+   cômodo tem `Reino.config.texto.corpo × dpr` px de aparelho (48/32/16 no celular, tablet e notebook: múltiplo de
+   8), 16 px CSS nos 3 tamanhos. A moldura dela é desenhada em px de arte da interface (§10.10.1: 1 px de arte =
+   2 px CSS = `2 × dpr` px de aparelho): borda de 1 px de arte, pregos de 1×1. A moldura da foto segue a mesma
+   conta. Placa sem lugar na parede: §10.18.4.
 6. Caracteres: a fonte não tem "√", "−", "●", "✓" nem o hífen inquebrável (U+2011). Use "-" no lugar de "−", o ✓
    com desenho 16×16 (§10.6), casa cheia desenhada em CSS no lugar de "●"; "–" e "×" existem. Caractere novo em
    texto de tela: confira que a fonte o tem (o `validar-conteudo.js` confere matérias, provas e os textos de `js/ui/`).
 7. Ligaduras desligadas no seletor `*` (`font-variant-ligatures: none`; campos sem `font: inherit` também) e, no canvas,
    `ctx.textRendering = 'optimizeSpeed'` antes do `fillText`: com elas "fi" vira um glifo só e o "i" some.
+8. Título que não cabe desce um degrau por vez, nunca por fator: o título da missão em Português (`ajustarTitulo`,
+   `desafios.js`, só em Português) vai de 24 a 16 e a 12, e nunca ×0,9/0,8/0,7.
 
 ### 10.10 Pixel da interface: bordas, sombras, ícones e retratos
-1. Na interface, 1 pixel de arte = 2 px CSS. Toda medida de desenho é múltiplo de 2 px CSS.
-2. Borda: 2 px; 4 px em moldura grande (painel, balão, tela, retrato). Nada de 1, 3 ou 5 px.
-3. Sombra dura para baixo: 2 px (chip, botão pequeno) ou 4 px (botão grande, painel). Botão apertado desce 2 px e
-   perde a sombra na mesma medida.
+1. Na interface, 1 pixel de arte = 2 px CSS. Toda medida de desenho é múltiplo de 2 px CSS. Exceção que vem de
+   antes: `--canto-grande` (9 px, §10.1).
+2. Borda, só por token: `--borda-fina` (2 px) em botão de qualquer tamanho, chip, chip-mini, cartão e campo;
+   `--borda-grossa` (4 px) em moldura grande (painel, balão, tela, retrato). Nenhuma outra espessura (nada de 1, 3,
+   5, 6 nem 10 px).
+3. Sombra dura para baixo, só por token: `--sombra-pequena` (`0 2px 0 var(--borda)`) em chip e botão pequeno;
+   `--sombra-grande` (`0 4px 0 var(--borda)`) em botão grande e painel. Contorno de texto (`text-shadow`) de 2 px. O
+   botão apertado é da onda 3i (D9-03): a 2b não mexe em `:active` (o `translateY` e a sombra do apertado ficam
+   como estão até a 3i), e o validador de sombra ignora `:active`.
 4. Canto: `--canto-pequeno` (4 px) em botão de até 56 px de lado (✕, tela cheia, 📷, álbum): com `--canto-grande`
    o degrau de 9 px desenha um "+". Acima disso, `--canto` e `--canto-grande` (§10.1).
-5. Ícone 16×16 a 32 px CSS; 64 px em destaque; dentro de uma linha de texto, do tamanho da letra (16 ou 24 px).
-   Sempre em escala inteira (`PA.escalaNitida`); `paraDOM` só com escala par.
-6. Retrato de personagem (balão de NPC e do Claude): 4 px CSS por pixel, o mesmo para todos, em quadro com borda de
-   4 px e fundo chapado; a cabeça ocupa de 60 a 80 % da altura do quadro, sem cortar chapéu nem antena.
+5. Ícone 16×16 a 32 px CSS (2 px CSS por pixel) em botão, dock, chip e também dentro da linha de texto (a letra de
+   16 px da Press Start 2P já tem 2 px CSS por pixel da fonte); 64 px em destaque. Sempre em escala inteira
+   (`PA.escalaNitida`, alvo 32: nada de `escalaNitida(36, 16)`; o `iconeTexto` também dá 32).
+6. Retrato no balão (NPC e Claude): 4 px CSS por pixel, o mesmo para todos, sem `max-width` que encolha; quadro com
+   borda `--borda-grossa`, fundo chapado `--papel-quente`, `--canto` e a plaquinha do nome (`--texto-aux`) encostada
+   embaixo. Recorte a partir de `spr.topo - 1` (com chapéu e antena), cabeça centrada, 1 px de margem nos ETs; a
+   cabeça ocupa de 60 a 80 % da altura do quadro. No celular com "Letras grandes" o retrato vai para cima do texto
+   e o balão ocupa a largura toda; os botões do balão ficam com `nowrap`.
+7. Sprite no DOM (`PA.paraDOM`): escala par, sempre. Claude nas intros 4 (o grande, 6); unicórnio e silhueta das
+   cartas 4; detalhe do unicórnio 8; nascimento 8 (nada fracionário no meio da animação); vitrine da loja e prévia do
+   acessório 4; Salão 8 (Mariana grande), 4 (vistas), 2 (montada) e 4 (retrato); criar personagem 8; álbum de ETs
+   4; sprite das peças 4; o resto 2. Exceções escritas: o joystick (`entrada.js`, desenho já em px CSS), o confete
+   (§10.14.2) e o canvas do voo (escala própria).
 
 ### 10.11 Escala do mundo (câmera)
 O mundo (mapa e interiores) desenha em px de aparelho com escala inteira (`camera.js`, `redimensionar`). Regra:
@@ -282,8 +318,10 @@ CSS: o personagem continua grande para o toque e a tela mostra menos de 8 tiles.
 | tablet 820×1180, dpr 2 | 8 → 4 px (igual a hoje) | 18,4 × 12,8 | 68 px CSS |
 | notebook 1366×768, dpr 1 | 3 → 3 px | 16 × 28,5 | 51 px CSS |
 
-Resultado: o notebook mostra de 16 a 20 tiles de altura e, no celular, todo personagem tem ≥ 44 px CSS (e o ícone
-de status, 48 px CSS). O ícone de status do NPC acompanha essa escala.
+Resultado: o notebook mostra de 16 a 20 tiles de altura e, no celular, todo personagem tem ≥ 44 px CSS.
+O ícone de status do NPC (o balãozinho 20×23 sobre a cabeça) não acompanha essa escala: segue a densidade da
+interface, 2 px CSS por pixel (`s = 2 × dpr` px de aparelho), 46 px CSS de altura nos 3 tamanhos, menor que o NPC
+(adulto: 66, 88 e 66 px CSS).
 
 ### 10.12 Tabela de alturas (px de arte, contorno incluído)
 Medida no sprite, da primeira à última linha com desenho (`npm run ver -- --previa sprites`,
@@ -323,6 +361,9 @@ Adulto e criança diferem ≥ 4 px. Peça nova entra na faixa do papel dela; pap
 1. Todo desenho sólido tem contorno de 1 pixel em `--tinta` (`#3a2446`; `PA.contornar` no canvas).
 2. Exceções: água, luz (chama, brilho, raio de luz), céu e nuvem, sombra de chão e partícula de 1 a 2 pixels
    (confete, brilhinho). Mesmo assim, a água ganha linha d'água de 1 pixel e a luz, borda de brilho.
+   O confete é pixel do mundo: peças de 1 a 2 px de arte do mundo (`Reino._motor.escala / dpr` px CSS cada px de
+   arte), posição arredondada a esse passo, cores de `Reino.config.paleta.confete`, com o hex dos tokens `--rosa`,
+   `--ouro`, `--roxo`, `--azul`, `--laranja` e `--verde-folha` do §10.8.
 3. Silhueta de trancado ou vazio: preenchimento `--tinta-suave` com contorno `--tinta`; o "?" (≥ 7 px de arte de
    altura) sai em `--papel` com contorno `--tinta`. Nada de silhueta clara sem contorno.
 
@@ -349,12 +390,12 @@ A festa cresce com o feito: acerto < sala < prova < matéria completa. Compra é
 | Nível | Quando | Título | Movimento | Som |
 |---|---|---|---|---|
 | 1 | acerto, compra, cuidado feito | não muda | brilho de 3 quadros no item; sem confete | curto |
-| 2 | sala concluída, treino | 24 px | pulinho do emoji em degraus e brilhinhos; confete 40 | fanfarra |
-| 3 | prova terminada, ovo que nasce | 32 px | confete 90 | fanfarra |
-| 4 | matéria completa | 48 px (32 no celular, se não couber) | confete 160 e emoji grande | fanfarra longa |
+| 2 | sala concluída, treino | 24 px (`--texto-g`) | pulinho do emoji em degraus e brilhinhos; confete 40 | fanfarra |
+| 3 | prova terminada, ovo que nasce | 32 px (`--texto-t`) | confete 90 | fanfarra |
+| 4 | matéria completa | 48 px (`--texto-festa`; `--texto-t` no celular, se não couber) | confete 160 e emoji grande | fanfarra longa |
 
 Com animações desligadas fica só o título e o som. O ovo nasce no nível 3 em toda raridade; o lendário ganha o
-brilho arco-íris, não mais confete.
+brilho arco-íris, não mais confete. O confete é desenhado pela regra do §10.14.2.
 
 ### 10.17 Quebra de palavra
 1. No `body`: `overflow-wrap: break-word` e `hyphens: manual`. `overflow-wrap: anywhere` é proibido.
@@ -364,6 +405,11 @@ brilho arco-íris, não mais confete.
    couber, descem um degrau da escala (16 → 12), nunca para tamanho fora dela.
 4. Número, artigo e preposição de 1 a 2 letras, "R$" e o emoji do fim ficam colados à palavra vizinha com espaço
    inquebrável (U+00A0). Palavra composta ("arco-íris") fica num `span` com `nowrap`.
+5. Balão (NPC e Claude, com ou sem botões, e o recado de cuidado do Pet Shop): `.claude-texto` em `--texto`. A
+   paginação tem dois limites em `npcs-falas.js`: o da frase (`frases()`, 44 letras; é o que define o texto falado
+   e não muda) e o da página, que junta frases até caber em 2 linhas do celular com o retrato de 4 px (§10.10.6). A
+   frase sozinha maior que a página fica com 3 linhas: partir a frase mudaria a voz. O `validar-interiores.js` avisa
+   pelo limite da página.
 
 ### 10.18 Área útil
 1. O JS escreve no `:root` três variáveis, em px CSS: `--hud-topo` (fim do HUD de cima), `--dock-altura` (altura do
@@ -372,11 +418,13 @@ brilho arco-íris, não mais confete.
    folga de 8 px de cada lado.
 3. A câmera do mapa e dos interiores, o balão e os painéis leem essas mesmas variáveis (nenhum mede o HUD por
    conta própria). Objeto de toque e texto ficam dentro da área útil.
+4. Placa do cômodo sem lugar na parede (coberta pelo HUD ou sem espaço): desce para a primeira faixa livre abaixo do
+   HUD e à direita da coluna de chips, mesmo sobre o chão, com a mesma borda. Nunca some.
 
 ### 10.19 Estados de controle: indisponível, erro de item e foco
 1. Indisponível (trancado, desligado, sem estrelas, esperando a voz, Conferir sem resposta): uma regra só, para
    `:disabled`, `[aria-disabled="true"]` e `.indisponivel` (o que não é botão: carta cara da loja, planeta trancado).
-   Fundo `--papel-2` chapado, texto `--tinta-suave`, borda `--borda`, sombra de 2 px; o desenho dentro leva
+   Fundo `--papel-2` chapado, texto `--tinta-suave`, borda `--borda`, sombra `--sombra-pequena`; o desenho dentro leva
    `filter: var(--apagado)`. Nada de `opacity` nem `grayscale` no texto. O botão segue focável, com `aria-disabled`
    (§6.4). Ícone 16×16 só onde há motivo: 🔒 no trancado (planeta, foguete) e no caro (loja); o resto fica só com a
    aparência. Com `Reino.config.esperaFala.travar = true`, o botão esperando a voz ganha o ícone de ouvido (D5-13).
@@ -393,16 +441,18 @@ brilho arco-íris, não mais confete.
    (`UI.porTeclado`, §4.2): depois de um toque, nenhum anel.
 
 ### 10.20 Rodapé de ação
-1. Uma linha só, fixo no pé do painel (fora do que rola), altura fixa; botões com alvo ≥ 44 px de altura, texto de
-   16 px e `nowrap`.
+1. Uma linha só, fixo no pé do painel (fora do que rola), altura fixa; botões com alvo ≥ 44 px de altura, texto em
+   `--texto` e `nowrap`.
 2. Até 3 botões. O que não couber vira só a seta ou o ícone ("←" no lugar de "← Anterior"); o principal fica à
    direita.
 3. Serve à prova (`.prova-rodape`, o primeiro), às intros e resumos das salas, à capa da prova, ao "Pronto!" da
    aparência, aos botões da foto e ao fim do guia. No celular, o botão principal aparece sem rolar.
 
 ### 10.21 Cabeçalho e larguras de painel
-1. Cabeçalho: ícone 16×16 em 32 px à esquerda, título de 16 px numa linha (§10.17.3), ✕ à direita (§10.10.4),
-   fundo `--papel-quente`. Com matéria, uma faixa de 8 px na cor dela logo abaixo do cabeçalho (§10.22).
+1. Cabeçalho: ícone 16×16 em 32 px à esquerda, título em `--texto` com `nowrap` (§10.17.3), ✕ à direita
+   (§10.10.4), fundo `--papel-quente`. Título que não cabe (celular): o `painel()` de `ui/base.js` põe
+   `.titulo-longo` e ele desce para `--texto-aux`; nenhum nome muda. Com matéria, uma faixa de 8 px na cor dela
+   logo abaixo do cabeçalho (§10.22).
 2. Larguras de painel: 560 px (diálogo, escolha, cartão simples) e 720 px (listas, matéria, livro, loja). No
    celular, a largura da tela menos 8 px de cada lado.
 3. Na tela baixa e larga (notebook: `min-width: 1000px` e `max-height: 820px`), as listas dentro do painel de 720

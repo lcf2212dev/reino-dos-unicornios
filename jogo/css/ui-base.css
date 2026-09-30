@@ -73,16 +73,36 @@
   /* só brilho: anel da carta lendária, faixa do ovo e aura (faixas duras; use no linear-gradient) */
   --arco-iris: #ff5c6a 0 17%, #ff9f45 17% 33%, #ffe066 33% 50%, #6fdc8c 50% 67%, #5fb4ff 67% 83%, #a66bff 83%;
   --apagado: grayscale(1) brightness(1.1);   /* filter do DESENHO indisponível (§10.19.1); nunca no texto */
-  --escala-texto: 1;
+  /* letra (ui.md §10.9.1): só estes tamanhos; todo font-size do CSS é um deles */
+  --texto-p: 8px;        /* só número sobre ícone (contador, selo com número) */
+  --texto-aux: 12px;     /* rótulo auxiliar */
+  --texto: 16px;         /* o que a criança lê */
+  --texto-g: 24px;       /* título grande; enunciado a partir de 640 px */
+  --texto-t: 32px;       /* abertura e festa */
+  --texto-festa: 48px;   /* abertura e festa (32 no celular, se não couber) */
+  --entrelinha: 1.5;           /* corpo (ui.md §10.9.2) */
+  --entrelinha-titulo: 1.25;   /* título */
+  /* pixel da interface (ui.md §10.10): 1 px de arte = 2 px CSS */
+  --borda-fina: 2px;     /* botão, chip, chip-mini, cartão, campo */
+  --borda-grossa: 4px;   /* painel, balão, tela, retrato */
+  --sombra-pequena: 0 2px 0 var(--borda);   /* chip, botão pequeno */
+  --sombra-grande: 0 4px 0 var(--borda);    /* botão grande, painel */
+  --canto-pequeno: 4px;  /* botão de até 56 px de lado (✕, tela cheia, 📷, álbum): ui.md §10.10.4 */
   --fonte-texto: "Press Start 2P", "Trebuchet MS", sans-serif;
   --fonte-titulo: "Press Start 2P", "Trebuchet MS", sans-serif;
   --fonte-pixel: "Press Start 2P", "Trebuchet MS", sans-serif;
-  --sombra-botao: 0 5px 0 var(--borda);
+  --sombra-botao: var(--sombra-grande);     /* apelido temporário (era 0 5px 0): cada uso troca para um token (§10.10.3) */
   /* Pixel art também na moldura (docs/contratos/ui.md §10): cantos só com estas medidas, e em degrau (abaixo) */
   --canto: 6px;          /* botões, chips, cartões pequenos */
   --canto-grande: 9px;   /* painéis, balões, telas */
   --redondo: 14%;        /* o que era círculo: um "círculo" de pixels (quadrado sem os cantos) */
   color-scheme: light;
+}
+/* "Letras grandes" (ui.md §10.9.4): um degrau por token; --texto-p, --texto-t e --texto-festa ficam */
+:root.letras-grandes {
+  --texto-aux: 16px;
+  --texto: 24px;
+  --texto-g: 32px;
 }
 /* raridade (ui.md §10.8): a classe .rar-<r> dá as três cores; carta, chip, faixa, selo e prêmio leem --rar-texto,
    --rar-fundo e --rar-desenho (fundo chapado e faixa interna de 4 px; o contorno continua --borda) */
@@ -104,8 +124,8 @@ body {
   color: var(--tinta);
   font-family: var(--fonte-texto);
   font-weight: 400;
-  font-size: calc(16px * var(--escala-texto));
-  line-height: 1.8;
+  font-size: var(--texto);
+  line-height: var(--entrelinha);
   /* quebra de palavra (ui.md §10.17): só palavra que não cabe quebra, e só com o hífen suave do hifenizar à vista */
   overflow-wrap: break-word;
   hyphens: manual;
@@ -139,6 +159,7 @@ body.sem-animacao button.esperando-fala::after { animation: none; }
 [hidden] { display: none !important; }
 
 h1, h2, h3 { margin: 0; text-wrap: balance; }
+b, strong { font-weight: 400; }   /* sem negrito (ui.md §10.9.3) */
 .titulo-pixel { font-family: var(--fonte-titulo); font-weight: 400; letter-spacing: 0; font-size: 16px; line-height: 1.7; }
 p { margin: 0; }
 

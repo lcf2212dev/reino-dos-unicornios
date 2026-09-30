@@ -61,6 +61,10 @@ Reino.config = {
   // música por ambiente (js/sistemas/som.js + js/sistemas/musicas.js): volume; crossfadeS = segundos da troca;
   // comVoz = volume enquanto uma voz fala (30%). Melhor não mexer em lookaheadS e intervaloMs
   musica: { volume: 0.22, crossfadeS: 1.5, comVoz: 0.3, lookaheadS: 0.25, intervaloMs: 60 },
+  // tamanhos de letra (px CSS) que o canvas e o JS usam: espelho dos tokens --texto-p, --texto-aux, --texto e
+  // --texto-g do :root de css/ui-base.css (docs/contratos/ui.md §10.9.1). Mudou aqui, mude lá. A placa do cômodo
+  // usa corpo × devicePixelRatio (§10.9.5)
+  texto: { p: 8, aux: 12, corpo: 16, g: 24 },
   // mapa da cidade (js/mundo/): o tamanho (56×42 tiles) e o traçado ficam em js/mundo/mapa.js e js/mundo/lugares.js.
   // contorno dourado do prédio de lugar concluído (js/mundo/contorno.js): espessura em px da linha forte;
   // o brilho pulsa entre brilhoMin e brilhoMax (0 a 1) a cada periodoMs; faiscas = quantas faíscas ao mesmo
