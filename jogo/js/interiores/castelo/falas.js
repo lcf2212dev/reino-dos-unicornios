@@ -36,6 +36,22 @@ Reino.FALAS_INTERIORES.castelo = {
       bloqueada: ['Primeiro, as salas da Casa. 📝', 'A Casa das Palavras vem antes.'],
       depois: ['Você leu tudo com calma! ✨', 'Ler duas vezes dá certo! 🏆'],
     },
+    // ala da Matemática
+    caio: {
+      oi: ['Oi! Eu sou o Cavaleiro Caio. 🛡️', 'Eu treino Matemática com você.'],
+      nova: ['Vamos treinar a Matemática? 🥇', 'Vamos contar com calma?'],
+      feita: ['Quer treinar mais uma vez?', 'Vamos buscar o ouro com calma?'],
+      bloqueada: ['Primeiro, termine as salas. 🔒'],
+      depois: ['Você contou tudo com calma! ✨', 'Conferir a conta dá certo! 🏆'],
+    },
+    // ala da Geografia
+    rosa: {
+      oi: ['Oi! Eu sou a Cavaleira Rosa. 🛡️', 'Eu treino Geografia com você.'],
+      nova: ['Vamos treinar a Geografia? 🥇', 'Vamos ler cada pergunta? 📖'],
+      feita: ['Quer treinar mais uma vez?', 'Vamos buscar o ouro com calma?'],
+      bloqueada: ['Primeiro, termine as salas. 🔒'],
+      depois: ['Você revisou tudo com calma! ✨', 'Revisar é coisa de {campeã|campeão}! 🏆'],
+    },
   },
   // cavaleiro padrão: usado pelo gerador numa matéria sem cavaleiro conhecido
   cavaleiro: {

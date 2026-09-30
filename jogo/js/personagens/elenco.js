@@ -29,6 +29,9 @@
     serena: { nome: 'Princesa Serena', voz: 'npc-serena', sprite: { pele: '#ffe0c7', cabelo: '#f2c14e', penteado: 'longo', chapeu: 'coroa', roupa: '#ffb3d9', roupa2: '#ff8ac4', perna: 'vestido', colar: true, cor2: '#b58cff' } },
     aurora: { nome: 'Cavaleira Aurora', voz: 'npc-aurora', paraMateria: 'historia', sprite: { pele: '#d9a07a', cabelo: '#a0673a', penteado: 'rabo', chapeu: 'elmo', cor2: '#ff6b8a', armadura: true, armaduraCor: '#b95a36', roupa: '#ff7eb6' } },
     oliver: { nome: '«Sir Oliver»', voz: 'npc-oliver', paraMateria: 'ingles', sprite: { pele: '#f1c7a5', cabelo: '#c2532b', penteado: 'curto', bigode: true, chapeu: 'elmo', cor2: '#5fb4ff', armadura: true, armaduraCor: '#e0a020', roupa: '#2f6fd6', capa: true, capaCor: '#c9365a' } },
+    // alas da Matemática e da Geografia (a pluma e o coração da sobreveste usam cor2)
+    caio: { nome: 'Cavaleiro Caio', voz: 'npc-caio', paraMateria: 'matematica', sprite: { pele: '#c68a5e', cabelo: '#2b1b17', penteado: 'cacheado', chapeu: 'elmo', cor2: '#ffd34d', armadura: true, armaduraCor: '#3f7fe0', roupa: '#5fb4ff', capa: true, capaCor: '#ff9d2e' } },
+    rosa: { nome: 'Cavaleira Rosa', voz: 'npc-rosa', paraMateria: 'geografia', sprite: { pele: '#ffe0c7', cabelo: '#5a3825', penteado: 'trancas', chapeu: 'elmo', cor2: '#ff4f9a', armadura: true, armaduraCor: '#2e8b57', roupa: '#7cc15a', capa: true, capaCor: '#2f6fd6' } },
     // Escola do Reino
     margarida: { nome: 'Diretora Margarida', voz: 'npc-margarida', sprite: { pele: '#d9a07a', cabelo: '#6b5a66', penteado: 'coque', oculos: true, flor: true, roupa: '#39a860', roupa2: '#2d6b4a', perna: 'saia', cor2: '#ffd34d', colar: true } },
     helena: { nome: 'Professora Helena', voz: 'npc-helena', paraProva: 'historia-3bim', sprite: { pele: '#f1c7a5', cabelo: '#5a3825', penteado: 'chanel', roupa: '#ff9d2e', roupa2: '#6b4a9a', perna: 'saia', livro: '#5fb4ff', cor2: '#5fb4ff', oculos: true, oculosCor: '#c9365a' } },

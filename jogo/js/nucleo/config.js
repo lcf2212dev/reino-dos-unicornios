@@ -154,6 +154,8 @@ Reino.config = {
     'npc-aurora': { voz: 'de-DE-SeraphinaMultilingualNeural', velocidade: '+4%', tom: '-10Hz' }, // cavaleira firme e corajosa
     'npc-oliver': { voz: 'en-US-BrianMultilingualNeural', velocidade: '-12%', tom: '-12Hz', ingles: 'npc-oliver-en' }, // cavaleiro nobre, grave
     'npc-oliver-en': { voz: 'en-US-BrianMultilingualNeural', velocidade: '-20%', tom: '-12Hz' },
+    'npc-caio': { voz: 'de-DE-FlorianMultilingualNeural', velocidade: '-4%', tom: '-8Hz' },     // cavaleiro da Matemática, calmo (diferente do Oliver)
+    'npc-rosa': { voz: 'pt-BR-FranciscaNeural', velocidade: '+6%', tom: '+14Hz' },               // cavaleira da Geografia, alegre (mais aguda que a narradora)
     // Escola do Reino
     'npc-margarida': { voz: 'de-DE-SeraphinaMultilingualNeural', velocidade: '-12%', tom: '-14Hz' }, // diretora serena e firme (voz diferente da Teacher Emma, no mesmo prédio)
     'npc-helena': { voz: 'fr-FR-VivienneMultilingualNeural', velocidade: '+6%', tom: '-6Hz' },   // professora clara e animada
