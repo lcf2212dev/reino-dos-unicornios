@@ -15,7 +15,7 @@
    e a faixa vazia embaixo do chip não chegava ao mapa) */
 .hud-topo > *, .hud-botoes { pointer-events: none; }
 .hud-topo > * > *:not(.hud-botoes), .hud-botoes > * { pointer-events: auto; }
-.hud-esq { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+.hud-esq { display: flex; flex-direction: column; align-items: stretch; gap: 6px; }   /* os chips com a largura do maior */
 .hud-dir { display: flex; align-items: flex-start; gap: 8px; min-width: 0; } /* encolhe o chip em vez de passar da tela */
 .btn-tela-cheia {
   display: grid; place-items: center;
@@ -30,8 +30,12 @@
 .btn-foto { touch-action: none; -webkit-touch-callout: none; user-select: none; -webkit-user-select: none; }
 /* sem poder tirar foto agora (transição, tela aberta, balão): aria-disabled, no estado indisponível (ui-base.css),
    mas ainda focável pelo Tab */
+/* chips do HUD em linha (D8A-02): ícone de 32 px ao lado do número, sem quebra, 48 px de altura (44 no celular); o
+   espaço entre palavras vai à metade ("R$ 36,00", "5 ovos!": 8 px em vez de 16, a letra da Press Start 2P é larga) */
 .chip {
-  min-height: 44px; padding: 6px 14px;
+  display: inline-flex; align-items: center; gap: 4px;
+  min-height: 48px; padding: 4px 12px;
+  white-space: nowrap; word-spacing: -0.5em;
   border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
   background: var(--papel); font-size: var(--texto);
   box-shadow: inset 0 2px 0 var(--brilho), var(--sombra-pequena);
@@ -49,7 +53,11 @@
 .chip-montaria { min-width: 0; }
 .chip-montaria canvas { flex: none; }
 .montaria-info { display: flex; flex-direction: column; min-width: 0; font-size: var(--texto-aux); line-height: var(--entrelinha); }
-.montaria-info b { font-size: var(--texto); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* o nome quebra em até 2 linhas, só entre palavras (D13-02, ui.md §10.17): "Rainha da Torre / do Relógio" */
+.montaria-info b {
+  font-size: var(--texto); overflow-wrap: normal;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
+}
 /* 🌱 antes da barra de crescimento, como na carta do Estábulo (D8A-14): a barra não parece "a vida" do unicórnio */
 .chip-montaria .carta-cresce { display: flex; align-items: center; gap: 4px; min-width: 0; }
 .chip-montaria .carta-cresce .barrinha { flex: 1; margin-top: 0; }
@@ -100,17 +108,12 @@
   .controle-base { width: var(--cb, 132px); height: var(--cb, 132px); margin: calc(var(--cb, 132px) / -2) 0 0 calc(var(--cb, 132px) / -2); }
   .controle-pino { width: var(--cp, 60px); height: var(--cp, 60px); margin: calc(var(--cp, 60px) / -2) 0 0 calc(var(--cp, 60px) / -2); }
 }
-/* chip da Aura (js/ui/hud-aura.js), embaixo das estrelas, e o painel dela */
-.chip-aura { display: inline-flex; align-items: center; gap: 6px; }
-.aura-bolinha {
-  display: inline-block; width: 14px; height: 14px; flex: none;
-  border: var(--borda-fina) solid var(--borda); border-radius: var(--redondo);
-  outline: var(--borda-fina) solid var(--brilho);   /* halo de 1 pixel (era box-shadow 0 0 0 2px) */
-}
-.aura-arco-iris { background: conic-gradient(var(--arco-iris)); }
+/* chip da Aura (js/ui/hud-aura.js), embaixo das estrelas, e o painel dela: a chama em pixel na cor da faixa (D8A-09) */
+.aura-chama { flex: none; }
 .aura-painel { text-align: center; }
-.aura-valor { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: var(--texto-t); margin: 4px 0 8px; }
-.aura-valor .aura-bolinha { width: 26px; height: 26px; }
+.aura-valor { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; font-size: var(--texto-t); margin: 4px 0 8px; }
+/* o número inteiro passa de 9 letras ("123.456,7"): desce um degrau para caber no painel do celular */
+.aura-valor.aura-longa { font-size: var(--texto-g); }
 .aura-cores { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 12px; padding: 0; margin: 12px 0 0; list-style: none; }
 .aura-cores li { display: flex; flex-direction: column; align-items: center; gap: 2px; color: var(--tinta-suave); }
 .aura-cores li.aura-agora { color: var(--tinta); }
@@ -123,9 +126,22 @@
 @media (max-width: 480px) {
   .dock { left: 0; right: 0; transform: none; justify-content: space-between; gap: 8px; padding: 2px 1px; }
   .dock-btn { flex: 1 1 auto; min-width: 0; min-height: 64px; padding: 4px 0 6px; }
-  .chip { padding: 4px 10px; }
+  /* coluna de chips com largura fixa (D13-01): 7,5 letras ("R$ 36,00", "5 ovos!", a Aura compacta "12,3 mil") +
+     ícone, folgas e borda. O cartão da montaria fica com o resto da largura (194 px em 390), e os botões (tela
+     cheia, 📷, álbum) descem para uma fileira embaixo dele: assim cabem as barras e o nome em 2 linhas de 12 px
+     ("Rainha da Torre" são 15 letras = 180 px). Nada aqui muda com o valor da Aura */
+  .chip { min-height: 44px; padding: 4px; }
+  .hud-esq > .chip { min-width: calc(7.5ch + 48px); }
+  .hud-dir { flex: 1 1 0; flex-direction: column-reverse; align-items: stretch; gap: 6px; }
+  .hud-dir > .hud-botoes { align-self: flex-end; }
+  #hud .chip-montaria { max-width: none; padding: 4px; }
   .montaria-info b { font-size: var(--texto-aux); }
-  .hud-botoes { flex-direction: column; gap: 6px; }
+  /* sem fome e sede, o nome também vai em cima, na largura toda (como o com-cuidados de ui-petshop.css) */
+  .chip-montaria:not(.com-cuidados) { flex-wrap: wrap; row-gap: 2px; }
+  .chip-montaria:not(.com-cuidados) .montaria-info { display: contents; }
+  .chip-montaria:not(.com-cuidados) .montaria-info b { order: -1; flex: 0 0 100%; min-width: 0; }
+  .chip-montaria:not(.com-cuidados) .montaria-cresce { flex: 1 1 0; }
+  .hud-botoes { gap: 6px; }
   /* com Letras grandes os 4 rótulos em 16 px (480 px) não cabem: descem um degrau, para 12 (ui.md §10.17.3) */
   :root.letras-grandes .dock { --texto-aux: 12px; }
   /* e os chips de cima em 24 px partem "R$ 36,00" e "5 ovos!" e cobrem meia tela: descem para 16 (e 12) também */
