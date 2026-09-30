@@ -4,4 +4,8 @@
   var por = window.Reino.QUIMICA.porFrase;
   // ao abrir a estante
   por('livros.oi', ['Escolha um livro para ler!']);
+  // chegou ao fim de um livro pela 1ª vez (estrelasLivroNovo = 1: mudou o config, regrave)
+  por('livros.lido', ['Muito bem, livro lido!', 'Você ganhou uma estrela!']);
+  // leu os 8
+  por('livros.todos', ['Você leu todos os livros!', 'Parabéns, você é cientista!']);
 })();
