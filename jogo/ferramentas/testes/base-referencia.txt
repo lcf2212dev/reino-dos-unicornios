@@ -48,4 +48,5 @@
 # bfb2509 = onda 3h revisada (fotos, painéis, matéria, chips do HUD, erro parado, mundo, missão: 33 itens; O-09 descartado)
 # 52648a7 = onda 3i (afundar na regra única, durações em tokens, saída de tela, validador de movimento estrito: D9-03, D10-16, D9-12)
 # c0b505e = onda 5a, foguete e ícones (D8B-21, D4-12, D8A-19)
-c0b505e
+# a91eaa7 = onda 5a, placas (O-06, D2A-08, D12c-02, D12c-03) e O-30
+a91eaa7
