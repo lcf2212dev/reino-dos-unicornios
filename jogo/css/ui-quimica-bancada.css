@@ -57,9 +57,16 @@
 .bancada-cabeca { display: flex; align-items: center; gap: 12px; }
 .bancada-emoji { flex: none; }
 .bancada-titulo { font-size: var(--texto-g); line-height: var(--entrelinha-titulo); }
-.bancada-resultado > .chip-mini { align-self: flex-start; white-space: nowrap; }
+.bancada-resultado > .chip-mini { align-self: flex-start; max-width: 100%; }   /* Letras grandes: quebra, não vaza */
 .bancada-estrelas { background: var(--ouro-claro); }
 .bancada-acontece, .bancada-explica { font-size: var(--texto); line-height: var(--entrelinha); }
+/* "Por que acontece?": aberto no tablet e no notebook, recolhido no celular (quimica-bancada.js) */
+.bancada-porque > summary {
+  cursor: pointer; list-style: none; min-height: 32px; display: flex; align-items: center; gap: 8px; font-size: var(--texto-aux); line-height: var(--entrelinha);
+}
+.bancada-porque > summary::-webkit-details-marker { display: none; }
+.bancada-porque > summary::after { content: ' ▾'; }
+.bancada-porque[open] > summary::after { content: ' ▴'; }
 .bancada-seguranca { font-size: var(--texto-aux); line-height: var(--entrelinha); color: var(--erro); }
 .bancada-botoes { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 12px; }
 .bancada-botoes .btn-grande { white-space: nowrap; }

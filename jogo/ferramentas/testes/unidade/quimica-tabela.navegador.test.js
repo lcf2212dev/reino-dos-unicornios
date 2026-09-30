@@ -31,10 +31,16 @@ const COMPLETAR = `(function () {
 })()`;
 
 const estrelas = 'Reino.Progresso.estado().estrelas.ganhas';
-// nada vaza para o lado: o conteúdo e o rodapé cabem na largura do painel
+// nada vaza para o lado: o conteúdo e o rodapé cabem na largura do painel. Com .rola-mais o scrollWidth do conteúdo
+// conta a sombra do pé (::after com margem de -20 px, cortada pelo overflow-x: hidden, ui-telas.css): aí vale a caixa
+// de cada peça dentro do conteúdo
 const semVazar = `(function () {
   var t = document.querySelector('.tela-quimica-tabela'), r = [];
-  t.querySelectorAll('.painel-conteudo, footer.qt-rodape, .qt-abas').forEach(function (x) { if (x.scrollWidth > x.clientWidth + 1) r.push(x.className + ' ' + x.scrollWidth + '>' + x.clientWidth); });
+  t.querySelectorAll('.painel-conteudo, footer.qt-rodape, .qt-abas').forEach(function (x) {
+    if (!x.classList.contains('rola-mais')) { if (x.scrollWidth > x.clientWidth + 1) r.push(x.className + ' ' + x.scrollWidth + '>' + x.clientWidth); return; }
+    var c = x.getBoundingClientRect();
+    x.querySelectorAll('*').forEach(function (y) { var q = y.getBoundingClientRect(); if (q.width && (q.right > c.right + 1 || q.left < c.left - 1)) r.push('fora do conteúdo: ' + y.className); });
+  });
   var p = t.querySelector('.painel').getBoundingClientRect();
   t.querySelectorAll('footer.qt-rodape button').forEach(function (b) { var q = b.getBoundingClientRect(); if (q.left < p.left || q.right > p.right) r.push('botão fora: ' + b.textContent); });
   return r;
@@ -78,6 +84,12 @@ test('tabela periódica: mapa, cartões, lição até o fim, teclado e Esc', asy
     assert.strictEqual(await c.js("document.querySelector('.qt-selo').hidden"), false, 'selo da lição lida');
     assert.strictEqual(await c.js("document.querySelector('[aria-label=\"Próxima página\"]').getAttribute('aria-disabled')"), 'true');
     assert.deepStrictEqual(await c.js(semVazar), [], 'lição sem corte');
+    // o selo só na última página: ◀ esconde, ▶ traz de volta (sem outra estrela)
+    await c.tocar('[aria-label="Página anterior"]');
+    assert.strictEqual(await c.js("document.querySelector('.qt-selo').hidden"), true, 'selo some ao voltar a página');
+    await c.tocar('[aria-label="Próxima página"]');
+    assert.strictEqual(await c.js("document.querySelector('.qt-selo').hidden"), false, 'selo volta na última página');
+    assert.strictEqual(await c.js(estrelas), antes + 1, 'voltar e ir não dá outra estrela');
     await c.tocar('Voltar');
     assert.ok(await c.js(`document.querySelector('.qt-licao[data-licao="${id}"]').classList.contains('lida')`), '✔ na lista');
     // de novo: nada a mais

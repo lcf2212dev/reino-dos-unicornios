@@ -16,12 +16,12 @@
   // cores das bolhas da chaminé, uma de cada vez
   var BOLHAS = [ROSA, CIA, AMAR, LIL, VERDE];
 
-  // órbita do átomo: anel de pixel (elipse vazada de 1 px) girado de `ang` graus
+  // órbita do átomo: anel de pixel (elipse vazada, uns 2 px de espessura) girado de `ang` graus
   function orbita(ctx, cx, cy, rx, ry, ang, cor) {
     var a = ang * Math.PI / 180, co = Math.cos(a), se = Math.sin(a);
     for (var j = -rx; j <= rx; j++) for (var i = -rx; i <= rx; i++) {
       var u = i * co + j * se, v = -i * se + j * co;
-      var fora = (u * u) / (rx * rx) + (v * v) / (ry * ry), dentro = (u * u) / ((rx - 1.2) * (rx - 1.2)) + (v * v) / ((ry - 1.2) * (ry - 1.2));
+      var fora = (u * u) / (rx * rx) + (v * v) / (ry * ry), dentro = (u * u) / ((rx - 1.7) * (rx - 1.7)) + (v * v) / ((ry - 1.7) * (ry - 1.7));
       if (fora <= 1 && dentro > 1) ret(ctx, cx + i, cy + j, 1, 1, cor);
     }
   }
@@ -95,11 +95,12 @@
     triangulo(ctx, px + 3, py + 5, w - 6, 26, LIL);
     Fa.telhas(ctx, px + 3, py + 5, w - 6, 26, LIL, 4);
     ret(ctx, px + 1, yP - 2, w - 2, 4, K); ret(ctx, px + 2, yP - 1, w - 4, 2, CIA); ret(ctx, px + 2, yP - 1, w - 4, 1, CIA3);
-    // átomo no alto do telhado: duas órbitas, o núcleo rosa e os elétrons ciano
-    ret(ctx, cx, py - 3, 1, 6, K);
-    [0, 60, 120].forEach(function (g) { orbita(ctx, cx, py - 11, 8, 3.2, g, K); });
-    circulo(ctx, cx, py - 11, 2, K); ret(ctx, cx - 1, py - 12, 3, 3, ROSA); ret(ctx, cx - 1, py - 12, 1, 1, C.branco);
-    ret(ctx, cx - 8, py - 12, 2, 2, CIA); ret(ctx, cx + 3, py - 18, 2, 2, AMAR); ret(ctx, cx + 3, py - 5, 2, 2, VERDE);
+    // átomo no alto do telhado: duas órbitas claras (ciano e lilás), o núcleo rosa e dois elétrons
+    var ay0 = py - 11;
+    ret(ctx, cx, ay0 + 2, 1, py + 3 - ay0 - 2, K);
+    orbita(ctx, cx, ay0, 9, 3.5, 40, CIA); orbita(ctx, cx, ay0, 9, 3.5, -40, LIL);
+    circulo(ctx, cx, ay0, 2, K); ret(ctx, cx - 1, ay0 - 1, 3, 3, ROSA); ret(ctx, cx - 1, ay0 - 1, 1, 1, C.branco);
+    ret(ctx, cx + 5, ay0 + 4, 2, 2, AMAR); ret(ctx, cx - 6, ay0 - 6, 2, 2, VERDE);
     // janela redonda no oitão, com o balão verde borbulhando
     var jy = M.jy;
     circulo(ctx, cx, jy, 8, K); circulo(ctx, cx, jy, 7, LIL3); circulo(ctx, cx, jy, 5, K); circulo(ctx, cx, jy, 4, '#b9eef6');
@@ -139,6 +140,11 @@
     var b = [[1, 2], [1, 1], [0, 0], [0, -2]][f];
     ret(ctx, cx + b[0], jy + b[1], 1, 1, f < 3 ? '#c9f5d4' : C.branco);
   }
+  // bolha redonda n × n (4 ou 5 px): contorno sem os cantos, miolo colorido e o brilhinho branco
+  function bolha(ctx, x, y, n, cor) {
+    ret(ctx, x + 1, y, n - 2, n, K); ret(ctx, x, y + 1, n, n - 2, K);
+    ret(ctx, x + 1, y + 1, n - 2, n - 2, cor); ret(ctx, x + 1, y + 1, 1, 1, C.branco);
+  }
   // animação: bolhas coloridas sobem da chaminé de vidro e estouram; o líquido do tubo e o balão borbulham
   function animarFora(ctx, px, py, w, h, t) {
     var M = medidas(px, py, w, h), bx = M.tx + 3;
@@ -154,8 +160,8 @@
       var lado = [0, 1, 1, 0, -1, -1][Math.floor(dy / 3) % 6] * (i % 2 ? 1 : -1);
       var x = bx + lado - 2, cor = BOLHAS[(i + Math.floor(t / ciclo)) % BOLHAS.length];
       if (fase > 0.9) { R.Desenho.brilho(ctx, x + 2, y + 2, C.branco); continue; }   // estourou
-      if (fase > 0.4) { ret(ctx, x, y, 5, 5, K); ret(ctx, x + 1, y + 1, 3, 3, cor); ret(ctx, x + 1, y + 1, 1, 1, C.branco); }   // cresceu
-      else { ret(ctx, x + 1, y + 1, 4, 4, K); ret(ctx, x + 2, y + 2, 2, 2, cor); ret(ctx, x + 2, y + 2, 1, 1, C.branco); }
+      if (fase > 0.4) bolha(ctx, x, y, 5, cor);   // cresceu
+      else bolha(ctx, x + 1, y + 1, 4, cor);
     }
     balaoJanela(ctx, M.cx, M.jy, Math.floor(t / 300) % 4);
   }

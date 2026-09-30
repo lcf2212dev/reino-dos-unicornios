@@ -39,7 +39,7 @@ alegria da descoberta, sem pressa nem cobrança.
 4. Caderno de receitas (tela, pelo botão 📒 da bancada e pelo caderno no púlpito): 10 receitas. A primeira,
    "POF! Explosão de confete" (vinagre + bicarbonato), já vem escrita e aberta. As outras aparecem como "?" com uma
    adivinha de dica até ela descobrir misturando. Cada receita descoberta mostra os ingredientes, o que acontece, a
-   explicação e o aviso "Na vida real, só com um adulto.".
+   explicação e o aviso "Na vida real, chame um adulto!".
 5. Microscópio (tela): 8 lâminas sem nenhum animal (sal, açúcar, folha, casca de cebola, pólen de flor, areia, fio
    de algodão, floco de neve). Ela escolhe a lâmina, o aumento (10×, 40×, 100×) e gira o foco até a imagem ficar nítida;
    a Doutora Proveta conta o que ela está vendo.

@@ -130,7 +130,7 @@
       var c = Q.contagem().receitas, rs = lista();
       var cab = el('div.qcad-cabeca-indice',
         el('h3.qcad-titulo', { tabindex: '-1' }, 'Minhas receitas'),
-        el('p.qcad-contador', { 'aria-live': 'polite' }, U.colado(c.feitas + ' de ' + c.total + ' receitas descobertas')));
+        el('p.qcad-contador', { 'aria-live': 'polite' }, U.colado(c.feitas + ' de ' + c.total + ' receitas feitas')));
       folha.appendChild(cab);
       if (Q.cadernoCompleto()) {
         folha.appendChild(el('p.qcad-completo', icone('🏆', 2), el('span', U.colado(Q.frase('caderno.completo')[0] || 'Caderno completo!'))));
@@ -162,15 +162,17 @@
       var fila = el('div.qcad-tubos', { role: 'list', 'aria-label': 'Ingredientes' });
       (r.ingredientes || []).forEach(function (id, i) {
         var ing = Q.ingrediente(id) || { id: id, nome: id, cor: '#9fd8ff' };
-        if (i) fila.appendChild(el('span.qcad-mais', { 'aria-hidden': 'true' }, '+'));
         var cv = PA.paraDOM(tubo(ing), 4, 'qcad-tubo-img');
         cv.setAttribute('aria-hidden', 'true');
-        fila.appendChild(el('div.qcad-tubo', { role: 'listitem' }, cv, el('small', U.colado(hif(ing.nome)))));
+        var t = el('div.qcad-tubo', { role: 'listitem' }, cv, el('small', U.colado(ing.nome)));
+        // o "+" anda junto com o tubo seguinte: se a fila quebra (celular), a linha de baixo começa com "+"
+        fila.appendChild(i ? el('div.qcad-par', { role: 'presentation' }, el('span.qcad-mais', { 'aria-hidden': 'true' }, '+'), t) : t);
       });
       return fila;
     }
 
-    function pagina(id, trocou) {
+    // seta: 'ant' ou 'prox' quando veio da seta (pelo teclado o foco fica nela: Enter segue folheando)
+    function pagina(id, trocou, seta) {
       var rs = lista(), i = rs.findIndex(function (x) { return x.id === id; });
       if (i < 0) return indice(null);
       var r = rs[i], aberta = Q.noCaderno(r.id);
@@ -182,8 +184,8 @@
       var ant = el('button.btn-icone.qcad-seta', { type: 'button', 'aria-label': 'Receita anterior' }, '←');
       var prox = el('button.btn-icone.qcad-seta', { type: 'button', 'aria-label': 'Próxima receita' }, '→');
       ant.disabled = i === 0; prox.disabled = i === rs.length - 1;
-      ant.addEventListener('click', function () { if (i > 0) { Reino.Som.tocar('toque'); pagina(rs[i - 1].id, true); } });
-      prox.addEventListener('click', function () { if (i < rs.length - 1) { Reino.Som.tocar('toque'); pagina(rs[i + 1].id, true); } });
+      ant.addEventListener('click', function () { if (i > 0) { Reino.Som.tocar('toque'); pagina(rs[i - 1].id, true, 'ant'); } });
+      prox.addEventListener('click', function () { if (i < rs.length - 1) { Reino.Som.tocar('toque'); pagina(rs[i + 1].id, true, 'prox'); } });
       folha.appendChild(el('nav.qcad-folhear', { 'aria-label': 'Folhear o caderno' }, ant,
         el('span.qcad-pag', U.colado('Receita ' + (i + 1) + ' de ' + rs.length)), prox));
       var titulo = el('h3.qcad-titulo', { tabindex: '-1' }, U.colado(aberta ? hif(r.nome) : 'Receita secreta'));
@@ -200,7 +202,9 @@
       }
       voltar.hidden = false;
       pn.conteudo.scrollTop = 0;
-      if (trocou) UI.focarTroca(voltar, titulo);
+      // na ponta a seta usada apaga: o foco vai para a outra
+      var naSeta = seta === 'ant' ? (ant.disabled ? prox : ant) : seta === 'prox' ? (prox.disabled ? ant : prox) : null;
+      if (trocou) UI.focarTroca(naSeta || voltar, titulo);
     }
 
     voltar.addEventListener('click', function () { Reino.Som.tocar('toque'); Reino.Som.calar(); indice(atual); });

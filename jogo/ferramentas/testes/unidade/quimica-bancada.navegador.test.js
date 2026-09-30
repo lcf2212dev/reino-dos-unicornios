@@ -1,6 +1,6 @@
 // Teste de NAVEGADOR (Chromium, servidor de TESTE, save sintético, modo determinístico): a bancada do Laboratório de
 // Química (UI.telaQuimicaBancada, docs/contratos/quimica.md §2). Abre com os 12 tubos; tocar despeja; vinagre +
-// bicarbonato e Misturar! grava a receita na hora e dá +2 estrelas só na 1ª vez; sem animação (congelado) o palco
+// bicarbonato e Misturar! grava a receita na hora e dá +2 estrelas só na 1ª vez (com o cartão, o Misturar! se apaga); sem animação (congelado) o palco
 // já mostra o quadro final e o cartão; béquer cheio não aceita o 4º tubo; tubo sozinho dá "Quase!"; arrastar o tubo
 // até o béquer despeja; Esvaziar; teclado (Tab, Enter) e Esc fecha. Zero erro de console.
 // Rodar (da raiz): node --test jogo/ferramentas/testes/unidade/quimica-bancada.navegador.test.js   (tudo: npm test)
@@ -45,6 +45,8 @@ test('bancada de química: despejar, misturar, descobrir, estrelas só na 1ª ve
     assert.strictEqual(await estrelas(), antes + ganho, 'estrelas da 1ª vez');
     assert.ok(await c.js(aVista('.bancada-estrelas')), 'chip da receita nova');
     assert.ok(!(await c.js(aVista('.bancada-prateleira'))), 'o cartão fica no lugar da prateleira');
+    assert.strictEqual(await c.js("document.querySelector('.bancada-misturar').getAttribute('aria-disabled')"), 'true', 'com o cartão, só o Outra mistura é principal');
+    assert.strictEqual(await c.js("document.querySelector('.bancada-porque').open"), false, 'no celular, a explicação começa recolhida');
     assert.ok(await c.js(`JSON.parse(localStorage.getItem(Reino.config.chaveSave)).quimica.receitas.pof === 1`), 'gravado no aparelho');
     // o canvas tem desenho (não ficou em branco)
     assert.ok(await c.js(`(function () { var d = document.querySelector('.bancada-cena').getContext('2d').getImageData(0, 0, 160, 96).data;
@@ -72,6 +74,7 @@ test('bancada de química: despejar, misturar, descobrir, estrelas só na 1ª ve
     await c.tocar('[data-tubo="vinagre"]');
     await c.tocar('.bancada-misturar');
     assert.strictEqual(await c.js("document.querySelector('.bancada-resultado .bancada-titulo').textContent"), 'Quase!');
+    assert.ok(!(await c.js("document.querySelector('.bancada-resultado .bancada-acontece').textContent")).startsWith('Quase'), 'o texto não repete o título');
     assert.strictEqual(await estrelas(), antes + ganho);
 
     // arrastar o óleo até o béquer (toque de verdade)

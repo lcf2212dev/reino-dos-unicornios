@@ -11,7 +11,7 @@
   // mistura sem receita: nunca é erro
   por('bancada.nada', ['Hmm, nada de especial.', 'Cientista testa de tudo!', 'Vamos tentar outra mistura?']);
   por('bancada.quaseFalta', ['Quase! Falta um ingrediente.']);
-  por('bancada.quaseSobra', ['Quase! Sobrou um ingrediente.', 'Tente tirar um deles.']);
+  por('bancada.quaseSobra', ['Quase! Sobrou um ingrediente.', 'Esvazie e tente de novo.']);
   por('bancada.quaseCaderno', ['A receita está no caderno!']);
   // receita (estrelasReceitaNova: 2; estrelasCadernoCompleto: 10)
   por('bancada.novaReceita', ['Receita nova no caderno!', 'Você ganhou duas estrelas!']);
