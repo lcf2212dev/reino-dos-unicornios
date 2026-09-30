@@ -6,7 +6,7 @@ Reino.falasDoPredio('escola', {
     'lousa-matematica': ['Três mais quatro dá sete!', 'Conte as bolinhas comigo.'],
     'lousa-geografia': ['Um mapa com mar, terra e rio!', 'O N mostra onde fica o norte.'],
     'lousa-ciencias': ['Uma plantinha e uma lupa!', 'A lupa mostra tudo de pertinho.'],
-    'lousa-portugues': ['BA, BE, BI! ✏️', 'Juntando sílabas, formamos palavras.'],
+    'lousa-portugues': ['A lousa tem sílabas! ✏️', 'Juntando sílabas, formamos palavras.'],
     'lousa-historia': ['Uma linha do tempo!', 'Primeiro o passado, depois o hoje.'],
   },
 });

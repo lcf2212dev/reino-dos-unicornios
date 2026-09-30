@@ -25007,6 +25007,7 @@
    "texto": "Hello",
    "pacotes": [
     "interior-castelo",
+    "interior-escola",
     "interior-observatorio"
    ],
    "fala": "Hello"
@@ -25016,7 +25017,8 @@
    "voz": "narradora",
    "texto": "quer dizer olá.",
    "pacotes": [
-    "interior-castelo"
+    "interior-castelo",
+    "interior-escola"
    ],
    "fala": "quer dizer olá."
   },
@@ -25906,24 +25908,6 @@
    "fala": "Cada um guarda o seu material."
   },
   {
-   "chave": "1bd9219as",
-   "voz": "narradora",
-   "texto": "A lousa tem o ABC!",
-   "pacotes": [
-    "interior-escola"
-   ],
-   "fala": "A lousa tem o abc!"
-  },
-  {
-   "chave": "aa5cab6512",
-   "voz": "narradora",
-   "texto": "Letra por letra, sem pressa.",
-   "pacotes": [
-    "interior-escola"
-   ],
-   "fala": "Letra por letra, sem pressa."
-  },
-  {
    "chave": "64f6b1e7s",
    "voz": "narradora",
    "texto": "Um globo do mundo!",
@@ -25996,6 +25980,15 @@
    "fala": "Contam coisas de outra época."
   },
   {
+   "chave": "24a61fbd18",
+   "voz": "narradora",
+   "texto": "Primeiro o passado, depois o hoje.",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Primeiro o passado, depois o hoje."
+  },
+  {
    "chave": "411d0fd3t",
    "voz": "narradora",
    "texto": "Palavras em inglês!",
@@ -26059,6 +26052,24 @@
    "fala": "Lá se fala inglês!"
   },
   {
+   "chave": "6243ea2fl",
+   "voz": "narradora",
+   "texto": "A lousa diz",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "A lousa diz"
+  },
+  {
+   "chave": "a8a5511ak",
+   "voz": "narradora",
+   "texto": "Em inglês,",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Em inglês,"
+  },
+  {
    "chave": "43db2c53w",
    "voz": "narradora",
    "texto": "Uma receita de salada!",
@@ -26111,6 +26122,78 @@
     "interior-escola"
    ],
    "fala": "Bata uma palma em cada uma."
+  },
+  {
+   "chave": "8bad4dfcu",
+   "voz": "narradora",
+   "texto": "A lousa tem sílabas!",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "A lousa tem sílabas!"
+  },
+  {
+   "chave": "ffb7b9bf1a",
+   "voz": "narradora",
+   "texto": "Juntando sílabas, formamos palavras.",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Juntando sílabas, formamos palavras."
+  },
+  {
+   "chave": "01f5fa4ez",
+   "voz": "narradora",
+   "texto": "Uma plantinha e uma lupa!",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Uma plantinha e uma lupa!"
+  },
+  {
+   "chave": "2f7368a015",
+   "voz": "narradora",
+   "texto": "A lupa mostra tudo de pertinho.",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "A lupa mostra tudo de pertinho."
+  },
+  {
+   "chave": "c8471e73z",
+   "voz": "narradora",
+   "texto": "Três mais quatro dá sete!",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Três mais quatro dá sete!"
+  },
+  {
+   "chave": "2acb43a6z",
+   "voz": "narradora",
+   "texto": "Conte as bolinhas comigo.",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Conte as bolinhas comigo."
+  },
+  {
+   "chave": "a1fc83cb13",
+   "voz": "narradora",
+   "texto": "Um mapa com mar, terra e rio!",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "Um mapa com mar, terra e rio!"
+  },
+  {
+   "chave": "e13f2da613",
+   "voz": "narradora",
+   "texto": "O N mostra onde fica o norte.",
+   "pacotes": [
+    "interior-escola"
+   ],
+   "fala": "O N mostra onde fica o norte."
   },
   {
    "chave": "8ac10616c",
