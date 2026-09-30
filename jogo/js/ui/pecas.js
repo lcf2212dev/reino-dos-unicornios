@@ -38,14 +38,23 @@
   // Tudo pelo tempo (s), não pelo quadro: a mesma chuva em 60 ou 120 Hz. Uma peça em 6 já nasce na tela
   // (confete desde o 1º quadro); as outras vêm de até 70 % da altura acima e atravessam a tela em 1,3 a 2,1 s.
   // O canvas só sai quando a última peça passa da borda de baixo.
-  var CORES_CONFETE = ['#ff7eb6', '#ffd34d', '#7c5cff', '#39c5bb', '#5fb4ff', '#ff9d2e'];
-  function criarConfete(quantos, w, h, sorte) {
-    sorte = sorte || Math.random;
-    var ps = [];
+  // Pixel do mundo (ui.md §10.14.2): o canvas é em px de aparelho, cada peça tem 1 ou 2 px de arte do mundo
+  // (passo = Reino._motor.escala px de aparelho) e a posição cai na grade desse passo; cores da paleta (§10.8)
+  // reserva: as cores de confete do §10.8 (rosa, ouro, roxo, azul, laranja, folha), se o config não tiver a lista
+  var CORES_CONFETE = ['#ff7eb6', '#ffd34d', '#7c5cff', '#5fb4ff', '#ff8a3d', '#9ccc4a'];
+  function coresConfete() {
+    var pal = Reino.config && Reino.config.paleta, cs = pal && Array.isArray(pal.confete) ? pal.confete : [];
+    cs = cs.filter(function (c) { return typeof c === 'string' && /^#[0-9a-f]{6}$/i.test(c); });
+    return cs.length ? cs : CORES_CONFETE;
+  }
+  // passo: px (do canvas) de 1 px de arte; k: px do canvas por px CSS (velocidade lateral e balanço)
+  function criarConfete(quantos, w, h, sorte, passo, k) {
+    sorte = sorte || Math.random; passo = passo || 1; k = k || 1;
+    var cores = coresConfete(), ps = [];
     for (var i = 0; i < quantos; i++) {
-      var s = 6 + Math.floor(sorte() * 3) * 3, cedo = i % 6 === 0;
+      var s = passo * (sorte() < 0.34 ? 1 : 2), cedo = i % 6 === 0;
       ps.push({ x0: sorte() * w, y0: cedo ? sorte() * h * 0.3 : -s - sorte() * h * 0.7, vy: h / (1.3 + sorte() * 0.8),
-        vx: -40 + sorte() * 80, s: s, c: CORES_CONFETE[i % CORES_CONFETE.length], r: sorte() * 6, x: 0, y: 0 });
+        vx: (-40 + sorte() * 80) * k, a: 12 * k, s: s, c: cores[i % cores.length], r: sorte() * 6, x: 0, y: 0 });
     }
     return ps;
   }
@@ -54,7 +63,7 @@
     var vivas = 0, visiveis = 0;
     ps.forEach(function (p) {
       p.y = p.y0 + p.vy * t;
-      p.x = p.x0 + p.vx * t + Math.sin(t / 0.3 + p.r) * 12;
+      p.x = p.x0 + p.vx * t + Math.sin(t / 0.3 + p.r) * (p.a || 12);
       if (p.y < h) { vivas++; if (p.y > -p.s) visiveis++; }
     });
     return { vivas: vivas, visiveis: visiveis };
@@ -64,19 +73,28 @@
     if (!animar()) return;
     var c = el('canvas.confete');
     document.body.appendChild(c);
-    var w = c.width = window.innerWidth, h = c.height = window.innerHeight;
+    var V = Reino._motor || {}, dpr = V.dpr || Math.min(window.devicePixelRatio || 1, 3);
+    var passo = Math.max(1, Math.round(V.escala || 2 * dpr));
+    var w = c.width = Math.round(window.innerWidth * dpr), h = c.height = Math.round(window.innerHeight * dpr);
+    c.style.width = window.innerWidth + 'px'; c.style.height = window.innerHeight + 'px';
     var ctx = c.getContext('2d');
-    var ps = criarConfete(quantos || 90, w, h);
+    var ps = criarConfete(quantos || 90, w, h, null, passo, dpr);
     var t0 = null, t = 0;
-    (function passo(agora) {
+    // a grade do mundo na tela anda com a câmera (motor/laco.js desliza o cenário em frações de pixel do jogo):
+    // a fase é o mesmo deslocamento que o laço usa para desenhar o buffer, lido a cada quadro
+    var fx = 0, fy = 0;
+    function fase(c) { var cam = V.cam; if (!cam) return 0; var d = -Math.round((cam[c] - Math.floor(cam[c])) * passo); return ((d % passo) + passo) % passo; }
+    function grade(v, f) { return Math.round((v - f) / passo) * passo + f; }
+    (function passoDoQuadro(agora) {
       // o relógio anda pelo dt do quadro (no máximo 0,1 s: aba escondida não some com a chuva de uma vez)
       if (t0 !== null) t += Math.min(0.1, Math.max(0, (agora - t0) / 1000));
       t0 = agora;
       var n = moverConfete(ps, t, h);
       ctx.clearRect(0, 0, w, h);
-      ps.forEach(function (p) { if (p.y < h && p.y > -p.s) { ctx.fillStyle = p.c; ctx.fillRect(Math.round(p.x), Math.round(p.y), p.s, p.s); } });
+      fx = fase('x'); fy = fase('y');
+      ps.forEach(function (p) { if (p.y < h && p.y > -p.s) { ctx.fillStyle = p.c; ctx.fillRect(grade(p.x, fx), grade(p.y, fy), p.s, p.s); } });
       c.dataset.pecas = n.visiveis;
-      if (n.vivas) requestAnimationFrame(passo); else c.remove();
+      if (n.vivas) requestAnimationFrame(passoDoQuadro); else c.remove();
     })(performance.now());
   };
   UI.confete.criar = criarConfete;
@@ -90,7 +108,7 @@
     var e = Reino.Unicornios.estagio(u ? u.xp : 0);
     opcoes = opcoes || {};
     var spr = PA.unicornio(d, e, 0, { enfeites: opcoes.semEnfeite ? [] : (id === P.montaria() ? est().usando.enfeites : []), asasFada: !opcoes.semEnfeite && id === P.montaria() && est().usando.asasFada });
-    return PA.paraDOM(spr, escala || 3);
+    return PA.paraDOM(spr, escala || 4);   // escala par (ui.md §10.10.7: sprite das peças 4)
   };
 
   UI.pedirNome = function (pergunta, atual) {
