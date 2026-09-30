@@ -65,6 +65,10 @@ Reino.config = {
   // --texto-g do :root de css/ui-base.css (docs/contratos/ui.md §10.9.1). Mudou aqui, mude lá. A placa do cômodo
   // usa corpo × devicePixelRatio (§10.9.5)
   texto: { p: 8, aux: 12, corpo: 16, g: 24 },
+  // durações (ms) de animação e transição: espelho dos tokens --rapido, --normal e --lento do :root de
+  // css/ui-base.css (docs/contratos/ui.md §10.15.3; o validar-movimento confere). Mudou aqui, mude lá.
+  // rapido = resposta ao toque e entrada/saída de tela (§10.15.8), normal = abrir/fechar/trocar, lento = chegada
+  movimento: { rapido: 120, normal: 240, lento: 600 },
   // mapa da cidade (js/mundo/): o tamanho (56×42 tiles) e o traçado ficam em js/mundo/mapa.js e js/mundo/lugares.js.
   // contorno dourado do prédio de lugar concluído (js/mundo/contorno.js): espessura em px da linha forte;
   // o brilho pulsa entre brilhoMin e brilhoMax (0 a 1) a cada periodoMs; faiscas = quantas faíscas ao mesmo
