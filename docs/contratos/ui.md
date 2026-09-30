@@ -517,6 +517,8 @@ faixas de 4 px (`--arco-1` a `--arco-6`) em cor lisa, que troca a ordem das core
       Shop até 1000 px (a partir de 1000 px de largura).
    3. A tela de pergunta (sala, prova, treino; não é painel sobre o mapa) vai até 1180 px nessa tela baixa e larga, em
       2 colunas (enunciado e banco de palavras à esquerda, casas e opções à direita; D12e-02).
+   4. O fim da matéria completa (`.fim-materia`) vai até 1000 px a partir de 700 px de largura, com os prêmios em 2
+      colunas (O-36).
 3. Caber na tela:
    1. Conteúdo que ainda rola mostra a sombra `.rola-mais` no pé; some quando chega ao fim.
    2. Na tela baixa e larga: o texto-guia que já é falado sai (`.guia-falada`); o que não é falado fica em 1 linha, com

@@ -1,6 +1,6 @@
 # TODO visual: Mariana e o Reino dos Unicórnios
 
-Progresso: 290 de 290 (onda 5d, 30/09/2026) · itens novos O-03 a O-37: 32 de 35
+Progresso: 290 de 290 (backlog completo, 30/09/2026) · itens novos O-03 a O-37: 35 de 35
 
 > Auditoria visual feita em 29/09/2026, só de leitura, sobre a `main` em `7cbfa9f`. Cobre tudo o que a jogadora vê: mapa, prédios por dentro e por fora, unicórnio, NPCs, diálogo, perguntas, provas, matérias, HUD, loja, menus, movimento, app instalado e coerência de direção de arte.
 > Cada item traz a evidência (`arquivo:linha` e nome de cena do e2e), o tipo, o esforço (P ≤ 1 h, M ≤ 1 dia, G > 1 dia), as dependências e o critério de pronto. Cada relatório e cada critério de pronto passou por um conferente independente.
@@ -481,11 +481,11 @@ As prioridades dizem **quanto importa**. Esta ordem diz **o que vem antes**. A r
 
 - [x] **O-34 · P3 · Desenho no celular com Letras grandes: etiquetas do "Use no desenho:" cortadas** — Com `{"texto":1.15}`, o enunciado da prova (7 linhas) empurra a lista para baixo e as etiquetas ficam sob a barra do "Terminei". Pronto quando `npm run ver -- --tela prova:ingles-3bim:11 --ajustes '{"texto":1.15}'` no celular mostrar o título e as 3 etiquetas sem rolar.
 
-- [ ] **O-35 · P3 · Retorno da sala no celular deitado cobre a marca do erro** — Em 844×390 a regra do celular (≤ 480 px de largura) não vale e a folha grande do retorno cobre os itens marcados em ligar e separar. Pronto quando, no celular deitado, a marca do erro e o "Tentar de novo" aparecerem juntos (regra por altura baixa, `max-height`).
+- [x] **O-35 · P3 · Retorno da sala no celular deitado cobre a marca do erro** — Em 844×390 a regra do celular (≤ 480 px de largura) não vale e a folha grande do retorno cobre os itens marcados em ligar e separar. Pronto quando, no celular deitado, a marca do erro e o "Tentar de novo" aparecerem juntos (regra por altura baixa, `max-height`).
 
-- [ ] **O-36 · P3 · Matéria completa: o botão fica abaixo da dobra** — Na tela de "Revisão de X completa!" o botão termina em 974 px no celular (tela de 844) e em 874 px no notebook (768). Pronto quando o botão estiver à vista sem rolar nos 3 tamanhos.
+- [x] **O-36 · P3 · Matéria completa: o botão fica abaixo da dobra** — Na tela de "Revisão de X completa!" o botão termina em 974 px no celular (tela de 844) e em 874 px no notebook (768). Pronto quando o botão estiver à vista sem rolar nos 3 tamanhos.
 
-- [ ] **O-37 · P3 · Placa do corredor da escola sobre o chão da sala de cima (celular)** — Com a Mariana 12 tiles à direita no corredor, "Corredor • Escola do Reino" passa da faixa verde para o chão da sala de cima (limite `chao.y0` em `interiores-placas.js`); com Letras grandes invade mais. Pronto quando a placa ficar dentro do próprio cômodo nessa cena, com e sem Letras grandes.
+- [x] **O-37 · P3 · Placa do corredor da escola sobre o chão da sala de cima (celular)** — Com a Mariana 12 tiles à direita no corredor, "Corredor • Escola do Reino" passa da faixa verde para o chão da sala de cima (limite `chao.y0` em `interiores-placas.js`); com Letras grandes invade mais. Pronto quando a placa ficar dentro do próprio cômodo nessa cena, com e sem Letras grandes.
 
 ### 3.6 NPCs (D4)
 > Os 79 personagens não jogáveis: sprites, retratos, ícone de status, escala e identidade de função. Código em `jogo/js/personagens/npcs*.js`, `elenco.js`, `interiores/*/personagens.js` e `interiores/planetas/ets.js`. Todas as reservas já têm sprite (não sobrou vaga tracejada), e o retrato é recortado do próprio sprite, então sempre bate com ele.
