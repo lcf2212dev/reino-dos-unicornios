@@ -42,4 +42,5 @@
 # 1b15fc9 = onda 1c do backlog visual (rodapé de ação: D10-B02, D6-09, D7-03, D12f-01, D6-10, D8B-26, D8B-05, D5-04, O-23; D5-15 descartado)
 # 1ebe342 = onda 3f do backlog visual (D2A-03, D2A-04, D2A-12, D2A-13, D2A-14; D3-07, D3-08, D3-13, O-20, O-21, D10-09; O-18, D9-11, D9-09; D13-07, D13-08, D8A-26; D10-B09; D8A-13, D6-15, D12d-02, D6-22; O-25, O-26; D6-16, D6-18, D6-27)
 # a2fabbc = leva 4a (D2B-16, D2B-17, O-19, D8B-23, D8B-19, O-17, D8B-25, D8A-10, D8A-11, D8A-21, D7-20, D11-13, D4-18, D4-19; Castelo do D2A-09; deitado; O-27, D4-02, D2B-01, D1-19 descartados)
-a2fabbc
+# 0b95967 = onda 2a, paleta (D10-02, D10-14, D10-18, D10-13, D6-20, D10-B04, D8B-12, D5-13, D8A-05, D11-03, D11-11) e lousas das salas de prova (D2A-09)
+0b95967
