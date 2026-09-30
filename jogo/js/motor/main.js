@@ -138,7 +138,9 @@
      abriria a primeira vez e trocaria as escolhas dela. Sem rede, quem já tem o save no aparelho joga com ele. */
   var ESPERA_PASSO_MS = 600;   // uma estrelinha a mais na espera (--lento, ui.md §10.15: volta inteira em 1,8 s)
   V.esperarProgresso = esperarProgresso;   // para ver a espera nas fotos (npm run ver -- --vivo --js …)
-  function esperarProgresso() {
+  // doLogin: o painel de login segue aberto enquanto isso (telaQuemVaiJogar, aoEntrar): a 1ª tentativa não abre a
+  // abertura por cima; só uma falha mostra o aviso com "Tentar de novo"
+  function esperarProgresso(doLogin) {
     return new Promise(function (resolver) {
       var t = null, msg = null, botao = null, timer = 0;
       function aviso(novo) {
@@ -182,7 +184,7 @@
       }
       function tentar() {
         if (t) { aviso(abrindo()); timer = msg._timer || 0; botao.hidden = true; }
-        var espera = setTimeout(mostrar, 400);   // resposta rápida: nem aparece
+        var espera = doLogin && !t ? 0 : setTimeout(mostrar, 400);   // resposta rápida: nem aparece
         P.iniciarNuvem().then(function () {
           clearTimeout(espera);
           clearInterval(timer);
@@ -216,12 +218,20 @@
   function iniciar() {
     var login = Reino.Jogadores.decidirSemTela();
     // (fora do congelado, só o "Trocar jogador" que acabou de conferir a senha: a música espera o 1º toque)
-    if (login) { Reino.Jogadores.usar(login); comecar(false, !Reino.congelado); return; }
+    if (login) { Reino.Jogadores.usar(login); comecar(false, !Reino.congelado).then(abrirReino); return; }
+    // o save é buscado com o login ainda aberto (aoEntrar): dele direto para o mapa, sem voltar à abertura
     telaInicio()
-      .then(function () { return UI.telaQuemVaiJogar({ ultimo: Reino.Jogadores.ultimo() }); })
-      .then(function (l) { Reino.Jogadores.usar(l); comecar(true); });
+      .then(function () {
+        return UI.telaQuemVaiJogar({ ultimo: Reino.Jogadores.ultimo(), aoEntrar: function (l) { Reino.Jogadores.usar(l); return comecar(true); } });
+      })
+      .then(abrirReino);
   }
-  // abriu: veio da abertura (o toque já liberou o som); musicaNoToque: sem toque nesta página ainda, a música liga no 1º
+  function abrirReino() {
+    var novo = !est().comecou;
+    (novo ? primeiraVez() : Promise.resolve()).then(function () { entrarNoReino(novo); });
+  }
+  // abriu: veio da abertura e do login (o toque já liberou o som); musicaNoToque: sem toque nesta página ainda, a música
+  // liga no 1º. Cumpre quando o save está em mãos (esperarProgresso).
   function comecar(abriu, musicaNoToque) {
     P.carregar();
     if (abriu && est().ajustes.musica) Reino.Som.musica(true);
@@ -257,10 +267,7 @@
     // vozes gravadas: frases do Claude e de cada matéria (as salas carregam quando abrem)
     Reino.Voz.carregarVarios(['geral'].concat(Reino.materias.map(function (m) { return m.id + '-extra'; })));
 
-    esperarProgresso().then(function () {
-      var novo = !est().comecou;
-      (novo ? primeiraVez() : Promise.resolve()).then(function () { entrarNoReino(novo); });
-    });
+    return esperarProgresso(abriu);
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', iniciar);

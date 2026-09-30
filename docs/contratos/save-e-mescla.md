@@ -321,7 +321,8 @@ Código: `jogo/js/sistemas/jogadores.js` (`Reino.Jogadores`, contas, perfil), `u
    o save fica onde está.
 2. Ordem (`motor/main.js`): abertura (visual de quem jogou por último, só LIDO do save dele: `Jogadores.visualGuardado`)
    → toque em "Entrar no Reino" (`.btn-comecar`) → login com senha (`UI.telaQuemVaiJogar`) → `P.usarJogador` →
-   `P.carregar()` → jogo. Nada é lido para jogar nem gravado na chave de ninguém antes da senha certa. O jogador não muda
+   `P.carregar()` → jogo. O save da nuvem é buscado com o login ainda aberto (`aoEntrar`, botão "Abrindo o
+   reino..."): dele direto para o mapa; a abertura só volta se a busca falhar (aviso e "Tentar de novo"). Nada é lido para jogar nem gravado na chave de ninguém antes da senha certa. O jogador não muda
    com o jogo aberto: `P.usarJogador` depois do carregar lança erro; trocar (`UI.trocarJogador`) grava, mostra
    "Guardando...", envia já (`P.enviarAgora`, espera no máximo 5 s), marca e recarrega; o recarregar entra direto em
    quem acabou de passar pela senha (sessionStorage `reino-entrou`, vale uma vez, só se bater com o lembrado).
