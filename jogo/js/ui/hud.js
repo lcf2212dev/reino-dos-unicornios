@@ -88,7 +88,7 @@
         rot.appendChild(document.createTextNode(l));
       });
       return el('button.dock-btn', { type: 'button', 'data-acao': acao, 'aria-label': aria },
-        PA.paraDOM(PA.iconeMenu(icone), PA.escalaNitida(36, 16), 'dock-icone'), rot);
+        PA.paraDOM(PA.iconeMenu(icone), PA.escalaNitida(32, 16), 'dock-icone'), rot);
     }
     var dock = el('nav.dock', { 'aria-label': 'Menu' },
       botaoDock('missoes', 'lugares', ['Lugares'], 'Lugares'),
@@ -141,10 +141,12 @@
     m.appendChild(el('span.montaria-info',
       el('b', P.nomeUni(id)),
       el('span.montaria-cresce',
-        iconePequeno(estg.emoji, 22),
+        iconePequeno(estg.emoji, 32),
         el('span.montaria-cresce-col',
           el('span.montaria-estagio', estg.nome),
-          el('span.barrinha', el('span', { style: { width: Math.round(pe.pct * 100) + '%' } })))),
+          // 🌱 antes da barra de crescimento, como na carta do Estábulo (D8A-14)
+          el('span.carta-cresce', iconePequeno('🌱', 16),
+            el('span.barrinha', el('span', { style: { width: Math.round(pe.pct * 100) + '%' } }))))),
       comCuidados ? barrasCuidado(id, 'mini') : null));
   };
 })();
