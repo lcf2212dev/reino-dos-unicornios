@@ -98,6 +98,12 @@
 .intro-claude-grande { max-width: 560px; background: var(--papel); }
 .claude-intro { flex: none; }
 .lugar-guia { display: flex; align-items: center; gap: 12px; }
+/* celular com Letras grandes (O-31): a palavra longa não cabe ao lado do retrato; o retrato vai para cima e,
+   se a palavra nem sozinha couber, só ela quebra */
+@media (max-width: 480px) {
+  .letras-grandes .lugar-guia { flex-direction: column; gap: 8px; }
+  .letras-grandes .lugar-guia p { align-self: stretch; min-width: 0; overflow-wrap: break-word; }
+}
 
 /* balão: 8 px acima do dock mais os 4 px da sombra (D5-10; --dock-altura, do pé da tela ao topo do dock, é do
    hud.js; ui.md §10.18); o retrato no alto, o nome numa aba de 1 linha em cima (D5-11) e o bico no retrato (D5-09) */
