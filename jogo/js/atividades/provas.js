@@ -23,13 +23,13 @@
     return lista;
   };
   Pv.acessorio = function (id) { return Pv.acessorios().find(function (a) { return a.id === id; }) || null; };
-  Pv.icone = function (id, px) { return PA.paraDOM(PA.iconeDesenho('acessorio:' + id), PA.escalaNitida(px || 36, 16), 'icone-acessorio'); };
+  Pv.icone = function (id, px) { return PA.paraDOM(PA.iconeDesenho('acessorio:' + id), PA.escalaNitida(px || 32, 16), 'icone-acessorio'); };
 
   // o unicórnio de montaria usando o acessório (para ela ver como fica)
   Pv.previa = function (id, escala) {
     var uid = P.montaria(), u = est().unis[uid];
     var e = Reino.Unicornios.estagio(u ? u.xp : 0);
-    return PA.paraDOM(PA.unicornio(P.defUni(uid), e, 0, { enfeites: [id] }), escala || 5, 'previa-acessorio');
+    return PA.paraDOM(PA.unicornio(P.defUni(uid), e, 0, { enfeites: [id] }), escala || 4, 'previa-acessorio');
   };
 
   Pv.formatarNota = function (n) { return String(Math.round(n * 10) / 10).replace('.', ','); };
@@ -52,7 +52,7 @@
         : passou ? el('span.premio-status.passou', 'Já passou') : null;
       lista.appendChild(el('li.linha-premio.rar-' + r + (agora ? '.agora' : '') + (passou ? '.passou' : '') + (ganhou ? '.ganhou' : ''),
         el('span.premio-quando', QUANDO[r]),
-        Pv.icone(a.id, 40),
+        Pv.icone(a.id, 32),
         el('span.premio-info', rotuloRaridade(r), el('b', U.colado(a.nome))),
         status));
     });
@@ -66,7 +66,7 @@
   Pv.telaEscola = function () {
     var pn = Reino.UI.painel('lugar', '🏫 Escola do Reino');
     var c = pn.conteudo;
-    c.appendChild(el('div.lugar-guia', PA.paraDOM(PA.claude(0), 3, 'claude-intro'), el('p', Reino.Falas.provas.escola)));
+    c.appendChild(el('div.lugar-guia', PA.paraDOM(PA.claude(0), 4, 'claude-intro'), el('p', Reino.Falas.provas.escola)));
     Reino.Som.falar(Reino.Falas.provas.escola, { voz: 'claude' });
     var lista = el('div.lista-salas');
     Reino.provas.forEach(function (prova) {
@@ -117,7 +117,7 @@
     var pontos = el('div.missao-pontos', { 'aria-hidden': 'true' });
     var titulo = el('div.missao-titulo', el('span', (prova.emoji || '📝') + ' ' + prova.nome));
     var faixa = el('div.faixa-valendo' + (valendo ? '.rar-' + valendo : '.treino'), { hidden: true },
-      valendo ? [Pv.icone(prova.acessorios[valendo].id, 28), el('span', 'Valendo: acessório ', el('b', rar(valendo).nome.toLowerCase()), '. Acerte TUDO!')]
+      valendo ? [Pv.icone(prova.acessorios[valendo].id, 32), el('span', 'Valendo: acessório ', el('b', rar(valendo).nome.toLowerCase()), '. Acerte TUDO!')]
         : el('span', '✏️ Treino: o acessório desta prova você já ganhou.'));
     var corpo = el('div.missao-corpo');
     var rodape = el('footer.missao-rodape.prova-rodape.rodape-acao', { hidden: true });   // rodapé de ação (ui.md §10.20)
@@ -156,7 +156,7 @@
         el('h2.titulo-pixel', U.colado(prova.nome)),
         el('p.intro-paginas', U.colado(materia.nome + ' • ' + prova.bimestre + ' • ' + questoes.length + ' questões')),
         el('div.selo-tentativa' + (valendo ? '.rar-' + valendo : ''), el('small', 'Esta é a sua'), el('b', tentativa + 'ª tentativa')),
-        valendo ? el('div.previa-valendo.rar-' + valendo, Pv.previa(prova.acessorios[valendo].id, 6),
+        valendo ? el('div.previa-valendo.rar-' + valendo, Pv.previa(prova.acessorios[valendo].id, 4),
           el('p', 'Valendo agora: ', el('b', U.colado(prova.acessorios[valendo].nome)), ' ', rotuloRaridade(valendo))) : null,
         Pv.quadroPremios(prova),
         el('div.intro-claude', PA.paraDOM(PA.claude(0), 4, 'claude-intro'), el('p', U.colado(fala))),
@@ -327,7 +327,7 @@
 
       var botoes = el('div.intro-botoes');
       if (a) {
-        caixa.appendChild(el('div.previa-valendo.ganhou.rar-' + premios.raridade, Pv.previa(a.id, 7),
+        caixa.appendChild(el('div.previa-valendo.ganhou.rar-' + premios.raridade, Pv.previa(a.id, 4),
           el('p', el('b', a.nome), ' ', rotuloRaridade(premios.raridade))));
         var usar = el('button.btn-grande.btn-principal', { type: 'button' }, 'Colocar no meu unicórnio ✨');
         usar.addEventListener('click', function () {
@@ -342,7 +342,7 @@
       } else if (premios.proximo) {
         var prox = prova.acessorios[premios.proximo];
         caixa.appendChild(el('div.proximo-premio.rar-' + premios.proximo,
-          Pv.icone(prox.id, 48),
+          Pv.icone(prox.id, 64),
           el('p', el('small', 'A ' + (premios.tentativa + 1) + 'ª tentativa vale:'), el('br'), el('b', prox.nome), ' ', rotuloRaridade(premios.proximo))));
       }
 

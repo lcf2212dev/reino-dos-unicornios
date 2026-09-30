@@ -22,7 +22,7 @@
       var t = UI.abrirTela('ovo');
       var toques = 0;
       var ovoBox = el('button.ovo-grande.rar-' + d.raridade, { type: 'button', 'aria-label': 'Toque no ovo' });
-      function pintarOvo() { ovoBox.innerHTML = ''; ovoBox.appendChild(PA.paraDOM(PA.ovo(d.raridade, toques), 10)); }
+      function pintarOvo() { ovoBox.innerHTML = ''; ovoBox.appendChild(PA.paraDOM(PA.ovo(d.raridade, toques), 8)); }
       pintarOvo();
       var texto = el('p.ovo-texto', Reino.Falas.ovo(d.raridade));
       // 3 bolinhas embaixo do ovo: acendem a cada toque
@@ -47,7 +47,7 @@
         UI.confete(d.raridade === 'lendario' ? 160 : 90);
         card.innerHTML = '';
         card.appendChild(el('h2.titulo-pixel', d.raridade === 'lendario' ? '🌈 UM LENDÁRIO! 🌈' : 'Nasceu!'));
-        card.appendChild(el('div.detalhe-sprite.nascimento.rar-' + d.raridade, PA.paraDOM(PA.unicornio(d, 0, 0), 9)));
+        card.appendChild(el('div.detalhe-sprite.nascimento.rar-' + d.raridade, PA.paraDOM(PA.unicornio(d, 0, 0), 8)));
         card.appendChild(el('p.detalhe-rar.rar-' + d.raridade, rar.emoji + ' ' + rar.nome));
         card.appendChild(el('p.ovo-nome', opcoes.primeiro ? 'Seu primeiro unicórnio!' : P.nomeUni(id)));
         card.appendChild(el('p.detalhe-frase', '"' + d.frase + '"'));
@@ -96,13 +96,12 @@
      foco aparece inteiro (mostrarFoco rola o cartão por dentro). */
   function compactarNascimento(t, card, botao) {
     var sprite = card.querySelector('.detalhe-sprite'), tela = sprite && sprite.querySelector('canvas');
-    var dica = card.querySelector('.detalhe-dica'), nome = card.querySelector('.ovo-nome'), botoes = botao && botao.parentElement;
+    var botoes = botao && botao.parentElement;
     function escala(k) { if (tela) { tela.style.width = (tela.width * k) + 'px'; tela.style.height = (tela.height * k) + 'px'; } }
     var passos = [
       function () { card.style.gap = '8px'; card.style.paddingTop = card.style.paddingBottom = '14px'; if (botoes) botoes.style.marginTop = '6px'; },
-      function () { escala(7); if (sprite) sprite.style.minHeight = '0'; },
-      function () { escala(5.5); if (nome) nome.style.fontSize = '1.3em'; if (dica) dica.style.fontSize = '0.82em'; },
-      function () { escala(4.5); },
+      function () { escala(6); if (sprite) sprite.style.minHeight = '0'; },
+      function () { escala(4); card.classList.add('nascimento-compacto'); },   // letras um degrau abaixo (css)
     ];
     var feito = 0;
     function cabe() { return card.scrollHeight <= card.clientHeight + 1; }

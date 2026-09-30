@@ -194,7 +194,7 @@
       var extra = null;
       if (!ok && d.tipo === 'varias' && res && res.faltam > 0 && (!res.erradas || !res.erradas.length)) extra = el('p.retorno-extra', 'Dica: ainda falta marcar ' + (res.faltam === 1 ? '1 item' : res.faltam + ' itens') + '!');
       var cab = el('div.retorno-cabeca',
-        PA.paraDOM(PA.claude(0), 3, 'claude-retorno'),
+        PA.paraDOM(PA.claude(0), 4, 'claude-retorno'),
         el('div',
           el('h3', ok ? (dePrimeira ? '✨ Isso! +1 ⭐' : '✨ Isso!') : '💭 Quase!'),
           el('p.retorno-fala', fala)));

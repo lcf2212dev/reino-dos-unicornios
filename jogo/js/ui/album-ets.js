@@ -27,15 +27,13 @@
     ] },
   });
 
-  function compacto() { return window.innerWidth <= 480 || window.innerHeight <= 500; }
   // o ET de corpo inteiro, nítido (escala inteira); ainda não amigo = silhueta escura
   function figura(e) {
     var PA = window.PA, N = Reino.NPCs, pe = Reino.personagens[e.id];
     try {
       var c = N.sprite({ id: e.id, sprite: pe.sprite }, 0);
       if (!e.amigo && PA.silhueta) c = PA.silhueta(c);   // ainda não é amigo: silhueta pintada e contornada (sem filtro de CSS)
-      var alvo = compacto() ? 64 : 88;
-      var cv = PA.paraDOM(c, PA.escalaNitida(alvo, c.width), 'album-sprite');
+      var cv = PA.paraDOM(c, 4, 'album-sprite');   // 4 px CSS por pixel (ui.md §10.10.7)
       return cv;
     } catch (err) { return null; }
   }

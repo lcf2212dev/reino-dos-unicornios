@@ -9,7 +9,7 @@
   function figuraCompletar(f) {
     var desenho = PA.iconeDesenho(f.img);
     return el('span.completar-img', { role: 'img', 'aria-label': f.alt ? U.semEn(f.alt) : null },
-      desenho ? PA.paraDOM(desenho, PA.escalaNitida(desenho.width > 16 ? 64 : 48, desenho.width)) : '❓');
+      desenho ? PA.paraDOM(desenho, PA.escalaNitida(64, desenho.width)) : '❓');
   }
 
   // colado: [texto antes da palavra, pedaço da palavra antes da lacuna, pedaço depois, resto da frase]

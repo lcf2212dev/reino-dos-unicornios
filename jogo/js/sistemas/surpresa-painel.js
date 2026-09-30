@@ -36,7 +36,7 @@
   // o Claude com escala inteira de pixel da tela (nítido): menor no celular, sem transform fracionário
   function claudeNitido() {
     var spr = PA.claude(0), src = spr.canvas || spr;
-    var alvo = (compacto() ? 2 : 3) * src.width;
+    var alvo = (compacto() ? 2 : 4) * src.width;
     return PA.paraDOM(spr, PA.escalaNitida(alvo, src.width), 'surpresa-claude');
   }
 

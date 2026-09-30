@@ -21,7 +21,7 @@
       // desenho ainda não feito: mostra ❓ em vez de quebrar a questão
       var desenhoImg = p[0].img && PA.iconeDesenho(p[0].img);
       var conteudo = p[0].img
-        ? el('span.ligar-img', desenhoImg ? PA.paraDOM(desenhoImg, PA.escalaNitida(desenhoImg.width > 16 ? 96 : 64, desenhoImg.width)) : '❓')
+        ? el('span.ligar-img', desenhoImg ? PA.paraDOM(desenhoImg, PA.escalaNitida(64, desenhoImg.width)) : '❓')
         : [p[0].e ? el('span.opcao-emoji', p[0].e) : null, el('span', p[0].t)];
       var b = el('button.ligar-item.ligar-esq' + (p[0].img ? '.com-img' : ''), { type: 'button', 'aria-label': p[0].img ? U.semEn(p[0].alt) : null }, el('span.ligar-marca'), conteudo);
       b.addEventListener('click', function () {

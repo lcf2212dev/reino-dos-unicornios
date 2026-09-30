@@ -57,8 +57,7 @@ Reino.util = (function () {
     }
     if (ultimo < s.length) colocarIcones(node, semEn(s.slice(ultimo)));
   }
-  function colocarIcones(node, s, sozinho) {
-    if (sozinho === undefined) sozinho = s.trim();
+  function colocarIcones(node, s) {
     RE_ICONE.lastIndex = 0;
     if (!RE_ICONE.test(s) || !window.PA || !PA.iconeEmoji) {
       node.appendChild(document.createTextNode(s));
@@ -68,7 +67,7 @@ Reino.util = (function () {
     var ultimo = 0, m;
     while ((m = RE_ICONE.exec(s))) {
       if (m.index > ultimo) node.appendChild(document.createTextNode(s.slice(ultimo, m.index)));
-      node.appendChild(PA.iconeTexto(m[0], sozinho === m[0]));
+      node.appendChild(PA.iconeTexto(m[0]));
       ultimo = m.index + m[0].length;
     }
     if (ultimo < s.length) node.appendChild(document.createTextNode(s.slice(ultimo)));
@@ -98,12 +97,13 @@ Reino.util = (function () {
       var salaN = /^sala$/i.test(a) && num;
       var esquerda = fimEmoji || numFim || salaN;
       var direita = !esquerda && ini === i - 1 && !!a && !!b && RE_CURTA.test(a) && !(/^sala$/i.test(b) && /^\p{N}/u.test(prox));
-      if (esquerda && ini < i - 1 && tam(ini, i) > COLA_MAX) {   // desfaz o grupo: fica só com a palavra de antes
+      var tetoGrupo = fimEmoji && /^\p{N}/u.test(ps[ini]) ? COLA_NUM : COLA_MAX;   // "60 minutos! ⏰": o ícone de 32 px pede mais
+      if (esquerda && ini < i - 1 && tam(ini, i) > tetoGrupo) {   // desfaz o grupo: fica só com a palavra de antes
         for (var k = ini + 1; k < i; k++) junta[k] = false;
         ini = i - 1;
       }
       // a cola à esquerda de uma palavra só aceita um pouco mais: emoji do fim até COLA_EMOJI, número até COLA_NUM
-      var teto = ini < i - 1 ? COLA_MAX : fimEmoji ? COLA_EMOJI : esquerda ? COLA_NUM : COLA_MAX;
+      var teto = ini < i - 1 ? tetoGrupo : fimEmoji ? COLA_EMOJI : esquerda ? COLA_NUM : COLA_MAX;
       if ((esquerda || direita) && tam(ini, i) <= teto) junta[i] = true;
       else { junta[i] = false; ini = i; }
     }
@@ -111,30 +111,30 @@ Reino.util = (function () {
   }
   // o mesmo em DOM: cada grupo colado (e palavra composta até 12 letras, "Arco-íris": a fonte não tem U+2011) vira um span
   // nowrap. O textContent fica igual ao texto (voz e quem compara o balão não veem diferença).
-  function colarEm(node, s, sozinho) {
+  function colarEm(node, s) {
     colar(s).split(' ').forEach(function (p, i) {
       if (i) node.appendChild(document.createTextNode(' '));
       if (!p) return;
-      if (p.indexOf('\u00a0') < 0 && !(/\p{L}-\p{L}/u.test(p) && tamanho(p) <= COLA_MAX)) { colocarIcones(node, p, sozinho); return; }
+      if (p.indexOf('\u00a0') < 0 && !(/\p{L}-\p{L}/u.test(p) && tamanho(p) <= COLA_MAX)) { colocarIcones(node, p); return; }
       var sp = document.createElement('span');
       sp.style.whiteSpace = 'nowrap';
-      colocarIcones(sp, p.replace(/\u00a0/g, ' '), sozinho);
+      colocarIcones(sp, p.replace(/\u00a0/g, ' '));
       node.appendChild(sp);
     });
   }
   function colado(s) {
     s = String(s);
-    var frag = document.createDocumentFragment(), sozinho = semEn(s).trim(), ultimo = 0, m;
+    var frag = document.createDocumentFragment(), ultimo = 0, m;
     RE_EN.lastIndex = 0;
     while ((m = RE_EN.exec(s))) {   // «inglês» como no colocarTexto
-      if (m.index > ultimo) colarEm(frag, semEn(s.slice(ultimo, m.index)), sozinho);
+      if (m.index > ultimo) colarEm(frag, semEn(s.slice(ultimo, m.index)));
       var span = document.createElement('span');
       span.className = 'en'; span.lang = 'en';
-      colarEm(span, m[1], sozinho);
+      colarEm(span, m[1]);
       frag.appendChild(span);
       ultimo = RE_EN.lastIndex;
     }
-    if (ultimo < s.length) colarEm(frag, semEn(s.slice(ultimo)), sozinho);
+    if (ultimo < s.length) colarEm(frag, semEn(s.slice(ultimo)));
     return frag;
   }
   // no balão (já na tela): o grupo mais largo que a linha se desfaz (data-largo), para não sair da caixa
