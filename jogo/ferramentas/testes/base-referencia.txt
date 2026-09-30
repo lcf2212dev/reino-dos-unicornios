@@ -56,4 +56,5 @@
 # b4cbde6 = O-35, O-36, O-37 (retorno deitado, matéria completa sem rolar, placa do corredor)
 # 3565241 = login direto e placa JIM WILSON da escola
 # f8b5009 = login direto e placa JIM WILSON da escola
-f8b5009
+# bdc9dad = matéria do dia na Aura (config)
+bdc9dad
