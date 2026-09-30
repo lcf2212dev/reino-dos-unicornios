@@ -18,12 +18,21 @@
   function est() { return P.estado(); }
 
   /* ---------- tamanho e escala ---------- */
+  // escala do mundo (ui.md §10.11), inteira em px de aparelho: ~18 tiles de altura, o lado menor com
+  // ≥ 8 tiles, e nunca menos de 2 px CSS por pixel (esse mínimo vence o dos 8 tiles)
+  function escalaDoMundo(w, h, dpr) {
+    var minimo = Math.max(1, Math.round(2 * dpr));
+    var e = Math.max(Math.round(h / (T * 18)), minimo);
+    e = Math.min(e, Math.floor(Math.min(w, h) / (T * 8)));
+    return Math.max(e, minimo);
+  }
+
   function redimensionar() {
     V.dpr = Math.min(window.devicePixelRatio || 1, 3);
     var w = window.innerWidth, h = window.innerHeight;
     V.canvas.width = Math.round(w * V.dpr); V.canvas.height = Math.round(h * V.dpr);
     V.canvas.style.width = w + 'px'; V.canvas.style.height = h + 'px';
-    V.escala = Math.max(2, Math.round(Math.min(V.canvas.width, V.canvas.height) / (T * 12.5)));
+    V.escala = escalaDoMundo(V.canvas.width, V.canvas.height, V.dpr);
     V.buffer.width = Math.ceil(V.canvas.width / V.escala) + 1;
     V.buffer.height = Math.ceil(V.canvas.height / V.escala) + 1;
     V.bctx.imageSmoothingEnabled = false;
@@ -107,5 +116,5 @@
     ctx: null, escala: V.escala, dpr: V.dpr, cam: cam,
   };
 
-  V.est = est; V.redimensionar = redimensionar; V.atualizarCamera = atualizarCamera; V.pintor = pintor;
+  V.est = est; V.escalaDoMundo = escalaDoMundo; V.redimensionar = redimensionar; V.atualizarCamera = atualizarCamera; V.pintor = pintor;
 })();
