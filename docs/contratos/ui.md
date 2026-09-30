@@ -256,7 +256,7 @@ Medida no sprite, da primeira à última linha com desenho (`npm run ver -- --pr
 
 | Peça | Faixa | Hoje (medido em 29/09) |
 |---|---|---|
-| criança (Mariana a pé, NPC criança, ET criança, fada) | 16–18 | Mariana 17, `lab-malu` 17, ETs crianças 17–18, fada 17 |
+| criança (Mariana a pé, NPC criança, ET criança, fada) | 16–18 | Mariana 17, `lab-malu` 17, ETs crianças 18 (sem antena); 20–22 com boina ou antena, fada 17 |
 | adulto e idoso sem chapéu | 21–24 | 21–24 (D4-15) |
 | chapéu, coque, pluma, antena, elmo | até +4 sobre o teto da faixa (adulto: ≤ 28), nunca acima de 2 tiles (32) | até 27 (elmo, chef, festa) |
 | ET adulto e vovó | 21–24 e ≥ 2 a mais que a criança do planeta | 24; 26 com antena ou orelha |
