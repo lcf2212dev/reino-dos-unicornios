@@ -35,10 +35,13 @@ footer.livro-rodape .livro-nav .btn-grande { width: 64px; padding: 0; }
 .bau-nota { color: var(--tinta-suave); font-size: var(--texto-aux); text-align: center; }
 .saldo-estrelas { font-size: var(--texto); text-align: center; }
 .saldo-dica { display: block; margin-top: 4px; font-size: var(--texto-aux); color: var(--tinta-suave); }   /* D13-05: saldo 0 */
-.vitrine-previa { display: grid; place-items: center; min-height: 170px; border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto-grande); 
+/* D8A-06: vitrine (escala 2) e saldo lado a lado, para a 1ª fileira de cartas caber sem rolar */
+.loja-topo { display: flex; align-items: center; gap: 12px; }
+.loja-topo .saldo-estrelas { flex: 1; min-width: 0; }
+.vitrine-previa { flex: none; display: grid; place-items: center; width: 96px; height: 80px; border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto-grande); 
   background:
-    linear-gradient(var(--branco), var(--branco)) center / 74px 150px no-repeat, linear-gradient(var(--branco), var(--branco)) center / 114px 134px no-repeat,
-    linear-gradient(var(--branco), var(--branco)) center / 134px 114px no-repeat, linear-gradient(var(--branco), var(--branco)) center / 150px 74px no-repeat, var(--ambar-claro);
+    linear-gradient(var(--branco), var(--branco)) center / 38px 76px no-repeat, linear-gradient(var(--branco), var(--branco)) center / 58px 68px no-repeat,
+    linear-gradient(var(--branco), var(--branco)) center / 68px 58px no-repeat, linear-gradient(var(--branco), var(--branco)) center / 76px 38px no-repeat, var(--ambar-claro);
 }
 .grade-loja { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
 /* Letras grandes: a carta alarga para a palavra de 7 letras em 24 px ("Morango") caber sem partir */
@@ -186,6 +189,20 @@ body.sem-animacao .interruptor-bola::after { transition: none; }
 
 
 /* ---------- loja: atalhos para cada encaixe (com 68 enfeites, a tela rola) ---------- */
-.loja-atalhos { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
-.loja-atalhos .btn-pequeno { min-height: 44px; padding: 4px 12px; font-size: var(--texto); }
-.loja-grupo { scroll-margin-top: 8px; }
+/* D8A-06: uma linha só que rola de lado (sem quebrar); o atalho tocado fica destacado */
+.loja-atalhos { display: flex; flex-wrap: nowrap; gap: 8px; overflow-x: auto; padding: 6px; scroll-padding-inline: 8px; }
+.loja-atalhos .btn-pequeno { flex: none; white-space: nowrap; min-height: 44px; padding: 4px 12px; font-size: var(--texto); }
+.loja-atalhos .btn-pequeno.ativo { background: var(--ouro-claro); }
+/* título de grupo: o visual do .estabulo-grupo; o 1º cola nos atalhos */
+h3.loja-grupo { font-family: var(--fonte-titulo); font-size: var(--texto); margin-top: 18px; scroll-margin-top: 8px; }
+.loja-atalhos + h3.loja-grupo { margin-top: 0; }
+/* letras grandes: o atalho dourado já diz o 1º grupo; o título fica só para o leitor de tela (a 1ª fileira cabe) */
+.letras-grandes .loja-atalhos + h3.loja-grupo { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.letras-grandes .loja-topo + .loja-atalhos, .letras-grandes .loja-atalhos + h3.loja-grupo + .grade-loja { margin-top: 4px; }
+.letras-grandes .loja-topo .saldo-estrelas, .letras-grandes .grade-loja .item-loja b { font-size: var(--texto-aux); }
+.letras-grandes .grade-loja .item-loja { padding: 6px 8px; gap: 2px; }
+.letras-grandes .loja-atalhos { padding-block: 4px; }
+/* letras grandes: o texto do saldo (e a dica do saldo 0) contorna a vitrine e passa por baixo dela */
+.letras-grandes .loja-topo { display: flow-root; }
+.letras-grandes .loja-topo .vitrine-previa { float: left; margin-right: 12px; }
+.letras-grandes .loja-topo .saldo-dica { display: inline; margin-left: 0.4em; }
