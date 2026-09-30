@@ -52,7 +52,7 @@
     if (npcId) n = ((ctx && ctx.interior && ctx.interior.npcs) || []).find(function (x) { return x.id === npcId; });
     if (!n && ctx && ctx.npc && ctx.npc.id === npcId) n = ctx.npc;
     if (n) {
-      try { if (R.NPCs && R.NPCs.retrato) retrato = [R.NPCs.retrato(n, 0), R.NPCs.retrato(n, 1)]; } catch (e) { retrato = null; }
+      try { if (R.NPCs && R.NPCs.retrato) retrato = [R.NPCs.retrato(n, 0), R.NPCs.retrato(n, 1), R.NPCs.retrato(n, 2)]; } catch (e) { retrato = null; }
       return { nome: n.nome || nomePadrao, retrato: retrato, voz: voz };
     }
     var o = ctx && ctx.objeto, OI = R.ObservatorioInterior;
