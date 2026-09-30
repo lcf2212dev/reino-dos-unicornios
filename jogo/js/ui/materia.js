@@ -19,25 +19,44 @@
     var feitas = P.salasFeitas(materia);
     c.appendChild(el('div.lugar-guia', PA.paraDOM(PA.claude(0), 4, 'claude-intro'),
       el('p', feitas === 0 ? materia.guia : (feitas === materia.salas.length ? 'Você completou todas as salas! Agora pode treinar no Castelo da Medalha ou jogar as salas de novo para ganhar os raros. 🌈' : 'Você já fez ' + feitas + ' de ' + materia.salas.length + ' salas. Vamos para a próxima?'))));
-    c.appendChild(barraDinheiro(materia));
+    // livro no alto, compacto, ao lado da barra de dinheiro (D7-15)
+    var livro = el('button.btn-livro-topo', { type: 'button' }, '📖 ' + nomeLivro(materia));
+    livro.addEventListener('click', function () { UI.abrirLivro(materia); });
+    var topo = el('div.materia-topo', barraDinheiro(materia), livro);
+    c.appendChild(topo);
+    // o cartão focado pelo teclado não some embaixo do topo grudado (acompanha as Letras grandes)
+    var medirTopo = function () { c.style.scrollPaddingTop = topo.offsetHeight + 'px'; };
+    if (window.ResizeObserver) new ResizeObserver(medirTopo).observe(topo); else setTimeout(medirTopo, 0);
     // a sobra da divisão em valores redondos vem como bônus ao completar (progresso-regras.js)
     if (P.bonusMateria(materia) > 0 && !P.materiaCompleta(materia)) c.appendChild(el('p.bau-nota', '🎁 Completando todas as salas: + ' + U.reais(P.bonusMateria(materia)).replace(' ', '\u00a0') + ' de bônus!'));
-    var lista = el('div.lista-salas');
+    var lista = el('div.lista-salas.lista-materia');
+    // a 1ª sala não feita ganha o "✨ Próxima!" e a lista rola até ela (D7-14)
+    var iProx = feitas === 0 ? -1 : materia.salas.findIndex(function (s) { return !(est().salas[s.id] || {}).feita; });
+    var proxima = null;
     materia.salas.forEach(function (s, i) {
       var reg = est().salas[s.id] || {};
       var raro = (materia.unicornios || []).find(function (u) { return u.raridade === 'raro' && u.sala === s.id; });
       var temRaro = raro && P.temUni(raro.id);
       var chips = el('span.sala-chips',
-        reg.feita ? el('span.chip-mini.ok', '✓ Feita') : el('span.chip-mini.nova', 'Nova!'),
+        // no celular Feita, Raro e Calma ficam só no desenho (o rótulo some): os chips cabem numa linha (D7-09)
+        reg.feita ? el('span.chip-mini.ok', { 'aria-label': 'Feita' }, '✓', el('span.rotulo-chip', ' Feita'))
+          // "Próxima!" com mais chips: no celular só o ✨ (a borda grossa já marca), para não quebrar a linha
+          : i === iProx && (temRaro || reg.calma) ? el('span.chip-mini.nova', { 'aria-label': 'Próxima' }, '✨', el('span.rotulo-chip', ' Próxima!'))
+          : el('span.chip-mini.nova', i === iProx ? '✨ Próxima!' : '✨ Nova!'),
         el('span.chip-mini', '💰 ' + U.reais(P.valorSala(materia))),
-        temRaro ? el('span.chip-mini.raro', '💙 Raro') : null,
-        reg.calma ? el('span.chip-mini.calma', '🌙 Calma') : null);
+        temRaro ? el('span.chip-mini.raro', { 'aria-label': 'Raro' }, '💙', el('span.rotulo-chip', ' Raro')) : null,
+        reg.calma ? el('span.chip-mini.calma', { 'aria-label': 'Calma' }, '🌙', el('span.rotulo-chip', ' Calma')) : null);
       // .ir-embaixo: no celular o "Entrar →"/"Jogar de novo" desce para a linha de baixo (senão
       // espreme o nome da sala numa coluna de uma letra)
-      var b = el('button.sala-card.ir-embaixo' + (reg.feita ? '.feita' : ''), { type: 'button' },
+      var b = el('button.sala-card.ir-embaixo' + (reg.feita ? '.feita' : '') + (i === iProx ? '.proxima' : ''), { type: 'button',
+        // nome acessível inteiro: no celular a ação e os rótulos ficam só no desenho
+        'aria-label': (i + 1) + '. ' + s.nome + ', ' + (reg.feita ? 'feita' : i === iProx ? 'próxima' : 'nova') + ', ' + U.reais(P.valorSala(materia)) +
+          (temRaro ? ', raro' : '') + (reg.calma ? ', calma' : '') + ', apostila ' + s.paginas + ', ' + (reg.feita ? 'jogar de novo' : 'entrar') },
         el('span.sala-emoji', s.emoji),
-        el('span.sala-info', el('b', hifenizar((i + 1) + '. ' + s.nome)), el('small', 'Apostila: ' + s.paginas), chips),
-        el('span.sala-ir', reg.feita ? 'Jogar de novo' : 'Entrar →'));
+        el('span.sala-info', el('b', hifenizar((i + 1) + '. ' + s.nome)), el('small', '📖 ' + s.paginas), chips),
+        // no celular só a seta, à direita do nome (D7-09)
+        reg.feita ? el('span.sala-ir', el('span.rotulo-chip', 'Jogar de novo'), el('span.seta-celular', '→'))
+          : el('span.sala-ir', el('span.rotulo-chip', 'Entrar '), '→'));
       b.addEventListener('click', function () {
         Reino.Som.tocar('porta');
         Reino.Missao.iniciar(materia, s, function (premios) {
@@ -48,11 +67,14 @@
         });
       });
       lista.appendChild(b);
+      if (i === iProx) proxima = b;
     });
     c.appendChild(lista);
-    var livro = el('button.btn-grande.btn-secundario', { type: 'button' }, '📖 ' + nomeLivro(materia));
-    livro.addEventListener('click', function () { UI.abrirLivro(materia); });
-    c.appendChild(el('div.intro-botoes', livro));
+    // rola só o conteúdo do painel, sem animação, para a próxima sala ficar inteira à vista
+    if (proxima) {
+      var fim = proxima.offsetTop + proxima.offsetHeight - c.offsetTop - c.clientHeight + 18; // o topo fica grudado (sticky)
+      if (fim > 0) c.scrollTop = fim;
+    }
   };
 
   /* ---------- livro de resumos ---------- */
