@@ -62,6 +62,14 @@
   .missao-corpo:has(.desenho) { padding-bottom: 40px; }
   /* O-30: no celular, "Use no desenho:" sobe para antes da dica, à vista sem rolar */
   .desenho-lista { order: -1; }
+  /* O-34: com letras grandes, título numa linha e etiquetas em até 2 linhas, sem encolher o texto */
+  .letras-grandes .desenho-lista { gap: 4px; }
+  .letras-grandes .desenho-lista > b { white-space: nowrap; }
+  .letras-grandes .desenho-requisitos { gap: 4px; justify-content: center; font-size: var(--texto-aux); }
+  .letras-grandes .desenho-req { gap: 4px; padding: 2px 6px; white-space: nowrap; }
+  /* o espaço sai da prancheta (11 px por quadradinho, escala inteira) e da folga de baixo */
+  .letras-grandes .desenho-moldura { width: calc(24 * 11px + 2 * var(--borda-grossa)); }
+  .letras-grandes .missao-corpo:has(.desenho) { padding-bottom: 24px; }
 }
 
 /* texto de apoio (d.apoio): a caixa do texto que a questão manda ler, acima do enunciado */
