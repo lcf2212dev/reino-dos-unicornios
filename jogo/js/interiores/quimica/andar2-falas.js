@@ -5,8 +5,10 @@
 Reino.falasDoPredio('quimica', {
   objetos: {
     // os três que abrem as telas (docs/contratos/quimica.md §9)
-    'fogao': ['O Fogão dos Estados!', 'Vamos esquentar e esfriar?'],
+    'fogao': ['O Fogão dos Estados!', 'O gelo derrete no calor.'],
     'mesa-separar': ['A Mesa de Separar Misturas!', 'Cada mistura tem um jeito.'],
     'estante-livros': ['Uma estante cheia de livros!', 'Qual livro vamos ler?'],
+    // enfeites que falam
+    'pia-cozinha': ['A pia da cozinha!', 'A água lava a louça.'],
   },
 });

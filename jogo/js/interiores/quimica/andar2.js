@@ -34,39 +34,91 @@
   function tela(chave, nome, t, o) { return inter(chave, nome, Object.assign(o, { acao: { tipo: 'tela', tela: t } })); }
   // objeto que conta uma curiosidade do tema (sorteada sem repetir na sessão, na voz do Professor Carbono)
   function cur(nome, tema, o) { return Object.assign(o, { nome: nome, acao: { tipo: 'quimica-curiosidade', tema: tema } }); }
-  // enchimento do esqueleto (só para o validador passar enquanto as frentes trabalham): a frente do cenário troca
-  // tudo isto pelos cômodos de verdade. Tapetes cobrem o chão fora do corredor; o resto são móveis comuns
-  function enchimento(meio) {
-    var l = [
-      { tipo: 'arandela', x: 4, y: 0 }, { tipo: 'relogio-parede', x: 8, y: 0 },
-      { tipo: 'vaso-planta', x: 12, y: 2 }, { tipo: 'pilha-livros', x: 12, y: 4 }, { tipo: 'cesto', x: 12, y: 6 },
-      { tipo: 'flores', x: 0, y: 12 }, { tipo: 'caixote', x: 12, y: 12 }, { tipo: 'vaso-grande', x: 0, y: 6 },
-      { tipo: 'planta-alta', x: 0, y: 10 }, { tipo: 'luminaria-pe', x: 12, y: 10 }, { tipo: 'globo', x: 2, y: 12 },
-      { tipo: 'almofada', x: 10, y: 12 },
-    ];
-    return meio ? l.concat([{ tipo: 'tapete', x: 0, y: 3, w: 5, h: 9 }, { tipo: 'tapete-listrado', x: 8, y: 3, w: 5, h: 9 }])
-      : l.concat([{ tipo: 'tapete', x: 1, y: 3, w: 11, h: 5 }, { tipo: 'tapete-listrado', x: 1, y: 8, w: 11, h: 4 }]);
-  }
+  var AMARELO = '#ffd34d', CREME = '#fff8ee', MUSEU = '#c0394a';
   var objetos = [].concat(
-    /* ---------- COZINHA QUÍMICA ---------- */
+    /* ---------- COZINHA QUÍMICA: o fogão, a mesa de separar e a Dona Caramela (7, 6) perto do fogão ---------- */
     sala(COZ.x, COZ.y, [
-      tela('fogao', 'Fogão dos Estados', 'quimica-estados', { tipo: 'lab-bancada', x: 3, y: 3 }),
-      tela('mesa-separar', 'Mesa de Separar Misturas', 'quimica-separar', { tipo: 'lab-bancada', x: 3, y: 8 }),
-      cur('Potes da cozinha', 'cozinha', { tipo: 'estante', x: 0, y: 2 }),
-      { tipo: 'janela', x: 2, y: 0 }, { tipo: 'janela', x: 10, y: 0 },
-    ].concat(enchimento())),
-    /* ---------- SALÃO DAS CURIOSIDADES (com a escada) ---------- */
+      // parede: 5-7 livre para a placa
+      { tipo: 'janela', x: 0, y: 0 }, { tipo: 'quimica-avental', x: 4, y: 0 }, { tipo: 'janela', x: 8, y: 0, var: { andar: 2 } },
+      { tipo: 'quimica-panelas-parede', x: 10, y: 0 }, { tipo: 'relogio-parede', x: 12, y: 0 },
+      cur('Geladeira', 'agua', { tipo: 'quimica-geladeira', x: 1, y: 2 }),
+      cur('Potes de mantimentos', 'cozinha', { tipo: 'quimica-potes', x: 2, y: 2 }),
+      inter('pia-cozinha', 'Pia da cozinha', { tipo: 'quimica-pia-cozinha', x: 5, y: 2 }),
+      { tipo: 'cesto', x: 7, y: 2 }, { tipo: 'caixote', x: 9, y: 2 }, { tipo: 'quimica-banqueta', x: 11, y: 2, var: { cor: '#ff9d3d' } },
+      { tipo: 'cesto', x: 12, y: 2, var: { conteudo: 'frutas' } },
+      // o fogão com a cozinheira do lado; tapete xadrez na frente
+      { tipo: 'quimica-mesa-cozinha', x: 0, y: 4 },
+      tela('fogao', 'Fogão dos Estados', 'quimica-estados', { tipo: 'quimica-fogao', x: 4, y: 4 }),
+      { tipo: 'tapete', x: 3, y: 5, w: 5, h: 2, var: { cor: '#ffe0c8', borda: '#ff9d3d' } },
+      { tipo: 'quimica-banqueta', x: 0, y: 5, var: { cor: S.COR2 } }, { tipo: 'quimica-banqueta', x: 2, y: 5, var: { cor: AMARELO } },
+      { tipo: 'armario', x: 10, y: 4 }, { tipo: 'planta-alta', x: 12, y: 4 },
+      cur('Fruteira', 'corpo', { tipo: 'quimica-fruteira', x: 9, y: 5 }),
+      { tipo: 'tapete-redondo', x: 10, y: 6, var: { cor: '#fff4c8' } }, { tipo: 'luminaria-pe', x: 12, y: 7, var: { andar: 2 } },
+      { tipo: 'flores', x: 0, y: 7, var: { vaso: S.COR } },
+      // a Mesa de Separar Misturas, com as banquetas na frente
+      tela('mesa-separar', 'Mesa de Separar Misturas', 'quimica-separar', { tipo: 'quimica-mesa-separar', x: 2, y: 7 }),
+      { tipo: 'tapete-listrado', x: 1, y: 8, w: 5, h: 1, var: { cores: ['#ff9d3d', CREME, S.COR2, CREME] } },
+      { tipo: 'cesto', x: 7, y: 8, var: { conteudo: 'frutas' } },
+      { tipo: 'vaso-planta', x: 0, y: 10 }, { tipo: 'quimica-banqueta', x: 2, y: 10 }, { tipo: 'quimica-banqueta', x: 4, y: 10, var: { cor: '#5fb4ff' } },
+      { tipo: 'tapete', x: 5, y: 10, w: 4, h: 2, var: { cor: '#fff4e8', borda: S.COR } },
+      { tipo: 'quimica-lixeira', x: 7, y: 11 },
+      { tipo: 'flores', x: 0, y: 12 }, { tipo: 'banco', x: 2, y: 12 }, { tipo: 'pilha-livros', x: 5, y: 12 },
+      { tipo: 'caixote', x: 9, y: 11 }, { tipo: 'barril', x: 10, y: 12 }, { tipo: 'vaso-grande', x: 12, y: 12, var: { cor: '#ff9d3d' } },
+      { tipo: 'cesto', x: 12, y: 10, var: { conteudo: 'frutas' } },
+    ]),
+    /* ---------- SALÃO DAS CURIOSIDADES: vitrines de museu, a escada (21, 12) e o Professor Carbono (24, 6) ---------- */
     sala(CUR.x, CUR.y, [
-      cur('Vitrine dos metais', 'metais', { tipo: 'estante', x: 1, y: 2 }),
-      cur('Vitrine dos cristais', 'cristais', { tipo: 'estante', x: 10, y: 2 }),
-      { tipo: 'janela', x: 3, y: 0 }, { tipo: 'janela', x: 9, y: 0 },
-    ].concat(enchimento(true))),
-    /* ---------- BIBLIOTECA DA QUÍMICA ---------- */
+      { tipo: 'janela', x: 1, y: 0 }, cur('Quadro dos fogos', 'cores', { tipo: 'quimica-fogos', x: 2, y: 0 }),
+      cur('Mapa do Brasil', 'brasil', { tipo: 'quimica-mapa-brasil', x: 9, y: 0 }), { tipo: 'janela', x: 12, y: 0 },
+      { tipo: 'vaso-planta', x: 0, y: 2 }, { tipo: 'pilha-livros', x: 1, y: 2 },
+      cur('Garrafas dos elementos', 'elementos', { tipo: 'quimica-garrafas', x: 3, y: 2 }),
+      cur('Geodo de cristais', 'cristais', { tipo: 'quimica-vitrine-museu', x: 8, y: 2, var: { tema: 'geodo', cor: '#b58cff' } }),
+      { tipo: 'pilha-livros', x: 10, y: 2 },
+      cur('Barra de ouro', 'metais', { tipo: 'quimica-vitrine-museu', x: 11, y: 2, var: { tema: 'ouro', cor: AMARELO } }),
+      { tipo: 'vaso-grande', x: 12, y: 2 },
+      // o cordão na frente das vitrines da esquerda
+      { tipo: 'tapete', x: 0, y: 4, w: 4, h: 3, var: { cor: '#ffe6ea', borda: MUSEU } },
+      cur('Diamante e grafite', 'elementos', { tipo: 'quimica-vitrine-museu', x: 0, y: 4, var: { tema: 'diamante', cor: '#5fb4ff' } }),
+      cur('Vela no pote', 'ar-fogo', { tipo: 'quimica-vitrine-museu', x: 2, y: 5, var: { tema: 'vela', cor: '#ff9d3d' } }),
+      { tipo: 'quimica-cordao', x: 1, y: 7 }, { tipo: 'quimica-cordao', x: 3, y: 7 },
+      // o cantinho do Professor Carbono, com o leite e a banana
+      { tipo: 'tapete-redondo', x: 8, y: 4, var: { cor: '#e9dcff' } },
+      cur('Leite e banana', 'corpo', { tipo: 'quimica-vitrine-museu', x: 12, y: 6, var: { tema: 'corpo', cor: S.COR2 } }),
+      { tipo: 'flores', x: 11, y: 4 }, { tipo: 'quimica-cordao', x: 10, y: 6 },
+      { tipo: 'flores', x: 8, y: 6, var: { vaso: S.COR } },
+      // embaixo: bancos para descansar e a escada
+      { tipo: 'banco', x: 0, y: 10 }, { tipo: 'vaso-planta', x: 3, y: 10 },
+      { tipo: 'tapete', x: 0, y: 11, w: 4, h: 2, var: { cor: '#fff6e4', borda: S.COR } },
+      { tipo: 'luminaria-pe', x: 4, y: 11 }, { tipo: 'vaso-grande', x: 0, y: 12 }, { tipo: 'pilha-livros', x: 3, y: 12, var: { andar: 2 } },
+      { tipo: 'tapete-listrado', x: 5, y: 12, w: 3, h: 1, var: { cores: [MUSEU, CREME, AMARELO, CREME] } },
+      { tipo: 'pedestal', x: 8, y: 10 }, { tipo: 'banco', x: 10, y: 10 }, { tipo: 'vaso-planta', x: 12, y: 10 },
+      { tipo: 'tapete', x: 8, y: 11, w: 5, h: 2, var: { cor: '#ffe6ea', borda: MUSEU } },
+      { tipo: 'flores', x: 9, y: 12 }, { tipo: 'vaso-grande', x: 12, y: 12, var: { cor: '#b58cff' } },
+    ]),
+    /* ---------- BIBLIOTECA DA QUÍMICA: a estante grande, a mesa de leitura e os retratos ---------- */
     sala(BIB.x, BIB.y, [
-      tela('estante-livros', 'Estante dos livros', 'quimica-livros', { tipo: 'estante', x: 5, y: 2 }),
-      cur('Retratos de cientistas', 'cientistas', { tipo: 'estante', x: 1, y: 2 }),
-      { tipo: 'janela', x: 0, y: 0 }, { tipo: 'janela', x: 11, y: 0 },
-    ].concat(enchimento()))
+      { tipo: 'janela', x: 1, y: 0 },
+      cur('Retratos de cientistas', 'cientistas', { tipo: 'quimica-retrato', x: 2, y: 0, var: { desenho: 'balanca' } }),
+      { tipo: 'quimica-retrato', x: 3, y: 0, var: { desenho: 'frasco' } }, { tipo: 'quimica-retrato', x: 4, y: 0, var: { desenho: 'tabela' } },
+      cur('Ciclo da água', 'agua', { tipo: 'quimica-ciclo-agua', x: 9, y: 0 }), { tipo: 'janela', x: 12, y: 0 },
+      { tipo: 'vaso-planta', x: 0, y: 2 }, { tipo: 'cesto', x: 3, y: 2 }, { tipo: 'papeis', x: 4, y: 2 },
+      tela('estante-livros', 'Estante dos livros', 'quimica-livros', { tipo: 'quimica-estante-livros', x: 5, y: 2 }),
+      { tipo: 'estante', x: 10, y: 3 }, { tipo: 'flores', x: 12, y: 2 },
+      // a mesa de leitura no tapete, com cadeiras dos dois lados
+      { tipo: 'tapete', x: 3, y: 4, w: 6, h: 3, var: { cor: '#dff4ec', borda: '#3fae8a' } },
+      { tipo: 'cadeira', x: 3, y: 5 }, { tipo: 'mesa', x: 4, y: 5, var: { toalha: '#e9dcff', itens: ['livro', 'xicara'] } },
+      { tipo: 'cadeira', x: 6, y: 5 }, { tipo: 'luminaria-pe', x: 8, y: 4 },
+      { tipo: 'poltrona', x: 0, y: 4 }, { tipo: 'mesa-centro', x: 0, y: 6 }, { tipo: 'globo', x: 12, y: 5 },
+      { tipo: 'poltrona', x: 10, y: 6 }, { tipo: 'pilha-livros', x: 11, y: 7 },
+      // o cantinho de ler do fundo
+      { tipo: 'tapete-redondo', x: 5, y: 8, var: { cor: '#fff4c8' } },
+      { tipo: 'quimica-pufe', x: 5, y: 8, var: { cor: S.COR2 } }, { tipo: 'quimica-pufe', x: 7, y: 9, var: { cor: '#6fdc8c' } },
+      { tipo: 'relogio-pe', x: 10, y: 9 }, { tipo: 'planta-alta', x: 12, y: 9 },
+      { tipo: 'vaso-planta', x: 0, y: 12 }, { tipo: 'banco', x: 1, y: 12 },
+      { tipo: 'tapete-listrado', x: 3, y: 11, w: 5, h: 1, var: { cores: ['#3fae8a', CREME, S.COR, CREME] } },
+      { tipo: 'sofa', x: 4, y: 12, var: { andar: 2 } }, { tipo: 'pilha-livros', x: 8, y: 12 }, { tipo: 'cesto', x: 9, y: 12 },
+      { tipo: 'estante', x: 10, y: 12 }, { tipo: 'vaso-grande', x: 12, y: 12 },
+    ])
   );
 
   // os personagens do andar (reservas.js; visual em personagens.js), cada um na vaga e com a ação da reserva
