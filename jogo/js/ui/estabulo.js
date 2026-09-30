@@ -20,10 +20,17 @@
     var todos = Reino.Unicornios.todos(est().corInicial);
     var ganhos = todos.filter(function (d) { return P.temUni(d.id); }).length;
     c.appendChild(el('p.estabulo-contagem', 'Sua coleção: ', el('b', ganhos + ' de ' + todos.length), ' unicórnios'));
-    var grupos = [{ titulo: 'Primeiro amigo', lista: todos.filter(function (d) { return !d.materiaId; }) }];
-    Reino.materias.forEach(function (m) { grupos.push({ titulo: m.emoji + ' ' + m.nome, lista: todos.filter(function (d) { return d.materiaId === m.id; }) }); });
+    var grupos = [{ titulo: 'Primeiro amigo', emoji: '🦄', lista: todos.filter(function (d) { return !d.materiaId; }) }];
+    Reino.materias.forEach(function (m) { grupos.push({ titulo: m.emoji + ' ' + m.nome, emoji: m.emoji, nome: m.nome, lista: todos.filter(function (d) { return d.materiaId === m.id; }) }); });
+    // atalhos: um toque rola até a matéria (a barra fica presa no topo da lista)
+    var atalhos = el('nav.estabulo-atalhos', { 'aria-label': 'Ir para a matéria' });
+    c.appendChild(atalhos);
     grupos.forEach(function (g) {
-      c.appendChild(el('h3.estabulo-grupo', g.titulo));
+      var h = el('h3.estabulo-grupo', g.titulo);
+      var a = el('button.estabulo-atalho', { type: 'button', 'aria-label': g.nome || g.titulo }, iconePequeno(g.emoji, 32));
+      a.addEventListener('click', function () { Reino.Som.tocar('toque'); h.scrollIntoView({ block: 'start' }); });
+      atalhos.appendChild(a);
+      c.appendChild(h);
       var grade = el('div.grade-unis');
       g.lista.forEach(function (d) { grade.appendChild(cartaUni(d, function () { UI.fecharTela(pn.tela); UI.telaEstabulo(); })); });
       c.appendChild(grade);
@@ -37,7 +44,8 @@
     var rar = Reino.Unicornios.RARIDADES[d.raridade];
     if (tem) {
       var pe = Reino.Unicornios.progressoEstagio(u.xp);
-      carta.appendChild(UI.spriteMontaria(d.id, 3, { semEnfeite: true }));
+      // a montaria aparece com os enfeites em uso, como no cartão do HUD (os outros não usam nada)
+      carta.appendChild(UI.spriteMontaria(d.id, 3));
       carta.appendChild(el('b.carta-nome', P.nomeUni(d.id)));
       carta.appendChild(el('span.carta-rar', rar.emoji + ' ' + rar.nome));
       carta.appendChild(el('span.carta-estagio', Reino.Unicornios.ESTAGIOS[pe.estagio].emoji + ' ' + Reino.Unicornios.ESTAGIOS[pe.estagio].nome));
@@ -76,7 +84,7 @@
     }
     var pe = Reino.Unicornios.progressoEstagio(u.xp);
     var E = Reino.Unicornios.ESTAGIOS;
-    c.appendChild(el('div.detalhe-sprite.rar-' + d.raridade, UI.spriteMontaria(d.id, 7, { semEnfeite: true })));
+    c.appendChild(el('div.detalhe-sprite.rar-' + d.raridade, UI.spriteMontaria(d.id, 7)));
     c.appendChild(el('p.detalhe-rar.rar-' + d.raridade, rar.emoji + ' ' + rar.nome));
     c.appendChild(el('p.detalhe-frase', '"' + d.frase + '"'));
     var trilha = el('ol.trilha-estagios');
