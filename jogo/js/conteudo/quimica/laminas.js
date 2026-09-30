@@ -29,6 +29,6 @@
       aumentos: { 10: 'São muitos fiozinhos brancos.', 40: 'Os fios estão enroscados.', 100: 'Cada fibra é uma fita torcida.' } },
     { id: 'neve', nome: 'Floco de neve', emoji: '❄',
       explica: ['O floco de neve é gelo.', 'É um cristal de água.', 'Os flocos têm seis pontas.'],
-      aumentos: { 10: 'Parece uma estrelinha branca.', 40: 'Olha as seis pontas dela!', 100: 'Cada ponta tem galhinhos.' } },
+      aumentos: { 10: 'Parece uma estrelinha branca.', 40: 'Olha as seis pontas dela!', 100: 'Cada ponta tem raminhos.' } },
   ];
 })();

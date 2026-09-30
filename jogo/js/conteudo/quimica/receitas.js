@@ -65,7 +65,7 @@
       ingredientes: ['agua', 'detergente'], efeito: 'bolhas', cor: '#bfe9ff', cor2: '#ff9ee0',
       acontece: 'As bolhas saíram voando!',
       explica: ['O sabão deixa a água elástica.', 'Ela vira uma película fina.', 'A película prende o ar.',
-        'Bolha é ar embrulhado em água.'],
+        'Dentro da bolha tem ar.'],
       dica: 'Duas coisas de lavar louça.' },
   ];
 })();

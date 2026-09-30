@@ -493,6 +493,11 @@
    "velocidade": "+4%",
    "tom": "+18Hz"
   },
+  "npc-quimica-proveta": {
+   "voz": "pt-BR-FranciscaNeural",
+   "velocidade": "+10%",
+   "tom": "-34Hz"
+  },
   "npc-salao-lulu": {
    "voz": "en-US-AvaMultilingualNeural",
    "velocidade": "+12%",
@@ -33627,6 +33632,510 @@
    "fala": "O éle no fim soa como u."
   },
   {
+   "chave": "261703d61b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Olá, sou a Doutora Proveta!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Olá, sou a Doutora Proveta!"
+  },
+  {
+   "chave": "fb4da95419",
+   "voz": "npc-quimica-proveta",
+   "texto": "Bem-vinda ao laboratório!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Bem-vinda ao laboratório!"
+  },
+  {
+   "chave": "8a8637b619",
+   "voz": "npc-quimica-proveta",
+   "texto": "Bem-vindo ao laboratório!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Bem-vindo ao laboratório!"
+  },
+  {
+   "chave": "42b1e24a1c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Aqui usamos óculos e jaleco.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Aqui usamos óculos e jaleco."
+  },
+  {
+   "chave": "06a2258b16",
+   "voz": "npc-quimica-proveta",
+   "texto": "Vamos misturar poções?",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Vamos misturar poções?"
+  },
+  {
+   "chave": "ed6054021b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Já espiou pelo microscópio?",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Já espiou pelo microscópio?"
+  },
+  {
+   "chave": "304f13fd18",
+   "voz": "npc-quimica-proveta",
+   "texto": "Olhe a tabela periódica!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Olhe a tabela periódica!"
+  },
+  {
+   "chave": "8d1451d11d",
+   "voz": "npc-quimica-proveta",
+   "texto": "O caderno guarda as receitas.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O caderno guarda as receitas."
+  },
+  {
+   "chave": "5765db3b1e",
+   "voz": "npc-quimica-proveta",
+   "texto": "Na vida real, chame um adulto!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Na vida real, chame um adulto!"
+  },
+  {
+   "chave": "afcdaedd13",
+   "voz": "narradora",
+   "texto": "Aqui diz: segurança primeiro!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Aqui diz: segurança primeiro!"
+  },
+  {
+   "chave": "ff95521f11",
+   "voz": "narradora",
+   "texto": "Sempre com um adulto junto.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Sempre com um adulto junto."
+  },
+  {
+   "chave": "2fdcbc4b10",
+   "voz": "narradora",
+   "texto": "São fórmulas de moléculas.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "São fórmulas de moléculas."
+  },
+  {
+   "chave": "0c34e3e512",
+   "voz": "narradora",
+   "texto": "A água tem dois hidrogênios.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A água tem dois hidrogênios."
+  },
+  {
+   "chave": "4c268f4ev",
+   "voz": "narradora",
+   "texto": "E também um oxigênio!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "E também um oxigênio!"
+  },
+  {
+   "chave": "168463d0x",
+   "voz": "narradora",
+   "texto": "É a capela de exaustão.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "É a capela de exaustão."
+  },
+  {
+   "chave": "b5941d82z",
+   "voz": "narradora",
+   "texto": "Ela leva o cheiro embora.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ela leva o cheiro embora."
+  },
+  {
+   "chave": "3bf8a176x",
+   "voz": "narradora",
+   "texto": "Lixeiras de reciclagem!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Lixeiras de reciclagem!"
+  },
+  {
+   "chave": "73edf30dy",
+   "voz": "narradora",
+   "texto": "Papel, plástico e vidro.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Papel, plástico e vidro."
+  },
+  {
+   "chave": "df9b144911",
+   "voz": "narradora",
+   "texto": "Balões e provetas de vidro.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Balões e provetas de vidro."
+  },
+  {
+   "chave": "83a2e1d011",
+   "voz": "narradora",
+   "texto": "A proveta mede os líquidos.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A proveta mede os líquidos."
+  },
+  {
+   "chave": "c33cfdb310",
+   "voz": "narradora",
+   "texto": "Frascos de todas as cores!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Frascos de todas as cores!"
+  },
+  {
+   "chave": "aab8d2ffz",
+   "voz": "narradora",
+   "texto": "Cada um tem uma etiqueta.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Cada um tem uma etiqueta."
+  },
+  {
+   "chave": "52893ed2y",
+   "voz": "narradora",
+   "texto": "O chuveiro de segurança!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O chuveiro de segurança!"
+  },
+  {
+   "chave": "b34a1f53z",
+   "voz": "narradora",
+   "texto": "E o lava-olhos, bem aqui.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "E o lava-olhos, bem aqui."
+  },
+  {
+   "chave": "14caccad12",
+   "voz": "narradora",
+   "texto": "Jaleco e óculos de proteção.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Jaleco e óculos de proteção."
+  },
+  {
+   "chave": "82cfc65c12",
+   "voz": "narradora",
+   "texto": "Cientista se protege sempre!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Cientista se protege sempre!"
+  },
+  {
+   "chave": "3f997c4613",
+   "voz": "narradora",
+   "texto": "Um extintor para emergências.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um extintor para emergências."
+  },
+  {
+   "chave": "bbe69c8dz",
+   "voz": "narradora",
+   "texto": "Tomara que nunca precise!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Tomara que nunca precise!"
+  },
+  {
+   "chave": "73ac30fdy",
+   "voz": "narradora",
+   "texto": "Hora de misturar poções!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Hora de misturar poções!"
+  },
+  {
+   "chave": "7fbe159aw",
+   "voz": "narradora",
+   "texto": "O caderno de receitas!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O caderno de receitas!"
+  },
+  {
+   "chave": "dc883f5510",
+   "voz": "narradora",
+   "texto": "Cada descoberta fica aqui.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Cada descoberta fica aqui."
+  },
+  {
+   "chave": "e0b0c741v",
+   "voz": "narradora",
+   "texto": "A pia do laboratório.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A pia do laboratório."
+  },
+  {
+   "chave": "414fadb611",
+   "voz": "narradora",
+   "texto": "Lavar as mãos é importante!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Lavar as mãos é importante!"
+  },
+  {
+   "chave": "72eb2424t",
+   "voz": "narradora",
+   "texto": "A célula da cebola!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A célula da cebola!"
+  },
+  {
+   "chave": "c9efe04613",
+   "voz": "narradora",
+   "texto": "Parece uma parede de tijolos.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Parece uma parede de tijolos."
+  },
+  {
+   "chave": "fb30710610",
+   "voz": "narradora",
+   "texto": "Um floco de neve de perto.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um floco de neve de perto."
+  },
+  {
+   "chave": "b5c8fc31u",
+   "voz": "narradora",
+   "texto": "Ele tem seis pontas!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele tem seis pontas!"
+  },
+  {
+   "chave": "9b87fd7av",
+   "voz": "narradora",
+   "texto": "Uma caixa de lâminas!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Uma caixa de lâminas!"
+  },
+  {
+   "chave": "bfbad51cx",
+   "voz": "narradora",
+   "texto": "Tem sal, folha e areia.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Tem sal, folha e areia."
+  },
+  {
+   "chave": "19168c09w",
+   "voz": "narradora",
+   "texto": "Olha quantos cristais!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Olha quantos cristais!"
+  },
+  {
+   "chave": "c9267d2d10",
+   "voz": "narradora",
+   "texto": "O sal também é um cristal.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O sal também é um cristal."
+  },
+  {
+   "chave": "afd16b4ay",
+   "voz": "narradora",
+   "texto": "Lupas deixam tudo maior.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Lupas deixam tudo maior."
+  },
+  {
+   "chave": "e3f9736c10",
+   "voz": "narradora",
+   "texto": "O microscópio, muito mais!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O microscópio, muito mais!"
+  },
+  {
+   "chave": "24b3afcdz",
+   "voz": "narradora",
+   "texto": "Cebolas brotando na água!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Cebolas brotando na água!"
+  },
+  {
+   "chave": "e6a9cd9cy",
+   "voz": "narradora",
+   "texto": "A casquinha vira lâmina.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A casquinha vira lâmina."
+  },
+  {
+   "chave": "35ebaad610",
+   "voz": "narradora",
+   "texto": "Um microscópio bem grande!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um microscópio bem grande!"
+  },
+  {
+   "chave": "7a93a4bcx",
+   "voz": "narradora",
+   "texto": "Vamos olhar as lâminas?",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Vamos olhar as lâminas?"
+  },
+  {
+   "chave": "d34e3648t",
+   "voz": "narradora",
+   "texto": "A tabela periódica!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A tabela periódica!"
+  },
+  {
+   "chave": "227fa52b11",
+   "voz": "narradora",
+   "texto": "Cada casinha é um elemento.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Cada casinha é um elemento."
+  },
+  {
+   "chave": "d6eb518bw",
+   "voz": "narradora",
+   "texto": "Sólido, líquido e gás!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Sólido, líquido e gás!"
+  },
+  {
+   "chave": "7d895de310",
+   "voz": "narradora",
+   "texto": "São os estados da matéria.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "São os estados da matéria."
+  },
+  {
+   "chave": "839e453at",
+   "voz": "narradora",
+   "texto": "A molécula da água!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A molécula da água!"
+  },
+  {
+   "chave": "b7b37960v",
+   "voz": "narradora",
+   "texto": "Tem dois hidrogênios.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Tem dois hidrogênios."
+  },
+  {
+   "chave": "c810640dw",
+   "voz": "narradora",
+   "texto": "E um oxigênio no meio!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "E um oxigênio no meio!"
+  },
+  {
+   "chave": "41db6927t",
+   "voz": "narradora",
+   "texto": "Um modelo de átomo!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um modelo de átomo!"
+  },
+  {
+   "chave": "e81ecfb311",
+   "voz": "narradora",
+   "texto": "Os elétrons giram em volta.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Os elétrons giram em volta."
+  },
+  {
    "chave": "5ca132d312",
    "voz": "npc-salao-lulu",
    "texto": "Oi, eu sou a Dona Lulu!",
@@ -42625,6 +43134,2508 @@
     "interior-observatorio"
    ],
    "fala": "Obrigado de novo, amigo!"
+  },
+  {
+   "chave": "1219f4161a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Oi! Vamos misturar poções?",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Oi! Vamos misturar poções?"
+  },
+  {
+   "chave": "7a49d24419",
+   "voz": "npc-quimica-proveta",
+   "texto": "Toque num tubo de ensaio.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Toque num tubo de ensaio."
+  },
+  {
+   "chave": "500b35241a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Depois, toque em Misturar!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Depois, toque em Misturar!"
+  },
+  {
+   "chave": "4b79937617",
+   "voz": "npc-quimica-proveta",
+   "texto": "O béquer já está cheio!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O béquer já está cheio!"
+  },
+  {
+   "chave": "8c775a6214",
+   "voz": "npc-quimica-proveta",
+   "texto": "Cabem só três tubos.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Cabem só três tubos."
+  },
+  {
+   "chave": "dc8dd1d114",
+   "voz": "npc-quimica-proveta",
+   "texto": "O béquer está vazio.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O béquer está vazio."
+  },
+  {
+   "chave": "1cc7136119",
+   "voz": "npc-quimica-proveta",
+   "texto": "Escolha um tubo primeiro!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Escolha um tubo primeiro!"
+  },
+  {
+   "chave": "021fa7f717",
+   "voz": "npc-quimica-proveta",
+   "texto": "Olha, nada de especial.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Olha, nada de especial."
+  },
+  {
+   "chave": "3500b60f18",
+   "voz": "npc-quimica-proveta",
+   "texto": "Cientista testa de tudo!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Cientista testa de tudo!"
+  },
+  {
+   "chave": "6b70a74f1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Vamos tentar outra mistura?",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Vamos tentar outra mistura?"
+  },
+  {
+   "chave": "3efcf5981c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Quase! Falta um ingrediente.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Quase! Falta um ingrediente."
+  },
+  {
+   "chave": "46e5d2f21d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Quase! Sobrou um ingrediente.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Quase! Sobrou um ingrediente."
+  },
+  {
+   "chave": "2650c35b18",
+   "voz": "npc-quimica-proveta",
+   "texto": "Esvazie e tente de novo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Esvazie e tente de novo."
+  },
+  {
+   "chave": "72209efb1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "A receita está no caderno!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A receita está no caderno!"
+  },
+  {
+   "chave": "e845d4e318",
+   "voz": "npc-quimica-proveta",
+   "texto": "Receita nova no caderno!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Receita nova no caderno!"
+  },
+  {
+   "chave": "42f216331a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Você ganhou duas estrelas!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Você ganhou duas estrelas!"
+  },
+  {
+   "chave": "49c307f218",
+   "voz": "npc-quimica-proveta",
+   "texto": "O caderno está completo!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O caderno está completo!"
+  },
+  {
+   "chave": "ff4f2d1d1c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Mais dez estrelas para você!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Mais dez estrelas para você!"
+  },
+  {
+   "chave": "8063b08d15",
+   "voz": "npc-quimica-proveta",
+   "texto": "Essa você já conhece!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Essa você já conhece!"
+  },
+  {
+   "chave": "f8960dfc1d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Este é o caderno de receitas.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Este é o caderno de receitas."
+  },
+  {
+   "chave": "0e34b54c1c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Cada mistura nova fica aqui!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Cada mistura nova fica aqui!"
+  },
+  {
+   "chave": "d17bae4b1e",
+   "voz": "npc-quimica-proveta",
+   "texto": "Misture na bancada e descubra!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Misture na bancada e descubra!"
+  },
+  {
+   "chave": "fd6ec9a019",
+   "voz": "npc-quimica-proveta",
+   "texto": "Você completou o caderno!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Você completou o caderno!"
+  },
+  {
+   "chave": "f4d26ffb1e",
+   "voz": "npc-quimica-proveta",
+   "texto": "Que cientista incrível você é!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Que cientista incrível você é!"
+  },
+  {
+   "chave": "69f7eb0f1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Vamos espiar o bem pequeno?",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Vamos espiar o bem pequeno?"
+  },
+  {
+   "chave": "e0514baf13",
+   "voz": "npc-quimica-proveta",
+   "texto": "Escolha uma lâmina.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Escolha uma lâmina."
+  },
+  {
+   "chave": "a3d3216f18",
+   "voz": "npc-quimica-proveta",
+   "texto": "Gire o foco bem devagar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Gire o foco bem devagar."
+  },
+  {
+   "chave": "799d1e0019",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ficou nítida, sem borrão!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ficou nítida, sem borrão!"
+  },
+  {
+   "chave": "4627fe8a16",
+   "voz": "npc-quimica-proveta",
+   "texto": "Você ganhou 1 estrela!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Você ganhou 1 estrela!"
+  },
+  {
+   "chave": "73ea9f2a1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Você viu todas as lâminas!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Você viu todas as lâminas!"
+  },
+  {
+   "chave": "e3afb1011c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Oi! Aqui moram os elementos.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Oi! Aqui moram os elementos."
+  },
+  {
+   "chave": "00fd71bb1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Toque num cartão para ver.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Toque num cartão para ver."
+  },
+  {
+   "chave": "a308455b16",
+   "voz": "npc-quimica-proveta",
+   "texto": "Muito bem, lição lida!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Muito bem, lição lida!"
+  },
+  {
+   "chave": "a26d366018",
+   "voz": "npc-quimica-proveta",
+   "texto": "Você ganhou uma estrela!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Você ganhou uma estrela!"
+  },
+  {
+   "chave": "0e85438d19",
+   "voz": "npc-quimica-proveta",
+   "texto": "Você leu todas as lições!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Você leu todas as lições!"
+  },
+  {
+   "chave": "06652ec217",
+   "voz": "npc-quimica-proveta",
+   "texto": "Que cientista incrível!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Que cientista incrível!"
+  },
+  {
+   "chave": "cea2c0fe15",
+   "voz": "npc-quimica-proveta",
+   "texto": "O vinagre é um ácido.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O vinagre é um ácido."
+  },
+  {
+   "chave": "972c4a6a19",
+   "voz": "npc-quimica-proveta",
+   "texto": "O bicarbonato é uma base.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O bicarbonato é uma base."
+  },
+  {
+   "chave": "5a8a1aae1d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Água, a mais famosa de todas.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Água, a mais famosa de todas."
+  },
+  {
+   "chave": "515b054618",
+   "voz": "npc-quimica-proveta",
+   "texto": "O detergente faz espuma.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O detergente faz espuma."
+  },
+  {
+   "chave": "2a83875315",
+   "voz": "npc-quimica-proveta",
+   "texto": "Suco de repolho roxo!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Suco de repolho roxo!"
+  },
+  {
+   "chave": "c273bfa814",
+   "voz": "npc-quimica-proveta",
+   "texto": "O limão é bem ácido.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O limão é bem ácido."
+  },
+  {
+   "chave": "266a5e001b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Sal de cozinha, branquinho.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Sal de cozinha, branquinho."
+  },
+  {
+   "chave": "feb4d6331e",
+   "voz": "npc-quimica-proveta",
+   "texto": "O óleo é mais leve que a água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O óleo é mais leve que a água."
+  },
+  {
+   "chave": "15202aa818",
+   "voz": "npc-quimica-proveta",
+   "texto": "Corante azul pinta tudo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Corante azul pinta tudo."
+  },
+  {
+   "chave": "e6f7ad6f16",
+   "voz": "npc-quimica-proveta",
+   "texto": "Fermento de fazer pão.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Fermento de fazer pão."
+  },
+  {
+   "chave": "ac631d571c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Água oxigenada, com cuidado!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Água oxigenada, com cuidado!"
+  },
+  {
+   "chave": "185c86a11b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Leite, cheio de gordurinha.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Leite, cheio de gordurinha."
+  },
+  {
+   "chave": "2a0186d31b",
+   "voz": "npc-quimica-proveta",
+   "texto": "POF! Saiu espuma e confete!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "pof! Saiu espuma e confete!"
+  },
+  {
+   "chave": "ed20639a1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Juntos, eles fazem um gás.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Juntos, eles fazem um gás."
+  },
+  {
+   "chave": "e25d144719",
+   "voz": "npc-quimica-proveta",
+   "texto": "É o gás carbônico, sabia?",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "É o gás carbônico, sabia?"
+  },
+  {
+   "chave": "6401dc7a18",
+   "voz": "npc-quimica-proveta",
+   "texto": "O gás empurra tudo: POF!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O gás empurra tudo: pof!"
+  },
+  {
+   "chave": "bee76c191c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Um ácido e um pó branquinho.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um ácido e um pó branquinho."
+  },
+  {
+   "chave": "d3b5d77919",
+   "voz": "npc-quimica-proveta",
+   "texto": "A espuma subiu como lava!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A espuma subiu como lava!"
+  },
+  {
+   "chave": "70fa51ae19",
+   "voz": "npc-quimica-proveta",
+   "texto": "É de novo ácido com base.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "É de novo ácido com base."
+  },
+  {
+   "chave": "0cd259df1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Eles soltam gás carbônico.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Eles soltam gás carbônico."
+  },
+  {
+   "chave": "c6e7a5b61a",
+   "voz": "npc-quimica-proveta",
+   "texto": "O detergente prende o gás.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O detergente prende o gás."
+  },
+  {
+   "chave": "2bd3eaaf1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Viram milhões de bolhinhas.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Viram milhões de bolhinhas."
+  },
+  {
+   "chave": "d40995431a",
+   "voz": "npc-quimica-proveta",
+   "texto": "A espuma transborda: lava!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A espuma transborda: lava!"
+  },
+  {
+   "chave": "4127385a1d",
+   "voz": "npc-quimica-proveta",
+   "texto": "O POF com o que lava a louça.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O pof com o que lava a louça."
+  },
+  {
+   "chave": "e1c09d8812",
+   "voz": "npc-quimica-proveta",
+   "texto": "O roxo virou rosa!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O roxo virou rosa!"
+  },
+  {
+   "chave": "69b162711e",
+   "voz": "npc-quimica-proveta",
+   "texto": "O suco de repolho é indicador.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O suco de repolho é indicador."
+  },
+  {
+   "chave": "0d38cb621c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ele muda de cor com o ácido.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele muda de cor com o ácido."
+  },
+  {
+   "chave": "10fee65b1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "O limão é ácido e azedinho.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O limão é ácido e azedinho."
+  },
+  {
+   "chave": "75a91c281b",
+   "voz": "npc-quimica-proveta",
+   "texto": "No ácido, o roxo vira rosa!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "No ácido, o roxo vira rosa!"
+  },
+  {
+   "chave": "3d849ba01c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Roxo com uma fruta azedinha.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Roxo com uma fruta azedinha."
+  },
+  {
+   "chave": "0d1376811b",
+   "voz": "npc-quimica-proveta",
+   "texto": "O roxo ficou verde-azulado!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O roxo ficou verde-azulado!"
+  },
+  {
+   "chave": "32d81bea1e",
+   "voz": "npc-quimica-proveta",
+   "texto": "O repolho é indicador, lembra?",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O repolho é indicador, lembra?"
+  },
+  {
+   "chave": "760174ad1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "E o bicarbonato é uma base.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "E o bicarbonato é uma base."
+  },
+  {
+   "chave": "83ced6eb1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "A base é o oposto do ácido.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A base é o oposto do ácido."
+  },
+  {
+   "chave": "413a2fe11b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Na base, o roxo vira verde.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Na base, o roxo vira verde."
+  },
+  {
+   "chave": "a9d098bf15",
+   "voz": "npc-quimica-proveta",
+   "texto": "Roxo com o pó do POF.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Roxo com o pó do pof."
+  },
+  {
+   "chave": "f2e11cea1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Subiu uma torre de espuma!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Subiu uma torre de espuma!"
+  },
+  {
+   "chave": "c8f829311b",
+   "voz": "npc-quimica-proveta",
+   "texto": "A água oxigenada se quebra.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A água oxigenada se quebra."
+  },
+  {
+   "chave": "c5eb590519",
+   "voz": "npc-quimica-proveta",
+   "texto": "Vira água e gás oxigênio.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Vira água e gás oxigênio."
+  },
+  {
+   "chave": "df136bd21c",
+   "voz": "npc-quimica-proveta",
+   "texto": "O fermento acelera a reação.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O fermento acelera a reação."
+  },
+  {
+   "chave": "26ac39de1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "O detergente faz as bolhas.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O detergente faz as bolhas."
+  },
+  {
+   "chave": "493073fc1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "A espuma sai até quentinha.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A espuma sai até quentinha."
+  },
+  {
+   "chave": "5b5d7cc31b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Dá espuma para um elefante!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Dá espuma para um elefante!"
+  },
+  {
+   "chave": "b9a22f171a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Farmácia, padaria e sabão.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Farmácia, padaria e sabão."
+  },
+  {
+   "chave": "c3d77fc21b",
+   "voz": "npc-quimica-proveta",
+   "texto": "O sal sumiu dentro da água!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O sal sumiu dentro da água!"
+  },
+  {
+   "chave": "e4a2df1a1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "O sal não sumiu de verdade.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O sal não sumiu de verdade."
+  },
+  {
+   "chave": "6d2fabcd19",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ele se dissolveu na água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele se dissolveu na água."
+  },
+  {
+   "chave": "98fd94f21c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Virou pedacinhos minúsculos.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Virou pedacinhos minúsculos."
+  },
+  {
+   "chave": "840e82cd1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Isso é mistura, não reação.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Isso é mistura, não reação."
+  },
+  {
+   "chave": "469bb2f219",
+   "voz": "npc-quimica-proveta",
+   "texto": "Por isso o mar é salgado.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Por isso o mar é salgado."
+  },
+  {
+   "chave": "ff8ddc481a",
+   "voz": "npc-quimica-proveta",
+   "texto": "O que deixa o mar salgado?",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O que deixa o mar salgado?"
+  },
+  {
+   "chave": "5620d3131d",
+   "voz": "npc-quimica-proveta",
+   "texto": "O óleo ficou boiando em cima!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O óleo ficou boiando em cima!"
+  },
+  {
+   "chave": "70023a101c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Água e óleo não se misturam.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Água e óleo não se misturam."
+  },
+  {
+   "chave": "f50a274015",
+   "voz": "npc-quimica-proveta",
+   "texto": "O óleo é menos denso.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O óleo é menos denso."
+  },
+  {
+   "chave": "833868ad17",
+   "voz": "npc-quimica-proveta",
+   "texto": "Denso é mais pesadinho.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Denso é mais pesadinho."
+  },
+  {
+   "chave": "4113eeb91c",
+   "voz": "npc-quimica-proveta",
+   "texto": "No mesmo tamanho, pesa mais.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "No mesmo tamanho, pesa mais."
+  },
+  {
+   "chave": "70657b931d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Por isso o óleo boia na água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Por isso o óleo boia na água."
+  },
+  {
+   "chave": "673858811c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Da torneira e da frigideira.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Da torneira e da frigideira."
+  },
+  {
+   "chave": "9e2962561d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Gotas azuis desceram na água!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Gotas azuis desceram na água!"
+  },
+  {
+   "chave": "7b6ba7a618",
+   "voz": "npc-quimica-proveta",
+   "texto": "O corante gosta de água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O corante gosta de água."
+  },
+  {
+   "chave": "7505c62d1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ele não se mistura no óleo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele não se mistura no óleo."
+  },
+  {
+   "chave": "d7fb14e51d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Vira gotinhas dentro do óleo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Vira gotinhas dentro do óleo."
+  },
+  {
+   "chave": "282603f41b",
+   "voz": "npc-quimica-proveta",
+   "texto": "As gotas descem até a água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "As gotas descem até a água."
+  },
+  {
+   "chave": "ff1302601d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Lá embaixo, a cor se espalha!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Lá embaixo, a cor se espalha!"
+  },
+  {
+   "chave": "5219ab2d1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Camadas teimosas e uma cor.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Camadas teimosas e uma cor."
+  },
+  {
+   "chave": "23745fa31c",
+   "voz": "npc-quimica-proveta",
+   "texto": "As cores fugiram rodopiando!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "As cores fugiram rodopiando!"
+  },
+  {
+   "chave": "a730fb5c1d",
+   "voz": "npc-quimica-proveta",
+   "texto": "O leite tem uma pele fininha.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O leite tem uma pele fininha."
+  },
+  {
+   "chave": "07b0a90317",
+   "voz": "npc-quimica-proveta",
+   "texto": "É a tensão superficial.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "É a tensão superficial."
+  },
+  {
+   "chave": "8bc77f831b",
+   "voz": "npc-quimica-proveta",
+   "texto": "O detergente quebra a pele.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O detergente quebra a pele."
+  },
+  {
+   "chave": "c79d5e2c19",
+   "voz": "npc-quimica-proveta",
+   "texto": "E corre atrás da gordura.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "E corre atrás da gordura."
+  },
+  {
+   "chave": "1b78b3091b",
+   "voz": "npc-quimica-proveta",
+   "texto": "As cores dançam no caminho!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "As cores dançam no caminho!"
+  },
+  {
+   "chave": "b93c533c1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Café da manhã, cor e sabão.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Café da manhã, cor e sabão."
+  },
+  {
+   "chave": "db1af84218",
+   "voz": "npc-quimica-proveta",
+   "texto": "As bolhas saíram voando!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "As bolhas saíram voando!"
+  },
+  {
+   "chave": "dfca80d51e",
+   "voz": "npc-quimica-proveta",
+   "texto": "O sabão deixa a água elástica.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O sabão deixa a água elástica."
+  },
+  {
+   "chave": "72c25c601b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ela vira uma película fina.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ela vira uma película fina."
+  },
+  {
+   "chave": "606b296017",
+   "voz": "npc-quimica-proveta",
+   "texto": "A película prende o ar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A película prende o ar."
+  },
+  {
+   "chave": "389dd45017",
+   "voz": "npc-quimica-proveta",
+   "texto": "Dentro da bolha tem ar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Dentro da bolha tem ar."
+  },
+  {
+   "chave": "f1e597ea1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Duas coisas de lavar louça.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Duas coisas de lavar louça."
+  },
+  {
+   "chave": "0b575e0c1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "O sal é feito de cristais.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O sal é feito de cristais."
+  },
+  {
+   "chave": "da364a821c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Os átomos ficam em fileiras.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Os átomos ficam em fileiras."
+  },
+  {
+   "chave": "157376d01d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Por isso o cristal é um cubo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Por isso o cristal é um cubo."
+  },
+  {
+   "chave": "36e325891b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Parecem grãozinhos brancos.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Parecem grãozinhos brancos."
+  },
+  {
+   "chave": "9de7467718",
+   "voz": "npc-quimica-proveta",
+   "texto": "Olha os cubinhos de sal!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Olha os cubinhos de sal!"
+  },
+  {
+   "chave": "c447a0b41d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Os cubos têm bordas retinhas.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Os cubos têm bordas retinhas."
+  },
+  {
+   "chave": "32119fbe1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "O açúcar também é cristal.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O açúcar também é cristal."
+  },
+  {
+   "chave": "532b6ea41d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Mas não é um cubo como o sal.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Mas não é um cubo como o sal."
+  },
+  {
+   "chave": "d0095a831e",
+   "voz": "npc-quimica-proveta",
+   "texto": "Parece um tijolinho inclinado.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Parece um tijolinho inclinado."
+  },
+  {
+   "chave": "6fd3b97f1d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Os grãozinhos brilham na luz.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Os grãozinhos brilham na luz."
+  },
+  {
+   "chave": "3be8dff71e",
+   "voz": "npc-quimica-proveta",
+   "texto": "Os cristais são transparentes.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Os cristais são transparentes."
+  },
+  {
+   "chave": "2893d6f519",
+   "voz": "npc-quimica-proveta",
+   "texto": "Os cantos são inclinados.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Os cantos são inclinados."
+  },
+  {
+   "chave": "4eb4eff71b",
+   "voz": "npc-quimica-proveta",
+   "texto": "A folha é feita de células.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A folha é feita de células."
+  },
+  {
+   "chave": "65e3749f1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Elas têm grãozinhos verdes.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Elas têm grãozinhos verdes."
+  },
+  {
+   "chave": "700af7ad1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "São os cloroplastos, sabia?",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "São os cloroplastos, sabia?"
+  },
+  {
+   "chave": "2bd87a381b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Com luz, eles fazem açúcar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Com luz, eles fazem açúcar."
+  },
+  {
+   "chave": "51a01ac41a",
+   "voz": "npc-quimica-proveta",
+   "texto": "As veias parecem estradas.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "As veias parecem estradas."
+  },
+  {
+   "chave": "886ee99f1d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Olha as celulinhas juntinhas!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Olha as celulinhas juntinhas!"
+  },
+  {
+   "chave": "a7e3c75d1d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Tem grãos verdes e boquinhas!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Tem grãos verdes e boquinhas!"
+  },
+  {
+   "chave": "c28382981b",
+   "voz": "npc-quimica-proveta",
+   "texto": "É a pele fininha da cebola.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "É a pele fininha da cebola."
+  },
+  {
+   "chave": "a707b8c617",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ela é feita de células.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ela é feita de células."
+  },
+  {
+   "chave": "c54f848c1d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Parecem tijolinhos de parede.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Parecem tijolinhos de parede."
+  },
+  {
+   "chave": "4295953a1d",
+   "voz": "npc-quimica-proveta",
+   "texto": "A pele é fina e transparente.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A pele é fina e transparente."
+  },
+  {
+   "chave": "8d4d1db71b",
+   "voz": "npc-quimica-proveta",
+   "texto": "São fileiras de tijolinhos!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "São fileiras de tijolinhos!"
+  },
+  {
+   "chave": "02e18ee21a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Cada célula tem um núcleo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Cada célula tem um núcleo."
+  },
+  {
+   "chave": "c792cbd11a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Pólen é o pozinho da flor.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Pólen é o pozinho da flor."
+  },
+  {
+   "chave": "8f6d4ae71e",
+   "voz": "npc-quimica-proveta",
+   "texto": "Abelhas e vento levam o pólen.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Abelhas e vento levam o pólen."
+  },
+  {
+   "chave": "e03679b51c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Assim nascem sementes novas.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Assim nascem sementes novas."
+  },
+  {
+   "chave": "bc8dcb611d",
+   "voz": "npc-quimica-proveta",
+   "texto": "O pozinho amarelo se espalha.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O pozinho amarelo se espalha."
+  },
+  {
+   "chave": "75eea3451a",
+   "voz": "npc-quimica-proveta",
+   "texto": "São muitas bolinhas, olha!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "São muitas bolinhas, olha!"
+  },
+  {
+   "chave": "fcebc8541a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Cada bolinha tem espinhos!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Cada bolinha tem espinhos!"
+  },
+  {
+   "chave": "f7d555741c",
+   "voz": "npc-quimica-proveta",
+   "texto": "A areia é pedra quebradinha.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A areia é pedra quebradinha."
+  },
+  {
+   "chave": "0f8fc2331e",
+   "voz": "npc-quimica-proveta",
+   "texto": "Rios e ondas gastam as pedras.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Rios e ondas gastam as pedras."
+  },
+  {
+   "chave": "772db75418",
+   "voz": "npc-quimica-proveta",
+   "texto": "A maior parte é quartzo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A maior parte é quartzo."
+  },
+  {
+   "chave": "06b5a36d1e",
+   "voz": "npc-quimica-proveta",
+   "texto": "São pedrinhas de muitas cores.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "São pedrinhas de muitas cores."
+  },
+  {
+   "chave": "15a8f33518",
+   "voz": "npc-quimica-proveta",
+   "texto": "Tem redondas e pontudas.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Tem redondas e pontudas."
+  },
+  {
+   "chave": "779127a71b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Algumas brilham como vidro.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Algumas brilham como vidro."
+  },
+  {
+   "chave": "7051f2901c",
+   "voz": "npc-quimica-proveta",
+   "texto": "O algodão vem de uma planta.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O algodão vem de uma planta."
+  },
+  {
+   "chave": "be314cee16",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ele é feito de fibras.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele é feito de fibras."
+  },
+  {
+   "chave": "12915db21d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Fibra é um fiozinho comprido.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Fibra é um fiozinho comprido."
+  },
+  {
+   "chave": "977bbe671d",
+   "voz": "npc-quimica-proveta",
+   "texto": "São muitos fiozinhos brancos.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "São muitos fiozinhos brancos."
+  },
+  {
+   "chave": "0d6eb83819",
+   "voz": "npc-quimica-proveta",
+   "texto": "Os fios estão enroscados.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Os fios estão enroscados."
+  },
+  {
+   "chave": "69860c391e",
+   "voz": "npc-quimica-proveta",
+   "texto": "Cada fibra é uma fita torcida.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Cada fibra é uma fita torcida."
+  },
+  {
+   "chave": "9fa601c517",
+   "voz": "npc-quimica-proveta",
+   "texto": "O floco de neve é gelo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O floco de neve é gelo."
+  },
+  {
+   "chave": "9d6d585215",
+   "voz": "npc-quimica-proveta",
+   "texto": "É um cristal de água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "É um cristal de água."
+  },
+  {
+   "chave": "e3f7e15e1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Os flocos têm seis pontas.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Os flocos têm seis pontas."
+  },
+  {
+   "chave": "6ff2eae31d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Parece uma estrelinha branca.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Parece uma estrelinha branca."
+  },
+  {
+   "chave": "09f62be619",
+   "voz": "npc-quimica-proveta",
+   "texto": "Olha as seis pontas dela!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Olha as seis pontas dela!"
+  },
+  {
+   "chave": "41390f7a18",
+   "voz": "npc-quimica-proveta",
+   "texto": "Cada ponta tem raminhos.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Cada ponta tem raminhos."
+  },
+  {
+   "chave": "a444b42a17",
+   "voz": "npc-quimica-proveta",
+   "texto": "Tudo é feito de átomos.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Tudo é feito de átomos."
+  },
+  {
+   "chave": "574937ea19",
+   "voz": "npc-quimica-proveta",
+   "texto": "Você e a flor também são.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Você e a flor também são."
+  },
+  {
+   "chave": "277d846817",
+   "voz": "npc-quimica-proveta",
+   "texto": "O átomo é pequenininho!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O átomo é pequenininho!"
+  },
+  {
+   "chave": "a2c6db261b",
+   "voz": "npc-quimica-proveta",
+   "texto": "No meio dele fica o núcleo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "No meio dele fica o núcleo."
+  },
+  {
+   "chave": "986104cc1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Lá tem prótons e nêutrons.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Lá tem prótons e nêutrons."
+  },
+  {
+   "chave": "c629c2c21c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Em volta, giram os elétrons.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Em volta, giram os elétrons."
+  },
+  {
+   "chave": "000a6bea1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "São os tijolinhos de tudo!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "São os tijolinhos de tudo!"
+  },
+  {
+   "chave": "166ae8311c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Elemento é um tipo de átomo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Elemento é um tipo de átomo."
+  },
+  {
+   "chave": "96f8b63a1c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Seu número conta os prótons.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Seu número conta os prótons."
+  },
+  {
+   "chave": "8b7278ed16",
+   "voz": "npc-quimica-proveta",
+   "texto": "O ouro tem 79 prótons.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O ouro tem 79 prótons."
+  },
+  {
+   "chave": "385ccfc51c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Já conhecemos 118 elementos.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Já conhecemos 118 elementos."
+  },
+  {
+   "chave": "7ed1b7811d",
+   "voz": "npc-quimica-proveta",
+   "texto": "A tabela periódica tem todos.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A tabela periódica tem todos."
+  },
+  {
+   "chave": "540e67a51b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Na coluna, eles se parecem.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Na coluna, eles se parecem."
+  },
+  {
+   "chave": "743e31481d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Cada cor é um tipo diferente.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Cada cor é um tipo diferente."
+  },
+  {
+   "chave": "6a90616c1d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Átomos gostam de dar as mãos.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Átomos gostam de dar as mãos."
+  },
+  {
+   "chave": "9fd44d4b1e",
+   "voz": "npc-quimica-proveta",
+   "texto": "Juntos, eles formam moléculas.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Juntos, eles formam moléculas."
+  },
+  {
+   "chave": "80c45a3116",
+   "voz": "npc-quimica-proveta",
+   "texto": "A água é uma molécula.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A água é uma molécula."
+  },
+  {
+   "chave": "ad4499441e",
+   "voz": "npc-quimica-proveta",
+   "texto": "Tem dois átomos de hidrogênio.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Tem dois átomos de hidrogênio."
+  },
+  {
+   "chave": "312370ed17",
+   "voz": "npc-quimica-proveta",
+   "texto": "E um átomo de oxigênio.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "E um átomo de oxigênio."
+  },
+  {
+   "chave": "830c6af21e",
+   "voz": "npc-quimica-proveta",
+   "texto": "Uma gotinha tem montões delas!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Uma gotinha tem montões delas!"
+  },
+  {
+   "chave": "d389018b1e",
+   "voz": "npc-quimica-proveta",
+   "texto": "A água tem três jeitos de ser.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A água tem três jeitos de ser."
+  },
+  {
+   "chave": "cf3c8adb1c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Sólido: o gelo, bem durinho.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Sólido: o gelo, bem durinho."
+  },
+  {
+   "chave": "290f63441c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Líquido: a água que escorre.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Líquido: a água que escorre."
+  },
+  {
+   "chave": "73a50b041c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Gás: o vapor que sobe no ar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Gás: o vapor que sobe no ar."
+  },
+  {
+   "chave": "19a0af4b1d",
+   "voz": "npc-quimica-proveta",
+   "texto": "No gelo, as moléculas grudam.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "No gelo, as moléculas grudam."
+  },
+  {
+   "chave": "16e47a121b",
+   "voz": "npc-quimica-proveta",
+   "texto": "No gás, elas correm soltas!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "No gás, elas correm soltas!"
+  },
+  {
+   "chave": "b40b9d2b19",
+   "voz": "npc-quimica-proveta",
+   "texto": "O calor faz a água mudar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O calor faz a água mudar."
+  },
+  {
+   "chave": "54e355f51b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Limão e vinagre são ácidos.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Limão e vinagre são ácidos."
+  },
+  {
+   "chave": "62afafec1e",
+   "voz": "npc-quimica-proveta",
+   "texto": "Bicarbonato e sabão são bases.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Bicarbonato e sabão são bases."
+  },
+  {
+   "chave": "e1b2aa1c1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "O repolho roxo é indicador.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O repolho roxo é indicador."
+  },
+  {
+   "chave": "a928a8cf19",
+   "voz": "npc-quimica-proveta",
+   "texto": "Com ácido, ele fica rosa.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Com ácido, ele fica rosa."
+  },
+  {
+   "chave": "e6b83c641d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Com base, fica verde-azulado.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Com base, fica verde-azulado."
+  },
+  {
+   "chave": "30e14dd31b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Nunca prove para descobrir!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Nunca prove para descobrir!"
+  },
+  {
+   "chave": "6dbce8301d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Misturar não é sempre reagir.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Misturar não é sempre reagir."
+  },
+  {
+   "chave": "e022df5e1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Sal na água é uma mistura.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Sal na água é uma mistura."
+  },
+  {
+   "chave": "b488365b1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Os átomos continuam iguais.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Os átomos continuam iguais."
+  },
+  {
+   "chave": "cc68c1251b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Na reação, nasce algo novo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Na reação, nasce algo novo."
+  },
+  {
+   "chave": "3d0976f21b",
+   "voz": "npc-quimica-proveta",
+   "texto": "No POF, nasceu um gás novo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "No pof, nasceu um gás novo."
+  },
+  {
+   "chave": "db26015d1d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Bolhas e cor nova dão pistas!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Bolhas e cor nova dão pistas!"
+  },
+  {
+   "chave": "acf869621c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está na água e nas estrelas.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está na água e nas estrelas."
+  },
+  {
+   "chave": "67da2fbd17",
+   "voz": "npc-quimica-proveta",
+   "texto": "É o elemento mais leve.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "É o elemento mais leve."
+  },
+  {
+   "chave": "b04ba8a41b",
+   "voz": "npc-quimica-proveta",
+   "texto": "O Sol tem muito hidrogênio.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O Sol tem muito hidrogênio."
+  },
+  {
+   "chave": "16215e421c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Enche os balões que flutuam.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Enche os balões que flutuam."
+  },
+  {
+   "chave": "7e83e63e15",
+   "voz": "npc-quimica-proveta",
+   "texto": "É mais leve que o ar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "É mais leve que o ar."
+  },
+  {
+   "chave": "af462dc518",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ele deixa a voz fininha!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele deixa a voz fininha!"
+  },
+  {
+   "chave": "a8198dda1e",
+   "voz": "npc-quimica-proveta",
+   "texto": "É um gás nobre, bem sossegado.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "É um gás nobre, bem sossegado."
+  },
+  {
+   "chave": "9cdefc4b1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está na bateria do celular.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está na bateria do celular."
+  },
+  {
+   "chave": "5661179b1d",
+   "voz": "npc-quimica-proveta",
+   "texto": "É o metal mais leve de todos.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "É o metal mais leve de todos."
+  },
+  {
+   "chave": "72df0c6c15",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ele boia até no óleo!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele boia até no óleo!"
+  },
+  {
+   "chave": "d5c4500a18",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está na pedra esmeralda.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está na pedra esmeralda."
+  },
+  {
+   "chave": "824d810414",
+   "voz": "npc-quimica-proveta",
+   "texto": "É leve e muito duro.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "É leve e muito duro."
+  },
+  {
+   "chave": "acc769a61b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Faz espelhos de telescópio.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Faz espelhos de telescópio."
+  },
+  {
+   "chave": "4fa7654e18",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está no vidro de panela.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está no vidro de panela."
+  },
+  {
+   "chave": "3b2a2f6a1d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Faz o vidro aguentar o forno.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Faz o vidro aguentar o forno."
+  },
+  {
+   "chave": "b474345516",
+   "voz": "npc-quimica-proveta",
+   "texto": "O boro é um semimetal.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O boro é um semimetal."
+  },
+  {
+   "chave": "219133641c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está no lápis e no diamante.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está no lápis e no diamante."
+  },
+  {
+   "chave": "3eace57d18",
+   "voz": "npc-quimica-proveta",
+   "texto": "O diamante é só carbono.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O diamante é só carbono."
+  },
+  {
+   "chave": "c3e3fcc21c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Seu corpo tem muito carbono.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Seu corpo tem muito carbono."
+  },
+  {
+   "chave": "7f997e6c16",
+   "voz": "npc-quimica-proveta",
+   "texto": "É a maior parte do ar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "É a maior parte do ar."
+  },
+  {
+   "chave": "ab85fde719",
+   "voz": "npc-quimica-proveta",
+   "texto": "As plantas precisam dele.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "As plantas precisam dele."
+  },
+  {
+   "chave": "9da0596419",
+   "voz": "npc-quimica-proveta",
+   "texto": "Líquido, é gelado demais!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Líquido, é gelado demais!"
+  },
+  {
+   "chave": "6ad2fbe71a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está no ar que respiramos.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está no ar que respiramos."
+  },
+  {
+   "chave": "a51018891b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Sem ele, o fogo não acende.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Sem ele, o fogo não acende."
+  },
+  {
+   "chave": "3adc49cc14",
+   "voz": "npc-quimica-proveta",
+   "texto": "Também está na água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Também está na água."
+  },
+  {
+   "chave": "2a59464617",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está na pasta de dente.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está na pasta de dente."
+  },
+  {
+   "chave": "270cc6b916",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ele protege os dentes.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele protege os dentes."
+  },
+  {
+   "chave": "1373e0891a",
+   "voz": "npc-quimica-proveta",
+   "texto": "É o elemento mais reativo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "É o elemento mais reativo."
+  },
+  {
+   "chave": "369cfacb1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ele se junta a quase tudo!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele se junta a quase tudo!"
+  },
+  {
+   "chave": "f81534491c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Brilha nas placas luminosas.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Brilha nas placas luminosas."
+  },
+  {
+   "chave": "650502ee1d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ele brilha em cor de laranja.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele brilha em cor de laranja."
+  },
+  {
+   "chave": "6ab339cf17",
+   "voz": "npc-quimica-proveta",
+   "texto": "O nome quer dizer novo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O nome quer dizer novo."
+  },
+  {
+   "chave": "25a9ad6f17",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está no sal de cozinha.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está no sal de cozinha."
+  },
+  {
+   "chave": "068a90541c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Sozinho, é um metal molinho.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Sozinho, é um metal molinho."
+  },
+  {
+   "chave": "42d5a66c19",
+   "voz": "npc-quimica-proveta",
+   "texto": "Na água, ele reage forte!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Na água, ele reage forte!"
+  },
+  {
+   "chave": "35cee99117",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está nas folhas verdes.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está nas folhas verdes."
+  },
+  {
+   "chave": "b216bee91c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Queima com luz branca forte.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Queima com luz branca forte."
+  },
+  {
+   "chave": "5377c4eb1e",
+   "voz": "npc-quimica-proveta",
+   "texto": "Brilha nos fogos de artifício.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Brilha nos fogos de artifício."
+  },
+  {
+   "chave": "04050e6218",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está na latinha de suco.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está na latinha de suco."
+  },
+  {
+   "chave": "97db6b5417",
+   "voz": "npc-quimica-proveta",
+   "texto": "É leve e não enferruja.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "É leve e não enferruja."
+  },
+  {
+   "chave": "5453600d1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Dá para reciclar sem parar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Dá para reciclar sem parar."
+  },
+  {
+   "chave": "9a9f322417",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está na areia da praia.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está na areia da praia."
+  },
+  {
+   "chave": "ebabcd4f1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está no chip do computador.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está no chip do computador."
+  },
+  {
+   "chave": "36b676691e",
+   "voz": "npc-quimica-proveta",
+   "texto": "Derretida, a areia vira vidro.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Derretida, a areia vira vidro."
+  },
+  {
+   "chave": "9a4ac1741d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está nos seus ossos e dentes.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está nos seus ossos e dentes."
+  },
+  {
+   "chave": "8192fcfc19",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está na lixa da caixinha.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está na lixa da caixinha."
+  },
+  {
+   "chave": "ee25cddc1e",
+   "voz": "npc-quimica-proveta",
+   "texto": "Um tipo dele brilha no escuro.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um tipo dele brilha no escuro."
+  },
+  {
+   "chave": "a8ee047017",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está perto dos vulcões.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está perto dos vulcões."
+  },
+  {
+   "chave": "a376442a19",
+   "voz": "npc-quimica-proveta",
+   "texto": "É amarelinho como a gema.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "É amarelinho como a gema."
+  },
+  {
+   "chave": "f996e3491c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está no cheiro de ovo podre.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está no cheiro de ovo podre."
+  },
+  {
+   "chave": "711f716a18",
+   "voz": "npc-quimica-proveta",
+   "texto": "Limpa a água da piscina.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Limpa a água da piscina."
+  },
+  {
+   "chave": "990881111e",
+   "voz": "npc-quimica-proveta",
+   "texto": "Também está no sal de cozinha.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Também está no sal de cozinha."
+  },
+  {
+   "chave": "fa14df881d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Sozinho, é um gás esverdeado.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Sozinho, é um gás esverdeado."
+  },
+  {
+   "chave": "d0c2d19018",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está dentro de lâmpadas.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está dentro de lâmpadas."
+  },
+  {
+   "chave": "c49bc11a1c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Tem um pouquinho dele no ar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Tem um pouquinho dele no ar."
+  },
+  {
+   "chave": "61997a971d",
+   "voz": "npc-quimica-proveta",
+   "texto": "O nome quer dizer preguiçoso.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O nome quer dizer preguiçoso."
+  },
+  {
+   "chave": "eb8901481b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está na banana e na batata.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está na banana e na batata."
+  },
+  {
+   "chave": "1ffceddf1e",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ajuda os músculos a trabalhar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ajuda os músculos a trabalhar."
+  },
+  {
+   "chave": "afef598c17",
+   "voz": "npc-quimica-proveta",
+   "texto": "Na água, ele pega fogo!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Na água, ele pega fogo!"
+  },
+  {
+   "chave": "b4765d531a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está no leite e nos ossos.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está no leite e nos ossos."
+  },
+  {
+   "chave": "e680043f1c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Deixa ossos e dentes fortes.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Deixa ossos e dentes fortes."
+  },
+  {
+   "chave": "9d7f9bcf1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "O giz da lousa tem cálcio.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O giz da lousa tem cálcio."
+  },
+  {
+   "chave": "df4c60791a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está no feijão e no prego.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está no feijão e no prego."
+  },
+  {
+   "chave": "6a1c82921a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Leva o oxigênio no sangue.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Leva o oxigênio no sangue."
+  },
+  {
+   "chave": "49afc92a17",
+   "voz": "npc-quimica-proveta",
+   "texto": "Molhado, ele enferruja.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Molhado, ele enferruja."
+  },
+  {
+   "chave": "2a28337313",
+   "voz": "npc-quimica-proveta",
+   "texto": "O ímã puxa o ferro.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O ímã puxa o ferro."
+  },
+  {
+   "chave": "e10bd1101e",
+   "voz": "npc-quimica-proveta",
+   "texto": "Fica nos fios de eletricidade.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Fica nos fios de eletricidade."
+  },
+  {
+   "chave": "bf55cd251a",
+   "voz": "npc-quimica-proveta",
+   "texto": "É avermelhado e brilhante.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "É avermelhado e brilhante."
+  },
+  {
+   "chave": "87ef7f3a1e",
+   "voz": "npc-quimica-proveta",
+   "texto": "Leva a eletricidade muito bem.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Leva a eletricidade muito bem."
+  },
+  {
+   "chave": "f2d103951b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está em colares e talheres.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está em colares e talheres."
+  },
+  {
+   "chave": "4bf464731b",
+   "voz": "npc-quimica-proveta",
+   "texto": "É a campeã da eletricidade.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "É a campeã da eletricidade."
+  },
+  {
+   "chave": "245545761a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Com o tempo, ela escurece.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Com o tempo, ela escurece."
+  },
+  {
+   "chave": "603b10a117",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está em anéis e coroas.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está em anéis e coroas."
+  },
+  {
+   "chave": "8eb4675e1d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ele não escurece com o tempo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele não escurece com o tempo."
+  },
+  {
+   "chave": "d95a9be31a",
+   "voz": "npc-quimica-proveta",
+   "texto": "É mole e fácil de amassar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "É mole e fácil de amassar."
+  },
+  {
+   "chave": "5c09bc3e1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Vira uma folha bem fininha.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Vira uma folha bem fininha."
   },
   {
    "chave": "6a4a021b1r",
