@@ -1,0 +1,83 @@
+{
+  "nome": "2026-09-29-tv-3d",
+  "pedido": "pedidos/2026-09-29-tv-3d.md",
+  "personagens": [],
+  "tarefas": [
+    {
+      "id": "unicornio",
+      "tipo": "arte",
+      "titulo": "D3-05, D3-09, D3-10, D3-11, D3-12, D13-06, O-10: Mariana no Pequeno, laço, Chanel, vestido Princesa, crescer muda o desenho, enfeites juntos",
+      "quem": "general-purpose",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/arte/pixelart-unicornio-moldes.js",
+        "jogo/js/arte/pixelart-unicornio.js",
+        "jogo/js/arte/pixelart-mariana-visual.js",
+        "jogo/js/arte/pixelart-personagens.js",
+        "jogo/ferramentas/validar/validar-enfeites.js",
+        "vercel/pwa/icone-192.png",
+        "vercel/pwa/icone-512.png",
+        "vercel/pwa/icone-maskable-512.png",
+        "vercel/pwa/apple-touch-icon.png",
+        "jogo/ferramentas/pwa/favicon.svg"
+      ],
+      "worktree": "tv-3d-unicornio",
+      "pronto": [
+        "o 'Pronto quando' completo de cada item no TODO"
+      ],
+      "estimativa": 180
+    },
+    {
+      "id": "interiores",
+      "tipo": "cenario",
+      "titulo": "D2A-06, D2A-07, D2A-11, D2A-15, D2A-16: Baias, passadeira da Escola, tapete do Baú, passagens entre cômodos, Salão",
+      "quem": "general-purpose",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/interiores/estabulo/",
+        "jogo/js/interiores/escola/",
+        "jogo/js/interiores/bau/",
+        "jogo/js/interiores/salao/",
+        "jogo/js/motor/interiores-estatico.js"
+      ],
+      "worktree": "tv-3d-interiores",
+      "pronto": [
+        "o 'Pronto quando' completo de cada item no TODO"
+      ],
+      "estimativa": 150
+    },
+    {
+      "id": "integracao",
+      "tipo": "integracao",
+      "titulo": "Juntar, npm test e e2e, marcar o TODO",
+      "quem": "orquestrador",
+      "depende": [
+        "unicornio",
+        "interiores"
+      ],
+      "arquivos": [
+        "TODO-VISUAL.md",
+        "jogo/js/manifesto.js",
+        "jogo/index.html",
+        "jogo/ferramentas/testes/base-referencia.txt"
+      ],
+      "worktree": "tv-3d",
+      "pronto": [
+        "npm test e npm run e2e verdes; diferenças explicadas (base trocada)"
+      ],
+      "estimativa": 45
+    },
+    {
+      "id": "entrega",
+      "tipo": "entrega",
+      "titulo": "Merge, push e Vercel",
+      "quem": "orquestrador",
+      "depende": [
+        "integracao"
+      ],
+      "arquivos": [],
+      "worktree": "tv-3d",
+      "estimativa": 15
+    }
+  ]
+}
