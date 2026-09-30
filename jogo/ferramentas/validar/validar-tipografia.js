@@ -21,7 +21,7 @@ if (require.main === module) require('../ajuda').ajuda(__filename);
 const fs = require('fs');
 const path = require('path');
 
-const ESTRITO = false;
+const ESTRITO = true;
 const ESCALA = [8, 12, 16, 24, 32, 48];
 const TOKENS = ['--texto-p', '--texto-aux', '--texto', '--texto-g', '--texto-t', '--texto-festa'];
 const ESPELHO = { p: '--texto-p', aux: '--texto-aux', corpo: '--texto', g: '--texto-g' };   // Reino.config.texto
