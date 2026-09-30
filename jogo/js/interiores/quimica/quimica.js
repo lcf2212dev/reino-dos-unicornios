@@ -48,6 +48,8 @@
       // parede: embaixo dos pôsteres e das janelas, só coisa baixa; 5-7 livre para a placa
       poster(2, 'seguranca', 'seguranca', 'Segurança primeiro'),
       inter('formulas', 'Quadro de fórmulas', { tipo: 'quimica-quadro', x: 3, y: 0, var: { desenho: 'formulas' } }),
+      // o cartaz "2º andar" logo à direita do arco da escada (6, 2), para ela ver ao entrar
+      { tipo: 'quimica-cartaz-andar', x: 7, y: 0 },
       { tipo: 'janela', x: 8, y: 0 }, { tipo: 'arandela', x: 9, y: 0 }, { tipo: 'janela', x: 10, y: 0 },
       inter('capela', 'Capela de exaustão', { tipo: 'quimica-capela', x: 0, y: 2 }),
       // (2, 2) e (4, 2) livres: é dali que ela olha o pôster e o quadro
