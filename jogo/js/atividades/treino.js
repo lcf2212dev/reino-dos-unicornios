@@ -293,7 +293,7 @@
       rodape.hidden = true;
       var certas = questoes.map(function (d, i) { return D.conferirValor(d, respostas[i]); });
       var acertos = certas.filter(Boolean).length;
-      Reino.Aura.contar(certas);
+      Reino.Aura.contar(certas, materia.id);
       var premios = P.registrarTreino(materia, acertos, questoes.length);
       var med = premios.medalha;
       var M = Reino.Falas.medalhas[med];

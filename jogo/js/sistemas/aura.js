@@ -3,7 +3,8 @@
    no começo). Números em Reino.config.aura.
    Cada contagem também avisa o barramento (Reino.EVENTOS.RESPOSTAS: { certas, erradas }), para o foguete.
    Quem conta: atividades/missao.js (cada Conferir da sala), atividades/treino.js e atividades/provas.js (na entrega,
-   questão por questão), sistemas/surpresa-painel.js (cada resposta), por Reino.Aura.contar(certas).
+   questão por questão), sistemas/surpresa-painel.js (cada resposta), atividades/voo-portais.js e
+   sistemas/viagem-desafio.js, por Reino.Aura.contar(certas, materiaId): a matéria do dia vale mais na certa.
    Guarda em décimos inteiros (sem erro de ponto flutuante): 0,2 = 2. Chip do HUD: ui/hud-aura.js.
    node: true: nada de DOM, Progresso nem Cena no carregamento (só dentro das funções). */
 (function () {
@@ -62,22 +63,34 @@
     for (var f = A.faixa(d); f > 0; f--) lim *= c.multiplicador;
     return lim;
   };
-  // um passo só, sem gravar: certa soma o passo, errada tira o passo × penalidade (nunca abaixo de 0)
-  A.aplicar = function (d, certa) {
+  // a matéria do dia (Reino.config.aura.materiaDoDia): { materia, vezes } de hoje, ou null
+  A.materiaDoDia = function (dia) {
+    var md = cfg().materiaDoDia, id = md && md.dias && md.dias[dia || R.util.hoje()];
+    return id ? { materia: id, vezes: md.vezes } : null;
+  };
+  // quantas vezes o passo vale numa certa desta matéria hoje (1 fora da matéria do dia)
+  A.vezesDaMateria = function (materiaId, dia) {
+    var h = materiaId && A.materiaDoDia(dia);
+    return h && h.materia === materiaId ? h.vezes : 1;
+  };
+  // um passo só, sem gravar: certa soma o passo × vezes (matéria do dia; 1 se omitido), errada tira o passo ×
+  // penalidade (nunca abaixo de 0)
+  A.aplicar = function (d, certa, vezes) {
     var p = A.passo(d);
-    return certa ? d + p : Math.max(0, d - p * cfg().penalidade);
+    return certa ? d + p * (vezes || 1) : Math.max(0, d - p * cfg().penalidade);
   };
   // conta as respostas (true = certa, false = errada, null = não conta), em ordem, grava e
-  // guarda a cor nova para o Claude comemorar ao voltar ao mapa. Devolve { antes, depois } em décimos.
-  A.contar = function (respostas) {
+  // guarda a cor nova para o Claude comemorar ao voltar ao mapa. materiaId: a matéria das perguntas (a do dia vale
+  // mais). Devolve { antes, depois } em décimos.
+  A.contar = function (respostas, materiaId) {
     var lista = [].concat(respostas);
     if (R.util && R.util.emit) R.util.emit(R.EVENTOS.RESPOSTAS, {
       certas: lista.filter(function (r) { return r === true; }).length,
       erradas: lista.filter(function (r) { return r === false; }).length });
     var est = estado();
     if (!est) return null;
-    var antes = A.decimos(), d = antes;
-    lista.forEach(function (r) { if (r === true || r === false) d = A.aplicar(d, r); });
+    var antes = A.decimos(), d = antes, vezes = A.vezesDaMateria(materiaId);
+    lista.forEach(function (r) { if (r === true || r === false) d = A.aplicar(d, r, vezes); });
     if (d === antes) return { antes: antes, depois: d };
     var mar = est.aura && est.aura.mariana;
     est.aura = est.aura || {};

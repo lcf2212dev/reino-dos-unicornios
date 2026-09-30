@@ -71,10 +71,13 @@
     var d = A.decimos(), f = A.faixa(d), cor = A.corDaFaixa(f), passo = A.passo(d);
     var pen = Reino.config.aura.penalidade;
     var prox = A.proximaFaixa(d), corProx = A.corDaFaixa(f + 1);
+    // matéria do dia (Reino.config.aura.materiaDoDia): o aviso só no painel (sem voz)
+    var hoje = A.materiaDoDia(), mh = hoje && Reino.materia && Reino.materia(hoje.materia);
     pn.conteudo.appendChild(el('div.aura-painel',
       el('p.aura-valor' + (A.texto(d).length > 9 ? '.aura-longa' : ''), iconeAura(cor.cor, 4), el('b', A.texto(d))),
       el('p', 'Sua aura está ' + cor.nome + '.'),
       el('p', 'Pergunta certa: +' + A.texto(passo) + '. Errada: -' + A.texto(passo * pen) + '.'),
+      mh ? el('p.aura-materia-do-dia', '🌟 Hoje, cada pergunta certa de ', el('b', mh.nome), ' vale ', el('b', hoje.vezes + ' vezes'), ': +' + A.texto(passo * hoje.vezes) + '!') : null,
       corProx !== cor ? el('p', 'Faltam ' + A.texto(prox - d) + ' para a aura ficar ' + corProx.nome + '!') : null,
       el('ul.aura-cores', Reino.config.aura.cores.map(function (c, i) {
         return el('li' + (i === Math.min(f, Reino.config.aura.cores.length - 1) ? '.aura-agora' : ''), iconeAura(c.cor), el('small', c.nome));
