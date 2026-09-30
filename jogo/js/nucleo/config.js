@@ -118,6 +118,18 @@ Reino.config = {
   // áudio travar (e é quando a próxima fala encadeada começa). lerQuestoes: cada questão (sala, treino, prova) é lida
   // sozinha ao aparecer; resumoNaSala: as cartas do livro usadas pela sala aparecem (e são lidas) antes da 1ª questão
   esperaFala: { travar: false, msPorLetra: 75, folga: 1.6, minS: 2, maxS: 30, lerQuestoes: true, resumoNaSala: true },
+  // cores da moldura que o canvas e o JS usam: espelho do :root de css/ui-base.css (mesmo hex, conferido pelo
+  // validar-cores.js; papéis em docs/contratos/ui.md §10.8). Mudou aqui, mude lá. Não é cor de save (D8B-03)
+  paleta: {
+    tinta: '#3a2446', tintaSuave: '#6b5378', noite: '#24162e', noite2: '#33224a',
+    papel: '#fff8ee', papel2: '#efe8e2', papelQuente: '#fff1cc', grama: '#c6e15a',
+    raridade: {
+      comum: { texto: '#6b5378', fundo: '#fff8ee', desenho: '#ff9cc6' },
+      raro: { texto: '#2b5ea8', fundo: '#dcebff', desenho: '#5fb4ff' },
+      epico: { texto: '#5b2aa8', fundo: '#eadcff', desenho: '#a66bff' },
+      lendario: { texto: '#8a5200', fundo: '#ffe39a', desenho: '#ffb020' },
+    },
+  },
   // vozes naturais (gravadas por ferramentas/vozes/gerar-vozes.py). Trocou voz, velocidade ou tom: `npm run vozes`
   // (regrava) e peça para republicar
   vozes: {

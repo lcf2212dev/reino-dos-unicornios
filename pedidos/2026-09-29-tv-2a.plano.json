@@ -1,0 +1,131 @@
+{
+  "nome": "2026-09-29-tv-2a",
+  "pedido": "pedidos/2026-09-29-tv-2a.md",
+  "personagens": [],
+  "tarefas": [
+    {
+      "id": "contrato",
+      "tipo": "contrato",
+      "titulo": "Reino.config.paleta (espelho do :root) e as decisões da 2a no ui.md §10.8 e §10.19",
+      "quem": "orquestrador",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/nucleo/config.js",
+        "docs/contratos/ui.md"
+      ],
+      "worktree": "tv-2a",
+      "pronto": [
+        "Reino.config.paleta com tinta, tintaSuave, noite, noite2, papel, papel2, papelQuente, grama e raridade.<r>.texto|fundo|desenho, valores do pedido §14",
+        "ui.md §10 com as decisões 1 a 14 do pedido; npm run validar verde"
+      ],
+      "estimativa": 30
+    },
+    {
+      "id": "css",
+      "tipo": "arte",
+      "titulo": "D10-02, D10-14, D10-18, D10-13, D6-20, D10-B04 (com D6-14 e D8B-12) no CSS: tokens no :root, troca de todo literal, estado indisponível, validar-cores",
+      "quem": "general-purpose",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/css/",
+        "jogo/ferramentas/validar/validar-cores.js",
+        "jogo/ferramentas/validar/validar-tudo.js",
+        "jogo/ferramentas/testes/unidade/contraste-texto.navegador.test.js"
+      ],
+      "worktree": "tv-2a-css",
+      "pronto": [
+        "o 'Pronto quando' de D10-02, D10-14, D10-13 (parte CSS), D10-18 (voo e jogadores), D6-20 (cor), D10-B04 e D8B-12",
+        "validar-cores.js no npm run validar: literal só no :root e em SVG data: com hex de token; opacity só na lista do pedido §14.10; :root == Reino.config.paleta",
+        "contraste-texto verde, com a tela de jogadores e o voo nas cenas"
+      ],
+      "estimativa": 240
+    },
+    {
+      "id": "js",
+      "tipo": "mecanica",
+      "titulo": "D10-13 no canvas (ovo, baia, quadro da Escola), D10-18 (vão e planetas), D6-20 (Conferir do ET e da surpresa), D8A-05 (enfeite caro na loja, com .indisponivel e 🔒)",
+      "quem": "general-purpose",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/arte/pixelart-ovos.js",
+        "jogo/js/interiores/estabulo/estabulo.js",
+        "jogo/js/interiores/escola/objetos.js",
+        "jogo/js/arte/desenho.js",
+        "jogo/js/arte/icones/planetas.js",
+        "jogo/js/ui/foguete.js",
+        "jogo/js/ui/et-desafio.js",
+        "jogo/js/sistemas/surpresa-painel.js",
+        "jogo/js/ui/loja.js",
+        "jogo/js/atividades/voo-desenho.js"
+      ],
+      "worktree": "tv-2a-js",
+      "pronto": [
+        "o 'Pronto quando' de D10-13 (parte JS), D10-18 (vão), D6-20 (classe) e D8A-05",
+        "nenhuma cor de raridade nem de fundo escuro literal nesses arquivos: tudo de Reino.config.paleta"
+      ],
+      "estimativa": 120
+    },
+    {
+      "id": "app",
+      "tipo": "mecanica",
+      "titulo": "D11-03 e D11-11: uma cor só ao abrir o app (html, manifesto, montar.js) e theme-color clara no mapa",
+      "quem": "worker-low",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/ferramentas/gerar-index.js",
+        "vercel/montar.js",
+        "vercel/pwa/manifest.webmanifest",
+        "jogo/js/ui/abertura.js",
+        "jogo/ferramentas/testes/unidade/cor-do-app.test.js"
+      ],
+      "worktree": "tv-2a-app",
+      "pronto": [
+        "o 'Pronto quando' de D11-03 e D11-11",
+        "cor-do-app.test.js: index.html gerado, manifesto e COR do montar.js iguais a Reino.config.paleta.noite"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "integracao",
+      "tipo": "integracao",
+      "titulo": "Juntar as 4 numa integração só, npm run index, npm test e e2e (troca da base), marcar o TODO",
+      "quem": "orquestrador",
+      "depende": [
+        "contrato",
+        "css",
+        "js",
+        "app"
+      ],
+      "arquivos": [
+        "TODO-VISUAL.md",
+        "jogo/js/manifesto.js",
+        "jogo/index.html",
+        "jogo/ferramentas/testes/tipos-jogo.d.ts",
+        "jogo/ferramentas/testes/base-referencia.txt"
+      ],
+      "worktree": "tv-2a",
+      "pronto": [
+        "npm test e e2e verdes, cada diferença explicada por um item da 2a; base trocada"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "entrega",
+      "tipo": "entrega",
+      "titulo": "Merge, push e Vercel",
+      "quem": "orquestrador",
+      "depende": [
+        "integracao"
+      ],
+      "arquivos": [],
+      "worktree": "tv-2a",
+      "estimativa": 15
+    }
+  ]
+}
