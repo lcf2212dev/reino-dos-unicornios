@@ -319,9 +319,8 @@
         }).filter(Boolean);
         return linhas.length ? el('div', linhas) : null;
       }
-      corpo.appendChild(el('div.fim-sala.resultado-prova',
-        el('div.medalha-grande.medalha-' + med, info[0]),
-        el('h2.titulo-pixel', info[1]),
+      var medalha = el('div.medalha-grande.medalha-' + med, info[0]), titulo = el('h2.titulo-pixel', info[1]);
+      corpo.appendChild(el('div.fim-sala.resultado-prova', medalha, titulo,
         el('p.fim-grande', 'Você acertou ' + acertos + ' de ' + questoes.length + '!'),
         el('div.intro-claude', PA.paraDOM(PA.claude(0), 4, 'claude-intro'), el('p', info[2])),
         el('ul.premios',
@@ -331,6 +330,7 @@
         erradas.children.length ? el('h3', 'Vamos aprender com as que faltaram:') : null,
         erradas.children.length ? erradas : null,
         voltar));
+      Reino.UI.festa(2, { titulo: titulo, emoji: medalha, som: false });   // treino: nível 2 (ui.md §10.16)
       Reino.UI.esperarFala([voltar, sair], [info[1], Reino.Falas.acertouDeTotal(acertos, questoes.length), info[2]], { voz: 'claude' });
       // teclado ("Entregar a prova"): o botão sumiu e o foco ia para o body; vai para o botão do fim
       // (ou para o título, do começo da tela, se o botão ainda não aparece: o Tab leva a ele).

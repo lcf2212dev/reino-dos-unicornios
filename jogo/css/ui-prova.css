@@ -71,7 +71,7 @@
 .premio-status { grid-area: status; justify-self: end; font-size: var(--texto-aux); padding: 2px 10px; border-radius: var(--canto); border: var(--borda-fina) solid var(--borda); background: var(--branco); }
 .premio-status.agora { background: var(--ouro); }
 .premio-status.ganhou { background: var(--certo-fundo); color: var(--certo); }
-.nota-folha { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 150px; height: 150px; border: var(--borda-grossa) solid var(--erro); border-radius: var(--redondo); background: var(--branco); color: var(--erro); box-shadow: var(--sombra-grande); animation: brilhar calc(2 * var(--lento)) step-end; }
+.nota-folha { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 150px; height: 150px; border: var(--borda-grossa) solid var(--erro); border-radius: var(--canto-grande); background: var(--branco); color: var(--erro); box-shadow: var(--sombra-grande); animation: brilhar calc(2 * var(--lento)) step-end; }
 .nota-folha b { font-family: var(--fonte-titulo); font-size: var(--texto-t); line-height: var(--entrelinha-titulo); }
 .nota-folha small { font-size: var(--texto-aux); }
 .nota-folha.nota-dez { border-color: var(--certo); color: var(--certo); }
@@ -149,3 +149,16 @@
   .letras-grandes .missao-rodape .contador-revisao { display: none; }   /* o selo de cada questão e o aviso já contam */
   .letras-grandes .item-revisao .rev-resp { font-size: var(--texto-aux); }   /* 16 com Letras grandes */
 }
+/* resultado (prova e treino): os botões de fim com a mesma largura, um embaixo do outro; o do prêmio logo abaixo da
+   prévia (D6-19) */
+.resultado-prova .intro-botoes { flex-direction: column; align-items: stretch; width: 100%; max-width: 360px; }
+.resultado-prova .intro-botoes.botoes-premio { margin-top: 0; }
+/* celular: a folha da nota menor, para o botão do prêmio caber sem rolar com o título de 32 px (nível 3) */
+@media (max-width: 480px) { .resultado-prova .nota-folha { width: 112px; height: 112px; } }
+/* celular, lendário: a moldura arco-íris toma o lugar do respiro da prévia (não soma altura; D6-19) */
+@media (max-width: 480px) { .resultado-prova .previa-valendo:has(> .brilho-arco) { padding-top: 8px; padding-bottom: 8px; gap: 8px; } }
+/* título do prêmio: o ícone da raridade colado à 1ª palavra (provas.js) */
+.resultado-prova .titulo-colado { white-space: nowrap; }
+.resultado-prova .titulo-colado canvas { margin-right: 8px; vertical-align: 8px; }
+/* celular: um degrau abaixo (32 → 24), para ícone + "Acessório" caberem na largura sem transbordar */
+@media (max-width: 480px) { .resultado-prova .titulo-pixel.titulo-premio { font-size: var(--texto-g); } }

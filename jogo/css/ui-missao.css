@@ -241,7 +241,11 @@
 
 /* intro e fim de sala */
 .intro-sala, .fim-sala, .ritual, .revisao { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
-.intro-emoji, .fim-emoji { font-size: var(--texto-festa); line-height: 1; }
+.intro-emoji { font-size: var(--texto-festa); line-height: 1; }
+.fim-emoji { display: flex; justify-content: center; }   /* o ícone já vem no tamanho do nível (missao.js) */
+/* fim de sala: o bloco no meio da altura (D6-26); se não couber, rola do topo (margem automática vira 0) */
+.missao-corpo:has(> .fim-sala) { display: flex; flex-direction: column; }
+.missao-corpo > .fim-sala { width: 100%; margin-top: auto; margin-bottom: auto; }
 .intro-paginas { color: var(--tinta-suave); font-size: var(--texto-aux); }
 .intro-regras { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; text-align: left; }
 .intro-regras li { padding: 10px 14px; background: var(--papel); border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); }

@@ -217,6 +217,8 @@
         Reino.Progresso.salvar();
         Reino.Som.tocar('acerto');
         if (dePrimeira) setTimeout(function () { Reino.Som.tocar('estrela'); }, 350);
+        // a estrela ganha sai da opção certa e vai até o contador (D9-17)
+        if (dePrimeira) Reino.UI.estrelaVoa(corpo.querySelector('.certa') || btnConferir, pontos);
         mostrarRetorno(true, d, dePrimeira, cresceu);
       } else {
         errouAtual = true;
@@ -315,7 +317,6 @@
       pintarTrilha('fim');
       rodape.hidden = true;
       var premios = Reino.Progresso.concluirSala(materia, sala, { acertosPrimeira: acertosPrimeira, total: lista.length, pressas: pressas });
-      Reino.Som.tocar('fanfarra');
       corpo.innerHTML = '';
       var itens = el('ul.premios');
       itens.appendChild(el('li', el('span.premio-icone', '⭐'), el('span', 'Acertos de primeira: ', el('b', acertosPrimeira + ' de ' + lista.length))));
@@ -330,11 +331,14 @@
       var dicaRaro = faltamRaro ? el('p.dica-raro', '💙 Mais ' + (faltamRaro === 1 ? '1 vez' : faltamRaro + ' vezes') + ' nesta sala e o unicórnio raro nasce! Ou faça tudo certo de primeira e com calma.')
         : premios.porPersistencia ? el('p.dica-raro', '💙 O unicórnio raro nasceu pela sua persistência!') : null;
       var btn = el('button.btn-grande.btn-principal', { type: 'button' }, premios.ovos.length ? 'Chocar ' + (premios.ovos.length > 1 ? 'os ovos' : 'o ovo') + ' 🥚' : 'Voltar ' + (materia.lugar.artigo === 'a' ? 'à ' : 'ao ') + materia.lugar.nome);
-      corpo.appendChild(el('div.fim-sala',
-        el('div.fim-emoji', premios.materiaCompleta ? '🌈' : '🎉'),
-        el('h2.titulo-pixel', premios.materiaCompleta ? 'Revisão de ' + materia.nome + ' completa!' : 'Sala concluída!'),
-        premios.materiaCompleta ? el('p.fim-grande', 'Você completou TODAS as salas! ' + U.reais(Reino.config.valorPorMateria) + ' de ' + materia.nome + ' no baú! 🥳') : el('p', Reino.Claude.frase('fimSala')),
+      // escala de festa (ui.md §10.16): sala = nível 2, matéria completa = nível 4; uma 🎉 só, a do emoji
+      // o ícone no tamanho do nível, em escala inteira: 16×3 = 48 px (matéria completa), 16×2 = 32 px (sala)
+      var emoji = el('div.fim-emoji', { 'aria-hidden': 'true' }, window.PA.iconeEmoji(premios.materiaCompleta ? '🌈' : '🎉', premios.materiaCompleta ? 3 : 2));
+      var titulo = el('h2.titulo-pixel', premios.materiaCompleta ? 'Revisão de ' + materia.nome + ' completa!' : 'Sala concluída!');
+      corpo.appendChild(el('div.fim-sala', emoji, titulo,
+        premios.materiaCompleta ? el('p.fim-grande', 'Você completou TODAS as salas! ' + U.reais(Reino.config.valorPorMateria) + ' de ' + materia.nome + ' no baú! 🥳') : el('p', Reino.Claude.frase('fimSala').replace(/\s*🎉/g, '')),
         itens, dicaRaro, btn));
+      Reino.UI.festa(premios.materiaCompleta ? 4 : 2, { titulo: titulo, emoji: emoji });
       Reino.UI.focarTroca(btn, corpo.querySelector('.fim-sala h2'), CALMA_TROCA);
       if (premios.primeiraVez) setTimeout(function () { Reino.Som.tocar('moeda'); }, 900);
       Reino.UI.esperarFala([btn, sair], [premios.materiaCompleta ? Reino.Falas.fixas.revisaoCompleta : Reino.Falas.fixas.salaConcluida, Reino.Falas.acertouDePrimeira(acertosPrimeira)], { voz: 'claude' });

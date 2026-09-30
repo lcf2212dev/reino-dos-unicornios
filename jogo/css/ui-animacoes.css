@@ -14,6 +14,51 @@
   0%, 50% { filter: drop-shadow(2px 0 0 var(--ouro-claro)) drop-shadow(-2px 0 0 var(--ouro-claro)) drop-shadow(0 2px 0 var(--ouro-claro)) drop-shadow(0 -2px 0 var(--ouro-claro)); }
   25%, 75%, 100% { filter: none; }
 }
+/* escala de festa (ui.md §10.16; UI.festa em ui/pecas.js): pulinho do emoji em degraus de 2 px, com os brilhinhos do
+   brilhar junto; o nível 1 é o brilho de 3 quadros no item */
+@keyframes pulinho { 0%, 50%, 100% { transform: none; } 12.5%, 37.5% { transform: translateY(-4px); } 25% { transform: translateY(-8px); } }
+.festa-pulo { animation: pulinho var(--lento) step-end 3, brilhar var(--lento) step-end 3; }
+.festa-brilho { animation: brilhar var(--normal) step-end; }
+/* brilho arco-íris do lendário (§10.16: ovo que nasce e prova lendária): moldura de 6 faixas de 4 px nas cores do
+   --arco-iris, sem degradê, em volta do desenho; troca a ordem das cores em degraus. Sem animação: a moldura fica parada. */
+.brilho-arco { display: inline-grid; place-items: center; padding: 24px; flex-shrink: 0;
+  background:
+    linear-gradient(var(--rar-fundo, var(--papel)), var(--rar-fundo, var(--papel))) center / calc(100% - 48px) calc(100% - 48px) no-repeat,
+    linear-gradient(var(--arco-1), var(--arco-1)) center / calc(100% - 40px) calc(100% - 40px) no-repeat,
+    linear-gradient(var(--arco-2), var(--arco-2)) center / calc(100% - 32px) calc(100% - 32px) no-repeat,
+    linear-gradient(var(--arco-3), var(--arco-3)) center / calc(100% - 24px) calc(100% - 24px) no-repeat,
+    linear-gradient(var(--arco-4), var(--arco-4)) center / calc(100% - 16px) calc(100% - 16px) no-repeat,
+    linear-gradient(var(--arco-5), var(--arco-5)) center / calc(100% - 8px) calc(100% - 8px) no-repeat,
+    linear-gradient(var(--arco-6), var(--arco-6)) center / 100% 100% no-repeat;
+  animation: arco-girar var(--lento) step-end 3; }
+@keyframes arco-girar {
+  33% { background:
+    linear-gradient(var(--rar-fundo, var(--papel)), var(--rar-fundo, var(--papel))) center / calc(100% - 48px) calc(100% - 48px) no-repeat,
+    linear-gradient(var(--arco-2), var(--arco-2)) center / calc(100% - 40px) calc(100% - 40px) no-repeat,
+    linear-gradient(var(--arco-3), var(--arco-3)) center / calc(100% - 32px) calc(100% - 32px) no-repeat,
+    linear-gradient(var(--arco-4), var(--arco-4)) center / calc(100% - 24px) calc(100% - 24px) no-repeat,
+    linear-gradient(var(--arco-5), var(--arco-5)) center / calc(100% - 16px) calc(100% - 16px) no-repeat,
+    linear-gradient(var(--arco-6), var(--arco-6)) center / calc(100% - 8px) calc(100% - 8px) no-repeat,
+    linear-gradient(var(--arco-1), var(--arco-1)) center / 100% 100% no-repeat; }
+  66% { background:
+    linear-gradient(var(--rar-fundo, var(--papel)), var(--rar-fundo, var(--papel))) center / calc(100% - 48px) calc(100% - 48px) no-repeat,
+    linear-gradient(var(--arco-3), var(--arco-3)) center / calc(100% - 40px) calc(100% - 40px) no-repeat,
+    linear-gradient(var(--arco-4), var(--arco-4)) center / calc(100% - 32px) calc(100% - 32px) no-repeat,
+    linear-gradient(var(--arco-5), var(--arco-5)) center / calc(100% - 24px) calc(100% - 24px) no-repeat,
+    linear-gradient(var(--arco-6), var(--arco-6)) center / calc(100% - 16px) calc(100% - 16px) no-repeat,
+    linear-gradient(var(--arco-1), var(--arco-1)) center / calc(100% - 8px) calc(100% - 8px) no-repeat,
+    linear-gradient(var(--arco-2), var(--arco-2)) center / 100% 100% no-repeat; }
+}
+/* título do ovo lendário: o 🌈 colado à 1ª palavra (ovos.js) */
+.painel-ovo .titulo-colado { white-space: nowrap; }
+.painel-ovo .titulo-colado canvas { margin-right: 8px; vertical-align: 8px; }
+/* a estrela ganha a caminho do chip (UI.estrelaVoa): o JS põe cada degrau; nada de transição */
+.estrela-voa { position: fixed; z-index: 200; pointer-events: none; }
+/* título da tela de fim no tamanho do nível (fica com as animações desligadas) */
+.titulo-pixel.titulo-festa-2 { font-size: var(--texto-g); }
+.titulo-pixel.titulo-festa-3 { font-size: var(--texto-t); }
+.titulo-pixel.titulo-festa-4 { font-size: var(--texto-festa); }
+@media (max-width: 480px) { .titulo-pixel.titulo-festa-4 { font-size: var(--texto-t); } }
 @keyframes tremer { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
 .treme { animation: tremer var(--normal) step-end; }
 /* erro de item parado (ui.md §10.19.2; desafios/ligar.js, _d.erroParado): fundo --erro-fundo e borda --erro até apagar ou

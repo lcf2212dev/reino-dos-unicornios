@@ -66,8 +66,10 @@
       est().loja[item.id] = true;
       if (!usando(item)) alternar(item);
       P.salvar();
-      Reino.Som.tocar('estrela'); UI.confete(40);
+      Reino.Som.tocar('estrela');
       depois(); U.emit(EV.MAPA_MUDOU);
+      // compra: nível 1, sem confete, brilho de 3 quadros no cartão comprado (ui.md §10.16)
+      UI.festa(1, { som: false, item: document.querySelector('.item-loja[data-item="' + item.id + '"]') });
     });
   }
   // caro: ainda não comprado e com preço acima do saldo. A carta fica no estado indisponível (.indisponivel,

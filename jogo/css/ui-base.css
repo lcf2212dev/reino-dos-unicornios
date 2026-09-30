@@ -71,7 +71,8 @@
   --veu-6: rgba(36, 22, 46, 0.24);
   --veu-7: rgba(36, 22, 46, 0.28);
   /* só brilho: anel da carta lendária, faixa do ovo e aura (faixas duras; use no linear-gradient) */
-  --arco-iris: #ff5c6a 0 17%, #ff9f45 17% 33%, #ffe066 33% 50%, #6fdc8c 50% 67%, #5fb4ff 67% 83%, #a66bff 83%;
+  --arco-1: #ff5c6a; --arco-2: #ff9f45; --arco-3: #ffe066; --arco-4: #6fdc8c; --arco-5: #5fb4ff; --arco-6: #a66bff;   /* as 6 faixas (brilho do lendário) */
+  --arco-iris: var(--arco-1) 0 17%, var(--arco-2) 17% 33%, var(--arco-3) 33% 50%, var(--arco-4) 50% 67%, var(--arco-5) 67% 83%, var(--arco-6) 83%;
   --apagado: grayscale(1) brightness(1.1);   /* filter do DESENHO indisponível (§10.19.1); nunca no texto */
   /* letra (ui.md §10.9.1): só estes tamanhos; todo font-size do CSS é um deles */
   --texto-p: 8px;        /* só número sobre ícone (contador, selo com número) */
