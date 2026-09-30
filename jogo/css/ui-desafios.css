@@ -5,9 +5,12 @@
   color: var(--roxo-texto);
   /* pontilhado em pixel no pé do trecho (2px ligado, 2px desligado): o `underline dotted` do Chromium saía com
      os pontos em fase diferente a cada execução e sujava o e2e */
-  background: linear-gradient(90deg, var(--en-ponto) 50%, transparent 50%) 0 100% / 4px 2px repeat-x,
+  /* a faixa termina onde o pontilhado termina (D7-19): canto reto (o canto arredondado cortava as pontas do
+     pontilhado e deixava um degrau) e um ponto de 2 px fechando a ponta direita */
+  background: linear-gradient(var(--en-ponto), var(--en-ponto)) 100% 100% / 2px 2px no-repeat,
+    linear-gradient(90deg, var(--en-ponto) 50%, transparent 50%) 0 100% / 4px 2px repeat-x,
     var(--roxo-claro);
-  border-radius: var(--canto);
+  border-radius: 0;
   padding: 0 0.15em 0.2em;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
@@ -16,7 +19,8 @@
 [aria-pressed="true"] .en, .btn-principal .en, .vf-botao .en, .seq-item .en, .chip-palavra .en {
   --en-ponto: currentColor;
   color: inherit;
-  background: linear-gradient(90deg, var(--en-ponto) 50%, transparent 50%) 0 100% / 4px 2px repeat-x,
+  background: linear-gradient(var(--en-ponto), var(--en-ponto)) 100% 100% / 2px 2px no-repeat,
+    linear-gradient(90deg, var(--en-ponto) 50%, transparent 50%) 0 100% / 4px 2px repeat-x,
     var(--brilho-fraco);
 }
 .en canvas.pixel { background: none; }
@@ -33,9 +37,8 @@
 .desenho-ferr small { font-size: var(--texto-aux); }
 .desenho-ferr[aria-pressed="true"] { background: var(--ambar-claro); outline: var(--borda-fina) solid var(--roxo); outline-offset: 2px; }
 .desenho-limpar { background: var(--quase-fundo); }
-/* a cor desenhada em 32 px; o toque pega 44 (6 px em volta: a metade do vão de 12) */
-.desenho-cor { position: relative; width: 32px; height: 32px; border: var(--borda-fina) solid var(--borda); border-radius: var(--redondo); box-shadow: var(--sombra-pequena); }
-.desenho-cor::after { content: ""; position: absolute; inset: -6px; }
+/* cada cor com 44 px, o alvo do dedo (D6-12); no celular, 2 fileiras de 4 */
+.desenho-cor { position: relative; width: 44px; height: 44px; border: var(--borda-fina) solid var(--borda); border-radius: var(--redondo); box-shadow: var(--sombra-pequena); }
 .desenho-cor[aria-pressed="true"] { outline: 4px solid var(--roxo); outline-offset: 2px; }
 .desenho-moldura { width: min(100%, 360px); border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto); background: var(--branco); }
 .desenho-tela {
@@ -55,6 +58,7 @@
   .desenho-ferr { min-width: 46px; padding: 4px 2px; }
   /* prancheta menor e folga embaixo: a lista de requisitos não some atrás do rodapé */
   .desenho-moldura { width: min(100%, 300px); }
+  .desenho-paleta { max-width: calc(4 * 44px + 3 * 12px); margin-left: auto; margin-right: auto; }
   .missao-corpo:has(.desenho) { padding-bottom: 40px; }
 }
 
@@ -206,3 +210,6 @@ span.mai-acento.mai-acento::after { content: attr(data-a); content: attr(data-a)
   .desenho-ferr, .letras-grandes .desenho-ferr { width: calc((100% - 6px) / 2); min-width: 0; padding: 4px 8px; }
   .desenho-ferramentas, .letras-grandes .desenho-ferramentas { max-width: none; }
 }
+/* Ligar no celular (D6-17): 2 px a menos de folga e de vão para "Informações" caber ao lado da bolinha (depois de
+   ui-animacoes.css, que dá 8px 6px) */
+@media (max-width: 480px) { .ligar-colunas .ligar-item { padding: 8px 4px; gap: 4px; } }

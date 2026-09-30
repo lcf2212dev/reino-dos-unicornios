@@ -68,7 +68,9 @@
   Pr.ritual = function (cont, podePular) {
     return new Promise(function (resolver) {
       cont.innerHTML = '';
-      var balao = el('div.balao-respira', desenhoBalao(8, 'balao-cor'));
+      // tablet em pé (D12c-01): 16 px por pixel da arte; nos outros, 8
+      var emPe = window.matchMedia && window.matchMedia('(min-width: 640px) and (max-width: 999.98px) and (min-height: 900px)').matches;
+      var balao = el('div.balao-respira', desenhoBalao(emPe ? 16 : 8, 'balao-cor'));
       var texto = el('p.respira-texto', 'Vamos respirar fundo antes da prova?');
       var contagem = el('p.respira-conta', '');
       var pular = el('button.btn-grande.btn-secundario', { type: 'button', hidden: !podePular }, 'Já respirei, pular');

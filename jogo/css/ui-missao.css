@@ -17,6 +17,25 @@
 .titulo-resto { white-space: normal; }   /* o resto do «inglês» do título, dentro do mesmo span.en, quebra normal */
 /* letras grandes no celular: o título do topo fica no degrau de baixo (16), como o cabeçalho que não cabe (ui.md §10.21) */
 @media (max-width: 480px) { .letras-grandes .missao-titulo { font-size: var(--texto-aux); } }
+/* trilha da sala (D7-21, D12f-04): "Carta N de M"/"Desafio N de M", um livrinho por carta do resumo e um ponto por
+   pergunta, juntos no cabeçalho; no celular o texto fica no corpo (.desafio-num, .resumo-pag) */
+.missao-trilha { display: flex; align-items: center; gap: 10px; flex: none; }
+.trilha-texto { font-size: var(--texto-aux); line-height: var(--entrelinha); color: var(--tinta-suave); white-space: nowrap; }
+.trilha-cartas { display: flex; align-items: center; gap: 4px; }
+.trilha-cartas:empty { display: none; }
+/* livrinho em pixel: 12×16 com a lombada de 2 px no meio; a carta aberta maior e dourada (sem scale) */
+.carta-marca { width: 12px; height: 16px; border: var(--borda-fina) solid var(--borda);
+  background: linear-gradient(var(--borda), var(--borda)) center / 2px 100% no-repeat, var(--branco); }
+.carta-marca.feito { background: linear-gradient(var(--borda), var(--borda)) center / 2px 100% no-repeat, var(--laranja); }
+.carta-marca.atual { width: 16px; height: 20px; background: linear-gradient(var(--borda), var(--borda)) center / 2px 100% no-repeat, var(--ouro); }
+/* celular: o cabeçalho não tem lugar para a trilha inteira; ficam só os pontos das perguntas, como antes */
+@media (max-width: 480px) {
+  .tela-missao .trilha-texto, .tela-missao .trilha-cartas { display: none; }
+  .tela-missao .missao-trilha:is(.fase-intro, .fase-resumo) { display: none; }
+}
+@media (min-width: 481px) {
+  .tela-missao .missao-corpo > .desafio-num, .tela-missao .resumo-pag { display: none; }
+}
 .missao-pontos { display: flex; align-items: center; gap: 6px; flex: none; }
 .ponto { width: 12px; height: 12px; border: var(--borda-fina) solid var(--borda); border-radius: var(--redondo); background: var(--branco); }
 .ponto.feito { background: var(--laranja); }
@@ -92,19 +111,25 @@
 
 /* ligar */
 .ligar { display: flex; flex-direction: column; gap: 12px; }
-.ligar-colunas { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
+/* 1fr com mínimo automático: a coluna com a palavra mais comprida fica mais larga e a palavra inteira (D6-17) */
+.ligar-colunas { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .ligar-col { display: flex; flex-direction: column; gap: 10px; }
 .ligar-item {
   --cor-par: transparent;
-  display: flex; align-items: center; gap: 8px;
+  /* bolinha sempre no canto de cima à esquerda (D6-17): o texto fica ao lado dela, alinhado pelo alto, e o bloco fica
+     no meio do botão; só quando a palavra mais comprida não cabe ao lado o texto desce para baixo da bolinha (nunca
+     parte a palavra que caberia, D10-B01) */
+  display: flex; flex-wrap: wrap; align-items: flex-start; align-content: center; gap: 8px;
   min-height: 60px; padding: 10px 12px; text-align: left;
   border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
   background: var(--papel); box-shadow: var(--sombra-grande);
   font-size: var(--texto);
-  flex-wrap: wrap;
 }
-/* o texto desce para baixo da bolinha/figura só quando a palavra mais comprida não cabe ao lado */
 .ligar-item > span:last-child:not(.ligar-img) { flex: 1 1 0; max-width: 100%; overflow-wrap: break-word; }
+/* com emoji (D6-17): o emoji fica em cima do texto, os dois na coluna ao lado da bolinha (o texto não desce por causa dele) */
+.ligar-item:has(> .opcao-emoji) { display: grid; grid-template-columns: auto minmax(0, 1fr); justify-items: start; align-content: center; column-gap: 8px; row-gap: 4px; }
+.ligar-item:has(> .opcao-emoji) > .opcao-emoji, .ligar-item:has(> .opcao-emoji) > span:last-child { grid-column: 2; }
+.ligar-item:has(> .opcao-emoji) > .ligar-marca { grid-row: 1 / span 2; }
 .ligar-marca { flex: none; width: 26px; height: 26px; border-radius: var(--redondo); border: var(--borda-fina) solid var(--borda); background: linear-gradient(var(--papel), var(--papel)) center / 14px 14px no-repeat, var(--cor-par); color: var(--tinta); font-size: var(--texto-aux); display: grid; place-items: center; }
 .ligar-item.escolhida { outline: 4px solid var(--roxo); outline-offset: 2px; background: var(--ambar-claro); }
 .ligar-item.ligado { background: color-mix(in srgb, var(--cor-par) 16%, var(--branco)); }
@@ -214,11 +239,12 @@
 /* resumo antes das questões (cartas do livro que a sala usa) */
 .resumo-sala { display: flex; flex-direction: column; align-items: center; gap: 12px; }
 .resumo-sala .livro-carta { width: 100%; max-width: 720px; box-sizing: border-box; }
-/* botões do resumo no rodapé de ação, de largura fixa (o "Continuar" não anda entre as cartas): o principal largo o
-   bastante para "Começar as perguntas 🦄", que fica no lugar dele na última carta */
+/* botões do resumo no rodapé de ação, de largura fixa (o "Continuar" não anda entre as cartas); o 🔊 Ouvir (D7-06)
+   no tamanho do texto, ao lado do de seguir */
 @media (min-width: 481px) {
   footer.rodape-acao.resumo-botoes > * { flex: 0 0 260px; min-width: 0; }
-  footer.rodape-acao.resumo-botoes > .btn-principal { flex-basis: 420px; }
+  footer.rodape-acao.resumo-botoes > .btn-principal { flex-basis: 360px; }   /* a largura do "Começar" da intro (D7-17) */
+  footer.rodape-acao > .btn-ouvir-sala { flex: 0 0 auto; }
 }
 .resumo-pag { color: var(--tinta-suave); font-size: var(--texto-aux); margin: 0; }
 /* contador da revisão do treino (D6-11): letra pequena suave; no celular ganha linha própria acima do Entregar */
@@ -227,4 +253,56 @@
   .missao-rodape:has(.contador-revisao) { flex-wrap: wrap; row-gap: 6px; height: auto; }
   .missao-rodape .contador-revisao { flex-basis: 100%; text-align: center; }
   .missao-rodape .btn-entregar { flex: 1; }
+}
+
+/* intro no celular (D7-13): o nome e o ícone já estão no cabeçalho; a intro não repete */
+@media (max-width: 480px) { .tela-missao .intro-sala > .intro-emoji, .tela-missao .intro-sala > h2 { display: none; } }
+
+/* tablet em pé (D12c-01): o bloco do corpo no meio da altura livre; o rodapé de ação fica onde está */
+@media (min-width: 640px) and (max-width: 999.98px) and (min-height: 900px) {
+  .missao-corpo { display: flex; flex-direction: column; }
+  .missao-corpo > * { flex: none; width: 100%; }
+  /* dois calços iguais em cima e embaixo (o 1º filho pode ser o "Desafio N de M" escondido); somem quando o bloco
+     não cabe e o corpo rola */
+  .missao-corpo::before, .missao-corpo::after { content: ""; flex: 1 0 0; }
+  /* a carta do resumo, a fala da intro e o Ritual da Calma em letra de enunciado (24, como a pergunta do tablet): o bloco enche a tela */
+  .resumo-sala .livro-carta p, .missao-corpo .ritual p, .tela-missao .intro-claude p { font-size: var(--texto-g); }
+  /* Ritual da Calma (D12c-01): balão a 16 px por pixel da arte (treino.js), título um degrau acima e mais vão */
+  /* opções mais altas (alvo ≥ 96) e carta do resumo com mais vão: pergunta e resumo curtos também enchem ≥ 75 % */
+  .missao-corpo .opcao { min-height: 96px; }
+  .resumo-sala .livro-carta { padding: 32px; }
+  .resumo-sala .livro-carta p { line-height: var(--entrelinha); }
+  /* o resumo (D12c-01): a carta enche a altura livre, com os blocos espalhados por igual (sem um vão grande só) */
+  .missao-corpo:has(> .resumo-sala)::before, .missao-corpo:has(> .resumo-sala)::after { flex: 0 0 0; }
+  .missao-corpo > .resumo-sala { flex: 1 0 auto; }
+  .resumo-sala .livro-carta { flex: 1 0 auto; display: flex; flex-direction: column; justify-content: space-evenly; }
+  .missao-corpo .ritual { gap: 28px; }
+  .missao-corpo .ritual > h2 { font-size: var(--texto-g); }
+  .missao-corpo .ritual .balao-respira { width: 290px; height: 350px; }
+}
+
+/* notebook (tela baixa e larga, ui.md §10.21.4; D12e-02, D12f-03): toda pergunta na mesma caixa de até 1180 px, em 2
+   colunas: o enunciado no alto da esquerda (no mesmo x com ou sem texto de apoio), o texto de apoio e o quadro de
+   palavras embaixo dele (2/5 da largura); casas, opções e cartas à direita (3/5: o Ligar e a memória têm as 2
+   colunas deles), cada coluna crescendo sozinha */
+@media (min-width: 1000px) and (max-height: 820px) {
+  .missao-corpo:has(> .desafio) > * { max-width: 1180px; }
+  .missao-corpo > .desafio, .missao-corpo > .desafio.com-apoio {
+    display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); grid-template-rows: auto auto 1fr;
+    align-items: start; column-gap: 24px; row-gap: 0;
+  }
+  /* (:is(...) para vencer as regras do texto de apoio de ≥ 1000 px, em ui-desafios.css) */
+  :is(.tela-missao, .tela-prova) .missao-corpo > .desafio > .enunciado { grid-column: 1; grid-row: 1; }
+  :is(.tela-missao, .tela-prova) .missao-corpo > .desafio > .apoio { grid-column: 1; grid-row: 2; margin-top: 16px; }
+  :is(.tela-missao, .tela-prova) .missao-corpo > .desafio > :not(.enunciado):not(.apoio) { grid-column: 2; grid-row: 1 / -1; }
+  /* completar sem texto de apoio: o quadro de palavras desce para baixo do enunciado; como as casas são várias, as
+     2 colunas vêm de colunas de texto (a caixa .completar some da conta; o enunciado vem antes no DOM) */
+  .missao-corpo > .desafio-completar:not(.com-apoio):not(:has(> .completar > .frase-completar:nth-child(6))) { display: block; column-count: 2; column-gap: 24px; }
+  .missao-corpo > .desafio-completar:not(.com-apoio) > .completar:not(:has(> .frase-completar:nth-child(6))) { display: contents; }
+  .missao-corpo > .desafio-completar:not(.com-apoio) > .enunciado,
+  .missao-corpo > .desafio-completar:not(.com-apoio) > .completar > * { break-inside: avoid; margin-bottom: 16px; }
+  .missao-corpo > .desafio-completar:not(.com-apoio) > .completar > :last-child { margin-bottom: 0; }
+  .missao-corpo > .desafio-completar:not(.com-apoio) > .completar > .quadro-palavras + * { break-before: column; }
+  /* memória: as 2 fileiras de cartas acima do rodapé */
+  .carta-mem { max-height: calc((100dvh - 330px) / 2); }
 }
