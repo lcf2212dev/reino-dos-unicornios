@@ -14,8 +14,8 @@
   function achar(nome, id) { var l = dados()[nome] || []; for (var i = 0; i < l.length; i++) if (l[i].id === id) return l[i]; return null; }
 
   /* ================= CURIOSIDADES ================= */
-  // ids já contados nesta sessão (a memória some ao recarregar; nada vai para o save)
-  var contadas = {};
+  // ids já contados nesta sessão (a memória some ao recarregar; nada vai para o save) e o último (não repete em seguida)
+  var contadas = {}, ultima = null;
   Q.TEMAS_CURIOSIDADE = ['cozinha', 'corpo', 'agua', 'ar-fogo', 'metais', 'cores', 'elementos', 'cientistas', 'cristais', 'brasil'];
   Q.curiosidades = function () { return lista('curiosidades'); };
   /** Os temas que têm pelo menos uma curiosidade. @returns {string[]} */
@@ -25,7 +25,8 @@
     return t;
   };
   /** Sorteia uma curiosidade do tema sem repetir na sessão ('todas' ou vazio = qualquer uma; tema sem nenhuma cai em
-      'todas'). Quando todas do tema já foram contadas, o tema recomeça. No modo congelado, o sorteio é pela chave.
+      'todas'). Quando todas do tema já foram contadas, o tema recomeça, sem repetir a última. No modo congelado, o
+      sorteio é pela chave.
       @param {string} [tema] @returns {{ id: string, tema: string, paginas: string[] } | null} */
   Q.curiosidade = function (tema) {
     var todas = Q.curiosidades();
@@ -33,13 +34,17 @@
     if (!doTema.length) doTema = todas;
     if (!doTema.length) return null;
     var novas = doTema.filter(function (c) { return !contadas[c.id]; });
-    if (!novas.length) { doTema.forEach(function (c) { delete contadas[c.id]; }); novas = doTema; }
+    if (!novas.length) {
+      doTema.forEach(function (c) { delete contadas[c.id]; });
+      novas = doTema.length > 1 ? doTema.filter(function (c) { return c.id !== ultima; }) : doTema;
+    }
     var c = U && U.sortear ? U.sortear(novas, 'quimica-curiosidade:' + (tema || 'todas')) : novas[0];
     contadas[c.id] = true;
+    ultima = c.id;
     return { id: c.id, tema: c.tema, paginas: (c.paginas || []).slice() };
   };
   /** Só testes: esquece o que já foi contado. */
-  Q.reiniciarCuriosidades = function () { contadas = {}; };
+  Q.reiniciarCuriosidades = function () { contadas = {}; ultima = null; };
 
   /* ================= FOGÃO DOS ESTADOS ================= */
   Q.materiais = function () { return lista('materiais').sort(porOrdem); };
