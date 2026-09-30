@@ -44,47 +44,6 @@
     ] },
   });
 
-  // desenhos só do balãozinho de status (D4-12), por cima do ícone de mesmo emoji: o ❗ com traço de 4 px e o 🤍
-  // escurecido (3,1:1 com o #fff8ee do balão; o 🤍 claro das cartas de raridade fica como está)
-  if (Reino.registrarIcones && !(window.ICONES && window.ICONES['status:❗'])) Reino.registrarIcones({
-    'status:❗': { n: 'exclamação (status)', p: { k: '#3a2446', w: '#ffffff', R: '#ffb3c1', r: '#ff6b8a', d: '#d63d63' }, d: [
-      '................',
-      '.....kkkkkk.....',
-      '.....kwRrrk.....',
-      '.....kRrrdk.....',
-      '.....kRrrdk.....',
-      '.....kRrrdk.....',
-      '.....kRrrdk.....',
-      '.....krrddk.....',
-      '.....krdddk.....',
-      '.....kkkkkk.....',
-      '................',
-      '.....kkkkkk.....',
-      '.....kRwrdk.....',
-      '.....krdddk.....',
-      '.....kkkkkk.....',
-      '................',
-    ] },
-    'status:🤍': { n: 'coração branco (status)', p: { k: '#3a2446', w: '#e6dcef', l: '#c4b4d4', p: '#9a86ad', P: '#7d6a92' }, d: [
-      '................',
-      '................',
-      '..kkkk....kkkk..',
-      '.kwlppk..kpppPk.',
-      'kwlpppPkkppppPPk',
-      'klpppppppppppPPk',
-      'klpppppppppppPPk',
-      'kppppppppppppPPk',
-      '.kpppppppppppPk.',
-      '..kpppppppPPPk..',
-      '...kpppppPPPk...',
-      '....kpppPPPk....',
-      '.....kppPPk.....',
-      '......kpPk......',
-      '.......kk.......',
-      '................',
-    ] },
-  });
-
   // status vindos de outros módulos (ex.: Dona Aveia com a montaria faminta): fn(npc) → {icone, rotulo} | null
   var STATUS = [];
   N.registrarStatus = function (fn) { STATUS.push(fn); };
@@ -126,7 +85,7 @@
   function bolha(icone) {
     if (bolhas[icone]) return bolhas[icone];
     var PA = window.PA;
-    var chave = icone.replace(/️/g, ''), ic = PA.iconeDesenho('status:' + chave) || PA.iconeDesenho(chave);
+    var chave = icone.replace(/️/g, ''), ic = PA.iconeDesenho(chave);
     var w = 20, h = 23, c = PA.novoCanvas(w, h), ctx = c.getContext('2d');
     function r(x, y, a, b, k) { ctx.fillStyle = k; ctx.fillRect(x, y, a, b); }
     // caixa arredondada com contorno + rabinho
