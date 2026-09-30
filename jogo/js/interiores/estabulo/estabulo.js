@@ -20,14 +20,8 @@
       ret(ctx, x + ((i * 5) % w), y + ((i * 3) % Math.max(1, h)), 1, 1, PALHA3);
     }
   }
-  // desenha um canvas cabendo numa caixa (sem suavizar), com a base encostada embaixo
-  function caber(ctx, img, cx, base, maxW, maxH) {
-    var s = Math.min(1, maxW / img.width, maxH / img.height);
-    var w = Math.round(img.width * s), h = Math.round(img.height * s);
-    var lig = ctx.imageSmoothingEnabled; ctx.imageSmoothingEnabled = false;
-    ctx.drawImage(img, Math.round(cx - w / 2), base - h, w, h);
-    ctx.imageSmoothingEnabled = lig;
-  }
+  // desenha um canvas cabendo numa caixa, a 1× ou numa miniatura inteira (loja/desenhos.js)
+  function caber(ctx, img, cx, base, maxW, maxH) { if (I.caberNitido) I.caberNitido(ctx, img, cx, base, maxW, maxH); }
   // baias fixas: a baia n é sempre do n-ésimo unicórnio do álbum (vazia até ele nascer)
   function daBaia(n) {
     try { return (R.NPCs && R.NPCs.unicornioDaBaia) ? R.NPCs.unicornioDaBaia(n) : null; } catch (e) { return null; }
@@ -89,7 +83,7 @@
       if (d) placa();
       if (d && window.PA && PA.unicornio) {
         var e = estagioDe(P, d.id), spr = PA.unicornio(d, e, 0), c = spr && (spr.canvas || spr);
-        if (c) caber(ctx, c, px + 16, py + 29, 28, 22);
+        if (c) caber(ctx, c, px + 16, py + 29, 28, 23);   // adulto 28×23: a 1×
         if (P.montaria && P.montaria() === d.id) {
           // laço de montaria e brilhos
           ret(ctx, px + 3, py + 9, 3, 3, K); ret(ctx, px + 7, py + 9, 3, 3, K); ret(ctx, px + 5, py + 10, 3, 3, K);

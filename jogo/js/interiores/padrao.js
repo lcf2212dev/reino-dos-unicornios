@@ -53,9 +53,8 @@
   function pintarIcone(ctx, e, cx, cy, max) {
     var ic = iconeEmoji(e);
     if (!ic) { circulo(ctx, cx, cy, 3, K); circulo(ctx, cx, cy, 2, C.ouro); return; }
-    var src = ic.canvas || ic, w = src.width, h = src.height, k = Math.min(1, max / Math.max(w, h));
-    var dw = Math.round(w * k), dh = Math.round(h * k);
-    ctx.drawImage(src, Math.round(cx - dw / 2), Math.round(cy - dh / 2), dw, dh);
+    // a 1× ou numa miniatura inteira (nada de escala fracionária; I.caberNitido, de loja/desenhos.js)
+    if (I.caberNitido) I.caberNitido(ctx, ic, cx, cy, max, max, true);
   }
 
   /* ================= OBJETOS PADRÃO ================= */
@@ -70,7 +69,7 @@
       ret(ctx, px + 7, py + 3, 2, 3, K); ret(ctx, px + 7, py + 4, 2, 1, C.ouro);
     } });
   // bancada com o emoji num porta-retrato (interativa)
-  I.objeto('padrao-bancada', { w: 2, h: 1, topo: 12, solido: true,
+  I.objeto('padrao-bancada', { w: 2, h: 1, topo: 16, solido: true,
     desenhar: function (ctx, px, py, o) {
       var cor = v(o, 'cor', '#7c5cff'), W = (o.w || 2) * 16;
       ret(ctx, px + 2, py + 8, 3, 8, K); ret(ctx, px + W - 5, py + 8, 3, 8, K);
@@ -79,9 +78,10 @@
       ret(ctx, px + 2, py + 3, W - 4, 1, clara(cor, 0.45)); ret(ctx, px + 2, py + 7, W - 4, 1, escura(cor, 0.2));
       // porta-retrato em pé
       var cx = px + W / 2;
-      contornoRet(ctx, cx - 8, py - 12, 16, 15, C.ouro);
-      ret(ctx, cx - 7, py - 11, 14, 13, C.creme);
-      pintarIcone(ctx, v(o, 'emoji', '⭐'), cx, py - 5, 11);
+      // porta-retrato do tamanho do ícone (16 px): o desenho vai a 1×, sem encolher
+      contornoRet(ctx, cx - 9, py - 16, 18, 19, C.ouro);
+      ret(ctx, cx - 8, py - 15, 16, 17, C.creme);
+      pintarIcone(ctx, v(o, 'emoji', '⭐'), cx, py - 7, 16);
       ret(ctx, px + 4, py + 1, 3, 2, K); ret(ctx, px + 5, py + 1, 1, 1, C.branco);
     } });
   // púlpito com o livro aberto da matéria
