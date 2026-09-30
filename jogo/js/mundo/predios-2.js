@@ -1,4 +1,4 @@
-/* Fachadas do mapa, parte 2 de 2 (veio de mundo/predios.js): escola, relógio (Inglês) e a torre padrão
+/* Fachadas do mapa, parte 2 de 2 (veio de mundo/predios.js): escola, relógio (Inglês, com a bandeirinha e o "HI!") e a torre padrão
    das matérias sem desenho próprio. Registra em Mapa.PREDIOS; enfeites de Mapa.fachada. */
 (function () {
   var Mapa = window.Mapa, F = Mapa.fachada, D = window.Reino.Desenho;
@@ -110,11 +110,18 @@
     triangulo(ctx, cx - 13, py - 1, 26, 13, telhado);
     F.telhas(ctx, cx - 13, py - 1, 26, 13, telhado, 3);
     ret(ctx, cx - 17, py + 13, 34, 1, escurecer(telhado, 0.2));
-    ret(ctx, cx, py - 9, 1, 6, K);
-    circulo(ctx, cx, py - 9, 2, K); circulo(ctx, cx, py - 9, 1, det);
+    // mastro com a bandeirinha do Reino Unido (a torre de Inglês, D2A-13)
+    ret(ctx, cx - 1, py - 12, 2, 9, K); ret(ctx, cx - 1, py - 12, 1, 1, det);
+    D.matriz(ctx, cx + 1, py - 12, ['kkkkkkkkkkk', 'kwbbwrwbbwk', 'kbwbwrwbwbk', 'krrrrrrrrrk', 'kbwbwrwbwbk', 'kwbbwrwbbwk',
+      'kkkkkkkkkkk'], { k: K, w: '#ffffff', b: '#2a4fb0', r: '#e0433f' });
+    // plaquinha "HI!" entre as janelinhas, em cima da porta
+    contornoRet(ctx, cx - 6, py + 42, 13, 10, '#ffffff');
+    ret(ctx, cx - 5, py + 43, 11, 1, '#2a4fb0'); ret(ctx, cx - 5, py + 50, 11, 1, '#2a4fb0');
+    letra(ctx, ['#.#', '#.#', '###', '#.#', '#.#'], cx - 4, py + 45, '#e0433f');
+    letra(ctx, ['###', '.#.', '.#.', '.#.', '###'], cx, py + 45, '#e0433f');
+    letra(ctx, ['#', '#', '#', '.', '#'], cx + 4, py + 45, '#e0433f');
     // porta, degrau e vasos
-    F.degrau(ctx, cx, py + h - 3, 22, 3);
-    F.porta(ctx, cx - 7, py + h - 25, 14, 22, '#7c5cff', det);
+    F.entrada(ctx, cx, py + h, '#7c5cff', det);
     F.vaso(ctx, cx - 23, py + h, '#ff7eb6');
     F.vaso(ctx, cx + 23, py + h, '#ffffff');
     // brilhinhos
@@ -152,8 +159,7 @@
       if (h >= 80) F.janela(ctx, cx - 4, py + 40, 8, 10, { arco: true, cruz: false, floreira: det });
     }
     // porta, degrau e vasinhos
-    F.degrau(ctx, cx, py + h - 3, 20, 3);
-    F.porta(ctx, cx - 7, py + h - 25, 14, 22, '#7c5cff');
+    F.entrada(ctx, cx, py + h, '#7c5cff', null, { largDegrau: 20 });
     F.vaso(ctx, x0 - 5, py + h, det);
     F.vaso(ctx, x0 + larg + 4, py + h, '#ffffff');
   };

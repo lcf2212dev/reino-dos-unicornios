@@ -4,7 +4,8 @@
    loja; escola, relógio e torre em mundo/predios-2.js. Prédio novo = uma função aqui (ou no arquivo
    do prédio, como a Pet Shop e o Observatório) + a entrada em mundo/lugares.js. Os enfeites comuns
    (janela, telhas, tijolos, porta...) vêm de Mapa.fachada (mundo/fachadas.js). A porta fica sempre
-   no meio da última linha. Brilhos animados: Mapa.PREDIOS_ANIM (só com Animações ligado). */
+   no meio da última linha (largura par: o desenho anda F.desvio) e é F.entrada (degrau + porta, F.PORTA).
+   Brilhos animados: Mapa.PREDIOS_ANIM (só com Animações ligado). */
 (function () {
   var Mapa = window.Mapa, F = Mapa.fachada, D = window.Reino.Desenho;
   var C = D.C, K = D.K, ret = D.ret, circulo = D.circulo, elipse = D.elipse, triangulo = D.triangulo;
@@ -52,7 +53,7 @@
       elipse(ctx, cx, py + h - 25, 14, 6, K); elipse(ctx, cx, py + h - 25, 13, 5, '#f0d0a0');
       ret(ctx, cx - 14, py + h - 25, 28, 25, K); ret(ctx, cx - 13, py + h - 25, 26, 25, '#f0d0a0');
       for (var a = -12; a <= 10; a += 4) ret(ctx, cx + a, py + h - 29 + Math.round(Math.abs(a) / 3), 2, 1, '#d9b88a');
-      F.porta(ctx, cx - 10, py + h - 26, 20, 26, roxo);
+      F.entrada(ctx, cx, py + h, roxo, null, { larg: 20, alto: 23, largDegrau: 26 });
       // fita da medalha: o disco dourado cobre o meio
       var yFita = py + 28, yFim = py + h - 29, comp = yFim - yFita + 1;
       ret(ctx, cx - 6, py + 26, 10, 2, '#ffd34d');
@@ -74,6 +75,7 @@
     },
     museu: function (ctx, px, py, w, h, cores) {
       cores = cores || {};
+      px += F.desvio(w);   // largura par: o desenho anda até a porta ficar no meio do tile dela (D2A-12)
       var parede = cores.parede || '#fff6e4', telhado = cores.telhado || '#f0a04a', det = cores.detalhe || '#ff8a3d';
       var pedra = PA.cor.misturar(parede, '#f0d8b8', 0.62);
       var pedraClara = PA.cor.clarear(pedra, 0.28);
@@ -148,6 +150,7 @@
       Mapa.fachada.lampiao(ctx, px + w - 5, py + h - 1, 14);
     },
     estabulo: function (ctx, px, py, w, h) {
+      px += F.desvio(w);   // largura par: o desenho anda até a porta ficar no meio do tile dela (D2A-12)
       var cx = px + w / 2, telhado = '#f0a04a', telhado2 = '#d9842f', telhadoL = '#ffc27a';
       // paredes de tábuas em pé, com o rodapé de pedra
       contornoRet(ctx, px + 4, py + 22, w - 8, h - 22, '#f6e7c4');
@@ -182,15 +185,17 @@
       // janelas com venezianas laranja e floreira
       F.janela(ctx, px + 14, py + 27, 12, 10, { venezianas: '#ff8a3d', floreira: '#ff7eb6' });
       F.janela(ctx, px + w - 26, py + 27, 12, 10, { venezianas: '#ff8a3d', floreira: '#ffe066' });
-      // porta de celeiro com o X branco e o batente
-      var dx = cx - 10, dy = py + h - 26;
-      ret(ctx, dx - 2, dy - 2, 24, 28, K); ret(ctx, dx - 1, dy - 1, 22, 2, '#ffffff');
-      contornoRet(ctx, dx, dy, 20, 26, '#ff8a3d');
-      F.tabuas(ctx, dx + 1, dy + 1, 18, 25, '#ff8a3d');
+      // porta de celeiro com o X branco e o batente, em cima do degrau (entrada padrão: F.PORTA)
+      var dx = cx - 10, dy = py + h - 26, da = 23;
+      ret(ctx, dx - 2, dy - 2, 24, da + 2, K); ret(ctx, dx - 1, dy - 1, 22, 2, '#ffffff');
+      contornoRet(ctx, dx, dy, 20, da, '#ff8a3d');
+      F.tabuas(ctx, dx + 1, dy + 1, 18, da - 1, '#ff8a3d');
       ctx.fillStyle = '#ffffff';
-      for (var t = 0; t < 22; t++) { ctx.fillRect(dx + 1 + Math.round(t * 18 / 22), dy + 2 + t, 2, 1); ctx.fillRect(dx + 17 - Math.round(t * 18 / 22), dy + 2 + t, 2, 1); }
-      ret(ctx, dx + 1, dy + 1, 18, 1, '#ffffff'); ret(ctx, dx + 9, dy + 1, 2, 25, '#ffffff'); ret(ctx, dx + 1, dy + 24, 18, 1, '#ffffff');
-      ret(ctx, dx + 7, dy + 12, 2, 2, C.ouro); ret(ctx, dx + 11, dy + 12, 2, 2, C.ouro);
+      for (var t = 0; t < da - 4; t++) { ctx.fillRect(dx + 1 + Math.round(t * 16 / (da - 5)), dy + 2 + t, 2, 1); ctx.fillRect(dx + 17 - Math.round(t * 16 / (da - 5)), dy + 2 + t, 2, 1); }
+      ret(ctx, dx + 1, dy + 1, 18, 1, '#ffffff'); ret(ctx, dx + 9, dy + 1, 2, da - 1, '#ffffff'); ret(ctx, dx + 1, dy + da - 2, 18, 1, '#ffffff');
+      ret(ctx, dx + 7, dy + 11, 2, 2, C.ouro); ret(ctx, dx + 11, dy + 11, 2, 2, C.ouro);
+      ret(ctx, dx + 7, dy + 11, 1, 1, C.ouro3); ret(ctx, dx + 11, dy + 11, 1, 1, C.ouro3);
+      F.degrau(ctx, cx, py + h - 3, 26, 3);
       // ferradura da sorte em cima da porta
       var hx = cx - 5, hy = py + 24;
       ret(ctx, hx, hy, 3, 7, K); ret(ctx, hx + 8, hy, 3, 7, K); ret(ctx, hx, hy + 5, 11, 4, K);
@@ -251,15 +256,12 @@
         ret(ctx, c[0], py + h - 7, 7, 7, K); ret(ctx, c[0] + 1, py + h - 6, 5, 5, C.metal); ret(ctx, c[0] + 1, py + h - 6, 5, 1, '#e8eef8');
         ret(ctx, c[0] + 3, py + h - 4, 1, 1, C.metal2);
       });
-      // porta-fechadura com a pedra preciosa
-      var dx = cx - 8;
-      ret(ctx, dx - 2, py + h - 26, 20, 26, K); ret(ctx, dx - 1, py + h - 25, 18, 25, ouro); ret(ctx, dx - 1, py + h - 25, 1, 25, '#fff3a0');
-      contornoRet(ctx, dx, py + h - 24, 16, 24, '#6b4428');
-      F.tabuas(ctx, dx + 1, py + h - 23, 14, 23, '#6b4428');
-      ret(ctx, dx + 2, py + h - 22, 12, 1, ouro);
-      circulo(ctx, dx + 8, py + h - 15, 3, K); circulo(ctx, dx + 8, py + h - 15, 2, ouro); ret(ctx, dx + 7, py + h - 14, 3, 5, K); ret(ctx, dx + 8, py + h - 14, 1, 4, ouro);
-      ret(ctx, dx + 7, py + h - 16, 1, 1, '#fff3a0');
-      D.miudeza(ctx, 'gema', cx, py + h - 25);
+      // porta de ameixa escura (contraste com a madeira, D2A-03) na entrada padrão, com a fechadura e a pedra preciosa
+      var fo = F.entrada(ctx, cx, py + h, '#4a2a5a', ouro, { larg: 16 });
+      var fy = fo.y + 9;
+      circulo(ctx, cx, fy, 3, K); circulo(ctx, cx, fy, 2, ouro); ret(ctx, cx - 1, fy + 1, 3, 5, K); ret(ctx, cx, fy + 1, 1, 4, ouro);
+      ret(ctx, cx - 1, fy - 1, 1, 1, '#fff3a0'); ret(ctx, cx, fy, 1, 1, K);
+      D.miudeza(ctx, 'gema', cx, fo.y - 2);
       // tesouro que escorregou: moedas e uma gema na grama
       [[21, 5], [26, 4], [w - 25, 4]].forEach(function (m) {
         circulo(ctx, px + m[0], py + h - m[1], 3, K); circulo(ctx, px + m[0], py + h - m[1], 2, ouro);
@@ -301,7 +303,7 @@
       ret(ctx, px + 56, py + 45, 1, 1, '#9b5cff'); ret(ctx, px + 57, py + 44, 1, 1, '#9b5cff'); ret(ctx, px + 58, py + 43, 1, 1, '#9b5cff');
       D.matriz(ctx, px + 58, py + 39, ['..y..', '.yyy.', 'yywyy', '.y.y.'], { y: C.ouro, w: '#fff3a0' });
       // porta
-      F.porta(ctx, cx - 7, py + h - 22, 14, 22, '#9b5cff', '#ffe066');
+      F.entrada(ctx, cx, py + h, '#9b5cff', '#ffe066');
       // canteiro de flores
       contornoRet(ctx, px + 14, py + 52, 16, 8, '#c98a4b');
       ret(ctx, px + 15, py + 53, 14, 1, C.madeiraClara);

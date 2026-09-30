@@ -33,6 +33,9 @@
   function dentro(x, y) { return x >= 0 && y >= 0 && x < W && y < H; }
   function noRect(x, y, r) { return x >= r.x && y >= r.y && x < r.x + r.w && y < r.y + r.h; }
   function porta(r) { return { x: r.x + Math.floor(r.w / 2), y: r.y + r.h - 1 }; }
+  // peça da frente do prédio no tile fx: cerca dos dois lados do portão com o mesmo número de tiles; na largura par
+  // sobra o tile da ponta esquerda, que vira um arbusto (sólido como a cerca: a pegada e o caminho não mudam; D2A-12)
+  function pecaDaCerca(l, fx) { return l.rect.w % 2 === 0 && fx === l.rect.x ? 'arbusto' : 'cerca'; }
 
   // ids das matérias porCima que já estão no traçado de hoje: entram antes do sorteio dos enfeites, como os
   // lugares fixos. Matéria nova NÃO entra aqui: fica fora da cópia e não mexe nas flores do resto do reino.
@@ -135,7 +138,7 @@
     hoje.forEach(function (l) {
       if (l.tipo === 'castelo') return;
       var fy = l.rect.y + l.rect.h;
-      for (var fx = l.rect.x; fx < l.rect.x + l.rect.w; fx++) if (fx !== l.porta.x) por('cerca', fx, fy);
+      for (var fx = l.rect.x; fx < l.rect.x + l.rect.w; fx++) if (fx !== l.porta.x) por(pecaDaCerca(l, fx), fx, fy);
     });
 
     // bordas de árvores, bosques e enfeites sorteados
@@ -208,7 +211,7 @@
       var fy = l.rect.y + l.rect.h;
       for (var fx = l.rect.x; fx < l.rect.x + l.rect.w; fx++) {
         if (fx === l.porta.x || !dentro(fx, fy) || tipo[fy][fx] !== 'g' || solido[fy][fx]) continue;
-        decor[fy][fx] = 'cerca'; solido[fy][fx] = true;
+        decor[fy][fx] = pecaDaCerca(l, fx); solido[fy][fx] = true;
       }
     });
     lugares.forEach(function (l) { delete l.novo; });

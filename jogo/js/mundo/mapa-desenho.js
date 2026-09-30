@@ -95,10 +95,8 @@
   I.contornoRet = contornoRet;
   I.sombraChao = sombraChao;   // também para mundo/arvores.js
 
-  function sombraBase(ctx, px, py, w, h) {
-    elipse(ctx, px + w / 2, py + h - 1, Math.round(w * 0.38), 3, 'rgba(58,36,70,0.10)');
-    elipse(ctx, px + w / 2, py + h - 1, Math.round(w * 0.30), 1, 'rgba(58,36,70,0.18)');
-  }
+  // sombra de chão do prédio, embaixo e fora da base: Mapa.fachada.sombraBase (mundo/fachadas.js, D2A-14)
+  function sombraBase(ctx, px, py, w, h) { Mapa.fachada.sombraBase(ctx, px, py, w, h); }
 
   // enfeites do chão, tile a tile (os altos, postos à mão, vão na ordem de cima para baixo do Mapa.prerender).
   // O sorteio das flores anda pela cópia do reino de hoje (I.decorSorteio):

@@ -58,16 +58,9 @@
     circulo(ctx, jx, jy, 8, K); circulo(ctx, jx, jy, 7, MAD); circulo(ctx, jx, jy, 5, K); circulo(ctx, jx, jy, 4, '#eef9ff');
     ['#ff7eb6', '#ffd34d', '#6fdc8c', '#5fb4ff'].forEach(function (c, i) { ret(ctx, jx - 3, jy + 2 - i, 7, 1, c); });
     ret(ctx, jx - 3, jy - 3, 7, 1, C.branco); ret(ctx, jx, jy - 4, 1, 1, VERM);
-    // porta com arco e janelinha de coração
-    var dx = cx - 7, dy = py + h - 22;
-    ret(ctx, dx - 1, dy + 2, 16, 20, C.ouro); elipse(ctx, dx + 7, dy + 3, 8, 3, C.ouro);
-    ret(ctx, dx, dy + 3, 14, 19, LAR); elipse(ctx, dx + 7, dy + 4, 7, 3, LAR);
-    ret(ctx, dx + 1, dy + 5, 12, 1, '#ffb070');
-    ret(ctx, dx + 6, dy + 5, 1, 17, '#d96a2a');
-    coracao(ctx, dx + 5, dy + 7, C.creme);
-    ret(ctx, dx + 10, dy + 13, 2, 2, C.ouro);
-    // tapetinho da porta
-    ret(ctx, cx - 6, py + h - 2, 13, 2, K); ret(ctx, cx - 5, py + h - 2, 11, 1, MENTA);
+    // porta laranja padrão (arco, moldura dourada, maçaneta e degrau: Mapa.fachada.entrada) com o coração
+    var fo = Fa.entrada(ctx, cx, py + h, LAR, C.ouro);
+    coracao(ctx, cx - 3, fo.y + 4, C.creme);
     // saco de feno e potinho de água do lado de fora
     fardo(ctx, px + 49, py + h - 2, 10, 8);
     var bx = px + 68, by = py + h - 5;

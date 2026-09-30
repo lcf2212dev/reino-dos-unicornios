@@ -81,8 +81,6 @@
     // degrau de pedra e a porta roxa de arco com moldura dourada (como todas as entradas do reino)
     Fa.degrau(ctx, cx, py + h - 5, 25, 5);
     Fa.porta(ctx, cx - 7, py + h - 26, 14, 21, '#7c5cff');
-    // sombra de 2 px na base da casa
-    ret(ctx, px + 7, py + h, w - 14, 1, 'rgba(58,36,70,0.28)'); ret(ctx, px + 9, py + h + 1, w - 18, 1, 'rgba(58,36,70,0.14)');
     // pilha de livros ao lado da porta (esquerda) e um vaso de hortelã (direita)
     var lx = px + 12, lb = py + h - 2;
     livrinho(ctx, lx, lb, 14, 5, '#5fb4ff'); livrinho(ctx, lx + 1, lb - 4, 12, 5, '#ffd34d'); livrinho(ctx, lx + 2, lb - 8, 11, 5, '#ff7eb6');

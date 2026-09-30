@@ -131,20 +131,13 @@
     ret(ctx, cx + 14, dy0 - 27, 3, 3, '#5fb4ff'); ret(ctx, cx + 15, dy0 - 27, 1, 1, '#d9f2ff');
     ret(ctx, cx - 3, dy0 - 6, 6, 5, CONTORNO); ret(ctx, cx - 2, dy0 - 5, 4, 3, '#6f6198');   // o pé do telescópio
 
-    // ---- plaquinha com a lua e a estrela, porta e janelinhas ----
-    contornoRet(ctx, cx - 6, by + 4, 12, 8, '#2a2050');
-    circulo(ctx, cx - 2, by + 8, 2, '#ffe066'); ret(ctx, cx - 1, by + 6, 2, 3, '#2a2050'); ret(ctx, cx, by + 9, 1, 1, '#2a2050');
-    brilho(ctx, cx + 3, by + 7, '#ffffff');
-    var dx = cx - 6, dyy = by + 12, dw = 12, dh = bh - 12;
-    // arco em linhas inteiras (sem meio pixel): moldura dourada e a porta roxa
-    [[dx - 1, dw + 2, dyy, '#ffd34d'], [dx, dw, dyy + 1, '#7c5cff']].forEach(function (a) {
-      [3, 1, 1].forEach(function (ins, r) { ret(ctx, a[0] + ins, a[2] + r, a[1] - ins * 2, 1, a[3]); });
-      ret(ctx, a[0], a[2] + 3, a[1], dyy + dh - a[2] - 3, a[3]);
-    });
-    ret(ctx, dx + dw / 2 - 1, dyy + 5, 1, dh - 5, esc('#7c5cff', 0.25));
-    ret(ctx, dx + dw - 4, dyy + Math.floor(dh / 2) + 2, 2, 2, '#ffd34d');
-    ret(ctx, dx + 2, dyy + 6, 1, 1, '#ffe066');
-    [bx + 9, bx + bw - 9].forEach(function (jx) {
+    // ---- porta padrão (Mapa.fachada.porta, 14×22: 23 px de arte com o arco; a escada é o degrau) com a janelinha da
+    // lua e da estrela ----
+    window.Mapa.fachada.porta(ctx, cx - 7, by + 5, 14, bh - 5, '#7c5cff', '#ffd34d');
+    contornoRet(ctx, cx - 4, by + 8, 8, 6, '#2a2050');
+    ret(ctx, cx - 3, by + 9, 2, 4, '#ffe066'); ret(ctx, cx - 2, by + 9, 1, 1, '#2a2050'); ret(ctx, cx - 2, by + 12, 1, 1, '#2a2050');
+    ret(ctx, cx + 1, by + 9, 1, 3, '#dff4ff'); ret(ctx, cx, by + 10, 3, 1, '#dff4ff'); ret(ctx, cx + 1, by + 10, 1, 1, '#ffffff');
+    [bx + 8, bx + bw - 9].forEach(function (jx) {
       circulo(ctx, jx, by + 13, 4, CONTORNO); circulo(ctx, jx, by + 13, 3, '#ffd34d'); circulo(ctx, jx, by + 13, 2, '#2a2050');
       ret(ctx, jx - 1, by + 12, 1, 1, '#ffffff'); ret(ctx, jx + 1, by + 14, 1, 1, '#ffe066');
     });

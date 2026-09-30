@@ -58,8 +58,6 @@
     // degrau de pedra e a porta roxa de arco com moldura dourada (como todas as entradas do reino)
     Fa.degrau(ctx, cx, py + h - 5, 25, 5);
     Fa.porta(ctx, cx - 7, py + h - 26, 14, 21, '#7c5cff');
-    // sombra de 2 px na base
-    ret(ctx, px + 7, py + h, w - 14, 1, 'rgba(58,36,70,0.28)'); ret(ctx, px + 9, py + h + 1, w - 18, 1, 'rgba(58,36,70,0.14)');
     // semáforo na calçada (esquerda) e a caixa de correio amarela (direita)
     var sx = px + 3, sb = py + h - 1;
     ret(ctx, sx + 2, sb - 14, 2, 14, K); ret(ctx, sx + 2, sb - 13, 1, 12, C.metal);
