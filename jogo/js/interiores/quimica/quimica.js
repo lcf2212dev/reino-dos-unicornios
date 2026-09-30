@@ -29,8 +29,9 @@
   /* ================= LAYOUT ================= */
   // 3 cômodos de 13×13 lado a lado (paredes nas fileiras 1-2): Sala do Microscópio (esquerda) | Bancada de
   // Misturas (entrada, no meio) | Cantinho dos Átomos (direita). Portas nas fileiras 9-10; saída embaixo da Bancada.
-  // CONTRATO (docs/contratos/quimica.md §5): ids e rects dos cômodos, portas, saída, spawn, a vaga da Doutora
-  // Proveta (24, 6) e os 4 objetos que abrem as telas (chaves bancada, caderno, microscopio, tabela).
+  // CONTRATO (docs/contratos/quimica.md §5): ids e rects dos cômodos, portas, saída, spawn, a escada (21, 3) que
+  // sobe para o 2º andar, a vaga da Doutora Proveta (24, 6) e os 4 objetos que abrem as telas (chaves bancada,
+  // caderno, microscopio, tabela).
   var MIC = { x: 1, y: 1 }, BAN = { x: 15, y: 1 }, ATO = { x: 29, y: 1 };
   function sala(ox, oy, lista) {
     return lista.map(function (o) { var n = Object.assign({}, o); n.x = o.x + ox; n.y = o.y + oy; return n; });
@@ -152,6 +153,9 @@
     tamanho: { w: 43, h: 15 },
     saida: { x: BAN.x + 6, y: 13 },
     spawn: { x: BAN.x + 6, y: 12 },
+    // sobe para o 2º andar (quimica/andar2.js), no fundo da Bancada, no fim do corredor que sai da porta: quem desce
+    // de lá chega logo abaixo do arco, (21, 4); quem sobe chega acima do vão de lá, olhando para o salão
+    escadas: [{ x: BAN.x + 6, y: 3, para: 'quimica-2', olhar: { x: 0, y: -1 }, sentido: 'sobe' }],
     comodos: [
       { id: 'bancada', nome: 'Bancada de Misturas', placa: 'Bancada de Misturas', rect: { x: BAN.x, y: BAN.y, w: 13, h: 13 },
         piso: 'taco', parede: 'papel',

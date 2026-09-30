@@ -174,7 +174,8 @@ test('quimica: toda página falada com até 30 letras e 3+ palavras, sem fórmul
     if (letras(f.texto) > 30) ruins.push(`${letras(f.texto)} letras: "${f.texto}"`);
     if (f.texto.trim().split(/\s+/).length < 3) ruins.push(`menos de 3 palavras: "${f.texto}"`);
     if (/[A-Z][a-z]?[0-9₀-₉]/.test(f.texto)) ruins.push(`fórmula na fala (a voz fala por extenso): "${f.texto}"`);
-    if (f.voz !== R.Quimica.VOZ) ruins.push(`voz ${f.voz}: "${f.texto}"`);
+    // térreo na voz da Doutora Proveta; 2º andar na do Professor Carbono ou da Dona Caramela (contrato §9)
+    if (![R.Quimica.VOZ, R.Quimica.VOZ_CARBONO, R.Quimica.VOZ_CARAMELA].includes(f.voz)) ruins.push(`voz ${f.voz}: "${f.texto}"`);
   });
   igual(ruins, []);
 });

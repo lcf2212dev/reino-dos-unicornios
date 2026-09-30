@@ -1,0 +1,148 @@
+{
+  "nome": "quimica-andar2",
+  "pedido": "pedidos/2026-09-30-quimica-andar2.md",
+  "personagens": [
+    { "id": "quimica-carbono", "nome": "Professor Carbono", "genero": "m", "idade": "idoso", "predio": "quimica-2", "x": 24, "y": 6,
+      "acao": { "tipo": "quimica-curiosidade", "tema": "todas" },
+      "perfil": { "voz": "pt-BR-AntonioNeural", "velocidade": "-12%", "tom": "-50Hz" } },
+    { "id": "quimica-caramela", "nome": "Dona Caramela", "genero": "f", "idade": "adulto", "predio": "quimica-2", "x": 7, "y": 6,
+      "acao": { "tipo": "tela", "tela": "quimica-estados" },
+      "perfil": { "voz": "pt-BR-FranciscaNeural", "velocidade": "+0%", "tom": "+22Hz" } }
+  ],
+  "tarefas": [
+    {
+      "id": "contrato", "tipo": "contrato",
+      "titulo": "Reservas do Professor Carbono e da Dona Caramela, esqueleto do quimica-2 com as escadas, API do andar, grupos do save, config, sementes, ids das telas",
+      "quem": "orquestrador", "depende": [],
+      "arquivos": [
+        "jogo/js/interiores/quimica/reservas.js", "jogo/js/interiores/quimica/acoes.js",
+        "jogo/js/sistemas/quimica.js", "jogo/js/sistemas/quimica-andar2.js", "jogo/js/nucleo/config.js",
+        "jogo/js/manifesto.js", "jogo/index.html", "docs/contratos/quimica.md", "docs/contratos/README.md",
+        "jogo/ferramentas/testes/unidade/escadas.test.js", "jogo/ferramentas/testes/unidade/quimica.test.js",
+        "jogo/ferramentas/testes/unidade/quimica-andar2.test.js",
+        "CLAUDE.md", "docs/contratos/save-e-mescla.md", "docs/decisoes/seguranca-do-progresso.md", "docs/receitas/enfeite-novo.md",
+        ".claude/skills/orquestrar-frentes/SKILL.md", ".claude/skills/entregar/SKILL.md", ".claude/skills/investigar-vazamento/SKILL.md",
+        ".claude/agents/worker-low.md"
+      ],
+      "worktree": "quimica-andar2", "personagens": ["quimica-carbono", "quimica-caramela"],
+      "pronto": ["vagas tracejadas em (24, 6) e (7, 6) no quimica-2", "npm run vozes-elenco limpo", "escadas pareadas (21, 3) ↔ (21, 12)", "quimica-andar2.test.js verde"],
+      "estimativa": 40
+    },
+    {
+      "id": "novidade", "tipo": "mecanica",
+      "titulo": "Selo ✨ Novo! para novidade dentro de um lugar já visitado (o 2º andar) e a linha do menu Lugares",
+      "quem": "worker-low", "depende": ["contrato"],
+      "arquivos": ["jogo/js/sistemas/visitados.js", "jogo/js/interiores/quimica/lugar.js", "docs/contratos/conteudo.md",
+        "jogo/ferramentas/testes/unidade/novidade-andar.test.js"],
+      "worktree": "quimica-novidade",
+      "pronto": ["✨ Novo! no Laboratório até ela entrar no quimica-2, mesmo já tendo visitado o térreo", "lugares sem a novidade nova continuam iguais", "linha 'Misturas, microscópio, átomos e 2º andar'"],
+      "estimativa": 25
+    },
+    {
+      "id": "cenario", "tipo": "cenario",
+      "titulo": "Os 3 cômodos ricos do 2º andar, objetos quimica-* novos, falas dos objetos e o cartaz '2º andar' no térreo",
+      "quem": "worker-low", "depende": ["contrato"],
+      "arquivos": ["jogo/js/interiores/quimica/andar2.js", "jogo/js/interiores/quimica/andar2-objetos.js",
+        "jogo/js/interiores/quimica/andar2-objetos-2.js", "jogo/js/interiores/quimica/andar2-falas.js",
+        "jogo/js/interiores/quimica/quimica.js"],
+      "worktree": "quimica-cenario2",
+      "pronto": ["validar-interiores --so quimica-2 sem erro (rico, alcançável)", "vagas (24, 6) e (7, 6) livres", "fogão, mesa e estante abrem as telas", "escada do térreo visível da porta, com o cartaz"],
+      "estimativa": 60
+    },
+    {
+      "id": "npc-andar2", "tipo": "npc",
+      "titulo": "Visual do Professor Carbono e da Dona Caramela",
+      "quem": "worker-low", "depende": ["contrato"],
+      "arquivos": ["jogo/js/interiores/quimica/personagens.js"],
+      "worktree": "quimica-npc2", "personagens": ["quimica-carbono", "quimica-caramela"],
+      "pronto": ["os dois aparecem nas vagas, nos 3 tamanhos, diferentes da Doutora Proveta, da Doutora Vega e da Chef Manu"],
+      "estimativa": 20
+    },
+    {
+      "id": "falas-andar2", "tipo": "falas",
+      "titulo": "Falas do Professor Carbono e da Dona Caramela (oi, nova, depois) e a nova fala da Doutora Proveta sobre o 2º andar",
+      "quem": "worker-low", "depende": ["contrato"],
+      "arquivos": ["jogo/js/interiores/quimica/personagens-falas.js"],
+      "worktree": "quimica-andar2", "personagens": ["quimica-carbono", "quimica-caramela"],
+      "pronto": ["até 30 letras por página, 3+ palavras", "nova da Dona Caramela = 'Vamos ver a água mudar?'"],
+      "estimativa": 15
+    },
+    {
+      "id": "curiosidades", "tipo": "conteudo",
+      "titulo": "40+ curiosidades de química com fonte, em 10 temas, e a ação quimica-curiosidade completa",
+      "quem": "worker-low", "depende": ["contrato"],
+      "arquivos": ["jogo/js/conteudo/quimica/curiosidades.js", "jogo/js/interiores/quimica/curiosidade.js",
+        "jogo/ferramentas/testes/unidade/quimica-curiosidades.test.js"],
+      "worktree": "quimica-curiosidades",
+      "pronto": ["≥ 40 curiosidades corretas, ≥ 3 por tema, fonte e URL em cada", "Outra curiosidade / Tchau, sem repetir na sessão", "nada de bicho"],
+      "estimativa": 45
+    },
+    {
+      "id": "estados", "tipo": "mecanica",
+      "titulo": "Fogão dos Estados: panela, termômetro, moléculas, esquentar e esfriar, as 7 mudanças",
+      "quem": "worker-low", "depende": ["contrato"],
+      "arquivos": ["jogo/js/ui/quimica-estados.js", "jogo/js/ui/quimica-estados-2.js", "jogo/css/ui-quimica-estados.css",
+        "jogo/js/conteudo/quimica/estados.js", "jogo/js/conteudo/quimica/frases-estados.js",
+        "jogo/ferramentas/testes/unidade/quimica-estados.navegador.test.js"],
+      "worktree": "quimica-estados",
+      "pronto": ["gelo derrete, água ferve, vapor condensa na tampa, água congela", "chocolate, manteiga e vela derretem e endurecem", "sem animação: quadro final", "teclado"],
+      "estimativa": 60
+    },
+    {
+      "id": "separar", "tipo": "mecanica",
+      "titulo": "Mesa de Separar Misturas: 6 misturas, 6 ferramentas, animação de cada separação",
+      "quem": "worker-low", "depende": ["contrato"],
+      "arquivos": ["jogo/js/ui/quimica-separar.js", "jogo/js/ui/quimica-separar-2.js", "jogo/css/ui-quimica-separar.css",
+        "jogo/js/conteudo/quimica/separar.js", "jogo/js/conteudo/quimica/frases-separar.js",
+        "jogo/ferramentas/testes/unidade/quimica-separar.navegador.test.js"],
+      "worktree": "quimica-separar",
+      "pronto": ["ferramenta certa separa com animação", "a errada não pune", "sem animação: quadro final", "teclado"],
+      "estimativa": 60
+    },
+    {
+      "id": "livros", "tipo": "mecanica",
+      "titulo": "Estante da Biblioteca: 8 livros com desenho, lidos pelo Professor Carbono",
+      "quem": "worker-low", "depende": ["contrato"],
+      "arquivos": ["jogo/js/ui/quimica-livros.js", "jogo/js/ui/quimica-livros-2.js", "jogo/css/ui-quimica-livros.css",
+        "jogo/js/conteudo/quimica/livros.js", "jogo/js/conteudo/quimica/frases-livros.js",
+        "jogo/ferramentas/testes/unidade/quimica-livros.navegador.test.js"],
+      "worktree": "quimica-livros",
+      "pronto": ["8 livros corretos com desenho próprio", "estrela ao chegar à última página, só na 1ª vez", "teclado"],
+      "estimativa": 50
+    },
+    {
+      "id": "icones", "tipo": "arte",
+      "titulo": "Ícones pixel art dos emojis novos do 2º andar",
+      "quem": "worker-low", "depende": ["contrato"],
+      "arquivos": ["jogo/js/conteudo/quimica/icones-2.js"],
+      "worktree": "quimica-icones2",
+      "pronto": ["🧈 🕯 🌡 🫘 🧲 🔩 🌧 🧑‍🔬 com desenho 16×16"],
+      "estimativa": 20
+    },
+    {
+      "id": "vozes", "tipo": "vozes",
+      "titulo": "Vozes do Professor Carbono, da Dona Caramela e de todas as falas novas do laboratório",
+      "quem": "orquestrador",
+      "depende": ["contrato", "falas-andar2", "curiosidades", "estados", "separar", "livros", "cenario"],
+      "arquivos": ["jogo/js/voz/interior-quimica.js"],
+      "worktree": "integracao-quimica-andar2", "personagens": ["quimica-carbono", "quimica-caramela"],
+      "pronto": ["transcrição sem ✘"], "estimativa": 40
+    },
+    {
+      "id": "integracao", "tipo": "integracao",
+      "titulo": "Juntar as frentes, e2e das telas novas, npm test e e2e",
+      "quem": "orquestrador",
+      "depende": ["contrato", "novidade", "cenario", "npc-andar2", "falas-andar2", "curiosidades", "estados", "separar", "livros", "icones", "vozes"],
+      "arquivos": ["jogo/ferramentas/testes/referencias-cenas.js", "jogo/ferramentas/testes/base-referencia.txt", "jogo/ferramentas/testes/cenario.js", "docs/ARQUITETURA.md"],
+      "worktree": "integracao-quimica-andar2",
+      "pronto": ["npm test e npm run e2e verdes"], "estimativa": 40
+    },
+    {
+      "id": "entrega", "tipo": "entrega",
+      "titulo": "Merge na main, push e Vercel",
+      "quem": "orquestrador", "depende": ["integracao"], "arquivos": [],
+      "worktree": "integracao-quimica-andar2",
+      "pronto": ["main no GitHub e Vercel publicada"], "estimativa": 15
+    }
+  ]
+}
