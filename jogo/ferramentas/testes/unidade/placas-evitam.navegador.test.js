@@ -145,6 +145,36 @@ test('placa do cômodo: fora do balão, a 8 px do HUD, fora dos objetos da pared
         conferir(`celular ${interior}/${comodo}`, m, falhas);
       }
     } finally { await cc.fechar(); }
+    // Letras grandes (O-32): a letra da placa sobe um degrau (16 → 24 px CSS) e as regras seguem valendo
+    for (const tam of ['celular', 'tablet', 'notebook']) {
+      const lg = await abrirCenario({ browser, tamanho: tam, save: 'completo', pasta: '/tmp/reino-testes/ver/teste-placas-lg-' + tam });
+      try {
+        for (const [interior, comodo] of [['castelo', 'ala-ciencias'], ['museu', 'galeria1'], ['escola', null], ['bau', null], ['loja', null]]) {
+          await lg.ir(interior);
+          if (comodo) {
+            await lg.js(`(function () {
+              var c = Reino.Interiores.def(${JSON.stringify(interior)}).comodos.find(function (k) { return k.id === ${JSON.stringify(comodo)}; }).rect;
+              var cena = Reino.Cena.atual(), x = c.x + Math.floor(c.w / 2), y = c.y + Math.floor(c.h / 2);
+              var p = cena.solido(x, y) ? cena.maisPerto(x, y, Jogador.tile()) : { x: x, y: y };
+              Jogador.posicionar(p.x, p.y); Jogador.virar(0, 1);
+            })()`);
+          }
+          const alturas = [];
+          for (const grande of [false, true]) {
+            await lg.js(`document.documentElement.classList.toggle('letras-grandes', ${grande})`);
+            await lg.avancar(600);
+            const m = await lg.page.evaluate(medirQuadro);
+            const nome = `${tam} ${interior}/${comodo || 'entrada'}${grande ? ' LG' : ''}`;
+            if (!m.placas.length) { falhas.push(`${nome}: nenhuma placa desenhada`); continue; }
+            comPlaca++;
+            alturas.push(Math.max.apply(null, m.placas.map((p) => Math.round((p.bottom - p.top) * (p.right - p.left)))));
+            conferir(nome, m, falhas);
+          }
+          if (alturas.length === 2 && !(alturas[1] > alturas[0])) falhas.push(`${tam} ${interior}: a placa não cresceu com Letras grandes (${alturas.join(' → ')})`);
+          await lg.js(`document.documentElement.classList.remove('letras-grandes')`);
+        }
+      } finally { await lg.fechar(); }
+    }
     // celular, corredor da escola: a Mariana anda de ponta a ponta (a câmera rola), com e sem o balão da Margarida;
     // a placa do cômodo dela aparece em todo quadro e nunca sobe para a sala de cima
     const cel = await abrirCenario({ browser, tamanho: 'celular', save: 'completo', pasta: '/tmp/reino-testes/ver/teste-placas-celular' });
