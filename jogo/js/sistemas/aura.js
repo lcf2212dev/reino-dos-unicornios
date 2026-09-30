@@ -95,6 +95,18 @@
     var inteiro = Math.floor(d / 10);
     return inteiro.toLocaleString('pt-BR') + ',' + (d % 10);
   };
+  // o do chip do HUD (D13-01), de até 8 letras: "1.234,5" até 9.999,9; daí "12,3 mil", "123 mil", "1,2 mi", "45 bi"…
+  // (arredonda para baixo: nunca mostra mais do que ela tem). O painel da Aura mostra o texto inteiro
+  var UNIDADES = ['mil', 'mi', 'bi', 'tri'];
+  A.textoCurto = function (d) {
+    if (d === undefined) d = A.decimos();
+    var inteiro = Math.floor(d / 10);
+    if (inteiro < 10000) return A.texto(d);
+    var u = 0, div = 1000;   // só inteiros: sem erro de vírgula flutuante
+    while (inteiro >= div * 1000 && u < UNIDADES.length - 1) { div *= 1000; u++; }
+    var v = Math.floor(inteiro / div), casa = v < 100 ? Math.floor(inteiro * 10 / div) % 10 : 0;
+    return v.toLocaleString('pt-BR') + (casa ? ',' + casa : '') + ' ' + UNIDADES[u];
+  };
 
   /* ================= COMEMORAÇÃO ================= */
   // a cor nova é comemorada quando ela volta ao mapa (sem tela por cima), para não falar por cima do retorno da sala

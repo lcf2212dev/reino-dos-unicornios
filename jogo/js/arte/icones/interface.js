@@ -739,4 +739,23 @@ Object.assign(window.ICONES, {
     '................',
     '................',
   ] },
+  // a chama da Aura (chip do HUD e painel, ui/hud-aura.js): o HUD repinta c, l e s na cor da faixa (D8A-09)
+  "aura:chama": { n: "aura", p: { k: '#3a2446', c: '#ffd25c', l: '#fff0b0', s: '#e0a020', w: '#ffffff' }, d: [
+    '......k.........',
+    '.....ksk........',
+    '....kccsk.......',
+    '....kcccsk.k....',
+    '...kccccskksk...',
+    '...kccccskcsk...',
+    '..kcccllcccsk...',
+    '..kccllllcccsk..',
+    '.kccclllllccsk..',
+    '.kcccllwllccsk..',
+    '.kscclwwwllcsk..',
+    '..kcclwwwwlcsk..',
+    '..kssclwwlssk...',
+    '...kkssssskk....',
+    '.....kkkkk......',
+    '................',
+  ] },
 });

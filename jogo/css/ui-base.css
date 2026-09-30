@@ -155,7 +155,7 @@ body.sem-animacao button.esperando-fala::after { animation: none; }
 :focus-visible, :root [aria-pressed]:focus-visible, :root .ligar-item:focus-visible { outline: 4px dashed var(--tinta); outline-offset: 2px; }
 .pixel, canvas { image-rendering: pixelated; image-rendering: crisp-edges; }
 .icone-px { vertical-align: -0.3em; }
-.seta canvas, .btn-icone canvas, .btn-tela-cheia canvas, .chip canvas, .dock-btn canvas { display: block; }
+.seta canvas, .btn-icone canvas, .btn-tela-cheia canvas, .dock-btn canvas { display: block; }   /* o chip do HUD é flex (ui-hud.css) */
 [hidden] { display: none !important; }
 
 h1, h2, h3 { margin: 0; text-wrap: balance; }
