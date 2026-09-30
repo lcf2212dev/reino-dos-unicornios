@@ -45,7 +45,7 @@
     if (tem) {
       var pe = Reino.Unicornios.progressoEstagio(u.xp);
       // a montaria aparece com os enfeites em uso, como no cartão do HUD (os outros não usam nada)
-      carta.appendChild(UI.spriteMontaria(d.id, 3));
+      carta.appendChild(UI.spriteMontaria(d.id, 4));
       carta.appendChild(el('b.carta-nome', P.nomeUni(d.id)));
       carta.appendChild(el('span.carta-rar', rar.emoji + ' ' + rar.nome));
       carta.appendChild(el('span.carta-estagio', Reino.Unicornios.ESTAGIOS[pe.estagio].emoji + ' ' + Reino.Unicornios.ESTAGIOS[pe.estagio].nome));
@@ -84,7 +84,7 @@
     }
     var pe = Reino.Unicornios.progressoEstagio(u.xp);
     var E = Reino.Unicornios.ESTAGIOS;
-    c.appendChild(el('div.detalhe-sprite.rar-' + d.raridade, UI.spriteMontaria(d.id, 7)));
+    c.appendChild(el('div.detalhe-sprite.rar-' + d.raridade, UI.spriteMontaria(d.id, 8)));
     c.appendChild(el('p.detalhe-rar.rar-' + d.raridade, rar.emoji + ' ' + rar.nome));
     c.appendChild(el('p.detalhe-frase', '"' + d.frase + '"'));
     var trilha = el('ol.trilha-estagios');
@@ -129,7 +129,7 @@
     var c = pn.conteudo;
     var lista = Cu.despensa();
     c.appendChild(el('div.petshop-uni',
-      UI.spriteMontaria(d.id, 3, { semEnfeite: true }),
+      UI.spriteMontaria(d.id, 4, { semEnfeite: true }),
       el('div.petshop-uni-info', el('b', P.nomeUni(d.id)), barrasCuidado(d.id, 'grande'))));
     if (!lista.length) {
       c.appendChild(el('p.petshop-vazia', '🧺 A despensa está vazia.'));

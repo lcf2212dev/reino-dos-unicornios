@@ -24,7 +24,7 @@
       U.preencher(saldo, '⭐ Você tem ' + P.estrelas() + (P.estrelas() === 1 ? ' estrela' : ' estrelas'));
       var id = P.montaria();
       uniBox.innerHTML = '';
-      uniBox.appendChild(UI.spriteMontaria(id, window.innerWidth <= 480 ? 3 : 4));
+      uniBox.appendChild(UI.spriteMontaria(id, 4));
       uniBox.appendChild(el('div.petshop-uni-info', el('b', P.nomeUni(id)), uniChocado(id) ? barrasCuidado(id, 'grande') : null));
       grade.innerHTML = '';
       Cu.comidas().forEach(function (co) {

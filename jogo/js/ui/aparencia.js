@@ -156,7 +156,7 @@
             var ap = prova();
             ap[g[2]] = o.id;
             var b = el('button.criar-opcao', { type: 'button', 'data-id': o.id },
-              el('span.criar-retrato', recorte(PA.mariana(ap, false, 0, { vista: 'frente' }), g[3], g[4], 3)),
+              el('span.criar-retrato', recorte(PA.mariana(ap, false, 0, { vista: 'frente' }), g[3], g[4], 4)),
               el('span.criar-opcao-nome', o.nome));
             b.addEventListener('click', function () { aparencia()[g[2]] = o.id; Reino.Som.tocar('selecionar'); marcar(); desenhar(); });
             g[0].appendChild(b);
