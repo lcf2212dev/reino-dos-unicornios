@@ -129,6 +129,7 @@ Reino.config = {
       epico: { texto: '#5b2aa8', fundo: '#eadcff', desenho: '#a66bff' },
       lendario: { texto: '#8a5200', fundo: '#ffe39a', desenho: '#ffb020' },
     },
+    confete: ['#ff7eb6', '#ffd34d', '#7c5cff', '#5fb4ff', '#ff8a3d', '#9ccc4a'],   // --rosa --ouro --roxo --azul --laranja --verde-folha (ui.md §10.14.2)
   },
   // vozes naturais (gravadas por ferramentas/vozes/gerar-vozes.py). Trocou voz, velocidade ou tom: `npm run vozes`
   // (regrava) e peça para republicar
