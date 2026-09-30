@@ -248,6 +248,7 @@
       { js: 'js/interiores/torre/torre.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/escola/falas.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/escola/objetos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/escola/lousas.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/escola/escola.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/castelo/falas.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/castelo/objetos.js', grupo: 'interiores', node: true },

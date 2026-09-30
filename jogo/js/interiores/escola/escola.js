@@ -99,10 +99,15 @@
   // uma sala de aula completa (cômodo, objetos, professor, porta e corredores) para a prova n
   function gerarSala(prova, n) {
     var ox = 1 + 12 * (n + 1), oy = 1, tema = TEMAS[prova.materiaId] || TEMA_PADRAO, cm = tema.carteira;
+    // lousa própria da matéria (escola/lousas.js) nas colunas 8 a 10, longe da placa; os enfeites de lá vão para 4 e 6
+    var desenho = S.lousaDaMateria && S.lousaDaMateria(prova.materiaId), enfeites = tema.enfeites;
+    if (desenho) enfeites = enfeites.map(function (e) {
+      return e.y !== 0 || (e.x !== 8 && e.x !== 10) ? e : Object.assign({}, e, { x: e.x === 8 ? 4 : 6 });
+    }).concat([inter('lousa-' + prova.materiaId, 'Lousa', { tipo: 'escola-lousa', x: 8, y: 0, var: { desenho: desenho } })]);
     var objetos = sala(ox, oy, [
-      // parede do fundo: janela, alfabeto, lousa com ABC, relógio (+ enfeites do tema)
+      // parede do fundo: janela, alfabeto, lousa (a do ABC nas salas sem lousa própria), relógio (+ enfeites do tema)
       { tipo: 'janela', x: 0, y: 0 }, { tipo: 'escola-alfabeto', x: 1, y: 0 },
-      inter('lousa', 'Lousa', { tipo: 'lousa', x: 4, y: 0, w: 3 }),
+    ].concat(desenho ? [] : [inter('lousa', 'Lousa', { tipo: 'lousa', x: 4, y: 0, w: 3 })]).concat([
       { tipo: 'relogio-parede', x: 7, y: 0 },
       // frente da sala
       { tipo: 'bau', x: 0, y: 2 },               // baixo: não tapa a janela nem o alfabeto
@@ -120,7 +125,7 @@
       { tipo: 'cesto', x: 1, y: 9 }, { tipo: 'pilha-livros', x: 3, y: 9 }, { tipo: 'escola-lixeira', x: 2, y: 9 },
       { tipo: 'estante', x: 9, y: 9 },
       { tipo: 'papeis', x: 8, y: 10 },
-    ].concat(tema.enfeites));
+    ]).concat(enfeites));
     return {
       comodo: { id: 'sala-' + prova.id, nome: 'Sala de ' + nomeMateria(prova), placa: 'Sala de ' + nomeMateria(prova),
         rect: { x: ox, y: oy, w: 11, h: 11 }, piso: tema.piso, parede: tema.parede, paleta: tema.paleta },
