@@ -168,7 +168,7 @@
     if (faixa) coluna.appendChild(faixa);
     coluna.appendChild(palco);
     var dica = el('p', 'voo-dica', 'Arraste o dedo ou use as setas para pegar estrelas!');
-    topo.appendChild(dica); t.appendChild(topo); t.appendChild(coluna);
+    topo.appendChild(dica); if (faixa) t.classList.add('tela-voo-portais'); t.appendChild(topo); t.appendChild(coluna);
     var comPortais = !!faixa;
     ajustar(cv, comPortais);
     var ctx = cv.getContext('2d');
@@ -229,6 +229,8 @@
       if (s.fase !== faseAntes || n !== contaAntes) {
         aviso.textContent = s.fase === 'contagem' ? String(n) : (s.fase === 'chegada' || s.fase === 'fim') ? V.falaChegada(planeta) : '';
         aviso.className = 'voo-aviso' + (aviso.textContent ? ' voo-aviso-ligado' : '') + (s.fase === 'contagem' ? ' voo-aviso-numero' : ' voo-aviso-chegada');
+        // a dica só vale na contagem; depois some sem mexer o canvas (visibility)
+        dica.style.visibility = s.fase === 'contagem' ? '' : 'hidden';
         faseAntes = s.fase; contaAntes = n;
       }
       var pct = Math.round(V.distancia(s) * 100);
