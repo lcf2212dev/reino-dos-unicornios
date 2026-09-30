@@ -14,6 +14,16 @@
   /* ================= CENA ================= */
   var cenas = {};
 
+  // canvas do estático, opaco (alpha: false): o estático pinta o retângulo todo (fundo ou céu por baixo), e colá-lo
+  // no buffer a cada quadro vira cópia em vez de mistura (desenho idêntico, mais barato). Sem DOM (testes): PA.novoCanvas.
+  function canvasOpaco(w, h) {
+    if (typeof document === 'undefined' || typeof document.createElement !== 'function') return PA.novoCanvas(w, h);
+    var c = document.createElement('canvas');
+    c.width = w; c.height = h;
+    c.getContext('2d', { alpha: false }).imageSmoothingEnabled = false;
+    return c;
+  }
+
   function criarCena(def) {
     var g = grade(def);
     var npcs = def.npcs || [];
@@ -46,7 +56,7 @@
       var chave = chaveEstado();
       if (estatico && chave === chaveFeita) { sujo = false; return; }
       E.mascaras = {}; E.retratos = {};
-      if (!estatico) estatico = PA.novoCanvas(g.w * T, g.h * T);
+      if (!estatico) estatico = canvasOpaco(g.w * T, g.h * T);
       var ctx = estatico.getContext('2d');
       desenharEstatico(ctx, def, g, P, objs);
       // anims parados entram no estático só como base? não: são desenhados a cada quadro (ver desenharFundo)
