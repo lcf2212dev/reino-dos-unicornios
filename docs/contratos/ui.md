@@ -291,6 +291,8 @@ O lendário é sempre dourado (chip, faixa da prova e quadro da Escola também);
 5. Ícone 16×16 a 32 px CSS (2 px CSS por pixel) em botão, dock, chip e também dentro da linha de texto (a letra de
    16 px da Press Start 2P já tem 2 px CSS por pixel da fonte); 64 px em destaque. Sempre em escala inteira
    (`PA.escalaNitida`, alvo 32: nada de `escalaNitida(36, 16)`; o `iconeTexto` também dá 32).
+   Exceção: o ícone de barrinha (cuidados e crescimento no cartão da montaria e nas cartas) fica em 16 px, 1 px CSS
+   por pixel, porque a barra tem 8 px de altura; é a única densidade menor da interface.
 6. Retrato no balão (NPC e Claude): 4 px CSS por pixel, o mesmo para todos, sem `max-width` que encolha; quadro com
    borda `--borda-grossa`, fundo chapado `--papel-quente`, `--canto` e a plaquinha do nome (`--texto-aux`) encostada
    embaixo. Recorte a partir de `spr.topo - 1` (com chapéu e antena), cabeça centrada, 1 px de margem nos ETs; a
@@ -406,7 +408,7 @@ brilho arco-íris, não mais confete. O confete é desenhado pela regra do §10.
 4. Número, artigo e preposição de 1 a 2 letras, "R$" e o emoji do fim ficam colados à palavra vizinha com espaço
    inquebrável (U+00A0). Palavra composta ("arco-íris") fica num `span` com `nowrap`.
 5. Balão (NPC e Claude, com ou sem botões, e o recado de cuidado do Pet Shop): `.claude-texto` em `--texto`. A
-   paginação tem dois limites em `npcs-falas.js`: o da frase (`frases()`, 44 letras; é o que define o texto falado
+   paginação tem dois limites em `npcs-falas.js`: o da frase (`frases()`, 30 letras; é o que define o texto falado
    e não muda) e o da página, que junta frases até caber em 2 linhas do celular com o retrato de 4 px (§10.10.6). A
    frase sozinha maior que a página fica com 3 linhas: partir a frase mudaria a voz. O `validar-interiores.js` avisa
    pelo limite da página.
@@ -450,8 +452,9 @@ brilho arco-íris, não mais confete. O confete é desenhado pela regra do §10.
 
 ### 10.21 Cabeçalho e larguras de painel
 1. Cabeçalho: ícone 16×16 em 32 px à esquerda, título em `--texto` com `nowrap` (§10.17.3), ✕ à direita
-   (§10.10.4), fundo `--papel-quente`. Título que não cabe (celular): o `painel()` de `ui/base.js` põe
-   `.titulo-longo` e ele desce para `--texto-aux`; nenhum nome muda. Com matéria, uma faixa de 8 px na cor dela
+   (§10.10.4), fundo `--papel-quente`. Título que não cabe (celular): primeiro o nome curto (`opcoes.curto` do
+   `painel()`, com o nome inteiro no `aria-label`), depois 2 linhas no mesmo tamanho (`.titulo-quebra`) e só então
+   `.titulo-longo` desce para `--texto-aux`; o título nunca fica menor que o texto do painel sem precisar. Com matéria, uma faixa de 8 px na cor dela
    logo abaixo do cabeçalho (§10.22).
 2. Larguras de painel: 560 px (diálogo, escolha, cartão simples) e 720 px (listas, matéria, livro, loja). No
    celular, a largura da tela menos 8 px de cada lado.

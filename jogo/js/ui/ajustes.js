@@ -56,5 +56,6 @@
     // 1.15 (ligado) ou 1 e continua assim: liga com qualquer valor > 1, sem migrar nem normalizar
     document.documentElement.classList.toggle('letras-grandes', a.texto > 1);
     document.body.classList.toggle('sem-animacao', !a.animacoes);
+    if (UI.ajustarTitulos) UI.ajustarTitulos();   // o título do painel aberto se refaz no tamanho novo (D8B-11)
   };
 })();

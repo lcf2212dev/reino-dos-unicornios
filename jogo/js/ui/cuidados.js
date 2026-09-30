@@ -42,7 +42,7 @@
   function uniChocado(id) { var u = est().unis[id]; return !!(u && u.chocado); }
   // ícone pequeno e nítido (fora do texto: não cresce com a fonte). PA.iconeEmoji já arredonda
   // para a escala inteira mais próxima de `px` (PA.escalaNitida), então nunca sai borrado.
-  function iconePequeno(emoji, px) { return PA.iconeEmoji(emoji, px / 18); }
+  function iconePequeno(emoji, px) { return PA.iconeEmoji(emoji, px / 16); }
   // tamanho do ícone das barras grandes: 24px no celular e 32px no tablet e no notebook
   function pxIconeGrande() { return window.innerWidth <= 480 ? 24 : 32; }
 
