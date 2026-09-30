@@ -20,9 +20,9 @@
 .btn-tela-cheia {
   display: grid; place-items: center;
   width: 48px; height: 48px; flex: none;
-  border: 3px solid var(--borda); border-radius: var(--canto-grande);
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-pequeno);   /* botão de até 56 px (ui.md §10.10.4) */
   background: var(--papel); color: var(--tinta);
-  box-shadow: inset 0 2px 0 var(--brilho), 0 3px 0 var(--borda);
+  box-shadow: inset 0 2px 0 var(--brilho), var(--sombra-pequena);
 }
 .btn-tela-cheia:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--borda); }
 /* tela cheia, câmera (📷, js/sistemas/fotos.js) e álbum lado a lado; no celular, um embaixo do outro (telas pequenas) */
@@ -32,9 +32,9 @@
    mas ainda focável pelo Tab */
 .chip {
   min-height: 44px; padding: 6px 14px;
-  border: 3px solid var(--borda); border-radius: var(--canto);
-  background: var(--papel); font-weight: 700; font-size: 0.95em;
-  box-shadow: inset 0 2px 0 var(--brilho), 0 3px 0 var(--borda);
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
+  background: var(--papel); font-size: var(--texto);
+  box-shadow: inset 0 2px 0 var(--brilho), var(--sombra-pequena);
   font-variant-numeric: tabular-nums;
 }
 .chip-dinheiro { background: linear-gradient(180deg, var(--papel-quente) 0 30%, var(--ouro-claro) 30% 70%, var(--ouro) 70%); }
@@ -43,41 +43,41 @@
   display: flex; align-items: center; gap: 8px;
   max-width: min(54vw, 280px);
   padding: 6px 12px 6px 8px;
-  border: 3px solid var(--borda); border-radius: var(--canto-grande);
-  background: var(--papel); box-shadow: inset 0 2px 0 var(--brilho), 0 3px 0 var(--borda); text-align: left;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande);
+  background: var(--papel); box-shadow: inset 0 2px 0 var(--brilho), var(--sombra-pequena); text-align: left;
 }
 .chip-montaria { min-width: 0; }
 .chip-montaria canvas { flex: none; }
-.montaria-info { display: flex; flex-direction: column; min-width: 0; font-size: 0.8em; line-height: 1.5; }
-/* o ícone do estágio desce para a linha da barrinha: a barra de crescimento também tem ícone, como a fome e a sede */
-.chip-montaria .montaria-cresce { align-items: flex-end; }
-.montaria-info b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.montaria-info { display: flex; flex-direction: column; min-width: 0; font-size: var(--texto-aux); line-height: var(--entrelinha); }
+.montaria-info b { font-size: var(--texto); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* 🌱 antes da barra de crescimento, como na carta do Estábulo (D8A-14): a barra não parece "a vida" do unicórnio */
+.chip-montaria .carta-cresce { display: flex; align-items: center; gap: 4px; min-width: 0; }
+.chip-montaria .carta-cresce .barrinha { flex: 1; margin-top: 0; }
 .montaria-estagio { color: var(--tinta-suave); }
-.barrinha { display: block; height: 8px; margin-top: 4px; border: 2px solid var(--borda); border-radius: var(--canto); background: var(--branco); overflow: hidden; min-width: 60px; }
-.barrinha > span { display: block; height: 100%; background: linear-gradient(90deg, var(--laranja) 0 50%, var(--ambar) 50%); box-shadow: inset 0 1px 0 var(--brilho); }
+.barrinha { display: block; height: 8px; margin-top: 4px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--branco); overflow: hidden; min-width: 60px; }
+.barrinha > span { display: block; height: 100%; background: linear-gradient(90deg, var(--laranja) 0 50%, var(--ambar) 50%); box-shadow: inset 0 2px 0 var(--brilho); }
 
 .dock {
   position: absolute;
   left: 50%; transform: translateX(-50%);
   bottom: calc(env(safe-area-inset-bottom, 0px) + 10px);
-  display: flex; gap: 4px; padding: 4px;
-  border: 3px solid var(--borda); border-radius: var(--canto);
+  display: flex; gap: 8px; padding: 4px;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
   background: var(--papel);
-  box-shadow: 0 4px 0 var(--borda);
+  box-shadow: var(--sombra-grande);
 }
 .dock-btn {
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
-  width: 92px; min-height: 72px; padding: 4px 4px 6px;
+  min-width: 92px; min-height: 72px; padding: 4px 4px 6px;   /* cresce com o rótulo: "Estábulo" em 12 px tem 96 px */
   border: 0; border-radius: var(--canto);
   background: transparent;
 }
 .dock-btn canvas { display: block; }
 .dock-rotulo {
   font-family: var(--fonte-pixel);
-  font-weight: 400;
-  font-size: 8px;
-  line-height: 1.6;
-  letter-spacing: 0.01em;
+  font-size: var(--texto-aux);
+  line-height: var(--entrelinha);
+  white-space: nowrap;   /* rótulo curto não quebra (ui.md §10.17.3); "Plano da Prova" tem as 2 linhas no <br> */
   color: var(--tinta);
   text-align: center;
 }
@@ -104,21 +104,38 @@
 .chip-aura { display: inline-flex; align-items: center; gap: 6px; }
 .aura-bolinha {
   display: inline-block; width: 14px; height: 14px; flex: none;
-  border: 2px solid var(--borda); border-radius: var(--redondo);
-  box-shadow: 0 0 0 2px var(--brilho);
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--redondo);
+  outline: var(--borda-fina) solid var(--brilho);   /* halo de 1 pixel (era box-shadow 0 0 0 2px) */
 }
 .aura-arco-iris { background: conic-gradient(var(--arco-iris)); }
 .aura-painel { text-align: center; }
-.aura-valor { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 1.8em; margin: 4px 0 8px; }
+.aura-valor { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: var(--texto-t); margin: 4px 0 8px; }
 .aura-valor .aura-bolinha { width: 26px; height: 26px; }
 .aura-cores { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 12px; padding: 0; margin: 12px 0 0; list-style: none; }
 .aura-cores li { display: flex; flex-direction: column; align-items: center; gap: 2px; color: var(--tinta-suave); }
-.aura-cores li.aura-agora { color: var(--tinta); font-weight: 700; }
+.aura-cores li.aura-agora { color: var(--tinta); }
 
-/* celular (max-width 480px): dock mais estreito, chips menores e botões do HUD em coluna */
+/* Letras grandes (ui.md §10.9.4): o rótulo do dock vai a 16 px e o botão cresce com ele */
+:root.letras-grandes .dock-btn { min-width: 104px; }
+/* celular (max-width 480px): dock na largura da tela, chips mais baixos e botões do HUD em coluna. Os 4 rótulos em
+   12 px somam 360 px ("Estábulo" e "da Prova" com 96): cada botão fica do tamanho do rótulo, com 8 px entre eles,
+   e o dock encosta nas laterais da tela para caber */
 @media (max-width: 480px) {
-  .dock-btn { width: 78px; min-height: 64px; }
-  .dock-rotulo { font-size: 8px; }
-  .chip { padding: 4px 10px; font-size: 0.85em; }
+  .dock { left: 0; right: 0; transform: none; justify-content: space-between; gap: 8px; padding: 2px 1px; }
+  .dock-btn { flex: 1 1 auto; min-width: 0; min-height: 64px; padding: 4px 0 6px; }
+  .chip { padding: 4px 10px; }
+  .montaria-info b { font-size: var(--texto-aux); }
   .hud-botoes { flex-direction: column; gap: 6px; }
+  /* com Letras grandes os 4 rótulos em 16 px (480 px) não cabem: descem um degrau, para 12 (ui.md §10.17.3) */
+  :root.letras-grandes .dock { --texto-aux: 12px; }
+  /* e os chips de cima em 24 px partem "R$ 36,00" e "5 ovos!" e cobrem meia tela: descem para 16 (e 12) também */
+  :root.letras-grandes .hud-topo { --texto: 16px; --texto-aux: 12px; }
+  :root.letras-grandes .dock-btn { min-width: 0; }
+}
+/* celular mais estreito que 390 px (360, 375, 320): os 4 rótulos em 12 px (360 px + 3 vãos de 8) não cabem e nenhum
+   deles parte ("Estábulo" tem 8 letras). O dock fica só com os ícones de 32 px, em 4 botões iguais de ≥ 44 px; o
+   nome continua no aria-label de cada botão e o rótulo, escondido só da vista */
+@media (max-width: 389.98px) {
+  .dock-btn { flex: 1 1 0; min-width: 44px; min-height: 56px; padding: 4px 0; }
+  .dock-rotulo { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
 }
