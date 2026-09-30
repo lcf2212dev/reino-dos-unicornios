@@ -159,10 +159,9 @@ desenho, de raridade e de matéria, nunca de moldura. Toda cor de CSS vem de um 
 literal fora do `:root` só em desenho feito em código (paletas de sprite e de ícone).
 
 Os nomes da tabela já valem (D10-01): `--laranja*`, `--ambar*`, `--verde-folha` e `--papel-quente`; `--rosa` e `--lilas`
-são as cores reais de desenho. `--papel-2` já é o `#efe8e2` do estado indisponível; o creme `#fff6e4` que ele era
-vive em `--papel-leve` (temporário: os usos passam para `--papel` ou `--papel-quente` no D10-14). Texto de
-raridade: `--raro-texto`, `--epico-texto`, `--lendario-texto`; texto laranja: `--laranja-escuro`. Seleção roxa
-cheia com texto branco usa fundo `--roxo-texto` (branco sobre `--roxo` dá 4,3:1).
+são as cores reais de desenho. `--borda` é apelido de `--tinta` e `--papel-leve` não existe mais (o painel é
+`--papel`; cabeçalho e chip, `--papel-quente`). Texto laranja: `--laranja-escuro`. Seleção roxa cheia (`--roxo-texto`)
+e acerto cheio (`--certo`) levam texto `--branco` (branco sobre `--roxo` dá 4,3:1, por isso o fundo é `--roxo-texto`).
 
 | Token | Hex | Papel |
 |---|---|---|
@@ -174,15 +173,49 @@ cheia com texto branco usa fundo `--roxo-texto` (branco sobre `--roxo` dá 4,3:1
 | `--papel-quente` | `#fff1cc` | cabeçalho, chip, balão |
 | `--papel-2` | `#efe8e2` | fundo do estado indisponível (§10.19); `--tinta-suave` sobre ele: 5,5:1 |
 | `--laranja`, `--laranja-escuro`, `--laranja-claro` | `#ff8a3d`, `#a8480a`, `#ffe4c2` | ação principal; o escuro é o laranja de texto (5,5:1 no `--papel`, 5,2:1 no `--papel-quente`) |
+| `--laranja-forte` | `#e06a12` | contorno de escolhido em cima de laranja (unicórnio montado, opção circulada) |
 | `--ambar`, `--ambar-claro` | `#f0a04a`, `#fff1d0` | enfeite secundário da moldura |
-| `--ouro` | `#ffd34d` | estrela, moeda |
+| `--ouro`, `--ouro-claro` | `#ffd34d`, `#fff4cc` | estrela, moeda; o claro é fundo de aviso de medalha e de apoio |
 | `--roxo`, `--roxo-texto` | `#7c5cff`, `#5a3cc4` | seleção; link e texto roxo (6,9:1). `--roxo` nunca é cor de texto |
 | `--certo`, `--certo-fundo` | `#1b6e45`, `#dff8e8` | acerto (5,6:1 no fundo verde) |
-| `--erro`, `--erro-fundo` | `#b02c47`, `#ffe0e0` | erro de item, sair, perigo (5,1:1 no fundo, 6,0:1 no `--papel`) |
+| `--quase-fundo` | `#fff0c2` | quase certo (errinho da correção, retorno "quase") |
+| `--erro`, `--erro-fundo` | `#b02c47`, `#ffe0e0` | erro de item, sair, perigo (5,15:1 no `--erro-fundo`, 6,0:1 no `--papel`) |
 | `--rosa`, `--lilas` | `#ff7eb6`, `#b58cff` | cor de desenho (nunca moldura); `--lilas` é o texto secundário em tela escura (6,6:1 no `--noite`) |
+| `--azul` | `#5fb4ff` | cor de desenho (pauta do caderno, barra do voo); nunca moldura |
+| `--ceu`, `--verde-folha` | `#bfe9ff`, `#9ccc4a` | cor de desenho: céu e água (gota cheia, selo do álbum); folha e interruptor ligado |
+| `--roxo-claro` | `#ebe5ff` | fundo roxo leve: trecho em inglês (`.en`, texto `--roxo-texto`, 6,0:1), chip "calma" |
+| `--grama` | `#c6e15a` | fundo do `body` por trás do mapa |
+| `--branco` | `#ffffff` | brilho de 1 px, halo, texto sobre seleção ou acerto cheio; `#fff` literal não se usa |
+| `--brilho`, `--brilho-fraco` | `rgba(255,255,255,0.85)`, `…0.35)` | brilho interno de botão e chip; o do apertado |
+| `--sombra-chao`, `--sombra-veu`, `--veu` | `rgba(58,36,70,0.2)`, `…0.35)`, `…0.45)` | sombra de chão; elevação; véu atrás do painel |
+| `--veu-noite`, `--veu-noite-fraco` | `rgba(36,22,46,0.4)`, `…0.2)` | vinheta da abertura |
+| `--arco-iris` | 6 faixas duras (`#ff5c6a #ff9f45 #ffe066 #6fdc8c #5fb4ff #a66bff`) | só brilho, e só em três lugares: anel da carta lendária, faixa do ovo e aura |
+| `--apagado` | `grayscale(1) brightness(1.1)` | `filter` do desenho indisponível (§10.19.1); nunca no texto |
 
-Raridade (texto, fundo, desenho), em cartas, ovos, prova, loja e prêmios; o contorno continua `--tinta` e a cor vai
-no fundo ou numa faixa interna:
+Alfa em degraus: um brilho de moldura só (`--brilho`, e `--brilho-fraco` no apertado), a sombra de tinta em três
+(`--sombra-chao`, `--sombra-veu`, `--veu`) e a vinheta da abertura em dois (`--veu-noite`, `--veu-noite-fraco`);
+alfa fora deles não se escreve. A vinheta desce de `--veu-noite` a `--veu-noite-fraco` e dele a transparente, e
+cada passagem entre dois níveis é pontilhado ordenado 2×2 (§10.13.4): faixa dura entre eles, não.
+
+O que o canvas e o JS pintam de moldura lê `Reino.config.paleta` (`jogo/js/nucleo/config.js`), espelho do `:root`
+com o mesmo hex, conferido pelo validador de cores (`npm run validar`): mude os dois juntos. Cor que vem do save (unicórnio, aura,
+aparência, carimbo) não é token e não se reescreve nem se normaliza (D8B-03).
+
+SVG em `data:` não aceita `var()`: o `fill` leva o hex de um token da tabela.
+
+Cor do app (splash, `html` antes dos scripts, manifesto, `theme-color`): `--noite`. Com o mapa aberto o
+`theme-color` vira `--grama` e volta a `--noite` na abertura; o JS lê `Reino.config.paleta`, e `index.html`, manifesto e
+`vercel/montar.js` levam o hex, conferido por teste. Os ícones PNG do app não mudam.
+
+Desenho feito em CSS também usa token: halo e brilho `--branco`, caderno com margem `--rosa` e pauta `--azul`, nota
+da folha `--erro`.
+
+Conferir: a ação principal da pergunta é moldura, então a mesma classe `.btn-conferir` e a mesma cor nas três
+telas (sala, surpresa e ET): laranja habilitado, §10.19.1 desabilitado. Verde (`--verde-folha`) não é cor de botão.
+
+Raridade (texto, fundo, desenho), em cartas, ovos, prova, loja, prêmios e no quadro da Escola: tokens
+`--<r>-texto|fundo|desenho` (`--comum-texto` é `--tinta-suave`) e `Reino.config.paleta.raridade`. O contorno é
+sempre `--borda`; a cor vai no fundo chapado (`--<r>-fundo`) e numa faixa interna de 4 px (`--<r>-desenho`):
 
 | Raridade | Texto | Fundo | Desenho |
 |---|---|---|---|
@@ -191,13 +224,14 @@ no fundo ou numa faixa interna:
 | épico | `#5b2aa8` (6,9:1) | `#eadcff` | `#a66bff` |
 | lendário | `#8a5200` (5,1:1) | `#ffe39a` | `#ffb020` |
 
-O lendário é sempre dourado; o arco-íris só entra como brilho. Cor de matéria: §10.22.
+O lendário é sempre dourado (chip, faixa da prova e quadro da Escola também); o arco-íris só entra como brilho
+(`--arco-iris`, na tabela acima). Cor de matéria: §10.22.
 
 1. Contraste: texto ≥ 4,5:1 sobre o fundo real (≥ 3:1 só com 24 px ou mais). `--tinta` no `--papel` dá 13,1:1. O
    texto do botão laranja é `--tinta` (5,9:1): não há texto branco sobre laranja.
 2. Estado pela cor (seleção, certo, erro) muda fundo e borda do controle; o contorno de desenho continua `--tinta`.
-3. Telas escuras, só estas: voo, espaço e planetas, o vão dos interiores e a tela de jogadores. Todas com `--noite`
-   (degrau `--noite-2`); o resto do jogo é claro. Nelas o texto é `--papel`, o secundário `--lilas`
+3. Telas escuras, só estas: abertura (o céu é desenho), voo, espaço e planetas, o vão dos interiores e a tela de
+   jogadores. Todas com `--noite` (degrau `--noite-2`); o resto do jogo é claro. Nelas o texto é `--papel`, o secundário `--lilas`
    (`--tinta-suave` não se usa: 2,6:1), e ícone ou sprite de contorno escuro ganha brilho de 1 pixel em `--papel`
    (§10.3).
 
@@ -298,8 +332,7 @@ Adulto e criança diferem ≥ 4 px. Peça nova entra na faixa do papel dela; pap
 3. Durações só por token: `--rapido` 120 ms (resposta ao toque), `--normal` 240 ms (abrir, fechar, trocar),
    `--lento` 600 ms (chegada, festa curta). Repetição infinita tem período de 2 × `--lento` ou mais, e o chamado de
    atenção repete poucas vezes e para.
-4. `opacity` só em véu, em partícula e na entrada e saída de uma tela inteira (≤ `--normal`); nunca como estado
-   parado (§10.19).
+4. `opacity`: onde pode, só no §10.19.1.
 5. Exceções escritas (o validador de pixel aceita só estas):
    - `armar-encher` (`ui-base.css`): barra de preenchimento em `scaleX`, dura `ARMAR_MS`;
    - `.balao-respira` (Ritual da Calma, `ui-prova.css`): cresce e encolhe contínuo, de propósito, no ritmo da
@@ -340,10 +373,16 @@ brilho arco-íris, não mais confete.
    conta própria). Objeto de toque e texto ficam dentro da área útil.
 
 ### 10.19 Estados de controle: indisponível, erro de item e foco
-1. Indisponível (trancado, desligado, sem estrelas, esperando a voz): fundo `--papel-2` chapado, texto
-   `--tinta-suave`, borda `--tinta`, sombra de 2 px, e um ícone 16×16 que diz por quê (🔒 trancado, relógio
-   esperando, estrela vazia sem estrelas). Nada de `opacity` nem `grayscale` no texto. O botão segue focável, com
-   `aria-disabled` (§6.4).
+1. Indisponível (trancado, desligado, sem estrelas, esperando a voz, Conferir sem resposta): uma regra só, para
+   `:disabled`, `[aria-disabled="true"]` e `.indisponivel` (o que não é botão: carta cara da loja, planeta trancado).
+   Fundo `--papel-2` chapado, texto `--tinta-suave`, borda `--borda`, sombra de 2 px; o desenho dentro leva
+   `filter: var(--apagado)`. Nada de `opacity` nem `grayscale` no texto. O botão segue focável, com `aria-disabled`
+   (§6.4). Ícone 16×16 só onde há motivo: 🔒 no trancado (planeta, foguete) e no caro (loja); o resto fica só com a
+   aparência. Com `Reino.config.esperaFala.travar = true`, o botão esperando a voz ganha o ícone de ouvido (D5-13).
+   `opacity`, em todo o CSS, só em movimento: `@keyframes` (partícula, entrada e saída de uma tela inteira, ≤
+   `--normal`) e a transição de véu e flash (`.abertura-flash`, `.fotos-flash`, `.abertura-entrando`). Estado parado
+   com `opacity`, só estas duas exceções: o 0/1 do escondido-até-o-foco (`.criar-lasca`) e o joystick translúcido
+   sobre o mapa (`#controle`). O validador de cores (`npm run validar`) acusa o resto.
 2. Erro de item (opção errada, par errado, peça fora do lugar): estado parado, com fundo `--erro-fundo` e borda
    `--erro`, até o item ser apagado ou até o próximo toque; o tremor vem por cima só com animação. A opção errada
    que fica na tela vem riscada, sem `opacity`, com ≥ 4,5:1.
