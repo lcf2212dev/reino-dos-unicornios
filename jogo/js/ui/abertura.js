@@ -48,6 +48,13 @@
   }
 
   /* ---------- a cena ---------- */
+  // barra do app (theme-color, só no build da Vercel): noite na abertura e no login, grama quando o mapa abre
+  // (main.js entrarNoReino; ui.md §10.8)
+  function corDaBarra(nome) {
+    var meta = document.querySelector('meta[name=theme-color]'), pal = Reino.config && Reino.config.paleta;
+    if (meta && pal && pal[nome]) meta.setAttribute('content', pal[nome]);
+  }
+
   function abertura(opcoes) {
     opcoes = opcoes || {};
     var cfg = config(), A = Reino._abertura;
@@ -297,6 +304,7 @@
       } else if (jaNoDom || ++esperas > 50) { parar(); return; }
       timerVigia = setTimeout(vigiar, jaNoDom ? 400 : 50);
     }
+    corDaBarra('noite');
     window.addEventListener('resize', aoMudarTamanho);
     if (anima) {
       raiz.style.setProperty('--entrar-ms', cfg.entrarMs + 'ms');
@@ -311,4 +319,5 @@
   }
 
   Reino.UI.abertura = abertura;
+  Reino.UI.corDaBarra = corDaBarra;
 })();

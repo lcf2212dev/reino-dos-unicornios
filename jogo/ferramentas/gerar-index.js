@@ -15,6 +15,8 @@ const MANIFESTO = require(path.join(raiz, 'js/manifesto.js'));
 // o favicon (um só, também no app da Vercel): a cabeça do unicórnio em 16×16, feita por ferramentas/pwa/gerar-icones.js
 const FAVICON = 'data:image/svg+xml,' + fs.readFileSync(path.join(__dirname, 'pwa', 'favicon.svg'), 'utf8').trim()
   .replace(/[%#<>"]/g, encodeURIComponent);
+// a cor do app (splash, página antes dos scripts, abertura): Reino.config.paleta.noite (ui.md §10.8)
+const NOITE = /\bnoite:\s*'(#[0-9a-f]{6})'/i.exec(fs.readFileSync(path.join(raiz, 'js/nucleo/config.js'), 'utf8'))[1];
 const MARCA = '<!-- Gerado por ferramentas/gerar-index.js a partir de js/manifesto.js. Não edite à mão: mude o manifesto e rode o gerador. -->';
 const MODELO = `<!doctype html>
 ${MARCA}
@@ -23,6 +25,7 @@ ${MARCA}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Reino dos Unicórnios</title>
+<style>html{background:${NOITE}}</style>
 <link rel="icon" href="${FAVICON}">
 <link rel="preload" href="css/press-start-2p.woff2" as="font" type="font/woff2" crossorigin>
 {{CSS}}
