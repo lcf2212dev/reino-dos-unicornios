@@ -1,4 +1,4 @@
-/* dados: moldes do unicórnio em pixel art (adulto 26x21 e filhote 18x16, nas 5 vistas):
+/* dados: moldes do unicórnio em pixel art (adulto até 26x21 e filhote até 18x16, nas 5 vistas):
    corpo, pernas, asas, âncoras dos enfeites, desenhos próprios de enfeites por vista, brilhos,
    onde a cavaleira senta (e que enfeites ficam por cima dela); e ENFEITES (PA.ENFEITES_MONTARIA), o desenho de cada enfeite.
    Guarda os moldes em PA._interno.UNI (quem desenha é pixelart-unicornio.js). Sem DOM. */
@@ -92,6 +92,8 @@
     enfeites: { 'anel-saturno': { linhas: ['.AA..AA.', 'AAWWWWAA'], x: 18, y: 1 }, 'capacete-astronauta': { linhas: CAPACETE_ASTRONAUTA_LADO, x: 12, y: 1 },
       'cometa-cauda': { linhas: COMETA_CAUDA_TRAS, x: 0, y: 8 } },
     brilhos: [[12, 6], [11, 9], [2, 13], [13, 4]],
+    // só o Adulto (estágio 3): a crina e a cauda 1 linha mais longas ([x, y, letra] por cima do molde)
+    crinaAdulto: [[11, 13, 'm'], [12, 13, 'n'], [3, 19, 'r']],
     cavaleira: [2, 2],
   };
   UNI.adulto.frente = {
@@ -138,6 +140,8 @@
     brilhos: [[0, 7], [1, 10], [7, 4]],
     // montada: ela senta no alto da cabeça, com as pernas dos dois lados da crina; na frente dela só a cara do
     // unicórnio (dos olhos para baixo): o chifre e os enfeites da cabeça ficam atrás do tronco dela
+    // só o Adulto (estágio 3): a crina e a cauda 1 linha mais longas ([x, y, letra] por cima do molde)
+    crinaAdulto: [[2, 13, 'r']],
     cavaleira: [3, -7],
     naFrente: [0, 7, 17, 12],
   };
@@ -186,6 +190,8 @@
     enfeites: { 'cachecol-pinguim': { linhas: CACHECOL_COSTAS, x: 5, y: 9 }, 'capacete-astronauta': { linhas: CAPACETE_ASTRONAUTA_COSTAS, x: 3, y: 1 }, 'chapeu-chef-arco-iris': { linhas: CHAPEU_CHEF_FRENTE, x: 5, y: 1 }, 'gravata-borboleta': { linhas: ['RRRRR'], x: 5, y: 10 },
       'colar-perolas': { linhas: ['LcrcrcL', '.LLLLL.'], x: 6, y: 10 } },
     brilhos: [[10, 6], [11, 9], [8, 15]],
+    // só o Adulto (estágio 3): a crina e a cauda 1 linha mais longas ([x, y, letra] por cima do molde)
+    crinaAdulto: [[8, 20, 'n']],
     cavaleira: [3, 6],
     // montada, a cauda fica entre ela e quem olha: o enfeite dela vai por cima da cavaleira
     enfeitesNaFrente: ['cauda'],
@@ -230,6 +236,8 @@
       // naFrente: montada, a lua é pintada de novo por cima da Mariana (senão some atrás da perna dela)
       'brinco-lua': { linhas: BRINCO_LUA, x: 7, y: 3, naFrente: true } },
     brilhos: [[10, 6], [8, 9], [2, 13], [15, 4]],
+    // só o Adulto (estágio 3): a crina e a cauda 1 linha mais longas ([x, y, letra] por cima do molde)
+    crinaAdulto: [[2, 16, 'n']],
     cavaleira: [4, -4],
     naFrente: [10, 0, 21, 12],
   };
@@ -271,6 +279,8 @@
       // o anel 1 px mais estreito na frente, para caber na borda direita
       'anel-saturno': { linhas: ['..AA..AA', '.AAWWWAA'], x: 14, y: 1 } },
     brilhos: [[10, 7], [9, 10], [1, 14]],
+    // só o Adulto (estágio 3): a crina e a cauda 1 linha mais longas ([x, y, letra] por cima do molde)
+    crinaAdulto: [[2, 20, 'n']],
     cavaleira: [5, 1],
     // montada: enfeites da cabeça e da cauda por cima da cavaleira (a cabeça dela tampava a orelha)
     enfeitesNaFrente: ['orelha', 'cabeca', 'chifre', 'cauda'],
@@ -316,7 +326,9 @@
       'pompom-cauda': { linhas: POMPOM_CAUDA, x: 0, y: 7 },
       'cometa-cauda': { linhas: COMETA_CAUDA, x: 0, y: 5 },
       // de lado o filhote mostra só dois planetas, no peito (os três viravam um cinto na barriga)
-      'colar-planetas': { linhas: ['ykkykky', 'krRkbBk', 'kRRkBBk', '.kk.kk.'], x: 7, y: 9 } },
+      'colar-planetas': { linhas: ['ykkykky', 'krRkbBk', 'kRRkBBk', '.kk.kk.'], x: 7, y: 9 },
+      // laço 1 px mais alto e sem as pontinhas: montada, fica 1 px de cabelo entre ele e o rosto dela
+      laco: { linhas: ['PP.PP', 'PPYPP'], x: 5, y: 0 } },
     brilhos: [[5, 5], [1, 9], [6, 3]],
     // montada: ela senta 1 px mais para trás e 1 mais baixo, no dorso; os enfeites da orelha, da cabeça, do
     // chifre e da cauda vão por cima dela (a cabeça dela tampava a orelha do filhote),
@@ -367,44 +379,45 @@
     cavaleira: [2, -8],
     naFrente: [0, 6, 15, 10],
   };
+  // de costas o filhote é mais largo (18) que de frente: a cabeça e a garupa aparecem dos dois lados da Mariana montada
   UNI.filhote.costas = {
     corpo: [
-      '.......h........',
-      '.......hg.......',
-      '...b...hg...b...',
-      '...bb.mhgm.bb...',
-      '...bbbbmnbbbb...',
-      '..bbbbbbmnrbbb..',
-      '..bbbbbbbmnrbb..',
-      '..bbbbbbbmnrbb..',
-      '...bbbbbbbmnr...',
-      '....bbbbbbmnrm..',
-      '...bbbbbbbbmnb..',
-      '...bbbbmmbbbbb..',
-      '...sssmnnmsss...',
+      '........h.........',
+      '........hg........',
+      '..b.....hg.....b..',
+      '..bb...mhgm...bb..',
+      '..bbbbbbmnbbbbbb..',
+      '..bbbbbbbmnrbbbb..',
+      '..bbbbbbbbmnrbbb..',
+      '...bbbbbbbmnrbb...',
+      '...bbbbbbbbmnrb...',
+      '..bbbbbbbbbbmnrb..',
+      '.bbbbbbbbbbbbmnbb.',
+      '.bbbbbbbmmbbbbbbb.',
+      '.bsssssmnnmssssss.',
     ],
     pernas: [
-      ['....bb.rn.bb....',
-       '....bb.nr.bb....',
-       '....ff....ff....'],
-      ['....bb.rn.bb....',
-       '....ff.nr.bb....',
-       '..........ff....'],
-      ['....bb.rn.bb....',
-       '....bb.nr.ff....',
-       '....ff..........'],
+      ['...bb...rn...bb...',
+       '...bb...nr...bb...',
+       '...ff........ff...'],
+      ['...bb...rn...bb...',
+       '...ff...nr...bb...',
+       '.............ff...'],
+      ['...bb...rn...bb...',
+       '...bb...nr...ff...',
+       '...ff.............'],
     ],
     asas: [
-      { linhas: ['WW...', '.WWWW', '..XWW'], x: 2, y: 8 },
-      { linhas: ['...WW', 'WWWW.', 'WWX..'], x: 9, y: 8 },
+      { linhas: ['WW...', '.WWWW', '..XWW'], x: 3, y: 8 },
+      { linhas: ['...WW', 'WWWW.', 'WWX..'], x: 10, y: 8 },
     ],
-    ancoras: { orelha: [12, 2], olho: null, cabeca: [7, 3],
-      pescoco: [8, 9], cauda: [7, 12], chifre: [7, 1] },
-    enfeites: { 'cachecol-pinguim': { linhas: CACHECOL_COSTAS, x: 4, y: 8 }, 'capacete-astronauta': { linhas: CAPACETE_ASTRONAUTA_COSTAS, x: 2, y: 1 }, 'chapeu-chef-arco-iris': { linhas: CHAPEU_CHEF_FRENTE, x: 4, y: 1 }, 'gravata-borboleta': { linhas: ['RRRRR'], x: 5, y: 9 },
-      'colar-perolas': { linhas: ['LcrcrcL', '.LLLLL.'], x: 5, y: 9 },
-      'anel-saturno': { linhas: ['A....A', '.AaaA.'], x: 5, y: 2, bebe: ANEL_BEBE_FRENTE } },
-    brilhos: [[10, 6], [11, 8]],
-    cavaleira: [2, 3],
+    ancoras: { orelha: [15, 2], olho: null, cabeca: [8, 3],
+      pescoco: [9, 9], cauda: [8, 12], chifre: [8, 1] },
+    enfeites: { 'cachecol-pinguim': { linhas: CACHECOL_COSTAS, x: 5, y: 8 }, 'capacete-astronauta': { linhas: CAPACETE_ASTRONAUTA_COSTAS, x: 3, y: 1 }, 'chapeu-chef-arco-iris': { linhas: CHAPEU_CHEF_FRENTE, x: 5, y: 1 }, 'gravata-borboleta': { linhas: ['RRRRR'], x: 6, y: 9 },
+      'colar-perolas': { linhas: ['LcrcrcL', '.LLLLL.'], x: 6, y: 9 },
+      'anel-saturno': { linhas: ['A....A', '.AaaA.'], x: 6, y: 2, bebe: { linhas: ANEL_BEBE_FRENTE.linhas, x: 6, y: 3 } } },
+    brilhos: [[11, 6], [12, 8]],
+    cavaleira: [3, 3],
     enfeitesNaFrente: ['cauda'],
   };
   UNI.filhote.diagFrente = {
@@ -575,7 +588,7 @@
     'estrela-cadente-cauda': { linhas: ['....p', '...pP', 'kYkP.', 'YWY..', 'kYk..'], paleta: { k: '#3a2446', Y: '#ffd34d', W: '#ffffff', p: '#ffd1e6', P: '#ff7eb6' }, ancora: 'cauda', dx: -2, dy: -2 },
     // capacete de astronauta: bolha branca com viseira azul, aro cinza com parafusos e antena de bolinha rosa.
     // dy -2 para a bolinha caber no quadro do filhote (âncora cabeca em y=2); de lado a viseira vai para a cara
-    'capacete-astronauta': { linhas: CAPACETE_ASTRONAUTA, paleta: { k: '#3a2446', W: '#ffffff', w: '#dfe6f2', C: '#8fd8ff', c: '#eafaff', B: '#4fa8e8', g: '#b8c2d6', G: '#7d88a3', R: '#ff5c8a' }, ancora: 'cabeca', dx: -5, dy: -2 },
+    'capacete-astronauta': { linhas: CAPACETE_ASTRONAUTA, paleta: { k: '#3a2446', W: '#ffffff', w: '#dfe6f2', C: '#8fd8ff', c: '#eafaff', B: '#4fa8e8', g: '#b8c2d6', G: '#7d88a3', R: '#ff5c8a' }, ancora: 'cabeca', dx: -5, dy: -2, cobreChifre: true },
     // prêmios da prova de Português (js/conteudo/provas/portugues-3bim.js)
     // touca de chef branca e fofa (dois gomos, dobras e lado da sombra em lilás L) com faixa de arco-íris
     // de 2 px (a de baixo mais escura): assim a touca não se confunde com a cabeça de um unicórnio branco
