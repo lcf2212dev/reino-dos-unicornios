@@ -60,7 +60,7 @@ registrarTela, registrarAcao, registrarStatus, registrarBase, gradeSprite, telas
 O que o NPC já disse na sessão fica só na memória (nada no save).
 
 ## 4. Status (ícone acima da cabeça, derivado do progresso)
-1. Sala: `❗` nova, `✓` feita, `💙` raro da sala já ganho (`P.temUni`).
+1. Sala: `❗` nova, `✓` feita, `🦄` raro da sala já ganho (o `💙` fica só para "vale raro") (`P.temUni`).
 2. Treino: `🔒` até terminar as salas; depois a melhor medalha (`🥇`/`🥈`/`🥉`) ou `❗` sem medalha.
 3. Prova: `🌈`/`💙`/`🤍` o que vale a próxima tentativa (`P.valendoProva`); `✓` acessório ganho.
 4. Guia e tela: `💬` (estábulo com ovos: `🥚`).
