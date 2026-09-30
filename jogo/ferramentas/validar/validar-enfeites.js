@@ -10,7 +10,9 @@
 //     de 6 px do tronco dela (ela não vira busto);
 //   - chifre livre (D13-06): em todo estágio e vista, nenhum enfeite da orelha ou da cabeça muda um pixel do chifre,
 //     sozinho ou com os 6 encaixes ocupados juntos (menos o capacete, cobreChifre, e o que está quase todo em cima do
-//     chifre, como a antena); e, com todos juntos, os olhos continuam à vista (só os óculos os cobrem).
+//     chifre, como a antena); e, com todos juntos, os olhos continuam à vista (só os óculos os cobrem);
+//   - pose cansada (fome ou sede baixa) e pulo: fora do molde e chifre/pernas de frente também com a pose cansada;
+//     todo molde com 3 quadros de passo, e o quadro do pulo (patas encolhidas) e o cansado do tamanho do parado.
 // Uso: node jogo/ferramentas/validar/validar-enfeites.js [--raiz <pasta jogo>] [--detalhes]   (npm run validar)
 //   --raiz: outra cópia do jogo (ex.: a de um commit antigo, para ver o validador acusar o defeito).
 if (require.main === module) require('../ajuda').ajuda(__filename);
@@ -114,13 +116,27 @@ function conferir() {
 
   // fora do molde
   let totalFora = 0;
-  [0, 1, 2, 3].forEach((est) => PA.VISTAS.forEach((vista) => {
+  [false, true].forEach((cansado) => [0, 1, 2, 3].forEach((est) => PA.VISTAS.forEach((vista) => {
     ids.forEach((id) => {
       foraDoQuadro = 0;
-      PA.unicornio(DEF, est, 0, { vista, enfeites: [id] });
-      if (foraDoQuadro) { totalFora += foraDoQuadro; erros.push(`${id}: ${foraDoQuadro} px fora do molde (${ESTAGIOS[est]}, ${vista})`); }
+      PA.unicornio(DEF, est, 0, { vista, enfeites: [id], cansado });
+      if (foraDoQuadro) { totalFora += foraDoQuadro; erros.push(`${id}: ${foraDoQuadro} px fora do molde (${ESTAGIOS[est]}, ${vista}${cansado ? ', cansado' : ''})`); }
     });
+  })));
+
+  // passo, pulo e pose cansada
+  const UNI0 = ctx.PA._interno.UNI, PULO = ctx.PA._interno.PULO;
+  Object.keys(UNI0).forEach((m) => Object.keys(UNI0[m]).forEach((vista) => {
+    if (UNI0[m][vista].pernas.length !== 3) erros.push(`${m} ${vista}: ${UNI0[m][vista].pernas.length} quadros de passo, precisa de 3`);
   }));
+  [0, 1, 3].forEach((est) => PA.VISTAS.forEach((vista) => {
+    const parado = PA.unicornio(DEF, est, 0, { vista }), rot = `(${ESTAGIOS[est]}, ${vista})`;
+    const pulo = PA.unicornio(DEF, est, PULO, { vista }), cans = PA.unicornio(DEF, est, 0, { vista, cansado: true });
+    if (pulo.w !== parado.w || pulo.h !== parado.h || cans.w !== parado.w || cans.h !== parado.h) erros.push(`pulo ou cansado muda o tamanho do sprite ${rot}`);
+    if (diferenca(pulo.canvas, parado.canvas) === 0) erros.push(`o quadro do pulo é igual ao parado ${rot}`);
+    if (diferenca(cans.canvas, parado.canvas) === 0) erros.push(`a pose cansada é igual à parada ${rot}`);
+  }));
+  linhas.push('3 quadros de passo em todo molde; pulo e pose cansada com desenho próprio e do mesmo tamanho');
 
   // oclusão montada
   OCLUSAO.forEach(([ancoras, est, vista, minimo]) => {
@@ -140,9 +156,10 @@ function conferir() {
   // no canvas com contorno: linhas 8–11 e 12–14, depois das 7 da cabeça)
   const chifre = DEF.cores.chifre, corChifre = new Set([chifre, PA.cor.escurecer(chifre, 0.25), PA.cor.clarear(chifre, 0.45)]
     .map((c) => cor(c).slice(0, 3).join(',')));
-  [1, 3].forEach((est) => ['frente', 'diagFrente'].forEach((vista) => {
-    const uni = PA.unicornio(DEF, est, 0, { vista, enfeites: [] });
-    const mont = PA.montada(DEF, est, 0, AP, { vista, enfeites: [] }).canvas;
+  [false, true].forEach((cansado) => [1, 3].forEach((est) => ['frente', 'diagFrente'].forEach((vista) => {
+    const uni = PA.unicornio(DEF, est, 0, { vista, enfeites: [], cansado });
+    const mont = PA.montada(DEF, est, 0, AP, { vista, enfeites: [], cansado }).canvas;
+    const rotulo = ESTAGIOS[est] + (cansado ? ', cansado' : '');
     const cav = PA.mariana(AP, true, 0, { vista }).canvas;
     const ox = (mont.width - uni.w) / 2 + uni.cavaleira[0], oy = mont.height - uni.h + uni.cavaleira[1];
     let noTronco = 0, pernas = 0, pernasVistas = 0;
@@ -155,14 +172,14 @@ function conferir() {
       if (y <= 11 && corChifre.has(rgb)) noTronco++;
       if (y >= 12) { pernas++; if (rgb === [0, 1, 2].map((k) => cav.dados[o + k]).join(',')) pernasVistas++; }
     }
-    if (noTronco) erros.push(`chifre: ${noTronco} px por cima do tronco da cavaleira (${ESTAGIOS[est]}, ${vista})`);
-    else linhas.push(`chifre fora do tronco da cavaleira (${ESTAGIOS[est]}, ${vista})`);
+    if (noTronco) erros.push(`chifre: ${noTronco} px por cima do tronco da cavaleira (${rotulo}, ${vista})`);
+    else linhas.push(`chifre fora do tronco da cavaleira (${rotulo}, ${vista})`);
     if (vista === 'frente') {
-      const txt = `pernas da cavaleira: ${Math.round(pernasVistas / pernas * 100)} % visíveis (${ESTAGIOS[est]}, frente)`;
+      const txt = `pernas da cavaleira: ${Math.round(pernasVistas / pernas * 100)} % visíveis (${rotulo}, frente)`;
       if (pernasVistas / pernas < 0.5) erros.push(txt + ', mínimo 50 %'); else linhas.push(txt);
       // enfeite por cima do tronco: pixels do tronco que mudam com o enfeite
       ids.forEach((id) => {
-        const com = PA.montada(DEF, est, 0, AP, { vista, enfeites: [id] }).canvas;
+        const com = PA.montada(DEF, est, 0, AP, { vista, enfeites: [id], cansado }).canvas;
         if (com.width !== mont.width || com.height !== mont.height) return;
         let n = 0;
         for (let y = 8; y <= 11; y++) for (let x = 0; x < cav.width; x++) {
@@ -172,10 +189,10 @@ function conferir() {
           const m = (Y * mont.width + X) * 4;
           if ([0, 1, 2, 3].some((k) => com.dados[m + k] !== mont.dados[m + k])) n++;
         }
-        if (n > TRONCO_MAX) erros.push(`${id}: cobre ${n} px do tronco da cavaleira (${ESTAGIOS[est]}, frente), máximo ${TRONCO_MAX}`);
+        if (n > TRONCO_MAX) erros.push(`${id}: cobre ${n} px do tronco da cavaleira (${rotulo}, frente), máximo ${TRONCO_MAX}`);
       });
     }
-  }));
+  })));
   // chifre livre e olhos à vista
   const UNI = ctx.PA._interno.UNI;
   const TODOS = ['fitinha-cauda', 'colar-perolas', 'laco', 'coroa', 'anel-saturno'];

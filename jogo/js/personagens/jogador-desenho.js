@@ -8,6 +8,24 @@
   var espelhos = new WeakMap();
   var DIST_BEBE = I.DIST_BEBE;   // quantos pixels o bebê anda atrás da Mariana
   var PASSOS = [1, 0, 2, 0];   // quadros do andar: pé, junto, outro pé, junto
+  /* Cadência pela distância (não pelo relógio): um quadro do passo a cada PX_QUADRO px do jogo andados e um
+     pulinho do trote a cada 2 quadros, então com fome, com sede ou nadando (mais devagar) o passo encolhe junto
+     e o casco não patina. Pulando alto acima de METADE_PULO da altura, o unicórnio encolhe as patas. */
+  var PX_QUADRO = { montada: 12, aPe: 8 };
+  var METADE_PULO = 0.5;
+  // distância andada (px do jogo): cresce com o deslocamento de verdade entre um desenho e o outro; um salto
+  // maior que um tile (entrar num prédio, voltar ao mapa) não conta. Parada, o trote ainda termina o pulinho.
+  var passo = { dist: 0, x: null, y: null, t: null };
+  function andar(pxQuadro) {
+    var d = passo.x === null ? 0 : Math.hypot(J.x - passo.x, J.y - passo.y);
+    var dt = passo.t === null ? 0 : Math.min(0.1, Math.max(0, J.t - passo.t));
+    passo.x = J.x; passo.y = J.y; passo.t = J.t;
+    if (d > 0 && d <= T) passo.dist += d;
+    else if (!J.andando && Math.abs(trote(pxQuadro)) > 0.06) passo.dist += dt * J.velocidade();
+  }
+  // o pulinho do trote (0 a 1): mais alto no meio do quadro "junto" (quadro 0 do PASSOS), no chão nos passos
+  function trote(pxQuadro) { return Math.abs(Math.sin(Math.PI * (passo.dist - pxQuadro / 2) / (2 * pxQuadro))); }
+  J.passo = passo;
   // largura da sombra conforme a vista (de frente e de costas o corpo fica mais estreito)
   var SOMBRA = { lado: 1, diagFrente: 0.85, diagCostas: 0.85, frente: 0.6, costas: 0.6 };
 
@@ -76,6 +94,9 @@
     return s;
   }
   J.sujar = sujar;
+  function cansado() {
+    try { var C = Reino.Cuidados, f = C && C.fatorVelocidade ? C.fatorVelocidade() : 1; return typeof f === 'number' && f < 1; } catch (e) { return false; }
+  }
   function montariaSuja() {
     try { return !!(Reino.Cuidados && Reino.Cuidados.sujo && Reino.Cuidados.sujo()); } catch (e) { return false; }
   }
@@ -232,13 +253,18 @@
     var P = Reino.Progresso, est = P.estado();
     var id = P.montaria(), def = P.defUni(id), u = est.unis[id];
     var estagio = Reino.Unicornios.estagio(u ? u.xp : 0);
-    var quadro = J.andando && animar ? PASSOS[Math.floor(J.t / 0.16) % 4] : 0;
+    var pxQuadro = estagio >= 1 ? PX_QUADRO.montada : PX_QUADRO.aPe;
+    andar(pxQuadro);
+    var quadro = J.andando && animar ? PASSOS[Math.floor(passo.dist / pxQuadro) % 4] : 0;
     var usa = est.usando;
     var olhar = PA.vistaDaDirecao(J.olharX, J.olharY);
-    var opcoes = { enfeites: usa.enfeites, capa: usa.capa, asasFada: usa.asasFada, vista: olhar.vista };
-    var pulo = animar ? Math.abs(Math.sin(J.tPulo * 10)) : 0;
-    // pulo alto (J.pular): o corpo sobe, a sombra fica no chão e encolhe um pouco no alto
+    // fome ou sede baixa (ela anda mais devagar): o unicórnio fica com a pose cansada
+    var opcoes = { enfeites: usa.enfeites, capa: usa.capa, asasFada: usa.asasFada, vista: olhar.vista, cansado: cansado() };
+    // o pulinho do trote é de 1 px inteiro (sobe ou não sobe: movimento de pixel em degrau)
+    var pulo = animar ? trote(pxQuadro) : 0;
+    // pulo alto (J.pular): o corpo sobe, a sombra fica no chão e encolhe um pouco no alto; no alto, patas encolhidas
     var alto = J.alturaPulo(), encolhe = alto ? 1 - 0.3 * alto / J.salto.altura : 1;
+    var quadroUni = alto > METADE_PULO * (J.salto ? J.salto.altura : 0) && alto > 0 ? PA._interno.PULO : quadro;
     // prefers-reduced-motion também para tudo o que é da água (ondinhas, partículas, ícone balançando)
     if (Reino.util.reduzMovimentoSistema) animar = false;
     var particulas = animar;
@@ -269,9 +295,9 @@
       } }];
     }
     if (estagio >= 1) {
-      var spr = PA.montada(def, estagio, quadro, est.aparencia, opcoes);
+      var spr = PA.montada(def, estagio, quadroUni, est.aparencia, opcoes);
       var prof = fundura(J.x, J.y), corte = estagio >= 2 ? CORTE.montadaGrande : CORTE.montadaPequena;
-      var puloM = pulo * (1 - prof) + alto;          // na água o trote vira deslizar
+      var puloM = Math.round(pulo * (1 - prof)) + alto;          // na água o trote vira deslizar
       var raio = (estagio >= 2 ? 28 : 20) / 2.6 * SOMBRA[olhar.vista];
       var imgM = sujo ? sujar(spr.canvas) : spr.canvas;
       marcarSilhueta(spr.canvas, J.x, J.y + 1 - puloM, olhar.espelhar, prof, corte);
@@ -293,12 +319,12 @@
       var frente = pontoAtras(DIST_BEBE - 3), tras = pontoAtras(DIST_BEBE + 3);
       if (Math.hypot(frente.x - tras.x, frente.y - tras.y) > 1) J.olharBebe = PA.vistaDaDirecao(frente.x - tras.x, frente.y - tras.y);
       var olharB = J.olharBebe || olhar;
-      var bebe = PA.unicornio(def, 0, quadro, Object.assign({}, opcoes, { vista: olharB.vista }));
+      var bebe = PA.unicornio(def, 0, quadroUni, Object.assign({}, opcoes, { vista: olharB.vista }));
       var menina = PA.mariana(est.aparencia, false, quadro, { capa: usa.capa, vista: olhar.vista });
       pulo *= 1.5;
       var ry = r.y;
       var profB = fundura(r.x, ry), profM = fundura(J.x, J.y);
-      var puloB = pulo * (1 - profB) + alto;
+      var puloB = Math.round(pulo * (1 - profB)) + alto;
       var imgB = sujo ? sujar(bebe.canvas) : bebe.canvas;
       marcarSilhueta(menina.canvas, J.x, J.y + 1 - alto, olhar.espelhar, profM, CORTE.mariana);
       itens = [

@@ -164,18 +164,85 @@
     return algum ? [{ linhas: linhasNF, paleta: paletaNF, x: 0, y: 0 }] : [];
   }
 
-  // estagio: 0 bebê, 1 pequeno, 2 jovem, 3 adulto • opcoes.vista: uma de PA.VISTAS
+  /* Pulo (quadro PULO): as patas encolhem, cada casco 1 px mais alto e 1 px para o meio do corpo (joelho dobrado),
+     a partir das pernas paradas do molde; o sprite continua da mesma altura (a última linha fica vazia). */
+  var PULO = 3, pernasDoPulo = new WeakMap();
+  function pernasPulo(molde) {
+    var q = molde.pernas[0], r = pernasDoPulo.get(molde);
+    if (r) return r;
+    var g = q.map(function (l) { return l.split(''); }), cascos = [], x0 = 99, x1 = -1;
+    q.forEach(function (l, y) { for (var x = 0; x < l.length; x++) if (l[x] === 'f') { cascos.push([x, y]); x0 = Math.min(x0, x); x1 = Math.max(x1, x); } });
+    var meio = (x0 + x1) / 2;
+    cascos.forEach(function (c) {
+      g[c[1]][c[0]] = '.';
+      if (c[1] > 0 && 'bs'.indexOf(g[c[1] - 1][c[0]]) >= 0) g[c[1] - 1][c[0]] = '.';
+    });
+    cascos.forEach(function (c) { if (c[1] > 0) g[c[1] - 1][c[0] + (c[0] < meio ? 1 : c[0] > meio ? -1 : 0)] = 'f'; });
+    r = g.map(function (l) { return l.join(''); });
+    pernasDoPulo.set(molde, r);
+    return r;
+  }
+
+  /* Pose cansada (fome ou sede baixa: Cuidados.fatorVelocidade() < 1): a cabeça desce 1 px (o retângulo
+     molde.cansado.cabeca, com os enfeites da orelha, olho, cabeça e chifre), as pontas das orelhas caem
+     (molde.cansado.orelhas: [x, y, letra] do molde parado, já contando a descida) e os olhos ficam meio fechados.
+     De frente ela senta na cabeça (cansado.cavaleira): desce junto. */
+  var DA_CABECA = { orelha: true, olho: true, cabeca: true, chifre: true };
+  var moldesCansados = new WeakMap();
+  function dentroDe(r, x, y) { return x >= r[0] && x <= r[2] && y >= r[1] && y <= r[3]; }
+  function moldeCansado(molde) {
+    var m = moldesCansados.get(molde);
+    if (m) return m;
+    var c = molde.cansado, r = c.cabeca, ancoras = {}, enfeites = {};
+    Object.keys(molde.ancoras).forEach(function (k) {
+      var a = molde.ancoras[k];
+      ancoras[k] = a && DA_CABECA[k] ? [a[0], a[1] + 1] : a;
+    });
+    function descer(d) { return Object.assign({}, d, { y: d.y + 1 }, d.bebe ? { bebe: descer(d.bebe) } : {}); }
+    Object.keys(molde.enfeites || {}).forEach(function (k) {
+      var e = ENFEITES[k], d = molde.enfeites[k];
+      enfeites[k] = e && DA_CABECA[e.ancora] ? descer(d) : d;
+    });
+    var nf = molde.naFrente;
+    m = Object.assign({}, molde, {
+      ancoras: ancoras, enfeites: enfeites,
+      brilhos: molde.brilhos.map(function (b) { return dentroDe(r, b[0], b[1]) ? [b[0], b[1] + 1] : b; }),
+      naFrente: nf ? [nf[0], nf[1] + 1, nf[2], nf[3] + 1] : nf,
+      cavaleira: c.cavaleira ? [molde.cavaleira[0], molde.cavaleira[1] + 1] : molde.cavaleira,
+    });
+    moldesCansados.set(molde, m);
+    return m;
+  }
+  function cansar(linhas, c) {
+    var r = c.cabeca, g = linhas.map(function (l) { return l.split(''); });
+    for (var y = Math.min(r[3] + 1, g.length - 1); y >= r[1]; y--) {
+      for (var x = r[0]; x <= r[2]; x++) g[y][x] = y > r[1] ? linhas[y - 1][x] : '.';
+    }
+    (c.orelhas || []).forEach(function (o) { var l = g[o[1] + 1]; if (l && o[0] < l.length) l[o[0]] = o[2]; });
+    // olhos meio fechados: a linha do brilho do olho vira pálpebra (a cor da sombra do pelo)
+    g.forEach(function (l) {
+      for (var x = 0; x < l.length; x++) if (l[x] === 'l') {
+        l[x] = 's';
+        if (l[x - 1] === 'e') l[x - 1] = 's';
+        if (l[x + 1] === 'e') l[x + 1] = 's';
+      }
+    });
+    return g.map(function (l) { return l.join(''); });
+  }
+
+  // estagio: 0 bebê, 1 pequeno, 2 jovem, 3 adulto • quadro: 0 parado, 1 e 2 passos, PULO (3) patas encolhidas
+  // • opcoes.vista: uma de PA.VISTAS • opcoes.cansado: pose cansada (fome ou sede baixa)
   PA.unicornio = function (def, estagio, quadro, opcoes) {
     opcoes = opcoes || {};
     var enf = opcoes.enfeites || [];
     var vista = opcoes.vista || 'lado';
     var combo = enf.join('+');
-    var chave = ['uni', def.id, estagio, quadro, combo, opcoes.asasFada ? 'af' : '', vista].join('|');
+    var chave = ['uni', def.id, estagio, quadro, combo, opcoes.asasFada ? 'af' : '', vista, opcoes.cansado ? 'c' : ''].join('|');
     if (cache[chave]) { usarCombo(combo); return cache[chave]; }
 
     var grande = estagio >= 2;
     var molde = UNI[grande ? 'adulto' : 'filhote'][vista];
-    var pernas = molde.pernas[quadro % 3] || molde.pernas[1];
+    var pernas = quadro === PULO ? pernasPulo(molde) : molde.pernas[quadro % 3] || molde.pernas[1];
     var corpoLinhas = molde.corpo.concat(pernas);
     if (estagio === 0) {
       // bebê: só um toquinho de chifre
@@ -188,6 +255,10 @@
         var l = corpoLinhas[p[1]];
         if (l) corpoLinhas[p[1]] = l.slice(0, p[0]) + p[2] + l.slice(p[0] + 1);
       });
+    }
+    if (opcoes.cansado && molde.cansado) {
+      corpoLinhas = cansar(corpoLinhas, molde.cansado);
+      molde = moldeCansado(molde);
     }
     var w = corpoLinhas[0].length, h = corpoLinhas.length;
     var base = novoCanvas(w, h);
@@ -233,6 +304,7 @@
     return res;
   };
   I.usarCombo = usarCombo;
+  I.PULO = PULO;
   I.QUASE_NO_CHIFRE = QUASE_NO_CHIFRE;
   I.lugarDoEnfeite = lugarDoEnfeite;
 })();

@@ -89,9 +89,9 @@
         frente: ['..BBHHHH...', '.BBHHHHHH..', '.HHHHHHHHH.', '.HHKKKKKHH.', '.HKEKKKEKH.', '.HRKKKKKRH.', '.HHKKKKKHH.'],
         lado: ['..BHHHH....', '.BBHHHHHH..', '..HHHHHHHH.', '..HHHKKKKK.', '..HHKKKEKK.', '..HHKKKKRK.', '..HHHKKKK..'],
         // de costas e em 3/4: o cabelo acaba reto na altura do queixo, com as pontas claras, e a nuca aparece
-        costas: ['..BBHHHH...', '.BBHHHHHH..', '.HHHLLHHHH.', '.HHLHHHHHH.', '.HHHHHHHHH.', '.HLHHHHHLH.', '..KKKKKKK..'],
+        costas: ['...HHHHBB..', '..HHHHHHBB.', '.HHHLLHHHH.', '.HHLHHHHHH.', '.HHHHHHHHH.', '.HLHHHHHLH.', '..KKKKKKK..'],
         diagFrente: ['..BHHHHH...', '.BBHHHHHHH.', '..HHHHHHHH.', '..HHKKKKKH.', '..HHKEKKEK.', '..HLKKKKRK.', '...KKKKKK..'],
-        diagCostas: ['..BHHHH....', '.BBHHHHHH..', '..HHHLLHHH.', '..HHLHHHHH.', '..HHHHHHHK.', '..HLHHHLKK.', '...KKKKKK..'],
+        diagCostas: ['...HHHHHB..', '..HHHHHHBB.', '..HHHLLHHH.', '..HHLHHHHH.', '..HHHHHHHK.', '..HLHHHLKK.', '...KKKKKK..'],
       } },
     tranca: { curto: true,
       cabeca: {
@@ -119,10 +119,10 @@
     cacheado: {
       cabeca: {
         frente: ['..BBHHHHH..', '.BBHHHHLHH.', 'HHHHLHHHHHH', 'HLHKKKKKHLH', 'HHKEKKKEKHH', 'HLRKKKKKRLH', 'HHHKKKKKHHH'],
-        costas: ['..BBHHHHH..', '.BBHHHLHHH.', 'HHHLHHHHLHH', 'HLHHHLHHHHH', 'HHHHHHHLHLH', 'HLHHLHHHHHH', 'HHHHHHHLHHH'],
+        costas: ['..HHHHHBB..', '.HHHLHHHBB.', 'HHHLHHHHLHH', 'HLHHHLHHHHH', 'HHHHHHHLHLH', 'HLHHLHHHHHH', 'HHHHHHHLHHH'],
         lado: ['.BHHHHH....', 'BBHHLHHHH..', 'HHHHHHHHHH.', 'HLHHHKKKKK.', 'HHHLKKKEKK.', 'HLHHKKKKRK.', 'HHHHHKKKK..'],
         diagFrente: ['.BHHHHHH...', 'BBHHLHHHHH.', 'HHHHHHHHHHH', 'HLHHKKKKKHL', 'HHHLKEKKEKH', 'HLHHKKKKRKH', 'HHHHHKKKK.H'],
-        diagCostas: ['.BHHHHH....', 'BBHHLHHHH..', 'HHHHHLLHHHH', 'HLHHLHHHHHL', 'HHHLHHHHHKH', 'HLHHHHHHKKH', 'HHHHHHHKK.H'],
+        diagCostas: ['..HHHHHHB..', '.HHHLHHHHBB', 'HHHHHLLHHHH', 'HLHHLHHHHHL', 'HHHLHHHHHKH', 'HLHHHHHHKKH', 'HHHHHHHKK.H'],
       },
       corpo: {
         frente: ['HLH.....HLH', 'HH.......HH', '.H.......H.'],
@@ -239,9 +239,9 @@
       for (var x = 0; x < r.length; x++) if (o[x] === 'B') r[x] = x === 0 || x === r.length - 1 || o[x - 1] === '.' || o[x + 1] === '.' ? '.' : 'H';
     }
   }
-  // corte de menino com laço: o lacinho fica no mesmo lugar do da Mariana
-  var LACO = { frente: [[0, 3], [0, 2], [1, 2], [1, 1]], lado: [[0, 2], [1, 1], [1, 2]], costas: [[0, 2], [0, 3], [1, 1], [1, 2]],
-    diagFrente: [[0, 2], [1, 1], [1, 2]], diagCostas: [[0, 2], [1, 1], [1, 2]] };
+  // corte de menino com laço: o lacinho fica no mesmo lugar do da Mariana (de costas, à direita de quem olha)
+  var LACO = { frente: [[0, 3], [0, 2], [1, 2], [1, 1]], lado: [[0, 2], [1, 1], [1, 2]], costas: [[0, 7], [0, 8], [1, 8], [1, 9]],
+    diagFrente: [[0, 2], [1, 1], [1, 2]], diagCostas: [[0, 8], [1, 8], [1, 9]] };
 
   /** Aplica corte, modelo e laço nas linhas da Mariana (cabeça + corpo) e devolve linhas novas.
       @param {string[]} linhas @param {string} vista @param {boolean} sentada @param {string} corte @param {string} modelo

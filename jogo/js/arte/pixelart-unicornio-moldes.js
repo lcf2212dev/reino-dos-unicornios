@@ -84,6 +84,11 @@
        '...n.bb..ss...ss...bb.....',
        '.....bb..ss...ss...bb.....',
        '.....ff..ff...ff...ff.....'],
+      // 3º quadro: as pernas de fora voltam para junto das de dentro (o outro tempo do passo)
+      ['..rm..bb.ss....ss.bb......',
+       '...n...bbss....ssbb.......',
+       '.......bbss....ssbb.......',
+       '.......ffff....ffff.......'],
     ],
     asas: [{ linhas: ASA_ADULTO, x: 2, y: 4, atras: true, escura: true }, { linhas: ASA_ADULTO, x: 3, y: 5 }],
     ancoras: { orelha: [15, 1], olho: [19, 6], cabeca: [17, 3],
@@ -136,7 +141,10 @@
     ],
     ancoras: { orelha: [3, 2], olho: [5, 7], cabeca: [8, 3],
       pescoco: [9, 13], cauda: null, chifre: [8, 1] },
-    enfeites: { 'chapeu-chef-arco-iris': { linhas: CHAPEU_CHEF_FRENTE, x: 5, y: 1 }, oculos: { linhas: OCULOS_FRENTE, x: 4, y: 6 }, 'oculos-estrela': { linhas: OCULOS_ESTRELA_FRENTE, x: 4, y: 6 } },
+    enfeites: { 'chapeu-chef-arco-iris': { linhas: CHAPEU_CHEF_FRENTE, x: 5, y: 1 }, oculos: { linhas: OCULOS_FRENTE, x: 4, y: 6 }, 'oculos-estrela': { linhas: OCULOS_ESTRELA_FRENTE, x: 4, y: 6 },
+      // o anel 1 px mais alto, perto da ponta do chifre e sem o risquinho de baixo: com a coroa (encaixe da cabeça,
+      // logo embaixo) as pontas dela ficam à vista
+      'anel-saturno': { linhas: ['.AA..AA.', 'AAWWWWAA'], x: 5, y: 0 } },
     brilhos: [[0, 7], [1, 10], [7, 4]],
     // montada: ela senta no alto da cabeça, com as pernas dos dois lados da crina; na frente dela só a cara do
     // unicórnio (dos olhos para baixo): o chifre e os enfeites da cabeça ficam atrás do tronco dela
@@ -225,6 +233,10 @@
        '.....bb..ss..bb..ss...',
        '.....ff..ff..bb...ss..',
        '.............ff...ff..'],
+      ['......bb.ss...bb.ss...',
+       '.......bbss....bbss...',
+       '.......ffff....bbss...',
+       '...............ffff...'],
     ],
     asas: [{ linhas: ASA_ADULTO, x: 3, y: 4, atras: true, escura: true }, { linhas: ASA_ADULTO, x: 4, y: 5 }],
     ancoras: { orelha: [20, 2], olho: [19, 7], cabeca: [17, 3],
@@ -270,6 +282,10 @@
        '..rnbb...ss.bb...ss...',
        '..r.bb...ss.ff...ff...',
        '....ff...ff...........'],
+      ['.rnm.bb.ss...bb.ss....',
+       '..rn..bbss....bbss....',
+       '..r...bbss....ffff....',
+       '......ffff............'],
     ],
     asas: [{ linhas: ASA_ADULTO, x: 5, y: 4, atras: true, escura: true }, { linhas: ASA_ADULTO, x: 6, y: 5 }],
     ancoras: { orelha: [13, 2], olho: null, cabeca: [16, 4],
@@ -314,6 +330,9 @@
       ['...bb..s.s..bb....',
        '...bb..s.s..bb....',
        '...ff..f.f..ff....'],
+      ['.....bbs.sbb......',
+       '.....bbs.sbb......',
+       '.....fff.fff......'],
     ],
     asas: [{ linhas: ASA_FILHOTE, x: 1, y: 3, atras: true, escura: true }, { linhas: ASA_FILHOTE, x: 2, y: 4 }],
     ancoras: { orelha: [8, 0], olho: [11, 5], cabeca: [10, 2],
@@ -443,6 +462,9 @@
       ['...bb..s.bb..s..',
        '...ff..f.bb..s..',
        '.........ff..f..'],
+      ['.....bbs...bbs..',
+       '.....fff...bbs..',
+       '...........fff..'],
     ],
     asas: [{ linhas: ASA_FILHOTE, x: 2, y: 5, atras: true, escura: true }, { linhas: ASA_FILHOTE, x: 3, y: 6 }],
     ancoras: { orelha: [15, 2], olho: [13, 6], cabeca: [12, 3],
@@ -457,7 +479,8 @@
       // colar 1 px para a esquerda, para o planeta laranja e o elo da ponta caberem na borda
       'colar-planetas': { linhas: COLAR_PLANETAS, x: 6, y: 10 } },
     brilhos: [[5, 6], [1, 10], [6, 4]],
-    cavaleira: [2, -6],
+    // ela senta 2 px mais baixa que antes: montada fica com 22 px de altura (ui.md §10.12: 19–22)
+    cavaleira: [2, -4],
     naFrente: [7, 0, 15, 11],
   };
   UNI.filhote.diagCostas = {
@@ -483,6 +506,9 @@
       ['...bb..s.bb..s..',
        '...bb..s.ff..f..',
        '...ff..f........'],
+      ['.....bbs...bbs..',
+       '.....bbs...fff..',
+       '.....fff........'],
     ],
     asas: [{ linhas: ASA_FILHOTE, x: 3, y: 5, atras: true, escura: true }, { linhas: ASA_FILHOTE, x: 4, y: 6 }],
     ancoras: { orelha: [9, 2], olho: null, cabeca: [12, 3],
@@ -491,9 +517,33 @@
       'colar-perolas': { linhas: ['LcrcrcL', '.LLLLL.'], x: 7, y: 8 },
       'anel-saturno': { linhas: ['A....A', '.AaaA.'], x: 10, y: 2, bebe: ANEL_BEBE_DIAG } },
     brilhos: [[7, 5], [6, 7], [1, 10]],
-    cavaleira: [3, 0],
+    // 1 px mais alta que o chifre: montada com 19 px (ui.md §10.12: 19–22)
+    cavaleira: [3, -1],
     enfeitesNaFrente: ['orelha', 'cabeca', 'chifre', 'cauda'],
   };
+
+  /* Pose cansada (fome ou sede baixa; quem desenha é pixelart-unicornio.js): cabeca = [x0, y0, x1, y1] que desce
+     1 px; orelhas = [x, y, letra] do molde parado (a ponta que some, '.', e onde a orelha cai); cavaleira: de frente
+     ela senta na cabeça e desce junto. */
+  var CANSADO = {
+    adulto: {
+      lado: { cabeca: [10, 0, 25, 10], orelhas: [[16, 2, '.']] },
+      frente: { cabeca: [0, 0, 17, 12], orelhas: [[3, 2, '.'], [14, 2, '.'], [2, 3, 'b'], [15, 3, 'b']], cavaleira: true },
+      costas: { cabeca: [3, 0, 14, 4], orelhas: [[3, 2, '.'], [14, 2, '.'], [2, 3, 'b'], [15, 3, 'b']] },
+      diagFrente: { cabeca: [11, 0, 21, 11], orelhas: [[11, 2, '.'], [20, 2, '.'], [21, 3, 'b']] },
+      diagCostas: { cabeca: [11, 0, 21, 7], orelhas: [[13, 2, '.'], [20, 3, '.'], [21, 4, 'b']] },
+    },
+    filhote: {
+      lado: { cabeca: [8, 0, 17, 8], orelhas: [[9, 1, '.'], [8, 2, 'b']] },
+      frente: { cabeca: [0, 0, 15, 10], orelhas: [[3, 2, '.'], [12, 2, '.'], [2, 3, 'b'], [13, 3, 'b']], cavaleira: true },
+      costas: { cabeca: [2, 0, 15, 4], orelhas: [[2, 2, '.'], [15, 2, '.'], [1, 3, 'b'], [16, 3, 'b']] },
+      diagFrente: { cabeca: [7, 0, 15, 10], orelhas: [[7, 2, '.'], [15, 2, '.']] },
+      diagCostas: { cabeca: [9, 0, 15, 6], orelhas: [[9, 2, '.']] },
+    },
+  };
+  Object.keys(CANSADO).forEach(function (est) {
+    Object.keys(CANSADO[est]).forEach(function (vista) { UNI[est][vista].cansado = CANSADO[est][vista]; });
+  });
 
   var ENFEITES = {
     flor:   { linhas: ['.P.', 'PYP', '.P.'], paleta: { P: '#ff7eb6', Y: '#ffe066' }, ancora: 'orelha', dx: -1, dy: 1 },
