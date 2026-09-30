@@ -50,4 +50,5 @@
 # c0b505e = onda 5a, foguete e ícones (D8B-21, D4-12, D8A-19)
 # a91eaa7 = onda 5a, placas (O-06, D2A-08, D12c-02, D12c-03) e O-30
 # 70f8fb3 = O-33 (móveis na grade do fundo)
-70f8fb3
+# 30e6177 = onda 5b (área útil, balão no pé e paginado, retorno compacto, loja; D10-B03, D1-10, D1-11, D2A-01, D8A-15, D11-06, D11-05, D5-01, D5-02, D5-05, D5-09, D5-10, D5-11, D6-08, D8A-06)
+30e6177
