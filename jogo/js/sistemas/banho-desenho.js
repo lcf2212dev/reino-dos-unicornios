@@ -12,6 +12,8 @@
   // espuma da banheira: as mesmas bolhas do desenho parado (petshop.js), em px a partir do canto da banheira
   var ESPUMA = [[10, 3, 4], [16, 1, 5], [23, 2, 4], [29, 0, 5], [36, 2, 4], [41, 4, 3], [13, -2, 3], [26, -3, 3], [33, -3, 3]];
   var PASSOS = [1, 0, 2, 0];
+  // x do meio de um sprite de largura w com a borda esquerda no pixel inteiro do jogo (como o ET): anda em degraus
+  function naGrade(x, w) { return Math.round(x - w / 2) + w / 2; }
 
   /* ---------- sprites pequenos (feitos uma vez, na primeira vez que aparecem) ---------- */
   var cache = {};
@@ -101,7 +103,7 @@
     if (s < 0.88) {
       // sacudida: balança de leve de um lado para o outro (1 px, devagar, entrando e saindo aos poucos)
       var env = Math.sin(Math.PI * trecho(s, 0.74, 0.86));
-      return { x: g.lx + Math.sin((e - 0.74 * I.st.dur) / 1000 * Math.PI * 2 * 4.5) * env, y: g.ly, vista: 'frente', espelhar: false, quadro: 0, corta: false, dentro: false };
+      return { x: g.lx + Math.round(Math.sin((e - 0.74 * I.st.dur) / 1000 * Math.PI * 2 * 4.5) * env), y: g.ly, vista: 'frente', espelhar: false, quadro: 0, corta: false, dentro: false };
     }
     if (s < 0.98) {
       // volta andando até ela (montada) ou até o lugar dele atrás dela (bebê)
@@ -151,7 +153,7 @@
       if ((bq[1] < 0) !== deTras) return;
       var r = Math.round(bq[2] * f);
       if (r < 1) return;
-      p.sprite(bolha(r), g.px + bq[0] + 0.5, g.py + bq[1] + r + 1 + (1 - f) * 3);
+      p.sprite(bolha(r), g.px + bq[0] + 0.5, g.py + bq[1] + r + 1 + Math.round((1 - f) * 3));
     });
   }
 
@@ -175,7 +177,7 @@
       for (var k = 0; k < 4; k++) {
         var c = ((e - 0.15 * d) / 1500 + k / 4) % 1;
         var bx = g.px + [6, 11, 38, 43][k] + Math.sin(e / 300 + k) * 1.5, by = g.linha - 6 - c * 18;
-        if (c < 0.82) p.sprite(bolha(k % 2 + 1), bx, by + (k % 2 + 1) + 1);
+        if (c < 0.82) { var bk = bolha(k % 2 + 1); p.sprite(bk, naGrade(bx, bk.width), Math.round(by) + (k % 2 + 1) + 1); }
         else if (c < 0.94) brilho(p, Math.round(bx), Math.round(by), 1, BRANCO);
       }
     }
@@ -192,18 +194,20 @@
     if (s > 0.30 && s < 0.50) {
       var ke = trecho(s, 0.30, 0.50), entra = suave(trecho(ke, 0, 0.15)) * suave(1 - trecho(ke, 0.85, 1));
       var vai = Math.sin((e - 0.30 * d) / 1000 * Math.PI * 2 * 1.6) * 6;
-      p.sprite(escova(), costas.x + vai, costas.y - 1 - (1 - entra) * 10);
+      var esc = escova();
+      p.sprite(esc, naGrade(costas.x + vai, esc.width), Math.round(costas.y - 1 - (1 - entra) * 10));
     }
     // chuveirinho enxaguando: cabeça em cima das costas e a água caindo
     if (s > 0.50 && s < 0.66) {
       var kc = trecho(s, 0.50, 0.66), vem = suave(trecho(kc, 0, 0.18)) * suave(1 - trecho(kc, 0.82, 1));
       // (a cabeça fica no meio-esquerdo do sprite: o cabo sobe para a direita)
-      var hx = costas.x + 6 + Math.sin(e / 330) * 3, hy = g.ty + fundo(s) - h - 1 - (1 - vem) * 12;
-      p.sprite(chuveiro(), hx, hy);
+      var chu = chuveiro();
+      var hx = naGrade(costas.x + 6 + Math.sin(e / 330) * 3, chu.width), hy = Math.round(g.ty + fundo(s) - h - 1 - (1 - vem) * 12);
+      p.sprite(chu, hx, hy);
       if (vem > 0.6) {
         var de = hy - 1, ate = g.linha - 2, len = ate - de;
         for (var q = 0; q < 10; q++) {
-          var fq = (e / 220 + q * 0.37) % 1, col = hx - 7 + q;
+          var fq = (e / 220 + q * 0.37) % 1, col = Math.round(hx - 7) + q;
           p.ret(col, de + fq * len, 1, 3, q % 2 ? AGUA3 : AGUA2);
           p.ret(col, de + ((fq + 0.5) % 1) * len, 1, 2, q % 3 ? AGUA2 : BRANCO);
         }
@@ -213,7 +217,8 @@
     var casa = { x: g.px + 25.5, y: g.py - 2 }, canto = { x: g.px + 40.5, y: g.py - 1 };
     var kp = s < 0.5 ? suave(trecho(s, 0.01, 0.09)) : 1 - suave(trecho(s, 0.88, 0.98));
     var balanco = Math.sin(e / 260) * 1.2 * kp;
-    p.sprite(patinho(), lerp(casa.x, canto.x, kp) + Math.sin(e / 520) * 0.8 * kp, lerp(casa.y, canto.y, kp) + balanco);
+    var pat = patinho();
+    p.sprite(pat, naGrade(lerp(casa.x, canto.x, kp) + Math.sin(e / 520) * 0.8 * kp, pat.width), Math.round(lerp(casa.y, canto.y, kp) + balanco));
   }
 
   // gotas voando da sacudida (duas levas)

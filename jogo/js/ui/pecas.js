@@ -35,22 +35,52 @@
   function aparencia() { return est().aparencia; }
 
   /* ---------- confete ---------- */
+  // Tudo pelo tempo (s), não pelo quadro: a mesma chuva em 60 ou 120 Hz. Uma peça em 6 já nasce na tela
+  // (confete desde o 1º quadro); as outras vêm de até 70 % da altura acima e atravessam a tela em 1,3 a 2,1 s.
+  // O canvas só sai quando a última peça passa da borda de baixo.
+  var CORES_CONFETE = ['#ff7eb6', '#ffd34d', '#7c5cff', '#39c5bb', '#5fb4ff', '#ff9d2e'];
+  function criarConfete(quantos, w, h, sorte) {
+    sorte = sorte || Math.random;
+    var ps = [];
+    for (var i = 0; i < quantos; i++) {
+      var s = 6 + Math.floor(sorte() * 3) * 3, cedo = i % 6 === 0;
+      ps.push({ x0: sorte() * w, y0: cedo ? sorte() * h * 0.3 : -s - sorte() * h * 0.7, vy: h / (1.3 + sorte() * 0.8),
+        vx: -40 + sorte() * 80, s: s, c: CORES_CONFETE[i % CORES_CONFETE.length], r: sorte() * 6, x: 0, y: 0 });
+    }
+    return ps;
+  }
+  // põe cada peça no tempo t (s desde o começo); devolve { vivas (ainda acima da borda de baixo), visiveis }
+  function moverConfete(ps, t, h) {
+    var vivas = 0, visiveis = 0;
+    ps.forEach(function (p) {
+      p.y = p.y0 + p.vy * t;
+      p.x = p.x0 + p.vx * t + Math.sin(t / 0.3 + p.r) * 12;
+      if (p.y < h) { vivas++; if (p.y > -p.s) visiveis++; }
+    });
+    return { vivas: vivas, visiveis: visiveis };
+  }
+  function animar() { return U.animar ? U.animar() : !!(est().ajustes.animacoes && !U.reduzMovimentoSistema); }
   UI.confete = function (quantos) {
-    if (!est().ajustes.animacoes) return;
+    if (!animar()) return;
     var c = el('canvas.confete');
     document.body.appendChild(c);
     var w = c.width = window.innerWidth, h = c.height = window.innerHeight;
     var ctx = c.getContext('2d');
-    var cores = ['#ff7eb6', '#ffd34d', '#7c5cff', '#39c5bb', '#5fb4ff', '#ff9d2e'];
-    var ps = [];
-    for (var i = 0; i < (quantos || 90); i++) ps.push({ x: Math.random() * w, y: -20 - Math.random() * h * 0.5, vy: 2 + Math.random() * 3, vx: -1 + Math.random() * 2, s: 6 + Math.floor(Math.random() * 3) * 3, c: cores[i % cores.length], r: Math.random() * 6 });
-    var t0 = performance.now();
-    (function passo(t) {
+    var ps = criarConfete(quantos || 90, w, h);
+    var t0 = null, t = 0;
+    (function passo(agora) {
+      // o relógio anda pelo dt do quadro (no máximo 0,1 s: aba escondida não some com a chuva de uma vez)
+      if (t0 !== null) t += Math.min(0.1, Math.max(0, (agora - t0) / 1000));
+      t0 = agora;
+      var n = moverConfete(ps, t, h);
       ctx.clearRect(0, 0, w, h);
-      ps.forEach(function (p) { p.y += p.vy; p.x += p.vx + Math.sin((t / 300) + p.r); ctx.fillStyle = p.c; ctx.fillRect(Math.round(p.x), Math.round(p.y), p.s, p.s); });
-      if (t - t0 < 2600) requestAnimationFrame(passo); else c.remove();
-    })(t0);
+      ps.forEach(function (p) { if (p.y < h && p.y > -p.s) { ctx.fillStyle = p.c; ctx.fillRect(Math.round(p.x), Math.round(p.y), p.s, p.s); } });
+      c.dataset.pecas = n.visiveis;
+      if (n.vivas) requestAnimationFrame(passo); else c.remove();
+    })(performance.now());
   };
+  UI.confete.criar = criarConfete;
+  UI.confete.mover = moverConfete;
 
   /* ---------- sprites prontos para a interface ---------- */
   UI.spriteMontaria = function (id, escala, opcoes) {

@@ -31,7 +31,8 @@ test('pulo: sobe até a altura no meio e volta a 0 em ms', () => {
   assert.strictEqual(J.pulando(), true);
   const alturas = [];
   for (let i = 1; i <= 9; i++) { J.t = i / 10; alturas.push(J.alturaPulo()); }
-  assert.ok(alturas[0] > 0 && alturas[0] < 5, 'começa devagar');
+  assert.ok(alturas[0] > 7, 'sai rápido do chão (parábola, não elevador)');
+  assert.ok(alturas.every(Number.isInteger), 'altura em pixel inteiro do jogo');
   assert.ok(Math.max.apply(null, alturas.slice(0, 8)) > 26, 'chega perto dos 28 px no meio');
   assert.ok(alturas[1] < alturas[3] && alturas[6] < alturas[4], 'sobe e desce');
   assert.strictEqual(alturas[8], 0, 'em 900 ms volta ao chão');
@@ -62,4 +63,21 @@ test('pulo: sem Animações ou com movimento reduzido não pula', () => {
   const J = montar({ reduz: true });
   assert.strictEqual(J.pular(), false);
   assert.strictEqual(J.pulando(), false);
+});
+
+// fração das amostras acima de 75 % da altura, num pulo inteiro
+function noAlto(op) {
+  const J = montar();
+  J.pular(op);
+  const t0 = J.t, n = 200;
+  let alto = 0;
+  for (let i = 0; i < n; i++) { J.t = t0 + (i + 0.5) / n * op.ms / 1000; if (J.alturaPulo() > 0.75 * op.altura) alto++; }
+  return alto / n;
+}
+
+test('pulo: parábola, e a Lua fica mais tempo no alto que Júpiter (D9-14)', () => {
+  const lua = noAlto({ altura: 28, ms: 900 }), jupiter = noAlto({ altura: 34, ms: 650 });
+  assert.ok(lua >= 0.5, `Lua no alto: ${lua}`);
+  assert.ok(jupiter >= 0.5, `Júpiter no alto: ${jupiter}`);
+  assert.ok(lua > jupiter, `Lua (${lua}) mais que Júpiter (${jupiter})`);
 });

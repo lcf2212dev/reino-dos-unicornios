@@ -159,11 +159,14 @@
     if (J.salto && (J.t - J.salto.t0) * 1000 >= J.salto.ms) J.salto = null;
     return !!J.salto;
   };
-  // quantos px ela está acima do chão agora (0 fora do pulo); curva (1 - cos)/2: devagar nas pontas
+  // quantos px ela está acima do chão agora (0 fora do pulo), inteiro (pixel do jogo). Parábola 4k(1-k):
+  // sai rápido do chão e fica no alto; pulo mais longo = gravidade menor = flutua mais lá em cima
+  // (expoente 650/ms: Júpiter, 650 ms, é a parábola pura; a Lua, 900 ms, fica mais tempo no alto).
   J.alturaPulo = function () {
     if (!J.pulando()) return 0;
     var k = (J.t - J.salto.t0) * 1000 / J.salto.ms;
-    return J.salto.altura * (1 - Math.cos(2 * Math.PI * k)) / 2;
+    var flutua = Math.max(0.5, Math.min(1, 650 / J.salto.ms));
+    return Math.round(J.salto.altura * Math.pow(Math.max(0, 4 * k * (1 - k)), flutua));
   };
 
   // teclas: {x: -1..1, y: -1..1, livre?} (livre: direção analógica do thumbstick/mouse, vira em 8 com folga)
