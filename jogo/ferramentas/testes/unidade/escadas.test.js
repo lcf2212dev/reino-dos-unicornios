@@ -14,6 +14,8 @@ const CONGELADA = {
   'observatorio-2:0': { para: 'observatorio', x: 26, y: 4 },
   'observatorio-2:1': { para: 'observatorio-3', x: 18, y: 22 },
   'observatorio-3:0': { para: 'observatorio-2', x: 26, y: 4 },
+  'quimica:0': { para: 'quimica-2', x: 21, y: 11 },
+  'quimica-2:0': { para: 'quimica', x: 21, y: 4 },
 };
 TORRE.forEach((id, i) => {
   let k = 0;

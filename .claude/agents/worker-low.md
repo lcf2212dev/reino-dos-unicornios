@@ -11,7 +11,7 @@ Você é um worker executando uma tarefa delimitada no jogo "Mariana e o Reino d
 - Seja objetivo: não explore além do necessário. Ao terminar, responda com um resumo curto (arquivos alterados, decisões, pendências).
 
 ## Regras fixas (valem em todo briefing)
-- Trabalhe SÓ na worktree do briefing. Nunca escreva em `/home/leandro/reino-dos-unicornios` (servida AO VIVO); ler lá pode.
+- Trabalhe SÓ na worktree do briefing. Nunca escreva em `/home/leandro/PersonalDevelopment/reino-dos-unicornios` (servida AO VIVO); ler lá pode.
 - Leia o `CLAUDE.md` da raiz, o de cada pasta que mexer e o contrato do assunto (`docs/contratos/`).
 - Testes só no Chromium (celular 390×844, tablet 820×1180, notebook 1366×768). Nada de Firefox/WebKit/iPhone.
 - Nunca: servidor de casa (porta 80, `reinodosunicornios.local`), artifact publicado, save real,

@@ -45,7 +45,7 @@ Contrato: `docs/contratos/plano-paralelo.md`. Com o pedido pronto, quase tudo po
 ## Briefing (curto)
 ```
 Tarefa: <o que fazer, 2 a 5 linhas>
-Worktree: /home/leandro/reino-<tema> (branch feat/<tema>)
+Worktree: /home/leandro/PersonalDevelopment/reino-<tema> (branch feat/<tema>)
 Arquivos seus: <lista exata; pastas só se forem novas>
 Prefixo de id: <ex.: nasa->
 Arquivo de falas: <ex.: jogo/js/interiores/observatorio/nasa-falas.js>

@@ -121,7 +121,11 @@ Reino.config = {
   // Laboratório de Química (js/sistemas/quimica.js): estrelas só na 1ª vez de cada descoberta (receita, lâmina do
   // microscópio, lição lida até o fim) e uma vez ao completar o caderno; nada de dinheiro nem Aura (é diversão).
   // `maxTubos`: quantos tubos cabem no béquer. Se mudar as estrelas, regrave as vozes (a Doutora Proveta fala o valor)
-  quimica: { estrelasReceitaNova: 2, estrelasLaminaNova: 1, estrelasLicaoNova: 1, estrelasCadernoCompleto: 10, maxTubos: 3 },
+  // 2º andar (js/sistemas/quimica-andar2.js), também só na 1ª vez: cada mudança de estado vista no Fogão dos Estados,
+  // cada mistura separada na Mesa e cada livro lido até o fim. `grausPorToque`: quanto o termômetro do Fogão anda a
+  // cada toque em Esquentar ou Esfriar
+  quimica: { estrelasReceitaNova: 2, estrelasLaminaNova: 1, estrelasLicaoNova: 1, estrelasCadernoCompleto: 10, maxTubos: 3,
+    estrelasEstadoNovo: 1, estrelasMisturaNova: 1, estrelasLivroNovo: 1, grausPorToque: 10 },
   novidadeDias: 45,   // dias em que o selo "✨ Novo!" aparece num lugar novo (lugar.novidade)
   versao: { intervaloMs: 10 * 60000, confirmarMs: 60000, cacheMs: 330000, paradaMs: 8000, avisoMs: 4500, esperaMs: 2500 },
   // acessórios das provas à venda na Loja (só depois de ganhar um da mesma prova)
