@@ -10,6 +10,18 @@
 .livro-figura { display: inline-flex; align-items: center; justify-content: center; line-height: 0; font-size: 1.6em; }
 .livro-nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .livro-pag { font-weight: 700; color: var(--tinta-suave); }
+/* o livro pela estante: painel de altura fixa (não segue a carta) e a navegação no rodapé de ação, com a contagem de
+   largura fixa ("10 de 16" inteiro): a seta → fica no mesmo lugar em todas as cartas */
+.tela-livro .painel { height: min(744px, 100%); }
+.tela-livro .painel-conteudo { flex: 1; min-height: 0; }
+footer.livro-rodape { justify-content: center; }
+.livro-rodape .livro-nav { flex: none; gap: 8px; }
+footer.livro-rodape .livro-nav .btn-grande { width: 64px; padding: 0; }
+.livro-rodape .livro-pag { width: 128px; font-size: 16px; line-height: 1; text-align: center; white-space: nowrap; }
+.livro-rodape .intro-botoes { flex: none; flex-wrap: nowrap; margin: 0; }
+@media (max-width: 480px) {
+  footer.livro-rodape .livro-nav .btn-grande, footer.livro-rodape .so-seta { width: 56px; padding: 0; }
+}
 
 /* ---------- baú e loja ---------- */
 .bau-total { display: flex; align-items: center; gap: 14px; padding: 14px 18px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--ouro-claro); }

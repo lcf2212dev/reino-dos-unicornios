@@ -17,12 +17,15 @@
     var titulo = el('div.missao-titulo', el('span', sala.emoji + ' ' + sala.nome));
     var corpo = el('div.missao-corpo');
     var btnConferir = el('button.btn-grande.btn-conferir', { type: 'button', disabled: true }, 'Conferir ✓');
-    var rodape = el('footer.missao-rodape', el('span.sem-relogio', '⏳ Sem relógio. O tempo é todo seu!'), btnConferir);
+    var rodape = el('footer.missao-rodape.rodape-acao', el('span.sem-relogio', '⏳ Sem relógio. O tempo é todo seu!'), btnConferir);
+    // o rodapé de ação da intro ("Começar") e do resumo ("← Voltar" e "Continuar →"): fixo, fora do que rola (ui.md §10.20)
+    var acao = el('footer.rodape-acao', { hidden: true });
     var retorno = el('div.missao-retorno', { hidden: true });
 
     tela.appendChild(el('header.missao-topo', sair, titulo, pontos));
     tela.appendChild(corpo);
     tela.appendChild(rodape);
+    tela.appendChild(acao);
     tela.appendChild(retorno);
     document.body.classList.add('em-missao');
     D.ajustarTitulo(titulo, materia && materia.id);
@@ -52,8 +55,16 @@
       pontos.setAttribute('aria-label', 'Desafio ' + (idx + 1) + ' de ' + lista.length);
     }
 
-    function intro() {
+    // troca o rodapé de ação: `tipo` é a classe da fila de botões (intro-botoes, resumo-botoes)
+    function mostrarAcao(tipo, botoes) {
       rodape.hidden = true;
+      acao.className = 'rodape-acao ' + tipo;
+      acao.innerHTML = '';
+      botoes.forEach(function (b) { acao.appendChild(b); });
+      acao.hidden = false;
+    }
+
+    function intro() {
       corpo.innerHTML = '';
       var claudeMini = PA.paraDOM(PA.claude(0), 4, 'claude-intro');
       var comecar = el('button.btn-grande.btn-principal', { type: 'button' }, 'Começar 🦄');
@@ -62,11 +73,12 @@
         el('h2.titulo-pixel', U.colado(sala.nome)),
         el('p.intro-paginas', U.colado('Apostila: ' + sala.paginas)),
         el('div.intro-claude', claudeMini, el('p', U.colado(sala.intro))),
-        el('ul.intro-regras',
-          el('li', '⏳ Aqui não tem relógio. Pode ir devagar!'),
-          el('li', '👀 Leia cada pergunta com calma e depois toque em "Conferir".'),
-          el('li', '⭐ Acertou de primeira? Ganha estrela!')),
-        el('div.intro-botoes', comecar)));
+        // no celular, as 3 regras viram uma linha de ícones com o nome curto (.regra-curta)
+        el('ul.intro-regras.regras-da-sala',
+          el('li', '⏳', el('span.regra-longa', ' Aqui não tem relógio. Pode ir devagar!'), el('span.regra-curta', 'Sem relógio')),
+          el('li', '👀', el('span.regra-longa', ' Leia cada pergunta com calma e depois toque em "Conferir".'), el('span.regra-curta', 'Leia com calma')),
+          el('li', '⭐', el('span.regra-longa', ' Acertou de primeira? Ganha estrela!'), el('span.regra-curta', 'Acerto de 1ª')))));
+      mostrarAcao('intro-botoes', [comecar]);
       comecar.addEventListener('click', function () { Reino.Som.tocar('porta'); if (cartas.length) resumo(0); else mostrarDesafio(); });
       if (cartas.length) Reino.Voz.carregar(materia.id + '-livro');
       // o pacote de voz pode chegar tarde (rede lenta): só fala se a introdução ainda está na tela
@@ -84,18 +96,20 @@
       });
     }
     function resumo(i) {
-      rodape.hidden = true;
       Reino.Som.calar();
       corpo.innerHTML = '';
       var area = el('div.livro-carta');
       Reino.UI.desenharCarta(area, cartas[i]);
       var ultima = i === cartas.length - 1;
-      var seguir = el('button.btn-grande.btn-principal', { type: 'button' }, ultima ? 'Começar as perguntas 🦄' : 'Continuar →');
-      var voltar = i > 0 ? el('button.btn-grande.btn-secundario', { type: 'button' }, '← Voltar') : null;
-      var botoes = el('div.resumo-botoes', voltar, seguir);
+      // no celular, "Começar 🦄" e só a seta no "Voltar" (o .rotulo-longo some); na carta 1, a vaga guarda o lugar
+      // do "Voltar" e o "Continuar" fica sempre no mesmo lugar
+      var seguir = el('button.btn-grande.btn-principal', { type: 'button' }, ultima ? ['Começar', el('span.rotulo-longo', ' as perguntas'), ' 🦄'] : 'Continuar →');
+      var voltar = i > 0 ? el('button.btn-grande.btn-secundario.so-seta', { type: 'button', 'aria-label': 'Voltar' }, '←', el('span.rotulo-longo', ' Voltar')) : null;
       var titulo = el('h2.titulo-pixel', '📖 Resumo');
       corpo.appendChild(el('div.resumo-sala', titulo,
-        el('p.resumo-pag', 'Carta ' + (i + 1) + ' de ' + cartas.length), area, botoes));
+        el('p.resumo-pag', 'Carta ' + (i + 1) + ' de ' + cartas.length), area));
+      mostrarAcao('resumo-botoes', [voltar || el('span.rodape-vaga.so-seta', { 'aria-hidden': 'true' }), seguir]);
+      var botoes = acao;
       seguir.addEventListener('click', function () { Reino.Som.tocar('toque'); if (ultima) mostrarDesafio(); else resumo(i + 1); });
       if (voltar) voltar.addEventListener('click', function () { Reino.Som.tocar('toque'); resumo(i - 1); });
       corpo.scrollTop = 0;
@@ -110,6 +124,7 @@
     }
 
     function mostrarDesafio() {
+      acao.hidden = true;
       rodape.hidden = false;
       Reino.Som.calar();
       Reino.Claude.limpar();

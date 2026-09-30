@@ -73,8 +73,19 @@
     return U().el('p.fotos-legenda.fotos-dica', toque ? 'Segure a foto para compartilhar ou salvar.' : 'Clique com o botão direito na foto para salvar.');
   }
 
-  function botao(rotulo, principal, classe) {
-    return U().el('button.btn-grande' + (principal ? '.btn-principal' : '.btn-secundario') + (classe ? '.' + classe : ''), { type: 'button' }, rotulo);
+  // botão do rodapé de ação (ui.md §10.20): o ícone e o rótulo; no rodapé, o secundário mostra só o ícone e o
+  // principal, no celular, o rótulo curto (ui-fotos.css). O nome inteiro fica no aria-label e no title
+  // o balão "Foto guardada no álbum!" (ou outro aviso sem botões) fecha quando o álbum ou a foto grande abre: nada
+  // cobre o rodapé de ação (ui.md §10.20)
+  function fecharAviso() {
+    var C = Reino.Claude;
+    if (C && C.limpar && !(C.dialogoAberto && C.dialogoAberto())) C.limpar();   // e os avisos na fila (a 2ª foto guardada)
+  }
+
+  function botao(icone, rotulo, curto, principal, classe) {
+    return U().el('button.btn-grande' + (principal ? '.btn-principal' : '.btn-secundario') + (classe ? '.' + classe : ''),
+      { type: 'button', 'aria-label': rotulo, title: rotulo },
+      icone, U().el('span.rotulo-longo', ' ' + rotulo), U().el('span.rotulo-curto', ' ' + curto));
   }
 
   var ultima = null;   // a última foto tirada nesta visita (para depurar)
@@ -124,13 +135,17 @@
       var pn = UI.painel('fotos-previa', 'Que foto linda! 📸', { aoFechar: fim });
       var img = el('img.fotos-img', { src: url, alt: 'Foto: ' + foto.lugar + ', ' + foto.data, width: foto.w, height: foto.h, draggable: 'false' });
       var msg = el('p.fotos-msg', { role: 'status' });
-      var guardar = botao('🖼 Guardar no álbum', true, 'fotos-guardar');
-      var album = botao('🖼 Abrir o álbum', true, 'fotos-abrir-album');
-      var salvar = botao('💾 Salvar no aparelho', false, 'fotos-salvar');
-      var apagar = botao('🗑 Apagar', false, 'fotos-apagar');
+      var guardar = botao('🖼', 'Guardar no álbum', 'Guardar', true, 'fotos-guardar');
+      var album = botao('🖼', 'Abrir o álbum', 'Álbum', true, 'fotos-abrir-album');
+      var salvar = botao('💾', 'Salvar no aparelho', 'Salvar', false, 'fotos-salvar');
+      var apagar = botao('🗑', 'Apagar', 'Apagar', false, 'fotos-apagar');
       album.hidden = true;
-      var corpo = el('div.fotos-previa-corpo', el('div.fotos-moldura-img', img), dica(), msg, el('div.intro-botoes.fotos-botoes', guardar, album, salvar, apagar));
+      var corpo = el('div.fotos-previa-corpo', el('div.fotos-moldura-img', img), dica(), msg);
       pn.conteudo.appendChild(corpo);
+      // os botões no rodapé de ação do painel: sempre à vista, a foto encolhe (D8B-05)
+      // o principal por último (à direita, e o último no Tab); sem álbum, o Salvar vira o principal e vai para o fim
+      var rodape = el('footer.rodape-acao.fotos-botoes', apagar, salvar, guardar, album);
+      pn.card.appendChild(rodape);
       function avisar(texto) { U().preencher(msg, texto); msg.hidden = !texto; corpo.classList.toggle('com-msg', !!texto); if (texto) falarVoz(texto); }
       function focarBotao(b) { if (UI.porTeclado && UI.porTeclado()) setTimeout(function () { try { b.focus({ preventScroll: true }); } catch (e) {} }, 30); }
       // estado do banco: sem álbum aqui, só salvar no aparelho; álbum lotado, avisa e oferece abrir
@@ -139,6 +154,7 @@
         // sem álbum neste aparelho, o "Salvar no aparelho" vira o botão principal
         salvar.classList.toggle('btn-principal', banco.estado !== 'ok');
         salvar.classList.toggle('btn-secundario', banco.estado === 'ok');
+        if (banco.estado !== 'ok') rodape.appendChild(salvar); else rodape.insertBefore(salvar, guardar);
         salvar.hidden = !amb.podeBaixar();
         if (banco.estado !== 'ok') { guardar.hidden = true; album.hidden = true; avisar(FRASES.semBanco); return; }
         guardar.hidden = cheio; album.hidden = !cheio;
@@ -192,6 +208,7 @@
     var UI = Reino.UI, el = U().el;
     if (!UI || typeof document === 'undefined') return Promise.resolve();
     if (albumAbrindo) return albumAbrindo;
+    fecharAviso();
     return (albumAbrindo = abrirBanco().then(function () {
       albumAbrindo = null;
       return new Promise(function (resolver) {
@@ -248,14 +265,15 @@
   function verGrande(lista, i, aoFechar) {
     var UI = Reino.UI, el = U().el;
     var apagou = false, url = null;
+    fecharAviso();
     var pn = UI.painel('fotos-ver', 'Foto do álbum 🖼', { aoFechar: function () { if (url) URL.revokeObjectURL(url); aoFechar(apagou); } });
     var img = el('img.fotos-img', { alt: '', draggable: 'false' });
     var legenda = el('p.fotos-legenda');
     var ant = el('button.btn-icone.fotos-nav', { type: 'button', 'aria-label': 'Foto anterior' }, '◀');
     var prox = el('button.btn-icone.fotos-nav', { type: 'button', 'aria-label': 'Próxima foto' }, '▶');
-    var comp = botao('💌 Compartilhar', true, 'fotos-compartilhar');
-    var salvar = botao('💾 Salvar no aparelho', true, 'fotos-salvar');
-    var apagar = botao('🗑 Apagar', false, 'fotos-apagar');
+    var comp = botao('💌', 'Compartilhar', 'Enviar', true, 'fotos-compartilhar');
+    var salvar = botao('💾', 'Salvar no aparelho', 'Salvar', true, 'fotos-salvar');
+    var apagar = botao('🗑', 'Apagar', 'Apagar', false, 'fotos-apagar');
     var msg = el('p.fotos-msg', { role: 'status', hidden: true });
     // com o Compartilhar, ele é o principal e o Salvar fica secundário
     comp.hidden = !podeCompartilhar(lista[i]);
@@ -264,7 +282,9 @@
     salvar.hidden = !amb.podeBaixar();
     pn.conteudo.appendChild(el('div.fotos-ver-corpo' + (comp.hidden ? '' : '.com-compartilhar'),
       el('div.fotos-ver-linha', ant, el('div.fotos-moldura-img', img), prox),
-      legenda, comp.hidden ? dica() : null, msg, el('div.intro-botoes.fotos-botoes', comp, salvar, apagar)));
+      legenda, comp.hidden ? dica() : null, msg));
+    // o principal por último (à direita, e o último no Tab): o Compartilhar, ou o Salvar sem ele
+    pn.card.appendChild(comp.hidden ? el('footer.rodape-acao.fotos-botoes', apagar, comp, salvar) : el('footer.rodape-acao.fotos-botoes', apagar, salvar, comp));
     function mostrar() {
       var f = lista[i];
       if (url) URL.revokeObjectURL(url);

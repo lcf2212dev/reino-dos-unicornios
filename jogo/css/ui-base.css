@@ -159,3 +159,38 @@ body.sem-animacao .btn-grande.armando .armando-texto { display: block; }
 .intro-botoes { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 18px; }
 .intro-botoes.coluna { flex-direction: column; align-items: stretch; }
 
+/* ---------- rodapé de ação (ui.md §10.20) ---------- */
+/* Uma linha fixa no pé da tela ou do painel, fora do que rola, sempre com a mesma altura: botões de 52 px, letra de
+   16 px sem quebrar; o principal à direita. No celular, o .rotulo-longo some ("← Anterior" vira "←", "🔊 Ouvir" vira
+   "🔊") e a .rodape-vaga guarda o lugar de um botão que ainda não existe (o "← Voltar" da 1ª carta) */
+footer.rodape-acao {
+  --rodape-seguro: 0px;
+  flex: none; display: flex; flex-wrap: nowrap; align-items: center; justify-content: flex-end; gap: 12px;
+  height: calc(80px + var(--rodape-seguro)); margin: 0;
+  padding: 12px 16px calc(12px + var(--rodape-seguro));
+  background: var(--papel); border-top: 4px solid var(--borda);
+}
+.tela > footer.rodape-acao { --rodape-seguro: env(safe-area-inset-bottom, 0px); }
+footer.rodape-acao[hidden] { display: none; }
+footer.rodape-acao > :first-child:not(:last-child) { margin-right: auto; }
+footer.rodape-acao > .btn-grande, footer.rodape-acao > .rodape-vaga { flex: 0 1 360px; min-width: max-content; }
+footer.rodape-acao .btn-grande {
+  height: 52px; min-height: 0; padding: 0 16px; font-size: 16px; line-height: 1; white-space: nowrap;
+}
+footer.rodape-acao .sem-relogio { min-width: 0; font-size: 12px; line-height: 1.5; }
+.rodape-vaga { visibility: hidden; }
+.rotulo-curto { display: none; }
+/* ícone dentro do botão do rodapé: 32 px, inteiro (2 px CSS por pixel do desenho; ui.md §10.10) */
+footer.rodape-acao canvas.icone-em { width: 32px !important; height: 32px !important; }
+/* sem botão à vista (a memória não tem "Conferir"): o rodapé não guarda os 80 px; só o "Sem relógio", onde cabe */
+footer.rodape-acao:not(:has(.btn-grande:not([hidden]))) { height: auto; padding-top: 8px; padding-bottom: calc(8px + var(--rodape-seguro)); }
+@media (max-width: 480px) {
+  footer.rodape-acao { gap: 8px; padding-left: 12px; padding-right: 12px; }
+  footer.rodape-acao > .btn-grande { flex: 1 1 0; min-width: 0; }
+  footer.rodape-acao .rotulo-longo { display: none; }
+  footer.rodape-acao .rotulo-curto { display: inline; }
+  footer.rodape-acao:not(:has(.btn-grande:not([hidden]))) { display: none; }
+  footer.rodape-acao > .so-seta, footer.rodape-acao > .rodape-vaga { flex: 0 0 64px; min-width: 0; padding: 0; }
+  footer.rodape-acao .sem-relogio { display: none; }
+}
+

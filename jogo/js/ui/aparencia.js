@@ -202,8 +202,9 @@
         linhaRoupa, linhaLaco);
       pn.card.classList.add('painel-criar');
       var ok = el('button.btn-grande.btn-principal', { type: 'button' }, 'Pronto! ✨');
-      // o Pronto vem depois dos campos (Tab), mas fica embaixo da vitrine a partir do tablet (css)
-      pn.conteudo.appendChild(el('div.criar', el('div.criar-vitrine', palco, plaquinha), campos, el('div.intro-botoes.criar-botoes', ok)));
+      // o Pronto no rodapé de ação do painel, fora do que rola: à vista sem rolar no celular (ui.md §10.20)
+      pn.conteudo.appendChild(el('div.criar', el('div.criar-vitrine', palco, plaquinha), campos));
+      pn.card.appendChild(el('footer.rodape-acao.criar-botoes', ok));
       ok.addEventListener('click', function () { UI.fecharTela(pn.tela); concluir(); });
       // Pronto e ✕ guardam o que foi escolhido (como o Salão): nome e sexo no perfil, aparência no save
       function concluir() {
