@@ -1,6 +1,6 @@
 /* Salão de Beleza, parte 2: as cores do salão e os objetos próprios ('salao-<nome>'): espelho de camarim, cadeira
    de cabeleireira, secador de capacete, carrinho de pentes, prateleira de produtos, lavatório, arara de roupas,
-   provador e a placa da tesoura. O que as partes dividem fica em Reino._predios.salao (cores e a tesoura, que o
+   vitrine de laços, provador e a placa da tesoura. O que as partes dividem fica em Reino._predios.salao (cores e a tesoura, que o
    fora.js também desenha). Nada de canvas no carregamento. */
 (function () {
   var R = window.Reino;
@@ -129,6 +129,21 @@
         ret(ctx, x - 2, py - 8, 7, 7, K); ret(ctx, x - 1, py - 8, 5, 6, cor); ret(ctx, x - 1, py - 3, 5, 1, e);
         if (i % 2) ret(ctx, x + 1, py - 11, 1, 1, C.branco);
       });
+    } });
+  // vitrine de laços: armarinho de vidro com três prateleiras de laços coloridos (no lugar do 2º relógio)
+  var LACO = ['kk...kk', 'kpk.kpk', 'kppdppk', 'kpk.kpk', 'kk...kk'];
+  I.objeto('salao-vitrine', { w: 1, h: 1, topo: 20, solido: true, alto: true,
+    desenhar: function (ctx, px, py) {
+      ret(ctx, px + 1, py - 20, 14, 33, K); ret(ctx, px + 2, py - 19, 12, 31, LILAS2);
+      ret(ctx, px + 2, py - 19, 12, 1, LILAS); ret(ctx, px + 3, py - 17, 10, 26, LILAS3);
+      [[-16, ROSA], [-8, '#5fb4ff'], [0, C.ouro]].forEach(function (f) {
+        var y = py + f[0];
+        D.matriz(ctx, px + 5, y, LACO, { k: K, p: f[1], d: D.escurecer(f[1], 0.3) });
+        ret(ctx, px + 3, y + 6, 10, 1, CROMO2);
+      });
+      ret(ctx, px + 4, py - 17, 1, 8, C.branco); ret(ctx, px + 11, py - 6, 1, 3, C.branco);   // brilho do vidro
+      ret(ctx, px + 2, py + 13, 3, 2, K); ret(ctx, px + 11, py + 13, 3, 2, K);
+      ret(ctx, px + 6, py - 23, 4, 3, K); ret(ctx, px + 7, py - 22, 2, 1, C.ouro);
     } });
   // provador: cabine com cortina listrada, estrela no topo e o banquinho aparecendo
   I.objeto('salao-provador', { w: 2, h: 2, topo: 12, solido: true, alto: true,

@@ -147,8 +147,6 @@
       // só caixotes (o chão ali ficaria preso)
       inter('mural', 'Prêmios da Escola do Reino', { tipo: 'escola-mural', x: 12 - mw, y: 3, w: mw, junto: true }),
       { tipo: 'caixote', x: 12 - mw, y: 2, w: mw },
-      // passadeira no corredor (não bloqueia)
-      { tipo: 'tapete', x: 0, y: 4, w: 12, h: 2, var: { cor: '#9fe0a0', borda: '#ffd34d' } },
       // recepção, perto do tapete de saída
       { tipo: 'tapete', x: 4, y: 6, w: 3, h: 1, var: { cor: '#9fe0a0', borda: '#ffd34d' } },
       { tipo: 'banco', x: 0, y: 7 }, { tipo: 'vaso-planta', x: 2, y: 7 },
@@ -166,9 +164,7 @@
       n === 0 ? inter('escaninhos', 'Armários dos alunos', { tipo: 'escola-escaninhos', x: 0, y: 2 })
         : { tipo: 'escola-escaninhos', x: 0, y: 2, var: { cores: [C.lilas, C.laranja, C.azul, C.rosa] } },
       { tipo: 'flores', x: 2, y: 2 }, { tipo: 'caixote', x: 8, y: 2 }, { tipo: 'banco', x: 9, y: 2 },
-      // passadeira listrada no corredor, com um tapete redondo na frente da porta
-      { tipo: 'tapete-listrado', x: 0, y: 4, w: ultimo ? 11 : 12, h: 1, var: { cores: ['#39a860', '#fff8ee', '#ffd34d', '#fff8ee'] } },
-      { tipo: 'tapete-listrado', x: 0, y: 5, w: ultimo ? 11 : 12, h: 1, var: { cores: ['#ffd34d', '#fff8ee', '#39a860', '#fff8ee'] } },
+      // tapete redondo na frente da porta (a passadeira do corredor é uma peça só: montar)
       { tipo: 'tapete-redondo', x: 4, y: 2, w: 3, h: 2 },
       // fileira de baixo: sempre algo a cada 2 tiles
       { tipo: 'banco', x: 1, y: 7 }, { tipo: 'vaso-planta', x: 4, y: 8 }, { tipo: 'escola-lixeira', x: 7, y: 7 },
@@ -184,7 +180,8 @@
     var provas = R.provas || [], N = provas.length, S = N + 1;
     var salas = provas.map(gerarSala);
     var largura = 12 * S - 1, by = 13;
-    var objetos = trechoHall(1, by, N);
+    // passadeira do corredor: uma peça só, de uma parede à outra (não bloqueia)
+    var objetos = [{ tipo: 'escola-passadeira', x: 1, y: by + 4, w: largura, h: 2 }].concat(trechoHall(1, by, N));
     salas.forEach(function (s, n) { objetos = objetos.concat(trechoSala(1 + 12 * (n + 1), by, n, n === N - 1)); });
     salas.forEach(function (s) { objetos = objetos.concat(s.objetos); });
     // a bandeirinha do trecho anterior passa por cima da cortina: tira a cortina desse tile

@@ -1,4 +1,4 @@
-/* Interiores: desenho do estático (paredes, pisos, sombras, lábios, escadas, saída e os móveis
+/* Interiores: desenho do estático (paredes, pisos, sombras, soleiras, lábios, escadas, saída e os móveis
    baixos, pré-renderizados num canvas) e as setas animadas da saída e das escadas.
    Veio de motor/interiores.js. Registra em Reino._interiores: paletaComodo, comodoDoTile,
    desenharEstatico, setaSaida, setaEscada. Só roda quando chamado (nada de DOM no carregamento). */
@@ -97,6 +97,18 @@
     matriz(ctx, px + 4, py + 4 + (cima ? -d : d), linhas, { k: K, w: C.ouro });
   }
 
+  // a cor de soleira mais longe (em RGB) de todas as cores dos pisos vizinhos
+  var SOLEIRAS = ['#b98a64', '#b9aacb', '#8fa9bf', '#d8c08c', '#a3b98a'];
+  function rgb(h) { h = String(h || '').replace('#', ''); if (h.length === 3) h = h.replace(/./g, '$&$&'); var n = parseInt(h, 16) || 0; return [n >> 16 & 255, n >> 8 & 255, n & 255]; }
+  function corDaSoleira(pisos) {
+    var melhor = SOLEIRAS[0], dist = -1;
+    SOLEIRAS.forEach(function (c) {
+      var a = rgb(c), d = Infinity;
+      pisos.forEach(function (p) { if (!p) return; var b = rgb(p); d = Math.min(d, Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]) + Math.abs(a[2] - b[2])); });
+      if (d > dist) { dist = d; melhor = c; }
+    });
+    return melhor;
+  }
   function desenharEstatico(ctx, def, g, P, objs) {
     var W = g.w, H = g.h;
     ctx.clearRect(0, 0, W * T, H * T);
@@ -108,6 +120,20 @@
     function palTile(x, y) { var c = comodoDoTile(def, g, x, y); return c ? pal[c.id] : paletaComodo({}); }
     function vazio(x, y) { return !g.dentro(x, y) || (!g.comodo[y][x] && !g.porta[y][x]); }
     function ehParedeSolida(x, y) { return g.dentro(x, y) && g.parede[y][x] && !g.porta[y][x]; }
+    // passagem lateral: vão de porta fora dos cômodos, entre dois cômodos lado a lado (parede vertical)
+    function comodoEm(x, y) { return g.dentro(x, y) ? g.comodo[y][x] : null; }
+    function ehLateral(x, y) { return g.dentro(x, y) && g.porta[y][x] && !g.comodo[y][x] && !!comodoEm(x - 1, y) && !!comodoEm(x + 1, y); }
+    // soleira de cor própria (diferente dos dois pisos) e batente em cima e embaixo do vão
+    function desenharSoleira(ctx, x, y) {
+      var pe = pal[comodoEm(x - 1, y)], pd = pal[comodoEm(x + 1, y)], cor = corDaSoleira([pe.p.piso, pe.p.piso2, pd.p.piso, pd.p.piso2]);
+      var px = x * T, py = y * T, luz = clarear(cor, 0.3), junta = escurecer(cor, 0.28), bat = escurecer(C.madeira, 0.3);
+      ret(ctx, px, py, 16, 16, cor);
+      for (var j = 0; j < 16; j += 8) { ret(ctx, px + 1, py + j, 14, 1, luz); ret(ctx, px + 1, py + j + 7, 14, 1, junta); }
+      ret(ctx, px, py, 1, 16, K); ret(ctx, px + 15, py, 1, 16, K);
+      // batente: viga de madeira na ponta de cada parede (luz em cima, contorno --tinta)
+      if (!ehLateral(x, y - 1)) { ret(ctx, px, py, 16, 5, K); ret(ctx, px + 1, py, 14, 4, C.madeira); ret(ctx, px + 1, py, 14, 1, C.madeiraClara); ret(ctx, px + 1, py + 3, 14, 1, bat); }
+      if (!ehLateral(x, y + 1)) { ret(ctx, px, py + 11, 16, 5, K); ret(ctx, px + 1, py + 12, 14, 4, C.madeira); ret(ctx, px + 1, py + 12, 14, 1, C.madeiraClara); ret(ctx, px + 1, py + 15, 14, 1, bat); }
+    }
     // paredes do fundo
     (def.comodos || []).forEach(function (c) {
       var r = c.rect, pc = pal[c.id];
@@ -131,6 +157,7 @@
         if (ehParedeSolida(x2 - 1, y2)) { ret(ctx, px, py, 3, 16, K); ret(ctx, px, py, 2, 16, escurecer(pp.parede, 0.25)); ret(ctx, px + 1, py, 1, 16, C.madeiraClara); }
         if (ehParedeSolida(x2 + 1, y2)) { ret(ctx, px + 13, py, 3, 16, K); ret(ctx, px + 14, py, 2, 16, escurecer(pp.parede, 0.25)); ret(ctx, px + 14, py, 1, 16, C.madeiraClara); }
       }
+      if (ehLateral(x2, y2)) desenharSoleira(ctx, x2, y2);
     }
     // lábios: a espessura das paredes vista de cima, no vão escuro em volta dos cômodos
     var saida = def.saida;

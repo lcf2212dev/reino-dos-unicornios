@@ -311,7 +311,7 @@
     { tipo: 'bau-gemas', x: 14, y: 2 }, { tipo: 'bau', x: 15, y: 2 }, { tipo: 'vaso-grande', x: 16, y: 2 },
     { tipo: 'bau-gemas', x: 17, y: 2 },
     // meio: o monte, a balança, o ninho do dragão
-    { tipo: 'tapete-redondo', x: 7, y: 6, w: 3, h: 1 },
+    { tipo: 'tapete-redondo', x: 7, y: 5, w: 3, h: 2 },   // debaixo do monte (linhas 5–6)
     inter('monte', 'Monte de moedas', { tipo: 'bau-monte', x: 7, y: 5, acao: TELA }),
     { tipo: 'pilha-livros', x: 4, y: 2 }, { tipo: 'bau-saco', x: 0, y: 4, var: { cor: '#a8b8d8' } },
     inter('balanca', 'Balança de moedas', { tipo: 'bau-balanca', x: 3, y: 4 }),

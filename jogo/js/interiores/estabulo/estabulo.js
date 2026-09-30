@@ -39,14 +39,11 @@
   function estagioDe(P, id) {
     try { var u = P.estado().unis[id]; return R.Unicornios.estagio(u ? u.xp : 0); } catch (e) { return 0; }
   }
-  // 💧/🍎/🛁 do unicórnio da baia quando a sede, a fome ou o banho está baixo (Reino.Cuidados.icone, nessa
-  // prioridade; ausente nas ferramentas)
-  // última coluna e última linha com desenho de um ícone (os ícones têm margem transparente diferente)
+  // 💧/🍎/🛁 da baia quando a sede, a fome ou o banho está baixo (Reino.Cuidados.icone; ausente nas ferramentas);
+  // caixaVisivel: última coluna e linha com desenho do ícone (cada ícone tem uma margem transparente)
   var caixas = typeof WeakMap === 'function' ? new WeakMap() : null;
   function caixaVisivel(img) {
-    var c = caixas && caixas.get(img);
-    if (c) return c;
-    c = { dir: img.width - 1, baixo: img.height - 1 };
+    var c = caixas && caixas.get(img); if (c) return c; c = { dir: img.width - 1, baixo: img.height - 1 };
     try {
       var d = img.getContext('2d').getImageData(0, 0, img.width, img.height).data, dir = -1, baixo = -1;
       for (var y = 0; y < img.height; y++) for (var x = 0; x < img.width; x++) {
@@ -60,6 +57,8 @@
   function iconeCuidado(id) {
     try { return (R.Cuidados && R.Cuidados.icone) ? R.Cuidados.icone(id) : null; } catch (e) { return null; }
   }
+  // o desenho das baias (madeira das alas, pendurados, silhueta e "?" da baia vazia) mora em estabulo/baias.js
+  var B = R._predios.estabulo, ALAS_MADEIRA = B.ALAS_MADEIRA, PENDURADOS = B.PENDURADOS, INTERROGACAO = B.INTERROGACAO, poseDaBaia = B.poseDaBaia;
   function ovos(P) { try { return P && P.ovosParaChocar ? P.ovosParaChocar() : []; } catch (e) { return []; } }
 
   /* ================= OBJETOS DO ESTÁBULO ================= */
@@ -73,16 +72,21 @@
     desenhar: function (ctx, px, py, o, P) {
       var n = v(o, 'indice', 0), d = P ? daBaia(n) : null, m = moradorDaBaia(P, n);
       // paredes de tábuas e o chão de palha
+      // cada ala com a sua madeira; cada baia com uma coisinha pendurada (a fileira não fica clonada)
+      var ala = ALAS_MADEIRA[Math.floor(n / 7) % ALAS_MADEIRA.length];
       ret(ctx, px, py, 32, 32, K);
-      ret(ctx, px + 1, py + 1, 30, 20, '#c98a52');
-      for (var y = py + 4; y < py + 21; y += 5) ret(ctx, px + 1, y, 30, 1, '#a86a3c');
-      ret(ctx, px + 1, py + 1, 30, 2, '#e8b27a');
+      ret(ctx, px + 1, py + 1, 30, 20, ala[0]);
+      for (var y = py + 4; y < py + 21; y += 5) ret(ctx, px + 1, y, 30, 1, ala[1]);
+      ret(ctx, px + 1, py + 1, 30, 2, ala[2]);
+      var pend = PENDURADOS[(n * 3 + Math.floor(n / 7)) % PENDURADOS.length];
+      if (pend && d) R.Desenho.matriz(ctx, px + 2, py + 3, pend, { k: K, w: C.branco, b: '#c8c0d4', a: ala[3], z: '#9fb8c8', p: '#ff7eb6', r: '#ffb3d9' });
       palha(ctx, px + 1, py + 21, 30, 10);
       ret(ctx, px, py, 2, 32, K); ret(ctx, px + 30, py, 2, 32, K);
       ret(ctx, px + 1, py, 1, 31, C.madeira); ret(ctx, px + 30, py, 1, 31, C.madeira);
-      // plaquinha da baia (cor da raridade)
-      var cr = (window.PA && PA.CORES_RARIDADE && m && PA.CORES_RARIDADE[m.raridade]) || { base: C.creme, borda: '#b8aac8' };
-      ret(ctx, px + 11, py + 3, 10, 5, K); ret(ctx, px + 12, py + 4, 8, 3, cr.base); ret(ctx, px + 13, py + 5, 6, 1, cr.borda);
+      // plaquinha da baia (cor da raridade): na parede; na baia vazia, pendurada na porteira (a silhueta ocupa a parede)
+      var cr = (window.PA && PA.CORES_RARIDADE && m && PA.CORES_RARIDADE[m.raridade]) || { base: C.creme, borda: '#b8aac8' }, yp = d ? py + 3 : py + 26;
+      function placa() { ret(ctx, px + 11, yp, 10, 5, K); ret(ctx, px + 12, yp + 1, 8, 3, cr.base); ret(ctx, px + 13, yp + 2, 6, 1, cr.borda); }
+      if (d) placa();
       if (d && window.PA && PA.unicornio) {
         var e = estagioDe(P, d.id), spr = PA.unicornio(d, e, 0), c = spr && (spr.canvas || spr);
         if (c) caber(ctx, c, px + 16, py + 29, 28, 22);
@@ -93,18 +97,16 @@
           brilho(ctx, px + 26, py + 10, C.ouro3); brilho(ctx, px + 24, py + 15, C.branco);
         }
       } else {
-        // baia vazia: silhueta clarinha de quem vai morar aqui, montinho de palha e um coração
-        if (m && window.PA && PA.unicornio && PA.silhueta) {
-          var sm = PA.unicornio(m, 0, 0), cs = sm && PA.silhueta(sm);
-          if (cs) { ctx.save(); ctx.globalAlpha = 0.16; caber(ctx, cs.canvas || cs, px + 16, py + 29, 28, 22); ctx.restore(); }
-        }
+        // baia vazia: palha e a silhueta de quem vai morar aqui, com o "?" em --papel
         elipse(ctx, px + 16, py + 26, 9, 3, PALHA2); elipse(ctx, px + 16, py + 25, 7, 2, PALHA3);
-        ret(ctx, px + 15, py + 13, 1, 1, '#ffb3d9'); ret(ctx, px + 17, py + 13, 1, 1, '#ffb3d9'); ret(ctx, px + 15, py + 14, 3, 1, '#ffb3d9'); ret(ctx, px + 16, py + 15, 1, 1, '#ffb3d9');
+        var pose = m && window.PA && PA.unicornio ? poseDaBaia(m, n) : null;
+        if (pose) { ctx.drawImage(pose.c, px + pose.x, py + pose.y); if (pose.qx != null) R.Desenho.matriz(ctx, px + pose.qx, py + pose.qy, INTERROGACAO, { k: K, w: '#fff8ee' }); }
       }
       // porteira baixa
       ret(ctx, px + 1, py + 26, 30, 2, K); ret(ctx, px + 2, py + 26, 28, 1, C.madeiraClara);
       ret(ctx, px + 1, py + 30, 30, 2, K);
       for (var x = px + 4; x < px + 30; x += 6) ret(ctx, x, py + 26, 2, 6, K);
+      if (!d) placa();
       // sede, fome ou banho baixo: o ícone (1 px = 1 px do jogo, nítido) no canto de cima da baia, com a
       // parte desenhada terminando logo acima da plaquinha (py + 3) e encostada na parede da direita:
       // a banheira (16 px de largura) cobria metade da plaquinha quando ficava no mesmo nível
@@ -119,13 +121,10 @@
   I.objeto('estabulo-ninho', { w: 2, h: 1, topo: 8, solido: true,
     chave: function (P) { return 'ninho:' + ovos(P).map(function (id) { var d = P.defUni(id); return d ? d.raridade : '?'; }).join(','); },
     desenhar: function (ctx, px, py, o, P) {
-      var cx = px + 16;
-      elipse(ctx, cx, py + 9, 15, 6, K); elipse(ctx, cx, py + 9, 14, 5, PALHA2); elipse(ctx, cx, py + 8, 11, 3, '#b8862e');
-      var lista = ovos(P).slice(0, 5);
-      var pos = [[0, 0], [-7, 1], [7, 1], [-3, 3], [4, 3]];
+      var cx = px + 16; elipse(ctx, cx, py + 9, 15, 6, K); elipse(ctx, cx, py + 9, 14, 5, PALHA2); elipse(ctx, cx, py + 8, 11, 3, '#b8862e');
+      var lista = ovos(P).slice(0, 5), pos = [[0, 0], [-7, 1], [7, 1], [-3, 3], [4, 3]];
       lista.forEach(function (id, i) {
-        var d = P.defUni(id), img = window.PA && PA.ovo ? PA.ovo(d ? d.raridade : 'comum', 0) : null;
-        img = img && (img.canvas || img);
+        var d = P.defUni(id), img = window.PA && PA.ovo ? PA.ovo(d ? d.raridade : 'comum', 0) : null; img = img && (img.canvas || img);
         if (img) caber(ctx, img, cx + pos[i][0], py + 10 + pos[i][1], 10, 12);
       });
       // aba da frente do ninho
