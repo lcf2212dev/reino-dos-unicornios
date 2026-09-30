@@ -43,14 +43,14 @@ footer.livro-rodape .livro-nav .btn-grande { width: 64px; padding: 0; }
 .grade-loja { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
 /* Letras grandes: a carta alarga para a palavra de 7 letras em 24 px ("Morango") caber sem partir */
 :root.letras-grandes .grade-loja { grid-template-columns: repeat(auto-fill, minmax(min(216px, 100%), 1fr)); }
-.item-loja { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 12px 8px; border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); box-shadow: var(--sombra-grande); font-size: var(--texto); }
+.item-loja { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 12px 8px; border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); box-shadow: var(--sombra-grande); --degrau: 4px; font-size: var(--texto); }
 .item-icone { font-size: var(--texto-t); }
 .item-loja b { max-width: 100%; text-align: center; }
 /* rótulos dos prêmios (Ganho na prova, Comprado, raridade): ≥ 12px no celular, e quebram dentro da carta */
 .item-loja .chip-mini { font-size: var(--texto-aux); max-width: 100%; text-align: center; border-radius: var(--canto); }
 .item-preco { padding: 2px 10px; border-radius: var(--canto); background: var(--ouro-claro); border: var(--borda-fina) solid var(--borda); }
 /* prêmio da escola: raridade no fundo chapado e na faixa interna de 4 px (ui.md §10.8); os estados abaixo vêm por cima */
-.item-premio { background: var(--rar-fundo, var(--papel)); box-shadow: inset 0 0 0 4px var(--rar-desenho, transparent), var(--sombra-grande); }   /* tipografia-ok: faixa interna da raridade (ui.md §10.8) */
+.item-premio { background: var(--rar-fundo, var(--papel)); box-shadow: inset 0 0 0 4px var(--rar-desenho, transparent), var(--sombra-grande); --degrau: 4px; --brilho-apertado: inset 0 0 0 4px var(--rar-desenho, transparent); }   /* tipografia-ok: faixa interna da raridade (ui.md §10.8) */
 .item-premio.bloqueado { background: var(--papel-2); }
 .item-premio.bloqueado .item-preco { background: var(--branco); }
 .item-loja.comprado .item-preco { background: var(--certo-fundo); }   /* "Usar" não tem a cor do preço */
@@ -59,7 +59,7 @@ footer.livro-rodape .livro-nav .btn-grande { width: 64px; padding: 0; }
 .item-loja.indisponivel .item-preco { background: var(--papel-2); }
 
 /* ---------- estábulo ---------- */
-.btn-ovos { width: 100%; animation: pulsar 1.2s step-end 3; }
+.btn-ovos { width: 100%; animation: pulsar calc(2 * var(--lento)) step-end 3; }
 .estabulo-contagem { text-align: center; }
 .estabulo-grupo { font-family: var(--fonte-titulo); font-size: var(--texto); margin-top: 18px !important; scroll-margin-top: 128px; }
 /* D13-08: atalhos dos grupos, grudados no topo da área de rolagem (o top negativo cobre o padding dela) */
@@ -77,6 +77,7 @@ footer.livro-rodape .livro-nav .btn-grande { width: 64px; padding: 0; }
   min-height: 188px; padding: 12px 8px 10px;
   border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto-grande);
   /* raridade: fundo chapado e faixa interna de 4 px (ui.md §10.8); o contorno é sempre --borda */
+  --degrau: 4px; --brilho-apertado: inset 0 0 0 4px var(--rar-desenho, transparent);
   background: var(--rar-fundo, var(--papel)); box-shadow: inset 0 0 0 4px var(--rar-desenho, transparent), var(--sombra-grande);   /* tipografia-ok: faixa interna da raridade (ui.md §10.8) */
 }
 /* lendário: o brilho arco-íris no anel (o único lugar da carta com arco-íris; a máscara só usa o alfa) */
@@ -104,7 +105,7 @@ footer.livro-rodape .livro-nav .btn-grande { width: 64px; padding: 0; }
     linear-gradient(var(--branco), var(--branco)) center / 74px 150px no-repeat, linear-gradient(var(--branco), var(--branco)) center / 114px 134px no-repeat,
     linear-gradient(var(--branco), var(--branco)) center / 134px 114px no-repeat, linear-gradient(var(--branco), var(--branco)) center / 150px 74px no-repeat, var(--rar-fundo, var(--ambar-claro));
 }
-.detalhe-sprite.nascimento { animation: brilhar 1.2s step-end; }
+.detalhe-sprite.nascimento { animation: brilhar calc(2 * var(--lento)) step-end; }
 .detalhe-rar { text-align: center; font-size: var(--texto); }
 .detalhe-rar { color: var(--rar-texto, var(--tinta)); }
 .detalhe-frase { text-align: center; font-style: italic; }
@@ -125,8 +126,8 @@ footer.livro-rodape .livro-nav .btn-grande { width: 64px; padding: 0; }
     linear-gradient(var(--ouro-claro), var(--ouro-claro)) center / 136px 128px no-repeat, linear-gradient(var(--ouro-claro), var(--ouro-claro)) center / 144px 88px no-repeat; }
 .painel-ovo { width: min(520px, 100%); padding: 22px; align-items: center; text-align: center; gap: 14px; overflow: auto; }
 .painel-ovo { background: var(--rar-fundo, var(--papel)); box-shadow: inset 0 0 0 4px var(--rar-desenho, transparent), var(--sombra-grande); }   /* tipografia-ok: faixa interna da raridade (ui.md §10.8) */
-.ovo-grande { border: 0; padding: 16px; }   /* a folga mostra o halo em volta do ovo de 112×128 */
-.ovo-grande.balanca { animation: balancar 0.45s steps(1); }
+.ovo-grande { border: 0; padding: 16px; --degrau: 2px; }   /* a folga mostra o halo em volta do ovo de 112×128 */
+.ovo-grande.balanca { animation: balancar 0.45s steps(1); }   /* movimento-ok: casa com o setTimeout(nasceu, 450) de ui/ovos.js:42 (§10.15.5) */
 .ovo-grande.rar-lendario canvas, .ovo-grande.rar-epico canvas { filter: drop-shadow(2px 0 0 var(--ouro)) drop-shadow(-2px 0 0 var(--ouro)) drop-shadow(0 2px 0 var(--ouro)) drop-shadow(0 -2px 0 var(--ouro)); }
 .ovo-texto { font-size: var(--texto); }
 .ovo-nome { font-family: var(--fonte-titulo); font-size: var(--texto-g); color: var(--laranja-escuro); }
@@ -134,7 +135,7 @@ footer.livro-rodape .livro-nav .btn-grande { width: 64px; padding: 0; }
 /* nome */
 .campo-nome { width: 100%; min-height: 58px; padding: 10px 14px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); font: inherit; font-size: var(--texto); text-align: center; background: var(--branco); color: var(--tinta); }
 .sugestoes { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
-.sugestao { min-height: 40px; font-size: var(--texto); cursor: pointer; }
+.sugestao { box-shadow: var(--sombra-pequena); --degrau: 2px; min-height: 40px; font-size: var(--texto); cursor: pointer; }
 
 /* aparência */
 .previa-personagem { display: grid; place-items: center; min-height: 170px; border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto-grande); 
@@ -144,7 +145,7 @@ footer.livro-rodape .livro-nav .btn-grande { width: 64px; padding: 0; }
 }
 .linha-cores { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 .rotulo-cor { width: 70px; }
-.bolinha-cor { width: 48px; height: 48px; border-radius: var(--redondo); border: var(--borda-fina) solid var(--borda); box-shadow: var(--sombra-pequena); }
+.bolinha-cor { width: 48px; height: 48px; border-radius: var(--redondo); border: var(--borda-fina) solid var(--borda); box-shadow: var(--sombra-pequena); --degrau: 2px; }
 .bolinha-cor[aria-pressed="true"] { outline: 4px solid var(--roxo); outline-offset: 2px; }
 
 /* regras */
@@ -158,20 +159,22 @@ footer.livro-rodape .livro-nav .btn-grande { width: 64px; padding: 0; }
 .interruptor-texto { display: flex; flex-direction: column; flex: 1; min-width: 0; }   /* o interruptor não sai da carta com Letras grandes */
 .interruptor-texto small { color: var(--tinta-suave); font-size: var(--texto-aux); }
 .interruptor-bola { flex: none; position: relative; width: 60px; height: 34px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel-2); }
-.interruptor-bola::after { content: ""; position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; border-radius: var(--redondo); background: var(--branco); border: var(--borda-fina) solid var(--borda); transition: left 0.15s; }
+.interruptor-bola::after { content: ""; position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; border-radius: var(--redondo); background: var(--branco); border: var(--borda-fina) solid var(--borda); transition: left var(--rapido) steps(13); }   /* 26 px em degraus de 2 */
+body.sem-animacao .interruptor-bola::after { transition: none; }
+@media (prefers-reduced-motion: reduce) { .interruptor-bola::after { transition: none; } }
 .interruptor[aria-checked="true"] .interruptor-bola { background: var(--verde-folha); }
 .interruptor[aria-checked="true"] .interruptor-bola::after { left: 29px; }
 .pin-visor { display: flex; justify-content: center; align-items: center; gap: 12px; min-height: 60px; font-size: var(--texto-g); padding: 10px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--branco); }
 .pin-casa { width: 24px; height: 24px; border: var(--borda-fina) solid var(--borda); background: var(--branco); }
 .pin-casa.cheia { background: linear-gradient(var(--roxo) 0 calc(100% - 4px), var(--borda) 0); }   /* sombra de 2 pixels embaixo, em faixa dura */
-.pin-visor.pin-erro { background: var(--erro-fundo); color: var(--erro); animation: tremer 0.4s steps(4); }
+.pin-visor.pin-erro { background: var(--erro-fundo); color: var(--erro); animation: tremer var(--normal) steps(4); }
 .pais-numeros { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; margin: 8px 0 0; }
 .pais-numeros dt { color: var(--tinta-suave); }
 .pais-numeros dd { margin: 0; text-align: right; white-space: nowrap; }
 .pais-numeros .pais-apagar { color: var(--tinta); padding: 4px 0 0; border-top: var(--borda-fina) solid var(--borda); }
 .pais-numeros dt.pais-apagar { padding-right: 12px; margin-right: -12px; }   /* a linha de cima de "A pagar" atravessa o vão entre as colunas */
 .pin-teclado { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-width: 320px; margin-left: auto; margin-right: auto; }
-.pin-tecla { min-height: 60px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); font-size: var(--texto); box-shadow: var(--sombra-pequena); }
+.pin-tecla { min-height: 60px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); font-size: var(--texto); box-shadow: var(--sombra-pequena); --degrau: 2px; }
 .pais-materia { padding: 14px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); }
 .pais-materia > * + * { margin-top: 8px; }
 .pais-pagar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }

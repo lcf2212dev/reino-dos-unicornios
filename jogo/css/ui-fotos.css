@@ -6,10 +6,10 @@
   background: var(--branco); pointer-events: none;
   opacity: 0.95;
 }
-.fotos-flash.sumindo { opacity: 0; transition: opacity 0.32s ease-out; }
+.fotos-flash.sumindo { opacity: 0; transition: opacity var(--normal) ease-out; }
 /* Animações desligado ou "reduzir movimento": só um esmaecer suave, sem clarão forte */
 .fotos-flash.suave { opacity: 0.3; }
-.fotos-flash.suave.sumindo { opacity: 0; transition: opacity 0.6s ease; }
+.fotos-flash.suave.sumindo { opacity: 0; transition: opacity var(--lento) ease-out; }
 
 /* a foto na tela: reduzida suave (a foto em si é nítida; aqui ela só cabe na tela) */
 .fotos-moldura-img { display: flex; justify-content: center; min-width: 0; }
@@ -76,10 +76,8 @@ footer.fotos-botoes .btn-secundario .rotulo-longo, footer.fotos-botoes .btn-secu
   min-width: 0; padding: 8px 4px 6px;
   border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
   background: var(--papel);
-  box-shadow: inset 0 2px 0 var(--brilho), var(--sombra-grande);
-  transition: transform 0.08s, box-shadow 0.08s;
+  box-shadow: inset 0 2px 0 var(--brilho), var(--sombra-grande); --degrau: 4px; --brilho-apertado: inset 0 2px 0 var(--brilho-fraco);
 }
-.fotos-mini:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--borda); }
 .fotos-mini img { display: block; width: 100%; height: 124px; object-fit: contain; image-rendering: auto; }
 /* legenda da miniatura: o lugar da foto (D8B-17; a palavra longa quebra na sílaba, hifenizar em fotos-telas.js) */
 .fotos-mini-data { max-width: 100%; font-size: var(--texto-aux); line-height: var(--entrelinha); text-align: center; }
@@ -90,10 +88,6 @@ footer.fotos-botoes .btn-secundario .rotulo-longo, footer.fotos-botoes .btn-secu
 @media (max-width: 600px) {
   .fotos-grade { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
   .fotos-mini img { height: auto; aspect-ratio: 9 / 16; }
-}
-body.sem-animacao .fotos-mini, body.sem-animacao .fotos-mini:active { transition: none; transform: none; }
-@media (prefers-reduced-motion: reduce) {
-  .fotos-mini, .fotos-mini:active { transition: none; transform: none; }
 }
 
 /* foto grande com o Compartilhar (um botão a mais): a foto encolhe para os três caberem */
@@ -106,7 +100,7 @@ body.sem-animacao .fotos-mini, body.sem-animacao .fotos-mini:active { transition
   width: 112px; height: 144px; margin: 4px auto 12px;   /* 12 px embaixo: a sombra não encosta no "está vazio" */
   border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto);
   background: var(--papel-2);
-  box-shadow: var(--sombra-grande);
+  box-shadow: var(--sombra-grande);   /* movimento-ok: moldura enfeite (div aria-hidden), não tocável */
   outline: 6px solid var(--papel-quente); outline-offset: calc(-6px - var(--borda-grossa));   /* o passe-partout */
 }
 .fotos-vazio-icone { font-size: var(--texto-t); line-height: 1; }

@@ -31,7 +31,7 @@
   position: relative; display: block; flex: 1; min-width: 0;
   border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--branco); overflow: hidden;
 }
-.cuid-cheio { display: block; height: 100%; box-shadow: inset 0 2px 0 var(--brilho); transition: width 0.4s ease; }
+.cuid-cheio { display: block; height: 100%; box-shadow: inset 0 2px 0 var(--brilho); transition: width var(--normal) steps(4); }
 .cuid-fome .cuid-cheio { background: linear-gradient(90deg, var(--fome) 0 50%, var(--fome-clara) 50%); }
 .cuid-sede .cuid-cheio { background: linear-gradient(90deg, var(--sede) 0 50%, var(--sede-clara) 50%); }
 .cuid-banho .cuid-cheio { background: linear-gradient(90deg, var(--banho) 0 50%, var(--banho-clara) 50%); }
@@ -42,7 +42,7 @@
 .cuid-fome.baixo .cuid-cheio { background: var(--fome); }
 .cuid-sede.baixo .cuid-cheio { background: var(--sede); }
 .cuid-banho.baixo .cuid-cheio { background: var(--banho); }
-.cuid-barra.baixo > canvas, .cuid-barra.baixo .cuid-icone { animation: cuid-chamar 2.4s step-end 3; }
+.cuid-barra.baixo > canvas, .cuid-barra.baixo .cuid-icone { animation: cuid-chamar calc(4 * var(--lento)) step-end 3; }
 @keyframes cuid-chamar { 0%, 60%, 100% { transform: none; } 45% { transform: translateY(-2px); } }
 body.sem-animacao .cuid-barra.baixo canvas, body.sem-animacao .cuid-barra.baixo .cuid-icone { animation: none; }
 body.sem-animacao .cuid-cheio { transition: none; }
@@ -97,7 +97,6 @@ body.sem-animacao .cuid-cheio { transition: none; }
 .item-comida .comida-tem { order: 1; margin-top: auto; }            /* "🧺 ×N" logo acima do preço */
 .item-comida:has(.comida-tem) .item-preco { margin-top: 4px; }     /* preços na mesma altura */
 .item-comida .sem-quebra { white-space: nowrap; }   /* "arco-íris" não quebra no hífen */
-.item-comida:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--borda); }
 .item-comida:focus-visible { outline: 4px dashed var(--tinta); outline-offset: 2px; }
 .item-comida b { text-align: center; line-height: 1.5; max-width: 100%; }
 .comida-enche { font-size: var(--texto-aux); color: var(--certo); }   /* 5,8:1 no papel */
