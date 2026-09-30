@@ -262,14 +262,11 @@
     var ctrl = {
       el: wrap,
       valor: valor,
-      pronto: temAlgo,
+      pronto: function () { return !_d.marcado(wrap) && temAlgo(); },
       conferir: function () { var v = valor(); return { ok: D.desenhoCumpriu(d, v), faltam: D.desenhoFaltam(d, v) }; },
       marcarErro: function () {
-        reqs.forEach(function (q) {
-          if (requisitoOk(q.r, usou)) return;
-          q.li.classList.add('treme');
-          setTimeout(function () { q.li.classList.remove('treme'); }, 600);
-        });
+        // o requisito que falta fica marcado (nada se apaga no desenho)
+        _d.erroParado(wrap, reqs.filter(function (q) { return !requisitoOk(q.r, usou); }).map(function (q) { return q.li; }), opts.onMudar);
       },
       marcarCerto: function () { wrap.classList.add('tudo-certo'); },
     };

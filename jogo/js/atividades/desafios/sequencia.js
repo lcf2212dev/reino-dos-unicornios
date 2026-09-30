@@ -31,7 +31,7 @@
         alvo.appendChild(estilo === 'frase' ? b : el('li', b));
       });
       for (var k = seq.length; k < n && estilo !== 'frase'; k++) alvo.appendChild(el('li.seq-vaga', el('span.seq-num', String(k + 1)), el('span', '...')));
-      if (estilo === 'frase' && !seq.length) alvo.appendChild(el('span.frase-vazia', 'Toque nos blocos abaixo para montar a frase'));
+      if (estilo === 'frase' && !seq.length) alvo.appendChild(el('span.frase-vazia', comDica || _d.jaInstrui(d.pergunta) ? 'A frase aparece aqui' : 'Toque nos blocos abaixo para montar a frase'));
       monte.filter(function (i) { return seq.indexOf(i) < 0; }).forEach(function (i) {
         var b = el('button.seq-item', { type: 'button' }, itens[i]);
         b.addEventListener('click', function (ev) {
@@ -48,14 +48,16 @@
         pool.appendChild(b);
       });
     }
+    // instrução de toque uma vez só (D6-13): sem dica quando há instrucao ou o enunciado já diz "toque…"
+    var comDica = !d.instrucao && !_d.jaInstrui(d.pergunta);
     if (estilo === 'frase') {
       wrap.appendChild(alvo);
       // com instrucao (linha logo abaixo da pergunta), a dica de toque não se repete
-      if (!d.instrucao) wrap.appendChild(el('p.dica-toque', 'Toque num bloco para colocar. Toque de novo para tirar.'));
+      if (comDica) wrap.appendChild(el('p.dica-toque', 'Toque num bloco para colocar. Toque de novo para tirar.'));
       wrap.appendChild(pool);
     } else {
       // no ordenar, as opções ficam em cima para caberem na tela do celular
-      if (!d.instrucao) wrap.appendChild(el('p.dica-toque', 'Toque nas etapas na ordem certa. Errou? Toque no item da lista para tirar.'));
+      if (comDica) wrap.appendChild(el('p.dica-toque', 'Toque nas partes na ordem certa. Errou? Toque no item da lista para tirar.'));
       wrap.appendChild(pool);
       wrap.appendChild(alvo);
     }
@@ -63,19 +65,19 @@
     var ctrl = {
       el: wrap, ordem: monte,
       valor: function () { return seq.slice(); },
-      pronto: function () { return seq.length === n; },
+      pronto: function () { return !_d.marcado(wrap) && seq.length === n; },
       conferir: function () {
         var prim = -1;
         for (var i = 0; i < n; i++) if (seq[i] !== i) { prim = i; break; }
         return { ok: prim < 0, primeiroErrado: prim };
       },
       marcarErro: function (res) {
-        wrap.classList.add('treme');
-        setTimeout(function () {
-          wrap.classList.remove('treme');
+        // marca da 1ª peça fora do lugar até o fim (as que saem ao apagar)
+        var itens = Array.prototype.slice.call(pecasAlvo(), Math.max(0, res.primeiroErrado));
+        _d.erroParado(wrap, itens, function () {
           seq = seq.slice(0, Math.max(0, res.primeiroErrado));
           pintar(); opts.onMudar();
-        }, 500);
+        });
       },
       marcarCerto: function () { wrap.classList.add('tudo-certo'); },
     };
