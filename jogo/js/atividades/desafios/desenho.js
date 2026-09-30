@@ -91,14 +91,28 @@
     return c;
   };
 
-  // ícone pequeno de forma (desenhado com o mesmo risco da prancheta)
-  function iconeForma(forma) {
-    var c = document.createElement('canvas'), n = 12;
-    c.width = c.height = n;
-    c.className = 'pixel desenho-icone-forma';
-    var ctx = c.getContext('2d');
-    ctx.fillStyle = '#3a2446';
-    riscoForma(forma, 1, 1, 10, 10).forEach(function (p) { if (p[0] >= 0 && p[0] < n && p[1] >= 0 && p[1] < n) ctx.fillRect(p[0], p[1], 1, 1); });
+  // ícones das formas (16×16 cheios, com contorno, como os de js/arte/icones/)
+  var P_FORMA = { k: '#3a2446', r: '#ff8fc8', R: '#ffd0e8', a: '#4d8dff', A: '#b8d4ff', v: '#4cc26b', V: '#b4f5b8' };
+  if (Reino.registrarIcones && !(window.ICONES || {})['desenho:circulo']) Reino.registrarIcones({
+    'desenho:circulo': { n: 'círculo', p: P_FORMA, d: [
+      '................', '.....kkkkkk.....', '...kkRRrrrrkk...', '..kRRrrrrrrrrk..', '..kRrrrrrrrrrk..', '.kRrrrrrrrrrrrk.',
+      '.kRrrrrrrrrrrrk.', '.krrrrrrrrrrrrk.', '.krrrrrrrrrrrrk.', '.krrrrrrrrrrrrk.', '.krrrrrrrrrrrrk.', '..krrrrrrrrrrk..',
+      '..krrrrrrrrrrk..', '...kkrrrrrrkk...', '.....kkkkkk.....', '................'] },
+    'desenho:quadrado': { n: 'quadrado', p: P_FORMA, d: [
+      '................', '.kkkkkkkkkkkkkk.', '.kAAAAAAAAAAAAk.', '.kAaaaaaaaaaaak.', '.kAaaaaaaaaaaak.', '.kAaaaaaaaaaaak.',
+      '.kAaaaaaaaaaaak.', '.kAaaaaaaaaaaak.', '.kAaaaaaaaaaaak.', '.kAaaaaaaaaaaak.', '.kAaaaaaaaaaaak.', '.kAaaaaaaaaaaak.',
+      '.kAaaaaaaaaaaak.', '.kaaaaaaaaaaaak.', '.kkkkkkkkkkkkkk.', '................'] },
+    'desenho:triangulo': { n: 'triângulo', p: P_FORMA, d: [
+      '................', '.......kk.......', '......kVVk......', '......kVvk......', '.....kVvvvk.....', '.....kVvvvk.....',
+      '....kVvvvvvk....', '....kVvvvvvk....', '...kVvvvvvvvk...', '...kVvvvvvvvk...', '..kVvvvvvvvvvk..', '..kvvvvvvvvvvk..',
+      '.kvvvvvvvvvvvvk.', '.kvvvvvvvvvvvvk.', '.kkkkkkkkkkkkkk.', '................'] },
+  });
+  // ícone de ferramenta a 32 px nítidos (formas e emojis iguais)
+  function iconeFerr(chave) {
+    var c = PA.iconeEmoji(chave, 2), lado = c.width * PA.escalaNitida(32, c.width);
+    c.style.width = lado + 'px';
+    c.style.height = (c.height * lado / c.width) + 'px';
+    c.classList.add('desenho-icone-ferr');
     return c;
   }
 
@@ -119,12 +133,12 @@
     var botoesFerr = {};
     var barraFerr = el('div.desenho-ferramentas', FERRAMENTAS.map(function (f) {
       var b = el('button.desenho-ferr', { type: 'button', 'aria-label': f[1], title: f[1] },
-        f[2] ? f[2] : iconeForma(f[0]), el('small', f[1]));
+        iconeFerr(f[2] || 'desenho:' + f[0]), el('small', f[1]));
       b.addEventListener('click', function () { if (ctrl.travado) return; ferramenta = f[0]; Reino.Som.tocar('toque'); pintarBotoes(); });
       botoesFerr[f[0]] = b;
       return b;
     }));
-    var limpar = el('button.desenho-ferr.desenho-limpar', { type: 'button', 'aria-label': 'Limpar tudo', title: 'Limpar' }, '🗑', el('small', 'Limpar'));
+    var limpar = el('button.desenho-ferr.desenho-limpar', { type: 'button', 'aria-label': 'Limpar tudo', title: 'Limpar' }, iconeFerr('🗑'), el('small', 'Limpar'));
     limpar.addEventListener('click', function () {
       if (ctrl.travado) return;
       Reino.UI.confirmar('Apagar o desenho inteiro e começar de novo?', 'Apagar', 'Não').then(function (sim) {

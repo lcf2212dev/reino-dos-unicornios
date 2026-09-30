@@ -23,12 +23,19 @@
     } catch (e) { p = null; }
     if (p && p.catch) p.catch(function () {});
   };
+  // ícone dos botões do canto: 32 px nítidos nos 3 tamanhos (o mesmo do álbum)
+  UI.iconeHud = function (emoji) {
+    var c = PA.iconeEmoji(emoji, 2), lado = c.width * PA.escalaNitida(32, c.width);
+    c.style.width = lado + 'px';
+    c.style.height = (c.height * lado / c.width) + 'px';
+    return c;
+  };
   function pintarBotaoTela() {
     var b = U.$('.btn-tela-cheia');
     if (!b) return;
     var cheia = UI.emTelaCheia();
     b.textContent = '';
-    b.appendChild(PA.iconeEmoji(cheia ? 'tela-cheia:sair' : 'tela-cheia:abrir', 2));
+    b.appendChild(UI.iconeHud(cheia ? 'tela-cheia:sair' : 'tela-cheia:abrir'));
     b.setAttribute('aria-label', cheia ? 'Sair da tela cheia' : 'Tela cheia');
     b.title = cheia ? 'Sair da tela cheia' : 'Tela cheia';
   }
