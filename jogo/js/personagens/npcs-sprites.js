@@ -148,17 +148,27 @@
 
   N.sprite = function (npc, quadro) { return gerar(npc.sprite, quadro); };
 
-  // busto para o balão: quadrado, com a base no peito; quadro 1 = piscando, 2 = boca aberta (falando)
-  var QUADRO_RETRATO = [0, 2, 16];
+  /* retrato do balão (ui.md §10.10.6): de 1 px acima do topo (chapéu e antena inteiros) até o peito; se a cabeça (do
+     topo ao queixo, 3 linhas acima do busto) passar de 80 % da altura, entram mais linhas de ombro. Largura: 19
+     colunas no meio do sprite (a cabeça com 1 px de margem dos lados); o que tiver desenho mais para fora nessas
+     linhas (orelha, anel de Saturno) alarga o quadro até ele + 1 px de margem, sem cortar. O recorte sai do quadro 0,
+     para os 3 quadros ficarem alinhados. quadro 1 = piscando, 2 = boca aberta (falando) */
+  var QUADRO_RETRATO = [0, 2, 16], LARGURA_RETRATO = 19, CABECA_MAX = 0.8;
   N.retrato = function (npc, quadro) {
     quadro = QUADRO_RETRATO[quadro] === undefined ? (quadro ? 1 : 0) : quadro;
     var k = 'npcRetrato|' + chaveSprite(npc.sprite) + '|' + quadro;
     if (cache[k]) return cache[k];
-    var spr = gerar(npc.sprite, QUADRO_RETRATO[quadro]);
-    var lado = spr.width, fim = spr.busto + 1, ini = Math.max(0, Math.min(spr.topo, fim - lado));
-    var alto = Math.min(lado, fim - ini);
-    var c = window.PA.novoCanvas(lado, lado);
-    c.getContext('2d').drawImage(spr, 0, ini, lado, alto, 0, lado - alto, lado, alto);
+    var spr = gerar(npc.sprite, QUADRO_RETRATO[quadro]), base = gerar(npc.sprite, 0);
+    var ini = base.topo - 1, cabeca = base.busto - 3 - base.topo + 1;
+    var fim = Math.min(base.height, Math.max(base.busto + 1, ini + Math.ceil(cabeca / CABECA_MAX)));
+    var sy = Math.max(0, ini), meio = Math.floor(base.width / 2), metade = (LARGURA_RETRATO - 1) / 2;
+    var dados = base.getContext('2d').getImageData(0, sy, base.width, fim - sy).data;
+    for (var i = 0; i < dados.length / 4; i++) if (dados[i * 4 + 3]) metade = Math.max(metade, Math.abs(i % base.width - meio) + 1);
+    var lado = 2 * metade + 1, sx = meio - metade, dx = 0;
+    if (sx < 0) { dx = -sx; sx = 0; }
+    var larg = Math.min(lado - dx, spr.width - sx), c = window.PA.novoCanvas(lado, fim - ini);
+    c.getContext('2d').drawImage(spr, sx, sy, larg, fim - sy, dx, sy - ini, larg, fim - sy);
+    c.personagem = true;   // o balão amplia a 4 (claude.js), mesmo com o quadro mais largo
     cache[k] = c;
     return c;
   };

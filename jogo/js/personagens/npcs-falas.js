@@ -98,8 +98,11 @@
 
   function nomeLivro(m) { return (Reino.UI && Reino.UI.nomeLivro) ? Reino.UI.nomeLivro(m) : (m.nomeLivro || 'Livro das Memórias'); }
 
-  // junta os pedaços em balões de até ~2 linhas (a última página leva os botões)
-  var LIMITE = 30;
+  // dois limites (ui.md §10.17.5). LIMITE: o da frase (frases(), e o corte de frase longa só na tela em
+  // npcs-conversa.js); é o que define o texto falado e as vozes gravadas: não mude. LIMITE_PAGINA: o paginar junta
+  // frases numa página até aqui, o que cabe em 2 linhas do celular (letra de 16 px, retrato de 4 px: 16 letras por
+  // linha; medido com todas as falas dos NPCs, 24 junta sem passar de 2 linhas). A última página leva os botões
+  var LIMITE = 30, LIMITE_PAGINA = 24;
   // divide um texto em frases (o emoji fica com a frase dele); frase longa demais
   // ainda é cortada nos dois-pontos / ponto e vírgula. Cada frase é um segmento gravado.
   // O fim do texto também fecha frase (senão o emoji final virava um pedaço sozinho e sumia).
@@ -118,14 +121,15 @@
     return res.filter(function (f) { return /[\p{L}\p{N}]/u.test(f); });
   }
   N.frases = frases;
-  // lista de textos → páginas (cada texto vira frases; frases curtas juntam até LIMITE)
+  // lista de textos → páginas (cada texto vira frases; frases curtas juntam até LIMITE_PAGINA; a frase sozinha maior
+  // fica inteira na página dela: partir mudaria a voz)
   function paginas(textos) { return paginar([].concat.apply([], (textos || []).map(frases))); }
   function tamanho(t) { return String(t).replace(/[«»]/g, '').replace(/[\u{1F000}-\u{1FAFF}\u{2190}-\u{21FF}\u{2300}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}]/gu, '').trim().length; }
   function paginar(segs) {
     var pags = [], atual = [], n = 0;
     segs.filter(Boolean).forEach(function (sg) {
       var t = tamanho(sg);
-      if (atual.length && n + 1 + t > LIMITE) { pags.push(atual); atual = []; n = 0; }
+      if (atual.length && n + 1 + t > LIMITE_PAGINA) { pags.push(atual); atual = []; n = 0; }
       atual.push(sg); n += (n ? 1 : 0) + t;
     });
     if (atual.length) pags.push(atual);
@@ -258,6 +262,6 @@
       reg.calma ? el('span.chip-mini.calma', '🌙 Calma') : null);
   };
 
-  _n.U = U; _n.PADRAO = PADRAO; _n.LIMITE = LIMITE; _n.tamanho = tamanho; _n.frases = frases;
+  _n.U = U; _n.PADRAO = PADRAO; _n.LIMITE = LIMITE; _n.LIMITE_PAGINA = LIMITE_PAGINA; _n.tamanho = tamanho; _n.frases = frases;
   _n.paginas = paginas; _n.falas = falas; _n.uma = uma; _n.convite = convite;
 })();

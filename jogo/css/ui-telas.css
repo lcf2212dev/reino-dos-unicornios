@@ -17,21 +17,32 @@
   max-height: 100%;
   display: flex; flex-direction: column;
   background: var(--papel);
-  border: 4px solid var(--borda);
+  border: var(--borda-grossa) solid var(--borda);
   border-radius: var(--canto-grande);
-  box-shadow: 0 8px 0 var(--sombra-veu);
+  box-shadow: var(--sombra-grande);
   overflow: hidden;
 }
 .painel-topo {
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
   padding: 14px 14px 12px 20px;
   background: var(--ambar-claro);
-  border-bottom: 4px solid var(--borda);
+  border-bottom: var(--borda-grossa) solid var(--borda);
+}
+/* título do painel numa linha (ui.md §10.21.1); não coube, o painel() (ui/base.js) põe .titulo-quebra (2 linhas na
+   mesma letra) e, só se nem assim couber, .titulo-longo (um degrau abaixo) */
+.painel-topo .titulo-pixel { min-width: 0; font-size: var(--texto); white-space: nowrap; }
+.painel-topo .titulo-pixel.titulo-quebra { white-space: normal; }
+.painel-topo .titulo-pixel.titulo-longo { font-size: var(--texto-aux); }
+/* nome curto no celular (ui/base.js, CURTOS): "Lugares do Reino" vira "Lugares" numa linha a 16 px (D8B-11) */
+.painel-topo .titulo-curto { display: none; }
+@media (max-width: 480px) {
+  .painel-topo .titulo-inteiro { display: none; }
+  .painel-topo .titulo-curto { display: inline; }
 }
 .painel-conteudo { padding: 18px 20px 22px; overflow: auto; }
 .painel-conteudo > * + * { margin-top: 14px; }
 .painel-pequeno { width: min(460px, 100%); padding: 22px; gap: 14px; }
-.confirmar-msg { font-size: 1.05em; font-weight: 700; text-align: center; }
+.confirmar-msg { font-size: var(--texto); text-align: center; }
 
 /* início */
 .tela-inicio { background: linear-gradient(180deg, var(--ceu) 0 40%, var(--papel-quente) 40% 85%, var(--grama) 85%); }
@@ -47,31 +58,29 @@
 .logo-uni { position: relative; animation: flutuar 2.6s ease-in-out infinite; }
 .titulo-jogo {
   position: relative;
-  font-family: var(--fonte-titulo); line-height: 1.7;
+  font-family: var(--fonte-titulo); line-height: var(--entrelinha);
   margin-top: 16px; padding: 14px 18px 16px; max-width: min(94vw, 560px);
-  background: var(--papel); border: 4px solid var(--borda); border-radius: var(--canto-grande);
-  box-shadow: var(--sombra-botao);
+  background: var(--papel); border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto-grande);
+  box-shadow: var(--sombra-grande);
 }
 .titulo-jogo::before, .titulo-jogo::after {
   content: "";
   position: absolute; top: -16px; width: 14px; height: 18px;
-  background: var(--ouro); border: 3px solid var(--borda); border-radius: var(--canto);
-  box-shadow: 0 3px 0 var(--borda);
+  background: var(--ouro); border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
+  box-shadow: var(--sombra-pequena);
 }
 .titulo-jogo::before { left: 28px; }
 .titulo-jogo::after { right: 28px; }
-.titulo-jogo span { display: block; font-family: var(--fonte-pixel); font-size: 32px; line-height: 1.4; color: var(--laranja-forte); text-shadow: 4px 4px 0 var(--borda); letter-spacing: 0; }
-.titulo-jogo small { display: block; font-size: 16px; font-weight: 400; line-height: 1.7; margin-top: 10px; }
-.inicio-sub { color: var(--tinta-suave); font-weight: 700; }
-.btn-comecar { font-size: 16px; padding: 16px 22px; }
+.titulo-jogo span { display: block; font-family: var(--fonte-pixel); font-size: var(--texto-t); line-height: var(--entrelinha-titulo); color: var(--laranja-forte); text-shadow: 2px 2px 0 var(--borda); letter-spacing: 0; }
+.titulo-jogo small { display: block; font-size: var(--texto); line-height: var(--entrelinha); margin-top: 10px; }
+.inicio-sub { color: var(--tinta-suave); }
+.btn-comecar { font-size: var(--texto); padding: 16px 22px; }
 
 /* Claude */
-.intro-claude { display: flex; align-items: center; gap: 14px; padding: 14px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel-quente); text-align: left; }
-.intro-claude p { font-weight: 700; }
+.intro-claude { display: flex; align-items: center; gap: 14px; padding: 14px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel-quente); text-align: left; }
 .intro-claude-grande { max-width: 560px; background: var(--papel); }
 .claude-intro { flex: none; }
 .lugar-guia { display: flex; align-items: center; gap: 12px; }
-.lugar-guia p { font-weight: 700; }
 
 #claude-balao {
   position: fixed; z-index: 40;
@@ -85,54 +94,65 @@
 body.em-missao #claude-balao { bottom: calc(env(safe-area-inset-bottom, 0px) + 104px); }
 #claude-balao.entrando { animation: subir 0.25s ease-out; }
 .claude-mascote { display: flex; flex-direction: column; align-items: center; flex: none; }
-.claude-nome { font-family: var(--fonte-titulo); font-weight: 700; font-size: 0.8em; background: var(--papel); border: 2px solid var(--borda); border-radius: var(--canto); padding: 0 6px; margin-top: -4px; }
+/* retrato (ui.md §10.10.6): 4 px CSS por pixel (claude.js), num quadro de borda grossa com fundo chapado; o
+   content-box deixa o desenho no tamanho inteiro (sem a borda comer pixel) */
+.claude-avatar { box-sizing: content-box; flex: none; border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto); background: var(--papel-quente); }
+/* plaquinha do nome, encostada embaixo do quadro */
+.claude-nome { font-family: var(--fonte-titulo); font-size: var(--texto-aux); line-height: var(--entrelinha); background: var(--papel); border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); padding: 0 6px; margin-top: calc(-1 * var(--borda-fina)); }
 .claude-fala {
   position: relative; flex: 1;
   padding: 14px 16px 12px;
-  background: var(--papel); border: 4px solid var(--borda); border-radius: var(--canto-grande);
-  box-shadow: 0 5px 0 var(--sombra-veu);
+  background: var(--papel); border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto-grande);
+  box-shadow: var(--sombra-grande);
 }
-.claude-fala::before { content: ""; position: absolute; left: -14px; bottom: 18px; border: 10px solid transparent; border-right-color: var(--borda); }
-.claude-texto { font-weight: 700; font-size: 1em; }
+/* bico do balão, em degraus de pixel (2 px de arte por degrau), apontando para quem fala */
+.claude-fala::before {
+  content: ""; position: absolute; left: -12px; bottom: 18px; width: 12px; height: 20px; background: var(--borda);
+  clip-path: polygon(12px 0, 12px 20px, 8px 20px, 8px 16px, 4px 16px, 4px 12px, 0 12px, 0 8px, 4px 8px, 4px 4px, 8px 4px, 8px 0);
+}
+.claude-texto { font-size: var(--texto); line-height: var(--entrelinha); }
 .claude-acoes { display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px; }
-.claude-acoes button { min-height: 48px; padding: 6px 16px; border: 3px solid var(--borda); border-radius: var(--canto); background: var(--laranja); font-weight: 700; box-shadow: 0 3px 0 var(--borda); }
+/* botões do balão: letra do corpo e numa linha só, o ícone junto do texto (D13-03) */
+.claude-acoes button { min-height: 48px; padding: 6px 16px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--laranja); font-size: var(--texto); white-space: nowrap; box-shadow: var(--sombra-grande); }
 .claude-acoes .btn-ouvir-claude { background: var(--papel); }
 #claude-balao.dica-pressa .claude-fala { background: var(--ouro-claro); }
+/* celular: 8 px de cada lado, como os painéis (ui.md §10.21.2) */
+@media (max-width: 480px) { #claude-balao { left: 8px; right: 8px; } }
 
 /* ---------- lugar / salas ---------- */
 .lista-salas { display: flex; flex-direction: column; gap: 12px; }
 .sala-card {
   display: flex; align-items: center; gap: 14px; width: 100%;
   padding: 12px 14px; text-align: left;
-  border: 3px solid var(--borda); border-radius: var(--canto-grande);
-  background: var(--papel); box-shadow: 0 4px 0 var(--borda);
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande);
+  background: var(--papel); box-shadow: var(--sombra-grande);
 }
 .sala-card:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--borda); }
 .sala-card.feita { background: var(--certo-fundo); }
 .sala-card.bloqueada { background: var(--papel-2); }
-.sala-emoji { font-size: 2em; flex: none; width: 1.4em; text-align: center; }
+.sala-emoji { font-size: var(--texto-t); flex: none; width: 1.4em; text-align: center; }
 .sala-info { flex: 1; display: flex; flex-direction: column; gap: 3px; min-width: 0; }
 /* nomes compridos (fonte pixel larga) quebram nas sílabas marcadas por hifenizar() (ui/pecas.js); o resto é a
    regra do body (ui.md §10.17) */
-.sala-info small { color: var(--tinta-suave); font-size: 0.8em; }
-.sala-ir { flex: none; font-weight: 700; font-size: 0.85em; color: var(--roxo-texto); }
+.sala-info small { color: var(--tinta-suave); font-size: var(--texto-aux); }
+.sala-ir { flex: none; font-size: var(--texto); color: var(--roxo-texto); }
 .sala-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 3px; }
-.chip-mini { display: inline-block; padding: 1px 9px; border: 2px solid var(--borda); border-radius: var(--canto); font-size: 0.72em; font-weight: 700; background: var(--papel); }
+.chip-mini { display: inline-block; padding: 2px 8px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); font-size: var(--texto-aux); line-height: var(--entrelinha); background: var(--papel); }
 .chip-mini.ok { background: var(--certo-fundo); }
 .chip-mini.nova { background: var(--laranja-claro); }
 .chip-mini.raro { background: var(--raro-fundo); color: var(--raro-texto); }
 .chip-mini.calma { background: var(--roxo-claro); }
 /* trilho de 250 px ou mais; se o texto não couber ao lado (celular), desce para a linha de baixo */
 .barra-dinheiro { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
-.barra-dinheiro-trilho { flex: 1 1 250px; min-width: 120px; height: 18px; border: 3px solid var(--borda); border-radius: var(--canto); background: var(--branco); overflow: hidden; }
+.barra-dinheiro-trilho { flex: 1 1 250px; min-width: 120px; height: 18px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--branco); overflow: hidden; }
 .barra-dinheiro-trilho span { display: block; height: 100%; background: repeating-linear-gradient(90deg, var(--ouro) 0 14px, var(--ouro-claro) 14px 18px); }
-.barra-dinheiro-texto { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; font-size: 0.9em; }
+.barra-dinheiro-texto { font-variant-numeric: tabular-nums; white-space: nowrap; font-size: var(--texto); }
 /* Lugares compacto (D8B-14): cabem 5 cartões no celular */
 .tela-lugares .lista-salas { gap: 8px; }
 .tela-lugares .sala-card { padding: 6px 10px; gap: 8px; }
-.tela-lugares .sala-emoji { font-size: 1.5em; width: 1.2em; margin-right: 4px; }
+.tela-lugares .sala-emoji { font-size: var(--texto-g); width: 1.2em; margin-right: 4px; }
 .tela-lugares .sala-info { gap: 0; line-height: 1.25; }
-.lugares-grupo { font-size: 16px; color: var(--tinta-suave); margin: 8px 0 0; }
+.lugares-grupo { font-size: var(--texto); color: var(--tinta-suave); margin: 8px 0 0; }
 .lugares-grupo:first-child { margin-top: 0; }
 /* pontos de página do balão no canto de baixo à direita (D5-14) */
 #claude-balao .pontos-pagina { margin-left: auto; align-self: flex-end; }
