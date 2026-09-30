@@ -160,7 +160,8 @@ Reino.Interiores.objeto('escrivaninha', {
    balão abrir, fechar ou trocar de texto remede na hora. A posição fica guardada por cômodo e só se recalcula
    quando muda a posição do cômodo na tela (câmera), o canvas, os retângulos do HUD/balão, os balãozinhos ou a
    célula da Mariana (ou ela passa por baixo); ao recalcular, o lugar de antes (preso ao cômodo) vale enquanto
-   continuar livre, para a placa não pular com a câmera. Conferido por `testes/unidade/placas-evitam.navegador.test.js`.
+   continuar livre, para a placa não pular com a câmera. Com Letras grandes (`html.letras-grandes`) a letra sobe um
+   degrau (`texto.corpo` → `texto.g`, múltiplo de 8) e a fonte entra na chave. Conferido por `testes/unidade/placas-evitam.navegador.test.js`.
 6. O ícone de status do NPC é desenhado em px da tela (via `pintor.ctx`).
 7. Piso com contraste ≥ 2,9 com o contorno da Mariana (mediana dos pixels desenhados), em todo cômodo
    (`contraste-pisos.navegador.test.js`); exceção só com motivo em `validar/contraste.js`.

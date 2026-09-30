@@ -225,9 +225,12 @@
   // de 1×1 u, sem o degrau de sombra dos chips). Onde ela fica: interiores.md §6.4 e §6.5
   function desenharPlacas(def, ctx, pintor, t, animar) {
     var escala = pintor.escala || 3, dpr = pintor.dpr || 1;
-    var corpo = (R.config && R.config.texto && R.config.texto.corpo) || 16;
+    // "Letras grandes" (ui.md §10.9.4) sobe a letra um degrau (corpo → g, múltiplo de 8: pixel inteiro); a fonte
+    // entra na chave das medidas e da guarda, então a troca refaz a placa uma vez só
+    var tx = (R.config && R.config.texto) || {}, grande = document.documentElement.classList.contains('letras-grandes');
+    var corpo = (grande ? tx.g || 24 : tx.corpo) || 16;
     var fonte = Math.round(corpo * dpr), u = Math.max(1, Math.round(2 * dpr));
-    var pad = 5 * u, topo = 2 * u, lh = 10 * u, borda = u;
+    var pad = 5 * u, topo = 2 * u, lh = Math.round(corpo * 10 / 16) * u, borda = u;
     var cw = ctx.canvas.width, ch = ctx.canvas.height;
     var pal = (R.config && R.config.paleta) || {};
     ctx.save();
@@ -274,7 +277,11 @@
       // fim só fora do HUD e da Mariana. A largura é a da tela que sobra; o texto quebra no que precisar
       var xChips = 0;
       medido.rects.forEach(function (h) { if (!h.balao && h.left < cw / 3 && h.top < ch / 2 && h.bottom > 0) xChips = Math.max(xChips, h.right + h.f); });
-      var m3 = linhasDa(ctx, c.placa, fonte, Math.min((r.w * T - 6) * escala, cw - xChips - borda * 4) - pad * 2);
+      // com Letras grandes a largura é a do chão do cômodo à direita dos chips (senão a placa larga nunca cabia no
+      // chão); a palavra que não cabe ao lado dos chips (celular) usa a largura toda, abaixo deles
+      function larg3() { return Math.min((r.w * T - 6) * escala, cw - xChips - borda * 4, grande ? xb - Math.max(xChips, xa) - borda * 4 : 1e9) - pad * 2; }
+      var m3 = linhasDa(ctx, c.placa, fonte, larg3());
+      if (grande && m3.largura > larg3()) { xChips = 0; m3 = linhasDa(ctx, c.placa, fonte, larg3()); }
       var sw3 = Math.ceil(m3.largura + pad * 2), sh3 = topo * 2 + lh * m3.linhas.length;
       var x3 = Math.round((esq + dir) / 2 - sw3 / 2), tela = { x0: xChips, x1: cw, y0: 0, y1: ch };
       var chao = { x0: Math.max(xChips, xa), x1: xb, y0: Math.max(cimaC, 0), y1: Math.min(baixoC, ch) };
