@@ -100,7 +100,7 @@ footer.fotos-botoes .btn-secundario .rotulo-longo, footer.fotos-botoes .btn-secu
   width: 112px; height: 144px; margin: 4px auto 12px;   /* 12 px embaixo: a sombra não encosta no "está vazio" */
   border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto);
   background: var(--papel-2);
-  box-shadow: var(--sombra-grande);   /* movimento-ok: moldura enfeite (div aria-hidden), não tocável */
+  box-shadow: var(--sombra-grande);
   outline: 6px solid var(--papel-quente); outline-offset: calc(-6px - var(--borda-grossa));   /* o passe-partout */
 }
 .fotos-vazio-icone { font-size: var(--texto-t); line-height: 1; }

@@ -388,8 +388,8 @@ Adulto e criança diferem ≥ 4 px. Peça nova entra na faixa do papel dela; pap
      respiração (3,1 s);
    - confete e festa: duração da escala de festa (§10.16);
    - zoom da abertura (`ui-abertura.css`): `--entrar-ms` com `cubic-bezier`, casado com `Reino.config.abertura`;
-   - duração presa a um timer do JS fora da onda 3i (`ARMAR_MS`, `balancar` do ovo em `ui/ovos.js`): a frente `css`
-     da 3i completa esta lista com o `arquivo:linha` de cada timer.
+   - duração presa a um timer do JS: `armar-encher` (`ui-base.css`, 1,1 s = `ARMAR_MS` de `ui/base.js`) e o
+     `balancar` do `.ovo-grande.balanca` (`ui-paineis.css`, 0,45 s = o `setTimeout(nasceu, 450)` de `ui/ovos.js`).
 6. Toda animação e toda `transition` curta têm saída em `body.sem-animacao` e `prefers-reduced-motion` (§8.3); o que
    o canvas desenha fica parado quando as animações estão desligadas. O afundar (item 7) não é animação: fica igual
    nas duas saídas.
@@ -412,7 +412,9 @@ Adulto e criança diferem ≥ 4 px. Peça nova entra na faixa do papel dela; pap
       ovos, `balancar` do `.ovo-grande`): `animation: none` em `:active`, na mesma regra única.
    6. Com sombra, mas não tocáveis (sem `--degrau`): `.painel`, `.painel-ovo`, `.tela-jogadores .painel`, `.dock`,
       `.claude-fala`, `.titulo-jogo`, `.nota-folha`, `.selo-tentativa`, `.linha-premio`, `.jogadores-guardando`,
-      `.criar-plaquinha`, `.apoio`. O validador de movimento usa esta lista.
+      `.criar-plaquinha`, `.apoio`, `.fotos-vazio`. O validador de movimento usa esta lista.
+   7. Sombra de degrau num pseudo-elemento (a `.bolinha-cor` do celular, no `::before`): o `:active` do botão só
+      redefine o token (`--sombra-pequena: none`), sem `transform` nem `box-shadow`; quem desce é a regra única.
 8. Entrada e saída de tela. O véu (`.tela`) esmaece (`opacity` 0 → 1) e o `.painel` desce 3 degraus de 2 px
    (`translateY(-6px)` → 0, `steps(3)`), os dois em `--rapido`; a saída é o inverso, em `--rapido`, `forwards`.
    1. `UI.fecharTela` faz tudo NA HORA (tira da pilha, `com-tela`, `EV.TELAS`, HUD, foco devolvido) e então, com
