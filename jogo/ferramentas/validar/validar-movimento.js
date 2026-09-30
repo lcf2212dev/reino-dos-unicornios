@@ -11,17 +11,16 @@
 //   (c) :active com transform ou box-shadow só na regra única do ui-base.css (§10.15.7.1);
 // JS: :root --rapido/--normal/--lento igual a Reino.config.movimento { rapido, normal, lento } (§10.15.3).
 // Exceção de propósito: "/* movimento-ok: <motivo> */" na mesma linha.
-// Modo: com ESTRITO = false (hoje, até a frente css da 3i converter) só RELATA e sai 0; a integração da 3i liga
-// ESTRITO = true (ou --estrito / REINO_MOVIMENTO_ESTRITO=1) e qualquer violação sai 1.
+// Modo estrito (desde a integração da 3i): qualquer violação sai 1.
 if (require.main === module) require('../ajuda').ajuda(__filename);
 const fs = require('fs');
 const path = require('path');
 
-const ESTRITO = false;
+const ESTRITO = true;
 const TOKENS = { '--rapido': 'rapido', '--normal': 'normal', '--lento': 'lento' };   // :root → Reino.config.movimento
 // §10.15.7.6: com sombra de degrau, mas não tocáveis (classe no último composto do seletor)
 const NAO_TOCAVEIS = ['painel', 'painel-ovo', 'dock', 'claude-fala', 'titulo-jogo', 'nota-folha', 'selo-tentativa',
-  'linha-premio', 'jogadores-guardando', 'criar-plaquinha', 'apoio'];
+  'linha-premio', 'jogadores-guardando', 'criar-plaquinha', 'apoio', 'fotos-vazio'];
 // §10.15.5: exceções escritas de duração (arquivo + trecho do seletor ou do valor)
 const EXCECOES = [
   { arq: 'ui-base.css', val: /\barmar-encher\b/ },          // barra em scaleX, dura ARMAR_MS

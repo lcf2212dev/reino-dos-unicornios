@@ -53,7 +53,7 @@ for (const modo of ['reduzir movimento', 'Ajustes → Animações desligado']) {
       assert.ok(!r.noDom && r.vivas === 0 && !r.comTela, 'fora do DOM na hora');
       // CSS da frente css (.btn-grande sem transition; .interruptor-bola::after com saída em sem-animacao/reduce)
       const d = await c.js(TRANSICAO);
-      if (process.env.REINO_SEM_CSS_SAIDA !== '1') assert.deepStrictEqual(d.map(parseFloat), [0, 0], '.btn-grande e .interruptor-bola sem transition: ' + d);
+      assert.deepStrictEqual(d.map(parseFloat), [0, 0], '.btn-grande e .interruptor-bola sem transition: ' + d);
     } finally { await c.fechar(); }
   });
 }
