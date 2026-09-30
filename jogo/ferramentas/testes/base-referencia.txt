@@ -58,4 +58,5 @@
 # f8b5009 = login direto e placa JIM WILSON da escola
 # bdc9dad = matéria do dia na Aura (config)
 # b5ec36d = Laboratório de Química na clareira 1
-b5ec36d
+# 4fefa26 = 2º andar do Laboratório de Química
+4fefa26
