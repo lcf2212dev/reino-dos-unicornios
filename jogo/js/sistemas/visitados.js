@@ -1,7 +1,8 @@
 /* Visitados e o selo "✨ Novo!" do menu Lugares.
    O save ganha `visitados: { <id>: true }` (P.registrarCampo; mescla = união, o Novo ciclo mantém): ids dos
    interiores e dos lugares em que ela já entrou. A novidade é DECLARADA no lugar (`lugar.novidade: 'AAAA-MM-DD'`)
-   e vale por `config.novidadeDias` dias (padrão 45) ou até a 1ª visita. Contrato: docs/contratos/conteudo.md. */
+   e vale por `config.novidadeDias` dias (padrão 45) ou até a 1ª visita. Novidade dentro de um lugar já visitado
+   (ex.: um andar novo): `novidade: { desde: 'AAAA-MM-DD', interior: '<id>' }` vale até ela entrar NESSE interior. Contrato: docs/contratos/conteudo.md. */
 (function () {
   var U = Reino.util, EV = Reino.EVENTOS, P = Reino.Progresso, I = Reino._progresso;
   var DIAS = 45;   // padrão, se o config não disser
@@ -31,10 +32,14 @@
     return novo;
   };
   // o lugar tem novidade declarada, recente (menos de novidadeDias dias) e ela ainda não entrou
+  // com { desde, interior }: só o interior declarado conta como visita
   N.ehNovo = function (lugar) {
-    if (!lugar || !lugar.novidade) return false;
-    var t = dataDe(lugar.novidade);
+    var nov = lugar && lugar.novidade;
+    if (!nov) return false;
+    var alvo = typeof nov === 'object' ? nov.interior : null;
+    var t = dataDe(typeof nov === 'object' ? nov.desde : nov);
     if (!isFinite(t) || (Date.now() - t) / 86400000 >= dias()) return false;
+    if (alvo) return !N.visitado(alvo);
     return !N.visitado(lugar.id) && !N.visitado(lugar.interior);
   };
   N.dataDe = dataDe;
