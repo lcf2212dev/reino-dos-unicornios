@@ -1,7 +1,8 @@
-/* Laboratório de Química, parte 3: o layout e o registro do interior (um cômodo de 11×11, 3 cômodos; esqueleto do contrato, a caprichar).
-   Já passa no validador ("rico", alcançável, saída e spawn): mexa aos poucos e rode
-   node jogo/ferramentas/validar/validar-interiores.js. Formato: docs/contratos/interiores.md §3.
-   As falas moram em quimica/falas.js; os objetos próprios em quimica/objetos.js; o de fora em quimica/fora.js. */
+/* Laboratório de Química, parte 4: o layout e o registro do interior (3 cômodos de 13×13 num andar só).
+   Bancada de Misturas (entrada: a bancada, o canto da segurança e o caderno), Sala do Microscópio (lâminas, lupas,
+   cebolas, cristais) e Cantinho dos Átomos (tabela periódica, átomo, água, pufes). Formato: docs/contratos/interiores.md §3.
+   As falas moram em quimica/falas.js; os objetos próprios em quimica/objetos.js e objetos-2.js; o de fora em quimica/fora.js.
+   Confira com node jogo/ferramentas/validar/validar-interiores.js --so quimica --detalhes. */
 (function () {
   var R = window.Reino;
   var I = R.Interiores;
@@ -35,22 +36,92 @@
     return lista.map(function (o) { var n = Object.assign({}, o); n.x = o.x + ox; n.y = o.y + oy; return n; });
   }
   function tela(chave, nome, t, o) { return inter(chave, nome, Object.assign(o, { acao: { tipo: 'tela', tela: t } })); }
+  function poster(x, desenho, chave, nome) {
+    var o = { tipo: 'quimica-poster', x: x, y: 0, var: { desenho: desenho } };
+    return chave ? inter(chave, nome, o) : o;
+  }
+  var AMARELO = '#ffd34d', CREME = '#fff8ee';
   var objetos = [].concat(
-    // BANCADA DE MISTURAS (entrada)
+    /* ---------- BANCADA DE MISTURAS (entrada): a bancada, a segurança e o caderno ---------- */
     sala(BAN.x, BAN.y, [
-      tela('bancada', 'Bancada de misturas', 'quimica-bancada', { tipo: 'lab-bancada', x: 8, y: 3, w: 3, h: 1 }),
-      tela('caderno', 'Caderno de receitas', 'quimica-caderno', { tipo: 'lab-pulpito', x: 2, y: 5 }),
-      { tipo: 'janela', x: 0, y: 0 }, { tipo: 'arandela', x: 3, y: 0 }, { tipo: 'arandela', x: 9, y: 0 }, { tipo: 'janela', x: 12, y: 0 },
+      // parede: embaixo dos pôsteres e das janelas, só coisa baixa; 5-7 livre para a placa
+      poster(2, 'seguranca', 'seguranca', 'Segurança primeiro'),
+      inter('formulas', 'Quadro de fórmulas', { tipo: 'quimica-quadro', x: 3, y: 0, var: { desenho: 'formulas' } }),
+      { tipo: 'janela', x: 8, y: 0 }, { tipo: 'arandela', x: 9, y: 0 }, { tipo: 'janela', x: 10, y: 0 },
+      inter('capela', 'Capela de exaustão', { tipo: 'quimica-capela', x: 0, y: 2 }),
+      // (2, 2) e (4, 2) livres: é dali que ela olha o pôster e o quadro
+      inter('lixeira', 'Lixeiras de reciclagem', { tipo: 'quimica-lixeira', x: 3, y: 2 }),
+      inter('vidrarias', 'Balões e provetas', { tipo: 'quimica-vidrarias', x: 8, y: 2 }), { tipo: 'cesto', x: 10, y: 2 },
+      inter('frascos', 'Estante de frascos', { tipo: 'quimica-estante-frascos', x: 11, y: 2 }),
+      // o canto da segurança: chuveiro, jalecos, extintor
+      inter('chuveiro', 'Chuveiro de segurança', { tipo: 'quimica-chuveiro', x: 0, y: 5 }),
+      inter('cabide', 'Jalecos e óculos', { tipo: 'quimica-cabide', x: 4, y: 4 }),
+      { tipo: 'tapete-listrado', x: 1, y: 5, w: 3, h: 1, var: { cores: [AMARELO, CREME, AMARELO, CREME] } },
+      inter('extintor', 'Extintor', { tipo: 'quimica-extintor', x: 0, y: 7 }),
+      { tipo: 'quimica-banqueta', x: 3, y: 7, var: { cor: S.COR2 } },
+      // a bancada logo em frente à entrada; a Doutora Proveta fica atrás dela, em (9, 5)
+      tela('bancada', 'Bancada de misturas', 'quimica-bancada', { tipo: 'quimica-bancada', x: 8, y: 6 }),
+      { tipo: 'tapete', x: 8, y: 7, w: 3, h: 1, var: { cor: '#e9dcff', borda: S.COR } },
+      { tipo: 'quimica-banqueta', x: 11, y: 6 }, { tipo: 'planta-alta', x: 12, y: 4 }, { tipo: 'vaso-planta', x: 12, y: 7 },
+      // embaixo: o caderno no púlpito, perto da porta, e a pia
+      { tipo: 'vaso-planta', x: 0, y: 10 },
+      tela('caderno', 'Caderno de receitas', 'quimica-caderno', { tipo: 'quimica-pulpito', x: 4, y: 10 }),
+      { tipo: 'banco', x: 1, y: 12 }, { tipo: 'pilha-livros', x: 3, y: 12 },
+      { tipo: 'caixote', x: 8, y: 12 },
+      inter('pia', 'Pia do laboratório', { tipo: 'quimica-pia', x: 9, y: 11 }),
+      { tipo: 'luminaria-pe', x: 12, y: 10 }, { tipo: 'flores', x: 12, y: 11, var: { vaso: S.COR } }, { tipo: 'vaso-grande', x: 12, y: 12 },
     ]),
-    // SALA DO MICROSCÓPIO
+    /* ---------- SALA DO MICROSCÓPIO: lâminas, lupas, cebolas e cristais ---------- */
     sala(MIC.x, MIC.y, [
-      tela('microscopio', 'Microscópio', 'quimica-microscopio', { tipo: 'lab-microscopio', x: 6, y: 4 }),
-      { tipo: 'janela', x: 2, y: 0 }, { tipo: 'janela', x: 10, y: 0 },
+      { tipo: 'janela', x: 2, y: 0 }, poster(3, 'cebola', 'poster-cebola', 'Célula de cebola'),
+      poster(4, 'neve', 'poster-neve', 'Floco de neve'),
+      { tipo: 'janela', x: 8, y: 0 }, { tipo: 'relogio-parede', x: 9, y: 0 }, poster(10, 'cristal'),
+      { tipo: 'janela', x: 11, y: 0 }, { tipo: 'arandela', x: 12, y: 0 },
+      { tipo: 'estante', x: 0, y: 2 },
+      inter('laminas', 'Caixa de lâminas', { tipo: 'quimica-caixa-laminas', x: 2, y: 2 }),
+      { tipo: 'papeis', x: 4, y: 2 },
+      inter('cristais', 'Vitrine de cristais', { tipo: 'quimica-vitrine-cristais', x: 5, y: 2 }),
+      { tipo: 'planta-alta', x: 7, y: 2 }, { tipo: 'cesto', x: 8, y: 2 }, { tipo: 'pilha-livros', x: 9, y: 2 },
+      { tipo: 'flores', x: 11, y: 2 },
+      inter('lupas', 'Mesa das lupas', { tipo: 'quimica-lupas', x: 1, y: 4 }),
+      { tipo: 'poltrona', x: 4, y: 4 },
+      { tipo: 'tapete', x: 4, y: 5, w: 3, h: 2, var: { cor: '#ffe0ef', borda: S.COR2 } },
+      { tipo: 'mesa-centro', x: 5, y: 5 },
+      inter('cebolas', 'Cebolas brotando', { tipo: 'quimica-cebolas', x: 8, y: 4 }),
+      { tipo: 'vaso-planta', x: 11, y: 4 },
+      // o microscópio perto da porta da Bancada
+      tela('microscopio', 'Microscópio', 'quimica-microscopio', { tipo: 'quimica-microscopio', x: 9, y: 6 }),
+      { tipo: 'quimica-banqueta', x: 11, y: 7, var: { cor: '#5fb4ff' } }, { tipo: 'luminaria-pe', x: 12, y: 6 },
+      { tipo: 'vaso-planta', x: 0, y: 6 }, { tipo: 'quimica-cebolas', x: 2, y: 6, var: { vaso: 'barro' } },
+      { tipo: 'quimica-cebolas', x: 1, y: 8 }, { tipo: 'cesto', x: 7, y: 8 },
+      { tipo: 'tapete-listrado', x: 3, y: 9, w: 3, h: 1, var: { cores: [S.COR2, CREME, S.COR, CREME] } },
+      { tipo: 'lab-bancada', x: 0, y: 11, var: { itens: 'vasos' } }, { tipo: 'banco', x: 3, y: 12 },
+      { tipo: 'cavalete', x: 6, y: 10 }, { tipo: 'caixote', x: 8, y: 11 },
+      { tipo: 'quimica-cebolas', x: 10, y: 11 }, { tipo: 'vaso-grande', x: 12, y: 12 },
     ]),
-    // CANTINHO DOS ÁTOMOS
+    /* ---------- CANTINHO DOS ÁTOMOS: a tabela periódica, o átomo e a água ---------- */
     sala(ATO.x, ATO.y, [
-      tela('tabela', 'Tabela periódica', 'quimica-tabela', { tipo: 'lab-quadro', x: 5, y: 0 }),
-      { tipo: 'janela', x: 1, y: 0 }, { tipo: 'janela', x: 11, y: 0 },
+      { tipo: 'janela', x: 0, y: 0 },
+      // a tabela gigante perto da porta; embaixo dela só coisa baixa e (2, 2)-(3, 2) livres para chegar
+      tela('tabela', 'Tabela periódica', 'quimica-tabela', { tipo: 'quimica-tabela-parede', x: 1, y: 0 }),
+      inter('estados', 'Sólido, líquido e gás', { tipo: 'quimica-quadro', x: 8, y: 0, var: { desenho: 'estados' } }),
+      { tipo: 'janela', x: 10, y: 0 },
+      { tipo: 'flores', x: 0, y: 2 }, { tipo: 'pilha-livros', x: 1, y: 2 }, { tipo: 'almofada', x: 4, y: 2, var: { cor: S.COR2 } },
+      { tipo: 'cesto', x: 5, y: 2 },
+      inter('agua', 'Molécula de água', { tipo: 'quimica-agua', x: 7, y: 2 }),
+      { tipo: 'caixote', x: 9, y: 2 }, { tipo: 'estante', x: 11, y: 2 }, 
+      { tipo: 'mesa', x: 0, y: 5, var: { toalha: '#e9dcff', itens: ['livro', 'xicara'] } },
+      inter('atomo', 'Modelo de átomo', { tipo: 'quimica-atomo', x: 6, y: 4 }),
+      { tipo: 'planta-alta', x: 11, y: 4 },
+      { tipo: 'tapete', x: 3, y: 5, w: 7, h: 3, var: { cor: '#dff4ff', borda: S.COR } },
+      { tipo: 'quimica-pufe', x: 4, y: 6 }, { tipo: 'quimica-pufe', x: 6, y: 7, var: { cor: AMARELO } },
+      { tipo: 'quimica-pufe', x: 8, y: 6, var: { cor: '#b58cff' } },
+      { tipo: 'poltrona', x: 11, y: 6 }, { tipo: 'luminaria-pe', x: 0, y: 7 }, { tipo: 'vaso-planta', x: 12, y: 7 },
+      { tipo: 'tapete-listrado', x: 5, y: 9, w: 3, h: 1, var: { cores: [S.COR, CREME, AMARELO, CREME] } },
+      { tipo: 'mesa-centro', x: 10, y: 8 },
+      { tipo: 'banco', x: 0, y: 11 }, { tipo: 'vaso-grande', x: 3, y: 10 }, { tipo: 'sofa', x: 4, y: 12 },
+      { tipo: 'quimica-pufe', x: 7, y: 11, var: { cor: '#6fdc8c' } }, { tipo: 'relogio-pe', x: 9, y: 10 },
+      { tipo: 'pilha-livros', x: 11, y: 12 }, { tipo: 'globo', x: 12, y: 10 },
     ])
   );
 
@@ -84,9 +155,11 @@
         piso: 'taco', parede: 'papel',
         paleta: { piso: '#f3cfa0', piso2: '#dcae78', parede: S.PAREDE, parede2: '#e9dcff', rodape: S.COR, detalhe: S.COR2 } },
       { id: 'microscopio', nome: 'Sala do Microscópio', placa: 'Sala do Microscópio', rect: { x: MIC.x, y: MIC.y, w: 13, h: 13 },
-        piso: 'taco', parede: 'papel' },
+        piso: 'taco', parede: 'papel',
+        paleta: { piso: '#f3cfa0', piso2: '#dcae78', parede: '#f2fff8', parede2: '#cdeee0', rodape: '#3fae8a', detalhe: S.COR2 } },
       { id: 'atomos', nome: 'Cantinho dos Átomos', placa: 'Cantinho dos Átomos', rect: { x: ATO.x, y: ATO.y, w: 13, h: 13 },
-        piso: 'taco', parede: 'papel' },
+        piso: 'taco', parede: 'papel',
+        paleta: { piso: '#f3cfa0', piso2: '#dcae78', parede: '#eef6ff', parede2: '#d6e4ff', rodape: '#5a7ad6', detalhe: '#ffd34d' } },
     ],
     portas: [
       { x: MIC.x + 13, y: 9, w: 1, h: 2 },   // microscópio ↔ bancada
@@ -95,6 +168,7 @@
     corredores: [
       { x: BAN.x + 5, y: 3, w: 3, h: 11 },   // da saída até o fundo da bancada
       { x: MIC.x + 9, y: 9, w: 19, h: 2 },   // porta a porta
+      { x: ATO.x, y: 9, w: 4, h: 2 },        // entrada do Cantinho dos Átomos
     ],
     objetos: objetos,
     npcs: npcs,

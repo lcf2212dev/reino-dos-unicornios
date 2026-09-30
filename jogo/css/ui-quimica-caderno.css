@@ -1,1 +1,153 @@
-/* Laboratório de Química: estilo da tela caderno (docs/contratos/quimica.md). A preencher pela frente dona deste arquivo. */
+/* Laboratório de Química: o caderno de receitas (js/ui/quimica-caderno.js). Caderno de cientista: argolas da
+   espiral no topo, papel quadriculado (grade --ceu de 16 px, margem --rosa), índice em cartões e a página da receita
+   com os tubinhos. Sem animação nenhuma. */
+.tela-quimica-caderno .painel { max-width: 720px; }
+.qcad-conteudo { padding-top: 10px; }
+
+/* ---------- o caderno: espiral e folha ---------- */
+.qcad-caderno { position: relative; padding-top: 10px; }
+/* a argola (desenho 6×11 do JS, 12 em 12 px de arte) a 2 px CSS por pixel, sobre a borda de cima da folha */
+.qcad-espiral {
+  position: absolute; top: 0; left: 18px; right: 12px; height: 22px; z-index: 1; pointer-events: none;
+  background-repeat: repeat-x; background-size: 24px 22px; image-rendering: pixelated;
+}
+.qcad-folha {
+  position: relative; padding: 24px 14px 16px 40px;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
+  background-color: var(--papel);
+  background-image:
+    linear-gradient(to right, var(--rosa) 0 2px, transparent 2px),
+    linear-gradient(to right, var(--ceu) 0 2px, transparent 2px),
+    linear-gradient(to bottom, var(--ceu) 0 2px, transparent 2px);
+  background-size: 2px 100%, 16px 16px, 16px 16px;
+  background-repeat: no-repeat, repeat, repeat;
+  background-position: 28px 0, 0 0, 0 0;
+}
+.qcad-folha > * + * { margin-top: 12px; }
+.qcad-titulo { margin: 0; font-size: var(--texto); line-height: var(--entrelinha-titulo); }
+.qcad-titulo:focus { outline: none; }
+
+/* ---------- índice ---------- */
+.qcad-cabeca-indice { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 12px; }
+.qcad-contador { margin: 0; font-size: var(--texto-aux); color: var(--tinta-suave); }
+.qcad-completo {
+  display: flex; align-items: center; gap: 10px; margin: 12px 0 0; padding: 8px 12px;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
+  background: linear-gradient(to bottom, var(--ouro-claro) 0 calc(100% - 4px), var(--ouro) calc(100% - 4px));
+}
+.qcad-grade {
+  list-style: none; margin: 12px 0 0; padding: 0;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(176px, 1fr)); gap: 12px;
+}
+.qcad-grade > li { display: flex; min-width: 0; }
+.qcad-cartao {
+  position: relative; flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px;
+  padding: 10px 8px 12px; text-align: center; font: inherit; color: var(--tinta); cursor: pointer;
+  background: var(--papel); border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
+  box-shadow: var(--sombra-pequena); --degrau: 2px;
+}
+.qcad-cartao.segredo { background: var(--papel-quente); border-style: dashed; }
+.qcad-num {
+  align-self: flex-start; font-size: var(--texto-aux); color: var(--tinta-suave); line-height: 1;
+}
+.qcad-figura { position: relative; display: flex; align-items: center; justify-content: center; min-height: 64px; }
+.qcad-nome { font-size: var(--texto); line-height: var(--entrelinha-titulo); }
+.qcad-dica { font-size: var(--texto-aux); color: var(--tinta-suave); line-height: var(--entrelinha); }
+.qcad-cartao .qcad-selo { margin-top: auto; }
+
+/* o segredo (ui.md §10.14.3): frasco em silhueta e o "?" em --papel com contorno --tinta */
+.qcad-silhueta { position: relative; display: inline-flex; }
+.qcad-frasco { image-rendering: pixelated; }
+.qcad-interroga {
+  position: absolute; inset: 12px 0 0; display: flex; align-items: center; justify-content: center;
+  font-size: var(--texto-g); line-height: 1; color: var(--papel);
+  text-shadow: 2px 0 0 var(--tinta), -2px 0 0 var(--tinta), 0 2px 0 var(--tinta), 0 -2px 0 var(--tinta);
+}
+
+/* os selos: feita (verde), experimente (laranja) */
+.qcad-selo {
+  display: inline-block; padding: 4px 8px; font-size: var(--texto-aux); line-height: 1; white-space: nowrap;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-pequeno);
+}
+.qcad-selo.feita { background: var(--certo-fundo); color: var(--certo); }
+.qcad-selo.experimente { background: var(--laranja-claro); color: var(--laranja-escuro); }
+.qcad-selo canvas.icone-em { width: 16px !important; height: 16px !important; vertical-align: -2px; }
+
+/* ---------- página da receita ---------- */
+.qcad-folhear { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.qcad-pag { font-size: var(--texto-aux); color: var(--tinta-suave); text-align: center; }
+.qcad-cabeca { display: flex; align-items: center; gap: 14px; }
+.qcad-cabeca-texto { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; min-width: 0; }
+.qcad-figura.grande {
+  flex: none; width: 88px; height: 88px; background: var(--papel);
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
+}
+.qcad-pagina-segredo .qcad-figura.grande { background: var(--papel-quente); border-style: dashed; }
+.qcad-bloco h4 { margin: 0 0 6px; font-size: var(--texto-aux); color: var(--roxo-texto); }
+.qcad-bloco p { margin: 0; line-height: var(--entrelinha); }
+.qcad-bloco-dica p, .qcad-convite { background: var(--papel-quente); }
+.qcad-convite { margin: 0; padding: 8px 10px; border: var(--borda-fina) dashed var(--borda); border-radius: var(--canto); }
+
+/* os ingredientes em tubinhos (desenho 10×24 a 4 px CSS por pixel) */
+.qcad-tubos { display: flex; align-items: flex-start; justify-content: center; gap: 8px; }
+.qcad-tubo { flex: 0 1 132px; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; }
+.qcad-tubo small { font-size: var(--texto-aux); line-height: var(--entrelinha); }
+.qcad-tubo-img { image-rendering: pixelated; }
+.qcad-mais { align-self: center; margin-bottom: 30px; font-size: var(--texto-g); color: var(--tinta-suave); }
+
+.qcad-aviso {
+  margin: 0; padding: 8px 10px 8px 14px;
+  background: linear-gradient(to right, var(--laranja) 0 4px, var(--quase-fundo) 4px);
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
+}
+
+/* rodapé: sem o "📒 Receitas" (no índice), o "Ouvir" fica à esquerda */
+.qcad-rodape > .qcad-voltar[hidden] + .qcad-ouvir { margin-right: auto; }
+.qcad-rodape > .so-seta { flex: 0 1 220px; }
+.qcad-rodape > .qcad-bancada { flex: 0 1 360px; }
+
+/* "Ir para a bancada" vira "Bancada" onde os três botões não cabem com o nome inteiro (celular e tablet) */
+.qcad-curto { display: none; }
+@media (max-width: 999px) {
+  .qcad-rodape .qcad-longo { display: none; }
+  .qcad-rodape .qcad-curto { display: inline; }
+}
+/* tablet e notebook: o nome da receita em título grande */
+@media (min-width: 640px) { .qcad-pagina .qcad-titulo { font-size: var(--texto-g); } }
+
+/* ---------- celular ---------- */
+@media (max-width: 480px) {
+  .qcad-folha { padding: 22px 8px 12px 24px; background-position: 14px 0, 0 0, 0 0; }
+  .qcad-espiral { left: 10px; right: 6px; }
+  /* uma receita por linha: o desenho à esquerda, número, nome, dica e selo à direita */
+  .qcad-grade { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .qcad-cartao {
+    display: grid; grid-template-columns: 64px minmax(0, 1fr); column-gap: 10px; row-gap: 4px;
+    align-items: start; justify-items: start; padding: 8px; text-align: left;
+  }
+  .qcad-cartao > .qcad-figura { grid-column: 1; grid-row: 1 / span 4; align-self: center; }
+  .qcad-cartao > :not(.qcad-figura) { grid-column: 2; }
+  .qcad-cartao .qcad-selo { margin-top: 2px; }
+  .qcad-cabeca { gap: 10px; }
+  .qcad-figura.grande { width: 76px; height: 76px; }
+  .qcad-tubos { gap: 2px; }
+  .qcad-mais { font-size: var(--texto); margin-bottom: 36px; }
+  .qcad-rodape > .so-seta { flex: 0 0 64px; }
+  .qcad-rodape > .qcad-bancada { flex: 1 1 0; }
+}
+.letras-grandes .qcad-grade { grid-template-columns: repeat(auto-fill, minmax(232px, 1fr)); }
+
+/* notebook baixo (ui.md §10.21.2): o painel mais largo e as 10 receitas em 5 colunas */
+@media (min-width: 1000px) and (max-height: 820px) {
+  :root:not(.letras-grandes) .tela-quimica-caderno .painel { width: min(1000px, 100%); max-width: min(1000px, 100%); }
+  :root:not(.letras-grandes) .qcad-grade { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+  :root:not(.letras-grandes) .qcad-cartao { padding: 8px 6px 10px; gap: 4px; }
+  /* a página em 2 colunas: os tubinhos à esquerda, o texto à direita (sem rolar) */
+  :root:not(.letras-grandes) .qcad-pagina:not(.qcad-pagina-segredo) {
+    display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: 24px; align-items: start;
+  }
+  :root:not(.letras-grandes) .qcad-pagina:not(.qcad-pagina-segredo) > * { grid-column: 2; margin-top: 12px; }
+  :root:not(.letras-grandes) .qcad-pagina:not(.qcad-pagina-segredo) > .qcad-folhear { grid-column: 1 / -1; margin-top: 0; }
+  :root:not(.letras-grandes) .qcad-pagina:not(.qcad-pagina-segredo) > .qcad-cabeca { grid-column: 1 / -1; }
+  :root:not(.letras-grandes) .qcad-pagina:not(.qcad-pagina-segredo) > .qcad-bloco-tubos { grid-column: 1; grid-row: 3 / span 4; }
+}

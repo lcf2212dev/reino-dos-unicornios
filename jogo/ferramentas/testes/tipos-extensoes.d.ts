@@ -26,6 +26,8 @@ interface LugarRegistrado {
   placa?: 'acima' | 'direita';
   /** tiles [x, y] de rua da rua até a frente da porta (obrigatório) */
   caminho: [number, number][];
+  /** cerquinha com portão na fileira da frente (depois do sorteio; mundo/mapa.js) */
+  cerca?: boolean;
   menu?: MenuLugar;
 }
 

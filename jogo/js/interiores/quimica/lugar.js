@@ -5,6 +5,7 @@ Reino.registrarLugar({
   id: 'quimica', nome: 'Laboratório de Química', sprite: 'quimica', placa: 'acima',
   rect: { x: 37, y: 24, w: 5, h: 5 },
   caminho: [[39, 29]],
+  cerca: true,   // cerquinha com portão na frente, como os prédios de hoje (mundo/mapa.js)
   novidade: '2026-09-30',   // selo "✨ Novo!" no menu Lugares até ela entrar (ou config.novidadeDias dias)
   menu: {
     emoji: '🧪',

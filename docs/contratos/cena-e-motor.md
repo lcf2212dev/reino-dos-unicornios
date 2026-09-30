@@ -197,6 +197,8 @@ alvo = { tipo: 'npc'|'objeto'|'saida'|'escada'|'lugar'|'claude', id,
      (`Mapa.prerender` → `I.desenharEnfeites`) tira os números do sorteio (`rng(4242)`) da cópia; flor que um lugar
      novo tirou gasta os mesmos números sem pintar: as flores longe dele não mudam. Teste: `unidade/mapa-sorteio.test.js`.
    - Não acrescente id ao `LEGADO_SORTEIO` nem entrada ao `LUGARES_FIXOS`: prédio novo usa `registrarLugar`.
+   - Cerquinha com portão de um `registrarLugar`: vem sozinha no terreno de `Mapa.RESERVADOS`; fora dele, `cerca: true`
+     no def. Entra depois do sorteio: só muda a fileira da frente do prédio (chão livre), nada no resto do reino.
 5. `Mapa.PREDIOS_ANIM[sprite](ctx, px, py, w, h, t)`: gancho na camada animada do mapa (só com Animações);
    o Observatório usa para cintilar.
 6. O registro do desenho de fora pelo próprio prédio: `if (window.Mapa && Mapa.PREDIOS) Mapa.PREDIOS.<sprite> = function (ctx, px, py, w, h) {…}`.

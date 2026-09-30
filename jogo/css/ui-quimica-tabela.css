@@ -1,1 +1,123 @@
-/* Laboratório de Química: estilo da tela da tabela periódica (docs/contratos/quimica.md). A preencher pela frente dona deste arquivo. */
+/* Laboratório de Química: a tabela periódica do Cantinho dos Átomos (js/ui/quimica-tabela.js e -2.js; contrato
+   docs/contratos/quimica.md). Abas, o mapa das casas com a legenda, os cartões dos elementos, a ficha e as lições.
+   Cores das famílias vêm do dado (--qt-cor e --qt-fundo, postas pelo JS); o resto é token (ui.md §10.8). */
+
+/* painel: 720 px; na tela baixa e larga (notebook) 1000 px, para o mapa e a legenda lado a lado (ui.md §10.21.2) */
+@media (min-width: 1000px) and (max-height: 820px) { .tela-quimica-tabela .painel { width: min(1000px, 100%); } }
+
+/* ---------- abas (o mesmo desenho das abas de jogadores, ui-jogadores.css) ---------- */
+.qt-abas { flex: none; display: flex; justify-content: center; padding: 8px 20px 0; border-bottom: var(--borda-grossa) solid var(--borda); }
+.qt-aba {
+  flex: 0 1 auto; display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 8px 20px; margin-bottom: -4px;
+  border: var(--borda-fina) solid var(--borda); border-bottom-width: var(--borda-grossa); border-radius: var(--canto) var(--canto) 0 0;
+  background: var(--papel-quente); font: inherit; font-size: var(--texto); color: inherit; white-space: nowrap; cursor: pointer;
+}
+.qt-aba + .qt-aba { margin-left: 6px; }
+.qt-aba[aria-selected="true"] { background: var(--papel); border-bottom-color: var(--papel); }
+
+/* ---------- aba Tabela ---------- */
+.qt-dica { margin-bottom: 0; font-size: var(--texto-aux); color: var(--tinta-suave); text-align: center; }
+.qt-sub { margin-bottom: 0; font-size: var(--texto); }
+.qt-dica:first-child, .qt-contagem:first-child { margin-top: 0; }
+.qt-mapa-caixa { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: center; gap: 12px 16px; }
+.qt-canvas { display: block; flex: none; image-rendering: pixelated; }
+.qt-mapa { cursor: pointer; }
+.qt-legenda {
+  flex: 1 1 180px; min-width: 180px; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); align-content: start;
+  gap: 6px 12px; margin: 0; padding: 0; list-style: none; font-size: var(--texto-aux); line-height: var(--entrelinha-titulo);
+}
+.qt-legenda li { display: flex; align-items: center; gap: 8px; }
+.qt-cor { flex: none; display: inline-block; width: 16px; height: 16px; border: var(--borda-fina) solid var(--borda); }
+
+/* os cartões: 5 colunas no tablet, 4 no celular, 8 no notebook; alvo de toque bem acima de 44 px */
+.qt-grade { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+.qt-cartao {
+  display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 0; min-height: 96px; padding: 10px 4px 8px;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
+  background: linear-gradient(var(--qt-cor) 0 6px, var(--qt-fundo) 6px);
+  box-shadow: var(--sombra-pequena); --degrau: 2px;
+  font: inherit; color: var(--tinta); cursor: pointer;
+}
+.qt-cartao[aria-current="true"] { outline: 4px solid var(--roxo); outline-offset: 0; }   /* o último aberto (a casa acesa no mapa) */
+.qt-num { align-self: flex-start; padding-left: 4px; font-size: var(--texto-aux); line-height: 1; }
+.qt-simb { font-size: var(--texto-g); line-height: 1; }
+.qt-nome { max-width: 100%; font-size: var(--texto-aux); line-height: var(--entrelinha-titulo); text-align: center; }
+
+/* ---------- a ficha do elemento ---------- */
+.qt-ficha > * + * { margin-top: 12px; }
+.qt-ficha-topo { display: flex; align-items: center; gap: 16px; }
+.qt-grande {
+  flex: none; display: flex; flex-direction: column; width: 136px; height: 136px; padding: 16px 8px 8px;
+  border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto-grande);
+  background: linear-gradient(var(--qt-cor) 0 10px, var(--qt-fundo) 10px);
+}
+.qt-grande .qt-num { font-size: var(--texto); }
+.qt-grande-simb { margin: auto; font-size: var(--texto-festa); line-height: 1; }
+.qt-ficha-info { min-width: 0; }
+.qt-ficha-nome { margin: 0; font-size: var(--texto-g); line-height: var(--entrelinha-titulo); white-space: nowrap; }
+.qt-ficha-info p { margin: 8px 0 0; }
+.qt-ficha-fam { display: flex; align-items: center; gap: 8px; }
+.qt-bloco { padding: 10px 14px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel-quente); }
+.qt-bloco h4 { margin: 0 0 4px; font-size: var(--texto-aux); color: var(--tinta-suave); }
+.qt-bloco p { margin: 0; line-height: var(--entrelinha); }
+.qt-bloco p + p { margin-top: 6px; }
+.qt-ficha-mapa { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+
+/* rodapé: "Voltar" à esquerda; ◀ (página) ▶ à direita, setas de 64 px */
+footer.qt-rodape > .btn-grande { flex: none; min-width: 0; }
+footer.qt-rodape .so-seta { width: 64px; padding: 0; }
+.qt-nav { display: flex; align-items: center; gap: 8px; }
+.qt-pag { min-width: 96px; font-size: var(--texto-aux); line-height: 1; text-align: center; white-space: nowrap; }
+
+/* ---------- aba Lições ---------- */
+.qt-contagem { margin-bottom: 0; text-align: center; }
+.qt-licoes { display: grid; gap: 10px; }
+.qt-licao {
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px; min-height: 64px; padding: 10px 14px;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel);
+  box-shadow: var(--sombra-pequena); --degrau: 2px; font: inherit; color: var(--tinta); text-align: left; cursor: pointer;
+}
+.qt-licao.lida { background: var(--certo-fundo); }
+.qt-licao.lida .qt-licao-estado { color: var(--certo); }
+.qt-licao-emoji { display: inline-flex; }
+.qt-licao-nome { line-height: var(--entrelinha-titulo); }
+.qt-licao-estado { white-space: nowrap; }
+
+.qt-licao-pagina { display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; }
+.qt-licao-pagina > * { margin: 0; }
+.qt-licao-titulo { font-size: var(--texto); line-height: var(--entrelinha-titulo); }
+.qt-quadro { display: flex; flex-direction: column; align-items: stretch; gap: 6px; width: min-content; }   /* a largura do desenho */
+.qt-quadro-legenda { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 14px; font-size: var(--texto-aux); color: var(--tinta-suave); }
+.qt-quadro-legenda > span { display: inline-flex; align-items: center; gap: 6px; }
+/* partes do desenho (sólido, líquido, gás…): cada nome embaixo da sua parte */
+.qt-quadro-legenda.partes { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); }
+.qt-quadro-legenda.partes > span { justify-content: center; }
+.qt-licao-texto { max-width: 560px; font-size: var(--texto-g); line-height: var(--entrelinha); }
+.qt-selo { padding: 8px 14px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--certo-fundo); color: var(--certo); }
+.qt-selo[hidden] { display: none; }
+
+/* ---------- celular ---------- */
+@media (max-width: 480px) {
+  .qt-abas { padding: 6px 12px 0; }
+  .qt-aba { min-height: 44px; padding: 8px 14px; }
+  .qt-grade { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; }
+  .qt-cartao { min-height: 88px; padding: 8px 2px 6px; }
+  .qt-grande { width: 104px; height: 104px; padding: 12px 6px 6px; }
+  .qt-grande-simb { font-size: var(--texto-t); }
+  .qt-ficha-topo { gap: 12px; }
+  .qt-ficha-nome { font-size: var(--texto); }
+  .qt-ficha-info p { font-size: var(--texto-aux); }
+  footer.qt-rodape > .qt-voltar { width: 64px; padding: 0; }   /* só a seta: ◀ 1 de 3 ▶ cabem ao lado (ui.md §10.20.2) */
+  .qt-pag { min-width: 72px; }
+  .qt-licao { gap: 8px; padding: 8px 10px; }
+  .qt-licao-texto { font-size: var(--texto); }
+}
+/* notebook (tela baixa e larga): 8 colunas de cartões e as lições em 2 colunas (ui.md §10.21.2.1) */
+@media (min-width: 1000px) and (max-height: 820px) {
+  .qt-grade { grid-template-columns: repeat(8, minmax(0, 1fr)); }
+  .qt-licoes { grid-template-columns: 1fr 1fr; }
+}
+/* "Letras grandes": uma coluna a menos de cartões (o nome em 16 px cabe na sílaba) */
+.letras-grandes .qt-grade { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 480px) { .letras-grandes .qt-grade { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 1000px) and (max-height: 820px) { .letras-grandes .qt-grade { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
