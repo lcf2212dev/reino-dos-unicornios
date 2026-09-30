@@ -76,8 +76,8 @@ function checarNovos(d, naProva) {
     });
   }
   // o mesmo ícone em todas as opções não ajuda a escolher: melhor sem ícone
-  if (Array.isArray(d.opcoes) && d.opcoes.length > 1 && d.opcoes.every((o) => o && o.e && o.e === d.opcoes[0].e))
-    avisos.push(`${d.id}: o mesmo ícone ${d.opcoes[0].e} em todas as opções (tire o "e")`);
+  if (Array.isArray(d.opcoes) && d.opcoes.length > 1 && d.opcoes.every((o) => o && o.e && o.e === d.opcoes[0].e && !String(o.e).includes(Preencher.MARCADOR)))
+    erros.push(`${d.id}: o mesmo ícone ${d.opcoes[0].e} em todas as opções (tire o "e")`);
   if (d.instrucao !== undefined) checar(textoOk(d.instrucao), `${d.id}: "instrucao" precisa ser um texto não vazio`);
   const def = tipoDe(d);
   CAMPOS_DE_TIPO.forEach((c) => {

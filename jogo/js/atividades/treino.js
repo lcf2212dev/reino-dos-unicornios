@@ -72,7 +72,7 @@
       var texto = el('p.respira-texto', 'Vamos respirar fundo antes da prova?');
       var contagem = el('p.respira-conta', '');
       var pular = el('button.btn-grande.btn-secundario', { type: 'button', hidden: !podePular }, 'Já respirei, pular');
-      var comecar = el('button.btn-grande.btn-principal', { type: 'button' }, 'Começar a respirar', desenhoBalao(2, 'balao-botao'));
+      var comecar = el('button.btn-grande.btn-principal', { type: 'button' }, 'Começar a ', el('span', { style: 'white-space:nowrap' }, 'respirar', desenhoBalao(2, 'balao-botao')));   // o 🎈 não fica sozinho na linha (D6-24, ui.md §10.17)
       var titulo = el('h2.titulo-pixel', 'Ritual da Calma');
       var ritual = el('div.ritual', titulo, balao, texto, contagem, el('div.intro-botoes', comecar, pular));
       cont.appendChild(ritual);
@@ -246,7 +246,7 @@
         el('p', Reino.Genero.genero('{As campeãs|Os campeões} revisam a prova inteirinha antes de entregar. Toque em cada questão.')),
         aviso, lista));
       rodape.hidden = false;
-      rodape.appendChild(el('span.sem-relogio', revisadas.filter(Boolean).length + ' de ' + questoes.length + ' revisadas'));
+      rodape.appendChild(el('span.contador-revisao', revisadas.filter(Boolean).length + ' de ' + questoes.length + ' revisadas'));
       rodape.appendChild(entregar);
       entregar.addEventListener('click', function () { Reino.Som.tocar('toque'); resultado(); });
       if (primeiraVez) Pr.balaoQueSome(Reino.Falas.fixas.revisar);
