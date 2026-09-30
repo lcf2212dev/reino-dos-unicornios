@@ -5,6 +5,9 @@
 @keyframes pulsar { 0%, 50%, 100% { transform: none; } 25% { transform: translateY(-2px); } }   /* pulo de 1 pixel de arte, em degrau (step-end) */
 @keyframes piscar { 50% { opacity: 0.3; } }
 @keyframes flutuar { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes painel-descer { from { transform: translateY(-6px); } to { transform: none; } }   /* entrada da tela: 3 degraus de 2 px (steps(3)) */
+@keyframes painel-subir { from { transform: none; } to { transform: translateY(-6px); } }
+@keyframes sumir { from { opacity: 1; } to { opacity: 0; } }
 @keyframes balancar { 0%, 100% { transform: none; } 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
 /* chegada: contorno claro de 1 pixel que acende e apaga 2 vezes, sem crescer nem clarear o desenho (use com step-end) */
 @keyframes brilhar {
@@ -12,7 +15,7 @@
   25%, 75%, 100% { filter: none; }
 }
 @keyframes tremer { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
-.treme { animation: tremer 0.4s ease-in-out; }
+.treme { animation: tremer var(--normal) step-end; }
 /* erro de item parado (ui.md §10.19.2; desafios/ligar.js, _d.erroParado): fundo --erro-fundo e borda --erro até apagar ou
    até o próximo toque; o .treme vem junto e o sem-animacao o desliga. A classe dobrada ganha do .ligado, .escolhido,
    .virada e [aria-pressed] (CSS carregado antes ou depois) */
@@ -22,6 +25,14 @@
 /* jogo da memória: a carta achata em degraus inteiros (memoria.js, virar), sem scale; o corte em px pares vem do JS */
 .carta-mem.mem-achata-1 { clip-path: inset(0 var(--mem-corte-1, 0px)); }
 .carta-mem.mem-achata-2 { clip-path: inset(0 var(--mem-corte-2, 0px)); }
+
+/* saída de tela (ui.md §10.15.8): mover o nó para #telas-saindo reinicia a animation, então a saída é OUTRA animation
+   (o inverso da entrada), presa no fim até o JS tirar o nó (Reino.config.movimento.rapido) */
+#telas-saindo { position: relative; z-index: 20; pointer-events: none; }
+#telas-saindo .tela.saindo { animation: sumir var(--rapido) ease-out forwards; }
+#telas-saindo .tela.saindo .painel { animation: painel-subir var(--rapido) steps(3) forwards; }
+body.sem-animacao #telas-saindo .tela.saindo { display: none; }
+@media (prefers-reduced-motion: reduce) { #telas-saindo .tela.saindo { display: none; } }
 
 body.sem-animacao *:not(.balao-respira), body.sem-animacao *::before, body.sem-animacao *::after { animation: none !important; }
 @media (prefers-reduced-motion: reduce) {
