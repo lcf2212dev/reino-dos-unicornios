@@ -434,8 +434,13 @@ A festa cresce com o feito: acerto < sala < prova < matéria completa. Compra é
 | 3 | prova terminada, ovo que nasce | 32 px (`--texto-t`) | confete 90 | fanfarra |
 | 4 | matéria completa | 48 px (`--texto-festa`; `--texto-t` no celular, se não couber) | confete 160 e emoji grande | fanfarra longa |
 
-Com animações desligadas fica só o título e o som. O ovo nasce no nível 3 em toda raridade; o lendário ganha o
-brilho arco-íris, não mais confete. O confete é desenhado pela regra do §10.14.2.
+Uma chamada só: `UI.festa(nivel, opcoes)` (`ui/pecas.js`, tabela em `UI.festa.tabela`; `opcoes.item` recebe o
+brilho do nível 1). Nível por tela: compra, cuidado, acerto da surpresa e do ET = 1; sala, treino, ET vencido e Aura
+= 2; prova e ovo = 3; matéria completa = 4. Com animações desligadas fica só o título e o som. O ovo nasce no nível
+3 em toda raridade; o lendário (ovo e prova) ganha o brilho arco-íris, não mais confete: moldura `.brilho-arco` de 6
+faixas de 4 px (`--arco-1` a `--arco-6`) em cor lisa, que troca a ordem das cores em degraus (`var(--lento)`
+`step-end`, 3 vezes) e fica parada sem animação. O ícone da tela de fim sai no tamanho do nível, em escala inteira
+(32 px no nível 2, 48 px no nível 4). O confete é desenhado pela regra do §10.14.2.
 
 ### 10.17 Quebra de palavra
 1. No `body`: `overflow-wrap: break-word` e `hyphens: manual`. `overflow-wrap: anywhere` é proibido.
