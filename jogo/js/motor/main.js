@@ -110,6 +110,7 @@
 
   function entrarNoReino(novo) {
     V.jogoAtivo = true;
+    UI.corDaBarra('grama');   // a última tela de entrada fechou: o mapa à vista (ui.md §10.8)
     U.$('#hud').hidden = false;
     UI.montarHUD();
     V.montarControle();

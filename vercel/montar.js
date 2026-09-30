@@ -11,7 +11,8 @@ const { execFileSync } = require('node:child_process');
 const JOGO = path.join(__dirname, '..', 'jogo');
 const PWA = path.join(__dirname, 'pwa');
 const SAIDA = path.join(__dirname, 'public');
-const COR = '#3b2170';
+// cor do app (theme-color): Reino.config.paleta.noite; o jogo troca para a grama com o mapa aberto (ui.md §10.8)
+const COR = /\bnoite:\s*'(#[0-9a-f]{6})'/i.exec(fs.readFileSync(path.join(JOGO, 'js', 'nucleo', 'config.js'), 'utf8'))[1];
 
 fs.rmSync(SAIDA, { recursive: true, force: true });
 fs.mkdirSync(path.join(SAIDA, 'css'), { recursive: true });
