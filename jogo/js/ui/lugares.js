@@ -59,12 +59,13 @@
     emoji: function (l) { return Reino.materia(l.materiaId).emoji; },
     info: function (l) {
       var m = Reino.materia(l.materiaId);
-      return P.salasFeitas(m) + ' de ' + m.salas.length + ' salas • ' + U.reais(P.dinheiroMateria(m)) + ' de ' + U.reais(Reino.config.valorPorMateria);
+      return P.salasFeitas(m) + ' de ' + m.salas.length + ' salas • ' + U.reais(P.dinheiroMateria(m)).replace(' ', '\u00a0');   // "R$ 12,00" não quebra
     },
     avisos: function (l) {
       var m = Reino.materia(l.materiaId);
       var pronto = Reino.Cena && Reino.Cena.concluidos ? Reino.Cena.concluidos().indexOf(l.id) >= 0 : P.materiaCompleta(m);
-      return [{ texto: pronto ? 'Pronto' : P.salasFeitas(m) + '/' + m.salas.length, tipo: pronto ? 'pronto' : 'salas' }];
+      // "3 de 5 salas" já está na info: só o "Pronto" vira aviso
+      return pronto ? [{ texto: 'Pronto', tipo: 'pronto' }] : [];
     },
     abrir: function (l) { return UI.telaMateria(Reino.materia(l.materiaId)); },
   });
@@ -111,11 +112,15 @@
     var lista = el('div.lista-salas');
     // as matérias aparecem primeiro
     var ordenados = Mapa.lugares().slice().sort(function (a, b) { return (b.tipo === 'materia') - (a.tipo === 'materia'); });
+    var grupo = null;
     ordenados.forEach(function (l) {
+      // subtítulo a cada troca de grupo: "Matérias" e depois "Lugares"
+      var g = l.tipo === 'materia' ? 'Matérias' : 'Lugares';
+      if (g !== grupo) { grupo = g; lista.appendChild(el('h3.lugares-grupo', g)); }
       var d = menuDe(l) || {};
       var emoji = typeof d.emoji === 'function' ? d.emoji(l) : (d.emoji || '📍');
       var info = d.info ? d.info(l) : '';
-      var b = el('button.sala-card', { type: 'button' }, el('span.sala-emoji', emoji), el('span.sala-info', el('b', hifenizar(l.nome)), el('small', hifenizar(info)), ondeFica(l), chipsAvisos(l)), el('span.sala-ir', 'Ir →'));
+      var b = el('button.sala-card', { type: 'button' }, el('span.sala-emoji', emoji), el('span.sala-info', el('b', hifenizar(l.nome)), el('small', hifenizar(info)), ondeFica(l), chipsAvisos(l)), el('span.sala-ir', { 'aria-label': 'Ir' }, '→'));
       b.addEventListener('click', function (e) {
         UI.fecharTela(pn.tela);
         // o dedo que ainda bate no "Ir" cai no mapa e trocaria o destino: segura mais um pouco

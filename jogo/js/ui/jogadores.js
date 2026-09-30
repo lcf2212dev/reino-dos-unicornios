@@ -226,15 +226,22 @@
     return UI.telaQuemVaiJogar({ podeFechar: true }).then(function (login) {
       if (!login || login === J().atual()) return login;
       // enquanto o progresso de quem sai vai para o banco (a página recarrega em seguida)
-      var t = UI.abrirTela('jogadores');
-      t.appendChild(el('div.jogadores-guardando', el('p.titulo-pixel', { 'aria-live': 'polite' }, 'Guardando...')));
+      UI.telaGuardando();
       return J().trocarPara(login).then(function () { return login; });
     });
   };
+  // "Guardando...": painel com quem está jogando e três pontinhos que pulam (parados sem animação)
+  UI.telaGuardando = function () {
+    var t = UI.abrirTela('jogadores'), login = null;
+    try { login = J().atual(); } catch (x) { login = null; }
+    var pontos = el('span.guardando-pontos', { 'aria-hidden': 'true' }, el('i'), el('i'), el('i'));
+    t.appendChild(el('div.jogadores-guardando', el('span.jogadores-retrato', { 'aria-hidden': 'true' }, arteDoCartao(login || J().MARIANA)),
+      el('p.titulo-pixel', { 'aria-live': 'polite' }, 'Guardando'), pontos));
+    return t;
+  };
   // "Sair" (Ajustes): guarda, e o próximo carregamento mostra "Entrar no Reino" (o save fica onde está)
   UI.sairDoJogador = function () {
-    var t = UI.abrirTela('jogadores');
-    t.appendChild(el('div.jogadores-guardando', el('p.titulo-pixel', { 'aria-live': 'polite' }, 'Guardando...')));
+    UI.telaGuardando();
     return J().sair();
   };
 })();
