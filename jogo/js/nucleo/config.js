@@ -118,6 +118,10 @@ Reino.config = {
   // 3ª versão: o ET amigo que acompanha a Mariana anda `companheiroDistancia` px atrás dela
   viagem: { tanque: 10, cheioNoComeco: true, vooSegundos: 30, estrelasPorVoo: 5, portaisPorVoo: 3, estrelasPorPortal: 1,
     desafioPerguntas: 3, estrelasPorAcertoET: 1, companheiroDistancia: 30 },
+  // Laboratório de Química (js/sistemas/quimica.js): estrelas só na 1ª vez de cada descoberta (receita, lâmina do
+  // microscópio, lição lida até o fim) e uma vez ao completar o caderno; nada de dinheiro nem Aura (é diversão).
+  // `maxTubos`: quantos tubos cabem no béquer. Se mudar as estrelas, regrave as vozes (a Doutora Proveta fala o valor)
+  quimica: { estrelasReceitaNova: 2, estrelasLaminaNova: 1, estrelasLicaoNova: 1, estrelasCadernoCompleto: 10, maxTubos: 3 },
   novidadeDias: 45,   // dias em que o selo "✨ Novo!" aparece num lugar novo (lugar.novidade)
   versao: { intervaloMs: 10 * 60000, confirmarMs: 60000, cacheMs: 330000, paradaMs: 8000, avisoMs: 4500, esperaMs: 2500 },
   // acessórios das provas à venda na Loja (só depois de ganhar um da mesma prova)

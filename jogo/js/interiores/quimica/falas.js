@@ -1,0 +1,13 @@
+/* Laboratório de Química: tudo o que a pessoa de dentro e os objetos dizem (gravado com a voz de cada um).
+   Esqueleto do `npm run novo`: troque cada marcador de preencher por falas de verdade (o validador recusa o marcador).
+   Cada página com até 30 letras (sem contar «» e emoji) e frases de 3+ palavras.
+   Falas demais para um arquivo? Outra parte chama Reino.falasDoPredio('quimica', { ... }) (qualquer ordem de carga). */
+Reino.falasDoPredio('quimica', {
+  // as pessoas de dentro: npm run novo -- personagem <id> --predio quimica (as falas delas ficam em quimica/personagens.js)
+  npcs: {},
+  objetos: {
+    'vitrine': ['(preencher) o que tem na vitrine?'],
+    'pedestal': ['(preencher) o que está no pedestal?'],
+    'bebedouro': ['(preencher) uma fala do bebedouro.'],
+  },
+});
