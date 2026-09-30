@@ -421,9 +421,7 @@ interface CartaLivro {
   /** emoji */
   e: string;
   titulo: string;
-  texto: string;
-  /** termo destacado na tela (padrão: palavra mais longa do título que aparece no texto) */
-  destaque?: string;
+  texto: string; destaque?: string;   // destaque: termo em cor na tela (padrão: a palavra mais longa do título)
 }
 
 /** Uma sala (js/conteudo/materias/<m>/<sala>.js, Reino.registrarSala). */
