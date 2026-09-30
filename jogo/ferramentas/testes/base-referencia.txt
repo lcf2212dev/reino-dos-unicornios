@@ -57,4 +57,5 @@
 # 3565241 = login direto e placa JIM WILSON da escola
 # f8b5009 = login direto e placa JIM WILSON da escola
 # bdc9dad = matéria do dia na Aura (config)
-bdc9dad
+# b5ec36d = Laboratório de Química na clareira 1
+b5ec36d
