@@ -29,6 +29,66 @@
       voz: e.voz || 'npc-' + id, x: x, y: y, acao: acao, falas: F.npcs[id] || {} };
   }
 
+  /* ================= LOUSAS E PEÇAS PRÓPRIAS DAS ALAS (D2A-09) ================= */
+  // algarismos e letras 3×5 do giz (só os que as lousas usam)
+  var GIZ = {
+    H: ['x.x', 'x.x', 'xxx', 'x.x', 'x.x'], E: ['xxx', 'x..', 'xx.', 'x..', 'xxx'], L: ['x..', 'x..', 'x..', 'x..', 'xxx'],
+    O: ['.x.', 'x.x', 'x.x', 'x.x', '.x.'], N: ['x.x', 'xxx', 'xxx', 'x.x', 'x.x'],
+    3: ['xx.', '..x', '.x.', '..x', 'xx.'], 4: ['x.x', 'x.x', 'xxx', '..x', '..x'], 7: ['xxx', '..x', '.x.', '.x.', '.x.'],
+    '+': ['...', '.x.', 'xxx', '.x.', '...'], '=': ['...', 'xxx', '...', 'xxx', '...'],
+  };
+  function giz(ctx, texto, x, y, cor) {
+    for (var i = 0; i < texto.length; i++) if (GIZ[texto[i]]) matriz(ctx, x + i * 4, y, GIZ[texto[i]], { x: cor });
+  }
+  // lousa da ala (fica na coluna 8, longe da placa do cômodo): var.desenho = 'hello' | 'conta' | 'mapa'
+  I.objeto('castelo-lousa', { w: 2, h: 2, parede: true, solido: false,
+    desenhar: function (ctx, px, py, o) {
+      var d = (o.var && o.var.desenho) || 'conta', fundo = d === 'hello' ? '#2f4f7a' : '#2e6b45';
+      ret(ctx, px + 1, py + 6, 30, 21, K); ret(ctx, px + 2, py + 7, 28, 19, C.madeira);
+      ret(ctx, px + 4, py + 9, 24, 14, fundo); ret(ctx, px + 4, py + 9, 24, 1, d === 'hello' ? '#4a6c9c' : '#3f8a5a');
+      if (d === 'hello') {
+        giz(ctx, 'HELLO', px + 6, py + 11, C.branco);
+        ret(ctx, px + 6, py + 18, 19, 1, '#ffd0d6');   // sublinhado de giz
+        matriz(ctx, px + 12, py + 19, ['x.x', '.x.'], { x: C.ouro3 });   // sorrisinho
+      } else if (d === 'conta') {
+        giz(ctx, '3+4=7', px + 6, py + 11, C.branco);
+        for (var i = 0; i < 7; i++) ret(ctx, px + 7 + i * 3, py + 19, 2, 2, i < 3 ? '#ffd0d6' : C.ouro3);   // bolinhas para contar
+      } else {   // mapa: mar, duas terras, rio e a rosa dos ventos com o N
+        ret(ctx, px + 4, py + 10, 24, 13, '#6fb8d8');
+        matriz(ctx, px + 5, py + 11, ['.gggg....', 'gggggg...', 'gggkgg...', '.ggggg...', '..ggg....', '...g.....'], { g: '#7cc86a', k: '#4f9a4a' });
+        matriz(ctx, px + 14, py + 16, ['..ggg', '.gggg', 'ggggg', '.ggg.'], { g: '#e8c86a' });
+        ret(ctx, px + 8, py + 13, 1, 3, '#3a7ab8');
+        giz(ctx, 'N', px + 22, py + 10, C.branco);
+        matriz(ctx, px + 22, py + 16, ['.x.', 'xvx', '.x.'], { x: C.branco, v: C.vermelho });
+      }
+      ret(ctx, px + 3, py + 23, 26, 2, C.madeira3);
+      ret(ctx, px + 7, py + 22, 3, 1, C.branco); ret(ctx, px + 21, py + 21, 5, 2, K); ret(ctx, px + 22, py + 21, 3, 1, C.ouro);
+    } });
+  // ábaco de madeira de pé (ala da Matemática)
+  I.objeto('castelo-abaco', { w: 1, h: 1, topo: 8, solido: true, alto: true,
+    desenhar: function (ctx, px, py) {
+      var cx = px + 8, cores = ['#e0433f', '#ffd34d', '#3f7fe0'];
+      ret(ctx, cx - 6, py + 12, 3, 3, K); ret(ctx, cx + 4, py + 12, 3, 3, K);
+      ret(ctx, cx - 7, py - 8, 15, 21, K); ret(ctx, cx - 6, py - 7, 13, 19, C.madeira);
+      ret(ctx, cx - 5, py - 6, 11, 17, C.creme);
+      for (var l = 0; l < 3; l++) {
+        var y = py - 4 + l * 5;
+        ret(ctx, cx - 5, y + 1, 11, 1, C.madeira2);
+        for (var b = 0; b < 3 + l; b++) ret(ctx, cx - 5 + b * 2 + (l === 1 ? 0 : 1), y, 2, 3, cores[l]);
+        ret(ctx, cx - 5 + (l === 1 ? 0 : 1), y, 1, 1, C.branco);
+      }
+    } });
+  // bússola grande num pedestal (ala da Geografia)
+  I.objeto('castelo-bussola', { w: 1, h: 1, topo: 10, solido: true, alto: true,
+    desenhar: function (ctx, px, py) {
+      var cx = px + 8;
+      ret(ctx, cx - 5, py + 11, 11, 4, K); ret(ctx, cx - 4, py + 12, 9, 2, C.madeira2);
+      ret(ctx, cx - 2, py + 2, 5, 10, K); ret(ctx, cx - 1, py + 3, 3, 8, C.madeira);
+      circulo(ctx, cx, py - 3, 7, K); circulo(ctx, cx, py - 3, 6, C.ouro); circulo(ctx, cx, py - 3, 5, C.creme);
+      matriz(ctx, cx - 1, py - 8, ['.v.', '.v.', 'vvv', '.v.', '.a.', 'aaa', '.a.', '.a.'], { v: C.vermelho, a: '#3f7fe0' });
+      ret(ctx, cx, py - 3, 1, 1, K); ret(ctx, cx - 4, py - 5, 1, 1, C.branco);
+    } });
+
   /* ================= ALAS: TEMAS E CAVALEIROS ================= */
   // cavaleiro de cada matéria: o personagem do elenco com `paraMateria` (personagens/elenco.js);
   // as outras matérias ganham o cavaleiro padrão
@@ -65,7 +125,7 @@
       paleta: { piso: '#e8b888', piso2: '#c98a5a', parede: '#fbe6cc', parede2: '#f0c8a0', rodape: '#8a4a3a' },
     },
     ingles: {
-      paredeLarga: { tipo: 'castelo-bandeirolas' }, paredeEstreita: { tipo: 'relogio-parede' },
+      paredeLarga: { tipo: 'castelo-lousa', var: { desenho: 'hello' } }, paredeEstreita: { tipo: 'relogio-parede' },
       a: inter('ingles-cartaz', 'Cartaz em inglês', { tipo: 'castelo-cartaz-ingles' }),
       b: { tipo: 'relogio-pe' }, c: { tipo: 'pilha-livros' }, d: { tipo: 'globo' }, e: { tipo: 'torre-blocos-abc' },
       cor: '#2f6fd6', piso: 'pedra', parede: 'tijolo',
@@ -90,15 +150,20 @@
   var PISOS_PADRAO = ['palha', 'taco', 'azulejo', 'carpete', 'mosaico'];
   // peça baixa da matéria para as alas sem tema próprio (objeto do prédio dela; desenhado depois que tudo carregou)
   var PECA_E = { matematica: 'matematica-blocos', geografia: 'geografia-telefone' };
+  // lousa e peça A próprias das alas sem tema (D2A-09)
+  var PROPRIAS = {
+    matematica: { paredeLarga: { tipo: 'castelo-lousa', var: { desenho: 'conta' } }, a: { tipo: 'castelo-abaco' } },
+    geografia: { paredeLarga: { tipo: 'castelo-lousa', var: { desenho: 'mapa' } }, a: { tipo: 'castelo-bussola' } },
+  };
   function temaPadrao(m, i) {
     var cores = (m.lugar && m.lugar.cores) || {};
-    return {
+    return Object.assign({
       paredeLarga: { tipo: 'mapa-parede' }, paredeEstreita: { tipo: 'cartaz' },
       a: { tipo: 'planta-alta' }, b: { tipo: 'castelo-pergaminhos' }, c: { tipo: 'pilha-livros' }, d: { tipo: 'globo' },
       e: { tipo: PECA_E[m.id] || 'castelo-elmo' },
       cor: cores.detalhe || '#6fdc8c', piso: PISOS_PADRAO[i % PISOS_PADRAO.length], parede: 'pedra',
       paleta: { parede: cores.parede || '#f4eee0', rodape: cores.detalhe || '#6b5a4a' },
-    };
+    }, PROPRIAS[m.id]);
   }
   // "Ala da História", "Ala do Inglês"
   function artigo(nome) {
