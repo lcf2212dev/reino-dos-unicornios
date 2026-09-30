@@ -37,7 +37,7 @@
 .surpresa-retorno {
   padding: 16px;
   border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto-grande);
-  animation: surpresa-surgir 0.22s ease-out;
+  animation: surpresa-surgir var(--normal) steps(4);   /* 8 px em degraus de 2 px */
 }
 .surpresa-retorno > * + * { margin-top: 12px; }
 /* o enunciado repetido no topo do resultado: curto (até 2 linhas) e discreto */
@@ -178,6 +178,7 @@
   .surpresa-botoes { padding: 6px 12px 8px; }
   .surpresa-botoes .btn-grande { min-height: 46px; }
 }
+body.sem-animacao .surpresa-retorno { animation: none; }
 @media (prefers-reduced-motion: reduce) {
   .surpresa-retorno { animation: none; }
 }

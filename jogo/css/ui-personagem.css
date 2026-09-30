@@ -18,15 +18,15 @@
   border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto-grande); cursor: pointer; overflow: hidden;
   background:
     linear-gradient(180deg, var(--ceu) 0 29%, var(--laranja-claro) 29% 58%, var(--grama) 58% 79%, var(--verde-folha) 79%);
-  box-shadow: inset 0 -6px 0 var(--sombra-chao), var(--sombra-grande);   /* tipografia-ok: o chão da vitrine (faixa interna de 3 px de arte), não é sombra */
+  box-shadow: inset 0 -6px 0 var(--sombra-chao), var(--sombra-grande); --degrau: 4px; --brilho-apertado: inset 0 -6px 0 var(--sombra-chao);   /* tipografia-ok: o chão da vitrine (faixa interna de 3 px de arte), não é sombra */
 }
 .criar-palco::before, .criar-palco::after {   /* brilhinhos de estrela no céu da vitrine */
   content: ''; position: absolute; width: 6px; height: 6px; background: var(--ouro-claro);
   outline: var(--borda-fina) solid var(--brilho);   /* o brilho em volta (1 px de arte) */
-  animation: criar-brilho 2.4s steps(2) infinite;
+  animation: criar-brilho calc(4 * var(--lento)) steps(2) infinite;
 }
 .criar-palco::before { left: 16%; top: 14%; }
-.criar-palco::after { right: 18%; top: 26%; animation-delay: 1.2s; }
+.criar-palco::after { right: 18%; top: 26%; animation-delay: calc(2 * var(--lento)); }
 .criar-chao { position: absolute; left: 50%; bottom: 18px; width: 120px; height: 18px; transform: translateX(-50%);
   border-radius: var(--redondo); background: var(--sombra-chao); }
 .criar-sprite { position: relative; image-rendering: pixelated; }
@@ -54,7 +54,7 @@
 .letras-grandes .criar-sexo-btn { flex: 1 1 auto; }
 .criar-sexo-btn {
   flex: 1 1 0; min-height: 48px; padding: 8px 10px; font: inherit; color: inherit; cursor: pointer;
-  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); box-shadow: var(--sombra-pequena);
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); box-shadow: var(--sombra-pequena); --degrau: 2px;
 }
 .criar-sexo-btn[aria-pressed="true"] { background: var(--laranja-claro); outline: 4px solid var(--roxo); outline-offset: 2px; }
 .criar-grupo > .criar-opcoes { flex: 1 1 auto; }
@@ -78,7 +78,7 @@
 .criar-opcao {
   flex: 0 0 auto; width: min-content; min-width: 118px;   /* 8 letras de 12 px por linha */
   display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 8px 4px;   /* 8 px entre o nome e o contorno */
-  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel); box-shadow: var(--sombra-pequena);
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel); box-shadow: var(--sombra-pequena); --degrau: 2px;
   font: inherit; font-size: var(--texto-aux); color: inherit; cursor: pointer; line-height: var(--entrelinha-titulo);
 }
 .criar-opcao[aria-pressed="true"] { background: var(--laranja-claro); outline: 4px solid var(--roxo); outline-offset: 1px; }
@@ -105,9 +105,11 @@ body.sem-animacao .criar-palco::before, body.sem-animacao .criar-palco::after { 
   /* D8B-09: alvo de toque de 44 px (transparente); o desenho de 34 fica no ::before, e as vizinhas encostam os alvos */
   .tela-aparencia .linha-cores { column-gap: 0; }
   .tela-aparencia .linha-cores .rotulo-cor { margin-right: 3px; }
-  .tela-aparencia .bolinha-cor { position: relative; width: 44px; height: 44px; border: 0; box-shadow: none; background: none !important; }
+  .tela-aparencia .bolinha-cor { position: relative; width: 44px; height: 44px; border: 0; box-shadow: none; background: none !important; --degrau: 2px; }
+  /* afunda o botão inteiro; a sombra do desenho (no ::before) some junto (ui.md §10.15.7) */
+  .tela-aparencia .bolinha-cor:active:not(:disabled) { --sombra-pequena: none; }
   .tela-aparencia .bolinha-cor::before { content: ''; position: absolute; inset: 5px;
-    border: var(--borda-fina) solid var(--borda); border-radius: var(--redondo); box-shadow: var(--sombra-pequena);
+    border: var(--borda-fina) solid var(--borda); border-radius: var(--redondo); box-shadow: var(--sombra-pequena); --degrau: 2px;
     background: var(--cor-bolinha); }
   .tela-aparencia .bolinha-sem::before { background: repeating-linear-gradient(45deg, var(--branco) 0 5px, var(--papel-2) 5px 10px); }
   .tela-aparencia .bolinha-sem::after { inset: 15px; }
