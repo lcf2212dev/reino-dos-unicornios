@@ -75,6 +75,7 @@
   // tocar continua dizendo quantas estrelas faltam
   function caro(item, tem) { return !tem && P.estrelas() < item.preco; }
   function faltam(item) { var f = item.preco - P.estrelas(); return f > 0 ? (f === 1 ? ', falta 1 estrela' : ', faltam ' + f + ' estrelas') : ''; }
+  var ICONE_CARTA = 64;   // D8A-17: o desenho na carta a 64 px (destaque, ui.md §10.10.5), acima do nome
   var avisouPremios = false;   // a regra nova dos prêmios é falada uma vez por sessão
   // a vitrine da tela, por encaixe (com 68 enfeites, uma grade só ficava comprida demais); em cada grupo,
   // do mais barato ao mais caro (empate: a ordem da lista). Capa, rastro e asas vão juntos no fim
@@ -106,7 +107,10 @@
       // o repintar troca os botões: o foco volta para o mesmo item (senão cai no body)
       var ativo = document.activeElement;
       var focoItem = ativo && pn.tela.contains(ativo) && ativo.getAttribute('data-item');
-      U.preencher(saldo, '⭐ Você tem ' + P.estrelas() + ' estrelas');
+      var n = P.estrelas();
+      U.preencher(saldo, '⭐ Você tem ' + n + (n === 1 ? ' estrela' : ' estrelas'));
+      // D13-05: com saldo 0, como ganhar
+      if (!n) saldo.appendChild(el('small.saldo-dica', 'Ganhe estrelas acertando de primeira nas salas!'));
       vitrine.innerHTML = '';
       var id = P.montaria(), u = est().unis[id];
       var e = Reino.Unicornios.estagio(u ? u.xp : 0);
@@ -123,7 +127,7 @@
         var tem = !!est().loja[item.id], cr = caro(item, tem);
         var b = el('button.item-loja' + (tem ? '.comprado' : '') + (usando(item) ? '.usando' : '') + (cr ? '.indisponivel' : ''),
           { type: 'button', 'data-item': item.id, 'aria-disabled': cr ? 'true' : null, 'aria-label': item.nome + ', ' + (tem ? (usando(item) ? 'usando' : 'comprado, tocar para usar') : item.preco + ' estrelas' + faltam(item)) },
-          el('span.item-icone', iconeItem(item)), el('b', hifenizar(item.nome)),
+          el('span.item-icone', iconeItem(item, ICONE_CARTA)), el('b', hifenizar(item.nome)),
           el('span.item-preco', tem ? (usando(item) ? '✓ Usando' : 'Usar') : (cr ? '🔒 ' : '') + '⭐ ' + item.preco));
         b.addEventListener('click', function (e) {
           if (logoDepoisDaCompra(e, item.id)) return;
@@ -147,8 +151,8 @@
           var tem = st === 'ganho' || st === 'comprado';
           var rar = Reino.Unicornios.RARIDADES[p.raridade];
           var desenho = st === 'bloqueado'
-            ? PA.paraDOM(PA.silhueta(PA.iconeDesenho('acessorio:' + p.id)), PA.escalaNitida(32, 16), 'icone-acessorio')
-            : Reino.Provas.icone(p.id, 32);
+            ? PA.paraDOM(PA.silhueta(PA.iconeDesenho('acessorio:' + p.id)), PA.escalaNitida(ICONE_CARTA, 16), 'icone-acessorio')
+            : Reino.Provas.icone(p.id, ICONE_CARTA);
           var rotulo = st === 'ganho' ? el('span.chip-mini.ok', '🏫 Ganho na prova')
             : st === 'comprado' ? el('span.chip-mini', '⭐ Comprado')
             : el('span.chip-mini', rar.emoji + ' ' + rar.nome);
