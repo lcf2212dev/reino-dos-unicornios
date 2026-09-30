@@ -78,3 +78,28 @@ test('aura: mescla entre aparelhos vale a mais recente, mesmo menor; aparelho an
   const velho = saveHoje(); delete velho.aura; velho.atualizado = 5;
   assert.strictEqual(j.P.mesclar(velho, a).aura.mariana.d, 500);
 });
+
+test('aura: matéria do dia (config.aura.materiaDoDia) vale 4× na certa, a errada tira o de sempre', () => {
+  const R = comSave().R;
+  assert.deepStrictEqual({ ...R.Aura.materiaDoDia('2026-09-30') }, { materia: 'geografia', vezes: 4 });
+  assert.strictEqual(R.Aura.vezesDaMateria('matematica', '2026-10-01'), 4);
+  assert.strictEqual(R.Aura.vezesDaMateria('ciencias', '2026-10-02'), 4);
+  assert.strictEqual(R.Aura.vezesDaMateria('geografia', '2026-10-01'), 1, 'geografia só no dia dela');
+  assert.strictEqual(R.Aura.vezesDaMateria('geografia', '2026-10-03'), 1, 'fora da lista: nada muda');
+  assert.strictEqual(R.Aura.vezesDaMateria(undefined, '2026-09-30'), 1, 'sem matéria: vale 1');
+  assert.strictEqual(R.Aura.aplicar(0, true, 4), 8);
+  assert.strictEqual(R.Aura.aplicar(20, false, 4), 16, 'errada: -passo × penalidade, sem multiplicar');
+  assert.strictEqual(R.Aura.aplicar(0, true), 2);
+});
+
+test('aura: contar com a matéria do dia de hoje soma 4 passos', () => {
+  const j = comSave(), R = j.R;
+  const hoje = R.util.hoje();
+  R.config.aura.materiaDoDia = { vezes: 4, dias: { [hoje]: 'geografia' } };
+  R.Aura.contar([true], 'geografia');
+  assert.strictEqual(R.Aura.decimos(), 8);
+  R.Aura.contar([true], 'historia');
+  assert.strictEqual(R.Aura.decimos(), 10);
+  R.Aura.contar([false], 'geografia');
+  assert.strictEqual(R.Aura.decimos(), 6);
+});

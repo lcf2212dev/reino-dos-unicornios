@@ -68,7 +68,7 @@
   }
   // uma resposta conferida (cada pergunta é respondida uma vez: acerto = de primeira): Aura e estrela
   function conferir(d, ok) {
-    if (R.Aura && R.Aura.contar) R.Aura.contar(ok);
+    if (R.Aura && R.Aura.contar) R.Aura.contar(ok, d.materia);
     if (!ok) return 0;
     var n = cfg().estrelasPorAcertoET;
     d.certas++;

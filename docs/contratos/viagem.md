@@ -65,7 +65,7 @@ aberto() → bool
   roda (é a atividade) sem partículas, parallax nem tremida.
 - Portais (2ª versão): `iniciar({ planeta, perguntas })`, `perguntas` de `Reino.Viagem.perguntas` (§4.1). Um portal por
   pergunta, espalhados no voo: a pergunta aparece (e a narradora lê) um pouco antes; as opções (2 ou 3) viram faixas
-  lado a lado; passar pela certa = estrela a mais (`config.viagem.estrelasPorPortal`) e `Reino.Aura.contar([true])`
+  lado a lado; passar pela certa = estrela a mais (`config.viagem.estrelasPorPortal`) e `Reino.Aura.contar([true], matéria)`
   (enche o tanque e a Aura); pela errada = "Quase!" com a certa, sem tirar nada. Resolve também `portais: { certos, erros }`.
 
 ### 4.1 Perguntas da viagem (`Reino.Viagem.perguntas`)

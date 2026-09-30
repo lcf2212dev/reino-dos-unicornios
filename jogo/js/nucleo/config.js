@@ -97,6 +97,9 @@ Reino.config = {
       { nome: 'azul', cor: '#5cb8ff' }, { nome: 'roxa', cor: '#b57cff' }, { nome: 'rosa', cor: '#ff7ec4' },
       { nome: 'dourada', cor: '#ffb830' }, { nome: 'arco-íris', cor: 'arco-iris' },
     ],
+    // matéria do dia (pedido do Leandro): no dia 'aaaa-mm-dd' (fuso do aparelho), cada pergunta certa da matéria
+    // (id de conteudo/materias) soma `vezes` × o passo; a errada tira o de sempre. Dia fora da lista: nada muda
+    materiaDoDia: { vezes: 4, dias: { '2026-09-30': 'geografia', '2026-10-01': 'matematica', '2026-10-02': 'ciencias' } },
   },
   // pergunta surpresa (js/sistemas/surpresa.js): de 3 a 10 minutos de jogo livre, vale 2 estrelas de primeira;
   // esperaLivreMs: livre e parada há isso antes de aparecer. Se mudar `estrelas`, regrave as vozes (o Claude fala o valor)

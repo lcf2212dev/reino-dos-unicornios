@@ -4,7 +4,7 @@
      estrela perto do portal. Sem pressa: o voo dura o mesmo.
    - tela (V.portaisTela): a pergunta numa faixa acima do canvas (com 🔊, lida pela narradora com a voz gravada da
      sala) e os rótulos das opções em DOM sobre as faixas do canvas (legíveis no celular). Certo: "Isso!", brilho e
-     Reino.Aura.contar([true]); errado: "Quase!" e a certa por 2 s, nada se tira.
+     Reino.Aura.contar([true], matéria); errado: "Quase!" e a certa por 2 s, nada se tira.
    O desenho das faixas mora em voo-desenho.js. */
 (function () {
   var R = window.Reino, V = R.Voo;
@@ -115,7 +115,7 @@
           if (e.certo) {
             mostrar(genero(V.FALA_CERTO) + ' ⭐', 'voo-pergunta-ligada voo-pergunta-certo' + (op.animar ? ' voo-brilho' : ''));
             falar(genero(V.FALA_CERTO));
-            try { if (R.Aura && R.Aura.contar) R.Aura.contar([true]); } catch (x) { if (window.console) console.error(x); }
+            try { if (R.Aura && R.Aura.contar) R.Aura.contar([true], e.portal.p.materia); } catch (x) { if (window.console) console.error(x); }
           } else {
             mostrar(V.FALA_ERRADO + ' ✓ ' + certa, 'voo-pergunta-ligada voo-pergunta-quase');
             falar(V.FALA_ERRADO);
