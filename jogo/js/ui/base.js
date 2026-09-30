@@ -229,46 +229,52 @@
   UI.fecharTodas = function () { while (pilha.length) UI.fecharTela(pilha[pilha.length - 1]); };
   UI.temTela = function () { return pilha.length > 0; };
 
-  // título do painel (ui.md §10.21.1, §10.9.8): numa linha em --texto; se não cabe, quebra em até 2 linhas na mesma
-  // letra (.titulo-quebra: o título nunca fica menor que o texto do painel); só se nem em 2 linhas cabe, desce um
-  // degrau (.titulo-longo, --texto-aux). De novo quando a tela gira e quando a fonte termina de carregar
-  function ajustarTitulo(h) {
-    if (!h) return;
-    h.classList.remove('titulo-longo', 'titulo-quebra');
-    if (h.scrollWidth <= h.clientWidth + 1) return;
-    h.classList.add('titulo-quebra');
-    if (h.getBoundingClientRect().height > 2.5 * parseFloat(getComputedStyle(h).lineHeight)) h.classList.add('titulo-longo');
-  }
+  // título do painel (ui.md §10.21.1): numa linha em --texto; não cabe, 2 linhas na mesma letra (.titulo-quebra); nem assim, um degrau abaixo (.titulo-longo)
+  function ajustarTitulo(h) { if (!h) return; h.classList.remove('titulo-longo', 'titulo-quebra'); if (h.scrollWidth <= h.clientWidth + 1) return; h.classList.add('titulo-quebra');
+    if (h.getBoundingClientRect().height > 2.5 * parseFloat(getComputedStyle(h).lineHeight)) h.classList.add('titulo-longo'); }   // de novo ao girar e ao carregar a fonte
   function ajustarTitulos() { Array.prototype.forEach.call(document.querySelectorAll('.painel-topo .titulo-pixel'), ajustarTitulo); }
-  window.addEventListener('resize', ajustarTitulos);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(ajustarTitulos);
+  window.addEventListener('resize', ajustarTitulos); if (document.fonts && document.fonts.ready) document.fonts.ready.then(ajustarTitulos);
   UI.ajustarTitulos = ajustarTitulos;
   // nome curto do título no celular (≤ 480 px, ui-telas.css), para caber numa linha a 16 px (D8B-11); o leitor de
   // tela lê o nome inteiro (aria-label). Título novo comprido: passe opcoes.curto no UI.painel
   var CURTOS = {
     '📋 Lugares do Reino': '📋 Lugares', '🪞 Meu personagem': '🪞 Personagem', '✨ Crie seu personagem': '✨ Seu personagem',
-    '🦄 Estábulo Mágico': '🦄 Estábulo',
-    '🧚 Loja das Fadas': '🧚 Loja', '💰 Baú do Tesouro': '💰 Baú',
+    '🦄 Estábulo Mágico': '🦄 Estábulo', '🧚 Loja das Fadas': '🧚 Loja', '💰 Baú do Tesouro': '💰 Baú',
   };
-  function tituloDoPainel(id, titulo, curto) {
-    if (!curto || typeof titulo !== 'string') return el('h2.titulo-pixel', { id: id }, titulo);
-    return el('h2.titulo-pixel', { id: id, 'aria-label': titulo.replace(/\p{Extended_Pictographic}|\uFE0F/gu, '').trim() },
-      el('span.titulo-inteiro', titulo), el('span.titulo-curto', { 'aria-hidden': 'true' }, curto));
+  // o emoji do começo do título vira o ícone de 32 px à esquerda (ui.md §10.21.1); o texto fica sem ele
+  var EMOJI_INICIO = /^(\p{Extended_Pictographic}\uFE0F?(\u200D\p{Extended_Pictographic}\uFE0F?)*)\s*/u;
+  function semEmoji(s) { return typeof s === 'string' ? s.replace(EMOJI_INICIO, '') : s; }
+  function tituloDoPainel(id, titulo, curto, icone) {
+    var m = typeof titulo === 'string' && EMOJI_INICIO.exec(titulo), ic;
+    icone = icone || (m && m[1]);
+    if ((ic = icone && window.PA && PA.iconeEmoji ? PA.iconeEmoji(icone, 2) : null)) { ic.classList.add('painel-icone'); ic.setAttribute('aria-hidden', 'true'); }
+    if (!curto || typeof titulo !== 'string') return el('h2.titulo-pixel', { id: id }, ic, semEmoji(titulo));
+    return el('h2.titulo-pixel', { id: id, 'aria-label': semEmoji(titulo).replace(/\p{Extended_Pictographic}|\uFE0F/gu, '').trim() }, ic,
+      el('span.titulo-inteiro', semEmoji(titulo)), el('span.titulo-curto', { 'aria-hidden': 'true' }, semEmoji(curto)));
   }
-  // tela com cartão central, título e botão de fechar
+  // sombra no pé do conteúdo enquanto ainda há o que rolar (D12f-02); some no fim
+  function sombraDoPe(c) {
+    var ver = function () { c.classList.toggle('rola-mais', c.scrollTop + c.clientHeight < c.scrollHeight - 2); };
+    c.addEventListener('scroll', ver, { passive: true }); if (window.ResizeObserver) { var ro = new ResizeObserver(ver); ro.observe(c); setTimeout(function () { if (c.firstElementChild) ro.observe(c.firstElementChild); ver(); }, 0); }
+  }
+  // tela com cartão central, título e botão de fechar. opcoes: icone (chave de ícone; sem ela, o emoji do começo do
+  // título ou o da matéria), materia (faixa na cor dela, subtítulo e --cor-materia na tela), estreito (560 px)
   var nPainel = 0;
   function painel(nome, titulo, opcoes) {
     opcoes = opcoes || {};
-    var t = UI.abrirTela(nome);
+    var t = UI.abrirTela(nome), mat = opcoes.materia;
     var idTitulo = 'painel-titulo-' + (++nPainel);
-    t.setAttribute('aria-labelledby', idTitulo);
+    t.setAttribute('aria-labelledby', idTitulo); if (mat && mat.cor) t.style.setProperty('--cor-materia', mat.cor);
     var fechar = el('button.btn-icone.btn-fechar', { type: 'button', 'aria-label': 'Fechar' }, '✕');
     var conteudo = el('div.painel-conteudo');
-    var card = el('div.painel',
-      el('header.painel-topo', tituloDoPainel(idTitulo, titulo, opcoes.curto || CURTOS[titulo]), opcoes.semFechar ? null : fechar),
-      conteudo);
+    var icMat = mat && !opcoes.icone && !EMOJI_INICIO.test(titulo);   // sem ícone próprio: o da matéria
+    var h = tituloDoPainel(idTitulo, titulo, opcoes.curto || CURTOS[titulo], opcoes.icone || (icMat ? mat.emoji : null));
+    var card = el('div.painel' + (opcoes.estreito ? '.painel-estreito' : '') + (mat ? '.com-materia' : ''),
+      el('header.painel-topo', mat ? el('div.painel-nome', h, el('p.painel-sub', U.colado(mat.nome))) : h, opcoes.semFechar ? null : fechar),
+      mat ? el('div.painel-faixa', { 'aria-hidden': 'true' }) : null, conteudo);
     t.appendChild(card);
-    ajustarTitulo(card.querySelector('.painel-topo .titulo-pixel'));
+    ajustarTitulo(h);
+    sombraDoPe(conteudo);
     fechar.addEventListener('click', function () { Reino.Som.tocar('toque'); Reino.Som.calar(); UI.fecharTela(t); if (opcoes.aoFechar) opcoes.aoFechar(); });
     t.addEventListener('click', function (e) { if (e.target === t && !opcoes.semFechar) fechar.click(); });
     if (!opcoes.semFechar) t._aoEsc = function () { fechar.click(); };   // Esc = ✕

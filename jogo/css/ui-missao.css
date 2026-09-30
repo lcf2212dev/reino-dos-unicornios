@@ -9,6 +9,12 @@
   padding: calc(env(safe-area-inset-top, 0px) + 10px) 14px 10px;
   background: var(--ambar-claro); border-bottom: var(--borda-grossa) solid var(--borda);
 }
+/* sala, prova e treino de uma matéria: faixa de 8 px na cor dela no pé do cabeçalho (D10-12, ui.md §10.22) */
+.tela[style*="--cor-materia"] .missao-topo { position: relative; padding-bottom: 20px; }
+.tela[style*="--cor-materia"] .missao-topo::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 8px; pointer-events: none;
+  background: var(--cor-materia); border-top: var(--borda-fina) solid var(--borda);
+}
 .missao-titulo { flex: 1; min-width: 0; font-family: var(--fonte-titulo); font-size: var(--texto); line-height: var(--entrelinha-titulo);
   overflow-wrap: normal; }   /* título sem hífen suave: palavra inteira (ui.md §10.17) */
 /* degrau do título que não cabe (D.ajustarTitulo, js/atividades/desafios.js): um token abaixo, nunca fator */

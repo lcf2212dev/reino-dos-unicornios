@@ -66,7 +66,7 @@
   Pv.telaEscola = function () {
     var pn = Reino.UI.painel('lugar', '🏫 Escola do Reino');
     var c = pn.conteudo;
-    c.appendChild(el('div.lugar-guia', PA.paraDOM(PA.claude(0), 4, 'claude-intro'), el('p', Reino.Falas.provas.escola)));
+    c.appendChild(el('div.lugar-guia.guia-falada', PA.paraDOM(PA.claude(0), 4, 'claude-intro'), el('p', Reino.Falas.provas.escola)));   // dita ao abrir: some no notebook baixo
     Reino.Som.falar(Reino.Falas.provas.escola, { voz: 'claude' });
     var lista = el('div.lista-salas');
     Reino.provas.forEach(function (prova) {
@@ -76,11 +76,11 @@
         valendo ? el('span.chip-mini.valendo.rar-' + valendo, 'Valendo: ' + rar(valendo).emoji + ' ' + rar(valendo).nome) : null,
         reg.premio ? el('span.chip-mini.ok', '✓ ' + rar(reg.premio).emoji + ' ' + prova.acessorios[reg.premio].nome) : null,
         reg.tentativas ? el('span.chip-mini', reg.tentativas + (reg.tentativas === 1 ? ' tentativa' : ' tentativas')) : null,
-        reg.tentativas ? el('span.chip-mini', 'Melhor nota: ' + Pv.formatarNota(reg.melhor || 0)) : null);
-      var b = el('button.sala-card.cartao-prova', { type: 'button' },
+        reg.tentativas ? el('span.chip-mini', 'Melhor nota: ' + Pv.formatarNota(reg.melhor || 0)) : null,
+        el('span.sala-ir.selo-ir', reg.premio ? 'Treinar →' : reg.tentativas ? 'De novo →' : 'Fazer →'));   // o selo na linha dos chips (D6-23)
+      var b = el('button.sala-card.cartao-prova.cartao-lista', { type: 'button' },
         el('span.sala-emoji', prova.emoji),
-        el('span.sala-info', el('b', prova.nome), el('small', prova.bimestre + ' • ' + prova.questoes.length + ' questões'), chips),
-        el('span.sala-ir', reg.premio ? 'Treinar →' : reg.tentativas ? 'De novo →' : 'Fazer →'));
+        el('span.sala-info', el('b', el('span.nome-inteiro', prova.nome), el('span.nome-curto', { 'aria-hidden': 'true' }, prova.nome.replace(/^Revisão Bimestral de /, 'Revisão de '))), el('small', prova.bimestre + ' • ' + prova.questoes.length + ' questões'), chips));
       b.addEventListener('click', function () {
         Reino.Som.tocar('porta');
         Pv.iniciar(prova, function () { Reino.UI.fecharTela(pn.tela); Pv.telaEscola(); U.emit(EV.MAPA_MUDOU); });
@@ -113,9 +113,10 @@
     var avisosPressa = 0;
 
     var tela = Reino.UI.abrirTela('prova');
+    if (materia && materia.cor) tela.style.setProperty('--cor-materia', materia.cor);   // faixa do cabeçalho na cor da matéria (ui-missao.css)
     var sair = el('button.btn-icone.btn-sair', { type: 'button', 'aria-label': 'Sair da prova' }, '✕');
     var pontos = el('div.missao-pontos', { 'aria-hidden': 'true' });
-    var titulo = el('div.missao-titulo', el('span', (prova.emoji || '📝') + ' ' + prova.nome));
+    var titulo = el('div.missao-titulo', el('span', ((materia && materia.emoji) || prova.emoji || '📝') + ' ' + prova.nome));   // o emoji da matéria (D10-12)
     var faixa = el('div.faixa-valendo' + (valendo ? '.rar-' + valendo : '.treino'), { hidden: true },
       valendo ? [Pv.icone(prova.acessorios[valendo].id, 32), el('span', 'Valendo: acessório ', el('b', rar(valendo).nome.toLowerCase()), '. Acerte TUDO!')]
         : el('span', '✏️ Treino: o acessório desta prova você já ganhou.'));

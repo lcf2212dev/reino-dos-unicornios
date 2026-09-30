@@ -13,14 +13,18 @@
       el('span.barra-dinheiro-texto', U.colado(U.reais(ganho) + ' de ' + U.reais(total))));
   }
 
+  // texto-guia do Claude (não é dito ao abrir): no notebook baixo fica numa linha com reticências; o inteiro no title
+  function guia(texto) { return el('p', { title: texto }, texto); }
+
   UI.telaMateria = function (materia) {
-    var pn = painel('lugar', materia.lugar.nome);
+    var pn = painel('lugar', materia.lugar.nome, { materia: materia });
     var c = pn.conteudo;
     var feitas = P.salasFeitas(materia);
     c.appendChild(el('div.lugar-guia', PA.paraDOM(PA.claude(0), 4, 'claude-intro'),
-      el('p', feitas === 0 ? materia.guia : (feitas === materia.salas.length ? 'Você completou todas as salas! Agora pode treinar no Castelo da Medalha ou jogar as salas de novo para ganhar os raros. 🌈' : 'Você já fez ' + feitas + ' de ' + materia.salas.length + ' salas. Vamos para a próxima?'))));
+      guia(feitas === 0 ? materia.guia : (feitas === materia.salas.length ? 'Você completou todas as salas! Agora pode treinar no Castelo da Medalha ou jogar as salas de novo para ganhar os raros. 🌈' : 'Você já fez ' + feitas + ' de ' + materia.salas.length + ' salas. Vamos para a próxima?'))));
     // livro no alto, compacto, ao lado da barra de dinheiro (D7-15)
-    var livro = el('button.btn-livro-topo', { type: 'button' }, '📖 ' + nomeLivro(materia));
+    // no notebook baixo só o ícone fica à vista (o nome no aria-label e no title)
+    var livro = el('button.btn-livro-topo', { type: 'button', 'aria-label': nomeLivro(materia), title: nomeLivro(materia) }, '📖 ', el('span.livro-topo-nome', nomeLivro(materia)));
     livro.addEventListener('click', function () { UI.abrirLivro(materia); });
     var topo = el('div.materia-topo', barraDinheiro(materia), livro);
     c.appendChild(topo);
@@ -127,7 +131,7 @@
 
   UI.abrirLivro = function (materia, cartaoId) {
     Reino.Voz.carregar(materia.id + '-livro');
-    var pn = painel('livro', '📖 ' + nomeLivro(materia));
+    var pn = painel('livro', '📖 ' + nomeLivro(materia), { materia: materia });
     var cartas = materia.livro;
     var i = Math.max(0, cartas.findIndex(function (c) { return c.id === cartaoId; }));
     var area = el('div.livro-carta');
@@ -135,9 +139,18 @@
     var prox = el('button.btn-grande.btn-secundario', { type: 'button', 'aria-label': 'Próxima carta' }, '→');
     var ouvir = el('button.btn-grande.btn-principal.so-seta', { type: 'button', 'aria-label': 'Ouvir' }, '🔊', el('span.rotulo-longo', ' Ouvir'));
     var pag = el('span.livro-pag');
+    // índice (D7-12): uma fileira rolável com o ícone de cada carta; 1 toque leva a ela
+    var marcas = cartas.map(function (c, k) {
+      var m = el('button.livro-marca', { type: 'button', 'aria-label': 'Carta ' + (k + 1) + ': ' + c.titulo }, c.e);
+      m.addEventListener('click', function () { if (k !== i) { i = k; Reino.Som.tocar('toque'); mostrar(); } });
+      return m;
+    });
     function mostrar() {
       var c = cartas[i];
       UI.desenharCarta(area, c);
+      marcas.forEach(function (m, k) { m.classList.toggle('atual', k === i); if (k === i) m.setAttribute('aria-current', 'true'); else m.removeAttribute('aria-current'); });
+      var mi = marcas[i], fila = mi.parentNode;   // a marca atual à vista na fileira, sem animação
+      if (fila && (mi.offsetLeft < fila.scrollLeft || mi.offsetLeft + mi.offsetWidth > fila.scrollLeft + fila.clientWidth)) fila.scrollLeft = mi.offsetLeft - 8;
       pag.textContent = (i + 1) + ' de ' + cartas.length;
       ant.disabled = i === 0; prox.disabled = i === cartas.length - 1;
       pn.conteudo.scrollTop = 0; // carta nova abre do topo
@@ -146,6 +159,7 @@
     ant.addEventListener('click', function () { if (i > 0) { i--; Reino.Som.tocar('toque'); mostrar(); } });
     prox.addEventListener('click', function () { if (i < cartas.length - 1) { i++; Reino.Som.tocar('toque'); mostrar(); } });
     ouvir.addEventListener('click', function () { Reino.Voz.carregar(materia.id + '-livro').then(function () { Reino.Som.falar(UI.falaCarta(cartas[i]), { voz: 'narradora' }); }); });
+    pn.card.insertBefore(el.apply(null, ['nav.livro-indice', { 'aria-label': 'Cartas do livro' }].concat(marcas)), pn.conteudo);
     pn.conteudo.appendChild(area);
     // ← n de N → e o 🔊 Ouvir no rodapé de ação do painel, fora da carta que rola: sempre no mesmo lugar (ui.md §10.20)
     pn.card.appendChild(el('footer.rodape-acao.livro-rodape', el('div.livro-nav', ant, pag, prox),
@@ -164,7 +178,7 @@
   };
 
   UI.telaPlano = function () {
-    var pn = painel('plano', '🥇 Meu Plano da Prova');
+    var pn = painel('plano', '🥇 Meu Plano da Prova', { estreito: true });
     pn.conteudo.appendChild(UI.cartaoPlano());
     pn.conteudo.appendChild(el('div.aviso-medalha',
       el('span.aviso-medalha-icone', '🥇'),
@@ -176,22 +190,23 @@
   };
 
   UI.telaCastelo = function () {
-    var pn = painel('lugar', 'Castelo da Medalha');
+    var pn = painel('lugar', 'Castelo da Medalha', { icone: '🏰' });
     var c = pn.conteudo;
     c.appendChild(el('div.lugar-guia', PA.paraDOM(PA.claude(0), 4, 'claude-intro'),
-      el('p', 'Aqui é o treino para a prova de verdade: sem relógio, com revisão antes de entregar. Na escola, a medalha de ouro vale ' + U.reais(Reino.config.medalhaEscolaValor) + '! 🥇')));
+      guia('Aqui é o treino para a prova de verdade: sem relógio, com revisão antes de entregar. Na escola, a medalha de ouro vale ' + U.reais(Reino.config.medalhaEscolaValor) + '! 🥇')));
     var lista = el('div.lista-salas');
     Reino.materias.forEach(function (m) {
       var completa = P.materiaCompleta(m);
       var t = est().treinos[m.id] || {};
       var faltam = m.salas.length - P.salasFeitas(m);
-      var medalha = { ouro: '🥇', prata: '🥈', bronze: '🥉' }[t.melhor];
-      var b = el('button.sala-card' + (completa ? '' : '.bloqueada'), { type: 'button' },
+      var medalha = { ouro: '🥇 Melhor: Ouro', prata: '🥈 Melhor: Prata', bronze: '🥉 Melhor: Bronze' }[t.melhor];
+      // o mesmo cartão da Escola (D6-23): ícone pequeno ao lado do nome, "Treinar →" como selo-botão
+      var b = el('button.sala-card.cartao-lista' + (completa ? '' : '.bloqueada'), { type: 'button' },
         el('span.sala-emoji', m.emoji),
         el('span.sala-info', el('b', 'Treino de ' + m.nome),
           el('small', completa ? '10 perguntas de todas as salas' : 'Abre quando você terminar as salas. Falta' + (faltam === 1 ? ' 1 sala' : 'm ' + faltam + ' salas') + '!'),
-          el('span.sala-chips', medalha ? el('span.chip-mini.ok', medalha + ' Melhor medalha') : null, t.vezes ? el('span.chip-mini', t.vezes + (t.vezes === 1 ? ' treino' : ' treinos')) : null)),
-        el('span.sala-ir', completa ? 'Treinar →' : '🔒'));
+          el('span.sala-chips', medalha ? el('span.chip-mini.ok', medalha) : null, t.vezes ? el('span.chip-mini', t.vezes + (t.vezes === 1 ? ' treino' : ' treinos')) : null,
+            completa ? el('span.sala-ir.selo-ir', 'Treinar →') : el('span.sala-ir', '🔒'))));   // o selo na linha dos chips
       b.addEventListener('click', function () {
         if (!completa) {
           Reino.Som.tocar('toque');

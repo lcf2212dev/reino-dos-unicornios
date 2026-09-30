@@ -120,7 +120,7 @@
       var d = menuDe(l) || {};
       var emoji = typeof d.emoji === 'function' ? d.emoji(l) : (d.emoji || '📍');
       var info = d.info ? d.info(l) : '';
-      var b = el('button.sala-card', { type: 'button' }, el('span.sala-emoji', emoji), el('span.sala-info', el('b', hifenizar(l.nome)), el('small', hifenizar(info)), ondeFica(l), chipsAvisos(l)), el('span.sala-ir', { 'aria-label': 'Ir' }, '→'));
+      var b = el('button.sala-card', { type: 'button' }, el('span.sala-emoji', emoji), el('span.sala-info', el('b', { title: l.nome }, hifenizar(l.nome)), el('small', hifenizar(info)), ondeFica(l), chipsAvisos(l)), el('span.sala-ir', { 'aria-label': 'Ir' }, '→'));
       b.addEventListener('click', function (e) {
         UI.fecharTela(pn.tela);
         // o dedo que ainda bate no "Ir" cai no mapa e trocaria o destino: segura mais um pouco
