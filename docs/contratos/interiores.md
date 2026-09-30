@@ -145,9 +145,9 @@ Reino.Interiores.objeto('escrivaninha', {
 4. Placas dos cômodos: em px da tela, fonte pixel, tamanho do texto pela regra do `ui.md` §10.9.5 (o código de hoje
    ainda usa a escala do mundo; muda no D10-05), desenhadas por
    cima dos itens (`desenharSobre`) e quase transparentes quando cobrem a Mariana.
-5. Quando o HUD de cima cobre a placa de um cômodo, ela desvia só dentro da parede do próprio cômodo
-   (pela `caixaParada` do HUD: a caixa sem o transform da animação, remedida a cada 500 ms); se não couber,
-   some enquanto estiver coberta.
+5. Quando o HUD de cima cobre a placa de um cômodo, ela desvia primeiro dentro da parede do próprio cômodo
+   (pela `caixaParada` do HUD: a caixa sem o transform da animação, remedida a cada 500 ms); se não couber, desce
+   pela regra do `ui.md` §10.18.4 e nunca some.
 6. O ícone de status do NPC é desenhado em px da tela (via `pintor.ctx`).
 7. Piso com contraste ≥ 2,9 com o contorno da Mariana (mediana dos pixels desenhados), em todo cômodo
    (`contraste-pisos.navegador.test.js`); exceção só com motivo em `validar/contraste.js`.
