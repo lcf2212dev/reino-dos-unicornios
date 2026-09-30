@@ -24,10 +24,10 @@
   R.registrarPersonagem({ id: 'geo-beto', nome: 'Guarda Beto',
     sprite: { pele: '#b07a52', cabelo: '#1f1414', penteado: 'curto', chapeu: 'bone', chapeuCor: '#ffd34d', roupa: '#ffd34d', roupa2: '#3a3a5a', apito: true },
     perfil: { voz: 'fr-FR-RemyMultilingualNeural', velocidade: '-2%', tom: '-6Hz' } });
-  // sala g5: Problemas no Trânsito
+  // sala g5: Problemas no Trânsito (ciclista mirim)
   R.registrarPersonagem({ id: 'geo-cora', nome: 'Ciclista Cora',
-    sprite: { pele: '#ffe0c7', cabelo: '#c9304a', penteado: 'trancas', chapeu: 'bone', chapeuCor: '#39a860', roupa: '#6fdc8c', roupa2: '#2f4f8a' },
-    perfil: { voz: 'de-DE-SeraphinaMultilingualNeural', velocidade: '+4%', tom: '+12Hz' } });
+    sprite: { idade: 'crianca', pele: '#ffe0c7', cabelo: '#c9304a', penteado: 'trancas', chapeu: 'bone', chapeuCor: '#39a860', roupa: '#6fdc8c', roupa2: '#2f4f8a' },
+    perfil: { voz: 'de-DE-SeraphinaMultilingualNeural', velocidade: '+10%', tom: '+28Hz' } });
 
   /* ---------- falas ---------- */
   R.falasDoPredio('geografia', {
