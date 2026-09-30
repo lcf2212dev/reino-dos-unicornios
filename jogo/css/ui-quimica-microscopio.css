@@ -1,1 +1,51 @@
-/* Laboratório de Química: estilo da tela do microscópio (docs/contratos/quimica.md). A preencher pela frente dona deste arquivo. */
+/* Laboratório de Química: estilo da tela do microscópio (docs/contratos/quimica.md §2; ui/quimica-microscopio.js).
+   A ocular (canvas ampliado por inteiro) em cima no celular e no tablet; ao lado dos controles a partir de 900 px. */
+.micro-corpo { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.micro-moldura { display: flex; justify-content: center; max-width: 100%; overflow: hidden; flex: none; }
+.micro-ocular { display: block; flex: none; image-rendering: pixelated; image-rendering: crisp-edges; }
+.micro-lado { display: flex; flex-direction: column; gap: 12px; width: 100%; min-width: 0; }
+.micro-nome { margin: 0; font-size: var(--texto); line-height: var(--entrelinha-titulo); }
+.micro-linha { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.micro-estado, .micro-premio {
+  display: inline-flex; align-items: center; gap: 4px; min-height: 32px; padding: 4px 10px;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
+  font-size: var(--texto-aux); background: var(--papel-2); color: var(--tinta-suave); white-space: nowrap;
+}
+.micro-estado.nitida { background: var(--certo-fundo); color: var(--certo); }
+.micro-premio { background: var(--ouro-claro); color: var(--lendario-texto); }
+.micro-premio[hidden] { display: none; }
+.micro-ouvir { margin-left: auto; min-width: 44px; padding: 6px 8px; }
+.micro-texto { margin: 0; min-height: 3em; font-size: var(--texto-aux); line-height: var(--entrelinha); }
+.micro-grupo { display: flex; flex-direction: column; gap: 6px; }
+.micro-rotulo { margin: 0; font-size: var(--texto-aux); color: var(--tinta-suave); }
+.micro-laminas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.micro-lamina, .micro-aumento {
+  position: relative; display: flex; align-items: center; gap: 6px; min-height: 44px; padding: 6px 10px;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel);
+  box-shadow: var(--sombra-pequena); --degrau: 2px;
+  font: inherit; font-size: var(--texto-aux); color: inherit; text-align: left; line-height: var(--entrelinha-titulo); cursor: pointer;
+}
+.micro-lamina[aria-pressed="true"], .micro-aumento[aria-pressed="true"] { background: var(--roxo-claro); outline: 4px solid var(--roxo); outline-offset: -2px; }
+/* a lâmina já vista ganha o ✓ no fim da linha */
+.micro-visto { display: none; margin-left: auto; flex: none; }
+.micro-lamina.vista .micro-visto { display: flex; }
+.micro-aumentos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.micro-aumento { justify-content: center; font-size: var(--texto); }
+.micro-foco { display: flex; align-items: center; gap: 10px; }
+.micro-trilho { flex: 1; display: flex; gap: 4px; align-items: center; min-width: 0; }
+.micro-marca { flex: 1; height: 16px; min-width: 4px; background: var(--papel-2); border: var(--borda-fina) solid var(--borda); }
+.micro-marca.atual { height: 28px; background: var(--laranja); }
+.micro-contagem { margin: 0; font-size: var(--texto-aux); color: var(--tinta-suave); }
+.letras-grandes .micro-laminas { grid-template-columns: minmax(0, 1fr); }
+
+/* tela larga: a ocular à esquerda e os controles à direita, o painel do tamanho do que tem dentro */
+@media (min-width: 900px) {
+  .tela-quimica-microscopio .painel { width: auto; max-width: min(1180px, 100%); }
+  .micro-corpo { flex-direction: row; align-items: flex-start; gap: 20px; }
+  .micro-lado { width: 480px; }
+}
+/* celular: menos folga em volta, a ocular maior possível */
+@media (max-width: 480px) {
+  .tela-quimica-microscopio .painel-conteudo { padding: 12px 12px 16px; }
+  .micro-lamina { padding: 6px 8px; }
+}

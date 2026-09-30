@@ -208,8 +208,9 @@
       var l = fixo(f);
       lugares.push(l);
       assentar(l);
-      // no terreno reservado para ele (Mapa.RESERVADOS), a mesma cerquinha dos prédios de hoje, com o portão na porta
-      if (!(Mapa.RESERVADOS || []).some(function (res) { return res.id === l.id; })) return;
+      // no terreno reservado para ele (Mapa.RESERVADOS) ou pedida no registro (cerca: true), a mesma cerquinha dos
+      // prédios de hoje, com o portão na porta (depois do sorteio: só mexe na fileira da frente dele)
+      if (!l.cerca && !(Mapa.RESERVADOS || []).some(function (res) { return res.id === l.id; })) return;
       var fy = l.rect.y + l.rect.h;
       for (var fx = l.rect.x; fx < l.rect.x + l.rect.w; fx++) {
         if (fx === l.porta.x || !dentro(fx, fy) || tipo[fy][fx] !== 'g' || solido[fy][fx]) continue;

@@ -11,7 +11,7 @@
     { id: 'detergente', nome: 'Detergente', cor: '#7ee07e', tipo: 'liquido', fala: 'O detergente faz espuma.' },
     { id: 'repolho', nome: 'Repolho roxo', cor: '#8a4fc8', tipo: 'liquido', fala: 'Suco de repolho roxo!' },
     { id: 'limao', nome: 'Limão', cor: '#f6f06a', tipo: 'liquido', fala: 'O limão é bem ácido.' },
-    { id: 'sal', nome: 'Sal', cor: '#f4f4ff', tipo: 'po', fala: 'Sal de cozinha, bem branquinho.' },
+    { id: 'sal', nome: 'Sal', cor: '#f4f4ff', tipo: 'po', fala: 'Sal de cozinha, branquinho.' },
     { id: 'oleo', nome: 'Óleo', cor: '#f7c948', tipo: 'liquido', fala: 'O óleo é mais leve que a água.' },
     { id: 'corante', nome: 'Corante azul', cor: '#2f6bff', tipo: 'liquido', fala: 'Corante azul pinta tudo.' },
     { id: 'fermento', nome: 'Fermento', cor: '#d9b98a', tipo: 'po', fala: 'Fermento de fazer pão.' },
