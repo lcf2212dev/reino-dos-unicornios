@@ -93,7 +93,8 @@ Ordem de cada quadro (`motor/laco.js`):
 2. Buffer ampliado no canvas.
 3. `cena.desenharTela(ctx, pintor, t, animar)` (no mapa hoje é vazio: as placas do mapa saíram, §9).
 4. Itens ordenados por Y: `Jogador.itensDesenho(pintor, animar)` + `cena.itensDesenho(pintor, t, animar)`
-   (+ `camada.itensDesenho` de cada módulo com `camada.ativo()`, §14; ex.: o banho).
+   (+ `camada.itensDesenho` de cada módulo com `camada.ativo()`, §14; ex.: o banho) + as peças altas do mapa
+   encostadas nela (`Mapa.itensFrente`: só os pixels opacos, pela linha do pé, recortadas à caixa dela).
 5. `cena.desenharSobre(ctx, pintor, t, animar)` (opcional): placas dos cômodos nos interiores (quase
    transparentes quando cobrem a Mariana) (+ `camada.sobre` dos módulos ativos, §14).
 6. Luz (vinheta).
@@ -178,8 +179,10 @@ alvo = { tipo: 'npc'|'objeto'|'saida'|'escada'|'lugar'|'claude', id,
 3. O menu Lugares mostra o nome e os avisos que a placa dava (`UI.avisosDoLugar(l)`, `ui/lugares.js`):
    `0/5`/`Pronto` (matéria), `Ovo` (Estábulo), `Prova` (Escola), `Sede`/`Fome`/`Banho` (Pet Shop).
    Pet Shop (🐾) e Observatório (🔭) com uma linha de informação cada.
-4. O mapa (56×42, `mundo/mapa.js`) é desenhado a partir dos DADOS de `mundo/lugares.js`: `Mapa.CIDADE` (ruas,
-   praça, lago, peças grandes da praça em `objetos`, enfeites postos à mão, `inicio` = onde ela aparece ao abrir o
+4. O mapa (56×42, `mundo/mapa.js`; árvores em `mundo/arvores.js`, chão, ruas, clareiras e bosque em `mundo/chao.js`;
+   `Mapa.fundura` lê a mesma máscara de pixels do lago) é desenhado a partir dos DADOS de `mundo/lugares.js`: `Mapa.CIDADE` (ruas,
+   com `estilo` do piso, praça, lago, peças grandes da praça em `objetos`, enfeites postos à mão, `motivos` (postos
+   depois do sorteio: não o embaralham), `inicio` = onde ela aparece ao abrir o
    jogo, `claude`), `Mapa.LUGARES_FIXOS`, `Mapa.CLAREIRAS` e `Mapa.RESERVADOS` (terreno guardado para um prédio que
    vem por `registrarLugar`: só grama, com o rect e o caminho que ele deve usar). A posição dela não é salva: ao
    abrir, `Mapa.inicio`. Desenho: `mapa-desenho.js` (chão, meio-fio, enfeites sorteados), `lago.js`,

@@ -55,6 +55,8 @@ var tipos = [
   ['Adulto épico com coroa e óculos', function (v, q) { return PA.unicornio(defs.epico, 3, q, { vista: v, enfeites: ['coroa', 'oculos'] }); }],
   ['Montada no pequeno', function (v, q) { return PA.montada(defs.comum, 1, q, ap, { vista: v }); }],
   ['Montada no adulto', function (v, q) { return PA.montada(defs.comum, 3, q, ap, { vista: v }); }],
+  ['Nove espaços (adulto)', function (v, q) { return PA.unicornio(defs.comum, 3, q, { vista: v, asasFada: true, enfeites: ['colar-perolas','oculos','laco','coroa','anel-saturno','fitinha-cauda'] }); }],
+  ['Mariana chanel', function (v, q) { return PA.mariana(Object.assign({}, ap, { corte: 'chanel', modelo: 'vestido', semLaco: false }), false, q, { vista: v }); }],
   ['Montada no épico com capa e laço', function (v, q) { return PA.montada(defs.epico, 3, q, ap, { vista: v, capa: true, enfeites: ['laco'] }); }],
 ];
 var so = new URLSearchParams(location.search).get('so');

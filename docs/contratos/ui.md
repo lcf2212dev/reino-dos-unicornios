@@ -257,7 +257,7 @@ Medida no sprite, da primeira à última linha com desenho (`npm run ver -- --pr
 | Peça | Faixa | Hoje (medido em 29/09) |
 |---|---|---|
 | criança (Mariana a pé, NPC criança, ET criança, fada) | 16–18 | Mariana 17, `lab-malu` 17, ETs crianças 17–18, fada 17 |
-| adulto e idoso sem chapéu | 21–24 | 19–22 (sobem no D4-15) |
+| adulto e idoso sem chapéu | 21–24 | 21–24 (D4-15) |
 | chapéu, coque, pluma, antena | até +4 sobre a faixa, nunca acima de 2 tiles (32) | até 25 |
 | ET adulto e vovó | 21–24 e ≥ 2 a mais que a criança do planeta | vovós 21 |
 | unicórnio filhote (estágios 0 e 1) | 16–18 | 17–18 |
@@ -266,10 +266,10 @@ Medida no sprite, da primeira à última linha com desenho (`npm run ver -- --pr
 | Mariana montada no adulto | altura do unicórnio até +4 (23–28) | 23 |
 | bicho e criatura grande (dragão, robô) | faixa de adulto | dragão 21, robô 17 |
 | estátua e armadura de enfeite | ≤ o adulto ao lado | — |
-| porta de prédio (mapa) | 22–28 | 18–26 |
+| porta de prédio (mapa) | 22–28 | 22–26 (O-04) |
 | poste | 32–36 | 34 |
-| arvoreta (1 tile) | 16–20 | 17 |
-| árvore comum (copa de 2 a 3 tiles) | ≥ 40 | não existe ainda (D1-06) |
+| arvoreta (1 tile) | 16–20 | 20 |
+| árvore comum (copa de 2 a 3 tiles) | ≥ 40 | 44–45; meia altura ~35 onde a copa cobriria rua (D1-06) |
 
 Adulto e criança diferem ≥ 4 px. Peça nova entra na faixa do papel dela; papel novo, linha nova aqui.
 
