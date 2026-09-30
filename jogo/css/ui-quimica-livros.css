@@ -1,1 +1,48 @@
-/* Laboratório de Química, 2º andar: a Estante dos livros (Biblioteca da Química) (js/ui/quimica-livros.js; contrato docs/contratos/quimica.md §9). */
+/* Laboratório de Química, 2º andar: a Estante dos livros (Biblioteca da Química) (js/ui/quimica-livros.js; contrato docs/contratos/quimica.md §9).
+   A estante (os livros como lombadas coloridas, 2 colunas; 4 no notebook) e o livro aberto (desenho, texto, ◀ ▶).
+   A cor de cada livro vem do JS (--ql-cor e --ql-fundo); o resto é token (ui.md §10.8). */
+
+.ql-contagem { margin: 0 0 12px; text-align: center; }
+.ql-estante { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.ql-livro {
+  display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-rows: auto auto; align-items: center; gap: 4px 10px;
+  min-height: 88px; padding: 10px 10px 10px 20px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
+  background: linear-gradient(90deg, var(--ql-cor) 0 10px, var(--borda) 10px 12px, var(--ql-fundo) 12px);
+  box-shadow: var(--sombra-pequena); --degrau: 2px; font: inherit; color: var(--tinta); text-align: left; cursor: pointer;
+}
+.ql-livro-emoji { grid-row: 1 / span 2; display: inline-flex; }
+.ql-livro-nome { hyphens: manual; line-height: var(--entrelinha-titulo); }
+.ql-livro-estado { justify-self: start; white-space: nowrap; }
+.ql-livro.lido .ql-livro-estado { background: var(--certo-fundo); color: var(--certo); }
+
+/* o livro aberto */
+.ql-pagina { display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; }
+.ql-pagina > * { margin: 0; }
+.ql-titulo { font-size: var(--texto); line-height: var(--entrelinha-titulo); }
+.ql-figura { margin: 0; padding: 0; }
+.ql-canvas { display: block; flex: none; image-rendering: pixelated; }
+.ql-texto { max-width: 560px; min-height: 2.6em; font-size: var(--texto-g); line-height: var(--entrelinha); }
+.ql-selo { padding: 8px 14px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--certo-fundo); color: var(--certo); }
+.ql-selo[hidden] { display: none; }
+
+/* rodapé: "Estante" à esquerda; ◀ (página) ▶ à direita, setas de 64 px */
+footer.ql-rodape > .btn-grande { flex: none; min-width: 0; }
+footer.ql-rodape .so-seta { width: 64px; padding: 0; }
+.ql-nav { display: flex; align-items: center; gap: 8px; }
+.ql-pag { min-width: 96px; font-size: var(--texto-aux); line-height: 1; text-align: center; white-space: nowrap; }
+
+@media (max-width: 480px) {
+  .ql-estante { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .ql-livro { grid-template-columns: auto minmax(0, 1fr) auto; grid-template-rows: auto; min-height: 64px; padding: 8px 8px 8px 18px; gap: 8px; }
+  .ql-livro-emoji { grid-row: auto; }
+  .ql-texto { font-size: var(--texto); }
+  footer.ql-rodape > .ql-voltar { width: 64px; padding: 0; }   /* só a seta: ◀ 1 de 8 ▶ cabem ao lado (ui.md §10.20.2) */
+  .ql-pag { min-width: 72px; }
+}
+/* notebook (tela baixa e larga): 4 colunas, os 8 livros sem rolar */
+@media (min-width: 1000px) and (max-height: 820px) {
+  .tela-quimica-livros .painel { width: min(1000px, 100%); }
+  .ql-estante { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .ql-livro { grid-template-columns: minmax(0, 1fr); justify-items: start; }
+  .ql-livro-emoji { grid-row: auto; }
+}
