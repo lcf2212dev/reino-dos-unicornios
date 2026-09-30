@@ -8,6 +8,7 @@ Reino.registrarMateria({
   id: 'ciencias',
   nome: 'Ciências',
   emoji: '🔬',
+  cor: '#139a8c',   // a cor da matéria (docs/contratos/ui.md §10.22)
   nomeLivro: 'Caderno do Cientista',
   lugar: { nome: 'Laboratório de Ciências', artigo: 'o', dentro: 'observatorio', interior: 'observatorio-3',
     andar: '3º andar', novidade: '2026-09-26' },

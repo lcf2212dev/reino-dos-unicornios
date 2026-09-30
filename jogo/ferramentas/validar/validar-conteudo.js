@@ -88,7 +88,30 @@ function checarNovos(d, naProva) {
   if (def && def.validar) def.validar(d, { checar, avisar: (msg) => avisos.push(msg), naProva, icones: icones.window.ICONES, textoOk });
 }
 
+// cor da matéria (`cor`): a da tabela do docs/contratos/ui.md §10.22 (a regra mora lá; sem o docs/, como na cópia
+// do teste do `npm run novo`, só o formato e a repetição) e nenhuma cor em duas matérias
+const UI_MD = path.join(__dirname, '../../../docs/contratos/ui.md');
+const CORES_UI = (() => {
+  if (!fs.existsSync(UI_MD)) return null;
+  const sec = fs.readFileSync(UI_MD, 'utf8').split(/^### 10\.22 /m)[1];
+  const t = {};
+  (sec || '').split(/^#{2,3} /m)[0].split('\n').forEach((l) => { const r = /^\|\s*([^|`]+?)\s*\|\s*`(#[0-9a-f]{6})`\s*\|/i.exec(l); if (r) t[r[1]] = r[2].toLowerCase(); });
+  return t;
+})();
+if (CORES_UI && !Object.keys(CORES_UI).length) erros.push('docs/contratos/ui.md §10.22: tabela das cores das matérias não encontrada');
+const coresVistas = {};
+function checarCor(m) {
+  if (typeof m.cor === 'string' && m.cor.includes(Preencher.MARCADOR)) return;   // esqueleto do `npm run novo`
+  if (!checarRet(typeof m.cor === 'string' && /^#[0-9a-f]{6}$/.test(m.cor), `${m.id}: sem cor da matéria (cor: '#rrggbb' minúsculo, ui.md §10.22)`)) return;
+  if (coresVistas[m.cor]) erros.push(`${m.id}: cor ${m.cor} repetida (já é de ${coresVistas[m.cor]})`);
+  coresVistas[m.cor] = m.id;
+  if (!CORES_UI) return;
+  if (!CORES_UI[m.nome]) erros.push(`${m.id}: "${m.nome}" sem linha na tabela de cores do docs/contratos/ui.md §10.22`);
+  else checar(CORES_UI[m.nome] === m.cor, `${m.id}: cor ${m.cor}, mas o ui.md §10.22 diz ${CORES_UI[m.nome]}`);
+}
+
 MATERIAS.forEach((m) => {
+  checarCor(m);
   checarIngles(m, m.id);
   Preencher.faltas(m, m.id).forEach((e) => erros.push(e));   // esqueleto do `npm run novo` ainda por escrever
   const livro = new Set((m.livro || []).map((l) => l.id));

@@ -355,6 +355,7 @@ interface Materia {
   id: string;
   nome: string;
   emoji: string | ((l?: any) => string);
+  /** a cor da matéria, '#rrggbb' (docs/contratos/ui.md §10.22; validar-conteudo confere) */ cor: string;
   /** o prédio da matéria no mapa */
   lugar: LugarMateria;
   /** fala do guia (voz 'claude') */
@@ -364,8 +365,7 @@ interface Materia {
   /** cartas do livro da matéria (Reino.livroDa) */
   livro: CartaLivro[];
   unicornios: UnicornioMateria[];
-  /** nome do livro na tela (padrão: "Livro") */
-  nomeLivro?: string;
+  /** nome do livro na tela (padrão: "Livro das Memórias", js/ui/materia.js) */ nomeLivro?: string;
 }
 
 /** O prédio de uma matéria no mapa. */

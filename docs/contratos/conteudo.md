@@ -38,9 +38,11 @@ Personagens: `npcs-e-dialogo.md`. Prédios: `interiores.md`. Vozes: `som-musica-
    R$ 3,00 + R$ 2,00. Nunca dízima.
 4. Estilo dos arquivos de sala: igual aos que já existem (ex.: `historia/h1.js`): indentação de 4 espaços na sala,
    8 nos desafios.
-5. Emojis novos da matéria: `<m>/icones.js` com `Reino.registrarIcones`, grupo `'icones'` no manifesto (para o
+5. Cor da matéria: `cor: '#rrggbb'` (minúsculo) no `<m>/<m>.js`, a da tabela do `ui.md` §10.22 (matéria nova ganha
+   linha lá); `validar-conteudo.js` confere a tabela e a repetição. O telhado ainda vem de `lugar.cores.telhado`.
+6. Emojis novos da matéria: `<m>/icones.js` com `Reino.registrarIcones`, grupo `'icones'` no manifesto (para o
    validador enxergar).
-6. Onde a matéria fica (`lugar`): um prédio próprio no mapa (`nome`, `artigo`, `sprite`, `rect` ou uma clareira;
+7. Onde a matéria fica (`lugar`): um prédio próprio no mapa (`nome`, `artigo`, `sprite`, `rect` ou uma clareira;
    `porCima: true` põe o lugar depois do sorteio dos enfeites, e o resto do reino fica com as mesmas árvores e
    flores; ex.: `portugues.js`) OU dentro de um prédio que já existe: `lugar: { nome, artigo, dentro: '<id do lugar anfitrião>',
    interior: '<id do andar>' }`, sem `rect` nem `sprite`. Com `dentro`, `Mapa.criar` (`mundo/mapa.js`) não põe nada

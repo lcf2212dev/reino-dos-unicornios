@@ -44,7 +44,7 @@ Reino.FALAS_INTERIORES.torre = {
   },
   objetos: {
     // térreo
-    'livro': ['O Livro das Palavras! 📖', 'Vamos ler com calma?'],
+    'livro': ['O Livro do Inglês! 📖', 'Vamos ler com calma?'],
     'andares': ['A torre tem cinco andares.', 'Uma sala em cada andar. 🗼', 'Suba a escada sem pressa.'],
     'engrenagens': ['Engrenagens do relógio! ⚙️', 'Uma gira a outra, sem pressa.'],
     'relogio-grande': ['O relógio faz tic-tac! 🕰️', 'Lá no alto mora o relógio.'],

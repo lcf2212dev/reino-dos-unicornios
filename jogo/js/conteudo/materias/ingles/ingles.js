@@ -7,7 +7,8 @@ Reino.registrarMateria({
   id: 'ingles',
   nome: 'Inglês',
   emoji: '🔤',
-  nomeLivro: 'Livro das Palavras',
+  cor: '#e0a020',   // a cor da matéria (docs/contratos/ui.md §10.22)
+  nomeLivro: 'Livro do Inglês',   // não "das Palavras": confundia com a Casa das Palavras (Português)
   lugar: {
     nome: 'Torre do Relógio',
     sprite: 'relogio',
@@ -19,7 +20,7 @@ Reino.registrarMateria({
 
   salas: Reino.salasDa('ingles'),         // i1.js, i2.js, i3.js, i4.js, i5.js, na ordem do manifesto
 
-  /* Livro da Torre: resumos curtos para ler antes ou quando errar. */
+  /* Livro do Inglês: resumos curtos para ler antes ou quando errar. */
   livro: Reino.livroDa('ingles'),         // livro.js
 
   /* Unicórnios de Inglês: 1 comum e 1 raro por sala, 2 épicos e o lendário. */

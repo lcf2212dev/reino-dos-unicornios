@@ -5,6 +5,7 @@ Reino.registrarMateria({
   id: '{{id}}',
   nome: '{{nome}}',
   emoji: '{{emoji}}',
+  cor: '(preencher) #rrggbb, uma cor nova na tabela do docs/contratos/ui.md §10.22',
   nomeLivro: 'Livro de {{nome}}',
   lugar: {
     nome: '(preencher) nome do prédio',

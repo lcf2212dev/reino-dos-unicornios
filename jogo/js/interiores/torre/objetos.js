@@ -115,7 +115,7 @@
       circulo(ctx, x + 11, y + 7, 2, C.creme); ret(ctx, x + 11, y + 6, 1, 2, K);
       ret(ctx, x + 18, y + 8, 5, 1, C.ouro2); ret(ctx, x + 18, y + 14, 5, 1, C.ouro2); ret(ctx, x + 18, y + 20, 5, 1, C.ouro2);
     } });
-  // púlpito do Livro das Palavras
+  // púlpito do Livro do Inglês
   I.objeto('torre-pulpito', { w: 1, h: 1, topo: 12, solido: true, alto: true,
     desenhar: function (ctx, px, py) {
       var cx = px + 8;
