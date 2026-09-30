@@ -106,16 +106,36 @@
     return h;
   }
 
+  /* ação de vez em quando (D4-17), cada um no seu ritmo: a cada 4,2 a 5 s (pela fase), 960 ms de gesto em degraus.
+     Pessoa e fada adultas acenam (quadros 4 e 4|8, 240 ms cada), o dragãozinho bate as asas, e criança e as
+     outras bases (ET, robô...) dão dois pulinhos (1-2 px, 120 ms por degrau). Parado sem animação (quadro 0). */
+  var ACAO_MS = 960, PULO = [-1, -2, -1, 0, -1, -2, -1, 0];
+  function gesto(npc) {
+    var s = npc.sprite || {}, base = s.base || 'pessoa';
+    if (base === 'dragao') return 'asas';
+    if ((base === 'pessoa' || base === 'fada') && (s.idade || (base === 'fada' ? 'crianca' : 'adulto')) !== 'crianca') return 'aceno';
+    return 'pulo';
+  }
+  function acao(npc, t, f) {
+    var periodo = 4200 + (f % 5) * 200, ta = (t + (f >>> 4) % periodo) % periodo;
+    if (ta >= ACAO_MS) return null;
+    var g = gesto(npc);
+    if (g === 'pulo') return { quadro: 0, dy: PULO[Math.floor(ta / 120)] };
+    return { quadro: 4 | (Math.floor(ta / 240) % 2 ? 8 : 0), dy: 0 };
+  }
+
   N.desenhar = function (pintor, npc, x, yPes, t, animar) {
     var f = fase(npc);
-    var quadro = 0;
-    if (animar) {
+    var quadro = 0, dy = 0;
+    var ac = animar ? acao(npc, t, f) : null;
+    if (ac) { quadro = ac.quadro; dy = ac.dy; }
+    else if (animar) {
       quadro = Math.floor((t + f % 700) / 700) % 2;
       if ((t + f % 3900) % 3900 < 140) quadro |= 2;   // pisca de vez em quando
     }
     if (window.Jogador && window.Jogador.sombra) window.Jogador.sombra(pintor, x, yPes, 5);
     var spr = gerar(npc.sprite, quadro);
-    pintor.sprite(spr, x, yPes + 1);
+    pintor.sprite(spr, x, yPes + 1 + dy);
     // ícone de status acima da cabeça, em px da tela (nítido: inteiro de px por px do ícone)
     var st = N.status(npc);
     var b = bolha(st.icone), ctx = pintor.ctx;
