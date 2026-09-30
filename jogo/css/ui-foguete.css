@@ -52,3 +52,4 @@
   .foguete-gota { border-radius: var(--canto); font-size: 0.8em; }
   .foguete-balao { padding: 8px 10px; }
 }
+.foguete-passaporte small.falta { color: var(--tinta-suave); }   /* planeta que falta (D8B-22) */

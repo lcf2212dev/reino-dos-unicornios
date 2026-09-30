@@ -1,6 +1,6 @@
 /* Utilidades comuns (Reino.util): $, $$, el (monta DOM), preencher, colar/colado (quebra de linha), semEn, embaralhar, sortear, clamp,
-   reais, reaisCurto, copia, esperar, hoje, o barramento de eventos (on, emit) e reduzMovimentoSistema
-   (lido na carga, depois do js/nucleo/congelar.js). */
+   reais, reaisCurto, copia, esperar, hoje, o barramento de eventos (on, emit), reduzMovimentoSistema (o "reduzir movimento" do aparelho, seguido na
+   hora pelo ouvinte de change; o js/nucleo/congelar.js vem antes) e animar() (Animações ligadas E sem reduzir). */
 window.Reino = window.Reino || {};
 
 Reino.util = (function () {
@@ -186,11 +186,23 @@ Reino.util = (function () {
     return hojeTexto;
   }
 
-  var reduzMovimento = false;
-  try { reduzMovimento = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+  // "reduzir movimento" do aparelho: o ÚNICO lugar que lê a media query; segue a troca na hora (como o CSS)
+  var mqReduz = null;
+  try { mqReduz = window.matchMedia('(prefers-reduced-motion: reduce)'); } catch (e) {}
+  // pode animar agora? ajuste Animações ligado E o aparelho sem "reduzir movimento"
+  function animar() {
+    var P = window.Reino && window.Reino.Progresso, e = P && P.estado && P.estado();
+    return !!(e && e.ajustes && e.ajustes.animacoes !== false) && !api.reduzMovimentoSistema;
+  }
 
-  return { $: $, $$: $$, el: el, preencher: preencher, semEn: semEn, embaralhar: embaralhar, sortear: sortear, clamp: clamp,
+  var api = { $: $, $$: $$, el: el, preencher: preencher, semEn: semEn, embaralhar: embaralhar, sortear: sortear, clamp: clamp,
     colar: colar, colado: colado, preencherColado: preencherColado,
     reais: reais, reaisCurto: reaisCurto, copia: copia, esperar: esperar, hoje: hoje, on: on, emit: emit,
-    reduzMovimentoSistema: reduzMovimento };
+    reduzMovimentoSistema: !!(mqReduz && mqReduz.matches), animar: animar };
+  function aoMudarReduz() { api.reduzMovimentoSistema = !!mqReduz.matches; }
+  try {
+    if (mqReduz && mqReduz.addEventListener) mqReduz.addEventListener('change', aoMudarReduz);
+    else if (mqReduz && mqReduz.addListener) mqReduz.addListener(aoMudarReduz);
+  } catch (e) {}
+  return api;
 })();

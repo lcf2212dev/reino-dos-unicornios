@@ -13,7 +13,6 @@
 .album-figura { position: relative; display: flex; align-items: flex-end; justify-content: center; min-height: 64px; }
 .album-sprite { image-rendering: pixelated; }
 .album-cartao.silhueta { border-style: dashed; background: var(--papel-quente); }
-.album-cartao.silhueta .album-sprite { filter: brightness(0); opacity: 0.55; }
 .album-interroga {
   position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
   font-size: 2em; font-weight: 700; color: var(--papel);
@@ -29,3 +28,4 @@
   .album-cartao { padding: 6px 4px; }
   .album-figura { min-height: 48px; }
 }
+.album-levar { margin-top: auto; }   /* botões da fileira na mesma altura (D8B-20) */

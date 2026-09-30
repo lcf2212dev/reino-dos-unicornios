@@ -10,6 +10,8 @@
   --tinta: #3a2446;
   --tinta-suave: #6b5378;
   --papel: #fff8ee;
+  --erro: #b3261e;          /* texto de erro (ui.md §10.8) */
+  --erro-fundo: #ffe3e6;    /* fundo de erro: PIN errado (D8B-16) */
   --papel-leve: #fff6e4;    /* o creme que era --papel-2 (mesmo valor); cada uso vai para --papel ou --papel-quente (ui.md §10.8) */
   --papel-2: #efe8e2;       /* fundo do estado indisponível (ui.md §10.19.1); --tinta-suave sobre ele: 5,5:1 */
   --papel-quente: #fff1cc;

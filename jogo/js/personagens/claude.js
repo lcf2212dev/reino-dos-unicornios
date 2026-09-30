@@ -152,7 +152,9 @@
       q = (q + 1) % 16;
       var c = bal.querySelector('canvas.claude-avatar');
       if (!c || bal.hidden) return;
-      var spr = quadros ? quadros[q === 0 && quadros[1] ? 1 : 0] : PA.claude(q === 0 ? 1 : 0).canvas;
+      // boca aberta (quadros[2]) em quadros alternados enquanto a voz toca; parada sem animação (D4-17)
+      var boca = quadros && quadros[2] && q % 2 && Reino.Voz && Reino.Voz.falando && Reino.Voz.falando() && !U.reduzMovimentoSistema && !document.body.classList.contains('sem-animacao');
+      var spr = quadros ? quadros[q === 0 && quadros[1] ? 1 : boca ? 2 : 0] : PA.claude(q === 0 ? 1 : 0).canvas;
       var ctx = c.getContext('2d'); ctx.clearRect(0, 0, c.width, c.height); ctx.drawImage(spr, 0, 0);
     }, 220);
     return bal;

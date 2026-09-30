@@ -9,7 +9,7 @@
 
   function compacto() { return window.innerWidth <= 480 || window.innerHeight <= 500; }
   function reduzMovimento() {
-    try { return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches); } catch (e) { return false; }
+    return !!(window.Reino && Reino.util && Reino.util.reduzMovimentoSistema);   // lido e seguido em nucleo/util.js
   }
   // o busto do ET com escala inteira (nítido)
   function retrato(npc) {

@@ -194,3 +194,10 @@
 .resumo-pag { color: var(--tinta-suave); font-weight: 700; font-size: 0.85em; margin: 0; }
 .resumo-botoes { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; width: 100%; max-width: 720px; }
 .resumo-botoes .btn-grande { flex: 1 1 200px; }
+/* contador da revisão do treino (D6-11): letra pequena suave; no celular ganha linha própria acima do Entregar */
+.contador-revisao { font-size: 12px; color: var(--tinta-suave); }
+@media (max-width: 480px) {
+  .missao-rodape:has(.contador-revisao) { flex-wrap: wrap; row-gap: 6px; }
+  .missao-rodape .contador-revisao { flex-basis: 100%; text-align: center; }
+  .missao-rodape .btn-entregar { flex: 1; }
+}
