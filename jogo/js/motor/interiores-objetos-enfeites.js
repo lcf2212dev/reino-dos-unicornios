@@ -11,6 +11,42 @@
   var II = R._interiores, T = II.T, OBJETOS = II.OBJETOS, objeto = II.objeto, larg = II.larg, cor = II.cor;
   var LIVROS = II.LIVROS;
 
+  // kit comum (cesto, vaso-grande, papéis): cada prédio com o seu. O desenho acha o prédio do objeto
+  // procurando a entrada igual (tipo, x, y, var) em Reino.interiores; var.cor/var.conteudo mandam.
+  function predioDe(o) {
+    if (o.__predio !== undefined) return o.__predio;
+    var ids = [];
+    (R.interiores || []).forEach(function (d) {
+      if ((d.objetos || []).some(function (e) { return e.tipo === o.tipo && e.x === o.x && e.y === o.y && e.var === o.var; })) ids.push(d.id);
+    });
+    var id = ids.join('+');
+    try { Object.defineProperty(o, '__predio', { value: id }); } catch (e) { /* congelado: procura de novo */ }
+    return id;
+  }
+  function hash(s) { var n = 7; for (var i = 0; i < s.length; i++) n = (Math.imul(n, 31) + s.charCodeAt(i)) | 0; return n >>> 0; }
+  function kitDe(o, tabela, lista) {
+    var id = predioDe(o), base = id.split('-')[0];
+    return tabela[id] || tabela[base] || lista[hash(id) % lista.length];
+  }
+  // cesto: [palha, conteúdo, cores do conteúdo]
+  var CESTOS = {
+    castelo: ['#d9a93a', 'novelos', [C.roxo, C.ouro]], escola: ['#e7b870', 'lapis', [C.vermelho, C.azul, C.verde]],
+    estabulo: ['#c98a4b', 'cenouras', [C.laranja]], loja: ['#f0c98a', 'bolinhas', [C.rosa, C.ouro]],
+    petshop: ['#b58a5a', 'ossinhos', [C.creme]], salao: ['#e2a8c0', 'toalhas', [C.rosa2, C.branco]],
+    bau: ['#d9a93a', 'bolinhas', [C.ouro, C.ouro3]]
+  };
+  var CESTOS_LISTA = [['#e7b870', 'frutas', [C.vermelho, C.verde]], ['#c9a878', 'novelos', [C.azul, C.lilas]],
+    ['#dcb98c', 'bolinhas', [C.verde, C.laranja]], ['#b8905e', 'frutas', [C.laranja, C.ouro]],
+    ['#e8c49a', 'lapis', [C.roxo, C.ouro, C.rosa]], ['#d0a070', 'novelos', [C.vermelho, C.creme]]];
+  // vaso-grande: [corpo, faixa]
+  var VASOS = {
+    bau: ['#d9a93a', '#fff3a0'], escola: ['#6fb86f', C.creme], castelo: ['#7c5cff', C.ouro], salao: ['#ff9cc6', C.branco],
+    geografia: ['#e07a4a', '#ffe0b0'], museu: ['#c8507a', C.ouro]
+  };
+  var VASOS_LISTA = [['#5f8bd6', C.branco], ['#3eaea3', '#d9fff4'], ['#b58cff', C.creme], ['#e07a4a', C.creme],
+    ['#6fdc8c', C.branco], ['#ff8a3d', C.ouro3], ['#8a94aa', C.azul2]];
+  var FITAS = [C.rosa, C.azul, C.verde, C.lilas, C.laranja, C.vermelho, C.ouro2];
+
   objeto('vaso-planta', { w: 1, h: 1, topo: 12, solido: true, alto: true,
     desenhar: function (ctx, px, py, o) {
       var cx = px + 8, v = cor(o, 'vaso', C.terracota);
@@ -50,11 +86,12 @@
     } });
   objeto('vaso-grande', { w: 1, h: 1, topo: 8, solido: true, alto: true,
     desenhar: function (ctx, px, py, o) {
-      var cx = px + 8, c = cor(o, 'cor', '#5f8bd6');
+      var k = kitDe(o, VASOS, VASOS_LISTA), cx = px + 8, c = cor(o, 'cor', k[0]), f = cor(o, 'faixa', k[1]);
       ret(ctx, cx - 3, py - 8, 7, 3, K); ret(ctx, cx - 2, py - 7, 5, 1, clarear(c, 0.4));
       elipse(ctx, cx, py + 5, 7, 9, K); elipse(ctx, cx, py + 5, 6, 8, c);
+      elipse(ctx, cx + 1, py + 8, 4, 4, escurecer(c, 0.15)); elipse(ctx, cx, py + 6, 4, 5, c);
       ret(ctx, cx - 2, py - 5, 5, 2, c);
-      ret(ctx, cx - 6, py + 3, 13, 2, C.branco); ret(ctx, cx - 5, py + 7, 11, 1, clarear(c, 0.55));
+      ret(ctx, cx - 6, py + 3, 13, 2, f); ret(ctx, cx - 5, py + 7, 11, 1, clarear(c, 0.55));
       for (var i = -4; i <= 4; i += 4) ret(ctx, cx + i, py + 3, 1, 2, c);
       ret(ctx, cx - 4, py - 1, 1, 3, clarear(c, 0.5));
       ret(ctx, cx - 3, py + 14, 7, 1, K);
@@ -212,15 +249,18 @@
         b -= 4;
       }
     } });
+  // papéis: pilha arrumada e amarrada com fita (não papel solto no chão)
   objeto('papeis', { w: 1, h: 1, solido: false, semSombra: true, plano: true,
     desenhar: function (ctx, px, py, o) {
-      [[2, 3, 7, 6], [7, 7, 7, 6], [3, 9, 6, 5]].forEach(function (f, i) {
-        ret(ctx, px + f[0] - 1, py + f[1] - 1, f[2] + 2, f[3] + 2, 'rgba(58,36,70,0.35)');
-        ret(ctx, px + f[0], py + f[1], f[2], f[3], i === 1 ? '#fff6d8' : C.branco);
-        ret(ctx, px + f[0] + 1, py + f[1] + 1, f[2] - 2, 1, '#c4b4d4');
-        ret(ctx, px + f[0] + 1, py + f[1] + 3, f[2] - 3, 1, '#c4b4d4');
+      var fita = cor(o, 'cor', FITAS[hash(predioDe(o)) % FITAS.length]);
+      ret(ctx, px + 1, py + 15, 14, 1, 'rgba(58,36,70,0.22)');
+      ret(ctx, px + 2, py + 5, 12, 10, K);
+      [[3, 12, '#f3e6c8'], [3, 10, C.branco], [3, 8, '#fff6d8'], [3, 6, C.branco]].forEach(function (f) {
+        ret(ctx, px + f[0], py + f[1], 10, 2, f[2]); ret(ctx, px + f[0], py + f[1] + 1, 10, 1, '#c4b4d4');
       });
-      ret(ctx, px + 9, py + 9, 1, 1, C.rosa); ret(ctx, px + 11, py + 9, 1, 1, C.rosa); ret(ctx, px + 10, py + 10, 1, 1, C.rosa);
+      ret(ctx, px + 3, py + 6, 10, 1, C.branco); ret(ctx, px + 4, py + 7, 6, 1, '#c4b4d4');
+      ret(ctx, px + 7, py + 6, 2, 8, fita); ret(ctx, px + 7, py + 6, 1, 8, clarear(fita, 0.35));
+      ret(ctx, px + 5, py + 3, 2, 2, K); ret(ctx, px + 9, py + 3, 2, 2, K); ret(ctx, px + 6, py + 4, 1, 1, fita); ret(ctx, px + 9, py + 4, 1, 1, fita);
     } });
   objeto('almofada', { w: 1, h: 1, solido: false, plano: true,
     desenhar: function (ctx, px, py, o) {
@@ -246,16 +286,60 @@
       elipse(ctx, cx, py - 5, 7, 4, 'rgba(255,236,170,' + a.toFixed(3) + ')');
       ret(ctx, cx - 1, py - 10, 3, 2, C.ouro3);
     } });
+  // o que vai por cima do cesto (desenhado antes da borda)
+  var CONTEUDOS = {
+    bolinhas: function (ctx, px, py, cs) {
+      circulo(ctx, px + 5, py + 5, 3, K); circulo(ctx, px + 5, py + 5, 2, cs[0]);
+      circulo(ctx, px + 10, py + 4, 3, K); circulo(ctx, px + 10, py + 4, 2, cs[1 % cs.length]);
+      ret(ctx, px + 4, py + 4, 2, 1, C.branco); ret(ctx, px + 9, py + 3, 2, 1, C.branco);
+    },
+    novelos: function (ctx, px, py, cs) {
+      [[5, 5, cs[0]], [10, 5, cs[1 % cs.length]]].forEach(function (n) {
+        circulo(ctx, px + n[0], py + n[1], 3, K); circulo(ctx, px + n[0], py + n[1], 2, n[2]);
+        ret(ctx, px + n[0] - 1, py + n[1] - 1, 3, 1, escurecer(n[2], 0.25)); ret(ctx, px + n[0] - 1, py + n[1] + 1, 3, 1, escurecer(n[2], 0.25));
+      });
+      ret(ctx, px + 12, py + 6, 1, 4, cs[1 % cs.length]);
+    },
+    frutas: function (ctx, px, py, cs) {
+      [[4, 5, cs[0]], [8, 4, cs[1 % cs.length]], [11, 5, cs[0]]].forEach(function (n) {
+        circulo(ctx, px + n[0], py + n[1], 2, K); ret(ctx, px + n[0] - 1, py + n[1] - 1, 3, 3, n[2]);
+        ret(ctx, px + n[0] - 1, py + n[1] - 1, 1, 1, clarear(n[2], 0.5)); ret(ctx, px + n[0], py + n[1] - 3, 1, 1, C.folha3);
+      });
+    },
+    lapis: function (ctx, px, py, cs) {
+      [3, 6, 9, 12].forEach(function (x, i) {
+        var c = cs[i % cs.length], y = py + 1 + (i % 2);
+        ret(ctx, px + x - 1, y, 3, 6, K); ret(ctx, px + x, y + 1, 1, 5, c); ret(ctx, px + x, y, 1, 1, C.madeiraClara);
+      });
+    },
+    cenouras: function (ctx, px, py, cs) {
+      [4, 8, 12].forEach(function (x, i) {
+        var y = py + 2 + (i % 2);
+        ret(ctx, px + x - 1, y, 3, 5, K); ret(ctx, px + x, y + 1, 1, 4, cs[0]);
+        ret(ctx, px + x - 1, y - 2, 1, 2, C.folha3); ret(ctx, px + x + 1, y - 2, 1, 2, C.folha);
+      });
+    },
+    ossinhos: function (ctx, px, py, cs) {
+      [[3, 4], [8, 3]].forEach(function (n) {
+        ret(ctx, px + n[0], py + n[1], 6, 4, K);
+        ret(ctx, px + n[0] + 1, py + n[1] + 1, 4, 2, cs[0]); ret(ctx, px + n[0] + 1, py + n[1] + 1, 4, 1, C.branco);
+      });
+    },
+    toalhas: function (ctx, px, py, cs) {
+      [[2, 3, cs[0]], [8, 3, cs[1 % cs.length]]].forEach(function (n) {
+        ret(ctx, px + n[0], py + n[1], 6, 4, K); ret(ctx, px + n[0] + 1, py + n[1] + 1, 4, 2, n[2]);
+        ret(ctx, px + n[0] + 1, py + n[1] + 1, 4, 1, clarear(n[2], 0.4)); ret(ctx, px + n[0] + 4, py + n[1] + 2, 1, 1, escurecer(n[2], 0.25));
+      });
+    }
+  };
   objeto('cesto', { w: 1, h: 1, topo: 2, solido: true,
     desenhar: function (ctx, px, py, o) {
-      var c = cor(o, 'cor', '#e7b870');
-      circulo(ctx, px + 5, py + 5, 3, K); circulo(ctx, px + 5, py + 5, 2, C.rosa);
-      circulo(ctx, px + 10, py + 4, 3, K); circulo(ctx, px + 10, py + 4, 2, C.azul2);
-      ret(ctx, px + 4, py + 4, 2, 1, C.branco); ret(ctx, px + 9, py + 3, 2, 1, C.branco);
-      ret(ctx, px + 12, py + 6, 1, 4, C.azul2);
+      var k = kitDe(o, CESTOS, CESTOS_LISTA), c = cor(o, 'cor', k[0]);
+      var tipo = (o.var && o.var.conteudo) || k[1], cs = (o.var && o.var.cores) || k[2];
+      (CONTEUDOS[tipo] || CONTEUDOS.bolinhas)(ctx, px, py, cs);
       ret(ctx, px + 1, py + 6, 14, 9, K); ret(ctx, px + 2, py + 7, 12, 7, c);
       for (var j = 0; j < 3; j++) for (var i = 0; i < 6; i++) ret(ctx, px + 2 + i * 2 + (j % 2), py + 8 + j * 2, 1, 1, escurecer(c, 0.2));
-      ret(ctx, px + 1, py + 6, 14, 1, escurecer(c, 0.35));
+      ret(ctx, px + 1, py + 6, 14, 1, escurecer(c, 0.35)); ret(ctx, px + 2, py + 7, 12, 1, clarear(c, 0.3));
     } });
   objeto('balde', { w: 1, h: 1, topo: 3, solido: true,
     desenhar: function (ctx, px, py, o) {
