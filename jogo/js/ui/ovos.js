@@ -44,10 +44,14 @@
       function nasceu() {
         P.chocar(id); P.salvar();
         Reino.Som.tocar('chocar');
-        UI.confete(d.raridade === 'lendario' ? 160 : 90);
         card.innerHTML = '';
-        card.appendChild(el('h2.titulo-pixel', d.raridade === 'lendario' ? '🌈 UM LENDÁRIO! 🌈' : 'Nasceu!'));
-        card.appendChild(el('div.detalhe-sprite.nascimento.rar-' + d.raridade, PA.paraDOM(PA.unicornio(d, 0, 0), 8)));
+        // lendário: um 🌈 só, colado à 1ª palavra (ui.md §10.21.1); no celular quebra em 2 linhas
+        var titulo = d.raridade === 'lendario' ? el('h2.titulo-pixel', el('span.titulo-colado', '🌈UM'), ' LENDÁRIO!') : el('h2.titulo-pixel', 'Nasceu!');
+        card.appendChild(titulo);
+        UI.festa(3, { titulo: titulo, som: false });   // ovo que nasce: nível 3 em toda raridade (ui.md §10.16)
+        // o lendário ganha o brilho arco-íris, não mais confete (ui.md §10.16)
+        var sprite = el('div.detalhe-sprite.nascimento.rar-' + d.raridade, PA.paraDOM(PA.unicornio(d, 0, 0), 8));
+        card.appendChild(d.raridade === 'lendario' ? el('div.brilho-arco', sprite) : sprite);
         card.appendChild(el('p.detalhe-rar.rar-' + d.raridade, rar.emoji + ' ' + rar.nome));
         card.appendChild(el('p.ovo-nome', opcoes.primeiro ? 'Seu primeiro unicórnio!' : P.nomeUni(id)));
         card.appendChild(el('p.detalhe-frase', '"' + d.frase + '"'));

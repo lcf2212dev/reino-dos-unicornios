@@ -98,7 +98,7 @@
         ctrl.marcarCerto();
         Reino.Som.tocar('acerto');
         setTimeout(function () { Reino.Som.tocar('estrela'); }, 350);
-        if (!reduzMovimento()) UI.confete(16);
+        UI.festa(1, { som: false, item: ctrl.card.querySelector('.certa') });   // acerto do ET: nível 1 (ui.md §10.16)
         retorno.appendChild(el('h3', '✨ +' + n + ' ⭐'));
         dizer([sortear(F.acerto)]);
       } else {
@@ -131,7 +131,7 @@
       var amiga = npc.genero === 'm' ? 'seu amigo' : 'sua amiga';
       area.appendChild(el('p.et-amigo', '💛 ' + (npc.nome || 'ET') + (novo ? ' virou ' : ' é ') + amiga + '!'));
       Reino.Som.tocar('estrela');
-      if (!reduzMovimento()) UI.confete(30);
+      UI.festa(2, { som: false });   // ET vencido: nível 2 (ui.md §10.16)
       dizer(des.amigoAntes ? F.fimDeNovo : F.fim);
       U.preencher(btn, 'Tchau! 💛');
       travar();

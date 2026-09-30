@@ -97,6 +97,70 @@
       if (n.vivas) requestAnimationFrame(passoDoQuadro); else c.remove();
     })(performance.now());
   };
+
+  /* ---------- escala de festa (ui.md §10.16) ---------- */
+  // nível: confete, classe do título, som (só sons que já existem; o 4 é a fanfarra com a estrela depois)
+  var FESTA = {
+    1: { confete: 0, som: null },
+    2: { confete: 40, som: 'fanfarra' },
+    3: { confete: 90, som: 'fanfarra' },
+    4: { confete: 160, som: 'fanfarra', depois: 'estrela' },
+  };
+  // opcoes: titulo (ganha .titulo-festa-N, com ou sem animação), emoji (pulinho e brilhinhos, nível 2+),
+  // item (brilho de 3 quadros, nível 1), som (false: quem chama já tocou), confete (número: troca o da tabela, ex. 0)
+  UI.festa = function (nivel, opcoes) {
+    var f = FESTA[nivel] || FESTA[1];
+    opcoes = opcoes || {};
+    if (opcoes.titulo) opcoes.titulo.classList.add('titulo-festa-' + nivel);
+    if (opcoes.som !== false && f.som) {
+      Reino.Som.tocar(f.som);
+      if (f.depois) setTimeout(function () { Reino.Som.tocar(f.depois); }, 700);
+    }
+    if (!animar()) return f;
+    if (opcoes.emoji && nivel >= 2) opcoes.emoji.classList.add('festa-pulo');
+    if (opcoes.item) { opcoes.item.classList.remove('festa-brilho'); void opcoes.item.offsetWidth; opcoes.item.classList.add('festa-brilho'); }
+    var n = typeof opcoes.confete === 'number' ? opcoes.confete : f.confete;
+    if (n > 0) UI.confete(n);
+    return f;
+  };
+  UI.festa.tabela = FESTA;
+
+  /* ---------- a estrela ganha vai até o contador (D9-17) ---------- */
+  // ⭐ de 16×16 pixels de arte (32 px CSS), desenhada em JS, em 8 degraus (posição em px pares) até o chip de estrelas do HUD (ou, com uma tela por
+  // cima do HUD, até o placar da tela); o chip se repinta quando ela chega; sem animação não sai nada
+  var PASSOS_ESTRELA = 8;   // 8 degraus em 2 × --lento (1,2 s): dá para ver a estrela ir
+  function alvoEstrela(alvoTela) {
+    var chip = U.$('#hud .chip-estrelas');
+    if (chip) {
+      var r = chip.getBoundingClientRect(), icone = chip.querySelector('canvas') || chip;
+      var ri = icone.getBoundingClientRect(), topo = r.width && document.elementFromPoint(ri.left + ri.width / 2, ri.top + ri.height / 2);
+      if (topo && chip.contains(topo)) return ri;
+    }
+    return alvoTela ? alvoTela.getBoundingClientRect() : null;
+  }
+  UI.estrelaVoa = function (de, alvoTela) {
+    var a = de && de.getBoundingClientRect(), b = alvoEstrela(alvoTela);
+    if (!animar() || !a || !b || !window.PA) return;
+    var c = window.PA.iconeEmoji('⭐', 1);
+    c.classList.add('estrela-voa');
+    c.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(c);
+    var x0 = a.left + a.width / 2 - 16, y0 = a.top + a.height / 2 - 16, x1 = b.left + b.width / 2 - 16, y1 = b.top + b.height / 2 - 16;
+    var ms = ((Reino.config.movimento && Reino.config.movimento.lento) || 600) * 2 / PASSOS_ESTRELA, k = 1;
+    function por(i) {
+      var t = i / PASSOS_ESTRELA;
+      c.style.left = 2 * Math.round((x0 + (x1 - x0) * t) / 2) + 'px';
+      c.style.top = 2 * Math.round((y0 + (y1 - y0) * t) / 2) + 'px';
+    }
+    por(1);   // o 1º degrau já na hora (a foto do ver pega a estrela no caminho)
+    (function passo() {
+      setTimeout(function () {
+        if (++k > PASSOS_ESTRELA) { c.remove(); if (UI.atualizarHUD) UI.atualizarHUD(); return; }
+        por(k); passo();
+      }, ms);
+    })();
+  };
+
   UI.confete.criar = criarConfete;
   UI.confete.mover = moverConfete;
 

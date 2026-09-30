@@ -141,7 +141,8 @@
       ctrl.marcarCerto();
       Reino.Som.tocar('acerto');
       setTimeout(function () { Reino.Som.tocar('estrela'); }, 350);
-      if (!reduzMovimento()) UI.confete(24);
+      UI.festa(1, { som: false, item: ctrl.card.querySelector('.certa') });   // acerto: nível 1 (ui.md §10.16)
+      UI.estrelaVoa(ctrl.card.querySelector('.certa'));
       var elogio = elogioAcerto();
       var ganhou = S.frases().ganhou;
       mostrarRetorno(true, '✨ Isso! +' + n + ' ⭐', elogio, ganhou);
