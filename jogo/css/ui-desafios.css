@@ -60,6 +60,8 @@
   .desenho-moldura { width: min(100%, 300px); }
   .desenho-paleta { max-width: calc(4 * 44px + 3 * 12px); margin-left: auto; margin-right: auto; }
   .missao-corpo:has(.desenho) { padding-bottom: 40px; }
+  /* O-30: no celular, "Use no desenho:" sobe para antes da dica, à vista sem rolar */
+  .desenho-lista { order: -1; }
 }
 
 /* texto de apoio (d.apoio): a caixa do texto que a questão manda ler, acima do enunciado */
