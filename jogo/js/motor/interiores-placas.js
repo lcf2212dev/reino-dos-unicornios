@@ -1,5 +1,5 @@
 /* Interiores: as placas dos cômodos (em px da tela, com a fonte pixel, por cima de móveis e
-   personagens), que fogem do HUD e ficam quase transparentes quando cruzam a Mariana.
+   personagens): placas de parede que fogem do HUD, do balão e dos objetos da parede e da Mariana.
    Veio de motor/interiores.js (o corpo de cena.desenharSobre e os ajudantes do HUD).
    Registra em Reino._interiores: desenharPlacas. Só roda quando chamado. */
 (function () {
@@ -12,6 +12,7 @@
     return { x: Math.round((x - c.x) * pintor.escala), y: Math.round((y - c.y) * pintor.escala) };
   }
   var FONTE_PIXEL = '"Press Start 2P", "Trebuchet MS", sans-serif';
+  var FOLGA_HUD = 8;   // px CSS entre a placa e o HUD ou o balão (a folga do ui.md §10.18.2)
 
   // corpo da Mariana em px da tela (em pé ~16×24 acima dos pés; montada ~28×34)
   function caixaMariana(pintor) {
@@ -34,54 +35,138 @@
     var w = e.offsetWidth, h = e.offsetHeight, dx = w * 0.02, dy = h * 0.02;
     return { left: left - dx, right: left + w + dx, top: top - dy, bottom: top + h + dy };
   }
-  // retângulos do HUD em px do canvas, medidos no máximo a cada 500 ms (como o mapa fazia com as placas dos prédios)
-  var hudMedido = { chave: '', medidoEm: -1e9, rects: [] };
-  function retangulosHud(canvas, dpr) {
-    if (typeof document === 'undefined' || !canvas || !canvas.getBoundingClientRect) return [];
-    var agora = performance.now(), chave = canvas.width + 'x' + canvas.height + '@' + dpr;
-    if (chave === hudMedido.chave && agora - hudMedido.medidoEm <= 500) return hudMedido.rects;
-    var c = canvas.getBoundingClientRect();
-    if (!c.width) return [];
-    var k = canvas.width / c.width || dpr;
-    hudMedido.rects = Array.prototype.map.call(document.querySelectorAll('#hud > *:not(.hud-topo), #hud .hud-topo > * > *'), function (e) {
-      var r = caixaParada(e);
-      return { left: (r.left - c.left) * k, right: (r.right - c.left) * k, top: (r.top - c.top) * k, bottom: (r.bottom - c.top) * k };
-    }).filter(function (r) { return r.right > r.left && r.bottom > r.top; });
-    hudMedido.medidoEm = agora; hudMedido.chave = chave;
-    return hudMedido.rects;
+  // retângulos do HUD (e do balão aberto, com o retrato e a plaquinha do nome) em px do canvas, medidos no máximo a
+  // cada 500 ms (como o mapa fazia com as placas dos prédios); o balão abrir, fechar ou trocar de texto remede na
+  // hora. Cada um leva a folga f de 8 px CSS até a placa (ui.md §10.18.2)
+  var hudMedido = { chave: '', medidoEm: -1e9, rects: [], dialogo: false, versao: 0, assinatura: '' };
+  function balaoAberto() {
+    var b = document.getElementById('claude-balao');
+    return b && !b.hidden && b.style.visibility !== 'hidden' ? b : null;
   }
-  // posição mais próxima da original em que a placa (com a borda e uma folga) não cruza o HUD
-  function desviarDoHud(hud, sx, sy, sw, sh, borda, cw, ch, xMin, xMax) {
-    if (!hud.length) return { x: sx, y: sy };
-    var folga = borda * 2;
+  function retangulosHud(canvas, dpr) {
+    if (typeof document === 'undefined' || !canvas || !canvas.getBoundingClientRect) return hudMedido;
+    var bal = balaoAberto(), tx = bal && bal.querySelector('.claude-texto');
+    var agora = performance.now(), chave = canvas.width + 'x' + canvas.height + '@' + dpr + (bal ? '|' + (tx ? tx.textContent.length : 0) : '');
+    if (chave === hudMedido.chave && agora - hudMedido.medidoEm <= 500) return hudMedido;
+    var c = canvas.getBoundingClientRect();
+    if (!c.width) return hudMedido;
+    var k = canvas.width / c.width || dpr, f = Math.ceil(FOLGA_HUD * k) + 1;   // +1: arredondamento do zoom não deixa a folga cair abaixo de 8
+    function doCanvas(r) { return { left: (r.left - c.left) * k, right: (r.right - c.left) * k, top: (r.top - c.top) * k, bottom: (r.bottom - c.top) * k, f: f }; }
+    var rects = Array.prototype.map.call(document.querySelectorAll('#hud > *:not(.hud-topo), #hud .hud-topo > * > *'), function (e) {
+      return doCanvas(caixaParada(e));
+    });
+    if (bal) {
+      // o balão entra subindo (animação "subir"): mede sem o deslocamento, onde ele vai parar
+      var r = bal.getBoundingClientRect(), dy = 0;
+      try { var tr = getComputedStyle(bal).transform; if (tr && tr !== 'none') dy = new DOMMatrixReadOnly(tr).m42; } catch (e) {}
+      var rb = doCanvas({ left: r.left, right: r.right, top: r.top - dy, bottom: r.bottom - dy });
+      rb.balao = true;
+      rects.push(rb);
+    }
+    hudMedido.rects = rects.filter(function (q) { return q.right > q.left && q.bottom > q.top; });
+    hudMedido.dialogo = !!bal;
+    // a versão só muda quando algum retângulo mudou de fato (a placa guardada é recalculada por ela)
+    var ass = !!bal + hudMedido.rects.map(arred).join(';');
+    if (ass !== hudMedido.assinatura) { hudMedido.assinatura = ass; hudMedido.versao++; }
+    hudMedido.medidoEm = agora; hudMedido.chave = chave;
+    return hudMedido;
+  }
+  // os objetos pendurados na parede do fundo do cômodo (e os que ocupam as fileiras dela), em px do jogo, uma vez
+  // por interior: a placa desliza pela parede até achar um vão entre eles (D2A-08)
+  var paredes = typeof WeakMap === 'function' ? new WeakMap() : null;
+  function objetosDaParede(def, c) {
+    var porComodo = paredes && paredes.get(def);
+    if (!porComodo) { porComodo = {}; if (paredes) paredes.set(def, porComodo); }
+    if (porComodo[c.id]) return porComodo[c.id];
+    var r = c.rect, lista = [];
+    (def.objetos || []).forEach(function (o) {
+      var d = II.dimensoes(o);
+      if (o.x >= r.x + r.w || o.x + d.w <= r.x || o.y >= r.y + r.h || o.y + d.h <= r.y) return;
+      // o de chão só conta se o desenho dele (com o topo que sobe) alcança a faixa da parede; conta inteiro
+      var y0 = o.y * T - d.topo;
+      if (!II.ehParede(o) && y0 >= (r.y + 2) * T) return;
+      lista.push({ x0: o.x * T, x1: (o.x + d.w) * T, y0: y0, y1: (o.y + d.h) * T });
+    });
+    porComodo[c.id] = lista;
+    return lista;
+  }
+  // os outros cômodos em px do jogo, uma vez por cômodo (a placa na moldura de cima ou no chão não invade o vizinho)
+  var vizinhos = typeof WeakMap === 'function' ? new WeakMap() : null;
+  function outrosComodos(def, c) {
+    var porComodo = vizinhos && vizinhos.get(def);
+    if (!porComodo) { porComodo = {}; if (vizinhos) vizinhos.set(def, porComodo); }
+    if (porComodo[c.id]) return porComodo[c.id];
+    return (porComodo[c.id] = (def.comodos || []).filter(function (o) { return o !== c; }).map(function (o) {
+      return { x0: o.rect.x * T, y0: o.rect.y * T, x1: (o.rect.x + o.rect.w) * T, y1: (o.rect.y + o.rect.h) * T };
+    }));
+  }
+  // os móveis de chão do cômodo (o desenho inteiro, com o topo que sobe), uma vez por interior; tapete à parte
+  // (enfeite plano: a placa no chão prefere não cobrir, mas pode)
+  var chaos = typeof WeakMap === 'function' ? new WeakMap() : null;
+  function objetosDoChao(def, c) {
+    var porComodo = chaos && chaos.get(def);
+    if (!porComodo) { porComodo = {}; if (chaos) chaos.set(def, porComodo); }
+    if (porComodo[c.id]) return porComodo[c.id];
+    var r = c.rect, moveis = [], tapetes = [];
+    (def.objetos || []).forEach(function (o) {
+      var d = II.dimensoes(o);
+      if (o.x >= r.x + r.w || o.x + d.w <= r.x || o.y >= r.y + r.h || o.y + d.h <= r.y) return;
+      var lib = II.libDe(o), toca = !!(o.fala || o.acao || lib.pedestal || /pedestal/.test(o.tipo));
+      (lib.plano ? tapetes : moveis).push({ x0: o.x * T, x1: (o.x + d.w) * T, y0: o.y * T - d.topo, y1: (o.y + d.h) * T, toca: toca });
+    });
+    // o tapete de saída e as escadas também se tocam (gatilhos pisados)
+    [def.saida].concat(def.escadas || []).forEach(function (e) {
+      if (e && e.x >= r.x && e.x < r.x + r.w && e.y >= r.y && e.y < r.y + r.h) moveis.push({ x0: e.x * T, x1: (e.x + 1) * T, y0: e.y * T, y1: (e.y + 1) * T, toca: true });
+    });
+    return (porComodo[c.id] = { moveis: moveis, tapetes: tapetes });
+  }
+  function paraTela(pintor, lista, f) {
+    return lista.map(function (o) {
+      var a = naTela(pintor, o.x0, o.y0), b = naTela(pintor, o.x1, o.y1);
+      return { left: a.x, top: a.y, right: b.x, bottom: b.y, f: f };
+    });
+  }
+  // a posição mais perto de (sx, sy) em que a placa (sw×sh, mais a borda) cabe na área e não cruza nenhum obstáculo
+  // (cada um com a sua folga f); descer pesa menos que andar de lado. Sem lugar: null
+  function lugarLivre(obst, sx, sy, sw, sh, borda, area) {
+    var x0 = area.x0 + borda, x1 = area.x1 - borda - sw, y0 = area.y0 + borda, y1 = area.y1 - borda - sh;
+    if (x1 < x0 || y1 < y0) return null;
+    // só os obstáculos que tocam a área contam
+    obst = obst.filter(function (r) { var f = r.f || 0; return r.left - f < area.x1 && r.right + f > area.x0 && r.top - f < area.y1 && r.bottom + f > area.y0; });
     function cruza(x, y) {
-      for (var i = 0; i < hud.length; i++) {
-        var r = hud[i];
-        if (x - folga < r.right && x + sw + folga > r.left && y - folga < r.bottom && y + sh + folga > r.top) return true;
+      for (var i = 0; i < obst.length; i++) {
+        var r = obst[i], f = r.f || 0;
+        if (x - borda - f < r.right && x + sw + borda + f > r.left && y - borda - f < r.bottom && y + sh + borda + f > r.top) return true;
       }
       return false;
     }
-    var lo = Math.max(folga, xMin === undefined ? -1e9 : xMin), hi = Math.min(cw - sw - folga, xMax === undefined ? 1e9 : xMax - sw);
-    function dentroX(x) { return hi >= lo ? Math.max(lo, Math.min(x, hi)) : Math.max(folga, Math.min(x, cw - sw - folga)); }
-    if (!cruza(sx, sy)) return { x: sx, y: sy };
-    var cands = [];
-    var ys = [sy], xs = [sx];
-    hud.forEach(function (r) {
-      ys.push(Math.round(r.bottom + folga * 2));
-      xs.push(Math.round(r.right + folga * 2), Math.round(r.left - sw - folga * 2));
+    var px = Math.max(x0, Math.min(sx, x1)), py = Math.max(y0, Math.min(sy, y1));
+    if (!cruza(px, py)) return { x: px, y: py };
+    var xs = [px, x0, x1], ys = [py, y0, y1];
+    obst.forEach(function (r) {
+      var f = (r.f || 0) + borda;
+      xs.push(Math.ceil(r.right + f), Math.floor(r.left - f - sw));
+      ys.push(Math.ceil(r.bottom + f), Math.floor(r.top - f - sh));
     });
-    ys.forEach(function (y) { xs.forEach(function (x) { cands.push({ x: dentroX(x), y: y }); }); });
     var melhor = null, custo = Infinity;
-    cands.forEach(function (p) {
-      if (p.y < sy || p.y + sh > ch || cruza(p.x, p.y)) return;
-      // descer é o preferido; andar de lado pesa um pouco mais
-      var k = (p.y - sy) + Math.abs(p.x - sx) * 1.3;
-      if (k < custo) { custo = k; melhor = p; }
+    ys.forEach(function (y) {
+      if (y < y0 || y > y1) return;
+      xs.forEach(function (x) {
+        if (x < x0 || x > x1) return;
+        var k = Math.abs(y - sy) + Math.abs(x - sx) * 1.3;
+        if (k < custo && !cruza(x, y)) { custo = k; melhor = { x: x, y: y }; }
+      });
     });
-    if (melhor) return melhor;
-    var fundo = sy;
-    hud.forEach(function (r) { fundo = Math.max(fundo, Math.round(r.bottom + folga * 2)); });
-    return { x: dentroX(sx), y: fundo, semLugar: true };
+    return melhor;
+  }
+  // o fundo da placa de parede: --laranja-claro (madeira clara, longe do --papel-quente dos chips), lido do :root uma vez (o canvas não lê variável CSS)
+  var fundoPlaca = null;
+  function corFundo() {
+    if (fundoPlaca) return fundoPlaca;
+    var v = '';
+    try { v = getComputedStyle(document.documentElement).getPropertyValue('--laranja-claro').trim(); } catch (e) {}
+    if (v) fundoPlaca = v;
+    return v || '#ffe4c2';
   }
 
   // as linhas de cada placa, medidas uma vez por texto, fonte e largura máxima (medir texto a cada quadro custava
@@ -121,27 +206,124 @@
     if (!J || typeof J.x !== 'number') return false;
     return J.x >= r.x * T && J.x < (r.x + r.w) * T && J.y >= r.y * T && J.y < (r.y + r.h) * T;
   }
+  function sobMariana(g, m, borda) {
+    return m && g.x - borda < m.dir && g.x + g.sw + borda > m.esq && g.y - borda < m.baixo && g.y + g.sh + borda > m.cima;
+  }
+  // a placa calculada de cada cômodo (por interior), refeita só quando a chave muda: posição do cômodo na tela (a
+  // câmera), tamanho do canvas, versão do HUD e do balão, balãozinhos, célula da Mariana (desempenho, O-06)
+  var guardadas = typeof WeakMap === 'function' ? new WeakMap() : null, guardaSemMapa = {};
+  function guardaDe(def) {
+    if (!guardadas) return guardaSemMapa;
+    var g = guardadas.get(def);
+    if (!g) { g = {}; guardadas.set(def, g); }
+    return g;
+  }
+  function arred(q) { return Math.round(q.left) + ',' + Math.round(q.top) + ',' + Math.round(q.right) + ',' + Math.round(q.bottom); }
 
   // placas dos cômodos, em px da tela, com a fonte pixel, por cima de móveis e personagens (ui.md §10.9.5): a letra
   // tem Reino.config.texto.corpo px CSS (× dpr em px de aparelho) nos 3 tamanhos; a moldura é desenhada em px de arte
-  // da interface (u = 2 px CSS): borda de 1 u, pregos de 1×1 u
+  // da interface (u = 2 px CSS): placa de parede de madeira (--laranja-claro, borda --tinta de 1 u, dois preguinhos
+  // de 1×1 u, sem o degrau de sombra dos chips). Onde ela fica: interiores.md §6.4 e §6.5
   function desenharPlacas(def, ctx, pintor, t, animar) {
     var escala = pintor.escala || 3, dpr = pintor.dpr || 1;
     var corpo = (R.config && R.config.texto && R.config.texto.corpo) || 16;
     var fonte = Math.round(corpo * dpr), u = Math.max(1, Math.round(2 * dpr));
     var pad = 5 * u, topo = 2 * u, lh = 10 * u, borda = u;
     var cw = ctx.canvas.width, ch = ctx.canvas.height;
+    var pal = (R.config && R.config.paleta) || {};
     ctx.save();
     ctx.imageSmoothingEnabled = true;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.font = fonte + 'px ' + FONTE_PIXEL;
     ctx.textRendering = 'optimizeSpeed';   // sem ligadura: com ela "fi"/"fl" viram um glifo só (o CSS não vale no canvas)
-    var hud = null, mari = caixaMariana(pintor);
+    var medido = null, mari = caixaMariana(pintor), J = window.Jogador;
+    var mariR = mari ? [{ left: mari.esq, top: mari.cima, right: mari.dir, bottom: mari.baixo, f: borda }] : [];
+    var celula = mari ? Math.floor(J.x / T) + ',' + Math.floor(J.y / T) + ',' + (mari.dir - mari.esq) : '';
     // os balãozinhos que N.desenhar pôs neste quadro (npcs-status.js), lidos e esvaziados a cada quadro
     var bq = R._npcs && R._npcs.bolhasQuadro, bolhas = [], corpos = [];
     function daTela(b) { return b.canvas === ctx.canvas; }
-    if (bq) { bolhas = bq.rects.filter(daTela); corpos = (bq.corpos || []).filter(daTela); bq.rects = []; bq.corpos = []; }
+    // balãozinho e cadeado de NPC com folga de 8 px CSS
+    if (bq) { bolhas = bq.rects.filter(daTela).map(function (b) { return { left: b.left, top: b.top, right: b.right, bottom: b.bottom, f: Math.round(8 * dpr) }; }); corpos = (bq.corpos || []).filter(daTela); bq.rects = []; bq.corpos = []; }
+    var assBolhas = null, guarda = guardaDe(def);
+
+    // onde a placa do cômodo c fica: a lista de passos, em ordem; cada um devolve o lugar livre mais perto de (x, y)
+    function passos(c, esq, dir, cimaC, baixoC, dela) {
+      var r = c.rect;
+      var med = linhasDa(ctx, c.placa, fonte, (r.w * T - 6) * escala - pad * 2);
+      var sw = Math.ceil(med.largura + pad * 2), sh = topo * 2 + lh * med.linhas.length;
+      var sx = Math.round((esq + dir) / 2 - sw / 2), sy = naTela(pintor, 0, r.y * T + 2).y;
+      var fimParede = naTela(pintor, 0, (r.y + 2) * T).y;
+      var gente = medido.rects.concat(bolhas, mariR);
+      var parede = objetosDaParede(def, c), obj = paraTela(pintor, parede, borda);
+      var outros = paraTela(pintor, outrosComodos(def, c), 0);
+      var xa = Math.max(esq, 0), xb = Math.min(dir, cw), ym = cimaC - Math.round(sh / 2) - borda;
+      function p(med, sw, sh, x, y, obst, area) {
+        return { med: med, sw: sw, sh: sh, x: x, y: y, achar: function (x, y) { return lugarLivre(obst, x, y, sw, sh, borda, area); } };
+      }
+      var lista = [
+        // 1) na parede do fundo, dentro do cômodo e da tela, fora dos objetos pendurados nela
+        p(med, sw, sh, sx, sy, gente.concat(obj), { x0: xa, x1: xb, y0: Math.max(cimaC, 0), y1: Math.min(fimParede, ch) }),
+        // 2) na moldura de cima (metade sobre a borda; pode subir até inteira acima dela), encostando nos objetos da
+        // parede e sem cruzar nenhum outro cômodo
+        p(med, sw, sh, sx, ym, gente.concat(paraTela(pintor, parede, 0), outros),
+          { x0: xa, x1: xb, y0: Math.max(cimaC - sh - borda * 2, 0), y1: Math.min(ym + sh + borda * 2, ch) }),
+      ];
+      if (!dela) return lista;
+      // 3) a do cômodo dela nunca some (ui.md §10.18.4): desce para o chão do próprio cômodo, abaixo do HUD e à
+      // direita da coluna de chips, fora dos NPCs e da Mariana; depois a tela toda (sem invadir outro cômodo); por
+      // fim só fora do HUD e da Mariana. A largura é a da tela que sobra; o texto quebra no que precisar
+      var xChips = 0;
+      medido.rects.forEach(function (h) { if (!h.balao && h.left < cw / 3 && h.top < ch / 2 && h.bottom > 0) xChips = Math.max(xChips, h.right + h.f); });
+      var m3 = linhasDa(ctx, c.placa, fonte, Math.min((r.w * T - 6) * escala, cw - xChips - borda * 4) - pad * 2);
+      var sw3 = Math.ceil(m3.largura + pad * 2), sh3 = topo * 2 + lh * m3.linhas.length;
+      var x3 = Math.round((esq + dir) / 2 - sw3 / 2), tela = { x0: xChips, x1: cw, y0: 0, y1: ch };
+      var chao = { x0: Math.max(xChips, xa), x1: xb, y0: Math.max(cimaC, 0), y1: Math.min(baixoC, ch) };
+      // no chão, meio tile de folga da Mariana, dos NPCs e dos móveis (D2A-08: caía colada nos pés dela)
+      var meio = Math.round(T / 2 * escala), ch3 = objetosDoChao(def, c);
+      var mariM = mari ? [{ left: mari.esq, top: mari.cima, right: mari.dir, bottom: mari.baixo, f: meio }] : [];
+      var genteM = mariM.concat(corpos.map(function (q) { return { left: q.left, top: q.top, right: q.right, bottom: q.bottom, f: meio }; }));
+      var perto = genteM.concat(ch3.moveis.map(function (o) { return paraTela(pintor, [o], o.toca ? meio : borda)[0]; }));
+      var noChao = medido.rects.concat(bolhas, perto, obj), tapetes = paraTela(pintor, ch3.tapetes, 0);
+      var tocaveis = paraTela(pintor, ch3.moveis.filter(function (o) { return o.toca; }), meio);
+      var gente3 = medido.rects.concat(bolhas, genteM);   // Mariana e NPCs com meio tile
+      var faixa = { x0: chao.x0, x1: chao.x1, y0: chao.y0, y1: Math.min(fimParede + sh3 + borda * 2, chao.y1) };
+      return lista.concat([
+        // 3a) encostada na parede de cima, fora do tapete; 3b) o fundo do cômodo, fora do tapete; 3c) idem, sobre ele
+        p(m3, sw3, sh3, x3, sy, noChao.concat(tapetes), faixa),
+        p(m3, sw3, sh3, x3, chao.y1, noChao.concat(tapetes), chao),
+        p(m3, sw3, sh3, x3, chao.y1, noChao, chao),
+        // 3d) só fora do que se toca (móvel comum pode ficar embaixo): de novo a faixa de cima e depois o fundo
+        p(m3, sw3, sh3, x3, sy, gente3.concat(obj, tocaveis), faixa),
+        p(m3, sw3, sh3, x3, chao.y1, gente3.concat(obj, tocaveis), chao),
+        p(m3, sw3, sh3, x3, sy, gente3.concat(obj), chao),
+        p(m3, sw3, sh3, x3, sy, gente3.concat(obj, outros), tela),
+        p(m3, sw3, sh3, x3, sy, gente3.concat(outros), tela),
+        p(m3, sw3, sh3, x3, sy, gente3.concat(obj), tela),
+        p(m3, sw3, sh3, x3, sy, medido.rects.concat(mariM), tela),
+        p(m3, sw3, sh3, x3, sy, medido.rects.concat(mariR), tela),
+      ]);
+    }
+    function calcular(c, antes, esq, dir, cimaC, baixoC, dela, chave) {
+      var lista = passos(c, esq, dir, cimaC, baixoC, dela), i, q, livre;
+      // histerese: o lugar de antes (preso ao cômodo, não à tela) vale enquanto continuar livre no mesmo passo
+      if (antes && antes.pos && lista[antes.passo]) {
+        q = lista[antes.passo];
+        var ax = esq + antes.dx, ay = cimaC + antes.dy;
+        livre = q.sw === antes.pos.sw ? q.achar(ax, ay) : null;
+        if (livre && livre.x === ax && livre.y === ay) return montar(q, livre, antes.passo);
+      }
+      for (i = 0; i < lista.length; i++) {
+        livre = lista[i].achar(lista[i].x, lista[i].y);
+        if (livre) return montar(lista[i], livre, i);
+      }
+      // sem nenhum retângulo livre (exceção do interiores.md §6.5): a placa fica fora deste quadro
+      return { chave: chave, pos: null };
+      function montar(q, l, passo) {
+        return { chave: chave, passo: passo, dx: l.x - esq, dy: l.y - cimaC, pos: { x: l.x, y: l.y, sw: q.sw, sh: q.sh, med: q.med } };
+      }
+    }
+
     (def.comodos || []).forEach(function (c) {
       if (!c.placa) return;
       var r = c.rect;
@@ -149,61 +331,28 @@
       var esq = naTela(pintor, r.x * T, 0).x, dir = naTela(pintor, (r.x + r.w) * T, 0).x;
       var cimaC = naTela(pintor, 0, r.y * T).y, baixoC = naTela(pintor, 0, (r.y + r.h) * T).y;
       if (dir < 0 || esq > cw || baixoC < 0 || cimaC > ch) return;
-      var dela = comMariana(r);   // a do cômodo da Mariana nunca some (ui.md §10.18.4)
-      var med = linhasDa(ctx, c.placa, fonte, (r.w * T - 6) * escala - pad * 2);
-      var sw = Math.ceil(med.largura + pad * 2), sh = topo * 2 + lh * med.linhas.length;
-      var sx = Math.round((esq + dir) / 2 - sw / 2), sy = naTela(pintor, 0, r.y * T + 2).y;
-      // a placa inteira na tela: encosta na borda de dentro, sem sair do cômodo
-      var xLo = Math.max(esq, borda * 2), xHi = Math.min(dir, cw - borda * 2) - sw;
-      if (xHi >= xLo) sx = Math.max(xLo, Math.min(sx, xHi));
-      var fora = sx > cw || sy > ch || sx + sw < 0 || sy + sh < 0;
-      if (fora && !dela) return;
-      // o HUD e os balãozinhos de status deste quadro (a placa por cima esconderia o ícone do NPC)
-      if (!hud) hud = retangulosHud(ctx.canvas, dpr).concat(bolhas);
-      // placa atrás do HUD (chips, botão ↙, montaria): desce para logo abaixo dele ou vai para o lado,
-      // e só desce até a borda de baixo da parede do fundo (as 2 primeiras fileiras do cômodo):
-      // mais abaixo ela pareceria estar no chão, ou no meio do cômodo de baixo
-      var fimParede = naTela(pintor, 0, (r.y + 2) * T).y, livre = null;
-      if (!fora) {
-        livre = desviarDoHud(hud, sx, sy, sw, sh, borda, cw, Math.min(ch, fimParede - borda), esq + borda, dir - borda);
-        // desviada, a placa não pode invadir outro cômodo nem sair da parede
-        if ((livre.x !== sx || livre.y !== sy) &&
-          (livre.x < esq - borda || livre.x + sw > dir + borda || livre.y + sh + borda > fimParede)) livre = null;
-        // e inteira na tela, com a borda: cortada, a da Mariana desce e a vizinha some
-        else if (livre.x - borda < 0 || livre.x + sw + borda > cw || livre.y - borda < 0 || livre.y + sh + borda > ch) livre = null;
-      }
-      if (!livre) {
-        if (!dela) return;
-        // na descida, a placa desvia também do corpo dos NPCs e da Mariana (em cima do chão ela cobriria alguém)
-        var obst = hud.concat(corpos, mari ? [{ left: mari.esq, top: mari.cima, right: mari.dir, bottom: mari.baixo }] : []);
-        // sem lugar na parede: a primeira faixa livre abaixo do HUD e à direita da coluna de chips, mesmo sobre o
-        // chão, com a mesma borda. A largura é a da tela que sobra; o texto quebra em quantas linhas precisar
-        var xChips = 0;
-        hud.forEach(function (h) { if (h.left < cw / 3 && h.top < ch / 2 && h.bottom > 0) xChips = Math.max(xChips, h.right); });
-        var folga = borda * 2, larg = cw - xChips - folga * 4;
-        med = linhasDa(ctx, c.placa, fonte, Math.min((r.w * T - 6) * escala, larg) - pad * 2);
-        sw = Math.ceil(med.largura + pad * 2); sh = topo * 2 + lh * med.linhas.length;
-        var x0 = Math.round(Math.max(xChips + folga * 2, Math.min(cw - sw - folga * 2, (esq + dir) / 2 - sw / 2)));
-        var y0 = Math.max(folga, Math.min(sy, ch - sh - folga));
-        livre = desviarDoHud(obst, x0, y0, sw, sh, borda, cw, ch, xChips + folga, cw - folga);
-        // nenhum lugar livre de gente: fica onde não cruza o HUD (e some por cima da Mariana, como sempre)
-        if (livre.semLugar || livre.y + sh > ch) livre = desviarDoHud(hud, x0, y0, sw, sh, borda, cw, ch, xChips + folga, cw - folga);
-      }
-      sx = livre.x; sy = livre.y;
-      // cruzando a Mariana, a placa fica quase transparente (como as placas do mapa)
-      ctx.globalAlpha = mari && sx - borda < mari.dir && sx + sw + borda > mari.esq && sy - borda < mari.baixo && sy + sh + borda > mari.cima ? 0.35 : 1;
+      var dela = comMariana(r);
+      if (!medido) medido = retangulosHud(ctx.canvas, dpr);
+      // com o balão aberto, só a placa do cômodo dela (a vizinha sairia cortada ao lado do balão)
+      if (medido.dialogo && !dela) return;
+      if (assBolhas === null) assBolhas = bolhas.concat(corpos).map(arred).join(';');
+      var chave = esq + ',' + cimaC + ',' + cw + 'x' + ch + ',' + fonte + '|' + medido.versao + '|' + assBolhas + '|' + celula + '|' + dela;
+      var g = guarda[c.id];
+      // a Mariana andou dentro da célula e passou por baixo: recalcula (a do cômodo dela muda de lugar; a vizinha
+      // que não achar outro lugar some enquanto ela estiver embaixo)
+      if (!g || g.chave !== chave || (g.pos && sobMariana(g.pos, mari, borda))) g = guarda[c.id] = calcular(c, g, esq, dir, cimaC, baixoC, dela, chave);
+      var s = g.pos;
+      if (!s || sobMariana(s, mari, borda)) return;
+      var sx = s.x, sy = s.y, sw = s.sw, sh = s.sh;
       ctx.fillStyle = K;
       ctx.fillRect(sx - borda, sy - borda, sw + borda * 2, sh + borda * 2);
-      ctx.fillStyle = '#fff8ee';
+      ctx.fillStyle = corFundo();
       ctx.fillRect(sx, sy, sw, sh);
-      ctx.fillStyle = '#f3e6c8';
-      ctx.fillRect(sx, sy + sh - u, sw, u);
-      ctx.fillStyle = '#ffd34d';
+      ctx.fillStyle = pal.tintaSuave || '#6b5378';
       ctx.fillRect(sx + 2 * u, sy + 2 * u, u, u);
       ctx.fillRect(sx + sw - 3 * u, sy + 2 * u, u, u);
       ctx.fillStyle = K;
-      med.linhas.forEach(function (l, i) { ctx.fillText(l, Math.round(sx + sw / 2), sy + topo + lh * i + Math.round(lh / 2)); });
-      ctx.globalAlpha = 1;
+      s.med.linhas.forEach(function (l, i) { ctx.fillText(l, Math.round(sx + sw / 2), sy + topo + lh * i + Math.round(lh / 2)); });
     });
     ctx.restore();
     ctx.imageSmoothingEnabled = false;
