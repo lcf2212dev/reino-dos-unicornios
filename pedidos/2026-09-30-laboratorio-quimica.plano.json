@@ -15,9 +15,9 @@
         "tela": "quimica-bancada"
       },
       "perfil": {
-        "voz": "pt-BR-ThalitaMultilingualNeural",
-        "velocidade": "+0%",
-        "tom": "-28Hz"
+        "voz": "pt-BR-FranciscaNeural",
+        "velocidade": "+10%",
+        "tom": "-34Hz"
       }
     }
   ],
