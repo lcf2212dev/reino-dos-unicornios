@@ -1,13 +1,13 @@
 /* Álbum de ETs (js/ui/album-ets.js): um cartão por ET; amigo em cores, ainda não = silhueta com "?". */
 .tela-album-ets .painel { max-width: 720px; }
-.album-contador { font-weight: 700; text-align: center; margin-bottom: 10px; }
+.album-contador { text-align: center; margin-bottom: 10px; }
 .album-grade {
   list-style: none; margin: 0; padding: 0;
   display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; padding: 6px;
 }
 .album-cartao {
   display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center;
-  padding: 10px 8px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel);
+  padding: 10px 8px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel);
 }
 .album-cartao small { color: var(--tinta-suave); }
 .album-figura { position: relative; display: flex; align-items: flex-end; justify-content: center; min-height: 64px; }
@@ -15,14 +15,16 @@
 .album-cartao.silhueta { border-style: dashed; background: var(--papel-quente); }
 .album-interroga {
   position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-  font-size: 2em; font-weight: 700; color: var(--papel);
-  text-shadow: 1px 0 0 var(--tinta), -1px 0 0 var(--tinta), 0 1px 0 var(--tinta), 0 -1px 0 var(--tinta);
+  font-size: var(--texto-t); color: var(--papel);
+  text-shadow: 2px 0 0 var(--tinta), -2px 0 0 var(--tinta), 0 2px 0 var(--tinta), 0 -2px 0 var(--tinta);
 }
 .album-cartao.amigo { border-color: var(--certo); background: var(--certo-fundo); }
-.album-cartao.junto { box-shadow: 0 0 0 4px var(--ceu); }
-.album-selo { font-size: 0.8em; font-weight: 700; padding: 2px 8px; border-radius: var(--canto); background: var(--ceu); }
-.album-levar { width: 100%; margin-top: 4px; font-size: 0.9em; }
+.album-cartao.junto { outline: var(--borda-grossa) solid var(--ceu); }   /* o anel azul de quem está junto */
+.album-selo { font-size: var(--texto-aux); padding: 2px 8px; border-radius: var(--canto); background: var(--ceu); }
+.album-levar { width: 100%; margin-top: 4px; font-size: var(--texto); }
 
+/* "Letras grandes": o nome ("ET de Saturno", colado pelo espaço inquebrável) cabe com folga */
+.letras-grandes .album-grade { grid-template-columns: repeat(auto-fill, minmax(232px, 1fr)); }
 @media (max-width: 480px), (max-height: 500px) {
   .album-grade { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
   .album-cartao { padding: 6px 4px; }

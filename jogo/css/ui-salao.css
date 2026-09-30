@@ -2,7 +2,7 @@
    prévia grande da Mariana (de frente, de lado, de costas e montada) e a grade de opções com retrato. */
 .salao-previa {
   display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap;
-  padding: 10px; border: 3px solid var(--borda); border-radius: var(--canto-grande);
+  padding: 10px; border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto-grande);
   background:
     linear-gradient(var(--branco), var(--branco)) center / 200px 92% no-repeat, linear-gradient(var(--branco), var(--branco)) center / 250px 80% no-repeat,
     linear-gradient(var(--branco), var(--branco)) center / 290px 62% no-repeat, linear-gradient(var(--branco), var(--branco)) center / 310px 40% no-repeat, var(--laranja-claro);
@@ -10,19 +10,28 @@
 .salao-grande { display: grid; place-items: center; min-height: 140px; }
 .salao-vistas { display: flex; align-items: flex-end; gap: 12px; }
 .salao-vista { display: grid; place-items: end center; gap: 4px; min-width: 72px; }   /* a legenda ("De costas") cabe sem encostar na vizinha */
-.salao-legenda { font-size: 12px; color: var(--tinta-suave); white-space: nowrap; }   /* D8B-27 */
+.salao-legenda { font-size: var(--texto-aux); color: var(--tinta-suave); white-space: nowrap; }   /* D8B-27 */
 /* coluna larga o bastante para a maior palavra ("Cacheadinho": 11 letras de 12 px) inteira, com 8 px até o contorno
    (ui.md §10.17) */
 .salao-opcoes { display: grid; grid-template-columns: repeat(auto-fill, minmax(156px, 1fr)); gap: 8px; }
 .salao-opcao {
   display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 8px 6px;
-  border: 3px solid var(--borda); border-radius: var(--canto); background: var(--papel); box-shadow: 0 3px 0 var(--borda);
-  font: inherit; font-size: 12px; font-weight: 700; color: inherit; cursor: pointer; line-height: 1.25;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel); box-shadow: var(--sombra-pequena);
+  font: inherit; font-size: var(--texto-aux); color: inherit; cursor: pointer; line-height: var(--entrelinha-titulo);
 }
 .salao-opcao[aria-pressed="true"] { background: var(--laranja-claro); outline: 4px solid var(--roxo); outline-offset: 2px; }
 .salao-retrato { display: grid; place-items: end center; min-height: 54px; }
 .salao-nome { text-align: center; overflow-wrap: normal; }   /* quebra só entre palavras */
+/* com "Letras grandes" a legenda de 16 px quebra entre as palavras ("De / costas"), sem vazar da vitrine */
+.letras-grandes .salao-legenda { white-space: normal; text-align: center; overflow-wrap: normal; }
+.letras-grandes .salao-vistas { flex-wrap: wrap; justify-content: center; }   /* "Montada" desce para a linha de baixo */
+/* e a coluna cabe "Cacheadinho" (11 letras de 16 px) com 8 px até o contorno */
+.letras-grandes .salao-opcoes { grid-template-columns: repeat(auto-fill, minmax(216px, 1fr)); }
 @media (max-width: 480px) {
   .salao-opcoes { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
   .salao-opcao { padding: 6px 8px 4px; }
+  /* celular com "Letras grandes": uma coluna, o retrato à esquerda e o nome ao lado (duas colunas não cabem o nome) */
+  .letras-grandes .salao-opcoes { grid-template-columns: minmax(0, 1fr); }
+  .letras-grandes .salao-opcao { flex-direction: row; gap: 12px; padding: 6px 12px; }
+  .letras-grandes .salao-nome { text-align: left; }
 }

@@ -241,7 +241,7 @@
               urls.push(u);
               var b = el('button.fotos-mini', { type: 'button', 'aria-label': 'Ver a foto: ' + f.lugar + ', ' + f.data },
                 el('img', { src: u, alt: '', draggable: 'false' }),
-                el('span.fotos-mini-data', f.data));
+                el('span.fotos-mini-data', legendaMini(f.lugar)));   // o lugar (D8B-17); a data fica na foto grande
               b.addEventListener('click', function () { som('toque'); verGrande(lista, i, function (apagou) { if (apagou) montar(i); }); });
               grade.appendChild(b);
               return b;
@@ -260,6 +260,12 @@
       });
     }));
   };
+
+  // legenda da miniatura: o lugar já gravado na foto (só leitura), com o hífen suave nas palavras longas (ui.md §10.17)
+  function legendaMini(lugar) {
+    var R = Reino._ui, t = String(lugar || '');
+    return R && R.hifenizar ? R.hifenizar(t) : t;
+  }
 
   // a foto grande, com ◀ ▶ (e as setas do teclado), Compartilhar (onde der), Salvar no aparelho e Apagar (com confirmação)
   function verGrande(lista, i, aoFechar) {
@@ -291,7 +297,7 @@
       url = URL.createObjectURL(f.png);
       img.src = url; img.alt = 'Foto: ' + f.lugar + ', ' + f.data;
       img.width = f.w; img.height = f.h;
-      U().preencher(legenda, f.lugar + ' · ' + f.data);
+      U().preencher(legenda, f.lugar + '\u00a0· ' + f.data);   // o "·" colado ao lugar, nunca sozinho no fim da linha (ui.md §10.17.4)
       msg.hidden = true;
       var varias = lista.length > 1;
       ant.hidden = prox.hidden = !varias;
