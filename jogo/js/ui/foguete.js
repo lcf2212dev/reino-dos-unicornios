@@ -1,5 +1,5 @@
 /* Painel do foguete (Reino.UI.telaFoguete), aberto pelo foguete do Hangar (ação `viagem`, sistemas/viagem.js):
-   o tanque em gotinhas, os destinos (Reino.Viagem.planetas()) com "Decolar!" quando cheio, e o passaporte (um
+   o tanque em gotinhas, os destinos (Reino.Viagem.planetas()) com "Voar!" quando cheio, e o passaporte (um
    carimbo por planeta, selo com o planeta dentro; sem carimbo, o planeta em silhueta e "?"). O desenho dos planetas
    é o do Planetário (Reino.IconesPlanetas, arte/icones/planetas.js). Não cheio: o Claude diz quantas certas faltam.
    Destino com `depois` ainda sem aquele carimbo: cadeado; tocar nele faz o Claude dizer qual visitar antes.
@@ -70,7 +70,7 @@
           // trancado: o estado indisponível (.indisponivel, ui.md §10.19.1), com o 🔒 dizendo por quê
           return el('li.foguete-destino.foguete-trancado.indisponivel', bola(p, true), el('b', p.nome), tranca);
         }
-        var btn = el('button.btn-grande.btn-principal.foguete-decolar', { type: 'button', disabled: !cheio }, 'Decolar! 🚀');
+        var btn = el('button.btn-grande.btn-principal.foguete-decolar', { type: 'button', disabled: !cheio }, 'Voar!🚀');   // compacto: cabe na linha do nome, como o 🔒 (D8B-21)
         btn.setAttribute('aria-label', 'Decolar para ' + para);
         btn.addEventListener('click', function () {
           if (!V.cheio() || !V.aberto(p.id)) return;

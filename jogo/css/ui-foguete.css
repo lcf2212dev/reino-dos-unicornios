@@ -23,10 +23,20 @@
 
 .foguete-destinos ul, .foguete-passaporte ul { list-style: none; margin: 0; padding: 0; }
 .foguete-destino {
-  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;   /* nome e botão (ou cadeado) numa linha só (D8B-21) */
   padding: 8px 10px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel);
 }
-.foguete-destino b { flex: 1; min-width: 4em; }
+.foguete-destino b { flex: 999 1 auto; min-width: min-content; }
+.foguete-destino button { flex: none; white-space: nowrap; }
+/* compacto, como o cadeado: o 🚀 colado no "Voar!" (sem o espaço da fonte, larga), o botão cabe ao lado do nome
+   até com Letras grandes no celular; nome comprido com Letras grandes ainda desce (flex-wrap) */
+.foguete-decolar {
+  min-width: 0; padding-left: 10px; padding-right: 10px;
+  display: inline-flex; align-items: center; justify-content: center;   /* "Voar!" no meio da altura do 🚀 */
+}
+/* botão que desceu ocupa a linha toda (o nome, com flex 999, fica com o que sobra quando cabem juntos) */
+.foguete-destino .foguete-decolar { flex: 1 0 auto; }
+.foguete-decolar > canvas { margin-left: 4px; }
 .foguete-destino + .foguete-destino { margin-top: 8px; }
 /* planeta trancado: .indisponivel, no estado indisponível de ui-base.css (nome em --tinta-suave, sem transparência; D8B-12) */
 .foguete-cadeado { min-width: 56px; }
