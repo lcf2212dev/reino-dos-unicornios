@@ -21,7 +21,7 @@ assunto (`loja.md`, `cuidados.md`, `surpresa.md`, `fotos.md`); regras locais da 
 ## 2. Pilha de telas
 ```
 UI.abrirTela(nome) → section.tela.tela-<nome> (role dialog, aria-modal) em #telas, no topo da pilha
-UI.fecharTela(t?)          // tira t (padrão: a de cima) da pilha e do DOM; UI.atualizarHUD()
+UI.fecharTela(t?)          // tira t (padrão: a de cima) da pilha e do DOM (§10.15.8); UI.atualizarHUD()
 UI.fecharTodas()  UI.temTela() → bool
 UI.painel(nome, titulo, { semFechar?, aoFechar? }) → { tela, conteudo, card }   // cartão com título e ✕
 UI.escolher(msg, [{ rotulo, valor, principal?, seguro?, gasta? }], classe?) → Promise(valor)
@@ -35,6 +35,7 @@ UI.confirmar(msg, sim, nao, gasta?) → Promise(bool)   // atalho: dois botões,
 4. `UI.painel`: ✕, tocar fora do cartão e Esc fecham (os três pelo mesmo caminho do ✕), salvo `semFechar`.
 5. `UI.escolher` resolve com o `valor` do botão tocado e fecha o diálogo antes de resolver.
 6. Quem lê o estado numa tela aberta chama `P.estado()` na hora do toque (`save-e-mescla.md` §8).
+7. A pilha é só `#telas > .tela`. A tela que sai (`#telas-saindo`, §10.15.8) não é pilha: ninguém a procura.
 
 ## 3. Teclado: Esc e Tab
 1. Esc (no `window`, depois dos ouvintes do `document`; ignora `defaultPrevented` e repetição) age na tela de
@@ -283,9 +284,9 @@ O lendário é sempre dourado (chip, faixa da prova e quadro da Escola também);
    `--borda-grossa` (4 px) em moldura grande (painel, balão, tela, retrato). Nenhuma outra espessura (nada de 1, 3,
    5, 6 nem 10 px).
 3. Sombra dura para baixo, só por token: `--sombra-pequena` (`0 2px 0 var(--borda)`) em chip e botão pequeno;
-   `--sombra-grande` (`0 4px 0 var(--borda)`) em botão grande e painel. Contorno de texto (`text-shadow`) de 2 px. O
-   botão apertado é da onda 3i (D9-03): a 2b não mexe em `:active` (o `translateY` e a sombra do apertado ficam
-   como estão até a 3i), e o validador de sombra ignora `:active`.
+   `--sombra-grande` (`0 4px 0 var(--borda)`) em botão grande e painel. Contorno de texto (`text-shadow`) de 2 px.
+   Botão apertado desce a altura da sombra (2 ou 4 px) e a sombra some; cada tocável declara `--degrau` ao lado da
+   sombra (§10.15.7).
 4. Canto: `--canto-pequeno` (4 px) em botão de até 56 px de lado (✕, tela cheia, 📷, álbum): com `--canto-grande`
    o degrau de 9 px desenha um "+". Acima disso, `--canto` e `--canto-grande` (§10.1).
 5. Ícone 16×16 a 32 px CSS (2 px CSS por pixel) em botão, dock, chip e também dentro da linha de texto (a letra de
@@ -372,18 +373,54 @@ Adulto e criança diferem ≥ 4 px. Peça nova entra na faixa do papel dela; pap
 ### 10.15 Movimento
 1. `scale` só por fator inteiro em desenho pixel (e nunca em texto); pulso = deslocamento de 1 pixel de arte ou
    troca de quadro.
-2. Desenho pixel anda em degraus: `steps()` ou deslocamento inteiro. Translação suave só em painel inteiro.
+2. Desenho pixel (sprite, ícone, emoji, chip, carta, estrela) anda em `steps(n)`, com n = número de degraus de 2 px
+   do deslocamento, ou em deslocamento inteiro. `ease-out` só em translação de painel inteiro e em `opacity` de véu,
+   flash ou tela inteira (§10.19.1). `cubic-bezier` só nas exceções do item 5.
 3. Durações só por token: `--rapido` 120 ms (resposta ao toque), `--normal` 240 ms (abrir, fechar, trocar),
-   `--lento` 600 ms (chegada, festa curta). Repetição infinita tem período de 2 × `--lento` ou mais, e o chamado de
-   atenção repete poucas vezes e para.
+   `--lento` 600 ms (chegada, festa curta), no `:root` de `ui-base.css`, com o espelho `Reino.config.movimento`
+   (`config.js`; o validador confere os dois). Toda duração de `animation` e `transition` em `jogo/css/` é um token
+   ou `calc(<inteiro> * var(--lento))`; os `0ms`/`0.01ms` das saídas `sem-animacao`/`reduce` valem. Repetição
+   infinita tem período de 2 × `--lento` ou mais, e o chamado de atenção repete poucas vezes e para.
 4. `opacity`: onde pode, só no §10.19.1.
 5. Exceções escritas (o validador de pixel aceita só estas):
    - `armar-encher` (`ui-base.css`): barra de preenchimento em `scaleX`, dura `ARMAR_MS`;
    - `.balao-respira` (Ritual da Calma, `ui-prova.css`): cresce e encolhe contínuo, de propósito, no ritmo da
      respiração (3,1 s);
-   - confete e festa: duração da escala de festa (§10.16).
-6. Toda animação tem saída em `body.sem-animacao` e `prefers-reduced-motion` (§8.3); o que o canvas desenha fica
-   parado quando as animações estão desligadas.
+   - confete e festa: duração da escala de festa (§10.16);
+   - zoom da abertura (`ui-abertura.css`): `--entrar-ms` com `cubic-bezier`, casado com `Reino.config.abertura`;
+   - duração presa a um timer do JS fora da onda 3i (`ARMAR_MS`, `balancar` do ovo em `ui/ovos.js`): a frente `css`
+     da 3i completa esta lista com o `arquivo:linha` de cada timer.
+6. Toda animação e toda `transition` curta têm saída em `body.sem-animacao` e `prefers-reduced-motion` (§8.3); o que
+   o canvas desenha fica parado quando as animações estão desligadas. O afundar (item 7) não é animação: fica igual
+   nas duas saídas.
+7. Afundar. Todo tocável com sombra de degrau, em `:active`, desce a altura da sombra e a sombra some; o brilho
+   interno (onde há) vira o do apertado. Uma regra só, em `ui-base.css`:
+   `:is(button, [role="button"]):active:not(:disabled):not([aria-disabled="true"]):not(.indisponivel)
+   { transform: translateY(var(--degrau, 0px)); box-shadow: var(--brilho-apertado, none); }`.
+   1. Cada tocável declara, na mesma regra da sombra, `--degrau: 2px` (com `--sombra-pequena`) ou `--degrau: 4px`
+      (com `--sombra-grande`); quem tem brilho `inset` declara também
+      `--brilho-apertado: inset 0 2px 0 var(--brilho-fraco)`. Nenhum outro `:active` com `transform` ou
+      `box-shadow` (o `.dock-btn:active` troca só o fundo: o botão não tem sombra, a do `.dock` fica).
+   2. Sem sombra de degrau, não afunda (`--degrau` 0: `.apoio-abrir`, `.interruptor`, `.jogadores-aba`,
+      `.btn-ouvir`, `.dock-btn`). Exceções: `.chip-mini.sugestao` tem `--sombra-pequena` e `--degrau: 2px`;
+      `.ovo-grande` (desenho solto, fundo transparente) desce `--degrau: 2px`, sem sombra.
+   3. Estado parado não muda o repouso: selecionado (`[aria-pressed="true"]`), `.certa` e `.colocada` guardam a
+      sombra e afundam igual. Indisponível não afunda (§10.19.1).
+   4. É estado, não animação: instantâneo (sem `transition`; pixel não desliza), igual com `body.sem-animacao` e
+      `prefers-reduced-motion`.
+   5. Animação que mexe no `transform` do próprio botão (chamado do `.bau`, `pulsar` do `.btn-ovos` e do chip dos
+      ovos, `balancar` do `.ovo-grande`): `animation: none` em `:active`, na mesma regra única.
+   6. Com sombra, mas não tocáveis (sem `--degrau`): `.painel`, `.painel-ovo`, `.tela-jogadores .painel`, `.dock`,
+      `.claude-fala`, `.titulo-jogo`, `.nota-folha`, `.selo-tentativa`, `.linha-premio`, `.jogadores-guardando`,
+      `.criar-plaquinha`, `.apoio`. O validador de movimento usa esta lista.
+8. Entrada e saída de tela. O véu (`.tela`) esmaece (`opacity` 0 → 1) e o `.painel` desce 3 degraus de 2 px
+   (`translateY(-6px)` → 0, `steps(3)`), os dois em `--rapido`; a saída é o inverso, em `--rapido`, `forwards`.
+   1. `UI.fecharTela` faz tudo NA HORA (tira da pilha, `com-tela`, `EV.TELAS`, HUD, foco devolvido) e então, com
+      `U.animar()` verdadeiro, move o nó para `#telas-saindo` (criado por `ui/base.js` ao lado de `#telas`,
+      `aria-hidden="true"`, `inert`, `pointer-events: none`, abaixo de `#telas` no empilhamento) com a classe
+      `.saindo`, e o tira do DOM depois de `Reino.config.movimento.rapido` ms (`setTimeout`: o `animationend` não
+      vem com animação desligada). Com `U.animar()` falso, tira na hora. `UI.fecharTodas` usa o mesmo caminho.
+   2. `#telas-saindo` não é pilha (§2.7): `#telas > .tela` e `telas.querySelector(...)` seguem vendo só a viva.
 
 ### 10.16 Escala de festa
 A festa cresce com o feito: acerto < sala < prova < matéria completa. Compra é festa de acerto.
@@ -425,6 +462,7 @@ brilho arco-íris, não mais confete. O confete é desenhado pela regra do §10.
 ### 10.19 Estados de controle: indisponível, erro de item e foco
 1. Indisponível (trancado, desligado, sem estrelas, esperando a voz, Conferir sem resposta): uma regra só, para
    `:disabled`, `[aria-disabled="true"]` e `.indisponivel` (o que não é botão: carta cara da loja, planeta trancado).
+   Não afunda (§10.15.7): o retorno ao toque é o `toque-ignorado`.
    Fundo `--papel-2` chapado, texto `--tinta-suave`, borda `--borda`, sombra `--sombra-pequena`; o desenho dentro leva
    `filter: var(--apagado)`. Nada de `opacity` nem `grayscale` no texto. O botão segue focável, com `aria-disabled`
    (§6.4). Ícone 16×16 só onde há motivo: 🔒 no trancado (planeta, foguete) e no caro (loja); o resto fica só com a
