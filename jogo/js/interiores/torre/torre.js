@@ -74,7 +74,7 @@
     cartaz(7, 'relogio', '#fff3d6', BRONZE), { tipo: 'cortina', x: 8, y: 0, var: { cor: '#2f6fd6' } }, { tipo: 'janela', x: 10, y: 0 },
     { tipo: 'torre-caixa-pecas', x: 0, y: 2 }, { tipo: 'pilha-livros', x: 2, y: 2 }, { tipo: 'torre-blocos-abc', x: 3, y: 2 },
     { tipo: 'globo', x: 0, y: 4 },
-    inter('livro', 'Livro das Palavras', { tipo: 'torre-pulpito', x: 2, y: 4, acao: { tipo: 'tela', tela: 'livro', materia: 'ingles' } }),
+    inter('livro', 'Livro do Inglês', { tipo: 'torre-pulpito', x: 2, y: 4, acao: { tipo: 'tela', tela: 'livro', materia: 'ingles' } }),
     { tipo: 'torre-tapete-palavras', x: 1, y: 5, w: 2, h: 2, var: { palavra: 'TICK', cor: '#9fcfff' } },
     { tipo: 'pilha-livros', x: 0, y: 6 }, { tipo: 'torre-engrenagens', x: 0, y: 8 }, { tipo: 'torre-caixa-pecas', x: 3, y: 8 },
     { tipo: 'tapete-listrado', x: 0, y: 9, w: 3, h: 1, var: { cores: ['#2f6fd6', '#fff8ee', '#ff5c6a', '#fff8ee'] } },

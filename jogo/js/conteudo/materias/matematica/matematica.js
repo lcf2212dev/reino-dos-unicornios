@@ -9,6 +9,7 @@ Reino.registrarMateria({
   id: 'matematica',
   nome: 'Matemática',
   emoji: '🔢',
+  cor: '#3f7fe0',   // a cor da matéria (docs/contratos/ui.md §10.22)
   nomeLivro: 'Livro dos Números',
   lugar: {
     nome: 'Torre dos Números',

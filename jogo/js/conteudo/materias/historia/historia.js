@@ -6,6 +6,7 @@ Reino.registrarMateria({
   id: 'historia',
   nome: 'História',
   emoji: '🏛️',
+  cor: '#b95a36',   // a cor da matéria (docs/contratos/ui.md §10.22)
   lugar: {
     nome: 'Museu das Memórias',
     sprite: 'museu',

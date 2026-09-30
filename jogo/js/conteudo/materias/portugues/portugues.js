@@ -10,6 +10,7 @@ Reino.registrarMateria({
   id: 'portugues',
   nome: 'Português',
   emoji: '📝',
+  cor: '#e0433f',   // a cor da matéria (docs/contratos/ui.md §10.22)
   nomeLivro: 'Livro das Letras',
   lugar: {
     nome: 'Casa das Palavras',
