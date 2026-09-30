@@ -112,3 +112,15 @@
   .jogadores-cartao { padding-left: 4px; padding-right: 4px; }   /* 12 letras de 12 px cabem com folga */
   .jogadores-nome { font-size: 12px; }
 }
+
+/* D8B-25: ícone e rótulo das abas numa linha só (a aba cresce com o rótulo), e cartões maiores com até 2 jogadores */
+.jogadores-aba { flex: 0 1 auto; max-width: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap; padding-left: 16px; padding-right: 16px; }
+@media (max-width: 480px) { .jogadores-aba { padding-left: 8px; padding-right: 8px; gap: 4px; } }
+.jogadores-grade:not(:has(> :nth-child(3))) .jogadores-cartao { min-height: 150px; }
+/* notebook (duas colunas): a coluna dos cartões não fica vazia; a arte dobra (zoom inteiro, pixel nítido) */
+@media (min-width: 760px) and (max-height: 900px) {
+  .jogadores-grade:not(:has(> :nth-child(3))) .jogadores-cartao { min-height: 240px; }
+  .jogadores-grade:not(:has(> :nth-child(3))) .jogadores-arte { zoom: 2; }
+}
+/* celular: "Entrar" e "Criar conta" em 16 px só cabem lado a lado sem o ícone */
+@media (max-width: 480px) { .jogadores-aba canvas { display: none; } }
