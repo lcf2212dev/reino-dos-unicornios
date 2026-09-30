@@ -100,7 +100,7 @@
     };
   }
   var mapa = {
-    id: 'mapa', tipo: 'mapa', lugarId: null, corFundo: '#c6e15a',
+    id: 'mapa', tipo: 'mapa', lugarId: null, corFundo: '#6f9a3a',   // o bosque fechado além da borda (mundo/chao.js)
     largura: function () { return Mapa.largura(); },
     altura: function () { return Mapa.altura(); },
     solido: function (x, y) { return Mapa.solido(x, y); },
@@ -141,9 +141,13 @@
     // de cada lugar ficam no menu Lugares, UI.telaLugares)
     desenharTela: function () {},
     itensDesenho: function (pn, t, animar) {
-      var ct = Mapa.claudeTile;
+      var ct = Mapa.claudeTile, j = J();
       // empate com a Mariana: o Claude fica atrás (como sempre foi)
-      return [{ y: ct.y * T + 14 - 0.0001, desenhar: function () { desenharClaude(pn, t, animar); } }];
+      var itens = [{ y: ct.y * T + 14 - 0.0001, desenhar: function () { desenharClaude(pn, t, animar); } }];
+      // postes, árvores, fonte e prédios encostados nela (e no bebê que vem atrás, até 20 px acima) voltam por cima,
+      // pela linha do pé
+      if (Mapa.itensFrente) itens = itens.concat(Mapa.itensFrente({ x0: j.x - 44, x1: j.x + 44, y0: j.y - 52, y1: j.y + 26, pe: j.y - (j.montado && j.montado() ? 1 : 20) }, pn, t, animar));
+      return itens;
     },
   };
   Cena.mapa = mapa;

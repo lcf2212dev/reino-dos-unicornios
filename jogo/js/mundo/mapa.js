@@ -14,10 +14,12 @@
      de usar, nunca guarde a grade numa variável que dure mais que uma chamada. */
   var I = Mapa._interno = {
     tipo: [],               // letra do chão: 'g' grama, 'f' tapete de flores, 'c' rua, 'p' praça, 'a' água
+    estilo: [],             // calçamento de cada tile de rua: 'pedra', 'ladrilho', 'terra' (Mapa.CIDADE.ruas)
     solido: [],             // true = não dá para andar
     tipoSorteio: [], decorSorteio: [],   // cópia do reino antes dos lugares novos: o sorteio das flores segue ela
     // enfeite do tile: 'arvore', 'flor', 'cristal', 'arbusto', 'cogumelo', 'pedra' (sorteados);
-    // 'poste', 'banco', 'canteiro', 'cerca' (postos à mão: Mapa.CIDADE e a frente dos prédios)
+    // 'poste', 'banco', 'canteiro', 'cerca' (postos à mão: Mapa.CIDADE e a frente dos prédios);
+    // 'frutifera', 'poco', 'correio', 'placa', 'pedrinhas' (Mapa.CIDADE.motivos)
     decor: [],
     objetos: [],            // peças grandes da praça (Mapa.CIDADE.objetos): fonte, coreto, canteiros
     lugares: [],            // os lugares desenhados no mapa (Mapa.lugares() junta os de dentro)
@@ -37,10 +39,10 @@
   Mapa.LEGADO_SORTEIO = ['portugues', 'geografia', 'matematica'];
 
   Mapa.criar = function (materias) {
-    var tipo = I.tipo = [], solido = I.solido = [], decor = I.decor = [], lugares = I.lugares = [];
+    var tipo = I.tipo = [], solido = I.solido = [], decor = I.decor = [], lugares = I.lugares = [], estilo = I.estilo = [];
     var reservado = [];
     for (var y = 0; y < H; y++) {
-      tipo.push([]); solido.push([]); decor.push([]); reservado.push([]);
+      tipo.push([]); solido.push([]); decor.push([]); reservado.push([]); estilo.push([]);
       for (var x = 0; x < W; x++) { tipo[y].push('g'); solido[y].push(false); decor[y].push(null); reservado[y].push(false); }
     }
     var CID = Mapa.CIDADE;
@@ -65,7 +67,10 @@
 
     function pintar(x, y, t) { if (dentro(x, y)) tipo[y][x] = t; }
     function pintarRect(r, t) { for (var yy = r.y; yy < r.y + r.h; yy++) for (var xx = r.x; xx < r.x + r.w; xx++) pintar(xx, yy, t); }
-    CID.ruas.forEach(function (r) { pintarRect(r, 'c'); });
+    CID.ruas.forEach(function (r) {
+      pintarRect(r, 'c');
+      for (var yy = r.y; yy < r.y + r.h; yy++) for (var xx = r.x; xx < r.x + r.w; xx++) if (dentro(xx, yy)) estilo[yy][xx] = r.estilo || 'pedra';
+    });
     pintarRect(CID.praca, 'p');
     // lago: dá para nadar nele (a Mariana e a montaria), então a água não é sólida
     var L = CID.lago;
@@ -97,7 +102,10 @@
         solido[yy][xx] = !(xx === l.porta.x && yy === l.porta.y);
       }
       var cam = l.caminho || ligacao(l.porta);
-      cam.forEach(function (p) { decor[p[1]][p[0]] = null; tipo[p[1]][p[0]] = 'c'; solido[p[1]][p[0]] = false; });
+      cam.forEach(function (p) {
+        decor[p[1]][p[0]] = null; tipo[p[1]][p[0]] = 'c'; solido[p[1]][p[0]] = false;
+        if (!estilo[p[1]][p[0]]) estilo[p[1]][p[0]] = 'ladrilho';
+      });
     }
     // da frente da porta descendo reto até a primeira rua ou praça (no máximo 8 tiles)
     function ligacao(p) {
@@ -179,6 +187,14 @@
     // não mudar as flores longe dele (contrato cena-e-motor.md §9)
     I.tipoSorteio = tipo.map(function (l) { return l.slice(); });
     I.decorSorteio = decor.map(function (l) { return l.slice(); });
+    // motivos postos à mão nos campos vazios (Mapa.CIDADE.motivos): depois da cópia, para não mexer no sorteio das
+    // árvores e flores do resto; só em chão livre (tiram a flor do tile). 'pedrinhas' é chão: dá para pisar
+    (CID.motivos || []).forEach(function (e) {
+      var mx = e[1], my = e[2];
+      if (!dentro(mx, my) || solido[my][mx] || reservado[my][mx] || tipo[my][mx] !== 'g') return;
+      if (lugares.some(function (l) { return noRect(mx, my, l.rect); })) return;
+      decor[my][mx] = e[0]; solido[my][mx] = e[0] !== 'pedrinhas';
+    });
     // lugares novos, por cima do reino já enfeitado (tiram só o enfeite do próprio terreno e do caminho):
     // matérias porCima de fora do legado e os registrados pelos prédios (Reino.registrarLugar), na ordem de registro
     lugares.forEach(function (l) { if (l.novo) assentar(l); });

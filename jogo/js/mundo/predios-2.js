@@ -114,7 +114,7 @@
     circulo(ctx, cx, py - 9, 2, K); circulo(ctx, cx, py - 9, 1, det);
     // porta, degrau e vasos
     F.degrau(ctx, cx, py + h - 3, 22, 3);
-    F.porta(ctx, cx - 7, py + h - 21, 14, 18, '#7c5cff', det);
+    F.porta(ctx, cx - 7, py + h - 25, 14, 22, '#7c5cff', det);
     F.vaso(ctx, cx - 23, py + h, '#ff7eb6');
     F.vaso(ctx, cx + 23, py + h, '#ffffff');
     // brilhinhos
@@ -153,7 +153,7 @@
     }
     // porta, degrau e vasinhos
     F.degrau(ctx, cx, py + h - 3, 20, 3);
-    F.porta(ctx, cx - 7, py + h - 22, 14, 19, '#7c5cff');
+    F.porta(ctx, cx - 7, py + h - 25, 14, 22, '#7c5cff');
     F.vaso(ctx, x0 - 5, py + h, det);
     F.vaso(ctx, x0 + larg + 4, py + h, '#ffffff');
   };

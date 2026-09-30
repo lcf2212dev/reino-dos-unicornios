@@ -6,13 +6,18 @@
   var EV = Reino.EVENTOS;
   var V = Reino._motor, cam = V.cam, pintor = V.pintor, est = V.est, atualizarCamera = V.atualizarCamera;
 
-  // luz em faixas de pixel: o clarão quente no meio e a vinheta escura nas bordas, calculados na grade de pixels da
-  // cena (canvas pequeno, alfa em poucos níveis) e ampliados sem suavizar. Um só cache, refeito quando o tamanho muda.
+  // luz em degraus de pixel: o clarão quente no meio e a vinheta escura nas bordas, calculados na grade de pixels da
+  // cena (canvas pequeno) e ampliados sem suavizar. Degraus de 0,04 de alfa, e entre um degrau e o outro um
+  // pontilhado ordenado 2×2 (ui.md §10.13: sem anéis contínuos). Um só cache, refeito quando o tamanho muda.
   var luz = { w: 0, h: 0, escala: 0, img: null };
-  function faixaLuz(t) {
-    if (t < 0.42) return [255, 236, 200, Math.ceil((1 - t / 0.42) * 2) * 0.04];   // 0,08 · 0,04
-    if (t > 0.72) return [58, 36, 70, Math.ceil((t - 0.72) / 0.28 * 4) * 0.04];    // 0,04 … 0,16
-    return null;
+  var BAYER = [0.125, 0.625, 0.875, 0.375];   // limiar do pontilhado 2×2, por (x % 2, y % 2)
+  function faixaLuz(t, x, y) {
+    var cor, a;
+    if (t < 0.42) { cor = [255, 236, 200]; a = (1 - t / 0.42) * 0.08; }   // até 0,08
+    else if (t > 0.72) { cor = [58, 36, 70]; a = (t - 0.72) / 0.28 * 0.16; }   // até 0,16
+    else return null;
+    var n = a / 0.04, base = Math.floor(n);
+    return [cor[0], cor[1], cor[2], (base + (n - base > BAYER[(y % 2) * 2 + (x % 2)] ? 1 : 0)) * 0.04];
   }
   function imagemLuz() {
     var W = V.canvas.width, H = V.canvas.height, e = V.escala || 1;
@@ -24,7 +29,7 @@
     var cx = W / 2, cy = H / 2, raio = Math.max(W, H) * 0.62;
     for (var y = 0; y < h; y++) for (var x = 0; x < w; x++) {
       var dx = (x + 0.5) * e - cx, dy = (y + 0.5) * e - cy;
-      var f = faixaLuz(Math.min(1, Math.sqrt(dx * dx + dy * dy) / raio));
+      var f = faixaLuz(Math.min(1, Math.sqrt(dx * dx + dy * dy) / raio), x, y);
       if (!f || !f[3]) continue;
       var i = (y * w + x) * 4;
       d[i] = f[0]; d[i + 1] = f[1]; d[i + 2] = f[2]; d[i + 3] = Math.round(f[3] * 255);
@@ -61,7 +66,7 @@
     V.bctx.fillStyle = cena.corFundo;
     V.bctx.fillRect(ox, oy, V.buffer.width, V.buffer.height);
     seguro(cena, 'fundo', function () { cena.desenharFundo(V.bctx, t, animar); });
-    J.desenharMarcador(V.bctx, t);
+    J.desenharMarcador(V.bctx, t, animar);
     V.ctx.setTransform(1, 0, 0, 1, 0, 0);
     V.ctx.imageSmoothingEnabled = false;
     V.ctx.drawImage(V.buffer, -Math.round((cam.x - ox) * V.escala), -Math.round((cam.y - oy) * V.escala), V.buffer.width * V.escala, V.buffer.height * V.escala);

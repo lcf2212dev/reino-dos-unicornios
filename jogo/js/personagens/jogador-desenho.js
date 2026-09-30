@@ -347,14 +347,29 @@
     J.itensDesenho(p, animar).sort(function (a, b) { return a.y - b.y; }).forEach(function (i) { i.desenhar(); });
   };
 
-  J.desenharMarcador = function (ctx, t) {
+  // marcador do toque no chão: 4 setinhas em pixel (11×11, contorno escuro) apontando para o tile tocado.
+  // Com Animações, as setinhas respiram 1 px para fora e para dentro; sem, ficam paradas.
+  var SETA = ['kkkkk', 'kpppk', '.kpk.', '..k..'];   // a de cima (apontando para baixo); as outras giram
+  function seta(ctx, x, y, lado) {
+    for (var j = 0; j < SETA.length; j++) for (var i = 0; i < 5; i++) {
+      var ch = SETA[j][i];
+      if (ch === '.') continue;
+      var dx = i - 2, dy = j;
+      var px = lado === 0 ? dx : lado === 1 ? -dy : lado === 2 ? dx : dy;
+      var py = lado === 0 ? dy : lado === 1 ? dx : lado === 2 ? -dy : dx;
+      ctx.fillStyle = ch === 'k' ? '#3a2446' : (j === 1 && i === 1 ? '#ffd1e6' : '#ff4f9a');
+      ctx.fillRect(x + px, y + py, 1, 1);
+    }
+  }
+  J.desenharMarcador = function (ctx, t, animar) {
     if (!J.marcador) return;
     var m = J.marcador;
-    var x = m.x * T + 8, y = m.y * T + 10;
-    var s = 2 + Math.round((Math.sin(t / 150) + 1));
-    ctx.fillStyle = '#ff4f9a';
-    ctx.fillRect(x - s, y, s * 2 + 1, 1);
-    ctx.fillRect(x, y - s, 1, s * 2 + 1);
+    var x = m.x * T + 8, y = m.y * T + 8;
+    var o = animar ? Math.round((Math.sin(t / 150) + 1) / 2) : 0;
+    seta(ctx, x, y - 5 - o, 0);         // em cima, apontando para baixo
+    seta(ctx, x + 5 + o, y, 1);         // à direita, apontando para a esquerda
+    seta(ctx, x, y + 5 + o, 2);         // embaixo, apontando para cima
+    seta(ctx, x - 5 - o, y, 3);         // à esquerda, apontando para a direita
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(x, y, 1, 1);
   };
