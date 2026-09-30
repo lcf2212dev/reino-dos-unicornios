@@ -1,6 +1,6 @@
 # TODO visual: Mariana e o Reino dos Unicórnios
 
-Progresso: 145 de 290 (O-24, 29/09/2026) · itens novos O-03 a O-28: 11 de 26
+Progresso: 146 de 290 (D4-04 e O-22, 29/09/2026) · itens novos O-03 a O-28: 12 de 26
 
 > Auditoria visual feita em 29/09/2026, só de leitura, sobre a `main` em `7cbfa9f`. Cobre tudo o que a jogadora vê: mapa, prédios por dentro e por fora, unicórnio, NPCs, diálogo, perguntas, provas, matérias, HUD, loja, menus, movimento, app instalado e coerência de direção de arte.
 > Cada item traz a evidência (`arquivo:linha` e nome de cena do e2e), o tipo, o esforço (P ≤ 1 h, M ≤ 1 dia, G > 1 dia), as dependências e o critério de pronto. Cada relatório e cada critério de pronto passou por um conferente independente.
@@ -454,7 +454,7 @@ As prioridades dizem **quanto importa**. Esta ordem diz **o que vem antes**. A r
   Evidência: `jogo/js/arte/pixelart-unicornio-moldes.js` (onda 3d). · Tipo: bug visual · Esforço: P · Depende de: D13-06
 - [ ] **O-21 · P2 · De costas (N, NE) o laço da Mariana fica do lado oposto ao da frente** — Depois do D3-09 o laço fica à direita dela de frente e à esquerda de costas. Pronto quando, em `--previa direcoes`, o laço estiver do mesmo lado do corpo dela em S, SE, N e NE.
 
-- [ ] **O-22 · P2 · Banho: unicórnio, espuma, gotas e pingos fora da grade de pixel** — `banho.js:127` desenha o unicórnio em meio pixel quando o sprite tem largura ímpar; espuma, gotas e pingos de `banho-desenho.js` caem fora da grade. Pronto quando, no meio do banho ampliado, todo desenho cair em pixel inteiro do mundo.
+- [x] **O-22 · P2 · Banho: unicórnio, espuma, gotas e pingos fora da grade de pixel** — `banho.js:127` desenha o unicórnio em meio pixel quando o sprite tem largura ímpar; espuma, gotas e pingos de `banho-desenho.js` caem fora da grade. Pronto quando, no meio do banho ampliado, todo desenho cair em pixel inteiro do mundo.
 
 - [ ] **O-23 · P2 · Ícone do "Ouvir" com 37,33 px** — `icone-em` de 1,25em dá tamanho fracionário ao ícone do botão 🔊. Pronto quando o ícone medir 32 px nos 3 tamanhos.
 
@@ -504,7 +504,7 @@ As prioridades dizem **quanto importa**. Esta ordem diz **o que vem antes**. A r
   Evidência: `jogo/js/interiores/salao/personagens.js:7-8`, `personagens/npcs-status.js:52`. · Tipo: feature visual nova · Esforço: M · Depende de: —
 - [x] **D4-17 · P3 · Idle igual para todos, sempre de frente; retrato sem boca falando** — Criar um quadro de "ação" nas bases (braço levantado ou objeto mexendo) e um quadro de boca aberta no retrato enquanto a voz toca. Pronto quando `npm run ver -- --vivo --ir planeta-lua` mostrar a Lumi fazendo algo além de respirar e o retrato mexer a boca durante a fala.
   Evidência: `jogo/js/personagens/npcs-status.js:83-87` (quadro 0/1 + piscar, igual para todos), `personagens/claude.js:149-157`. · Tipo: feature visual nova · Esforço: G · Depende de: —
-- [ ] **D4-04 · P3 · Cavaleiros de Matemática e Geografia: mesmo molde, mesmo nome e mesma voz (só a túnica muda)** — Dar aos dois entrada própria no elenco (`paraMateria`), com nome, cor de pluma e capa, emblema e voz próprios, como a Clara. Pronto quando os 6 cavaleiros das alas tiverem nome, voz e cor de pluma/capa (hex) diferentes em `elenco.js`.
+- [x] **D4-04 · P3 · Cavaleiros de Matemática e Geografia: mesmo molde, mesmo nome e mesma voz (só a túnica muda)** — Dar aos dois entrada própria no elenco (`paraMateria`), com nome, cor de pluma e capa, emblema e voz próprios, como a Clara. Pronto quando os 6 cavaleiros das alas tiverem nome, voz e cor de pluma/capa (hex) diferentes em `elenco.js`.
   Evidência: `jogo/js/interiores/castelo/castelo.js:106-112` (os dois são "Cavaleiro do Reino", voz `npc-padrao-1`); cenas `npc-castelo-cav-{matematica,geografia}`. · Tipo: asset novo · Esforço: M · Depende de: vozes novas (skill `validar-vozes`)
 - [ ] **D4-18 · P3 · Matemática sem elenco próprio (guia e monitoras genéricos)** — Criar guia e 6 monitores com nome e ofício ligado ao tema de cada sala. Pronto quando `comodo-padrao-matematica-sala*` mostrar personagens com nome próprio e acessório temático.
   Evidência: `jogo/js/interiores/padrao.js:103-111,188,231`. · Tipo: asset novo · Esforço: G · Depende de: D4-04, D2B-02, vozes novas
