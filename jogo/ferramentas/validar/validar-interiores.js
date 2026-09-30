@@ -61,10 +61,8 @@ function checarIngles(s, onde) {
 }
 // no celular cabem ~17 letras por linha: uma fala (ou página) de até ~44 letras fica em 2-3 linhas
 function longa(s, onde) {
-  if (typeof s !== 'string') return;
-  // mede o que aparece na tela: a versão mais longa depois do gênero (o marcador {…|…} não vai para o balão)
-  const versoes = Reino.Genero && Reino.Genero.versoes ? Reino.Genero.versoes(s) : [s];
-  const n = Math.max(...versoes.map((v) => v.replace(/[«»]/g, '').replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}\u{200D}]/gu, '').trim().length));
+  if (typeof s !== 'string') return;   // mede o que aparece na tela: a versão mais longa depois do gênero ({…|…} não vai para o balão)
+  const n = Math.max(...(Reino.Genero && Reino.Genero.versoes ? Reino.Genero.versoes(s) : [s]).map((v) => v.replace(/[«»]/g, '').replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}\u{200D}]/gu, '').trim().length));
   if (n > 44) avisos.push(`${onde}: fala com ${n} letras (máx. ~44 para caber no balão do celular): "${s}"`);
 }
 function normal(s) {
