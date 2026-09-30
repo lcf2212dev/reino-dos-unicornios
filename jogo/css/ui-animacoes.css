@@ -13,6 +13,15 @@
 }
 @keyframes tremer { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
 .treme { animation: tremer 0.4s ease-in-out; }
+/* erro de item parado (ui.md §10.19.2; desafios/ligar.js, _d.erroParado): fundo --erro-fundo e borda --erro até apagar ou
+   até o próximo toque; o .treme vem junto e o sem-animacao o desliga. A classe dobrada ganha do .ligado, .escolhido,
+   .virada e [aria-pressed] (CSS carregado antes ou depois) */
+:is(.ligar-item, .sep-item, .seq-item, .copiar-opcao, .copiar-linha, .vf-linha, .desenho-req, .carta-mem).item-erro.item-erro {
+  background: var(--erro-fundo); border-color: var(--erro); outline-color: var(--erro); color: var(--tinta);
+}
+/* jogo da memória: a carta achata em degraus inteiros (memoria.js, virar), sem scale; o corte em px pares vem do JS */
+.carta-mem.mem-achata-1 { clip-path: inset(0 var(--mem-corte-1, 0px)); }
+.carta-mem.mem-achata-2 { clip-path: inset(0 var(--mem-corte-2, 0px)); }
 
 body.sem-animacao *:not(.balao-respira), body.sem-animacao *::before, body.sem-animacao *::after { animation: none !important; }
 @media (prefers-reduced-motion: reduce) {

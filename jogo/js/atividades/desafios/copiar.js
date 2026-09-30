@@ -146,7 +146,7 @@
     var ctrl = {
       el: wrap, monte: monte,
       valor: function () { return valores.map(function (v) { return { escolha: v.escolha, letras: v.letras.slice() }; }); },
-      pronto: function () { return d.itens.every(function (_, i) { return itemPronto(i); }); },
+      pronto: function () { return !_d.marcado(wrap) && d.itens.every(function (_, i) { return itemPronto(i); }); },
       conferir: function () {
         var erradas = d.itens.map(function (it, i) {
           return valores[i].escolha === it.certa && copiaCerta(it, valores[i]) ? -1 : i;
@@ -155,15 +155,22 @@
       },
       // desfaz só a parte errada de cada item (a escolha e/ou a cópia)
       marcarErro: function (res) {
+        // marca a escrita marcada errada e/ou a cópia errada; só depois desfaz
+        var marcados = [];
         (res.erradas || []).forEach(function (i) {
           var it = d.itens[i], v = valores[i];
-          if (v.escolha !== it.certa) v.escolha = null;
-          if (!copiaCerta(it, v)) v.letras = [];
-          itens[i].caixa.classList.add('treme');
-          setTimeout(function () { itens[i].caixa.classList.remove('treme'); }, 600);
-          pintar(i);
+          if (v.escolha !== it.certa && v.escolha !== null) marcados.push(itens[i].botoesOpc[v.escolha]);
+          if (!copiaCerta(it, v)) marcados.push(itens[i].linha);
         });
-        opts.onMudar();
+        _d.erroParado(wrap, marcados, function () {
+          (res.erradas || []).forEach(function (i) {
+            var it = d.itens[i], v = valores[i];
+            if (v.escolha !== it.certa) v.escolha = null;
+            if (!copiaCerta(it, v)) v.letras = [];
+            pintar(i);
+          });
+          opts.onMudar();
+        });
       },
       marcarCerto: function () { wrap.classList.add('tudo-certo'); },
     };

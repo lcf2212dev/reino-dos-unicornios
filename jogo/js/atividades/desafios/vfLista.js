@@ -55,14 +55,17 @@
     var ctrl = {
       el: lista,
       valor: function () { return marcas.slice(); },
-      pronto: function () { return marcas.every(function (m) { return m !== null; }); },
+      pronto: function () { return !_d.marcado(lista) && marcas.every(function (m) { return m !== null; }); },
       conferir: function () {
         var erradas = marcas.map(function (m, i) { return m === certo(i) ? -1 : i; }).filter(function (i) { return i >= 0; });
         return { ok: erradas.length === 0, erradas: erradas };
       },
       marcarErro: function (res) {
-        (res.erradas || []).forEach(function (i) { marcas[i] = null; linhas[i].linha.classList.add('treme'); setTimeout(function () { linhas[i].linha.classList.remove('treme'); }, 600); });
-        pintar(); opts.onMudar();
+        // a linha errada fica marcada com a resposta dela; só depois a marca apaga
+        _d.erroParado(lista, (res.erradas || []).map(function (i) { return linhas[i].linha; }), function () {
+          (res.erradas || []).forEach(function (i) { marcas[i] = null; });
+          pintar(); opts.onMudar();
+        });
       },
       marcarCerto: function () { lista.classList.add('tudo-certo'); },
     };

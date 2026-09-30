@@ -3,6 +3,36 @@
   var U = Reino.util, el = U.el, D = Reino.Desafios, _d = Reino._desafios;
   var fracao = _d.fracao;
 
+  /* erro parado (ui.md §10.19.2), usado por todos os desafios de itens: .item-erro nos itens errados (o tremor por cima
+     só com animação, pelo CSS) até ERRO_MS ou até o próximo toque no desafio; aí apaga() desfaz a resposta errada.
+     Na missão, com o "Quase!" (.missao-retorno) aberto por cima, o relógio espera: a marca fica até ERRO_MS depois do
+     "Tentar de novo". Enquanto a marca está à vista, _d.marcado(wrap) é true e o pronto() do desafio dá false (o
+     Conferir fica desligado até a criança refazer). Nada fora do wrap: o relógio para sozinho se o wrap sai da tela */
+  var ERRO_MS = 900, PASSO_MS = 150;
+  // o enunciado já diz como tocar ("toque…", "tocando…", "toca…") ou "Coloque … na ordem": a dica de toque não se repete (D6-13)
+  _d.jaInstrui = function (t) { return /\bto(que|ques|ca|cando|car)\b|\btoque-/i.test(t || '') || /\b(coloque|ponha)\b.*\bna ordem\b/i.test(t || ''); };
+  function retornoAberto() { if (typeof document === 'undefined') return false; var r = document.querySelector('.missao-retorno'); return !!(r && !r.hidden); }
+  _d.marcado = function (wrap) { return !!wrap.__erroFim; };
+  _d.erroParado = function (wrap, itens, apagar) {
+    if (wrap.__erroFim) wrap.__erroFim();
+    itens.forEach(function (b) { b.classList.add('item-erro', 'treme'); });
+    var resta = ERRO_MS, t = setTimeout(relogio, PASSO_MS);
+    function relogio() {
+      if (wrap.isConnected === false) { limpar(); return; } // saiu pelo ✕: morre junto, sem apagar
+      if (retornoAberto()) resta = ERRO_MS; else resta -= PASSO_MS;
+      if (resta <= 0) fim(); else t = setTimeout(relogio, PASSO_MS);
+    }
+    function limpar() {
+      clearTimeout(t); wrap.__erroFim = null;
+      wrap.removeEventListener('click', fim, true);
+      itens.forEach(function (b) { b.classList.remove('item-erro', 'treme'); });
+    }
+    function fim() { if (wrap.__erroFim !== fim) return; limpar(); if (apagar) apagar(); }
+    wrap.__erroFim = fim;
+    // o próximo toque apaga a marca antes de valer (fase de captura: roda antes do clique do item)
+    wrap.addEventListener('click', fim, true);
+  };
+
   var CORES_LIGAR = ['#ff7eb6', '#7c5cff', '#39c5bb', '#ffb020', '#5fb4ff'];
 
   var montar = function (d, opts) {
@@ -80,23 +110,20 @@
     var ctrl = {
       el: wrap, ordem: direita,
       valor: function () { return U.copia(liga); },
-      pronto: function () { return Object.keys(liga).length === n; },
+      pronto: function () { return !_d.marcado(wrap) && Object.keys(liga).length === n; },
       conferir: function () {
         var erradas = Object.keys(liga).filter(function (k) { return liga[k] !== +k; }).map(Number);
         return { ok: erradas.length === 0 && Object.keys(liga).length === n, erradas: erradas };
       },
       marcarErro: function (res) {
-        (res.erradas || []).forEach(function (k) {
-          // os botões são guardados agora: aos 450 ms o par é apagado e liga[k] some
-          var bDir = bD[liga[k]], bEsq = bE[k];
-          bDir.classList.add('treme'); bEsq.classList.add('treme');
-          setTimeout(function () { bDir.classList.remove('treme'); bEsq.classList.remove('treme'); }, 600);
-        });
-        setTimeout(function () {
+        // os botões são guardados agora: ao apagar, o par some e liga[k] também
+        var itens = [];
+        (res.erradas || []).forEach(function (k) { itens.push(bE[k], bD[liga[k]]); });
+        _d.erroParado(wrap, itens, function () {
           (res.erradas || []).forEach(function (k) { delete liga[k]; });
           escolhida = (res.erradas || [])[0] != null ? res.erradas[0] : null;
           pintar(); opts.onMudar();
-        }, 450);
+        });
       },
       marcarCerto: function () { wrap.classList.add('tudo-certo'); },
     };
