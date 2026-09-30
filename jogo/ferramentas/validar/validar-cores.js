@@ -193,6 +193,7 @@ function validar(raiz = jogo) {
     for (const r of ['comum', 'raro', 'epico', 'lendario']) {
       for (const p of ['texto', 'fundo', 'desenho']) par(`paleta.raridade.${r}.${p}`, ((pal.raridade || {})[r] || {})[p], `--${r}-${p}`);
     }
+    ['--rosa', '--ouro', '--roxo', '--azul', '--laranja', '--verde-folha'].forEach((token, i) => par(`paleta.confete[${i}]`, (pal.confete || [])[i], token));
   }
   return erros;
 }
