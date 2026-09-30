@@ -160,7 +160,9 @@ body.sem-animacao button.esperando-fala::after { animation: none; }
 
 h1, h2, h3 { margin: 0; text-wrap: balance; }
 b, strong { font-weight: 400; }   /* sem negrito (ui.md §10.9.3) */
-.titulo-pixel { font-family: var(--fonte-titulo); font-weight: 400; letter-spacing: 0; font-size: 16px; line-height: 1.7; }
+h1, h2, h3, h4, h5, h6 { font-weight: 400; }
+small { font-size: var(--texto-aux); }
+.titulo-pixel { font-family: var(--fonte-titulo); font-weight: 400; letter-spacing: 0; font-size: var(--texto); line-height: var(--entrelinha-titulo); }
 p { margin: 0; }
 
 /* ---------- mapa ---------- */
@@ -187,7 +189,7 @@ body.sem-animacao .toque-ignorado { transform: none; }
 /* pelo teclado a trava não vale (ui.js): com o foco do teclado no botão, ele não parece desligado (o estado
    indisponível, abaixo, deixa de fora o .armando com foco do teclado) */
 .btn-grande.armando:focus-visible .armando-barra, .btn-grande.armando:focus-visible .armando-texto { display: none; }
-.btn-grande.armando .armando-texto { font-size: 0.75em; font-weight: 700; }
+.btn-grande.armando .armando-texto { font-size: var(--texto-aux); }
 body.sem-animacao .btn-grande.armando .armando-barra { display: none; }
 body.sem-animacao .btn-grande.armando .armando-texto { display: block; }
 @media (prefers-reduced-motion: reduce) {
@@ -199,24 +201,23 @@ body.sem-animacao .btn-grande.armando .armando-texto { display: block; }
 .btn-grande {
   min-height: 58px;
   padding: 12px 22px;
-  border: 3px solid var(--borda);
+  border: var(--borda-fina) solid var(--borda);
   border-radius: var(--canto-grande);
   background: var(--papel);
-  font-weight: 700;
-  font-size: 1em;
-  box-shadow: inset 0 2px 0 var(--brilho), var(--sombra-botao);
+  font-size: var(--texto);
+  box-shadow: inset 0 2px 0 var(--brilho), var(--sombra-grande);
   transition: transform 0.08s, box-shadow 0.08s;
 }
 .btn-grande:active:not(:disabled) { transform: translateY(3px); box-shadow: inset 0 1px 0 var(--brilho-fraco), 0 2px 0 var(--borda); }
 .btn-principal { background: var(--laranja); color: var(--tinta); }
 .btn-secundario { background: var(--papel); }
 .btn-perigo { background: var(--erro-fundo); }
-.btn-pequeno { min-height: 44px; padding: 6px 14px; border: 3px solid var(--borda); border-radius: var(--canto); background: var(--ambar-claro); font-weight: 700; box-shadow: 0 3px 0 var(--borda); }
+.btn-pequeno { min-height: 44px; padding: 6px 14px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--ambar-claro); box-shadow: var(--sombra-pequena); }
 .btn-icone {
   width: 52px; height: 52px; flex: none;
-  border: 3px solid var(--borda); border-radius: var(--canto-grande);
-  background: var(--papel); font-size: 1.2em; font-weight: 700;
-  box-shadow: inset 0 2px 0 var(--brilho), 0 4px 0 var(--borda);
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-pequeno);   /* ✕ sem "cruz" (D8A-03, §10.10.4) */
+  background: var(--papel); font-size: var(--texto);
+  box-shadow: inset 0 2px 0 var(--brilho), var(--sombra-grande);
 }
 /* estado indisponível (ui.md §10.19.1): uma regra só para o botão desabilitado (disabled), o travado que segue focável
    (aria-disabled: guarda de toque, foto desligada) e o que não é botão (.indisponivel: carta cara da loja, planeta
@@ -225,7 +226,7 @@ body.sem-animacao .btn-grande.armando .armando-texto { display: block; }
    base dos botões e cartas (.btn-principal, .item-loja; o :where tira a força do .armando) e perde para o estado de uma opção (.opcao.errada,
    .opcao.certa, a marcada), que é outra coisa (§10.19.2). O 🔒 do trancado e do caro vem do JS */
 :is(button:disabled, button[aria-disabled="true"]:not(:where(.armando:focus-visible)), .indisponivel) {
-  background: var(--papel-2); color: var(--tinta-suave); border-color: var(--borda); box-shadow: 0 2px 0 var(--borda);
+  background: var(--papel-2); color: var(--tinta-suave); border-color: var(--borda); box-shadow: var(--sombra-pequena);
 }
 :is(button:disabled, button[aria-disabled="true"]:not(:where(.armando:focus-visible)), .indisponivel) canvas { filter: var(--apagado); }
 :is(button:disabled, button[aria-disabled="true"], .indisponivel):active { transform: none; }
@@ -241,16 +242,16 @@ footer.rodape-acao {
   flex: none; display: flex; flex-wrap: nowrap; align-items: center; justify-content: flex-end; gap: 12px;
   height: calc(80px + var(--rodape-seguro)); margin: 0;
   padding: 12px 16px calc(12px + var(--rodape-seguro));
-  background: var(--papel); border-top: 4px solid var(--borda);
+  background: var(--papel); border-top: var(--borda-grossa) solid var(--borda);
 }
 .tela > footer.rodape-acao { --rodape-seguro: env(safe-area-inset-bottom, 0px); }
 footer.rodape-acao[hidden] { display: none; }
 footer.rodape-acao > :first-child:not(:last-child) { margin-right: auto; }
 footer.rodape-acao > .btn-grande, footer.rodape-acao > .rodape-vaga { flex: 0 1 360px; min-width: max-content; }
 footer.rodape-acao .btn-grande {
-  height: 52px; min-height: 0; padding: 0 16px; font-size: 16px; line-height: 1; white-space: nowrap;
+  height: 52px; min-height: 0; padding: 0 16px; font-size: var(--texto); line-height: 1; white-space: nowrap;
 }
-footer.rodape-acao .sem-relogio { min-width: 0; font-size: 12px; line-height: 1.5; }
+footer.rodape-acao .sem-relogio { min-width: 0; font-size: var(--texto-aux); line-height: 1.5; }
 .rodape-vaga { visibility: hidden; }
 .rotulo-curto { display: none; }
 /* ícone dentro do botão do rodapé: 32 px, inteiro (2 px CSS por pixel do desenho; ui.md §10.10) */

@@ -18,7 +18,7 @@ const fs = require('fs');
 const path = require('path');
 
 const jogo = path.join(__dirname, '..', '..');
-const CANTOS = new Set(['0', '0px', 'var(--canto)', 'var(--canto-grande)', 'var(--redondo)', 'inherit', 'initial', 'unset']);
+const CANTOS = new Set(['0', '0px', 'var(--canto-pequeno)', 'var(--canto)', 'var(--canto-grande)', 'var(--redondo)', 'inherit', 'initial', 'unset']);
 
 function semComentarios(css) { return css.replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, ' ')); }
 function linhaDe(texto, i) { return texto.slice(0, i).split('\n').length; }
@@ -95,7 +95,7 @@ function checarCss(nome, texto, erros) {
   const t = semComentarios(texto);
   for (const m of t.matchAll(/border(-(top|bottom)-(left|right))?-radius\s*:\s*([^;}]+)/g)) {
     const ruins = dividir(m[4].replace(/!important/, '').replace(/\//g, ' '), ' ').filter((v) => !CANTOS.has(v));
-    if (ruins.length) erros.push(`${nome}:${linhaDe(t, m.index)}: border-radius "${m[4].trim()}" (use 0, var(--canto), var(--canto-grande) ou var(--redondo))`);
+    if (ruins.length) erros.push(`${nome}:${linhaDe(t, m.index)}: border-radius "${m[4].trim()}" (use 0, var(--canto-pequeno), var(--canto), var(--canto-grande) ou var(--redondo))`);
   }
   for (const m of t.matchAll(/(repeating-)?radial-gradient\(/g)) erros.push(`${nome}:${linhaDe(t, m.index)}: radial-gradient (círculo de borda lisa: faixas lineares ou forma em degrau)`);
   for (const m of t.matchAll(/(repeating-)?(linear|conic)-gradient\(/g)) {
