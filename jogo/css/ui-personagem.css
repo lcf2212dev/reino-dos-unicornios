@@ -102,7 +102,18 @@ body.sem-animacao .criar-palco::before, body.sem-animacao .criar-palco::after { 
   .criar-grupo:has(> .criar-opcoes) { flex-direction: column; align-items: stretch; gap: 4px; }
   .tela-aparencia .criar-grupo:has(> .criar-opcoes) > .rotulo-cor { flex: none; width: auto; }
   .tela-aparencia .rotulo-cor { flex-basis: 76px; width: 76px; font-size: var(--texto-aux); overflow-wrap: normal; }   /* "Cabelo" inteiro */
-  .tela-aparencia .bolinha-cor { width: 34px; height: 34px; border-width: var(--borda-fina); }
+  /* D8B-09: alvo de toque de 44 px (transparente); o desenho de 34 fica no ::before, e as vizinhas encostam os alvos */
+  .tela-aparencia .linha-cores { column-gap: 0; }
+  .tela-aparencia .linha-cores .rotulo-cor { margin-right: 3px; }
+  .tela-aparencia .bolinha-cor { position: relative; width: 44px; height: 44px; border: 0; box-shadow: none; background: none !important; }
+  .tela-aparencia .bolinha-cor::before { content: ''; position: absolute; inset: 5px;
+    border: var(--borda-fina) solid var(--borda); border-radius: var(--redondo); box-shadow: var(--sombra-pequena);
+    background: var(--cor-bolinha); }
+  .tela-aparencia .bolinha-sem::before { background: repeating-linear-gradient(45deg, var(--branco) 0 5px, var(--papel-2) 5px 10px); }
+  .tela-aparencia .bolinha-sem::after { inset: 15px; }
+  .tela-aparencia .bolinha-cor[aria-pressed="true"] { outline-offset: -3px; }
+  /* "Letras grandes": o rótulo de 104 px não deixa as 5 lado a lado; os alvos se sobrepõem 3 px (cada um segue 44) */
+  .letras-grandes .tela-aparencia .bolinha-cor { margin-right: -3px; }
   .criar-sexo-btn { min-height: 44px; font-size: var(--texto); padding: 6px; }
   /* "Letras grandes": o rótulo ("Cabelo" em 16 px) alarga e "Menina"/"Menino" descem um degrau para caber lado a lado */
   .letras-grandes .tela-aparencia .rotulo-cor { flex-basis: 104px; width: 104px; }

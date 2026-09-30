@@ -91,7 +91,7 @@
   UI.telaQuemVaiJogar = function (opcoes) {
     opcoes = opcoes || {};
     return new Promise(function (resolver) {
-      var pn = UI.painel('jogadores', 'Entrar no Reino', { semFechar: !opcoes.podeFechar, aoFechar: function () { resolver(null); } });
+      var pn = UI.painel('jogadores', '🔑 Entrar no Reino', { semFechar: !opcoes.podeFechar, aoFechar: function () { resolver(null); } });
       var c = Reino.config.jogadores;
       var fim = false;
       function entrou(login) { if (fim) return; fim = true; UI.fecharTela(pn.tela); resolver(login); }
