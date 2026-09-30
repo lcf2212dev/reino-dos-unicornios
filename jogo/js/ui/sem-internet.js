@@ -93,7 +93,8 @@
       escrever(no, icone('✔'), 'Pronto para jogar sem internet.'
         + (n ? ' Guardando a versão nova… ' + n.feitos + ' de ' + n.total + '.'
           + (n.falhou ? ' A versão nova vem na próxima vez que abrir com internet.' : '') : ''));
-    }    no.hidden = !no.firstChild;   // nada a dizer: sem nota vazia
+    }
+    no.hidden = !no.firstChild;   // nada a dizer: sem nota vazia
   }
   UI.notaSemInternet = function () { perguntar(); return nota(desenharApp); };
 })();

@@ -26,7 +26,7 @@ const AJUDA = `Uso: node jogo/ferramentas/testes/ver.js [opções]   (npm run ve
             ;perguntas                                 na sala (--tela sala:<id>): toca "Começar" e passa o resumo
                                                  do livro até a 1ª pergunta (ver "Cuidados" abaixo)
   ordem: --ir (espera a cena trocar e a transição acabar), --tela, cada --js, --passos, foto
-  --tamanhos celular,tablet,notebook   (padrão: os 3, em paralelo)
+  --tamanhos celular,tablet,notebook   (padrão: os 3, em paralelo; também: deitado, 844×390, só a pedido)
   --vivo                    jogo vivo (sem congelar; animações ligadas; entra direto no mapa, sem a senha)
   --nome <n>                pasta de saída (padrão: data e hora)
   --raiz <pasta jogo>       outra cópia do jogo (padrão: a desta worktree)

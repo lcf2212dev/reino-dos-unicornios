@@ -8,7 +8,7 @@ Ferramentas de desenvolvimento (Node). Nenhuma entra no jogo. Comandos: `CLAUDE.
   recusa banco fora de `/tmp` ou em `servidor/dados`).
 - Navegador: só `testes/navegador.js` (Playwright, só Chromium, preso à porta de teste; bloqueia o resto).
   Tamanhos: celular 390×844, tablet 820×1180, notebook 1366×768 (`TAMANHOS`, os padrão);
-  a pedido (`--tamanhos deitado`, nunca no padrão nem no e2e): deitado 844×390 (celular deitado).
+  a pedido (`--tamanhos deitado`, nunca no padrão; no e2e só com `--tamanhos deitado`): deitado 844×390 (celular deitado).
 - Nada de Firefox, WebKit, nem emulação de iPhone/iPad com WebKit.
 - Saves 100% sintéticos: `testes/saves.js`. Nunca copie o save real.
 - Nunca leia, copie ou grave em `jogo/servidor/dados/`. Nunca publique o artifact
