@@ -238,7 +238,7 @@
   // tela lê o nome inteiro (aria-label). Título novo comprido: passe opcoes.curto no UI.painel
   var CURTOS = {
     '📋 Lugares do Reino': '📋 Lugares', '🪞 Meu personagem': '🪞 Personagem', '✨ Crie seu personagem': '✨ Seu personagem',
-    'Que foto linda! 📸': 'Foto nova 📸', 'Álbum de fotos 🖼': 'Álbum 🖼', '🦄 Estábulo Mágico': '🦄 Estábulo',
+    '🦄 Estábulo Mágico': '🦄 Estábulo',
     '🧚 Loja das Fadas': '🧚 Loja', '💰 Baú do Tesouro': '💰 Baú',
   };
   function tituloDoPainel(id, titulo, curto) {

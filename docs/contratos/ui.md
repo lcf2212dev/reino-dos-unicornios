@@ -102,7 +102,7 @@ UI.registrarBotaoHud({ id, ordem, criar() → botão, pintar?(), eventos?: [Rein
    no alvo perto da Mariana (os botões 📷 e álbum ainda param o keydown com `stopPropagation`).
 6. Os blocos do HUD (`.hud-esq`, `.hud-dir`, `.hud-botoes`) têm `pointer-events: none`; só botões e chips pegam
    toque (senão o 📷 criava uma faixa morta sob o chip da montaria no celular).
-7. Celular (≤ 480 px): `.hud-botoes` vira coluna ao lado do chip da montaria; hoje são 3 (tela cheia, 📷,
+7. Celular (≤ 480 px): `.hud-botoes` vira fileira embaixo do chip da montaria (a coluna de chips tem largura fixa, D13-01); hoje são 3 (tela cheia, 📷,
    álbum). Botão a mais só depois de conferir nos 3 tamanhos (`npm run ver`). O dock de baixo tem 4 botões e
    não ganha um 5º (420 px numa tela de 390 cortava).
 
@@ -381,7 +381,6 @@ Adulto e criança diferem ≥ 4 px. Peça nova entra na faixa do papel dela; pap
    - `armar-encher` (`ui-base.css`): barra de preenchimento em `scaleX`, dura `ARMAR_MS`;
    - `.balao-respira` (Ritual da Calma, `ui-prova.css`): cresce e encolhe contínuo, de propósito, no ritmo da
      respiração (3,1 s);
-   - `conic-gradient` da aura (`ui-hud.css`): até o D8A-09 redesenhar o chip;
    - confete e festa: duração da escala de festa (§10.16).
 6. Toda animação tem saída em `body.sem-animacao` e `prefers-reduced-motion` (§8.3); o que o canvas desenha fica
    parado quando as animações estão desligadas.
