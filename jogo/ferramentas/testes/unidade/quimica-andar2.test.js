@@ -69,7 +69,17 @@ test('quimica-2: separa (pura) e curiosidade sem repetir na sessão, por tema, c
     assert.ok(!vistas.has(c.id), 'repetiu ' + c.id + ' antes de contar todas');
     vistas.add(c.id);
   }
-  assert.ok(Q.curiosidade('todas'), 'depois de todas, recomeça');
+  const ultima = [...vistas].pop();
+  for (let i = 0; i < 20; i++) {
+    Q.reiniciarCuriosidades();
+    let antes = null;
+    for (let j = 0; j < todas.length * 3; j++) {
+      const c = Q.curiosidade('todas');
+      if (todas.length > 1) assert.notStrictEqual(c.id, antes, 'a mesma duas vezes seguidas no recomeço');
+      antes = c.id;
+    }
+  }
+  assert.ok(ultima && Q.curiosidade('todas'), 'depois de todas, recomeça');
   const tema = todas[0].tema;
   assert.strictEqual(Q.curiosidade(tema).tema, tema);
   assert.ok(Q.curiosidade('tema-que-nao-existe'), 'tema sem curiosidade cai em todas');
