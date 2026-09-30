@@ -65,24 +65,47 @@
     return { mult: 1, div: dMin };
   }
 
-  // o texto do carimbo em uma ou duas etiquetas (lugar e data), na fonte pixel; devolve o layout
-  function planejarCarimbo(ctx, lugar, data, larguraUtil, m) {
-    var l = lugar;
-    for (var fonte = m.fonte; fonte >= 8; fonte -= 8) {
-      ctx.font = fonte + 'px ' + FONTE_PIXEL;
-      ctx.textRendering = 'optimizeSpeed';   // sem ligadura "fi"/"fl" (ui.md §10.9)
-      var pad = Math.max(6, Math.round(fonte * 0.6)), vao = 3 * m.u;
-      var tentativas = l.comodo ? [nomeLugar(l), l.predio] : [l.predio];   // o cômodo só se couber
-      for (var i = 0; i < tentativas.length; i++) {
-        var tl = tentativas[i];
-        var wl = Math.ceil(ctx.measureText(tl).width) + pad * 2, wd = Math.ceil(ctx.measureText(data).width) + pad * 2;
-        if (wl + vao + wd <= larguraUtil) return { fonte: fonte, pad: pad, linhas: [[tl, data]], wl: wl, wd: wd, vao: vao, texto: tl };
-        if (Math.max(wl, wd) <= larguraUtil) return { fonte: fonte, pad: pad, linhas: [[tl], [data]], wl: wl, wd: wd, vao: vao, texto: tl };
+  // quebra um texto em duas linhas no separador mais perto do meio (null se não tiver)
+  function quebrar(t, sep) {
+    var esp = -1;
+    for (var c = t.indexOf(sep); c >= 0; c = t.indexOf(sep, c + 1)) { if (esp < 0 || Math.abs(c - t.length / 2) < Math.abs(esp - t.length / 2)) esp = c; }
+    return esp > 0 ? [t.slice(0, esp), t.slice(esp + sep.length)] : null;
+  }
+  // o texto do carimbo (lugar e data), na fonte pixel: a maior letra (degrau de 8, até 40) cuja faixa cabe
+  // em altMax sem mexer na cena; em cada letra tenta lado a lado, um embaixo do outro, a placa em duas
+  // linhas com a data ao lado e, por fim, embaixo (com folga cheia e depois curta). O nome completo
+  // (prédio · cômodo) vale mais que a letra maior: o prédio sozinho só quando nenhuma letra cabe com ele
+  function planejarCarimbo(ctx, lugar, data, larguraUtil, m, altMax) {
+    var l = lugar, u = m.u, vao = 3 * u, tp = l.predio;
+    var textos = l.comodo ? [[nomeLugar(l), ' · '], [tp, ' ']] : [[tp, ' ']];
+    for (var t = 0; t < textos.length; t++) {
+      var tl = textos[t][0], partes = quebrar(tl, textos[t][1]);
+      for (var passo = 0; passo < 2 * (Math.max(40, m.fonte) / 8); passo++) {
+        // cada letra primeiro com a folga cheia, depois com a folga curta (antes de diminuir a letra)
+        var fonte = Math.max(40, m.fonte) - 8 * Math.floor(passo / 2), folga = passo % 2 ? 0.35 : 0.6;
+        ctx.font = fonte + 'px ' + FONTE_PIXEL;
+        ctx.textRendering = 'optimizeSpeed';   // sem ligadura "fi"/"fl" (ui.md §10.9)
+        var pad = Math.max(6, Math.round(fonte * folga)), hEt = fonte + pad * 2, h2 = hEt + Math.round(fonte * 1.25);
+        var wd = Math.ceil(ctx.measureText(data).width) + pad * 2;
+        var wl = Math.ceil(ctx.measureText(tl).width) + pad * 2;
+        var opcoes = [
+          { linhas: [[tl, data]], wl: wl, larg: wl + vao + wd, alt: hEt, partes: [tl] },
+          { linhas: [[tl], [data]], wl: wl, larg: Math.max(wl, wd), alt: 2 * hEt + vao, partes: [tl] },
+        ];
+        if (partes) {
+          var w2 = Math.ceil(Math.max(ctx.measureText(partes[0]).width, ctx.measureText(partes[1]).width)) + pad * 2;
+          opcoes.push({ linhas: [[tl, data]], wl: w2, larg: w2 + vao + wd, alt: h2, partes: partes });
+          opcoes.push({ linhas: [[tl], [data]], wl: w2, larg: Math.max(w2, wd), alt: h2 + vao + hEt, partes: partes });
+        }
+        for (var i = 0; i < opcoes.length; i++) {
+          var o = opcoes[i];
+          if (o.larg <= larguraUtil && o.alt + 4 * u <= altMax) { o.fonte = fonte; o.pad = pad; o.wd = wd; o.vao = vao; o.texto = tl; return o; }
+        }
       }
     }
     ctx.font = '8px ' + FONTE_PIXEL;
     ctx.textRendering = 'optimizeSpeed';   // sem ligadura "fi"/"fl" (ui.md §10.9)
-    return { fonte: 8, pad: 6, linhas: [[l.predio], [data]], wl: larguraUtil, wd: Math.ceil(ctx.measureText(data).width) + 12, vao: 3 * m.u, texto: l.predio };
+    return { fonte: 8, pad: 6, linhas: [[tp], [data]], wl: larguraUtil, wd: Math.ceil(ctx.measureText(data).width) + 12, vao: vao, texto: tp, partes: [tp], alt: 2 * 20 + vao };
   }
 
   // etiqueta como as placas dos cômodos: contorno, papel, sombrinha embaixo e dois pontinhos dourados
@@ -102,7 +125,10 @@
     ctx.textRendering = 'optimizeSpeed';   // sem ligadura "fi"/"fl" (ui.md §10.9)
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText(texto, Math.round(x + w / 2), Math.round(y + h / 2 + fonte * 0.06));
+    var ls = [].concat(texto), passoL = Math.round(fonte * 1.25);   // uma ou duas linhas, centradas
+    ls.forEach(function (t, i) {
+      ctx.fillText(t, Math.round(x + w / 2), Math.round(y + h / 2 + (i - (ls.length - 1) / 2) * passoL + fonte * 0.06));
+    });
   }
 
   function montarFoto(cap, lugar, quando) {
@@ -117,9 +143,11 @@
     var ctx = out.getContext('2d');
     // carimbo: planeja antes para saber a altura da faixa de baixo
     var util = cw + 2 * b - 8 * u;
-    var plano = planejarCarimbo(ctx, lugar, d.data, util, m);
+    var plano = planejarCarimbo(ctx, lugar, d.data, util, m, mx - ch - 2 * b);
     var hEt = plano.fonte + plano.pad * 2;
-    var faixa = plano.linhas.length * hEt + (plano.linhas.length - 1) * 3 * u + 4 * u;
+    var hLugar = hEt + (plano.partes.length - 1) * Math.round(plano.fonte * 1.25);   // a placa pode ter duas linhas
+    var altTotal = plano.alt;
+    var faixa = altTotal + 4 * u;
     var fw = cw + 2 * b, fh = ch + b + b + faixa;
     // nunca passa do lado maior (medidas() já reserva o pior caso; isto é só por garantia)
     if (Math.max(fw, fh) > mx) { var s = mx / Math.max(fw, fh); cw = Math.floor(cw * s); ch = Math.floor(ch * s); fw = cw + 2 * b; fh = ch + b + b + faixa; }
@@ -180,19 +208,21 @@
     // carimbo: lugar (papel) e data (lilás), centrados na faixa de baixo
     var topoFaixa = b + ch + b - u;
     var altUtil = fh - topoFaixa - 2 * u;
-    var altTotal = plano.linhas.length * hEt + (plano.linhas.length - 1) * 3 * u;
     var yy = topoFaixa + Math.round((altUtil - altTotal) / 2);
     plano.linhas.forEach(function (linha) {
       var ws = linha.map(function (t) { return t === plano.texto ? plano.wl : plano.wd; });
       var total = ws.reduce(function (a, v) { return a + v; }, 0) + (linha.length - 1) * plano.vao;
       var xx = Math.round((fw - total) / 2);
+      var hl = linha.indexOf(plano.texto) >= 0 ? hLugar : hEt;   // a data ao lado da placa fica no meio da altura
       linha.forEach(function (t, i) {
-        etiqueta(ctx, xx, yy, ws[i], hEt, t, plano.fonte, u, t === plano.texto ? COR.papel : COR.lilasClaro);
+        var eLugar = t === plano.texto, h = eLugar ? hLugar : hEt;
+        etiqueta(ctx, xx, yy + Math.round((hl - h) / 2), ws[i], h, eLugar ? plano.partes : t, plano.fonte, u, eLugar ? COR.papel : COR.lilasClaro);
         xx += ws[i] + plano.vao;
       });
-      yy += hEt + 3 * u;
+      yy += hl + 3 * u;
     });
-    return { canvas: out, lugar: plano.texto, data: d.data, arquivo: d.arquivo, w: fw, h: fh };
+    // lugar (arquivo e legenda): sempre o nome completo, mesmo que a placa leve só o prédio
+    return { canvas: out, lugar: nomeLugar(lugar), placa: plano.texto, fonte: plano.fonte, data: d.data, arquivo: d.arquivo, w: fw, h: fh };
   }
 
   // a fonte pixel já veio? (nas placas ela é a mesma; sem rede, segue com a de reserva)
