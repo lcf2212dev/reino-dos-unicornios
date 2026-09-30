@@ -59,11 +59,15 @@ function checarIngles(s, onde) {
   }
   if (aberto) erros.push(`${onde}: « sem » em "${s}"`);
 }
-// no celular cabem ~17 letras por linha: uma fala (ou página) de até ~44 letras fica em 2-3 linhas
+// balão (ui.md §10.17.5): fala acima de 44 letras e frase (segmento gravado) acima de 1,5 página (mais de 3 linhas)
+const PAGINA = (Reino._npcs && Reino._npcs.LIMITE_PAGINA) || 24, FRASE_MAX = Math.floor(PAGINA * 1.5);
+const letras = (v) => v.replace(/[«»]/g, '').replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}\u{200D}]/gu, '').trim().length;
 function longa(s, onde) {
   if (typeof s !== 'string') return;   // mede o que aparece na tela: a versão mais longa depois do gênero ({…|…} não vai para o balão)
-  const n = Math.max(...(Reino.Genero && Reino.Genero.versoes ? Reino.Genero.versoes(s) : [s]).map((v) => v.replace(/[«»]/g, '').replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}\u{200D}]/gu, '').trim().length));
+  const versoes = Reino.Genero && Reino.Genero.versoes ? Reino.Genero.versoes(s) : [s], n = Math.max(...versoes.map(letras));
+  const f = [].concat(...versoes.map((v) => (temNpcs ? Reino.NPCs.frases(v) : [v]))).find((x) => letras(x) > FRASE_MAX);
   if (n > 44) avisos.push(`${onde}: fala com ${n} letras (máx. ~44 para caber no balão do celular): "${s}"`);
+  else if (f) avisos.push(`${onde}: frase com ${letras(f)} letras (página de ${PAGINA}: mais de 3 linhas no celular): "${f}"`);
 }
 function normal(s) {
   return String(s).replace(/[«»]/g, '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
@@ -388,7 +392,6 @@ defs.forEach((d) => {
   resumo.push(`✔ ${d.id} — ${d.nome} [${d.lugar}${d.entrada ? ', entrada' : ''}]: ${d.tamanho.w}×${d.tamanho.h}, ${(d.comodos || []).length} cômodo(s), ${(d.objetos || []).length} objetos, ${totInter} interativos, ${(d.npcs || []).length} NPCs, ${(d.escadas || []).length} escada(s)`);
   resumo.push(...linhasC);
 });
-
 // personagens registrados com predio (Reino.personagensDoPredio): o id é o do interior (andar da torre: o do
 // andar; interior padrão: 'padrao-<matéria>'); prédio antigo não tem vagas, então sem x/y ele não aparece
 (Reino._personagensPredio || []).filter((r) => doSo(r.predio)).forEach((r) => {
@@ -396,14 +399,11 @@ defs.forEach((d) => {
   if (!checar(d, `personagem ${r.id}: predio '${r.predio}' não é id de interior (${Reino.interiores.map((i) => i.id).join(', ')})`)) return;
   checar((d.npcs || []).some((n) => n.id === r.id), `personagem ${r.id}: registrado em '${r.predio}' sem x/y, e esse prédio não tem vagas (prédio antigo): dê x e y (tile de chão livre do interior)`);
 });
-
 // reservas de personagem (plano paralelo): completas e preenchidas
 { const r = Extras.reservas(Reino, doSo); erros.push(...r.erros); avisos.push(...r.avisos); }
-
 // sprites do elenco e de registrarPersonagem; emoji do menu sem desenho (Reino.registrarLugar)
 if (!SO && temNpcs) Object.keys(Reino.NPCs.ELENCO).forEach((id) => Extras.chavesDoSprite(Reino, Reino.NPCs.ELENCO[id].sprite, `elenco ${id}`).forEach((a) => avisos.push(a)));
 (Reino.lugaresRegistrados || []).filter((l) => doSo(l.id)).forEach((l) => Extras.emojiDoMenu(ctx, l).forEach((a) => avisos.push(a)));
-
 if (DETALHES) {
   console.log(`Biblioteca: ${Object.keys(I.OBJETOS).length} tipos de objeto, ${Object.keys(I.PISOS).length} pisos, ${Object.keys(I.PAREDES).length} paredes${temNpcs ? '' : ' (js/personagens/npcs.js ainda não existe)'}`);
   resumo.forEach((l) => console.log(l));

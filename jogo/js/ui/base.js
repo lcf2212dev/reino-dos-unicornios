@@ -220,6 +220,32 @@
   UI.fecharTodas = function () { while (pilha.length) UI.fecharTela(pilha[pilha.length - 1]); };
   UI.temTela = function () { return pilha.length > 0; };
 
+  // título do painel (ui.md §10.21.1, §10.9.8): numa linha em --texto; se não cabe, quebra em até 2 linhas na mesma
+  // letra (.titulo-quebra: o título nunca fica menor que o texto do painel); só se nem em 2 linhas cabe, desce um
+  // degrau (.titulo-longo, --texto-aux). De novo quando a tela gira e quando a fonte termina de carregar
+  function ajustarTitulo(h) {
+    if (!h) return;
+    h.classList.remove('titulo-longo', 'titulo-quebra');
+    if (h.scrollWidth <= h.clientWidth + 1) return;
+    h.classList.add('titulo-quebra');
+    if (h.getBoundingClientRect().height > 2.5 * parseFloat(getComputedStyle(h).lineHeight)) h.classList.add('titulo-longo');
+  }
+  function ajustarTitulos() { Array.prototype.forEach.call(document.querySelectorAll('.painel-topo .titulo-pixel'), ajustarTitulo); }
+  window.addEventListener('resize', ajustarTitulos);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(ajustarTitulos);
+  UI.ajustarTitulos = ajustarTitulos;
+  // nome curto do título no celular (≤ 480 px, ui-telas.css), para caber numa linha a 16 px (D8B-11); o leitor de
+  // tela lê o nome inteiro (aria-label). Título novo comprido: passe opcoes.curto no UI.painel
+  var CURTOS = {
+    '📋 Lugares do Reino': '📋 Lugares', '🪞 Meu personagem': '🪞 Personagem', '✨ Crie seu personagem': '✨ Seu personagem',
+    'Que foto linda! 📸': 'Foto nova 📸', 'Álbum de fotos 🖼': 'Álbum 🖼', '🦄 Estábulo Mágico': '🦄 Estábulo',
+    '🧚 Loja das Fadas': '🧚 Loja', '💰 Baú do Tesouro': '💰 Baú',
+  };
+  function tituloDoPainel(id, titulo, curto) {
+    if (!curto || typeof titulo !== 'string') return el('h2.titulo-pixel', { id: id }, titulo);
+    return el('h2.titulo-pixel', { id: id, 'aria-label': titulo.replace(/\p{Extended_Pictographic}|\uFE0F/gu, '').trim() },
+      el('span.titulo-inteiro', titulo), el('span.titulo-curto', { 'aria-hidden': 'true' }, curto));
+  }
   // tela com cartão central, título e botão de fechar
   var nPainel = 0;
   function painel(nome, titulo, opcoes) {
@@ -230,9 +256,10 @@
     var fechar = el('button.btn-icone.btn-fechar', { type: 'button', 'aria-label': 'Fechar' }, '✕');
     var conteudo = el('div.painel-conteudo');
     var card = el('div.painel',
-      el('header.painel-topo', el('h2.titulo-pixel', { id: idTitulo }, titulo), opcoes.semFechar ? null : fechar),
+      el('header.painel-topo', tituloDoPainel(idTitulo, titulo, opcoes.curto || CURTOS[titulo]), opcoes.semFechar ? null : fechar),
       conteudo);
     t.appendChild(card);
+    ajustarTitulo(card.querySelector('.painel-topo .titulo-pixel'));
     fechar.addEventListener('click', function () { Reino.Som.tocar('toque'); Reino.Som.calar(); UI.fecharTela(t); if (opcoes.aoFechar) opcoes.aoFechar(); });
     t.addEventListener('click', function (e) { if (e.target === t && !opcoes.semFechar) fechar.click(); });
     if (!opcoes.semFechar) t._aoEsc = function () { fechar.click(); };   // Esc = ✕

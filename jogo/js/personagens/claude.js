@@ -168,14 +168,16 @@
   function porTeclado() { return !!(Reino.UI && Reino.UI.porTeclado && Reino.UI.porTeclado()); }
   function vozDe(item) { return item.voz || (item.quem && item.quem.voz) || 'claude'; }
 
-  // retrato: Claude (padrão) ou o da personagem, ampliado nítido
+  // retrato: Claude (padrão) ou o da personagem, ampliado nítido. Personagem (Claude, e o N.retrato de NPC e ET) a 4 px
+  // CSS por pixel, o mesmo para todos (ui.md §10.10.6); outro retrato (objeto, unicórnio) a 4 até 21 px, senão a 2
+  function escalaRetrato(src) { return src.personagem || Math.max(src.width, src.height) <= 21 ? 4 : 2; }
   function porRetrato(bal, quem) {
     var velho = bal.querySelector('canvas.claude-avatar');
     var r = quem && quem.retrato;
     quadros = r ? (Array.isArray(r) ? r : [r]) : null;
     if (!quadros && !bal.classList.contains('com-quem')) return;
     var src = quadros ? quadros[0] : PA.claude(0).canvas;
-    var novo = PA.paraDOM(src, quadros ? PA.escalaNitida(Math.min(72, src.width * 4), src.width) : 4, 'claude-avatar');
+    var novo = PA.paraDOM(src, escalaRetrato(src), 'claude-avatar');
     velho.replaceWith(novo);
   }
 
