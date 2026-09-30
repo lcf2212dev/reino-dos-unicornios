@@ -33,7 +33,7 @@
 .voo-opcao {
   display: flex; align-items: center; justify-content: center; box-sizing: border-box; padding: 0 4px;
   text-align: center; font-size: var(--texto); line-height: var(--entrelinha-titulo); color: var(--papel);
-  text-shadow: -2px 0 0 var(--tinta), 2px 0 0 var(--tinta), 0 -2px 0 var(--tinta), 0 2px 0 var(--tinta), 2px 2px 0 var(--tinta);
+  text-shadow: -2px 0 0 var(--tinta), 2px 0 0 var(--tinta), 0 -2px 0 var(--tinta), 0 2px 0 var(--tinta);
 }
 /* celular (e deitado baixo): o rótulo das faixas no degrau de baixo (era 2,4vmin, 12,8 px no celular) */
 @media (max-width: 480px), (max-height: 500px) { .voo-opcao { font-size: var(--texto-aux); } }
@@ -47,7 +47,7 @@
 .voo-aviso {
   position: absolute; left: 0; right: 0; top: 38%; text-align: center; pointer-events: none;
   font-family: var(--fonte-pixel); font-size: var(--texto); line-height: 1.5; color: var(--papel);
-  text-shadow: -2px 0 0 var(--tinta), 2px 0 0 var(--tinta), 0 -2px 0 var(--tinta), 0 2px 0 var(--tinta), 2px 2px 0 var(--tinta); padding: 0 10px; visibility: hidden;
+  text-shadow: -2px 0 0 var(--tinta), 2px 0 0 var(--tinta), 0 -2px 0 var(--tinta), 0 2px 0 var(--tinta); padding: 0 10px; visibility: hidden;
 }
 .voo-aviso-ligado { visibility: visible; }
 /* a chegada fica abaixo do planeta e acima do foguete (folga ≥ 12 px), num fundo, sem cobrir a borda dele */

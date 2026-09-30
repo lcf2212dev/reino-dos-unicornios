@@ -88,7 +88,7 @@
 }
 .titulo-jogo::before { left: 28px; }
 .titulo-jogo::after { right: 28px; }
-.titulo-jogo span { display: block; font-family: var(--fonte-pixel); font-size: var(--texto-t); line-height: var(--entrelinha-titulo); color: var(--laranja-forte); text-shadow: 2px 2px 0 var(--borda); letter-spacing: 0; }
+.titulo-jogo span { display: block; font-family: var(--fonte-pixel); font-size: var(--texto-t); line-height: var(--entrelinha-titulo); color: var(--laranja-forte); text-shadow: 0 2px 0 var(--borda); letter-spacing: 0; }
 .titulo-jogo small { display: block; font-size: var(--texto); line-height: var(--entrelinha); margin-top: 10px; }
 .inicio-sub { color: var(--tinta-suave); }
 .btn-comecar { font-size: var(--texto); padding: 16px 22px; }
@@ -290,3 +290,5 @@ body.balao-no-pe #telas .tela { padding-bottom: calc(var(--balao-altura, 0px) + 
 .lugares-grupo:first-child { margin-top: 0; }
 /* pontos de página do balão no canto de baixo à direita (D5-14) */
 #claude-balao .pontos-pagina { margin-left: auto; align-self: flex-end; }
+/* ícone em tela escura (§10.8.3, D8A-24): brilho de 1 px de arte em --papel nas quatro direções, sem desfoque */
+.fundo-escuro canvas.icone-em, .tela-voo canvas.icone-em { filter: drop-shadow(2px 0 0 var(--papel)) drop-shadow(-2px 0 0 var(--papel)) drop-shadow(0 2px 0 var(--papel)) drop-shadow(0 -2px 0 var(--papel)); }
