@@ -15,6 +15,27 @@
     sede: { icone: '💧', rotulo: 'Sede', baixo: 'Quer água!' },
     banho: { icone: '🛁', rotulo: 'Banho', baixo: 'Quer banho!' },
   };
+  // sinal do cuidado baixo: balãozinho âmbar com "!" no canto do ícone (sem vermelho de alarme)
+  Reino.registrarIcones({
+    'cuidado-baixo': { n: 'cuidado baixo', p: { k: '#3a2446', a: '#ffc34d', m: '#8f4a12' }, d: [
+      '...........kkkk.',
+      '..........kammak',
+      '..........kammak',
+      '..........kammak',
+      '..........kaaaak',
+      '..........kammak',
+      '..........kaaaak',
+      '...........kkkk.',
+      '................',
+      '................',
+      '................',
+      '................',
+      '................',
+      '................',
+      '................',
+      '................',
+    ] },
+  });
   function cuidadosProntos() { return !!(Reino.Cuidados && Reino.Cuidados.niveis); }
   // o banho só aparece quando Reino.Cuidados já o conhece (niveis() com o campo)
   function comBanho() { try { return cuidadosProntos() && typeof Reino.Cuidados.niveis().banho === 'number'; } catch (e) { return false; } }
@@ -25,6 +46,12 @@
   // tamanho do ícone das barras grandes: 24px no celular e 32px no tablet e no notebook
   function pxIconeGrande() { return window.innerWidth <= 480 ? 24 : 32; }
 
+  function iconeComSinal(emoji, px) {
+    var sinal = iconePequeno('cuidado-baixo', px >= 32 ? 48 : 32);   // 2px CSS por pixel de arte (3 ao lado do ícone de 32)
+    sinal.classList.add('cuid-sinal');
+    sinal.setAttribute('aria-hidden', 'true');
+    return el('span.cuid-icone', iconePequeno(emoji, px), sinal);
+  }
   // tamanho 'mini' (HUD e cartas: ícone + trilho fino) ou 'grande' (detalhe e Pet Shop: com rótulo)
   function barraCuidado(uniId, campo, tamanho) {
     var info = CUIDADO[campo];
@@ -32,7 +59,8 @@
     var b = el('span.cuid-barra.cuid-' + campo + '.cuid-' + tamanho,
       { role: 'meter', 'aria-valuemin': '0', 'aria-valuemax': '100', 'data-uni': uniId, 'data-campo': campo },
       // mini: 16px pedidos = 16px CSS nítidos em dpr 1, 2 e 3 (com 12 o iPhone ficava com 10,7px)
-      tamanho === 'grande' ? el('span.cuid-rotulo', iconePequeno(info.icone, pxIconeGrande()), el('span', info.rotulo)) : iconePequeno(info.icone, 16),
+      // grande: ícone numa caixinha com o balão de baixo por cima (só com .baixo); mini: sem balão (listrado e mínimo bastam)
+      tamanho === 'grande' ? el('span.cuid-rotulo', iconeComSinal(info.icone, pxIconeGrande()), el('span', info.rotulo)) : iconePequeno(info.icone, 16),
       el('span.cuid-trilho', cheio),
       tamanho === 'grande' ? el('small.cuid-aviso') : null);
     pintarBarra(b);
@@ -49,7 +77,8 @@
     var v = Math.round(typeof nv === 'number' ? nv : 100);   // sem o campo = cheio
     var baixo = !!Reino.Cuidados.baixo(id)[campo];
     var cheio = b.querySelector('.cuid-cheio');
-    if (cheio) cheio.style.width = v + '%';
+    // acima de zero, nunca menos de 1 pixel de arte (2px): fome 5 e fome 0 não ficam iguais
+    if (cheio) cheio.style.width = v > 0 ? 'max(2px, ' + v + '%)' : '0';
     b.classList.toggle('baixo', baixo);
     b.setAttribute('aria-valuenow', String(v));
     b.setAttribute('aria-label', CUIDADO[campo].rotulo + ': ' + v + ' de 100' + (baixo ? ', ' + CUIDADO[campo].baixo.toLowerCase() : ''));
