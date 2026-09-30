@@ -52,4 +52,5 @@
 # 70f8fb3 = O-33 (móveis na grade do fundo)
 # 30e6177 = onda 5b (área útil, balão no pé e paginado, retorno compacto, loja; D10-B03, D1-10, D1-11, D2A-01, D8A-15, D11-06, D11-05, D5-01, D5-02, D5-05, D5-09, D5-10, D5-11, D6-08, D8A-06)
 # 4606019 = onda 5c (cabeçalho padrão dos painéis, cor da matéria, notebook baixo: D10-B11, D10-12, D8B-28, D6-23, D7-12, D7-18, D12f-02)
-4606019
+# 66af4cf = onda 5d (festa pela escala, brilho arco-íris, sombras retas; D10-B10, D9-05, D6-26, D6-19, D9-17, D10-10, D8A-24) e O-31, O-32
+66af4cf
