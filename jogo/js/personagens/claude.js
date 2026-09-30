@@ -97,10 +97,13 @@
           U.el('button.btn-ouvir-claude.livre-na-fala', { type: 'button', 'aria-label': 'Ouvir o Claude', text: '🔊' }),
           U.el('button.btn-ok-claude', { type: 'button', text: 'Ok! 👍' }))));
     document.body.appendChild(bal);
+    if (window.ResizeObserver) new ResizeObserver(medirAltura).observe(bal);   // a fala cresce (Letras grandes, ícone)
+    window.addEventListener('resize', medirAltura);
     bal.querySelector('.btn-ouvir-claude').addEventListener('click', function () { if (!aberto) return; var segs = aberto.fala || aberto.texto, op = { voz: vozDe(aberto) }; if (Reino.UI && Reino.UI.ouvirDeNovo) Reino.UI.ouvirDeNovo(segs, op); else Reino.Som.falar(segs, op); });
     bal.querySelector('.claude-acoes').addEventListener('click', function (e) {
       var b = e.target.closest('button[data-valor]');
       if (!b || !aberto || b.disabled) return;
+      if (b.dataset.valor === PAGINA) { Reino.Som.tocar('toque'); virarPagina(bal, aberto); return; }
       // toque de dedo/mouse (não o Enter): o próximo balão nasce no mesmo lugar, e o 2º toque de um toque
       // duplo pulava a página sem ela ler (ou apertava o "Ok! 👍"/"Vamos!"). A guarda do ui/base.js segura
       // os toques perto deste por um instante; toque noutro lugar e o teclado valem na hora.
@@ -186,6 +189,11 @@
     var ouvir = acoes.querySelector('.btn-ouvir-claude');
     ouvir.setAttribute('aria-label', 'Ouvir ' + (item.quem ? U.semEn(item.quem.nome) : 'o Claude'));
     while (ouvir.nextSibling) acoes.removeChild(ouvir.nextSibling);
+    bal.classList.toggle('com-botoes', !!item.botoes || meioDaFala(item));
+    if (meioDaFala(item)) {   // página que não é a última: só o "Continuar →" (e o 🔊)
+      acoes.appendChild(U.el('button.btn-dialogo.principal', { type: 'button', text: 'Continuar →', 'data-valor': PAGINA }));
+      return acoes.querySelector('.btn-dialogo');
+    }
     if (!item.botoes) {
       acoes.appendChild(U.el('button.btn-ok-claude', { type: 'button', text: 'Ok! 👍', 'data-valor': 'ok' }));
       return item.modal ? acoes.querySelector('.btn-ok-claude') : null;
@@ -199,29 +207,125 @@
     return foco || acoes.querySelector('.btn-dialogo');
   }
 
+  /* páginas (D5-02): no celular (e com Letras grandes em qualquer tamanho), a fala do Claude que passa de 4 linhas
+     (5 fora do celular) aparece em pedaços de até 4 linhas com "Continuar →" (npcs-e-dialogo.md §10.1); o áudio é
+     o da frase inteira, uma vez só. Linhas medidas no próprio balão (a letra e a largura reais); o menor número de
+     páginas que cabe, pedaços parecidos (nenhum abaixo de 40 % do maior), cortados numa frase perto do alvo ou
+     numa palavra. NPC (quem) não pagina aqui: as falas dele já vêm curtas */
+  var LINHAS_PAGINA = 4, PAGINA = '__pagina';
+  function celular() { return !!(window.matchMedia && window.matchMedia('(max-width: 480px)').matches); }
+  function paginavel() { return celular() || document.documentElement.classList.contains('letras-grandes'); }
+  function linhasDe(bal, t) {
+    var el = bal.querySelector('.claude-texto');
+    U.preencherColado(el, t);
+    return Math.round(el.scrollHeight / (parseFloat(getComputedStyle(el).lineHeight) || 24));
+  }
+  // corte em n pedaços: cada alvo = o que sobra / páginas que faltam; frase a até 30 % do alvo, senão a palavra mais perto
+  function dividir(t, n) {
+    var pags = [], resto = t;
+    for (var k = 0; k < n - 1; k++) {
+      var alvo = resto.length / (n - k), melhor = -1, dist = Infinity, re = /[.!?…]["”]?\s/g, m;
+      while ((m = re.exec(resto))) { var d = Math.abs(m.index + 1 - alvo); if (d <= alvo * 0.3 && d < dist) { dist = d; melhor = m.index + m[0].length - 1; } }
+      if (melhor < 0) for (var i = 0; i < resto.length; i++) if (resto[i] === ' ' && Math.abs(i - alvo) < dist) { dist = Math.abs(i - alvo); melhor = i; }
+      if (melhor <= 0) break;
+      pags.push(resto.slice(0, melhor).trim());
+      resto = resto.slice(melhor).trim();
+    }
+    pags.push(resto);
+    return pags;
+  }
+  // no celular com Letras grandes e uma tela aberta, 3 linhas: a tela acima do balão fica com espaço (D5-01)
+  function linhasPagina() { return celular() && document.documentElement.classList.contains('letras-grandes') && Reino.UI && Reino.UI.temTela && Reino.UI.temTela() ? 3 : LINHAS_PAGINA; }
+  function paginar(bal, t) {
+    t = String(t).trim();
+    var LINHAS_PAGINA = linhasPagina();
+    var total = linhasDe(bal, t);
+    if (total <= LINHAS_PAGINA + (celular() ? 0 : 1)) return null;
+    var pags = null;
+    for (var n = Math.ceil(total / LINHAS_PAGINA); n <= total; n++) {
+      pags = dividir(t, n);
+      var tam = pags.map(function (p) { return p.length; });
+      if (pags.every(function (p) { return linhasDe(bal, p) <= LINHAS_PAGINA; }) && Math.min.apply(null, tam) >= 0.4 * Math.max.apply(null, tam)) break;
+    }
+    return pags && pags.length > 1 ? pags : null;
+  }
+  function meioDaFala(item) { return !!(item.paginas && item.pag < item.paginas.length - 1); }
+  function porTexto(bal, item) {
+    var t = item.paginas ? item.paginas[item.pag] : item.texto;
+    U.preencherColado(bal.querySelector('.claude-texto'), t);   // emoji, número e "Sala N" colados (ui.md §10.17)
+    var extra = bal.querySelector('.claude-extra');
+    extra.innerHTML = '';
+    var comExtra = item.extra && !meioDaFala(item);
+    if (comExtra) extra.appendChild(item.extra);
+    extra.hidden = !comExtra;
+    return porBotoes(bal, item);
+  }
+  function virarPagina(bal, item) {
+    item.pag++;
+    var foco = porTexto(bal, item);
+    if (foco && porTeclado()) try { foco.focus({ preventScroll: true }); } catch (e) { foco.focus(); }
+    medirAltura();
+    contarTempo(item);
+  }
+  // balão com tempo: cada página tem o tempo inteiro; acabou numa página do meio, vira; na última, fecha
+  function contarTempo(item) {
+    clearTimeout(item.timer);
+    if (item.tempo) item.timer = setTimeout(function () { if (aberto !== item) return; if (meioDaFala(item)) virarPagina(U.$('#claude-balao'), item); else fechar(); }, item.tempo);
+  }
+
+  /* área útil (D10-B03, ui.md §10.18): --balao-altura no :root = do topo do balão (com a aba do nome) ao pé da
+     tela, 0 fechado; a câmera e as telas leem. body.balao-no-pe (D5-01): com uma tela aberta, o balão desce
+     para o pé e a tela encolhe para acima dele (ui-telas.css) */
+  var alturaAntes = -1;
+  function medirAltura() {
+    var bal = U.$('#claude-balao'), h = 0;
+    if (bal && !bal.hidden) {
+      var r = bal.getBoundingClientRect(), nome = bal.querySelector('.claude-nome'), topo = r.top;
+      if (nome) topo = Math.min(topo, nome.getBoundingClientRect().top);
+      h = Math.max(0, Math.ceil(window.innerHeight - topo));
+    }
+    if (h === alturaAntes) return;
+    alturaAntes = h;
+    document.documentElement.style.setProperty('--balao-altura', h + 'px');
+  }
+  function porLugar() {
+    var noPe = !!(aberto && Reino.UI && Reino.UI.temTela && Reino.UI.temTela());
+    document.body.classList.toggle('balao-no-pe', noPe);
+    medirAltura();
+  }
+  // nome que não cabe numa linha na largura do balão: um degrau abaixo (ui.md §10.17.3), nunca quebra (D5-11)
+  function porNome(bal, item) {
+    var nome = bal.querySelector('.claude-nome');
+    U.preencher(nome, item.quem ? item.quem.nome : 'Claude');
+    nome.classList.remove('nome-aux');
+    if (nome.scrollWidth > bal.clientWidth) nome.classList.add('nome-aux');
+  }
+
   function mostrar(item) {
     var bal = montar();
     aberto = item;
     porRetrato(bal, item.quem);
     bal.classList.toggle('com-quem', !!item.quem);
-    bal.classList.toggle('com-botoes', !!item.botoes);
-    U.preencher(bal.querySelector('.claude-nome'), item.quem ? item.quem.nome : 'Claude');
-    U.preencherColado(bal.querySelector('.claude-texto'), item.texto);   // emoji, número e "Sala N" colados (ui.md §10.17)
-    var extra = bal.querySelector('.claude-extra');
-    extra.innerHTML = '';
-    if (item.extra) extra.appendChild(item.extra);
-    extra.hidden = !item.extra;
-    var foco = porBotoes(bal, item);
+    item.pag = 0;
+    item.paginas = null;
+    if (!item.quem && typeof item.texto === 'string' && paginavel()) {
+      // mede com o balão montado e invisível (a largura real, com retrato e padding)
+      bal.style.visibility = 'hidden'; bal.hidden = false;
+      item.paginas = paginar(bal, item.texto);
+      bal.style.visibility = '';
+    }
+    var foco = porTexto(bal, item);
     bal.setAttribute('role', item.modal ? 'dialog' : 'status');
     if (item.modal) bal.setAttribute('aria-modal', 'true'); else bal.removeAttribute('aria-modal');
     document.body.classList.toggle('com-dialogo', !!item.modal);
     bal.classList.toggle('dica-pressa', item.tipo === 'pressa');
     bal.hidden = false;
+    porNome(bal, item);
+    porLugar();
     bal.classList.remove('entrando'); void bal.offsetWidth; bal.classList.add('entrando');
     if (foco && porTeclado()) try { foco.focus({ preventScroll: true }); } catch (e) { foco.focus(); }
     if (item.falar !== false) falarNoBalao(bal, item, foco);
-    clearTimeout(item.timer);
-    if (item.tempo) item.timer = setTimeout(fechar, item.tempo);
+    contarTempo(item);
   }
   // balão que espera resposta (sem `tempo`): com config.esperaFala.travar, os botões (menos o 🔊) só liberam
   // quando a fala acaba; sem ela (o padrão), a fala toca e ela responde ou fecha quando quiser (fechar cala a voz)
@@ -242,6 +346,7 @@
     aberto = null;
     if (bal) bal.hidden = true;
     document.body.classList.remove('com-dialogo');
+    porLugar();
     Reino.Som.calar();
     if (item.resolver) item.resolver(typeof valor === 'string' ? valor : null);
     if (fila.length) setTimeout(seguirFila, 180);
@@ -272,6 +377,7 @@
     if (festaAberta() && !fila[0].modal) { esperarFesta(); return; }
     mostrar(fila.shift());
   }
+  U.on(Reino.EVENTOS.TELAS, porLugar);
   U.on(Reino.EVENTOS.TELAS, function () {
     if (!esperando || festaAberta()) return;
     esperando = false;
@@ -280,6 +386,7 @@
   C.fechar = function () { fechar(); };
   C.aberto = function () { return !!aberto; };
   C.dialogoAberto = function () { return !!(aberto && aberto.modal); };
+  C.textoAberto = function () { return aberto ? aberto.texto : null; };   // a fala inteira (com páginas, só uma aparece)
   C.quemFala = function () { return aberto ? aberto.quem : null; };
   C.limpar = function () {
     // itens novos (quem/botões/modal) descartados resolvem null; os antigos seguem sem resolver, como antes

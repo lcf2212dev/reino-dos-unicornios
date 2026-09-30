@@ -225,6 +225,11 @@ Reino.Claude.dialogoAberto() → bool   // o balão aberto é modal
 ## 10. Falas (tamanho e frases automáticas)
 1. Cada fala (ou página) com até 30 letras (sem contar «» e emoji): no celular cabem ~15–17 letras por linha;
    o balão tem 2 linhas. Escreva falas curtas. Regras de voz: `som-musica-e-voz.md` §5.
+   Exceção: o Claude (balão sem `quem`) tem até 4 linhas por página. A fala dele que passa de 4 linhas no celular
+   (5 fora dele, com Letras grandes; 3 por página no celular com Letras grandes e uma tela aberta) aparece em
+   páginas com "Continuar →" (`claude.js`, `paginar`: linhas medidas no próprio balão, o menor número de páginas,
+   pedaços parecidos); a voz lê a frase inteira uma vez só, então as frases do Claude não se cortam no texto nem
+   na gravação.
 2. Frases automáticas do motor (`npcs-falas.js`), também curtas: resumo do guia ("Você fez N de 5 salas.",
    "Já ganhou R$ X!", "Agora vamos para a Sala N!"), persistência ("Mais N vezes e o raro nasce!", "Ou de
    primeira, com calma!"), prova ("Agora vale um prêmio lendário/raro/comum!"), treino ("Faltam N salas!"),

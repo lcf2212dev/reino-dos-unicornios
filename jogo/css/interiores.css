@@ -24,17 +24,11 @@
 /* ...e o balão mais largo (painel de 720 px, ui.md §10.21): "📖 Livro das Memórias" em até 2 linhas */
 #claude-balao:has(.btn-dialogo:not(.principal) ~ .btn-dialogo:not(.principal)) { max-width: 720px; }
 
-/* personagem falando: o retrato no quadro (ui-telas.css), sem encolher (ui.md §10.10.6); a plaquinha embaixo, com o
-   nome inteiro em até 2 linhas (o nome nunca corta): 232 px cabem "Seu Carlos do" e "Relojoeiro Seu Ponteiro" em
-   2 linhas também na letra de 16 px das Letras grandes */
-#claude-balao.com-quem .claude-nome { position: relative; z-index: 1; max-width: 232px; text-align: center; overflow-wrap: normal; word-break: keep-all; hyphens: none; }
+/* personagem falando: o retrato no quadro (ui-telas.css), sem encolher (ui.md §10.10.6); o nome na aba de 1 linha
+   em cima do balão (ui-telas.css, D5-11), inteiro, sem hífen */
+#claude-balao.com-quem .claude-nome { overflow-wrap: normal; word-break: keep-all; hyphens: none; }
 
 @media (max-width: 480px) {
-  #claude-balao.com-quem { gap: 6px; }
-  /* no celular o nome vira uma aba em cima do balão, encostada no quadro do retrato (à esquerda dele): o nome mais
-     longo ("Seu Carlos do Carrossel", 23 letras) cabe numa linha na letra de 12 px; nunca corta (se não couber, quebra) */
-  #claude-balao.com-quem .claude-nome { position: absolute; left: 0; bottom: 100%; max-width: 100%; margin: 0; z-index: 1; }
-  #claude-balao.com-quem { margin-top: 26px; align-items: flex-start; }
   #claude-balao.com-botoes .claude-fala { padding: 10px 8px; }
   #claude-balao.com-botoes .claude-acoes { gap: 6px; }
   /* "Continuar →" ao lado do 🔊 na letra de 16 px: o 🔊 no alvo mínimo (44 px) e pouca folga dentro dos botões */
@@ -49,7 +43,6 @@
   .letras-grandes #claude-balao .claude-mascote { flex-direction: row; align-items: flex-end; gap: 8px; }
   .letras-grandes #claude-balao .claude-nome,
   .letras-grandes #claude-balao.com-quem .claude-nome { position: static; margin: 0; max-width: none; flex: 0 1 auto; min-width: 0; text-align: left; }
-  .letras-grandes #claude-balao.com-quem { margin-top: 0; }
   .letras-grandes #claude-balao .claude-fala { padding: 10px 8px; }
   .letras-grandes #claude-balao .claude-fala::before { left: 20px; top: -12px; bottom: auto; width: 20px; height: 12px;
     clip-path: polygon(0 12px, 20px 12px, 20px 8px, 16px 8px, 16px 4px, 12px 4px, 12px 0, 8px 0, 8px 4px, 4px 4px, 4px 8px, 0 8px); }

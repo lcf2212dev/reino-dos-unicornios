@@ -139,3 +139,16 @@
   .letras-grandes .premio-status { justify-self: start; }
   .letras-grandes .premio-info { font-size: var(--texto-aux); }
 }
+/* revisão no celular (D5-01): o selo "👀 Revisar" desce para baixo do texto (a questão usa a largura toda), a frase
+   de abertura sai e o aviso amarelo (que já diz o mesmo) vai para depois da lista; com Letras grandes o título
+   e o contador também saem (o balão, o cabeçalho e os selos já dizem): a 1ª questão cabe inteira acima do balão */
+@media (max-width: 480px) {
+  .item-revisao { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 8px; row-gap: 4px; padding: 8px 10px; }
+  .item-revisao .rev-status { grid-column: 2; }
+  .revisao { gap: 8px; }
+  .revisao > h2 + p { display: none; }
+  .revisao .aviso-revisao { order: 1; padding: 6px 10px; }
+  .letras-grandes .revisao > h2 { display: none; }
+  .letras-grandes .missao-rodape .contador-revisao { display: none; }   /* o selo de cada questão e o aviso já contam */
+  .letras-grandes .item-revisao .rev-resp { font-size: var(--texto-aux); }   /* 16 com Letras grandes */
+}

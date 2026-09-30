@@ -24,7 +24,9 @@
     var inicio = texto.slice(0, 30);   // o começo (sem emoji: o fim pode virar ícone de pixel art)
     function meu() {
       var bal = document.getElementById('claude-balao'), t = bal && bal.querySelector('.claude-texto');
-      return !!(bal && !bal.hidden && Reino.Claude.aberto() && t && t.textContent.indexOf(inicio) === 0);
+      // no celular a fala longa aparece em páginas (claude.js, D5-02): confere a fala inteira do balão aberto
+      var tudo = Reino.Claude.textoAberto ? Reino.Claude.textoAberto() : t && t.textContent;
+      return !!(bal && !bal.hidden && Reino.Claude.aberto() && t && typeof tudo === 'string' && tudo.indexOf(inicio) === 0);
     }
     var espera = setInterval(function () {
       var agora = Date.now();
@@ -230,13 +232,16 @@
       var faltamRev = revisadas.filter(function (r) { return !r; }).length;
       var semResp = respostas.filter(function (r) { return r == null || (Array.isArray(r) && !r.length); }).length;
       var lista = el('ol.lista-revisao');
+      // o começo da pergunta; no celular com Letras grandes, mais curto (a 1ª questão cabe acima do balão, D5-01)
+      var corte = window.matchMedia && matchMedia('(max-width: 480px)').matches && document.documentElement.classList.contains('letras-grandes') ? 36 : 70;
+      function resumo(t) { return t.length > corte ? t.slice(0, corte).trimEnd() + '…' : t; }
       var itens = [];
       questoes.forEach(function (d, i) {
         var r = respostas[i];
         var vazia = r == null || (Array.isArray(r) && !r.length);
         var item = el('li', el('button.item-revisao' + (revisadas[i] ? '.revisado' : '') + (vazia ? '.vazio' : ''), { type: 'button' },
           el('span.rev-num', String(i + 1)),
-          el('span.rev-texto', el('b', D.enunciado(d).slice(0, 70) + (D.enunciado(d).length > 70 ? '…' : '')), el('br'), el('span.rev-resp', 'Sua resposta: ' + D.respostaTexto(d, r))),
+          el('span.rev-texto', el('b', resumo(D.enunciado(d))), el('br'), el('span.rev-resp', 'Sua resposta: ' + D.respostaTexto(d, r))),
           el('span.rev-status', revisadas[i] ? '✓ Revisei' : (vazia ? '✏️ Responder' : '👀 Revisar'))));
         item.firstChild.addEventListener('click', function () { Reino.Som.tocar('toque'); mostrarQuestao(i, true); });
         itens.push(item.firstChild);
