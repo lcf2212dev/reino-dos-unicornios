@@ -244,7 +244,7 @@
     document.body.classList.remove('com-dialogo');
     Reino.Som.calar();
     if (item.resolver) item.resolver(typeof valor === 'string' ? valor : null);
-    if (fila.length) setTimeout(function () { if (!aberto && fila.length) mostrar(fila.shift()); }, 180);
+    if (fila.length) setTimeout(seguirFila, 180);
   }
 
   // Claude.falar('texto', {tipo, tempo, falar, fala: [segmentos], voz, agora, quem, botoes, extra, modal}) -> Promise<valor do botão | null>
@@ -258,9 +258,25 @@
       if (opcoes.agora && aberto) { fila.unshift(item); fechar(); return; }
       // modal passa na frente de um balão comum, para ela não sair andando
       if (item.modal && aberto && !aberto.modal) { fechar(); mostrar(item); return; }
-      if (aberto) fila.push(item); else mostrar(item);
+      if (aberto) fila.push(item);
+      else if (festaAberta() && !item.modal) { fila.push(item); esperarFesta(); }
+      else mostrar(item);
     });
   };
+  // O-02: com uma tela de festa aberta (o ovo chocando e o "Nasceu!"), o balão comum espera na fila até ela fechar
+  var TELAS_FESTA = '.tela-ovo', esperando = false;
+  function festaAberta() { return typeof document !== 'undefined' && !!document.querySelector(TELAS_FESTA); }
+  function esperarFesta() { esperando = true; }
+  function seguirFila() {
+    if (aberto || !fila.length) return;
+    if (festaAberta() && !fila[0].modal) { esperarFesta(); return; }
+    mostrar(fila.shift());
+  }
+  U.on(Reino.EVENTOS.TELAS, function () {
+    if (!esperando || festaAberta()) return;
+    esperando = false;
+    setTimeout(seguirFila, 180);
+  });
   C.fechar = function () { fechar(); };
   C.aberto = function () { return !!aberto; };
   C.dialogoAberto = function () { return !!(aberto && aberto.modal); };
