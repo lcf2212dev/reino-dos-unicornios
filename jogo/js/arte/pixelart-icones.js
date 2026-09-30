@@ -28,14 +28,21 @@
     c.style.height = (src.height * escala) + 'px';
     return c;
   };
+  // trancado/vazio (ui.md §10.14): miolo em --tinta-suave e borda (pixel com vizinho vazio) em --tinta; mesmo tamanho
   PA.silhueta = function (spr) {
-    var src = spr.canvas || spr;
-    var c = novoCanvas(src.width, src.height);
-    var ctx = c.getContext('2d');
+    var src = spr.canvas || spr, w = src.width, h = src.height;
+    var c = novoCanvas(w, h), ctx = c.getContext('2d');
     ctx.drawImage(src, 0, 0);
-    ctx.globalCompositeOperation = 'source-in';
-    ctx.fillStyle = '#b9a8cc';
-    ctx.fillRect(0, 0, c.width, c.height);
+    var img = ctx.getImageData(0, 0, w, h), d = img.data, a = new Uint8Array(w * h);
+    for (var i = 0; i < w * h; i++) a[i] = d[i * 4 + 3] > 0 ? 1 : 0;
+    function cheio(x, y) { return x >= 0 && y >= 0 && x < w && y < h && a[y * w + x]; }
+    for (var y = 0; y < h; y++) for (var x = 0; x < w; x++) {
+      if (!a[y * w + x]) continue;
+      var borda = !cheio(x - 1, y) || !cheio(x + 1, y) || !cheio(x, y - 1) || !cheio(x, y + 1);
+      var k = (y * w + x) * 4;
+      d[k] = borda ? 0x3a : 0x6b; d[k + 1] = borda ? 0x24 : 0x53; d[k + 2] = borda ? 0x46 : 0x78; d[k + 3] = 255;
+    }
+    ctx.putImageData(img, 0, 0);
     return c;
   };
 
