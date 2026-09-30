@@ -76,3 +76,37 @@ test('Letras grandes no celular: páginas por linhas reais, sem pedaço solto', 
     assert.ok(tam.length >= 2 && Math.min(...tam) >= 0.4 * Math.max(...tam), 'pedaço solto: ' + tam.join('/'));
   } finally { await c.fechar(); }
 });
+
+// D5-05: conversa com NPC num interior, página por página: a Mariana e o NPC inteiros fora do balão e da aba do nome
+const CONVERSAS = [['museu', 'memoria'], ['escola', 'helena'], ['petshop', null], ['estabulo', null]];
+const SOBRA = "(function(){var V=Reino._motor,J=Jogador,c=Reino.Cena.atual(),k=V.escala/V.dpr,n=window.__npc;"
+  + "var m=J.montado&&J.montado(),w=m?28:16,h=m?34:24;function cx(x,y){return{x:(x-V.cam.x)*k,y:(y-V.cam.y)*k};}"
+  + "var cx1=[cx(J.x-w/2,J.y-h),cx(J.x+w/2,J.y)],cx2=[cx(n.x*16,n.y*16-12),cx(n.x*16+16,n.y*16+16)];"
+  + "var b=document.querySelector('#claude-balao').getBoundingClientRect(),a=document.querySelector('.claude-nome').getBoundingClientRect();"
+  + "function fora(s,r){return s[1].y<=r.top||s[0].y>=r.bottom||s[1].x<=r.left||s[0].x>=r.right;}"
+  + "return {ok:fora(cx1,b)&&fora(cx1,a)&&fora(cx2,b)&&fora(cx2,a),mari:Math.round(cx1[1].y),npc:Math.round(cx2[1].y),topo:Math.round(Math.min(b.top,a.top))};})()";
+for (const tamanho of ['celular', 'tablet', 'notebook']) {
+  test('D5-05 no ' + tamanho + ': a Mariana e o NPC ficam acima do balão da conversa', async () => {
+    const c = await abrirCenario({ tamanho });
+    try {
+      for (const [lugar, id] of CONVERSAS) {
+        await c.ir(lugar);
+        await c.js("(function(id){var cena=Reino.Cena.atual(),l=cena.npcs(),n=id?l.find(function(x){return x.id===id;}):l[0];window.__npc=n;"
+          + "var alvo=cena.alvoEm(n.x*16+8,n.y*16+4);if(alvo&&alvo.tipo==='npc'&&alvo.npc===n){Jogador.posicionar(alvo.tile.x,alvo.tile.y);Jogador.virar(alvo.olhar.x,alvo.olhar.y);}"
+          + "void Reino.NPCs.interagir(n,{interior:Reino.Interiores.def(cena.id||" + JSON.stringify(lugar) + "),cena:cena});})(" + JSON.stringify(id) + ")");
+        await c.avancar(800);
+        let pg = 1;
+        for (;;) {
+          const s = await c.js(SOBRA);
+          console.log('D5-05', tamanho, lugar, 'página', pg, JSON.stringify(s));
+          assert.ok(s.ok, `${lugar} página ${pg} no ${tamanho}: sprite embaixo do balão ${JSON.stringify(s)}`);
+          if (!(await c.js(CONTINUAR))) break;
+          await c.avancar(400); pg++;
+        }
+        if (process.env.REINO_FOTOS_D5) await c.foto(`d5-05-${tamanho}-${lugar}`);
+        await c.js('Reino.Claude.fechar()'); await c.avancar(200);
+        await c.ir('mapa');
+      }
+    } finally { await c.fechar(); }
+  });
+}

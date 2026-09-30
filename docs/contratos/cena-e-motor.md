@@ -13,7 +13,7 @@ Regras gerais (ambiente, convenções, testes): `README.md`.
 ## 1. Onde está no código
 - `jogo/js/motor/cena.js` — `Reino.Cena` (estado, entrar/sair, adaptador do mapa, ocupar/liberar, quadros).
 - `jogo/js/motor/transicao.js` — íris (`TEMPO`, `TEMPO_RAPIDO`, `COR_IRIS`), evento `Reino.EVENTOS.TRANSICAO`.
-- `jogo/js/motor/camera.js` — canvas, escala, câmera, pintor, `margemBaixoMapa` (cria `Reino._motor`).
+- `jogo/js/motor/camera.js` — canvas, escala, câmera, pintor, `bordasMapa` e `areaHUD` (lê a área útil, ui.md §10.18; cria `Reino._motor`).
 - `jogo/js/motor/laco.js` — o quadro (camadas) e o laço (`requestAnimationFrame`).
 - `jogo/js/motor/entrada.js` — teclado, toque/clique no canvas, mouse segurado, thumbstick do toque, agir no alvo.
 - `jogo/js/motor/main.js` — início do jogo e telas de entrada.
@@ -168,7 +168,7 @@ alvo = { tipo: 'npc'|'objeto'|'saida'|'escada'|'lugar'|'claude', id,
 1. Igual no mapa e nos interiores: centraliza se couber; senão segue a Mariana com limite nas bordas.
 2. Nos interiores pode passar da borda até o fim do HUD de cima e do menu de baixo.
 3. Mapa: `BORDA_BAIXO` (4 fileiras de grama) desenhada abaixo do mapa e margem de baixo medida no HUD
-   (`margemBaixoMapa`, `motor/camera.js`), para as portas de baixo e ela nadando não sumirem atrás do menu.
+   (`bordasMapa`, `motor/camera.js`), para as portas de baixo e ela nadando não sumirem atrás do menu.
 4. Escala: `escalaDoMundo` (`motor/camera.js`), pela regra do `ui.md` §10.11.
 
 ## 9. Mapa: placas, lugares e prédios

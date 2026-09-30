@@ -452,12 +452,18 @@ brilho arco-íris, não mais confete. O confete é desenhado pela regra do §10.
    pelo limite da página.
 
 ### 10.18 Área útil
-1. O JS escreve no `:root` três variáveis, em px CSS: `--hud-topo` (fim do HUD de cima), `--dock-altura` (altura do
-   dock de baixo) e `--balao-altura` (altura do balão aberto; 0 fechado).
+1. O JS escreve no `:root`, em px CSS: `--hud-topo` (fim do HUD de cima), `--dock-altura` (altura do dock de baixo),
+   por bloco do HUD `--hud-esq-largura`/`--hud-esq-fundo` (coluna de chips) e `--hud-dir-largura`/`--hud-dir-fundo`
+   (montaria e a fileira ⛶ 📷 🖼), todas por `ui/hud.js` (`Reino.UI.areaUtil()` devolve os mesmos números;
+   `medirAreaUtil()` força a medida), e `--balao-altura` (topo do balão com a aba do nome até o pé; 0 fechado), por
+   `personagens/claude.js`. Só se reescreve quando o valor muda.
 2. Área útil = a tela menos `--hud-topo` em cima e o maior entre `--dock-altura` e `--balao-altura` embaixo, com
    folga de 8 px de cada lado.
 3. A câmera do mapa e dos interiores, o balão e os painéis leem essas mesmas variáveis (nenhum mede o HUD por
    conta própria). Objeto de toque e texto ficam dentro da área útil.
+   Com tela aberta o balão vai para o pé (`body.balao-no-pe`) e a tela reserva `--balao-altura` + 8 px embaixo. Na
+   conversa com NPC num interior, a câmera sobe só o que falta para a Mariana e o NPC ficarem acima do balão, e na
+   mesma conversa só sobe (sem vai e volta entre páginas); fechado, volta ao lugar.
 4. Placa do cômodo sem lugar na parede (coberta pelo HUD ou sem espaço): desce para a primeira faixa livre abaixo do
    HUD e à direita da coluna de chips, mesmo sobre o chão, com a mesma borda. Nunca some.
 
