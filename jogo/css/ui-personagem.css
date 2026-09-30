@@ -15,14 +15,14 @@
 .criar-palco {
   position: relative; width: 100%; min-height: 260px;
   display: grid; place-items: end center; padding: 18px 10px 26px;
-  border: 4px solid var(--borda); border-radius: var(--canto-grande); cursor: pointer; overflow: hidden;
+  border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto-grande); cursor: pointer; overflow: hidden;
   background:
     linear-gradient(180deg, var(--ceu) 0 29%, var(--laranja-claro) 29% 58%, var(--grama) 58% 79%, var(--verde-folha) 79%);
-  box-shadow: inset 0 -6px 0 var(--sombra-chao), 0 5px 0 var(--borda);
+  box-shadow: inset 0 -6px 0 var(--sombra-chao), var(--sombra-grande);   /* tipografia-ok: o chão da vitrine (faixa interna de 3 px de arte), não é sombra */
 }
 .criar-palco::before, .criar-palco::after {   /* brilhinhos de estrela no céu da vitrine */
   content: ''; position: absolute; width: 6px; height: 6px; background: var(--ouro-claro);
-  box-shadow: 0 0 0 2px var(--brilho);
+  outline: var(--borda-fina) solid var(--brilho);   /* o brilho em volta (1 px de arte) */
   animation: criar-brilho 2.4s steps(2) infinite;
 }
 .criar-palco::before { left: 16%; top: 14%; }
@@ -32,14 +32,14 @@
 .criar-sprite { position: relative; image-rendering: pixelated; }
 .criar-plaquinha {
   min-width: 60%; max-width: 100%; padding: 8px 14px; text-align: center;
-  border: 3px solid var(--borda); border-radius: var(--canto); background: var(--ouro-claro);
-  font-family: var(--fonte-pixel); font-size: 16px; box-shadow: 0 3px 0 var(--borda);
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--ouro-claro);
+  font-family: var(--fonte-pixel); font-size: var(--texto); box-shadow: var(--sombra-pequena);
   /* até 12 letras (NOME_MAX) cabe inteiro numa linha; mais comprido quebra na sílaba, com hífen (aparencia.js) */
 }
 
 /* ---------- campos ---------- */
 .criar-campos { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
-.tela-aparencia .rotulo-cor { flex: 0 0 96px; width: 96px; font-weight: 700; font-size: 0.85em; }
+.tela-aparencia .rotulo-cor { flex: 0 0 96px; width: 96px; font-size: var(--texto-aux); }
 .tela-aparencia .linha-cores, .criar-grupo, .criar-linha-nome { display: flex; align-items: center; gap: 8px; min-width: 0; }
 .tela-aparencia .linha-cores { flex-wrap: wrap; }
 .tela-aparencia .bolinha-cor { width: 40px; height: 40px; flex: 0 0 auto; }
@@ -48,10 +48,13 @@
   clip-path: polygon(0 0, 25% 0, 50% 25%, 75% 50%, 100% 75%, 100% 100%, 75% 100%, 50% 75%, 25% 50%, 0 25%);
   background: var(--erro); border-radius: 0; }
 .criar-nome { flex: 1 1 auto; min-width: 0; margin: 0; }
-.criar-sexo { display: flex; gap: 8px; flex: 1 1 auto; }
+.criar-sexo { display: flex; gap: 8px; flex: 1 1 auto; min-width: 0; }
+/* "Letras grandes": "Menina" e "Menino" em 24 px não cabem lado a lado ao lado do rótulo: o par quebra em 2 linhas */
+.letras-grandes .criar-sexo { flex-wrap: wrap; }
+.letras-grandes .criar-sexo-btn { flex: 1 1 auto; }
 .criar-sexo-btn {
-  flex: 1 1 0; min-height: 48px; padding: 8px 10px; font: inherit; font-weight: 700; color: inherit; cursor: pointer;
-  border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); box-shadow: 0 3px 0 var(--borda);
+  flex: 1 1 0; min-height: 48px; padding: 8px 10px; font: inherit; color: inherit; cursor: pointer;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); box-shadow: var(--sombra-pequena);
 }
 .criar-sexo-btn[aria-pressed="true"] { background: var(--laranja-claro); outline: 4px solid var(--roxo); outline-offset: 2px; }
 .criar-grupo > .criar-opcoes { flex: 1 1 auto; }
@@ -61,12 +64,12 @@
   display: flex; gap: 8px; min-width: 0; padding: 8px 8px 12px; scroll-padding-inline: 8px 64px;   /* a faixa (48, 8 dela sob a folga) + 8 + o anel de foco (4 + 3) */
   /* sem scroll-snap: ele puxava o cartão com foco de volta para baixo da faixa */
   overflow-x: auto; scrollbar-width: thin;
-  border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel);
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel);
 }
 .criar-mais {   /* a faixa de "tem mais", com o ícone ▶ (aparencia.js); a borda é a da fileira */
   /* os 8 px da direita ficam sob a folga da fileira (o sticky para na borda do conteúdo): o ícone centra no resto */
   position: sticky; right: -8px; flex: 0 0 48px; align-self: stretch; margin: -8px 0 -12px; padding-right: 8px;
-  display: grid; place-items: center; border-left: 3px solid var(--borda); background: var(--papel-quente);
+  display: grid; place-items: center; border-left: var(--borda-fina) solid var(--borda); background: var(--papel-quente);
 }
 .criar-opcoes.no-fim .criar-mais { visibility: hidden; }
 /* só uma lasca à vista, colada à faixa: some (continua focável: o Tab rola até ele e ele volta) */
@@ -75,8 +78,8 @@
 .criar-opcao {
   flex: 0 0 auto; width: min-content; min-width: 118px;   /* 8 letras de 12 px por linha */
   display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 8px 4px;   /* 8 px entre o nome e o contorno */
-  border: 3px solid var(--borda); border-radius: var(--canto); background: var(--papel); box-shadow: 0 3px 0 var(--borda);
-  font: inherit; font-size: 12px; font-weight: 700; color: inherit; cursor: pointer; line-height: 1.25;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel); box-shadow: var(--sombra-pequena);
+  font: inherit; font-size: var(--texto-aux); color: inherit; cursor: pointer; line-height: var(--entrelinha-titulo);
 }
 .criar-opcao[aria-pressed="true"] { background: var(--laranja-claro); outline: 4px solid var(--roxo); outline-offset: 1px; }
 .criar-retrato { display: grid; place-items: end center; min-height: 40px; }
@@ -94,11 +97,14 @@ body.sem-animacao .criar-palco::before, body.sem-animacao .criar-palco::after { 
   .criar-palco { width: auto; min-width: 150px; min-height: 150px; padding: 10px 14px 18px; }
   .criar-chao { width: 80px; height: 12px; bottom: 12px; }
   .criar-plaquinha { display: none; }   /* o campo Nome já mostra o nome (D8B-26) */
-  .tela-aparencia .criar-nome { padding: 8px; font-size: 16px; }   /* 12 letras inteiras no campo */
+  .tela-aparencia .criar-nome { padding: 8px; font-size: var(--texto); }   /* 12 letras inteiras no campo */
   /* Corte e Roupa: o rótulo em cima e a fileira na largura toda (cabem 3 cartões, cada nome inteiro) */
   .criar-grupo:has(> .criar-opcoes) { flex-direction: column; align-items: stretch; gap: 4px; }
   .tela-aparencia .criar-grupo:has(> .criar-opcoes) > .rotulo-cor { flex: none; width: auto; }
-  .tela-aparencia .rotulo-cor { flex-basis: 76px; width: 76px; font-size: 12px; overflow-wrap: normal; }   /* "Cabelo" inteiro */
-  .tela-aparencia .bolinha-cor { width: 34px; height: 34px; border-width: 2px; }
-  .criar-sexo-btn { min-height: 44px; font-size: 0.85em; padding: 6px; }
+  .tela-aparencia .rotulo-cor { flex-basis: 76px; width: 76px; font-size: var(--texto-aux); overflow-wrap: normal; }   /* "Cabelo" inteiro */
+  .tela-aparencia .bolinha-cor { width: 34px; height: 34px; border-width: var(--borda-fina); }
+  .criar-sexo-btn { min-height: 44px; font-size: var(--texto); padding: 6px; }
+  /* "Letras grandes": o rótulo ("Cabelo" em 16 px) alarga e "Menina"/"Menino" descem um degrau para caber lado a lado */
+  .letras-grandes .tela-aparencia .rotulo-cor { flex-basis: 104px; width: 104px; }
+  .letras-grandes .criar-sexo-btn { font-size: var(--texto-aux); }
 }

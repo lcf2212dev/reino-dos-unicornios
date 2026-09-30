@@ -32,23 +32,27 @@
 .titulo-abertura {
   display: flex; flex-direction: column; align-items: center; gap: 0.35em;
   margin: 0; padding: 8px 4px 0;
-  font-family: var(--fonte-pixel); font-weight: 400; letter-spacing: 0; line-height: 1.15;
+  font-family: var(--fonte-pixel); font-weight: 400; letter-spacing: 0; line-height: var(--entrelinha-titulo);
   user-select: none;
 }
 .titulo-linha { display: block; white-space: nowrap; }
-.titulo-linha-1 { font-size: clamp(15px, 4.6vw, 30px); color: var(--papel-quente); }
-.titulo-linha-2 { font-size: clamp(24px, 8.4vw, 60px); color: var(--laranja); }
+/* escala de festa (ui.md §10.16): a linha grande em --texto-festa (48), --texto-t (32) no celular; a de cima um degrau
+   da escala abaixo. O título não cresce com "Letras grandes" (a linha de cima volta um degrau: 24 → --texto, 16 → --texto-aux) */
+.titulo-linha-1 { font-size: var(--texto-g); color: var(--papel-quente); }
+.titulo-linha-2 { font-size: var(--texto-festa); color: var(--laranja); }
+.letras-grandes .titulo-linha-1 { font-size: var(--texto); }
+@media (max-width: 600px) {
+  .titulo-linha-1 { font-size: var(--texto); }
+  .titulo-linha-2 { font-size: var(--texto-t); }
+  .letras-grandes .titulo-linha-1 { font-size: var(--texto-aux); }
+}
 .titulo-espaco { display: inline-block; width: 0.45em; }
-/* linha de cima é pequena (15-30px): contorno fino, sombra curta e cor lisa (sem a camada do degradê) */
-.titulo-linha-1 .titulo-letra { --o: 1px; text-shadow: 1px 0 0 var(--borda), -1px 0 0 var(--borda), 0 1px 0 var(--borda), 0 -1px 0 var(--borda), 1px 1px 0 var(--borda), -1px 1px 0 var(--borda), 1px -1px 0 var(--borda), -1px -1px 0 var(--borda), 0 3px 0 var(--borda), 1px 3px 0 var(--borda), -1px 3px 0 var(--borda); }
+/* contorno em px de arte da interface: a linha de cima (16-24 px, cor lisa, sem a camada do degradê) com 2 px, a grande
+   com 4 px (1 pixel da letra de 32 px); a sombra só para baixo */
+.titulo-linha-1 .titulo-letra { text-shadow: 2px 0 0 var(--borda), -2px 0 0 var(--borda), 0 2px 0 var(--borda), 0 -2px 0 var(--borda), 2px 2px 0 var(--borda), -2px 2px 0 var(--borda), 2px -2px 0 var(--borda), -2px -2px 0 var(--borda), 0 4px 0 var(--borda), 2px 4px 0 var(--borda), -2px 4px 0 var(--borda); }   /* tipografia-ok: contorno e sombra do título da abertura (escala de festa, §10.16) */
 .titulo-letra {
   position: relative; display: inline-block;
-  --o: max(2px, 0.08em);
-  text-shadow:
-    var(--o) 0 0 var(--borda), calc(-1 * var(--o)) 0 0 var(--borda), 0 var(--o) 0 var(--borda), 0 calc(-1 * var(--o)) 0 var(--borda),
-    var(--o) var(--o) 0 var(--borda), calc(-1 * var(--o)) var(--o) 0 var(--borda),
-    var(--o) calc(-1 * var(--o)) 0 var(--borda), calc(-1 * var(--o)) calc(-1 * var(--o)) 0 var(--borda),
-    0 calc(2.4 * var(--o)) 0 var(--borda), var(--o) calc(2.4 * var(--o)) 0 var(--borda), calc(-1 * var(--o)) calc(2.4 * var(--o)) 0 var(--borda);
+  text-shadow: 4px 0 0 var(--borda), -4px 0 0 var(--borda), 0 4px 0 var(--borda), 0 -4px 0 var(--borda), 4px 4px 0 var(--borda), -4px 4px 0 var(--borda), 4px -4px 0 var(--borda), -4px -4px 0 var(--borda), 0 8px 0 var(--borda), 4px 8px 0 var(--borda), -4px 8px 0 var(--borda);   /* tipografia-ok: contorno e sombra do título da abertura (escala de festa, §10.16) */
   animation: letra-cai 0.6s step-end var(--atraso, 0ms) both,
     letra-brilha 3.8s step-end var(--brilho, 1600ms) infinite;
 }
@@ -79,22 +83,30 @@
 .tela-inicio .inicio-sub {
   margin: 0; padding: 6px 14px;
   background: var(--papel); color: var(--tinta);
-  border: 3px solid var(--borda); border-radius: var(--canto-grande);
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande);
 }
-.tela-inicio .btn-comecar { font-size: 18px; padding: 16px 28px; }
+.tela-inicio .btn-comecar { font-size: var(--texto); padding: 16px 28px; }
 .tela-inicio .inicio-materias-curta { display: none; }
 /* celular em pé: botão numa linha só e a caixa curta (a Mariana trota logo acima) */
 @media (max-width: 600px) and (min-height: 501px) {
-  .tela-inicio .btn-comecar { white-space: nowrap; padding: 14px 20px; font-size: 16px; }
+  .tela-inicio .btn-comecar { white-space: nowrap; padding: 14px 20px; }
   .tela-inicio .inicio-materias-longa { display: none; }
   .tela-inicio .inicio-materias-curta { display: inline; }
 }
-.btn-pulsar { animation: halo-pulsa 1.8s ease-out infinite; }
-@keyframes halo-pulsa {
-  0% { box-shadow: inset 0 2px 0 var(--brilho), var(--sombra-botao), 0 0 0 0 var(--ouro); }
-  70%, 100% { box-shadow: inset 0 2px 0 var(--brilho), var(--sombra-botao), 0 0 0 16px transparent; }
+.btn-pulsar { position: relative; }
+/* o halo: um anel dourado de 4 px que se afasta do botão em degraus de 4 px e some (sem sombra desfocada) */
+.btn-pulsar::before {
+  content: ''; position: absolute; inset: -4px; pointer-events: none;
+  border: var(--borda-grossa) solid transparent; border-radius: var(--canto-grande);
+  animation: halo-pulsa 1.8s step-end infinite;
 }
-.btn-trocar-jogador { font-size: 0.85em; background: var(--papel); }
+@keyframes halo-pulsa {
+  0% { inset: -4px; border-color: var(--ouro); }
+  20% { inset: -8px; border-color: var(--ouro); }
+  40% { inset: -12px; border-color: var(--ouro-claro); }
+  60%, 100% { inset: -16px; border-color: transparent; }
+}
+.btn-trocar-jogador { font-size: var(--texto); background: var(--papel); }
 
 /* entrar: zoom no castelo, a tela clareia e o texto some */
 .abertura.entrando .abertura-cena { transform: scale(3); transition: transform var(--entrar-ms, 600ms) cubic-bezier(0.45, 0, 0.8, 0.5); }
@@ -103,9 +115,10 @@
 
 /* celular deitado: título e botão menores para a cena aparecer */
 @media (max-height: 500px) {
-  .titulo-linha-1 { font-size: clamp(12px, 3.4vh, 20px); }
-  .titulo-linha-2 { font-size: clamp(20px, 8.5vh, 40px); }
-  .tela-inicio .btn-comecar { min-height: 50px; padding: 10px 22px; font-size: 16px; }
+  .titulo-linha-1 { font-size: var(--texto); }
+  .titulo-linha-2 { font-size: var(--texto-t); }
+  .letras-grandes .titulo-linha-1 { font-size: var(--texto-aux); }
+  .tela-inicio .btn-comecar { min-height: 50px; padding: 10px 22px; }
   .tela-inicio .inicio { gap: 8px; }
   .inicio-baixo { gap: 8px; }
   /* celular deitado: sem a caixa "Revisão de…" (cobria a Mariana) e o botão mais embaixo (a porta do castelo aparece) */
@@ -114,8 +127,8 @@
 }
 
 /* sem animação: letras e botão parados no lugar final */
-.abertura-parada .titulo-letra, .tela-inicio:has(.abertura-parada) .btn-pulsar,
-body.sem-animacao .titulo-letra, body.sem-animacao .btn-pulsar { animation: none; }
+.abertura-parada .titulo-letra, .tela-inicio:has(.abertura-parada) .btn-pulsar::before,
+body.sem-animacao .titulo-letra, body.sem-animacao .btn-pulsar::before { animation: none; }
 @media (prefers-reduced-motion: reduce) {
-  .titulo-letra, .btn-pulsar { animation: none; }
+  .titulo-letra, .btn-pulsar::before { animation: none; }
 }

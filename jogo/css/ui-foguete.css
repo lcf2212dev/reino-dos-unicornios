@@ -5,18 +5,17 @@
 .foguete-balao {
   flex: 1; min-width: 0;
   padding: 10px 14px;
-  border: 3px solid var(--borda); border-radius: var(--canto-grande);
+  border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto-grande);
   background: var(--papel-quente);
 }
 .foguete-balao p + p { margin-top: 6px; }
-.foguete-balao p:first-child { font-weight: 700; }
-.foguete-sub { font-size: 0.85em; margin-bottom: 8px; }
+.foguete-sub { font-size: var(--texto-aux); margin-bottom: 8px; }
 
 .foguete-gotas { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 4px; }
 .foguete-gota {
   display: flex; align-items: center; justify-content: center;
-  aspect-ratio: 1; border: 2px solid var(--borda); border-radius: var(--canto);
-  background: var(--papel-2); font-size: 1.1em;
+  aspect-ratio: 1; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
+  background: var(--papel-2); font-size: var(--texto);
 }
 .foguete-gota > * { max-width: 80%; height: auto; }
 .foguete-gota:not(.cheia) > * { filter: var(--apagado); }   /* gota vazia: o desenho apaga (ui.md §10.19.1) */
@@ -25,7 +24,7 @@
 .foguete-destinos ul, .foguete-passaporte ul { list-style: none; margin: 0; padding: 0; }
 .foguete-destino {
   display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-  padding: 8px 10px; border: 3px solid var(--borda); border-radius: var(--canto); background: var(--papel);
+  padding: 8px 10px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel);
 }
 .foguete-destino b { flex: 1; min-width: 4em; }
 .foguete-destino + .foguete-destino { margin-top: 8px; }
@@ -33,21 +32,21 @@
 .foguete-cadeado { min-width: 56px; }
 .foguete-bola {
   flex: none; display: inline-flex; align-items: center; justify-content: center;
-  width: 32px; height: 32px; border: 3px solid var(--borda); border-radius: var(--redondo);
-  font-weight: 700; color: var(--papel);
+  width: 32px; height: 32px; border: var(--borda-fina) solid var(--borda); border-radius: var(--redondo);
+  color: var(--papel);
 }
 .foguete-silhueta { background: var(--tinta-suave); }
 .foguete-passaporte ul { display: flex; flex-wrap: wrap; gap: 10px; }
 .foguete-passaporte li {
   display: flex; flex-direction: column; align-items: center; gap: 4px;
-  padding: 8px; border: 3px dashed var(--tinta-suave); border-radius: var(--canto); min-width: 72px;
+  padding: 8px; border: var(--borda-fina) dashed var(--tinta-suave); border-radius: var(--canto); min-width: 72px;
 }
 .foguete-passaporte li.carimbado { border-style: solid; border-color: var(--certo); background: var(--certo-fundo); }
 .foguete-album { width: 100%; margin-top: 10px; }
 
 @media (max-width: 480px), (max-height: 500px) {
   .foguete-gotas { gap: 2px; }
-  .foguete-gota { border-radius: var(--canto); font-size: 0.8em; }
+  .foguete-gota { border-radius: var(--canto); font-size: var(--texto-aux); }
   .foguete-balao { padding: 8px 10px; }
 }
 .foguete-passaporte small.falta { color: var(--tinta-suave); }   /* planeta que falta (D8B-22) */

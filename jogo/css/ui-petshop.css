@@ -29,9 +29,9 @@
 .cuid-barra.baixo .cuid-sinal { display: block; }
 .cuid-trilho {
   position: relative; display: block; flex: 1; min-width: 0;
-  border: 2px solid var(--borda); border-radius: var(--canto); background: var(--branco); overflow: hidden;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--branco); overflow: hidden;
 }
-.cuid-cheio { display: block; height: 100%; box-shadow: inset 0 1px 0 var(--brilho); transition: width 0.4s ease; }
+.cuid-cheio { display: block; height: 100%; box-shadow: inset 0 2px 0 var(--brilho); transition: width 0.4s ease; }
 .cuid-fome .cuid-cheio { background: linear-gradient(90deg, var(--fome) 0 50%, var(--fome-clara) 50%); }
 .cuid-sede .cuid-cheio { background: linear-gradient(90deg, var(--sede) 0 50%, var(--sede-clara) 50%); }
 .cuid-banho .cuid-cheio { background: linear-gradient(90deg, var(--banho) 0 50%, var(--banho-clara) 50%); }
@@ -70,21 +70,21 @@ body.sem-animacao .cuid-cheio { transition: none; }
 /* grande: detalhe do unicórnio, Pet Shop e escolha de comida */
 .cuid-par-grande { flex-direction: column; gap: 8px; width: 100%; }
 .cuid-grande { display: grid; grid-template-columns: auto 1fr; align-items: center; column-gap: 10px; row-gap: 2px; }
-.cuid-grande .cuid-rotulo { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; font-size: 0.85em; min-width: 6.5em; }
+.cuid-grande .cuid-rotulo { display: inline-flex; align-items: center; gap: 6px; font-size: var(--texto-aux); min-width: 6.5em; }
 .cuid-grande .cuid-rotulo canvas { flex: none; vertical-align: middle; }
-.cuid-grande .cuid-trilho { height: 16px; border-width: 3px; border-radius: 0; }
-.cuid-grande .cuid-aviso { grid-column: 2; font-size: 0.75em; font-weight: 700; color: var(--cuid-aviso); }
+.cuid-grande .cuid-trilho { height: 16px; border-width: var(--borda-fina); border-radius: 0; }
+.cuid-grande .cuid-aviso { grid-column: 2; font-size: var(--texto-aux); color: var(--cuid-aviso); }
 .cuid-grande .cuid-aviso:empty { display: none; }
-.cuid-detalhe { padding: 12px 14px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); }
+.cuid-detalhe { padding: 12px 14px; border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); }
 
 /* ---------- tela da Pet Shop ---------- */
 .petshop-uni {
   display: flex; align-items: center; gap: 14px;
-  padding: 10px 14px; border: 3px solid var(--borda); border-radius: var(--canto-grande);
+  padding: 10px 14px; border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto-grande);
   background: var(--ambar-claro);
 }
 /* o branco fica numa caixinha só atrás do unicórnio: a divisão de cor é a borda dela, em qualquer tela */
-.petshop-uni > canvas { flex: none; box-sizing: content-box; padding: 4px; border: 3px solid var(--borda); border-radius: var(--canto); background: var(--branco); }
+.petshop-uni > canvas { flex: none; box-sizing: content-box; padding: 4px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--branco); }
 .petshop-uni-info { display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 0; }
 .petshop-uni-info > b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 /* as 5 comidas: 3 + 2 centralizadas (flex em vez da grade da Loja, que deixava o bolo sozinho
@@ -100,20 +100,20 @@ body.sem-animacao .cuid-cheio { transition: none; }
 .item-comida:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--borda); }
 .item-comida:focus-visible { outline: 4px dashed var(--tinta); outline-offset: 2px; }
 .item-comida b { text-align: center; line-height: 1.5; max-width: 100%; }
-.comida-enche { font-size: 0.85em; font-weight: 700; color: var(--certo); }   /* 5,8:1 no papel */
+.comida-enche { font-size: var(--texto-aux); color: var(--certo); }   /* 5,8:1 no papel */
 .item-comida.falta .item-preco { background: var(--papel-2); color: var(--tinta-suave); }
-.item-comida .comida-tem { font-size: 0.86em; } /* ≥ 12px */
+.item-comida .comida-tem { font-size: var(--texto-aux); }
 .petshop-despensa {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px;
-  padding: 10px 14px; border: 3px dashed var(--borda); border-radius: var(--canto-grande); background: var(--papel);
+  padding: 10px 14px; border: var(--borda-fina) dashed var(--borda); border-radius: var(--canto-grande); background: var(--papel);
 }
 .petshop-despensa p { margin: 0; }
-.petshop-despensa .chip-mini { font-size: 0.8em; }
-.petshop-vazia { text-align: center; font-weight: 700; }
+.petshop-despensa .chip-mini { font-size: var(--texto-aux); }
+.petshop-vazia { text-align: center; }
 
 /* confirmação da compra (UI.escolher com 3 opções): linha gentil de barriga cheia e,
    em tela baixa (celular deitado), botões lado a lado e o painel rola se ainda não couber */
-.confirmar-nota { display: block; margin-top: 8px; font-size: 0.85em; color: var(--tinta-suave); }
+.confirmar-nota { display: block; margin-top: 8px; font-size: var(--texto-aux); color: var(--tinta-suave); }
 .painel-compra { overflow: auto; }
 /* os 3 botões da compra com a mesma altura: trocar o "Agora não" de lugar com um botão de gastar
    (ui.js, afastarDoDedo) põe o "Agora não" exatamente onde o dedo estava */
@@ -134,7 +134,7 @@ body.recado-cuidado .tela { padding-bottom: calc(env(safe-area-inset-bottom, 0px
 @media (max-height: 480px) {
   body.recado-cuidado #claude-balao { left: auto; right: calc(env(safe-area-inset-right, 0px) + 6px); width: min(340px, 42vw); margin: 0; gap: 6px; }
   body.recado-cuidado #claude-balao .claude-fala { padding: 10px 10px 8px; }
-  body.recado-cuidado #claude-balao .claude-texto { font-size: 0.85em; }
+  body.recado-cuidado #claude-balao .claude-texto { font-size: var(--texto); }   /* o balão é --texto (ui.md §10.17.5) */
   body.recado-cuidado .tela {
     padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 12px);
     padding-right: calc(env(safe-area-inset-right, 0px) + 18px + min(340px, 42vw));
@@ -146,6 +146,8 @@ body.recado-cuidado .tela { padding-bottom: calc(env(safe-area-inset-bottom, 0px
 @media (min-width: 1000px) {
   .tela-petshop .painel { width: min(1000px, 100%); }
   .tela-petshop .grade-comidas > .item-comida { flex-basis: calc((100% - 48px) / 5); }
+  /* com "Letras grandes", 3 por linha: em 5, "arco-íris" (24 px) não cabia na carta */
+  .letras-grandes .tela-petshop .grade-comidas > .item-comida { flex-basis: calc((100% - 24px) / 3); }
   .tela-petshop .cuid-par-grande { flex-direction: row; gap: 18px; }
   .tela-petshop .cuid-par-grande > .cuid-barra { flex: 1; }
 }
@@ -159,9 +161,9 @@ body.recado-cuidado .tela { padding-bottom: calc(env(safe-area-inset-bottom, 0px
   .petshop-uni { gap: 10px; padding: 8px 10px; }
   /* no celular: rótulo e aviso em cima, trilho largo embaixo */
   .cuid-grande { grid-template-columns: auto 1fr; column-gap: 6px; }
-  .cuid-grande .cuid-rotulo { min-width: 0; font-size: 0.75em; }
+  .cuid-grande .cuid-rotulo { min-width: 0; font-size: var(--texto-aux); }
   /* aviso embaixo do trilho, numa linha só (em cima, ao lado do rótulo, não cabia com 12px) */
-  .cuid-grande .cuid-aviso { grid-column: 1 / -1; grid-row: 3; text-align: right; white-space: nowrap; font-size: 0.75em; }
+  .cuid-grande .cuid-aviso { grid-column: 1 / -1; grid-row: 3; text-align: right; white-space: nowrap; font-size: var(--texto-aux); }
   .cuid-grande .cuid-trilho { grid-column: 1 / -1; grid-row: 2; }
   .cuid-par-mini { gap: 4px; }
   /* chip da montaria com fome, sede e banho: nome em cima na largura toda; embaixo o unicórnio e as
@@ -173,8 +175,8 @@ body.recado-cuidado .tela { padding-bottom: calc(env(safe-area-inset-bottom, 0px
   .chip-montaria.com-cuidados .cuid-par-mini { flex: 1 1 0; flex-direction: column; gap: 5px; margin: 0; min-width: 0; }
   .chip-montaria.com-cuidados .cuid-mini .cuid-trilho { min-width: 40px; }
   .chip-montaria.com-cuidados .cuid-par-mini:has(.cuid-banho) { gap: 2px; }
-  /* balão dos cuidados sobre uma tela: letra um pouco menor e mais largura, até 3 linhas */
+  /* balão dos cuidados sobre uma tela: mais largura, até 3 linhas (a letra é a do balão, --texto: ui.md §10.17.5) */
   body.recado-cuidado #claude-balao { left: 6px; right: 6px; gap: 6px; }
   body.recado-cuidado #claude-balao .claude-fala { padding: 10px 10px 8px; }
-  body.recado-cuidado #claude-balao .claude-texto { font-size: 0.85em; }
+  body.recado-cuidado #claude-balao .claude-texto { font-size: var(--texto); }
 }

@@ -9,7 +9,7 @@
 }
 .tela-jogadores .painel {
   border-radius: var(--canto-grande);
-  box-shadow: 0 0 0 4px var(--papel-quente), 4px 4px 0 4px var(--borda), 8px 8px 0 4px var(--sombra-veu);
+  box-shadow: 0 0 0 4px var(--papel-quente), 0 4px 0 4px var(--borda), 0 8px 0 4px var(--sombra-veu);   /* tipografia-ok: moldura em degraus da tela escura (anel creme e sombra só para baixo, 4 px) */
 }
 .tela-jogadores .painel { width: min(780px, 100%); }
 .tela-jogadores .painel-topo {
@@ -22,39 +22,39 @@
 }
 .jogadores-cartao {
   display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 6px;
-  min-height: 150px; padding: 12px 8px 10px; border: 3px solid var(--borda); border-radius: var(--canto);
-  background: linear-gradient(180deg, var(--papel) 0 45%, var(--laranja-claro) 45% 80%, var(--ambar-claro) 80%); box-shadow: var(--sombra-botao);
-  font: inherit; color: inherit; cursor: pointer; line-height: 1.15;
+  min-height: 150px; padding: 12px 8px 10px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
+  background: linear-gradient(180deg, var(--papel) 0 45%, var(--laranja-claro) 45% 80%, var(--ambar-claro) 80%); box-shadow: var(--sombra-grande);
+  font: inherit; color: inherit; cursor: pointer; line-height: var(--entrelinha-titulo);
 }
 .jogadores-cartao:hover { background: linear-gradient(180deg, var(--papel) 0 45%, var(--laranja-claro) 45% 80%, var(--ambar) 80%); }
 .jogadores-cartao:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--borda); }
 .jogadores-cartao[aria-current="true"] { outline: 4px solid var(--roxo); outline-offset: 2px; }
 .jogadores-retrato { display: grid; place-items: end center; min-height: 84px; }
 .jogadores-retrato canvas { image-rendering: pixelated; max-width: 100%; height: auto; }
-.jogadores-icone { font-size: 2.4em; line-height: 1; }
-.jogadores-nome { font-size: 1.35em; text-align: center; }
-.jogadores-estado { margin: 0; text-align: center; font-size: 0.85em; color: var(--tinta-suave); }
+.jogadores-icone { font-size: var(--texto-t); line-height: 1; }
+.jogadores-nome { text-align: center; }
+.jogadores-estado { margin: 0; text-align: center; font-size: var(--texto-aux); color: var(--tinta-suave); }
 .jogadores .intro-botoes { justify-content: center; }
 .jogadores-secao { display: flex; flex-direction: column; gap: 8px; }
 .jogadores-secao[hidden] { display: none; }
-.jogadores-subtitulo { margin: 0; font-size: 0.95em; text-align: center; color: var(--tinta-suave); }
-.jogadores-abas { display: flex; justify-content: center; gap: 0; margin-top: 4px; border-bottom: 4px solid var(--borda); }
+.jogadores-subtitulo { margin: 0; font-size: var(--texto); text-align: center; color: var(--tinta-suave); }
+.jogadores-abas { display: flex; justify-content: center; gap: 0; margin-top: 4px; border-bottom: var(--borda-grossa) solid var(--borda); }
 .jogadores-aba {
   flex: 1 1 0; max-width: 240px; min-height: 52px; padding: 8px 12px; margin-bottom: -4px;
-  border: 3px solid var(--borda); border-bottom-width: 4px; border-radius: var(--canto) var(--canto) 0 0; background: var(--papel-quente);
-  font: inherit; font-weight: 700; color: inherit; cursor: pointer;
+  border: var(--borda-fina) solid var(--borda); border-bottom-width: var(--borda-grossa); border-radius: var(--canto) var(--canto) 0 0; background: var(--papel-quente);
+  font: inherit; color: inherit; cursor: pointer;
 }
 .jogadores-aba + .jogadores-aba { margin-left: 6px; }
 .jogadores-aba[aria-selected="true"] { background: var(--papel); border-bottom-color: var(--papel); }
 .jogadores-form { display: flex; flex-direction: column; gap: 10px; width: min(460px, 100%); margin-left: auto; margin-right: auto; }
 .jogadores-form[hidden] { display: none; }
-.jogadores-linha { display: flex; flex-direction: column; gap: 4px; font-weight: 700; }
-.jogadores-rotulo { font-size: 0.9em; }
-.jogadores-campo { min-height: 52px; font-size: 1.05em; }
-.jogadores-dica { margin: 0; font-size: 0.85em; text-align: center; }
-.jogadores-erro { margin: 0; padding: 8px 10px; border: 3px solid var(--borda); border-radius: var(--canto); background: var(--erro-fundo); font-weight: 700; text-align: center; }
+.jogadores-linha { display: flex; flex-direction: column; gap: 4px; }
+.jogadores-rotulo { font-size: var(--texto); }
+.jogadores-campo { min-height: 52px; font-size: var(--texto); }
+.jogadores-dica { margin: 0; font-size: var(--texto-aux); text-align: center; }
+.jogadores-erro { margin: 0; padding: 8px 10px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--erro-fundo); text-align: center; }
 .jogadores-erro[hidden] { display: none; }
-.jogadores-guardando { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 16px 24px; color: var(--tinta); font-size: 24px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); box-shadow: 0 4px 0 var(--borda); }   /* D8B-24 */
+.jogadores-guardando { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 16px 24px; color: var(--tinta); font-size: var(--texto-g); border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); box-shadow: var(--sombra-grande); }   /* D8B-24 */
 .guardando-pontos { display: flex; gap: 8px; height: 16px; align-items: flex-end; }
 .guardando-pontos i { width: 8px; height: 8px; background: var(--roxo); animation: guardando-pulo 0.9s steps(2) infinite; }
 .guardando-pontos i:nth-child(2) { animation-delay: 0.3s; }
@@ -64,7 +64,6 @@
 @media (max-width: 480px) {
   .jogadores-grade { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   .jogadores-cartao { min-height: 128px; }
-  .jogadores-nome { font-size: 1.15em; }
 }
 /* entrada com abas: cartões mais baixos, para as abas aparecerem sem rolar */
 .tela-jogadores .painel-conteudo { padding-top: 12px; }
@@ -72,12 +71,10 @@
 .jogadores-cartao { min-height: 112px; padding: 8px 6px; gap: 4px; }
 .jogadores-retrato { min-height: 56px; }
 .jogadores-retrato canvas { height: 56px; width: auto; }
-.jogadores-nome { font-size: 1.15em; }
 @media (max-width: 480px) {
   .jogadores-grade { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
   .jogadores-cartao { min-height: 100px; }
   .jogadores-retrato canvas { height: 44px; }
-  .jogadores-nome { font-size: 0.95em; }
 }
 /* duas colunas em tela larga e baixa (notebook): cartões à esquerda, abas e formulário à direita, sem rolar */
 .jogadores-lado-cartoes, .jogadores-lado-form { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
@@ -93,7 +90,6 @@
   .jogadores-cartao { min-height: 88px; padding: 6px 4px; }
   .jogadores-retrato { min-height: 40px; }
   .jogadores-retrato canvas { height: 40px; }
-  .jogadores-nome { font-size: 1em; }
   .jogadores-campo { min-height: 44px; }
   .jogadores-aba { min-height: 44px; }
   .jogadores-form { gap: 6px; }
@@ -102,8 +98,9 @@
 
 /* o nome até 12 letras (NOME_MAX) cabe inteiro numa linha (ui.md §10.17): 16 px e cartão de 212 px (12 letras de 16 px
    e a folga); no celular, 2 colunas e 12 px. O login vai a 20 letras: acima de 12, quebra na sílaba, com o hífen do
-   hifenizar (jogadores.js), nunca vaza. Por último na cascata: vale sobre os tamanhos de cima */
-.jogadores-nome { font-size: 16px; max-width: 100%; }
+   hifenizar (jogadores.js), nunca vaza. Nome próprio não cresce com "Letras grandes" (§10.17.3): volta um degrau */
+.jogadores-nome { font-size: var(--texto); max-width: 100%; }
+.letras-grandes .jogadores-nome { font-size: var(--texto-aux); }
 .jogadores-grade { grid-template-columns: repeat(auto-fit, minmax(212px, 240px)); }
 @media (min-width: 760px) and (max-height: 900px) {
   .jogadores-grade { grid-template-columns: repeat(auto-fill, minmax(212px, 1fr)); }
@@ -111,12 +108,14 @@
 @media (max-width: 480px) {
   .jogadores-grade { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .jogadores-cartao { padding-left: 4px; padding-right: 4px; }   /* 12 letras de 12 px cabem com folga */
-  .jogadores-nome { font-size: 12px; }
+  .jogadores-nome { font-size: var(--texto-aux); }
 }
 
 /* D8B-25: ícone e rótulo das abas numa linha só (a aba cresce com o rótulo), e cartões maiores com até 2 jogadores */
 .jogadores-aba { flex: 0 1 auto; max-width: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap; padding-left: 16px; padding-right: 16px; }
 @media (max-width: 480px) { .jogadores-aba { padding-left: 8px; padding-right: 8px; gap: 4px; } }
+/* notebook (duas colunas) com "Letras grandes": o rótulo das abas desce um degrau para caber na coluna (§10.17.3) */
+@media (min-width: 760px) and (max-height: 900px) { .letras-grandes .jogadores-aba { font-size: var(--texto-aux); } }
 .jogadores-grade:not(:has(> :nth-child(3))) .jogadores-cartao { min-height: 150px; }
 /* notebook (duas colunas): a coluna dos cartões não fica vazia; a arte dobra (zoom inteiro, pixel nítido) */
 @media (min-width: 760px) and (max-height: 900px) {

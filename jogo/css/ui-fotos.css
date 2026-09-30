@@ -17,7 +17,7 @@
   display: block; width: auto; height: auto;
   max-width: 100%;
   image-rendering: auto;
-  filter: drop-shadow(0 5px 0 var(--sombra-veu));
+  filter: drop-shadow(0 4px 0 var(--sombra-veu));
   -webkit-user-select: none; user-select: none; -webkit-touch-callout: none;
 }
 /* na prévia e na foto grande, segurar a foto (ou o botão direito) abre o menu do navegador: compartilhar/salvar */
@@ -27,30 +27,30 @@
 .tela-fotos-ver .fotos-img { max-height: calc(100vh - 330px); max-height: calc(100dvh - 330px); min-height: 120px; object-fit: contain; }
 
 .fotos-previa-corpo, .fotos-ver-corpo { display: flex; flex-direction: column; align-items: stretch; gap: 12px; }
-.fotos-msg { font-weight: 700; text-align: center; line-height: 1.6; margin: 0; }
+.fotos-msg { text-align: center; line-height: var(--entrelinha); margin: 0; }
 .fotos-msg[hidden] { display: none; }
 .fotos-aviso {
   padding: 10px 12px;
-  border: 3px solid var(--borda); border-radius: var(--canto);
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
   background: var(--papel-quente);
 }
-.fotos-nota { text-align: center; font-size: 0.85em; color: var(--tinta-suave); line-height: 1.6; }
+.fotos-nota { text-align: center; font-size: var(--texto-aux); color: var(--tinta-suave); line-height: var(--entrelinha); }
 .fotos-botoes .btn-grande[hidden] { display: none; }
 /* botões no rodapé de ação (D8B-05): o principal por último no DOM (à direita) com o rótulo; os secundários só com o
    ícone (o nome no title) */
 footer.fotos-botoes > :first-child:not(:last-child) { margin-right: 0; }
 footer.fotos-botoes > .btn-secundario { flex: 0 0 64px; min-width: 0; padding: 0; }
 footer.fotos-botoes .btn-secundario .rotulo-longo, footer.fotos-botoes .btn-secundario .rotulo-curto { display: none; }
-.fotos-legenda { text-align: center; font-size: 0.8em; line-height: 1.6; margin: 0; }
+/* legenda da foto grande: o lugar e a data (D8B-17: a data fica aqui, em --texto-aux) */
+.fotos-legenda { text-align: center; font-size: var(--texto-aux); line-height: var(--entrelinha); margin: 0; }
 
-/* celular: painel mais justo e a grade do álbum em 3 colunas */
+/* celular: painel mais justo (a grade de 3 colunas vem depois da regra base da grade, lá embaixo) */
 @media (max-width: 600px) {
   .tela-fotos-previa .painel-conteudo, .tela-fotos-ver .painel-conteudo, .tela-fotos-album .painel-conteudo { padding: 14px 14px 18px; }
   footer.fotos-botoes > .btn-secundario { flex-basis: 56px; }   /* folga para o "Guardar" do principal */
   /* a foto grande cabe sem rolar (a legenda e a dica quebram em mais linhas no celular) */
   .tela-fotos-ver .fotos-img { max-height: calc(100vh - 340px); max-height: calc(100dvh - 340px); }
   .tela-fotos-previa .fotos-img { max-height: calc(100vh - 360px); max-height: calc(100dvh - 360px); }
-  .fotos-grade { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
 }
 /* com um aviso escrito (álbum cheio, só salvar, salva), a foto encolhe para os botões caberem */
 .tela-fotos-previa .com-msg .fotos-img { max-height: calc(100vh - 470px); max-height: calc(100dvh - 470px); }
@@ -61,11 +61,11 @@ footer.fotos-botoes .btn-secundario .rotulo-longo, footer.fotos-botoes .btn-secu
 .fotos-nav[hidden] { display: none; }
 @media (max-width: 600px) {
   .fotos-ver-linha { gap: 4px; }
-  .fotos-nav { width: 40px; height: 52px; border-radius: var(--canto); }
+  .fotos-nav { width: 44px; height: 52px; padding: 0; border-radius: var(--canto); }   /* sem padding e 44 de largura: o ◀ cabe dentro da borda */
 }
 
 /* álbum: grade de miniaturas */
-.fotos-conta { text-align: center; font-size: 0.85em; color: var(--tinta-suave); margin: 0; }
+.fotos-conta { text-align: center; font-size: var(--texto-aux); color: var(--tinta-suave); margin: 0; }
 .fotos-grade {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
@@ -73,20 +73,23 @@ footer.fotos-botoes .btn-secundario .rotulo-longo, footer.fotos-botoes .btn-secu
 }
 .fotos-mini {
   display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 6px;
-  min-height: 132px; padding: 8px 6px 6px;
-  border: 3px solid var(--borda); border-radius: var(--canto);
+  min-width: 0; padding: 8px 4px 6px;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
   background: var(--papel);
-  box-shadow: inset 0 2px 0 var(--brilho), 0 4px 0 var(--borda);
+  box-shadow: inset 0 2px 0 var(--brilho), var(--sombra-grande);
   transition: transform 0.08s, box-shadow 0.08s;
 }
 .fotos-mini:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--borda); }
-.fotos-mini img { display: block; width: 100%; height: 92px; object-fit: contain; image-rendering: auto; }
-.fotos-mini-data { font-size: 0.55em; line-height: 1.4; white-space: nowrap; }
+.fotos-mini img { display: block; width: 100%; height: 124px; object-fit: contain; image-rendering: auto; }
+/* legenda da miniatura: o lugar da foto (D8B-17; a palavra longa quebra na sílaba, hifenizar em fotos-telas.js) */
+.fotos-mini-data { max-width: 100%; font-size: var(--texto-aux); line-height: var(--entrelinha); text-align: center; }
 @media (min-width: 700px) {
-  .fotos-grade { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
-  .fotos-mini { min-height: 168px; }
-  .fotos-grade { gap: 12px; }
-  .fotos-mini img { height: 124px; }
+  .fotos-grade { grid-template-columns: repeat(auto-fill, minmax(156px, 1fr)); }
+}
+/* celular: 3 colunas, e a foto (em pé, como a tela) ocupa o alto do cartão (D8B-17) */
+@media (max-width: 600px) {
+  .fotos-grade { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .fotos-mini img { height: auto; aspect-ratio: 9 / 16; }
 }
 body.sem-animacao .fotos-mini, body.sem-animacao .fotos-mini:active { transition: none; transform: none; }
 @media (prefers-reduced-motion: reduce) {
