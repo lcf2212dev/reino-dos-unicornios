@@ -40,4 +40,5 @@
 # 8b09408 = O-24 (ícones dos interiores sem escala fracionária)
 # 81b308f = D4-04 e O-22 (Cavaleiro Caio e Cavaleira Rosa com voz própria; banho na grade de pixel)
 # 1b15fc9 = onda 1c do backlog visual (rodapé de ação: D10-B02, D6-09, D7-03, D12f-01, D6-10, D8B-26, D8B-05, D5-04, O-23; D5-15 descartado)
-1b15fc9
+# 1ebe342 = onda 3f do backlog visual (D2A-03, D2A-04, D2A-12, D2A-13, D2A-14; D3-07, D3-08, D3-13, O-20, O-21, D10-09; O-18, D9-11, D9-09; D13-07, D13-08, D8A-26; D10-B09; D8A-13, D6-15, D12d-02, D6-22; O-25, O-26; D6-16, D6-18, D6-27)
+1ebe342
