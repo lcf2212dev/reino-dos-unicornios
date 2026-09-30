@@ -101,7 +101,7 @@
       var t = G && G.texto ? G.texto(segs[0]) : segs[0];
       var partes = tamanho(t) > TELA ? quebrarNaTela(t) : [t];
       if (partes.length < 2) return [{ segs: segs }];
-      return partes.map(function (p, k) { return k ? { segs: [p], mudo: true } : { segs: [p], fala: [t] }; });
+      return partes.map(function (p, k) { return k ? { segs: [p], mudo: true, fala: [t] } : { segs: [p], fala: [t] }; });
     }));
   }
   function falarPaginado(texto, quem) {

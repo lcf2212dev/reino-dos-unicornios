@@ -65,20 +65,26 @@
       var guardada = !cheio && uniChocado(id) ? Cu.quantidade(co.id) : 0;
       var podeComprar = P.estrelas() >= co.preco;
       if (!podeComprar && !guardada) { faltamEstrelas(co, co.preco - P.estrelas()); return; }
-      var pergunta = 'Trocar ' + co.preco + (co.preco === 1 ? ' estrela' : ' estrelas') + ' por ' + co.nome + '?';
+      // o desenho da comida (48 px) em cima e o preço com a ⭐ em pixel, numa linha só dele (como na Loja)
+      var d = PA.iconeDesenho(co.icone);
+      var desenho = [d ? PA.paraDOM(d, PA.escalaNitida(48, 16), 'icone-acessorio') : co.icone, el('br')];
+      var preco = '⭐\u00a0' + co.preco + (co.preco === 1 ? '\u00a0estrela' : '\u00a0estrelas');
+      var pergunta = [desenho, 'Trocar por ' + co.nome + '?', el('br'), preco];
       var msg = guardada
-        ? [co.nome + ': tem ' + guardada + ' na despensa! 🧺', podeComprar ? el('span.confirmar-nota', 'Ou trocar ' + co.preco + (co.preco === 1 ? ' estrela' : ' estrelas') + ' por mais uma.') : null]
+        ? [desenho, co.nome + ': tem ' + guardada + '\u00a0na despensa!', podeComprar ? el('span.confirmar-nota', 'Ou trocar ' + co.preco + (co.preco === 1 ? ' estrela' : ' estrelas') + ' por mais uma.') : null]
         : cheio ? [pergunta, el('span.confirmar-nota', P.nomeUni(id) + ' está de barriga cheia. A comidinha fica guardada para depois! 💛')] : pergunta;
+      // o que gasta estrela mostra o preço embaixo, em pixel
+      function comPreco(rotulo) { return [rotulo, el('br'), '⭐\u00a0' + co.preco]; }
       // com comida guardada: "Dar uma", "Agora não" e "Comprar e guardar" (sem "Comprar e dar":
       // 4 botões não cabiam em tela pequena). "Dar uma" gasta comida guardada: nasce apagado e
       // longe do dedo, como os botões que gastam estrela
       var opcoes = guardada ? [
         { rotulo: 'Dar uma da despensa 🧺', valor: 'despensa', principal: true, gasta: true },
         { rotulo: 'Agora não', valor: null, seguro: true },
-        podeComprar ? { rotulo: 'Comprar e guardar 🧺', valor: 'guardar', gasta: true } : null,
+        podeComprar ? { rotulo: comPreco('Comprar e guardar 🧺'), valor: 'guardar', gasta: true } : null,
       ] : [
-        cheio ? null : { rotulo: 'Comprar e dar agora ' + co.icone, valor: 'dar', principal: true, gasta: true },
-        { rotulo: 'Comprar e guardar 🧺', valor: 'guardar', principal: cheio, gasta: true },
+        cheio ? null : { rotulo: comPreco('Comprar e dar agora ' + co.icone), valor: 'dar', principal: true, gasta: true },
+        { rotulo: comPreco('Comprar e guardar 🧺'), valor: 'guardar', principal: cheio, gasta: true },
         { rotulo: 'Agora não', valor: null, seguro: true },
       ];
       UI.escolher(msg, opcoes.filter(Boolean), 'painel-compra').then(function (v) {

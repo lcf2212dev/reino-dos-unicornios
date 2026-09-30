@@ -127,4 +127,12 @@ body.em-missao #claude-balao { bottom: calc(env(safe-area-inset-bottom, 0px) + 1
 .barra-dinheiro-trilho { flex: 1 1 250px; min-width: 120px; height: 18px; border: 3px solid var(--borda); border-radius: var(--canto); background: #fff; overflow: hidden; }
 .barra-dinheiro-trilho span { display: block; height: 100%; background: repeating-linear-gradient(90deg, var(--ouro) 0 14px, #ffdb70 14px 18px); }
 .barra-dinheiro-texto { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; font-size: 0.9em; }
-
+/* Lugares compacto (D8B-14): cabem 5 cartões no celular */
+.tela-lugares .lista-salas { gap: 8px; }
+.tela-lugares .sala-card { padding: 6px 10px; gap: 8px; }
+.tela-lugares .sala-emoji { font-size: 1.5em; width: 1.2em; margin-right: 4px; }
+.tela-lugares .sala-info { gap: 0; line-height: 1.25; }
+.lugares-grupo { font-size: 16px; color: var(--tinta-suave); margin: 8px 0 0; }
+.lugares-grupo:first-child { margin-top: 0; }
+/* pontos de página do balão no canto de baixo à direita (D5-14) */
+#claude-balao .pontos-pagina { margin-left: auto; align-self: flex-end; }

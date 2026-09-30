@@ -6,6 +6,8 @@
 .livro-carta p + p { margin-top: 16px; }   /* a carta em blocos curtos (D7-05) */
 .destaque { color: var(--laranja-escuro); }   /* termo em destaque só pela cor (o roxo se confunde com o .en do Inglês) */
 .livro-emoji { font-size: 2.6em; }
+.livro-figuras { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 12px; margin: 0 0 12px; }
+.livro-figura { display: inline-flex; align-items: center; justify-content: center; line-height: 0; font-size: 1.6em; }
 .livro-nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .livro-pag { font-weight: 700; color: var(--tinta-suave); }
 
@@ -83,7 +85,6 @@
 .trilha-estagios li.alcancado { border-color: var(--borda); background: var(--papel); color: var(--tinta); }
 .trilha-estagios span { font-size: 1.5em; }
 .trilha-estagios small { font-weight: 700; font-size: 0.72em; }
-.silhueta { opacity: 0.85; }
 
 /* ovo */
 .tela-ovo { /* anéis em degrau (SVG em grade, ampliado sem suavizar) */
@@ -130,7 +131,15 @@
 .interruptor-bola::after { content: ""; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: var(--redondo); background: #fff; border: 2px solid var(--borda); transition: left 0.15s; }
 .interruptor[aria-checked="true"] .interruptor-bola { background: var(--verde-folha); }
 .interruptor[aria-checked="true"] .interruptor-bola::after { left: 29px; }
-.pin-visor { text-align: center; font-size: 1.6em; font-weight: 700; letter-spacing: 0.2em; padding: 10px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: #fff; }
+.pin-visor { display: flex; justify-content: center; align-items: center; gap: 12px; min-height: 60px; font-size: 16px; padding: 10px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: #fff; }
+.pin-casa { width: 24px; height: 24px; border: 2px solid var(--borda); background: #fff; }
+.pin-casa.cheia { background: var(--roxo); box-shadow: inset 0 -4px 0 var(--borda); }
+.pin-visor.pin-erro { background: var(--erro-fundo); color: var(--erro); animation: tremer 0.4s steps(4); }
+.pais-numeros { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; margin: 8px 0 0; }
+.pais-numeros dt { color: var(--tinta-suave); }
+.pais-numeros dd { margin: 0; text-align: right; white-space: nowrap; }
+.pais-numeros .pais-apagar { color: var(--tinta); padding: 4px 0 0; border-top: 2px solid var(--borda); }
+.pais-numeros dt.pais-apagar { padding-right: 12px; margin-right: -12px; }   /* a linha de cima de "A pagar" atravessa o vão entre as colunas */
 .pin-teclado { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-width: 320px; margin-left: auto; margin-right: auto; }
 .pin-tecla { min-height: 60px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); font-weight: 700; font-size: 1.2em; box-shadow: 0 3px 0 var(--borda); }
 .pais-materia { padding: 14px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); }

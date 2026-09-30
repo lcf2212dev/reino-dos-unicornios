@@ -89,6 +89,10 @@
     area.innerHTML = '';
     area.appendChild(el('div.livro-emoji', c.e));
     area.appendChild(el('h3', c.titulo));
+    // figuras: fileira de ícones das coisas que a carta lista (D7-16); só desenho, a fala não muda
+    if (c.figuras && c.figuras.length) {
+      area.appendChild(el.apply(null, ['div.livro-figuras'].concat(c.figuras.map(function (f) { return el('span.livro-figura', f); }))));
+    }
     var termo = termoCarta(c);
     blocosCarta(c.texto).forEach(function (b) {
       var i = termo ? semIngles(b).indexOf(termo) : -1;

@@ -85,7 +85,7 @@
         }),
         el('div.pais-pagar', el('label', { for: 'pago-' + m.id }, 'Já pago (R$):'), campo, salvar)));
     });
-    c.appendChild(el('div.bau-total', el('span.bau-moeda', '🪙'), el('div', el('small', 'Total ganho no jogo'), el('b', U.reais(total)), el('small', 'A pagar: ' + U.reais(Math.max(0, total - pagoTotal))))));
+    c.appendChild(el('div.bau-total', el('span.bau-moeda', '🪙'), el('div', el('small', 'Total ganho no jogo'), el('b', U.reais(total)), el('small', 'A pagar: ', el('span', { style: 'white-space:nowrap' }, U.reais(Math.max(0, total - pagoTotal)))))));
     var nuvem = P.statusNuvem();
     c.appendChild(el('p.pais-nota', nuvem === 'erro'
       ? '🔄 Não conseguimos enviar o progresso agora. O jogo tenta de novo sozinho.'

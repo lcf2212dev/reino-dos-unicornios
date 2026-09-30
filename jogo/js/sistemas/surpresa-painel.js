@@ -28,7 +28,7 @@
   }
 
   function reduzMovimento() {
-    try { return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches); } catch (e) { return false; }
+    return !!(window.Reino && Reino.util && Reino.util.reduzMovimentoSistema);   // lido e seguido em nucleo/util.js
   }
 
   // celular em pé ou deitado: mesmo corte do @media compacto de css/ui-novidades.css

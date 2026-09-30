@@ -8,8 +8,9 @@
     linear-gradient(#fff, #fff) center / 290px 62% no-repeat, linear-gradient(#fff, #fff) center / 310px 40% no-repeat, var(--laranja-claro);
 }
 .salao-grande { display: grid; place-items: center; min-height: 140px; }
-.salao-vistas { display: flex; align-items: flex-end; gap: 10px; }
-.salao-vista { display: grid; place-items: end center; }
+.salao-vistas { display: flex; align-items: flex-end; gap: 12px; }
+.salao-vista { display: grid; place-items: end center; gap: 4px; min-width: 72px; }   /* a legenda ("De costas") cabe sem encostar na vizinha */
+.salao-legenda { font-size: 12px; color: var(--tinta-suave); white-space: nowrap; }   /* D8B-27 */
 /* coluna larga o bastante para a maior palavra ("Cacheadinho": 11 letras de 12 px) inteira, com 8 px até o contorno
    (ui.md §10.17) */
 .salao-opcoes { display: grid; grid-template-columns: repeat(auto-fill, minmax(156px, 1fr)); gap: 8px; }

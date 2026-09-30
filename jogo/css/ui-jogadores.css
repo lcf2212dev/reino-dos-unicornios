@@ -53,7 +53,13 @@
 .jogadores-dica { margin: 0; font-size: 0.85em; text-align: center; }
 .jogadores-erro { margin: 0; padding: 8px 10px; border: 3px solid var(--borda); border-radius: var(--canto); background: #ffe0e0; font-weight: 700; text-align: center; }
 .jogadores-erro[hidden] { display: none; }
-.jogadores-guardando { color: #fff; text-shadow: 3px 3px 0 var(--borda); font-size: 1.3em; text-align: center; }
+.jogadores-guardando { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 16px 24px; color: var(--tinta); font-size: 24px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); box-shadow: 0 4px 0 var(--borda); }   /* D8B-24 */
+.guardando-pontos { display: flex; gap: 8px; height: 16px; align-items: flex-end; }
+.guardando-pontos i { width: 8px; height: 8px; background: var(--roxo); animation: guardando-pulo 0.9s steps(2) infinite; }
+.guardando-pontos i:nth-child(2) { animation-delay: 0.3s; }
+.guardando-pontos i:nth-child(3) { animation-delay: 0.6s; }
+@keyframes guardando-pulo { 0%, 100% { transform: none; } 50% { transform: translateY(-8px); } }
+@media (prefers-reduced-motion: reduce) { .guardando-pontos i { animation: none; } }
 @media (max-width: 480px) {
   .jogadores-grade { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   .jogadores-cartao { min-height: 128px; }
