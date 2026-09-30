@@ -18,7 +18,7 @@ Reino.registrarMateria({
     rect: { x: 46, y: 15, w: 4, h: 5 },   // fileira do meio, a leste da praça; a porta (48,19) desce até a Rua da Praça
     placa: 'acima',
     porCima: true,     // entra depois do sorteio dos enfeites: o resto do reino fica igual (js/mundo/mapa.js)
-    cores: { parede: '#eaf4ff', telhado: '#3f7fe0', detalhe: '#ffc93c' },
+    cores: { parede: '#eaf4ff', detalhe: '#ffc93c' },
     novidade: '2026-09-26',
   },
   guia: 'Eu sou o guia da Torre dos Números! Aqui tem calendário, relógio, chances e muita multiplicação.',

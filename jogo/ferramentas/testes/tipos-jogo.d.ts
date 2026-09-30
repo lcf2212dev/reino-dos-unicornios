@@ -377,7 +377,7 @@ interface LugarMateria {
   rect: Retangulo;
   /** onde fica a placa do nome ('acima', …) */
   placa: string;
-  cores: { parede: string; telhado: string; detalhe: string };
+  cores: { parede: string; telhado?: string; detalhe: string };
   /** 'a' = lugar feminino ("a Casa das Palavras"); sem ele, masculino */
   artigo?: 'a';
   porCima?: boolean;

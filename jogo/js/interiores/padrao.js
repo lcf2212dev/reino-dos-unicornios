@@ -108,10 +108,11 @@
   var MASCULINO = { 1: true, 4: true };   // vozes 'npc-padrao-1' e '-4' são masculinas
   function sprite(m, i, ele) {
     var cores = (m.lugar && m.lugar.cores) || {};
-    var roupa = i % 2 ? (cores.telhado || '#7c5cff') : (cores.detalhe || '#ff8ac4');
+    var tel = m.cor || cores.telhado;
+    var roupa = i % 2 ? (tel || '#7c5cff') : (cores.detalhe || '#ff8ac4');
     var s = { base: 'pessoa', pele: PELES[i % PELES.length], cabelo: CABELOS[(i * 3 + 1) % CABELOS.length],
       penteado: ele ? PENTE_ELE[i % PENTE_ELE.length] : PENTE_ELA[i % PENTE_ELA.length],
-      roupa: roupa, roupa2: escura(cores.telhado || '#5a4a8a', 0.35), cor2: cores.detalhe || '#ffd34d' };
+      roupa: roupa, roupa2: escura(tel || '#5a4a8a', 0.35), cor2: cores.detalhe || '#ffd34d' };
     if (!ele) s.perna = ['saia', 'vestido', 'saia'][i % 3];
     return Object.assign(s, ACESSORIOS[(i * 5 + 2) % ACESSORIOS.length]);
   }
@@ -152,7 +153,7 @@
     var salas = m.salas || [], N = salas.length;
     /** @type {Partial<LugarMateria['cores']>} */
     var cores = (m.lugar && m.lugar.cores) || {};
-    var cP = cores.parede || '#fff6e4', cT = cores.telhado || '#9b6bd6', cD = cores.detalhe || '#ff8ac4';
+    var cP = cores.parede || '#fff6e4', cT = m.cor || cores.telhado || '#9b6bd6', cD = cores.detalhe || '#ff8ac4';
     var nomeLugar = (m.lugar && m.lugar.nome) || m.nome;
     /** @type {any} */
     var planta = ((R._predios || {})[m.id] || {}).planta || null;
