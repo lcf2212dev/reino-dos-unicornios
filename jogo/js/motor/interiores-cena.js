@@ -82,8 +82,17 @@
     var ctxPintor = { fillStyle: '#000', fillRect: function (x, y, w, h) { E.pintorAtual.ret(x, y, w, h, this.fillStyle); } };
     // baixo na frente dela; o animado leva a animação junto (numa cópia com 8 px de folga), e o fundo pula ela
     var ANIM_FOLGA = 8;
+    // sprite do móvel com a mesma conta do estático (buffer em px inteiros, deslizado em px da tela: laco.js);
+    // o pintor.sprite arredonda por conta própria e o móvel pulava ~1 px ao virar sprite (O-33)
+    function spriteNoFundo(img, x, yPes) {
+      var p = E.pintorAtual, c = p.cam, e = p.escala;
+      if (!p.ctx || !c) { p.sprite(img, x, yPes); return; }
+      var ox = Math.floor(c.x), oy = Math.floor(c.y);
+      p.ctx.drawImage(img, (x - img.width / 2 - ox) * e - Math.round((c.x - ox) * e),
+        (yPes - img.height - oy) * e - Math.round((c.y - oy) * e), img.width * e, img.height * e);
+    }
     function desenharMovel(it) {
-      if (!it.lib.anim) { E.pintorAtual.sprite(it.sprite, it.px + it.W / 2, it.base + 2); return; }
+      if (!it.lib.anim) { spriteNoFundo(it.sprite, it.px + it.W / 2, it.base + 2); return; }
       var F = ANIM_FOLGA, w = it.sprite.width + F * 2, h = it.sprite.height + F * 2;
       if (!it.spriteAnim || it.spriteAnim.width !== w || it.spriteAnim.height !== h) it.spriteAnim = PA.novoCanvas(w, h);
       var sc = it.spriteAnim.getContext('2d');
@@ -92,7 +101,7 @@
       sc.save(); sc.translate(F + 2 - it.px, F + it.topo - it.py);
       it.lib.anim(sc, it.px, it.py, tAtual, it.o);
       sc.restore();
-      E.pintorAtual.sprite(it.spriteAnim, it.px + it.W / 2, it.base + 2 + F);
+      spriteNoFundo(it.spriteAnim, it.px + it.W / 2, it.base + 2 + F);
     }
     // baixos que o sprite dela cobre e que ficam na frente dela (pé mais embaixo): entram na ordem por y
     var perto = [], comPerto = [];
@@ -189,7 +198,7 @@
     altos.forEach(function (it) {
       itens.push({ y: it.base - 1, objeto: it.o, desenhar: function () {
         if (!it.sprite) return;
-        E.pintorAtual.sprite(it.sprite, it.px + it.W / 2, it.base + 2);
+        spriteNoFundo(it.sprite, it.px + it.W / 2, it.base + 2);
         if (it.lib.anim) it.lib.anim(ctxPintor, it.px, it.py, tAtual, it.o);
       } });
     });
