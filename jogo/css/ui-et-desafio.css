@@ -1,7 +1,7 @@
 /* Desafio do ET (js/ui/et-desafio.js): o retrato e a fala do ET, a pergunta, o retorno e o amigo no fim. */
 .tela-et-desafio .painel { max-width: 600px; }
 .et-cabeca { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
-.et-retrato { flex: none; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: #1b1840; }
+.et-retrato { flex: none; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--noite); }
 .et-balao {
   flex: 1; min-width: 0;
   padding: 8px 12px;
@@ -11,7 +11,7 @@
 .et-fala { font-weight: 700; }
 .et-placar { font-size: 0.85em; margin-top: 4px; }
 @media (max-width: 480px), (max-height: 500px) { .et-placar { white-space: nowrap; font-size: 12px; } }   /* o placar numa linha só (D6-21), no tamanho de rótulo auxiliar (ui.md §10.9.1) */
-.et-retorno { margin-top: 10px; padding: 8px 12px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel-leve); }
+.et-retorno { margin-top: 10px; padding: 8px 12px; border: 3px solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); }
 .et-retorno h3 { margin: 0 0 4px; }
 .et-retorno p + p { margin-top: 6px; }
 .et-amigo { text-align: center; font-size: 1.3em; font-weight: 700; padding: 18px 8px; }

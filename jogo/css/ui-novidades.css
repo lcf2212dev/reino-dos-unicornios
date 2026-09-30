@@ -21,8 +21,7 @@
 /* a linha curta (Claude, matéria e +2) só aparece no modo compacto, lá embaixo */
 .surpresa-curta { display: none; }
 
-/* ✕ travado nos primeiros 600 ms (como o "Agora não"): inativo à vista */
-.tela-surpresa .btn-fechar:disabled { opacity: 0.45; cursor: default; }
+/* ✕ travado nos primeiros 600 ms (como o "Agora não"): no estado indisponível (ui-base.css) */
 
 /* "Agora não" e "Conferir" (e o "Ok!" depois da resposta): rodapé fixo do painel */
 .surpresa-botoes {
@@ -30,10 +29,10 @@
   display: flex; flex-wrap: wrap; gap: 12px; justify-content: flex-end;
   padding: 12px 20px 16px;
   border-top: 3px solid var(--borda);
-  background: var(--papel-leve);
+  background: var(--papel);
 }
 .surpresa-botoes .btn-grande { flex: 1 1 200px; }
-.surpresa-conferir { background: var(--verde-folha); font-size: 1.1em; }
+.surpresa-conferir { font-size: 1.1em; }   /* a cor é a do .btn-conferir (ui-missao.css) */
 
 /* resposta: mesmas cores da missão (retorno-certo / retorno-quase), dentro do painel */
 .surpresa-retorno {
@@ -66,13 +65,12 @@
 /* a errada continua legível (5,8:1, com o risco) e a certa ganha um selo ✓, não só a cor
    (no ::before: o ::after é o quadradinho das de marcar).
    Só aqui: a regra de ui-jogo.css (.opcao.errada) é das provas e fica como está. */
-.tela-surpresa .opcao.errada { opacity: 1; color: var(--tinta-suave); background: #f1edf5; }
 .tela-surpresa .opcao.certa { position: relative; }
 .tela-surpresa .opcao.certa::before {
   content: "✓"; position: absolute; top: -10px; right: 6px;
   width: 26px; height: 26px; display: grid; place-items: center;
   border: 3px solid var(--borda); border-radius: var(--redondo);
-  background: var(--certo); color: #fff; font-size: 14px;
+  background: var(--certo); color: var(--branco); font-size: 14px;
 }
 
 /* tablet e notebook: painel mais largo (alternativas numa linha só) e o 🔊 Ouvir ao lado da pergunta */

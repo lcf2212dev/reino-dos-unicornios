@@ -3,7 +3,7 @@
 /* flash: transição de opacidade (body.sem-animacao corta animações, não transições) */
 .fotos-flash {
   position: fixed; inset: 0; z-index: 70;
-  background: #fff; pointer-events: none;
+  background: var(--branco); pointer-events: none;
   opacity: 0.95;
 }
 .fotos-flash.sumindo { opacity: 0; transition: opacity 0.32s ease-out; }
@@ -17,7 +17,7 @@
   display: block; width: auto; height: auto;
   max-width: 100%;
   image-rendering: auto;
-  filter: drop-shadow(0 5px 0 rgba(58, 36, 70, 0.3));
+  filter: drop-shadow(0 5px 0 var(--sombra-veu));
   -webkit-user-select: none; user-select: none; -webkit-touch-callout: none;
 }
 /* na prévia e na foto grande, segurar a foto (ou o botão direito) abre o menu do navegador: compartilhar/salvar */
@@ -32,7 +32,7 @@
 .fotos-aviso {
   padding: 10px 12px;
   border: 3px solid var(--borda); border-radius: var(--canto);
-  background: #ffe3ef;
+  background: var(--papel-quente);
 }
 .fotos-nota { text-align: center; font-size: 0.85em; color: var(--tinta-suave); line-height: 1.6; }
 .fotos-botoes .btn-grande[hidden] { display: none; }
@@ -76,7 +76,7 @@ footer.fotos-botoes .btn-secundario .rotulo-longo, footer.fotos-botoes .btn-secu
   min-height: 132px; padding: 8px 6px 6px;
   border: 3px solid var(--borda); border-radius: var(--canto);
   background: var(--papel);
-  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.85), 0 4px 0 var(--borda);
+  box-shadow: inset 0 2px 0 var(--brilho), 0 4px 0 var(--borda);
   transition: transform 0.08s, box-shadow 0.08s;
 }
 .fotos-mini:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--borda); }

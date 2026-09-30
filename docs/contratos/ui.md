@@ -193,9 +193,10 @@ e acerto cheio (`--certo`) levam texto `--branco` (branco sobre `--roxo` dá 4,3
 | `--apagado` | `grayscale(1) brightness(1.1)` | `filter` do desenho indisponível (§10.19.1); nunca no texto |
 
 Alfa em degraus: um brilho de moldura só (`--brilho`, e `--brilho-fraco` no apertado), a sombra de tinta em três
-(`--sombra-chao`, `--sombra-veu`, `--veu`) e a vinheta da abertura em dois (`--veu-noite`, `--veu-noite-fraco`);
-alfa fora deles não se escreve. A vinheta desce de `--veu-noite` a `--veu-noite-fraco` e dele a transparente, e
-cada passagem entre dois níveis é pontilhado ordenado 2×2 (§10.13.4): faixa dura entre eles, não.
+(`--sombra-chao`, `--sombra-veu`, `--veu`), o véu escuro em dois (`--veu-noite`, `--veu-noite-fraco`) e o véu da
+abertura em sete degraus de 0,04 (`--veu-1` a `--veu-7`, D8B-23); alfa fora deles não se escreve. Véu desce de um
+nível ao vizinho de 0,04 em 0,04 ou, entre dois níveis mais distantes, em pontilhado ordenado 2×2 (§10.13.4): faixa
+dura, não.
 
 O que o canvas e o JS pintam de moldura lê `Reino.config.paleta` (`jogo/js/nucleo/config.js`), espelho do `:root`
 com o mesmo hex, conferido pelo validador de cores (`npm run validar`): mude os dois juntos. Cor que vem do save (unicórnio, aura,

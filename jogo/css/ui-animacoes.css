@@ -8,7 +8,7 @@
 @keyframes balancar { 0%, 100% { transform: none; } 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
 /* chegada: contorno claro de 1 pixel que acende e apaga 2 vezes, sem crescer nem clarear o desenho (use com step-end) */
 @keyframes brilhar {
-  0%, 50% { filter: drop-shadow(2px 0 0 #fff6c8) drop-shadow(-2px 0 0 #fff6c8) drop-shadow(0 2px 0 #fff6c8) drop-shadow(0 -2px 0 #fff6c8); }
+  0%, 50% { filter: drop-shadow(2px 0 0 var(--ouro-claro)) drop-shadow(-2px 0 0 var(--ouro-claro)) drop-shadow(0 2px 0 var(--ouro-claro)) drop-shadow(0 -2px 0 var(--ouro-claro)); }
   25%, 75%, 100% { filter: none; }
 }
 @keyframes tremer { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
@@ -24,7 +24,7 @@ body.sem-animacao *:not(.balao-respira), body.sem-animacao *::before, body.sem-a
   body { font-size: calc(16px * var(--escala-texto)); }
   .painel-conteudo { padding: 14px 14px 18px; }
   .missao-rodape .sem-relogio { display: none; }
-  .btn-conferir { flex: 1; }
+  .missao-rodape .btn-conferir { flex: 1; }
   /* coluna com a palavra mais comprida fica mais larga (1fr com mínimo automático) e a letra do Ligar para em
      ~24 letras nas duas palavras mais compridas juntas ("nascimento" + "acontecimentos"): nada vaza nem corta palavra */
   .ligar-colunas { grid-template-columns: 1fr 1fr; gap: 8px; container-type: inline-size; }

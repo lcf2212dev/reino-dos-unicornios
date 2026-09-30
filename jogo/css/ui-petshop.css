@@ -29,16 +29,16 @@
 .cuid-barra.baixo .cuid-sinal { display: block; }
 .cuid-trilho {
   position: relative; display: block; flex: 1; min-width: 0;
-  border: 2px solid var(--borda); border-radius: var(--canto); background: #fff; overflow: hidden;
+  border: 2px solid var(--borda); border-radius: var(--canto); background: var(--branco); overflow: hidden;
 }
-.cuid-cheio { display: block; height: 100%; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5); transition: width 0.4s ease; }
+.cuid-cheio { display: block; height: 100%; box-shadow: inset 0 1px 0 var(--brilho); transition: width 0.4s ease; }
 .cuid-fome .cuid-cheio { background: linear-gradient(90deg, var(--fome) 0 50%, var(--fome-clara) 50%); }
 .cuid-sede .cuid-cheio { background: linear-gradient(90deg, var(--sede) 0 50%, var(--sede-clara) 50%); }
 .cuid-banho .cuid-cheio { background: linear-gradient(90deg, var(--banho) 0 50%, var(--banho-clara) 50%); }
 /* baixa (< 25): trilho listrado quentinho (o listrado se vê com qualquer daltonismo), barra na cor
    de sempre, sem vermelho de alarme; o ícone chama com 3 pulinhos de 2px (em degrau, sem escala:
    o pixel continua nítido) e para */
-.cuid-barra.baixo .cuid-trilho { background: repeating-linear-gradient(135deg, #fff 0 4px, var(--cuid-baixo-fundo) 4px 8px); border-color: var(--borda); }
+.cuid-barra.baixo .cuid-trilho { background: repeating-linear-gradient(135deg, var(--branco) 0 4px, var(--cuid-baixo-fundo) 4px 8px); border-color: var(--borda); }
 .cuid-fome.baixo .cuid-cheio { background: var(--fome); }
 .cuid-sede.baixo .cuid-cheio { background: var(--sede); }
 .cuid-banho.baixo .cuid-cheio { background: var(--banho); }
@@ -84,7 +84,7 @@ body.sem-animacao .cuid-cheio { transition: none; }
   background: var(--ambar-claro);
 }
 /* o branco fica numa caixinha só atrás do unicórnio: a divisão de cor é a borda dela, em qualquer tela */
-.petshop-uni > canvas { flex: none; box-sizing: content-box; padding: 4px; border: 3px solid var(--borda); border-radius: var(--canto); background: #fff; }
+.petshop-uni > canvas { flex: none; box-sizing: content-box; padding: 4px; border: 3px solid var(--borda); border-radius: var(--canto); background: var(--branco); }
 .petshop-uni-info { display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 0; }
 .petshop-uni-info > b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 /* as 5 comidas: 3 + 2 centralizadas (flex em vez da grade da Loja, que deixava o bolo sozinho
@@ -101,11 +101,11 @@ body.sem-animacao .cuid-cheio { transition: none; }
 .item-comida:focus-visible { outline: 4px dashed var(--tinta); outline-offset: 2px; }
 .item-comida b { text-align: center; line-height: 1.5; max-width: 100%; }
 .comida-enche { font-size: 0.85em; font-weight: 700; color: var(--certo); }   /* 5,8:1 no papel */
-.item-comida.falta .item-preco { background: #f1edf5; color: var(--tinta-suave); }
+.item-comida.falta .item-preco { background: var(--papel-2); color: var(--tinta-suave); }
 .item-comida .comida-tem { font-size: 0.86em; } /* ≥ 12px */
 .petshop-despensa {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px;
-  padding: 10px 14px; border: 3px dashed var(--borda); border-radius: var(--canto-grande); background: var(--papel-leve);
+  padding: 10px 14px; border: 3px dashed var(--borda); border-radius: var(--canto-grande); background: var(--papel);
 }
 .petshop-despensa p { margin: 0; }
 .petshop-despensa .chip-mini { font-size: 0.8em; }
