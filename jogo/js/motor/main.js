@@ -239,8 +239,8 @@
     if (!est().comecou) J.posicionar(Mapa.inicio.x, Mapa.inicio.y);
     V.canvas = U.$('#reino');
     V.ctx = V.canvas.getContext('2d');
-    V.buffer = PA.novoCanvas(10, 10);
-    V.bctx = V.buffer.getContext('2d');
+    V.buffer = document.createElement('canvas'); V.buffer.width = 10; V.buffer.height = 10;
+    V.bctx = V.buffer.getContext('2d', { alpha: false });   // opaco: cada quadro pinta o fundo inteiro antes
     Cena.ligar({ pintor: pintor, soltarTeclas: function () { V.teclas = {}; }, desenhar: function () { V.desenhar(performance.now()); } });
     V.redimensionar();
     if (document.fonts && document.fonts.load) {

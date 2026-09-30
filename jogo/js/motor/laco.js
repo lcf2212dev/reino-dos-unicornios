@@ -9,7 +9,7 @@
   // luz em degraus de pixel: o clarão quente no meio e a vinheta escura nas bordas, calculados na grade de pixels da
   // cena (canvas pequeno) e ampliados sem suavizar. Degraus de 0,04 de alfa, e entre um degrau e o outro um
   // pontilhado ordenado 2×2 (ui.md §10.13: sem anéis contínuos). Um só cache, refeito quando o tamanho muda.
-  var luz = { w: 0, h: 0, escala: 0, img: null };
+  var luz = { w: 0, h: 0, escala: 0, img: null, partes: [] };
   var BAYER = [0.125, 0.625, 0.875, 0.375];   // limiar do pontilhado 2×2, por (x % 2, y % 2)
   function faixaLuz(t, x, y) {
     var cor, a;
@@ -35,13 +35,30 @@
       d[i] = f[0]; d[i + 1] = f[1]; d[i + 2] = f[2]; d[i + 3] = Math.round(f[3] * 255);
     }
     ctx.putImageData(img, 0, 0);
-    luz.w = W; luz.h = H; luz.escala = e; luz.img = c;
+    luz.w = W; luz.h = H; luz.escala = e; luz.img = c; luz.partes = partesLuz(d, w, h);
     return c;
   }
+  // o meio do anel (entre o clarão e a vinheta) é todo transparente: o quadro só cola os blocos de
+  // BLOCO×BLOCO px da luz que têm algum pixel (juntos em faixas por fileira de blocos), e não a tela inteira
+  var BLOCO = 16;
+  function partesLuz(d, w, h) {
+    var partes = [];
+    for (var by = 0; by < h; by += BLOCO) {
+      var bh = Math.min(BLOCO, h - by), ini = -1;
+      for (var bx = 0; bx < w; bx += BLOCO) {
+        var bw = Math.min(BLOCO, w - bx), cheio = false;
+        for (var y = by; y < by + bh && !cheio; y++) for (var x = bx; x < bx + bw; x++) if (d[(y * w + x) * 4 + 3]) { cheio = true; break; }
+        if (cheio && ini < 0) ini = bx;
+        if (!cheio && ini >= 0) { partes.push([ini, by, bx - ini, bh]); ini = -1; }
+      }
+      if (ini >= 0) partes.push([ini, by, w - ini, bh]);
+    }
+    return partes;
+  }
   function desenharLuz() {
-    var c = imagemLuz(), e = V.escala || 1;
+    var c = imagemLuz(), e = V.escala || 1, p = luz.partes;
     V.ctx.imageSmoothingEnabled = false;
-    V.ctx.drawImage(c, 0, 0, c.width * e, c.height * e);
+    for (var i = 0; i < p.length; i++) V.ctx.drawImage(c, p[i][0], p[i][1], p[i][2], p[i][3], p[i][0] * e, p[i][1] * e, p[i][2] * e, p[i][3] * e);
   }
 
   function ordemY(a, b) { return a.y - b.y; }

@@ -135,8 +135,11 @@
   Mapa.prerender = function () {
     // mais BORDA_BAIXO fileiras depois do fim do mapa: a câmera passa da borda de baixo para o menu não esconder a
     // última fileira, e ali aparece o bosque fechado (além da borda o mundo não continua em grama)
-    var c = PA.novoCanvas(W * T, (H + BORDA_BAIXO) * T);
-    var ctx = c.getContext('2d');
+    // opaco (alpha: false): chão e bosque além da borda cobrem a imagem toda, e colá-la a cada quadro vira cópia
+    var c = typeof document !== 'undefined' && typeof document.createElement === 'function' ? document.createElement('canvas') : PA.novoCanvas(W * T, (H + BORDA_BAIXO) * T);
+    c.width = W * T; c.height = (H + BORDA_BAIXO) * T;
+    var ctx = c.getContext('2d', { alpha: false });
+    ctx.imageSmoothingEnabled = false;
     for (var y = 0; y < H; y++) for (var x = 0; x < W; x++) I.desenharChao(ctx, x, y);
     I.desenharAlemDaBorda(ctx, H * T, BORDA_BAIXO * T);
     I.desenharClareiras(ctx);
