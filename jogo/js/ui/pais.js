@@ -86,12 +86,9 @@
         el('div.pais-pagar', el('label', { for: 'pago-' + m.id }, 'Já pago (R$):'), campo, salvar)));
     });
     c.appendChild(el('div.bau-total', el('span.bau-moeda', '🪙'), el('div', el('small', 'Total ganho no jogo'), el('b', U.reais(total)), el('small', 'A pagar: ', el('span', { style: 'white-space:nowrap' }, U.reais(Math.max(0, total - pagoTotal)))))));
-    var nuvem = P.statusNuvem();
-    c.appendChild(el('p.pais-nota', nuvem === 'erro'
-      ? '🔄 Não conseguimos enviar o progresso agora. O jogo tenta de novo sozinho.'
-      : nuvem === 'local'
-        ? '💾 O progresso está salvo só neste aparelho. Ele é enviado quando a internet voltar.'
-        : '☁️ O progresso está sincronizado com o banco do Reino.'));
+    // nuvem e jogo guardado para jogar sem internet: notas vivas (ui/sem-internet.js)
+    c.appendChild(UI.notaNuvem());
+    c.appendChild(UI.notaSemInternet());
     c.appendChild(el('p.pais-nota', 'A medalha de ouro da escola (R$' + Reino.config.medalhaEscolaValor + ') é combinada fora do jogo. O jogo só lembra ' + Reino.Genero.nome() + ' de fazer a prova com calma.'));
     var ciclo = el('button.btn-grande.btn-secundario', { type: 'button' }, '🔄 Começar novo ciclo de provas');
     ciclo.addEventListener('click', function () {

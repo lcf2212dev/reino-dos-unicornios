@@ -203,6 +203,7 @@
       { js: 'js/ui/ajustes.js', grupo: 'ui' },
       { js: 'js/ui/aparencia.js', grupo: 'ui' },
       { js: 'js/ui/salao.js', grupo: 'ui' },
+      { js: 'js/ui/sem-internet.js', grupo: 'ui' },
       { js: 'js/ui/pais.js', grupo: 'ui' },
       { js: 'js/ui/jogadores.js', grupo: 'ui' },
       { js: 'js/ui/abertura-desenho.js', grupo: 'ui' },
