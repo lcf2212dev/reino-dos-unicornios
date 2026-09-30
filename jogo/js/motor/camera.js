@@ -41,62 +41,72 @@
     V.desenhar(performance.now());
   }
 
-  // nos interiores, o HUD de cima e o menu de baixo não podem esconder a primeira e a última
-  // fileira (o tapete de saída fica embaixo): a câmera pode passar da borda até o fim do HUD
-  function margensHUD() {
-    var m = { topo: 0, baixo: 0 };
-    var r = V.canvas.getBoundingClientRect();
-    U.$$('#hud .hud-topo > *').forEach(function (e) {
-      var b = e.getBoundingClientRect();
-      if (b.bottom > b.top) m.topo = Math.max(m.topo, b.bottom - r.top);
-    });
-    var dock = U.$('#hud .dock');
-    if (dock) { var d = dock.getBoundingClientRect(); if (d.bottom > d.top) m.baixo = Math.max(0, r.bottom - d.top); }
-    m.topo = m.topo * V.dpr / V.escala; m.baixo = m.baixo * V.dpr / V.escala;
-    return m;
+  // área útil (ui.md §10.18): o HUD (ui/hud.js) escreve no :root o que cobre, em px CSS; aqui só se lê
+  // (nada de medir o HUD nem o dock). Folga de 8 px entre a área útil e o que a cobre (§10.18.2)
+  var FOLGA = 8;
+  var raiz = document.documentElement.style;
+  function lerVar(nome) { return parseFloat(raiz.getPropertyValue(nome)) || 0; }
+  // relida de 250 em 250 ms ou quando a escala muda (a leitura por quadro custava no mapa)
+  var areaGuardada = null, areaEm = -1e9;
+  function areaHUD() {
+    var agora = performance.now(), k = V.dpr / V.escala;   // px CSS → px do jogo
+    if (areaGuardada && areaGuardada.k === k && agora - areaEm < 250) return areaGuardada;
+    areaGuardada = lerArea(k);
+    areaEm = areaGuardada.topo ? agora : -1e9;   // HUD ainda sem medida: lê de novo no próximo quadro
+    return areaGuardada;
+  }
+  function lerArea(k) {
+    function g(v) { return v > 0 ? (v + FOLGA) * k : 0; }
+    return {
+      topo: g(lerVar('--hud-topo')), baixo: g(lerVar('--dock-altura')), k: k,
+      esq: { largura: lerVar('--hud-esq-largura'), fundo: g(lerVar('--hud-esq-fundo')) },
+      dir: { largura: lerVar('--hud-dir-largura'), fundo: g(lerVar('--hud-dir-fundo')) },
+    };
+  }
+  // nos interiores, a margem de cima conta só o bloco do HUD que cruza a coluna do cômodo (D2A-01):
+  // cômodo estreito no meio sobe até o topo da tela; o de baixo é o dock (o tapete de saída fica embaixo)
+  function margensInterior(a, mw) {
+    var x0 = -cam.x / a.k, x1 = (mw - cam.x) / a.k, vw = window.innerWidth, topo = 0;
+    if (x0 < a.esq.largura) topo = Math.max(topo, a.esq.fundo);
+    if (x1 > vw - a.dir.largura) topo = Math.max(topo, a.dir.fundo);
+    return { topo: topo, baixo: a.baixo };
   }
 
-  // no mapa, só a borda de baixo passa do fim do mapa, na altura do menu de baixo: senão ele esconde
-  // a última fileira (portas da Pet Shop e do Observatório no celular; no notebook, o menu fica
-  // centrado bem em cima do lago e esconderia quem nada na última fileira dele).
-  // Em cima não: a coluna de chips da esquerda é alta e deixaria meia tela de grama vazia; as
-  // placas dos cômodos já descem para fugir do HUD de cima.
-  // A medida é guardada (getBoundingClientRect por quadro é caro) e refeita a cada meio segundo ou
-  // quando a tela muda de tamanho; a margem usada desliza até a nova medida, para a câmera não pular.
-  var mapaBaixo = { alvo: 0, atual: 0, medidoEm: -1e9, t: 0, chave: '' };
-  function margemBaixoMapa() {
+  // no mapa, a borda de baixo passa do fim do mapa na altura do dock (senão ele esconde a última fileira:
+  // portas da Pet Shop e do Observatório, ela nadando no lago) e a de cima, na altura do HUD, só com a Mariana
+  // nas 6 primeiras fileiras (BORDA_CIMA, D1-11: o telhado dos prédios de cima fica abaixo do HUD; mais para
+  // baixo, a borda volta ao mapa, para não abrir grama vazia). A margem usada desliza até a nova, sem pular.
+  var FILEIRAS_CIMA = 6;
+  var bordas = { cima: 0, baixo: 0, t: 0, chave: '' };
+  function bordasMapa(a) {
     var agora = performance.now(), chave = V.buffer.width + 'x' + V.buffer.height + '@' + V.escala;
-    var mudouTela = chave !== mapaBaixo.chave;
-    if (mudouTela || agora - mapaBaixo.medidoEm > 500) {
-      var m = margensHUD();
-      // o menu fica embaixo, no meio (em cima do lago): em qualquer tela a câmera pode passar da borda
-      // até o fim dele, para a última fileira (portas de baixo, ela nadando) não ficar escondida
-      mapaBaixo.alvo = m.baixo;
-      mapaBaixo.medidoEm = agora;
-    }
-    if (mudouTela) { mapaBaixo.chave = chave; mapaBaixo.atual = mapaBaixo.alvo; }
+    var alvoCima = Math.floor(J.y / T) < FILEIRAS_CIMA ? a.topo : 0;
+    if (chave !== bordas.chave) { bordas.chave = chave; bordas.cima = alvoCima; bordas.baixo = a.baixo; }
     else {
-      var dt = Math.min(0.1, Math.max(0, (agora - mapaBaixo.t) / 1000));
-      var d = mapaBaixo.alvo - mapaBaixo.atual;
-      mapaBaixo.atual = Math.abs(d) < 0.05 ? mapaBaixo.alvo : mapaBaixo.atual + d * Math.min(1, dt * 6);
+      var f = Math.min(1, Math.min(0.1, Math.max(0, (agora - bordas.t) / 1000)) * 6);
+      bordas.cima = deslizar(bordas.cima, alvoCima, f);
+      bordas.baixo = deslizar(bordas.baixo, a.baixo, f);
     }
-    mapaBaixo.t = agora;
-    return mapaBaixo.atual;
+    bordas.t = agora;
+    return bordas;
   }
+  function deslizar(atual, alvo, f) { var d = alvo - atual; return Math.abs(d) < 0.05 ? alvo : atual + d * f; }
 
   function atualizarCamera() {
     var vw = V.buffer.width, vh = V.buffer.height;
     var c = Cena.atual();
-    var mw = c.largura(), mh = c.altura();
-    var alvoX = J.x - vw / 2, alvoY = J.y - 10 - vh / 2;
-    cam.x = mw <= vw ? (mw - vw) / 2 : U.clamp(alvoX, 0, mw - vw);
+    var mw = c.largura(), mh = c.altura(), a = areaHUD();
+    cam.x = mw <= vw ? (mw - vw) / 2 : U.clamp(J.x - vw / 2, 0, mw - vw);
+    // a Mariana no meio da área útil (entre o HUD e o dock), não da tela inteira (D1-10)
+    function alvoY(topo, baixo) { return J.y - 10 - topo - (vh - topo - baixo) / 2; }
     if (c.tipo !== 'interior') {
-      var baixo = margemBaixoMapa();
-      cam.y = mh <= vh - baixo ? (mh - vh + baixo) / 2 : U.clamp(alvoY, 0, Math.max(0, mh - vh + baixo));
+      var b = bordasMapa(a), livreMapa = vh - b.cima - b.baixo;
+      cam.y = mh <= livreMapa ? (mh - livreMapa) / 2 - b.cima
+        : U.clamp(alvoY(a.topo, a.baixo), -b.cima, Math.max(-b.cima, mh - vh + b.baixo));
       return;
     }
-    var m = margensHUD(), livre = vh - m.topo - m.baixo;
-    cam.y = mh <= livre ? (mh - livre) / 2 - m.topo : U.clamp(alvoY, -m.topo, mh - vh + m.baixo);
+    var m = margensInterior(a, mw), livre = vh - m.topo - m.baixo;
+    cam.y = mh <= livre ? (mh - livre) / 2 - m.topo : U.clamp(alvoY(m.topo, m.baixo), -m.topo, mh - vh + m.baixo);
   }
 
   // desenha personagens direto em pixels de tela: andam suave, sem tremer
