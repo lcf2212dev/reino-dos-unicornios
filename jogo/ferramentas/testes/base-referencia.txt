@@ -47,4 +47,5 @@
 # a579903 = onda 2b, tipografia e pixel (D10-04, D10-06, D10-07, D10-08, D10-05, D12a-01, D9-16, D4-12, D5-06, D13-03, D10-B08, D5-03, D4-08, D8B-11, D8B-17, D8A-04, D8A-03, D8A-14)
 # bfb2509 = onda 3h revisada (fotos, painéis, matéria, chips do HUD, erro parado, mundo, missão: 33 itens; O-09 descartado)
 # 52648a7 = onda 3i (afundar na regra única, durações em tokens, saída de tela, validador de movimento estrito: D9-03, D10-16, D9-12)
-52648a7
+# c0b505e = onda 5a, foguete e ícones (D8B-21, D4-12, D8A-19)
+c0b505e
