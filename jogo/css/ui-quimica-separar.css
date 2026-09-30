@@ -1,1 +1,50 @@
-/* Laboratório de Química, 2º andar: a Mesa de Separar Misturas (Cozinha Química) (js/ui/quimica-separar.js; contrato docs/contratos/quimica.md §9). */
+/* Laboratório de Química, 2º andar: a Mesa de Separar Misturas (Cozinha Química) (js/ui/quimica-separar.js; contrato docs/contratos/quimica.md §9).
+   O palco (canvas ampliado por inteiro) em cima no celular e no tablet; ao lado dos botões a partir de 900 px. */
+.sep-corpo { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.sep-moldura {
+  display: flex; justify-content: center; max-width: 100%; overflow: hidden; flex: none;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
+}
+.sep-palco { display: block; flex: none; image-rendering: pixelated; image-rendering: crisp-edges; }
+.sep-lado { display: flex; flex-direction: column; gap: 12px; width: 100%; min-width: 0; }
+.sep-nome { margin: 0; font-size: var(--texto); line-height: var(--entrelinha-titulo); }
+.sep-linha { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; min-height: 44px; }
+.sep-jeito, .sep-premio {
+  display: inline-flex; align-items: center; gap: 4px; min-height: 32px; padding: 4px 10px;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
+  font-size: var(--texto-aux); white-space: nowrap;
+}
+.sep-jeito { background: var(--certo-fundo); color: var(--certo); }
+.sep-premio { background: var(--ouro-claro); color: var(--lendario-texto); }
+.sep-jeito[hidden], .sep-premio[hidden] { display: none; }
+.sep-ouvir { margin-left: auto; min-width: 44px; padding: 6px 8px; }
+.sep-texto { margin: 0; min-height: 3em; font-size: var(--texto-aux); line-height: var(--entrelinha); }
+.sep-grupo { display: flex; flex-direction: column; gap: 6px; }
+.sep-rotulo { margin: 0; font-size: var(--texto-aux); color: var(--tinta-suave); }
+.sep-misturas, .sep-ferramentas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.sep-opcao {
+  position: relative; display: flex; align-items: center; gap: 6px; min-height: 44px; padding: 6px 10px;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel);
+  box-shadow: var(--sombra-pequena); --degrau: 2px;
+  font: inherit; font-size: var(--texto-aux); color: inherit; text-align: left; line-height: var(--entrelinha-titulo); cursor: pointer;
+}
+.sep-opcao[aria-pressed="true"] { background: var(--roxo-claro); outline: 4px solid var(--roxo); outline-offset: -2px; }
+.sep-icone { flex: none; }
+/* a mistura já separada ganha o ✓ no fim da linha */
+.sep-visto { display: none; position: absolute; top: 0; bottom: 0; right: 6px; align-items: center; }
+.sep-misturas .sep-opcao { padding-right: 40px; }   /* o lugar do ✓, mesmo com o nome em 2 linhas */
+.sep-misturas .sep-opcao.vista .sep-visto { display: flex; }
+.sep-contagem { margin: 0; font-size: var(--texto-aux); color: var(--tinta-suave); }
+.letras-grandes .sep-misturas, .letras-grandes .sep-ferramentas { grid-template-columns: minmax(0, 1fr); }
+
+/* tela larga: o palco à esquerda e os botões à direita, o painel do tamanho do que tem dentro */
+@media (min-width: 900px) {
+  .tela-quimica-separar .painel { width: auto; max-width: min(1180px, 100%); }
+  .sep-corpo { flex-direction: row; align-items: flex-start; gap: 20px; }
+  .sep-lado { width: 440px; }
+}
+/* celular: menos folga em volta */
+@media (max-width: 480px) {
+  .tela-quimica-separar .painel-conteudo { padding: 12px 12px 16px; }
+  .sep-opcao { padding: 6px 8px; }
+}
