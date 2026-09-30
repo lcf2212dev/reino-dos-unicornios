@@ -48,6 +48,9 @@
   function lerVar(nome) { return parseFloat(raiz.getPropertyValue(nome)) || 0; }
   // relida de 250 em 250 ms ou quando a escala muda (a leitura por quadro custava no mapa)
   var areaGuardada = null, areaEm = -1e9;
+  // o balão abrir, fechar ou mudar de altura (claude.js escreve --balao-altura) relê na hora
+  if (typeof MutationObserver === 'function') new MutationObserver(function () { areaEm = -1e9; })
+    .observe(document.documentElement, { attributes: true, attributeFilter: ['style'] });
   function areaHUD() {
     var agora = performance.now(), k = V.dpr / V.escala;   // px CSS → px do jogo
     if (areaGuardada && areaGuardada.k === k && agora - areaEm < 250) return areaGuardada;
@@ -59,6 +62,7 @@
     function g(v) { return v > 0 ? (v + FOLGA) * k : 0; }
     return {
       topo: g(lerVar('--hud-topo')), baixo: g(lerVar('--dock-altura')), k: k,
+      balao: g(lerVar('--balao-altura')),   // do topo do balão (com a aba do nome) ao pé, mais a folga; 0 fechado
       esq: { largura: lerVar('--hud-esq-largura'), fundo: g(lerVar('--hud-esq-fundo')) },
       dir: { largura: lerVar('--hud-dir-largura'), fundo: g(lerVar('--hud-dir-fundo')) },
     };
@@ -107,6 +111,29 @@
     }
     var m = margensInterior(a, mw), livre = vh - m.topo - m.baixo;
     cam.y = mh <= livre ? (mh - livre) / 2 - m.topo : U.clamp(alvoY(m.topo, m.baixo), -m.topo, mh - vh + m.baixo);
+    acimaDoBalao(c, a, vh);
+  }
+  // conversa com NPC (balão modal, D5-05): a câmera sobe só o que falta para a Mariana e o NPC ficarem inteiros
+  // acima do balão (a margem de baixo vira max(dock, balão) + folga); fechado, volta ao lugar de sempre
+  // na mesma conversa a câmera só sobe (a altura do balão muda de página em página: sem vai e volta)
+  var subida = { quem: null, y: 0 };
+  function acimaDoBalao(c, a, vh) {
+    var Cl = Reino.Claude, quem = Cl && Cl.quemFala ? Cl.quemFala() : null;
+    if (!a.balao || a.balao <= a.baixo || !quem) { subida.quem = null; return; }
+    var pes = J.y, n = npcDaConversa(c);
+    if (n) pes = Math.max(pes, n.y * T + T);
+    cam.y = Math.max(cam.y, pes + 2 - (vh - a.balao));
+    if (subida.quem === quem) cam.y = Math.max(cam.y, subida.y);
+    subida.quem = quem; subida.y = cam.y;
+  }
+  // o NPC da conversa: o mais perto da Mariana, no máximo a 2 tiles (ela para no tile do lado dele)
+  function npcDaConversa(c) {
+    var lista = c.npcs ? c.npcs() : [], melhor = null, dist = 2.5;
+    for (var i = 0; i < lista.length; i++) {
+      var d = Math.abs(lista[i].x * T + T / 2 - J.x) / T + Math.abs(lista[i].y * T + T - J.y) / T;
+      if (d < dist) { dist = d; melhor = lista[i]; }
+    }
+    return melhor;
   }
 
   // desenha personagens direto em pixels de tela: andam suave, sem tremer

@@ -36,7 +36,8 @@
     if (typeof document === 'undefined' || !canvas || !canvas.getBoundingClientRect) return hudMedido;
     var bal = balaoAberto(), tx = bal && bal.querySelector('.claude-texto');
     var agora = performance.now(), chave = canvas.width + 'x' + canvas.height + '@' + dpr + (bal ? '|' + (tx ? tx.textContent.length : 0) : '')
-      + (R.UI.areaUtil ? '|' + JSON.stringify(R.UI.areaUtil()) : '');
+      + (R.UI.areaUtil ? '|' + JSON.stringify(R.UI.areaUtil()) : '')
+      + '|' + document.documentElement.style.getPropertyValue('--balao-altura');   // o balão mudou de altura: remede
     if (chave === hudMedido.chave && agora - hudMedido.medidoEm <= 500) return hudMedido;
     var c = canvas.getBoundingClientRect();
     if (!c.width) return hudMedido;
@@ -57,6 +58,9 @@
       var rb = doCanvas({ left: r.left, right: r.right, top: r.top - dy, bottom: r.bottom - dy });
       rb.balao = true;
       rects.push(rb);
+      // a aba do nome fica acima do balão, fora do retângulo dele: obstáculo à parte
+      var nm = bal.querySelector('.claude-nome'), rn = nm && nm.getBoundingClientRect();
+      if (rn && rn.width) { var q = doCanvas({ left: rn.left, right: rn.right, top: rn.top - dy, bottom: rn.bottom - dy }); q.balao = true; rects.push(q); }
     }
     hudMedido.rects = rects.filter(function (q) { return q.right > q.left && q.bottom > q.top; });
     hudMedido.dialogo = !!bal;
