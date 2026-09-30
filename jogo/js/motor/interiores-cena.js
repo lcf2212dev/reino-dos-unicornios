@@ -38,6 +38,9 @@
       return it;
     });
     var altos = objs.filter(function (it) { return it.alto; });
+    // móveis baixos e sólidos (vão no estático): voltam por cima dela só quando o sprite dela avança sobre
+    // eles e o pé do móvel está mais embaixo que o dela (a montada é mais larga que um tile; O-05)
+    var baixos = objs.filter(function (it) { var s = solidoDe(it.o); return !it.alto && !it.parede && !it.lib.plano && (s === true || s === 'base'); });
     var animados = objs.filter(function (it) { return it.lib.anim && !it.alto; });
     var estatico = null, chaveFeita = null, sujo = true;
     var tAtual = 0, animarAtual = false;
@@ -60,22 +63,58 @@
       var ctx = estatico.getContext('2d');
       desenharEstatico(ctx, def, g, P, objs);
       // anims parados entram no estático só como base? não: são desenhados a cada quadro (ver desenharFundo)
-      altos.forEach(function (it) {
-        var w = it.W + 4, h = it.topo + it.H + 2;
-        if (!it.sprite || it.sprite.width !== w || it.sprite.height !== h) it.sprite = PA.novoCanvas(w, h);
-        var sc = it.sprite.getContext('2d');
-        sc.clearRect(0, 0, w, h);
-        sc.save(); sc.translate(2 - it.px, it.topo - it.py);
-        it.lib.desenhar && it.lib.desenhar(sc, it.px, it.py, it.o, P);
-        sc.restore();
-      });
+      altos.forEach(function (it) { pintarSprite(it, P); });
+      // os baixos só ganham sprite quando ela chega perto (spriteDoBaixo)
+      baixos.forEach(function (it) { it.feito = false; });
       chaveFeita = chave; sujo = false;
+    }
+    // sprite de um móvel: 2 px de folga dos lados, topo acima do tile, 2 px embaixo (a sombra)
+    function pintarSprite(it, P) {
+      var w = it.W + 4, h = it.topo + it.H + 2;
+      if (!it.sprite || it.sprite.width !== w || it.sprite.height !== h) it.sprite = PA.novoCanvas(w, h);
+      var sc = it.sprite.getContext('2d');
+      sc.clearRect(0, 0, w, h);
+      sc.save(); sc.translate(2 - it.px, it.topo - it.py);
+      it.lib.desenhar && it.lib.desenhar(sc, it.px, it.py, it.o, P);
+      sc.restore();
+    }
+    // contexto falso para as animações dos móveis altos: desenha com o pintor, em px da tela
+    var ctxPintor = { fillStyle: '#000', fillRect: function (x, y, w, h) { E.pintorAtual.ret(x, y, w, h, this.fillStyle); } };
+    // baixo na frente dela; o animado leva a animação junto (numa cópia com 8 px de folga), e o fundo pula ela
+    var ANIM_FOLGA = 8;
+    function desenharMovel(it) {
+      if (!it.lib.anim) { E.pintorAtual.sprite(it.sprite, it.px + it.W / 2, it.base + 2); return; }
+      var F = ANIM_FOLGA, w = it.sprite.width + F * 2, h = it.sprite.height + F * 2;
+      if (!it.spriteAnim || it.spriteAnim.width !== w || it.spriteAnim.height !== h) it.spriteAnim = PA.novoCanvas(w, h);
+      var sc = it.spriteAnim.getContext('2d');
+      sc.clearRect(0, 0, w, h);
+      sc.drawImage(it.sprite, F, F);
+      sc.save(); sc.translate(F + 2 - it.px, F + it.topo - it.py);
+      it.lib.anim(sc, it.px, it.py, tAtual, it.o);
+      sc.restore();
+      E.pintorAtual.sprite(it.spriteAnim, it.px + it.W / 2, it.base + 2 + F);
+    }
+    // baixos que o sprite dela cobre e que ficam na frente dela (pé mais embaixo): entram na ordem por y
+    var perto = [], comPerto = [];
+    function baixosPerto() {
+      perto.length = 0;
+      for (var b = 0; b < baixos.length; b++) baixos[b].naFrente = false;
+      var J = window.Jogador, s = J && J.silhueta;
+      if (!s || !s.img) return perto;
+      var w = s.img.width, x0 = s.x - w / 2, x1 = s.x + w / 2, y0 = s.yPes - s.img.height, y1 = s.yPes;
+      for (var i = 0; i < baixos.length; i++) {
+        var it = baixos[i];
+        // pé dela mais embaixo, ou dentro da pegada (ex.: a parte de cima, livre, de um móvel 'base'): fica como está
+        if (it.base - 1 <= J.y || (J.x >= it.px && J.x < it.px + it.W && J.y >= it.py)) continue;
+        if (it.px - 2 >= x1 || it.px + it.W + 2 <= x0 || it.py - it.topo >= y1 || it.base + 2 <= y0) continue;
+        if (!it.feito) { pintarSprite(it, progresso()); it.feito = true; }
+        it.naFrente = true; perto.push(it.item);
+      }
+      return perto;
     }
     function marcarSujo() { sujo = true; }
     if (R.util && R.util.on) { R.util.on(R.EVENTOS.PROGRESSO, marcarSujo); R.util.on(R.EVENTOS.PROGRESSO_REMOTO, marcarSujo); R.util.on(R.EVENTOS.MAPA_MUDOU, marcarSujo); }
 
-    // contexto falso para as animações dos móveis altos: desenha com o pintor, em px da tela
-    var ctxPintor = { fillStyle: '#000', fillRect: function (x, y, w, h) { E.pintorAtual.ret(x, y, w, h, this.fillStyle); } };
 
     var cena = {
       id: def.id, tipo: 'interior', lugarId: def.lugar, nome: def.nome, def: def, corFundo: (def.fundo && II.FUNDOS[def.fundo] || {}).cor || FUNDO,
@@ -114,7 +153,9 @@
         if (!estatico || sujo) renderizar();
         bctx.drawImage(estatico, 0, 0);
         var tt = animar ? t : 0;
-        for (var i = 0; i < animados.length; i++) { var it = animados[i]; it.lib.anim(bctx, it.px, it.py, tt, it.o); }
+        // os baixos na frente dela (mesma silhueta que itensDesenho usa) levam a animação no próprio sprite
+        baixosPerto();
+        for (var i = 0; i < animados.length; i++) { var it = animados[i]; if (!it.naFrente) it.lib.anim(bctx, it.px, it.py, tt, it.o); }
         if (def.saida) setaSaida(bctx, def.saida, t, animar);
         var esc = def.escadas || [];
         for (var k = 0; k < esc.length; k++) setaEscada(bctx, esc[k], t, animar);
@@ -126,7 +167,11 @@
       itensDesenho: function (pintor, t, animar) {
         E.pintorAtual = pintor; tAtual = animar ? t : 0; animarAtual = animar;
         if (!estatico || sujo) renderizar();
-        return itens;
+        if (!perto.length) return itens;
+        // lista reusada: itens fixos + os baixos da vez (sem alocar por quadro)
+        comPerto.length = itens.length;
+        for (var i = 0; i < perto.length; i++) comPerto[itens.length + i] = perto[i];
+        return comPerto;
       },
       // para as ferramentas: objetos com a pegada já resolvida
       _objetos: objs,
@@ -137,6 +182,7 @@
 
     // itens por Y (montados uma vez; o pintor e o tempo entram por variável)
     var itens = [];
+    function copiarItens() { comPerto.length = 0; for (var i = 0; i < itens.length; i++) comPerto.push(itens[i]); }
     npcs.forEach(function (n) {
       itens.push({ y: n.y * T + 12, npc: n, desenhar: function () { desenharNpc(E.pintorAtual, n, tAtual, animarAtual); } });
     });
@@ -147,6 +193,10 @@
         if (it.lib.anim) it.lib.anim(ctxPintor, it.px, it.py, tAtual, it.o);
       } });
     });
+    baixos.forEach(function (it) {
+      it.item = { y: it.base - 1, objeto: it.o, desenhar: function () { if (it.sprite) desenharMovel(it); } };
+    });
+    copiarItens();
     return cena;
   }
 
