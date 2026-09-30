@@ -73,7 +73,7 @@
       el('p.surpresa-curta-materia', el('span', p.materia.emoji), el('span.surpresa-curta-nome', ' ' + p.materia.nome)),
       el('p.surpresa-curta-vale', '+' + cfg().estrelas + ' ⭐'));
 
-    var btnConferir = el('button.btn-grande.btn-principal.surpresa-conferir', { type: 'button', disabled: true }, 'Conferir ✓');
+    var btnConferir = el('button.btn-grande.btn-conferir.surpresa-conferir', { type: 'button', disabled: true }, 'Conferir ✓');
     var btnDepois = el('button.btn-grande.btn-secundario.surpresa-depois', { type: 'button' }, 'Agora não');
     // os botões ficam num rodapé fixo do painel: sempre à vista, mesmo com a pergunta rolando
     var botoes = el('footer.surpresa-botoes', btnDepois, btnConferir);

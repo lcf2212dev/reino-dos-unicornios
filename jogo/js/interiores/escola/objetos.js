@@ -220,8 +220,14 @@
     } });
 
   /* ---------- mural dos prêmios: derivado do estado (colorido = ganho; silhueta = ainda não) ---------- */
-  var FUNDO_RARIDADE = { lendario: '#ffe6f7', raro: '#dcefff', comum: '#f4f0f8' };
-  var BORDA_RARIDADE = { lendario: '#ff7eb6', raro: '#5fb4ff', comum: '#c4b4d4' };
+  // raridade pelo trio de Reino.config.paleta (ui.md §10.8): fundo chapado e faixa no desenho; lendário dourado.
+  // Prêmio ainda não ganho: o indisponível (--papel-2) com o "?" em --tinta-suave
+  // (lida na hora; chave que faltar cai na reserva, o hex do contrato, nunca num TypeError)
+  var RESERVA = { papel2: '#efe8e2', tintaSuave: '#6b5378', raridade: { comum: { fundo: '#fff8ee', desenho: '#ff9cc6', texto: '#6b5378' }, raro: { fundo: '#dcebff', desenho: '#5fb4ff', texto: '#2b5ea8' }, epico: { fundo: '#eadcff', desenho: '#a66bff', texto: '#5b2aa8' }, lendario: { fundo: '#ffe39a', desenho: '#ffb020', texto: '#8a5200' } } };
+  function pal(k) { var P = (R.config && R.config.paleta) || {}; return P[k] || RESERVA[k]; }
+  function rar(r, k) { var t = (pal('raridade') || {})[r] || {}; return t[k] || RESERVA.raridade[r][k]; }
+  function fundoRaridade(r) { return rar(r, 'fundo'); }
+  function faixaRaridade(r) { return rar(r, 'desenho'); }
   var RARIDADES = ['lendario', 'raro', 'comum'];
   // só o prêmio da prova acende o mural: comprar os outros na Loja das Fadas não conta
   function ganhou(P, prova, r) {
@@ -262,11 +268,11 @@
         RARIDADES.forEach(function (r, k) {
           var a = pv.acessorios && pv.acessorios[r], x = gx + k * 17, tem = ganhou(P, pv, r);
           ret(ctx, x - 1, gy - 1, 18, 18, K);
-          ret(ctx, x, gy, 16, 16, tem ? FUNDO_RARIDADE[r] : '#e8e0ee');
-          ret(ctx, x, gy, 16, 1, BORDA_RARIDADE[r]);
+          ret(ctx, x, gy, 16, 16, tem ? fundoRaridade(r) : pal('papel2'));
+          ret(ctx, x, gy, 16, 1, faixaRaridade(r));
           var ic = a && window.PA && PA.iconeDesenho ? PA.iconeDesenho('acessorio:' + a.id) : null;
           if (ic) ctx.drawImage(tem ? ic : PA.silhueta(ic), x, gy);
-          else matriz(ctx, x + 6, gy + 4, ['.kk.', 'k..k', '..k.', '.k..', '....', '.k..'], { k: '#8a7aa8' });
+          else matriz(ctx, x + 6, gy + 4, ['.kk.', 'k..k', '..k.', '.k..', '....', '.k..'], { k: pal('tintaSuave') });
         });
       });
     } });

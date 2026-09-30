@@ -43,7 +43,8 @@
     var cabeca = el('div.et-cabeca', retrato(npc), el('div.et-balao', balao, placar));
     var area = el('div.et-area');
     var retorno = el('div.et-retorno', { hidden: true, 'aria-live': 'polite' });
-    var btn = el('button.btn-grande.btn-principal.et-botao', { type: 'button', disabled: true }, 'Conferir ✓');
+    var btn = el('button.btn-grande.btn-conferir.et-botao',   // o mesmo Conferir da sala e da surpresa (ui.md §10.8)
+      { type: 'button', disabled: true }, 'Conferir ✓');
     var botoes = el('footer.et-botoes', btn);
     pn.conteudo.appendChild(cabeca);
     pn.conteudo.appendChild(area);
