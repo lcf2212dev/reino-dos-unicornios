@@ -300,6 +300,7 @@
       { js: 'js/interiores/matematica/objetos-parede.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/matematica/objetos-chao.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/matematica/salas.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/matematica/elenco.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/matematica/fora.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/geografia/falas.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/geografia/objetos.js', grupo: 'interiores', node: true },

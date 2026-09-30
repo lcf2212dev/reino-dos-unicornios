@@ -134,7 +134,7 @@ Reino.config = {
     'npc-memoria': { voz: 'fr-FR-VivienneMultilingualNeural', velocidade: '-16%', tom: '-12Hz' }, // curadora idosa, calma (diferente da narradora dos objetos)
     'npc-antonio': { voz: 'fr-FR-RemyMultilingualNeural', velocidade: '-14%', tom: '-12Hz' },   // senhor das cartas: devagar, de avô
     'npc-chico': { voz: 'pt-BR-AntonioNeural', velocidade: '+12%', tom: '+16Hz' },             // carteiro animado (voz nativa: as multilíngues embolavam as frases curtas)
-    'npc-taina': { voz: 'pt-BR-ThalitaMultilingualNeural', velocidade: '+6%', tom: '+6Hz' },    // guia jovem e alegre
+    'npc-taina': { voz: 'pt-BR-ThalitaMultilingualNeural', velocidade: '+10%', tom: '+26Hz' },  // guia mirim, criança alegre
     'npc-contadeira': { voz: 'pt-BR-ThalitaMultilingualNeural', velocidade: '-18%', tom: '-12Hz' }, // griô: devagar, voz de contar história
     'npc-nina': { voz: 'en-US-AvaMultilingualNeural', velocidade: '+6%', tom: '+12Hz' },         // restauradora curiosa e leve
     // Torre do Relógio (Inglês)
@@ -145,8 +145,8 @@ Reino.config = {
     'npc-stella-en': { voz: 'en-US-AvaMultilingualNeural', velocidade: '-10%', tom: '+6Hz' },
     'npc-smile': { voz: 'en-US-BrianMultilingualNeural', velocidade: '+0%', tom: '+8Hz', ingles: 'npc-smile-en' },  // dentista sorridente
     'npc-smile-en': { voz: 'en-US-BrianMultilingualNeural', velocidade: '-10%', tom: '+8Hz' },
-    'npc-moon': { voz: 'en-US-AvaMultilingualNeural', velocidade: '-15%', tom: '-8Hz', ingles: 'npc-moon-en' },     // voz de boa-noite, bem calminha
-    'npc-moon-en': { voz: 'en-US-AvaMultilingualNeural', velocidade: '-20%', tom: '-8Hz' },
+    'npc-moon': { voz: 'en-US-AvaMultilingualNeural', velocidade: '-6%', tom: '+24Hz', ingles: 'npc-moon-en' },     // menina de boa-noite, calminha
+    'npc-moon-en': { voz: 'en-US-AvaMultilingualNeural', velocidade: '-12%', tom: '+24Hz' },
     'npc-joy': { voz: 'en-AU-WilliamMultilingualNeural', velocidade: '+4%', tom: '+10Hz', ingles: 'npc-joy-en' },   // músico feliz
     'npc-joy-en': { voz: 'en-AU-WilliamMultilingualNeural', velocidade: '-6%', tom: '+10Hz' },
     // Castelo da Medalha
@@ -174,7 +174,7 @@ Reino.config = {
     'npc-cosmo': { voz: 'de-DE-FlorianMultilingualNeural', velocidade: '+0%', tom: '+18Hz', efeito: 'robo-leve' },
     // Casa das Palavras (Português): os que ensinam o som das letras têm voz brasileira nativa
     'npc-palavrinha': { voz: 'pt-BR-FranciscaNeural', velocidade: '-12%', tom: '+16Hz' },        // guia carinhosa, devagar e mais aguda que a narradora
-    'npc-manu': { voz: 'en-US-EmmaMultilingualNeural', velocidade: '+6%', tom: '+12Hz' },         // chef animada
+    'npc-manu': { voz: 'en-US-EmmaMultilingualNeural', velocidade: '+10%', tom: '+28Hz' },        // chef mirim, criança animada
     'npc-heitor': { voz: 'pt-BR-AntonioNeural', velocidade: '-10%', tom: '-28Hz' },              // jardineiro calmo, bem mais grave que o Claude
     'npc-chocalho': { voz: 'fr-FR-RemyMultilingualNeural', velocidade: '+12%', tom: '+22Hz' },    // palhaço agudo e rápido
     'npc-brisa': { voz: 'de-DE-SeraphinaMultilingualNeural', velocidade: '+4%', tom: '-4Hz' },    // capitã firme e aventureira

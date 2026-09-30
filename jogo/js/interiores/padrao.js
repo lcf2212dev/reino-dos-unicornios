@@ -177,6 +177,17 @@
     }
 
     var comodos = [], objetos = [], npcs = [], portas = [], corredores = [];
+    // elenco próprio (opcional): Reino._predios.<matéria>.elenco = { guia: id, salas: { <sala>: id } }, ids do
+    // Reino.NPCs.ELENCO; o NPC mantém id, lugar e ação do padrão e ganha nome, sprite e voz dele. Falas por cima:
+    // Reino.falasDoPredio('padrao-<matéria>', { npcs: { <id do NPC do padrão>: { oi… } } })
+    var EP = ((R._predios || {})[m.id] || {}).elenco || {};
+    var FPP = ((R.FALAS_INTERIORES || {})['padrao-' + m.id] || { npcs: {} }).npcs || {};
+    function proprio(npc, id) {
+      var e = id && ((R.NPCs && R.NPCs.ELENCO) || {})[id];
+      if (e) { npc.nome = e.nome; npc.voz = e.voz; npc.sprite = Object.assign({ base: 'pessoa' }, e.sprite); }
+      if (FPP[npc.id]) npc.falas = Object.assign(npc.falas, FPP[npc.id]);
+      return npc;
+    }
     // cruz livre em todo cômodo: faixa das fileiras 6-7 e colunas 4-6
     function cruz(o) {
       corredores.push({ x: o.x, y: o.y + 6, w: 11, h: 2 }, { x: o.x + 4, y: o.y + 2, w: 3, h: 9 });
@@ -216,9 +227,9 @@
       { tipo: 'sofa', x: 8, y: 10 }, { tipo: 'cabideiro', x: 10, y: 8 },
       { tipo: 'vaso-planta', x: 10, y: 9 }, { tipo: 'relogio-pe', x: 10, y: 10 }, { tipo: 'tapete-redondo', x: 8, y: 8, w: 2, h: 1 },
     ]));
-    npcs.push({ id: 'guia-' + m.id, nome: 'Guia de ' + m.nome, voz: 'npc-padrao-guia',
+    npcs.push(proprio({ id: 'guia-' + m.id, nome: 'Guia de ' + m.nome, voz: 'npc-padrao-guia',
       sprite: sprite(m, 7, false), x: h.x + 7, y: h.y + 8, acao: { tipo: 'guia', lugar: 'materia:' + m.id, livro: m.id },
-      falas: { oi: FALAS.guia.oi.slice() } });
+      falas: { oi: FALAS.guia.oi.slice() } }, EP.guia));
 
     /* ---------- SALAS ---------- */
     salas.forEach(function (s, i) {
@@ -263,10 +274,10 @@
       ];
       var lista = PS ? marcadores(PS.objetos, { '@bancada': bancada, '@quadro': quadro }) : parede.concat(chao);
       objetos = objetos.concat(pos(o.x, o.y, lista));
-      npcs.push({ id: 'sala-' + m.id + '-' + s.id, nome: (ele ? 'Monitor' : 'Monitora') + ' da Sala ' + n,
+      npcs.push(proprio({ id: 'sala-' + m.id + '-' + s.id, nome: (ele ? 'Monitor' : 'Monitora') + ' da Sala ' + n,
         voz: 'npc-padrao-' + vozN, sprite: sprite(m, i, ele), x: o.x + 7, y: o.y + 5,
         acao: { tipo: 'sala', materia: m.id, sala: s.id },
-        falas: { oi: salaOi(n), nova: FALAS.sala.nova.slice(), feita: FALAS.sala.feita.slice(), depois: FALAS.sala.depois.slice() } });
+        falas: { oi: salaOi(n), nova: FALAS.sala.nova.slice(), feita: FALAS.sala.feita.slice(), depois: FALAS.sala.depois.slice() } }, (EP.salas || {})[s.id]));
     });
 
     /* ---------- PORTAS ---------- */
