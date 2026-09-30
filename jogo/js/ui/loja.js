@@ -38,13 +38,16 @@
   UI.usandoEnfeite = function (id) { var it = itemPorId(id); return !!it && usando(it); };
 
   // ícone do item: desenho de js/arte/icones/ pela chave ('enfeite:…', 'acessorio:…') ou o emoji (vira pixel sozinho)
-  function iconeItem(item) {
+  function iconeItem(item, px) {
     var chave = item.icone || '';
-    if (chave.indexOf(':') > 0) {
-      var d = PA.iconeDesenho(chave);
-      if (d) return PA.paraDOM(d, PA.escalaNitida(36, 16), 'icone-acessorio');
-    }
+    var d = chave.indexOf(':') > 0 || px ? PA.iconeDesenho(chave) : null;
+    if (d) return PA.paraDOM(d, PA.escalaNitida(px || 36, 16), 'icone-acessorio');
     return chave;
+  }
+  // a pergunta da compra: o desenho do item (48 px, destaque), a pergunta e o preço numa linha só dele,
+  // com a ⭐ em pixel (no meio da frase, a ⭐ ficava numa linha e o número na outra)
+  function perguntaDaCompra(item) {
+    return [iconeItem(item, 48), el('br'), 'Trocar por ' + item.nome + '?', el('br'), '⭐\u00a0' + item.preco + '\u00a0estrelas'];
   }
   // comprar com estrelas (enfeite ou prêmio à venda): gasta, guarda, já veste e grava
   function comprar(item, depois) {
@@ -56,7 +59,7 @@
         { fala: [item.premio ? LI.FALAS.faltamPremio : Reino.Falas.fixas.lojaFaltam], tempo: 5000 });
       return;
     }
-    UI.confirmar('Trocar ' + item.preco + ' estrelas por ' + item.nome + '?', 'Sim, quero! ✨', 'Agora não', true).then(function (sim) {
+    UI.confirmar(perguntaDaCompra(item), 'Sim, quero! ✨', 'Agora não', true).then(function (sim) {
       if (!sim) return;
       compra.itemComprado = item.id;   // o cartão dele ignora toques perto do "Sim" até 1,1 s sem toque
       if (!P.gastarEstrelas(item.preco)) return;   // (as estrelas não mudam enquanto ela confirma, mas por via das dúvidas)
