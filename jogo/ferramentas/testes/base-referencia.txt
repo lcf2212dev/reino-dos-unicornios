@@ -59,4 +59,5 @@
 # bdc9dad = matéria do dia na Aura (config)
 # b5ec36d = Laboratório de Química na clareira 1
 # 4fefa26 = 2º andar do Laboratório de Química
-4fefa26
+# fb34e88 = respostas erradas mantêm a Aura; configuração de penalidade removida
+fb34e88
