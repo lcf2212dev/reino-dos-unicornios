@@ -15,7 +15,7 @@ jogo/js/conteudo/materias/ciencias/c1.js até c5.js e livro.js; matéria atual d
 # 8. Personagens e falas
 Objetos interativos e narradora já existente. Sem personagem novo. Textos em português curtos, gentis, com leitura em voz alta.
 # 9. Prêmios
-Passaporte de descobertas durante a visita, sem prêmio financeiro ou alteração no progresso escolar. Pode refazer qualquer brincadeira; sem cronômetro, nota ou perda.
+Passaporte de descobertas durante a visita e Aura por atividade concluída. Em 02/10/2026, cada conclusão vale 4× a Aura normal de Ciências. Pode refazer para ganhar novamente; toque duplo ou reabrir resultado não rende. Sem prêmio financeiro, cronômetro, nota ou perda.
 # 11. O que NÃO pode mudar
 Matéria e provas existentes, economia, saves reais, demais construções e motor central.
 # 12. Aparelhos

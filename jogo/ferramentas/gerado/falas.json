@@ -26382,6 +26382,150 @@
    "fala": "Beber água é na Pet Shop!"
   },
   {
+   "chave": "2412355ay",
+   "voz": "narradora",
+   "texto": "O jardim está esperando!",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O jardim está esperando!"
+  },
+  {
+   "chave": "c3699f3213",
+   "voz": "narradora",
+   "texto": "Vamos cuidar de cada detalhe.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Vamos cuidar de cada detalhe."
+  },
+  {
+   "chave": "597304de13",
+   "voz": "narradora",
+   "texto": "Tudo se encontra na natureza.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Tudo se encontra na natureza."
+  },
+  {
+   "chave": "0bf057e413",
+   "voz": "narradora",
+   "texto": "Vamos acompanhar essas cenas.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Vamos acompanhar essas cenas."
+  },
+  {
+   "chave": "13a8202az",
+   "voz": "narradora",
+   "texto": "Cada encontro conta algo.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Cada encontro conta algo."
+  },
+  {
+   "chave": "8d35a3d3z",
+   "voz": "narradora",
+   "texto": "Vamos seguir suas pistas!",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Vamos seguir suas pistas!"
+  },
+  {
+   "chave": "16e2f43210",
+   "voz": "narradora",
+   "texto": "Há muitos jeitos de viver.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Há muitos jeitos de viver."
+  },
+  {
+   "chave": "2c67f1b811",
+   "voz": "narradora",
+   "texto": "Vamos visitar os ambientes!",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Vamos visitar os ambientes!"
+  },
+  {
+   "chave": "9cc088c811",
+   "voz": "narradora",
+   "texto": "Chegou a Feira de Ciências!",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Chegou a Feira de Ciências!"
+  },
+  {
+   "chave": "f2d2cf4b11",
+   "voz": "narradora",
+   "texto": "Vamos brincar de descobrir!",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Vamos brincar de descobrir!"
+  },
+  {
+   "chave": "2f077e7f13",
+   "voz": "narradora",
+   "texto": "Aqui usamos peças e desenhos.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Aqui usamos peças e desenhos."
+  },
+  {
+   "chave": "cade268f13",
+   "voz": "narradora",
+   "texto": "Guarde aqui suas descobertas!",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Guarde aqui suas descobertas!"
+  },
+  {
+   "chave": "7bc4b01dv",
+   "voz": "narradora",
+   "texto": "Vale brincar de novo.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Vale brincar de novo."
+  },
+  {
+   "chave": "9d8d4c7d14",
+   "voz": "narradora",
+   "texto": "O passaporte dura esta visita.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O passaporte dura esta visita."
+  },
+  {
+   "chave": "6b97d93310",
+   "voz": "narradora",
+   "texto": "Olhe com calma e descubra!",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Olhe com calma e descubra!"
+  },
+  {
+   "chave": "c303606612",
+   "voz": "narradora",
+   "texto": "Desenhe o que você observou.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Desenhe o que você observou."
+  },
+  {
    "chave": "56e1adba18",
    "voz": "npc-geo-marco",
    "texto": "Oi, eu sou o Maquinista Marco!",
@@ -30118,7 +30262,8 @@
    "voz": "narradora",
    "texto": "A água não é viva.",
    "pacotes": [
-    "interior-observatorio"
+    "interior-observatorio",
+    "interior-feira"
    ],
    "fala": "A água não é viva."
   },
@@ -30379,7 +30524,8 @@
    "voz": "narradora",
    "texto": "O cacto guarda água dentro.",
    "pacotes": [
-    "interior-observatorio"
+    "interior-observatorio",
+    "interior-feira"
    ],
    "fala": "O cacto guarda água dentro."
   },
@@ -37195,6 +37341,2220 @@
     "interior-padrao-matematica"
    ],
    "fala": "Ele fala desta sala aqui."
+  },
+  {
+   "chave": "382bbea610",
+   "voz": "narradora",
+   "texto": "Vamos cuidar deste jardim!",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Vamos cuidar deste jardim!"
+  },
+  {
+   "chave": "bbfe6685x",
+   "voz": "narradora",
+   "texto": "O broto está crescendo.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O broto está crescendo."
+  },
+  {
+   "chave": "e8231aef11",
+   "voz": "narradora",
+   "texto": "Vamos guardar essa mudança!",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Vamos guardar essa mudança!"
+  },
+  {
+   "chave": "5b4ea96d10",
+   "voz": "narradora",
+   "texto": "Observe o broto com calma.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Observe o broto com calma."
+  },
+  {
+   "chave": "ae08cae3w",
+   "voz": "narradora",
+   "texto": "Ele mudou desde ontem.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Ele mudou desde ontem."
+  },
+  {
+   "chave": "e786267fw",
+   "voz": "narradora",
+   "texto": "O broto é um ser vivo.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O broto é um ser vivo."
+  },
+  {
+   "chave": "7aea6c1bt",
+   "voz": "narradora",
+   "texto": "Ele nasce e cresce.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Ele nasce e cresce."
+  },
+  {
+   "chave": "f50c4b0710",
+   "voz": "narradora",
+   "texto": "Plantas produzem alimento.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Plantas produzem alimento."
+  },
+  {
+   "chave": "bcad01c910",
+   "voz": "narradora",
+   "texto": "Podem gerar novas plantas.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Podem gerar novas plantas."
+  },
+  {
+   "chave": "3d857997w",
+   "voz": "narradora",
+   "texto": "Um dia, também morrem.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Um dia, também morrem."
+  },
+  {
+   "chave": "dbd526e8w",
+   "voz": "narradora",
+   "texto": "A muda está no escuro.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "A muda está no escuro."
+  },
+  {
+   "chave": "cdcd53eb11",
+   "voz": "narradora",
+   "texto": "Abra um caminho para a luz!",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Abra um caminho para a luz!"
+  },
+  {
+   "chave": "32bc9652x",
+   "voz": "narradora",
+   "texto": "A água já está no solo.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "A água já está no solo."
+  },
+  {
+   "chave": "fa736781t",
+   "voz": "narradora",
+   "texto": "Falta a luz chegar.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Falta a luz chegar."
+  },
+  {
+   "chave": "926f5216r",
+   "voz": "narradora",
+   "texto": "A luz não é viva.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "A luz não é viva."
+  },
+  {
+   "chave": "c5cc9a73t",
+   "voz": "narradora",
+   "texto": "A planta usa a luz.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "A planta usa a luz."
+  },
+  {
+   "chave": "1b92682b11",
+   "voz": "narradora",
+   "texto": "Assim, ela produz alimento.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Assim, ela produz alimento."
+  },
+  {
+   "chave": "5c911508u",
+   "voz": "narradora",
+   "texto": "É um fator abiótico.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "É um fator abiótico."
+  },
+  {
+   "chave": "3f78040cv",
+   "voz": "narradora",
+   "texto": "O solo está bem seco.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O solo está bem seco."
+  },
+  {
+   "chave": "a6e3947811",
+   "voz": "narradora",
+   "texto": "Vamos dar água à plantinha!",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Vamos dar água à plantinha!"
+  },
+  {
+   "chave": "aa3fbd2dy",
+   "voz": "narradora",
+   "texto": "As raízes estão no solo.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "As raízes estão no solo."
+  },
+  {
+   "chave": "5c9ff207w",
+   "voz": "narradora",
+   "texto": "Elas precisam de água.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Elas precisam de água."
+  },
+  {
+   "chave": "6cdcb664y",
+   "voz": "narradora",
+   "texto": "As raízes absorvem água.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "As raízes absorvem água."
+  },
+  {
+   "chave": "4e5a0b5d11",
+   "voz": "narradora",
+   "texto": "Também absorvem nutrientes.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Também absorvem nutrientes."
+  },
+  {
+   "chave": "73cb8cb912",
+   "voz": "narradora",
+   "texto": "O solo tem partes não vivas.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O solo tem partes não vivas."
+  },
+  {
+   "chave": "d934718010",
+   "voz": "narradora",
+   "texto": "Também abriga seres vivos.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Também abriga seres vivos."
+  },
+  {
+   "chave": "d1bee26fy",
+   "voz": "narradora",
+   "texto": "Água e ar não são vivos.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Água e ar não são vivos."
+  },
+  {
+   "chave": "3980403b13",
+   "voz": "narradora",
+   "texto": "Veja as formigas cortadeiras!",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Veja as formigas cortadeiras!"
+  },
+  {
+   "chave": "2ad4641212",
+   "voz": "narradora",
+   "texto": "Elas carregam folhas juntas.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Elas carregam folhas juntas."
+  },
+  {
+   "chave": "974768cf13",
+   "voz": "narradora",
+   "texto": "Monte a horta do formigueiro!",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Monte a horta do formigueiro!"
+  },
+  {
+   "chave": "69a33f9310",
+   "voz": "narradora",
+   "texto": "O fungo cresce nas folhas.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O fungo cresce nas folhas."
+  },
+  {
+   "chave": "f5e25f1712",
+   "voz": "narradora",
+   "texto": "Ele alimenta essas formigas.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Ele alimenta essas formigas."
+  },
+  {
+   "chave": "4e1f890f12",
+   "voz": "narradora",
+   "texto": "Cortadeiras cultivam fungos.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Cortadeiras cultivam fungos."
+  },
+  {
+   "chave": "e529395610",
+   "voz": "narradora",
+   "texto": "Usam folhas nesse cultivo.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Usam folhas nesse cultivo."
+  },
+  {
+   "chave": "a2fa7748x",
+   "voz": "narradora",
+   "texto": "O fungo é seu alimento.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O fungo é seu alimento."
+  },
+  {
+   "chave": "d5a5116aw",
+   "voz": "narradora",
+   "texto": "O fungo também é vivo.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O fungo também é vivo."
+  },
+  {
+   "chave": "1a0c82a212",
+   "voz": "narradora",
+   "texto": "Outras formigas comem grãos.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Outras formigas comem grãos."
+  },
+  {
+   "chave": "3d2de180z",
+   "voz": "narradora",
+   "texto": "Ou comem pequenos bichos.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Ou comem pequenos bichos."
+  },
+  {
+   "chave": "a2c66e1c11",
+   "voz": "narradora",
+   "texto": "Nosso lago ainda está seco.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Nosso lago ainda está seco."
+  },
+  {
+   "chave": "edbe5a9411",
+   "voz": "narradora",
+   "texto": "Os peixes são de brinquedo.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Os peixes são de brinquedo."
+  },
+  {
+   "chave": "9a52cf1c10",
+   "voz": "narradora",
+   "texto": "Prepare a água do cenário!",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Prepare a água do cenário!"
+  },
+  {
+   "chave": "df3acb8111",
+   "voz": "narradora",
+   "texto": "Pedras fazem parte do lago.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Pedras fazem parte do lago."
+  },
+  {
+   "chave": "52d6fb8ez",
+   "voz": "narradora",
+   "texto": "Mas peixes vivem na água.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Mas peixes vivem na água."
+  },
+  {
+   "chave": "afb8de59x",
+   "voz": "narradora",
+   "texto": "Peixes são seres vivos.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Peixes são seres vivos."
+  },
+  {
+   "chave": "0d8bb93ev",
+   "voz": "narradora",
+   "texto": "O lago reúne os dois.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O lago reúne os dois."
+  },
+  {
+   "chave": "cb04b16b12",
+   "voz": "narradora",
+   "texto": "Rochas também não são vivas.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Rochas também não são vivas."
+  },
+  {
+   "chave": "3810bbc3s",
+   "voz": "narradora",
+   "texto": "O ar ajuda a vida.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O ar ajuda a vida."
+  },
+  {
+   "chave": "1856aba912",
+   "voz": "narradora",
+   "texto": "Vamos ligar estas histórias!",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Vamos ligar estas histórias!"
+  },
+  {
+   "chave": "9e3aa8e2w",
+   "voz": "narradora",
+   "texto": "A onça busca alimento.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "A onça busca alimento."
+  },
+  {
+   "chave": "9a42bf2b10",
+   "voz": "narradora",
+   "texto": "Ligue as peças dessa cena!",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Ligue as peças dessa cena!"
+  },
+  {
+   "chave": "2f699df911",
+   "voz": "narradora",
+   "texto": "A onça caça outros animais.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "A onça caça outros animais."
+  },
+  {
+   "chave": "1d0dc4dcz",
+   "voz": "narradora",
+   "texto": "Procure a peça do jacaré.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Procure a peça do jacaré."
+  },
+  {
+   "chave": "a5d1dca010",
+   "voz": "narradora",
+   "texto": "A onça pode caçar jacarés.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "A onça pode caçar jacarés."
+  },
+  {
+   "chave": "30ee110dz",
+   "voz": "narradora",
+   "texto": "A onça consegue alimento.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "A onça consegue alimento."
+  },
+  {
+   "chave": "ca6f281bx",
+   "voz": "narradora",
+   "texto": "O jacaré é prejudicado.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O jacaré é prejudicado."
+  },
+  {
+   "chave": "21221fc8y",
+   "voz": "narradora",
+   "texto": "Esses animais são vivos.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Esses animais são vivos."
+  },
+  {
+   "chave": "b9f6d136y",
+   "voz": "narradora",
+   "texto": "São os fatores bióticos.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "São os fatores bióticos."
+  },
+  {
+   "chave": "00569dbc13",
+   "voz": "narradora",
+   "texto": "O gafanhoto vai se alimentar.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O gafanhoto vai se alimentar."
+  },
+  {
+   "chave": "0b83d77812",
+   "voz": "narradora",
+   "texto": "Complete a cena da refeição!",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Complete a cena da refeição!"
+  },
+  {
+   "chave": "f594e3ddy",
+   "voz": "narradora",
+   "texto": "Veja a folha mordiscada.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Veja a folha mordiscada."
+  },
+  {
+   "chave": "8f67363310",
+   "voz": "narradora",
+   "texto": "Ela pode ser seu alimento.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Ela pode ser seu alimento."
+  },
+  {
+   "chave": "850576e6y",
+   "voz": "narradora",
+   "texto": "O gafanhoto come folhas.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O gafanhoto come folhas."
+  },
+  {
+   "chave": "8236640d10",
+   "voz": "narradora",
+   "texto": "Ele consegue se alimentar.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Ele consegue se alimentar."
+  },
+  {
+   "chave": "c41dd11012",
+   "voz": "narradora",
+   "texto": "A planta perde essas partes.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "A planta perde essas partes."
+  },
+  {
+   "chave": "faf59e65z",
+   "voz": "narradora",
+   "texto": "Ela pode ser prejudicada.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Ela pode ser prejudicada."
+  },
+  {
+   "chave": "7d79d7bd12",
+   "voz": "narradora",
+   "texto": "Bugio e arara buscam frutos.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Bugio e arara buscam frutos."
+  },
+  {
+   "chave": "611bfe07z",
+   "voz": "narradora",
+   "texto": "Há poucos nesta palmeira.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Há poucos nesta palmeira."
+  },
+  {
+   "chave": "406c0aaa11",
+   "voz": "narradora",
+   "texto": "Amplie a mata de brinquedo!",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Amplie a mata de brinquedo!"
+  },
+  {
+   "chave": "b134a25d11",
+   "voz": "narradora",
+   "texto": "Os dois comem esses frutos.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Os dois comem esses frutos."
+  },
+  {
+   "chave": "1f85545910",
+   "voz": "narradora",
+   "texto": "Mais árvores podem ajudar.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Mais árvores podem ajudar."
+  },
+  {
+   "chave": "171ab90fz",
+   "voz": "narradora",
+   "texto": "Eles disputam o alimento.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Eles disputam o alimento."
+  },
+  {
+   "chave": "3a7d2a3810",
+   "voz": "narradora",
+   "texto": "Essa disputa é competição.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Essa disputa é competição."
+  },
+  {
+   "chave": "ddb88f6c11",
+   "voz": "narradora",
+   "texto": "Pode faltar comida para um.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Pode faltar comida para um."
+  },
+  {
+   "chave": "f0ccb622z",
+   "voz": "narradora",
+   "texto": "Mais frutos podem ajudar.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Mais frutos podem ajudar."
+  },
+  {
+   "chave": "1c67224b11",
+   "voz": "narradora",
+   "texto": "O gato da história se coça.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O gato da história se coça."
+  },
+  {
+   "chave": "9a6e131010",
+   "voz": "narradora",
+   "texto": "Tem pulgas entre os pelos.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Tem pulgas entre os pelos."
+  },
+  {
+   "chave": "9070fce411",
+   "voz": "narradora",
+   "texto": "Escolha um jeito de ajudar!",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Escolha um jeito de ajudar!"
+  },
+  {
+   "chave": "67c60af611",
+   "voz": "narradora",
+   "texto": "Só brincar não tira pulgas.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Só brincar não tira pulgas."
+  },
+  {
+   "chave": "1f80310712",
+   "voz": "narradora",
+   "texto": "Um adulto pode buscar ajuda.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Um adulto pode buscar ajuda."
+  },
+  {
+   "chave": "38c6e85714",
+   "voz": "narradora",
+   "texto": "Pulgas se alimentam de sangue.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Pulgas se alimentam de sangue."
+  },
+  {
+   "chave": "3554231ez",
+   "voz": "narradora",
+   "texto": "O gato sente desconforto.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O gato sente desconforto."
+  },
+  {
+   "chave": "447bce31w",
+   "voz": "narradora",
+   "texto": "A pulga é beneficiada.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "A pulga é beneficiada."
+  },
+  {
+   "chave": "36995aecv",
+   "voz": "narradora",
+   "texto": "O gato é prejudicado.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O gato é prejudicado."
+  },
+  {
+   "chave": "b5fba58a11",
+   "voz": "narradora",
+   "texto": "Um veterinário pode ajudar.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Um veterinário pode ajudar."
+  },
+  {
+   "chave": "fb186931w",
+   "voz": "narradora",
+   "texto": "Há larvas para cuidar.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Há larvas para cuidar."
+  },
+  {
+   "chave": "5863fe55x",
+   "voz": "narradora",
+   "texto": "As coletoras já saíram.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "As coletoras já saíram."
+  },
+  {
+   "chave": "2578ccf813",
+   "voz": "narradora",
+   "texto": "Complete a equipe da colmeia!",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Complete a equipe da colmeia!"
+  },
+  {
+   "chave": "71fe278210",
+   "voz": "narradora",
+   "texto": "Cada tarefa ajuda o grupo.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Cada tarefa ajuda o grupo."
+  },
+  {
+   "chave": "4af34fb014",
+   "voz": "narradora",
+   "texto": "As larvas precisam de cuidado.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "As larvas precisam de cuidado."
+  },
+  {
+   "chave": "c7b1942810",
+   "voz": "narradora",
+   "texto": "Abelhas cooperam em grupo.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Abelhas cooperam em grupo."
+  },
+  {
+   "chave": "bd85d211x",
+   "voz": "narradora",
+   "texto": "Umas cuidam das larvas.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Umas cuidam das larvas."
+  },
+  {
+   "chave": "5077c36dx",
+   "voz": "narradora",
+   "texto": "Outras buscam alimento.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Outras buscam alimento."
+  },
+  {
+   "chave": "da7278fb10",
+   "voz": "narradora",
+   "texto": "Outras protegem a colmeia.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Outras protegem a colmeia."
+  },
+  {
+   "chave": "27786ee510",
+   "voz": "narradora",
+   "texto": "Isso é viver em sociedade.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Isso é viver em sociedade."
+  },
+  {
+   "chave": "d01266d314",
+   "voz": "narradora",
+   "texto": "Vamos acompanhar os encontros!",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Vamos acompanhar os encontros!"
+  },
+  {
+   "chave": "1feec5a710",
+   "voz": "narradora",
+   "texto": "Há insetos sobre o búfalo.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Há insetos sobre o búfalo."
+  },
+  {
+   "chave": "84f0058310",
+   "voz": "narradora",
+   "texto": "Um pássaro busca alimento.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Um pássaro busca alimento."
+  },
+  {
+   "chave": "f727ec3b11",
+   "voz": "narradora",
+   "texto": "Junte as peças do encontro!",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Junte as peças do encontro!"
+  },
+  {
+   "chave": "09a044a913",
+   "voz": "narradora",
+   "texto": "O pássaro come esses insetos.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O pássaro come esses insetos."
+  },
+  {
+   "chave": "62391abdw",
+   "voz": "narradora",
+   "texto": "Veja a pele do búfalo.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Veja a pele do búfalo."
+  },
+  {
+   "chave": "ff923c3210",
+   "voz": "narradora",
+   "texto": "O pássaro come os insetos.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O pássaro come os insetos."
+  },
+  {
+   "chave": "f2d3871210",
+   "voz": "narradora",
+   "texto": "O búfalo fica livre deles.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O búfalo fica livre deles."
+  },
+  {
+   "chave": "b27cb59912",
+   "voz": "narradora",
+   "texto": "Esse encontro ajuda os dois.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Esse encontro ajuda os dois."
+  },
+  {
+   "chave": "c21c521710",
+   "voz": "narradora",
+   "texto": "Nem todo encontro é assim.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Nem todo encontro é assim."
+  },
+  {
+   "chave": "a195fd1413",
+   "voz": "narradora",
+   "texto": "Dois pássaros buscam insetos.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Dois pássaros buscam insetos."
+  },
+  {
+   "chave": "60b4dbd110",
+   "voz": "narradora",
+   "texto": "Aqui há poucos para comer.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Aqui há poucos para comer."
+  },
+  {
+   "chave": "c34cf4a912",
+   "voz": "narradora",
+   "texto": "Abra outra parte do cenário!",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Abra outra parte do cenário!"
+  },
+  {
+   "chave": "d44c350c11",
+   "voz": "narradora",
+   "texto": "Eles buscam a mesma comida.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Eles buscam a mesma comida."
+  },
+  {
+   "chave": "fb9a478c12",
+   "voz": "narradora",
+   "texto": "Procure mais insetos por lá.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Procure mais insetos por lá."
+  },
+  {
+   "chave": "2856accdy",
+   "voz": "narradora",
+   "texto": "Pássaros podem competir.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Pássaros podem competir."
+  },
+  {
+   "chave": "d39f4bf113",
+   "voz": "narradora",
+   "texto": "Mesmo sendo da mesma espécie.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Mesmo sendo da mesma espécie."
+  },
+  {
+   "chave": "a84065f4x",
+   "voz": "narradora",
+   "texto": "Os dois buscam insetos.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Os dois buscam insetos."
+  },
+  {
+   "chave": "f7df1b7310",
+   "voz": "narradora",
+   "texto": "Mais alimento pode ajudar.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Mais alimento pode ajudar."
+  },
+  {
+   "chave": "44c6f2d210",
+   "voz": "narradora",
+   "texto": "O beija-flor busca néctar.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O beija-flor busca néctar."
+  },
+  {
+   "chave": "221b62eb11",
+   "voz": "narradora",
+   "texto": "Monte seu jardim de flores!",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Monte seu jardim de flores!"
+  },
+  {
+   "chave": "5a2f8579z",
+   "voz": "narradora",
+   "texto": "O néctar fica nas flores.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O néctar fica nas flores."
+  },
+  {
+   "chave": "1a4df156w",
+   "voz": "narradora",
+   "texto": "Ele serve de alimento.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Ele serve de alimento."
+  },
+  {
+   "chave": "63301ff611",
+   "voz": "narradora",
+   "texto": "O néctar é um líquido doce.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O néctar é um líquido doce."
+  },
+  {
+   "chave": "ae7e7bc1x",
+   "voz": "narradora",
+   "texto": "Fica dentro das flores.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Fica dentro das flores."
+  },
+  {
+   "chave": "9f6248b0z",
+   "voz": "narradora",
+   "texto": "O beija-flor se alimenta.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O beija-flor se alimenta."
+  },
+  {
+   "chave": "273255dcy",
+   "voz": "narradora",
+   "texto": "Flores e aves são vivas.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Flores e aves são vivas."
+  },
+  {
+   "chave": "10bb3ba614",
+   "voz": "narradora",
+   "texto": "O grupo de cupins tem tarefas.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O grupo de cupins tem tarefas."
+  },
+  {
+   "chave": "d393ca7e12",
+   "voz": "narradora",
+   "texto": "A equipe vai buscar madeira.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "A equipe vai buscar madeira."
+  },
+  {
+   "chave": "7835ef9f13",
+   "voz": "narradora",
+   "texto": "Complete o caminho da comida!",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Complete o caminho da comida!"
+  },
+  {
+   "chave": "a860a84211",
+   "voz": "narradora",
+   "texto": "Esses cupins comem madeira.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Esses cupins comem madeira."
+  },
+  {
+   "chave": "ed844d40x",
+   "voz": "narradora",
+   "texto": "O grupo trabalha junto.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O grupo trabalha junto."
+  },
+  {
+   "chave": "10bd62a910",
+   "voz": "narradora",
+   "texto": "Cupins vivem em sociedade.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Cupins vivem em sociedade."
+  },
+  {
+   "chave": "d3791d4c12",
+   "voz": "narradora",
+   "texto": "Muitos cupins comem madeira.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Muitos cupins comem madeira."
+  },
+  {
+   "chave": "b032f2f7w",
+   "voz": "narradora",
+   "texto": "Há cuidado e proteção.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Há cuidado e proteção."
+  },
+  {
+   "chave": "ecb6627dz",
+   "voz": "narradora",
+   "texto": "Formigas também cooperam.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Formigas também cooperam."
+  },
+  {
+   "chave": "1b82c9ea11",
+   "voz": "narradora",
+   "texto": "O cão da história tem sede.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O cão da história tem sede."
+  },
+  {
+   "chave": "fb6f8ec913",
+   "voz": "narradora",
+   "texto": "Prepare seu cantinho de água!",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Prepare seu cantinho de água!"
+  },
+  {
+   "chave": "c4267c6cy",
+   "voz": "narradora",
+   "texto": "Água fresca ajuda o cão.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Água fresca ajuda o cão."
+  },
+  {
+   "chave": "335e9139y",
+   "voz": "narradora",
+   "texto": "A bola fica para depois.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "A bola fica para depois."
+  },
+  {
+   "chave": "fc12dfffq",
+   "voz": "narradora",
+   "texto": "O cão bebe água.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O cão bebe água."
+  },
+  {
+   "chave": "469b180f11",
+   "voz": "narradora",
+   "texto": "Também precisa respirar ar.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Também precisa respirar ar."
+  },
+  {
+   "chave": "bbce073f10",
+   "voz": "narradora",
+   "texto": "Mas ajudam os seres vivos.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Mas ajudam os seres vivos."
+  },
+  {
+   "chave": "cc6bb30ds",
+   "voz": "narradora",
+   "texto": "A bola não é viva.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "A bola não é viva."
+  },
+  {
+   "chave": "71e6f93113",
+   "voz": "narradora",
+   "texto": "Vamos explorar cada ambiente!",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Vamos explorar cada ambiente!"
+  },
+  {
+   "chave": "61ca447210",
+   "voz": "narradora",
+   "texto": "A chuva chegou à Caatinga.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "A chuva chegou à Caatinga."
+  },
+  {
+   "chave": "73eaa367y",
+   "voz": "narradora",
+   "texto": "Monte a poça temporária!",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Monte a poça temporária!"
+  },
+  {
+   "chave": "c22e5e2413",
+   "voz": "narradora",
+   "texto": "Ela abriga peixes-das-nuvens.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Ela abriga peixes-das-nuvens."
+  },
+  {
+   "chave": "1d1a189911",
+   "voz": "narradora",
+   "texto": "Essa poça dura pouco tempo.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Essa poça dura pouco tempo."
+  },
+  {
+   "chave": "222cf0b1t",
+   "voz": "narradora",
+   "texto": "Use a peça de água.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Use a peça de água."
+  },
+  {
+   "chave": "7e64ec0f12",
+   "voz": "narradora",
+   "texto": "A Caatinga tem tempos secos.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "A Caatinga tem tempos secos."
+  },
+  {
+   "chave": "1d50343911",
+   "voz": "narradora",
+   "texto": "Também tem tempos de chuva.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Também tem tempos de chuva."
+  },
+  {
+   "chave": "cbba5a9512",
+   "voz": "narradora",
+   "texto": "Esses peixes vivem em poças.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Esses peixes vivem em poças."
+  },
+  {
+   "chave": "d6bb51d5z",
+   "voz": "narradora",
+   "texto": "Esse lugar é seu hábitat.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Esse lugar é seu hábitat."
+  },
+  {
+   "chave": "8171488b10",
+   "voz": "narradora",
+   "texto": "O sagui pula entre galhos.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O sagui pula entre galhos."
+  },
+  {
+   "chave": "f97a177d11",
+   "voz": "narradora",
+   "texto": "A ave usa a vegetação seca.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "A ave usa a vegetação seca."
+  },
+  {
+   "chave": "3162eb5f12",
+   "voz": "narradora",
+   "texto": "É o bico-virado-da-caatinga.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "É o bico-virado-da-caatinga."
+  },
+  {
+   "chave": "bae3eaa011",
+   "voz": "narradora",
+   "texto": "O tamanduá procura insetos.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O tamanduá procura insetos."
+  },
+  {
+   "chave": "d479c699z",
+   "voz": "narradora",
+   "texto": "O tatu-bola busca abrigo.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O tatu-bola busca abrigo."
+  },
+  {
+   "chave": "b10ac66710",
+   "voz": "narradora",
+   "texto": "O deserto está na vitrine.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O deserto está na vitrine."
+  },
+  {
+   "chave": "6aee76c611",
+   "voz": "narradora",
+   "texto": "Abra a janela do seu caule!",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Abra a janela do seu caule!"
+  },
+  {
+   "chave": "cf82ecaby",
+   "voz": "narradora",
+   "texto": "O caule é o corpo verde.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O caule é o corpo verde."
+  },
+  {
+   "chave": "b8ca38f0z",
+   "voz": "narradora",
+   "texto": "Ali fica a água guardada.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Ali fica a água guardada."
+  },
+  {
+   "chave": "c0a3887b13",
+   "voz": "narradora",
+   "texto": "O cacto guarda água no caule.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O cacto guarda água no caule."
+  },
+  {
+   "chave": "bf95bd7a12",
+   "voz": "narradora",
+   "texto": "Espinhos no lugar de folhas.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Espinhos no lugar de folhas."
+  },
+  {
+   "chave": "6e426daa12",
+   "voz": "narradora",
+   "texto": "Assim, ele perde menos água.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Assim, ele perde menos água."
+  },
+  {
+   "chave": "bd5580e1y",
+   "voz": "narradora",
+   "texto": "O camelo guarda gordura.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O camelo guarda gordura."
+  },
+  {
+   "chave": "18dbd11cw",
+   "voz": "narradora",
+   "texto": "Ela fica nas corcovas.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Ela fica nas corcovas."
+  },
+  {
+   "chave": "694c636c13",
+   "voz": "narradora",
+   "texto": "Essa gordura fornece energia.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Essa gordura fornece energia."
+  },
+  {
+   "chave": "5e35b845y",
+   "voz": "narradora",
+   "texto": "Não é um tanque de água.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Não é um tanque de água."
+  },
+  {
+   "chave": "15b2f69cy",
+   "voz": "narradora",
+   "texto": "O vento sopra na tundra.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O vento sopra na tundra."
+  },
+  {
+   "chave": "b0b27d2111",
+   "voz": "narradora",
+   "texto": "Monte as plantas baixinhas!",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Monte as plantas baixinhas!"
+  },
+  {
+   "chave": "7fea5bab10",
+   "voz": "narradora",
+   "texto": "Perto do chão venta menos.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Perto do chão venta menos."
+  },
+  {
+   "chave": "d2bf8bce12",
+   "voz": "narradora",
+   "texto": "As plantas ficam protegidas.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "As plantas ficam protegidas."
+  },
+  {
+   "chave": "85563f3c12",
+   "voz": "narradora",
+   "texto": "Plantas baixas evitam vento.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Plantas baixas evitam vento."
+  },
+  {
+   "chave": "f10701ef14",
+   "voz": "narradora",
+   "texto": "O urso-polar tem pelos densos.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O urso-polar tem pelos densos."
+  },
+  {
+   "chave": "bbe069b211",
+   "voz": "narradora",
+   "texto": "Sua gordura conserva calor.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Sua gordura conserva calor."
+  },
+  {
+   "chave": "436df4f411",
+   "voz": "narradora",
+   "texto": "O lobo-do-ártico tem pelos.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O lobo-do-ártico tem pelos."
+  },
+  {
+   "chave": "014558fd10",
+   "voz": "narradora",
+   "texto": "A cor clara ajuda na neve.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "A cor clara ajuda na neve."
+  },
+  {
+   "chave": "759ec7fa13",
+   "voz": "narradora",
+   "texto": "Seu pelo grosso guarda calor.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Seu pelo grosso guarda calor."
+  },
+  {
+   "chave": "9014dd57y",
+   "voz": "narradora",
+   "texto": "Monte o lago da vitrine!",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Monte o lago da vitrine!"
+  },
+  {
+   "chave": "5c2ad32011",
+   "voz": "narradora",
+   "texto": "Esta planta flutua na água.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Esta planta flutua na água."
+  },
+  {
+   "chave": "cfbaae46y",
+   "voz": "narradora",
+   "texto": "Suas folhas recebem luz.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Suas folhas recebem luz."
+  },
+  {
+   "chave": "c637546ay",
+   "voz": "narradora",
+   "texto": "As raízes ficam na água.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "As raízes ficam na água."
+  },
+  {
+   "chave": "7b6c1b2cx",
+   "voz": "narradora",
+   "texto": "O aguapé tem ar dentro.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O aguapé tem ar dentro."
+  },
+  {
+   "chave": "93f8a912v",
+   "voz": "narradora",
+   "texto": "Isso ajuda a flutuar.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Isso ajuda a flutuar."
+  },
+  {
+   "chave": "615292fb13",
+   "voz": "narradora",
+   "texto": "Suas raízes tiram nutrientes.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Suas raízes tiram nutrientes."
+  },
+  {
+   "chave": "470ad25c10",
+   "voz": "narradora",
+   "texto": "Os nutrientes vêm da água.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Os nutrientes vêm da água."
+  },
+  {
+   "chave": "0f209ac312",
+   "voz": "narradora",
+   "texto": "Peixes nadam com nadadeiras.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Peixes nadam com nadadeiras."
+  },
+  {
+   "chave": "84c7a1dd12",
+   "voz": "narradora",
+   "texto": "Brânquias ajudam a respirar.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Brânquias ajudam a respirar."
+  },
+  {
+   "chave": "58019c54x",
+   "voz": "narradora",
+   "texto": "Tiram oxigênio da água.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Tiram oxigênio da água."
+  },
+  {
+   "chave": "f313c36512",
+   "voz": "narradora",
+   "texto": "A árvore busca água no solo.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "A árvore busca água no solo."
+  },
+  {
+   "chave": "e29c944613",
+   "voz": "narradora",
+   "texto": "Complete o desenho escondido!",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Complete o desenho escondido!"
+  },
+  {
+   "chave": "056c2183y",
+   "voz": "narradora",
+   "texto": "As raízes ficam no solo.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "As raízes ficam no solo."
+  },
+  {
+   "chave": "198ca0f1y",
+   "voz": "narradora",
+   "texto": "Elas absorvem água dali.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Elas absorvem água dali."
+  },
+  {
+   "chave": "6bdef9c911",
+   "voz": "narradora",
+   "texto": "Raízes absorvem nutrientes.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Raízes absorvem nutrientes."
+  },
+  {
+   "chave": "b3a3abf910",
+   "voz": "narradora",
+   "texto": "Elas também absorvem água.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Elas também absorvem água."
+  },
+  {
+   "chave": "4f99849512",
+   "voz": "narradora",
+   "texto": "Algumas alcançam mais fundo.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Algumas alcançam mais fundo."
+  },
+  {
+   "chave": "265a6f24z",
+   "voz": "narradora",
+   "texto": "Florestas são terrestres.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Florestas são terrestres."
+  },
+  {
+   "chave": "3ca237d213",
+   "voz": "narradora",
+   "texto": "Campos também são terrestres.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Campos também são terrestres."
+  },
+  {
+   "chave": "f2a386b7y",
+   "voz": "narradora",
+   "texto": "A onça tem patas fortes.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "A onça tem patas fortes."
+  },
+  {
+   "chave": "3f1e851bu",
+   "voz": "narradora",
+   "texto": "Elas ajudam na caça.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Elas ajudam na caça."
+  },
+  {
+   "chave": "41cfd1b112",
+   "voz": "narradora",
+   "texto": "Vamos descobrir os detalhes!",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Vamos descobrir os detalhes!"
+  },
+  {
+   "chave": "e371517d14",
+   "voz": "narradora",
+   "texto": "A tartaruga marinha vai nadar.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "A tartaruga marinha vai nadar."
+  },
+  {
+   "chave": "449b18f413",
+   "voz": "narradora",
+   "texto": "Mova a peça que a impulsiona!",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Mova a peça que a impulsiona!"
+  },
+  {
+   "chave": "4e37e4ecy",
+   "voz": "narradora",
+   "texto": "Ela usa suas nadadeiras.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Ela usa suas nadadeiras."
+  },
+  {
+   "chave": "65d4486a10",
+   "voz": "narradora",
+   "texto": "O casco serve de proteção.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O casco serve de proteção."
+  },
+  {
+   "chave": "b9ac147a13",
+   "voz": "narradora",
+   "texto": "As nadadeiras ajudam a nadar.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "As nadadeiras ajudam a nadar."
+  },
+  {
+   "chave": "1640078710",
+   "voz": "narradora",
+   "texto": "O casco protege seu corpo.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O casco protege seu corpo."
+  },
+  {
+   "chave": "ef3f2472z",
+   "voz": "narradora",
+   "texto": "Ela respira fora da água.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Ela respira fora da água."
+  },
+  {
+   "chave": "60bb054c11",
+   "voz": "narradora",
+   "texto": "São jeitos de viver no mar.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "São jeitos de viver no mar."
+  },
+  {
+   "chave": "9248e543z",
+   "voz": "narradora",
+   "texto": "A preguiça está no galho.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "A preguiça está no galho."
+  },
+  {
+   "chave": "7c77cd9411",
+   "voz": "narradora",
+   "texto": "Aproxime a lupa das garras!",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Aproxime a lupa das garras!"
+  },
+  {
+   "chave": "05ed99f712",
+   "voz": "narradora",
+   "texto": "As garras seguram os galhos.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "As garras seguram os galhos."
+  },
+  {
+   "chave": "63f5b540z",
+   "voz": "narradora",
+   "texto": "Veja onde ela se pendura.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Veja onde ela se pendura."
+  },
+  {
+   "chave": "d37831b213",
+   "voz": "narradora",
+   "texto": "A preguiça tem garras longas.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "A preguiça tem garras longas."
+  },
+  {
+   "chave": "1fe3b04010",
+   "voz": "narradora",
+   "texto": "Elas ajudam a se pendurar.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Elas ajudam a se pendurar."
+  },
+  {
+   "chave": "aa39d25913",
+   "voz": "narradora",
+   "texto": "Seu corpo vive entre árvores.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Seu corpo vive entre árvores."
+  },
+  {
+   "chave": "3b108f3bv",
+   "voz": "narradora",
+   "texto": "Isso é uma adaptação.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Isso é uma adaptação."
+  },
+  {
+   "chave": "db895dfcw",
+   "voz": "narradora",
+   "texto": "O feneco busca abrigo.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O feneco busca abrigo."
+  },
+  {
+   "chave": "4d0de9dex",
+   "voz": "narradora",
+   "texto": "Abra a toca do cenário!",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Abra a toca do cenário!"
+  },
+  {
+   "chave": "58c538d2x",
+   "voz": "narradora",
+   "texto": "Ele cava tocas no solo.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Ele cava tocas no solo."
+  },
+  {
+   "chave": "7df74f1b13",
+   "voz": "narradora",
+   "texto": "Na toca, fica longe do calor.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Na toca, fica longe do calor."
+  },
+  {
+   "chave": "ed1e56e7y",
+   "voz": "narradora",
+   "texto": "A toca protege do calor.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "A toca protege do calor."
+  },
+  {
+   "chave": "bf63ddda13",
+   "voz": "narradora",
+   "texto": "O feneco tem orelhas grandes.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O feneco tem orelhas grandes."
+  },
+  {
+   "chave": "04ab7f0d12",
+   "voz": "narradora",
+   "texto": "Elas ajudam a liberar calor.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Elas ajudam a liberar calor."
+  },
+  {
+   "chave": "7a9c0058y",
+   "voz": "narradora",
+   "texto": "Veja o lagarto-de-colar.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Veja o lagarto-de-colar."
+  },
+  {
+   "chave": "4921db2514",
+   "voz": "narradora",
+   "texto": "Suas escamas protegem o corpo.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Suas escamas protegem o corpo."
+  },
+  {
+   "chave": "8043f26813",
+   "voz": "narradora",
+   "texto": "Elas reduzem a perda de água.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Elas reduzem a perda de água."
+  },
+  {
+   "chave": "b36948a714",
+   "voz": "narradora",
+   "texto": "Pernas fortes ajudam a correr.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Pernas fortes ajudam a correr."
+  },
+  {
+   "chave": "e271320213",
+   "voz": "narradora",
+   "texto": "O pinguim voltou do mergulho.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "O pinguim voltou do mergulho."
+  },
+  {
+   "chave": "7f27a6d310",
+   "voz": "narradora",
+   "texto": "Veja sua proteção na água!",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Veja sua proteção na água!"
+  },
+  {
+   "chave": "928419eb12",
+   "voz": "narradora",
+   "texto": "As penas protegem seu corpo.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "As penas protegem seu corpo."
+  },
+  {
+   "chave": "73bb258612",
+   "voz": "narradora",
+   "texto": "A água não entra facilmente.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "A água não entra facilmente."
+  },
+  {
+   "chave": "26b42086x",
+   "voz": "narradora",
+   "texto": "As penas barram a água.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "As penas barram a água."
+  },
+  {
+   "chave": "6a21d002z",
+   "voz": "narradora",
+   "texto": "A gordura conserva calor.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "A gordura conserva calor."
+  },
+  {
+   "chave": "d14b5273x",
+   "voz": "narradora",
+   "texto": "Isso ajuda no mar frio.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Isso ajuda no mar frio."
+  },
+  {
+   "chave": "e0e32a7210",
+   "voz": "narradora",
+   "texto": "Cada corpo tem adaptações.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Cada corpo tem adaptações."
+  },
+  {
+   "chave": "2246aad013",
+   "voz": "narradora",
+   "texto": "Uma joaninha pousou na folha.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Uma joaninha pousou na folha."
+  },
+  {
+   "chave": "34ef5412z",
+   "voz": "narradora",
+   "texto": "Ela é pequena e vermelha.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Ela é pequena e vermelha."
+  },
+  {
+   "chave": "21b26b5d11",
+   "voz": "narradora",
+   "texto": "Guarde o que você observou!",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Guarde o que você observou!"
+  },
+  {
+   "chave": "cfabda2f10",
+   "voz": "narradora",
+   "texto": "Desenhe sua cor e tamanho.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Desenhe sua cor e tamanho."
+  },
+  {
+   "chave": "d2658ebax",
+   "voz": "narradora",
+   "texto": "Mostre onde ela pousou.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Mostre onde ela pousou."
+  },
+  {
+   "chave": "a0c302e012",
+   "voz": "narradora",
+   "texto": "Observar pede muita atenção.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Observar pede muita atenção."
+  },
+  {
+   "chave": "f57c856ex",
+   "voz": "narradora",
+   "texto": "Anote cores e tamanhos.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Anote cores e tamanhos."
+  },
+  {
+   "chave": "9b5fa552x",
+   "voz": "narradora",
+   "texto": "Anote o lugar e a ação.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Anote o lugar e a ação."
+  },
+  {
+   "chave": "de6a3aa613",
+   "voz": "narradora",
+   "texto": "Desenhos guardam descobertas.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Desenhos guardam descobertas."
+  },
+  {
+   "chave": "99f5e4fc12",
+   "voz": "narradora",
+   "texto": "Plantas e insetos são vivos.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Plantas e insetos são vivos."
+  },
+  {
+   "chave": "72f3e0a110",
+   "voz": "narradora",
+   "texto": "Fungos e algas também são.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Fungos e algas também são."
+  },
+  {
+   "chave": "6ecd41c111",
+   "voz": "narradora",
+   "texto": "Bactérias também são vivas.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Bactérias também são vivas."
+  },
+  {
+   "chave": "58faae6413",
+   "voz": "narradora",
+   "texto": "São pequenas demais para ver.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "São pequenas demais para ver."
+  },
+  {
+   "chave": "038cb5e914",
+   "voz": "narradora",
+   "texto": "Usamos microscópios para isso.",
+   "pacotes": [
+    "interior-feira"
+   ],
+   "fala": "Usamos microscópios para isso."
   },
   {
    "chave": "f4cabefdt",

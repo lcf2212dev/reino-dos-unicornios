@@ -1,0 +1,212 @@
+/* Feira de Ciências: brincadeiras livres; nenhuma leitura ou escrita de progresso.
+   API pública de dados: salas em ordem c1–c5. topicos referencia o livro de Ciências.
+   Todas as peças representam modelos da feira; não se manipulam animais reais. */
+window.Reino.FeiraCiencias = {
+  salas: [
+    {
+      id: 'jardim', nome: 'Jardim da Vida', chamada: 'Vamos cuidar deste jardim!',
+      emoji: '🌱', cor: '#287b49', clara: '#e1f4d6', selo: 'Semente da Vida', origem: 'c1',
+      missoes: [
+        {
+          id: 'jardim-01', titulo: 'O broto acordou', cena: 'jardim', topicos: ['seres-vivos'],
+          convite: ['O broto está crescendo.', 'Vamos guardar essa mudança!'],
+          dica: ['Observe o broto com calma.', 'Ele mudou desde ontem.'],
+          descoberta: ['O broto é um ser vivo.', 'Ele nasce e cresce.', 'Plantas produzem alimento.', 'Podem gerar novas plantas.', 'Um dia, também morrem.'],
+          opcoes: [{ id: 'pedra', nome: 'Desenhar a pedra', emoji: '⛰' }, { id: 'broto', nome: 'Desenhar o broto', emoji: '🌱' }, { id: 'vaso', nome: 'Desenhar o vaso', emoji: '🎨' }], certa: 'broto',
+        },
+        {
+          id: 'jardim-02', titulo: 'Uma janela de luz', cena: 'jardim', topicos: ['fatores-abioticos'],
+          convite: ['A muda está no escuro.', 'Abra um caminho para a luz!'],
+          dica: ['A água já está no solo.', 'Falta a luz chegar.'],
+          descoberta: ['A luz não é viva.', 'A planta usa a luz.', 'Assim, ela produz alimento.', 'É um fator abiótico.'],
+          opcoes: [{ id: 'janela', nome: 'Abrir a janela', emoji: '☀' }, { id: 'agua', nome: 'Trazer mais água', emoji: '💧' }, { id: 'vaso', nome: 'Trocar o vaso', emoji: '🌱' }], certa: 'janela',
+        },
+        {
+          id: 'jardim-03', titulo: 'A sede do jardim', cena: 'jardim', topicos: ['fatores-abioticos', 'relacoes'],
+          convite: ['O solo está bem seco.', 'Vamos dar água à plantinha!'],
+          dica: ['As raízes estão no solo.', 'Elas precisam de água.'],
+          descoberta: ['As raízes absorvem água.', 'Também absorvem nutrientes.', 'O solo tem partes não vivas.', 'Também abriga seres vivos.', 'Água e ar não são vivos.'],
+          opcoes: [{ id: 'luz', nome: 'Abrir outra janela', emoji: '☀' }, { id: 'pedras', nome: 'Arrumar as pedras', emoji: '⛰' }, { id: 'regar', nome: 'Regar um pouquinho', emoji: '💧' }], certa: 'regar',
+        },
+        {
+          id: 'jardim-04', titulo: 'A horta das formigas', cena: 'jardim', topicos: ['formigueiro', 'seres-vivos'],
+          convite: ['Veja as formigas cortadeiras!', 'Elas carregam folhas juntas.', 'Monte a horta do formigueiro!'],
+          dica: ['O fungo cresce nas folhas.', 'Ele alimenta essas formigas.'],
+          descoberta: ['Cortadeiras cultivam fungos.', 'Usam folhas nesse cultivo.', 'O fungo é seu alimento.', 'O fungo também é vivo.', 'Outras formigas comem grãos.', 'Ou comem pequenos bichos.'],
+          opcoes: [{ id: 'pedras', nome: 'Levar as pedrinhas', emoji: '⛰' }, { id: 'folhas', nome: 'Levar folhas ao fungo', emoji: '🍃' }, { id: 'sementes', nome: 'Levar as sementes', emoji: '🌱' }], certa: 'folhas',
+        },
+        {
+          id: 'jardim-05', titulo: 'O lago em miniatura', cena: 'jardim', topicos: ['seres-vivos', 'fatores-abioticos'],
+          convite: ['Nosso lago ainda está seco.', 'Os peixes são de brinquedo.', 'Prepare a água do cenário!'],
+          dica: ['Pedras fazem parte do lago.', 'Mas peixes vivem na água.'],
+          descoberta: ['Peixes são seres vivos.', 'A água não é viva.', 'O lago reúne os dois.', 'Rochas também não são vivas.', 'O ar ajuda a vida.'],
+          opcoes: [{ id: 'agua', nome: 'Encaixar a peça de água', emoji: '💧' }, { id: 'rochas', nome: 'Encaixar mais rochas', emoji: '⛰' }, { id: 'margem', nome: 'Encaixar a margem', emoji: '🌾' }], certa: 'agua',
+        },
+      ],
+    },
+    {
+      id: 'teia', nome: 'Teia dos Encontros', chamada: 'Vamos ligar estas histórias!',
+      emoji: '🐾', cor: '#98522e', clara: '#ffebce', selo: 'Fio dos Encontros', origem: 'c2',
+      missoes: [
+        {
+          id: 'teia-01', titulo: 'O caminho da onça', cena: 'teia', topicos: ['alimentacao', 'relacoes'],
+          convite: ['A onça busca alimento.', 'Ligue as peças dessa cena!'],
+          dica: ['A onça caça outros animais.', 'Procure a peça do jacaré.'],
+          descoberta: ['A onça pode caçar jacarés.', 'A onça consegue alimento.', 'O jacaré é prejudicado.', 'Esses animais são vivos.', 'São os fatores bióticos.'],
+          opcoes: [{ id: 'fruta', nome: 'Ligar aos frutos', emoji: '🍎' }, { id: 'folha', nome: 'Ligar às folhas', emoji: '🍃' }, { id: 'jacare', nome: 'Ligar ao jacaré', emoji: '🐾' }], certa: 'jacare',
+        },
+        {
+          id: 'teia-02', titulo: 'Folhas mordiscadas', cena: 'teia', topicos: ['alimentacao'],
+          convite: ['O gafanhoto vai se alimentar.', 'Complete a cena da refeição!'],
+          dica: ['Veja a folha mordiscada.', 'Ela pode ser seu alimento.'],
+          descoberta: ['O gafanhoto come folhas.', 'Ele consegue se alimentar.', 'A planta perde essas partes.', 'Ela pode ser prejudicada.'],
+          opcoes: [{ id: 'folha', nome: 'Encaixar a folha', emoji: '🍃' }, { id: 'inseto', nome: 'Encaixar outro inseto', emoji: '🐾' }, { id: 'fruto', nome: 'Encaixar o fruto', emoji: '🍎' }], certa: 'folha',
+        },
+        {
+          id: 'teia-03', titulo: 'Frutos para dois', cena: 'teia', topicos: ['competicao'],
+          convite: ['Bugio e arara buscam frutos.', 'Há poucos nesta palmeira.', 'Amplie a mata de brinquedo!'],
+          dica: ['Os dois comem esses frutos.', 'Mais árvores podem ajudar.'],
+          descoberta: ['Eles disputam o alimento.', 'Essa disputa é competição.', 'Pode faltar comida para um.', 'Mais frutos podem ajudar.'],
+          opcoes: [{ id: 'ninho', nome: 'Colocar mais ninhos', emoji: '🏠' }, { id: 'palmeira', nome: 'Colocar outra palmeira', emoji: '🌳' }, { id: 'pedra', nome: 'Colocar outra pedra', emoji: '⛰' }], certa: 'palmeira',
+        },
+        {
+          id: 'teia-04', titulo: 'O gato se coça', cena: 'teia', topicos: ['prejuizo'],
+          convite: ['O gato da história se coça.', 'Tem pulgas entre os pelos.', 'Escolha um jeito de ajudar!'],
+          dica: ['Só brincar não tira pulgas.', 'Um adulto pode buscar ajuda.'],
+          descoberta: ['Pulgas se alimentam de sangue.', 'O gato sente desconforto.', 'A pulga é beneficiada.', 'O gato é prejudicado.', 'Um veterinário pode ajudar.'],
+          opcoes: [{ id: 'adulto', nome: 'Chamar um adulto', emoji: '🤝' }, { id: 'bola', nome: 'Trazer sua bola', emoji: '⚽' }, { id: 'cama', nome: 'Arrumar sua cama', emoji: '🏠' }], certa: 'adulto',
+        },
+        {
+          id: 'teia-05', titulo: 'Tarefas da colmeia', cena: 'teia', topicos: ['sociedade'],
+          convite: ['Há larvas para cuidar.', 'As coletoras já saíram.', 'Complete a equipe da colmeia!'],
+          dica: ['Cada tarefa ajuda o grupo.', 'As larvas precisam de cuidado.'],
+          descoberta: ['Abelhas cooperam em grupo.', 'Umas cuidam das larvas.', 'Outras buscam alimento.', 'Outras protegem a colmeia.', 'Isso é viver em sociedade.'],
+          opcoes: [{ id: 'guarda', nome: 'Reforçar a entrada', emoji: '🏠' }, { id: 'coletora', nome: 'Enviar mais coletoras', emoji: '🌸' }, { id: 'cuidadora', nome: 'Cuidar das larvas', emoji: '🐝' }], certa: 'cuidadora',
+        },
+      ],
+    },
+    {
+      id: 'parcerias', nome: 'Praça das Parcerias', chamada: 'Vamos acompanhar os encontros!',
+      emoji: '🤝', cor: '#7953a6', clara: '#f0e5fb', selo: 'Laço da Natureza', origem: 'c3',
+      missoes: [
+        {
+          id: 'parcerias-01', titulo: 'Um pouso no búfalo', cena: 'parcerias', topicos: ['ajuda', 'relacoes'],
+          convite: ['Há insetos sobre o búfalo.', 'Um pássaro busca alimento.', 'Junte as peças do encontro!'],
+          dica: ['O pássaro come esses insetos.', 'Veja a pele do búfalo.'],
+          descoberta: ['O pássaro come os insetos.', 'O búfalo fica livre deles.', 'Esse encontro ajuda os dois.', 'Nem todo encontro é assim.'],
+          opcoes: [{ id: 'capim', nome: 'Pousar sobre o capim', emoji: '🌾' }, { id: 'bufalo', nome: 'Pousar sobre o búfalo', emoji: '🤝' }, { id: 'galho', nome: 'Pousar sobre o galho', emoji: '🌳' }], certa: 'bufalo',
+        },
+        {
+          id: 'parcerias-02', titulo: 'Mais um pássaro chegou', cena: 'parcerias', topicos: ['competicao', 'ajuda'],
+          convite: ['Dois pássaros buscam insetos.', 'Aqui há poucos para comer.', 'Abra outra parte do cenário!'],
+          dica: ['Eles buscam a mesma comida.', 'Procure mais insetos por lá.'],
+          descoberta: ['Pássaros podem competir.', 'Mesmo sendo da mesma espécie.', 'Os dois buscam insetos.', 'Mais alimento pode ajudar.'],
+          opcoes: [{ id: 'insetos', nome: 'Abrir área com insetos', emoji: '🐾' }, { id: 'agua', nome: 'Abrir área com água', emoji: '💧' }, { id: 'abrigo', nome: 'Abrir área com ninhos', emoji: '🏠' }], certa: 'insetos',
+        },
+        {
+          id: 'parcerias-03', titulo: 'A visita do beija-flor', cena: 'parcerias', topicos: ['alimentacao', 'seres-vivos'],
+          convite: ['O beija-flor busca néctar.', 'Monte seu jardim de flores!'],
+          dica: ['O néctar fica nas flores.', 'Ele serve de alimento.'],
+          descoberta: ['O néctar é um líquido doce.', 'Fica dentro das flores.', 'O beija-flor se alimenta.', 'Flores e aves são vivas.'],
+          opcoes: [{ id: 'folhas', nome: 'Encaixar mais folhas', emoji: '🍃' }, { id: 'frutos', nome: 'Encaixar mais frutos', emoji: '🍎' }, { id: 'flores', nome: 'Encaixar as flores', emoji: '🌸' }], certa: 'flores',
+        },
+        {
+          id: 'parcerias-04', titulo: 'A turma dos cupins', cena: 'parcerias', topicos: ['sociedade'],
+          convite: ['O grupo de cupins tem tarefas.', 'A equipe vai buscar madeira.', 'Complete o caminho da comida!'],
+          dica: ['Esses cupins comem madeira.', 'O grupo trabalha junto.'],
+          descoberta: ['Cupins vivem em sociedade.', 'Muitos cupins comem madeira.', 'Há cuidado e proteção.', 'Formigas também cooperam.'],
+          opcoes: [{ id: 'madeira', nome: 'Ligar ao tronco caído', emoji: '🌳' }, { id: 'frutos', nome: 'Ligar aos frutos', emoji: '🍎' }, { id: 'flor', nome: 'Ligar às flores', emoji: '🌸' }], certa: 'madeira',
+        },
+        {
+          id: 'parcerias-05', titulo: 'Uma pausa para beber', cena: 'parcerias', topicos: ['fatores-abioticos', 'seres-vivos'],
+          convite: ['O cão da história tem sede.', 'Prepare seu cantinho de água!'],
+          dica: ['Água fresca ajuda o cão.', 'A bola fica para depois.'],
+          descoberta: ['O cão bebe água.', 'Também precisa respirar ar.', 'Água e ar não são vivos.', 'Mas ajudam os seres vivos.', 'A bola não é viva.'],
+          opcoes: [{ id: 'bola', nome: 'Colocar sua bola', emoji: '⚽' }, { id: 'agua', nome: 'Colocar água fresca', emoji: '💧' }, { id: 'sombra', nome: 'Preparar uma sombra', emoji: '🌳' }], certa: 'agua',
+        },
+      ],
+    },
+    {
+      id: 'habitats', nome: 'Viagem pelos Hábitats', chamada: 'Vamos explorar cada ambiente!',
+      emoji: '🌍', cor: '#287e98', clara: '#def3f8', selo: 'Mapa dos Hábitats', origem: 'c4',
+      missoes: [
+        {
+          id: 'habitats-01', titulo: 'Depois da chuva', cena: 'habitats', topicos: ['caatinga', 'habitat'],
+          convite: ['A chuva chegou à Caatinga.', 'Monte a poça temporária!', 'Ela abriga peixes-das-nuvens.'],
+          dica: ['Essa poça dura pouco tempo.', 'Use a peça de água.'],
+          descoberta: ['A Caatinga tem tempos secos.', 'Também tem tempos de chuva.', 'Esses peixes vivem em poças.', 'Esse lugar é seu hábitat.', 'O sagui pula entre galhos.', 'A ave usa a vegetação seca.', 'É o bico-virado-da-caatinga.', 'O tamanduá procura insetos.', 'O tatu-bola busca abrigo.'],
+          opcoes: [{ id: 'arvore', nome: 'Encaixar uma árvore', emoji: '🌳' }, { id: 'areia', nome: 'Encaixar mais areia', emoji: '🏜' }, { id: 'poca', nome: 'Encaixar a poça', emoji: '💧' }], certa: 'poca',
+        },
+        {
+          id: 'habitats-02', titulo: 'Segredos do deserto', cena: 'habitats', topicos: ['muito-quente', 'habitat'],
+          convite: ['O deserto está na vitrine.', 'O cacto guarda água dentro.', 'Abra a janela do seu caule!'],
+          dica: ['O caule é o corpo verde.', 'Ali fica a água guardada.'],
+          descoberta: ['O cacto guarda água no caule.', 'Espinhos no lugar de folhas.', 'Assim, ele perde menos água.', 'O camelo guarda gordura.', 'Ela fica nas corcovas.', 'Essa gordura fornece energia.', 'Não é um tanque de água.'],
+          opcoes: [{ id: 'caule', nome: 'Abrir janela do caule', emoji: '🌱' }, { id: 'solo', nome: 'Abrir janela do solo', emoji: '🏜' }, { id: 'corcova', nome: 'Abrir janela da corcova', emoji: '🐾' }], certa: 'caule',
+        },
+        {
+          id: 'habitats-03', titulo: 'Bem perto do chão', cena: 'habitats', topicos: ['muito-frio', 'habitat'],
+          convite: ['O vento sopra na tundra.', 'Monte as plantas baixinhas!'],
+          dica: ['Perto do chão venta menos.', 'As plantas ficam protegidas.'],
+          descoberta: ['Plantas baixas evitam vento.', 'O urso-polar tem pelos densos.', 'Sua gordura conserva calor.', 'O lobo-do-ártico tem pelos.', 'A cor clara ajuda na neve.', 'Seu pelo grosso guarda calor.'],
+          opcoes: [{ id: 'alto', nome: 'Pôr plantas no alto', emoji: '🌳' }, { id: 'baixo', nome: 'Pôr plantas junto ao chão', emoji: '🌱' }, { id: 'agua', nome: 'Pôr plantas sob a água', emoji: '💧' }], certa: 'baixo',
+        },
+        {
+          id: 'habitats-04', titulo: 'O passeio do aguapé', cena: 'habitats', topicos: ['aquatico', 'habitat'],
+          convite: ['Monte o lago da vitrine!', 'Esta planta flutua na água.'],
+          dica: ['Suas folhas recebem luz.', 'As raízes ficam na água.'],
+          descoberta: ['O aguapé tem ar dentro.', 'Isso ajuda a flutuar.', 'Suas raízes tiram nutrientes.', 'Os nutrientes vêm da água.', 'Peixes nadam com nadadeiras.', 'Brânquias ajudam a respirar.', 'Tiram oxigênio da água.'],
+          opcoes: [{ id: 'fundo', nome: 'Pôr aguapé no fundo', emoji: '🐟' }, { id: 'margem', nome: 'Pôr aguapé na margem seca', emoji: '⛰' }, { id: 'superficie', nome: 'Pôr aguapé na superfície', emoji: '🍃' }], certa: 'superficie',
+        },
+        {
+          id: 'habitats-05', titulo: 'Debaixo da floresta', cena: 'habitats', topicos: ['terrestre', 'habitat'],
+          convite: ['A árvore busca água no solo.', 'Complete o desenho escondido!'],
+          dica: ['As raízes ficam no solo.', 'Elas absorvem água dali.'],
+          descoberta: ['Raízes absorvem nutrientes.', 'Elas também absorvem água.', 'Algumas alcançam mais fundo.', 'Florestas são terrestres.', 'Campos também são terrestres.', 'A onça tem patas fortes.', 'Elas ajudam na caça.'],
+          opcoes: [{ id: 'raizes', nome: 'Encaixar as raízes', emoji: '🌱' }, { id: 'copa', nome: 'Encaixar mais folhas', emoji: '🍃' }, { id: 'flor', nome: 'Encaixar novas flores', emoji: '🌸' }], certa: 'raizes',
+        },
+      ],
+    },
+    {
+      id: 'observatorio', nome: 'Ateliê de Descobertas', chamada: 'Vamos descobrir os detalhes!',
+      emoji: '🔎', cor: '#a54573', clara: '#ffe4ef', selo: 'Olhar de Cientista', origem: 'c5',
+      missoes: [
+        {
+          id: 'observatorio-01', titulo: 'Nadadeiras em ação', cena: 'observatorio', topicos: ['adaptacoes'],
+          convite: ['A tartaruga marinha vai nadar.', 'Mova a peça que a impulsiona!'],
+          dica: ['Ela usa suas nadadeiras.', 'O casco serve de proteção.'],
+          descoberta: ['As nadadeiras ajudam a nadar.', 'O casco protege seu corpo.', 'Ela respira fora da água.', 'São jeitos de viver no mar.'],
+          opcoes: [{ id: 'casco', nome: 'Mover a peça do casco', emoji: '🐢' }, { id: 'nadadeiras', nome: 'Mover as nadadeiras', emoji: '🌊' }, { id: 'cabeca', nome: 'Mover a peça da cabeça', emoji: '🔎' }], certa: 'nadadeiras',
+        },
+        {
+          id: 'observatorio-02', titulo: 'Um abraço no galho', cena: 'observatorio', topicos: ['adaptacoes'],
+          convite: ['A preguiça está no galho.', 'Aproxime a lupa das garras!'],
+          dica: ['As garras seguram os galhos.', 'Veja onde ela se pendura.'],
+          descoberta: ['A preguiça tem garras longas.', 'Elas ajudam a se pendurar.', 'Seu corpo vive entre árvores.', 'Isso é uma adaptação.'],
+          opcoes: [{ id: 'garras', nome: 'Observar suas garras', emoji: '🔎' }, { id: 'pelos', nome: 'Observar seus pelos', emoji: '🔎' }, { id: 'folhas', nome: 'Observar as folhas', emoji: '🍃' }], certa: 'garras',
+        },
+        {
+          id: 'observatorio-03', titulo: 'Uma toca fresquinha', cena: 'observatorio', topicos: ['muito-quente', 'adaptacoes'],
+          convite: ['O feneco busca abrigo.', 'Abra a toca do cenário!'],
+          dica: ['Ele cava tocas no solo.', 'Na toca, fica longe do calor.'],
+          descoberta: ['A toca protege do calor.', 'O feneco tem orelhas grandes.', 'Elas ajudam a liberar calor.', 'Veja o lagarto-de-colar.', 'Suas escamas protegem o corpo.', 'Elas reduzem a perda de água.', 'Pernas fortes ajudam a correr.'],
+          opcoes: [{ id: 'lago', nome: 'Abrir caminho ao lago', emoji: '🌊' }, { id: 'galho', nome: 'Abrir caminho ao galho', emoji: '🌳' }, { id: 'toca', nome: 'Abrir caminho à toca', emoji: '🏠' }], certa: 'toca',
+        },
+        {
+          id: 'observatorio-04', titulo: 'O mergulho do pinguim', cena: 'observatorio', topicos: ['adaptacoes', 'muito-frio'],
+          convite: ['O pinguim voltou do mergulho.', 'Veja sua proteção na água!'],
+          dica: ['As penas protegem seu corpo.', 'A água não entra facilmente.'],
+          descoberta: ['As penas barram a água.', 'A gordura conserva calor.', 'Isso ajuda no mar frio.', 'Cada corpo tem adaptações.'],
+          opcoes: [{ id: 'penas', nome: 'Ampliar a camada de penas', emoji: '🐧' }, { id: 'bico', nome: 'Ampliar a ponta do bico', emoji: '🔎' }, { id: 'pes', nome: 'Ampliar a marca dos pés', emoji: '🐾' }], certa: 'penas',
+        },
+        {
+          id: 'observatorio-05', titulo: 'O caderno da descoberta', cena: 'observatorio', topicos: ['observar', 'seres-vivos'],
+          convite: ['Uma joaninha pousou na folha.', 'Ela é pequena e vermelha.', 'Guarde o que você observou!'],
+          dica: ['Desenhe sua cor e tamanho.', 'Mostre onde ela pousou.'],
+          descoberta: ['Observar pede muita atenção.', 'Anote cores e tamanhos.', 'Anote o lugar e a ação.', 'Desenhos guardam descobertas.', 'Plantas e insetos são vivos.', 'Fungos e algas também são.', 'Bactérias também são vivas.', 'São pequenas demais para ver.', 'Usamos microscópios para isso.'],
+          opcoes: [{ id: 'imaginar', nome: 'Inventar uma aventura', emoji: '✨' }, { id: 'registrar', nome: 'Desenhar o que viu', emoji: '🎨' }, { id: 'decorar', nome: 'Enfeitar a capa', emoji: '🌸' }], certa: 'registrar',
+        },
+      ],
+    },
+  ],
+};
