@@ -1,21 +1,8 @@
-/* Manifesto do jogo: a ÚNICA lista dos arquivos que o jogo carrega, na ordem de carga.
-   Arquivo novo = uma linha aqui + `node ferramentas/gerar-index.js` (npm run index), que
-   reescreve o index.html. `node ferramentas/gerar-index.js --conferir` acusa index.html
-   desatualizado, arquivo que não existe e .js em js/ que ficou fora daqui.
-
-   Formato (dados puros, sem DOM; funciona no Node e no navegador):
-   - css: folhas de estilo, na ordem da cascata (css/ é plano: sem subpastas).
-   - scripts: um por linha, na ordem em que o navegador carrega (a ordem importa: cada
-     arquivo usa o que os de cima registraram em window.Reino).
-       js     caminho a partir de jogo/
-       grupo  área do arquivo (nucleo, arte, icones, pixelart, conteudo, materias, provas, personagens,
-              sistemas, mundo, atividades, ui, motor, interiores, debug); as ferramentas
-              escolhem os arquivos por grupo
-       node   true = roda num vm do Node sem DOM (as ferramentas dão só console, relógio,
-              timers e, nos testes, um localStorage/document de mentira). É o que
-              ferramentas/jogo-no-node.js carrega para listar falas, validar e testar.
-   js/voz/*.js não entra: são pacotes de áudio gerados, carregados sob demanda por Voz.carregar.
-   O index.html não carrega este arquivo; se carregado, ele fica em Reino.MANIFESTO. */
+/* Manifesto: lista única de CSS e scripts, na ordem de carga (npm run index gera index.html).
+   Formato: css = caminhos de jogo/css; scripts = { js, grupo, node? }.
+   node:true permite avaliação no Node sem DOM; grupo seleciona scripts por área nas ferramentas.
+   Pacotes js/voz/*.js ficam fora e carregam sob demanda. Sem DOM no carregamento.
+   Regras completas: jogo/js/CLAUDE.md e docs/decisoes/manifesto-unico.md. */
 (function () {
   var MANIFESTO = {
     css: [
@@ -25,6 +12,7 @@
       'css/ui-missao.css',
       'css/ui-prova.css',
       'css/ui-paineis.css',
+      'css/ui-feira.css',
       'css/ui-animacoes.css',
       'css/ui-desafios.css',
       'css/interiores.css',
@@ -222,6 +210,7 @@
       { js: 'js/ui/et-desafio.js', grupo: 'ui' },
       { js: 'js/ui/album-ets.js', grupo: 'ui' },
       { js: 'js/ui/materia.js', grupo: 'ui' },
+      { js: 'js/ui/feira.js', grupo: 'ui' },
       { js: 'js/ui/bau.js', grupo: 'ui' },
       { js: 'js/ui/loja.js', grupo: 'ui' },
       { js: 'js/ui/estabulo.js', grupo: 'ui' },
@@ -401,6 +390,15 @@
       { js: 'js/interiores/quimica/curiosidade.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/quimica/fora.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/quimica/lugar.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/feira/dados.js', grupo: 'interiores', node: true },
+      { js: 'js/ui/feira-cenas.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/feira/falas.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/feira/objetos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/feira/objetos-natureza.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/feira/acoes.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/feira/feira.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/feira/fora.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/feira/lugar.js', grupo: 'interiores', node: true },
       // padrao.js por último entre os prédios: monta o interior das matérias que não têm um próprio
       { js: 'js/interiores/padrao.js', grupo: 'interiores', node: true },
       { js: 'js/sistemas/banho.js', grupo: 'sistemas' },
