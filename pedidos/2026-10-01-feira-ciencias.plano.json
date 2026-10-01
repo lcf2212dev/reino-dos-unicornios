@@ -1,0 +1,143 @@
+{
+  "nome": "feira-ciencias",
+  "pedido": "pedidos/2026-10-01-feira-ciencias.md",
+  "personagens": [],
+  "tarefas": [
+    {
+      "id": "contrato",
+      "tipo": "contrato",
+      "titulo": "contrato",
+      "quem": "orquestrador",
+      "depende": [],
+      "arquivos": [
+        "docs/contratos/feira-ciencias.md",
+        "jogo/js/manifesto.js",
+        "jogo/index.html",
+        "jogo/js/interiores/feira/lugar.js"
+      ],
+      "worktree": "feira-ciencias",
+      "pronto": [
+        "Contrato docs/contratos/feira-ciencias.md cumprido"
+      ]
+    },
+    {
+      "id": "conteudo",
+      "tipo": "conteudo",
+      "titulo": "conteudo",
+      "quem": "worker-low",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/interiores/feira/dados.js",
+        "jogo/js/interiores/feira/falas.js"
+      ],
+      "worktree": "feira-conteudo",
+      "pronto": [
+        "Contrato docs/contratos/feira-ciencias.md cumprido"
+      ]
+    },
+    {
+      "id": "arte",
+      "tipo": "arte",
+      "titulo": "arte",
+      "quem": "worker-low",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/interiores/feira/objetos.js",
+        "jogo/js/interiores/feira/objetos-natureza.js",
+        "jogo/js/interiores/feira/fora.js",
+        "jogo/js/ui/feira-cenas.js"
+      ],
+      "worktree": "feira-arte",
+      "pronto": [
+        "Contrato docs/contratos/feira-ciencias.md cumprido"
+      ]
+    },
+    {
+      "id": "telas",
+      "tipo": "mecanica",
+      "titulo": "telas",
+      "quem": "worker-low",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/ui/feira.js",
+        "jogo/css/ui-feira.css",
+        "jogo/js/interiores/feira/acoes.js"
+      ],
+      "worktree": "feira-telas",
+      "pronto": [
+        "Contrato docs/contratos/feira-ciencias.md cumprido"
+      ]
+    },
+    {
+      "id": "cenario",
+      "tipo": "cenario",
+      "titulo": "cenario",
+      "quem": "orquestrador",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/interiores/feira/feira.js"
+      ],
+      "worktree": "feira-ciencias",
+      "pronto": [
+        "Contrato docs/contratos/feira-ciencias.md cumprido"
+      ]
+    },
+    {
+      "id": "vozes",
+      "tipo": "vozes",
+      "titulo": "vozes",
+      "quem": "orquestrador",
+      "depende": [
+        "conteudo",
+        "cenario"
+      ],
+      "arquivos": [
+        "jogo/js/voz/interior-feira.js"
+      ],
+      "worktree": "feira-ciencias",
+      "pronto": [
+        "Contrato docs/contratos/feira-ciencias.md cumprido"
+      ]
+    },
+    {
+      "id": "integracao",
+      "tipo": "integracao",
+      "titulo": "integracao",
+      "quem": "orquestrador",
+      "depende": [
+        "conteudo",
+        "arte",
+        "telas",
+        "cenario",
+        "vozes"
+      ],
+      "arquivos": [],
+      "worktree": "feira-ciencias",
+      "pronto": [
+        "Contrato docs/contratos/feira-ciencias.md cumprido"
+      ]
+    },
+    {
+      "id": "entrega",
+      "tipo": "entrega",
+      "titulo": "entrega",
+      "quem": "orquestrador",
+      "depende": [
+        "integracao"
+      ],
+      "arquivos": [],
+      "worktree": "feira-ciencias",
+      "pronto": [
+        "Contrato docs/contratos/feira-ciencias.md cumprido"
+      ]
+    }
+  ]
+}
