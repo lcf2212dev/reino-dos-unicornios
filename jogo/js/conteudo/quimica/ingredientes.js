@@ -1,7 +1,8 @@
-/* Laboratório de Química: os 12 tubos da bancada (Reino.QUIMICA.ingredientes). Contrato: docs/contratos/quimica.md §3.
-   id (usado pelas receitas), nome (no tubo), cor (o líquido ou o pó no desenho), tipo: 'liquido' | 'po',
-   fala: dita pela Doutora Proveta quando ela toca no tubo (até 30 letras, 3+ palavras). Só coisas de cozinha e
-   farmácia: na vida real, experimento só com um adulto. */
+/* Laboratório de Química: os produtos da bancada (Reino.QUIMICA.ingredientes). Contrato: docs/contratos/quimica.md §3.
+   id (usado pelas receitas), nome (no tubo), cor (o líquido ou o pó no desenho), tipo: 'liquido' | 'po' | 'gas', grupo (casa por padrão), formula e forma opcionais,
+   fala: dita pela Doutora Proveta quando ela toca no tubo (até 30 letras, 3+ palavras). Produtos em soluções, pós e gases para uma simulação, sem quantidades ou instruções de preparo.
+   As cores dos gases identificam partículas no modelo: esses gases são incolores.
+   Fontes: https://periodic-table.rsc.org/element/1/ e /element/2/Helium; reações em receitas.js. */
 (function () {
   var Q = window.Reino.QUIMICA = window.Reino.QUIMICA || {};
   Q.ingredientes = [
@@ -17,5 +18,46 @@
     { id: 'fermento', nome: 'Fermento', cor: '#d9b98a', tipo: 'po', fala: 'Fermento de fazer pão.' },
     { id: 'oxigenada', nome: 'Água oxigenada', cor: '#e8f6ff', tipo: 'liquido', fala: 'Água oxigenada, com cuidado!' },
     { id: 'leite', nome: 'Leite', cor: '#fffaf0', tipo: 'liquido', fala: 'Leite, cheio de gordurinha.' },
+
+    { id: 'cloreto-ferrico', nome: 'Cloreto férrico', cor: '#dba644', tipo: 'liquido', grupo: 'reagentes',
+      formula: 'FeCl₃', forma: 'Solução', fala: 'É o cloreto férrico.' },
+    { id: 'tiocianato-potassio', nome: 'Tiocianato de potássio', cor: '#e8f6ff', tipo: 'liquido', grupo: 'reagentes',
+      formula: 'KSCN', forma: 'Solução', fala: 'O tiocianato é um sal.' },
+    { id: 'sulfato-cobre', nome: 'Sulfato de cobre', cor: '#4099df', tipo: 'po', grupo: 'reagentes',
+      formula: 'CuSO₄·5H₂O', forma: 'Cristais', fala: 'O sulfato de cobre é azul.' },
+    { id: 'sulfato-magnesio', nome: 'Sulfato de magnésio', cor: '#f3f0ff', tipo: 'po', grupo: 'reagentes',
+      formula: 'MgSO₄·7H₂O', forma: 'Cristais', fala: 'É um sal de magnésio.' },
+    { id: 'cloreto-calcio', nome: 'Cloreto de cálcio', cor: '#ecf6ff', tipo: 'liquido', grupo: 'reagentes',
+      formula: 'CaCl₂', forma: 'Solução', fala: 'É o cloreto de cálcio.' },
+    { id: 'carbonato-sodio', nome: 'Carbonato de sódio', cor: '#e6f2ff', tipo: 'liquido', grupo: 'reagentes',
+      formula: 'Na₂CO₃', forma: 'Solução', fala: 'É o carbonato de sódio.' },
+    { id: 'acido-citrico', nome: 'Ácido cítrico', cor: '#fffbd9', tipo: 'po', grupo: 'reagentes',
+      formula: 'C₆H₈O₇', forma: 'Cristais', fala: 'O limão tem ácido cítrico.' },
+    { id: 'amido', nome: 'Amido', cor: '#fffaf3', tipo: 'po', grupo: 'reagentes',
+      formula: '(C₆H₁₀O₅)ₙ', forma: 'Pó', fala: 'O amido vem das plantas.' },
+    { id: 'iodo', nome: 'Iodo', cor: '#a06c34', tipo: 'liquido', grupo: 'reagentes',
+      formula: 'I₂', forma: 'Solução', fala: 'O iodo revela o amido.' },
+    { id: 'acucar', nome: 'Açúcar', cor: '#fff4e5', tipo: 'po', grupo: 'reagentes',
+      formula: 'C₁₂H₂₂O₁₁', forma: 'Cristais', fala: 'O açúcar forma cristais.' },
+    { id: 'ferro', nome: 'Ferro', cor: '#868b97', tipo: 'po', grupo: 'elementos',
+      formula: 'Fe', forma: 'Limalha', fala: 'O ferro é um metal.' },
+    { id: 'cobre', nome: 'Cobre', cor: '#c98258', tipo: 'po', grupo: 'elementos',
+      formula: 'Cu', forma: 'Metal em pó', fala: 'O cobre conduz eletricidade.' },
+    { id: 'aluminio', nome: 'Alumínio', cor: '#ced8e0', tipo: 'po', grupo: 'elementos',
+      formula: 'Al', forma: 'Metal em pó', fala: 'O alumínio é bem leve.' },
+    { id: 'zinco', nome: 'Zinco', cor: '#a7b9c7', tipo: 'po', grupo: 'elementos',
+      formula: 'Zn', forma: 'Metal em pó', fala: 'O zinco protege o ferro.' },
+    { id: 'carbono', nome: 'Carbono', cor: '#494858', tipo: 'po', grupo: 'elementos',
+      formula: 'C', forma: 'Grafite em pó', fala: 'A grafite contém carbono.' },
+    { id: 'hidrogenio', nome: 'Hidrogênio', cor: '#eb9bbb', tipo: 'gas', grupo: 'gases',
+      formula: 'H₂', forma: 'Gás', fala: 'O hidrogênio é o mais leve.' },
+    { id: 'oxigenio', nome: 'Oxigênio', cor: '#8dbbdd', tipo: 'gas', grupo: 'gases',
+      formula: 'O₂', forma: 'Gás', fala: 'Respiramos o gás oxigênio.' },
+    { id: 'nitrogenio', nome: 'Nitrogênio', cor: '#b4a0d5', tipo: 'gas', grupo: 'gases',
+      formula: 'N₂', forma: 'Gás', fala: 'O ar tem muito nitrogênio.' },
+    { id: 'helio', nome: 'Hélio', cor: '#e2bd64', tipo: 'gas', grupo: 'gases',
+      formula: 'He', forma: 'Gás', fala: 'O hélio quase não reage.' },
+    { id: 'gas-carbonico', nome: 'Gás carbônico', cor: '#91bba4', tipo: 'gas', grupo: 'gases',
+      formula: 'CO₂', forma: 'Gás', fala: 'É o gás das bebidas com gás.' },
   ];
 })();

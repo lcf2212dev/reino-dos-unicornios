@@ -1,7 +1,7 @@
 /* Laboratório de Química, a bancada, parte 1 de 3: o palco (o canvas da bancada, 160×96 px de arte): o fundo, o
    béquer com as camadas, os tubos de ensaio (em pé e inclinados), o despejar e o laço de animação.
    Cria o interno Reino._quimicaPalco (docs/contratos/quimica.md §2), que guarda: W, H, BEQ (a geometria do béquer),
-   MESA, EFEITOS (efeito → { dur, sons: [[ms, som]], som, desenhar(ctx, t, info) }; quimica-palco-2.js registra os 9
+   MESA, EFEITOS (efeito → { dur, sons: [[ms, som]], som, desenhar(ctx, t, info) }; quimica-palco-2.js registra as reações
    e o 'nada'), os helpers de desenho que os efeitos usam e criar(canvas) (o palco de uma tela aberta).
    Quem usa: quimica-palco-2.js e quimica-bancada.js. Pixel art (ui.md §10): só retângulos e os círculos de pixel do
    Reino.Desenho; sem arc, degradê nem blur. Sem animação (Reino.util.animar() falso): nada de rAF, só o quadro final. */
@@ -97,14 +97,25 @@
       }
     }
   }
+  // Partículas do modelo, espalhadas por todo o espaço; cor simbólica, sem nível de líquido.
+  function gas(ctx, x, y, w, h, cor, passo) {
+    for (var i = 0; i < 14; i++) {
+      var px = x + 2 + ((i * 11 + passo) % Math.max(1, w - 4));
+      var py = y + ((i * 7 + passo) % Math.max(1, h - 1));
+      ret(ctx, px, py, 2, 1, cor);
+    }
+  }
   // as camadas de baixo para cima: [{ cor, tipo, h }]
   function camadas(ctx, lista, x0) {
     var y = BEQ.fundo + 1;
     lista.forEach(function (c, i) {
-      if (!c.h) return;
+      if (!c.h || c.tipo === 'gas') return;
       y -= c.h;
       if (c.tipo === 'po') po(ctx, x0, y, BEQ.dentroW, c.h, c.cor, i + 1);
       else liquido(ctx, x0, y, BEQ.dentroW, c.h, c.cor);
+    });
+    lista.filter(function (c) { return c.tipo === 'gas'; }).forEach(function (c, i) {
+      gas(ctx, x0, BEQ.topo + 3, BEQ.dentroW, Math.max(1, y - BEQ.topo - 4), c.cor, i * 7);
     });
     return y;   // o topo do que tem dentro
   }
@@ -166,7 +177,8 @@
         var dentro = y < 2 ? true : y < TH - 2 ? (x >= 1 && x <= 6) : y === TH - 2 ? (x >= 2 && x <= 5) : (x >= 3 && x <= 4);
         if (!dentro) { g[y].push(null); continue; }
         var cor = y === 0 ? BRANCO : VIDRO_TUBO;
-        var cheia = naBoca ? (y >= 2 && y < 2 + n) : (y >= TH - n && n > 0);
+        var cheia = ing.tipo !== 'gas' && (naBoca ? (y >= 2 && y < 2 + n) : (y >= TH - n && n > 0));
+        if (ing.tipo === 'gas' && y > 2 && y < TH - 2 && x > 2 && (x + y * 3) % 7 === 0) cor = ing.cor;
         if (cheia) {
           var topo = naBoca ? 2 + n - 1 : TH - n;
           cor = ing.cor;
@@ -232,6 +244,7 @@
     tubo(ctx, ing, q[1], q[2], q[3], 1 - p, q[1] > 90);
     if (!jorrando) return;
     var bx = q[2], by = q[3] + 1, passo = Math.floor(t / 40);
+    if (ing.tipo === 'gas') { gas(ctx, 66, 22, 28, 24, ing.cor, passo); return; }
     if (ing.tipo === 'po') {
       for (var k = 0; k < 12; k++) {
         var y = by + ((k * 7 + passo * 3) % Math.max(1, ySup - by));
@@ -332,6 +345,6 @@
     return palco;
   };
 
-  Object.assign(P, { fundo: fundo, bequer: bequer, liquido: liquido, po: po, camadas: camadas, espuma: espuma, bolha: bolha,
+  Object.assign(P, { fundo: fundo, bequer: bequer, gas: gas, liquido: liquido, po: po, camadas: camadas, espuma: espuma, bolha: bolha,
     brilho: brilho, confete: confete, fumaca: fumaca, media: media, tubo: tubo, quadro: quadro, infoDe: infoDe });
 })();

@@ -40,10 +40,12 @@ Cada tela é um painel DOM (`UI.painel`, `docs/contratos/ui.md`), aberto na hora
 
 ## 3. Dados (`Reino.QUIMICA`, `jogo/js/conteudo/quimica/`)
 Todos `node: true`, só dados (sem DOM). Formato no comentário de cada arquivo:
-- `ingredientes`: `{ id, nome, cor, tipo: 'liquido' | 'po', fala }` (12 tubos).
+- `ingredientes`: `{ id, nome, cor, tipo: 'liquido' | 'po' | 'gas', fala, grupo?, formula?, forma? }`.
+  Grupos: `casa` (padrão), `reagentes`, `elementos`, `gases`; filtros preservam os produtos no béquer.
+  `forma` distingue soluções, cristais e pós. As cores dos gases são simbólicas e as partículas ocupam o espaço.
 - `receitas`: `{ id, ordem, inicial?, nome, emoji, ingredientes: [2 ou 3 ids], efeito, cor, cor2?, acontece, explica, dica }`.
   Efeitos (a bancada desenha cada um): `explosao`, `vulcao`, `cor`, `espuma-gigante`, `dissolver`, `camadas`,
-  `gotas`, `redemoinho`, `bolhas`. A 1ª (`pof`, vinagre + bicarbonato) é `inicial`: já vem escrita no caderno.
+  `gotas`, `redemoinho`, `bolhas`, `precipitado`, `deposito`, `efervescencia`, `gases`. A 1ª (`pof`, vinagre + bicarbonato) é `inicial`: já vem escrita no caderno.
   Nenhum conjunto de ingredientes se repete entre receitas.
 - `elementos`: cartões `{ z, simbolo, nome, familia, onde, curiosidade }` (1 a 20, 26, 29, 47, 79);
   `familias`: `{ <id>: { nome, cor } }`; `tabela`: as 118 casas `{ z, simbolo, familia, linha, coluna }`.

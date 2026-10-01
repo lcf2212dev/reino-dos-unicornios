@@ -1,7 +1,7 @@
 /* Laboratório de Química: as receitas do caderno (Reino.QUIMICA.receitas). Contrato: docs/contratos/quimica.md §3.
    id, ordem (no caderno), inicial (já vem escrita no caderno), nome, emoji (com pixel art), ingredientes (ids de
    ingredientes.js; a ordem não importa; 2 ou 3), efeito (a animação da bancada: 'explosao' | 'vulcao' | 'cor' |
-   'espuma-gigante' | 'dissolver' | 'camadas' | 'gotas' | 'redemoinho' | 'bolhas'), cor (o líquido no fim), cor2 (a
+   'espuma-gigante' | 'dissolver' | 'camadas' | 'gotas' | 'redemoinho' | 'bolhas' | 'precipitado' | 'deposito' | 'efervescencia' | 'gases'), cor (o líquido no fim), cor2 (a
    2ª cor, quando o efeito tem duas), acontece (1 página: o que ela viu), explica (páginas: por que aconteceu),
    dica (1 página: a adivinha do caderno enquanto é segredo). Cada página até 30 letras, 3+ palavras. */
 (function () {
@@ -67,5 +67,67 @@
       explica: ['O sabão deixa a água elástica.', 'Ela vira uma película fina.', 'A película prende o ar.',
         'Dentro da bolha tem ar.'],
       dica: 'Duas coisas de lavar louça.' },
+    // Fontes das novas descobertas (representações virtuais, sem preparo ou quantidades):
+    // Fe/tiocianato: https://sciencedemonstrations.fas.harvard.edu/presentations/equilibrium-iron-iii-thiocyanate
+    // Iodo/amido: https://www.acs.org/middleschoolchemistry/lessonplans/chapter6/lesson6.html
+    // Precipitado: https://www.colorado.edu/lab/lecture-demo-manual/general-reactions/s130-chemical-rxns-precipitation-cacl2-na2co3-caco3
+    // Cítrico: https://www.acs.org/education/activities/the-secret-science-of-self-inflating-balloons.html
+    // Deslocamento: https://edu.rsc.org/experiments/displacement-reactions-between-metals-and-their-salts/720.article
+    // Gases: https://periodic-table.rsc.org/element/1/ e /element/2/Helium
+    { id: 'vermelho-ferrico', ordem: 11, nome: 'Vermelho de laboratório', emoji: '🧪',
+      ingredientes: ['cloreto-ferrico', 'tiocianato-potassio'], efeito: 'cor', cor: '#b82f42', cor2: '#dba644',
+      acontece: 'A mistura ficou vermelha!',
+      explica: ['O cloreto traz íons de ferro.', 'São partes com carga elétrica.', 'Eles se ligam ao tiocianato.', 'Essa união tem cor vermelha.'],
+      dica: 'Um sal de ferro e tiocianato.' },
+    { id: 'amido-azul', ordem: 12, nome: 'O detetive do amido', emoji: '🔬',
+      ingredientes: ['amido', 'iodo'], efeito: 'cor', cor: '#302757', cor2: '#a06c34',
+      acontece: 'O amido ficou azul-escuro!',
+      explica: ['O amido tem longas cadeias.', 'O iodo se encaixa nelas.', 'A união ganha uma cor escura.', 'Assim podemos achar amido.'],
+      dica: 'Iodo e um pó das plantas.' },
+    { id: 'sal-azul', ordem: 13, nome: 'Cristais azuis na água', emoji: '💎',
+      ingredientes: ['agua', 'sulfato-cobre'], efeito: 'dissolver', cor: '#4099df', cor2: '#70b7ef',
+      acontece: 'A água ficou azul!',
+      explica: ['O sal se dissolve na água.', 'Seus íons ficam espalhados.', 'Os íons de cobre dão a cor.'],
+      dica: 'Água e os cristais azuis.' },
+    { id: 'sal-magnesio', ordem: 14, nome: 'O sal que se espalha', emoji: '🧪',
+      ingredientes: ['agua', 'sulfato-magnesio'], efeito: 'dissolver', cor: '#d4eaff', cor2: '#f3f0ff',
+      acontece: 'Os cristais se dissolveram!',
+      explica: ['A água separa os íons do sal.', 'Eles ficam bem espalhados.', 'O sal continua ali dentro.'],
+      dica: 'Água e um sal de magnésio.' },
+    { id: 'neve-calcario', ordem: 15, nome: 'Neve no béquer', emoji: '❄️',
+      ingredientes: ['cloreto-calcio', 'carbonato-sodio'], efeito: 'precipitado', cor: '#d9edfa', cor2: '#ffffff',
+      acontece: 'Surgiu um sólido branquinho!',
+      explica: ['Os sais já estavam na água.', 'Seus íons se juntaram.', 'Formaram carbonato de cálcio.', 'Ele quase não dissolve.', 'Esse sólido é um precipitado.'],
+      dica: 'Um cloreto e um carbonato.' },
+    { id: 'citrico-bolhas', ordem: 16, nome: 'Bolhinhas cítricas', emoji: '🫧',
+      ingredientes: ['agua', 'acido-citrico', 'bicarbonato'], efeito: 'efervescencia', cor: '#dbf0ef', cor2: '#ffffff',
+      acontece: 'A mistura liberou um gás!',
+      explica: ['Na água, o ácido se dissolve.', 'Reage com o bicarbonato.', 'A reação solta gás carbônico.', 'É ele que faz as bolhinhas.'],
+      dica: 'Água, ácido cítrico e base.' },
+    { id: 'acucar-agua', ordem: 17, nome: 'Açúcar invisível', emoji: '💎',
+      ingredientes: ['agua', 'acucar'], efeito: 'dissolver', cor: '#d4eaff', cor2: '#fff4e5',
+      acontece: 'O açúcar se dissolveu!',
+      explica: ['As moléculas se espalham.', 'Ficam entre as da água.', 'O açúcar continua na mistura.'],
+      dica: 'Água e os cristais doces.' },
+    { id: 'cobre-novo', ordem: 18, nome: 'Cobre aparecendo', emoji: '🧪',
+      ingredientes: ['agua', 'sulfato-cobre', 'ferro'], efeito: 'deposito', cor: '#bad2b6', cor2: '#c98258',
+      acontece: 'O ferro ganhou uma capa!',
+      explica: ['O sal se dissolve na água.', 'O ferro entra na reação.', 'Parte dele vira íons.', 'Íons de cobre viram metal.', 'O cobre recobre o ferro.'],
+      dica: 'Água, sal azul e ferro.' },
+    { id: 'mistura-ar', ordem: 19, nome: 'Os principais gases do ar', emoji: '🫧',
+      ingredientes: ['nitrogenio', 'oxigenio'], efeito: 'gases', cor: '#b4a0d5', cor2: '#8dbbdd',
+      acontece: 'Os gases ficaram misturados!',
+      explica: ['O ar tem muito nitrogênio.', 'Também tem gás oxigênio.', 'Há outros gases no ar.', 'O argônio é um deles.', 'Misturar não é sempre reagir.'],
+      dica: 'Os principais gases do ar.' },
+    { id: 'gases-estrelas', ordem: 20, nome: 'Gases das estrelas', emoji: '✨',
+      ingredientes: ['hidrogenio', 'helio'], efeito: 'gases', cor: '#eb9bbb', cor2: '#e2bd64',
+      acontece: 'São dois gases bem leves!',
+      explica: ['Estrelas têm muito hidrogênio.', 'Também têm bastante hélio.', 'Aqui eles só se misturam.', 'Não criamos uma estrela!'],
+      dica: 'Hidrogênio e outro gás leve.' },
+    { id: 'agua-gas', ordem: 21, nome: 'Gás dentro da água', emoji: '🫧',
+      ingredientes: ['agua', 'gas-carbonico'], efeito: 'efervescencia', cor: '#b6dce8', cor2: '#ffffff',
+      acontece: 'Parte do gás ficou na água!',
+      explica: ['O gás pode entrar na água.', 'Uma parte se dissolve.', 'Outra parte sai em bolhas.', 'É o gás das bebidas com gás.'],
+      dica: 'Água e o gás das bebidas.' },
   ];
 })();

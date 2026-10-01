@@ -1,7 +1,7 @@
 /* Laboratório de Química: a bancada de misturas (UI.telaQuimicaBancada, js/ui/quimica-bancada.js): o palco (canvas do
-   béquer em ampliação inteira e par, 2 ou 4 px por pixel de arte), a fala da Doutora Proveta, a prateleira com os 12
-   tubos, o cartão do resultado e o rodapé. Celular e tablet em coluna; tela baixa e larga (notebook) em 2 colunas
-   (ui.md §10.21.2). touch-action: none só na prateleira e no palco (o tubo se arrasta até o béquer). */
+   béquer em ampliação inteira e par, 2 ou 4 px por pixel de arte), a fala da Doutora Proveta, as prateleiras de
+   produtos, o cartão do resultado e o rodapé. Celular e tablet em coluna; tela baixa e larga (notebook) em 2 colunas
+   (ui.md §10.21.2). Arraste pelo desenho do tubo; os rótulos permitem rolar a prateleira com o dedo. */
 .tela-quimica-bancada .painel-conteudo { padding: 12px 16px 14px; }
 .bancada { display: flex; flex-direction: column; gap: 10px; }
 .bancada-esq, .bancada-dir { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
@@ -24,24 +24,34 @@
 .bancada-fala { min-height: calc(2 * 1.5 * var(--texto)); font-size: var(--texto); line-height: var(--entrelinha); }
 .bancada-fala:empty { min-height: 0; }
 
-/* ---------- a prateleira ---------- */
+/* ---------- filtros e prateleira ---------- */
+.bancada-filtros { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+.bancada-filtro {
+  min-width: 0; min-height: 44px; padding: 6px 4px; font: inherit; font-size: var(--texto-aux);
+  color: var(--tinta); background: var(--papel); border: var(--borda-fina) solid var(--borda); cursor: pointer;
+}
+.bancada-filtro[aria-pressed="true"] { background: var(--laranja-claro); box-shadow: var(--sombra-pequena); --degrau: 2px; }
+.bancada-nota { font-size: var(--texto-aux); line-height: var(--entrelinha); }
+.bancada-tubo-formula { font-family: sans-serif; font-size: var(--texto); overflow-wrap: anywhere; }
+.bancada-tubo-forma { font-size: var(--texto-aux); line-height: 1.5; }
+
 .bancada-prateleira {
   display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; padding: 8px;
   border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
   background: linear-gradient(var(--ambar-claro) 0 calc(100% - 8px), var(--ambar) calc(100% - 8px));
-  touch-action: none;
+  touch-action: pan-y;
 }
-.bancada-prateleira[hidden], .bancada-resultado[hidden] { display: none; }
+.bancada-filtros[hidden], .bancada-nota[hidden], .bancada-tubo[hidden], .bancada-prateleira[hidden], .bancada-resultado[hidden] { display: none; }
 .bancada-tubo {
   display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 4px; min-width: 0; padding: 6px 4px;
   border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel);
   box-shadow: var(--sombra-pequena); --degrau: 2px;
   font: inherit; font-size: var(--texto-aux); line-height: var(--entrelinha-titulo); color: var(--tinta);
-  cursor: pointer; touch-action: none; user-select: none; -webkit-user-select: none;
+  cursor: pointer; touch-action: pan-y; user-select: none; -webkit-user-select: none;
 }
 .bancada-tubo.no-bequer { background: var(--laranja-claro); }
-.bancada-tubo-desenho { flex: none; width: 24px; height: 36px; image-rendering: pixelated; image-rendering: crisp-edges; }
-.bancada-tubo-nome { max-width: 100%; text-align: center; overflow-wrap: normal; }
+.bancada-tubo-desenho { touch-action: none; flex: none; width: 24px; height: 36px; image-rendering: pixelated; image-rendering: crisp-edges; }
+.bancada-tubo-nome { max-width: 100%; text-align: center; overflow-wrap: anywhere; }
 /* o tubo que segue o dedo (4 px por pixel de arte), por cima de tudo */
 .bancada-fantasma {
   position: fixed; left: 0; top: 0; z-index: 60; width: 48px; height: 104px; pointer-events: none;
@@ -76,6 +86,7 @@
   .tela-quimica-bancada .painel-conteudo { padding: 6px 8px; }
   .bancada, .bancada-esq, .bancada-dir { gap: 6px; }
   .bancada-prateleira { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px 6px; padding: 4px 6px 10px; }
+  .bancada-filtros { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .bancada-tubo { padding: 2px; gap: 2px; }
   .bancada-mistura.vazio { display: none; }   /* a fala já diz que está vazio */
   .bancada-info { padding: 4px 10px 6px; }
@@ -86,7 +97,7 @@
   /* no rodapé, Esvaziar e Caderno viram só o ícone; o Misturar! (o principal) fica com o resto */
   footer.bancada-rodape > .bancada-esvaziar, footer.bancada-rodape > .bancada-caderno { flex: 0 0 64px; padding: 0; }
   footer.bancada-rodape > .bancada-misturar { flex: 1 1 0; }
-  /* a fala em 12 px: no celular o palco, a fala e as 12 prateleiras cabem sem rolar */
+  /* a fala em 12 px: no celular o palco, a fala e os produtos têm rótulos legíveis */
   .bancada-fala { min-height: calc(2 * 1.5 * var(--texto-aux)); font-size: var(--texto-aux); }
 }
 /* Letras grandes: os 3 botões do rodapé não cabem em 24 px; descem um degrau (ui.md §10.17.3) */
@@ -97,5 +108,6 @@
 /* ---------- tela baixa e larga (notebook): palco e fala à esquerda, prateleira (ou o cartão) à direita ---------- */
 @media (min-width: 1000px) and (max-height: 820px) {
   :root:not(.letras-grandes) .tela-quimica-bancada .painel { width: min(1180px, 100%); max-width: min(1180px, 100%); }
+  .bancada-prateleira:not([data-grupo="casa"]) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   :root:not(.letras-grandes) .bancada { display: grid; grid-template-columns: min-content minmax(0, 1fr); align-items: start; gap: 20px; }
 }

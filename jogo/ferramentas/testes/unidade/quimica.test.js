@@ -30,18 +30,20 @@ const igual = (a, b, m) => assert.deepStrictEqual(JSON.parse(JSON.stringify(a)),
 const ids = (l) => l.map((x) => x.id);
 // letras como o validador conta (validar-interiores.js): sem «» e sem emoji
 const letras = (v) => v.replace(/[«»]/g, '').replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}\u{200D}]/gu, '').trim().length;
-const EFEITOS = ['explosao', 'vulcao', 'cor', 'espuma-gigante', 'dissolver', 'camadas', 'gotas', 'redemoinho', 'bolhas'];
+const EFEITOS = ['explosao', 'vulcao', 'cor', 'espuma-gigante', 'dissolver', 'camadas', 'gotas', 'redemoinho', 'bolhas', 'precipitado', 'deposito', 'efervescencia', 'gases'];
 
-test('quimica: as quantidades do pedido (10 receitas, 24 cartões, 118 casas, 6 lições, 8 lâminas)', () => {
+test('quimica: catálogo ampliado (21 receitas, 24 cartões, 118 casas, 6 lições, 8 lâminas)', () => {
   const Q = carregar().Quimica;
   igual(ids(Q.receitas()), ['pof', 'vulcao', 'pocao-rosa', 'pocao-verde', 'elefante', 'agua-do-mar',
-    'camadas', 'chuva-de-cores', 'leite-magico', 'bolhas']);
-  igual(Q.receitas().map((r) => r.ordem), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+    'camadas', 'chuva-de-cores', 'leite-magico', 'bolhas', 'vermelho-ferrico', 'amido-azul',
+    'sal-azul', 'sal-magnesio', 'neve-calcario', 'citrico-bolhas', 'acucar-agua', 'cobre-novo',
+    'mistura-ar', 'gases-estrelas', 'agua-gas']);
+  igual(Q.receitas().map((r) => r.ordem), Array.from({ length: 21 }, (_, i) => i + 1));
   igual(Q.elementos().map((e) => e.z), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 26, 29, 47, 79]);
   assert.strictEqual(Q.tabela().length, 118);
   igual(ids(Q.licoes().sort((a, b) => a.ordem - b.ordem)), ['atomos', 'elemento', 'moleculas', 'estados', 'acidos-bases', 'mistura-reacao']);
   igual(ids(Q.laminas()), ['sal', 'acucar', 'folha', 'cebola', 'polen', 'areia', 'algodao', 'neve']);
-  assert.strictEqual(Q.ingredientes().length, 12);
+  assert.strictEqual(Q.ingredientes().length, 32);
 });
 
 test('quimica: receitas bem formadas (ingredientes existem, efeito da lista, sem conjunto repetido, só a pof inicial)', () => {
@@ -114,9 +116,9 @@ test('quimica: descobrir grava, dá estrelas só na 1ª vez e o bônus do cadern
   assert.strictEqual(Q.descobrir('laminas', 'cebola').estrelas, c.estrelasLaminaNova);
   assert.strictEqual(Q.descobrir('licoes', 'atomos').estrelas, c.estrelasLicaoNova);
   assert.strictEqual(Q.descobrir('licoes', 'atomos').estrelas, 0);
-  const total = 10 * c.estrelasReceitaNova + c.estrelasCadernoCompleto + c.estrelasLaminaNova + c.estrelasLicaoNova;
+  const total = 21 * c.estrelasReceitaNova + c.estrelasCadernoCompleto + c.estrelasLaminaNova + c.estrelasLicaoNova;
   assert.strictEqual(j.P.estrelas() - antes, total);
-  igual({ ...Q.contagem().receitas }, { feitas: 10, total: 10 });
+  igual({ ...Q.contagem().receitas }, { feitas: 21, total: 21 });
   igual({ ...Q.contagem().laminas }, { feitas: 1, total: 8 });
 });
 
@@ -189,4 +191,33 @@ test('quimica: mescla do campo quimica entre aparelhos une os dois lados', () =>
   igual(j.P.mesclar(b, a).quimica, esperado);
   const velho = saveHoje(); delete velho.quimica;
   igual(j.P.mesclar(velho, a).quimica, a.quimica, 'save antigo não apaga');
+});
+
+
+test('quimica: os produtos têm ids únicos e gases não viram líquidos nem reação de combustão', () => {
+  const Q = carregar().Quimica;
+  assert.strictEqual(new Set(ids(Q.ingredientes())).size, 32);
+  assert.strictEqual(Q.ingrediente('cloreto-ferrico').nome, 'Cloreto férrico');
+  for (const id of ['hidrogenio', 'oxigenio', 'nitrogenio', 'helio', 'gas-carbonico']) {
+    assert.strictEqual(Q.ingrediente(id).tipo, 'gas');
+    assert.strictEqual(Q.ingrediente(id).grupo, 'gases');
+  }
+  assert.strictEqual(Q.misturar(['hidrogenio', 'oxigenio']).receita, null);
+  assert.strictEqual(Q.misturar(['cloreto-ferrico', 'tiocianato-potassio']).receita.id, 'vermelho-ferrico');
+  assert.strictEqual(Q.misturar(['agua', 'ferro', 'sulfato-cobre']).receita.id, 'cobre-novo');
+});
+
+test('quimica: save do catálogo antigo mantém descobertas e libera novas páginas', () => {
+  const j = comSave(), Q = j.R.Quimica;
+  Q.receitas().slice(0, 10).forEach((r) => Q.descobrir('receitas', r.id));
+  const antes = j.P.estrelas();
+  igual(Q.contagem().receitas, { feitas: 10, total: 21 });
+  assert.ok(!Q.cadernoCompleto());
+  Q.receitas().slice(0, 10).forEach((r) => {
+    assert.ok(Q.noCaderno(r.id));
+    assert.strictEqual(Q.descobrir('receitas', r.id).estrelas, 0);
+  });
+  assert.strictEqual(j.P.estrelas(), antes);
+  assert.ok(!Q.noCaderno('vermelho-ferrico'));
+  assert.strictEqual(Q.descobrir('receitas', 'vermelho-ferrico').estrelas, j.R.config.quimica.estrelasReceitaNova);
 });

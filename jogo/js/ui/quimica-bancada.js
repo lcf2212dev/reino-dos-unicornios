@@ -1,5 +1,5 @@
 /* Laboratório de Química, a bancada, parte 3 de 3: a tela Reino.UI.telaQuimicaBancada(op) (docs/contratos/quimica.md §2).
-   Prateleira com os 12 tubos (tocar, Enter/Espaço ou arrastar até o béquer despeja), o palco (Reino._quimicaPalco,
+   Prateleiras de produtos por grupo (tocar, Enter/Espaço ou arrastar até o béquer despeja), o palco (Reino._quimicaPalco,
    quimica-palco.js e quimica-palco-2.js), o rodapé (Esvaziar, 📒 Caderno, Misturar!), o cartão do resultado e as
    falas da Doutora Proveta (Reino.Quimica.VOZ). A receita é gravada no Misturar!, antes da animação (§7). */
 (function () {
@@ -28,11 +28,13 @@
     var palcoBox = el('div.bancada-palco', cv);
     var mistura = el('p.bancada-mistura');
     var fala = el('p.bancada-fala');
+    var filtros = el('div.bancada-filtros', { role: 'group', 'aria-label': 'Grupos de produtos' });
+    var notaGas = el('p.bancada-nota', { hidden: true }, 'Gases incolores: as cores representam partículas.');
     var prateleira = el('div.bancada-prateleira', { role: 'group', 'aria-label': 'Tubos de ensaio' });
     var cartao = el('section.bancada-resultado', { hidden: true, tabindex: '-1' });
     var raiz = el('div.bancada',
       el('div.bancada-esq', palcoBox, el('div.bancada-info', mistura, fala)),
-      el('div.bancada-dir', prateleira, cartao));
+      el('div.bancada-dir', filtros, notaGas, prateleira, cartao));
     pn.conteudo.appendChild(raiz);
     var palco = P.criar(cv, function () { return tela.isConnected && !tela.classList.contains('saindo'); });
 
@@ -62,7 +64,10 @@
         var n = tubos.filter(function (id) { return id === b.dataset.tubo; }).length;
         b.classList.toggle('no-bequer', n > 0);
       });
+      prateleira.dataset.grupo = grupoAtual;
       prateleira.hidden = !!resultado;
+      filtros.hidden = !!resultado;
+      notaGas.hidden = !!resultado || grupoAtual !== 'gases';
       raiz.classList.toggle('com-resultado', !!resultado);
       cartao.hidden = !resultado;
     }
@@ -74,7 +79,7 @@
       if (!ing) return;
       if (palco.g.tubos.length >= maxTubos()) { R.Som.tocar('toque'); dizer(frase('cheio')); return; }
       palco.despejar(id);
-      R.Som.tocar(ing.tipo === 'po' ? 'sacudida' : 'gotas');
+      R.Som.tocar(ing.tipo === 'gas' ? 'bolhas' : ing.tipo === 'po' ? 'sacudida' : 'gotas');
       dizer([ing.fala]);   // a fala já diz o nome do tubo
       atualizar();
     }
@@ -87,6 +92,7 @@
       var ini = null, arrastou = false;
       b.addEventListener('pointerdown', function (e) {
         if ((e.button && e.button > 0) || reagindo || resultado) return;
+        if (e.pointerType === 'touch' && !e.target.classList.contains('bancada-tubo-desenho')) return;
         if (UI.toqueSegurado && UI.toqueSegurado(e.clientX, e.clientY)) return;
         ini = { x: e.clientX, y: e.clientY, id: e.pointerId }; arrastou = false;
       });
@@ -120,11 +126,25 @@
       if (fantasma && fantasma.parentNode) fantasma.parentNode.removeChild(fantasma);
       fantasma = null; palcoBox.classList.remove('alvo');
     }
+    var grupoAtual = 'casa';
+    [['casa', 'Em casa'], ['reagentes', 'Reagentes'], ['elementos', 'Elementos'], ['gases', 'Gases']].forEach(function (g) {
+      var b = el('button.bancada-filtro', { type: 'button', 'data-grupo': g[0], 'aria-pressed': String(g[0] === grupoAtual) }, g[1]);
+      b.addEventListener('click', function () {
+        grupoAtual = g[0];
+        U.$$('.bancada-filtro', filtros).forEach(function (f) { f.setAttribute('aria-pressed', String(f.dataset.grupo === grupoAtual)); });
+        U.$$('.bancada-tubo', prateleira).forEach(function (t) { t.hidden = t.dataset.grupo !== grupoAtual; });
+        atualizar();
+        R.Som.tocar('toque');
+      });
+      filtros.appendChild(b);
+    });
     Q.ingredientes().forEach(function (ing) {
       var mini = el('canvas.bancada-tubo-desenho', { 'aria-hidden': 'true' });
       P.tuboDePe(mini, ing);
-      var b = el('button.bancada-tubo', { type: 'button', 'data-tubo': ing.id, 'aria-label': ing.nome },
-        mini, el('span.bancada-tubo-nome', R._ui.hifenizar(ing.nome)));
+      var b = el('button.bancada-tubo', { type: 'button', 'data-tubo': ing.id, 'aria-label': ing.nome, 'data-grupo': ing.grupo || 'casa', hidden: !!ing.grupo },
+        mini, el('span.bancada-tubo-nome', R._ui.hifenizar(ing.nome)),
+        ing.formula ? el('small.bancada-tubo-formula', ing.formula) : null,
+        ing.forma ? el('small.bancada-tubo-forma', ing.forma) : null);
       ligarArrasto(b, ing);
       prateleira.appendChild(b);
     });
@@ -227,7 +247,7 @@
     (op.tubos || []).slice(0, maxTubos()).forEach(function (id) { if (Q.ingrediente(id)) palco.g.tubos.push(id); });
     palco.desenhar();
     atualizar();
-    if (!jaDisseOi) { jaDisseOi = true; dizer(frase('oi')); }
+    if (!jaDisseOi) { jaDisseOi = true; dizer(comSeguranca(frase('oi')), frase('oi').join(' ')); }
     else U.preencher(fala, frase('oi').slice(1).join(' '));
     return pn;
   };

@@ -10,5 +10,5 @@
     F[chave] = paginas;
   }
   Q.porFrase = por;
-  por('comum.seguranca', ['Na vida real, chame um adulto!']);
+  por('comum.seguranca', ['Aqui é uma simulação.', 'Produtos só no laboratório.', 'Com um adulto responsável.']);
 })();
