@@ -86,19 +86,19 @@ Reino.config = {
     pixel: 5, pixelTablet: 6,        // px de cada pixel do thumbstick (pixel art: base de 22, pino de 10) no
                                      // celular (110 px) e em tela a partir de 700×700 (132 px); número inteiro
   },
-  // Aura (js/sistemas/aura.js): cada pergunta certa soma `passo`, cada errada tira `passo` × `penalidade` (mínimo 0).
+  // Aura (js/sistemas/aura.js): cada pergunta certa soma `passo`; respostas erradas mantêm a pontuação.
   // O passo começa em `passoInicial` e cresce × `multiplicador` a cada faixa: a 1ª faixa começa em `primeiraFaixa`
   // (10), a 2ª em 100, a 3ª em 1000… `cores`: a cor da aura em volta da Mariana em cada faixa (a última vale daí em
   // diante; 'arco-iris' = as cores passando). Se mudar os nomes das cores, regrave as vozes (o Claude fala a cor)
   aura: {
-    passoInicial: 0.2, primeiraFaixa: 10, multiplicador: 10, penalidade: 2,
+    passoInicial: 0.2, primeiraFaixa: 10, multiplicador: 10,
     cores: [
       { nome: 'branca', cor: '#ffffff' }, { nome: 'amarela', cor: '#ffe45c' }, { nome: 'verde', cor: '#6ee07a' },
       { nome: 'azul', cor: '#5cb8ff' }, { nome: 'roxa', cor: '#b57cff' }, { nome: 'rosa', cor: '#ff7ec4' },
       { nome: 'dourada', cor: '#ffb830' }, { nome: 'arco-íris', cor: 'arco-iris' },
     ],
     // matéria do dia (pedido do Leandro): no dia 'aaaa-mm-dd' (fuso do aparelho), cada pergunta certa da matéria
-    // (id de conteudo/materias) soma `vezes` × o passo; a errada tira o de sempre. Dia fora da lista: nada muda
+    // (id de conteudo/materias) soma `vezes` × o passo. Dia fora da lista: nada muda
     materiaDoDia: { vezes: 4, dias: { '2026-09-30': 'geografia', '2026-10-01': 'matematica', '2026-10-02': 'ciencias' } },
   },
   // pergunta surpresa (js/sistemas/surpresa.js): de 3 a 10 minutos de jogo livre, vale 2 estrelas de primeira;
