@@ -62,4 +62,5 @@
 # fb34e88 = respostas erradas mantêm a Aura; configuração de penalidade removida
 # 5347a80 = 32 produtos e 21 descobertas no laboratório de química
 # 5eb123b = Feira de Ciências, salas, vozes e entrada em Lugares
-5eb123b
+# 7551213 = Feira de Ciências integrada, salas e narração
+7551213
