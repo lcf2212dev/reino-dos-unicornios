@@ -44,8 +44,8 @@ test('aura: a sequência das faixas (0,2 → 2 → 20 → 200)', () => {
   assert.deepStrictEqual([0, 99, 100, 999, 1000, 9999, 10000].map(A.passo), [2, 2, 20, 20, 200, 200, 2000]);
   assert.strictEqual(A.aplicar(98, true), 100);      // 9,8 + 0,2 = 10,0
   assert.strictEqual(A.aplicar(100, true), 120);     // e a próxima vale +2
-  assert.strictEqual(A.aplicar(100, false), 60);     // errada tira o dobro da faixa em que ela está
-  assert.strictEqual(A.aplicar(3, false), 0);        // nunca abaixo de 0
+  const valores = [0, 3, 98, 100, 999, 1000, 9999, 10000];
+  assert.deepStrictEqual(valores.map((d) => A.aplicar(d, false)), valores, 'erradas mantêm a Aura em qualquer faixa');
   assert.strictEqual(A.corDaFaixa(1).nome, 'amarela');
   assert.strictEqual(A.corDaFaixa(99).nome, 'arco-íris');
   assert.strictEqual(A.texto(124), '12,4');
@@ -55,18 +55,22 @@ test('aura: a sequência das faixas (0,2 → 2 → 20 → 200)', () => {
 test('aura: contar grava no save, em ordem, e nota parcial (null) não conta', () => {
   const j = comSave();
   const r = j.R.Aura.contar([true, true, false, null, true]);
-  assert.deepStrictEqual(copia(r), { antes: 0, depois: 2 });
-  assert.strictEqual(j.lido().aura.mariana.d, 2);
+  assert.deepStrictEqual(copia(r), { antes: 0, depois: 6 });
+  assert.strictEqual(j.lido().aura.mariana.d, 6);
   assert.ok(j.lido().aura.mariana.em > 0);
 });
 
-test('aura: passar de faixa marca a cor para comemorar; cair de volta desmarca', () => {
+test('aura: errar depois de passar de faixa mantém a pontuação, o save e a comemoração', () => {
   const j = comSave();
   j.P.estado().aura = { mariana: { d: 98, em: 1 } };
   j.R.Aura.contar(true);
   assert.strictEqual(j.R.depurarAura(), 1);
-  j.R.Aura.contar(false);
-  assert.strictEqual(j.R.depurarAura(), null);
+  const salvo = copia(j.lido().aura);
+  assert.deepStrictEqual(copia(j.R.Aura.contar([false, false, null])), { antes: 100, depois: 100 });
+  assert.strictEqual(j.R.Aura.faixa(j.R.Aura.decimos()), 1);
+  assert.deepStrictEqual(copia(j.P.estado().aura), salvo);
+  assert.deepStrictEqual(copia(j.lido().aura), salvo);
+  assert.strictEqual(j.R.depurarAura(), 1);
 });
 
 test('aura: mescla entre aparelhos vale a mais recente, mesmo menor; aparelho antigo não apaga', () => {
@@ -79,7 +83,7 @@ test('aura: mescla entre aparelhos vale a mais recente, mesmo menor; aparelho an
   assert.strictEqual(j.P.mesclar(velho, a).aura.mariana.d, 500);
 });
 
-test('aura: matéria do dia (config.aura.materiaDoDia) vale 4× na certa, a errada tira o de sempre', () => {
+test('aura: matéria do dia (config.aura.materiaDoDia) vale 4× na certa, a errada mantém a pontuação', () => {
   const R = comSave().R;
   assert.deepStrictEqual({ ...R.Aura.materiaDoDia('2026-09-30') }, { materia: 'geografia', vezes: 4 });
   assert.strictEqual(R.Aura.vezesDaMateria('matematica', '2026-10-01'), 4);
@@ -88,7 +92,7 @@ test('aura: matéria do dia (config.aura.materiaDoDia) vale 4× na certa, a erra
   assert.strictEqual(R.Aura.vezesDaMateria('geografia', '2026-10-03'), 1, 'fora da lista: nada muda');
   assert.strictEqual(R.Aura.vezesDaMateria(undefined, '2026-09-30'), 1, 'sem matéria: vale 1');
   assert.strictEqual(R.Aura.aplicar(0, true, 4), 8);
-  assert.strictEqual(R.Aura.aplicar(20, false, 4), 16, 'errada: -passo × penalidade, sem multiplicar');
+  assert.strictEqual(R.Aura.aplicar(20, false, 4), 20, 'errada mantém a Aura mesmo na matéria do dia');
   assert.strictEqual(R.Aura.aplicar(0, true), 2);
 });
 
@@ -101,5 +105,5 @@ test('aura: contar com a matéria do dia de hoje soma 4 passos', () => {
   R.Aura.contar([true], 'historia');
   assert.strictEqual(R.Aura.decimos(), 10);
   R.Aura.contar([false], 'geografia');
-  assert.strictEqual(R.Aura.decimos(), 6);
+  assert.strictEqual(R.Aura.decimos(), 10);
 });

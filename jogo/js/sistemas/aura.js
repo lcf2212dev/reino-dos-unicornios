@@ -1,4 +1,4 @@
-/* Aura (aura): a pontuação que cresce com cada pergunta certa e cai com cada errada (o dobro), e o brilho que
+/* Aura (aura): a pontuação que cresce com cada pergunta certa e se mantém nas erradas, e o brilho que
    contorna a figura da Mariana (J.silhueta, de personagens/jogador-desenho.js), que muda de cor a cada faixa (branca
    no começo). Números em Reino.config.aura.
    Cada contagem também avisa o barramento (Reino.EVENTOS.RESPOSTAS: { certas, erradas }), para o foguete.
@@ -20,7 +20,7 @@
 
   /* ================= NO SAVE ================= */
   // aura: { mariana: { d: décimos, em } } (docs/contratos/save-e-mescla.md §11): entre aparelhos vale a mais
-  // recente (a Aura também desce, então "a maior" traria de volta o que ela perdeu). Novo ciclo mantém.
+  // recente, preservando a compatibilidade com saves das versões anteriores. Novo ciclo mantém.
   R.Progresso.registrarCampo('aura', {
     padrao: function () { return {}; },
     mesclar: 'carimbo',
@@ -73,11 +73,9 @@
     var h = materiaId && A.materiaDoDia(dia);
     return h && h.materia === materiaId ? h.vezes : 1;
   };
-  // um passo só, sem gravar: certa soma o passo × vezes (matéria do dia; 1 se omitido), errada tira o passo ×
-  // penalidade (nunca abaixo de 0)
+  // um passo só, sem gravar: certa soma o passo × vezes (matéria do dia; 1 se omitido), errada mantém a Aura
   A.aplicar = function (d, certa, vezes) {
-    var p = A.passo(d);
-    return certa ? d + p * (vezes || 1) : Math.max(0, d - p * cfg().penalidade);
+    return certa ? d + A.passo(d) * (vezes || 1) : d;
   };
   // conta as respostas (true = certa, false = errada, null = não conta), em ordem, grava e
   // guarda a cor nova para o Claude comemorar ao voltar ao mapa. materiaId: a matéria das perguntas (a do dia vale
