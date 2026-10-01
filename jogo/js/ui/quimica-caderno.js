@@ -48,6 +48,12 @@
   ];
   function tubo(ing) {
     var cor = /^#[0-9a-f]{6}$/i.test(ing.cor || '') ? ing.cor : '#9fd8ff';
+    if (ing.tipo === 'gas') {
+      var grade = TUBO.map(function (linha, y) {
+        return linha.replace(/[Lld]/g, function (_, x) { return (x + y * 3) % 7 === 0 ? 'P' : 'g'; });
+      });
+      return pintar(grade, { k: K, w: '#ffffff', g: '#e6f4ff', v: '#ffffff', P: cor });
+    }
     var po = ing.tipo === 'po';
     return pintar(po ? TUBO_PO : TUBO, {
       k: K, w: '#ffffff', g: '#e6f4ff', v: '#ffffff',
@@ -198,7 +204,7 @@
         folha.appendChild(el('section.qcad-bloco.qcad-bloco-tubos', el('h4', 'Ingredientes'), tubos(r)));
         folha.appendChild(el('section.qcad-bloco', el('h4', 'O que acontece'), el('p', U.colado(hif(r.acontece || '')))));
         folha.appendChild(el('section.qcad-bloco', el('h4', 'Por quê?'), el('p', U.colado(hif((r.explica || []).join(' '))))));
-        folha.appendChild(el('p.qcad-aviso', U.colado(Q.frase('comum.seguranca')[0] || '')));
+        folha.appendChild(el('p.qcad-aviso', U.colado(Q.frase('comum.seguranca').join(' '))));
       }
       voltar.hidden = false;
       pn.conteudo.scrollTop = 0;

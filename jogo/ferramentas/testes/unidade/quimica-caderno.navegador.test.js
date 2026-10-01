@@ -41,7 +41,7 @@ test('caderno: pof aberta num save novo, segredo com dica, descoberta com selo, 
     // a página da pof: ingredientes em tubinhos, o aviso e o selo
     await c.tocar('.qcad-cartao[data-receita="pof"]');
     assert.strictEqual(await c.js("document.querySelectorAll('.qcad-tubo').length"), 2);
-    const seguranca = await c.js("Reino.Quimica.frase('comum.seguranca')[0]");
+    const seguranca = await c.js("Reino.Quimica.frase('comum.seguranca').join(' ')");
     assert.ok(seguranca && (await texto(c, '.qcad-pagina .qcad-aviso')) === seguranca, 'o aviso de segurança');
     assert.match(await texto(c, '.qcad-pagina .qcad-selo'), /Experimente!/);
     // a página de um segredo: a dica e o convite para a bancada

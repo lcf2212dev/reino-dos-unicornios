@@ -1,5 +1,5 @@
 /* Laboratório de Química, a bancada, parte 2 de 3: as animações das reações (docs/contratos/quimica.md §3, efeitos).
-   Registra em Reino._quimicaPalco.EFEITOS (criado por quimica-palco.js) os 9 efeitos e o 'nada' (mistura sem receita):
+   Registra em Reino._quimicaPalco.EFEITOS (criado por quimica-palco.js) os efeitos e o 'nada' (mistura sem receita):
    { dur (ms), sons: [[ms, som]] (só sons que já existem), som (o único, sem animação), desenhar(ctx, t, info) }.
    desenhar(ctx, dur, info) é o quadro final: é ele que aparece sem animação. Tudo em pixel art: cor em 3 ou 4 degraus,
    fumaça pontilhada, confete com Reino.config.paleta.confete; posições fixas por Reino.Desenho.sorte (sem Math.random). */
@@ -325,6 +325,10 @@
   /* ---------- nada (mistura sem receita): mistura, duas bolhinhas e fica assim ---------- */
   P.EFEITOS.nada = { dur: 1400, som: 'bolhas', sons: [[700, 'bolhas']],
     desenhar: function (ctx, t, info) {
+      if (info.tipos.indexOf('gas') >= 0) {
+        P.bequer(ctx, function (c, x0) { P.camadas(c, info.ings.map(function (i) { return { cor: i.cor, tipo: i.tipo, h: BEQ.camada }; }), x0); });
+        return;
+      }
       if (t < MISTURA) { misturando(ctx, t, info, info.media); return; }
       var topo = topoDe(info.nivel);
       P.bequer(ctx, function (c, x0) {
@@ -335,6 +339,47 @@
           if (y > topo + 1) ret(c, b[0], y, 2, 2, clarear(info.media, 0.6));
           else P.bolha(c, b[0], topo, 2 - b[1], clarear(info.media, 0.5));
         });
+      });
+    } };
+
+  /* Novas descobertas: sólidos, bolhas dentro da água e misturas de gases. */
+  P.EFEITOS.precipitado = { dur: 2400, som: 'gotas', sons: [[600, 'gotas']],
+    desenhar: function (ctx, t, info) {
+      var rec = info.rec, p = degrau(fase(t, 400, 2200), 6), topo = topoDe(info.nivel);
+      P.bequer(ctx, function (c, x0) {
+        P.liquido(c, x0, topo, XW, info.nivel, rec.cor);
+        for (var i = 0; i < 50 * p; i++) {
+          var y = topo + 2 + Math.round(sorte(i, 4, 7) * (info.nivel - 4) * (1 - p / 2) + p * 8);
+          ret(c, x0 + 2 + (i * 11) % (XW - 4), Math.min(FUNDO - 1, y), 2, 2, rec.cor2);
+        }
+        if (p > 0.5) P.po(c, x0, FUNDO - 3, XW, 4, rec.cor2, 2);
+      });
+    } };
+  P.EFEITOS.deposito = { dur: 2600, som: 'gotas', sons: [[600, 'gotas']],
+    desenhar: function (ctx, t, info) {
+      var rec = info.rec, p = degrau(fase(t, 400, 2400), 6), topo = topoDe(info.nivel);
+      P.bequer(ctx, function (c, x0) {
+        P.liquido(c, x0, topo, XW, info.nivel, D.misturar('#4099df', rec.cor, p));
+        for (var i = 0; i < 8; i++) {
+          var x = x0 + 3 + i * 4, y = FUNDO - 5 - i % 3;
+          ret(c, x, y, 3, 5, '#868b97');
+          if (i < p * 8) ret(c, x, y, 2, 5, rec.cor2);
+        }
+      });
+    } };
+  P.EFEITOS.efervescencia = { dur: 2400, som: 'bolhas', sons: [[600, 'bolhas'], [1400, 'bolhas']],
+    desenhar: function (ctx, t, info) {
+      var rec = info.rec, topo = topoDe(info.nivel);
+      P.bequer(ctx, function (c, x0) {
+        P.liquido(c, x0, topo, XW, info.nivel, rec.cor);
+        borbulhas(c, x0, topo, t, rec.cor, 16);
+      });
+      for (var i = 0; i < 3; i++) P.bolha(ctx, MEIO - 9 + i * 9, topo - 3 - (Math.floor(t / 80) + i * 5) % 13, 2, '#8fa9c2');
+    } };
+  P.EFEITOS.gases = { dur: 1800, som: 'bolhas', sons: [[0, 'bolhas']],
+    desenhar: function (ctx, t, info) {
+      P.bequer(ctx, function (c, x0) {
+        info.ings.forEach(function (ing, i) { P.gas(c, x0, BOCA + 3, XW, FUNDO - BOCA - 4, ing.cor, Math.floor(t / 100) + i * 7); });
       });
     } };
 })();

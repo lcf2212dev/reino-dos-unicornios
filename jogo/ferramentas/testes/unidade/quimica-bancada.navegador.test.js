@@ -1,5 +1,5 @@
 // Teste de NAVEGADOR (Chromium, servidor de TESTE, save sintético, modo determinístico): a bancada do Laboratório de
-// Química (UI.telaQuimicaBancada, docs/contratos/quimica.md §2). Abre com os 12 tubos; tocar despeja; vinagre +
+// Química (UI.telaQuimicaBancada, docs/contratos/quimica.md §2). Abre com os produtos por grupo; tocar despeja; vinagre +
 // bicarbonato e Misturar! grava a receita na hora e dá +2 estrelas só na 1ª vez (com o cartão, o Misturar! se apaga); sem animação (congelado) o palco
 // já mostra o quadro final e o cartão; béquer cheio não aceita o 4º tubo; tubo sozinho dá "Quase!"; arrastar o tubo
 // até o béquer despeja; Esvaziar; teclado (Tab, Enter) e Esc fecha. Zero erro de console.
@@ -21,7 +21,7 @@ test('bancada de química: despejar, misturar, descobrir, estrelas só na 1ª ve
 
     await c.js('void Reino.UI.telaQuimicaBancada()');
     await c.avancar(600);
-    assert.strictEqual(await c.js("document.querySelectorAll('.tela-quimica-bancada .bancada-tubo').length"), 12, '12 tubos');
+    assert.strictEqual(await c.js("document.querySelectorAll('.tela-quimica-bancada .bancada-tubo').length"), 32, '32 produtos');
     assert.strictEqual(await c.js("document.querySelector('.bancada-misturar').getAttribute('aria-disabled')"), 'true', 'Misturar! apagado vazio');
 
     // tocar despeja: vinagre e bicarbonato
@@ -80,7 +80,7 @@ test('bancada de química: despejar, misturar, descobrir, estrelas só na 1ª ve
     // arrastar o óleo até o béquer (toque de verdade)
     await c.tocar('.bancada-outra');
     const pos = await c.js(`(function () {
-      var a = document.querySelector('[data-tubo="oleo"]').getBoundingClientRect(), b = document.querySelector('.bancada-palco').getBoundingClientRect();
+      var a = document.querySelector('[data-tubo="oleo"] canvas').getBoundingClientRect(), b = document.querySelector('.bancada-palco').getBoundingClientRect();
       return [Math.round(a.left + a.width / 2), Math.round(a.top + a.height / 2), Math.round(b.left + b.width / 2), Math.round(b.top + b.height / 2)];
     })()`);
     await c.arrastar(pos.join(',') + ',400,toque');
@@ -100,5 +100,77 @@ test('bancada de química: despejar, misturar, descobrir, estrelas só na 1ª ve
     await c.tecla('Escape');
     assert.strictEqual(await c.js('Reino.UI.temTela()'), false, 'Esc fecha');
     assert.deepStrictEqual(c.erros, [], 'sem erro de console');
+  } finally { await c.fechar(); }
+});
+
+
+test('bancada: filtros preservam o béquer; novas descobertas, gases e caderno nos três tamanhos', async () => {
+  for (const tamanho of ['celular', 'tablet', 'notebook']) {
+    const c = await abrirCenario({ save: 'completo', tamanho, pasta: '/tmp/reino-testes/ver/teste-quimica-produtos-' + tamanho });
+    try {
+      await c.js('void Reino.UI.telaQuimicaBancada()'); await c.avancar(600);
+      await c.tocar('.bancada-filtro[data-grupo="reagentes"]');
+      if (tamanho === 'celular') {
+        const pos = await c.js(`(function () {
+          var r = document.querySelector('[data-tubo="cloreto-ferrico"] .bancada-tubo-nome').getBoundingClientRect();
+          return [Math.round(r.left + r.width / 2), Math.round(r.top + r.height / 2)];
+        })()`);
+        await c.arrastar([pos[0], pos[1], pos[0], pos[1] - 200, 500, 'toque'].join(','));
+        assert.ok(await c.js("document.querySelector('.tela-quimica-bancada .painel-conteudo').scrollTop > 0"), 'rolar pelo rótulo');
+        await c.tocar('[data-tubo="acucar"]');
+        assert.ok((await c.js("document.querySelector('.bancada-mistura').textContent")).includes('Açúcar'));
+        await c.tocar('.bancada-esvaziar');
+      }
+      await c.tocar('[data-tubo="cloreto-ferrico"]');
+      await c.tocar('.bancada-filtro[data-grupo="gases"]');
+      assert.strictEqual(await c.js(noBequer), 1, 'trocar grupo preserva o béquer');
+      assert.ok(await c.js(aVista('[data-tubo="hidrogenio"]')));
+      assert.strictEqual(await c.js("document.querySelector('.bancada-filtro[data-grupo=gases]').getAttribute('aria-pressed')"), 'true');
+      await c.tocar('.bancada-filtro[data-grupo="reagentes"]');
+      await c.tocar('[data-tubo="tiocianato-potassio"]');
+      await c.tocar('.bancada-misturar');
+      assert.strictEqual(await c.js("Reino.Quimica.descoberto('receitas', 'vermelho-ferrico')"), true);
+      assert.strictEqual(await c.js("document.querySelector('.bancada-cena').dataset.efeito"), 'cor');
+      await c.tocar('.bancada-outra');
+      await c.tocar('.bancada-filtro[data-grupo="gases"]');
+      await c.tocar('[data-tubo="hidrogenio"]');
+      await c.tocar('[data-tubo="helio"]');
+      await c.tocar('.bancada-misturar');
+      assert.strictEqual(await c.js("document.querySelector('.bancada-cena').dataset.efeito"), 'gases');
+      assert.strictEqual(await c.js(quadro), 'final');
+      // O quadro final tem partículas, sem uma faixa de líquido (centro interno do béquer).
+      assert.ok(await c.js(`(function () {
+        var ctx = document.querySelector('.bancada-cena').getContext('2d'), d = ctx.getImageData(70, 50, 18, 26).data, vidro = 0;
+        for (var i = 0; i < d.length; i += 4) if (d[i] === 238 && d[i + 1] === 249 && d[i + 2] === 255) vidro++;
+        return vidro > 350;
+      })()`));
+      await c.tocar('.bancada-caderno'); await c.avancar(600);
+      assert.ok((await c.js("document.querySelector('.qcad-titulo').textContent")).includes('Gases das estrelas'));
+      await c.tocar('.qcad-voltar');
+      assert.strictEqual(await c.js("document.querySelectorAll('.qcad-cartao').length"), 21);
+      await c.tocar('[data-receita="gases-estrelas"]');
+      assert.ok((await c.js("document.querySelector('.qcad-tubos').textContent")).includes('Hidrogênio'));
+      assert.strictEqual(await c.js('document.documentElement.scrollWidth > innerWidth'), false);
+      assert.deepStrictEqual(c.erros, []);
+    } finally { await c.fechar(); }
+  }
+});
+
+
+test('bancada: todas as novas receitas desenham, gravam e encerram sem animação', async () => {
+  const c = await abrirCenario({ save: 'completo', tamanho: 'celular', pasta: '/tmp/reino-testes/ver/teste-quimica-reacoes' });
+  try {
+    const receitas = await c.js('Reino.Quimica.receitas().slice(10)');
+    for (const receita of receitas) {
+      await c.js('void Reino.UI.telaQuimicaBancada(' + JSON.stringify({ tubos: receita.ingredientes }) + ')');
+      await c.avancar(600);
+      await c.tocar('.bancada-misturar');
+      assert.strictEqual(await c.js(quadro), 'final', receita.id);
+      assert.strictEqual(await c.js("document.querySelector('.bancada-cena').dataset.efeito"), receita.efeito, receita.id);
+      assert.ok(await c.js('Reino.Quimica.descoberto("receitas", ' + JSON.stringify(receita.id) + ')'));
+      if (['precipitado', 'deposito', 'efervescencia', 'gases'].includes(receita.efeito)) await c.foto(receita.id);
+      await c.tecla('Escape');
+    }
+    assert.deepStrictEqual(c.erros, []);
   } finally { await c.fechar(); }
 });
