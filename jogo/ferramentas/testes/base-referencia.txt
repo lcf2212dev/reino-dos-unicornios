@@ -60,4 +60,5 @@
 # b5ec36d = Laboratório de Química na clareira 1
 # 4fefa26 = 2º andar do Laboratório de Química
 # fb34e88 = respostas erradas mantêm a Aura; configuração de penalidade removida
-fb34e88
+# 5347a80 = 32 produtos e 21 descobertas no laboratório de química
+5347a80
