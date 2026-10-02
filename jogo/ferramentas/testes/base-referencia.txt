@@ -65,4 +65,5 @@
 # 7551213 = Feira de Ciências integrada, salas e narração
 # 09c88a3 = Narrar somente a pergunta, sem instruções e respostas
 # cadfe38 = Escola de Música, salas, teclado e fundamentos; nova entrada em Lugares
-cadfe38
+# 425103c = Escola de Música na clareira do lago, três ambientes detalhados e jogos musicais
+425103c
