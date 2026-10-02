@@ -75,7 +75,9 @@ test('árvore inventada e toda certa: sai com 0', () => {
 
 test('cópia da documentação de verdade: a referência plantada vira um erro novo na linha certa', () => {
   const raiz = pastaNova('copia');
-  ['docs', '.claude'].forEach((p) => { if (fs.existsSync(path.join(REPO, p))) fs.cpSync(path.join(REPO, p), path.join(raiz, p), { recursive: true }); });
+  ['docs', '.claude'].forEach((p) => { if (fs.existsSync(path.join(REPO, p))) fs.cpSync(path.join(REPO, p), path.join(raiz, p), {
+    recursive: true, filter: (src) => src !== path.join(REPO, '.claude', 'worktrees'),
+  }); });
   ['CLAUDE.md', 'package.json', 'COMO-USAR.md'].forEach((f) => { if (fs.existsSync(path.join(REPO, f))) fs.copyFileSync(path.join(REPO, f), path.join(raiz, f)); });
   // o jogo entra por link (só leitura: o validador lê nomes e o texto de jogo/js, nada é escrito lá)
   fs.symlinkSync(path.join(REPO, 'jogo'), path.join(raiz, 'jogo'));
@@ -86,6 +88,27 @@ test('cópia da documentação de verdade: a referência plantada vira um erro n
   assert.strictEqual(depois.status, 1, depois.saida);
   const novos = depois.erros.filter((l) => !antes.erros.includes(l));
   assert.deepStrictEqual(novos, ['✘ docs/plantado.md:4: caminho não existe: jogo/js/nucleo/nao-existe.js'], depois.saida);
+});
+
+test('worktrees internas não entram na validação nem resolvem referências da árvore atual', () => {
+  const raiz = pastaNova('worktrees');
+  escrever(raiz, 'package.json', JSON.stringify({ scripts: {} }));
+  escrever(raiz, 'CLAUDE.md', 'Documentação atual.\n');
+  escrever(raiz, '.claude/worktrees/antiga/CLAUDE.md', 'Antigo: `js/sumiu.js`.\n');
+  escrever(raiz, '.claude/worktrees/antiga/jogo/servidor/CLAUDE.md', 'Banco antigo: `dados/reino.db`.\n');
+  escrever(raiz, '.claude/worktrees/antiga/jogo/js/so-na-antiga.js', '// arquivo de outra árvore\n');
+  const antes = rodar(raiz);
+  assert.strictEqual(antes.status, 0, antes.saida);
+  assert.match(antes.saida, /em 1 arquivos/);
+
+  escrever(raiz, 'docs/guia.md', 'Ausente nesta árvore: `js/so-na-antiga.js`.\n');
+  escrever(raiz, '.claude/skills/exemplo/SKILL.md', 'Também conferir: `js/nao-existe.js`.\n');
+  const depois = rodar(raiz);
+  assert.strictEqual(depois.status, 1, depois.saida);
+  assert.deepStrictEqual(depois.erros, [
+    '✘ .claude/skills/exemplo/SKILL.md:1: caminho não existe: js/nao-existe.js',
+    '✘ docs/guia.md:1: caminho não existe: js/so-na-antiga.js',
+  ], depois.saida);
 });
 
 test('pasta de material nova na raiz (Geografia/): vira raiz de caminho sem lista fixa', () => {

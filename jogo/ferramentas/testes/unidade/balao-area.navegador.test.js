@@ -9,7 +9,7 @@ const ALTURA = "parseFloat(getComputedStyle(document.documentElement).getPropert
 const LINHAS = "(function(){var t=document.querySelector('.claude-texto');return Math.round(t.getBoundingClientRect().height/parseFloat(getComputedStyle(t).lineHeight));})()";
 const CONTINUAR = "(function(){var b=[...document.querySelectorAll('.claude-acoes button')].find(function(x){return /Continuar/.test(x.textContent)});if(b)b.click();return !!b;})()";
 
-test('--balao-altura acompanha o balão e o dock fica livre', async () => {
+test('--balao-altura acompanha o balão sem menu inferior', async () => {
   const c = await abrirCenario({ tamanho: 'celular' });
   try {
     assert.strictEqual(await c.js(ALTURA), 0);
@@ -18,7 +18,7 @@ test('--balao-altura acompanha o balão e o dock fica livre', async () => {
     const alt = await c.js(ALTURA);
     const topo = await c.js("innerHeight - Math.min(document.querySelector('#claude-balao').getBoundingClientRect().top, document.querySelector('.claude-nome').getBoundingClientRect().top)");
     assert.ok(Math.abs(alt - topo) <= 1, `--balao-altura ${alt} x ${topo}`);
-    assert.ok(await c.js("(function(){var a=document.querySelector('#claude-balao').getBoundingClientRect(),d=document.querySelector('.dock').getBoundingClientRect();return a.bottom+4<=d.top-8;})()"), 'o balão encosta no dock');
+    assert.ok(await c.js("(function(){var a=document.querySelector('#claude-balao').getBoundingClientRect();return a.bottom+4<=innerHeight;})()"), 'o balão ultrapassa o pé da tela');
     assert.strictEqual(await c.js("document.querySelector('.claude-nome').getBoundingClientRect().height <= 26"), true, 'o nome quebrou de linha');
     await c.js('Reino.Claude.fechar()');
     await c.avancar(100);

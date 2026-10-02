@@ -1,4 +1,4 @@
-/* HUD: chips de cima (dinheiro, estrelas, ovos, montaria), dock do menu, tela cheia e os botões
+/* HUD: chips de cima (dinheiro, estrelas, ovos, montaria), ajustes, tela cheia e os botões
    registrados por UI.registrarBotaoHud (📷 e álbum em ui/hud-fotos.js). */
 (function () {
   var U = Reino.util, el = U.el, P = Reino.Progresso;
@@ -67,6 +67,14 @@
     (def.eventos || []).forEach(ouvir);
   };
 
+  UI.registrarBotaoHud({ id: 'ajustes', ordem: 25, criar: function () {
+    var b = el('button.btn-tela-cheia.btn-ajustes', { type: 'button', 'aria-label': 'Ajustes', title: 'Ajustes' });
+    b.appendChild(PA.paraDOM(PA.iconeMenu('ajustes'), 2, 'hud-icone'));
+    b.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') e.stopPropagation(); });
+    b.addEventListener('click', function () { Reino.Som.tocar('toque'); UI.telaAjustes(); });
+    return b;
+  } });
+
   /* ---------- área útil (ui.md §10.18): o HUD escreve no :root o que ele cobre, em px CSS ----------
      --hud-topo (fim do HUD de cima), --dock-altura (do pé da tela ao topo do dock) e, para quem só conta o
      que cobre a sua coluna (câmera dos interiores, placas), cada bloco de cima: --hud-esq-largura e
@@ -129,21 +137,6 @@
     var botoes = el('div.hud-botoes', telaCheia);
     botoesHud.forEach(function (d) { botoes.appendChild(d.criar()); });
     hud.appendChild(el('div.hud-topo', el('div.hud-esq', dinheiro, estrelas, ovos), el('div.hud-dir', botoes, montaria)));
-    function botaoDock(acao, icone, linhas, aria) {
-      var rot = el('small.dock-rotulo');
-      linhas.forEach(function (l, i) {
-        if (i) rot.appendChild(el('br'));
-        rot.appendChild(document.createTextNode(l));
-      });
-      return el('button.dock-btn', { type: 'button', 'data-acao': acao, 'aria-label': aria },
-        PA.paraDOM(PA.iconeMenu(icone), PA.escalaNitida(32, 16), 'dock-icone'), rot);
-    }
-    var dock = el('nav.dock', { 'aria-label': 'Menu' },
-      botaoDock('missoes', 'lugares', ['Lugares'], 'Lugares'),
-      botaoDock('estabulo', 'estabulo', ['Estábulo'], 'Estábulo'),
-      botaoDock('plano', 'plano', ['Plano', 'da Prova'], 'Plano da Prova'),
-      botaoDock('ajustes', 'ajustes', ['Ajustes'], 'Ajustes'));
-    hud.appendChild(dock);
     // com uma tela aberta, o HUD fica atrás dela: um Enter num botão dele não empilha outra tela
     hud.addEventListener('click', function (e) { if (UI.temTela()) { e.preventDefault(); e.stopImmediatePropagation(); } }, true);
     pintarBotaoTela();
@@ -152,17 +145,8 @@
     estrelas.addEventListener('click', function () { Reino.Som.tocar('toque'); UI.telaLoja(); });
     ovos.addEventListener('click', function () { Reino.Som.tocar('toque'); UI.chocarOvos(P.ovosParaChocar()); });
     montaria.addEventListener('click', function () { Reino.Som.tocar('toque'); UI.telaEstabulo(); });
-    dock.addEventListener('click', function (e) {
-      var b = e.target.closest('.dock-btn'); if (!b) return;
-      Reino.Som.tocar('toque');
-      var a = b.getAttribute('data-acao');
-      if (a === 'missoes') UI.telaLugares();
-      if (a === 'estabulo') UI.telaEstabulo();
-      if (a === 'plano') UI.telaPlano();
-      if (a === 'ajustes') UI.telaAjustes();
-    });
     UI.atualizarHUD();
-    if (vigia) { vigia.disconnect(); [hud, U.$('.hud-esq', hud), U.$('.hud-dir', hud), dock].forEach(function (e) { vigia.observe(e); }); }
+    if (vigia) { vigia.disconnect(); [hud, U.$('.hud-esq', hud), U.$('.hud-dir', hud)].forEach(function (e) { vigia.observe(e); }); }
   };
 
   UI.atualizarHUD = function () {

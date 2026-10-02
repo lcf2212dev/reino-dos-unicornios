@@ -212,8 +212,9 @@ h3.loja-grupo { font-family: var(--fonte-titulo); font-size: var(--texto); margi
 @media (min-width: 1000px) and (max-height: 820px) {
   :root:not(.letras-grandes) .tela-ajustes .painel-conteudo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; align-content: start; }
   :root:not(.letras-grandes) .tela-ajustes .painel-conteudo > * { margin-top: 0; }
-  /* ajustes: os 4 botões em 2 × 2 (numa fileira só, "Meu personagem" partiria a palavra) */
+  /* ajustes: ações em duas colunas, com a área dos pais na largura toda */
   :root:not(.letras-grandes) .tela-ajustes .intro-botoes.coluna { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 0; }
+  :root:not(.letras-grandes) .tela-ajustes .intro-botoes.coluna > :last-child { grid-column: 1 / -1; }
   /* baú: o total (numa linha só) e a nota lado a lado no alto; as matérias em 2 colunas; o aviso na largura toda */
   :root:not(.letras-grandes) .tela-lugar .painel-conteudo:has(> .bau-total) { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; align-content: start; padding: 12px; }
   :root:not(.letras-grandes) .tela-lugar .painel-conteudo:has(> .bau-total) > * { margin-top: 0; }

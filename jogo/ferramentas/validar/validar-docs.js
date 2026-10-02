@@ -14,7 +14,7 @@
 // Ignorados: `/tmp/…`; texto com marcador de modelo (<…>, *, {…}, …, $); qualquer coisa em servidor/dados (nem
 //   olhamos o disco lá: é o banco da Mariana); blocos entre <!-- validar-docs: ignorar --> e
 //   <!-- validar-docs: fim --> (histórico ou exemplo); arquivo com <!-- validar-docs: ignorar-arquivo -->;
-//   e os trechos históricos da lista HISTORICOS abaixo.
+//   as cópias de outras árvores em .claude/worktrees/ e os trechos históricos da lista HISTORICOS abaixo.
 // Arquivos da lista EM_CONSTRUCAO que ainda não existem viram aviso (outro construtor os entrega), não erro.
 // Sai com código 1 e lista cada referência quebrada como arquivo:linha.
 const fs = require('fs');
@@ -34,7 +34,8 @@ const HISTORICOS = [
 // Hoje vazia: tudo o que estava aqui já existe (faltar é erro). Só para uso temporário entre construtores.
 const EM_CONSTRUCAO = [];
 const PULAR_PASTAS = new Set(['node_modules', '.git']);
-const PULAR_CAMINHOS = ['jogo/js/voz', 'jogo/ferramentas/gerado/vozes-cache', 'jogo/servidor/dados'];
+// Outras worktrees têm documentação e arquivos próprios: não podem gerar erros nem resolver referências desta árvore.
+const PULAR_CAMINHOS = ['.claude/worktrees', 'jogo/js/voz', 'jogo/ferramentas/gerado/vozes-cache', 'jogo/servidor/dados'];
 const RAIZES_SIMBOLO = /^(?:window\.)?(Reino|Mapa|Jogador|PA|UI|__reino|__congelar)(?=\.|$)/;
 const EXT = /\.(js|mjs|cjs|md|css|html|json|py|txt|db|ts|sh|yml|yaml|mp3|png|service)$/i;
 const MODELO = /[<>*{}…$|()'"=,;!?]|\.\.\./;
