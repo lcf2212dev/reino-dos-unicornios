@@ -67,4 +67,5 @@
 # cadfe38 = Escola de Música, salas, teclado e fundamentos; nova entrada em Lugares
 # 425103c = Escola de Música na clareira do lago, três ambientes detalhados e jogos musicais
 # 5be85d5 = experiências e mini-jogos de ciências, enfeites das fadas e exclusivos da Pet Shop
-5be85d5
+# 01b04a5 = experiências e mini-jogos de ciências, enfeites das fadas e exclusivos da Pet Shop
+01b04a5
