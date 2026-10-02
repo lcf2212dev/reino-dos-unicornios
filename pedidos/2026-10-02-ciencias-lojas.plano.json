@@ -1,0 +1,83 @@
+{
+  "nome": "ciencias-lojas",
+  "pedido": "pedidos/2026-10-02-ciencias-lojas.md",
+  "personagens": [],
+  "tarefas": [
+    {
+      "id": "ciencias",
+      "tipo": "mecanica",
+      "titulo": "Experiências e mini-jogos no laboratório",
+      "quem": "worker",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/conteudo/laboratorio/",
+        "jogo/js/ui/laboratorio.js",
+        "jogo/js/ui/laboratorio-jogos.js",
+        "jogo/js/ui/laboratorio-cenas.js",
+        "jogo/css/ui-laboratorio.css",
+        "jogo/js/interiores/observatorio/lab-atividades.js",
+        "jogo/js/interiores/observatorio/lab-andar3.js",
+        "jogo/ferramentas/testes/unidade/laboratorio.test.js"
+      ],
+      "worktree": "ciencias-atividades",
+      "pronto": [
+        "Seis experiências e três mini-jogos acessíveis no hall, teclado e toque, sem campo novo no save"
+      ]
+    },
+    {
+      "id": "lojas",
+      "tipo": "mecanica",
+      "titulo": "Enfeites das fadas e exclusivos da Pet Shop",
+      "quem": "worker",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/conteudo/loja-itens.js",
+        "jogo/js/conteudo/loja-novidades.js",
+        "jogo/js/arte/enfeites-novidades.js",
+        "jogo/js/ui/loja.js",
+        "jogo/js/ui/petshop.js",
+        "jogo/js/ui/petshop-enfeites.js",
+        "jogo/js/interiores/loja/loja.js",
+        "jogo/ferramentas/testes/unidade/lojas-novidades.test.js"
+      ],
+      "worktree": "lojas-novidades",
+      "pronto": [
+        "Doze enfeites das fadas e seis da Pet Shop; compra, equipar e exclusividade testados"
+      ]
+    },
+    {
+      "id": "integracao",
+      "tipo": "integracao",
+      "titulo": "Manifesto, vozes, documentação e testes",
+      "quem": "orquestrador",
+      "depende": [
+        "ciencias",
+        "lojas"
+      ],
+      "arquivos": [
+        "jogo/js/manifesto.js",
+        "jogo/index.html",
+        "docs/contratos/loja.md",
+        "docs/contratos/laboratorio-atividades.md"
+      ],
+      "worktree": "ciencias-lojas",
+      "pronto": [
+        "Testes e revisão aprovados"
+      ]
+    },
+    {
+      "id": "entrega",
+      "tipo": "entrega",
+      "titulo": "Entrega e publicação",
+      "quem": "orquestrador",
+      "depende": [
+        "integracao"
+      ],
+      "arquivos": [],
+      "worktree": "ciencias-lojas",
+      "pronto": [
+        "Main publicada e conferida"
+      ]
+    }
+  ]
+}
