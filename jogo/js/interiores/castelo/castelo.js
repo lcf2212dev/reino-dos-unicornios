@@ -108,7 +108,7 @@
     bloqueada: ['Primeiro, as salas do Laboratório.', 'O Laboratório vem antes.'],
     depois: ['Que cientista {caprichosa|caprichoso}! ✨', 'Você sabe muito da natureza! 🏆'],
   };
-  F.objetos['ciencias-microscopio'] = F.objetos['ciencias-microscopio'] || ['Um microscópio na ala!', 'Ele mostra o bem pequeninho.'];
+  F.objetos['ciencias-microscopio'] = F.objetos['ciencias-microscopio'] || [R.Bimestres.aviso];
   // { historia: 'aurora', ingles: 'oliver', portugues: 'clara' }: gancho de teste (I.castelo), tirado do elenco
   var CAVALEIROS = {};
   Object.keys(ELENCO).forEach(function (id) {

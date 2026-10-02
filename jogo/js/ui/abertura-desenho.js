@@ -16,7 +16,7 @@
     var emPe = H > W * 1.15;
     var yH = Math.round(H * (emPe ? 0.63 : 0.7));               // horizonte (pé das montanhas)
     var colina = Math.max(8, Math.round(H * 0.035));             // altura da colina do castelo
-    var cx = Math.round(W / 2);
+    var cx = Math.round(W * (emPe ? 0.5 : 0.7));
     var topoColina = yH - colina;
     var castelo = { w: 112, h: 80, x: cx - 56, y: topoColina - 77 };
     var raio = Math.round(Math.max(104, Math.min(Math.max(W * 0.47, 124), yH * 0.8)));

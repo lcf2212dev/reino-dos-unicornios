@@ -5,7 +5,8 @@
 const { test } = require('node:test');
 const assert = require('assert');
 const path = require('path');
-const { abrirCenario, PASTA_VER } = require('../cenario');
+const { PASTA_VER } = require('../cenario');
+const { abrirCenario } = require('./ajudantes/terceiro-bimestre');
 const pasta = (n) => path.join(PASTA_VER, n);   // dentro da REINO_TESTES (guardas.js)
 
 // caixa de um elemento: topo, x, fundo, altura e se o texto passa da largura (botão de 1 linha que não coube)

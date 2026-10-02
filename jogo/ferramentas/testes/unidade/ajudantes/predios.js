@@ -16,7 +16,8 @@ function ctxAnotador() {
 
 // mapa: põe um Mapa de mentira cuja fachada (porta, degrau, tijolos…) só anota as chamadas
 // pa:   um PA de mentira (ícones), para desenhar vitrines sem canvas
-function montar({ mapa = false, pa = null } = {}) {
+function montar({ mapa = false, pa = null, terceiroBimestre = false } = {}) {
+  const Jogo = terceiroBimestre ? require('./terceiro-bimestre') : require('../../../jogo-no-node');
   const chamadas = [];
   const fachada = new Proxy({}, { get: (_, f) => (f === 'chamadas' ? chamadas : (...a) => { chamadas.push({ f, a }); }) });
   const extras = { console, setTimeout, clearTimeout, Math, Date };

@@ -5,7 +5,7 @@
 // nada trava. Servidor e banco de TESTE novos (cenario.js); saves 100% sintéticos (voz desligada).
 const { test } = require('node:test');
 const assert = require('assert');
-const { abrirCenario } = require('../cenario');
+const { abrirCenario } = require('./ajudantes/terceiro-bimestre');
 
 // espera: true → cada fala fica pendente até __soltar(); false → nada espera
 const STUB = (espera) => `

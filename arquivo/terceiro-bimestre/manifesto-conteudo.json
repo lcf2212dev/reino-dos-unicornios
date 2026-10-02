@@ -1,0 +1,252 @@
+[
+  {
+    "js": "js/conteudo/materias/registro.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/historia/h1.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/historia/h2.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/historia/h3.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/historia/h4.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/historia/h5.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/historia/livro.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/historia/historia.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/ingles/i1.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/ingles/i2.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/ingles/i3.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/ingles/i4.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/ingles/i5.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/ingles/livro.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/ingles/ingles.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/portugues/p1.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/portugues/p2.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/portugues/p3.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/portugues/p4.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/portugues/p5.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/portugues/livro.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/portugues/portugues.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/ciencias/c1.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/ciencias/c2.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/ciencias/c3.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/ciencias/c4.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/ciencias/c5.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/ciencias/livro.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/ciencias/ciencias.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/matematica/m1.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/matematica/m2.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/matematica/m3.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/matematica/m4.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/matematica/m5.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/matematica/m6.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/matematica/livro.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/matematica/matematica.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/geografia/g1.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/geografia/g2.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/geografia/g3.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/geografia/g4.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/geografia/g5.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/geografia/livro.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/materias/geografia/geografia.js",
+    "grupo": "materias",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/provas/historia-3bim.js",
+    "grupo": "provas",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/provas/ingles-3bim.js",
+    "grupo": "provas",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/provas/portugues-3bim.js",
+    "grupo": "provas",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/provas/ciencias-3bim.js",
+    "grupo": "provas",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/provas/matematica-3bim.js",
+    "grupo": "provas",
+    "node": true
+  },
+  {
+    "js": "js/conteudo/provas/geografia-3bim.js",
+    "grupo": "provas",
+    "node": true
+  }
+]

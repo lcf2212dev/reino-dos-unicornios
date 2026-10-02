@@ -4,7 +4,8 @@
 // Rodar (da raiz): node --test jogo/ferramentas/testes/unidade/genero-falas.test.js   (tudo: npm test)
 const { test } = require('node:test');
 const assert = require('assert');
-const J = require('../../jogo-no-node');
+// Fixture histórica preserva a cobertura dos dois gêneros nas antigas falas pedagógicas.
+const J = require('./ajudantes/terceiro-bimestre');
 
 function jogo() {
   const ctx = J.contexto({ console });

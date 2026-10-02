@@ -7,7 +7,7 @@
 // Servidor e banco de TESTE (cenario.js); save sintético.
 const { test } = require('node:test');
 const assert = require('assert');
-const { abrirCenario } = require('../cenario');
+const { abrirCenario } = require('./ajudantes/terceiro-bimestre');
 
 // põe cada texto em `sel` com U.preencherColado e devolve os que estouram (span nowrap além do pai ou da tela)
 const MEDIR = (sel, textos) => `(function () {

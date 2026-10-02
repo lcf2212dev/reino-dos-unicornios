@@ -4,7 +4,8 @@
 //   --detalhes   também a linha "✔ <matéria/prova> …" de cada uma (sem ele: só erros, avisos e o resumo)
 const fs = require('fs');
 const path = require('path');
-const Jogo = require('../jogo-no-node');
+const ARQUIVO = process.argv.includes('--terceiro-bimestre');
+const Jogo = ARQUIVO ? require('../testes/unidade/ajudantes/terceiro-bimestre') : require('../jogo-no-node');
 const Preencher = require('./preencher');
 
 const ctx = Jogo.contexto({ console });
@@ -114,6 +115,12 @@ MATERIAS.forEach((m) => {
   checarCor(m);
   checarIngles(m, m.id);
   Preencher.faltas(m, m.id).forEach((e) => erros.push(e));   // esqueleto do `npm run novo` ainda por escrever
+  if (m.arquivada) {
+    checar(!ARQUIVO, `${m.id}: conteúdo histórico não pode ser um catálogo vazio`);
+    checar(Array.isArray(m.livro) && m.livro.length === 0, `${m.id}: matéria arquivada ainda contém livro`);
+    checar(Array.isArray(m.salas) && m.salas.length > 0 && m.salas.every((s) => Array.isArray(s.desafios) && s.desafios.length === 0), `${m.id}: catálogo arquivado deve preservar salas sem desafios`);
+    detalhe(`✔ ${m.nome}: catálogo arquivado, aguardando o quarto bimestre`);
+  }
   const livro = new Set((m.livro || []).map((l) => l.id));
   checar(m.salas && m.salas.length > 0, `${m.id}: sem salas`);
   // cada sala vale um valor redondo e a sobra é bônus ao completar (progresso-regras.js): a soma fecha sempre
@@ -123,7 +130,7 @@ MATERIAS.forEach((m) => {
   checar(Math.round(valorSala * 100) % 50 === 0 && bonus >= 0, `${m.id}: valor por sala (${valorSala}) tem de ser de R$ 0,50 em R$ 0,50 e o bônus (${bonus}) não pode ser negativo`);
 
   m.salas.forEach((s) => {
-    checar(s.desafios.length >= Reino.config.desafiosPorSala, `${s.id}: só ${s.desafios.length} desafios (mínimo ${Reino.config.desafiosPorSala})`);
+    if (!m.arquivada) checar(s.desafios.length >= Reino.config.desafiosPorSala, `${s.id}: só ${s.desafios.length} desafios (mínimo ${Reino.config.desafiosPorSala})`);
     s.desafios.forEach((d) => {
       checar(!ids.has(d.id), `ID repetido: ${d.id}`);
       ids.add(d.id);
@@ -151,7 +158,7 @@ MATERIAS.forEach((m) => {
     if (u.raridade === 'epico') checar(['ouro', 'perfeito'].includes(u.treino), `${u.id}: treino "${u.treino}" desconhecido (ouro ou perfeito)`);
   });
   const treinaveis = m.salas.flatMap((s) => s.desafios).filter((d) => Reino.Desafios.TREINAVEIS.includes(d.tipo) && !d.livre).length;
-  checar(treinaveis >= Reino.config.perguntasTreino, `${m.id}: só ${treinaveis} perguntas para o treino`);
+  if (!m.arquivada) checar(treinaveis >= Reino.config.perguntasTreino, `${m.id}: só ${treinaveis} perguntas para o treino`);
   detalhe(`✔ ${m.nome}: ${m.salas.length} salas, ${m.salas.reduce((t, s) => t + s.desafios.length, 0)} desafios, ${treinaveis} para o treino, ${(m.livro || []).length} cartões no livro, ${unis.length} unicórnios, R$${valorSala.toFixed(2)} por sala`);
 });
 
@@ -196,6 +203,11 @@ PROVAS.forEach((pv) => {
   });
   checarIngles(pv, pv.id);
   Preencher.faltas(pv, pv.id).forEach((e) => erros.push(e));
+  if (pv.arquivada) {
+    checar(!ARQUIVO, `${pv.id}: prova histórica não pode ser um catálogo vazio`);
+    checar(m && m.arquivada, `${pv.id}: prova arquivada de matéria ativa`);
+    checar(Array.isArray(pv.questoes) && pv.questoes.length === 0, `${pv.id}: prova arquivada ainda contém questões`);
+  }
   pv.questoes.forEach((d) => {
     checarNovos(d, true);
     checar(!ids.has(d.id), `ID repetido: ${d.id}`);
@@ -222,6 +234,8 @@ PROVAS.forEach((pv) => {
   const arquivos = SO
     ? materias.filter(daVez).map((s) => trocar[Jogo.nome(s)] || Jogo.caminho(s.js)).concat(provas.filter(daVez).map((s) => Jogo.caminho(s.js)))
     : todos(raizJs, '.js').filter((f) => !f.startsWith(voz)).map(trocado).concat(todos(path.join(Jogo.raiz, 'css'), '.css'));
+  if (ARQUIVO) arquivos.push(...(SO ? materias.concat(provas).filter(daVez).map((s) => Jogo.arquivo(Jogo.nome(s)))
+    : todos(path.resolve(Jogo.raiz, '../arquivo/terceiro-bimestre/jogo/js'), '.js').filter((f) => !f.includes(path.sep + 'voz' + path.sep))));
   const iExtra = process.argv.indexOf('--emojis-extra');
   if (iExtra >= 0) arquivos.push(path.resolve(process.argv[iExtra + 1]));
   // tira /* */ e // de fim de linha (fora de "http://", ':' antes) sem mexer no resto

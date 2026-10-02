@@ -63,16 +63,17 @@
     },
     avisos: function (l) {
       var m = Reino.materia(l.materiaId);
+      if (m.arquivada) return [];
       var pronto = Reino.Cena && Reino.Cena.concluidos ? Reino.Cena.concluidos().indexOf(l.id) >= 0 : P.materiaCompleta(m);
       // "3 de 5 salas" já está na info: só o "Pronto" vira aviso
       return pronto ? [{ texto: 'Pronto', tipo: 'pronto' }] : [];
     },
     abrir: function (l) { return UI.telaMateria(Reino.materia(l.materiaId)); },
   });
-  UI.registrarLugarMenu('castelo', { emoji: '🥇', info: function () { return 'Treino da Medalha de Ouro'; }, abrir: function () { return UI.telaCastelo(); } });
+  UI.registrarLugarMenu('castelo', { emoji: '🥇', info: function () { return Reino.materias.every(function (m) { return m.arquivada; }) ? 'Novos conteúdos em breve' : 'Treino da Medalha de Ouro'; }, abrir: function () { return UI.telaCastelo(); } });
   UI.registrarLugarMenu('escola', {
-    emoji: '🏫', info: function () { return 'Provas bimestrais valendo acessório'; },
-    avisos: function () { return Reino.provas.some(function (pv) { return !P.regProva(pv).premio; }) ? [{ texto: 'Prova', tipo: 'prova' }] : []; },
+    emoji: '🏫', info: function () { return Reino.provas.every(function (p) { return p.arquivada; }) ? 'Novos conteúdos em breve' : 'Provas bimestrais valendo acessório'; },
+    avisos: function () { return Reino.provas.some(function (pv) { return !pv.arquivada && !P.regProva(pv).premio; }) ? [{ texto: 'Prova', tipo: 'prova' }] : []; },
     abrir: function () { return Reino.Provas.telaEscola(); },
   });
   UI.registrarLugarMenu('estabulo', {
@@ -109,18 +110,28 @@
   }
   UI.telaLugares = function () {
     var pn = painel('lugares', '📋 Lugares do Reino');
-    var lista = el('div.lista-salas');
+    var lista = el('div.lista-salas.lugares-atlas');
+    pn.conteudo.appendChild(el('div.lugares-capa', iconePequeno('🦄', 48), el('div',
+      el('p.lugares-capitulo', '4º bimestre'), el('b', 'Seu reino de aventuras'),
+      el('p', 'Escolha um lugar. Vamos até lá!'))));
     // as matérias aparecem primeiro
     var ordenados = Mapa.lugares().slice().sort(function (a, b) { return (b.tipo === 'materia') - (a.tipo === 'materia'); });
     var grupo = null;
     ordenados.forEach(function (l) {
       // subtítulo a cada troca de grupo: "Matérias" e depois "Lugares"
-      var g = l.tipo === 'materia' ? 'Matérias' : 'Lugares';
-      if (g !== grupo) { grupo = g; lista.appendChild(el('h3.lugares-grupo', g)); }
+      var g = l.tipo === 'materia' ? 'Novos aprendizados' : 'Explore o reino';
+      if (g !== grupo) { grupo = g; lista.appendChild(el('h3.lugares-grupo', el('span', g), el('small', l.tipo === 'materia' ? 'Em breve' : 'Vamos passear!'))); }
       var d = menuDe(l) || {};
       var emoji = typeof d.emoji === 'function' ? d.emoji(l) : (d.emoji || '📍');
-      var info = d.info ? d.info(l) : '';
-      var b = el('button.sala-card', { type: 'button' }, el('span.sala-emoji', emoji), el('span.sala-info', el('b', { title: l.nome }, hifenizar(l.nome)), el('small', hifenizar(info)), ondeFica(l), chipsAvisos(l)), el('span.sala-ir', { 'aria-label': 'Ir' }, '→'));
+      var m = l.tipo === 'materia' ? Reino.materia(l.materiaId) : null;
+      var espera = m && (Reino.Bimestres ? Reino.Bimestres.emEspera(m) : m.arquivada);
+      var info = espera ? 'Novos conteúdos em breve' : (d.info ? d.info(l) : 'Venha conhecer!');
+      var b = el('button.sala-card', { type: 'button' }, el('span.sala-emoji', emoji), el('span.sala-info', el('b', { title: l.nome }, hifenizar(l.nome)), el('small', hifenizar(info)), ondeFica(l), espera ? null : chipsAvisos(l)), el('span.sala-ir', { 'aria-label': 'Ir' }, '→'));
+      if (l.tipo === 'materia') {
+        b.classList.add('lugar-materia');
+        var materia = Reino.materia(l.materiaId);
+        if (materia && materia.cor) b.style.setProperty('--cor-materia', materia.cor);
+      }
       b.addEventListener('click', function (e) {
         UI.fecharTela(pn.tela);
         // o dedo que ainda bate no "Ir" cai no mapa e trocaria o destino: segura mais um pouco

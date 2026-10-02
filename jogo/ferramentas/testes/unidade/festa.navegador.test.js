@@ -3,7 +3,7 @@
 // trocado por um de mentira que já sai certo. Servidor e banco de TESTE novos por cenário; saves 100% sintéticos.
 const { test } = require('node:test');
 const assert = require('assert');
-const { abrirCenario } = require('../cenario');
+const { abrirCenario } = require('./ajudantes/terceiro-bimestre');
 
 const FALSO = `
   var D = Reino.Desafios;

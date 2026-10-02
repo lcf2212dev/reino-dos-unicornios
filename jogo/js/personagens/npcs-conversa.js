@@ -153,6 +153,7 @@
 
   N.executar = function (acao, ctx) {
     acao = acao || {};
+    if (Reino.Bimestres.acaoEmEspera(acao)) return Reino.Bimestres.avisar();
     var UI = Reino.UI, p = P();
     if (acao.tipo === 'sala') {
       var m = materiaDe(acao), s = salaDe(acao);
@@ -230,6 +231,11 @@
   N.interagir = function (npc, ctx) {
     if (emConversa) return emConversa;
     var a = npc.acao || {};
+    if (Reino.Bimestres.acaoEmEspera(a)) {
+      emConversa = Promise.resolve(Reino.Bimestres.avisar({ nome: npc.nome, voz: npc.voz, retrato: N.retrato(npc, 0) }))
+        .finally(function () { emConversa = null; });
+      return emConversa;
+    }
     // retrato: [normal, piscando, boca aberta] (o balão abre a boca enquanto a voz toca, D4-17)
     var quem = { nome: npc.nome, retrato: [N.retrato(npc, 0), N.retrato(npc, 1), N.retrato(npc, 2)], voz: npc.voz };
     function balao(pg, op) {

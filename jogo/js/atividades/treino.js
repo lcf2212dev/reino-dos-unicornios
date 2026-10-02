@@ -119,6 +119,7 @@
   };
 
   Pr.iniciar = function (materia, aoTerminar) {
+    if (Reino.Bimestres.emEspera(materia)) return Reino.Bimestres.avisar().then(function () { if (aoTerminar) aoTerminar(null); });
     Reino.Voz.carregarMateria(materia);
     var tela = Reino.UI.abrirTela('prova');
     if (materia.cor) tela.style.setProperty('--cor-materia', materia.cor);   // faixa do cabeçalho na cor da matéria

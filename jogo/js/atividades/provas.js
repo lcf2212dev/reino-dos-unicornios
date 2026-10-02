@@ -10,7 +10,6 @@
   var MAX_AVISOS_PRESSA = 3;
   // troca de tela pelo teclado: o Enter/Espaço que chega logo depois no controle novo não vale
   var CALMA_TROCA = 400;
-
   function rar(r) { return Reino.Unicornios.RARIDADES[r]; }
   function est() { return P.estado(); }
 
@@ -64,12 +63,13 @@
 
   /* ---------- a construção ---------- */
   Pv.telaEscola = function () {
+    if (Reino.provas.every(function (p) { return p.arquivada; })) return Reino.Bimestres.painel('Escola do Reino', { icone: '🏫' });
     var pn = Reino.UI.painel('lugar', '🏫 Escola do Reino');
     var c = pn.conteudo;
     c.appendChild(el('div.lugar-guia.guia-falada', PA.paraDOM(PA.claude(0), 4, 'claude-intro'), el('p', Reino.Falas.provas.escola)));   // dita ao abrir: some no notebook baixo
     Reino.Som.falar(Reino.Falas.provas.escola, { voz: 'claude' });
     var lista = el('div.lista-salas');
-    Reino.provas.forEach(function (prova) {
+    Reino.provas.filter(function (p) { return !p.arquivada; }).forEach(function (prova) {
       var reg = P.regProva(prova);
       var valendo = P.valendoProva(prova);
       var chips = el('span.sala-chips',
@@ -95,6 +95,7 @@
 
   /* ---------- a prova ---------- */
   Pv.iniciar = function (prova, aoTerminar) {
+    if (prova.arquivada) return Reino.Bimestres.avisar().then(function () { if (aoTerminar) aoTerminar(null); });
     Reino.Voz.carregar('prova-' + prova.id);
     var materia = Reino.materia(prova.materiaId);
     var reg = P.regProva(prova);

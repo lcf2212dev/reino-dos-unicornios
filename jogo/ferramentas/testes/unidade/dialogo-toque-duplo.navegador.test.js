@@ -21,6 +21,7 @@ test('toque duplo no "Continuar →" avança só uma página e não aciona o bot
 
     const { page } = await abrir({ browser, url: servidor.url, save, query: '?debug=1&congelar=1' });
     await esperarJogo(page);
+  await require('./ajudantes/terceiro-bimestre').noNavegador(page);
     await page.waitForTimeout(1500);
     const info = await page.evaluate(() => {
       Reino.Claude.limpar();
@@ -29,6 +30,8 @@ test('toque duplo no "Continuar →" avança só uma página e não aciona o bot
       Reino.interiores.some(function (d) {
         return (d.npcs || []).some(function (n) {
           if (!n.acao || n.acao.tipo !== 'sala') return false;
+          // Saudação sintética de duas páginas: o NPC publicado agora só anuncia o quarto bimestre.
+          n.falas = Object.assign({}, n.falas, { oi: ['Olá! Vamos conversar?', 'Esta é a segunda página.'] });
           var pags = [].concat.apply([], Reino._npcs.falas(n, 'oi').map(function (t) { return Reino._npcs.paginas([t]); }));
           if (pags.length >= 2) { achado = { d: d, n: n, pags: pags }; return true; }
           return false;

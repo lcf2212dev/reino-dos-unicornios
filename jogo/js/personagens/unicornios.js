@@ -76,6 +76,7 @@
   // dica de como ganhar (para as cartas ainda escondidas)
   U.comoGanhar = function (def) {
     var m = def.materiaId ? Reino.materia(def.materiaId) : null;
+    if (m && m.arquivada) return 'Unicórnio do terceiro bimestre.';
     var sala = m && def.sala ? m.salas.find(function (s) { return s.id === def.sala; }) : null;
     if (def.raridade === 'comum' && sala) return 'Conclua a sala "' + sala.nome + '".';
     var P = Reino.Progresso;

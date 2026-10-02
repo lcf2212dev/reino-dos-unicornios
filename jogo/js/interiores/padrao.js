@@ -196,9 +196,9 @@
 
     /* ---------- HALL ---------- */
     var h = xy(1, 0), temCima = !!ocupada['1:1'];
-    var livroHall = { tipo: 'padrao-pulpito', nome: m.nomeLivro || 'Livro da matéria', fala: FALAS.objetos.livro,
+    var livroHall = { tipo: 'padrao-pulpito', nome: m.nomeLivro || 'Livro da matéria', fala: m.arquivada ? Reino.Bimestres.aviso : FALAS.objetos.livro,
       acao: { tipo: 'tela', tela: 'livro', materia: m.id }, var: { cor: cT } };
-    var bancadaHall = { tipo: 'padrao-bancada', nome: 'Desenho da matéria', fala: FALAS.objetos.hall, var: { emoji: semFE0F(m.emoji), cor: cD } };
+    var bancadaHall = { tipo: 'padrao-bancada', nome: 'Desenho da matéria', fala: m.arquivada ? Reino.Bimestres.aviso : FALAS.objetos.hall, var: { emoji: semFE0F(m.emoji), cor: cD } };
     var bebedouro = { tipo: 'bebedouro', nome: 'Bebedouro', fala: FALAS.objetos.bebedouro };
     var PH = planta && planta.hall;
     comodos.push(comPlanta({ id: 'hall', nome: 'Hall', placa: 'Hall • ' + nomeLugar, rect: { x: h.x, y: h.y, w: 11, h: 11 },
@@ -241,7 +241,7 @@
       comodos.push(comPlanta({ id: 'sala' + n, nome: String(s.nome || '').replace(/[«»]/g, ''), placa: placa(n, s.nome),
         rect: { x: o.x, y: o.y, w: 11, h: 11 }, piso: PISOS[(i + 1) % PISOS.length], parede: PAREDES[i % PAREDES.length], paleta: pal }, PS));
       cruz(o);
-      var bancada = { tipo: 'padrao-bancada', nome: 'Desenho da Sala ' + n, fala: FALAS.objetos.bancada, var: { emoji: emo, cor: pal.detalhe } };
+      var bancada = { tipo: 'padrao-bancada', nome: 'Desenho da Sala ' + n, fala: m.arquivada ? Reino.Bimestres.aviso : FALAS.objetos.bancada, var: { emoji: emo, cor: pal.detalhe } };
       var quadro = raro ? { tipo: 'quadro-unicornio', var: { uni: raro.id } } : { tipo: 'mapa-parede' };
       /** @type {ObjetoInterior[]} */
       var parede = [

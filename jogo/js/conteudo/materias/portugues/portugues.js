@@ -7,6 +7,7 @@
    Salas em p1.js, p2.js, p3.js, p4.js, p5.js e o livro em livro.js (carregados antes deste arquivo, na ordem do
    manifesto; ver conteudo/materias/registro.js). */
 Reino.registrarMateria({
+  arquivada: true,
   id: 'portugues',
   nome: 'Português',
   emoji: '📝',
@@ -21,7 +22,7 @@ Reino.registrarMateria({
     porCima: true,   // entra depois do sorteio dos enfeites: o resto do reino fica igual (js/mundo/mapa.js)
     cores: { parede: '#fff4ec', detalhe: '#39a860' },
   },
-  guia: 'Eu sou o guia da Casa das Palavras! Aqui tem receita, letras, uma viagem gelada e um carrossel.',
+  guia: 'Em breve teremos novos conteúdos do quarto bimestre!',
 
   salas: Reino.salasDa('portugues'),         // p1.js, p2.js, p3.js, p4.js, p5.js, na ordem do manifesto
 

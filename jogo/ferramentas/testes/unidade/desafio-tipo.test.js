@@ -9,7 +9,7 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const { spawnSync } = require('child_process');
-const Jogo = require('../../jogo-no-node');
+const Jogo = require('./ajudantes/terceiro-bimestre');
 
 // o tipo de mentira: "conta" (a resposta é o número certo); registrado igual a um desafios/<tipo>.js
 const REGISTRO = `Reino.registrarTipoDesafio('contaTeste', {
@@ -82,10 +82,10 @@ const tmp = path.join('/tmp/reino-testes', path.basename(path.dirname(jogo)) + '
 function validarCom(campos) {
   fs.mkdirSync(tmp, { recursive: true });
   const sala = path.join(tmp, 'h1.js');
-  const t = fs.readFileSync(path.join(jogo, 'js/conteudo/materias/historia/h1.js'), 'utf8');
+  const t = fs.readFileSync(Jogo.arquivo('conteudo/materias/historia/h1'), 'utf8');
   assert.ok(t.includes("tipo: 'varias'"), 'âncora sumiu de h1.js (atualize o teste)');
   fs.writeFileSync(sala, REGISTRO + t.replace("tipo: 'varias'", "tipo: 'contaTeste'" + campos));
-  const r = spawnSync(process.execPath, ['ferramentas/validar/validar-conteudo.js', '--materia', sala], { cwd: jogo, encoding: 'utf8' });
+  const r = spawnSync(process.execPath, ['ferramentas/validar/validar-conteudo.js', '--terceiro-bimestre', '--materia', sala], { cwd: jogo, encoding: 'utf8' });
   return { status: r.status, saida: (r.stdout || '') + (r.stderr || '') };
 }
 

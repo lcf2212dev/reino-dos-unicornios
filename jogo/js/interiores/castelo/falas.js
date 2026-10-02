@@ -1,76 +1,135 @@
-/* Castelo da Medalha: tudo o que a princesa, os cavaleiros e os objetos dizem (gravado com a voz de cada um). */
-Reino.FALAS_INTERIORES = Reino.FALAS_INTERIORES || {};
-Reino.FALAS_INTERIORES.castelo = {
-  npcs: {
-    // salão do trono: explica o treino (o convite sorteia uma das falas de `nova`)
-    serena: {
-      oi: ['Oi! Sou a Princesa Serena. 👑', 'O treino aqui não tem relógio.'],
-      nova: [
-        'Aqui ninguém tem pressa. 🌷',
-        'Revise tudo antes de entregar.',
-        'A medalha vem dos acertos. 🥇',
-        'Acertar com calma dá ouro. 🥇',
+/* Personagens e objetos aguardam o quarto bimestre. Falas originais em arquivo/terceiro-bimestre/jogo/js/interiores/castelo/falas.js. */
+Reino.falasDoPredio("castelo", {
+  "npcs": {
+    "serena": {
+      "oi": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
       ],
+      "nova": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ]
     },
-    // ala da História
-    aurora: {
-      oi: ['Oi! Sou a Cavaleira Aurora. 🛡️', 'Eu treino a História com você.'],
-      nova: ['Vamos treinar a História? 🥇', 'Vamos ler cada pergunta? 📖'],
-      feita: ['Quer treinar mais uma vez?', 'Vamos buscar o ouro com calma?'],
-      bloqueada: ['Primeiro, as salas do museu. 🏛️', 'O museu vem antes do treino.'],
-      depois: ['Você revisou tudo com calma! ✨', 'Revisar é coisa de {campeã|campeão}! 🏆'],
+    "aurora": {
+      "oi": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ],
+      "nova": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ],
+      "feita": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ],
+      "bloqueada": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ],
+      "depois": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ]
     },
-    // ala do Inglês
-    oliver: {
-      oi: ['Oi! Eu sou o «Sir Oliver». 🛡️', 'Eu treino o Inglês com você.'],
-      nova: ['Vamos treinar o Inglês? 🥇', 'Vamos ler tudo com calma?'],
-      feita: ['Quer treinar de novo comigo?', 'Vamos tentar o ouro com calma?'],
-      bloqueada: ['Primeiro, as salas da Torre. 🕰️', 'A Torre vem antes do treino.'],
-      depois: ['«Well done!» Você revisou tudo!', 'Terminar com calma é o melhor!'],
+    "oliver": {
+      "oi": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ],
+      "nova": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ],
+      "feita": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ],
+      "bloqueada": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ],
+      "depois": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ]
     },
-    // ala do Português
-    clara: {
-      oi: ['Eu sou a Cavaleira Clara! 🛡️', 'Eu treino Português com você.'],
-      nova: ['Vamos treinar o Português? 🥇', 'Leia cada pergunta duas vezes.'],
-      feita: ['Quer treinar mais uma vez? ✨', 'Vamos buscar o ouro com calma?'],
-      bloqueada: ['Primeiro, as salas da Casa. 📝', 'A Casa das Palavras vem antes.'],
-      depois: ['Você leu tudo com calma! ✨', 'Ler duas vezes dá certo! 🏆'],
+    "clara": {
+      "oi": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ],
+      "nova": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ],
+      "feita": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ],
+      "bloqueada": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ],
+      "depois": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ]
     },
-    // ala da Matemática
-    caio: {
-      oi: ['Oi! Eu sou o Cavaleiro Caio. 🛡️', 'Eu treino Matemática com você.'],
-      nova: ['Vamos treinar a Matemática? 🥇', 'Vamos contar com calma?'],
-      feita: ['Quer treinar mais uma vez?', 'Vamos buscar o ouro com calma?'],
-      bloqueada: ['Primeiro, termine as salas. 🔒'],
-      depois: ['Você contou tudo com calma! ✨', 'Conferir a conta dá certo! 🏆'],
+    "caio": {
+      "oi": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ],
+      "nova": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ],
+      "feita": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ],
+      "bloqueada": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ],
+      "depois": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ]
     },
-    // ala da Geografia
-    rosa: {
-      oi: ['Oi! Eu sou a Cavaleira Rosa. 🛡️', 'Eu treino Geografia com você.'],
-      nova: ['Vamos treinar a Geografia? 🥇', 'Vamos ler cada pergunta? 📖'],
-      feita: ['Quer treinar mais uma vez?', 'Vamos buscar o ouro com calma?'],
-      bloqueada: ['Primeiro, termine as salas. 🔒'],
-      depois: ['Você revisou tudo com calma! ✨', 'Revisar é coisa de {campeã|campeão}! 🏆'],
-    },
+    "rosa": {
+      "oi": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ],
+      "nova": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ],
+      "feita": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ],
+      "bloqueada": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ],
+      "depois": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ]
+    }
   },
-  // cavaleiro padrão: usado pelo gerador numa matéria sem cavaleiro conhecido
-  cavaleiro: {
-    oi: ['Oi! Sou um cavaleiro do Reino.', 'Eu cuido do treino desta ala.'],
-    nova: ['Vamos treinar sem pressa? 🥇', 'Vamos ler cada pergunta? 📖'],
-    feita: ['Quer treinar mais uma vez?', 'Vamos buscar o ouro com calma?'],
-    bloqueada: ['Primeiro, termine as salas. 🔒'],
-    depois: ['Você revisou tudo com calma! ✨', 'Revisar é coisa de {campeã|campeão}! 🏆'],
+  "cavaleiro": {
+    "oi": [
+      "Em breve teremos novos conteúdos do quarto bimestre!"
+    ],
+    "nova": [
+      "Em breve teremos novos conteúdos do quarto bimestre!"
+    ],
+    "feita": [
+      "Em breve teremos novos conteúdos do quarto bimestre!"
+    ],
+    "bloqueada": [
+      "Em breve teremos novos conteúdos do quarto bimestre!"
+    ],
+    "depois": [
+      "Em breve teremos novos conteúdos do quarto bimestre!"
+    ]
   },
-  objetos: {
-    // salão do trono
-    'tapecaria': ['É o Plano da Prova! 📜', 'Vamos ler {juntas|juntos} com calma?'],
-    'medalhas': ['Aqui ficam as suas medalhas! 🏅', 'Todas vieram dos seus acertos.'],
-    'lareira': ['Que fogo quentinho! 🔥', 'Descanse um pouquinho aqui.'],
-    // ala da História
-    'historia-ampulheta': ['Uma ampulheta bem antiga! ⏳', 'No treino não tem relógio.', 'Pode pensar com calma.'],
-    // ala do Inglês
-    'ingles-cartaz': ['Um cartaz «in English»! 📋', '«Hello» quer dizer olá.'],
-    // ala do Português
-    'portugues-livro': ['Um livro aberto na mesa! 📖', 'Leia devagar, com o dedinho.', 'Depois, leia mais uma vez.'],
-  },
-};
+  "objetos": {
+    "tapecaria": [
+      "Em breve teremos novos conteúdos do quarto bimestre!"
+    ],
+    "medalhas": [
+      "Em breve teremos novos conteúdos do quarto bimestre!"
+    ],
+    "lareira": [
+      "Em breve teremos novos conteúdos do quarto bimestre!"
+    ],
+    "historia-ampulheta": [
+      "Em breve teremos novos conteúdos do quarto bimestre!"
+    ],
+    "ingles-cartaz": [
+      "Em breve teremos novos conteúdos do quarto bimestre!"
+    ],
+    "portugues-livro": [
+      "Em breve teremos novos conteúdos do quarto bimestre!"
+    ]
+  }
+});

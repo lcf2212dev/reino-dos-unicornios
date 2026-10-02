@@ -6,7 +6,7 @@
 // pontuação não tocam em document: entram aqui pelo manifesto (grupo atividades), sem lista copiada.
 const { test } = require('node:test');
 const assert = require('assert');
-const Jogo = require('../../jogo-no-node');
+const Jogo = require('./ajudantes/terceiro-bimestre');
 
 function carregar() {
   const ctx = Jogo.contexto({ console, Math, Date, JSON });

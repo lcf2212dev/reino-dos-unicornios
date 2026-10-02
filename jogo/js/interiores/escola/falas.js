@@ -1,64 +1,107 @@
-/* Escola do Reino: tudo o que a diretora, os professores e os objetos dizem (gravado com a voz de cada um). */
-Reino.FALAS_INTERIORES = Reino.FALAS_INTERIORES || {};
-Reino.FALAS_INTERIORES.escola = {
-  npcs: {
-    // corredor: a diretora explica os prêmios (o motor junta o botão "Ver a lista")
-    margarida: {
-      oi: [
-        'Oi! Sou a Diretora Margarida. 🌼',
-        'Nota dez é acertar tudo! ⭐',
-        'Com dez de primeira: lendário! 🌈',
-        'Na segunda vez, vale o raro. 💙',
-        'Depois, vale o comum. 🤍',
+/* Personagens e objetos aguardam o quarto bimestre. Falas originais em arquivo/terceiro-bimestre/jogo/js/interiores/escola/falas.js. */
+Reino.falasDoPredio("escola", {
+  "npcs": {
+    "margarida": {
+      "oi": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
       ],
-      nova: ['Quer ver as provas da Escola?', 'Vamos ver os prêmios {juntas|juntos}?'],
+      "nova": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ]
     },
-    // sala de História
-    helena: {
-      oi: ['Oi! Sou a Professora Helena. 📜', 'Eu adoro contar histórias.'],
-      nova: ['Vamos fazer a prova com calma?', 'Leia cada pergunta devagar.'],
-      feita: ['Vamos treinar a prova {juntas|juntos}?', 'Quer revisar a prova comigo?'],
-      depois: ['Você leu com muita atenção!', 'Que prova caprichada! ✨'],
+    "helena": {
+      "oi": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ],
+      "nova": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ],
+      "feita": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ],
+      "depois": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ]
     },
-    // sala de Inglês
-    emma: {
-      oi: ['Oi! Eu sou a «Teacher Emma»! 🍎', 'Eu ensino Inglês com carinho.'],
-      nova: ['Vamos fazer a prova {juntas|juntos}?', 'Escute cada palavra com calma.'],
-      feita: ['Vamos treinar a prova {juntas|juntos}?', 'Quer revisar as palavras comigo?'],
-      depois: ['«Good job!» Você foi muito bem!', 'Você revisou com calma! ✨'],
+    "emma": {
+      "oi": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ],
+      "nova": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ],
+      "feita": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ],
+      "depois": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ]
     },
-    // sala de Português
-    lucia: {
-      oi: ['Eu sou a Professora Lúcia! 📝', 'Eu adoro ler e escrever.'],
-      nova: ['Vamos fazer a prova com calma?', 'Leia o texto duas vezes. 📖'],
-      feita: ['Vamos treinar a prova {juntas|juntos}?', 'Revise antes de entregar. ✏️'],
-      depois: ['Você leu tudo com atenção!', 'Revisar ajudou muito! ✨'],
-    },
+    "lucia": {
+      "oi": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ],
+      "nova": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ],
+      "feita": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ],
+      "depois": [
+        "Em breve teremos novos conteúdos do quarto bimestre!"
+      ]
+    }
   },
-  // professora de uma prova nova, sem professor próprio ainda (voz da narradora)
-  professorPadrao: {
-    oi: ['Oi! Sou a Professora do Reino.', 'Cuido desta sala de aula. 📝'],
-    nova: ['Vamos fazer a prova com calma?', 'Leia tudo antes de responder.'],
-    feita: ['Vamos treinar a prova {juntas|juntos}?', 'Quer revisar a prova comigo?'],
-    depois: ['Você fez tudo com carinho! 💛'],
+  "professorPadrao": {
+    "oi": [
+      "Em breve teremos novos conteúdos do quarto bimestre!"
+    ],
+    "nova": [
+      "Em breve teremos novos conteúdos do quarto bimestre!"
+    ],
+    "feita": [
+      "Em breve teremos novos conteúdos do quarto bimestre!"
+    ],
+    "depois": [
+      "Em breve teremos novos conteúdos do quarto bimestre!"
+    ]
   },
-  objetos: {
-    // corredor
-    'mural': ['São os prêmios da Escola! 🏆', 'Os coloridos já são seus.', 'Os outros ainda vão chegar.'],
-    'bebedouro': ['Um golinho de água? 💧', 'Descanse um pouquinho.'],
-    'escaninhos': ['Os armários dos alunos. 🎒', 'Cada um guarda o seu material.'],
-    // salas (todas)
-    'lousa': ['A lousa tem o ABC! ✏️', 'Letra por letra, sem pressa.'],
-    'globo': ['Um globo do mundo! 🌍', 'O mundo é grande e bonito.'],
-    'mochila': ['Uma mochila bem arrumada. 🎒', 'Lápis, caderno e borracha.'],
-    // sala de História
-    'cartas': ['Cartas antigas da turma. ✉️', 'Contam coisas de outra época.'],
-    'linha-tempo': ['Uma linha do tempo! 📜', 'Do passado até hoje. ⏳'],
-    // sala de Inglês
-    'palavras': ['Palavras em inglês! 🍎', '«Apple» quer dizer maçã.', '«Book» quer dizer livro. 📖'],
-    'bandeira': ['A bandeira do Reino Unido.', 'Lá se fala inglês! 💂'],
-    // sala de Português
-    'receita': ['Uma receita de salada! 🍎', 'Primeiro vêm os ingredientes.', 'Depois, o modo de preparo.'],
-    'silabas': ['Sílabas coloridas no quadro! 🔤', 'Toda palavra tem sílabas.', 'Bata uma palma em cada uma.'],
-  },
-};
+  "objetos": {
+    "mural": [
+      "Em breve teremos novos conteúdos do quarto bimestre!"
+    ],
+    "bebedouro": [
+      "Em breve teremos novos conteúdos do quarto bimestre!"
+    ],
+    "escaninhos": [
+      "Em breve teremos novos conteúdos do quarto bimestre!"
+    ],
+    "lousa": [
+      "Em breve teremos novos conteúdos do quarto bimestre!"
+    ],
+    "globo": [
+      "Em breve teremos novos conteúdos do quarto bimestre!"
+    ],
+    "mochila": [
+      "Em breve teremos novos conteúdos do quarto bimestre!"
+    ],
+    "cartas": [
+      "Em breve teremos novos conteúdos do quarto bimestre!"
+    ],
+    "linha-tempo": [
+      "Em breve teremos novos conteúdos do quarto bimestre!"
+    ],
+    "palavras": [
+      "Em breve teremos novos conteúdos do quarto bimestre!"
+    ],
+    "bandeira": [
+      "Em breve teremos novos conteúdos do quarto bimestre!"
+    ],
+    "receita": [
+      "Em breve teremos novos conteúdos do quarto bimestre!"
+    ],
+    "silabas": [
+      "Em breve teremos novos conteúdos do quarto bimestre!"
+    ]
+  }
+});

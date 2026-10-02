@@ -9,7 +9,19 @@ const { execFileSync } = require('child_process');
 const { PASTA_TESTES } = require('../guardas');
 
 const VER = path.join(__dirname, '..', 'ver.js');
-const rodar = (nome, args) => {
+let copiaHistorica;
+function raizHistorica() {
+  if (copiaHistorica) return copiaHistorica;
+  const jogo = path.resolve(__dirname, '../../..');
+  const pasta = fs.mkdtempSync(path.join(PASTA_TESTES, 'ver-terceiro-bimestre-'));
+  copiaHistorica = path.join(pasta, 'jogo');
+  fs.cpSync(jogo, copiaHistorica, { recursive: true, filter: (f) =>
+    !f.includes('/servidor/dados') && !f.includes('/ferramentas/gerado') });
+  require('./ajudantes/terceiro-bimestre').copiarPara(copiaHistorica);
+  return copiaHistorica;
+}
+const rodar = (nome, args, historico = false) => {
+  if (historico) args = ['--raiz', raizHistorica()].concat(args);
   const saida = execFileSync(process.execPath, [VER, '--tamanhos', 'celular', '--nome', nome].concat(args), { encoding: 'utf8', timeout: 90000 });
   const pasta = path.join(PASTA_TESTES, 'ver', nome);
   return { saida, pasta, estado: JSON.parse(fs.readFileSync(path.join(pasta, 'estado.json'), 'utf8')).celular };
@@ -38,7 +50,7 @@ test('ver: o console.log do --js vai para o console.txt e para o fim da saída, 
 });
 
 test('ver: --tela desafio:<id> abre esse desafio (sem o sorteio da sala)', () => {
-  const r = rodar(`teste-desafio-${id}`, ['--tela', 'desafio:h1-03']);
+  const r = rodar(`teste-desafio-${id}`, ['--tela', 'desafio:h1-03'], true);
   assert.ok(fs.statSync(path.join(r.pasta, 'celular.png')).size > 1000);
   assert.strictEqual(r.estado.estado, 'atividade');
   assert.throws(() => rodar(`teste-desafio-nao-${id}`, ['--tela', 'desafio:nao-existe']), /desafio "nao-existe" não existe/);
@@ -57,6 +69,6 @@ test('ver: --tela album:1 chega à foto grande', () => {
 });
 
 test('ver: --tela prova:<id>:2 mostra a 2ª questão', () => {
-  const r = rodar(`teste-prova-q2-${id}`, ['--tela', 'prova:historia-3bim:2', '--js', 'document.querySelector(".desafio-num").textContent']);
+  const r = rodar(`teste-prova-q2-${id}`, ['--tela', 'prova:historia-3bim:2', '--js', 'document.querySelector(".desafio-num").textContent'], true);
   assert.match(r.saida, /--js 1 → Questão 2/);
 });

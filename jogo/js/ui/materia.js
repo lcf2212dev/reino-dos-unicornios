@@ -17,6 +17,7 @@
   function guia(texto) { return el('p', { title: texto }, texto); }
 
   UI.telaMateria = function (materia) {
+    if (Reino.Bimestres.emEspera(materia)) return Reino.Bimestres.painel(materia.lugar.nome, { materia: materia });
     var pn = painel('lugar', materia.lugar.nome, { materia: materia });
     var c = pn.conteudo;
     var feitas = P.salasFeitas(materia);
@@ -130,6 +131,7 @@
   UI.falaCarta = function (c) { return [c.titulo, c.texto]; };
 
   UI.abrirLivro = function (materia, cartaoId) {
+    if (Reino.Bimestres.emEspera(materia)) return Reino.Bimestres.painel(materia.nome, { materia: materia });
     Reino.Voz.carregar(materia.id + '-livro');
     var pn = painel('livro', '📖 ' + nomeLivro(materia), { materia: materia });
     var cartas = materia.livro;
@@ -190,12 +192,13 @@
   };
 
   UI.telaCastelo = function () {
+    if (Reino.materias.every(Reino.Bimestres.emEspera)) return Reino.Bimestres.painel('Castelo da Medalha', { icone: '🏰' });
     var pn = painel('lugar', 'Castelo da Medalha', { icone: '🏰' });
     var c = pn.conteudo;
     c.appendChild(el('div.lugar-guia', PA.paraDOM(PA.claude(0), 4, 'claude-intro'),
       guia('Aqui é o treino para a prova de verdade: sem relógio, com revisão antes de entregar. Na escola, a medalha de ouro vale ' + U.reais(Reino.config.medalhaEscolaValor) + '! 🥇')));
     var lista = el('div.lista-salas');
-    Reino.materias.forEach(function (m) {
+    Reino.materias.filter(function (m) { return !Reino.Bimestres.emEspera(m); }).forEach(function (m) {
       var completa = P.materiaCompleta(m);
       var t = est().treinos[m.id] || {};
       var faltam = m.salas.length - P.salasFeitas(m);

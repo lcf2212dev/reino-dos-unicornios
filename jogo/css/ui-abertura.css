@@ -134,3 +134,39 @@ body.sem-animacao .titulo-letra, body.sem-animacao .btn-pulsar::before { animati
   .titulo-letra, .btn-pulsar::before { animation: none; }
   .abertura-entrando .titulo-abertura, .abertura-entrando .inicio-baixo { transition: none; }
 }
+
+/* Novo capítulo: capa de aventura com o castelo à direita e a entrada em uma plaquinha. */
+.abertura-marca { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.abertura-capitulo, .abertura-bimestre { margin: 0; font-size: var(--texto-aux); line-height: var(--entrelinha); }
+.abertura-capitulo { color: var(--papel-quente); padding: 8px 16px; background: var(--noite); border-bottom: var(--borda-fina) solid var(--ouro); }
+.abertura-bimestre { color: var(--tinta); background: var(--papel-quente); padding: 10px 20px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); }
+.tela-inicio .inicio { max-width: none; padding-top: 24px; }
+.tela-inicio .inicio-baixo { width: auto; max-width: 580px; padding: 16px 24px; background: var(--papel-quente); border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto-grande); border-top-color: var(--ouro); gap: 12px; }
+.tela-inicio .inicio-sub { background: transparent; border: 0; padding: 0; }
+.tela-inicio .inicio-materias { margin: 0; color: var(--tinta-suave); font-size: var(--texto-aux); }
+.tela-inicio .inicio-botoes { width: 100%; }
+.tela-inicio .btn-comecar { width: 100%; }
+@media (min-width: 1000px) and (min-height: 501px) {
+  .tela-inicio .inicio { align-items: flex-start; justify-content: center; gap: 40px; padding: 32px 48px; }
+  .tela-inicio .abertura { width: 52%; }
+  .titulo-linha-2 { font-size: var(--texto-t); }
+  .tela-inicio .inicio-baixo { width: 52%; max-width: 600px; }
+}
+@media (max-width: 600px) and (min-height: 501px) {
+  .abertura-marca { gap: 12px; }
+  .tela-inicio .inicio-baixo { width: 100%; padding: 12px; }
+  .tela-inicio .inicio { padding-top: 8px; padding-bottom: 0; }
+}
+@media (max-height: 500px) {
+  .tela-inicio .inicio { display: grid; grid-template-columns: 1fr 1fr; align-content: center; align-items: center; gap: 24px; padding: 8px; }
+  .abertura-marca { gap: 12px; }
+  .titulo-linha-2 { font-size: var(--texto-g); }
+  .titulo-linha-1 { font-size: var(--texto-aux); }
+  .tela-inicio .inicio-baixo { padding: 12px; }
+  .tela-inicio .btn-comecar { padding: 12px 8px; }
+}
+@media (max-height: 500px) {
+  .tela-inicio .inicio { grid-template-rows: 1fr auto; align-content: stretch; }
+  .tela-inicio .abertura { grid-column: 1; grid-row: 1 / 3; }
+  .tela-inicio .inicio-baixo { grid-column: 2; grid-row: 2; margin-bottom: 8px; }
+}

@@ -40,6 +40,7 @@ test('treino: plano, questão e resultado travam até a fala acabar', async () =
     await a.context.close();
     const { page } = await abrir({ browser, url: servidor.url, save, query: '?debug=1&congelar=1' });
     await esperarJogo(page);
+    await require('./ajudantes/terceiro-bimestre').noNavegador(page);
     await avancar(page, 3000);
     await page.evaluate(() => {
       window.__fala = { espera: true, pendentes: [], segs: [] };
@@ -105,6 +106,7 @@ test('treino, padrão (sem config.esperaFala.travar): plano, questão e ✕ livr
     await a.context.close();
     const { page } = await abrir({ browser, url: servidor.url, save, query: '?debug=1&congelar=1' });
     await esperarJogo(page);
+    await require('./ajudantes/terceiro-bimestre').noNavegador(page);
     await avancar(page, 3000);
     await page.evaluate(() => {
       // a voz "fala" e não acaba nunca: nada pode esperar por ela

@@ -6,7 +6,7 @@
 // (sem salas nem ovos); servidor e banco de TESTE novos (cenario.js); relógio congelado.
 const { test, before, after } = require('node:test');
 const assert = require('assert');
-const { abrirCenario } = require('../cenario');
+const { abrirCenario } = require('./ajudantes/terceiro-bimestre');
 
 let c;
 before(async () => { c = await abrirCenario({ tamanho: 'celular', save: 'inicio' }); });

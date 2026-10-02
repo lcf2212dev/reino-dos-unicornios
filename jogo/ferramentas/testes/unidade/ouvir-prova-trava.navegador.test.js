@@ -50,6 +50,7 @@ test('prova: cada fala trava os botões até acabar (e sem espera nada trava)', 
     await a.context.close();
     const { page } = await abrir({ browser, url: servidor.url, save, query: '?debug=1&congelar=1' });
     await esperarJogo(page);
+    await require('./ajudantes/terceiro-bimestre').noNavegador(page);
     await avancar(page, 3000);
     await page.evaluate(() => {
       window.__fala = { espera: true, pendentes: [], segs: [] };
@@ -144,6 +145,7 @@ test('prova, padrão (sem config.esperaFala.travar): capa, questão e ✕ livres
     await a.context.close();
     const { page } = await abrir({ browser, url: servidor.url, save, query: '?debug=1&congelar=1' });
     await esperarJogo(page);
+    await require('./ajudantes/terceiro-bimestre').noNavegador(page);
     await avancar(page, 3000);
     await page.evaluate(() => {
       // a voz "fala" e não acaba nunca: nada pode esperar por ela

@@ -79,7 +79,7 @@
     if (!tem) {
       c.appendChild(el('div.detalhe-sprite', PA.paraDOM(PA.silhueta(PA.unicornio(d, 3, 0)), 8, 'silhueta')));
       c.appendChild(el('p.detalhe-rar.rar-' + d.raridade, rar.emoji + ' ' + rar.nome));
-      c.appendChild(el('p.detalhe-como', '🔎 Como ganhar: ' + Reino.Unicornios.comoGanhar(d)));
+      c.appendChild(el('p.detalhe-como', Reino.Bimestres.emEspera(d.materiaId) ? 'Unicórnio do terceiro bimestre.' : '🔎 Como ganhar: ' + Reino.Unicornios.comoGanhar(d)));
       return;
     }
     var pe = Reino.Unicornios.progressoEstagio(u.xp);

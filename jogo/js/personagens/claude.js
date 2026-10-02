@@ -6,9 +6,9 @@
 
   var FALAS = {
     boasVindas: [
-      'Oi, {nome}! Que bom te ver! Vamos passear pelo Reino e revisar um pouquinho?',
+      'Oi, {nome}! Que bom te ver! Vamos passear pelo Reino?',
       'Olá, {nome}! Seu unicórnio estava com saudade de você! 🦄',
-      'Oba, {a|o} {nome} chegou! As salas do Reino estão te esperando.',
+      'Oba, {a|o} {nome} chegou! Vamos descobrir os cantinhos do Reino!',
     ],
     acerto: [
       'Isso, {nome}! Você leu com calma e acertou! ✨',
@@ -51,11 +51,7 @@
       'Quem acerta com calma ganha o ouro. Quem corre pode errar bobeira. Qual você prefere?',
     ],
     curiosidade: [
-      'Sabia que a neta do senhor Antônio também se chama Mariana? 😄',
-      'No cartão-postal da apostila está escrito: "Mariana adorou". Tem Mariana em todo lugar!',
-      'Os griôs contam histórias há centenas de anos. Hoje eu sou o seu griô! 📖',
-      'O senhor Antônio esperava o carteiro todos os dias. Imagina esperar uma carta por semanas!',
-      'A Dona Sara conheceu o mar em 28/12/1957. Ela guardou até as conchinhas!',
+      'Em breve teremos novos conteúdos do quarto bimestre!',
     ],
     pausa: [
       'Você está estudando há um tempinho! Que tal beber água e esticar os braços? 💧',

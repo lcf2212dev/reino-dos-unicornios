@@ -2,7 +2,7 @@
 // determinístico no modo congelado. Rodar: node --test jogo/ferramentas/testes/unidade/viagem-perguntas.test.js
 const { test } = require('node:test');
 const assert = require('assert');
-const Jogo = require('../../jogo-no-node');
+const Jogo = require('./ajudantes/terceiro-bimestre');
 
 function carregar(salasFeitas) {
   const ctx = Jogo.contexto({ console: { warn() {}, log() {}, error: console.error }, setTimeout, clearTimeout, Math, Date });

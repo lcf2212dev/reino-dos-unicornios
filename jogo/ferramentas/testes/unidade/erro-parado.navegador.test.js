@@ -7,7 +7,7 @@ const { test } = require('node:test');
 const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
-const { abrirCenario } = require('../cenario');
+const { abrirCenario } = require('./ajudantes/terceiro-bimestre');
 const { PASTA_TESTES } = require('../guardas');
 
 const TIPOS = {

@@ -4,6 +4,7 @@
    Salas em i1.js, i2.js, i3.js, i4.js, i5.js e o livro em livro.js (carregados antes deste arquivo, na ordem do
    manifesto; ver conteudo/materias/registro.js). */
 Reino.registrarMateria({
+  arquivada: true,
   id: 'ingles',
   nome: 'Inglês',
   emoji: '🔤',
@@ -16,7 +17,7 @@ Reino.registrarMateria({
     placa: 'acima',   // ao lado cobriria o castelo ou o museu
     cores: { parede: '#eef3ff', detalhe: '#ffcf3d' },
   },
-  guia: '«Hello!» Eu sou o guia da Torre do Relógio! Aqui a gente brinca de inglês, um pouquinho de cada vez.',
+  guia: 'Em breve teremos novos conteúdos do quarto bimestre!',
 
   salas: Reino.salasDa('ingles'),         // i1.js, i2.js, i3.js, i4.js, i5.js, na ordem do manifesto
 

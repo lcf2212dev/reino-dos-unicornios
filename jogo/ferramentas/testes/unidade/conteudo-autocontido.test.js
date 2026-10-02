@@ -40,6 +40,7 @@ function copiaComProva(nome, texto) {
   ['js', 'ferramentas'].forEach((p) => fs.cpSync(path.join(jogo, p), path.join(destino, p), {
     recursive: true, force: true, filter: (src) => !fora.some((f) => src === f || src.startsWith(f + path.sep)),
   }));
+  require('./ajudantes/terceiro-bimestre').copiarPara(destino);
   fs.writeFileSync(path.join(destino, 'js/conteudo/provas/mentira-9bim.js'), texto);
   const man = path.join(destino, 'js/manifesto.js');
   const ancora = "{ js: 'js/conteudo/provas/portugues-3bim.js', grupo: 'provas', node: true },";

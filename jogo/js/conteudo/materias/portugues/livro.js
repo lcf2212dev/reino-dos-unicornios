@@ -1,32 +1,3 @@
-/* Livro das Letras: resumos curtos para ler antes ou quando errar. */
-Reino.registrarLivro('portugues',
-  [
-    { id: 'receita', e: '🍓', titulo: 'O que é uma receita',
-      texto: 'Uma receita é um texto que ensina a fazer um prato, uma bebida ou uma sobremesa. Ela usa uma linguagem simples e organizada. Com ela a gente sabe o que usar e o que fazer. Dá para achar receitas em livros de cozinha, em revistas e na internet. Outros textos também ensinam a fazer coisas, como os tutoriais e os manuais.' },
-    { id: 'partes-receita', e: '📋', titulo: 'As partes da receita',
-      texto: 'O título é o nome da receita, como "Salada de frutas". Os ingredientes mostram tudo o que vai ser usado. O modo de preparo explica o passo a passo. As porções dizem quantas pessoas a receita serve. Uma boa receita deixa todas as partes bem separadas.' },
-    { id: 'passo-a-passo', e: '🥣', titulo: 'Um passo de cada vez',
-      texto: 'O modo de preparo vem em etapas, com números: 1, 2, 3... É importante seguir a ordem! Na salada de frutas, o primeiro passo é reunir todos os ingredientes. O último é servir e se deliciar. Se a gente pula um passo ou troca a ordem, a comida pode não dar certo.' },
-    { id: 'letra-h', e: '🌿', titulo: 'O H mudinho', destaque: 'letra H',
-      texto: 'A letra H, quando aparece no começo da palavra, não tem som. Por isso a gente diz que o H é uma letra muda: ele está lá, mas não é falado. Veja: hora, homem, história, hotel, hortelã. Na fala o H não aparece, mas na escrita ele não pode faltar!' },
-    { id: 'digrafos', e: '🐣', titulo: 'CH, LH e NH', destaque: 'dígrafos',
-      texto: 'CH, LH e NH são dígrafos: duas letras que fazem um som só. O CH tem o som do X de xícara, como em chocalho. O LH tem um som único, como em escolhem. O NH também tem um som só dele, como em amarelinha.' },
-    { id: 'x-ou-ch', e: '🔤', titulo: 'X ou CH?', destaque: 'mesmo som',
-      texto: 'O X e o CH podem ter o mesmo som. Xícara e chave começam com o mesmo som! Com X: xícara, abacaxi, peixe, caixa. Com CH: chave, chuva, mochila, chocolate. Só ouvindo não dá para saber: é preciso conhecer a palavra. Quanto mais a gente lê, mais fácil fica!' },
-    { id: 'sons-do-x', e: '🔊', titulo: 'Três sons do X', destaque: 'sons do X',
-      texto: 'A apostila mostra três sons do X: som de S, como em excesso e próximo. Som de Z, como em exame e exemplo. Som de CH, como em xícara e abacaxi.' },
-    { id: 'relato', e: '📔', titulo: 'O relato pessoal', destaque: 'relato pessoal',
-      texto: 'O relato pessoal conta uma situação especial que a gente viveu. Ele diz o que aconteceu, onde foi, quem estava junto e como a gente se sentiu. As irmãs Laura, Tamara e Marininha escreveram um relato da viagem de barco delas até a Antártida. Elas contaram dos pinguins, das focas, do vento gelado no rosto e dos icebergs. Escrever ajuda a lembrar e deixa outras pessoas imaginarem tudo.' },
-    { id: 'tempo-no-relato', e: '⏰', titulo: 'Quando aconteceu?', destaque: 'marcação temporal',
-      texto: 'No relato, os fatos vêm na ordem em que aconteceram. Palavras de tempo mostram quando cada coisa aconteceu: ontem, depois, naquele dia, no início do dia, à noite. Isso se chama marcação temporal. As irmãs escreveram: "Depois de cruzarmos o Drake..."' },
-    { id: 'som-de-s', e: '🌞', titulo: 'Quem faz o som de S?', destaque: 'som de S',
-      texto: 'Várias letras podem ter o som de S! O S no começo da palavra: sapato, sol, sapo. O S depois de uma vogal e antes de uma consoante: pasta, costa. O S no final da palavra: dados, alunos. O SS sempre fica no meio da palavra, entre duas vogais: passarinho, massa, carrossel. Cuidado: um S só, entre duas vogais, tem som de Z: casa, casaco. O Z no final da palavra: arroz, feliz, voz. E o X em algumas palavras: próximo, máximo.' },
-    { id: 'ponta-iceberg', e: '🧊', titulo: 'A ponta do iceberg',
-      texto: 'Quando alguém diz "isso é só a ponta do iceberg", quer dizer que tem muito mais do que parece! Só um pedaço pequeno do iceberg fica fora da água, em cima do mar. O resto, a parte maior, fica escondido debaixo da água. E cada iceberg é único, com tons de branco, cinza, azul e verde.' },
-    { id: 'silabas', e: '👏', titulo: 'Separar em sílabas',
-      texto: 'As sílabas são os pedacinhos da palavra. Fale batendo palmas, uma palma para cada pedacinho: bal-de, pal-mei-ra! Para escrever a palavra separada, a gente usa um tracinho entre as sílabas: al-gu-ma, par-te, to-tal.' },
-    { id: 'l-r-final', e: '🌊', titulo: 'L e R no fim da sílaba',
-      texto: 'A letra L no fim da sílaba tem som de U, como em volta e calmo. Outros exemplos: palco, alto, balde, mel. A letra R também aparece no fim da sílaba: parte, porta, verde, mar. O som desse R pode mudar, conforme o sotaque de quem fala.' },
-    { id: 'r-rr', e: '🎠', titulo: 'R fraco, R forte e RR', destaque: 'R fraco',
-      texto: 'O R fraco aparece sozinho no meio da palavra, entre vogais, como em perigo e caro. O R forte aparece no começo da palavra, como em rua e roda: aí ele é escrito com um R só. No meio da palavra, entre duas vogais, o som forte é escrito com RR: carro, terra, carrossel. O RR também é um dígrafo.' },
-  ]);
+/* Catálogo de compatibilidade do 3º bimestre. Original integral em arquivo/terceiro-bimestre/jogo/js/conteudo/materias/portugues/livro.js.
+   Sem atividades disponíveis; IDs preservam progresso, recompensas e identidade do lugar. */
+Reino.registrarLivro("portugues", []);
