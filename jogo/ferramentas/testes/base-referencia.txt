@@ -69,4 +69,5 @@
 # 5be85d5 = experiências e mini-jogos de ciências, enfeites das fadas e exclusivos da Pet Shop
 # 01b04a5 = experiências e mini-jogos de ciências, enfeites das fadas e exclusivos da Pet Shop
 # 61b6e4f = quarto bimestre em espera, arquivo histórico e apresentação renovada
-61b6e4f
+# 538fc32 = HUD sem menu inferior, ajustes ao lado do álbum e placas adaptadas
+538fc32
