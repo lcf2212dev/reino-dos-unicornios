@@ -64,4 +64,5 @@
 # 5eb123b = Feira de Ciências, salas, vozes e entrada em Lugares
 # 7551213 = Feira de Ciências integrada, salas e narração
 # 09c88a3 = Narrar somente a pergunta, sem instruções e respostas
-09c88a3
+# cadfe38 = Escola de Música, salas, teclado e fundamentos; nova entrada em Lugares
+cadfe38
