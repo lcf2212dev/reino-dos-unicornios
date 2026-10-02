@@ -50,11 +50,30 @@ test('pontuação e textos da correção vêm do tipo', () => {
   assert.strictEqual(D.enunciado(d), 'Faça a conta.');
 });
 
-test('falas: segmentos do 🔊 (pergunta, instrução e o que o tipo acrescenta) e a pista do tipo', () => {
-  assert.deepStrictEqual([...R.Falas.segmentosDesafio(d)], ['Faça a conta.', 'Toque no número.', 'Quanto é 2 + 3?']);
+test('falas: o 🔊 lê só a pergunta; tipo sem pergunta fornece seu enunciado', () => {
+  assert.deepStrictEqual([...R.Falas.segmentosDesafio(d)], ['Faça a conta.']);
+  assert.deepStrictEqual([...R.Falas.segmentosDesafio({ ...d, pergunta: undefined })], ['Quanto é 2 + 3?']);
   assert.strictEqual(R.Falas.pista(d, { livro: [] }), R.Falas.fixas.pistaEspecial);
   // tipo sem ganchos de fala: só a pergunta
   assert.deepStrictEqual([...R.Falas.segmentosDesafio({ id: 'z', tipo: 'naoExiste', pergunta: 'Oi?' })], ['Oi?']);
+});
+
+test('voz: questões reais de salas e provas não narram respostas, mesmo com ordem embaralhada', () => {
+  const ctx = Jogo.contexto({ console });
+  const reino = Jogo.carregar(ctx, Jogo.ordemDosPredios(Jogo.scripts())).Reino;
+  const questoes = reino.materias.flatMap((m) => m.salas.flatMap((s) => s.desafios))
+    .concat(reino.provas.flatMap((p) => p.questoes));
+  const tipos = new Set();
+  for (const q of questoes) {
+    tipos.add(q.tipo);
+    const esperado = q.tipo === 'vf' ? [reino.Falas.fixas.verdadeiroOuFalso, q.afirmacao] : [q.pergunta];
+    assert.ok(esperado.every((s) => typeof s === 'string' && s.length), q.id);
+    const ordem = q.opcoes ? q.opcoes.map((_, i) => i).reverse() : undefined;
+    assert.deepStrictEqual([...reino.Falas.segmentosDesafio(q, ordem)], esperado, q.id);
+  }
+  for (const tipo of ['escolha', 'varias', 'vf', 'vfLista', 'ligar', 'completar', 'ordenar']) {
+    assert.ok(tipos.has(tipo), 'cobertura: ' + tipo);
+  }
 });
 
 // validador: sala 1 de História copiada, com o registro no topo e o 1º desafio trocado pelo tipo de mentira

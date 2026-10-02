@@ -105,16 +105,14 @@
     return defs && Object.prototype.hasOwnProperty.call(defs, d.tipo) ? defs[d.tipo] : null;
   }
 
-  // o que a narradora lê no botão 🔊 de um desafio (opções na ordem da tela): a pergunta, a instrução e
-  // o que o tipo acrescenta (def.falas(d, todos, segs) devolve a lista; todos(lista) = a ordem da tela)
+  // Na leitura automática e no 🔊, só a pergunta; instruções e respostas ficam na tela.
+  // Tipos sem pergunta (vf) fornecem os segmentos do próprio enunciado.
   F.segmentosDesafio = function (d, ordem) {
-    // vf não tem pergunta: o tipo troca a lista inteira (def.falas)
-    var segs = [/** @type {any} */ (d).pergunta];
-    // instrucao: o jeito de responder no jogo, numa linha própria (o texto da folha fica intacto na pergunta)
-    if (d.instrucao) segs.push(d.instrucao);
+    var pergunta = /** @type {any} */ (d).pergunta;
+    if (pergunta) return [pergunta];
     function todos(lista) { return ordem || lista.map(function (_, i) { return i; }); }
     var def = tipoDe(d);
-    return def && def.falas ? def.falas(d, todos, segs) : segs;
+    return def && def.falas ? def.falas(d, todos, []) : [];
   };
   // texto de apoio de uma questão (d.apoio: título e partes com lista ou texto), lido no 🔊 da caixa do texto
   F.segmentosApoio = function (apoio) {
