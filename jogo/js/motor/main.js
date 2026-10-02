@@ -80,7 +80,7 @@
       var ir = el('button.btn-grande.btn-principal', { type: 'button' }, 'Entrar no Reino 🦄');
       pn.conteudo.appendChild(el('ul.regras',
         el('li', el('span.regra-icone', '📚'), el('span', el('b', '4º bimestre: '), 'em breve teremos novos conteúdos das seis matérias da escola.')),
-        el('li', el('span.regra-icone', '🏰'), el('span', el('b', 'Explore: '), 'toque no chão para andar ou use as setas. Abra Lugares para escolher seu próximo passeio.')),
+        el('li', el('span.regra-icone', '🏰'), el('span', el('b', 'Explore: '), 'toque no chão para andar ou use as setas. Caminhe até os prédios para escolher seu próximo passeio.')),
         el('li', el('span.regra-icone', '🦄'), el('span', el('b', 'Cuide: '), 'visite seus unicórnios, dê comida e água e escolha seus enfeites favoritos.')),
         el('li', el('span.regra-icone', '⭐'), el('span', el('b', 'Descubra: '), 'o Laboratório de Química, a Feira de Ciências e a Escola de Música continuam esperando por você.')),
         el('li.regra-destaque', el('span.regra-icone', '💛'), el('span', el('b', 'Suas conquistas continuam aqui. '), 'Seus unicórnios, estrelas e prêmios estão guardados com carinho.'))));

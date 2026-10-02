@@ -17,7 +17,7 @@ const MEDIR = `(function () {
   return {
     vars: { topo: v('--hud-topo'), dock: v('--dock-altura'), esqF: v('--hud-esq-fundo'), esqL: v('--hud-esq-largura'), dirF: v('--hud-dir-fundo'), dirL: v('--hud-dir-largura') },
     reais: { topo: Math.max(max(esq, function (b) { return b.bottom; }), max(dir, function (b) { return b.bottom; })),
-      dock: Math.ceil(vh - dock.top), esqF: max(esq, function (b) { return b.bottom; }), esqL: max(esq, function (b) { return b.right; }),
+      dock: dock ? Math.ceil(vh - dock.top) : 0, esqF: max(esq, function (b) { return b.bottom; }), esqL: max(esq, function (b) { return b.right; }),
       dirF: max(dir, function (b) { return b.bottom; }), dirL: max(dir, function (b) { return vw - b.left; }) },
   };
 })()`;
@@ -31,7 +31,8 @@ for (const tamanho of ['celular', 'tablet', 'notebook']) {
         await c.avancar(600);
         const m = await c.js(MEDIR);
         assert.deepStrictEqual(m.vars, m.reais);
-        assert.ok(m.vars.topo > 0 && m.vars.dock > 0, 'HUD e dock medidos');
+        assert.ok(m.vars.topo > 0, 'HUD medido');
+        assert.strictEqual(m.vars.dock, 0, 'sem menu inferior, toda a base fica livre');
         // no celular a fileira ⛶ 📷 🖼 fica embaixo do cartão: o fundo da direita a conta
         if (tamanho === 'celular') assert.ok(await c.js("document.querySelector('#hud .btn-foto').getBoundingClientRect().bottom <= parseFloat(document.documentElement.style.getPropertyValue('--hud-dir-fundo'))"));
       } finally { await c.fechar(); }

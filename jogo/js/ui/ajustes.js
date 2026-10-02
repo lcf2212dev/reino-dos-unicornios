@@ -39,15 +39,13 @@
     var tam = el('button.interruptor', { type: 'button', role: 'switch', 'aria-checked': String(a.texto > 1) }, el('span.interruptor-texto', el('b', '🔠 Letras grandes'), el('small', 'Deixa os textos maiores.')), el('span.interruptor-bola'));
     tam.addEventListener('click', function () { var v = !ligado(tam); atuais().texto = v ? 1.15 : 1; tam.setAttribute('aria-checked', String(v)); UI.aplicarAjustes(); P.salvar(); });
     c.appendChild(tam);
-    var pers = el('button.btn-grande.btn-secundario', { type: 'button' }, '🪞 Meu personagem');
-    pers.addEventListener('click', function () { UI.fecharTela(pn.tela); UI.telaAparencia().then(function () { U.emit(EV.MAPA_MUDOU); }); });
     var pais = el('button.btn-grande.btn-secundario', { type: 'button' }, '🔒 Área dos pais');
     pais.addEventListener('click', function () { UI.fecharTela(pn.tela); UI.telaPais(); });
     var trocar = el('button.btn-grande.btn-secundario', { type: 'button' }, '🔄 Trocar jogador');
     trocar.addEventListener('click', function () { UI.fecharTela(pn.tela); UI.trocarJogador(); });
     var sair = el('button.btn-grande.btn-secundario.btn-sair', { type: 'button' }, '🚪 Sair');
     sair.addEventListener('click', function () { UI.fecharTela(pn.tela); UI.sairDoJogador(); });
-    c.appendChild(el('div.intro-botoes.coluna', pers, trocar, sair, pais));
+    c.appendChild(el('div.intro-botoes.coluna', trocar, sair, pais));
   };
 
   UI.aplicarAjustes = function () {

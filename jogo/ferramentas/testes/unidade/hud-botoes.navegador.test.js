@@ -13,7 +13,7 @@ test('botão registrado entra depois do álbum e repinta no evento', async () =>
         pintar: function () { window.__pintou++; } });
       Reino.UI.montarHUD();`);
     const ordem = await c.js("[].map.call(document.querySelectorAll('#hud .hud-botoes > button'), function (b) { return b.className; })");
-    assert.deepStrictEqual(ordem.map((k) => k.split(' ')[1] || k), ['btn-tela-cheia', 'btn-foto', 'btn-album', 'btn-falso']);
+    assert.deepStrictEqual(ordem.map((k) => k.split(' ')[1] || k), ['btn-tela-cheia', 'btn-foto', 'btn-album', 'btn-ajustes', 'btn-falso']);
     const antes = await c.js('window.__pintou');
     assert.ok(antes >= 1, 'pinta na montagem');
     await c.js("Reino.util.emit('teste-hud')");
