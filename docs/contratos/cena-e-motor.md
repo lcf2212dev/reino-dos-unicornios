@@ -167,8 +167,11 @@ alvo = { tipo: 'npc'|'objeto'|'saida'|'escada'|'lugar'|'claude', id,
 ## 8. Câmera
 1. Igual no mapa e nos interiores: centraliza se couber; senão segue a Mariana com limite nas bordas.
 2. Nos interiores pode passar da borda até o fim do HUD de cima e do menu de baixo.
-3. Mapa: `BORDA_BAIXO` (4 fileiras de grama) desenhada abaixo do mapa e margem de baixo medida no HUD
+3. Mapa: `BORDA_BAIXO` (4 fileiras de bosque) desenhada abaixo do mapa e margem de baixo medida no HUD
    (`bordasMapa`, `motor/camera.js`), para as portas de baixo e ela nadando não sumirem atrás do menu.
+   Nas 6 primeiras fileiras, a câmera também sobe pela altura do HUD, com transição suave. A região em `y < 0`
+   recebe bosque e a continuação das copas num cache separado, ancorado no mundo; ele cobre o buffer visível,
+   cresce quando necessário e é invalidado ao pré-renderizar o mapa. A origem do estático continua em `(0, 0)`.
 4. Escala: `escalaDoMundo` (`motor/camera.js`), pela regra do `ui.md` §10.11.
 
 ## 9. Mapa: placas, lugares e prédios

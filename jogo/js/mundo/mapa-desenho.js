@@ -7,6 +7,7 @@
   var Mapa = window.Mapa, I = Mapa._interno;
   var T = Mapa.T, W = Mapa.W, H = Mapa.H;
   var BORDA_BAIXO = 4;      // fileiras de bosque fechado desenhadas abaixo do fim do mapa (só enfeite; mundo/chao.js)
+  var bordaCima = null;    // bosque e copas em y < 0; separado para preservar a origem do estático e do lago
 
   var C = {
     grama: '#c6e15a', grama2: '#a8cc48', grama3: '#e4f59a',
@@ -185,8 +186,26 @@
     }
     itens.sort(function (a, b) { return a.pe - b.pe; }).forEach(function (i) { i.f(); });
     I.estatico = c;
+    bordaCima = null;
     return c;
   };
+
+  // A câmera pode subir pela altura do HUD. O cache cobre pelo menos uma tela e só cresce quando necessário;
+  // o bosque usa coordenadas do mundo, portanto redimensionar não desloca suas copas.
+  function desenharBordaCima(ctx) {
+    var m = ctx.getTransform();
+    if (m.d <= 0 || m.f <= 0) return;
+    var h = Math.ceil(Math.max(ctx.canvas.height, m.f) / m.d / T) * T;
+    if (!bordaCima || bordaCima.height < h) {
+      bordaCima = PA.novoCanvas(W * T, h);
+      var bc = bordaCima.getContext('2d');
+      bc.translate(0, h);
+      I.desenharAlemDaBorda(bc, -h, h);
+      // Mesma ordem por Y do estático: completa as copas que antes eram cortadas em y = 0.
+      I.altas.forEach(function (a) { if (a.y < 0) bc.drawImage(a.frente, a.x, a.y); });
+    }
+    ctx.drawImage(bordaCima, 0, -bordaCima.height);
+  }
 
   // por cima dos personagens: as peças altas cuja caixa encosta na caixa dada (px do jogo; a da Mariana e do bebê;
   // caixa.pe = o menor y de pé entre eles),
@@ -238,6 +257,7 @@
   Mapa.desenharAnimado = function (ctx, t, opcoes) {
     opcoes = opcoes || {};
     if (!I.estatico) Mapa.prerender();
+    desenharBordaCima(ctx);
     ctx.drawImage(I.estatico, 0, 0);
     I.desenharLagoVivo(ctx, t, !opcoes.semAnimacao);
     if (!opcoes.semAnimacao) {
