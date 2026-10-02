@@ -59,8 +59,11 @@ test('resumir: contagem por tamanho e região; só as "outras" na lista', () => 
   assert.deepStrictEqual(r.outras.map((x) => x.f), ['imagens/teste/b.png', 'imagens/teste/c.png']);
 });
 
-test('tabela medida: os 3 tamanhos com densidade e as 3 regiões', () => {
+test('tabela medida: os 3 tamanhos com HUD e balão, sem menu inferior', () => {
   assert.deepStrictEqual(Object.keys(REGIOES), ['celular', 'tablet', 'notebook']);
   assert.deepStrictEqual(Object.values(REGIOES).map((t) => t.densidade), [3, 2, 1]);
-  Object.values(REGIOES).forEach((t) => ['hudTopo', 'dock', 'balao'].forEach((k) => assert.ok(t[k] && t[k].w > 0 && t[k].h > 0, k)));
+  Object.values(REGIOES).forEach((t) => {
+    ['hudTopo', 'balao'].forEach((k) => assert.ok(t[k] && t[k].w > 0 && t[k].h > 0, k));
+    assert.strictEqual(t.dock, undefined);
+  });
 });

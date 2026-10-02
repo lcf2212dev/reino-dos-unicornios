@@ -12,9 +12,9 @@ const FOLGA = 4;
 
 // <regioes> (gerado por --medir; não edite à mão)
 const REGIOES = {
-  celular: { densidade: 3, hudTopo: { x: 10, y: 10, w: 370, h: 208 }, dock: { x: 26, y: 745, w: 338, h: 89 }, balao: { x: 12, y: 412, w: 366, h: 336 } },
-  tablet: { densidade: 2, hudTopo: { x: 10, y: 10, w: 800, h: 221 }, dock: { x: 213, y: 1078, w: 394, h: 92 }, balao: { x: 110, y: 860, w: 600, h: 224 } },
-  notebook: { densidade: 1, hudTopo: { x: 10, y: 10, w: 1346, h: 245 }, dock: { x: 486, y: 672, w: 394, h: 86 }, balao: { x: 383, y: 457, w: 600, h: 215 } },
+  celular: { densidade: 3, hudTopo: { x: 10, y: 10, w: 370, h: 194 }, balao: { x: 8, y: 646, w: 374, h: 186 } },
+  tablet: { densidade: 2, hudTopo: { x: 10, y: 10, w: 800, h: 210 }, balao: { x: 110, y: 860, w: 600, h: 308 } },
+  notebook: { densidade: 1, hudTopo: { x: 10, y: 10, w: 1346, h: 210 }, balao: { x: 383, y: 448, w: 600, h: 308 } },
 };
 // </regioes>
 
