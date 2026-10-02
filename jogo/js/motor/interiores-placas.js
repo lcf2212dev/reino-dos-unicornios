@@ -276,7 +276,8 @@
       // direita da coluna de chips, fora dos NPCs e da Mariana; depois a tela toda (sem invadir outro cômodo); por
       // fim só fora do HUD e da Mariana. A largura é a da tela que sobra; o texto quebra no que precisar
       var xChips = 0;
-      medido.rects.forEach(function (h) { if (!h.balao && h.left < cw / 3 && h.top < ch / 2 && h.bottom > 0) xChips = Math.max(xChips, h.right + h.f); });
+      // Só a coluna ancorada à esquerda: a fileira de botões da direita pode alcançar o primeiro terço da tela.
+      medido.rects.forEach(function (h) { if (!h.balao && h.left <= 0 && h.top < ch / 2 && h.bottom > 0) xChips = Math.max(xChips, h.right + h.f); });
       // com Letras grandes a largura é a do chão do cômodo à direita dos chips (senão a placa larga nunca cabia no
       // chão); a palavra que não cabe ao lado dos chips (celular) usa a largura toda, abaixo deles
       function larg3() { return Math.min((r.w * T - 6) * escala, cw - xChips - borda * 4, grande ? xb - Math.max(xChips, xa) - borda * 4 : 1e9) - pad * 2; }
