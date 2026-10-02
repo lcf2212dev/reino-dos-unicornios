@@ -34,7 +34,7 @@
   function ambienteAgora() {
     var telas = document.getElementById('telas');
     if (telas) {
-      if (telas.querySelector('.tela-prova')) return 'silencio';      // treino da medalha e prova: concentração
+      if (telas.querySelector('.tela-prova, .tela-musica-teclado, .tela-musica-fundamentos')) return 'silencio';      // treino da medalha e prova: concentração
       if (telas.querySelector('.tela-missao')) return 'sala';
     }
     var C = Reino.Cena, cena = C && C.atual ? C.atual() : null;

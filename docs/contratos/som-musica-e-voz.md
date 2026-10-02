@@ -26,6 +26,10 @@ falas (até 30 letras por página, frases de 3+ palavras, conferência por trans
 2. "Som" desligado não cala a música; a música desligada não cala os efeitos (ganhos separados: `mestre`
    dos efeitos x ganho da música).
 
+3. `Reino.Som.notaMusical(midi, { duracao?, volume?, timbre? })` toca uma nota afinada pelo
+   número MIDI (Lá 4 = 69 = 440 Hz) e devolve uma função para interrompê-la. Respeita o ajuste Som,
+   limita duração e volume e desconecta os nós ao terminar; as aulas encerram suas notas ao fechar.
+
 ## 3. Música por ambiente
 1. `Reino.Musicas` (dados, sem DOM): `faixas: { <id>: { … } }`,
    `expandir(id) → [{ t, dur, freq, parte: 'melodia'|'harmonia'|'baixo'|'percussao', vol, onda? }]` (um loop
@@ -42,7 +46,9 @@ falas (até 30 letras por página, frases de 3+ palavras, conferência por trans
 5. Ambientes → faixa: `mapa`, `lago` (nadando), `museu`, `torre`, `portugues` (e `portugues-gelo` no cômodo
    `porto`: a cantiga da cozinha com sininhos, pad frio e eco), `castelo`, `escola`, `estabulo`, `loja`, `bau`,
    `petshop`, `observatorio`, `sala` (tela `.tela-missao`). Interior sem faixa própria: a do mapa.
-6. Treino e prova (`.tela-prova` em qualquer lugar da pilha): silêncio (fade) e volta ao sair.
+6. Treino e prova (`.tela-prova`) e aulas da Escola de Música (`.tela-musica-teclado`,
+   `.tela-musica-fundamentos`) em qualquer lugar da pilha: silêncio (fade) da música ambiente e volta ao sair.
+   As notas das aulas continuam audíveis quando o ajuste Som está ligado.
 7. O ambiente é decidido lendo a cena ativa, o nado e a tela do topo (`.tela-missao` = sala, `.tela-prova` =
    treino e prova), sem API nova na UI.
 8. Nadar e trocar de cômodo só trocam a faixa depois de 250 ms firmes (sem vaivém na margem); ao voltar a

@@ -1,0 +1,81 @@
+{
+  "nome": "escola-musica",
+  "pedido": "pedidos/2026-10-02-escola-musica.md",
+  "personagens": [],
+  "tarefas": [
+    {
+      "id": "cenario",
+      "tipo": "cenario",
+      "titulo": "Prédio e salas da Escola de Música",
+      "quem": "worker-low",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/interiores/escola-musica/falas.js",
+        "jogo/js/interiores/escola-musica/objetos.js",
+        "jogo/js/interiores/escola-musica/escola-musica.js",
+        "jogo/js/interiores/escola-musica/fora.js",
+        "jogo/js/interiores/escola-musica/lugar.js"
+      ],
+      "worktree": "escola-musica",
+      "personagens": [],
+      "pronto": [
+        "Duas salas ricas alcançáveis; fachada musical e lugar no mapa"
+      ]
+    },
+    {
+      "id": "aulas",
+      "tipo": "mecanica",
+      "titulo": "Teclado e fundamentos musicais",
+      "quem": "worker-low",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/interiores/escola-musica/dados.js",
+        "jogo/js/interiores/escola-musica/acoes.js",
+        "jogo/js/interiores/escola-musica/teclado.js",
+        "jogo/js/interiores/escola-musica/fundamentos.js",
+        "jogo/css/ui-escola-musica.css"
+      ],
+      "worktree": "escola-musica-aulas",
+      "personagens": [],
+      "pronto": [
+        "Instrumento e atividades acessíveis com retorno gentil"
+      ]
+    },
+    {
+      "id": "integracao",
+      "tipo": "integracao",
+      "titulo": "Som, manifesto, vozes e testes",
+      "quem": "orquestrador",
+      "depende": [
+        "cenario",
+        "aulas"
+      ],
+      "arquivos": [
+        "jogo/js/manifesto.js",
+        "jogo/index.html",
+        "jogo/js/sistemas/som-escola.js",
+        "jogo/ferramentas/testes/unidade/escola-musica.test.js"
+      ],
+      "worktree": "escola-musica",
+      "personagens": [],
+      "pronto": [
+        "Gates e conferência visual"
+      ]
+    },
+    {
+      "id": "entrega",
+      "tipo": "entrega",
+      "titulo": "Integração main e publicação",
+      "quem": "orquestrador",
+      "depende": [
+        "integracao"
+      ],
+      "arquivos": [],
+      "worktree": "escola-musica",
+      "personagens": [],
+      "pronto": [
+        "Entrega verificada"
+      ]
+    }
+  ]
+}
