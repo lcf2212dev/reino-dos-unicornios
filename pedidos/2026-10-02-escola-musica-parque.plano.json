@@ -1,0 +1,102 @@
+{
+  "nome": "escola-musica-parque",
+  "pedido": "pedidos/2026-10-02-escola-musica-parque.md",
+  "personagens": [],
+  "tarefas": [
+    {
+      "id": "fachada",
+      "tipo": "fachada",
+      "titulo": "Fachada detalhada na clareira junto ao lago",
+      "quem": "worker-low",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/interiores/escola-musica/fora.js",
+        "jogo/js/interiores/escola-musica/lugar.js"
+      ],
+      "worktree": "escola-musica-parque-fachada",
+      "personagens": [],
+      "pronto": [
+        "Fachada detalhada na clareira junto ao lago"
+      ]
+    },
+    {
+      "id": "interior",
+      "tipo": "cenario",
+      "titulo": "Salas distintas e decoradas com acessos aos jogos",
+      "quem": "worker-low",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/interiores/escola-musica/escola-musica.js",
+        "jogo/js/interiores/escola-musica/objetos.js",
+        "jogo/js/interiores/escola-musica/objetos-sala-jogos.js",
+        "jogo/js/interiores/escola-musica/falas.js"
+      ],
+      "worktree": "escola-musica-parque-interior",
+      "personagens": [],
+      "pronto": [
+        "Salas distintas e decoradas com acessos aos jogos"
+      ]
+    },
+    {
+      "id": "jogos",
+      "tipo": "mecanica",
+      "titulo": "Três jogos musicais completos e responsivos",
+      "quem": "worker-low",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/interiores/escola-musica/jogos-dados.js",
+        "jogo/js/interiores/escola-musica/jogos.js",
+        "jogo/js/interiores/escola-musica/jogo-eco.js",
+        "jogo/js/interiores/escola-musica/jogo-ritmo.js",
+        "jogo/js/interiores/escola-musica/jogo-ouvido.js",
+        "jogo/css/ui-musica-jogos.css"
+      ],
+      "worktree": "escola-musica-parque-jogos",
+      "personagens": [],
+      "pronto": [
+        "Três jogos musicais completos e responsivos"
+      ]
+    },
+    {
+      "id": "integracao",
+      "tipo": "integracao",
+      "titulo": "Integração, vozes e validação",
+      "quem": "orquestrador",
+      "depende": [
+        "fachada",
+        "interior",
+        "jogos"
+      ],
+      "arquivos": [
+        "jogo/js/manifesto.js",
+        "jogo/index.html",
+        "jogo/js/interiores/escola-musica/acoes.js",
+        "jogo/js/sistemas/som-musica.js",
+        "jogo/ferramentas/testes/unidade/escola-musica-jogos.navegador.test.js",
+        "jogo/js/interiores/escola-musica/dados.js",
+        "jogo/ferramentas/tamanho.js",
+        "jogo/ferramentas/testes/unidade/novo.test.js"
+      ],
+      "worktree": "escola-musica-parque",
+      "personagens": [],
+      "pronto": [
+        "Validar tudo e revisar diferenças"
+      ]
+    },
+    {
+      "id": "entrega",
+      "tipo": "entrega",
+      "titulo": "Publicar main e Vercel",
+      "quem": "orquestrador",
+      "depende": [
+        "integracao"
+      ],
+      "arquivos": [],
+      "worktree": "escola-musica-parque",
+      "personagens": [],
+      "pronto": [
+        "Gates verdes e produção confirmada"
+      ]
+    }
+  ]
+}

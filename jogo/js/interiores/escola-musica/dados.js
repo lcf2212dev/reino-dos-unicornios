@@ -13,7 +13,7 @@
   ];
   M.melodia = [60, 62, 64, 65, 67, 65, 64, 62, 60];
   M.falas = {
-    convite: ['Vamos fazer música juntos?', 'Escolha uma das duas aulas.'],
+    convite: ['Vamos fazer música juntos?', 'Escolha uma aula ou um jogo.'],
     teclado: ['Cada tecla tem um som.', 'Toque e descubra as notas.'],
     guiada: ['Siga as notas com calma.', 'Pode tentar quantas quiser.'],
     fim: ['Você tocou a melodia toda!', 'Vamos fazer música de novo?'],

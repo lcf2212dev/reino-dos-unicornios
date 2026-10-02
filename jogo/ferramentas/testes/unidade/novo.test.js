@@ -44,7 +44,9 @@ test('prédio com rect e caminho: index confere e o interior só pede o que falt
 });
 
 test('matéria: o validador de conteúdo acusa só os (preencher)', () => {
-  const r = rodar(novo, ['materia', 'zztestemat', '--nome', 'Matéria de Teste', '--emoji', '🌍', '--prefixo', 'zzt', '--raiz', copia]);
+  // A cidade pode ocupar todas as clareiras; esta fixture de conteúdo usa um terreno livre explícito.
+  const a = areaLivre();
+  const r = rodar(novo, ['materia', 'zztestemat', '--nome', 'Matéria de Teste', '--emoji', '🌍', '--prefixo', 'zzt', '--rect', a.rect, '--raiz', copia]);
   assert.strictEqual(r.status, 0, r.stderr);
   const v = naCopia('ferramentas/validar/validar-conteudo.js');
   const e = erros(v);
