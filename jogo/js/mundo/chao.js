@@ -1,7 +1,7 @@
 /* O chão do mapa, tile a tile: grama (tufos e manchas sorteados por tile, sem a grade à mostra), os 3 calçamentos
    (paralelepípedo nas avenidas, ladrilho claro nas travessas e caminhos, terra batida nas trilhas; Mapa.CIDADE.ruas
    .estilo), o piso da praça, as clareiras guardadas para as próximas matérias e o bosque fechado além da borda de
-   baixo. Usa as cores e os ajudantes de mundo/mapa-desenho.js e de mundo/arvores.js (Mapa._interno) e entrega:
+   cima e de baixo. Usa as cores e os ajudantes de mundo/mapa-desenho.js e de mundo/arvores.js (Mapa._interno) e entrega:
      I.desenharChao(ctx, x, y, forcado)   um tile (forcado: a letra do chão, para as fileiras além do mapa)
      I.desenharClareiras(ctx)             as clareiras livres (depois do chão, antes dos enfeites)
      I.desenharAlemDaBorda(ctx, y0, h)    o bosque fechado de y0 (px) até y0 + h, na largura do mapa */
@@ -126,7 +126,7 @@
     });
   };
 
-  /* ----- além da borda de baixo: bosque fechado, só copas escuras (sem chão à mostra) ----- */
+  /* ----- além das bordas: bosque fechado, só copas escuras (sem chão à mostra) ----- */
   var COPA_ESCURA = ['#8fb83a', '#6f9a3a', '#b6d24e'], moitas = null;
   function moita(v) {
     var c = PA.novoCanvas(28, 24), bolas = [[14, 12, 10], [8, 15, 7], [20, 14, 8]].map(function (b, i) {
@@ -140,9 +140,11 @@
   I.desenharAlemDaBorda = function (ctx, y0, h) {
     if (!moitas) moitas = [0, 1, 2, 3].map(moita);
     ret(ctx, 0, y0, W * T, h, COPA_ESCURA[1]);
-    for (var fila = 0; fila * 10 < h + 10; fila++) for (var x = -14 + (fila % 2) * 9; x < W * T; x += 18) {
+    // Em cima, as fileiras se ancoram em y = 0 (não na altura variável do cache). Embaixo, preserva o desenho.
+    var base = y0 < 0 ? 0 : y0, primeira = y0 < 0 ? Math.floor(y0 / 10) : 0;
+    for (var fila = primeira; base + fila * 10 < y0 + h + 10; fila++) for (var x = -14 + ((fila % 2 + 2) % 2) * 9; x < W * T; x += 18) {
       var v = Math.floor(s(x, fila, 71) * 4);
-      ctx.drawImage(moitas[v], x + Math.floor(s(x, fila, 72) * 5) - 2, y0 - 12 + fila * 10);
+      ctx.drawImage(moitas[v], x + Math.floor(s(x, fila, 72) * 5) - 2, base - 12 + fila * 10);
     }
   };
 })();
