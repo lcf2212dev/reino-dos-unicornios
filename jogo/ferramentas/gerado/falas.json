@@ -14596,8 +14596,7 @@
    "voz": "narradora",
    "texto": "Ele mostra o bem pequeninho.",
    "pacotes": [
-    "interior-castelo",
-    "interior-observatorio"
+    "interior-castelo"
    ],
    "fala": "Ele mostra o bem pequeninho."
   },
@@ -19803,31 +19802,22 @@
    "fala": "São cinco salas para visitar."
   },
   {
-   "chave": "95a9d3eb10",
+   "chave": "39c8f72611",
    "voz": "narradora",
-   "texto": "Um microscópio de verdade!",
+   "texto": "Vamos brincar com ciências?",
    "pacotes": [
     "interior-observatorio"
    ],
-   "fala": "Um microscópio de verdade!"
+   "fala": "Vamos brincar com ciências?"
   },
   {
-   "chave": "91b70277y",
+   "chave": "6fa2444fz",
    "voz": "narradora",
-   "texto": "Tubos com água colorida!",
+   "texto": "Vamos fazer experiências?",
    "pacotes": [
     "interior-observatorio"
    ],
-   "fala": "Tubos com água colorida!"
-  },
-  {
-   "chave": "d484752812",
-   "voz": "narradora",
-   "texto": "Cientista testa com cuidado.",
-   "pacotes": [
-    "interior-observatorio"
-   ],
-   "fala": "Cientista testa com cuidado."
+   "fala": "Vamos fazer experiências?"
   },
   {
    "chave": "02fc2139y",
@@ -32016,6 +32006,321 @@
     "interior-observatorio"
    ],
    "fala": "Lá já colheram alface!"
+  },
+  {
+   "chave": "c0facdc5v",
+   "voz": "narradora",
+   "texto": "Vamos testar na água.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos testar na água."
+  },
+  {
+   "chave": "21e2395bw",
+   "voz": "narradora",
+   "texto": "O que será que flutua?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O que será que flutua?"
+  },
+  {
+   "chave": "83b65651z",
+   "voz": "narradora",
+   "texto": "O material faz diferença.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O material faz diferença."
+  },
+  {
+   "chave": "bd24a1eez",
+   "voz": "narradora",
+   "texto": "O formato também importa.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O formato também importa."
+  },
+  {
+   "chave": "c92d3e22w",
+   "voz": "narradora",
+   "texto": "Vamos aproximar o ímã.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos aproximar o ímã."
+  },
+  {
+   "chave": "df89ecbfz",
+   "voz": "narradora",
+   "texto": "O que será que ele atrai?",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O que será que ele atrai?"
+  },
+  {
+   "chave": "b071e315u",
+   "voz": "narradora",
+   "texto": "O ímã atrai o ferro.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O ímã atrai o ferro."
+  },
+  {
+   "chave": "684931f8z",
+   "voz": "narradora",
+   "texto": "Mas não atrai todo metal.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Mas não atrai todo metal."
+  },
+  {
+   "chave": "79bfa8a0x",
+   "voz": "narradora",
+   "texto": "Vamos mover a lanterna.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos mover a lanterna."
+  },
+  {
+   "chave": "47c3f33f12",
+   "voz": "narradora",
+   "texto": "Observe o tamanho da sombra.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Observe o tamanho da sombra."
+  },
+  {
+   "chave": "3ace02a7v",
+   "voz": "narradora",
+   "texto": "O bloco impede a luz.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O bloco impede a luz."
+  },
+  {
+   "chave": "f8d0f9d2z",
+   "voz": "narradora",
+   "texto": "Atrás dele fica a sombra.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Atrás dele fica a sombra."
+  },
+  {
+   "chave": "8741b6c1z",
+   "voz": "narradora",
+   "texto": "Vamos observar a semente.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos observar a semente."
+  },
+  {
+   "chave": "55a8fbf5u",
+   "voz": "narradora",
+   "texto": "Um pote recebe água.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Um pote recebe água."
+  },
+  {
+   "chave": "b432f76d10",
+   "voz": "narradora",
+   "texto": "A semente precisa de água.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "A semente precisa de água."
+  },
+  {
+   "chave": "013badbav",
+   "voz": "narradora",
+   "texto": "Também precisa de ar.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Também precisa de ar."
+  },
+  {
+   "chave": "22712b9212",
+   "voz": "narradora",
+   "texto": "Aqui o tempo passa depressa.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Aqui o tempo passa depressa."
+  },
+  {
+   "chave": "aa9c1ecfy",
+   "voz": "narradora",
+   "texto": "Vamos misturar com água.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos misturar com água."
+  },
+  {
+   "chave": "a514adf7x",
+   "voz": "narradora",
+   "texto": "Observe o que acontece.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Observe o que acontece."
+  },
+  {
+   "chave": "2c6ac95av",
+   "voz": "narradora",
+   "texto": "Nem tudo se dissolve.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Nem tudo se dissolve."
+  },
+  {
+   "chave": "bf5d585810",
+   "voz": "narradora",
+   "texto": "O açúcar continua na água.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O açúcar continua na água."
+  },
+  {
+   "chave": "24bdd35az",
+   "voz": "narradora",
+   "texto": "Vamos ligar os dois fios.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos ligar os dois fios."
+  },
+  {
+   "chave": "cb8df427y",
+   "voz": "narradora",
+   "texto": "A pilha fornece energia.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "A pilha fornece energia."
+  },
+  {
+   "chave": "d2b6fbefy",
+   "voz": "narradora",
+   "texto": "O caminho está completo.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O caminho está completo."
+  },
+  {
+   "chave": "1e515ecfx",
+   "voz": "narradora",
+   "texto": "Agora a lâmpada acende.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Agora a lâmpada acende."
+  },
+  {
+   "chave": "a3a429bcz",
+   "voz": "narradora",
+   "texto": "Vamos encontrar os pares.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos encontrar os pares."
+  },
+  {
+   "chave": "8e48b45a12",
+   "voz": "narradora",
+   "texto": "Cada animal tem seu hábitat.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Cada animal tem seu hábitat."
+  },
+  {
+   "chave": "7d4f213d10",
+   "voz": "narradora",
+   "texto": "Vamos visitar três flores.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos visitar três flores."
+  },
+  {
+   "chave": "c844b59612",
+   "voz": "narradora",
+   "texto": "Depois volte para a colmeia.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Depois volte para a colmeia."
+  },
+  {
+   "chave": "d83e3907u",
+   "voz": "narradora",
+   "texto": "O sol aquece a água.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "O sol aquece a água."
+  },
+  {
+   "chave": "7ce73149z",
+   "voz": "narradora",
+   "texto": "Vamos montar essa viagem.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos montar essa viagem."
+  },
+  {
+   "chave": "148e2aa0y",
+   "voz": "narradora",
+   "texto": "Você fez uma descoberta!",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Você fez uma descoberta!"
+  },
+  {
+   "chave": "1730747a10",
+   "voz": "narradora",
+   "texto": "Pode experimentar de novo.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Pode experimentar de novo."
+  },
+  {
+   "chave": "d8ba4d1cy",
+   "voz": "narradora",
+   "texto": "Vamos fazer descobertas.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Vamos fazer descobertas."
+  },
+  {
+   "chave": "5bf487e9y",
+   "voz": "narradora",
+   "texto": "Escolha uma experiência.",
+   "pacotes": [
+    "interior-observatorio"
+   ],
+   "fala": "Escolha uma experiência."
   },
   {
    "chave": "bd189b78y",

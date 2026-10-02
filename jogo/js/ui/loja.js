@@ -61,13 +61,14 @@
     }
     UI.confirmar(perguntaDaCompra(item), 'Sim, quero! ✨', 'Agora não', true).then(function (sim) {
       if (!sim) return;
+      if (est().loja[item.id]) return; // confirmação antiga nunca cobra duas vezes
       compra.itemComprado = item.id;   // o cartão dele ignora toques perto do "Sim" até 1,1 s sem toque
       if (!P.gastarEstrelas(item.preco)) return;   // (as estrelas não mudam enquanto ela confirma, mas por via das dúvidas)
       est().loja[item.id] = true;
       if (!usando(item)) alternar(item);
       P.salvar();
       Reino.Som.tocar('estrela');
-      depois(); U.emit(EV.MAPA_MUDOU);
+      depois(true); U.emit(EV.MAPA_MUDOU);
       // compra: nível 1, sem confete, brilho de 3 quadros no cartão comprado (ui.md §10.16)
       UI.festa(1, { som: false, item: document.querySelector('.item-loja[data-item="' + item.id + '"]') });
     });
@@ -85,9 +86,25 @@
     return { id: s, titulo: LI.SLOTS[s].nome, slots: [s] };
   }).concat([{ id: 'especiais', titulo: 'Capa, rastro e asas', slots: ['capa', 'rastro', 'asas'] }]);
   function itensDoGrupo(g) {
-    return ITENS.filter(function (it) { return g.slots.indexOf(it.slot) >= 0; })
+    return LI.naLoja('fadas').filter(function (it) { return g.slots.indexOf(it.slot) >= 0; })
       .sort(function (a, b) { return a.preco - b.preco || ITENS.indexOf(a) - ITENS.indexOf(b); });
   }
+
+  function cartao(item, pintar) {
+        var tem = !!est().loja[item.id], cr = caro(item, tem);
+        var b = el('button.item-loja' + (tem ? '.comprado' : '') + (usando(item) ? '.usando' : '') + (cr ? '.indisponivel' : ''),
+          { type: 'button', 'data-item': item.id, 'aria-disabled': cr ? 'true' : null, 'aria-label': item.nome + ', ' + (tem ? (usando(item) ? 'usando' : 'comprado, tocar para usar') : item.preco + ' estrelas' + faltam(item)) },
+          el('span.item-icone', iconeItem(item, ICONE_CARTA)), el('b', hifenizar(item.nome)),
+          el('span.item-preco', tem ? (usando(item) ? '✓ Usando' : 'Usar') : (cr ? '🔒 ' : '') + '⭐ ' + item.preco));
+        b.addEventListener('click', function (e) {
+          if (logoDepoisDaCompra(e, item.id)) return;
+          if (tem) { alternar(item); Reino.Som.tocar('selecionar'); P.salvar(); pintar(); U.emit(EV.MAPA_MUDOU); return; }
+          comprar(item, pintar);
+        });
+        return b;
+      }
+  // Compartilhado apenas pelas duas lojas: mesma confirmação, economia e guarda de toque.
+  R.cartaoEnfeite = cartao;
 
   UI.telaLoja = function () {
     var pn = painel('lugar', '🧚 Loja das Fadas');
@@ -132,21 +149,8 @@
       vitrine.appendChild(PA.paraDOM(spr, 2));   // D8A-06: vitrine menor (escala 2, a da interface), ao lado do saldo
       grupos.forEach(function (x) {
         x.grade.innerHTML = '';
-        itensDoGrupo(x.g).forEach(function (item) { x.grade.appendChild(cartao(item)); });
+        itensDoGrupo(x.g).forEach(function (item) { x.grade.appendChild(cartao(item, pintar)); });
       });
-      function cartao(item) {
-        var tem = !!est().loja[item.id], cr = caro(item, tem);
-        var b = el('button.item-loja' + (tem ? '.comprado' : '') + (usando(item) ? '.usando' : '') + (cr ? '.indisponivel' : ''),
-          { type: 'button', 'data-item': item.id, 'aria-disabled': cr ? 'true' : null, 'aria-label': item.nome + ', ' + (tem ? (usando(item) ? 'usando' : 'comprado, tocar para usar') : item.preco + ' estrelas' + faltam(item)) },
-          el('span.item-icone', iconeItem(item, ICONE_CARTA)), el('b', hifenizar(item.nome)),
-          el('span.item-preco', tem ? (usando(item) ? '✓ Usando' : 'Usar') : (cr ? '🔒 ' : '') + '⭐ ' + item.preco));
-        b.addEventListener('click', function (e) {
-          if (logoDepoisDaCompra(e, item.id)) return;
-          if (tem) { alternar(item); Reino.Som.tocar('selecionar'); P.salvar(); pintar(); U.emit(EV.MAPA_MUDOU); return; }
-          comprar(item, pintar);
-        });
-        return b;
-      }
       // prêmios da Escola do Reino: ganha 1 acertando TUDO na prova; os outros 2 da mesma prova ficam à venda
       premiosBox.innerHTML = '';
       (Reino.provas || []).forEach(function (pv) {

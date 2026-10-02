@@ -78,7 +78,7 @@ function novoCanvasFalso() {
 /* ---------- carrega a pixel art e as provas, na ordem do manifesto ---------- */
 function carregarJogo() {
   const manifesto = require(path.join(raiz, 'js/manifesto.js'));
-  const QUEREM = /^js\/(nucleo\/config|arte\/desenho|arte\/pixelart(-unicornio-moldes|-unicornio|-personagens|-mariana-visual)?|nucleo\/registros|conteudo\/provas\/[^/]+)\.js$/;
+  const QUEREM = /^js\/(nucleo\/config|arte\/desenho|arte\/icones\/icones|arte\/enfeites-novidades|arte\/pixelart(-unicornio-moldes|-unicornio|-personagens|-mariana-visual)?|nucleo\/registros|conteudo\/provas\/[^/]+)\.js$/;
   const ctx = { console: { log() {}, warn() {}, error: console.error }, Math, JSON, Object, Array, Map, Set };
   ctx.window = ctx;
   ctx.document = { createElement: () => novoCanvasFalso() };

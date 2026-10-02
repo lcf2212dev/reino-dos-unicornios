@@ -1,0 +1,33 @@
+/* Descobertas e mini-jogos do laboratório: arte estática, controles para toque e teclado. */
+.laboratorio .painel-conteudo { display: flex; flex-direction: column; gap: 16px; }
+.laboratorio-grade { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.laboratorio-grade .laboratorio-botao { display: flex; flex-direction: column; align-items: center; gap: 12px; white-space: normal; }
+.laboratorio-botao { min-height: 48px; white-space: normal; overflow-wrap: break-word; }
+.laboratorio-cena { display: block; width: 320px; max-width: 100%; height: auto; image-rendering: pixelated; }
+.laboratorio-grade .laboratorio-cena { width: 160px; }
+.laboratorio-palco { display: flex; justify-content: center; padding: 8px; border: var(--borda-fina) solid var(--tinta); background: var(--certo-fundo); }
+.laboratorio-guia, .laboratorio-relato { margin: 0; line-height: var(--entrelinha); }
+.laboratorio-relato { padding: 16px; border: var(--borda-fina) solid var(--tinta); background: var(--papel-quente); }
+.laboratorio-legenda { font-size: var(--texto-aux); line-height: var(--entrelinha); }
+.laboratorio-controles { display: flex; flex-wrap: wrap; gap: 12px; }
+.laboratorio-controles > button { flex: 1 1 140px; }
+.laboratorio [aria-pressed="true"] { background: var(--roxo-claro); border-color: var(--roxo); }
+.laboratorio .laboratorio-certo { background: var(--certo-fundo); border-color: var(--certo); }
+.laboratorio-memoria { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-bottom: 16px; }
+.laboratorio-memoria button { min-height: 96px; }
+.laboratorio-jardim { display: grid; grid-template-columns: repeat(5, 48px); width: 244px; margin: 8px auto 16px; border: var(--borda-fina) solid var(--tinta); }
+.laboratorio-casa { width: 48px; height: 48px; position: relative; background: var(--certo-fundo); border: var(--borda-fina) solid var(--verde-folha); }
+.laboratorio-casa.pedra::before { content: ''; position: absolute; inset: 10px 6px; background: var(--tinta-suave); border: var(--borda-fina) solid var(--tinta); }
+.laboratorio-casa.flor::before { content: ''; position: absolute; inset: 8px; background: var(--rosa); border: var(--borda-fina) solid var(--tinta); }
+.laboratorio-casa.flor::after { content: ''; position: absolute; inset: 18px; background: var(--ouro); }
+.laboratorio-casa.visitada { background: var(--certo-fundo); border-color: var(--tinta); }
+.laboratorio-casa.colmeia::before { content: ''; position: absolute; inset: 6px 10px; background: repeating-linear-gradient(var(--ouro) 0 6px, var(--laranja-escuro) 6px 8px); border: var(--borda-fina) solid var(--tinta); }
+.laboratorio-abelha { position: absolute; z-index: 1; left: 8px; top: 16px; width: 28px; height: 16px; border: var(--borda-fina) solid var(--tinta); background: repeating-linear-gradient(90deg, var(--ouro) 0 6px, var(--tinta) 6px 10px); }
+.laboratorio-abelha::before { content: ''; position: absolute; width: 12px; height: 8px; top: -10px; left: 6px; border: var(--borda-fina) solid var(--tinta); background: var(--ceu); }
+.laboratorio-direcoes { display: flex; justify-content: center; gap: 8px; }
+.laboratorio-direcoes button { min-width: 48px; }
+.laboratorio-trilha { padding-left: 0; list-style-position: inside; line-height: var(--entrelinha); }
+.laboratorio-trilha li { padding: 8px; margin-bottom: 8px; background: var(--papel-quente); border: var(--borda-fina) solid var(--tinta); }
+@media (max-width: 420px) {
+  .laboratorio-grade { grid-template-columns: 1fr; }
+}

@@ -13,7 +13,7 @@
   var LILAS = '#c9a8ff', LILAS2 = '#9b6bd6', MUSGO = '#7fa84a', MUSGO2 = '#5e8a36', ROSA = '#ff9cc6';
 
   // a lista única da Loja (js/conteudo/loja-itens.js): os mesmos enfeites e prêmios da tela da Loja
-  function enfeites() { return (R.LojaItens && R.LojaItens.ENFEITES) || []; }
+  function enfeites() { return (R.LojaItens && R.LojaItens.naLoja('fadas')) || []; }
 
   function v(o, k, padrao) { return (o && o.var && o.var[k] !== undefined) ? o.var[k] : padrao; }
   var brilho = R.Desenho.brilho;   // brilho em cruz (aqui sempre com a cor)

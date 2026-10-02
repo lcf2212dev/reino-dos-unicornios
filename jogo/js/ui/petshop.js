@@ -18,6 +18,7 @@
     var uniBox = el('div.petshop-uni');
     var grade = el('div.grade-loja.grade-comidas');
     var despensa = el('div.petshop-despensa');
+    var enfeites = el('div.grade-loja');
     function pintar(focar) {
       // refazer a grade encolhe o painel por um instante: a rolagem volta para onde ela estava
       var rolagem = c.scrollTop;
@@ -46,6 +47,7 @@
         lista.forEach(function (x) { despensa.appendChild(el('span.chip-mini', x.comida.icone + ' ×' + x.quantidade)); });
       }
       if (focar) { var f = grade.querySelector('[data-comida="' + focar + '"]'); if (f) try { f.focus({ preventScroll: true }); } catch (e) {} }
+      R.pintarEnfeitesPetShop(enfeites, function (comprou) { if (comprou) visita.comprou++; pintar(); });
       c.scrollTop = rolagem;
     }
     function faltamEstrelas(co, faltam) {
@@ -103,6 +105,9 @@
     c.appendChild(uniBox);
     c.appendChild(grade);
     c.appendChild(despensa);
+    c.appendChild(el('h3.estabulo-grupo', 'Acessórios exclusivos'));
+    c.appendChild(el('p.bau-nota', 'Só na Pet Shop! Compre uma vez e use no seu unicórnio quando quiser.'));
+    c.appendChild(enfeites);
     c.appendChild(el('p.bau-nota', '💧 A água é de graça: é só beber no bebedouro, no Cantinho da Água.'));
     pintar();
     var primeiro = grade.querySelector('button');

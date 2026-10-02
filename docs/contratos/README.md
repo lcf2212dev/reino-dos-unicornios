@@ -19,6 +19,7 @@ contrato dele. Mudança de contrato: só o orquestrador. Histórico da refatora�
 | fotos e álbum | `fotos.md` |
 | matérias, salas, desafios e tipos, livro, provas, treino, Português | `conteudo.md` |
 | Laboratório de Química: misturas, caderno de receitas, microscópio, tabela periódica, 2º andar (curiosidades, estados, separar, livros), campo `quimica` | `quimica.md` |
+| experiências e mini-jogos do Laboratório de Ciências no Observatório | `laboratorio-atividades.md` |
 | plano de frentes paralelas, reserva de personagem (vaga tracejada), ondas, conferência em pipeline | `plano-paralelo.md` |
 | regras gerais de código, ordem de carga, testes | tabela abaixo |
 
