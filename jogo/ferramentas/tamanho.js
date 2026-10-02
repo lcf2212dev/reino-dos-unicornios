@@ -24,6 +24,7 @@ const REGRAS = [
   { tipo: 'gerado', casa: /^js\/voz\// },
   { tipo: 'gerado', casa: /^ferramentas\/gerado\// },
   { tipo: 'gerado', casa: /^index\.html$/ },
+  { tipo: 'dados', casa: /^js\/manifesto\.js$/ }, // catálogo de arquivos, lido por item e crescente com o jogo
   { tipo: 'dados', casa: /^js\/conteudo\// },
   { tipo: 'dados', casa: /^js\/arte\/icones\// },
   { tipo: 'dados', casa: /^js\/.*\/falas\.js$/ },

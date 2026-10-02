@@ -3,12 +3,12 @@
    Sem caminho o lugar é recusado; confira com node jogo/ferramentas/validar/validar-interiores.js. */
 Reino.registrarLugar({
   id: 'escola-musica', nome: 'Escola de Música', sprite: 'escola-musica', placa: 'acima',
-  rect: { x: 10, y: 7, w: 4, h: 3 },
-  caminho: [[12, 10]],
+  rect: { x: 13, y: 33, w: 5, h: 5 },
+  caminho: [[15, 38]],
   novidade: '2026-10-02',   // selo "✨ Novo!" no menu Lugares até ela entrar (ou config.novidadeDias dias)
   menu: {
     emoji: '🎵',
     // a linha de baixo no menu Lugares
-    info: function () { return 'Aulas de teclado e fundamentos musicais'; },
+    info: function () { return 'Aulas e jogos de teclado e fundamentos musicais'; },
   },
 });

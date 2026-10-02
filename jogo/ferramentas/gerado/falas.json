@@ -15756,13 +15756,13 @@
    "fala": "Ele marca a pulsação."
   },
   {
-   "chave": "5f3e9d84x",
+   "chave": "8340ecfa10",
    "voz": "narradora",
-   "texto": "Vamos conhecer os sons?",
+   "texto": "Os fones ajudam a escutar.",
    "pacotes": [
     "interior-escola-musica"
    ],
-   "fala": "Vamos conhecer os sons?"
+   "fala": "Os fones ajudam a escutar."
   },
   {
    "chave": "e3fd073d11",
@@ -15774,6 +15774,33 @@
    "fala": "Escolha uma aula de música!"
   },
   {
+   "chave": "c1fc2adbw",
+   "voz": "narradora",
+   "texto": "Cada barra tem um som.",
+   "pacotes": [
+    "interior-escola-musica"
+   ],
+   "fala": "Cada barra tem um som."
+  },
+  {
+   "chave": "5f3e9d84x",
+   "voz": "narradora",
+   "texto": "Vamos conhecer os sons?",
+   "pacotes": [
+    "interior-escola-musica"
+   ],
+   "fala": "Vamos conhecer os sons?"
+  },
+  {
+   "chave": "a4ca62f313",
+   "voz": "narradora",
+   "texto": "Vamos brincar com a pulsação!",
+   "pacotes": [
+    "interior-escola-musica"
+   ],
+   "fala": "Vamos brincar com a pulsação!"
+  },
+  {
    "chave": "6af13b6810",
    "voz": "narradora",
    "texto": "Uma pausa para beber água.",
@@ -15781,6 +15808,60 @@
     "interior-escola-musica"
    ],
    "fala": "Uma pausa para beber água."
+  },
+  {
+   "chave": "cbc8820311",
+   "voz": "narradora",
+   "texto": "A bateria dá vida ao ritmo!",
+   "pacotes": [
+    "interior-escola-musica"
+   ],
+   "fala": "A bateria dá vida ao ritmo!"
+  },
+  {
+   "chave": "9f7ecae010",
+   "voz": "narradora",
+   "texto": "Este palco espera sua voz!",
+   "pacotes": [
+    "interior-escola-musica"
+   ],
+   "fala": "Este palco espera sua voz!"
+  },
+  {
+   "chave": "e6f7a3a7z",
+   "voz": "narradora",
+   "texto": "Vamos brincar com música?",
+   "pacotes": [
+    "interior-escola-musica"
+   ],
+   "fala": "Vamos brincar com música?"
+  },
+  {
+   "chave": "4eff8b62z",
+   "voz": "narradora",
+   "texto": "Escute e repita as notas!",
+   "pacotes": [
+    "interior-escola-musica"
+   ],
+   "fala": "Escute e repita as notas!"
+  },
+  {
+   "chave": "f9c853a512",
+   "voz": "narradora",
+   "texto": "Monte um ritmo do seu jeito!",
+   "pacotes": [
+    "interior-escola-musica"
+   ],
+   "fala": "Monte um ritmo do seu jeito!"
+  },
+  {
+   "chave": "7d2ff51510",
+   "voz": "narradora",
+   "texto": "Que diferença você escuta?",
+   "pacotes": [
+    "interior-escola-musica"
+   ],
+   "fala": "Que diferença você escuta?"
   },
   {
    "chave": "8ac10616c",
@@ -26978,13 +27059,13 @@
    "fala": "Vamos fazer música juntos?"
   },
   {
-   "chave": "59736c46y",
+   "chave": "4e0cf43fz",
    "voz": "claude",
-   "texto": "Escolha uma das duas aulas.",
+   "texto": "Escolha uma aula ou um jogo.",
    "pacotes": [
     "interior-escola-musica"
    ],
-   "fala": "Escolha uma das duas aulas."
+   "fala": "Escolha uma aula ou um jogo."
   },
   {
    "chave": "5b81b180t",
@@ -27192,6 +27273,123 @@
     "interior-escola-musica"
    ],
    "fala": "Bata palmas se você quiser."
+  },
+  {
+   "chave": "9a5d262dx",
+   "voz": "claude",
+   "texto": "Vamos brincar com os sons?",
+   "pacotes": [
+    "interior-escola-musica"
+   ],
+   "fala": "Vamos brincar com os sons?"
+  },
+  {
+   "chave": "cb4347d3x",
+   "voz": "claude",
+   "texto": "Escolha um jogo de música.",
+   "pacotes": [
+    "interior-escola-musica"
+   ],
+   "fala": "Escolha um jogo de música."
+  },
+  {
+   "chave": "11ee01c7s",
+   "voz": "claude",
+   "texto": "Ouça e veja as notas.",
+   "pacotes": [
+    "interior-escola-musica"
+   ],
+   "fala": "Ouça e veja as notas."
+  },
+  {
+   "chave": "323b6868z",
+   "voz": "claude",
+   "texto": "Depois toque na mesma ordem.",
+   "pacotes": [
+    "interior-escola-musica"
+   ],
+   "fala": "Depois toque na mesma ordem."
+  },
+  {
+   "chave": "a9c46977v",
+   "voz": "claude",
+   "texto": "Você pode ouvir de novo.",
+   "pacotes": [
+    "interior-escola-musica"
+   ],
+   "fala": "Você pode ouvir de novo."
+  },
+  {
+   "chave": "ea17a6c610",
+   "voz": "claude",
+   "texto": "Monte quatro tempos musicais.",
+   "pacotes": [
+    "interior-escola-musica"
+   ],
+   "fala": "Monte quatro tempos musicais."
+  },
+  {
+   "chave": "aedb84fez",
+   "voz": "claude",
+   "texto": "Toque nos blocos para mudar.",
+   "pacotes": [
+    "interior-escola-musica"
+   ],
+   "fala": "Toque nos blocos para mudar."
+  },
+  {
+   "chave": "221d61a4v",
+   "voz": "claude",
+   "texto": "Compare com o meu ritmo.",
+   "pacotes": [
+    "interior-escola-musica"
+   ],
+   "fala": "Compare com o meu ritmo."
+  },
+  {
+   "chave": "1bd8b333w",
+   "voz": "claude",
+   "texto": "Vamos comparar dois sons?",
+   "pacotes": [
+    "interior-escola-musica"
+   ],
+   "fala": "Vamos comparar dois sons?"
+  },
+  {
+   "chave": "2b8f6af0w",
+   "voz": "claude",
+   "texto": "Ouça os dois com atenção.",
+   "pacotes": [
+    "interior-escola-musica"
+   ],
+   "fala": "Ouça os dois com atenção."
+  },
+  {
+   "chave": "fe74c536z",
+   "voz": "claude",
+   "texto": "Depois escolha sua resposta.",
+   "pacotes": [
+    "interior-escola-musica"
+   ],
+   "fala": "Depois escolha sua resposta."
+  },
+  {
+   "chave": "159c5cecw",
+   "voz": "claude",
+   "texto": "Você completou o desafio!",
+   "pacotes": [
+    "interior-escola-musica"
+   ],
+   "fala": "Você completou o desafio!"
+  },
+  {
+   "chave": "3e6efa96u",
+   "voz": "claude",
+   "texto": "Pode brincar outra vez.",
+   "pacotes": [
+    "interior-escola-musica"
+   ],
+   "fala": "Pode brincar outra vez."
   },
   {
    "chave": "382bbea610",

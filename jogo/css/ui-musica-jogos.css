@@ -1,0 +1,34 @@
+/* Jogos musicais: controles grandes, quatro tempos visíveis e feedback sem depender de animação. */
+.musica-jogo .painel-conteudo { display: flex; flex-direction: column; gap: 16px; }
+.musica-jogo .painel-conteudo > * { flex-shrink: 0; min-width: 0; }
+.musica-jogo .mj-texto, .musica-jogo .mj-etapa, .musica-jogo .mj-recado, .musica-jogo .mj-pista, .musica-jogo .mj-aviso { margin: 0; line-height: var(--entrelinha); }
+.musica-jogo .mj-texto { font-size: var(--texto); }
+.musica-jogo .mj-etapa { color: var(--laranja-escuro); font-size: var(--texto-aux); }
+.musica-jogo .mj-recado { padding: 12px; background: var(--papel-quente); border-left: var(--borda-grossa) solid var(--borda); font-size: var(--texto); }
+.musica-jogo .mj-pista, .musica-jogo .mj-aviso { padding: 12px; background: var(--ouro-claro); border: var(--borda-fina) solid var(--borda); font-size: var(--texto-aux); }
+.musica-jogo .mj-controles { display: flex; flex-wrap: wrap; gap: 12px; }
+.musica-jogo .mj-botao, .musica-jogo .mj-resposta, .musica-jogo .mj-som { min-height: 48px; white-space: normal; line-height: var(--entrelinha); }
+.musica-jogo .mj-hub { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.musica-jogo .mj-cartao { display: flex; flex-direction: column; gap: 16px; text-align: left; padding: 16px; min-height: 120px; color: var(--tinta); background: var(--papel-quente); border: var(--borda-grossa) solid var(--borda); box-shadow: var(--sombra-grande); --degrau: 4px; }
+.musica-jogo .mj-cartao strong { font-size: var(--texto); font-weight: 400; line-height: var(--entrelinha); }
+.musica-jogo .mj-cartao span { font-size: var(--texto-aux); line-height: var(--entrelinha); }
+.musica-jogo .mj-notas, .musica-jogo .mj-grade-ritmo { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.musica-jogo .mj-nota, .musica-jogo .mj-bloco { min-height: 96px; padding: 12px 4px; font-size: var(--texto); line-height: var(--entrelinha); color: var(--tinta); background: var(--papel); border: var(--borda-fina) solid var(--borda); box-shadow: var(--sombra-grande); --degrau: 4px; }
+.musica-jogo .mj-bloco { display: flex; flex-direction: column; gap: 12px; align-items: center; justify-content: center; }
+.musica-jogo .mj-numero { font-size: var(--texto-aux); }
+.musica-jogo .mj-sons { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.musica-jogo .mj-soando { background: var(--ouro); color: var(--tinta); outline: var(--borda-grossa) solid var(--laranja); outline-offset: -4px; }
+.musica-jogo .mj-nota:disabled { background: var(--papel-2); color: var(--tinta-suave); }
+.musica-jogo .mj-nota.mj-soando:disabled { background: var(--ouro); color: var(--tinta); }
+.musica-jogo .mj-pergunta { margin: 0; font-size: var(--texto); line-height: var(--entrelinha); }
+.musica-jogo [hidden] { display: none !important; }
+@media (max-width: 540px) {
+  .musica-jogo .mj-hub { grid-template-columns: minmax(0, 1fr); }
+  .musica-jogo .mj-texto, .musica-jogo .mj-recado { font-size: var(--texto-aux); }
+  .musica-jogo .mj-controles > button { flex: 1 1 132px; }
+  .musica-jogo .mj-grade-ritmo { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .musica-jogo .mj-notas { gap: 8px; }
+  .musica-jogo .mj-nota { font-size: var(--texto-aux); min-height: 80px; }
+  .musica-jogo .mj-sons { gap: 12px; }
+  .musica-jogo .mj-som { font-size: var(--texto-aux); }
+}

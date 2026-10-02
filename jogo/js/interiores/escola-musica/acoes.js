@@ -53,10 +53,11 @@
   };
   M.menu = function () {
     var s = M.sessao('musica-aulas', 'Escola de Música');
-    s.corpo.appendChild(M.el('p', 'musica-intro', 'Um lugar para descobrir sons e criar melodias. Escolha sua aula!'));
+    s.corpo.appendChild(M.el('p', 'musica-intro', 'Um lugar para descobrir sons, criar melodias e brincar com música.'));
     var grade = M.el('div', 'musica-escolhas');
     [ ['Aula de teclado', 'Toque as teclas e aprenda uma pequena melodia.', M.teclado],
-      ['Fundamentos musicais', 'Explore os sons com exemplos e brincadeiras.', M.fundamentos] ].forEach(function (a) {
+      ['Fundamentos musicais', 'Explore os sons com exemplos e brincadeiras.', M.fundamentos],
+      ['Jogos musicais', 'Repita melodias, monte ritmos e investigue os sons.', M.jogos] ].forEach(function (a) {
       var b = M.botao('', function () { s.ir(a[2]); }, 'musica-cartao');
       b.appendChild(M.el('strong', '', a[0])); b.appendChild(M.el('span', '', a[1])); grade.appendChild(b);
     });
