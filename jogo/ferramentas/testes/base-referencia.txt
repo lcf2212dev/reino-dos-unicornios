@@ -63,4 +63,5 @@
 # 5347a80 = 32 produtos e 21 descobertas no laboratório de química
 # 5eb123b = Feira de Ciências, salas, vozes e entrada em Lugares
 # 7551213 = Feira de Ciências integrada, salas e narração
-7551213
+# 09c88a3 = Narrar somente a pergunta, sem instruções e respostas
+09c88a3
