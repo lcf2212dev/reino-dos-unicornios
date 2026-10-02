@@ -22,11 +22,12 @@ gasta: `ui.md` §5.
 ## 2. `Reino.LojaItens`
 ```
 Reino.LojaItens = {
-  ENFEITES: [{ id, nome, preco, slot, icone, espaco?: true }]   // tudo o que se compra com estrelas;
+  ENFEITES: [{ id, nome, preco, slot, icone, espaco?: true, loja?: 'petshop' }]   // tudo o que se compra com estrelas;
                                     // icone = emoji com desenho nos ícones OU a chave 'enfeite:<id>'
   SLOTS: { <slot>: { nome } }       // orelha, olho, cabeca, chifre, pescoco, cauda (em usando.enfeites, com âncora
                                     // nos moldes) + capa, rastro, asas (especiais: usando.capa, usando.estrelinhas,
                                     // usando.asasFada). Não existe `patas`
+  naLoja('fadas' | 'petshop') → enfeites do estabelecimento
   enfeite(id) → item | null
   premios() → [{ id, nome, raridade, provaId, preco, slot }]    // acessórios de todas as provas; slot = âncora
                                     // de PA.ENFEITES_MONTARIA (null sem PA, como nas ferramentas em vm)
@@ -38,6 +39,13 @@ Reino.LojaItens = {
 ```
 1. É a ÚNICA lista: a tela da Loja (`UI.ITENS_LOJA` é apelido de `ENFEITES`), a Loja por dentro e as
    ferramentas usam esta. Nenhuma cópia duplicada.
+2. `loja` ausente identifica a Loja das Fadas; `loja: 'petshop'` identifica acessórios exclusivos
+   da Pet Shop. Tela e vitrine das fadas usam `naLoja('fadas')`; a Pet Shop usa `naLoja('petshop')`.
+   Compras e encaixes continuam em `loja[id]` e `usando.enfeites`, sem campo persistente novo.
+   `conteudo/loja-novidades.js` acrescenta os itens à lista única, depois de `loja-itens.js`;
+   `arte/enfeites-novidades.js` registra seus desenhos e ícones.
+3. Os cartões de enfeites da Pet Shop reutilizam a compra, confirmação e guarda de toque da Loja.
+   Comprar veste o acessório; tocar novamente permite tirar ou usar sem pagar outra vez.
 
 ## 3. Prêmios da escola à venda
 1. Estado de um prêmio (derivado, nada novo no save):

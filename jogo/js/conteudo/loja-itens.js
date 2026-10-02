@@ -114,6 +114,11 @@
     faltamPremio: 'Ainda faltam estrelas para esse prêmio. Cada acerto de primeira vale uma estrela! ⭐',
   };
 
+  // Canal de venda é dado do catálogo; a posse continua em loja[id].
+  L.naLoja = function (loja) {
+    return L.ENFEITES.filter(function (item) { return (item.loja || 'fadas') === loja; });
+  };
+
   L.enfeite = function (id) {
     for (var i = 0; i < L.ENFEITES.length; i++) if (L.ENFEITES[i].id === id) return L.ENFEITES[i];
     return null;

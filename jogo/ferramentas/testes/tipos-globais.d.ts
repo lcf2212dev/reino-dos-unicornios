@@ -5,6 +5,7 @@
 // Módulo ainda sem tipo fica `any` (pela assinatura de índice); quando ganhar tipo, declare-o aqui.
 // Os membros são opcionais porque cada arquivo registra o seu ao carregar (a ordem é a do manifesto).
 /// <reference path="tipos-jogo.d.ts" />
+/// <reference path="tipos-loja.d.ts" />
 /// <reference path="tipos-extensoes.d.ts" />
 
 /** Tudo o que os arquivos registram em window.Reino (config, util, materias, Progresso, UI…). */
