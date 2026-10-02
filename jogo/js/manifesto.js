@@ -13,6 +13,7 @@
       'css/ui-prova.css',
       'css/ui-paineis.css',
       'css/ui-feira.css',
+      'css/ui-escola-musica.css',
       'css/ui-animacoes.css',
       'css/ui-desafios.css',
       'css/interiores.css',
@@ -41,10 +42,8 @@
       { js: 'js/nucleo/registros.js', grupo: 'nucleo', node: true },
       { js: 'js/nucleo/modulos.js', grupo: 'nucleo', node: true },
       { js: 'js/nucleo/util.js', grupo: 'nucleo', node: true },
-      // eventos.js logo depois do util.js: os nomes dos eventos do barramento (Reino.EVENTOS)
-      { js: 'js/nucleo/eventos.js', grupo: 'nucleo', node: true },
-      // ambiente.js: onde o jogo roda (artifact, file:, https, servidor de casa, compartilhar, baixar)
-      { js: 'js/nucleo/ambiente.js', grupo: 'nucleo', node: true },
+      { js: 'js/nucleo/eventos.js', grupo: 'nucleo', node: true }, // eventos.js logo depois do util.js: os nomes dos eventos do barramento (Reino.EVENTOS)
+      { js: 'js/nucleo/ambiente.js', grupo: 'nucleo', node: true }, // ambiente.js: onde o jogo roda (artifact, file:, https, servidor de casa, compartilhar, baixar)
       { js: 'js/arte/icones/icones.js', grupo: 'icones', node: true },
       { js: 'js/arte/icones/interface.js', grupo: 'icones', node: true },
       { js: 'js/arte/icones/premios.js', grupo: 'icones', node: true },
@@ -60,10 +59,8 @@
       { js: 'js/arte/icones/portugues.js', grupo: 'icones', node: true },
       { js: 'js/arte/icones/portugues-palavras.js', grupo: 'icones', node: true },
       { js: 'js/arte/icones/portugues-salas.js', grupo: 'icones', node: true },
-      // desenho.js antes da pixel art: Reino.Desenho (paleta e helpers) é a fonte das cores do PA.cor
-      { js: 'js/arte/desenho.js', grupo: 'arte', node: true },
-      // pixelart.js (base) primeiro: cria window.PA e PA._interno, que as outras partes usam
-      { js: 'js/arte/pixelart.js', grupo: 'pixelart' },
+      { js: 'js/arte/desenho.js', grupo: 'arte', node: true }, // desenho.js antes da pixel art: Reino.Desenho (paleta e helpers) é a fonte das cores do PA.cor
+      { js: 'js/arte/pixelart.js', grupo: 'pixelart' }, // pixelart.js (base) primeiro: cria window.PA e PA._interno, que as outras partes usam
       { js: 'js/arte/pixelart-unicornio-moldes.js', grupo: 'pixelart' },
       { js: 'js/arte/pixelart-unicornio.js', grupo: 'pixelart' },
       { js: 'js/arte/pixelart-personagens.js', grupo: 'pixelart' },
@@ -72,8 +69,7 @@
       { js: 'js/arte/pixelart-ovos.js', grupo: 'pixelart' },
       { js: 'js/arte/pixelart-icones.js', grupo: 'pixelart' },
       { js: 'js/conteudo/loja-itens.js', grupo: 'conteudo', node: true },
-      // Laboratório de Química: os dados (docs/contratos/quimica.md); frases.js antes das frases-<tela>.js
-      { js: 'js/conteudo/quimica/ingredientes.js', grupo: 'conteudo', node: true },
+      { js: 'js/conteudo/quimica/ingredientes.js', grupo: 'conteudo', node: true }, // Laboratório de Química: os dados (docs/contratos/quimica.md); frases.js antes das frases-<tela>.js
       { js: 'js/conteudo/quimica/receitas.js', grupo: 'conteudo', node: true },
       { js: 'js/conteudo/quimica/frases.js', grupo: 'conteudo', node: true },
       { js: 'js/conteudo/quimica/frases-bancada.js', grupo: 'conteudo', node: true },
@@ -92,8 +88,7 @@
       { js: 'js/conteudo/quimica/separar.js', grupo: 'conteudo', node: true },
       { js: 'js/conteudo/quimica/livros.js', grupo: 'conteudo', node: true },
       { js: 'js/personagens/unicornios.js', grupo: 'personagens', node: true },
-      // registro.js antes das matérias: cada sala (e o livro) se registra e <m>.js junta tudo na matéria
-      { js: 'js/conteudo/materias/registro.js', grupo: 'materias', node: true },
+      { js: 'js/conteudo/materias/registro.js', grupo: 'materias', node: true }, // registro.js antes das matérias: cada sala (e o livro) se registra e <m>.js junta tudo na matéria
       { js: 'js/conteudo/materias/historia/h1.js', grupo: 'materias', node: true },
       { js: 'js/conteudo/materias/historia/h2.js', grupo: 'materias', node: true },
       { js: 'js/conteudo/materias/historia/h3.js', grupo: 'materias', node: true },
@@ -156,6 +151,7 @@
       { js: 'js/sistemas/visitados.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/jogadores.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/som.js', grupo: 'sistemas' },
+      { js: 'js/sistemas/som-escola.js', grupo: 'sistemas' },
       { js: 'js/sistemas/som-instrumentos.js', grupo: 'sistemas' },
       { js: 'js/sistemas/som-musica.js', grupo: 'sistemas' },
       { js: 'js/sistemas/musicas-faixas.js', grupo: 'sistemas', node: true },
@@ -180,10 +176,8 @@
       { js: 'js/mundo/predios-2.js', grupo: 'mundo' },
       { js: 'js/personagens/jogador.js', grupo: 'personagens' },
       { js: 'js/personagens/jogador-desenho.js', grupo: 'personagens' },
-      // node: true: o validador e as falas usam os ganchos dos tipos (no carregamento, nada de document)
-      { js: 'js/atividades/desafios.js', grupo: 'atividades', node: true },
-      // cada tipo de desafio se registra no núcleo (Reino.registrarTipoDesafio, desafios.js, carregado antes)
-      { js: 'js/atividades/desafios/escolha.js', grupo: 'atividades', node: true },
+      { js: 'js/atividades/desafios.js', grupo: 'atividades', node: true }, // node: true: o validador e as falas usam os ganchos dos tipos (no carregamento, nada de document)
+      { js: 'js/atividades/desafios/escolha.js', grupo: 'atividades', node: true }, // cada tipo de desafio se registra no núcleo (Reino.registrarTipoDesafio, desafios.js, carregado antes)
       { js: 'js/atividades/desafios/varias.js', grupo: 'atividades', node: true },
       { js: 'js/atividades/desafios/ligar.js', grupo: 'atividades', node: true },
       { js: 'js/atividades/desafios/sequencia.js', grupo: 'atividades', node: true },
@@ -399,8 +393,16 @@
       { js: 'js/interiores/feira/feira.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/feira/fora.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/feira/lugar.js', grupo: 'interiores', node: true },
-      // padrao.js por último entre os prédios: monta o interior das matérias que não têm um próprio
-      { js: 'js/interiores/padrao.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/escola-musica/dados.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/escola-musica/acoes.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/escola-musica/teclado.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/escola-musica/fundamentos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/escola-musica/falas.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/escola-musica/objetos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/escola-musica/escola-musica.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/escola-musica/fora.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/escola-musica/lugar.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/padrao.js', grupo: 'interiores', node: true }, // padrao.js por último entre os prédios: monta o interior das matérias que não têm um próprio
       { js: 'js/sistemas/banho.js', grupo: 'sistemas' },
       { js: 'js/sistemas/banho-desenho.js', grupo: 'sistemas' },
       { js: 'js/sistemas/et-companheiro-desenho.js', grupo: 'sistemas' },
