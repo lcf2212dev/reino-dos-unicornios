@@ -106,8 +106,9 @@ Personagens: `npcs-e-dialogo.md`. Prédios: `interiores.md`. Vozes: `som-musica-
      `pista` (nome da frase em `Falas.fixas`), `campos` (campos opcionais só deste tipo: `livre`, `colado`, `rotulos`).
    - Textos: `enunciado(d)`/`enunciadoTela(d)` (sem eles: `d.pergunta`), `textoCerto(d)`, `textoResposta(d, valor)`
      (correção), `textoFala(d)` e `textoProva(d)` (tempo mínimo de leitura da prova).
-   - Voz: `falas(d, todos, segs)` recebe `[pergunta, instrucao?]` e devolve a lista lida no 🔊 e gravada
-     (`todos(lista)` = índices na ordem da tela). Mudou o que é lido: `npm run vozes`.
+   - Voz: `Falas.segmentosDesafio` lê somente `pergunta`, na leitura automática e no 🔊, sem instruções
+     nem respostas. Para tipos sem `pergunta` (V/F), `falas(d, todos, segs)` recebe `segs = []` e fornece
+     apenas o enunciado (`todos(lista)` = índices na ordem da tela). Texto novo exige `npm run vozes`.
    - Prova: `prepararProva(d)` (ordem preparada uma vez), `extraCorrecao(d, valor)` (elemento a mais na correção).
    - `validar(d, v)`: checagens sem DOM, no Node; `v = { checar(cond, msg), avisar(msg), naProva, icones, textoOk }`.
    - `exemplos: { desafio, certa(d), estranhos }` (obrigatório para o `npm test`): um desafio sintético do tipo,

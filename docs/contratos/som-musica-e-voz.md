@@ -82,7 +82,8 @@ falas (até 30 letras por página, frases de 3+ palavras, conferência por trans
    inglês entre «» (na tela aparece destacado, sem os sinais, e é falado pela voz inglesa).
 9. Português: letras sozinhas em MAIÚSCULAS ("usando X ou CH", "a letra H") são lidas pelo nome (xis, cê agá,
    éle agá, ene agá, ésse, dois ésses, zê, érre, dois érres, éle, agá), só nos pacotes de Português
-   (`listar-falas.js`). No `completar` com `colado: true` a narradora lê só o enunciado.
+   (`listar-falas.js`). Em todos os desafios, a narradora lê somente a pergunta, sem instruções nem
+   respostas, tanto automaticamente quanto no 🔊. Em V/F, lê "Verdadeiro ou falso?" e a afirmação.
 10. Texto de apoio: lido pela narradora com `Reino.Falas.segmentosApoio(apoio)` (título, título de cada parte,
     cada item da lista, o texto), no pacote da sala ou da prova.
 11. Falas com botão de seguir ou sair: `Reino.Voz.falarEsperando(segs, op) → { espera, fim }` (espera = false quando
