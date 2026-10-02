@@ -80,6 +80,7 @@
   // o selo da matéria do dia (Reino.config.aura.materiaDoDia): o emoji da matéria, o foguinho e "×4", sem frase
   function seloDoDia(A) {
     var hoje = A.materiaDoDia(), m = hoje && Reino.materia && Reino.materia(hoje.materia);
+    if (m && m.arquivada) m = null;
     if (!m) return null;
     var dica = 'Hoje, ' + m.nome + ' vale ' + hoje.vezes + ' vezes mais Aura!';
     return el('div.aura-dia', { role: 'img', 'aria-label': dica, title: dica },

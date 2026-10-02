@@ -5,6 +5,7 @@
    5 salas que dividem os R$20, na ordem do livro. Salas em c1.js … c5.js e o livro em livro.js (carregados antes
    deste arquivo, na ordem do manifesto; ver conteudo/materias/registro.js). Ícones novos em icones.js. */
 Reino.registrarMateria({
+  arquivada: true,
   id: 'ciencias',
   nome: 'Ciências',
   emoji: '🔬',
@@ -12,7 +13,7 @@ Reino.registrarMateria({
   nomeLivro: 'Caderno do Cientista',
   lugar: { nome: 'Laboratório de Ciências', artigo: 'o', dentro: 'observatorio', interior: 'observatorio-3',
     andar: '3º andar', novidade: '2026-09-26' },
-  guia: 'Eu sou o guia do Laboratório de Ciências! Aqui a gente descobre os seres vivos e onde cada um mora.',
+  guia: 'Em breve teremos novos conteúdos do quarto bimestre!',
 
   salas: Reino.salasDa('ciencias'),         // c1.js, c2.js, c3.js, c4.js, c5.js, na ordem do manifesto
 

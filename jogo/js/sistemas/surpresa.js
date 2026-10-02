@@ -84,6 +84,7 @@
     if (cacheTodas && cacheTodas.materias === Reino.materias) return cacheTodas.lista;
     var tipos = cfg().tipos, lista = [];
     (Reino.materias || []).forEach(function (m) {
+      if (m.arquivada) return;
       (m.salas || []).forEach(function (s) {
         (s.desafios || []).forEach(function (d) {
           if (tipos.indexOf(d.tipo) < 0 || d.livre) return;

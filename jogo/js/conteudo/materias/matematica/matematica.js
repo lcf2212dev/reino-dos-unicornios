@@ -6,6 +6,7 @@
    Contagens de figuras que não dão para conferir na foto ficaram de fora.
    Salas em m1.js … m6.js e o livro em livro.js (carregados antes deste arquivo, na ordem do manifesto). */
 Reino.registrarMateria({
+  arquivada: true,
   id: 'matematica',
   nome: 'Matemática',
   emoji: '🔢',
@@ -21,7 +22,7 @@ Reino.registrarMateria({
     cores: { parede: '#eaf4ff', detalhe: '#ffc93c' },
     novidade: '2026-09-26',
   },
-  guia: 'Eu sou o guia da Torre dos Números! Aqui tem calendário, relógio, chances e muita multiplicação.',
+  guia: 'Em breve teremos novos conteúdos do quarto bimestre!',
 
   salas: Reino.salasDa('matematica'),         // m1.js … m6.js, na ordem do manifesto
 

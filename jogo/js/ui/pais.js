@@ -68,7 +68,7 @@
       salvar.addEventListener('click', function () { P.registrarPagamento(m.id, parseFloat(campo.value) || 0); UI.fecharTela(pn.tela); abrirPais(true, m.id); });
       var t = est().treinos[m.id] || {};
       c.appendChild(el('div.pais-materia',
-        el('h3', m.emoji + ' ' + m.nome),
+        el('h3', m.emoji + ' ' + m.nome + (m.arquivada ? ' • 3º bimestre arquivado' : '')),
         // grade rótulo/valor (2 colunas); "A pagar" em destaque
         el('dl.pais-numeros',
           el('dt', 'Salas feitas'), el('dd', P.salasFeitas(m) + ' de ' + m.salas.length),

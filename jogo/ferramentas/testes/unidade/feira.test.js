@@ -4,7 +4,7 @@ const assert = require('node:assert/strict');
 const { montar } = require('./ajudantes/predios');
 
 test('feira: todo tópico do livro de Ciências aparece em brincadeira acessível', () => {
-  const { R, janela } = montar();
+  const { R, janela } = montar({ terceiroBimestre: true });
   const salas = R.FeiraCiencias.salas;
   const livro = R.materia('ciencias').livro;
   assert.equal(salas.length, 5);
@@ -25,7 +25,7 @@ test('feira: todo tópico do livro de Ciências aparece em brincadeira acessíve
 });
 
 test('feira: convite, ajuda e descoberta têm texto exato registrado para narração', () => {
-  const { R } = montar();
+  const { R } = montar({ terceiroBimestre: true });
   const falas = R.FALAS_INTERIORES.feira;
   const gravadas = new Set(falas.extras.filter(f => f.voz === 'narradora').map(f => f.texto));
   for (const s of R.FeiraCiencias.salas) for (const m of s.missoes) {
@@ -35,7 +35,7 @@ test('feira: convite, ajuda e descoberta têm texto exato registrado para narra�
 });
 
 test('feira: prédio independente com cinco salas e hall, entrada e ação de exploração', () => {
-  const { R } = montar();
+  const { R } = montar({ terceiroBimestre: true });
   const feira = R.interiores.find(i => i.id === 'feira');
   assert.ok(feira.entrada && feira.lugar === 'feira');
   assert.equal(feira.comodos.length, 6);

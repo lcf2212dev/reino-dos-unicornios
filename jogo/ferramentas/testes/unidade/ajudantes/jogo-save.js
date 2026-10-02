@@ -17,6 +17,7 @@ const Jogo = require('../../../jogo-no-node');
 //   timersReais setTimeout/clearTimeout de verdade (padrão: não fazem nada)
 //   semArmazenamento  localStorage que lança erro em tudo (navegador bloqueado)
 function montar(opcoes = {}) {
+  const Jogo = opcoes.terceiroBimestre ? require('./terceiro-bimestre') : module.exports.Jogo;
   const relogio = { agora: opcoes.agora || 1760000000000 };
   const intervalos = [];
   const ouvintes = {};
@@ -141,10 +142,10 @@ const copia = (o) => JSON.parse(JSON.stringify(o));
 function semNovos(e) { e = copia(e); delete e.cuidados; delete e.despensa; if (e.ajustes) { delete e.ajustes.surpresa; delete e.ajustes.surpresaEm; } return e; }
 
 // jogo já carregado com saveAtual() (ajuste(s) muda o save antes)
-function jogoCarregado(ajuste) {
+function jogoCarregado(ajuste, opcoes = {}) {
   const s = saveAtual();
   if (ajuste) ajuste(s);
-  const j = montar({ save: s });
+  const j = montar(Object.assign({}, opcoes, { save: s }));
   j.P.carregar();
   return j;
 }

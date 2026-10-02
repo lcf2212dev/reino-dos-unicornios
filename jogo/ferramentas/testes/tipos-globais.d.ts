@@ -12,6 +12,7 @@
 interface ReinoGlobal {
   [nome: string]: any;
   config?: any;
+  Bimestres?: BimestresApi;
   util?: any;
   // js/nucleo/registros.js
   materias?: Materia[];

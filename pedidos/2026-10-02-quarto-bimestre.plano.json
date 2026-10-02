@@ -1,0 +1,89 @@
+{
+  "nome": "quarto-bimestre",
+  "pedido": "pedidos/2026-10-02-quarto-bimestre.md",
+  "personagens": [],
+  "tarefas": [
+    {
+      "id": "conteudo",
+      "tipo": "conteudo",
+      "quem": "conteudo",
+      "worktree": "quarto-conteudo",
+      "depende": [],
+      "arquivos": [
+        "arquivo/",
+        "jogo/js/conteudo/",
+        "jogo/js/nucleo/registros.js",
+        "jogo/js/sistemas/bimestres.js",
+        "jogo/js/personagens/npcs-conversa.js",
+        "jogo/js/personagens/npcs-falas.js",
+        "jogo/js/personagens/npcs-status.js",
+        "jogo/js/atividades/",
+        "jogo/js/ui/materia.js",
+        "jogo/js/ui/estabulo.js",
+        "jogo/js/ui/pais.js",
+        "jogo/js/sistemas/surpresa.js",
+        "jogo/js/interiores/",
+        "jogo/ferramentas/testes/unidade/bimestres.test.js",
+        "docs/contratos/bimestres.md"
+      ]
+    },
+    {
+      "id": "visual",
+      "tipo": "mecanica",
+      "quem": "visual",
+      "worktree": "quarto-visual",
+      "depende": [],
+      "arquivos": [
+        "jogo/css/ui-abertura.css",
+        "jogo/css/ui-hud.css",
+        "jogo/css/ui-telas.css",
+        "jogo/css/ui-paineis.css",
+        "jogo/css/ui-temporada.css",
+        "jogo/js/ui/abertura.js",
+        "jogo/js/ui/abertura-desenho.js",
+        "jogo/js/ui/lugares.js",
+        "jogo/js/ui/hud.js",
+        "jogo/js/ui/temporada.js"
+      ]
+    },
+    {
+      "id": "testes",
+      "tipo": "mecanica",
+      "quem": "testes_arquivo",
+      "worktree": "quarto-conteudo",
+      "depende": [
+        "conteudo"
+      ],
+      "arquivos": [
+        "jogo/ferramentas/validar/",
+        "jogo/ferramentas/testes/unidade/ajudantes/terceiro-bimestre.js"
+      ]
+    },
+    {
+      "id": "integracao",
+      "tipo": "integracao",
+      "quem": "orquestrador",
+      "worktree": "quarto-bimestre",
+      "depende": [
+        "conteudo",
+        "visual",
+        "testes"
+      ],
+      "arquivos": [
+        "jogo/js/manifesto.js",
+        "jogo/index.html",
+        "jogo/ferramentas/testes/base-referencia.txt"
+      ]
+    },
+    {
+      "id": "entrega",
+      "tipo": "entrega",
+      "quem": "orquestrador",
+      "worktree": "quarto-bimestre",
+      "depende": [
+        "integracao"
+      ],
+      "arquivos": []
+    }
+  ]
+}

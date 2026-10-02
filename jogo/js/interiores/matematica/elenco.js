@@ -47,13 +47,13 @@
   /* ---------- falas (por cima das do padrão; nova/feita/depois ficam as de sempre) ---------- */
   R.falasDoPredio('padrao-matematica', {
     npcs: {
-      'guia-matematica': { oi: ['Oi! Eu sou a Professora Isa.', 'Os números moram aqui! 🌟', 'Cada sala tem um ajudante.'] },
-      'sala-matematica-m1': { oi: ['Oi! Eu sou a Cecília! 📅', 'Eu conto os dias do mês.', 'Vamos ver o calendário?'] },
-      'sala-matematica-m2': { oi: ['Olá! Eu sou o Seu Otávio. ⏰', 'Meu relógio nunca atrasa!', 'Vamos aprender as horas?'] },
-      'sala-matematica-m3': { oi: ['Oi! Eu sou o Mágico Tito! 🎲', 'Será que vai sair o seis?', 'Vamos pensar nas chances?'] },
-      'sala-matematica-m4': { oi: ['Oi! Eu sou a Confeiteira Lara.', 'Cada prato com o mesmo tanto.', 'Vamos somar grupos iguais?'] },
-      'sala-matematica-m5': { oi: ['Oi! Eu sou a Zuzu, a palhacinha.', 'Dobro é duas vezes! ✌️', 'Triplo é três vezes o mesmo.'] },
-      'sala-matematica-m6': { oi: ['Olá! Eu sou o Professor Tadeu.', 'Adoro a tabuada do 4 e do 5!', 'Vamos pular de cinco em cinco?'] },
+      'guia-matematica': { oi: ['Em breve teremos novos conteúdos do quarto bimestre!'] },
+      'sala-matematica-m1': { oi: ['Em breve teremos novos conteúdos do quarto bimestre!'] },
+      'sala-matematica-m2': { oi: ['Em breve teremos novos conteúdos do quarto bimestre!'] },
+      'sala-matematica-m3': { oi: ['Em breve teremos novos conteúdos do quarto bimestre!'] },
+      'sala-matematica-m4': { oi: ['Em breve teremos novos conteúdos do quarto bimestre!'] },
+      'sala-matematica-m5': { oi: ['Em breve teremos novos conteúdos do quarto bimestre!'] },
+      'sala-matematica-m6': { oi: ['Em breve teremos novos conteúdos do quarto bimestre!'] },
     },
   });
 })();

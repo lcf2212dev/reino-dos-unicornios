@@ -3,7 +3,7 @@
 // valorPorMateria / salas (R$ 3,33, R$ 6,67…): a fala dita no balão não tem voz gravada. Save 100% sintético.
 const { test } = require('node:test');
 const assert = require('assert');
-const Jogo = require('../../jogo-no-node.js');
+const Jogo = require('./ajudantes/terceiro-bimestre');
 
 function jogo() {
   const guardado = {};

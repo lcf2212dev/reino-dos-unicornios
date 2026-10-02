@@ -7,6 +7,7 @@
   var CALMA_TROCA = 400;
 
   M.iniciar = function (materia, sala, aoTerminar) {
+    if (Reino.Bimestres.emEspera(materia)) return Reino.Bimestres.avisar().then(function () { if (aoTerminar) aoTerminar(null); });
     var tela = Reino.UI.abrirTela('missao');
     if (materia && materia.cor) tela.style.setProperty('--cor-materia', materia.cor);   // faixa do cabeçalho na cor da matéria (D10-12)
     var lista = D.sortear(sala, Reino.config.desafiosPorSala);

@@ -48,6 +48,7 @@
   var STATUS = [];
   N.registrarStatus = function (fn) { STATUS.push(fn); };
   N.status = function (npc) {
+    if (Reino.Bimestres.acaoEmEspera(npc.acao)) return { icone: '💬', rotulo: 'Quarto bimestre em breve' };
     for (var si = 0; si < STATUS.length; si++) {
       try { var st = STATUS[si](npc); if (st) return st; } catch (e) { console.error(e); }
     }

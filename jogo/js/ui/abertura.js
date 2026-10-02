@@ -62,7 +62,7 @@
     var cv = el('canvas.abertura-cena', { 'aria-hidden': 'true' });
     var ctx = cv.getContext('2d');
     var flash = el('div.abertura-flash');
-    var raiz = el('div.logo.abertura' + (anima ? '' : '.abertura-parada'), cv, el('div.abertura-veu'), flash, titulo(cfg));
+    var raiz = el('div.logo.abertura' + (anima ? '' : '.abertura-parada'), cv, el('div.abertura-veu'), flash, el('div.abertura-marca', el('p.abertura-capitulo', 'Um novo capítulo'), titulo(cfg), el('p.abertura-bimestre', '4º bimestre')));
     var m = null, cam = {}, estrelas = [], voadores = [], rastro = [], vagas = [];
     var raf = 0, inicio = 0, parado = false, jaNoDom = false, esperas = 0, mudouTamanho = true, timerTam = 0, timerVigia = 0;
 
@@ -99,7 +99,7 @@
         return (vistos[corpo] = true);
       });
       // faixa de voo: entre o pé do título e o meio do castelo (nunca por cima das letras)
-      var h1 = raiz.querySelector('.titulo-abertura');
+      var h1 = raiz.querySelector('.abertura-marca');
       var topo = Math.round((h1 && h1.isConnected ? h1.getBoundingClientRect().bottom / s : m.yH * 0.25) + 4);
       var fundo = Math.max(topo + 26, m.castelo.y + 45), vao = fundo - topo;
       voadores = [];
@@ -177,7 +177,7 @@
       var q = anima ? Math.floor(t * 8) % 3 : 0;
       var spr = PA.montada(opcoes.montaria, 3, q, opcoes.aparencia, {});
       var e = Math.min(m.W, m.H) >= 190 ? 2 : 1, w = spr.w * e, h = spr.h * e;
-      var x = Math.round(m.W * (m.emPe ? 0.2 : 0.22) - w / 2), y = m.frente - h + (q === 1 ? -e : 0);
+      var x = Math.round(m.W * (m.emPe ? 0.2 : m.W > m.H * 2 ? 0.43 : 0.6) - w / 2), y = m.frente - h + (q === 1 ? -e : 0);
       ctx.fillStyle = 'rgba(30,40,40,0.35)';
       ctx.fillRect(x + Math.round(w * 0.2), m.frente - 1, Math.round(w * 0.6), 2);
       ctx.drawImage(spr.canvas, Math.max(1, x), y, w, h);

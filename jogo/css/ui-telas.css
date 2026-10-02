@@ -298,3 +298,52 @@ body.balao-no-pe #telas .tela { padding-bottom: calc(var(--balao-altura, 0px) + 
 #claude-balao .pontos-pagina { margin-left: auto; align-self: flex-end; }
 /* ícone em tela escura (§10.8.3, D8A-24): brilho de 1 px de arte em --papel nas quatro direções, sem desfoque */
 .fundo-escuro canvas.icone-em, .tela-voo canvas.icone-em { filter: drop-shadow(2px 0 0 var(--papel)) drop-shadow(-2px 0 0 var(--papel)) drop-shadow(0 2px 0 var(--papel)) drop-shadow(0 -2px 0 var(--papel)); }
+
+/* Atlas do reino: uma capa, dois capítulos e cartões com faixa de matéria. */
+.tela-lugares .painel-conteudo { padding: 16px; background: var(--papel-quente); }
+.lugares-capa { display: flex; align-items: center; gap: 16px; padding: 16px; margin-bottom: 20px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); border-bottom: var(--borda-grossa) solid var(--ouro); }
+.lugares-capa > canvas { flex: none; }
+.lugares-capa b { display: block; font-size: var(--texto); line-height: var(--entrelinha); }
+.lugares-capa p { margin: 8px 0 0; font-size: var(--texto-aux); line-height: var(--entrelinha); color: var(--tinta-suave); }
+.lugares-capa .lugares-capitulo { color: var(--laranja-escuro); margin: 0 0 8px; }
+.tela-lugares .lugares-atlas { gap: 12px; }
+.tela-lugares .lugares-grupo { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; padding: 12px 0 4px; margin-top: 8px; color: var(--tinta); }
+.lugares-grupo small { font-size: var(--texto-aux); color: var(--tinta-suave); }
+.tela-lugares .sala-card { padding: 14px 12px; gap: 12px; min-height: 88px; }
+.tela-lugares .sala-info { gap: 8px; line-height: var(--entrelinha); }
+.tela-lugares .sala-info b { font-size: var(--texto); white-space: normal; overflow: visible; text-overflow: clip; }
+.tela-lugares .sala-emoji { display: grid; place-items: center; flex: none; width: 48px; min-height: 48px; margin: 0; background: var(--papel-quente); border-radius: var(--canto); }
+.tela-lugares .lugar-materia { border-left: var(--borda-grossa) solid var(--cor-materia, var(--ambar)); }
+.tela-lugares .sala-ir { display: grid; place-items: center; width: 32px; height: 32px; color: var(--tinta); background: var(--papel-quente); border-radius: var(--canto-pequeno); }
+@media (min-width: 1000px) and (max-height: 820px) {
+  .tela-lugares .lugares-capa { padding: 12px 16px; margin-bottom: 8px; }
+  .tela-lugares .sala-card { padding: 10px; gap: 8px; }
+  .tela-lugares .sala-emoji { width: 32px; }
+  .tela-lugares .sala-ir { width: 20px; }
+}
+@media (max-width: 600px) {
+  .tela-lugares .painel-conteudo { padding: 12px; }
+  .lugares-capa { padding: 12px; gap: 12px; }
+  .lugares-capa > canvas { display: none; }
+  .tela-lugares .sala-card { gap: 8px; padding: 12px 8px; }
+  .tela-lugares .sala-emoji { width: 32px; }
+  .tela-lugares .sala-ir { width: 20px; }
+}
+
+/* Recado do novo bimestre: papel de carta com faixa dourada e espaço para ler com calma. */
+.tela-bimestre .painel-conteudo { padding: 24px; background: var(--papel-quente); }
+.tela-bimestre .aviso { margin: 0; padding: 24px 16px; border: var(--borda-fina) solid var(--borda); border-bottom: var(--borda-grossa) solid var(--ouro); border-radius: var(--canto-grande); background: var(--papel); color: var(--tinta); text-align: center; font-size: var(--texto); line-height: var(--entrelinha); }
+@media (max-width: 600px), (max-height: 500px) {
+  .tela-bimestre .painel-conteudo { padding: 12px; }
+  .tela-bimestre .aviso { padding: 16px 12px; }
+}
+
+/* Tela deitada: o primeiro destino aparece inteiro, mesmo com Letras grandes. */
+@media (max-height: 500px) {
+  .tela-lugares .painel-conteudo { padding: 8px 12px; }
+  .tela-lugares .lugares-capa { display: none; }
+  .tela-lugares .lugares-grupo { padding: 0 0 4px; margin: 0; gap: 4px; }
+  .tela-lugares .lugares-atlas { gap: 8px; margin-top: 0; }
+  .tela-lugares .sala-card { padding: 8px 12px; min-height: 72px; }
+  .tela-lugares .sala-info { gap: 4px; }
+}

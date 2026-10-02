@@ -2,12 +2,12 @@
    Carregado depois de escola/objetos.js e antes de escola/escola.js (que põe a lousa na parede). */
 Reino.falasDoPredio('escola', {
   objetos: {
-    'lousa-ingles': ['A lousa diz «Hello»!', 'Em inglês, «Hello» quer dizer olá.'],
-    'lousa-matematica': ['Três mais quatro dá sete!', 'Conte as bolinhas comigo.'],
-    'lousa-geografia': ['Um mapa com mar, terra e rio!', 'O N mostra onde fica o norte.'],
-    'lousa-ciencias': ['Uma plantinha e uma lupa!', 'A lupa mostra tudo de pertinho.'],
-    'lousa-portugues': ['A lousa tem sílabas! ✏️', 'Juntando sílabas, formamos palavras.'],
-    'lousa-historia': ['Uma linha do tempo!', 'Primeiro o passado, depois o hoje.'],
+    'lousa-ingles': [Reino.Bimestres.aviso],
+    'lousa-matematica': [Reino.Bimestres.aviso],
+    'lousa-geografia': [Reino.Bimestres.aviso],
+    'lousa-ciencias': [Reino.Bimestres.aviso],
+    'lousa-portugues': [Reino.Bimestres.aviso],
+    'lousa-historia': [Reino.Bimestres.aviso],
   },
 });
 (function () {

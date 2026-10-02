@@ -207,6 +207,7 @@
 
   // tudo o que o NPC pode dizer (para gravar as vozes), com os números enumerados
   N.falasPossiveis = function (npc, def) {
+    if (Reino.Bimestres.acaoEmEspera(npc.acao)) return [{ texto: Reino.Bimestres.aviso, voz: npc.voz || 'narradora' }];
     var out = [], a = npc.acao || {}, voz = npc.voz || 'narradora', pers = Reino.config.persistencia;
     // mesmos segmentos que o balão fala: cada texto dividido em frases
     function add(t) { frases(t).forEach(function (f) { if (!out.some(function (o) { return o.texto === f; })) out.push({ texto: f, voz: voz }); }); }
@@ -250,6 +251,7 @@
 
   /* ---------- chips da sala (iguais aos da tela da matéria) ---------- */
   N.chips = function (npc) {
+    if (Reino.Bimestres.acaoEmEspera(npc.acao)) return null;
     var a = npc.acao || {};
     if (a.tipo !== 'sala') return null;
     var m = materiaDe(a), s = salaDe(a);

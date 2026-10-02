@@ -5,6 +5,7 @@
    Salas em g1.js, g2.js, g3.js, g4.js, g5.js e o livro em livro.js (carregados antes deste arquivo, na ordem do
    manifesto; ver conteudo/materias/registro.js). */
 Reino.registrarMateria({
+  arquivada: true,
   id: 'geografia',
   nome: 'Geografia',
   emoji: '🌍',
@@ -20,7 +21,7 @@ Reino.registrarMateria({
     cores: { parede: '#eaf6ff', detalhe: '#39a860' },
     novidade: '2026-09-26',   // selo "✨ Novo!" no menu Lugares até ela entrar (ou config.novidadeDias dias)
   },
-  guia: 'Eu sou o guia da Estação dos Caminhos! Aqui tem comunicação, telefone, internet e trânsito.',
+  guia: 'Em breve teremos novos conteúdos do quarto bimestre!',
 
   salas: Reino.salasDa('geografia'),         // g1.js, g2.js, g3.js, g4.js, g5.js, na ordem do manifesto
 

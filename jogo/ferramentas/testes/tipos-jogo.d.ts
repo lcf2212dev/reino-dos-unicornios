@@ -352,6 +352,8 @@ interface ProgressoInterno {
 
 /** Uma matéria (js/conteudo/materias/<m>/<m>.js, Reino.registrarMateria). */
 interface Materia {
+  /** Catálogo histórico: preserva conquistas, sem lições disponíveis. */ arquivada?: boolean;
+  bimestre?: number;
   id: string;
   nome: string;
   emoji: string | ((l?: any) => string);
@@ -438,6 +440,7 @@ interface Sala {
 
 /** Prova bimestral (js/conteudo/provas/<id>.js, Reino.registrarProva). */
 interface Prova {
+  /** Conserva acessórios e notas do bimestre arquivado. */ arquivada?: boolean;
   id: string;
   materiaId: string;
   nome: string;
@@ -934,3 +937,12 @@ interface EventosReino {
 }
 /** Nome de um evento ('progresso', 'cena'…). */
 type Evento = EventosReino[keyof EventosReino];
+
+/** Temporada disponível, independente do progresso histórico. */
+interface BimestresApi {
+  atual: number; inicio: string; aviso: string;
+  emEspera(materia: Materia | string): boolean;
+  acaoEmEspera(acao: any): boolean;
+  avisar(quem?: any): Promise<any>;
+  painel(titulo?: string, opcoes?: any): any;
+}

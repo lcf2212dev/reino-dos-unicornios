@@ -17,6 +17,7 @@ const erros = (r) => (r.stdout + r.stderr).split('\n').filter((l) => l.startsWit
 test.before(() => {
   fs.mkdirSync(copia, { recursive: true });
   fs.cpSync(path.join(repo, 'jogo'), path.join(copia, 'jogo'), { recursive: true, filter: (f) => !f.includes('/servidor/dados') && !f.includes('/ferramentas/gerado') && !f.includes('/js/voz/') });
+  require('./ajudantes/terceiro-bimestre').copiarPara(path.join(copia, 'jogo'));
   fs.copyFileSync(path.join(repo, 'package.json'), path.join(copia, 'package.json'));
 });
 

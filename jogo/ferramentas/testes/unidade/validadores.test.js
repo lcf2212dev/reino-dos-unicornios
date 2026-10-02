@@ -26,6 +26,7 @@ function copiaDoJogo(nome) {
     recursive: true, force: true, filter: (src) => !fora.some((f) => src === f || src.startsWith(f + path.sep)),
   }));
   fs.copyFileSync(path.join(jogo, 'index.html'), path.join(destino, 'index.html'));
+  fs.cpSync(path.resolve(jogo, '../arquivo'), path.resolve(destino, '../arquivo'), { recursive: true });
   return destino;
 }
 function plantar(arq, de, para) {
@@ -39,9 +40,9 @@ test('validar-conteudo: passa no jogo de hoje e acusa um tipo de desafio errado 
   assert.strictEqual(ok.status, 0, ok.saida);
   const sala = path.join(tmp, 'conteudo', 'historia', 'h1.js');
   fs.mkdirSync(path.dirname(sala), { recursive: true });
-  fs.copyFileSync(path.join(jogo, 'js/conteudo/materias/historia/h1.js'), sala);
+  fs.copyFileSync(require('./ajudantes/terceiro-bimestre').arquivo('conteudo/materias/historia/h1'), sala);
   plantar(sala, "tipo: 'escolha'", "tipo: 'escolhaPlantada'");
-  const r = node('ferramentas/validar/validar-conteudo.js', ['--materia', sala]);
+  const r = node('ferramentas/validar/validar-conteudo.js', ['--terceiro-bimestre', '--materia', sala]);
   assert.strictEqual(r.status, 1, r.saida);
   assert.match(r.saida, /tipo desconhecido escolhaPlantada/);
 });
@@ -90,6 +91,7 @@ test('validar-interiores: personagem registrado com predio museu e x/y passa; se
 
 test('validar-conteudo: emoji sem desenho é erro; com ícone registrado num prédio (Reino.registrarIcones em interiores/) passa', () => {
   const copia = copiaDoJogo('icone');
+  require('./ajudantes/terceiro-bimestre').copiarPara(copia);
   const sala = path.join(copia, 'js/conteudo/materias/historia/h1.js');
   const falas = path.join(copia, 'js/interiores/museu/falas.js');
   const original = fs.readFileSync(falas, 'utf8');

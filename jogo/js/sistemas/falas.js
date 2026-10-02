@@ -83,7 +83,9 @@
   F.acertouDeTotal = function (n, total) { return 'Você acertou ' + n + ' de ' + total + '.'; };
   // lugar.artigo: 'a' para lugar feminino (a Casa das Palavras); sem ele, masculino (o Museu, a Torre já diz "do")
   function feminino(m) { return m.lugar.artigo === 'a'; }
-  F.tutorialMapa = function (m) { return 'Toque no chão para andar (ou use as setas do teclado). Vamos até ' + (feminino(m) ? 'a ' : 'o ') + m.lugar.nome + '? É só tocar ' + (feminino(m) ? 'nela' : 'nele') + '! ' + m.emoji; };
+  F.tutorialMapa = function (m) {
+    if (Reino.Bimestres && Reino.Bimestres.emEspera(m)) return 'Toque no chão para andar ou use as setas do teclado. Abra Lugares para escolher seu próximo passeio pelo Reino!';
+    return 'Toque no chão para andar (ou use as setas do teclado). Vamos até ' + (feminino(m) ? 'a ' : 'o ') + m.lugar.nome + '? É só tocar ' + (feminino(m) ? 'nela' : 'nele') + '! ' + m.emoji; };
   F.treinoBloqueado = function (m, faltam) {
     return 'O treino de ' + m.nome + ' abre quando você terminar as salas ' + (feminino(m) ? 'da ' : 'do ') + m.lugar.nome + '. Falta' + (faltam === 1 ? ' só 1!' : 'm ' + faltam + '!') + ' Você consegue! 💪';
   };
@@ -144,6 +146,8 @@
       });
     }
 
+    if (Reino.Bimestres) add(Reino.Bimestres.aviso, 'narradora', 'geral');
+
     // Claude: banco de frases e frases fixas
     var bancos = Reino.Claude.FALAS;
     Object.keys(bancos).forEach(function (k) { bancos[k].forEach(function (t) { add(t, 'claude', 'geral'); }); });
@@ -165,6 +169,8 @@
     Reino.materias.forEach(function (m) {
       var p = F.pacotesDaMateria(m);
       add(F.tutorialMapa(m), 'claude', p.extra);
+      (m.unicornios || []).forEach(function (u) { add(u.frase, 'unicornio', p.extra); });
+      if (m.arquivada) return;
       add(m.guia, 'claude', p.extra);
       for (var f = 1; f <= m.salas.length; f++) add(F.treinoBloqueado(m, f), 'claude', p.extra);
       (m.livro || []).forEach(function (c) {
@@ -172,7 +178,6 @@
         add(c.titulo, 'narradora', p.livro);
         add(c.texto, 'narradora', p.livro);
       });
-      (m.unicornios || []).forEach(function (u) { add(u.frase, 'unicornio', p.extra); });
       m.salas.forEach(function (s) {
         add(s.nome, 'claude', p.extra);
         add(s.intro, 'claude', p.extra);

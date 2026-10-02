@@ -34,6 +34,7 @@ async function comJogo(fn, mudarSave) {
     await a.context.close();
     const { page } = await abrir({ browser, url: servidor.url, save, query: '?debug=1&congelar=1' });
     await esperarJogo(page);
+  await require('./ajudantes/terceiro-bimestre').noNavegador(page);
     await avancar(page, 3000);
     await fn(page);
   } finally {

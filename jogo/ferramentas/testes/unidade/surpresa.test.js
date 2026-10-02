@@ -10,7 +10,7 @@ const { Jogo, jogoCarregado, montar } = require('./ajudantes/jogo-save');
 const MIN = 60 * 1000;
 // jogo carregado (salas h1 e h2 feitas) + surpresa, com sorteio fixo e a voz de mentira (registra e não resolve)
 function comSurpresa(opcoes = {}) {
-  const j = opcoes.semSave ? montar() : jogoCarregado(opcoes.ajuste);
+  const j = opcoes.semSave ? montar({ terceiroBimestre: true }) : jogoCarregado(opcoes.ajuste, { terceiroBimestre: true });
   if (opcoes.semSave) j.P.carregar();
   Jogo.carregar(j.ctx, Jogo.scripts({ nomes: ['sistemas/surpresa'] }));
   j.ctx.Math = Object.create(Math);

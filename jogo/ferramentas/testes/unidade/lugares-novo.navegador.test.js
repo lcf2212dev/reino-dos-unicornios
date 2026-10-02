@@ -11,6 +11,8 @@ const LINHA = ACHAR + ".textContent.replace(/\\u00ad/g, '')";
 test('Lugares: "No 3º andar do Observatório" e o selo Novo! que some depois de entrar', async () => {
   const c = await abrirCenario({ tamanho: 'celular', save: 'inicio', pasta: '/tmp/reino-testes/ver/teste-lugares-novo' });
   try {
+    // Cenário de uma matéria disponível: verifica o selo de novidade, independente do bimestre ativo.
+    await c.js("Reino.materia('ciencias').arquivada = false");
     await c.tela('lugares');
     const linha = await c.js(LINHA);
     assert.ok(/No 3º andar do Observatório/.test(linha), 'linha do menu: ' + linha);

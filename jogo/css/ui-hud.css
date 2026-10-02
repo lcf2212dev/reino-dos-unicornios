@@ -173,3 +173,18 @@ body.sem-animacao .aura-dia { animation: none; }
   .dock-btn { flex: 1 1 0; min-width: 44px; min-height: 56px; padding: 4px 0; }
   .dock-rotulo { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
 }
+
+/* Um menu de viagem mais legível: entrada dourada para o atlas, divisórias e base em creme. */
+.dock { background: var(--papel-quente); padding: 6px; gap: 4px; border-top: var(--borda-grossa) solid var(--ouro); }
+.dock-btn { padding: 6px 12px; gap: 6px; }
+.dock-btn + .dock-btn { border-left: var(--borda-fina) solid var(--ambar); border-radius: 0; }
+.dock-btn[data-acao="missoes"] { background: var(--laranja-claro); }
+.chip-montaria { border-top: var(--borda-grossa) solid var(--ouro); }
+.hud-esq .chip { border-left: var(--borda-grossa) solid var(--ambar); }
+@media (max-width: 480px) {
+  .dock { padding: 4px 0; gap: 0; }
+  .dock-btn { padding: 4px 2px; gap: 4px; }
+}
+@media (max-height: 500px) {
+  .dock-btn { min-height: 56px; padding: 2px 10px; gap: 2px; }
+}

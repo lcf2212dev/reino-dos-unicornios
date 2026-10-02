@@ -138,7 +138,7 @@
       var n = P.estrelas();
       U.preencher(saldo, '⭐ Você tem ' + n + (n === 1 ? ' estrela' : ' estrelas'));
       // D13-05: com saldo 0, como ganhar
-      if (!n) saldo.appendChild(el('small.saldo-dica', 'Ganhe estrelas acertando de primeira nas salas!'));
+      if (!n) saldo.appendChild(el('small.saldo-dica', 'Continue explorando o Reino para ganhar estrelas!'));
       vitrine.innerHTML = '';
       var id = P.montaria(), u = est().unis[id];
       var e = Reino.Unicornios.estagio(u ? u.xp : 0);
@@ -158,7 +158,7 @@
         var ganhou = reg.premio ? Reino.Unicornios.RARIDADES[reg.premio] : null;
         premiosBox.appendChild(el('p.bau-nota', el('b', pv.emoji + ' ' + pv.nome), ganhou
           ? ' • Você ganhou o prêmio ' + ganhou.emoji + ' ' + ganhou.nome.toLowerCase() + '! Os outros estão à venda.'
-          : ' • Acerte TUDO na prova para ganhar um deles.'));
+          : pv.arquivada ? ' • Coleção do terceiro bimestre.' : ' • Acerte TUDO na prova para ganhar um deles.'));
         var g = el('div.grade-loja');
         LI.premios().filter(function (p) { return p.provaId === pv.id; }).forEach(function (p) {
           var item = acessorioComoItem(p);
@@ -184,6 +184,7 @@
             if (tem) { alternar(item); Reino.Som.tocar('selecionar'); P.salvar(); pintar(); U.emit(EV.MAPA_MUDOU); return; }
             if (st === 'aVenda') return comprar(item, pintar);
             Reino.Som.tocar('toque');
+            if (pv.arquivada) return Reino.Bimestres.avisar();
             Reino.Claude.falar(Reino.Falas.provas.lojaPremio);
           });
           g.appendChild(b);
@@ -196,7 +197,7 @@
     c.appendChild(atalhos);
     grupos.forEach(function (x) { c.appendChild(x.titulo); c.appendChild(x.grade); });
     c.appendChild(el('h3.estabulo-grupo', '🏫 Prêmios da Escola do Reino'));
-    c.appendChild(el('p.bau-nota', 'Acerte TUDO numa prova e ganhe um prêmio; os outros se trocam por estrelas. 🌈'));
+    c.appendChild(el('p.bau-nota', Reino.provas.every(function (p) { return p.arquivada; }) ? 'Suas conquistas do terceiro bimestre continuam aqui. 🌈' : 'Acerte TUDO numa prova e ganhe um prêmio; os outros se trocam por estrelas. 🌈'));
     c.appendChild(premiosBox);
     c.appendChild(el('p.bau-nota', 'As fadas trocam estrelas por enfeites. Você ganha estrelas acertando de primeira e com a Estrela da Calma. 🌙'));
     pintar();

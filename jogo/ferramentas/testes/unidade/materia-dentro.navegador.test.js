@@ -7,7 +7,7 @@ const { abrirCenario } = require('../cenario');
 
 const MONTAR = `
   var h = Reino.materia('historia');
-  Reino.materias.push(Object.assign({}, h, { id: 'sintetica', nome: 'Sintética',
+  Reino.materias.push(Object.assign({}, h, { id: 'sintetica', nome: 'Sintética', arquivada: false,
     lugar: { nome: 'Sala Sintética', artigo: 'a', dentro: 'observatorio', interior: 'sint-andar' } }));
   var obs = Reino.Interiores.doLugar('observatorio');
   Reino.registrarInterior(Object.assign({}, obs, { id: 'sint-andar', lugar: 'materia:sintetica', entrada: true }));

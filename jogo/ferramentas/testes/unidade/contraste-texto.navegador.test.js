@@ -9,7 +9,7 @@
 // Rodar (da raiz): node --test jogo/ferramentas/testes/unidade/contraste-texto.navegador.test.js   (tudo: npm test)
 const { test } = require('node:test');
 const assert = require('assert');
-const { abrirCenario } = require('../cenario');
+const { abrirCenario } = require('./ajudantes/terceiro-bimestre');
 const { mostrarDesafio } = require('../referencias-cenas');
 const CT = require('../../validar/contraste');
 

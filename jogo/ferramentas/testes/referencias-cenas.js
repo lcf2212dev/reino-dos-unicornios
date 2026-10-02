@@ -86,7 +86,7 @@ async function cenasTelas(page, pasta) {
 async function cenasSalas(page, pasta) {
   const salas = await page.evaluate(() => {
     var l = [];
-    Reino.materias.forEach((m) => m.salas.forEach((s) => l.push([m.id, s.id])));
+    Reino.materias.filter((m) => !m.arquivada).forEach((m) => m.salas.forEach((s) => l.push([m.id, s.id])));
     return l;
   });
   for (const [m, s] of salas) {
@@ -106,7 +106,8 @@ async function cenasSalas(page, pasta) {
     await page.evaluate((m) => { Reino.Prova.iniciar(Reino.materia(m)); }, m);
     await avancar(page, 3000);
     await foto(page, pasta, `treino-${m}`);
-    await sairComConfirmar(page);
+    if (await page.evaluate((id) => !!Reino.materia(id).arquivada, m)) await limpar(page);
+    else await sairComConfirmar(page);
   }
 }
 
@@ -157,7 +158,7 @@ async function mostrarDesafio(page, modo, ref) {
 }
 
 async function cenasProvasEDesafios(page, pasta) {
-  const provas = await page.evaluate(() => Reino.provas.map((p) => ({ id: p.id, n: p.questoes.length })));
+  const provas = await page.evaluate(() => Reino.provas.filter((p) => !p.arquivada).map((p) => ({ id: p.id, n: p.questoes.length })));
   for (const p of provas) {
     await page.evaluate((id) => { Reino.Provas.iniciar(Reino.prova(id)); }, p.id);
     await foto(page, pasta, `prova-${p.id}-capa`);
@@ -174,7 +175,7 @@ async function cenasProvasEDesafios(page, pasta) {
   // um desafio de cada tipo das salas
   const tipos = await page.evaluate(() => {
     var vistos = {};
-    Reino.materias.forEach((m) => m.salas.forEach((s) => s.desafios.forEach((d, i) => { if (!vistos[d.tipo]) vistos[d.tipo] = { m: m.id, s: s.id, i: i }; })));
+    Reino.materias.filter((m) => !m.arquivada).forEach((m) => m.salas.forEach((s) => s.desafios.forEach((d, i) => { if (!vistos[d.tipo]) vistos[d.tipo] = { m: m.id, s: s.id, i: i }; })));
     return vistos;
   });
   for (const [tipo, ref] of Object.entries(tipos)) {

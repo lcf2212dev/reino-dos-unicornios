@@ -8,7 +8,7 @@ const Jogo = require('../../jogo-no-node');
 const { Jogo: JS, montar, copia } = require('./ajudantes/jogo-save');
 
 function comSave(save) {
-  const j = montar({ agora: Date.UTC(2026, 8, 27), save });
+  const j = montar({ terceiroBimestre: true, agora: Date.UTC(2026, 8, 27), save });
   if (!j.R.registrarModulo) j.R.registrarModulo = function () {};
   ['sistemas/progresso-campos', 'sistemas/aura', 'sistemas/viagem', 'sistemas/viagem-desafio']
     .forEach((n) => vm.runInContext(fs.readFileSync(JS.arquivo(n), 'utf8'), j.ctx, { filename: n }));

@@ -3,6 +3,7 @@
    Salas em h1.js, h2.js, h3.js, h4.js, h5.js e o livro em livro.js (carregados antes deste arquivo, na ordem do
    manifesto; ver conteudo/materias/registro.js). */
 Reino.registrarMateria({
+  arquivada: true,
   id: 'historia',
   nome: 'História',
   emoji: '🏛️',
@@ -14,7 +15,7 @@ Reino.registrarMateria({
     placa: 'acima',   // ao lado cobriria a Torre do Relógio
     cores: { parede: '#fff6e4', detalhe: '#ff8a3d' },
   },
-  guia: 'Eu sou o guia do Museu das Memórias! Em cada sala tem um pedacinho da apostila de História.',
+  guia: 'Em breve teremos novos conteúdos do quarto bimestre!',
 
   salas: Reino.salasDa('historia'),         // h1.js, h2.js, h3.js, h4.js, h5.js, na ordem do manifesto
 

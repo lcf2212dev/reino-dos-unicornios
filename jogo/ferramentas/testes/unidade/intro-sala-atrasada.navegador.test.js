@@ -24,6 +24,7 @@ async function comSala(fn) {
     await a.context.close();
     const { page } = await abrir({ browser, url: servidor.url, save, query: '?debug=1&congelar=1' });
     await esperarJogo(page);
+  await require('./ajudantes/terceiro-bimestre').noNavegador(page);
     await avancar(page, 3000);
     const m = await page.evaluate(() => ({ m: Reino.materias[0].id, s: Reino.materias[0].salas[0].id }));
     // rede lenta só para o pacote de voz desta sala

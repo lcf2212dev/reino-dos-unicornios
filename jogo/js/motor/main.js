@@ -26,11 +26,10 @@
       var ir = el('button.btn-grande.btn-principal.btn-comecar.btn-pulsar', { type: 'button' }, 'Entrar no Reino ✨');
       // (sem "Trocar jogador" aqui: o login vem logo depois do toque)
       var botoes = el('div.inicio-botoes', ir);
-      var nomes = Reino.materias.map(function (m) { return m.nome; });
       t.appendChild(el('div.inicio', cena.el, el('div.inicio-baixo', botoes,
         el('p.inicio-sub.inicio-materias',
-          el('span.inicio-materias-longa', 'Revisão de ' + nomes.slice(0, -1).join(', ') + (nomes.length > 1 ? ' e ' : '') + nomes[nomes.length - 1]),
-          el('span.inicio-materias-curta', 'Revisão das ' + nomes.length + ' matérias da escola')))));   // curta: celular em pé
+          el('span.inicio-materias-longa', '4º bimestre · Novos conteúdos em breve'),
+          el('span.inicio-materias-curta', 'Novos conteúdos em breve')))));   // curta: celular em pé
       var foi = false;
       ir.addEventListener('click', function () {
         if (foi) return;
@@ -80,11 +79,11 @@
       var pn = UI.painel('regras', 'Como funciona o Reino', { semFechar: true });
       var ir = el('button.btn-grande.btn-principal', { type: 'button' }, 'Entrar no Reino 🦄');
       pn.conteudo.appendChild(el('ul.regras',
-        el('li', el('span.regra-icone', '🏛️'), el('span', el('b', 'Missões: '), 'cada matéria tem um lugar no reino, com 5 salas: ' + Reino.materias.map(function (m) { return m.lugar.nome + ' (' + m.nome + ')'; }).join(', ').replace(/, ([^,]*)$/, ' e $1') + '.')),
-        el('li', el('span.regra-icone', '💰'), el('span', el('b', 'Dinheiro: '), 'cada sala vale ' + U.reais(P.valorSala(Reino.materias[0])) + '. A revisão inteira de uma matéria vale ' + U.reais(Reino.config.valorPorMateria) + '!')),
-        el('li', el('span.regra-icone', '🦄'), el('span', el('b', 'Unicórnios: '), 'ganhe ovos de unicórnio comum, raro, épico e lendário. Eles nascem bebês e crescem quando você acerta!')),
-        el('li', el('span.regra-icone', '⏳'), el('span', el('b', 'Sem relógio: '), 'aqui ninguém tem pressa. Leia com calma e toque em "Conferir".')),
-        el('li.regra-destaque', el('span.regra-icone', '🥇'), el('span', el('b', 'A medalha de ouro da escola vale ' + U.reais(Reino.config.medalhaEscolaValor) + '! '), 'Ela vem de acertar com calma e revisar a prova, não de terminar primeiro.'))));
+        el('li', el('span.regra-icone', '📚'), el('span', el('b', '4º bimestre: '), 'em breve teremos novos conteúdos das seis matérias da escola.')),
+        el('li', el('span.regra-icone', '🏰'), el('span', el('b', 'Explore: '), 'toque no chão para andar ou use as setas. Abra Lugares para escolher seu próximo passeio.')),
+        el('li', el('span.regra-icone', '🦄'), el('span', el('b', 'Cuide: '), 'visite seus unicórnios, dê comida e água e escolha seus enfeites favoritos.')),
+        el('li', el('span.regra-icone', '⭐'), el('span', el('b', 'Descubra: '), 'o Laboratório de Química, a Feira de Ciências e a Escola de Música continuam esperando por você.')),
+        el('li.regra-destaque', el('span.regra-icone', '💛'), el('span', el('b', 'Suas conquistas continuam aqui. '), 'Seus unicórnios, estrelas e prêmios estão guardados com carinho.'))));
       pn.conteudo.appendChild(el('div.intro-botoes', ir));
       ir.addEventListener('click', function () { Reino.Som.tocar('porta'); UI.fecharTela(pn.tela); resolver(); });
     });
