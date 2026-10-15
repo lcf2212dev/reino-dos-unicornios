@@ -1,5 +1,6 @@
-/* Telas das matérias: a sala de cada matéria (lista de salas), o livro de resumos, o Plano da
-   Prova e o Castelo da Medalha (treino). */
+/* Telas das matérias: a sala de cada matéria (lista de salas; com os livros da escola, em grupos por capítulo e
+   livro), o nome do livro, o Plano da Prova e o Castelo da Medalha (treino). O livro em si: materia-livro.js, que
+   usa daqui o R.livroEscolar (Reino._ui). */
 (function () {
   var U = Reino.util, el = U.el, P = Reino.Progresso;
   var EV = Reino.EVENTOS;
@@ -11,6 +12,12 @@
     return el('div.barra-dinheiro',
       el('div.barra-dinheiro-trilho', el('span', { style: { width: Math.round(ganho / total * 100) + '%' } })),
       el('span.barra-dinheiro-texto', U.colado(U.reais(ganho) + ' de ' + U.reais(total))));
+  }
+
+  // "Capítulo 10 • 📗 Aprendizagem" (sem capítulo, só o livro); no celular o livro desce para a 2ª linha, sem o "•"
+  function tituloGrupo(s, L) {
+    var partes = [s.capitulo ? 'Capítulo ' + s.capitulo : '', L ? L.emoji + ' ' + L.curto : ''].filter(Boolean);
+    return partes.length ? el('h3.materia-grupo', partes.map(function (t, k) { return [k ? el('span.grupo-sep', ' • ') : null, el('span', t)]; })) : null;
   }
 
   // texto-guia do Claude (não é dito ao abrir): no notebook baixo fica numa linha com reticências; o inteiro no title
@@ -37,9 +44,13 @@
     var lista = el('div.lista-salas.lista-materia');
     // a 1ª sala não feita ganha o "✨ Próxima!" e a lista rola até ela (D7-14)
     var iProx = feitas === 0 ? -1 : materia.salas.findIndex(function (s) { return !(est().salas[s.id] || {}).feita; });
-    var proxima = null;
+    var proxima = null, grupo = null;
     materia.salas.forEach(function (s, i) {
       var reg = est().salas[s.id] || {};
+      // livros da escola (4º bimestre): um título a cada capítulo e livro, na ordem do manifesto
+      var L = livroEscolar(materia, s.livroOrigem), g = materia.livros ? tituloGrupo(s, L) : null;
+      if (g && g.textContent !== grupo) lista.appendChild(g);
+      grupo = g && g.textContent;
       var raro = (materia.unicornios || []).find(function (u) { return u.raridade === 'raro' && u.sala === s.id; });
       var temRaro = raro && P.temUni(raro.id);
       var chips = el('span.sala-chips',
@@ -56,9 +67,9 @@
       var b = el('button.sala-card.ir-embaixo' + (reg.feita ? '.feita' : '') + (i === iProx ? '.proxima' : ''), { type: 'button',
         // nome acessível inteiro: no celular a ação e os rótulos ficam só no desenho
         'aria-label': (i + 1) + '. ' + s.nome + ', ' + (reg.feita ? 'feita' : i === iProx ? 'próxima' : 'nova') + ', ' + U.reais(P.valorSala(materia)) +
-          (temRaro ? ', raro' : '') + (reg.calma ? ', calma' : '') + ', apostila ' + s.paginas + ', ' + (reg.feita ? 'jogar de novo' : 'entrar') },
+          (temRaro ? ', raro' : '') + (reg.calma ? ', calma' : '') + ', ' + (L ? L.nome : 'apostila') + ' ' + s.paginas + ', ' + (reg.feita ? 'jogar de novo' : 'entrar') },
         el('span.sala-emoji', s.emoji),
-        el('span.sala-info', el('b', hifenizar((i + 1) + '. ' + s.nome)), el('small', '📖 ' + s.paginas), chips),
+        el('span.sala-info', el('b', hifenizar((i + 1) + '. ' + s.nome)), el('small', (L ? L.emoji : '📖') + ' ' + s.paginas), chips),
         // no celular só a seta, à direita do nome (D7-09)
         reg.feita ? el('span.sala-ir', el('span.rotulo-chip', 'Jogar de novo'), el('span.seta-celular', '→'))
           : el('span.sala-ir', el('span.rotulo-chip', 'Entrar '), '→'));
@@ -82,92 +93,16 @@
     }
   };
 
-  /* ---------- livro de resumos ---------- */
-  // cada matéria pode dar nome ao seu livro (nomeLivro); o padrão é o da História
-  function nomeLivro(materia) { return materia.nomeLivro || 'Livro das Memórias'; }
+  /* ---------- livro de resumos (o livro em si: materia-livro.js) ---------- */
+  // cada matéria pode dar nome ao seu livro (nomeLivro); o padrão é o da História (com os livros da escola, "Meus Livros")
+  function nomeLivro(materia) { return materia.nomeLivro || (materia.livros ? 'Meus Livros' : 'Livro das Memórias'); }
   UI.nomeLivro = nomeLivro;
-  // desenho e fala de uma carta do livro (o livro pela estante e o resumo antes das questões da sala)
-  // o texto vira blocos de até 3 frases (só na tela: a fala continua sendo c.texto inteiro)
-  var FRASE = /[.!?…]["”»)]?\s+(?=["“«(]?[A-ZÁÉÍÓÚÂÊÔÃÕÀÇ0-9])/g;
-  function blocosCarta(texto) {
-    var frases = [], ini = 0, m, alvo = texto.replace(/«[^«»]*?([.!?…]?»)/g, function (m, fim) { return '«' + m.slice(1, -fim.length).replace(/./g, 'X') + fim; });
-    FRASE.lastIndex = 0; // só corta fora do «inglês» (ou logo depois dele)
-    while ((m = FRASE.exec(alvo))) { frases.push(texto.slice(ini, m.index + m[0].length).trim()); ini = m.index + m[0].length; }
-    frases.push(texto.slice(ini));
-    var n = Math.ceil(frases.length / 3), tam = Math.ceil(frases.length / n), out = [];
-    for (var j = 0; j < frases.length; j += tam) out.push(frases.slice(j, j + tam).join(' '));
-    return out;
+  // o livro da escola de uma sala ou carta (matéria com `livros`, quarto-bimestre.md §2): { chave, nome, emoji, curto }
+  // curto: o do livro ou o nome sem o "Livro de" ("Aprendizagem"), nas abas e nos grupos
+  function livroEscolar(materia, chave) {
+    var L = materia && materia.livros && chave && materia.livros[chave];
+    return L ? { chave: chave, nome: L.nome, emoji: L.emoji, curto: L.curto || L.nome.replace(/^Livro d[aeo]s? /, '') } : null;
   }
-  // termo destacado: c.destaque ou a palavra mais longa do título que aparece no texto
-  var PALAVRA = '[A-Za-zÀ-ÿ]';
-  // trecho «inglês» vira '#' (mesmo tamanho): o destaque nunca corta o span.en
-  function semIngles(t) { return t.replace(/«[^«»]*»/g, function (m) { return m.replace(/./g, '#'); }); }
-  function termoCarta(c) {
-    var cands = c.destaque ? [c.destaque] : c.titulo.split(/[^A-Za-zÀ-ÿ]+/)
-      .filter(function (w) { return w.length >= 4; }).sort(function (a, b) { return b.length - a.length; });
-    for (var k = 0; k < cands.length; k++) {
-      var m = new RegExp('(^|[^A-Za-zÀ-ÿ])(' + cands[k] + PALAVRA + '{0,2})(?![A-Za-zÀ-ÿ])', 'i').exec(semIngles(c.texto));
-      if (m) return m[2];
-    }
-    return null;
-  }
-  UI.blocosCarta = blocosCarta; UI.termoCarta = termoCarta;
-  UI.desenharCarta = function (area, c) {
-    area.innerHTML = '';
-    area.appendChild(el('div.livro-emoji', c.e));
-    area.appendChild(el('h3', c.titulo));
-    // figuras: fileira de ícones das coisas que a carta lista (D7-16); só desenho, a fala não muda
-    if (c.figuras && c.figuras.length) {
-      area.appendChild(el.apply(null, ['div.livro-figuras'].concat(c.figuras.map(function (f) { return el('span.livro-figura', f); }))));
-    }
-    var termo = termoCarta(c);
-    blocosCarta(c.texto).forEach(function (b) {
-      var i = termo ? semIngles(b).indexOf(termo) : -1;
-      if (i < 0) { area.appendChild(el('p', b)); return; }
-      area.appendChild(el('p', b.slice(0, i), el('span.destaque', termo), b.slice(i + termo.length)));
-      termo = null; // só a primeira vez
-    });
-  };
-  UI.falaCarta = function (c) { return [c.titulo, c.texto]; };
-
-  UI.abrirLivro = function (materia, cartaoId) {
-    if (Reino.Bimestres.emEspera(materia)) return Reino.Bimestres.painel(materia.nome, { materia: materia });
-    Reino.Voz.carregar(materia.id + '-livro');
-    var pn = painel('livro', '📖 ' + nomeLivro(materia), { materia: materia });
-    var cartas = materia.livro;
-    var i = Math.max(0, cartas.findIndex(function (c) { return c.id === cartaoId; }));
-    var area = el('div.livro-carta');
-    var ant = el('button.btn-grande.btn-secundario', { type: 'button', 'aria-label': 'Carta anterior' }, '←');
-    var prox = el('button.btn-grande.btn-secundario', { type: 'button', 'aria-label': 'Próxima carta' }, '→');
-    var ouvir = el('button.btn-grande.btn-principal.so-seta', { type: 'button', 'aria-label': 'Ouvir' }, '🔊', el('span.rotulo-longo', ' Ouvir'));
-    var pag = el('span.livro-pag');
-    // índice (D7-12): uma fileira rolável com o ícone de cada carta; 1 toque leva a ela
-    var marcas = cartas.map(function (c, k) {
-      var m = el('button.livro-marca', { type: 'button', 'aria-label': 'Carta ' + (k + 1) + ': ' + c.titulo }, c.e);
-      m.addEventListener('click', function () { if (k !== i) { i = k; Reino.Som.tocar('toque'); mostrar(); } });
-      return m;
-    });
-    function mostrar() {
-      var c = cartas[i];
-      UI.desenharCarta(area, c);
-      marcas.forEach(function (m, k) { m.classList.toggle('atual', k === i); if (k === i) m.setAttribute('aria-current', 'true'); else m.removeAttribute('aria-current'); });
-      var mi = marcas[i], fila = mi.parentNode;   // a marca atual à vista na fileira, sem animação
-      if (fila && (mi.offsetLeft < fila.scrollLeft || mi.offsetLeft + mi.offsetWidth > fila.scrollLeft + fila.clientWidth)) fila.scrollLeft = mi.offsetLeft - 8;
-      pag.textContent = (i + 1) + ' de ' + cartas.length;
-      ant.disabled = i === 0; prox.disabled = i === cartas.length - 1;
-      pn.conteudo.scrollTop = 0; // carta nova abre do topo
-      Reino.Som.calar();
-    }
-    ant.addEventListener('click', function () { if (i > 0) { i--; Reino.Som.tocar('toque'); mostrar(); } });
-    prox.addEventListener('click', function () { if (i < cartas.length - 1) { i++; Reino.Som.tocar('toque'); mostrar(); } });
-    ouvir.addEventListener('click', function () { Reino.Voz.carregar(materia.id + '-livro').then(function () { Reino.Som.falar(UI.falaCarta(cartas[i]), { voz: 'narradora' }); }); });
-    pn.card.insertBefore(el.apply(null, ['nav.livro-indice', { 'aria-label': 'Cartas do livro' }].concat(marcas)), pn.conteudo);
-    pn.conteudo.appendChild(area);
-    // ← n de N → e o 🔊 Ouvir no rodapé de ação do painel, fora da carta que rola: sempre no mesmo lugar (ui.md §10.20)
-    pn.card.appendChild(el('footer.rodape-acao.livro-rodape', el('div.livro-nav', ant, pag, prox),
-      Reino.Som.temVoz() ? el('div.intro-botoes', ouvir) : null));
-    mostrar();
-  };
 
   /* ---------- castelo (treino da medalha) ---------- */
   UI.cartaoPlano = function () {
@@ -228,4 +163,5 @@
   };
 
   R.barraDinheiro = barraDinheiro;
+  R.livroEscolar = livroEscolar;
 })();

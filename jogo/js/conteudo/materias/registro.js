@@ -8,12 +8,17 @@
    uma linha no js/manifesto.js (grupo 'materias', node: true) depois da última sala e antes de
    <m>/livro.js e <m>/<m>.js. */
 (function () {
-  /** @type {Object<string, { salas: Sala[], livro: CartaLivro[] }>} */
+  /** @type {Object<string, { salas: Sala[], livro: CartaLivro[], unicornios?: UnicornioMateria[] }>} */
   var pendentes = {};   // { idDaMateria: { salas: [...], livro: [...] } }
   function da(materiaId) { return pendentes[materiaId] || (pendentes[materiaId] = { salas: [], livro: [] }); }
 
   Reino.registrarSala = function (materiaId, sala) { da(materiaId).salas.push(sala); };
   Reino.registrarLivro = function (materiaId, cartas) { da(materiaId).livro = cartas; };
+  // livro em partes (4º bimestre: um arquivo de cartas por capítulo e livro): as cartas se somam, na ordem do manifesto
+  Reino.registrarCartas = function (materiaId, cartas) { da(materiaId).livro = da(materiaId).livro.concat(cartas); };
+  // unicórnios das salas em partes (um arquivo por capítulo); o <m>.js junta com os épicos e o lendário
+  Reino.registrarUnicornios = function (materiaId, unis) { var p = da(materiaId); p.unicornios = (p.unicornios || []).concat(unis); };
+  Reino.unicorniosDa = function (materiaId) { return (da(materiaId).unicornios || []).slice(); };
   Reino.salasDa = function (materiaId) { return da(materiaId).salas; };
   Reino.livroDa = function (materiaId) { return da(materiaId).livro; };
 })();

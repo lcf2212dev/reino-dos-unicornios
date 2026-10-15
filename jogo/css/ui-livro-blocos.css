@@ -1,0 +1,132 @@
+/* Cartas ricas do livro (4º bimestre): blocos de texto, versos, listas, quadros, tabelas, figuras e ilustrações,
+   e o cabeçalho "Livro de Aprendizagem • p. 5". Contrato: docs/contratos/quarto-bimestre.md §4. Também as abas dos
+   dois livros da escola (o livro pela estante) e os títulos de grupo da tela da matéria (materia.js, materia-livro.js). */
+
+/* ---------- a carta rica (o livro pela estante e o resumo da sala) ---------- */
+/* cabeçalho: uma aba de papel pendurada na faixa da cor da matéria (a faixa é o ::before da carta, ui-telas.css) */
+.livro-carta.carta-rica > .carta-livro {
+  display: flex; align-items: center; gap: 8px;
+  width: fit-content; max-width: 100%; margin: -18px auto 8px; padding: 2px 12px 4px 8px;
+  border: var(--borda-fina) solid var(--borda); border-top: 0; border-radius: 0 0 var(--canto) var(--canto);
+  background: var(--papel-quente); font-size: var(--texto-aux); line-height: var(--entrelinha-titulo);
+}
+.carta-livro-texto { min-width: 0; text-align: left; }
+.carta-livro-pag { white-space: nowrap; color: var(--tinta-suave); }
+.livro-carta.carta-rica > h3 { margin: 4px 0 12px; }
+.carta-titulo-emoji { margin-right: 8px; }
+/* os blocos: alinhados à esquerda, na largura de leitura, com o mesmo vão entre eles */
+.livro-carta.carta-rica > [class^="bloco-"] { width: 100%; max-width: 62ch; margin: 0 auto; text-align: left; }   /* a largura toda também na coluna flex do resumo (tablet) */
+.livro-carta.carta-rica > [class^="bloco-"] + [class^="bloco-"] { margin-top: 16px; }
+.bloco-texto { white-space: pre-line; }   /* "\n" do livro quebra a linha */
+/* fala de personagem: o travessão em destaque e a linha que não cabe continua depois dele */
+.bloco-fala { padding-left: 2em; text-indent: -2em; }
+.fala-travessao { color: var(--laranja-escuro); }
+/* poema: o bloco no meio da carta, versos alinhados à esquerda, espaço entre as estrofes */
+.livro-carta.carta-rica > .bloco-versos { width: fit-content; }
+.bloco-versos .estrofe { margin: 0; }
+.bloco-versos .estrofe + .estrofe { margin-top: 16px; }
+.verso { display: block; padding-left: 2em; text-indent: -2em; }
+/* a maiúscula acentuada desenhada por cima (ui-desafios.css) não herda o recuo negativo (o "É" sairia à esquerda) */
+:is(.bloco-fala, .verso, .bloco-lista li) span.mai-acento.mai-acento::before,
+:is(.bloco-fala, .verso, .bloco-lista li) span.mai-acento.mai-acento::after { text-indent: 0; }
+/* lista: quadradinho de pixel e o termo em destaque pela cor (a fonte não tem negrito, ui.md §10.9.3) */
+.bloco-lista { list-style: none; padding: 0; }
+.bloco-lista li { padding-left: 20px; text-indent: -20px; }
+.bloco-lista li + li { margin-top: 8px; }
+/* item que já traz a própria marca do livro ("a) …", "■ …"): sem o quadradinho */
+.bloco-lista li.sem-marca { padding-left: 0; text-indent: 0; }
+.sem-quebra { white-space: nowrap; }
+.bloco-lista li.sem-marca::before { content: none; }
+.bloco-lista li::before {
+  content: ""; display: inline-block; width: 12px; height: 12px; margin-right: 8px; vertical-align: 2px;
+  border: var(--borda-fina) solid var(--borda); background: var(--laranja);
+}
+.lista-termo { color: var(--laranja-escuro); }
+/* quadro do livro: borda, título numa faixa e o texto dentro */
+.bloco-quadro { overflow: hidden; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel-quente); }
+.quadro-titulo {
+  margin: 0; padding: 4px 12px; border-bottom: var(--borda-fina) solid var(--borda); background: var(--ambar);
+  font-size: var(--texto); line-height: var(--entrelinha-titulo); text-align: center;
+}
+.livro-carta .bloco-quadro > :not(.quadro-titulo) { max-width: none; margin: 10px 12px; }
+/* tabela: grade de tinta, cabeçalho em papel quente */
+.bloco-tabela { width: 100%; border-collapse: collapse; table-layout: fixed; background: var(--papel); }
+.bloco-tabela :is(th, td) {
+  padding: 6px 8px; border: var(--borda-fina) solid var(--borda); text-align: left; vertical-align: top;
+  font-size: var(--texto); line-height: var(--entrelinha-titulo);
+}
+.bloco-tabela th { background: var(--papel-quente); }
+/* figuras: ícone num quadro de 64 px (16×16 em 4×, 32×32 em 2×: todas do mesmo tamanho) com a legenda embaixo */
+.bloco-figuras { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 16px; }
+.bloco-figura { display: flex; flex-direction: column; align-items: center; gap: 4px; max-width: 160px; margin: 0; text-align: center; }
+.bloco-figura figcaption { font-size: var(--texto-aux); line-height: var(--entrelinha-titulo); }
+/* ilustração: canvas no meio, na escala inteira que o JS escolhe; a mais larga que a carta rola de lado no quadro */
+.bloco-ilustracao { overflow-x: auto; }
+.ilustracao-px { display: block; margin: 0 auto; }
+/* fonte do texto: letra auxiliar, à direita como no livro */
+.livro-carta.carta-rica > p.bloco-fonte { font-size: var(--texto-aux); color: var(--tinta-suave); text-align: right; }
+
+/* celular: a carta com mais largura de texto e o título um degrau abaixo (cabe mais sem rolar); tabela de 3 colunas ou
+   mais (ou com Letras grandes) vira uma caixinha por linha, cada valor com o seu cabeçalho */
+@media (max-width: 480px) {
+  .livro-carta.carta-rica { padding-left: 8px; padding-right: 8px; }   /* 19 letras por linha: a carta de ~110 palavras rola ~meia tela */
+  .livro-carta.carta-rica > h3 { font-size: var(--texto); }
+  .tela-livro .carta-titulo-emoji { display: none; }   /* no livro o ícone da carta já está na marca acesa do índice */
+  :is(.bloco-tabela.tabela-larga, .letras-grandes .bloco-tabela),
+  :is(.bloco-tabela.tabela-larga, .letras-grandes .bloco-tabela) :is(tbody, tr, td) { display: block; }
+  :is(.bloco-tabela.tabela-larga, .letras-grandes .bloco-tabela) thead { display: none; }
+  :is(.bloco-tabela.tabela-larga, .letras-grandes .bloco-tabela) tr { padding: 4px 8px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel); }
+  :is(.bloco-tabela.tabela-larga, .letras-grandes .bloco-tabela) tr + tr { margin-top: 8px; }
+  :is(.bloco-tabela.tabela-larga, .letras-grandes .bloco-tabela) td { padding: 2px 0; border: 0; }
+  :is(.bloco-tabela.tabela-larga, .letras-grandes .bloco-tabela) td[data-cab]::before { content: attr(data-cab) ": "; font-size: var(--texto-aux); color: var(--tinta-suave); }
+  .bloco-tabela th { font-size: var(--texto-aux); }   /* rótulo da coluna: um degrau abaixo, a palavra inteira (ui.md §10.17.3) */
+}
+/* tablet em pé, no resumo da sala: o texto da carta já vai a 24 (ui-missao.css); listas, tabelas e legendas também.
+   A carta enche a altura livre (D12c-01): o cabeçalho fica preso à faixa e o resto no meio do que sobra */
+@media (min-width: 640px) and (max-width: 999.98px) and (min-height: 900px) {
+  .resumo-sala .livro-carta.carta-rica > .carta-livro, .resumo-sala .livro-carta.carta-rica > :last-child { margin-bottom: auto; }
+  .resumo-sala .livro-carta.carta-rica :is(li, th, td, .quadro-titulo) { font-size: var(--texto-g); }
+  .resumo-sala .livro-carta.carta-rica .bloco-figura figcaption { font-size: var(--texto); }
+  .resumo-sala .livro-carta.carta-rica > p.bloco-fonte { font-size: var(--texto-aux); }
+}
+
+/* ---------- os dois livros da escola: uma aba para cada, em cima das marcas ---------- */
+.livro-abas {
+  flex: none; display: flex; justify-content: center; gap: 6px; padding: 8px 12px 0;
+  border-bottom: var(--borda-fina) solid var(--borda);
+}
+.livro-aba {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 48px; padding: 6px 16px; margin-bottom: -2px;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto) var(--canto) 0 0;
+  background: var(--laranja-claro); font: inherit; font-size: var(--texto); color: inherit; white-space: nowrap; cursor: pointer;
+}
+.livro-aba[aria-selected="true"] { background: var(--papel-quente); border-bottom-color: var(--papel-quente); }
+/* celular: a aba escolhida com o nome, a outra só com o ícone; com Letras grandes o nome desce um degrau */
+@media (max-width: 480px) {
+  .livro-abas { padding: 6px 8px 0; }
+  .livro-aba { min-height: 44px; padding: 4px 12px; }
+  .livro-aba:not([aria-selected="true"]) .livro-aba-nome { display: none; }
+  :root.letras-grandes .livro-aba { font-size: var(--texto-aux); }
+}
+
+/* ---------- rodapé do livro: "20 de 117" inteiro entre as setas ---------- */
+/* a contagem tem sempre a largura de "999 de 999" (1ch = uma letra da fonte pixel): a seta → fica no mesmo lugar em
+   todas as cartas e em todos os livros. No celular a caixa fica em 128 px e a letra desce um degrau quando não cabe
+   (ui.md §10.17.3): com 100 cartas ou mais, 12; com Letras grandes, 16 (e 12 com 100 cartas ou mais) */
+.livro-rodape .livro-pag { width: 10ch; }
+@media (max-width: 480px) {
+  .livro-rodape .livro-pag { width: 128px; }
+  .livro-rodape .livro-pag.livro-pag-longa, :root.letras-grandes .livro-rodape .livro-pag { font-size: var(--texto-aux); }
+  :root.letras-grandes .livro-rodape .livro-pag.livro-pag-longa { --texto-aux: 12px; }
+}
+
+/* ---------- tela da matéria com os livros da escola: um título por capítulo e livro ---------- */
+.materia-grupo { display: flex; flex-wrap: wrap; align-items: center; margin: 8px 0 0; font-size: var(--texto); line-height: var(--entrelinha-titulo); color: var(--tinta-suave); }
+.materia-grupo > span { white-space: pre; }
+@media (max-width: 480px) {
+  .materia-grupo { column-gap: 16px; }
+  .materia-grupo > .grupo-sep { display: none; }
+  :root.letras-grandes .materia-grupo { font-size: var(--texto-aux); }   /* "📗 Aprendizagem" inteiro numa linha (ui.md §10.17.3) */
+}
+.materia-grupo:first-child { margin-top: 0; }
+.painel .lista-salas > .materia-grupo { grid-column: 1 / -1; }

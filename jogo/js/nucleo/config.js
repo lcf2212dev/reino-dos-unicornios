@@ -11,6 +11,7 @@ Reino.config = {
   medalhaEscolaValor: 100,    // prêmio da medalha de ouro da prova real
   pinPais: '2026',            // troque aqui o PIN da Área dos Pais
   desafiosPorSala: 6,
+  desafiosSalaLivro: 14,      // sala de livro (ordem: 'livro', 4º bimestre): todos os desafios, na ordem; no máximo este tanto
   perguntasTreino: 10,
   // provas bimestrais (Escola do Reino): o acessório só vem com esta nota ou mais.
   // 10 = acertar tudo. Tentativa 1 → lendário, 2 → raro, depois → comum.

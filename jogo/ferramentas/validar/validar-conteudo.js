@@ -7,6 +7,7 @@ const path = require('path');
 const ARQUIVO = process.argv.includes('--terceiro-bimestre');
 const Jogo = ARQUIVO ? require('../testes/unidade/ajudantes/terceiro-bimestre') : require('../jogo-no-node');
 const Preencher = require('./preencher');
+const Livro4 = require('./livro-4bim');
 
 const ctx = Jogo.contexto({ console });
 // --materia <arquivo>: usa esse arquivo no lugar do arquivo de mesmo nome em js/conteudo/materias/: a matéria
@@ -72,8 +73,12 @@ function checarNovos(d, naProva) {
     checar(a && Array.isArray(a.partes) && a.partes.length > 0, `${d.id}: apoio sem partes`);
     ((a && a.partes) || []).forEach((p, i) => {
       const lista = Array.isArray(p.lista) && p.lista.length > 0 && p.lista.every(textoOk);
-      checar(p && (lista || textoOk(p.texto)) && (p.lista === undefined || lista) && (p.texto === undefined || textoOk(p.texto)) && (p.titulo === undefined || textoOk(p.titulo)),
-        `${d.id}: parte ${i + 1} do apoio precisa de lista (textos) ou texto`);
+      // versos (poema: '' separa estrofes) e figuras (ícones com legenda): 4º bimestre (quarto-bimestre.md §12)
+      const versos = Array.isArray(p.versos) && p.versos.some(textoOk) && p.versos.every((v) => typeof v === 'string');
+      const figuras = Array.isArray(p.figuras) && p.figuras.length > 0 && p.figuras.every((f) => f && textoOk(f.img));
+      checar(p && (lista || textoOk(p.texto) || versos || figuras) && (p.lista === undefined || lista) && (p.texto === undefined || textoOk(p.texto)) &&
+        (p.versos === undefined || versos) && (p.figuras === undefined || figuras) && (p.titulo === undefined || textoOk(p.titulo)),
+        `${d.id}: parte ${i + 1} do apoio precisa de lista (textos), texto, versos ou figuras`);
     });
   }
   // o mesmo ícone em todas as opções não ajuda a escolher: melhor sem ícone
@@ -86,6 +91,8 @@ function checarNovos(d, naProva) {
     const aceitam = Object.keys(TIPOS).filter((t) => (TIPOS[t].campos || []).includes(c));
     checar(def && (def.campos || []).includes(c), `${d.id}: "${c}" só vale em ${aceitam.join('/')}`);
   });
+  // figuras da questão (d.figura, apoio.partes[].figuras; quarto-bimestre.md §12): desenho e ilustração existem
+  if (Reino.Desafios.conferirFiguras) Reino.Desafios.conferirFiguras(d, { checar, avisar: (msg) => avisos.push(msg), naProva, icones: icones.window.ICONES, textoOk, ilustracao: icones.Reino.ilustracao });
   if (def && def.validar) def.validar(d, { checar, avisar: (msg) => avisos.push(msg), naProva, icones: icones.window.ICONES, textoOk });
 }
 
@@ -122,6 +129,7 @@ MATERIAS.forEach((m) => {
     detalhe(`✔ ${m.nome}: catálogo arquivado, aguardando o quarto bimestre`);
   }
   const livro = new Set((m.livro || []).map((l) => l.id));
+  (m.livro || []).forEach((c) => Livro4.checarCarta(m, c, checar, (msg) => avisos.push(msg), icones));
   checar(m.salas && m.salas.length > 0, `${m.id}: sem salas`);
   // cada sala vale um valor redondo e a sobra é bônus ao completar (progresso-regras.js): a soma fecha sempre
   const P = icones.Reino.Progresso, valorSala = P.valorSala(m), bonus = P.bonusMateria(m);   // o jogo inteiro (linha do `icones`)
@@ -130,7 +138,8 @@ MATERIAS.forEach((m) => {
   checar(Math.round(valorSala * 100) % 50 === 0 && bonus >= 0, `${m.id}: valor por sala (${valorSala}) tem de ser de R$ 0,50 em R$ 0,50 e o bônus (${bonus}) não pode ser negativo`);
 
   m.salas.forEach((s) => {
-    if (!m.arquivada) checar(s.desafios.length >= Reino.config.desafiosPorSala, `${s.id}: só ${s.desafios.length} desafios (mínimo ${Reino.config.desafiosPorSala})`);
+    if (!m.arquivada && s.ordem === undefined) checar(s.desafios.length >= Reino.config.desafiosPorSala, `${s.id}: só ${s.desafios.length} desafios (mínimo ${Reino.config.desafiosPorSala})`);
+    Livro4.checarSala(m, s, checar, Reino.config);
     s.desafios.forEach((d) => {
       checar(!ids.has(d.id), `ID repetido: ${d.id}`);
       ids.add(d.id);

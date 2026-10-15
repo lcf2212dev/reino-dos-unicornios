@@ -74,7 +74,7 @@ Reino.registrarInterior({
     nome?: 'Caixinha de lembranças',  // nome no balão, se for interativo
     fala?: 'Texto curto.',            // interativo: fala curta (voz 'narradora', ou `voz`)
     voz?: 'narradora',
-    acao?: { tipo: 'tela', tela: 'livro'|'plano'|'estabulo'|'loja'|'bau'|'ovos'|'petshop', materia? }
+    acao?: { tipo: 'tela', tela: 'livro'|'plano'|'estabulo'|'loja'|'bau'|'ovos'|'petshop', materia?, livro? }
          | { tipo: 'unicornio', indice }      // (estábulo) o unicórnio da baia diz a frase gravada
          | { tipo: '<registrada>', … }        // ações de npcs-e-dialogo.md §7 (beber, banho, curiosidade…)
     var?: { … },                      // parâmetros do desenho (cor, unicórnio do quadro etc.)
@@ -153,7 +153,7 @@ Reino.Interiores.objeto('escrivaninha', {
    cômodo, `parede: true`, nas 2 fileiras da parede ou de chão com o desenho subindo até elas, com o desenho inteiro): (a) na parede do fundo do próprio cômodo, deslizando até o
    vão mais perto do meio; (b) sem vão, na moldura de cima do cômodo (metade sobre a borda, ou inteira acima dela),
    sem cruzar nenhum outro cômodo; (c) só a do cômodo da Mariana, sem lugar nas duas: desce para o chão (`ui.md`
-   §10.18.4), a meio tile (em px de tela) da Mariana, dos NPCs, do que se toca (objeto com fala/ação, pedestal, tapete de saída, escada) e, se der, dos móveis: primeiro a faixa logo abaixo da parede, depois o fundo do cômodo, fora do tapete (enfeite plano, que ela pode cobrir se não houver outro lugar); depois na tela sem invadir outro cômodo; sem isso, cobre um
+   §10.18.4), a meio tile (em px de tela) da Mariana, dos NPCs, do que se toca (objeto com fala/ação, pedestal, tapete de saída, escada; o tapete de saída e as escadas nunca ficam cobertos, nem nos passos de último recurso, salvo se não houver lugar nenhum fora deles) e, se der, dos móveis: primeiro a faixa logo abaixo da parede, depois o fundo do cômodo, fora do tapete (enfeite plano, que ela pode cobrir se não houver outro lugar); depois na tela sem invadir outro cômodo; sem isso, cobre um
    enfeite de parede (o celular com o balão aberto no corredor da Escola). Ela só some se não houver nenhum
    retângulo fora do HUD, do balão e da Mariana (exceção). A placa de outro cômodo não aparece com o balão aberto e
    pode sumir. O HUD é medido pela `caixaParada` (a caixa sem o transform da animação) no máximo a cada 500 ms; o
@@ -245,7 +245,9 @@ parte). Aqui só o que outros arquivos usam. Escada entre andares de lugares dif
 
 ### 9.5 Casa das Palavras (lugar `materia:portugues`)
 1. Desenho de fora `Mapa.PREDIOS.palavras`, em `portugues/fora.js`. Ids `portugues` e, se houver andares ou alas,
-   `portugues-<n>`, todos com `pacote: 'interior-portugues'`.
+   `portugues-<n>`, todos com `pacote: 'interior-portugues'`. O térreo (`portugues.js`) é da Língua Portuguesa do
+   4º bimestre (`quarto-bimestre.md` §7; pessoas, falas e objetos em `portugues/lp-*.js`); o layout do 3º bimestre
+   está em `arquivo/terceiro-bimestre/`, e os `objetos-*.js` dele continuam registrando os tipos `portugues-*`.
 2. Cavaleira e professora vêm do elenco (`paraMateria` / `paraProva`, §8.7); o tema da ala em `TEMAS.<matéria>`
    (`castelo/castelo.js`). O mesmo vale para Ciências (`lab-cavaleira`, registrada no `castelo/castelo.js`, que
    carrega antes do Observatório).

@@ -315,7 +315,9 @@
 
   Reino.InteriorPadrao = { gerar: gerar, FALAS: FALAS };
   (R.materias || []).forEach(function (m) {
-    if (R.interiores.some(function (d) { return d.lugar === 'materia:' + m.id; })) return;
+    // já tem interior: o do lugar dela ou o de lugar.interior (matéria dentro de um prédio, conteudo.md §2.7)
+    var dentro = m.lugar && m.lugar.dentro && m.lugar.interior;
+    if (R.interiores.some(function (d) { return d.lugar === 'materia:' + m.id || d.id === dentro; })) return;
     R.registrarInterior(gerar(m));
   });
 })();

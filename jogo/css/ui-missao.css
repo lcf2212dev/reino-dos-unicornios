@@ -51,6 +51,14 @@
 .missao-pontos:has(> .ponto:nth-child(11)) .ponto { flex: 1 1 0; width: auto; height: 8px; border: 0; border-radius: 0; background: transparent; }
 .missao-pontos:has(> .ponto:nth-child(11)) .ponto.feito { background: var(--laranja); }
 .missao-pontos:has(> .ponto:nth-child(11)) .ponto.atual { height: 16px; margin: -4px 0; background: var(--ouro); outline: var(--borda-fina) solid var(--borda); }
+/* sala de livro com 7 a 14 perguntas no celular (missao.js, .trilha-longa): a mesma barra, estreita (56 px), para os
+   pontos não cobrirem o título; a sala sorteada (6) continua com os pontos */
+@media (max-width: 480px) {
+  .tela-missao .trilha-longa .missao-pontos { gap: 0; width: 56px; height: 12px; border: var(--borda-fina) solid var(--borda); background: var(--branco); }
+  .tela-missao .trilha-longa .missao-pontos .ponto { flex: 1 1 0; width: auto; height: 8px; border: 0; border-radius: 0; background: transparent; }
+  .tela-missao .trilha-longa .missao-pontos .ponto.feito { background: var(--laranja); }
+  .tela-missao .trilha-longa .missao-pontos .ponto.atual { height: 16px; margin: -4px 0; background: var(--ouro); outline: var(--borda-fina) solid var(--borda); }
+}
 .missao-corpo { flex: 1; overflow: auto; padding: 18px 16px 24px; }
 .missao-corpo > * { max-width: 760px; margin-left: auto; margin-right: auto; }
 .missao-rodape {

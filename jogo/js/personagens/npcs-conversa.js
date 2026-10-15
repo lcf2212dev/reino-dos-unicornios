@@ -181,7 +181,7 @@
       var fim = function (r) { U().emit(Reino.EVENTOS.MAPA_MUDOU); return r || null; };
       switch (acao.tela) {
         case 'ovos': return UI.chocarOvos(p.ovosParaChocar()).then(fim);
-        case 'livro': var ml = Reino.materia(acao.materia); return ml ? esperarTela(function () { UI.abrirLivro(ml); }).then(fim) : Promise.resolve(null);
+        case 'livro': var ml = Reino.materia(acao.materia); return ml ? esperarTela(function () { UI.abrirLivro(ml, null, acao.livro); }).then(fim) : Promise.resolve(null);   // acao.livro: o livro da escola
         case 'plano': return esperarTela(UI.telaPlano).then(fim);
         case 'loja': return esperarTela(UI.telaLoja).then(fim);
         case 'estabulo': return esperarTela(UI.telaEstabulo).then(fim);

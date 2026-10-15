@@ -11,6 +11,7 @@ const Preencher = require('./preencher');
 const Extras = require('./interiores-extras');
 const Escadas = require('./validar-escadas');
 const Viagem = require('./validar-viagem');
+const Materias = require('./interiores-materias');
 
 const iSo = process.argv.indexOf('--so'), SO = iSo >= 0 ? process.argv[iSo + 1] : null, DETALHES = process.argv.includes('--detalhes');
 const ctx = Jogo.contexto({ console, setTimeout, clearTimeout, Math, Date });
@@ -28,22 +29,16 @@ function checar(cond, msg) { if (!cond) erros.push(msg); return !!cond; }
 // prédios (Reino.registrarLugar) + as matérias
 const LUGARES = new Set(LugaresDoMapa.ids(ctx).concat(Reino.materias.map((m) => 'materia:' + m.id)));
 if (!SO) LugaresDoMapa.checar(ctx).forEach((e) => erros.push(e));
-// matéria dentro de um prédio que já existe (lugar.dentro + lugar.interior): o anfitrião é um lugar do mapa
-// e o interior existe com lugar 'materia:<id>'. predio(l) = o prédio do mapa onde o lugar l fica.
-const ANFITRIAO = {};
-Reino.materias.filter((m) => m.lugar && m.lugar.dentro).forEach((m) => {
-  const id = 'materia:' + m.id, l = m.lugar, di = Reino.interiores.find((d) => d.id === l.interior);
-  ANFITRIAO[id] = l.dentro;
-  checar(LUGARES.has(l.dentro) && !/^materia:/.test(l.dentro), `${id}: lugar.dentro "${l.dentro}" não é um prédio do mapa`);
-  if (checar(di, `${id}: lugar.interior "${l.interior}" não existe`)) checar(di.lugar === id, `${id}: o interior "${l.interior}" tem lugar "${di.lugar}" (precisa ser "${id}")`);
-});
+// matéria dentro de um prédio que já existe (lugar.dentro + lugar.interior; interiores-materias.js).
+// predio(l) = o prédio do mapa onde o lugar l fica.
+const ANFITRIAO = Materias.anfitrioes(Reino, LUGARES, checar);
 const predio = (l) => ANFITRIAO[l] || l;
 // telas e ações registradas pelos prédios novos (Reino.NPCs.registrarTela / registrarAcao)
 const TELAS = ['livro', 'plano', 'estabulo', 'loja', 'bau', 'ovos'].concat(temNpcs && Reino.NPCs.telas ? Reino.NPCs.telas() : []);
 const ACOES_EXTRAS = temNpcs && Reino.NPCs.acoes ? Reino.NPCs.acoes() : [];
 // --so: só os interiores daquele prédio, todos os andares (e os andares de matéria `dentro` dele); as conferências
 // entre prédios ficam só entre eles, mas escadas e lugares enxergam todos os interiores (porId, porLugar)
-const PREDIOS_SO = new Set(Reino.interiores.filter((d) => d.id === SO || d.lugar === SO).map((d) => predio(d.lugar)));
+const PREDIOS_SO = new Set(Reino.interiores.filter((d) => d.id === SO || d.lugar === SO).map((d) => predio(d.lugar)).concat(ANFITRIAO[SO] || []));
 const defs = SO ? Reino.interiores.filter((d) => PREDIOS_SO.has(predio(d.lugar))) : Reino.interiores;
 const doSo = (id) => !SO || defs.some((d) => d.id === id || d.lugar === id);
 if (SO && !defs.length) erros.push(`--so ${SO}: nenhum interior nem lugar com esse id (${[...new Set(Reino.interiores.map((d) => d.lugar))].join(', ')})`);
@@ -267,27 +262,21 @@ defs.forEach((d) => {
     if (n.acao && ['sala', 'treino', 'prova'].includes(n.acao.tipo)) {
       const k = n.acao.tipo + ':' + (n.acao.tipo === 'prova' ? n.acao.prova : n.acao.tipo === 'sala' ? n.acao.sala : n.acao.materia);
       const comodo = g && g.dentro(n.x, n.y) ? g.comodo[n.y][n.x] : null;
-      if (!atividades.has(k)) atividades.set(k, []);
-      atividades.get(k).push({ interior: d.id, lugar: d.lugar, comodo, npc: n.id });
+      anotar(atividades, k, { interior: d.id, lugar: d.lugar, comodo, npc: n.id });
     }
   });
+  // estação de sala (objeto; 4º bimestre): várias por cômodo
+  (d.objetos || []).filter((o) => o.acao && o.acao.tipo === 'sala').forEach((o) => anotar(atividades, 'sala:' + o.acao.sala,
+    { interior: d.id, lugar: d.lugar, comodo: null, npc: `${o.tipo} (${o.x},${o.y})`, estacao: true }));
 });
 // cada sala/treino/prova: exatamente um NPC, em cômodos distintos dentro do prédio
+function anotar(mapa, k, v) { if (!mapa.has(k)) mapa.set(k, []); mapa.get(k).push(v); }
 atividades.forEach((lista, k) => checar(lista.length === 1, `${k}: ${lista.length} NPCs (${lista.map((x) => x.npc).join(', ')}); precisa de exatamente 1`));
 const porComodo = new Map();
-atividades.forEach((lista, k) => lista.forEach((x) => {
-  const ck = x.interior + '/' + x.comodo;
-  if (!porComodo.has(ck)) porComodo.set(ck, []);
-  porComodo.get(ck).push(k);
-}));
+atividades.forEach((lista, k) => lista.filter((x) => !x.estacao).forEach((x) => anotar(porComodo, x.interior + '/' + x.comodo, k)));
 porComodo.forEach((ks, ck) => checar(ks.length === 1, `${ck}: ${ks.join(', ')} no mesmo cômodo (cada atividade no seu cômodo)`));
-// prédios que já têm interior precisam de todas as suas atividades lá dentro
-const esperadas = {};
-Reino.materias.forEach((m) => {
-  esperadas['materia:' + m.id] = m.salas.map((s) => 'sala:' + s.id);
-  (esperadas.castelo = esperadas.castelo || []).push('treino:' + m.id);
-});
-esperadas.escola = Reino.provas.map((p) => 'prova:' + p.id);
+// prédios que já têm interior precisam de todas as suas atividades lá dentro (salas de matéria arquivada, não)
+const esperadas = Materias.esperadas(Reino);
 Object.keys(esperadas).filter(doSo).forEach((l) => {
   if (porLugar[l]) {
     esperadas[l].forEach((k) => {

@@ -14,9 +14,12 @@ function jogo() {
 
 test('seis matérias e provas arquivadas não trazem perguntas ou livros ativos', () => {
   const { R } = jogo();
-  assert.equal(R.materias.length, 6);
+  // as do 3º bimestre (catálogo arquivado); as do 4º bimestre (bimestre: 4, quarto-bimestre.md) ficam ativas à parte
+  const arquivadas = R.materias.filter((m) => m.bimestre !== 4);
+  assert.equal(arquivadas.length, 6);
+  assert.ok(R.materias.filter((m) => m.bimestre === 4).every((m) => !m.arquivada && !R.Bimestres.emEspera(m.id)));
   assert.equal(R.provas.length, 6);
-  for (const m of R.materias) {
+  for (const m of arquivadas) {
     assert.equal(m.arquivada, true);
     assert.equal(R.Bimestres.emEspera(m.id), true);
     assert.equal(m.livro.length, 0);
@@ -52,19 +55,21 @@ test('arquivo original preserva desafios, livros e questões fora do jogo public
 test('guardas cobrem guias, salas, treino, provas e livros sem bloquear serviços', () => {
   const { R } = jogo();
   const B = R.Bimestres;
-  for (const m of R.materias) {
+  for (const m of R.materias.filter((x) => x.arquivada)) {
     for (const tipo of ['sala', 'treino']) assert.equal(B.acaoEmEspera({ tipo, materia: m.id }), true);
     assert.equal(B.acaoEmEspera({ tipo: 'guia', lugar: 'materia:' + m.id }), true);
     assert.equal(B.acaoEmEspera({ tipo: 'tela', tela: 'livro', materia: m.id }), true);
   }
   for (const p of R.provas) assert.equal(B.acaoEmEspera({ tipo: 'prova', prova: p.id }), true);
-  for (const lugar of ['escola', 'castelo']) assert.equal(B.acaoEmEspera({ tipo: 'guia', lugar }), true);
+  // a Escola espera a Revisão do bimestre (prova ativa); o Castelo abre com a matéria ativa do 4º bimestre
+  assert.equal(B.acaoEmEspera({ tipo: 'guia', lugar: 'escola' }), !R.provas.some((p) => !p.arquivada));
+  assert.equal(B.acaoEmEspera({ tipo: 'guia', lugar: 'castelo' }), !R.materias.some((m) => !m.arquivada));
   for (const tela of ['loja', 'estabulo', 'petshop']) assert.equal(B.acaoEmEspera({ tipo: 'tela', tela }), false);
 });
 
 test('espera conserva dinheiro derivado, recompensas e save; surpresa fica vazia', () => {
   const { R, P, ctx } = jogo();
-  const m = R.materias[0], e = P.estado();
+  const m = R.materias.find((x) => x.arquivada), e = P.estado();
   m.salas.forEach(s => { e.salas[s.id] = { feita: 123, vezes: 1, melhor: 5 }; });
   e.unis[m.unicornios[0].id] = { em: 123, xp: 50, chocado: true };
   e.loja[R.provas[0].acessorios.lendario.id] = true;
@@ -86,7 +91,7 @@ test('entradas diretas não iniciam atividade nem concedem recompensas', async (
   const antes = JSON.stringify(P.estado());
   let fins = 0;
   const fim = premio => { assert.equal(premio, null); fins++; };
-  for (const m of R.materias) {
+  for (const m of R.materias.filter((x) => x.arquivada)) {
     await R.Missao.iniciar(m, m.salas[0], fim);
     await R.Prova.iniciar(m, fim);
   }
@@ -100,7 +105,7 @@ test('objetos adicionados depois das falas-base também aguardam o quarto bimest
   const ctx = Jogo.contexto({ console });
   Jogo.carregar(ctx, Jogo.ordemDosPredios(Jogo.scripts()));
   const R = ctx.Reino;
-  for (const m of R.materias) {
+  for (const m of R.materias.filter((x) => x.arquivada)) {
     assert.deepEqual(Array.from(R.FALAS_INTERIORES.escola.objetos['lousa-' + m.id]), [R.Bimestres.aviso]);
   }
   assert.deepEqual(Array.from(R.FALAS_INTERIORES.castelo.objetos['ciencias-microscopio']), [R.Bimestres.aviso]);

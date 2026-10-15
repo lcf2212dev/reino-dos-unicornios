@@ -1,5 +1,9 @@
 // Lista tudo o que o jogo fala e prepara o texto para as vozes naturais.
-// Uso: node ferramentas/vozes/listar-falas.js   (gera ferramentas/gerado/falas.json)
+// Uso (da raiz do repositório):
+//   node jogo/ferramentas/vozes/listar-falas.js            gera jogo/ferramentas/gerado/falas.json e mostra o resumo
+//   node jogo/ferramentas/vozes/listar-falas.js --mostrar  também cada fala cujo texto a voz lê diferente (→)
+//   node jogo/ferramentas/vozes/listar-falas.js --ajuda    só esta ajuda (não grava nada)
+if (require.main === module) require('../ajuda').ajuda(__filename);
 const fs = require('fs');
 const path = require('path');
 const Jogo = require('../jogo-no-node');
@@ -22,7 +26,7 @@ const ESTADOS = { AM: 'Amazonas', RJ: 'Rio de Janeiro', MS: 'Mato Grosso do Sul'
 const NOME_LETRA = { CH: 'cê agá', LH: 'éle agá', NH: 'ene agá', SS: 'dois ésses', RR: 'dois érres',
   H: 'agá', X: 'xis', S: 'ésse', Z: 'zê', R: 'érre', L: 'éle', U: 'u' };
 // palavras com hífen que não são sílabas separadas (compostas e pronomes: "lave-os", "bem-vinda")
-const COMPOSTAS = /^(pega-pega|bem-vind[oa]s?|caça-palavras|arco-íris|guarda-chuva|beija-flor)$/i;
+const COMPOSTAS = /^(pega-pega|bem-vind[oa]s?|caça-palavras|arco-íris|guarda-chuva|beija-flor|batata-doce|bem-me-quer|mal-me-quer|dois-pontos|pontos?-finai?[ls]|vitória-régia)$/i;
 const FEM_SEM_A = /^(vez|colher|flor|mulher|luz|noite|tarde|parte|sílaba|árvore|nuvem|viagem)$/i;
 const MASC_EM_A = /^(dia|mapa|planeta|problema|sofá|clima|tema|cometa)$/i;
 const PRONUNCIA = { kiwis: 'kiuís', kiwi: 'kiuí' };
@@ -46,6 +50,10 @@ function nomesDasLetras(t) {
 
 function prepararFala(texto, voz, pacotes) {
   let t = Reino.Voz.normalizar(texto);
+  // terminações soltas ("-ã, -ão, -ães", "Ã – ão – ães"): a voz lia "an an ans"; fala cada uma com um exemplo
+  t = t.replace(/(^|[\s(–—"“,])-?(ães|ão|ã)(?=$|[\s,.;:)!?–—"”])/giu, (_, a, w) => a + ({ 'ã': 'ã, de irmã', 'ão': 'ão, de pão', 'ães': 'ães, de pães' })[w.toLowerCase()]);
+  // número de quadrinho/lacuna dos diálogos do livro ("[4]Oba[5] Com certeza"): só na tela; a voz faz uma pausa
+  t = t.replace(/\s*\[\d+\]\s*/g, '… ').replace(/^(…\s*)+|(\s*…)+\s*$/g, '').replace(/(…\s*)+([.!?:,;])/g, '$2').trim();
   if ((pacotes || []).some((p) => /portugues/.test(p)) && !VOZES_INGLESAS.has(voz)) t = nomesDasLetras(t);
   if (!VOZES_INGLESAS.has(voz)) t = t.replace(RE_NOMES, (_, a, w) => a + PRONUNCIA_NOMES[w.toLowerCase()]);
   // voz inglesa: só lacunas e MAIÚSCULAS (sem as regras do português)

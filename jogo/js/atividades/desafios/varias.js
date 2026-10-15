@@ -8,10 +8,12 @@
     var sel = {};
     (opts.valorInicial || []).forEach(function (i) { sel[i] = true; });
     var bloq = {};
-    var lista = el('div.opcoes.opcoes-varias');
+    // opções com desenho (o.img; d.soImagem): _d.botaoImg, de escolha.js
+    var comImg = _d.temImg(d);
+    var lista = el('div.opcoes.opcoes-varias' + (comImg ? '.opcoes-img' : ''));
     var botoes = {};
     ordem.forEach(function (i) {
-      var b = botaoOpcao(d.opcoes[i], '.opcao-marcar');
+      var b = comImg ? _d.botaoImg(d.opcoes[i], d, '.opcao-marcar') : botaoOpcao(d.opcoes[i], '.opcao-marcar');
       b.addEventListener('click', function () {
         if (bloq[i] || ctrl.travado) return;
         sel[i] = !sel[i]; Reino.Som.tocar(sel[i] ? 'selecionar' : 'toque'); pintar(); opts.onMudar();
@@ -55,7 +57,7 @@
   };
 
   Reino.registrarTipoDesafio('varias', {
-    montar: montar, pontuar: pontuar, treinavel: true, campos: ['livre'], pista: 'pistaVarias',
+    montar: montar, pontuar: pontuar, treinavel: true, campos: ['livre', 'soImagem'], pista: 'pistaVarias',
     exemplos: { desafio: { id: 'x', tipo: 'varias', opcoes: [{ t: 'a', ok: true }, { t: 'b' }, { t: 'c', ok: true }] },
       certa: function (d) { return d.livre ? [0] : d.opcoes.map(function (o, i) { return o.ok ? i : -1; }).filter(function (i) { return i >= 0; }); },
       estranhos: [[], [99], [null], [0, 0, 0]] },
@@ -63,6 +65,7 @@
     textoCerto: function (d) { return d.opcoes.filter(function (o) { return o.ok; }).map(function (o) { return o.t; }).join(', '); },
     textoResposta: function (d, valor) { return valor.map(function (i) { return d.opcoes[i].t; }).join(', '); },
     validar: function (d, v) {
+      _d.conferirOpcoesImg(d, v);
       if (d.livre !== undefined) v.checar(d.livre === true, d.id + ': "livre" só vale true');
       if (d.livre) return;
       var ok = d.opcoes.filter(function (o) { return o.ok; }).length;

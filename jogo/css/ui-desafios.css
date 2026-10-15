@@ -45,6 +45,11 @@
   display: block; width: 100%; height: auto; aspect-ratio: 1; image-rendering: pixelated; touch-action: none;
   cursor: crosshair; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none;
 }
+/* teclado: as dicas empilhadas na mesma célula (o espaço é sempre o da maior: a prancheta nunca pula); só a atual
+   aparece, e só com o foco do teclado na prancheta (o cursor é desenhado no canvas) */
+.desenho-dica-tecla { display: grid; max-width: 360px; margin: 0; text-align: center; }
+.desenho-dica-tecla > span { grid-area: 1 / 1; visibility: hidden; }
+.desenho-dica-tecla > .dica-atual { visibility: visible; }
 .desenho-lista { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; justify-content: center; font-size: var(--texto); }
 .desenho-requisitos { display: flex; gap: 10px; list-style: none; margin: 0; padding: 0; flex-wrap: wrap; }
 .desenho-req { display: flex; align-items: center; gap: 6px; padding: 4px 8px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--branco); color: var(--tinta-suave); }
@@ -79,6 +84,7 @@
 .apoio-parte { margin-top: 12px; }
 .apoio-parte-titulo { margin: 0 0 4px; font-size: var(--texto); color: var(--laranja-escuro); }
 .apoio-lista { margin: 0; padding-left: 1.5em; font-size: var(--texto); line-height: var(--entrelinha); }
+.apoio-lista li.sem-marca { list-style: none; }
 .apoio-texto { margin: 0; font-size: var(--texto); line-height: var(--entrelinha); overflow-wrap: break-word; }
 .btn-ouvir-apoio { margin-top: 0; flex: none; }
 .apoio-topo { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 10px; }

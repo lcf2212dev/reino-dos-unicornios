@@ -20,7 +20,7 @@ enfeite só aparece na tela; a fala "faltam estrelas" é fixa).
 
 ## Passo a passo
 ### 0. Onde trabalhar
-- Na sua worktree (ex.: `/home/leandro/PersonalDevelopment/reino-<tarefa>`), nunca em `/home/leandro/PersonalDevelopment/reino-dos-unicornios`.
+- Na sua worktree (ex.: `/home/leandro/Development/products/reino-<tarefa>`), nunca em `/home/leandro/Development/products/reino-dos-unicornios`.
 - Recomendado: uma worktree NOVA para a tarefa (o orquestrador cria; `node_modules` é um link). Nela tudo
   roda, inclusive `npm test` inteiro e `npm run e2e` (que precisam do git para ler o commit base).
 - Rascunho em `/tmp` (só se pedirem): copie a SUA worktree inteira, sem `node_modules`, sem `.git` e sem

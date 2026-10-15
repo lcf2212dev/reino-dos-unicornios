@@ -14,7 +14,7 @@ const { lancar } = require('../navegador');
 const CONVERSAS = [
   ['padrao-matematica', 'sala-matematica-m3'], ['padrao-matematica', 'sala-matematica-m4'], ['padrao-matematica', 'sala-matematica-m6'],
   ['museu', 'nina'], ['museu', 'taina'], ['observatorio-3', 'lab-lupa'], ['observatorio-3', 'lab-malu'], ['observatorio-3', 'lab-ravi'],
-  ['geografia', 'geo-teo'], ['portugues', 'carlos'], ['portugues', 'brisa'], ['portugues', 'chocalho'],
+  ['geografia', 'geo-teo'], ['portugues', 'lp-celeste'], ['portugues', 'lp-sol'], ['portugues', 'lp-pingo'],
   ['planeta-lua', 'lua-pipo'], ['bau', 'tostao'], ['castelo', 'aurora'],
 ];
 const COMODOS = [['castelo', 'ala-ciencias'], ['escola', 'sala-matematica-3bim'], ['padrao-matematica', 'sala6'], ['museu', 'galeria1'], ['torre-relogio', null]];

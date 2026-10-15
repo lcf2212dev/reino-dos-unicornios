@@ -17,7 +17,7 @@ até ~6 min.
 
 ## 2. Reproduzir pequeno
 - Uma aba, medindo passo a passo (heap, nós do DOM, ouvintes, RSS do Chromium):
-  `npm run memoria -- --raiz <worktree>/jogo --comparar "/home/leandro/PersonalDevelopment/reino-dos-unicornios/jogo"` (a main só é lida).
+  `npm run memoria -- --raiz <worktree>/jogo --comparar "/home/leandro/Development/products/reino-dos-unicornios/jogo"` (a main só é lida).
   `--ir <lugar>`, `--tela <nome>`, `--passos`, `--ms`: os mesmos lugares e telas do `npm run ver`.
 - `CRESCE` só na worktree = o vazamento é da mudança dela; nas duas = já estava na main (ou é da ferramenta).
 - Travou sem crescer (o `avancar` não volta): é espera sem fim. O e2e tem teto: "pacote de voz não terminou de

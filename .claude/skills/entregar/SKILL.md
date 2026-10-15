@@ -12,7 +12,7 @@ do e2e, merge, push e artifact (se o jogo mudou) sem perguntar.
 ```
 npm run worktree -- <tema> --material <Pasta>
 ```
-- Cria `/home/leandro/PersonalDevelopment/reino-<tema>` na branch `feat/<tema>` a partir da main (`--base <ref>` para outra), com
+- Cria `/home/leandro/Development/products/reino-<tema>` na branch `feat/<tema>` a partir da main (`--base <ref>` para outra), com
   `node_modules` por link (`--ci` faz `npm ci`) e cópia dos arquivos NÃO rastreados de `matérias/<pasta>/` (prints de uma
   matéria ou prova; `<Pasta>` é o nome da matéria, ex.: `Geografia` ou `ciências/Revisão`). Só lê a árvore principal.
 - Prints e fotos: `node jogo/ferramentas/fluxo/material.js <Pasta> --folha` grava cópias reduzidas, índice e
@@ -24,9 +24,9 @@ npm run worktree -- <tema> --material <Pasta>
    `package.json`, `CLAUDE.md`, manifesto, `base-referencia.txt`, falas novas.
 2. Rode, na ordem em que as frentes devem entrar (branch com commit ou caminho de worktree sem commit):
    ```
-   node jogo/ferramentas/fluxo/integrar.js feat/a /home/leandro/PersonalDevelopment/reino-b --assunto "o que a frente b fez"
+   node jogo/ferramentas/fluxo/integrar.js feat/a /home/leandro/Development/products/reino-b --assunto "o que a frente b fez"
    ```
-   - Worktree `/home/leandro/PersonalDevelopment/reino-integracao-<data>` (branch `integracao/<data>`; `--nome` para outro nome).
+   - Worktree `/home/leandro/Development/products/reino-integracao-<data>` (branch `integracao/<data>`; `--nome` para outro nome).
    - Branch com commits além da main: cherry-pick. Worktree sem commit: diff dela aplicado com `apply --3way`
      + os arquivos novos. Sem `--commit`, as frentes soltas entram depois dos cherry-picks e ficam sem commit
      (dá para testar antes). Com `--commit`, um commit por frente solta:

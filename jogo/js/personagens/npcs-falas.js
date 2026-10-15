@@ -76,6 +76,8 @@
   }
   function resumoDinheiro(v) { return 'Já ganhou ' + reais(v) + '! 💰'; }
   function resumoProxima(m, s, primeira) {
+    // sala de livro (4º bimestre): as estações não têm número, a fala diz o nome da sala
+    if (s.ordem === 'livro') return (primeira ? 'A primeira é ' : 'Agora vamos para ') + '"' + s.nome + '"! ' + (s.emoji || '');
     return (primeira ? 'A primeira é a Sala ' : 'Agora vamos para a Sala ') + (m.salas.indexOf(s) + 1) + '! ' + (s.emoji || '');
   }
   var RESUMO_ZERO = 'Você ainda não fez salas.';

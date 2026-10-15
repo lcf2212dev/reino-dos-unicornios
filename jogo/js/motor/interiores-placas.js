@@ -106,7 +106,7 @@
     var porComodo = chaos && chaos.get(def);
     if (!porComodo) { porComodo = {}; if (chaos) chaos.set(def, porComodo); }
     if (porComodo[c.id]) return porComodo[c.id];
-    var r = c.rect, moveis = [], tapetes = [];
+    var r = c.rect, moveis = [], tapetes = [], passagens = [];
     (def.objetos || []).forEach(function (o) {
       var d = II.dimensoes(o);
       if (o.x >= r.x + r.w || o.x + d.w <= r.x || o.y >= r.y + r.h || o.y + d.h <= r.y) return;
@@ -115,9 +115,11 @@
     });
     // o tapete de saída e as escadas também se tocam (gatilhos pisados)
     [def.saida].concat(def.escadas || []).forEach(function (e) {
-      if (e && e.x >= r.x && e.x < r.x + r.w && e.y >= r.y && e.y < r.y + r.h) moveis.push({ x0: e.x * T, x1: (e.x + 1) * T, y0: e.y * T, y1: (e.y + 1) * T, toca: true });
+      if (!e || !(e.x >= r.x && e.x < r.x + r.w && e.y >= r.y && e.y < r.y + r.h)) return;
+      var q = { x0: e.x * T, x1: (e.x + 1) * T, y0: e.y * T, y1: (e.y + 1) * T, toca: true };
+      moveis.push(q); passagens.push(q);
     });
-    return (porComodo[c.id] = { moveis: moveis, tapetes: tapetes });
+    return (porComodo[c.id] = { moveis: moveis, tapetes: tapetes, passagens: passagens });
   }
   function paraTela(pintor, lista, f) {
     return lista.map(function (o) {
@@ -293,6 +295,8 @@
       var perto = genteM.concat(ch3.moveis.map(function (o) { return paraTela(pintor, [o], o.toca ? meio : borda)[0]; }));
       var noChao = medido.rects.concat(bolhas, perto, obj), tapetes = paraTela(pintor, ch3.tapetes, 0);
       var tocaveis = paraTela(pintor, ch3.moveis.filter(function (o) { return o.toca; }), meio);
+      // a saída e as escadas (o caminho para sair) nunca ficam embaixo da placa, nem nos passos de último recurso
+      var passagens = paraTela(pintor, ch3.passagens, meio);
       var gente3 = medido.rects.concat(bolhas, genteM);   // Mariana e NPCs com meio tile
       var faixa = { x0: chao.x0, x1: chao.x1, y0: chao.y0, y1: Math.min(fimParede + sh3 + borda * 2, chao.y1) };
       // a passadeira (tapete de parede a parede, a do corredor da escola) parece a divisa do cômodo: meio em cima e meio
@@ -316,12 +320,13 @@
         // 3d) só fora do que se toca (móvel comum pode ficar embaixo): de novo a faixa de cima e depois o fundo
         p(m3, sw3, sh3, x3, sy, gente3.concat(obj, tocaveis), faixa),
         p(m3, sw3, sh3, x3, chao.y1, gente3.concat(obj, tocaveis), chao),
-        p(m3, sw3, sh3, x3, sy, gente3.concat(obj), chao),
-        p(m3, sw3, sh3, x3, sy, gente3.concat(obj, outros), tela),
-        p(m3, sw3, sh3, x3, sy, gente3.concat(outros), tela),
-        p(m3, sw3, sh3, x3, sy, gente3.concat(obj), tela),
-        p(m3, sw3, sh3, x3, sy, medido.rects.concat(mariM), tela),
-        p(m3, sw3, sh3, x3, sy, medido.rects.concat(mariR), tela),
+        p(m3, sw3, sh3, x3, sy, gente3.concat(obj, passagens), chao),
+        p(m3, sw3, sh3, x3, sy, gente3.concat(obj, outros, passagens), tela),
+        p(m3, sw3, sh3, x3, sy, gente3.concat(outros, passagens), tela),
+        p(m3, sw3, sh3, x3, sy, gente3.concat(obj, passagens), tela),
+        p(m3, sw3, sh3, x3, sy, medido.rects.concat(mariM, passagens), tela),
+        p(m3, sw3, sh3, x3, sy, medido.rects.concat(mariR, passagens), tela),
+        p(m3, sw3, sh3, x3, sy, medido.rects.concat(mariR), tela),   // sem lugar nenhum fora da saída: a placa não some
       ]);
     }
     function calcular(c, antes, esq, dir, cimaC, baixoC, dela, chave) {
