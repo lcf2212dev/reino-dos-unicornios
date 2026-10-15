@@ -217,7 +217,7 @@
   CAPITULOS.forEach(function (cap, i) {
     var T = TEMAS[cap], x = 1 + i * 12;
     comodos.push(Object.assign({ id: 'lp-galeria' + cap, nome: T.nome, placa: 'Cap. ' + cap + ' • ' + T.nome, rect: { x: x, y: 11, w: 11, h: 11 } }, T.galeria));
-    comodos.push({ id: 'lp-atelie' + cap, nome: 'Atividades do Cap. ' + cap, placa: 'Atividades • Cap. ' + cap, rect: { x: x, y: 1, w: 11, h: 9 },
+    comodos.push({ id: 'lp-atelie' + cap, nome: 'Atividades do Cap. ' + cap, placa: 'Atividades do Cap. ' + cap, rect: { x: x, y: 1, w: 11, h: 9 },
       piso: 'tabuas', parede: 'papel', paleta: Object.assign({ piso: '#f2d6a8', piso2: '#d9b27a', parede: '#fff6d6', rodape: '#c98a00' }, T.atelie) });
   });
 
