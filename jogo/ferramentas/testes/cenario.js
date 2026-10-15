@@ -104,7 +104,8 @@ async function abrirCenario(op = {}) {
     let bases, dados;
     try {
       const a = await abrir({ browser, url: gerador.url, tamanho, query: '?debug=1&congelar=1' });
-      await a.page.waitForFunction(() => window.Reino && Reino.materias && Reino.Unicornios, null, { timeout: 30000 });
+      // __reino (debug.js, o último do manifesto): tudo carregado, provas inclusive (gerarSaves usa Reino.prova)
+      await a.page.waitForFunction(() => window.__reino && window.Reino && Reino.materias && Reino.Unicornios, null, { timeout: 30000 });
       bases = await a.page.evaluate(`(${gerarSaves.toString()})()`);
       dados = await a.page.evaluate(() => {
         var salas = {};
