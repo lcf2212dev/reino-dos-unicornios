@@ -13,8 +13,8 @@ Aqui não se escreve código: só se lê o jogo e se escreve o pedido.
    `CLAUDE.md` da pasta; em pedido grande, um agente `Explore` por feature, em paralelo):
    - onde mora hoje (prédio, andar, cômodo, tela, ajuste) e o que já existe parecido;
    - o que o texto chama de um jeito e o código de outro (ex.: "setas" = `#setas` e o ajuste `ajustes.setas`);
-   - a pasta de material em `matérias/` (ex.: `matérias/ciências/`): o que tem nela e se uma subpasta pede outra
-     coisa (ex.: `matérias/ciências/Revisão/` é folha de prova: vira prova);
+   - a pasta de material em `matérias/` (ex.: `matérias/4 Bimestre/português/`): o que tem nela e se uma subpasta pede outra
+     coisa (ex.: uma subpasta `Revisão/` é folha de prova: vira prova);
    - `npm run ver -- --ir <lugar>` para olhar o lugar quando ajudar.
 3. **Preencher o modelo completo** de cada feature (o curto para ajuste pequeno). Campo sem nada a dizer fica fora,
    como no exemplo do modelo. Não repita "O que já vale sempre". O que o texto não fecha, você decide (a opção que
