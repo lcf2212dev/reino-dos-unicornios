@@ -74,4 +74,5 @@
 # 9f7c009 = Língua Portuguesa do 4º bimestre no Museu (fechamento: vozes e ajustes finais)
 # 4001467 = Língua Portuguesa do 4º bimestre na Casa das Palavras (térreo), Museu como na main
 # 0a3f0f1 = placa do cômodo não cobre o tapete de saída nem a escada
-0a3f0f1
+# c7ee099 = Língua Portuguesa do 4º bimestre na Casa das Palavras
+c7ee099
