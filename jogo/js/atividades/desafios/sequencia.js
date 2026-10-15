@@ -67,6 +67,8 @@
       valor: function () { return seq.slice(); },
       pronto: function () { return !_d.marcado(wrap) && seq.length === n; },
       conferir: function () {
+        // a ordem do livro ou uma das aceitas (como na pontuação)
+        if (pontuar(d, seq) === 1) return { ok: true, primeiroErrado: -1 };
         var prim = -1;
         for (var i = 0; i < n; i++) if (seq[i] !== i) { prim = i; break; }
         return { ok: prim < 0, primeiroErrado: prim };

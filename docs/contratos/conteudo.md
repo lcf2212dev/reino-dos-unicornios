@@ -55,6 +55,14 @@ Personagens: `npcs-e-dialogo.md`. Prédios: `interiores.md`. Vozes: `som-musica-
    aparece no anfitrião. `validar-interiores.js` acusa anfitrião ou andar inexistente. Gerador:
    `npm run novo -- materia <m> --nome … --emoji … --dentro <lugar> --interior <id>`. Ex.: Ciências
    (`dentro: 'observatorio'`, `interior: 'observatorio-3'`).
+   - `interior` também pode ser o interior de entrada do PRÓPRIO anfitrião (o `lugar` dele é o do anfitrião): a matéria
+     ocupa o prédio a partir do térreo, e se entra pela porta de sempre. Ex.: Língua Portuguesa do 4º bimestre
+     (`dentro: 'materia:portugues'`, `interior: 'portugues'`; `quarto-bimestre.md` §7). O menu Lugares mostra uma
+     linha só, a da matéria ativa (o prédio da matéria arquivada sai; "Ir" vai pela porta dele), sem "Dentro da…";
+     o "Novo!" vale até ela entrar no interior depois da novidade (a visita fica com o id da matéria, `ui/lugares.js`).
+     O interior padrão (`padrao.js`) não se gera para ela. `validar-interiores.js` (com `interiores-materias.js`) aceita
+     esse interior e confere as salas dela no prédio do anfitrião; sala de matéria arquivada não precisa de NPC nem
+     estação no prédio.
    - `andar: '3º andar'` (opcional, só com `dentro`): a linha do menu Lugares diz "No 3º andar do Observatório",
      com o emoji do anfitrião (sem `andar`: "Dentro do Observatório"). `mapa.js` copia `andar` e `anfitriaoNome`.
    - `novidade: 'AAAA-MM-DD'` (opcional, matéria ou `Reino.registrarLugar`): selo "✨ Novo!" (aviso `tipo: 'novo'`)

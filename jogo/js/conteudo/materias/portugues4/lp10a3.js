@@ -1,0 +1,80 @@
+/* Sala lp10a3 (Livro de Aprendizagem, capítulo 10, pp. 11 a 13): sinais de pontuação — ponto-final, ponto de
+   interrogação e ponto de exclamação (O Gato de Botas e Chapeuzinho Vermelho). */
+Reino.registrarSala('portugues4',
+    {
+      id: 'lp10a3', nome: 'Os sinais de pontuação', emoji: '❓',
+      livroOrigem: 'aprendizagem', capitulo: 10, paginas: 'pp. 11 a 13', ordem: 'livro',
+      cartas: ['lp-a11', 'lp-a11b', 'lp-a12', 'lp-a13'],
+      intro: 'Ponto-final, ponto de interrogação e ponto de exclamação: vamos descobrir para que serve cada um!',
+      desafios: [
+        { id: 'lp10a3-01', tipo: 'ligar', origem: 'APR-11-qA', pagina: 11, livro: 'lp-a11b',
+          pergunta: 'No texto, foram usados alguns sinais, como "!" e "?". Para que eles servem? Ligue cada sinal ao que ele faz.',
+          pares: [
+            [{ t: 'Ponto-final ( . )' }, { t: 'Indica que a frase terminou.' }],
+            [{ t: 'Ponto de interrogação ( ? )' }, { t: 'Faz uma pergunta ou mostra uma dúvida.' }],
+            [{ t: 'Ponto de exclamação ( ! )' }, { t: 'Mostra sentimentos e emoções.' }],
+          ],
+          adaptacao: 'A conversa oral virou ligar cada sinal ao que ele faz.',
+          explica: 'O ponto-final termina a frase. O ponto de interrogação faz uma pergunta, como "O que será de mim?". O ponto de exclamação mostra emoção, como "Não se preocupe!".' },
+        { id: 'lp10a3-02', tipo: 'marcar', origem: 'APR-12-q1', pagina: 12, livro: 'lp-a11b', marca: 'circular',
+          pergunta: 'Releia o trecho de O Gato de Botas. Contorne as pontuações que você encontrar de acordo com a legenda.',
+          cores: [{ nome: 'Ponto-final', cor: '#3f7cff' }, { nome: 'Interrogação', cor: '#ff4f5e' }, { nome: 'Exclamação', cor: '#2fb35a' }],
+          texto: 'Assim, o gato continuou a correr, até alcançar o castelo do terrível ogro, que, ao vê-lo, indagou:\n' +
+            '— Quem é você{?|1} O que deseja em meus domínios{?|1}\n' +
+            '— Sou o Gato de Botas, seu modesto servo{!|2} Ouvi dizer que o senhor possui poderes mágicos, mas não acreditei, pois só creio naquilo que vejo... Será que conseguiria me transformar em um leão{?|1}\n' +
+            'Imediatamente, houve a metamorfose, e o bichano emendou:\n' +
+            '— Nossa{!|2} Mas eu duvido que você consiga virar um ratinho{!|2}\n' +
+            'Cheio de orgulho, o ogro se converteu em roedor{.|0} Sem perder tempo, o leão o comeu e, em seguida, voltou à forma natural{.|0}',
+          explica: 'São 3 pontos de interrogação (você? domínios? leão?), 3 pontos de exclamação (servo! Nossa! ratinho!) e 2 pontos-finais (roedor. natural.).' },
+        { id: 'lp10a3-03', tipo: 'varias', origem: 'APR-12-q2', pagina: 12, livro: 'lp-a11b',
+          pergunta: 'Contorne as frases que podem terminar com ponto de exclamação (!). Toque em TODAS.',
+          opcoes: [
+            { t: 'Em qual lugar a Chapeuzinho Vermelho encontrou o Lobo Mau' },
+            { t: 'O caçador salvou a Branca de Neve da Rainha Má', ok: true },
+            { t: 'É uma casa feita de doces. Uau', ok: true },
+            { t: 'Onde a Cinderela perdeu o sapatinho' },
+          ],
+          adaptacao: 'Contornar a frase inteira virou tocar na frase (no marcar seria preciso tocar palavra por palavra).',
+          explica: 'O ponto de exclamação mostra emoção: "O caçador salvou a Branca de Neve da Rainha Má!" e "Uau!". As frases com "Em qual lugar" e "Onde" são perguntas: terminam com ponto de interrogação.' },
+        { id: 'lp10a3-04', tipo: 'varias', origem: 'APR-12-q3', pagina: 12, livro: 'lp-a11b',
+          pergunta: 'Marque um X nas frases que podem terminar com ponto de interrogação (?). Toque em TODAS.',
+          opcoes: [
+            { t: 'O príncipe entrou no castelo e tudo estava muito silencioso' },
+            { t: 'Que vestido lindo a fada madrinha fez para a Cinderela' },
+            { t: 'Quem comeu a casinha de doces da bruxa', ok: true },
+            { t: 'O Lobo Mau fugiu correndo pela floresta porque viu o caçador' },
+            { t: 'Como a princesa conseguiu sair da torre', ok: true },
+          ],
+          explica: 'Frases que começam com "Quem" e "Como" fazem uma pergunta: terminam com ponto de interrogação. "Que vestido lindo" mostra emoção: termina com ponto de exclamação.' },
+        { id: 'lp10a3-05', tipo: 'completar', origem: 'APR-13-q4', pagina: 13, livro: 'lp-a11b', colado: true,
+          apoio: { titulo: 'Chapeuzinho Vermelho', partes: [
+            { texto: 'Era uma vez uma menina chamada Chapeuzinho Vermelho[1] Um dia, sua mãe lhe disse:' },
+            { texto: '— Chapeuzinho, leve esta cesta com bolo e doces à casa da vovó, que está doente. Mas tenha cuidado[2] Não vá pela floresta nem converse com desconhecidos!' },
+            { texto: 'Chapeuzinho prometeu ir pela estradinha que chegava até a casa da vovó[3] Porém, no caminho, distraiu-se com os bichinhos e, quando se deu conta, estava no meio da floresta.' },
+            { texto: 'Foi então que apareceu o lobo:' },
+            { texto: '— Está perdida, menina[4]' },
+            { texto: '— Não, não... Estou indo para a casa da vovó, que está doente. Vou levar bolo e doces para ela.' },
+            { texto: '— Ora, vá pelo caminho das flores, menina! É mais curto! — disse o lobo.' },
+            { texto: 'Chapeuzinho concordou: — Isso mesmo! Assim também poderei colher flores para ela[5]' },
+            { texto: 'Mas o caminho das flores era longo. O lobo, por sua vez, não perdeu tempo. Chegou primeiro à casa da vovó e bateu à porta:' },
+            { texto: '— Toc! Toc! Toc[6]' },
+            { texto: '— Quem é[7] — perguntou a vovó.' },
+            { texto: '— Sou eu! A Chapeuzinho Vermelho[8] — respondeu o lobo disfarçando a voz.' },
+            { texto: '— É só pegar a chave debaixo do tapete da entrada, querida[9]' },
+          ] },
+          pergunta: 'Leia um trecho do conto Chapeuzinho Vermelho. Depois, complete os espaços com ponto-final, ponto de exclamação ou ponto de interrogação.',
+          palavras: ['.', '?', '!'],
+          frases: [
+            { letra: '1', antes: 'chamada Chapeuzinho Vermelho', depois: ' Um dia, sua mãe lhe disse:', certa: 0 },
+            { letra: '2', antes: 'Mas tenha cuidado', depois: ' Não vá pela floresta', certa: 2 },
+            { letra: '3', antes: 'até a casa da vovó', depois: ' Porém, no caminho', certa: 0 },
+            { letra: '4', antes: '— Está perdida, menina', depois: '', certa: 1 },
+            { letra: '5', antes: 'Assim também poderei colher flores para ela', depois: '', certa: 0, aceitas: [2] },
+            { letra: '6', antes: '— Toc! Toc! Toc', depois: '', certa: 2 },
+            { letra: '7', antes: '— Quem é', depois: ' — perguntou a vovó.', certa: 1 },
+            { letra: '8', antes: '— Sou eu! A Chapeuzinho Vermelho', depois: ' — respondeu o lobo', certa: 0, aceitas: [2] },
+            { letra: '9', antes: 'debaixo do tapete da entrada, querida', depois: '', certa: 0, aceitas: [2] },
+          ],
+          explica: 'Pergunta pede ponto de interrogação: "Está perdida, menina?" e "Quem é?". Emoção pede exclamação: "tenha cuidado!" e "Toc! Toc! Toc!". O fim de uma frase que só conta algo leva ponto-final.' },
+      ],
+    });

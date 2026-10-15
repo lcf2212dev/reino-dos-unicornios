@@ -70,4 +70,8 @@
 # 01b04a5 = experiências e mini-jogos de ciências, enfeites das fadas e exclusivos da Pet Shop
 # 61b6e4f = quarto bimestre em espera, arquivo histórico e apresentação renovada
 # 538fc32 = HUD sem menu inferior, ajustes ao lado do álbum e placas adaptadas
-538fc32
+# 45cf55a = Língua Portuguesa do 4º bimestre no Museu (ala, 25 salas de livro, cartas ricas, tipos novos, vozes)
+# 9f7c009 = Língua Portuguesa do 4º bimestre no Museu (fechamento: vozes e ajustes finais)
+# 4001467 = Língua Portuguesa do 4º bimestre na Casa das Palavras (térreo), Museu como na main
+# 0a3f0f1 = placa do cômodo não cobre o tapete de saída nem a escada
+0a3f0f1

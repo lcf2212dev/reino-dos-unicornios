@@ -4,15 +4,31 @@
   var U = Reino.util, el = U.el, D = Reino.Desafios, _d = Reino._desafios;
   var botaoOpcao = _d.botaoOpcao;
 
+  /* opção com desenho (4º bimestre): o.img (chave de window.ICONES) em 64 px em cima do texto; desenho que falta: ❓.
+     d.soImagem: só o desenho, com o nome no aria-label. As opções com desenho ficam em grade (.opcoes-img). */
+  _d.temImg = function (d) { return d.opcoes.some(function (o) { return o.img; }); };
+  _d.botaoImg = function (o, d, extra) {
+    return el('button.opcao.opcao-img' + (extra || ''), { type: 'button', 'aria-label': d.soImagem ? U.semEn(o.t) : null },
+      el('span.opcao-figura', { 'aria-hidden': 'true' }, o.img ? _d.figuraIcone(o.img, 64) : null),
+      d.soImagem ? null : el('span.opcao-texto', U.colado(o.t)));
+  };
+  // validar: desenho das opções (aviso na sala, erro na prova) e soImagem só com desenho em todas
+  _d.conferirOpcoesImg = function (d, v) {
+    var com = (d.opcoes || []).filter(function (o) { return o && o.img !== undefined; });
+    if (d.soImagem !== undefined) v.checar(d.soImagem === true && com.length === (d.opcoes || []).length, d.id + ': "soImagem" só vale true, com img em todas as opções');
+    com.forEach(function (o) { _d.conferirDesenho(o.img, d.id + ': opção "' + o.t + '"', v); });
+  };
+
   // escolha única (também serve para "completar a frase")
   function montarEscolha(d, opts) {
     var ordem = opts.ordem || U.embaralhar(d.opcoes.map(function (_, i) { return i; }), ['escolha', d]);
     var sel = opts.valorInicial != null ? opts.valorInicial : null;
     var bloqueadas = {};
-    var lista = el('div.opcoes' + (d.opcoes.length === 2 ? '.opcoes-duas' : ''));
+    var comImg = _d.temImg(d);
+    var lista = el('div.opcoes' + (d.opcoes.length === 2 ? '.opcoes-duas' : '') + (comImg ? '.opcoes-img' : ''));
     var botoes = {};
     ordem.forEach(function (i) {
-      var o = d.opcoes[i], b = botaoOpcao({ e: o.e, t: U.colado(o.t) });   // colado: ui.md §10.17
+      var o = d.opcoes[i], b = comImg ? _d.botaoImg(o, d) : botaoOpcao({ e: o.e, t: U.colado(o.t) });   // colado: ui.md §10.17
       b.addEventListener('click', function () {
         if (bloqueadas[i] || ctrl.travado) return;
         sel = i; Reino.Som.tocar('selecionar'); pintar(); opts.onMudar();
@@ -49,7 +65,7 @@
   _d.textoOpcoes = function (d) { return '. ' + d.opcoes.map(function (o) { return o.t; }).join('. '); };
 
   Reino.registrarTipoDesafio('escolha', {
-    montar: montarEscolha, treinavel: true,
+    montar: montarEscolha, treinavel: true, campos: ['soImagem'],
     // exemplos: para o teste de unidade (desafio sintético, resposta certa de qualquer desafio, respostas estranhas)
     exemplos: { desafio: { id: 'x', tipo: 'escolha', opcoes: [{ t: 'a' }, { t: 'b' }, { t: 'c' }], certa: 2 },
       certa: function (d) { return d.certa; }, estranhos: [-1, 99, '0', true] },
@@ -58,6 +74,7 @@
     textoCerto: function (d) { return d.opcoes[d.certa].t; },
     textoResposta: function (d, valor) { return d.opcoes[valor].t; },
     validar: function (d, v) {
+      _d.conferirOpcoesImg(d, v);
       if (!v.naProva) {
         v.checar(Array.isArray(d.opcoes) && d.opcoes.length >= 2, d.id + ': poucas opções');
         var textos = d.opcoes.map(function (o) { return o.t; });

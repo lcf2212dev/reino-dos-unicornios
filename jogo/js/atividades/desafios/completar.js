@@ -75,7 +75,8 @@
     var ctrl = {
       el: wrap,
       valor: function () { return escolha.slice(); },
-      pronto: function () { return escolha.every(function (e) { return e !== null; }); },
+      // valor inicial curto (ex.: []) não está pronto: uma escolha por frase
+      pronto: function () { return escolha.length === d.frases.length && escolha.every(function (e) { return e !== null; }); },
       conferir: function () {
         // livre: questão pessoal, vale qualquer palavra (a mesma pode ir em mais de uma lacuna)
         if (d.livre) return { ok: escolha.every(function (e) { return e !== null; }), erradas: [] };

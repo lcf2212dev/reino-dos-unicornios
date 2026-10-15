@@ -18,6 +18,9 @@
       'css/ui-laboratorio.css',
       'css/ui-animacoes.css',
       'css/ui-desafios.css',
+      'css/ui-livro-blocos.css',
+      'css/ui-desafios-livro.css',
+      'css/ui-desafios-grade.css',
       'css/interiores.css',
       'css/ui-novidades.css',
       'css/ui-foguete.css',
@@ -48,6 +51,7 @@
       { js: 'js/nucleo/eventos.js', grupo: 'nucleo', node: true }, // eventos.js logo depois do util.js: os nomes dos eventos do barramento (Reino.EVENTOS)
       { js: 'js/nucleo/ambiente.js', grupo: 'nucleo', node: true }, // ambiente.js: onde o jogo roda (artifact, file:, https, servidor de casa, compartilhar, baixar)
       { js: 'js/arte/icones/icones.js', grupo: 'icones', node: true },
+      { js: 'js/arte/ilustracoes.js', grupo: 'icones', node: true }, // ilustrações maiores que um ícone (Reino.registrarIlustracao; 4º bimestre): antes das ilustrações das matérias
       { js: 'js/arte/icones/interface.js', grupo: 'icones', node: true },
       { js: 'js/arte/icones/premios.js', grupo: 'icones', node: true },
       { js: 'js/arte/icones/pessoas.js', grupo: 'icones', node: true },
@@ -62,6 +66,7 @@
       { js: 'js/arte/icones/portugues.js', grupo: 'icones', node: true },
       { js: 'js/arte/icones/portugues-palavras.js', grupo: 'icones', node: true },
       { js: 'js/arte/icones/portugues-salas.js', grupo: 'icones', node: true },
+      { js: 'js/arte/icones/livros.js', grupo: 'icones', node: true }, // 📗 dos livros da escola (4º bimestre)
       { js: 'js/arte/desenho.js', grupo: 'arte', node: true }, // desenho.js antes da pixel art: Reino.Desenho (paleta e helpers) é a fonte das cores do PA.cor
       { js: 'js/arte/pixelart.js', grupo: 'pixelart' }, // pixelart.js (base) primeiro: cria window.PA e PA._interno, que as outras partes usam
       { js: 'js/arte/pixelart-unicornio-moldes.js', grupo: 'pixelart' },
@@ -138,9 +143,52 @@
       { js: 'js/conteudo/materias/geografia/g5.js', grupo: 'materias', node: true },
       { js: 'js/conteudo/materias/geografia/livro.js', grupo: 'materias', node: true },
       { js: 'js/conteudo/materias/geografia/geografia.js', grupo: 'materias', node: true },
+      // Língua Portuguesa do 4º bimestre (térreo da Casa das Palavras; docs/contratos/quarto-bimestre.md): salas de livro na ordem dos livros,
+      // cartas e unicórnios por capítulo, depois a matéria
+      { js: 'js/conteudo/materias/portugues4/lp10a1.js', grupo: 'materias', node: true },
+      { js: 'js/conteudo/materias/portugues4/lp10a2.js', grupo: 'materias', node: true },
+      { js: 'js/conteudo/materias/portugues4/lp10a3.js', grupo: 'materias', node: true },
+      { js: 'js/conteudo/materias/portugues4/lp10a4.js', grupo: 'materias', node: true },
+      { js: 'js/conteudo/materias/portugues4/lp10a5.js', grupo: 'materias', node: true },
+      { js: 'js/conteudo/materias/portugues4/lp10a6.js', grupo: 'materias', node: true },
+      { js: 'js/conteudo/materias/portugues4/lp10a7.js', grupo: 'materias', node: true },
+      { js: 'js/conteudo/materias/portugues4/lp10t1.js', grupo: 'materias', node: true },
+      { js: 'js/conteudo/materias/portugues4/lp10t2.js', grupo: 'materias', node: true },
+      { js: 'js/conteudo/materias/portugues4/lp11a1.js', grupo: 'materias', node: true },
+      { js: 'js/conteudo/materias/portugues4/lp11a2.js', grupo: 'materias', node: true },
+      { js: 'js/conteudo/materias/portugues4/lp11a3.js', grupo: 'materias', node: true },
+      { js: 'js/conteudo/materias/portugues4/lp11a4.js', grupo: 'materias', node: true },
+      { js: 'js/conteudo/materias/portugues4/lp11a5.js', grupo: 'materias', node: true },
+      { js: 'js/conteudo/materias/portugues4/lp11a6.js', grupo: 'materias', node: true },
+      { js: 'js/conteudo/materias/portugues4/lp11t1.js', grupo: 'materias', node: true },
+      { js: 'js/conteudo/materias/portugues4/lp11t2.js', grupo: 'materias', node: true },
+      { js: 'js/conteudo/materias/portugues4/lp12a1.js', grupo: 'materias', node: true },
+      { js: 'js/conteudo/materias/portugues4/lp12a2.js', grupo: 'materias', node: true },
+      { js: 'js/conteudo/materias/portugues4/lp12a3.js', grupo: 'materias', node: true },
+      { js: 'js/conteudo/materias/portugues4/lp12a4.js', grupo: 'materias', node: true },
+      { js: 'js/conteudo/materias/portugues4/lp12a5.js', grupo: 'materias', node: true },
+      { js: 'js/conteudo/materias/portugues4/lp12a6.js', grupo: 'materias', node: true },
+      { js: 'js/conteudo/materias/portugues4/lp12t1.js', grupo: 'materias', node: true },
+      { js: 'js/conteudo/materias/portugues4/lp12t2.js', grupo: 'materias', node: true },
+      { js: 'js/conteudo/materias/portugues4/livro-10a.js', grupo: 'materias', node: true },
+      { js: 'js/conteudo/materias/portugues4/livro-10t.js', grupo: 'materias', node: true },
+      { js: 'js/conteudo/materias/portugues4/livro-11a.js', grupo: 'materias', node: true },
+      { js: 'js/conteudo/materias/portugues4/livro-11t.js', grupo: 'materias', node: true },
+      { js: 'js/conteudo/materias/portugues4/livro-12a.js', grupo: 'materias', node: true },
+      { js: 'js/conteudo/materias/portugues4/livro-12t.js', grupo: 'materias', node: true },
+      { js: 'js/conteudo/materias/portugues4/unicornios-10.js', grupo: 'materias', node: true },
+      { js: 'js/conteudo/materias/portugues4/unicornios-11.js', grupo: 'materias', node: true },
+      { js: 'js/conteudo/materias/portugues4/unicornios-12.js', grupo: 'materias', node: true },
+      { js: 'js/conteudo/materias/portugues4/portugues4.js', grupo: 'materias', node: true },
       { js: 'js/conteudo/materias/ciencias/icones.js', grupo: 'icones', node: true },
       { js: 'js/conteudo/materias/matematica/icones.js', grupo: 'icones', node: true },
       { js: 'js/conteudo/materias/geografia/icones.js', grupo: 'icones', node: true },
+      { js: 'js/conteudo/materias/portugues4/icones-10.js', grupo: 'icones', node: true },
+      { js: 'js/conteudo/materias/portugues4/ilustracoes-10.js', grupo: 'icones', node: true },
+      { js: 'js/conteudo/materias/portugues4/icones-11.js', grupo: 'icones', node: true },
+      { js: 'js/conteudo/materias/portugues4/ilustracoes-11.js', grupo: 'icones', node: true },
+      { js: 'js/conteudo/materias/portugues4/icones-12.js', grupo: 'icones', node: true },
+      { js: 'js/conteudo/materias/portugues4/ilustracoes-12.js', grupo: 'icones', node: true },
       { js: 'js/conteudo/quimica/icones.js', grupo: 'icones', node: true },
       { js: 'js/conteudo/quimica/icones-2.js', grupo: 'icones', node: true },
       { js: 'js/conteudo/provas/historia-3bim.js', grupo: 'provas', node: true },
@@ -155,6 +203,7 @@
       { js: 'js/sistemas/progresso-regras.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/progresso-campos.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/visitados.js', grupo: 'sistemas', node: true },
+      { js: 'js/sistemas/producoes.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/jogadores.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/som.js', grupo: 'sistemas' },
       { js: 'js/sistemas/som-escola.js', grupo: 'sistemas' },
@@ -183,6 +232,14 @@
       { js: 'js/personagens/jogador.js', grupo: 'personagens' },
       { js: 'js/personagens/jogador-desenho.js', grupo: 'personagens' },
       { js: 'js/atividades/desafios.js', grupo: 'atividades', node: true }, // node: true: o validador e as falas usam os ganchos dos tipos (no carregamento, nada de document)
+      { js: 'js/atividades/desafios/campo-texto.js', grupo: 'atividades', node: true }, // caixa de digitar com acentos (helpers dos tipos do 4º bimestre)
+      { js: 'js/atividades/desafios/marcar.js', grupo: 'atividades', node: true }, // tipos do livro do 4º bimestre: circular/sublinhar/pintar, completar escrevendo, resposta escrita
+      { js: 'js/atividades/desafios/digitar.js', grupo: 'atividades', node: true },
+      { js: 'js/atividades/desafios/escrever.js', grupo: 'atividades', node: true },
+      { js: 'js/atividades/desafios/figuras.js', grupo: 'atividades', node: true }, // figuras nas questões do 4º bimestre (opção, apoio, d.figura) e a conferência delas
+      { js: 'js/atividades/desafios/tabela.js', grupo: 'atividades', node: true }, // tipos do livro do 4º bimestre, parte 2: tabela, cruzadinha, caça-palavras
+      { js: 'js/atividades/desafios/cruzadinha.js', grupo: 'atividades', node: true },
+      { js: 'js/atividades/desafios/caca-palavras.js', grupo: 'atividades', node: true },
       { js: 'js/atividades/desafios/escolha.js', grupo: 'atividades', node: true }, // cada tipo de desafio se registra no núcleo (Reino.registrarTipoDesafio, desafios.js, carregado antes)
       { js: 'js/atividades/desafios/varias.js', grupo: 'atividades', node: true },
       { js: 'js/atividades/desafios/ligar.js', grupo: 'atividades', node: true },
@@ -210,6 +267,7 @@
       { js: 'js/ui/et-desafio.js', grupo: 'ui' },
       { js: 'js/ui/album-ets.js', grupo: 'ui' },
       { js: 'js/ui/materia.js', grupo: 'ui' },
+      { js: 'js/ui/materia-livro.js', grupo: 'ui' }, // o livro: cartas (ricas do 4º bimestre) e os dois livros da escola
       { js: 'js/ui/laboratorio.js', grupo: 'ui' },
       { js: 'js/ui/laboratorio-cenas.js', grupo: 'ui' },
       { js: 'js/ui/laboratorio-jogos.js', grupo: 'ui' },
@@ -334,6 +392,13 @@
       { js: 'js/interiores/portugues/objetos-horta-circo.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/portugues/objetos-porto.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/portugues/objetos-parque.js', grupo: 'interiores', node: true },
+      // Língua Portuguesa do 4º bimestre no térreo (docs/contratos/quarto-bimestre.md §7): pessoas, falas e objetos
+      // (prefixo lp-); o layout é o portugues.js
+      { js: 'js/interiores/portugues/lp-personagens.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/portugues/lp-falas.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/portugues/lp-objetos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/portugues/lp-objetos-temas.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/portugues/lp-objetos-atelies.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/portugues/portugues.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/portugues/fora.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/matematica/objetos-parede.js', grupo: 'interiores', node: true },

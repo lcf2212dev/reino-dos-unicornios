@@ -5,8 +5,12 @@ const path = require('path');
 const Jogo = require('../../../jogo-no-node');
 const raiz = path.resolve(Jogo.raiz, '../arquivo/terceiro-bimestre/jogo');
 const historico = (s) => ['materias', 'provas'].includes(s.grupo) && !s.js.endsWith('/registro.js');
+// o que o 3º bimestre tinha (manifesto de conteúdo do arquivo): matéria ou prova de bimestre seguinte fica de fora
+const DO_TERCEIRO = new Set(JSON.parse(fs.readFileSync(path.resolve(raiz, '../manifesto-conteudo.json'), 'utf8')).map((s) => s.js));
+const deOutroBimestre = (s) => historico(s) && !DO_TERCEIRO.has(s.js);
 function carregar(ctx, lista, opcoes = {}) {
   const trocar = Object.assign({}, opcoes.trocar);
+  lista = lista.filter((s) => !deOutroBimestre(s));
   lista.filter((s) => historico(s) || fs.existsSync(path.join(raiz, s.js))).forEach((s) => {
     const arq = path.join(raiz, s.js);
     if (!fs.existsSync(arq)) throw new Error('Fixture do terceiro bimestre ausente: ' + arq);
@@ -33,8 +37,10 @@ async function noNavegador(page) {
   carregar(ctx, Jogo.scripts({ nomes: ['nucleo/config', 'nucleo/registros'], grupos: ['materias', 'provas'] }));
   const dados = JSON.parse(JSON.stringify({ materias: ctx.Reino.materias, provas: ctx.Reino.provas }));
   await page.evaluate(({ materias, provas }) => {
-    Reino.materias.splice(0, Reino.materias.length, ...materias);
-    Reino.provas.splice(0, Reino.provas.length, ...provas);
+    // as do 3º bimestre voltam com o conteúdo; as de bimestre seguinte (ex.: portugues4) ficam como estão
+    const historicas = new Set(materias.map((m) => m.id)), provasHist = new Set(provas.map((p) => p.id));
+    Reino.materias.splice(0, Reino.materias.length, ...materias, ...Reino.materias.filter((m) => !historicas.has(m.id)));
+    Reino.provas.splice(0, Reino.provas.length, ...provas, ...Reino.provas.filter((p) => !provasHist.has(p.id)));
     Reino.Bimestres.emEspera = () => false;
   }, dados);
 }

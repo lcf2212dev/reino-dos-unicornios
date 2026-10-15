@@ -368,6 +368,10 @@ interface Materia {
   livro: CartaLivro[];
   unicornios: UnicornioMateria[];
   /** nome do livro na tela (padrão: "Livro das Memórias", js/ui/materia.js) */ nomeLivro?: string;
+  /** 4º bimestre: os livros da escola que a matéria reproduz (docs/contratos/quarto-bimestre.md §2) */
+  livros?: { [chave: string]: { nome: string; curto?: string; emoji: string } };
+  /** 4º bimestre: caminho do INVENTARIO.md a partir da raiz do repositório (cobertura-4bim.js) */
+  inventario?: string;
 }
 
 /** O prédio de uma matéria no mapa. */
@@ -383,6 +387,10 @@ interface LugarMateria {
   /** 'a' = lugar feminino ("a Casa das Palavras"); sem ele, masculino */
   artigo?: 'a';
   porCima?: boolean;
+  /** matéria dentro de um prédio que já existe: o lugar do anfitrião e o interior dela (docs/contratos/conteudo.md §2.7) */
+  dentro?: string;
+  interior?: string;
+  andar?: string;
 }
 
 /** Unicórnio do baralho de uma matéria. */
@@ -423,7 +431,28 @@ interface CartaLivro {
   /** emoji */
   e: string;
   titulo: string;
-  texto: string; destaque?: string;   // destaque: termo em cor na tela (padrão: a palavra mais longa do título)
+  texto?: string; destaque?: string;   // destaque: termo em cor na tela (padrão: a palavra mais longa do título)
+  /** carta rica do 4º bimestre (quarto-bimestre.md §4): blocos no lugar do texto */
+  blocos?: BlocoCarta[];
+  livroOrigem?: string;
+  pagina?: number;
+  capitulo?: number;
+  /** questões do inventário que a carta só mostra (sem desafio) */
+  soLeitura?: string[];
+}
+
+/** Bloco de uma carta rica (quarto-bimestre.md §4). */
+interface BlocoCarta {
+  t: 'texto' | 'fala' | 'versos' | 'lista' | 'quadro' | 'tabela' | 'figuras' | 'ilustracao' | 'fonte';
+  texto?: string;
+  quem?: string;
+  titulo?: string;
+  versos?: string[];
+  itens?: any[];
+  cab?: string[];
+  linhas?: string[][];
+  id?: string;
+  alt?: string;
 }
 
 /** Uma sala (js/conteudo/materias/<m>/<sala>.js, Reino.registrarSala). */
@@ -436,6 +465,12 @@ interface Sala {
   /** fala de abertura (voz 'claude') */
   intro: string;
   desafios: Desafio[];
+  /** sala de livro (4º bimestre, quarto-bimestre.md §3): todos os desafios, na ordem */
+  ordem?: 'livro';
+  livroOrigem?: string;
+  capitulo?: number;
+  /** ids das cartas do resumo, na ordem */
+  cartas?: string[];
 }
 
 /** Prova bimestral (js/conteudo/provas/<id>.js, Reino.registrarProva). */
@@ -481,7 +516,8 @@ interface IconePixel {
 /** Texto de apoio de uma questão (lido no 🔊 da caixa do texto). */
 interface ApoioDesafio {
   titulo: string;
-  partes: { titulo?: string; lista?: string[]; texto?: string }[];
+  /** versos: linhas de poema ('' separa estrofes); figuras: ícones de window.ICONES (4º bimestre) */
+  partes: { titulo?: string; lista?: string[]; texto?: string; versos?: string[]; figuras?: { img: string; legenda?: string }[] }[];
 }
 
 /** O que todo desafio tem (sala ou prova). O resto depende do `tipo`. */
@@ -496,6 +532,8 @@ interface DesafioBase {
   /** o jeito de responder no jogo, numa linha própria (a pergunta fica igual à folha) */
   instrucao?: string;
   apoio?: ApoioDesafio;
+  /** figura logo abaixo do enunciado (4º bimestre): ícone de window.ICONES ou ilustração (Reino.registrarIlustracao) */
+  figura?: { img: string; legenda?: string } | { ilustracao: string; alt: string; legenda?: string };
   /** pista própria depois de um erro (Falas.pista; hoje nenhum dado usa) */
   dica?: string;
   /** a narradora lê também os itens (nas provas, que não têm pista) */
@@ -507,6 +545,8 @@ interface DesafioBase {
 interface OpcaoDesafio {
   e?: string;
   t: string;
+  /** desenho de window.ICONES em cima do texto (escolha e varias; com d.soImagem, só o desenho) */
+  img?: string;
   /** varias: esta opção é certa */
   ok?: boolean;
 }
@@ -820,6 +860,12 @@ interface FalasApi {
   segmentosApoio(apoio?: ApoioDesafio): string[];
   fraseComLacuna(f: FraseCompletar): string;
   pacotesDaMateria(m: Materia): { extra: string; livro: string; sala(s: Sala): string };
+  /** fala de uma carta do livro (antiga: título e texto; rica: os blocos) */
+  segmentosCarta(c: CartaLivro): string[];
+  /** pacote de voz de uma carta (por capítulo nas que têm `capitulo`) */
+  pacoteCarta(m: Materia, c?: CartaLivro): string;
+  /** maior lista de desafios de uma missão (sorteada ou de livro) */
+  maxDesafiosMissao(): number;
   /** tudo o que o jogo fala (as ferramentas gravam os áudios a partir disto) */
   todas(): Fala[];
 }

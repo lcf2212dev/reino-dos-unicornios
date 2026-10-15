@@ -139,7 +139,7 @@
     var m = acao.materia ? R.materia(acao.materia) : R.materias && R.materias[0];
     var mapa = { bau: 'telaBau', loja: 'telaLoja', estabulo: 'telaEstabulo', plano: 'telaPlano' };
     if (mapa[acao.tela] && UI[mapa[acao.tela]]) UI[mapa[acao.tela]]();
-    else if (acao.tela === 'livro' && UI.abrirLivro) UI.abrirLivro(m);
+    else if (acao.tela === 'livro' && UI.abrirLivro) UI.abrirLivro(m, null, acao.livro);
     else if (acao.tela === 'ovos' && UI.chocarOvos && P) UI.chocarOvos(P.ovosParaChocar());
     return Promise.resolve();
   }

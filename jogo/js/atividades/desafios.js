@@ -207,7 +207,7 @@
   _d.doTeclado = doTeclado;
 
   /* texto de apoio (d.apoio, em qualquer desafio ou questão), acima do enunciado:
-     { titulo, partes: [{ titulo, lista: [...] } ou { titulo, texto }] }
+     { titulo, partes: [{ titulo, lista: [...] } ou { titulo, texto } (4º bimestre: versos: [...], figuras: [{ img, legenda }])] }
      tela larga (≥ 1000 px): ao lado da pergunta, sempre aberto. Celular e tablet em pé: caixa recolhível,
      aberta na primeira questão que traz o texto e fechada nas seguintes (fechado = true); o 🔊 fica sempre à vista. */
   /* um só escutador de resize para todas as caixas de apoio: guarda só as caixas ainda na tela (WeakRef, quando há),
@@ -236,8 +236,11 @@
       (apoio.partes || []).map(function (p) {
         return el('div.apoio-parte',
           p.titulo ? el('p.apoio-parte-titulo', p.titulo) : null,
-          p.lista ? el('ul.apoio-lista', p.lista.map(function (t) { return el('li', t); })) : null,
-          p.texto ? el('p.apoio-texto', p.texto) : null);
+          p.lista ? el('ul.apoio-lista', p.lista.map(function (t) { return el('li' + (/^\s*([a-z]\)|\d+[.)]|[■•])\s/.test(t) ? '.sem-marca' : ''), t); })) : null,
+          p.texto ? el('p.apoio-texto', p.texto) : null,
+          // versos e figuras (4º bimestre): desafios/figuras.js
+          p.versos ? _d.versosApoio(p.versos) : null,
+          p.figuras ? _d.figurasLista(p.figuras, 'apoio-figuras') : null);
       }));
     var abrir = el('button.apoio-abrir', { type: 'button' });
     var topo = el('div.apoio-topo', el('p.apoio-rotulo', '📖 Texto de apoio'), abrir);
@@ -290,6 +293,8 @@
     (def && def.enunciadoTela ? def.enunciadoTela(d) : [el('p.pergunta', d.pergunta)]).forEach(function (n) { enun.appendChild(n); });
     // instrucao (opcional): o jeito de responder no jogo, numa linha própria logo abaixo da pergunta
     if (d.instrucao) enun.appendChild(el('p.instrucao', el('span.instrucao-icone', { 'aria-hidden': 'true' }, '👉'), el('span', d.instrucao)));
+    // figura (opcional, 4º bimestre): ícone ou ilustração logo abaixo do enunciado (desafios/figuras.js)
+    if (d.figura) enun.appendChild(D.figuraDesafio(d.figura));
     var ouvir = el('button.btn-ouvir.livre-na-fala', { type: 'button', 'aria-label': 'Ouvir a pergunta' }, '🔊 Ouvir');
     ouvir.addEventListener('click', function () { Reino.UI.ouvirDeNovo(Reino.Falas.segmentosDesafio(d, ctrl.ordem), { voz: 'narradora' }); });
     if (Reino.Som.temVoz()) enun.appendChild(ouvir);
@@ -355,6 +360,11 @@
     var iSimples = lista.findIndex(function (d) { return !especial(d); });
     if (iSimples > 0) { var s = lista.splice(iSimples, 1)[0]; lista.unshift(s); }
     return lista.slice(0, quantos);
+  };
+  // a lista da missão: sala de livro (ordem: 'livro', docs/contratos/quarto-bimestre.md §3) joga todos os
+  // desafios na ordem do arquivo; as outras sorteiam config.desafiosPorSala
+  D.listaDaSala = function (sala) {
+    return sala.ordem === 'livro' ? sala.desafios.slice() : D.sortear(sala, Reino.config.desafiosPorSala);
   };
 
   Reino.Desafios = D;

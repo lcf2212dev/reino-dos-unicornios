@@ -19,6 +19,7 @@ contrato dele. Mudança de contrato: só o orquestrador. Histórico da refatora�
 | fotos e álbum | `fotos.md` |
 | matérias, salas, desafios e tipos, livro, provas, treino, Português | `conteudo.md` |
 | temporada ativa, arquivo do terceiro bimestre, espera e preservação de conquistas | `bimestres.md` |
+| quarto bimestre (cada matéria no prédio dela): livros inteiros, salas de livro, cartas ricas, vozes por capítulo, produções, tipos do livro, banco da Revisão | `quarto-bimestre.md` |
 | Laboratório de Química: misturas, caderno de receitas, microscópio, tabela periódica, 2º andar (curiosidades, estados, separar, livros), campo `quimica` | `quimica.md` |
 | experiências e mini-jogos do Laboratório de Ciências no Observatório | `laboratorio-atividades.md` |
 | plano de frentes paralelas, reserva de personagem (vaga tracejada), ondas, conferência em pipeline | `plano-paralelo.md` |

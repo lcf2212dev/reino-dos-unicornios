@@ -18,6 +18,14 @@ function carregar() {
 }
 const R = carregar();
 const D = R.Desafios;
+// as matérias ativas do 4º bimestre (a fixture histórica carrega só as do 3º): mesmas conferências
+const Ativo = require('../../jogo-no-node');
+function carregarQuarto() {
+  const ctx = Ativo.contexto({ console, Math, Date, JSON });
+  Ativo.carregar(ctx, Ativo.scripts({ nomes: ['nucleo/config', 'nucleo/registros', 'nucleo/util', 'nucleo/eventos'], grupos: ['atividades', 'materias'] }));
+  return ctx.Reino.materias.filter((m) => m.bimestre === 4);
+}
+const QUARTO = carregarQuarto();
 const pontos = (d, valores) => valores.map((v) => D.pontuar(d, v));
 
 /* ---------- cada tipo, com um desafio sintético ---------- */
@@ -113,6 +121,7 @@ function todosOsDesafios() {
   const lista = [];
   R.materias.forEach((m) => m.salas.forEach((s) => s.desafios.forEach((d) => lista.push({ onde: m.id + '/' + s.id, d }))));
   R.provas.forEach((p) => p.questoes.forEach((d) => lista.push({ onde: p.id, d })));
+  QUARTO.forEach((m) => m.salas.forEach((s) => s.desafios.forEach((d) => lista.push({ onde: m.id + '/' + s.id, d }))));
   // os exemplos entram também (um tipo novo é conferido antes de ter sala)
   TIPOS.forEach((tipo) => lista.push({ onde: 'exemplo', d: exemplosDe(tipo).desafio }));
   return lista;

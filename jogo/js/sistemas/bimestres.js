@@ -18,7 +18,9 @@
     if (a.tipo === 'sala' || a.tipo === 'treino' || (a.tipo === 'tela' && a.tela === 'livro')) return B.emEspera(a.materia);
     if (a.tipo === 'guia') {
       if (/^materia:/.test(a.lugar || '')) return B.emEspera(a.lugar.slice(8));
-      return (a.lugar === 'escola' || a.lugar === 'castelo') && !R.materias.some(function (m) { return !m.arquivada; });
+      // a Escola espera uma prova ativa (a Revisão do bimestre); o Castelo, uma matéria ativa (o treino)
+      if (a.lugar === 'escola') return !R.provas.some(function (p) { return !p.arquivada; });
+      return a.lugar === 'castelo' && !R.materias.some(function (m) { return !m.arquivada; });
     }
     return false;
   };

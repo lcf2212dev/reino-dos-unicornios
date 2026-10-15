@@ -20,7 +20,8 @@ Não há migração de save. IDs, chaves, dinheiro derivado, pagamentos, conquis
 compatíveis. A área dos pais identifica o terceiro bimestre como arquivado. As perguntas surpresa ignoram
 matérias arquivadas, inclusive perguntas pendentes de versões anteriores, sem reescrever o save por isso.
 
-Ao adicionar material futuro, registre um catálogo separado, com novos IDs de matéria, salas e provas.
+Ao adicionar material futuro, registre um catálogo separado, com novos IDs de matéria, salas e provas
+(o formato do 4º bimestre, no prédio de cada matéria: `quarto-bimestre.md`).
 Não reative nem acrescente salas ao catálogo do terceiro bimestre: o dinheiro já ganho depende da quantidade
 de salas dele. Os NPCs e seus interiores poderão apontar para o material novo, mantendo o catálogo antigo
 registrado para as conquistas. A mudança de temporada não chama `novoCiclo`.

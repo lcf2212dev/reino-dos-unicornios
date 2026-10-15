@@ -1,0 +1,134 @@
+/* Desafios do livro do 4º bimestre, parte 2 (docs/contratos/quarto-bimestre.md §12): figuras nas questões (opção com
+   desenho, versos e figuras no texto de apoio, figura abaixo do enunciado), tabela para completar, cruzadinha e
+   caça-palavras. As casas da cruzadinha e do caça-palavras medem até 44 px e encolhem para a grade caber na largura
+   (--colunas vem do JS); a borda de 2 px é dividida entre vizinhas (margem de -2 px). */
+
+/* ---------- figuras ---------- */
+.desafio-figura, .apoio-figuras { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 24px; margin-top: 12px; }
+.figura-item { display: flex; flex-direction: column; align-items: center; gap: 4px; margin: 0; min-width: 0; }
+.figura-img { display: inline-flex; align-items: center; justify-content: center; min-width: 64px; min-height: 64px; font-size: var(--texto-t); line-height: 1; }
+.figura-item figcaption { font-size: var(--texto); line-height: var(--entrelinha); text-align: center; }
+.desafio-figura .figura-item:has(.desafio-ilustracao) { width: 100%; }
+/* ilustração: nunca menos de 2× (figuras.js); a que não cabe rola dentro do quadro (de lado ou para baixo), a página não */
+.desafio-ilustracao { display: block; width: 100%; overflow: auto; text-align: center; font-size: var(--texto-t); line-height: 1;
+  border: var(--borda-fina) solid transparent; border-radius: var(--canto); }   /* a borda já existe: a moldura não muda o tamanho */
+.desafio-ilustracao canvas { display: inline-block; vertical-align: top; image-rendering: pixelated; }
+.desafio-ilustracao-rola { border-color: var(--borda); }
+/* poema do texto de apoio: uma estrofe por parágrafo; verso comprido continua recuado */
+.apoio-versos { margin-top: 4px; }
+.apoio-estrofe { margin: 0 0 12px; font-size: var(--texto); line-height: var(--entrelinha); }
+.apoio-estrofe:last-child { margin-bottom: 0; }
+.apoio-verso { display: block; padding-left: 16px; text-indent: -16px; }
+
+/* opção com desenho (escolha e varias): o desenho de 64 px em cima do nome; grade de 2 colunas no celular */
+.opcoes.opcoes-img { grid-template-columns: repeat(auto-fill, minmax(min(100%, 140px), 1fr)); }
+.opcao.opcao-img { flex-direction: column; justify-content: center; gap: 6px; padding: 10px 8px 12px; text-align: center; }
+.opcao-img .opcao-figura { display: inline-flex; align-items: center; justify-content: center; min-height: 64px; font-size: var(--texto-t); line-height: 1; }
+.opcao-img .opcao-texto { flex: none; max-width: 100%; overflow-wrap: break-word; }
+/* celular com letras grandes: o nome da opção desce um degrau (24 → 16) para caber na meia largura (ui.md §10.17.3) */
+@media (max-width: 480px) { .letras-grandes .opcao-img .opcao-texto { font-size: var(--texto-aux); } }
+.opcao-marcar.opcao-img { position: relative; padding-top: 16px; }
+.opcao-marcar.opcao-img::after { position: absolute; top: 6px; right: 6px; }
+
+/* ---------- tabela para completar ---------- */
+.tabela-desafio { display: flex; flex-direction: column; gap: 12px; }
+.tabela-quadro { width: 100%; border-collapse: collapse; background: var(--papel); font-size: var(--texto); line-height: var(--entrelinha); }
+.tabela-quadro th, .tabela-quadro td { padding: 6px 8px; border: var(--borda-fina) solid var(--borda); text-align: center; vertical-align: middle; overflow-wrap: break-word; }
+.tabela-quadro th { background: var(--papel-quente); color: var(--laranja-escuro); }
+/* a caixa de digitar e a fileira de acentos vêm de ui-desafios-livro.css; na célula, a caixa fica mais baixa e centrada,
+   uma linha que cresce para baixo (tabela.js): a resposta comprida quebra entre as palavras, nunca some de lado */
+.tabela-quadro .campo-texto { min-height: 44px; padding: 4px 6px; text-align: center; }
+.tabela-quadro textarea.campo-texto { resize: none; overflow: hidden; }
+/* a fileira de acentos é uma linha da tabela, logo depois da linha da caixa com foco */
+.tabela-quadro tr.tabela-acentos > td { padding: 8px; background: var(--papel-quente); }
+.tabela-acentos .acentos { margin: 0 auto; }
+.tabela-lacuna {
+  display: block; width: 100%; min-height: 44px; padding: 4px 6px; border: var(--borda-fina) dashed var(--tinta-suave); border-radius: var(--canto);
+  background: var(--branco); color: var(--roxo-texto); font-size: var(--texto); line-height: var(--entrelinha);
+}
+.tabela-lacuna.preenchida { border-style: solid; border-color: var(--borda); background: var(--ambar-claro); }
+.tabela-lacuna[aria-pressed="true"] { border-style: solid; border-color: var(--roxo); outline: var(--borda-fina) solid var(--roxo); outline-offset: 0; }
+/* celular: tabela de 3 colunas ou mais, ou com caixa de digitar (com letras grandes, toda tabela) vira uma ficha por linha, com o título da
+   coluna ao lado de cada célula */
+@media (max-width: 480px) {
+  :is(.tabela-larga, .tabela-digita, .letras-grandes .tabela-desafio) .tabela-quadro thead { display: none; }
+  :is(.tabela-larga, .tabela-digita, .letras-grandes .tabela-desafio) :is(.tabela-quadro, .tabela-quadro tbody, .tabela-quadro tr) { display: block; }
+  :is(.tabela-larga, .tabela-digita, .letras-grandes .tabela-desafio) .tabela-quadro tr { margin-bottom: 8px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel); }
+  :is(.tabela-larga, .tabela-digita, .letras-grandes .tabela-desafio) .tabela-quadro tr:last-child { margin-bottom: 0; }
+  :is(.tabela-larga, .tabela-digita, .letras-grandes .tabela-desafio) .tabela-quadro td { display: block; border: 0; border-bottom: var(--borda-fina) dashed var(--ambar); text-align: left; }
+  :is(.tabela-larga, .tabela-digita, .letras-grandes .tabela-desafio) .tabela-quadro td:last-child { border-bottom: 0; }
+  :is(.tabela-larga, .tabela-digita, .letras-grandes .tabela-desafio) .tabela-quadro tr.tabela-acentos { border-color: var(--ambar); background: var(--papel-quente); }
+  :is(.tabela-larga, .tabela-digita, .letras-grandes .tabela-desafio) .tabela-quadro td[data-cab] { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); align-items: center; gap: 8px; }
+  :is(.tabela-larga, .tabela-digita, .letras-grandes .tabela-desafio) .tabela-quadro td[data-cab]::before { content: attr(data-cab); font-size: var(--texto-aux); line-height: var(--entrelinha); color: var(--tinta-suave); }
+  /* letras grandes, e a célula de responder (caixa ou lacuna): o título da coluna em cima e a caixa na largura toda (a
+     palavra inteira à vista: "tartaruguinha") */
+  .letras-grandes .tabela-desafio .tabela-quadro td[data-cab],
+  :is(.tabela-larga, .tabela-digita) .tabela-quadro td[data-cab]:has(> .campo-texto-caixa, > .tabela-lacuna) { display: block; }
+  .letras-grandes .tabela-desafio .tabela-quadro td[data-cab]::before,
+  :is(.tabela-larga, .tabela-digita) .tabela-quadro td[data-cab]:has(> .campo-texto-caixa, > .tabela-lacuna)::before { display: block; margin-bottom: 4px; }
+  .letras-grandes .tabela-desafio .tabela-quadro td[data-cab]::before { white-space: nowrap; }
+  /* tabela de 2 colunas (sem ficha): o título da coluna um degrau abaixo, a palavra inteira (ui.md §10.17.3) */
+  .tabela-quadro th { font-size: var(--texto-aux); }
+}
+
+/* cruzadinha: a fileira de acentos (ui-desafios-livro.css) em 2 linhas de 6, na largura da grade, também na tela larga */
+.cruzadinha .acentos { grid-template-columns: repeat(6, minmax(44px, 1fr)); width: 100%; }
+
+/* ---------- cruzadinha e caça-palavras: casas ---------- */
+.cruzadinha, .caca { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: center; gap: 16px; container-type: inline-size; }
+.cruz-grade, .caca-grade {
+  --casa: min(44px, calc((100cqw - 2px) / var(--colunas, 8)));
+  display: grid; grid-template-columns: repeat(var(--colunas, 8), var(--casa)); grid-auto-rows: var(--casa); padding: 0 2px 2px 0;
+}
+@supports (width: round(down, 9px, 2px)) {
+  .cruz-grade, .caca-grade { --casa: round(down, min(44px, calc((100cqw - 2px) / var(--colunas, 8))), 2px); }
+}
+.cruz-casa, .caca-letra { position: relative; margin: 0 -2px -2px 0; border: var(--borda-fina) solid var(--borda); border-radius: 0; background: var(--branco); color: var(--tinta); }
+
+/* cruzadinha: a caixa de digitar cobre a casa sem mostrar o texto; a letra aparece no span por cima (maiúscula acentuada
+   desenhada certa pelo D.acentuarMaiusculas) */
+.cruz-lado { display: flex; flex-direction: column; align-items: center; gap: 12px; width: min-content; min-width: min(100%, 300px); max-width: 100%; }
+.cruz-campo {
+  position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; padding: 0; border: 0; border-radius: 0;
+  background: transparent; color: transparent; caret-color: transparent; font: inherit; font-size: var(--texto); text-align: center; cursor: pointer;
+}
+.cruz-campo::selection { background: transparent; color: transparent; }
+.cruz-letra { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding-top: 4px; font-size: var(--texto); line-height: 1; pointer-events: none; }
+.cruz-num { position: absolute; left: 2px; top: 2px; font-size: var(--texto-p); line-height: 1; color: var(--tinta-suave); pointer-events: none; }
+.cruz-casa.na-palavra { background: var(--ambar-claro); }
+.cruz-casa.ativa { z-index: 1; border-color: var(--roxo); outline: var(--borda-fina) solid var(--roxo); outline-offset: -4px; }
+.cruz-pistas { display: flex; flex: 1 1 240px; flex-direction: column; gap: 8px; min-width: 0; margin: 0; padding: 0; list-style: none; }
+.cruz-pistas.cruz-pistas-img { display: grid; grid-template-columns: repeat(auto-fill, minmax(136px, 1fr)); }
+.cruz-pista {
+  display: flex; align-items: center; gap: 8px; width: 100%; min-height: 48px; padding: 6px 10px;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel); box-shadow: var(--sombra-pequena); --degrau: 2px;
+  font-size: var(--texto); line-height: var(--entrelinha); text-align: left;
+}
+.cruz-pistas-img .cruz-pista { justify-content: center; }
+.cruz-pista[aria-pressed="true"] { background: var(--ambar-claro); border-color: var(--roxo); outline: var(--borda-fina) solid var(--roxo); outline-offset: 0; }
+.cruz-pista-num { flex: none; min-width: 32px; padding: 2px 4px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-pequeno); background: var(--papel-quente); text-align: center; line-height: 1.5; }
+.cruz-pista-dir { flex: none; display: inline-flex; line-height: 1; }
+.cruz-pista-img { flex: none; display: inline-flex; min-width: 64px; min-height: 64px; align-items: center; justify-content: center; font-size: var(--texto-t); line-height: 1; }
+.cruz-pista-dica { min-width: 0; overflow-wrap: break-word; text-align: left; }
+/* letras grandes: a dica desce para a linha toda, embaixo do número, da seta e da figura, alinhada à esquerda */
+.letras-grandes .cruz-pista { flex-wrap: wrap; justify-content: flex-start; }
+.letras-grandes .cruz-pista-dica { flex: 1 1 100%; }
+
+/* caça-palavras: tocar/arrastar na grade não rola a tela; cada palavra achada leva uma cor de marca-texto */
+.caca-grade { touch-action: none; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+.caca-letra { padding: 0; font-size: var(--texto); line-height: 1; touch-action: none; }
+.caca-letra.caca-cor-0 { background: var(--rosa); }
+.caca-letra.caca-cor-1 { background: var(--ceu); }
+.caca-letra.caca-cor-2 { background: var(--ouro); }
+.caca-letra.caca-cor-3 { background: var(--verde-folha); }
+.caca-letra.caca-cor-4 { background: var(--lilas); }
+.caca-letra.caca-sel { z-index: 1; background: var(--ambar-claro); border-color: var(--roxo); }
+.caca-letra.caca-inicio { background: var(--roxo-texto); color: var(--branco); }
+.caca-letra:focus-visible { z-index: 2; }
+.caca-lista { display: flex; flex: 1 1 200px; flex-wrap: wrap; align-content: flex-start; justify-content: center; gap: 8px; min-width: 0; margin: 0; padding: 0; list-style: none; }
+.caca-palavra { padding: 4px 10px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel); font-size: var(--texto); line-height: var(--entrelinha); }
+.caca-palavra.achada { border-color: var(--certo); background: var(--certo-fundo); color: var(--certo); text-decoration: line-through; }
+
+/* ---------- erro de item e acerto (ui.md §10.19.2 e 3) ---------- */
+:is(.tabela-lacuna, .cruz-casa, .caca-letra).item-erro.item-erro { background: var(--erro-fundo); border-color: var(--erro); outline-color: var(--erro); color: var(--tinta); }
+.tudo-certo :is(.tabela-lacuna, .cruz-casa) { border-color: var(--certo); background: var(--certo-fundo); color: var(--tinta); }

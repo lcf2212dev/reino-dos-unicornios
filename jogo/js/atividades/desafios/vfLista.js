@@ -55,7 +55,7 @@
     var ctrl = {
       el: lista,
       valor: function () { return marcas.slice(); },
-      pronto: function () { return !_d.marcado(lista) && marcas.every(function (m) { return m !== null; }); },
+      pronto: function () { return !_d.marcado(lista) && marcas.length === d.itens.length && marcas.every(function (m) { return m !== null; }); },
       conferir: function () {
         var erradas = marcas.map(function (m, i) { return m === certo(i) ? -1 : i; }).filter(function (i) { return i >= 0; });
         return { ok: erradas.length === 0, erradas: erradas };

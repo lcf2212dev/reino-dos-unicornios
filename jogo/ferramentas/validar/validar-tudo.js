@@ -12,6 +12,7 @@ const jogo = path.join(__dirname, '..', '..');
 const VALIDADORES = [
   { nome: 'conteúdo das matérias', arq: 'ferramentas/validar/validar-conteudo.js', detalhes: true },
   { nome: 'conteúdo preservado do terceiro bimestre', arq: 'ferramentas/validar/validar-conteudo.js', args: ['--terceiro-bimestre'], detalhes: true },
+  { nome: 'cobertura dos livros do 4º bimestre (inventário x jogo)', arq: 'ferramentas/validar/cobertura-4bim.js', detalhes: true },
   { nome: 'interiores', arq: 'ferramentas/validar/validar-interiores.js', detalhes: true },
   { nome: 'index.html x manifesto', arq: 'ferramentas/gerar-index.js', args: ['--conferir'] },
   { nome: 'nomes repetidos', arq: 'ferramentas/validar/validar-nomes.js' },

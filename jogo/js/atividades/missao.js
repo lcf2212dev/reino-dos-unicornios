@@ -10,7 +10,7 @@
     if (Reino.Bimestres.emEspera(materia)) return Reino.Bimestres.avisar().then(function () { if (aoTerminar) aoTerminar(null); });
     var tela = Reino.UI.abrirTela('missao');
     if (materia && materia.cor) tela.style.setProperty('--cor-materia', materia.cor);   // faixa do cabeçalho na cor da matéria (D10-12)
-    var lista = D.sortear(sala, Reino.config.desafiosPorSala);
+    var lista = D.listaDaSala(sala);
     var idx = 0, acertosPrimeira = 0, pressas = 0, ultimaPressa = -10;
     var errouAtual = false, avisouPressa = false, inicioDesafio = 0, ctrl = null;
 
@@ -71,6 +71,8 @@
         : fase === 'desafio' ? 'Desafio ' + (idx + 1) + ' de ' + lista.length : '';
       trilhaTexto.hidden = !trilhaTexto.textContent;
       trilha.className = 'missao-trilha fase-' + fase;   // no celular, a trilha só aparece nas perguntas (css)
+      // sala de livro com mais perguntas que a sorteada: no celular, uma barra estreita no lugar dos pontos (css)
+      if (lista.length > Reino.config.desafiosPorSala) trilha.classList.add('trilha-longa');
     }
     function pintarPontos() { pintarTrilha('desafio'); }
 
@@ -83,6 +85,11 @@
       acao.hidden = false;
     }
 
+    // sala de livro (4º bimestre): o nome do livro da escola no lugar de "Apostila"
+    function livroDaSala() {
+      var L = sala.livroOrigem && materia && materia.livros && materia.livros[sala.livroOrigem];
+      return L ? L.emoji + ' ' + L.nome : 'Apostila';
+    }
     function intro() {
       corpo.innerHTML = '';
       var claudeMini = PA.paraDOM(PA.claude(0), 4, 'claude-intro');
@@ -90,7 +97,7 @@
       corpo.appendChild(el('div.intro-sala',
         el('div.intro-emoji', sala.emoji),
         el('h2.titulo-pixel', U.colado(sala.nome)),
-        el('p.intro-paginas', U.colado('Apostila: ' + sala.paginas)),
+        el('p.intro-paginas', U.colado(livroDaSala() + ': ' + sala.paginas)),
         el('div.intro-claude', claudeMini, el('p', U.colado(sala.intro))),
         // no celular, as 3 regras viram uma linha de ícones com o nome curto (.regra-curta)
         el('ul.intro-regras.regras-da-sala',
@@ -103,7 +110,7 @@
       mostrarAcao('intro-botoes', ouvir ? [ouvir, comecar] : [comecar]);
       pintarTrilha('intro');
       comecar.addEventListener('click', function () { Reino.Som.tocar('porta'); if (cartas.length) resumo(0); else mostrarDesafio(); });
-      if (cartas.length) Reino.Voz.carregar(materia.id + '-livro');
+      if (cartas.length) Reino.Voz.carregar(pacoteCarta(cartas[0]));
       // o pacote de voz pode chegar tarde (rede lenta): só fala se a introdução ainda está na tela
       Reino.Voz.carregarSala(materia, sala).then(function () {
         if (comecar.isConnected) Reino.UI.esperarFala([comecar, sair], falaIntro, { voz: 'claude' });
@@ -119,13 +126,21 @@
     }
 
     // resumo antes das questões: as cartas do livro que a sala usa (campo `livro`, sem repetir, na ordem)
+    // sala.cartas (sala de livro): as cartas dadas, nessa ordem, mesmo sem a preferência do resumo
     var cartas = [];
-    if (Reino.config.esperaFala.resumoNaSala && materia && materia.livro) {
+    if (sala.cartas && materia && materia.livro) {
+      sala.cartas.forEach(function (id) {
+        var c = materia.livro.find(function (x) { return x.id === id; });
+        if (c) cartas.push(c);
+      });
+    } else if (Reino.config.esperaFala.resumoNaSala && materia && materia.livro) {
       sala.desafios.forEach(function (d) {
         var c = materia.livro.find(function (x) { return x.id === d.livro; });
         if (c && cartas.indexOf(c) < 0) cartas.push(c);
       });
     }
+    // pacote de voz de cada carta (por capítulo nas cartas que têm `capitulo`)
+    function pacoteCarta(c) { return Reino.Falas.pacoteCarta(materia, c); }
     function resumo(i) {
       Reino.Som.calar();
       corpo.innerHTML = '';
@@ -142,7 +157,7 @@
         el('p.resumo-pag', 'Carta ' + (i + 1) + ' de ' + cartas.length), area));
       // 🔊 repete a carta (D7-06), como o do livro
       var ouvir = botaoOuvir(function () {
-        Reino.Voz.carregar(materia.id + '-livro').then(function () { Reino.UI.ouvirDeNovo(Reino.UI.falaCarta(cartas[i]), { voz: 'narradora' }); });
+        Reino.Voz.carregar(pacoteCarta(cartas[i])).then(function () { Reino.UI.ouvirDeNovo(Reino.UI.falaCarta(cartas[i]), { voz: 'narradora' }); });
       });
       var fila = [voltar || el('span.rodape-vaga.so-seta', { 'aria-hidden': 'true' })];
       if (ouvir) fila.push(ouvir);
@@ -154,8 +169,8 @@
       if (voltar) voltar.addEventListener('click', function () { Reino.Som.tocar('toque'); resumo(i - 1); });
       corpo.scrollTop = 0;
       Reino.UI.focarTroca(seguir, titulo, CALMA_TROCA);
-      // lê a carta (pacote <matéria>-livro); com config.esperaFala.travar, botões e ✕ esperam a leitura acabar
-      Reino.Voz.carregar(materia.id + '-livro').then(function () {
+      // lê a carta (pacote <matéria>-livro ou <matéria>-livro-<capítulo>); com config.esperaFala.travar, botões e ✕ esperam a leitura acabar
+      Reino.Voz.carregar(pacoteCarta(cartas[i])).then(function () {
         if (!seguir.isConnected) return;
         Reino.UI.esperarFala([botoes, sair], Reino.UI.falaCarta(cartas[i]), { voz: 'narradora' }).then(function () {
           if (seguir.isConnected) Reino.UI.focarTroca(seguir, titulo, 0);
@@ -238,6 +253,8 @@
       var fala = ok ? Reino.Claude.frase(dePrimeira ? 'acerto' : 'acertoDepois') : Reino.Claude.frase('erro');
       var extra = null;
       if (!ok && d.tipo === 'varias' && res && res.faltam > 0 && (!res.erradas || !res.erradas.length)) extra = el('p.retorno-extra', 'Dica: ainda falta marcar ' + (res.faltam === 1 ? '1 item' : res.faltam + ' itens') + '!');
+      // o tipo diz o que falta (escrever: "Escreva pelo menos 2 frases.")
+      if (!ok && res && res.dica) extra = el('p.retorno-extra', res.dica);
       var cab = el('div.retorno-cabeca',
         PA.paraDOM(PA.claude(0), compacto ? 3 : 4, 'claude-retorno'),
         el('div',

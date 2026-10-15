@@ -1,27 +1,31 @@
-/* Casa das Palavras (Português), parte 5 de 6: hall + 5 cômodos, um para cada sala.
-   Hall (Dona Palavrinha e o Livro das Letras), Cozinha das Receitas, Horta do H, Pátio do Circo,
-   Porto da Expedição e Parque do Carrossel.
-   Aqui: ajudantes de montagem, o layout e o registro do interior. Os objetos ficam em
-   portugues/objetos-*.js (carregados antes); a casa de fora, no mapa, em portugues/fora.js.
-   Só dados, objetos e registros; nada de DOM, PA ou Progresso no carregamento.
-   As falas moram em portugues/falas.js. */
+/* Casa das Palavras: o térreo é da Língua Portuguesa do 4º bimestre (docs/contratos/quarto-bimestre.md §7), a casa
+   dos dois livros da escola. Entra-se pela porta da casa no mapa e se sai pelo tapete do saguão.
+   Planta (37×33): embaixo, o saguão (guia, mapa, os dois livros e o tapete de saída); no meio, uma galeria por
+   capítulo (Livro de Aprendizagem, verde); em cima, o ateliê de cada capítulo (Livro de Atividades, amarelo). Portas
+   largas entre vizinhos e corredores em cruz: do saguão se chega a tudo em poucos passos.
+   As estações das salas são GERADAS DOS DADOS: cada sala de Reino.materia('portugues4').salas vai para a vaga do
+   cômodo do seu capítulo e livro, na ordem do livro; vaga sem sala vira enfeite. Objetos em portugues/lp-objetos*.js,
+   pessoas em portugues/lp-personagens.js, falas em portugues/lp-falas.js; a casa de fora, em portugues/fora.js.
+   O layout do 3º bimestre (Cozinha, Horta, Circo, Porto e Parque) está em
+   arquivo/terceiro-bimestre/jogo/js/interiores/portugues/portugues.js. */
 (function () {
   var R = window.Reino;
-  var I = R.Interiores, D = I.desenho, C = D.C;
-  var ret = D.ret, circulo = D.circulo, elipse = D.elipse, triangulo = D.triangulo, contornoRet = D.contornoRet;
-  var clarear = D.clarear, escurecer = D.escurecer;
-  var K = R.Desenho.K;
+  var MAT = 'portugues4', M = R.materia && R.materia(MAT);
+  // sem a matéria (contexto só com o catálogo do 3º bimestre) a casa não tem térreo; a fixture histórica dos testes
+  // carrega o layout arquivado no lugar deste arquivo
+  if (!M) return;
   var F = (R.FALAS_INTERIORES && R.FALAS_INTERIORES.portugues) || { npcs: {}, objetos: {} };
   var ELENCO = (R.NPCs && R.NPCs.ELENCO) || {};
+
   /* ================= AJUDANTES DE MONTAGEM ================= */
-  // coordenadas locais do cômodo (0..10 × 0..10; fileiras 0 e 1 são a parede)
+  // coordenadas locais do cômodo (fileiras 0 e 1 são a parede)
   function sala(ox, oy, lista) {
     return lista.map(function (o) { var n = Object.assign({}, o); n.x = o.x + ox; n.y = o.y + oy; return n; });
   }
   function inter(chave, nome, o) {
     return Object.assign(o, { chave: chave, nome: nome, fala: F.objetos[chave] || '(fala de ' + chave + ')' });
   }
-  /** NPC do interior com sprite e voz do elenco. @param {string} id @param {number} x @param {number} y
+  /** NPC da casa com sprite e voz do elenco. @param {string} id @param {number} x @param {number} y
       @param {AcaoNpc} acao @returns {Npc} */
   function npc(id, x, y, acao) {
     /** @type {Partial<PersonagemElenco>} */
@@ -29,206 +33,226 @@
     return { id: id, nome: e.nome || id, sprite: e.sprite ? Object.assign({ base: 'pessoa' }, e.sprite) : { base: 'pessoa' },
       voz: e.voz || 'npc-' + id, x: x, y: y, acao: acao, falas: F.npcs[id] || {} };
   }
-  function acaoSala(s) { return { tipo: 'sala', materia: 'portugues', sala: s }; }
+  var GUIA = { tipo: 'guia', lugar: 'materia:' + MAT, livro: MAT };
+
+  /* ================= ESTAÇÕES (das salas da matéria) ================= */
+  // vagas em coordenadas locais, na ordem do livro: galeria (Aprendizagem) ao longo da cruz de corredores;
+  // ateliê (Atividades) encostadas na parede do fundo, embaixo dos trechos de parede sem enfeite
+  var VAGAS = { aprendizagem: [[1, 4], [3, 4], [7, 4], [9, 4], [1, 8], [3, 8], [7, 8]], atividades: [[3, 2], [5, 2], [7, 2]] };
+  var CAPITULOS = [10, 11, 12];
+  function salasDo(cap, livro) { return M.salas.filter(function (s) { return s.capitulo === cap && s.livroOrigem === livro; }); }
+  M.salas.forEach(function (s) {
+    if (CAPITULOS.indexOf(s.capitulo) < 0 || !VAGAS[s.livroOrigem]) {
+      throw new Error('portugues: a sala ' + s.id + ' (capítulo ' + s.capitulo + ', livro ' + s.livroOrigem +
+        ') não tem cômodo na Casa das Palavras (portugues/portugues.js)');
+    }
+  });
+  CAPITULOS.forEach(function (cap) {
+    Object.keys(VAGAS).forEach(function (livro) {
+      var n = salasDo(cap, livro).length, max = VAGAS[livro].length;
+      if (n > max) throw new Error('portugues: o capítulo ' + cap + ' tem ' + n + ' salas do livro "' + livro + '", mas ' +
+        (livro === 'atividades' ? 'o ateliê' : 'a galeria') + ' só tem ' + max + ' vagas (portugues/portugues.js, VAGAS)');
+    });
+  });
+  // "pp. 3 a 9" → "Páginas 3 a 9"; "p. 4" → "Página 4"
+  function textoPaginas(p) {
+    var t = String(p || '').trim(), m = /^(pp?)\.\s*(.+)$/i.exec(t);
+    if (!m) return t;
+    return (m[1].toLowerCase() === 'pp' || /\d\D+\d/.test(m[2]) ? 'Páginas ' : 'Página ') + m[2];
+  }
+  // fala curta da estação (sem emoji): "Páginas 3 a 9: O Gato de Botas."; se não couber numa página, só
+  // "Páginas 11 a 13." (o nome da sala já está no título do balão: não se repete)
+  function falaSala(s) {
+    var pg = String(textoPaginas(s.paginas) || '').replace(/\bp\. /g, 'página '), nome = String(s.nome || '').trim(), fim = /[.!?…]$/.test(nome) ? '' : '.';
+    if (!pg) return nome + fim;
+    var uma = pg + ': ' + nome + fim;
+    return uma.length <= 34 ? uma : pg + '.';
+  }
+  function primeiraPagina(p) { var m = /\d+/.exec(String(p || '')); return m ? m[0] : ''; }
+  var ENFEITE = {
+    aprendizagem: function (i) { return { tipo: 'pedestal', var: { item: ['livro', 'estrela', 'coroa', 'vaso', 'ovo', 'pergaminho', 'globo'][i] } }; },
+    atividades: function () { return { tipo: 'cavalete' }; },
+  };
+  function estacoes(cap, livro, ox, oy) {
+    var ss = salasDo(cap, livro);
+    return VAGAS[livro].map(function (p, i) {
+      var s = ss[i], o = { x: ox + p[0], y: oy + p[1] };
+      if (!s) return Object.assign(o, ENFEITE[livro](i));   // vaga sem sala: enfeite (nunca uma estação vazia)
+      return Object.assign(o, { tipo: 'lp-estacao', chave: 'lp-sala-' + s.id, nome: s.nome, fala: falaSala(s),
+        acao: { tipo: 'sala', materia: MAT, sala: s.id }, var: { livro: livro, pagina: primeiraPagina(s.paginas) } });
+    });
+  }
 
   /* ================= LAYOUT ================= */
-  // colunas: 1 | 13 | 25 ; fileiras: 1 (circo, porto, parque) e 13 (cozinha, hall, horta)
+  // colunas 1 | 13 | 25; ateliês nas fileiras 1–9, galerias 11–21, saguão 23–31 (de ponta a ponta)
+  // galeria (11×11): parede x0, x2–3, x7, x8–9 enfeitadas; x1 e x10 sem enfeite (móvel alto embaixo); fileira 3 livre
+  // atrás das estações; cruz de corredores: x4–6 e fileiras 5–7 (portas de cima, de baixo e dos lados)
   var objetos = [].concat(
-    /* ---------- HALL: Casa das Palavras (creme, vermelho e verde) ---------- */
-    sala(13, 13, [
-      
-      { tipo: 'portugues-varal', x: 2, y: 0, var: { letras: 'ABCDE' } },
-      { tipo: 'arandela', x: 4, y: 0 }, { tipo: 'arandela', x: 6, y: 0 },
-      { tipo: 'portugues-varal', x: 7, y: 0, var: { letras: 'FGHIL' } },
-      { tipo: 'relogio-parede', x: 9, y: 0 }, { tipo: 'portugues-cartaz-aa', x: 10, y: 0 },
-      { tipo: 'estante', x: 0, y: 2 },
-      inter('livro', 'Livro das Letras', { tipo: 'portugues-pulpito', x: 2, y: 3, acao: { tipo: 'tela', tela: 'livro', materia: 'portugues' } }),
-      { tipo: 'tapete', x: 0, y: 4, w: 4, h: 1, var: { cor: '#ff9cc6', borda: '#39a860' } },
-      
-      { tipo: 'planta-alta', x: 0, y: 5 },
-      { tipo: 'pilha-livros', x: 10, y: 2 },
-      inter('mapa-casa', 'Mapa da Casa', { tipo: 'portugues-mapa', x: 8, y: 3 }),
-      // tapete de página de caderno e a poltrona de leitura com braços
-      { tipo: 'portugues-tapete-caderno', x: 7, y: 4, w: 4, h: 1 },
-      { tipo: 'portugues-poltrona', x: 8, y: 5 }, { tipo: 'pilha-livros', x: 10, y: 5 },
-      // canto do dicionário: nada alto logo embaixo do dicionário e do globo (não "pousam" em cima de nada)
-      inter('dicionario', 'Dicionário', { tipo: 'portugues-dicionario', x: 0, y: 8 }),
-      { tipo: 'portugues-tapete-letras', x: 1, y: 8, var: { letras: 'A', cor: '#ffd1e6' } }, { tipo: 'globo', x: 2, y: 8 },
-      { tipo: 'pilha-livros', x: 0, y: 9 }, { tipo: 'portugues-tapete-letras', x: 1, y: 9, var: { letras: 'B', cor: '#c8ecc8' } },
-      { tipo: 'portugues-bau-letras', x: 0, y: 10 }, { tipo: 'vaso-planta', x: 2, y: 10 }, { tipo: 'luminaria-pe', x: 3, y: 10 },
-      // os blocos ficam um tile abaixo dos pés da Dona Palavrinha (ela fica em 7,8)
-      inter('blocos', 'Blocos de letras', { tipo: 'portugues-blocos', x: 7, y: 10 }),
-      { tipo: 'mesa', x: 8, y: 9, var: { toalha: '#ffd1e6', itens: ['livro', 'xicara'] } },
-      { tipo: 'relogio-pe', x: 10, y: 10 },
-      { tipo: 'portugues-bau-letras', x: 8, y: 10 }, { tipo: 'portugues-tapete-letras', x: 7, y: 8, var: { letras: 'C', cor: '#ffd1e6' } },
+    /* ---------- SAGUÃO ---------- */
+    sala(1, 23, [
+      { tipo: 'janela', x: 0, y: 0 }, { tipo: 'estandarte', x: 1, y: 0, var: { cor: '#8e4fd6', emblema: 'estrela' } },
+      { tipo: 'estante', x: 2, y: 2, var: { cor: '#8a604a' } }, { tipo: 'pilha-livros', x: 0, y: 2 }, { tipo: 'flores', x: 1, y: 2 },
+      { tipo: 'quadro', x: 7, y: 0, var: { cena: 'paisagem' } }, { tipo: 'arandela', x: 8, y: 0 },
+      { tipo: 'escola-alfabeto', x: 9, y: 0 }, { tipo: 'estante', x: 11, y: 2 }, { tipo: 'vitral', x: 13, y: 0 },
+      { tipo: 'papeis', x: 7, y: 2 }, { tipo: 'lp-letras', x: 9, y: 2 }, { tipo: 'pilha-livros', x: 10, y: 2 }, { tipo: 'flores', x: 13, y: 2 },
+      inter('lp-livro-aprendizagem', 'Livro de Aprendizagem', { tipo: 'lp-pulpito', x: 14, y: 2, var: { livro: 'aprendizagem' },
+        acao: { tipo: 'tela', tela: 'livro', materia: MAT, livro: 'aprendizagem' } }),
+      { tipo: 'estandarte', x: 15, y: 0, var: { cor: '#3fae5a', emblema: 'coracao' } }, { tipo: 'portugues-blocos', x: 15, y: 2 },
+      { tipo: 'estandarte', x: 19, y: 0, var: { cor: '#ffc61a', emblema: 'coracao' } }, { tipo: 'castelo-blocos-letras', x: 19, y: 2 },
+      inter('lp-livro-atividades', 'Livro de Atividades', { tipo: 'lp-pulpito', x: 20, y: 2, var: { livro: 'atividades' },
+        acao: { tipo: 'tela', tela: 'livro', materia: MAT, livro: 'atividades' } }),
+      { tipo: 'vitral', x: 21, y: 0 }, { tipo: 'flores', x: 21, y: 2 }, { tipo: 'estante', x: 22, y: 2 },
+      { tipo: 'prateleira-parede', x: 24, y: 0 }, { tipo: 'arandela', x: 26, y: 0 }, { tipo: 'quadro', x: 27, y: 0, var: { cena: 'mar' } },
+      { tipo: 'pilha-livros', x: 24, y: 2 }, { tipo: 'papeis', x: 25, y: 2 }, { tipo: 'lp-potes', x: 26, y: 2 }, { tipo: 'caixote', x: 27, y: 2 },
+      { tipo: 'estante', x: 31, y: 2, var: { cor: '#8a604a' } }, { tipo: 'estandarte', x: 33, y: 0, var: { cor: '#8e4fd6', emblema: 'estrela' } },
+      { tipo: 'janela', x: 34, y: 0 }, { tipo: 'flores', x: 33, y: 2 }, { tipo: 'pilha-livros', x: 34, y: 2 },
+      { tipo: 'tapete', x: 16, y: 4, var: { cor: '#c9a8ff', borda: '#ffd34d' } },
+      // embaixo, à esquerda: cantinho de leitura, luminária, vitrine e o bebedouro
+      { tipo: 'planta-alta', x: 0, y: 6 }, { tipo: 'cesto', x: 0, y: 7, var: { conteudo: 'lapis' } }, { tipo: 'vaso-grande', x: 0, y: 8 },
+      { tipo: 'tapete', x: 1, y: 7, var: { cor: '#e0d0ff', borda: '#8e4fd6' } },
+      { tipo: 'poltrona', x: 1, y: 7, var: { cor: '#b58cff' } }, { tipo: 'mesa-centro', x: 2, y: 7 },
+      { tipo: 'luminaria-pe', x: 5, y: 6 }, { tipo: 'pilha-livros', x: 5, y: 8 }, { tipo: 'banco', x: 6, y: 6 },
+      { tipo: 'cesto', x: 8, y: 8, var: { conteudo: 'lapis' } }, { tipo: 'vitrine', x: 9, y: 8, var: { itens: ['livro', 'estrela', 'livro'] } },
+      { tipo: 'vaso-planta', x: 11, y: 8 }, inter('lp-bebedouro', 'Bebedouro', { tipo: 'bebedouro', x: 12, y: 6 }),
+      { tipo: 'flores', x: 13, y: 8 }, { tipo: 'vaso-planta', x: 14, y: 7 }, { tipo: 'pilha-livros', x: 14, y: 8 },
+      { tipo: 'flores', x: 15, y: 8 },
+      // embaixo, à direita: o mapa da casa, sofá, outra vitrine e plantas
+      inter('lp-mapa', 'Mapa da casa', { tipo: 'lp-mapa', x: 19, y: 7 }), { tipo: 'flores', x: 19, y: 8 },
+      { tipo: 'luminaria-pe', x: 22, y: 6 }, { tipo: 'tapete-redondo', x: 22, y: 7, var: { cor: '#ffe28a' } },
+      { tipo: 'cesto', x: 22, y: 8, var: { conteudo: 'lapis' } }, { tipo: 'sofa', x: 24, y: 7, var: { cor: '#b58cff' } }, { tipo: 'banco', x: 25, y: 8 },
+      { tipo: 'planta-alta', x: 27, y: 6 }, { tipo: 'vitrine', x: 28, y: 7, var: { itens: ['pergaminho', 'livro', 'coroa'] } },
+      { tipo: 'vaso-planta', x: 31, y: 7 }, { tipo: 'cesto', x: 31, y: 8, var: { conteudo: 'lapis' } }, { tipo: 'mesa-centro', x: 32, y: 8 },
+      { tipo: 'poltrona', x: 33, y: 7, var: { cor: '#b58cff' } }, { tipo: 'planta-alta', x: 34, y: 6 },
+      { tipo: 'pilha-livros', x: 34, y: 7 }, { tipo: 'vaso-grande', x: 34, y: 8 },
     ]),
-    /* ---------- SALA 1: Cozinha das Receitas (azulejo de morango) ---------- */
-    sala(1, 13, [
-      // o quadro do raro no canto da parede, fora da placa da sala (que fica no meio, em cima)
-      { tipo: 'portugues-receita', x: 1, y: 0 },
-      { tipo: 'portugues-panelas', x: 2, y: 0 }, { tipo: 'cortina', x: 4, y: 0, var: { cor: '#ff9cc6' } },
-      { tipo: 'relogio-parede', x: 5, y: 0 }, { tipo: 'prateleira-parede', x: 6, y: 0 }, { tipo: 'janela', x: 8, y: 0 },
-      { tipo: 'quadro-unicornio', x: 9, y: 0, var: { uni: 'p-receitinha' } },
-      { tipo: 'portugues-geladeira', x: 0, y: 2 }, { tipo: 'portugues-fogao', x: 1, y: 2, junto: true },   // as panelas penduradas e a receita em cima do fogão, de propósito
-      { tipo: 'portugues-bancada', x: 3, y: 2 },
-      inter('liquidificador', 'Liquidificador', { tipo: 'portugues-liquidificador', x: 6, y: 3 }),
-      { tipo: 'portugues-cesta-frutas', x: 5, y: 2 }, 
-      inter('abacaxi', 'Abacaxi', { tipo: 'portugues-abacaxi', x: 9, y: 3 }),
-      // o caixote embaixo do quadro do raro fica sem nada em cima (senão invade a moldura)
-      { tipo: 'portugues-caneca-bolo', x: 8, y: 2 },
-      { tipo: 'tapete-listrado', x: 0, y: 4, w: 3, h: 1, var: { cores: ['#ff4f6a', '#fff4ec', '#39a860', '#fff4ec'] } },
-      { tipo: 'tapete', x: 1, y: 6, w: 3, h: 2, var: { cor: '#ffd1e6', borda: '#ff4f6a' } },
-      inter('salada', 'Salada de frutas', { tipo: 'portugues-salada', x: 1, y: 8 }),
-      { tipo: 'cadeira', x: 0, y: 8, var: { almofada: '#ff9cc6' } }, { tipo: 'cadeira', x: 2, y: 8, var: { almofada: '#9fe0a0' } },
-      { tipo: 'mesa', x: 4, y: 9, var: { toalha: '#ffc2d8', itens: ['xicara', 'bolo'] } },
-      { tipo: 'portugues-mesa-preparo', x: 7, y: 5 }, { tipo: 'portugues-cesta-frutas', x: 9, y: 5 },
-      { tipo: 'portugues-cesta-frutas', x: 5, y: 7 },
-      inter('caneca-bolo', 'Bolo de caneca', { tipo: 'portugues-caneca-bolo', x: 6, y: 10 }),
-      { tipo: 'portugues-cesta-frutas', x: 0, y: 10 }, { tipo: 'portugues-cesta-frutas', x: 2, y: 10 }, { tipo: 'portugues-bancada', x: 7, y: 10 },
-      { tipo: 'portugues-caneca-bolo', x: 10, y: 10 }, { tipo: 'portugues-cesta-frutas', x: 9, y: 10 },
-      { tipo: 'portugues-tapete-letras', x: 3, y: 8, var: { letras: 'R', cor: '#ffd1e6' } },   // encostada na cadeira
-    ]),
-    /* ---------- SALA 2: Horta do H (terra e verde) ---------- */
-    sala(25, 13, [
-      { tipo: 'quadro-unicornio', x: 0, y: 0, var: { uni: 'p-hibisco' } },
-      { tipo: 'janela', x: 2, y: 0 }, { tipo: 'portugues-cartaz-h', x: 3, y: 0, var: { figura: 'hotel' } },
-      { tipo: 'janela', x: 4, y: 0 }, { tipo: 'portugues-cartaz-h', x: 5, y: 0, var: { figura: 'helicoptero' } },
-      { tipo: 'bandeirinhas', x: 6, y: 0 }, { tipo: 'janela', x: 8, y: 0 }, { tipo: 'relogio-parede', x: 9, y: 0 }, { tipo: 'janela', x: 10, y: 0 },
-      { tipo: 'portugues-hortela', x: 6, y: 2 },
-      // a placa e o vaso de hortelã ficam uma fileira abaixo dos canteiros (sem cobrir a ponta deles)
-      inter('placa-horta', 'Placa da horta', { tipo: 'portugues-placa-horta', x: 1, y: 4 }),
-      { tipo: 'portugues-canteiro', x: 2, y: 2, var: { planta: 'alface' } },
-      { tipo: 'portugues-canteiro', x: 4, y: 2, var: { planta: 'tomate' } },
-      inter('hortela', 'Vaso de hortelã', { tipo: 'portugues-hortela', x: 7, y: 4 }),
-      { tipo: 'portugues-canteiro', x: 7, y: 2, var: { planta: 'hortela' } },
-      { tipo: 'portugues-canteiro-flores', x: 10, y: 2 }, { tipo: 'portugues-regador', x: 1, y: 2 },
-      { tipo: 'portugues-canteiro', x: 3, y: 4, var: { planta: 'cenoura', chao: true } },
-      inter('hibisco', 'Pé de hibisco', { tipo: 'portugues-hibisco', x: 9, y: 5 }),
-      { tipo: 'portugues-carrinho', x: 10, y: 6 },
-      { tipo: 'portugues-leira', x: 6, y: 6, w: 3, h: 1 },
-      { tipo: 'portugues-leira', x: 8, y: 8, w: 3, h: 1, var: { planta: 'repolho' } },
-      inter('helicoptero', 'Helicóptero de brinquedo', { tipo: 'portugues-helicoptero', x: 5, y: 8 }),
-      { tipo: 'portugues-espantalho', x: 3, y: 8 },
-      { tipo: 'portugues-hortela', x: 0, y: 10 }, { tipo: 'portugues-canteiro', x: 1, y: 10 }, { tipo: 'portugues-regador', x: 3, y: 10 },
-      { tipo: 'portugues-carrinho', x: 4, y: 10 }, { tipo: 'flores', x: 6, y: 10 }, { tipo: 'caixote', x: 7, y: 10, var: { item: 'moedas' } },
-      { tipo: 'portugues-canteiro', x: 8, y: 10, var: { planta: 'alface', chao: true } },   // com uma fileira livre entre ele e a leira
-      { tipo: 'vaso-planta', x: 10, y: 10 }, { tipo: 'portugues-regador', x: 5, y: 6 },
-      { tipo: 'portugues-carrinho', x: 0, y: 8 },
-    ]),
-    /* ---------- SALA 3: Pátio do Circo (lona vermelha e amarelinha no chão) ---------- */
-    sala(1, 1, [
-      // o quadro do raro no canto da direita, fora da placa da sala (e, no notebook, fora do dinheiro e da estrela)
-      { tipo: 'janela', x: 0, y: 0 }, { tipo: 'cartaz', x: 1, y: 0 }, { tipo: 'portugues-lona', x: 2, y: 0 },
-      { tipo: 'bandeirinhas', x: 4, y: 0 }, { tipo: 'portugues-lona', x: 6, y: 0, var: { cor: '#7c5cff' } },
-      { tipo: 'estandarte', x: 8, y: 0, var: { cor: '#e0433f', emblema: 'estrela' } },
-      { tipo: 'quadro-unicornio', x: 9, y: 0, var: { uni: 'p-xicara' } },
-      { tipo: 'portugues-banquinho', x: 0, y: 2 },
-      inter('chocalho', 'Chocalho', { tipo: 'portugues-chocalho', x: 1, y: 3 }),
-      inter('amarelinha', 'Amarelinha', { tipo: 'portugues-amarelinha', x: 2, y: 5 }),
-      { tipo: 'portugues-bola-circo', x: 3, y: 2 }, { tipo: 'flores', x: 5, y: 2, var: { vaso: '#7c5cff' } },
-      inter('pipoca', 'Carrinho de pipoca', { tipo: 'portugues-pipoca', x: 7, y: 3 }),
-      { tipo: 'portugues-banquinho', x: 6, y: 2, var: { cor: '#e0433f' } }, { tipo: 'portugues-bola-circo', x: 4, y: 2 },
-      { tipo: 'portugues-bola-circo', x: 10, y: 3 },   // longe do chocalho: atrás dele fica o chão
-      inter('ninho', 'Ninho', { tipo: 'portugues-ninho', x: 9, y: 4 }),
-      { tipo: 'portugues-bola-circo', x: 0, y: 6 }, { tipo: 'portugues-banquinho', x: 0, y: 7 },
-      { tipo: 'portugues-banquinho', x: 4, y: 10, var: { cor: '#ffe066' } }, { tipo: 'portugues-bola-circo', x: 5, y: 10 }, { tipo: 'portugues-banquinho', x: 6, y: 10, var: { cor: '#39c5bb' } },
-      { tipo: 'tapete', x: 7, y: 8, w: 3, h: 2, var: { cor: '#ffd34d', borda: '#e0433f' } },
-      { tipo: 'caixote', x: 10, y: 10, var: { item: 'estrela' } }, { tipo: 'portugues-bola-circo', x: 8, y: 10 },
-      { tipo: 'luminaria-pe', x: 0, y: 10 }, { tipo: 'portugues-banquinho', x: 5, y: 8, var: { cor: '#ff9d2e' } },
-      { tipo: 'portugues-bola-circo', x: 10, y: 8 },
-    ]),
-    /* ---------- SALA 4: Porto da Expedição (convés de madeira, gelo e mar) ---------- */
-    sala(13, 1, [
-      { tipo: 'portugues-bandeira', x: 4, y: 0 },
-      { tipo: 'relogio-parede', x: 5, y: 0 }, { tipo: 'portugues-boia', x: 6, y: 0 }, { tipo: 'portugues-boia', x: 7, y: 0 }, { tipo: 'janela', x: 8, y: 0 },
-      { tipo: 'portugues-quadro-estreito', x: 9, y: 0, var: { uni: 'p-iceberg', lado: 'dir' } },
-      { tipo: 'portugues-barco', x: 0, y: 2 },
-      inter('iceberg', 'Tanque do iceberg', { tipo: 'portugues-iceberg', x: 7, y: 3 }),
-      { tipo: 'portugues-ancora', x: 3, y: 2 },
-      // na frente do cais só coisas baixas; o albatroz fica num tile livre, com chão atrás dele
-      { tipo: 'portugues-cordas', x: 0, y: 4 }, { tipo: 'caixote', x: 1, y: 4, var: { item: 'concha' } },
-      { tipo: 'portugues-albatroz', x: 9, y: 4 }, { tipo: 'portugues-leme', x: 7, y: 5 },
-      { tipo: 'portugues-cordas', x: 9, y: 2 }, { tipo: 'caixote', x: 10, y: 2 },   // sem nada em cima: fica embaixo do quadro do raro
-      inter('pinguins', 'Pinguins', { tipo: 'portugues-pinguins', x: 0, y: 5 }),
-      { tipo: 'portugues-gelo', x: 0, y: 8, w: 3, h: 2 },
-      inter('focas', 'Focas', { tipo: 'portugues-focas', x: 8, y: 5 }),
-      inter('diario', 'Diário da expedição', { tipo: 'portugues-diario', x: 9, y: 9 }),
-      { tipo: 'caixote', x: 10, y: 10, var: { item: 'estrela' } }, { tipo: 'portugues-focas', x: 6, y: 10 }, { tipo: 'globo', x: 10, y: 9 },
-      { tipo: 'portugues-lampiao', x: 0, y: 10 }, { tipo: 'portugues-ancora', x: 1, y: 10 }, { tipo: 'portugues-cordas', x: 3, y: 10 },
-      { tipo: 'portugues-pinguins', x: 2, y: 8 }, { tipo: 'portugues-cordas', x: 8, y: 8 }, { tipo: 'tapete', x: 3, y: 9, w: 2, h: 1, var: { cor: '#9fcfff', borda: '#2f6fd6' } },
-    ]),
-    /* ---------- SALA 5: Parque do Carrossel (grama e festa) ---------- */
-    sala(25, 1, [
-      // o quadro do raro no canto da esquerda, fora da placa da sala (e, no notebook, fora da carta do unicórnio)
-      { tipo: 'quadro-unicornio', x: 0, y: 0, var: { uni: 'p-farol' } },
-      { tipo: 'janela', x: 2, y: 0 }, { tipo: 'bandeirinhas', x: 3, y: 0 },
-      { tipo: 'estandarte', x: 8, y: 0, var: { cor: '#ff5c8a', emblema: 'coracao' } }, { tipo: 'janela', x: 10, y: 0 },
-      inter('arvore', 'Árvore', { tipo: 'portugues-arvore', x: 1, y: 4 }), { tipo: 'portugues-canteiro-flores', x: 2, y: 2 },
-      { tipo: 'portugues-bola', x: 0, y: 2 }, { tipo: 'portugues-bola', x: 3, y: 4 },
-      inter('carrossel', 'Carrossel', { tipo: 'portugues-carrossel', x: 5, y: 2 }),
-      { tipo: 'portugues-canteiro-flores', x: 4, y: 2, var: { cor: '#b58cff' } }, { tipo: 'portugues-canteiro-flores', x: 8, y: 2, var: { cor: '#ffd34d' } },
-      { tipo: 'portugues-canteiro-flores', x: 10, y: 2 }, { tipo: 'portugues-poste', x: 9, y: 2 },
-      inter('baloes', 'Balões', { tipo: 'portugues-baloes', x: 9, y: 4 }),
-      { tipo: 'portugues-algodao', x: 10, y: 5 },
-      inter('mel', 'Pote de mel', { tipo: 'portugues-mel', x: 8, y: 9 }),
-      { tipo: 'portugues-banco-praca', x: 9, y: 10 }, { tipo: 'portugues-bola', x: 10, y: 8 },
-      { tipo: 'portugues-banco-praca', x: 0, y: 10 }, { tipo: 'flores', x: 2, y: 10 },
-      { tipo: 'portugues-bola', x: 1, y: 8 }, { tipo: 'portugues-canteiro-flores', x: 0, y: 8 },
-      { tipo: 'portugues-canteiro-flores', x: 3, y: 8, var: { cor: '#ff5c6a' } }, { tipo: 'portugues-bola', x: 5, y: 10 },
-      { tipo: 'tapete', x: 5, y: 8, w: 2, h: 1, var: { cor: '#ffd1e6', borda: '#ff5c8a' } },
-      { tipo: 'portugues-canteiro-flores', x: 6, y: 10 },
-      { tipo: 'tapete-listrado', x: 7, y: 7, w: 3, h: 1, var: { cores: ['#ff5c8a', '#fff4ec', '#5fb4ff', '#fff4ec'] } },
-    ])
+    /* ---------- GALERIA 10: Conta uma história? (contos: castelo e floresta) ---------- */
+    sala(1, 11, [
+      { tipo: 'castelo-escudo', x: 0, y: 0 }, { tipo: 'lp-livro-conto', x: 2, y: 0 }, { tipo: 'castelo-brasao', x: 7, y: 0 },
+      { tipo: 'castelo-tapecaria', x: 8, y: 0 },
+      { tipo: 'pilha-livros', x: 0, y: 2 }, { tipo: 'lp-moinho', x: 1, y: 2 }, { tipo: 'castelo-pergaminhos', x: 2, y: 2 },
+      { tipo: 'flores', x: 3, y: 2, var: { vaso: '#3fae5a' } }, { tipo: 'cesto', x: 7, y: 2, var: { conteudo: 'lapis' } }, { tipo: 'bau', x: 8, y: 2 },
+      { tipo: 'pilha-livros', x: 9, y: 2 }, { tipo: 'planta-alta', x: 10, y: 2 },
+      { tipo: 'vaso-planta', x: 0, y: 4 }, { tipo: 'museu-legenda', x: 2, y: 4 }, { tipo: 'castelo-candelabro', x: 8, y: 4 },
+      { tipo: 'lp-gato-botas', x: 10, y: 4 },
+      { tipo: 'castelo-tapete-real', x: 4, y: 6 },
+      { tipo: 'castelo-armadura', x: 0, y: 8 }, { tipo: 'museu-legenda', x: 2, y: 8 }, { tipo: 'castelo-coroa-almofada', x: 0, y: 9 },
+      { tipo: 'museu-banco-veludo', x: 0, y: 10, var: { cor: '#2a7a3e' } },
+      inter('lp-castelo', 'Castelo do ogro', { tipo: 'lp-castelo', x: 2, y: 10 }),
+      { tipo: 'castelo-ampulheta', x: 10, y: 8 }, { tipo: 'tapete-listrado', x: 7, y: 9, var: { cores: ['#3fae5a', '#ffd34d', '#3fae5a', '#fff8ee'] } },
+      { tipo: 'lp-vitoria-regia', x: 7, y: 10 }, { tipo: 'castelo-feno', x: 9, y: 10 }, { tipo: 'planta-alta', x: 10, y: 10 },
+    ]), estacoes(10, 'aprendizagem', 1, 11),
+    /* ---------- GALERIA 11: Quem canta... (canções e instrumentos) ---------- */
+    sala(13, 11, [
+      { tipo: 'janela', x: 0, y: 0 }, { tipo: 'lp-notas', x: 2, y: 0 }, { tipo: 'cortina', x: 7, y: 0, var: { cor: '#ff8a3d' } },
+      { tipo: 'bandeirinhas', x: 8, y: 0 },
+      { tipo: 'torre-pandeiro', x: 0, y: 2 }, { tipo: 'lp-gramofone', x: 1, y: 2 }, { tipo: 'escola-musica-metronomo', x: 2, y: 2 },
+      { tipo: 'escola-musica-fones', x: 3, y: 2 }, { tipo: 'flores', x: 7, y: 2, var: { vaso: '#ff8a3d' } },
+      { tipo: 'pilha-livros', x: 8, y: 2 }, { tipo: 'museu-piao', x: 9, y: 2 }, { tipo: 'lp-arara', x: 10, y: 2 },
+      { tipo: 'vaso-planta', x: 0, y: 4 }, { tipo: 'museu-legenda', x: 2, y: 4 }, { tipo: 'lp-violao', x: 8, y: 4 },
+      { tipo: 'luminaria-pe', x: 10, y: 4 },
+      { tipo: 'escola-musica-tapete', x: 4, y: 6 },
+      inter('lp-leao', 'Rei da Floresta', { tipo: 'lp-leao', x: 0, y: 8 }), { tipo: 'museu-legenda', x: 2, y: 8 },
+      { tipo: 'torre-pandeiro', x: 0, y: 9 }, { tipo: 'museu-banco-veludo', x: 0, y: 10, var: { cor: '#c8701a' } },
+      { tipo: 'museu-tambor', x: 2, y: 10 },
+      { tipo: 'torre-sino', x: 10, y: 8 }, { tipo: 'tapete-listrado', x: 7, y: 9, var: { cores: ['#ff8a3d', '#ffd34d', '#e0433f', '#fff8ee'] } },
+      { tipo: 'torre-piano', x: 7, y: 10 }, { tipo: 'escola-musica-fones', x: 9, y: 10 }, { tipo: 'planta-alta', x: 10, y: 10 },
+    ]), estacoes(11, 'aprendizagem', 13, 11),
+    /* ---------- GALERIA 12: O visual do poema (poemas visuais e letras) ---------- */
+    sala(25, 11, [
+      { tipo: 'lp-relampago', x: 0, y: 0 }, { tipo: 'lp-poema', x: 2, y: 0 }, { tipo: 'lp-cartaz-abc', x: 7, y: 0, var: { cor: '#2f6fd6' } },
+      { tipo: 'escola-alfabeto', x: 8, y: 0 },
+      { tipo: 'pilha-livros', x: 0, y: 2 }, { tipo: 'lp-ovo', x: 1, y: 2 }, { tipo: 'portugues-blocos', x: 2, y: 2 },
+      { tipo: 'papeis', x: 3, y: 2 }, { tipo: 'lp-letras', x: 7, y: 2 }, { tipo: 'castelo-blocos-letras', x: 8, y: 2 },
+      { tipo: 'flores', x: 9, y: 2, var: { vaso: '#5fb4ff' } }, { tipo: 'cavalete', x: 10, y: 2 },
+      { tipo: 'vaso-planta', x: 0, y: 4 }, { tipo: 'museu-legenda', x: 2, y: 4 }, { tipo: 'lp-maquina', x: 8, y: 4 },
+      { tipo: 'luminaria-pe', x: 10, y: 4 },
+      { tipo: 'tapete', x: 4, y: 6, var: { cor: '#bcd0f2', borda: '#8e4fd6' } },
+      { tipo: 'globo', x: 0, y: 8 }, { tipo: 'museu-legenda', x: 2, y: 8 }, { tipo: 'lp-letras', x: 0, y: 9, var: { cor: '#3fae5a', cor2: '#ffc61a' } },
+      { tipo: 'museu-banco-veludo', x: 0, y: 10, var: { cor: '#2f4f8a' } },
+      inter('lp-jacare', 'Jacaré letrado', { tipo: 'lp-jacare', x: 2, y: 10 }),
+      { tipo: 'portugues-dicionario', x: 10, y: 8 },
+      { tipo: 'portugues-tapete-letras', x: 7, y: 9 }, { tipo: 'portugues-tapete-letras', x: 8, y: 9 }, { tipo: 'portugues-tapete-letras', x: 9, y: 9 },
+      { tipo: 'escrivaninha', x: 7, y: 10 }, { tipo: 'cadeira', x: 9, y: 10, var: { almofada: '#5fb4ff' } }, { tipo: 'planta-alta', x: 10, y: 10 },
+    ]), estacoes(12, 'aprendizagem', 25, 11),
+    // o tema de cada ateliê (portugues/lp-objetos-atelies.js): quadro e cartaz na parede, um canto, o meio (entre as
+    // estações), dois móveis da sala (a1 à esquerda, a9 à direita) e a peça da fileira de baixo
+    atelie(10, 1, { cor: '#3fae5a', quadro: 'lp-quadro-iara', cartaz: 'pontuacao', canto: 'castelo-pergaminhos', meio: 'pilha-livros',
+      a1: 'globo', a9: 'lp-pe-feijao', baixo: 'lp-porquinhos' }),
+    atelie(11, 13, { cor: '#ff8a3d', quadro: 'lp-instrumentos', cartaz: 'notas', canto: 'torre-pandeiro', meio: 'lp-hamster',
+      a1: 'lp-aquario', a9: 'lp-arara', baixo: 'lp-bichos' }),
+    atelie(12, 25, { cor: '#5fb4ff', quadro: 'lp-falta-sorte', cartaz: 'ao', canto: 'castelo-blocos-letras', meio: 'lp-letras',
+      a1: 'lp-maquina', a9: 'lp-bola', baixo: 'portugues-bau-letras' })
   );
+  // ateliê (11×9, Livro de Atividades, amarelo): mesas de trabalho com o caderno amarelo, varal de desenhos e o tema do
+  // capítulo; as estações na parede do fundo (x3, x5, x7 sem enfeite em cima); corredores: x4–6 (porta de baixo) e a
+  // fileira 5 (portas dos lados)
+  function atelie(cap, ox, t) {
+    return sala(ox, 1, [
+      { tipo: 'janela', x: 0, y: 0 }, { tipo: 'lp-varal', x: 1, y: 0 }, { tipo: 'lp-cartaz-abc', x: 4, y: 0 },
+      { tipo: 'lp-cartaz', x: 6, y: 0, var: { tema: t.cartaz } }, { tipo: t.quadro, x: 8, y: 0 }, { tipo: 'janela', x: 10, y: 0 },
+      { tipo: 'cesto', x: 0, y: 2, var: { conteudo: 'lapis' } }, { tipo: 'lp-potes', x: 1, y: 2 }, { tipo: 'pilha-livros', x: 2, y: 2 },
+      { tipo: t.meio, x: 4, y: 2 }, { tipo: 'lp-potes', x: 6, y: 2 }, { tipo: 'bau', x: 8, y: 2 },
+      { tipo: t.canto, x: 9, y: 2 }, { tipo: 'flores', x: 10, y: 2, var: { vaso: t.cor } },
+      { tipo: 'tapete', x: 4, y: 3, var: { cor: '#fff0a0', borda: t.cor } },
+      { tipo: t.a1, x: 1, y: 4 }, { tipo: t.a9, x: 9, y: 4 },
+      { tipo: 'lp-mesa-atividades', x: 1, y: 6 }, { tipo: 'cadeira', x: 3, y: 6, var: { almofada: t.cor } },
+      { tipo: 'lp-mesa-atividades', x: 8, y: 6 }, { tipo: 'cadeira', x: 7, y: 6, var: { almofada: t.cor } },
+      { tipo: 'vaso-planta', x: 0, y: 7 }, { tipo: 'flores', x: 0, y: 8 }, { tipo: t.baixo, x: 1, y: 8 }, { tipo: 'caixote', x: 3, y: 8 },
+      { tipo: 'tapete-listrado', x: 4, y: 7, var: { cores: [t.cor, '#ffc61a', t.cor, '#fff8ee'] } },
+      { tipo: 'barril', x: 7, y: 8 }, { tipo: 'banco', x: 8, y: 8 }, { tipo: 'vaso-planta', x: 10, y: 7 }, { tipo: 'balde', x: 10, y: 8 },
+    ]).concat(estacoes(cap, 'atividades', ox, 1));
+  }
 
+  /* ================= A CASA ================= */
+  var TEMAS = {   // paleta de cada capítulo: galeria (rodapé verde do Livro de Aprendizagem) e ateliê (rodapé dourado do de Atividades)
+    10: { nome: 'Conta uma história?', galeria: { piso: 'pedra', parede: 'pedra', paleta: { piso: '#e6eed8', piso2: '#b9c9a0', parede: '#eef4e2', parede2: '#cfe0b8', rodape: '#2a7a3e' } },
+      atelie: { parede2: '#d8ecc0', detalhe: '#3fae5a' } },
+    11: { nome: 'Quem canta...', galeria: { piso: 'taco', parede: 'papel', paleta: { piso: '#f6d2a8', piso2: '#dca878', parede: '#fff1dc', parede2: '#ffd8b0', rodape: '#2a7a3e', detalhe: '#ff8a3d' } },
+      atelie: { parede2: '#ffdcb8', detalhe: '#ff8a3d' } },
+    12: { nome: 'O visual do poema', galeria: { piso: 'mosaico', parede: 'papel', paleta: { piso: '#eef4ff', piso2: '#bcd0f2', detalhe: '#8e4fd6', parede: '#f2f2ff', parede2: '#d6e2ff', rodape: '#2a7a3e' } },
+      atelie: { parede2: '#d6e2ff', detalhe: '#5fb4ff' } },
+  };
+  var comodos = [{ id: 'lp-saguao', nome: 'Saguão', placa: 'Saguão • Língua Portuguesa', rect: { x: 1, y: 23, w: 35, h: 9 },
+    piso: 'mosaico', parede: 'papel', paleta: { piso: '#f4ecff', piso2: '#cdb4f4', detalhe: '#ffd34d', parede: '#f1e6ff', parede2: '#dccaf8', rodape: '#5a3f8a' } }];
+  CAPITULOS.forEach(function (cap, i) {
+    var T = TEMAS[cap], x = 1 + i * 12;
+    comodos.push(Object.assign({ id: 'lp-galeria' + cap, nome: T.nome, placa: 'Cap. ' + cap + ' • ' + T.nome, rect: { x: x, y: 11, w: 11, h: 11 } }, T.galeria));
+    comodos.push({ id: 'lp-atelie' + cap, nome: 'Atividades do Cap. ' + cap, placa: 'Atividades • Cap. ' + cap, rect: { x: x, y: 1, w: 11, h: 9 },
+      piso: 'tabuas', parede: 'papel', paleta: Object.assign({ piso: '#f2d6a8', piso2: '#d9b27a', parede: '#fff6d6', rodape: '#c98a00' }, T.atelie) });
+  });
+
+  // a Língua Portuguesa (lugar.dentro: 'materia:portugues', interior: 'portugues') mora no interior de entrada da
+  // própria casa: o lugar é o da Casa das Palavras, e por ele se entra pela porta do mapa e pelo "Ir" do menu Lugares
   Reino.registrarInterior({
     id: 'portugues',
     lugar: 'materia:portugues',
     nome: 'Casa das Palavras',
     entrada: true,
     pacote: 'interior-portugues',
-    tamanho: { w: 37, h: 25 },
-    saida: { x: 18, y: 23 },
-    spawn: { x: 18, y: 22 },
-    comodos: [
-      { id: 'hall', nome: 'Hall', placa: 'Hall • Casa das Palavras', rect: { x: 13, y: 13, w: 11, h: 11 },
-        piso: 'mosaico', parede: 'papel', paleta: { piso: '#fff4ec', piso2: '#ff9cc6', detalhe: '#39a860', parede: '#fff4ec', parede2: '#ffd9d0', rodape: '#b82e35' } },
-      { id: 'cozinha', nome: 'Cozinha das Receitas', placa: 'Sala 1 • Receita de Quê?', rect: { x: 1, y: 13, w: 11, h: 11 },
-        piso: 'azulejo', parede: 'azulejo', paleta: { piso: '#fff4ec', piso2: '#ffc2c8', detalhe: '#ff4f6a', parede: '#fffaf2', parede2: '#ffd1d6', rodape: '#b82e35' } },
-      { id: 'horta', nome: 'Horta do H', placa: 'Sala 2 • O H Silencioso', rect: { x: 25, y: 13, w: 11, h: 11 },
-        piso: 'carpete', parede: 'madeira', paleta: { piso: '#b4d67e', piso2: '#94bd62', parede: '#e8f6d8', parede2: '#b6d88a', rodape: '#2a7d48' } },
-      { id: 'circo', nome: 'Pátio do Circo', placa: 'Sala 3 • CH, LH, NH e o X', rect: { x: 1, y: 1, w: 11, h: 11 },
-        piso: 'tabuas', parede: 'papel', paleta: { piso: '#f0c890', piso2: '#d09a5a', parede: '#fff1f4', parede2: '#ffd34d', rodape: '#7c5cff' } },
-      { id: 'porto', nome: 'Porto da Expedição', placa: 'Sala 4 • Expedição Antártida', rect: { x: 13, y: 1, w: 11, h: 11 },
-        piso: 'tabuas', parede: 'madeira', paleta: { piso: '#d8c0a0', piso2: '#a88a68', parede: '#e8f6ff', parede2: '#bfe4f5', rodape: '#2f4f8a' } },
-      { id: 'parque', nome: 'Parque do Carrossel', placa: 'Sala 5 • L, R e RR', rect: { x: 25, y: 1, w: 11, h: 11 },
-        piso: 'carpete', parede: 'papel', paleta: { piso: '#a8dc8a', piso2: '#8fcc72', parede: '#e6f6ff', parede2: '#ffd1e6', rodape: '#39a860' } },
-    ],
+    tamanho: { w: 37, h: 33 },
+    saida: { x: 18, y: 31 },   // o tapete no meio da parede de baixo do saguão: a porta da casa (fora.js), no meio
+    spawn: { x: 18, y: 30 },
+    comodos: comodos,
     portas: [
-      { x: 12, y: 19, w: 1, h: 2 },   // cozinha ↔ hall
-      { x: 24, y: 19, w: 1, h: 2 },   // hall ↔ horta
-      { x: 18, y: 12, w: 1, h: 3 },   // hall ↔ porto (atravessa a parede do fundo do hall)
-      { x: 12, y: 7, w: 1, h: 2 },    // circo ↔ porto
-      { x: 24, y: 7, w: 1, h: 2 },    // porto ↔ parque
+      { x: 5, y: 10, w: 3, h: 3 }, { x: 17, y: 10, w: 3, h: 3 }, { x: 29, y: 10, w: 3, h: 3 },   // ateliê ↔ galeria
+      { x: 5, y: 22, w: 3, h: 3 }, { x: 17, y: 22, w: 3, h: 3 }, { x: 29, y: 22, w: 3, h: 3 },   // galeria ↔ saguão
+      { x: 12, y: 16, w: 1, h: 3 }, { x: 24, y: 16, w: 1, h: 3 },                                 // galeria ↔ galeria
+      { x: 12, y: 5, w: 1, h: 3 }, { x: 24, y: 5, w: 1, h: 3 },                                   // ateliê ↔ ateliê
     ],
     corredores: [
-      { x: 17, y: 15, w: 3, h: 9 }, { x: 13, y: 19, w: 11, h: 2 },   // hall
-      { x: 8, y: 19, w: 4, h: 2 }, { x: 25, y: 19, w: 4, h: 2 },     // entradas da cozinha e da horta
-      { x: 17, y: 3, w: 3, h: 9 }, { x: 13, y: 7, w: 11, h: 2 },     // porto
-      { x: 8, y: 7, w: 4, h: 2 }, { x: 25, y: 7, w: 4, h: 2 },       // entradas do circo e do parque
+      { x: 5, y: 13, w: 3, h: 9 }, { x: 17, y: 13, w: 3, h: 9 }, { x: 29, y: 13, w: 3, h: 9 }, { x: 1, y: 16, w: 35, h: 3 },   // galerias
+      { x: 5, y: 3, w: 3, h: 7 }, { x: 17, y: 3, w: 3, h: 7 }, { x: 29, y: 3, w: 3, h: 7 }, { x: 1, y: 6, w: 35, h: 1 },        // ateliês
+      { x: 1, y: 27, w: 35, h: 2 }, { x: 17, y: 25, w: 3, h: 7 }, { x: 5, y: 25, w: 3, h: 2 }, { x: 29, y: 25, w: 3, h: 2 },   // saguão (até o tapete)
     ],
     objetos: objetos,
     npcs: [
-      npc('palavrinha', 20, 21, { tipo: 'guia', lugar: 'materia:portugues', livro: 'portugues' }),
-      npc('manu', 5, 18, acaoSala('p1')),
-      npc('heitor', 30, 18, acaoSala('p2')),
-      npc('chocalho', 6, 6, acaoSala('p3')),
-      npc('brisa', 16, 6, acaoSala('p4')),
-      npc('carlos', 30, 6, acaoSala('p5')),
-    // + os registrados com predio: 'portugues' e x/y (Reino.personagensDoPredio; prédio antigo não tem vagas: sem x/y, o validador acusa)
+      npc('lp-leticia', 16, 30, GUIA),
+      npc('lp-celeste', 10, 19, GUIA),
+      npc('lp-sol', 22, 19, GUIA),
+      npc('lp-pingo', 34, 19, GUIA),
+    // + os registrados com predio: 'portugues' e x/y (Reino.personagensDoPredio; sem x/y, o validador acusa)
     ].concat(R.personagensDoPredio('portugues').filter(function (p) { return p.x != null && p.y != null; }).map(function (p) {
-      return npc(p.id, p.x, p.y, p.acao || { tipo: 'guia', lugar: 'materia:portugues', livro: 'portugues' });
+      return npc(p.id, p.x, p.y, p.acao || GUIA);
     })),
   });
-
 })();

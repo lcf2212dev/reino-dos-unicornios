@@ -239,7 +239,7 @@ Com relógios diferentes, as duas se desfariam para sempre. Por isso:
    - saves 100% sintéticos (`jogo/ferramentas/testes/saves.js`); nunca copie o save real;
    - testes sem navegador num `vm` com localStorage de mentira (`testar-save.js`, `testar-banho.js`);
    - derrube só os seus servidores, pelo PID; nunca `pkill`/`killall` por nome.
-4. Nada é escrito na árvore principal `/home/leandro/PersonalDevelopment/reino-dos-unicornios` (servida ao vivo pelo container).
+4. Nada é escrito na árvore principal `/home/leandro/Development/products/reino-dos-unicornios` (servida ao vivo pelo container).
 
 ## 10. Antes de mexer, rode
 ```

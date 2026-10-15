@@ -411,7 +411,7 @@
        pecas.js     hifenizar, aparencia
        cuidados.js  CUIDADO, cuidadosProntos, comBanho, uniChocado, iconePequeno, barrasCuidado,
                     rotularMontaria, falarCuidado, balaoNaTela, darComida, textoEnche, nomeComida
-       materia.js   barraDinheiro */
+       materia.js   barraDinheiro, livroEscolar (materia-livro.js usa) */
   Reino._ui = {
     est: est, pilha: pilha, topo: topo, focar: focar, focaveis: focaveis, mostrarFoco: mostrarFoco,
     focarMapa: focarMapa, perto: perto, toqueIgnorado: toqueIgnorado,

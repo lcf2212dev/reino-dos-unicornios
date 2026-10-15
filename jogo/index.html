@@ -20,6 +20,9 @@
 <link rel="stylesheet" href="css/ui-laboratorio.css">
 <link rel="stylesheet" href="css/ui-animacoes.css">
 <link rel="stylesheet" href="css/ui-desafios.css">
+<link rel="stylesheet" href="css/ui-livro-blocos.css">
+<link rel="stylesheet" href="css/ui-desafios-livro.css">
+<link rel="stylesheet" href="css/ui-desafios-grade.css">
 <link rel="stylesheet" href="css/interiores.css">
 <link rel="stylesheet" href="css/ui-novidades.css">
 <link rel="stylesheet" href="css/ui-foguete.css">
@@ -55,6 +58,7 @@
 <script src="js/nucleo/eventos.js"></script>
 <script src="js/nucleo/ambiente.js"></script>
 <script src="js/arte/icones/icones.js"></script>
+<script src="js/arte/ilustracoes.js"></script>
 <script src="js/arte/icones/interface.js"></script>
 <script src="js/arte/icones/premios.js"></script>
 <script src="js/arte/icones/pessoas.js"></script>
@@ -69,6 +73,7 @@
 <script src="js/arte/icones/portugues.js"></script>
 <script src="js/arte/icones/portugues-palavras.js"></script>
 <script src="js/arte/icones/portugues-salas.js"></script>
+<script src="js/arte/icones/livros.js"></script>
 <script src="js/arte/desenho.js"></script>
 <script src="js/arte/pixelart.js"></script>
 <script src="js/arte/pixelart-unicornio-moldes.js"></script>
@@ -145,9 +150,50 @@
 <script src="js/conteudo/materias/geografia/g5.js"></script>
 <script src="js/conteudo/materias/geografia/livro.js"></script>
 <script src="js/conteudo/materias/geografia/geografia.js"></script>
+<script src="js/conteudo/materias/portugues4/lp10a1.js"></script>
+<script src="js/conteudo/materias/portugues4/lp10a2.js"></script>
+<script src="js/conteudo/materias/portugues4/lp10a3.js"></script>
+<script src="js/conteudo/materias/portugues4/lp10a4.js"></script>
+<script src="js/conteudo/materias/portugues4/lp10a5.js"></script>
+<script src="js/conteudo/materias/portugues4/lp10a6.js"></script>
+<script src="js/conteudo/materias/portugues4/lp10a7.js"></script>
+<script src="js/conteudo/materias/portugues4/lp10t1.js"></script>
+<script src="js/conteudo/materias/portugues4/lp10t2.js"></script>
+<script src="js/conteudo/materias/portugues4/lp11a1.js"></script>
+<script src="js/conteudo/materias/portugues4/lp11a2.js"></script>
+<script src="js/conteudo/materias/portugues4/lp11a3.js"></script>
+<script src="js/conteudo/materias/portugues4/lp11a4.js"></script>
+<script src="js/conteudo/materias/portugues4/lp11a5.js"></script>
+<script src="js/conteudo/materias/portugues4/lp11a6.js"></script>
+<script src="js/conteudo/materias/portugues4/lp11t1.js"></script>
+<script src="js/conteudo/materias/portugues4/lp11t2.js"></script>
+<script src="js/conteudo/materias/portugues4/lp12a1.js"></script>
+<script src="js/conteudo/materias/portugues4/lp12a2.js"></script>
+<script src="js/conteudo/materias/portugues4/lp12a3.js"></script>
+<script src="js/conteudo/materias/portugues4/lp12a4.js"></script>
+<script src="js/conteudo/materias/portugues4/lp12a5.js"></script>
+<script src="js/conteudo/materias/portugues4/lp12a6.js"></script>
+<script src="js/conteudo/materias/portugues4/lp12t1.js"></script>
+<script src="js/conteudo/materias/portugues4/lp12t2.js"></script>
+<script src="js/conteudo/materias/portugues4/livro-10a.js"></script>
+<script src="js/conteudo/materias/portugues4/livro-10t.js"></script>
+<script src="js/conteudo/materias/portugues4/livro-11a.js"></script>
+<script src="js/conteudo/materias/portugues4/livro-11t.js"></script>
+<script src="js/conteudo/materias/portugues4/livro-12a.js"></script>
+<script src="js/conteudo/materias/portugues4/livro-12t.js"></script>
+<script src="js/conteudo/materias/portugues4/unicornios-10.js"></script>
+<script src="js/conteudo/materias/portugues4/unicornios-11.js"></script>
+<script src="js/conteudo/materias/portugues4/unicornios-12.js"></script>
+<script src="js/conteudo/materias/portugues4/portugues4.js"></script>
 <script src="js/conteudo/materias/ciencias/icones.js"></script>
 <script src="js/conteudo/materias/matematica/icones.js"></script>
 <script src="js/conteudo/materias/geografia/icones.js"></script>
+<script src="js/conteudo/materias/portugues4/icones-10.js"></script>
+<script src="js/conteudo/materias/portugues4/ilustracoes-10.js"></script>
+<script src="js/conteudo/materias/portugues4/icones-11.js"></script>
+<script src="js/conteudo/materias/portugues4/ilustracoes-11.js"></script>
+<script src="js/conteudo/materias/portugues4/icones-12.js"></script>
+<script src="js/conteudo/materias/portugues4/ilustracoes-12.js"></script>
 <script src="js/conteudo/quimica/icones.js"></script>
 <script src="js/conteudo/quimica/icones-2.js"></script>
 <script src="js/conteudo/provas/historia-3bim.js"></script>
@@ -162,6 +208,7 @@
 <script src="js/sistemas/progresso-regras.js"></script>
 <script src="js/sistemas/progresso-campos.js"></script>
 <script src="js/sistemas/visitados.js"></script>
+<script src="js/sistemas/producoes.js"></script>
 <script src="js/sistemas/jogadores.js"></script>
 <script src="js/sistemas/som.js"></script>
 <script src="js/sistemas/som-escola.js"></script>
@@ -190,6 +237,14 @@
 <script src="js/personagens/jogador.js"></script>
 <script src="js/personagens/jogador-desenho.js"></script>
 <script src="js/atividades/desafios.js"></script>
+<script src="js/atividades/desafios/campo-texto.js"></script>
+<script src="js/atividades/desafios/marcar.js"></script>
+<script src="js/atividades/desafios/digitar.js"></script>
+<script src="js/atividades/desafios/escrever.js"></script>
+<script src="js/atividades/desafios/figuras.js"></script>
+<script src="js/atividades/desafios/tabela.js"></script>
+<script src="js/atividades/desafios/cruzadinha.js"></script>
+<script src="js/atividades/desafios/caca-palavras.js"></script>
 <script src="js/atividades/desafios/escolha.js"></script>
 <script src="js/atividades/desafios/varias.js"></script>
 <script src="js/atividades/desafios/ligar.js"></script>
@@ -217,6 +272,7 @@
 <script src="js/ui/et-desafio.js"></script>
 <script src="js/ui/album-ets.js"></script>
 <script src="js/ui/materia.js"></script>
+<script src="js/ui/materia-livro.js"></script>
 <script src="js/ui/laboratorio.js"></script>
 <script src="js/ui/laboratorio-cenas.js"></script>
 <script src="js/ui/laboratorio-jogos.js"></script>
@@ -341,6 +397,11 @@
 <script src="js/interiores/portugues/objetos-horta-circo.js"></script>
 <script src="js/interiores/portugues/objetos-porto.js"></script>
 <script src="js/interiores/portugues/objetos-parque.js"></script>
+<script src="js/interiores/portugues/lp-personagens.js"></script>
+<script src="js/interiores/portugues/lp-falas.js"></script>
+<script src="js/interiores/portugues/lp-objetos.js"></script>
+<script src="js/interiores/portugues/lp-objetos-temas.js"></script>
+<script src="js/interiores/portugues/lp-objetos-atelies.js"></script>
 <script src="js/interiores/portugues/portugues.js"></script>
 <script src="js/interiores/portugues/fora.js"></script>
 <script src="js/interiores/matematica/objetos-parede.js"></script>

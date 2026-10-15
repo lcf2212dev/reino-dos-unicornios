@@ -8,6 +8,22 @@ Reino.materias = [];
 Reino.registrarMateria = function (m) { Reino.materias.push(m); };
 /** @param {string} id @returns {Materia | undefined} */
 Reino.materia = function (id) { return Reino.materias.find(function (m) { return m.id === id; }); };
+// banco de questões das salas (docs/contratos/quarto-bimestre.md §9): a Revisão da Escola monta as questões dela
+// com os desafios das salas, pelo id ou pela origem no inventário do livro (cópia rasa: a prova pode mudar campos)
+/** @param {string} id @returns {Desafio | undefined} */
+Reino.desafio = function (id) { return Reino._acharDesafio(function (d) { return d.id === id; }); };
+/** @param {string} origem @returns {Desafio | undefined} */
+Reino.desafioPorOrigem = function (origem) { return Reino._acharDesafio(function (d) { return d.origem === origem; }); };
+Reino._acharDesafio = function (fn) {
+  for (var i = 0; i < Reino.materias.length; i++) {
+    var salas = Reino.materias[i].salas || [];
+    for (var j = 0; j < salas.length; j++) {
+      var d = salas[j].desafios.find(fn);
+      if (d) return Object.assign({}, d);
+    }
+  }
+  return undefined;
+};
 // provas bimestrais: cada uma em js/conteudo/provas/<id>.js
 Reino.provas = [];
 /** @param {Prova} p */

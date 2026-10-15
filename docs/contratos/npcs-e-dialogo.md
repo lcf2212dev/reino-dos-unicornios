@@ -132,7 +132,7 @@ O que o NPC faz (sala, guia, treino…) está no `npcs` do interior onde ele apa
 1. sala → `Reino.Missao.iniciar(materia, sala, fim)` (`atividades/missao.js`).
 2. treino → `Reino.Prova.iniciar(materia, fim)` (`atividades/treino.js`); só com a matéria completa; senão fala `bloqueada`.
 3. prova → `Reino.Provas.iniciar(prova, fim)` (`atividades/provas.js`).
-4. tela → `UI.abrirLivro(m)`, `UI.telaPlano()`, `UI.telaLoja()`, `UI.telaEstabulo()`,
+4. tela → `UI.abrirLivro(m, null, acao.livro)` (`livro`: qual dos `materia.livros`, 4º bimestre), `UI.telaPlano()`, `UI.telaLoja()`, `UI.telaEstabulo()`,
    `UI.chocarOvos(P.ovosParaChocar())`, `UI.telaBau()`, ou a tela registrada (§7).
 5. guia → botão "Ver a lista" abre `UI.telaMateria(m)` / `UI.telaCastelo()` / `Reino.Provas.telaEscola()`;
    guia de matéria também oferece o livro.

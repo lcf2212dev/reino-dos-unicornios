@@ -301,8 +301,10 @@
   var ALT_BAIAS = 2 + ALAS * 4;              // parede + alas
   var HALL_Y = 1 + ALT_BAIAS + 1;             // 1 tile de vão entre os cômodos
   // pontas das fileiras: só coisa baixa (uma por ala, sem tapar a vizinha nem a parede)
-  var ESQ = ['cesto', 'estabulo-feno', 'caixote', 'balde', 'cesto', 'estabulo-escovas', 'caixote'];
-  var DIR = ['caixote', 'barril', 'cesto', 'estabulo-feno', 'caixote', 'balde', 'cesto'];
+  // (flores e cenouras também aqui: com o baralho num múltiplo de 7 não sobra cantinho de guardados, e o cômodo
+  // continua com 15 tipos ou mais)
+  var ESQ = ['cesto', 'estabulo-feno', 'caixote', 'balde', 'flores', 'estabulo-escovas', 'caixote'];
+  var DIR = ['caixote', 'barril', 'cesto', 'estabulo-feno', 'caixote', 'balde', 'estabulo-cenouras'];
   var PAREDE = ['janela', 'estabulo-lanterna', 'estabulo-ferraduras', 'estabulo-catavento', 'estabulo-lanterna', 'janela',
     'estabulo-mangueira', 'estabulo-lanterna', 'estabulo-ferraduras', 'janela', 'estabulo-lanterna', 'estabulo-catavento',
     'estabulo-ferraduras', 'estabulo-lanterna', 'janela'];

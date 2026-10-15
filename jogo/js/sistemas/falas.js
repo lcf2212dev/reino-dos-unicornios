@@ -116,7 +116,8 @@
     var def = tipoDe(d);
     return def && def.falas ? def.falas(d, todos, []) : [];
   };
-  // texto de apoio de uma questão (d.apoio: título e partes com lista ou texto), lido no 🔊 da caixa do texto
+  // texto de apoio de uma questão (d.apoio: título e partes com lista, texto, versos ou figuras), lido no 🔊 da caixa
+  // do texto, na ordem da tela: versos, uma fala por estrofe ('' separa; versos juntos com espaço); figuras, as legendas
   F.segmentosApoio = function (apoio) {
     if (!apoio) return [];
     var segs = [];
@@ -125,8 +126,40 @@
       if (p.titulo) segs.push(p.titulo);
       (p.lista || []).forEach(function (t) { segs.push(t); });
       if (p.texto) segs.push(p.texto);
+      var estrofe = [];
+      (p.versos || []).concat(['']).forEach(function (v) { if (v) estrofe.push(v); else if (estrofe.length) { segs.push(estrofe.join(' ')); estrofe = []; } });
+      var legendas = (p.figuras || []).map(function (f) { return f.legenda; }).filter(Boolean);
+      if (legendas.length) segs.push(legendas.join(', ') + '.');
     });
     return segs;
+  };
+  // carta do livro: título e o texto de cada bloco, na ordem (carta antiga: título e texto; carta rica:
+  // docs/contratos/quarto-bimestre.md §4). A fonte e a ilustração ficam só na tela.
+  F.segmentosCarta = function (c) {
+    if (!c.blocos) return [c.titulo, c.texto];
+    var segs = [c.titulo];
+    function item(i) { return (i.termo ? i.termo + (/[:.]$/.test(i.termo) ? ' ' : ': ') : '') + i.texto; }
+    c.blocos.forEach(function (b) {
+      if (b.t === 'texto' || b.t === 'fala') segs.push(b.texto);
+      else if (b.t === 'versos') {
+        var estrofe = [];
+        b.versos.concat(['']).forEach(function (v) { if (v) estrofe.push(v); else if (estrofe.length) { segs.push(estrofe.join(' ')); estrofe = []; } });
+      } else if (b.t === 'lista') b.itens.forEach(function (i) { segs.push(item(i)); });
+      else if (b.t === 'quadro') { if (b.titulo) segs.push(b.titulo); if (b.texto) segs.push(b.texto); (b.itens || []).forEach(function (i) { segs.push(item(i)); }); }
+      else if (b.t === 'tabela') b.linhas.forEach(function (l) {
+        segs.push(l.map(function (cel, k) { return (b.cab && b.cab[k] ? b.cab[k] + ': ' : '') + cel; }).filter(function (x) { return x.trim(); }).join('. ') + '.');
+      });
+      else if (b.t === 'figuras') segs.push(b.itens.map(function (f) { return f.legenda; }).filter(Boolean).join(', ') + '.');
+    });
+    return segs.filter(function (t) { return t && String(t).trim(); });
+  };
+  // pacote de voz de uma carta: por capítulo quando ela tem `capitulo` (o Chromebook não baixa o livro inteiro)
+  F.pacoteCarta = function (m, c) { return m.id + '-livro' + (c && c.capitulo ? '-' + c.capitulo : ''); };
+  // maior lista de desafios de uma missão (sorteada ou de livro): as frases "acertou N de primeira"
+  F.maxDesafiosMissao = function () {
+    var max = Reino.config.desafiosPorSala;
+    (Reino.materias || []).forEach(function (m) { m.salas.forEach(function (s) { if (s.ordem === 'livro') max = Math.max(max, s.desafios.length); }); });
+    return max;
   };
   F.fraseComLacuna = function (f) { return f.antes + ' ______' + (/^[.,!?]/.test(f.depois) ? '' : ' ') + f.depois; };
 
@@ -154,7 +187,7 @@
     Object.keys(F.fixas).forEach(function (k) { add(cru(F.fixas, k), k === 'verdadeiroOuFalso' ? 'narradora' : 'claude', 'geral'); });
     Object.keys(F.medalhas).forEach(function (k) { add(F.medalhas[k].titulo, 'claude', 'geral'); add(cru(F.medalhas[k], 'frase'), 'claude', 'geral'); });
     ['comum', 'raro', 'epico', 'lendario'].forEach(function (r) { add(F.ovo(r), 'claude', 'geral'); });
-    for (var n = 0; n <= Reino.config.desafiosPorSala; n++) add(F.acertouDePrimeira(n), 'claude', 'geral');
+    for (var n = 0, maxMissao = F.maxDesafiosMissao(); n <= maxMissao; n++) add(F.acertouDePrimeira(n), 'claude', 'geral');
     for (var a = 0; a <= Reino.config.perguntasTreino; a++) add(F.acertouDeTotal(a, Reino.config.perguntasTreino), 'claude', 'geral');
     if (Reino.Unicornios) { var ini = /** @type {any} */ (Reino.Unicornios.def('inicial')); add(ini.fraseCrua || ini.frase, 'unicornio', 'geral'); }
 
@@ -175,8 +208,7 @@
       for (var f = 1; f <= m.salas.length; f++) add(F.treinoBloqueado(m, f), 'claude', p.extra);
       (m.livro || []).forEach(function (c) {
         add(F.pistaLivro(c.titulo), 'claude', p.extra);
-        add(c.titulo, 'narradora', p.livro);
-        add(c.texto, 'narradora', p.livro);
+        F.segmentosCarta(c).forEach(function (t) { add(t, 'narradora', F.pacoteCarta(m, c)); });
       });
       m.salas.forEach(function (s) {
         add(s.nome, 'claude', p.extra);

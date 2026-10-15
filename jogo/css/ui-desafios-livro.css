@@ -1,0 +1,110 @@
+/* Tipos de desafio do livro do 4º bimestre: a caixa de digitar com a fileira de acentos (desafios/campo-texto.js),
+   marcar (circular, sublinhar e pintar no texto), digitar (completar escrevendo) e escrever (resposta escrita).
+   Contrato: docs/contratos/quarto-bimestre.md §12. Sem animação: o erro parado e o tremor vêm de ui-animacoes.css. */
+
+/* ---------- caixa de digitar e fileira de acentos ---------- */
+.campo-texto-caixa { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.campo-texto {
+  width: 100%; min-height: 48px; padding: 8px 10px;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--branco); color: var(--tinta);
+  font: inherit; font-size: var(--texto); line-height: var(--entrelinha);
+  -webkit-user-select: text; user-select: text;
+}
+textarea.campo-texto { display: block; resize: vertical; }
+/* palavra do livro em maiúsculas (digitar colado: PA__ARINHO): o que ela digita aparece em maiúsculas */
+.campo-texto[data-maiusculas="sim"] { text-transform: uppercase; }
+.campo-texto[readonly] { cursor: default; }
+.tudo-certo .campo-texto { background: var(--certo-fundo); border-color: var(--certo); }
+/* erro de item parado (ui.md §10.19.2): a caixa errada fica marcada até ela mexer de novo (o texto continua) */
+.campo-texto.item-erro.item-erro { background: var(--erro-fundo); border-color: var(--erro); }
+/* 12 letras com acento: uma fileira a partir de 640 px, duas de 6 no celular; cada tecla com 44 px, o alvo do dedo */
+.acentos { display: grid; grid-template-columns: repeat(12, minmax(44px, 1fr)); gap: 6px; max-width: 624px; }
+.acento {
+  min-height: 44px; padding: 4px 0; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-pequeno);
+  background: var(--papel-quente); box-shadow: var(--sombra-pequena); --degrau: 2px; font-size: var(--texto); line-height: 1;
+}
+@media (max-width: 639.98px) { .acentos { grid-template-columns: repeat(6, minmax(44px, 1fr)); } }
+
+/* ---------- marcar: o texto com cada palavra e sinal tocável ---------- */
+.marcar { display: flex; flex-direction: column; gap: 12px; }
+.marcar-legenda { display: flex; flex-wrap: wrap; gap: 8px; }
+.marcar-cor {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 6px 12px;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--branco);
+  box-shadow: var(--sombra-pequena); --degrau: 2px; font-size: var(--texto); text-align: left;
+}
+.marcar-cor[aria-pressed="true"] { background: var(--ambar-claro); outline: var(--borda-fina) solid var(--roxo); outline-offset: 2px; }
+.marcar-amostra { flex: none; width: 24px; height: 24px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-pequeno); background: var(--marca-cor, var(--roxo)); }
+/* isolation: a marca (::before, z-index -1) fica atrás das letras e na frente do papel */
+.marcar-texto {
+  isolation: isolate; padding: 10px 12px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel);
+  font-size: var(--texto); line-height: var(--entrelinha);
+}
+.marcar-linha { min-height: 48px; }
+.marcar-linha-vazia { min-height: 16px; }
+/* palavra e sinal colados ("esperto.") não se separam na quebra de linha */
+.marcar-grupo { white-space: nowrap; }
+/* cada token com 44 px de altura (24 da letra e 10 + 10 de folga) e 8 px de cada lado. A marca (contorno e fundo) é o
+   ::before, atrás das letras: não mexe no texto nem na área de toque */
+.marcar-token {
+  position: relative; display: inline-block; margin: 2px 0; padding: 10px 8px; border-radius: var(--canto);
+  line-height: var(--entrelinha); cursor: pointer; touch-action: manipulation;
+}
+.marcar-token::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; border: var(--borda-grossa) solid transparent; border-radius: inherit;
+  pointer-events: none;
+}
+/* rótulo do item ("a)"): só texto, na mesma altura dos tokens */
+.marcar-rotulo { display: inline-block; margin: 2px 0; padding: 10px 0 10px 8px; }
+/* sinal solto: 32 px de largura para o dedo */
+.marcar-sinal { min-width: 32px; text-align: center; }
+/* emenda de palavra e sinal colados ("dia," e não "dia ,"; "“Oi"): as letras ficam como no texto, as caixas encostadas
+   sem se cobrir. A marca avança 2 px no vizinho (atrás das letras). O sinal colado tem 4 px do lado de fora e mais 12 px
+   de toque além da caixa (::after; 32 px no todo), sem chegar à palavra; o que fica entre dois colados ("?” ") tem só a
+   largura dele */
+.marcar-grupo > .marcar-token + .marcar-token { padding-left: 0; }
+.marcar-grupo > .marcar-token:has(+ .marcar-token) { padding-right: 0; }
+.marcar-grupo > .marcar-token + .marcar-token::before { left: -2px; }
+.marcar-grupo > .marcar-token:has(+ .marcar-token)::before { right: -2px; }
+.marcar-grupo > .marcar-sinal:is(.marcar-token + *, :has(+ .marcar-token)) { min-width: 0; }
+.marcar-grupo > .marcar-token + .marcar-sinal:last-child { padding-right: 4px; }
+.marcar-grupo > .marcar-sinal:first-child:has(+ .marcar-token) { padding-left: 4px; }
+.marcar-grupo > .marcar-token + .marcar-sinal:last-child::after,
+.marcar-grupo > .marcar-sinal:first-child:has(+ .marcar-token)::after { content: ""; position: absolute; top: 0; bottom: 0; width: 12px; }
+.marcar-grupo > .marcar-token + .marcar-sinal:last-child::after { left: 100%; }
+.marcar-grupo > .marcar-sinal:first-child:has(+ .marcar-token)::after { right: 100%; }
+.marcar-circular .marcar-token[aria-pressed="true"] { border-radius: var(--redondo); }
+.marcar-circular .marcar-token[aria-pressed="true"]::before { border-color: var(--marca-cor, var(--roxo)); }
+.marcar-sublinhar .marcar-token[aria-pressed="true"] { border-radius: 0; }
+.marcar-sublinhar .marcar-token[aria-pressed="true"]::before { border-bottom-color: var(--marca-cor, var(--roxo)); }
+/* pintar: o fundo na cor da marca; o texto em --branco quando a cor é escura (marcar.js escolhe pelo contraste) */
+.marcar-pintar .marcar-token[aria-pressed="true"]::before { background: var(--marca-cor, var(--roxo-texto)); border-color: var(--marca-cor, var(--roxo-texto)); }
+.marcar-pintar:not(.marcar-com-cores) .marcar-token[aria-pressed="true"], .marcar-pintar .marcar-token.marca-escura[aria-pressed="true"] { color: var(--branco); }
+/* marca errada parada (ui.md §10.19.2), por cima de qualquer marca */
+.marcar-token.item-erro.item-erro { color: var(--tinta); }
+.marcar-token.item-erro.item-erro::before { background: var(--erro-fundo); border-color: var(--erro); }
+.tudo-certo .marcar-texto { background: var(--certo-fundo); }
+/* letras grandes no celular: o texto fica em 16 (palavra comprida não vaza da linha) */
+@media (max-width: 480px) { .letras-grandes .marcar-texto { font-size: var(--texto-aux); } }
+
+/* ---------- digitar: completar escrevendo ---------- */
+.digitar { display: flex; flex-direction: column; gap: 12px; }
+.digitar-item {
+  display: flex; align-items: center; gap: 12px; padding: 10px 14px;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel);
+}
+.digitar-frase { flex: 1; min-width: 0; line-height: var(--entrelinha); }
+.digitar-frase .campo-texto-caixa { display: inline-flex; vertical-align: middle; max-width: 100%; margin: 2px 0; }
+/* a caixa do tamanho da maior resposta (--letras, do JS; a fonte pixel tem 1ch por letra) */
+.digitar .campo-texto { width: calc(var(--letras, 8) * 1ch + 24px); max-width: 100%; text-align: center; }
+.digitar-palavra { white-space: nowrap; }
+.digitar-img { flex: none; display: inline-flex; align-items: center; justify-content: center; min-height: 64px; line-height: 1; }
+.tudo-certo .digitar-item { background: var(--certo-fundo); }
+@media (max-width: 480px) { .digitar-item { padding: 10px; gap: 8px; } }
+
+/* ---------- escrever: resposta escrita ---------- */
+.escrever { display: flex; flex-direction: column; gap: 12px; }
+.escrever-contador { align-self: flex-end; color: var(--tinta-suave); font-size: var(--texto-aux); }
+.escrever-modelo { padding: 12px 14px; border: var(--borda-fina) solid var(--certo); border-radius: var(--canto-grande); background: var(--certo-fundo); }
+.escrever-modelo p { margin: 0; }
+.escrever-modelo .escrever-modelo-titulo { margin-bottom: 6px; color: var(--certo); font-size: var(--texto-aux); }

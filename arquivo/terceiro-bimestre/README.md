@@ -9,6 +9,10 @@ conteúdo registra a ordem histórica para testes. Os pacotes de voz substituíd
 em `jogo/js/voz/`, sem entrar na distribuição ativa. O registro compartilhado (`materias/registro.js`) continua
 no jogo e não é conteúdo de um bimestre.
 
+O layout da Casa das Palavras do 3º bimestre (`jogo/js/interiores/portugues/portugues.js`: Cozinha, Horta, Circo,
+Porto e Parque) também está aqui, intacto: no jogo, o térreo da casa passou a ser da Língua Portuguesa do 4º
+bimestre (`docs/contratos/quarto-bimestre.md` §7). A fixture histórica dos testes carrega este no lugar do novo.
+
 No jogo ativo resta um catálogo sem perguntas, respostas ou cartas de estudo. Ele conserva IDs, nomes,
 recompensas, sprites e metadados para manter progresso, dinheiro derivado, conquistas e identidade dos
 prédios. Consulte `docs/contratos/bimestres.md` para os pontos de acesso bloqueados e os cuidados ao adicionar
