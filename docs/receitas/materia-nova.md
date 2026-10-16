@@ -28,8 +28,8 @@ index. À mão: o conteúdo da apostila (todo `(preencher)`; os validadores recu
 | (opcional) prédio próprio | `predio-novo.md`; sem ele entra o interior padrão (`jogo/js/interiores/padrao.js`) |
 | (opcional) cavaleiro do treino | `personagem-novo.md` com `paraMateria: '<m>'` |
 
-Automático (não mexa): ala no Castelo, baias no Estábulo, interior padrão, pergunta surpresa, dinheiro
-(`Reino.config.valorPorMateria`: cada sala vale um valor redondo, de R$ 0,50 em R$ 0,50, e a sobra é bônus ao
+Automático (não mexa): ala no Castelo, baias no Estábulo, interior padrão, pergunta surpresa, Robux
+(`Reino.config.valorPorMateria`: cada sala vale um valor redondo, de 10 em 10 Robux, e a sobra é bônus ao
 completar a matéria; `P.valorSala`/`P.bonusMateria` em `progresso-regras.js`), menu Lugares.
 
 ## Passo a passo

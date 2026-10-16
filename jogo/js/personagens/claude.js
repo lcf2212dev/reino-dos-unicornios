@@ -39,7 +39,7 @@
     ],
     dica: [
       'Sabia? Quem termina a prova primeiro não ganha medalha. Quem ACERTA é que ganha! 🥇',
-      'A medalha de ouro da escola vale R$100! E ela vem das respostas certas, não da pressa. 💛',
+      'A medalha de ouro da escola vale 2.500 Robux! E ela vem das respostas certas, não da pressa. 💛',
       'Os campeões revisam a prova do começo ao fim antes de entregar.',
       'O tempo da prova é todo seu. Terminar por último está tudo bem!',
       'Na prova, leia cada pergunta duas vezes: uma para entender e outra para ter certeza.',

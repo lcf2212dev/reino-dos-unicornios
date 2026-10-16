@@ -1,5 +1,5 @@
 /* Utilidades comuns (Reino.util): $, $$, el (monta DOM), preencher, colar/colado (quebra de linha), semEn, embaralhar, sortear, clamp,
-   reais, reaisCurto, copia, esperar, hoje, o barramento de eventos (on, emit), reduzMovimentoSistema (o "reduzir movimento" do aparelho, seguido na
+   robux, robuxNumero, copia, esperar, hoje, o barramento de eventos (on, emit), reduzMovimentoSistema (o "reduzir movimento" do aparelho, seguido na
    hora pelo ouvinte de change; o js/nucleo/congelar.js vem antes) e animar() (Animações ligadas E sem reduzir). */
 window.Reino = window.Reino || {};
 
@@ -163,8 +163,9 @@ Reino.util = (function () {
   }
   function sortear(arr, chave) { return arr[Math.floor(sorteador(chave)() * arr.length)]; }
   function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
-  function reais(v) { return 'R$ ' + (Math.round(v * 100) / 100).toFixed(2).replace('.', ','); }
-  function reaisCurto(v) { return 'R$' + (Number.isInteger(v) ? v : v.toFixed(2).replace('.', ',')); }
+  // o prêmio das salas (Robux, sempre inteiro): "1.500" (ponto no milhar) e "1.500 Robux"
+  function robuxNumero(v) { return String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
+  function robux(v) { return robuxNumero(v) + ' Robux'; }
   function copia(o) { return JSON.parse(JSON.stringify(o)); }
   function esperar(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
 
@@ -197,7 +198,7 @@ Reino.util = (function () {
 
   var api = { $: $, $$: $$, el: el, preencher: preencher, semEn: semEn, embaralhar: embaralhar, sortear: sortear, clamp: clamp,
     colar: colar, colado: colado, preencherColado: preencherColado,
-    reais: reais, reaisCurto: reaisCurto, copia: copia, esperar: esperar, hoje: hoje, on: on, emit: emit,
+    robux: robux, robuxNumero: robuxNumero, copia: copia, esperar: esperar, hoje: hoje, on: on, emit: emit,
     reduzMovimentoSistema: !!(mqReduz && mqReduz.matches), animar: animar };
   function aoMudarReduz() { api.reduzMovimentoSistema = !!mqReduz.matches; }
   try {

@@ -153,7 +153,7 @@
     var hud = U.$('#hud');
     if (!hud || !hud.firstChild || !est()) return;
     // os chips em linha: ícone ao lado do número, sem quebra (D8A-02, ui-hud.css)
-    U.preencher(U.$('.chip-dinheiro', hud), '💰 ' + U.reais(P.dinheiroTotal()));
+    U.preencher(U.$('.chip-dinheiro', hud), '💰 ' + U.robuxNumero(P.dinheiroTotal()));
     U.preencher(U.$('.chip-estrelas', hud), '⭐ ' + P.estrelas());
     var ovos = P.ovosParaChocar();
     var cOvos = U.$('.chip-ovos', hud);

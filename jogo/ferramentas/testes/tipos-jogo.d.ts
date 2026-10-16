@@ -44,7 +44,7 @@ interface EstadoSave {
   /** itemId → true (enfeite comprado ou acessório ganho/comprado) */
   loja: { [itemId: string]: boolean };
   usando: Usando;
-  /** materiaId → valor já pago pelos pais (R$) */
+  /** materiaId → valor já pago pelos pais, em reais como sempre (P.pago e P.registrarPagamento falam em Robux: R$ 1 = 25) */
   pago: { [materiaId: string]: number };
   ajustes: Ajustes;
   ritualVisto: boolean;

@@ -34,7 +34,7 @@
 .hud-botoes > .hud-nuvem { display: grid; place-items: center; flex: none; width: 32px; align-self: center; pointer-events: none; }
 .hud-botoes > .hud-nuvem[hidden] { display: none; }
 /* chips do HUD em linha (D8A-02): ícone de 32 px ao lado do número, sem quebra, 48 px de altura (44 no celular); o
-   espaço entre palavras vai à metade ("R$ 36,00", "5 ovos!": 8 px em vez de 16, a letra da Press Start 2P é larga) */
+   espaço entre palavras vai à metade ("5 ovos!": 8 px em vez de 16, a letra da Press Start 2P é larga) */
 .chip {
   display: inline-flex; align-items: center; gap: 4px;
   min-height: 48px; padding: 4px 12px;
@@ -112,7 +112,7 @@ body.sem-animacao .aura-dia { animation: none; }
 
 /* Celular: chips compactos e botões em uma fileira abaixo da montaria. */
 @media (max-width: 480px) {
-  /* coluna de chips com largura fixa (D13-01): 7,5 letras ("R$ 36,00", "5 ovos!", a Aura compacta "12,3 mil") +
+  /* coluna de chips com largura fixa (D13-01): 7,5 letras ("5 ovos!", a Aura compacta "12,3 mil"; os Robux, "1.500", cabem com folga) +
      ícone, folgas e borda. O cartão da montaria fica com o resto da largura (194 px em 390), e os botões (tela
      cheia, 📷, álbum, ajustes) descem para uma fileira embaixo dele: assim cabem as barras e o nome em 2 linhas de 12 px
      ("Rainha da Torre" são 15 letras = 180 px). Nada aqui muda com o valor da Aura */
@@ -129,7 +129,7 @@ body.sem-animacao .aura-dia { animation: none; }
   .chip-montaria:not(.com-cuidados) .montaria-cresce { flex: 1 1 0; }
   .hud-botoes { gap: 4px; }
   .hud-botoes > button { width: 44px; height: 44px; }
-  /* e os chips de cima em 24 px partem "R$ 36,00" e "5 ovos!" e cobrem meia tela: descem para 16 (e 12) também */
+  /* e os chips de cima em 24 px partem "5 ovos!" e cobrem meia tela: descem para 16 (e 12) também */
   :root.letras-grandes .hud-topo { --texto: 16px; --texto-aux: 12px; }
 }
 .chip-montaria { border-top: var(--borda-grossa) solid var(--ouro); }

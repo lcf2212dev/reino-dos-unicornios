@@ -1,5 +1,5 @@
 /* Baú do Tesouro: uma caverna do tesouro aconchegante dentro do baú, guardada pelo Dragãozinho Tostão.
-   As pilhas de moedas crescem com o dinheiro das salas feitas (derivado de Reino.Progresso).
+   As pilhas de moedas (douradas, como as dos Robux) crescem com os Robux das salas feitas (derivado de Reino.Progresso).
    Só dados e os objetos temáticos; as falas moram em bau/falas.js. */
 (function () {
   var R = window.Reino;
@@ -14,11 +14,11 @@
   function moeda(ctx, x, y) { ret(ctx, x, y, 5, 3, K); ret(ctx, x + 1, y + 1, 3, 1, C.ouro); ret(ctx, x + 1, y, 3, 1, C.ouro3); }
   function moedaPe(ctx, x, y) { ret(ctx, x, y, 4, 4, K); ret(ctx, x + 1, y + 1, 2, 2, C.ouro); ret(ctx, x + 1, y + 1, 1, 1, C.ouro3); }
   function gema(ctx, x, y, c) { ret(ctx, x, y + 1, 5, 2, K); ret(ctx, x + 1, y, 3, 4, K); ret(ctx, x + 1, y + 1, 3, 2, c); ret(ctx, x + 1, y + 1, 1, 1, C.branco); }
-  // dinheiro em centavos (derivado das salas feitas)
+  // Robux ganhos (derivados das salas feitas)
   function materia(id) { return (R.materias || []).find(function (m) { return m.id === id; }) || null; }
-  function centMateria(P, id) { var m = materia(id); return m && P && P.dinheiroMateria ? Math.round(P.dinheiroMateria(m) * 100) : 0; }
-  function centTotal(P) { return P && P.dinheiroTotal ? Math.round(P.dinheiroTotal() * 100) : 0; }
-  function valorMax() { return ((R.config && R.config.valorPorMateria) || 20) * 100; }
+  function robuxMateria(P, id) { var m = materia(id); return m && P && P.dinheiroMateria ? P.dinheiroMateria(m) : 0; }
+  function robuxTotal(P) { return P && P.dinheiroTotal ? P.dinheiroTotal() : 0; }
+  function valorMax() { return (R.config && R.config.valorPorMateria) || 500; }
   // ícone da matéria em pixel (desenho de js/arte/icones/ ou o emoji reduzido a pixels)
   function iconeMateria(m) {
     if (!m || !window.PA || typeof document === 'undefined') return null;
@@ -27,10 +27,10 @@
 
   /* ================= PILHAS E MONTE (derivados do progresso) ================= */
   I.objeto('bau-pilha', { w: 1, h: 1, topo: 30, solido: true, alto: true,
-    chave: function (P, o) { return 'bp:' + v(o, 'materia', '') + ':' + centMateria(P, v(o, 'materia', '')); },
+    chave: function (P, o) { return 'bp:' + v(o, 'materia', '') + ':' + robuxMateria(P, v(o, 'materia', '')); },
     desenhar: function (ctx, px, py, o, P) {
       var cx = px + 8, id = v(o, 'materia', ''), m = materia(id);
-      var f = Math.max(0, Math.min(1, centMateria(P, id) / valorMax()));
+      var f = Math.max(0, Math.min(1, robuxMateria(P, id) / valorMax()));
       var camadas = Math.round(f * 12);   // até 12 moedas de 2 px
       // pratinho dourado
       elipse(ctx, cx, py + 3, 7, 2, K); elipse(ctx, cx, py + 3, 6, 1, C.ouro2);
@@ -50,12 +50,12 @@
       } else ret(ctx, px + 6, py + 7, 4, 4, C.ouro);
     } });
   I.objeto('bau-monte', { w: 3, h: 1, topo: 20, solido: true, alto: true,
-    chave: function (P) { return 'bm:' + centTotal(P); },
+    chave: function (P) { return 'bm:' + robuxTotal(P); },
     desenhar: function (ctx, px, py, o, P) {
-      // escala fixa de 2 matérias (R$40): com uma matéria nova, o mesmo dinheiro não pode parecer menor.
-      // Cheio a partir de R$40 (hoje há R$60 possíveis)
+      // escala fixa de 2 matérias (1.000 Robux): com uma matéria nova, os mesmos Robux não podem parecer menos.
+      // Cheio a partir de 1.000 Robux
       var cx = px + 24, max = valorMax() * 2;
-      var f = Math.max(0, Math.min(1, centTotal(P) / max));
+      var f = Math.max(0, Math.min(1, robuxTotal(P) / max));
       var alt = 3 + Math.round(f * 16), larg = 16 + Math.round(f * 26);
       // base de pedra
       elipse(ctx, cx, py + 11, 22, 4, K); elipse(ctx, cx, py + 10, 21, 3, '#8a6aa0'); elipse(ctx, cx, py + 9, 19, 2, '#a888bc');
@@ -169,7 +169,8 @@
       elipse(ctx, cx, py + 8, 7, 7, K); elipse(ctx, cx, py + 8, 6, 6, c); elipse(ctx, cx - 2, py + 6, 2, 3, D.clarear(c, 0.3));
       ret(ctx, cx - 3, py - 1, 7, 3, K); ret(ctx, cx - 2, py, 5, 1, c);
       ret(ctx, cx - 4, py + 2, 9, 2, K); ret(ctx, cx - 3, py + 2, 7, 1, C.vermelho);
-      D.matriz(ctx, cx - 2, py + 7, ['.yy.', 'y...', '.yy.', '...y', '.yy.'], { y: C.ouro2 });
+      // a marca do saco é o símbolo do Robux em miniatura (o anel e o quadradinho do meio), não mais o "$"
+      D.matriz(ctx, cx - 2, py + 7, ['.yyy.', 'y...y', 'y.y.y', 'y...y', '.yyy.'], { y: C.ouro2 });
       moedaPe(ctx, px + 12, py + 11);
     } });
   I.objeto('bau-taca', { w: 1, h: 1, topo: 12, solido: true, alto: true,
@@ -266,7 +267,7 @@
   var pilhas = [], entre = [], corrFaixa = [];
   function fileiraY(f) { return f === 0 ? 2 : 2 + f * 2; }
   MATS.forEach(function (m, i) {
-    var o = inter('pilha', 'Moedas de ' + String(m.nome).replace(/[«»]/g, ''),
+    var o = inter('pilha', 'Robux de ' + String(m.nome).replace(/[«»]/g, ''),
       { tipo: 'bau-pilha', x: XS[i % POR], y: fileiraY(Math.floor(i / POR)), var: { materia: m.id }, acao: TELA });
     o.junto = true;              // pilhas de propósito uma atrás da outra, encostadas na parede
     o.chave = 'pilha-' + m.id;   // mesma fala para todas as pilhas
@@ -312,7 +313,7 @@
     { tipo: 'bau-gemas', x: 17, y: 2 },
     // meio: o monte, a balança, o ninho do dragão
     { tipo: 'tapete-redondo', x: 7, y: 5, w: 3, h: 2 },   // debaixo do monte (linhas 5–6)
-    inter('monte', 'Monte de moedas', { tipo: 'bau-monte', x: 7, y: 5, acao: TELA }),
+    inter('monte', 'Monte de Robux', { tipo: 'bau-monte', x: 7, y: 5, acao: TELA }),
     { tipo: 'pilha-livros', x: 4, y: 2 }, { tipo: 'bau-saco', x: 0, y: 4, var: { cor: '#a8b8d8' } },
     inter('balanca', 'Balança de moedas', { tipo: 'bau-balanca', x: 3, y: 4 }),
     { tipo: 'caixote', x: 2, y: 4, var: { item: 'moedas' } }, { tipo: 'almofada', x: 4, y: 4, var: { cor: '#ffd34d' } },

@@ -7,8 +7,8 @@ window.Reino = window.Reino || {};
 
 Reino.config = {
   nomeJogadora: 'Mariana',
-  valorPorMateria: 20,        // R$ por matéria revisada: cada sala vale um valor redondo (R$ 0,50 em R$ 0,50) e a sobra é bônus ao completar
-  medalhaEscolaValor: 100,    // prêmio da medalha de ouro da prova real
+  valorPorMateria: 500,       // Robux por matéria revisada: cada sala vale um valor redondo (de 10 em 10 Robux) e a sobra é bônus ao completar
+  medalhaEscolaValor: 2500,   // Robux da medalha de ouro da prova real (combinado fora do jogo; era R$ 100, na troca de R$ 20 = 500 Robux)
   pinPais: '2026',            // troque aqui o PIN da Área dos Pais
   desafiosPorSala: 6,
   desafiosSalaLivro: 14,      // sala de livro (ordem: 'livro', 4º bimestre): todos os desafios, na ordem; no máximo este tanto

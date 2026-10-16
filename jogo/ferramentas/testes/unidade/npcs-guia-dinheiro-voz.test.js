@@ -1,6 +1,6 @@
-// O resumo do guia ("Já ganhou R$ X! 💰") tem de estar em NPCs.falasPossiveis (é dali que as vozes são gravadas).
-// Com 6 salas (Matemática) a sala vale R$ 3,00 (P.valorSala, de R$ 0,50 em R$ 0,50), mas o npcs-falas.js enumera
-// valorPorMateria / salas (R$ 3,33, R$ 6,67…): a fala dita no balão não tem voz gravada. Save 100% sintético.
+// O resumo do guia ("Já ganhou 80 Robux! 💰") tem de estar em NPCs.falasPossiveis (é dali que as vozes são gravadas).
+// Com 6 salas (Matemática) a sala vale 80 Robux (P.valorSala, de 10 em 10) e a última traz o bônus: se o
+// npcs-falas.js enumerasse valorPorMateria / salas (83, 166…), a fala dita no balão não teria voz. Save 100% sintético.
 const { test } = require('node:test');
 const assert = require('assert');
 const Jogo = require('./ajudantes/terceiro-bimestre');

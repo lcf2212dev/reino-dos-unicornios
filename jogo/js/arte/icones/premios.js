@@ -1,4 +1,4 @@
-/* dados: desenhos dos ícones de prêmios e magia (unicórnio, estrelas, medalhas, dinheiro, ovo, corações, festa) e os do menu (menu:<id>; menu:album é o botão do álbum no HUD).
+/* dados: desenhos dos ícones de prêmios e magia (unicórnio, estrelas, medalhas, Robux e dinheiro, ovo, corações, festa) e os do menu (menu:<id>; menu:album é o botão do álbum no HUD).
    Formato em js/arte/icones/icones.js (que cria window.ICONES). */
 Object.assign(window.ICONES, {
   "🦄": { n: "unicórnio", p: { k: '#3a2446', w: '#ffffff', g: '#e8dcf5', s: '#c9b3e6', y: '#ffe066', o: '#f0a04a', r: '#ff7eb6', p: '#b58cff', b: '#5fb4ff', e: '#2a1838', c: '#ffb3d9', n: '#b88ab8' }, d: [
@@ -181,23 +181,24 @@ Object.assign(window.ICONES, {
     '...kpyyyyyypk...',
     '...kkkkkkkkkk...',
   ] },
-  "💰": { n: "saco de dinheiro", p: { k: '#3a2446', y: '#f7d7a8', l: '#fff0d6', o: '#d9a066', r: '#ff6b8a', G: '#2e9e5a' }, d: [
-    '....kkk..kkk....',
-    '....kyykkyyk....',
-    '.....kyyyyk.....',
-    '......kyyk......',
-    '.....krrrrk.....',
-    '....kyyyyyyk....',
-    '...kylyyGyyyk...',
-    '..kylyyGGGGyok..',
-    '.kylyyGyGyyyyok.',
-    '.kylyyyGGGyyyok.',
-    'kylyyyyyGyGyyyok',
-    'kyyyyyGGGGyyyyok',
-    'kyyyyyyyGyyyyook',
-    '.kyyyyyyyyyyook.',
-    '..kooooooooook..',
-    '...kkkkkkkkkk...',
+  // o 💰 é o símbolo do Robux, o prêmio das salas (pedido do Leandro, 2026-10-16): hexágono dourado com o quadrado no meio
+  "💰": { n: "Robux", p: { k: '#3a2446', y: '#ffd34d', l: '#fff6a8', o: '#e08a1e' }, d: [
+    '.......kk.......',
+    '.....kklykk.....',
+    '...kklllyyykk...',
+    '.kkllllkkyyyykk.',
+    '.klllkkkkkkyyok.',
+    '.klyklllllokyok.',
+    '.klyklyyyyokyok.',
+    '.klyklyyyyokyok.',
+    '.klyklyyyyokyok.',
+    '.kyyklyyyyokyok.',
+    '.kyykyoooookyok.',
+    '.kyyykkkkkkoook.',
+    '.kkyyyykkooookk.',
+    '...kkyyyoookk...',
+    '.....kkyokk.....',
+    '.......kk.......',
   ] },
   "💸": { n: "dinheiro voando", p: { k: '#3a2446', w: '#ffffff', s: '#cbbde0', g: '#8fe0a0', l: '#c8f5d0', G: '#4fb070', D: '#2d7a4a' }, d: [
     '................',

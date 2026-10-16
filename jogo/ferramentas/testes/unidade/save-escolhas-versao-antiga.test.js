@@ -64,7 +64,7 @@ test('versão nova troca (montaria, nome, som) e a antiga grava depois sem saber
   const { N, V, dN, dV, banco, andar, sincronizar } = await aparelhos();
   andar(1000);
   N.P.estado().montaria = 'h-cartinha'; N.P.estado().unis.inicial.nome = 'Pipoca'; N.P.estado().ajustes.som = false;
-  N.P.salvar(); N.P.registrarPagamento('historia', 2);   // 4 → 2 (os pais corrigem)
+  N.P.salvar(); N.P.registrarPagamento('historia', 2 * 25);   // 4 → 2 (os pais corrigem)
   await dN.enviar();
   andar(5000);
   V.P.estado().salas.h3 = { vezes: 1, melhor: 5, feita: V.relogio.agora };   // conquista feita na versão antiga
@@ -92,14 +92,14 @@ test('versão nova troca (montaria, nome, som) e a antiga grava depois sem saber
 
 test('pago corrigido para menos entre dois aparelhos da versão nova, com a antiga fechada: vale a correção', async () => {
   const { N, V, dN, dV, andar, sincronizar } = await aparelhos();
-  andar(1000); N.P.registrarPagamento('historia', 40); await dN.enviar();
+  andar(1000); N.P.registrarPagamento('historia', 40 * 25); await dN.enviar();
   await sincronizar();
   assert.strictEqual(V.P.pago('historia'), 40);
   // a versão antiga sai de cena (a aba recarrega com a versão nova: mesmo save, mesma loja)
   const V2 = montar({ loja: V.guardado, agora: V.relogio.agora }); V2.P.carregar();
   assert.ok(V2.P.estado().pagoEm.historia > 0, 'o carimbo que a antiga guardou chega à nova');
   andar(1000); V2.relogio.agora = N.relogio.agora;
-  N.P.registrarPagamento('historia', 4);
+  N.P.registrarPagamento('historia', 4 * 25);
   assert.strictEqual(V2.P.mesclar(copia(V2.P.estado()), copia(N.P.estado())).pago.historia, 4);
   assert.strictEqual(V2.P.mesclar(copia(N.P.estado()), copia(V2.P.estado())).pago.historia, 4);
 });

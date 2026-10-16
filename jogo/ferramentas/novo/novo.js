@@ -217,13 +217,12 @@ const TIPOS = {
   },
 };
 // aviso do valor por sala, que muda quando a matéria ganha sala: a mesma regra de progresso-regras.js
-// (cada sala de R$ 0,50 em R$ 0,50, arredondado para baixo; a sobra é bônus ao completar a matéria)
+// (em Robux: cada sala de 10 em 10, arredondado para baixo; a sobra é bônus ao completar a matéria)
 function valorSala(total, n, antes) {
-  const reais = (c) => 'R$ ' + (c / 100).toFixed(2).replace('.', ',');
-  const conta = (k) => { const sala = Math.floor(total * 100 / k / 50) * 50; return { sala, bonus: total * 100 - sala * k }; };
+  const conta = (k) => { const sala = Math.floor(total / k / 10) * 10; return { sala, bonus: total - sala * k }; };
   const agora = conta(n), velho = antes ? conta(antes) : null;
-  const texto = (c) => reais(c.sala) + ' por sala' + (c.bonus ? ' + ' + reais(c.bonus) + ' de bônus ao completar' : '');
-  return `valor: ${texto(agora)} (R$ ${total} em ${n} salas${velho ? `; antes, com ${antes}, ${texto(velho)}` : ''})`;
+  const texto = (c) => c.sala + ' Robux por sala' + (c.bonus ? ' + ' + c.bonus + ' de bônus ao completar' : '');
+  return `valor: ${texto(agora)} (${total} Robux em ${n} salas${velho ? `; antes, com ${antes}, ${texto(velho)}` : ''})`;
 }
 // --dentro: o `lugar` da matéria vira { nome, artigo, dentro, interior } (sem rect nem desenho no mapa)
 function lugarDentro(txt, op) {

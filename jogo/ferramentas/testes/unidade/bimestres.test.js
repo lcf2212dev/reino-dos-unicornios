@@ -76,7 +76,7 @@ test('espera conserva dinheiro derivado, recompensas e save; surpresa fica vazia
   e.pago[m.id] = 7;
   const antes = JSON.stringify(e);
   assert.equal(P.dinheiroMateria(m), R.config.valorPorMateria);
-  assert.equal(P.pago(m.id), 7);
+  assert.equal(P.pago(m.id), 7 * 25, 'o save guarda reais; P.pago fala em Robux');
   assert.ok(P.defUni(m.unicornios[0].id));
   Jogo.carregar(ctx, Jogo.scripts({ nomes: ['sistemas/surpresa'] }));
   assert.equal(R.Surpresa.proximaPergunta(), null);

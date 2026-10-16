@@ -22,7 +22,8 @@ Gravação, amostras e conferência: só quem integra (o orquestrador). NUNCA ab
 
 ## Conferência (passo 4 do `npm run vozes`)
 - 1ª passada com o `small`; as reprovadas passam de novo com o `medium` (`--segunda <modelo>`, `--sem-segunda`).
-- Algarismo x extenso, "R$ 16" x "16 reais", "pro" x "para o", colmeia x coméia contam como iguais.
+- Algarismo x extenso, "R$ 16" x "16 reais", "pro" x "para o", colmeia x coméia, cem x sem contam como iguais.
+  Palavra que o transcritor não conhece ("Robux" saía "robôs") vai de dica: `VOCABULARIO` do `conferir-vozes.py`.
 - `✘` (frase de 3+ palavras): voz errada de verdade. Reescreva ou use `PRONUNCIA` no `listar-falas.js` e grave de novo.
 - `?` palavra solta (1–2 palavras, ex.: opções de desafio): não reprova; ouça o arquivo listado. Só regrave se soar errado.
 - Reconferir avulsos: `.vozes/venv-whisper/bin/python jogo/ferramentas/vozes/conferir-vozes.py --amostras arq.mp3=texto --modelo medium`

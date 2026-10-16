@@ -1,5 +1,5 @@
 /* INGLÊS — 2º ano, English Volume 2, 3º bimestre, Chapters 6 a 10.
-   Lugar no reino: Torre do Relógio. 5 salas que dividem os R$20.
+   Lugar no reino: Torre do Relógio. 5 salas que dividem os 500 Robux.
    Convenção: todo trecho em inglês fica entre « e » (a voz inglesa lê só esse pedaço).
    Salas em i1.js, i2.js, i3.js, i4.js, i5.js e o livro em livro.js (carregados antes deste arquivo, na ordem do
    manifesto; ver conteudo/materias/registro.js). */

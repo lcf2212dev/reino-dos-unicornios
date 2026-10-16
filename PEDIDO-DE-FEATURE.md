@@ -68,7 +68,7 @@ Textos:     [ ] escrevo eu (abaixo)   [ ] escreva você
 Voz nova:   [ ] crie uma nova (o Claude escolhe e confere)   [ ] use uma que já existe
 
 # 9. Prêmios
-(estrelas, R$, unicórnio, acessório, enfeite. Se não tiver prêmio, escreva "nenhum")
+(estrelas, Robux, unicórnio, acessório, enfeite. Se não tiver prêmio, escreva "nenhum")
 Caminho por persistência (ganhar sem acertar tudo):   [ ] você propõe   [ ] quero assim:
 
 # 10. Números que eu quero poder mudar depois
@@ -106,7 +106,7 @@ republicar o claude.ai.
 - **Ícones:** todo emoji na tela vira desenho em pixel art.
 - **Vozes:** toda fala nova ganha voz gravada e conferida.
 - **Tamanhos:** funciona no celular, no tablet e no notebook, e também pelo teclado (Tab, Enter e Esc).
-- **Dinheiro:** vale a regra de hoje (R$ 20 por matéria, salas de R$ 0,50 em R$ 0,50). Só muda se você pedir.
+- **Robux:** vale a regra de hoje (500 Robux por matéria, salas de 10 em 10 Robux). Só muda se você pedir.
 - **Números:** os ajustáveis ficam em `jogo/js/nucleo/config.js`.
 
 ## O que o Claude faz com o pedido
