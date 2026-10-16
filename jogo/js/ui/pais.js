@@ -63,7 +63,7 @@
     Reino.materias.forEach(function (m) {
       var ganho = P.dinheiroMateria(m), pago = P.pago(m.id);
       total += ganho; pagoTotal += pago;
-      var campo = el('input.campo-pago#pago-' + m.id, { type: 'number', min: 0, step: 1, value: pago, 'aria-label': 'Valor já pago de ' + m.nome });
+      var campo = el('input.campo-pago#pago-' + m.id, { type: 'number', min: 0, step: 1, value: pago, 'aria-label': 'Robux já pagos de ' + m.nome });
       var salvar = el('button.btn-pequeno', { type: 'button' }, 'Registrar pagamento');
       salvar.addEventListener('click', function () { P.registrarPagamento(m.id, parseFloat(campo.value) || 0); UI.fecharTela(pn.tela); abrirPais(true, m.id); });
       var t = est().treinos[m.id] || {};
