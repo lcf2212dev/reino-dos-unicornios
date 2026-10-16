@@ -75,4 +75,5 @@
 # 4001467 = Língua Portuguesa do 4º bimestre na Casa das Palavras (térreo), Museu como na main
 # 0a3f0f1 = placa do cômodo não cobre o tapete de saída nem a escada
 # c7ee099 = Língua Portuguesa do 4º bimestre na Casa das Palavras
-c7ee099
+# c699e4a = prêmio em Robux: chip e ícone do HUD, telas do prêmio, Baú, falas e área dos pais
+c699e4a
