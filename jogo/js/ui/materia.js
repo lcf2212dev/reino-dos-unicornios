@@ -11,7 +11,7 @@
     var ganho = P.dinheiroMateria(materia), total = Reino.config.valorPorMateria;
     return el('div.barra-dinheiro',
       el('div.barra-dinheiro-trilho', el('span', { style: { width: Math.round(ganho / total * 100) + '%' } })),
-      el('span.barra-dinheiro-texto', U.colado(U.reais(ganho) + ' de ' + U.reais(total))));
+      el('span.barra-dinheiro-texto', U.colado(U.robuxNumero(ganho) + ' de ' + U.robux(total))));   // "300 de 500 Robux"
   }
 
   // "Capítulo 10 • 📗 Aprendizagem" (sem capítulo, só o livro); no celular o livro desce para a 2ª linha, sem o "•"
@@ -30,7 +30,7 @@
     var feitas = P.salasFeitas(materia);
     c.appendChild(el('div.lugar-guia', PA.paraDOM(PA.claude(0), 4, 'claude-intro'),
       guia(feitas === 0 ? materia.guia : (feitas === materia.salas.length ? 'Você completou todas as salas! Agora pode treinar no Castelo da Medalha ou jogar as salas de novo para ganhar os raros. 🌈' : 'Você já fez ' + feitas + ' de ' + materia.salas.length + ' salas. Vamos para a próxima?'))));
-    // livro no alto, compacto, ao lado da barra de dinheiro (D7-15)
+    // livro no alto, compacto, ao lado da barra dos Robux (D7-15)
     // no notebook baixo só o ícone fica à vista (o nome no aria-label e no title)
     var livro = el('button.btn-livro-topo', { type: 'button', 'aria-label': nomeLivro(materia), title: nomeLivro(materia) }, '📖 ', el('span.livro-topo-nome', nomeLivro(materia)));
     livro.addEventListener('click', function () { UI.abrirLivro(materia); });
@@ -40,7 +40,7 @@
     var medirTopo = function () { c.style.scrollPaddingTop = topo.offsetHeight + 'px'; };
     if (window.ResizeObserver) new ResizeObserver(medirTopo).observe(topo); else setTimeout(medirTopo, 0);
     // a sobra da divisão em valores redondos vem como bônus ao completar (progresso-regras.js)
-    if (P.bonusMateria(materia) > 0 && !P.materiaCompleta(materia)) c.appendChild(el('p.bau-nota', '🎁 Completando todas as salas: + ' + U.reais(P.bonusMateria(materia)).replace(' ', '\u00a0') + ' de bônus!'));
+    if (P.bonusMateria(materia) > 0 && !P.materiaCompleta(materia)) c.appendChild(el('p.bau-nota', '🎁 Completando todas as salas: + ' + U.robux(P.bonusMateria(materia)).replace(' ', '\u00a0') + ' de bônus!'));
     var lista = el('div.lista-salas.lista-materia');
     // a 1ª sala não feita ganha o "✨ Próxima!" e a lista rola até ela (D7-14)
     var iProx = feitas === 0 ? -1 : materia.salas.findIndex(function (s) { return !(est().salas[s.id] || {}).feita; });
@@ -59,14 +59,14 @@
           // "Próxima!" com mais chips: no celular só o ✨ (a borda grossa já marca), para não quebrar a linha
           : i === iProx && (temRaro || reg.calma) ? el('span.chip-mini.nova', { 'aria-label': 'Próxima' }, '✨', el('span.rotulo-chip', ' Próxima!'))
           : el('span.chip-mini.nova', i === iProx ? '✨ Próxima!' : '✨ Nova!'),
-        el('span.chip-mini', '💰 ' + U.reais(P.valorSala(materia))),
+        el('span.chip-mini', '💰 ' + U.robuxNumero(P.valorSala(materia))),   // o 💰 é o símbolo do Robux
         temRaro ? el('span.chip-mini.raro', { 'aria-label': 'Raro' }, '💙', el('span.rotulo-chip', ' Raro')) : null,
         reg.calma ? el('span.chip-mini.calma', { 'aria-label': 'Calma' }, '🌙', el('span.rotulo-chip', ' Calma')) : null);
       // .ir-embaixo: no celular o "Entrar →"/"Jogar de novo" desce para a linha de baixo (senão
       // espreme o nome da sala numa coluna de uma letra)
       var b = el('button.sala-card.ir-embaixo' + (reg.feita ? '.feita' : '') + (i === iProx ? '.proxima' : ''), { type: 'button',
         // nome acessível inteiro: no celular a ação e os rótulos ficam só no desenho
-        'aria-label': (i + 1) + '. ' + s.nome + ', ' + (reg.feita ? 'feita' : i === iProx ? 'próxima' : 'nova') + ', ' + U.reais(P.valorSala(materia)) +
+        'aria-label': (i + 1) + '. ' + s.nome + ', ' + (reg.feita ? 'feita' : i === iProx ? 'próxima' : 'nova') + ', ' + U.robux(P.valorSala(materia)) +
           (temRaro ? ', raro' : '') + (reg.calma ? ', calma' : '') + ', ' + (L ? L.nome : 'apostila') + ' ' + s.paginas + ', ' + (reg.feita ? 'jogar de novo' : 'entrar') },
         el('span.sala-emoji', s.emoji),
         el('span.sala-info', el('b', hifenizar((i + 1) + '. ' + s.nome)), el('small', (L ? L.emoji : '📖') + ' ' + s.paginas), chips),
@@ -119,7 +119,7 @@
     pn.conteudo.appendChild(UI.cartaoPlano());
     pn.conteudo.appendChild(el('div.aviso-medalha',
       el('span.aviso-medalha-icone', '🥇'),
-      el('p', 'A medalha de ouro da escola vale ', el('b', U.colado(U.reais(Reino.config.medalhaEscolaValor))), U.colado('! Ela vem das respostas certas, não de terminar primeiro.'))));
+      el('p', 'A medalha de ouro da escola vale ', el('b', U.colado(U.robux(Reino.config.medalhaEscolaValor))), U.colado('! Ela vem das respostas certas, não de terminar primeiro.'))));
     pn.conteudo.appendChild(el('p.plano-frase', U.colado(Reino.Genero.genero('"Terminar por último é coisa de {campeã|campeão}!" 🏆'))));
     var ouvir = el('button.btn-grande.btn-principal', { type: 'button' }, '🔊 Ouvir o plano');
     ouvir.addEventListener('click', function () { Reino.Som.falar(Reino.Falas.fixas.plano, { voz: 'claude' }); });
@@ -131,7 +131,7 @@
     var pn = painel('lugar', 'Castelo da Medalha', { icone: '🏰' });
     var c = pn.conteudo;
     c.appendChild(el('div.lugar-guia', PA.paraDOM(PA.claude(0), 4, 'claude-intro'),
-      guia('Aqui é o treino para a prova de verdade: sem relógio, com revisão antes de entregar. Na escola, a medalha de ouro vale ' + U.reais(Reino.config.medalhaEscolaValor) + '! 🥇')));
+      guia('Aqui é o treino para a prova de verdade: sem relógio, com revisão antes de entregar. Na escola, a medalha de ouro vale ' + U.robux(Reino.config.medalhaEscolaValor) + '! 🥇')));
     var lista = el('div.lista-salas');
     Reino.materias.filter(function (m) { return !Reino.Bimestres.emEspera(m); }).forEach(function (m) {
       var completa = P.materiaCompleta(m);

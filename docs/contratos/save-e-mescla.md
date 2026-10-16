@@ -120,6 +120,9 @@ Para cada comida, `compradas` = maior e `usadas` = maior (contador estragado con
    mora em `perfil` (§12). Sem corte/modelo salvo vale o padrão do sexo (`PA.VISUAL_SEXO`). A Mariana sem `perfil.sexo`
    é menina: o sprite dela não muda.
 ### 4.7 `pago` (carimbos em `pagoEm`)
+`pago` continua em REAIS, como antes do prêmio em Robux (2026-10-16): o formato não muda (§2) e um aparelho da
+versão antiga lê o mesmo número. `P.pago` e `P.registrarPagamento` falam em Robux pela troca fixa R$ 1 = 25 Robux
+(R$ 20 por matéria = 500), em `progresso-regras.js`; o save guarda Robux ÷ 25.
 1. `P.registrarPagamento` carimba a matéria (`max(Date.now(), carimbo + 1)`), também para menos (40 → 4).
 2. Mesmo ciclo: vale o valor do lado com o carimbo maior; sem carimbo nos dois ou empate = o maior (a regra de antes).
    `pagoEm`: por chave, o maior. Ciclo diferente: `pago` e `pagoEm` vêm do ciclo mais novo; o Novo ciclo apaga `pagoEm`.

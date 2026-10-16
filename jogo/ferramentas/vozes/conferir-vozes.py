@@ -10,7 +10,8 @@
 #     Fala de 1–2 palavras que ainda diverge não reprova: vai para "conferir de ouvido" (o transcritor erra
 #     palavra solta, ex.: "peixe" → "Deixe"), com o arquivo para ouvir.
 # A comparação aceita algarismo x extenso ("3, 2, 1" = "três, dois, um"), "R$ 16" = "16 reais",
-# "pro/pra" = "para o/para a" e colmeia/coméia.
+# "pro/pra" = "para o/para a" e colmeia/coméia. Palavra que o transcritor não conhece (VOCABULARIO, ex.: Robux) vai
+# de dica (initial_prompt) quando está no texto: sem ela, a voz certa sai transcrita como outra palavra.
 #   python3 jogo/ferramentas/vozes/conferir-vozes.py --amostras a.mp3[=texto] b.mp3[=texto] [--lingua pt]
 #     transcreve arquivos avulsos (ex.: amostras-de-voz/); com =texto, compara também
 # Sem gravação nova, sai com 0 sem carregar o faster-whisper. Sem faster-whisper instalado, explica como instalar.
@@ -44,7 +45,8 @@ DEZENAS = ' dez vinte trinta quarenta cinquenta sessenta setenta oitenta noventa
 CENTENAS = ' cento duzentos trezentos quatrocentos quinhentos seiscentos setecentos oitocentos novecentos'.split(' ')
 # o transcritor escreve diferente do texto, mas a voz disse certo
 TROCAS = {'pro': 'para o', 'pra': 'para a', 'pros': 'para os', 'pras': 'para as', 'uma': 'um', 'catorze': 'quatorze',
-          'comeia': 'colmeia', 'comeias': 'colmeias', 'real': 'reais', 'duas': 'dois'}
+          'comeia': 'colmeia', 'comeias': 'colmeias', 'real': 'reais', 'duas': 'dois',
+          'sem': 'cem'}   # homófonos: "Já ganhou 100 Robux" saía "sem" (vale para os dois lados, a voz diz igual)
 
 
 def extenso(n):
@@ -101,8 +103,18 @@ def carregar_modelo(nome=None):
     return WhisperModel(modelo, device='cpu', compute_type='int8')
 
 
-def transcrever(modelo, arquivo, lingua):
-    partes, _ = modelo.transcribe(arquivo, language=lingua, beam_size=5, vad_filter=False)
+# sem a dica, "Robux" saía "robôs" ou "Rollbooks" com a voz certa; com ela, as 4 vozes testadas batem e as grafias que
+# soam errado ("Róbux", com ó aberto: "robos") continuam reprovando (conferido por transcrição em 2026-10-16)
+VOCABULARIO = {'robux': 'Robux é a moeda do Roblox.'}
+
+
+def dica(texto):
+    achadas = [d for p, d in VOCABULARIO.items() if re.search(r'\b' + p + r'\b', texto or '', re.I)]
+    return ' '.join(achadas) or None
+
+
+def transcrever(modelo, arquivo, lingua, texto=None):
+    partes, _ = modelo.transcribe(arquivo, language=lingua, beam_size=5, vad_filter=False, initial_prompt=dica(texto))
     return ' '.join(p.text.strip() for p in partes).strip()
 
 
@@ -114,7 +126,7 @@ def amostras():
     ruins = 0
     for item in itens:
         arq, _, texto = item.partition('=')
-        ouvido = transcrever(modelo, arq, lingua)
+        ouvido = transcrever(modelo, arq, lingua, texto)
         if texto:
             nota = parecido(texto, ouvido)
             ok = nota >= limite
@@ -140,7 +152,7 @@ def novas():
     ruins = []
     for n, f in enumerate(lista, 1):
         arq = os.path.join(GERADO, 'vozes-cache', indice[f['chave']])
-        ouvido = transcrever(modelo, arq, 'en' if f['voz'] in inglesas else 'pt')
+        ouvido = transcrever(modelo, arq, 'en' if f['voz'] in inglesas else 'pt', f['fala'])
         nota = parecido(f['fala'], ouvido)
         if nota < limite:
             ruins.append((f, ouvido, nota))
@@ -152,7 +164,7 @@ def novas():
         maior, de_novo = carregar_modelo(segunda), []
         for f, ouvido, nota in ruins:
             arq = os.path.join(GERADO, 'vozes-cache', indice[f['chave']])
-            ouvido = transcrever(maior, arq, 'en' if f['voz'] in inglesas else 'pt')
+            ouvido = transcrever(maior, arq, 'en' if f['voz'] in inglesas else 'pt', f['fala'])
             nota = parecido(f['fala'], ouvido)
             if nota < limite:
                 de_novo.append((f, ouvido, nota))

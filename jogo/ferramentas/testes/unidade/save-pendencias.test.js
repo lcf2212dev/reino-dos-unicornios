@@ -72,20 +72,21 @@ test('montaria escolhida num aparelho não volta atrás quando o outro grava os 
   assert.strictEqual(A.P.estado().montaria, 'h-cartinha', 'a montaria que ela escolheu continua');
 });
 
-// `pago` se juntava pelo MAIOR (progresso-mescla.js): o 40 digitado por engano voltava do outro aparelho
+// `pago` se juntava pelo MAIOR (progresso-mescla.js): o 1000 digitado por engano voltava do outro aparelho
+// (em Robux, como os pais digitam; o save guarda reais: R$ 4 = 100 Robux)
 test('pagamento corrigido para menos na Área dos pais vale nos dois aparelhos', async () => {
-  const { A, B, dA, dB } = await doisAparelhos();   // pago.historia = 4 no save sintético
+  const { A, B, dA, dB } = await doisAparelhos();   // pago.historia = 4 (reais) no save sintético
   A.relogio.agora += 1000; B.relogio.agora += 1000;
-  A.P.registrarPagamento('historia', 40);          // notebook do pai: 40 por engano (ui/pais.js)
+  A.P.registrarPagamento('historia', 1000);        // notebook do pai: 1000 por engano (ui/pais.js)
   await dA.enviar();
-  await dB.conferir(); await dB.enviar();          // o tablet recebe o 40
-  assert.strictEqual(B.P.pago('historia'), 40);
+  await dB.conferir(); await dB.enviar();          // o tablet recebe o 1000
+  assert.strictEqual(B.P.pago('historia'), 1000);
   A.relogio.agora += 30000; B.relogio.agora += 30000;
-  A.P.registrarPagamento('historia', 4);           // o pai corrige
+  A.P.registrarPagamento('historia', 100);         // o pai corrige
   await dA.enviar();
-  assert.strictEqual(A.P.pago('historia'), 4, 'no notebook, logo depois de corrigir, vale 4');
+  assert.strictEqual(A.P.pago('historia'), 100, 'no notebook, logo depois de corrigir, vale 100');
   await dB.conferir(); await dB.enviar();
   await dA.conferir(); await dA.enviar();
-  assert.strictEqual(B.P.pago('historia'), 4, 'o tablet fica com a correção do pai');
-  assert.strictEqual(A.P.pago('historia'), 4, 'o notebook não volta para 40');
+  assert.strictEqual(B.P.pago('historia'), 100, 'o tablet fica com a correção do pai');
+  assert.strictEqual(A.P.pago('historia'), 100, 'o notebook não volta para 1000');
 });

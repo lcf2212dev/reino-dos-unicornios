@@ -1,6 +1,6 @@
 /* MATEMÁTICA — 2º ano, Volume 3, Capítulos 8 e 9 (pp. 32 a 80 da apostila).
    Capítulo 8, "Tempo e probabilidade" (pp. 32 a 54); Capítulo 9, "Multiplicação" (pp. 55 a 80).
-   Lugar no reino: Torre dos Números, na faixa do meio, à direita da praça. 6 salas: R$ 3,00 cada + R$ 2,00 de bônus.
+   Lugar no reino: Torre dos Números, na faixa do meio, à direita da praça. 6 salas: 80 Robux cada + 20 de bônus.
    Fotos em matérias/matemática/ (IMG_7492 a 7514): duas páginas por foto (a 7506 deitada, pp. 64–65).
    As respostas à mão são da Mariana e não são gabarito: cada conta foi conferida (ex.: p. 75, 8 + 16 = 24 mudas).
    Contagens de figuras que não dão para conferir na foto ficaram de fora.

@@ -99,7 +99,7 @@
     /* ---------- GALERIA DO ESPAÇO ---------- */
     sala(GAL.x, GAL.y, [
       // parede: o mapa das constelações, a prateleira baixa (atrás da placa do cômodo) e os quadros à direita.
-      // O mapa fica 2 tiles para dentro: no canto ele sumia sob as fichas da esquerda do HUD (R$, ⭐, 🥚),
+      // O mapa fica 2 tiles para dentro: no canto ele sumia sob as fichas da esquerda do HUD (💰 Robux, ⭐, 🥚),
       // e 3 para dentro ele ficava atrás da placa do cômodo
       { tipo: 'arandela', x: 1, y: 0 },
       cur('mapa-constelacoes', 'Mapa das constelações', 'constelacoes', { tipo: 'observatorio-mapa-constelacoes', x: 2, y: 0 }),

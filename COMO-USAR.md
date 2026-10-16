@@ -29,9 +29,9 @@ Guia de uso para o Leandro. As regras técnicas ficam em `docs/contratos/`.
 ## Área dos pais
 - Fica em ⚙️ Ajustes → 🔒 Área dos pais. PIN: **2026**. Para trocar, mude `pinPais` em `jogo/js/nucleo/config.js` e
   peça ao Claude para republicar.
-- Lá dá para ver quanto ela ganhou por matéria, quantos treinos fez, as tentativas e notas das provas, e registrar o
-  que já foi pago.
-- **🔄 Começar novo ciclo de provas:** zera salas, treinos, dinheiro e pagamentos. Mantém unicórnios, estrelas,
+- Lá dá para ver quantos Robux ela ganhou por matéria, quantos treinos fez, as tentativas e notas das provas, e
+  registrar quantos Robux já foram dados. O que foi registrado antes em reais aparece convertido (R$ 20 = 500 Robux).
+- **🔄 Começar novo ciclo de provas:** zera salas, treinos, Robux e pagamentos. Mantém unicórnios, estrelas,
   enfeites, despensa, fome, sede e banho.
 - **🗑️ Apagar tudo:** zera TODO o progresso, sem volta. Não use para resolver problema: peça ao Claude.
 
@@ -49,9 +49,8 @@ Guia de uso para o Leandro. As regras técnicas ficam em `docs/contratos/`.
 3. Prova nova: mande as fotos da folha e peça ao Claude. Ela vira uma sala na Escola do Reino, com 3 prêmios.
 
 ## Regras do jogo (resumo)
-- **Dinheiro:** cada matéria vale R$20, divididos entre as salas (cada sala paga uma vez). Hoje são 4 matérias
-  (História, Inglês, Português e Ciências), R$80 no total. Se a divisão não der redonda, a sobra vem de bônus ao
-  completar a matéria.
+- **Robux:** cada matéria vale 500 Robux, divididos entre as salas (cada sala paga uma vez, de 10 em 10 Robux). Se a
+  divisão não der redonda, a sobra vem de bônus ao completar a matéria. O 💰 do jogo é o símbolo do Robux.
 - **Unicórnios:** comum ao concluir uma sala; raro com a sala toda certa de primeira e sem pressa, **ou** jogando a
   sala 3 vezes; épicos pelo Treino da Medalha (ouro ou tudo certo), **ou** com 3 e 5 treinos terminados; lendário ao
   completar a matéria. Esse caminho da persistência faz nenhum unicórnio depender só de perfeição.
@@ -61,12 +60,12 @@ Guia de uso para o Leandro. As regras técnicas ficam em `docs/contratos/`.
 - **Provas (Escola do Reino):** as questões da folha da escola, uma por vez, sem mostrar certo ou errado no meio.
   Nota 10 dá um acessório: lendário na 1ª tentativa, raro na 2ª, comum depois. Ganhando um, os outros dois da mesma
   prova ficam à venda na Loja, com estrelas (comprar não conta como prêmio). A medalha de ouro da prova real
-  (R$100) é combinada fora do jogo.
+  (2.500 Robux) é combinada fora do jogo.
 - **Pergunta surpresa:** de vez em quando, com ela livre no mapa, o Claude faz uma pergunta de uma sala já feita.
   Acertou de primeira: 2 estrelas. Errou: vê a explicação, sem perder nada. Dá para desligar em ⚙️ Ajustes.
 - **Fome, sede e banho:** só a montaria gasta, e só com ela jogando. Com fome ou sede baixa, anda mais devagar;
   sujinho não fica lento. Comida se compra com estrelas na Pet Shop (sempre com confirmação); água e banho são de
-  graça lá dentro. Nada disso tira XP, dinheiro ou unicórnio.
+  graça lá dentro. Nada disso tira XP, Robux ou unicórnio.
 - **Nadar:** ela entra no lago e nada, mais devagar.
 - **Fotos e álbum:** o 📷 no topo tira foto do jogo (nunca da câmera). O álbum guarda até 40 fotos e fica só naquele
   aparelho. No claude.ai, para salvar ou compartilhar, ela segura o dedo na foto (no notebook, botão direito). No

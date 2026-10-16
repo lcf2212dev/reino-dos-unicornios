@@ -138,7 +138,7 @@ test('duas abas: quem recebe o evento só junta, não regrava (sem eco)', () => 
   const [A, B] = t.abas;
   A.P.carregar(); B.P.carregar();
   ['h3', 'h4', 'h5'].forEach((s) => { t.andar(1000); fazerSala(A, s, 5); t.entregar(); });
-  A.P.registrarPagamento('historia', 8); t.entregar();
+  A.P.registrarPagamento('historia', 8 * 25); t.entregar();
   A.P.novoCiclo(); t.entregar();
   assert.strictEqual(t.gravacoes[0], 5); assert.strictEqual(t.gravacoes[1] || 0, 0, 'a B regravou por eco');
   assert.strictEqual(B.P.estado().ciclo, 2);

@@ -1,5 +1,5 @@
 /* HISTÓRIA — 2º ano, Volume 3, Capítulos 8 e 9 (pp. 14–32 da apostila).
-   Lugar no reino: Museu das Memórias. 5 salas que dividem os R$20.
+   Lugar no reino: Museu das Memórias. 5 salas que dividem os 500 Robux.
    Salas em h1.js, h2.js, h3.js, h4.js, h5.js e o livro em livro.js (carregados antes deste arquivo, na ordem do
    manifesto; ver conteudo/materias/registro.js). */
 Reino.registrarMateria({

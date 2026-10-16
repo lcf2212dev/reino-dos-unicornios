@@ -777,13 +777,13 @@
    "fala": "Sabia? Quem termina a prova primeiro não ganha medalha. Quem acerta é que ganha!"
   },
   {
-   "chave": "660297d42l",
+   "chave": "6c5687f82r",
    "voz": "claude",
-   "texto": "A medalha de ouro da escola vale R$100! E ela vem das respostas certas, não da pressa.",
+   "texto": "A medalha de ouro da escola vale 2.500 Robux! E ela vem das respostas certas, não da pressa.",
    "pacotes": [
     "geral"
    ],
-   "fala": "A medalha de ouro da escola vale 100 reais! E ela vem das respostas certas, não da pressa."
+   "fala": "A medalha de ouro da escola vale 2.500 Robux! E ela vem das respostas certas, não da pressa."
   },
   {
    "chave": "41f322f11y",
@@ -12082,22 +12082,22 @@
    "fala": "Sou o Dragãozinho Tostão."
   },
   {
-   "chave": "7fa2dc6810",
+   "chave": "730581acw",
    "voz": "npc-tostao",
-   "texto": "Eu guardo suas moedinhas!",
+   "texto": "Eu guardo seus Robux!",
    "pacotes": [
     "interior-bau"
    ],
-   "fala": "Eu guardo suas moedinhas!"
+   "fala": "Eu guardo seus Robux!"
   },
   {
-   "chave": "486ea34410",
+   "chave": "927162c1z",
    "voz": "npc-tostao",
-   "texto": "Vamos contar suas moedas?",
+   "texto": "Vamos contar seus Robux?",
    "pacotes": [
     "interior-bau"
    ],
-   "fala": "Vamos contar suas moedas?"
+   "fala": "Vamos contar seus Robux?"
   },
   {
    "chave": "668448c913",
@@ -12118,13 +12118,13 @@
    "fala": "Vamos abrir o baú juntos?"
   },
   {
-   "chave": "f916ea2711",
+   "chave": "9eca213a10",
    "voz": "npc-tostao",
-   "texto": "Suas moedas estão seguras!",
+   "texto": "Seus Robux estão seguros!",
    "pacotes": [
     "interior-bau"
    ],
-   "fala": "Suas moedas estão seguras!"
+   "fala": "Seus Robux estão seguros!"
   },
   {
    "chave": "3ce4b1d215",
@@ -12190,22 +12190,22 @@
    "fala": "Os livros de contas do Tostão."
   },
   {
-   "chave": "bf5bafaby",
+   "chave": "235ea838v",
    "voz": "narradora",
-   "texto": "Ele anota cada moedinha!",
+   "texto": "Ele anota cada Robux!",
    "pacotes": [
     "interior-bau"
    ],
-   "fala": "Ele anota cada moedinha!"
+   "fala": "Ele anota cada Robux!"
   },
   {
-   "chave": "cffb526f11",
+   "chave": "28dfb45410",
    "voz": "narradora",
-   "texto": "O monte de todas as moedas!",
+   "texto": "O monte de todos os Robux!",
    "pacotes": [
     "interior-bau"
    ],
-   "fala": "O monte de todas as moedas!"
+   "fala": "O monte de todos os Robux!"
   },
   {
    "chave": "3b650e7d12",
@@ -12280,13 +12280,13 @@
    "fala": "Esta pilha é de uma matéria."
   },
   {
-   "chave": "a7bc9d6310",
+   "chave": "c0dbf7f4z",
    "voz": "narradora",
-   "texto": "Cada sala nova põe moedas!",
+   "texto": "Cada sala nova põe Robux!",
    "pacotes": [
     "interior-bau"
    ],
-   "fala": "Cada sala nova põe moedas!"
+   "fala": "Cada sala nova põe Robux!"
   },
   {
    "chave": "db1a1b871r",
@@ -15862,13 +15862,13 @@
    "fala": "Já fez uma de 25 salas."
   },
   {
-   "chave": "7c98c10ex",
+   "chave": "4994e41fy",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou R$ 0,50!",
+   "texto": "Já ganhou 20 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 0 reais e 50 centavos!"
+   "fala": "Já ganhou 20 Robux!"
   },
   {
    "chave": "e58d7b6c13",
@@ -15880,13 +15880,13 @@
    "fala": "Já fez duas de 25 salas."
   },
   {
-   "chave": "ec0039eax",
+   "chave": "f913cc89y",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou R$ 1,00!",
+   "texto": "Já ganhou 40 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 1 real!"
+   "fala": "Já ganhou 40 Robux!"
   },
   {
    "chave": "700d049213",
@@ -15898,13 +15898,13 @@
    "fala": "Já fez três de 25 salas."
   },
   {
-   "chave": "341d56d9x",
+   "chave": "0cbf62fby",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou R$ 1,50!",
+   "texto": "Já ganhou 60 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 1 real e 50 centavos!"
+   "fala": "Já ganhou 60 Robux!"
   },
   {
    "chave": "2b0d9dc115",
@@ -15916,13 +15916,13 @@
    "fala": "Já fez quatro de 25 salas."
   },
   {
-   "chave": "babef3b7x",
+   "chave": "39641505y",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou R$ 2,00!",
+   "texto": "Já ganhou 80 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 2 reais!"
+   "fala": "Já ganhou 80 Robux!"
   },
   {
    "chave": "27be097b14",
@@ -15934,13 +15934,13 @@
    "fala": "Já fez cinco de 25 salas."
   },
   {
-   "chave": "fc0ad6b0x",
+   "chave": "e3fd7724z",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou R$ 2,50!",
+   "texto": "Já ganhou 100 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 2 reais e 50 centavos!"
+   "fala": "Já ganhou 100 Robux!"
   },
   {
    "chave": "2073186513",
@@ -15952,13 +15952,13 @@
    "fala": "Já fez seis de 25 salas."
   },
   {
-   "chave": "9b9e6c34x",
+   "chave": "b746a8f2z",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou R$ 3,00!",
+   "texto": "Já ganhou 120 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 3 reais!"
+   "fala": "Já ganhou 120 Robux!"
   },
   {
    "chave": "0935b80013",
@@ -15970,13 +15970,13 @@
    "fala": "Já fez sete de 25 salas."
   },
   {
-   "chave": "e36bd743x",
+   "chave": "d9465960z",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou R$ 3,50!",
+   "texto": "Já ganhou 140 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 3 reais e 50 centavos!"
+   "fala": "Já ganhou 140 Robux!"
   },
   {
    "chave": "e384b7fe13",
@@ -15988,13 +15988,13 @@
    "fala": "Já fez oito de 25 salas."
   },
   {
-   "chave": "979b42c9x",
+   "chave": "2a76af0ez",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou R$ 4,00!",
+   "texto": "Já ganhou 160 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 4 reais!"
+   "fala": "Já ganhou 160 Robux!"
   },
   {
    "chave": "f726b67f13",
@@ -16006,13 +16006,13 @@
    "fala": "Já fez nove de 25 salas."
   },
   {
-   "chave": "4f7e25dax",
+   "chave": "6f13106cz",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou R$ 4,50!",
+   "texto": "Já ganhou 180 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 4 reais e 50 centavos!"
+   "fala": "Já ganhou 180 Robux!"
   },
   {
    "chave": "b54ba76212",
@@ -16024,13 +16024,13 @@
    "fala": "Já fez dez de 25 salas."
   },
   {
-   "chave": "c87aeabex",
+   "chave": "0328f5fbz",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou R$ 5,00!",
+   "texto": "Já ganhou 200 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 5 reais!"
+   "fala": "Já ganhou 200 Robux!"
   },
   {
    "chave": "665b799113",
@@ -16042,13 +16042,13 @@
    "fala": "Já fez onze de 25 salas."
   },
   {
-   "chave": "872f07c5x",
+   "chave": "ef7d5f89z",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou R$ 5,50!",
+   "texto": "Já ganhou 220 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 5 reais e 50 centavos!"
+   "fala": "Já ganhou 220 Robux!"
   },
   {
    "chave": "7468552d13",
@@ -16060,13 +16060,13 @@
    "fala": "Já fez doze de 25 salas."
   },
   {
-   "chave": "170d586bx",
+   "chave": "3ffe771fz",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou R$ 6,00!",
+   "texto": "Já ganhou 240 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 6 reais!"
+   "fala": "Já ganhou 240 Robux!"
   },
   {
    "chave": "ae73140314",
@@ -16078,13 +16078,13 @@
    "fala": "Já fez treze de 25 salas."
   },
   {
-   "chave": "cef03b7cx",
+   "chave": "14c0fd9dz",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou R$ 6,50!",
+   "texto": "Já ganhou 260 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 6 reais e 50 centavos!"
+   "fala": "Já ganhou 260 Robux!"
   },
   {
    "chave": "915dc27716",
@@ -16096,13 +16096,13 @@
    "fala": "Já fez catorze de 25 salas."
   },
   {
-   "chave": "ec8d5ac8x",
+   "chave": "60c233a3z",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou R$ 7,00!",
+   "texto": "Já ganhou 280 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 7 reais!"
+   "fala": "Já ganhou 280 Robux!"
   },
   {
    "chave": "0c349a1915",
@@ -16114,13 +16114,13 @@
    "fala": "Já fez quinze de 25 salas."
   },
   {
-   "chave": "ab9129afx",
+   "chave": "4b3f18caz",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou R$ 7,50!",
+   "texto": "Já ganhou 300 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 7 reais e 50 centavos!"
+   "fala": "Já ganhou 300 Robux!"
   },
   {
    "chave": "2f5ea78a18",
@@ -16132,13 +16132,13 @@
    "fala": "Já fez dezesseis de 25 salas."
   },
   {
-   "chave": "8de2752dx",
+   "chave": "3a0f27dcz",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou R$ 8,00!",
+   "texto": "Já ganhou 320 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 8 reais!"
+   "fala": "Já ganhou 320 Robux!"
   },
   {
    "chave": "730e3e9f18",
@@ -16150,13 +16150,13 @@
    "fala": "Já fez dezessete de 25 salas."
   },
   {
-   "chave": "0edf0b06x",
+   "chave": "16c35306z",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou R$ 8,50!",
+   "texto": "Já ganhou 340 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 8 reais e 50 centavos!"
+   "fala": "Já ganhou 340 Robux!"
   },
   {
    "chave": "838293cd16",
@@ -16168,13 +16168,13 @@
    "fala": "Já fez dezoito de 25 salas."
   },
   {
-   "chave": "a8a294a2x",
+   "chave": "6d3ec938z",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou R$ 9,00!",
+   "texto": "Já ganhou 360 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 9 reais!"
+   "fala": "Já ganhou 360 Robux!"
   },
   {
    "chave": "848fcfd117",
@@ -16186,13 +16186,13 @@
    "fala": "Já fez dezenove de 25 salas."
   },
   {
-   "chave": "f0bfb191x",
+   "chave": "c27dd6a2z",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou R$ 9,50!",
+   "texto": "Já ganhou 380 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 9 reais e 50 centavos!"
+   "fala": "Já ganhou 380 Robux!"
   },
   {
    "chave": "86b6d90d14",
@@ -16204,13 +16204,13 @@
    "fala": "Já fez vinte de 25 salas."
   },
   {
-   "chave": "c470754cy",
+   "chave": "7743bba1z",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou R$ 10,00!",
+   "texto": "Já ganhou 400 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 10 reais!"
+   "fala": "Já ganhou 400 Robux!"
   },
   {
    "chave": "1e2b287611",
@@ -16222,13 +16222,13 @@
    "fala": "Já fez 21 de 25 salas."
   },
   {
-   "chave": "4b50c27by",
+   "chave": "bddae653z",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou R$ 10,50!",
+   "texto": "Já ganhou 420 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 10 reais e 50 centavos!"
+   "fala": "Já ganhou 420 Robux!"
   },
   {
    "chave": "161a1a4511",
@@ -16240,13 +16240,13 @@
    "fala": "Já fez 22 de 25 salas."
   },
   {
-   "chave": "917b6f4fy",
+   "chave": "f0327975z",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou R$ 11,00!",
+   "texto": "Já ganhou 440 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 11 reais!"
+   "fala": "Já ganhou 440 Robux!"
   },
   {
    "chave": "e77021a011",
@@ -16258,13 +16258,13 @@
    "fala": "Já fez 23 de 25 salas."
   },
   {
-   "chave": "527869e8y",
+   "chave": "a11d94f7z",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou R$ 11,50!",
+   "texto": "Já ganhou 460 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 11 reais e 50 centavos!"
+   "fala": "Já ganhou 460 Robux!"
   },
   {
    "chave": "5fd1f6bf11",
@@ -16276,13 +16276,13 @@
    "fala": "Já fez 24 de 25 salas."
   },
   {
-   "chave": "e05e6a02y",
+   "chave": "7a041779z",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou R$ 12,00!",
+   "texto": "Já ganhou 480 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 12 reais!"
+   "fala": "Já ganhou 480 Robux!"
   },
   {
    "chave": "5048530c10",
@@ -16294,13 +16294,13 @@
    "fala": "Você fez as 25 salas!"
   },
   {
-   "chave": "6ae2d357y",
+   "chave": "b8a87218z",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou R$ 20,00!",
+   "texto": "Já ganhou 500 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 20 reais!"
+   "fala": "Já ganhou 500 Robux!"
   },
   {
    "chave": "84ee6a611a",
@@ -16645,13 +16645,13 @@
    "fala": "Já fez uma de 25 salas."
   },
   {
-   "chave": "29e0e8fax",
+   "chave": "aadd976by",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou R$ 0,50!",
+   "texto": "Já ganhou 20 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 0 reais e 50 centavos!"
+   "fala": "Já ganhou 20 Robux!"
   },
   {
    "chave": "a428ede813",
@@ -16663,13 +16663,13 @@
    "fala": "Já fez duas de 25 salas."
   },
   {
-   "chave": "0cbeeedex",
+   "chave": "1d72fb4dy",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou R$ 1,00!",
+   "texto": "Já ganhou 40 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 1 real!"
+   "fala": "Já ganhou 40 Robux!"
   },
   {
    "chave": "0e5b263613",
@@ -16681,13 +16681,13 @@
    "fala": "Já fez três de 25 salas."
   },
   {
-   "chave": "cb730be5x",
+   "chave": "4c94b1cfy",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou R$ 1,50!",
+   "texto": "Já ganhou 60 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 1 real e 50 centavos!"
+   "fala": "Já ganhou 60 Robux!"
   },
   {
    "chave": "2d843b0515",
@@ -16699,13 +16699,13 @@
    "fala": "Já fez quatro de 25 salas."
   },
   {
-   "chave": "5a14280bx",
+   "chave": "20a43ae1y",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou R$ 2,00!",
+   "texto": "Já ganhou 80 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 2 reais!"
+   "fala": "Já ganhou 80 Robux!"
   },
   {
    "chave": "91f3101f14",
@@ -16717,13 +16717,13 @@
    "fala": "Já fez cinco de 25 salas."
   },
   {
-   "chave": "13343f9cx",
+   "chave": "31eecfc8z",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou R$ 2,50!",
+   "texto": "Já ganhou 100 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 2 reais e 50 centavos!"
+   "fala": "Já ganhou 100 Robux!"
   },
   {
    "chave": "89c5bfd913",
@@ -16735,13 +16735,13 @@
    "fala": "Já fez seis de 25 salas."
   },
   {
-   "chave": "d39741e8x",
+   "chave": "2c4eea96z",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou R$ 3,00!",
+   "texto": "Já ganhou 120 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 3 reais!"
+   "fala": "Já ganhou 120 Robux!"
   },
   {
    "chave": "9a7c85e413",
@@ -16753,13 +16753,13 @@
    "fala": "Já fez sete de 25 salas."
   },
   {
-   "chave": "129a474fx",
+   "chave": "7efaa96cz",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou R$ 3,50!",
+   "texto": "Já ganhou 140 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 3 reais e 50 centavos!"
+   "fala": "Já ganhou 140 Robux!"
   },
   {
    "chave": "fc94e9a213",
@@ -16771,13 +16771,13 @@
    "fala": "Já fez oito de 25 salas."
   },
   {
-   "chave": "15afa135x",
+   "chave": "a8172c1az",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou R$ 4,00!",
+   "texto": "Já ganhou 160 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 4 reais!"
+   "fala": "Já ganhou 160 Robux!"
   },
   {
    "chave": "7051e23b13",
@@ -16789,13 +16789,13 @@
    "fala": "Já fez nove de 25 salas."
   },
   {
-   "chave": "56fb842ex",
+   "chave": "e92df260z",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou R$ 4,50!",
+   "texto": "Já ganhou 180 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 4 reais e 50 centavos!"
+   "fala": "Já ganhou 180 Robux!"
   },
   {
    "chave": "dc8ba25612",
@@ -16807,13 +16807,13 @@
    "fala": "Já fez dez de 25 salas."
   },
   {
-   "chave": "3ce9cf0ax",
+   "chave": "4fe6101fz",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou R$ 5,00!",
+   "texto": "Já ganhou 200 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 5 reais!"
+   "fala": "Já ganhou 200 Robux!"
   },
   {
    "chave": "d62e988513",
@@ -16825,13 +16825,13 @@
    "fala": "Já fez onze de 25 salas."
   },
   {
-   "chave": "83c9b779x",
+   "chave": "24a8969dz",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou R$ 5,50!",
+   "texto": "Já ganhou 220 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 5 reais e 50 centavos!"
+   "fala": "Já ganhou 220 Robux!"
   },
   {
    "chave": "ca4dd0d113",
@@ -16843,13 +16843,13 @@
    "fala": "Já fez doze de 25 salas."
   },
   {
-   "chave": "fdc5c357x",
+   "chave": "13108efbz",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou R$ 6,00!",
+   "texto": "Já ganhou 240 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 6 reais!"
+   "fala": "Já ganhou 240 Robux!"
   },
   {
    "chave": "6964a2bf14",
@@ -16861,13 +16861,13 @@
    "fala": "Já fez treze de 25 salas."
   },
   {
-   "chave": "3f11a650x",
+   "chave": "ff64f889z",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou R$ 6,50!",
+   "texto": "Já ganhou 260 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 6 reais e 50 centavos!"
+   "fala": "Já ganhou 260 Robux!"
   },
   {
    "chave": "ebf690d316",
@@ -16879,13 +16879,13 @@
    "fala": "Já fez catorze de 25 salas."
   },
   {
-   "chave": "ec880154x",
+   "chave": "a56b6507z",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou R$ 7,00!",
+   "texto": "Já ganhou 280 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 7 reais!"
+   "fala": "Já ganhou 280 Robux!"
   },
   {
    "chave": "d5493cfd15",
@@ -16897,13 +16897,13 @@
    "fala": "Já fez quinze de 25 salas."
   },
   {
-   "chave": "b45635e3x",
+   "chave": "92c5406ez",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou R$ 7,50!",
+   "texto": "Já ganhou 300 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 7 reais e 50 centavos!"
+   "fala": "Já ganhou 300 Robux!"
   },
   {
    "chave": "5bdf2c0e18",
@@ -16915,13 +16915,13 @@
    "fala": "Já fez dezesseis de 25 salas."
   },
   {
-   "chave": "44ecfec1x",
+   "chave": "d6f8ba40z",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou R$ 8,00!",
+   "texto": "Já ganhou 320 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 8 reais!"
+   "fala": "Já ganhou 320 Robux!"
   },
   {
    "chave": "785a0e5318",
@@ -16933,13 +16933,13 @@
    "fala": "Já fez dezessete de 25 salas."
   },
   {
-   "chave": "3e0d7b12x",
+   "chave": "eee67352z",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou R$ 8,50!",
+   "texto": "Já ganhou 340 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 8 reais e 50 centavos!"
+   "fala": "Já ganhou 340 Robux!"
   },
   {
    "chave": "aa59ccd916",
@@ -16951,13 +16951,13 @@
    "fala": "Já fez dezoito de 25 salas."
   },
   {
-   "chave": "ebab2e96x",
+   "chave": "441ed504z",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou R$ 9,00!",
+   "texto": "Já ganhou 360 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 9 reais!"
+   "fala": "Já ganhou 360 Robux!"
   },
   {
    "chave": "713637c517",
@@ -16969,13 +16969,13 @@
    "fala": "Já fez dezenove de 25 salas."
   },
   {
-   "chave": "aaaefd7dx",
+   "chave": "4257d476z",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou R$ 9,50!",
+   "texto": "Já ganhou 380 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 9 reais e 50 centavos!"
+   "fala": "Já ganhou 380 Robux!"
   },
   {
    "chave": "14c40e7114",
@@ -16987,13 +16987,13 @@
    "fala": "Já fez vinte de 25 salas."
   },
   {
-   "chave": "057f0f88y",
+   "chave": "536767adz",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou R$ 10,00!",
+   "texto": "Já ganhou 400 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 10 reais!"
+   "fala": "Já ganhou 400 Robux!"
   },
   {
    "chave": "99cff8d211",
@@ -17005,13 +17005,13 @@
    "fala": "Já fez 21 de 25 salas."
   },
   {
-   "chave": "c482de6fy",
+   "chave": "31f59a2fz",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou R$ 10,50!",
+   "texto": "Já ganhou 420 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 10 reais e 50 centavos!"
+   "fala": "Já ganhou 420 Robux!"
   },
   {
    "chave": "890d1eb111",
@@ -17023,13 +17023,13 @@
    "fala": "Já fez 22 de 25 salas."
   },
   {
-   "chave": "2fff0d2by",
+   "chave": "1b6aaa99z",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou R$ 11,00!",
+   "texto": "Já ganhou 440 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 11 reais!"
+   "fala": "Já ganhou 440 Robux!"
   },
   {
    "chave": "129db7dc11",
@@ -17041,13 +17041,13 @@
    "fala": "Já fez 23 de 25 salas."
   },
   {
-   "chave": "e7e1f03cy",
+   "chave": "ba0327cbz",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou R$ 11,50!",
+   "texto": "Já ganhou 460 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 11 reais e 50 centavos!"
+   "fala": "Já ganhou 460 Robux!"
   },
   {
    "chave": "44e1ac9311",
@@ -17059,13 +17059,13 @@
    "fala": "Já fez 24 de 25 salas."
   },
   {
-   "chave": "e16c9f7ey",
+   "chave": "fe4d6a95z",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou R$ 12,00!",
+   "texto": "Já ganhou 480 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 12 reais!"
+   "fala": "Já ganhou 480 Robux!"
   },
   {
    "chave": "82ae660810",
@@ -17077,13 +17077,13 @@
    "fala": "Você fez as 25 salas!"
   },
   {
-   "chave": "a90a00f3y",
+   "chave": "f2dc5054z",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou R$ 20,00!",
+   "texto": "Já ganhou 500 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 20 reais!"
+   "fala": "Já ganhou 500 Robux!"
   },
   {
    "chave": "5b3fad5d1a",
@@ -17419,13 +17419,13 @@
    "fala": "Já fez uma de 25 salas."
   },
   {
-   "chave": "da99a8a9t",
+   "chave": "d7d9f04eu",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou R$ 0,50!",
+   "texto": "Já ganhou 20 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 0 reais e 50 centavos!"
+   "fala": "Já ganhou 20 Robux!"
   },
   {
    "chave": "5673716fz",
@@ -17437,13 +17437,13 @@
    "fala": "Já fez duas de 25 salas."
   },
   {
-   "chave": "2306c925t",
+   "chave": "8ee64f64u",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou R$ 1,00!",
+   "texto": "Já ganhou 40 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 1 real!"
+   "fala": "Já ganhou 40 Robux!"
   },
   {
    "chave": "46ca99adz",
@@ -17455,13 +17455,13 @@
    "fala": "Já fez três de 25 salas."
   },
   {
-   "chave": "6452ac1et",
+   "chave": "0bf1ad32u",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou R$ 1,50!",
+   "texto": "Já ganhou 60 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 1 real e 50 centavos!"
+   "fala": "Já ganhou 60 Robux!"
   },
   {
    "chave": "541d3b9e11",
@@ -17473,13 +17473,13 @@
    "fala": "Já fez quatro de 25 salas."
   },
   {
-   "chave": "78489304t",
+   "chave": "0dc7e608u",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou R$ 2,00!",
+   "texto": "Já ganhou 80 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 2 reais!"
+   "fala": "Já ganhou 80 Robux!"
   },
   {
    "chave": "4100f58a10",
@@ -17491,13 +17491,13 @@
    "fala": "Já fez cinco de 25 salas."
   },
   {
-   "chave": "c015fe13t",
+   "chave": "a31760dfv",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou R$ 2,50!",
+   "texto": "Já ganhou 100 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 2 reais e 50 centavos!"
+   "fala": "Já ganhou 100 Robux!"
   },
   {
    "chave": "0806544az",
@@ -17509,13 +17509,13 @@
    "fala": "Já fez seis de 25 salas."
   },
   {
-   "chave": "e2794387t",
+   "chave": "49206d5dv",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou R$ 3,00!",
+   "texto": "Já ganhou 120 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 3 reais!"
+   "fala": "Já ganhou 120 Robux!"
   },
   {
    "chave": "e4d5425fz",
@@ -17527,13 +17527,13 @@
    "fala": "Já fez sete de 25 salas."
   },
   {
-   "chave": "e3c4c1c0t",
+   "chave": "bc7fb3bbv",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou R$ 3,50!",
+   "texto": "Já ganhou 140 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 3 reais e 50 centavos!"
+   "fala": "Já ganhou 140 Robux!"
   },
   {
    "chave": "966b8239z",
@@ -17545,13 +17545,13 @@
    "fala": "Já fez oito de 25 salas."
   },
   {
-   "chave": "f0353a8et",
+   "chave": "3fa3ed49v",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou R$ 4,00!",
+   "texto": "Já ganhou 160 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 4 reais!"
+   "fala": "Já ganhou 160 Robux!"
   },
   {
    "chave": "99818214z",
@@ -17563,13 +17563,13 @@
    "fala": "Já fez nove de 25 salas."
   },
   {
-   "chave": "aee95795t",
+   "chave": "0f6f01c7v",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou R$ 4,50!",
+   "texto": "Já ganhou 180 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 4 reais e 50 centavos!"
+   "fala": "Já ganhou 180 Robux!"
   },
   {
    "chave": "f21c9ce3y",
@@ -17581,13 +17581,13 @@
    "fala": "Já fez dez de 25 salas."
   },
   {
-   "chave": "8a64f219t",
+   "chave": "1c35cb88v",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou R$ 5,00!",
+   "texto": "Já ganhou 200 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 5 reais!"
+   "fala": "Já ganhou 200 Robux!"
   },
   {
    "chave": "de41df72z",
@@ -17599,13 +17599,13 @@
    "fala": "Já fez onze de 25 salas."
   },
   {
-   "chave": "4247d52at",
+   "chave": "1695e656v",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou R$ 5,50!",
+   "texto": "Já ganhou 220 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 5 reais e 50 centavos!"
+   "fala": "Já ganhou 220 Robux!"
   },
   {
    "chave": "1c56e782z",
@@ -17617,13 +17617,13 @@
    "fala": "Já fez doze de 25 salas."
   },
   {
-   "chave": "d44745d8t",
+   "chave": "a632c42cv",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou R$ 6,00!",
+   "texto": "Já ganhou 240 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 6 reais!"
+   "fala": "Já ganhou 240 Robux!"
   },
   {
    "chave": "c3dcaa0610",
@@ -17635,13 +17635,13 @@
    "fala": "Já fez treze de 25 salas."
   },
   {
-   "chave": "934b14bft",
+   "chave": "121ac8dav",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou R$ 6,50!",
+   "texto": "Já ganhou 260 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 6 reais e 50 centavos!"
+   "fala": "Já ganhou 260 Robux!"
   },
   {
    "chave": "c7c8145a12",
@@ -17653,13 +17653,13 @@
    "fala": "Já fez catorze de 25 salas."
   },
   {
-   "chave": "327aaf7bt",
+   "chave": "82252420v",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou R$ 7,00!",
+   "texto": "Já ganhou 280 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 7 reais!"
+   "fala": "Já ganhou 280 Robux!"
   },
   {
    "chave": "f64c963e11",
@@ -17671,13 +17671,13 @@
    "fala": "Já fez quinze de 25 salas."
   },
   {
-   "chave": "ab9a624ct",
+   "chave": "7e965fd1v",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou R$ 7,50!",
+   "texto": "Já ganhou 300 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 7 reais e 50 centavos!"
+   "fala": "Já ganhou 300 Robux!"
   },
   {
    "chave": "82935fc314",
@@ -17689,13 +17689,13 @@
    "fala": "Já fez dezesseis de 25 salas."
   },
   {
-   "chave": "905c7fb2t",
+   "chave": "3ef2d203v",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou R$ 8,00!",
+   "texto": "Já ganhou 320 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 8 reais!"
+   "fala": "Já ganhou 320 Robux!"
   },
   {
    "chave": "4b59879a14",
@@ -17707,13 +17707,13 @@
    "fala": "Já fez dezessete de 25 salas."
   },
   {
-   "chave": "187a0161t",
+   "chave": "b3e41665v",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou R$ 8,50!",
+   "texto": "Já ganhou 340 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 8 reais e 50 centavos!"
+   "fala": "Já ganhou 340 Robux!"
   },
   {
    "chave": "80bc329c12",
@@ -17725,13 +17725,13 @@
    "fala": "Já fez dezoito de 25 salas."
   },
   {
-   "chave": "f732f67dt",
+   "chave": "9d791267v",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou R$ 9,00!",
+   "texto": "Já ganhou 360 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 9 reais!"
+   "fala": "Já ganhou 360 Robux!"
   },
   {
    "chave": "d2556fbe13",
@@ -17743,13 +17743,13 @@
    "fala": "Já fez dezenove de 25 salas."
   },
   {
-   "chave": "382f2796t",
+   "chave": "e83dc769v",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou R$ 9,50!",
+   "texto": "Já ganhou 380 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 9 reais e 50 centavos!"
+   "fala": "Já ganhou 380 Robux!"
   },
   {
    "chave": "953a8ffc10",
@@ -17761,13 +17761,13 @@
    "fala": "Já fez vinte de 25 salas."
   },
   {
-   "chave": "4b49db19u",
+   "chave": "b591ecfav",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou R$ 10,00!",
+   "texto": "Já ganhou 400 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 10 reais!"
+   "fala": "Já ganhou 400 Robux!"
   },
   {
    "chave": "26262491x",
@@ -17779,13 +17779,13 @@
    "fala": "Já fez 21 de 25 salas."
   },
   {
-   "chave": "032cbe2au",
+   "chave": "2555754cv",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou R$ 10,50!",
+   "texto": "Já ganhou 420 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 10 reais e 50 centavos!"
+   "fala": "Já ganhou 420 Robux!"
   },
   {
    "chave": "f815d9b2x",
@@ -17797,13 +17797,13 @@
    "fala": "Já fez 22 de 25 salas."
   },
   {
-   "chave": "b11a238eu",
+   "chave": "b97cf5f6v",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou R$ 11,00!",
+   "texto": "Já ganhou 440 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 11 reais!"
+   "fala": "Já ganhou 440 Robux!"
   },
   {
    "chave": "1fb511e7x",
@@ -17815,13 +17815,13 @@
    "fala": "Já fez 23 de 25 salas."
   },
   {
-   "chave": "6fce4095u",
+   "chave": "451dee28v",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou R$ 11,50!",
+   "texto": "Já ganhou 460 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 11 reais e 50 centavos!"
+   "fala": "Já ganhou 460 Robux!"
   },
   {
    "chave": "7135e408x",
@@ -17833,13 +17833,13 @@
    "fala": "Já fez 24 de 25 salas."
   },
   {
-   "chave": "f35f987bu",
+   "chave": "660b94d2v",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou R$ 12,00!",
+   "texto": "Já ganhou 480 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 12 reais!"
+   "fala": "Já ganhou 480 Robux!"
   },
   {
    "chave": "48c590edw",
@@ -17851,13 +17851,13 @@
    "fala": "Você fez as 25 salas!"
   },
   {
-   "chave": "a4022f2au",
+   "chave": "d5aad16bv",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou R$ 20,00!",
+   "texto": "Já ganhou 500 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 20 reais!"
+   "fala": "Já ganhou 500 Robux!"
   },
   {
    "chave": "0ed611d416",
@@ -18193,13 +18193,13 @@
    "fala": "Já fez uma de 25 salas."
   },
   {
-   "chave": "a5a3ad1cv",
+   "chave": "6e91c68dw",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou R$ 0,50!",
+   "texto": "Já ganhou 20 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 0 reais e 50 centavos!"
+   "fala": "Já ganhou 20 Robux!"
   },
   {
    "chave": "dd29778611",
@@ -18211,13 +18211,13 @@
    "fala": "Já fez duas de 25 salas."
   },
   {
-   "chave": "6606af68v",
+   "chave": "233ae1abw",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou R$ 1,00!",
+   "texto": "Já ganhou 40 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 1 real!"
+   "fala": "Já ganhou 40 Robux!"
   },
   {
    "chave": "6dae127c11",
@@ -18229,13 +18229,13 @@
    "fala": "Já fez três de 25 salas."
   },
   {
-   "chave": "a509b4cfv",
+   "chave": "619105f9w",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou R$ 1,50!",
+   "texto": "Já ganhou 60 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 1 real e 50 centavos!"
+   "fala": "Já ganhou 60 Robux!"
   },
   {
    "chave": "33a772f713",
@@ -18247,13 +18247,13 @@
    "fala": "Já fez quatro de 25 salas."
   },
   {
-   "chave": "03303ee9v",
+   "chave": "88aa8377w",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou R$ 2,00!",
+   "texto": "Já ganhou 80 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 2 reais!"
+   "fala": "Já ganhou 80 Robux!"
   },
   {
    "chave": "574ea81512",
@@ -18265,13 +18265,13 @@
    "fala": "Já fez cinco de 25 salas."
   },
   {
-   "chave": "bc50567av",
+   "chave": "81c643fax",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou R$ 2,50!",
+   "texto": "Já ganhou 100 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 2 reais e 50 centavos!"
+   "fala": "Já ganhou 100 Robux!"
   },
   {
    "chave": "a037705311",
@@ -18283,13 +18283,13 @@
    "fala": "Já fez seis de 25 salas."
   },
   {
-   "chave": "9f2e5c5ev",
+   "chave": "f189cc4cx",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou R$ 3,00!",
+   "texto": "Já ganhou 120 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 3 reais!"
+   "fala": "Já ganhou 120 Robux!"
   },
   {
    "chave": "5a482c2a11",
@@ -18301,13 +18301,13 @@
    "fala": "Já fez sete de 25 salas."
   },
   {
-   "chave": "5de27965v",
+   "chave": "85b14cf6x",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou R$ 3,50!",
+   "texto": "Já ganhou 140 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 3 reais e 50 centavos!"
+   "fala": "Já ganhou 140 Robux!"
   },
   {
    "chave": "adafa13411",
@@ -18319,13 +18319,13 @@
    "fala": "Já fez oito de 25 salas."
   },
   {
-   "chave": "903530d7v",
+   "chave": "11524528x",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou R$ 4,00!",
+   "texto": "Já ganhou 160 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 4 reais!"
+   "fala": "Já ganhou 160 Robux!"
   },
   {
    "chave": "a3d62bb911",
@@ -18337,13 +18337,13 @@
    "fala": "Já fez nove de 25 salas."
   },
   {
-   "chave": "d18113d0v",
+   "chave": "323febd2x",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou R$ 4,50!",
+   "texto": "Já ganhou 180 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 4 reais e 50 centavos!"
+   "fala": "Já ganhou 180 Robux!"
   },
   {
    "chave": "0ace56b010",
@@ -18355,13 +18355,13 @@
    "fala": "Já fez dez de 25 salas."
   },
   {
-   "chave": "7ef76ed4v",
+   "chave": "f096056dx",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou R$ 5,00!",
+   "texto": "Já ganhou 200 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 5 reais!"
+   "fala": "Já ganhou 200 Robux!"
   },
   {
    "chave": "601b973b11",
@@ -18373,13 +18373,13 @@
    "fala": "Já fez onze de 25 salas."
   },
   {
-   "chave": "46c5a363v",
+   "chave": "123594efx",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou R$ 5,50!",
+   "texto": "Já ganhou 220 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 5 reais e 50 centavos!"
+   "fala": "Já ganhou 220 Robux!"
   },
   {
    "chave": "a837335b11",
@@ -18391,13 +18391,13 @@
    "fala": "Já fez doze de 25 salas."
   },
   {
-   "chave": "a81f0eb5v",
+   "chave": "67497e59x",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou R$ 6,00!",
+   "texto": "Já ganhou 240 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 6 reais!"
+   "fala": "Já ganhou 240 Robux!"
   },
   {
    "chave": "24f66a8d12",
@@ -18409,13 +18409,13 @@
    "fala": "Já fez treze de 25 salas."
   },
   {
-   "chave": "e96af1aev",
+   "chave": "5731c58bx",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou R$ 6,50!",
+   "texto": "Já ganhou 260 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 6 reais e 50 centavos!"
+   "fala": "Já ganhou 260 Robux!"
   },
   {
    "chave": "748170a914",
@@ -18427,13 +18427,13 @@
    "fala": "Já fez catorze de 25 salas."
   },
   {
-   "chave": "cf593c8av",
+   "chave": "08464d55x",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou R$ 7,00!",
+   "texto": "Já ganhou 280 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 7 reais!"
+   "fala": "Já ganhou 280 Robux!"
   },
   {
    "chave": "a9ac607f13",
@@ -18445,13 +18445,13 @@
    "fala": "Já fez quinze de 25 salas."
   },
   {
-   "chave": "163924f9v",
+   "chave": "3ebb2414x",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou R$ 7,50!",
+   "texto": "Já ganhou 300 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 7 reais e 50 centavos!"
+   "fala": "Já ganhou 300 Robux!"
   },
   {
    "chave": "952d299416",
@@ -18463,13 +18463,13 @@
    "fala": "Já fez dezesseis de 25 salas."
   },
   {
-   "chave": "a2be5c83v",
+   "chave": "36a0d5e2x",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou R$ 8,00!",
+   "texto": "Já ganhou 320 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 8 reais!"
+   "fala": "Já ganhou 320 Robux!"
   },
   {
    "chave": "0891409516",
@@ -18481,13 +18481,13 @@
    "fala": "Já fez dezessete de 25 salas."
   },
   {
-   "chave": "5af0f174v",
+   "chave": "83749d50x",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou R$ 8,50!",
+   "texto": "Já ganhou 340 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 8 reais e 50 centavos!"
+   "fala": "Já ganhou 340 Robux!"
   },
   {
    "chave": "86f2719b14",
@@ -18499,13 +18499,13 @@
    "fala": "Já fez dezoito de 25 salas."
   },
   {
-   "chave": "62a96ee0v",
+   "chave": "18e352fex",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou R$ 9,00!",
+   "texto": "Já ganhou 360 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 9 reais!"
+   "fala": "Já ganhou 360 Robux!"
   },
   {
    "chave": "89bc03ef15",
@@ -18517,13 +18517,13 @@
    "fala": "Já fez dezenove de 25 salas."
   },
   {
-   "chave": "e15d2727v",
+   "chave": "1b490f1cx",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou R$ 9,50!",
+   "texto": "Já ganhou 380 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 9 reais e 50 centavos!"
+   "fala": "Já ganhou 380 Robux!"
   },
   {
    "chave": "931dba0f12",
@@ -18535,13 +18535,13 @@
    "fala": "Já fez vinte de 25 salas."
   },
   {
-   "chave": "8e0ffc96w",
+   "chave": "6f4bb7dfx",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou R$ 10,00!",
+   "texto": "Já ganhou 400 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 10 reais!"
+   "fala": "Já ganhou 400 Robux!"
   },
   {
    "chave": "0a6aac80z",
@@ -18553,13 +18553,13 @@
    "fala": "Já fez 21 de 25 salas."
   },
   {
-   "chave": "4d13cb7dw",
+   "chave": "1554c45dx",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou R$ 10,50!",
+   "texto": "Já ganhou 420 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 10 reais e 50 centavos!"
+   "fala": "Já ganhou 420 Robux!"
   },
   {
    "chave": "880d188bz",
@@ -18571,13 +18571,13 @@
    "fala": "Já fez 22 de 25 salas."
   },
   {
-   "chave": "e751ccc1w",
+   "chave": "88b40abbx",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou R$ 11,00!",
+   "texto": "Já ganhou 440 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 11 reais!"
+   "fala": "Já ganhou 440 Robux!"
   },
   {
    "chave": "f99aa456z",
@@ -18589,13 +18589,13 @@
    "fala": "Já fez 23 de 25 salas."
   },
   {
-   "chave": "e0724912w",
+   "chave": "0bd84449x",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou R$ 11,50!",
+   "texto": "Já ganhou 460 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 11 reais e 50 centavos!"
+   "fala": "Já ganhou 460 Robux!"
   },
   {
    "chave": "5f156aa9z",
@@ -18607,13 +18607,13 @@
    "fala": "Já fez 24 de 25 salas."
   },
   {
-   "chave": "729ecf60w",
+   "chave": "dba358c7x",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou R$ 12,00!",
+   "texto": "Já ganhou 480 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 12 reais!"
+   "fala": "Já ganhou 480 Robux!"
   },
   {
    "chave": "539abbaay",
@@ -18625,13 +18625,13 @@
    "fala": "Você fez as 25 salas!"
   },
   {
-   "chave": "341a7405w",
+   "chave": "f7f0c92ex",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou R$ 20,00!",
+   "texto": "Já ganhou 500 Robux!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 20 reais!"
+   "fala": "Já ganhou 500 Robux!"
   },
   {
    "chave": "dc34f26718",
