@@ -126,7 +126,13 @@
     if (novo) {
       tutorial = Reino.Claude.falar(Reino.Falas.tutorialMapa(Reino.materias[0]))
         .then(function () { return Reino.Claude.falar(Reino.Claude.frase('dica')); });
-    } else if (!Reino.congelado) {   // modo determinístico dos testes (js/nucleo/congelar.js): sem boas-vindas
+    }
+    // o baú de presentes (ui/bau-presente.js; resolve na hora sem presente) vem antes das boas-vindas, para o balão
+    // não cobrir o baú; o parabéns da medalha de ouro (ui/abertura-medalha.js) vem por último
+    var abrirBau = !novo && !Reino.congelado && Reino.UI.abrirPresentesPendentes;
+    var bau = abrirBau ? Reino.UI.abrirPresentesPendentes() : Promise.resolve();
+    function boasVindas() {
+      if (novo || Reino.congelado) return;   // modo determinístico dos testes (js/nucleo/congelar.js): sem boas-vindas
       var ovos = P.ovosParaChocar().length;
       var oi = Reino.Claude.frase('boasVindas');
       Reino.Claude.falar(oi + (ovos ? ' E você tem ' + (ovos === 1 ? 'um ovo' : ovos + ' ovos') + ' para chocar! 🥚' : ''), { fala: [oi, ovos ? Reino.Falas.fixas.ovosParaChocar : null] });
@@ -134,9 +140,8 @@
     // pergunta surpresa (módulo): o relógio só começa depois do tutorial da primeira vez
     ctxModulo.tutorial = tutorial;
     Reino.modulos.forEach(function (m) { if (m.depoisDasBoasVindas) m.depoisDasBoasVindas(ctxModulo); });
-    // o baú de presentes (outra frente; resolve na hora sem presente) e só depois o parabéns da medalha de ouro
-    // (ui/abertura-medalha.js: só depois da tela em festa, com a Mariana, uma vez por sessão)
-    (Reino.UI.abrirPresentesPendentes ? Reino.UI.abrirPresentesPendentes() : Promise.resolve())
+    bau.catch(function (e) { console.warn('presentes:', e); })
+      .then(boasVindas)
       .then(function () { UI.festaMedalha.parabens(); })
       .catch(function (e) { console.warn('presentes/parabéns:', e); });   // ela já está no mapa: só não festeja
   }

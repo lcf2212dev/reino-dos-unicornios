@@ -32,6 +32,8 @@ Reino.LojaItens = {
   premios() → [{ id, nome, raridade, provaId, preco, slot }]    // acessórios de todas as provas; slot = âncora
                                     // de PA.ENFEITES_MONTARIA (null sem PA, como nas ferramentas em vm)
   precoPremio(raridade) → Reino.config.precoPremio[raridade]
+  ULTRA → { nome: 'Ultra Lendário', emoji: '💎' }  // raridade acima de lendário (presentes: conteudo/presentes.js)
+  ultras() → os acessórios Ultra Lendários dos presentes (fora de premios(): nunca à venda, seção própria na Loja)
   estadoPremio(premio, P) → 'bloqueado' | 'aVenda' | 'ganho' | 'comprado'
   item(id) → enfeite, ou prêmio como { id, nome, slot, preco, raridade, provaId, icone: 'acessorio:<id>', premio: true }
   FALAS: { chave: texto }           // o que a Loja fala (em Falas.todas, pacote geral)
