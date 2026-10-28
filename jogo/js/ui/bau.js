@@ -8,7 +8,10 @@
   UI.telaBau = function () {
     var pn = painel('lugar', '💰 Baú do Tesouro');
     var c = pn.conteudo;
-    c.appendChild(el('div.bau-total', el('span.bau-moeda', '💰'), el('div', el('small', 'Você já ganhou'), el('b', U.colado(U.robux(P.dinheiroTotal()))))));
+    // os três números: o que ganhou, o que os pais já deram e o que falta receber (o 💰 do HUD)
+    function total(icone, rotulo, valor) { return el('div.bau-total', el('span.bau-moeda', icone), el('div', el('small', rotulo), el('b', U.colado(U.robux(valor))))); }
+    c.appendChild(el('div.bau-totais', total('💰', 'Você já ganhou', P.dinheiroTotal()), total('🎁', 'Já recebeu', P.pagoTotal()),
+      total('✨', 'Para receber', P.saldoRobux())));
     Reino.materias.forEach(function (m) {
       c.appendChild(el('div.bau-materia', el('b', m.emoji + ' ' + m.nome), barraDinheiro(m),
         el('small', U.colado(P.salasFeitas(m) + ' de ' + m.salas.length + ' salas feitas • cada sala vale ' + U.robux(P.valorSala(m)) +
