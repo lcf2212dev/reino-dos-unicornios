@@ -3,6 +3,10 @@
    Telas (js/ui/quimica-*.js) só chamam esta API; tudo o que elas falam sai daqui (falas()), no pacote do prédio:
    no térreo, na voz da Doutora Proveta; no 2º andar, na do Professor Carbono ou da Dona Caramela (Q.vozDe).
    O que é só do 2º andar (curiosidades, estados, separar, livros) está em sistemas/quimica-andar2.js.
+   Prêmio da trilha perfeita (quarto-bimestre.md §14): grupos `elementos` (id 'z' + z) e `experiencias` (id da carta
+   de Reino.QUIMICA.experiencias), gravados por P.conferirTrilhas com Q.descobrir(grupo, id, { trilha: true }) (sem
+   estrelas e sem salvar: quem chama salva). Cartão de elemento com `trilha: '<salaId>'` fica bloqueado até ganhar:
+   Q.elementoGanho(z) (o sem `trilha` está sempre ganho); Q.experienciaGanha(id).
    node: true: nada de DOM, Progresso nem Cena no carregamento. */
 (function () {
   var R = window.Reino;
@@ -17,7 +21,11 @@
     estados: { lista: 'mudancas', estrelas: 'estrelasEstadoNovo' },     // 2º andar: Fogão dos Estados
     separar: { lista: 'misturas', estrelas: 'estrelasMisturaNova' },    // 2º andar: Mesa de Separar Misturas
     livros: { lista: 'livros', estrelas: 'estrelasLivroNovo' },         // 2º andar: Biblioteca
+    elementos: { lista: 'elementos', premio: true, porZ: true },        // prêmio da trilha (id 'z' + z)
+    experiencias: { lista: 'experiencias', premio: true },               // prêmio da trilha
   };
+  // o id de um cartão no grupo (elementos usam o número atômico: 'z30')
+  function idDe(grupo, x) { return GRUPOS[grupo] && GRUPOS[grupo].porZ ? 'z' + x.z : x.id; }
   Q.GRUPOS = Object.keys(GRUPOS);
   // quem fala cada tela: o prefixo da chave da frase ('estados.oi' → estados); o que não está aqui é da Doutora Proveta
   var VOZ_CARBONO = Q.VOZ_CARBONO = 'npc-quimica-carbono';
@@ -37,8 +45,11 @@
     mesclar: 'contadores',
     novoCiclo: 'mantem',
     copiaSeguranca: true,
-    exemplos: [{ receitas: { pof: 1 }, licoes: { atomos: 1 } },
-      { receitas: { pof: 1, 'pocao-rosa': 1 }, laminas: { cebola: 1 }, estados: { 'agua-derreter': 1 }, separar: { cafe: 1 }, livros: { fogo: 1 } }],
+    // coerentes com os exemplos de `trilhas` (sistemas/trilhas.js): a sala ganha lá tem os dois cartões aqui (o
+    // P.conferirTrilhas do carregar re-garante os cartões das salas já em `trilhas`)
+    exemplos: [{ receitas: { pof: 1 }, licoes: { atomos: 1 }, elementos: { z30: 1 }, experiencias: { 'exp-pilha-limao': 1 } },
+      { receitas: { pof: 1, 'pocao-rosa': 1 }, laminas: { cebola: 1 }, estados: { 'agua-derreter': 1 }, separar: { cafe: 1 }, livros: { fogo: 1 },
+        elementos: { z30: 1, z32: 1 }, experiencias: { 'exp-pilha-limao': 1, 'exp-telefone-de-copo': 1 } }],
   });
   function estado() { try { return R.Progresso.estado(); } catch (e) { return null; } }
 
@@ -50,8 +61,12 @@
   /** Os ids descobertos de um grupo que ainda existem nos dados (id de outra versão fica no save, mas não conta). */
   Q.descobertas = function (grupo) {
     var fonte = GRUPOS[grupo] ? lista(GRUPOS[grupo].lista) : [];
-    return fonte.filter(function (x) { return Q.descoberto(grupo, x.id); }).map(function (x) { return x.id; });
+    return fonte.map(function (x) { return idDe(grupo, x); }).filter(function (id) { return Q.descoberto(grupo, id); });
   };
+  /** O elemento já está aberto? O cartão sem `trilha` sempre; o da trilha, depois do prêmio. @param {number} z */
+  Q.elementoGanho = function (z) { var e = Q.elemento(z); return !!e && (!e.trilha || Q.descoberto('elementos', 'z' + z)); };
+  /** A carta de experiência já foi ganha (prêmio da trilha)? @param {string} id */
+  Q.experienciaGanha = function (id) { return Q.descoberto('experiencias', id); };
   Q.cadernoCompleto = function () { var t = Q.receitas().length; return t > 0 && Q.descobertas('receitas').length === t; };
   /** O caderno mostra a receita aberta: descoberta ou `inicial` (a 1ª já vem escrita). */
   Q.noCaderno = function (id) { var r = Q.receita(id); return !!r && (!!r.inicial || Q.descoberto('receitas', id)); };
@@ -62,14 +77,19 @@
   };
 
   /** Grava a descoberta (na hora em que ela age) e dá as estrelas da 1ª vez.
+      opcoes.trilha: prêmio da trilha perfeita, só nos grupos elementos e experiencias (sem estrelas, sem salvar;
+      grava mesmo o id que esta versão não tem). Sem ela, esses dois grupos recusam.
+      @param {string} grupo @param {string} id @param {{ trilha?: boolean }} [opcoes]
       @returns {{ nova: boolean, estrelas: number, completo: boolean }} completo: esta receita fechou o caderno */
-  Q.descobrir = function (grupo, id) {
-    var nada = { nova: false, estrelas: 0, completo: false };
+  Q.descobrir = function (grupo, id, opcoes) {
+    var nada = { nova: false, estrelas: 0, completo: false }, trilha = !!(opcoes && opcoes.trilha);
     var est = estado();
     if (!est || !GRUPOS[grupo] || !id || Q.descoberto(grupo, id)) return nada;
-    if (!achar(dados()[GRUPOS[grupo].lista] || [], id)) return nada;
+    if (!!GRUPOS[grupo].premio !== trilha) return nada;   // os grupos do prêmio só pela trilha (e a trilha só neles)
+    if (!trilha && !achar((dados()[GRUPOS[grupo].lista] || []).map(function (x) { return { id: idDe(grupo, x) }; }), id)) return nada;
     var q = est.quimica = est.quimica || {};
     (q[grupo] = q[grupo] || {})[id] = 1;
+    if (trilha) return { nova: true, estrelas: 0, completo: false };
     var c = cfg(), n = c[GRUPOS[grupo].estrelas] || 0;
     var completo = grupo === 'receitas' && Q.cadernoCompleto();
     if (completo) n += c.estrelasCadernoCompleto;

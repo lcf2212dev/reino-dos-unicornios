@@ -122,7 +122,8 @@
     if (def.raridade === 'epico' && def.treino === 'perfeito') return Math.max(0, pers.treinoPerfeito - vezesTreino(def.materiaId));
     return null;
   };
-  // dá os raros/épicos que já cumprem a regra (retroativo); devolve os ids novos
+  // dá os raros/épicos que já cumprem a regra (retroativo) e, junto, os prêmios da trilha perfeita que faltam
+  // (P.conferirTrilhas, sistemas/trilhas.js: ao abrir e ao mesclar); devolve os ids novos (unicórnios, depois salas)
   P.conferirPersistencia = function () {
     var novos = [];
     Reino.materias.forEach(function (m) {
@@ -133,7 +134,7 @@
       });
     });
     if (novos.length) I.estado.atualizado = agora();
-    return novos;
+    return P.conferirTrilhas ? novos.concat(P.conferirTrilhas()) : novos;
   };
 
   P.medalhaPara = function (acertos, total) {

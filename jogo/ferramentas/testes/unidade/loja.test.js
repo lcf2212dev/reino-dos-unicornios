@@ -35,8 +35,9 @@ test('enfeites: ids únicos, preço inteiro positivo, encaixe conhecido e ícone
 test('prêmios da Escola: um por raridade de cada prova (lendário, raro, comum), com o preço da config', () => {
   const j = comLoja();
   const { L, R } = j;
-  const ps = L.premios();
+  const todos = L.premios(), ps = todos.filter((p) => !p.origem);
   assert.strictEqual(ps.length, R.provas.length * 3);
+  assert.strictEqual(todos.filter((p) => p.origem === 'trilha').length, 25, 'os 25 lendários da trilha perfeita');
   R.provas.forEach((pv) => {
     const daProva = ps.filter((p) => p.provaId === pv.id);
     assert.deepStrictEqual(copia(daProva.map((p) => p.raridade)), ['lendario', 'raro', 'comum'], pv.id);

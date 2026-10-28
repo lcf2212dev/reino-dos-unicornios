@@ -19,7 +19,7 @@ espalha o estrago para os outros aparelhos.
 - `docker compose restart/down/up/build`, mexer no container ou no serviço `reino-nome`.
 - Publicar ou republicar o artifact, ou abrir o jogo publicado (só o orquestrador publica, pela skill `publicar-artifact`).
 - `localStorage.clear()`, `removeItem` em chave existente, "Apagar tudo", "Novo ciclo" ou pagamento fora do teste.
-- Escrever na árvore principal `/home/leandro/Development/products/reino-dos-unicornios` (servida ao vivo pelo container).
+- Escrever na árvore principal `/home/leandro/Development/projects/reino-dos-unicornios` (servida ao vivo pelo container).
 
 ## Decisão: as guardas (como testar)
 | Guarda | Onde | O que impede |
@@ -29,7 +29,7 @@ espalha o estrago para os outros aparelhos.
 | Saves sintéticos | `jogo/ferramentas/testes/saves.js` | valores inventados, gerados pelo próprio jogo; nunca o save real |
 | Testes sem navegador | `jogo/ferramentas/testes/unidade/` | `vm` com localStorage de mentira |
 | Validador de docs | `jogo/ferramentas/validar/validar-docs.js` | nem olha o disco em `servidor/dados` |
-| Worktree própria | `/home/leandro/Development/products/reino-<tarefa>` | nada escrito na árvore servida |
+| Worktree própria | `/home/leandro/Development/projects/reino-<tarefa>` | nada escrito na árvore servida |
 
 ## Consequências
 - Derrube só os seus servidores, pelo PID ou `s.parar()`; nunca `pkill`/`killall` por nome.

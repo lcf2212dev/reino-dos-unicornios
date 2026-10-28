@@ -1,5 +1,5 @@
-/* Língua Portuguesa do 4º bimestre (térreo da Casa das Palavras), parte 1 dos objetos (prefixo lp-): as estações das
-   salas, os púlpitos dos dois livros, o mapa da casa e o que mora nos ateliês. Os enfeites dos capítulos estão em
+/* Língua Portuguesa do 4º bimestre (Casa das Palavras), parte 1 dos objetos (prefixo lp-): as estações das salas (com o
+   selo ❗/✓/🦄/◐), os púlpitos dos dois livros, o mapa da casa (os dois andares) e o que mora nos ateliês. Os enfeites dos capítulos estão em
    portugues/lp-objetos-temas.js; o layout, em portugues/portugues.js.
    Divide em Reino._predios.portugues.lp: LIVROS (cores de cada livro), livroAberto e numero (algarismos 3×5). */
 (function () {
@@ -46,32 +46,45 @@
   }
 
   /* ---------- estado da sala (como o status dos NPCs de sala, npcs-e-dialogo.md §4) ---------- */
+  // as etapas da sala (quarto-bimestre.md §13.2), se a API estiver no jogo
+  function etapas(a) {
+    try { return R.Etapas && R.Etapas.estado && a.materia && a.sala ? R.Etapas.estado(a.materia, a.sala) : null; } catch (e) { return null; }
+  }
   function estadoSala(P, o) {
     var a = o.acao || {}, m = a.materia && R.materia(a.materia);
     var s = m && (m.salas || []).find(function (x) { return x.id === a.sala; });
     if (!s || !P || !P.estado) return 'nova';
+    var et = etapas(a);
+    var feita = !!(P.estado().salas[s.id] || {}).feita;
+    if (et && et.emAndamento && !feita) return 'andamento';   // 1ª trilha começada e falta etapa: ◐ (sala feita fica ✓/🦄)
     var raro = (m.unicornios || []).find(function (u) { return u.raridade === 'raro' && u.sala === s.id; });
     if (raro && P.temUni(raro.id)) return 'raro';
-    var reg = P.estado().salas[s.id];
-    return reg && reg.feita ? 'feita' : 'nova';
+    return feita ? 'feita' : 'nova';
   }
-  // o selo redondo: ❗ nova (branco, ponto vermelho), ✓ feita (verde), 🦄 raro ganho (rosa, chifre dourado)
+  // a chave do pré-render: o selo e as etapas feitas (muda a cada etapa guardada)
+  function chaveSala(P, o) {
+    var et = P && P.estado ? etapas(o.acao || {}) : null;
+    return estadoSala(P, o) + (et ? ':' + (et.feitas || []).length + '/' + (et.perfeitas || []).length + '/' + et.total : '');
+  }
+  // o selo redondo: ❗ nova (branco, ponto vermelho), ✓ feita (verde), 🦄 raro ganho (rosa, chifre dourado),
+  // ◐ em andamento (branco, metade esquerda laranja)
   var SELOS = {
     nova: { fundo: C.branco, marca: ['..r..', '..r..', '..r..', '.....', '..r..'] },
     feita: { fundo: '#3fae5a', marca: ['.....', '....w', '...w.', 'w.w..', '.w...'] },
     raro: { fundo: C.rosa2, marca: ['....Y', '...yY', '..yY.', '.yY..', '.....'] },
+    andamento: { fundo: C.branco, marca: ['.ooo.', 'ooo..', 'ooo..', 'ooo..', '.ooo.'] },
   };
   function selo(ctx, cx, cy, estado) {
     var s = SELOS[estado] || SELOS.nova;
     circulo(ctx, cx, cy, 4, K); circulo(ctx, cx, cy, 3, s.fundo);
-    matriz(ctx, cx - 2, cy - 2, s.marca, { r: '#e0433f', w: C.branco, y: C.ouro, Y: C.ouro2 });
+    matriz(ctx, cx - 2, cy - 2, s.marca, { r: '#e0433f', w: C.branco, y: C.ouro, Y: C.ouro2, o: '#ff8a3d' });
   }
 
   /* ================= ESTAÇÃO DA SALA ================= */
   // var: { livro: 'aprendizagem'|'atividades', pagina } ; acao: { tipo: 'sala', materia, sala } (o selo lê a sala dela).
   // O selo flutua acima do livro, à direita (como o balãozinho dos NPCs), sem cobrir o número da página
   I.objeto('lp-estacao', { w: 1, h: 1, topo: 21, solido: true, alto: true,
-    chave: function (P, o) { return estadoSala(P, o); },
+    chave: chaveSala,
     desenhar: function (ctx, px, py, o, P) {
       var cx = px + 8, L = livroDe(o);
       ret(ctx, cx - 6, py + 11, 13, 4, K); ret(ctx, cx - 5, py + 12, 11, 2, C.madeira3);
@@ -108,21 +121,39 @@
     } });
 
   /* ================= MAPA DA CASA ================= */
-  // a planta: ateliês (amarelos) em cima, galerias (verdes) no meio, o saguão (roxo) embaixo e o "você está aqui"
+  // as duas plantas lado a lado. À esquerda, o térreo: Salas de Leitura e galerias (verdes) e o saguão (roxo), com a
+  // escada e o "você está aqui"; à direita, o 1º andar: ateliês (amarelos), o Cantinho do Respiro (verde-água) e a
+  // Galeria dos Tesouros (dourada), com a escada no ateliê do meio
+  var COLS = [[1, 3], [5, 2], [8, 3]];   // as três colunas de cômodos de cada planta (x, largura), dentro de 12 px
+  function escadinha(ctx, x, y) { ret(ctx, x, y + 2, 1, 1, C.branco); ret(ctx, x + 1, y + 1, 1, 1, C.branco); ret(ctx, x + 2, y, 1, 1, C.branco); }
   I.objeto('lp-mapa', { w: 2, h: 1, topo: 16, solido: true, alto: true,
     desenhar: function (ctx, px, py) {
       ret(ctx, px + 4, py, 3, 15, K); ret(ctx, px + 25, py, 3, 15, K);
       ret(ctx, px + 5, py, 1, 14, C.madeira); ret(ctx, px + 26, py, 1, 14, C.madeira);
       contornoRet(ctx, px + 1, py - 14, 30, 16, C.madeira2);
       ret(ctx, px + 3, py - 12, 26, 12, C.creme);
+      // térreo (x 3–14)
+      var x0 = px + 3, y0 = py - 12;
+      ret(ctx, x0, y0, 12, 12, K);
       for (var i = 0; i < 3; i++) {
-        var x = px + 4 + i * 9;
-        ret(ctx, x, py - 12, 7, 3, K); ret(ctx, x + 1, py - 11, 5, 1, LIVROS.atividades.capa);
-        ret(ctx, x, py - 9, 7, 4, K); ret(ctx, x + 1, py - 8, 5, 2, LIVROS.aprendizagem.capa);
-        ret(ctx, x + 3, py - 10, 1, 2, C.creme);   // porta entre o ateliê e a galeria
+        var x = x0 + COLS[i][0], w = COLS[i][1];
+        ret(ctx, x, y0 + 1, w, 2, LIVROS.aprendizagem.claro);   // Sala de Leitura
+        ret(ctx, x, y0 + 4, w, 3, LIVROS.aprendizagem.capa);    // galeria
+        ret(ctx, x + 1, y0 + 3, 1, 1, C.creme); ret(ctx, x + 1, y0 + 7, 1, 1, C.creme);   // portas
       }
-      ret(ctx, px + 4, py - 5, 25, 4, K); ret(ctx, px + 5, py - 4, 23, 2, '#b58cff');
-      ret(ctx, px + 15, py - 4, 2, 2, C.vermelho);
+      ret(ctx, x0 + 1, y0 + 8, 10, 3, '#b58cff');                // saguão
+      escadinha(ctx, x0 + 7, y0 + 8);
+      ret(ctx, x0 + 5, y0 + 9, 2, 2, C.vermelho);                // você está aqui
+      // 1º andar (x 17–28)
+      var x1 = px + 17;
+      ret(ctx, x1, y0, 12, 12, K);
+      for (var j = 0; j < 3; j++) ret(ctx, x1 + COLS[j][0], y0 + 1, COLS[j][1], 5, LIVROS.atividades.capa);
+      escadinha(ctx, x1 + 5, y0 + 3);
+      ret(ctx, x1 + 1, y0 + 7, 5, 4, '#9fd8c8');                 // Cantinho do Respiro
+      ret(ctx, x1 + 7, y0 + 7, 4, 4, C.ouro);                    // Galeria dos Tesouros
+      ret(ctx, x1 + 2, y0 + 6, 1, 1, C.creme); ret(ctx, x1 + 9, y0 + 6, 1, 1, C.creme); ret(ctx, x1 + 6, y0 + 8, 1, 2, C.creme);
+      // a setinha do térreo para o 1º andar
+      ret(ctx, px + 15, py - 7, 2, 1, C.ouro3 || C.ouro); ret(ctx, px + 16, py - 8, 1, 3, C.ouro3 || C.ouro);
       ret(ctx, px + 1, py - 15, 30, 2, K); ret(ctx, px + 2, py - 14, 28, 1, C.ouro);
     } });
 

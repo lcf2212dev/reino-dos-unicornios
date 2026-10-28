@@ -191,7 +191,35 @@
         });
         premiosBox.appendChild(g);
       });
+      pintarTrilha();
       if (focoItem) focar(pn.tela.querySelector('[data-item="' + focoItem + '"]'));
+    }
+    // prêmios da trilha perfeita (quarto-bimestre.md §14.3): ganho = como os da Escola; bloqueado nunca está à venda
+    var trilhaBox = el('div.grade-loja');
+    function pintarTrilha() {
+      trilhaBox.innerHTML = '';
+      LI.premios().filter(function (p) { return p.origem === 'trilha'; }).forEach(function (p) {
+        var item = acessorioComoItem(p), st = LI.estadoPremio(p, P), tem = st === 'ganho', sala = nomeDaSala(p.sala);
+        var desenho = tem ? Reino.Provas.icone(p.id, ICONE_CARTA)
+          : PA.paraDOM(PA.silhueta(PA.iconeDesenho('acessorio:' + p.id)), PA.escalaNitida(ICONE_CARTA, 16), 'icone-acessorio');
+        var b = el('button.item-loja.item-premio.rar-lendario.premio-' + st + (tem ? '.comprado' : '.bloqueado') + (tem && usando(item) ? '.usando' : ''),
+          { type: 'button', 'data-item': p.id, 'data-estado': st,
+            'aria-label': p.nome + ', ' + (tem ? (usando(item) ? 'usando' : 'ganho na trilha, tocar para usar') : 'bloqueado, sem errar na trilha: ' + sala) },
+          el('span.item-icone', desenho), el('b', hifenizar(p.nome)),
+          tem ? el('span.chip-mini.ok', '🌟 Trilha perfeita') : el('small', 'Sem errar na trilha: ' + sala),
+          el('span.item-preco', tem ? (usando(item) ? '✓ Usando' : 'Usar') : '🔒 🌟 Lendário'));
+        b.addEventListener('click', function (e) {
+          if (logoDepoisDaCompra(e, item.id)) return;
+          if (tem) { alternar(item); Reino.Som.tocar('selecionar'); P.salvar(); pintar(); U.emit(EV.MAPA_MUDOU); return; }
+          Reino.Som.tocar('toque');
+        });
+        trilhaBox.appendChild(b);
+      });
+    }
+    function nomeDaSala(id) {
+      var pt = Reino.premioTrilha(id), m = pt && Reino.materia && Reino.materia(pt.materia);
+      var s = m && m.salas.find(function (x) { return x.id === id; });
+      return s ? s.nome : id;
     }
     c.appendChild(el('div.loja-topo', vitrine, saldo));
     c.appendChild(atalhos);
@@ -199,6 +227,11 @@
     c.appendChild(el('h3.estabulo-grupo', '🏫 Prêmios da Escola do Reino'));
     c.appendChild(el('p.bau-nota', Reino.provas.every(function (p) { return p.arquivada; }) ? 'Suas conquistas do terceiro bimestre continuam aqui. 🌈' : 'Acerte TUDO numa prova e ganhe um prêmio; os outros se trocam por estrelas. 🌈'));
     c.appendChild(premiosBox);
+    if ((Reino.premiosTrilha || []).length) {
+      c.appendChild(el('h3.estabulo-grupo', '🌟 Prêmios da Trilha Perfeita'));
+      c.appendChild(el('p.bau-nota', 'Faça todas as etapas de uma sala de Português sem errar e ganhe um prêmio lendário. 📖'));
+      c.appendChild(trilhaBox);
+    }
     c.appendChild(el('p.bau-nota', 'As fadas trocam estrelas por enfeites. Você ganha estrelas acertando de primeira e com a Estrela da Calma. 🌙'));
     pintar();
     // primeira vez na sessão com prêmio à venda: o Claude conta a novidade

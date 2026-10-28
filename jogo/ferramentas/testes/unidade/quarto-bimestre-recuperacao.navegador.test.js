@@ -2,7 +2,8 @@
 // tipo usado nos livros (a 1ª de cada tipo que não é livre; marcar com legenda de cores, tabela com banco de palavras e
 // com caixa de digitar), numa missão com essas questões: cada uma começa em branco, recebe a resposta errada pelos
 // controles, "Conferir" dá "Quase!", "Tentar de novo", e ela conserta NO MESMO controle até "Isso!". Por toque de
-// verdade no celular e só pelo teclado (Tab, setas, Enter, digitação) no notebook. Sem erro de console.
+// verdade no celular e só pelo teclado (Tab, setas, Enter, digitação) no notebook; a missão é uma sala de livro, então
+// vem em etapas: "Começar" na trilha e "Próxima etapa ▶" entre elas, pelo mesmo toque ou teclado. Sem erro de console.
 // Servidor e banco de TESTE novos (cenario.js); save sintético; congelado (?congelar=1).
 // Rodar (da raiz): npm run unidade -- --so quarto-bimestre-recuperacao
 const { test } = require('node:test');
@@ -11,7 +12,7 @@ const fs = require('fs');
 const path = require('path');
 const { abrirCenario } = require('../cenario');
 const { PASTA_TESTES } = require('../guardas');
-const { preparar, acionar, responderDaVez } = require('./ajudantes/quarto-bimestre');
+const { preparar, responderDaVez, seguirSala } = require('./ajudantes/quarto-bimestre');
 
 // roda NA PÁGINA: as questões (ids) e a missão com elas, na ordem dos tipos
 function escolher() {
@@ -46,14 +47,14 @@ for (const [modo, tamanho] of [['toque', 'celular'], ['teclado', 'notebook']]) {
           ordem: 'livro', livroOrigem: 'aprendizagem', capitulo: 10, cartas: [], desafios: ds });
       })(Reino.materia('portugues4'), ${JSON.stringify(ids)})`);
       await c.avancar(600);
-      await acionar(c, c.page.locator('.tela-missao footer.rodape-acao:not([hidden]) .btn-principal'), modo);
       const problemas = [];
-      for (const id of ids) {
-        const r = await responderDaVez(c, id, modo);
+      let k = 0;
+      const fim = await seguirSala(c, async (id) => {
+        const r = await responderDaVez(c, ids[k++] || id, modo);
         if (r.errado !== 'quase') r.problemas.push('a errada não foi conferida');
-        if (r.problemas.length) problemas.push(`${id} (${r.tipo}): ${r.problemas.join('; ')}`);
-        if (r.certo !== 'certo') break;   // a missão não andou: as próximas sairiam fora da ordem
-      }
+        if (r.problemas.length) problemas.push(`${r.id} (${r.tipo}): ${r.problemas.join('; ')}`);
+      }, { modo });
+      assert.strictEqual(k, ids.length, 'todas as questões, na ordem: ' + JSON.stringify(fim));
       console.log(`${modo} no ${tamanho}: ${ids.length} questões, tipos ${tipos.sort().join(', ')}`);
       assert.deepStrictEqual(problemas, [], `questões com problema (${modo})`);
       assert.ok(await c.js("!!document.querySelector('.tela-missao .fim-sala')"), 'a missão não terminou');

@@ -1,0 +1,70 @@
+/* Etapas da sala de livro (docs/contratos/quarto-bimestre.md §13.3 e §14): a trilha das etapas na intro da missão,
+   o fim de etapa, a festa da trilha perfeita (atividades/missao-etapas.js) e o chip "em andamento" da tela da
+   matéria (ui/materia.js). Sem animação própria: a festa é a do UI.festa (ui.md §10.16). */
+
+/* a caixa da trilha: "Etapa N de M", as bolinhas e "⭐ X de M" */
+.etapas-caixa { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%; max-width: 560px; padding: 12px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); }
+.etapas-conta { margin: 0; font-size: var(--texto); }
+.etapas-estrelas { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.etapas-estrelas p { margin: 0; }
+.etapas-x { font-size: var(--texto); }
+.etapas-premio { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 4px 8px; font-size: var(--texto-aux); line-height: var(--entrelinha); color: var(--lendario-texto); }
+
+/* as bolinhas, ligadas por um caminho (faixa de 4 px no meio da altura) */
+.etapas-trilha { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 6px;
+  background: linear-gradient(180deg, transparent 0 calc(50% - 2px), var(--ambar) calc(50% - 2px) calc(50% + 2px), transparent calc(50% + 2px)); }
+.etapas-trilha li { display: flex; }
+.etapa-bolinha { display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; width: 44px; height: 44px; padding: 0;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--redondo); background: var(--papel-2); color: var(--tinta-suave);
+  font-size: var(--texto); line-height: 1; box-shadow: var(--sombra-pequena); --degrau: 2px; }
+span.etapa-bolinha { box-shadow: none; }
+.etapa-bolinha.feita { background: var(--certo-fundo); color: var(--certo); }
+.etapa-bolinha.perfeita { background: var(--ouro-claro); color: var(--tinta); }
+.etapa-bolinha.proxima { background: var(--laranja-claro); color: var(--tinta); }
+/* a escolhida (o "Começar" abre ela): borda grossa */
+.etapa-bolinha.escolhida { border-width: var(--borda-grossa); }
+button.etapa-bolinha.apagada { cursor: default; }
+
+/* intro da sala de livro: a fala do Claude e a trilha */
+.intro-etapas { gap: 12px; }
+@media (max-width: 480px) {
+  .intro-etapas { gap: 8px; }
+  .etapas-caixa { padding: 8px; gap: 8px; }
+  .etapa-bolinha { width: 44px; height: 44px; }
+  .etapas-trilha { gap: 6px 4px; }
+}
+
+/* fim de etapa: curto e calmo */
+.fim-etapa { gap: 12px; }
+.etapa-resultado { margin: 0; font-size: var(--texto); color: var(--tinta-suave); }
+.etapa-resultado.sem-erro { color: var(--tinta); }
+.fim-etapa .intro-claude { max-width: 560px; }
+@media (min-width: 481px) { footer.rodape-acao.fim-etapa-botoes > * { flex: 0 0 300px; min-width: 0; } }
+@media (max-width: 480px) { footer.rodape-acao.fim-etapa-botoes > * { flex: 1 1 0; min-width: 0; padding-left: 8px; padding-right: 8px; } }
+
+/* festa da trilha perfeita: três cartões lendários */
+.festa-trilha { gap: 12px; }
+.festa-trilha > p { margin: 0; }
+.festa-solta { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.cartoes-trilha { list-style: none; margin: 0; padding: 0; width: 100%; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.cartao-trilha { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 8px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--rar-fundo); box-shadow: inset 0 0 0 4px var(--rar-desenho); text-align: center; }   /* tipografia-ok: faixa interna da raridade (ui.md §10.8) */
+.cartao-trilha > b { font-size: var(--texto); }
+.cartao-trilha > small { font-size: var(--texto-aux); color: var(--rar-texto); }
+.cartao-trilha-desenho { display: flex; align-items: center; justify-content: center; min-height: 64px; }
+.cartao-trilha .btn-grande { width: 100%; min-height: 44px; padding-left: 8px; padding-right: 8px; }
+.elemento-simbolo { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 64px; height: 64px; box-sizing: border-box; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-pequeno); background: var(--papel); font-size: var(--texto-g); line-height: 1; }
+.elemento-simbolo small { font-size: var(--texto-p); color: var(--tinta-suave); margin-bottom: 4px; }
+.cartao-trilha-emoji { font-size: var(--texto-g); line-height: 1; }
+/* celular: um cartão por linha, desenho à esquerda */
+@media (max-width: 640px) {
+  .cartoes-trilha { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .cartao-trilha { display: grid; grid-template-columns: 64px minmax(0, 1fr); grid-auto-flow: row; column-gap: 12px; row-gap: 4px; align-items: center; text-align: left; padding: 8px 12px; }
+  .cartao-trilha > .cartao-trilha-desenho { grid-row: 1 / span 3; }
+  .cartao-trilha > :not(.cartao-trilha-desenho) { grid-column: 2; }
+}
+
+/* tela da matéria: a sala em andamento (◐ desenhado em CSS: metade laranja, metade papel) e a trilha perfeita */
+.chip-mini.andamento { background: var(--laranja-claro); white-space: nowrap; }
+.meia-lua { display: inline-block; flex: none; box-sizing: border-box; width: 16px; height: 16px; border: var(--borda-fina) solid var(--borda); border-radius: var(--redondo);
+  background: linear-gradient(90deg, var(--laranja) 0 50%, var(--papel) 50%); }
+.chip-mini.trilha-perfeita { background: var(--lendario-fundo); color: var(--lendario-texto); }

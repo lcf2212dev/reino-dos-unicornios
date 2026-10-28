@@ -1,4 +1,4 @@
-// Enfeites do unicórnio (PA.ENFEITES_MONTARIA, com os prêmios das provas): desenha de verdade, sem navegador
+// Enfeites do unicórnio (PA.ENFEITES_MONTARIA, com os prêmios das provas e os da trilha perfeita): desenha de verdade, sem navegador
 // (canvas falso em memória, só fillRect/drawImage/getImageData, que é o que a pixel art usa) e confere:
 //   - fora do molde: nenhum pixel de enfeite pintado fora do quadro do unicórnio (o canvas cortaria), em todo
 //     estágio e vista;
@@ -75,10 +75,10 @@ function novoCanvasFalso() {
   return c;
 }
 
-/* ---------- carrega a pixel art e as provas, na ordem do manifesto ---------- */
+/* ---------- carrega a pixel art, as provas e os prêmios da trilha, na ordem do manifesto ---------- */
 function carregarJogo() {
   const manifesto = require(path.join(raiz, 'js/manifesto.js'));
-  const QUEREM = /^js\/(nucleo\/config|arte\/desenho|arte\/icones\/icones|arte\/enfeites-novidades|arte\/pixelart(-unicornio-moldes|-unicornio|-personagens|-mariana-visual)?|nucleo\/registros|conteudo\/provas\/[^/]+)\.js$/;
+  const QUEREM = /^js\/(nucleo\/config|arte\/desenho|arte\/icones\/icones|arte\/enfeites-novidades|arte\/pixelart(-unicornio-moldes|-unicornio|-personagens|-mariana-visual)?|nucleo\/registros|conteudo\/provas\/[^/]+|conteudo\/materias\/[^/]+\/premios-trilha-[^/]+)\.js$/;
   const ctx = { console: { log() {}, warn() {}, error: console.error }, Math, JSON, Object, Array, Map, Set };
   ctx.window = ctx;
   ctx.document = { createElement: () => novoCanvasFalso() };

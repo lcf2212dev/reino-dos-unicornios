@@ -19,7 +19,8 @@
   var brilho = R.Desenho.brilho;   // brilho em cruz (aqui sempre com a cor)
   function est(P) { try { return P && P.estado ? P.estado() : null; } catch (e) { return null; } }
   function comprados(P) { var e = est(P); return (e && e.loja) || {}; }
-  function premios() { try { return R.LojaItens ? R.LojaItens.premios() : []; } catch (e) { return []; } }
+  // a vitrine física mostra só os prêmios da Escola; os da trilha perfeita ficam na tela da Loja (não cabem 25)
+  function premios() { try { return R.LojaItens ? R.LojaItens.premios().filter(function (a) { return a.origem !== 'trilha'; }) : []; } catch (e) { return []; } }
   // 'bloqueado' | 'aVenda' | 'ganho' | 'comprado' (derivado do save, como na tela da Loja)
   function estadoPremio(a, P) { try { return R.LojaItens.estadoPremio(a, P); } catch (e) { return 'bloqueado'; } }
   function icone(chave) { return (window.PA && PA.iconeDesenho) ? PA.iconeDesenho(chave) : null; }

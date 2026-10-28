@@ -8,7 +8,8 @@ desafio, livro e salas em geral: `conteudo.md`. Prédio e andares: `interiores.m
 ## Índice
 1. Onde está no código · 2. Matéria do 4º bimestre · 3. Sala de livro (`ordem: 'livro'`) · 4. Cartas ricas ·
 5. Vozes por capítulo · 6. Rastreio do inventário (`origem`) · 7. No prédio da matéria · 8. Produções salvas ·
-9. Banco para a Revisão · 10. Matéria seguinte (receita curta) · 11. Antes de mexer · 12. Tipos de desafio do livro
+9. Banco para a Revisão · 10. Matéria seguinte (receita curta) · 11. Antes de mexer · 12. Tipos de desafio do livro ·
+13. Etapas da sala de livro · 14. Trilha perfeita (prêmio lendário)
 
 ## 1. Onde está no código
 - Conteúdo: `jogo/js/conteudo/materias/<m>/` (uma sala por arquivo, `livro-<cap>.js` com as cartas de cada capítulo,
@@ -63,7 +64,8 @@ Reino.registrarSala('portugues4', {
    `config.perguntasTreino` desafios treináveis (o treino do Castelo).
 5. `livroOrigem` (`'aprendizagem'`/`'atividades'`, chave de `materia.livros`) e `capitulo` (número) são obrigatórios
    na sala de livro. `paginas` diz as páginas impressas daquele livro.
-6. Sair no meio não conta (como sempre); terminar conta a sala, com dinheiro, estrelas e ovos de sempre.
+6. A sala de livro é jogada em etapas (§13): cada etapa terminada fica guardada; sair no meio de uma etapa só perde
+   aquela etapa. Terminar a última conta a sala, com dinheiro, estrelas e ovos de sempre.
 
 ## 4. Cartas ricas
 ```
@@ -170,3 +172,120 @@ fileira de acentos); resposta digitada vale sem diferença de maiúsculas, espa�
 | caça-palavras | `cacaPalavras` | `grade: ['GATOX', …]` (letras maiúsculas), `palavras: ['GATO', …]` (horizontal ou vertical, achadas na grade) |
 | desenho | `desenho` (existente) | `guardar: true` guarda em `producoes` e mostra de volta |
 | marcar X, ligar, numerar, classificar, completar com quadro | `escolha`, `vf`, `varias`, `vfLista`, `ligar`, `ordenar`, `separar`, `completar` | os de sempre (`conteudo.md` §3); opção com `img` em `escolha`/`varias` |
+
+## 13. Etapas da sala de livro
+Por quê: uma sala inteira (até 13 cartas e 14 desafios) é longa demais de uma vez para a Mariana (TDAH e autismo
+nível 1). A sala vira uma trilha de etapas curtas; o `id` da sala, `P.salas`, Robux, estrelas, ovos e unicórnios não
+mudam (nada do que ela já fez se perde).
+
+### 13.1 Divisão (`jogo/js/atividades/etapas.js`, `node: true`)
+`Reino.etapasDaSala(materia, sala)` → `null` (sala sem `ordem: 'livro'`) ou
+`[{ n: 0, cartas: ['lp-a03', …], desafios: [<desafio>, …] }, …]` (`n` = índice, a partir de 0):
+1. Desafios na ordem do arquivo; uma etapa fecha ao chegar a `config.etapaDesafiosMax` pontos (`escrever` e `desenho`
+   valem `config.etapaPesoEscrever`, o resto 1). Sobra de 1 desafio sem carta própria junta-se à etapa anterior.
+2. Cada carta de `sala.cartas` entra na etapa do primeiro desafio que a cita (`desafio.livro`); carta sem desafio vai
+   com a carta seguinte (a última, com a última etapa); as cartas ficam na ordem de `sala.cartas` e nunca voltam para
+   uma etapa anterior à da carta de antes.
+3. Leitura demais numa etapa (mais de `config.etapaCartasMax` cartas ou de `config.etapaPalavrasMax` palavras): as
+   primeiras cartas viram etapa(s) só de leitura antes dela, com o máximo que couber; uma carta grande sozinha pode.
+4. `sala.etapas: [n, n, …]` (opcional): quantos desafios em cada etapa, à mão; as cartas seguem a regra 2.
+5. Determinística e pura (só a sala e o config); toda carta e todo desafio em exatamente uma etapa; desafios na ordem.
+   `node jogo/ferramentas/validar/etapas-4bim.js [--tabela]` confere e imprime a divisão (entra no `npm run validar`).
+
+### 13.2 Estado (`jogo/js/sistemas/etapas-progresso.js`)
+Campo `etapas` (`registrarCampo`, `save-e-mescla.md` §11; mescla própria com `exemplos`, `novoCiclo: 'zera'`,
+`copiaSeguranca: true`):
+```
+etapas: { lp10a4: { rodada: 0,                                   // salas[id].vezes quando a rodada começou
+                    feitas: { 0: { a: 3, t: 3, p: 0, em: 1792… } },// a = acertos de 1ª, t = total, p = pressas
+                    perfeitas: { 0: 1792… } } }                   // ⭐: etapa feita sem erro (fica entre rodadas)
+```
+- Mescla: `rodada` maior vence (as `feitas` da rodada menor somem da mescla); mesma rodada, união das `feitas` (a
+  mesma etapa nos dois: a de `em` maior); `perfeitas` sempre união (menor `em`). Comutativa e idempotente.
+- `rodada` velha (menor que `salas[id].vezes` atual) = trilha nova: nenhuma etapa feita nesta rodada.
+
+API `Reino.Etapas` (no navegador; lê o estado na hora):
+- `estado(materia, sala)` → `{ total, feitas: [n…], perfeitas: [n…], proxima: n|null, emAndamento, salaFeita,
+  trilhaPerfeita }` (`proxima` = primeira etapa não feita na rodada; `emAndamento` = alguma feita e falta alguma).
+- `concluirEtapa(materia, sala, n, { acertosPrimeira, total, pressas })` → grava a etapa (e a ⭐ se
+  `acertosPrimeira === total`), salva, e devolve `{ ultima, perfeita, sala?: <retorno de P.concluirSala>,
+  trilha?: <retorno de conferirTrilhas para esta sala> }`. Na última etapa da rodada chama `P.concluirSala` com a soma
+  das etapas da rodada (Robux, estrelas, ovos e persistência como sempre).
+- Etapa refeita fora da rodada (para ganhar a ⭐): `concluirEtapa` aceita etapa já feita; grava de novo e não chama
+  `concluirSala` se a rodada já tinha sido concluída.
+
+### 13.3 Na missão
+`Reino.Missao`/`atividades/missao.js`: abrir a sala mostra a trilha (`atividades/missao-etapas.js`): uma bolinha
+por etapa (✓ feita, ⭐ perfeita, ▶ próxima), "Etapa N de M" e "⭐ X de M". "Começar" abre a `proxima` (sala feita:
+a primeira sem ⭐, ou a 1ª); tocar numa etapa feita sem ⭐ refaz só ela. A etapa mostra as cartas dela e os desafios
+dela (a trilha "Carta 1 de 2 / Desafio 3 de 4" conta só a etapa). Fim de etapa: "Etapa guardada!", "Próxima etapa ▶"
+e "Descansar 🌿" (fecha; tudo guardado). Última etapa: a tela de sala concluída de sempre. ✕ no meio: só a etapa
+atual recomeça. Tela da matéria e estação da Casa: estado "em andamento" (◐, "2/4").
+
+## 14. Trilha perfeita (prêmio lendário)
+Pedido do Leandro (2026-10-28): cada sala de Língua Portuguesa com ⭐ em todas as etapas dá um acessório lendário
+para o unicórnio, uma carta de experiência e um elemento químico. Só sem erros (como a nota 10 da Escola: sem caminho
+por persistência), mas pode refazer só a etapa que faltou, quantas vezes quiser, sem pressa (calma não conta).
+
+### 14.1 Registro (`jogo/js/nucleo/registros.js`)
+```
+Reino.registrarPremioTrilha({
+  sala: 'lp10a1', materia: 'portugues4',
+  acessorio: { id: 'lpt-lp10a1', nome: 'Botas do Gato', icone: { n, p, d }, desenho: { linhas, paleta, ancora, dx, dy } },
+  elemento: 30,                  // z do cartão de Reino.QUIMICA.elementos (bloqueado até ganhar)
+  experiencia: 'exp-pilha-limao' // id do cartão de Reino.QUIMICA.experiencias
+});
+Reino.premiosTrilha            // lista, na ordem de registro
+Reino.premioTrilha(salaId)     // o prêmio da sala ou undefined
+```
+O acessório entra como os das provas (`ICONES['acessorio:<id>']`, `Reino.desenhosAcessorios`,
+`PA.ENFEITES_MONTARIA`). Arquivos: `conteudo/materias/portugues4/premios-trilha-<cap>.js` (um por capítulo).
+
+### 14.2 Estado e entrega (`jogo/js/sistemas/trilhas.js`)
+Campo `trilhas: { <salaId>: em }` (mescla própria: por sala fica o menor `em`, nada some; `novoCiclo: 'mantem'`, `copiaSeguranca`).
+`P.conferirTrilhas()` (roda junto do `P.conferirPersistencia`: ao abrir e ao mesclar; idempotente; devolve as salas
+premiadas agora): sala com prêmio registrado e (⭐ em todas as etapas, ou `salas[id].perfeita` — retroativo: a sala
+feita de uma vez sem erro antes das etapas) → `trilhas[id]`, `loja[acessorio.id] = true`,
+`Q.descobrir('elementos', 'z' + z)` e `Q.descobrir('experiencias', id)` (sem as estrelas da química). Evento
+`Reino.EVENTOS.TRILHA_PERFEITA` `{ sala, materia }` por sala nova. A festa (3 cartões) sai na tela de fim da última ⭐;
+o prêmio retroativo, na próxima vez que ela entra na Casa das Palavras.
+
+### 14.3 Onde aparece
+- Loja (`loja-itens.js`): `L.premios()` inclui os da trilha (`raridade: 'lendario'`, `origem: 'trilha'`, `sala`);
+  estado `ganho` (em `trilhas`) ou `bloqueado` ("Faça a trilha de <sala> sem errar"); nunca à venda.
+- Química: os 25 cartões novos de elemento ficam com "?" até ganhar (os 24 de antes, sempre abertos);
+  "Experiências do Reino" (`ui/quimica-experiencias.js`): álbum de 25 cartas, silhueta "?" até ganhar.
+- Casa das Palavras, 1º andar (`portugues-1`): Galeria dos Tesouros, um pedestal por sala (aceso = ganho).
+
+### 14.4 Tabela (fixa: as frentes usam estes ids)
+| Sala | Elemento (z) | Experiência |
+|---|---|---|
+| lp10a1 O Gato de Botas | Zinco (30) | `exp-pilha-limao` |
+| lp10a2 As partes do conto | Estanho (50) | `exp-tambor-de-lata` |
+| lp10a3 Os sinais de pontuação | Iodo (53) | `exp-iodo-amido` |
+| lp10a4 A lenda da Vitória-Régia | Titânio (22) | `exp-barquinho-flutua` |
+| lp10a5 Quando e onde? | Rubídio (37) | `exp-relogio-de-sol` |
+| lp10a6 Meu reconto | Tungstênio (74) | `exp-teatro-de-sombras` |
+| lp10a7 João e o pé de feijão | Manganês (25) | `exp-feijao-no-algodao` |
+| lp10t1 A sereia Iara | Bromo (35) | `exp-ovo-que-flutua` |
+| lp10t2 Os Três Porquinhos | Cromo (24) | `exp-ponte-de-papel` |
+| lp11a1 Rei da Floresta | Níquel (28) | `exp-violao-de-elastico` |
+| lp11a2 Os bichos da canção | Germânio (32) | `exp-telefone-de-copo` |
+| lp11a3 Masculino e feminino | Cobalto (27) | `exp-repolho-roxo` |
+| lp11a4 Aumentativo | Lantânio (57) | `exp-lupa-de-gota` |
+| lp11a5 Diminutivo | Gálio (31) | `exp-gelo-e-sal` |
+| lp11a6 Minha paródia | Criptônio (36) | `exp-lanterna-colorida` |
+| lp11t1 O animal de estimação | Selênio (34) | `exp-calor-do-sol` |
+| lp11t2 Aumentativo e diminutivo | Neodímio (60) | `exp-bussola-caseira` |
+| lp12a1 Jacaré letrado | Platina (78) | `exp-batata-espuma` |
+| lp12a2 Palavras em -ã, -ão, -ães | Estrôncio (38) | `exp-arco-iris-no-copo` |
+| lp12a3 Próprios e comuns | Chumbo (82) | `exp-lapis-sem-chumbo` |
+| lp12a4 Maiúsculas e minúsculas | Mercúrio (80) | `exp-termometro-caseiro` |
+| lp12a5 Meu poema visual | Bário (56) | `exp-leite-colorido` |
+| lp12a6 A primavera endoideceu | Molibdênio (42) | `exp-flor-colorida` |
+| lp12t1 Falta de sorte | Xenônio (54) | `exp-balao-estatico` |
+| lp12t2 Letras e nomes | Bismuto (83) | `exp-cristais-de-sal` |
+
+Cartão de experiência (`conteudo/quimica/experiencias.js`, `Reino.QUIMICA.experiencias`):
+`{ id, nome, emoji, elemento: z, comAdulto: true, precisa: ['…'], passos: ['…'], acontece: '…', porque: ['…'] }`;
+cada página até 30 letras, 3+ palavras; só materiais de casa e seguros (nada de fogo, nada de tomada).

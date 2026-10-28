@@ -1,8 +1,11 @@
-/* Missão: a tela de uma sala (Reino.Missao.iniciar): intro, desafios sorteados um a um,
-   retorno do Claude a cada conferência e os prêmios no fim. Usa Reino.Desafios. */
+/* Missão: a tela de uma sala (Reino.Missao.iniciar): intro, desafios sorteados um a um, retorno do Claude a cada
+   conferência e os prêmios no fim. Usa Reino.Desafios. Sala de livro (quarto-bimestre.md §13.3): a intro é a trilha
+   e cada etapa tem as cartas e os desafios dela. Objeto interno Reino._missao (criado aqui; missao-etapas.js registra
+   nele trilha, fimEtapa, festaTrilha, fechaASala e soma, que recebem a `api` da missão aberta, em M.iniciar). */
 (function () {
   var U = Reino.util, el = U.el, D = Reino.Desafios;
   var M = {};
+  var ME = Reino._missao = {};
   // troca de tela pelo teclado: o Enter/Espaço que chega logo depois no controle novo não vale
   var CALMA_TROCA = 400;
 
@@ -10,7 +13,9 @@
     if (Reino.Bimestres.emEspera(materia)) return Reino.Bimestres.avisar().then(function () { if (aoTerminar) aoTerminar(null); });
     var tela = Reino.UI.abrirTela('missao');
     if (materia && materia.cor) tela.style.setProperty('--cor-materia', materia.cor);   // faixa do cabeçalho na cor da matéria (D10-12)
-    var lista = D.listaDaSala(sala);
+    // sala de livro: as etapas (null nas sorteadas); etapaN = a etapa em curso (-1 = na trilha)
+    var etapas = Reino.etapasDaSala && Reino.Etapas ? Reino.etapasDaSala(materia, sala) : null, etapaN = -1;
+    var lista = etapas ? [] : D.listaDaSala(sala);
     var idx = 0, acertosPrimeira = 0, pressas = 0, ultimaPressa = -10;
     var errouAtual = false, avisouPressa = false, inicioDesafio = 0, ctrl = null;
 
@@ -40,7 +45,8 @@
     var botaoFim = null;   // no fim da sala, o "Voltar"/"Chocar o ovo": a sala já contou e o ✕ faz o mesmo
     sair.addEventListener('click', function () {
       if (botaoFim) { botaoFim.click(); return; }
-      Reino.UI.confirmar('Quer sair da sala agora? Você pode voltar e fazer de novo depois.', 'Sair', 'Continuar aqui').then(function (sim) {
+      Reino.UI.confirmar(etapas && etapaN >= 0 ? 'Quer sair agora? As etapas que você terminou estão guardadas. Só esta etapa começa de novo.'
+        : 'Quer sair da sala agora? Você pode voltar e fazer de novo depois.', 'Sair', 'Continuar aqui').then(function (sim) {
         if (!sim) return;
         fechar();
         if (aoTerminar) aoTerminar(null);
@@ -91,6 +97,7 @@
       return L ? L.emoji + ' ' + L.nome : 'Apostila';
     }
     function intro() {
+      if (etapas) { etapaN = -1; botaoFim = null; ME.trilha(api); return; }
       corpo.innerHTML = '';
       var claudeMini = PA.paraDOM(PA.claude(0), 4, 'claude-intro');
       var comecar = el('button.btn-grande.btn-principal', { type: 'button' }, 'Começar 🦄');
@@ -127,18 +134,15 @@
 
     // resumo antes das questões: as cartas do livro que a sala usa (campo `livro`, sem repetir, na ordem)
     // sala.cartas (sala de livro): as cartas dadas, nessa ordem, mesmo sem a preferência do resumo
-    var cartas = [];
-    if (sala.cartas && materia && materia.livro) {
-      sala.cartas.forEach(function (id) {
-        var c = materia.livro.find(function (x) { return x.id === id; });
-        if (c) cartas.push(c);
-      });
-    } else if (Reino.config.esperaFala.resumoNaSala && materia && materia.livro) {
-      sala.desafios.forEach(function (d) {
-        var c = materia.livro.find(function (x) { return x.id === d.livro; });
-        if (c && cartas.indexOf(c) < 0) cartas.push(c);
-      });
+    // (na sala de livro, as da etapa: etapa.cartas, ou as citadas pelos desafios dela se a sala não tem `cartas`)
+    function cartasPara(ids, desafios) {
+      var r = [], achar = function (id) { return materia.livro.find(function (x) { return x.id === id; }); };
+      if (!materia || !materia.livro) return r;
+      if (ids) ids.forEach(function (id) { var c = achar(id); if (c) r.push(c); });
+      else if (Reino.config.esperaFala.resumoNaSala) desafios.forEach(function (d) { var c = achar(d.livro); if (c && r.indexOf(c) < 0) r.push(c); });
+      return r;
     }
+    var cartas = etapas ? [] : cartasPara(sala.cartas, sala.desafios);
     // pacote de voz de cada carta (por capítulo nas cartas que têm `capitulo`)
     function pacoteCarta(c) { return Reino.Falas.pacoteCarta(materia, c); }
     function resumo(i) {
@@ -146,11 +150,12 @@
       corpo.innerHTML = '';
       var area = el('div.livro-carta');
       Reino.UI.desenharCarta(area, cartas[i]);
-      var ultima = i === cartas.length - 1;
+      var ultima = i === cartas.length - 1, soLeitura = ultima && !lista.length;   // etapa só de leitura: termina na última carta
       // no celular, "Começar 🦄" e só a seta no "Voltar" (o .rotulo-longo some); na carta 1, a vaga guarda o lugar
       // do "Voltar" e o "Continuar" fica sempre no mesmo lugar
       // o de seguir tem a largura do "Começar" da intro (D7-17): na última carta, "Começar 🦄" como lá
-      var seguir = el('button.btn-grande.btn-principal', { type: 'button', 'aria-label': ultima ? 'Começar as perguntas' : null }, ultima ? 'Começar 🦄' : 'Continuar →');
+      var seguir = el('button.btn-grande.btn-principal', { type: 'button', 'aria-label': soLeitura ? 'Terminar a etapa' : ultima ? 'Começar as perguntas' : null },
+        soLeitura ? 'Terminar ✓' : ultima ? 'Começar 🦄' : 'Continuar →');
       var voltar = i > 0 ? el('button.btn-grande.btn-secundario.so-seta', { type: 'button', 'aria-label': 'Voltar' }, '←', el('span.rotulo-longo', ' Voltar')) : null;
       var titulo = el('h2.titulo-pixel', '📖 Resumo');
       corpo.appendChild(el('div.resumo-sala', titulo,
@@ -165,7 +170,7 @@
       mostrarAcao('resumo-botoes', fila);
       pintarTrilha('resumo', i);
       var botoes = acao;
-      seguir.addEventListener('click', function () { Reino.Som.tocar('toque'); if (ultima) mostrarDesafio(); else resumo(i + 1); });
+      seguir.addEventListener('click', function () { Reino.Som.tocar('toque'); if (soLeitura) terminarEtapa(); else if (ultima) mostrarDesafio(); else resumo(i + 1); });
       if (voltar) voltar.addEventListener('click', function () { Reino.Som.tocar('toque'); resumo(i - 1); });
       corpo.scrollTop = 0;
       Reino.UI.focarTroca(seguir, titulo, CALMA_TROCA);
@@ -272,7 +277,7 @@
       if (cresceu) retorno.appendChild(el('p.retorno-cresceu', '🌟 ' + Reino.Progresso.nomeUni(cresceu.id) + ' cresceu! Agora é ' + Reino.Unicornios.ESTAGIOS[cresceu.estagio].nome + ' ' + Reino.Unicornios.ESTAGIOS[cresceu.estagio].emoji));
       var botoes = el('div.retorno-botoes');
       if (ok) {
-        var cont = el('button.btn-grande.btn-principal', { type: 'button' }, idx + 1 < lista.length ? 'Continuar →' : 'Terminar a sala 🎉');
+        var cont = el('button.btn-grande.btn-principal', { type: 'button' }, idx + 1 < lista.length ? 'Continuar →' : etapas && !ME.fechaASala(api) ? 'Terminar a etapa ✨' : 'Terminar a sala 🎉');
         cont.addEventListener('click', function () { Reino.Som.tocar('toque'); retorno.hidden = true; soltarGiro(); corpo.style.paddingBottom = ''; proximo(); });
         botoes.appendChild(cont);
       } else {
@@ -328,16 +333,49 @@
     function proximo() {
       idx++;
       if (idx < lista.length) { mostrarDesafio(); return; }
-      terminar();
+      if (etapas) terminarEtapa(); else terminar();
     }
 
-    function terminar() {
+    /* ---------- etapas (sala de livro) ---------- */
+    // abre a etapa n: as cartas dela e depois os desafios dela, com a contagem só dela
+    function comecarEtapa(n) {
+      var e = etapas[n];
+      etapaN = n; botaoFim = null;
+      lista = e.desafios.slice();
+      cartas = cartasPara(sala.cartas ? e.cartas : null, e.desafios);
+      idx = 0; acertosPrimeira = 0; pressas = 0; ultimaPressa = -10;
+      Reino.Som.tocar('porta');
+      if (cartas.length) resumo(0); else if (lista.length) mostrarDesafio(); else terminarEtapa();
+    }
+    // guarda a etapa; a última da rodada conta a sala (a tela de sempre); a última ⭐ da trilha, a festa do prêmio
+    function terminarEtapa() {
+      pintarTrilha('fim');
+      rodape.hidden = true; acao.hidden = true;   // (a etapa só de leitura termina no rodapé de ação da carta)
+      var r = Reino.Etapas.concluirEtapa(materia, sala, etapaN, { acertosPrimeira: acertosPrimeira, total: lista.length, pressas: pressas });
+      var fimSala = r && r.sala ? function () { terminar(r.sala, ME.soma(sala)); } : null;   // a sala inteira, somada das etapas
+      if (r && r.trilha) ME.festaTrilha(api, r.trilha, fimSala);
+      else if (fimSala) fimSala();
+      else ME.fimEtapa(api, r || { perfeita: acertosPrimeira >= lista.length });
+    }
+    // o que missao-etapas.js usa desta missão aberta
+    var api = {
+      materia: materia, sala: sala, etapas: etapas, corpo: corpo, sair: sair, CALMA: CALMA_TROCA,
+      mostrarAcao: mostrarAcao, pintarTrilha: pintarTrilha, botaoOuvir: botaoOuvir, livroDaSala: livroDaSala, pacoteCarta: pacoteCarta,
+      etapa: function () { return etapaN; },
+      comecar: comecarEtapa,
+      botaoFim: function (b) { botaoFim = b; },
+      fechar: function (premios) { fechar(); if (aoTerminar) aoTerminar(premios || null); },
+    };
+
+    // pronto/soma (sala de livro): o retorno de P.concluirSala que a última etapa já chamou e os acertos { a, t } da sala
+    function terminar(pronto, soma) {
       pintarTrilha('fim');
       rodape.hidden = true;
-      var premios = Reino.Progresso.concluirSala(materia, sala, { acertosPrimeira: acertosPrimeira, total: lista.length, pressas: pressas });
+      var acertos = soma ? soma.a : acertosPrimeira, total = soma ? soma.t : lista.length;
+      var premios = pronto || Reino.Progresso.concluirSala(materia, sala, { acertosPrimeira: acertos, total: total, pressas: pressas });
       corpo.innerHTML = '';
       var itens = el('ul.premios');
-      itens.appendChild(el('li', el('span.premio-icone', '⭐'), el('span', 'Acertos de primeira: ', el('b', acertosPrimeira + ' de ' + lista.length))));
+      itens.appendChild(el('li', el('span.premio-icone', '⭐'), el('span', 'Acertos de primeira: ', el('b', acertos + ' de ' + total))));
       if (premios.calma) itens.appendChild(el('li', el('span.premio-icone', '🌙'), el('span', el('b', 'Estrela da Calma!'), ' Você leu tudo com calma. +3 ⭐')));
       if (premios.primeiraVez) itens.appendChild(el('li.premio-dinheiro', el('span.premio-icone', '💰'), el('span', el('b', '+ ' + U.robux(premios.dinheiro)), ' no Baú do Tesouro!')));
       else itens.appendChild(el('li', el('span.premio-icone', '🔁'), el('span', 'Treino livre: os ' + U.robux(Reino.Progresso.valorSala(materia)) + ' desta sala já estão no baú.')));
@@ -362,7 +400,7 @@
       Reino.UI.festa(premios.materiaCompleta ? 4 : 2, { titulo: titulo, emoji: emoji });
       Reino.UI.focarTroca(btn, corpo.querySelector('.fim-sala h2'), CALMA_TROCA);
       if (premios.primeiraVez) setTimeout(function () { Reino.Som.tocar('moeda'); }, 900);
-      Reino.UI.esperarFala([btn, sair], [premios.materiaCompleta ? Reino.Falas.fixas.revisaoCompleta : Reino.Falas.fixas.salaConcluida, Reino.Falas.acertouDePrimeira(acertosPrimeira)], { voz: 'claude' });
+      Reino.UI.esperarFala([btn, sair], [premios.materiaCompleta ? Reino.Falas.fixas.revisaoCompleta : Reino.Falas.fixas.salaConcluida, Reino.Falas.acertouDePrimeira(acertos)], { voz: 'claude' });
       btn.addEventListener('click', function () {
         fechar();
         var depois = function () { if (aoTerminar) aoTerminar(premios); };

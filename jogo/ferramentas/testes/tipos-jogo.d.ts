@@ -282,6 +282,8 @@ interface ProgressoApi {
   persistiuSala(salaId: string): boolean;
   faltamPersistencia(def: DefPersistencia): number | null;
   conferirPersistencia(): string[];
+  /** prêmios da trilha perfeita que faltam (sistemas/trilhas.js); devolve as salas premiadas agora */
+  conferirTrilhas?(): string[];
   medalhaPara(acertos: number, total: number): Medalha;
   registrarTreino(materia: Materia, acertos: number, total: number): PremiosTreino;
   premioDaTentativa(n: number): RaridadePremio;
@@ -963,6 +965,7 @@ interface EventosReino {
   PROGRESSO_REMOTO: 'progressoRemoto';
   /** sem carga */
   MAPA_MUDOU: 'mapaMudou';
+  TRILHA_PERFEITA: 'trilhaPerfeita';
   /** carga: boolean (começou/terminou) */
   TRANSICAO: 'transicao';
   /** carga: Reino.Cuidados.depurar() */

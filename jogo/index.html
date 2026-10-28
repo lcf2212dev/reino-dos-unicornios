@@ -12,6 +12,8 @@
 <link rel="stylesheet" href="css/ui-hud.css">
 <link rel="stylesheet" href="css/ui-telas.css">
 <link rel="stylesheet" href="css/ui-missao.css">
+<link rel="stylesheet" href="css/ui-etapas.css">
+<link rel="stylesheet" href="css/ui-respiro.css">
 <link rel="stylesheet" href="css/ui-prova.css">
 <link rel="stylesheet" href="css/ui-paineis.css">
 <link rel="stylesheet" href="css/ui-feira.css">
@@ -38,6 +40,7 @@
 <link rel="stylesheet" href="css/ui-quimica-estados.css">
 <link rel="stylesheet" href="css/ui-quimica-separar.css">
 <link rel="stylesheet" href="css/ui-quimica-livros.css">
+<link rel="stylesheet" href="css/ui-quimica-experiencias.css">
 <link rel="stylesheet" href="css/ui-jogadores.css">
 <link rel="stylesheet" href="css/ui-abertura.css">
 <link rel="stylesheet" href="css/ui-personagem.css">
@@ -95,6 +98,9 @@
 <script src="js/conteudo/quimica/frases-microscopio.js"></script>
 <script src="js/conteudo/quimica/frases-tabela.js"></script>
 <script src="js/conteudo/quimica/elementos.js"></script>
+<script src="js/conteudo/quimica/elementos-trilha.js"></script>
+<script src="js/conteudo/quimica/experiencias.js"></script>
+<script src="js/conteudo/quimica/frases-experiencias.js"></script>
 <script src="js/conteudo/quimica/tabela.js"></script>
 <script src="js/conteudo/quimica/licoes.js"></script>
 <script src="js/conteudo/quimica/laminas.js"></script>
@@ -185,6 +191,9 @@
 <script src="js/conteudo/materias/portugues4/unicornios-11.js"></script>
 <script src="js/conteudo/materias/portugues4/unicornios-12.js"></script>
 <script src="js/conteudo/materias/portugues4/portugues4.js"></script>
+<script src="js/conteudo/materias/portugues4/premios-trilha-10.js"></script>
+<script src="js/conteudo/materias/portugues4/premios-trilha-11.js"></script>
+<script src="js/conteudo/materias/portugues4/premios-trilha-12.js"></script>
 <script src="js/conteudo/materias/ciencias/icones.js"></script>
 <script src="js/conteudo/materias/matematica/icones.js"></script>
 <script src="js/conteudo/materias/geografia/icones.js"></script>
@@ -209,6 +218,8 @@
 <script src="js/sistemas/progresso-campos.js"></script>
 <script src="js/sistemas/visitados.js"></script>
 <script src="js/sistemas/producoes.js"></script>
+<script src="js/sistemas/etapas-progresso.js"></script>
+<script src="js/sistemas/trilhas.js"></script>
 <script src="js/sistemas/jogadores.js"></script>
 <script src="js/sistemas/som.js"></script>
 <script src="js/sistemas/som-escola.js"></script>
@@ -255,7 +266,9 @@
 <script src="js/atividades/desafios/copiar.js"></script>
 <script src="js/atividades/desafios/memoria.js"></script>
 <script src="js/atividades/desafios/desenho.js"></script>
+<script src="js/atividades/etapas.js"></script>
 <script src="js/atividades/missao.js"></script>
+<script src="js/atividades/missao-etapas.js"></script>
 <script src="js/atividades/treino.js"></script>
 <script src="js/atividades/provas.js"></script>
 <script src="js/atividades/voo.js"></script>
@@ -301,6 +314,7 @@
 <script src="js/ui/quimica-separar-2.js"></script>
 <script src="js/ui/quimica-livros.js"></script>
 <script src="js/ui/quimica-livros-2.js"></script>
+<script src="js/ui/quimica-experiencias.js"></script>
 <script src="js/ui/sem-internet.js"></script>
 <script src="js/ui/pais.js"></script>
 <script src="js/ui/jogadores.js"></script>
@@ -392,6 +406,7 @@
 <script src="js/interiores/observatorio/lab-objetos-3.js"></script>
 <script src="js/interiores/observatorio/lab-atividades.js"></script>
 <script src="js/interiores/observatorio/lab-andar3.js"></script>
+<script src="js/interiores/portugues/reservas.js"></script>
 <script src="js/interiores/portugues/falas.js"></script>
 <script src="js/interiores/portugues/objetos-hall-cozinha.js"></script>
 <script src="js/interiores/portugues/objetos-horta-circo.js"></script>
@@ -399,10 +414,15 @@
 <script src="js/interiores/portugues/objetos-parque.js"></script>
 <script src="js/interiores/portugues/lp-personagens.js"></script>
 <script src="js/interiores/portugues/lp-falas.js"></script>
+<script src="js/interiores/portugues/personagens-falas.js"></script>
+<script src="js/interiores/portugues/lp-respiro.js"></script>
 <script src="js/interiores/portugues/lp-objetos.js"></script>
 <script src="js/interiores/portugues/lp-objetos-temas.js"></script>
 <script src="js/interiores/portugues/lp-objetos-atelies.js"></script>
+<script src="js/interiores/portugues/lp-objetos-andar1.js"></script>
+<script src="js/interiores/portugues/lp-tesouros.js"></script>
 <script src="js/interiores/portugues/portugues.js"></script>
+<script src="js/interiores/portugues/lp-andar1.js"></script>
 <script src="js/interiores/portugues/fora.js"></script>
 <script src="js/interiores/matematica/objetos-parede.js"></script>
 <script src="js/interiores/matematica/objetos-chao.js"></script>

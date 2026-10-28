@@ -141,6 +141,7 @@ Arquivo grande foi dividido em partes que carregam em sequência; o que era priv
 | `Reino._musicas` | `jogo/js/sistemas/musicas-faixas.js` | `musicas.js` |
 | `Reino._ui` | `jogo/js/ui/base.js` (fim do arquivo) | as outras telas de `jogo/js/ui/` |
 | `Reino._desafios` | `jogo/js/atividades/desafios.js` | `atividades/desafios/<tipo>.js` |
+| `Reino._missao` | `jogo/js/atividades/missao.js` | `atividades/missao-etapas.js` |
 | `Reino._banho`, `Reino._fotos`, `Reino._surpresa`, `Reino._jogador` | a primeira parte de cada um | as outras partes |
 | `PA._interno`, `Mapa._interno` | `jogo/js/arte/pixelart.js`, `jogo/js/mundo/mapa.js` | `arte/pixelart-*.js`, `mundo/*.js` |
 
@@ -158,6 +159,7 @@ Barramento `Reino.util` (`U.on`, `U.emit`); como usar e criar evento: `jogo/js/C
 | `CENA` | `cena` | `{ de, para }` |
 | `OCUPADA` | `ocupada` | motivo ou `null` |
 | `IR_PARA` | `irPara` | o lugar |
+| `TRILHA_PERFEITA` | `trilhaPerfeita` | `{ sala, materia }` |
 | `NUVEM` | `nuvem` | `'sincronizado'`, `'erro'` ou `'local'` |
 Quem emite e quem ouve: o comentário de cada constante no arquivo.
 

@@ -114,7 +114,9 @@
       // conteúdo do cesto é pelo prédio, achado por tipo + x + y + var)
       { tipo: 'cesto', x: 5, y: 2, var: { conteudo: 'bolinhas', cores: [S.COR, S.COR2] } },
       inter('agua', 'Molécula de água', { tipo: 'quimica-agua', x: 7, y: 2 }),
-      { tipo: 'caixote', x: 9, y: 2 }, { tipo: 'estante', x: 11, y: 2 }, 
+      { tipo: 'caixote', x: 9, y: 2 },
+      // a estante das cartas de experiência (abre o álbum Experiências do Reino)
+      tela('experiencias', 'Experiências do Reino', 'quimica-experiencias', { tipo: 'estante', x: 11, y: 2 }),
       { tipo: 'mesa', x: 0, y: 5, var: { toalha: '#e9dcff', itens: ['livro', 'xicara'] } },
       inter('atomo', 'Modelo de átomo', { tipo: 'quimica-atomo', x: 6, y: 4 }),
       { tipo: 'planta-alta', x: 11, y: 4 },

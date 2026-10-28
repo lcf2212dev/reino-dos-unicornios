@@ -3,8 +3,9 @@
 // texto que ainda não está certo, confere ("Quase!": já fica guardado, §8.2) e sai no meio pelo ✕: a sala não conta e o
 // dinheiro não muda, mas o desenho e o texto ficam em `producoes` (no save e na cópia de segurança). Sai da Casa das
 // Palavras andando (tapete do saguão), volta andando e recarrega a página (o save sintético no localStorage do contexto de
-// teste): tudo igual. Reabre a sala: o desenho e o texto voltam nas questões, com o Conferir já ligado; ela conserta o
-// texto no mesmo controle e termina a sala, que agora conta (dinheiro e texto novo guardado); recarrega de novo: igual.
+// teste): tudo igual. Reabre a sala: a trilha volta na etapa da escrita (as etapas de antes ficaram guardadas); o
+// desenho e o texto voltam nas questões, com o Conferir já ligado; ela conserta o texto no mesmo controle e termina a
+// sala, etapa por etapa, que agora conta (dinheiro e texto novo guardado); recarrega de novo: igual.
 // Servidor e banco de TESTE novos (cenario.js); save sintético; congelado (?congelar=1); tablet. Sem erro de console.
 // Rodar (da raiz): npm run unidade -- --so quarto-bimestre-persistencia
 const { test } = require('node:test');
@@ -13,22 +14,26 @@ const fs = require('fs');
 const path = require('path');
 const { abrirCenario } = require('../cenario');
 const { PASTA_TESTES } = require('../guardas');
-const { preparar, respostas, acionar, levarA, conferir, botaoDoRetorno, responderDaVez, esperar, tocarTile, andarAte, estacao } = require('./ajudantes/quarto-bimestre');
+const { preparar, respostas, acionar, levarA, conferir, botaoDoRetorno, responderDaVez, esperar, tocarTile, andarAte, irAEstacao, seguirSala, telaDaMissao, PRINCIPAL } = require('./ajudantes/quarto-bimestre');
 
 const estado = (c, sala) => c.js(`(function (P) { var e = P.estado(), s = e.salas['${sala}']; return { feita: !!(s && s.feita), reg: s || null, dinheiro: P.dinheiroTotal(),
   producoes: e.producoes, guardado: JSON.parse(localStorage.getItem(Reino.config.chaveSave)).producoes,
   copia: (JSON.parse(localStorage.getItem(Reino.config.chaveSave + '-novidades') || '{}').campos || {}).producoes }; })(Reino.Progresso)`);
 
-// pela estação da Casa das Palavras (toque) até a 1ª questão
+// pela estação da Casa das Palavras (toque) até a trilha das etapas, e "Começar"
 async function abrirSala(c, sala) {
-  const e = await estacao(c, sala.id);
+  const e = await irAEstacao(c, sala.id);
   await andarAte(c, e.tile.x, e.tile.y);
   await tocarTile(c, e.x, e.y);
   assert.ok(await esperar(c, 'Reino.Claude.dialogoAberto()', 8000), 'a estação não falou');
-  await acionar(c, c.page.locator('#claude-balao .claude-acoes .btn-dialogo.principal'), 'toque');
-  assert.ok(await esperar(c, "!!document.querySelector('.tela-missao .intro-sala')", 8000), 'a estação não abriu a sala');
-  for (let i = 0; i <= sala.cartas; i++) await acionar(c, c.page.locator('.tela-missao footer.rodape-acao:not([hidden]) .btn-principal'), 'dom');
-  assert.ok(await c.js("!!document.querySelector('.tela-missao .desafio')"), 'a sala não chegou às questões');
+  // a fala da estação pode ter mais de uma página (sala em andamento): toca o principal até a sala abrir
+  for (let i = 0; i < 6 && await c.js('Reino.Claude.dialogoAberto()'); i++) {
+    await acionar(c, c.page.locator('#claude-balao .claude-acoes .btn-dialogo.principal'), 'toque');
+    await c.avancar(300);
+  }
+  assert.ok(await esperar(c, "!!document.querySelector('.tela-missao .intro-sala .etapas-trilha')", 8000), 'a estação não abriu a trilha da sala');
+  await acionar(c, c.page.locator(PRINCIPAL), 'dom');
+  assert.ok(['carta', 'desafio'].includes(await telaDaMissao(c)), 'o "Começar" não abriu a etapa');
 }
 // sai da Casa das Palavras andando: tapete do saguão para o mapa; volta: porta da casa, direto no saguão
 async function sairEVoltarAndando(c) {
@@ -70,10 +75,11 @@ test('o que ela fez fica: saindo no meio depois de conferir, andando para fora e
     await c.ir('portugues');
     await c.page.evaluate(preparar);
     await abrirSala(c, sala);
-    for (const id of sala.ids.slice(0, sala.ids.indexOf(sala.escrever))) {
+    const ate = await seguirSala(c, async (id) => {
       const r = await responderDaVez(c, id, 'dom', { errar: false });
       assert.deepStrictEqual(r.problemas, [], id);
-    }
+    }, { antesDe: sala.escrever });
+    assert.strictEqual(ate.fim, 'desafio', 'não chegou à escrita: ' + JSON.stringify(ate));
     const resp = await c.page.evaluate(respostas, sala.escrever);
     await levarA(c, resp, resp.errada, 'dom');
     assert.strictEqual(await conferir(c, 'dom'), 'quase', 'o texto errado deu certo');
@@ -102,13 +108,15 @@ test('o que ela fez fica: saindo no meio depois de conferir, andando para fora e
     await c.ir('portugues');
     await c.page.evaluate(preparar);
     await abrirSala(c, sala);
-    for (const id of sala.ids) {
+    const vistos = [];
+    const fimSala = await seguirSala(c, async (id) => {
+      vistos.push(id);
       // as questões sem produção guardada começam em branco; as com produção (o desenho, o texto e outra escrita
       // acertada antes) voltam com ela
       if (!recarregado.producoes[id]) {
         const r = await responderDaVez(c, id, 'dom', { errar: false });
         assert.deepStrictEqual(r.problemas, [], id + ' (de novo)');
-        continue;
+        return;
       }
       await c.avancar(200);
       const volta = await c.js(`(function (a, b) { var v = a.ctrl.valor(); return { id: a.d.id, ligado: !b.disabled, px: v && v.px, texto: typeof v === 'string' ? v : null }; })(
@@ -121,8 +129,14 @@ test('o que ela fez fica: saindo no meio depois de conferir, andando para fora e
       if (id === sala.escrever) { assert.strictEqual(g.texto, resp.errada); await levarA(c, resp, resp.certa, 'dom'); }
       assert.strictEqual(await conferir(c, 'dom'), 'certo', id + ' depois de voltar');
       await botaoDoRetorno(c, 'Continuar|Terminar', 'dom');
-    }
-    assert.ok(await c.js("!!document.querySelector('.tela-missao .fim-sala')"), 'a sala reaberta não terminou');
+    });
+    assert.strictEqual(fimSala.fim, 'fimSala', 'a sala reaberta não terminou: ' + JSON.stringify(fimSala));
+    // a trilha voltou na etapa da escrita: as etapas de antes ficaram guardadas e não se repetem
+    const etapaDaEscrita = await c.js(`Reino.etapasDaSala(Reino.materia('portugues4'), Reino.materia('portugues4').salas.find(function (s) { return s.id === '${sala.id}'; }))
+      .findIndex(function (e) { return e.desafios.some(function (d) { return d.id === '${sala.escrever}'; }); })`);
+    const depoisDela = await c.js(`[].concat.apply([], Reino.etapasDaSala(Reino.materia('portugues4'), Reino.materia('portugues4').salas.find(function (s) { return s.id === '${sala.id}'; }))
+      .slice(${etapaDaEscrita}).map(function (e) { return e.desafios.map(function (d) { return d.id; }); }))`);
+    assert.deepStrictEqual(vistos, depoisDela, 'reabrir começou na etapa da escrita');
     await c.js("Reino.UI.fecharTodas(); document.body.classList.remove('em-missao')");
     await c.avancar(600);
     const fim = await estado(c, sala.id);

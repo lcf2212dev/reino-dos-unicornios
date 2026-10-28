@@ -53,25 +53,31 @@
       grupo = g && g.textContent;
       var raro = (materia.unicornios || []).find(function (u) { return u.raridade === 'raro' && u.sala === s.id; });
       var temRaro = raro && P.temUni(raro.id);
+      // sala de livro (quarto-bimestre.md §13.3): em andamento (◐ e "2/4" etapas; só a sala ainda não feita: a feita
+      // que refaz uma etapa continua ✓) e a trilha perfeita (⭐)
+      var et = Reino.Etapas ? Reino.Etapas.estado(materia, s) : null, anda = !reg.feita && !!(et && et.emAndamento), perfeita = !!(et && et.trilhaPerfeita);
       var chips = el('span.sala-chips',
         // no celular Feita, Raro e Calma ficam só no desenho (o rótulo some): os chips cabem numa linha (D7-09)
-        reg.feita ? el('span.chip-mini.ok', { 'aria-label': 'Feita' }, '✓', el('span.rotulo-chip', ' Feita'))
+        anda ? el('span.chip-mini.andamento', { 'aria-label': 'Em andamento' }, el('span.meia-lua', { 'aria-hidden': 'true' }), ' ' + et.feitas.length + '/' + et.total)
+          : reg.feita ? el('span.chip-mini.ok', { 'aria-label': 'Feita' }, '✓', el('span.rotulo-chip', ' Feita'))
           // "Próxima!" com mais chips: no celular só o ✨ (a borda grossa já marca), para não quebrar a linha
           : i === iProx && (temRaro || reg.calma) ? el('span.chip-mini.nova', { 'aria-label': 'Próxima' }, '✨', el('span.rotulo-chip', ' Próxima!'))
           : el('span.chip-mini.nova', i === iProx ? '✨ Próxima!' : '✨ Nova!'),
         el('span.chip-mini', '💰 ' + U.robuxNumero(P.valorSala(materia))),   // o 💰 é o símbolo do Robux
         temRaro ? el('span.chip-mini.raro', { 'aria-label': 'Raro' }, '💙', el('span.rotulo-chip', ' Raro')) : null,
-        reg.calma ? el('span.chip-mini.calma', { 'aria-label': 'Calma' }, '🌙', el('span.rotulo-chip', ' Calma')) : null);
+        reg.calma ? el('span.chip-mini.calma', { 'aria-label': 'Calma' }, '🌙', el('span.rotulo-chip', ' Calma')) : null,
+        perfeita ? el('span.chip-mini.trilha-perfeita', { 'aria-label': 'Trilha perfeita' }, '⭐', el('span.rotulo-chip', ' Perfeita')) : null);
       // .ir-embaixo: no celular o "Entrar →"/"Jogar de novo" desce para a linha de baixo (senão
       // espreme o nome da sala numa coluna de uma letra)
       var b = el('button.sala-card.ir-embaixo' + (reg.feita ? '.feita' : '') + (i === iProx ? '.proxima' : ''), { type: 'button',
         // nome acessível inteiro: no celular a ação e os rótulos ficam só no desenho
-        'aria-label': (i + 1) + '. ' + s.nome + ', ' + (reg.feita ? 'feita' : i === iProx ? 'próxima' : 'nova') + ', ' + U.robux(P.valorSala(materia)) +
-          (temRaro ? ', raro' : '') + (reg.calma ? ', calma' : '') + ', ' + (L ? L.nome : 'apostila') + ' ' + s.paginas + ', ' + (reg.feita ? 'jogar de novo' : 'entrar') },
+        'aria-label': (i + 1) + '. ' + s.nome + ', ' + (anda ? 'em andamento, ' + et.feitas.length + ' de ' + et.total + ' etapas' : reg.feita ? 'feita' : i === iProx ? 'próxima' : 'nova') + ', ' + U.robux(P.valorSala(materia)) +
+          (temRaro ? ', raro' : '') + (reg.calma ? ', calma' : '') + (perfeita ? ', trilha perfeita' : '') + ', ' + (L ? L.nome : 'apostila') + ' ' + s.paginas + ', ' + (anda ? 'continuar' : reg.feita ? 'jogar de novo' : 'entrar') },
         el('span.sala-emoji', s.emoji),
         el('span.sala-info', el('b', hifenizar((i + 1) + '. ' + s.nome)), el('small', (L ? L.emoji : '📖') + ' ' + s.paginas), chips),
         // no celular só a seta, à direita do nome (D7-09)
-        reg.feita ? el('span.sala-ir', el('span.rotulo-chip', 'Jogar de novo'), el('span.seta-celular', '→'))
+        anda ? el('span.sala-ir', el('span.rotulo-chip', 'Continuar'), el('span.seta-celular', '→'))
+          : reg.feita ? el('span.sala-ir', el('span.rotulo-chip', 'Jogar de novo'), el('span.seta-celular', '→'))
           : el('span.sala-ir', el('span.rotulo-chip', 'Entrar '), '→'));
       b.addEventListener('click', function () {
         Reino.Som.tocar('porta');
