@@ -30463,6 +30463,78 @@
    "fala": "O álbum ainda está vazio. Vamos tirar uma foto?"
   },
   {
+   "chave": "eb17aa8ez",
+   "voz": "claude",
+   "texto": "Mariana, chegou um presente!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Mariana, chegou um presente!"
+  },
+  {
+   "chave": "62a4b7f4v",
+   "voz": "claude",
+   "texto": "Toque no baú para abrir!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Toque no baú para abrir!"
+  },
+  {
+   "chave": "106014c3w",
+   "voz": "claude",
+   "texto": "Elas são Ultra Lendárias!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Elas são Ultra Lendárias!"
+  },
+  {
+   "chave": "fe6ab038t",
+   "voz": "claude",
+   "texto": "Você mereceu cada uma!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Você mereceu cada uma!"
+  },
+  {
+   "chave": "05909306s",
+   "voz": "claude",
+   "texto": "Uma medalha de prata!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Uma medalha de prata!"
+  },
+  {
+   "chave": "90e0031fx",
+   "voz": "claude",
+   "texto": "Pelo seu segundo bimestre!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Pelo seu segundo bimestre!"
+  },
+  {
+   "chave": "2c42b856t",
+   "voz": "claude",
+   "texto": "E uma medalha de ouro!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "E uma medalha de ouro!"
+  },
+  {
+   "chave": "f4be8045y",
+   "voz": "claude",
+   "texto": "Pelo seu terceiro bimestre!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Pelo seu terceiro bimestre!"
+  },
+  {
    "chave": "e2597d87w",
    "voz": "claude",
    "texto": "Chegou novidade no Reino!",
