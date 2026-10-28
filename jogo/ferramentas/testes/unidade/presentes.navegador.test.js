@@ -14,6 +14,7 @@ const ID = 'medalhas-2026', PRATA = 'ultra-medalha-prata-2bim', OURO = 'ultra-me
 test('baú dos presentes: abre uma vez só para a Mariana, entrega as duas medalhas e a de ouro se usa', async () => {
   const c = await abrirCenario({ save: 'completo', tamanho: 'celular', pasta: '/tmp/reino-testes/ver/teste-presentes' });
   try {
+    await c.js('Reino.Progresso.estado().presentes = {}');   // o save sintético vem com o baú já aberto (saves.js)
     assert.deepStrictEqual(await c.js('Reino.Progresso.estado().presentes'), {});
     assert.deepStrictEqual(await c.js('Reino.Progresso.presentesPendentes().map(function (d) { return d.id; })'), [ID]);
     await c.js('window.__fim = null; void Reino.UI.abrirPresentesPendentes().then(function (r) { window.__fim = r; })');
