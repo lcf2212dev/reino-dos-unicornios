@@ -77,4 +77,5 @@
 # c7ee099 = Língua Portuguesa do 4º bimestre na Casa das Palavras
 # c699e4a = prêmio em Robux: chip e ícone do HUD, telas do prêmio, Baú, falas e área dos pais
 # 5d1b7e5 = lições de Português em etapas, casa em dois andares, prêmios da trilha perfeita
-5d1b7e5
+# b5b7a48 = 💰 mostra o saldo a receber, entrada em festa da medalha de ouro, baú com medalhas Ultra Lendárias
+b5b7a48
