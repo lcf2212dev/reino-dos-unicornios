@@ -10,6 +10,8 @@
       'css/ui-hud.css',
       'css/ui-telas.css',
       'css/ui-missao.css',
+      'css/ui-etapas.css',
+      'css/ui-respiro.css',
       'css/ui-prova.css',
       'css/ui-paineis.css',
       'css/ui-feira.css',
@@ -36,6 +38,7 @@
       'css/ui-quimica-estados.css',
       'css/ui-quimica-separar.css',
       'css/ui-quimica-livros.css',
+      'css/ui-quimica-experiencias.css',
       'css/ui-jogadores.css',
       'css/ui-abertura.css',
       'css/ui-personagem.css',
@@ -88,6 +91,9 @@
       { js: 'js/conteudo/quimica/frases-microscopio.js', grupo: 'conteudo', node: true },
       { js: 'js/conteudo/quimica/frases-tabela.js', grupo: 'conteudo', node: true },
       { js: 'js/conteudo/quimica/elementos.js', grupo: 'conteudo', node: true },
+      { js: 'js/conteudo/quimica/elementos-trilha.js', grupo: 'conteudo', node: true }, // os 25 elementos do prêmio da trilha perfeita (bloqueados até ganhar; quarto-bimestre.md §14)
+      { js: 'js/conteudo/quimica/experiencias.js', grupo: 'conteudo', node: true },
+      { js: 'js/conteudo/quimica/frases-experiencias.js', grupo: 'conteudo', node: true }, // frases do álbum Experiências do Reino (as páginas das cartas entram no Q.falas)
       { js: 'js/conteudo/quimica/tabela.js', grupo: 'conteudo', node: true },
       { js: 'js/conteudo/quimica/licoes.js', grupo: 'conteudo', node: true },
       { js: 'js/conteudo/quimica/laminas.js', grupo: 'conteudo', node: true },
@@ -180,6 +186,9 @@
       { js: 'js/conteudo/materias/portugues4/unicornios-11.js', grupo: 'materias', node: true },
       { js: 'js/conteudo/materias/portugues4/unicornios-12.js', grupo: 'materias', node: true },
       { js: 'js/conteudo/materias/portugues4/portugues4.js', grupo: 'materias', node: true },
+      { js: 'js/conteudo/materias/portugues4/premios-trilha-10.js', grupo: 'materias', node: true }, // prêmio da trilha perfeita de cada sala (quarto-bimestre.md §14)
+      { js: 'js/conteudo/materias/portugues4/premios-trilha-11.js', grupo: 'materias', node: true },
+      { js: 'js/conteudo/materias/portugues4/premios-trilha-12.js', grupo: 'materias', node: true },
       { js: 'js/conteudo/materias/ciencias/icones.js', grupo: 'icones', node: true },
       { js: 'js/conteudo/materias/matematica/icones.js', grupo: 'icones', node: true },
       { js: 'js/conteudo/materias/geografia/icones.js', grupo: 'icones', node: true },
@@ -204,6 +213,8 @@
       { js: 'js/sistemas/progresso-campos.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/visitados.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/producoes.js', grupo: 'sistemas', node: true },
+      { js: 'js/sistemas/etapas-progresso.js', grupo: 'sistemas', node: true }, // campo etapas (quarto-bimestre.md §13)
+      { js: 'js/sistemas/trilhas.js', grupo: 'sistemas', node: true }, // campo trilhas e P.conferirTrilhas (§14)
       { js: 'js/sistemas/jogadores.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/som.js', grupo: 'sistemas' },
       { js: 'js/sistemas/som-escola.js', grupo: 'sistemas' },
@@ -250,7 +261,9 @@
       { js: 'js/atividades/desafios/copiar.js', grupo: 'atividades', node: true },
       { js: 'js/atividades/desafios/memoria.js', grupo: 'atividades', node: true },
       { js: 'js/atividades/desafios/desenho.js', grupo: 'atividades', node: true },
+      { js: 'js/atividades/etapas.js', grupo: 'atividades', node: true }, // Reino.etapasDaSala (quarto-bimestre.md §13.1)
       { js: 'js/atividades/missao.js', grupo: 'atividades' },
+      { js: 'js/atividades/missao-etapas.js', grupo: 'atividades' }, // trilha das etapas e fim de etapa (§13.3)
       { js: 'js/atividades/treino.js', grupo: 'atividades' },
       { js: 'js/atividades/provas.js', grupo: 'atividades' },
       { js: 'js/atividades/voo.js', grupo: 'atividades', node: true },
@@ -296,6 +309,7 @@
       { js: 'js/ui/quimica-separar-2.js', grupo: 'ui' },
       { js: 'js/ui/quimica-livros.js', grupo: 'ui' },
       { js: 'js/ui/quimica-livros-2.js', grupo: 'ui' },
+      { js: 'js/ui/quimica-experiencias.js', grupo: 'ui' }, // álbum Experiências do Reino (quarto-bimestre.md §14.3)
       { js: 'js/ui/sem-internet.js', grupo: 'ui' },
       { js: 'js/ui/pais.js', grupo: 'ui' },
       { js: 'js/ui/jogadores.js', grupo: 'ui' },
@@ -387,6 +401,7 @@
       { js: 'js/interiores/observatorio/lab-objetos-3.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/observatorio/lab-atividades.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/observatorio/lab-andar3.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/portugues/reservas.js', grupo: 'interiores', node: true }, // reservas do 1º andar (orquestrador)
       { js: 'js/interiores/portugues/falas.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/portugues/objetos-hall-cozinha.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/portugues/objetos-horta-circo.js', grupo: 'interiores', node: true },
@@ -396,10 +411,15 @@
       // (prefixo lp-); o layout é o portugues.js
       { js: 'js/interiores/portugues/lp-personagens.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/portugues/lp-falas.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/portugues/personagens-falas.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/portugues/lp-respiro.js', grupo: 'interiores', node: true }, // ação lp-respiro (Vovó Serena): respiração guiada
       { js: 'js/interiores/portugues/lp-objetos.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/portugues/lp-objetos-temas.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/portugues/lp-objetos-atelies.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/portugues/lp-objetos-andar1.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/portugues/lp-tesouros.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/portugues/portugues.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/portugues/lp-andar1.js', grupo: 'interiores', node: true }, // 1º andar (portugues-1): ateliês, Cantinho do Respiro, Galeria dos Tesouros
       { js: 'js/interiores/portugues/fora.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/matematica/objetos-parede.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/matematica/objetos-chao.js', grupo: 'interiores', node: true },

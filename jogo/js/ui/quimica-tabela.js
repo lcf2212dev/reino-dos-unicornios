@@ -45,6 +45,9 @@
     no.style.setProperty('--qt-fundo', D.misturar(cor, PAPEL, 0.72));
     return no;
   }
+  // o elemento do prêmio da trilha perfeita ainda não ganho: "?" no lugar do nome e do símbolo (quarto-bimestre.md §14.3)
+  function fechado(z) { return !!Q.elementoGanho && !!Q.elemento(z) && !Q.elementoGanho(z); }
+  T.fechado = fechado;
   function amostra(cor) { return el('span.qt-cor', { 'aria-hidden': 'true', style: { background: cor } }); }
 
   /* Nome no cartão: até 8 letras inteiro (numa linha só); de 9 ou mais, das sílabas do hifenizar fica só o corte
@@ -81,7 +84,7 @@
       var cor = familia(x.familia).cor;
       casa(ctx, p.x, p.y, cor);
       n++;
-      letras.push({ p: p, s: x.simbolo, cor: cor });
+      letras.push({ p: p, s: fechado(x.z) ? '?' : x.simbolo, cor: cor });
       if (x.z === aceso) luz = { p: p, cor: cor };
     });
     if (luz) {   // a casa do cartão escolhido acesa: anel de ouro por fora do contorno e a cor mais clara
@@ -123,8 +126,10 @@
   function mostrarTabela(v, focarZ) {
     var caixa = el('div.qt-mapa-caixa');
     var grade = el('div.qt-grade', Q.elementos().map(function (e) {
-      var b = pintar(el('button.qt-cartao', { type: 'button', 'data-z': String(e.z) },
-        el('span.qt-num', String(e.z)), el('span.qt-simb', e.simbolo), el('span.qt-nome', nomeCartao(e.nome))), familia(e.familia).cor);
+      var f = fechado(e.z);
+      var b = pintar(el('button.qt-cartao' + (f ? '.qt-fechado' : ''), { type: 'button', 'data-z': String(e.z),
+        'aria-label': f ? 'Elemento ' + e.z + ', segredo da trilha perfeita' : null },
+        el('span.qt-num', String(e.z)), el('span.qt-simb', f ? '?' : e.simbolo), el('span.qt-nome', f ? '?' : nomeCartao(e.nome))), familia(e.familia).cor);
       if (e.z === v.aceso) b.setAttribute('aria-current', 'true');
       b.addEventListener('click', function () { R.Som.tocar('toque'); v.rolagem = v.pn.conteudo.scrollTop; abrirCartao(v, e.z); });
       // pelo teclado, a casa do cartão com foco acende no mapa
@@ -162,10 +167,18 @@
     var lista = Q.elementos(), i = -1;
     lista.forEach(function (e, k) { if (e.z === z) i = k; });
     if (i < 0) return;
-    var e = lista[i], fam = familia(e.familia);
+    var e = lista[i], fam = familia(e.familia), f = fechado(e.z);
     v.aceso = e.z;
-    var titulo = el('h3.qt-ficha-nome', e.nome);
-    var ficha = el('article.qt-ficha',
+    var titulo = el('h3.qt-ficha-nome', f ? 'Segredo' : e.nome);
+    var ficha = f ? el('article.qt-ficha.qt-fechado',
+      el('div.qt-ficha-topo',
+        pintar(el('div.qt-grande', el('span.qt-num', String(e.z)), el('span.qt-grande-simb', '?')), fam.cor),
+        el('div.qt-ficha-info', titulo, el('p', 'Número atômico: ', el('b', String(e.z))))),
+      el('section.qt-bloco', el('h4', '🔒 Elemento secreto'),
+        el('p', hifenizar('Ganhe numa trilha perfeita de Língua Portuguesa.')),
+        el('p', 'Sala: ', el('b', nomeDaSala(e.trilha)))),
+      el('div.qt-ficha-mapa', el('p.qt-dica', 'A casa dele na tabela:'), desenharMapa(telaBaixaLarga() ? 3 : 2, e.z)))
+      : el('article.qt-ficha',
       el('div.qt-ficha-topo',
         pintar(el('div.qt-grande', el('span.qt-num', String(e.z)), el('span.qt-grande-simb', e.simbolo)), fam.cor),
         el('div.qt-ficha-info', titulo,
@@ -185,8 +198,15 @@
     v.trocar([ficha], [voltar, ant, prox], { ant: ant, prox: prox });
     // pelo teclado: na seta de novo (Enter segue andando), ou no "Voltar"
     UI.focarTroca(eraSeta && foco.getAttribute('aria-label') === 'Elemento anterior' ? ant : eraSeta ? prox : voltar, titulo, 400);
-    falar([e.onde].concat(paginas(e.curiosidade)));
+    falar(f ? Q.frase('trilha.elemento') : [e.onde].concat(paginas(e.curiosidade)));
   }
+  // o nome da sala de Língua Portuguesa que dá o prêmio (Reino.premioTrilha)
+  function nomeDaSala(id) {
+    var pt = R.premioTrilha && R.premioTrilha(id), m = pt && R.materia && R.materia(pt.materia);
+    var s = m && m.salas.find(function (x) { return x.id === id; });
+    return s ? s.nome : String(id || '');
+  }
+  T.nomeDaSala = nomeDaSala;
 
   function rodapeBotao(rotulo, aria, classe) {
     return el('button.btn-grande.' + (classe || 'btn-secundario'), { type: 'button', 'aria-label': aria || null }, rotulo);

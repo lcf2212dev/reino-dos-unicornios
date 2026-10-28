@@ -41,6 +41,23 @@ Reino.registrarProva = function (p) {
     }
   });
 };
+// prêmio da trilha perfeita (docs/contratos/quarto-bimestre.md §14): cada sala de livro com ⭐ em todas as etapas dá
+// um acessório lendário (inline, como os das provas), um elemento químico (z) e uma carta de experiência (id)
+/** @type {{ sala: string, materia: string, acessorio: { id: string, nome: string, icone?: any, desenho?: DesenhoEnfeite }, elemento: number, experiencia: string }[]} */
+Reino.premiosTrilha = [];
+Reino.registrarPremioTrilha = function (def) {
+  if (!def || !def.sala || !def.acessorio || !def.acessorio.id) throw new Error('registrarPremioTrilha: precisa de sala e acessorio.id');
+  if (Reino.premioTrilha(def.sala)) throw new Error('registrarPremioTrilha: sala repetida "' + def.sala + '"');
+  Reino.premiosTrilha.push(def);
+  var a = def.acessorio;
+  if (a.icone && window.ICONES) window.ICONES['acessorio:' + a.id] = a.icone;
+  if (a.desenho) {
+    Reino.desenhosAcessorios[a.id] = a.desenho;
+    if (window.PA && window.PA.ENFEITES_MONTARIA) window.PA.ENFEITES_MONTARIA[a.id] = a.desenho;
+  }
+};
+/** @param {string} sala */
+Reino.premioTrilha = function (sala) { return Reino.premiosTrilha.find(function (p) { return p.sala === sala; }); };
 // desenhos inline dos acessórios de prova (id → formato de PA.ENFEITES_MONTARIA)
 /** @type {{ [id: string]: DesenhoEnfeite }} */
 Reino.desenhosAcessorios = {};

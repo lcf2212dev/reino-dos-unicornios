@@ -283,14 +283,67 @@ async function andarAte(c, x, y) {
   assert.ok(await esperar(c, `(function (t) { return t.x === ${x} && t.y === ${y} && !Jogador.caminho.length; })(Jogador.tile())`, 30000, 300),
     `não chegou a (${x}, ${y}): está em ${JSON.stringify(await c.js('Jogador.tile()'))}`);
 }
-// a estação da sala na Casa das Palavras aberta: o objeto e o tile onde ela para para usá-la (o mesmo cálculo do toque)
-async function estacao(c, salaId) {
-  const e = await c.js(`(function (it) { if (!it) return null; var a = Reino.Cena.atual().alvoEm(it.o.x * 16 + 8, it.o.y * 16 + 8);
+// a estação da sala na Casa das Palavras aberta (térreo `portugues` ou 1º andar `portugues-1`): o objeto e o tile onde
+// ela para para usá-la (o mesmo cálculo do toque)
+const CASA = ['portugues', 'portugues-1'];
+const achaEstacao = (c, salaId) => c.js(`(function (it) { if (!it) return null; var a = Reino.Cena.atual().alvoEm(it.o.x * 16 + 8, it.o.y * 16 + 8);
     return { x: it.o.x, y: it.o.y, tile: a && a.tile, olhar: a && a.olhar, chave: a && a.objeto && a.objeto.chave }; })(
-    __reino.cena() === 'portugues' ? Reino.Cena.atual()._objetos.find(function (it) { return it.o.chave === 'lp-sala-${salaId}'; }) : null)`);
-  assert.ok(e, `a estação da sala ${salaId} não está na Casa das Palavras (cena: ${await c.js('__reino.cena()')})`);
+    ${JSON.stringify(CASA)}.indexOf(__reino.cena()) >= 0 ? Reino.Cena.atual()._objetos.find(function (it) { return it.o.chave === 'lp-sala-${salaId}'; }) : null)`);
+async function estacao(c, salaId) {
+  const e = await achaEstacao(c, salaId);
+  assert.ok(e, `a estação da sala ${salaId} não está neste andar da Casa das Palavras (cena: ${await c.js('__reino.cena()')})`);
   assert.strictEqual(e.chave, 'lp-sala-' + salaId, `o toque na estação de ${salaId} acha outra coisa`);
   return e;
 }
+// vai ao andar da Casa das Palavras onde está a estação da sala (as salas do Livro de Atividades ficam no 1º andar)
+async function irAEstacao(c, salaId) {
+  if (CASA.indexOf(await c.js('__reino.cena()')) >= 0 && await achaEstacao(c, salaId)) return estacao(c, salaId);
+  for (const andar of CASA) {
+    await c.ir(andar);
+    if (await achaEstacao(c, salaId)) return estacao(c, salaId);
+  }
+  return estacao(c, salaId);
+}
 
-module.exports = { DESAFIO, RETORNO, preparar, respostas, acionar, levarA, conferir, botaoDoRetorno, responderDaVez, esperar, tocarTile, andarAte, estacao };
+/* ---------- a trilha das etapas (sala de livro, quarto-bimestre.md §13.3) ---------- */
+// o que a missão mostra agora: trilha, carta, desafio, fimEtapa, festa (trilha perfeita), fimSala ou fechada
+const telaDaMissao = (c) => c.js(`(function (t) { if (!t) return 'fechada';
+  if (t.querySelector('.festa-trilha')) return 'festa'; if (t.querySelector('.fim-etapa')) return 'fimEtapa'; if (t.querySelector('.fim-sala')) return 'fimSala';
+  if (t.querySelector('.resumo-sala')) return 'carta'; if (t.querySelector('.missao-corpo .desafio')) return 'desafio'; if (t.querySelector('.intro-sala')) return 'trilha';
+  return '?'; })(document.querySelector('#telas > .tela-missao'))`);
+const PRINCIPAL = '.tela-missao footer.rodape-acao:not([hidden]) .btn-principal';
+// da tela aberta até o fim da sala (ou até `op.ate`: 'fimEtapa', 'festa'; ou o desafio `op.antesDe`, sem responder):
+// "Começar" na trilha, "Continuar" nas cartas,
+// aoDesafio(id) em cada desafio (responde e continua), "Próxima etapa" no fim de etapa e o botão da festa da trilha.
+// Devolve { fim, etapas (fins de etapa vistos), festa, cartas: ["Carta 1 de 2"…], desafios: ["Desafio 1 de 4"…] }
+async function seguirSala(c, aoDesafio, op = {}) {
+  const modo = op.modo || 'dom', r = { etapas: 0, festa: false, cartas: [], desafios: [] };
+  let ultimo = null;
+  for (let k = 0; k < 400; k++) {
+    const q = await telaDaMissao(c);
+    if (q === op.ate || q === 'fimSala' || q === 'fechada') return Object.assign(r, { fim: q });
+    if (q === 'trilha' || q === 'carta') {
+      if (q === 'carta') r.cartas.push(await c.js("document.querySelector('.tela-missao .resumo-pag').textContent"));
+      await acionar(c, c.page.locator(PRINCIPAL), modo);
+    } else if (q === 'desafio') {
+      const id = await c.js('window.__q.atual.d.id');
+      if (id === op.antesDe) return Object.assign(r, { fim: 'desafio' });
+      if (id === ultimo) return Object.assign(r, { fim: 'parou em ' + id });
+      ultimo = id;
+      r.desafios.push(await c.js("document.querySelector('.tela-missao .desafio-num').textContent"));
+      await aoDesafio(id);
+    } else if (q === 'fimEtapa') {
+      r.etapas++;
+      ultimo = null;
+      await acionar(c, c.page.locator(PRINCIPAL), modo);   // "Próxima etapa ▶"
+    } else if (q === 'festa') {
+      r.festa = true;
+      await acionar(c, c.page.locator('.tela-missao .festa-trilha > .btn-principal'), modo);
+    } else return Object.assign(r, { fim: q });
+    await c.avancar(100);
+  }
+  return Object.assign(r, { fim: 'sem fim' });
+}
+
+module.exports = { DESAFIO, RETORNO, preparar, respostas, acionar, levarA, conferir, botaoDoRetorno, responderDaVez, esperar, tocarTile, andarAte,
+  estacao, irAEstacao, telaDaMissao, seguirSala, PRINCIPAL };

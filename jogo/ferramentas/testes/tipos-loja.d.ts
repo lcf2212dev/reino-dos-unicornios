@@ -21,7 +21,12 @@ interface Premio {
   id: string;
   nome: string;
   raridade: RaridadePremio;
-  provaId: string;
+  /** a prova (ausente no prêmio da trilha) */
+  provaId?: string;
+  /** 'trilha': lendário da trilha perfeita (quarto-bimestre.md §14.3), nunca à venda */
+  origem?: 'trilha';
+  /** a sala da trilha (só com origem 'trilha') */
+  sala?: string;
   preco: number;
   /** âncora do desenho (PA.ENFEITES_MONTARIA[id].ancora); null sem PA (Node) */
   slot: string | null;

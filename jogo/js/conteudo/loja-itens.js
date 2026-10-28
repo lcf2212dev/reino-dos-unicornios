@@ -134,7 +134,8 @@
     var e = window.PA && window.PA.ENFEITES_MONTARIA && window.PA.ENFEITES_MONTARIA[id];
     return e ? e.ancora : null;
   }
-  // os acessórios de todas as provas (Reino.provas), na ordem lendário, raro, comum de cada prova
+  // os acessórios de todas as provas (Reino.provas), na ordem lendário, raro, comum de cada prova, e depois os
+  // lendários da trilha perfeita (Reino.premiosTrilha; quarto-bimestre.md §14.3): origem 'trilha', nunca à venda
   L.premios = function () {
     var lista = [];
     (R.provas || []).forEach(function (pv) {
@@ -143,6 +144,10 @@
         if (!a) return;
         lista.push({ id: a.id, nome: a.nome, raridade: r, provaId: pv.id, preco: L.precoPremio(r), slot: encaixe(a.id) });
       });
+    });
+    (R.premiosTrilha || []).forEach(function (pt) {
+      var a = pt.acessorio;
+      lista.push({ id: a.id, nome: a.nome, raridade: 'lendario', origem: 'trilha', sala: pt.sala, preco: 0, slot: encaixe(a.id) });
     });
     return lista;
   };
@@ -161,7 +166,13 @@
   // derivado do save (nada novo nele):
   //   ganho: é o prêmio da prova • comprado: está na loja e não é o ganho
   //   aVenda: já ganhou algum desta prova • bloqueado: ainda não ganhou nenhum desta prova
+  //   trilha: ganho com a sala em `trilhas` (P.conferirTrilhas); senão bloqueado (não se compra)
   L.estadoPremio = function (premio, P) {
+    if (premio.origem === 'trilha') {
+      var et = (P && P.estado) ? P.estado() : null;
+      var tr = et && /** @type {{ trilhas?: Object<string, number> }} */ (/** @type {unknown} */ (et)).trilhas;   // campo de sistemas/trilhas.js
+      return tr && Object.prototype.hasOwnProperty.call(tr, premio.sala) ? 'ganho' : 'bloqueado';
+    }
     var reg = (P && P.regProva) ? P.regProva(provaDe(premio)) : {};
     if (reg && reg.premio === premio.raridade) return 'ganho';
     var est = (P && P.estado) ? P.estado() : null;
@@ -174,6 +185,8 @@
     if (e) return e;
     var p = premioPorId(id);
     if (!p) return null;
+    if (p.origem) return { id: p.id, nome: p.nome, slot: p.slot, preco: p.preco, raridade: p.raridade, origem: p.origem, sala: p.sala,
+      icone: 'acessorio:' + p.id, premio: true };
     return { id: p.id, nome: p.nome, slot: p.slot, preco: p.preco, raridade: p.raridade, provaId: p.provaId,
       icone: 'acessorio:' + p.id, premio: true };
   };

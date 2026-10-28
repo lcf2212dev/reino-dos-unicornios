@@ -12,6 +12,13 @@ Reino.config = {
   pinPais: '2026',            // troque aqui o PIN da Área dos Pais
   desafiosPorSala: 6,
   desafiosSalaLivro: 14,      // sala de livro (ordem: 'livro', 4º bimestre): todos os desafios, na ordem; no máximo este tanto
+  // etapas da sala de livro (docs/contratos/quarto-bimestre.md §13): cada etapa junta poucas cartas e as perguntas
+  // delas. etapaDesafiosMax = pontos de desafio por etapa (escrever e desenho valem etapaPesoEscrever, o resto 1);
+  // etapaCartasMax e etapaPalavrasMax = leitura máxima de uma etapa (passou: as primeiras cartas viram etapa só de leitura)
+  etapaDesafiosMax: 4,
+  etapaPesoEscrever: 2,
+  etapaCartasMax: 3,
+  etapaPalavrasMax: 250,
   perguntasTreino: 10,
   // provas bimestrais (Escola do Reino): o acessório só vem com esta nota ou mais.
   // 10 = acertar tudo. Tentativa 1 → lendário, 2 → raro, depois → comum.

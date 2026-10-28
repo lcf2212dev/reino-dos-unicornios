@@ -14,7 +14,7 @@ Este arquivo tem as regras invioláveis e o índice. As regras de código de cad
 - Nada disso se abre, testa, lê, copia, grava, publica ou apaga. Nada de `localStorage.clear()`, "Apagar tudo",
   "Novo ciclo" ou pagamento fora do ambiente de teste.
 - Docker, container e o serviço `reino-nome`: desligados; nunca se mexe.
-- Na árvore principal `/home/leandro/Development/products/reino-dos-unicornios` não se escreve: trabalhe numa worktree (`npm run worktree -- <tema> [--material <Pasta>]`).
+- Na árvore principal `/home/leandro/Development/projects/reino-dos-unicornios` não se escreve: trabalhe numa worktree (`npm run worktree -- <tema> [--material <Pasta>]`).
 - Detalhes: `docs/contratos/save-e-mescla.md` §9.
 
 ## Fluxo 100% autônomo

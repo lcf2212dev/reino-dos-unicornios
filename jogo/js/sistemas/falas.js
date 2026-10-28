@@ -24,6 +24,16 @@
     pistaVarias: 'Os errados foram tirados. Veja se falta marcar algum!',
     pistaSimples: 'Leia a pergunta de novo, devagarinho.',
     pistaDesenho: 'Olhe a listinha embaixo do desenho: ainda falta usar alguma coisa!',
+    // etapas da sala de livro e trilha perfeita (atividades/missao-etapas.js; quarto-bimestre.md §13.3, §14)
+    etapaGuardada: 'Sua etapa ficou guardada!',
+    etapaSemErro: 'Tudo certo de primeira!',
+    etapaDepois: 'Depois você tenta sem errar!',
+    etapaSeguir: 'Vamos seguir ou descansar?',
+    descansarGuardado: 'Tudo ficou guardado.',
+    descansarCantinho: 'Vá ao Cantinho do Respiro.',
+    descansarAndar: 'Ele fica no primeiro andar.',
+    trilhaSemErro: 'Você fez a trilha sem errar!',
+    trilhaPremios: 'Você ganhou três prêmios!',
   };
 
   F.medalhas = {

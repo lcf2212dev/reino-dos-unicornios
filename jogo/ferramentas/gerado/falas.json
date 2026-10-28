@@ -493,6 +493,26 @@
    "velocidade": "+4%",
    "tom": "+18Hz"
   },
+  "npc-lp-rabisco": {
+   "voz": "en-US-BrianMultilingualNeural",
+   "velocidade": "+0%",
+   "tom": "-6Hz"
+  },
+  "npc-lp-melodia": {
+   "voz": "en-US-AvaMultilingualNeural",
+   "velocidade": "+4%",
+   "tom": "+6Hz"
+  },
+  "npc-lp-tito": {
+   "voz": "en-AU-WilliamMultilingualNeural",
+   "velocidade": "+8%",
+   "tom": "+14Hz"
+  },
+  "npc-lp-serena": {
+   "voz": "fr-FR-VivienneMultilingualNeural",
+   "velocidade": "-12%",
+   "tom": "-10Hz"
+  },
   "npc-lp-leticia": {
    "voz": "pt-BR-FranciscaNeural",
    "velocidade": "+4%",
@@ -1117,6 +1137,87 @@
     "geral"
    ],
    "fala": "Olhe a listinha embaixo do desenho: ainda falta usar alguma coisa!"
+  },
+  {
+   "chave": "a465a347w",
+   "voz": "claude",
+   "texto": "Sua etapa ficou guardada!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Sua etapa ficou guardada!"
+  },
+  {
+   "chave": "db7d8869u",
+   "voz": "claude",
+   "texto": "Tudo certo de primeira!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Tudo certo de primeira!"
+  },
+  {
+   "chave": "ca72ac57z",
+   "voz": "claude",
+   "texto": "Depois você tenta sem errar!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Depois você tenta sem errar!"
+  },
+  {
+   "chave": "3fe53505x",
+   "voz": "claude",
+   "texto": "Vamos seguir ou descansar?",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Vamos seguir ou descansar?"
+  },
+  {
+   "chave": "601bab68r",
+   "voz": "claude",
+   "texto": "Tudo ficou guardado.",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Tudo ficou guardado."
+  },
+  {
+   "chave": "a2d737b7x",
+   "voz": "claude",
+   "texto": "Vá ao Cantinho do Respiro.",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Vá ao Cantinho do Respiro."
+  },
+  {
+   "chave": "45755504y",
+   "voz": "claude",
+   "texto": "Ele fica no primeiro andar.",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Ele fica no primeiro andar."
+  },
+  {
+   "chave": "ab35b283z",
+   "voz": "claude",
+   "texto": "Você fez a trilha sem errar!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Você fez a trilha sem errar!"
+  },
+  {
+   "chave": "86867dafw",
+   "voz": "claude",
+   "texto": "Você ganhou três prêmios!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Você ganhou três prêmios!"
   },
   {
    "chave": "1f0e6650n",
@@ -15772,13 +15873,22 @@
    "fala": "Cada capítulo tem uma galeria."
   },
   {
-   "chave": "000ce1cf14",
+   "chave": "954b972e17",
    "voz": "npc-lp-leticia",
-   "texto": "E cada uma tem um ateliê.",
+   "texto": "Os ateliês ficam lá em cima.",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "E cada uma tem um ateliê."
+   "fala": "Os ateliês ficam lá em cima."
+  },
+  {
+   "chave": "ee10c1d715",
+   "voz": "npc-lp-leticia",
+   "texto": "A escada leva aos ateliês!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "A escada leva aos ateliês!"
   },
   {
    "chave": "8d73b94b16",
@@ -15808,6 +15918,15 @@
    "fala": "Quer ver a lista de salas?"
   },
   {
+   "chave": "6616e34cz",
+   "voz": "npc-lp-leticia",
+   "texto": "Quer subir a escada?",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Quer subir a escada?"
+  },
+  {
    "chave": "da6766d6y",
    "voz": "npc-lp-leticia",
    "texto": "Você leu muito bem!",
@@ -15833,6 +15952,15 @@
     "interior-portugues"
    ],
    "fala": "Volte sempre para ler mais!"
+  },
+  {
+   "chave": "05fafe5017",
+   "voz": "npc-lp-leticia",
+   "texto": "Suba ao Cantinho do Respiro!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Suba ao Cantinho do Respiro!"
   },
   {
    "chave": "a4b6f77314",
@@ -16589,6 +16717,24 @@
     "interior-portugues"
    ],
    "fala": "Vamos ler um conto juntinhos?"
+  },
+  {
+   "chave": "3f0ee5a619",
+   "voz": "npc-lp-celeste",
+   "texto": "Vamos para a próxima história?",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Vamos para a próxima história?"
+  },
+  {
+   "chave": "3dff4df316",
+   "voz": "npc-lp-celeste",
+   "texto": "Se cansar, suba e descanse.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Se cansar, suba e descanse."
   },
   {
    "chave": "a1fae593x",
@@ -17365,6 +17511,24 @@
    "fala": "Afine a voz e vamos lá!"
   },
   {
+   "chave": "b0e1b96a14",
+   "voz": "npc-lp-sol",
+   "texto": "Vamos cantar a próxima etapa?",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Vamos cantar a próxima etapa?"
+  },
+  {
+   "chave": "eb6aa02011",
+   "voz": "npc-lp-sol",
+   "texto": "Se cansar, pare e respire!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Se cansar, pare e respire!"
+  },
+  {
    "chave": "d05c56cdr",
    "voz": "npc-lp-sol",
    "texto": "Que voz afinada!",
@@ -18137,6 +18301,24 @@
     "interior-portugues"
    ],
    "fala": "Quer ver um poema visual?"
+  },
+  {
+   "chave": "4f25ce1314",
+   "voz": "npc-lp-pingo",
+   "texto": "Bora rimar a próxima etapa?",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Bora rimar a próxima etapa?"
+  },
+  {
+   "chave": "b7c6726014",
+   "voz": "npc-lp-pingo",
+   "texto": "Pode descansar no Cantinho.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Pode descansar no Cantinho."
   },
   {
    "chave": "8d96eafby",
@@ -18950,31 +19132,49 @@
    "fala": "Em cima, as galerias verdes."
   },
   {
-   "chave": "4e9450e212",
+   "chave": "ad261adc12",
    "voz": "narradora",
-   "texto": "Capítulo 10 fica à esquerda.",
+   "texto": "Depois, as Salas de Leitura.",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Capítulo 10 fica à esquerda."
+   "fala": "Depois, as Salas de Leitura."
   },
   {
-   "chave": "287be82814",
+   "chave": "329065d9y",
    "voz": "narradora",
-   "texto": "O 11 no meio e o 12 à direita.",
+   "texto": "A escada do saguão sobe.",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "O 11 no meio e o 12 à direita."
+   "fala": "A escada do saguão sobe."
   },
   {
-   "chave": "3951c58116",
+   "chave": "9942f5e613",
    "voz": "narradora",
-   "texto": "Mais acima, os ateliês amarelos!",
+   "texto": "Lá estão os ateliês amarelos.",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Mais acima, os ateliês amarelos!"
+   "fala": "Lá estão os ateliês amarelos."
+  },
+  {
+   "chave": "bfa2d190y",
+   "voz": "narradora",
+   "texto": "E o Cantinho do Respiro.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "E o Cantinho do Respiro."
+  },
+  {
+   "chave": "75825b03z",
+   "voz": "narradora",
+   "texto": "E a Galeria dos Tesouros!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "E a Galeria dos Tesouros!"
   },
   {
    "chave": "29cc776cz",
@@ -19031,33 +19231,6 @@
    "fala": "Páginas 14 a 19."
   },
   {
-   "chave": "bae0792d15",
-   "voz": "narradora",
-   "texto": "Páginas 20 a 22: Quando e onde?",
-   "pacotes": [
-    "interior-portugues"
-   ],
-   "fala": "Páginas 20 a 22: Quando e onde?"
-  },
-  {
-   "chave": "f23c088113",
-   "voz": "narradora",
-   "texto": "Páginas 23 a 26: Meu reconto.",
-   "pacotes": [
-    "interior-portugues"
-   ],
-   "fala": "Páginas 23 a 26: Meu reconto."
-  },
-  {
-   "chave": "75fcdbfdq",
-   "voz": "narradora",
-   "texto": "Páginas 27 a 29.",
-   "pacotes": [
-    "interior-portugues"
-   ],
-   "fala": "Páginas 27 a 29."
-  },
-  {
    "chave": "85a2840dz",
    "voz": "narradora",
    "texto": "Eu sou o rei da floresta!",
@@ -19110,24 +19283,6 @@
     "interior-portugues"
    ],
    "fala": "Páginas 41 a 45: Aumentativo."
-  },
-  {
-   "chave": "2e4dc2e012",
-   "voz": "narradora",
-   "texto": "Páginas 46 a 49: Diminutivo.",
-   "pacotes": [
-    "interior-portugues"
-   ],
-   "fala": "Páginas 46 a 49: Diminutivo."
-  },
-  {
-   "chave": "9c4c1a8415",
-   "voz": "narradora",
-   "texto": "Páginas 50 a 54: Minha paródia.",
-   "pacotes": [
-    "interior-portugues"
-   ],
-   "fala": "Páginas 50 a 54: Minha paródia."
   },
   {
    "chave": "12add4ab10",
@@ -19184,6 +19339,51 @@
    "fala": "Páginas 71 a 74."
   },
   {
+   "chave": "bae0792d15",
+   "voz": "narradora",
+   "texto": "Páginas 20 a 22: Quando e onde?",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Páginas 20 a 22: Quando e onde?"
+  },
+  {
+   "chave": "f23c088113",
+   "voz": "narradora",
+   "texto": "Páginas 23 a 26: Meu reconto.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Páginas 23 a 26: Meu reconto."
+  },
+  {
+   "chave": "75fcdbfdq",
+   "voz": "narradora",
+   "texto": "Páginas 27 a 29.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Páginas 27 a 29."
+  },
+  {
+   "chave": "2e4dc2e012",
+   "voz": "narradora",
+   "texto": "Páginas 46 a 49: Diminutivo.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Páginas 46 a 49: Diminutivo."
+  },
+  {
+   "chave": "9c4c1a8415",
+   "voz": "narradora",
+   "texto": "Páginas 50 a 54: Minha paródia.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Páginas 50 a 54: Minha paródia."
+  },
+  {
    "chave": "26eae37e18",
    "voz": "narradora",
    "texto": "Páginas 75 a 77: Meu poema visual.",
@@ -19200,6 +19400,2337 @@
     "interior-portugues"
    ],
    "fala": "Páginas 78 a 80."
+  },
+  {
+   "chave": "75bec46b18",
+   "voz": "npc-lp-rabisco",
+   "texto": "Olá, eu sou o Mestre Rabisco!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Olá, eu sou o Mestre Rabisco!"
+  },
+  {
+   "chave": "f8d1b56216",
+   "voz": "npc-lp-rabisco",
+   "texto": "Aqui é o ateliê dos contos.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Aqui é o ateliê dos contos."
+  },
+  {
+   "chave": "d031e53418",
+   "voz": "npc-lp-rabisco",
+   "texto": "Cada lição tem etapas curtas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Cada lição tem etapas curtas."
+  },
+  {
+   "chave": "016668fc11",
+   "voz": "npc-lp-rabisco",
+   "texto": "Vamos fazer uma etapa?",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Vamos fazer uma etapa?"
+  },
+  {
+   "chave": "16c46f9311",
+   "voz": "npc-lp-rabisco",
+   "texto": "Uma etapa de cada vez!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Uma etapa de cada vez!"
+  },
+  {
+   "chave": "82c753b613",
+   "voz": "npc-lp-rabisco",
+   "texto": "Tudo fica guardado, viu?",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Tudo fica guardado, viu?"
+  },
+  {
+   "chave": "21ff11a314",
+   "voz": "npc-lp-rabisco",
+   "texto": "Você ainda não fez salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Você ainda não fez salas."
+  },
+  {
+   "chave": "6a404e8818",
+   "voz": "npc-lp-rabisco",
+   "texto": "O treino do Castelo já abriu!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "O treino do Castelo já abriu!"
+  },
+  {
+   "chave": "ca4941f012",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já fez uma de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez uma de 25 salas."
+  },
+  {
+   "chave": "7e4d208fy",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já ganhou 20 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 20 Robux!"
+  },
+  {
+   "chave": "9a4197dc13",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já fez duas de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez duas de 25 salas."
+  },
+  {
+   "chave": "1871c179y",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já ganhou 40 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 40 Robux!"
+  },
+  {
+   "chave": "1f492a2213",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já fez três de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez três de 25 salas."
+  },
+  {
+   "chave": "da1b9d2by",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já ganhou 60 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 60 Robux!"
+  },
+  {
+   "chave": "13e8adf115",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já fez quatro de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez quatro de 25 salas."
+  },
+  {
+   "chave": "8ea02375y",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já ganhou 80 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 80 Robux!"
+  },
+  {
+   "chave": "b2f6148b14",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já fez cinco de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez cinco de 25 salas."
+  },
+  {
+   "chave": "a2824e94z",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já ganhou 100 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 100 Robux!"
+  },
+  {
+   "chave": "7a92541513",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já fez seis de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez seis de 25 salas."
+  },
+  {
+   "chave": "9a680062z",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já ganhou 120 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 120 Robux!"
+  },
+  {
+   "chave": "6f78beb013",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já fez sete de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez sete de 25 salas."
+  },
+  {
+   "chave": "e73bc7d0z",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já ganhou 140 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 140 Robux!"
+  },
+  {
+   "chave": "4f32f38e13",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já fez oito de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez oito de 25 salas."
+  },
+  {
+   "chave": "7caa7d7ez",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já ganhou 160 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 160 Robux!"
+  },
+  {
+   "chave": "566293cf13",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já fez nove de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez nove de 25 salas."
+  },
+  {
+   "chave": "7f10399cz",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já ganhou 180 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 180 Robux!"
+  },
+  {
+   "chave": "990d611212",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já fez dez de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez dez de 25 salas."
+  },
+  {
+   "chave": "05a652ebz",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já ganhou 200 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 200 Robux!"
+  },
+  {
+   "chave": "4fc0caa113",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já fez onze de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez onze de 25 salas."
+  },
+  {
+   "chave": "6b3af639z",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já ganhou 220 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 220 Robux!"
+  },
+  {
+   "chave": "a9ce6bfd13",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já fez doze de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez doze de 25 salas."
+  },
+  {
+   "chave": "a75d6d4fz",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já ganhou 240 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 240 Robux!"
+  },
+  {
+   "chave": "ed888c7314",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já fez treze de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez treze de 25 salas."
+  },
+  {
+   "chave": "783bb6cdz",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já ganhou 260 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 260 Robux!"
+  },
+  {
+   "chave": "af0ad36716",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já fez catorze de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez catorze de 25 salas."
+  },
+  {
+   "chave": "b18c2e13z",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já ganhou 280 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 280 Robux!"
+  },
+  {
+   "chave": "83f6dd2915",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já fez quinze de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez quinze de 25 salas."
+  },
+  {
+   "chave": "e58d6e7az",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já ganhou 300 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 300 Robux!"
+  },
+  {
+   "chave": "c49a331a18",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já fez dezesseis de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez dezesseis de 25 salas."
+  },
+  {
+   "chave": "5550f6ccz",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já ganhou 320 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 320 Robux!"
+  },
+  {
+   "chave": "df3817ef18",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já fez dezessete de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez dezessete de 25 salas."
+  },
+  {
+   "chave": "e9787776z",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já ganhou 340 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 340 Robux!"
+  },
+  {
+   "chave": "cba3ab5d16",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já fez dezoito de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez dezoito de 25 salas."
+  },
+  {
+   "chave": "75196fa8z",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já ganhou 360 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 360 Robux!"
+  },
+  {
+   "chave": "bcde31c117",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já fez dezenove de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez dezenove de 25 salas."
+  },
+  {
+   "chave": "96071652z",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já ganhou 380 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 380 Robux!"
+  },
+  {
+   "chave": "1adf635d14",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já fez vinte de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez vinte de 25 salas."
+  },
+  {
+   "chave": "ae91e151z",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já ganhou 400 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 400 Robux!"
+  },
+  {
+   "chave": "8e77d1a611",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já fez 21 de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez 21 de 25 salas."
+  },
+  {
+   "chave": "6eee5383z",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já ganhou 420 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 420 Robux!"
+  },
+  {
+   "chave": "cef094f511",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já fez 22 de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez 22 de 25 salas."
+  },
+  {
+   "chave": "e3df97e5z",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já ganhou 440 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 440 Robux!"
+  },
+  {
+   "chave": "b3d92f1011",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já fez 23 de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez 23 de 25 salas."
+  },
+  {
+   "chave": "cd7493e7z",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já ganhou 460 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 460 Robux!"
+  },
+  {
+   "chave": "aca481af11",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já fez 24 de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez 24 de 25 salas."
+  },
+  {
+   "chave": "183948e9z",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já ganhou 480 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 480 Robux!"
+  },
+  {
+   "chave": "41be809c10",
+   "voz": "npc-lp-rabisco",
+   "texto": "Você fez as 25 salas!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Você fez as 25 salas!"
+  },
+  {
+   "chave": "4c314d08z",
+   "voz": "npc-lp-rabisco",
+   "texto": "Já ganhou 500 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 500 Robux!"
+  },
+  {
+   "chave": "dfff99511a",
+   "voz": "npc-lp-rabisco",
+   "texto": "A primeira é \"O Gato de Botas\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "A primeira é \"O Gato de Botas\"!"
+  },
+  {
+   "chave": "9dd6694e1e",
+   "voz": "npc-lp-rabisco",
+   "texto": "Agora vamos para \"O Gato de Botas\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"O Gato de Botas\"!"
+  },
+  {
+   "chave": "5db5aa8b1h",
+   "voz": "npc-lp-rabisco",
+   "texto": "Agora vamos para \"As partes do conto\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"As partes do conto\"!"
+  },
+  {
+   "chave": "e6a93fb61l",
+   "voz": "npc-lp-rabisco",
+   "texto": "Agora vamos para \"Os sinais de pontuação\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Os sinais de pontuação\"!"
+  },
+  {
+   "chave": "39c48ddb1n",
+   "voz": "npc-lp-rabisco",
+   "texto": "Agora vamos para \"A lenda da Vitória-Régia\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"A lenda da Vitória-Régia\"!"
+  },
+  {
+   "chave": "4504d8701d",
+   "voz": "npc-lp-rabisco",
+   "texto": "Agora vamos para \"Quando e onde?\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Quando e onde?\"!"
+  },
+  {
+   "chave": "aa31d8691a",
+   "voz": "npc-lp-rabisco",
+   "texto": "Agora vamos para \"Meu reconto\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Meu reconto\"!"
+  },
+  {
+   "chave": "593e171d1k",
+   "voz": "npc-lp-rabisco",
+   "texto": "Agora vamos para \"João e o pé de feijão\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"João e o pé de feijão\"!"
+  },
+  {
+   "chave": "4219da5f1c",
+   "voz": "npc-lp-rabisco",
+   "texto": "Agora vamos para \"A sereia Iara\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"A sereia Iara\"!"
+  },
+  {
+   "chave": "89a428431h",
+   "voz": "npc-lp-rabisco",
+   "texto": "Agora vamos para \"Os Três Porquinhos\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Os Três Porquinhos\"!"
+  },
+  {
+   "chave": "f2b8fb571e",
+   "voz": "npc-lp-rabisco",
+   "texto": "Agora vamos para \"Rei da Floresta\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Rei da Floresta\"!"
+  },
+  {
+   "chave": "6680c45c1i",
+   "voz": "npc-lp-rabisco",
+   "texto": "Agora vamos para \"Os bichos da canção\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Os bichos da canção\"!"
+  },
+  {
+   "chave": "28d6634d1j",
+   "voz": "npc-lp-rabisco",
+   "texto": "Agora vamos para \"Masculino e feminino\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Masculino e feminino\"!"
+  },
+  {
+   "chave": "6816a86f1a",
+   "voz": "npc-lp-rabisco",
+   "texto": "Agora vamos para \"Aumentativo\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Aumentativo\"!"
+  },
+  {
+   "chave": "e3fdcbec19",
+   "voz": "npc-lp-rabisco",
+   "texto": "Agora vamos para \"Diminutivo\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Diminutivo\"!"
+  },
+  {
+   "chave": "89c64cdf1c",
+   "voz": "npc-lp-rabisco",
+   "texto": "Agora vamos para \"Minha paródia\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Minha paródia\"!"
+  },
+  {
+   "chave": "e97e65081k",
+   "voz": "npc-lp-rabisco",
+   "texto": "Agora vamos para \"O animal de estimação\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"O animal de estimação\"!"
+  },
+  {
+   "chave": "6b8e31661n",
+   "voz": "npc-lp-rabisco",
+   "texto": "Agora vamos para \"Aumentativo e diminutivo\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Aumentativo e diminutivo\"!"
+  },
+  {
+   "chave": "a465654d1d",
+   "voz": "npc-lp-rabisco",
+   "texto": "Agora vamos para \"Jacaré letrado\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Jacaré letrado\"!"
+  },
+  {
+   "chave": "3074cb991o",
+   "voz": "npc-lp-rabisco",
+   "texto": "Agora vamos para \"Palavras em -ã, -ão, -ães\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Palavras em ã, de irmã, ão, de pão, ães, de pães\"!"
+  },
+  {
+   "chave": "4311d4021g",
+   "voz": "npc-lp-rabisco",
+   "texto": "Agora vamos para \"Próprios e comuns\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Próprios e comuns\"!"
+  },
+  {
+   "chave": "d79ad1501m",
+   "voz": "npc-lp-rabisco",
+   "texto": "Agora vamos para \"Maiúsculas e minúsculas\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Maiúsculas e minúsculas\"!"
+  },
+  {
+   "chave": "fa5fce651f",
+   "voz": "npc-lp-rabisco",
+   "texto": "Agora vamos para \"Meu poema visual\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Meu poema visual\"!"
+  },
+  {
+   "chave": "000051b11l",
+   "voz": "npc-lp-rabisco",
+   "texto": "Agora vamos para \"A primavera endoideceu\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"A primavera endoideceu\"!"
+  },
+  {
+   "chave": "a57e763c1d",
+   "voz": "npc-lp-rabisco",
+   "texto": "Agora vamos para \"Falta de sorte\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Falta de sorte\"!"
+  },
+  {
+   "chave": "b861c6a81d",
+   "voz": "npc-lp-rabisco",
+   "texto": "Agora vamos para \"Letras e nomes\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Letras e nomes\"!"
+  },
+  {
+   "chave": "96ccae8715",
+   "voz": "npc-lp-melodia",
+   "texto": "Oi, eu sou a Dona Cantiga!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Oi, eu sou a Dona Cantiga!"
+  },
+  {
+   "chave": "97e6fc7c17",
+   "voz": "npc-lp-melodia",
+   "texto": "Aqui é o ateliê das canções.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Aqui é o ateliê das canções."
+  },
+  {
+   "chave": "64a3de6c18",
+   "voz": "npc-lp-melodia",
+   "texto": "Cada lição tem etapas curtas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Cada lição tem etapas curtas."
+  },
+  {
+   "chave": "9102203712",
+   "voz": "npc-lp-melodia",
+   "texto": "Vamos cantar uma etapa?",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Vamos cantar uma etapa?"
+  },
+  {
+   "chave": "3e58204f10",
+   "voz": "npc-lp-melodia",
+   "texto": "Você canta muito bem!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Você canta muito bem!"
+  },
+  {
+   "chave": "c31605c315",
+   "voz": "npc-lp-melodia",
+   "texto": "Se cansar, pode descansar.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Se cansar, pode descansar."
+  },
+  {
+   "chave": "52e2f3db14",
+   "voz": "npc-lp-melodia",
+   "texto": "Você ainda não fez salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Você ainda não fez salas."
+  },
+  {
+   "chave": "cbeb7ea018",
+   "voz": "npc-lp-melodia",
+   "texto": "O treino do Castelo já abriu!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "O treino do Castelo já abriu!"
+  },
+  {
+   "chave": "08e9312812",
+   "voz": "npc-lp-melodia",
+   "texto": "Já fez uma de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez uma de 25 salas."
+  },
+  {
+   "chave": "59751757y",
+   "voz": "npc-lp-melodia",
+   "texto": "Já ganhou 20 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 20 Robux!"
+  },
+  {
+   "chave": "ec5804f413",
+   "voz": "npc-lp-melodia",
+   "texto": "Já fez duas de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez duas de 25 salas."
+  },
+  {
+   "chave": "b37a1601y",
+   "voz": "npc-lp-melodia",
+   "texto": "Já ganhou 40 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 40 Robux!"
+  },
+  {
+   "chave": "6c0a154a13",
+   "voz": "npc-lp-melodia",
+   "texto": "Já fez três de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez três de 25 salas."
+  },
+  {
+   "chave": "259ee4b3y",
+   "voz": "npc-lp-melodia",
+   "texto": "Já ganhou 60 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 60 Robux!"
+  },
+  {
+   "chave": "0ed848f915",
+   "voz": "npc-lp-melodia",
+   "texto": "Já fez quatro de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez quatro de 25 salas."
+  },
+  {
+   "chave": "68c7c36dy",
+   "voz": "npc-lp-melodia",
+   "texto": "Já ganhou 80 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 80 Robux!"
+  },
+  {
+   "chave": "633aa74314",
+   "voz": "npc-lp-melodia",
+   "texto": "Já fez cinco de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez cinco de 25 salas."
+  },
+  {
+   "chave": "534251ecz",
+   "voz": "npc-lp-melodia",
+   "texto": "Já ganhou 100 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 100 Robux!"
+  },
+  {
+   "chave": "b9ed997d13",
+   "voz": "npc-lp-melodia",
+   "texto": "Já fez seis de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez seis de 25 salas."
+  },
+  {
+   "chave": "7c5ed49az",
+   "voz": "npc-lp-melodia",
+   "texto": "Já ganhou 120 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 120 Robux!"
+  },
+  {
+   "chave": "52d07c6813",
+   "voz": "npc-lp-melodia",
+   "texto": "Já fez sete de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez sete de 25 salas."
+  },
+  {
+   "chave": "06367848z",
+   "voz": "npc-lp-melodia",
+   "texto": "Já ganhou 140 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 140 Robux!"
+  },
+  {
+   "chave": "982cb1f613",
+   "voz": "npc-lp-melodia",
+   "texto": "Já fez oito de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez oito de 25 salas."
+  },
+  {
+   "chave": "00969316z",
+   "voz": "npc-lp-melodia",
+   "texto": "Já ganhou 160 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 160 Robux!"
+  },
+  {
+   "chave": "ec8399c713",
+   "voz": "npc-lp-melodia",
+   "texto": "Já fez nove de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez nove de 25 salas."
+  },
+  {
+   "chave": "c82cb8a4z",
+   "voz": "npc-lp-melodia",
+   "texto": "Já ganhou 180 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 180 Robux!"
+  },
+  {
+   "chave": "dfbd078a12",
+   "voz": "npc-lp-melodia",
+   "texto": "Já fez dez de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez dez de 25 salas."
+  },
+  {
+   "chave": "44f17523z",
+   "voz": "npc-lp-melodia",
+   "texto": "Já ganhou 200 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 200 Robux!"
+  },
+  {
+   "chave": "9243616913",
+   "voz": "npc-lp-melodia",
+   "texto": "Já fez onze de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez onze de 25 salas."
+  },
+  {
+   "chave": "8b3c8c71z",
+   "voz": "npc-lp-melodia",
+   "texto": "Já ganhou 220 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 220 Robux!"
+  },
+  {
+   "chave": "6dadd43513",
+   "voz": "npc-lp-melodia",
+   "texto": "Já fez doze de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez doze de 25 salas."
+  },
+  {
+   "chave": "79b30d87z",
+   "voz": "npc-lp-melodia",
+   "texto": "Já ganhou 240 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 240 Robux!"
+  },
+  {
+   "chave": "c946e90b14",
+   "voz": "npc-lp-melodia",
+   "texto": "Já fez treze de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez treze de 25 salas."
+  },
+  {
+   "chave": "13fce985z",
+   "voz": "npc-lp-melodia",
+   "texto": "Já ganhou 260 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 260 Robux!"
+  },
+  {
+   "chave": "a0911f2f16",
+   "voz": "npc-lp-melodia",
+   "texto": "Já fez catorze de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez catorze de 25 salas."
+  },
+  {
+   "chave": "e758377bz",
+   "voz": "npc-lp-melodia",
+   "texto": "Já ganhou 280 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 280 Robux!"
+  },
+  {
+   "chave": "31936f7115",
+   "voz": "npc-lp-melodia",
+   "texto": "Já fez quinze de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez quinze de 25 salas."
+  },
+  {
+   "chave": "c32e1bd2z",
+   "voz": "npc-lp-melodia",
+   "texto": "Já ganhou 300 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 300 Robux!"
+  },
+  {
+   "chave": "2b87db4218",
+   "voz": "npc-lp-melodia",
+   "texto": "Já fez dezesseis de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez dezesseis de 25 salas."
+  },
+  {
+   "chave": "18667d84z",
+   "voz": "npc-lp-melodia",
+   "texto": "Já ganhou 320 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 320 Robux!"
+  },
+  {
+   "chave": "f94325c718",
+   "voz": "npc-lp-melodia",
+   "texto": "Já fez dezessete de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez dezessete de 25 salas."
+  },
+  {
+   "chave": "670ce8eez",
+   "voz": "npc-lp-melodia",
+   "texto": "Já ganhou 340 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 340 Robux!"
+  },
+  {
+   "chave": "4ac8344516",
+   "voz": "npc-lp-melodia",
+   "texto": "Já fez dezoito de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez dezoito de 25 salas."
+  },
+  {
+   "chave": "ab4062c0z",
+   "voz": "npc-lp-melodia",
+   "texto": "Já ganhou 360 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 360 Robux!"
+  },
+  {
+   "chave": "138c25a917",
+   "voz": "npc-lp-melodia",
+   "texto": "Já fez dezenove de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez dezenove de 25 salas."
+  },
+  {
+   "chave": "12b473faz",
+   "voz": "npc-lp-melodia",
+   "texto": "Já ganhou 380 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 380 Robux!"
+  },
+  {
+   "chave": "ebd1c52514",
+   "voz": "npc-lp-melodia",
+   "texto": "Já fez vinte de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez vinte de 25 salas."
+  },
+  {
+   "chave": "45604e69z",
+   "voz": "npc-lp-melodia",
+   "texto": "Já ganhou 400 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 400 Robux!"
+  },
+  {
+   "chave": "fa2d199e11",
+   "voz": "npc-lp-melodia",
+   "texto": "Já fez 21 de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez 21 de 25 salas."
+  },
+  {
+   "chave": "8f5d1e5bz",
+   "voz": "npc-lp-melodia",
+   "texto": "Já ganhou 420 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 420 Robux!"
+  },
+  {
+   "chave": "da1e2d0d11",
+   "voz": "npc-lp-melodia",
+   "texto": "Já fez 22 de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez 22 de 25 salas."
+  },
+  {
+   "chave": "f4695f7dz",
+   "voz": "npc-lp-melodia",
+   "texto": "Já ganhou 440 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 440 Robux!"
+  },
+  {
+   "chave": "3c34942811",
+   "voz": "npc-lp-melodia",
+   "texto": "Já fez 23 de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez 23 de 25 salas."
+  },
+  {
+   "chave": "d1e6fcffz",
+   "voz": "npc-lp-melodia",
+   "texto": "Já ganhou 460 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 460 Robux!"
+  },
+  {
+   "chave": "7c786e8711",
+   "voz": "npc-lp-melodia",
+   "texto": "Já fez 24 de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez 24 de 25 salas."
+  },
+  {
+   "chave": "dbb8e6d1z",
+   "voz": "npc-lp-melodia",
+   "texto": "Já ganhou 480 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 480 Robux!"
+  },
+  {
+   "chave": "24c343c410",
+   "voz": "npc-lp-melodia",
+   "texto": "Você fez as 25 salas!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Você fez as 25 salas!"
+  },
+  {
+   "chave": "df47ab20z",
+   "voz": "npc-lp-melodia",
+   "texto": "Já ganhou 500 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 500 Robux!"
+  },
+  {
+   "chave": "fe13a7091a",
+   "voz": "npc-lp-melodia",
+   "texto": "A primeira é \"O Gato de Botas\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "A primeira é \"O Gato de Botas\"!"
+  },
+  {
+   "chave": "4d9c38361e",
+   "voz": "npc-lp-melodia",
+   "texto": "Agora vamos para \"O Gato de Botas\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"O Gato de Botas\"!"
+  },
+  {
+   "chave": "a00ee0531h",
+   "voz": "npc-lp-melodia",
+   "texto": "Agora vamos para \"As partes do conto\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"As partes do conto\"!"
+  },
+  {
+   "chave": "f039644e1l",
+   "voz": "npc-lp-melodia",
+   "texto": "Agora vamos para \"Os sinais de pontuação\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Os sinais de pontuação\"!"
+  },
+  {
+   "chave": "5acf94731n",
+   "voz": "npc-lp-melodia",
+   "texto": "Agora vamos para \"A lenda da Vitória-Régia\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"A lenda da Vitória-Régia\"!"
+  },
+  {
+   "chave": "ccdbd6281d",
+   "voz": "npc-lp-melodia",
+   "texto": "Agora vamos para \"Quando e onde?\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Quando e onde?\"!"
+  },
+  {
+   "chave": "90d43c011a",
+   "voz": "npc-lp-melodia",
+   "texto": "Agora vamos para \"Meu reconto\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Meu reconto\"!"
+  },
+  {
+   "chave": "0eeae4551k",
+   "voz": "npc-lp-melodia",
+   "texto": "Agora vamos para \"João e o pé de feijão\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"João e o pé de feijão\"!"
+  },
+  {
+   "chave": "887412b71c",
+   "voz": "npc-lp-melodia",
+   "texto": "Agora vamos para \"A sereia Iara\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"A sereia Iara\"!"
+  },
+  {
+   "chave": "de785afb1h",
+   "voz": "npc-lp-melodia",
+   "texto": "Agora vamos para \"Os Três Porquinhos\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Os Três Porquinhos\"!"
+  },
+  {
+   "chave": "34232b7f1e",
+   "voz": "npc-lp-melodia",
+   "texto": "Agora vamos para \"Rei da Floresta\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Rei da Floresta\"!"
+  },
+  {
+   "chave": "bdc7e0341i",
+   "voz": "npc-lp-melodia",
+   "texto": "Agora vamos para \"Os bichos da canção\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Os bichos da canção\"!"
+  },
+  {
+   "chave": "4e832a251j",
+   "voz": "npc-lp-melodia",
+   "texto": "Agora vamos para \"Masculino e feminino\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Masculino e feminino\"!"
+  },
+  {
+   "chave": "bbb53aa71a",
+   "voz": "npc-lp-melodia",
+   "texto": "Agora vamos para \"Aumentativo\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Aumentativo\"!"
+  },
+  {
+   "chave": "f1e7185419",
+   "voz": "npc-lp-melodia",
+   "texto": "Agora vamos para \"Diminutivo\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Diminutivo\"!"
+  },
+  {
+   "chave": "5e9421871c",
+   "voz": "npc-lp-melodia",
+   "texto": "Agora vamos para \"Minha paródia\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Minha paródia\"!"
+  },
+  {
+   "chave": "2918d5e01k",
+   "voz": "npc-lp-melodia",
+   "texto": "Agora vamos para \"O animal de estimação\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"O animal de estimação\"!"
+  },
+  {
+   "chave": "70f4cf0e1n",
+   "voz": "npc-lp-melodia",
+   "texto": "Agora vamos para \"Aumentativo e diminutivo\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Aumentativo e diminutivo\"!"
+  },
+  {
+   "chave": "160865f51d",
+   "voz": "npc-lp-melodia",
+   "texto": "Agora vamos para \"Jacaré letrado\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Jacaré letrado\"!"
+  },
+  {
+   "chave": "bb53e7311o",
+   "voz": "npc-lp-melodia",
+   "texto": "Agora vamos para \"Palavras em -ã, -ão, -ães\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Palavras em ã, de irmã, ão, de pão, ães, de pães\"!"
+  },
+  {
+   "chave": "199eab6a1g",
+   "voz": "npc-lp-melodia",
+   "texto": "Agora vamos para \"Próprios e comuns\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Próprios e comuns\"!"
+  },
+  {
+   "chave": "fd23c7b81m",
+   "voz": "npc-lp-melodia",
+   "texto": "Agora vamos para \"Maiúsculas e minúsculas\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Maiúsculas e minúsculas\"!"
+  },
+  {
+   "chave": "4828a5fd1f",
+   "voz": "npc-lp-melodia",
+   "texto": "Agora vamos para \"Meu poema visual\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Meu poema visual\"!"
+  },
+  {
+   "chave": "ddd7dec91l",
+   "voz": "npc-lp-melodia",
+   "texto": "Agora vamos para \"A primavera endoideceu\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"A primavera endoideceu\"!"
+  },
+  {
+   "chave": "1c5b05841d",
+   "voz": "npc-lp-melodia",
+   "texto": "Agora vamos para \"Falta de sorte\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Falta de sorte\"!"
+  },
+  {
+   "chave": "63a82ef01d",
+   "voz": "npc-lp-melodia",
+   "texto": "Agora vamos para \"Letras e nomes\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Letras e nomes\"!"
+  },
+  {
+   "chave": "3340090ez",
+   "voz": "npc-lp-tito",
+   "texto": "Oi, eu sou o Tito Rima!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Oi, eu sou o Tito Rima!"
+  },
+  {
+   "chave": "4999036013",
+   "voz": "npc-lp-tito",
+   "texto": "Aqui é o ateliê dos poemas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Aqui é o ateliê dos poemas."
+  },
+  {
+   "chave": "a838231115",
+   "voz": "npc-lp-tito",
+   "texto": "Cada lição tem etapas curtas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Cada lição tem etapas curtas."
+  },
+  {
+   "chave": "a56f6324y",
+   "voz": "npc-lp-tito",
+   "texto": "Vamos rimar uma etapa?",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Vamos rimar uma etapa?"
+  },
+  {
+   "chave": "6574b452x",
+   "voz": "npc-lp-tito",
+   "texto": "Que rima mais bonita!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Que rima mais bonita!"
+  },
+  {
+   "chave": "840ef0ce13",
+   "voz": "npc-lp-tito",
+   "texto": "Sem erro, ganha um tesouro!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Sem erro, ganha um tesouro!"
+  },
+  {
+   "chave": "a10d3b1a11",
+   "voz": "npc-lp-tito",
+   "texto": "Você ainda não fez salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Você ainda não fez salas."
+  },
+  {
+   "chave": "a8d383e515",
+   "voz": "npc-lp-tito",
+   "texto": "O treino do Castelo já abriu!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "O treino do Castelo já abriu!"
+  },
+  {
+   "chave": "673ad4f1z",
+   "voz": "npc-lp-tito",
+   "texto": "Já fez uma de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez uma de 25 salas."
+  },
+  {
+   "chave": "c58079c6v",
+   "voz": "npc-lp-tito",
+   "texto": "Já ganhou 20 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 20 Robux!"
+  },
+  {
+   "chave": "87d6585710",
+   "voz": "npc-lp-tito",
+   "texto": "Já fez duas de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez duas de 25 salas."
+  },
+  {
+   "chave": "bf07a69cv",
+   "voz": "npc-lp-tito",
+   "texto": "Já ganhou 40 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 40 Robux!"
+  },
+  {
+   "chave": "0e73a04510",
+   "voz": "npc-lp-tito",
+   "texto": "Já fez três de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez três de 25 salas."
+  },
+  {
+   "chave": "e329f38av",
+   "voz": "npc-lp-tito",
+   "texto": "Já ganhou 60 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 60 Robux!"
+  },
+  {
+   "chave": "7309f33612",
+   "voz": "npc-lp-tito",
+   "texto": "Já fez quatro de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez quatro de 25 salas."
+  },
+  {
+   "chave": "273334d0v",
+   "voz": "npc-lp-tito",
+   "texto": "Já ganhou 80 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 80 Robux!"
+  },
+  {
+   "chave": "be8dc4b211",
+   "voz": "npc-lp-tito",
+   "texto": "Já fez cinco de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez cinco de 25 salas."
+  },
+  {
+   "chave": "d35ee967w",
+   "voz": "npc-lp-tito",
+   "texto": "Já ganhou 100 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 100 Robux!"
+  },
+  {
+   "chave": "0e86972210",
+   "voz": "npc-lp-tito",
+   "texto": "Já fez seis de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez seis de 25 salas."
+  },
+  {
+   "chave": "e9c9ed65w",
+   "voz": "npc-lp-tito",
+   "texto": "Já ganhou 120 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 120 Robux!"
+  },
+  {
+   "chave": "8a6ca1a710",
+   "voz": "npc-lp-tito",
+   "texto": "Já fez sete de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez sete de 25 salas."
+  },
+  {
+   "chave": "74d8a903w",
+   "voz": "npc-lp-tito",
+   "texto": "Já ganhou 140 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 140 Robux!"
+  },
+  {
+   "chave": "5cf91e5110",
+   "voz": "npc-lp-tito",
+   "texto": "Já fez oito de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez oito de 25 salas."
+  },
+  {
+   "chave": "b47c36d1w",
+   "voz": "npc-lp-tito",
+   "texto": "Já ganhou 160 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 160 Robux!"
+  },
+  {
+   "chave": "52ec439c10",
+   "voz": "npc-lp-tito",
+   "texto": "Já fez nove de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez nove de 25 salas."
+  },
+  {
+   "chave": "aaaa4cffw",
+   "voz": "npc-lp-tito",
+   "texto": "Já ganhou 180 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 180 Robux!"
+  },
+  {
+   "chave": "b31e862bz",
+   "voz": "npc-lp-tito",
+   "texto": "Já fez dez de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez dez de 25 salas."
+  },
+  {
+   "chave": "cc2898b0w",
+   "voz": "npc-lp-tito",
+   "texto": "Já ganhou 200 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 200 Robux!"
+  },
+  {
+   "chave": "ec0733ca10",
+   "voz": "npc-lp-tito",
+   "texto": "Já fez onze de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez onze de 25 salas."
+  },
+  {
+   "chave": "d9ad79dew",
+   "voz": "npc-lp-tito",
+   "texto": "Já ganhou 220 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 220 Robux!"
+  },
+  {
+   "chave": "45bcd72a10",
+   "voz": "npc-lp-tito",
+   "texto": "Já fez doze de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez doze de 25 salas."
+  },
+  {
+   "chave": "c897baf4w",
+   "voz": "npc-lp-tito",
+   "texto": "Já ganhou 240 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 240 Robux!"
+  },
+  {
+   "chave": "b008f82e11",
+   "voz": "npc-lp-tito",
+   "texto": "Já fez treze de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez treze de 25 salas."
+  },
+  {
+   "chave": "23aa0dc2w",
+   "voz": "npc-lp-tito",
+   "texto": "Já ganhou 260 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 260 Robux!"
+  },
+  {
+   "chave": "150f1bf213",
+   "voz": "npc-lp-tito",
+   "texto": "Já fez catorze de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez catorze de 25 salas."
+  },
+  {
+   "chave": "c2bc0258w",
+   "voz": "npc-lp-tito",
+   "texto": "Já ganhou 280 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 280 Robux!"
+  },
+  {
+   "chave": "a959df7612",
+   "voz": "npc-lp-tito",
+   "texto": "Já fez quinze de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez quinze de 25 salas."
+  },
+  {
+   "chave": "71254bb9w",
+   "voz": "npc-lp-tito",
+   "texto": "Já ganhou 300 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 300 Robux!"
+  },
+  {
+   "chave": "8272df1b15",
+   "voz": "npc-lp-tito",
+   "texto": "Já fez dezesseis de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez dezesseis de 25 salas."
+  },
+  {
+   "chave": "0b90a86bw",
+   "voz": "npc-lp-tito",
+   "texto": "Já ganhou 320 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 320 Robux!"
+  },
+  {
+   "chave": "63971f6215",
+   "voz": "npc-lp-tito",
+   "texto": "Já fez dezessete de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez dezessete de 25 salas."
+  },
+  {
+   "chave": "7e260c4dw",
+   "voz": "npc-lp-tito",
+   "texto": "Já ganhou 340 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 340 Robux!"
+  },
+  {
+   "chave": "8628693413",
+   "voz": "npc-lp-tito",
+   "texto": "Já fez dezoito de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez dezoito de 25 salas."
+  },
+  {
+   "chave": "ad47c2cfw",
+   "voz": "npc-lp-tito",
+   "texto": "Já ganhou 360 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 360 Robux!"
+  },
+  {
+   "chave": "68eeee5614",
+   "voz": "npc-lp-tito",
+   "texto": "Já fez dezenove de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez dezenove de 25 salas."
+  },
+  {
+   "chave": "81574be1w",
+   "voz": "npc-lp-tito",
+   "texto": "Já ganhou 380 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 380 Robux!"
+  },
+  {
+   "chave": "213b44f411",
+   "voz": "npc-lp-tito",
+   "texto": "Já fez vinte de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez vinte de 25 salas."
+  },
+  {
+   "chave": "a05255e2w",
+   "voz": "npc-lp-tito",
+   "texto": "Já ganhou 400 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 400 Robux!"
+  },
+  {
+   "chave": "905fcf59y",
+   "voz": "npc-lp-tito",
+   "texto": "Já fez 21 de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez 21 de 25 salas."
+  },
+  {
+   "chave": "a86ca414w",
+   "voz": "npc-lp-tito",
+   "texto": "Já ganhou 420 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 420 Robux!"
+  },
+  {
+   "chave": "33ae00fay",
+   "voz": "npc-lp-tito",
+   "texto": "Já fez 22 de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez 22 de 25 salas."
+  },
+  {
+   "chave": "8294d2few",
+   "voz": "npc-lp-tito",
+   "texto": "Já ganhou 440 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 440 Robux!"
+  },
+  {
+   "chave": "4b77878fy",
+   "voz": "npc-lp-tito",
+   "texto": "Já fez 23 de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez 23 de 25 salas."
+  },
+  {
+   "chave": "ed261d50w",
+   "voz": "npc-lp-tito",
+   "texto": "Já ganhou 460 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 460 Robux!"
+  },
+  {
+   "chave": "4effb870y",
+   "voz": "npc-lp-tito",
+   "texto": "Já fez 24 de 25 salas.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já fez 24 de 25 salas."
+  },
+  {
+   "chave": "a91cdc0aw",
+   "voz": "npc-lp-tito",
+   "texto": "Já ganhou 480 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 480 Robux!"
+  },
+  {
+   "chave": "8a16d3a5x",
+   "voz": "npc-lp-tito",
+   "texto": "Você fez as 25 salas!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Você fez as 25 salas!"
+  },
+  {
+   "chave": "171ea6b3w",
+   "voz": "npc-lp-tito",
+   "texto": "Já ganhou 500 Robux!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Já ganhou 500 Robux!"
+  },
+  {
+   "chave": "e6ddd87c17",
+   "voz": "npc-lp-tito",
+   "texto": "A primeira é \"O Gato de Botas\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "A primeira é \"O Gato de Botas\"!"
+  },
+  {
+   "chave": "0959668f1b",
+   "voz": "npc-lp-tito",
+   "texto": "Agora vamos para \"O Gato de Botas\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"O Gato de Botas\"!"
+  },
+  {
+   "chave": "fa33f4c01e",
+   "voz": "npc-lp-tito",
+   "texto": "Agora vamos para \"As partes do conto\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"As partes do conto\"!"
+  },
+  {
+   "chave": "e90650c51i",
+   "voz": "npc-lp-tito",
+   "texto": "Agora vamos para \"Os sinais de pontuação\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Os sinais de pontuação\"!"
+  },
+  {
+   "chave": "70e6a2e01k",
+   "voz": "npc-lp-tito",
+   "texto": "Agora vamos para \"A lenda da Vitória-Régia\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"A lenda da Vitória-Régia\"!"
+  },
+  {
+   "chave": "54e651cb1a",
+   "voz": "npc-lp-tito",
+   "texto": "Agora vamos para \"Quando e onde?\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Quando e onde?\"!"
+  },
+  {
+   "chave": "d30c170817",
+   "voz": "npc-lp-tito",
+   "texto": "Agora vamos para \"Meu reconto\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Meu reconto\"!"
+  },
+  {
+   "chave": "42ad2afc1h",
+   "voz": "npc-lp-tito",
+   "texto": "Agora vamos para \"João e o pé de feijão\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"João e o pé de feijão\"!"
+  },
+  {
+   "chave": "5c0160da19",
+   "voz": "npc-lp-tito",
+   "texto": "Agora vamos para \"A sereia Iara\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"A sereia Iara\"!"
+  },
+  {
+   "chave": "32903ef81e",
+   "voz": "npc-lp-tito",
+   "texto": "Agora vamos para \"Os Três Porquinhos\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Os Três Porquinhos\"!"
+  },
+  {
+   "chave": "011effa61b",
+   "voz": "npc-lp-tito",
+   "texto": "Agora vamos para \"Rei da Floresta\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Rei da Floresta\"!"
+  },
+  {
+   "chave": "adeceffd1f",
+   "voz": "npc-lp-tito",
+   "texto": "Agora vamos para \"Os bichos da canção\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Os bichos da canção\"!"
+  },
+  {
+   "chave": "ca69a9f21g",
+   "voz": "npc-lp-tito",
+   "texto": "Agora vamos para \"Masculino e feminino\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Masculino e feminino\"!"
+  },
+  {
+   "chave": "cb4fbe3a17",
+   "voz": "npc-lp-tito",
+   "texto": "Agora vamos para \"Aumentativo\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Aumentativo\"!"
+  },
+  {
+   "chave": "e5c26d4b16",
+   "voz": "npc-lp-tito",
+   "texto": "Agora vamos para \"Diminutivo\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Diminutivo\"!"
+  },
+  {
+   "chave": "0f833a9219",
+   "voz": "npc-lp-tito",
+   "texto": "Agora vamos para \"Minha paródia\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Minha paródia\"!"
+  },
+  {
+   "chave": "a28e11891h",
+   "voz": "npc-lp-tito",
+   "texto": "Agora vamos para \"O animal de estimação\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"O animal de estimação\"!"
+  },
+  {
+   "chave": "1f82cbcd1k",
+   "voz": "npc-lp-tito",
+   "texto": "Agora vamos para \"Aumentativo e diminutivo\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Aumentativo e diminutivo\"!"
+  },
+  {
+   "chave": "533bab5a1a",
+   "voz": "npc-lp-tito",
+   "texto": "Agora vamos para \"Jacaré letrado\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Jacaré letrado\"!"
+  },
+  {
+   "chave": "ec3a40241l",
+   "voz": "npc-lp-tito",
+   "texto": "Agora vamos para \"Palavras em -ã, -ão, -ães\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Palavras em ã, de irmã, ão, de pão, ães, de pães\"!"
+  },
+  {
+   "chave": "9a456da31d",
+   "voz": "npc-lp-tito",
+   "texto": "Agora vamos para \"Próprios e comuns\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Próprios e comuns\"!"
+  },
+  {
+   "chave": "6289a7591j",
+   "voz": "npc-lp-tito",
+   "texto": "Agora vamos para \"Maiúsculas e minúsculas\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Maiúsculas e minúsculas\"!"
+  },
+  {
+   "chave": "8ce531ca1c",
+   "voz": "npc-lp-tito",
+   "texto": "Agora vamos para \"Meu poema visual\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Meu poema visual\"!"
+  },
+  {
+   "chave": "5e83c30a1i",
+   "voz": "npc-lp-tito",
+   "texto": "Agora vamos para \"A primavera endoideceu\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"A primavera endoideceu\"!"
+  },
+  {
+   "chave": "cf7fb9971a",
+   "voz": "npc-lp-tito",
+   "texto": "Agora vamos para \"Falta de sorte\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Falta de sorte\"!"
+  },
+  {
+   "chave": "e9a8490b1a",
+   "voz": "npc-lp-tito",
+   "texto": "Agora vamos para \"Letras e nomes\"!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Agora vamos para \"Letras e nomes\"!"
+  },
+  {
+   "chave": "7ba1ed37x",
+   "voz": "npc-lp-serena",
+   "texto": "Olá, minha querida!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Olá, minha querida!"
+  },
+  {
+   "chave": "4afa1a6bv",
+   "voz": "npc-lp-serena",
+   "texto": "Olá, meu querido!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Olá, meu querido!"
+  },
+  {
+   "chave": "08e68684z",
+   "voz": "npc-lp-serena",
+   "texto": "Eu sou a Vovó Serena.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Eu sou a Vovó Serena."
+  },
+  {
+   "chave": "5524648b17",
+   "voz": "npc-lp-serena",
+   "texto": "Aqui é o Cantinho do Respiro.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Aqui é o Cantinho do Respiro."
+  },
+  {
+   "chave": "6619bc9b15",
+   "voz": "npc-lp-serena",
+   "texto": "Vamos respirar bem devagar?",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Vamos respirar bem devagar?"
+  },
+  {
+   "chave": "4030244618",
+   "voz": "npc-lp-serena",
+   "texto": "Descansar também é importante.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Descansar também é importante."
+  },
+  {
+   "chave": "00b874d516",
+   "voz": "npc-lp-serena",
+   "texto": "Seu progresso está guardado.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Seu progresso está guardado."
   },
   {
    "chave": "090536f813",
@@ -19254,6 +21785,42 @@
     "interior-portugues"
    ],
    "fala": "Páginas 17 e 18: Letras e nomes."
+  },
+  {
+   "chave": "550f015711",
+   "voz": "narradora",
+   "texto": "Os peixinhos nadam devagar.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Os peixinhos nadam devagar."
+  },
+  {
+   "chave": "b5d22d03x",
+   "voz": "narradora",
+   "texto": "Respire junto com eles.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Respire junto com eles."
+  },
+  {
+   "chave": "d58b4b4fz",
+   "voz": "narradora",
+   "texto": "Cada sala tem um tesouro!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Cada sala tem um tesouro!"
+  },
+  {
+   "chave": "81f9062211",
+   "voz": "narradora",
+   "texto": "Sem errar, ele acende aqui.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Sem errar, ele acende aqui."
   },
   {
    "chave": "261703d61b",
@@ -19749,6 +22316,24 @@
     "interior-quimica"
    ],
    "fala": "E um oxigênio no meio!"
+  },
+  {
+   "chave": "65fcc635z",
+   "voz": "narradora",
+   "texto": "As Experiências do Reino!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "As Experiências do Reino!"
+  },
+  {
+   "chave": "d98d23f310",
+   "voz": "narradora",
+   "texto": "Cartas para fazer em casa.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Cartas para fazer em casa."
   },
   {
    "chave": "41db6927t",
@@ -27563,6 +30148,51 @@
    "fala": "Aqui é o banho dos unicórnios!"
   },
   {
+   "chave": "518413e713",
+   "voz": "npc-lp-serena",
+   "texto": "Olhe o círculo com calma.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Olhe o círculo com calma."
+  },
+  {
+   "chave": "0843508810",
+   "voz": "npc-lp-serena",
+   "texto": "Puxe o ar bem devagar.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Puxe o ar bem devagar."
+  },
+  {
+   "chave": "341a221111",
+   "voz": "npc-lp-serena",
+   "texto": "Solte o ar bem devagar.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Solte o ar bem devagar."
+  },
+  {
+   "chave": "312cd5e412",
+   "voz": "npc-lp-serena",
+   "texto": "Você respirou muito bem!",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Você respirou muito bem!"
+  },
+  {
+   "chave": "8853fd3d14",
+   "voz": "npc-lp-serena",
+   "texto": "Pode voltar quando quiser.",
+   "pacotes": [
+    "interior-portugues"
+   ],
+   "fala": "Pode voltar quando quiser."
+  },
+  {
    "chave": "0cd57bb61x",
    "voz": "claude",
    "texto": "Seu unicórnio está com fome. A Pet Shop tem comidinha gostosa!",
@@ -29685,6 +32315,2670 @@
     "interior-quimica"
    ],
    "fala": "Que cientista incrível!"
+  },
+  {
+   "chave": "6ddcde8217",
+   "voz": "npc-quimica-proveta",
+   "texto": "Experiências para casa!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Experiências para casa!"
+  },
+  {
+   "chave": "afad766215",
+   "voz": "npc-quimica-proveta",
+   "texto": "Sempre com um adulto.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Sempre com um adulto."
+  },
+  {
+   "chave": "02507c201b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Essa carta ainda é segredo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Essa carta ainda é segredo."
+  },
+  {
+   "chave": "efd139de18",
+   "voz": "npc-quimica-proveta",
+   "texto": "Faça a trilha sem errar!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Faça a trilha sem errar!"
+  },
+  {
+   "chave": "b4cdb56717",
+   "voz": "npc-quimica-proveta",
+   "texto": "Faça com um adulto, tá?",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Faça com um adulto, tá?"
+  },
+  {
+   "chave": "d94c1e321b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Esse elemento é um segredo!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Esse elemento é um segredo!"
+  },
+  {
+   "chave": "d35d8b0f19",
+   "voz": "npc-quimica-proveta",
+   "texto": "Faça uma trilha perfeita!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Faça uma trilha perfeita!"
+  },
+  {
+   "chave": "99cc1ab017",
+   "voz": "npc-quimica-proveta",
+   "texto": "É na Casa das Palavras.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "É na Casa das Palavras."
+  },
+  {
+   "chave": "5373f8d01d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Quatro limões bem suculentos.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Quatro limões bem suculentos."
+  },
+  {
+   "chave": "a581f26e1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Pregos de zinco do adulto.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Pregos de zinco do adulto."
+  },
+  {
+   "chave": "6fb22a4617",
+   "voz": "npc-quimica-proveta",
+   "texto": "Moedas de cor de cobre.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Moedas de cor de cobre."
+  },
+  {
+   "chave": "3110c4551e",
+   "voz": "npc-quimica-proveta",
+   "texto": "Fios com garras e uma luzinha.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Fios com garras e uma luzinha."
+  },
+  {
+   "chave": "a28169ac1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "O adulto aperta os limões.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O adulto aperta os limões."
+  },
+  {
+   "chave": "542f09f81e",
+   "voz": "npc-quimica-proveta",
+   "texto": "O adulto põe um prego em cada.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O adulto põe um prego em cada."
+  },
+  {
+   "chave": "3779b5891c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Põe uma moeda do outro lado.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Põe uma moeda do outro lado."
+  },
+  {
+   "chave": "7735abd41b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Liga os limões com os fios.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Liga os limões com os fios."
+  },
+  {
+   "chave": "c90ee7931d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Agora ligue a luzinha no fim.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Agora ligue a luzinha no fim."
+  },
+  {
+   "chave": "a1628e821b",
+   "voz": "npc-quimica-proveta",
+   "texto": "A luzinha acende fraquinha!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A luzinha acende fraquinha!"
+  },
+  {
+   "chave": "3f54a6f91b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Zinco e cobre trocam carga.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Zinco e cobre trocam carga."
+  },
+  {
+   "chave": "c24548111c",
+   "voz": "npc-quimica-proveta",
+   "texto": "O suco do limão ajuda nisso.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O suco do limão ajuda nisso."
+  },
+  {
+   "chave": "922ff2ab1e",
+   "voz": "npc-quimica-proveta",
+   "texto": "Isso faz uma pilha de verdade!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Isso faz uma pilha de verdade!"
+  },
+  {
+   "chave": "8e451f3a19",
+   "voz": "npc-quimica-proveta",
+   "texto": "Uma lata vazia sem tampa.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Uma lata vazia sem tampa."
+  },
+  {
+   "chave": "fcbf55ef1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Um balão de festa cortado.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um balão de festa cortado."
+  },
+  {
+   "chave": "d9bd3f9b16",
+   "voz": "npc-quimica-proveta",
+   "texto": "Um elástico bem firme.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um elástico bem firme."
+  },
+  {
+   "chave": "23ddb72516",
+   "voz": "npc-quimica-proveta",
+   "texto": "Dois lápis para tocar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Dois lápis para tocar."
+  },
+  {
+   "chave": "1d49666b19",
+   "voz": "npc-quimica-proveta",
+   "texto": "O adulto confere a borda.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O adulto confere a borda."
+  },
+  {
+   "chave": "5a331f4918",
+   "voz": "npc-quimica-proveta",
+   "texto": "Estique o balão na lata.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Estique o balão na lata."
+  },
+  {
+   "chave": "cda5ee4216",
+   "voz": "npc-quimica-proveta",
+   "texto": "Prenda com o elástico.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Prenda com o elástico."
+  },
+  {
+   "chave": "89e1b20b13",
+   "voz": "npc-quimica-proveta",
+   "texto": "Toque com os lápis!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Toque com os lápis!"
+  },
+  {
+   "chave": "15d69c8916",
+   "voz": "npc-quimica-proveta",
+   "texto": "A lata vira um tambor!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A lata vira um tambor!"
+  },
+  {
+   "chave": "499a95bb1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "O balão treme e faz o som.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O balão treme e faz o som."
+  },
+  {
+   "chave": "6c05c9db1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Lata de ferro tem estanho.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Lata de ferro tem estanho."
+  },
+  {
+   "chave": "07aa8a9b18",
+   "voz": "npc-quimica-proveta",
+   "texto": "O estanho cobre o ferro.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O estanho cobre o ferro."
+  },
+  {
+   "chave": "da9413f41d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Iodo de farmácia, com adulto.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Iodo de farmácia, com adulto."
+  },
+  {
+   "chave": "08741af317",
+   "voz": "npc-quimica-proveta",
+   "texto": "Um conta-gotas pequeno.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um conta-gotas pequeno."
+  },
+  {
+   "chave": "86597e691a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Pão, batata e um pratinho.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Pão, batata e um pratinho."
+  },
+  {
+   "chave": "c5900bb118",
+   "voz": "npc-quimica-proveta",
+   "texto": "Só o adulto pega o iodo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Só o adulto pega o iodo."
+  },
+  {
+   "chave": "4e9c07db18",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ponha o pão no pratinho.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ponha o pão no pratinho."
+  },
+  {
+   "chave": "c2fee17f18",
+   "voz": "npc-quimica-proveta",
+   "texto": "O adulto pinga uma gota.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O adulto pinga uma gota."
+  },
+  {
+   "chave": "fe77ba1919",
+   "voz": "npc-quimica-proveta",
+   "texto": "O adulto pinga na batata.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O adulto pinga na batata."
+  },
+  {
+   "chave": "8c30efd916",
+   "voz": "npc-quimica-proveta",
+   "texto": "Lave as mãos no final.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Lave as mãos no final."
+  },
+  {
+   "chave": "1833990e18",
+   "voz": "npc-quimica-proveta",
+   "texto": "A gota fica azul-escura!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A gota fica azul-escura!"
+  },
+  {
+   "chave": "927bab2f18",
+   "voz": "npc-quimica-proveta",
+   "texto": "O iodo encontra o amido.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O iodo encontra o amido."
+  },
+  {
+   "chave": "509b1dd619",
+   "voz": "npc-quimica-proveta",
+   "texto": "Juntos, eles ficam azuis.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Juntos, eles ficam azuis."
+  },
+  {
+   "chave": "c6715a8618",
+   "voz": "npc-quimica-proveta",
+   "texto": "Iodo não se põe na boca!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Iodo não se põe na boca!"
+  },
+  {
+   "chave": "d8d4b53613",
+   "voz": "npc-quimica-proveta",
+   "texto": "Uma bacia com água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Uma bacia com água."
+  },
+  {
+   "chave": "5780c8ef19",
+   "voz": "npc-quimica-proveta",
+   "texto": "Papel-alumínio do adulto.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Papel-alumínio do adulto."
+  },
+  {
+   "chave": "dadf1b5014",
+   "voz": "npc-quimica-proveta",
+   "texto": "Moedas para a carga.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Moedas para a carga."
+  },
+  {
+   "chave": "66a7eedb1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Faça uma bola de alumínio.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Faça uma bola de alumínio."
+  },
+  {
+   "chave": "ca5fc69215",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ponha a bola na água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ponha a bola na água."
+  },
+  {
+   "chave": "9ec105e018",
+   "voz": "npc-quimica-proveta",
+   "texto": "Agora faça um barquinho.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Agora faça um barquinho."
+  },
+  {
+   "chave": "323ce93716",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ponha o barco na água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ponha o barco na água."
+  },
+  {
+   "chave": "ebf135c81a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Coloque moedas, uma a uma.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Coloque moedas, uma a uma."
+  },
+  {
+   "chave": "8176046f1d",
+   "voz": "npc-quimica-proveta",
+   "texto": "A bola afunda e o barco boia!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A bola afunda e o barco boia!"
+  },
+  {
+   "chave": "f39f5c8a1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "O barco empurra muita água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O barco empurra muita água."
+  },
+  {
+   "chave": "fd5f55b619",
+   "voz": "npc-quimica-proveta",
+   "texto": "Por isso a água o segura.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Por isso a água o segura."
+  },
+  {
+   "chave": "2da369a218",
+   "voz": "npc-quimica-proveta",
+   "texto": "Submarinos usam titânio.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Submarinos usam titânio."
+  },
+  {
+   "chave": "0d7ad19f12",
+   "voz": "npc-quimica-proveta",
+   "texto": "Um prato de papel.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um prato de papel."
+  },
+  {
+   "chave": "9d24d9da16",
+   "voz": "npc-quimica-proveta",
+   "texto": "Um lápis bem comprido.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um lápis bem comprido."
+  },
+  {
+   "chave": "fb8292ad17",
+   "voz": "npc-quimica-proveta",
+   "texto": "Uma canetinha colorida.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Uma canetinha colorida."
+  },
+  {
+   "chave": "5d6a14a015",
+   "voz": "npc-quimica-proveta",
+   "texto": "Um dia de sol bonito.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um dia de sol bonito."
+  },
+  {
+   "chave": "4c61af101e",
+   "voz": "npc-quimica-proveta",
+   "texto": "O adulto fura o meio do prato.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O adulto fura o meio do prato."
+  },
+  {
+   "chave": "e225bb4315",
+   "voz": "npc-quimica-proveta",
+   "texto": "Espete o lápis em pé.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Espete o lápis em pé."
+  },
+  {
+   "chave": "12a7e93815",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ponha o prato no sol.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ponha o prato no sol."
+  },
+  {
+   "chave": "e53387701c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Marque a sombra a cada hora.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Marque a sombra a cada hora."
+  },
+  {
+   "chave": "0565881c19",
+   "voz": "npc-quimica-proveta",
+   "texto": "A sombra anda pelo prato!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A sombra anda pelo prato!"
+  },
+  {
+   "chave": "8991b7e518",
+   "voz": "npc-quimica-proveta",
+   "texto": "A Terra gira o dia todo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A Terra gira o dia todo."
+  },
+  {
+   "chave": "c64222e117",
+   "voz": "npc-quimica-proveta",
+   "texto": "Por isso a sombra muda.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Por isso a sombra muda."
+  },
+  {
+   "chave": "d5ae79e81c",
+   "voz": "npc-quimica-proveta",
+   "texto": "O rubídio faz relógio exato.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O rubídio faz relógio exato."
+  },
+  {
+   "chave": "33a56d1316",
+   "voz": "npc-quimica-proveta",
+   "texto": "Uma lanterna de pilha.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Uma lanterna de pilha."
+  },
+  {
+   "chave": "7c57e00e18",
+   "voz": "npc-quimica-proveta",
+   "texto": "Uma parede bem clarinha.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Uma parede bem clarinha."
+  },
+  {
+   "chave": "6c2ddf8418",
+   "voz": "npc-quimica-proveta",
+   "texto": "Suas duas mãos espertas.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Suas duas mãos espertas."
+  },
+  {
+   "chave": "f8518df615",
+   "voz": "npc-quimica-proveta",
+   "texto": "O adulto apaga a luz.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O adulto apaga a luz."
+  },
+  {
+   "chave": "05aa69481c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Acenda a lanterna na parede.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Acenda a lanterna na parede."
+  },
+  {
+   "chave": "aaef42dd18",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ponha as mãos na frente.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ponha as mãos na frente."
+  },
+  {
+   "chave": "67391e971c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Faça um coelho com os dedos.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Faça um coelho com os dedos."
+  },
+  {
+   "chave": "c70701e619",
+   "voz": "npc-quimica-proveta",
+   "texto": "Agora conte uma história!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Agora conte uma história!"
+  },
+  {
+   "chave": "ef566c111d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Os bichos aparecem na parede!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Os bichos aparecem na parede!"
+  },
+  {
+   "chave": "3f65bdb417",
+   "voz": "npc-quimica-proveta",
+   "texto": "Sua mão bloqueia a luz.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Sua mão bloqueia a luz."
+  },
+  {
+   "chave": "8d1fe6091a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Atrás dela, fica a sombra.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Atrás dela, fica a sombra."
+  },
+  {
+   "chave": "2ac04c3f1c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Tinha tungstênio na lâmpada.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Tinha tungstênio na lâmpada."
+  },
+  {
+   "chave": "6f53e7ab14",
+   "voz": "npc-quimica-proveta",
+   "texto": "Um copo de plástico.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um copo de plástico."
+  },
+  {
+   "chave": "0aeb362014",
+   "voz": "npc-quimica-proveta",
+   "texto": "Um pouco de algodão.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um pouco de algodão."
+  },
+  {
+   "chave": "fd5a3fc314",
+   "voz": "npc-quimica-proveta",
+   "texto": "Uns grãos de feijão.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Uns grãos de feijão."
+  },
+  {
+   "chave": "724e252315",
+   "voz": "npc-quimica-proveta",
+   "texto": "Um pouquinho de água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um pouquinho de água."
+  },
+  {
+   "chave": "f7f1ad6218",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ponha o algodão no copo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ponha o algodão no copo."
+  },
+  {
+   "chave": "1cb42d8a19",
+   "voz": "npc-quimica-proveta",
+   "texto": "Molhe o algodão com água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Molhe o algodão com água."
+  },
+  {
+   "chave": "58e795bd1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Coloque os feijões em cima.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Coloque os feijões em cima."
+  },
+  {
+   "chave": "38cb92b11d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Deixe o copo perto da janela.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Deixe o copo perto da janela."
+  },
+  {
+   "chave": "dd9361bb18",
+   "voz": "npc-quimica-proveta",
+   "texto": "Molhe um pouco todo dia.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Molhe um pouco todo dia."
+  },
+  {
+   "chave": "5e46534f16",
+   "voz": "npc-quimica-proveta",
+   "texto": "Nasce um pé de feijão!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Nasce um pé de feijão!"
+  },
+  {
+   "chave": "e34d08cd16",
+   "voz": "npc-quimica-proveta",
+   "texto": "A semente bebe a água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A semente bebe a água."
+  },
+  {
+   "chave": "ebc0f03516",
+   "voz": "npc-quimica-proveta",
+   "texto": "A luz ajuda a crescer.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A luz ajuda a crescer."
+  },
+  {
+   "chave": "f0798ba51d",
+   "voz": "npc-quimica-proveta",
+   "texto": "A planta usa manganês também.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A planta usa manganês também."
+  },
+  {
+   "chave": "ce76120918",
+   "voz": "npc-quimica-proveta",
+   "texto": "Um copo grande com água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um copo grande com água."
+  },
+  {
+   "chave": "fd1185cb16",
+   "voz": "npc-quimica-proveta",
+   "texto": "Um ovo cru inteirinho.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um ovo cru inteirinho."
+  },
+  {
+   "chave": "6fe04f9117",
+   "voz": "npc-quimica-proveta",
+   "texto": "Muitas colheres de sal.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Muitas colheres de sal."
+  },
+  {
+   "chave": "478804821b",
+   "voz": "npc-quimica-proveta",
+   "texto": "O adulto põe o ovo na água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O adulto põe o ovo na água."
+  },
+  {
+   "chave": "8d9eaa9b1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Veja o ovo ir para o fundo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Veja o ovo ir para o fundo."
+  },
+  {
+   "chave": "ea29c19b17",
+   "voz": "npc-quimica-proveta",
+   "texto": "Tire o ovo com cuidado.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Tire o ovo com cuidado."
+  },
+  {
+   "chave": "f8b5f76c1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Misture muito sal na água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Misture muito sal na água."
+  },
+  {
+   "chave": "ca911c4615",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ponha o ovo de volta.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ponha o ovo de volta."
+  },
+  {
+   "chave": "624f3c7314",
+   "voz": "npc-quimica-proveta",
+   "texto": "O ovo sobe e flutua!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O ovo sobe e flutua!"
+  },
+  {
+   "chave": "5cc2e43b1d",
+   "voz": "npc-quimica-proveta",
+   "texto": "A água salgada é mais pesada.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A água salgada é mais pesada."
+  },
+  {
+   "chave": "0c8211251c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ela empurra o ovo para cima.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ela empurra o ovo para cima."
+  },
+  {
+   "chave": "7c4c3dfa17",
+   "voz": "npc-quimica-proveta",
+   "texto": "O mar também tem bromo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O mar também tem bromo."
+  },
+  {
+   "chave": "11b02fbe13",
+   "voz": "npc-quimica-proveta",
+   "texto": "Uma folha de papel.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Uma folha de papel."
+  },
+  {
+   "chave": "ddc3d7fc13",
+   "voz": "npc-quimica-proveta",
+   "texto": "Dois livros iguais.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Dois livros iguais."
+  },
+  {
+   "chave": "93e6956612",
+   "voz": "npc-quimica-proveta",
+   "texto": "Moedas para pesar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Moedas para pesar."
+  },
+  {
+   "chave": "7742ee0f1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ponha os livros separados.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ponha os livros separados."
+  },
+  {
+   "chave": "bfdd00b01c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Deite a folha lisa por cima.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Deite a folha lisa por cima."
+  },
+  {
+   "chave": "5b25558d19",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ponha moedas e veja cair.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ponha moedas e veja cair."
+  },
+  {
+   "chave": "6897f6a719",
+   "voz": "npc-quimica-proveta",
+   "texto": "Dobre a folha em sanfona.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Dobre a folha em sanfona."
+  },
+  {
+   "chave": "5440969218",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ponha de novo as moedas.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ponha de novo as moedas."
+  },
+  {
+   "chave": "fb78520a1c",
+   "voz": "npc-quimica-proveta",
+   "texto": "A sanfona aguenta as moedas!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A sanfona aguenta as moedas!"
+  },
+  {
+   "chave": "0a10dae51c",
+   "voz": "npc-quimica-proveta",
+   "texto": "As dobras deixam tudo forte.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "As dobras deixam tudo forte."
+  },
+  {
+   "chave": "6c481e2a1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Os porquinhos fariam assim!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Os porquinhos fariam assim!"
+  },
+  {
+   "chave": "84e1635c19",
+   "voz": "npc-quimica-proveta",
+   "texto": "O cromo evita a ferrugem.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O cromo evita a ferrugem."
+  },
+  {
+   "chave": "d8a6942b1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Uma caixa de sapato aberta.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Uma caixa de sapato aberta."
+  },
+  {
+   "chave": "47ce6ba11a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Elásticos finos e grossos.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Elásticos finos e grossos."
+  },
+  {
+   "chave": "7110161c1e",
+   "voz": "npc-quimica-proveta",
+   "texto": "Estique os elásticos na caixa.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Estique os elásticos na caixa."
+  },
+  {
+   "chave": "02db2daf14",
+   "voz": "npc-quimica-proveta",
+   "texto": "Puxe um de cada vez.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Puxe um de cada vez."
+  },
+  {
+   "chave": "d556cdb416",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ouça o som de cada um.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ouça o som de cada um."
+  },
+  {
+   "chave": "cf9fa32d1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Compare o fino e o grosso.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Compare o fino e o grosso."
+  },
+  {
+   "chave": "88e3eaf11e",
+   "voz": "npc-quimica-proveta",
+   "texto": "Cada elástico canta diferente!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Cada elástico canta diferente!"
+  },
+  {
+   "chave": "ab4c18751b",
+   "voz": "npc-quimica-proveta",
+   "texto": "O elástico treme e faz som.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O elástico treme e faz som."
+  },
+  {
+   "chave": "91c4a6e71b",
+   "voz": "npc-quimica-proveta",
+   "texto": "O fino treme mais depressa.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O fino treme mais depressa."
+  },
+  {
+   "chave": "8ce233f718",
+   "voz": "npc-quimica-proveta",
+   "texto": "Corda de aço tem níquel.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Corda de aço tem níquel."
+  },
+  {
+   "chave": "30b0c23b17",
+   "voz": "npc-quimica-proveta",
+   "texto": "Dois copos de plástico.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Dois copos de plástico."
+  },
+  {
+   "chave": "f1c34c7619",
+   "voz": "npc-quimica-proveta",
+   "texto": "Um barbante bem comprido.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um barbante bem comprido."
+  },
+  {
+   "chave": "39abe08816",
+   "voz": "npc-quimica-proveta",
+   "texto": "Um adulto para ajudar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um adulto para ajudar."
+  },
+  {
+   "chave": "63849be11c",
+   "voz": "npc-quimica-proveta",
+   "texto": "O adulto faz furo nos copos.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O adulto faz furo nos copos."
+  },
+  {
+   "chave": "d9274ba61d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Passe o barbante pelos furos.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Passe o barbante pelos furos."
+  },
+  {
+   "chave": "7d2b861c1d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Dê um nó dentro de cada copo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Dê um nó dentro de cada copo."
+  },
+  {
+   "chave": "bad9d17717",
+   "voz": "npc-quimica-proveta",
+   "texto": "Cada um segura um copo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Cada um segura um copo."
+  },
+  {
+   "chave": "533dadb418",
+   "voz": "npc-quimica-proveta",
+   "texto": "Estique e fale baixinho!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Estique e fale baixinho!"
+  },
+  {
+   "chave": "950aabbf1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "A voz chega do outro lado!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A voz chega do outro lado!"
+  },
+  {
+   "chave": "d7dca3201c",
+   "voz": "npc-quimica-proveta",
+   "texto": "A voz faz o barbante tremer.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A voz faz o barbante tremer."
+  },
+  {
+   "chave": "e22ccb3414",
+   "voz": "npc-quimica-proveta",
+   "texto": "O tremor leva o som.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O tremor leva o som."
+  },
+  {
+   "chave": "1cc2e5a21a",
+   "voz": "npc-quimica-proveta",
+   "texto": "O germânio ajudou o rádio.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O germânio ajudou o rádio."
+  },
+  {
+   "chave": "58616e3a15",
+   "voz": "npc-quimica-proveta",
+   "texto": "Água de repolho roxo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Água de repolho roxo."
+  },
+  {
+   "chave": "d483ec7519",
+   "voz": "npc-quimica-proveta",
+   "texto": "Três copos transparentes.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Três copos transparentes."
+  },
+  {
+   "chave": "372cd62f16",
+   "voz": "npc-quimica-proveta",
+   "texto": "Vinagre e bicarbonato.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Vinagre e bicarbonato."
+  },
+  {
+   "chave": "fbf602841d",
+   "voz": "npc-quimica-proveta",
+   "texto": "O adulto prepara a água roxa.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O adulto prepara a água roxa."
+  },
+  {
+   "chave": "dab655e21c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ponha um pouco em cada copo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ponha um pouco em cada copo."
+  },
+  {
+   "chave": "655913561b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Pingue vinagre no primeiro.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Pingue vinagre no primeiro."
+  },
+  {
+   "chave": "228cf5b41d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ponha bicarbonato no segundo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ponha bicarbonato no segundo."
+  },
+  {
+   "chave": "56f1bf5c1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Deixe o terceiro sem nada.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Deixe o terceiro sem nada."
+  },
+  {
+   "chave": "9054b54d1c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Aparecem rosa, roxo e verde!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Aparecem rosa, roxo e verde!"
+  },
+  {
+   "chave": "b366dfe419",
+   "voz": "npc-quimica-proveta",
+   "texto": "O repolho mostra o azedo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O repolho mostra o azedo."
+  },
+  {
+   "chave": "ccd8b8be1e",
+   "voz": "npc-quimica-proveta",
+   "texto": "Azedo rosa, bicarbonato verde.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Azedo rosa, bicarbonato verde."
+  },
+  {
+   "chave": "7235c39918",
+   "voz": "npc-quimica-proveta",
+   "texto": "O cobalto dá a cor azul.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O cobalto dá a cor azul."
+  },
+  {
+   "chave": "d1df714c1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Um saquinho plástico limpo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um saquinho plástico limpo."
+  },
+  {
+   "chave": "d78b628b11",
+   "voz": "npc-quimica-proveta",
+   "texto": "Uma gota de água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Uma gota de água."
+  },
+  {
+   "chave": "da4ddee616",
+   "voz": "npc-quimica-proveta",
+   "texto": "Um jornal ou um livro.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um jornal ou um livro."
+  },
+  {
+   "chave": "b6b310a91b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ponha o plástico no jornal.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ponha o plástico no jornal."
+  },
+  {
+   "chave": "2f454a3018",
+   "voz": "npc-quimica-proveta",
+   "texto": "Pingue uma gota em cima.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Pingue uma gota em cima."
+  },
+  {
+   "chave": "2412311019",
+   "voz": "npc-quimica-proveta",
+   "texto": "Olhe as letras pela gota.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Olhe as letras pela gota."
+  },
+  {
+   "chave": "2cbeb51a1d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Tente gotas de outro tamanho.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Tente gotas de outro tamanho."
+  },
+  {
+   "chave": "2cfde96218",
+   "voz": "npc-quimica-proveta",
+   "texto": "As letras ficam maiores!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "As letras ficam maiores!"
+  },
+  {
+   "chave": "0889bf121b",
+   "voz": "npc-quimica-proveta",
+   "texto": "A gota redonda curva a luz.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A gota redonda curva a luz."
+  },
+  {
+   "chave": "11c84cb61a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ela vira uma lupa pequena.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ela vira uma lupa pequena."
+  },
+  {
+   "chave": "7e8d6d5a1d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Lente de câmera tem lantânio.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Lente de câmera tem lantânio."
+  },
+  {
+   "chave": "6aef9deb1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Um cubo de gelo num prato.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um cubo de gelo num prato."
+  },
+  {
+   "chave": "2893e38416",
+   "voz": "npc-quimica-proveta",
+   "texto": "Um pedaço de barbante.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um pedaço de barbante."
+  },
+  {
+   "chave": "f13019d112",
+   "voz": "npc-quimica-proveta",
+   "texto": "Uma pitada de sal.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Uma pitada de sal."
+  },
+  {
+   "chave": "44b7b25b19",
+   "voz": "npc-quimica-proveta",
+   "texto": "Deite o barbante no gelo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Deite o barbante no gelo."
+  },
+  {
+   "chave": "1f51730f18",
+   "voz": "npc-quimica-proveta",
+   "texto": "Jogue sal por cima dele.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Jogue sal por cima dele."
+  },
+  {
+   "chave": "c4ae696a1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Espere contando até trinta.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Espere contando até trinta."
+  },
+  {
+   "chave": "c9bd780e18",
+   "voz": "npc-quimica-proveta",
+   "texto": "Puxe o barbante devagar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Puxe o barbante devagar."
+  },
+  {
+   "chave": "58baef5819",
+   "voz": "npc-quimica-proveta",
+   "texto": "O gelo sobe preso no fio!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O gelo sobe preso no fio!"
+  },
+  {
+   "chave": "e34f29621e",
+   "voz": "npc-quimica-proveta",
+   "texto": "O sal derrete um pouco o gelo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O sal derrete um pouco o gelo."
+  },
+  {
+   "chave": "708f04f31b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Depois a água gela de novo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Depois a água gela de novo."
+  },
+  {
+   "chave": "e821417917",
+   "voz": "npc-quimica-proveta",
+   "texto": "O gálio derrete na mão!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O gálio derrete na mão!"
+  },
+  {
+   "chave": "22ecfcdc18",
+   "voz": "npc-quimica-proveta",
+   "texto": "Papel celofane colorido.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Papel celofane colorido."
+  },
+  {
+   "chave": "27d946d314",
+   "voz": "npc-quimica-proveta",
+   "texto": "Um elástico pequeno.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um elástico pequeno."
+  },
+  {
+   "chave": "83bca3811e",
+   "voz": "npc-quimica-proveta",
+   "texto": "Cubra a lanterna com celofane.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Cubra a lanterna com celofane."
+  },
+  {
+   "chave": "7d5b70bc1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Apague a luz com o adulto.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Apague a luz com o adulto."
+  },
+  {
+   "chave": "0eae7ae818",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ilumine a parede branca.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ilumine a parede branca."
+  },
+  {
+   "chave": "f37a644a17",
+   "voz": "npc-quimica-proveta",
+   "texto": "Troque a cor e misture!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Troque a cor e misture!"
+  },
+  {
+   "chave": "a495d05912",
+   "voz": "npc-quimica-proveta",
+   "texto": "A luz muda de cor!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A luz muda de cor!"
+  },
+  {
+   "chave": "f2c74e081c",
+   "voz": "npc-quimica-proveta",
+   "texto": "O celofane só deixa uma cor.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O celofane só deixa uma cor."
+  },
+  {
+   "chave": "94def8e01b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Placa de luz tem gás nobre.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Placa de luz tem gás nobre."
+  },
+  {
+   "chave": "c407b90f1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "O criptônio é um gás nobre.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O criptônio é um gás nobre."
+  },
+  {
+   "chave": "d1b43bd71a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Dois cubos de gelo iguais.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Dois cubos de gelo iguais."
+  },
+  {
+   "chave": "adb4947c1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Papel preto e papel branco.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Papel preto e papel branco."
+  },
+  {
+   "chave": "e1761b001a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Um lugar com bastante sol.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um lugar com bastante sol."
+  },
+  {
+   "chave": "ef001bb317",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ponha os papéis no sol.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ponha os papéis no sol."
+  },
+  {
+   "chave": "79740c8616",
+   "voz": "npc-quimica-proveta",
+   "texto": "Um gelo em cada papel.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um gelo em cada papel."
+  },
+  {
+   "chave": "fabe86a418",
+   "voz": "npc-quimica-proveta",
+   "texto": "Espere e olhe com calma.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Espere e olhe com calma."
+  },
+  {
+   "chave": "ac8923011b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Qual gelo derrete primeiro?",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Qual gelo derrete primeiro?"
+  },
+  {
+   "chave": "8ff41b0c1e",
+   "voz": "npc-quimica-proveta",
+   "texto": "O gelo do preto derrete antes!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O gelo do preto derrete antes!"
+  },
+  {
+   "chave": "46415e321e",
+   "voz": "npc-quimica-proveta",
+   "texto": "O preto guarda o calor do sol.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O preto guarda o calor do sol."
+  },
+  {
+   "chave": "5f3dcd2517",
+   "voz": "npc-quimica-proveta",
+   "texto": "O branco devolve a luz.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O branco devolve a luz."
+  },
+  {
+   "chave": "d20ce42e1c",
+   "voz": "npc-quimica-proveta",
+   "texto": "O selênio ajuda a ver a luz.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O selênio ajuda a ver a luz."
+  },
+  {
+   "chave": "cd0c76781b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Um ímã forte, com o adulto.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um ímã forte, com o adulto."
+  },
+  {
+   "chave": "e49c220517",
+   "voz": "npc-quimica-proveta",
+   "texto": "Um clipe de metal reto.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um clipe de metal reto."
+  },
+  {
+   "chave": "ef390b5d1e",
+   "voz": "npc-quimica-proveta",
+   "texto": "Uma tampinha e um pote d’água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Uma tampinha e um pote d’água."
+  },
+  {
+   "chave": "c47a61a71b",
+   "voz": "npc-quimica-proveta",
+   "texto": "O adulto endireita o clipe.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O adulto endireita o clipe."
+  },
+  {
+   "chave": "f36a619316",
+   "voz": "npc-quimica-proveta",
+   "texto": "O adulto segura o ímã.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O adulto segura o ímã."
+  },
+  {
+   "chave": "27c1c4671d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Esfregue o clipe vinte vezes.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Esfregue o clipe vinte vezes."
+  },
+  {
+   "chave": "315c2f3418",
+   "voz": "npc-quimica-proveta",
+   "texto": "Sempre no mesmo sentido.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Sempre no mesmo sentido."
+  },
+  {
+   "chave": "3beab0b51a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ponha o clipe na tampinha.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ponha o clipe na tampinha."
+  },
+  {
+   "chave": "ac0b5eab17",
+   "voz": "npc-quimica-proveta",
+   "texto": "Deixe a tampinha boiar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Deixe a tampinha boiar."
+  },
+  {
+   "chave": "5a6f2ddb1c",
+   "voz": "npc-quimica-proveta",
+   "texto": "O clipe aponta para o norte!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O clipe aponta para o norte!"
+  },
+  {
+   "chave": "bb2312b615",
+   "voz": "npc-quimica-proveta",
+   "texto": "O clipe virou um ímã.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O clipe virou um ímã."
+  },
+  {
+   "chave": "9c661bed18",
+   "voz": "npc-quimica-proveta",
+   "texto": "A Terra também é um ímã.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A Terra também é um ímã."
+  },
+  {
+   "chave": "110f962d17",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ímã forte tem neodímio.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ímã forte tem neodímio."
+  },
+  {
+   "chave": "f71aafa01b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Água oxigenada, com adulto.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Água oxigenada, com adulto."
+  },
+  {
+   "chave": "59a79d7d19",
+   "voz": "npc-quimica-proveta",
+   "texto": "Uma fatia de batata crua.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Uma fatia de batata crua."
+  },
+  {
+   "chave": "f77b622512",
+   "voz": "npc-quimica-proveta",
+   "texto": "Um pratinho fundo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um pratinho fundo."
+  },
+  {
+   "chave": "ca0f1ab118",
+   "voz": "npc-quimica-proveta",
+   "texto": "O adulto corta a batata.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O adulto corta a batata."
+  },
+  {
+   "chave": "c2478b3c1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ponha a fatia no pratinho.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ponha a fatia no pratinho."
+  },
+  {
+   "chave": "d83c77a219",
+   "voz": "npc-quimica-proveta",
+   "texto": "Só o adulto pinga a água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Só o adulto pinga a água."
+  },
+  {
+   "chave": "1a1936f91a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Olhe com calma, sem tocar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Olhe com calma, sem tocar."
+  },
+  {
+   "chave": "945baae11a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Aparece uma espuma branca!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Aparece uma espuma branca!"
+  },
+  {
+   "chave": "01797a9a1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "A batata quebra essa água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A batata quebra essa água."
+  },
+  {
+   "chave": "ca35f3721a",
+   "voz": "npc-quimica-proveta",
+   "texto": "As bolhas são de oxigênio.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "As bolhas são de oxigênio."
+  },
+  {
+   "chave": "653f4c6e1d",
+   "voz": "npc-quimica-proveta",
+   "texto": "A platina faz o mesmo truque!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A platina faz o mesmo truque!"
+  },
+  {
+   "chave": "f58d8f3c16",
+   "voz": "npc-quimica-proveta",
+   "texto": "Um copo de água cheio.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um copo de água cheio."
+  },
+  {
+   "chave": "4a09e1b619",
+   "voz": "npc-quimica-proveta",
+   "texto": "Uma folha branca no chão.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Uma folha branca no chão."
+  },
+  {
+   "chave": "ea1e611d13",
+   "voz": "npc-quimica-proveta",
+   "texto": "Uma janela com sol.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Uma janela com sol."
+  },
+  {
+   "chave": "33607b721d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ponha o copo perto da janela.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ponha o copo perto da janela."
+  },
+  {
+   "chave": "ddcccb321d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Deixe o sol passar pela água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Deixe o sol passar pela água."
+  },
+  {
+   "chave": "dc66ab7816",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ponha a folha embaixo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ponha a folha embaixo."
+  },
+  {
+   "chave": "00f7dde517",
+   "voz": "npc-quimica-proveta",
+   "texto": "Mexa a folha até achar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Mexa a folha até achar."
+  },
+  {
+   "chave": "6bb6221c1e",
+   "voz": "npc-quimica-proveta",
+   "texto": "Um arco-íris aparece na folha!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um arco-íris aparece na folha!"
+  },
+  {
+   "chave": "3c697dfd1e",
+   "voz": "npc-quimica-proveta",
+   "texto": "A água separa as cores da luz.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A água separa as cores da luz."
+  },
+  {
+   "chave": "ef2e0c6218",
+   "voz": "npc-quimica-proveta",
+   "texto": "O estrôncio pinta fogos.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O estrôncio pinta fogos."
+  },
+  {
+   "chave": "131410381c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ele dá o vermelho nos fogos.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele dá o vermelho nos fogos."
+  },
+  {
+   "chave": "16bcaf1516",
+   "voz": "npc-quimica-proveta",
+   "texto": "Um lápis bem apontado.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um lápis bem apontado."
+  },
+  {
+   "chave": "7c2fc8131a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Uma folha de papel branca.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Uma folha de papel branca."
+  },
+  {
+   "chave": "8a34d0a017",
+   "voz": "npc-quimica-proveta",
+   "texto": "Um paninho para limpar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um paninho para limpar."
+  },
+  {
+   "chave": "4b621a481d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Pinte um quadrado bem escuro.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Pinte um quadrado bem escuro."
+  },
+  {
+   "chave": "d811e9a71c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Esfregue o dedo no quadrado.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Esfregue o dedo no quadrado."
+  },
+  {
+   "chave": "6e041cda19",
+   "voz": "npc-quimica-proveta",
+   "texto": "Veja o dedo cinza e liso.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Veja o dedo cinza e liso."
+  },
+  {
+   "chave": "313cd7e717",
+   "voz": "npc-quimica-proveta",
+   "texto": "Lave as mãos com sabão.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Lave as mãos com sabão."
+  },
+  {
+   "chave": "1a6261c71c",
+   "voz": "npc-quimica-proveta",
+   "texto": "O dedo fica cinza brilhante!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O dedo fica cinza brilhante!"
+  },
+  {
+   "chave": "b219322814",
+   "voz": "npc-quimica-proveta",
+   "texto": "O lápis tem grafite.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O lápis tem grafite."
+  },
+  {
+   "chave": "6d014f321d",
+   "voz": "npc-quimica-proveta",
+   "texto": "O grafite é feito de carbono.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O grafite é feito de carbono."
+  },
+  {
+   "chave": "68886ef71b",
+   "voz": "npc-quimica-proveta",
+   "texto": "O nome chumbo é só costume.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O nome chumbo é só costume."
+  },
+  {
+   "chave": "e5ffef5e1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Garrafa plástica com água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Garrafa plástica com água."
+  },
+  {
+   "chave": "6e46e25916",
+   "voz": "npc-quimica-proveta",
+   "texto": "Umas gotas de corante.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Umas gotas de corante."
+  },
+  {
+   "chave": "7127e8a915",
+   "voz": "npc-quimica-proveta",
+   "texto": "Um canudo e massinha.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um canudo e massinha."
+  },
+  {
+   "chave": "be18b1aa19",
+   "voz": "npc-quimica-proveta",
+   "texto": "Pinte a água com corante.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Pinte a água com corante."
+  },
+  {
+   "chave": "c2f9c6f41a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ponha o canudo na garrafa.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ponha o canudo na garrafa."
+  },
+  {
+   "chave": "064cdfb81a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Feche a boca com massinha.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Feche a boca com massinha."
+  },
+  {
+   "chave": "32c72b6417",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ponha a garrafa no sol.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ponha a garrafa no sol."
+  },
+  {
+   "chave": "a8ddeb5d1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Olhe o canudo com atenção.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Olhe o canudo com atenção."
+  },
+  {
+   "chave": "8d1071c918",
+   "voz": "npc-quimica-proveta",
+   "texto": "A água sobe pelo canudo!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A água sobe pelo canudo!"
+  },
+  {
+   "chave": "626946951a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Quente, a água ocupa mais.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Quente, a água ocupa mais."
+  },
+  {
+   "chave": "e01845c018",
+   "voz": "npc-quimica-proveta",
+   "texto": "O antigo usava mercúrio.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O antigo usava mercúrio."
+  },
+  {
+   "chave": "31b742291a",
+   "voz": "npc-quimica-proveta",
+   "texto": "O nosso usa água colorida.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O nosso usa água colorida."
+  },
+  {
+   "chave": "cfcf53b619",
+   "voz": "npc-quimica-proveta",
+   "texto": "Um prato fundo com leite.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um prato fundo com leite."
+  },
+  {
+   "chave": "5a14f5441a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Gotas de corante colorido.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Gotas de corante colorido."
+  },
+  {
+   "chave": "c51eaa6d19",
+   "voz": "npc-quimica-proveta",
+   "texto": "Detergente e um cotonete.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Detergente e um cotonete."
+  },
+  {
+   "chave": "a87850a819",
+   "voz": "npc-quimica-proveta",
+   "texto": "Pingue as cores no leite.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Pingue as cores no leite."
+  },
+  {
+   "chave": "f980225a1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Molhe o cotonete no sabão.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Molhe o cotonete no sabão."
+  },
+  {
+   "chave": "0d7b7c3a19",
+   "voz": "npc-quimica-proveta",
+   "texto": "Encoste no meio do leite.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Encoste no meio do leite."
+  },
+  {
+   "chave": "6135497a19",
+   "voz": "npc-quimica-proveta",
+   "texto": "Fique em silêncio e olhe.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Fique em silêncio e olhe."
+  },
+  {
+   "chave": "95c5a63a19",
+   "voz": "npc-quimica-proveta",
+   "texto": "As cores dançam no prato!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "As cores dançam no prato!"
+  },
+  {
+   "chave": "134daa601a",
+   "voz": "npc-quimica-proveta",
+   "texto": "O sabão empurra a gordura.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O sabão empurra a gordura."
+  },
+  {
+   "chave": "57d3a0181d",
+   "voz": "npc-quimica-proveta",
+   "texto": "O bário dá o verde dos fogos.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O bário dá o verde dos fogos."
+  },
+  {
+   "chave": "d9d6e1511e",
+   "voz": "npc-quimica-proveta",
+   "texto": "Aqui as cores dançam no leite!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Aqui as cores dançam no leite!"
+  },
+  {
+   "chave": "f9487db818",
+   "voz": "npc-quimica-proveta",
+   "texto": "Uma flor branca de talo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Uma flor branca de talo."
+  },
+  {
+   "chave": "b4f7135d1d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Um copo com um pouco de água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um copo com um pouco de água."
+  },
+  {
+   "chave": "c05608731a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Bastante corante colorido.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Bastante corante colorido."
+  },
+  {
+   "chave": "c52644cb1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Misture o corante na água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Misture o corante na água."
+  },
+  {
+   "chave": "75f84b6016",
+   "voz": "npc-quimica-proveta",
+   "texto": "O adulto apara o talo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O adulto apara o talo."
+  },
+  {
+   "chave": "ea17aa9615",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ponha a flor no copo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ponha a flor no copo."
+  },
+  {
+   "chave": "f2ae66bd19",
+   "voz": "npc-quimica-proveta",
+   "texto": "Espere um dia inteirinho.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Espere um dia inteirinho."
+  },
+  {
+   "chave": "779cf5d916",
+   "voz": "npc-quimica-proveta",
+   "texto": "As pétalas ganham cor!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "As pétalas ganham cor!"
+  },
+  {
+   "chave": "9c6ce3171d",
+   "voz": "npc-quimica-proveta",
+   "texto": "A flor bebe a água pelo talo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A flor bebe a água pelo talo."
+  },
+  {
+   "chave": "ff46c23c15",
+   "voz": "npc-quimica-proveta",
+   "texto": "O corante sobe junto.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O corante sobe junto."
+  },
+  {
+   "chave": "2f80f1941a",
+   "voz": "npc-quimica-proveta",
+   "texto": "A planta usa o molibdênio.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A planta usa o molibdênio."
+  },
+  {
+   "chave": "06ee8cdb18",
+   "voz": "npc-quimica-proveta",
+   "texto": "Um balão de festa cheio.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um balão de festa cheio."
+  },
+  {
+   "chave": "4e29147b18",
+   "voz": "npc-quimica-proveta",
+   "texto": "Seu cabelo seco e solto.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Seu cabelo seco e solto."
+  },
+  {
+   "chave": "3927fad517",
+   "voz": "npc-quimica-proveta",
+   "texto": "Papel picado bem miúdo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Papel picado bem miúdo."
+  },
+  {
+   "chave": "4eaab37d1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Esfregue o balão no cabelo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Esfregue o balão no cabelo."
+  },
+  {
+   "chave": "c4abbb9d1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Veja o cabelo ficar em pé.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Veja o cabelo ficar em pé."
+  },
+  {
+   "chave": "970186d31c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Leve o balão perto do papel.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Leve o balão perto do papel."
+  },
+  {
+   "chave": "685e774f18",
+   "voz": "npc-quimica-proveta",
+   "texto": "Grude o balão na parede.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Grude o balão na parede."
+  },
+  {
+   "chave": "fa3aa43416",
+   "voz": "npc-quimica-proveta",
+   "texto": "O papel pula no balão!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O papel pula no balão!"
+  },
+  {
+   "chave": "da428b9e18",
+   "voz": "npc-quimica-proveta",
+   "texto": "O balão ganha uma carga.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O balão ganha uma carga."
+  },
+  {
+   "chave": "e0049bcb19",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ela puxa as coisas leves.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ela puxa as coisas leves."
+  },
+  {
+   "chave": "6a75bc421b",
+   "voz": "npc-quimica-proveta",
+   "texto": "O xenônio brilha em faróis.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O xenônio brilha em faróis."
+  },
+  {
+   "chave": "17fda6ce17",
+   "voz": "npc-quimica-proveta",
+   "texto": "Água morna da torneira.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Água morna da torneira."
+  },
+  {
+   "chave": "08c7f45f17",
+   "voz": "npc-quimica-proveta",
+   "texto": "Um pires e um barbante.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um pires e um barbante."
+  },
+  {
+   "chave": "1b79df851a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Misture sal na água morna.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Misture sal na água morna."
+  },
+  {
+   "chave": "fe9b6c6017",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ponha até o sal sobrar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ponha até o sal sobrar."
+  },
+  {
+   "chave": "26deb34619",
+   "voz": "npc-quimica-proveta",
+   "texto": "Molhe o barbante na água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Molhe o barbante na água."
+  },
+  {
+   "chave": "e3f4d45e18",
+   "voz": "npc-quimica-proveta",
+   "texto": "Deixe no pires uns dias.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Deixe no pires uns dias."
+  },
+  {
+   "chave": "512e3ee71c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Crescem cristais brilhantes!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Crescem cristais brilhantes!"
+  },
+  {
+   "chave": "470f9d3d18",
+   "voz": "npc-quimica-proveta",
+   "texto": "A água vai embora no ar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A água vai embora no ar."
+  },
+  {
+   "chave": "d5ab384e1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "O sal fica e faz cristais.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O sal fica e faz cristais."
+  },
+  {
+   "chave": "b2a6d3411e",
+   "voz": "npc-quimica-proveta",
+   "texto": "O bismuto faz cristais lindos!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O bismuto faz cristais lindos!"
   },
   {
    "chave": "9e4b8c801d",
@@ -32729,6 +38023,78 @@
    "fala": "O giz da lousa tem cálcio."
   },
   {
+   "chave": "d0ff28691a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está em aviões e foguetes.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está em aviões e foguetes."
+  },
+  {
+   "chave": "540dff5b1e",
+   "voz": "npc-quimica-proveta",
+   "texto": "É forte e mais leve que o aço.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "É forte e mais leve que o aço."
+  },
+  {
+   "chave": "b6fe446d1d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Também faz bicicletas fortes.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Também faz bicicletas fortes."
+  },
+  {
+   "chave": "1972aa8c1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Brilha na torneira da pia.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Brilha na torneira da pia."
+  },
+  {
+   "chave": "9204c7e41c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Deixa o metal bem brilhante.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Deixa o metal bem brilhante."
+  },
+  {
+   "chave": "87d533741d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ajuda o aço a não enferrujar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ajuda o aço a não enferrujar."
+  },
+  {
+   "chave": "a3d161c81b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está no feijão e nas nozes.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está no feijão e nas nozes."
+  },
+  {
+   "chave": "c1eb22b317",
+   "voz": "npc-quimica-proveta",
+   "texto": "Deixa o aço mais forte.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Deixa o aço mais forte."
+  },
+  {
    "chave": "df4c60791a",
    "voz": "npc-quimica-proveta",
    "texto": "Está no feijão e no prego.",
@@ -32765,6 +38131,60 @@
    "fala": "O ímã puxa o ferro."
   },
   {
+   "chave": "da030d8616",
+   "voz": "npc-quimica-proveta",
+   "texto": "Pinta o vidro de azul.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Pinta o vidro de azul."
+  },
+  {
+   "chave": "06c932af16",
+   "voz": "npc-quimica-proveta",
+   "texto": "Existe o azul-cobalto!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Existe o azul-cobalto!"
+  },
+  {
+   "chave": "8a7284ab18",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está na vitamina B doze.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está na vitamina B doze."
+  },
+  {
+   "chave": "69eb292b1c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está nas cordas da guitarra.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está nas cordas da guitarra."
+  },
+  {
+   "chave": "95eab06817",
+   "voz": "npc-quimica-proveta",
+   "texto": "Também está nas moedas.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Também está nas moedas."
+  },
+  {
+   "chave": "d7cefdf311",
+   "voz": "npc-quimica-proveta",
+   "texto": "O ímã gosta dele!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O ímã gosta dele!"
+  },
+  {
    "chave": "e10bd1101e",
    "voz": "npc-quimica-proveta",
    "texto": "Fica nos fios de eletricidade.",
@@ -32792,6 +38212,240 @@
    "fala": "Leva a eletricidade muito bem."
   },
   {
+   "chave": "7247f8fa17",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está no protetor solar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está no protetor solar."
+  },
+  {
+   "chave": "3bc2111a19",
+   "voz": "npc-quimica-proveta",
+   "texto": "Com limão, faz uma pilha!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Com limão, faz uma pilha!"
+  },
+  {
+   "chave": "d0fbeb631c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Protege o ferro da ferrugem.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Protege o ferro da ferrugem."
+  },
+  {
+   "chave": "6ce502fb1c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está nas luzinhas coloridas.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está nas luzinhas coloridas."
+  },
+  {
+   "chave": "f399efe218",
+   "voz": "npc-quimica-proveta",
+   "texto": "Derrete no calor da mão!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Derrete no calor da mão!"
+  },
+  {
+   "chave": "a798ec0419",
+   "voz": "npc-quimica-proveta",
+   "texto": "É um metal bem diferente.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "É um metal bem diferente."
+  },
+  {
+   "chave": "c69692c21a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está nos fios de internet.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está nos fios de internet."
+  },
+  {
+   "chave": "a4b9fb711b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ajuda a levar a luz no fio.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ajuda a levar a luz no fio."
+  },
+  {
+   "chave": "9497c0fb19",
+   "voz": "npc-quimica-proveta",
+   "texto": "É um semimetal brilhante.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "É um semimetal brilhante."
+  },
+  {
+   "chave": "51eb939419",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está na castanha-do-pará.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está na castanha-do-pará."
+  },
+  {
+   "chave": "4f2fbef514",
+   "voz": "npc-quimica-proveta",
+   "texto": "Gosta da luz do Sol.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Gosta da luz do Sol."
+  },
+  {
+   "chave": "827c5bc912",
+   "voz": "npc-quimica-proveta",
+   "texto": "O nome vem da Lua.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O nome vem da Lua."
+  },
+  {
+   "chave": "b3d153e914",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está na água do mar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está na água do mar."
+  },
+  {
+   "chave": "5146f8ec1d",
+   "voz": "npc-quimica-proveta",
+   "texto": "É um líquido cor de ferrugem.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "É um líquido cor de ferrugem."
+  },
+  {
+   "chave": "fc07795a18",
+   "voz": "npc-quimica-proveta",
+   "texto": "É para olhar, não mexer.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "É para olhar, não mexer."
+  },
+  {
+   "chave": "82770b8419",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está em lanternas fortes.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está em lanternas fortes."
+  },
+  {
+   "chave": "e85874151d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Brilha com luz esbranquiçada.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Brilha com luz esbranquiçada."
+  },
+  {
+   "chave": "bf9c76271c",
+   "voz": "npc-quimica-proveta",
+   "texto": "O nome quer dizer escondido.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O nome quer dizer escondido."
+  },
+  {
+   "chave": "5b113d431c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está em relógios bem certos.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está em relógios bem certos."
+  },
+  {
+   "chave": "dce037f917",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ajuda a contar o tempo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ajuda a contar o tempo."
+  },
+  {
+   "chave": "0fbf23dd18",
+   "voz": "npc-quimica-proveta",
+   "texto": "Pinta fogos de vermelho.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Pinta fogos de vermelho."
+  },
+  {
+   "chave": "339f70731b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Deixa o céu cor de morango.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Deixa o céu cor de morango."
+  },
+  {
+   "chave": "9e1b12ee17",
+   "voz": "npc-quimica-proveta",
+   "texto": "O nome vem de uma vila.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O nome vem de uma vila."
+  },
+  {
+   "chave": "a9cfcfa31d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está no feijão e na lentilha.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está no feijão e na lentilha."
+  },
+  {
+   "chave": "11569e5216",
+   "voz": "npc-quimica-proveta",
+   "texto": "O feijão precisa dele.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O feijão precisa dele."
+  },
+  {
+   "chave": "53b5d2e515",
+   "voz": "npc-quimica-proveta",
+   "texto": "Deixa o aço bem duro.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Deixa o aço bem duro."
+  },
+  {
    "chave": "f2d103951b",
    "voz": "npc-quimica-proveta",
    "texto": "Está em colares e talheres.",
@@ -32817,6 +38471,222 @@
     "interior-quimica"
    ],
    "fala": "Com o tempo, ela escurece."
+  },
+  {
+   "chave": "74c70c1419",
+   "voz": "npc-quimica-proveta",
+   "texto": "Cobre as latas de comida.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Cobre as latas de comida."
+  },
+  {
+   "chave": "40bfc77a1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "A lata faz um tambor legal.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A lata faz um tambor legal."
+  },
+  {
+   "chave": "c4a45fa518",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ele não enferruja fácil.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele não enferruja fácil."
+  },
+  {
+   "chave": "11f40c5b1c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Com amido, fica azul-escuro!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Com amido, fica azul-escuro!"
+  },
+  {
+   "chave": "620edea918",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ajuda o corpo a crescer.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ajuda o corpo a crescer."
+  },
+  {
+   "chave": "b48ebdfe1e",
+   "voz": "npc-quimica-proveta",
+   "texto": "Puro, é para olhar, não mexer.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Puro, é para olhar, não mexer."
+  },
+  {
+   "chave": "9a2329bd18",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está em faróis de carro.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está em faróis de carro."
+  },
+  {
+   "chave": "47ef307617",
+   "voz": "npc-quimica-proveta",
+   "texto": "Brilha com luz azulada.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Brilha com luz azulada."
+  },
+  {
+   "chave": "3081a19f1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "O nome quer dizer estranho.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O nome quer dizer estranho."
+  },
+  {
+   "chave": "238423b915",
+   "voz": "npc-quimica-proveta",
+   "texto": "Pinta fogos de verde.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Pinta fogos de verde."
+  },
+  {
+   "chave": "75554b751d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Aparece no raio-X da barriga.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Aparece no raio-X da barriga."
+  },
+  {
+   "chave": "7f3d7eb519",
+   "voz": "npc-quimica-proveta",
+   "texto": "O nome quer dizer pesado.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O nome quer dizer pesado."
+  },
+  {
+   "chave": "a9973a031a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está nas lentes de câmera.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está nas lentes de câmera."
+  },
+  {
+   "chave": "8b3c178119",
+   "voz": "npc-quimica-proveta",
+   "texto": "Deixa a lente fina e boa.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Deixa a lente fina e boa."
+  },
+  {
+   "chave": "631ecc3d1c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Abre a fila dos lantanídeos.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Abre a fila dos lantanídeos."
+  },
+  {
+   "chave": "70bc6ee018",
+   "voz": "npc-quimica-proveta",
+   "texto": "Faz os ímãs mais fortes.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Faz os ímãs mais fortes."
+  },
+  {
+   "chave": "3249c8a717",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está no fone de ouvido.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está no fone de ouvido."
+  },
+  {
+   "chave": "2d50ad4c1c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ímã pequeno não vai na boca.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ímã pequeno não vai na boca."
+  },
+  {
+   "chave": "192591bd1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Brilhava na lâmpada antiga.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Brilhava na lâmpada antiga."
+  },
+  {
+   "chave": "2ae08e0e18",
+   "voz": "npc-quimica-proveta",
+   "texto": "Aguenta um calor enorme.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Aguenta um calor enorme."
+  },
+  {
+   "chave": "75f768231b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Era o fiozinho que acendia.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Era o fiozinho que acendia."
+  },
+  {
+   "chave": "c32e37fd19",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está em joias brilhantes.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está em joias brilhantes."
+  },
+  {
+   "chave": "2d7d905219",
+   "voz": "npc-quimica-proveta",
+   "texto": "Não escurece com o tempo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Não escurece com o tempo."
+  },
+  {
+   "chave": "9da03dec1d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ajuda outras coisas a reagir.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ajuda outras coisas a reagir."
   },
   {
    "chave": "603b10a117",
@@ -32853,6 +38723,78 @@
     "interior-quimica"
    ],
    "fala": "Vira uma folha bem fininha."
+  },
+  {
+   "chave": "b3cbacde1c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Estava no termômetro antigo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Estava no termômetro antigo."
+  },
+  {
+   "chave": "c15f26ce13",
+   "voz": "npc-quimica-proveta",
+   "texto": "É um metal líquido!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "É um metal líquido!"
+  },
+  {
+   "chave": "1bad54b81a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está em baterias de carro.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está em baterias de carro."
+  },
+  {
+   "chave": "68d88c9917",
+   "voz": "npc-quimica-proveta",
+   "texto": "O lápis não tem chumbo!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O lápis não tem chumbo!"
+  },
+  {
+   "chave": "ef8180aa13",
+   "voz": "npc-quimica-proveta",
+   "texto": "É pesado e molinho.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "É pesado e molinho."
+  },
+  {
+   "chave": "338e83cb1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Está em remédio de barriga.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Está em remédio de barriga."
+  },
+  {
+   "chave": "fad700901a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Faz cristais de arco-íris!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Faz cristais de arco-íris!"
+  },
+  {
+   "chave": "26bdb72e1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Seus cristais têm degraus.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Seus cristais têm degraus."
   },
   {
    "chave": "0d22c8ea1b",

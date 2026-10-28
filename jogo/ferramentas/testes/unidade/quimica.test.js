@@ -32,14 +32,20 @@ const ids = (l) => l.map((x) => x.id);
 const letras = (v) => v.replace(/[«»]/g, '').replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}\u{200D}]/gu, '').trim().length;
 const EFEITOS = ['explosao', 'vulcao', 'cor', 'espuma-gigante', 'dissolver', 'camadas', 'gotas', 'redemoinho', 'bolhas', 'precipitado', 'deposito', 'efervescencia', 'gases'];
 
-test('quimica: catálogo ampliado (21 receitas, 24 cartões, 118 casas, 6 lições, 8 lâminas)', () => {
+test('quimica: catálogo ampliado (21 receitas, 24 + 25 cartões, 118 casas, 6 lições, 8 lâminas)', () => {
   const Q = carregar().Quimica;
   igual(ids(Q.receitas()), ['pof', 'vulcao', 'pocao-rosa', 'pocao-verde', 'elefante', 'agua-do-mar',
     'camadas', 'chuva-de-cores', 'leite-magico', 'bolhas', 'vermelho-ferrico', 'amido-azul',
     'sal-azul', 'sal-magnesio', 'neve-calcario', 'citrico-bolhas', 'acucar-agua', 'cobre-novo',
     'mistura-ar', 'gases-estrelas', 'agua-gas']);
   igual(Q.receitas().map((r) => r.ordem), Array.from({ length: 21 }, (_, i) => i + 1));
-  igual(Q.elementos().map((e) => e.z), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 26, 29, 47, 79]);
+  // 24 cartões sempre abertos e os 25 do prêmio da trilha perfeita (quarto-bimestre.md §14.4), cada um com a sua sala
+  igual(Q.elementos().filter((e) => !e.trilha).map((e) => e.z), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 26, 29, 47, 79]);
+  const TRILHA = { 30: 'lp10a1', 50: 'lp10a2', 53: 'lp10a3', 22: 'lp10a4', 37: 'lp10a5', 74: 'lp10a6', 25: 'lp10a7', 35: 'lp10t1',
+    24: 'lp10t2', 28: 'lp11a1', 32: 'lp11a2', 27: 'lp11a3', 57: 'lp11a4', 31: 'lp11a5', 36: 'lp11a6', 34: 'lp11t1', 60: 'lp11t2',
+    78: 'lp12a1', 38: 'lp12a2', 82: 'lp12a3', 80: 'lp12a4', 56: 'lp12a5', 42: 'lp12a6', 54: 'lp12t1', 83: 'lp12t2' };
+  igual(Object.fromEntries(Q.elementos().filter((e) => e.trilha).map((e) => [e.z, e.trilha])), TRILHA);
+  assert.strictEqual(Q.elementos().length, 49);
   assert.strictEqual(Q.tabela().length, 118);
   igual(ids(Q.licoes().sort((a, b) => a.ordem - b.ordem)), ['atomos', 'elemento', 'moleculas', 'estados', 'acidos-bases', 'mistura-reacao']);
   igual(ids(Q.laminas()), ['sal', 'acucar', 'folha', 'cebola', 'polen', 'areia', 'algodao', 'neve']);

@@ -21,6 +21,10 @@ Reino.EVENTOS = {
      depois da Aparência), atividades/provas.js, personagens/npcs-conversa.js.
      Ouve: motor/main.js (HUD e redesenho), motor/interiores-cena.js (redesenha o fundo do interior). */
   MAPA_MUDOU: 'mapaMudou',
+  /* Uma sala virou trilha perfeita (⭐ em todas as etapas; docs/contratos/quarto-bimestre.md §14) e os 3 prêmios
+     foram entregues. Carga: { sala, materia } (ids). Emite: sistemas/trilhas.js (P.conferirTrilhas).
+     Ouve: atividades/missao-etapas.js (festa do prêmio), interiores/portugues/lp-tesouros.js (pedestal aceso). */
+  TRILHA_PERFEITA: 'trilhaPerfeita',
   /* Começou (true) ou terminou (false) a transição em íris. Carga: boolean.
      Emite: motor/transicao.js. Ouve: ui/hud.js (botão das fotos). */
   TRANSICAO: 'transicao',

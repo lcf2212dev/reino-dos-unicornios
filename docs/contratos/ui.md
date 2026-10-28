@@ -386,6 +386,8 @@ Adulto e criança diferem ≥ 4 px. Peça nova entra na faixa do papel dela; pap
    - `armar-encher` (`ui-base.css`): barra de preenchimento em `scaleX`, dura `ARMAR_MS`;
    - `.balao-respira` (Ritual da Calma, `ui-prova.css`): cresce e encolhe contínuo, de propósito, no ritmo da
      respiração (3,1 s);
+   - `.respiro-circulo` (Cantinho do Respiro, `ui-respiro.css`): cresce e encolhe na respiração guiada, 4 s por fase
+     (`ease-in-out`, presa a `FASE_MS` de `interiores/portugues/lp-respiro.js`);
    - confete e festa: duração da escala de festa (§10.16);
    - zoom da abertura (`ui-abertura.css`): `--entrar-ms` com `cubic-bezier`, casado com `Reino.config.abertura`;
    - duração presa a um timer do JS: `armar-encher` (`ui-base.css`, 1,1 s = `ARMAR_MS` de `ui/base.js`) e o

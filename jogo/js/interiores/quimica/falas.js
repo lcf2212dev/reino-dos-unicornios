@@ -31,5 +31,7 @@ Reino.falasDoPredio('quimica', {
     'atomo': ['Um modelo de átomo!', 'Os elétrons giram em volta.'],
     'agua': ['A molécula da água!', 'Tem dois hidrogênios.', 'E um oxigênio no meio!'],
     'estados': ['Sólido, líquido e gás!', 'São os estados da matéria.'],
+    // a estante do álbum Experiências do Reino (prêmio da trilha perfeita)
+    'experiencias': ['As Experiências do Reino!', 'Cartas para fazer em casa.'],
   },
 });

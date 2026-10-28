@@ -1,9 +1,11 @@
 // Aceite do 4º bimestre (Língua Portuguesa), parte 3: salas inteiras jogadas pela interface, como a criança joga. Na Casa
-// das Palavras, toca a estação e o "Ok!" do balão; intro ("Começar"), cada carta do resumo ("Continuar →"), cada questão
-// respondida só com toques e digitação na tela, a tabela e o desenho também (prancheta: cor, ferramenta, ponto e
-// arraste), com calma (espera o tempo de leitura antes do "Conferir"), "Continuar" e "Terminar a sala"; no fim, a sala
-// conta como no 3º bimestre (P.concluirSala): o dinheiro da sala no baú e no HUD, as estrelas (acertos de primeira + 3
-// da calma), o ovo comum e o raro (perfeita e com calma), chocados pela tela do ovo.
+// das Palavras (no andar da estação), toca a estação e o "Ok!" do balão; a trilha das etapas ("Começar"), e em cada
+// etapa as cartas dela ("Continuar →") e cada questão respondida só com toques e digitação na tela, a tabela e o desenho
+// também (prancheta: cor, ferramenta, ponto e arraste), com calma (espera o tempo de leitura antes do "Conferir"),
+// "Continuar" e "Terminar"; entre as etapas, "Próxima etapa ▶"; tudo certo de primeira: a festa da trilha perfeita
+// (3 cartões, o acessório na loja); no fim, a sala conta como no 3º bimestre (P.concluirSala, com a soma das etapas):
+// o dinheiro da sala no baú e no HUD, as estrelas (acertos de primeira + 3 da calma), o ovo comum e o raro (perfeita e
+// com calma), chocados pela tela do ovo.
 // Por capítulo, as salas que juntas têm todos os tipos de questão dele (separar e montar a frase incluídos): Cap. 10 no
 // celular (toque), 11 no tablet (toque), 12 no notebook (clique); capítulo sem salas: pulado, com aviso.
 // Servidor e banco de TESTE novos (cenario.js); save sintético; congelado (?congelar=1). Sem erro de console.
@@ -14,7 +16,7 @@ const fs = require('fs');
 const path = require('path');
 const { abrirCenario } = require('../cenario');
 const { PASTA_TESTES } = require('../guardas');
-const { preparar, acionar, responderDaVez, esperar, tocarTile, andarAte, estacao } = require('./ajudantes/quarto-bimestre');
+const { preparar, acionar, responderDaVez, esperar, tocarTile, andarAte, irAEstacao, seguirSala } = require('./ajudantes/quarto-bimestre');
 
 const sp = (x) => String(x).replace(/­/g, '').replace(/\s+/g, ' ').trim();
 
@@ -23,43 +25,42 @@ async function jogarSala(c, salaId) {
   const sala = await c.js(`(function (s) { return { id: s.id, nome: s.nome, paginas: s.paginas, cartas: (s.cartas || []).length, ids: s.desafios.map(function (d) { return d.id; }) }; })(
     Reino.materia('portugues4').salas.find(function (s) { return s.id === '${salaId}'; }))`);
   const n = sala.ids.length;
+  const nEtapas = await c.js(`Reino.etapasDaSala(Reino.materia('portugues4'), Reino.materia('portugues4').salas.find(function (s) { return s.id === '${salaId}'; })).length`);
   const antes = await c.js(`(function (P, m) { var e = P.estado(); return { dinheiro: P.dinheiroTotal(), valorSala: P.valorSala(m), ganhas: e.estrelas.ganhas,
     feita: !!(e.salas['${sala.id}'] && e.salas['${sala.id}'].feita), unis: Object.keys(e.unis),
     ovos: m.unicornios.filter(function (u) { return u.sala === '${sala.id}'; }).map(function (u) { return u.raridade + ':' + u.id; }).sort() }; })(Reino.Progresso, Reino.materia('portugues4'))`);
   assert.strictEqual(antes.feita, false);
   assert.deepStrictEqual(antes.ovos.map((x) => x.split(':')[0]), ['comum', 'raro'], 'a sala com 1 unicórnio comum e 1 raro');
 
-  // na Casa das Palavras: anda até a estação da sala, toca nela e no "Ok!"
-  if ((await c.js('__reino.cena()')) !== 'portugues') await c.ir('portugues');
-  const e = await estacao(c, sala.id);
+  // na Casa das Palavras (o andar da estação): anda até a estação da sala, toca nela e no "Ok!"
+  const e = await irAEstacao(c, sala.id);
   await andarAte(c, e.tile.x, e.tile.y);
   await tocarTile(c, e.x, e.y);
   assert.ok(await esperar(c, 'Reino.Claude.dialogoAberto()', 8000), 'a estação não falou');
   await acionar(c, c.page.locator('#claude-balao .claude-acoes .btn-dialogo.principal'), 'toque');
   await c.avancar(800);
 
-  // intro e cartas do resumo
-  assert.ok(await esperar(c, "!!document.querySelector('.tela-missao .intro-sala')", 8000), 'sem a intro da sala');
+  // a trilha das etapas (a intro da sala de livro)
+  assert.ok(await esperar(c, "!!document.querySelector('.tela-missao .intro-sala .etapas-trilha')", 8000), 'sem a trilha da sala');
   const intro = sp(await c.js("document.querySelector('.tela-missao .intro-sala').textContent"));
-  assert.ok(intro.indexOf(sp(sala.nome)) >= 0 && intro.indexOf(sp(sala.paginas)) >= 0, 'intro sem o nome ou as páginas: ' + intro);
-  const principal = c.page.locator('.tela-missao footer.rodape-acao:not([hidden]) .btn-principal');
-  await acionar(c, principal, 'toque');
-  for (let i = 1; i <= sala.cartas; i++) {
-    assert.match(await c.js("document.querySelector('.tela-missao .resumo-pag').textContent"), new RegExp(`Carta ${i} de ${sala.cartas}`));
-    assert.ok(await c.js("document.querySelector('.tela-missao .livro-carta').textContent.trim().length > 0"), `carta ${i} vazia`);
-    await acionar(c, principal, 'toque');
-  }
+  assert.ok(intro.indexOf(sp(sala.nome)) >= 0 && intro.indexOf(sp(sala.paginas)) >= 0, 'trilha sem o nome ou as páginas: ' + intro);
+  assert.strictEqual(await c.js("document.querySelectorAll('.tela-missao .etapa-bolinha').length"), nEtapas, 'uma bolinha por etapa');
 
-  // as questões, na ordem do livro, todas certas de primeira e com calma, pelos toques
-  const tipos = [];
-  for (let k = 0; k < n; k++) {
-    assert.match(await c.js("document.querySelector('.tela-missao .desafio-num').textContent"), new RegExp(`Desafio ${k + 1} de ${n}`));
-    const r = await responderDaVez(c, sala.ids[k], 'toque', { errar: false, calma: true });
-    assert.deepStrictEqual(r.problemas, [], `${r.id} (${r.tipo})`);
-    assert.ok(r.primeira, `${r.id}: sem a estrela de primeira`);
-    tipos.push(r.tipo);
-  }
-  console.log(`${sala.id} no ${c.tamanho}: ${tipos.join(', ')}`);
+  // etapa por etapa: as cartas e as questões, na ordem do livro, todas certas de primeira e com calma, pelos toques
+  const tipos = [], ids = [];
+  const r = await seguirSala(c, async (id) => {
+    const q = await responderDaVez(c, id, 'toque', { errar: false, calma: true });
+    assert.deepStrictEqual(q.problemas, [], `${q.id} (${q.tipo})`);
+    assert.ok(q.primeira, `${q.id}: sem a estrela de primeira`);
+    tipos.push(q.tipo); ids.push(id);
+  }, { modo: 'toque' });
+  assert.strictEqual(r.fim, 'fimSala', 'a sala não terminou: ' + JSON.stringify(r));
+  assert.deepStrictEqual(ids, sala.ids, 'as questões na ordem do livro');
+  assert.strictEqual(r.cartas.length, sala.cartas, 'todas as cartas, cada uma uma vez');
+  assert.strictEqual(r.etapas, nEtapas - 1, 'um fim de etapa entre as etapas');
+  assert.ok(r.festa, 'tudo certo de primeira: a festa da trilha perfeita');
+  assert.ok(await c.js(`Reino.Progresso.estado().loja[Reino.premioTrilha('${sala.id}').acessorio.id] === true`), 'o acessório da trilha na loja');
+  console.log(`${sala.id} no ${c.tamanho} (${nEtapas} etapas): ${tipos.join(', ')}`);
 
   // o fim da sala: os prêmios de sempre
   assert.ok(await esperar(c, "!!document.querySelector('.tela-missao .fim-sala')", 4000), 'sem o fim da sala');
@@ -85,7 +86,7 @@ async function jogarSala(c, salaId) {
     await acionar(c, c.page.locator('.tela-ovo .btn-secundario'), 'toque');
     await c.avancar(800);
   }
-  assert.ok(await esperar(c, "!Reino.UI.temTela() && __reino.cena() === 'portugues'", 6000), 'não voltou à Casa das Palavras');
+  assert.ok(await esperar(c, "!Reino.UI.temTela() && /^portugues/.test(__reino.cena())", 6000), 'não voltou à Casa das Palavras');
   assert.deepStrictEqual(await c.js(`${JSON.stringify(depois.novos)}.map(function (id) { return Reino.Progresso.estado().unis[id].chocado; })`), [true, true]);
   assert.ok(sp(await c.js("document.querySelector('.chip-dinheiro').textContent")).indexOf(sp(await c.js('Reino.util.robuxNumero(Reino.Progresso.dinheiroTotal())'))) >= 0,
     'o HUD sem o dinheiro novo');

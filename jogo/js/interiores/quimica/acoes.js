@@ -11,6 +11,8 @@
     R.NPCs.registrarTela('quimica-caderno', abrir('telaQuimicaCaderno'));
     R.NPCs.registrarTela('quimica-microscopio', abrir('telaQuimicaMicroscopio'));
     R.NPCs.registrarTela('quimica-tabela', abrir('telaQuimicaTabela'));
+    // a estante das Experiências do Reino (prêmio da trilha perfeita, quarto-bimestre.md §14.3)
+    R.NPCs.registrarTela('quimica-experiencias', function () { var f = R.UI && R.UI.abrirExperiencias; if (f) return f(); });
     // 2º andar (docs/contratos/quimica.md §9): o convite do Fogão é o mesmo texto da fala `nova` da Dona Caramela
     R.NPCs.registrarTela('quimica-estados', abrir('telaQuimicaEstados'), 'Vamos ver a água mudar?');
     R.NPCs.registrarTela('quimica-separar', abrir('telaQuimicaSeparar'));
