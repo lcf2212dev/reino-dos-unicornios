@@ -1,0 +1,100 @@
+/* Baú dos presentes (js/ui/bau-presente.js) e a raridade Ultra Lendário (Loja, js/ui/loja.js).
+   Tela escura (ui.md §10.8.3): céu da noite (--noite) com estrelinhas em CSS; texto --papel e
+   --ouro; o baú ganha o brilho de 1 pixel em --papel. A luz que sobe são as 6 cores do arco-íris (--arco-1 a --arco-6)
+   chapadas; o acessório sobe em degraus (o giro é troca de quadros no JS); o cartão Ultra Lendário é o fundo dourado do
+   lendário com a moldura .brilho-arco (ui-animacoes.css). Movimento só por token e em degraus; com
+   body.sem-animacao ou prefers-reduced-motion nada anda (o JS também não põe as classes de movimento). */
+.rar-ultra { --rar-texto: var(--lendario-texto); --rar-fundo: var(--lendario-fundo); --rar-desenho: var(--lendario-desenho); }
+/* Loja: o cartão Ultra Lendário tem uma faixa arco-íris em cima, por dentro da faixa dourada */
+.item-premio.rar-ultra { background: linear-gradient(90deg, var(--arco-iris)) top / 100% 8px no-repeat, var(--rar-fundo); }
+
+.tela-presente {
+  background:
+    url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='200' shape-rendering='crispEdges'><rect x='22' y='18' width='4' height='4' fill='%23fff8ee'/><rect x='170' y='34' width='4' height='4' fill='%23ffd34d'/><rect x='96' y='70' width='2' height='2' fill='%23fff4cc'/><rect x='214' y='112' width='4' height='4' fill='%23fff8ee'/><rect x='54' y='128' width='2' height='2' fill='%23ffd34d'/><rect x='136' y='160' width='2' height='2' fill='%23fff8ee'/><rect x='8' y='184' width='2' height='2' fill='%23fff4cc'/><rect x='190' y='186' width='4' height='4' fill='%23fff4cc'/></svg>") 0 0 / 240px 200px repeat,
+    var(--noite);   /* céu de uma cor só: a divisa das 2 faixas cortava o cartão no celular */
+  color: var(--papel);
+}
+.tela-presente [hidden] { display: none !important; }
+.presente-palco {
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+  width: min(640px, 100%); margin: auto; text-align: center;
+}
+.presente-titulo { margin: 0; font-size: var(--texto-g); line-height: var(--entrelinha-titulo); color: var(--ouro); }
+.presente-dica { margin: 0; min-height: 24px; font-size: var(--texto); color: var(--papel); }
+.presente-botoes, .presente-escolhas { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+
+/* a cena: o baú embaixo, a luz atrás dele, as estrelinhas em volta e o acessório subindo */
+.presente-cena { position: relative; width: 100%; height: 300px; display: flex; align-items: flex-end; justify-content: center; }
+.presente-bau { position: relative; z-index: 2; padding: 0; border: 0; background: none; cursor: pointer; --degrau: 0px; }
+.presente-bau canvas { display: block; filter: drop-shadow(2px 0 0 var(--papel)) drop-shadow(-2px 0 0 var(--papel)) drop-shadow(0 2px 0 var(--papel)) drop-shadow(0 -2px 0 var(--papel)); }
+.presente-bau:focus-visible { outline: 4px dashed var(--papel); outline-offset: 6px; }
+.presente-feixe { position: absolute; z-index: 1; left: 50%; top: 0; bottom: 88px; width: 96px; margin-left: -48px; display: flex; }
+.presente-feixe span { flex: 1; }
+.presente-feixe .arco-1 { background: var(--arco-1); }
+.presente-feixe .arco-2 { background: var(--arco-2); }
+.presente-feixe .arco-3 { background: var(--arco-3); }
+.presente-feixe .arco-4 { background: var(--arco-4); }
+.presente-feixe .arco-5 { background: var(--arco-5); }
+.presente-feixe .arco-6 { background: var(--arco-6); }
+.presente-faiscas { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+.presente-faisca { position: absolute; }
+.presente-faisca.f0 { left: 14%; top: 56%; }
+.presente-faisca.f1 { left: 78%; top: 50%; }
+.presente-faisca.f2 { left: 24%; top: 22%; }
+.presente-faisca.f3 { left: 68%; top: 14%; }
+.presente-faisca.f4 { left: 6%; top: 34%; }
+.presente-faisca.f5 { left: 88%; top: 30%; }
+.presente-faisca.f6 { left: 34%; top: 4%; }
+.presente-faisca.f7 { left: 58%; top: 40%; }
+.presente-sobe { position: absolute; z-index: 3; left: 50%; bottom: 88px; margin-left: -48px; }
+.presente-sobe canvas { display: block; filter: drop-shadow(2px 0 0 var(--papel)) drop-shadow(-2px 0 0 var(--papel)) drop-shadow(0 2px 0 var(--papel)) drop-shadow(0 -2px 0 var(--papel)); }
+
+/* o cartão Ultra Lendário (um acessório) e o final (todos) */
+.presente-cartao, .presente-final {
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  width: min(460px, 100%); padding: 16px 18px;
+  background: var(--rar-fundo, var(--lendario-fundo)); color: var(--tinta);
+  border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto-grande);
+}
+.presente-final { width: min(560px, 100%); }
+.presente-selo {
+  margin: 0; padding: 4px 10px; font-size: var(--texto-aux); color: var(--lendario-texto);
+  background: var(--papel-quente); border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
+}
+.presente-nome { margin: 0; font-size: var(--texto); line-height: var(--entrelinha-titulo); color: var(--tinta); }
+.presente-cartao.maior .presente-nome { font-size: var(--texto-g); }
+.presente-lado { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+.presente-mini {
+  display: flex; flex-direction: column; align-items: center; gap: 6px; width: 180px; padding: 10px 8px;
+  background: var(--rar-fundo); border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
+  font-size: var(--texto-aux); line-height: var(--entrelinha-titulo);
+}
+.presente-mereceu { margin: 0; font-size: var(--texto); color: var(--tinta); }
+
+/* movimento (só com .animado: o JS não põe nada quando U.animar() é falso) */
+@keyframes presente-chegar {
+  0% { transform: translateY(-96px); } 12.5% { transform: translateY(-72px); } 25% { transform: translateY(-48px); }
+  37.5% { transform: translateY(-24px); } 50% { transform: none; } 62.5% { transform: translateY(-16px); }
+  75% { transform: none; } 87.5% { transform: translateY(-8px); } 100% { transform: none; }
+}
+@keyframes presente-feixe-subir { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes presente-faisca { 0% { transform: none; } 50% { transform: translateY(-12px); } 100% { transform: translateY(-24px); opacity: 0; } }
+@keyframes presente-subir { from { transform: none; } to { transform: translateY(-120px); } }
+.tela-presente.animado .presente-bau.entrando { animation: presente-chegar calc(2 * var(--lento)) step-end, pulsar calc(2 * var(--lento)) step-end calc(3 * var(--lento)) 3; }
+.tela-presente.animado .presente-bau.tremendo { animation: tremer var(--normal) step-end 3; }
+.tela-presente.animado .presente-feixe { animation: presente-feixe-subir var(--lento) steps(6) both; }
+.tela-presente.animado .presente-faisca { animation: presente-faisca calc(2 * var(--lento)) steps(4) 3 both; }
+.tela-presente.animado .presente-faisca:nth-child(odd) { animation-delay: var(--lento); }
+.tela-presente.animado .presente-sobe.subindo { animation: presente-subir calc(2 * var(--lento)) steps(10) both; }
+.tela-presente.animado .presente-cartao { animation: painel-descer var(--rapido) steps(3); }
+body.sem-animacao .tela-presente * { animation: none !important; }
+@media (prefers-reduced-motion: reduce) { .tela-presente * { animation: none !important; } }
+
+/* celular: baú e luz menores (escala 6 no JS), título um degrau abaixo */
+@media (max-width: 480px) {
+  .presente-titulo { font-size: var(--texto); }
+  .presente-cena { height: 240px; }
+  .presente-feixe { bottom: 66px; width: 72px; margin-left: -36px; }
+  .presente-sobe { bottom: 66px; margin-left: -32px; }
+  .presente-mini { width: 140px; }
+}

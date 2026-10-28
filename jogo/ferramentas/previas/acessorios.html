@@ -10,12 +10,12 @@
   th{font-weight:normal;color:#5e3f6e} td{background:#cdeecb}
   #filtro{margin-bottom:8px}
 </style>
-<p>Cada enfeite da Loja das Fadas, cada prêmio da Escola e cada prêmio da trilha perfeita em todas as vistas (8 direções: as da esquerda são o espelho),
+<p>Cada enfeite da Loja das Fadas, cada prêmio da Escola, cada prêmio da trilha perfeita e cada Ultra Lendário em todas as vistas (8 direções: as da esquerda são o espelho),
 em cada estágio, e montado. Filtre com <code>?id=anel-saturno,colar-planetas</code> ou <code>?novos=1</code>.</p>
 <div id="r"></div>
 <script src="../../js/manifesto.js"></script>
 <script src="previa.js"></script>
-<script>Previa.carregar({ nomes: ['nucleo/config', 'nucleo/registros', 'nucleo/util', 'nucleo/eventos', 'arte/desenho', 'conteudo/loja-itens', 'conteudo/materias/portugues4/premios-trilha-10', 'conteudo/materias/portugues4/premios-trilha-11', 'conteudo/materias/portugues4/premios-trilha-12'], grupos: ['icones', 'pixelart', 'provas'] });</script>
+<script>Previa.carregar({ nomes: ['nucleo/config', 'nucleo/registros', 'nucleo/util', 'nucleo/eventos', 'arte/desenho', 'conteudo/loja-itens', 'conteudo/materias/portugues4/premios-trilha-10', 'conteudo/materias/portugues4/premios-trilha-11', 'conteudo/materias/portugues4/premios-trilha-12', 'conteudo/presentes'], grupos: ['icones', 'pixelart', 'provas'] });</script>
 <script>
 // um unicórnio comum (sem asas) e um lendário (com asas), para ver o enfeite nos dois
 var DEFS = {
@@ -36,6 +36,9 @@ var ESC = +(q.get('escala') || 3);
 var L = Reino.LojaItens;
 var nomes = {};
 L.ENFEITES.forEach(function (e) { nomes[e.id] = e; });
+// os Ultra Lendários (presentes do jogo, Reino.LojaItens.ultras): o nome no cabeçalho
+var ultras = {};
+L.ultras().forEach(function (u) { ultras[u.id] = u; });
 var ANTIGOS = ['flor', 'laco', 'oculos', 'coroa', 'tiara-arco-iris', 'pena-magica', 'laco-vovo', 'coroa-big-ben', 'oculos-de-sol', 'lacinho-estrela'];
 var ids = Object.keys(PA.ENFEITES_MONTARIA).filter(function (id) {
   if (so) return so.indexOf(id) >= 0;
@@ -54,7 +57,7 @@ ids.forEach(function (id) {
   var ic = PA.iconeDesenho(it ? it.icone : 'acessorio:' + id);
   var cab = document.createElement('div'); cab.className = 'cab';
   if (ic) cab.appendChild(PA.paraDOM(ic, 3));
-  h.innerHTML = id + ' <small>' + (it ? it.nome + ' • ⭐ ' + it.preco + (it.espaco ? ' • espaço' : '') : 'prêmio da Escola') + ' • encaixe: ' + e.ancora + '</small>';
+  h.innerHTML = id + ' <small>' + (it ? it.nome + ' • ⭐ ' + it.preco + (it.espaco ? ' • espaço' : '') : ultras[id] ? ultras[id].nome + ' • 💎 Ultra Lendário' : 'prêmio da Escola') + ' • encaixe: ' + e.ancora + '</small>';
   cab.appendChild(h); r.appendChild(cab);
   var t = document.createElement('table'), tr = document.createElement('tr');
   tr.appendChild(document.createElement('th'));

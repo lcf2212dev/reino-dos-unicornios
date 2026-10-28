@@ -20,11 +20,15 @@ interface Enfeite {
 interface Premio {
   id: string;
   nome: string;
-  raridade: RaridadePremio;
-  /** a prova (ausente no prêmio da trilha) */
+  /** 'ultra': Ultra Lendário, presente do jogo (LojaItens.ultras) */
+  raridade: RaridadePremio | 'ultra';
+  /** a prova (ausente no prêmio da trilha e no presente) */
   provaId?: string;
-  /** 'trilha': lendário da trilha perfeita (quarto-bimestre.md §14.3), nunca à venda */
-  origem?: 'trilha';
+  /** 'trilha': lendário da trilha perfeita (quarto-bimestre.md §14.3); 'presente': Ultra Lendário dado pelo jogo
+   *  (conteudo/presentes.js). Os dois nunca estão à venda */
+  origem?: 'trilha' | 'presente';
+  /** o presente (só com origem 'presente') */
+  presente?: string;
   /** a sala da trilha (só com origem 'trilha') */
   sala?: string;
   preco: number;
@@ -66,6 +70,10 @@ interface LojaItensApi {
   naLoja(loja: 'fadas' | 'petshop'): Enfeite[];
   precoPremio(raridade: RaridadePremio): number;
   premios(): Premio[];
+  /** a raridade acima do lendário (nome e emoji) */
+  ULTRA: { nome: string, emoji: string };
+  /** os Ultra Lendários (Reino.presentes), fora de premios() */
+  ultras(): Premio[];
   /** derivado do save; P = Reino.Progresso (opcional: sem ele, 'bloqueado') */
   estadoPremio(premio: Premio, P?: ProgressoApi): EstadoPremio;
   item(id: string): ItemLoja | null;

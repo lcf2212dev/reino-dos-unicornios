@@ -43,6 +43,7 @@
       'css/ui-abertura.css',
       'css/ui-personagem.css',
       'css/ui-voo.css',
+      'css/ui-bau-presente.css',
     ],
     scripts: [
       { js: 'js/nucleo/congelar.js', grupo: 'nucleo' },
@@ -189,6 +190,7 @@
       { js: 'js/conteudo/materias/portugues4/premios-trilha-10.js', grupo: 'materias', node: true }, // prêmio da trilha perfeita de cada sala (quarto-bimestre.md §14)
       { js: 'js/conteudo/materias/portugues4/premios-trilha-11.js', grupo: 'materias', node: true },
       { js: 'js/conteudo/materias/portugues4/premios-trilha-12.js', grupo: 'materias', node: true },
+      { js: 'js/conteudo/presentes.js', grupo: 'conteudo', node: true }, // presentes do jogo: as medalhas Ultra Lendárias (pedido 2026-10-28)
       { js: 'js/conteudo/materias/ciencias/icones.js', grupo: 'icones', node: true },
       { js: 'js/conteudo/materias/matematica/icones.js', grupo: 'icones', node: true },
       { js: 'js/conteudo/materias/geografia/icones.js', grupo: 'icones', node: true },
@@ -291,6 +293,7 @@
       { js: 'js/ui/petshop-enfeites.js', grupo: 'ui' },
       { js: 'js/ui/petshop.js', grupo: 'ui' },
       { js: 'js/ui/ovos.js', grupo: 'ui' },
+      { js: 'js/ui/bau-presente.js', grupo: 'ui' }, // o baú dos presentes depois do login (UI.abrirPresentesPendentes)
       { js: 'js/ui/lugares.js', grupo: 'ui' },
       { js: 'js/ui/ajustes.js', grupo: 'ui' },
       { js: 'js/ui/aparencia.js', grupo: 'ui' },
@@ -319,6 +322,7 @@
       { js: 'js/sistemas/fotos.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/fotos-moldura.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/fotos-telas.js', grupo: 'sistemas', node: true },
+      { js: 'js/sistemas/presentes.js', grupo: 'sistemas', node: true }, // campo presentes, P.presentesPendentes, P.abrirPresente (módulo depois de cuidados, surpresa e fotos)
       { js: 'js/sistemas/versao.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/aura.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/viagem.js', grupo: 'sistemas', node: true },
