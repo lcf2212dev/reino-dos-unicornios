@@ -22,19 +22,22 @@
       var t = UI.abrirTela('inicio');
       var ultimo = Reino.Jogadores.ultimo(), vis = (ultimo && Reino.Jogadores.visualGuardado(ultimo)) || {};
       var ap = Object.assign({}, PA.APARENCIA_PADRAO, vis.aparencia || {});
-      var cena = UI.abertura({ montaria: Reino.Unicornios.def('inicial', vis.corInicial || 'rosa'), aparencia: ap });
+      // festa da medalha de ouro (ui/abertura-medalha.js): só se a última jogadora é a Mariana (ou ninguém) e até a data
+      var medalha = UI.festaMedalha.ativa(ultimo);
+      var cena = UI.abertura({ montaria: Reino.Unicornios.def('inicial', vis.corInicial || 'rosa'), aparencia: ap, medalha: medalha });
       var ir = el('button.btn-grande.btn-principal.btn-comecar.btn-pulsar', { type: 'button' }, 'Entrar no Reino ✨');
       // (sem "Trocar jogador" aqui: o login vem logo depois do toque)
       var botoes = el('div.inicio-botoes', ir);
       t.appendChild(el('div.inicio', cena.el, el('div.inicio-baixo', botoes,
         el('p.inicio-sub.inicio-materias',
-          el('span.inicio-materias-longa', '4º bimestre · Novos conteúdos em breve'),
-          el('span.inicio-materias-curta', 'Novos conteúdos em breve')))));   // curta: celular em pé
+          el('span.inicio-materias-longa', '4º bimestre · Língua Portuguesa chegou!'),
+          el('span.inicio-materias-curta', 'Língua Portuguesa chegou!')))));   // curta: celular em pé
       var foi = false;
       ir.addEventListener('click', function () {
         if (foi) return;
         foi = true;
-        Reino.Som.ativar(); Reino.Som.tocar('porta');
+        Reino.Som.ativar(); Reino.Som.tocar(medalha ? 'fanfarra' : 'porta');
+        if (medalha) UI.festaMedalha.entrou();   // o Claude dá parabéns ao chegar no mapa (se quem entrar for ela)
         UI.telaCheia(true);
         cena.entrar().then(function () { UI.fecharTela(t); resolver(); });   // brilho e zoom no castelo
       });
@@ -131,6 +134,11 @@
     // pergunta surpresa (módulo): o relógio só começa depois do tutorial da primeira vez
     ctxModulo.tutorial = tutorial;
     Reino.modulos.forEach(function (m) { if (m.depoisDasBoasVindas) m.depoisDasBoasVindas(ctxModulo); });
+    // o baú de presentes (outra frente; resolve na hora sem presente) e só depois o parabéns da medalha de ouro
+    // (ui/abertura-medalha.js: só depois da tela em festa, com a Mariana, uma vez por sessão)
+    (Reino.UI.abrirPresentesPendentes ? Reino.UI.abrirPresentesPendentes() : Promise.resolve())
+      .then(function () { UI.festaMedalha.parabens(); })
+      .catch(function (e) { console.warn('presentes/parabéns:', e); });   // ela já está no mapa: só não festeja
   }
 
   /* o jogo só começa com o progresso guardado em mãos (o banco da Vercel ou o claude.ai): sem ele, um aparelho novo

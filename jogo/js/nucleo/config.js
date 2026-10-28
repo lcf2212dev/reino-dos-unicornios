@@ -32,6 +32,9 @@ Reino.config = {
   // NÃO troque o prefixoSave: é onde mora o progresso de cada outro jogador ('reino-v1-<login>')
   // abertura (tela de início): durações em ms, quantidades e tamanho do pixel da cena (menos pixels = pixel maior)
   abertura: { tituloMs: 1600, estrelas: 70, unicornios: 3, arcoMs: 1800, entrarMs: 600, pixelsAlvo: 70000 },
+  // festa da medalha de ouro da prova real do 3º bimestre (js/ui/abertura-medalha.js): a tela de início vira festa
+  // (medalha, confete dourado) e o Claude dá parabéns, só para a Mariana, até o dia `ate` (inclusive); depois some sozinha
+  festaMedalha: { ate: '2026-12-20' },
   // jogadores: tamanho do login e da senha; senhaMariana = senha da conta 'mariana' (sem segurança). Ninguém entra
   // direto: vale quando não há banco ou ele não responde (com banco, vale a senha guardada nele); vazio = não entra
   // sem rede ao abrir, com o save no aparelho: joga e tenta a nuvem de novo a cada reconectarMs (e quando a rede volta)

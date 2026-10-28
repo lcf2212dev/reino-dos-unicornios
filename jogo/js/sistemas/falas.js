@@ -34,6 +34,10 @@
     descansarAndar: 'Ele fica no primeiro andar.',
     trilhaSemErro: 'Você fez a trilha sem errar!',
     trilhaPremios: 'Você ganhou três prêmios!',
+    // festa da medalha de ouro da prova real (ui/abertura-medalha.js): o Claude, ao chegar no mapa, uma vez por sessão
+    parabensMedalha: 'Parabéns pela medalha de ouro!',
+    parabensCalma: 'Você estudou com muita calma.',
+    parabensOrgulho: 'Estou muito orgulhoso de você!',
   };
 
   F.medalhas = {
