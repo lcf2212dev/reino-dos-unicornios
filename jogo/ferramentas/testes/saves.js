@@ -18,6 +18,9 @@ function gerarSaves() {
       loja: {}, usando: { enfeites: [], capa: false, asasFada: false, estrelinhas: false }, pago: {},
       ajustes: { som: false, musica: false, voz: false, animacoes: false, texto: 1, setas: false, surpresa: false },
       ritualVisto: true, cuidados: {}, despensa: {},
+      // o baú dos presentes (sistemas/presentes.js) já aberto: senão ele cobre as telas dos testes fora do modo
+      // congelado; o teste do baú (presentes.navegador.test.js) esvazia o campo para vê-lo
+      presentes: { 'medalhas-2026': T - 2 * H },
     }, extra || {});
   }
   var nota = R.config.notaSucessoProva;
