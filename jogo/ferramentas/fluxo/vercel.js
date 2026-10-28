@@ -8,7 +8,7 @@
 // Exporta <ref> (padrão HEAD) com git archive (jogo/index.html, jogo/css, jogo/js, jogo/ferramentas e vercel/) para
 // /tmp/reino-testes/vercel/<commit>/ e ali roda vercel pull, vercel build --prod e vercel deploy --prebuilt --prod.
 // Não escreve na árvore do repositório. Token: VERCEL_TOKEN do ambiente ou a linha VERCEL_TOKEN= do .env do SaaS
-// (/home/leandro/Development/SaaS/.env ou o antigo /home/leandro/PersonalDevelopment/SaaS/.env).
+// (/home/leandro/Development/my-apps/SaaS/.env, ou os antigos /home/leandro/Development/SaaS/.env e /home/leandro/PersonalDevelopment/SaaS/.env).
 // O banco da Vercel guarda saves reais: intocável (CLAUDE.md da raiz).
 const fs = require('fs');
 const path = require('path');
@@ -17,7 +17,7 @@ if (require.main === module) require('../ajuda').ajuda(__filename);
 const { conferirOpcoes } = require('../ajuda');
 
 const PROJETO = { projectId: 'prj_JxmsaMptKQmgJ1bbDBJXryIuA3T7', orgId: 'team_Zl72UlmUcKooFmnViP6qziOp' };
-const ENV_SAAS = ['/home/leandro/Development/SaaS/.env', '/home/leandro/PersonalDevelopment/SaaS/.env'];
+const ENV_SAAS = ['/home/leandro/Development/my-apps/SaaS/.env', '/home/leandro/Development/SaaS/.env', '/home/leandro/PersonalDevelopment/SaaS/.env'];
 const CAMINHOS = ['jogo/index.html', 'jogo/css', 'jogo/js', 'jogo/ferramentas', 'vercel'];
 
 function token() {
