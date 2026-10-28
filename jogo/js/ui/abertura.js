@@ -7,6 +7,7 @@
    Camadas paradas em abertura-desenho.js (uma vez por tamanho); aqui só o que mexe: estrelas, nuvens,
    arco-íris se desenhando, unicórnios voando com rastro, a Mariana trotando, vaga-lumes, estrela cadente.
    Sem animação (Ajustes, reduzir movimento do aparelho ou modo congelado dos testes): a mesma cena parada.
+   opcoes.medalha: a festa da medalha de ouro (js/ui/abertura-medalha.js): faixa, medalha, confete e rastro dourados.
    Números: Reino.config.abertura (os que faltarem vêm de PADRAO). */
 (function () {
   var U = Reino.util, el = U.el, D = Reino.Desenho;
@@ -62,7 +63,10 @@
     var cv = el('canvas.abertura-cena', { 'aria-hidden': 'true' });
     var ctx = cv.getContext('2d');
     var flash = el('div.abertura-flash');
-    var raiz = el('div.logo.abertura' + (anima ? '' : '.abertura-parada'), cv, el('div.abertura-veu'), flash, el('div.abertura-marca', el('p.abertura-capitulo', 'Um novo capítulo'), titulo(cfg), el('p.abertura-bimestre', '4º bimestre')));
+    var festa = opcoes.medalha && A.festa, medalha = festa ? A.festa.bloco() : null;
+    var marca = festa ? el('div.abertura-marca.abertura-medalha', el('p.abertura-faixa-medalha', '🥇 Medalha de Ouro! 🥇'), titulo(cfg), medalha.el)
+      : el('div.abertura-marca', el('p.abertura-capitulo', 'Um novo capítulo'), titulo(cfg), el('p.abertura-bimestre', '4º bimestre'));
+    var raiz = el('div.logo.abertura' + (anima ? '' : '.abertura-parada'), cv, el('div.abertura-veu'), flash, marca);
     var m = null, cam = {}, estrelas = [], voadores = [], rastro = [], vagas = [];
     var raf = 0, inicio = 0, parado = false, jaNoDom = false, esperas = 0, mudouTamanho = true, timerTam = 0, timerVigia = 0;
 
@@ -191,6 +195,7 @@
       }
     }
     var CORES_RASTRO = ['#ff9cc6', '#ffe066', '#9fdcff', '#b58cff', '#ffffff', '#6fdc8c'];
+    var coresRastro = festa ? A.festa.RASTRO : CORES_RASTRO;   // na festa da medalha, o rastro é dourado
     function voar(t, dt) {
       for (var i = 0; i < voadores.length; i++) {
         var v = voadores[i], q = anima ? Math.floor(t * 7 + i) % 3 : 1;
@@ -214,7 +219,7 @@
         if (b.vida <= 0) continue;
         var k = b.vida / b.max, x = Math.round(b.x), y = Math.round(b.y);
         ctx.globalAlpha = Math.min(1, k * 1.4);
-        ctx.fillStyle = CORES_RASTRO[b.cor];
+        ctx.fillStyle = coresRastro[b.cor];
         if (k > 0.75 && j % 3 === 0) { ctx.fillRect(x - 1, y, 3, 1); ctx.fillRect(x, y - 1, 1, 3); }
         else ctx.fillRect(x, y, 1, 1);
       }
@@ -247,6 +252,10 @@
       voar(t, dt);
       desenharRastro(dt);
       vagaLumes(t);
+      if (festa) {   // confete dourado (parado sem animação) e o brilho passando na medalha
+        A.festa.confete(ctx, m, t);
+        if (anima) A.festa.quadro(medalha, t);
+      }
     }
 
     /* ----- laço (só com animação) e parada ----- */
@@ -283,6 +292,7 @@
       soltarCamadas();
       estrelas = voadores = rastro = vagas = [];
       A.soltar(cv);
+      if (medalha) A.soltar(medalha.canvas);
     }
     function entrar() {
       return new Promise(function (resolver) {

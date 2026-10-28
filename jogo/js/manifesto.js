@@ -314,6 +314,7 @@
       { js: 'js/ui/pais.js', grupo: 'ui' },
       { js: 'js/ui/jogadores.js', grupo: 'ui' },
       { js: 'js/ui/abertura-desenho.js', grupo: 'ui' },
+      { js: 'js/ui/abertura-medalha.js', grupo: 'ui' },   // festa da medalha de ouro na abertura (até config.festaMedalha.ate)
       { js: 'js/ui/abertura.js', grupo: 'ui' },
       { js: 'js/sistemas/fotos.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/fotos-moldura.js', grupo: 'sistemas', node: true },
