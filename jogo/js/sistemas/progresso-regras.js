@@ -24,6 +24,10 @@
   // (R$ 20 por matéria = 500 Robux). Fixo: a matéria paga em dinheiro continua paga mesmo que o valorPorMateria mude.
   var ROBUX_POR_REAL = 25;
   P.pago = function (materiaId) { return Math.round((I.estado.pago[materiaId] || 0) * ROBUX_POR_REAL); };
+  // o que os pais já pagaram, somado nas matérias registradas (como a Área dos Pais)
+  P.pagoTotal = function () { return Reino.materias.reduce(function (t, m) { return t + P.pago(m.id); }, 0); };
+  // o 💰 do HUD: o que ainda falta receber (ganho − já pago), nunca negativo
+  P.saldoRobux = function () { return Math.max(0, P.dinheiroTotal() - P.pagoTotal()); };
 
   P.salasFeitas = function (materia) { return materia.salas.filter(function (s) { return I.estado.salas[s.id] && I.estado.salas[s.id].feita; }).length; };
   P.materiaCompleta = function (materia) { return P.salasFeitas(materia) === materia.salas.length; };

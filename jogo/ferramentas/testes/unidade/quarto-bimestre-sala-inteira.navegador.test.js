@@ -88,7 +88,7 @@ async function jogarSala(c, salaId) {
   }
   assert.ok(await esperar(c, "!Reino.UI.temTela() && /^portugues/.test(__reino.cena())", 6000), 'não voltou à Casa das Palavras');
   assert.deepStrictEqual(await c.js(`${JSON.stringify(depois.novos)}.map(function (id) { return Reino.Progresso.estado().unis[id].chocado; })`), [true, true]);
-  assert.ok(sp(await c.js("document.querySelector('.chip-dinheiro').textContent")).indexOf(sp(await c.js('Reino.util.robuxNumero(Reino.Progresso.dinheiroTotal())'))) >= 0,
+  assert.ok(sp(await c.js("document.querySelector('.chip-dinheiro').textContent")).indexOf(sp(await c.js('Reino.util.robuxNumero(Reino.Progresso.saldoRobux())'))) >= 0,
     'o HUD sem o dinheiro novo');
   return tipos;
 }

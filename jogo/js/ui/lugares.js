@@ -99,7 +99,7 @@
     avisos: function () { return P.ovosParaChocar().length ? [{ texto: 'Ovo', icone: '🥚', tipo: 'ovo' }] : []; },
     abrir: function () { return UI.telaEstabulo(); },
   });
-  UI.registrarLugarMenu('bau', { emoji: '💰', info: function () { return U.robux(P.dinheiroTotal()) + ' guardados'; }, abrir: function () { return UI.telaBau(); } });
+  UI.registrarLugarMenu('bau', { emoji: '💰', info: function () { return U.robux(P.saldoRobux()) + ' para receber'; }, abrir: function () { return UI.telaBau(); } });
   UI.registrarLugarMenu('loja', {
     emoji: '🧚', info: function () { return '⭐ ' + P.estrelas() + (P.estrelas() === 1 ? ' estrela' : ' estrelas') + ' para gastar'; },
     abrir: function () { return UI.telaLoja(); },

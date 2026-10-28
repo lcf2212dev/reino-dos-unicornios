@@ -265,6 +265,8 @@ interface ProgressoApi {
   dinheiroMateria(materia: Materia): number;
   dinheiroTotal(): number;
   pago(materiaId: string): number;
+  pagoTotal(): number;
+  saldoRobux(): number;
   salasFeitas(materia: Materia): number;
   materiaCompleta(materia: Materia): boolean;
   estrelas(): number;
