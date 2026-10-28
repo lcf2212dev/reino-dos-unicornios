@@ -1220,6 +1220,33 @@
    "fala": "Você ganhou três prêmios!"
   },
   {
+   "chave": "f850e7bc11",
+   "voz": "claude",
+   "texto": "Parabéns pela medalha de ouro!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Parabéns pela medalha de ouro!"
+  },
+  {
+   "chave": "d50c725f10",
+   "voz": "claude",
+   "texto": "Você estudou com muita calma.",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Você estudou com muita calma."
+  },
+  {
+   "chave": "74416e0f11",
+   "voz": "claude",
+   "texto": "Estou muito orgulhoso de você!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Estou muito orgulhoso de você!"
+  },
+  {
    "chave": "1f0e6650n",
    "voz": "claude",
    "texto": "MEDALHA DE OURO!",
