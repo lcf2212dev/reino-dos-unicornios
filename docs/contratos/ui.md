@@ -227,13 +227,13 @@ sempre `--borda`; a cor vai no fundo chapado (`--<r>-fundo`) e numa faixa intern
 | lendário | `#8a5200` (5,1:1) | `#ffe39a` | `#ffb020` |
 
 O lendário é sempre dourado (chip, faixa da prova e quadro da Escola também); o arco-íris só entra como brilho
-(`--arco-iris`, na tabela acima). Cor de matéria: §10.22.
+(`--arco-iris`, na tabela acima) e na faixa e na moldura do cartão Ultra Lendário (Loja e baú dos presentes). Cor de matéria: §10.22.
 
 1. Contraste: texto ≥ 4,5:1 sobre o fundo real (≥ 3:1 só com 24 px ou mais). `--tinta` no `--papel` dá 13,1:1. O
    texto do botão laranja é `--tinta` (5,9:1): não há texto branco sobre laranja.
 2. Estado pela cor (seleção, certo, erro) muda fundo e borda do controle; o contorno de desenho continua `--tinta`.
-3. Telas escuras, só estas: abertura (o céu é desenho), voo, espaço e planetas, o vão dos interiores e a tela de
-   jogadores. Todas com `--noite` (degrau `--noite-2`); o resto do jogo é claro. Nelas o texto é `--papel`, o secundário `--lilas`
+3. Telas escuras, só estas: abertura (o céu é desenho), voo, espaço e planetas, o vão dos interiores, a tela de
+   jogadores e o baú dos presentes. Todas com `--noite` (degrau `--noite-2`); o resto do jogo é claro. Nelas o texto é `--papel`, o secundário `--lilas`
    (`--tinta-suave` não se usa: 2,6:1), e ícone ou sprite de contorno escuro ganha brilho de 1 pixel em `--papel`
    (§10.3).
 

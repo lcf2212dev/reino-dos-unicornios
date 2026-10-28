@@ -364,8 +364,8 @@
       else mostrar(item);
     });
   };
-  // O-02: com uma tela de festa aberta (o ovo chocando e o "Nasceu!"), o balão comum espera na fila até ela fechar
-  var TELAS_FESTA = '.tela-ovo', esperando = false;
+  // O-02: com uma tela de festa aberta (o ovo chocando e o "Nasceu!", o baú dos presentes), o balão comum espera na fila até ela fechar
+  var TELAS_FESTA = '.tela-ovo, .tela-presente', esperando = false;
   function festaAberta() { return typeof document !== 'undefined' && !!document.querySelector(TELAS_FESTA); }
   function esperarFesta() { esperando = true; }
   function seguirFila() {
