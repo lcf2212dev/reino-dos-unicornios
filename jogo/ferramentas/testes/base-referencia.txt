@@ -76,4 +76,5 @@
 # 0a3f0f1 = placa do cômodo não cobre o tapete de saída nem a escada
 # c7ee099 = Língua Portuguesa do 4º bimestre na Casa das Palavras
 # c699e4a = prêmio em Robux: chip e ícone do HUD, telas do prêmio, Baú, falas e área dos pais
-c699e4a
+# 5d1b7e5 = lições de Português em etapas, casa em dois andares, prêmios da trilha perfeita
+5d1b7e5
