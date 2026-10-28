@@ -192,6 +192,7 @@
         premiosBox.appendChild(g);
       });
       pintarTrilha();
+      pintarUltras();
       if (focoItem) focar(pn.tela.querySelector('[data-item="' + focoItem + '"]'));
     }
     // prêmios da trilha perfeita (quarto-bimestre.md §14.3): ganho = como os da Escola; bloqueado nunca está à venda
@@ -216,6 +217,25 @@
         trilhaBox.appendChild(b);
       });
     }
+    // Ultra Lendários (presentes do jogo, LI.ultras): só os que ela tem aparecem; nunca à venda; tocar veste/tira
+    var ultrasTitulo = el('h3.estabulo-grupo', LI.ULTRA.emoji + ' Ultra Lendários'), ultrasBox = el('div.grade-loja');
+    function pintarUltras() {
+      ultrasBox.innerHTML = '';
+      var meus = LI.ultras().filter(function (p) { return LI.estadoPremio(p, P) === 'ganho'; });
+      ultrasTitulo.hidden = ultrasBox.hidden = !meus.length;
+      meus.forEach(function (p) {
+        var item = acessorioComoItem(p), usa = usando(item);
+        var b = el('button.item-loja.item-premio.rar-ultra.premio-ganho.comprado' + (usa ? '.usando' : ''),
+          { type: 'button', 'data-item': p.id, 'data-estado': 'ganho', 'aria-label': p.nome + ', ' + LI.ULTRA.nome.toLowerCase() + ', ' + (usa ? 'usando' : 'presente, tocar para usar') },
+          el('span.item-icone', Reino.Provas.icone(p.id, ICONE_CARTA)), el('b', hifenizar(p.nome)),
+          el('span.chip-mini.ok', LI.ULTRA.emoji + ' ' + LI.ULTRA.nome), el('span.item-preco', usa ? '✓ Usando' : 'Usar'));
+        b.addEventListener('click', function (e) {
+          if (logoDepoisDaCompra(e, item.id)) return;
+          alternar(item); Reino.Som.tocar('selecionar'); P.salvar(); pintar(); U.emit(EV.MAPA_MUDOU);
+        });
+        ultrasBox.appendChild(b);
+      });
+    }
     function nomeDaSala(id) {
       var pt = Reino.premioTrilha(id), m = pt && Reino.materia && Reino.materia(pt.materia);
       var s = m && m.salas.find(function (x) { return x.id === id; });
@@ -224,6 +244,7 @@
     c.appendChild(el('div.loja-topo', vitrine, saldo));
     c.appendChild(atalhos);
     grupos.forEach(function (x) { c.appendChild(x.titulo); c.appendChild(x.grade); });
+    c.appendChild(ultrasTitulo); c.appendChild(ultrasBox);
     c.appendChild(el('h3.estabulo-grupo', '🏫 Prêmios da Escola do Reino'));
     c.appendChild(el('p.bau-nota', Reino.provas.every(function (p) { return p.arquivada; }) ? 'Suas conquistas do terceiro bimestre continuam aqui. 🌈' : 'Acerte TUDO numa prova e ganhe um prêmio; os outros se trocam por estrelas. 🌈'));
     c.appendChild(premiosBox);
