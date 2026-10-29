@@ -3,10 +3,13 @@
 # Acusa as que divergem (a voz embolou, trocou palavra, leu sigla errado) e sai com código 1.
 # Uso (da raiz do repositório):
 #   python3 jogo/ferramentas/vozes/conferir-vozes.py [--antes <vozes-indice antigo.json>] [--modelo small] [--limite 0.8]
-#                                                     [--segunda medium | --sem-segunda]
+#                                                     [--segunda medium | --sem-segunda] [--processos N] [--feixe 1]
 #     --antes: índice de antes da gravação (o vozes.js passa a cópia que guardou); sem ele, o do último
 #              commit (git show HEAD:jogo/ferramentas/gerado/vozes-indice.json)
 #     --segunda: as reprovadas são transcritas de novo com um modelo maior (padrão medium; ~1,5 GB na 1ª vez)
+#     --processos: transcritores em paralelo na 1ª passada (padrão: 1 a cada 4 núcleos, até 6; 1 = sem paralelo)
+#     --feixe: beam_size da 1ª passada (padrão 1, rápido); a 2ª passada usa sempre 5. Conferido em 2026-10-29: 30
+#              gravações antigas com feixe 1 em 6 processos deram o mesmo veredito que o antigo (feixe 5, sequencial)
 #     Fala de 1–2 palavras que ainda diverge não reprova: vai para "conferir de ouvido" (o transcritor erra
 #     palavra solta, ex.: "peixe" → "Deixe"), com o arquivo para ouvir.
 # A comparação aceita algarismo x extenso ("3, 2, 1" = "três, dois, um"), "R$ 16" = "16 reais",
@@ -15,7 +18,10 @@
 #   python3 jogo/ferramentas/vozes/conferir-vozes.py --amostras a.mp3[=texto] b.mp3[=texto] [--lingua pt]
 #     transcreve arquivos avulsos (ex.: amostras-de-voz/); com =texto, compara também
 # Sem gravação nova, sai com 0 sem carregar o faster-whisper. Sem faster-whisper instalado, explica como instalar.
+import concurrent.futures
 import difflib
+import importlib.util
+import multiprocessing
 import json
 import os
 import re
@@ -26,13 +32,15 @@ import unicodedata
 AQUI = os.path.dirname(os.path.abspath(__file__))
 GERADO = os.path.join(AQUI, '..', 'gerado')
 REPO = os.path.abspath(os.path.join(AQUI, '..', '..', '..'))
-VENV = os.path.join(REPO, '.vozes', 'venv-whisper')   # .vozes/ é ignorado pelo git (fora do /tmp, que é memória)
-COMO_INSTALAR = f"""✘ faster-whisper não está instalado. Instale no venv do projeto (.vozes/, ignorado pelo git):
-    python3 -m venv {VENV}
-    {VENV}/bin/pip install faster-whisper
+# venv único para todas as worktrees (o mesmo do vozes.js); REINO_VOZES_VENV escolhe outro lugar
+VENV = os.environ.get('REINO_VOZES_VENV') or os.path.join(os.path.expanduser('~'), '.cache', 'reino-dos-unicornios', 'vozes-venv')
+COMO_INSTALAR = f"""✘ faster-whisper não está instalado. Instale no venv das vozes (um só para todas as worktrees):
+    uv venv --python 3.13 {VENV}
+    uv pip install --python {VENV}/bin/python faster-whisper 'av<14'
+  (sem uv: curl -LsSf https://astral.sh/uv/install.sh | sh; o av<14 não tem pacote para o Python 3.14)
   e rode de novo com esse python (o npm run vozes já usa esse venv se ele existir):
     {VENV}/bin/python jogo/ferramentas/vozes/conferir-vozes.py {' '.join(sys.argv[1:])}
-  (ou, com uv: uv run --with faster-whisper python jogo/ferramentas/vozes/conferir-vozes.py …)
+  (ou: uv run --python 3.13 --with faster-whisper --with 'av<14' python jogo/ferramentas/vozes/conferir-vozes.py …)
   Na 1ª vez o modelo é baixado da internet (small: ~500 MB) para ~/.cache/huggingface."""
 
 
@@ -91,7 +99,7 @@ def indice_antes():
     return json.loads(r.stdout)
 
 
-def carregar_modelo(nome=None):
+def carregar_modelo(nome=None, threads=0):
     # modelo no cache padrão do usuário (~/.cache/huggingface; HF_HOME definido por fora vale)
     try:
         from faster_whisper import WhisperModel
@@ -99,8 +107,9 @@ def carregar_modelo(nome=None):
         print(COMO_INSTALAR)
         sys.exit(2)
     modelo = nome or opcao('--modelo', 'small')
-    print(f'  carregando o modelo {modelo} do faster-whisper (CPU)…', flush=True)
-    return WhisperModel(modelo, device='cpu', compute_type='int8')
+    if not threads:
+        print(f'  carregando o modelo {modelo} do faster-whisper (CPU)…', flush=True)
+    return WhisperModel(modelo, device='cpu', compute_type='int8', cpu_threads=threads)
 
 
 # sem a dica, "Robux" saía "robôs" ou "Rollbooks" com a voz certa; com ela, as 4 vozes testadas batem e as grafias que
@@ -113,15 +122,54 @@ def dica(texto):
     return ' '.join(achadas) or None
 
 
-def transcrever(modelo, arquivo, lingua, texto=None):
-    partes, _ = modelo.transcribe(arquivo, language=lingua, beam_size=5, vad_filter=False, initial_prompt=dica(texto))
+def transcrever(modelo, arquivo, lingua, texto=None, feixe=5):
+    partes, _ = modelo.transcribe(arquivo, language=lingua, beam_size=feixe, vad_filter=False, initial_prompt=dica(texto))
     return ' '.join(p.text.strip() for p in partes).strip()
+
+
+# 1ª passada em paralelo: cada processo carrega o próprio modelo (com uma parte dos núcleos) e transcreve um pedaço
+_MODELO = None
+
+
+def _iniciar(nome, threads):
+    global _MODELO
+    _MODELO = carregar_modelo(nome, threads)
+
+
+def _um(item):
+    arq, lingua, texto, feixe = item
+    return transcrever(_MODELO, arq, lingua, texto, feixe)
+
+
+def transcrever_todos(itens, nome, feixe):
+    """itens: [(arquivo, língua, texto)] → transcrições na mesma ordem."""
+    nucleos = os.cpu_count() or 4
+    processos = min(int(opcao('--processos', str(max(1, min(6, nucleos // 4))))), max(1, len(itens) // 10))
+    tarefas = [(a, l, t, feixe) for a, l, t in itens]
+    if processos <= 1:
+        modelo, saida = carregar_modelo(nome), []
+        for n, t in enumerate(tarefas, 1):
+            saida.append(transcrever(modelo, *t))
+            if n % 25 == 0:
+                print(f'  {n}/{len(tarefas)}…', flush=True)
+        return saida
+    print(f'  carregando o modelo {nome} do faster-whisper (CPU) em {processos} processos, feixe {feixe}…', flush=True)
+    # spawn: cada filho começa limpo (fork depois do ctranslate2 carregado deixa as threads disputando a CPU)
+    with concurrent.futures.ProcessPoolExecutor(processos, mp_context=multiprocessing.get_context('spawn'), initializer=_iniciar,
+                                                initargs=(nome, 4)) as ex:
+        saida = []
+        for n, ouvido in enumerate(ex.map(_um, tarefas, chunksize=4), 1):
+            saida.append(ouvido)
+            if n % 100 == 0:
+                print(f'  {n}/{len(tarefas)}…', flush=True)
+        return saida
 
 
 def amostras():
     i = sys.argv.index('--amostras')
     itens = [a for a in sys.argv[i + 1:] if not a.startswith('--')]
-    itens = [a for a in itens if a not in (opcao('--lingua'), opcao('--modelo'), opcao('--limite'), opcao('--segunda'))]
+    itens = [a for a in itens if a not in (opcao('--lingua'), opcao('--modelo'), opcao('--limite'), opcao('--segunda'),
+                                           opcao('--processos'), opcao('--feixe'))]
     modelo, lingua, limite = carregar_modelo(), opcao('--lingua', 'pt'), float(opcao('--limite', '0.8'))
     ruins = 0
     for item in itens:
@@ -148,18 +196,18 @@ def novas():
         print('✔ nenhuma gravação nova para conferir')
         return 0
     print(f'Conferindo {len(lista)} gravação(ões) nova(s) por transcrição…', flush=True)
-    modelo, limite = carregar_modelo(), float(opcao('--limite', '0.8'))
-    ruins = []
-    for n, f in enumerate(lista, 1):
-        arq = os.path.join(GERADO, 'vozes-cache', indice[f['chave']])
-        ouvido = transcrever(modelo, arq, 'en' if f['voz'] in inglesas else 'pt', f['fala'])
-        nota = parecido(f['fala'], ouvido)
-        if nota < limite:
-            ruins.append((f, ouvido, nota))
-        if n % 25 == 0:
-            print(f'  {n}/{len(lista)}…', flush=True)
+    # sem faster-whisper, explica como instalar antes de abrir processos (só procura: importar aqui atrasaria os filhos)
+    if importlib.util.find_spec('faster_whisper') is None:
+        print(COMO_INSTALAR)
+        sys.exit(2)
+    limite = float(opcao('--limite', '0.8'))
+    itens = [(os.path.join(GERADO, 'vozes-cache', indice[f['chave']]), 'en' if f['voz'] in inglesas else 'pt', f['fala']) for f in lista]
+    ouvidos = transcrever_todos(itens, opcao('--modelo', 'small'), int(opcao('--feixe', '1')))
+    ruins = [(f, o, parecido(f['fala'], o)) for f, o in zip(lista, ouvidos)]
+    ruins = [r for r in ruins if r[2] < limite]
     segunda = opcao('--segunda', 'medium')
-    if ruins and '--sem-segunda' not in sys.argv and segunda != opcao('--modelo', 'small'):
+    # a 2ª passada (modelo maior, feixe 5) desfaz as reprovações falsas do feixe 1
+    if ruins and '--sem-segunda' not in sys.argv and (segunda != opcao('--modelo', 'small') or opcao('--feixe', '1') != '5'):
         print(f'  {len(ruins)} divergiram: 2ª passada só nelas com o modelo {segunda}…', flush=True)
         maior, de_novo = carregar_modelo(segunda), []
         for f, ouvido, nota in ruins:
