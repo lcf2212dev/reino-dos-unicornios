@@ -4,8 +4,6 @@ description: Use para abrir, ver, testar ou tirar print do jogo Reino dos Unicó
 ---
 # Ver o jogo (servidor de teste)
 
-Regras: `jogo/ferramentas/CLAUDE.md`.
-
 1. PRIMEIRO `npm run ver` (na raiz da worktree): sobe servidor de TESTE e banco novos, põe um save sintético,
    vai ao lugar/tela, roda passos e fotografa nos 3 tamanhos (e `deitado` a pedido: `jogo/ferramentas/CLAUDE.md`) em `/tmp/reino-testes/ver/<nome>/` (PNG, `<nome>/erros.txt`,
    `<nome>/estado.json`; sai com código ≠ 0 se houve erro de console). `npm run ver -- --ajuda` lista tudo.
@@ -31,9 +29,5 @@ Regras: `jogo/ferramentas/CLAUDE.md`.
    `jogo/ferramentas/testes/navegador.js` (`abrir({ url, tamanho, save, query })`), com saves de
    `jogo/ferramentas/testes/saves.js`. Em código: `const { iniciar } = require('./servidor-teste'); const s = await iniciar(); … s.parar();`
 
-Guardas:
-- Nunca porta 80, `reinodosunicornios.local`, `localhost` sem porta de teste nem o IP do PC.
-- Nunca Firefox, WebKit nem emulação de iPhone/iPad com WebKit.
-- Saves só sintéticos; nunca copie o save real. Nunca "Apagar tudo", "Novo ciclo" nem pagamento fora do teste.
-- Pare só os seus servidores (Ctrl+C, `s.parar()` ou pelo PID). Nunca `pkill`/`killall` por nome.
-- Temporários ficam em `/tmp/reino-testes/`, sem apagar.
+Guardas (porta, navegador, saves, derrubar pelo PID, temporários): `jogo/ferramentas/CLAUDE.md`. Nunca "Apagar
+tudo", "Novo ciclo" nem pagamento fora do teste.

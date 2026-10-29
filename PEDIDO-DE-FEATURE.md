@@ -5,7 +5,7 @@ Como usar:
 2. Preencha só o que importa. Campo em branco vale o padrão escrito nele. Não precisa repetir o que está em "O que já vale sempre".
 3. Cole na conversa com o Claude. A primeira linha, `/nova-feature`, chama a skill que segue este modelo.
 
-Sem tempo para o modelo? Escreva do seu jeito e comece com `/preparar-pedido`.
+Sem tempo para o modelo? Escreva do seu jeito e comece com `/nova-feature`.
 
 Fotos e prints vão numa pasta dentro de `matérias/`. Exemplo: `reino-dos-unicornios/matérias/geografia/`. No pedido, escreva só o nome da pasta.
 

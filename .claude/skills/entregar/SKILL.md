@@ -1,72 +1,50 @@
 ---
 name: entregar
-description: Use no Reino dos Unicórnios, como orquestrador, quando as frentes (worktrees de agentes) terminaram e é hora de juntá-las na main, testar e entregar (commit, merge, push, artifact), ou para criar a worktree de uma frente nova com o material. Não use dentro de uma frente (worker) nem para testar uma frente só (validar-tudo).
+description: Use no Reino dos Unicórnios, como orquestrador, para criar a worktree de uma frente (com o material) e, quando as frentes terminaram, juntá-las na main, testar e entregar (commit, vozes, base do e2e, merge, push, conferência da Vercel) e limpar o que sobrou. Não use dentro de uma frente (worker) nem para testar uma frente só (validar-tudo).
 ---
-# Entregar (integrar frentes na main)
+# Entregar
 
-Para quem coordena. Ferramentas em `jogo/ferramentas/fluxo/` (Node, sem dependência). O histórico é LINEAR:
-cherry-pick, nunca merge commit. O fluxo é 100% autônomo (`CLAUDE.md` da raiz): commit, troca da base
-do e2e, merge, push e artifact (se o jogo mudou) sem perguntar.
+Para quem coordena; autorizado pelo `CLAUDE.md` da raiz, sem perguntar. Histórico LINEAR (cherry-pick, nunca merge
+commit). Detalhe de cada opção: `--ajuda` da ferramenta.
 
 ## Começar uma frente
-```
-npm run worktree -- <tema> --material <Pasta>
-```
-- Cria `/home/leandro/Development/projects/reino-<tema>` na branch `feat/<tema>` a partir da main (`--base <ref>` para outra), com
-  `node_modules` por link (`--ci` faz `npm ci`) e cópia dos arquivos NÃO rastreados de `matérias/<pasta>/` (prints de uma
-  matéria ou prova; `<Pasta>` é o nome da matéria, ex.: `Geografia` ou `ciências/Revisão`). Só lê a árvore principal.
-- Prints e fotos: `node jogo/ferramentas/fluxo/material.js <Pasta> --folha` grava cópias reduzidas, índice e
-  folhas de contato em `/tmp/reino-testes/material/<pasta>/`. Agente lê só essas.
+`npm run worktree -- <tema> [--material <Pasta>] [--base <ref>]` → `/home/leandro/Development/projects/reino-<tema>`, branch `feat/<tema>`,
+`node_modules` por link, cópia dos NÃO rastreados de `matérias/<Pasta>/` (ex.: `Geografia`, `ciências/Revisão`).
+Prints: `npm run material -- <Pasta> --folha` (reduzidas e folhas em `/tmp/reino-testes/material/<pasta>/`; agente lê só essas).
 
-## Integrar
-1. Confira que as frentes pararam (a ferramenta também confere: processo vivo numa worktree de frente = mostra os
-   PIDs e para; espere, não derrube processo que não é seu). Leia o retorno de cada frente: linhas para
-   `package.json`, `CLAUDE.md`, manifesto, `base-referencia.txt`, falas novas.
-2. Rode, na ordem em que as frentes devem entrar (branch com commit ou caminho de worktree sem commit):
-   ```
-   node jogo/ferramentas/fluxo/integrar.js feat/a /home/leandro/Development/projects/reino-b --assunto "o que a frente b fez"
-   ```
-   - Worktree `/home/leandro/Development/projects/reino-integracao-<data>` (branch `integracao/<data>`; `--nome` para outro nome).
-   - Branch com commits além da main: cherry-pick. Worktree sem commit: diff dela aplicado com `apply --3way`
-     + os arquivos novos. Sem `--commit`, as frentes soltas entram depois dos cherry-picks e ficam sem commit
-     (dá para testar antes). Com `--commit`, um commit por frente solta:
-     "Reino dos Unicórnios: <assunto>" + linha Claude-Session (variável `CLAUDE_SESSION_URL`).
-   - Depois: `npm run index`, aviso se o `falas.json` mudou, `npm test`, `npm run e2e` (e o resumo dele, se
-     houver). Relatório e saídas em `/tmp/reino-testes/integrar/<nome>/`.
-3. Conflito: a ferramenta para, lista os arquivos e grava o estado. Resolva na worktree de integração, `git add`
-   e rode `node jogo/ferramentas/fluxo/integrar.js --continuar --nome <nome>`.
-   - `jogo/index.html`: resolvido sozinho (um lado + `npm run index`).
-   - Lista de skills (ou outra lista) no `CLAUDE.md`: JUNTE as duas listas, sem perder item de nenhum lado.
-   - Manifesto: mantenha as linhas das duas frentes, na ordem de carga que cada uma pediu.
-4. Linhas do orquestrador (`package.json`, `CLAUDE.md`, `COMO-USAR.md`, tipos, `.gitignore`): ponha na worktree
-   de integração e rode `npm test` de novo.
-5. Vozes: com falas novas ou o aviso do `falas.json`, skill `gravar-vozes`; personagem novo ou perfil de voz
-   trocado, antes a skill `validar-vozes`.
-6. Diferença no e2e: confira cada uma com o que as frentes disseram. Diferença não explicada = volte à frente.
-7. Colisões: arquivo NÃO rastreado na árvore principal (ex.: a pasta de prints) que a integração passa a
-   rastrear. Igual byte a byte = "mover" (só com `--merge`, para `/tmp/reino-testes/antes-do-merge/<data>/`);
-   diferente = a ferramenta para e lista: vale o da árvore principal (o mais novo); copie-o para a worktree de
-   integração, `git add` e `--continuar`.
+## Integrar e entregar (uma chamada)
+Antes: frentes paradas (processo vivo numa worktree de frente = a ferramenta para e mostra os PIDs; espere) e o
+retorno de cada uma lido (linhas para os arquivos disputados, falas novas, diferenças do e2e).
+```
+npm run integrar -- feat/a /home/leandro/Development/projects/reino-b --assunto "o que a b fez" --commit --vozes \
+  --esperado '<regex das imagens que a feature explica>' [--trocar-base "<descrição>"] --merge --push
+```
+- `--esperado` sempre (idêntico esperado: `--esperado '^$'`, sem `--trocar-base`); `--trocar-base "<descrição>"` só
+  se o e2e mudou de propósito (o que a feature explica). `--merge` recusa e2e vermelho sem `--esperado` aceito.
+- Worktree `reino-integracao-<data>` (`--nome` outro). Branch com commit: cherry-pick; worktree solta: diff +
+  arquivos novos, um commit por frente com `--commit` (mensagem sem Claude-Session e sem prefixo dobrado).
+- `--vozes`: grava, empacota e confere as falas sem áudio (commit "vozes …"); conferência reprovada = para (skill
+  `validar-vozes`, depois `--continuar`). `--merge` recusa fala sem áudio. Personagem novo ou perfil trocado: antes,
+  `npm run vozes-elenco`.
+- e2e diferente fora do `--esperado` = para, sem base nem merge: volte à frente. `--trocar-base` grava a base `@`
+  dentro do último commit (sem commit "base do e2e").
+- Conflito: para e lista; resolva na worktree de integração, `git add`, `npm run integrar -- --continuar --nome <n>`
+  (o estado mora no git dela). Resolvidos sozinhos: `index.html` e vozes (índice juntado; a mesma fala com áudios
+  diferentes para e pede escolha). Lista no `CLAUDE.md`: junte as duas. Manifesto: as linhas das duas frentes.
+- Linhas dos arquivos disputados: ponha na worktree de integração e rode de novo (sem entradas, retoma o que falta).
+- Colisão (não rastreado na árvore principal que a integração passa a rastrear): igual = movido pelo `--merge`;
+  diferente = para: vale o da árvore principal; copie para a integração, `git add`, `--continuar`.
+- Árvore principal com mudança em arquivo rastreado: leve-a para a integração (nada se perde), restaure a principal
+  ao git e explique no relatório.
+- Push recusado (GitHub andou): `git fetch`, `merge --ff-only origin/main` na principal (ou integre de novo por
+  cima) e push. Nunca `--force`.
 
-## Entregar (sem perguntar, com tudo verde)
-1. **Commit:** `--commit` (ou commits à mão na worktree de integração).
-2. **Base do e2e:** só se o e2e mudou de propósito (a diferença que a feature explica) →
-   `--trocar-base "<descrição curta>"` (commit "Reino dos Unicórnios: base do e2e em <hash> (<descrição>)").
-3. **Merge:** `--merge` move as colisões iguais e faz `merge --ff-only` na árvore principal (servida ao vivo); exige
-   `npm test` verde e a integração sem mudança solta. Se a árvore principal tiver mudança em arquivo rastreado, veja
-   o que é: alguém pode ter mexido nela (ex.: moveu uma pasta de material); leve a mudança para a integração e
-   restaure a árvore principal ao que está no git antes do merge. Mudança que você não entende: leve-a igual
-   para a integração (nada se perde) e explique no relatório.
-4. **Push:** `--push` (`git push origin main`, nunca `--force`). Recusado porque o GitHub andou: `git fetch`,
-   `merge --ff-only origin/main` na árvore principal (se não for fast-forward, integre de novo por cima do
-   `origin/main`) e push de novo.
-As flags vão juntas numa chamada só: `--commit --trocar-base … --merge --push`.
-5. **Artifact:** depois do push, se `npm run artifact -- --desde publicado` mostra arquivo do jogo → skill
-   `publicar-artifact`. Só docs ou ferramentas: não publique.
-6. **Relatório final:** o que entrou, o que você decidiu sozinho, o hash da main, a versão do artifact e
-   o servidor de teste.
+## Depois do push
+1. `npm run vercel -- --conferir` (jogo não mudou: sai na hora). Erro: `npm run vercel` (plano B). Nada de artifact.
+2. Limpeza: `npm run limpar` lista; `npm run limpar -- --aplicar --manter '<regex das worktrees em uso>'` só com
+   nenhuma frente rodando.
+3. Relatório: skill `nova-feature`, passo 7.
 
 ## Nunca
-- Escrever na árvore principal fora do `--merge`; `git push --force`; merge commit; `rm` com caminho variável.
-- Servidor de casa, save real, artifact publicado ou Docker (regras do `CLAUDE.md` da raiz).
-- Apagar a worktree de integração ou as das frentes (ficam; o Leandro limpa quando quiser).
+Escrever na árvore principal fora do `--merge`; `git push --force`; merge commit; `rm` com caminho variável; o que o
+`CLAUDE.md` da raiz protege (progresso, banco da Vercel, servidor de casa, artifact, Docker).

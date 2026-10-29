@@ -4,10 +4,10 @@ description: Use quando for criar ou refazer um prédio por dentro (interior) no
 ---
 # Novo prédio
 
-1. Worktree (nunca na árvore principal): `npm run worktree -- <tema>`. Leia `jogo/js/interiores/CLAUDE.md`
+1. Worktree: `npm run worktree -- <tema>`. Leia `jogo/js/interiores/CLAUDE.md`
    (inclui o que o prédio não edita).
 2. Siga a receita `docs/receitas/predio-novo.md` (gerador, partes, lugar no mapa, manifesto, conferir no jogo);
    personagem novo: `docs/receitas/personagem-novo.md`; falas: `docs/receitas/licoes-de-voz.md`.
    Contratos: `docs/contratos/interiores.md` e `docs/contratos/npcs-e-dialogo.md`.
-3. Fecho: skill `validar-tudo` (com `npm run e2e -- --desempenho`, se mexeu em desenho); falas novas com o texto
-   exato no retorno (quem integra grava com `gravar-vozes`). A frente não faz commit; quem orquestra integra até a main (skill `entregar`).
+3. Fecho: skill `validar-tudo` (com `--desempenho`); falas novas com o texto exato no retorno. Quem orquestra
+   integra (skill `entregar`).

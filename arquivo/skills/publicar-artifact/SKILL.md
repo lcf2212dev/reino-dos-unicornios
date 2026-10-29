@@ -1,6 +1,6 @@
 ---
 name: publicar-artifact
-description: Use depois de cada merge na main que muda o jogo (entrega ponta a ponta, sem perguntar), para publicar (atualizar) o artifact do Reino dos Unicórnios no claude.ai. Publica apenas o que mudou desde a versão registrada, em lotes, sem mexer no progresso da Mariana. Só o orquestrador; nunca um worker nem um subagente.
+description: APOSENTADA — não use. Use depois de cada merge na main que muda o jogo (entrega ponta a ponta, sem perguntar), para publicar (atualizar) o artifact do Reino dos Unicórnios no claude.ai. Publica apenas o que mudou desde a versão registrada, em lotes, sem mexer no progresso da Mariana. Só o orquestrador; nunca um worker nem um subagente.
 ---
 
 # Publicar o artifact por delta

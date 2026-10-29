@@ -36,7 +36,7 @@ Guia de uso para o Leandro. As regras técnicas ficam em `docs/contratos/`.
 
 ## Pedir uma novidade
 - Copie o modelo `PEDIDO-DE-FEATURE.md`, preencha e cole na conversa.
-- Sem tempo? Escreva do seu jeito começando com `/preparar-pedido`.
+- Sem tempo? Escreva do seu jeito começando com `/nova-feature`.
 - O Claude não pergunta nada: decide o que faltar, constrói, testa, põe na main, manda para o GitHub e a Vercel
   publica sozinha no mesmo endereço. No fim ele conta o que fez e o que decidiu.
 
