@@ -33,10 +33,13 @@ const gravarJson = (arq, v) => { fs.mkdirSync(path.dirname(arq), { recursive: tr
 // do Resource Timing, e cada volta abria um MessageChannel que nunca fechava: o Chromium passava de 10 GB.
 const PINTURA = ['fillRect', 'strokeRect', 'clearRect', 'drawImage', 'fillText', 'strokeText', 'fill', 'stroke', 'putImageData'];
 const ESPERA_VOZ_MS = Number(process.env.REINO_ESPERA_VOZ_MS) || 20000;
-const avancar = (page, ms) => page.evaluate(async ([m, metodos, esperaMax]) => {
+// Sem pintar nem o último passo (pintar falso): o trecho que um lote da fila mapa + interiores só anda, sem foto
+// (referencias-cenas.js). A tela sai igual porque cada quadro repinta tudo e a foto seguinte pinta o seu.
+// (roda dentro da página: avancarNaPagina([ms, PINTURA, ESPERA_VOZ_MS, pintar]))
+const avancarNaPagina = async ([m, metodos, esperaMax, pintar]) => {
   var C = window.__congelar, V = window.Reino && Reino._motor;
   var antes = Math.max(0, Math.ceil(m / 16) - 1) * 16;
-  if (!V || !V.ctx || !V.bctx || !antes) return C.avancar(m);
+  if (!V || !V.ctx || !V.bctx || (!antes && pintar)) return C.avancar(m);
   var faltam = () => {
     var feitos = window.__scriptsProntos || new Set(performance.getEntriesByType('resource').map((e) => e.name));
     return [...document.querySelectorAll('script[src*="js/voz/"]')].filter((s) => !feitos.has(s.src)).map((s) => s.src);
@@ -57,12 +60,22 @@ const avancar = (page, ms) => page.evaluate(async ([m, metodos, esperaMax]) => {
       }
       await C.avancar(16);
     }
+    if (!pintar) return await C.avancar(m - antes);
   } finally {
     ctxs.forEach((c) => metodos.forEach((k) => { delete c[k]; }));
     canal.port1.close();
   }
   return C.avancar(m - antes);
-}, [ms, PINTURA, ESPERA_VOZ_MS]);
+};
+// page.__pintar === false (foto): passos sem pintar
+const avancar = (page, ms) => page.evaluate(avancarNaPagina, [ms, PINTURA, ESPERA_VOZ_MS, page.__pintar !== false]);
+// vários passos num evaluate só (`corpo` usa av(ms) e quadro()): cada ida e volta ao Chromium custa, e muito com a
+// máquina cheia; foto e limpar faziam 4 cada
+const naPagina = (page, corpo) => page.evaluate(`(async () => {
+  const avancar = ${avancarNaPagina}, quadro = ${quadroRealNaPagina};
+  const av = (ms) => avancar([ms, ${JSON.stringify(PINTURA)}, ${ESPERA_VOZ_MS}, ${page.__pintar !== false}]);
+  ${corpo}
+})()`);
 // cada aba tem o SEU servidor de teste com banco novo: a sincronização de uma aba não vaza para outra
 async function abrirJogo(browser, raiz, tamanho, save) {
   const servidor = await iniciar({ raiz });
@@ -88,40 +101,41 @@ async function abrirJogo(browser, raiz, tamanho, save) {
 // título da sala quando as bolinhas entram; sem este quadro, o observador disparava ou não antes da última pintura
 // conforme a carga da máquina e "Expedição Antártida" saía em 2 ou 3 linhas (O-11). Um ResizeObserver novo, criado
 // depois dos do jogo, é entregue no MESMO quadro e depois deles: quando ele chega, os do jogo já pediram o rAF.
-const quadroReal = (page) => page.evaluate(() => new Promise((r) => {
+const quadroRealNaPagina = () => new Promise((r) => {
   var feito = false, fim = () => { if (!feito) { feito = true; ro.disconnect(); r(); } };
   var ro = new ResizeObserver(fim);
   ro.observe(document.documentElement);
   (window.__esperarReal || ((ms) => new Promise((ok) => setTimeout(ok, ms))))(2000).then(fim);
-}));
+});
 // page.__filtro (RegExp, --cenas do e2e): nome que não casa anda o relógio igual, mas não é fotografado.
 // page.__faltam (Set dos nomes pedidos neste tamanho): vazio, a aba para (erro .chega) — já saiu tudo
+// page.__lote ({ de, ate }, lotes da fila mapa + interiores: referencias-cenas.js): a foto nº i (contando de 1) só sai
+// com de < i <= ate; antes anda o relógio igual sem foto e sem pintar (page.__pintar) e, passada a última, a aba para
+// (.chega)
+const chega = () => Object.assign(new Error('chega'), { chega: true });
 async function foto(page, pasta, nome) {
-  if (page.__faltam && !page.__faltam.size) throw Object.assign(new Error('chega'), { chega: true });
+  const i = page.__nFoto = (page.__nFoto || 0) + 1;
+  if ((page.__faltam && !page.__faltam.size) || (page.__lote && i > page.__lote.ate)) throw chega();
   marcar(page, nome); // o vigia (vigia-memoria.js) acusa a aba que fica minutos sem foto nova
+  page.__pintar = !(page.__lote && i <= page.__lote.de); // vale até a próxima foto
   // 600 ms como antes (37 passos de 16 e um de 8), com um quadro de verdade antes do último passo (quadroReal)
-  await avancar(page, 592);
-  await quadroReal(page);
-  await avancar(page, 8);
-  await page.evaluate(() => window.__congelar.respirar(8));
+  await naPagina(page, 'await av(592); await quadro(); await av(8); await window.__congelar.respirar(8);');
+  if (page.__lote && i <= page.__lote.de) return;
   if (page.__filtro && !page.__filtro.test(nome)) return;
   if (page.__faltam) page.__faltam.delete(nome);
   fs.mkdirSync(pasta, { recursive: true });
-  // 1ª captura só para cancelar as animações de CSS; a camada é refeita e a 2ª sai estável
-  await page.screenshot({ animations: 'disabled', caret: 'hide' });
-  await page.waitForTimeout(60);
   await page.screenshot({ path: path.join(pasta, nome + '.png'), animations: 'disabled', caret: 'hide' });
+  if (page.__lote && i >= page.__lote.ate) throw chega();
 }
 // fecha telas, balões e missões abertas (como os botões de fechar fariam)
 async function limpar(page) {
-  await page.evaluate(() => {
+  await naPagina(page, `
     try { Reino.Claude.limpar(); } catch (e) { /* sem balão */ }
     Reino.UI.fecharTodas();
     document.body.classList.remove('em-missao');
-  });
-  await avancar(page, 400);
-  await page.evaluate(() => { Reino.UI.fecharTodas(); document.body.classList.remove('em-missao'); });
-  await avancar(page, 200);
+    await av(400);
+    Reino.UI.fecharTodas(); document.body.classList.remove('em-missao');
+    await av(200);`);
 }
 
 async function clicarBotao(page, seletor, texto) {
