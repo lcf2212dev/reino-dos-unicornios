@@ -64,12 +64,16 @@
   function ordemY(a, b) { return a.y - b.y; }
   // um erro no desenho de uma cena não derruba o quadro (nem a íris); avisa uma vez por parte
   var errosVistos = {};
-  function seguro(cena, parte, fn) {
-    try { return fn(); } catch (e) {
-      var k = cena.id + ':' + parte;
-      if (!errosVistos[k]) { errosVistos[k] = true; console.error('Erro ao desenhar ' + k, e); }
-    }
+  function avisar(cena, parte, e) {
+    var k = cena.id + ':' + parte;
+    if (!errosVistos[k]) { errosVistos[k] = true; console.error('Erro ao desenhar ' + k, e); }
   }
+  function seguro(cena, parte, fn) {
+    try { return fn(); } catch (e) { avisar(cena, parte, e); }
+  }
+  // listas reusadas a cada quadro (sem lixo): os itens por Y e as camadas ativas
+  var itens = [], camadas = [];
+  function juntar(lista) { if (lista) for (var i = 0; i < lista.length; i++) itens.push(lista[i]); }
   function desenhar(t) {
     if (!est() || !V.ctx) return;
     var t0 = performance.now();
@@ -88,15 +92,24 @@
     V.ctx.imageSmoothingEnabled = false;
     V.ctx.drawImage(V.buffer, -Math.round((cam.x - ox) * V.escala), -Math.round((cam.y - oy) * V.escala), V.buffer.width * V.escala, V.buffer.height * V.escala);
     seguro(cena, 'tela', function () { cena.desenharTela(V.ctx, pintor, t, animar); });
-    // quem está mais embaixo aparece na frente
-    var itens = J.itensDesenho(pintor, animar).concat(seguro(cena, 'itens', function () { return cena.itensDesenho(pintor, t, animar); }) || []);
+    // quem está mais embaixo aparece na frente (a ordenação é estável: no empate, a ordem em que entraram)
+    itens.length = 0; camadas.length = 0;
+    juntar(J.itensDesenho(pintor, animar));
+    try { juntar(cena.itensDesenho(pintor, t, animar)); } catch (e) { avisar(cena, 'itens', e); }
     // camadas dos módulos (js/nucleo/modulos.js; ex.: banho de espuma) entram na mesma ordem por y
-    var camadas = Reino.modulos.filter(function (m) { return m.camada && m.camada.ativo(); });
-    camadas.forEach(function (m) { itens = itens.concat(seguro(cena, m.id, function () { return m.camada.itensDesenho(pintor, t, animar); }) || []); });
-    itens.sort(ordemY).forEach(function (i) { seguro(cena, 'item', function () { i.desenhar(); }); });
+    var mods = Reino.modulos, i;
+    for (i = 0; i < mods.length; i++) if (mods[i].camada && mods[i].camada.ativo()) camadas.push(mods[i]);
+    for (i = 0; i < camadas.length; i++) {
+      try { juntar(camadas[i].camada.itensDesenho(pintor, t, animar)); } catch (e) { avisar(cena, camadas[i].id, e); }
+    }
+    itens.sort(ordemY);
+    for (i = 0; i < itens.length; i++) { try { itens[i].desenhar(); } catch (e) { avisar(cena, 'item', e); } }
     // por cima dos personagens (ex.: placas dos cômodos que descem para desviar do HUD)
     if (cena.desenharSobre) seguro(cena, 'sobre', function () { cena.desenharSobre(V.ctx, pintor, t, animar); });
-    camadas.forEach(function (m) { if (m.camada.sobre && m.camada.ativo()) seguro(cena, m.id + '-sobre', function () { m.camada.sobre(V.ctx, pintor, t, animar); }); });
+    for (i = 0; i < camadas.length; i++) {
+      var m = camadas[i];
+      if (m.camada.sobre && m.camada.ativo()) seguro(cena, m.id + '-sobre', function () { m.camada.sobre(V.ctx, pintor, t, animar); });
+    }
     desenharLuz();
     Cena.desenharIris(V.ctx, pintor, performance.now());
     Cena.quadros.registrar(performance.now() - t0);

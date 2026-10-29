@@ -13,6 +13,32 @@
 
   /* ================= CENA ================= */
   var cenas = {};
+  // memória: só as LIMITE_CENAS cenas usadas por último guardam o estático e os sprites dos móveis; a que sai é
+  // refeita no preparar da próxima visita, com a íris fechada (a cena ativa nunca sai). Em ordem de uso, a mais
+  // recente no fim
+  var LIMITE_CENAS = 4, vivas = [];
+  function usar(cena) {
+    var i = vivas.indexOf(cena);
+    if (i >= 0) vivas.splice(i, 1);
+    vivas.push(cena);
+    var atual = R.Cena && R.Cena.atual ? R.Cena.atual() : null;
+    for (var k = 0; vivas.length > LIMITE_CENAS && k < vivas.length - 1; ) {
+      if (vivas[k] === atual) { k++; continue; }
+      vivas.splice(k, 1)[0]._liberar();
+    }
+  }
+  // fora da câmera não se desenha (móveis e animações; os NPCs sempre: o desenho deles guarda as caixas que as placas
+  // dos cômodos leem). Quanto a animação pode passar do sprite do móvel (px do jogo): o pior medido é o foguete da NASA
+  // decolando (começa com um toque), 180 px acima; o dos móveis altos, 10 px. O teste
+  // interiores-alcance.navegador.test.js desenha todas (com as de toque disparadas) e confere
+  var ALCANCE_ANIM = 256, FOLGA_ITEM = 16;
+  function vistaDoPintor(p, v) {
+    var c = p && p.cam, cv = p && p.ctx && p.ctx.canvas, e = p && p.escala;
+    if (!c || !cv || !e) return null;
+    v.x0 = c.x; v.y0 = c.y; v.x1 = c.x + cv.width / e; v.y1 = c.y + cv.height / e;
+    return v;
+  }
+  function naVista(v, b) { return b.x1 >= v.x0 && b.x0 <= v.x1 && b.y1 >= v.y0 && b.y0 <= v.y1; }
 
   // canvas do estático, opaco (alpha: false): o estático pinta o retângulo todo (fundo ou céu por baixo), e colá-lo
   // no buffer a cada quadro vira cópia em vez de mistura (desenho idêntico, mais barato). Sem DOM (testes): PA.novoCanvas.
@@ -59,7 +85,7 @@
       var chave = chaveEstado();
       if (estatico && chave === chaveFeita) { sujo = false; return; }
       E.mascaras = {}; E.retratos = {};
-      if (!estatico) estatico = canvasOpaco(g.w * T, g.h * T);
+      if (!estatico) { estatico = canvasOpaco(g.w * T, g.h * T); usar(cena); }
       var ctx = estatico.getContext('2d');
       desenharEstatico(ctx, def, g, P, objs);
       // anims parados entram no estático só como base? não: são desenhados a cada quadro (ver desenharFundo)
@@ -122,6 +148,12 @@
       return perto;
     }
     function marcarSujo() { sujo = true; }
+    // saiu da memória (usar): solta o estático e os sprites; o próximo renderizar refaz tudo
+    function liberar() {
+      estatico = null; chaveFeita = null; sujo = true;
+      E.mascaras = {}; E.retratos = {};
+      objs.forEach(function (it) { it.sprite = null; it.spriteAnim = null; it.feito = false; });
+    }
     if (R.util && R.util.on) { R.util.on(R.EVENTOS.PROGRESSO, marcarSujo); R.util.on(R.EVENTOS.PROGRESSO_REMOTO, marcarSujo); R.util.on(R.EVENTOS.MAPA_MUDOU, marcarSujo); }
 
 
@@ -154,17 +186,30 @@
       preparar: function () {
         try {
           if (sujo || !estatico) renderizar();
+          usar(cena);
           aquecerNpcs(npcs);
         } catch (e) { return Promise.reject(e); }
         return Promise.resolve();
       },
       desenharFundo: function (bctx, t, animar) {
         if (!estatico || sujo) renderizar();
-        bctx.drawImage(estatico, 0, 0);
+        // a vista do buffer (px do jogo): só com o deslocamento simples do laço; senão, desenha todos
+        var m = bctx.getTransform ? bctx.getTransform() : null, v = null;
+        if (m && !m.b && !m.c && m.a > 0 && m.d > 0 && bctx.canvas) {
+          v = vistaFundo; v.x0 = -m.e / m.a; v.y0 = -m.f / m.d; v.x1 = v.x0 + bctx.canvas.width / m.a; v.y1 = v.y0 + bctx.canvas.height / m.d;
+        }
+        // do estático, só o pedaço que a vista pega (mesmos pixels, no mesmo lugar)
+        var sx = v ? Math.max(0, Math.floor(v.x0)) : 0, sy = v ? Math.max(0, Math.floor(v.y0)) : 0;
+        var sw = v ? Math.min(estatico.width, Math.ceil(v.x1)) - sx : 0, sh = v ? Math.min(estatico.height, Math.ceil(v.y1)) - sy : 0;
+        if (!v) bctx.drawImage(estatico, 0, 0);
+        else if (sw > 0 && sh > 0) bctx.drawImage(estatico, sx, sy, sw, sh, sx, sy, sw, sh);
         var tt = animar ? t : 0;
         // os baixos na frente dela (mesma silhueta que itensDesenho usa) levam a animação no próprio sprite
         baixosPerto();
-        for (var i = 0; i < animados.length; i++) { var it = animados[i]; if (!it.naFrente) it.lib.anim(bctx, it.px, it.py, tt, it.o); }
+        for (var i = 0; i < animados.length; i++) {
+          var it = animados[i];
+          if (!it.naFrente && (!v || naVista(v, it.caixa))) it.lib.anim(bctx, it.px, it.py, tt, it.o);
+        }
         if (def.saida) setaSaida(bctx, def.saida, t, animar);
         var esc = def.escadas || [];
         for (var k = 0; k < esc.length; k++) setaEscada(bctx, esc[k], t, animar);
@@ -176,27 +221,35 @@
       itensDesenho: function (pintor, t, animar) {
         E.pintorAtual = pintor; tAtual = animar ? t : 0; animarAtual = animar;
         if (!estatico || sujo) renderizar();
-        if (!perto.length) return itens;
-        // lista reusada: itens fixos + os baixos da vez (sem alocar por quadro)
-        comPerto.length = itens.length;
-        for (var i = 0; i < perto.length; i++) comPerto[itens.length + i] = perto[i];
+        // lista reusada: os itens fixos que a câmera vê (na ordem de sempre) + os baixos da vez (sem alocar por quadro)
+        var v = vistaDoPintor(pintor, vistaItens), n = 0;
+        for (var i = 0; i < itens.length; i++) if (!v || !itens[i].caixa || naVista(v, itens[i].caixa)) comPerto[n++] = itens[i];
+        for (var j = 0; j < perto.length; j++) comPerto[n++] = perto[j];
+        comPerto.length = n;
         return comPerto;
       },
       // para as ferramentas: objetos com a pegada já resolvida
       _objetos: objs,
       _quemEm: function (wx, wy) { var q = II.quemEm(E, wx, wy); return q ? (q.npc ? 'npc:' + q.npc.id : 'obj:' + q.it.i) : null; },
       _renderizar: function () { sujo = true; renderizar(); return estatico; },
+      _liberar: liberar,
+      _temEstatico: function () { return !!estatico; },
     };
     E.cena = cena;
+    var vistaFundo = {}, vistaItens = {};
+    // caixa de cada animado e de cada móvel alto (px do jogo): o sprite com o alcance da animação
+    function caixa(it, F) { return { x0: it.px - 2 - F, y0: it.py - it.topo - F, x1: it.px + it.W + 2 + F, y1: it.base + 2 + F }; }
+    animados.forEach(function (it) { it.caixa = caixa(it, ALCANCE_ANIM); });
+    altos.forEach(function (it) { it.caixa = caixa(it, FOLGA_ITEM); });
 
-    // itens por Y (montados uma vez; o pintor e o tempo entram por variável)
+    // itens por Y (montados uma vez; o pintor e o tempo entram por variável). Com caixa (os móveis altos), só entram
+    // os que a câmera vê; os NPCs, sem caixa, entram sempre
     var itens = [];
-    function copiarItens() { comPerto.length = 0; for (var i = 0; i < itens.length; i++) comPerto.push(itens[i]); }
     npcs.forEach(function (n) {
       itens.push({ y: n.y * T + 12, npc: n, desenhar: function () { desenharNpc(E.pintorAtual, n, tAtual, animarAtual); } });
     });
     altos.forEach(function (it) {
-      itens.push({ y: it.base - 1, objeto: it.o, desenhar: function () {
+      itens.push({ y: it.base - 1, objeto: it.o, caixa: it.caixa, desenhar: function () {
         if (!it.sprite) return;
         spriteNoFundo(it.sprite, it.px + it.W / 2, it.base + 2);
         if (it.lib.anim) it.lib.anim(ctxPintor, it.px, it.py, tAtual, it.o);
@@ -205,13 +258,13 @@
     baixos.forEach(function (it) {
       it.item = { y: it.base - 1, objeto: it.o, desenhar: function () { if (it.sprite) desenharMovel(it); } };
     });
-    copiarItens();
     return cena;
   }
 
   // desenha cada NPC uma vez num pintor mudo (vários instantes, com e sem animação), para os
-  // caches de sprites e ícones do Reino.NPCs ficarem prontos antes de a íris abrir
-  var pintorMudo = null;
+  // caches de sprites e ícones do Reino.NPCs ficarem prontos antes de a íris abrir. Os caches do Reino.NPCs não
+  // saem da memória: a volta inteira só na 1ª vez de cada sprite; nas outras, um desenho parado (o ícone de agora)
+  var pintorMudo = null, aquecidos = typeof WeakMap === 'function' ? new WeakMap() : null;
   function aquecerNpcs(npcs) {
     if (!R.NPCs || !R.NPCs.desenhar || !npcs.length) return;
     if (!pintorMudo) {
@@ -221,10 +274,12 @@
     }
     npcs.forEach(function (n) {
       try {
+        if (aquecidos && n.sprite && aquecidos.get(n) === n.sprite) { R.NPCs.desenhar(pintorMudo, n, n.x * T + 8, n.y * T + 12, 0, false); return; }
         if (R.NPCs.sprite) { R.NPCs.sprite(n, 0); R.NPCs.sprite(n, 1); }
         if (R.NPCs.retrato) { R.NPCs.retrato(n, 0); R.NPCs.retrato(n, 1); }
         for (var t = 0; t <= 6000; t += 50) R.NPCs.desenhar(pintorMudo, n, n.x * T + 8, n.y * T + 12, t, true);
         R.NPCs.desenhar(pintorMudo, n, n.x * T + 8, n.y * T + 12, 0, false);
+        if (aquecidos && n.sprite && typeof n.sprite === 'object') aquecidos.set(n, n.sprite);
       } catch (e) {}
     });
   }
@@ -248,6 +303,8 @@
   R.Interiores = {
     T: T,
     def: function (id) { return R.interiores.find(function (d) { return d.id === id; }) || null; },
+    // para os testes: as cenas com o estático na memória, da usada há mais tempo à mais recente
+    _naMemoria: function () { return vivas.map(function (c) { return c.id; }); },
     doLugar: function (lugarId) {
       var lista = R.interiores.filter(function (d) { return d.lugar === lugarId; });
       return lista.find(function (d) { return d.entrada; }) || lista[0] || null;

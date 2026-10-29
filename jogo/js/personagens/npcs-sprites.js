@@ -75,7 +75,16 @@
     return { g: g, busto: BY + 3 };
   }
 
-  function chaveSprite(s) { return JSON.stringify(s || {}); }
+  // a chave de cada objeto de sprite sai uma vez só (o interiores/padrao.js troca o objeto inteiro, nunca muda dentro)
+  var chaves = typeof WeakMap === 'function' ? new WeakMap() : null;
+  function chaveSprite(s) {
+    if (!chaves || !s || typeof s !== 'object') return JSON.stringify(s || {});
+    var k = chaves.get(s);
+    if (k === undefined) { k = JSON.stringify(s); chaves.set(s, k); }
+    return k;
+  }
+  // sprite pronto por objeto de sprite e quadro, sem montar a chave em texto a cada desenho
+  var prontos = chaves ? new WeakMap() : null;
 
   /* bases novas de sprite (ex.: 'robo' do Observatório): fn(o, quadro) → { g: Grade, busto }.
      o = params() com o.cru = o sprite original; quadro: bit 1 respira, bit 2 pisca.
@@ -130,8 +139,10 @@
   function gerar(spriteDef, quadro) {
     quadro = quadro | 0;
     if (quadro & 4) quadro &= ~1;
+    var porQuadro = prontos && spriteDef && typeof spriteDef === 'object' ? prontos.get(spriteDef) : null;
+    if (porQuadro && porQuadro[quadro]) return porQuadro[quadro];
     var k = 'npc|' + chaveSprite(spriteDef) + '|' + quadro;
-    if (cache[k]) return cache[k];
+    if (cache[k]) return guardar(spriteDef, quadro, cache[k]);
     var o = params(spriteDef);
     var r = BASES[o.base] ? BASES[o.base](o, quadro) : o.base === 'dragao' ? gradeDragao(o, quadro) : gradePessoa(o, quadro);
     if ((quadro & 4) && (o.base === 'pessoa' || o.base === 'fada')) aceno(r.g, o, !!(quadro & 8));
@@ -143,6 +154,13 @@
     c.topo = topo;
     c.busto = r.busto + 1;   // +1 do contorno
     cache[k] = c;
+    return guardar(spriteDef, quadro, c);
+  }
+  function guardar(spriteDef, quadro, c) {
+    if (!prontos || !spriteDef || typeof spriteDef !== 'object') return c;
+    var porQuadro = prontos.get(spriteDef);
+    if (!porQuadro) prontos.set(spriteDef, porQuadro = []);
+    porQuadro[quadro] = c;
     return c;
   }
 

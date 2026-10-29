@@ -131,13 +131,26 @@
 
   // p = pintor que desenha em pixels de tela (movimento suave, sem tremer)
   // forca: 0–1 (na água a sombra some aos poucos)
+  // as 7 linhas da sombra: a cor de cada uma com força 1 e a meia largura das larguras de sempre, feitas uma vez só
+  // (na água a largura encolhe aos poucos: essas não se guardam, no máximo 32 larguras)
+  var ALFA_SOMBRA = [0.28, 0.18, 0.10, 0.05];
+  function corSombra(j, k) { return 'rgba(58,36,70,' + (ALFA_SOMBRA[Math.abs(j)] * k).toFixed(3) + ')'; }
+  var CORES_SOMBRA = [-3, -2, -1, 0, 1, 2, 3].map(function (j) { return corSombra(j, 1); }), meiasSombra = {}, nMeias = 0;
+  function meias(larg) {
+    var ms = meiasSombra[larg];
+    if (ms) return ms;
+    ms = [];
+    for (var i = -3; i <= 3; i++) ms.push(Math.round(larg * Math.sqrt(1 - (i * i) / 12.25)));
+    if (nMeias < 32) { meiasSombra[larg] = ms; nMeias++; }
+    return ms;
+  }
   function sombra(p, x, y, larg, forca) {
     var k = forca === undefined ? 1 : forca;
     if (k <= 0.02) return;
-    var alfa = { 0: 0.28, 1: 0.18, 2: 0.10, 3: 0.05 };
+    var ms = meias(larg);
     for (var j = -3; j <= 3; j++) {
-      var m = Math.round(larg * Math.sqrt(1 - (j * j) / 12.25));
-      p.ret(x - m, y + j, m * 2, 1, 'rgba(58,36,70,' + (alfa[Math.abs(j)] * k).toFixed(3) + ')');
+      var m = ms[j + 3];
+      p.ret(x - m, y + j, m * 2, 1, k === 1 ? CORES_SOMBRA[j + 3] : corSombra(j, k));
     }
   }
   J.sombra = function (p, x, y, larg) { sombra(p, x, y, larg); };
