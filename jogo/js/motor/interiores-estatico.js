@@ -187,7 +187,7 @@
     // sombras automáticas sob os móveis
     objs.forEach(function (it) {
       if (it.parede || it.lib.semSombra || it.lib.plano) return;
-      // sombra de chão reta e centrada (ui.md §10.13.2): 2 níveis (0,15 fora, 0,25 no miolo), 2 px fora da base
+      // sombra de chão reta e centrada (arte.md §13.2): 2 níveis (0,15 fora, 0,25 no miolo), 2 px fora da base
       var cx = it.px + it.W / 2, by2 = it.py + it.H - 1;
       elipse(ctx, Math.round(cx), by2, Math.max(3, Math.round(it.W * 0.42)), 3, 'rgba(58,36,70,0.15)');
       elipse(ctx, Math.round(cx), by2, Math.max(2, Math.round(it.W * 0.32)), 1, 'rgba(58,36,70,0.12)');

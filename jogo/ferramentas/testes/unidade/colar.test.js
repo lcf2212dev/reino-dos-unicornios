@@ -1,4 +1,4 @@
-// Reino.util.colar (ui.md §10.17): grupos de até 12 caracteres; à direita a palavra de 1–2 letras, "R$" e número; à
+// Reino.util.colar (arte.md §17): grupos de até 12 caracteres; à direita a palavra de 1–2 letras, "R$" e número; à
 // esquerda o número do fim, o de "Sala N" e o emoji do fim. A voz normaliza \s (o U+00A0 também): a fala não muda.
 const { test } = require('node:test');
 const assert = require('assert');

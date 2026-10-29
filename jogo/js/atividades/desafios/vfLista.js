@@ -6,7 +6,7 @@
   // rótulos dos botões do vfLista: d.rotulos (ex.: ['T', 'F'], ['✓', 'X']); sem rotulos, V/F
   var NOME_ROTULO = { T: 'True', '✓': 'Certo', X: 'Errado' };
   // rótulos com desenho (ex.: ✓): os dois viram desenho (X → ✘, mesma família) a 32 px, 1 pixel de arte = 2 px
-  // CSS em escala inteira (ui.md §10.10); o nome falado continua no aria-label
+  // CSS em escala inteira (arte.md §10); o nome falado continua no aria-label
   var DESENHO_ROTULO = { X: '✘' };
   function comDesenho(r) { return !!(window.ICONES && window.ICONES[r] && window.PA && PA.iconeEmoji); }
   function rotuloEl(d, v) {

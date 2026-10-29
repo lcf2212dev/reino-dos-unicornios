@@ -18,7 +18,7 @@
   function est() { return P.estado(); }
 
   /* ---------- tamanho e escala ---------- */
-  // escala do mundo (ui.md §10.11), inteira em px de aparelho: ~18 tiles de altura, o lado menor com
+  // escala do mundo (arte.md §11), inteira em px de aparelho: ~18 tiles de altura, o lado menor com
   // ≥ 8 tiles, e nunca menos de 2 px CSS por pixel (esse mínimo vence o dos 8 tiles)
   function escalaDoMundo(w, h, dpr) {
     var minimo = Math.max(1, Math.round(2 * dpr));
@@ -41,8 +41,8 @@
     V.desenhar(performance.now());
   }
 
-  // área útil (ui.md §10.18): o HUD (ui/hud.js) escreve no :root o que cobre, em px CSS; aqui só se lê
-  // (nada de medir o HUD nem o dock). Folga de 8 px entre a área útil e o que a cobre (§10.18.2)
+  // área útil (arte.md §18): o HUD (ui/hud.js) escreve no :root o que cobre, em px CSS; aqui só se lê
+  // (nada de medir o HUD nem o dock). Folga de 8 px entre a área útil e o que a cobre (arte.md §18.2)
   var FOLGA = 8;
   var raiz = document.documentElement.style;
   function lerVar(nome) { return parseFloat(raiz.getPropertyValue(nome)) || 0; }

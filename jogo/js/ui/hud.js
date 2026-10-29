@@ -75,7 +75,7 @@
     return b;
   } });
 
-  /* ---------- área útil (ui.md §10.18): o HUD escreve no :root o que ele cobre, em px CSS ----------
+  /* ---------- área útil (arte.md §18): o HUD escreve no :root o que ele cobre, em px CSS ----------
      --hud-topo (fim do HUD de cima), --dock-altura (do pé da tela ao topo do dock) e, para quem só conta o
      que cobre a sua coluna (câmera dos interiores, placas), cada bloco de cima: --hud-esq-largura e
      --hud-esq-fundo (chips da esquerda), --hud-dir-largura (da borda direita) e --hud-dir-fundo (cartão

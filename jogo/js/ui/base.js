@@ -210,7 +210,7 @@
       }
     }
   };
-  // a tela sai por #telas-saindo (fora da pilha, sem toque nem foco) e some depois de --rapido (§10.15.8)
+  // a tela sai por #telas-saindo (fora da pilha, sem toque nem foco) e some depois de --rapido (arte.md §15.8)
   function sair(t) {
     if (!t.parentNode) return;
     if (!U.animar()) return t.parentNode.removeChild(t);
@@ -229,7 +229,7 @@
   UI.fecharTodas = function () { while (pilha.length) UI.fecharTela(pilha[pilha.length - 1]); };
   UI.temTela = function () { return pilha.length > 0; };
 
-  // título do painel (ui.md §10.21.1): numa linha em --texto; não cabe, 2 linhas na mesma letra (.titulo-quebra); nem assim, um degrau abaixo (.titulo-longo)
+  // título do painel (arte.md §21.1): numa linha em --texto; não cabe, 2 linhas na mesma letra (.titulo-quebra); nem assim, um degrau abaixo (.titulo-longo)
   function ajustarTitulo(h) { if (!h) return; h.classList.remove('titulo-longo', 'titulo-quebra'); if (h.scrollWidth <= h.clientWidth + 1) return; h.classList.add('titulo-quebra');
     if (h.getBoundingClientRect().height > 2.5 * parseFloat(getComputedStyle(h).lineHeight)) h.classList.add('titulo-longo'); }   // de novo ao girar e ao carregar a fonte
   function ajustarTitulos() { Array.prototype.forEach.call(document.querySelectorAll('.painel-topo .titulo-pixel'), ajustarTitulo); }
@@ -241,7 +241,7 @@
     '📋 Lugares do Reino': '📋 Lugares', '🪞 Meu personagem': '🪞 Personagem', '✨ Crie seu personagem': '✨ Seu personagem',
     '🦄 Estábulo Mágico': '🦄 Estábulo', '🧚 Loja das Fadas': '🧚 Loja', '💰 Baú do Tesouro': '💰 Baú',
   };
-  // o emoji do começo do título vira o ícone de 32 px à esquerda (ui.md §10.21.1); o texto fica sem ele
+  // o emoji do começo do título vira o ícone de 32 px à esquerda (arte.md §21.1); o texto fica sem ele
   var EMOJI_INICIO = /^(\p{Extended_Pictographic}\uFE0F?(\u200D\p{Extended_Pictographic}\uFE0F?)*)\s*/u;
   function semEmoji(s) { return typeof s === 'string' ? s.replace(EMOJI_INICIO, '') : s; }
   function tituloDoPainel(id, titulo, curto, icone) {

@@ -112,7 +112,7 @@
         if (palavras(c.valor()).length && Reino.Producoes) Reino.Producoes.guardar(d.id, { texto: c.valor().trim() });
         return { ok: ok, dica: a.dica };
       },
-      // a caixa fica marcada (ui.md §10.19.2) até ela escrever de novo; o texto fica
+      // a caixa fica marcada (arte.md §19.2) até ela escrever de novo; o texto fica
       marcarErro: function () { _d.erroParado(wrap, [c.campo], opts.onMudar); },
       marcarCerto: function () {
         wrap.classList.add('tudo-certo');

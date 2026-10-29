@@ -80,6 +80,10 @@ falas (até 30 letras por página, frases de 3+ palavras, conferência por trans
    - `<matéria>-<sala>` (ex.: `portugues-p1`), `<matéria>-extra`, `<matéria>-livro`, `prova-<prova>`.
    Os de Português: `portugues-p1` a `portugues-p5`, `portugues-extra`, `portugues-livro`,
    `interior-portugues`, `prova-portugues-3bim`.
+   A abertura carrega só o `geral` (quem começa agora leva também o `-extra` da 1ª matéria, do tutorial do mapa);
+   depois do mapa (baú e balão das boas-vindas fechados, ou 3 s; ocioso) `V.adiantarExtras` baixa o `-extra` das
+   matérias em uso (no congelado não). O `<matéria>-extra` também vem com a tela da matéria, o prédio dela (junto com
+   o interior), o Estábulo e o ovo (`V.carregarUnicornios`) e por trás de `carregarSala`/`carregarMateria`.
 5. `extras: [{ texto, voz }]` no `Reino.falasDoPredio('<prédio>', …)`: falas do prédio que não saem de NPC nem de
    objeto (bebedouro, curiosidades, piadas do Cosmo). `Falas.todas()` põe no pacote `interior-<prédio>`.
 6. `Reino.Falas.todas()` inclui `NPCs.falasPossiveis` de cada NPC e as `fala` dos objetos, no pacote do interior.
@@ -93,8 +97,9 @@ falas (até 30 letras por página, frases de 3+ palavras, conferência por trans
 10. Texto de apoio: lido pela narradora com `Reino.Falas.segmentosApoio(apoio)` (título, título de cada parte,
     cada item da lista, o texto), no pacote da sala ou da prova.
 11. Falas com botão de seguir ou sair: `Reino.Voz.falarEsperando(segs, op) → { espera, fim }` (espera = false quando
-    nada vai soar: voz desligada, sem gravação, AudioContext parado; `fim` resolve no fim da fala, quando outra a corta
-    ou no teto de `config.esperaFala`) e `Reino.UI.esperarFala(alvos, segs, op)`, que fala e devolve esse `fim`. Só com
+    nada vai soar: voz desligada, AudioContext parado, ou nenhum pedaço gravado nem com pacote a caminho; pacote fora
+    da memória ou `-extra` ainda não baixado conta, e a fala espera por ele até 4 s, um prazo por fala; `fim` resolve
+    no fim da fala, quando outra a corta ou no teto de `config.esperaFala`) e `Reino.UI.esperarFala(alvos, segs, op)`, que fala e devolve esse `fim`. Só com
     `config.esperaFala.travar` (desligado desde 29/09/2026: ela pula, responde ou sai durante a fala; seguir ou fechar
     cala a voz) trava os botões dos alvos (classe `esperando-fala`; `.livre-na-fala` fica livre; Esc bloqueado) até o
     `fim`. O 🔊 durante uma espera usa `Reino.UI.ouvirDeNovo(segs, op)` (repete e estica a espera; `Som.falar`
@@ -118,7 +123,10 @@ falas (até 30 letras por página, frases de 3+ palavras, conferência por trans
 2. Duas filas: as falas ouvidas uma vez (curiosidades, perguntas) saem antes das que se repetem (acertos,
    erros, avisos do Claude), que têm até 14 MB protegidos (`TETO_REPETIDAS`); a que acabou de chegar sempre
    fica. `V.memoria()` → `{ falas, repetidas, bytes }` para os testes.
-3. Pacote que falhou (Wi-Fi caiu): é esquecido e pedido de novo sozinho em 3 s, 10 s e 30 s (`ESPERAS`), também
+3. Pacotes na memória: LRU por pacote até `V.tetoPacotes` (32 MB de base64); nunca saem o `geral`, o pacote do
+   prédio da cena atual e o recém-chegado; no congelado nada sai. `V.tem` só conta o áudio na memória;
+   `V.memoriaPacotes()` para os testes.
+4. Pacote que falhou (Wi-Fi caiu): é esquecido e pedido de novo sozinho em 3 s, 10 s e 30 s (`ESPERAS`), também
    na próxima fala (no máximo a cada 5 s) e na hora no evento `online`. A fala que já passou muda não toca atrasada.
 
 ## 7. Gravar vozes (quem integra)

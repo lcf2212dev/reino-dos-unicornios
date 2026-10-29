@@ -2,7 +2,7 @@
    pele, barriga, antenas (0-2, com bolinha 'antena'), olhos (1-3), orelhas, enfeite (+ enfeiteCor), cabelo,
    e as roupas opcionais macacao, cachecol, barba, jaleco, mochila, boina, lapis, xale (cores; sem elas o desenho
    não muda) e bengala (true ou cor). `planeta` dá o traço fixo dos 3 ETs de lá (crateras na Lua, poeira em
-   Marte, anel em Saturno, faixas e mancha em Júpiter, nuvem em Vênus, gota em Netuno). `idade` muda a altura (ui.md §10.12): a criança
+   Marte, anel em Saturno, faixas e mancha em Júpiter, nuvem em Vênus, gota em Netuno). `idade` muda a altura (arte.md §12): a criança
    perde 2 linhas da barriga e o idoso/adulto ganha 2 (barriga e perna), 4 px de diferença.
    Só registra: nada de DOM nem canvas no carregamento. */
 (function () {

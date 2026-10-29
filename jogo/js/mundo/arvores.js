@@ -1,4 +1,4 @@
-/* As árvores do mapa (ui.md §10.12): a comum (copa de massas, ≥ 40 px de arte), a de meia altura e a arvoreta de
+/* As árvores do mapa (arte.md §12): a comum (copa de massas, ≥ 40 px de arte), a de meia altura e a arvoreta de
    1 tile, em 3 formatos, com fruta, moita no pé (na borda) e deslocamento pela sorte do tile. Usa as cores e os
    ajudantes de mundo/mapa-desenho.js (Mapa._interno) e entrega:
      I.varianteArvore(x, y, memo)   o desenho da árvore do tile ({ forma, pal, chave, esp, fruta, moita, dx, dy, w, h });
@@ -9,7 +9,7 @@
   var W = Mapa.W, H = Mapa.H, C = I.C, K = C.contorno, ret = I.ret, sombraChao = I.sombraChao;
   var COPAS = [['#ffc27a', '#f0a04a', '#fff1d0'], ['#d4ee78', '#a8cc48', '#f4f8c8'], ['#e4f59a', '#8fb83a', '#fff6d4']];
 
-  /* ----- árvores (ui.md §10.12: a comum ≥ 40 px de arte, a arvoreta de 1 tile 16–20): copa de massas com contorno,
+  /* ----- árvores (arte.md §12: a comum ≥ 40 px de arte, a arvoreta de 1 tile 16–20): copa de massas com contorno,
      luz em cima e à esquerda, sombra embaixo à direita e no chão; 3 formatos e nunca o mesmo desenho 3 vezes seguidas */
   var AW = 30, AH = 48;       // caixa do sprite da árvore: 7 px para cada lado do tile e 2 tiles acima dele
   function bola(cx, cy, r) {

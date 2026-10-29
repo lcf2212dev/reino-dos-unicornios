@@ -33,7 +33,7 @@
     try {
       var c = N.sprite({ id: e.id, sprite: pe.sprite }, 0);
       if (!e.amigo && PA.silhueta) c = PA.silhueta(c);   // ainda não é amigo: silhueta pintada e contornada (sem filtro de CSS)
-      var cv = PA.paraDOM(c, 4, 'album-sprite');   // 4 px CSS por pixel (ui.md §10.10.7)
+      var cv = PA.paraDOM(c, 4, 'album-sprite');   // 4 px CSS por pixel (arte.md §10.7)
       return cv;
     } catch (err) { return null; }
   }

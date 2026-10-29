@@ -29,7 +29,7 @@
 /* a maiúscula acentuada desenhada por cima (ui-desafios.css) não herda o recuo negativo (o "É" sairia à esquerda) */
 :is(.bloco-fala, .verso, .bloco-lista li) span.mai-acento.mai-acento::before,
 :is(.bloco-fala, .verso, .bloco-lista li) span.mai-acento.mai-acento::after { text-indent: 0; }
-/* lista: quadradinho de pixel e o termo em destaque pela cor (a fonte não tem negrito, ui.md §10.9.3) */
+/* lista: quadradinho de pixel e o termo em destaque pela cor (a fonte não tem negrito, arte.md §9.3) */
 .bloco-lista { list-style: none; padding: 0; }
 .bloco-lista li { padding-left: 20px; text-indent: -20px; }
 .bloco-lista li + li { margin-top: 8px; }
@@ -79,7 +79,7 @@
   :is(.bloco-tabela.tabela-larga, .letras-grandes .bloco-tabela) tr + tr { margin-top: 8px; }
   :is(.bloco-tabela.tabela-larga, .letras-grandes .bloco-tabela) td { padding: 2px 0; border: 0; }
   :is(.bloco-tabela.tabela-larga, .letras-grandes .bloco-tabela) td[data-cab]::before { content: attr(data-cab) ": "; font-size: var(--texto-aux); color: var(--tinta-suave); }
-  .bloco-tabela th { font-size: var(--texto-aux); }   /* rótulo da coluna: um degrau abaixo, a palavra inteira (ui.md §10.17.3) */
+  .bloco-tabela th { font-size: var(--texto-aux); }   /* rótulo da coluna: um degrau abaixo, a palavra inteira (arte.md §17.3) */
 }
 /* tablet em pé, no resumo da sala: o texto da carta já vai a 24 (ui-missao.css); listas, tabelas e legendas também.
    A carta enche a altura livre (D12c-01): o cabeçalho fica preso à faixa e o resto no meio do que sobra */
@@ -112,7 +112,7 @@
 /* ---------- rodapé do livro: "20 de 117" inteiro entre as setas ---------- */
 /* a contagem tem sempre a largura de "999 de 999" (1ch = uma letra da fonte pixel): a seta → fica no mesmo lugar em
    todas as cartas e em todos os livros. No celular a caixa fica em 128 px e a letra desce um degrau quando não cabe
-   (ui.md §10.17.3): com 100 cartas ou mais, 12; com Letras grandes, 16 (e 12 com 100 cartas ou mais) */
+   (arte.md §17.3): com 100 cartas ou mais, 12; com Letras grandes, 16 (e 12 com 100 cartas ou mais) */
 .livro-rodape .livro-pag { width: 10ch; }
 @media (max-width: 480px) {
   .livro-rodape .livro-pag { width: 128px; }
@@ -126,7 +126,7 @@
 @media (max-width: 480px) {
   .materia-grupo { column-gap: 16px; }
   .materia-grupo > .grupo-sep { display: none; }
-  :root.letras-grandes .materia-grupo { font-size: var(--texto-aux); }   /* "📗 Aprendizagem" inteiro numa linha (ui.md §10.17.3) */
+  :root.letras-grandes .materia-grupo { font-size: var(--texto-aux); }   /* "📗 Aprendizagem" inteiro numa linha (arte.md §17.3) */
 }
 .materia-grupo:first-child { margin-top: 0; }
 .painel .lista-salas > .materia-grupo { grid-column: 1 / -1; }

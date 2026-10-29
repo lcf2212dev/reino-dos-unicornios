@@ -3,7 +3,8 @@
 // verdade + --continuar, branch `integracao` antiga (e em conflito) e retomada de integração antiga com barra (estado
 // no /tmp, levado para o git da worktree), colisão igual (movida só com --merge) e diferente (recusa o merge),
 // --trocar-base (base `@` no último commit, sem commit à parte e sem npm test de novo), --esperado, mensagem sem
-// prefixo dobrado nem Claude-Session, --podar no começo, --merge e --push (só aqui, no repositório temporário).
+// prefixo dobrado nem Claude-Session, --podar no começo, --merge (recusa sem e2e verde ou --esperado aceito) e
+// --push (só aqui, no repositório temporário).
 // As vozes: fluxo-integrar-vozes.test.js.
 const test = require('node:test');
 const assert = require('node:assert');
@@ -253,6 +254,30 @@ test('integrar: --esperado recusa diferença fora do regex (sem base nem merge) 
   assert.deepStrictEqual(assuntos(R.principal, 1), ['Reino dos Unicórnios: frente A']);
   assert.match(R.ler('jogo/ferramentas/testes/base-referencia.txt'), /^# @ = loja e mapa\n@$/m);
   assert.deepStrictEqual(R.linhas('test.log'), ['test']);
+});
+
+test('integrar: --merge recusa sem e2e (--sem-e2e) e com e2e diferente sem --esperado; o resumo fica no relatório', async () => {
+  const R = criarRepo('fluxo-int');
+  const a = R.frente('a');
+  R.mudarManifesto(a, 'b', 'b-A', 'Reino dos Unicórnios: frente A');
+  const main = R.git(R.principal, 'rev-parse', 'main');
+  const r1 = await rodar(R, ['feat/a', '--commit', '--sem-e2e', '--merge', '--nome', nm(R, 't12')]);
+  assert.strictEqual(r1.codigo, 1, r1.texto);
+  assert.match(r1.texto, /--merge recusado: .*o npm run e2e não rodou/);
+  // sem --sem-e2e, roda o e2e que faltou (no mesmo estado): diferente e sem --esperado = recusa
+  fs.writeFileSync(path.join(R.base, 'e2e-diferencas.json'), JSON.stringify(['celular/tela-loja']));
+  const r2 = await rodar(R, ['--nome', nm(R, 't12'), '--merge']);
+  assert.strictEqual(r2.codigo, 1, r2.texto);
+  assert.match(r2.texto, /--merge recusado: .*e2e com diferença sem --esperado aceito/);
+  assert.strictEqual(R.git(R.principal, 'rev-parse', 'main'), main);
+  // o resumo.json original some (poda do e2e-*): o --esperado usa a cópia do relatório
+  const copia = path.join(C.PASTA_TESTES, 'integrar', nm(R, 't12'), 'e2e-resumo.json');
+  assert.ok(fs.existsSync(copia), r2.texto);
+  const original = /resumo do e2e \((\S+), cópia em /.exec(r2.texto)[1];
+  fs.renameSync(original, original + '.podado');
+  const r3 = await rodar(R, ['--nome', nm(R, 't12'), '--esperado', 'tela-loja', '--trocar-base', 'loja', '--merge']);
+  assert.strictEqual(r3.codigo, 0, r3.texto);
+  assert.deepStrictEqual(R.linhas('e2e.log').filter((l) => l === 'e2e'), ['e2e'], 'o e2e rodou uma vez só');
 });
 
 test('integrar: npm test vermelho pela base → --trocar-base --merge roda o npm test UMA vez a mais e entra', async () => {

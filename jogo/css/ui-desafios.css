@@ -193,7 +193,7 @@ span.mai-acento.mai-acento::before, span.mai-acento.mai-acento::after {
 span.mai-acento.mai-acento::before { content: attr(data-b); content: attr(data-b) / ""; }
 span.mai-acento.mai-acento::after { content: attr(data-a); content: attr(data-a) / ""; top: -0.375em; }
 
-/* completar colado na grade: "a)" e a palavra na mesma linha, no rótulo de 12 px da grade (ui.md §10.9.1: nada de
+/* completar colado na grade: "a)" e a palavra na mesma linha, no rótulo de 12 px da grade (arte.md §9.1: nada de
    encolher por conta): "__ELICÓPTERO" no celular cabe inteira */
 .completar-grade.completar-colado:not(.completar-colado-longo) .frase-colada { font-size: var(--texto-aux); }
 

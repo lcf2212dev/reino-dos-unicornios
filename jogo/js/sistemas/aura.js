@@ -133,7 +133,7 @@
     if (f !== A.faixa(A.decimos())) return;
     var t = fraseDaCor(A.corDaFaixa(f).nome);
     if (R.Som && R.Som.tocar) R.Som.tocar('estrela');
-    if (R.UI.festa) R.UI.festa(2, { som: false });   // subir de faixa: nível 2 (ui.md §10.16)
+    if (R.UI.festa) R.UI.festa(2, { som: false });   // subir de faixa: nível 2 (arte.md §16)
     if (R.Claude) R.Claude.falar(t, { fala: [t], voz: 'claude' });
   }
   A.comemorarSePrecisar = comemorarSePrecisar;

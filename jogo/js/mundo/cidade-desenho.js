@@ -339,7 +339,7 @@
     ctx.fillRect(Math.round(cx - 26 + br * 52), cy + 6, 3, 1);
   };
   // halo do lampião: anel de 2 px em volta da lanterna e mais 2 px pontilhados (2×2), só FORA do poste
-  // (não lava o contorno nem se sobrepõe: um nível de alfa só; ui.md §10.13). Feito uma vez, na caixa do sprite do poste
+  // (não lava o contorno nem se sobrepõe: um nível de alfa só; arte.md §13). Feito uma vez, na caixa do sprite do poste
   var halo = null;
   function haloPoste() {
     if (halo) return halo;
@@ -378,7 +378,7 @@
     if (f) I.animarObjeto(ctx, f, t);
     // lampiões: o halo morno que respira devagar
     var img = haloPoste();
-    // respira em 3 degraus de alfa (0,14 · 0,18 · 0,22), não em rampa contínua (ui.md §10.13 e §10.15)
+    // respira em 3 degraus de alfa (0,14 · 0,18 · 0,22), não em rampa contínua (arte.md §13 e §15)
     ctx.globalAlpha = 0.18 + 0.04 * Math.round(Math.sin(t / 900));
     if (postesDe !== I.decor) {
       postesDe = I.decor; postes = [];

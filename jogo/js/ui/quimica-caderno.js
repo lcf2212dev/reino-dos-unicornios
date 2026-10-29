@@ -7,7 +7,7 @@
 (function () {
   var U = Reino.util, el = U.el;
   var UI = Reino.UI;
-  var K = '#3a2446';   // contorno (ui.md §10.14)
+  var K = '#3a2446';   // contorno (arte.md §14)
 
   function hif(s) { var h = Reino._ui && Reino._ui.hifenizar; return h ? h(s) : s; }
   function falar(paginas) { if (paginas.length) Reino.Som.falar(paginas, { voz: Reino.Quimica.VOZ }); }
@@ -61,7 +61,7 @@
       P: cor, p: misturar(cor, K, 0.35),
     });
   }
-  // o frasco do segredo (ui.md §10.14.3): silhueta em --tinta-suave com contorno --tinta; o "?" vem do CSS
+  // o frasco do segredo (arte.md §14.3): silhueta em --tinta-suave com contorno --tinta; o "?" vem do CSS
   var FRASCO = [
     '................', '.....xxxxxx.....', '.....xxxxxx.....', '......xxxx......', '......xxxx......',
     '......xxxx......', '.....xxxxxx.....', '....xxxxxxxx....', '...xxxxxxxxxx...', '..xxxxxxxxxxxx..',
@@ -106,7 +106,7 @@
     var folha = el('div.qcad-folha');
     pn.conteudo.appendChild(el('div.qcad-caderno', espiral, folha));
 
-    // rodapé de ação (ui.md §10.20): 📒 Receitas (só na página), 🔊 Ouvir e "Ir para a bancada"
+    // rodapé de ação (arte.md §20): 📒 Receitas (só na página), 🔊 Ouvir e "Ir para a bancada"
     var voltar = el('button.btn-grande.btn-secundario.so-seta.qcad-voltar', { type: 'button', 'aria-label': 'Voltar às receitas' },
       '📒', el('span.rotulo-longo', ' Receitas'));
     var ouvir = el('button.btn-grande.btn-secundario.so-seta.qcad-ouvir', { type: 'button', 'aria-label': 'Ouvir' },

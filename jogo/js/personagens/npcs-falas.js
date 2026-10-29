@@ -100,7 +100,7 @@
 
   function nomeLivro(m) { return (Reino.UI && Reino.UI.nomeLivro) ? Reino.UI.nomeLivro(m) : (m.nomeLivro || 'Livro das Memórias'); }
 
-  // dois limites (ui.md §10.17.5). LIMITE: o da frase (frases(), e o corte de frase longa só na tela em
+  // dois limites (arte.md §17.5). LIMITE: o da frase (frases(), e o corte de frase longa só na tela em
   // npcs-conversa.js); é o que define o texto falado e as vozes gravadas: não mude. LIMITE_PAGINA: o paginar junta
   // frases numa página até aqui, o que cabe em 2 linhas do celular (letra de 16 px, retrato de 4 px: 16 letras por
   // linha; medido com todas as falas dos NPCs, 24 junta sem passar de 2 linhas). A última página leva os botões

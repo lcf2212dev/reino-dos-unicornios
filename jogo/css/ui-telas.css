@@ -30,7 +30,7 @@
   background: var(--ambar-claro);
   border-bottom: var(--borda-grossa) solid var(--borda);
 }
-/* cabeçalho padrão (ui.md §10.21.1, D10-B11): ícone de 32 px à esquerda e o título numa linha; não coube, o painel()
+/* cabeçalho padrão (arte.md §21.1, D10-B11): ícone de 32 px à esquerda e o título numa linha; não coube, o painel()
    (ui/base.js) põe .titulo-quebra (2 linhas na mesma letra) e, só se nem assim couber, .titulo-longo (um degrau abaixo) */
 .painel-topo .titulo-pixel { min-width: 0; font-size: var(--texto); white-space: nowrap; }
 .painel-topo .titulo-pixel.titulo-quebra { white-space: normal; }
@@ -39,7 +39,7 @@
 .painel-nome { flex: 1; min-width: 0; }
 .painel-nome .titulo-pixel { display: block; }
 .painel-sub { font-size: var(--texto-aux); color: var(--tinta-suave); white-space: nowrap; }
-/* matéria (ui.md §10.22): faixa de 8 px na cor dela logo abaixo do cabeçalho; a cor nunca vai no texto */
+/* matéria (arte.md §22): faixa de 8 px na cor dela logo abaixo do cabeçalho; a cor nunca vai no texto */
 .painel-faixa { flex: none; height: 8px; background: var(--cor-materia, var(--ambar-claro)); border-bottom: var(--borda-fina) solid var(--borda); }
 /* nome curto no celular (ui/base.js, CURTOS): "Lugares do Reino" vira "Lugares" numa linha a 16 px (D8B-11) */
 .painel-topo .titulo-curto { display: none; }
@@ -56,7 +56,7 @@
   content: ""; display: block; position: sticky; bottom: 0; height: 8px; margin: 0 -20px -8px; pointer-events: none;
   background: linear-gradient(var(--veu-1) 0 2px, var(--veu-2) 2px 4px, var(--veu-3) 4px 6px, var(--veu-4) 6px);
 }
-/* as duas larguras de painel (ui.md §10.21.2): 720 (listas, matéria, livro, loja) e 560 (diálogo, escolha, cartão) */
+/* as duas larguras de painel (arte.md §21.2): 720 (listas, matéria, livro, loja) e 560 (diálogo, escolha, cartão) */
 .painel-estreito { width: min(560px, 100%); }
 .painel-pequeno { width: min(560px, 100%); padding: 22px; gap: 14px; }
 .confirmar-msg { font-size: var(--texto); text-align: center; }
@@ -106,7 +106,7 @@
 }
 
 /* balão: 8 px acima do dock mais os 4 px da sombra (D5-10; --dock-altura, do pé da tela ao topo do dock, é do
-   hud.js; ui.md §10.18); o retrato no alto, o nome numa aba de 1 linha em cima (D5-11) e o bico no retrato (D5-09) */
+   hud.js; arte.md §18); o retrato no alto, o nome numa aba de 1 linha em cima (D5-11) e o bico no retrato (D5-09) */
 #claude-balao {
   position: fixed; z-index: 40;
   left: calc(env(safe-area-inset-left, 0px) + 12px); right: calc(env(safe-area-inset-right, 0px) + 12px);
@@ -122,7 +122,7 @@ body.balao-no-pe #claude-balao { bottom: calc(env(safe-area-inset-bottom, 0px) +
 body.balao-no-pe #telas .tela { padding-bottom: calc(var(--balao-altura, 0px) + 8px); }
 #claude-balao.entrando { animation: subir var(--normal) ease-out; }
 .claude-mascote { display: flex; flex-direction: column; align-items: center; flex: none; }
-/* retrato (ui.md §10.10.6): 4 px CSS por pixel (claude.js), num quadro de borda grossa com fundo chapado; o
+/* retrato (arte.md §10.6): 4 px CSS por pixel (claude.js), num quadro de borda grossa com fundo chapado; o
    content-box deixa o desenho no tamanho inteiro (sem a borda comer pixel) */
 .claude-avatar { box-sizing: content-box; flex: none; border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto); background: var(--papel-quente); }
 /* aba do nome em cima do balão, encostada no quadro do retrato: 1 linha em todos os tamanhos (D5-11); o que não
@@ -148,7 +148,7 @@ body.balao-no-pe #telas .tela { padding-bottom: calc(var(--balao-altura, 0px) + 
 .claude-acoes button { min-height: 48px; padding: 6px 16px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--laranja); font-size: var(--texto); white-space: nowrap; box-shadow: var(--sombra-grande); --degrau: 4px; }
 .claude-acoes .btn-ouvir-claude { background: var(--papel); }
 #claude-balao.dica-pressa .claude-fala { background: var(--ouro-claro); }
-/* celular: 8 px de cada lado, como os painéis (ui.md §10.21.2) */
+/* celular: 8 px de cada lado, como os painéis (arte.md §21.2) */
 /* celular: 8 px de cada lado e o layout compacto do NPC também para o Claude (D5-02) */
 @media (max-width: 480px) {
   #claude-balao { left: calc(env(safe-area-inset-left, 0px) + 8px); right: calc(env(safe-area-inset-right, 0px) + 8px); gap: 6px; }
@@ -168,7 +168,7 @@ body.balao-no-pe #telas .tela { padding-bottom: calc(var(--balao-altura, 0px) + 
 .sala-emoji { font-size: var(--texto-t); flex: none; width: 1.4em; text-align: center; }
 .sala-info { flex: 1; display: flex; flex-direction: column; gap: 3px; min-width: 0; }
 /* nomes compridos (fonte pixel larga) quebram nas sílabas marcadas por hifenizar() (ui/pecas.js); o resto é a
-   regra do body (ui.md §10.17) */
+   regra do body (arte.md §17) */
 .sala-info small { color: var(--tinta-suave); font-size: var(--texto-aux); }
 .sala-ir { flex: none; font-size: var(--texto); color: var(--roxo-texto); }
 /* chips centrados na altura: o texto e o desenho na mesma linha (D7-08) */
@@ -241,7 +241,7 @@ body.balao-no-pe #telas .tela { padding-bottom: calc(var(--balao-altura, 0px) + 
 }
 /* nome curto do cartão da prova: só no notebook baixo, abaixo */
 .cartao-prova .nome-curto { display: none; }
-/* notebook baixo (ui.md §10.21.3, D7-18, D12f-02): as listas do painel em 2 colunas de cartão; na matéria, o "Jogar de
+/* notebook baixo (arte.md §21.2.1, D7-18, D12f-02): as listas do painel em 2 colunas de cartão; na matéria, o "Jogar de
    novo" desce para baixo dos chips e o nome não hifeniza */
 @media (min-width: 1000px) and (max-height: 820px) {
   .painel .lista-salas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; align-items: stretch; }
@@ -296,7 +296,7 @@ body.balao-no-pe #telas .tela { padding-bottom: calc(var(--balao-altura, 0px) + 
 .lugares-grupo:first-child { margin-top: 0; }
 /* pontos de página do balão no canto de baixo à direita (D5-14) */
 #claude-balao .pontos-pagina { margin-left: auto; align-self: flex-end; }
-/* ícone em tela escura (§10.8.3, D8A-24): brilho de 1 px de arte em --papel nas quatro direções, sem desfoque */
+/* ícone em tela escura (arte.md §8.3, D8A-24): brilho de 1 px de arte em --papel nas quatro direções, sem desfoque */
 .fundo-escuro canvas.icone-em, .tela-voo canvas.icone-em { filter: drop-shadow(2px 0 0 var(--papel)) drop-shadow(-2px 0 0 var(--papel)) drop-shadow(0 2px 0 var(--papel)) drop-shadow(0 -2px 0 var(--papel)); }
 
 /* Atlas do reino: uma capa, dois capítulos e cartões com faixa de matéria. */

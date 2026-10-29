@@ -338,7 +338,7 @@ else {
       stringsDoCodigo(fs.readFileSync(path.join(pastaUi, f), 'utf8')).forEach((s) => olhar(s, 'js/ui/' + f));
     });
   }
-  // já na fila de um item do TODO-VISUAL.md: aviso até o item sair (o validador acusa o caractere em qualquer outro lugar)
+  // já na fila de um item do arquivo/TODO-VISUAL.md: aviso até o item sair (o validador acusa o caractere em qualquer outro lugar)
   const CONHECIDOS = { 'js/ui/pais.js ●': 'D8B-16 (o visor do PIN vira casas desenhadas)' };
   Object.keys(CONHECIDOS).forEach((k) => {
     const [onde, ch] = k.split(' ');

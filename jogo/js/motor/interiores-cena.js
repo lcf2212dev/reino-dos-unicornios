@@ -28,9 +28,10 @@
     }
   }
   // fora da câmera não se desenha (móveis e animações; os NPCs sempre: o desenho deles guarda as caixas que as placas
-  // dos cômodos leem). Quanto a animação pode passar do sprite do móvel (px do jogo): o pior medido é o foguete da NASA
-  // decolando (começa com um toque), 180 px acima; o dos móveis altos, 10 px. O teste
-  // interiores-alcance.navegador.test.js desenha todas (com as de toque disparadas) e confere
+  // dos cômodos leem). Quanto a animação pode passar do sprite do móvel (px do jogo): o pior caso real é a fenda do
+  // Observatório, 143 px; a folga 256 cobre também os ~179 px da decolagem do foguete da NASA, que hoje nenhum dado
+  // dispara; o dos móveis altos, 8 px. O teste interiores-alcance.navegador.test.js desenha todas (com as de toque
+  // disparadas) e confere
   var ALCANCE_ANIM = 256, FOLGA_ITEM = 16;
   function vistaDoPintor(p, v) {
     var c = p && p.cam, cv = p && p.ctx && p.ctx.canvas, e = p && p.escala;

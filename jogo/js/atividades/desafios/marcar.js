@@ -101,7 +101,7 @@
     return r.total ? U.clamp((r.certos - r.erradas.length) / r.total, 0, 1) : 0;
   };
 
-  // pintar com cor do livro: texto --tinta ou --branco, o que tiver mais contraste com a cor (ui.md §10.8.1)
+  // pintar com cor do livro: texto --tinta ou --branco, o que tiver mais contraste com a cor (arte.md §8.1)
   function luz(hex) {
     var n = parseInt(String(hex).slice(1), 16), rgb = [n >> 16 & 255, n >> 8 & 255, n & 255];
     return rgb.reduce(function (s, c, i) {
@@ -218,7 +218,7 @@
         var dica = !ok && !r.erradas.length ? 'Dica: ainda falta marcar ' + (r.faltam === 1 ? '1 item' : r.faltam + ' itens') + '!' : null;
         return { ok: ok, erradas: r.erradas, faltam: r.faltam, dica: dica };
       },
-      // as marcas erradas ficam paradas (ui.md §10.19.2) e depois saem
+      // as marcas erradas ficam paradas (arte.md §19.2) e depois saem
       marcarErro: function (res) {
         var erradas = (res.erradas || []).filter(function (i) { return tokens[i]; });
         _d.erroParado(wrap, erradas.map(function (i) { return tokens[i]; }), function () {

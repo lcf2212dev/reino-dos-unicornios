@@ -14,12 +14,12 @@
   0%, 50% { filter: drop-shadow(2px 0 0 var(--ouro-claro)) drop-shadow(-2px 0 0 var(--ouro-claro)) drop-shadow(0 2px 0 var(--ouro-claro)) drop-shadow(0 -2px 0 var(--ouro-claro)); }
   25%, 75%, 100% { filter: none; }
 }
-/* escala de festa (ui.md §10.16; UI.festa em ui/pecas.js): pulinho do emoji em degraus de 2 px, com os brilhinhos do
+/* escala de festa (arte.md §16; UI.festa em ui/pecas.js): pulinho do emoji em degraus de 2 px, com os brilhinhos do
    brilhar junto; o nível 1 é o brilho de 3 quadros no item */
 @keyframes pulinho { 0%, 50%, 100% { transform: none; } 12.5%, 37.5% { transform: translateY(-4px); } 25% { transform: translateY(-8px); } }
 .festa-pulo { animation: pulinho var(--lento) step-end 3, brilhar var(--lento) step-end 3; }
 .festa-brilho { animation: brilhar var(--normal) step-end; }
-/* brilho arco-íris do lendário (§10.16: ovo que nasce e prova lendária): moldura de 6 faixas de 4 px nas cores do
+/* brilho arco-íris do lendário (arte.md §16: ovo que nasce e prova lendária): moldura de 6 faixas de 4 px nas cores do
    --arco-iris, sem degradê, em volta do desenho; troca a ordem das cores em degraus. Sem animação: a moldura fica parada. */
 .brilho-arco { display: inline-grid; place-items: center; padding: 24px; flex-shrink: 0;
   background:
@@ -61,7 +61,7 @@
 @media (max-width: 480px) { .titulo-pixel.titulo-festa-4 { font-size: var(--texto-t); } }
 @keyframes tremer { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
 .treme { animation: tremer var(--normal) step-end; }
-/* erro de item parado (ui.md §10.19.2; desafios/ligar.js, _d.erroParado): fundo --erro-fundo e borda --erro até apagar ou
+/* erro de item parado (arte.md §19.2; desafios/ligar.js, _d.erroParado): fundo --erro-fundo e borda --erro até apagar ou
    até o próximo toque; o .treme vem junto e o sem-animacao o desliga. A classe dobrada ganha do .ligado, .escolhido,
    .virada e [aria-pressed] (CSS carregado antes ou depois) */
 :is(.ligar-item, .sep-item, .seq-item, .copiar-opcao, .copiar-linha, .vf-linha, .desenho-req, .carta-mem).item-erro.item-erro {
@@ -71,7 +71,7 @@
 .carta-mem.mem-achata-1 { clip-path: inset(0 var(--mem-corte-1, 0px)); }
 .carta-mem.mem-achata-2 { clip-path: inset(0 var(--mem-corte-2, 0px)); }
 
-/* saída de tela (ui.md §10.15.8): mover o nó para #telas-saindo reinicia a animation, então a saída é OUTRA animation
+/* saída de tela (arte.md §15.8): mover o nó para #telas-saindo reinicia a animation, então a saída é OUTRA animation
    (o inverso da entrada), presa no fim até o JS tirar o nó (Reino.config.movimento.rapido) */
 #telas-saindo { position: relative; z-index: 20; pointer-events: none; }
 #telas-saindo .tela.saindo { animation: sumir var(--rapido) ease-out forwards; }
@@ -91,7 +91,7 @@ body.sem-animacao *:not(.balao-respira), body.sem-animacao *::before, body.sem-a
   .missao-rodape .btn-conferir { flex: 1; }
   /* coluna com a palavra mais comprida fica mais larga (1fr com mínimo automático) e a letra do Ligar para em
      ~24 letras nas duas palavras mais compridas juntas ("nascimento" + "acontecimentos"): em 12 px nada vaza nem corta
-     palavra; com Letras grandes o Ligar fica nos 12 px (em 16 não cabe: desce um degrau, ui.md §10.17.3) */
+     palavra; com Letras grandes o Ligar fica nos 12 px (em 16 não cabe: desce um degrau, arte.md §17.3) */
   .ligar-colunas { grid-template-columns: 1fr 1fr; gap: 8px; container-type: inline-size; }
   .ligar-item { font-size: var(--texto-aux); padding: 8px 6px; gap: 6px; }
   :root.letras-grandes .ligar-item { --texto-aux: 12px; }

@@ -34,7 +34,7 @@
   };
 
   // ilustração: a maior escala par que cabe na largura da caixa e em 40% da altura da tela, nunca menos de 2 (1 px de
-  // arte = 2 px CSS, ui.md §10.10.1 e §10.10.7). A que nem em 2× cabe rola por dentro do próprio quadro, como nas cartas
+  // arte = 2 px CSS, arte.md §10.1 e §10.7). A que nem em 2× cabe rola por dentro do próprio quadro, como nas cartas
   // do livro: de lado, se for mais larga que a caixa; para baixo, se for mais alta que ROLAR (a fração da tela, nunca
   // menos de alturaMin). A página nunca rola de lado e o enunciado e as opções continuam à mão.
   var ROLAR = { alturaMin: 320, fracaoTela: 0.5 };

@@ -1,4 +1,4 @@
-// Erro de item parado (ui.md §10.19.2; D9-04, D9-13): com Animações desligadas, 200 ms depois de marcar o erro o item
+// Erro de item parado (arte.md §19.2; D9-04, D9-13): com Animações desligadas, 200 ms depois de marcar o erro o item
 // errado ainda aparece com .item-erro (fundo --erro-fundo) em Ligar, Separar, Sequência, Copiar, V/F em lista e Desenho;
 // no jogo da memória o par errado fica marcado enquanto aberto e a carta vira em degraus (JS, relógio do jogo).
 // Servidor e banco de TESTE novos (cenario.js); save sintético; congelado (?congelar=1).

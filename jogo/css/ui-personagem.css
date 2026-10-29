@@ -106,7 +106,7 @@ body.sem-animacao .criar-palco::before, body.sem-animacao .criar-palco::after { 
   .tela-aparencia .linha-cores { column-gap: 0; }
   .tela-aparencia .linha-cores .rotulo-cor { margin-right: 3px; }
   .tela-aparencia .bolinha-cor { position: relative; width: 44px; height: 44px; border: 0; box-shadow: none; background: none !important; --degrau: 2px; }
-  /* afunda o botão inteiro; a sombra do desenho (no ::before) some junto (ui.md §10.15.7) */
+  /* afunda o botão inteiro; a sombra do desenho (no ::before) some junto (arte.md §15.7) */
   .tela-aparencia .bolinha-cor:active:not(:disabled) { --sombra-pequena: none; }
   .tela-aparencia .bolinha-cor::before { content: ''; position: absolute; inset: 5px;
     border: var(--borda-fina) solid var(--borda); border-radius: var(--redondo); box-shadow: var(--sombra-pequena); --degrau: 2px;

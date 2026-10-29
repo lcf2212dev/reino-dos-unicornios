@@ -6,6 +6,9 @@ const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
 
+// os processos filhos (validadores, testes da cópia) rodam com as reservas FECHADAS, como na integração (fluxo/comum.js):
+// numa frente, o npm test vem com REINO_RESERVAS_ABERTAS=1 e o teste da reserva sem registro esperaria erro
+delete process.env.REINO_RESERVAS_ABERTAS;
 const repo = path.join(__dirname, '../../../..');
 // em os.tmpdir() (TMPDIR=/dev/shm/… quando o /tmp enche, jogo/ferramentas/CLAUDE.md)
 const copia = path.join(require('os').tmpdir(), `reino-testes/novo-${process.pid}`);

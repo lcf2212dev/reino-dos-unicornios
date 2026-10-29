@@ -25,7 +25,7 @@
 .opcao.opcao-img { flex-direction: column; justify-content: center; gap: 6px; padding: 10px 8px 12px; text-align: center; }
 .opcao-img .opcao-figura { display: inline-flex; align-items: center; justify-content: center; min-height: 64px; font-size: var(--texto-t); line-height: 1; }
 .opcao-img .opcao-texto { flex: none; max-width: 100%; overflow-wrap: break-word; }
-/* celular com letras grandes: o nome da opção desce um degrau (24 → 16) para caber na meia largura (ui.md §10.17.3) */
+/* celular com letras grandes: o nome da opção desce um degrau (24 → 16) para caber na meia largura (arte.md §17.3) */
 @media (max-width: 480px) { .letras-grandes .opcao-img .opcao-texto { font-size: var(--texto-aux); } }
 .opcao-marcar.opcao-img { position: relative; padding-top: 16px; }
 .opcao-marcar.opcao-img::after { position: absolute; top: 6px; right: 6px; }
@@ -67,7 +67,7 @@
   .letras-grandes .tabela-desafio .tabela-quadro td[data-cab]::before,
   :is(.tabela-larga, .tabela-digita) .tabela-quadro td[data-cab]:has(> .campo-texto-caixa, > .tabela-lacuna)::before { display: block; margin-bottom: 4px; }
   .letras-grandes .tabela-desafio .tabela-quadro td[data-cab]::before { white-space: nowrap; }
-  /* tabela de 2 colunas (sem ficha): o título da coluna um degrau abaixo, a palavra inteira (ui.md §10.17.3) */
+  /* tabela de 2 colunas (sem ficha): o título da coluna um degrau abaixo, a palavra inteira (arte.md §17.3) */
   .tabela-quadro th { font-size: var(--texto-aux); }
 }
 
@@ -129,6 +129,6 @@
 .caca-palavra { padding: 4px 10px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel); font-size: var(--texto); line-height: var(--entrelinha); }
 .caca-palavra.achada { border-color: var(--certo); background: var(--certo-fundo); color: var(--certo); text-decoration: line-through; }
 
-/* ---------- erro de item e acerto (ui.md §10.19.2 e 3) ---------- */
+/* ---------- erro de item e acerto (arte.md §19.2 e 3) ---------- */
 :is(.tabela-lacuna, .cruz-casa, .caca-letra).item-erro.item-erro { background: var(--erro-fundo); border-color: var(--erro); outline-color: var(--erro); color: var(--tinta); }
 .tudo-certo :is(.tabela-lacuna, .cruz-casa) { border-color: var(--certo); background: var(--certo-fundo); color: var(--tinta); }

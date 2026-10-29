@@ -67,7 +67,7 @@
           var tranca = el('button.btn-grande.foguete-cadeado', { type: 'button' }, '🔒');
           tranca.setAttribute('aria-label', p.nome + ' trancado. ' + frase);
           tranca.addEventListener('click', function () { Reino.Som.tocar('toque'); dizer([frase]); });
-          // trancado: o estado indisponível (.indisponivel, ui.md §10.19.1), com o 🔒 dizendo por quê
+          // trancado: o estado indisponível (.indisponivel, arte.md §19.1), com o 🔒 dizendo por quê
           return el('li.foguete-destino.foguete-trancado.indisponivel', bola(p, true), el('b', p.nome), tranca);
         }
         var btn = el('button.btn-grande.btn-principal.foguete-decolar', { type: 'button', disabled: !cheio }, 'Voar!🚀');   // compacto: cabe na linha do nome, como o 🔒 (D8B-21)

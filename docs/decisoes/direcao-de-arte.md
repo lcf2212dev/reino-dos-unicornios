@@ -1,6 +1,6 @@
 # Decisão: direção de arte (escala do mundo, cor por matéria, festa)
 
-**Data:** 2026-09-29 · **Contexto:** backlog visual (`TODO-VISUAL.md`, item D10-19). As regras estão em
+**Data:** 2026-09-29 · **Contexto:** backlog visual (`arquivo/TODO-VISUAL.md`, item D10-19). As regras estão em
 `docs/contratos/arte.md` §8 em diante; aqui fica só o porquê das escolhas de produto.
 
 ## Contexto

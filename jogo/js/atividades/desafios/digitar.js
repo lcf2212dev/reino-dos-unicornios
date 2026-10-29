@@ -113,7 +113,7 @@
         });
         return { ok: erradas.length === 0, erradas: erradas, dica: acento ? 'Dica: confira os acentos!' : null };
       },
-      // a caixa errada fica marcada (ui.md §10.19.2) até ela mexer de novo; a palavra fica, para ela consertar
+      // a caixa errada fica marcada (arte.md §19.2) até ela mexer de novo; a palavra fica, para ela consertar
       marcarErro: function (res) {
         _d.erroParado(wrap, (res.erradas || []).map(function (i) { return campos[i].campo; }), opts.onMudar);
       },

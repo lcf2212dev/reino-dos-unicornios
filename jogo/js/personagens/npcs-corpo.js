@@ -71,7 +71,7 @@
   /* ---------- corpo ---------- */
   function pintarCorpo(g, o, m) {
     var x = CX, R = o.roupa, Rd = esc(R, 0.22), R2 = o.roupa2, R2d = esc(R2, 0.22), K = o.pele, S = o.sapato;
-    // armadura: cinza de metal, ou na cor da matéria do cavaleiro (armaduraCor, ui.md §10.22)
+    // armadura: cinza de metal, ou na cor da matéria do cavaleiro (armaduraCor, arte.md §22)
     var AC = o.armaduraCor;
     if (o.armadura) { R2 = AC ? esc(mis('#c3cde0', AC, 0.7), 0.12) : '#aab4cc'; R2d = AC ? esc(R2, 0.25) : '#7c86a3'; S = AC ? esc(R2, 0.5) : '#5f6a84'; }
     var b = BY, nT = m.nT, maos = m.maos;

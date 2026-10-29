@@ -27,8 +27,8 @@ Este arquivo tem as regras invioláveis e o índice. As regras de código de cad
 - Nunca use AskUserQuestion, nunca pare para aprovar plano, amostra ou resultado. O que você decidiu vai no
   relatório final, curto.
 - Merge só com `npm test` e `npm run e2e` verdes; diferença no e2e fora do que a feature explica é defeito: corrija.
-  Mudança de propósito no e2e: aceite a base na mesma integração (`--trocar-base "<descrição>"`, que a grava no
-  mesmo commit da frente).
+  O `integrar` leva sempre `--esperado '<regex das imagens que a feature explica>'` (`'^$'` = idêntico); mudança de
+  propósito no e2e: aceite a base na mesma integração (`--trocar-base "<descrição>"`, no mesmo commit da frente).
 - O que não tem volta não se faz, e o trabalho segue pelo outro caminho:
   - progresso da Mariana, banco da Vercel, Docker, servidor de casa, artifact: não se tocam (acima);
   - apagar o que não é temporário: não apague; deixe o arquivo e cite no relatório final;

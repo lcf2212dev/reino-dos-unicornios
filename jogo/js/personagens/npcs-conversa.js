@@ -63,7 +63,7 @@
     return [].concat.apply([], out.map(function (o) { return tamanho(o) > LIMITE && /,/.test(t) && o !== t ? quebrarNaTela(o.replace(/,\s*$/, ',')) : [o]; }));
   }
   /* pontinhos de página no pé do balão (D5-14), em pixel: a página de agora cheia, as outras vazias; na última,
-     o último cheio marca o fim. Conversa de 1 página não tem. 2 px da tela por pixel do desenho (ui.md §10). */
+     o último cheio marca o fim. Conversa de 1 página não tem. 2 px da tela por pixel do desenho (arte.md). */
   function pontos(i, total) {
     var PA = window.PA;
     if (total < 2 || !PA || !PA.novoCanvas || !PA.paraDOM) return null;

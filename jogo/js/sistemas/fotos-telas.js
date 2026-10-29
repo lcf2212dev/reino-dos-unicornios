@@ -74,13 +74,13 @@
   }
 
   // o balão "Foto guardada no álbum!" (ou outro aviso sem botões) fecha quando o álbum ou a foto grande abre: nada
-  // cobre o rodapé de ação (ui.md §10.20)
+  // cobre o rodapé de ação (arte.md §20)
   function fecharAviso() {
     var C = Reino.Claude;
     if (C && C.limpar && !(C.dialogoAberto && C.dialogoAberto())) C.limpar();   // e os avisos na fila (a 2ª foto guardada)
   }
 
-  // botão do rodapé de ação (ui.md §10.20): o ícone e o rótulo; no rodapé, o secundário mostra só o ícone e o
+  // botão do rodapé de ação (arte.md §20): o ícone e o rótulo; no rodapé, o secundário mostra só o ícone e o
   // principal, no celular, o rótulo curto (ui-fotos.css). O nome inteiro fica no aria-label e no title
   function botao(icone, rotulo, curto, principal, classe) {
     return U().el('button.btn-grande' + (principal ? '.btn-principal' : '.btn-secundario') + (classe ? '.' + classe : ''),
@@ -272,7 +272,7 @@
     }));
   };
 
-  // legenda da miniatura: o lugar já gravado na foto (só leitura), com o hífen suave nas palavras longas (ui.md §10.17)
+  // legenda da miniatura: o lugar já gravado na foto (só leitura), com o hífen suave nas palavras longas (arte.md §17)
   function legendaMini(lugar) {
     var R = Reino._ui, t = String(lugar || '');
     return R && R.hifenizar ? R.hifenizar(t) : t;
@@ -308,7 +308,7 @@
       url = URL.createObjectURL(f.png);
       img.src = url; img.alt = 'Foto: ' + f.lugar + ', ' + f.data;
       img.width = f.w; img.height = f.h;
-      U().preencher(legenda, f.lugar + '\u00a0· ' + f.data);   // o "·" colado ao lugar, nunca sozinho no fim da linha (ui.md §10.17.4)
+      U().preencher(legenda, f.lugar + '\u00a0· ' + f.data);   // o "·" colado ao lugar, nunca sozinho no fim da linha (arte.md §17.4)
       msg.hidden = true;
       var varias = lista.length > 1;
       ant.hidden = prox.hidden = !varias;

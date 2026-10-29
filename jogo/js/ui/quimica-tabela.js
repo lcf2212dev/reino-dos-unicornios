@@ -17,7 +17,7 @@
   var P = 8, VAO = 4, MARGEM = 2, COLUNAS = 18;
   var W_MAPA = MARGEM * 2 + COLUNAS * P + 1, H_MAPA = MARGEM * 2 + 9 * P + VAO + 1;
 
-  function hifenizar(s) { return R._ui.hifenizar(s); }   // ui/pecas.js (ui.md §10.17)
+  function hifenizar(s) { return R._ui.hifenizar(s); }   // ui/pecas.js (arte.md §17)
   T.hifenizar = hifenizar;
   function paginas(x) { return !x ? [] : Array.isArray(x) ? x.slice() : [x]; }
   T.paginas = paginas;
@@ -51,7 +51,7 @@
   function amostra(cor) { return el('span.qt-cor', { 'aria-hidden': 'true', style: { background: cor } }); }
 
   /* Nome no cartão: até 8 letras inteiro (numa linha só); de 9 ou mais, das sílabas do hifenizar fica só o corte
-     mais perto do meio ("Hidro-gênio"), para as duas linhas saírem parelhas (ui.md §10.17.2) */
+     mais perto do meio ("Hidro-gênio"), para as duas linhas saírem parelhas (arte.md §17.2) */
   function nomeCartao(nome) {
     var partes = hifenizar(nome).split('\u00ad');
     if (partes.length < 3) return partes.join('\u00ad');
@@ -72,10 +72,10 @@
   function casa(ctx, x, y, cor) {
     ret(ctx, x, y, P + 1, P + 1, K);
     ret(ctx, x + 1, y + 1, P - 1, P - 1, cor);
-    ret(ctx, x + 1, y + 1, P - 1, 1, D.clarear(cor, 0.45));   // luz de cima e da esquerda (ui.md §10.13.1)
+    ret(ctx, x + 1, y + 1, P - 1, 1, D.clarear(cor, 0.45));   // luz de cima e da esquerda (arte.md §13.1)
     ret(ctx, x + 1, y + 2, 1, P - 2, D.clarear(cor, 0.25));
   }
-  // k: px CSS por px de arte. Com k ≥ 4 cada casa leva o símbolo (texto do canvas em múltiplo de 8 px, ui.md §10.9.5)
+  // k: px CSS por px de arte. Com k ≥ 4 cada casa leva o símbolo (texto do canvas em múltiplo de 8 px, arte.md §9.5)
   function desenharMapa(k, aceso) {
     var c = canvasNitido(W_MAPA, H_MAPA, k), ctx = c.ctx, n = 0, luz = null, letras = [];
     Q.tabela().forEach(function (x) {

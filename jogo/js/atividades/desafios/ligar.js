@@ -3,7 +3,7 @@
   var U = Reino.util, el = U.el, D = Reino.Desafios, _d = Reino._desafios;
   var fracao = _d.fracao;
 
-  /* erro parado (ui.md §10.19.2), usado por todos os desafios de itens: .item-erro nos itens errados (o tremor por cima
+  /* erro parado (arte.md §19.2), usado por todos os desafios de itens: .item-erro nos itens errados (o tremor por cima
      só com animação, pelo CSS) até ERRO_MS ou até o próximo toque no desafio; aí apaga() desfaz a resposta errada.
      Na missão, com o "Quase!" (.missao-retorno) aberto por cima, o relógio espera: a marca fica até ERRO_MS depois do
      "Tentar de novo". Enquanto a marca está à vista, _d.marcado(wrap) é true e o pronto() do desafio dá false (o

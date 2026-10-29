@@ -14,7 +14,7 @@
     bimestre: 4,
     nome: 'Língua Portuguesa',
     emoji: '✏️',
-    cor: '#8e4fd6',   // a cor da matéria (docs/contratos/ui.md §10.22): o roxo da capa do Volume 4
+    cor: '#8e4fd6',   // a cor da matéria (docs/contratos/arte.md §22): o roxo da capa do Volume 4
     nomeLivro: 'Livros de Língua Portuguesa',
     livros: {
       aprendizagem: { nome: 'Livro de Aprendizagem', curto: 'Aprendizagem', emoji: '📗' },

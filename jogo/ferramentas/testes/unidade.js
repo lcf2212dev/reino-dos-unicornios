@@ -78,7 +78,7 @@ async function rodarFila(cfg) {
   const dest = cfg.destino ? fs.createWriteStream(cfg.destino) : null;
   const fluxo = run({ files: cfg.lista, concurrency: cfg.concorrencia, timeout: POR_TESTE_MS, isolation: 'process' });
   for await (const ev of fluxo) {
-    if (ev.type === 'test:fail') process.exitCode = 1;
+    if (ev.type === 'test:fail' && !ev.data.todo) process.exitCode = 1;   // `todo` que falha não reprova (como o node --test)
     saida.write(ev);
     if (dest) for await (const l of reporter([ev])) dest.write(l);
   }

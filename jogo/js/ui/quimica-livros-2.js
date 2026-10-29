@@ -1,6 +1,6 @@
 /* Laboratório de Química, 2º andar: a Estante dos livros (Biblioteca da Química), parte 2 de 2 (o desenho em pixel art).
    Contrato: docs/contratos/quimica.md §2 e §9. Um desenho por livro (chave `desenho`), 64×48 px de arte, que muda um
-   pouco a cada página (a cena acompanha o texto). ui.md §10: contorno #3a2446, sem arc, gradiente nem blur; luz em
+   pouco a cada página (a cena acompanha o texto). arte.md: contorno #3a2446, sem arc, gradiente nem blur; luz em
    faixas; ampliação inteira. Acrescenta ao interno Reino._quimicaLivros: desenhos e desenho(chave, pagina). */
 (function () {
   var R = window.Reino, T = R._quimicaLivros, el = T.el, ret = T.ret, D = R.Desenho;

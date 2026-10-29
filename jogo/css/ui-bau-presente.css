@@ -1,5 +1,5 @@
 /* Baú dos presentes (js/ui/bau-presente.js) e a raridade Ultra Lendário (Loja, js/ui/loja.js).
-   Tela escura (ui.md §10.8.3): céu da noite (--noite) com estrelinhas em CSS; texto --papel e
+   Tela escura (arte.md §8.3): céu da noite (--noite) com estrelinhas em CSS; texto --papel e
    --ouro; o baú ganha o brilho de 1 pixel em --papel. A luz que sobe são as 6 cores do arco-íris (--arco-1 a --arco-6)
    chapadas; o acessório sobe em degraus (o giro é troca de quadros no JS); o cartão Ultra Lendário é o fundo dourado do
    lendário com a moldura .brilho-arco (ui-animacoes.css). Movimento só por token e em degraus; com

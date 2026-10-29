@@ -52,7 +52,7 @@
       function desenhar() {
         var v = VOLTA[volta], andando = relogio !== null;
         var spr = PA.mariana(prova(), false, andando ? [1, 0, 2, 0][passo % 4] : 0, { vista: v[0] });
-        var escala = 8;   // par (ui.md §10.10.7)
+        var escala = 8;   // par (arte.md §10.7)
         if (tela.width !== spr.w || tela.height !== spr.h) { tela.width = spr.w; tela.height = spr.h; }
         var c = tela.getContext('2d');
         c.clearRect(0, 0, spr.w, spr.h); c.drawImage(spr.canvas, 0, 0);
@@ -72,7 +72,7 @@
       // ---------- nome e sexo ----------
       var nome = el('input#campo-nome-jogador.campo-nome.criar-nome', { type: 'text', maxlength: NOME_MAX, value: rascunho.nome,
         autocomplete: 'off', spellcheck: 'false', 'aria-label': 'Nome', placeholder: 'Seu nome' });
-      // até 12 letras numa linha, inteiro; mais comprido (nome antigo) quebra só na sílaba, com hífen (ui.md §10.17)
+      // até 12 letras numa linha, inteiro; mais comprido (nome antigo) quebra só na sílaba, com hífen (arte.md §17)
       function preencherPlaquinha() {
         var t = nome.value.trim() || rascunho.nome;
         U.preencher(plaquinha, t.length > NOME_MAX ? R.hifenizar(t) : t);
@@ -220,7 +220,7 @@
         linhaRoupa, linhaLaco);
       pn.card.classList.add('painel-criar');
       var ok = el('button.btn-grande.btn-principal', { type: 'button' }, 'Pronto! ✨');
-      // o Pronto no rodapé de ação do painel, fora do que rola: à vista sem rolar no celular (ui.md §10.20)
+      // o Pronto no rodapé de ação do painel, fora do que rola: à vista sem rolar no celular (arte.md §20)
       pn.conteudo.appendChild(el('div.criar', el('div.criar-vitrine', palco, plaquinha), campos));
       pn.card.appendChild(el('footer.rodape-acao.criar-botoes', ok));
       ok.addEventListener('click', function () { UI.fecharTela(pn.tela); concluir(); });

@@ -1,4 +1,4 @@
-// Testes de unidade: o validador de movimento (ferramentas/validar/validar-movimento.js; docs/contratos/ui.md §10.15).
+// Testes de unidade: o validador de movimento (ferramentas/validar/validar-movimento.js; docs/contratos/arte.md §15).
 // Rodar (em jogo/): node --test ferramentas/testes/unidade/validar-movimento.test.js
 const { test } = require('node:test');
 const assert = require('assert');

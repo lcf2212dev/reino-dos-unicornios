@@ -15,7 +15,8 @@ const { planoPoda, arquivosHarness } = require('../e2e-disco');
 const REPO = path.resolve(__dirname, '..', '..', '..', '..');
 // a lista de arquivos sai da main (require a partir de referencias.js); a conta é feita aqui, à parte
 function harnessDaMain() {
-  const ler = (f) => execFileSync('git', ['-C', REPO, 'show', `main:jogo/ferramentas/testes/${f}`]);
+  // stderr calado, como o harnessMain() do e2e-disco.js (arquivo que a main ainda não tem: o git reclama à toa)
+  const ler = (f) => execFileSync('git', ['-C', REPO, 'show', `main:jogo/ferramentas/testes/${f}`], { stdio: ['ignore', 'pipe', 'ignore'] });
   const h = crypto.createHash('sha256');
   arquivosHarness(ler).forEach((f) => { h.update(f + '\0'); h.update(ler(f)); });
   return h.digest('hex').slice(0, 8);

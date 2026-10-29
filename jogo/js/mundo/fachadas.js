@@ -169,7 +169,7 @@
       ret(ctx, x + 2, y + (h >> 1) + 1, 2, 2, C.ouro);
     },
     // entrada padrão das fachadas (D2A-04): degrau claro embaixo e F.porta em cima (arco, moldura, maçaneta dourada);
-    // cx = meio da porta, yb = chão (py + h). Folha de 14×22 (23 px de arte com o arco; ui.md §10.12: 22 a 28) e
+    // cx = meio da porta, yb = chão (py + h). Folha de 14×22 (23 px de arte com o arco; arte.md §12: 22 a 28) e
     // degrau de 3. o: { larg, alto, degrau (0 = sem), largDegrau }. Devolve a folha { x, y, w, h } para os enfeites
     entrada: function (ctx, cx, yb, cor, moldura, o) {
       o = o || {};
@@ -217,7 +217,7 @@
       ret(ctx, x + 1, y + 1, 8, 5, K); ret(ctx, x + 1, y + 2, 7, 3, cor); ret(ctx, x + 1, y + 2, 7, 1, clarear(cor, 0.4));
       ret(ctx, x + 6, y + 3, 3, 1, K);
     },
-    // sombra de chão do prédio (ui.md §10.13): faixa reta embaixo e centrada na porta, 3 px de arte para fora da
+    // sombra de chão do prédio (arte.md §13): faixa reta embaixo e centrada na porta, 3 px de arte para fora da
     // base (y = py + h, a primeira linha abaixo do rect), em pixel cheio e 2 níveis de alfa. Chamada pelo
     // Mapa.prerender (mundo/mapa-desenho.js) no chão, antes do prédio: fica fora do sprite e da máscara do contorno
     sombraBase: function (ctx, px, py, w, h) {

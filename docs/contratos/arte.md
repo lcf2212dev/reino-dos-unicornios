@@ -5,8 +5,8 @@ Para que serve: as regras visuais de tudo o que aparece na tela (CSS e canvas). 
 
 ## 1–7. Moldura
 Tudo na tela é pixel art, também o que é CSS e o que é desenhado no canvas. Os itens 1 a 7 são a moldura (citados
-como §1 a §7); as seções 8 em diante são a direção de arte. Código novo já nasce nelas; onde o código de
-hoje ainda não segue, o item do `TODO-VISUAL.md` leva até a regra. O porquê das escolhas de produto (escala do mundo,
+como §1 a §7); as seções 8 em diante são a direção de arte. Código novo já nasce nelas (o backlog que levou o
+código até elas, todo feito, está em `arquivo/TODO-VISUAL.md`). O porquê das escolhas de produto (escala do mundo,
 cor por matéria, festa): `docs/decisoes/direcao-de-arte.md`.
 1. Cantos: `border-radius` só com `var(--canto-pequeno)` (botão pequeno, §10.4), `var(--canto)`, `var(--canto-grande)` ou `var(--redondo)` (o antigo círculo), ou 0.
    `ui-base.css` põe `corner-shape: notch` em tudo: o canto vira um degrau reto e a borda e a sombra o seguem.

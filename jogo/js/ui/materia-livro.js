@@ -48,7 +48,7 @@
   // item de lista ou de quadro: o termo em destaque pela cor (a fonte não tem negrito) e o texto
   function itemLista(i) { return el('li' + ((!i.termo && /^\s*([a-z]\)|\d+[.)]|[■•])\s/.test(i.texto)) || /^\s*(\d+[.)]?|[a-z]\))\s*$/.test(i.termo || '') ? '.sem-marca' : ''), i.termo ? [el('b.lista-termo', hifenizar(i.termo)), ' '] : null, hifenizar(i.texto)); }
   // figura: desenho de window.ICONES ('lp:moinho' ou emoji) num quadro de 64 px, na maior escala par que cabe nele
-  // (ui.md §10.10.7): 16×16 em 4× e 32×32 em 2×, todas do mesmo tamanho na fileira; sem desenho, o emoji ou ❓
+  // (arte.md §10.7): 16×16 em 4× e 32×32 em 2×, todas do mesmo tamanho na fileira; sem desenho, o emoji ou ❓
   var FIGURA = 64;
   function iconeFigura(img) {
     var d = PA.iconeDesenho(String(img).replace(/\uFE0F/g, ''));
@@ -59,7 +59,7 @@
     c.style.height = (c.height * e) + 'px';
     return c;
   }
-  // ilustração: escala inteira e par, nunca menos de 2 (1 px de arte = 2 px CSS, ui.md §10.10.1 e §10.10.7): a maior
+  // ilustração: escala inteira e par, nunca menos de 2 (1 px de arte = 2 px CSS, arte.md §10.1 e §10.7): a maior
   // que cabe na largura e na altura máxima, até escalaMax. Arte mais larga que a metade da largura útil sai em 2× e
   // rola de lado dentro do próprio quadro (.bloco-ilustracao; a página nunca). Largura útil da carta no celular
   // (390 px): 306 px no livro e 334 no resumo da sala, então arte de até 152 px de largura cabe sem rolar.
@@ -173,7 +173,7 @@
   // livroOrigem: em qual livro abrir (ação de NPC ou objeto); a carta pedida (cartaoId) manda mais: abre no livro dela
   UI.abrirLivro = function (materia, cartaoId, livroOrigem) {
     if (Reino.Bimestres.emEspera(materia)) return Reino.Bimestres.painel(materia.nome, { materia: materia });
-    // com os livros da escola o nome é comprido ("Livros de Língua Portuguesa"): no celular, o curto (ui.md §10.21.1)
+    // com os livros da escola o nome é comprido ("Livros de Língua Portuguesa"): no celular, o curto (arte.md §21.1)
     var titulo = '📖 ' + UI.nomeLivro(materia), curto = materia.livros && titulo !== '📖 Meus Livros' ? '📖 Meus Livros' : null;
     var pn = painel('livro', titulo, { materia: materia, curto: curto });
     // livro ainda sem cartas: o aviso, sem quebrar
@@ -248,7 +248,7 @@
     montarIndice();
     pn.card.insertBefore(nav, pn.conteudo);
     pn.conteudo.appendChild(area);
-    // ← n de N → e o 🔊 Ouvir no rodapé de ação do painel, fora da carta que rola: sempre no mesmo lugar (ui.md §10.20)
+    // ← n de N → e o 🔊 Ouvir no rodapé de ação do painel, fora da carta que rola: sempre no mesmo lugar (arte.md §20)
     pn.card.appendChild(el('footer.rodape-acao.livro-rodape', el('div.livro-nav', ant, pag, prox),
       Reino.Som.temVoz() ? el('div.intro-botoes', ouvir) : null));
     mostrar();

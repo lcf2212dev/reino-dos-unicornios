@@ -1,6 +1,6 @@
 /* Laboratório de Química, 2º andar: a Estante dos livros (Biblioteca da Química) (js/ui/quimica-livros.js; contrato docs/contratos/quimica.md §9).
    A estante (os livros como lombadas coloridas, 2 colunas; 4 no notebook) e o livro aberto (desenho, texto, ◀ ▶).
-   A cor de cada livro vem do JS (--ql-cor e --ql-fundo); o resto é token (ui.md §10.8). */
+   A cor de cada livro vem do JS (--ql-cor e --ql-fundo); o resto é token (arte.md §8). */
 
 .ql-contagem { margin: 0 0 12px; text-align: center; }
 .ql-estante { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
@@ -36,7 +36,7 @@ footer.ql-rodape .so-seta { width: 64px; padding: 0; }
   .ql-livro { grid-template-columns: auto minmax(0, 1fr) auto; grid-template-rows: auto; min-height: 64px; padding: 8px 8px 8px 18px; gap: 8px; }
   .ql-livro-emoji { grid-row: auto; }
   .ql-texto { font-size: var(--texto); }
-  footer.ql-rodape > .ql-voltar { width: 64px; padding: 0; }   /* só a seta: ◀ 1 de 8 ▶ cabem ao lado (ui.md §10.20.2) */
+  footer.ql-rodape > .ql-voltar { width: 64px; padding: 0; }   /* só a seta: ◀ 1 de 8 ▶ cabem ao lado (arte.md §20.2) */
   .ql-pag { min-width: 72px; }
 }
 /* notebook (tela baixa e larga): 4 colunas, os 8 livros sem rolar */

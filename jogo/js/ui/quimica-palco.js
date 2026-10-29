@@ -3,7 +3,7 @@
    Cria o interno Reino._quimicaPalco (docs/contratos/quimica.md §2), que guarda: W, H, BEQ (a geometria do béquer),
    MESA, EFEITOS (efeito → { dur, sons: [[ms, som]], som, desenhar(ctx, t, info) }; quimica-palco-2.js registra as reações
    e o 'nada'), os helpers de desenho que os efeitos usam e criar(canvas) (o palco de uma tela aberta).
-   Quem usa: quimica-palco-2.js e quimica-bancada.js. Pixel art (ui.md §10): só retângulos e os círculos de pixel do
+   Quem usa: quimica-palco-2.js e quimica-bancada.js. Pixel art (arte.md): só retângulos e os círculos de pixel do
    Reino.Desenho; sem arc, degradê nem blur. Sem animação (Reino.util.animar() falso): nada de rAF, só o quadro final. */
 (function () {
   var R = window.Reino;
@@ -129,7 +129,7 @@
     bolas.forEach(function (b) { if (b[2] > 1) circulo(ctx, b[0] - 1, b[1] - 1, b[2] - 1, cor); });
     bolas.forEach(function (b) { if (b[2] > 2) ret(ctx, b[0] - Math.ceil(b[2] / 2), b[1] - Math.ceil(b[2] / 2), 2, 1, BRANCO); });
   }
-  // bolha de sabão: só o anel (a luz não tem contorno, ui.md §10.14.2) e um brilho no alto à esquerda
+  // bolha de sabão: só o anel (a luz não tem contorno, arte.md §14.2) e um brilho no alto à esquerda
   function bolha(ctx, x, y, r, cor) {
     for (var j = -r; j <= r; j++) for (var i = -r; i <= r; i++) {
       var d = i * i + j * j;

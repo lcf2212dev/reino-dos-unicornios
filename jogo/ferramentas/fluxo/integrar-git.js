@@ -147,8 +147,6 @@ function aplicarSolto(integ, wt, log) {
   return conf.length || diferentes.length ? { ok: false, conflitos: conf.concat(diferentes), erro: erroGerados } : { ok: true };
 }
 
-// arquivos (já mudados) para dentro do último commit da integração (--amend; a branch ainda não está na main);
-// sem commit da integração além de `main`, um commit novo com `titulo`
 // por que o último commit NÃO pode ser emendado (null = pode): não é da integração, ou já está na main ou no
 // origin/main (o --amend reescreveria um commit publicado)
 function naoEmendar(integ, main) {
@@ -160,6 +158,8 @@ function naoEmendar(integ, main) {
   return null;
 }
 
+// arquivos (já mudados) para dentro do último commit da integração (--amend; a branch ainda não está na main);
+// se ele não pode ser emendado (naoEmendar: nada além da `main`, ou já publicado), um commit novo com `titulo`
 function emendar(integ, arquivos, main, titulo) {
   C.git(integ, 'add', '-A', '--', ...arquivos);
   if (C.gitOk(integ, 'diff', '--cached', '--quiet')) return null;

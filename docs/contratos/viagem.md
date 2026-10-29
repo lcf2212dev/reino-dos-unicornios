@@ -2,7 +2,7 @@
 
 Cobre a viagem espacial: o combustível que enche com as respostas certas, o painel do foguete (com o passaporte),
 o minijogo de voo e os planetas (interiores do Observatório com céu aberto e ETs). Pedido:
-`pedidos/2026-09-27-viagem-espacial.md`. Números em `Reino.config.viagem`.
+`arquivo/pedidos/2026-09-27-viagem-espacial.md`. Números em `Reino.config.viagem`.
 
 ## Índice
 1. Onde está · 2. Fluxo · 3. `Reino.Viagem` · 4. `Reino.Voo` · 5. Planetas · 6. ETs · 7. Pulo · 8. Save · 9. Antes de mexer

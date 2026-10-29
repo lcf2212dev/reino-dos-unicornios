@@ -122,7 +122,7 @@
       valendo ? [Pv.icone(prova.acessorios[valendo].id, 32), el('span', 'Valendo: acessório ', el('b', rar(valendo).nome.toLowerCase()), '. Acerte TUDO!')]
         : el('span', '✏️ Treino: o acessório desta prova você já ganhou.'));
     var corpo = el('div.missao-corpo');
-    var rodape = el('footer.missao-rodape.prova-rodape.rodape-acao', { hidden: true });   // rodapé de ação (ui.md §10.20)
+    var rodape = el('footer.missao-rodape.prova-rodape.rodape-acao', { hidden: true });   // rodapé de ação (arte.md §20)
     tela.appendChild(el('header.missao-topo', sair, titulo, pontos));
     Reino.Desafios.ajustarTitulo(titulo, prova.materiaId);
     tela.appendChild(faixa);
@@ -224,7 +224,7 @@
       if (revisando) corpo.appendChild(el('p.dica-revisao', 'Leia de novo com calma. Se achar um errinho, é só trocar a resposta.'));
       pintarPontos(i);
 
-      // no celular, só a seta no "Anterior" e "Entregar 📝" (o .rotulo-longo some: ui.md §10.20)
+      // no celular, só a seta no "Anterior" e "Entregar 📝" (o .rotulo-longo some: arte.md §20)
       var ant = el('button.btn-grande.btn-secundario.so-seta', { type: 'button', 'aria-label': 'Anterior' }, '←', el('span.rotulo-longo', ' Anterior'));
       var ultima = i + 1 === questoes.length;
       var prox = el('button.btn-grande.btn-principal', { type: 'button' },
@@ -324,7 +324,7 @@
 
       var caixa = el('div.fim-sala.resultado-prova');
       caixa.appendChild(el('div.nota-folha' + (premios.sucesso ? '.nota-dez' : ''), el('small', 'Nota'), el('b', Pv.formatarNota(premios.nota)), el('small', 'de 10')));
-      // com prêmio, o ícone da raridade vai colado à 1ª palavra (ui.md §10.21.1), sem o espaço largo da fonte: no celular quebra em 2 linhas
+      // com prêmio, o ícone da raridade vai colado à 1ª palavra (arte.md §21.1), sem o espaço largo da fonte: no celular quebra em 2 linhas
       var h2 = a ? el('h2.titulo-pixel.titulo-premio', el('span.titulo-colado', titulo.split(' ').slice(0, 2).join('')), ' ' + titulo.split(' ').slice(2).join(' '))
         : el('h2.titulo-pixel', titulo);
       caixa.appendChild(h2);
@@ -335,7 +335,7 @@
         // lendário: a moldura arco-íris soma 48 px; no celular a prévia desce uma escala para o botão caber (D6-19)
         var lend = premios.raridade === 'lendario';
         var prev = Pv.previa(a.id, lend && window.matchMedia('(max-width: 480px)').matches ? 3 : 4);
-        if (lend) prev = el('div.brilho-arco', prev);   // brilho arco-íris do lendário (ui.md §10.16)
+        if (lend) prev = el('div.brilho-arco', prev);   // brilho arco-íris do lendário (arte.md §16)
         caixa.appendChild(el('div.previa-valendo.ganhou.rar-' + premios.raridade, prev,
           el('p', el('b', a.nome), ' ', rotuloRaridade(premios.raridade))));
         // o botão do prêmio logo abaixo da prévia, à vista sem rolar (D6-19)
@@ -407,7 +407,7 @@
       corpo.scrollTop = 0;
       Reino.UI.focarTroca(caixa.querySelector('.btn-principal'), h2, CALMA_TROCA);
 
-      // prova terminada = nível 3 (ui.md §10.16): título de 32 px; confete 90 em toda raridade, só com prêmio ou nota 10
+      // prova terminada = nível 3 (arte.md §16): título de 32 px; confete 90 em toda raridade, só com prêmio ou nota 10
       if (a) { Reino.UI.festa(3, { titulo: h2 }); setTimeout(function () { Reino.Som.tocar('estrela'); }, 700); }
       else { Reino.Som.tocar(premios.sucesso ? 'acerto' : 'toque'); Reino.UI.festa(3, { titulo: h2, som: false, confete: premios.sucesso ? 90 : 0 }); }
       Reino.UI.esperarFala([botoes, sair], [fala], { voz: 'claude' });

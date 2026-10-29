@@ -28,7 +28,7 @@
     c.style.height = (src.height * escala) + 'px';
     return c;
   };
-  // trancado/vazio (ui.md §10.14): miolo em --tinta-suave e borda (pixel com vizinho vazio) em --tinta; mesmo tamanho
+  // trancado/vazio (arte.md §14): miolo em --tinta-suave e borda (pixel com vizinho vazio) em --tinta; mesmo tamanho
   PA.silhueta = function (spr) {
     var src = spr.canvas || spr, w = src.width, h = src.height;
     var c = novoCanvas(w, h), ctx = c.getContext('2d');
@@ -149,14 +149,14 @@
     return PA.paraDOM(base, PA.escalaNitida((escala || 2) * 16, base.width), 'icone-px');
   };
 
-  /* Escala par em px CSS por pixel do desenho (ui.md §10.10.7): o par mais perto do alvo, nunca menos de 2;
+  /* Escala par em px CSS por pixel do desenho (arte.md §10.7): o par mais perto do alvo, nunca menos de 2;
      assim nenhum pixel sai mais largo que o vizinho. */
   PA.escalaNitida = function (px, grade) {
     return 2 * Math.max(1, Math.round(px / grade / 2));
   };
 
   /* Ícone dentro de um texto: 32 px (2 px CSS por pixel, como a letra de 16 px), no meio da frase ou sozinho
-     (ui.md §10.10.5). */
+     (arte.md §10.5). */
   PA.iconeTexto = function (emoji) {
     var c = PA.iconeEmoji(emoji, 2);
     c.classList.add('icone-em');

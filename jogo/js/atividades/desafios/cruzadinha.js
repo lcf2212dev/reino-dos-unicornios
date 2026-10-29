@@ -212,7 +212,7 @@
     return _d.fracao(d.palavras.filter(function (p, i) { return typeof valor[i] === 'string' && base(valor[i]) === base(p.resposta); }).length, d.palavras.length);
   };
   /* correção: "1. GATO • 1. GALO • 2. LIMÃO" (no mesmo número, a deitada antes da em pé), número e palavra presos por
-     espaço inquebrável (ui.md §10.17.4). Sem a seta: na correção ela vira desenho (canvas) e o Chromium quebra a linha
+     espaço inquebrável (arte.md §17.4). Sem a seta: na correção ela vira desenho (canvas) e o Chromium quebra a linha
      antes e depois dele mesmo com U+00A0; a linha é montada por concatenação de texto (provas.js), sem lugar para um span */
   function textoPalavras(d, ls) {
     var g = grade(d);

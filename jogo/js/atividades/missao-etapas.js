@@ -85,7 +85,7 @@
     function rotulo(n) {
       alvo = n;
       U.preencher(conta, 'Etapa ' + (n + 1) + ' de ' + est.total);
-      // refazer sem ⭐: "Tentar sem errar ⭐" (no celular, "Sem errar ⭐": o .rotulo-longo some, ui.md §10.20)
+      // refazer sem ⭐: "Tentar sem errar ⭐" (no celular, "Sem errar ⭐": o .rotulo-longo some, arte.md §20)
       var refazer = feita(est, n) && !tem(est.perfeitas, n);
       comecar.textContent = '';
       comecar.setAttribute('aria-label', refazer ? 'Tentar sem errar' : 'Começar');
@@ -120,7 +120,7 @@
     var emoji = el('div.fim-emoji', { 'aria-hidden': 'true' }, PA.iconeEmoji(r.perfeita ? '⭐' : '📖', 2));
     var titulo = el('h2.titulo-pixel', 'Etapa guardada! ✨');
     var linha = r.perfeita ? FALAS.semErro : FALAS.depois;
-    // no celular (rodapé de ação, ui.md §10.20): "Próxima ▶" e "Descansar" (o .rotulo-longo some)
+    // no celular (rodapé de ação, arte.md §20): "Próxima ▶" e "Descansar" (o .rotulo-longo some)
     var proxima = el('button.btn-grande.btn-principal', { type: 'button', 'aria-label': 'Próxima etapa' }, 'Próxima', el('span.rotulo-longo', ' etapa'), ' ▶');
     var descansar = el('button.btn-grande.btn-secundario', { type: 'button', 'aria-label': 'Descansar' }, 'Descansar', el('span.rotulo-longo', ' 🌿'));
     api.corpo.innerHTML = '';
@@ -129,7 +129,7 @@
       el('div.etapas-caixa', el('p.etapas-conta', 'Etapa ' + (api.etapa() + 1) + ' de ' + est.total + ' guardada'), bolinhas(est, alvo, null)),
       el('div.intro-claude', PA.paraDOM(PA.claude(0), 4, 'claude-intro'), el('p', FALAS.seguir))));
     api.mostrarAcao('intro-botoes fim-etapa-botoes', [descansar, proxima]);
-    // festa leve (ui.md §10.16, nível 1): o brilho no ícone; a ⭐ ganha toca a estrela
+    // festa leve (arte.md §16, nível 1): o brilho no ícone; a ⭐ ganha toca a estrela
     Reino.UI.festa(1, { item: emoji, som: false });
     Reino.Som.tocar(r.perfeita ? 'estrela' : 'acerto');
     proxima.addEventListener('click', function () { api.comecar(alvo); });
@@ -197,7 +197,7 @@
     var lista = cartoes(premio);
     api.corpo.innerHTML = '';
     api.corpo.appendChild(el('div.fim-sala.festa-trilha', emoji, titulo, el('p', U.colado('Você fez ' + api.sala.nome + ' sem errar nada!')), lista, btn));
-    // escala de festa (ui.md §10.16): maior que a da sala (nível 3)
+    // escala de festa (arte.md §16): maior que a da sala (nível 3)
     Reino.UI.festa(3, { titulo: titulo, emoji: emoji });
     btn.addEventListener('click', function () { Reino.Som.tocar('toque'); if (depois) depois(); else api.fechar(null); });
     api.botaoFim(btn);

@@ -1,6 +1,6 @@
 /* Etapas da sala de livro (docs/contratos/quarto-bimestre.md §13.3 e §14): a trilha das etapas na intro da missão,
    o fim de etapa, a festa da trilha perfeita (atividades/missao-etapas.js) e o chip "em andamento" da tela da
-   matéria (ui/materia.js). Sem animação própria: a festa é a do UI.festa (ui.md §10.16). */
+   matéria (ui/materia.js). Sem animação própria: a festa é a do UI.festa (arte.md §16). */
 
 /* a caixa da trilha: "Etapa N de M", as bolinhas e "⭐ X de M" */
 .etapas-caixa { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%; max-width: 560px; padding: 12px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); }
@@ -47,7 +47,7 @@ button.etapa-bolinha.apagada { cursor: default; }
 .festa-trilha > p { margin: 0; }
 .festa-solta { display: flex; flex-direction: column; align-items: center; text-align: center; }
 .cartoes-trilha { list-style: none; margin: 0; padding: 0; width: 100%; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
-.cartao-trilha { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 8px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--rar-fundo); box-shadow: inset 0 0 0 4px var(--rar-desenho); text-align: center; }   /* tipografia-ok: faixa interna da raridade (ui.md §10.8) */
+.cartao-trilha { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 8px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--rar-fundo); box-shadow: inset 0 0 0 4px var(--rar-desenho); text-align: center; }   /* tipografia-ok: faixa interna da raridade (arte.md §8) */
 .cartao-trilha > b { font-size: var(--texto); }
 .cartao-trilha > small { font-size: var(--texto-aux); color: var(--rar-texto); }
 .cartao-trilha-desenho { display: flex; align-items: center; justify-content: center; min-height: 64px; }

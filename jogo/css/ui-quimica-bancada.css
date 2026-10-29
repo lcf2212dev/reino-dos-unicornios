@@ -1,7 +1,7 @@
 /* Laboratório de Química: a bancada de misturas (UI.telaQuimicaBancada, js/ui/quimica-bancada.js): o palco (canvas do
    béquer em ampliação inteira e par, 2 ou 4 px por pixel de arte), a fala da Doutora Proveta, as prateleiras de
    produtos, o cartão do resultado e o rodapé. Celular e tablet em coluna; tela baixa e larga (notebook) em 2 colunas
-   (ui.md §10.21.2). Arraste pelo desenho do tubo; os rótulos permitem rolar a prateleira com o dedo. */
+   (arte.md §21.2). Arraste pelo desenho do tubo; os rótulos permitem rolar a prateleira com o dedo. */
 .tela-quimica-bancada .painel-conteudo { padding: 12px 16px 14px; }
 .bancada { display: flex; flex-direction: column; gap: 10px; }
 .bancada-esq, .bancada-dir { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
@@ -100,7 +100,7 @@
   /* a fala em 12 px: no celular o palco, a fala e os produtos têm rótulos legíveis */
   .bancada-fala { min-height: calc(2 * 1.5 * var(--texto-aux)); font-size: var(--texto-aux); }
 }
-/* Letras grandes: os 3 botões do rodapé não cabem em 24 px; descem um degrau (ui.md §10.17.3) */
+/* Letras grandes: os 3 botões do rodapé não cabem em 24 px; descem um degrau (arte.md §17.3) */
 .letras-grandes footer.bancada-rodape .btn-grande { font-size: var(--texto-aux); }
 .letras-grandes .bancada-prateleira { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 @media (max-width: 480px) { .letras-grandes .bancada-prateleira { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

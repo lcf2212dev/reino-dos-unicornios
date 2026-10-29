@@ -6,13 +6,14 @@
 //   1. testes de unidade    jogo/ferramentas/testes/unidade.js (duas filas de node --test: Node puro e navegador;
 //                           ao vivo, por ser o mais longo)
 //   2. validadores          jogo/ferramentas/validar/validar-tudo.js (conteúdo, interiores, index, docs)
-//   3. tamanho              jogo/ferramentas/tamanho.js (código ≤ 420 linhas, dados ≤ 800)
+//   3. tamanho              jogo/ferramentas/tamanho.js (código avisa acima de 420 linhas e falha acima de 600; dados ≤ 800)
 //   4. referências de dados jogo/ferramentas/testes/e2e.js --so-dados (servidor de TESTE + Chromium)
 //   5. tipos                jogo/ferramentas/testes/tipos.js (TypeScript sobre os arquivos de tipos.json)
 // A saída dos passos 2 a 5 só aparece inteira no fim, e só quando o passo falha (ou com --detalhes). Passo cujo arquivo
 // não existe é erro. Sai com código 1 se algum passo falhar.
 // Verde por árvore (testes/verdes.js): tudo verde grava a chave da árvore de trabalho; o próximo `npm test` na mesma
-// árvore (mesmos arquivos, Node, Playwright e REINO_RESERVAS_ABERTAS) só diz "já verde" e sai 0 (--forcar roda).
+// árvore (mesmos arquivos, Node, Playwright e todas as variáveis REINO_* com valor, menos as de FORA_DA_CHAVE em
+// testes/verdes.js) só diz "já verde" e sai 0 (--forcar roda).
 // Cada passo roda num grupo de processos próprio com tempo máximo (unidade 6 min, validadores 2, tamanho 1,
 // referências 4, tipos 2; REINO_TEMPO=2 dobra): estourou, o grupo inteiro (Chromium incluso) é derrubado. Pega a
 // trava da worktree (testes/trava.js): outro `npm test` na mesma worktree espera (ou falha com --sem-esperar).

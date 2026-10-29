@@ -51,7 +51,7 @@
             Reino.Som.tocar('estrela');
             if (Object.keys(achados).length === d.pares.length) { completo = true; opts.onMudar(); if (opts.onCompleto) setTimeout(opts.onCompleto, 500); }
           } else {
-            // par errado: as duas cartas ficam marcadas (erro parado, ui.md §10.19.2) enquanto abertas
+            // par errado: as duas cartas ficam marcadas (erro parado, arte.md §19.2) enquanto abertas
             travar = true;
             abertas.forEach(function (i) { botoes[i].classList.add('item-erro'); });
             setTimeout(function () {

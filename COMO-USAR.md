@@ -6,8 +6,9 @@ Guia de uso para o Leandro. As regras técnicas ficam em `docs/contratos/`.
 - **Tablet, celular ou notebook:** abra https://reino-dos-unicornios.vercel.app
   - **Instalar como app:** no Chrome do Android, menu ⋮ → "Instalar app" (ou "Adicionar à tela inicial"); no iPhone/iPad,
     Safari → Compartilhar → "Adicionar à Tela de Início"; no notebook, o ícone de instalar na barra de endereço.
-  - **Sem internet:** abra uma vez com internet e espere uns minutos (o jogo inteiro, com as vozes, fica guardado no
-    aparelho). Depois ele abre e joga sem rede; o progresso fica no aparelho e vai para o banco sozinho quando a
+  - **Sem internet:** abra uma vez com internet e espere até a Área dos pais dizer "Pronto para jogar sem internet."
+    (antes ela mostra "Guardando o jogo para jogar sem internet… N de M."; o jogo inteiro, com as vozes, fica guardado
+    no aparelho). Depois ele abre e joga sem rede; o progresso fica no aparelho e vai para o banco sozinho quando a
     internet volta. Um aparelho que nunca abriu o jogo precisa de internet na primeira vez.
   - O progresso é sincronizado entre os aparelhos e entre abas. Um aparelho novo já abre com o progresso dela.
   - **Entrar:** toda vez que o jogo abre, toque em "Entrar no Reino" e digite a senha. Mariana: login `mariana`,

@@ -143,7 +143,7 @@ test('validar-tudo: resume os validadores e falha quando um deles falha', () => 
   assert.match(r.saida, /✔ interiores/);
 });
 
-test('tamanho: código acima de 420, dados acima de 800 são acusados (EXCECOES hoje vazia)', () => {
+test('tamanho: código avisa acima de 420 e falha acima de 600, dados falham acima de 800 (EXCECOES hoje vazia)', () => {
   const T = require('../../tamanho');
   // regras por caminho (um lugar só: REGRAS em ferramentas/tamanho.js)
   assert.strictEqual(T.regra('js/voz/geral.js'), 'gerado');
@@ -154,18 +154,29 @@ test('tamanho: código acima de 420, dados acima de 800 são acusados (EXCECOES 
   assert.strictEqual(T.regra('js/sistemas/cuidados.js'), 'codigo');
   assert.strictEqual(T.regra('css/ui-base.css'), 'codigo');
   assert.strictEqual(T.regra('ferramentas/vozes/gerar-vozes.py'), 'codigo');
-  // árvore sintética pequena (não precisa copiar o jogo)
-  const raiz = path.join(tmp, 'tamanho', 'jogo');
+  // árvore sintética pequena (não precisa copiar o jogo; pasta nova por rodada, sem apagar)
+  const raiz = path.join(tmp, 'tamanho-' + process.pid, 'jogo');
   const escrever = (rel, n) => { fs.mkdirSync(path.dirname(path.join(raiz, rel)), { recursive: true }); fs.writeFileSync(path.join(raiz, rel), 'x\n'.repeat(n)); };
   escrever('js/sistemas/grande.js', 421);
   escrever('js/sistemas/cabe.js', 420);
-  escrever('js/conteudo/materias/muita.js', 801);
+  escrever('ferramentas/no-teto.js', 600);
   escrever('js/arte/icones/cabe.js', 800);
   escrever('js/voz/enorme.js', 5000);
   escrever('css/estilo.css', 10);
-  const r = node(path.join(jogo, 'ferramentas/tamanho.js'), ['--raiz', raiz]);
+  // só avisos: lista o de 421 (e o de 600), mas não falha
+  let r = node(path.join(jogo, 'ferramentas/tamanho.js'), ['--raiz', raiz]);
+  assert.strictEqual(r.status, 0, r.saida);
+  assert.match(r.saida, /⚠ 2 arquivo\(s\) de código acima de 420/);
+  assert.match(r.saida, /js\/sistemas\/grande\.js: 421 linhas/);
+  assert.match(r.saida, /ferramentas\/no-teto\.js: 600 linhas/);
+  assert.doesNotMatch(r.saida, /✘|cabe\.js|enorme\.js/);
+  // acima de 600 (código) e de 800 (dados): falha
+  escrever('js/sistemas/demais.js', 601);
+  escrever('js/conteudo/materias/muita.js', 801);
+  r = node(path.join(jogo, 'ferramentas/tamanho.js'), ['--raiz', raiz]);
   assert.strictEqual(r.status, 1, r.saida);
-  assert.match(r.saida, /js\/sistemas\/grande\.js: 421 linhas \(codigo, limite 420\)/);
+  assert.match(r.saida, /js\/sistemas\/demais\.js: 601 linhas \(codigo, limite 600\)/);
   assert.match(r.saida, /js\/conteudo\/materias\/muita\.js: 801 linhas \(dados, limite 800\)/);
-  assert.doesNotMatch(r.saida, /cabe\.js|enorme\.js/);
+  assert.match(r.saida, /js\/sistemas\/grande\.js: 421 linhas$/m);   // segue como aviso
+  assert.doesNotMatch(r.saida, /grande\.js: 421 linhas \(|cabe\.js|enorme\.js/);
 });

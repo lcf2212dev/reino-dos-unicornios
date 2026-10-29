@@ -9,7 +9,7 @@
    No carregamento NADA de DOM ou canvas: as ferramentas em Node carregam este arquivo num vm. */
 (function () {
   var R = window.Reino = window.Reino || {};
-  // contorno e vão entre os cômodos: --tinta e --noite de Reino.config.paleta (ui.md §10.8). Sem a chave (as
+  // contorno e vão entre os cômodos: --tinta e --noite de Reino.config.paleta (arte.md §8). Sem a chave (as
   // ferramentas que só querem o rng carregam este arquivo sozinho), a reserva com o hex do contrato
   var PAL = (R.config && R.config.paleta) || {};
   var K = PAL.tinta || '#3a2446';

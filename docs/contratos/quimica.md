@@ -2,7 +2,7 @@
 
 Cobre o prédio `quimica` (clareira 1 do mapa): a bancada de misturas, o caderno de receitas, o microscópio, a
 tabela periódica, as descobertas no save e as estrelas; e o 2º andar (§9: curiosidades, Fogão dos Estados, Mesa de
-Separar Misturas, livros). Pedidos: `pedidos/2026-09-30-laboratorio-quimica.md`, `pedidos/2026-09-30-quimica-andar2.md`.
+Separar Misturas, livros). Pedidos: `arquivo/pedidos/2026-09-30-laboratorio-quimica.md`, `arquivo/pedidos/2026-09-30-quimica-andar2.md`.
 Números em `Reino.config.quimica`. Só diversão e aprendizado extra: nada de dinheiro, Aura, pergunta ou erro.
 
 ## Índice

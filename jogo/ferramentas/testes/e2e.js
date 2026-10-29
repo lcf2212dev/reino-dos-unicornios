@@ -4,7 +4,7 @@
 //   node jogo/ferramentas/testes/e2e.js --so-dados       só dados + vozes (rápido; parte do npm test)
 //   … --base <hash>          outra base (padrão: jogo/ferramentas/testes/base-referencia.txt: um hash, ou "@" = o
 //                            commit que mudou aquele arquivo por último; "@" mudado e sem commit = o HEAD, com aviso)
-//   … --desempenho           também o A/B de desempenho contra a base (desempenho.js, ~5 min)
+//   … --desempenho           também o A/B de desempenho contra a base (desempenho.js, 6 cenas, ~7 min)
 //   … --tamanhos celular     só alguns tamanhos nas imagens   · --raiz <pasta jogo>: outro jogo "atual"
 //   … --cenas <regex>        só as imagens cujo nome (sem .png) casa, ex.: --cenas 'interior-loja|tela-bau'.
 //                            Só imagens: dados e vozes ficam de fora (rode --so-dados à parte, ~30 s). A página

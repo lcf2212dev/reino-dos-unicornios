@@ -1,4 +1,4 @@
-// Tipografia e pixel da interface (docs/contratos/ui.md §10.9 e §10.10; decisões 1 a 10 da onda 2b).
+// Tipografia e pixel da interface (docs/contratos/arte.md §9 e §10; decisões 1 a 10 da onda 2b).
 // Uso: node ferramentas/validar/validar-tipografia.js [--raiz <pasta jogo>] [--detalhes] [--estrito]
 //   (roda no npm run validar)
 // CSS (css/*.css, sem os comentários):
@@ -7,7 +7,7 @@
 //   - font-weight só 400 (normal/inherit); line-height só 1, 1.25, 1.5 ou var(--entrelinha[-titulo]);
 //   - border (e border-top/-width…) com espessura só por token var(--borda-fina|--borda-grossa) (ou 0);
 //   - box-shadow só var(--sombra-pequena|--sombra-grande) (ou o brilho inset 0 ±2/4px 0); text-shadow só contorno 0/2 px
-//     sem desfoque; seletor com :active fica de fora (§10.10.3); exceção do §10.10.3: o brilho interno
+//     sem desfoque; seletor com :active fica de fora (arte.md §10.3); exceção do §10.3: o brilho interno
 //     `inset 0 ±2/4px 0 var(--brilho|--brilho-fraco)` é aceito fora do token; tokens de borda/sombra/canto do :root com o valor do contrato; b, strong { font-weight: 400 };
 //   - JS: style.fontSize/lineHeight/fontWeight e font-size:/line-height: em string de estilo acusados;
 //   - nada de --escala-texto (CSS e JS).
@@ -30,7 +30,7 @@ const EXCECOES_JS = [/motor\/entrada\.js$/, /\/voo[-a-z]*\.js$/];
 
 // comentário vira espaço (mantém as linhas)
 function semComentarios(css) { return css.replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, ' ')); }
-// contrato §10.10.2-3: o valor dos tokens de borda, sombra e canto
+// contrato arte.md §10.2-3: o valor dos tokens de borda, sombra e canto
 const TOKENS_PIXEL = { '--borda-fina': '2px', '--borda-grossa': '4px', '--sombra-pequena': '0 2px 0 var(--borda)', '--sombra-grande': '0 4px 0 var(--borda)', '--canto-pequeno': '4px' };
 // números de uma sombra (sem cor/var/inset): [x, y, desfoque?]
 const numeros = (s) => s.replace(/var\([^)]*\)|rgba?\([^)]*\)|#\w+|inset/g, ' ').trim().split(/\s+/).filter((t) => /^-?\d*\.?\d+(px)?$/.test(t)).map(parseFloat);

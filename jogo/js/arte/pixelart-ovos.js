@@ -27,7 +27,7 @@
     [[6, 3], [5, 4], [6, 5], [7, 6], [3, 7], [4, 8], [5, 8], [8, 7], [9, 8]],
     [[6, 3], [5, 4], [6, 5], [7, 6], [3, 7], [4, 8], [5, 8], [8, 7], [9, 8], [2, 10], [3, 10], [6, 9], [7, 10], [9, 10]],
   ];
-  // cores por raridade: o trio de Reino.config.paleta.raridade (ui.md §10.8): casca no fundo, mancha e plaquinha
+  // cores por raridade: o trio de Reino.config.paleta.raridade (arte.md §8): casca no fundo, mancha e plaquinha
   // no desenho. Chave que faltar (prévia sem config) cai na reserva, com o hex do contrato
   var RESERVA = { comum: { fundo: '#fff8ee', desenho: '#ff9cc6', texto: '#6b5378' }, raro: { fundo: '#dcebff', desenho: '#5fb4ff', texto: '#2b5ea8' }, epico: { fundo: '#eadcff', desenho: '#a66bff', texto: '#5b2aa8' }, lendario: { fundo: '#ffe39a', desenho: '#ffb020', texto: '#8a5200' } };
   var RAR = ((window.Reino && Reino.config && Reino.config.paleta) || {}).raridade || {};

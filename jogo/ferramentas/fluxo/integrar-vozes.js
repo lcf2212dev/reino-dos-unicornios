@@ -3,8 +3,8 @@
 // integração. Os arquivos gerados (falas.json, índice, pacotes) só passam pelo código, nunca pela tela.
 const fs = require('fs');
 const path = require('path');
-const crypto = require('crypto');
 const C = require('./comum');
+const { pendentes: pendentesGerado } = require('../vozes/vozes');   // a regra do áudio pendente mora lá (sem efeito ao carregar)
 
 const GERADO = 'jogo/ferramentas/gerado';
 const FALAS = `${GERADO}/falas.json`;
@@ -16,20 +16,6 @@ const EMPACOTAR = 'jogo/ferramentas/vozes/empacotar-vozes.js';
 // arquivo gerado das vozes que o conflito resolve sozinho (os mp3 do cache têm nome por hash: não conflitam)
 const ehVoz = (f) => f === FALAS || f === INDICE || new RegExp(`^${PACOTES}/[^/]+\\.js$`).test(f);
 
-// CÓPIA do pendentes(gerado) de vozes/vozes.js (a frente das vozes passou a exportá-lo, com require.main):
-// trocar por require('../vozes/vozes').pendentes na integração.
-// Áudio = vozes-cache/<voz>/<sha1(voz|velocidade|tom|fala[|efeito])[:16]>.mp3, e o índice tem de apontar para ele.
-function pendentesGerado(gerado) {
-  const { vozes, falas } = JSON.parse(fs.readFileSync(path.join(gerado, 'falas.json'), 'utf8'));
-  const arqIndice = path.join(gerado, 'vozes-indice.json');
-  const indice = fs.existsSync(arqIndice) ? JSON.parse(fs.readFileSync(arqIndice, 'utf8')) : {};
-  return falas.filter((f) => {
-    const v = vozes[f.voz] || {};
-    const partes = [v.voz, v.velocidade, v.tom, f.fala].concat(v.efeito ? [v.efeito] : []);
-    const h = crypto.createHash('sha1').update(partes.join('|'), 'utf8').digest('hex').slice(0, 16);
-    return !fs.existsSync(path.join(gerado, 'vozes-cache', f.voz, h + '.mp3')) || indice[f.chave] !== `${f.voz}/${h}.mp3`;
-  });
-}
 // falas sem áudio da worktree `integ` (sem falas.json: nenhuma)
 const pendentes = (integ) => (fs.existsSync(path.join(integ, FALAS)) ? pendentesGerado(path.join(integ, GERADO)) : []);
 

@@ -1,10 +1,10 @@
-// Teste de NAVEGADOR (Chromium, servidor de TESTE, save sintético): contraste do TEXTO da interface (ui.md §10.8.1).
+// Teste de NAVEGADOR (Chromium, servidor de TESTE, save sintético): contraste do TEXTO da interface (arte.md §8.1).
 // Em cada tela (as mesmas cenas do e2e: tela-materia-*, prova-*-capa, tela-plano, tela-estabulo, telas do menu,
 // o foguete (planeta trancado), a tela de jogadores e o voo (telas escuras), um desafio de cada tipo,
 // prova-portugues-3bim-q11), mede a cor do texto (getComputedStyle, com a opacidade de
 // quem está por cima) × o fundo efetivo (as camadas de background-color até a primeira opaca; faixa de degradê
 // duro conta a pior faixa) e exige ≥ 4,5:1 (3:1 com 24 px ou mais), inclusive nos ::before/::after com texto e no
-// controle indisponível (disabled, aria-disabled, .indisponivel: ui.md §10.19.1, --tinta-suave sobre --papel-2).
+// controle indisponível (disabled, aria-disabled, .indisponivel: arte.md §19.1, --tinta-suave sobre --papel-2).
 // A conta é a de validar/contraste.js. Também confere que um par ruim de propósito é acusado.
 // Rodar (da raiz): node --test jogo/ferramentas/testes/unidade/contraste-texto.navegador.test.js   (tudo: npm test)
 const { test } = require('node:test');
@@ -25,7 +25,7 @@ function coletarTexto(seletorRaiz) {
     var a = c[3];
     return [0, 1, 2].map(function (i) { return Math.round(c[i] * a + base[i] * (1 - a)); }).concat(1);
   }
-  // cores das faixas de um linear-gradient (duro, §10.2): a pior faixa decide
+  // cores das faixas de um linear-gradient (duro, arte.md §2): a pior faixa decide
   function faixas(img) {
     if (!img || img === 'none' || img.indexOf('linear-gradient') < 0) return null;
     var cores = (img.match(/rgba?\([^)]+\)/g) || []).map(rgba);
@@ -70,7 +70,7 @@ function coletarTexto(seletorRaiz) {
   raiz.querySelectorAll('*').forEach(function (el) {
     var cs = getComputedStyle(el);
     if (cs.visibility !== 'visible' || cs.display === 'none') return;
-    // o controle indisponível também é medido: o texto dele não apaga (ui.md §10.19.1, D10-B04)
+    // o controle indisponível também é medido: o texto dele não apaga (arte.md §19.1, D10-B04)
     var r = el.getBoundingClientRect();
     if (r.width <= 1 || r.height <= 1) return;
     var proprio = [...el.childNodes].filter(function (n) { return n.nodeType === 3; }).map(function (n) { return n.textContent; }).join('');
@@ -125,7 +125,7 @@ test('contraste do texto da interface ≥ 4,5:1 (3:1 com ≥ 24 px) sobre o fund
       falhas.push(...reprovados(await medir(cena), cena));
       await limpar();
     }
-    // a tela de jogadores (tela escura, ui.md §10.8.3): céu --noite e o painel creme
+    // a tela de jogadores (tela escura, arte.md §8.3): céu --noite e o painel creme
     await c.js('void Reino.UI.telaQuemVaiJogar()');
     await c.avancar(800);
     falhas.push(...reprovados(await medir('tela-jogadores'), 'tela-jogadores'));
@@ -170,6 +170,6 @@ test('contraste do texto da interface ≥ 4,5:1 (3:1 com ≥ 24 px) sobre o fund
     assert.deepStrictEqual(vazias, [], 'cenas sem nenhum texto medido');
     assert.ok(Object.keys(medidas).length >= 30, 'poucas cenas medidas: ' + Object.keys(medidas).join(', '));
     if (process.env.REINO_CONTRASTE_LISTA) console.log(medidas);
-    assert.deepStrictEqual([...new Set(falhas)], [], 'texto abaixo do contraste mínimo (ui.md §10.8.1):\n' + [...new Set(falhas)].join('\n'));
+    assert.deepStrictEqual([...new Set(falhas)], [], 'texto abaixo do contraste mínimo (arte.md §8.1):\n' + [...new Set(falhas)].join('\n'));
   } finally { await c.fechar(); }
 });

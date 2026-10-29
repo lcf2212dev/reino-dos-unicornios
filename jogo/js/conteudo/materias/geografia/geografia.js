@@ -9,7 +9,7 @@ Reino.registrarMateria({
   id: 'geografia',
   nome: 'Geografia',
   emoji: '🌍',
-  cor: '#39a860',   // a cor da matéria (docs/contratos/ui.md §10.22)
+  cor: '#39a860',   // a cor da matéria (docs/contratos/arte.md §22)
   nomeLivro: 'Livro dos Caminhos',
   lugar: {
     nome: 'Estação dos Caminhos',

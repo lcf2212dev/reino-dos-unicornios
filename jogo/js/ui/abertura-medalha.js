@@ -60,7 +60,7 @@
     D.circulo(ctx, CX, CY, RAIO - 3, COR.y);
     D.circulo(ctx, CX, CY, RAIO - 5, COR.o);
     D.circulo(ctx, CX, CY, RAIO - 6, COR.y);
-    // luz de cima e da esquerda (ui.md §10.13.1): arco claro no quarto de cima à esquerda
+    // luz de cima e da esquerda (arte.md §13.1): arco claro no quarto de cima à esquerda
     for (var a = 0; a < 12; a++) {
       var ang = Math.PI * (1.05 + a * 0.035);
       D.ret(ctx, Math.round(CX + Math.cos(ang) * (RAIO - 3)), Math.round(CY + Math.sin(ang) * (RAIO - 3)), 1, 1, COR.l);
@@ -98,7 +98,7 @@
     desenharMedalha(b.canvas, q);
   }
 
-  /* ---------- confete e estrelinhas douradas caindo na cena (pixel do mundo, ui.md §10.14.2) ---------- */
+  /* ---------- confete e estrelinhas douradas caindo na cena (pixel do mundo, arte.md §14.2) ---------- */
   var DOURADO = ['#ffd34d', '#fff4cc', '#f0a04a', '#ffb020', '#ff8a3d'];   // --ouro --ouro-claro --ambar, lendário, --laranja
   var RASTRO = ['#ffd34d', '#fff4cc', '#f0a04a', '#ffb020', '#ffffff', '#ffe066'];
   var PECAS = 72;
