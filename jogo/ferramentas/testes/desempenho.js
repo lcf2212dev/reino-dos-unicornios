@@ -1,5 +1,5 @@
 // Desempenho A/B: quanto tempo REAL o navegador leva para andar N quadros fixos do jogo, com a CPU
-// 4× mais lenta, no mapa e nos 3 interiores mais pesados (escola, museu, observatorio).
+// 4× mais lenta, no mapa e nos interiores mais pesados (escola, museu, observatorio, castelo, portugues).
 // Uso:
 //   node jogo/ferramentas/testes/desempenho.js <jogo-referencia> <jogo-novo> [--pares 16] [--quadros 60] [--cenas mapa,escola]
 //   node jogo/ferramentas/testes/desempenho.js --aa <jogo> [--vezes 3]      (teste A/A: o mesmo jogo dos dois lados)
@@ -14,7 +14,8 @@
 //   coleta de lixo forçada antes de cada amostra (--expose-gc);
 // - as duas versões ficam abertas ao mesmo tempo (um servidor de teste e uma aba isolada cada) e as
 //   amostras se alternam A B B A …: a carga da máquina e a posição afetam as duas igual;
-// - resultado por cena = mediana das razões B/A dos pares.
+// - resultado por cena = mediana das razões B/A dos pares (a média de ms por quadro decide); junto, a média e o
+//   p95 do tempo de cada quadro só no requestAnimationFrame (laço e desenho), de todas as amostras de cada lado.
 // CRITÉRIO: uma cena acima de 5% é medida de novo (até 2 vezes); reprova só se a mediana das
 // medições continuar acima de 5% (falha consistente, não um pico da máquina).
 // Ruído medido (2026-09-26, 32 núcleos com outros agentes rodando, carga ~8): A/A 3× (16 pares, 60 quadros)
@@ -27,12 +28,29 @@ const { abrir, lancar } = require('./navegador');
 const { gerarSaves } = require('./saves');
 
 const TOLERANCIA = 1.05;
-const CENAS = ['mapa', 'escola', 'museu', 'observatorio'];
+const CENAS = ['mapa', 'escola', 'museu', 'observatorio', 'castelo', 'portugues'];
 const mediana = (v) => { const s = [...v].sort((a, b) => a - b); const m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
 const pct = (r) => `${r >= 1 ? '+' : ''}${((r - 1) * 100).toFixed(1)}%`;
+const media = (v) => (v.length ? v.reduce((a, b) => a + b, 0) / v.length : 0);
+const p95 = (v) => { const s = [...v].sort((a, b) => a - b); return s.length ? s[Math.min(s.length - 1, Math.ceil(s.length * 0.95) - 1)] : 0; };
 
 // roda antes do jogo: guarda o relógio real (o congelar.js troca performance.now pelo virtual)
 function guardarRelogio() { window.__relogioReal = performance.now.bind(performance); }
+
+// depois do congelar.js: cronometra (relógio real) cada quadro do requestAnimationFrame; os pedidos do mesmo
+// quadro virtual (o laço e o medidor do debug) somam num tempo só. Só mede com window.__temposQuadro ligado
+function medirQuadros() {
+  var pedir = window.requestAnimationFrame;
+  window.requestAnimationFrame = function (fn) {
+    return pedir(function (t) {
+      var t0 = window.__relogioReal();
+      try { fn(t); } finally {
+        var q = window.__temposQuadro, d = window.__relogioReal() - t0;
+        if (q) { if (q.t === t) q.v[q.v.length - 1] += d; else { q.t = t; q.v.push(d); } }
+      }
+    });
+  };
+}
 
 async function avancar(page, ms) { return page.evaluate((m) => window.__congelar.avancar(m), ms); }
 
@@ -50,6 +68,7 @@ async function abrirLado(browser, raiz, saves) {
   }
   // animações do cenário ligadas também no modo determinístico (o congelar.js pede movimento reduzido)
   await page.evaluate(() => { Reino.util.reduzMovimentoSistema = false; });
+  await page.evaluate(`(${medirQuadros.toString()})()`);
   await avancar(page, 1000);
   const cdp = await context.newCDPSession(page);
   await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });
@@ -69,13 +88,16 @@ async function irCena(lado, cena) {
   await avancar(page, 2500);
 }
 
-// ms reais por quadro numa amostra de `quadros` quadros
+// ms reais por quadro numa amostra de `quadros` quadros ({ media, quadros: ms de cada quadro })
 async function amostra(lado, quadros) {
   return lado.page.evaluate(async (n) => {
     if (window.gc) window.gc();
+    window.__temposQuadro = { t: null, v: [] };
     var t0 = window.__relogioReal();
     await window.__congelar.avancar(n * 16);
-    return (window.__relogioReal() - t0) / n;
+    var media = (window.__relogioReal() - t0) / n, v = window.__temposQuadro.v;
+    window.__temposQuadro = null;
+    return { media: media, quadros: v };
   }, quadros);
 }
 
@@ -94,13 +116,14 @@ async function saves(browser, raiz) {
 async function medirCena(a, b, cena, op) {
   await irCena(a, cena); await irCena(b, cena);
   for (let i = 0; i < 2; i++) { await amostra(a, op.quadros); await amostra(b, op.quadros); }
-  const va = [], vb = [], razoes = [];
+  const va = [], vb = [], qa = [], qb = [], razoes = [];
   for (let i = 0; i < op.pares; i++) {
     let x, y;
     if (i % 2) { y = await amostra(b, op.quadros); x = await amostra(a, op.quadros); } else { x = await amostra(a, op.quadros); y = await amostra(b, op.quadros); }
-    va.push(x); vb.push(y); razoes.push(y / x);
+    va.push(x.media); vb.push(y.media); razoes.push(y.media / x.media);
+    qa.push(...x.quadros); qb.push(...y.quadros);
   }
-  return { a: mediana(va), b: mediana(vb), razao: mediana(razoes) };
+  return { a: mediana(va), b: mediana(vb), quadroA: media(qa), quadroB: media(qb), p95a: p95(qa), p95b: p95(qb), razao: mediana(razoes) };
 }
 
 // compara duas pastas jogo/ (raizA = referência). Devolve { ok, cenas: { cena: { a, b, razao, medidas } } }
@@ -118,9 +141,11 @@ async function comparar(raizA, raizB, op = {}) {
       const razao = mediana(medidas.map((m) => m.razao));
       const passa = razao <= TOLERANCIA;
       if (!passa) r.ok = false;
-      r.cenas[cena] = { a: medidas[0].a, b: medidas[0].b, razao, medidas: medidas.map((m) => m.razao) };
-      op.log(`  ${passa ? '✔' : '✘'} ${cena}: ${medidas[0].a.toFixed(3)} → ${medidas[0].b.toFixed(3)} ms/quadro (${pct(razao)}` +
-        (medidas.length > 1 ? `; medido ${medidas.length}×: ${medidas.map((m) => pct(m.razao)).join(', ')}` : '') + ')');
+      const m0 = medidas[0];
+      r.cenas[cena] = { a: m0.a, b: m0.b, quadroA: m0.quadroA, quadroB: m0.quadroB, p95a: m0.p95a, p95b: m0.p95b, razao, medidas: medidas.map((m) => m.razao) };
+      op.log(`  ${passa ? '✔' : '✘'} ${cena}: ${m0.a.toFixed(3)} → ${m0.b.toFixed(3)} ms/quadro (${pct(razao)}` +
+        (medidas.length > 1 ? `; medido ${medidas.length}×: ${medidas.map((m) => pct(m.razao)).join(', ')}` : '') +
+        `); quadro: média ${m0.quadroA.toFixed(3)} → ${m0.quadroB.toFixed(3)} ms, p95 ${m0.p95a.toFixed(3)} → ${m0.p95b.toFixed(3)} ms`);
     }
     await a.context.close(); await b.context.close();
   } finally { await browser.close(); }

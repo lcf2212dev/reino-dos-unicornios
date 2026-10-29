@@ -47,11 +47,29 @@
   // status vindos de outros módulos (ex.: Dona Aveia com a montaria faminta): fn(npc) → {icone, rotulo} | null
   var STATUS = [];
   N.registrarStatus = function (fn) { STATUS.push(fn); };
-  N.status = function (npc) {
-    if (Reino.Bimestres.acaoEmEspera(npc.acao)) return { icone: '💬', rotulo: 'Quarto bimestre em breve' };
+  function emEspera(npc) { return Reino.Bimestres.acaoEmEspera(npc.acao) ? { icone: '💬', rotulo: 'Quarto bimestre em breve' } : null; }
+  function registrado(npc) {
     for (var si = 0; si < STATUS.length; si++) {
       try { var st = STATUS[si](npc); if (st) return st; } catch (e) { console.error(e); }
     }
+    return null;
+  }
+  N.status = function (npc) { return emEspera(npc) || registrado(npc) || statusDoProgresso(npc); };
+  // o status de cada quadro (N.desenhar): a espera e o que vem do progresso ficam guardados até o progresso mudar
+  // (evento ou outro save carregado); os registrados (a fome da montaria anda com o relógio) são sempre na hora
+  var versaoStatus = 0, guardados = typeof WeakMap === 'function' ? new WeakMap() : null;
+  if (Reino.util && Reino.util.on && Reino.EVENTOS) {
+    Reino.util.on(Reino.EVENTOS.PROGRESSO, function () { versaoStatus++; });
+    Reino.util.on(Reino.EVENTOS.PROGRESSO_REMOTO, function () { versaoStatus++; });
+  }
+  function statusDoQuadro(npc) {
+    var p = P(), est = p && p.estado ? p.estado() : null;
+    if (!guardados || !est) return N.status(npc);
+    var g = guardados.get(npc);
+    if (!g || g.v !== versaoStatus || g.est !== est) guardados.set(npc, g = { v: versaoStatus, est: est, espera: emEspera(npc), base: null });
+    return g.espera || registrado(npc) || g.base || (g.base = statusDoProgresso(npc));
+  }
+  function statusDoProgresso(npc) {
     var a = npc.acao || {}, p = P(), est = p.estado();
     if (a.tipo === 'sala') {
       var m = materiaDe(a), s = salaDe(a);
@@ -147,7 +165,7 @@
     pintor.sprite(spr, x, yPes + 1 + dy);
     // ícone de status acima da cabeça, em px da tela, na densidade da interface (ui.md §10.11): 2 px CSS por px
     // do balãozinho (s = 2 × dpr px de aparelho), 46 px CSS de altura nos 3 tamanhos, menor que o NPC
-    var st = N.status(npc);
+    var st = statusDoQuadro(npc);
     var b = bolha(st.icone), ctx = pintor.ctx;
     if (!ctx) return;
     var s = Math.max(1, Math.round(2 * (pintor.dpr || 1)));
