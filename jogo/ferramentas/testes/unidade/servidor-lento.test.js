@@ -1,4 +1,4 @@
-// servidor-teste.js: quando o servidor não diz "na porta" em 10 s, iniciar() falha — e o processo que ele subiu
+// servidor-teste.js: quando o servidor não diz "na porta" a tempo (10 s; aqui 1,5 s por REINO_SERVIDOR_SUBIR_MS), iniciar() falha — e o processo que ele subiu
 // tem de morrer junto. Bug da auditoria: ele ficava vivo; com --fundo (grupo próprio, sem vigia-pai), órfão para sempre.
 // Servidor FALSO (raiz sintética na pasta de testes): só demora 15 s para dizer "na porta" e sai sozinho em 25 s
 // (o teste não manda sinal a nada: sem a correção, o órfão some sozinho). Sem navegador.
@@ -10,6 +10,8 @@ const path = require('path');
 const { PASTA_TESTES } = require('../guardas');
 const { iniciar } = require('../servidor-teste');
 const { vivo } = require('../trava');
+
+process.env.REINO_SERVIDOR_SUBIR_MS = '1500';   // a espera de verdade (10 s) só alongava o teste
 
 function raizLenta() {
   fs.mkdirSync(PASTA_TESTES, { recursive: true });
@@ -26,7 +28,7 @@ function pidsDe(raiz) {
 }
 
 for (const fundo of [false, true]) {
-  test(`servidor que não sobe em 10 s não fica vivo (fundo=${fundo})`, { timeout: 30000, skip: process.platform !== 'linux' }, async () => {
+  test(`servidor que não sobe a tempo não fica vivo (fundo=${fundo})`, { timeout: 30000, skip: process.platform !== 'linux' }, async () => {
     const raiz = raizLenta();
     await assert.rejects(iniciar({ raiz, fundo }), /não subiu/);
     await new Promise((ok) => setTimeout(ok, 500));

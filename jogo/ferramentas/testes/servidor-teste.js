@@ -5,6 +5,7 @@
 //   --fundo: o servidor fica rodando sozinho (grupo de processos próprio, log em /tmp/reino-testes/),
 //            este comando sai com 0 e mostra o PID para `kill <pid>` (o jeito certo em tarefa de segundo plano)
 // Em código: const { iniciar } = require('./servidor-teste'); const s = await iniciar(); … s.parar();
+// Espera o servidor dizer "na porta" por até 10 s (REINO_SERVIDOR_SUBIR_MS muda; os testes usam menos).
 // O servidor filho morre junto com o pai (vigia-pai.js, canal IPC): nenhum servidor órfão fica
 // para trás se o pai cair, mesmo com kill -9.
 if (require.main === module) require('../ajuda').ajuda(__filename);
@@ -17,6 +18,7 @@ const { PASTA_TESTES, conferirPorta, conferirBanco } = require('./guardas');
 
 const RAIZ_PADRAO = path.join(__dirname, '..', '..');
 const VIGIA = path.join(__dirname, 'vigia-pai.js');
+const subirMs = () => Number(process.env.REINO_SERVIDOR_SUBIR_MS) || 10000;
 
 function portaLivre(de) {
   return new Promise((resolver, falhar) => {
@@ -65,7 +67,7 @@ async function subir(op) {
   }
   const subiu = new Promise((resolver, falhar) => {
     let saida = '';
-    const tempo = setTimeout(() => falhar(new Error('servidor de teste não subiu: ' + saida)), 10000);
+    const tempo = setTimeout(() => falhar(new Error('servidor de teste não subiu: ' + saida)), subirMs());
     const ler = (b) => { saida += b; if (/na porta/.test(saida)) { clearTimeout(tempo); resolver(); } };
     proc.once('exit', (c) => { clearTimeout(tempo); falhar(new Error(`servidor de teste saiu (${c}): ${saida}`)); });
     if (!op.fundo) { proc.stdout.on('data', ler); proc.stderr.on('data', ler); return; }

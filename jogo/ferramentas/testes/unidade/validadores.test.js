@@ -1,8 +1,10 @@
 // Testes de unidade das ferramentas de conferência: validar-conteudo, validar-interiores, validar-tudo e
-// tamanho passam no jogo de hoje e acusam um erro plantado numa cópia em /tmp (o jogo de verdade não muda).
+// tamanho acusam um erro plantado numa cópia em /tmp (o jogo de verdade não muda). Que o jogo de hoje passa, o próprio
+// `npm test` confere no passo dos validadores: aqui não roda de novo.
 // Rodar (em jogo/): node --test ferramentas/testes/unidade/validadores.test.js   (tudo: npm test, na raiz)
 // A cópia fica em /tmp/reino-testes/<worktree>/ (uma pasta por worktree, reaproveitada a cada rodada; o
-// sistema limpa /tmp ao reiniciar). Só js/ (sem js/voz) e ferramentas/ (sem ferramentas/gerado) são copiados.
+// sistema limpa /tmp ao reiniciar). Só js/ (sem js/voz) e ferramentas/ (sem ferramentas/gerado) são copiados; o
+// arquivo/ (vozes aposentadas, 63 MB, só lido) entra por link.
 const { test } = require('node:test');
 const assert = require('assert');
 const fs = require('fs');
@@ -12,7 +14,7 @@ const { spawnSync } = require('child_process');
 const Jogo = require('../../jogo-no-node');
 
 const jogo = Jogo.raiz;
-const tmp = path.join('/tmp/reino-testes', path.basename(path.dirname(jogo)) + '-' + crypto.createHash('md5').update(jogo).digest('hex').slice(0, 8));
+const tmp = path.join('/tmp/reino-testes', path.basename(path.dirname(jogo)) + '-v2-' + crypto.createHash('md5').update(jogo).digest('hex').slice(0, 8));
 
 function node(arq, args = [], cwd = jogo) {
   const r = spawnSync(process.execPath, [arq].concat(args), { cwd, encoding: 'utf8' });
@@ -26,7 +28,8 @@ function copiaDoJogo(nome) {
     recursive: true, force: true, filter: (src) => !fora.some((f) => src === f || src.startsWith(f + path.sep)),
   }));
   fs.copyFileSync(path.join(jogo, 'index.html'), path.join(destino, 'index.html'));
-  fs.cpSync(path.resolve(jogo, '../arquivo'), path.resolve(destino, '../arquivo'), { recursive: true });
+  const arquivo = path.resolve(destino, '../arquivo');
+  try { fs.lstatSync(arquivo); } catch (e) { fs.symlinkSync(path.resolve(jogo, '../arquivo'), arquivo); }
   return destino;
 }
 function plantar(arq, de, para) {
@@ -35,9 +38,7 @@ function plantar(arq, de, para) {
   fs.writeFileSync(arq, t.replace(de, para));
 }
 
-test('validar-conteudo: passa no jogo de hoje e acusa um tipo de desafio errado numa sala plantada (--materia)', () => {
-  const ok = node('ferramentas/validar/validar-conteudo.js');
-  assert.strictEqual(ok.status, 0, ok.saida);
+test('validar-conteudo: acusa um tipo de desafio errado numa sala plantada (--materia)', () => {
   const sala = path.join(tmp, 'conteudo', 'historia', 'h1.js');
   fs.mkdirSync(path.dirname(sala), { recursive: true });
   fs.copyFileSync(require('./ajudantes/terceiro-bimestre').arquivo('conteudo/materias/historia/h1'), sala);
@@ -47,9 +48,7 @@ test('validar-conteudo: passa no jogo de hoje e acusa um tipo de desafio errado 
   assert.match(r.saida, /tipo desconhecido escolhaPlantada/);
 });
 
-test('validar-interiores: passa no jogo de hoje e acusa uma tela que não existe num prédio plantado', () => {
-  const ok = node('ferramentas/validar/validar-interiores.js');
-  assert.strictEqual(ok.status, 0, ok.saida);
+test('validar-interiores: acusa uma tela que não existe num prédio plantado', () => {
   const copia = copiaDoJogo('interiores');
   plantar(path.join(copia, 'js/interiores/castelo/castelo.js'), "tela: 'plano'", "tela: 'telaPlantada'");
   const r = node('ferramentas/validar/validar-interiores.js', [], copia);
@@ -79,6 +78,7 @@ test('validar-interiores: personagem registrado com predio museu e x/y passa; se
   // relativo: o museu tem um NPC a mais que antes (vale com outros personagens já registrados no jogo)
   const npcsDoMuseu = (saida) => Number((/✔ museu — .* (\d+) NPCs/.exec(saida) || [])[1]);
   const antes = node('ferramentas/validar/validar-interiores.js', ['--detalhes'], copia);
+  assert.match(antes.saida, /^✔ castelo — /m, '--detalhes lista cada interior');
   fs.writeFileSync(falas, registro(', x: 22, y: 21') + original);
   const ok = node('ferramentas/validar/validar-interiores.js', ['--detalhes'], copia);
   assert.strictEqual(ok.status, 0, ok.saida);
@@ -108,13 +108,11 @@ test('validar-conteudo: emoji sem desenho é erro; com ícone registrado num pr�
 });
 
 test('validar-interiores: por padrão só o resumo; --detalhes lista; --so filtra; ação de módulo e sprite (aviso)', () => {
-  const ok = node('ferramentas/validar/validar-interiores.js');
-  assert.ok(!/^✔ /m.test(ok.saida), ok.saida);
-  assert.match(ok.saida.trim().split('\n').pop(), /^Tudo certo! \d+ interiores/);
-  assert.match(node('ferramentas/validar/validar-interiores.js', ['--detalhes']).saida, /^✔ castelo — /m);
+  // (o --detalhes no jogo inteiro: no teste do personagem, acima)
   const so = node('ferramentas/validar/validar-interiores.js', ['--so', 'escola']);
   assert.strictEqual(so.status, 0, so.saida);
-  assert.match(so.saida, /1 interiores de escola/);
+  assert.ok(!/^✔ /m.test(so.saida), so.saida);
+  assert.match(so.saida.trim().split('\n').pop(), /^Tudo certo! 1 interiores de escola/);
   assert.strictEqual(node('ferramentas/validar/validar-interiores.js', ['--so', 'naoexiste']).status, 1);
   // um sistema declara a ação no def do módulo (carrega antes dos NPCs) e um prédio a usa; sprite com chave errada
   const copia = copiaDoJogo('acao-de-modulo');
@@ -131,26 +129,21 @@ test('validar-conteudo: --so filtra e --detalhes mostra a linha de cada uma', ()
   assert.strictEqual(so.status, 0, so.saida);
   assert.match(so.saida, /0 matéria\(s\), 1 prova\(s\)/);
   assert.match(so.saida, /^✔ Revisão Bimestral de História/m);
-  assert.ok(!/^✔ /m.test(node('ferramentas/validar/validar-conteudo.js').saida));
+  assert.ok(!/^✔ /m.test(node('ferramentas/validar/validar-conteudo.js', ['--so', 'historia-3bim']).saida));
 });
 
 test('validar-tudo: resume os validadores e falha quando um deles falha', () => {
-  const ok = node('ferramentas/validar/validar-tudo.js');
-  assert.strictEqual(ok.status, 0, ok.saida);
-  assert.match(ok.saida, /✔ conteúdo das matérias/);
-  assert.match(ok.saida, /✔ interiores/);
-  assert.match(ok.saida, /✔ index\.html x manifesto/);
   const copia = copiaDoJogo('validar-tudo');
   // index.html fora do manifesto: o gerar-index --conferir acusa
   plantar(path.join(copia, 'index.html'), '</body>', '<script src="js/plantado.js"></script>\n</body>');
   const r = node('ferramentas/validar/validar-tudo.js', [], copia);
   assert.strictEqual(r.status, 1, r.saida);
   assert.match(r.saida, /✘ index\.html x manifesto/);
+  assert.match(r.saida, /✔ conteúdo das matérias/);   // os outros seguem passando (a cópia só mudou o index)
+  assert.match(r.saida, /✔ interiores/);
 });
 
-test('tamanho: o jogo de hoje passa; código acima de 420, dados acima de 800 são acusados (EXCECOES hoje vazia)', () => {
-  const ok = node('ferramentas/tamanho.js');
-  assert.strictEqual(ok.status, 0, ok.saida);
+test('tamanho: código acima de 420, dados acima de 800 são acusados (EXCECOES hoje vazia)', () => {
   const T = require('../../tamanho');
   // regras por caminho (um lugar só: REGRAS em ferramentas/tamanho.js)
   assert.strictEqual(T.regra('js/voz/geral.js'), 'gerado');
