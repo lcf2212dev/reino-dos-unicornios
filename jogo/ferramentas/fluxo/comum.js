@@ -5,7 +5,7 @@
 // em /tmp/reino-testes/ faz o papel de tudo isso.
 const fs = require('fs');
 const path = require('path');
-const { spawnSync } = require('child_process');
+const { spawn, spawnSync } = require('child_process');
 const { PASTA_TESTES } = require('../testes/guardas');
 
 // sem as variáveis GIT_* herdadas (um hook ou outro git por cima mudaria o repositório de cada comando) e sem
@@ -33,6 +33,18 @@ function git(pasta, ...args) {
   return r.saida.replace(/\s+$/, '');
 }
 const gitOk = (pasta, ...args) => rodar('git', ['-C', pasta, ...args]).ok;
+
+// roda e mostra ao vivo (salvo `quieto`), guardando a saída num arquivo; resolve com true se saiu com 0
+function rodarTee(cmd, args, cwd, arqLog, quieto) {
+  return new Promise((ok) => {
+    const f = fs.createWriteStream(arqLog);
+    const p = spawn(cmd, args, { cwd, env: ambiente(), stdio: ['ignore', 'pipe', 'pipe'] });
+    const passa = (d) => { f.write(d); if (!quieto) process.stdout.write(d); };
+    p.stdout.on('data', passa); p.stderr.on('data', passa);
+    p.on('error', (e) => passa(String(e.message) + '\n'));
+    p.on('close', (code) => f.end(() => ok(code === 0)));
+  });
+}
 
 // argumentos: posicionais + opções. `repetidas` acumulam em lista; `booleanas` não levam valor.
 function lerArgs(argv, { booleanas = [], repetidas = [] } = {}) {
@@ -185,6 +197,6 @@ const semAcento = (s) => String(s).normalize('NFD').replace(/[̀-ͯ]/g, '');
 const slug = (s) => semAcento(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'x';
 
 module.exports = {
-  PASTA_TESTES, rodar, git, gitOk, lerArgs, raizes, worktrees, acharNodeModules, prepararNodeModules,
+  PASTA_TESTES, rodar, rodarTee, git, gitOk, lerArgs, raizes, worktrees, acharNodeModules, prepararNodeModules,
   PASTA_MATERIAS, pastaMaterial, naoRastreados, rastreados, copiarArquivos, mesmoConteudo, processosNaPasta, hoje, horaCurta, slug, ambiente,
 };

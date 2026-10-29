@@ -1,20 +1,22 @@
 // Operações de git do integrar.js: classificar as entradas, cherry-pick linear, `apply --3way` de worktree sem
-// commit, conflitos (jogo/index.html se resolve sozinho: um lado + `npm run index`), colisões com arquivos
-// não rastreados da árvore principal, troca da base do e2e e commits. Só escreve na worktree de integração,
-// exceto moverColisoes/devolver (chamadas só com --merge).
+// commit, conflitos (jogo/index.html se resolve sozinho: um lado + `npm run index`; os gerados das vozes também:
+// integrar-vozes.js), colisões com arquivos não rastreados da árvore principal, troca da base do e2e (à parte, só
+// para e2e.js antigo) e commits. Só escreve na worktree de integração, exceto moverColisoes/devolver (só com --merge).
 const fs = require('fs');
 const path = require('path');
 const C = require('./comum');
+const V = require('./integrar-vozes');
 
 const INDEX = 'jogo/index.html';
 const BASE_E2E = 'jogo/ferramentas/testes/base-referencia.txt';
 const TROCAR_BASE = 'jogo/ferramentas/testes/trocar-base.js';
 const SEM_EDITOR = { GIT_EDITOR: 'true' };
 
-// "Reino dos Unicórnios: …" + linha Claude-Session (se a variável CLAUDE_SESSION_URL existir)
+// "Reino dos Unicórnios: …" sem repetir o prefixo; nada de Claude-Session nem atribuição (regra do Leandro)
+const PREFIXO = 'Reino dos Unicórnios: ';
 function mensagem(titulo) {
-  const s = process.env.CLAUDE_SESSION_URL;
-  return `Reino dos Unicórnios: ${titulo}` + (s ? `\n\nClaude-Session: ${s}` : '');
+  const t = String(titulo).trim();
+  return t.startsWith(PREFIXO) ? t : PREFIXO + t;
 }
 
 // status sem o link do node_modules (ele não conta como mudança)
@@ -75,17 +77,24 @@ function refazerIndex(integ, log) {
   log(`  • conflito em ${INDEX}: um lado + npm run index (resolvido sozinho)`);
 }
 
-// laço do cherry-pick: resolve o index.html sozinho, pula commit que ficou vazio, para em conflito de verdade
+// gerado que o conflito resolve sozinho: index.html e os arquivos das vozes
+const resolveSozinho = (f) => f === INDEX || V.ehVoz(f);
+function resolverGerados(integ, conf, log) {
+  if (conf.includes(INDEX)) refazerIndex(integ, log);
+  return V.resolverVozes(integ, conf, log);
+}
+
+// laço do cherry-pick: resolve os gerados sozinho, pula commit que ficou vazio, para em conflito de verdade
 function seguirCherryPick(integ, r, log) {
   let erroAntes = null;
   for (let volta = 0; volta < 1000; volta++) {
     if (r.ok) return { ok: true };
     const conf = conflitos(integ);
-    if (conf.some((f) => f !== INDEX)) return { ok: false, conflitos: conf };
+    if (!conf.every(resolveSozinho)) return { ok: false, conflitos: conf };
     const erro = (r.erro || r.saida || '').trim();
     if (!emCherryPick(integ) || (!conf.length && erro && erro === erroAntes)) return { ok: false, conflitos: [], erro };
     erroAntes = erro;
-    if (conf.length) refazerIndex(integ, log);
+    if (conf.length) { const g = resolverGerados(integ, conf, log); if (!g.ok) return g; }
     if (C.gitOk(integ, 'diff', '--cached', '--quiet')) {
       log('  • commit que ficou vazio (já está na main): pulado');
       r = C.rodar('git', ['-C', integ, 'cherry-pick', '--skip'], { env: SEM_EDITOR });
@@ -103,7 +112,7 @@ function aplicarCommits(integ, commits, log) {
 function continuar(integ, log) {
   if (emCherryPick(integ)) return seguirCherryPick(integ, { ok: false }, log);
   const conf = conflitos(integ);
-  if (conf.length && conf.every((f) => f === INDEX)) { refazerIndex(integ, log); return { ok: true }; }
+  if (conf.length && conf.every(resolveSozinho)) return resolverGerados(integ, conf, log);
   return conf.length ? { ok: false, conflitos: conf } : { ok: true };
 }
 
@@ -112,7 +121,7 @@ function continuar(integ, log) {
 function aplicarSolto(integ, wt, log) {
   const diff = C.rodar('git', ['-C', wt, 'diff', '--binary', 'HEAD'], { binario: true });
   if (!diff.ok) throw new Error(`git diff em ${wt} falhou: ${diff.erro}`);
-  let conf = []; let falhou = null;
+  let conf = []; let falhou = null; let erroGerados = null;
   if (diff.saida.length) {
     const a = C.rodar('git', ['-C', integ, 'apply', '--3way', '--whitespace=nowarn'], { input: diff.saida });
     conf = conflitos(integ);
@@ -122,7 +131,10 @@ function aplicarSolto(integ, wt, log) {
       if (C.rodar('git', ['-C', integ, 'apply', '--reverse', '--check'], { input: diff.saida }).ok) log(`  • as mudanças soltas de ${wt} já estão na integração`);
       else falhou = String(a.erro).trim();
     } else {
-      if (conf.length && conf.every((f) => f === INDEX)) { refazerIndex(integ, log); conf = []; }
+      if (conf.length && conf.every(resolveSozinho)) {
+        const g = resolverGerados(integ, conf, log);
+        if (g.ok) conf = []; else erroGerados = g.erro;
+      }
       log(`  • apply --3way das mudanças soltas de ${wt}` + (conf.length ? ' (com conflito)' : ''));
     }
   }
@@ -132,7 +144,28 @@ function aplicarSolto(integ, wt, log) {
   if (novos.length) log(`  • ${c.copiados.length} arquivo(s) novo(s) copiado(s)` + (c.iguais.length ? `, ${c.iguais.length} já iguais` : ''));
   const diferentes = c.diferentes.map((f) => `${f} (novo na frente e diferente do que já está na integração)`);
   if (falhou) return { ok: false, conflitos: diferentes, erro: falhou, applyFalhou: true };
-  return conf.length || diferentes.length ? { ok: false, conflitos: conf.concat(diferentes) } : { ok: true };
+  return conf.length || diferentes.length ? { ok: false, conflitos: conf.concat(diferentes), erro: erroGerados } : { ok: true };
+}
+
+// arquivos (já mudados) para dentro do último commit da integração (--amend; a branch ainda não está na main);
+// sem commit da integração além de `main`, um commit novo com `titulo`
+// por que o último commit NÃO pode ser emendado (null = pode): não é da integração, ou já está na main ou no
+// origin/main (o --amend reescreveria um commit publicado)
+function naoEmendar(integ, main) {
+  if (C.git(integ, 'rev-list', '--count', `${main}..HEAD`) === '0') return 'nada integrado além da main (não há commit da integração para emendar)';
+  if (C.gitOk(integ, 'merge-base', '--is-ancestor', 'HEAD', 'main')) return 'o último commit da integração já está na main';
+  if (C.gitOk(integ, 'rev-parse', '-q', '--verify', 'refs/remotes/origin/main') && C.gitOk(integ, 'merge-base', '--is-ancestor', 'HEAD', 'origin/main')) {
+    return 'o último commit da integração já está no origin/main';
+  }
+  return null;
+}
+
+function emendar(integ, arquivos, main, titulo) {
+  C.git(integ, 'add', '-A', '--', ...arquivos);
+  if (C.gitOk(integ, 'diff', '--cached', '--quiet')) return null;
+  if (naoEmendar(integ, main)) C.git(integ, 'commit', '-q', '--no-verify', '-m', mensagem(titulo));
+  else C.git(integ, 'commit', '-q', '--amend', '--no-edit', '--no-verify');
+  return C.git(integ, 'rev-parse', '--short', 'HEAD');
 }
 
 // commit da frente sem commit (com --commit); nada preparado = nada a fazer
@@ -186,7 +219,7 @@ function trocarTexto(texto, curto, descricao) {
   return linhas.join('\n');
 }
 
-// base do e2e = HEAD da integração; usa o trocar-base.js da frente do e2e se já existir; commit
+// base do e2e = HEAD da integração, num commit à parte: só para e2e.js sem --aceitar (integrar-e2e.js)
 function trocarBase(integ, descricao, log) {
   if (!descricao || /[\r\n#]/.test(descricao)) throw new Error('--trocar-base: descrição de uma linha, sem "#"');
   if (mudancas(integ).length) throw new Error('--trocar-base: a integração tem mudanças sem commit (use --commit)');
@@ -209,6 +242,6 @@ function trocarBase(integ, descricao, log) {
 }
 
 module.exports = {
-  INDEX, mensagem, mudancas, branchesEmConflito, classificar, conflitos, emCherryPick, aplicarCommits, continuar,
-  aplicarSolto, commitFrente, colisoes, moverColisoes, devolver, trocarTexto, trocarBase,
+  INDEX, BASE_E2E, mensagem, mudancas, branchesEmConflito, classificar, conflitos, emCherryPick, aplicarCommits, continuar,
+  aplicarSolto, naoEmendar, emendar, commitFrente, colisoes, moverColisoes, devolver, trocarTexto, trocarBase,
 };
