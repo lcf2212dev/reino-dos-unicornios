@@ -7,7 +7,7 @@ Reino.falasDoPredio('torre', {
     // o guia do saguão (o convite é o resumo automático do motor)
     ponteiro: {
       oi: ['Tic-tac! Sou o Seu Ponteiro. ⏰', 'Aqui mora o livro de «English»!', 'Cada andar tem um capítulo. 🗼'],
-      depois: ['Suba a escada sem pressa! ✨'],
+      depois: ['Pode subir com calma, viu? ✨'],
     },
     // andar 1: English, capítulo 10 «If You're Happy, Clap Your Hands» (sentimentos)
     joy: {
