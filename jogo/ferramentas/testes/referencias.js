@@ -6,6 +6,8 @@
 //   node jogo/ferramentas/testes/referencias.js capturar <saida> [--raiz <pasta jogo>] [--so dados,imagens,desempenho,vozes] [--tamanhos celular,tablet]
 //   node jogo/ferramentas/testes/referencias.js comparar <referencia> <nova> [--desempenho]
 // Saída: <saida>/dados/*.json, <saida>/imagens/<tamanho>/*.png, <saida>/desempenho.json, <saida>/vozes.json
+// Variáveis: REINO_TEMPOS=1 (quanto levou cada grupo de fotos), REINO_LOTES_MAPA (lotes da fila mapa + interiores
+// de cada tamanho, padrão 3; não muda nenhuma foto, só o tempo: referencias-cenas.js).
 // Arquivos: referencias-pagina.js (página determinística), referencias-cenas.js (fotos),
 // referencias-dados.js (dados, desempenho, vozes), referencias-comparar.js (comparação).
 // Base automática (commit de base-referencia.txt) e comparação de um comando só: e2e.js.
@@ -17,12 +19,15 @@ const { abrir, lancar, TAMANHOS } = require('./navegador');
 const { registrar } = require('./vigia-memoria');
 const { gerarSaves } = require('./saves');
 const { estavel, abrirJogo, foto } = require('./referencias-pagina');
-const { cenasMapaEInteriores, cenasTelas, cenasSalas, cenasProvasEDesafios } = require('./referencias-cenas');
+const { lotesMapa, cenasTelas, cenasSalas, cenasProvasEDesafios } = require('./referencias-cenas');
 const { capturarDados, capturarDesempenho, capturarVozes } = require('./referencias-dados');
 const { comparar } = require('./referencias-comparar');
 
 // abas simultâneas: metade das CPUs, até 12
 const PARALELO_PADRAO = Math.max(1, Math.min(Math.floor(os.cpus().length / 2), 12));
+// lotes da fila mapa + interiores de cada tamanho (a mais longa; referencias-cenas.js): com 3, o piso passa a ser a
+// fila das salas
+const LOTES_MAPA = Math.max(1, Math.floor(Number(process.env.REINO_LOTES_MAPA)) || 3);
 
 // op: { raiz, so, tamanhos, paralelo (abas ao mesmo tempo), filtro (RegExp: só fotografa esses nomes),
 //       faltam ({ tamanho: Set de nomes }: com filtro, as abas param quando todos já saíram) }
@@ -31,26 +36,30 @@ async function capturar(saida, op) {
   const tamanhos = (op.tamanhos || Object.keys(TAMANHOS).join(',')).split(',');
   const raiz = path.resolve(op.raiz || path.join(__dirname, '..', '..'));
   const servidor = await iniciar({ raiz });
-  const browser = await lancar();
   const erros = [];
   try {
     if (so.has('vozes')) capturarVozes(raiz, path.join(saida, 'vozes.json'));
+    // o navegador dos dados fecha antes das fotos: segurar a vaga dele (navegador.js) enquanto as abas das fotos
+    // esperam por vagas travaria tudo com poucas vagas
     let saves = null;
-    if (so.has('dados')) saves = await capturarDados(browser, raiz, path.join(saida, 'dados'));
-    if (!saves) {
-      const { context, page } = await abrir({ browser, url: servidor.url, query: '?debug=1&congelar=1' });
-      await page.waitForFunction(() => window.Reino && Reino.Progresso && Reino.Progresso.estado(), null, { timeout: 30000 });
-      saves = await page.evaluate(`(${gerarSaves.toString()})()`);
-      await context.close();
-    }
+    const browser = await lancar({ nome: 'dados' });
+    try {
+      if (so.has('dados')) saves = await capturarDados(browser, raiz, path.join(saida, 'dados'));
+      if (!saves) {
+        const { context, page } = await abrir({ browser, url: servidor.url, query: '?debug=1&congelar=1' });
+        await page.waitForFunction(() => window.Reino && Reino.Progresso && Reino.Progresso.estado(), null, { timeout: 30000 });
+        saves = await page.evaluate(`(${gerarSaves.toString()})()`);
+        await context.close();
+      }
+    } finally { await browser.close(); }
     if (so.has('imagens')) {
       // cada grupo numa aba própria (servidor e banco próprios): roda em paralelo, até op.paralelo por vez
-      // as filas de mapa + interiores (as mais longas) entram primeiro, uma por tamanho
+      // os lotes da fila mapa + interiores (as mais longas) entram primeiro
       const tarefas = [];
       const t = (tamanho, save, fn) => tarefas.push({ tamanho, save, fn: Object.assign((page) => fn(page, path.join(saida, 'imagens', tamanho)), { nome: fn.name }) });
-      // mapa + interiores fica numa aba só, em fila: as barras de fome/sede/banho do HUD andam com o
-      // relógio, então um lote de interiores que começasse numa página nova sairia com outras barras (testado)
-      tamanhos.forEach((tm) => t(tm, 'completo', cenasMapaEInteriores));
+      // cada lote refaz a fila desde o começo e só fotografa a sua faixa: as barras de fome/sede/banho do HUD andam
+      // com o relógio, e um lote que só começasse no meio sairia com outras barras (testado)
+      tamanhos.forEach((tm) => lotesMapa(LOTES_MAPA).forEach((fn) => t(tm, 'completo', fn)));
       tamanhos.forEach((tm) => [cenasSalas, cenasProvasEDesafios, cenasTelas].forEach((fn) => t(tm, 'completo', fn)));
       tamanhos.forEach((tm) => {
         t(tm, 'inicio', (page, p) => foto(page, p, 'mapa-inicio'));
@@ -60,7 +69,8 @@ async function capturar(saida, op) {
       let prox = 0;
       // um Chromium por vaga: com --disable-gpu a composição de um navegador é uma fila só para todas as abas
       await Promise.all(Array.from({ length: Math.min(limite, tarefas.length) }, async () => {
-        const nav = await lancar();
+        const nav = await lancar({ nome: 'fotos', desistir: () => prox >= tarefas.length });
+        if (!nav) return; // esperou vaga e as outras abas já fizeram tudo
         try {
           while (prox < tarefas.length) {
             const { tamanho, save, fn } = tarefas[prox++];
@@ -77,9 +87,11 @@ async function capturar(saida, op) {
         } finally { await nav.close(); }
       }));
     }
-    if (so.has('desempenho')) await capturarDesempenho(browser, raiz, saves, path.join(saida, 'desempenho.json'));
+    if (so.has('desempenho')) {
+      const browser = await lancar({ nome: 'desempenho' });
+      try { await capturarDesempenho(browser, raiz, saves, path.join(saida, 'desempenho.json')); } finally { await browser.close(); }
+    }
   } finally {
-    await browser.close();
     servidor.parar();
   }
   erros.sort(); // a ordem de término varia com o paralelismo

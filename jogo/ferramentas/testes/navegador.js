@@ -1,9 +1,11 @@
 // Navegador de teste (Playwright, só Chromium, contexto isolado) preso ao servidor de TESTE.
 // Recusa a porta 80, localhost sem porta, reinodosunicornios.local e IPs da rede: o jogo aberto
 // lá sincronizaria com o progresso real da Mariana. Toda rede fora da porta de teste é bloqueada.
+const path = require('path');
 const { chromium } = require('playwright');
 const { conferirUrl } = require('./guardas');
 const { vigiar } = require('./vigia-memoria');
+const vagas = require('./vagas');
 
 // tamanhos padrão do CLAUDE.md: celular, tablet e notebook
 const TAMANHOS = {
@@ -26,8 +28,24 @@ const ARGS_FIXOS = ['--disable-gpu', '--disable-gpu-rasterization', '--disable-p
 // e falha; o loopback (127.0.0.1) vai direto e é filtrado por origem em abrir() (só a porta de teste)
 const ARGS_REDE = ['--proxy-server=http://127.0.0.1:9'];
 // op.args: argumentos extras do Chromium (ex.: desempenho.js usa --js-flags=--expose-gc)
-// todo Chromium de teste fica sob o vigia de memória e de travamento (vigia-memoria.js)
-async function lancar(op = {}) { vigiar(); return chromium.launch({ headless: true, args: ARGS_FIXOS.concat(ARGS_REDE, op.args || []) }); }
+// todo Chromium de teste fica sob o vigia de memória e de travamento (vigia-memoria.js) e ocupa uma vaga entre as
+// worktrees (vagas.js: espera a vez; devolve ao fechar ou cair). op.nome: para quê (vai junto do script na espera
+// dos outros: "e2e.js fotos");
+// op.desistir: função; verdadeira durante a espera, não abre e devolve null (ex.: as fotos já acabaram)
+// Sob o `node --test` (NODE_TEST_CONTEXT; a unidade dá 2 min por teste) a espera tem prazo de 90 s × REINO_TEMPO: o
+// teste falha dizendo que não havia vaga, em vez de "timed out", e não abre Chromium depois. Fora dele (e2e), sem prazo.
+const NOME = path.basename(process.argv[1] || 'node');
+const PRAZO_TESTE_MS = process.env.NODE_TEST_CONTEXT ? 90000 * (Number(process.env.REINO_TEMPO) || 1) : undefined;
+async function lancar(op = {}) {
+  vigiar();
+  const vaga = await vagas.pegar(op.nome ? `${NOME} ${op.nome}` : NOME, { desistir: op.desistir, prazoMs: PRAZO_TESTE_MS });
+  if (!vaga) return null;
+  try {
+    const browser = await chromium.launch({ headless: true, args: ARGS_FIXOS.concat(ARGS_REDE, op.args || []) });
+    browser.on('disconnected', () => vaga.soltar());
+    return browser;
+  } catch (e) { vaga.soltar(); throw e; }
+}
 
 // Roda antes de tudo em cada carga (antes do save e dos scripts do jogo):
 // - o buffer do Resource Timing (250 entradas) enchia durante a própria carga do jogo (scripts + CSS + pacotes de voz)

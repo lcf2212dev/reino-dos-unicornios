@@ -3,9 +3,26 @@
 const { avancar, foto, limpar, clicarBotao, sairComConfirmar } = require('./referencias-pagina');
 
 /* ---------- cenas ---------- */
-async function cenasMapaEInteriores(page, pasta) {
+// Fila mapa + interiores em lotes (abas próprias, em paralelo). Cada lote faz a fila INTEIRA desde o começo, do
+// mesmo jeito (relógio, sorteio, barras de fome/sede/banho do HUD, conversas já feitas), e só fotografa a sua faixa
+// (page.__lote, referencias-pagina.js): as fotos saem iguais às da fila única. Andar sem foto custa CUSTO_PULAR de uma
+// foto, então os primeiros lotes são maiores e todos terminam juntos.
+const CUSTO_PULAR = 0.35;
+function cortes(total, n) {
+  const s = [];
+  for (let k = 0, a = 0; k < n; k++) { const t = Math.max(0.2, 1 - CUSTO_PULAR * a); s.push(t); a += t; }
+  const soma = s.reduce((x, y) => x + y, 0);
+  let a = 0;
+  return s.map((t, k) => { const de = Math.round(total * a / soma); a += t; return { de, ate: k === n - 1 ? Infinity : Math.round(total * a / soma) }; });
+}
+// as n funções da fila em lotes (nome "cenasMapaEInteriores k/n", para REINO_TEMPOS e o vigia)
+const lotesMapa = (n) => Array.from({ length: n }, (_, k) => Object.defineProperty(
+  (page, pasta) => cenasMapaEInteriores(page, pasta, { k, n }), 'name', { value: `cenasMapaEInteriores ${k + 1}/${n}` }));
+
+async function cenasMapaEInteriores(page, pasta, lote) {
+  const defs = await page.evaluate(() => Reino.interiores.map((d) => ({ id: d.id, npcs: (d.npcs || []).length, comodos: (d.comodos || []).map((c) => ({ id: c.id, rect: c.rect })) })));
+  if (lote) page.__lote = cortes(defs.reduce((n, d) => n + 1 + d.comodos.length + d.npcs, 1), lote.n)[lote.k];
   await foto(page, pasta, 'mapa');
-  const defs = await page.evaluate(() => Reino.interiores.map((d) => ({ id: d.id, comodos: (d.comodos || []).map((c) => ({ id: c.id, rect: c.rect })) })));
   for (const d of defs) {
     await page.evaluate((id) => { Reino.Cena.irPara(id); }, d.id);
     await avancar(page, 2500);
@@ -185,4 +202,4 @@ async function cenasProvasEDesafios(page, pasta) {
   }
 }
 
-module.exports = { cenasMapaEInteriores, cenasTelas, cenasSalas, cenasProvasEDesafios, mostrarDesafio };
+module.exports = { cenasMapaEInteriores, lotesMapa, cortes, cenasTelas, cenasSalas, cenasProvasEDesafios, mostrarDesafio };
