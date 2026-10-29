@@ -1,6 +1,7 @@
 /* Torre do Relógio do English (4º bimestre), os andares de cima: um por capítulo, na ordem do livro, com o anfitrião
    do capítulo e as estações das salas (geradas dos dados em torre/torre.js, nas vagas (3,3), (7,3), (3,7) e (7,7):
-   aqui, o tile de cima de cada vaga e o (3,5) do anfitrião ficam livres), e o mecanismo do relógio no alto.
+   aqui, o tile de cima de cada vaga e o (3,5) do anfitrião ficam livres, e o tile de baixo de cada vaga só com objeto
+   baixo (topo ≤ 3) ou livre: não cobre o pé da estação), e o mecanismo do relógio no alto.
    Usa de Reino._predios.torre (torre/torre.js): andar, andarDoCapitulo, inter e cartaz. */
 (function () {
   var R = window.Reino;
@@ -51,11 +52,10 @@
     inter('trave', 'Trave de futebol', { tipo: 'torre-trave', x: 0, y: 4 }),
     { tipo: 'torre-mochila', x: 0, y: 6, var: { cor: '#5fb4ff' } }, { tipo: 'lp-bola', x: 1, y: 6 }, { tipo: 'cesto', x: 0, y: 7 },
     { tipo: 'tapete-listrado', x: 0, y: 8, w: 3, h: 1, var: { cores: ['#6fdc8c', '#ffffff', '#6fdc8c', '#ffffff'] } },
-    { tipo: 'castelo-blocos-letras', x: 3, y: 8 }, { tipo: 'pilha-livros', x: 0, y: 9 },
+    { tipo: 'lp-pufe', x: 3, y: 8 }, { tipo: 'pilha-livros', x: 0, y: 9 },
     { tipo: 'caixote', x: 0, y: 10, var: { item: 'medalha' } }, { tipo: 'torre-tapete-palavras', x: 1, y: 10, var: { palavra: 'ABC', cor: '#ffc896' } },
     { tipo: 'papeis', x: 2, y: 10 }, { tipo: 'torre-blocos-abc', x: 3, y: 10 },
-    { tipo: 'torre-mochila', x: 10, y: 2, var: { cor: '#ff8a3d' } },
-    { tipo: 'petshop-potes-biscoito', x: 7, y: 4 },
+    { tipo: 'petshop-potes-biscoito', x: 10, y: 2 },
     inter('casinha', 'Casinha do cachorro', { tipo: 'petshop-casinha', x: 8, y: 4 }), { tipo: 'lab-cachorro', x: 10, y: 4 },
     { tipo: 'petshop-tapete-patinhas', x: 8, y: 6 },
     { tipo: 'petshop-estante-comida', x: 8, y: 9 }, { tipo: 'lp-hamster', x: 10, y: 9 },
@@ -119,7 +119,7 @@
     paleta: { piso: '#eef8ff', piso2: '#bfe3f7', detalhe: '#5fb4ff', parede: '#e6f6ff', parede2: '#9fdcff', rodape: '#2f6fa8' },
   }, [
     { tipo: 'janela', x: 0, y: 0 },
-    inter('grafico', 'Gráfico das frutas', { tipo: 'matematica-grafico', x: 1, y: 0 }),
+    inter('grafico', 'Gráfico das comidas', { tipo: 'matematica-grafico', x: 1, y: 0 }),
     cartaz(3, 'maca', '#fff8ee', C.verde),
     { tipo: 'torre-palavra', x: 4, y: 0, var: { palavra: 'HEALTHY', faixa: C.verde, icone: 'maca' } },
     cartaz(6, 'dente', '#fff8ee', C.agua), { tipo: 'prateleira-parede', x: 7, y: 0 }, { tipo: 'janela', x: 10, y: 0 },
@@ -128,7 +128,7 @@
     { tipo: 'portugues-geladeira', x: 0, y: 6 }, { tipo: 'quimica-fruteira', x: 1, y: 6 }, { tipo: 'petshop-cesta-macas', x: 0, y: 7 },
     { tipo: 'tapete-listrado', x: 0, y: 8, w: 2, h: 1, var: { cores: ['#6fdc8c', '#ffffff', '#ff7a5a', '#ffffff'] } },
     { tipo: 'portugues-liquidificador', x: 2, y: 8 },
-    { tipo: 'estabulo-cenouras', x: 3, y: 8 },
+    { tipo: 'torre-tapete-palavras', x: 3, y: 8, var: { palavra: 'YUM', cor: '#7ed9c8' } },
     { tipo: 'vaso-planta', x: 0, y: 9 },
     { tipo: 'caixote', x: 0, y: 10, var: { item: 'planta' } }, { tipo: 'torre-tapete-palavras', x: 1, y: 10, var: { palavra: 'EAT', cor: '#7ed9c8' } },
     { tipo: 'papeis', x: 2, y: 10 }, { tipo: 'portugues-abacaxi', x: 3, y: 10 },
