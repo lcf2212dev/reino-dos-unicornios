@@ -3,8 +3,7 @@
 //      node ferramentas/gerar-index.js --conferir  → só confere; sai com código 1 se o index.html
 //        não bate com o manifesto, se algum arquivo do manifesto não existe ou se há .js em js/
 //        (fora de js/voz/ e do próprio manifesto) que não está no manifesto.
-// O cabeçalho e o corpo fixos do HTML estão no MODELO abaixo. O ferramentas/gerar-artifact.js
-// tira doctype, <html>, <head>, <body> e as metas charset/viewport desta mesma página.
+// O cabeçalho e o corpo fixos do HTML estão no MODELO abaixo.
 if (require.main === module) require('./ajuda').ajuda(__filename);
 const fs = require('fs');
 const path = require('path');
