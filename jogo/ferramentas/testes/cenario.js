@@ -88,6 +88,37 @@ function tratarFoto(arq, op, escala) {
   return feitos;
 }
 
+/* ---------- as bases sintéticas (uma vez por processo e por raiz) ---------- */
+// 1ª aba sem save: gera as bases sintéticas com os ids do jogo carregado. Servidor e banco à parte: o estado
+// em branco que essa aba grava não pode chegar ao banco do cenário (a mescla trocaria ajustes do save).
+// Os ids não mudam dentro de um processo: guarda em memória (texto JSON; cada cenário recebe uma cópia nova).
+const basesGuardadas = new Map();
+async function basesDoJogo(browser, raiz, tamanho) {
+  const chave = path.resolve(raiz || path.join(__dirname, '..', '..'));
+  if (!basesGuardadas.has(chave)) {
+    const gerar = (async () => {
+      const gerador = await iniciar({ raiz });
+      try {
+        const a = await abrir({ browser, url: gerador.url, tamanho, query: '?debug=1&congelar=1' });
+        try {
+          // __reino (debug.js, o último do manifesto): tudo carregado, provas inclusive (gerarSaves usa Reino.prova)
+          await a.page.waitForFunction(() => window.__reino && window.Reino && Reino.materias && Reino.Unicornios, null, { timeout: 30000 });
+          const bases = await a.page.evaluate(`(${gerarSaves.toString()})()`);
+          const dados = await a.page.evaluate(() => {
+            var salas = {};
+            Reino.materias.forEach(function (m) { salas[m.id] = m.salas.map(function (s) { return s.id; }); });
+            return { salas: salas };
+          });
+          return JSON.stringify({ bases, dados });
+        } finally { await a.context.close(); }
+      } finally { gerador.parar(); }
+    })();
+    basesGuardadas.set(chave, gerar);
+    gerar.catch(() => basesGuardadas.delete(chave));   // falhou: o próximo cenário tenta de novo
+  }
+  return JSON.parse(await basesGuardadas.get(chave));
+}
+
 /* ---------- o cenário ---------- */
 async function abrirCenario(op = {}) {
   const congelar = op.congelar !== false;
@@ -98,22 +129,7 @@ async function abrirCenario(op = {}) {
   const browser = op.browser || await lancar();
   const query = congelar ? '?debug=1&congelar=1' : '?debug=1';
   try {
-    // 1ª aba sem save: gera as bases sintéticas com os ids do jogo carregado. Servidor e banco à parte: o estado
-    // em branco que essa aba grava não pode chegar ao banco do cenário (a mescla trocaria ajustes do save)
-    const gerador = await iniciar({ raiz: op.raiz });
-    let bases, dados;
-    try {
-      const a = await abrir({ browser, url: gerador.url, tamanho, query: '?debug=1&congelar=1' });
-      // __reino (debug.js, o último do manifesto): tudo carregado, provas inclusive (gerarSaves usa Reino.prova)
-      await a.page.waitForFunction(() => window.__reino && window.Reino && Reino.materias && Reino.Unicornios, null, { timeout: 30000 });
-      bases = await a.page.evaluate(`(${gerarSaves.toString()})()`);
-      dados = await a.page.evaluate(() => {
-        var salas = {};
-        Reino.materias.forEach(function (m) { salas[m.id] = m.salas.map(function (s) { return s.id; }); });
-        return { salas: salas };
-      });
-      await a.context.close();
-    } finally { gerador.parar(); }
+    const { bases, dados } = await basesDoJogo(browser, op.raiz, tamanho);
     const save = comporSave(bases, op, dados);
 
     // entrarDireto (vivo): o jogo pediria a senha ("Entrar no Reino"); o save sintético é o da chave da Mariana, então a
@@ -126,9 +142,12 @@ async function abrirCenario(op = {}) {
       if (congelar) await avancarSemPintura(page, ms);
       else await page.waitForTimeout(ms);
     };
-    // o progresso vem do servidor de teste: anda o relógio até o mapa aparecer
+    // o progresso vem do servidor de teste: anda o relógio até o mapa aparecer (vivo sem entrarDireto: até a tela de
+    // início, que espera o "Entrar no Reino" do teste; antes o laço esperava ali, à toa, uns 25 s)
+    const naInicio = !congelar && !op.entrarDireto;
     for (let i = 0; i < 400; i++) {
-      const pronto = await page.evaluate(() => { var h = document.querySelector('#hud'); return window.__reino.estado() === 'mapa' && h && !h.hidden; });
+      const pronto = await page.evaluate((naInicio) => { var h = document.querySelector('#hud');
+        return (window.__reino.estado() === 'mapa' && h && !h.hidden) || (naInicio && !!document.querySelector('.tela-inicio .btn-comecar')); }, naInicio);
       if (pronto) break;
       await avancar(50);
       if (congelar) await page.waitForTimeout(15);
