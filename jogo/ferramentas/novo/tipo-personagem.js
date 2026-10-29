@@ -1,5 +1,5 @@
 // Tipo `personagem` do `npm run novo`: um NPC novo num interior, com Reino.registrarPersonagem({ …, predio, x, y, acao })
-// e as falas dele (Reino.FALAS_INTERIORES.<chave>.npcs.<id>) num personagens.js, sem editar os arquivos que já existem.
+// e as falas dele (Reino.falasDoPredio(<chave>, { npcs })) num personagens.js, sem editar os arquivos que já existem.
 // --predio é o id do INTERIOR ('petshop', 'torre-1', 'padrao-geografia'). Onde mora o personagens.js:
 //   prédio com pasta: jogo/js/interiores/<pasta>/personagens.js, depois do falas.js e antes do <pasta>.js;
 //   interior padrão de matéria: jogo/js/conteudo/materias/<m>/personagens.js, antes do <m>.js (o padrao.js vem depois).
@@ -137,10 +137,11 @@ module.exports = {
     const { V, livre, existe, L } = op.dadosPersonagem, pf = V[livre] || {}, p = op.predio;
     // sem --acao, o interior dá a dele (no esqueleto, a do guia; o 1º toma o lugar do guia de marcador)
     const xyAcao = (op.x !== undefined ? `, x: ${op.x}, y: ${op.y}` : '') + (op.acaoObj ? `, acao: ${novo().literal(op.acaoObj)}` : '');
-    const falas = `Reino.FALAS_INTERIORES['${L.falas}'].npcs['${id}'] = {
+    // falas pela junção do prédio (jogo/js/interiores/CLAUDE.md): nunca Reino.FALAS_INTERIORES[...] = direto
+    const falas = `Reino.falasDoPredio('${L.falas}', { npcs: { '${id}': {
   oi: ['(preencher) o que diz aqui?'],
   depois: ['(preencher) uma fala curtinha.'],
-};
+} } });
 `;
     const lugar = `\n  predio: '${p}'` + (op.x !== undefined ? `, x: ${op.x}, y: ${op.y}` : '') + (op.acaoObj ? `, acao: ${novo().literal(op.acaoObj)}` : '') + ',';
     const bloco = `
@@ -149,10 +150,10 @@ Reino.registrarPersonagem({ id: '${id}', nome: '${novo().aspas(op.nome || '(pree
   sprite: { pele: '#e0ac86', cabelo: '#2b1b17', penteado: 'curto', roupa: '#5fb4ff', roupa2: '#2f4a6a', cor2: '#ffd34d' },
   perfil: { voz: '${pf.voz}', velocidade: '${pf.velocidade}', tom: '${pf.tom}' },${lugar}
 });
-Reino.FALAS_INTERIORES['${L.falas}'].npcs['${id}'] = {
+Reino.falasDoPredio('${L.falas}', { npcs: { '${id}': {
   oi: ['(preencher) quem é você?', '(preencher) o que faz aqui?'],
   depois: ['(preencher) uma fala curtinha.'],
-};
+} } });
 `;
     const blocoTambem = `
 // ${id} também aqui (registrado em ${op.origem}): mesma voz e sprite; as falas deste interior
@@ -160,10 +161,8 @@ Reino.personagemTambemEm('${id}', { predio: '${p}'${xyAcao} });
 ${falas}`;
     const quem = L.pasta ? `do prédio ${L.pasta}` : `do interior ${p}`;
     const cab = `/* Personagens próprios ${quem} (Reino.registrarPersonagem, docs/contratos/npcs-e-dialogo.md §5) e as falas
-   deles em Reino.FALAS_INTERIORES['${L.falas}'].npcs. Carrega ${L.onde.antesDe ? 'antes de ' + L.onde.antesDe : 'depois de ' + L.onde.depoisDe} (manifesto).
+   deles por Reino.falasDoPredio('${L.falas}', { npcs }). Carrega ${L.onde.antesDe ? 'antes de ' + L.onde.antesDe : 'depois de ' + L.onde.depoisDe} (manifesto).
    Cada página com até 30 letras (sem contar «» e emoji) e frases de 3+ palavras. */
-Reino.FALAS_INTERIORES = Reino.FALAS_INTERIORES || {};
-Reino.FALAS_INTERIORES['${L.falas}'] = Reino.FALAS_INTERIORES['${L.falas}'] || { npcs: {}, objetos: {} };
 `;
     const blocoReserva = op.reserva && `
 // ${id}: ${op.reserva.nome} (reservado em ${d0(op).arqReservas()}: nome, voz, lugar e falas vêm de lá; aqui o visual (idade ${op.reserva.idade}))

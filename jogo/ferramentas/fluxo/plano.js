@@ -87,6 +87,10 @@ function conferir(plano) {
     if (!/^[a-z0-9][a-z0-9-]*$/.test(t.worktree || '')) erros.push(`${q}: preencha "worktree" (o <tema> de reino-<tema>)`);
     if (!Array.isArray(t.depende || [])) erros.push(`${q}: "depende" tem de ser uma lista`);
     if (!['integracao', 'entrega'].includes(t.tipo) && !(t.arquivos || []).length) erros.push(`${q}: preencha "arquivos" (posse exclusiva de cada frente)`);
+    // como fazer (opcionais, vão no briefing): ler por seção, gerador, arquivo-modelo, testes focados
+    if (t.ler !== undefined && !(Array.isArray(t.ler) && t.ler.every((x) => typeof x === 'string'))) erros.push(`${q}: "ler" tem de ser uma lista de textos ("docs/ARQUITETURA.md §5.1")`);
+    for (const c of ['gerador', 'modelo']) if (t[c] !== undefined && typeof t[c] !== 'string') erros.push(`${q}: "${c}" tem de ser um texto`);
+    if (t.testes !== undefined && ![].concat(t.testes).every((x) => typeof x === 'string')) erros.push(`${q}: "testes" tem de ser um comando ou uma lista de comandos`);
   }
   // personagens (§6.4)
   const pids = new Set();
