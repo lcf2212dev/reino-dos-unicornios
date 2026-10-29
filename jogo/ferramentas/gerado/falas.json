@@ -12957,13 +12957,13 @@
    "fala": "O treino de English abre quando você terminar as salas da Torre do Relógio. Faltam 16! Você consegue!"
   },
   {
-   "chave": "1caab2452g",
+   "chave": "905e251a23",
    "voz": "claude",
-   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Capítulo 10 –",
+   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"",
    "pacotes": [
     "ingles4-extra"
    ],
-   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Capítulo 10 –"
+   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \""
   },
   {
    "chave": "d874d9ee13",
@@ -12976,13 +12976,22 @@
    "fala": "If You're Happy, Clap Your Hands"
   },
   {
-   "chave": "17a70684n",
+   "chave": "fc9659a4m",
+   "voz": "claude",
+   "texto": "– Capítulo 10\".",
+   "pacotes": [
+    "ingles4-extra"
+   ],
+   "fala": "– Capítulo 10\"."
+  },
+  {
+   "chave": "fe782490n",
    "voz": "narradora",
-   "texto": "Capítulo 10 –",
+   "texto": "– Capítulo 10",
    "pacotes": [
     "ingles4-livro-10"
    ],
-   "fala": "Capítulo 10 –"
+   "fala": "– Capítulo 10"
   },
   {
    "chave": "402c1fd920",
@@ -13030,15 +13039,6 @@
     "ingles4-livro-10"
    ],
    "fala": "O que deixa você feliz? E o que deixa você triste? Pense e converse com alguém!"
-  },
-  {
-   "chave": "905e251a23",
-   "voz": "claude",
-   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"",
-   "pacotes": [
-    "ingles4-extra"
-   ],
-   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \""
   },
   {
    "chave": "7a39a378y",
@@ -13875,15 +13875,6 @@
    "fala": "Say how I feel in different situations."
   },
   {
-   "chave": "da94bcaa2g",
-   "voz": "claude",
-   "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Capítulo 11 –",
-   "pacotes": [
-    "ingles4-extra"
-   ],
-   "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"Capítulo 11 –"
-  },
-  {
    "chave": "20eedfb1u",
    "voz": "ingles",
    "texto": "I Dance When I'm Happy!",
@@ -13894,13 +13885,22 @@
    "fala": "I Dance When I'm Happy!"
   },
   {
-   "chave": "5a867c1fn",
+   "chave": "0c1197c3m",
+   "voz": "claude",
+   "texto": "– Capítulo 11\".",
+   "pacotes": [
+    "ingles4-extra"
+   ],
+   "fala": "– Capítulo 11\"."
+  },
+  {
+   "chave": "ff782623n",
    "voz": "narradora",
-   "texto": "Capítulo 11 –",
+   "texto": "– Capítulo 11",
    "pacotes": [
     "ingles4-livro-11"
    ],
-   "fala": "Capítulo 11 –"
+   "fala": "– Capítulo 11"
   },
   {
    "chave": "65eeae5d1w",
@@ -20362,22 +20362,22 @@
    "fala": "How many times a week can you eat these food items?"
   },
   {
-   "chave": "f6c029e1r",
+   "chave": "7194f613q",
    "voz": "narradora",
-   "texto": "Salada e frutas :",
+   "texto": "Salada e frutas:",
    "pacotes": [
     "ingles4-en12p3"
    ],
-   "fala": "Salada e frutas :"
+   "fala": "Salada e frutas:"
   },
   {
-   "chave": "27112ff411",
+   "chave": "0ad4fb2810",
    "voz": "narradora",
-   "texto": "Hambúrguer e batata frita :",
+   "texto": "Hambúrguer e batata frita:",
    "pacotes": [
     "ingles4-en12p3"
    ],
-   "fala": "Hambúrguer e batata frita :"
+   "fala": "Hambúrguer e batata frita:"
   },
   {
    "chave": "d6622a6716",

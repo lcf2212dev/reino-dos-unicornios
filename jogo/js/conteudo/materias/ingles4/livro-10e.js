@@ -10,7 +10,7 @@
   }
   Reino.registrarCartas('ingles4', [
     // abertura e objetivos (pp. 122 e 123)
-    carta('en-e122', '😄', 'Capítulo 10 – «If You\'re Happy, Clap Your Hands»', 122, [
+    carta('en-e122', '😄', '«If You\'re Happy, Clap Your Hands» – Capítulo 10', 122, [
       { t: 'texto', texto: 'Duas meninas pulam de alegria, com confete caindo do céu azul.' },
       { t: 'quadro', titulo: '«Let\'s talk»', itens: [
         { texto: '«What makes you happy?»' },
