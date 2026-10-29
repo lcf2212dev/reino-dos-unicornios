@@ -29,7 +29,7 @@ desafio, livro e salas em geral: `conteudo.md`. Prédio e andares: `interiores.m
 ## 2. Matéria do 4º bimestre
 1. Catálogo separado do 3º bimestre (`bimestres.md`): ids novos de matéria, sala, desafio, carta e unicórnio; nunca
    `arquivada`. `bimestre: 4` na matéria.
-2. Nome diferente do da matéria arquivada (a cor do `ui.md` §10.22 é por nome): Português do 4º bimestre é
+2. Nome diferente do da matéria arquivada (a cor do `arte.md` §22 é por nome): Português do 4º bimestre é
    **Língua Portuguesa** (o nome da capa do livro), id `portugues4`, cor `#8e4fd6`.
 3. `livros`: os livros da escola que a matéria reproduz, cada um com nome e emoji:
    `livros: { aprendizagem: { nome: 'Livro de Aprendizagem', curto: 'Aprendizagem', emoji: '📗' }, atividades: { … } }`
@@ -42,6 +42,7 @@ desafio, livro e salas em geral: `conteudo.md`. Prédio e andares: `interiores.m
    1 unicórnio comum e 1 raro; a matéria, 2 épicos e o lendário.
 
 ## 3. Sala de livro (`ordem: 'livro'`)
+Sala nova: `npm run novo -- sala <m> <idSala>` (receita `docs/receitas/sala-4bim.md`).
 ```
 Reino.registrarSala('portugues4', {
     id: 'lp10a1', nome: 'O Gato de Botas', emoji: '🐱',

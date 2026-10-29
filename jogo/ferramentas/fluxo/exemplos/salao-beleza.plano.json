@@ -64,6 +64,8 @@
       "arquivos": ["jogo/js/ui/salao.js", "jogo/css/ui-salao.css", "jogo/js/interiores/salao/acoes.js", "jogo/js/arte/pixelart-mariana-visual.js",
         "jogo/ferramentas/testes/unidade/salao.navegador.test.js", "jogo/ferramentas/testes/unidade/salao-visual.test.js"],
       "worktree": "salao-telas",
+      "ler": ["docs/ARQUITETURA.md §5.1", "docs/contratos/ui.md §2-§5", "docs/contratos/arte.md", "pedidos/2026-09-27-salao-beleza.md"],
+      "modelo": "jogo/js/ui/lugares.js",
       "pronto": ["uns 8 cortes e 8 roupas, visíveis a pé, montada e em todas as vistas", "escolha salva e vale depois de recarregar",
         "teclado (Tab, Enter, Esc) funciona"],
       "estimativa": 45
@@ -85,7 +87,7 @@
       "estimativa": 30
     },
     {
-      "id": "entrega", "tipo": "entrega", "titulo": "Merge na main, push e artifact",
+      "id": "entrega", "tipo": "entrega", "titulo": "Merge na main, push e a Vercel no ar",
       "quem": "orquestrador", "depende": ["integracao"],
       "arquivos": [],
       "worktree": "salao-beleza",

@@ -94,6 +94,7 @@ function tiposDaLinha(l) {
   if (/mecanica|jeito novo|desafio|ajuste|correcao|outro/.test(s)) t.push('mecanica');
   if (/enfeite|comida|premio|loja/.test(s)) t.push('arte');
   if (/musica/.test(s)) t.push('musica');
+  if (/ferramenta|teste|documenta/.test(s)) t.push('ferramenta');
   if (/fala/.test(s)) t.push('falas');
   return t;
 }
@@ -124,6 +125,7 @@ function rascunho(texto, op = {}) {
   if (tipos.has('mecanica')) nova('mecanica', 'mecanica', 'Sistema ou tela nova');
   if (tipos.has('arte')) nova('arte', 'arte', 'Ícones, enfeites ou comidas', { depende: [] });
   if (tipos.has('musica')) nova('musica', 'musica', 'Faixa nova', { depende: [] });
+  if (tipos.has('ferramenta')) nova('ferramenta', 'ferramenta', 'Ferramentas, testes ou docs', { depende: [] });
   personagens.forEach((p) => {
     const n = primeiroNome(p.nome);
     nova(`npc-${n}`, 'npc', `Visual e ação de ${p.nome}`, { worktree: `${nome}-npc-${n}`, personagens: [p.id] });
@@ -138,7 +140,7 @@ function rascunho(texto, op = {}) {
   const pronto = campo(ped, 13).map((l) => l.replace(/^\s*-\s*\[[ x]\]\s*/i, '').trim()).filter(Boolean);
   nova('integracao', 'integracao', 'Juntar as frentes, vozes e e2e',
     { quem: 'orquestrador', worktree: nome, depende: tarefas.map((t) => t.id), pronto, estimativa: 30 });
-  nova('entrega', 'entrega', 'Merge, push e artifact', { quem: 'orquestrador', worktree: nome, depende: ['integracao'], estimativa: 10 });
+  nova('entrega', 'entrega', 'Merge, push e a Vercel no ar', { quem: 'orquestrador', worktree: nome, depende: ['integracao'], estimativa: 10 });
   return { nome, pedido: op.pedido || null, personagens, tarefas };
 }
 

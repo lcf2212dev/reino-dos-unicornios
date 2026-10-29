@@ -164,7 +164,7 @@ test('briefing, conferente e reservas do exemplo', () => {
   const p = copia();
   const b = P.briefing(p, 'npc-lulu', { mae: '/home/x' });
   for (const r of [/^Tarefa: /m, /^Worktree: \/home\/x\/reino-salao-npcs \(branch feat\/salao-npcs\)/m, /^Arquivos seus: jogo\/js\/interiores\/salao\/personagens\.js/m,
-    /^Prefixo de id: salao-/m, /^Arquivo de falas: nenhum: as falas são da tarefa falas-lulu/m, /^Pode ler: /m, /^Pronto quando: /m,
+    /^Prefixo de id: salao-/m, /^Arquivo de falas: nenhum: as falas são da tarefa falas-lulu/m, /^Ler \(§\): /m, /^Gerador: npm run novo -- personagem <id> --predio salao/m, /^Pronto quando: /m,
     /^Diferença esperada no e2e: /m, /salao-lulu: Dona Lulu, f, adulto, vaga salao \(3,5\)/, /a reserva não muda; registrarPersonagem só com id, sprite/]) assert.match(b, r);
   assert.match(P.briefing(p, 'falas-lulu'), /^Arquivo de falas: jogo\/js\/interiores\/salao\/personagens-falas\.js/m);
   const c = P.conferente(p, 'npc-lulu', { mae: '/home/x', arqPlano: 'plano.json' });
@@ -245,4 +245,28 @@ test('plano conferir: "depende" em texto vira problema listado, não exceção',
   let erros;
   assert.doesNotThrow(() => { erros = P.conferir(plano); });
   assert.ok(erros.some((e) => /"depende" tem de ser uma lista/.test(e)), JSON.stringify(erros));
+});
+
+test('briefing diz como fazer: gerador, modelo, ler por seção e testes focados; tipo ferramenta; entrega sem artifact', () => {
+  const p = copia();
+  const b = P.briefing(p, 'telas');
+  assert.match(b, /^Modelo: jogo\/js\/ui\/lugares\.js/m);
+  assert.match(b, /^Ler \(§\): docs\/ARQUITETURA\.md §5\.1, docs\/contratos\/ui\.md §2-§5/m);
+  assert.match(b, /^Testes focados: npm run unidade -- --so 'salao\.navegador\|salao-visual'/m);
+  tarefa(p, 'telas').testes = 'npm run unidade -- --so salao';
+  assert.match(P.briefing(p, 'telas'), /^Testes focados: npm run unidade -- --so salao \(/m);
+  const T = require('../../fluxo/plano-tipos');
+  // nada de arquivo grande inteiro: ARQUITETURA e ui.md só por seção
+  Object.values(T.TIPOS).forEach((x) => (x.ler || []).forEach((l) => assert.doesNotMatch(l, /^docs\/(ARQUITETURA|contratos\/ui)\.md$/, l)));
+  assert.doesNotMatch(JSON.stringify(T.TIPOS.entrega), /artifact/);
+  assert.match(T.TIPOS.entrega.conferencia.join(), /npm run vercel -- --conferir/);
+  assert.match(T.TIPOS.ferramenta.conferencia.join(), /--ajuda/);
+  p.tarefas.push({ id: 'docs', tipo: 'ferramenta', quem: 'worker-low', worktree: 'salao-docs', arquivos: ['docs/receitas/x.md'], depende: [] });
+  tarefa(p, 'integracao').depende.push('docs');
+  assert.deepStrictEqual(P.conferir(p), []);
+  assert.match(P.briefing(p, 'docs'), /^Diferença esperada no e2e: idêntico/m);
+  tarefa(p, 'docs').ler = 'docs/ARQUITETURA.md';
+  tarefa(p, 'docs').gerador = 3;
+  acusa(p, /"ler" tem de ser uma lista/);
+  acusa(p, /"gerador" tem de ser um texto/);
 });

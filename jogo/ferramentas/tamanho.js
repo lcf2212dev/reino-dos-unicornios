@@ -1,8 +1,9 @@
-// Confere o tamanho dos arquivos (em linhas): código ≤ 420, dados ≤ 800, tipos ≤ 1000, gerados sem limite.
+// Confere o tamanho dos arquivos (em linhas). Código, CSS e ferramentas miram ~400: acima de 420 é AVISO (a lista
+// sai na tela) e acima de 600 FALHA; dados ≤ 800, tipos ≤ 1000, gerados sem limite.
 // Uso: node ferramentas/tamanho.js              (npm run tamanho, na raiz do repositório)
 //      node ferramentas/tamanho.js --todos      (lista também os que estão dentro do limite)
 //      node ferramentas/tamanho.js --raiz <pasta jogo>   (confere outra cópia do jogo; usado pelos testes)
-// Sai com código 1 e lista os arquivos que passam do limite. Só olha js/, css/, ferramentas/ e o index.html
+// Sai com código 1 e lista os arquivos que passam do limite (só avisa os de código entre 421 e 600). Só olha js/, css/, ferramentas/ e o index.html
 // (nunca entra em servidor/: o banco da Mariana mora em servidor/dados/).
 // Arquivo grande demais: divida por responsabilidade (ver docs/decisoes/divisao-em-arquivos.md). Exceção só
 // com motivo, na lista EXCECOES abaixo, e temporária.
@@ -10,7 +11,8 @@ if (require.main === module) require('./ajuda').ajuda(__filename);
 const fs = require('fs');
 const path = require('path');
 
-const LIMITE = { codigo: 420, dados: 800, tipos: 1000 };
+const LIMITE = { codigo: 600, dados: 800, tipos: 1000 };   // acima: falha
+const AVISO = { codigo: 420 };                             // acima (até o LIMITE): aviso, hora de dividir
 
 // A regra de cada arquivo, por caminho (a partir de jogo/). A PRIMEIRA regra que casa vale.
 //   gerado  sem limite e fora da conta (pacotes de voz, cache das vozes, index.html do gerar-index)
@@ -80,9 +82,9 @@ function listar(raiz) {
   return lista.sort();
 }
 
-// confere uma pasta do jogo; devolve { passam, excecoes, sobrando, semRegra, total }
+// confere uma pasta do jogo; devolve { passam, avisos, excecoes, sobrando, semRegra, todos }
 function conferir(raiz) {
-  const passam = [], excecoes = [], sobrando = [], semRegra = [], todos = [];
+  const passam = [], avisos = [], excecoes = [], sobrando = [], semRegra = [], todos = [];
   for (const rel of listar(raiz)) {
     const tipo = regra(rel);
     if (tipo === 'gerado') continue;
@@ -95,11 +97,12 @@ function conferir(raiz) {
       if (n > limite) excecoes.push(Object.assign(item, { motivo: EXCECOES[rel] }));
       else sobrando.push(item);
     } else if (n > limite) passam.push(item);
+    else if (AVISO[tipo] && n > AVISO[tipo]) avisos.push(Object.assign(item, { aviso: AVISO[tipo] }));
   }
   Object.keys(EXCECOES).forEach((rel) => {
     if (!todos.some((t) => t.rel === rel)) sobrando.push({ rel, linhas: 0, limite: 0, sumiu: true });
   });
-  return { passam, excecoes, sobrando, semRegra, todos };
+  return { passam, avisos, excecoes, sobrando, semRegra, todos };
 }
 
 if (require.main === module) {
@@ -111,13 +114,17 @@ if (require.main === module) {
   r.excecoes.forEach((t) => console.log(`⚠ exceção: ${t.rel} (${t.linhas} linhas > ${t.limite}): ${t.motivo}`));
   r.sobrando.forEach((t) => console.log(`⚠ exceção sobrando em EXCECOES: ${t.rel} ${t.sumiu ? '(arquivo não existe mais)' : `(${t.linhas} linhas, já cabe em ${t.limite})`}`));
   r.semRegra.forEach((rel) => console.log(`⚠ sem regra de tamanho: ${rel}`));
+  if (r.avisos.length) {
+    console.log(`⚠ ${r.avisos.length} arquivo(s) de código acima de ${AVISO.codigo} linhas (mire ~400; falha acima de ${LIMITE.codigo}):`);
+    r.avisos.sort((a, b) => b.linhas - a.linhas).forEach((t) => console.log(`  ${t.rel}: ${t.linhas} linhas`));
+  }
   if (r.passam.length) {
     console.log(`✘ ${r.passam.length} arquivo(s) acima do limite (código ${LIMITE.codigo}, dados ${LIMITE.dados}, tipos ${LIMITE.tipos} linhas):`);
     r.passam.sort((a, b) => b.linhas - a.linhas).forEach((t) => console.log(`  ${t.rel}: ${t.linhas} linhas (${t.tipo}, limite ${t.limite})`));
     console.log('  Divida o arquivo por responsabilidade (docs/decisoes/divisao-em-arquivos.md).');
     process.exit(1);
   }
-  console.log(`✔ tamanho: ${r.todos.length - r.excecoes.length} arquivos dentro do limite${r.excecoes.length ? ` e ${r.excecoes.length} exceção(ões)` : ''} (código ${LIMITE.codigo}, dados ${LIMITE.dados}, tipos ${LIMITE.tipos} linhas; gerados fora)`);
+  console.log(`✔ tamanho: ${r.todos.length - r.excecoes.length} arquivos dentro do limite${r.excecoes.length ? ` e ${r.excecoes.length} exceção(ões)` : ''}${r.avisos.length ? ` (${r.avisos.length} com aviso)` : ''} (código ${AVISO.codigo} aviso / ${LIMITE.codigo} falha, dados ${LIMITE.dados}, tipos ${LIMITE.tipos} linhas; gerados fora)`);
 }
 
-module.exports = { LIMITE, REGRAS, EXCECOES, regra, linhas, conferir };
+module.exports = { LIMITE, AVISO, REGRAS, EXCECOES, regra, linhas, conferir };

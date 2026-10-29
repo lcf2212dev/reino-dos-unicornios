@@ -54,7 +54,11 @@ function briefing(plano, id, op = {}) {
     `Arquivos seus: ${(t.arquivos || []).join(', ') || '(preencha no plano)'}`,
     `Prefixo de id: ${t.prefixo || (p ? p + '-' : plano.nome + '-')}`,
     `Arquivo de falas: ${arquivoDeFalas(plano, t)}`,
-    `Pode ler: ${(t.ler || (tipo.ler || []).concat(plano.pedido ? [plano.pedido] : [])).join(', ')}`,
+    // como fazer (opcionais; o plano troca o padrão do tipo): gerador, arquivo-modelo, leitura por seção, testes focados
+    ...(t.gerador || tipo.gerador ? [`Gerador: ${T.preencher(t.gerador || tipo.gerador, { p })} (comece por ele, com --seco)`] : []),
+    ...(t.modelo || tipo.modelo ? [`Modelo: ${t.modelo || tipo.modelo} (copie o formato)`] : []),
+    `Ler (§): ${(t.ler || (tipo.ler || []).concat(plano.pedido ? [plano.pedido] : [])).join(', ')} (só as seções citadas)`,
+    ...(testesFocados(t) ? [`Testes focados: ${testesFocados(t)} (no fim, uma vez: npm test)`] : []),
     `Pronto quando: ${(t.pronto || []).join('; ') || '(preencha no plano)'}`,
     `Diferença esperada no e2e: ${T.preencher(t.e2e || tipo.e2e || 'idêntico', { p })}`,
   ];
@@ -67,6 +71,13 @@ function briefing(plano, id, op = {}) {
   }
   L.push('Regras fixas: .claude/agents/worker-low.md (sem commit; só os seus arquivos; linhas de arquivos do orquestrador vão no retorno).');
   return L.join('\n');
+}
+
+// os testes que o worker roda enquanto trabalha: campo `testes` do plano (comandos) ou os testes listados em `arquivos`
+function testesFocados(t) {
+  if (t.testes) return [].concat(t.testes).join('; ');
+  const f = filtroTestes(t);
+  return f ? `npm run unidade -- --so ${f}` : '';
 }
 
 // filtro do `npm run unidade -- --so` a partir dos testes em `arquivos` ('salao.navegador|salao-visual', com aspas para o shell); '' sem teste
@@ -127,4 +138,4 @@ function reservas(plano) {
   return L;
 }
 
-module.exports = { briefing, conferente, reservas, predioDa, personagensDa, REGRA_RESERVA };
+module.exports = { briefing, testesFocados, conferente, reservas, predioDa, personagensDa, REGRA_RESERVA };

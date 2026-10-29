@@ -1,0 +1,27 @@
+/* Sala {{sala}} ({{livroNome}}, capítulo {{capitulo}}, (preencher) pp. x a y): (preencher) o que esta seção do livro tem
+   (docs/contratos/quarto-bimestre.md §3; receita docs/receitas/sala-4bim.md). Esqueleto do `npm run novo`: um
+   desafio de escolha e um de escrever, no formato certo; troque cada marcador de preencher (o validador recusa o
+   marcador), troque o tipo pelo do livro (§12) e acrescente as outras questões NA ORDEM do livro
+   (até config.desafiosSalaLivro). `origem` = o id da questão no INVENTARIO.md (APR-12-q3, ATI-05-q2). */
+Reino.registrarSala('{{materia}}',
+    {
+      id: '{{sala}}', nome: '(preencher)', emoji: '(preencher)',
+      livroOrigem: '{{livro}}', capitulo: {{capitulo}}, paginas: '(preencher) pp. x a y', ordem: 'livro',
+      cartas: ['{{carta}}'],
+      intro: '(preencher) uma frase carinhosa do que vamos ler e fazer',
+      desafios: [
+        { id: '{{sala}}-01', tipo: 'escolha', origem: '(preencher) {{ORI}}-00-q1', pagina: 0, livro: '{{carta}}',
+          pergunta: '(preencher) o enunciado do livro, palavra por palavra',
+          opcoes: [
+            { t: '(preencher) opção 1' },
+            { t: '(preencher) opção 2' },
+            { t: '(preencher) opção 3' },
+          ], certa: 0,
+          explica: '(preencher) a explicação' },
+        { id: '{{sala}}-02', tipo: 'escrever', origem: '(preencher) {{ORI}}-00-q2', pagina: 0, livro: '{{carta}}',
+          pergunta: '(preencher) o enunciado do livro',
+          linhas: 2, chaves: [['(preencher) palavra que a resposta precisa ter']],
+          modelo: '(preencher) uma resposta certa',
+          explica: '(preencher) a explicação' },
+      ],
+    });

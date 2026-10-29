@@ -131,6 +131,10 @@ test('personagem: personagens.js depois do falas.js, voz que o prédio não usa,
   assert.strictEqual(R.NPCs.ELENCO.zztestetrigo.nome, 'Seu Trigo');
   assert.notStrictEqual(chave(V['npc-zztestetrigo']), chave(V['npc-zztestejoana']));
   assert.ok(R.FALAS_INTERIORES.petshop.npcs.zztestetrigo && R.FALAS_INTERIORES.petshop.npcs.aveia);
+  // falas pela junção do prédio (jogo/js/interiores/CLAUDE.md), nunca atribuídas direto
+  const pers = fs.readFileSync(path.join(copia, 'jogo/js/interiores/petshop/personagens.js'), 'utf8');
+  assert.match(pers, /Reino\.falasDoPredio\('petshop', \{ npcs: \{ 'zztestejoana'/);
+  assert.doesNotMatch(pers, /FALAS_INTERIORES\[/);
   const v = naCopia('ferramentas/validar/validar-interiores.js');
   assert.ok(erros(v).some((l) => l.includes('npcs.zztestetrigo')));
   // (a matéria dos testes de cima ainda tem o rect marcador: aqui só conta o que é da Pet Shop)
@@ -298,4 +302,56 @@ test('reserva: contrato primeiro (vaga tracejada + falas à parte), o personagem
   assert.strictEqual(R.reservas.zztestenina.preenchida, true);
   const v = naCopia('ferramentas/validar/validar-interiores.js');
   assert.deepStrictEqual(erros(v).filter((l) => /zztestenina|loja/.test(l) && !l.startsWith('✘ falta preencher: ')), [], v.stdout);
+});
+
+test('sala no 4º bimestre: sala de livro na ordem do livro, carta e unicórnios do capítulo; matéria arquivada recusada', () => {
+  // a fixture da cópia é o 3º bimestre inteiro (sem o arquivada: true do jogo): marca a História como no jogo
+  const hist = path.join(copia, 'jogo/js/conteudo/materias/historia/historia.js'), histTxt = fs.readFileSync(hist, 'utf8');
+  fs.writeFileSync(hist, histTxt.replace('Reino.registrarMateria({', 'Reino.registrarMateria({ arquivada: true,'));
+  const arq = rodar(novo, ['sala', 'historia', 'h6', '--raiz', copia]);
+  fs.writeFileSync(hist, histTxt);
+  assert.notStrictEqual(arq.status, 0);
+  assert.match(arq.stderr, /arquivada.*docs\/receitas\/sala-4bim\.md/);
+  // a Casa das Palavras não tem pedestal sobrando: escreve, confere e devolve a cópia como estava
+  const pasta = path.join(copia, 'jogo/js/conteudo/materias/portugues4');
+  const guardar = ['js/manifesto.js', 'index.html', 'js/conteudo/materias/portugues4/livro-12a.js', 'js/conteudo/materias/portugues4/unicornios-12.js']
+    .map((rel) => [path.join(copia, 'jogo', rel), fs.readFileSync(path.join(copia, 'jogo', rel), 'utf8')]);
+  try {
+    const r = rodar(novo, ['sala', 'portugues4', 'lp12a7', '--raiz', copia]);
+    assert.strictEqual(r.status, 0, r.stderr);
+    assert.match(r.stdout, /antes de js\/conteudo\/materias\/portugues4\/lp12t1\.js/);
+    semCache();
+    const Jogo = require(path.join(copia, 'jogo/ferramentas/jogo-no-node.js'));
+    const R = Jogo.carregar(Jogo.contexto({ console }), Jogo.scripts({ nomes: ['nucleo/config', 'nucleo/registros'], grupos: ['materias'] })).Reino;
+    const m = R.materias.find((x) => x.id === 'portugues4');
+    const ids = m.salas.map((x) => x.id);
+    assert.strictEqual(ids[ids.indexOf('lp12a7') - 1], 'lp12a6');
+    const sala = m.salas.find((x) => x.id === 'lp12a7');
+    assert.strictEqual(JSON.stringify([sala.ordem, sala.livroOrigem, sala.capitulo, sala.cartas]), JSON.stringify(['livro', 'aprendizagem', 12, ['lp12a7-c1']]));
+    assert.ok(sala.desafios.every((d) => d.livro === 'lp12a7-c1' && /preencher/.test(d.origem)));
+    assert.ok(m.livro.some((c) => c.id === 'lp12a7-c1' && c.capitulo === 12));
+    assert.strictEqual(m.unicornios.filter((u) => u.sala === 'lp12a7').map((u) => u.raridade + ' ' + u.id).join(), 'comum lp-(preencher)-comum,raro lp-(preencher)-raro');
+    assert.strictEqual(naCopia('ferramentas/gerar-index.js', ['--conferir']).status, 0);
+    // capítulo novo: livro-13a.js e unicornios-13.js novos, depois dos do capítulo 12 (só --seco)
+    const s = rodar(novo, ['sala', 'portugues4', 'lp13a1', '--seco', '--raiz', copia]);
+    assert.strictEqual(s.status, 0, s.stderr);
+    assert.match(s.stdout, /depois de js\/conteudo\/materias\/portugues4\/livro-12t\.js[\s\S]*livro-13a\.js/);
+    assert.notStrictEqual(rodar(novo, ['sala', 'portugues4', 'zz1', '--seco', '--raiz', copia]).status, 0, 'sem capítulo no id nem --capitulo');
+    // livro de Atividades: letra t (as duas chaves começam com "a"), inclusive em capítulo novo
+    const t3 = rodar(novo, ['sala', 'portugues4', 'lp12t3', '--seco', '--raiz', copia]);
+    assert.strictEqual(t3.status, 0, t3.stderr);
+    assert.match(t3.stdout, /livro-12t\.js \(entrada nova/);
+    assert.match(t3.stdout, /depois de js\/conteudo\/materias\/portugues4\/lp12t2\.js/);
+    const t13 = rodar(novo, ['sala', 'portugues4', 'lp13t1', '--seco', '--raiz', copia]);
+    assert.match(t13.stdout, /portugues4\/livro-13t\.js\n/);
+    const atv = rodar(novo, ['sala', 'portugues4', 'parodia2', '--capitulo', '11', '--livro', 'atividades', '--seco', '--raiz', copia]);
+    assert.strictEqual(atv.status, 0, atv.stderr);
+    assert.match(atv.stdout, /livro-11t\.js \(entrada nova/);
+    // id fora do padrão: o lugar segue o capítulo pedido (depois das salas de Atividades do 11, antes do 12)
+    assert.match(atv.stdout, /antes de js\/conteudo\/materias\/portugues4\/lp12a1\.js/);
+    assert.match(atv.stdout, /premios-trilha-11\.js/);
+  } finally {
+    guardar.forEach(([f, t]) => fs.writeFileSync(f, t));
+    fs.rmSync(path.join(pasta, 'lp12a7.js'), { force: true });
+  }
 });

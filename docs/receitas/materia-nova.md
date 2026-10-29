@@ -1,17 +1,21 @@
 # Receita: matéria nova
 
 Para que serve: pôr uma matéria nova no reino (ex.: Geografia), com salas, livro, unicórnios e um lugar no
-mapa. Regras: `docs/contratos/conteudo.md` §2–§4. Fluxo do Leandro: `COMO-USAR.md` ("Nova matéria").
+mapa. Material da escola do 4º bimestre em diante (livros inteiros, no prédio da matéria) NÃO usa esta receita:
+`quarto-bimestre.md` §10, e sala nova `sala-4bim.md`. Esta receita (salas sorteadas, formato antigo) vale só para
+uma matéria extra fora da temporada escolar (sem livro da escola página por página). As do 3º bimestre
+(`arquivada: true`) não ganham sala. Regras: `docs/contratos/conteudo.md` §2–§4. Fluxo do Leandro: `COMO-USAR.md` ("Nova matéria").
 
 ## Quando usar
 - O Leandro salvou as fotos da apostila numa pasta em `matérias/` (`matérias/<matéria>/`) e pediu a matéria.
-- Só uma sala nova numa matéria que existe: `npm run novo -- sala <m> <idSala>` e o passo 2.
+- Só uma sala nova: `sala-4bim.md` (4º bimestre) ou `npm run novo -- sala <m> <id>` numa matéria extra deste formato;
+  o gerador recusa matéria arquivada.
 
 ## Comece pelo gerador
 ```
 npm run novo -- materia <m> --nome "Geografia" --emoji 🌍 --salas 5 --prefixo g --seco
 npm run novo -- materia <m> --nome "Geografia" --emoji 🌍 --salas 5 --prefixo g
-npm run novo -- sala <m> <idSala>           # só uma sala nova numa matéria que existe
+npm run novo -- sala <m4> <idSala>          # sala nova numa matéria do 4º bimestre (sala-4bim.md)
 ```
 Cria as salas, `livro.js` e `<m>.js` no formato de `historia/`, as linhas do manifesto (salas antes do livro) e o
 index. À mão: o conteúdo da apostila (todo `(preencher)`; os validadores recusam), ícones e vozes.
@@ -24,7 +28,7 @@ index. À mão: o conteúdo da apostila (todo `(preencher)`; os validadores recu
 | `jogo/js/conteudo/materias/<m>/<m>.js` | `Reino.registrarMateria({ id, nome, emoji, lugar, guia, salas: Reino.salasDa('<m>'), livro: Reino.livroDa('<m>'), unicornios })` |
 | `jogo/js/manifesto.js` | as linhas (grupo `'materias'`, `node: true`), depois do Português |
 | `jogo/index.html` | GERADO: `npm run index` |
-| `jogo/js/arte/icones/<lote>.js` | desenho de todo emoji novo (lote novo = arquivo novo + linha no manifesto, grupo `'icones'`) |
+| `jogo/js/conteudo/materias/<m>/icones.js` | desenho de todo emoji novo, por `Reino.registrarIcones` na pasta da feature; linha no manifesto, grupo `'icones'` |
 | (opcional) prédio próprio | `predio-novo.md`; sem ele entra o interior padrão (`jogo/js/interiores/padrao.js`) |
 | (opcional) cavaleiro do treino | `personagem-novo.md` com `paraMateria: '<m>'` |
 
@@ -36,11 +40,11 @@ completar a matéria; `P.valorSala`/`P.bonusMateria` em `progresso-regras.js`), 
 1. Leia a apostila pelas fotos: `npm run material -- <Pasta> --folha` e leia só as reduzidas em `/tmp/reino-testes/material/`
    (o que está escrito à mão é da Mariana e
    NUNCA é gabarito: `docs/contratos/conteudo.md` §6).
-2. Salas: copie o formato de `jogo/js/conteudo/materias/historia/h1.js` (4 espaços na sala, 8 nos desafios).
+2. Salas: copie o formato de `arquivo/terceiro-bimestre/jogo/js/conteudo/materias/historia/h1.js` (o do jogo ficou só com o aviso de espera) (4 espaços na sala, 8 nos desafios).
    - ids das salas ÚNICOS no jogo todo (o save guarda `salas[<id da sala>]`): use prefixo da matéria (`g1`…).
    - ids dos desafios únicos (`g1-01`…). Todo desafio tem `livro` (id de uma carta) e `explica`.
    - ≥ 12 desafios por sala, ≥ 6 de `escolha`/`vf`/`varias` (a surpresa e o treino usam só esses).
-3. Livro: `livro.js` como `jogo/js/conteudo/materias/historia/livro.js` (ids fixos; o livro de cada desafio aponta para eles).
+3. Livro: `livro.js` como `arquivo/terceiro-bimestre/jogo/js/conteudo/materias/historia/livro.js` (ids fixos; o livro de cada desafio aponta para eles).
 4. Matéria `<m>.js` como `jogo/js/conteudo/materias/historia/historia.js`:
    - `lugar: { nome, sprite, rect, porCima: true, cores, placa }`. Clareiras livres: `Mapa.CLAREIRAS` (`mundo/lugares.js`), ex.: `rect: { x: 37, y: 24, w: 5, h: 5 }`.
    - `porCima: true` é obrigatório: o lugar entra depois do sorteio das árvores e flores (`Math.random` em
@@ -49,7 +53,8 @@ completar a matéria; `P.valorSala`/`P.bonusMateria` em `progresso-regras.js`), 
    - `unicornios`: 1 comum + 1 raro por sala (`sala`), 2 épicos (`treino: 'ouro'` e `'perfeito'`, com `asa`),
      1 lendário (`materiaCompleta: true`, com `asa`). ids únicos com prefixo (`g-…`), nomes que não repetem.
 5. Manifesto: salas na ordem, depois `livro.js`, depois `<m>.js` (a ordem das salas é a do manifesto). Rode `npm run index`.
-6. Ícones: `npm run validar` avisa "emojis sem pixel art"; desenhe cada um (`jogo/js/CLAUDE.md`, Arte).
+6. Ícones: `npm run validar` avisa "emojis sem pixel art"; desenhe cada um por `Reino.registrarIcones` no
+   `icones.js` da matéria (`jogo/js/CLAUDE.md`, Arte; os lotes de `arte/icones/` não crescem).
 7. Vozes: todo enunciado, opção, explicação e carta do livro é falado (pacotes `<m>-<sala>`, `<m>-livro`,
    `<m>-extra`, `interior-padrao-<m>`): `fala-nova-e-vozes.md`.
 

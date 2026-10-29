@@ -51,14 +51,16 @@ function existentes(raiz) {
   }));
   const Jogo = require(path.join(raiz, 'jogo/ferramentas/jogo-no-node.js'));
   const ctx = Jogo.carregar(Jogo.contexto({ console }), Jogo.scripts({ nomes: ['nucleo/config', 'nucleo/registros'], grupos: ['materias'] }));
-  const materias = ctx.Reino.materias.map((m) => ({ id: m.id, nome: m.nome, salas: m.salas.map((s) => s.id) }));
+  const materias = ctx.Reino.materias.map((m) => ({ id: m.id, nome: m.nome, salas: m.salas.map((s) => s.id),
+    arquivada: !!m.arquivada, bimestre: m.bimestre, livros: m.livros, livro: (m.livro || []).map((c) => c.id),
+    salasInfo: m.salas.map((s) => ({ id: s.id, capitulo: s.capitulo, livro: s.livroOrigem })), unis: (m.unicornios || []).map((u) => u.id) }));
   const pastasMat = fs.readdirSync(path.join(js, 'conteudo/materias'), { withFileTypes: true }).filter((e) => e.isDirectory()).map((e) => e.name);
   return { clareiras: ctxMapa.Mapa.CLAREIRAS, lugares, pastas, materias, pastasMat, salas: new Set(materias.flatMap((m) => m.salas)), valorPorMateria: ctx.Reino.config.valorPorMateria };
 }
 
 /* ================= TIPOS ================= */
 // cada tipo: { ajuda, cria, conferir(id, op, ex), arquivos(id, op, ex), manifesto(id, op, ex), checklist(id, op), ver(id, op) }
-// Tipo grande mora em arquivo próprio (tipo-<t>.js). Próximos: prova, personagem, no mesmo formato.
+// Tipo grande mora em arquivo próprio (tipo-<t>.js).
 const TIPOS = {
   sistema: require('./tipo-sistema'),
   prova: require('./tipo-prova'),
@@ -179,42 +181,7 @@ const TIPOS = {
     ver(id) { return `npm run ver -- --ir materia:${id} --nome ${id}`; },
   },
 
-  sala: {
-    ajuda: 'sala <materia> <idSala>',
-    cria: 'jogo/js/conteudo/materias/<materia>/<idSala>.js (6 desafios para preencher) e a linha antes do livro.js da matéria',
-    conferir(id, op, ex, raiz) {
-      const m = ex.materias.find((x) => x.id === op.materia);
-      if (!m) throw new Error(`sala: a matéria "${op.materia}" não existe (${ex.materias.map((x) => x.id).join(', ')})`);
-      if (ex.salas.has(id)) throw new Error(`sala: "${id}" já existe`);
-      const livro = path.join(raiz, `jogo/js/conteudo/materias/${op.materia}/livro.js`);
-      if (!fs.existsSync(livro)) throw new Error(`sala: a matéria ${op.materia} não tem livro.js`);
-      if (new RegExp(`id:\\s*'${id}'`).test(fs.readFileSync(livro, 'utf8'))) throw new Error(`sala: já há uma carta '${id}' no livro de ${op.materia}`);
-      op.nMateria = m; op.nSala = m.salas.length + 1; op.valorPorMateria = ex.valorPorMateria;
-    },
-    arquivos(id, op) {
-      return [[`jogo/js/conteudo/materias/${op.materia}/${id}.js`, modelo('materia-sala.js.modelo',
-        { NOME: String(op.nMateria.nome).toUpperCase(), n: op.nSala, sala: id, materia: op.materia })],
-        // a carta que os desafios da sala apontam (livro: '<id>'), no fim do livro da matéria
-        [`jogo/js/conteudo/materias/${op.materia}/livro.js`, { inserirNoFim: `    { id: '${id}', e: '(preencher)', titulo: '(preencher)',\n      texto: '(preencher)' },\n` }]];
-    },
-    manifesto(id, op) {
-      return { jss: [`js/conteudo/materias/${op.materia}/${id}.js`], onde: { antesDe: `js/conteudo/materias/${op.materia}/livro.js`, grupo: 'materias' } };
-    },
-    checklist(id, op) {
-      return [
-        `conteúdo: troque cada (preencher) em jogo/js/conteudo/materias/${op.materia}/${id}.js`,
-        `livro: a carta '${id}' entrou no fim de ${op.materia}/livro.js: título e texto (troque o livro dos desafios se for outra carta)`,
-        valorSala(op.valorPorMateria, op.nSala, op.nSala - 1),
-        `unicórnios: 1 comum e 1 raro com sala: '${id}' em ${op.materia}/${op.materia}.js`,
-        UNI_NPC,
-        EMOJIS + ' (os dos desafios da sala)',
-        'o prédio da matéria: se for próprio (não o padrao.js), um NPC com a ação { tipo: \'sala\' } num cômodo novo',
-        'vozes: npm run vozes',
-      ];
-    },
-    validadores: ['node jogo/ferramentas/validar/validar-conteudo.js', 'node jogo/ferramentas/validar/validar-interiores.js', 'npm test'],
-    ver(id) { return `npm run ver -- --tela sala:${id} --nome ${id}`; },
-  },
+  sala: require('./tipo-sala'),
 };
 // aviso do valor por sala, que muda quando a matéria ganha sala: a mesma regra de progresso-regras.js
 // (em Robux: cada sala de 10 em 10, arredondado para baixo; a sobra é bônus ao completar a matéria)
@@ -269,7 +236,7 @@ const nomesSalas = (id, op, n) => Array.from({ length: n }, (_, i) => prefixo(id
 /* ================= LINHA DE COMANDO ================= */
 function lerArgs(argv) {
   const op = { pos: [] };
-  const valor = { '--voz': 'voz', '--antes-de': 'antesDe', '--depois-de': 'depoisDe', '--x': 'x', '--y': 'y', '--acao': 'acao', '--predio': 'predio', '--professora': 'professora', '--nome-professora': 'nomeProfessora', '--campo': 'campo', '--estrategia': 'estrategia', '--nome': 'nome', '--rect': 'rect', '--caminho': 'caminho', '--emoji': 'emoji', '--salas': 'salas', '--prefixo': 'prefixo', '--raiz': 'raiz', '--dentro': 'dentro', '--interior': 'interior', '--genero': 'genero', '--idade': 'idade' };
+  const valor = { '--voz': 'voz', '--antes-de': 'antesDe', '--depois-de': 'depoisDe', '--x': 'x', '--y': 'y', '--acao': 'acao', '--predio': 'predio', '--professora': 'professora', '--nome-professora': 'nomeProfessora', '--campo': 'campo', '--estrategia': 'estrategia', '--nome': 'nome', '--rect': 'rect', '--caminho': 'caminho', '--emoji': 'emoji', '--salas': 'salas', '--prefixo': 'prefixo', '--raiz': 'raiz', '--dentro': 'dentro', '--interior': 'interior', '--genero': 'genero', '--idade': 'idade', '--capitulo': 'capitulo', '--livro': 'livro' };
   for (let i = 0; i < argv.length; i++) {
     const k = argv[i];
     if (valor[k]) { if (argv[i + 1] === undefined) throw new Error(`${k} precisa de um valor`); op[valor[k]] = argv[++i]; }
@@ -296,7 +263,7 @@ function ajuda() {
     'Exemplos:',
     '  npm run novo -- predio padaria --nome "Padaria" --rect 10,10,5,4 --caminho "14,14;13,14;12,14" --emoji 🥐',
     '  npm run novo -- materia geografia --nome "Geografia" --emoji 🌍 --salas 5 --prefixo g',
-    '  npm run novo -- sala historia h6',
+    '  npm run novo -- sala portugues4 lp12a7          # 4º bimestre: docs/receitas/sala-4bim.md',
     '  npm run novo -- prova historia 4 --professora rosa --nome-professora "Professora Rosa"',
     '  npm run novo -- personagem trigo --predio petshop --nome "Seu Trigo"',
     '  npm run novo -- reserva salao-lulu --predio salao --nome "Dona Lulu" --genero f --idade adulto --x 3 --y 5',
@@ -355,7 +322,7 @@ function literal(v) {
   if (v && typeof v === 'object') return '{ ' + Object.keys(v).map((k) => (/^[A-Za-z_$][\w$]*$/.test(k) ? k : `'${aspas(k)}'`) + ': ' + literal(v[k])).join(', ') + ' }';
   return typeof v === 'string' ? `'${aspas(v)}'` : String(v);
 }
-Object.assign(module.exports, { modelo, aspas, literal });
+Object.assign(module.exports, { modelo, aspas, literal, valorSala, EMOJIS, UNI_NPC });
 
 if (require.main === module) {
   try { executar(process.argv.slice(2)); } catch (e) { console.error('✘ ' + e.message); process.exit(1); }
