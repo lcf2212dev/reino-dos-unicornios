@@ -38,9 +38,9 @@
   // Tudo pelo tempo (s), não pelo quadro: a mesma chuva em 60 ou 120 Hz. Uma peça em 6 já nasce na tela
   // (confete desde o 1º quadro); as outras vêm de até 70 % da altura acima e atravessam a tela em 1,3 a 2,1 s.
   // O canvas só sai quando a última peça passa da borda de baixo.
-  // Pixel do mundo (ui.md §10.14.2): o canvas é em px de aparelho, cada peça tem 1 ou 2 px de arte do mundo
-  // (passo = Reino._motor.escala px de aparelho) e a posição cai na grade desse passo; cores da paleta (§10.8)
-  // reserva: as cores de confete do §10.8 (rosa, ouro, roxo, azul, laranja, folha), se o config não tiver a lista
+  // Pixel do mundo (arte.md §14.2): o canvas é em px de aparelho, cada peça tem 1 ou 2 px de arte do mundo
+  // (passo = Reino._motor.escala px de aparelho) e a posição cai na grade desse passo; cores da paleta (arte.md §8)
+  // reserva: as cores de confete do arte.md §8 (rosa, ouro, roxo, azul, laranja, folha), se o config não tiver a lista
   var CORES_CONFETE = ['#ff7eb6', '#ffd34d', '#7c5cff', '#5fb4ff', '#ff8a3d', '#9ccc4a'];
   function coresConfete() {
     var pal = Reino.config && Reino.config.paleta, cs = pal && Array.isArray(pal.confete) ? pal.confete : [];
@@ -98,7 +98,7 @@
     })(performance.now());
   };
 
-  /* ---------- escala de festa (ui.md §10.16) ---------- */
+  /* ---------- escala de festa (arte.md §16) ---------- */
   // nível: confete, classe do título, som (só sons que já existem; o 4 é a fanfarra com a estrela depois)
   var FESTA = {
     1: { confete: 0, som: null },
@@ -172,7 +172,7 @@
     var e = Reino.Unicornios.estagio(u ? u.xp : 0);
     opcoes = opcoes || {};
     var spr = PA.unicornio(d, e, 0, { enfeites: opcoes.semEnfeite ? [] : (id === P.montaria() ? est().usando.enfeites : []), asasFada: !opcoes.semEnfeite && id === P.montaria() && est().usando.asasFada });
-    return PA.paraDOM(spr, escala || 4);   // escala par (ui.md §10.10.7: sprite das peças 4)
+    return PA.paraDOM(spr, escala || 4);   // escala par (arte.md §10.7: sprite das peças 4)
   };
 
   UI.pedirNome = function (pergunta, atual) {

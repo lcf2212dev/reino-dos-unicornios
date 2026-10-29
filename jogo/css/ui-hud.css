@@ -21,14 +21,14 @@
 .btn-tela-cheia {
   display: grid; place-items: center;
   width: 48px; height: 48px; flex: none;
-  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-pequeno);   /* botão de até 56 px (ui.md §10.10.4) */
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-pequeno);   /* botão de até 56 px (arte.md §10.4) */
   background: var(--papel); color: var(--tinta);
   box-shadow: inset 0 2px 0 var(--brilho), var(--sombra-pequena); --degrau: 2px; --brilho-apertado: inset 0 2px 0 var(--brilho-fraco);
 }
 /* tela cheia, câmera (📷, js/sistemas/fotos.js), álbum e ajustes lado a lado */
 .hud-botoes { display: flex; gap: 8px; flex: none; }
 .btn-foto { touch-action: none; -webkit-touch-callout: none; user-select: none; -webkit-user-select: none; }
-/* 📷 e álbum ficam acesos também na conversa (D8A-15, ui.md §10.19): sem poder tirar, o toque só afunda o botão */
+/* 📷 e álbum ficam acesos também na conversa (D8A-15, arte.md §19): sem poder tirar, o toque só afunda o botão */
 /* nuvem riscada (D11-05, ui/sem-internet.js): o progresso não subiu. Na fileira dos botões, 32 px, sem toque e sem
    mudar a altura da fileira */
 .hud-botoes > .hud-nuvem { display: grid; place-items: center; flex: none; width: 32px; align-self: center; pointer-events: none; }
@@ -56,7 +56,7 @@
 .chip-montaria { min-width: 0; }
 .chip-montaria canvas { flex: none; }
 .montaria-info { display: flex; flex-direction: column; min-width: 0; font-size: var(--texto-aux); line-height: var(--entrelinha); }
-/* o nome quebra em até 2 linhas, só entre palavras (D13-02, ui.md §10.17): "Rainha da Torre / do Relógio" */
+/* o nome quebra em até 2 linhas, só entre palavras (D13-02, arte.md §17): "Rainha da Torre / do Relógio" */
 .montaria-info b {
   font-size: var(--texto); overflow-wrap: normal;
   display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
@@ -75,7 +75,7 @@
   position: absolute; width: var(--cb, 110px); height: var(--cb, 110px); margin: calc(var(--cb, 110px) / -2) 0 0 calc(var(--cb, 110px) / -2);
   filter: drop-shadow(0 var(--px, 5px) 0 var(--sombra-veu));
 }
-#controle .controle-base { opacity: 0.85; }   /* translúcido sobre o mapa: exceção escrita do ui.md §10.19.1 */
+#controle .controle-base { opacity: 0.85; }   /* translúcido sobre o mapa: exceção escrita do arte.md §19.1 */
 .controle-pino {
   position: absolute; left: 50%; top: 50%; width: var(--cp, 50px); height: var(--cp, 50px); margin: calc(var(--cp, 50px) / -2) 0 0 calc(var(--cp, 50px) / -2);
 }

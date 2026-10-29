@@ -71,7 +71,7 @@
     UI.focarTroca(prox, titulo, 400);
   };
 
-  /* ---------- os desenhos (64×48 px de arte; ui.md §10: contorno #3a2446, sem arc, luz em faixas) ---------- */
+  /* ---------- os desenhos (64×48 px de arte; arte.md: contorno #3a2446, sem arc, luz em faixas) ---------- */
   function bola(ctx, cx, cy, r, cor) {
     D.circulo(ctx, cx, cy, r + 1, K);
     D.circulo(ctx, cx, cy, r, cor);

@@ -13,7 +13,7 @@
     ['.kkkkk.', 'kaawaak', 'kaaaaak', '.kkkkk.', '.kakak.', '.kk.kk.'],
     ['..kkk..', '.k...k.', 'kkkkkkk', 'kwwwwwk', 'kzzzzzk', '.kkkkk.'],
     ['kk...kk', 'kpk.kpk', 'kpprppk', 'kpk.kpk', 'kk...kk'], null];
-  // baia vazia (§10.14): a silhueta de quem vai morar ali, do tamanho dos unicórnios das baias ocupadas (caixa de
+  // baia vazia (arte.md §14): a silhueta de quem vai morar ali, do tamanho dos unicórnios das baias ocupadas (caixa de
   // 28 × 23, sem reduzir o adulto, centrada), de pé acima da porteira (py + 26): o contorno do próprio desenho fica
   // --tinta, o corpo --tinta-suave e o chifre --papel; sem asas; de lado ou na diagonal, passo e espelho pela baia n.
   // O "?" 7×9 vai num canto livre dela, com folga de 1 px da silhueta e de 3 px das divisórias.

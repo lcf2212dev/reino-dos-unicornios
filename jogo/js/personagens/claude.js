@@ -168,7 +168,7 @@
   function vozDe(item) { return item.voz || (item.quem && item.quem.voz) || 'claude'; }
 
   // retrato: Claude (padrão) ou o da personagem, ampliado nítido. Personagem (Claude, e o N.retrato de NPC e ET) a 4 px
-  // CSS por pixel, o mesmo para todos (ui.md §10.10.6); outro retrato (objeto, unicórnio) a 4 até 21 px, senão a 2
+  // CSS por pixel, o mesmo para todos (arte.md §10.6); outro retrato (objeto, unicórnio) a 4 até 21 px, senão a 2
   function escalaRetrato(src) { return src.personagem || Math.max(src.width, src.height) <= 21 ? 4 : 2; }
   function porRetrato(bal, quem) {
     var velho = bal.querySelector('canvas.claude-avatar');
@@ -248,7 +248,7 @@
   function meioDaFala(item) { return !!(item.paginas && item.pag < item.paginas.length - 1); }
   function porTexto(bal, item) {
     var t = item.paginas ? item.paginas[item.pag] : item.texto;
-    U.preencherColado(bal.querySelector('.claude-texto'), t);   // emoji, número e "Sala N" colados (ui.md §10.17)
+    U.preencherColado(bal.querySelector('.claude-texto'), t);   // emoji, número e "Sala N" colados (arte.md §17)
     var extra = bal.querySelector('.claude-extra');
     extra.innerHTML = '';
     var comExtra = item.extra && !meioDaFala(item);
@@ -269,7 +269,7 @@
     if (item.tempo) item.timer = setTimeout(function () { if (aberto !== item) return; if (meioDaFala(item)) virarPagina(U.$('#claude-balao'), item); else fechar(); }, item.tempo);
   }
 
-  /* área útil (D10-B03, ui.md §10.18): --balao-altura no :root = do topo do balão (com a aba do nome) ao pé da
+  /* área útil (D10-B03, arte.md §18): --balao-altura no :root = do topo do balão (com a aba do nome) ao pé da
      tela, 0 fechado; a câmera e as telas leem. body.balao-no-pe (D5-01): com uma tela aberta, o balão desce
      para o pé e a tela encolhe para acima dele (ui-telas.css) */
   var alturaAntes = -1;
@@ -289,7 +289,7 @@
     document.body.classList.toggle('balao-no-pe', noPe);
     medirAltura();
   }
-  // nome que não cabe numa linha na largura do balão: um degrau abaixo (ui.md §10.17.3), nunca quebra (D5-11)
+  // nome que não cabe numa linha na largura do balão: um degrau abaixo (arte.md §17.3), nunca quebra (D5-11)
   function porNome(bal, item) {
     var nome = bal.querySelector('.claude-nome');
     U.preencher(nome, item.quem ? item.quem.nome : 'Claude');

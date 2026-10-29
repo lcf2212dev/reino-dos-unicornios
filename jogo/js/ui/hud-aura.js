@@ -38,7 +38,7 @@
     });
     return (cacheChama[cor] = c);
   }
-  // 32 px no chip, na barra e no selo; 64 px no destaque do painel (ui.md §10.10.5)
+  // 32 px no chip, na barra e no selo; 64 px no destaque do painel (arte.md §10.5)
   function iconeAura(cor, escala) {
     var c = PA.paraDOM(chama(cor), escala || 2, 'aura-chama');
     c.setAttribute('aria-hidden', 'true');

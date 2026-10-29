@@ -10,7 +10,8 @@
 // vaga nenhuma há REINO_VAGAS_ESPERA_MS (padrão 60 s) pode usar a reserva: REINO_VAGAS_EXTRA vagas (padrão 4,
 // extra-<n>.json, o mesmo link), para um teste da unidade (2 min) não ficar parado atrás de dois e2e. Reserva
 // esgotada: continua esperando, até op.prazoMs (sem prazo: sem fim), quando lança "✘ sem vaga de Chromium há N s
-// (quem ocupa)" e não abre navegador nenhum. Derrubado (SIGTERM) esperando sem vaga nenhuma: diz que esperava vaga.
+// (quem ocupa)" e não abre navegador nenhum. Derrubado (SIGTERM, SIGINT, SIGHUP) esperando: apaga os .tmp-* e, sem
+// vaga nenhuma, diz que esperava vaga.
 // Risco aceito: quebrar o `.assumindo` de um morto tem uma corrida rara (dois processos conferem o mesmo morto e o
 // segundo apaga o `.assumindo` novo de um terceiro) que dá a mesma vaga a dois: no pior caso, +1 Chromium por um
 // tempo; nenhuma vaga se perde.
@@ -50,7 +51,8 @@ function criar(de, para) {
 const sair = (arq) => { try { fs.unlinkSync(arq); } catch (e) { /* já saiu */ } };
 
 // vaga de dono morto: só com o `.assumindo` na mão. Com ele, ninguém mais apaga a vaga (o dono morto não devolve),
-// então a conferência e o unlink não têm vão; quem cria uma vaga livre no meio ganha, e aqui o link dá EEXIST.
+// então a conferência e o unlink não têm vão (a exceção é o risco aceito do cabeçalho: quebrar o `.assumindo` de
+// um morto); quem cria uma vaga livre no meio ganha, e aqui o link dá EEXIST.
 // Vaga ilegível (sumiu, ou outro acabou de criá-la) nunca é apagada: só se tenta criar (EEXIST = é de outro).
 // `.assumindo` de dono morto (morreu no meio) sai do caminho para a próxima volta; ilegível ou por tempo, nunca.
 function assumir(arq, tmp, chave) {
@@ -88,10 +90,12 @@ const pendentes = new Set(); // .tmp-<chave> das esperas em curso (o process.exi
 let seq = 0, registrado = false, ultimoAviso = '', esperando = 0, ultimoQuem = '';
 // o mesmo aviso uma vez por processo (as abas do e2e esperam juntas)
 const avisar = (t) => { if (t !== ultimoAviso) console.log(ultimoAviso = t); };
-// SIGTERM (tempo do teste estourado, processo.js) com alguém esperando: sem vaga nenhuma, a causa é a espera
-function derrubado() {
+// SIGTERM (tempo do teste estourado, processo.js), SIGINT (Ctrl+C) ou SIGHUP (terminal fechado) com alguém
+// esperando: sai pelo process.exit, que apaga os .tmp-* (soltarTodas); sem vaga nenhuma, a causa é a espera
+const SINAIS = { SIGTERM: 143, SIGINT: 130, SIGHUP: 129 };   // os códigos do processo.js
+function derrubado(sinal) {
   if (!minhas.size) console.log(`✘ derrubado enquanto esperava vaga de Chromium (${ultimoQuem}); veja vagas.js`);
-  process.exit(143);
+  process.exit(SINAIS[sinal] || 143);
 }
 function soltarTodas() {
   for (const [arq, chave] of minhas) { const d = ler(arq); if (d && d.chave === chave) sair(arq); }
@@ -143,13 +147,13 @@ async function pegar(nome, op = {}) {
           (s ? `esperando vaga há ${s} s` : 'espero'));
         proxAviso = Date.now() + avisoMs;
       }
-      if (!aguardou) { aguardou = true; if (!esperando++) process.on('SIGTERM', derrubado); }
+      if (!aguardou) { aguardou = true; if (!esperando++) Object.keys(SINAIS).forEach((x) => process.on(x, derrubado)); }
       await new Promise((ok) => setTimeout(ok, op.intervaloMs || 200 + Math.random() * 200));
     }
   } finally {
     sair(tmp);
     pendentes.delete(tmp);
-    if (aguardou && !--esperando) process.removeListener('SIGTERM', derrubado);
+    if (aguardou && !--esperando) Object.keys(SINAIS).forEach((x) => process.removeListener(x, derrubado));
   }
   minhas.set(arq, chave);
   let solta = false;

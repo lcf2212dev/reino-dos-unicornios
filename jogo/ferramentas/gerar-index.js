@@ -14,7 +14,7 @@ const MANIFESTO = require(path.join(raiz, 'js/manifesto.js'));
 // o favicon (um só, também no app da Vercel): a cabeça do unicórnio em 16×16, feita por ferramentas/pwa/gerar-icones.js
 const FAVICON = 'data:image/svg+xml,' + fs.readFileSync(path.join(__dirname, 'pwa', 'favicon.svg'), 'utf8').trim()
   .replace(/[%#<>"]/g, encodeURIComponent);
-// a cor do app (splash, página antes dos scripts, abertura): Reino.config.paleta.noite (ui.md §10.8)
+// a cor do app (splash, página antes dos scripts, abertura): Reino.config.paleta.noite (arte.md §8)
 const NOITE = /\bnoite:\s*'(#[0-9a-f]{6})'/i.exec(fs.readFileSync(path.join(raiz, 'js/nucleo/config.js'), 'utf8'))[1];
 const MARCA = '<!-- Gerado por ferramentas/gerar-index.js a partir de js/manifesto.js. Não edite à mão: mude o manifesto e rode o gerador. -->';
 const MODELO = `<!doctype html>

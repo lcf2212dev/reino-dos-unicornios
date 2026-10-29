@@ -361,7 +361,7 @@ interface Materia {
   id: string;
   nome: string;
   emoji: string | ((l?: any) => string);
-  /** a cor da matéria, '#rrggbb' (docs/contratos/ui.md §10.22; validar-conteudo confere) */ cor: string;
+  /** a cor da matéria, '#rrggbb' (docs/contratos/arte.md §22; validar-conteudo confere) */ cor: string;
   /** o prédio da matéria no mapa */
   lugar: LugarMateria;
   /** fala do guia (voz 'claude') */

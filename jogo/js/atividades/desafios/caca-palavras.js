@@ -114,7 +114,7 @@
       var cs = trecho(a, b), texto = cs.map(function (c) { return L[c[1]][c[0]]; }).join('');
       var i = d.palavras.findIndex(function (p, j) { return p === texto && achadas.indexOf(j) < 0; });
       if (i < 0) {
-        // não é palavra da lista (ou já achada): as letras tremem paradas um instante (ui.md §10.19.2)
+        // não é palavra da lista (ou já achada): as letras tremem paradas um instante (arte.md §19.2)
         Reino.Som.tocar('toque');
         pintar();
         if (d.palavras.indexOf(texto) < 0) marcarErro(cs.map(function (c) { return botoes[c[1]][c[0]]; }));
@@ -125,7 +125,7 @@
       pintar(); opts.onMudar();
       if (completo() && opts.onCompleto) setTimeout(opts.onCompleto, 500);
     }
-    /* erro parado (ui.md §10.19.2) só no trecho tocado, até ERRO_MS ou até o próximo toque na grade (o _d.erroParado
+    /* erro parado (arte.md §19.2) só no trecho tocado, até ERRO_MS ou até o próximo toque na grade (o _d.erroParado
        apagaria a marca já no clique que vem junto com o pointerup) */
     var erro = { casas: [], t: null };
     function marcarErro(bs) {

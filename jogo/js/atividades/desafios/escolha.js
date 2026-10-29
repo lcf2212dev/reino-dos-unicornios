@@ -28,7 +28,7 @@
     var lista = el('div.opcoes' + (d.opcoes.length === 2 ? '.opcoes-duas' : '') + (comImg ? '.opcoes-img' : ''));
     var botoes = {};
     ordem.forEach(function (i) {
-      var o = d.opcoes[i], b = comImg ? _d.botaoImg(o, d) : botaoOpcao({ e: o.e, t: U.colado(o.t) });   // colado: ui.md §10.17
+      var o = d.opcoes[i], b = comImg ? _d.botaoImg(o, d) : botaoOpcao({ e: o.e, t: U.colado(o.t) });   // colado: arte.md §17
       b.addEventListener('click', function () {
         if (bloqueadas[i] || ctrl.travado) return;
         sel = i; Reino.Som.tocar('selecionar'); pintar(); opts.onMudar();

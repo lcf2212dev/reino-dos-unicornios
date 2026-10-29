@@ -62,7 +62,8 @@ async function semNadaAPublicar(sha, raiz, buscar = fetch) {
       + '&target=production&state=READY&limit=20';
     const r = await buscar(url, { headers: { Authorization: 'Bearer ' + token() } });
     if (!r.ok) return null;
-    const ultima = ((await r.json()).deployments || []).filter((d) => (d.readyState || d.state) === 'READY')
+    // a URL já pede produção READY; o filtro repete no código (a API não pode trazer uma prévia por engano)
+    const ultima = ((await r.json()).deployments || []).filter((d) => (d.readyState || d.state) === 'READY' && d.target === 'production')
       .sort((x, y) => (y.created || 0) - (x.created || 0))[0];
     const pub = ultima && ultima.meta && ultima.meta.githubCommitSha;
     if (!pub || !/^[0-9a-f]{40}$/.test(pub)) return null;
@@ -74,7 +75,7 @@ async function semNadaAPublicar(sha, raiz, buscar = fetch) {
 const minutos = (ms) => { const s = Math.round(ms / 1000); return s < 60 ? s + ' s' : Math.floor(s / 60) + ' min ' + (s % 60) + ' s'; };
 
 // a publicação automática (pela integração com o GitHub) do commit `sha`: espera ela terminar e diz como foi
-async function conferir(sha) {
+async function conferir(sha, raiz) {
   const url = `https://api.vercel.com/v6/deployments?projectId=${PROJETO.projectId}&teamId=${PROJETO.orgId}&limit=20`;
   const cabecalho = { Authorization: 'Bearer ' + token() };
   const inicio = Date.now(), limite = inicio + 15 * 60000;
@@ -90,7 +91,13 @@ async function conferir(sha) {
       visto = estado; ultimoAviso = Date.now();
     }
     if (estado === 'READY') { console.log(`✔ publicado ${sha.slice(0, 7)} em https://reino-dos-unicornios.vercel.app`); return 0; }
-    if (estado === 'CANCELED') { console.log('✔ ignorado pela Vercel (o jogo não mudou: vercel/ignorar-build.sh); nada a publicar'); return 0; }
+    // CANCELED: o ignorar-build.sh achou o jogo igual; confere de novo pela última de produção antes de dar ok
+    if (estado === 'CANCELED') {
+      const pub = await semNadaAPublicar(sha, raiz);
+      if (pub) { console.log(`✔ ignorado pela Vercel (o jogo é o de ${pub.slice(0, 7)}, já publicado: vercel/ignorar-build.sh); nada a publicar`); return 0; }
+      console.log(`✘ a Vercel cancelou ${sha.slice(0, 7)}, mas não deu para confirmar que o jogo é o da última publicação de produção: publique com npm run vercel`);
+      return 1;
+    }
     if (estado === 'ERROR') { console.log(`✘ a publicação de ${sha.slice(0, 7)} falhou (veja https://${d.url}): publique com npm run vercel`); return 1; }
     // BLOCKED: a Vercel não reconheceu o autor do commit como alguém do time (o e-mail do commit tem que ser da conta
     // lcf2212dev no GitHub: git config user.email deste repositório, o noreply dela)
@@ -119,7 +126,7 @@ function main() {
           + ' vercel/ignorar-build.sh): nada a publicar');
         return;
       }
-      return conferir(sha).then((codigo) => { process.exitCode = codigo; });
+      return conferir(sha, raizRepo).then((codigo) => { process.exitCode = codigo; });
     });
   }
   const commit = execFileSync('git', ['rev-parse', '--short', ref], { cwd: raizRepo, encoding: 'utf8' }).trim();

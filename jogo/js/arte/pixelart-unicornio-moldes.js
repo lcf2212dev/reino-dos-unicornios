@@ -479,7 +479,7 @@
       // colar 1 px para a esquerda, para o planeta laranja e o elo da ponta caberem na borda
       'colar-planetas': { linhas: COLAR_PLANETAS, x: 6, y: 10 } },
     brilhos: [[5, 6], [1, 10], [6, 4]],
-    // ela senta 2 px mais baixa que antes: montada fica com 22 px de altura (ui.md §10.12: 19–22)
+    // ela senta 2 px mais baixa que antes: montada fica com 22 px de altura (arte.md §12: 19–22)
     cavaleira: [2, -4],
     naFrente: [7, 0, 15, 11],
   };
@@ -517,7 +517,7 @@
       'colar-perolas': { linhas: ['LcrcrcL', '.LLLLL.'], x: 7, y: 8 },
       'anel-saturno': { linhas: ['A....A', '.AaaA.'], x: 10, y: 2, bebe: ANEL_BEBE_DIAG } },
     brilhos: [[7, 5], [6, 7], [1, 10]],
-    // 1 px mais alta que o chifre: montada com 19 px (ui.md §10.12: 19–22)
+    // 1 px mais alta que o chifre: montada com 19 px (arte.md §12: 19–22)
     cavaleira: [3, -1],
     enfeitesNaFrente: ['orelha', 'cabeca', 'chifre', 'cauda'],
   };

@@ -25,7 +25,7 @@
     return Number.isInteger(v) && !!d.banco && v >= 0 && v < d.banco.length && d.banco[v] === d.banco[c.certa];
   }
   function preenchida(c, v) { return digitada(c) ? typeof v === 'string' && v.trim() !== '' : v !== null && v !== undefined; }
-  // palavra de 9 letras ou mais quebra na sílaba, com o hífen à vista (ui.md §10.17.2; Reino._ui vem depois, já na tela)
+  // palavra de 9 letras ou mais quebra na sílaba, com o hífen à vista (arte.md §17.2; Reino._ui vem depois, já na tela)
   function hifenizar(t) { return Reino._ui && Reino._ui.hifenizar ? Reino._ui.hifenizar(t) : String(t); }
   // a caixa de digitar da célula: uma linha que cresce com o texto (nada fica escondido de lado)
   function crescer(campo) {
@@ -158,7 +158,7 @@
         var erradas = lista.filter(function (p) { return !celulaCerta(d, d.linhas[p[0]][p[1]], valor[p[0]][p[1]]); });
         return { ok: erradas.length === 0, erradas: erradas };
       },
-      // erro parado (ui.md §10.19.2): as células erradas ficam marcadas e depois se apagam para ela tentar de novo
+      // erro parado (arte.md §19.2): as células erradas ficam marcadas e depois se apagam para ela tentar de novo
       marcarErro: function (res) {
         var erradas = res.erradas || [];
         _d.erroParado(wrap, erradas.map(function (p) { return celulas[p[0] + ',' + p[1]].caixa; }), function () {

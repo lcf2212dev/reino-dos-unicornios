@@ -54,7 +54,7 @@ function checarIngles(s, onde) {
   }
   if (aberto) erros.push(`${onde}: « sem » em "${s}"`);
 }
-// balão (ui.md §10.17.5): fala acima de 44 letras e frase (segmento gravado) acima de 1,5 página (mais de 3 linhas)
+// balão (arte.md §17.5): fala acima de 44 letras e frase (segmento gravado) acima de 1,5 página (mais de 3 linhas)
 const PAGINA = (Reino._npcs && Reino._npcs.LIMITE_PAGINA) || 24, FRASE_MAX = Math.floor(PAGINA * 1.5);
 const letras = (v) => v.replace(/[«»]/g, '').replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}\u{200D}]/gu, '').trim().length;
 function longa(s, onde) {

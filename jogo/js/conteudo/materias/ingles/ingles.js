@@ -8,7 +8,7 @@ Reino.registrarMateria({
   id: 'ingles',
   nome: 'Inglês',
   emoji: '🔤',
-  cor: '#e0a020',   // a cor da matéria (docs/contratos/ui.md §10.22)
+  cor: '#e0a020',   // a cor da matéria (docs/contratos/arte.md §22)
   nomeLivro: 'Livro do Inglês',   // não "das Palavras": confundia com a Casa das Palavras (Português)
   lugar: {
     nome: 'Torre do Relógio',

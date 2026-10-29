@@ -9,7 +9,7 @@
 //      --manter '<regex>'          → protege as worktrees cujo caminho casa (ex.: 'reino-ef-|reino-eficiencia',
 //                                     as frentes de um plano em andamento que ainda não começaram).
 // Arquivos ignorados pelo git somem no remove: node_modules, vercel/public/ e jogo/js/versao.json são gerados;
-// .vozes/ só com venv/temporários vira aviso; qualquer outro ignorado segura a worktree.
+// .vozes/ só com pastas de venv/temporários vira aviso; qualquer outro ignorado segura a worktree.
 if (require.main === module) require('../ajuda').ajuda(__filename);
 const C = require('./comum');
 
@@ -34,7 +34,7 @@ function tamanhoKB(pasta) {
 // ignorados pelo git que somem no `worktree remove`: os regeneráveis não contam; os de .vozes/ que são só o venv
 // do transcritor ou temporários viram aviso; o resto segura a worktree (o mais seguro: não se perde nada)
 const GERADOS = /^(node_modules\/?|vercel\/public\/.*|jogo\/js\/versao\.json)$/;
-const VOZES_DESCARTAVEIS = /^\.vozes\/(\.?venv[^/]*|tmp|temp[^/]*)(\/|$)/;
+const VOZES_DESCARTAVEIS = /^\.vozes\/(\.?venv[^/]*|tmp|temp[^/]*)\//;   // só PASTAS (arquivo solto com esse nome segura)
 function ignorados(pasta) {
   const todos = C.git(pasta, '--no-optional-locks', 'ls-files', '-o', '-i', '--exclude-standard').split('\n').filter(Boolean)
     .filter((f) => !GERADOS.test(f));

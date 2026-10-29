@@ -52,7 +52,7 @@ function pendentes(gerado = GERADO) {
   const arqIndice = path.join(gerado, 'vozes-indice.json');
   const indice = fs.existsSync(arqIndice) ? JSON.parse(fs.readFileSync(arqIndice, 'utf8')) : {};
   return falas.filter((f) => {
-    const v = vozes[f.voz];
+    const v = vozes[f.voz] || {};
     const partes = [v.voz, v.velocidade, v.tom, f.fala].concat(v.efeito ? [v.efeito] : []);
     const h = crypto.createHash('sha1').update(partes.join('|'), 'utf8').digest('hex').slice(0, 16);
     return !fs.existsSync(path.join(gerado, 'vozes-cache', f.voz, h + '.mp3')) || indice[f.chave] !== `${f.voz}/${h}.mp3`;
@@ -139,7 +139,8 @@ function principal() {
   return falhas;
 }
 
-// usado pelo integrar: pendentes(gerado?) → falas do falas.json sem áudio no cache ou fora do índice
+// usado pelo integrar (fluxo/integrar-vozes.js) e pelo orfaos.js: pendentes(gerado?) → falas do falas.json sem
+// áudio no cache ou fora do índice
 module.exports = { pendentes };
 if (require.main === module) try {
   if (tem('--orfaos')) { require('./orfaos').orfaos(GERADO, tem('--aplicar')); process.exit(0); }

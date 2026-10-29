@@ -107,7 +107,7 @@
     return o;
   }
 
-  // alturas pela tabela do docs/contratos/ui.md §10.12: criança 17 px de arte (com contorno), adulto e idoso 21
+  // alturas pela tabela do docs/contratos/arte.md §12: criança 17 px de arte (com contorno), adulto e idoso 21
   // sem chapéu (diferença de 4 px: 1 linha a mais de tronco e 1 de perna no adulto)
   function medidas(o) {
     var crianca = o.idade === 'crianca';

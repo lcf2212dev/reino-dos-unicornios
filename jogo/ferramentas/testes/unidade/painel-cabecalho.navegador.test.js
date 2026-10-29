@@ -1,4 +1,4 @@
-// Cabeçalho padrão do painel (ui.md §10.21, D10-B11): o título numa linha quando cabe; senão 2 linhas (.titulo-quebra),
+// Cabeçalho padrão do painel (arte.md §21, D10-B11): o título numa linha quando cabe; senão 2 linhas (.titulo-quebra),
 // nunca abaixo de --texto-aux; o ícone de 32 px à esquerda, a faixa da matéria com --cor-materia, e as larguras só 560 e 720 (exceções da tela baixa e larga: Foguete, Álbum de ETs e Pet Shop), nos 3 tamanhos e com Letras grandes.
 // Servidor e banco de TESTE (cenario.js); save sintético.
 const { test } = require('node:test');
@@ -11,7 +11,7 @@ const TELAS = [
   'Reino.UI.telaMateria(Reino.materia("historia"))', 'Reino.UI.abrirLivro(Reino.materia("geografia"))',
   'Reino.UI.telaFoguete()', 'Reino.UI.telaAlbumETs()', 'Reino.UI.telaPetShop()',
 ];
-// exceções da largura (§10.21.2): na tela baixa e larga, Foguete e Álbum de ETs a 1180 (sem Letras grandes) e Pet Shop a 1000
+// exceções da largura (arte.md §21.2): na tela baixa e larga, Foguete e Álbum de ETs a 1180 (sem Letras grandes) e Pet Shop a 1000
 function larguraEsperada(abrir, m, grande) {
   var baixaLarga = m.tela >= 1000 && m.altura <= 820;
   if (/telaPetShop/.test(abrir) && m.tela >= 1000) return [1000];

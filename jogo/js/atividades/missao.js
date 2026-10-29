@@ -30,7 +30,7 @@
     var corpo = el('div.missao-corpo');
     var btnConferir = el('button.btn-grande.btn-conferir', { type: 'button', disabled: true }, 'Conferir ✓');
     var rodape = el('footer.missao-rodape.rodape-acao', el('span.sem-relogio', '⏳ Sem relógio. O tempo é todo seu!'), btnConferir);
-    // o rodapé de ação da intro ("Começar") e do resumo ("← Voltar" e "Continuar →"): fixo, fora do que rola (ui.md §10.20)
+    // o rodapé de ação da intro ("Começar") e do resumo ("← Voltar" e "Continuar →"): fixo, fora do que rola (arte.md §20)
     var acao = el('footer.rodape-acao', { hidden: true });
     var retorno = el('div.missao-retorno', { hidden: true });
 
@@ -389,7 +389,7 @@
       var dicaRaro = faltamRaro ? el('p.dica-raro', '💙 Mais ' + (faltamRaro === 1 ? '1 vez' : faltamRaro + ' vezes') + ' nesta sala e o unicórnio raro nasce! Ou faça tudo certo de primeira e com calma.')
         : premios.porPersistencia ? el('p.dica-raro', '💙 O unicórnio raro nasceu pela sua persistência!') : null;
       var btn = el('button.btn-grande.btn-principal', { type: 'button' }, premios.ovos.length ? 'Chocar ' + (premios.ovos.length > 1 ? 'os ovos' : 'o ovo') + ' 🥚' : 'Voltar ' + (materia.lugar.artigo === 'a' ? 'à ' : 'ao ') + materia.lugar.nome);
-      // escala de festa (ui.md §10.16): sala = nível 2, matéria completa = nível 4; uma 🎉 só, a do emoji
+      // escala de festa (arte.md §16): sala = nível 2, matéria completa = nível 4; uma 🎉 só, a do emoji
       // o ícone no tamanho do nível, em escala inteira: 16×3 = 48 px (matéria completa), 16×2 = 32 px (sala)
       var emoji = el('div.fim-emoji', { 'aria-hidden': 'true' }, window.PA.iconeEmoji(premios.materiaCompleta ? '🌈' : '🎉', premios.materiaCompleta ? 3 : 2));
       var titulo = el('h2.titulo-pixel', premios.materiaCompleta ? 'Revisão de ' + materia.nome + ' completa!' : 'Sala concluída!');

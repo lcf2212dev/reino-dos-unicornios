@@ -9,7 +9,7 @@
   var K = R.Desenho.K;
   var S = (R._predios = R._predios || {}).matematica = (R._predios.matematica || {});
   function v(o, k, padrao) { return (o && o.var && o.var[k] !== undefined) ? o.var[k] : padrao; }
-  // cores da Torre: o azul da matéria (ui.md §10.22) e os acentos dos blocos de contar
+  // cores da Torre: o azul da matéria (arte.md §22) e os acentos dos blocos de contar
   var AZUL = '#3f7fe0', AMAR = '#ffc93c', VERM = '#e0433f', VERDE = '#3fbf7f', LARANJA = '#ff8c42', ROSA = '#ff7aa8';
   S.CORES = { azul: AZUL, amarelo: AMAR, vermelho: VERM, verde: VERDE, laranja: LARANJA, rosa: ROSA, lousa: '#2f6b55' };
   var BLOCOS = [VERM, AMAR, AZUL, VERDE, LARANJA, ROSA];
@@ -47,7 +47,7 @@
   // texto centrado em cx
   function textoC(ctx, cx, y, s, cor) { return texto(ctx, Math.round(cx - largura(s) / 2), y, s, cor); }
   S.textoC = textoC;
-  // brilho de 1 px no canto de cima à esquerda (luz de cima, ui.md §10.13)
+  // brilho de 1 px no canto de cima à esquerda (luz de cima, arte.md §13)
   function luz(ctx, x, y, w, cor) { ret(ctx, x, y, w, 1, cor); }
 
   /* ================= PAREDE ================= */

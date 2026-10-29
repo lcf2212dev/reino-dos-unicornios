@@ -1,11 +1,11 @@
-// Cores da moldura (docs/contratos/ui.md §10.8 e §10.19.1): toda cor de CSS sai de um token do :root.
+// Cores da moldura (docs/contratos/arte.md §8 e §19.1): toda cor de CSS sai de um token do :root.
 // Uso: node ferramentas/validar/validar-cores.js [--raiz <pasta jogo>] [--contas]   (roda no npm run validar)
 // CSS (css/*.css, sem os comentários):
 //   - cor literal (#hex, rgb()/hsl()/…, nome de cor como white) só dentro de um bloco `:root { … }`;
 //   - SVG em data: (não aceita var()): o fill/stroke leva o hex de um token do :root de ui-base.css (%23…), nunca
 //     rgb(); o fill-opacity só com um degrau de alfa dos tokens (--brilho, --sombra-*, --veu*: 0,2 0,35 0,4 0,45 0,85);
 //   - grayscale() só no :root (o desenho indisponível usa filter: var(--apagado); nunca no texto);
-//   - opacity só em @keyframes, na transição de véu e flash e nos dois estados parados do §10.19.1 (EXCECOES_OPACITY,
+//   - opacity só em @keyframes, na transição de véu e flash e nos dois estados parados do arte.md §19.1 (EXCECOES_OPACITY,
 //     seletor inteiro: `.fotos-flash .x` não herda a exceção); no escondido-até-o-foco, só 0 ou 1;
 //   - var(--x) sem reserva aponta para uma variável que existe (no CSS ou escrita pelo JS);
 //   - o :root de ui-base.css e Reino.config.paleta (js/nucleo/config.js, o que o canvas usa) dão o mesmo hex.
@@ -16,7 +16,7 @@ const path = require('path');
 const vm = require('vm');
 
 const jogo = path.join(__dirname, '..', '..');
-// ui.md §10.19.1: onde opacity vale fora de @keyframes. Seletor INTEIRO (cada parte da lista, sem espaços a mais) →
+// arte.md §19.1: onde opacity vale fora de @keyframes. Seletor INTEIRO (cada parte da lista, sem espaços a mais) →
 // só estes valores (null = qualquer). Seletor novo com opacity entra aqui só se o contrato deixar
 const EXCECOES_OPACITY = new Map([
   // transição de véu e flash
@@ -123,16 +123,16 @@ function checarCss(nome, texto, tk, definidas, js, erros) {
   const quadros = blocos(t, /@keyframes\s+[\w-]+\s*\{/g);
   // 1. cor literal fora do :root
   for (const m of t.matchAll(/#[0-9a-fA-F]{3,8}\b/g)) {
-    if (!dentro(raizes, m.index)) erros.push(`${nome}:${linhaDe(t, m.index)}: cor literal ${m[0]} fora do :root (use um token: ui.md §10.8)`);
+    if (!dentro(raizes, m.index)) erros.push(`${nome}:${linhaDe(t, m.index)}: cor literal ${m[0]} fora do :root (use um token: arte.md §8)`);
   }
   for (const m of t.matchAll(FUNCAO_COR)) {
-    if (!dentro(raizes, m.index)) erros.push(`${nome}:${linhaDe(t, m.index)}: cor literal ${m[1]}() fora do :root (use um token: ui.md §10.8)`);
+    if (!dentro(raizes, m.index)) erros.push(`${nome}:${linhaDe(t, m.index)}: cor literal ${m[1]}() fora do :root (use um token: arte.md §8)`);
   }
   for (const m of t.matchAll(/([\w-]+)\s*:\s*([^;{}]+)/g)) {
     if (m[1].startsWith('--') || dentro(raizes, m.index)) continue;
     const valor = m[2].replace(/(["'])[^"']*\1/g, ' ').replace(/var\([^)]*\)/g, ' ');
     for (const w of valor.toLowerCase().match(/[a-z]+(-[a-z]+)*/g) || []) {
-      if (NOMES_COR.has(w)) erros.push(`${nome}:${linhaDe(t, m.index)}: cor por nome "${w}" em ${m[1]} (use um token: ui.md §10.8)`);
+      if (NOMES_COR.has(w)) erros.push(`${nome}:${linhaDe(t, m.index)}: cor por nome "${w}" em ${m[1]} (use um token: arte.md §8)`);
     }
   }
   // 2. SVG em data:: hex de token, nada de rgb(); o alfa (fill-opacity…) só nos degraus dos tokens de alfa
@@ -140,19 +140,19 @@ function checarCss(nome, texto, tk, definidas, js, erros) {
     if (!/^data:/.test(u.texto)) continue;
     const svg = decodeURIComponent(u.texto.replace(/^data:[^,]*,/, '').replace(/%(?![0-9a-fA-F]{2})/g, '%25'));
     for (const m of svg.matchAll(/(fill-opacity|stroke-opacity|opacity|stop-opacity)\s*=\s*['"]?\s*([\d.]+)/g)) {
-      if (!tk.alfas.has(Number(m[2]))) erros.push(`${nome}:${linhaDe(t0, u.off)}: SVG em data: com ${m[1]}="${m[2]}", fora dos degraus de alfa do :root (${[...tk.alfas].sort().join(', ')}: ui.md §10.8)`);
+      if (!tk.alfas.has(Number(m[2]))) erros.push(`${nome}:${linhaDe(t0, u.off)}: SVG em data: com ${m[1]}="${m[2]}", fora dos degraus de alfa do :root (${[...tk.alfas].sort().join(', ')}: arte.md §8)`);
     }
     for (const m of svg.matchAll(/(fill|stroke|stop-color|color)\s*=\s*['"]?\s*([^'" >]+)/g)) {
       const v = m[2].trim();
       if (/^(none|transparent|currentColor)$/i.test(v)) continue;
       if (/^#[0-9a-f]{3,8}$/i.test(v)) {
-        if (!tk.permitidos.has(hex6(v))) erros.push(`${nome}:${linhaDe(t0, u.off)}: SVG em data: com ${m[1]}="${v}", que não é hex de um token do :root (ui.md §10.8)`);
+        if (!tk.permitidos.has(hex6(v))) erros.push(`${nome}:${linhaDe(t0, u.off)}: SVG em data: com ${m[1]}="${v}", que não é hex de um token do :root (arte.md §8)`);
       } else erros.push(`${nome}:${linhaDe(t0, u.off)}: SVG em data: com ${m[1]}="${v}" (use o hex de um token; o alfa vai no ${m[1]}-opacity)`);
     }
   }
   // 3. grayscale só no :root (--apagado)
   for (const m of t.matchAll(/\bgrayscale\(/g)) {
-    if (!dentro(raizes, m.index)) erros.push(`${nome}:${linhaDe(t, m.index)}: grayscale() fora do :root (desenho indisponível: filter: var(--apagado); texto nunca: ui.md §10.19.1)`);
+    if (!dentro(raizes, m.index)) erros.push(`${nome}:${linhaDe(t, m.index)}: grayscale() fora do :root (desenho indisponível: filter: var(--apagado); texto nunca: arte.md §19.1)`);
   }
   // 4. opacity só em movimento e nas exceções escritas
   for (const m of t.matchAll(/(^|[;{\s])opacity\s*:\s*([^;}]+)/g)) {
@@ -162,7 +162,7 @@ function checarCss(nome, texto, tk, definidas, js, erros) {
     const valor = m[2].replace(/!important/, '').trim();
     const partes = sel.split(',').map((x) => x.trim().replace(/\s+/g, ' '));
     if (partes.every((x) => EXCECOES_OPACITY.has(x) && (!EXCECOES_OPACITY.get(x) || EXCECOES_OPACITY.get(x).includes(valor)))) continue;
-    erros.push(`${nome}:${linhaDe(t, i)}: opacity: ${valor} em "${sel}" (estado parado: o indisponível do ui.md §10.19.1, sem opacity)`);
+    erros.push(`${nome}:${linhaDe(t, i)}: opacity: ${valor} em "${sel}" (estado parado: o indisponível do arte.md §19.1, sem opacity)`);
   }
   // 5. var(--x) sem reserva: a variável existe
   for (const m of t.matchAll(/var\(\s*(--[\w-]+)\s*\)/g)) {
@@ -183,7 +183,7 @@ function validar(raiz = jogo) {
   // 6. :root == Reino.config.paleta
   let pal;
   try { pal = paletaDoJs(raiz); } catch (e) { erros.push(`js/nucleo/config.js: não carregou no Node (${e.message})`); }
-  if (!pal) erros.push('js/nucleo/config.js: falta Reino.config.paleta (espelho do :root: ui.md §10.8)');
+  if (!pal) erros.push('js/nucleo/config.js: falta Reino.config.paleta (espelho do :root: arte.md §8)');
   else {
     const par = (onde, v, token) => {
       if (!tk.hex[token]) erros.push(`css/ui-base.css: falta o token ${token} (Reino.config.${onde})`);
@@ -198,7 +198,7 @@ function validar(raiz = jogo) {
   return erros;
 }
 
-// as contas do inventário (pedidos/2026-09-29-tv-2a-inventario.md): quantas cores literais sobraram fora do :root
+// as contas do inventário (arquivo/pedidos/2026-09-29-tv-2a-inventario.md): quantas cores literais sobraram fora do :root
 function contas(raiz = jogo) {
   const css = path.join(raiz, 'css');
   const tk = tokens(raiz);
@@ -228,7 +228,7 @@ if (require.main === module) {
   if (process.argv.includes('--contas')) { console.log(JSON.stringify(contas(raiz), null, 1)); process.exit(0); }
   const erros = validar(raiz);
   erros.forEach((e) => console.log('✘ ' + e));
-  if (erros.length) { console.log(`✘ ${erros.length} ponto(s) de cor fora da paleta (docs/contratos/ui.md §10.8 e §10.19.1)`); process.exit(1); }
+  if (erros.length) { console.log(`✘ ${erros.length} ponto(s) de cor fora da paleta (docs/contratos/arte.md §8 e §19.1)`); process.exit(1); }
   console.log('✔ cores só de tokens: literal só no :root e em SVG com hex de token, opacity só em movimento, :root = Reino.config.paleta');
 }
 

@@ -1,5 +1,5 @@
 /* "Quem vai jogar?", pedir a senha, criar jogador e "Guardando..." (js/ui/jogadores.js).
-   Fundo: tela escura (ui.md §10.8.3): céu da noite em 2 faixas (--noite, --noite-2) com estrelinhas em CSS (--papel e
+   Fundo: tela escura (arte.md §8.3): céu da noite em 2 faixas (--noite, --noite-2) com estrelinhas em CSS (--papel e
    --ouro-claro); painel central creme com borda em degraus de pixel. */
 .tela-jogadores {
   background:
@@ -96,9 +96,9 @@ body.sem-animacao .guardando-pontos i { animation: none; }
   .tela-jogadores .painel-topo { padding-top: 8px; padding-bottom: 8px; }
 }
 
-/* o nome até 12 letras (NOME_MAX) cabe inteiro numa linha (ui.md §10.17): 16 px e cartão de 212 px (12 letras de 16 px
+/* o nome até 12 letras (NOME_MAX) cabe inteiro numa linha (arte.md §17): 16 px e cartão de 212 px (12 letras de 16 px
    e a folga); no celular, 2 colunas e 12 px. O login vai a 20 letras: acima de 12, quebra na sílaba, com o hífen do
-   hifenizar (jogadores.js), nunca vaza. Nome próprio não cresce com "Letras grandes" (§10.17.3): volta um degrau */
+   hifenizar (jogadores.js), nunca vaza. Nome próprio não cresce com "Letras grandes" (arte.md §17.3): volta um degrau */
 .jogadores-nome { font-size: var(--texto); max-width: 100%; }
 .letras-grandes .jogadores-nome { font-size: var(--texto-aux); }
 .jogadores-grade { grid-template-columns: repeat(auto-fit, minmax(212px, 240px)); }
@@ -114,7 +114,7 @@ body.sem-animacao .guardando-pontos i { animation: none; }
 /* D8B-25: ícone e rótulo das abas numa linha só (a aba cresce com o rótulo), e cartões maiores com até 2 jogadores */
 .jogadores-aba { flex: 0 1 auto; max-width: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap; padding-left: 16px; padding-right: 16px; }
 @media (max-width: 480px) { .jogadores-aba { padding-left: 8px; padding-right: 8px; gap: 4px; } }
-/* notebook (duas colunas) com "Letras grandes": o rótulo das abas desce um degrau para caber na coluna (§10.17.3) */
+/* notebook (duas colunas) com "Letras grandes": o rótulo das abas desce um degrau para caber na coluna (arte.md §17.3) */
 @media (min-width: 760px) and (max-height: 900px) { .letras-grandes .jogadores-aba { font-size: var(--texto-aux); } }
 .jogadores-grade:not(:has(> :nth-child(3))) .jogadores-cartao { min-height: 150px; }
 /* notebook (duas colunas): a coluna dos cartões não fica vazia; a arte dobra (zoom inteiro, pixel nítido) */

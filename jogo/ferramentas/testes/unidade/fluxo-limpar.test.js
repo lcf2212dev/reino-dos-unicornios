@@ -28,6 +28,7 @@ test('limpar: lista, e o --aplicar só tira o que é seguro', async () => {
   R.git(frente, 'add', '-A'); R.git(frente, 'commit', '-q', '-m', 'à frente de novo');
   R.escrever('.vozes/venv/bin/python', 'x', limpa);                         // só o venv: aviso, mas sai
   const comIgnorado = R.frente('ignorado'); R.escrever('segredo.txt', 's', comIgnorado);
+  R.escrever('.vozes/tmp', 'arquivo solto, não pasta', comIgnorado);              // só pasta tmp é descartável
   const protegida = R.frente('ef-plano');                                    // limpa, mas protegida pelo --manter
   const proc = spawn('sleep', ['60'], { cwd: viva, stdio: 'ignore' });
   try {
@@ -41,7 +42,7 @@ test('limpar: lista, e o --aplicar só tira o que é seguro', async () => {
     assert.match(l.texto, /reino-frente.*1 commit\(s\) fora da main/);
     assert.match(l.texto, new RegExp(`reino-viva.*processo vivo \\(PID ${proc.pid}`));
     assert.match(l.texto, /reino-limpa.*⚠ some com ela: \.vozes\/venv/);
-    assert.match(l.texto, /reino-ignorado.*arquivos ignorados segredo\.txt/);
+    assert.match(l.texto, /reino-ignorado.*arquivos ignorados \.vozes\/tmp, segredo\.txt/);
     assert.match(l.texto, /reino-ef-plano.*protegida pelo --manter/);
     assert.match(l.texto, /feat\/aberta: 1 commit\(s\) à frente/);
 
@@ -54,7 +55,8 @@ test('limpar: lista, e o --aplicar só tira o que é seguro', async () => {
     assert.ok(fs.existsSync(path.join(comIgnorado, 'segredo.txt')));
     const branches = R.git(R.principal, 'branch', '--format=%(refname:short)').split('\n');
     // a branch da prunable conta como livre já na listagem (o prune vem antes)
-    assert.match(l.texto, /contidas na main: \d+ \(\d+ podem sair/);
+    // contidas: limpa, suja, viva, sumiu, mesclada, ignorado, ef-plano; saem a limpa, a sumiu e a mesclada
+    assert.match(l.texto, /contidas na main: 7 \(3 podem sair/);
     ['feat/limpa', 'feat/sumiu', 'feat/mesclada'].forEach((b) => assert.ok(!branches.includes(b), b));
     ['main', 'feat/suja', 'feat/frente', 'feat/viva', 'feat/aberta', 'feat/ignorado', 'feat/ef-plano'].forEach((b) => assert.ok(branches.includes(b), b));
     assert.match(a.texto, /branch feat\/suja ficou: em uso/);

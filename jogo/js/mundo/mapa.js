@@ -55,7 +55,7 @@
     Mapa.LUGARES_FIXOS.forEach(function (f) { if (!f.caminho) lugares.push(fixo(f)); });
     // matéria com lugar.dentro mora num prédio que já existe: nada no mapa (entra no fim, em I.lugaresDentro)
     // e não conta na vez das clareiras, para as outras não mudarem de lugar
-    // o telhado é a cor da matéria (docs/contratos/ui.md §10.22); parede e detalhe vêm do lugar
+    // o telhado é a cor da matéria (docs/contratos/arte.md §22); parede e detalhe vêm do lugar
     function coresDe(m) { return Object.assign({}, m.lugar.cores, m.cor ? { telhado: m.cor } : {}); }
     var porCima = [], k = 0, deDentro = [];
     materias.forEach(function (m) {

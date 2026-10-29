@@ -1,4 +1,4 @@
-// Testes de unidade: o validador de pixel art na moldura (ferramentas/validar/validar-pixel.js; docs/contratos/ui.md §10).
+// Testes de unidade: o validador de pixel art na moldura (ferramentas/validar/validar-pixel.js; docs/contratos/arte.md).
 // Rodar (em jogo/): node --test ferramentas/testes/unidade/validar-pixel.test.js
 const { test } = require('node:test');
 const assert = require('assert');

@@ -23,7 +23,7 @@
   var D = window.Reino.Desenho;
   var ret = D.ret, circulo = D.circulo, elipse = D.elipse, triangulo = D.triangulo, K = C.contorno;
 
-  // sombra de chão (ui.md §10.13): elipse de pixel, 2 níveis (0,15 e 0,25), 3 px para fora do pé
+  // sombra de chão (arte.md §13): elipse de pixel, 2 níveis (0,15 e 0,25), 3 px para fora do pé
   function sombraChao(ctx, cx, y, meia) {
     ret(ctx, cx - meia + 2, y - 1, (meia - 2) * 2, 1, 'rgba(58,36,70,0.15)');
     ret(ctx, cx - meia, y, meia * 2, 1, 'rgba(58,36,70,0.15)');

@@ -1,4 +1,4 @@
-// Escala de festa (ui.md §10.16; UI.festa em ui/pecas.js): o nível de cada tela de fim (título, confete, pulinho) com
+// Escala de festa (arte.md §16; UI.festa em ui/pecas.js): o nível de cada tela de fim (título, confete, pulinho) com
 // as animações ligadas, e só o título (e o som) com elas desligadas. Molde do fim-sala.navegador.test.js: o desafio é
 // trocado por um de mentira que já sai certo. Servidor e banco de TESTE novos por cenário; saves 100% sintéticos.
 const { test } = require('node:test');

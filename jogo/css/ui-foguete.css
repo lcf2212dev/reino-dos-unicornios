@@ -17,7 +17,7 @@
   background: var(--papel-2); font-size: var(--texto);
 }
 .foguete-gota > * { max-width: 80%; height: auto; }
-.foguete-gota:not(.cheia) > * { filter: var(--apagado); }   /* gota vazia: o desenho apaga (ui.md §10.19.1) */
+.foguete-gota:not(.cheia) > * { filter: var(--apagado); }   /* gota vazia: o desenho apaga (arte.md §19.1) */
 .foguete-gota.cheia { background: var(--ceu); }
 
 .foguete-destinos ul, .foguete-passaporte ul { list-style: none; margin: 0; padding: 0; }
@@ -67,7 +67,7 @@
 .foguete-album { width: 100%; margin-top: 10px; }
 
 @media (max-width: 480px), (max-height: 500px) {
-  /* 10 gotas numa linha não cabem o ícone de 32 px (2 px CSS por pixel, §10.10.5): duas linhas de 5 */
+  /* 10 gotas numa linha não cabem o ícone de 32 px (2 px CSS por pixel, arte.md §10.5): duas linhas de 5 */
   .foguete-gotas { gap: 2px; grid-template-columns: repeat(5, minmax(0, 1fr)); }
   .foguete-gota { border-radius: var(--canto); font-size: var(--texto-aux); }
   .foguete-balao { padding: 8px 10px; }

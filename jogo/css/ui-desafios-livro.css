@@ -15,7 +15,7 @@ textarea.campo-texto { display: block; resize: vertical; }
 .campo-texto[data-maiusculas="sim"] { text-transform: uppercase; }
 .campo-texto[readonly] { cursor: default; }
 .tudo-certo .campo-texto { background: var(--certo-fundo); border-color: var(--certo); }
-/* erro de item parado (ui.md §10.19.2): a caixa errada fica marcada até ela mexer de novo (o texto continua) */
+/* erro de item parado (arte.md §19.2): a caixa errada fica marcada até ela mexer de novo (o texto continua) */
 .campo-texto.item-erro.item-erro { background: var(--erro-fundo); border-color: var(--erro); }
 /* 12 letras com acento: uma fileira a partir de 640 px, duas de 6 no celular; cada tecla com 44 px, o alvo do dedo */
 .acentos { display: grid; grid-template-columns: repeat(12, minmax(44px, 1fr)); gap: 6px; max-width: 624px; }
@@ -80,7 +80,7 @@ textarea.campo-texto { display: block; resize: vertical; }
 /* pintar: o fundo na cor da marca; o texto em --branco quando a cor é escura (marcar.js escolhe pelo contraste) */
 .marcar-pintar .marcar-token[aria-pressed="true"]::before { background: var(--marca-cor, var(--roxo-texto)); border-color: var(--marca-cor, var(--roxo-texto)); }
 .marcar-pintar:not(.marcar-com-cores) .marcar-token[aria-pressed="true"], .marcar-pintar .marcar-token.marca-escura[aria-pressed="true"] { color: var(--branco); }
-/* marca errada parada (ui.md §10.19.2), por cima de qualquer marca */
+/* marca errada parada (arte.md §19.2), por cima de qualquer marca */
 .marcar-token.item-erro.item-erro { color: var(--tinta); }
 .marcar-token.item-erro.item-erro::before { background: var(--erro-fundo); border-color: var(--erro); }
 .tudo-certo .marcar-texto { background: var(--certo-fundo); }

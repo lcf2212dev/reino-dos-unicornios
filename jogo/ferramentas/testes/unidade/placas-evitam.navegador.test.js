@@ -1,6 +1,6 @@
 // Teste de NAVEGADOR (Chromium, servidor de TESTE, save sintético, congelado): a placa do cômodo (motor/
 // interiores-placas.js, interiores.md §6.4 e §6.5) nunca fica embaixo do balão do NPC (#claude-balao, com o
-// retrato e a plaquinha do nome), fica a 8 px CSS de qualquer retângulo do HUD (ui.md §10.18.2), não cobre objeto
+// retrato e a plaquinha do nome), fica a 8 px CSS de qualquer retângulo do HUD (arte.md §18.2), não cobre objeto
 // pendurado na parede nem móvel de chão alto que sobe nela, não é desenhada translúcida e tem fundo próprio (--laranja-claro, não o --papel dos chips),
 // não invade outro cômodo (cruza no máximo um) e a do cômodo da Mariana nunca some (D12a-01).
 // Cenas: as do D12c-02 e D12c-03 (conversa, tablet), as do D2A-08 (cômodo, notebook) e o corredor da escola com a

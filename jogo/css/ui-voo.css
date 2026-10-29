@@ -38,7 +38,7 @@
 /* celular (e deitado baixo): o rótulo das faixas no degrau de baixo (era 2,4vmin, 12,8 px no celular) */
 @media (max-width: 480px), (max-height: 500px) { .voo-opcao { font-size: var(--texto-aux); } }
 .voo-opcao-certa { outline: 4px solid var(--ouro-claro); outline-offset: -4px; }
-/* erro de item (ui.md §10.19.2): riscada e com a moldura --erro, sem transparência */
+/* erro de item (arte.md §19.2): riscada e com a moldura --erro, sem transparência */
 .voo-opcao-errada { outline: 4px solid var(--erro); outline-offset: -4px; text-decoration: line-through; text-decoration-thickness: 4px; }
 .voo-cena {
   display: block; image-rendering: pixelated; image-rendering: crisp-edges;

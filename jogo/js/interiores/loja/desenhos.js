@@ -24,7 +24,7 @@
   // 'bloqueado' | 'aVenda' | 'ganho' | 'comprado' (derivado do save, como na tela da Loja)
   function estadoPremio(a, P) { try { return R.LojaItens.estadoPremio(a, P); } catch (e) { return 'bloqueado'; } }
   function icone(chave) { return (window.PA && PA.iconeDesenho) ? PA.iconeDesenho(chave) : null; }
-  // desenha um canvas cabendo numa caixa, sempre a 1× (nada de escala fracionária, ui.md §10): o que não
+  // desenha um canvas cabendo numa caixa, sempre a 1× (nada de escala fracionária, arte.md): o que não
   // cabe vira uma miniatura própria (loja/desenhos.js), com a base encostada embaixo.
   // Também usado pelo Estábulo, pelo Baú e pelo cartaz do prédio padrão (I.caberNitido).
   var MINIS = typeof WeakMap !== 'undefined' ? new WeakMap() : null, KRGB = '58,36,70';

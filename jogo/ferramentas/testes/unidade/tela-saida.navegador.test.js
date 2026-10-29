@@ -1,4 +1,4 @@
-// Saída de tela (ui/base.js, UI.fecharTela; docs/contratos/ui.md §2 item 7 e §10.15.8): com animação, a tela sai
+// Saída de tela (ui/base.js, UI.fecharTela; docs/contratos/ui.md §2 item 7 e arte.md §15.8): com animação, a tela sai
 // da pilha na hora e espera --rapido em #telas-saindo (sem toque nem foco); sem animação, some na hora.
 // Servidor e banco de TESTE novos por cenário (cenario.js); save sintético.
 const { test } = require('node:test');

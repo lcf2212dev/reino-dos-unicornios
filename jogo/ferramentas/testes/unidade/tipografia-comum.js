@@ -20,7 +20,7 @@ function medir() {
     var cs = getComputedStyle(e); if (cs.visibility === 'hidden' || cs.display === 'none') return;
     if (e.tagName === 'CANVAS') {
       if (e.id === 'reino' || !e.width || /voo|joystick/.test(quem(e))) return;
-      // o desenho é a caixa de conteúdo: a moldura (borda e respiro do retrato, §10.10.6) não entra na conta
+      // o desenho é a caixa de conteúdo: a moldura (borda e respiro do retrato, arte.md §10.6) não entra na conta
       var w = b.width - ['borderLeftWidth', 'borderRightWidth', 'paddingLeft', 'paddingRight'].reduce(function (s, k) { return s + parseFloat(cs[k]); }, 0);
       r.n++; por(r.px, String(Math.round(w / e.width * 100) / 100), quem(e)); return;
     }

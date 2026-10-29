@@ -77,7 +77,7 @@
 
   /* Título do topo da sala/prova. Em toda matéria, o ícone fica preso à primeira palavra (nunca sozinho numa
      linha, como no "Expedição Antártida" do celular com letras grandes). Se o título passa de 2 linhas, a letra desce
-     um degrau da escala (ui.md §10.9.8): o título nasce em --texto (16; 24 com "Letras grandes") e desce para
+     um degrau da escala (arte.md §9.8): o título nasce em --texto (16; 24 com "Letras grandes") e desce para
      --texto-aux (12; 16), por classe (css/ui-missao.css), nunca por fator; fica o degrau com menos linhas.
      O encolher é só nas matérias desta lista: História e Inglês têm o mesmo aperto, mas as telas delas ficam como estão. */
   D.MATERIAS_TITULO_AJUSTAVEL = ['portugues'];

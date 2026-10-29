@@ -1,4 +1,4 @@
-// Área útil (ui.md §10.18, ui/hud.js): as variáveis do :root batem com os retângulos do HUD e do dock, nos 3 tamanhos
+// Área útil (arte.md §18, ui/hud.js): as variáveis do :root batem com os retângulos do HUD e do dock, nos 3 tamanhos
 // e com Letras grandes; a câmera (motor/camera.js) só as lê. Servidor e banco de TESTE (cenario.js); save sintético.
 const { test } = require('node:test');
 const assert = require('assert');

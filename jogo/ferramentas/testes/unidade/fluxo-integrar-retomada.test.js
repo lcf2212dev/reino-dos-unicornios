@@ -70,7 +70,7 @@ test('integrar: colisão diferente resolvida como a skill manda → --continuar 
   const integ = r1.pasta;
   fs.copyFileSync(path.join(R.principal, 'matérias/história/foto 1.txt'), path.join(integ, 'matérias/história/foto 1.txt'));
   R.git(integ, 'add', '--', 'matérias/história/foto 1.txt');
-  const r2 = await rodar(R, ['--continuar', '--nome', nome, '--commit', '--sem-e2e', '--merge']);
+  const r2 = await rodar(R, ['--continuar', '--nome', nome, '--commit', '--merge']);   // o --merge exige o e2e
   assert.strictEqual(r2.codigo, 0, r2.texto);
   assert.strictEqual(R.ler('matérias/história/foto 1.txt'), 'print NOVO');
   assert.match(C.git(R.principal, 'log', '-1', '--format=%s'), /resolução da integração/);

@@ -69,16 +69,16 @@
       P.salvar();
       Reino.Som.tocar('estrela');
       depois(true); U.emit(EV.MAPA_MUDOU);
-      // compra: nível 1, sem confete, brilho de 3 quadros no cartão comprado (ui.md §10.16)
+      // compra: nível 1, sem confete, brilho de 3 quadros no cartão comprado (arte.md §16)
       UI.festa(1, { som: false, item: document.querySelector('.item-loja[data-item="' + item.id + '"]') });
     });
   }
   // caro: ainda não comprado e com preço acima do saldo. A carta fica no estado indisponível (.indisponivel,
-  // ui.md §10.19.1, com aria-disabled e o motivo no aria-label) e 🔒 no preço antes do toque; segue focável e
+  // arte.md §19.1, com aria-disabled e o motivo no aria-label) e 🔒 no preço antes do toque; segue focável e
   // tocar continua dizendo quantas estrelas faltam
   function caro(item, tem) { return !tem && P.estrelas() < item.preco; }
   function faltam(item) { var f = item.preco - P.estrelas(); return f > 0 ? (f === 1 ? ', falta 1 estrela' : ', faltam ' + f + ' estrelas') : ''; }
-  var ICONE_CARTA = 64;   // D8A-17: o desenho na carta a 64 px (destaque, ui.md §10.10.5), acima do nome
+  var ICONE_CARTA = 64;   // D8A-17: o desenho na carta a 64 px (destaque, arte.md §10.5), acima do nome
   var avisouPremios = false;   // a regra nova dos prêmios é falada uma vez por sessão
   // a vitrine da tela, por encaixe (com 68 enfeites, uma grade só ficava comprida demais); em cada grupo,
   // do mais barato ao mais caro (empate: a ordem da lista). Capa, rastro e asas vão juntos no fim

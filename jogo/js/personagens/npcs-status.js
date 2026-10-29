@@ -163,7 +163,7 @@
     if (window.Jogador && window.Jogador.sombra) window.Jogador.sombra(pintor, x, yPes, 5);
     var spr = gerar(npc.sprite, quadro);
     pintor.sprite(spr, x, yPes + 1 + dy);
-    // ícone de status acima da cabeça, em px da tela, na densidade da interface (ui.md §10.11): 2 px CSS por px
+    // ícone de status acima da cabeça, em px da tela, na densidade da interface (arte.md §11): 2 px CSS por px
     // do balãozinho (s = 2 × dpr px de aparelho), 46 px CSS de altura nos 3 tamanhos, menor que o NPC
     var st = statusDoQuadro(npc);
     var b = bolha(st.icone), ctx = pintor.ctx;

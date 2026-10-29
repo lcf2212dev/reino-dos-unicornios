@@ -249,7 +249,7 @@ async function responderDaVez(c, esperado, modo, op = {}) {
     rel.errado = await conferir(c, modo);
     if (rel.errado !== 'quase') rel.problemas.push('a errada deu: ' + rel.errado);
     if (!(await botaoDoRetorno(c, 'Tentar de novo', modo))) rel.problemas.push('sem o "Tentar de novo"');
-    await c.avancar(1100);   // a marca do erro sai e o que estava errado se apaga (ui.md §10.19.2)
+    await c.avancar(1100);   // a marca do erro sai e o que estava errado se apaga (arte.md §19.2)
   }
   await levarA(c, r, r.certa, modo);
   const vc = await c.js('(function (a) { return { nota: Reino.Desafios.pontuar(a.d, a.ctrl.valor()), mesmo: a.ctrl.__marca === 1, pronto: a.ctrl.pronto() }; })(window.__q.atual)');

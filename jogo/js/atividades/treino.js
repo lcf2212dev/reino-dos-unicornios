@@ -76,7 +76,7 @@
       var texto = el('p.respira-texto', 'Vamos respirar fundo antes da prova?');
       var contagem = el('p.respira-conta', '');
       var pular = el('button.btn-grande.btn-secundario', { type: 'button', hidden: !podePular }, 'Já respirei, pular');
-      var comecar = el('button.btn-grande.btn-principal', { type: 'button' }, 'Começar a ', el('span', { style: 'white-space:nowrap' }, 'respirar', desenhoBalao(2, 'balao-botao')));   // o 🎈 não fica sozinho na linha (D6-24, ui.md §10.17)
+      var comecar = el('button.btn-grande.btn-principal', { type: 'button' }, 'Começar a ', el('span', { style: 'white-space:nowrap' }, 'respirar', desenhoBalao(2, 'balao-botao')));   // o 🎈 não fica sozinho na linha (D6-24, arte.md §17)
       var titulo = el('h2.titulo-pixel', 'Ritual da Calma');
       var ritual = el('div.ritual', titulo, balao, texto, contagem, el('div.intro-botoes', comecar, pular));
       cont.appendChild(ritual);
@@ -133,7 +133,7 @@
     var sair = el('button.btn-icone.btn-sair', { type: 'button', 'aria-label': 'Sair do treino' }, '✕');
     var titulo = el('div.missao-titulo', el('span', '🥇 Treino da Medalha: ' + materia.nome));
     var corpo = el('div.missao-corpo');
-    var rodape = el('footer.missao-rodape.prova-rodape.rodape-acao', { hidden: true });   // rodapé de ação (ui.md §10.20)
+    var rodape = el('footer.missao-rodape.prova-rodape.rodape-acao', { hidden: true });   // rodapé de ação (arte.md §20)
     // os pontos de progresso, como na prova (D6-23): um por questão, a respondida laranja e a atual dourada
     var pontos = el('div.missao-pontos', { 'aria-hidden': 'true' });
     function desenharPontos() {
@@ -194,7 +194,7 @@
       corpo.appendChild(ctrl.card);
       if (modoRevisao) corpo.appendChild(el('p.dica-revisao', 'Leia de novo com calma. Se tiver certeza, toque em "Revisei ✓". Se quiser, pode trocar a resposta.'));
 
-      // no celular, só a seta no "Anterior" e "Revisão 👀" (o .rotulo-longo some e o .rotulo-curto aparece: ui.md §10.20)
+      // no celular, só a seta no "Anterior" e "Revisão 👀" (o .rotulo-longo some e o .rotulo-curto aparece: arte.md §20)
       var ant = el('button.btn-grande.btn-secundario.so-seta', { type: 'button', 'aria-label': 'Anterior' }, '←', el('span.rotulo-longo', ' Anterior'));
       var prox = el('button.btn-grande.btn-principal', { type: 'button' });
       function atualizarBotoes() {
@@ -331,7 +331,7 @@
         erradas.children.length ? el('h3', 'Vamos aprender com as que faltaram:') : null,
         erradas.children.length ? erradas : null,
         voltar));
-      Reino.UI.festa(2, { titulo: titulo, emoji: medalha, som: false });   // treino: nível 2 (ui.md §10.16)
+      Reino.UI.festa(2, { titulo: titulo, emoji: medalha, som: false });   // treino: nível 2 (arte.md §16)
       Reino.UI.esperarFala([voltar, sair], [info[1], Reino.Falas.acertouDeTotal(acertos, questoes.length), info[2]], { voz: 'claude' });
       // teclado ("Entregar a prova"): o botão sumiu e o foco ia para o body; vai para o botão do fim
       // (ou para o título, do começo da tela, se o botão ainda não aparece: o Tab leva a ele).

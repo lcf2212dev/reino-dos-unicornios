@@ -2,7 +2,7 @@
    Contrato: docs/contratos/quimica.md §2 e §9. Acrescenta ao interno Reino._quimicaSeparar (criado na parte 1):
    W, H (o palco, em pixels de arte), desenhar(ctx, mistura, ferramenta, t) e iconeFerramenta(id).
    ferramenta = a certa que está separando (t de 0 a 1; 1 = o quadro final); sem ela, só a mistura parada.
-   Pixel art (ui.md §10): retângulos e os círculos de pixel do Reino.Desenho; sem arc, degradê nem blur. */
+   Pixel art (arte.md): retângulos e os círculos de pixel do Reino.Desenho; sem arc, degradê nem blur. */
 (function () {
   var R = window.Reino, D = R.Desenho, K = D.K, C = D.C;
   var ret = D.ret, circulo = D.circulo, elipse = D.elipse, clarear = D.clarear, escurecer = D.escurecer, sorte = D.sorte;

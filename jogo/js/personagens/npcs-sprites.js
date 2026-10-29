@@ -166,7 +166,7 @@
 
   N.sprite = function (npc, quadro) { return gerar(npc.sprite, quadro); };
 
-  /* retrato do balão (ui.md §10.10.6): de 1 px acima do topo (chapéu e antena inteiros) até o peito; se a cabeça (do
+  /* retrato do balão (arte.md §10.6): de 1 px acima do topo (chapéu e antena inteiros) até o peito; se a cabeça (do
      topo ao queixo, 3 linhas acima do busto) passar de 80 % da altura, entram mais linhas de ombro. Largura: 19
      colunas no meio do sprite (a cabeça com 1 px de margem dos lados); o que tiver desenho mais para fora nessas
      linhas (orelha, anel de Saturno) alarga o quadro até ele + 1 px de margem, sem cortar. O recorte sai do quadro 0,

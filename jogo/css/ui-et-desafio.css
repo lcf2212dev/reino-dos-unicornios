@@ -9,7 +9,7 @@
   background: var(--papel-quente);
 }
 .et-placar { font-size: var(--texto-aux); margin-top: 4px; }
-@media (max-width: 480px), (max-height: 500px) { .et-placar { white-space: nowrap; } }   /* o placar numa linha só (D6-21), no tamanho de rótulo auxiliar (ui.md §10.9.1) */
+@media (max-width: 480px), (max-height: 500px) { .et-placar { white-space: nowrap; } }   /* o placar numa linha só (D6-21), no tamanho de rótulo auxiliar (arte.md §9.1) */
 .et-retorno { margin-top: 10px; padding: 8px 12px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); }
 .et-retorno h3 { margin: 0 0 4px; }
 .et-retorno p + p { margin-top: 6px; }

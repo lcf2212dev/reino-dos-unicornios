@@ -134,6 +134,22 @@ test('derrubado (SIGTERM) enquanto espera: diz que esperava vaga e quem ocupa', 
   assert.deepStrictEqual(fs.readdirSync(pasta), [], 'sobrou .tmp do derrubado');
 });
 
+test('SIGINT e SIGHUP enquanto espera: sai com 130/129 e não sobra .tmp', async () => {
+  for (const [sinal, codigo] of [['SIGINT', 130], ['SIGHUP', 129]]) {
+    const pasta = novaPasta();
+    const dono = disputar(pasta, 'dono', 1500);
+    await espera(300);
+    const b = disputar(pasta, 'B', 0);
+    await espera(400);
+    assert.ok(fs.readdirSync(pasta).some((f) => f.startsWith('.tmp-')), 'o B espera com o .tmp');
+    b.p.kill(sinal);
+    const rb = await b.fim;
+    assert.strictEqual(rb.c, codigo, sinal + ': ' + rb.saida);
+    assert.strictEqual((await dono.fim).c, 0);
+    assert.deepStrictEqual(fs.readdirSync(pasta), [], `sobrou .tmp do ${sinal}`);
+  }
+});
+
 test('derrubado segurando vaga (e outra aba esperando): não culpa a espera, e solta tudo', async () => {
   const pasta = novaPasta();
   const cod = `const v = require(${JSON.stringify(VAGAS)}), o = { pasta: ${JSON.stringify(pasta)}, total: 1, extra: 0, intervaloMs: 30 };

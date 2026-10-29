@@ -1,4 +1,4 @@
-// Quebra de linha (ui.md §10.17, util.colado): nenhum grupo colado (span nowrap) passa da caixa do pai nem da tela,
+// Quebra de linha (arte.md §17, util.colado): nenhum grupo colado (span nowrap) passa da caixa do pai nem da tela,
 // nos balões (NPC e Claude), nas opções de desafio, nas intros de sala e na capa de prova, no celular e no notebook.
 // Cada texto real é posto no lugar de verdade da tela e medido. Nos balões também: o balão inteiro dentro da tela e
 // nenhuma linha só com um emoji ou só com um número (D5-07). Exceção: linha de conta ou de lista, sem letra e com

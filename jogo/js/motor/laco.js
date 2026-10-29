@@ -8,7 +8,7 @@
 
   // luz em degraus de pixel: o clarão quente no meio e a vinheta escura nas bordas, calculados na grade de pixels da
   // cena (canvas pequeno) e ampliados sem suavizar. Degraus de 0,04 de alfa, e entre um degrau e o outro um
-  // pontilhado ordenado 2×2 (ui.md §10.13: sem anéis contínuos). Um só cache, refeito quando o tamanho muda.
+  // pontilhado ordenado 2×2 (arte.md §13: sem anéis contínuos). Um só cache, refeito quando o tamanho muda.
   var luz = { w: 0, h: 0, escala: 0, img: null, partes: [] };
   var BAYER = [0.125, 0.625, 0.875, 0.375];   // limiar do pontilhado 2×2, por (x % 2, y % 2)
   function faixaLuz(t, x, y) {

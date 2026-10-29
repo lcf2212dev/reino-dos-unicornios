@@ -12,7 +12,7 @@
     return { x: Math.round((x - c.x) * pintor.escala), y: Math.round((y - c.y) * pintor.escala) };
   }
   var FONTE_PIXEL = '"Press Start 2P", "Trebuchet MS", sans-serif';
-  var FOLGA_HUD = 8;   // px CSS entre a placa e o HUD ou o balão (a folga do ui.md §10.18.2)
+  var FOLGA_HUD = 8;   // px CSS entre a placa e o HUD ou o balão (a folga do arte.md §18.2)
 
   // corpo da Mariana em px da tela (em pé ~16×24 acima dos pés; montada ~28×34)
   function caixaMariana(pintor) {
@@ -26,7 +26,7 @@
   }
   // retângulos do HUD (e do balão aberto, com o retrato e a plaquinha do nome) em px do canvas, medidos no máximo a
   // cada 500 ms (como o mapa fazia com as placas dos prédios); o balão abrir, fechar ou trocar de texto remede na
-  // hora. Cada um leva a folga f de 8 px CSS até a placa (ui.md §10.18.2)
+  // hora. Cada um leva a folga f de 8 px CSS até a placa (arte.md §18.2)
   var hudMedido = { chave: '', medidoEm: -1e9, rects: [], dialogo: false, versao: 0, assinatura: '' };
   function balaoAberto() {
     var b = document.getElementById('claude-balao');
@@ -43,7 +43,7 @@
     if (!c.width) return hudMedido;
     var k = canvas.width / c.width || dpr, f = Math.ceil(FOLGA_HUD * k) + 1;   // +1: arredondamento do zoom não deixa a folga cair abaixo de 8
     function doCanvas(r) { return { left: (r.left - c.left) * k, right: (r.right - c.left) * k, top: (r.top - c.top) * k, bottom: (r.bottom - c.top) * k, f: f }; }
-    // o HUD pela área útil (ui/hud.js, ui.md §10.18): os chips da esquerda, o bloco da direita (montaria e a fileira
+    // o HUD pela área útil (ui/hud.js, arte.md §18): os chips da esquerda, o bloco da direita (montaria e a fileira
     // ⛶ 📷 🖼) e o dock, sem medir o HUD aqui
     var a = R.UI.areaUtil ? R.UI.areaUtil() : null, vw = window.innerWidth, vh = window.innerHeight, rects = [];
     if (a) {
@@ -221,13 +221,13 @@
   }
   function arred(q) { return Math.round(q.left) + ',' + Math.round(q.top) + ',' + Math.round(q.right) + ',' + Math.round(q.bottom); }
 
-  // placas dos cômodos, em px da tela, com a fonte pixel, por cima de móveis e personagens (ui.md §10.9.5): a letra
+  // placas dos cômodos, em px da tela, com a fonte pixel, por cima de móveis e personagens (arte.md §9.5): a letra
   // tem Reino.config.texto.corpo px CSS (× dpr em px de aparelho) nos 3 tamanhos; a moldura é desenhada em px de arte
   // da interface (u = 2 px CSS): placa de parede de madeira (--laranja-claro, borda --tinta de 1 u, dois preguinhos
   // de 1×1 u, sem o degrau de sombra dos chips). Onde ela fica: interiores.md §6.4 e §6.5
   function desenharPlacas(def, ctx, pintor, t, animar) {
     var escala = pintor.escala || 3, dpr = pintor.dpr || 1;
-    // "Letras grandes" (ui.md §10.9.4) sobe a letra um degrau (corpo → g, múltiplo de 8: pixel inteiro); a fonte
+    // "Letras grandes" (arte.md §9.4) sobe a letra um degrau (corpo → g, múltiplo de 8: pixel inteiro); a fonte
     // entra na chave das medidas e da guarda, então a troca refaz a placa uma vez só
     var tx = (R.config && R.config.texto) || {}, grande = document.documentElement.classList.contains('letras-grandes');
     var corpo = (grande ? tx.g || 24 : tx.corpo) || 16;
@@ -274,7 +274,7 @@
           { x0: xa, x1: xb, y0: Math.max(cimaC - sh - borda * 2, 0), y1: Math.min(ym + sh + borda * 2, ch) }),
       ];
       if (!dela) return lista;
-      // 3) a do cômodo dela nunca some (ui.md §10.18.4): desce para o chão do próprio cômodo, abaixo do HUD e à
+      // 3) a do cômodo dela nunca some (arte.md §18.4): desce para o chão do próprio cômodo, abaixo do HUD e à
       // direita da coluna de chips, fora dos NPCs e da Mariana; depois a tela toda (sem invadir outro cômodo); por
       // fim só fora do HUD e da Mariana. A largura é a da tela que sobra; o texto quebra no que precisar
       var xChips = 0;

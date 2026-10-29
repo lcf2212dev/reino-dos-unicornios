@@ -33,7 +33,7 @@
   // criança: a mesma silhueta sem 3 linhas do meio (cabeça e corpo), com 3 linhas vazias em cima (mesma altura de grade)
   var VAZIA = '...................';
   var CRIANCA = [VAZIA, VAZIA, VAZIA].concat(VAGA.filter(function (l, j) { return j !== 9 && j !== 13 && j !== 19; }));
-  // adulto: 1 linha a mais de corpo (21 px com o contorno, como o NPC adulto: ui.md §10.12)
+  // adulto: 1 linha a mais de corpo (21 px com o contorno, como o NPC adulto: arte.md §12)
   var ADULTO = VAGA.slice(0, 20).concat(['...B...........B...'], VAGA.slice(20));
 
   function gradeReserva(o, quadro) {

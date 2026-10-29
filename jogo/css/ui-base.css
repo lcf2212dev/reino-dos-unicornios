@@ -7,15 +7,15 @@
   src: url("press-start-2p.woff2") format("woff2");
 }
 :root {
-  /* paleta (docs/contratos/ui.md §10.8): toda cor de CSS sai daqui; fora do :root, literal só em desenho de SVG em
+  /* paleta (docs/contratos/arte.md §8): toda cor de CSS sai daqui; fora do :root, literal só em desenho de SVG em
      data: (com o hex de um token). Reino.config.paleta repete os que o canvas usa (mesmo hex; validar-cores.js) */
   --tinta: #3a2446;
   --tinta-suave: #6b5378;   /* texto secundário e do estado indisponível: 6,35:1 no --papel */
-  --noite: #24162e;         /* fundo das telas escuras (§10.8.3): abertura, voo, espaço, vão dos interiores, jogadores */
+  --noite: #24162e;         /* fundo das telas escuras (arte.md §8.3): abertura, voo, espaço, vão dos interiores, jogadores */
   --noite-2: #33224a;       /* degrau de --noite: cartão, faixa e estrela sobre fundo escuro */
   --papel: #fff8ee;         /* fundo de painel */
   --papel-quente: #fff1cc;  /* cabeçalho, chip, balão */
-  --papel-2: #efe8e2;       /* fundo do estado indisponível (ui.md §10.19.1); --tinta-suave sobre ele: 5,5:1 */
+  --papel-2: #efe8e2;       /* fundo do estado indisponível (arte.md §19.1); --tinta-suave sobre ele: 5,5:1 */
   --borda: var(--tinta);
   --branco: #ffffff;        /* brilho de 1 px, halo, texto sobre seleção ou acerto cheio */
   --erro: #b02c47;          /* erro de item, sair, perigo: 5,15:1 no --erro-fundo */
@@ -23,7 +23,7 @@
   --ambar: #f0a04a;
   --ambar-claro: #fff1d0;
   --roxo: #7c5cff;          /* seleção (borda e fundo); nunca cor de texto */
-  --roxo-texto: #5a3cc4;    /* link e texto roxo: 6,9:1 no --papel (ui.md §10.8) */
+  --roxo-texto: #5a3cc4;    /* link e texto roxo: 6,9:1 no --papel (arte.md §8) */
   --roxo-claro: #ebe5ff;    /* fundo roxo leve: trecho em inglês, chip "calma" */
   --laranja: #ff8a3d;
   --laranja-claro: #ffe4c2;
@@ -35,7 +35,7 @@
   --certo-fundo: #dff8e8;
   --quase-fundo: #fff0c2;
   --grama: #c6e15a;         /* fundo do body por trás do mapa */
-  /* cor de desenho, nunca de moldura (docs/contratos/ui.md §10.8) */
+  /* cor de desenho, nunca de moldura (docs/contratos/arte.md §8) */
   --rosa: #ff7eb6;
   --lilas: #b58cff;         /* também o texto secundário em tela escura */
   --azul: #5fb4ff;
@@ -62,7 +62,7 @@
   --veu: rgba(58, 36, 70, 0.45);
   --veu-noite: rgba(36, 22, 46, 0.4);
   --veu-noite-fraco: rgba(36, 22, 46, 0.2);
-  /* véu em degraus de 0,04 (§10.13.4): a abertura (D8B-23) */
+  /* véu em degraus de 0,04 (arte.md §13.4): a abertura (D8B-23) */
   --veu-1: rgba(36, 22, 46, 0.04);
   --veu-2: rgba(36, 22, 46, 0.08);
   --veu-3: rgba(36, 22, 46, 0.12);
@@ -73,42 +73,42 @@
   /* só brilho: anel da carta lendária, faixa do ovo e aura (faixas duras; use no linear-gradient) */
   --arco-1: #ff5c6a; --arco-2: #ff9f45; --arco-3: #ffe066; --arco-4: #6fdc8c; --arco-5: #5fb4ff; --arco-6: #a66bff;   /* as 6 faixas (brilho do lendário) */
   --arco-iris: var(--arco-1) 0 17%, var(--arco-2) 17% 33%, var(--arco-3) 33% 50%, var(--arco-4) 50% 67%, var(--arco-5) 67% 83%, var(--arco-6) 83%;
-  --apagado: grayscale(1) brightness(1.1);   /* filter do DESENHO indisponível (§10.19.1); nunca no texto */
-  /* letra (ui.md §10.9.1): só estes tamanhos; todo font-size do CSS é um deles */
+  --apagado: grayscale(1) brightness(1.1);   /* filter do DESENHO indisponível (arte.md §19.1); nunca no texto */
+  /* letra (arte.md §9.1): só estes tamanhos; todo font-size do CSS é um deles */
   --texto-p: 8px;        /* só número sobre ícone (contador, selo com número) */
   --texto-aux: 12px;     /* rótulo auxiliar */
   --texto: 16px;         /* o que a criança lê */
   --texto-g: 24px;       /* título grande; enunciado a partir de 640 px */
   --texto-t: 32px;       /* abertura e festa */
   --texto-festa: 48px;   /* abertura e festa (32 no celular, se não couber) */
-  --entrelinha: 1.5;           /* corpo (ui.md §10.9.2) */
+  --entrelinha: 1.5;           /* corpo (arte.md §9.2) */
   --entrelinha-titulo: 1.25;   /* título */
-  /* pixel da interface (ui.md §10.10): 1 px de arte = 2 px CSS */
+  /* pixel da interface (arte.md §10): 1 px de arte = 2 px CSS */
   --borda-fina: 2px;     /* botão, chip, chip-mini, cartão, campo */
   --borda-grossa: 4px;   /* painel, balão, tela, retrato */
   --sombra-pequena: 0 2px 0 var(--borda);   /* chip, botão pequeno */
   --sombra-grande: 0 4px 0 var(--borda);    /* botão grande, painel */
-  --canto-pequeno: 4px;  /* botão de até 56 px de lado (✕, tela cheia, 📷, álbum): ui.md §10.10.4 */
+  --canto-pequeno: 4px;  /* botão de até 56 px de lado (✕, tela cheia, 📷, álbum): arte.md §10.4 */
   --fonte-texto: "Press Start 2P", "Trebuchet MS", sans-serif;
   --fonte-titulo: "Press Start 2P", "Trebuchet MS", sans-serif;
   --fonte-pixel: "Press Start 2P", "Trebuchet MS", sans-serif;
-  /* Pixel art também na moldura (docs/contratos/ui.md §10): cantos só com estas medidas, e em degrau (abaixo) */
+  /* Pixel art também na moldura (docs/contratos/arte.md): cantos só com estas medidas, e em degrau (abaixo) */
   --canto: 6px;          /* botões, chips, cartões pequenos */
   --canto-grande: 9px;   /* painéis, balões, telas */
   --redondo: 14%;        /* o que era círculo: um "círculo" de pixels (quadrado sem os cantos) */
-  /* durações (ui.md §10.15.3): espelho de Reino.config.movimento (validar-movimento.js confere) */
+  /* durações (arte.md §15.3): espelho de Reino.config.movimento (validar-movimento.js confere) */
   --rapido: 120ms;   /* resposta ao toque */
   --normal: 240ms;   /* abrir, fechar, trocar */
   --lento: 600ms;    /* chegada, festa curta */
   color-scheme: light;
 }
-/* "Letras grandes" (ui.md §10.9.4): um degrau por token; --texto-p, --texto-t e --texto-festa ficam */
+/* "Letras grandes" (arte.md §9.4): um degrau por token; --texto-p, --texto-t e --texto-festa ficam */
 :root.letras-grandes {
   --texto-aux: 16px;
   --texto: 24px;
   --texto-g: 32px;
 }
-/* raridade (ui.md §10.8): a classe .rar-<r> dá as três cores; carta, chip, faixa, selo e prêmio leem --rar-texto,
+/* raridade (arte.md §8): a classe .rar-<r> dá as três cores; carta, chip, faixa, selo e prêmio leem --rar-texto,
    --rar-fundo e --rar-desenho (fundo chapado e faixa interna de 4 px; o contorno continua --borda) */
 .rar-comum { --rar-texto: var(--comum-texto); --rar-fundo: var(--comum-fundo); --rar-desenho: var(--comum-desenho); }
 .rar-raro { --rar-texto: var(--raro-texto); --rar-fundo: var(--raro-fundo); --rar-desenho: var(--raro-desenho); }
@@ -120,7 +120,7 @@
 *, *::before, *::after { corner-shape: notch; }
 @supports not (corner-shape: notch) { *, *::before, *::after { border-radius: 0 !important; } }
 
-* { box-sizing: border-box; font-synthesis: none; font-variant-ligatures: none; }   /* "fi" e "fl" da fonte pixel viram um glifo só e o "i" some (ui.md §10.9) */
+* { box-sizing: border-box; font-synthesis: none; font-variant-ligatures: none; }   /* "fi" e "fl" da fonte pixel viram um glifo só e o "i" some (arte.md §9) */
 html, body { height: 100%; }
 body {
   margin: 0;
@@ -130,7 +130,7 @@ body {
   font-weight: 400;
   font-size: var(--texto);
   line-height: var(--entrelinha);
-  /* quebra de palavra (ui.md §10.17): só palavra que não cabe quebra, e só com o hífen suave do hifenizar à vista */
+  /* quebra de palavra (arte.md §17): só palavra que não cabe quebra, e só com o hífen suave do hifenizar à vista */
   overflow-wrap: break-word;
   hyphens: manual;
   overflow: hidden;
@@ -154,7 +154,7 @@ button.esperando-fala::after {
 @keyframes esperando-fala { 50% { transform: translateY(-2px); } }   /* o ouvido pula 1 pixel de arte, em degrau */
 body.sem-animacao button.esperando-fala::after { animation: none; }
 @media (prefers-reduced-motion: reduce) { button.esperando-fala::after { animation: none; } }
-/* foco (ui.md §10.19.4): tracejado de 4 px em --tinta com folga de 2 px, diferente da seleção (--roxo). O :root
+/* foco (arte.md §19.4): tracejado de 4 px em --tinta com folga de 2 px, diferente da seleção (--roxo). O :root
    [aria-pressed] passa na frente do contorno roxo da opção marcada, que vem depois na cascata */
 :focus-visible, :root [aria-pressed]:focus-visible, :root .ligar-item:focus-visible { outline: 4px dashed var(--tinta); outline-offset: 2px; }
 .pixel, canvas { image-rendering: pixelated; image-rendering: crisp-edges; }
@@ -163,7 +163,7 @@ body.sem-animacao button.esperando-fala::after { animation: none; }
 [hidden] { display: none !important; }
 
 h1, h2, h3 { margin: 0; text-wrap: balance; }
-b, strong { font-weight: 400; }   /* sem negrito (ui.md §10.9.3) */
+b, strong { font-weight: 400; }   /* sem negrito (arte.md §9.3) */
 h1, h2, h3, h4, h5, h6 { font-weight: 400; }
 small { font-size: var(--texto-aux); }
 .titulo-pixel { font-family: var(--fonte-titulo); font-weight: 400; letter-spacing: 0; font-size: var(--texto); line-height: var(--entrelinha-titulo); }
@@ -218,25 +218,25 @@ body.sem-animacao .btn-grande.armando .armando-texto { display: block; }
 .btn-pequeno { min-height: 44px; padding: 6px 14px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--ambar-claro); box-shadow: var(--sombra-pequena); --degrau: 2px; }
 .btn-icone {
   width: 52px; height: 52px; flex: none;
-  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-pequeno);   /* ✕ sem "cruz" (D8A-03, §10.10.4) */
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-pequeno);   /* ✕ sem "cruz" (D8A-03, arte.md §10.4) */
   background: var(--papel); font-size: var(--texto);
   box-shadow: inset 0 2px 0 var(--brilho), var(--sombra-grande);
   --degrau: 4px; --brilho-apertado: inset 0 2px 0 var(--brilho-fraco);
 }
-/* estado indisponível (ui.md §10.19.1): uma regra só para o botão desabilitado (disabled), o travado que segue focável
+/* estado indisponível (arte.md §19.1): uma regra só para o botão desabilitado (disabled), o travado que segue focável
    (aria-disabled: guarda de toque, foto desligada) e o que não é botão (.indisponivel: carta cara da loja, planeta
    trancado). Fundo --papel-2 chapado, texto --tinta-suave (5,5:1), borda --borda, sombra de 2 px; o desenho de dentro
    apaga com --apagado, o texto nunca. O :is() dá a mesma força às três (um elemento e uma classe): vence a cor de
    base dos botões e cartas (.btn-principal, .item-loja; o :where tira a força do .armando) e perde para o estado de uma opção (.opcao.errada,
-   .opcao.certa, a marcada), que é outra coisa (§10.19.2). O 🔒 do trancado e do caro vem do JS */
+   .opcao.certa, a marcada), que é outra coisa (arte.md §19.2). O 🔒 do trancado e do caro vem do JS */
 :is(button:disabled, button[aria-disabled="true"]:not(:where(.armando:focus-visible)), .indisponivel) {
   background: var(--papel-2); color: var(--tinta-suave); border-color: var(--borda); box-shadow: var(--sombra-pequena);
 }
 :is(button:disabled, button[aria-disabled="true"]:not(:where(.armando:focus-visible)), .indisponivel) canvas { filter: var(--apagado); }
-/* afundar (ui.md §10.15.7): a regra única. Todo tocável com sombra de degrau declara --degrau (e --brilho-apertado, se
+/* afundar (arte.md §15.7): a regra única. Todo tocável com sombra de degrau declara --degrau (e --brilho-apertado, se
    tem brilho inset); em :active desce a altura da sombra e a sombra some. Estado, não animação: sem transition, igual
    com sem-animacao e reduce; a animação que mexe no transform do próprio botão para enquanto aperta. Indisponível
-   não afunda (§10.19.1) */
+   não afunda (arte.md §19.1) */
 :is(button, [role="button"]):active:not(:disabled):not([aria-disabled="true"]):not(.indisponivel) {
   transform: translateY(var(--degrau, 0px)); box-shadow: var(--brilho-apertado, none);
 }
@@ -244,7 +244,7 @@ body.sem-animacao .btn-grande.armando .armando-texto { display: block; }
 .intro-botoes { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 18px; }
 .intro-botoes.coluna { flex-direction: column; align-items: stretch; }
 
-/* ---------- rodapé de ação (ui.md §10.20) ---------- */
+/* ---------- rodapé de ação (arte.md §20) ---------- */
 /* Uma linha fixa no pé da tela ou do painel, fora do que rola, sempre com a mesma altura: botões de 52 px, letra de
    16 px sem quebrar; o principal à direita. No celular, o .rotulo-longo some ("← Anterior" vira "←", "🔊 Ouvir" vira
    "🔊") e a .rodape-vaga guarda o lugar de um botão que ainda não existe (o "← Voltar" da 1ª carta) */
@@ -265,7 +265,7 @@ footer.rodape-acao .btn-grande {
 footer.rodape-acao .sem-relogio { min-width: 0; font-size: var(--texto-aux); line-height: 1.5; }
 .rodape-vaga { visibility: hidden; }
 .rotulo-curto { display: none; }
-/* ícone dentro do botão do rodapé: 32 px, inteiro (2 px CSS por pixel do desenho; ui.md §10.10) */
+/* ícone dentro do botão do rodapé: 32 px, inteiro (2 px CSS por pixel do desenho; arte.md §10) */
 footer.rodape-acao canvas.icone-em { width: 32px !important; height: 32px !important; }
 /* sem botão à vista (a memória não tem "Conferir"): o rodapé não guarda os 80 px; só o "Sem relógio", onde cabe */
 footer.rodape-acao:not(:has(.btn-grande:not([hidden]))) { height: auto; padding-top: 8px; padding-bottom: calc(8px + var(--rodape-seguro)); }

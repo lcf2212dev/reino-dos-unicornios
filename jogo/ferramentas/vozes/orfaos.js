@@ -6,9 +6,10 @@ const path = require('path');
 // lista os órfãos de <gerado>/vozes-cache: [{ rel, bytes }] (rel = '<voz>/<arquivo>.mp3', como no índice)
 function acharOrfaos(gerado) {
   const cache = path.join(gerado, 'vozes-cache');
-  // caminhos do índice normalizados ("./claude/x.mp3", "ingles//y.mp3" são o mesmo arquivo)
+  // caminhos do índice resolvidos como o empacotar-vozes.js os acha (path.join(cache, rel)): "./claude/x.mp3",
+  // "ingles//y.mp3" e "claude/../ingles/z.mp3" são arquivos do cache
   const usados = new Set(Object.values(JSON.parse(fs.readFileSync(path.join(gerado, 'vozes-indice.json'), 'utf8')))
-    .map((r) => path.posix.normalize(String(r)).replace(/^\.\//, '')));
+    .map((r) => path.relative(cache, path.join(cache, String(r))).split(path.sep).join('/')));
   if (!fs.existsSync(cache)) return [];
   const saida = [];
   fs.readdirSync(cache, { withFileTypes: true }).filter((d) => d.isDirectory()).sort((a, b) => a.name.localeCompare(b.name)).forEach((d) => {
@@ -20,8 +21,7 @@ function acharOrfaos(gerado) {
   return saida.sort((a, b) => a.rel.localeCompare(b.rel));
 }
 
-// tira só os órfãos: caminho calculado e conferido (real) dentro do vozes-cache, arquivo .mp3 comum; o resto fica
-// Travas antes de apagar: gerado/ e vozes-cache/ de verdade (não link) e índice completo: toda fala do falas.json
+// travas antes de apagar: gerado/ e vozes-cache/ de verdade (não link) e índice completo: toda fala do falas.json
 // com o seu mp3 na chave certa (pendentes() vazio). Índice vazio, quebrado ou de uma gravação pela metade recusa.
 function podeAplicar(gerado) {
   const cache = path.join(gerado, 'vozes-cache');
@@ -31,6 +31,8 @@ function podeAplicar(gerado) {
   return falta ? `${falta} fala(s) sem áudio no índice (índice incompleto ou gravação pendente: rode o npm run vozes antes)` : null;
 }
 
+// tira só os órfãos (com as travas do podeAplicar): caminho calculado e conferido (real) dentro do vozes-cache,
+// arquivo .mp3 comum; o resto fica
 function apagarOrfaos(gerado, orfaos) {
   const motivo = podeAplicar(gerado);
   if (motivo) throw new Error(`--aplicar recusado: ${motivo}`);
@@ -58,8 +60,10 @@ function orfaos(gerado, aplicar) {
   lista.slice(0, 10).forEach((o) => console.log(`    ${o.rel}`));
   if (lista.length > 10) console.log(`    … e mais ${lista.length - 10}`);
   if (!lista.length) return 0;
-  if (aplicar) console.log(`✔ ${apagarOrfaos(gerado, lista)} órfão(s) tirado(s) do vozes-cache (${mb(bytes)})`);
-  else console.log('  (só a lista; para tirar: npm run vozes -- --orfaos --aplicar)');
+  if (aplicar) { console.log(`✔ ${apagarOrfaos(gerado, lista)} órfão(s) tirado(s) do vozes-cache (${mb(bytes)})`); return lista.length; }
+  const motivo = podeAplicar(gerado);
+  console.log(motivo ? `  (só a lista; o --aplicar seria recusado agora: ${motivo})`
+    : '  (só a lista; o --aplicar seria aceito: npm run vozes -- --orfaos --aplicar)');
   return lista.length;
 }
 

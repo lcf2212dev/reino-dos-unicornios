@@ -1,4 +1,4 @@
-// Pixel art na moldura (docs/contratos/ui.md §10): nada liso chega à tela.
+// Pixel art na moldura (docs/contratos/arte.md): nada liso chega à tela.
 // Uso: node ferramentas/validar/validar-pixel.js [--raiz <pasta jogo>]   (roda no npm run validar)
 // CSS (css/*.css, sem os comentários):
 //   - border-radius só com 0, var(--canto), var(--canto-grande) ou var(--redondo) (o corner-shape: notch de
@@ -8,7 +8,7 @@
 //   - sombra (box-shadow, text-shadow, drop-shadow) sem desfoque, e nada de blur();
 //   - rotate só em múltiplos de 90° (girar pixel em outro ângulo borra);
 //   - scale()/scaleX()/scaleY() só com fator inteiro (em @keyframes e fora), e conic-gradient nenhum, a não ser nas
-//     exceções escritas do ui.md §10.15.5 (EXCECOES_MOVIMENTO, abaixo).
+//     exceções escritas do arte.md §15.5 (EXCECOES_MOVIMENTO, abaixo).
 // JS (js/**, fora js/voz/): createLinearGradient, createRadialGradient, shadowBlur diferente de 0, .arc( e
 //   .ellipse( no canvas; emoji em texto fora do Reino.util.preencher/el (textContent/innerText com emoji, ou helper
 //   el() próprio que usa textContent): sai o glifo do sistema no lugar do ícone 16×16.
@@ -43,7 +43,7 @@ function dentroDe(s, i) {
   }
   return s.slice(i + 1);
 }
-// ui.md §10.15.5: onde scale fracionário e conic-gradient valem (chave: @keyframes ou trecho do seletor)
+// arte.md §15.5: onde scale fracionário e conic-gradient valem (chave: @keyframes ou trecho do seletor)
 const EXCECOES_MOVIMENTO = {
   scale: ['@keyframes armar-encher', '.balao-respira'],
   conic: ['.aura-arco-iris'],
@@ -118,11 +118,11 @@ function checarCss(nome, texto, erros) {
     const fatores = m[2].split(',').map((v) => v.trim()).filter(Boolean);
     if (fatores.every((v) => /^-?\d+$/.test(v))) continue;
     const ctx = contextoDe(t, m.index);
-    if (!excecao('scale', ctx)) erros.push(`${nome}:${linhaDe(t, m.index)}: ${m[0]} em "${ctx}": scale só com fator inteiro; pulso = 1 pixel de deslocamento ou troca de quadro (ui.md §10.15)`);
+    if (!excecao('scale', ctx)) erros.push(`${nome}:${linhaDe(t, m.index)}: ${m[0]} em "${ctx}": scale só com fator inteiro; pulso = 1 pixel de deslocamento ou troca de quadro (arte.md §15)`);
   }
   for (const m of t.matchAll(/(repeating-)?conic-gradient\(/g)) {
     const ctx = contextoDe(t, m.index);
-    if (!excecao('conic', ctx)) erros.push(`${nome}:${linhaDe(t, m.index)}: conic-gradient em "${ctx}" (fora das exceções do ui.md §10.15.5)`);
+    if (!excecao('conic', ctx)) erros.push(`${nome}:${linhaDe(t, m.index)}: conic-gradient em "${ctx}" (fora das exceções do arte.md §15.5)`);
   }
 }
 
@@ -165,7 +165,7 @@ if (require.main === module) {
   const i = process.argv.indexOf('--raiz');
   const erros = validar(i >= 0 ? path.resolve(process.argv[i + 1]) : jogo);
   erros.forEach((e) => console.log('✘ ' + e));
-  if (erros.length) { console.log(`✘ ${erros.length} ponto(s) sem pixel art (docs/contratos/ui.md §10)`); process.exit(1); }
+  if (erros.length) { console.log(`✘ ${erros.length} ponto(s) sem pixel art (docs/contratos/arte.md)`); process.exit(1); }
   console.log('✔ tudo em pixel art: cantos, faixas, sombras, rotações, escalas e canvas');
 }
 

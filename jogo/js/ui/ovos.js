@@ -46,11 +46,11 @@
         P.chocar(id); P.salvar();
         Reino.Som.tocar('chocar');
         card.innerHTML = '';
-        // lendário: um 🌈 só, colado à 1ª palavra (ui.md §10.21.1); no celular quebra em 2 linhas
+        // lendário: um 🌈 só, colado à 1ª palavra (arte.md §21.1); no celular quebra em 2 linhas
         var titulo = d.raridade === 'lendario' ? el('h2.titulo-pixel', el('span.titulo-colado', '🌈UM'), ' LENDÁRIO!') : el('h2.titulo-pixel', 'Nasceu!');
         card.appendChild(titulo);
-        UI.festa(3, { titulo: titulo, som: false });   // ovo que nasce: nível 3 em toda raridade (ui.md §10.16)
-        // o lendário ganha o brilho arco-íris, não mais confete (ui.md §10.16)
+        UI.festa(3, { titulo: titulo, som: false });   // ovo que nasce: nível 3 em toda raridade (arte.md §16)
+        // o lendário ganha o brilho arco-íris, não mais confete (arte.md §16)
         var sprite = el('div.detalhe-sprite.nascimento.rar-' + d.raridade, PA.paraDOM(PA.unicornio(d, 0, 0), 8));
         card.appendChild(d.raridade === 'lendario' ? el('div.brilho-arco', sprite) : sprite);
         card.appendChild(el('p.detalhe-rar.rar-' + d.raridade, rar.emoji + ' ' + rar.nome));

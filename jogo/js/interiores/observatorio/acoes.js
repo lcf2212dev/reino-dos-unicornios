@@ -203,7 +203,7 @@
     if (!UI || !UI.painel || typeof document === 'undefined') return contarCuriosidade({ tipo: 'curiosidade', tema: 'estrelas' }, {});
     var p = UI.painel('telescopio', '🔭 Telescópio', { aoFechar: function () { parar(); } });
     // cena ampliada em pixels inteiros, cabendo na largura e na altura da tela
-    // (escala par em px CSS, 2 ou 4: ui.md §10.10.7)
+    // (escala par em px CSS, 2 ou 4: arte.md §10.7)
     var largura = Math.min(window.innerWidth - 56, 700), altura = window.innerHeight - 330;
     var k = Math.max(2, Math.min(4, 2 * Math.floor(largura / 320), 2 * Math.floor(altura / 224)));
     var tela = el('canvas', 'display:block;flex:none;width:' + (160 * k) + 'px;height:' + (112 * k) + 'px;image-rendering:pixelated;image-rendering:crisp-edges;border-radius:12px;');

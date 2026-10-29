@@ -118,7 +118,7 @@
   .tela-surpresa .opcoes { gap: 8px; }
   .tela-surpresa .opcao { min-height: 48px; padding: 6px 10px; gap: 8px; border-radius: var(--canto); font-size: var(--texto); }
   .tela-surpresa .opcao-emoji { font-size: var(--texto-g); }
-  /* com "Letras grandes" a alternativa fica em 16 (em 24, "Brinquedos" não cabe na linha: §10.17.3) */
+  /* com "Letras grandes" a alternativa fica em 16 (em 24, "Brinquedos" não cabe na linha: arte.md §17.3) */
   .letras-grandes .tela-surpresa .opcao { font-size: var(--texto-aux); }
   .tela-surpresa .opcao-marcar::after { width: 24px; height: 24px; }
   .tela-surpresa .opcoes-vf .opcao { font-size: var(--texto); }
@@ -142,7 +142,7 @@
   .surpresa-curta-materia { flex: none; overflow: visible; }
   .surpresa-curta .btn-ouvir { margin-left: auto; }
   /* "Agora não" e "Conferir ✓" numa linha só (com letras grandes, o ✓ pode descer) */
-  /* rótulo curto que não cabe desce um degrau (ui.md §10.17.3): 12 px (16 com letras grandes, o ✓ pode descer) */
+  /* rótulo curto que não cabe desce um degrau (arte.md §17.3): 12 px (16 com letras grandes, o ✓ pode descer) */
   .surpresa-botoes .btn-grande, .surpresa-conferir { font-size: var(--texto-aux); padding: 6px 6px; }
   .surpresa-botoes .surpresa-depois { flex: 0 1 auto; }
   .surpresa-curta { column-gap: 6px; }

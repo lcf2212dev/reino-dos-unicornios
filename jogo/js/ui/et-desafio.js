@@ -43,7 +43,7 @@
     var cabeca = el('div.et-cabeca', retrato(npc), el('div.et-balao', balao, placar));
     var area = el('div.et-area');
     var retorno = el('div.et-retorno', { hidden: true, 'aria-live': 'polite' });
-    var btn = el('button.btn-grande.btn-conferir.et-botao',   // o mesmo Conferir da sala e da surpresa (ui.md §10.8)
+    var btn = el('button.btn-grande.btn-conferir.et-botao',   // o mesmo Conferir da sala e da surpresa (arte.md §8)
       { type: 'button', disabled: true }, 'Conferir ✓');
     var botoes = el('footer.et-botoes', btn);
     pn.conteudo.appendChild(cabeca);
@@ -98,7 +98,7 @@
         ctrl.marcarCerto();
         Reino.Som.tocar('acerto');
         setTimeout(function () { Reino.Som.tocar('estrela'); }, 350);
-        UI.festa(1, { som: false, item: ctrl.card.querySelector('.certa') });   // acerto do ET: nível 1 (ui.md §10.16)
+        UI.festa(1, { som: false, item: ctrl.card.querySelector('.certa') });   // acerto do ET: nível 1 (arte.md §16)
         retorno.appendChild(el('h3', '✨ +' + n + ' ⭐'));
         dizer([sortear(F.acerto)]);
       } else {
@@ -131,7 +131,7 @@
       var amiga = npc.genero === 'm' ? 'seu amigo' : 'sua amiga';
       area.appendChild(el('p.et-amigo', '💛 ' + (npc.nome || 'ET') + (novo ? ' virou ' : ' é ') + amiga + '!'));
       Reino.Som.tocar('estrela');
-      UI.festa(2, { som: false });   // ET vencido: nível 2 (ui.md §10.16)
+      UI.festa(2, { som: false });   // ET vencido: nível 2 (arte.md §16)
       dizer(des.amigoAntes ? F.fimDeNovo : F.fim);
       U.preencher(btn, 'Tchau! 💛');
       travar();

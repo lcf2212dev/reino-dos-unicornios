@@ -20,7 +20,7 @@ const FAVICON = path.join(__dirname, 'favicon.svg');
 
 // fundo: céu em duas faixas e o chão onde ele pisa (o roxo da abertura do app em cima, #3b2170 = background_color)
 const CEU = '#3b2170', CEU_2 = '#4a2880', CHAO = '#5c3290';
-const SOMBRA_ALFA = 0.25;              // sombra de chão (ui.md §10.13: alfa 0,15 a 0,25, um nível)
+const SOMBRA_ALFA = 0.25;              // sombra de chão (arte.md §13: alfa 0,15 a 0,25, um nível)
 const ZONA_SEGURA = 0.4;               // maskable: raio do círculo seguro = 40 % do lado (204,8 px em 512)
 
 /* ---------- a arte, em pixels de arte ---------- */
@@ -37,7 +37,7 @@ function desenho() {
   const s = unicornio('rosa', 3, 0, 'lado');
   const w = s.w, h = s.h + 1, base = s.h - 1;   // base: a última linha do contorno dos cascos
   const px = s.px.map((l) => l.slice()).concat([new Array(w).fill(null)]);
-  // sombra de chão (ui.md §10.13): elipse de pixel de um nível, 2 pixels além dos cascos, atrás deles e embaixo
+  // sombra de chão (arte.md §13): elipse de pixel de um nível, 2 pixels além dos cascos, atrás deles e embaixo
   const cols = px[base].map((c, x) => (c ? x : -1)).filter((x) => x >= 0);
   const x0 = cols[0], x1 = cols[cols.length - 1];
   const cor = mistura(CHAO, s.contorno, SOMBRA_ALFA);

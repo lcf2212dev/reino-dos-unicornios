@@ -97,7 +97,7 @@ const api = (lista, ok = true) => async (url, op) => {
   assert.ok(op.headers.Authorization);
   return { ok, json: async () => ({ deployments: lista }) };
 };
-const pub = (sha, created) => ({ readyState: 'READY', created, meta: sha ? { githubCommitSha: sha } : {} });
+const pub = (sha, created, target = 'production') => ({ readyState: 'READY', target, created, meta: sha ? { githubCommitSha: sha } : {} });
 
 test('vercel.js --conferir: "nada a publicar" só se o jogo é o da última publicação READY (API simulada)', async () => {
   const { semNadaAPublicar } = require('../../fluxo/vercel');
@@ -110,6 +110,7 @@ test('vercel.js --conferir: "nada a publicar" só se o jogo é o da última publ
     const nada = (sha, buscar) => semNadaAPublicar(sha, REPO, buscar);
     assert.strictEqual(await nada(doJogo, api([pub(doJogo, 2), pub(pai, 1)])), doJogo, 'publicado = nada a publicar');
     assert.strictEqual(await nada(doJogo, api([pub(doJogo, 1), pub(pai, 2)])), null, 'a mais nova é a do pai: o jogo mudou');
+    assert.strictEqual(await nada(doJogo, api([pub(pai, 3, null), pub(doJogo, 2)])), doJogo, 'prévia mais nova não conta');
     assert.strictEqual(await nada(doJogo, api([pub(pai, 2)])), null, 'jogo mudou desde a última: espera');
     assert.strictEqual(await nada(doJogo, api([pub(null, 3), pub(doJogo, 2)])), null, 'última sem commit (plano B): espera');
     assert.strictEqual(await nada(doJogo, api([pub('f'.repeat(40), 2)])), null, 'commit que não está aqui: espera');

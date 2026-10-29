@@ -67,7 +67,7 @@ function arquivosLivro(id, op) {
   const L = op.livro4, m = op.materia, rel = (f) => `jogo/${js(m, f)}`;
   const ORI = L.livro === 'atividades' ? 'ATI' : 'APR';
   const sala = novo().modelo('sala-livro.js.modelo', { sala: id, materia: m, livro: L.livro, livroNome: L.livroNome, capitulo: L.capitulo, carta: L.carta, ORI });
-  const carta = (r) => `${r}{ id: '${L.carta}', e: '(preencher)', titulo: '(preencher)', livroOrigem: '${L.livro}', pagina: 0, capitulo: ${L.capitulo},   // id: o da página (lp-a81)\n` +
+  const carta = (r) => `${r}{ id: '${L.carta}', e: '(preencher)', titulo: '(preencher)', livroOrigem: '${L.livro}', pagina: 0, capitulo: ${L.capitulo},   // id: o da página (${L.livro === 'atividades' ? 'lp-t08' : 'lp-a81'})\n` +
     `${r}  blocos: [{ t: 'texto', texto: '(preencher) o texto da página, palavra por palavra' }] },\n`;
   const uni = (r, cores) => `  { id: '${L.pre}-(preencher)-${r}', nome: '(preencher)', raridade: '${r}', sala: '${id}',\n    cores: ${cores},\n    frase: '(preencher)' },\n`;
   const unis = uni('comum', "{ corpo: '#f3ecff', crina: ['#8e4fd6', '#5fb4ff', '#ffd34d'], chifre: '#ffe680' }") +
@@ -127,7 +127,7 @@ module.exports = {
       `prêmio da trilha perfeita: Reino.registrarPremioTrilha da sala em ${m}/premios-trilha-${L.capitulo}.js (acessório, elemento e experiência da tabela de quarto-bimestre.md §14.4; capítulo novo: arquivo novo no manifesto)`,
       N.valorSala(op.valorPorMateria, op.nSala, op.nSala - 1),
       N.UNI_NPC, N.EMOJIS + ' (os da sala e das cartas)',
-      'prédio: a estação e o pedestal da sala aparecem sozinhos no capítulo (quarto-bimestre.md §7); se o capítulo não couber, o validar-interiores diz que arquivo do prédio cresce (receita novo-predio)',
+      'prédio: a estação e o pedestal da sala aparecem sozinhos no capítulo (quarto-bimestre.md §7); se o capítulo não couber, o validar-interiores diz que arquivo do prédio cresce (receita docs/receitas/predio-novo.md)',
       'vozes: npm run vozes',
     ];
   },

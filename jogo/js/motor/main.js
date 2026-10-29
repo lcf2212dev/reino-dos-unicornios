@@ -112,7 +112,7 @@
 
   function entrarNoReino(novo) {
     V.jogoAtivo = true;
-    UI.corDaBarra('grama');   // a última tela de entrada fechou: o mapa à vista (ui.md §10.8)
+    UI.corDaBarra('grama');   // a última tela de entrada fechou: o mapa à vista (arte.md §8)
     U.$('#hud').hidden = false;
     UI.montarHUD();
     V.montarControle();
@@ -162,7 +162,7 @@
 
   /* o jogo só começa com o progresso guardado em mãos (o banco da Vercel ou o claude.ai): sem ele, um aparelho novo
      abriria a primeira vez e trocaria as escolhas dela. Sem rede, quem já tem o save no aparelho joga com ele. */
-  var ESPERA_PASSO_MS = 600;   // uma estrelinha a mais na espera (--lento, ui.md §10.15: volta inteira em 1,8 s)
+  var ESPERA_PASSO_MS = 600;   // uma estrelinha a mais na espera (--lento, arte.md §15: volta inteira em 1,8 s)
   V.esperarProgresso = esperarProgresso;   // para ver a espera nas fotos (npm run ver -- --vivo --js …)
   // doLogin: o painel de login segue aberto enquanto isso (telaQuemVaiJogar, aoEntrar): a 1ª tentativa não abre a
   // abertura por cima; só uma falha mostra o aviso com "Tentar de novo"

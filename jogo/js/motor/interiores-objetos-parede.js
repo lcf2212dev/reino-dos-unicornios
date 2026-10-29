@@ -123,7 +123,7 @@
         ctx.drawImage(img, Math.round(ix + (iw - img.width) / 2), Math.round(iy + ih - img.height));
         ctx.restore();
       }
-      // "?" de 7 px em --papel com contorno --tinta (ui.md §10.14)
+      // "?" de 7 px em --papel com contorno --tinta (arte.md §14)
       if (!tem) matriz(ctx, ix + iw - 7, iy, ['.kkkk.', 'kppppk', 'kpkkpk', 'kkkpk.', '.kpk..', '.kkk..', '.kpk..', '.kkk..'], { k: K, p: '#fff8ee' });
       // plaquinha dourada
       ret(ctx, px + W / 2 - 4, y + h + 1, 8, 2, K); ret(ctx, px + W / 2 - 3, y + h + 1, 6, 1, C.ouro);

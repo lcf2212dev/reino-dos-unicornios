@@ -5,7 +5,7 @@
 (function () {
   var R = window.Reino;
   var K = '#3a2446';
-  // céu do voo: --noite, e a nebulosa no degrau --noite-2 (ui.md §10.8.3), de Reino.config.paleta, lidos na hora;
+  // céu do voo: --noite, e a nebulosa no degrau --noite-2 (arte.md §8.3), de Reino.config.paleta, lidos na hora;
   // chave que faltar cai na reserva (o hex do contrato)
   function noite(k) { var P = (R && R.config && R.config.paleta) || {}; return P[k] || { noite: '#24162e', noite2: '#33224a' }[k]; }
   // foguete 16×26: k contorno, w branco, c cinza claro, r vermelho, R vermelho escuro, b vidro, f fogo, y fogo claro.

@@ -6,7 +6,7 @@
   var I = R.Interiores, D = I.desenho, C = D.C;
   var ret = D.ret, circulo = D.circulo, elipse = D.elipse, triangulo = D.triangulo, contornoRet = D.contornoRet;
   var K = R.Desenho.K;
-  // cores da moldura e da raridade: Reino.config.paleta (ui.md §10.8), lida na hora; chave que faltar cai na
+  // cores da moldura e da raridade: Reino.config.paleta (arte.md §8), lida na hora; chave que faltar cai na
   // reserva (o hex do contrato), nunca num TypeError
   var RESERVA = { papel: '#fff8ee', tintaSuave: '#6b5378', raridade: { comum: { fundo: '#fff8ee', desenho: '#ff9cc6', texto: '#6b5378' }, raro: { fundo: '#dcebff', desenho: '#5fb4ff', texto: '#2b5ea8' }, epico: { fundo: '#eadcff', desenho: '#a66bff', texto: '#5b2aa8' }, lendario: { fundo: '#ffe39a', desenho: '#ffb020', texto: '#8a5200' } } };
   function pal(k) { var P = (R.config && R.config.paleta) || {}; return P[k] || RESERVA[k]; }

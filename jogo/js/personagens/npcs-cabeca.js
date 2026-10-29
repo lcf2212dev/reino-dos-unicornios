@@ -170,7 +170,7 @@
         for (var j = 3; j <= 5; j++) { g.p(x - 4, y + j, M); g.p(x + 4, y + j, M); }
         g.p(x - 3, y + 3, Md); g.p(x + 3, y + 3, Md);
         g.p(x - 2, y, Ml); g.p(x - 3, y + 1, Ml); g.p(x, y + 1, Md);
-        // pluma alta (o cavaleiro fica da altura da estátua de armadura da ala, ui.md §10.12)
+        // pluma alta (o cavaleiro fica da altura da estátua de armadura da ala, arte.md §12)
         g.l(y - 6, x + 1, x + 2, c2); g.l(y - 5, x, x + 2, c2);
         g.l(y - 4, x, x + 2, c2); g.l(y - 3, x - 1, x + 2, c2); g.l(y - 2, x - 1, x + 1, c2); g.p(x + 1, y - 4, cla(c2, 0.4));
         break;

@@ -1,4 +1,4 @@
-// Rodapé de ação (docs/contratos/ui.md §10.20; D10-B02, D7-03, D12f-01, D6-09): nos 3 tamanhos, o botão
+// Rodapé de ação (docs/contratos/arte.md §20; D10-B02, D7-03, D12f-01, D6-09): nos 3 tamanhos, o botão
 // de seguir fica à vista sem rolar e no mesmo lugar. Mede, numa página só: a intro e cada carta do resumo das salas
 // (todas), cada carta dos livros (todos), a capa das provas (todas) e o rodapé da questão 2 da prova de História.
 // Servidor e banco de TESTE novos (cenario.js); save 100% sintético.

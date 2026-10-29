@@ -1,4 +1,4 @@
-// A cor do app é uma só (ui.md §10.8): o html do index.html gerado, o manifesto do PWA e o theme-color do
+// A cor do app é uma só (arte.md §8): o html do index.html gerado, o manifesto do PWA e o theme-color do
 // vercel/montar.js usam Reino.config.paleta.noite.
 const { test } = require('node:test');
 const assert = require('assert');

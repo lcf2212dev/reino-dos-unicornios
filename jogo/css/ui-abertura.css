@@ -28,7 +28,7 @@
   image-rendering: pixelated;
 }
 
-/* título: duas linhas em letra pixel, contorno escuro e as faixas creme-laranja por cima de cada letra (ui.md §10.8) */
+/* título: duas linhas em letra pixel, contorno escuro e as faixas creme-laranja por cima de cada letra (arte.md §8) */
 .titulo-abertura {
   display: flex; flex-direction: column; align-items: center; gap: 0.35em;
   margin: 0; padding: 8px 4px 0;
@@ -36,7 +36,7 @@
   user-select: none;
 }
 .titulo-linha { display: block; white-space: nowrap; }
-/* escala de festa (ui.md §10.16): a linha grande em --texto-festa (48), --texto-t (32) no celular; a de cima um degrau
+/* escala de festa (arte.md §16): a linha grande em --texto-festa (48), --texto-t (32) no celular; a de cima um degrau
    da escala abaixo. O título não cresce com "Letras grandes" (a linha de cima volta um degrau: 24 → --texto, 16 → --texto-aux) */
 .titulo-linha-1 { font-size: var(--texto-g); color: var(--papel-quente); }
 .titulo-linha-2 { font-size: var(--texto-festa); color: var(--laranja); }
@@ -49,10 +49,10 @@
 .titulo-espaco { display: inline-block; width: 0.45em; }
 /* contorno em px de arte da interface: a linha de cima (16-24 px, cor lisa, sem a camada do degradê) com 2 px, a grande
    com 4 px (1 pixel da letra de 32 px); a sombra só para baixo */
-.titulo-linha-1 .titulo-letra { text-shadow: 2px 0 0 var(--borda), -2px 0 0 var(--borda), 0 2px 0 var(--borda), 0 -2px 0 var(--borda), 2px 2px 0 var(--borda), -2px 2px 0 var(--borda), 2px -2px 0 var(--borda), -2px -2px 0 var(--borda), 0 4px 0 var(--borda), 2px 4px 0 var(--borda), -2px 4px 0 var(--borda); }   /* tipografia-ok: contorno e sombra do título da abertura (escala de festa, §10.16) */
+.titulo-linha-1 .titulo-letra { text-shadow: 2px 0 0 var(--borda), -2px 0 0 var(--borda), 0 2px 0 var(--borda), 0 -2px 0 var(--borda), 2px 2px 0 var(--borda), -2px 2px 0 var(--borda), 2px -2px 0 var(--borda), -2px -2px 0 var(--borda), 0 4px 0 var(--borda), 2px 4px 0 var(--borda), -2px 4px 0 var(--borda); }   /* tipografia-ok: contorno e sombra do título da abertura (escala de festa, arte.md §16) */
 .titulo-letra {
   position: relative; display: inline-block;
-  text-shadow: 4px 0 0 var(--borda), -4px 0 0 var(--borda), 0 4px 0 var(--borda), 0 -4px 0 var(--borda), 4px 4px 0 var(--borda), -4px 4px 0 var(--borda), 4px -4px 0 var(--borda), -4px -4px 0 var(--borda), 0 8px 0 var(--borda), 4px 8px 0 var(--borda), -4px 8px 0 var(--borda);   /* tipografia-ok: contorno e sombra do título da abertura (escala de festa, §10.16) */
+  text-shadow: 4px 0 0 var(--borda), -4px 0 0 var(--borda), 0 4px 0 var(--borda), 0 -4px 0 var(--borda), 4px 4px 0 var(--borda), -4px 4px 0 var(--borda), 4px -4px 0 var(--borda), -4px -4px 0 var(--borda), 0 8px 0 var(--borda), 4px 8px 0 var(--borda), -4px 8px 0 var(--borda);   /* tipografia-ok: contorno e sombra do título da abertura (escala de festa, arte.md §16) */
   animation: letra-cai var(--lento) step-end var(--atraso, 0ms) both,
     letra-brilha calc(6 * var(--lento)) step-end var(--brilho, 1600ms) infinite;
 }
@@ -63,7 +63,7 @@
   -webkit-background-clip: text; background-clip: text; color: transparent;
   text-shadow: none;
 }
-@keyframes letra-cai {   /* cai em degraus inteiros (step-end), sem scale (ui.md §10.15) */
+@keyframes letra-cai {   /* cai em degraus inteiros (step-end), sem scale (arte.md §15) */
   0% { opacity: 0; transform: translateY(-24px); }
   25% { opacity: 1; transform: translateY(-24px); }
   50% { transform: translateY(-12px); }
@@ -172,7 +172,7 @@ body.sem-animacao .titulo-letra, body.sem-animacao .btn-pulsar::before { animati
 }
 
 /* Festa da medalha de ouro (js/ui/abertura-medalha.js): a faixa dourada no lugar do "Um novo capítulo" e, embaixo do
-   título, a medalha pendurada balançando em degraus de 2 px (sem girar o desenho, ui.md §10.15.4) com os textos. */
+   título, a medalha pendurada balançando em degraus de 2 px (sem girar o desenho, arte.md §15.4) com os textos. */
 .abertura-faixa-medalha {
   margin: 0; padding: 8px 16px;
   font-size: var(--texto); line-height: var(--entrelinha-titulo); color: var(--tinta);

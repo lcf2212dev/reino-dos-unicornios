@@ -14,7 +14,7 @@
   var CAPA = { cozinha: D.C.laranja, ar: D.C.azul, fogo: D.C.vermelho, ferrugem: D.C.terracota, agua: D.C.agua3,
     planta: D.C.folha, corpo: D.C.rosa, cientistas: D.C.roxo };
 
-  function hifenizar(s) { return R._ui.hifenizar(s); }   // ui/pecas.js (ui.md §10.17)
+  function hifenizar(s) { return R._ui.hifenizar(s); }   // ui/pecas.js (arte.md §17)
   function paginas(x) { return !x ? [] : Array.isArray(x) ? x.slice() : [x]; }
   function falar(ps) { ps = paginas(ps); if (ps.length) R.Som.falar(ps, { voz: Q.vozDe('livros') }); }
 

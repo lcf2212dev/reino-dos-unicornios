@@ -20,7 +20,7 @@ if (require.main === module) require(path.join(JOGO, 'ferramentas', 'ajuda.js'))
 const { conferirPastaTmp } = require(path.join(JOGO, 'ferramentas', 'testes', 'guardas.js'));
 const PUBLICO = path.join(__dirname, 'public');
 const PWA = path.join(__dirname, 'pwa');
-// cor do app (theme-color): Reino.config.paleta.noite; o jogo troca para a grama com o mapa aberto (ui.md §10.8)
+// cor do app (theme-color): Reino.config.paleta.noite; o jogo troca para a grama com o mapa aberto (arte.md §8)
 const COR = /\bnoite:\s*'(#[0-9a-f]{6})'/i.exec(fs.readFileSync(path.join(JOGO, 'js', 'nucleo', 'config.js'), 'utf8'))[1];
 // o que o build lê do repositório (o plano B, jogo/ferramentas/fluxo/vercel.js, exporta só isto)
 const DEPENDENCIAS = ['jogo/index.html', 'jogo/css', 'jogo/js', 'jogo/ferramentas/gerar-versao.js',

@@ -50,7 +50,7 @@
 
   /* ---------- a cena ---------- */
   // barra do app (theme-color, só no build da Vercel): noite na abertura e no login, grama quando o mapa abre
-  // (main.js entrarNoReino; ui.md §10.8)
+  // (main.js entrarNoReino; arte.md §8)
   function corDaBarra(nome) {
     var meta = document.querySelector('meta[name=theme-color]'), pal = Reino.config && Reino.config.paleta;
     if (meta && pal && pal[nome]) meta.setAttribute('content', pal[nome]);

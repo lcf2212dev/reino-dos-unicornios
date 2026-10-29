@@ -7,7 +7,7 @@
 (function () {
   var R = window.Reino = window.Reino || {};
   var K = '#3a2446';
-  // cores da moldura do carimbo (papel, céu --noite, silhueta): Reino.config.paleta (ui.md §10.8), lida na hora
+  // cores da moldura do carimbo (papel, céu --noite, silhueta): Reino.config.paleta (arte.md §8), lida na hora
   // (chave que faltar: a reserva, com o hex do contrato)
   var RESERVA = { papel: '#fff8ee', papel2: '#efe8e2', noite: '#24162e', tintaSuave: '#6b5378' };
   function PAL() {
@@ -70,7 +70,7 @@
 
   // carimbo 27×27: papel de selo 23×23 (2 a 24) com a borda picotada (um dente a cada 3 px, simétrico),
   // contorno por fora, filete na cor do planeta e, dentro, o planeta no céu (--noite). Sem carimbo: o
-  // indisponível (papel --papel-2, ui.md §10.19.1), fundo claro e o planeta em silhueta (--tinta-suave com contorno).
+  // indisponível (papel --papel-2, arte.md §19.1), fundo claro e o planeta em silhueta (--tinta-suave com contorno).
   var S = 27, A = 2, B = 24;
   function papel(x, y) {
     if (x < A || y < A || x > B || y > B) return false;
@@ -105,7 +105,7 @@
     return c;
   }
 
-  // no DOM, nítido: 2 px CSS por pixel de arte (ui.md §10.10)
+  // no DOM, nítido: 2 px CSS por pixel de arte (arte.md §10)
   function dom(src, classe) {
     var PA = window.PA;
     return PA.paraDOM(src, PA.escalaNitida(2 * src.width, src.width), classe);

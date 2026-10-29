@@ -8,7 +8,7 @@
 .aviso-medalha { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--ouro-claro); }
 .aviso-medalha-icone { font-size: var(--texto-t); flex: none; }
 
-.balao-respira { width: 150px; height: 180px; display: grid; place-items: center; transform: scale(0.55); transition: transform 3.1s ease-in-out; }   /* movimento-ok: respiração do Ritual da Calma, contínua de propósito (ui.md §10.15.5) */
+.balao-respira { width: 150px; height: 180px; display: grid; place-items: center; transform: scale(0.55); transition: transform 3.1s ease-in-out; }   /* movimento-ok: respiração do Ritual da Calma, contínua de propósito (arte.md §15.5) */
 .balao-cor { display: block; }   /* o balão em pixel art 16×20 (treino.js, BALAO), a 8 px por pixel */
 .balao-botao { vertical-align: middle; margin-left: 8px; }   /* o mesmo balão no botão, a 2 px por pixel */
 .balao-respira.enche { transform: scale(1.05); }
@@ -40,14 +40,14 @@
 .chip-rar { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); font-size: var(--texto-aux); white-space: nowrap; background: var(--rar-fundo, var(--comum-fundo)); color: var(--rar-texto, var(--tinta)); }
 .sala-chips .chip-mini { border-radius: var(--canto); }
 .chip-mini.valendo { background: var(--rar-fundo, var(--comum-fundo)); color: var(--rar-texto, var(--tinta)); }
-/* raridade: fundo chapado e a faixa interna de 4 px em --rar-desenho (lendário dourado, sem o arco-íris: ui.md §10.8) */
-.faixa-valendo { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 6px 14px; border-bottom: var(--borda-grossa) solid var(--borda); font-size: var(--texto-aux); text-align: center; background: var(--rar-fundo, var(--comum-fundo)); box-shadow: inset 0 -4px 0 var(--rar-desenho, var(--comum-desenho)); }   /* tipografia-ok: faixa interna da raridade (ui.md §10.8) */
+/* raridade: fundo chapado e a faixa interna de 4 px em --rar-desenho (lendário dourado, sem o arco-íris: arte.md §8) */
+.faixa-valendo { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 6px 14px; border-bottom: var(--borda-grossa) solid var(--borda); font-size: var(--texto-aux); text-align: center; background: var(--rar-fundo, var(--comum-fundo)); box-shadow: inset 0 -4px 0 var(--rar-desenho, var(--comum-desenho)); }   /* tipografia-ok: faixa interna da raridade (arte.md §8) */
 .faixa-valendo.treino { background: var(--papel); color: var(--tinta-suave); box-shadow: none; }
 .faixa-valendo canvas { flex: none; }
-.selo-tentativa { display: flex; flex-direction: column; align-items: center; padding: 10px 22px; border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto-grande); background: var(--rar-fundo, var(--comum-fundo)); box-shadow: inset 0 0 0 4px var(--rar-desenho, var(--comum-desenho)), var(--sombra-grande); }   /* tipografia-ok: faixa interna da raridade (ui.md §10.8) */
+.selo-tentativa { display: flex; flex-direction: column; align-items: center; padding: 10px 22px; border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto-grande); background: var(--rar-fundo, var(--comum-fundo)); box-shadow: inset 0 0 0 4px var(--rar-desenho, var(--comum-desenho)), var(--sombra-grande); }   /* tipografia-ok: faixa interna da raridade (arte.md §8) */
 .selo-tentativa small { font-size: var(--texto-aux); color: var(--tinta-suave); }
 .selo-tentativa b { font-family: var(--fonte-titulo); font-size: var(--texto-g); }
-.previa-valendo { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%; padding: 24px 16px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--rar-fundo, var(--comum-fundo)); box-shadow: inset 0 0 0 4px var(--rar-desenho, var(--comum-desenho)); }   /* tipografia-ok: faixa interna da raridade (ui.md §10.8) */
+.previa-valendo { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%; padding: 24px 16px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--rar-fundo, var(--comum-fundo)); box-shadow: inset 0 0 0 4px var(--rar-desenho, var(--comum-desenho)); }   /* tipografia-ok: faixa interna da raridade (arte.md §8) */
 .previa-valendo.ganhou { animation: brilhar calc(2 * var(--lento)) step-end; }
 .previa-valendo p { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; }
 .quadro-premios-caixa { width: 100%; display: flex; flex-direction: column; gap: 10px; text-align: left; }
@@ -62,7 +62,7 @@
 .letras-grandes .linha-premio { grid-template-columns: auto 1fr fit-content(calc(100% - 12px - 150px)); }
 .linha-premio[class*="rar-"] { background: var(--rar-fundo); }
 .linha-premio.agora { outline: 4px solid var(--roxo); outline-offset: 2px; box-shadow: var(--sombra-grande); }
-.linha-premio.passou { background: var(--papel-2); color: var(--tinta-suave); }   /* já passou: texto suave, sem transparência (ui.md §10.19.1); só o desenho apaga */
+.linha-premio.passou { background: var(--papel-2); color: var(--tinta-suave); }   /* já passou: texto suave, sem transparência (arte.md §19.1); só o desenho apaga */
 .linha-premio.passou canvas { filter: var(--apagado); }
 .linha-premio.passou .chip-rar { background: var(--papel); color: var(--tinta-suave); }   /* a raridade também apaga: não parece prêmio em jogo */
 .linha-premio.ganhou { background: var(--certo-fundo); }
@@ -75,7 +75,7 @@
 .nota-folha b { font-family: var(--fonte-titulo); font-size: var(--texto-t); line-height: var(--entrelinha-titulo); }
 .nota-folha small { font-size: var(--texto-aux); }
 .nota-folha.nota-dez { border-color: var(--certo); color: var(--certo); }
-.proximo-premio { display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px 14px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--rar-fundo, var(--comum-fundo)); box-shadow: inset 0 0 0 4px var(--rar-desenho, var(--comum-desenho)); text-align: left; }   /* tipografia-ok: faixa interna da raridade (ui.md §10.8) */
+.proximo-premio { display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px 14px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--rar-fundo, var(--comum-fundo)); box-shadow: inset 0 0 0 4px var(--rar-desenho, var(--comum-desenho)); text-align: left; }   /* tipografia-ok: faixa interna da raridade (arte.md §8) */
 .proximo-premio canvas { flex: none; }
 .proximo-premio p { display: block; }
 .proximo-premio .chip-rar { vertical-align: middle; }

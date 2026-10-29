@@ -5,13 +5,13 @@
 //   --commit             um commit por frente sem commit
 //   --vozes              fala sem áudio: npm run vozes (grava, empacota, confere) + commit "vozes …", antes do npm test
 //   --continuar          retoma depois de um conflito (resolva e git add) ou da conferência das vozes reprovada
-//   --sem-e2e            pula o npm run e2e
+//   --sem-e2e            pula o npm run e2e (o --merge recusa sem ele; sem --sem-e2e, roda o que faltou)
 //   --esperado '<re>'    e2e diferente: recusa (código 1, sem trocar a base nem merge) se alguma diferença não casar
 //                        com o regex (nome da imagem sem .png, <tamanho>/<nome> ou caminho do arquivo; resumo.json)
 //   Entrega (autorizada pelo CLAUDE.md da raiz):
 //   --trocar-base "<d>"  aceita o e2e atual: e2e.js --aceitar "<d>" (base `@`) dentro do ÚLTIMO commit da integração
-//   --merge              move colisões iguais e merge --ff-only na árvore principal (npm test verde, nenhuma fala
-//                        sem áudio, nada solto)
+//   --merge              move colisões iguais e merge --ff-only na árvore principal (npm test verde, e2e idêntico
+//                        ou com --esperado aceito, nenhuma fala sem áudio, nada solto)
 //   --push               git push origin main (nunca --force)
 // Sem entradas, retoma a integração <nome> (padrão: a de hoje) e roda só as fases que faltam ou foram pedidas.
 // a. e2e.js --podar (o /tmp é RAM); confere: árvore principal sem mudança em arquivo rastreado (pastas de material
@@ -27,7 +27,7 @@
 //    vozes-indice.json: índice juntado, um lado do resto, listar-falas + empacotar-vozes; a mesma fala com áudios
 //    diferentes = para).
 // d. npm run index (mudou: entra no último commit); vozes (listar-falas, conta das falas sem áudio; --vozes grava);
-//    npm test; npm run e2e (e o resumo.json dele). Relatório e saídas em /tmp/reino-testes/integrar/<nome>/.
+//    npm test; npm run e2e (e uma cópia do resumo.json dele). Relatório e saídas em /tmp/reino-testes/integrar/<nome>/.
 //    O npm test não roda de novo se estava verde e depois só mudou o base-referencia.txt, como o --aceitar gravou.
 // e. colisões: arquivo NÃO rastreado na árvore principal que a integração passa a rastrear. Igual byte a byte =
 //    "mover" (só com --merge, para /tmp/reino-testes/antes-do-merge/<data>/); diferente = para.
@@ -194,6 +194,19 @@ async function integrar(argv, op2 = {}) {
   const marcar = (conf) => { conf.marca = marca(); conf.marcaSemBase = marca(true); };
   // a base aceita não muda o jogo: index/vozes/test/e2e não se refazem por ela (o npm test vermelho, sim: no --merge)
   const precisa = () => !estado.conferido || !(mesmo() || soBaseAceita());
+  // npm run e2e; o resumo.json vai junto do relatório (a poda de 1 h do e2e-* não deixa o --esperado sem ele)
+  async function rodarE2e(conf) {
+    if (!temScript(integ, 'e2e')) return;
+    log('… npm run e2e');
+    conf.e2eSaida = path.join(dirRel, 'e2e.txt');
+    conf.e2e = await C.rodarTee('npm', ['run', 'e2e'], integ, conf.e2eSaida, quieto);
+    conf.esperado = null;
+    log(`${conf.e2e ? '✔ e2e idêntico' : '✘ e2e com diferença'} (saída em ${conf.e2eSaida})`);
+    const resumo = E.resumo(conf.e2eSaida);
+    conf.resumo = resumo && path.join(dirRel, 'e2e-resumo.json');
+    if (resumo) fs.copyFileSync(resumo, conf.resumo);
+    if (resumo) log(`resumo do e2e (${resumo}, cópia em ${conf.resumo}):\n${fs.readFileSync(conf.resumo, 'utf8').trimEnd()}`);
+  }
   if (precisa() && temScript(integ, 'index')) {
     const x = C.rodar('npm', ['run', '--silent', 'index'], { cwd: integ });
     log(x.ok ? '✔ npm run index' : `✘ npm run index falhou:\n${x.erro || x.saida}`);
@@ -213,18 +226,15 @@ async function integrar(argv, op2 = {}) {
       conf.teste = await C.rodarTee('npm', ['test'], integ, path.join(dirRel, 'npm-test.txt'), quieto);
       log(`${conf.teste ? '✔' : '✘'} npm test (saída em ${path.join(dirRel, 'npm-test.txt')})`);
     } else log('⚠ sem script "test" no package.json: npm test pulado');
-    if (op['sem-e2e']) log('• npm run e2e pulado (--sem-e2e)');
-    else if (temScript(integ, 'e2e')) {
-      log('… npm run e2e');
-      conf.e2eSaida = path.join(dirRel, 'e2e.txt');
-      conf.e2e = await C.rodarTee('npm', ['run', 'e2e'], integ, conf.e2eSaida, quieto);
-      log(`${conf.e2e ? '✔ e2e idêntico' : '✘ e2e com diferença'} (saída em ${conf.e2eSaida})`);
-      conf.resumo = E.resumo(conf.e2eSaida);
-      if (conf.resumo) log(`resumo do e2e (${conf.resumo}):\n${fs.readFileSync(conf.resumo, 'utf8').trimEnd()}`);
-    }
+    if (op['sem-e2e']) log('• npm run e2e pulado (--sem-e2e; o --merge recusa sem e2e)');
+    else await rodarE2e(conf);
     marcar(conf);
     estado.conferido = conf; salvar();
-  } else log(`• index/test/e2e já conferidos neste mesmo estado (npm test ${estado.conferido.teste ? 'verde' : 'vermelho'})`);
+  } else {
+    log(`• index/test/e2e já conferidos neste mesmo estado (npm test ${estado.conferido.teste ? 'verde' : 'vermelho'})`);
+    // pulado antes (--sem-e2e): roda agora, no mesmo estado
+    if (estado.conferido.e2e === null && !op['sem-e2e']) { await rodarE2e(estado.conferido); salvar(); }
+  }
 
   /* ---------- f0: as diferenças do e2e são as esperadas? ---------- */
   if (esperado) {
@@ -237,6 +247,7 @@ async function integrar(argv, op2 = {}) {
         return fim(1);
       }
       if (x.total) log(`✔ as ${x.total} diferença(s) do e2e casam com --esperado /${esperado.source}/`);
+      estado.conferido.esperado = esperado.source; salvar();   // aceito para ESTE e2e (outro e2e zera)
     }
   }
 
@@ -274,6 +285,9 @@ async function integrar(argv, op2 = {}) {
       marcar(estado.conferido); salvar();
     }
     if (!estado.conferido.teste) motivos.push('npm test não está verde');
+    // merge só com npm test e npm run e2e verdes (CLAUDE.md da raiz); e2e diferente só com o --esperado aceito
+    if (estado.conferido.e2e === null) motivos.push('o npm run e2e não rodou (rode sem --sem-e2e)');
+    else if (estado.conferido.e2e === false && !estado.conferido.esperado) motivos.push("e2e com diferença sem --esperado aceito (--esperado '<regex>')");
     if (motivos.length) { log(`✘ --merge recusado: ${motivos.join('; ')}`); return fim(1); }
     let destino = null;
     if (col.iguais.length) { destino = G.moverColisoes(r.principal, col.iguais, op2.antesDoMerge); log(`• ${col.iguais.length} colisão(ões) igual(is) movida(s) para ${destino}`); }

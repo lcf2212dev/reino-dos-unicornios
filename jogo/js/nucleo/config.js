@@ -73,12 +73,12 @@ Reino.config = {
   // comVoz = volume enquanto uma voz fala (30%). Melhor não mexer em lookaheadS e intervaloMs
   musica: { volume: 0.22, crossfadeS: 1.5, comVoz: 0.3, lookaheadS: 0.25, intervaloMs: 60 },
   // tamanhos de letra (px CSS) que o canvas e o JS usam: espelho dos tokens --texto-p, --texto-aux, --texto e
-  // --texto-g do :root de css/ui-base.css (docs/contratos/ui.md §10.9.1). Mudou aqui, mude lá. A placa do cômodo
-  // usa corpo × devicePixelRatio (§10.9.5)
+  // --texto-g do :root de css/ui-base.css (docs/contratos/arte.md §9.1). Mudou aqui, mude lá. A placa do cômodo
+  // usa corpo × devicePixelRatio (arte.md §9.5)
   texto: { p: 8, aux: 12, corpo: 16, g: 24 },
   // durações (ms) de animação e transição: espelho dos tokens --rapido, --normal e --lento do :root de
-  // css/ui-base.css (docs/contratos/ui.md §10.15.3; o validar-movimento confere). Mudou aqui, mude lá.
-  // rapido = resposta ao toque e entrada/saída de tela (§10.15.8), normal = abrir/fechar/trocar, lento = chegada
+  // css/ui-base.css (docs/contratos/arte.md §15.3; o validar-movimento confere). Mudou aqui, mude lá.
+  // rapido = resposta ao toque e entrada/saída de tela (arte.md §15.8), normal = abrir/fechar/trocar, lento = chegada
   movimento: { rapido: 120, normal: 240, lento: 600 },
   // mapa da cidade (js/mundo/): o tamanho (56×42 tiles) e o traçado ficam em js/mundo/mapa.js e js/mundo/lugares.js.
   // contorno dourado do prédio de lugar concluído (js/mundo/contorno.js): espessura em px da linha forte;
@@ -149,7 +149,7 @@ Reino.config = {
   // sozinha ao aparecer; resumoNaSala: as cartas do livro usadas pela sala aparecem (e são lidas) antes da 1ª questão
   esperaFala: { travar: false, msPorLetra: 75, folga: 1.6, minS: 2, maxS: 30, lerQuestoes: true, resumoNaSala: true },
   // cores da moldura que o canvas e o JS usam: espelho do :root de css/ui-base.css (mesmo hex, conferido pelo
-  // validar-cores.js; papéis em docs/contratos/ui.md §10.8). Mudou aqui, mude lá. Não é cor de save (D8B-03)
+  // validar-cores.js; papéis em docs/contratos/arte.md §8). Mudou aqui, mude lá. Não é cor de save (D8B-03)
   paleta: {
     tinta: '#3a2446', tintaSuave: '#6b5378', noite: '#24162e', noite2: '#33224a',
     papel: '#fff8ee', papel2: '#efe8e2', papelQuente: '#fff1cc', grama: '#c6e15a',
@@ -159,7 +159,7 @@ Reino.config = {
       epico: { texto: '#5b2aa8', fundo: '#eadcff', desenho: '#a66bff' },
       lendario: { texto: '#8a5200', fundo: '#ffe39a', desenho: '#ffb020' },
     },
-    confete: ['#ff7eb6', '#ffd34d', '#7c5cff', '#5fb4ff', '#ff8a3d', '#9ccc4a'],   // --rosa --ouro --roxo --azul --laranja --verde-folha (ui.md §10.14.2)
+    confete: ['#ff7eb6', '#ffd34d', '#7c5cff', '#5fb4ff', '#ff8a3d', '#9ccc4a'],   // --rosa --ouro --roxo --azul --laranja --verde-folha (arte.md §14.2)
   },
   // vozes naturais (gravadas por ferramentas/vozes/gerar-vozes.py). Trocou voz, velocidade ou tom: `npm run vozes`
   // (regrava) e peça para republicar

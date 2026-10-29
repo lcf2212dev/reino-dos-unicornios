@@ -228,7 +228,8 @@ Com relógios diferentes, as duas se desfariam para sempre. Por isso:
    intocáveis: o servidor de casa (container Docker `reino-unicornios` desligado, banco em
    `jogo/servidor/dados/reino.db`, copiado para a Vercel) e o artifact do claude.ai (doc `progresso/mariana`).
 2. Proibido:
-   - abrir, chamar ou testar qualquer endereço do servidor de casa, ou ler e gravar o banco da Vercel;
+   - abrir, chamar ou testar qualquer endereço do servidor de casa (a porta 80, `reinodosunicornios.local`, `localhost`
+     sem porta de teste, o IP do PC), ou ler e gravar o banco da Vercel;
    - ler, copiar, gravar ou apagar qualquer coisa em `jogo/servidor/dados/` (nem listar);
    - `docker compose restart/down/up/build`, mexer no container ou no serviço `reino-nome`;
    - publicar ou republicar o artifact, ou abrir o jogo publicado;

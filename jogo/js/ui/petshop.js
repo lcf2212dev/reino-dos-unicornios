@@ -67,7 +67,7 @@
       var guardada = !cheio && uniChocado(id) ? Cu.quantidade(co.id) : 0;
       var podeComprar = P.estrelas() >= co.preco;
       if (!podeComprar && !guardada) { faltamEstrelas(co, co.preco - P.estrelas()); return; }
-      // o desenho da comida (64 px, destaque §10.10.5) em cima e o preço com a ⭐ em pixel, numa linha só dele (como na Loja)
+      // o desenho da comida (64 px, destaque arte.md §10.5) em cima e o preço com a ⭐ em pixel, numa linha só dele (como na Loja)
       var d = PA.iconeDesenho(co.icone);
       var desenho = [d ? PA.paraDOM(d, PA.escalaNitida(64, 16), 'icone-acessorio') : co.icone, el('br')];
       var preco = '⭐\u00a0' + co.preco + (co.preco === 1 ? '\u00a0estrela' : '\u00a0estrelas');

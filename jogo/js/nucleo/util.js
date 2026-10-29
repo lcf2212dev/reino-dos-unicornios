@@ -78,7 +78,7 @@ Reino.util = (function () {
     return node;
   }
 
-  // quebra de linha (ui.md §10.17): grupos de no máximo COLA_MAX caracteres (espaço e pontuação contam, emoji vale 2).
+  // quebra de linha (arte.md §17): grupos de no máximo COLA_MAX caracteres (espaço e pontuação contam, emoji vale 2).
   // Cola à direita a palavra de 1–2 letras ("a", "pp."), o "R$" e o número (só começando um grupo); cola à esquerda o
   // número do fim (da frase ou da lista: "de 10.", "e 29"), o de "Sala N" e o emoji do fim. Se a cola à esquerda
   // passar do teto, o grupo se desfaz e ela fica só com a palavra de antes (teto maior: COLA_EMOJI, COLA_NUM).

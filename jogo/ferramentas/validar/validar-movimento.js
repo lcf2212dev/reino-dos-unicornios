@@ -1,15 +1,15 @@
-// Movimento da interface (docs/contratos/ui.md §10.15.2-§10.15.8; pedido 2026-09-29-tv-3i §14.9).
+// Movimento da interface (docs/contratos/arte.md §15.2-§15.8; pedido 2026-09-29-tv-3i §14.9).
 // Uso: node ferramentas/validar/validar-movimento.js [--raiz <pasta jogo>] [--detalhes] [--estrito]
 //   (roda no npm run validar)
 // CSS (css/*.css, sem os comentários):
 //   (a) duração de animation/transition (e -duration) só por token: var(--rapido|--normal|--lento) ou
 //       calc(<inteiro> * var(--lento)); 0ms/0s/0.01ms só nas saídas (body.sem-animacao, prefers-reduced-motion);
-//       repetição infinite com período de 2 × --lento ou mais (§10.15.3); exceções do §10.15.5 em EXCECOES;
+//       repetição infinite com período de 2 × --lento ou mais (arte.md §15.3); exceções do §15.5 em EXCECOES;
 //   (b) tocável com sombra de degrau (0 Npx 0 sem inset, --sombra-pequena/-grande ou custom property do :root que
 //       vira isso) declara --degrau: Npx na mesma regra ou na regra da classe base; fora NAO_TOCAVEIS e o
-//       indisponível (§10.15.7.1, §10.15.7.6, §10.19.1);
-//   (c) :active com transform ou box-shadow só na regra única do ui-base.css (§10.15.7.1);
-// JS: :root --rapido/--normal/--lento igual a Reino.config.movimento { rapido, normal, lento } (§10.15.3).
+//       indisponível (arte.md §15.7.1, §15.7.6, §19.1);
+//   (c) :active com transform ou box-shadow só na regra única do ui-base.css (arte.md §15.7.1);
+// JS: :root --rapido/--normal/--lento igual a Reino.config.movimento { rapido, normal, lento } (arte.md §15.3).
 // Exceção de propósito: "/* movimento-ok: <motivo> */" na mesma linha.
 // Modo estrito (desde a integração da 3i): qualquer violação sai 1.
 if (require.main === module) require('../ajuda').ajuda(__filename);
@@ -18,17 +18,17 @@ const path = require('path');
 
 const ESTRITO = true;
 const TOKENS = { '--rapido': 'rapido', '--normal': 'normal', '--lento': 'lento' };   // :root → Reino.config.movimento
-// §10.15.7.6: com sombra de degrau, mas não tocáveis (classe no último composto do seletor)
+// arte.md §15.7.6: com sombra de degrau, mas não tocáveis (classe no último composto do seletor)
 const NAO_TOCAVEIS = ['painel', 'painel-ovo', 'dock', 'claude-fala', 'titulo-jogo', 'nota-folha', 'selo-tentativa',
   'linha-premio', 'jogadores-guardando', 'criar-plaquinha', 'apoio', 'fotos-vazio'];
-// §10.15.5: exceções escritas de duração (arquivo + trecho do seletor ou do valor)
+// arte.md §15.5: exceções escritas de duração (arquivo + trecho do seletor ou do valor)
 const EXCECOES = [
   { arq: 'ui-base.css', val: /\barmar-encher\b/ },          // barra em scaleX, dura ARMAR_MS
   { arq: 'ui-prova.css', sel: /\.balao-respira\b/ },        // Ritual da Calma, 3,1 s
   { arq: 'ui-abertura.css', val: /--entrar-ms\b/ },         // zoom da abertura, Reino.config.abertura
 ];
 const ULTIMA_REGRA = /^:is\(button,\s*\[role="button"\]\):active/;   // a regra única de afundar (ui-base.css)
-const PARAGRAFO = { duracao: '§10.15.3', degrau: '§10.15.7.1', active: '§10.15.7.1', config: '§10.15.3' };
+const PARAGRAFO = { duracao: '§15.3', degrau: '§15.7.1', active: '§15.7.1', config: '§15.3' };
 
 function semComentarios(css) { return css.replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, ' ')); }
 function linhaDe(texto, i) { return texto.slice(0, i).split('\n').length; }
@@ -190,7 +190,7 @@ function checar(arquivos, cfgMov) {
     else if (cfgMov[k] !== n) v.config.push(`config.movimento.${k} = ${cfgMov[k]}, mas :root ${tok} = ${raiz[tok]}`);
   }
   v.config = [...new Set(v.config)];
-  for (const [cat, lista] of Object.entries(v)) v[cat] = lista.map((l) => `${l}  [ui.md ${PARAGRAFO[cat]}]`);
+  for (const [cat, lista] of Object.entries(v)) v[cat] = lista.map((l) => `${l}  [arte.md ${PARAGRAFO[cat]}]`);
   return v;
 }
 

@@ -84,7 +84,7 @@
         // cada letra primeiro com a folga cheia, depois com a folga curta (antes de diminuir a letra)
         var fonte = Math.max(40, m.fonte) - 8 * Math.floor(passo / 2), folga = passo % 2 ? 0.35 : 0.6;
         ctx.font = fonte + 'px ' + FONTE_PIXEL;
-        ctx.textRendering = 'optimizeSpeed';   // sem ligadura "fi"/"fl" (ui.md §10.9)
+        ctx.textRendering = 'optimizeSpeed';   // sem ligadura "fi"/"fl" (arte.md §9)
         var pad = Math.max(6, Math.round(fonte * folga)), hEt = fonte + pad * 2, h2 = hEt + Math.round(fonte * 1.25);
         var wd = Math.ceil(ctx.measureText(data).width) + pad * 2;
         var wl = Math.ceil(ctx.measureText(tl).width) + pad * 2;
@@ -104,7 +104,7 @@
       }
     }
     ctx.font = '8px ' + FONTE_PIXEL;
-    ctx.textRendering = 'optimizeSpeed';   // sem ligadura "fi"/"fl" (ui.md §10.9)
+    ctx.textRendering = 'optimizeSpeed';   // sem ligadura "fi"/"fl" (arte.md §9)
     return { fonte: 8, pad: 6, linhas: [[tp], [data]], wl: larguraUtil, wd: Math.ceil(ctx.measureText(data).width) + 12, vao: vao, texto: tp, partes: [tp], alt: 2 * 20 + vao };
   }
 
@@ -122,7 +122,7 @@
     ctx.fillRect(x + w - pt * 2, y + pt, pt, pt);
     ctx.fillStyle = K;
     ctx.font = fonte + 'px ' + FONTE_PIXEL;
-    ctx.textRendering = 'optimizeSpeed';   // sem ligadura "fi"/"fl" (ui.md §10.9)
+    ctx.textRendering = 'optimizeSpeed';   // sem ligadura "fi"/"fl" (arte.md §9)
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     var ls = [].concat(texto), passoL = Math.round(fonte * 1.25);   // uma ou duas linhas, centradas
