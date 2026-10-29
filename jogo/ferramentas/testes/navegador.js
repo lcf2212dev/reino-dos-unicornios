@@ -67,12 +67,15 @@ function antesDeTudo() {
 }
 
 // op: { browser, url (do servidor de teste), tamanho, save (objeto sintético), query, contexto,
-//       scripts (funções/textos que rodam antes do jogo em cada carga, depois do save) }
+//       scripts (funções/textos que rodam antes do jogo em cada carga, depois do save),
+//       serviceWorkers (true: liga o service worker; só os testes do app da Vercel, sw-nucleo.navegador.test.js) }
 async function abrir(op) {
   const base = conferirUrl(op.url);
   const browser = op.browser || await lancar();
-  // service worker bloqueado: requisições dele escapariam do filtro de rede abaixo
-  const context = await browser.newContext(Object.assign({ reducedMotion: op.reducedMotion || 'reduce' }, TAMANHOS[op.tamanho || 'notebook'], op.contexto || {}, { serviceWorkers: 'block' }));
+  // service worker bloqueado: requisições dele escapariam do filtro de rede abaixo (ligado só a pedido: aí só a 2ª
+  // barreira, o proxy morto de lancar(), segura o que ele pedir fora do 127.0.0.1)
+  const context = await browser.newContext(Object.assign({ reducedMotion: op.reducedMotion || 'reduce' }, TAMANHOS[op.tamanho || 'notebook'], op.contexto || {},
+    { serviceWorkers: op.serviceWorkers === true ? 'allow' : 'block' }));
   const origem = base.origin;
   await context.route('**/*', (r) => {
     const u = r.request().url();

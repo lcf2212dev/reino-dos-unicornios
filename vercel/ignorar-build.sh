@@ -2,8 +2,9 @@
 # "Ignored Build Step" da Vercel (ignoreCommand do vercel.json), no deploy que a integração com o GitHub dispara a
 # cada push. Sai 0 = não publica; sai 1 = publica. Roda em vercel/ (a pasta raiz do projeto), com o clone raso do repo.
 # 1. Só produção (a main): preview nunca, porque as variáveis do banco (saves reais) valem também em preview.
-# 2. Só quando o jogo muda desde a última publicação da main (VERCEL_GIT_PREVIOUS_SHA): index.html, css/, js/, o
-#    gerar-versao.js que o build usa e o próprio vercel/. Push só de docs ou ferramentas não publica (CLAUDE.md da raiz).
+# 2. Só quando o jogo muda desde a última publicação da main (VERCEL_GIT_PREVIOUS_SHA): tudo o que o build lê
+#    (DEPENDENCIAS do montar.js: index.html, css/, js/, as ferramentas que ele usa e o próprio vercel/). Push só de
+#    docs ou de outras ferramentas não publica (CLAUDE.md da raiz). A mesma lista vale no npm run vercel -- --conferir.
 # Na dúvida (sem publicação anterior, commit fora do clone raso), publica.
 if [ "$VERCEL_ENV" != "production" ]; then
   echo "ignorado: $VERCEL_ENV não é produção"
@@ -14,7 +15,8 @@ if [ -z "$VERCEL_GIT_PREVIOUS_SHA" ]; then
   exit 1
 fi
 git diff --quiet "$VERCEL_GIT_PREVIOUS_SHA" HEAD -- ../jogo/index.html ../jogo/css ../jogo/js \
-  ../jogo/ferramentas/gerar-versao.js ../jogo/ferramentas/ajuda.js .
+  ../jogo/ferramentas/gerar-versao.js ../jogo/ferramentas/ajuda.js ../jogo/ferramentas/jogo-no-node.js \
+  ../jogo/ferramentas/pwa/sprite.js ../jogo/ferramentas/testes/guardas.js .
 case $? in
   0) echo "ignorado: o jogo não mudou desde $VERCEL_GIT_PREVIOUS_SHA"; exit 0 ;;
   1) echo "publica: o jogo mudou desde $VERCEL_GIT_PREVIOUS_SHA"; exit 1 ;;
