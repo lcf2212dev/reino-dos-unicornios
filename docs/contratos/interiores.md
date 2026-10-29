@@ -252,6 +252,16 @@ parte). Aqui só o que outros arquivos usam. Escada entre andares de lugares dif
    (`castelo/castelo.js`). O mesmo vale para Ciências (`lab-cavaleira`, registrada no `castelo/castelo.js`, que
    carrega antes do Observatório).
 
+### 9.5.1 Torre do Relógio (lugar `materia:ingles`)
+1. Ids `torre` (térreo), `torre-1` a `torre-5` e `torre-relogio` (o mecanismo no alto), mesmo esqueleto 13×13 e as
+   mesmas escadas; `pacote: 'interior-torre'`. É o prédio do English do 4º bimestre (`ingles4`, `quarto-bimestre.md`
+   §7): o térreo é o saguão (o guia `ponteiro` e os dois livros), e cada andar é um capítulo, na ordem do livro
+   (`S.andarDoCapitulo` em `torre/torre.js`), com o anfitrião dele (guia da matéria).
+2. As salas viram estações (objeto `torre-estacao`, `torre/en-objetos.js`) GERADAS DOS DADOS: até 4 por andar, vaga
+   sem sala = pedestal; sala sem andar ou capítulo com sala demais = erro na carga. Andares em `torre/en-andares.js`.
+3. O layout do 3º bimestre (um andar por sala `i1`…`i5`) está em `arquivo/terceiro-bimestre/`, que a fixture
+   histórica carrega no lugar destes arquivos.
+
 ### 9.6 Interior de teste
 O interior de teste da primeira fase (`teste`, lugar `bau`, NPCs `teste-guia`/`teste-sala`) foi trocado pelo
 Baú de verdade e não existe mais. Os perfis de voz `npc-teste-guia`/`npc-teste-sala` ainda estão em

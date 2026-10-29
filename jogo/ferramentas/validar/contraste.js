@@ -7,8 +7,7 @@ const CONTORNO = '#3a2446';  // Reino.Desenho.K
 
 const EXCECOES = {
   'observatorio:planetario': 'chão clareado aprovado pelo pai (interiores.md §6.7)',
-  // medidas em 2026-09-26 (mediana 2,90 arredondada e 2,87)
-  'torre-2:andar': 'aceito pelo Leandro em 2026-09-26',
+  // medida em 2026-09-26 (mediana 2,87); o céu de noite do antigo andar 2 da Torre (2,90) saiu com o English do 4º bimestre
   'observatorio:cupula': 'aceito pelo Leandro em 2026-09-26',
 };
 
