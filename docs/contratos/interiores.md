@@ -253,7 +253,7 @@ parte). Aqui só o que outros arquivos usam. Escada entre andares de lugares dif
    carrega antes do Observatório).
 
 ### 9.5.1 Torre do Relógio (lugar `materia:ingles`)
-1. Ids `torre` (térreo), `torre-1` a `torre-5` e `torre-relogio` (o mecanismo no alto), mesmo esqueleto 13×13 e as
+1. Ids `torre` (térreo), `torre-1` a `torre-4` (um por capítulo: English 11 e 12, Projetos 11 e 12) e `torre-relogio`, esqueleto 13×13 e as
    mesmas escadas; `pacote: 'interior-torre'`. É o prédio do English do 4º bimestre (`ingles4`, `quarto-bimestre.md`
    §7): o térreo é o saguão (o guia `ponteiro` e os dois livros), e cada andar é um capítulo, na ordem do livro
    (`S.andarDoCapitulo` em `torre/torre.js`), com o anfitrião dele (guia da matéria).

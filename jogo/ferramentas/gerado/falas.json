@@ -971,9 +971,7 @@
    "voz": "narradora",
    "texto": "Verdadeiro ou falso?",
    "pacotes": [
-    "geral",
-    "ingles4-en10e1",
-    "ingles4-en10e3"
+    "geral"
    ],
    "fala": "Verdadeiro ou falso?"
   },
@@ -2043,9 +2041,7 @@
    "voz": "ingles",
    "texto": "Clap your hands!",
    "pacotes": [
-    "ingles-extra",
-    "ingles4-extra",
-    "interior-torre"
+    "ingles-extra"
    ],
    "fala": "Clap your hands!"
   },
@@ -12209,105 +12205,6 @@
    "fala": "Toque no chão para andar (ou use as setas do teclado). Vamos até a Torre do Relógio? É só tocar nela!"
   },
   {
-   "chave": "b7d9fa9e19",
-   "voz": "unicornio",
-   "texto": "Quando estou feliz, eu bato palmas!",
-   "pacotes": [
-    "ingles4-extra"
-   ],
-   "fala": "Quando estou feliz, eu bato palmas!"
-  },
-  {
-   "chave": "5dab1d0b1c",
-   "voz": "unicornio",
-   "texto": "Eu canto a canção inteirinha com você!",
-   "pacotes": [
-    "ingles4-extra"
-   ],
-   "fala": "Eu canto a canção inteirinha com você!"
-  },
-  {
-   "chave": "2967d911e",
-   "voz": "ingles",
-   "texto": "Hurray!",
-   "pacotes": [
-    "ingles4-extra"
-   ],
-   "fala": "Hurray!"
-  },
-  {
-   "chave": "64f31e871i",
-   "voz": "unicornio",
-   "texto": "Eu meço os sentimentos, do bravo ao animado!",
-   "pacotes": [
-    "ingles4-extra"
-   ],
-   "fala": "Eu meço os sentimentos, do bravo ao animado!"
-  },
-  {
-   "chave": "a084a4c2n",
-   "voz": "ingles",
-   "texto": "How do you feel?",
-   "pacotes": [
-    "ingles4-extra"
-   ],
-   "fala": "How do you feel?"
-  },
-  {
-   "chave": "a213d1e91e",
-   "voz": "unicornio",
-   "texto": "Todo sentimento tem um lugar no coração.",
-   "pacotes": [
-    "ingles4-extra"
-   ],
-   "fala": "Todo sentimento tem um lugar no coração."
-  },
-  {
-   "chave": "9882d522i",
-   "voz": "ingles",
-   "texto": "Inside out!",
-   "pacotes": [
-    "ingles4-extra"
-   ],
-   "fala": "Inside out!"
-  },
-  {
-   "chave": "dc1e998c19",
-   "voz": "unicornio",
-   "texto": "Com sol, eu fico feliz e quentinha!",
-   "pacotes": [
-    "ingles4-extra"
-   ],
-   "fala": "Com sol, eu fico feliz e quentinha!"
-  },
-  {
-   "chave": "4f75a1afk",
-   "voz": "ingles",
-   "texto": "I feel happy!",
-   "pacotes": [
-    "ingles4-extra"
-   ],
-   "fala": "I feel happy!"
-  },
-  {
-   "chave": "58ba60a51b",
-   "voz": "unicornio",
-   "texto": "Na chuva, eu pulo nas poças com você!",
-   "pacotes": [
-    "ingles4-extra"
-   ],
-   "fala": "Na chuva, eu pulo nas poças com você!"
-  },
-  {
-   "chave": "56ed6f20i",
-   "voz": "ingles",
-   "texto": "It's rainy!",
-   "pacotes": [
-    "ingles4-extra"
-   ],
-   "fala": "It's rainy!"
-  },
-  {
    "chave": "178dc4211h",
    "voz": "unicornio",
    "texto": "Eu adoro cachorrinhos, igualzinho à Renata!",
@@ -12930,33 +12827,6 @@
    "fala": "O treino de English abre quando você terminar as salas da Torre do Relógio. Faltam 13! Você consegue!"
   },
   {
-   "chave": "dcc2053e30",
-   "voz": "claude",
-   "texto": "O treino de English abre quando você terminar as salas da Torre do Relógio. Faltam 14! Você consegue!",
-   "pacotes": [
-    "ingles4-extra"
-   ],
-   "fala": "O treino de English abre quando você terminar as salas da Torre do Relógio. Faltam 14! Você consegue!"
-  },
-  {
-   "chave": "989520ed30",
-   "voz": "claude",
-   "texto": "O treino de English abre quando você terminar as salas da Torre do Relógio. Faltam 15! Você consegue!",
-   "pacotes": [
-    "ingles4-extra"
-   ],
-   "fala": "O treino de English abre quando você terminar as salas da Torre do Relógio. Faltam 15! Você consegue!"
-  },
-  {
-   "chave": "c9da862830",
-   "voz": "claude",
-   "texto": "O treino de English abre quando você terminar as salas da Torre do Relógio. Faltam 16! Você consegue!",
-   "pacotes": [
-    "ingles4-extra"
-   ],
-   "fala": "O treino de English abre quando você terminar as salas da Torre do Relógio. Faltam 16! Você consegue!"
-  },
-  {
    "chave": "905e251a23",
    "voz": "claude",
    "texto": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \"",
@@ -12964,915 +12834,6 @@
     "ingles4-extra"
    ],
    "fala": "Leia a pergunta de novo, devagarinho. Se precisar, abra o livro em \""
-  },
-  {
-   "chave": "d874d9ee13",
-   "voz": "ingles",
-   "texto": "If You're Happy, Clap Your Hands",
-   "pacotes": [
-    "ingles4-extra",
-    "ingles4-livro-10"
-   ],
-   "fala": "If You're Happy, Clap Your Hands"
-  },
-  {
-   "chave": "fc9659a4m",
-   "voz": "claude",
-   "texto": "– Capítulo 10\".",
-   "pacotes": [
-    "ingles4-extra"
-   ],
-   "fala": "– Capítulo 10\"."
-  },
-  {
-   "chave": "fe782490n",
-   "voz": "narradora",
-   "texto": "– Capítulo 10",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "– Capítulo 10"
-  },
-  {
-   "chave": "402c1fd920",
-   "voz": "narradora",
-   "texto": "Duas meninas pulam de alegria, com confete caindo do céu azul.",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "Duas meninas pulam de alegria, com confete caindo do céu azul."
-  },
-  {
-   "chave": "dd4932c0h",
-   "voz": "ingles",
-   "texto": "Let's talk",
-   "pacotes": [
-    "ingles4-livro-10",
-    "ingles4-livro-11",
-    "ingles4-livro-12"
-   ],
-   "fala": "Let's talk"
-  },
-  {
-   "chave": "4f7f5cbcs",
-   "voz": "ingles",
-   "texto": "What makes you happy?",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "What makes you happy?"
-  },
-  {
-   "chave": "79bed7aeq",
-   "voz": "ingles",
-   "texto": "What makes you sad?",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "What makes you sad?"
-  },
-  {
-   "chave": "8412be5d2h",
-   "voz": "narradora",
-   "texto": "O que deixa você feliz? E o que deixa você triste? Pense e converse com alguém!",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "O que deixa você feliz? E o que deixa você triste? Pense e converse com alguém!"
-  },
-  {
-   "chave": "7a39a378y",
-   "voz": "ingles",
-   "texto": "In this chapter you will...",
-   "pacotes": [
-    "ingles4-extra",
-    "ingles4-livro-10",
-    "ingles4-livro-11",
-    "ingles4-livro-12"
-   ],
-   "fala": "In this chapter you will..."
-  },
-  {
-   "chave": "ca3f3777s",
-   "voz": "ingles",
-   "texto": "Learn about feelings.",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "Learn about feelings."
-  },
-  {
-   "chave": "eac51c3aw",
-   "voz": "ingles",
-   "texto": "Talk about your feelings.",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "Talk about your feelings."
-  },
-  {
-   "chave": "9672141812",
-   "voz": "ingles",
-   "texto": "Ask your friends how they feel.",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "Ask your friends how they feel."
-  },
-  {
-   "chave": "c8f9177d1q",
-   "voz": "narradora",
-   "texto": "Neste capítulo, você vai aprender os sentimentos, os",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "Neste capítulo, você vai aprender os sentimentos, os"
-  },
-  {
-   "chave": "4e42eda2f",
-   "voz": "ingles",
-   "texto": "feelings",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "feelings"
-  },
-  {
-   "chave": "c876492210",
-   "voz": "narradora",
-   "texto": ", e falar deles em inglês.",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": ", e falar deles em inglês."
-  },
-  {
-   "chave": "dea61dfbg",
-   "voz": "ingles",
-   "texto": "Song time",
-   "pacotes": [
-    "ingles4-extra",
-    "ingles4-livro-10"
-   ],
-   "fala": "Song time"
-  },
-  {
-   "chave": "631ee511t",
-   "voz": "ingles",
-   "texto": "How do you feel today?",
-   "pacotes": [
-    "ingles4-extra",
-    "ingles4-livro-10"
-   ],
-   "fala": "How do you feel today?"
-  },
-  {
-   "chave": "c8d0b356w",
-   "voz": "ingles",
-   "texto": "Are you happy happy happy",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "Are you happy happy happy"
-  },
-  {
-   "chave": "e24823d8u",
-   "voz": "ingles",
-   "texto": "or are you sad sad sad?",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "or are you sad sad sad?"
-  },
-  {
-   "chave": "49e6b891y",
-   "voz": "ingles",
-   "texto": "Today I'm happy happy happy",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "Today I'm happy happy happy"
-  },
-  {
-   "chave": "5afbb7c1t",
-   "voz": "ingles",
-   "texto": "don't feel sad sad sad",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "don't feel sad sad sad"
-  },
-  {
-   "chave": "db8647c514",
-   "voz": "ingles",
-   "texto": "If you're happy, if you're happy,",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "If you're happy, if you're happy,"
-  },
-  {
-   "chave": "602127e1v",
-   "voz": "ingles",
-   "texto": "clap your hands! Hurray!",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "clap your hands! Hurray!"
-  },
-  {
-   "chave": "1c93728cx",
-   "voz": "ingles",
-   "texto": "Is he sleepy sleepy sleepy",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "Is he sleepy sleepy sleepy"
-  },
-  {
-   "chave": "8c9b3fc1y",
-   "voz": "ingles",
-   "texto": "or is he angry angry angry?",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "or is he angry angry angry?"
-  },
-  {
-   "chave": "1fd2996512",
-   "voz": "ingles",
-   "texto": "Today he's sleepy sleepy sleepy",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "Today he's sleepy sleepy sleepy"
-  },
-  {
-   "chave": "eda022dax",
-   "voz": "ingles",
-   "texto": "he's not angry angry angry",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "he's not angry angry angry"
-  },
-  {
-   "chave": "93f12cf516",
-   "voz": "ingles",
-   "texto": "If you're sleepy, if you're sleepy,",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "If you're sleepy, if you're sleepy,"
-  },
-  {
-   "chave": "6aeab532v",
-   "voz": "ingles",
-   "texto": "stamp your foot! Hurray!",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "stamp your foot! Hurray!"
-  },
-  {
-   "chave": "686d04f7m",
-   "voz": "ingles",
-   "texto": "Stamp your foot",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "Stamp your foot"
-  },
-  {
-   "chave": "b7d8a67fv",
-   "voz": "narradora",
-   "texto": ": bater o pé no chão.",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": ": bater o pé no chão."
-  },
-  {
-   "chave": "45267a6319",
-   "voz": "ingles",
-   "texto": "Match the pictures with the sentences.",
-   "pacotes": [
-    "ingles4-extra",
-    "ingles4-livro-10",
-    "ingles4-en10e1"
-   ],
-   "fala": "Match the pictures with the sentences."
-  },
-  {
-   "chave": "0af85c8a17",
-   "voz": "narradora",
-   "texto": "Ligue cada carinha à frase certa.",
-   "pacotes": [
-    "ingles4-livro-10",
-    "ingles4-en10e1"
-   ],
-   "fala": "Ligue cada carinha à frase certa."
-  },
-  {
-   "chave": "5fc64f53a",
-   "voz": "ingles",
-   "texto": "She",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "She"
-  },
-  {
-   "chave": "a8839dadg",
-   "voz": "narradora",
-   "texto": "é ela;",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "é ela;"
-  },
-  {
-   "chave": "452229909",
-   "voz": "ingles",
-   "texto": "he",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "he"
-  },
-  {
-   "chave": "b37921a2g",
-   "voz": "narradora",
-   "texto": "é ele.",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "é ele."
-  },
-  {
-   "chave": "c8927ac5k",
-   "voz": "ingles",
-   "texto": "She's sleepy.",
-   "pacotes": [
-    "ingles4-livro-10",
-    "ingles4-en10e2"
-   ],
-   "fala": "She's sleepy."
-  },
-  {
-   "chave": "874afc6ek",
-   "voz": "ingles",
-   "texto": "He's excited.",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "He's excited."
-  },
-  {
-   "chave": "542ec892j",
-   "voz": "ingles",
-   "texto": "She's angry.",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "She's angry."
-  },
-  {
-   "chave": "64f30762i",
-   "voz": "ingles",
-   "texto": "He's bored.",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "He's bored."
-  },
-  {
-   "chave": "6f3014dbn",
-   "voz": "ingles",
-   "texto": "Listen and point",
-   "pacotes": [
-    "ingles4-extra",
-    "ingles4-livro-10"
-   ],
-   "fala": "Listen and point"
-  },
-  {
-   "chave": "97fd247c8",
-   "voz": "claude",
-   "texto": "e",
-   "pacotes": [
-    "ingles4-extra"
-   ],
-   "fala": "e"
-  },
-  {
-   "chave": "e882751db",
-   "voz": "ingles",
-   "texto": "Draw",
-   "pacotes": [
-    "ingles4-extra",
-    "ingles4-livro-10"
-   ],
-   "fala": "Draw"
-  },
-  {
-   "chave": "08ea6398b",
-   "voz": "narradora",
-   "texto": "e",
-   "pacotes": [
-    "ingles4-livro-10",
-    "ingles4-livro-11"
-   ],
-   "fala": "e"
-  },
-  {
-   "chave": "c1b2cd131s",
-   "voz": "ingles",
-   "texto": "Listen to the sentences and point at the correct picture.",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "Listen to the sentences and point at the correct picture."
-  },
-  {
-   "chave": "333e226919",
-   "voz": "narradora",
-   "texto": "Ouça a frase e aponte a foto certa.",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "Ouça a frase e aponte a foto certa."
-  },
-  {
-   "chave": "fe68be26x",
-   "voz": "ingles",
-   "texto": "Draw what makes you happy!",
-   "pacotes": [
-    "ingles4-livro-10",
-    "ingles4-en10e2"
-   ],
-   "fala": "Draw what makes you happy!"
-  },
-  {
-   "chave": "893e020315",
-   "voz": "narradora",
-   "texto": "Desenhe o que deixa você feliz!",
-   "pacotes": [
-    "ingles4-livro-10",
-    "ingles4-en10e2"
-   ],
-   "fala": "Desenhe o que deixa você feliz!"
-  },
-  {
-   "chave": "a79ea54c15",
-   "voz": "ingles",
-   "texto": "Complete with the missing letters.",
-   "pacotes": [
-    "ingles4-extra",
-    "ingles4-livro-10",
-    "ingles4-en10e2"
-   ],
-   "fala": "Complete with the missing letters."
-  },
-  {
-   "chave": "72aa4ddb2a",
-   "voz": "narradora",
-   "texto": "Complete as letras que faltam e depois ligue os sentimentos às carinhas.",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "Complete as letras que faltam e depois ligue os sentimentos às carinhas."
-  },
-  {
-   "chave": "ec5b09ccj",
-   "voz": "ingles",
-   "texto": "Miming game.",
-   "pacotes": [
-    "ingles4-livro-10",
-    "ingles4-en10e2"
-   ],
-   "fala": "Miming game."
-  },
-  {
-   "chave": "5017bbcb24",
-   "voz": "narradora",
-   "texto": "O jogo de mímica: faça o sentimento sem falar, e o amigo adivinha!",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "O jogo de mímica: faça o sentimento sem falar, e o amigo adivinha!"
-  },
-  {
-   "chave": "e3d8ed3bb",
-   "voz": "ingles",
-   "texto": "Cult",
-   "pacotes": [
-    "ingles4-livro-10",
-    "ingles4-livro-12"
-   ],
-   "fala": "Cult"
-  },
-  {
-   "chave": "ecb3fedb25",
-   "voz": "ingles",
-   "texto": "Inside Out is a film about a little girl named Riley and her feelings.",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "Inside Out is a film about a little girl named Riley and her feelings."
-  },
-  {
-   "chave": "8dd0c4582i",
-   "voz": "narradora",
-   "texto": "Divertida Mente é um filme sobre uma menina chamada Riley e os sentimentos dela.",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "Divertida Mente é um filme sobre uma menina chamada Riley e os sentimentos dela."
-  },
-  {
-   "chave": "d367b95bo",
-   "voz": "ingles",
-   "texto": "Draw the feelings",
-   "pacotes": [
-    "ingles4-extra",
-    "ingles4-livro-10"
-   ],
-   "fala": "Draw the feelings"
-  },
-  {
-   "chave": "4aae32eej",
-   "voz": "ingles",
-   "texto": "Writing time",
-   "pacotes": [
-    "ingles4-extra",
-    "ingles4-livro-10",
-    "ingles4-livro-11"
-   ],
-   "fala": "Writing time"
-  },
-  {
-   "chave": "c9d25c281e",
-   "voz": "ingles",
-   "texto": "Look at the pictures and draw the feelings.",
-   "pacotes": [
-    "ingles4-livro-10",
-    "ingles4-en10e2"
-   ],
-   "fala": "Look at the pictures and draw the feelings."
-  },
-  {
-   "chave": "0f94943a1a",
-   "voz": "narradora",
-   "texto": "Olhe as fotos e desenhe as carinhas.",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "Olhe as fotos e desenhe as carinhas."
-  },
-  {
-   "chave": "98d05638u",
-   "voz": "ingles",
-   "texto": "How do they feel today?",
-   "pacotes": [
-    "ingles4-livro-10",
-    "ingles4-extra"
-   ],
-   "fala": "How do they feel today?"
-  },
-  {
-   "chave": "f41c613dc",
-   "voz": "ingles",
-   "texto": "She's",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "She's"
-  },
-  {
-   "chave": "3bb048b4u",
-   "voz": "narradora",
-   "texto": "quer dizer ela está;",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "quer dizer ela está;"
-  },
-  {
-   "chave": "7152d192b",
-   "voz": "ingles",
-   "texto": "he's",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "he's"
-  },
-  {
-   "chave": "27230b77u",
-   "voz": "narradora",
-   "texto": "quer dizer ele está.",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "quer dizer ele está."
-  },
-  {
-   "chave": "b5797b98f",
-   "voz": "ingles",
-   "texto": "Hands on",
-   "pacotes": [
-    "ingles4-extra",
-    "ingles4-livro-10",
-    "ingles4-livro-11",
-    "ingles4-livro-12"
-   ],
-   "fala": "Hands on"
-  },
-  {
-   "chave": "6c55dc1ez",
-   "voz": "ingles",
-   "texto": "Make a feelings thermometer!",
-   "pacotes": [
-    "ingles4-livro-10",
-    "ingles4-en10e2"
-   ],
-   "fala": "Make a feelings thermometer!"
-  },
-  {
-   "chave": "ceeac1cd1o",
-   "voz": "narradora",
-   "texto": "Um termômetro dos sentimentos, de cima para baixo:",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "Um termômetro dos sentimentos, de cima para baixo:"
-  },
-  {
-   "chave": "98910d50c",
-   "voz": "ingles",
-   "texto": "Angry",
-   "pacotes": [
-    "ingles4-livro-10",
-    "ingles4-livro-12"
-   ],
-   "fala": "Angry"
-  },
-  {
-   "chave": "94b559a1a",
-   "voz": "ingles",
-   "texto": "Sad",
-   "pacotes": [
-    "ingles4-livro-10",
-    "ingles4-livro-12"
-   ],
-   "fala": "Sad"
-  },
-  {
-   "chave": "e7b22f21d",
-   "voz": "ingles",
-   "texto": "Sleepy",
-   "pacotes": [
-    "ingles4-livro-10",
-    "ingles4-livro-12",
-    "interior-torre"
-   ],
-   "fala": "Sleepy"
-  },
-  {
-   "chave": "9bfc6a5fc",
-   "voz": "ingles",
-   "texto": "Bored",
-   "pacotes": [
-    "ingles4-livro-10",
-    "ingles4-livro-12"
-   ],
-   "fala": "Bored"
-  },
-  {
-   "chave": "df74afdfc",
-   "voz": "ingles",
-   "texto": "Happy",
-   "pacotes": [
-    "ingles4-livro-10",
-    "ingles4-livro-12",
-    "interior-torre"
-   ],
-   "fala": "Happy"
-  },
-  {
-   "chave": "1051600fe",
-   "voz": "ingles",
-   "texto": "Excited",
-   "pacotes": [
-    "ingles4-livro-10",
-    "ingles4-livro-12"
-   ],
-   "fala": "Excited"
-  },
-  {
-   "chave": "d9531392q",
-   "voz": "ingles",
-   "texto": "Answer the question",
-   "pacotes": [
-    "ingles4-extra",
-    "ingles4-livro-10"
-   ],
-   "fala": "Answer the question"
-  },
-  {
-   "chave": "91dbaebfh",
-   "voz": "ingles",
-   "texto": "I'm happy!",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "I'm happy!"
-  },
-  {
-   "chave": "9cfdd30fm",
-   "voz": "ingles",
-   "texto": "Super challenge",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "Super challenge"
-  },
-  {
-   "chave": "ed02c3931f",
-   "voz": "ingles",
-   "texto": "Look at the pictures and guess the feelings.",
-   "pacotes": [
-    "ingles4-livro-10",
-    "ingles4-en10e3"
-   ],
-   "fala": "Look at the pictures and guess the feelings."
-  },
-  {
-   "chave": "6e8033abm",
-   "voz": "ingles",
-   "texto": "I think he's...",
-   "pacotes": [
-    "ingles4-livro-10",
-    "ingles4-en10e3"
-   ],
-   "fala": "I think he's..."
-  },
-  {
-   "chave": "bb01c628n",
-   "voz": "ingles",
-   "texto": "I think she's...",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "I think she's..."
-  },
-  {
-   "chave": "d8a27b76o",
-   "voz": "ingles",
-   "texto": "Believe it or not",
-   "pacotes": [
-    "ingles4-extra",
-    "ingles4-livro-10"
-   ],
-   "fala": "Believe it or not"
-  },
-  {
-   "chave": "87ed538d2i",
-   "voz": "ingles",
-   "texto": "The weather can affect our feelings. It can make us happy, sad, bored, excited etc.",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "The weather can affect our feelings. It can make us happy, sad, bored, excited etc."
-  },
-  {
-   "chave": "5a068e951u",
-   "voz": "narradora",
-   "texto": "O tempo, sol ou chuva, pode mudar como a gente se sente!",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "O tempo, sol ou chuva, pode mudar como a gente se sente!"
-  },
-  {
-   "chave": "f875e427n",
-   "voz": "ingles",
-   "texto": "Think and write.",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "Think and write."
-  },
-  {
-   "chave": "1c3d732213",
-   "voz": "ingles",
-   "texto": "How do you feel when it's sunny?",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "How do you feel when it's sunny?"
-  },
-  {
-   "chave": "8cecca3013",
-   "voz": "ingles",
-   "texto": "How do you feel when it's rainy?",
-   "pacotes": [
-    "ingles4-livro-10",
-    "ingles4-en10e3"
-   ],
-   "fala": "How do you feel when it's rainy?"
-  },
-  {
-   "chave": "19a3e144h",
-   "voz": "ingles",
-   "texto": "Summing up",
-   "pacotes": [
-    "ingles4-extra",
-    "ingles4-livro-10",
-    "ingles4-livro-11",
-    "ingles4-livro-12"
-   ],
-   "fala": "Summing up"
-  },
-  {
-   "chave": "45f4d732u",
-   "voz": "ingles",
-   "texto": "Think, match and write.",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "Think, match and write."
-  },
-  {
-   "chave": "9d72d3c2f",
-   "voz": "ingles",
-   "texto": "Feelings",
-   "pacotes": [
-    "ingles4-livro-10",
-    "ingles4-extra",
-    "ingles4-livro-12",
-    "interior-torre"
-   ],
-   "fala": "Feelings"
-  },
-  {
-   "chave": "6089974cr",
-   "voz": "narradora",
-   "texto": ": os sentimentos.",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": ": os sentimentos."
-  },
-  {
-   "chave": "35d76ce4k",
-   "voz": "ingles",
-   "texto": "Now, I can...",
-   "pacotes": [
-    "ingles4-extra",
-    "ingles4-livro-10",
-    "ingles4-livro-11",
-    "ingles4-livro-12",
-    "ingles4-en10e3",
-    "ingles4-en12e3"
-   ],
-   "fala": "Now, I can..."
-  },
-  {
-   "chave": "743211f5l",
-   "voz": "ingles",
-   "texto": "Name feelings.",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "Name feelings."
-  },
-  {
-   "chave": "1744d23fs",
-   "voz": "ingles",
-   "texto": "Say how I am feeling.",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "Say how I am feeling."
-  },
-  {
-   "chave": "5465899f10",
-   "voz": "ingles",
-   "texto": "Ask my friends how they feel.",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "Ask my friends how they feel."
-  },
-  {
-   "chave": "74e156c41a",
-   "voz": "ingles",
-   "texto": "Say how I feel in different situations.",
-   "pacotes": [
-    "ingles4-livro-10"
-   ],
-   "fala": "Say how I feel in different situations."
   },
   {
    "chave": "20eedfb1u",
@@ -13912,6 +12873,16 @@
    "fala": "Uma menina e a mãe dançam juntas na sala, com um sorrisão."
   },
   {
+   "chave": "dd4932c0h",
+   "voz": "ingles",
+   "texto": "Let's talk",
+   "pacotes": [
+    "ingles4-livro-11",
+    "ingles4-livro-12"
+   ],
+   "fala": "Let's talk"
+  },
+  {
    "chave": "fecc205c12",
    "voz": "ingles",
    "texto": "How do you feel when you dance?",
@@ -13937,6 +12908,17 @@
     "ingles4-livro-11"
    ],
    "fala": "Converse com alguém: como você se sente quando dança? Quando você sorri?"
+  },
+  {
+   "chave": "7a39a378y",
+   "voz": "ingles",
+   "texto": "In this chapter you will...",
+   "pacotes": [
+    "ingles4-extra",
+    "ingles4-livro-11",
+    "ingles4-livro-12"
+   ],
+   "fala": "In this chapter you will..."
   },
   {
    "chave": "ab4cc3d11i",
@@ -14101,6 +13083,15 @@
    "fala": "Glossary"
   },
   {
+   "chave": "97fd247c8",
+   "voz": "claude",
+   "texto": "e",
+   "pacotes": [
+    "ingles4-extra"
+   ],
+   "fala": "e"
+  },
+  {
    "chave": "334be1f0e",
    "voz": "ingles",
    "texto": "Profile",
@@ -14109,6 +13100,15 @@
     "ingles4-livro-11"
    ],
    "fala": "Profile"
+  },
+  {
+   "chave": "08ea6398b",
+   "voz": "narradora",
+   "texto": "e",
+   "pacotes": [
+    "ingles4-livro-11"
+   ],
+   "fala": "e"
   },
   {
    "chave": "b36293d3c",
@@ -14630,6 +13630,17 @@
    "fala": "A canção se repete mais uma vez."
   },
   {
+   "chave": "b5797b98f",
+   "voz": "ingles",
+   "texto": "Hands on",
+   "pacotes": [
+    "ingles4-livro-11",
+    "ingles4-extra",
+    "ingles4-livro-12"
+   ],
+   "fala": "Hands on"
+  },
+  {
    "chave": "4019e7e7v",
    "voz": "ingles",
    "texto": "Make an alphabet poster!",
@@ -14768,6 +13779,16 @@
    "fala": "Desenho: castelo. Letra: T."
   },
   {
+   "chave": "4aae32eej",
+   "voz": "ingles",
+   "texto": "Writing time",
+   "pacotes": [
+    "ingles4-extra",
+    "ingles4-livro-11"
+   ],
+   "fala": "Writing time"
+  },
+  {
    "chave": "f6fd5a03n",
    "voz": "ingles",
    "texto": "Talk to a friend",
@@ -14868,6 +13889,17 @@
    "fala": "Seis fotos no meio de letras coloridas: uma bicicleta, uma cidade à noite, uma menina com frio, um vestido, um material de escola e uma menina feliz. Soletre a palavra e descubra a foto!"
   },
   {
+   "chave": "19a3e144h",
+   "voz": "ingles",
+   "texto": "Summing up",
+   "pacotes": [
+    "ingles4-extra",
+    "ingles4-livro-11",
+    "ingles4-livro-12"
+   ],
+   "fala": "Summing up"
+  },
+  {
    "chave": "098082a9n",
    "voz": "ingles",
    "texto": "Think and match.",
@@ -14932,6 +13964,18 @@
     "ingles4-livro-11"
    ],
    "fala": "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
+  },
+  {
+   "chave": "35d76ce4k",
+   "voz": "ingles",
+   "texto": "Now, I can...",
+   "pacotes": [
+    "ingles4-livro-11",
+    "ingles4-extra",
+    "ingles4-livro-12",
+    "ingles4-en12e3"
+   ],
+   "fala": "Now, I can..."
   },
   {
    "chave": "b2b4241013",
@@ -15212,6 +14256,16 @@
    "fala": "At night, Lily is sleepy. She goes to bed. Good night, Lily!"
   },
   {
+   "chave": "9d72d3c2f",
+   "voz": "ingles",
+   "texto": "Feelings",
+   "pacotes": [
+    "ingles4-extra",
+    "ingles4-livro-12"
+   ],
+   "fala": "Feelings"
+  },
+  {
    "chave": "4f67c13418",
    "voz": "ingles",
    "texto": "Match the pictures with the feelings.",
@@ -15231,6 +14285,15 @@
    "fala": "Find in the book. Then talk with your friends."
   },
   {
+   "chave": "98910d50c",
+   "voz": "ingles",
+   "texto": "Angry",
+   "pacotes": [
+    "ingles4-livro-12"
+   ],
+   "fala": "Angry"
+  },
+  {
    "chave": "0425f0d1h",
    "voz": "narradora",
    "texto": ": bravo",
@@ -15238,6 +14301,15 @@
     "ingles4-livro-12"
    ],
    "fala": ": bravo"
+  },
+  {
+   "chave": "e7b22f21d",
+   "voz": "ingles",
+   "texto": "Sleepy",
+   "pacotes": [
+    "ingles4-livro-12"
+   ],
+   "fala": "Sleepy"
   },
   {
    "chave": "aea52b85k",
@@ -15249,6 +14321,15 @@
    "fala": ": com sono"
   },
   {
+   "chave": "94b559a1a",
+   "voz": "ingles",
+   "texto": "Sad",
+   "pacotes": [
+    "ingles4-livro-12"
+   ],
+   "fala": "Sad"
+  },
+  {
    "chave": "675faf06i",
    "voz": "narradora",
    "texto": ": triste",
@@ -15258,6 +14339,15 @@
    "fala": ": triste"
   },
   {
+   "chave": "df74afdfc",
+   "voz": "ingles",
+   "texto": "Happy",
+   "pacotes": [
+    "ingles4-livro-12"
+   ],
+   "fala": "Happy"
+  },
+  {
    "chave": "950c2361h",
    "voz": "narradora",
    "texto": ": feliz",
@@ -15265,6 +14355,15 @@
     "ingles4-livro-12"
    ],
    "fala": ": feliz"
+  },
+  {
+   "chave": "9bfc6a5fc",
+   "voz": "ingles",
+   "texto": "Bored",
+   "pacotes": [
+    "ingles4-livro-12"
+   ],
+   "fala": "Bored"
   },
   {
    "chave": "05df8042l",
@@ -15277,6 +14376,15 @@
    "fala": ": entediado"
   },
   {
+   "chave": "1051600fe",
+   "voz": "ingles",
+   "texto": "Excited",
+   "pacotes": [
+    "ingles4-livro-12"
+   ],
+   "fala": "Excited"
+  },
+  {
    "chave": "3ba7d4a4j",
    "voz": "narradora",
    "texto": ": animado",
@@ -15285,6 +14393,15 @@
     "ingles4-livro-11"
    ],
    "fala": ": animado"
+  },
+  {
+   "chave": "e3d8ed3bb",
+   "voz": "ingles",
+   "texto": "Cult",
+   "pacotes": [
+    "ingles4-livro-12"
+   ],
+   "fala": "Cult"
   },
   {
    "chave": "f778e36e18",
@@ -16737,9 +15854,7 @@
    "texto": "bored",
    "pacotes": [
     "ingles4-livro-11",
-    "ingles4-en10e2",
-    "ingles4-en11p2",
-    "interior-torre"
+    "ingles4-en11p2"
    ],
    "fala": "bored"
   },
@@ -16768,8 +15883,7 @@
    "texto": "excited",
    "pacotes": [
     "ingles4-livro-11",
-    "ingles4-en11p2",
-    "interior-torre"
+    "ingles4-en11p2"
    ],
    "fala": "excited"
   },
@@ -18137,370 +17251,6 @@
     "ingles4-livro-12"
    ],
    "fala": "Maths"
-  },
-  {
-   "chave": "aac66091t",
-   "voz": "ingles",
-   "texto": "How Do You Feel Today?",
-   "pacotes": [
-    "ingles4-extra",
-    "interior-torre"
-   ],
-   "fala": "How Do You Feel Today?"
-  },
-  {
-   "chave": "3e5b5cf51k",
-   "voz": "claude",
-   "texto": "Vamos cantar e aprender os sentimentos em inglês!",
-   "pacotes": [
-    "ingles4-extra"
-   ],
-   "fala": "Vamos cantar e aprender os sentimentos em inglês!"
-  },
-  {
-   "chave": "7ef4293d14",
-   "voz": "ingles",
-   "texto": "If you're happy, clap your hands!",
-   "pacotes": [
-    "ingles4-extra"
-   ],
-   "fala": "If you're happy, clap your hands!"
-  },
-  {
-   "chave": "419ca5551l",
-   "voz": "ingles",
-   "texto": "If you're happy, if you're happy, clap your hands!",
-   "pacotes": [
-    "ingles4-en10e1"
-   ],
-   "fala": "If you're happy, if you're happy, clap your hands!"
-  },
-  {
-   "chave": "cb626e121c",
-   "voz": "narradora",
-   "texto": "Na canção, quando a gente bate palmas?",
-   "pacotes": [
-    "ingles4-en10e1"
-   ],
-   "fala": "Na canção, quando a gente bate palmas?"
-  },
-  {
-   "chave": "6da144a718",
-   "voz": "ingles",
-   "texto": "If you're sleepy, if you're sleepy...",
-   "pacotes": [
-    "ingles4-en10e1"
-   ],
-   "fala": "If you're sleepy, if you're sleepy..."
-  },
-  {
-   "chave": "09b9be7911",
-   "voz": "narradora",
-   "texto": "O que a canção manda fazer?",
-   "pacotes": [
-    "ingles4-en10e1"
-   ],
-   "fala": "O que a canção manda fazer?"
-  },
-  {
-   "chave": "be479199p",
-   "voz": "ingles",
-   "texto": "Today he's sleepy.",
-   "pacotes": [
-    "ingles4-en10e1"
-   ],
-   "fala": "Today he's sleepy."
-  },
-  {
-   "chave": "db9475c11u",
-   "voz": "narradora",
-   "texto": "Hoje o menino da canção está com sono, e não está bravo.",
-   "pacotes": [
-    "ingles4-en10e1"
-   ],
-   "fala": "Hoje o menino da canção está com sono, e não está bravo."
-  },
-  {
-   "chave": "d1e2c91014",
-   "voz": "narradora",
-   "texto": "No glossário: o que quer dizer",
-   "pacotes": [
-    "ingles4-en10e1"
-   ],
-   "fala": "No glossário: o que quer dizer"
-  },
-  {
-   "chave": "a7a3d057m",
-   "voz": "ingles",
-   "texto": "stamp your foot",
-   "pacotes": [
-    "ingles4-en10e1"
-   ],
-   "fala": "stamp your foot"
-  },
-  {
-   "chave": "2f5d56021j",
-   "voz": "claude",
-   "texto": "Vamos ouvir, desenhar e escrever os sentimentos!",
-   "pacotes": [
-    "ingles4-extra"
-   ],
-   "fala": "Vamos ouvir, desenhar e escrever os sentimentos!"
-  },
-  {
-   "chave": "05f2068bj",
-   "voz": "ingles",
-   "texto": "She's bored.",
-   "pacotes": [
-    "ingles4-en10e2"
-   ],
-   "fala": "She's bored."
-  },
-  {
-   "chave": "f1df5a2c13",
-   "voz": "narradora",
-   "texto": "Ouça e toque na figura certa.",
-   "pacotes": [
-    "ingles4-en10e2"
-   ],
-   "fala": "Ouça e toque na figura certa."
-  },
-  {
-   "chave": "c4a4c9abl",
-   "voz": "ingles",
-   "texto": "She's excited.",
-   "pacotes": [
-    "ingles4-en10e2"
-   ],
-   "fala": "She's excited."
-  },
-  {
-   "chave": "5eeb5d8fi",
-   "voz": "ingles",
-   "texto": "He's angry.",
-   "pacotes": [
-    "ingles4-en10e2"
-   ],
-   "fala": "He's angry."
-  },
-  {
-   "chave": "ea66aa1e1q",
-   "voz": "narradora",
-   "texto": "Escreva a palavra inteira, com as letras que faltam.",
-   "pacotes": [
-    "ingles4-en10e2"
-   ],
-   "fala": "Escreva a palavra inteira, com as letras que faltam."
-  },
-  {
-   "chave": "9effb0fa17",
-   "voz": "ingles",
-   "texto": "Now match the feelings to the faces.",
-   "pacotes": [
-    "ingles4-en10e2"
-   ],
-   "fala": "Now match the feelings to the faces."
-  },
-  {
-   "chave": "3c908c6e17",
-   "voz": "narradora",
-   "texto": "Ligue cada carinha ao sentimento.",
-   "pacotes": [
-    "ingles4-en10e2",
-    "ingles4-en10e3"
-   ],
-   "fala": "Ligue cada carinha ao sentimento."
-  },
-  {
-   "chave": "e4b5655a29",
-   "voz": "narradora",
-   "texto": "Sua amiga faz a mímica: boceja e esfrega os olhos. Qual é o sentimento?",
-   "pacotes": [
-    "ingles4-en10e2"
-   ],
-   "fala": "Sua amiga faz a mímica: boceja e esfrega os olhos. Qual é o sentimento?"
-  },
-  {
-   "chave": "6f504e891i",
-   "voz": "narradora",
-   "texto": "Desenhe duas carinhas: uma menina entediada,",
-   "pacotes": [
-    "ingles4-en10e2"
-   ],
-   "fala": "Desenhe duas carinhas: uma menina entediada,"
-  },
-  {
-   "chave": "f8feffe6u",
-   "voz": "narradora",
-   "texto": ", e um menino bravo,",
-   "pacotes": [
-    "ingles4-en10e2"
-   ],
-   "fala": ", e um menino bravo,"
-  },
-  {
-   "chave": "f0599fb0c",
-   "voz": "ingles",
-   "texto": "angry",
-   "pacotes": [
-    "ingles4-en10e2",
-    "interior-torre"
-   ],
-   "fala": "angry"
-  },
-  {
-   "chave": "7b2533b518",
-   "voz": "ingles",
-   "texto": "Writing time. How do they feel today?",
-   "pacotes": [
-    "ingles4-en10e2"
-   ],
-   "fala": "Writing time. How do they feel today?"
-  },
-  {
-   "chave": "1b4d21c41b",
-   "voz": "narradora",
-   "texto": "Escreva o sentimento de cada criança.",
-   "pacotes": [
-    "ingles4-en10e2"
-   ],
-   "fala": "Escreva o sentimento de cada criança."
-  },
-  {
-   "chave": "e116a62933",
-   "voz": "narradora",
-   "texto": "Toque nos sentimentos na ordem do termômetro: do mais bravo, lá em cima, até o mais animado, embaixo.",
-   "pacotes": [
-    "ingles4-en10e2"
-   ],
-   "fala": "Toque nos sentimentos na ordem do termômetro: do mais bravo, lá em cima, até o mais animado, embaixo."
-  },
-  {
-   "chave": "351b40b4n",
-   "voz": "ingles",
-   "texto": "I'm Happy Today!",
-   "pacotes": [
-    "ingles4-extra",
-    "interior-torre"
-   ],
-   "fala": "I'm Happy Today!"
-  },
-  {
-   "chave": "ff38dd641r",
-   "voz": "claude",
-   "texto": "Vamos contar como você se sente hoje, no sol e na chuva!",
-   "pacotes": [
-    "ingles4-extra"
-   ],
-   "fala": "Vamos contar como você se sente hoje, no sol e na chuva!"
-  },
-  {
-   "chave": "5c65a46e1e",
-   "voz": "ingles",
-   "texto": "Answer the question. How do you feel today?",
-   "pacotes": [
-    "ingles4-en10e3"
-   ],
-   "fala": "Answer the question. How do you feel today?"
-  },
-  {
-   "chave": "cae5c7bd16",
-   "voz": "narradora",
-   "texto": "Escreva como você se sente hoje.",
-   "pacotes": [
-    "ingles4-en10e3"
-   ],
-   "fala": "Escreva como você se sente hoje."
-  },
-  {
-   "chave": "9c26d8711m",
-   "voz": "narradora",
-   "texto": "O homem franze a testa, com os olhos bem bravos.",
-   "pacotes": [
-    "ingles4-en10e3"
-   ],
-   "fala": "O homem franze a testa, com os olhos bem bravos."
-  },
-  {
-   "chave": "31edb8a216",
-   "voz": "narradora",
-   "texto": "Sobre o homem de testa franzida:",
-   "pacotes": [
-    "ingles4-en10e3"
-   ],
-   "fala": "Sobre o homem de testa franzida:"
-  },
-  {
-   "chave": "12f0abf5q",
-   "voz": "ingles",
-   "texto": "I think he's happy.",
-   "pacotes": [
-    "ingles4-en10e3"
-   ],
-   "fala": "I think he's happy."
-  },
-  {
-   "chave": "bafd2d141k",
-   "voz": "ingles",
-   "texto": "Think and write. How do you feel when it's sunny?",
-   "pacotes": [
-    "ingles4-en10e3"
-   ],
-   "fala": "Think and write. How do you feel when it's sunny?"
-  },
-  {
-   "chave": "eeb9f1ac18",
-   "voz": "narradora",
-   "texto": "Como você se sente quando faz sol?",
-   "pacotes": [
-    "ingles4-en10e3"
-   ],
-   "fala": "Como você se sente quando faz sol?"
-  },
-  {
-   "chave": "b5b739f216",
-   "voz": "narradora",
-   "texto": "Como você se sente quando chove?",
-   "pacotes": [
-    "ingles4-en10e3"
-   ],
-   "fala": "Como você se sente quando chove?"
-  },
-  {
-   "chave": "1ee52f2516",
-   "voz": "ingles",
-   "texto": "Summing up. Think, match and write.",
-   "pacotes": [
-    "ingles4-en10e3"
-   ],
-   "fala": "Summing up. Think, match and write."
-  },
-  {
-   "chave": "88340ce4d",
-   "voz": "ingles",
-   "texto": "Write.",
-   "pacotes": [
-    "ingles4-en10e3"
-   ],
-   "fala": "Write."
-  },
-  {
-   "chave": "bb32fb6a1l",
-   "voz": "narradora",
-   "texto": "Escreva em inglês o sentimento de cada carinha.",
-   "pacotes": [
-    "ingles4-en10e3"
-   ],
-   "fala": "Escreva em inglês o sentimento de cada carinha."
-  },
-  {
-   "chave": "f4075cb416",
-   "voz": "narradora",
-   "texto": "Marque o que você já sabe fazer.",
-   "pacotes": [
-    "ingles4-en10e3"
-   ],
-   "fala": "Marque o que você já sabe fazer."
   },
   {
    "chave": "0284258923",
@@ -31109,13 +29859,13 @@
    "fala": "O treino do Castelo já abriu!"
   },
   {
-   "chave": "e6f31b4817",
+   "chave": "4e71ca3913",
    "voz": "npc-ponteiro",
-   "texto": "Já fez uma de dezesseis salas.",
+   "texto": "Já fez uma de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez uma de dezesseis salas."
+   "fala": "Já fez uma de treze salas."
   },
   {
    "chave": "835738acw",
@@ -31127,13 +29877,13 @@
    "fala": "Já ganhou 30 Robux!"
   },
   {
-   "chave": "62bd877418",
+   "chave": "6818f45d14",
    "voz": "npc-ponteiro",
-   "texto": "Já fez duas de dezesseis salas.",
+   "texto": "Já fez duas de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez duas de dezesseis salas."
+   "fala": "Já fez duas de treze salas."
   },
   {
    "chave": "022d81d3w",
@@ -31145,13 +29895,13 @@
    "fala": "Já ganhou 60 Robux!"
   },
   {
-   "chave": "0d4b2eda18",
+   "chave": "9dc135db14",
    "voz": "npc-ponteiro",
-   "texto": "Já fez três de dezesseis salas.",
+   "texto": "Já fez três de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez três de dezesseis salas."
+   "fala": "Já fez três de treze salas."
   },
   {
    "chave": "f7840732w",
@@ -31163,13 +29913,13 @@
    "fala": "Já ganhou 90 Robux!"
   },
   {
-   "chave": "d76aad331a",
+   "chave": "2758ca6616",
    "voz": "npc-ponteiro",
-   "texto": "Já fez quatro de dezesseis salas.",
+   "texto": "Já fez quatro de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez quatro de dezesseis salas."
+   "fala": "Já fez quatro de treze salas."
   },
   {
    "chave": "086bab3ax",
@@ -31181,13 +29931,13 @@
    "fala": "Já ganhou 120 Robux!"
   },
   {
-   "chave": "668c0b1519",
+   "chave": "c3484b5815",
    "voz": "npc-ponteiro",
-   "texto": "Já fez cinco de dezesseis salas.",
+   "texto": "Já fez cinco de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez cinco de dezesseis salas."
+   "fala": "Já fez cinco de treze salas."
   },
   {
    "chave": "f3520cb3x",
@@ -31199,13 +29949,13 @@
    "fala": "Já ganhou 150 Robux!"
   },
   {
-   "chave": "225129b718",
+   "chave": "09b27af214",
    "voz": "npc-ponteiro",
-   "texto": "Já fez seis de dezesseis salas.",
+   "texto": "Já fez seis de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez seis de dezesseis salas."
+   "fala": "Já fez seis de treze salas."
   },
   {
    "chave": "002beac4x",
@@ -31217,13 +29967,13 @@
    "fala": "Já ganhou 180 Robux!"
   },
   {
-   "chave": "40eb2e0818",
+   "chave": "9735e1f914",
    "voz": "npc-ponteiro",
-   "texto": "Já fez sete de dezesseis salas.",
+   "texto": "Já fez sete de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez sete de dezesseis salas."
+   "fala": "Já fez sete de treze salas."
   },
   {
    "chave": "ed15d378x",
@@ -31235,13 +29985,13 @@
    "fala": "Já ganhou 210 Robux!"
   },
   {
-   "chave": "a4d27ea618",
+   "chave": "75bc0e8f14",
    "voz": "npc-ponteiro",
-   "texto": "Já fez oito de dezesseis salas.",
+   "texto": "Já fez oito de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez oito de dezesseis salas."
+   "fala": "Já fez oito de treze salas."
   },
   {
    "chave": "b621f5a7x",
@@ -31253,13 +30003,13 @@
    "fala": "Já ganhou 240 Robux!"
   },
   {
-   "chave": "3612e1a918",
+   "chave": "820eb4a414",
    "voz": "npc-ponteiro",
-   "texto": "Já fez nove de dezesseis salas.",
+   "texto": "Já fez nove de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez nove de dezesseis salas."
+   "fala": "Já fez nove de treze salas."
   },
   {
    "chave": "8550420ax",
@@ -31271,13 +30021,13 @@
    "fala": "Já ganhou 270 Robux!"
   },
   {
-   "chave": "599ca69a17",
+   "chave": "61109f9b13",
    "voz": "npc-ponteiro",
-   "texto": "Já fez dez de dezesseis salas.",
+   "texto": "Já fez dez de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez dez de dezesseis salas."
+   "fala": "Já fez dez de treze salas."
   },
   {
    "chave": "308e0cf2x",
@@ -31289,13 +30039,13 @@
    "fala": "Já ganhou 300 Robux!"
   },
   {
-   "chave": "7896aec318",
+   "chave": "75f2ced614",
    "voz": "npc-ponteiro",
-   "texto": "Já fez onze de dezesseis salas.",
+   "texto": "Já fez onze de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez onze de dezesseis salas."
+   "fala": "Já fez onze de treze salas."
   },
   {
    "chave": "897b28cfx",
@@ -31307,13 +30057,13 @@
    "fala": "Já ganhou 330 Robux!"
   },
   {
-   "chave": "d20e7a5f18",
+   "chave": "2753bbca14",
    "voz": "npc-ponteiro",
-   "texto": "Já fez doze de dezesseis salas.",
+   "texto": "Já fez doze de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez doze de dezesseis salas."
+   "fala": "Já fez doze de treze salas."
   },
   {
    "chave": "528dbd60x",
@@ -31325,67 +30075,13 @@
    "fala": "Já ganhou 360 Robux!"
   },
   {
-   "chave": "7750114d19",
+   "chave": "a82c135711",
    "voz": "npc-ponteiro",
-   "texto": "Já fez treze de dezesseis salas.",
+   "texto": "Você fez as treze salas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez treze de dezesseis salas."
-  },
-  {
-   "chave": "aa3a5eb5x",
-   "voz": "npc-ponteiro",
-   "texto": "Já ganhou 390 Robux!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já ganhou 390 Robux!"
-  },
-  {
-   "chave": "37a0c0011b",
-   "voz": "npc-ponteiro",
-   "texto": "Já fez catorze de dezesseis salas.",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já fez catorze de dezesseis salas."
-  },
-  {
-   "chave": "7c7059fbx",
-   "voz": "npc-ponteiro",
-   "texto": "Já ganhou 420 Robux!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já ganhou 420 Robux!"
-  },
-  {
-   "chave": "1e7a565b1a",
-   "voz": "npc-ponteiro",
-   "texto": "Já fez quinze de dezesseis salas.",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já fez quinze de dezesseis salas."
-  },
-  {
-   "chave": "ffdd73c2x",
-   "voz": "npc-ponteiro",
-   "texto": "Já ganhou 450 Robux!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já ganhou 450 Robux!"
-  },
-  {
-   "chave": "d53f274a15",
-   "voz": "npc-ponteiro",
-   "texto": "Você fez as dezesseis salas!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Você fez as dezesseis salas!"
+   "fala": "Você fez as treze salas!"
   },
   {
    "chave": "40588540x",
@@ -31415,13 +30111,13 @@
    "fala": "Agora vamos para \""
   },
   {
-   "chave": "e16132da10",
+   "chave": "1af5c78a11",
    "voz": "narradora",
-   "texto": "A torre tem cinco andares.",
+   "texto": "A torre tem quatro andares.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "A torre tem cinco andares."
+   "fala": "A torre tem quatro andares."
   },
   {
    "chave": "15b150db10",
@@ -31451,13 +30147,13 @@
    "fala": "O livro de"
   },
   {
-   "chave": "090a07db13",
+   "chave": "042a51b6z",
    "voz": "narradora",
-   "texto": "São os capítulos 10, 11 e 12.",
+   "texto": "São os capítulos 11 e 12.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "São os capítulos 10, 11 e 12."
+   "fala": "São os capítulos 11 e 12."
   },
   {
    "chave": "2a3e3963v",
@@ -31467,15 +30163,6 @@
     "interior-torre"
    ],
    "fala": "O livro dos Projetos!"
-  },
-  {
-   "chave": "042a51b6z",
-   "voz": "narradora",
-   "texto": "São os capítulos 11 e 12.",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "São os capítulos 11 e 12."
   },
   {
    "chave": "1358081fx",
@@ -31512,645 +30199,6 @@
     "interior-torre"
    ],
    "fala": "Lá no alto mora o relógio."
-  },
-  {
-   "chave": "d35f6e1fe",
-   "voz": "npc-joy-en",
-   "texto": "Hi!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Hi!"
-  },
-  {
-   "chave": "e777c4d7g",
-   "voz": "npc-joy",
-   "texto": "Eu sou o",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Eu sou o"
-  },
-  {
-   "chave": "60d0fcb3l",
-   "voz": "npc-joy-en",
-   "texto": "Mister Joy",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Mister Joy"
-  },
-  {
-   "chave": "d9b7db6c10",
-   "voz": "npc-joy",
-   "texto": "Aqui falamos de sentimentos.",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Aqui falamos de sentimentos."
-  },
-  {
-   "chave": "1ee2470410",
-   "voz": "npc-joy",
-   "texto": "Vamos cantar e bater palmas?",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Vamos cantar e bater palmas?"
-  },
-  {
-   "chave": "3d9891e1x",
-   "voz": "npc-joy-en",
-   "texto": "How do you feel today?",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "How do you feel today?"
-  },
-  {
-   "chave": "5e383cf0y",
-   "voz": "npc-joy",
-   "texto": "Você cantou com o coração!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Você cantou com o coração!"
-  },
-  {
-   "chave": "df3aa26fl",
-   "voz": "npc-joy-en",
-   "texto": "I'm happy!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "I'm happy!"
-  },
-  {
-   "chave": "d650249dm",
-   "voz": "npc-joy",
-   "texto": "E você também?",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "E você também?"
-  },
-  {
-   "chave": "be67d241x",
-   "voz": "npc-joy",
-   "texto": "Você ainda não fez salas.",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Você ainda não fez salas."
-  },
-  {
-   "chave": "15aabf2e11",
-   "voz": "npc-joy",
-   "texto": "O treino do Castelo já abriu!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "O treino do Castelo já abriu!"
-  },
-  {
-   "chave": "3f23048e12",
-   "voz": "npc-joy",
-   "texto": "Já fez uma de dezesseis salas.",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já fez uma de dezesseis salas."
-  },
-  {
-   "chave": "7c9f62e6r",
-   "voz": "npc-joy",
-   "texto": "Já ganhou 30 Robux!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já ganhou 30 Robux!"
-  },
-  {
-   "chave": "4bc2296a13",
-   "voz": "npc-joy",
-   "texto": "Já fez duas de dezesseis salas.",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já fez duas de dezesseis salas."
-  },
-  {
-   "chave": "7a416b45r",
-   "voz": "npc-joy",
-   "texto": "Já ganhou 60 Robux!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já ganhou 60 Robux!"
-  },
-  {
-   "chave": "7d7dd4b813",
-   "voz": "npc-joy",
-   "texto": "Já fez três de dezesseis salas.",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já fez três de dezesseis salas."
-  },
-  {
-   "chave": "9e9916f0r",
-   "voz": "npc-joy",
-   "texto": "Já ganhou 90 Robux!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já ganhou 90 Robux!"
-  },
-  {
-   "chave": "557240e515",
-   "voz": "npc-joy",
-   "texto": "Já fez quatro de dezesseis salas.",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já fez quatro de dezesseis salas."
-  },
-  {
-   "chave": "97398c28s",
-   "voz": "npc-joy",
-   "texto": "Já ganhou 120 Robux!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já ganhou 120 Robux!"
-  },
-  {
-   "chave": "d7ea6dab14",
-   "voz": "npc-joy",
-   "texto": "Já fez cinco de dezesseis salas.",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já fez cinco de dezesseis salas."
-  },
-  {
-   "chave": "8cd89b15s",
-   "voz": "npc-joy",
-   "texto": "Já ganhou 150 Robux!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já ganhou 150 Robux!"
-  },
-  {
-   "chave": "c1022b2113",
-   "voz": "npc-joy",
-   "texto": "Já fez seis de dezesseis salas.",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já fez seis de dezesseis salas."
-  },
-  {
-   "chave": "5c05ffees",
-   "voz": "npc-joy",
-   "texto": "Já ganhou 180 Robux!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já ganhou 180 Robux!"
-  },
-  {
-   "chave": "415f1c8613",
-   "voz": "npc-joy",
-   "texto": "Já fez sete de dezesseis salas.",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já fez sete de dezesseis salas."
-  },
-  {
-   "chave": "b88d9f2es",
-   "voz": "npc-joy",
-   "texto": "Já ganhou 210 Robux!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já ganhou 210 Robux!"
-  },
-  {
-   "chave": "0b66339013",
-   "voz": "npc-joy",
-   "texto": "Já fez oito de dezesseis salas.",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já fez oito de dezesseis salas."
-  },
-  {
-   "chave": "767d4c6ds",
-   "voz": "npc-joy",
-   "texto": "Já ganhou 240 Robux!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já ganhou 240 Robux!"
-  },
-  {
-   "chave": "45ee97d713",
-   "voz": "npc-joy",
-   "texto": "Já fez nove de dezesseis salas.",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já fez nove de dezesseis salas."
-  },
-  {
-   "chave": "402e4bc4s",
-   "voz": "npc-joy",
-   "texto": "Já ganhou 270 Robux!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já ganhou 270 Robux!"
-  },
-  {
-   "chave": "3bf686fc12",
-   "voz": "npc-joy",
-   "texto": "Já fez dez de dezesseis salas.",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já fez dez de dezesseis salas."
-  },
-  {
-   "chave": "095be450s",
-   "voz": "npc-joy",
-   "texto": "Já ganhou 300 Robux!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já ganhou 300 Robux!"
-  },
-  {
-   "chave": "794d79b913",
-   "voz": "npc-joy",
-   "texto": "Já fez onze de dezesseis salas.",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já fez onze de dezesseis salas."
-  },
-  {
-   "chave": "2261a9a9s",
-   "voz": "npc-joy",
-   "texto": "Já ganhou 330 Robux!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já ganhou 330 Robux!"
-  },
-  {
-   "chave": "e9ffba0913",
-   "voz": "npc-joy",
-   "texto": "Já fez doze de dezesseis salas.",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já fez doze de dezesseis salas."
-  },
-  {
-   "chave": "bc881ce2s",
-   "voz": "npc-joy",
-   "texto": "Já ganhou 360 Robux!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já ganhou 360 Robux!"
-  },
-  {
-   "chave": "beb65a7b14",
-   "voz": "npc-joy",
-   "texto": "Já fez treze de dezesseis salas.",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já fez treze de dezesseis salas."
-  },
-  {
-   "chave": "4f5dcc43s",
-   "voz": "npc-joy",
-   "texto": "Já ganhou 390 Robux!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já ganhou 390 Robux!"
-  },
-  {
-   "chave": "e9c07e4716",
-   "voz": "npc-joy",
-   "texto": "Já fez catorze de dezesseis salas.",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já fez catorze de dezesseis salas."
-  },
-  {
-   "chave": "6b430fa1s",
-   "voz": "npc-joy",
-   "texto": "Já ganhou 420 Robux!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já ganhou 420 Robux!"
-  },
-  {
-   "chave": "edb8173d15",
-   "voz": "npc-joy",
-   "texto": "Já fez quinze de dezesseis salas.",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já fez quinze de dezesseis salas."
-  },
-  {
-   "chave": "3303f12cs",
-   "voz": "npc-joy",
-   "texto": "Já ganhou 450 Robux!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já ganhou 450 Robux!"
-  },
-  {
-   "chave": "457740cc10",
-   "voz": "npc-joy",
-   "texto": "Você fez as dezesseis salas!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Você fez as dezesseis salas!"
-  },
-  {
-   "chave": "928d1f82s",
-   "voz": "npc-joy",
-   "texto": "Já ganhou 500 Robux!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já ganhou 500 Robux!"
-  },
-  {
-   "chave": "8f284a82m",
-   "voz": "npc-joy",
-   "texto": "A primeira é \"",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "A primeira é \""
-  },
-  {
-   "chave": "207a2321x",
-   "voz": "npc-joy-en",
-   "texto": "How Do You Feel Today?",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "How Do You Feel Today?"
-  },
-  {
-   "chave": "325ea033q",
-   "voz": "npc-joy",
-   "texto": "Agora vamos para \"",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Agora vamos para \""
-  },
-  {
-   "chave": "5ff99272j",
-   "voz": "npc-joy-en",
-   "texto": "Feelings",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Feelings"
-  },
-  {
-   "chave": "dc5fcb24r",
-   "voz": "npc-joy-en",
-   "texto": "I'm Happy Today!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "I'm Happy Today!"
-  },
-  {
-   "chave": "0f4e6a42m",
-   "voz": "npc-joy-en",
-   "texto": "A Happy Day",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "A Happy Day"
-  },
-  {
-   "chave": "935c1433q",
-   "voz": "npc-joy-en",
-   "texto": "What Do You Do?",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "What Do You Do?"
-  },
-  {
-   "chave": "752555f6s",
-   "voz": "npc-joy-en",
-   "texto": "The Alphabet Song",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "The Alphabet Song"
-  },
-  {
-   "chave": "715072dfq",
-   "voz": "npc-joy-en",
-   "texto": "Super Challenge",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Super Challenge"
-  },
-  {
-   "chave": "41935d37k",
-   "voz": "npc-joy-en",
-   "texto": "Book Time",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Book Time"
-  },
-  {
-   "chave": "d928e814u",
-   "voz": "npc-joy-en",
-   "texto": "Weather and Clothes",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Weather and Clothes"
-  },
-  {
-   "chave": "14be7334l",
-   "voz": "npc-joy-en",
-   "texto": "Summing Up",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Summing Up"
-  },
-  {
-   "chave": "edb67b2fj",
-   "voz": "npc-joy-en",
-   "texto": "Be Kind!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Be Kind!"
-  },
-  {
-   "chave": "3d7ef592v",
-   "voz": "npc-joy-en",
-   "texto": "Empathy through Arts",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Empathy through Arts"
-  },
-  {
-   "chave": "a0a53b3bn",
-   "voz": "npc-joy-en",
-   "texto": "Kindness Box",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Kindness Box"
-  },
-  {
-   "chave": "43643415o",
-   "voz": "npc-joy-en",
-   "texto": "We Eat Pasta!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "We Eat Pasta!"
-  },
-  {
-   "chave": "235cc3a9v",
-   "voz": "npc-joy-en",
-   "texto": "Milk Comes from Cows",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Milk Comes from Cows"
-  },
-  {
-   "chave": "34a0d1d0v",
-   "voz": "npc-joy-en",
-   "texto": "Two Pieces of Fruit!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Two Pieces of Fruit!"
-  },
-  {
-   "chave": "32292f01a",
-   "voz": "ingles",
-   "texto": "sad",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "sad"
-  },
-  {
-   "chave": "a37dc215z",
-   "voz": "narradora",
-   "texto": "Todo sentimento é normal.",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Todo sentimento é normal."
-  },
-  {
-   "chave": "32790e54s",
-   "voz": "narradora",
-   "texto": "Um piano colorido!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Um piano colorido!"
-  },
-  {
-   "chave": "9154ac60w",
-   "voz": "narradora",
-   "texto": "Bata palmas bem feliz!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Bata palmas bem feliz!"
-  },
-  {
-   "chave": "c6effe56t",
-   "voz": "narradora",
-   "texto": "Um pandeiro alegre!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Um pandeiro alegre!"
-  },
-  {
-   "chave": "399e9ce2n",
-   "voz": "ingles",
-   "texto": "Stamp your foot!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Stamp your foot!"
-  },
-  {
-   "chave": "b7bd8e0cs",
-   "voz": "narradora",
-   "texto": "Bata o pé no chão!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Bata o pé no chão!"
-  },
-  {
-   "chave": "b601bb98s",
-   "voz": "narradora",
-   "texto": "Páginas 122 a 125.",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Páginas 122 a 125."
-  },
-  {
-   "chave": "6c88bdecs",
-   "voz": "narradora",
-   "texto": "Páginas 126 a 129:",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Páginas 126 a 129:"
-  },
-  {
-   "chave": "ba49470cs",
-   "voz": "narradora",
-   "texto": "Páginas 130 a 133.",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Páginas 130 a 133."
   },
   {
    "chave": "f49f81a7h",
@@ -32261,13 +30309,13 @@
    "fala": "O treino do Castelo já abriu!"
   },
   {
-   "chave": "636dfe4312",
+   "chave": "2eac2656y",
    "voz": "npc-ben",
-   "texto": "Já fez uma de dezesseis salas.",
+   "texto": "Já fez uma de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez uma de dezesseis salas."
+   "fala": "Já fez uma de treze salas."
   },
   {
    "chave": "87a87db9r",
@@ -32279,13 +30327,13 @@
    "fala": "Já ganhou 30 Robux!"
   },
   {
-   "chave": "30a4f42113",
+   "chave": "57159becz",
    "voz": "npc-ben",
-   "texto": "Já fez duas de dezesseis salas.",
+   "texto": "Já fez duas de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez duas de dezesseis salas."
+   "fala": "Já fez duas de treze salas."
   },
   {
    "chave": "6addd8f2r",
@@ -32297,13 +30345,13 @@
    "fala": "Já ganhou 60 Robux!"
   },
   {
-   "chave": "105741a713",
+   "chave": "0e0fcd42z",
    "voz": "npc-ben",
-   "texto": "Já fez três de dezesseis salas.",
+   "texto": "Já fez três de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez três de dezesseis salas."
+   "fala": "Já fez três de treze salas."
   },
   {
    "chave": "cdf9b593r",
@@ -32315,13 +30363,13 @@
    "fala": "Já ganhou 90 Robux!"
   },
   {
-   "chave": "cde2dc3e15",
+   "chave": "549e731711",
    "voz": "npc-ben",
-   "texto": "Já fez quatro de dezesseis salas.",
+   "texto": "Já fez quatro de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez quatro de dezesseis salas."
+   "fala": "Já fez quatro de treze salas."
   },
   {
    "chave": "cf140f9ds",
@@ -32333,13 +30381,13 @@
    "fala": "Já ganhou 120 Robux!"
   },
   {
-   "chave": "12a031fa14",
+   "chave": "d5d22a7b10",
    "voz": "npc-ben",
-   "texto": "Já fez cinco de dezesseis salas.",
+   "texto": "Já fez cinco de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez cinco de dezesseis salas."
+   "fala": "Já fez cinco de treze salas."
   },
   {
    "chave": "e967acb0s",
@@ -32351,13 +30399,13 @@
    "fala": "Já ganhou 150 Robux!"
   },
   {
-   "chave": "9ccf05ba13",
+   "chave": "c2cd453bz",
    "voz": "npc-ben",
-   "texto": "Já fez seis de dezesseis salas.",
+   "texto": "Já fez seis de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez seis de dezesseis salas."
+   "fala": "Já fez seis de treze salas."
   },
   {
    "chave": "4fd6de07s",
@@ -32369,13 +30417,13 @@
    "fala": "Já ganhou 180 Robux!"
   },
   {
-   "chave": "3f41b17113",
+   "chave": "af9d421cz",
    "voz": "npc-ben",
-   "texto": "Já fez sete de dezesseis salas.",
+   "texto": "Já fez sete de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez sete de dezesseis salas."
+   "fala": "Já fez sete de treze salas."
   },
   {
    "chave": "d4b59793s",
@@ -32387,13 +30435,13 @@
    "fala": "Já ganhou 210 Robux!"
   },
   {
-   "chave": "ded483d313",
+   "chave": "24dc6306z",
    "voz": "npc-ben",
-   "texto": "Já fez oito de dezesseis salas.",
+   "texto": "Já fez oito de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez oito de dezesseis salas."
+   "fala": "Já fez oito de treze salas."
   },
   {
    "chave": "2966226cs",
@@ -32405,13 +30453,13 @@
    "fala": "Já ganhou 240 Robux!"
   },
   {
-   "chave": "9d36bdf413",
+   "chave": "2c13c2ddz",
    "voz": "npc-ben",
-   "texto": "Já fez nove de dezesseis salas.",
+   "texto": "Já fez nove de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez nove de dezesseis salas."
+   "fala": "Já fez nove de treze salas."
   },
   {
    "chave": "eb460cb5s",
@@ -32423,13 +30471,13 @@
    "fala": "Já ganhou 270 Robux!"
   },
   {
-   "chave": "402b3e1512",
+   "chave": "ae0a4e58y",
    "voz": "npc-ben",
-   "texto": "Já fez dez de dezesseis salas.",
+   "texto": "Já fez dez de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez dez de dezesseis salas."
+   "fala": "Já fez dez de treze salas."
   },
   {
    "chave": "58079211s",
@@ -32441,13 +30489,13 @@
    "fala": "Já ganhou 300 Robux!"
   },
   {
-   "chave": "16de879213",
+   "chave": "3c884083z",
    "voz": "npc-ben",
-   "texto": "Já fez onze de dezesseis salas.",
+   "texto": "Já fez onze de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez onze de dezesseis salas."
+   "fala": "Já fez onze de treze salas."
   },
   {
    "chave": "2e218178s",
@@ -32459,13 +30507,13 @@
    "fala": "Já ganhou 330 Robux!"
   },
   {
-   "chave": "1d72e1c213",
+   "chave": "de685253z",
    "voz": "npc-ben",
-   "texto": "Já fez doze de dezesseis salas.",
+   "texto": "Já fez doze de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez doze de dezesseis salas."
+   "fala": "Já fez doze de treze salas."
   },
   {
    "chave": "f72da3a7s",
@@ -32477,67 +30525,13 @@
    "fala": "Já ganhou 360 Robux!"
   },
   {
-   "chave": "a8ab12f614",
+   "chave": "58e9167cw",
    "voz": "npc-ben",
-   "texto": "Já fez treze de dezesseis salas.",
+   "texto": "Você fez as treze salas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez treze de dezesseis salas."
-  },
-  {
-   "chave": "9fd3e6fes",
-   "voz": "npc-ben",
-   "texto": "Já ganhou 390 Robux!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já ganhou 390 Robux!"
-  },
-  {
-   "chave": "70b9d2ea16",
-   "voz": "npc-ben",
-   "texto": "Já fez catorze de dezesseis salas.",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já fez catorze de dezesseis salas."
-  },
-  {
-   "chave": "a60e6a8cs",
-   "voz": "npc-ben",
-   "texto": "Já ganhou 420 Robux!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já ganhou 420 Robux!"
-  },
-  {
-   "chave": "19c34ede15",
-   "voz": "npc-ben",
-   "texto": "Já fez quinze de dezesseis salas.",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já fez quinze de dezesseis salas."
-  },
-  {
-   "chave": "c238ec01s",
-   "voz": "npc-ben",
-   "texto": "Já ganhou 450 Robux!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já ganhou 450 Robux!"
-  },
-  {
-   "chave": "3a10ec1d10",
-   "voz": "npc-ben",
-   "texto": "Você fez as dezesseis salas!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Você fez as dezesseis salas!"
+   "fala": "Você fez as treze salas!"
   },
   {
    "chave": "10d800abs",
@@ -32558,13 +30552,13 @@
    "fala": "A primeira é \""
   },
   {
-   "chave": "90079fcex",
+   "chave": "0a80044fm",
    "voz": "npc-ben-en",
-   "texto": "How Do You Feel Today?",
+   "texto": "A Happy Day",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "How Do You Feel Today?"
+   "fala": "A Happy Day"
   },
   {
    "chave": "8cfcc6f6q",
@@ -32574,33 +30568,6 @@
     "interior-torre"
    ],
    "fala": "Agora vamos para \""
-  },
-  {
-   "chave": "e805f251j",
-   "voz": "npc-ben-en",
-   "texto": "Feelings",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Feelings"
-  },
-  {
-   "chave": "4a521e9fr",
-   "voz": "npc-ben-en",
-   "texto": "I'm Happy Today!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "I'm Happy Today!"
-  },
-  {
-   "chave": "0a80044fm",
-   "voz": "npc-ben-en",
-   "texto": "A Happy Day",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "A Happy Day"
   },
   {
    "chave": "9a1c16eeq",
@@ -32909,13 +30876,13 @@
    "fala": "O treino do Castelo já abriu!"
   },
   {
-   "chave": "99467e5115",
+   "chave": "e71e727c11",
    "voz": "npc-stella",
-   "texto": "Já fez uma de dezesseis salas.",
+   "texto": "Já fez uma de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez uma de dezesseis salas."
+   "fala": "Já fez uma de treze salas."
   },
   {
    "chave": "755f3c4bu",
@@ -32927,13 +30894,13 @@
    "fala": "Já ganhou 30 Robux!"
   },
   {
-   "chave": "f7523a7f16",
+   "chave": "27c8b66a12",
    "voz": "npc-stella",
-   "texto": "Já fez duas de dezesseis salas.",
+   "texto": "Já fez duas de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez duas de dezesseis salas."
+   "fala": "Já fez duas de treze salas."
   },
   {
    "chave": "3a307884u",
@@ -32945,13 +30912,13 @@
    "fala": "Já ganhou 60 Robux!"
   },
   {
-   "chave": "6e7deddd16",
+   "chave": "f25dbf5012",
    "voz": "npc-stella",
-   "texto": "Já fez três de dezesseis salas.",
+   "texto": "Já fez três de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez três de dezesseis salas."
+   "fala": "Já fez três de treze salas."
   },
   {
    "chave": "2fb126c1u",
@@ -32963,13 +30930,13 @@
    "fala": "Já ganhou 90 Robux!"
   },
   {
-   "chave": "2c855c5818",
+   "chave": "a62ffe6914",
    "voz": "npc-stella",
-   "texto": "Já fez quatro de dezesseis salas.",
+   "texto": "Já fez quatro de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez quatro de dezesseis salas."
+   "fala": "Já fez quatro de treze salas."
   },
   {
    "chave": "3e370a23v",
@@ -32981,13 +30948,13 @@
    "fala": "Já ganhou 120 Robux!"
   },
   {
-   "chave": "56bb9ee817",
+   "chave": "dac252d913",
    "voz": "npc-stella",
-   "texto": "Já fez cinco de dezesseis salas.",
+   "texto": "Já fez cinco de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez cinco de dezesseis salas."
+   "fala": "Já fez cinco de treze salas."
   },
   {
    "chave": "eecb82eav",
@@ -32999,13 +30966,13 @@
    "fala": "Já ganhou 150 Robux!"
   },
   {
-   "chave": "4f8a9eac16",
+   "chave": "3ff2496512",
    "voz": "npc-stella",
-   "texto": "Já fez seis de dezesseis salas.",
+   "texto": "Já fez seis de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez seis de dezesseis salas."
+   "fala": "Já fez seis de treze salas."
   },
   {
    "chave": "ccf23609v",
@@ -33017,13 +30984,13 @@
    "fala": "Já ganhou 180 Robux!"
   },
   {
-   "chave": "ed60aca716",
+   "chave": "5988884212",
    "voz": "npc-stella",
-   "texto": "Já fez sete de dezesseis salas.",
+   "texto": "Já fez sete de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez sete de dezesseis salas."
+   "fala": "Já fez sete de treze salas."
   },
   {
    "chave": "379a5a79v",
@@ -33035,13 +31002,13 @@
    "fala": "Já ganhou 210 Robux!"
   },
   {
-   "chave": "25c76c9516",
+   "chave": "5c6894d812",
    "voz": "npc-stella",
-   "texto": "Já fez oito de dezesseis salas.",
+   "texto": "Já fez oito de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez oito de dezesseis salas."
+   "fala": "Já fez oito de treze salas."
   },
   {
    "chave": "70c7aeb2v",
@@ -33053,13 +31020,13 @@
    "fala": "Já ganhou 240 Robux!"
   },
   {
-   "chave": "bdd0508216",
+   "chave": "059c691312",
    "voz": "npc-stella",
-   "texto": "Já fez nove de dezesseis salas.",
+   "texto": "Já fez nove de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez nove de dezesseis salas."
+   "fala": "Já fez nove de treze salas."
   },
   {
    "chave": "9d75b98fv",
@@ -33071,13 +31038,13 @@
    "fala": "Já ganhou 270 Robux!"
   },
   {
-   "chave": "05a4674f15",
+   "chave": "a657c4da11",
    "voz": "npc-stella",
-   "texto": "Já fez dez de dezesseis salas.",
+   "texto": "Já fez dez de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez dez de dezesseis salas."
+   "fala": "Já fez dez de treze salas."
   },
   {
    "chave": "cb2c91ffv",
@@ -33089,13 +31056,13 @@
    "fala": "Já ganhou 300 Robux!"
   },
   {
-   "chave": "f7ca63e816",
+   "chave": "f73ec7d912",
    "voz": "npc-stella",
-   "texto": "Já fez onze de dezesseis salas.",
+   "texto": "Já fez onze de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez onze de dezesseis salas."
+   "fala": "Já fez onze de treze salas."
   },
   {
    "chave": "801419a2v",
@@ -33107,13 +31074,13 @@
    "fala": "Já ganhou 330 Robux!"
   },
   {
-   "chave": "afeae23c16",
+   "chave": "0314da9512",
    "voz": "npc-stella",
-   "texto": "Já fez doze de dezesseis salas.",
+   "texto": "Já fez doze de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez doze de dezesseis salas."
+   "fala": "Já fez doze de treze salas."
   },
   {
    "chave": "3ea5e369v",
@@ -33125,67 +31092,13 @@
    "fala": "Já ganhou 360 Robux!"
   },
   {
-   "chave": "3a53dd9417",
+   "chave": "f4b57776z",
    "voz": "npc-stella",
-   "texto": "Já fez treze de dezesseis salas.",
+   "texto": "Você fez as treze salas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez treze de dezesseis salas."
-  },
-  {
-   "chave": "f7a56adcv",
-   "voz": "npc-stella",
-   "texto": "Já ganhou 390 Robux!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já ganhou 390 Robux!"
-  },
-  {
-   "chave": "4f5fc5e819",
-   "voz": "npc-stella",
-   "texto": "Já fez catorze de dezesseis salas.",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já fez catorze de dezesseis salas."
-  },
-  {
-   "chave": "96d99d82v",
-   "voz": "npc-stella",
-   "texto": "Já ganhou 420 Robux!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já ganhou 420 Robux!"
-  },
-  {
-   "chave": "d457db7818",
-   "voz": "npc-stella",
-   "texto": "Já fez quinze de dezesseis salas.",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já fez quinze de dezesseis salas."
-  },
-  {
-   "chave": "4d9d5ebbv",
-   "voz": "npc-stella",
-   "texto": "Já ganhou 450 Robux!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já ganhou 450 Robux!"
-  },
-  {
-   "chave": "29a9eaef13",
-   "voz": "npc-stella",
-   "texto": "Você fez as dezesseis salas!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Você fez as dezesseis salas!"
+   "fala": "Você fez as treze salas!"
   },
   {
    "chave": "7f50aa0dv",
@@ -33206,13 +31119,13 @@
    "fala": "A primeira é \""
   },
   {
-   "chave": "577317e810",
+   "chave": "8cc665f9p",
    "voz": "npc-stella-en",
-   "texto": "How Do You Feel Today?",
+   "texto": "A Happy Day",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "How Do You Feel Today?"
+   "fala": "A Happy Day"
   },
   {
    "chave": "0f441644t",
@@ -33222,33 +31135,6 @@
     "interior-torre"
    ],
    "fala": "Agora vamos para \""
-  },
-  {
-   "chave": "4100112fm",
-   "voz": "npc-stella-en",
-   "texto": "Feelings",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Feelings"
-  },
-  {
-   "chave": "090dd635u",
-   "voz": "npc-stella-en",
-   "texto": "I'm Happy Today!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "I'm Happy Today!"
-  },
-  {
-   "chave": "8cc665f9p",
-   "voz": "npc-stella-en",
-   "texto": "A Happy Day",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "A Happy Day"
   },
   {
    "chave": "e1e26c24t",
@@ -33629,13 +31515,13 @@
    "fala": "O treino do Castelo já abriu!"
   },
   {
-   "chave": "ebff0e3d13",
+   "chave": "6707db30z",
    "voz": "npc-moon",
-   "texto": "Já fez uma de dezesseis salas.",
+   "texto": "Já fez uma de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez uma de dezesseis salas."
+   "fala": "Já fez uma de treze salas."
   },
   {
    "chave": "ed5b1cdfs",
@@ -33647,13 +31533,13 @@
    "fala": "Já ganhou 30 Robux!"
   },
   {
-   "chave": "b58c263314",
+   "chave": "da64b36610",
    "voz": "npc-moon",
-   "texto": "Já fez duas de dezesseis salas.",
+   "texto": "Já fez duas de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez duas de dezesseis salas."
+   "fala": "Já fez duas de treze salas."
   },
   {
    "chave": "7386eb70s",
@@ -33665,13 +31551,13 @@
    "fala": "Já ganhou 60 Robux!"
   },
   {
-   "chave": "c77953a914",
+   "chave": "aa1206a410",
    "voz": "npc-moon",
-   "texto": "Já fez três de dezesseis salas.",
+   "texto": "Já fez três de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez três de dezesseis salas."
+   "fala": "Já fez três de treze salas."
   },
   {
    "chave": "4f2f3fc5s",
@@ -33683,13 +31569,13 @@
    "fala": "Já ganhou 90 Robux!"
   },
   {
-   "chave": "8686ef9416",
+   "chave": "f39d437d12",
    "voz": "npc-moon",
-   "texto": "Já fez quatro de dezesseis salas.",
+   "texto": "Já fez quatro de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez quatro de dezesseis salas."
+   "fala": "Já fez quatro de treze salas."
   },
   {
    "chave": "7945997ft",
@@ -33701,13 +31587,13 @@
    "fala": "Já ganhou 120 Robux!"
   },
   {
-   "chave": "3a5430a415",
+   "chave": "abea67ad11",
    "voz": "npc-moon",
-   "texto": "Já fez cinco de dezesseis salas.",
+   "texto": "Já fez cinco de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez cinco de dezesseis salas."
+   "fala": "Já fez cinco de treze salas."
   },
   {
    "chave": "2121ac3et",
@@ -33719,13 +31605,13 @@
    "fala": "Já ganhou 150 Robux!"
   },
   {
-   "chave": "057a050814",
+   "chave": "e97548f910",
    "voz": "npc-moon",
-   "texto": "Já fez seis de dezesseis salas.",
+   "texto": "Já fez seis de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez seis de dezesseis salas."
+   "fala": "Já fez seis de treze salas."
   },
   {
    "chave": "b86539e5t",
@@ -33737,13 +31623,13 @@
    "fala": "Já ganhou 180 Robux!"
   },
   {
-   "chave": "9e1c106314",
+   "chave": "d5f1c17610",
    "voz": "npc-moon",
-   "texto": "Já fez sete de dezesseis salas.",
+   "texto": "Já fez sete de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez sete de dezesseis salas."
+   "fala": "Já fez sete de treze salas."
   },
   {
    "chave": "2654eea5t",
@@ -33755,13 +31641,13 @@
    "fala": "Já ganhou 210 Robux!"
   },
   {
-   "chave": "6fb4d7d114",
+   "chave": "35b233fc10",
    "voz": "npc-moon",
-   "texto": "Já fez oito de dezesseis salas.",
+   "texto": "Já fez oito de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez oito de dezesseis salas."
+   "fala": "Já fez oito de treze salas."
   },
   {
    "chave": "3f37b346t",
@@ -33773,13 +31659,13 @@
    "fala": "Já ganhou 240 Robux!"
   },
   {
-   "chave": "523e6b0614",
+   "chave": "5d64f76f10",
    "voz": "npc-moon",
-   "texto": "Já fez nove de dezesseis salas.",
+   "texto": "Já fez nove de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez nove de dezesseis salas."
+   "fala": "Já fez nove de treze salas."
   },
   {
    "chave": "e6ec5643t",
@@ -33791,13 +31677,13 @@
    "fala": "Já ganhou 270 Robux!"
   },
   {
-   "chave": "576fddbb13",
+   "chave": "b35a21fez",
    "voz": "npc-moon",
-   "texto": "Já fez dez de dezesseis salas.",
+   "texto": "Já fez dez de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez dez de dezesseis salas."
+   "fala": "Já fez dez de treze salas."
   },
   {
    "chave": "c100d73bt",
@@ -33809,13 +31695,13 @@
    "fala": "Já ganhou 300 Robux!"
   },
   {
-   "chave": "5bec731414",
+   "chave": "87a98efd10",
    "voz": "npc-moon",
-   "texto": "Já fez onze de dezesseis salas.",
+   "texto": "Já fez onze de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez onze de dezesseis salas."
+   "fala": "Já fez onze de treze salas."
   },
   {
    "chave": "bdc6191et",
@@ -33827,13 +31713,13 @@
    "fala": "Já ganhou 330 Robux!"
   },
   {
-   "chave": "6162486814",
+   "chave": "37a9645910",
    "voz": "npc-moon",
-   "texto": "Já fez doze de dezesseis salas.",
+   "texto": "Já fez doze de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez doze de dezesseis salas."
+   "fala": "Já fez doze de treze salas."
   },
   {
    "chave": "4da190ddt",
@@ -33845,67 +31731,13 @@
    "fala": "Já ganhou 360 Robux!"
   },
   {
-   "chave": "35caf84815",
+   "chave": "c54ddac2x",
    "voz": "npc-moon",
-   "texto": "Já fez treze de dezesseis salas.",
+   "texto": "Você fez as treze salas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez treze de dezesseis salas."
-  },
-  {
-   "chave": "2457bc98t",
-   "voz": "npc-moon",
-   "texto": "Já ganhou 390 Robux!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já ganhou 390 Robux!"
-  },
-  {
-   "chave": "5d8f2d7c17",
-   "voz": "npc-moon",
-   "texto": "Já fez catorze de dezesseis salas.",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já fez catorze de dezesseis salas."
-  },
-  {
-   "chave": "2147f1a6t",
-   "voz": "npc-moon",
-   "texto": "Já ganhou 420 Robux!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já ganhou 420 Robux!"
-  },
-  {
-   "chave": "b7fd7df416",
-   "voz": "npc-moon",
-   "texto": "Já fez quinze de dezesseis salas.",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já fez quinze de dezesseis salas."
-  },
-  {
-   "chave": "e65c1b07t",
-   "voz": "npc-moon",
-   "texto": "Já ganhou 450 Robux!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já ganhou 450 Robux!"
-  },
-  {
-   "chave": "ad62228311",
-   "voz": "npc-moon",
-   "texto": "Você fez as dezesseis salas!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Você fez as dezesseis salas!"
+   "fala": "Você fez as treze salas!"
   },
   {
    "chave": "351b9ce1t",
@@ -33926,13 +31758,13 @@
    "fala": "A primeira é \""
   },
   {
-   "chave": "5fd233c4y",
+   "chave": "fc929b25n",
    "voz": "npc-moon-en",
-   "texto": "How Do You Feel Today?",
+   "texto": "A Happy Day",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "How Do You Feel Today?"
+   "fala": "A Happy Day"
   },
   {
    "chave": "bdc9aa08r",
@@ -33942,33 +31774,6 @@
     "interior-torre"
    ],
    "fala": "Agora vamos para \""
-  },
-  {
-   "chave": "e461db7bk",
-   "voz": "npc-moon-en",
-   "texto": "Feelings",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Feelings"
-  },
-  {
-   "chave": "ab883df9s",
-   "voz": "npc-moon-en",
-   "texto": "I'm Happy Today!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "I'm Happy Today!"
-  },
-  {
-   "chave": "fc929b25n",
-   "voz": "npc-moon-en",
-   "texto": "A Happy Day",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "A Happy Day"
   },
   {
    "chave": "6e7f0fe0r",
@@ -34250,13 +32055,13 @@
    "fala": "O treino do Castelo já abriu!"
   },
   {
-   "chave": "2217ac7814",
+   "chave": "c735768910",
    "voz": "npc-smile",
-   "texto": "Já fez uma de dezesseis salas.",
+   "texto": "Já fez uma de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez uma de dezesseis salas."
+   "fala": "Já fez uma de treze salas."
   },
   {
    "chave": "b1df1efct",
@@ -34268,13 +32073,13 @@
    "fala": "Já ganhou 30 Robux!"
   },
   {
-   "chave": "74709b2415",
+   "chave": "08fd2a2d11",
    "voz": "npc-smile",
-   "texto": "Já fez duas de dezesseis salas.",
+   "texto": "Já fez duas de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez duas de dezesseis salas."
+   "fala": "Já fez duas de treze salas."
   },
   {
    "chave": "d0d88023t",
@@ -34286,13 +32091,13 @@
    "fala": "Já ganhou 60 Robux!"
   },
   {
-   "chave": "901b53aa15",
+   "chave": "18659a8b11",
    "voz": "npc-smile",
-   "texto": "Já fez três de dezesseis salas.",
+   "texto": "Já fez três de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez três de dezesseis salas."
+   "fala": "Já fez três de treze salas."
   },
   {
    "chave": "f6ac5c42t",
@@ -34304,13 +32109,13 @@
    "fala": "Já ganhou 90 Robux!"
   },
   {
-   "chave": "18cc652317",
+   "chave": "0246673613",
    "voz": "npc-smile",
-   "texto": "Já fez quatro de dezesseis salas.",
+   "texto": "Já fez quatro de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez quatro de dezesseis salas."
+   "fala": "Já fez quatro de treze salas."
   },
   {
    "chave": "220b438au",
@@ -34322,13 +32127,13 @@
    "fala": "Já ganhou 120 Robux!"
   },
   {
-   "chave": "19473ba516",
+   "chave": "c7c7ad4812",
    "voz": "npc-smile",
-   "texto": "Já fez cinco de dezesseis salas.",
+   "texto": "Já fez cinco de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez cinco de dezesseis salas."
+   "fala": "Já fez cinco de treze salas."
   },
   {
    "chave": "ac166cc3u",
@@ -34340,13 +32145,13 @@
    "fala": "Já ganhou 150 Robux!"
   },
   {
-   "chave": "ad5c992715",
+   "chave": "96a6acc211",
    "voz": "npc-smile",
-   "texto": "Já fez seis de dezesseis salas.",
+   "texto": "Já fez seis de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez seis de dezesseis salas."
+   "fala": "Já fez seis de treze salas."
   },
   {
    "chave": "215b0b94u",
@@ -34358,13 +32163,13 @@
    "fala": "Já ganhou 180 Robux!"
   },
   {
-   "chave": "1995fb3815",
+   "chave": "6cb7fc4911",
    "voz": "npc-smile",
-   "texto": "Já fez sete de dezesseis salas.",
+   "texto": "Já fez sete de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez sete de dezesseis salas."
+   "fala": "Já fez sete de treze salas."
   },
   {
    "chave": "38099c48u",
@@ -34376,13 +32181,13 @@
    "fala": "Já ganhou 210 Robux!"
   },
   {
-   "chave": "f2254bb615",
+   "chave": "bf79653f11",
    "voz": "npc-smile",
-   "texto": "Já fez oito de dezesseis salas.",
+   "texto": "Já fez oito de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez oito de dezesseis salas."
+   "fala": "Já fez oito de treze salas."
   },
   {
    "chave": "4baaaeb7u",
@@ -34394,13 +32199,13 @@
    "fala": "Já ganhou 240 Robux!"
   },
   {
-   "chave": "7a9eeeb915",
+   "chave": "a77975d411",
    "voz": "npc-smile",
-   "texto": "Já fez nove de dezesseis salas.",
+   "texto": "Já fez nove de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez nove de dezesseis salas."
+   "fala": "Já fez nove de treze salas."
   },
   {
    "chave": "ae31f89au",
@@ -34412,13 +32217,13 @@
    "fala": "Já ganhou 270 Robux!"
   },
   {
-   "chave": "f9bcd20a14",
+   "chave": "bfb26c6b10",
    "voz": "npc-smile",
-   "texto": "Já fez dez de dezesseis salas.",
+   "texto": "Já fez dez de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez dez de dezesseis salas."
+   "fala": "Já fez dez de treze salas."
   },
   {
    "chave": "9c987542u",
@@ -34430,13 +32235,13 @@
    "fala": "Já ganhou 300 Robux!"
   },
   {
-   "chave": "9c906cd315",
+   "chave": "d1bbbc0611",
    "voz": "npc-smile",
-   "texto": "Já fez onze de dezesseis salas.",
+   "texto": "Já fez onze de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez onze de dezesseis salas."
+   "fala": "Já fez onze de treze salas."
   },
   {
    "chave": "5600dc9fu",
@@ -34448,13 +32253,13 @@
    "fala": "Já ganhou 330 Robux!"
   },
   {
-   "chave": "4ed7e66f15",
+   "chave": "2e7a9a7a11",
    "voz": "npc-smile",
-   "texto": "Já fez doze de dezesseis salas.",
+   "texto": "Já fez doze de treze salas.",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez doze de dezesseis salas."
+   "fala": "Já fez doze de treze salas."
   },
   {
    "chave": "45170030u",
@@ -34466,67 +32271,13 @@
    "fala": "Já ganhou 360 Robux!"
   },
   {
-   "chave": "d3405a3d16",
+   "chave": "da1e5287y",
    "voz": "npc-smile",
-   "texto": "Já fez treze de dezesseis salas.",
+   "texto": "Você fez as treze salas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já fez treze de dezesseis salas."
-  },
-  {
-   "chave": "45d00d85u",
-   "voz": "npc-smile",
-   "texto": "Já ganhou 390 Robux!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já ganhou 390 Robux!"
-  },
-  {
-   "chave": "68c72f3118",
-   "voz": "npc-smile",
-   "texto": "Já fez catorze de dezesseis salas.",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já fez catorze de dezesseis salas."
-  },
-  {
-   "chave": "8568654bu",
-   "voz": "npc-smile",
-   "texto": "Já ganhou 420 Robux!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já ganhou 420 Robux!"
-  },
-  {
-   "chave": "89ff712b17",
-   "voz": "npc-smile",
-   "texto": "Já fez quinze de dezesseis salas.",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já fez quinze de dezesseis salas."
-  },
-  {
-   "chave": "f5013fd2u",
-   "voz": "npc-smile",
-   "texto": "Já ganhou 450 Robux!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Já ganhou 450 Robux!"
-  },
-  {
-   "chave": "56c7f39a12",
-   "voz": "npc-smile",
-   "texto": "Você fez as dezesseis salas!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Você fez as dezesseis salas!"
+   "fala": "Você fez as treze salas!"
   },
   {
    "chave": "15e1a310u",
@@ -34547,13 +32298,13 @@
    "fala": "A primeira é \""
   },
   {
-   "chave": "b5c3602fz",
+   "chave": "34aeba80o",
    "voz": "npc-smile-en",
-   "texto": "How Do You Feel Today?",
+   "texto": "A Happy Day",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "How Do You Feel Today?"
+   "fala": "A Happy Day"
   },
   {
    "chave": "6c492f35s",
@@ -34563,33 +32314,6 @@
     "interior-torre"
    ],
    "fala": "Agora vamos para \""
-  },
-  {
-   "chave": "5c9f2174l",
-   "voz": "npc-smile-en",
-   "texto": "Feelings",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "Feelings"
-  },
-  {
-   "chave": "c0d489e6t",
-   "voz": "npc-smile-en",
-   "texto": "I'm Happy Today!",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "I'm Happy Today!"
-  },
-  {
-   "chave": "34aeba80o",
-   "voz": "npc-smile-en",
-   "texto": "A Happy Day",
-   "pacotes": [
-    "interior-torre"
-   ],
-   "fala": "A Happy Day"
   },
   {
    "chave": "a8335225s",

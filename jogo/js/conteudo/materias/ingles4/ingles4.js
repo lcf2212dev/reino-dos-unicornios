@@ -1,6 +1,7 @@
 /* ENGLISH — Inglês do 4º bimestre, 2º ano, English Volume 2 (docs/contratos/quarto-bimestre.md).
-   Um livro da escola em duas partes, reproduzidas página por página: os capítulos 10 "If You're Happy, Clap Your
-   Hands", 11 "I Dance When I'm Happy!" e 12 "Book Time" (pp. 122 a 159) e a parte de projetos, com os capítulos 11
+   Um livro da escola em duas partes, reproduzidas página por página: os capítulos 11 "I Dance When I'm Happy!" e
+   12 "Book Time" (pp. 134 a 159; o capítulo 10, pp. 122 a 133, foi do 3º bimestre: sala i5 da matéria arquivada
+   `ingles`, e fica fora daqui) e a parte de projetos, com os capítulos 11
    "Be Kind!" e 12 "I Have a Healthy Diet!" (pp. 164 a 193; Science, Arts, History, Geography, Maths e Connecting
    Ideas). As duas partes têm capítulos de mesmo número: cada uma é um `livros` (letra e sigla próprias).
    PDFs em matérias/4 Bimestre/inglês/; o checklist de cobertura é o INVENTARIO.md da mesma pasta.
@@ -18,15 +19,15 @@
     cor: '#d23c9b',   // a cor da matéria (docs/contratos/arte.md §22): o rosa-framboesa da capa do English Volume 2
     nomeLivro: 'Livros de English',
     livros: {
-      english: { nome: 'English – Capítulos 10 a 12', curto: 'English', emoji: '📔', letra: 'e', sigla: 'ENG' },
+      english: { nome: 'English – Capítulos 11 e 12', curto: 'English', emoji: '📔', letra: 'e', sigla: 'ENG' },
       projetos: { nome: 'English – Projetos', curto: 'Projetos', emoji: '📖', letra: 'p', sigla: 'PRJ' },
     },
     inventario: 'matérias/4 Bimestre/inglês/INVENTARIO.md',
     lugar: { nome: 'Torre do Relógio', artigo: 'a', dentro: 'materia:ingles', interior: 'torre', novidade: '2026-10-29' },
     guia: 'Aqui está o livro de English do 4º bimestre, página por página! Vamos começar pela primeira sala? «Let\'s go!»',
 
-    salas: Reino.salasDa(M),     // en10e1 … en12p3, na ordem do manifesto (a do livro)
-    livro: Reino.livroDa(M),     // livro-10e.js … livro-12p.js
+    salas: Reino.salasDa(M),     // en11e1 … en12p3, na ordem do manifesto (a do livro)
+    livro: Reino.livroDa(M),     // livro-11e.js … livro-12p.js
 
     /* 1 comum e 1 raro por sala (unicornios-<cap><e|p>.js), 2 épicos e o lendário. */
     unicornios: Reino.unicorniosDa(M).concat([

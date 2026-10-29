@@ -12,33 +12,8 @@
   var andar = S.andar, andarDoCapitulo = S.andarDoCapitulo, inter = S.inter, cartaz = S.cartaz;
   var BRONZE2 = S.BRONZE2;
 
-  /* ---------- ANDAR 1: English, capítulo 10 «If You're Happy, Clap Your Hands» (sentimentos: sala de música) ---------- */
-  andarDoCapitulo(1, '«If You\'re Happy, Clap Your Hands»', {
-    placa: 'Cap. 10 • «Clap Your Hands»', piso: 'mosaico', parede: 'papel',
-    paleta: { piso: '#fff0f6', piso2: '#ffc2d8', detalhe: '#ffd34d', parede: '#fff6d8', parede2: '#ffc2d8', rodape: '#ff4f9a' },
-  }, [
-    { tipo: 'janela', x: 0, y: 0 },
-    inter('carinhas', 'Cartaz das carinhas', { tipo: 'torre-carinhas', x: 1, y: 0 }),
-    cartaz(3, 'feliz', '#fff8ee', C.rosa), { tipo: 'bandeirinhas', x: 4, y: 0 }, cartaz(6, 'nota', '#fff8ee', C.ouro),
-    { tipo: 'torre-palavra', x: 7, y: 0, var: { palavra: 'HAPPY', faixa: C.rosa, icone: 'feliz' } }, { tipo: 'janela', x: 10, y: 0 },
-    { tipo: 'flores', x: 0, y: 2 }, { tipo: 'torre-blocos-abc', x: 1, y: 2 },
-    inter('piano', 'Piano', { tipo: 'torre-piano', x: 0, y: 4 }),
-    { tipo: 'sofa', x: 0, y: 6, var: { cor: '#ffd34d' } },
-    inter('pandeiro', 'Pandeiro', { tipo: 'torre-pandeiro', x: 0, y: 7 }), { tipo: 'almofada', x: 1, y: 7, var: { cor: '#5fb4ff' } },
-    { tipo: 'tapete-listrado', x: 0, y: 8, w: 3, h: 1, var: { cores: ['#ff7eb6', '#ffd34d', '#5fb4ff', '#6fdc8c'] } },
-    { tipo: 'torre-pandeiro', x: 3, y: 8 }, { tipo: 'vaso-planta', x: 0, y: 9 },
-    { tipo: 'caixote', x: 0, y: 10, var: { item: 'estrela' } }, { tipo: 'bau', x: 1, y: 10 }, { tipo: 'flores', x: 2, y: 10 },
-    { tipo: 'torre-mochila', x: 3, y: 10, var: { cor: '#ff7eb6' } },
-    { tipo: 'flores', x: 10, y: 2 },
-    { tipo: 'mesa', x: 8, y: 4, var: { toalha: '#ffc2d8', itens: ['bolo', 'xicara'] } }, { tipo: 'cadeira', x: 10, y: 4, var: { almofada: '#ffd34d' } },
-    { tipo: 'torre-tapete-palavras', x: 8, y: 6, w: 2, h: 2, var: { palavra: 'SING', cor: '#ffd34d' } }, { tipo: 'torre-blocos-abc', x: 10, y: 6 },
-    { tipo: 'torre-caixa-brinquedos', x: 8, y: 8, var: { cor: '#ff7eb6' } }, { tipo: 'cavalete', x: 10, y: 8 },
-    { tipo: 'torre-pandeiro', x: 7, y: 10 }, { tipo: 'torre-tapete-palavras', x: 8, y: 10, w: 2, h: 1, var: { palavra: 'HI', cor: '#ffc2d8' } },
-    { tipo: 'almofada', x: 10, y: 10, var: { cor: '#ff7eb6' } },
-  ], 'joy', 'estrela');
-
-  /* ---------- ANDAR 2: English, capítulo 11 «I Dance When I'm Happy!» (ações, abrigo de animais e alfabeto) ---------- */
-  andarDoCapitulo(2, '«I Dance When I\'m Happy!»', {
+  /* ---------- ANDAR 1: English, capítulo 11 «I Dance When I'm Happy!» (ações, abrigo de animais e alfabeto) ---------- */
+  andarDoCapitulo(1, '«I Dance When I\'m Happy!»', {
     placa: 'Cap. 11 • «I Dance!»', piso: 'tabuas', parede: 'tijolo',
     paleta: { piso: '#f0c88a', piso2: '#d9a45e', parede: '#ffb070', parede2: '#e8884a', rodape: '#2f4f8a', detalhe: '#ffffff' },
   }, [
@@ -63,8 +38,8 @@
     { tipo: 'flores', x: 10, y: 10 },
   ], 'ben', 'medalha');
 
-  /* ---------- ANDAR 3: English, capítulo 12 «Book Time» (tempo, roupas, tempo livre e rotina: o quarto) ---------- */
-  andarDoCapitulo(3, '«Book Time»', {
+  /* ---------- ANDAR 2: English, capítulo 12 «Book Time» (tempo, roupas, tempo livre e rotina: o quarto) ---------- */
+  andarDoCapitulo(2, '«Book Time»', {
     placa: 'Cap. 12 • «Book Time»', piso: 'taco', parede: 'papel',
     paleta: { piso: '#e8c49a', piso2: '#caa078', parede: '#efe2fb', parede2: '#ffe28a', rodape: '#7c5cff' },
   }, [
@@ -87,8 +62,8 @@
     { tipo: 'torre-blocos-abc', x: 10, y: 10 },
   ], 'stella', 'relogio');
 
-  /* ---------- ANDAR 4: Projetos, capítulo 11 «Be Kind!» (diferenças, empatia e a caixa da gentileza) ---------- */
-  andarDoCapitulo(4, '«Be Kind!»', {
+  /* ---------- ANDAR 3: Projetos, capítulo 11 «Be Kind!» (diferenças, empatia e a caixa da gentileza) ---------- */
+  andarDoCapitulo(3, '«Be Kind!»', {
     placa: 'Projetos 11 • «Be Kind!»', piso: 'carpete', parede: 'papel',
     paleta: { piso: '#ffe2d2', piso2: '#f6c4ac', parede: '#fff3e6', parede2: '#ffc2a8', rodape: '#e0433f', detalhe: '#ff7eb6' },
   }, [
@@ -113,8 +88,8 @@
     { tipo: 'torre-tapete-palavras', x: 8, y: 10, w: 2, h: 1, var: { palavra: 'NICE', cor: '#ffe066' } }, { tipo: 'flores', x: 10, y: 10 },
   ], 'moon', 'coroa');
 
-  /* ---------- ANDAR 5: Projetos, capítulo 12 «I Have a Healthy Diet!» (comida, de onde ela vem e gráficos) ---------- */
-  andarDoCapitulo(5, '«I Have a Healthy Diet!»', {
+  /* ---------- ANDAR 4: Projetos, capítulo 12 «I Have a Healthy Diet!» (comida, de onde ela vem e gráficos) ---------- */
+  andarDoCapitulo(4, '«I Have a Healthy Diet!»', {
     placa: 'Projetos 12 • «Healthy Diet!»', piso: 'azulejo', parede: 'azulejo',
     paleta: { piso: '#eef8ff', piso2: '#bfe3f7', detalhe: '#5fb4ff', parede: '#e6f6ff', parede2: '#9fdcff', rodape: '#2f6fa8' },
   }, [
@@ -141,7 +116,7 @@
   ], 'smile', 'vaso');
 
   /* ---------- NO ALTO: o mecanismo do relógio (sem personagem) ---------- */
-  andar(6, 'O Relógio', {
+  andar(5, 'O Relógio', {
     placa: 'No alto • O Relógio', piso: 'tabuas', parede: 'pedra',
     paleta: { piso: '#b98a5e', piso2: '#8f6440', parede: '#d8ccb8', parede2: '#b8a888', rodape: BRONZE2, detalhe: C.ouro },
   }, [
