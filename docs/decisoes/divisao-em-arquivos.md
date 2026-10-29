@@ -7,7 +7,7 @@ Para que serve: explica os limites de linhas e como um arquivo grande é dividid
 - Um IIFE grande tinha funções privadas usadas por todo o arquivo.
 
 ## Decisão
-- Limites (`npm run tamanho`, `jogo/ferramentas/tamanho.js`): código ≤ 420 linhas (alvo ~400), dados ≤ 800
+- Limites (`npm run tamanho`, `jogo/ferramentas/tamanho.js`): código ~400, aviso acima de 420, falha acima de 600; dados 800
   (conteúdo, ícones, falas, elenco, moldes, faixas), gerados sem limite. Exceção só temporária e com motivo.
 - Divisão por responsabilidade, em arquivos que carregam em sequência (ex.: `jogo/js/sistemas/progresso.js`,
   `progresso-mescla.js`, `progresso-nuvem.js`, `progresso-regras.js`).

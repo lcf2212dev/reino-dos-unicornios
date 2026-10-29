@@ -21,8 +21,7 @@ Guia de uso para o Leandro. As regras técnicas ficam em `docs/contratos/`.
   - **Celular e tablet:** toque num lugar, pessoa ou objeto. Arrastando o dedo na metade esquerda da tela, aparece um
     controle redondo (joystick) para andar para qualquer lado.
 - **Teclado:** Tab passa pelos botões, Enter escolhe, Esc fecha balões e telas.
-- **"O reino não abriu agora":** o jogo não conseguiu buscar o progresso. Confira a internet (ou o computador de casa)
-  e toque em "Tentar de novo". Até dar certo, o jogo não começa, para não perder nada.
+- **"O reino não abriu agora":** o jogo não conseguiu buscar o progresso. Confira a internet e toque em "Tentar de novo". Até dar certo, o jogo não começa, para não perder nada.
 - **Sem internet, só no notebook:** abra `jogo/index.html` com duplo clique. Nesse modo o progresso fica só naquele
   navegador.
 
@@ -38,14 +37,14 @@ Guia de uso para o Leandro. As regras técnicas ficam em `docs/contratos/`.
 ## Pedir uma novidade
 - Copie o modelo `PEDIDO-DE-FEATURE.md`, preencha e cole na conversa.
 - Sem tempo? Escreva do seu jeito começando com `/preparar-pedido`.
-- O Claude não pergunta nada: decide o que faltar, constrói, testa, põe na main, manda para o GitHub e republica o
-  claude.ai no mesmo link. No fim ele conta o que fez e o que decidiu.
+- O Claude não pergunta nada: decide o que faltar, constrói, testa, põe na main, manda para o GitHub e a Vercel
+  publica sozinha no mesmo endereço. No fim ele conta o que fez e o que decidiu.
 
 ## Nova matéria
 1. Salve os prints em `reino-dos-unicornios/matérias/<matéria>/` (ex.: `matérias/geografia/`). A folha de revisão da
    prova vai numa subpasta, ex.: `matérias/geografia/Revisão/`.
 2. Peça ao Claude para criar a matéria. Ele faz o lugar no reino, as salas, o livro, os unicórnios e as vozes, e
-   republica no mesmo link. O progresso dela é mantido.
+   publica no mesmo endereço. O progresso dela é mantido.
 3. Prova nova: mande as fotos da folha e peça ao Claude. Ela vira uma sala na Escola do Reino, com 3 prêmios.
 
 ## Regras do jogo (resumo)
@@ -68,28 +67,18 @@ Guia de uso para o Leandro. As regras técnicas ficam em `docs/contratos/`.
   graça lá dentro. Nada disso tira XP, Robux ou unicórnio.
 - **Nadar:** ela entra no lago e nada, mais devagar.
 - **Fotos e álbum:** o 📷 no topo tira foto do jogo (nunca da câmera). O álbum guarda até 40 fotos e fica só naquele
-  aparelho. No claude.ai, para salvar ou compartilhar, ela segura o dedo na foto (no notebook, botão direito). No
-  servidor de casa, "Salvar no aparelho" funciona.
+  aparelho. "Salvar no aparelho" baixa a foto; no celular e no tablet também aparece "Compartilhar".
 - **Música:** ⚙️ Ajustes → "🎵 Musiquinha" (começa desligada). Cada lugar tem a sua; some no treino e nas provas.
 - **Observatório:** curiosidades do espaço e piadas do Robô Cosmo, só para brincar: não dá estrelas nem muda o
   progresso.
 - **Lugar novo:** mostra "✨ Novo!" no menu Lugares até ela entrar nele.
 
-## Jogo no computador de casa
-- Endereço na rede de casa: **http://reinodosunicornios.local** (ou pelo IP do PC, ex.: http://192.168.1.247).
-- Roda no Docker e volta sozinho quando o PC liga. Reiniciar: `cd "jogo/servidor" && docker compose restart`.
-- O progresso fica no banco `jogo/servidor/dados/reino.db`, com as últimas 50 versões guardadas como backup.
-- O nome `reinodosunicornios.local` vem do serviço `systemctl --user status reino-nome`.
-
 ## Quando chega uma novidade
-O Claude atualiza o computador de casa e o claude.ai juntos, no fim do pedido. O progresso da Mariana fica como está.
-- **Computador de casa:** as abas abertas se atualizam sozinhas quando ela para no mapa.
-- **claude.ai:** quando o Claude avisar que republicou, feche as abas do jogo no claude.ai em todos os aparelhos
-  (inclusive no seletor de abas e de apps do celular e do tablet) e abra de novo. Uma aba antiga pode tirar enfeites
-  novos do unicórnio ou apagar comida comprada.
+O Claude põe a novidade na main e a Vercel publica sozinha. O progresso da Mariana fica como está.
+- As abas abertas (e o app instalado) se atualizam sozinhas quando ela para no mapa.
 - Se preferir que nada mude enquanto ela joga, peça a novidade num horário em que ela não esteja jogando.
 - **Se algo parecer errado:** não apague nada nem use "Apagar tudo". Deixe o jogo fechado e peça ao Claude para
-  olhar. O computador de casa guarda as últimas 50 versões do progresso.
+  olhar.
 
 ## Limitações conhecidas
 - Dois aparelhos gastando estrelas quase ao mesmo tempo: as duas compras podem virar uma só. As estrelas nunca ficam

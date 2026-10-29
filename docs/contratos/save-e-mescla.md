@@ -1,7 +1,7 @@
 # Contrato: save e mescla
 
 Cobre o estado salvo da Mariana (`Reino.Progresso`), os campos, a `chaveSave`, a cópia `-novidades`,
-`P.mesclar`, a sincronização (abas, servidor de casa, claude.ai), os carimbos e as regras de segurança
+`P.mesclar`, a sincronização (abas e banco da Vercel), os carimbos e as regras de segurança
 do progresso real. Mudança aqui só com muito cuidado e testes.
 
 ## Índice
@@ -13,8 +13,8 @@ do progresso real. Mudança aqui só com muito cuidado e testes.
 - `jogo/js/sistemas/progresso.js` — estado, `estadoNovo`, `completar`, `normalizarNovos`, `numeroOu`,
   carregar/salvar, `gravarLocal`, `vistoLocal`, `juntarDoAparelho`, `conteudo`/`trouxeAlgo`, cópia `-novidades`.
 - `jogo/js/sistemas/progresso-mescla.js` — `P.mesclar`, `juntarCuidados`, `juntarSurpresa`, despensa.
-- `jogo/js/sistemas/progresso-nuvem.js` — servidor de casa (`/api/progresso`) e claude.ai (`db`, doc
-  `progresso/mariana`), `iniciarNuvem`, `limiteRedeMs`, `novaTentativaMs`.
+- `jogo/js/sistemas/progresso-nuvem.js` — banco (`/api/progresso`: a Vercel; antes, o servidor de casa) e o
+  caminho do claude.ai (`db`, doc `progresso/mariana`; aposentado, o código ainda o reconhece), `iniciarNuvem`, `limiteRedeMs`, `novaTentativaMs`.
 - `jogo/js/sistemas/progresso-regras.js` — dinheiro, estrelas, unicórnios, salas, treinos, provas, pagamentos.
 - `jogo/js/sistemas/progresso-campos.js` — `P.registrarCampo` e o catálogo de estratégias de mescla (§11).
 - Interno compartilhado: `Reino._progresso` (`I.estado` é o objeto do save; ver o cabeçalho de progresso.js).
@@ -229,7 +229,7 @@ Com relógios diferentes, as duas se desfariam para sempre. Por isso:
    `jogo/servidor/dados/reino.db`, copiado para a Vercel) e o artifact do claude.ai (doc `progresso/mariana`).
 2. Proibido:
    - abrir, chamar ou testar qualquer endereço do servidor de casa, ou ler e gravar o banco da Vercel;
-   - ler, copiar, gravar ou apagar qualquer coisa em `jogo/servidor/dados/`;
+   - ler, copiar, gravar ou apagar qualquer coisa em `jogo/servidor/dados/` (nem listar);
    - `docker compose restart/down/up/build`, mexer no container ou no serviço `reino-nome`;
    - publicar ou republicar o artifact, ou abrir o jogo publicado;
    - `localStorage.clear()`, `removeItem` em chaves existentes, "Apagar tudo", "Novo ciclo" ou pagamentos
@@ -242,7 +242,7 @@ Com relógios diferentes, as duas se desfariam para sempre. Por isso:
    - saves 100% sintéticos (`jogo/ferramentas/testes/saves.js`); nunca copie o save real;
    - testes sem navegador num `vm` com localStorage de mentira (`testar-save.js`, `testar-banho.js`);
    - derrube só os seus servidores, pelo PID; nunca `pkill`/`killall` por nome.
-4. Nada é escrito na árvore principal `/home/leandro/Development/projects/reino-dos-unicornios` (servida ao vivo pelo container).
+4. Nada é escrito na árvore principal `/home/leandro/Development/projects/reino-dos-unicornios` (a cópia de referência; trabalhe numa worktree).
 
 ## 10. Antes de mexer, rode
 ```
@@ -303,19 +303,20 @@ Reino.Progresso.registrarCampo('jardim', {
 Cada jogador tem o seu save; a Mariana é o jogador `'mariana'`, e o dela não muda de lugar nem de formato.
 Código: `jogo/js/sistemas/jogadores.js` (`Reino.Jogadores`, contas, perfil), `ui/jogadores.js` ("Entrar no Reino"),
 `P.usarJogador`/`P.jogador`/`P.chaveSave` (progresso.js), a sincronização em progresso-nuvem.js e as rotas em
-`jogo/servidor/servidor.js`.
+`vercel/api/` (`progresso.js`, `jogadores.js`; tabelas em `vercel/lib/banco.js`; as do servidor de casa aposentado,
+em `jogo/servidor/servidor.js`, eram as mesmas).
 1. Onde mora cada save:
    | | Mariana (`'mariana'`) | outro jogador (`<login>`) |
    |---|---|---|
    | aparelho | `mariana-reino-v1` (+ `-novidades`) | `reino-v1-<login>` (+ `-novidades`; `config.jogadores.prefixoSave`) |
-   | claude.ai | doc `progresso/mariana` | doc `progresso/<login>`; conta em `jogadores/<login>` (`{ login, senha, criado }`) |
-   | servidor de casa | `/api/progresso`, linha `'mariana'` | `/api/progresso/<login>`, linha `<login>`; conta na tabela `jogadores` |
+   | claude.ai (aposentado) | doc `progresso/mariana` | doc `progresso/<login>`; conta em `jogadores/<login>` (`{ login, senha, criado }`) |
+   | banco (Vercel; antes, servidor de casa) | `/api/progresso`, linha `'mariana'` | `/api/progresso/<login>`, linha `<login>`; conta na tabela `jogadores` |
    | fotos (IndexedDB) | `reino-fotos` (as de antes) | `reino-fotos-<login>` |
    Login: `^[a-z0-9_-]{2,20}$`, fora dos nomes de `Object.prototype`; `'mariana'` é reservado (criar dá "já existe").
    A conta dela mora no banco como as outras (o progresso dela, NÃO: continua onde sempre esteve):
-   - servidor de casa: linha `'mariana'` da tabela `jogadores`, semeada pelo `servidor.js` ao iniciar com
+   - banco (Vercel, mesmas rotas do servidor de casa aposentado): linha `'mariana'` da tabela `jogadores`, semeada por `vercel/lib/banco.js` ao iniciar com
      `ON CONFLICT DO NOTHING` (nunca sobrescreve; banco sem a linha = entra, como antes);
-   - claude.ai: doc `jogadores/mariana`; se faltar, o jogo o cria com `config.jogadores.senhaMariana` na primeira
+   - claude.ai (aposentado): doc `jogadores/mariana`; se faltar, o jogo o cria com `config.jogadores.senhaMariana` na primeira
      conferência (nunca por cima de um que exista);
    - sem banco (arquivo, servidor antigo): confere com `config.jogadores.senhaMariana` (vazio = ninguém entra nela
      sem banco: nunca sem senha).
@@ -342,7 +343,7 @@ Código: `jogo/js/sistemas/jogadores.js` (`Reino.Jogadores`, contas, perfil), `u
    abas "Entrar" e "Criar conta".
    Testes com navegador sem congelar fazem o login (senha da Mariana): `referencias-dados.js` (desempenho),
    `album-duplo.navegador.test.js`, `jogadores.navegador.test.js`.
-4. Contas: senha em TEXTO, sem segurança (pedido do Leandro; no claude.ai qualquer visitante lê). Lembradas no aparelho
+4. Contas: senha em TEXTO, sem segurança (pedido do Leandro; no claude.ai aposentado, qualquer visitante lia). Lembradas no aparelho
    em `reino-jogadores` (`{ login: { senha, criado } }`): servem de cartão e de senha para sincronizar; entrar pede a
    senha sempre. Com banco, a conta nasce e é
    conferida nele; sem banco (arquivo, servidor antigo), só no aparelho.

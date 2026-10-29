@@ -3,11 +3,10 @@
 Para que serve: explica por que o jogo é HTML/CSS/JS puro, carregado em ordem, e o que não pode entrar.
 
 ## Contexto
-- O jogo roda de 3 jeitos: `jogo/index.html` aberto direto (`file://`), o servidor de casa (container
-  `reino-unicornios`) e o artifact do claude.ai.
-- `file://` bloqueia módulos ES e `fetch` de arquivo local. O artifact recebe uma página e arquivos soltos.
-- O servidor de casa só entrega `index.html`, `css/<arquivo>` e `js/**`, e não muda (é intocável)
-  (`jogo/servidor/` é lido pelo container; mudar exige restart, proibido para agentes).
+- O jogo roda na Vercel (`vercel/montar.js` publica só `index.html`, `css/<arquivo>` e `js/**`, o mesmo recorte do
+  antigo servidor de casa) e por `jogo/index.html` aberto direto (`file://`). Na época da decisão rodava também no
+  servidor de casa e no artifact do claude.ai (aposentados em 29/09/2026).
+- `file://` bloqueia módulos ES e `fetch` de arquivo local.
 - Quem mantém é uma IA por vez, sem contexto: menos peças = menos erro.
 
 ## Decisão

@@ -69,7 +69,11 @@ Reino.reservarPersonagem({
     "worktree": "salao-npcs",          // reino-<worktree>; frentes só de texto podem dividir uma
     "personagens": ["salao-lulu"],     // (npc, falas, vozes) quem ela cobre
     "pronto": ["a Dona Lulu aparece no lugar da vaga, nos 3 tamanhos"],
-    "estimativa": 20                   // minutos (opcional; só para o caminho crítico)
+    "estimativa": 20,                  // minutos (opcional; só para o caminho crítico)
+    "ler": ["docs/contratos/interiores.md §8"],   // opcional: o que ler, por seção ("arquivo §n")
+    "gerador": "npm run novo -- personagem …",   // opcional: o comando que começa a tarefa
+    "modelo": "jogo/js/interiores/petshop/",     // opcional: o que copiar
+    "testes": ["npm run unidade -- --so salao"]  // opcional: comando ou lista
   } ]
 }
 ```
@@ -87,11 +91,12 @@ Cada tipo traz a conferência que o subagent conferente roda assim que a tarefa 
 | `falas` | texto das falas (NPCs, objetos, extras) | lições de voz (30 letras, 3+ palavras), `listar-falas --mostrar` |
 | `vozes` | perfis, amostras, gravação e conferência por transcrição (orquestrador) | `vozes-elenco`, transcrição sem `✘`, `__reino.faltando` vazio |
 | `mecanica` | sistema ou tela nova (código) | `npm run unidade --so`, `ver --tela`, teclado (Tab, Enter, Esc) |
-| `conteudo` | salas, livro, prova | `validar`, `ver --tela sala:<id>`/`prova:<id>` |
+| `conteudo` | salas, livro, prova | `validar`, `ver --tela sala:<id>`/`prova:<id>`, `node jogo/ferramentas/validar/cobertura-4bim.js <m>` |
 | `arte` | ícones, enfeites, comidas | `ver --previa`, ícone para todo emoji |
 | `musica` | faixa nova | `testar-musicas.js` |
 | `integracao` | juntar as frentes, vozes, e2e (orquestrador) | `validar-tudo` inteiro, diferenças do e2e explicadas |
-| `entrega` | merge, push, artifact (orquestrador) | skill `entregar` |
+| `entrega` | merge, push e a Vercel no ar (orquestrador) | skill `entregar`, `npm run vercel -- --conferir` |
+| `ferramenta` | ferramentas, testes e docs | `npm run unidade -- --so <x>`, `--ajuda`, `npm test`, e2e idêntico |
 
 ## 5. Ondas, estados e pipeline
 1. **Ondas**: onda de uma tarefa = 1 + a maior onda entre as que ela depende (a sem dependência é a onda 0).

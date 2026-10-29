@@ -35,7 +35,7 @@ objetos e porta alcançáveis, todos os ícones existentes. Chrome CDP 127.0.0.1
 servidor de teste e saves sintéticos. Nenhum acesso ao banco real.
 
 Na Feira, uma peça experimentada recebe destaque tracejado suave e continua disponível. A marca vermelha/riscada
-de questões (ui.md §10.19.2) não se aplica: a atividade é exploração sem nota, conforme o pedido.
+de questões (`arte.md` §19.2) não se aplica: a atividade é exploração sem nota, conforme o pedido.
 `desenharCena.feita` é boolean; `escolha` é id ou null; `telaFeira.missao` é id da missão.
 
 ## Aura (pedido complementar de 01/10/2026)

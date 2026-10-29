@@ -197,10 +197,10 @@ Reino.Claude.dialogoAberto() → bool   // o balão aberto é modal
    NPC, pela Doutora Vega.
 6. Curiosidades:
    ```
-   Reino.FALAS_INTERIORES.observatorio.curiosidades = [
+   Reino.falasDoPredio('observatorio', { curiosidades: [   // falas.js; cada parte (nasa-falas.js…) junta as suas
      // fonte: <NASA Space Place | ESA Kids | Agência Espacial Brasileira> — <URL>
      { id, tema, paginas: ['frase curta.', 'outra frase.'] },
-   ]
+   ] })
    Reino.Observatorio (observatorio/falas.js) = {
      temas() → [tema]                                  // temas com pelo menos uma curiosidade
      curiosidade(tema) → { id, tema, paginas } | null  // sorteia sem repetir na sessão; 'todas' (ou vazio) = qualquer

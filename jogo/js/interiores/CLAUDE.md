@@ -30,4 +30,4 @@ Receitas: `docs/receitas/predio-novo.md`, `docs/receitas/personagem-novo.md`.
 - `padrao.js` monta o interior de toda matéria sem prédio próprio.
 
 ## Antes de entregar
-- `npm run validar` (critério de "rico" e grade), `npm test`, `npm run e2e`.
+- Skill `validar-tudo` (o `npm run validar` confere o critério de "rico" e a grade).

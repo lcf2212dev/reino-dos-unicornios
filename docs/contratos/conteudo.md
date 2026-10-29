@@ -39,7 +39,7 @@ Personagens: `npcs-e-dialogo.md`. Prédios: `interiores.md`. Vozes: `som-musica-
    o símbolo do Robux).
 4. Estilo dos arquivos de sala: igual aos que já existem (ex.: `historia/h1.js`): indentação de 4 espaços na sala,
    8 nos desafios.
-5. Cor da matéria: `cor: '#rrggbb'` (minúsculo) no `<m>/<m>.js`, a da tabela do `ui.md` §10.22 (matéria nova ganha
+5. Cor da matéria: `cor: '#rrggbb'` (minúsculo) no `<m>/<m>.js`, a da tabela do `arte.md` §22 (matéria nova ganha
    linha lá); `validar-conteudo.js` confere a tabela e a repetição. O telhado do prédio no mapa é essa cor (`js/mundo/mapa.js`); `lugar.cores` só tem parede e detalhe.
 6. Emojis novos da matéria: `<m>/icones.js` com `Reino.registrarIcones`, grupo `'icones'` no manifesto (para o
    validador enxergar).
@@ -154,8 +154,8 @@ Personagens: `npcs-e-dialogo.md`. Prédios: `interiores.md`. Vozes: `som-musica-
 7. Separação de sílabas: minúsculas com hífen (`bal-de`).
 8. Ligar: a palavra mais comprida da coluna da esquerda + a da direita até 24 letras (senão, no celular,
    quebra palavra ou vaza); `validar-conteudo.js` avisa.
-9. Emoji: prefira os que já têm desenho (`jogo/ferramentas/previas/icones.html`). Emoji novo: avise quem
-   integra (o desenho vai em `jogo/js/arte/icones/<lote>.js`).
+9. Emoji: prefira os que já têm desenho (`jogo/ferramentas/previas/icones.html`). Emoji novo: `Reino.registrarIcones`
+   na pasta da matéria (`jogo/js/CLAUDE.md`, Arte).
 10. Nas explicações de verdadeiro ou falso de Português, a resposta falsa começa com "É falso!".
 11. Validar sem tocar no jogo: copie o arquivo para `/tmp/<voce>/` e rode
     `node jogo/ferramentas/validar/validar-conteudo.js --materia /tmp/<voce>/p3.js` (uma sala, a matéria

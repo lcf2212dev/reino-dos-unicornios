@@ -9,8 +9,8 @@ npm run novo -- personagem <id> --predio <p> --nome "Seu Trigo" --seco
 npm run novo -- personagem <id> --predio <p> --nome "Seu Trigo" [--x 5 --y 6] [--acao guia]
 ```
 Cria (ou acrescenta) `jogo/js/interiores/<p>/personagens.js` com `Reino.registrarPersonagem({ …, predio, x, y, acao })`,
-uma voz ainda não usada no prédio e as falas `(preencher)` (em `Reino.FALAS_INTERIORES.<p>.npcs.<id>`, no mesmo
-arquivo). `--acao`: `guia` (padrão) ou um JSON (`'{"tipo":"tela","tela":"loja"}'`).
+uma voz ainda não usada no prédio e as falas `(preencher)` (por `Reino.falasDoPredio('<p>', { npcs: { <id>: … } })`,
+no mesmo arquivo). `--acao`: `guia` (padrão) ou um JSON (`'{"tipo":"tela","tela":"loja"}'`).
 Prédio feito com `npm run novo -- predio`: o `<p>.js` já soma `Reino.personagensDoPredio('<p>')` à lista `npcs`,
 então a pessoa aparece no interior sem editar o layout (sem `--x/--y`, na próxima vaga livre perto da entrada).
 Prédio de antes (Pet Shop, Museu, Torre…, e o padrão das matérias): também soma os registrados, mas só com `x/y`;

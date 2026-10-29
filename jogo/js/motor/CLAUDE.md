@@ -22,5 +22,4 @@ Contratos: `docs/contratos/cena-e-motor.md` (cena, íris, câmera, pintor, laço
 - Helpers de desenho ficam em `js/arte/desenho.js` (uma implementação só).
 
 ## Antes de entregar
-- `npm test`, `npm run validar` e `npm run e2e` (imagens nos 3 tamanhos).
-- Desempenho: `npm run e2e -- --desempenho`.
+- Skill `validar-tudo`, mais `npm run e2e -- --desempenho`.

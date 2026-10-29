@@ -142,18 +142,18 @@ Reino.Interiores.objeto('escrivaninha', {
    das `chave(P)`) muda, conferida nos eventos `progresso`/`progressoRemoto`/`mapaMudou`.
 2. Nada de criar canvas a cada quadro. Móveis altos viram sprites pré-renderizados.
 3. Animações (vela, pêndulo, brilho, água) só com `animar`.
-4. Placas dos cômodos: em px da tela, fonte pixel, tamanho do texto pela regra do `ui.md` §10.9.5, desenhadas por
+4. Placas dos cômodos: em px da tela, fonte pixel, tamanho do texto pela regra do `arte.md` §9.5, desenhadas por
    cima dos itens (`desenharSobre`), sempre opacas (nada de `globalAlpha` entre 0 e 1). Visual de placa de parede,
    não de chip: fundo `--laranja-claro` chapado (madeira clara, longe do `--papel-quente` dos chips), borda `--tinta`
    de 2 px CSS, dois preguinhos `--tinta-suave` de 1 pixel de arte, sem o degrau de sombra. A Mariana é obstáculo:
    a placa do cômodo dela muda de lugar em vez de sumir; a de um cômodo vizinho que não achar outro lugar some
    inteira enquanto ela estiver embaixo e volta em degrau (0 ou 1).
 5. Onde a placa fica, nesta ordem (obstáculos: o HUD e o balão aberto de `#claude-balao`, com o retrato e a
-   plaquinha, a 8 px CSS da folga do `ui.md` §10.18.2; os balãozinhos de status e cadeados, a 8 px; a Mariana; os objetos de parede do
+   plaquinha, a 8 px CSS da folga do `arte.md` §18.2; os balãozinhos de status e cadeados, a 8 px; a Mariana; os objetos de parede do
    cômodo, `parede: true`, nas 2 fileiras da parede ou de chão com o desenho subindo até elas, com o desenho inteiro): (a) na parede do fundo do próprio cômodo, deslizando até o
    vão mais perto do meio; (b) sem vão, na moldura de cima do cômodo (metade sobre a borda, ou inteira acima dela),
-   sem cruzar nenhum outro cômodo; (c) só a do cômodo da Mariana, sem lugar nas duas: desce para o chão (`ui.md`
-   §10.18.4), a meio tile (em px de tela) da Mariana, dos NPCs, do que se toca (objeto com fala/ação, pedestal, tapete de saída, escada; o tapete de saída e as escadas nunca ficam cobertos, nem nos passos de último recurso, salvo se não houver lugar nenhum fora deles) e, se der, dos móveis: primeiro a faixa logo abaixo da parede, depois o fundo do cômodo, fora do tapete (enfeite plano, que ela pode cobrir se não houver outro lugar); depois na tela sem invadir outro cômodo; sem isso, cobre um
+   sem cruzar nenhum outro cômodo; (c) só a do cômodo da Mariana, sem lugar nas duas: desce para o chão (`arte.md`
+   §18.4), a meio tile (em px de tela) da Mariana, dos NPCs, do que se toca (objeto com fala/ação, pedestal, tapete de saída, escada; o tapete de saída e as escadas nunca ficam cobertos, nem nos passos de último recurso, salvo se não houver lugar nenhum fora deles) e, se der, dos móveis: primeiro a faixa logo abaixo da parede, depois o fundo do cômodo, fora do tapete (enfeite plano, que ela pode cobrir se não houver outro lugar); depois na tela sem invadir outro cômodo; sem isso, cobre um
    enfeite de parede (o celular com o balão aberto no corredor da Escola). Ela só some se não houver nenhum
    retângulo fora do HUD, do balão e da Mariana (exceção). A placa de outro cômodo não aparece com o balão aberto e
    pode sumir. O HUD é medido pela `caixaParada` (a caixa sem o transform da animação) no máximo a cada 500 ms; o
@@ -175,10 +175,10 @@ Reino.Interiores.objeto('escrivaninha', {
 6. O validador aceita as telas e ações registradas (`Reino.NPCs.telas()`, `Reino.NPCs.acoes()`).
 
 ## 8. Convenções dos prédios
-1. Uma pasta por prédio: `jogo/js/interiores/<prédio>/`. `falas.js` (`Reino.FALAS_INTERIORES.<prédio> =
-   { npcs, objetos, extras? }`) carrega ANTES das outras partes; depois as partes do prédio (objetos
+1. Uma pasta por prédio: `jogo/js/interiores/<prédio>/`. `falas.js` (`Reino.falasDoPredio('<prédio>',
+   { npcs, objetos, extras? })`; falas em várias partes: `npcs-e-dialogo.md` §10.5); depois as partes do prédio (objetos
    temáticos, o interior `<prédio>.js`, `acoes.js`, `fora.js`…), que dividem o que precisam em
-   `Reino._predios.<prédio>`. Cada arquivo ≤ ~400 linhas.
+   `Reino._predios.<prédio>`. Tamanho: `jogo/js/CLAUDE.md` (Tamanho).
 2. Todas as partes entram no `jogo/js/manifesto.js`, grupo `'interiores'`, `node: true`, antes de
    `interiores/padrao.js` (sempre o último dos prédios). A prévia `interiores.html` e as ferramentas acham os
    prédios sozinhas pelo grupo (não há lista para atualizar).

@@ -13,7 +13,7 @@ Regras gerais (ambiente, convenções, testes): `README.md`.
 ## 1. Onde está no código
 - `jogo/js/motor/cena.js` — `Reino.Cena` (estado, entrar/sair, adaptador do mapa, ocupar/liberar, quadros).
 - `jogo/js/motor/transicao.js` — íris (`TEMPO`, `TEMPO_RAPIDO`, `COR_IRIS`), evento `Reino.EVENTOS.TRANSICAO`.
-- `jogo/js/motor/camera.js` — canvas, escala, câmera, pintor, `bordasMapa` e `areaHUD` (lê a área útil, ui.md §10.18; cria `Reino._motor`).
+- `jogo/js/motor/camera.js` — canvas, escala, câmera, pintor, `bordasMapa` e `areaHUD` (lê a área útil, `arte.md` §18; cria `Reino._motor`).
 - `jogo/js/motor/laco.js` — o quadro (camadas) e o laço (`requestAnimationFrame`).
 - `jogo/js/motor/entrada.js` — teclado, toque/clique no canvas, mouse segurado, thumbstick do toque, agir no alvo.
 - `jogo/js/motor/main.js` — início do jogo e telas de entrada.
@@ -172,7 +172,7 @@ alvo = { tipo: 'npc'|'objeto'|'saida'|'escada'|'lugar'|'claude', id,
    Nas 6 primeiras fileiras, a câmera também sobe pela altura do HUD, com transição suave. A região em `y < 0`
    recebe bosque e a continuação das copas num cache separado, ancorado no mundo; ele cobre o buffer visível,
    cresce quando necessário e é invalidado ao pré-renderizar o mapa. A origem do estático continua em `(0, 0)`.
-4. Escala: `escalaDoMundo` (`motor/camera.js`), pela regra do `ui.md` §10.11.
+4. Escala: `escalaDoMundo` (`motor/camera.js`), pela regra do `arte.md` §11.
 
 ## 9. Mapa: placas, lugares e prédios
 1. O mapa NÃO tem placas de prédio: sem desenho, sem toque na placa, sem desvio do HUD. O campo `placa`
@@ -346,21 +346,23 @@ Exemplo mínimo (um sistema novo "brilho" na pasta dos sistemas, no manifesto de
 ```
 
 ## 15. Versão nova: a aba se atualiza sozinha
-Módulo `versao` (`jogo/js/sistemas/versao.js`, `Reino.Versao`). Depois de atualizar o jogo no servidor de casa, as
+Módulo `versao` (`jogo/js/sistemas/versao.js`, `Reino.Versao`). Depois de publicar o jogo novo (Vercel), as
 abas que ficaram abertas nos aparelhos percebem e recarregam sozinhas (decisão do Leandro: sem perguntar).
 - **A impressão digital**: `npm run versao` (`jogo/ferramentas/gerar-versao.js`) grava `jogo/js/versao.json` =
   `{ versao, gerado }`, com `versao` = sha256 de `index.html` + `css/**` + `js/**` (inclusive `js/voz/`, fora o próprio
   `versao.json`), caminho e conteúdo, em ordem alfabética: a mesma árvore dá sempre o mesmo hash. O arquivo está no
   `.gitignore` (cada checkout gera o seu; `gerar-index.js --conferir` não olha para ele) e o `npm run index` (modo de
   escrita) também o grava. O `--merge` do `npm run integrar` o grava na árvore principal logo depois do merge.
-- **Desligado** (`Reino.Versao.motivoDesligado(amb)`): no artifact (`window.claude.use` existe: a plataforma já entrega
-  a versão nova), aberto do arquivo (`file:`) e no modo determinístico (`Reino.congelado`), a menos que a URL tenha
+- **Desligado** (`Reino.Versao.motivoDesligado(amb)`): no artifact aposentado (`window.claude.use` existe: a plataforma
+  já entregava a versão nova), aberto do arquivo (`file:`) e no modo determinístico (`Reino.congelado`), a menos que a URL tenha
   `&versao=1` (o teste deste módulo). O e2e não faz fetch nenhum.
 - **Conferir** (`iniciar`, ao entrar no Reino): `fetch('js/versao.json?t=…', { cache: 'no-store' })` = linha de base;
   de novo a cada `intervaloMs` e quando a aba volta a ficar visível (no máximo 1×/min). `versao.json` com 404: compara
   o texto do `index.html` (sem cache). Rede fora ou erro: ignora a leitura.
 - **Confirmar**: só vale a mudança vista 2 vezes, com `confirmarMs` entre elas, e com `performance.now() > cacheMs`
-  (330 s: o servidor deixa css/js 300 s em cache; recarregar antes misturaria arquivos novos e velhos).
+  (330 s: margem que vem do servidor de casa aposentado, que deixava css/js 300 s em cache. Na Vercel, `vercel/vercel.json`
+  põe `no-cache` só em `/`, `index.html`, `js/versao.json` e `sw.js`; css/js seguem o cache padrão dela, revalidado a
+  cada pedido, e o service worker troca os arquivos pelo hash).
 - **Quando**: parada NO MAPA há `paradaMs` = `Cena.estado() === 'mapa'`, nada bloqueado, nenhuma tela DOM, nenhuma
   pergunta surpresa, nenhum balão (Claude ou NPC), sem caminho nem setas, aba visível, sem toque nem tecla.
 - **Como**: o Claude fala num balão que fecha sozinho em `avisoMs` ("Chegou novidade no Reino! ✨" + "O que você fez
