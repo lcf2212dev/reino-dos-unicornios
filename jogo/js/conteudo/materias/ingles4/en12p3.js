@@ -24,7 +24,7 @@
           ], certa: 0,
           explica: 'O hambúrguer e a batata frita aparecem só no sábado, «Saturday».' },
         { id: 'en12p3-02', tipo: 'escolha', origem: 'PRJ-188-q2A', pagina: 188, livro: 'en-p188', apoio: SEMANA,
-          pergunta: '«How many times a week can you eat these food items?» Salada e frutas 🥗🍉:',
+          pergunta: '«How many times a week can you eat these food items?» Salada e frutas:',
           opcoes: [
             { t: '1' },
             { t: '3' },
@@ -32,7 +32,7 @@
           ], certa: 2,
           explica: 'Salada e frutas podem ser comidas todos os dias: 7 vezes por semana!' },
         { id: 'en12p3-03', tipo: 'escolha', origem: 'PRJ-188-q2B', pagina: 188, livro: 'en-p188', apoio: SEMANA,
-          pergunta: '«How many times a week can you eat these food items?» Hambúrguer e batata frita 🍔🍟:',
+          pergunta: '«How many times a week can you eat these food items?» Hambúrguer e batata frita:',
           opcoes: [
             { t: '1' },
             { t: '3' },

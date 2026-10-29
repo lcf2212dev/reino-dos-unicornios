@@ -10,7 +10,7 @@
   }
   Reino.registrarCartas('ingles4', [
     // abertura e objetivos (pp. 134 e 135)
-    carta('en-e134', '💃', 'Capítulo 11 – «I Dance When I\'m Happy!»', 134, [
+    carta('en-e134', '💃', '«I Dance When I\'m Happy!» – Capítulo 11', 134, [
       { t: 'texto', texto: 'Uma menina e a mãe dançam juntas na sala, com um sorrisão.' },
       { t: 'quadro', titulo: '«Let\'s talk»', itens: [
         { texto: '«How do you feel when you dance?»' },

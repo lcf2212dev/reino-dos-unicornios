@@ -10,7 +10,7 @@
   }
   Reino.registrarCartas('ingles4', [
     // Science (pp. 164 a 169)
-    carta('en-p164', '🌈', 'Capítulo 11 – «Be Kind!»', 164, [
+    carta('en-p164', '🌈', '«Be Kind!» – Capítulo 11', 164, [
       { t: 'texto', texto: 'Na foto, uma menina dá flores para uma moça. Que gentileza!' },
       { t: 'quadro', titulo: '«Let\'s talk»', itens: [
         { texto: '«In which situations can you be kind?»' },
