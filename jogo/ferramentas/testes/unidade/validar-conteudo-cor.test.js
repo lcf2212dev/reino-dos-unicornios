@@ -1,5 +1,5 @@
-// Testes de unidade: validar-conteudo confere a cor de cada matéria (`cor`) contra a tabela do docs/contratos/ui.md
-// §10.22: sem cor, cor fora da tabela e cor de outra matéria (repetida) são erro.
+// Testes de unidade: validar-conteudo confere a cor de cada matéria (`cor`) contra a tabela do docs/contratos/arte.md
+// §22: sem cor, cor fora da tabela e cor de outra matéria (repetida) são erro.
 // A matéria plantada vai numa pasta em /tmp/reino-testes/ (--materia); o jogo de verdade não muda.
 // Rodar (em jogo/): node --test ferramentas/testes/unidade/validar-conteudo-cor.test.js   (tudo: npm test)
 const { test } = require('node:test');
@@ -26,13 +26,13 @@ function plantada(n, linha) {
   return arq;
 }
 
-test('validar-conteudo: as 6 cores de hoje são as do ui.md §10.22', () => {
+test('validar-conteudo: as 6 cores de hoje são as do arte.md §22', () => {
   const r = validar([]);
   assert.strictEqual(r.status, 0, r.saida);
 });
 const CASOS = {
   'sem cor': ['', /ingles: sem cor da matéria/],
-  'cor fora da tabela': ["  cor: '#e0a021',", /ingles: cor #e0a021, mas o ui.md §10\.22 diz #e0a020/],
+  'cor fora da tabela': ["  cor: '#e0a021',", /ingles: cor #e0a021, mas o arte.md §22 diz #e0a020/],
   'cor de outra matéria': ["  cor: '#3f7fe0',", /cor #3f7fe0 repetida/],
   'maiúscula': ["  cor: '#E0A020',", /ingles: sem cor da matéria/],
 };

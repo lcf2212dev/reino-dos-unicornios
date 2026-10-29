@@ -4,8 +4,8 @@ Para que serve: resume as regras da mescla do save e diz por que mexer nelas é 
 `docs/contratos/save-e-mescla.md` §4–§7. Código: `jogo/js/sistemas/progresso-mescla.js`.
 
 ## Contexto
-- O mesmo save da Mariana é gravado por vários aparelhos, várias abas e duas nuvens (servidor de casa e
-  claude.ai), às vezes por uma versão ANTIGA do jogo aberta numa aba esquecida.
+- O mesmo save da Mariana é gravado por vários aparelhos, várias abas e a nuvem (hoje o banco da
+  Vercel; antes, o servidor de casa e o claude.ai), às vezes por uma versão ANTIGA do jogo aberta numa aba esquecida.
 - `Reino.Progresso.mesclar` (P.mesclar) junta dois estados. Uma regra errada apaga conquista, comida ou
   enfeite de verdade, e o erro se espalha na próxima sincronização.
 

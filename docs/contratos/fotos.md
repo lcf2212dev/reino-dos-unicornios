@@ -48,10 +48,9 @@ Nada toca em DOM, canvas, PA, Progresso ou Cena no carregamento.
    (celular, tablet); aí ele é o principal e o Salvar vira secundário. No resto (ex.: Chrome no notebook
    Linux) o botão nem aparece e fica só o "Salvar no aparelho" (um botão que salvaria com outro nome
    confundiria a criança). Cancelar (`AbortError`) não diz nada; outro erro cai no salvar (e avisa "salva").
-7. Onde cada jeito funciona. No artifact do claude.ai (`window.claude.use` existe) a plataforma recusa o share e
-   bloqueia o download: "Compartilhar" e "Salvar no aparelho" ficam escondidos (prévia e foto grande); "Apagar" fica.
-   No servidor de casa (http) não há Web Share API; o Salvar funciona. O Compartilhar só aparece em https fora do
-   claude.ai. Em todo lugar, a foto (`.fotos-img` da prévia e da foto grande, `<img>` com URL `blob:`) deixa o menu
+7. Onde cada jeito funciona. Na Vercel (https) o Salvar funciona e o Compartilhar aparece onde há Web Share com
+   arquivos; em http não há Web Share. O código ainda esconde os dois no artifact do claude.ai (aposentado: a
+   plataforma recusava o share e o download); "Apagar" fica sempre. Em todo lugar, a foto (`.fotos-img` da prévia e da foto grande, `<img>` com URL `blob:`) deixa o menu
    do navegador: segurar (toque) ou botão direito. Sem `-webkit-touch-callout: none` nem `contextmenu` bloqueado
    nela (o 📷 do HUD continua sem menu).
    Quem decide é `Reino.ambiente` (`jogo/js/nucleo/ambiente.js`), avaliado na hora de montar a tela:

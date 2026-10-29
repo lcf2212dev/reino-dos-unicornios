@@ -1,7 +1,7 @@
 # Contratos do jogo (índice)
 
 Invariantes e APIs do "Mariana e o Reino dos Unicórnios", um arquivo por assunto. Antes de mexer num assunto, leia o
-contrato dele. Mudança de contrato: só o orquestrador. Histórico da refatoração: `docs/decisoes/historico/`.
+contrato dele: a seção (§) do que vai mexer, não o arquivo inteiro. Mudança de contrato: só o orquestrador. Histórico da refatoração: `docs/decisoes/historico/`.
 
 ## Índice: assunto → contrato
 | Assunto | Contrato |
@@ -10,6 +10,7 @@ contrato dele. Mudança de contrato: só o orquestrador. Histórico da refatora�
 | interiores (prédios por dentro): formato, cômodos, portas, objetos, biblioteca, grade, "rico", validador, cada prédio | `interiores.md` |
 | NPCs, elenco, status, balões, falas até 30 letras por página, ações e telas | `npcs-e-dialogo.md` |
 | telas e UI: pilha de telas, `UI.painel`, foco/Tab/Esc, HUD e `UI.registrarBotaoHud`, guarda de toque, Área dos pais | `ui.md` |
+| pixel art e direção de arte: cantos, cor, tipografia, pixel da interface, escala do mundo, alturas, luz, contorno, movimento, festa, estados, componentes, cor de matéria | `arte.md` |
 | save, progresso, `chaveSave`, cópia `-novidades`, `P.mesclar`, sincronização, carimbos, segurança do progresso (§9) | `save-e-mescla.md` |
 | fome, sede, banho, despensa, Pet Shop, banheira | `cuidados.md` |
 | loja, enfeites, comidas, preços, prêmios da escola | `loja.md` |
@@ -28,12 +29,12 @@ contrato dele. Mudança de contrato: só o orquestrador. Histórico da refatora�
 ## Onde mora cada regra geral (uma fonte só)
 | Regra | Fonte |
 |---|---|
-| Onde o jogo roda (file://, servidor de casa, artifact), `Reino.ambiente`, scripts clássicos, sem `fetch` local | `jogo/js/CLAUDE.md` |
+| Onde o jogo roda (Vercel, file://), `Reino.ambiente`, scripts clássicos, sem `fetch` local | `jogo/js/CLAUDE.md` |
 | Manifesto, `index.html` gerado, arquivo novo, `node: true` | `jogo/js/CLAUDE.md` |
-| Objetos internos `Reino._*` (regra); quem cria e quem usa (mapa) | `jogo/js/CLAUDE.md`; `docs/ARQUITETURA.md` §7 |
+| Objetos internos `Reino._*` | `jogo/js/CLAUDE.md` (Objetos internos) |
 | `Reino.EVENTOS`, modo determinístico, `Reino.sorteioDaChave`, `?debug=1` | `jogo/js/CLAUDE.md` |
 | Pixel art, ícones de emoji (`Reino.registrarIcones`), animações e movimento reduzido | `jogo/js/CLAUDE.md` (Arte) |
-| Tamanho dos arquivos (400/420/800) | `jogo/js/CLAUDE.md` (Tamanho) |
+| Tamanho dos arquivos (código ~400, aviso acima de 420, falha acima de 600; dados 800) | `jogo/js/CLAUDE.md` (Tamanho) |
 | CSS plano, cascata, `sem-animacao` | `jogo/css/CLAUDE.md` |
 | Testes: Chromium, tamanhos, servidor e navegador de teste, saves sintéticos, `npm run ver`, gerador, e2e | `jogo/ferramentas/CLAUDE.md` |
 | Texto para criança: tom pt-BR carinhoso, tamanho das falas, frases | `docs/receitas/licoes-de-voz.md` |

@@ -130,7 +130,7 @@ Registre as esperadas para quem integra.
   `index.html`, `css/` e `js/`. Prévia é por `file://`.
 - Save: nada novo. Nunca teste com o save real; só `jogo/ferramentas/testes/saves.js`.
 - Aba com a versão antiga do jogo não conhece o id novo: ao trocar de enfeite, ela o tira do unicórnio (a
-  compra fica). Por isso servidor de casa e artifact são atualizados no mesmo dia (quem faz é o orquestrador).
+  compra fica). Ela se atualiza sozinha quando para no mapa (`cena-e-motor.md` §15).
 - "Page crashed"/"Target crashed" no Chromium: confira `df -h /tmp`; se estiver cheio, rode com
   `TMPDIR=/dev/shm/<pasta>` (não apague temporários de outros).
 - No zsh deste PC, `cp` pede confirmação ao sobrescrever: use `command cp -f` em scripts.

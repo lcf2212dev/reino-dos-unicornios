@@ -1,7 +1,7 @@
 # Decisão: direção de arte (escala do mundo, cor por matéria, festa)
 
 **Data:** 2026-09-29 · **Contexto:** backlog visual (`TODO-VISUAL.md`, item D10-19). As regras estão em
-`docs/contratos/ui.md` §10.8 em diante; aqui fica só o porquê das escolhas de produto.
+`docs/contratos/arte.md` §8 em diante; aqui fica só o porquê das escolhas de produto.
 
 ## Contexto
 A auditoria visual achou o jogo coerente no traço (contorno único, tile de 16, cantos em degrau, sem desfoque), mas
@@ -34,6 +34,6 @@ são de produto, e precisavam de um motivo registrado.
 ## Consequências
 - `camera.js` (`redimensionar`) muda de fórmula (D10-B09); o celular passa a mostrar ~8 tiles de largura e o e2e
   troca de base nos 3 tamanhos. Celular deitado (fora dos testes) fica no mínimo de 2 px CSS.
-- Cada matéria ganha `cor` nos dados (D10-12); matéria nova escolhe uma cor de família livre (`ui.md` §10.22).
+- Cada matéria ganha `cor` nos dados (D10-12); matéria nova escolhe uma cor de família livre (`arte.md` §22).
 - Um nível de festa por tela de fim (D10-B10, D9-05); a compra na loja fica com o brilho curto do nível 1, sem
   confete.

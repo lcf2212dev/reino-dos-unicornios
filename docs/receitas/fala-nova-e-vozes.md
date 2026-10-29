@@ -17,7 +17,7 @@ Para que serve: escrever ou mudar um texto que o jogo fala e deixar a voz gravad
 | Onde está o texto | Arquivo |
 |---|---|
 | NPC ou objeto de um prédio | `jogo/js/interiores/<prédio>/falas.js` |
-| fala do prédio que não é de NPC nem objeto | `Reino.FALAS_INTERIORES.<prédio>.extras = [{ texto, voz }]` no mesmo `falas.js` |
+| fala do prédio que não é de NPC nem objeto | `extras: [{ texto, voz }]` no `Reino.falasDoPredio('<prédio>', …)` do mesmo `falas.js` |
 | sala, livro, prova | `jogo/js/conteudo/materias/<m>/`, `jogo/js/conteudo/provas/` |
 | Claude e avisos fixos | `jogo/js/sistemas/falas.js` |
 | cuidados, surpresa, fotos, loja | `frases`/`falas()` de `jogo/js/sistemas/cuidados.js`, `surpresa.js`, `fotos.js`, `jogo/js/conteudo/loja-itens.js` (`FALAS`) |

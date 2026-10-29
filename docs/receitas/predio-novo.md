@@ -1,7 +1,7 @@
 # Receita: prédio novo no mapa (com interior)
 
 Para que serve: um lugar novo no reino (como a Pet Shop e o Observatório): desenho de fora no mapa, porta,
-interior com cômodos, objetos e personagens. Regras: `docs/contratos/interiores.md` e
+interior com cômodos, objetos e personagens. Regras: `docs/contratos/interiores.md` §3 (formato), §5 (objetos), §7 ("rico"), §8–§9 (convenções, prédios) e
 `docs/contratos/cena-e-motor.md` §9. Modelo mais simples de copiar: `jogo/js/interiores/petshop/`.
 
 ## Comece pelo gerador
@@ -18,7 +18,7 @@ manifesto e o index. À mão: preencher os `(preencher)`, mais cômodos e objeto
 ## Checklist de arquivos (`<p>` = id do prédio, ex.: `padaria`)
 | Arquivo | O que é |
 |---|---|
-| `jogo/js/interiores/<p>/falas.js` | `Reino.FALAS_INTERIORES.<p> = { npcs, objetos, extras? }` (carrega primeiro) |
+| `jogo/js/interiores/<p>/falas.js` | `Reino.falasDoPredio('<p>', { npcs, objetos, extras? })` (passo 2) |
 | `jogo/js/interiores/<p>/objetos*.js` | objetos temáticos `Reino.Interiores.objeto('<p>-<nome>', …)`; o que as partes dividem em `Reino._predios.<p>` |
 | `jogo/js/interiores/<p>/<p>.js` | `Reino.registrarInterior({ id: '<p>', lugar: '<p>', entrada: true, pacote: 'interior-<p>', … })` |
 | `jogo/js/interiores/<p>/fora.js` | desenho de fora: `if (window.Mapa && Mapa.PREDIOS) Mapa.PREDIOS.<p> = function (ctx, px, py, w, h) {…}` |
@@ -63,7 +63,7 @@ manifesto e o index. À mão: preencher os `(preencher)`, mais cômodos e objeto
 ```
 npm run validar        # interiores: grade, rico, alcance, ações; lugares (lidos dos dados: id, caminho, rect); index x manifesto
 npm run unidade
-npm run tamanho        # cada parte ≤ 420 linhas de código (falas.js é dado: 800)
+npm run tamanho        # código ~400, aviso acima de 420, falha acima de 600; dados (falas.js) 800
 node jogo/ferramentas/vozes/listar-falas.js
 npm test
 npm run e2e -- --desempenho   # esperado: mapa e dados de interiores/lugares mudam; desempenho ≤ 5% pior

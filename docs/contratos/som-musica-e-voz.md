@@ -80,7 +80,7 @@ falas (até 30 letras por página, frases de 3+ palavras, conferência por trans
    - `<matéria>-<sala>` (ex.: `portugues-p1`), `<matéria>-extra`, `<matéria>-livro`, `prova-<prova>`.
    Os de Português: `portugues-p1` a `portugues-p5`, `portugues-extra`, `portugues-livro`,
    `interior-portugues`, `prova-portugues-3bim`.
-5. `Reino.FALAS_INTERIORES.<prédio>.extras = [{ texto, voz }]`: falas do prédio que não saem de NPC nem de
+5. `extras: [{ texto, voz }]` no `Reino.falasDoPredio('<prédio>', …)`: falas do prédio que não saem de NPC nem de
    objeto (bebedouro, curiosidades, piadas do Cosmo). `Falas.todas()` põe no pacote `interior-<prédio>`.
 6. `Reino.Falas.todas()` inclui `NPCs.falasPossiveis` de cada NPC e as `fala` dos objetos, no pacote do interior.
 7. Todo texto falado precisa estar em alguma dessas listas, com a mesma divisão do balão.

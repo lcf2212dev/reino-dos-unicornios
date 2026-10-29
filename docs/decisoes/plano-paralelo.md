@@ -31,5 +31,5 @@ começarem juntas sem pisar umas nas outras, e um jeito de conferir cada uma ass
   `<p>/personagens-falas.js` (falas). Sem plano, o caminho antigo (`novo personagem` com tudo junto) continua valendo.
 - Tipos de tarefa novos entram no catálogo `jogo/ferramentas/fluxo/plano-tipos.js` com a conferência deles.
 - O que continua em fila, por natureza: gravação das vozes (uma pessoa, rede), integração, troca da base do e2e,
-  merge, push e artifact.
+  merge e push.
 - Contrato: `docs/contratos/plano-paralelo.md`.

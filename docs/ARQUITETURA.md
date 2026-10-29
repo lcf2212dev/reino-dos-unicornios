@@ -11,16 +11,15 @@ decisões (`docs/decisoes/`).
 em código. Ela anda num mapa, entra nos prédios, conversa com personagens e faz as salas de cada matéria
 (História, Inglês, Português). Acertos dão estrelas, unicórnios, enfeites e dinheiro de verdade (derivado).
 
-## 2. Os 3 jeitos de rodar (e o que isso impõe)
+## 2. Onde o jogo roda (e o que isso impõe)
 | Jeito | Como | Quem usa |
 |---|---|---|
-| `file://` | abrir `jogo/index.html` direto | abrir o jogo e as prévias à mão (os testes usam o servidor de TESTE: `jogo/ferramentas/CLAUDE.md`) |
-| servidor de casa | container Docker `reino-unicornios`, porta 80 | **só a família** (NUNCA abra nem teste) |
-| artifact do claude.ai | página montada por `npm run artifact` e publicada pelo orquestrador | a Mariana, fora de casa |
+| Vercel | `reino-dos-unicornios.vercel.app` e o app instalável (PWA), montados de `jogo/` por `vercel/` | a Mariana e os outros jogadores |
+| `file://` | abrir `jogo/index.html` direto | prévias à mão (os testes usam o servidor de TESTE: `jogo/ferramentas/CLAUDE.md`) |
 
-O que isso impõe ao código (scripts clássicos, sem `fetch` local, o que o servidor entrega): `jogo/js/CLAUDE.md`.
-Progresso real e servidor de casa, intocáveis: `docs/contratos/save-e-mescla.md` §9 (o porquê:
-`docs/decisoes/seguranca-do-progresso.md`).
+O que isso impõe ao código (scripts clássicos, sem `fetch` local): `jogo/js/CLAUDE.md`. O servidor de casa e o
+artifact do claude.ai foram aposentados em 29/09/2026 (o código ainda os reconhece). Progresso real, intocável:
+`docs/contratos/save-e-mescla.md` §9 (o porquê: `docs/decisoes/seguranca-do-progresso.md`).
 
 ## 3. Ordem de carga
 - A lista é `jogo/js/manifesto.js` (regras do manifesto e de `node: true`: `jogo/js/CLAUDE.md`).
@@ -55,7 +54,8 @@ jogo/
     debug.js            window.__reino (só com ?debug=1)
   ferramentas/
     vozes/  validar/  testes/ (+ testes/unidade/)  previas/ (abrem por file://)  gerado/ (não abrir)
-  servidor/             servidor de casa (intocável)
+  servidor/             servidor de casa (aposentado; intocável)
+vercel/                 o jogo na Vercel (API, PWA)
 docs/  ARQUITETURA.md  contratos/  receitas/  decisoes/
 ```
 
@@ -90,7 +90,7 @@ linhas do manifesto e o index, e deixa `(preencher)` onde só a pessoa escreve (
 | Campo novo no save | `novo sistema --campo` | `Reino.Progresso.registrarCampo` no arquivo do sistema | `progresso*.js`, testes do save | `sistema-novo.md` passo 5 |
 | Prédio (lugar + interior) | `novo predio` | `Reino.registrarLugar` + `Reino.registrarInterior` em `jogo/js/interiores/<p>/` | `mundo/lugares.js`, `ui/lugares.js`, `validar-interiores.js` | `predio-novo.md` |
 | Matéria dentro de um prédio que já existe (sem prédio no mapa) | `novo materia --dentro <lugar> --interior <id>` | `lugar: { nome, artigo, dentro, interior }` na matéria + `Reino.registrarInterior({ lugar: 'materia:<m>', entrada: true })` no prédio anfitrião | `mundo/mapa.js`, `ui/lugares.js`, `motor/cena.js` | `contratos/conteudo.md` §2 item 7 |
-| Matéria / sala | `novo materia`, `novo sala` | `Reino.registrarMateria` / `Reino.registrarSala` em `jogo/js/conteudo/materias/<m>/` | telas e desafios | `materia-nova.md` |
+| Matéria / sala | `novo materia`, `novo sala` (sala do 4º bimestre: `npm run novo -- sala <matéria do 4º bim> <id>`) | `Reino.registrarMateria` / `Reino.registrarSala` em `jogo/js/conteudo/materias/<m>/` | telas e desafios | `materia-nova.md`; 4º bim: `sala-4bim.md` |
 | Prova | `novo prova` | `Reino.registrarProva` (acessórios com `desenho` e `icone` inline) em `jogo/js/conteudo/provas/` | Escola, `arte/pixelart-unicornio-moldes.js`, `arte/icones/` | `prova-nova.md` |
 | Personagem | `novo personagem` | `Reino.registrarPersonagem` (com o perfil de voz) em `jogo/js/interiores/<p>/personagens.js` | `personagens/elenco.js`, `nucleo/config.js` | `personagem-novo.md` |
 | Personagem feito em paralelo (plano) | `novo reserva`, depois `novo personagem` | `Reino.reservarPersonagem` em `<p>/reservas.js` (contrato: nome, gênero, idade, voz, vaga) + só o sprite no `personagens.js` | o `<p>/reservas.js` (nas frentes) | `contratos/plano-paralelo.md` |
@@ -101,7 +101,7 @@ linhas do manifesto e o index, e deixa `(preencher)` onde só a pessoa escreve (
 | Ícone de emoji novo | — | `Reino.registrarIcones({ '<emoji>': { n, p, d } })` num arquivo da pasta da feature | `arte/icones/<lote>.js` | `jogo/js/CLAUDE.md` (Arte) |
 | Ação de NPC de um sistema | `novo sistema` | `acoes: { <tipo>: fn }` no `Reino.registrarModulo` | `personagens/npcs-conversa.js` | `cena-e-motor.md` §14 |
 | Botão no HUD | — | `UI.registrarBotaoHud({ id, ordem, criar, pintar?, eventos? })` num arquivo da feature (ex.: `ui/hud-fotos.js`) | `ui/hud.js` | `jogo/js/ui/CLAUDE.md` |
-| Saber onde o jogo roda (artifact, `file:`, https, servidor de casa, toque, compartilhar, baixar) | — | `Reino.ambiente` (`jogo/js/nucleo/ambiente.js`), funções avaliadas na hora | checar `window.claude`/`navigator.share` de novo | `fotos.md` |
+| Saber onde o jogo roda (`file:`, https, toque, compartilhar, baixar) | — | `Reino.ambiente` (`jogo/js/nucleo/ambiente.js`), funções avaliadas na hora | checar `window.claude`/`navigator.share` de novo | `fotos.md` |
 | Falas de um prédio em vários arquivos | `novo predio` | `Reino.falasDoPredio(id, parte)` (`nucleo/registros.js`) em cada parte | `Reino.FALAS_INTERIORES.<p> = …` | `npcs-e-dialogo.md` §10.5 |
 | Andar novo com escadas | — | `escadas: [{ x, y, para, chegar, olhar, sentido }]` com par no outro andar (sem `chegada`) | arquivos de coordenação entre andares | `interiores.md` §3.1 |
 
@@ -127,41 +127,13 @@ Conferir enquanto constrói e no fim: `jogo/ferramentas/CLAUDE.md` (Conferir enq
 
 ## 7. Objetos internos e a divisão de IIFE
 Arquivo grande foi dividido em partes que carregam em sequência; o que era privado vira um objeto INTERNO
-(regra: `jogo/js/CLAUDE.md`, Objetos internos). Quem cria e quem usa cada um:
-
-| Interno | Criado em | Usado por |
-|---|---|---|
-| `Reino._motor` | `jogo/js/motor/camera.js` | `laco.js`, `entrada.js`, `main.js` |
-| `Reino._cena` | `jogo/js/motor/cena.js` | `transicao.js` |
-| `Reino._interiores` | `jogo/js/motor/interiores-base.js` | `motor/interiores-*.js` |
-| `Reino._predios` (`.castelo`, `.escola`…) | primeira parte de cada prédio | as outras partes do mesmo prédio |
-| `Reino._npcs` | `jogo/js/personagens/npcs.js` | `npcs-*.js` |
-| `Reino._progresso` | `jogo/js/sistemas/progresso.js` | `progresso-*.js` (`I.estado`: ler sempre na hora) |
-| `Reino._som` | `jogo/js/sistemas/som.js` | `som-instrumentos.js`, `som-musica.js` |
-| `Reino._musicas` | `jogo/js/sistemas/musicas-faixas.js` | `musicas.js` |
-| `Reino._ui` | `jogo/js/ui/base.js` (fim do arquivo) | as outras telas de `jogo/js/ui/` |
-| `Reino._desafios` | `jogo/js/atividades/desafios.js` | `atividades/desafios/<tipo>.js` |
-| `Reino._missao` | `jogo/js/atividades/missao.js` | `atividades/missao-etapas.js` |
-| `Reino._banho`, `Reino._fotos`, `Reino._surpresa`, `Reino._jogador` | a primeira parte de cada um | as outras partes |
-| `PA._interno`, `Mapa._interno` | `jogo/js/arte/pixelart.js`, `jogo/js/mundo/mapa.js` | `arte/pixelart-*.js`, `mundo/*.js` |
+(regra: `jogo/js/CLAUDE.md`, Objetos internos). Cada um é criado na primeira parte do arquivo (ou do prédio:
+`Reino._predios.<p>`) e usado pelas outras; o cabeçalho de cada arquivo diz de que parte ele é. Para achar todos:
+`grep -rnE "\b(Reino|R|PA|Mapa)\._[a-zA-Z]+ = " jogo/js`.
 
 ## 8. Eventos (`Reino.EVENTOS`, `jogo/js/nucleo/eventos.js`)
-Barramento `Reino.util` (`U.on`, `U.emit`); como usar e criar evento: `jogo/js/CLAUDE.md`.
-| Constante | Nome | Carga |
-|---|---|---|
-| `PROGRESSO` | `progresso` | o estado salvo |
-| `PROGRESSO_REMOTO` | `progressoRemoto` | o estado vindo de outra aba ou da nuvem |
-| `MAPA_MUDOU` | `mapaMudou` | — |
-| `SETAS` | `setas` | — |
-| `TRANSICAO` | `transicao` | `true`/`false` |
-| `CUIDADOS` | `cuidados` | `Reino.Cuidados.depurar()` |
-| `TELAS` | `telas` | quantas telas abertas |
-| `CENA` | `cena` | `{ de, para }` |
-| `OCUPADA` | `ocupada` | motivo ou `null` |
-| `IR_PARA` | `irPara` | o lugar |
-| `TRILHA_PERFEITA` | `trilhaPerfeita` | `{ sala, materia }` |
-| `NUVEM` | `nuvem` | `'sincronizado'`, `'erro'` ou `'local'` |
-Quem emite e quem ouve: o comentário de cada constante no arquivo.
+Barramento `Reino.util` (`U.on`, `U.emit`); como usar e criar evento: `jogo/js/CLAUDE.md`. A lista, com a carga,
+quem emite e quem ouve, é o comentário de cada constante em `jogo/js/nucleo/eventos.js` (não se copia aqui).
 
 ## 9. Arquivos gerados (quais não se abrem: `CLAUDE.md` da raiz)
 | Gerado | De onde | Regenerar |
@@ -170,4 +142,3 @@ Quem emite e quem ouve: o comentário de cada constante no arquivo.
 | `jogo/js/voz/*.js` (pacotes de áudio) | falas do jogo + gravações | `npm run vozes` (só quem integra) |
 | `jogo/ferramentas/gerado/falas.json` | `Reino.Falas.todas()` | `node jogo/ferramentas/vozes/listar-falas.js` |
 | `jogo/ferramentas/gerado/vozes-indice.json`, `vozes-cache/` | gravações (edge-tts) | `npm run vozes` |
-| página do artifact | `jogo/index.html` + arquivos do manifesto | `npm run artifact` (grava em `/tmp/reino-testes/artifact/`; nunca publica) |

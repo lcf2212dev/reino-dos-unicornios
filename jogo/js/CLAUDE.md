@@ -2,15 +2,15 @@
 
 Fonte única das regras de código do jogo (vale para toda subpasta; o `CLAUDE.md` de cada uma só acrescenta).
 Mapa do código: `docs/ARQUITETURA.md`. Contratos por assunto: `docs/contratos/README.md`.
-O servidor entrega `js/**`, este arquivo também: nada de segredo aqui.
+A Vercel publica `js/**`, este arquivo também: nada de segredo aqui.
 
 ## Onde o jogo roda
-- Três jeitos, e tudo tem que funcionar nos três: `jogo/index.html` aberto direto (file://), o servidor de casa e o
-  artifact do claude.ai (montado por `jogo/ferramentas/gerar-artifact.js`).
-- O servidor só entrega `index.html`, `css/<arquivo>` (CSS sem subpasta) e `js/**`: todo script fica sob `jogo/js/`;
-  nada de `jogo/ferramentas/` chega ao navegador.
-- Ambiente (artifact, `file:`, https, servidor de casa, toque, compartilhar, baixar): só por `Reino.ambiente`
-  (`js/nucleo/ambiente.js`, funções avaliadas na hora); não repita a checagem de `window.claude` nem de `navigator.share`.
+- Na Vercel (com o app instalável) e por `jogo/index.html` aberto direto (`file://`); tudo funciona nos dois
+  (`docs/ARQUITETURA.md` §2). Servidor de casa e artifact: aposentados.
+- A Vercel (`vercel/montar.js`) só publica `index.html`, `css/<arquivo>` (CSS sem subpasta) e `js/**`: todo script fica
+  sob `jogo/js/`; nada de `jogo/ferramentas/` chega ao navegador.
+- Ambiente (`file:`, https, toque, compartilhar, baixar): só por `Reino.ambiente` (`js/nucleo/ambiente.js`, funções
+  avaliadas na hora); não repita a checagem de `window.claude` nem de `navigator.share`.
 
 ## Scripts clássicos
 - Sem módulos ES, bundler nem build. Scripts clássicos, carregados em ordem.
@@ -60,16 +60,16 @@ O servidor entrega `js/**`, este arquivo também: nada de segredo aqui.
   motivo, e conferindo com `npm run e2e`.
 
 ## Tamanho (vale também para `jogo/css/` e `jogo/ferramentas/`)
-- Código até ~400 linhas; `npm run tamanho` falha acima de 420 (CSS e ferramentas também: 420).
+- Código, CSS e ferramentas miram ~400 linhas; acima de 420 o `npm run tamanho` avisa, acima de 600 falha.
 - Dados (conteúdo, ícones, falas, elenco, moldes, faixas) até 800. Gerados sem limite.
 
 ## Arte
 - Pixel art desenhada em código, sem imagens: contorno `#3a2446`, tile de 16 px. Texto no canvas: "Press Start 2P".
 - Direção de arte (cor, texto, pixel da interface, escala do mundo, alturas, luz, contorno, movimento, festa, estados e
-  componentes comuns): `docs/contratos/ui.md` §10.
-- Todo emoji que aparece na tela ou no canvas tem ícone desenhado em `js/arte/icones/<lote>.js` (confira em
-  `jogo/ferramentas/previas/icones.html` ou `npm run ver -- --previa icones`). Emoji novo sem desenho: avise quem integra.
-- Feature com emoji próprio (ex.: o 🥐 da Padaria) desenha na PRÓPRIA pasta, sem editar os lotes:
+  componentes comuns): `docs/contratos/arte.md`.
+- Todo emoji que aparece na tela ou no canvas tem ícone desenhado (confira em `jogo/ferramentas/previas/icones.html`
+  ou `npm run ver -- --previa icones`). Os lotes `js/arte/icones/<lote>.js` não se editam numa feature.
+- Emoji novo de uma feature (ex.: o 🥐 da Padaria) se desenha na PRÓPRIA pasta:
   `Reino.registrarIcones({ '🥐': { n: 'croissant', p: { k: '#3a2446', … }, d: [16 linhas de 16] } })`
   (`js/arte/icones/icones.js`, `node: true`; chave sem `️`). Chave que já existe ou formato torto (o mesmo
   que o `validar-conteudo` confere nos acessórios: `Reino.conferirIcone`) lança erro na hora. O `validar-interiores`

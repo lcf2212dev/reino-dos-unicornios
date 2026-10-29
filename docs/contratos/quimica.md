@@ -35,7 +35,7 @@ Cada tela é um painel DOM (`UI.painel`, `docs/contratos/ui.md`), aberto na hora
   `interiores/quimica/acoes.js`. `npm run ver -- --tela quimica-bancada` (e as outras) abre direto.
 - A bancada tem o botão 📒 que abre o caderno: fecha a bancada e abre o caderno (não empilha duas telas).
 - Sem Animações (`Reino.util.animar()` falso, e no modo congelado do e2e): nada de rAF nem timer; desenha o quadro final.
-- Pixel art (`ui.md` §10): canvas com `Reino.Desenho`/`Reino.Interiores.desenho`, sem `arc`, gradiente nem blur;
+- Pixel art (`arte.md`): canvas com `Reino.Desenho`/`Reino.Interiores.desenho`, sem `arc`, gradiente nem blur;
   ampliação inteira; efeitos em degraus e pontilhado.
 
 ## 3. Dados (`Reino.QUIMICA`, `jogo/js/conteudo/quimica/`)

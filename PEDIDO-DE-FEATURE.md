@@ -15,7 +15,7 @@ Fotos e prints vão numa pasta dentro de `matérias/`. Exemplo: `reino-dos-unico
 O que quero:
 Onde aparece:
 Pronto quando:
-Parar antes? (em branco = até a main, o GitHub e o claude.ai)
+Parar antes? (em branco = até a main e o GitHub; a Vercel publica sozinha)
 ```
 
 ## Modelo completo (novidade de verdade)
@@ -80,7 +80,7 @@ Caminho por persistência (ganhar sem acertar tudo):   [ ] você propõe   [ ] q
 
 # 12. Aparelhos
 [x] celular   [x] tablet   [x] notebook
-Onde ela joga (se usa recurso do aparelho, como compartilhar, baixar ou câmera):   [ ] claude.ai   [ ] servidor de casa
+Recurso do aparelho (compartilhar, baixar, câmera, sem internet):
 
 # 13. Pronto quando (o que eu vou conferir)
 - [ ]
@@ -91,14 +91,12 @@ Onde ela joga (se usa recurso do aparelho, como compartilhar, baixar ou câmera)
 O que você já sabe que quer (o resto o Claude decide):
 
 # 15. Até onde ir
-Padrão: construir, testar, pôr na main (o servidor de casa passa a servir a novidade), mandar para o GitHub e
-republicar o claude.ai.
+Padrão: construir, testar, pôr na main e mandar para o GitHub (a Vercel publica sozinha).
 [ ] Parar antes: só servidor de teste para eu jogar
-[ ] Não republicar o claude.ai desta vez
 ```
 
 ## O que já vale sempre (não precisa escrever)
-- **Progresso da Mariana:** ninguém toca. Os testes usam só o servidor de teste e saves inventados.
+- **Progresso da Mariana:** ninguém toca (regra: `CLAUDE.md` da raiz). Os testes usam só o servidor de teste e saves inventados.
 - **Sem pressa:** nada premia terminar primeiro.
 - **Persistência:** todo prêmio pode ser ganho de outro jeito, além de acertar tudo. A exceção é o acessório da Escola, que exige nota 10.
 - **Nada se perde:** nada tira o que ela já ganhou.
@@ -110,7 +108,7 @@ republicar o claude.ai.
 - **Números:** os ajustáveis ficam em `jogo/js/nucleo/config.js`.
 
 ## O que o Claude faz com o pedido
-O Claude não pergunta nada: decide o que faltar, constrói à parte, testa, põe na main, manda para o GitHub e republica o claude.ai. No fim
+O Claude não pergunta nada: decide o que faltar, constrói à parte, testa, põe na main, manda para o GitHub (a Vercel publica sozinha). No fim
 te conta o que ficou pronto, o que ele decidiu e o endereço de um servidor de teste para você jogar.
 
 ## Exemplo preenchido
