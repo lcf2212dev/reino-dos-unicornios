@@ -7,7 +7,7 @@ const { test } = require('node:test');
 const assert = require('assert');
 const Jogo = require('../../jogo-no-node');
 
-const TORRE = ['torre', 'torre-1', 'torre-2', 'torre-3', 'torre-4', 'torre-5', 'torre-relogio'];
+const TORRE = ['torre', 'torre-1', 'torre-2', 'torre-3', 'torre-4', 'torre-relogio'];
 // 'origem:índice da escada' → chegada no destino
 const CONGELADA = {
   'observatorio:0': { para: 'observatorio-2', x: 22, y: 12 },

@@ -1,6 +1,6 @@
 /* Torre do Relógio: a torre inteira é do English do 4º bimestre (docs/contratos/quarto-bimestre.md §7), a partir do
    térreo: o saguão (o Seu Ponteiro, os dois livros e o quadro dos andares), um andar por capítulo, na ordem do livro
-   (English 10, 11 e 12; Projetos 11 e 12), e o mecanismo do relógio no alto. Entra-se pela porta do mapa; sai-se
+   (English 11 e 12; Projetos 11 e 12), e o mecanismo do relógio no alto. Entra-se pela porta do mapa; sai-se
    pelo tapete do térreo.
    As estações das salas são GERADAS DOS DADOS: cada sala de Reino.materia('ingles4').salas vai para a vaga do andar
    do seu capítulo e livro, na ordem do livro; vaga sem sala vira enfeite. Objetos em torre/objetos*.js e
@@ -39,7 +39,7 @@
 
   /* ================= ESTAÇÕES (das salas da matéria) ================= */
   // um andar por capítulo, na ordem do livro (andar 1 = CAPITULOS[0]…)
-  var CAPITULOS = [{ livro: 'english', cap: 10 }, { livro: 'english', cap: 11 }, { livro: 'english', cap: 12 },
+  var CAPITULOS = [{ livro: 'english', cap: 11 }, { livro: 'english', cap: 12 },
     { livro: 'projetos', cap: 11 }, { livro: 'projetos', cap: 12 }];
   // as vagas de cada andar, na ordem do livro: dos dois lados do corredor do meio, de cima para baixo
   // (o tile de cima de cada vaga fica sem móvel: a estação é alta)
@@ -56,13 +56,13 @@
     if (n > LUGARES.length) throw new Error('torre: o capítulo ' + c.cap + ' do livro "' + c.livro + '" tem ' + n +
       ' salas, mas o andar só tem ' + LUGARES.length + ' vagas (torre/torre.js, LUGARES)');
   });
-  // "pp. 122 a 125" → "Páginas 122 a 125"; "p. 4" → "Página 4"
+  // "pp. 134 a 137" → "Páginas 134 a 137"; "p. 4" → "Página 4"
   function textoPaginas(p) {
     var t = String(p || '').trim(), m = /^(pp?)\.\s*(.+)$/i.exec(t);
     if (!m) return t;
     return (m[1].toLowerCase() === 'pp' || /\d\D+\d/.test(m[2]) ? 'Páginas ' : 'Página ') + m[2];
   }
-  // fala curta da estação (sem emoji): "Páginas 122 a 125: Feelings."; se não couber numa página, só a página
+  // fala curta da estação (sem emoji): "Páginas 134 a 137: A Happy Day."; se não couber numa página, só a página
   // (o nome da sala já está no título do balão)
   function falaSala(s) {
     var pg = String(textoPaginas(s.paginas) || '').replace(/\bp\. /g, 'página '), nome = String(s.nome || '').trim(), fim = /[.!?…»]$/.test(nome) ? '' : '.';
@@ -71,7 +71,7 @@
     return uma.replace(/[«»]/g, '').length <= 34 ? uma : pg + '.';
   }
   function primeiraPagina(p) { var m = /\d+/.exec(String(p || '')); return m ? m[0] : ''; }
-  // as estações do andar i (1..5); vaga sem sala: o enfeite do andar (nunca uma estação vazia)
+  // as estações do andar i (1..4); vaga sem sala: o enfeite do andar (nunca uma estação vazia)
   function estacoes(i, enfeite) {
     var c = CAPITULOS[i - 1], ss = salasDo(c);
     return LUGARES.map(function (p, k) {
@@ -86,7 +86,7 @@
   // todos os andares têm o mesmo esqueleto: 13×13, um cômodo 11×11 em (1,1);
   // sobe no fundo à direita (10,3) e desce no chão à esquerda (2,10); corredor no meio.
   // Quem desce chega à esquerda do arco (9,3); quem sobe, à direita do vão (3,10) (`chegar`)
-  var ANDARES = ['torre', 'torre-1', 'torre-2', 'torre-3', 'torre-4', 'torre-5', 'torre-relogio'];
+  var ANDARES = ['torre', 'torre-1', 'torre-2', 'torre-3', 'torre-4', 'torre-relogio'];
   var SOBE = { x: 10, y: 3 }, DESCE = { x: 2, y: 10 };
   function escadas(i) {
     var e = [];
@@ -122,7 +122,7 @@
 
   /* ---------- TÉRREO: o saguão do English, na oficina do relojoeiro (pedra e bronze) ---------- */
   // as cores do quadro dos andares: a parede de cada andar, do térreo ao relógio
-  var CORES_ANDARES = ['#d9a86a', '#fff6d8', '#ffb070', '#efe2fb', '#fff3e6', '#e6f6ff', BRONZE];
+  var CORES_ANDARES = ['#d9a86a', '#ffb070', '#efe2fb', '#fff3e6', '#e6f6ff', BRONZE];
   andar(0, 'Torre do Relógio', {
     placa: 'Térreo • English', piso: 'pedra', parede: 'madeira',
     paleta: { piso: '#e8dcc8', piso2: '#c9b48f', parede: '#d9a86a', parede2: '#b9824a', rodape: BRONZE2, detalhe: C.ouro },

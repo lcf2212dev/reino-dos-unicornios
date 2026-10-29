@@ -111,9 +111,9 @@
       contornoRet(ctx, px + 2, py + 3, 28, 26, '#fff3d6');
       triangulo(ctx, x + 4, y + 1, 14, 4, K); triangulo(ctx, x + 6, y + 2, 10, 2, C.vermelho);
       var cs = v(o, 'cores', ['#ffb070', '#bfe9ff', '#2a2f66', '#cfe8ff', '#e8dcff', '#ffc2d8', BRONZE]);   // do térreo ao relógio
-      for (var i = 0; i < 7; i++) {
-        var yy = y + 5 + i * 3;
-        ret(ctx, x + 5, yy, 12, 3, K); ret(ctx, x + 6, yy + 1, 10, 2, cs[6 - i]);
+      for (var i = 0, n = cs.length; i < n; i++) {   // uma faixa por andar, de cima para baixo, encostadas no chão do quadro
+        var yy = y + 5 + (7 - n + i) * 3;
+        ret(ctx, x + 5, yy, 12, 3, K); ret(ctx, x + 6, yy + 1, 10, 2, cs[n - 1 - i]);
       }
       circulo(ctx, x + 11, y + 7, 2, C.creme); ret(ctx, x + 11, y + 6, 1, 2, K);
       ret(ctx, x + 18, y + 8, 5, 1, C.ouro2); ret(ctx, x + 18, y + 14, 5, 1, C.ouro2); ret(ctx, x + 18, y + 20, 5, 1, C.ouro2);

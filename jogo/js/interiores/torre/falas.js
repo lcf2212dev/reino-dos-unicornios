@@ -9,31 +9,25 @@ Reino.falasDoPredio('torre', {
       oi: ['Tic-tac! Sou o Seu Ponteiro. ⏰', 'Aqui mora o livro de «English»!', 'Cada andar tem um capítulo. 🗼'],
       depois: ['Pode subir com calma, viu? ✨'],
     },
-    // andar 1: English, capítulo 10 «If You're Happy, Clap Your Hands» (sentimentos)
-    joy: {
-      oi: ['«Hi!» Eu sou o «Mister Joy».', 'Aqui falamos de sentimentos. 💛'],
-      nova: ['Vamos cantar e bater palmas?', '«How do you feel today?»'],
-      depois: ['Você cantou com o coração! 💛', '«I\'m happy!» E você também?'],
-    },
-    // andar 2: English, capítulo 11 «I Dance When I'm Happy!» (ações, abrigo de animais e alfabeto)
+    // andar 1: English, capítulo 11 «I Dance When I'm Happy!» (ações, abrigo de animais e alfabeto)
     ben: {
       oi: ['«Hello!» Eu sou o «Coach Ben».', 'Eu danço quando estou feliz!'],
       nova: ['Vamos pular e dançar {juntas|juntos}?', 'Você conhece o Pingo? 🐶'],
       depois: ['«Good job!» Que time lindo, hein!', '«I dance when I\'m happy!»'],
     },
-    // andar 3: English, capítulo 12 «Book Time» (tempo, roupas, tempo livre e rotina)
+    // andar 2: English, capítulo 12 «Book Time» (tempo, roupas, tempo livre e rotina)
     stella: {
       oi: ['«Hello!» Eu sou a «Miss Stella».', 'Hoje é dia de ler um livro! 📖'],
       nova: ['Faz sol ou chove hoje? ☀️', 'Que roupa vamos vestir hoje?'],
       depois: ['Você olhou tudo com calma! ✨', '«Amazing!» Que leitura linda!'],
     },
-    // andar 4: Projetos, capítulo 11 «Be Kind!» (diferenças, empatia e gentileza)
+    // andar 3: Projetos, capítulo 11 «Be Kind!» (diferenças, empatia e gentileza)
     moon: {
       oi: ['«Hello!» Eu sou a «Miss Moon».', 'Aqui todo mundo é gentil. 💖'],
       nova: ['Vamos ser gentis {juntas|juntos}?', 'Ser diferente é muito bonito!'],
       depois: ['Você tem um coração gentil! 💖', '«You are a good friend!»'],
     },
-    // andar 5: Projetos, capítulo 12 «I Have a Healthy Diet!» (comida, de onde ela vem e gráficos)
+    // andar 4: Projetos, capítulo 12 «I Have a Healthy Diet!» (comida, de onde ela vem e gráficos)
     smile: {
       oi: ['«Hi!» Eu sou o «Doctor Smile».', 'Comida boa nos deixa fortes!'],
       nova: ['De onde vem a nossa comida?', '«Milk comes from cows.»'],
@@ -42,29 +36,25 @@ Reino.falasDoPredio('torre', {
   },
   objetos: {
     // térreo
-    'livro-english': ['O livro de «English»! 📔', 'São os capítulos 10, 11 e 12.'],
+    'livro-english': ['O livro de «English»! 📔', 'São os capítulos 11 e 12.'],
     'livro-projetos': ['O livro dos Projetos! 📖', 'São os capítulos 11 e 12.'],
-    'andares': ['A torre tem cinco andares.', 'Um capítulo em cada andar. 🗼', 'Suba a escada sem pressa.'],
+    'andares': ['A torre tem quatro andares.', 'Um capítulo em cada andar. 🗼', 'Suba a escada sem pressa.'],
     'engrenagens': ['Engrenagens do relógio! ⚙️', 'Uma gira a outra, sem pressa.'],
     'relogio-grande': ['O relógio faz tic-tac! 🕰️', 'Lá no alto mora o relógio.'],
     // andar 1
-    'carinhas': ['«Happy», «sad», «angry»!', '«Sleepy», «bored», «excited»!', 'Todo sentimento é normal. 💛'],
-    'piano': ['Um piano colorido! 🎹', '«Clap your hands!»', 'Bata palmas bem feliz!'],
-    'pandeiro': ['Um pandeiro alegre! 🎵', '«Stamp your foot!»', 'Bata o pé no chão!'],
-    // andar 2
     'alfabeto': ['Um cartaz com o alfabeto! 🔤', '«Now I know my ABCs!»'],
     'trave': ['Uma trave de futebol! ⚽', '«Jump» quer dizer pular.', '«Dance» quer dizer dançar.'],
     'casinha': ['A casinha do cachorrinho! 🐶', '«Puppy» quer dizer filhote.', '«Vet» é a veterinária.'],
-    // andar 3
+    // andar 2
     'rotina': ['O dia, do sol até a lua! 🌙', '«Morning» quer dizer manhã.', '«Afternoon» quer dizer tarde.', '«Night» quer dizer noite.'],
     'cama': ['Uma cama bem fofinha! 💤', '«Go to bed» é ir dormir.'],
     'roupas': ['Roupas para o frio e o calor!', '«Coat» quer dizer casaco.', '«Hat» quer dizer chapéu.'],
     'protetor': ['É o protetor solar! 🧴', '«It\'s sunny!» Hoje faz sol!'],
-    // andar 4
+    // andar 3
     'amigos': ['Somos todos diferentes!', 'E somos todos amigos! 💖'],
     'gentileza': ['A caixa da gentileza! 🎁', 'Ponha um bilhete gentil nela.'],
     'brinquedos': ['Uma caixa de brinquedos! 🧸', 'Dividir brinquedos é gentil.'],
-    // andar 5
+    // andar 4
     'grafico': ['Um gráfico das comidas!', 'A coluna mais alta ganhou!'],
     'salada': ['Uma salada bem colorida! 🥗', '«Vegetables» são os legumes.'],
     'horta': ['A comida vem da terra! 🥕', '«Fruits come from trees.»', 'As frutas vêm das árvores.'],
