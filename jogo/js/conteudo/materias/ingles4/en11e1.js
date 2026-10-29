@@ -1,0 +1,68 @@
+/* Sala en11e1 (English, capítulo 11, pp. 134 a 137): a abertura «I Dance When I'm Happy!» com o Let's talk, os
+   objetivos, o quadrinho «A Happy Day» (a Renata adota o Pingo no abrigo), o glossário, o desenho do cachorro e o
+   perfil da Luisa Mell (docs/contratos/quarto-bimestre.md §3). O Story time (ENG-136-q2) virou perguntas da história. */
+Reino.registrarSala('ingles4',
+    {
+      id: 'en11e1', nome: '«A Happy Day»', emoji: '🐶',
+      livroOrigem: 'english', capitulo: 11, paginas: 'pp. 134 a 137', ordem: 'livro',
+      cartas: ['en-e134', 'en-e135', 'en-e136', 'en-e137'],
+      intro: 'Vamos ler a história do Pingo, um cachorrinho que ganha uma família! «A happy day!»',
+      desafios: [
+        { id: 'en11e1-01', tipo: 'escolha', origem: 'ENG-136-q1', pagina: 136, livro: 'en-e136',
+          pergunta: '«Look and think.» Olhe o primeiro quadrinho. «How does Pingo feel?» Como o Pingo se sente?',
+          opcoes: [
+            { img: '😢', t: '«Sad»' },
+            { img: '😄', t: '«Happy»' },
+            { img: '😠', t: '«Angry»' },
+          ], certa: 0,
+          adaptacao: 'O olhar e pensar da conversa virou escolher como o Pingo se sente.',
+          explica: 'A veterinária diz «Don\'t be sad, Pingo.»: o Pingo está «sad», triste.' },
+        { id: 'en11e1-02', tipo: 'escolha', origem: 'ENG-136-q2a', pagina: 136, livro: 'en-e136',
+          pergunta: '«Story time.» Onde estão os cachorros da história?',
+          opcoes: [
+            { t: '«At the animal shelter.»' },
+            { t: '«At school.»' },
+            { t: '«At the park.»' },
+          ], certa: 0,
+          adaptacao: 'A leitura da história em sala virou perguntas sobre o quadrinho.',
+          explica: 'Eles esperam uma família no abrigo de animais: «animal shelter».' },
+        { id: 'en11e1-03', tipo: 'escolha', origem: 'ENG-136-q2b', pagina: 136, livro: 'en-e136',
+          pergunta: 'Quem diz «Don\'t be sad, Pingo.»?',
+          opcoes: [
+            { t: '«The vet.»' },
+            { t: 'A menina.' },
+            { t: 'O pai.' },
+          ], certa: 0,
+          explica: 'É a veterinária, a «vet», que cuida dos bichos e consola o Pingo.' },
+        { id: 'en11e1-04', tipo: 'escolha', origem: 'ENG-136-q2c', pagina: 136, livro: 'en-e136',
+          pergunta: '«What\'s his name?» Qual é o nome do cachorrinho?',
+          opcoes: [
+            { t: '«Bingo»' },
+            { t: '«Pingo»' },
+            { t: '«Bob»' },
+          ], certa: 1,
+          explica: 'A menina achou que era «Bingo», mas a veterinária soletrou: «P-I-N-G-O»!' },
+        { id: 'en11e1-05', tipo: 'escolha', origem: 'ENG-136-q2d', pagina: 136, livro: 'en-e136',
+          pergunta: '«Pingo, I dance when I\'m happy.» O que a menina faz quando está feliz?',
+          opcoes: [
+            { img: '💃', t: 'Dança.' },
+            { img: '😢', t: 'Chora.' },
+            { img: '😴', t: 'Dorme.' },
+          ], certa: 0,
+          explica: '«I dance when I\'m happy.» quer dizer: eu danço quando estou feliz!' },
+        { id: 'en11e1-06', tipo: 'escolha', origem: 'ENG-136-q2e', pagina: 137, livro: 'en-e137',
+          pergunta: 'O Pingo é um cachorrinho filhote. Como se diz filhote de cachorro em inglês?',
+          opcoes: [
+            { img: '🐶', t: '«Puppy»' },
+            { img: '🏠', t: '«Animal shelter»' },
+            { img: '🎉', t: '«Party»' },
+          ], certa: 0,
+          adaptacao: 'O glossário da p. 137 entrou como pergunta da história.',
+          explica: '«Puppy» é filhote de cachorro, como o Pingo.' },
+        { id: 'en11e1-07', tipo: 'desenho', origem: 'ENG-137-q3', pagina: 137, livro: 'en-e137', guardar: true,
+          pergunta: '«Draw the dog Renata adopts.» Desenhe o cachorro que a Renata adota.',
+          requisitos: ['formas', 'cores'],
+          adaptacao: 'O quadro pontilhado do livro virou a prancheta de desenho do jogo.',
+          explica: 'Que cachorrinho lindo! A Renata adotou o Pingo, marrom e branco, de orelhas compridas.' },
+      ],
+    });

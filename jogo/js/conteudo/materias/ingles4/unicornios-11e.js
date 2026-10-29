@@ -1,0 +1,28 @@
+/* Unicórnios das salas do capítulo 11 de English, «I Dance When I'm Happy!» (1 comum e 1 raro por sala).
+   O ingles4.js junta estes com os épicos e o lendário da matéria. */
+Reino.registrarUnicornios('ingles4', [
+  { id: 'en-puppy-love', nome: 'Puppy Love', raridade: 'comum', sala: 'en11e1',
+    cores: { corpo: '#fff3e6', crina: ['#a0612e', '#ffffff', '#ff9cc6'], chifre: '#ffe680' },
+    frase: 'Eu adoro cachorrinhos, igualzinho à Renata! «Woof, woof!»' },
+  { id: 'en-shelter-heart', nome: 'Shelter Heart', raridade: 'raro', sala: 'en11e1',
+    cores: { corpo: '#fff8ee', crina: ['#d23c9b', '#5fb4ff', '#ffd34d'], chifre: '#ffffff' },
+    frase: 'Todo bichinho merece um lar cheio de carinho. «Don\'t be sad!»' },
+  { id: 'en-happy-feet', nome: 'Happy Feet', raridade: 'comum', sala: 'en11e2',
+    cores: { corpo: '#f3ecff', crina: ['#8e4fd6', '#ff7eb6', '#ffd34d'], chifre: '#ffe680' },
+    frase: 'Quando estou feliz, eu danço sem parar! «I dance when I\'m happy!»' },
+  { id: 'en-jumping-jelly', nome: 'Jumping Jelly', raridade: 'raro', sala: 'en11e2',
+    cores: { corpo: '#e8fff4', crina: ['#2fbf8f', '#ffd34d', '#5fb4ff'], chifre: '#ffffff' },
+    frase: 'Eu pulo bem alto quando fico animada! «I jump when I\'m excited!»' },
+  { id: 'en-abc-song', nome: 'ABC Song', raridade: 'comum', sala: 'en11e3',
+    cores: { corpo: '#fffbe6', crina: ['#ff4d6d', '#ffb020', '#4cc26b'], chifre: '#ffe680' },
+    frase: 'Vamos cantar juntinhas? «Now I know my ABCs!»' },
+  { id: 'en-code-breaker', nome: 'Code Breaker', raridade: 'raro', sala: 'en11e3',
+    cores: { corpo: '#eef4ff', crina: ['#2f6fd6', '#d23c9b', '#ffffff'], chifre: '#ffd166' },
+    frase: 'Você descobriu o código secreto! «A, B, C... Well done!»' },
+  { id: 'en-super-speller', nome: 'Super Speller', raridade: 'comum', sala: 'en11e4',
+    cores: { corpo: '#fff0f6', crina: ['#d23c9b', '#ffd34d', '#8e4fd6'], chifre: '#ffe680' },
+    frase: 'Eu soletro tudo, letra por letra! «B, I, K, E: bike!»' },
+  { id: 'en-now-i-can', nome: 'Now I Can', raridade: 'raro', sala: 'en11e4',
+    cores: { corpo: '#fffaf2', crina: ['#3a2446', '#ff9cc6', '#5fb4ff'], chifre: '#ffffff' },
+    frase: 'Agora você sabe dizer o que sente e o que faz! «Now, I can!»' },
+]);

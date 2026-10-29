@@ -13,7 +13,7 @@ const BLOCOS = {
   fonte: (b) => txt(b.texto),
 };
 const MAX_PALAVRAS = 110, MAX_VERSOS = 16;
-const ORIGEM = /^(APR|ATI)-\d{2}-q[0-9A-Z]+[a-z]?$/;
+const ORIGEM = /^[A-Z]{3}-\d{2,3}-q[0-9A-Z]+[a-z]?$/;   // APR-12-q3, ATI-05-q2b, ENG-125-q2 (sigla do livro em materia.livros)
 function txt(t) { return typeof t === 'string' && t.trim().length > 0; }
 function palavras(t) { return String(t || '').split(/\s+/).filter(Boolean).length; }
 

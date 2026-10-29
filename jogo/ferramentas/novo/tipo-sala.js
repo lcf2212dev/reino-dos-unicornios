@@ -11,19 +11,22 @@ const RECEITA = 'docs/receitas/sala-4bim.md';
 // ordem "natural" dos ids (lp9a1 < lp10a1 < lp10a2 < lp10t1): a mesma que os livros seguem nos nomes
 const antes = (a, b) => a.localeCompare(b, 'en', { numeric: true }) < 0;
 const js = (m, f) => `js/conteudo/materias/${m}/${f}.js`;
-// letra do livro nos ids e arquivos (lp12a7, livro-12t.js): as duas chaves começam com "a", então é um mapa
-const LIVRO_DA_LETRA = { a: 'aprendizagem', t: 'atividades' };
-const LETRA_DO_LIVRO = { aprendizagem: 'a', atividades: 't' };
+// letra do livro nos ids e arquivos (lp12a7, livro-12t.js): `letra` do livro na matéria (materia.livros) ou, no
+// Português, a/t (as duas chaves começam com "a"); sigla das origens do inventário: `sigla` do livro ou APR/ATI
+const LETRA_PADRAO = { aprendizagem: 'a', atividades: 't' };
+const letraDo = (m, l) => (m.livros[l] && m.livros[l].letra) || LETRA_PADRAO[l] || l[0];
+const livroDaLetra = (m, x) => Object.keys(m.livros || {}).find((l) => letraDo(m, l) === x);
+const siglaDo = (m, l) => (m.livros[l] && m.livros[l].sigla) || (l === 'atividades' ? 'ATI' : 'APR');
 
 // capítulo e livro: --capitulo/--livro ou pelo id (<prefixo><cap><letra do livro><n>, ex.: lp12a7)
 function capituloLivro(id, op, m) {
   const chaves = Object.keys(m.livros || {});
-  const p = id.match(/(\d+)([at])\d+$/);
+  const p = id.match(/(\d+)([a-z])\d+$/);
   const capitulo = op.capitulo !== undefined ? Number(op.capitulo) : p && Number(p[1]);
-  const livro = op.livro || (p && LIVRO_DA_LETRA[p[2]]);
+  const livro = op.livro || (p && livroDaLetra(m, p[2]));
   if (!Number.isInteger(capitulo) || capitulo < 1) throw new Error(`sala: não sei o capítulo de ${id}; passe --capitulo N (ou um id como lp12a7)`);
   if (!chaves.includes(livro)) throw new Error(`sala: livro "${livro || ''}" desconhecido; passe --livro ${chaves.join('|')}`);
-  return { capitulo, livro, letra: LETRA_DO_LIVRO[livro] || livro[0] };
+  return { capitulo, livro, letra: letraDo(m, livro), sigla: siglaDo(m, livro) };
 }
 
 // onde a sala entra: antes da 1ª sala que vem depois dela (capítulo, livro e id em ordem natural), ou --depois-de <sala>
@@ -52,7 +55,9 @@ function conferirLivro(id, op, m, raiz) {
   const manifesto = Man.scripts(fs.readFileSync(Man.arquivo(raiz), 'utf8')).map((s) => s.js);
   const c = capituloLivro(id, op, m);
   const pasta = path.join(raiz, 'jogo/js/conteudo/materias', m.id);
-  const livroArq = `livro-${c.capitulo}${c.letra}`, uniArq = `unicornios-${c.capitulo}`;
+  // unicórnios por capítulo (unicornios-12.js) ou, com `letra` própria nos livros da matéria, por capítulo e livro
+  // (unicornios-12e.js: dois livros com capítulos de mesmo número)
+  const livroArq = `livro-${c.capitulo}${c.letra}`, uniArq = `unicornios-${c.capitulo}${m.livros[c.livro].letra ? c.letra : ''}`;
   const carta = `${id}-c1`;
   if (m.livro.includes(carta)) throw new Error(`sala: a carta ${carta} já existe`);
   op.livro4 = Object.assign(c, { pasta, livroArq, uniArq, carta, livroNome: m.livros[c.livro].nome,
@@ -65,7 +70,7 @@ function conferirLivro(id, op, m, raiz) {
 
 function arquivosLivro(id, op) {
   const L = op.livro4, m = op.materia, rel = (f) => `jogo/${js(m, f)}`;
-  const ORI = L.livro === 'atividades' ? 'ATI' : 'APR';
+  const ORI = L.sigla;
   const sala = novo().modelo('sala-livro.js.modelo', { sala: id, materia: m, livro: L.livro, livroNome: L.livroNome, capitulo: L.capitulo, carta: L.carta, ORI });
   const carta = (r) => `${r}{ id: '${L.carta}', e: '(preencher)', titulo: '(preencher)', livroOrigem: '${L.livro}', pagina: 0, capitulo: ${L.capitulo},   // id: o da página (${L.livro === 'atividades' ? 'lp-t08' : 'lp-a81'})\n` +
     `${r}  blocos: [{ t: 'texto', texto: '(preencher) o texto da página, palavra por palavra' }] },\n`;

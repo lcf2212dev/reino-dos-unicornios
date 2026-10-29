@@ -1,0 +1,21 @@
+/* Unicórnios das salas do capítulo 11 de Projetos "Be Kind!" (1 comum e 1 raro por sala), com o tema de cada sala. */
+Reino.registrarUnicornios('ingles4', [
+  { id: 'en-be-kind', nome: 'Be Kind', raridade: 'comum', sala: 'en11p1',
+    cores: { corpo: '#fff0f4', crina: ['#d23c9b', '#ffb3c7', '#ffd34d'], chifre: '#ffe680' },
+    frase: 'Cada um é de um jeito, e todo jeito é lindo! «Be kind!»' },
+  { id: 'en-rainbow-hug', nome: 'Rainbow Hug', raridade: 'raro', sala: 'en11p1',
+    cores: { corpo: '#fff8ee', crina: ['#ff5c6a', '#ffd34d', '#5fb4ff'], chifre: '#ffffff' },
+    frase: 'Um abraço com todas as cores! «We are different and beautiful.»' },
+  { id: 'en-empathy', nome: 'Empathy', raridade: 'comum', sala: 'en11p2',
+    cores: { corpo: '#f3ecff', crina: ['#8e4fd6', '#5fb4ff', '#ffd34d'], chifre: '#ffe680' },
+    frase: 'Eu percebo como você se sente. «What\'s the matter?»' },
+  { id: 'en-lets-play', nome: 'Let\'s Play', raridade: 'raro', sala: 'en11p2',
+    cores: { corpo: '#eafff2', crina: ['#2fae6b', '#ffd34d', '#ff9cc6'], chifre: '#ffffff' },
+    frase: 'Entediada? Vem comigo! «Let\'s play!»' },
+  { id: 'en-kindness-box', nome: 'Kindness Box', raridade: 'comum', sala: 'en11p3',
+    cores: { corpo: '#fff6e0', crina: ['#e0a800', '#d23c9b', '#fff8e0'], chifre: '#ffe680' },
+    frase: 'Guardo bilhetes carinhosos para você! «You are a good friend!»' },
+  { id: 'en-thank-you', nome: 'Thank You', raridade: 'raro', sala: 'en11p3',
+    cores: { corpo: '#fff8ee', crina: ['#3a2446', '#ff9cc6', '#ffd34d'], chifre: '#ffffff' },
+    frase: 'Obrigada por ser tão gentil! «Thank you!»' },
+]);

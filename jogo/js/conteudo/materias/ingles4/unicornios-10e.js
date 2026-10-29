@@ -1,0 +1,21 @@
+/* Unicórnios das salas do capítulo 10 do livro English (1 comum e 1 raro por sala), com os temas de cada sala. */
+Reino.registrarUnicornios('ingles4', [
+  { id: 'en-clap-clap', nome: 'Clap Clap', raridade: 'comum', sala: 'en10e1',
+    cores: { corpo: '#fff4d6', crina: ['#ffb020', '#ff7eb6', '#fff3a0'], chifre: '#ffd166' },
+    frase: 'Quando estou feliz, eu bato palmas! «Clap your hands!»' },
+  { id: 'en-hurray', nome: 'Hurray', raridade: 'raro', sala: 'en10e1',
+    cores: { corpo: '#ffe6f4', crina: ['#d23c9b', '#5fb4ff', '#ffd34d'], chifre: '#ffffff' },
+    frase: 'Eu canto a canção inteirinha com você! «Hurray!»' },
+  { id: 'en-thermometer', nome: 'Thermometer', raridade: 'comum', sala: 'en10e2',
+    cores: { corpo: '#eaf7ee', crina: ['#2fa35a', '#ffd34d', '#e0453a'], chifre: '#ffe680' },
+    frase: 'Eu meço os sentimentos, do bravo ao animado! «How do you feel?»' },
+  { id: 'en-riley', nome: 'Riley Star', raridade: 'raro', sala: 'en10e2',
+    cores: { corpo: '#f3ecff', crina: ['#8e4fd6', '#ffd34d', '#5fb4ff'], chifre: '#ffffff' },
+    frase: 'Todo sentimento tem um lugar no coração. «Inside out!»' },
+  { id: 'en-sunshine', nome: 'Sunshine', raridade: 'comum', sala: 'en10e3',
+    cores: { corpo: '#fff8d8', crina: ['#ffb020', '#ffd34d', '#ff8a3d'], chifre: '#ffe680' },
+    frase: 'Com sol, eu fico feliz e quentinha! «I feel happy!»' },
+  { id: 'en-rainy-day', nome: 'Rainy Day', raridade: 'raro', sala: 'en10e3',
+    cores: { corpo: '#e6f1ff', crina: ['#2f6fd6', '#9fd4ff', '#ffffff'], chifre: '#d6ecff' },
+    frase: 'Na chuva, eu pulo nas poças com você! «It\'s rainy!»' },
+]);
