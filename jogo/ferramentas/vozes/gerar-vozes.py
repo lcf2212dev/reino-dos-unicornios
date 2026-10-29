@@ -5,7 +5,6 @@ import asyncio
 import hashlib
 import json
 import os
-import subprocess
 import sys
 
 import edge_tts
@@ -53,8 +52,11 @@ async def gravar(fala, sem, contagem):
                 com = edge_tts.Communicate(fala['fala'], v['voz'], rate=v['velocidade'], pitch=v['tom'])
                 await com.save(bruto)
                 filtro = (EFEITOS[v['efeito']] + ',' + FILTRO) if v.get('efeito') else FILTRO
-                subprocess.run(['ffmpeg', '-loglevel', 'error', '-y', '-i', bruto, '-af', filtro,
-                                '-ac', '1', '-ar', '24000', '-b:a', '32k', destino], check=True)
+                # ffmpeg sem travar o laço async: as outras gravações seguem enquanto ele converte
+                proc = await asyncio.create_subprocess_exec('ffmpeg', '-loglevel', 'error', '-y', '-i', bruto, '-af', filtro,
+                                                            '-ac', '1', '-ar', '24000', '-b:a', '32k', destino)
+                if await proc.wait() != 0:
+                    raise RuntimeError(f'ffmpeg saiu com {proc.returncode}')
                 os.remove(bruto)
                 contagem['novas'] += 1
                 if contagem['novas'] % 25 == 0:

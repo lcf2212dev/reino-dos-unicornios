@@ -1,16 +1,23 @@
 // Vozes de ponta a ponta (npm run vozes): listar → gravar → empacotar → conferir por transcrição.
 // Uso (da raiz do repositório):
 //   node jogo/ferramentas/vozes/vozes.js [--sem-listar] [--sem-gravar] [--sem-empacotar] [--sem-conferir] [--saida <pasta>]
+//   node jogo/ferramentas/vozes/vozes.js --orfaos [--aplicar]
+//                 só lista os mp3 de gerado/vozes-cache/ que nenhuma chave do vozes-indice.json usa (quantos, quanto
+//                 ocupam, exemplos); com --aplicar, tira só esses arquivos. Não lista nem grava nada.
 //   1. listar     listar-falas.js: tudo o que o jogo fala → ferramentas/gerado/falas.json
 //   2. gravar     gerar-vozes.py: grava SÓ as falas sem áudio no cache (precisa de uv ou python com edge-tts,
 //                 ffmpeg e internet). Sem fala nova, nem roda. Antes, guarda o índice antigo em .vozes/
 //   3. empacotar  empacotar-vozes.js: junta os áudios em js/voz/<pacote>.js (ou em --saida <pasta>; aí
 //                 também compara com os js/voz/*.js do jogo e diz se ficou idêntico)
-//   4. conferir   conferir-vozes.py: transcreve só as gravações novas (faster-whisper) e acusa as que divergem.
-//                 Python, nesta ordem: .vozes/venv-whisper; senão `uv run --with faster-whisper`; senão cria o
-//                 .vozes/venv-whisper (python3 -m venv + pip install faster-whisper; baixa pacotes).
+//   4. conferir   conferir-vozes.py: transcreve só as gravações novas (faster-whisper) e acusa as que divergem
+//                 (1ª passada em vários processos, feixe 1; as que divergem, de novo com o modelo maior).
+//                 Python, nesta ordem: o venv único ~/.cache/reino-dos-unicornios/vozes-venv (ou REINO_VOZES_VENV),
+//                 para todas as worktrees; senão cria esse venv (uv venv --python 3.13 + uv pip install; sem uv,
+//                 python3 -m venv + pip; baixa pacotes); se não criar, `uv run`. O .vozes/venv-whisper não é mais usado.
+//                 "Novas" = diferentes do último índice conferido por inteiro (.vozes/indice-conferido.json; sem ele,
+//                 o do último commit): gravação pela metade que falhou ainda é conferida na rodada seguinte.
 //                 O modelo do whisper fica no cache do usuário (~/.cache/huggingface).
-// Temporários das vozes em <raiz do repositório>/.vozes/ (ignorado pelo git; o /tmp é memória).
+// Temporários das vozes (índice de antes) em <raiz do repositório>/.vozes/ (ignorado pelo git; o /tmp é memória).
 // Cada passo pode ser pulado. As vozes são achadas pelo TEXTO EXATO: texto falado mudou = gravação nova.
 if (require.main === module) require('../ajuda').ajuda(__filename);
 const fs = require('fs');
@@ -23,7 +30,9 @@ const GERADO = path.join(AQUI, '..', 'gerado');
 const VOZ_JOGO = path.join(AQUI, '..', '..', 'js', 'voz');
 const RAIZ = path.resolve(AQUI, '..', '..', '..');
 const PASTA_VOZES = path.join(RAIZ, '.vozes');
-const VENV = path.join(PASTA_VOZES, 'venv-whisper');
+const CONFERIDO = path.join(PASTA_VOZES, 'indice-conferido.json');   // gravado só depois de uma conferência sem erro
+// venv do transcritor: um só para todas as worktrees (410 MB cada); o mesmo do conferir-vozes.py
+const VENV = process.env.REINO_VOZES_VENV || path.join(require('os').homedir(), '.cache', 'reino-dos-unicornios', 'vozes-venv');
 const tem = (o) => process.argv.includes(o);
 const arg = (n) => { const i = process.argv.indexOf(n); return i > 0 ? process.argv[i + 1] : undefined; };
 
@@ -38,28 +47,37 @@ const existe = (cmd) => spawnSync('sh', ['-c', 'command -v "$0"', cmd]).status =
 // mesma regra do gerar-vozes.py (arquivo()): o áudio de uma fala é <voz>/<sha1(voz|velocidade|tom|fala[|efeito])[:16]>.mp3
 // Pendente: sem esse mp3 no cache OU sem ele na chave da fala no vozes-indice.json (o empacotar acha o áudio pelo
 // índice, e só o gerar-vozes.py o reescreve; ex.: texto que voltou ao de antes, dois textos que viram a mesma fala)
-function pendentes() {
-  const { vozes, falas } = JSON.parse(fs.readFileSync(path.join(GERADO, 'falas.json'), 'utf8'));
-  const arqIndice = path.join(GERADO, 'vozes-indice.json');
+function pendentes(gerado = GERADO) {
+  const { vozes, falas } = JSON.parse(fs.readFileSync(path.join(gerado, 'falas.json'), 'utf8'));
+  const arqIndice = path.join(gerado, 'vozes-indice.json');
   const indice = fs.existsSync(arqIndice) ? JSON.parse(fs.readFileSync(arqIndice, 'utf8')) : {};
   return falas.filter((f) => {
     const v = vozes[f.voz];
     const partes = [v.voz, v.velocidade, v.tom, f.fala].concat(v.efeito ? [v.efeito] : []);
     const h = crypto.createHash('sha1').update(partes.join('|'), 'utf8').digest('hex').slice(0, 16);
-    return !fs.existsSync(path.join(GERADO, 'vozes-cache', f.voz, h + '.mp3')) || indice[f.chave] !== `${f.voz}/${h}.mp3`;
+    return !fs.existsSync(path.join(gerado, 'vozes-cache', f.voz, h + '.mp3')) || indice[f.chave] !== `${f.voz}/${h}.mp3`;
   });
 }
 
-// python do conferir: .vozes/venv-whisper → uv run --with faster-whisper → cria o venv (avisa que baixa)
+// python do conferir: venv único → cria esse venv (uv, Python 3.13; senão python3 -m venv) → uv run
+// av < 14: o av mais novo recusa o metadata_errors que o faster-whisper passa (quebrou em 29/09/2026); o av < 14 não
+// tem pacote pronto para o Python 3.14, daí o 3.13 no uv
+const PACOTES_PY = ['faster-whisper', 'av<14'];
 function pythonDoConferir() {
   const py = path.join(VENV, 'bin', 'python');
   if (fs.existsSync(py)) return { cmd: py, pre: [] };
-  // av < 14: o av mais novo recusa o metadata_errors que o faster-whisper passa (quebrou em 29/09/2026)
-  if (existe('uv')) return { cmd: 'uv', pre: ['run', '--with', 'faster-whisper', '--with', 'av<14', 'python'] };
-  console.log(`\n⚠ sem o ${path.relative(RAIZ, VENV)} e sem uv: vou criar o venv e instalar o faster-whisper (baixa pacotes da internet)`);
-  if (rodar('4. conferir (criar venv)', 'python3', ['-m', 'venv', VENV]) !== 0) return null;
-  if (rodar('4. conferir (pip install)', path.join(VENV, 'bin', 'pip'), ['install', 'faster-whisper', 'av<14']) !== 0) return null;
-  return { cmd: py, pre: [] };
+  fs.mkdirSync(path.dirname(VENV), { recursive: true });
+  console.log(`\n⚠ sem o ${VENV}: vou criar o venv (um só para todas as worktrees) e instalar o faster-whisper (baixa pacotes da internet)`);
+  const criou = existe('uv')
+    ? rodar('4. conferir (criar venv)', 'uv', ['venv', '--python', '3.13', VENV]) === 0
+      && rodar('4. conferir (instalar)', 'uv', ['pip', 'install', '--python', py, ...PACOTES_PY]) === 0
+    // sem uv (instalar: curl -LsSf https://astral.sh/uv/install.sh | sh): só funciona com python3 até o 3.13
+    : rodar('4. conferir (criar venv)', 'python3', ['-m', 'venv', VENV]) === 0
+      && rodar('4. conferir (pip install)', path.join(VENV, 'bin', 'pip'), ['install', ...PACOTES_PY]) === 0;
+  if (criou) return { cmd: py, pre: [] };
+  // não deu para criar: o uv run (sem venv) ainda confere
+  if (existe('uv')) return { cmd: 'uv', pre: ['run', '--python', '3.13', ...PACOTES_PY.flatMap((p) => ['--with', p]), 'python'] };
+  return null;
 }
 
 const hash = (arq) => crypto.createHash('sha256').update(fs.readFileSync(arq)).digest('hex');
@@ -104,16 +122,27 @@ function principal() {
   }
 
   if (!tem('--sem-conferir')) {
-    const py = path.join(AQUI, 'conferir-vozes.py');
-    const args = [py].concat(antes ? ['--antes', antes] : []);
-    const p = pythonDoConferir();
-    const st = p ? rodar('4. conferir', p.cmd, p.pre.concat(args)) : 2;
-    if (st !== 0) falhas.push(st === 2 ? 'conferir (instale o faster-whisper: instruções acima)' : 'conferir (gravações que não batem com o texto)');
+    // "antes" = último índice conferido por inteiro (ou o do commit): a gravação que falhou no meio não escapa
+    const indice = fs.readFileSync(path.join(GERADO, 'vozes-indice.json'), 'utf8');
+    const conferido = fs.existsSync(CONFERIDO) ? fs.readFileSync(CONFERIDO, 'utf8')
+      : spawnSync('git', ['-C', RAIZ, 'show', 'HEAD:jogo/ferramentas/gerado/vozes-indice.json'], { encoding: 'utf8', maxBuffer: 64 << 20 }).stdout;
+    if (conferido && JSON.stringify(JSON.parse(conferido)) === JSON.stringify(JSON.parse(indice))) {
+      console.log('\n▶ 4. conferir: nenhuma gravação nova (índice igual ao último conferido)');
+    } else {
+      const args = [path.join(AQUI, 'conferir-vozes.py')].concat(fs.existsSync(CONFERIDO) ? ['--antes', CONFERIDO] : []);
+      const p = pythonDoConferir();
+      const st = p ? rodar('4. conferir', p.cmd, p.pre.concat(args)) : 2;
+      if (st === 0) { fs.mkdirSync(PASTA_VOZES, { recursive: true }); fs.writeFileSync(CONFERIDO, indice); }
+      else falhas.push(st === 2 ? 'conferir (instale o faster-whisper: instruções acima)' : 'conferir (gravações que não batem com o texto)');
+    }
   }
   return falhas;
 }
 
-try {
+// usado pelo integrar: pendentes(gerado?) → falas do falas.json sem áudio no cache ou fora do índice
+module.exports = { pendentes };
+if (require.main === module) try {
+  if (tem('--orfaos')) { require('./orfaos').orfaos(GERADO, tem('--aplicar')); process.exit(0); }
   const falhas = principal();
   console.log(falhas.length ? `\n✘ vozes: falhou em ${falhas.join('; ')}` : '\n✔ vozes: tudo certo');
   process.exit(falhas.length ? 1 : 0);
