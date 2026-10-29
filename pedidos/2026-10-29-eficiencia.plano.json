@@ -1,0 +1,377 @@
+{
+  "nome": "eficiencia",
+  "pedido": "pedidos/2026-10-29-eficiencia.md",
+  "personagens": [],
+  "tarefas": [
+    {
+      "id": "unidade",
+      "tipo": "mecanica",
+      "titulo": "Unidade paralela e dividida, fecho sem repetição, verde por árvore",
+      "quem": "worker-low",
+      "depende": [],
+      "arquivos": [
+        "jogo/ferramentas/testes/unidade.js",
+        "jogo/ferramentas/testar-tudo.js",
+        "jogo/ferramentas/testes/verdes.js",
+        "jogo/ferramentas/testes/tipos.js",
+        "jogo/ferramentas/testes/trava.js",
+        "jogo/ferramentas/testes/servidor-teste.js",
+        "jogo/ferramentas/testes/cenario.js",
+        "jogo/ferramentas/testes/unidade/colar.navegador.test.js",
+        "jogo/ferramentas/testes/unidade/album-duplo.navegador.test.js",
+        "jogo/ferramentas/testes/unidade/quarto-bimestre-sala-inteira.navegador.test.js",
+        "jogo/ferramentas/testes/unidade/tipografia.navegador.test.js",
+        "jogo/ferramentas/testes/unidade/trava.test.js",
+        "jogo/ferramentas/testes/unidade/trava-corrida.test.js",
+        "jogo/ferramentas/testes/unidade/trava-assumindo.test.js",
+        "jogo/ferramentas/testes/unidade/servidor-lento.test.js",
+        "jogo/ferramentas/testes/unidade/validadores.test.js",
+        "jogo/ferramentas/testes/unidade/verdes.test.js",
+        "jogo/ferramentas/testes/unidade/unidade-filas.test.js"
+      ],
+      "worktree": "ef-unidade",
+      "pronto": [
+        "npm run unidade ≤ 80 s nesta máquina",
+        "npm test roda tipos e pula árvore já verde (--forcar roda)",
+        "nenhum teste perdido"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "integrar",
+      "tipo": "mecanica",
+      "titulo": "integrar: base no mesmo commit, fase de vozes, --esperado, sem Claude-Session nem prefixo duplo",
+      "quem": "worker-low",
+      "depende": [],
+      "arquivos": [
+        "jogo/ferramentas/fluxo/integrar.js",
+        "jogo/ferramentas/fluxo/integrar-git.js",
+        "jogo/ferramentas/fluxo/comum.js",
+        "jogo/ferramentas/fluxo/repo-de-teste.js",
+        "jogo/ferramentas/testes/unidade/fluxo-integrar.test.js",
+        "jogo/ferramentas/testes/unidade/fluxo-integrar-retomada.test.js",
+        "jogo/ferramentas/testes/unidade/fluxo-integrar-vozes.test.js"
+      ],
+      "worktree": "ef-integrar",
+      "pronto": [
+        "--trocar-base grava a base no mesmo commit da frente",
+        "conflito de pacote de voz resolvido sozinho",
+        "--merge recusa fala sem áudio",
+        "commit sem Claude-Session e sem prefixo duplo"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "e2e-base",
+      "tipo": "mecanica",
+      "titulo": "e2e: base @, cache por conteúdo, --aceitar, --mudancas, poda",
+      "quem": "worker-low",
+      "depende": [],
+      "arquivos": [
+        "jogo/ferramentas/testes/e2e.js",
+        "jogo/ferramentas/testes/trocar-base.js",
+        "jogo/ferramentas/testes/e2e-disco.js",
+        "jogo/ferramentas/testes/unidade/e2e-disco.test.js",
+        "jogo/ferramentas/testes/unidade/e2e-disco-harness-main.test.js",
+        "jogo/ferramentas/testes/unidade/e2e-base.test.js",
+        "jogo/ferramentas/testes/unidade/e2e-mudancas.test.js"
+      ],
+      "worktree": "ef-e2e-base",
+      "pronto": [
+        "base @ resolvida pelo git",
+        "jogo igual ao da base: idêntico sem abrir navegador",
+        "captura do atual reaproveitada como base",
+        "--mudancas escolhe as cenas"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "e2e-piso",
+      "tipo": "mecanica",
+      "titulo": "e2e: fila mapa+interiores em lotes e vagas globais de Chromium",
+      "quem": "worker-low",
+      "depende": [],
+      "arquivos": [
+        "jogo/ferramentas/testes/referencias.js",
+        "jogo/ferramentas/testes/referencias-pagina.js",
+        "jogo/ferramentas/testes/referencias-cenas.js",
+        "jogo/ferramentas/testes/navegador.js",
+        "jogo/ferramentas/testes/vagas.js",
+        "jogo/ferramentas/testes/unidade/vagas.test.js"
+      ],
+      "worktree": "ef-e2e-piso",
+      "pronto": [
+        "e2e quente ≤ 40 s",
+        "A/A duas vezes sem diferença",
+        "jogo igual = idêntico à base"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "vozes",
+      "tipo": "mecanica",
+      "titulo": "Vozes: conferência paralela, ffmpeg sem travar, venv único, órfãos",
+      "quem": "worker-low",
+      "depende": [],
+      "arquivos": [
+        "jogo/ferramentas/vozes/",
+        "jogo/ferramentas/testes/unidade/vozes-pendentes.test.js",
+        "jogo/ferramentas/testes/unidade/elenco-vozes.test.js",
+        "jogo/ferramentas/testes/unidade/vozes-orfaos.test.js"
+      ],
+      "worktree": "ef-vozes",
+      "pronto": [
+        "nenhum pacote de voz muda",
+        "--orfaos lista e --aplicar tira só os órfãos",
+        "venv em ~/.cache"
+      ],
+      "estimativa": 40
+    },
+    {
+      "id": "motor-vozes",
+      "tipo": "mecanica",
+      "titulo": "Vozes no início só do geral, LRU dos pacotes carregados",
+      "quem": "worker-low",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/motor/main.js",
+        "jogo/js/sistemas/voz.js",
+        "jogo/ferramentas/testes/unidade/voz-lru.test.js"
+      ],
+      "worktree": "ef-motor-vozes",
+      "pronto": [
+        "abertura baixa só o geral",
+        "toda fala continua com voz",
+        "e2e idêntico"
+      ],
+      "estimativa": 45
+    },
+    {
+      "id": "motor-quadro",
+      "tipo": "mecanica",
+      "titulo": "Quadro: só o que aparece, NPCs sem trabalho repetido, LRU dos estáticos",
+      "quem": "worker-low",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/motor/interiores-cena.js",
+        "jogo/js/motor/laco.js",
+        "jogo/js/personagens/npcs-sprites.js",
+        "jogo/js/personagens/npcs-status.js",
+        "jogo/js/personagens/jogador-desenho.js",
+        "jogo/ferramentas/testes/desempenho.js",
+        "jogo/ferramentas/testes/unidade/interiores-lru.test.js"
+      ],
+      "worktree": "ef-motor-quadro",
+      "pronto": [
+        "e2e idêntico",
+        "--desempenho melhor ou igual em Escola, Castelo e Português"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "pwa",
+      "tipo": "mecanica",
+      "titulo": "Build da Vercel em lotes e service worker com núcleo antes das vozes",
+      "quem": "worker-low",
+      "depende": [],
+      "arquivos": [
+        "vercel/montar.js",
+        "vercel/pwa/sw.js",
+        "vercel/README.md",
+        "jogo/ferramentas/fluxo/vercel.js",
+        "jogo/ferramentas/testes/unidade/icones-pwa.test.js",
+        "jogo/ferramentas/testes/unidade/montar-lotes.navegador.test.js",
+        "jogo/ferramentas/testes/unidade/sw-nucleo.navegador.test.js"
+      ],
+      "worktree": "ef-pwa",
+      "pronto": [
+        "public/ com ~12 scripts e 1 CSS, jogo abre sem erro",
+        "SW antigo atualiza para o novo sem perder offline",
+        "vercel --conferir sai na hora se o jogo não mudou"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "docs",
+      "tipo": "mecanica",
+      "titulo": "Docs sem artifact nem servidor de casa, sem contradição, direção de arte separada",
+      "quem": "worker-low",
+      "depende": [],
+      "arquivos": [
+        "docs/contratos/README.md",
+        "docs/contratos/cena-e-motor.md",
+        "docs/contratos/conteudo.md",
+        "docs/contratos/cuidados.md",
+        "docs/contratos/feira-ciencias.md",
+        "docs/contratos/fotos.md",
+        "docs/contratos/interiores.md",
+        "docs/contratos/laboratorio-atividades.md",
+        "docs/contratos/loja.md",
+        "docs/contratos/npcs-e-dialogo.md",
+        "docs/contratos/plano-paralelo.md",
+        "docs/contratos/quimica.md",
+        "docs/contratos/save-e-mescla.md",
+        "docs/contratos/som-musica-e-voz.md",
+        "docs/contratos/surpresa.md",
+        "docs/contratos/ui.md",
+        "docs/contratos/viagem.md",
+        "docs/contratos/arte.md",
+        "docs/receitas/README.md",
+        "docs/receitas/comida-nova.md",
+        "docs/receitas/desafio-novo.md",
+        "docs/receitas/enfeite-novo.md",
+        "docs/receitas/fala-nova-e-vozes.md",
+        "docs/receitas/licoes-de-voz.md",
+        "docs/receitas/musica-nova.md",
+        "docs/receitas/personagem-novo.md",
+        "docs/receitas/predio-novo.md",
+        "docs/receitas/prova-nova.md",
+        "docs/receitas/sistema-novo.md",
+        "docs/decisoes/",
+        "PEDIDO-DE-FEATURE.md"
+      ],
+      "worktree": "ef-docs",
+      "pronto": [
+        "nenhum texto trata artifact ou servidor de casa como ativos",
+        "ui.md §10 virou docs/contratos/arte.md",
+        "npm run validar (validar-docs) verde"
+      ],
+      "estimativa": 50
+    },
+    {
+      "id": "gerador",
+      "tipo": "mecanica",
+      "titulo": "Gerador para o 4º bimestre, limite 420/600, plano com leitura por seção",
+      "quem": "worker-low",
+      "depende": [],
+      "arquivos": [
+        "jogo/ferramentas/novo/",
+        "jogo/ferramentas/tamanho.js",
+        "jogo/ferramentas/fluxo/plano.js",
+        "jogo/ferramentas/fluxo/plano-tipos.js",
+        "jogo/ferramentas/fluxo/plano-briefing.js",
+        "jogo/ferramentas/fluxo/plano-pedido.js",
+        "jogo/ferramentas/fluxo/exemplos/",
+        "jogo/ferramentas/testes/unidade/novo.test.js",
+        "jogo/ferramentas/testes/unidade/fluxo-plano.test.js",
+        "jogo/ferramentas/testes/unidade/tamanho.test.js",
+        "docs/receitas/materia-nova.md",
+        "docs/receitas/sala-4bim.md",
+        "docs/contratos/bimestres.md",
+        "docs/contratos/quarto-bimestre.md"
+      ],
+      "worktree": "ef-gerador",
+      "pronto": [
+        "npm run novo -- sala portugues4 <id> funciona",
+        "novo recusa matéria arquivada",
+        "tamanho avisa acima de 420 e falha acima de 600"
+      ],
+      "estimativa": 50
+    },
+    {
+      "id": "limpar",
+      "tipo": "mecanica",
+      "titulo": "npm run limpar (lista e aplica o seguro) e artifact aposentado em arquivo/",
+      "quem": "worker-low",
+      "depende": [],
+      "arquivos": [
+        "jogo/ferramentas/fluxo/limpar.js",
+        "jogo/ferramentas/testes/unidade/fluxo-limpar.test.js",
+        "jogo/ferramentas/gerar-artifact.js",
+        "jogo/ferramentas/artifact-delta.js",
+        "jogo/ferramentas/artifact-publicado.txt",
+        "jogo/ferramentas/testes/unidade/artifact-delta.test.js",
+        "jogo/ferramentas/testes/unidade/artifact-delta-acento.test.js",
+        "jogo/ferramentas/gerar-index.js",
+        "arquivo/artifact/"
+      ],
+      "worktree": "ef-limpar",
+      "pronto": [
+        "limpar lista sem mexer; --aplicar só prune, worktree limpa e mesclada, branch -d",
+        "artifact em arquivo/artifact/"
+      ],
+      "estimativa": 40
+    },
+    {
+      "id": "skills",
+      "tipo": "mecanica",
+      "titulo": "Skills e worker: entrada única, processo proporcional, fecho uma vez, comandos novos",
+      "quem": "worker-low",
+      "depende": [
+        "unidade",
+        "integrar",
+        "e2e-base",
+        "vozes",
+        "gerador",
+        "limpar",
+        "docs"
+      ],
+      "arquivos": [
+        ".claude/skills/",
+        ".claude/agents/worker-low.md",
+        "arquivo/skills/"
+      ],
+      "worktree": "ef-skills",
+      "pronto": [
+        "nenhuma skill manda publicar artifact; a entrega confere a Vercel",
+        "uma skill de entrada com tabela P/M/G",
+        "comandos citados existem"
+      ],
+      "estimativa": 50
+    },
+    {
+      "id": "integracao",
+      "tipo": "integracao",
+      "titulo": "Juntar as frentes, arquivos disputados, validar-tudo",
+      "quem": "orquestrador",
+      "depende": [
+        "unidade",
+        "integrar",
+        "e2e-base",
+        "e2e-piso",
+        "vozes",
+        "motor-vozes",
+        "motor-quadro",
+        "pwa",
+        "docs",
+        "gerador",
+        "limpar",
+        "skills"
+      ],
+      "arquivos": [
+        "package.json",
+        "CLAUDE.md",
+        "COMO-USAR.md",
+        "docs/ARQUITETURA.md",
+        "jogo/ferramentas/testes/base-referencia.txt",
+        ".claude/settings.json",
+        "TODO-VISUAL.md",
+        "pedidos/2026-10-29-eficiencia.md",
+        "pedidos/2026-10-29-eficiencia.plano.json"
+      ],
+      "worktree": "eficiencia",
+      "pronto": [
+        "npm test e npm run e2e verdes",
+        "e2e idêntico à base"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "entrega",
+      "tipo": "entrega",
+      "titulo": "Merge, push, Vercel e limpeza aplicada",
+      "quem": "orquestrador",
+      "depende": [
+        "integracao"
+      ],
+      "arquivos": [],
+      "worktree": "eficiencia",
+      "pronto": [
+        "main com push",
+        "vercel --conferir ok",
+        "limpeza aplicada e listada no relatório"
+      ],
+      "estimativa": 30
+    }
+  ]
+}
