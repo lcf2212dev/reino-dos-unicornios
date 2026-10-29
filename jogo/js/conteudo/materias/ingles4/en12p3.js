@@ -10,7 +10,7 @@
   ] }] };
   Reino.registrarSala('ingles4',
     {
-      id: 'en12p3', nome: '«Two Pieces of Fruit!»', emoji: '💧',
+      id: 'en12p3', nome: '«Two Pieces of Fruit!»', emoji: '🍎',
       livroOrigem: 'projetos', capitulo: 12, paginas: 'pp. 188 a 193', ordem: 'livro',
       cartas: ['en-p188', 'en-p189', 'en-p190', 'en-p191', 'en-p192', 'en-p193'],
       intro: 'Vamos contar o que a gente come e fazer gráficos! «How many times a week?»',

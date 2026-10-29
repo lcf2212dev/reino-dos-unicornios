@@ -10,7 +10,7 @@
   }
   Reino.registrarCartas('ingles4', [
     // abertura e objetivos (pp. 134 e 135)
-    carta('en-e134', '💃', 'Chapter 11 – «I Dance When I\'m Happy!»', 134, [
+    carta('en-e134', '💃', 'Capítulo 11 – «I Dance When I\'m Happy!»', 134, [
       { t: 'texto', texto: 'Uma menina e a mãe dançam juntas na sala, com um sorrisão.' },
       { t: 'quadro', titulo: '«Let\'s talk»', itens: [
         { texto: '«How do you feel when you dance?»' },
@@ -33,7 +33,7 @@
       { t: 'texto', texto: 'No abrigo, vários cachorros esperam uma família. Um cachorrinho está tristinho.' },
       { t: 'fala', quem: 'A veterinária', texto: '«Don\'t be sad, Pingo.»' },
       { t: 'texto', texto: 'Uma menina de óculos chega com o pai e vê o cachorrinho.' },
-      { t: 'fala', quem: 'O pai', texto: '«What\'s his name?»' },
+      { t: 'fala', quem: 'A menina', texto: '«What\'s his name?»' },
       { t: 'fala', quem: 'A veterinária', texto: '«Pingo!»' },
       { t: 'fala', quem: 'A menina', texto: '«Bingo?»' },
       { t: 'fala', quem: 'A veterinária', texto: '«No, Pingo. P-I-N-G-O.»' },

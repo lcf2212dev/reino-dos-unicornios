@@ -259,7 +259,7 @@ Estado: ok
 - Quadrinho "A HAPPY DAY" (3 quadros):
   1. Abrigo com cachorros em caixas; uma veterinária (crachá "VET") afaga um cachorrinho marrom e branco tristonho: "DON'T BE SAD, PINGO."
   2. Uma menina de óculos chega de mãos dadas com o pai e olha o cachorrinho.
-  3. Pai: "WHAT'S HIS NAME?" · Veterinária: "PINGO!" · Menina: "BINGO?" · Veterinária: "NO, PINGO. P-I-N-G-O." · Menina, abraçando o cachorro: "PINGO, I DANCE WHEN I'M HAPPY." · Pingo: "WOOF, WOOF!"
+  3. Menina: "WHAT'S HIS NAME?" · Veterinária: "PINGO!" · Menina: "BINGO?" · Veterinária: "NO, PINGO. P-I-N-G-O." · Menina, abraçando o cachorro: "PINGO, I DANCE WHEN I'M HAPPY." · Pingo: "WOOF, WOOF!"
 - Rodapé: "136".
 ### Questões
 - **ENG-136-q1**

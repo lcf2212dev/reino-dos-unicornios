@@ -48,7 +48,7 @@
             { antes: '«I»', depois: '.' },
           ],
           adaptacao: 'Resposta pessoal: qualquer resposta vale.',
-          explica: 'Muito bem! Você pode escrever «I cry.», «I sleep.» ou «I hug my mom.»' },
+          explica: 'Muito bem! Você pode escrever «I cry.», «I sleep.» ou «I hug my mum.»' },
         { id: 'en11e3-06', tipo: 'digitar', livre: true, origem: 'ENG-144-q11b', pagina: 144, livro: 'en-e144',
           pergunta: '«How do you spell your name?» Escreva o seu nome, letra por letra.',
           frases: [
@@ -57,7 +57,7 @@
           adaptacao: 'Resposta pessoal: qualquer nome vale.',
           explica: 'Que lindo! Soletrar é dizer o nome letra por letra, em inglês.' },
         { id: 'en11e3-07', tipo: 'escolha', origem: 'ENG-144-q12a', pagina: 144, livro: 'en-e144',
-          pergunta: '«Talk to a friend.» «What do you do when a toy breaks?» O que a gente faz quando um brinquedo quebra?',
+          pergunta: '«Talk to a friend.» «What do you do when a toy breaks?» Na figura, o brinquedo do menino quebrou. O que ele faz?',
           opcoes: [
             { img: '😢', t: '«I cry.»' },
             { img: '💃', t: '«I dance.»' },
@@ -66,7 +66,7 @@
           adaptacao: 'A conversa com o amigo virou escolher a resposta que combina com a foto.',
           explica: 'Brinquedo quebrado deixa a gente triste: «I cry.», eu choro.' },
         { id: 'en11e3-08', tipo: 'escolha', origem: 'ENG-144-q12b', pagina: 144, livro: 'en-e144',
-          pergunta: '«What do you do when you go to a party?» E quando você vai a uma festa?',
+          pergunta: '«What do you do when you go to a party?» Na figura, as crianças estão numa festa. O que elas fazem?',
           opcoes: [
             { img: '😢', t: '«I cry.»' },
             { img: '🦶', t: '«I stamp my foot.»' },

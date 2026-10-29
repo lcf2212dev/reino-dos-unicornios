@@ -35,6 +35,7 @@
       { t: 'texto', texto: 'O livro da sala de aula não está aqui. Então o Big Ben escreveu uma historinha para você ler!' },
     ]),
     carta('en-e150b', '📖', '«Lily\'s Weekend»', 150, [
+      { t: 'texto', texto: 'Esta historinha não é do livro da escola: é do jogo, e quem escreveu foi o Big Ben!' },
       { t: 'texto', texto: '«It is Saturday. It is cold and windy. Lily wears a coat, a scarf and boots. She reads a book with Grandma. Lily is happy!»' },
       { t: 'texto', texto: '«On Sunday, it is sunny and hot. Lily wears a T-shirt, shorts and sandals. She rides a bike and plays football with her brother Tom.»' },
       { t: 'texto', texto: '«Then it is rainy. The ball is wet. Tom is angry. Lily is sad. "Let\'s watch a film!" says Mum. Lily is excited!»' },
