@@ -45,6 +45,8 @@
     cama: ['..........', 'k.........', 'kkk.......', 'kwwkkkkkkk', 'kwwkllllll', 'kkkkllllll', 'kkkkkkkkkk', 'k........k', 'k........k', '..........'],
     nota: ['....kkkkkk', '....krrrrk', '....kk..kk', '....k....k', '....k....k', '.kkkk..kkk', 'krrrk.krrk', 'krrrk.krrk', '.kkk...kk.', '..........'],
     feliz: ['..kkkkkk..', '.kyyyyyyk.', 'kyykyykyyk', 'kyykyykyyk', 'kyyyyyyyyk', 'kykyyyykyk', 'kyykkkkyyk', '.kyyyyyyk.', '..kkkkkk..', '..........'],
+    maca: ['.....k....', '....kgg...', '..kk.kkk..', '.krrkrrrk.', 'krwrrrrrrk', 'krrrrrrrrk', 'krrrrrrrrk', '.krrrrrrk.', '..krrrrk..', '...kkkk...'],
+    coracao: ['..........', '.kkk..kkk.', 'kssskkrrrk', 'ksrrrrrrrk', 'krrrrrrrrk', '.krrrrrrk.', '..krrrrk..', '...krrk...', '....kk....', '..........'],
   };
   function icone(ctx, x, y, nome) {
     if (nome === 'sol') {
@@ -70,9 +72,10 @@
     A: ['.x.', 'x.x', 'xxx', 'x.x', 'x.x'], B: ['xx.', 'x.x', 'xx.', 'x.x', 'xx.'], C: ['.xx', 'x..', 'x..', 'x..', '.xx'],
     E: ['xxx', 'x..', 'xx.', 'x..', 'xxx'], G: ['.xx', 'x..', 'x.x', 'x.x', '.xx'], H: ['x.x', 'x.x', 'xxx', 'x.x', 'x.x'],
     I: ['xxx', '.x.', '.x.', '.x.', 'xxx'], L: ['x..', 'x..', 'x..', 'x..', 'xxx'], M: ['x.x', 'xxx', 'xxx', 'x.x', 'x.x'],
-    N: ['x.x', 'xxx', 'xxx', 'x.x', 'x.x'], O: ['.x.', 'x.x', 'x.x', 'x.x', '.x.'], P: ['xx.', 'x.x', 'xx.', 'x..', 'x..'],
+    N: ['xx.', 'x.x', 'x.x', 'x.x', 'x.x'], O: ['.x.', 'x.x', 'x.x', 'x.x', '.x.'], P: ['xx.', 'x.x', 'xx.', 'x..', 'x..'],
     R: ['xx.', 'x.x', 'xx.', 'x.x', 'x.x'], S: ['.xx', 'x..', '.x.', '..x', 'xx.'], T: ['xxx', '.x.', '.x.', '.x.', '.x.'],
     U: ['x.x', 'x.x', 'x.x', 'x.x', 'xxx'], Y: ['x.x', 'x.x', '.x.', '.x.', '.x.'], D: ['xx.', 'x.x', 'x.x', 'x.x', 'xx.'],
+    K: ['x.x', 'x.x', 'xx.', 'x.x', 'x.x'],
   };
   function palavra(ctx, texto, cx, y, cor) {
     var x = cx - Math.floor((texto.length * 4 - 1) / 2);
@@ -103,11 +106,11 @@
     } });
   // quadro dos andares: a torre inteira em corte
   I.objeto('torre-andares', { w: 2, h: 2, parede: true, solido: false,
-    desenhar: function (ctx, px, py) {
+    desenhar: function (ctx, px, py, o) {
       var x = px + 5, y = py + 4;
       contornoRet(ctx, px + 2, py + 3, 28, 26, '#fff3d6');
       triangulo(ctx, x + 4, y + 1, 14, 4, K); triangulo(ctx, x + 6, y + 2, 10, 2, C.vermelho);
-      var cs = ['#ffb070', '#bfe9ff', '#2a2f66', '#cfe8ff', '#e8dcff', '#ffc2d8', BRONZE];
+      var cs = v(o, 'cores', ['#ffb070', '#bfe9ff', '#2a2f66', '#cfe8ff', '#e8dcff', '#ffc2d8', BRONZE]);   // do térreo ao relógio
       for (var i = 0; i < 7; i++) {
         var yy = y + 5 + i * 3;
         ret(ctx, x + 5, yy, 12, 3, K); ret(ctx, x + 6, yy + 1, 10, 2, cs[6 - i]);
@@ -115,20 +118,21 @@
       circulo(ctx, x + 11, y + 7, 2, C.creme); ret(ctx, x + 11, y + 6, 1, 2, K);
       ret(ctx, x + 18, y + 8, 5, 1, C.ouro2); ret(ctx, x + 18, y + 14, 5, 1, C.ouro2); ret(ctx, x + 18, y + 20, 5, 1, C.ouro2);
     } });
-  // púlpito do Livro do Inglês
+  // púlpito do Livro do Inglês (var.cor: a lombada e a fitinha na cor do livro; sem ela, azul e vermelha)
   I.objeto('torre-pulpito', { w: 1, h: 1, topo: 12, solido: true, alto: true,
-    desenhar: function (ctx, px, py) {
-      var cx = px + 8;
+    desenhar: function (ctx, px, py, o) {
+      var cx = px + 8, cor = v(o, 'cor', null);
       ret(ctx, cx - 5, py + 11, 11, 4, K); ret(ctx, cx - 4, py + 12, 9, 2, BRONZE2);
       ret(ctx, cx - 2, py - 3, 5, 15, K); ret(ctx, cx - 1, py - 3, 3, 14, C.madeira); ret(ctx, cx - 1, py - 3, 1, 14, C.madeiraClara);
       ret(ctx, cx - 7, py - 5, 15, 3, K); ret(ctx, cx - 6, py - 4, 13, 1, BRONZE);
       // livro aberto com «ABC» e uma bandeirinha
       ret(ctx, cx - 7, py - 12, 15, 8, K);
       ret(ctx, cx - 6, py - 11, 6, 6, C.branco); ret(ctx, cx + 1, py - 11, 6, 6, C.branco);
-      ret(ctx, cx, py - 11, 1, 7, C.azul);
+      ret(ctx, cx, py - 11, 1, 7, cor || C.azul);
       ret(ctx, cx - 5, py - 10, 1, 3, C.vermelho); ret(ctx, cx - 3, py - 10, 1, 3, C.azul); ret(ctx, cx - 2, py - 8, 1, 1, C.ouro);
       for (var j = 0; j < 3; j++) ret(ctx, cx + 2, py - 10 + j * 2, 4, 1, '#9fcfff');
-      ret(ctx, cx + 3, py - 13, 1, 3, C.vermelho);
+      ret(ctx, cx + 3, py - 13, 1, 3, cor || C.vermelho);
+      if (cor) ret(ctx, cx - 6, py - 5, 13, 1, cor);   // a capa por baixo das páginas
     } });
   // engrenagens soltas numa bancada (térreo)
   I.objeto('torre-engrenagens', { w: 2, h: 1, topo: 10, solido: true, alto: true,

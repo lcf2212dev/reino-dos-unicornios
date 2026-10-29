@@ -394,7 +394,9 @@
       { js: 'js/interiores/torre/falas.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/torre/objetos.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/torre/objetos-casa.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/torre/en-objetos.js', grupo: 'interiores', node: true }, // English do 4º bimestre: a estação das salas
       { js: 'js/interiores/torre/torre.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/torre/en-andares.js', grupo: 'interiores', node: true }, // andares 1 a 5 (um por capítulo) e o relógio
       { js: 'js/interiores/escola/falas.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/escola/objetos.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/escola/lousas.js', grupo: 'interiores', node: true },

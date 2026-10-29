@@ -96,15 +96,15 @@ test('validar-conteudo: emoji sem desenho é erro; com ícone registrado num pr�
   const falas = path.join(copia, 'js/interiores/museu/falas.js');
   const original = fs.readFileSync(falas, 'utf8');
   fs.writeFileSync(falas, original);   // a cópia é reaproveitada: sempre do jogo de hoje
-  plantar(sala, "explica: '", "explica: '🍦 ");
+  plantar(sala, "explica: '", "explica: '🦩 ");
   const sem = node('ferramentas/validar/validar-conteudo.js', [], copia);
   assert.strictEqual(sem.status, 1, sem.saida);
-  assert.match(sem.saida, /emoji 🍦 sem pixel art em js\/arte\/icones\/ \(em js\/conteudo\/materias\/historia\/h1\.js\)/);
+  assert.match(sem.saida, /emoji 🦩 sem pixel art em js\/arte\/icones\/ \(em js\/conteudo\/materias\/historia\/h1\.js\)/);
   const d = Array.from({ length: 16 }, () => '..aaaaaaaaaaaa..');
-  fs.writeFileSync(falas, `Reino.registrarIcones({ '🍦': { n: 'sorvete', p: { a: '#ffd1e0' }, d: ${JSON.stringify(d)} } });\n` + original);
+  fs.writeFileSync(falas, `Reino.registrarIcones({ '🦩': { n: 'flamingo', p: { a: '#ffd1e0' }, d: ${JSON.stringify(d)} } });\n` + original);
   const com = node('ferramentas/validar/validar-conteudo.js', [], copia);
   assert.strictEqual(com.status, 0, com.saida);
-  assert.doesNotMatch(com.saida, /🍦/);
+  assert.doesNotMatch(com.saida, /🦩/);
 });
 
 test('validar-interiores: por padrão só o resumo; --detalhes lista; --so filtra; ação de módulo e sprite (aviso)', () => {

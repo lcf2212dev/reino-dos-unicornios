@@ -24,6 +24,7 @@ desafio, livro e salas em geral: `conteudo.md`. Prédio e andares: `interiores.m
 - Língua Portuguesa no térreo da Casa das Palavras: `jogo/js/interiores/portugues/` (`portugues.js` = o layout;
   `lp-*.js` = pessoas, falas e objetos); o layout do 3º bimestre em
   `arquivo/terceiro-bimestre/jogo/js/interiores/portugues/portugues.js`.
+- English na Torre do Relógio: `jogo/js/conteudo/materias/ingles4/` e `jogo/js/interiores/torre/` (`interiores.md` §9.5.1).
 - Produções (escrita livre e desenho salvos): campo `producoes` (`jogo/js/sistemas/producoes.js`).
 
 ## 2. Matéria do 4º bimestre
@@ -35,6 +36,10 @@ desafio, livro e salas em geral: `conteudo.md`. Prédio e andares: `interiores.m
    `livros: { aprendizagem: { nome: 'Livro de Aprendizagem', curto: 'Aprendizagem', emoji: '📗' }, atividades: { … } }`
    (`curto`: o nome na aba e no título de grupo).
    Toda sala e toda carta dizem de qual livro vêm (`livro`/`livroOrigem` com a chave daqui).
+   Livro com `letra` e `sigla` próprias (English: `{ …, letra: 'e', sigla: 'ENG' }` e `{ …, letra: 'p', sigla: 'PRJ' }`,
+   dois livros com capítulos de mesmo número): a letra vai nos ids e arquivos (`en12e1`, `livro-12e.js`,
+   `unicornios-12e.js`) e a sigla nas origens do inventário (`ENG-125-q2`, página de 3 algarismos); sem elas, as do
+   Português (`a`/`t`, `APR`/`ATI`).
 4. `lugar: { nome, artigo, dentro: 'materia:<arquivada>', interior: '<interior de entrada do prédio>', novidade }`
    (`conteudo.md` §2.7): a matéria mora no prédio da matéria arquivada de mesmo assunto, a partir do térreo. Língua
    Portuguesa: `{ nome: 'Casa das Palavras', artigo: 'a', dentro: 'materia:portugues', interior: 'portugues' }`.
@@ -124,7 +129,8 @@ Reino.registrarSala('portugues4', {
 4. Interior "rico" (`interiores.md` §7) em todo cômodo.
 5. O layout do 3º bimestre sai do jogo (cópia em `arquivo/terceiro-bimestre/`, que a fixture histórica dos testes
    carrega); a matéria arquivada fica registrada, sem sala no prédio (`validar-interiores.js` não exige NPC nem
-   estação para sala de matéria arquivada). Os outros prédios (o Museu, a Torre…) não mudam.
+   estação para sala de matéria arquivada). Já são do 4º bimestre: a Casa das Palavras (Língua Portuguesa) e a Torre
+   do Relógio (English: `interiores.md` §9.5.1); os outros prédios (o Museu…) não mudam.
 6. Menu Lugares: uma linha só para o prédio, a da matéria ativa (salas e dinheiro dela, sem "Dentro da…"), com as
    matérias ativas primeiro; o "Novo!" sai quando ela entra no prédio depois da novidade (`ui/lugares.js`).
 
