@@ -4,30 +4,16 @@ description: Use depois de criar ou mudar qualquer texto falado do Reino dos Uni
 ---
 # Gravar vozes
 
-Receitas: `docs/receitas/fala-nova-e-vozes.md` e `docs/receitas/licoes-de-voz.md`.
-Contrato: `docs/contratos/som-musica-e-voz.md` §4–§7.
-Personagem novo ou perfil de voz trocado: ANTES, a skill `validar-vozes` (checagens do elenco e amostras
-conferidas por transcrição). Depois de gravar, ela também explica o resultado da conferência.
+Receitas: `docs/receitas/fala-nova-e-vozes.md` e `docs/receitas/licoes-de-voz.md` (como escrever). Contrato:
+`docs/contratos/som-musica-e-voz.md` §4–§7. Personagem novo ou perfil trocado: ANTES, skill `validar-vozes`.
 
-- As vozes são achadas pelo TEXTO EXATO: mudou uma vírgula, grava de novo.
-- Como escrever (tamanho do balão, frases, inglês entre «»): `docs/receitas/licoes-de-voz.md`.
-- Gravação e conferência: só quem integra (o orquestrador). Quem escreve falas entrega o texto.
+- Só quem integra grava; quem escreve falas entrega o texto exato. Vozes são achadas pelo TEXTO EXATO.
 - NUNCA abra `jogo/js/voz/*.js` nem `jogo/ferramentas/gerado/**` (enormes).
-
-Na raiz da worktree:
-```
-npm run vozes
-```
-(listar → gravar só as novas → empacotar em `jogo/js/voz/` → conferir por transcrição).
-O transcritor roda pelo `.vozes/venv-whisper` (se existir), senão por `uv run --with faster-whisper`, senão o
-`npm run vozes` cria o venv em `.vozes/`. Temporários das vozes (índice de antes etc.) ficam em `.vozes/` (ignorado
-pelo git), não no /tmp; o modelo do whisper fica em `~/.cache/huggingface`.
-Para conferir sem tocar no jogo: `npm run vozes -- --saida /tmp/reino-testes/vozes/<pasta>` (compara com `jogo/js/voz/`).
-Precisa de internet (edge-tts), `uv` e `ffmpeg`.
-Passos avulsos: `node jogo/ferramentas/vozes/listar-falas.js`,
-`cd jogo && uv run --with edge-tts python ferramentas/vozes/gerar-vozes.py`,
-`node jogo/ferramentas/vozes/empacotar-vozes.js`, `jogo/ferramentas/vozes/conferir-vozes.py`.
-Ler a conferência (`✘`, `?`, 2ª passada com `medium`): skill `validar-vozes`. Voz embolada: reescreva a frase
-(`licoes-de-voz.md`) ou acrescente a pronúncia em `PRONUNCIA` do `listar-falas.js`.
-
-Depois: `npm test` e `npm run e2e -- --so-dados` (a lista de falas entra nas referências).
+- Na integração: o `--vozes` do `npm run integrar` (skill `entregar`). Fora dela, na raiz da worktree:
+  `npm run vozes` (listar → gravar só as novas → empacotar → conferir). Precisa de internet, `uv` e `ffmpeg`.
+- Python: venv único `~/.cache/reino-dos-unicornios/vozes-venv` (`REINO_VOZES_VENV`), criado sozinho
+  (`uv venv --python 3.13`). Temporários em `.vozes/`.
+- Conferir sem tocar no jogo: `npm run vozes -- --saida /tmp/reino-testes/vozes/<pasta>`.
+- mp3 sem uso no cache: `npm run vozes -- --orfaos` lista; `--aplicar` tira.
+- Resultado da conferência e voz embolada: skill `validar-vozes`.
+- Depois: o `npm test` já confere a lista de falas (sem `e2e --so-dados` à parte).

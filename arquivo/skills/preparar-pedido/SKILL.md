@@ -1,6 +1,6 @@
 ---
 name: preparar-pedido
-description: Use quando o Leandro descrever novidades do Reino dos Unicórnios em texto livre (lista, parágrafo, áudio transcrito), sem o modelo `PEDIDO-DE-FEATURE.md`, para separar em features, investigar o código, preencher um pedido no modelo para cada uma e construir ponta a ponta, sem perguntar. Não use se o pedido já vier no modelo (use `nova-feature`).
+description: APOSENTADA — não use. Use quando o Leandro descrever novidades do Reino dos Unicórnios em texto livre (lista, parágrafo, áudio transcrito), sem o modelo `PEDIDO-DE-FEATURE.md`, para separar em features, investigar o código, preencher um pedido no modelo para cada uma e construir ponta a ponta, sem perguntar. Não use se o pedido já vier no modelo (use `nova-feature`).
 ---
 # Preparar pedido (texto livre → pedidos no modelo)
 

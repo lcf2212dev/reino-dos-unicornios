@@ -12,7 +12,8 @@ Você é um worker executando uma tarefa delimitada no jogo "Mariana e o Reino d
 
 ## Regras fixas (valem em todo briefing)
 - Trabalhe SÓ na worktree do briefing. Nunca escreva em `/home/leandro/Development/projects/reino-dos-unicornios` (servida AO VIVO); ler lá pode.
-- Leia o `CLAUDE.md` da raiz, o de cada pasta que mexer e o contrato do assunto (`docs/contratos/`).
+- Leia o `CLAUDE.md` da raiz e o de cada pasta que mexer; dos contratos e receitas, só as seções (§) que o briefing
+  indica ("Ler (§)"), não o arquivo inteiro. Briefing com "Gerador": comece por ele; com "Modelo": copie o formato.
 - Testes só no Chromium (celular 390×844, tablet 820×1180, notebook 1366×768). Nada de Firefox/WebKit/iPhone.
 - Nunca: servidor de casa (porta 80, `reinodosunicornios.local`), artifact publicado, save real,
   `jogo/servidor/dados/`, Docker, `reino-nome`, `localStorage.clear()`, "Apagar tudo", "Novo ciclo".
@@ -20,19 +21,22 @@ Você é um worker executando uma tarefa delimitada no jogo "Mariana e o Reino d
   Derrube só o que VOCÊ subiu, pelo PID; nunca `pkill`/`killall` por nome.
 - Sem `git commit`, merge ou push. Temporários em `/tmp/reino-testes/`, sem apagar; `rm` só com caminho literal,
   nunca com variável ou `$(...)`. `node_modules` é um link: nunca `git add` dele.
-- Arquivo `.js`/`.css` novo = linha em `jogo/js/manifesto.js` + `npm run index`. Código até 420 linhas, dados até 800.
+- Arquivo `.js`/`.css` novo = linha em `jogo/js/manifesto.js` + `npm run index` (ponha na sua worktree e cite no
+  retorno; quem integra junta). Código ~400 linhas (aviso acima de 420, falha acima de 600), dados até 800.
 - Emoji novo na tela = ícone pixel art (`Reino.registrarIcones`). Fala nova: NÃO grave voz; liste o texto exato.
 - Número ajustável novo vai para `jogo/js/nucleo/config.js` só se o arquivo for seu; senão, liste no retorno.
 - Precisou de linha em `package.json`, `CLAUDE.md`, `COMO-USAR.md`, `docs/ARQUITETURA.md`, `tipos*.d.ts`/`tipos.json`,
   `.gitignore` ou `base-referencia.txt`? Pode pôr na sua worktree para testar, mas cite no retorno (o orquestrador integra).
-- No fim, uma vez: `npm test`, `npm run validar`, `npm run tamanho`, `npm run tipos` e `npm run e2e`
-  (cada diferença com o porquê; diferença não explicada = defeito seu).
+- Durante o trabalho, só os testes focados do briefing (`npm run unidade -- --so '<x>'`, `npm run e2e -- --mudancas`).
+  No fim, UMA vez: `npm test` (já roda validar, tamanho e tipos) e `npm run e2e` (cada diferença com o porquê;
+  diferença não explicada = defeito seu).
 
 ## Frente de um plano paralelo (`docs/contratos/plano-paralelo.md`)
 - A reserva (`<p>/reservas.js`: nome, gênero, idade, voz, vaga) é contrato: só leia. Precisa mudar? Diga no retorno.
 - Frente do NPC: `Reino.registrarPersonagem({ id, sprite })` (mais `acao` se a reserva não tiver); nada de nome,
   voz, x/y. Frente do cenário: deixe livre o tile de cada vaga (a vaga tracejada já ocupa o lugar).
-- Rode os testes com `REINO_RESERVAS_ABERTAS=1` (a vaga ainda sem registro é de outra frente: vira aviso).
+- Só em frente com reserva de personagem: rode os testes com `REINO_RESERVAS_ABERTAS=1` (a vaga ainda sem registro
+  é de outra frente: vira aviso).
 
 ## Vários agentes na mesma worktree
 - Ids novos (salas, NPCs, objetos, falas) com o prefixo do briefing (ex.: `nasa-`, `lab-`).

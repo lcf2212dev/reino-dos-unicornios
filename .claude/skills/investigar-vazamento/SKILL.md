@@ -5,7 +5,7 @@ description: Use no Reino dos Unicórnios quando um teste ou agente parece trava
 # Investigar vazamento ou travamento
 
 Normal, para comparar: uma aba do jogo fica abaixo de 1 GB; `npm run e2e` completo leva poucos minutos; `npm test`
-até ~6 min.
+até ~6 min. Esperando vaga de Chromium não é travamento: a mensagem diz quem ocupa (abaixo).
 
 ## 1. Parar o estrago (antes de investigar)
 1. Quem é o dono: o aviso do hook traz o PID do teste e a worktree. Se não trouxer:
@@ -13,7 +13,8 @@ até ~6 min.
 2. Um agente roda naquela worktree? O orquestrador para o agente (TaskStop) antes de mexer nos processos dele.
 3. Derrube o comando de teste (o node, não os Chromium um a um) pelo PID: `kill <pid>`. Nunca `pkill`/`killall`.
    Os Chromium e servidores filhos morrem juntos (vigia-pai.js, processo.js); confira com `ps` que sumiram.
-4. Nada do progresso da Mariana, servidor de casa, Docker ou artifact entra aqui (`CLAUDE.md` da raiz).
+
+4. Nada do progresso, servidor de casa, Docker, artifact: `CLAUDE.md` da raiz.
 
 ## 2. Reproduzir pequeno
 - Uma aba, medindo passo a passo (heap, nós do DOM, ouvintes, RSS do Chromium):
@@ -41,6 +42,12 @@ até ~6 min.
 2. `npm run memoria` de novo: `estável`. Depois a skill `validar-tudo`; o vigia fica ligado em todo teste de navegador.
 3. No relatório: causa, prova (antes e depois da sonda) e o que ficou para evitar a volta.
 
+## Vagas e lotes
+- Todo Chromium de teste pega uma vaga (`testes/vagas.js`, sempre em `/tmp/reino-testes/vagas/`), dividida entre
+  as worktrees: `REINO_VAGAS_CHROMIUM` (padrão metade das CPUs, até 16); quem espera há `REINO_VAGAS_ESPERA_MS`
+  (60 s) usa a reserva `REINO_VAGAS_EXTRA` (4). Esperando, avisa quem ocupa (a cada 30 s); teste de unidade espera
+  até 90 s e falha com "✘ sem vaga de Chromium há N s". Dono morto libera a vaga sozinho.
+- A fila mapa + interiores do e2e vai em lotes (`REINO_LOTES_MAPA`, padrão 3); `REINO_TEMPOS=1` mostra o tempo de cada grupo.
+
 ## Os vigias
-O que cada vigia olha, os limites e as variáveis que os mudam: `jogo/ferramentas/CLAUDE.md` ("Testes que não
-travam"). O porquê: `docs/decisoes/vigias-de-memoria.md`.
+Limites e variáveis: `jogo/ferramentas/CLAUDE.md` ("Testes que não travam"). O porquê: `docs/decisoes/vigias-de-memoria.md`.
