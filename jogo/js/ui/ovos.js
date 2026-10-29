@@ -16,6 +16,7 @@
 
   function chocarUm(id, opcoes) {
     opcoes = opcoes || {};
+    Reino.Voz.carregarUnicornios([id]);   // a frase dele (pacote <matéria>-extra) chega durante a animação
     return new Promise(function (resolver) {
       var d = P.defUni(id);
       var rar = Reino.Unicornios.RARIDADES[d.raridade];
