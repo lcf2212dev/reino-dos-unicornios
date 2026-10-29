@@ -9,6 +9,7 @@
 
   /* ---------- estábulo / álbum ---------- */
   UI.telaEstabulo = function () {
+    Reino.Voz.carregarUnicornios();   // as frases dos unicórnios dela (pacotes <matéria>-extra), antes do "Montar"
     var pn = painel('estabulo', '🦄 Estábulo Mágico');
     var c = pn.conteudo;
     var ovos = P.ovosParaChocar();

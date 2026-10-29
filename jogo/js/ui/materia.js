@@ -25,6 +25,7 @@
 
   UI.telaMateria = function (materia) {
     if (Reino.Bimestres.emEspera(materia)) return Reino.Bimestres.painel(materia.lugar.nome, { materia: materia });
+    Reino.Voz.carregar(materia.id + '-extra');   // guia, salas e treino bloqueado falam sem esperar
     var pn = painel('lugar', materia.lugar.nome, { materia: materia });
     var c = pn.conteudo;
     var feitas = P.salasFeitas(materia);

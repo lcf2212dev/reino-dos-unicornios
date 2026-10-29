@@ -131,11 +131,12 @@
     // não cobrir o baú; o parabéns da medalha de ouro (ui/abertura-medalha.js) vem por último
     var abrirBau = !novo && !Reino.congelado && Reino.UI.abrirPresentesPendentes;
     var bau = abrirBau ? Reino.UI.abrirPresentesPendentes() : Promise.resolve();
+    var oiFim = null;   // o balão das boas-vindas fechou (adiantarVozes espera)
     function boasVindas() {
       if (novo || Reino.congelado) return;   // modo determinístico dos testes (js/nucleo/congelar.js): sem boas-vindas
       var ovos = P.ovosParaChocar().length;
       var oi = Reino.Claude.frase('boasVindas');
-      Reino.Claude.falar(oi + (ovos ? ' E você tem ' + (ovos === 1 ? 'um ovo' : ovos + ' ovos') + ' para chocar! 🥚' : ''), { fala: [oi, ovos ? Reino.Falas.fixas.ovosParaChocar : null] });
+      oiFim = Reino.Claude.falar(oi + (ovos ? ' E você tem ' + (ovos === 1 ? 'um ovo' : ovos + ' ovos') + ' para chocar! 🥚' : ''), { fala: [oi, ovos ? Reino.Falas.fixas.ovosParaChocar : null] });
     }
     // pergunta surpresa (módulo): o relógio só começa depois do tutorial da primeira vez
     ctxModulo.tutorial = tutorial;
@@ -143,7 +144,20 @@
     bau.catch(function (e) { console.warn('presentes:', e); })
       .then(boasVindas)
       .then(function () { UI.festaMedalha.parabens(); })
-      .catch(function (e) { console.warn('presentes/parabéns:', e); });   // ela já está no mapa: só não festeja
+      .catch(function (e) { console.warn('presentes/parabéns:', e); })   // ela já está no mapa: só não festeja
+      .then(function () { adiantarVozes(oiFim); });
+  }
+  // com o baú e o balão das boas-vindas fechados (ou 3 s), o geral em mãos e o jogo ocioso: o <matéria>-extra das
+  // matérias em uso (sistemas/voz.js), para a 1ª visita ao prédio falar na hora. No modo congelado não (os testes
+  // pedem cada pacote quando a cena precisa)
+  function adiantarVozes(oiFim) {
+    if (Reino.congelado) return;
+    Promise.race([Promise.resolve(oiFim).catch(function () {}), new Promise(function (r) { setTimeout(r, 3000); })]).then(function () {
+      return Reino.Voz.carregar('geral');
+    }).then(function () {
+      if (window.requestIdleCallback) window.requestIdleCallback(function () { Reino.Voz.adiantarExtras(); }, { timeout: 2000 });
+      else setTimeout(function () { Reino.Voz.adiantarExtras(); }, 1500);
+    });
   }
 
   /* o jogo só começa com o progresso guardado em mãos (o banco da Vercel ou o claude.ai): sem ele, um aparelho novo
@@ -240,6 +254,7 @@
   }
   function abrirReino() {
     var novo = !est().comecou;
+    if (novo) Reino.Voz.carregar(Reino.materias[0].id + '-extra');   // o tutorial do mapa (entrarNoReino)
     (novo ? primeiraVez() : Promise.resolve()).then(function () { entrarNoReino(novo); });
   }
   // abriu: veio da abertura e do login (o toque já liberou o som); musicaNoToque: sem toque nesta página ainda, a música
@@ -276,8 +291,9 @@
     U.on(EV.PROGRESSO_REMOTO, function () { UI.aplicarAjustes(); if (V.jogoAtivo) UI.atualizarHUD(); });
     U.on(EV.MAPA_MUDOU, function () { UI.atualizarHUD(); V.desenhar(performance.now()); });
 
-    // vozes gravadas: frases do Claude e de cada matéria (as salas carregam quando abrem)
-    Reino.Voz.carregarVarios(['geral'].concat(Reino.materias.map(function (m) { return m.id + '-extra'; })));
+    // vozes gravadas: só as frases do Claude (as boas-vindas tocam logo no mapa). O <matéria>-extra vem com a sala, o
+    // treino ou o prédio da matéria, ou quando uma fala dele é pedida (sistemas/voz.js); as salas, quando abrem
+    Reino.Voz.carregar('geral');
 
     return esperarProgresso(abriu);
   }

@@ -56,10 +56,115 @@
     return ('0000000' + h.toString(16)).slice(-8) + s.length.toString(36);
   };
 
+  /* Pacotes na memória: o base64 de cada pacote fica em `clips` até o pacote sair. Sem teto, visitar Química,
+     Observatório e Português passava de 50 MB de texto. Guardamos até V.tetoPacotes letras; o pacote usado há mais
+     tempo sai primeiro (com a tag dele) e, se uma fala dele voltar, é pedido de novo pela tag de script (vem do
+     cache HTTP ou do service worker; funciona em file://). Nunca saem: o `geral`, o do prédio da cena atual
+     (Reino.Cena) e o que acabou de chegar. No modo congelado (testes) nada sai: o avancar do e2e conta a
+     tag pelo endereço, e a mesma tag pedida de novo pareceria pronta antes da hora. */
+  V.tetoPacotes = 32 * 1048576;
+  var tags = {};         // nome -> <script> do pacote carregado
+  var chavesDe = {};     // nome -> chaves do pacote carregado
+  var bytesDe = {};      // nome -> letras de base64 do pacote carregado
+  var usoDe = {};        // nome -> quando foi usado por último (contador)
+  var donos = {};        // chave -> quantos pacotes carregados a têm
+  var pacoteDe = {};     // chave -> um pacote que a tem (todo pacote já visto e os <matéria>-extra), para pedir de novo
+  var usos = 0, ultimoInterior = null, indiceExtra = false;
+  var ESPERA_PACOTE = 4000;   // fala de pacote que saiu (ou ainda não veio): espera ele voltar até aqui (um prazo por fala)
+
   V.registrar = function (nome, mapa) {
-    Object.keys(mapa).forEach(function (k) { clips[k] = mapa[k]; });
+    if (carregados[nome]) return;
+    var ks = Object.keys(mapa), bytes = 0;
+    ks.forEach(function (k) { clips[k] = mapa[k]; donos[k] = (donos[k] || 0) + 1; pacoteDe[k] = nome; bytes += mapa[k].length; });
+    chavesDe[nome] = ks; bytesDe[nome] = bytes; usoDe[nome] = ++usos;
     carregados[nome] = true;
+    aparar(nome);
   };
+
+  function predioAtual() {
+    var c = Reino.Cena && Reino.Cena.atual ? Reino.Cena.atual() : null;
+    return c && c.def ? c.def.pacote : null;
+  }
+  function aparar(novo) {
+    if (Reino.congelado) return;
+    var total = 0;
+    Object.keys(bytesDe).forEach(function (n) { total += bytesDe[n]; });
+    while (total > V.tetoPacotes) {
+      var velho = null;
+      Object.keys(bytesDe).forEach(function (n) {
+        if (n === 'geral' || n === novo || n === predioAtual()) return;
+        if (velho === null || usoDe[n] < usoDe[velho]) velho = n;
+      });
+      if (velho === null) break;
+      total -= bytesDe[velho];
+      descarregar(velho);
+    }
+  }
+  function descarregar(nome) {
+    chavesDe[nome].forEach(function (k) { if (--donos[k] <= 0) { delete donos[k]; delete clips[k]; } });
+    delete chavesDe[nome]; delete bytesDe[nome]; delete usoDe[nome]; delete carregados[nome]; delete pacotes[nome];
+    var s = tags[nome];
+    delete tags[nome];
+    if (s && s.parentNode) s.parentNode.removeChild(s);
+  }
+  // a fala usada conta como uso dos pacotes carregados que a têm
+  function usarPacotes(chave) {
+    var nome = pacoteDe[chave];
+    if (nome && carregados[nome]) usoDe[nome] = ++usos;
+  }
+
+  /* Pacote que tem uma fala sem áudio na memória: um que já veio e saiu, ou um <matéria>-extra que ainda não veio
+     (guia, nomes e apresentações das salas, pistas, frases dos unicórnios: Falas.todas, uma vez só, na 1ª falta). */
+  function montarIndice() {
+    indiceExtra = true;
+    try {
+      Reino.Falas.todas().forEach(function (f) {
+        if (!/-extra$/.test(f.pacote)) return;
+        var k = V.chave(f.voz, f.texto);
+        if (!pacoteDe[k]) pacoteDe[k] = f.pacote;
+      });
+    } catch (e) { if (window.console) console.warn('[voz] índice dos pacotes:', e); }
+  }
+  function buscar(chave) {
+    if (!pacoteDe[chave] && !indiceExtra && Reino.Falas && Reino.Falas.todas) montarIndice();
+    var nome = pacoteDe[chave];
+    return nome && !carregados[nome] ? nome : null;
+  }
+  function temOuVem(chave) { return !!clips[chave] || !!buscar(chave); }
+
+  // <matéria>-extra das matérias destes unicórnios (a frase de cada um está lá); sem ids, os que ela já tem
+  function extrasDosUnicornios(ids) {
+    var est = Reino.Progresso && Reino.Progresso.estado && Reino.Progresso.estado();
+    var tem = {};
+    (ids || Object.keys((est && est.unis) || {})).forEach(function (id) { tem[id] = true; });
+    return (Reino.materias || []).filter(function (m) {
+      return (m.unicornios || []).some(function (u) { return tem[u.id]; });
+    }).map(function (m) { return m.id + '-extra'; });
+  }
+  // depois do mapa, ocioso (motor/main.js): o <matéria>-extra das matérias em uso, para a 1ª visita falar na hora
+  V.adiantarExtras = function () {
+    return V.carregarVarios((Reino.materias || []).filter(function (m) { return !m.arquivada; }).map(function (m) { return m.id + '-extra'; }));
+  };
+  // pedido de quem mostra unicórnios que falam (Estábulo, ovo chocando): traz os pacotes antes da fala
+  V.carregarUnicornios = function (ids) { return V.carregarVarios(extrasDosUnicornios(ids)); };
+
+  // o prédio de uma matéria (NPC ou objeto com acao.materia de matéria em uso): o <matéria>-extra vem logo depois
+  // do pacote do prédio, para o guia e as salas falarem sem esperar; com baia de unicórnio, os das frases deles
+  function extrasDoPredio(nome) {
+    var ms = {};
+    (Reino.interiores || []).forEach(function (def) {
+      if (def.pacote !== nome) return;
+      /** @param {any} o */
+      function ver(o) {
+        var m = o && o.acao && o.acao.materia, mat = m && Reino.materia ? Reino.materia(m) : null;
+        if (mat && !mat.arquivada) ms[m + '-extra'] = true;
+        if (o && o.acao && o.acao.tipo === 'unicornio') extrasDosUnicornios().forEach(function (p) { ms[p] = true; });
+      }
+      (def.npcs || []).forEach(ver);
+      (def.objetos || []).forEach(ver);
+    });
+    return Object.keys(ms);
+  }
 
   // Pacote que falha (Wi-Fi caiu no meio) não fica perdido: a tag sai, a promessa é esquecida
   // e ele é pedido de novo sozinho, com espera crescente (ESPERAS), e também na próxima fala
@@ -87,7 +192,12 @@
   if (window.addEventListener) window.addEventListener('online', function () { tentarDeNovo(true); });
 
   V.carregar = function (nome) {
-    if (carregados[nome]) return Promise.resolve();
+    if (/^interior-/.test(nome) && ultimoInterior !== nome) {
+      ultimoInterior = nome;
+      var extras = extrasDoPredio(nome);
+      if (extras.length) { V.carregar(nome); V.carregarVarios(extras); }   // juntos, não em fila
+    }
+    if (carregados[nome]) { usoDe[nome] = ++usos; return Promise.resolve(); }
     if (pacotes[nome]) return pacotes[nome];
     pacotes[nome] = new Promise(function (resolver) {
       var s = document.createElement('script');
@@ -96,6 +206,7 @@
       s.async = true;
       s.onload = function () {
         if (carregados[nome]) {
+          tags[nome] = s;
           if (falhas[nome]) { clearTimeout(falhas[nome].relogio); delete falhas[nome]; }
         } else falhou(nome, s);   // chegou pela metade: não registrou nada
         resolver();
@@ -106,9 +217,17 @@
     return pacotes[nome];
   };
   V.carregarVarios = function (nomes) { return Promise.all(nomes.map(V.carregar)); };
-  V.carregarSala = function (materia, sala) { return V.carregar(materia.id + '-' + sala.id); };
+  // a sala (o que quem chama espera) e, por trás, o <matéria>-extra (nome e apresentação da sala, pistas do livro),
+  // que a fala espera sozinha quando precisa (V.falar)
+  V.carregarSala = function (materia, sala) {
+    var p = V.carregar(materia.id + '-' + sala.id);
+    V.carregar(materia.id + '-extra');
+    return p;
+  };
   V.carregarMateria = function (materia) {
-    return V.carregarVarios(materia.salas.map(function (s) { return materia.id + '-' + s.id; }));
+    var p = V.carregarVarios(materia.salas.map(function (s) { return materia.id + '-' + s.id; }));
+    V.carregar(materia.id + '-extra');
+    return p;
   };
 
   /** @returns {Partial<Ajustes>} */
@@ -180,6 +299,13 @@
       bytes: bytesBuffers.novas + bytesBuffers.repetidas };
   };
 
+  // para os testes: os pacotes guardados agora e quantas letras de base64 eles somam
+  V.memoriaPacotes = function () {
+    var nomes = Object.keys(bytesDe).sort(), bytes = 0;
+    nomes.forEach(function (n) { bytes += bytesDe[n]; });
+    return { pacotes: nomes, bytes: bytes, falas: Object.keys(clips).length };
+  };
+
   function esperar(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
 
   // segmentos: 'texto' | [ 'texto', {texto, voz}, ... ]; opcoes.voz: voz padrão
@@ -196,16 +322,20 @@
     var ac = Reino.Som.contexto();
     if (!ac || !lista.length) return Promise.resolve();
     var minha = ++vez;
-    var seq = Promise.resolve();
+    // pede já os pacotes de todos os pedaços que faltam (cada um espera o seu só quando chega a vez)
+    lista.forEach(function (seg) {
+      var k = V.chave(seg.voz, seg.texto), falta = clips[k] ? null : buscar(k);
+      if (falta) V.carregar(falta);
+    });
+    var seq = Promise.resolve(), prazo = null;   // um prazo só para os pacotes que esta fala espera
     lista.forEach(function (seg, i) {
-      seq = seq.then(function () {
-        if (minha !== vez) return;
-        var chave = V.chave(seg.voz, seg.texto);
+      function tocar(chave) {
         if (!clips[chave]) {
           V.faltando.push(seg.voz + ': ' + V.normalizar(seg.texto));
           if (window.console && console.debug) console.debug('[voz] sem áudio:', seg.voz, seg.texto);
           return;
         }
+        usarPacotes(chave);
         return decodificar(ac, chave).then(function (buf) {
           if (!buf || minha !== vez) return;
           return new Promise(function (fim) {
@@ -219,6 +349,15 @@
             adiantar(ac, lista[i + 1]);
           }).then(function () { if (i < lista.length - 1 && minha === vez) return esperar(250); });
         });
+      }
+      seq = seq.then(function () {
+        if (minha !== vez) return;
+        var chave = V.chave(seg.voz, seg.texto);
+        // o pacote da fala saiu da memória (ou é um <matéria>-extra que ainda não veio): pede e espera um pouco
+        var falta = clips[chave] ? null : buscar(chave);
+        if (!falta) return tocar(chave);
+        prazo = prazo || esperar(ESPERA_PACOTE);
+        return Promise.race([V.carregar(falta), prazo]).then(function () { if (minha === vez) return tocar(chave); });
       });
     });
     return seq.then(function () { if (minha === vez) Reino.Som.abaixarEfeitos(false); });
@@ -235,6 +374,7 @@
   };
 
   V.falando = function () { return !!tocando; };
+  // tem o áudio na memória agora (o de um pacote que ainda vai ser pedido não conta: pode não chegar a tempo)
   V.tem = function (voz, texto) { return V.dividir(texto, voz).every(function (p) { return !!clips[V.chave(p.voz, p.texto)]; }); };
 
   /* Fala e diz se vale esperar por ela (UI.esperarFala trava os botões até o fim).
@@ -252,7 +392,7 @@
     });
     var fala = V.falar(segmentos, opcoes);
     var ac = Reino.Som && Reino.Som.contexto ? Reino.Som.contexto() : null;
-    var gravados = lista.filter(function (p) { return !!clips[V.chave(p.voz, p.texto)]; });
+    var gravados = lista.filter(function (p) { return temOuVem(V.chave(p.voz, p.texto)); });
     if (ajustes().voz === false || !ac || ac.state !== 'running' || !gravados.length) {
       return { espera: false, fim: Promise.resolve() };
     }
