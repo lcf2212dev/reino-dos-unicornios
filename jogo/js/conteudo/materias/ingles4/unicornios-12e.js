@@ -1,0 +1,21 @@
+/* Unicórnios das salas do capítulo 12 "Book Time" (1 comum e 1 raro por sala) (docs/contratos/quarto-bimestre.md). */
+Reino.registrarUnicornios('ingles4', [
+  { id: 'en-bookworm', nome: 'Bookworm', raridade: 'comum', sala: 'en12e1',
+    cores: { corpo: '#f3ecff', crina: ['#d23c9b', '#ffd34d', '#5fb4ff'], chifre: '#ffe680' },
+    frase: 'Eu adoro ler histórias com você! «Book time!»' },
+  { id: 'en-story-star', nome: 'Story Star', raridade: 'raro', sala: 'en12e1',
+    cores: { corpo: '#fff8ee', crina: ['#8e4fd6', '#ff9cc6', '#ffd34d'], chifre: '#ffffff' },
+    frase: 'Cada livro é uma aventura nova. «I love stories!»' },
+  { id: 'en-sunny-day', nome: 'Sunny Day', raridade: 'comum', sala: 'en12e2',
+    cores: { corpo: '#fff6d6', crina: ['#ffb020', '#ffd34d', '#5fb4ff'], chifre: '#ffe680' },
+    frase: 'Com sol ou com chuva, brincar é bom demais! «It is sunny!»' },
+  { id: 'en-snowflake', nome: 'Snowflake', raridade: 'raro', sala: 'en12e2',
+    cores: { corpo: '#f2fbff', crina: ['#7ec8ff', '#ffffff', '#b98ae8'], chifre: '#d6ecff' },
+    frase: 'No frio, um cachecol quentinho para você! «It is snowy!»' },
+  { id: 'en-routine-ruby', nome: 'Routine Ruby', raridade: 'comum', sala: 'en12e3',
+    cores: { corpo: '#eefaf0', crina: ['#36b860', '#d23c9b', '#ffd34d'], chifre: '#ffe680' },
+    frase: 'Escovar, banho, escola, cama: você sabe a rotina toda! «Well done!»' },
+  { id: 'en-good-night', nome: 'Good Night', raridade: 'raro', sala: 'en12e3',
+    cores: { corpo: '#e8e6ff', crina: ['#2f3a8a', '#ffd34d', '#b98ae8'], chifre: '#ffffff' },
+    frase: 'Depois de um dia lindo, hora de sonhar. «Good night!»' },
+]);

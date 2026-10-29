@@ -9,9 +9,13 @@ const fs = require('fs');
 const path = require('path');
 const Jogo = require('../jogo-no-node');
 
+// sigla de cada livro nas páginas e questões: `sigla` em materia.livros; sem ela, a do Português
 const SIGLA = { aprendizagem: 'APR', atividades: 'ATI' };
-const RE_PAGINA = /^## (APR|ATI) p\. (\d+|sem número)\b/;
-const RE_QUESTAO = /^- \*\*((APR|ATI)-(\d{2})-q[0-9A-Z]+)\*\*/;
+const siglaDo = (m, l) => (m.livros && m.livros[l] && m.livros[l].sigla) || SIGLA[l];
+const RE_PAGINA = /^## ([A-Z]{3}) p\. (\d+|sem número)\b/;
+const RE_QUESTAO = /^- \*\*(([A-Z]{3})-(\d{2,3})-q[0-9A-Z]+)\*\*/;
+// a página de uma origem ('ENG-125-q2b' → 'ENG-125')
+const paginaDaOrigem = (o) => o.replace(/-q[0-9A-Z]+[a-z]?$/, '');
 
 // inventário: páginas ('APR-05') e questões ('APR-05-q1'), na ordem do arquivo
 function lerInventario(arq) {
@@ -38,7 +42,7 @@ function cobertura(m, raizRepo) {
   const coberta = new Set();
   (m.livro || []).forEach((c) => {
     if (!c.livroOrigem || !Number.isInteger(c.pagina)) return;
-    const pg = paginaDe(SIGLA[c.livroOrigem], c.pagina);
+    const pg = paginaDe(siglaDo(m, c.livroOrigem), c.pagina);
     const r = reg(pg);
     r.cartas.push(c.id);
     (cartaSala[c.id] || []).forEach((s) => r.salas.add(s));
@@ -52,7 +56,7 @@ function cobertura(m, raizRepo) {
     const base = d.origem.replace(/[a-z]$/, '');
     origens.add(base);
     if (!inv.questoes.includes(base) && !inv.questoes.includes(d.origem)) erros.push(`${d.id}: origem ${d.origem} não está no inventário`);
-    const pg = base.slice(0, 6);
+    const pg = paginaDaOrigem(base);
     const r = reg(pg);
     r.salas.add(s.id);
     r.desafios.push(d.id);
