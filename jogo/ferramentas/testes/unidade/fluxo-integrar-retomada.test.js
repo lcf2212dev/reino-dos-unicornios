@@ -16,7 +16,7 @@ const { criarRepo } = require('../../fluxo/repo-de-teste');
 const { integrar } = require('../../fluxo/integrar');
 
 const rodar = (R, args) => integrar(args, { cwd: R.principal, quieto: true, antesDoMerge: path.join(R.base, 'antes-do-merge') });
-// nome único por execução (o estado mora em /tmp/reino-testes/integrar/<nome>.json)
+// nome único por execução (o relatório mora em /tmp/reino-testes/integrar/<nome>/)
 const nm = (R, t) => `${t}-${path.basename(R.base).split('-').pop()}`;
 
 test('integrar: apply que falha sem conflito marcado → o --continuar não perde a frente calado', async () => {
