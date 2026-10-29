@@ -104,10 +104,10 @@
     // Maths (pp. 188 a 193)
     carta('en-p188', '📋', '«Drawing, analysing and comparing graphs»', 188, [
       { t: 'texto', texto: '«Look and check.» A tabela mostra o que alguém come na semana.' },
-      { t: 'tabela', cab: ['«Food»', '«Days»'], linhas: [
-        ['«Salad»', '«Every day»'],
+      { t: 'tabela', cab: ['Comida', 'Dias'], linhas: [
+        ['«Salad»', 'todos os dias'],
         ['«Hamburger»', '«Saturday»'],
-        ['«Fruit»', '«Every day»'],
+        ['«Fruit»', 'todos os dias'],
         ['«Chips»', '«Saturday»'],
       ] },
       { t: 'texto', texto: 'Salada e frutas todos os dias; hambúrguer e batata frita só no sábado.' },
