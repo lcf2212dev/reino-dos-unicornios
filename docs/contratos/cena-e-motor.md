@@ -19,7 +19,8 @@ Regras gerais (ambiente, convenções, testes): `README.md`.
 - `jogo/js/motor/main.js` — início do jogo e telas de entrada.
 - `jogo/js/personagens/jogador.js`, `jogador-desenho.js` — `Jogador` (movimento, caminho, água, desenho).
 - `jogo/js/mundo/mapa.js` (grade, lugares, caminho), `lugares.js` (`Mapa.LUGARES_FIXOS`), `mapa-desenho.js`
-  (`BORDA_BAIXO`, camada animada), `lago.js` (`Mapa.agua`, `Mapa.fundura`), `predios.js` (`Mapa.PREDIOS`, `Mapa.PREDIOS_ANIM`).
+  (`BORDA_BAIXO`, camada animada), `lago.js` (`Mapa.agua`, `Mapa.fundura`), `predios.js` (`Mapa.PREDIOS`, `Mapa.PREDIOS_ANIM`), `fachadas*.js`
+  (`Mapa.fachada`, `Mapa.fachada.kit`).
 - `jogo/js/ui/lugares.js` — menu Lugares, `UI.avisosDoLugar`.
 - `jogo/js/debug.js` — `window.__reino`.
 
@@ -190,8 +191,12 @@ alvo = { tipo: 'npc'|'objeto'|'saida'|'escada'|'lugar'|'claude', id,
    jogo, `claude`), `Mapa.LUGARES_FIXOS`, `Mapa.CLAREIRAS` e `Mapa.RESERVADOS` (terreno guardado para um prédio que
    vem por `registrarLugar`: só grama, com o rect e o caminho que ele deve usar). A posição dela não é salva: ao
    abrir, `Mapa.inicio`. Desenho: `mapa-desenho.js` (chão, meio-fio, enfeites sorteados), `lago.js`,
-   `cidade-desenho.js` (piso da praça, fonte grande animada, coreto, canteiros, postes, bancos, cercas, pedras),
-   `contorno.js`, `predios.js`. Cada prédio de hoje ganha uma cerquinha na frente, com o portão na porta.
+   `cidade-desenho.js` (piso da praça, fonte grande animada, coreto, canteiros redondos), `cidade-pecas.js` (peças de
+   1 tile: postes, bancos, canteiros, cercas, poço, correio, placas, pedras), `contorno.js`, `predios*.js` e os enfeites
+   de fachada (`fachadas.js`: `Mapa.fachada`; `fachadas-kit.js` e `fachadas-kit-2.js`: `Mapa.fachada.kit`, o volume
+   que os `fora.js` usam). Vida animada (borboletas, libélulas, folhas e passarinhos, só com Animações): o módulo
+   `sistemas/vida-mapa.js` (camada, §14), números em `config.vidaMapa`. Cada prédio de hoje ganha uma cerquinha na
+   frente, com o portão na porta.
    Prédio novo no mapa = `Reino.registrarLugar` (com `caminho`) + o desenho em `Mapa.PREDIOS[sprite]` (o arquivo
    `fora.js` do prédio). Lugar sem `caminho` (clareira, matéria) desce reto da frente da porta até a rua.
    - Entram ANTES do sorteio dos enfeites (o reino é enfeitado em volta deles): `LUGARES_FIXOS`, as matérias sem
