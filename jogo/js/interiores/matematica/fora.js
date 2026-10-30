@@ -16,6 +16,7 @@
   // Mapa.fachada.desvio) para o eixo do telhado cair no meio do tile da porta (x + floor(w/2), portão e caminho)
   function desvio(w) { return Math.floor(w / 32) * 16 + 8 - w / 2; }
   function desenharFora(ctx, px, py, w, h, cores) {
+    var V = window.Mapa.fachada.kit;
     cores = cores || {};
     var parede = cores.parede || '#eaf4ff', telhado = cores.telhado || '#3f7fe0', det = cores.detalhe || '#ffc93c';
     var F = window.Mapa.fachada, D = window.Reino.Desenho;
@@ -23,16 +24,26 @@
     var cx = px + w / 2;
     // corpo da torre de tijolinhos azuis, com a luz na esquerda e a sombra na direita
     r(ctx, px + 8, py + 26, w - 16, h - 26, K);
-    F.tijolos(ctx, px + 9, py + 27, w - 18, h - 28, parede, 5);
+    V.azulejos(ctx, px + 9, py + 27, w - 18, h - 28, parede);
     r(ctx, px + 9, py + 27, 1, h - 28, '#ffffff');
-    r(ctx, px + w - 15, py + 27, 6, h - 28, 'rgba(47,111,214,0.10)');
+    r(ctx, px + w - 15, py + 27, 6, h - 28, 'rgba(58,36,70,0.12)');
+    V.manchas(ctx, px + 9, py + 27, w - 18, h - 34, parede);
+    // cantoneiras de pedra clara nas quinas e a base de pedra
+    for (var cq = py + 29, kq = 0; cq + 4 <= py + h - 6; cq += 5, kq++) {
+      var lq = kq % 2 ? 3 : 5;
+      r(ctx, px + 9, cq, lq, 4, '#ffffff'); r(ctx, px + 9, cq + 4, lq, 1, '#c8d8ee');
+      r(ctx, px + w - 9 - lq, cq, lq, 4, '#c8d8ee'); r(ctx, px + w - 9 - lq, cq, lq, 1, '#eaf4ff');
+    }
+    V.fundacaoBlocos(ctx, px + 9, py + h - 6, w - 18, 5, '#9c98b8');
+    V.quinas(ctx, px + 9, py + 27, w - 18, h - 33);
+    V.sombraBeiral(ctx, px + 9, py + 29, w - 18);
     // telhado pontudo com a bandeirinha
     for (var t = 0; t < 22; t++) {
       var meia = Math.round(t * 1.15) + 2;
       r(ctx, cx - meia - 1, py + 5 + t, meia * 2 + 2, 1, K);
       if (t > 0) r(ctx, cx - meia, py + 5 + t, meia * 2, 1, t % 4 === 0 ? '#2a5bb0' : telhado);
     }
-    F.telhas(ctx, cx - 25, py + 5, 50, 22, telhado, 4);
+    V.telhadoVolume(ctx, cx - 25, py + 5, 50, 22, telhado, function (j) { return Math.round(j * 1.15) + 2; });
     r(ctx, px + 4, py + 26, w - 8, 3, K); r(ctx, px + 5, py + 27, w - 10, 1, '#2a5bb0');
     // janelinha redonda no telhado com o "+"
     D.circulo(ctx, cx, py + 19, 4, K); D.circulo(ctx, cx, py + 19, 3, det); D.circulo(ctx, cx, py + 19, 2, '#eaf4ff');
@@ -52,6 +63,7 @@
     r(ctx, cx - 10, py + 46, 20, 1, '#fff3a0'); r(ctx, cx - 7, py + 44, 1, 1, K); r(ctx, cx + 6, py + 44, 1, 1, K);
     digito(ctx, cx - 8, py + 47, '1', K); digito(ctx, cx - 2, py + 47, 'x', '#e0433f'); digito(ctx, cx + 4, py + 47, '2', K);
     // porta padrão em arco com o degrau (o tamanho de Mapa.fachada.entrada: folha 14×22 e degrau de 3)
+    V.moitas(ctx, px + 9, px + w - 9, py + h, cx, 11);
     F.degrau(ctx, cx, py + h - 3, 20, 3);
     F.porta(ctx, cx - 7, py + h - 25, 14, 22, '#8a5cff', det);
     // blocos de contar dos dois lados da porta (à direita, empilhados entre a porta e a quina)
@@ -64,6 +76,7 @@
     r(ctx, px + 12, py + 31, 4, 25, K); r(ctx, px + 13, py + 32, 2, 23, '#ffd34d');
     for (var rg = py + 34; rg < py + 56; rg += 3) r(ctx, px + 13, rg, 1, 1, K);
     D.matriz(ctx, px + w - 19, py + 47, ['k.......', 'kk......', 'kgk.....', 'kgek....', 'kg.gk...', 'kg..gk..', 'kggggggk', 'kkkkkkkk'], { k: K, g: '#3fbf7f', e: '#eaf4ff' });
+    V.lanterna(ctx, cx - 13, py + h - 24); V.lanterna(ctx, cx + 9, py + h - 24);
     F.tufos(ctx, [px + 6, px + w - 9], py + h);
   }
   // os dois-pontos do relógio digital piscam (camada animada do mapa)

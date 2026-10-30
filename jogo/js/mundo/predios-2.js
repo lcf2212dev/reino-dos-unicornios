@@ -23,21 +23,50 @@
     formas.forEach(function (f) { letra(ctx, f, x, y, cor); x += f[0].length + 1; });
   }
 
+  function cantoneiras(ctx, x, y, w, h, cor) {
+    var l = clarear(cor, 0.35), e = escurecer(cor, 0.12);
+    for (var j = y, k = 0; j + 4 <= y + h; j += 5, k++) {
+      var lg = k % 2 ? 3 : 5;
+      ret(ctx, x, j, lg, 4, l); ret(ctx, x, j + 4, lg, 1, e);
+      ret(ctx, x + w - lg, j, lg, 4, e); ret(ctx, x + w - lg, j, lg, 1, cor);
+    }
+  }
+
+  // pilastra de reboco com capitel (a quina do prédio sai da parede)
+  function pilastra(ctx, x, y, h, cor) {
+    ret(ctx, x, y, 5, h, K); ret(ctx, x + 1, y, 3, h, clarear(cor, 0.3)); ret(ctx, x + 1, y, 1, h, '#ffffff');
+    ret(ctx, x + 3, y, 1, h, escurecer(cor, 0.1));
+    ret(ctx, x - 1, y, 7, 3, K); ret(ctx, x, y + 1, 5, 1, clarear(cor, 0.4));
+  }
+  // hera subindo pela parede (folhinhas fixas por posição)
+  function hera(ctx, x, yb, alto) {
+    for (var j = 0; j < alto; j++) {
+      var dx = Math.round(Math.sin(j / 3) * 1.5);
+      ret(ctx, x + dx, yb - j, 1, 1, '#3f8a4a');
+      if (j % 3 === 0) { var lado = D.sorte(x, yb - j, 5) < 0.5 ? -2 : 1; ret(ctx, x + dx + lado, yb - j, 2, 2, '#6fbf5a'); ret(ctx, x + dx + lado, yb - j, 1, 1, '#a6e07a'); }
+    }
+  }
+
   Mapa.PREDIOS.escola = function (ctx, px, py, w, h) {
+    var V = window.Mapa.fachada.kit;
     var parede = '#fff1e8', parede2 = '#f6dccb', telhado = '#ff7a8a', telhado2 = '#e0506a';
     var cx = px + w / 2;
     // telhado principal de telhas
     triangulo(ctx, px, py + 16, w, 26, K);
     triangulo(ctx, px + 3, py + 19, w - 6, 22, telhado);
-    F.telhas(ctx, px + 3, py + 19, w - 6, 22, telhado, 4);
+    V.telhadoVolume(ctx, px + 3, py + 19, w - 6, 22, telhado);
     // beiral
     ret(ctx, px + 2, py + 40, w - 4, 4, K);
-    ret(ctx, px + 3, py + 41, w - 6, 2, telhado2);
+    ret(ctx, px + 3, py + 41, w - 6, 1, telhado2); ret(ctx, px + 3, py + 42, w - 6, 1, escurecer(telhado2, 0.35));
     // paredes com as tábuas deitadas e o rodapé de tijolinho
     contornoRet(ctx, px + 6, py + 43, w - 12, h - 49, parede);
-    for (var j = py + 49; j < py + h - 7; j += 6) { ret(ctx, px + 7, j, w - 14, 1, parede2); ret(ctx, px + 7, j + 1, w - 14, 1, '#fffaf5'); }
-    F.tijolos(ctx, px + 7, py + h - 10, w - 14, 3, '#f0a0a8', 3);
-    ret(ctx, px + w - 13, py + 44, 6, h - 51, 'rgba(224,80,106,0.08)');
+    V.tabuasH(ctx, px + 7, py + 44, w - 14, h - 51, parede);
+    V.fundacaoBlocos(ctx, px + 7, py + h - 12, w - 14, 5, '#b49cae');
+    V.quinas(ctx, px + 7, py + 44, w - 14, h - 56);
+    ret(ctx, px + w - 13, py + 44, 6, h - 51, 'rgba(224,80,106,0.12)');
+    ret(ctx, px + 7, py + 44, 1, h - 51, '#ffffff');
+    V.sombraBeiral(ctx, px + 7, py + 44, w - 14);
+    pilastra(ctx, px + 7, py + 44, h - 56, parede2); pilastra(ctx, px + w - 12, py + 44, h - 56, parede2);
     // bandeirinhas
     var bandeiras = ['#ffd34d', '#6fdc8c', '#5fb4ff', '#a66bff', '#ff9d2e'];
     ret(ctx, px + 8, py + 44, w - 16, 1, '#c9a27a');
@@ -52,9 +81,12 @@
     // degrau e porta
     F.degrau(ctx, cx, py + h - 7, 28, 7);
     F.porta(ctx, cx - 7, py + h - 29, 14, 22, '#7c5cff');
+    V.moitas(ctx, px + 10, px + w - 10, py + h - 6, cx, 16);
     // arbustos nos cantos
     F.vaso(ctx, px + 5, py + h, '#ff7eb6');
     F.vaso(ctx, px + w - 6, py + h, '#ffe066');
+    // lanterninhas de parede dos lados da porta
+    V.lanterna(ctx, cx - 13, py + h - 26); V.lanterna(ctx, cx + 9, py + h - 26);
     // lousa com o nome da escola (JIM WILSON) no telhado, em duas linhas, com a moldura de madeira
     ret(ctx, cx - 16, py + 27, 32, 17, K);
     ret(ctx, cx - 15, py + 28, 30, 15, C.madeira);
@@ -75,24 +107,32 @@
     ret(ctx, cx - 2, py + 15, 1, 3, '#fff3a0');
     ret(ctx, cx + 2, py + 16, 1, 3, '#d9a93a');
     ret(ctx, cx - 1, py + 21, 2, 1, '#d9a93a');
+    ret(ctx, cx, py + 13, 1, 1, '#d9a93a'); ret(ctx, cx - 4, py + 18, 8, 1, '#e8b840');
+    ret(ctx, cx + 4, py + 13, 1, 10, 'rgba(58,36,70,0.25)');
     ret(ctx, cx - 6, py + 24, 12, 2, K); ret(ctx, cx - 5, py + 24, 10, 1, '#fff8ee');
     triangulo(ctx, cx - 12, py, 24, 11, K);
     triangulo(ctx, cx - 10, py + 2, 20, 8, telhado);
-    F.telhas(ctx, cx - 10, py + 2, 20, 8, telhado, 3);
+    V.telhadoVolume(ctx, cx - 10, py + 2, 20, 8, telhado);
     ret(ctx, cx - 12, py + 9, 24, 2, K); ret(ctx, cx - 11, py + 9, 22, 1, telhado2);
     F.bandeira(ctx, cx, py - 6, 7, '#ffd34d');
   };
 
   Mapa.PREDIOS.relogio = function (ctx, px, py, w, h, cores) {
+    var V = window.Mapa.fachada.kit;
     cores = cores || {};
     var parede = cores.parede || '#eef3ff', telhado = cores.telhado || '#4a6cd4', det = cores.detalhe || '#ffcf3d';
     var pedra = misturar(parede, '#d8c8a8', 0.35);
     var cx = px + w / 2;
     // corpo da torre de pedra, com a luz na esquerda e a sombra na direita
     contornoRet(ctx, cx - 17, py + 36, 34, h - 36, pedra);
-    F.pedras(ctx, cx - 16, py + 37, 32, h - 38, pedra);
-    ret(ctx, cx + 10, py + 37, 6, h - 38, 'rgba(58,36,70,0.10)');
+    V.blocos(ctx, cx - 16, py + 37, 32, h - 38, pedra, 5, 8);
+    ret(ctx, cx + 10, py + 37, 6, h - 38, 'rgba(58,36,70,0.12)');
     ret(ctx, cx - 16, py + 37, 1, h - 38, clarear(pedra, 0.5));
+    cantoneiras(ctx, cx - 16, py + 40, 32, h - 48, pedra);
+    V.sombraBeiral(ctx, cx - 16, py + 39, 32);
+    V.fundacaoBlocos(ctx, cx - 16, py + h - 6, 32, 5, escurecer(pedra, 0.3));
+    V.quinas(ctx, cx - 16, py + 37, 32, h - 43);
+    hera(ctx, cx - 14, py + h - 6, 22);
     // janelinhas de arco dos lados
     [cx - 14, cx + 7].forEach(function (jx) { F.janela(ctx, jx, py + 42, 7, 11, { arco: true, cruz: false }); });
     // caixa do relógio com a sacada
@@ -102,11 +142,14 @@
     ret(ctx, cx - 22, py + 36, 44, 3, K); ret(ctx, cx - 21, py + 37, 42, 1, escurecer(det, 0.2));
     for (var s = cx - 20; s < cx + 20; s += 4) ret(ctx, s, py + 39, 2, 2, escurecer(pedra, 0.2));
     [cx - 19, cx + 17].forEach(function (lx) { ret(ctx, lx, py + 18, 2, 16, escurecer(parede, 0.1)); });
+    ret(ctx, cx - 19, py + 17, 1, 18, '#ffffff'); ret(ctx, cx + 12, py + 17, 7, 18, 'rgba(58,36,70,0.12)');
+    V.sombraBeiral(ctx, cx - 19, py + 15, 38);
     // mostrador com o aro dourado e os 12 risquinhos
     circulo(ctx, cx, py + 26, 11, K);
     circulo(ctx, cx, py + 26, 10, det);
     circulo(ctx, cx, py + 26, 9, escurecer(det, 0.2));
     circulo(ctx, cx, py + 26, 8, '#ffffff');
+    ret(ctx, cx - 5, py + 22, 3, 1, '#eef3ff'); ret(ctx, cx + 3, py + 31, 3, 1, '#e4e8f4');
     for (var hr = 0; hr < 12; hr++) {
       var ang = hr * Math.PI / 6, mx = Math.round(Math.sin(ang) * 7), my = Math.round(-Math.cos(ang) * 7);
       if (hr % 3 === 0) ret(ctx, cx + mx - 1, py + 26 + my - 1, 2, 2, telhado);
@@ -120,7 +163,7 @@
     ret(ctx, cx - 18, py + 12, 36, 3, K);
     triangulo(ctx, cx - 16, py - 4, 32, 17, K);
     triangulo(ctx, cx - 13, py - 1, 26, 13, telhado);
-    F.telhas(ctx, cx - 13, py - 1, 26, 13, telhado, 3);
+    V.telhadoVolume(ctx, cx - 13, py - 1, 26, 13, telhado);
     ret(ctx, cx - 17, py + 13, 34, 1, escurecer(telhado, 0.2));
     // mastro com a bandeirinha do Reino Unido (a torre de Inglês, D2A-13)
     ret(ctx, cx - 1, py - 12, 2, 9, K); ret(ctx, cx - 1, py - 12, 1, 1, det);
@@ -134,6 +177,8 @@
     letra(ctx, ['#', '#', '#', '.', '#'], cx + 4, py + 45, '#e0433f');
     // porta, degrau e vasos
     F.entrada(ctx, cx, py + h, '#7c5cff', det);
+    V.lanterna(ctx, cx - 13, py + h - 22); V.lanterna(ctx, cx + 9, py + h - 22);
+    V.moitas(ctx, cx - 21, cx + 21, py + h, cx, 10);
     F.vaso(ctx, cx - 23, py + h, '#ff7eb6');
     F.vaso(ctx, cx + 23, py + h, '#ffffff');
     // brilhinhos
@@ -147,16 +192,22 @@
 
   // torre padrão: serve para qualquer matéria sem desenho próprio (usa as cores dela e cabe em qualquer w×h)
   Mapa.PREDIOS.torre = function (ctx, px, py, w, h, cores) {
+    var V = window.Mapa.fachada.kit;
     cores = cores || {};
     var parede = cores.parede || '#fff6e4', telhado = cores.telhado || '#f0a04a', det = cores.detalhe || '#ff8a3d';
     var cx = px + w / 2, x0 = px + 12, larg = w - 24;
     contornoRet(ctx, x0, py + 22, larg, h - 22, parede);
-    F.pedras(ctx, x0 + 1, py + 23, larg - 2, h - 24, parede);
-    ret(ctx, x0 + larg - 7, py + 23, 6, h - 24, 'rgba(58,36,70,0.08)');
+    V.blocos(ctx, x0 + 1, py + 23, larg - 2, h - 24, parede, 5, 8);
+    cantoneiras(ctx, x0 + 1, py + 26, larg - 2, h - 32, parede);
+    ret(ctx, x0 + larg - 7, py + 23, 6, h - 24, 'rgba(58,36,70,0.12)');
+    ret(ctx, x0 + 1, py + 23, 1, h - 24, '#ffffff');
+    V.fundacaoBlocos(ctx, x0 + 1, py + h - 6, larg - 2, 5, escurecer(parede, 0.3));
+    V.quinas(ctx, x0 + 1, py + 23, larg - 2, h - 29);
+    V.sombraBeiral(ctx, x0 + 1, py + 24, larg - 2);
     // telhado de telhas com o beiral e a bandeira na cor da matéria
     triangulo(ctx, px + 6, py + 1, w - 12, 23, K);
     triangulo(ctx, px + 9, py + 4, w - 18, 19, telhado);
-    F.telhas(ctx, px + 9, py + 4, w - 18, 19, telhado, 4);
+    V.telhadoVolume(ctx, px + 9, py + 4, w - 18, 19, telhado);
     ret(ctx, px + 7, py + 21, w - 14, 3, K); ret(ctx, px + 8, py + 22, w - 16, 1, escurecer(telhado, 0.22));
     F.bandeira(ctx, cx, py - 8, 10, det);
     // janela redonda no alto e as janelinhas de arco dos lados
@@ -172,6 +223,8 @@
     }
     // porta, degrau e vasinhos
     F.entrada(ctx, cx, py + h, '#7c5cff', null, { largDegrau: 20 });
+    V.lanterna(ctx, cx - 13, py + h - 22); V.lanterna(ctx, cx + 9, py + h - 22);
+    V.moitas(ctx, x0 + 1, x0 + larg - 1, py + h, cx, 11);
     F.vaso(ctx, x0 - 5, py + h, det);
     F.vaso(ctx, x0 + larg + 4, py + h, '#ffffff');
   };
