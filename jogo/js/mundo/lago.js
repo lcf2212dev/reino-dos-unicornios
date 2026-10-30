@@ -59,41 +59,71 @@
   var sx = rx / 104, sy = ry / 38;
   function P(x, y) { return [Math.round(cx + (x - 288) * sx), Math.round(cy + (y - 394) * sy)]; }
 
+  var CLARO = '#a8ecdc', FUNDISSIMO = '#1f6a68', AREIA2 = '#f0d08c', AREIA3 = '#fff4cc', BORDA = '#dcb878';
   function desenharLago(ctx) {
     var x, y, k;
     for (y = 0; y < LH; y++) for (x = 0; x < LW; x++) {
       k = d(x, y);
-      var cor = null;
-      if (k < -4 + (D.sorte(X0 + x, 0, 31) < 0.4 ? 1 : 0)) continue;
-      if (k < -1) cor = AREIA;
+      var cor = null, wx = X0 + x, wy = Y0 + y, xadrez = (wx + wy) & 1;
+      var fim = -4 + (D.sorte(wx, 0, 31) < 0.4 ? 1 : 0);
+      if (k < fim) continue;
+      if (k < fim + 1) cor = BORDA;                                 // a beirada da areia, na grama
+      else if (k < -1) {
+        var r = D.sorte(wx, wy, 33);
+        cor = r < 0.12 ? AREIA2 : r > 0.94 ? AREIA3 : AREIA;        // grãozinhos
+      }
       else if (k < 0) cor = MOLHADA;
       else if (k < 1) cor = LINHA;                                  // linha d'água de 1 px
+      else if (k < 2.5) cor = CLARO;                                // o raso que deixa ver a areia
       else {
-        // a parte funda puxa para o lado de baixo e da direita (não é um alvo)
-        var v = k + (X0 + x - cx) * 0.09 + (Y0 + y - cy) * 0.3;
-        cor = v < 6 ? RASO : v < 21 ? MEIO : FUNDO;
+        // a parte funda puxa para o lado de baixo e da direita (não é um alvo); a troca de tom em pontilhado 2 × 2
+        var v = k + (wx - cx) * 0.09 + (wy - cy) * 0.3;
+        var lim = [5, 9, 20, 26, 34], tons = [CLARO, RASO, MEIO, FUNDO, FUNDISSIMO], t = 0;
+        while (t < 4 && v >= lim[t] + (xadrez ? 0 : 1.2)) t++;
+        cor = t === 0 ? RASO : tons[t];
+        if (t === 1 && v < 6.2 && xadrez) cor = CLARO;
       }
-      ret(ctx, X0 + x, Y0 + y, 1, 1, cor);
+      ret(ctx, wx, wy, 1, 1, cor);
     }
-    // reflexo quebrado em 3 traços, em cima e à esquerda (a luz vem de lá)
-    [[-44, -17, 9, C.agua2], [-30, -14, 5, '#ffffff'], [-52, -12, 3, C.agua2], [30, -18, 4, C.agua2]].forEach(function (s) {
-      ret(ctx, cx + s[0], cy + s[1], s[2], 1, s[3]);
+    // reflexo do céu: traços em cima e à esquerda (a luz vem de lá) e uma nuvem refletida
+    [[-44, -17, 9, C.agua2], [-30, -14, 5, '#ffffff'], [-52, -12, 3, C.agua2], [30, -18, 4, C.agua2], [-20, -9, 6, CLARO],
+      [-58, -5, 4, CLARO], [12, -12, 3, '#ffffff'], [44, -6, 5, CLARO]].forEach(function (s) {
+      ret(ctx, cx + Math.round(s[0] * sx), cy + Math.round(s[1] * sy), s[2], 1, s[3]);
     });
-    // pedras na margem, com contorno
-    [[286, 353], [180, 392], [393, 400], [286, 433], [338, 357], [228, 427]].forEach(function (p) {
-      var q = P(p[0], p[1]);
+    // pedrinhas na areia, com contorno: as postas à mão e outras pela sorte da margem
+    var pedras = [[286, 353], [180, 392], [393, 400], [286, 433], [338, 357], [228, 427]].map(function (p) { return P(p[0], p[1]); });
+    for (y = 2; y < LH - 2; y += 3) for (x = 2; x < LW - 2; x += 3) {
+      k = d(x, y);
+      if (k > -3.4 && k < -2.2 && D.sorte(X0 + x, Y0 + y, 35) < 0.16) pedras.push([X0 + x, Y0 + y, 1]);
+    }
+    pedras.forEach(function (q) {
+      if (q[2]) {   // miúda
+        ret(ctx, q[0] - 1, q[1], 4, 2, K); ret(ctx, q[0], q[1] - 1, 2, 4, K);
+        ret(ctx, q[0], q[1], 2, 1, D.sorte(q[0], q[1], 36) < 0.5 ? '#e6e0ee' : '#f0d8c0'); ret(ctx, q[0] + 1, q[1], 1, 1, '#b4a8c4');
+        return;
+      }
       ret(ctx, q[0] - 1, q[1], 5, 2, K); ret(ctx, q[0], q[1] - 1, 3, 4, K);
-      ret(ctx, q[0], q[1], 3, 2, '#c9c0d6'); ret(ctx, q[0], q[1], 2, 1, '#e6e0ee');
+      ret(ctx, q[0], q[1], 3, 2, '#c9c0d6'); ret(ctx, q[0], q[1], 2, 1, '#e6e0ee'); ret(ctx, q[0] + 2, q[1] + 1, 1, 1, '#a89cb8');
     });
   }
 
-  /* ----- a parte viva: juncos (balançam 1 px), vitórias-régias (sobem e descem 1 px) e a ondinha que corre na linha
-     d'água (3 quadros). Sem Animações, tudo no quadro 0. ----- */
+  /* ----- a parte viva: juncos e taboas (balançam 1 px), vitórias-régias com flor (sobem e descem 1 px), brilhos que
+     piscam e a ondinha que corre na linha d'água (3 quadros). Sem Animações, tudo no quadro 0. ----- */
   var JUNCOS = [[236, 350, 8], [238, 347, 10], [241, 352, 6], [328, 349, 8], [331, 346, 11], [334, 351, 6],
     [184, 388, 7], [182, 386, 9], [186, 390, 6], [390, 388, 7], [392, 385, 10], [388, 391, 5],
-    [256, 426, 7], [258, 423, 9], [261, 428, 6], [336, 422, 8], [338, 420, 10], [341, 424, 6]].map(function (h) { return P(h[0], h[1]).concat(h[2]); });
-  var REGIAS = [[-60, -8, 6, 3, '#ff8a3d'], [-40, 12, 5, 3, '#ffe066'], [52, 4, 7, 3, null], [70, -10, 5, 2, '#ff8a3d'],
-    [-86, 2, 5, 2, '#ffe066'], [20, -16, 5, 2, null]].map(function (v) { return [Math.round(v[0] * sx), Math.round(v[1] * sy)].concat(v.slice(2)); });
+    [256, 426, 7], [258, 423, 9], [261, 428, 6], [336, 422, 8], [338, 420, 10], [341, 424, 6]].map(function (h) { return P(h[0], h[1]).concat(Math.round(h[2] * 1.4)); });
+  // mais tufos pela margem, pela sorte do lugar (longe das pedras de passar, em cima no meio)
+  (function () {
+    for (var y = 3; y < LH - 3; y += 2) for (var x = 3; x < LW - 3; x += 2) {
+      var k = dist[y * LW + x], wx = X0 + x, wy = Y0 + y;
+      if (k < -1.5 || k > -0.5 || (Math.abs(wx - cx) < rx * 0.3 && wy < cy) || D.sorte(wx, wy, 37) > 0.12) continue;
+      var a = 8 + Math.floor(D.sorte(wx, wy, 38) * 6);
+      JUNCOS.push([wx, wy - a + 1, a], [wx + 3, wy - a + 4, a - 3]);
+    }
+  })();
+  var REGIAS = [[-60, -8, 6, 3, '#ff9cc6'], [-40, 12, 5, 3, '#ffffff'], [52, 4, 7, 3, null], [70, -10, 5, 2, '#ff9cc6'],
+    [-86, 2, 5, 2, '#ffffff'], [20, -16, 5, 2, null], [-8, 6, 4, 2, null], [86, 0, 4, 2, '#ff9cc6']].map(function (v) { return [Math.round(v[0] * sx), Math.round(v[1] * sy)].concat(v.slice(2)); });
+  var BRILHOS = [[-36, -4], [8, -2], [40, 10], [-70, 6], [62, -14], [-12, 14]].map(function (v) { return [cx + Math.round(v[0] * sx), cy + Math.round(v[1] * sy)]; });
   // o anel logo dentro da linha d'água, em ordem de ângulo (a ondinha anda por ele)
   var ANEL = [];
   for (var yy = 0; yy < LH; yy++) for (var xx = 0; xx < LW; xx++) {
@@ -106,18 +136,42 @@
   function vivo(ctx, q, animar) {
     ctx.fillStyle = C.agua2;
     for (var i = 0; i < ANEL.length; i++) if ((i + q * 4) % 12 < 3) ctx.fillRect(ANEL[i][0], ANEL[i][1], 1, 1);
+    // brilhos de sol: uma cruzinha que acende num quadro e fica de pontinho nos outros
+    BRILHOS.forEach(function (b, n) {
+      var aceso = animar ? (q + n) % 3 === 0 : n % 2 === 0;
+      ctx.fillStyle = '#ffffff'; ctx.fillRect(b[0], b[1], 1, 1);
+      if (aceso) { ctx.fillStyle = C.agua2; ctx.fillRect(b[0] - 1, b[1], 3, 1); ctx.fillRect(b[0], b[1] - 1, 1, 3); ctx.fillStyle = '#ffffff'; ctx.fillRect(b[0], b[1], 1, 1); }
+    });
     REGIAS.forEach(function (v, n) {
-      var bx = cx + v[0], by = cy + v[1] + (animar && (q + n) % 3 === 0 ? -1 : 0);
-      elipse(ctx, bx + 1, by + 1, v[2], v[3], FUNDO);
-      elipse(ctx, bx, by, v[2], v[3], '#8fb83a');
-      elipse(ctx, bx - 1, by - 1, Math.max(2, v[2] - 2), 1, '#b6d24e');
-      ret(ctx, bx, by, Math.max(2, v[2] - 1), 1, MEIO);
-      if (v[4]) { ret(ctx, bx + 2, by - 2, 2, 2, v[4]); ret(ctx, bx + 2, by - 2, 1, 1, '#fff6a8'); }
+      var bx = cx + v[0], by = cy + v[1] + (animar && (q + n) % 3 === 0 ? -1 : 0), rx2 = v[2], ry2 = v[3];
+      elipse(ctx, bx + 1, by + 1, rx2, ry2, FUNDISSIMO);              // a sombra na água
+      elipse(ctx, bx, by, rx2 + 1, ry2 + 1, '#2f6a3a');                // o contorno da folha
+      elipse(ctx, bx, by, rx2, ry2, '#7fb03a');
+      elipse(ctx, bx - 1, by - 1, Math.max(2, rx2 - 2), Math.max(1, ry2 - 1), '#b6d24e');
+      ret(ctx, bx - rx2 + 2, by - ry2, 1, 1, '#e4f59a');               // o brilho de cima
+      ret(ctx, bx + 1, by - ry2 - 1, 2, ry2 + 1, n % 2 ? MEIO : FUNDO); // o cortezinho da folha
+      if (v[4]) {   // a flor: pétalas em volta de um miolo amarelo
+        var fx = bx - 2, fy = by - 2, esc = D.escurecer(v[4], 0.18);
+        ret(ctx, fx - 1, fy, 5, 3, K); ret(ctx, fx, fy - 1, 3, 5, K);
+        ret(ctx, fx, fy, 3, 3, v[4]); ret(ctx, fx + 2, fy + 2, 1, 1, esc); ret(ctx, fx + 1, fy - 1, 1, 1, v[4]);
+        ret(ctx, fx + 1, fy + 1, 1, 1, '#ffd34d');
+      }
     });
     JUNCOS.forEach(function (h, n) {
-      var s = animar && (q + n) % 3 === 1 ? 1 : 0;
-      ret(ctx, h[0], h[1] + 2, 1, h[2] - 2, '#2f7a48');
-      ret(ctx, h[0] + s, h[1], 1, 2, '#8fb83a');
+      var s = animar && (q + n) % 3 === 1 ? 1 : 0, x = h[0], base = h[1] + h[2], a = Math.min(h[2], base - Y0 - 1), y = base - a;
+      // na fileira colada à calçada (em cima) o tufo fica baixo e sem taboa: não sobe na rua
+      // o tufo: folha do meio alta, duas mais baixas inclinadas para os lados
+      ret(ctx, x, y + 2, 1, a - 2, '#2f7a48');
+      ret(ctx, x + s, y, 1, 2, '#8fb83a');
+      ret(ctx, x - 1, base - Math.ceil(a * 0.6), 1, Math.ceil(a * 0.6), '#4f9a4a');
+      ret(ctx, x - 2 + s, base - Math.ceil(a * 0.6) - 1, 1, 2, '#a8cc48');
+      ret(ctx, x + 1, base - Math.ceil(a * 0.45), 1, Math.ceil(a * 0.45), '#3e8a46');
+      ret(ctx, x + 2 + s, base - Math.ceil(a * 0.45) - 1, 1, 2, '#8fb83a');
+      if (n % 3 === 1 && y - 7 >= Y0) {   // a taboa: a espiga marrom com contorno no alto do talo
+        ret(ctx, x - 1 + s, y - 5, 3, 6, K);
+        ret(ctx, x + s, y - 4, 1, 4, '#9a5a36'); ret(ctx, x + s, y - 4, 1, 1, '#c4825a');
+        ret(ctx, x + s, y - 7, 1, 2, '#2f7a48');
+      }
     });
   }
   // no estático (Mapa.prerender, no chão, antes das peças): o lago e a parte viva parada
