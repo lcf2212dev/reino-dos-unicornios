@@ -57,6 +57,7 @@
   // janela com os frascos coloridos na prateleira
   function janelaFrascos(ctx, x, y, w, h, frascos) {
     window.Mapa.fachada.janela(ctx, x, y, w, h, { moldura: LIL3, vidro: '#b9eef6', cruz: false });
+    V.fundoJanela(ctx, x, y, w, h);
     var yb = y + h - 4;
     ret(ctx, x + 2, yb + 1, w - 4, 1, C.madeira);
     frascos.forEach(function (f) { f[0](ctx, x + f[1], yb, f[2]); });
@@ -68,13 +69,16 @@
     return { cx: cx, jy: py + 16, tx: px + 58, topo: py - 11 };   // janela redonda; tubo da chaminé (x e a boca)
   }
 
+  var V;   // Mapa.fachada.kit, lido na hora de desenhar
   function desenharFora(ctx, px, py, w, h) {
+    V = window.Mapa.fachada.kit;
     var Fa = window.Mapa.fachada, M = medidas(px, py, w, h), cx = M.cx;
     var yP = py + 31;                                        // começo da parede
     // chaminé de tijolos lilás com o tubo de vidro (antes do telhado: ele cobre o pé dela)
     var chx = M.tx - 3;
     contornoRet(ctx, chx, py + 4, 12, 24, LIL2);
     Fa.tijolos(ctx, chx + 1, py + 5, 10, 22, LIL2, 3);
+    ret(ctx, chx + 1, py + 5, 1, 22, LIL3); ret(ctx, chx + 8, py + 5, 3, 22, 'rgba(58,36,70,0.16)');
     ret(ctx, M.tx, M.topo + 1, 6, py + 4 - M.topo, K);                       // tubo
     ret(ctx, M.tx + 1, M.topo + 2, 4, py + 3 - M.topo - 1, CIA3);
     ret(ctx, M.tx + 1, M.topo + 7, 4, py + 3 - M.topo - 6, ROSA); ret(ctx, M.tx + 1, M.topo + 7, 4, 1, ROSA2);
@@ -90,10 +94,15 @@
     ret(ctx, px + 4, py + h - 9, w - 8, 8, CIA); ret(ctx, px + 4, py + h - 9, w - 8, 1, CIA3);
     for (var rx = px + 8; rx < px + w - 6; rx += 8) ret(ctx, rx, py + h - 7, 1, 5, CIA2);
     ret(ctx, px + w - 10, yP + 1, 6, py + h - yP - 11, 'rgba(143,106,224,0.08)');   // sombra do lado direito
+    for (ay = yP + 1; ay < py + h - 16; ay += 6) for (ax = px + 4 + ((ay - yP) % 12 ? 3 : 0); ax < px + w - 10; ax += 6) {
+      if (R.Desenho.sorte(ax, ay, 19) < 0.25) ret(ctx, ax + 1, ay, 5, 5, '#f1ecfa');                // azulejo de outro tom
+    }
+    V.volume(ctx, px + 4, yP + 2, w - 8, py + h - yP - 12);
+    V.fundacao(ctx, px + 4, py + h - 6, w - 8, 5, '#c4b6dc');
+    V.sombra(ctx, px + 4, yP + 2, w - 8);
     // telhado de escamas lilás com a cornija ciano
     triangulo(ctx, px, py + 2, w, 30, K);
-    triangulo(ctx, px + 3, py + 5, w - 6, 26, LIL);
-    Fa.telhas(ctx, px + 3, py + 5, w - 6, 26, LIL, 4);
+    V.telhado(ctx, px + 3, py + 5, w - 6, 26, LIL, 4);
     ret(ctx, px + 1, yP - 2, w - 2, 4, K); ret(ctx, px + 2, yP - 1, w - 4, 2, CIA); ret(ctx, px + 2, yP - 1, w - 4, 1, CIA3);
     // átomo no alto do telhado: duas órbitas claras (ciano e lilás), o núcleo rosa e dois elétrons
     var ay0 = py - 11;
@@ -119,7 +128,9 @@
     janelaFrascos(ctx, px + 7, py + 41, 20, 15, [[erlenmeyer, 3, ROSA], [tubinho, 11, AMAR], [tubinho, 15, VERDE]]);
     janelaFrascos(ctx, px + w - 27, py + 41, 20, 15, [[balao, 2, AZUL], [erlenmeyer, 10, LARANJA]]);
     // porta ciano padrão (Mapa.fachada.entrada) com a vigia redonda
+    V.degraus(ctx, cx, py + h, 26);
     var fo = Fa.entrada(ctx, cx, py + h, CIA2, C.ouro);
+    V.capacho(ctx, cx, py + h, LIL2);
     circulo(ctx, cx, fo.y + 7, 3, K); circulo(ctx, cx, fo.y + 7, 2, CIA3); ret(ctx, cx - 1, fo.y + 6, 1, 1, C.branco);
     // vaso de flor à esquerda e caixote de frascos à direita
     Fa.vaso(ctx, px + 16, py + h, ROSA);
