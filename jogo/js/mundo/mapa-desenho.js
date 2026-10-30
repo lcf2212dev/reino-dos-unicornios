@@ -30,34 +30,59 @@
     ret(ctx, cx - meia + 2, y + 1, (meia - 2) * 2, 1, 'rgba(58,36,70,0.15)');
     ret(ctx, cx - meia + 3, y, (meia - 3) * 2, 1, 'rgba(58,36,70,0.12)');
   }
+  // flor: gasta SEMPRE 3 números de r() nesta ordem (x, y, cor; mapa-sorteio.test.js); o resto vem de D.sorte
   function desenharFlor(ctx, x, y, r, soSortear) {
     var px = x * T + 4 + Math.floor(r() * 7), py = y * T + 5 + Math.floor(r() * 5);
     var cor = FLORES[Math.floor(r() * FLORES.length)];
     if (soSortear) return;   // gasta os mesmos 3 números sem pintar (flor que um lugar novo tirou)
     var miolo = (cor === '#ffe066' || cor === '#ffffff') ? '#ff8a3d' : '#fff3a0';
+    var sombra = cor === '#ffffff' ? '#d9e4f2' : D.escurecer(cor, 0.18), luz = D.clarear(cor, 0.45);
+    var forma = Math.floor(D.sorte(x, y, 91) * 3);
+    ret(ctx, px - 1, py + 6, 3, 1, 'rgba(58,36,70,0.15)');
     ret(ctx, px, py + 2, 1, 4, '#7ea832');
-    ret(ctx, px - 2, py + 3, 2, 1, '#8fb83a'); ret(ctx, px + 1, py + 4, 2, 1, '#b6d24e');
-    ret(ctx, px - 2, py, 5, 1, cor); ret(ctx, px, py - 2, 1, 5, cor);
-    ret(ctx, px - 1, py - 1, 1, 1, cor); ret(ctx, px + 1, py - 1, 1, 1, cor);
-    ret(ctx, px - 1, py + 1, 1, 1, cor); ret(ctx, px + 1, py + 1, 1, 1, cor);
-    ret(ctx, px, py, 1, 1, miolo); ret(ctx, px + 3, py - 2, 1, 1, '#ffffff');
+    ret(ctx, px - 2, py + 3, 2, 1, '#8fb83a'); ret(ctx, px - 3, py + 2, 1, 1, '#8fb83a');
+    ret(ctx, px + 1, py + 4, 2, 1, '#b6d24e'); ret(ctx, px + 3, py + 3, 1, 1, '#b6d24e');
+    if (forma === 0) {       // margarida de 4 pétalas
+      ret(ctx, px - 2, py, 5, 1, cor); ret(ctx, px, py - 2, 1, 5, cor);
+      ret(ctx, px - 1, py - 1, 1, 1, cor); ret(ctx, px + 1, py - 1, 1, 1, cor);
+      ret(ctx, px - 1, py + 1, 1, 1, sombra); ret(ctx, px + 1, py + 1, 1, 1, sombra);
+      ret(ctx, px + 2, py, 1, 1, sombra); ret(ctx, px, py + 2, 1, 1, sombra);
+      ret(ctx, px - 2, py, 1, 1, luz); ret(ctx, px, py - 2, 1, 1, luz);
+    } else if (forma === 1) { // flor redonda de 5 pétalas
+      ret(ctx, px - 1, py - 2, 3, 1, cor); ret(ctx, px - 2, py - 1, 5, 2, cor); ret(ctx, px - 1, py + 1, 3, 1, sombra);
+      ret(ctx, px - 2, py + 1, 1, 1, sombra); ret(ctx, px + 2, py + 1, 1, 1, sombra); ret(ctx, px + 2, py - 1, 1, 2, sombra);
+      ret(ctx, px - 1, py - 2, 1, 1, luz); ret(ctx, px - 2, py - 1, 1, 1, luz);
+    } else {                 // tulipa
+      ret(ctx, px - 1, py - 2, 3, 3, cor); ret(ctx, px - 1, py - 3, 1, 1, cor); ret(ctx, px + 1, py - 3, 1, 1, cor);
+      ret(ctx, px + 1, py - 2, 1, 3, sombra); ret(ctx, px - 1, py, 3, 1, sombra); ret(ctx, px - 1, py - 2, 1, 1, luz);
+      ret(ctx, px, py - 1, 1, 1, miolo);
+    }
+    if (forma !== 2) ret(ctx, px, py, 1, 1, miolo);
+    if (D.sorte(x, y, 92) < 0.5) ret(ctx, px + 3, py - 2, 1, 1, '#ffffff');
   }
   function desenharCristal(ctx, x, y) {
     var px = x * T, py = y * T;
     elipse(ctx, px + 8, py + 13, 5, 2, '#8fb83a');
     sombraChao(ctx, px + 8, py + 12, 7);
     elipse(ctx, px + 8, py + 12, 3, 1, '#b6d24e');
+    // cristal pequeno ao lado, atrás
+    var lado = D.sorte(x, y, 93) < 0.5 ? -1 : 1, sx = px + 8 + lado * 5;
+    ret(ctx, sx - 2, py + 7, 5, 5, C.contorno); ret(ctx, sx - 1, py + 6, 3, 1, C.contorno); ret(ctx, sx, py + 5, 1, 1, C.contorno);
+    ret(ctx, sx - 1, py + 8, 1, 3, '#d8f2ff'); ret(ctx, sx, py + 6, 1, 5, '#9fdcff'); ret(ctx, sx + 1, py + 8, 1, 3, '#6bb8ea');
     var larg = [2, 4, 6, 8, 8, 6, 4, 2];
     for (var j = 0; j < larg.length; j++) {
       var w = larg[j], x0 = px + 8 - w / 2;
       ret(ctx, x0 - 1, py + 4 + j, w + 2, 1, C.contorno);
-      ret(ctx, x0, py + 4 + j, w / 2, 1, '#d8f2ff');
+      ret(ctx, x0, py + 4 + j, w / 2, 1, j < 4 ? '#e8f8ff' : '#c4ebff');
       ret(ctx, x0 + w / 2, py + 4 + j, w / 2, 1, j < 4 ? '#9fdcff' : '#6bb8ea');
-      if (w > 2) ret(ctx, x0 + w - 1, py + 4 + j, 1, 1, '#7ed9c8');
+      if (w > 2) ret(ctx, x0 + w - 1, py + 4 + j, 1, 1, j < 4 ? '#7ed9c8' : '#4f9fd6');
     }
+    ret(ctx, px + 8, py + 5, 1, 6, '#bfe6ff');               // aresta do meio
+    ret(ctx, px + 6, py + 7, 4, 1, '#d8f2ff');               // cintura facetada
     ret(ctx, px + 7, py + 6, 1, 2, '#ffffff');
     ret(ctx, px + 11, py + 4, 1, 3, '#ffffff');
     ret(ctx, px + 10, py + 5, 3, 1, '#fff6a8');
+    ret(ctx, px + 4, py + 13, 1, 1, '#d8f2ff'); ret(ctx, px + 12, py + 14, 1, 1, '#9fdcff');   // lasquinhas no chão
   }
   function desenharArbusto(ctx, x, y) {
     var px = x * T, py = y * T;
@@ -65,10 +90,18 @@
     sombraChao(ctx, px + 8, py + 14, 10);
     elipse(ctx, px + 8, py + 10, 7, 5, C.contorno);
     elipse(ctx, px + 8, py + 10, 6, 4, '#a8cc48');
-    elipse(ctx, px + 6, py + 9, 3, 2, '#d4ee78');
-    elipse(ctx, px + 12, py + 12, 2, 2, '#8fb83a');
+    elipse(ctx, px + 9, py + 12, 5, 2, '#8fb83a');
+    elipse(ctx, px + 6, py + 9, 3, 2, '#c4e266');
+    ret(ctx, px + 5, py + 7, 3, 1, '#e4f59a'); ret(ctx, px + 4, py + 8, 1, 1, '#e4f59a');
+    // folhas em pontilhado (fixas por posição)
+    for (var k = 0; k < 7; k++) {
+      var fx = px + 3 + Math.floor(D.sorte(x, y, 94 + k) * 10), fy = py + 8 + Math.floor(D.sorte(x, y, 101 + k) * 5);
+      ret(ctx, fx, fy, 1, 1, fy < py + 10 ? '#d4ee78' : '#7ea832');
+    }
+    ret(ctx, px + 12, py + 12, 2, 1, '#7ea832');
     ret(ctx, px + 4, py + 9, 3, 1, cor); ret(ctx, px + 5, py + 8, 1, 3, cor); ret(ctx, px + 5, py + 9, 1, 1, '#ffffff');
     ret(ctx, px + 10, py + 11, 3, 1, '#ffe066'); ret(ctx, px + 11, py + 10, 1, 3, '#ffe066'); ret(ctx, px + 11, py + 11, 1, 1, '#ffffff');
+    ret(ctx, px + 8, py + 7, 1, 1, cor); ret(ctx, px + 12, py + 8, 1, 1, '#ffffff');
   }
   function desenharCogumelo(ctx, x, y) {
     var sorte = I.rng(x * 89 + y * 47 + 13);
@@ -77,14 +110,22 @@
     var rosa = sorte() < 0.7;
     var chapeu = rosa ? '#ff8a3d' : '#f0a04a';
     var barra = rosa ? '#e07028' : '#d9842f';
+    ret(ctx, px - 1, py + 7, 7, 1, 'rgba(58,36,70,0.15)');
     ret(ctx, px, py + 6, 5, 1, C.grama2);
+    // cogumelinho filhote ao lado
+    var fx = px + (D.sorte(x, y, 108) < 0.5 ? -3 : 6);
+    ret(ctx, fx, py + 4, 1, 3, '#fff6ea'); ret(ctx, fx - 1, py + 3, 3, 1, C.contorno); ret(ctx, fx - 1, py + 2, 3, 1, chapeu);
+    ret(ctx, fx, py + 1, 1, 1, C.contorno); ret(ctx, fx - 1, py + 2, 1, 1, '#ffd0a0');
     ret(ctx, px + 1, py + 3, 3, 4, '#fff6ea');
     ret(ctx, px + 3, py + 3, 1, 4, '#e7d4b8');
+    ret(ctx, px + 1, py + 4, 3, 1, '#f3e2c8');                 // aba do anel
     circulo(ctx, px + 2, py + 2, 3, C.contorno);
     circulo(ctx, px + 2, py + 1, 3, chapeu);
     ret(ctx, px, py + 2, 5, 1, barra);
+    ret(ctx, px + 1, py - 1, 2, 1, D.clarear(chapeu, 0.35));
     ret(ctx, px + 1, py, 1, 1, '#ffffff');
     ret(ctx, px + 3, py + 1, 1, 1, '#ffffff');
+    ret(ctx, px - 1, py + 1, 1, 1, '#fff3dc');
   }
 
   /* ----- ajudantes dos prédios (mundo/predios.js) ----- */
