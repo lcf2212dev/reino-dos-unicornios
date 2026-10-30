@@ -1,7 +1,6 @@
 /* Desenho da fachada de cada prédio no mapa: Mapa.PREDIOS[sprite](ctx, px, py, w, h, cores),
    em px do jogo (o retângulo do lugar; o telhado pode passar um pouco para cima). Mapa.prerender
-   desenha cada lugar com o sprite dele (sem desenho: a torre). Aqui: castelo, museu, estábulo, baú e
-   loja; escola, relógio e torre em mundo/predios-2.js. Prédio novo = uma função aqui (ou no arquivo
+   desenha cada lugar com o sprite dele (sem desenho: a torre). Aqui: castelo, museu, estábulo e baú; loja em mundo/predios-3.js; escola, relógio e torre em mundo/predios-2.js. Prédio novo = uma função aqui (ou no arquivo
    do prédio, como a Pet Shop e o Observatório) + a entrada em mundo/lugares.js. Os enfeites comuns
    (janela, telhas, tijolos, porta...) vêm de Mapa.fachada (mundo/fachadas.js). A porta fica sempre
    no meio da última linha (largura par: o desenho anda F.desvio) e é F.entrada (degrau + porta, F.PORTA).
@@ -19,6 +18,7 @@
       contornoRet(ctx, cx - 16, py + 10, 32, 22, paredeT);
       F.pedras(ctx, cx - 15, py + 11, 30, 20, paredeT);
       ret(ctx, cx + 8, py + 11, 7, 20, 'rgba(160,110,60,0.14)');
+      F.beiral(ctx, cx - 15, py + 12, 30, 3);
       triangulo(ctx, cx - 19, py - 2, 38, 13, K);
       triangulo(ctx, cx - 16, py + 1, 32, 9, telhado);
       F.telhas(ctx, cx - 16, py + 1, 32, 9, telhado, 3);
@@ -28,7 +28,13 @@
       // muralha central de pedra, com as ameias
       contornoRet(ctx, px + 20, py + 30, w - 40, h - 30, parede);
       F.pedras(ctx, px + 21, py + 31, w - 42, h - 32, parede);
-      for (var k = px + 20; k < px + w - 20; k += 8) { ret(ctx, k, py + 25, 6, 6, K); ret(ctx, k + 1, py + 26, 4, 5, parede); ret(ctx, k + 1, py + 26, 4, 1, '#fffaf0'); }
+      for (var k = px + 20; k < px + w - 20; k += 8) {
+        ret(ctx, k, py + 25, 6, 6, K); ret(ctx, k + 1, py + 26, 4, 5, parede); ret(ctx, k + 1, py + 26, 4, 1, '#fffaf0');
+        ret(ctx, k + 1, py + 27, 1, 4, '#fffaf0'); ret(ctx, k + 4, py + 27, 1, 4, '#ecd6b0');
+      }
+      ret(ctx, px + 21, py + 31, w - 42, 1, '#ecd6b0'); ret(ctx, px + 21, py + 32, w - 42, 1, 'rgba(58,36,70,0.12)');
+      F.fundacao(ctx, px + 21, py + h - 6, w - 42, 6, '#c4ad8a');
+      F.volume(ctx, cx - 15, py + 11, 30, 20);
       // estandartes com o brasão dos dois lados do portão
       [px + 35, px + w - 35].forEach(function (bx) {
         ret(ctx, bx - 5, py + 34, 11, 2, K); ret(ctx, bx - 4, py + 34, 9, 1, C.ouro);
@@ -38,17 +44,28 @@
       [px + 2, px + w - 28].forEach(function (tx) {
         contornoRet(ctx, tx, py + 22, 26, h - 22, paredeT);
         F.pedras(ctx, tx + 1, py + 23, 24, h - 24, paredeT);
-        ret(ctx, tx + 19, py + 23, 6, h - 24, 'rgba(160,110,60,0.16)');
+        ret(ctx, tx + 17, py + 23, 8, h - 29, 'rgba(160,110,60,0.2)'); ret(ctx, tx + 22, py + 23, 3, h - 29, 'rgba(120,70,40,0.15)');
+        ret(ctx, tx + 2, py + 23, 2, h - 29, 'rgba(255,255,255,0.3)');
         ret(ctx, tx + 1, py + 23, 1, h - 24, '#fffaf0');
+        F.fundacao(ctx, tx + 1, py + h - 6, 24, 6, '#c4ad8a');
+        F.beiral(ctx, tx + 1, py + 24, 24, 3);
+        // musgo nas juntas, fixo por posição
+        for (var mz = 0; mz < 5; mz++) { var mx = tx + 3 + Math.floor(D.sorte(tx, mz, 31) * 19), my = py + 34 + Math.floor(D.sorte(mz, tx, 37) * 20); ret(ctx, mx, my, 2, 1, '#9cc25a'); ret(ctx, mx, my + 1, 1, 1, '#6fa040'); }
         triangulo(ctx, tx - 3, py + 2, 32, 22, K);
         triangulo(ctx, tx - 1, py + 4, 28, 19, telhado);
         F.telhas(ctx, tx - 1, py + 4, 28, 19, telhado, 4);
         ret(ctx, tx - 3, py + 21, 32, 3, K); ret(ctx, tx - 2, py + 22, 30, 1, '#d9842f');
         F.bandeira(ctx, tx + 12, py - 7, 10, '#ff8a3d');
-        F.janela(ctx, tx + 8, py + 31, 10, 14, { arco: true });
+        F.janela(ctx, tx + 8, py + 31, 10, 14, { arco: true, luz: tx === px + 2 ? null : '#ffe9a8' });
         ret(ctx, tx + 12, py + 53, 2, 9, K); ret(ctx, tx + 11, py + 56, 4, 2, K);
         F.tufos(ctx, [tx + 3, tx + 19], py + h - 1);
+        // estandarte comprido pendurado na torre
+        var ex = tx === px + 2 ? tx + 3 : tx + 19;
+        ret(ctx, ex - 1, py + 47, 6, 1, K); ret(ctx, ex - 1, py + 48, 6, 9, K); ret(ctx, ex, py + 48, 4, 8, roxo); ret(ctx, ex, py + 48, 1, 8, '#b49aff');
+        ret(ctx, ex + 1, py + 51, 2, 2, C.ouro); ret(ctx, ex, py + 57, 1, 1, K); ret(ctx, ex + 3, py + 57, 1, 1, K); ret(ctx, ex + 1, py + 56, 2, 2, K); ret(ctx, ex + 1, py + 56, 2, 1, roxo);
       });
+      F.trepadeira(ctx, px + 29, py + h - 6, 18, '#ff7eb6');
+      F.trepadeira(ctx, px + w - 30, py + h - 6, 14, '#ffe066');
       // portão com o arco de pedra e a porta roxa
       elipse(ctx, cx, py + h - 25, 14, 6, K); elipse(ctx, cx, py + h - 25, 13, 5, '#f0d0a0');
       ret(ctx, cx - 14, py + h - 25, 28, 25, K); ret(ctx, cx - 13, py + h - 25, 26, 25, '#f0d0a0');
@@ -76,7 +93,7 @@
     museu: function (ctx, px, py, w, h, cores) {
       cores = cores || {};
       px += F.desvio(w);   // largura par: o desenho anda até a porta ficar no meio do tile dela (D2A-12)
-      var parede = cores.parede || '#fff6e4', telhado = cores.telhado || '#f0a04a', det = cores.detalhe || '#ff8a3d';
+      var parede = cores.parede || '#fff6e4', telhado = cores.telhado || '#b95a36', det = cores.detalhe || '#ff8a3d';
       var pedra = PA.cor.misturar(parede, '#f0d8b8', 0.62);
       var pedraClara = PA.cor.clarear(pedra, 0.28);
       var junta = PA.cor.misturar(pedra, '#c4a57a', 0.45);
@@ -96,15 +113,30 @@
         ret(ctx, cx, py + 31, 8, h - 45, C.contorno);
         ret(ctx, cx + 1, py + 31, 6, h - 45, pedraClara);
         ret(ctx, cx + 5, py + 31, 2, h - 45, PA.cor.escurecer(pedra, 0.18));
+        ret(ctx, cx + 3, py + 32, 1, h - 47, PA.cor.escurecer(pedraClara, 0.1));   // caneluras
+        ret(ctx, cx + 2, py + 31, 1, h - 45, '#ffffff');
+        ret(ctx, cx - 1, py + h - 16, 10, 2, C.contorno); ret(ctx, cx, py + h - 16, 8, 1, pedraClara);   // base da coluna
       });
+      F.beiral(ctx, px + 8, py + 27, w - 16, 3);
+      F.volume(ctx, px + 8, py + 27, w - 16, h - 41);
       ret(ctx, px + 2, py + 20, w - 4, 7, C.contorno);
       ret(ctx, px + 3, py + 21, w - 6, 5, PA.cor.misturar(PA.cor.clarear(telhado, 0.35), pedraClara, 0.4));
       // dentículos na viga, frontão com o friso claro e os enfeites dourados nas pontas
       for (var dx = px + 4; dx < px + w - 5; dx += 4) ret(ctx, dx, py + 24, 2, 2, PA.cor.escurecer(pedraClara, 0.18));
       triangulo(ctx, px + 1, py + 1, w - 2, 20, C.contorno);
       triangulo(ctx, px + 4, py + 4, w - 8, 16, telhado);
-      triangulo(ctx, px + 10, py + 9, w - 20, 11, PA.cor.clarear(telhado, 0.18));
+      F.telhas(ctx, px + 4, py + 4, w - 8, 16, telhado, 4);
+      ret(ctx, px + w / 2 - 1, py + 5, 2, 1, PA.cor.clarear(telhado, 0.4));
+      triangulo(ctx, px + 14, py + 10, w - 28, 10, C.contorno); triangulo(ctx, px + 16, py + 12, w - 32, 8, pedraClara);   // tímpano de pedra
       ret(ctx, px + 4, py + 19, w - 8, 1, PA.cor.escurecer(telhado, 0.2));
+      F.telhasRet(ctx, px + 5, py + 18, w - 10, 1, PA.cor.escurecer(telhado, 0.12), 4);
+      // relevo do frontão: louros dos dois lados do medalhão
+      for (var lr = 0; lr < 4; lr++) {
+        ret(ctx, px + w / 2 - 8 - lr * 3, py + 14 + (lr >> 1), 2, 1, PA.cor.clarear(telhado, 0.45));
+        ret(ctx, px + w / 2 + 7 + lr * 3, py + 14 + (lr >> 1), 2, 1, PA.cor.clarear(telhado, 0.45));
+        ret(ctx, px + w / 2 - 8 - lr * 3, py + 15 + (lr >> 1), 2, 1, PA.cor.escurecer(telhado, 0.2));
+        ret(ctx, px + w / 2 + 7 + lr * 3, py + 15 + (lr >> 1), 2, 1, PA.cor.escurecer(telhado, 0.2));
+      }
       circulo(ctx, px + w / 2, py - 1, 2, C.contorno); circulo(ctx, px + w / 2, py - 1, 1, '#ffd34d');
       [px + 3, px + w - 4].forEach(function (ax) { ret(ctx, ax - 1, py + 16, 3, 4, C.contorno); ret(ctx, ax, py + 17, 1, 2, '#ffd34d'); });
       circulo(ctx, px + w / 2, py + 13, 4, '#ffffff');
@@ -155,8 +187,7 @@
       // paredes de tábuas em pé, com o rodapé de pedra
       contornoRet(ctx, px + 4, py + 22, w - 8, h - 22, '#f6e7c4');
       F.tabuas(ctx, px + 5, py + 23, w - 10, h - 24, '#f6e7c4');
-      F.pedras(ctx, px + 5, py + h - 7, w - 10, 6, '#e6dccb');
-      ret(ctx, px + 5, py + h - 8, w - 10, 1, K);
+      F.fundacao(ctx, px + 5, py + h - 8, w - 10, 7, '#e6dccb');
       // telhado com as fileiras de telhas e a cumeeira
       ctx.fillStyle = K;
       for (var j = 0; j < 24; j++) { var m = Math.round(12 + j * (w / 2 - 12) / 23); ctx.fillRect(cx - m - 2, py + j, (m + 2) * 2, 1); }
@@ -164,6 +195,8 @@
       for (var j2 = 2; j2 < 23; j2++) { var m2 = Math.round(10 + j2 * (w / 2 - 14) / 23); ctx.fillRect(cx - m2, py + j2, m2 * 2, 1); }
       for (var j3 = 5, lin = 0; j3 < 23; j3 += 4, lin++) {
         var m3 = Math.round(10 + j3 * (w / 2 - 14) / 23) - 1;
+        ret(ctx, cx + 1, py + j3 - 3, m3, 3, '#e4903e');   // água da direita na sombra
+        ret(ctx, cx - m3, py + j3, m3 * 2, 1, '#b86a28'); if (j3 + 1 < 22) ret(ctx, cx - m3 + 1, py + j3 + 1, m3, 1, telhadoL);
         for (var tx = cx - m3 + (lin % 2) * 3; tx + 5 <= cx + m3; tx += 6) {
           ret(ctx, tx + 1, py + j3, 4, 1, telhado2); ret(ctx, tx, py + j3 - 1, 1, 1, telhado2); ret(ctx, tx + 5, py + j3 - 1, 1, 1, telhado2);
           ret(ctx, tx + 2, py + j3 - 2, 2, 1, telhadoL);
@@ -171,10 +204,18 @@
       }
       ret(ctx, cx - 12, py + 2, 24, 1, telhadoL);
       ret(ctx, px + 2, py + 22, w - 4, 2, K);
+      ret(ctx, px + 3, py + 22, w - 6, 1, telhado2);
+      F.beiral(ctx, px + 5, py + 24, w - 10, 2, telhado2); ret(ctx, px + 5, py + 29, w - 10, 1, 'rgba(58,36,70,0.12)');
+      F.volume(ctx, px + 5, py + 23, w - 10, h - 31);
+      // vigas de canto
+      [px + 5, px + w - 8].forEach(function (vx) { ret(ctx, vx, py + 24, 3, h - 32, '#c98a4b'); ret(ctx, vx, py + 24, 1, h - 32, '#dca067'); ret(ctx, vx + 2, py + 24, 1, h - 32, '#a86e3a'); });
       // cata-vento com a estrela
       ret(ctx, cx, py - 4, 1, 5, K);
       ret(ctx, cx - 5, py - 2, 11, 1, K); ret(ctx, cx - 6, py - 3, 2, 3, K); ret(ctx, cx + 5, py - 3, 1, 3, K);
       D.matriz(ctx, cx - 3, py - 8, ['...k...', '..kyk..', 'kkyyykk', '.kyyyk.', 'kyk.kyk'], { k: K, y: C.ouro });
+      // galinho do cata-vento e as letras N e S
+      D.matriz(ctx, cx + 2, py - 13, ['.kk..', 'kryk.', '.kyyk', '..kk.'], { k: K, y: C.ouro, r: '#ff6b5a' });
+      ret(ctx, cx - 1, py - 9, 1, 2, K);
       // palha no vão do telhado
       ret(ctx, cx - 7, py + 7, 14, 12, K);
       ret(ctx, cx - 6, py + 8, 12, 10, '#6b4428');
@@ -212,6 +253,8 @@
       ret(ctx, px + 12, py + h - 16, 1, 5, '#ffd34d');
       ret(ctx, px + 21, py + h - 17, 1, 6, '#ffe066');
       ret(ctx, px + 25, py + h - 14, 1, 4, '#d9a93a');
+      // feno escapando do vão do telhado
+      [[-6, 19], [-2, 20], [3, 19], [6, 20]].forEach(function (f) { ret(ctx, cx + f[0], py + f[1], 1, 2, '#f5c842'); });
       // cocho de água à direita
       var bx = px + w - 30;
       ret(ctx, bx, py + h - 9, 20, 7, K); ret(ctx, bx + 1, py + h - 8, 18, 5, C.madeira);
@@ -240,6 +283,12 @@
         var yTopo = py + 22 - Math.round(12 * Math.sqrt(Math.max(0, 1 - (o * o) / ((w / 2 - 4) * (w / 2 - 4)))));
         ret(ctx, cx + o, yTopo + 1, 1, py + 24 - yTopo, '#8a604a');
       });
+      // gemas cravadas na tampa
+      [[-18, 15, '#ff6b8a'], [0, 12, '#5fb4ff'], [18, 15, '#6fdc8c']].forEach(function (g) {
+        var gx = cx + g[0], gy = py + g[1];
+        ret(ctx, gx - 2, gy - 1, 5, 4, K); ret(ctx, gx - 1, gy - 2, 3, 6, K);
+        ret(ctx, gx - 1, gy - 1, 3, 4, g[2]); ret(ctx, gx - 1, gy, 1, 1, '#ffffff'); ret(ctx, gx + 1, gy + 1, 1, 2, D.escurecer(g[2], 0.25));
+      });
       // corpo de tábuas deitadas
       contornoRet(ctx, px + 2, py + 24, w - 4, h - 24, mad);
       F.tabuas(ctx, px + 3, py + 29, w - 6, h - 30, mad, true);
@@ -251,6 +300,16 @@
         ret(ctx, bx, py + 10, 6, h - 10, ouro); ret(ctx, bx + 4, py + 10, 2, h - 10, ouro2); ret(ctx, bx, py + 10, 1, h - 10, '#fff3a0');
         for (var rv = py + 14; rv < py + h - 2; rv += 7) { ret(ctx, bx + 2, rv, 2, 2, ouro2); ret(ctx, bx + 2, rv, 1, 1, '#ffffff'); }
       });
+      F.beiral(ctx, px + 3, py + 29, w - 6, 3);
+      F.volume(ctx, px + 3, py + 29, w - 6, h - 30);
+      F.fundacao(ctx, px + 3, py + h - 5, w - 6, 4, '#a8794a');
+      // cantoneiras douradas em cima, com rebite
+      [[px + 2, 0], [px + w - 9, 1]].forEach(function (c) {
+        ret(ctx, c[0], py + 24, 7, 7, K); ret(ctx, c[0] + 1, py + 25, 5, 5, ouro); ret(ctx, c[0] + 1, py + 25, 5, 1, '#fff3a0');
+        ret(ctx, c[0] + 3, py + 27, 1, 1, ouro2); ret(ctx, c[0] + 3, py + 27, 1, 1, '#ffffff');
+      });
+      // rebites ao longo do pé
+      for (var rb = px + 12; rb < px + w - 12; rb += 5) { ret(ctx, rb, py + h - 3, 1, 1, ouro2); ret(ctx, rb, py + h - 4, 1, 1, '#fff3a0'); }
       // cantoneiras de ferro
       [[px + 2, 1], [px + w - 9, -1]].forEach(function (c) {
         ret(ctx, c[0], py + h - 7, 7, 7, K); ret(ctx, c[0] + 1, py + h - 6, 5, 5, C.metal); ret(ctx, c[0] + 1, py + h - 6, 5, 1, '#e8eef8');
@@ -268,77 +327,13 @@
         ret(ctx, px + m[0] - 1, py + h - m[1] - 1, 1, 1, '#ffffff'); ret(ctx, px + m[0] + 1, py + h - m[1] + 1, 1, 1, ouro2);
       });
     },
-    loja: function (ctx, px, py, w, h) {
-      var cx = px + w / 2, lar = '#ff8a3d', larE = '#e07028', larC = '#ffc27a';
-      // caule / casa, com a textura de caule e a sombra do chapéu
-      contornoRet(ctx, px + 12, py + 26, w - 24, h - 26, '#fff1dc');
-      for (var i = px + 15; i < px + w - 14; i += 5) ret(ctx, i, py + 34, 1, h - 36, '#f7e4c8');
-      ret(ctx, px + w - 22, py + 28, 8, h - 29, '#f5dfc0');
-      ret(ctx, px + 13, py + 32, w - 26, 2, 'rgba(160,80,30,0.18)');
-      // chapéu de cogumelo com sombra embaixo, brilho em cima e as pintas
-      elipse(ctx, cx, py + 18, w / 2 - 1, 17, K);
-      elipse(ctx, cx, py + 17, w / 2 - 3, 15, lar);
-      elipse(ctx, cx + 4, py + 21, w / 2 - 8, 9, '#f57a30');
-      elipse(ctx, cx - 8, py + 11, 14, 6, larC);
-      elipse(ctx, cx - 12, py + 8, 6, 2, '#ffe2b8');
-      ret(ctx, px + 2, py + 26, w - 4, 6, K); ret(ctx, px + 4, py + 26, w - 8, 4, larE);
-      for (var g = px + 6; g < px + w - 6; g += 3) ret(ctx, g, py + 28, 1, 2, '#c85a1c');
-      [[14, 16, 3], [58, 12, 3], [66, 18, 2], [28, 21, 2], [50, 21, 2], [38, 7, 2]].forEach(function (b) {
-        circulo(ctx, px + b[0], py + b[1] + 1, b[2], larE);
-        circulo(ctx, px + b[0], py + b[1], b[2], '#ffffff');
-        ret(ctx, px + b[0] - 1, py + b[1] - b[2] + 1, 1, 1, '#fff8ee');
-      });
-      // varal de luzinhas na aba do chapéu
-      LUZES_LOJA.forEach(function (l) {
-        ret(ctx, px + l[0], py + 31 + l[1], 1, 1, K);
-        ret(ctx, px + l[0], py + 32 + l[1], 2, 2, l[2]);
-      });
-      // janela redonda com moldura e floreira
-      circulo(ctx, px + 22, py + 42, 6, K); circulo(ctx, px + 22, py + 42, 5, C.madeira); circulo(ctx, px + 22, py + 42, 4, K);
-      circulo(ctx, px + 22, py + 42, 3, '#c8f3ea'); ret(ctx, px + 20, py + 40, 2, 2, '#ffffff'); ret(ctx, px + 22, py + 39, 1, 7, C.madeira); ret(ctx, px + 19, py + 42, 7, 1, C.madeira);
-      // plaquinha pendurada com a varinha de condão
-      ret(ctx, px + 55, py + 32, 1, 5, K); ret(ctx, px + 64, py + 32, 1, 5, K);
-      contornoRet(ctx, px + 52, py + 37, 16, 11, '#fff3d6');
-      ret(ctx, px + 53, py + 38, 14, 1, '#ffffff');
-      ret(ctx, px + 56, py + 45, 1, 1, '#9b5cff'); ret(ctx, px + 57, py + 44, 1, 1, '#9b5cff'); ret(ctx, px + 58, py + 43, 1, 1, '#9b5cff');
-      D.matriz(ctx, px + 58, py + 39, ['..y..', '.yyy.', 'yywyy', '.y.y.'], { y: C.ouro, w: '#fff3a0' });
-      // porta
-      F.entrada(ctx, cx, py + h, '#9b5cff', '#ffe066');
-      // canteiro de flores
-      contornoRet(ctx, px + 14, py + 52, 16, 8, '#c98a4b');
-      ret(ctx, px + 15, py + 53, 14, 1, C.madeiraClara);
-      ret(ctx, px + 16, py + 50, 12, 3, '#7ea832');
-      ret(ctx, px + 17, py + 50, 8, 1, '#b6d24e');
-      [[18, 50, '#ff8a3d'], [22, 49, '#ffe066'], [26, 50, '#ffffff']].forEach(function (f) {
-        ret(ctx, px + f[0] - 1, py + f[1], 3, 1, f[2]);
-        ret(ctx, px + f[0], py + f[1] - 1, 1, 3, f[2]);
-        ret(ctx, px + f[0], py + f[1], 1, 1, '#fff3a0');
-      });
-      // cogumelinhos na porta da direita
-      [[54, 62, '#ff7eb6'], [60, 63, '#b58cff']].forEach(function (c) {
-        ret(ctx, px + c[0], py + c[1] - 3, 2, 3, '#fff1dc'); ret(ctx, px + c[0] - 1, py + c[1] - 3, 4, 1, K);
-        elipse(ctx, px + c[0], py + c[1] - 5, 3, 2, K); elipse(ctx, px + c[0], py + c[1] - 5, 2, 1, c[2]);
-        ret(ctx, px + c[0], py + c[1] - 6, 1, 1, '#ffffff');
-      });
-      // brilhinhos
-      [[6, 36], [72, 40], [66, 50]].forEach(function (s) { F.brilho(ctx, px + s[0], py + s[1], '#ffffff'); });
-    },
   };
-
-  // luzinhas do varal da loja: x, desce (a curva do fio) e a cor
-  var LUZES_LOJA = [[8, 0, '#ff7eb6'], [16, 1, '#ffe066'], [24, 2, '#6fdc8c'], [32, 2, '#5fb4ff'], [46, 2, '#ff7eb6'],
-    [54, 2, '#ffe066'], [62, 1, '#6fdc8c'], [70, 0, '#b58cff']];
 
   Mapa.PREDIOS = PREDIOS;
   // brilhos animados de um prédio, por cima da imagem fixa (o prédio registra Mapa.PREDIOS_ANIM[sprite];
   // mesmos argumentos do desenho de fora, mais o tempo t). Só roda com Animações ligado.
   Mapa.PREDIOS_ANIM = Mapa.PREDIOS_ANIM || {};
-  // as luzinhas da loja acendem uma de cada vez; as moedas do baú piscam
-  Mapa.PREDIOS_ANIM.loja = function (ctx, px, py, w, h, t) {
-    var n = Math.floor(t / 260) % LUZES_LOJA.length, l = LUZES_LOJA[n];
-    ret(ctx, px + l[0] - 1, py + 32 + l[1], 4, 2, 'rgba(255,255,255,0.35)');
-    ret(ctx, px + l[0], py + 32 + l[1], 2, 2, '#ffffff');
-  };
+  // as moedas do baú piscam (as luzinhas da loja: mundo/predios-3.js)
   Mapa.PREDIOS_ANIM.bau = function (ctx, px, py, w, h, t) {
     var brilhos = [[24, 7], [36, 4], [58, 5], [48, 7], [21, h - 6]];
     var f = (t / 900) % brilhos.length, i = Math.floor(f), fase = f - i;

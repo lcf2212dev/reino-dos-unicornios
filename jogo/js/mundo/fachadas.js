@@ -1,6 +1,7 @@
 /* Enfeites de fachada, iguais em todos os prédios do mapa: Mapa.fachada.<enfeite>(ctx, ...), em px do jogo.
    Janela com moldura e brilho, telhas, tijolos, tábuas, floreira, toldo, porta caprichada, lampião, vaso,
-   brasão, bandeira, degrau, a entrada padrão (degrau + porta) e a sombra da base. Quem usa: mundo/predios*.js
+   brasão, bandeira, degrau (2 níveis), a entrada padrão (degrau + porta), a sombra da base e, para o volume,
+   fundacao (base de pedra no pé da parede), volume (luz na quina esquerda, sombra na direita), beiral (sombra do telhado na parede) e trepadeira. Quem usa: mundo/predios*.js
    e os desenhos de fora dos prédios (js/interiores/<p>/fora.js), sempre dentro da função de desenho (nunca no
    carregamento). Só desenha: nada de Math.random (a textura usa Reino.Desenho.sorte, fixa por posição). */
 (function () {
@@ -29,13 +30,17 @@
       var vx = x + 2, vy = y + 2, vw = w - 4, vh = h - 4;
       camada(2, vidro, Math.max(1, vh >> 2), vidroL);
       ret(ctx, vx, vy + vh - 1, vw, 1, escurecer(vidro, 0.15));
+      // fundo da moldura: 1 px escuro em cima e à esquerda do vidro (o vidro fica para dentro)
+      var fundo = escurecer(vidro, 0.32);
+      if (!perfil.length) ret(ctx, vx, vy, vw, 1, fundo);
+      ret(ctx, vx, vy + perfil.length, 1, vh - 1 - perfil.length, fundo);
       if (o.luz) ret(ctx, vx, vy + (vh >> 1), vw, vh - (vh >> 1) - 1, o.luz);
       // reflexo em diagonal
       for (var d = perfil.length; d < Math.min(vw, vh) - 1; d++) {
         var rx = vx + vw - 2 - d, ry = vy + d;
         if (rx >= vx && ry < vy + vh - 1 && d % 3 !== 2) ret(ctx, rx, ry, 1, 1, 'rgba(255,255,255,0.75)');
       }
-      var brX = vx + (perfil.length ? 1 : 0), brY = vy + (perfil.length ? 1 : 0);
+      var brX = vx + 1, brY = vy + 1 + (perfil.length ? 1 : 0);
       ret(ctx, brX, brY, 2, 1, '#ffffff'); ret(ctx, brX, brY, 1, 2, '#ffffff');
       if (o.cortina) { ret(ctx, vx, vy, 2, vh - 1, o.cortina); ret(ctx, vx + vw - 2, vy, 2, vh - 1, o.cortina); ret(ctx, vx, vy, vw, 1, o.cortina); }
       if (o.cruz !== false) {
@@ -44,7 +49,8 @@
       }
       // peitoril
       ret(ctx, x - 1, y + h - 1, w + 2, 3, K); ret(ctx, x, y + h, w, 1, clarear(mold, 0.4));
-      ret(ctx, x, y + h + 2, w, 1, 'rgba(58,36,70,0.22)');
+      ret(ctx, x - 1, y + h, 1, 1, mold); ret(ctx, x + w, y + h, 1, 1, escurecer(mold, 0.2));
+      ret(ctx, x, y + h + 2, w, 1, 'rgba(58,36,70,0.25)'); ret(ctx, x + 1, y + h + 3, w - 2, 1, 'rgba(58,36,70,0.15)');
       if (o.venezianas) {
         [x - 5, x + w + 1].forEach(function (sx) {
           ret(ctx, sx, y, 4, h, K); ret(ctx, sx + 1, y + 1, 2, h - 2, o.venezianas);
@@ -67,9 +73,24 @@
     telhas: function (ctx, x, y, w, h, cor, passo) {
       passo = passo || 4;
       var esc = escurecer(cor, 0.22), luz = clarear(cor, 0.3), cx = x + w / 2;
+      var fundo = escurecer(cor, 0.12), outro = misturar(cor, '#ffd9a0', 0.18);
+      // volume: a água da direita fica na sombra (luz da esquerda), a da esquerda ganha um tom mais claro
+      for (var jj = 2; jj < h - 1; jj++) {
+        var mm = meiaTri(w, h, jj) - 1;
+        if (mm > 3) { ret(ctx, Math.round(cx + 1), y + jj, mm - 1, 1, escurecer(cor, 0.14)); ret(ctx, Math.round(cx - mm), y + jj, 1, 1, clarear(cor, 0.25)); }
+      }
       for (var j = passo, lin = 0; j < h; j += passo, lin++) {
-        var m = meiaTri(w, h, j) - 2;
+        var m = meiaTri(w, h, j) - 2, m0 = meiaTri(w, h, j - 1) - 1;
+        // sombra da fileira de cima: a faixa logo abaixo da beirada
+        if (m0 > 0 && j + 1 < h) ret(ctx, Math.round(cx - m0), y + j + 1, Math.round(m0 * 2), 1, fundo);
+        // tom por fileira: uma sim, uma não, um pouco mais escura
+        if (lin % 2 && m0 > 1) for (var jf = j + 2; jf < Math.min(h - 1, j + passo); jf++) { var mf = meiaTri(w, h, jf) - 1; ret(ctx, Math.round(cx - mf) + 1, y + jf, Math.round(mf * 2) - 2, 1, escurecer(cor, 0.07)); }
+        // junta da fileira atravessando o telhado e o topo claro da fileira de baixo
+        var mj = meiaTri(w, h, j) - 1;
+        if (mj > 1) { ret(ctx, Math.round(cx - mj) + 1, y + j, Math.round(mj * 2) - 2, 1, escurecer(cor, 0.3)); if (j + 1 < h - 1) ret(ctx, Math.round(cx - mj) + 2, y + j + 1, Math.round(mj) - 2, 1, clarear(cor, 0.14)); }
         for (var tx = Math.round(cx - m) + (lin % 2) * 3; tx + 4 <= cx + m; tx += 6) {
+          if (sorte(tx, y + j, 11) < 0.22 && passo > 3) ret(ctx, tx + 1, y + j - passo + 2, 4, passo - 2, outro);
+          ret(ctx, tx + 5, y + j - passo + 1, 1, passo - 1, escurecer(cor, 0.18));   // junta vertical entre telhas
           ret(ctx, tx + 1, y + j, 4, 1, esc); ret(ctx, tx, y + j - 1, 1, 1, esc); ret(ctx, tx + 5, y + j - 1, 1, 1, esc);
           ret(ctx, tx + 2, y + j - passo + 2, 2, 1, luz);
         }
@@ -81,6 +102,8 @@
       var esc = escurecer(cor, 0.22), luz = clarear(cor, 0.3);
       ret(ctx, x, y, w, h, cor);
       for (var j = y + passo - 1, lin = 0; j < y + h; j += passo, lin++) {
+        ret(ctx, x, j, w, 1, escurecer(cor, 0.3));
+        if (j + 1 < y + h) ret(ctx, x, j + 1, w, 1, clarear(cor, 0.12));   // topo claro da fileira de baixo
         for (var tx = x + (lin % 2) * 3 - 3; tx < x + w; tx += 6) {
           var a = Math.max(x, tx + 1), b = Math.min(x + w, tx + 5);
           if (b > a) ret(ctx, a, j, b - a, 1, esc);
@@ -97,33 +120,42 @@
         if (j + alto - 1 < y + h) ret(ctx, x, j + alto - 1, w, 1, junta);
         for (var i = x + (lin % 2 ? 4 : 0); i < x + w; i += 8) {
           if (i > x) ret(ctx, i, j, 1, Math.min(alto - 1, y + h - j), junta);
-          var s = sorte(i, j, 7);
-          if (s < 0.25) ret(ctx, i + 1, j, Math.min(7, x + w - i - 1), Math.min(alto - 1, y + h - j), esc);
-          else if (s > 0.8) ret(ctx, i + 1, j, Math.min(3, x + w - i - 1), 1, luz);
+          var s = sorte(i, j, 7), a0 = Math.max(x, i + (i > x ? 1 : 0)), lw = Math.min(i + 8, x + w) - a0, la = Math.min(alto - 1, y + h - j);
+          if (lw <= 0) continue;
+          if (s < 0.25) ret(ctx, a0, j, lw, la, esc);
+          else if (s > 0.8) ret(ctx, a0, j, lw, la, clarear(cor, 0.08));
+          ret(ctx, a0, j, Math.min(3, lw), 1, luz);
+          if (la > 2) ret(ctx, a0 + 1, j + la - 1, lw - 1, 1, escurecer(cor, 0.18));
         }
       }
     },
     // pedras grandes de muralha
     pedras: function (ctx, x, y, w, h, cor) {
-      var junta = escurecer(cor, 0.16), luz = clarear(cor, 0.35);
+      var junta = escurecer(cor, 0.22), luz = clarear(cor, 0.35);
       ret(ctx, x, y, w, h, cor);
       for (var j = y, lin = 0; j < y + h; j += 6, lin++) {
         if (j + 5 < y + h) ret(ctx, x, j + 5, w, 1, junta);
         for (var i = x + (lin % 2 ? 5 : 0); i < x + w; i += 10) {
           if (i > x) ret(ctx, i, j, 1, Math.min(5, y + h - j), junta);
-          ret(ctx, Math.max(x, i + 1), j, Math.min(3, x + w - i - 1), 1, luz);
+          var a0 = Math.max(x, i + 1), lw = Math.min(i + 10, x + w) - a0, la = Math.min(5, y + h - j), sp = sorte(i, j, 13);
+          if (lw > 0 && sp < 0.3) ret(ctx, a0, j, lw, la, escurecer(cor, 0.06));
+          else if (lw > 0 && sp > 0.75) ret(ctx, a0, j, lw, la, misturar(cor, '#ffe0b0', 0.25));
+          if (lw > 1 && la > 3) { ret(ctx, a0 + 1, j + la - 1, lw - 1, 1, escurecer(cor, 0.1)); ret(ctx, a0 + lw - 1, j + 1, 1, la - 1, escurecer(cor, 0.08)); }
+          ret(ctx, a0, j, Math.min(3, x + w - i - 1), 1, luz); if (la > 2) ret(ctx, a0, j + 1, 1, 1, luz);
           if (sorte(i, j, 3) < 0.3 && j + 3 < y + h && i + 5 < x + w) ret(ctx, i + 5, j + 3, Math.min(2, x + w - i - 5), 1, junta);
         }
       }
     },
     // tábuas de madeira (verticais ou deitadas) com veios e preguinhos
     tabuas: function (ctx, x, y, w, h, cor, deitadas) {
-      var esc = escurecer(cor, 0.16), luz = clarear(cor, 0.2);
+      var esc = escurecer(cor, 0.28), luz = clarear(cor, 0.2);
       ret(ctx, x, y, w, h, cor);
       if (deitadas) {
+        for (var j0 = y; j0 < y + h; j0 += 6) if (sorte(x, j0, 19) < 0.4) ret(ctx, x, j0 + 1, w, Math.min(4, y + h - j0 - 1), escurecer(cor, 0.1));
         for (var j = y + 5; j < y + h; j += 6) { ret(ctx, x, j, w, 1, esc); ret(ctx, x, j + 1, w, 1, luz); }
         for (var v = y + 2; v < y + h; v += 6) for (var i = x + 3; i < x + w - 4; i += 9) if (sorte(i, v, 5) < 0.5) ret(ctx, i, v, 3, 1, esc);
       } else {
+        for (var i1 = x; i1 < x + w; i1 += 7) { var s1 = sorte(i1, y, 17); if (s1 < 0.3 || s1 > 0.8) ret(ctx, i1 + 2, y, Math.min(4, x + w - i1 - 2), h, s1 < 0.3 ? escurecer(cor, 0.1) : clarear(cor, 0.1)); }
         for (var i2 = x + 6; i2 < x + w; i2 += 7) { ret(ctx, i2, y, 1, h, esc); ret(ctx, i2 + 1, y, 1, h, luz); }
         for (var i3 = x + 3; i3 < x + w; i3 += 7) for (var v2 = y + 4; v2 < y + h - 3; v2 += 8) if (sorte(i3, v2, 9) < 0.5) ret(ctx, i3, v2, 1, 3, esc);
         for (var p = x + 2; p < x + w - 1; p += 7) { ret(ctx, p, y + 2, 1, 1, esc); ret(ctx, p, y + h - 3, 1, 1, esc); }
@@ -187,6 +219,12 @@
       ret(ctx, cx - (larg >> 1) + 1, y + 1, larg - 2, 1, '#fff0d0');
       ret(ctx, cx - (larg >> 1) + 1, y + alto - 1, larg - 2, 1, '#d4bc8c');
       for (var d = cx - (larg >> 1) + 5; d < cx + (larg >> 1) - 2; d += 6) ret(ctx, d, y + 2, 1, alto - 3, '#c9ae80');
+      // segundo nível: a pedra de baixo aparece 2 px de cada lado, com a quina escura
+      if (larg >= 10) {
+        ret(ctx, cx - (larg >> 1) + 1, y, 2, 1, '#e8d3a8'); ret(ctx, cx + (larg >> 1) - 3, y, 2, 1, '#e8d3a8');
+        ret(ctx, cx - (larg >> 1) + 3, y, 1, alto - 1, K); ret(ctx, cx + (larg >> 1) - 4, y, 1, alto - 1, K);
+        ret(ctx, cx - (larg >> 1) + 4, y + 1, 1, alto - 2, '#fff0d0');
+      }
     },
     // lampião de ferro com a luz amarela; x = poste, yb = chão
     lampiao: function (ctx, x, yb, alto) {
@@ -209,7 +247,7 @@
       D.matriz(ctx, cx - 5, y, [
         'kkkkkkkkkkk', 'kaaaaabbbbk', 'kaaaaabbbbk', 'kaaawabbbbk', 'kaawwwbbbbk', 'kbbbwbaaaak',
         '.kbbbbaaak.', '.kbbbbaaak.', '..kbbbaak..', '...kbbak...', '....kkk....'], { k: K, a: cor, b: cor2, w: C.ouro });
-      ret(ctx, cx - 4, y + 1, 1, 5, 'rgba(255,255,255,0.45)');
+      ret(ctx, cx - 4, y + 1, 1, 5, 'rgba(255,255,255,0.35)');
     },
     // bandeirinha num mastro; x = mastro, y = topo do mastro
     bandeira: function (ctx, x, y, alto, cor) {
@@ -225,6 +263,43 @@
       ret(ctx, cx - meia, y, meia * 2, 1, 'rgba(58,36,70,0.25)');
       ret(ctx, cx - meia + 2, y + 1, (meia - 2) * 2, 1, 'rgba(58,36,70,0.25)');
       ret(ctx, cx - meia + 5, y + 2, (meia - 5) * 2, 1, 'rgba(58,36,70,0.15)');
+    },
+    // base de pedra (fundação) no pé da parede: contorno em cima, pedras deitadas com tom próprio. y = topo
+    fundacao: function (ctx, x, y, w, h, cor) {
+      cor = misturar(cor || '#c9b494', '#6e5f58', 0.3);   // sempre bem mais escura que a parede
+      ret(ctx, x, y, w, 1, K);
+      ret(ctx, x, y + 1, w, h - 1, cor);
+      for (var i = x, k = 0; i < x + w; k++) {
+        var lw = 5 + Math.floor(sorte(i, y, 23) * 5), b = Math.min(i + lw, x + w), s = sorte(i, y, 29);
+        if (s < 0.33) ret(ctx, i, y + 1, b - i, h - 1, escurecer(cor, 0.15));
+        else if (s > 0.66) ret(ctx, i, y + 1, b - i, h - 1, clarear(cor, 0.18));
+        ret(ctx, i, y + 1, b - i, 1, clarear(cor, 0.35));
+        if (h > 3) ret(ctx, i, y + h - 1, b - i, 1, escurecer(cor, 0.25));
+        if (b < x + w) ret(ctx, b, y + 1, 1, h - 1, escurecer(cor, 0.4));
+        i = b + 1;
+      }
+    },
+    // volume da parede: luz de 1 px na quina esquerda, sombra de 3 px (2 degraus) na direita
+    volume: function (ctx, x, y, w, h) {
+      ret(ctx, x, y, 1, h, 'rgba(255,255,255,0.35)');
+      ret(ctx, x + w - 3, y, 3, h, 'rgba(58,36,70,0.15)'); ret(ctx, x + w - 2, y, 2, h, 'rgba(58,36,70,0.1)');
+    },
+    // beiral: com cor, a tábua do beiral (2 px, o lado de baixo escuro) e, embaixo dela, a sombra de 2 px na parede;
+    // sem cor, só a sombra (2 faixas de alfa, arte.md §13). y = linha logo abaixo do telhado
+    beiral: function (ctx, x, y, w, alto, cor) {
+      alto = alto || 3;
+      if (cor) { ret(ctx, x - 1, y, w + 2, 1, clarear(cor, 0.1)); ret(ctx, x - 1, y + 1, w + 2, 1, escurecer(cor, 0.35)); ret(ctx, x - 1, y + 2, w + 2, 1, K); y += 3; }
+      ret(ctx, x, y, w, 2, 'rgba(58,36,70,0.25)');
+      if (alto > 2) ret(ctx, x, y + 2, w, alto - 2, 'rgba(58,36,70,0.12)');
+    },
+    // trepadeira subindo a parede, com folhinhas e flores; x = pé, yb = chão
+    trepadeira: function (ctx, x, yb, alto, flor) {
+      for (var j = 0; j < alto; j++) {
+        var ox = x + ((j >> 2) % 2);
+        ret(ctx, ox, yb - 1 - j, 1, 1, C.folha3);
+        if (j % 3 === 1) { ret(ctx, ox - 1, yb - 1 - j, 1, 1, C.folha); ret(ctx, ox + 1, yb - 2 - j, 2, 1, C.folha); ret(ctx, ox + 1, yb - 3 - j, 1, 1, C.folha2); }
+        if (flor && j % 7 === 5) ret(ctx, ox - 1, yb - 2 - j, 1, 1, flor);
+      }
     },
     // tufinhos de grama junto da base
     tufos: function (ctx, pts, yb) {
