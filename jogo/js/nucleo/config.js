@@ -65,6 +65,11 @@ Reino.config = {
   // banho de espuma na Pet Shop (js/sistemas/banho.js): de graça, animação de ~6 s (curta ~1 s sem Animações);
   // depois de `pularDepoisMs`, um toque pula para o fim
   banho: { duracaoMs: 6000, duracaoCurtaMs: 1000, pularDepoisMs: 2000 },
+  // vida no mapa (js/sistemas/vida-mapa.js), só com Animações: bichinhos de enfeite, sem toque nem prêmio.
+  // borboletas: quantas perto de flores e canteiros; libelulas: sobre o lago; folhas: caindo das árvores;
+  // passarinhoACadaMs: de quanto em quanto tempo passa um bando; passarinhoPxS: velocidade (px do jogo por s);
+  // asaMs: troca de quadro das asas da borboleta
+  vidaMapa: { borboletas: 10, libelulas: 3, folhas: 4, passarinhoACadaMs: 14000, passarinhoPxS: 46, asaMs: 160 },
   // fotos do jogo (js/sistemas/fotos.js): só no aparelho (IndexedDB 'reino-fotos'), nunca no save nem no servidor.
   // maxLado: px do lado maior; maxAlbum: fotos por aparelho; toqueLongoMs: segurar o 📷 abre o álbum.
   // NÃO troque o `banco`, senão o álbum parece vazio
