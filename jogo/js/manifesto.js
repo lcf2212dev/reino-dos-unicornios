@@ -545,6 +545,7 @@
       { js: 'js/interiores/padrao.js', grupo: 'interiores', node: true }, // padrao.js por último entre os prédios: monta o interior das matérias que não têm um próprio
       { js: 'js/sistemas/banho.js', grupo: 'sistemas' },
       { js: 'js/sistemas/banho-desenho.js', grupo: 'sistemas' },
+      { js: 'js/sistemas/vida-mapa.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/et-companheiro-desenho.js', grupo: 'sistemas' },
       { js: 'js/motor/cena.js', grupo: 'motor' },
       { js: 'js/motor/transicao.js', grupo: 'motor' },
