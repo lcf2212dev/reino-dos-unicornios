@@ -12,53 +12,198 @@
   var s = D.sorte;
 
   function tufo(ctx, x, y, fio) { ret(ctx, x, y, 1, 3, C.grama2); ret(ctx, x + 1, y + 1, 1, 2, fio); }
-  // grama: 0 a 3 tufos em lugares sorteados e, em 1 de cada 6 tiles, uma mancha de grama mais escura
+
+  /* ----- grama: manchas orgânicas de 3 tons que atravessam os tiles (ruído de baixa frequência numa grade grossa,
+     contado do canto do mapa), pontilhado 2×2 na transição, tufos de 3 formatos, trevinhos e pedrinhas raras ----- */
+  var GRAMA_ESC = '#aac947', GRAMA_CLA = '#daf080';
+  function suave(t) { return t * t * (3 - 2 * t); }
+  function camada(px, py, cel, sem) {
+    var gx = px / cel, gy = py / cel, i = Math.floor(gx), j = Math.floor(gy), fx = suave(gx - i), fy = suave(gy - j);
+    var a = s(i, j, sem), b = s(i + 1, j, sem), c = s(i, j + 1, sem), d = s(i + 1, j + 1, sem);
+    return (a + (b - a) * fx) * (1 - fy) + (c + (d - c) * fx) * fy;
+  }
+  function ruido(px, py) { return camada(px, py, 44, 81) * 0.7 + camada(px, py, 15, 82) * 0.3; }
+  // cor da grama no pixel (bloco 2×2): base, mancha escura ou clara; na beirada, xadrez de blocos
+  function corGrama(px, py) {
+    var bx = px >> 1, by = py >> 1, n = ruido(bx * 2 + 1, by * 2 + 1), xadrez = (bx + by) % 2 === 0;
+    if (n < 0.36) return GRAMA_ESC;
+    if (n < 0.39) return xadrez ? GRAMA_ESC : C.grama;
+    if (n > 0.66) return GRAMA_CLA;
+    if (n > 0.63) return xadrez ? GRAMA_CLA : C.grama;
+    return C.grama;
+  }
+  var TUFOS = [
+    [[0, 1, 1, 3], [2, 0, 1, 4], [4, 1, 1, 3]],          // leque de 3 fios
+    [[0, 2, 1, 2], [1, 0, 1, 4], [3, 1, 1, 3]],          // tufo torto
+    [[0, 1, 1, 2], [1, 0, 1, 3], [2, 1, 1, 2]],          // tufinho
+  ];
+  function tufoGrande(ctx, x, y, v) {
+    TUFOS[v].forEach(function (f, i) {
+      ret(ctx, x + f[0], y + f[1], f[2], f[3], '#8fbf3e');
+      if (i === 1) ret(ctx, x + f[0], y + f[1], 1, 1, C.grama3);
+    });
+    ret(ctx, x, y + 4, TUFOS[v][2][0] + 1, 1, 'rgba(58,36,70,0.12)');
+  }
+  function trevo(ctx, x, y) {
+    ret(ctx, x, y, 2, 2, '#8fbf3e'); ret(ctx, x + 2, y + 1, 2, 2, '#8fbf3e'); ret(ctx, x, y + 2, 2, 2, '#8fbf3e');
+    ret(ctx, x, y, 1, 1, '#b8e06a'); ret(ctx, x + 2, y + 1, 1, 1, '#b8e06a'); ret(ctx, x + 1, y + 4, 1, 1, '#7ea832');
+  }
+  function rua(nx, ny) { var k = I.dentro(nx, ny) ? I.tipo[ny][nx] : 'g'; return k === 'c' || k === 'p'; }
   function grama(ctx, x, y, px, py) {
     ret(ctx, px, py, T, T, C.grama);
-    if (s(x, y, 11) < 0.17) {
-      var mx = px + 2 + Math.floor(s(x, y, 12) * 8), my = py + 3 + Math.floor(s(x, y, 13) * 8);
-      ret(ctx, mx, my, 6, 2, C.grama2); ret(ctx, mx + 1, my - 1, 3, 1, C.grama2); ret(ctx, mx + 2, my + 2, 3, 1, C.grama2);
+    for (var by = 0; by < T; by += 2) for (var bx = 0; bx < T; bx += 2) {
+      var cor = corGrama(px + bx, py + by);
+      if (cor !== C.grama) ret(ctx, px + bx, py + by, 2, 2, cor);
     }
-    for (var k = 0, n = Math.floor(s(x, y, 14) * 4); k < n; k++) {
-      tufo(ctx, px + 1 + Math.floor(s(x, y, 15 + k) * 13), py + 1 + Math.floor(s(x, y, 19 + k) * 12), C.grama3);
+    for (var k = 0, n = 1 + Math.floor(s(x, y, 14) * 3); k < n; k++) {
+      var tx = px + 1 + Math.floor(s(x, y, 15 + k) * 11), ty = py + 1 + Math.floor(s(x, y, 19 + k) * 10);
+      var v = Math.floor(s(x, y, 23 + k) * 4);
+      if (v === 3) tufo(ctx, tx, ty, C.grama3); else tufoGrande(ctx, tx, ty, v);
     }
+    if (s(x, y, 11) < 0.12) trevo(ctx, px + 3 + Math.floor(s(x, y, 12) * 8), py + 3 + Math.floor(s(x, y, 13) * 8));
+    if (s(x, y, 27) < 0.05) {
+      var qx = px + 2 + Math.floor(s(x, y, 28) * 10), qy = py + 3 + Math.floor(s(x, y, 29) * 9);
+      ret(ctx, qx, qy + 2, 3, 1, 'rgba(58,36,70,0.15)');
+      ret(ctx, qx, qy, 3, 2, '#d8cbb0'); ret(ctx, qx, qy, 2, 1, '#f4ecd8'); ret(ctx, qx + 2, qy + 1, 1, 1, '#b3a488');
+    }
+    // sombra de 1 px do meio-fio na grama (a luz vem de cima e da esquerda: só abaixo e à direita da rua)
+    if (calcada(x, y - 1)) ret(ctx, px, py, T, 1, 'rgba(58,36,70,0.15)');
+    if (calcada(x - 1, y)) ret(ctx, px, py + (calcada(x, y - 1) ? 1 : 0), 1, T, 'rgba(58,36,70,0.15)');
   }
-  // paralelepípedo: fileiras de 4 px, pedras de 5 + 1 de junta, desencontradas (contam do canto do mapa: emendam)
-  function pedra(ctx, px, py) {
-    ret(ctx, px, py, T, T, C.rua2);
+  // rua com meio-fio (avenida ou ladrilho; a terra não tem)
+  function calcada(nx, ny) {
+    if (!I.dentro(nx, ny) || I.tipo[ny][nx] !== 'c') return false;
+    return ((I.estilo && I.estilo[ny] && I.estilo[ny][nx]) || 'pedra') !== 'terra';
+  }
+
+  /* ----- paralelepípedo: fileiras de 4 px, pedras de 5 + 1 de junta, desencontradas (contam do canto do mapa:
+     emendam); cada pedra com tom próprio, brilho em cima/à esquerda, sombra embaixo/à direita ----- */
+  var PEDRAS = ['#f7d7a8', '#f1cc94', '#fbe3bc', '#ebc286'], JUNTA = '#c99a58';
+  function pedra(ctx, x, y, px, py) {
+    ret(ctx, px, py, T, T, JUNTA);
+    var gc = !rua(x, y - 1), gb = !rua(x, y + 1), ge = !rua(x - 1, y), gd = !rua(x + 1, y);
     for (var j = 0; j < 4; j++) {
       var wy = py + j * 4, desl = ((wy / 4) % 2) ? 3 : 0;
       for (var wx = px - ((px + desl) % 6); wx < px + T; wx += 6) {
         var a = Math.max(px, wx), b = Math.min(px + T, wx + 5);
         if (b <= a) continue;
-        ret(ctx, a, wy, b - a, 3, s(wx, wy, 21) < 0.3 ? '#f0cc98' : C.rua);
-        ret(ctx, a, wy, b - a, 1, C.rua3);
-        if (a === wx) ret(ctx, a, wy, 1, 1, C.rua);          // quina de cima arredondada
+        var tom = PEDRAS[Math.floor(s(wx, wy, 21) * 4)];
+        ret(ctx, a, wy, b - a, 3, tom);
+        ret(ctx, a, wy, b - a, 1, D.clarear(tom, 0.45));
+        ret(ctx, a, wy + 2, b - a, 1, D.escurecer(tom, 0.12));
+        if (a === wx) { ret(ctx, a, wy, 1, 3, D.clarear(tom, 0.25)); ret(ctx, a, wy, 1, 1, JUNTA); }
+        if (b === wx + 5) { ret(ctx, b - 1, wy + 1, 1, 2, D.escurecer(tom, 0.16)); ret(ctx, b - 1, wy + 2, 1, 1, JUNTA); }
+        if (s(wx, wy, 22) < 0.035 && b - a >= 4) {      // pedra rachada (rara)
+          ret(ctx, a + 1, wy + 1, 1, 1, D.escurecer(tom, 0.25)); ret(ctx, a + 2, wy + 2, 1, 1, D.escurecer(tom, 0.25));
+        }
+      }
+      // musgo nas juntas perto da grama
+      for (var i = 0; i < T; i++) {
+        var jx = px + i, junta = (jx + desl) % 6 === 5, perto = (gc && j === 0) || (gb && j === 3) || (ge && i < 3) || (gd && i > 12);
+        if (perto && junta && s(jx, wy, 24) < 0.5) ret(ctx, jx, wy + 1, 1, 2, '#a8cc48');
+        if (perto && s(jx, wy, 25) < 0.12) ret(ctx, jx, wy + 3, 1, 1, '#b6d451');
       }
     }
   }
-  // ladrilho claro: quadrados de 7 px com junta de 1, e um pontinho em quadrado sim, quadrado não
-  function ladrilho(ctx, px, py) {
-    ret(ctx, px, py, T, T, '#f3d9a4');
-    for (var j = 0; j < 2; j++) for (var i = 0; i < 2; i++) {
-      var qx = px + i * 8, qy = py + j * 8;
-      ret(ctx, qx, qy, 7, 7, '#fff0cc'); ret(ctx, qx, qy, 7, 1, '#fff8e8'); ret(ctx, qx, qy, 1, 7, '#fff8e8');
-      if ((qx / 8 + qy / 8) % 2) ret(ctx, qx + 3, qy + 3, 2, 2, '#f7e2b4');
+  // cruzamento (avenida com travessa comprida, não com o caminho curto de uma porta): rosácea de pedras claras e
+  // escuras no centro; quando o cruzamento tem 2 tiles, ela fica no meio dos dois
+  function longo(x, y, dy) { var n = 0; while (rua(x, y) && n < 6) { n++; y += dy; } return n; }
+  function cruz(x, y) {
+    if (!rua(x, y) || !rua(x - 1, y) || !rua(x + 1, y) || !(rua(x, y - 1) || rua(x, y + 1))) return false;
+    return longo(x, y, -1) + longo(x, y, 1) - 1 >= 6;
+  }
+  function rosacea(ctx, x, y, px, py) {
+    var e = x, d2 = x, c0 = y, b0 = y;      // centro do bloco de tiles de cruzamento
+    while (cruz(e - 1, y)) e--; while (cruz(d2 + 1, y)) d2++;
+    while (cruz(x, c0 - 1)) c0--; while (cruz(x, b0 + 1)) b0++;
+    var cx = (e + d2 + 1) * T / 2, cy = (c0 + b0 + 1) * T / 2;
+    // medalhão incrustado: disco rosado, 8 pétalas rosa e âmbar, miolo laranja, aro escuro e sombra embaixo/à direita
+    for (var j = 0; j < T; j++) for (var i = 0; i < T; i++) {
+      var dx = px + i + 0.5 - cx, dy = py + j + 0.5 - cy, d = Math.sqrt(dx * dx + dy * dy), cor = null;
+      if (d > 7.5) {
+        var sx = dx - 1, sy = dy - 1;
+        if (Math.sqrt(sx * sx + sy * sy) <= 7.5) ret(ctx, px + i, py + j, 1, 1, 'rgba(58,36,70,0.15)');
+        continue;
+      }
+      var setor = Math.floor((Math.atan2(dy, dx) + Math.PI) / (Math.PI / 4)) % 8;
+      if (d > 6.5) cor = C.meioFio2;
+      else if (d <= 1.5) cor = '#ff8a3d';
+      else if (d <= 2.5) cor = '#fff6a8';
+      else if (d <= 5.5) cor = setor % 2 ? '#ff8fb1' : '#ffbe3d';
+      else cor = '#ffe0e6';
+      ret(ctx, px + i, py + j, 1, 1, cor);
     }
   }
-  // terra batida: pedrinhas e grãos sorteados, e a grama roendo a beirada (sem meio-fio)
+
+  /* ----- ladrilho: peças de 7 px com chanfro e junta de 1; fileiras alternadas com losango ou florzinha ----- */
+  function ladrilho(ctx, px, py) {
+    ret(ctx, px, py, T, T, '#e8c88c');
+    for (var j = 0; j < 2; j++) for (var i = 0; i < 2; i++) {
+      var qx = px + i * 8, qy = py + j * 8, fila = (qy / 8) % 2, alt = (qx / 8 + qy / 8) % 2;
+      var base = alt ? '#fff0cc' : '#fbe6b8';
+      ret(ctx, qx, qy, 7, 7, base);
+      ret(ctx, qx + 1, qy, 5, 1, '#fffaf0'); ret(ctx, qx, qy + 1, 1, 5, '#fffaf0');      // chanfro de luz
+      ret(ctx, qx + 1, qy + 6, 6, 1, '#efd29a'); ret(ctx, qx + 6, qy + 1, 1, 6, '#efd29a'); // chanfro de sombra
+      ret(ctx, qx, qy, 1, 1, '#e8c88c'); ret(ctx, qx + 6, qy + 6, 1, 1, '#e8c88c');
+      ret(ctx, qx + 6, qy, 1, 1, '#f3dcaa'); ret(ctx, qx, qy + 6, 1, 1, '#f3dcaa');
+      if (fila) {         // losango
+        ret(ctx, qx + 3, qy + 1, 1, 1, '#f0b878'); ret(ctx, qx + 2, qy + 2, 3, 1, '#f0b878');
+        ret(ctx, qx + 1, qy + 3, 5, 1, '#f0b878'); ret(ctx, qx + 2, qy + 4, 3, 1, '#f0b878');
+        ret(ctx, qx + 3, qy + 5, 1, 1, '#f0b878');
+        ret(ctx, qx + 3, qy + 2, 1, 3, '#ffd59a'); ret(ctx, qx + 2, qy + 3, 3, 1, '#ffd59a');
+        ret(ctx, qx + 3, qy + 3, 1, 1, alt ? '#ff8a3d' : '#7ed9c8');
+      } else {            // florzinha de 4 pontos
+        ret(ctx, qx + 3, qy + 2, 1, 1, '#f3c88a'); ret(ctx, qx + 2, qy + 3, 1, 1, '#f3c88a');
+        ret(ctx, qx + 4, qy + 3, 1, 1, '#f3c88a'); ret(ctx, qx + 3, qy + 4, 1, 1, '#f3c88a');
+        ret(ctx, qx + 3, qy + 3, 1, 1, '#ffb15a');
+      }
+    }
+  }
+
+  /* ----- terra batida: sulcos de roda no sentido da trilha, pedrinhas e a grama roendo a beirada ----- */
   function terra(ctx, x, y, px, py) {
     ret(ctx, px, py, T, T, '#e2b57c');
-    for (var k = 0; k < 7; k++) {
+    for (var k = 0; k < 10; k++) {
       var gx = px + Math.floor(s(x, y, 30 + k) * 15), gy = py + 2 + Math.floor(s(x, y, 40 + k) * 12);
-      ret(ctx, gx, gy, k < 2 ? 2 : 1, 1, k % 2 ? '#c9955c' : '#f2d09e');
+      ret(ctx, gx, gy, 1, 1, k % 2 ? '#cf9e64' : '#f0cd98');
     }
-    function chao(nx, ny) { var t = I.dentro(nx, ny) ? I.tipo[ny][nx] : 'g'; return t !== 'c' && t !== 'p'; }
+    var deitada = rua(x - 1, y) || rua(x + 1, y) || !(rua(x, y - 1) || rua(x, y + 1));
+    [5, 10].forEach(function (o) {
+      for (var i = 0; i < T; i++) {
+        var w = (deitada ? py : px) + o + (s(deitada ? px + i : px + o, deitada ? py + o : py + i, 55) < 0.2 ? 1 : 0);
+        if (deitada) { ret(ctx, px + i, w, 1, 1, '#c99358'); ret(ctx, px + i, w + 1, 1, 1, '#eec894'); }
+        else { ret(ctx, w, py + i, 1, 1, '#c99358'); ret(ctx, w + 1, py + i, 1, 1, '#eec894'); }
+      }
+    });
+    for (var p = 0; p < 2; p++) if (s(x, y, 56 + p) < 0.6) {
+      var sx = px + 2 + Math.floor(s(x, y, 58 + p) * 11), sy = py + 2 + Math.floor(s(x, y, 60 + p) * 11);
+      ret(ctx, sx, sy + 1, 3, 1, '#b8854e'); ret(ctx, sx, sy, 3, 1, '#d8cbb0'); ret(ctx, sx, sy, 1, 1, '#f4ecd8');
+    }
+    function chao(nx, ny) { return !rua(nx, ny); }
     for (var i = 0; i < T; i++) {
-      if (chao(x, y - 1)) ret(ctx, px + i, py, 1, 1 + (s(px + i, py, 51) < 0.35 ? 1 : 0), C.grama);
-      if (chao(x, y + 1)) ret(ctx, px + i, py + T - 1 - (s(px + i, py, 52) < 0.35 ? 1 : 0), 1, 2, C.grama);
-      if (chao(x - 1, y)) ret(ctx, px, py + i, 1 + (s(px, py + i, 53) < 0.35 ? 1 : 0), 1, C.grama);
-      if (chao(x + 1, y)) ret(ctx, px + T - 1 - (s(px, py + i, 54) < 0.35 ? 1 : 0), py + i, 2, 1, C.grama);
+      var r1 = s(px + i, py, 51), r2 = s(px + i, py, 52), r3 = s(px, py + i, 53), r4 = s(px, py + i, 54);
+      if (chao(x, y - 1)) ret(ctx, px + i, py, 1, 1 + (r1 < 0.35 ? 1 : 0) + (r1 < 0.08 ? 1 : 0), corGrama(px + i, py));
+      if (chao(x, y + 1)) { var hb = 1 + (r2 < 0.35 ? 1 : 0) + (r2 < 0.08 ? 1 : 0); ret(ctx, px + i, py + T - hb, 1, hb, corGrama(px + i, py + T - 1)); }
+      if (chao(x - 1, y)) ret(ctx, px, py + i, 1 + (r3 < 0.35 ? 1 : 0) + (r3 < 0.08 ? 1 : 0), 1, corGrama(px, py + i));
+      if (chao(x + 1, y)) { var wd = 1 + (r4 < 0.35 ? 1 : 0) + (r4 < 0.08 ? 1 : 0); ret(ctx, px + T - wd, py + i, wd, 1, corGrama(px + T - 1, py + i)); }
+    }
+  }
+
+  function calcadaOuPraca(nx, ny) { var k = I.tipo[ny][nx]; return k === 'c' || k === 'p'; }
+  // meio-fio com volume: linha escura de fora, face lateral e face de cima clara (a luz vem de cima/esquerda)
+  function meioFio(ctx, x, y, px, py) {
+    var FACE = '#fff0cc', LADO = C.meioFio, LINHA = C.meioFio2;
+    var rua = function (nx, ny) { return !I.dentro(nx, ny) || calcadaOuPraca(nx, ny); };   // fora do mapa: sem meio-fio
+    if (!rua(x, y - 1)) { ret(ctx, px, py, T, 1, LINHA); ret(ctx, px, py + 1, T, 1, FACE); ret(ctx, px, py + 2, T, 1, LADO); }
+    if (!rua(x, y + 1)) { ret(ctx, px, py + 13, T, 1, FACE); ret(ctx, px, py + 14, T, 1, LADO); ret(ctx, px, py + 15, T, 1, LINHA); }
+    if (!rua(x - 1, y)) { ret(ctx, px, py, 1, T, LINHA); ret(ctx, px + 1, py, 1, T, FACE); ret(ctx, px + 2, py, 1, T, LADO); }
+    if (!rua(x + 1, y)) { ret(ctx, px + 13, py, 1, T, FACE); ret(ctx, px + 14, py, 1, T, LADO); ret(ctx, px + 15, py, 1, T, LINHA); }
+    // juntas do meio-fio a cada 8 px
+    for (var k = 0; k < T; k += 8) {
+      if (!rua(x, y - 1)) ret(ctx, px + k, py + 1, 1, 2, LINHA);
+      if (!rua(x, y + 1)) ret(ctx, px + k, py + 13, 1, 2, LINHA);
+      if (!rua(x - 1, y)) ret(ctx, px + 1, py + k, 2, 1, LINHA);
+      if (!rua(x + 1, y)) ret(ctx, px + 13, py + k, 2, 1, LINHA);
     }
   }
 
@@ -68,13 +213,9 @@
     else if (t === 'c') {
       var est = (I.estilo && I.estilo[y] && I.estilo[y][x]) || 'pedra';
       if (est === 'terra') { terra(ctx, x, y, px, py); return; }
-      if (est === 'ladrilho') ladrilho(ctx, px, py); else pedra(ctx, px, py);
-      // meio-fio: onde a rua encosta na grama, uma borda de pedra (a rua fica bem traçada)
-      var rua = function (nx, ny) { var k2 = I.dentro(nx, ny) ? I.tipo[ny][nx] : 'c'; return k2 === 'c' || k2 === 'p'; };
-      if (!rua(x, y - 1)) { ret(ctx, px, py, T, 2, C.meioFio); ret(ctx, px, py, T, 1, C.rua3); }
-      if (!rua(x, y + 1)) { ret(ctx, px, py + 14, T, 2, C.meioFio); ret(ctx, px, py + 15, T, 1, C.meioFio2); }
-      if (!rua(x - 1, y)) { ret(ctx, px, py, 2, T, C.meioFio); ret(ctx, px, py, 1, T, C.rua3); }
-      if (!rua(x + 1, y)) { ret(ctx, px + 14, py, 2, T, C.meioFio); ret(ctx, px + 15, py, 1, T, C.meioFio2); }
+      if (est === 'ladrilho') ladrilho(ctx, px, py);
+      else { pedra(ctx, x, y, px, py); if (cruz(x, y)) rosacea(ctx, x, y, px, py); }
+      meioFio(ctx, x, y, px, py);
     } else if (t === 'p') {
       ret(ctx, px, py, T, T, par ? C.praca2 : C.praca);
       ret(ctx, px, py + 15, T, 1, C.praca2);
