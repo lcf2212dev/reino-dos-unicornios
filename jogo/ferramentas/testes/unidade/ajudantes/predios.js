@@ -19,7 +19,9 @@ function ctxAnotador() {
 function montar({ mapa = false, pa = null, terceiroBimestre = false } = {}) {
   const Jogo = terceiroBimestre ? require('./terceiro-bimestre') : require('../../../jogo-no-node');
   const chamadas = [];
-  const fachada = new Proxy({}, { get: (_, f) => (f === 'chamadas' ? chamadas : (...a) => { chamadas.push({ f, a }); }) });
+  // o kit (Mapa.fachada.kit.*) também só anota, como 'kit.<nome>'
+  const kit = new Proxy({}, { get: (_, f) => (...a) => { chamadas.push({ f: 'kit.' + String(f), a }); } });
+  const fachada = new Proxy({}, { get: (_, f) => (f === 'chamadas' ? chamadas : f === 'kit' ? kit : (...a) => { chamadas.push({ f, a }); }) });
   const extras = { console, setTimeout, clearTimeout, Math, Date };
   if (mapa) extras.Mapa = { PREDIOS: {}, PREDIOS_ANIM: {}, fachada };
   if (pa) extras.PA = pa;

@@ -271,6 +271,7 @@
       { js: 'js/mundo/contorno.js', grupo: 'mundo' },
       { js: 'js/mundo/fachadas.js', grupo: 'mundo' },
       { js: 'js/mundo/fachadas-kit.js', grupo: 'mundo' },
+      { js: 'js/mundo/fachadas-kit-2.js', grupo: 'mundo' },
       { js: 'js/mundo/predios.js', grupo: 'mundo' },
       { js: 'js/mundo/predios-3.js', grupo: 'mundo' },
       { js: 'js/mundo/predios-2.js', grupo: 'mundo' },

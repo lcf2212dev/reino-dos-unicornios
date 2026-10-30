@@ -13,6 +13,7 @@
   /* ================= A CASA DE FORA (mapa) ================= */
   // casinha de cozinha com chaminé, o livro aberto "Aa" no telhado e a flâmula do lápis; porta roxa no meio da última fileira
   function desenharFora(ctx, px, py, w, h, cores) {
+    var V = window.Mapa.fachada.kit;
     cores = cores || {};
     var parede = cores.parede || CREME, telhado = cores.telhado || VERM, det = cores.detalhe || VERDE;
     var telhado2 = escurecer(telhado, 0.22), telhadoL = clarear(telhado, 0.3), det2 = escurecer(det, 0.25);
@@ -24,10 +25,14 @@
     [[61, 1, 3], [65, -4, 4], [60, -8, 3]].forEach(function (f) { circulo(ctx, px + f[0], py + f[1], f[2], '#f1eef8'); ret(ctx, px + f[0] - 1, py + f[1] - 1, 1, 1, C.branco); });
     // corpo da casa com as tábuas
     contornoRet(ctx, px + 6, py + 34, w - 12, h - 34, parede);
-    Fa.tabuas(ctx, px + 7, py + 35, w - 14, h - 36, parede, true);
-    ret(ctx, px + w - 14, py + 35, 7, h - 36, 'rgba(224,67,63,0.06)');
-    Fa.tijolos(ctx, px + 7, py + h - 7, w - 14, 6, '#e8957a', 3);
-    ret(ctx, px + 7, py + h - 8, w - 14, 1, K);
+    V.tabuasH(ctx, px + 7, py + 35, w - 14, 21, parede);
+    V.blocos(ctx, px + 7, py + 56, w - 14, h - 63, '#e8957a', 3, 6);   // tijolo aparente na metade de baixo
+    ret(ctx, px + 7, py + 55, w - 14, 1, escurecer(parede, 0.3));
+    V.manchas(ctx, px + 7, py + 35, w - 14, h - 44, parede);
+    ret(ctx, px + w - 14, py + 35, 7, h - 36, 'rgba(58,36,70,0.1)');
+    ret(ctx, px + 7, py + 35, 1, h - 43, C.branco);
+    V.fundacaoBlocos(ctx, px + 7, py + h - 7, w - 14, 6, '#a88a80');
+    V.quinas(ctx, px + 7, py + 35, w - 14, h - 42);
     // telhado vermelho com fileiras de telhas redondinhas
     triangulo(ctx, px + 1, py + 8, w - 2, 28, K);
     triangulo(ctx, px + 4, py + 11, w - 8, 24, telhado);
@@ -35,7 +40,8 @@
       var meia = Math.round((w - 8) / 2 * (ty - py - 11 + 1) / 24) - 3;
       for (var tx = cx - meia + 1; tx < cx + meia - 2; tx += 5) { ret(ctx, tx, ty, 4, 1, telhado2); ret(ctx, tx + 1, ty - 1, 2, 1, telhadoL); }
     }
-    ret(ctx, px + 2, py + 33, w - 4, 3, K); ret(ctx, px + 3, py + 34, w - 6, 1, telhado2);
+    V.telhadoVolume(ctx, px + 4, py + 11, w - 8, 24, telhado);
+    ret(ctx, px + 2, py + 33, w - 4, 3, K); ret(ctx, px + 3, py + 34, w - 6, 1, escurecer(telhado2, 0.3));
     // livro aberto no telhado (a placa da casa), com o "Aa" grandão: capa vermelha, páginas e a fitinha
     var LA = ['.###.', '#...#', '#...#', '#####', '#...#', '#...#', '#...#'];
     var La = ['.##.', '...#', '.###', '#..#', '.###'];
@@ -67,6 +73,7 @@
     ret(ctx, px + 9, ay, w - 18, 6, K);
     for (var i = px + 10, k = 0; i < px + w - 10; i += 4, k++) ret(ctx, i, ay + 1, 4, 4, k % 2 ? C.branco : det);
     for (var s = px + 10, k2 = 0; s < px + w - 10; s += 4, k2++) { ret(ctx, s, ay + 5, 4, 2, K); ret(ctx, s + 1, ay + 5, 2, 1, k2 % 2 ? C.branco : det); }
+    V.sombraBeiral(ctx, px + 7, ay + 7, w - 14);
     // janela da cozinha (esquerda) com a torta esfriando e a cortininha
     var jx = px + 10, jy = py + 47;
     contornoRet(ctx, jx, jy, 16, 13, '#bfe9ff');
@@ -79,6 +86,7 @@
     circulo(ctx, rx, ry, 7, K); circulo(ctx, rx, ry, 6, det); circulo(ctx, rx, ry, 4, K); circulo(ctx, rx, ry, 3, '#eef9ff');
     ret(ctx, rx - 2, ry, 4, 3, '#ff7eb6'); ret(ctx, rx + 2, ry + 1, 1, 1, '#ff7eb6'); ret(ctx, rx - 1, ry - 2, 1, 1, C.branco);
     // degrau de pedra e a porta roxa de arco com moldura dourada (como todas as entradas do reino)
+    V.moitas(ctx, px + 8, px + w - 8, py + h, cx, 13);
     Fa.degrau(ctx, cx, py + h - 5, 25, 5);
     Fa.porta(ctx, cx - 7, py + h - 26, 14, 21, '#7c5cff');
     // pilha de livros ao lado da porta (esquerda) e um vaso de hortelã (direita)
@@ -88,6 +96,14 @@
     var vx = px + w - 20, vb = py + h - 2;
     ret(ctx, vx, vb - 7, 9, 7, K); ret(ctx, vx + 1, vb - 6, 7, 5, C.terracota); ret(ctx, vx - 1, vb - 8, 11, 2, K);
     [[1, -12], [4, -14], [7, -12], [3, -10], [6, -10]].forEach(function (f) { ret(ctx, vx + f[0], vb + f[1], 2, 3, K); ret(ctx, vx + f[0], vb + f[1], 1, 2, '#6fdc8c'); });
+    V.lanterna(ctx, cx - 13, py + h - 24); V.lanterna(ctx, cx + 9, py + h - 27);
+    // cubinhos de letras (A e B) entre a porta e o vaso
+    var LB = { A: ['.#.', '#.#', '###', '#.#', '#.#'], B: ['##.', '#.#', '##.', '#.#', '##.'] };
+    [['A', px + 49, py + h - 10, '#5fb4ff'], ['B', px + 50, py + h - 18, '#ff7eb6']].forEach(function (b) {
+      contornoRet(ctx, b[1], b[2], 8, 8, C.branco);
+      ret(ctx, b[1] + 1, b[2] + 1, 6, 1, '#ffffff'); ret(ctx, b[1] + 6, b[2] + 2, 1, 5, '#d8d0e4');
+      R.Desenho.matriz(ctx, b[1] + 2, b[2] + 2, LB[b[0]], { '#': b[3] });
+    });
     // brilhinhos
     [[4, 30], [76, 40]].forEach(function (b) { brilho(ctx, px + b[0], py + b[1], C.branco); });
   }
