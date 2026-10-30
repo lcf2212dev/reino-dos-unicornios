@@ -11,7 +11,10 @@
   var D = Reino.Desenho;
   var ret = D.ret, circulo = D.circulo, elipse = D.elipse, contornoRet = D.contornoRet, brilho = D.brilho;
 
+
+  var V;   // Mapa.fachada.kit, lido na hora de desenhar
   function desenharObservatorio(ctx, px, py, w, h) {
+    V = window.Mapa.fachada.kit;
     var cx = px + Math.floor(w / 32) * 16 + 8;   // meio do tile da porta (a escada desce até ele)
     var hx = px + Math.floor(w / 2);
     var grama = '#b2d84e', grama2 = '#d0ea72', grama3 = '#8fb83a';
@@ -31,6 +34,19 @@
     [[14, 66], [80, 64], [24, 74], [72, 73]].forEach(function (s) {
       ret(ctx, px + s[0], py + s[1], 3, 2, '#efe2cc'); ret(ctx, px + s[0], py + s[1] + 2, 3, 1, terra2);
     });
+    // pedras com contorno na encosta (luz em cima à esquerda, sombra embaixo)
+    [[8, 60, 7, 5], [83, 58, 6, 4], [30, 70, 5, 4], [62, 71, 7, 5], [88, 69, 4, 3]].forEach(function (p) {
+      var qx = px + p[0], qy = py + p[1];
+      ret(ctx, qx, qy + p[3], p[2], 1, 'rgba(58,36,70,0.2)');
+      ret(ctx, qx + 1, qy, p[2] - 2, p[3], CONTORNO); ret(ctx, qx, qy + 1, p[2], p[3] - 2, CONTORNO);
+      ret(ctx, qx + 1, qy + 1, p[2] - 2, p[3] - 2, '#cfc2b4'); ret(ctx, qx + 1, qy + 1, p[2] - 3, 1, '#f1e9de');
+      ret(ctx, qx + 1, qy + p[3] - 2, p[2] - 2, 1, '#a99886');
+    });
+    // sombra na encosta da direita (a luz vem da esquerda)
+    for (j = 0; j < 20; j++) {
+      var mj = Math.floor((w / 2 - 3) * Math.sqrt(Math.max(0, 1 - (j * j) / 400)));
+      ret(ctx, hx + 10, py + h - 22 + j, Math.max(0, mj - 10), 1, 'rgba(58,36,70,0.12)');
+    }
     // platô
     elipse(ctx, hx, py + h - 34, w / 2 - 2, 13, CONTORNO);
     elipse(ctx, hx, py + h - 34, w / 2 - 3, 12, grama);
@@ -43,6 +59,11 @@
       ret(ctx, x, borda, 3, 2, grama);
       ret(ctx, x, borda + 2, 3, 1, CONTORNO);
       ret(ctx, x - 1, borda + 1, 1, 1, CONTORNO); ret(ctx, x + 3, borda + 1, 1, 1, CONTORNO);
+    }
+    // brilho na beira de cima do platô
+    for (x = -w / 2 + 8; x < -4; x++) {
+      var uu = x / (w / 2 - 3), topo = py + h - 34 - Math.floor(12 * Math.sqrt(Math.max(0, 1 - uu * uu)));
+      ret(ctx, hx + x, topo + 1, 1, 1, grama2);
     }
     // tufinhos e florzinhas no platô
     [[10, 47], [30, 53], [86, 48], [80, 55]].forEach(function (s) { ret(ctx, px + s[0], py + s[1], 1, 2, grama3); ret(ctx, px + s[0] + 2, py + s[1] - 1, 1, 3, grama3); });
@@ -70,8 +91,10 @@
     }
     ret(ctx, bx + bw - 10, by + 1, 9, bh - 2, 'rgba(154,140,196,0.22)');
     ret(ctx, bx + 1, by + 1, 2, bh - 2, '#ffffff');
+    V.volume(ctx, bx + 1, by + 1, bw - 2, bh - 5);
+    V.sombra(ctx, bx + 1, by + 3, bw - 2);                                       // sombra do aro da cúpula
     // rodapé
-    ret(ctx, bx - 1, by + bh - 4, bw + 2, 5, CONTORNO); ret(ctx, bx, by + bh - 3, bw, 3, '#cfc2ea'); ret(ctx, bx, by + bh - 3, bw, 1, '#e2d8f4');
+    ret(ctx, bx - 1, by + bh - 5, bw + 2, 6, CONTORNO); V.fundacao(ctx, bx, by + bh - 5, bw, 5, '#c9bde0');
 
     // ---- cúpula (meia bola prateada, com gomos) ----
     var dy0 = by, rx = 23, ry = 21;

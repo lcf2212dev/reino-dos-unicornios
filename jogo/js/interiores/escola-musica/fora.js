@@ -6,29 +6,31 @@
   var CREME = '#fff2dc', LUZ = '#fff9ec', SOMBRA = '#dcbda9';
   var ROXO = '#7957b5', TELHA = '#a583d3', ESCURO = '#59417f', OURO = '#efb34f';
 
+
   function nota(ctx, x, y, cor) {
     ret(ctx, x, y + 6, 4, 3, cor); ret(ctx, x + 3, y, 2, 8, cor);
     ret(ctx, x + 5, y + 1, 3, 2, cor);
   }
+  // nota com contorno: o contorno é a nota escura 1 px para cada lado, e a cor por cima
+  function notaContorno(ctx, x, y, cor) {
+    [[-1, 0], [1, 0], [0, -1], [0, 1]].forEach(function (d) { nota(ctx, x + d[0], y + d[1], K); });
+    nota(ctx, x, y, cor); ret(ctx, x + 3, y + 1, 1, 3, LUZ);
+  }
   function telhado(ctx, x, y, w, h) {
     D.triangulo(ctx, x, y, w, h, K);
-    D.triangulo(ctx, x + 3, y + 2, w - 6, h - 3, ROXO);
-    for (var linha = 5; linha < h - 2; linha += 4) {
-      var inicio = Math.ceil(w / 2 - (w / 2 - 3) * (linha - 1) / (h - 3)) + 2;
-      ret(ctx, x + inicio, y + linha, w - inicio * 2, 1, TELHA);
-      for (var coluna = inicio + 3; coluna < w - inicio - 1; coluna += 7) {
-        ret(ctx, x + coluna, y + linha + 1, 1, 2, ESCURO);
-      }
-    }
+    V.telhado(ctx, x + 3, y + 2, w - 6, h - 3, ROXO, 3);
     ret(ctx, x, y + h - 1, w, 3, K); ret(ctx, x + 1, y + h, w - 2, 1, OURO);
+    V.sombra(ctx, x + 2, y + h + 2, w - 4);                                 // sombra do beiral
   }
   function janela(ctx, x, y) {
-    borda(ctx, x, y, 13, 19, SOMBRA);
+    borda(ctx, x, y, 13, 19, SOMBRA); ret(ctx, x - 2, y - 2, 17, 2, K); ret(ctx, x - 1, y - 1, 15, 1, OURO);   // vergas
     ret(ctx, x + 2, y + 2, 9, 14, '#5c8f9e');
     ret(ctx, x + 3, y + 3, 3, 5, '#b9ece5'); ret(ctx, x + 7, y + 3, 3, 5, '#d6ccf7');
     ret(ctx, x + 3, y + 9, 3, 6, '#86c6ca'); ret(ctx, x + 7, y + 9, 3, 6, '#b4a6da');
     ret(ctx, x + 6, y + 2, 1, 14, LUZ); ret(ctx, x + 2, y + 8, 9, 1, LUZ);
     ret(ctx, x + 3, y + 3, 1, 3, LUZ); ret(ctx, x + 8, y + 10, 1, 2, LUZ);
+    V.fundoJanela(ctx, x, y, 13, 19);
+    for (var d = 0; d < 5; d++) { ret(ctx, x + 9 - d, y + 3 + d, 1, 1, '#ffffff'); ret(ctx, x + 10 - d, y + 3 + d, 1, 1, '#e8f7ff'); }
     ret(ctx, x - 1, y + 17, 15, 2, K); ret(ctx, x, y + 17, 13, 1, OURO);
     // Jardineira de flores sob o peitoril.
     ret(ctx, x + 1, y + 20, 11, 3, '#ac6d61'); ret(ctx, x + 2, y + 20, 9, 1, '#de9b79');
@@ -48,7 +50,9 @@
     // Pequenas hastes em forma de notas emergem dos arbustos.
     nota(ctx, x + (espelho ? 12 : 4), y - 3, OURO);
   }
+  var V;   // Mapa.fachada.kit, lido na hora de desenhar
   function desenhar(ctx, px, py, w, h) {
+    V = window.Mapa.fachada.kit;
     // O sprite ocupa os 80 pixels contratados, alinhado ao centro e ao chão do prédio.
     var x = px + Math.floor((w - 80) / 2), y = py + h - 80;
     // Fundação e duas alas, com pilastras e fiadas de pedra.
@@ -61,6 +65,9 @@
       ret(ctx, x + dx - 1, y + 35, 5, 2, OURO);
       ret(ctx, x + dx - 1, y + 64, 5, 3, '#caa590');
     });
+    V.reboco(ctx, x + 6, y + 31, 68, 36, CREME);
+    V.volume(ctx, x + 6, y + 35, 68, 32);
+    V.fundacao(ctx, x + 6, y + 67, 68, 6, '#d8bfae');
     telhado(ctx, x + 2, y + 15, 32, 20); telhado(ctx, x + 46, y + 15, 32, 20);
     janela(ctx, x + 11, y + 40); janela(ctx, x + 56, y + 40);
     // Torre central à frente das duas alas: vitral redondo, cornija e emblema musical.
@@ -91,6 +98,10 @@
     ret(ctx, x + 30, y + 75, 20, 2, K); ret(ctx, x + 31, y + 75, 18, 1, '#ebd5b6');
     ret(ctx, x + 28, y + 77, 24, 3, '#c6ad9a'); ret(ctx, x + 29, y + 77, 22, 1, '#fff2dc');
     jardim(ctx, x + 3, y + 63, false); jardim(ctx, x + 54, y + 63, true);
+    // notas soltas no ar, dos dois lados da torre
+    [[x + 4, y + 2, ROXO], [x + 12, y + 6, OURO], [x + 64, y + 3, '#eda1c6'], [x + 71, y + 8, ROXO]].forEach(function (n) {
+      notaContorno(ctx, n[0], n[1], n[2]);
+    });
   }
   if (window.Mapa && Mapa.PREDIOS) Mapa.PREDIOS['escola-musica'] = desenhar;
 })();
