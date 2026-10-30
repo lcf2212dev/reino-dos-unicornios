@@ -1,0 +1,194 @@
+{
+  "nome": "cidade-visual",
+  "pedido": "pedidos/2026-10-29-cidade-visual.md",
+  "personagens": [],
+  "tarefas": [
+    {
+      "id": "chao",
+      "tipo": "fachada",
+      "titulo": "Chão do mapa: grama em tons, avenidas de pedra com luz e sombra, meio-fio com volume, cruzamentos, terra e enfeites do chão",
+      "quem": "worker-low",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/mundo/chao.js",
+        "jogo/js/mundo/mapa-desenho.js",
+        "jogo/ferramentas/testes/unidade/cidade-chao.test.js"
+      ],
+      "worktree": "cv-chao",
+      "pronto": [
+        "grama com 3 ou mais tons em manchas orgânicas e tufos variados, sem a grade de 16 px à mostra",
+        "paralelepípedo com tons por pedra, luz em cima e à esquerda, junta escura; ladrilho e terra mais caprichados",
+        "meio-fio com volume (face de cima clara, face lateral e sombra de 1 px na grama)",
+        "cruzamentos das avenidas com desenho próprio",
+        "flor, cristal, arbusto e cogumelo mais detalhados, gastando os mesmos números do sorteio",
+        "contraste-pisos verde; sorteio e colisões iguais"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "praca",
+      "tipo": "fachada",
+      "titulo": "Praça e peças da rua: piso em mosaico, fonte, coreto, canteiros, postes, bancos, cercas, poço, correio e placas",
+      "quem": "worker-low",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/mundo/cidade-desenho.js",
+        "jogo/js/mundo/cidade-pecas.js",
+        "jogo/ferramentas/testes/unidade/cidade-praca-visual.test.js"
+      ],
+      "worktree": "cv-praca",
+      "pronto": [
+        "piso da praça em mosaico com borda e rosa dos ventos mais rica",
+        "fonte em camadas com mais detalhe (e água animada só com Animações)",
+        "coreto, canteiros, postes, bancos, cercas, poço, correio e placa mais detalhados",
+        "mesmas peças, nos mesmos tiles, sólidas do mesmo jeito"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "fachadas",
+      "tipo": "fachada",
+      "titulo": "Enfeites de fachada comuns (Mapa.fachada) e os prédios de predios.js: castelo, museu, estábulo, baú e loja",
+      "quem": "worker-low",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/mundo/fachadas.js",
+        "jogo/js/mundo/fachadas-2.js",
+        "jogo/js/mundo/predios.js",
+        "jogo/js/mundo/predios-3.js",
+        "jogo/ferramentas/testes/unidade/fachadas-visual.test.js"
+      ],
+      "worktree": "cv-fachadas",
+      "pronto": [
+        "Mapa.fachada com mais volume (janela, telhas, tijolos, tábuas, pedras, porta, sombra da base), mesmas assinaturas",
+        "castelo, museu, estábulo, baú e loja com base de pedra, sombra do beiral e mais detalhe, mesma cara e porta",
+        "abertura (castelo) continua bonita"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "predios2",
+      "tipo": "fachada",
+      "titulo": "Prédios de predios-2.js (escola, relógio, torre) e os de fora de Português, Matemática e Geografia",
+      "quem": "worker-low",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/mundo/predios-2.js",
+        "jogo/js/interiores/portugues/fora.js",
+        "jogo/js/interiores/matematica/fora.js",
+        "jogo/js/interiores/geografia/fora.js",
+        "jogo/js/mundo/fachadas-kit-2.js",
+        "jogo/ferramentas/testes/unidade/ajudantes/predios.js"
+      ],
+      "worktree": "cv-predios2",
+      "pronto": [
+        "escola, Torre do Relógio, torre padrão, Casa das Palavras, prédio dos Números e prédio dos Caminhos com mais volume e detalhe",
+        "mesma cara, cor da matéria e porta de cada um"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "fora",
+      "tipo": "fachada",
+      "titulo": "Prédios de fora: Pet Shop, Laboratório de Química, Salão, Escola de Música, Feira de Ciências e Observatório",
+      "quem": "worker-low",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/interiores/petshop/fora.js",
+        "jogo/js/interiores/quimica/fora.js",
+        "jogo/js/interiores/salao/fora.js",
+        "jogo/js/interiores/escola-musica/fora.js",
+        "jogo/js/interiores/feira/fora.js",
+        "jogo/js/interiores/observatorio/fora.js",
+        "jogo/js/mundo/fachadas-kit.js"
+      ],
+      "worktree": "cv-fora",
+      "pronto": [
+        "os 6 prédios com mais volume e detalhe, mesma cara, cor e porta de cada um"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "natureza",
+      "tipo": "fachada",
+      "titulo": "Árvores (copas em volumes, espécies variadas) e lago (margem, juncos, vitórias-régias com flor, água viva)",
+      "quem": "worker-low",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/mundo/arvores.js",
+        "jogo/js/mundo/lago.js",
+        "jogo/ferramentas/testes/unidade/natureza-visual.test.js"
+      ],
+      "worktree": "cv-natureza",
+      "pronto": [
+        "copas com volumes de luz e sombra e mais espécies (frutífera, florida, pinheiro)",
+        "lago com margem desenhada, juncos e vitórias-régias floridas; ondinhas só com Animações",
+        "água, nado e Mapa.fundura iguais (mesma forma)"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "vida",
+      "tipo": "mecanica",
+      "titulo": "Vida no mapa: borboletas, passarinhos e brilhos só com Animações (módulo com camada)",
+      "quem": "worker-low",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/sistemas/vida-mapa.js",
+        "jogo/js/nucleo/config.js",
+        "jogo/ferramentas/testes/unidade/vida-mapa.test.js"
+      ],
+      "worktree": "cv-vida",
+      "pronto": [
+        "com Animações ligadas, borboletas perto das flores e passarinhos cruzando o céu do mapa",
+        "com Animações desligadas e no e2e, nada aparece",
+        "nada de canvas nem objeto novo por quadro; números em config.js"
+      ],
+      "estimativa": 50
+    },
+    {
+      "id": "integracao",
+      "tipo": "integracao",
+      "titulo": "Juntar as 7 frentes, conferir o conjunto, npm test e e2e completos",
+      "quem": "orquestrador",
+      "depende": [
+        "chao",
+        "praca",
+        "fachadas",
+        "predios2",
+        "fora",
+        "natureza",
+        "vida"
+      ],
+      "arquivos": [
+        "jogo/js/manifesto.js",
+        "jogo/index.html",
+        "jogo/ferramentas/testes/base-referencia.txt",
+        "pedidos/2026-10-29-cidade-visual.md",
+        "pedidos/2026-10-29-cidade-visual.plano.json"
+      ],
+      "worktree": "cidade-visual",
+      "pronto": [
+        "npm test verde",
+        "e2e: só imagens com o mapa diferentes"
+      ],
+      "estimativa": 40
+    },
+    {
+      "id": "entrega",
+      "tipo": "entrega",
+      "titulo": "Merge na main, push e a Vercel conferida",
+      "quem": "orquestrador",
+      "depende": [
+        "integracao"
+      ],
+      "arquivos": [],
+      "worktree": "cidade-visual",
+      "pronto": [
+        "main no GitHub",
+        "Vercel conferida"
+      ],
+      "estimativa": 15
+    }
+  ]
+}
