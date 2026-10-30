@@ -80,4 +80,5 @@
 # b5b7a48 = 💰 mostra o saldo a receber, entrada em festa da medalha de ouro, baú com medalhas Ultra Lendárias
 # @ = English do 4º bimestre: matéria ingles4 (16 salas), Torre do Relógio com um andar por capítulo, alas, baias, lugares, HUD e sorteios
 # @ = English do 4º bimestre sem o capítulo 10 (que foi do 3º bimestre): 13 salas, Torre com 4 andares (English 11 e 12, Projetos 11 e 12)
+# @ = visual da cidade: chão, praça, prédios de fora, árvores e lago (mapa, telas sobre o mapa e treinos); bloco vidaMapa do config
 @
