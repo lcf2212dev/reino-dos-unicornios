@@ -567,6 +567,12 @@
       { js: 'js/interiores/casa/moveis-banheiro.js', grupo: 'interiores', node: true }, // casa: móveis do kit Banheiro
       { js: 'js/interiores/casa/moveis-quarto.js', grupo: 'interiores', node: true }, // casa: móveis do Quarto do jogador
       { js: 'js/interiores/casa/moveis-quarto-uni.js', grupo: 'interiores', node: true }, // casa: móveis do Quarto do unicórnio
+      { js: 'js/interiores/casa/falas.js', grupo: 'interiores', node: true }, // casa: o prédio (falas, caixa de mudança, térreo, 2º andar, fora, lugar)
+      { js: 'js/interiores/casa/objetos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/casa/casa.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/casa/andar2.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/casa/fora.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/casa/lugar.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/padrao.js', grupo: 'interiores', node: true }, // padrao.js por último entre os prédios: monta o interior das matérias que não têm um próprio
       { js: 'js/sistemas/banho.js', grupo: 'sistemas' },
       { js: 'js/sistemas/banho-desenho.js', grupo: 'sistemas' },

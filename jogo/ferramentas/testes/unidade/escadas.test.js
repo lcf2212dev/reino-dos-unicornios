@@ -18,6 +18,8 @@ const CONGELADA = {
   'quimica-2:0': { para: 'quimica', x: 21, y: 4 },
   'portugues:0': { para: 'portugues-1', x: 18, y: 11 },   // Casa das Palavras: do saguão, logo abaixo do vão no Ateliê 11
   'portugues-1:0': { para: 'portugues', x: 24, y: 26 },   // e de volta, logo abaixo do arco no fundo do saguão
+  'casa:0': { para: 'casa-2', x: 2, y: 10 },             // Minha Casa: da Sala de Estar, logo acima do vão no Quarto
+  'casa-2:0': { para: 'casa', x: 36, y: 4 },             // e de volta, logo abaixo do arco no canto da Sala de Estar
 };
 TORRE.forEach((id, i) => {
   let k = 0;
