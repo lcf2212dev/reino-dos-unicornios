@@ -4,8 +4,6 @@ Pedido: `pedidos/2026-10-31-casa.md`. A casa de 2 andares no canto de baixo à d
 matéria completa (do 4º bimestre em diante) dá um kit de móveis à escolha, e o jogador põe cada móvel onde quiser,
 virado para onde quiser.
 
-<!-- validar-docs: ignorar -->
-<!-- (contrato da onda 0: os arquivos ainda não existem; a integração tira este par de marcas) -->
 ## Índice
 1. Onde está no código · 2. Ids · 3. Kits · 4. Interiores decoráveis (motor) · 5. Móveis e direções ·
 6. Save · 7. API `Reino.Casa` · 8. Onde um móvel pode ficar · 9. Telas · 10. Falas e vozes · 11. Testes
@@ -21,7 +19,8 @@ virado para onde quiser.
 | o prédio | `js/interiores/casa/` (`falas.js`, `objetos.js`, `casa.js`, `andar2.js`, `fora.js`, `lugar.js`) |
 | save, regras, ação da caixa | `js/sistemas/casa.js` (`Reino.Casa`) |
 | motor | `js/motor/interiores-cena.js` (`refazer`, `objetosExtras`), `interiores-placas.js` (`{nome}`, `{uni}`), validador `jogo/ferramentas/validar/validar-interiores.js` (`decoravel`) |
-| telas | `js/ui/bau-casa.js`, `ui/casa-kits.js`, `ui/casa-decorar.js` (+ CSS `ui-bau-casa.css`, `ui-casa-kits.css`, `ui-casa-decorar.css`) |
+| telas | `js/ui/bau-casa.js`, `ui/casa-kits.js`, `ui/casa-falas.js` (as falas das duas, `node: true`), `ui/casa-decorar.js` e `ui/casa-decorar-fantasma.js` (+ CSS `ui-bau-casa.css`, `ui-casa-kits.css`, `ui-casa-decorar.css`) |
+| câmera no modo colocar | `Reino._motor.ajusteCamera(cam, c)`, chamado no fim de `atualizarCamera` (`js/motor/camera.js`): a câmera segue o fantasma |
 
 ## 2. Ids
 - Lugar `casa` ("Minha Casa"), `rect {x:46,y:33,w:6,h:5}`, porta em (49,37), sprite `casa`.
@@ -155,4 +154,3 @@ Qualquer cômodo vale para qualquer kit.
 - `unidade/casa-predio.navegador.test.js`, `unidade/casa-decorar.navegador.test.js`, `unidade/casa-telas.navegador.test.js`.
 - Cenas do e2e: o interior entra sozinho (vazio, como num save sintético sem kits); telas `bau-casa`, `kit-casa`,
   `decorar`.
-<!-- validar-docs: fim -->
