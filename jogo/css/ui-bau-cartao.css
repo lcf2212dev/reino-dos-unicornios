@@ -1,0 +1,66 @@
+/* Baú do cartão de experiência (js/ui/bau-cartao.js). O céu, o baú, a luz, as estrelinhas e o movimento são os do baú
+   dos presentes (a tela leva .tela-presente; css/ui-bau-presente.css); aqui só a cartinha do cartão (moldura de
+   carta em --papel com faixa roxa, emoji grande, nome, tubinhos) e os frascos dos produtos novos. Nada aqui se mexe
+   além da entrada do cartão (a mesma do presente, só com .animado). */
+.tela-cartao-bau [hidden] { display: none !important; }
+.cbau-caixa { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 100%; }
+
+/* a cartinha: moldura grossa, faixa roxa em cima com "🃏 Cartão n" */
+.cbau-cartao {
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  width: min(420px, 100%); padding: 0 16px 16px; color: var(--tinta); text-align: center;
+  background: var(--papel); border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto-grande);
+  overflow: hidden;   /* a faixa de cima segue o canto */
+}
+.cbau-numero {
+  align-self: stretch; margin: 0 -16px; padding: 8px 10px; font-size: var(--texto); line-height: 1;
+  color: var(--papel); background: var(--roxo); border-bottom: var(--borda-fina) solid var(--borda);
+}
+.cbau-emoji { display: flex; justify-content: center; padding-top: 4px; }
+.cbau-emoji canvas { image-rendering: pixelated; }
+.cbau-nome { margin: 0; font-size: var(--texto-g); line-height: var(--entrelinha-titulo); }
+.cbau-tubos { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: center; gap: 6px 4px; }
+.cbau-par { display: flex; align-items: flex-start; gap: 4px; }
+.cbau-mais { padding-top: 28px; font-size: var(--texto-g); line-height: 1; color: var(--tinta-suave); }
+.cbau-tubo { display: flex; flex-direction: column; align-items: center; gap: 4px; width: 88px; }
+.cbau-tubo small { font-size: var(--texto-aux); line-height: var(--entrelinha-titulo); overflow-wrap: break-word; }
+.cbau-tubo canvas, .cbau-produto canvas { image-rendering: pixelated; }
+.cbau-tubo-cor { display: block; width: 20px; height: 48px; border: var(--borda-fina) solid var(--borda); }
+.cbau-onde {
+  display: flex; align-items: center; justify-content: center; gap: 8px; text-align: left;
+  margin: 0; padding: 6px 10px; font-size: var(--texto-aux); line-height: var(--entrelinha-titulo);
+  background: var(--certo-fundo); border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
+}
+
+/* a cartinha menor (no final, ao lado dos produtos) */
+.cbau-cartao.compacta { gap: 6px; padding-bottom: 10px; }
+.cbau-cartao.compacta .cbau-nome { font-size: var(--texto); }
+.cbau-cartao.compacta .cbau-mais { padding-top: 16px; }
+.cbau-cartao.compacta .cbau-tubo { width: 76px; }
+
+/* os produtos novos: "Novo no laboratório!" e os frascos com nome e fórmula */
+.cbau-produtos {
+  display: flex; flex-direction: column; align-items: center; gap: 8px; width: min(420px, 100%); padding: 10px 12px;
+  color: var(--tinta); background: var(--lendario-fundo); border: var(--borda-grossa) solid var(--borda);
+  border-radius: var(--canto-grande);
+}
+.cbau-novo { margin: 0; font-size: var(--texto); line-height: var(--entrelinha-titulo); color: var(--lendario-texto); }
+.cbau-lista { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.cbau-produto {
+  display: flex; flex-direction: column; align-items: center; gap: 4px; width: 128px; padding: 8px 6px;
+  font-size: var(--texto-aux); line-height: var(--entrelinha-titulo); text-align: center;
+  background: var(--papel); border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
+}
+.cbau-produto b { overflow-wrap: break-word; }
+.cbau-formula { font-family: sans-serif; font-size: var(--texto); }
+
+.tela-presente.animado .cbau-cartao, .tela-presente.animado .cbau-produtos { animation: painel-descer var(--rapido) steps(3); }
+
+/* celular: a cartinha e os tubos mais justos */
+@media (max-width: 480px) {
+  .cbau-cartao { padding: 0 10px 12px; gap: 8px; }
+  .cbau-numero { margin: 0 -10px; }
+  .cbau-nome { font-size: var(--texto); }
+  .cbau-tubo { width: 96px; }
+  .cbau-produto { width: 112px; }
+}

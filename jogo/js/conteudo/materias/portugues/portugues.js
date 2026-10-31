@@ -1,6 +1,6 @@
 /* PORTUGUÊS — 2º ano, Volume 3, Língua Portuguesa, Capítulos 8 e 9 (pp. 30 a 80 da apostila).
    Capítulo 8, "Receita de quê?" (pp. 30 a 56); Capítulo 9, "Vi, fiz e relatei!" (pp. 57 a 80).
-   Lugar no reino: Casa das Palavras. 5 salas que dividem os 500 Robux, na ordem do livro.
+   Lugar no reino: Casa das Palavras. 5 salas que dividem as 50 moedas, na ordem do livro.
    Fotos em matérias/português/ (IMG_7459 a 7485): duas páginas por foto, deitadas (7459 = pp. 30–31 … 7485 = p. 80);
    a 7465 está de cabeça para baixo, a 7463 tem a p. 41 por cima da 39 e a 7476 é repetição borrada da 7477 (não use).
    Palavras cobertas por escrita ou pintura nas pp. 48, 69, 70 e 78: ficou só o que está legível.

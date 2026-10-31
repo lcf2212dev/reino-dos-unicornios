@@ -87,6 +87,8 @@
     acerto: function () { [N.C5, N.E5, N.G5, N.C6].forEach(function (f, i) { nota(f, i * 0.08, 0.18, 'triangle', 0.28); }); },
     erro: function () { nota(N.E4, 0, 0.22, 'sine', 0.18); nota(N.C4, 0.16, 0.3, 'sine', 0.16); },
     moeda: function () { nota(N.B5, 0, 0.08, 'square', 0.12); nota(N.E6, 0.07, 0.25, 'square', 0.12); },
+    // a moedinha que cai no chip do HUD (ui/moedas-festa.js): sino agudo, curto e brilhante (parciais de sino)
+    plim: function () { nota(N.E6, 0, 0.32, 'sine', 0.2); nota(N.E6 * 2, 0, 0.2, 'sine', 0.06); nota(N.E6 * 2.76, 0.005, 0.12, 'sine', 0.04); },
     estrela: function () { [N.C6, N.G5, N.E6].forEach(function (f, i) { nota(f, i * 0.06, 0.12, 'sine', 0.2); }); },
     rachar: function () { ruido(0, 0.12, 0.35); nota(N.G4, 0, 0.08, 'square', 0.06); },
     chocar: function () { ruido(0, 0.2, 0.3); [N.C5, N.E5, N.G5, N.C6, N.E6].forEach(function (f, i) { nota(f, 0.15 + i * 0.07, 0.25, 'triangle', 0.25); }); },

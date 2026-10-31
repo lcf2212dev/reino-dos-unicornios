@@ -77,7 +77,7 @@
     emoji: function (l) { return Reino.materia(l.materiaId).emoji; },
     info: function (l) {
       var m = Reino.materia(l.materiaId);
-      return P.salasFeitas(m) + ' de ' + m.salas.length + ' salas • ' + U.robux(P.dinheiroMateria(m)).replace(' ', '\u00a0');   // "300 Robux" não quebra
+      return P.salasFeitas(m) + ' de ' + m.salas.length + ' salas • ' + U.moedas(P.dinheiroMateria(m)).replace(' ', '\u00a0');   // "30 moedas" não quebra
     },
     avisos: function (l) {
       var m = Reino.materia(l.materiaId);
@@ -99,7 +99,7 @@
     avisos: function () { return P.ovosParaChocar().length ? [{ texto: 'Ovo', icone: '🥚', tipo: 'ovo' }] : []; },
     abrir: function () { return UI.telaEstabulo(); },
   });
-  UI.registrarLugarMenu('bau', { emoji: '💰', info: function () { return U.robux(P.saldoRobux()) + ' para receber'; }, abrir: function () { return UI.telaBau(); } });
+  UI.registrarLugarMenu('bau', { emoji: '💰', info: function () { return U.moedas(P.saldoMoedas()) + ' para receber'; }, abrir: function () { return UI.telaBau(); } });
   UI.registrarLugarMenu('loja', {
     emoji: '🧚', info: function () { return '⭐ ' + P.estrelas() + (P.estrelas() === 1 ? ' estrela' : ' estrelas') + ' para gastar'; },
     abrir: function () { return UI.telaLoja(); },

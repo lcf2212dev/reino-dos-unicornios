@@ -60,7 +60,7 @@ test('sair depois da etapa 2 e voltar: as duas guardadas, próxima = 2; a sala a
   assert.strictEqual(k.lido().etapas[SALA].feitas[1].em, 1790000001000);
 });
 
-test('terminar todas as etapas = o mesmo prêmio de concluirSala com a sala inteira (Robux, estrelas, ovos, xp)', () => {
+test('terminar todas as etapas = o mesmo prêmio de concluirSala com a sala inteira (moedas, estrelas, ovos, xp)', () => {
   for (const [erros, pressas] of [[0, 0], [1, 0], [0, 2]]) {
     const a = carregado(), b = carregado();
     let r;

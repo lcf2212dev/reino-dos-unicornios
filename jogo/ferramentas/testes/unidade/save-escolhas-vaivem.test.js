@@ -173,7 +173,7 @@ test('só novos, relógios iguais, envio logo depois de juntar: nenhuma escolha 
       const x = pega(devs), e = x.j.P.estado(), acao = pega(['escolha', 'escolha', 'cuidados', 'pagar', 'enviar', 'enviar', 'conferir', 'conferir']);
       if (acao === 'escolha') { const n = Math.floor(sorte() * ESC.length), [ler, mudar, vals] = ESC[n], v = pega(vals.filter((w) => w !== ler(e))); mudar(e, v); x.j.P.salvar(); ultima[n] = v; }
       else if (acao === 'cuidados') x.j.P.salvar();
-      else if (acao === 'pagar') { pago = pega([1, 4, 40, 7]); x.j.P.registrarPagamento('historia', pago * 25); }   // Robux; o save guarda reais
+      else if (acao === 'pagar') { pago = pega([2, 4, 40, 8]); x.j.P.registrarPagamento('historia', pago * 2.5); }   // moedas; o save guarda reais
       else if (acao === 'enviar') await x.d.enviar();
       else { await x.d.conferir(); if (x.d.timers.length) await x.d.enviar(); }   // o envio sai logo depois da junção
     }
