@@ -218,7 +218,7 @@ test('arquivo: um .js a mais na pasta do prédio, antes do <p>.js, com node como
 test('sala: 12 desafios dos 3 tipos básicos e o aviso do valor por sala', () => {
   const r = rodar(novo, ['sala', 'zztestemat', 'zzt6', '--raiz', copia]);
   assert.strictEqual(r.status, 0, r.stderr);
-  assert.match(r.stdout, /valor: 80 Robux por sala \+ 20 de bônus ao completar \(500 Robux em 6 salas; antes, com 5, 100 Robux por sala\)/);
+  assert.match(r.stdout, /valor: 8 moedas por sala \+ 2 de bônus ao completar \(50 moedas em 6 salas; antes, com 5, 10 moedas por sala\)/);
   const R = reinoDaCopia();
   const sala = R.materias.find((m) => m.id === 'zztestemat').salas.find((x) => x.id === 'zzt6');
   assert.strictEqual(sala.desafios.length, 12);

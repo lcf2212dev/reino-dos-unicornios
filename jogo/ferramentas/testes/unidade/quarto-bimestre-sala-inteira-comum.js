@@ -59,7 +59,7 @@ async function jogarSala(c, salaId) {
   assert.match(fim, /Estrela da Calma/);
   assert.match(fim, /no Baú do Tesouro/);
   assert.match(fim, /Você ganhou 2 ovos mágicos!/);
-  assert.ok(fim.indexOf(sp('+ ' + await c.js(`Reino.util.robux(${antes.valorSala})`))) >= 0, 'o fim sem o valor da sala: ' + fim);
+  assert.ok(fim.indexOf(sp('+ ' + await c.js(`Reino.util.moedas(${antes.valorSala})`))) >= 0, 'o fim sem o valor da sala: ' + fim);
   const depois = await c.js(`(function (P) { var e = P.estado(), r = e.salas['${sala.id}']; return { dinheiro: P.dinheiroTotal(), ganhas: e.estrelas.ganhas, reg: r,
     novos: Object.keys(e.unis).filter(function (id) { return ${JSON.stringify(antes.unis)}.indexOf(id) < 0; }).sort() }; })(Reino.Progresso)`);
   assert.ok(depois.reg && depois.reg.feita && depois.reg.perfeita && depois.reg.calma && depois.reg.vezes === 1, 'registro da sala: ' + JSON.stringify(depois.reg));
@@ -78,7 +78,7 @@ async function jogarSala(c, salaId) {
   }
   assert.ok(await esperar(c, "!Reino.UI.temTela() && /^portugues/.test(__reino.cena())", 6000), 'não voltou à Casa das Palavras');
   assert.deepStrictEqual(await c.js(`${JSON.stringify(depois.novos)}.map(function (id) { return Reino.Progresso.estado().unis[id].chocado; })`), [true, true]);
-  assert.ok(sp(await c.js("document.querySelector('.chip-dinheiro').textContent")).indexOf(sp(await c.js('Reino.util.robuxNumero(Reino.Progresso.saldoRobux())'))) >= 0,
+  assert.ok(sp(await c.js("document.querySelector('.chip-dinheiro').textContent")).indexOf(sp(await c.js('Reino.util.moedasNumero(Reino.Progresso.saldoMoedas())'))) >= 0,
     'o HUD sem o dinheiro novo');
   return tipos;
 }

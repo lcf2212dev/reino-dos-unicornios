@@ -274,6 +274,7 @@
 .premio-icone { font-size: var(--texto-g); flex: none; }
 .premio-dinheiro { background: var(--ouro-claro) !important; }
 .premio-ovo { background: var(--laranja-claro) !important; }
+.premio-cartao { background: var(--roxo-claro) !important; }
 .dica-raro { color: var(--raro-texto); }
 /* matéria completa (O-36): título e ícone do nível 4, com vãos menores e os prêmios em 2 colunas quando cabe,
    para o botão ficar à vista sem rolar */

@@ -31,6 +31,7 @@
       'css/ui-petshop.css',
       'css/ui-fotos.css',
       'css/ui-salao.css',
+      'css/ui-cofre.css',
       'css/ui-quimica-bancada.css',
       'css/ui-quimica-caderno.css',
       'css/ui-quimica-microscopio.css',
@@ -44,6 +45,8 @@
       'css/ui-personagem.css',
       'css/ui-voo.css',
       'css/ui-bau-presente.css',
+      'css/ui-bau-cartao.css',
+      'css/ui-moedas-festa.css',
     ],
     scripts: [
       { js: 'js/nucleo/congelar.js', grupo: 'nucleo' },
@@ -86,6 +89,8 @@
       { js: 'js/conteudo/loja-novidades.js', grupo: 'conteudo', node: true },
       { js: 'js/conteudo/quimica/ingredientes.js', grupo: 'conteudo', node: true }, // Laboratório de Química: os dados (docs/contratos/quimica.md); frases.js antes das frases-<tela>.js
       { js: 'js/conteudo/quimica/receitas.js', grupo: 'conteudo', node: true },
+      { js: 'js/conteudo/quimica/ingredientes-cartoes.js', grupo: 'conteudo', node: true }, // produtos que chegam com os cartões de experiência
+      { js: 'js/conteudo/quimica/receitas-cartoes.js', grupo: 'conteudo', node: true },
       { js: 'js/conteudo/quimica/frases.js', grupo: 'conteudo', node: true },
       { js: 'js/conteudo/quimica/frases-bancada.js', grupo: 'conteudo', node: true },
       { js: 'js/conteudo/quimica/frases-caderno.js', grupo: 'conteudo', node: true },
@@ -268,6 +273,7 @@
       { js: 'js/mundo/lago.js', grupo: 'mundo' },
       { js: 'js/mundo/cidade-desenho.js', grupo: 'mundo' },
       { js: 'js/mundo/cidade-pecas.js', grupo: 'mundo' },
+      { js: 'js/mundo/cofre-desenho.js', grupo: 'mundo' },
       { js: 'js/mundo/contorno.js', grupo: 'mundo' },
       { js: 'js/mundo/fachadas.js', grupo: 'mundo' },
       { js: 'js/mundo/fachadas-kit.js', grupo: 'mundo' },
@@ -327,10 +333,13 @@
       { js: 'js/ui/petshop.js', grupo: 'ui' },
       { js: 'js/ui/ovos.js', grupo: 'ui' },
       { js: 'js/ui/bau-presente.js', grupo: 'ui' }, // o baú dos presentes depois do login (UI.abrirPresentesPendentes)
+      { js: 'js/ui/bau-cartao.js', grupo: 'ui' }, // o baú do cartão de experiência no fim da sala (UI.abrirCartaoBau)
+      { js: 'js/ui/moedas-festa.js', grupo: 'ui' }, // as moedas voando até o chip do HUD (UI.festaMoedas)
       { js: 'js/ui/lugares.js', grupo: 'ui' },
       { js: 'js/ui/ajustes.js', grupo: 'ui' },
       { js: 'js/ui/aparencia.js', grupo: 'ui' },
       { js: 'js/ui/salao.js', grupo: 'ui' },
+      { js: 'js/ui/cofre.js', grupo: 'ui' },
       { js: 'js/ui/quimica-palco.js', grupo: 'ui' },
       { js: 'js/ui/quimica-palco-2.js', grupo: 'ui' },
       { js: 'js/ui/quimica-bancada.js', grupo: 'ui' },
@@ -366,6 +375,7 @@
       { js: 'js/sistemas/et-companheiro.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/quimica.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/quimica-andar2.js', grupo: 'sistemas', node: true },
+      { js: 'js/sistemas/cartoes.js', grupo: 'sistemas', node: true }, // cartões de experiência do Laboratório: derivados das salas feitas (quimica.md §10)
       { js: 'js/motor/interiores-base.js', grupo: 'motor', node: true },
       { js: 'js/motor/interiores-pisos.js', grupo: 'motor', node: true },
       { js: 'js/motor/interiores-objetos-parede.js', grupo: 'motor', node: true },

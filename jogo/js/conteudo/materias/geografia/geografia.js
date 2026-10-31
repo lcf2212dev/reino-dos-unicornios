@@ -1,6 +1,6 @@
 /* GEOGRAFIA — 2º ano, Volume 3, Capítulos 8 e 9 (pp. 13 a 31 da apostila).
    Capítulo 8, "Os lugares se conectam: meios de comunicação"; Capítulo 9, trânsito e uso seguro da internet.
-   Lugar no reino: Estação dos Caminhos. 5 salas que dividem os 500 Robux.
+   Lugar no reino: Estação dos Caminhos. 5 salas que dividem as 50 moedas.
    Fotos em matérias/geografia/: a IMG_7536 é de Ciências (não usada); a escrita à mão é da Mariana, não gabarito.
    Salas em g1.js, g2.js, g3.js, g4.js, g5.js e o livro em livro.js (carregados antes deste arquivo, na ordem do
    manifesto; ver conteudo/materias/registro.js). */

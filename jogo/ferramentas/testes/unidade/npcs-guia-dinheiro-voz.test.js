@@ -1,5 +1,5 @@
-// O resumo do guia ("Já ganhou 80 Robux! 💰") tem de estar em NPCs.falasPossiveis (é dali que as vozes são gravadas).
-// Com 6 salas (Matemática) a sala vale 80 Robux (P.valorSala, de 10 em 10) e a última traz o bônus: se o
+// O resumo do guia ("Já ganhou 8 moedas! 🪙") tem de estar em NPCs.falasPossiveis (é dali que as vozes são gravadas).
+// Com 6 salas (Matemática) a sala vale 8 moedas (P.valorSala, inteiro) e a última traz o bônus: se o
 // npcs-falas.js enumerasse valorPorMateria / salas (83, 166…), a fala dita no balão não teria voz. Save 100% sintético.
 const { test } = require('node:test');
 const assert = require('assert');

@@ -114,7 +114,9 @@ def carregar_modelo(nome=None, threads=0):
 
 # sem a dica, "Robux" saía "robôs" ou "Rollbooks" com a voz certa; com ela, as 4 vozes testadas batem e as grafias que
 # soam errado ("Róbux", com ó aberto: "robos") continuam reprovando (conferido por transcrição em 2026-10-16)
-VOCABULARIO = {'robux': 'Robux é a moeda do Roblox.'}
+# (cúrcuma e taninos: os cartões da Química, 2026-10-31; sem a dica saíam "cor com uma" e "chatentaninos")
+VOCABULARIO = {'robux': 'Robux é a moeda do Roblox.', 'cúrcuma': 'A cúrcuma é um tempero amarelo.',
+               'taninos': 'O chá tem taninos.'}
 
 
 def dica(texto):

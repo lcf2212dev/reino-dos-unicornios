@@ -7,8 +7,14 @@ window.Reino = window.Reino || {};
 
 Reino.config = {
   nomeJogadora: 'Mariana',
-  valorPorMateria: 500,       // Robux por matéria revisada: cada sala vale um valor redondo (de 10 em 10 Robux) e a sobra é bônus ao completar
-  medalhaEscolaValor: 2500,   // Robux da medalha de ouro da prova real (combinado fora do jogo; era R$ 100, na troca de R$ 20 = 500 Robux)
+  valorPorMateria: 50,        // moedas por matéria revisada: cada sala vale um número inteiro de moedas e a sobra é bônus ao completar
+                              // (era 500 Robux; pedido do Leandro, 2026-10-31: 20 Robux = 2 moedas)
+  medalhaEscolaValor: 250,    // moedas da medalha de ouro da prova real (combinado fora do jogo; era 2.500 Robux)
+  // o cofre (pote) da praça: cheio quando as matérias do bimestre estão completas (6 matérias × 50 moedas)
+  cofre: { cheio: 300 },
+  // cartões de experiência do Laboratório (sistemas/cartoes.js): um por sala feita (1ª vez) a partir desta data
+  // (o começo do 4º bimestre); fixa, para os cartões não sumirem quando o bimestre mudar
+  cartoes: { desde: '2026-10-05' },
   pinPais: '2026',            // troque aqui o PIN da Área dos Pais
   desafiosPorSala: 6,
   desafiosSalaLivro: 14,      // sala de livro (ordem: 'livro', 4º bimestre): todos os desafios, na ordem; no máximo este tanto

@@ -1,0 +1,10 @@
+/* Moedas voando até o chip do HUD (js/ui/moedas-festa.js): as 🪙 andam em degraus de 2 px pelo JS (sem transition);
+   o chip dá um pulinho de 1 pixel de arte (2 px) a cada moeda que chega (arte.md §15.1). Sem animação o JS não lança
+   nada; a saída sem-animacao/reduce fica aqui também. */
+.moedas-festa { position: fixed; inset: 0; z-index: 200; pointer-events: none; }
+.moeda-voa { position: fixed; image-rendering: pixelated; pointer-events: none; }
+
+@keyframes moedas-pulo { 0% { transform: translateY(-2px); } 100% { transform: none; } }
+#hud .chip-dinheiro.moedas-pulo { animation: moedas-pulo var(--rapido) step-end; }
+body.sem-animacao #hud .chip-dinheiro.moedas-pulo { animation: none; }
+@media (prefers-reduced-motion: reduce) { #hud .chip-dinheiro.moedas-pulo { animation: none; } }

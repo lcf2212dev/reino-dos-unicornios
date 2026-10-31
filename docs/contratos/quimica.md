@@ -7,7 +7,7 @@ Números em `Reino.config.quimica`. Só diversão e aprendizado extra: nada de d
 
 ## Índice
 1. Onde está · 2. Telas · 3. Dados · 4. Frases e vozes · 5. O prédio · 6. Ícones · 7. Save e estrelas · 8. Antes de mexer ·
-9. O 2º andar
+9. O 2º andar · 10. Cartões de experiência
 
 ## 1. Onde está
 | Arquivo | O quê |
@@ -18,6 +18,7 @@ Números em `Reino.config.quimica`. Só diversão e aprendizado extra: nada de d
 | `jogo/js/ui/quimica-caderno.js`, `css/ui-quimica-caderno.css` | o caderno de receitas (`UI.telaQuimicaCaderno`) |
 | `jogo/js/ui/quimica-microscopio.js`, `css/ui-quimica-microscopio.css`; `quimica-tabela.js`, `css/ui-quimica-tabela.css` | microscópio; tabela periódica |
 | `jogo/js/interiores/quimica/` | reservas, falas, personagens, objetos, layout (`quimica.js`), ações (telas), fachada, lugar |
+| `jogo/js/sistemas/cartoes.js`; `ui/bau-cartao.js`, `css/ui-bau-cartao.css` | os cartões de experiência (§10) e o baú do fim da sala |
 | `jogo/js/sistemas/quimica-andar2.js`; `interiores/quimica/andar2*.js`, `curiosidade.js`; `ui/quimica-{estados,separar,livros}*.js` | o 2º andar (§9) |
 
 ## 2. Telas
@@ -92,7 +93,7 @@ Emoji novo numa tela: só um dos que já têm desenho (`npm run ver -- --previa 
   Devolve `{ nova, estrelas, completo }`; repetir não dá nada. Nada de dinheiro nem Aura.
 - API: `misturar(ids) → { receita, quase, tipo: 'receita' | 'falta' | 'sobra' | 'nada' | 'vazio' }` (pura);
   `descoberto(grupo, id)`, `descobertas(grupo)`, `noCaderno(id)`, `cadernoCompleto()`, `contagem()`,
-  `ingredientes()`, `ingrediente(id)`, `receitas()`, `receita(id)`, `laminas()`, `lamina(id)`, `licoes()`,
+  `ingredientes()`, `ingrediente(id)`, `receitas()`, `todasReceitas()`, `receita(id)`, `laminas()`, `lamina(id)`, `licoes()`,
   `licao(id)`, `elementos()`, `elemento(z)`, `tabela()`, `familias()`, `frase(chave)`, `falas()`.
 
 ## 8. Antes de mexer
@@ -132,3 +133,33 @@ spawn (21, 11). Só curiosidade e aprendizado extra, como o térreo: nada de din
 - `Reino.config.quimica.grausPorToque`: quanto o termômetro do Fogão anda a cada toque.
 - Selo "✨ Novo!" do menu Lugares: volta no Laboratório até ela entrar no `quimica-2`, mesmo já tendo entrado no térreo.
 - Testes: `unidade/quimica-andar2.test.js` (API, ids, save, escadas) e `unidade/quimica-{estados,separar,livros}.navegador.test.js`.
+
+## 10. Cartões de experiência
+Pedido: `pedidos/2026-10-31-moedas-cofre-cartoes.md` §3–§4. Cada sala feita pela 1ª vez dá o próximo cartão: uma
+receita nova da bancada, que fica escrita no caderno ("Experimente!") até ela fazer.
+- Dados (`conteudo/quimica/receitas-cartoes.js`, `ingredientes-cartoes.js`): receita com `cartao: n` (1..N sem
+  buraco, a ordem de ganho) e `ordem: 100 + n`; produto com `cartao: true` (preso no baú até o 1º cartão que o usa).
+  Todo produto de cartão é usado por algum cartão. Receita nova = só dados (quando os cartões acabam, a sala não dá baú).
+- Derivado das salas feitas, SEM campo no save (`sistemas/cartoes.js`, `Reino.Cartoes`): contam as salas de
+  `Reino.materias` com `salas[id].feita ≥` o início do dia `Reino.config.cartoes.desde` (hora local), ordenadas por
+  (`feita`, id); a k-ésima dá o cartão k. As salas do 4º bimestre já feitas dão os cartões delas na hora.
+- API `Reino.Cartoes`: `lista()` (receitas de cartão por `cartao`), `ganhos()`, `ganho(receitaId)`, `cartao(n)`,
+  `daSala(salaId)` (o n daquela sala, ou 0), `produtosNovos(n)` (os produtos de cartão do n que nenhum cartão < n usa),
+  `liberado(ingredienteId)` (sem `cartao`: sempre; com: um cartão ganho o usa OU uma receita descoberta no save o usa),
+  `novoNaBancada(ingredienteId)` (liberado e ainda sem receita descoberta que o use: selo "Novo!"), `FALAS`.
+- O que ela já usou nunca some: receita de cartão descoberta continua em `receitas()` e segura os produtos dela,
+  mesmo num Novo ciclo (que zera as salas e, com elas, os cartões ainda não feitos).
+- Na química: `receitas()` (e `misturar`, que usa ela) esconde as de cartão não ganhas nem descobertas;
+  `todasReceitas()` e `falas()` veem tudo (a voz se grava antes); `noCaderno(id)` vale para cartão ganho;
+  `ingredientes()` esconde os produtos não liberados; `descobrir('receitas', id)` de cartão não ganho recusa;
+  `cadernoCompleto()` e as `estrelasCadernoCompleto` contam só as receitas sem `cartao` (o bônus não se repete);
+  `contagem().receitas` conta as que ela vê. Caderno: a marca "🃏 Cartão n" na cartinha e na página.
+- Fim da sala (`atividades/missao.js`, `terminar`): na 1ª vez, a linha "🃏 Cartão de experiência novo!" (se
+  `daSala > 0`); no botão final (ou no ✕), na ordem: fecha a tela → `UI.festaMoedas(dinheiro + bônus)`
+  (`ui/moedas-festa.js`: as 🪙 voam até o chip do HUD com o som `plim`) → `UI.abrirCartaoBau(n)` → chocar os ovos →
+  `aoTerminar`. Sem animações: os mesmos passos, parados (um plim e o número final; o baú, quadro a quadro, a cada toque).
+- `UI.abrirCartaoBau(n) → Promise` (`ui/bau-cartao.js`): o baú dos presentes (céu, baú, luz; a tela leva também
+  `.tela-presente`) → "Ver o cartão ✨" → a cartinha (emoji, nome, tubinhos) → com produtos novos, "Novo no
+  laboratório!" e os frascos (nome e fórmula) → "Ok! ✨". Esc pula para o fim e, no fim, fecha. Nada se grava.
+  Voz do Claude (`Reino.Cartoes.FALAS`, pacote `geral`).
+- Testes: `unidade/cartoes.test.js` (regra e dados) e `unidade/bau-cartao.navegador.test.js` (baú e moedas).

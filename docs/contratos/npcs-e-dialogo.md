@@ -231,7 +231,7 @@ Reino.Claude.dialogoAberto() → bool   // o balão aberto é modal
    pedaços parecidos); a voz lê a frase inteira uma vez só, então as frases do Claude não se cortam no texto nem
    na gravação.
 2. Frases automáticas do motor (`npcs-falas.js`), também curtas: resumo do guia ("Você fez N de 5 salas.",
-   "Já ganhou X Robux!", "Agora vamos para a Sala N!"), persistência ("Mais N vezes e o raro nasce!", "Ou de
+   "Já ganhou X moedas!", "Agora vamos para a Sala N!"), persistência ("Mais N vezes e o raro nasce!", "Ou de
    primeira, com calma!"), prova ("Agora vale um prêmio lendário/raro/comum!"), treino ("Faltam N salas!"),
    estábulo com ovos.
 3. Números que mudam são enumerados (como `treinoBloqueado`); inglês entre «».
