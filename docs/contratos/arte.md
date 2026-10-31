@@ -227,6 +227,12 @@ Adulto e criança diferem ≥ 4 px. Peça nova entra na faixa do papel dela; pap
 3. No CSS, sombra só para baixo (`0 4px 0`): nada de deslocamento lateral.
 4. Véu de luz (vinheta, halo, escurecer atrás do painel): degraus na grade de pixel, com diferença de alfa ≤ 0,04
    entre vizinhos, ou pontilhado ordenado 2×2 entre dois níveis. Faixa dura de alfa maior aparece como defeito.
+5. Jogador e unicórnio: cada material em 3 tons (brilho, base e sombra, a sombra puxada para o `--tinta`), o lado da
+   sombra à direita e embaixo. A personagem ganha rosto, brilho e sombra em código, por cima de qualquer corte e roupa
+   (`js/arte/pixelart-mariana-acabamento.js`); o unicórnio traz a luz da crina, do pelo e do olho no molde
+   (`pixelart-unicornio-moldes.js`: x/t/u brilho e y/z/v sombra das 3 cores da crina, d meia-sombra, c cílio, i íris),
+   e o código só põe a meia-sombra da borda e o brilho do casco (`pixelart-unicornio-acabamento.js`), que valem também
+   no passo, no pulo e na pose cansada. Piscar: só com Animações (`config.piscar`).
 
 ## 14. Contorno
 1. Todo desenho sólido tem contorno de 1 pixel em `--tinta` (`#3a2446`; `PA.contornar` no canvas).

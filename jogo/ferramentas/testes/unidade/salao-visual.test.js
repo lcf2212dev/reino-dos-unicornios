@@ -1,6 +1,7 @@
 // Testes de unidade: corte de cabelo e modelo de roupa do Salão de Beleza (aparencia.corte / aparencia.modelo).
 // 1) o desenho: PA._interno.aplicarVisual (js/arte/pixelart-mariana-visual.js) em todos os cortes, roupas e vistas,
 //    a pé (3 passos) e sentada: mesmo tamanho dos moldes e só letras da paleta; ids desconhecidos caem no de hoje.
+//    Depois dele, o acabamento (pixelart-mariana-acabamento.js: rosto, luz, sombra e o piscar) também.
 // 2) o save: save antigo (sem os campos) abre e grava igual, a escolha fica depois de gravar e recarregar, e a
 //    mescla leva o corte junto com as cores (aparencia vem inteira do lado mais recente, save-e-mescla.md §4).
 // Saves 100% sintéticos, num vm (ajudantes/jogo-save.js); nada toca no save real.
@@ -21,6 +22,7 @@ function arteMariana() {
   vm.createContext(ctx);
   vm.runInContext(fs.readFileSync(path.join(JS, 'arte/pixelart-mariana-visual.js'), 'utf8'), ctx);
   vm.runInContext(fs.readFileSync(path.join(JS, 'arte/pixelart-menino-moldes.js'), 'utf8'), ctx);
+  vm.runInContext(fs.readFileSync(path.join(JS, 'arte/pixelart-mariana-acabamento.js'), 'utf8'), ctx);
   return ctx.PA;
 }
 // os moldes de hoje (MARI), lidos do próprio arquivo sem executar o desenho
@@ -33,6 +35,8 @@ function moldes() {
   return ctx.MARI;
 }
 const LETRAS = new Set('.HLKERCDASBWMGTZJQOV'.split(''));
+// as do acabamento (cabelo na sombra e brilho, pele na sombra, boca, brilho do sapato, roupa clara na sombra)
+const LETRAS_ACABAMENTO = new Set([...LETRAS, ...'hIkmsN'.split('')]);
 
 test('salão: todo corte e roupa, em toda vista, a pé e sentada, mantém o tamanho e só usa letras da paleta', () => {
   const PA = arteMariana(), MARI = moldes();
@@ -51,6 +55,16 @@ test('salão: todo corte e roupa, em toda vista, a pé e sentada, mantém o tama
         assert.strictEqual(l.length, pose.linhas[0].length, onde + ': largura');
         l.split('').forEach((ch) => assert.ok(LETRAS.has(ch), `${onde}: letra "${ch}" fora da paleta`));
       });
+      // o acabamento e o olho fechado: mesmo tamanho, só letras da paleta, e o rosto continua com os 2 olhos
+      [PA._interno.acabarMariana(saida, vista, pose.sentada)].forEach((a) => [a, PA._interno.piscarMariana(a)].forEach((b, n) => {
+        assert.strictEqual(b.length, saida.length, onde + ': altura do acabamento');
+        b.forEach((l) => {
+          assert.strictEqual(l.length, saida[0].length, onde + ': largura do acabamento');
+          l.split('').forEach((ch) => assert.ok(LETRAS_ACABAMENTO.has(ch), `${onde}: letra "${ch}" do acabamento fora da paleta`));
+        });
+        const olhos = b.join('').split('E').length - 1, antes = saida.join('').split('E').length - 1;
+        if (n === 0) assert.ok(olhos >= antes, onde + ': o acabamento não some com olho');
+      }));
       // o visual de hoje passando pela função sai igual aos moldes (o PA.mariana nem chama, mas confere)
       if (c.id === 'solto' && r.id === 'vestido') assert.deepStrictEqual(copia(saida), copia(pose.linhas), onde);
     })));
