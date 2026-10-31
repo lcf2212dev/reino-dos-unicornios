@@ -341,9 +341,6 @@
       { js: 'js/ui/ovos.js', grupo: 'ui' },
       { js: 'js/ui/bau-presente.js', grupo: 'ui' }, // o baú dos presentes depois do login (UI.abrirPresentesPendentes)
       { js: 'js/ui/bau-cartao.js', grupo: 'ui' }, // o baú do cartão de experiência no fim da sala (UI.abrirCartaoBau)
-      { js: 'js/ui/casa-falas.js', grupo: 'ui', node: true }, // falas do Claude no baú da casa e na escolha do kit (sem DOM)
-      { js: 'js/ui/bau-casa.js', grupo: 'ui' }, // o baú da casa do jogador ao entrar no Reino (UI.abrirBauCasa; casa.md §9)
-      { js: 'js/ui/casa-kits.js', grupo: 'ui' }, // a escolha do kit de móveis da casa (UI.escolherKitCasa, UI.casaKitsPendentes)
       { js: 'js/ui/moedas-festa.js', grupo: 'ui' }, // as moedas voando até o chip do HUD (UI.festaMoedas)
       { js: 'js/ui/lugares.js', grupo: 'ui' },
       { js: 'js/ui/ajustes.js', grupo: 'ui' },
@@ -378,6 +375,9 @@
       { js: 'js/sistemas/fotos-telas.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/presentes.js', grupo: 'sistemas', node: true }, // campo presentes, P.presentesPendentes, P.abrirPresente (módulo depois de cuidados, surpresa e fotos)
       { js: 'js/sistemas/casa.js', grupo: 'sistemas', node: true }, // casa do jogador (casa.md): campos casaBau/casaKits/casaItens, Reino.Casa, ação casaDecorar
+      { js: 'js/ui/casa-falas.js', grupo: 'ui', node: true }, // falas do Claude no baú da casa e na escolha do kit (sem DOM)
+      { js: 'js/ui/bau-casa.js', grupo: 'ui' }, // o baú da casa do jogador ao entrar no Reino (UI.abrirBauCasa; casa.md §9)
+      { js: 'js/ui/casa-kits.js', grupo: 'ui' }, // a escolha do kit de móveis da casa (UI.escolherKitCasa, UI.casaKitsPendentes)
       { js: 'js/sistemas/versao.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/aura.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/viagem.js', grupo: 'sistemas', node: true },
