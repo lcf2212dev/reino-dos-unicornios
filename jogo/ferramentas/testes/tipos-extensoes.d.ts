@@ -161,6 +161,16 @@ interface KitCasaDef {
   comodo: string;
   itens: ItemKitCasa[];
 }
+/** Um móvel avulso da casa (casa.md §12): um à escolha por sala feita. `objeto` = tipo da biblioteca. */
+interface MovelCasaDef {
+  id: string;
+  nome: string;
+  objeto: string;
+  /** cômodo onde ele combina: a aba do modo decorar (um id de config.casa.kits) */
+  comodo: string;
+  direcoes: 1 | 2 | 4;
+  parede?: boolean;
+}
 /** Interior que o jogador decora (casa.md §4): o validador dispensa o critério de "rico" e a cena soma os móveis do save. */
 interface InteriorDef {
   decoravel?: boolean;

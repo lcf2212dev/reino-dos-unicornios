@@ -22,6 +22,8 @@ Reino.config = {
     desdeBimestre: 4,
     kits: ['estar', 'jantar', 'cozinha', 'banheiro', 'quarto-jogador', 'quarto-uni'],
     passoGirar: ['baixo', 'esq', 'cima', 'dir'],
+    // a cada sala feita de uma matéria que conta, a tela sorteia este tanto de móveis avulsos (casa.md §12) e ela escolhe 1
+    moveisOpcoes: 5,
   },
   pinPais: '2026',            // troque aqui o PIN da Área dos Pais
   desafiosPorSala: 6,

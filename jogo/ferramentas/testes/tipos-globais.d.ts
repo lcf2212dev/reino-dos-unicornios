@@ -27,6 +27,9 @@ interface ReinoGlobal {
   kitsCasa?: KitCasaDef[];
   registrarKitCasa?(def: KitCasaDef): boolean;
   kitCasa?(id: string): KitCasaDef | undefined;
+  moveisCasa?: MovelCasaDef[];
+  registrarMovelCasa?(def: MovelCasaDef): boolean;
+  movelCasa?(id: string): MovelCasaDef | undefined;
   // js/nucleo/modulos.js
   modulos?: ModuloDef[];
   registrarModulo?(def: ModuloDef): void;

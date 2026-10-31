@@ -1,6 +1,7 @@
 /* Casa do jogador, modo decorar (docs/contratos/casa.md §9.3), parte 2: o botão do HUD e o painel das peças.
    UI.decorarCasa({ kit? }) → Promise (resolve quando ela sai com "Pronto", ✕ ou Esc). O painel fica no pé da tela,
-   sem véu escuro: a casa aparece em cima. Abas pelos kits ganhos (nome de Reino.Casa.nomeKit); cada peça com a
+   sem véu escuro: a casa aparece em cima. Abas pelos cômodos com kit ou móvel avulso (Reino.Casa.abas(), nome de
+   Reino.Casa.nomeKit); cada peça com a
    miniatura (o desenho do objeto, de frente), o nome e "Na casa" ou "Guardado". Tocar numa peça (ou num móvel da
    casa, por cima do painel) entra no modo colocar (ui/casa-decorar-fantasma.js); colocou, guardou ou cancelou,
    o painel volta. A cena fica ocupada (Cena.ocupar('decorar')) do começo ao fim: ela não anda.
@@ -53,7 +54,7 @@
 
   // a aba de partida: a pedida, a última usada, a do cômodo onde ela está, a primeira
   function abaInicial(pedida) {
-    var ganhos = C().kitsGanhos();
+    var ganhos = C().abas();
     if (pedida && ganhos.indexOf(pedida) >= 0) return pedida;
     if (S && S.kit && ganhos.indexOf(S.kit) >= 0) return S.kit;
     var c = R.Cena.atual(), jt = window.Jogador ? Jogador.tile() : null, com = c && jt ? C().comodoEm(c.id, jt.x, jt.y) : null;
@@ -64,7 +65,7 @@
   UI.decorarCasa = function (opts) {
     opts = opts || {};
     if (S) return S.promessa;
-    if (!C() || !C().kitsGanhos().length || !naCasa()) return Promise.resolve();
+    if (!C() || !C().abas().length || !naCasa()) return Promise.resolve();
     var resolver, promessa = new Promise(function (r) { resolver = r; });
     S = { kit: null, modo: 'painel', tela: null, ultima: null, resolver: resolver, promessa: promessa };
     S.kit = abaInicial(opts.kit);
@@ -96,7 +97,7 @@
     S.calmaAte = performance.now() + CALMA_MS;
     var pn = UI.painel('decorar', 'Decorar a casa', { icone: 'casa-pincel', aoFechar: sair });
     S.tela = pn.tela;
-    var kits = C().kitsGanhos(), grade = el('div.decorar-pecas'), abas = {};
+    var kits = C().abas(), grade = el('div.decorar-pecas'), abas = {};
     function mostrar(kit) {
       S.kit = kit;
       Object.keys(abas).forEach(function (k) { abas[k].setAttribute('aria-selected', k === kit ? 'true' : 'false'); });

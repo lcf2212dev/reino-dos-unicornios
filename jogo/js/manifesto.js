@@ -49,6 +49,7 @@
       'css/ui-bau-cartao.css',
       'css/ui-bau-casa.css',
       'css/ui-casa-kits.css',
+      'css/ui-casa-moveis.css',
       'css/ui-moedas-festa.css',
       'css/ui-casa-decorar.css',
     ],
@@ -228,6 +229,7 @@
       { js: 'js/conteudo/presentes.js', grupo: 'conteudo', node: true }, // presentes do jogo: as medalhas Ultra Lendárias (pedido 2026-10-28)
       { js: 'js/conteudo/casa/kits-a.js', grupo: 'conteudo', node: true }, // casa: kits estar, jantar e cozinha (casa.md §3)
       { js: 'js/conteudo/casa/kits-b.js', grupo: 'conteudo', node: true }, // casa: kits Banheiro, Quarto do jogador e Quarto do unicórnio
+      { js: 'js/conteudo/casa/moveis-salas.js', grupo: 'conteudo', node: true }, // casa: os 38 móveis avulsos, um à escolha por sala feita (casa.md §12)
       { js: 'js/conteudo/materias/ciencias/icones.js', grupo: 'icones', node: true },
       { js: 'js/conteudo/materias/matematica/icones.js', grupo: 'icones', node: true },
       { js: 'js/conteudo/materias/geografia/icones.js', grupo: 'icones', node: true },
@@ -377,9 +379,11 @@
       { js: 'js/sistemas/fotos-telas.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/presentes.js', grupo: 'sistemas', node: true }, // campo presentes, P.presentesPendentes, P.abrirPresente (módulo depois de cuidados, surpresa e fotos)
       { js: 'js/sistemas/casa.js', grupo: 'sistemas', node: true }, // casa do jogador (casa.md): campos casaBau/casaKits/casaItens, Reino.Casa, ação casaDecorar
+      { js: 'js/sistemas/casa-moveis.js', grupo: 'sistemas', node: true }, // casa: campo casaMoveis, um móvel avulso por sala feita (Reino.CasaMoveis; casa.md §12)
       { js: 'js/ui/casa-falas.js', grupo: 'ui', node: true }, // falas do Claude no baú da casa e na escolha do kit (sem DOM)
       { js: 'js/ui/bau-casa.js', grupo: 'ui' }, // o baú da casa do jogador ao entrar no Reino (UI.abrirBauCasa; casa.md §9)
       { js: 'js/ui/casa-kits.js', grupo: 'ui' }, // a escolha do kit de móveis da casa (UI.escolherKitCasa, UI.casaKitsPendentes)
+      { js: 'js/ui/casa-moveis.js', grupo: 'ui' }, // a escolha do móvel avulso de uma sala feita (UI.escolherMovelCasa, UI.casaMoveisPendentes)
       { js: 'js/sistemas/versao.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/aura.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/viagem.js', grupo: 'sistemas', node: true },
@@ -577,6 +581,12 @@
       { js: 'js/interiores/casa/moveis-banheiro.js', grupo: 'interiores', node: true }, // casa: móveis do kit Banheiro
       { js: 'js/interiores/casa/moveis-quarto.js', grupo: 'interiores', node: true }, // casa: móveis do Quarto do jogador
       { js: 'js/interiores/casa/moveis-quarto-uni.js', grupo: 'interiores', node: true }, // casa: móveis do Quarto do unicórnio
+      { js: 'js/interiores/casa/moveis-salas-estar.js', grupo: 'interiores', node: true }, // casa: móveis avulsos (por sala) de Sala de Estar
+      { js: 'js/interiores/casa/moveis-salas-jantar.js', grupo: 'interiores', node: true }, // casa: móveis avulsos (por sala) de Sala de Jantar
+      { js: 'js/interiores/casa/moveis-salas-cozinha.js', grupo: 'interiores', node: true }, // casa: móveis avulsos (por sala) de Cozinha
+      { js: 'js/interiores/casa/moveis-salas-banheiro.js', grupo: 'interiores', node: true }, // casa: móveis avulsos (por sala) de Banheiro
+      { js: 'js/interiores/casa/moveis-salas-quarto.js', grupo: 'interiores', node: true }, // casa: móveis avulsos (por sala) de Quarto do jogador
+      { js: 'js/interiores/casa/moveis-salas-quarto-uni.js', grupo: 'interiores', node: true }, // casa: móveis avulsos (por sala) de Quarto do unicórnio
       { js: 'js/interiores/casa/falas.js', grupo: 'interiores', node: true }, // casa: o prédio (falas, caixa de mudança, térreo, 2º andar, fora, lugar)
       { js: 'js/interiores/casa/objetos.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/casa/casa.js', grupo: 'interiores', node: true },

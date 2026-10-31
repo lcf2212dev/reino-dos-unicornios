@@ -146,11 +146,13 @@
     // pergunta surpresa (módulo): o relógio só começa depois do tutorial da primeira vez
     ctxModulo.tutorial = tutorial;
     Reino.modulos.forEach(function (m) { if (m.depoisDasBoasVindas) m.depoisDasBoasVindas(ctxModulo); });
-    // o baú da casa (ui/bau-casa.js; resolve na hora se já ganhou): antigo depois dos presentes, novo depois do tutorial
+    // o baú da casa (ui/bau-casa.js; resolve na hora se já ganhou): antigo depois dos presentes, novo depois do tutorial;
+    // em seguida, o antigo escolhe o móvel de cada sala feita que ainda não deu móvel (ui/casa-moveis.js; casa.md §12)
     var casa = !Reino.congelado && UI.abrirBauCasa;
+    var moveis = function () { return UI.casaMoveisPendentes ? UI.casaMoveisPendentes() : null; };
     if (casa && novo) tutorial.then(function () { return UI.abrirBauCasa(); }).catch(function (e) { console.warn('casa:', e); });
     bau.catch(function (e) { console.warn('presentes:', e); })
-      .then(function () { if (casa && !novo) return UI.abrirBauCasa().catch(function (e) { console.warn('casa:', e); }); })
+      .then(function () { if (casa && !novo) return UI.abrirBauCasa().then(moveis).catch(function (e) { console.warn('casa:', e); }); })
       .then(boasVindas)
       .then(function () { UI.festaMedalha.parabens(); })
       .catch(function (e) { console.warn('presentes/parabéns:', e); })   // ela já está no mapa: só não festeja
