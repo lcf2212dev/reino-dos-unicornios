@@ -33,7 +33,7 @@
 }
 @media (max-height: 500px) {
   .abertura-faixa-novidade { font-size: var(--texto-aux); }
-  .novidade-casinha { width: 40px; height: 48px; }
+  .novidade-casinha { width: 40px !important; height: 48px !important; }   /* vence o tamanho inline do PA.paraDOM: sobra chão para a Mariana */
   .novidade-texto { font-size: var(--texto-aux); }
   .novidade-detalhe { display: none; }
 }

@@ -2,6 +2,7 @@
    Céu do entardecer com o sol, montanhas, nuvens, arco-íris, colinas, a estrada e o castelo.
    Pixel de verdade: 1 px lógico = 1 px do canvas (o CSS amplia sem borrar). Degradês com pontilhado
    (matriz de Bayer), como nos jogos de 16 bits. A animação e a tela ficam em abertura.js.
+   Também o palco: onde a Mariana pisa e as pistas de voo, longe das caixas do DOM (título, novidade, botão).
    Publica Reino._abertura (interno das duas). Nada de Math.random: a cena sai sempre igual. */
 (function () {
   var D = Reino.Desenho, K = D.K, ret = D.ret, circulo = D.circulo, rgb = D.hexRgb;
@@ -12,10 +13,13 @@
   function mix(a, b, k) { return [a[0] + (b[0] - a[0]) * k, a[1] + (b[1] - a[1]) * k, a[2] + (b[2] - a[2]) * k]; }
 
   /* ---------- medidas: onde fica cada coisa, a partir do tamanho lógico W x H ---------- */
-  function medidas(W, H) {
+  // tetoCastelo: o pé do bloco do título quando ele fica em cima do castelo; o horizonte desce até 0,78 de H
+  // para as bandeiras não sumirem atrás do bloco
+  function medidas(W, H, tetoCastelo) {
     var emPe = H > W * 1.15;
-    var yH = Math.round(H * (emPe ? 0.63 : 0.7));               // horizonte (pé das montanhas)
     var colina = Math.max(8, Math.round(H * 0.035));             // altura da colina do castelo
+    var yH = Math.round(H * (emPe ? 0.63 : 0.7));               // horizonte (pé das montanhas)
+    if (tetoCastelo) yH = Math.max(yH, Math.min(Math.round(H * 0.78), Math.round(tetoCastelo) + 14 + 77 + colina));
     var cx = Math.round(W * (emPe ? 0.5 : 0.7));
     var topoColina = yH - colina;
     var castelo = { w: 112, h: 80, x: cx - 56, y: topoColina - 77 };
@@ -215,7 +219,77 @@
     return c;
   }
 
+  /* ---------- palco: a Mariana e as pistas de voo (px lógicos; caixas { x, y, w, h }) ---------- */
+  function cruza(a, b, folga) {
+    folga = folga || 0;
+    return a.x < b.x + b.w + folga && b.x < a.x + a.w + folga && a.y < b.y + b.h + folga && b.y < a.y + a.h + folga;
+  }
+  // tam(e) → { w, h } do sprite montado na escala e. Procura, da maior escala para a menor, um lugar no chão (pés na
+  // linha da frente ou mais embaixo) que não cruze nenhuma caixa do DOM. A caixa conta o pulinho do trote e a sombra.
+  function lugarDaMenina(m, dom, tam) {
+    var pref = m.emPe ? [0.2, 0.8, 0.5] : m.W > m.H * 2 ? [0.43, 0.2, 0.1, 0.62, 0.85] : [0.6, 0.45, 0.88, 0.2];
+    function lugar(e, f, pe) {
+      var t = tam(e), x = Math.max(1, Math.min(m.W - t.w - 1, Math.round(m.W * f - t.w / 2)));
+      return { x: x, pe: pe, e: e, w: t.w, h: t.h, caixa: { x: x, y: pe - t.h - e, w: t.w, h: t.h + e + 2 } };
+    }
+    for (var e = Math.min(m.W, m.H) >= 190 ? 2 : 1; e >= 1; e--) {
+      for (var i = 0; i < pref.length; i++) {
+        for (var pe = m.frente; pe <= m.H - 3; pe += 2) {
+          var l = lugar(e, pref[i], pe);
+          if (!dom.some(function (d) { return cruza(l.caixa, d, 4); })) return l;
+        }
+      }
+    }
+    return lugar(1, pref[0], m.frente);
+  }
+  // tiras de y livres em [y0, y1): os voadores cruzam a tela toda, então cada caixa tira a faixa de y inteira dela
+  function livres(y0, y1, caixas, folga) {
+    var tiras = y1 > y0 ? [[y0, y1]] : [];
+    caixas.forEach(function (b) {
+      var a = b.y - folga, z = b.y + b.h + folga, novas = [];
+      tiras.forEach(function (t) {
+        if (z <= t[0] || a >= t[1]) { novas.push(t); return; }
+        if (a > t[0]) novas.push([t[0], a]);
+        if (z < t[1]) novas.push([z, t[1]]);
+      });
+      tiras = novas;
+    });
+    return tiras;
+  }
+  // cada tira recebe as pistas que couberem (tipos em ordem de preferência), espaçadas por igual
+  function encher(tiras, tipos, n, pistas) {
+    tiras.forEach(function (t) {
+      var y = t[0], aqui = [];
+      while (pistas.length + aqui.length < n) {
+        var tipo = tipos.filter(function (k) { return !(k.um && pistas.concat(aqui).some(function (p) { return p.tipo === k; })) && t[1] - y >= k.alto; })[0];
+        if (!tipo) break;
+        aqui.push({ y: y, tipo: tipo });
+        y += tipo.alto;
+      }
+      var sobra = (t[1] - y) / (aqui.length + 1);
+      aqui.forEach(function (p, i) { p.y = Math.round(p.y + sobra * (i + 1)); pistas.push(p); });
+    });
+  }
+  // pistas de voo, uma altura para cada voador (nunca dois na mesma): perto, no céu entre o que há em cima e o topo
+  // das torres (desenhados na frente); se faltar lugar, longe (menores, atrás do castelo e das montanhas).
+  // tipos: { perto: [grande, normal], longe: [pequeno] }, cada um com alto (sprite + balanço + rastro)
+  var BEIRAL = 21;   // do topo do castelo (py) ao beiral das torres, no desenho do mapa (mundo/predios.js)
+  // o retângulo do castelo do beiral para baixo (as torres de ponta a ponta): o que voa longe some atrás dele
+  function atrasDoCastelo(m) { return { x: m.castelo.x - 1, y: m.castelo.y + BEIRAL, w: m.castelo.w + 2, h: m.H }; }
+  function pistasDeVoo(m, bloqueios, menina, n, tipos) {
+    var pistas = [];
+    encher(livres(2, m.castelo.y - 12, bloqueios.concat([menina]), 2), tipos.perto, n, pistas);
+    // os de longe nunca na altura dos telhados (apareceriam no vão entre as torres, como se pousassem no castelo):
+    // só abaixo do beiral das torres, onde o castelo os esconde inteiros (abertura.js recorta o retângulo atrás dele,
+    // atrasDoCastelo). Podem passar atrás da Mariana: ela é desenhada na frente
+    var ocupadas = pistas.map(function (p) { return { y: p.y, h: p.tipo.alto }; });
+    ocupadas.push({ y: 0, h: m.castelo.y + BEIRAL });
+    encher(livres(2, m.yH - Math.round(m.H * 0.03), bloqueios.concat(ocupadas), 1), tipos.longe, n, pistas);
+    return pistas;
+  }
+
   function soltar(c) { if (c) { c.width = 0; c.height = 0; } }
 
-  Reino._abertura = { medidas: medidas, ceu: ceu, montanhas: montanhas, nuvens: nuvens, arcoIris: arcoIris, chao: chao, soltar: soltar };
+  Reino._abertura = { medidas: medidas, ceu: ceu, montanhas: montanhas, nuvens: nuvens, arcoIris: arcoIris, chao: chao, soltar: soltar,
+    cruza: cruza, lugarDaMenina: lugarDaMenina, pistasDeVoo: pistasDeVoo, atrasDoCastelo: atrasDoCastelo };
 })();
