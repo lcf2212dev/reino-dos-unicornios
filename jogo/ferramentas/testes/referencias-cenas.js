@@ -101,6 +101,24 @@ async function cenasTelas(page, pasta) {
     await foto(page, pasta, `tela-livro-${id}`);
     await limpar(page);
   }
+  // modo decorar da casa (casa.md §9.3), por último (o relógio que anda até a casa mexeria nas barras do HUD das
+  // outras telas): dentro da casa, com o kit Sala de Estar só na memória (sem salvar), o painel; depois sai e devolve o
+  // save como estava (a base antiga não tem: guarda)
+  if (await page.evaluate(() => !!(Reino.UI.decorarCasa && Reino.Casa && Reino.Interiores.def('casa')))) {
+    await page.evaluate(() => { Reino.Cena.irPara('casa'); });
+    await avancar(page, 2500);
+    await page.evaluate(() => {
+      var e = Reino.Progresso.estado();
+      window.__kitsAntes = e.casaKits;
+      e.casaKits = Object.assign({}, e.casaKits, { 'e2e-decorar': { kit: 'estar', em: 1 } });
+      Reino.UI.decorarCasa({ kit: 'estar' });
+    });
+    await foto(page, pasta, 'tela-decorar');
+    await page.evaluate(() => { var b = document.querySelector('.decorar-pronto'); if (b) b.click(); Reino.Progresso.estado().casaKits = window.__kitsAntes; });
+    await limpar(page);
+    await page.evaluate(() => { Reino.Cena.sair(); });
+    await avancar(page, 2500);
+  }
 }
 
 async function cenasSalas(page, pasta) {

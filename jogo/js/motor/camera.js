@@ -112,6 +112,8 @@
     var m = margensInterior(a, mw), livre = vh - m.topo - m.baixo;
     cam.y = mh <= livre ? (mh - livre) / 2 - m.topo : U.clamp(alvoY(m.topo, m.baixo), -m.topo, mh - vh + m.baixo);
     acimaDoBalao(c, a, vh);
+    // quem precisa mostrar outra coisa que não ela (o fantasma do modo decorar, ui/casa-decorar-fantasma.js) ajusta aqui
+    if (V.ajusteCamera) V.ajusteCamera(cam, c);
   }
   // conversa com NPC (balão modal, D5-05): a câmera sobe só o que falta para a Mariana e o NPC ficarem inteiros
   // acima do balão (a margem de baixo vira max(dock, balão) + folga); fechado, volta ao lugar de sempre

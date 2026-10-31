@@ -2,6 +2,8 @@
 //   foto            tira uma foto e para na prévia (.tela-fotos-previa)
 //   album:<n>       tira e guarda n fotos, abre o álbum e toca a n-ésima miniatura (.tela-fotos-ver)
 //   prova:<id>:<n>  a questão n da prova, a mesma tela das imagens prova-<id>-qNN do e2e
+//   decorar         dentro da casa, com o kit Sala de Estar só na memória, o painel do modo decorar (casa.md §9.3)
+//   decorar:colocar o mesmo, já no modo colocar com o sofá (o fantasma e a barra)
 const { mostrarDesafio } = require('./referencias-cenas');
 
 // relógio congelado: anda aos poucos até a condição valer (o IndexedDB responde fora do relógio)
@@ -42,6 +44,16 @@ async function questaoDaProva(c, id, n) {
   await c.avancar(600);
 }
 
+// o kit vai só no estado da aba (sem salvar): o painel lê casaKits na hora
+async function decorar(c, colocar) {
+  await c.ir('casa');
+  await c.js("(function (e) { if (!Reino.Casa.kitsGanhos().length) { e.casaKits = e.casaKits || {}; e.casaKits['ver-decorar'] = { kit: 'estar', em: 1 }; } })(Reino.Progresso.estado())");
+  await c.js("void Reino.UI.decorarCasa({ kit: 'estar' })");
+  await espera(c, "!!document.querySelector('.tela-decorar .decorar-peca')");
+  await c.avancar(400);
+  if (colocar) { await c.js("document.querySelector('.tela-decorar .decorar-peca').click()"); await espera(c, "!!document.querySelector('.decorar-barra')"); await c.avancar(400); }
+}
+
 // devolve true se a tela é uma destas (senão o cenário segue com as telas simples)
 async function telaEspecial(c, nome) {
   const p = nome.split(':');
@@ -52,6 +64,7 @@ async function telaEspecial(c, nome) {
     await album(c, n);
     return true;
   }
+  if (p[0] === 'decorar' && (p.length === 1 || p[1] === 'colocar')) { await decorar(c, p[1] === 'colocar'); return true; }
   if (p[0] === 'prova' && p.length === 3) { await questaoDaProva(c, p[1], Number(p[2])); return true; }
   return false;
 }

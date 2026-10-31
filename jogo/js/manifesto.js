@@ -49,6 +49,7 @@
       'css/ui-bau-casa.css',
       'css/ui-casa-kits.css',
       'css/ui-moedas-festa.css',
+      'css/ui-casa-decorar.css',
     ],
     scripts: [
       { js: 'js/nucleo/congelar.js', grupo: 'nucleo' },
@@ -349,6 +350,8 @@
       { js: 'js/ui/aparencia.js', grupo: 'ui' },
       { js: 'js/ui/salao.js', grupo: 'ui' },
       { js: 'js/ui/cofre.js', grupo: 'ui' },
+      { js: 'js/ui/casa-decorar-fantasma.js', grupo: 'ui' }, // casa: modo decorar, o modo colocar e o fantasma (casa.md §9.3)
+      { js: 'js/ui/casa-decorar.js', grupo: 'ui' }, // casa: modo decorar, o painel das peças e o botão do HUD (UI.decorarCasa)
       { js: 'js/ui/quimica-palco.js', grupo: 'ui' },
       { js: 'js/ui/quimica-palco-2.js', grupo: 'ui' },
       { js: 'js/ui/quimica-bancada.js', grupo: 'ui' },

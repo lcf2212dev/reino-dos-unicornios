@@ -1,0 +1,79 @@
+/* Casa do jogador, modo decorar (docs/contratos/casa.md §9.3; js/ui/casa-decorar.js e casa-decorar-fantasma.js):
+   o painel das peças no pé da tela (sem véu: a casa aparece em cima) e a barra do modo colocar (Girar, Guardar,
+   Cancelar, Colocar). Nada anima aqui: a entrada da tela é a de sempre (.tela) e o fantasma é do canvas. */
+
+/* ---------- painel das peças: baixo (até 38% da tela), para a sala ficar à vista em cima ---------- */
+.tela-decorar { background: none; align-items: flex-end; padding-top: 0; padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 8px); }
+.tela-decorar .painel { max-height: 38vh; min-height: 0; }
+.tela-decorar .painel-topo { padding-top: 6px; padding-bottom: 6px; }
+.decorar-topo {
+  flex: none; display: flex; align-items: center; gap: 8px; padding: 6px 12px;
+  border-bottom: var(--borda-grossa) solid var(--borda); background: var(--papel-quente);
+}
+.decorar-abas { flex: 1 1 auto; min-width: 0; display: flex; gap: 6px; overflow-x: auto; padding: 2px 0 4px; }
+.decorar-aba {
+  flex: none; min-height: 44px; padding: 6px 12px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
+  background: var(--papel); font: inherit; font-size: var(--texto-aux); color: inherit; white-space: nowrap; cursor: pointer;
+  box-shadow: var(--sombra-pequena); --degrau: 2px;
+}
+.decorar-aba[aria-selected="true"] { background: var(--roxo-claro); border-color: var(--roxo); }
+.decorar-kit { flex: 1 1 auto; min-width: 0; margin: 0; font-size: var(--texto); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.decorar-pronto { flex: none; background: var(--laranja); font-size: var(--texto); }
+.tela-decorar .painel-conteudo { display: flex; flex-direction: column; min-height: 0; padding: 8px 12px 10px; overflow: hidden; }
+.tela-decorar .painel-conteudo > * + * { margin-top: 8px; }
+.decorar-dica { flex: none; margin: 0; font-size: var(--texto-aux); line-height: var(--entrelinha); color: var(--tinta-suave); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.decorar-pecas { flex: 1 1 auto; min-height: 0; display: flex; gap: 8px; overflow-x: auto; overflow-y: hidden; padding-bottom: 6px; }
+.decorar-peca {
+  position: relative; flex: 0 0 128px;
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 4px; min-height: 48px;
+  padding: 6px 4px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
+  background: var(--papel); font: inherit; color: inherit; cursor: pointer;
+  box-shadow: var(--sombra-pequena); --degrau: 2px;
+}
+.decorar-mini-caixa { flex: 1 1 auto; min-height: 0; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; }
+.decorar-mini { display: block; flex: none; image-rendering: pixelated; }
+.decorar-peca-nome { flex: none; font-size: var(--texto-aux); line-height: 1.25; text-align: center; overflow-wrap: anywhere; }
+/* o estado vai no canto de cima do cartão, por cima do vazio acima da miniatura */
+.decorar-peca-estado {
+  position: absolute; top: 4px; left: 4px; padding: 0 4px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-pequeno);
+  font-size: var(--texto-aux); line-height: var(--entrelinha); background: var(--papel-2); color: var(--tinta-suave);
+}
+.decorar-peca.na-casa .decorar-peca-estado { background: var(--certo-fundo); color: var(--certo); }
+/* tela baixa (notebook): sem a dica, para sobrar altura para as peças */
+@media (max-height: 820px) { .decorar-dica { display: none; } }
+
+/* ---------- modo colocar: a barra de baixo (o HUD some; a barra fica no lugar do dock) ---------- */
+body.casa-decorando #hud { visibility: hidden; }
+.decorar-barra {
+  position: fixed; z-index: 15;
+  left: calc(env(safe-area-inset-left, 0px) + 8px); right: calc(env(safe-area-inset-right, 0px) + 8px);
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 8px);
+  max-width: 720px; margin: 0 auto;
+  display: flex; flex-direction: column; gap: 8px; padding: 8px 12px 12px;
+  background: var(--papel); border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto-grande);
+}
+.decorar-barra:focus { outline: none; }
+.decorar-barra:focus-visible { outline: 4px dashed var(--tinta); outline-offset: 2px; }
+.decorar-msg { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin: 0; font-size: var(--texto); line-height: var(--entrelinha); }
+.decorar-estado { font-size: var(--texto-aux); }
+.decorar-barra.pode .decorar-estado { color: var(--certo); }
+.decorar-barra.nao-pode .decorar-estado { color: var(--erro); }
+.decorar-botoes { display: flex; gap: 8px; }
+.decorar-btn {
+  flex: 1 1 0; min-width: 0; min-height: 56px; padding: 4px 8px;
+  display: flex; align-items: center; justify-content: center; gap: 8px; white-space: nowrap;
+}
+.decorar-btn canvas { flex: none; }
+
+/* celular: ícone em cima do nome; o Cancelar fica só com o ✕ (arte.md §20.2) */
+@media (max-width: 480px) {
+  .tela-decorar { padding-left: 8px; padding-right: 8px; }
+  .tela-decorar .painel-conteudo { padding: 6px 8px 8px; }
+  .decorar-topo { padding: 4px 8px; }
+  .decorar-dica { display: none; }
+  .decorar-peca { flex-basis: 116px; }
+  .decorar-barra { padding: 6px 8px 8px; gap: 6px; }
+  .decorar-btn { flex-direction: column; gap: 2px; min-height: 64px; padding: 4px 2px; font-size: var(--texto-aux); }
+  .decorar-cancelar { flex: 0 0 64px; }
+  .decorar-cancelar .decorar-rotulo { display: none; }
+}

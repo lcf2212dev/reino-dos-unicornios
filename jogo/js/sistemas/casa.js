@@ -183,7 +183,8 @@
   // o motivo de não caber (ou null). `outras` = ObjetoInterior das outras peças do andar. comJogador: confere o tile dela
   function motivo(def, outras, p, x, y, dir, comJogador) {
     if (p.dirs.indexOf(dir) < 0 || !inteiroOk(x) || !inteiroOk(y)) return 'fora';
-    var II = R.Interiores, g = II.grade(def), cand = comoObjeto(p, { x: x, y: y, dir: dir }), ts = tiles(cand), com = null;
+    // a grade sempre com a lista dada: sem ela, o grade chamaria objetosExtras → resolver → motivo (laço sem fim)
+    var II = R.Interiores, g = II.grade(def, def.objetos || []), cand = comoObjeto(p, { x: x, y: y, dir: dir }), ts = tiles(cand), com = null;
     for (var i = 0; i < ts.length; i++) {
       var t = ts[i];
       if (!g.dentro(t.x, t.y) || !g.comodo[t.y][t.x] || (com !== null && g.comodo[t.y][t.x] !== com)) return 'fora';
@@ -209,7 +210,7 @@
     }
     // o caminho: nada que se alcançava antes deixa de se alcançar
     if (!p.parede && !p.plano) {
-      var antes = II.grade(Object.assign({}, def, { objetos: objs })), depois = II.grade(Object.assign({}, def, { objetos: objs.concat([cand]) }));
+      var antes = II.grade(def, objs), depois = II.grade(def, objs.concat([cand]));
       var o = origem(def), va = alcance(antes, o), vd = alcance(depois, o);
       if (alvos(def, antes).some(function (gr) { return algumNo(va, gr) && !algumNo(vd, gr); })) return 'bloqueia';
     }
@@ -298,7 +299,7 @@
   }
   function objetosDoAndar(andar) { return resolver(andar).map(function (a) { return comoObjeto(a.p, a.l); }); }
   function comodoEm(andar, x, y) {
-    var def = R.Interiores && R.Interiores.def(andar), g = def && R.Interiores.grade(def);
+    var def = R.Interiores && R.Interiores.def(andar), g = def && R.Interiores.grade(def, def.objetos || []);
     return g && g.dentro(x, y) ? g.comodo[y][x] : null;
   }
 
