@@ -15,6 +15,14 @@ Reino.config = {
   // cartões de experiência do Laboratório (sistemas/cartoes.js): um por sala feita (1ª vez) a partir desta data
   // (o começo do 4º bimestre); fixa, para os cartões não sumirem quando o bimestre mudar
   cartoes: { desde: '2026-10-05' },
+  // a casa do jogador (sistemas/casa.js; docs/contratos/casa.md): 1 kit de móveis por matéria completa de um
+  // bimestre >= desdeBimestre (as do 3º, arquivadas, não contam: daria todos de uma vez). kits = a ordem na tela
+  // de escolha; passoGirar = a ordem das direções no botão Girar
+  casa: {
+    desdeBimestre: 4,
+    kits: ['estar', 'jantar', 'cozinha', 'banheiro', 'quarto-jogador', 'quarto-uni'],
+    passoGirar: ['baixo', 'esq', 'cima', 'dir'],
+  },
   pinPais: '2026',            // troque aqui o PIN da Área dos Pais
   desafiosPorSala: 6,
   desafiosSalaLivro: 14,      // sala de livro (ordem: 'livro', 4º bimestre): todos os desafios, na ordem; no máximo este tanto

@@ -557,6 +557,7 @@
       { js: 'js/interiores/escola-musica/escola-musica.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/escola-musica/fora.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/escola-musica/lugar.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/casa/virar.js', grupo: 'interiores', node: true }, // casa do jogador (casa.md): o desenho dos móveis nas 4 direções
       { js: 'js/interiores/padrao.js', grupo: 'interiores', node: true }, // padrao.js por último entre os prédios: monta o interior das matérias que não têm um próprio
       { js: 'js/sistemas/banho.js', grupo: 'sistemas' },
       { js: 'js/sistemas/banho-desenho.js', grupo: 'sistemas' },
