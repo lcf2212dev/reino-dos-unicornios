@@ -5,7 +5,7 @@
   padding: 2px 10px; font-size: var(--texto-aux); white-space: nowrap;
   background: var(--papel-quente); border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
 }
-.cmovel-grade { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }   /* os 5 numa fileira; quebrou, a de baixo no meio */
+.cmovel-grade { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }   /* quebrou a fileira (4 e 1 no tablet e no notebook): a de baixo no meio */
 .cmovel-cartao { flex: 0 1 126px; gap: 4px; }
 .cmovel-comodo { font-size: var(--texto-aux); line-height: var(--entrelinha-titulo); text-align: center; color: var(--tinta-suave); }
 .cmovel-mais {

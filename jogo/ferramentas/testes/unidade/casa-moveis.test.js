@@ -167,6 +167,18 @@ test('casa-moveis: mescla de 2 aparelhos (a mesma sala: o mais novo; salas difer
   });
 });
 
+test('casa-moveis: aparelho de versão antiga (sem o campo) e mais novo não apaga as escolhas', () => {
+  const A = pronto({ agora: 1000 });
+  assert.ok(A.CM.escolher('t-s2', A.CM.opcoes('t-s2')[0]));
+  A.P.salvar();
+  const velho = A.lido();
+  delete velho.casaMoveis;
+  [[A.lido(), velho], [velho, A.lido()]].forEach(([x, y]) => {
+    const m = A.P.mesclar(copia(x), copia(y));
+    igual(m.casaMoveis, A.lido().casaMoveis, 'a escolha continua');
+  });
+});
+
 test('casa-moveis: a caixa de mudança abre antes os móveis pendentes, depois os kits e o painel', async () => {
   const j = pronto(), R = j.R, acao = R.modulos.find((m) => m.id === 'casa').acoes.casaDecorar, chamadas = [];
   R.UI = R.UI || {};

@@ -42,7 +42,8 @@
 
       function escolher(id, b) {
         if (feito) return;
-        if (!CM.escolher(salaId, id)) { Reino.Som.tocar('erro'); return; }
+        // recusou (a nuvem resolveu a sala ou mudou o sorteio com a tela aberta): fecha e a fila abre de novo, atualizada
+        if (!CM.escolher(salaId, id)) { Reino.Som.tocar('erro'); feito = true; UI.fecharTela(pn.tela); resolver(true); return; }
         feito = true;
         b.classList.add('escolhido');
         UI.festa(2, { item: b });
