@@ -32,11 +32,11 @@ Personagens: `npcs-e-dialogo.md`. Prédios: `interiores.md`. Vozes: `som-musica-
    automático não serve; o texto falado é o `texto` inteiro).
 3. Unicórnios da matéria: no `<m>/<m>.js` (`unicornios: [{ id, nome, raridade, sala | treino | materiaCompleta,
    cores: { corpo, crina: [3 cores], chifre, asa? }, frase }]`).
-   Robux da matéria (`Reino.config.valorPorMateria`, derivado, nunca no save): cada sala vale um valor redondo,
-   de 10 em 10 Robux arredondado para baixo (`P.valorSala`), e a sobra é bônus quando a matéria fica completa
-   (`P.bonusMateria`; `premios.bonus` no `concluirSala` da última sala). 5 salas: 100 e bônus zero; 6 salas:
-   80 + 20. Nunca dízima. Na tela, `U.robux(v)` ("1.500 Robux") e `U.robuxNumero(v)` (chips: 💰 + número; o 💰 é
-   o símbolo do Robux).
+   Moedas da matéria (`Reino.config.valorPorMateria`, derivado, nunca no save): cada sala vale um valor redondo,
+   um número inteiro de moedas, arredondado para baixo (`P.valorSala`), e a sobra é bônus quando a matéria fica completa
+   (`P.bonusMateria`; `premios.bonus` no `concluirSala` da última sala). 5 salas: 10 e bônus zero; 6 salas:
+   8 + 2. Nunca dízima. Na tela, `U.moedas(v)` ("10 moedas", "1 moeda") e `U.moedasNumero(v)` (chips: 🪙 + número; o 🪙 é
+   a moeda).
 4. Estilo dos arquivos de sala: igual aos que já existem (ex.: `historia/h1.js`): indentação de 4 espaços na sala,
    8 nos desafios.
 5. Cor da matéria: `cor: '#rrggbb'` (minúsculo) no `<m>/<m>.js`, a da tabela do `arte.md` §22 (matéria nova ganha

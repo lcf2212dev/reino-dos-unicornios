@@ -73,7 +73,7 @@ test('montaria escolhida num aparelho não volta atrás quando o outro grava os 
 });
 
 // `pago` se juntava pelo MAIOR (progresso-mescla.js): o 1000 digitado por engano voltava do outro aparelho
-// (em Robux, como os pais digitam; o save guarda reais: R$ 4 = 100 Robux)
+// (em moedas, como os pais digitam; o save guarda reais: R$ 4 = 10 moedas)
 test('pagamento corrigido para menos na Área dos pais vale nos dois aparelhos', async () => {
   const { A, B, dA, dB } = await doisAparelhos();   // pago.historia = 4 (reais) no save sintético
   A.relogio.agora += 1000; B.relogio.agora += 1000;

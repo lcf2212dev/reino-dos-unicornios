@@ -27,7 +27,7 @@ footer.livro-rodape .livro-nav .btn-grande { width: 64px; padding: 0; }
 .bau-total { display: flex; align-items: center; gap: 14px; padding: 14px 18px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--ouro-claro); }
 .bau-totais { display: flex; flex-direction: column; gap: 10px; }
 .bau-total b { display: block; font-size: var(--texto-t); font-variant-numeric: tabular-nums; }
-/* "1.500 Robux" numa linha só no celular (D7-10); com Letras grandes, 24 (em 32 não cabe) */
+/* "150 moedas" numa linha só no celular (D7-10); com Letras grandes, 24 (em 32 não cabe) */
 @media (max-width: 480px) { .bau-total { gap: 6px; padding: 12px 22px 12px 8px; } .bau-total b { font-size: var(--texto-g); } :root.letras-grandes .bau-total b { font-size: var(--texto); } }
 .bau-total small { display: block; font-size: var(--texto-aux); color: var(--tinta-suave); }
 .bau-moeda { font-size: var(--texto-festa); }

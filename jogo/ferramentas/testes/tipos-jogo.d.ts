@@ -44,7 +44,7 @@ interface EstadoSave {
   /** itemId → true (enfeite comprado ou acessório ganho/comprado) */
   loja: { [itemId: string]: boolean };
   usando: Usando;
-  /** materiaId → valor já pago pelos pais, em reais como sempre (P.pago e P.registrarPagamento falam em Robux: R$ 1 = 25) */
+  /** materiaId → valor já pago pelos pais, em reais como sempre (P.pago e P.registrarPagamento falam em moedas: R$ 1 = 2,5) */
   pago: { [materiaId: string]: number };
   ajustes: Ajustes;
   ritualVisto: boolean;
@@ -266,7 +266,8 @@ interface ProgressoApi {
   dinheiroTotal(): number;
   pago(materiaId: string): number;
   pagoTotal(): number;
-  saldoRobux(): number;
+  saldoMoedas(): number;
+  dinheiroBimestre(): number;
   salasFeitas(materia: Materia): number;
   materiaCompleta(materia: Materia): boolean;
   estrelas(): number;

@@ -74,7 +74,7 @@
       { tipo: 'fonte', x: 25, y: 19, w: 5, h: 4 },
       { tipo: 'coreto', x: 22, y: 16, w: 3, h: 3 },
       { tipo: 'canteiro', x: 30, y: 16, w: 3, h: 3 },
-      { tipo: 'canteiro', x: 22, y: 24, w: 3, h: 3 },
+      { tipo: 'cofre', x: 22, y: 24, w: 3, h: 3 },      // o cofre das moedas (mundo/cofre-desenho.js)
       { tipo: 'canteiro', x: 30, y: 24, w: 3, h: 3 },
     ],
     enfeites: [

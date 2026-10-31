@@ -43,7 +43,7 @@
       estrelas: { ganhas: 0, gastas: 0 },
       loja: {},         // itemId -> true
       usando: { enfeites: [], capa: false, asasFada: false, estrelinhas: false },
-      pago: {},         // materiaId -> valor já pago pelos pais, em reais (a tela fala em Robux: P.pago)
+      pago: {},         // materiaId -> valor já pago pelos pais, em reais (a tela fala em moedas: P.pago)
       ajustes: { som: true, musica: false, voz: true, animacoes: !U.reduzMovimentoSistema, texto: 1, setas: false, surpresa: true },
       ritualVisto: false,
       cuidados: {},     // uniId -> {fome, sede, banho, em, acao, acaoFome, acaoSede, acaoBanho} (0–100, 100 = satisfeito/limpinho; sem registro ou sem banho = 100; acaoFome/acaoSede = carimbo do último comer/beber, acao = o maior dos dois (o banho não mexe nele), acaoBanho = do último banho, 0 = nenhum) — js/sistemas/cuidados.js

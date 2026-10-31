@@ -377,11 +377,13 @@
       var itens = el('ul.premios');
       itens.appendChild(el('li', el('span.premio-icone', '⭐'), el('span', 'Acertos de primeira: ', el('b', acertos + ' de ' + total))));
       if (premios.calma) itens.appendChild(el('li', el('span.premio-icone', '🌙'), el('span', el('b', 'Estrela da Calma!'), ' Você leu tudo com calma. +3 ⭐')));
-      if (premios.primeiraVez) itens.appendChild(el('li.premio-dinheiro', el('span.premio-icone', '💰'), el('span', el('b', '+ ' + U.robux(premios.dinheiro)), ' no Baú do Tesouro!')));
-      else itens.appendChild(el('li', el('span.premio-icone', '🔁'), el('span', 'Treino livre: os ' + U.robux(Reino.Progresso.valorSala(materia)) + ' desta sala já estão no baú.')));
-      if (premios.bonus) itens.appendChild(el('li.premio-dinheiro', el('span.premio-icone', '🎁'), el('span', el('b', '+ ' + U.robux(premios.bonus)), ' de bônus por completar ' + materia.nome + '!')));
+      var valor = Reino.Progresso.valorSala(materia), cartao = premios.primeiraVez && Reino.Cartoes ? Reino.Cartoes.daSala(sala.id) : 0;
+      if (premios.primeiraVez) itens.appendChild(el('li.premio-dinheiro', el('span.premio-icone', '🪙'), el('span', el('b', '+ ' + U.moedas(premios.dinheiro)), ' no Baú do Tesouro!')));
+      else itens.appendChild(el('li', el('span.premio-icone', '🔁'), el('span', 'Treino livre: ' + (valor === 1 ? 'a 1 moeda desta sala já está no baú.' : 'as ' + U.moedas(valor) + ' desta sala já estão no baú.'))));
+      if (premios.bonus) itens.appendChild(el('li.premio-dinheiro', el('span.premio-icone', '🎁'), el('span', el('b', '+ ' + U.moedas(premios.bonus)), ' de bônus por completar ' + materia.nome + '!')));
       // matéria completa (O-36): o total da matéria numa linha só
-      if (premios.materiaCompleta) itens.appendChild(el('li.premio-dinheiro', el('span.premio-icone', '💰'), el('span', materia.nome + ': ', el('b', U.robux(Reino.config.valorPorMateria)), ' no baú!')));
+      if (premios.materiaCompleta) itens.appendChild(el('li.premio-dinheiro', el('span.premio-icone', '🪙'), el('span', materia.nome + ': ', el('b', U.moedas(Reino.config.valorPorMateria)), ' no baú!')));
+      if (cartao) itens.appendChild(el('li.premio-cartao', el('span.premio-icone', '🃏'), el('span', el('b', 'Cartão de experiência novo!'))));
       if (premios.ovos.length) itens.appendChild(el('li.premio-ovo', el('span.premio-icone', '🥚'), el('span', el('b', premios.ovos.length === 1 ? 'Você ganhou um ovo mágico!' : 'Você ganhou ' + premios.ovos.length + ' ovos mágicos!'))));
       if (premios.cresceu) itens.appendChild(el('li', el('span.premio-icone', '🌟'), el('span', Reino.Progresso.nomeUni(premios.cresceu.id) + ' cresceu!')));
       var raro = (materia.unicornios || []).find(function (u) { return u.raridade === 'raro' && u.sala === sala.id; });
@@ -399,13 +401,14 @@
         itens, dicaRaro, btn));
       Reino.UI.festa(premios.materiaCompleta ? 4 : 2, { titulo: titulo, emoji: emoji });
       Reino.UI.focarTroca(btn, corpo.querySelector('.fim-sala h2'), CALMA_TROCA);
-      if (premios.primeiraVez) setTimeout(function () { Reino.Som.tocar('moeda'); }, 900);
       Reino.UI.esperarFala([btn, sair], [premios.materiaCompleta ? Reino.Falas.fixas.revisaoCompleta : Reino.Falas.fixas.salaConcluida, Reino.Falas.acertouDePrimeira(acertos)], { voz: 'claude' });
-      btn.addEventListener('click', function () {
+      btn.addEventListener('click', function () {   // depois da tela: as moedas voando até o HUD, o baú do cartão e os ovos
         fechar();
-        var depois = function () { if (aoTerminar) aoTerminar(premios); };
-        if (premios.ovos.length) Reino.UI.chocarOvos(premios.ovos).then(depois);
-        else depois();
+        var UI = Reino.UI, seq = Promise.resolve();
+        if (premios.primeiraVez && UI.festaMoedas) seq = seq.then(function () { return UI.festaMoedas(premios.dinheiro + (premios.bonus || 0)); });
+        if (cartao && UI.abrirCartaoBau) seq = seq.then(function () { return UI.abrirCartaoBau(cartao); });
+        if (premios.ovos.length) seq = seq.then(function () { return UI.chocarOvos(premios.ovos); });
+        seq.then(function () { if (aoTerminar) aoTerminar(premios); });
       });
       botaoFim = btn;
     }

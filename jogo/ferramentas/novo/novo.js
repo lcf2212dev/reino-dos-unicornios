@@ -184,12 +184,12 @@ const TIPOS = {
   sala: require('./tipo-sala'),
 };
 // aviso do valor por sala, que muda quando a matéria ganha sala: a mesma regra de progresso-regras.js
-// (em Robux: cada sala de 10 em 10, arredondado para baixo; a sobra é bônus ao completar a matéria)
+// (em moedas: cada sala um número inteiro, arredondado para baixo; a sobra é bônus ao completar a matéria)
 function valorSala(total, n, antes) {
-  const conta = (k) => { const sala = Math.floor(total / k / 10) * 10; return { sala, bonus: total - sala * k }; };
+  const conta = (k) => { const sala = Math.floor(total / k); return { sala, bonus: total - sala * k }; };
   const agora = conta(n), velho = antes ? conta(antes) : null;
-  const texto = (c) => c.sala + ' Robux por sala' + (c.bonus ? ' + ' + c.bonus + ' de bônus ao completar' : '');
-  return `valor: ${texto(agora)} (${total} Robux em ${n} salas${velho ? `; antes, com ${antes}, ${texto(velho)}` : ''})`;
+  const texto = (c) => c.sala + ' moedas por sala' + (c.bonus ? ' + ' + c.bonus + ' de bônus ao completar' : '');
+  return `valor: ${texto(agora)} (${total} moedas em ${n} salas${velho ? `; antes, com ${antes}, ${texto(velho)}` : ''})`;
 }
 // --dentro: o `lugar` da matéria vira { nome, artigo, dentro, interior } (sem rect nem desenho no mapa)
 function lugarDentro(txt, op) {

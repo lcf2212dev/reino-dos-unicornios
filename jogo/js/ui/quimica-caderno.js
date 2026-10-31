@@ -3,6 +3,8 @@
    (noCaderno: descoberta ou a 'pof', inicial) com emoji e nome; o segredo, silhueta com "?" e a dica. Página: emoji
    grande, nome, os ingredientes em tubinhos da cor de cada um, o que acontece, a explicação e o aviso de segurança;
    "Ouvir" na voz da Doutora Proveta. op.receita abre direto na página dela. Contrato: docs/contratos/quimica.md §2.
+   Receita de cartão (§10): a marca "🃏 Cartão n" na cartinha e na página. UI.quimicaTubo(ing, escala): o tubinho
+   colorido do caderno, também usado pelo baú do cartão (ui/bau-cartao.js).
    Estilos: css/ui-quimica-caderno.css. Sem animação: nada aqui se mexe. */
 (function () {
   var U = Reino.util, el = U.el;
@@ -92,6 +94,15 @@
     return c;
   }
 
+  // a marca da receita de cartão (§10): "🃏 Cartão n"
+  function marcaCartao(r) { return r.cartao ? el('span.qcad-marca-cartao', U.colado('🃏 Cartão ' + r.cartao)) : null; }
+  /** O tubinho do caderno (canvas na escala dada), para outras telas (o baú do cartão). @param {object} ing @param {number} escala */
+  UI.quimicaTubo = function (ing, escala) {
+    var cv = PA.paraDOM(tubo(ing), escala || 2, 'qcad-tubo-img');
+    cv.setAttribute('aria-hidden', 'true');
+    return cv;
+  };
+
   /* ---------- a tela ---------- */
   function telaQuimicaCaderno(op) {
     var Q = Reino.Quimica;
@@ -147,7 +158,7 @@
         var b = el('button.qcad-cartao' + (aberta ? '.aberta' : '.segredo') + (Q.descoberto('receitas', r.id) ? '.feita' : ''),
           { type: 'button', 'data-receita': r.id,
             'aria-label': 'Receita ' + (i + 1) + ': ' + (aberta ? r.nome : 'segredo. Dica: ' + r.dica) },
-          el('span.qcad-num', { 'aria-hidden': 'true' }, 'Nº ' + (i + 1)),
+          r.cartao ? marcaCartao(r) : el('span.qcad-num', { 'aria-hidden': 'true' }, 'Nº ' + (i + 1)),   // cartão: a marca no lugar do Nº
           aberta ? el('span.qcad-figura', icone(r.emoji, 4)) : el('span.qcad-figura', segredo(4)),
           aberta ? el('b.qcad-nome', U.colado(hif(r.nome))) : el('b.qcad-nome', 'Segredo'),
           aberta ? null : el('small.qcad-dica', U.colado(hif(r.dica || ''))),
@@ -196,7 +207,7 @@
         el('span.qcad-pag', U.colado('Receita ' + (i + 1) + ' de ' + rs.length)), prox));
       var titulo = el('h3.qcad-titulo', { tabindex: '-1' }, U.colado(aberta ? hif(r.nome) : 'Receita secreta'));
       folha.appendChild(el('div.qcad-cabeca', aberta ? el('span.qcad-figura.grande', icone(r.emoji, 4)) : el('span.qcad-figura.grande', segredo(4)),
-        el('div.qcad-cabeca-texto', titulo, selo(r))));
+        el('div.qcad-cabeca-texto', titulo, marcaCartao(r), selo(r))));
       if (!aberta) {
         folha.appendChild(el('section.qcad-bloco.qcad-bloco-dica', el('h4', 'Dica'), el('p', U.colado(hif(r.dica || '')))));
         folha.appendChild(el('p.qcad-convite', U.colado(Q.frase('caderno.segredo')[0] || '')));

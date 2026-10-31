@@ -128,7 +128,7 @@ test('sala de livro por etapas: trilha, fim de etapa, descansar, voltar, sala co
     s = await etapasNoSave(c);
     assert.ok(s.sala && s.sala.feita && s.sala.vezes === 1 && !s.sala.perfeita, 'a sala contada: ' + JSON.stringify(s.sala));
     assert.strictEqual(Math.round((s.dinheiro - antes.dinheiro) * 100), Math.round(info.valor * 100), 'o dinheiro da sala, igual ao da sala feita de uma vez');
-    assert.ok(telaFim.indexOf(sp('+ ' + await c.js(`Reino.util.robux(${info.valor})`))) >= 0, 'o fim sem o valor da sala');
+    assert.ok(telaFim.indexOf(sp('+ ' + await c.js(`Reino.util.moedas(${info.valor})`))) >= 0, 'o fim sem o valor da sala');
     await c.js("Reino.UI.fecharTodas(); document.body.classList.remove('em-missao')");
     await c.avancar(600);
 

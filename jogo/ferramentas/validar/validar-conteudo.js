@@ -134,8 +134,8 @@ MATERIAS.forEach((m) => {
   // cada sala vale um valor redondo e a sobra é bônus ao completar (progresso-regras.js): a soma fecha sempre
   const P = icones.Reino.Progresso, valorSala = P.valorSala(m), bonus = P.bonusMateria(m);   // o jogo inteiro (linha do `icones`)
   const soma = valorSala * m.salas.length + bonus;
-  checar(soma === Reino.config.valorPorMateria, `${m.id}: salas + bônus somam ${soma} Robux, esperado ${Reino.config.valorPorMateria}`);
-  checar(valorSala % 10 === 0 && bonus >= 0, `${m.id}: valor por sala (${valorSala} Robux) tem de ser de 10 em 10 e o bônus (${bonus}) não pode ser negativo`);
+  checar(soma === Reino.config.valorPorMateria, `${m.id}: salas + bônus somam ${soma} moedas, esperado ${Reino.config.valorPorMateria}`);
+  checar(Number.isInteger(valorSala) && valorSala > 0 && bonus >= 0, `${m.id}: valor por sala (${valorSala} moedas) tem de ser inteiro e maior que zero e o bônus (${bonus}) não pode ser negativo`);
 
   m.salas.forEach((s) => {
     if (!m.arquivada && s.ordem === undefined) checar(s.desafios.length >= Reino.config.desafiosPorSala, `${s.id}: só ${s.desafios.length} desafios (mínimo ${Reino.config.desafiosPorSala})`);
@@ -168,7 +168,7 @@ MATERIAS.forEach((m) => {
   });
   const treinaveis = m.salas.flatMap((s) => s.desafios).filter((d) => Reino.Desafios.TREINAVEIS.includes(d.tipo) && !d.livre).length;
   if (!m.arquivada) checar(treinaveis >= Reino.config.perguntasTreino, `${m.id}: só ${treinaveis} perguntas para o treino`);
-  detalhe(`✔ ${m.nome}: ${m.salas.length} salas, ${m.salas.reduce((t, s) => t + s.desafios.length, 0)} desafios, ${treinaveis} para o treino, ${(m.livro || []).length} cartões no livro, ${unis.length} unicórnios, ${valorSala} Robux por sala`);
+  detalhe(`✔ ${m.nome}: ${m.salas.length} salas, ${m.salas.reduce((t, s) => t + s.desafios.length, 0)} desafios, ${treinaveis} para o treino, ${(m.livro || []).length} cartões no livro, ${unis.length} unicórnios, ${valorSala} moedas por sala`);
 });
 
 // acessório com desenho e ícone no próprio arquivo da prova (conteudo.md §5)

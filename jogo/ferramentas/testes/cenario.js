@@ -33,11 +33,14 @@ const TELAS = {
   foguete: 'Reino.UI.telaFoguete && Reino.UI.telaFoguete()',
   voo: "Reino.Voo && Reino.Voo.iniciar({ planeta: Reino.Viagem.planeta('lua') })",
   'album-ets': 'Reino.UI.telaAlbumETs && Reino.UI.telaAlbumETs()',
+  cofre: 'Reino.UI.telaCofre && Reino.UI.telaCofre()',   // o cofre da praça (js/ui/cofre.js)
   // Laboratório de Química (docs/contratos/quimica.md §2)
   'quimica-bancada': 'Reino.UI.telaQuimicaBancada && Reino.UI.telaQuimicaBancada()',
   'quimica-caderno': 'Reino.UI.telaQuimicaCaderno && Reino.UI.telaQuimicaCaderno()',
   'quimica-microscopio': 'Reino.UI.telaQuimicaMicroscopio && Reino.UI.telaQuimicaMicroscopio()',
   'quimica-tabela': 'Reino.UI.telaQuimicaTabela && Reino.UI.telaQuimicaTabela()',
+  // o baú do cartão de experiência nº 1 (quimica.md §10; para outro n: --js 'void Reino.UI.abrirCartaoBau(5)')
+  'bau-cartao': 'void (Reino.UI.abrirCartaoBau && Reino.UI.abrirCartaoBau(1))',
 };
 // telas com argumento: 'materia:historia', 'livro:historia', 'sala:h1', 'prova:historia-3bim', 'treino:historia'
 // (e 'desafio:h1-03', tratado em tela(): um desafio certo, sem sorteio)

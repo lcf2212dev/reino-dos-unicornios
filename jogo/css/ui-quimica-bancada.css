@@ -52,6 +52,13 @@
 .bancada-tubo.no-bequer { background: var(--laranja-claro); }
 .bancada-tubo-desenho { touch-action: none; flex: none; width: 24px; height: 36px; image-rendering: pixelated; image-rendering: crisp-edges; }
 .bancada-tubo-nome { max-width: 100%; text-align: center; overflow-wrap: anywhere; }
+/* o selo "Novo!" do produto que veio num cartão de experiência (quimica.md §10), no canto do tubo */
+.bancada-tubo { position: relative; }
+.bancada-tubo-novo {
+  position: absolute; top: 2px; right: 2px; padding: 2px 4px; font-size: var(--texto-p); line-height: 1;
+  color: var(--tinta); background: var(--ouro); border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-pequeno);
+  pointer-events: none;
+}
 /* o tubo que segue o dedo (4 px por pixel de arte), por cima de tudo */
 .bancada-fantasma {
   position: fixed; left: 0; top: 0; z-index: 60; width: 48px; height: 104px; pointer-events: none;
