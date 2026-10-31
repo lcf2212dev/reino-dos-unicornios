@@ -258,6 +258,12 @@
     laco: ['#ff4f9a', '#ffd34d', '#7c5cff', '#39c5bb', '#ffffff'],
   };
 
+  // brilho do cabelo: o próprio cabelo puxado para um pêssego quente e saturado; no cabelo bem escuro, um reflexo
+  // violeta (um claro sem cor deixava o brilho cinza, como uma tiara)
+  function brilhoCabelo(cor) {
+    var c = PA.cor.hexParaRgb(cor), luz = (0.3 * c[0] + 0.59 * c[1] + 0.11 * c[2]) / 255;
+    return luz < 0.18 ? misturar(cor, '#7a5ad8', 0.4) : misturar(cor, '#ffc98a', 0.4);
+  }
   function paletaMariana(ap) {
     return {
       H: ap.cabelo, L: misturar(ap.cabelo, '#ffe3c4', 0.2), K: ap.pele, E: '#2a1838', R: '#ff9cc6',
@@ -266,6 +272,10 @@
       W: misturar(ap.roupa, '#ffffff', 0.72), M: misturar(ap.roupa, '#ffffff', 0.42), G: '#ffd34d', T: '#ffffff',
       // só nos de menino (pixelart-menino-moldes.js): raspado, jeans, cinto, prata e prata escura
       Z: misturar(ap.cabelo, ap.pele, 0.55), J: '#4f74c4', Q: '#6b4430', O: '#dfe6f2', V: '#8e9ab4',
+      // acabamento (pixelart-mariana-acabamento.js): cabelo e pele na sombra, boca, brilho do sapato, roupa clara na sombra
+      h: misturar(ap.cabelo, '#2a1838', 0.3), I: brilhoCabelo(ap.cabelo),
+      k: misturar(ap.pele, '#b0566e', 0.24), m: misturar(ap.pele, '#8a2a4e', 0.45),
+      s: misturar('#6b3b5a', '#ffffff', 0.3), N: misturar(ap.roupa, '#ffffff', 0.55),
     };
   }
 
@@ -277,12 +287,14 @@
     var vis = PA.visualMariana ? PA.visualMariana(ap) : { corte: 'solto', modelo: 'vestido', laco: true };
     var especial = !!I.aplicarVisual && (vis.corte !== 'solto' || vis.modelo !== 'vestido' || !vis.laco);
     var chave = ['mar', ap.pele, ap.cabelo, ap.roupa, ap.laco, sentada ? 1 : 0, quadro % 3, opcoes.capa ? 1 : 0, vista,
-      vis.corte, vis.modelo, vis.laco ? 1 : 0].join('|');
+      vis.corte, vis.modelo, vis.laco ? 1 : 0, opcoes.piscando ? 'pi' : ''].join('|');
     if (cache[chave]) return cache[chave];
     var molde = MARI[vista];
     var corpo = sentada ? molde.sentada : (molde.emPe[quadro % 3] || molde.emPe[1]);
     var linhas = molde.cabeca.concat(corpo);
     if (especial) linhas = I.aplicarVisual(linhas, vista, !!sentada, vis.corte, vis.modelo, vis.laco);
+    if (I.acabarMariana) linhas = I.acabarMariana(linhas, vista, !!sentada);
+    if (opcoes.piscando && I.piscarMariana) linhas = I.piscarMariana(linhas);
     var base = novoCanvas(linhas[0].length, linhas.length);
     var ctx = base.getContext('2d');
     var capa = opcoes.capa && molde.capa;
@@ -296,7 +308,8 @@
   };
 
   // Mariana montada: composição unicórnio + cavaleira (+ o pedaço do unicórnio que fica na frente dela).
-  // quadro PA._interno.PULO: patas encolhidas e ela 1 px mais baixa (agachada no pulo); opcoes.cansado: pose cansada
+  // quadro PA._interno.PULO: patas encolhidas e ela 1 px mais baixa (agachada no pulo); opcoes.cansado: pose cansada;
+  // opcoes.piscando: o unicórnio de olho fechado; opcoes.piscaMariana: ela de olho fechado
   PA.montada = function (def, estagio, quadro, ap, opcoes) {
     opcoes = opcoes || {};
     var vista = opcoes.vista || 'lado';
@@ -304,10 +317,11 @@
     var vis = PA.visualMariana ? PA.visualMariana(ap) : {};
     var pulo = quadro === I.PULO;
     var chave = ['mont', def.id, estagio, pulo ? 'p' : quadro % 3, ap.pele, ap.cabelo, ap.roupa, ap.laco,
-      combo, opcoes.capa ? 1 : 0, opcoes.asasFada ? 1 : 0, vista, vis.corte, vis.modelo, vis.laco ? 1 : 0, opcoes.cansado ? 'c' : ''].join('|');
+      combo, opcoes.capa ? 1 : 0, opcoes.asasFada ? 1 : 0, vista, vis.corte, vis.modelo, vis.laco ? 1 : 0, opcoes.cansado ? 'c' : '',
+      opcoes.piscando ? 'pi' : '', opcoes.piscaMariana ? 'pm' : ''].join('|');
     if (cache[chave]) { usarCombo(combo); return cache[chave]; }
     var uni = PA.unicornio(def, estagio, quadro, opcoes);
-    var cav = PA.mariana(ap, true, 0, { capa: opcoes.capa, vista: vista });
+    var cav = PA.mariana(ap, true, 0, { capa: opcoes.capa, vista: vista, piscando: opcoes.piscaMariana });
     var px = uni.cavaleira[0], py = uni.cavaleira[1] + (pulo ? 1 : 0);
     // o canvas cresce para caber a cavaleira; o centro dos pés continua no meio do unicórnio
     var esq = Math.max(0, -px), dir = Math.max(0, px + cav.w - uni.w);

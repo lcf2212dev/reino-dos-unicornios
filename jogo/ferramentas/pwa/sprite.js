@@ -58,7 +58,8 @@ function jogo() {
   ctx = Jogo.contexto({ console, Math, Object, Array, String, Number, Map, Set, JSON });
   ctx.document = { createElement: (t) => { if (t !== 'canvas') throw new Error('sprite: só canvas'); return canvasFalso(); } };
   // a arte do unicórnio e as cores do primeiro unicórnio, pela ordem do manifesto
-  const nomes = ['nucleo/config', 'arte/desenho', 'arte/pixelart', 'arte/pixelart-unicornio-moldes', 'arte/pixelart-unicornio', 'personagens/unicornios'];
+  const nomes = ['nucleo/config', 'arte/desenho', 'arte/pixelart', 'arte/pixelart-unicornio-moldes', 'arte/pixelart-unicornio-acabamento',
+    'arte/pixelart-unicornio', 'personagens/unicornios'];
   const lista = Jogo.manifesto.scripts.filter((s) => nomes.includes(Jogo.nome(s)));
   if (lista.length !== nomes.length) throw new Error('sprite: faltou no manifesto: ' + nomes.filter((n) => !lista.some((s) => Jogo.nome(s) === n)).join(', '));
   ctx.Reino = ctx.Reino || {};
