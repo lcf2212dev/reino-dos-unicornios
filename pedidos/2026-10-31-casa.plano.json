@@ -1,0 +1,104 @@
+{
+  "nome": "casa",
+  "pedido": "pedidos/2026-10-31-casa.md",
+  "personagens": [],
+  "tarefas": [
+    {
+      "id": "contrato", "tipo": "contrato", "titulo": "Contrato casa.md, config.casa, registrarKitCasa, CasaArte.virado, tipos",
+      "quem": "orquestrador", "depende": [],
+      "arquivos": ["docs/contratos/casa.md", "docs/contratos/README.md", "docs/ARQUITETURA.md", "jogo/js/nucleo/config.js",
+        "jogo/js/nucleo/registros.js", "jogo/js/interiores/casa/virar.js", "jogo/ferramentas/testes/tipos-extensoes.d.ts",
+        "jogo/ferramentas/testes/tipos-globais.d.ts", "pedidos/2026-10-31-casa.md", "pedidos/2026-10-31-casa.plano.json"],
+      "worktree": "casa",
+      "pronto": ["npm test verde com o contrato", "casa.md com ids, kits, save, API, telas"],
+      "estimativa": 10
+    },
+    {
+      "id": "motor", "tipo": "mecanica", "titulo": "Interior decorável: objetosExtras, refazer, placas com {nome}/{uni}, exceção do validador",
+      "quem": "worker-low", "depende": ["contrato"],
+      "arquivos": ["jogo/js/motor/interiores-cena.js", "jogo/js/motor/interiores-placas.js", "jogo/js/motor/interiores-grade.js",
+        "jogo/ferramentas/validar/validar-interiores.js", "docs/contratos/interiores.md",
+        "jogo/ferramentas/testes/unidade/interiores-decoravel.test.js"],
+      "worktree": "casa-motor",
+      "pronto": ["objetosExtras entram na grade e no desenho", "refazer(id) com a cena ativa não mexe na posição dela",
+        "placa com {nome}/{a|b}/{uni}", "decoravel dispensa §7 itens 1, 2 e 4", "e2e idêntico"],
+      "estimativa": 45
+    },
+    {
+      "id": "save", "tipo": "mecanica", "titulo": "sistemas/casa.js: campos casaBau/casaKits/casaItens, regras, podeColocar, ação casaDecorar",
+      "quem": "worker-low", "depende": ["contrato"],
+      "arquivos": ["jogo/js/sistemas/casa.js", "docs/contratos/save-e-mescla.md", "jogo/ferramentas/testes/unidade/casa.test.js"],
+      "worktree": "casa-save",
+      "pronto": ["API Reino.Casa de casa.md §7", "mescla de 2 aparelhos e save antigo testados", "testar-save e testar-banho verdes", "e2e idêntico"],
+      "estimativa": 45
+    },
+    {
+      "id": "moveis-a", "tipo": "arte", "titulo": "Kits Sala de Estar, Sala de Jantar e Cozinha: móveis nas direções e dados",
+      "quem": "worker-low", "depende": ["contrato"],
+      "arquivos": ["jogo/js/interiores/casa/moveis-estar.js", "jogo/js/interiores/casa/moveis-jantar.js",
+        "jogo/js/interiores/casa/moveis-cozinha.js", "jogo/js/conteudo/casa/kits-a.js",
+        "jogo/ferramentas/testes/unidade/casa-moveis-a.navegador.test.js"],
+      "worktree": "casa-moveis-a",
+      "pronto": ["3 kits de 6 a 8 peças", "cada móvel desenhado em todas as direções que declara", "e2e idêntico"],
+      "estimativa": 50
+    },
+    {
+      "id": "moveis-b", "tipo": "arte", "titulo": "Kits Banheiro, Quarto do jogador e Quarto do unicórnio: móveis nas direções e dados",
+      "quem": "worker-low", "depende": ["contrato"],
+      "arquivos": ["jogo/js/interiores/casa/moveis-banheiro.js", "jogo/js/interiores/casa/moveis-quarto.js",
+        "jogo/js/interiores/casa/moveis-quarto-uni.js", "jogo/js/conteudo/casa/kits-b.js",
+        "jogo/ferramentas/testes/unidade/casa-moveis-b.navegador.test.js"],
+      "worktree": "casa-moveis-b",
+      "pronto": ["3 kits de 6 a 8 peças", "cada móvel desenhado em todas as direções que declara", "e2e idêntico"],
+      "estimativa": 50
+    },
+    {
+      "id": "predio", "tipo": "cenario", "titulo": "A casa: lugar, fachada de 2 andares, térreo com 4 cômodos e casa-2 com os 2 quartos, caixas de mudança",
+      "quem": "worker-low", "depende": ["motor", "save"],
+      "arquivos": ["jogo/js/interiores/casa/falas.js", "jogo/js/interiores/casa/objetos.js", "jogo/js/interiores/casa/casa.js",
+        "jogo/js/interiores/casa/andar2.js", "jogo/js/interiores/casa/fora.js", "jogo/js/interiores/casa/lugar.js",
+        "jogo/ferramentas/testes/unidade/escadas.test.js", "jogo/ferramentas/testes/unidade/casa-predio.navegador.test.js"],
+      "worktree": "casa-predio",
+      "pronto": ["casa no mapa no rect combinado, com caminho, cerca e no menu Lugares", "6 cômodos vazios com placas, escadas pareadas",
+        "caixa de mudança em cada cômodo", "e2e: só mapa, lugares e as cenas da casa"],
+      "estimativa": 50
+    },
+    {
+      "id": "telas", "tipo": "mecanica", "titulo": "Baú da casa, escolha do kit, gancho no fim da sala, tela de início",
+      "quem": "worker-low", "depende": ["save"],
+      "arquivos": ["jogo/js/ui/bau-casa.js", "jogo/js/ui/casa-kits.js", "jogo/css/ui-bau-casa.css", "jogo/css/ui-casa-kits.css",
+        "jogo/js/motor/main.js", "jogo/js/atividades/missao.js", "jogo/css/ui-abertura.css",
+        "jogo/ferramentas/testes/unidade/abertura-medalha.navegador.test.js", "jogo/ferramentas/testes/referencias-cenas.js",
+        "jogo/ferramentas/testes/cenario.js", "jogo/ferramentas/testes/unidade/casa-telas.navegador.test.js"],
+      "worktree": "casa-telas",
+      "pronto": ["baú abre e sai uma casa, uma vez por jogador", "escolha de kit nos 3 tamanhos e pelo teclado",
+        "legenda nova também no celular deitado", "e2e: só tela-bau-casa e tela-kit-casa novas"],
+      "estimativa": 45
+    },
+    {
+      "id": "decorar", "tipo": "mecanica", "titulo": "Modo decorar: botão do HUD, painel de peças, fantasma, girar, colocar, mover, guardar",
+      "quem": "worker-low", "depende": ["motor", "save", "predio", "moveis-a"],
+      "arquivos": ["jogo/js/ui/casa-decorar.js", "jogo/js/ui/casa-decorar-fantasma.js", "jogo/css/ui-casa-decorar.css",
+        "jogo/ferramentas/testes/cenario-telas.js", "jogo/ferramentas/testes/unidade/casa-decorar.navegador.test.js"],
+      "worktree": "casa-decorar",
+      "pronto": ["colocar, girar nas 4 direções, mover e guardar pelo toque e pelo teclado", "fantasma verde/vermelho",
+        "botão só dentro da casa", "e2e: só a tela decorar nova"],
+      "estimativa": 60
+    },
+    {
+      "id": "integracao", "tipo": "integracao", "titulo": "Juntar as frentes, manifesto, vozes, base do e2e",
+      "quem": "orquestrador", "depende": ["motor", "save", "moveis-a", "moveis-b", "predio", "telas", "decorar"],
+      "arquivos": ["jogo/js/manifesto.js", "jogo/index.html", "jogo/ferramentas/testes/base-referencia.txt", "COMO-USAR.md",
+        "jogo/ferramentas/testes/tipos.json"],
+      "worktree": "casa",
+      "pronto": ["npm test e npm run e2e verdes, diferenças só da casa", "vozes gravadas e conferidas"],
+      "estimativa": 40
+    },
+    {
+      "id": "entrega", "tipo": "entrega", "titulo": "Merge, push, Vercel conferida, limpeza, relatório",
+      "quem": "orquestrador", "depende": ["integracao"],
+      "arquivos": [], "worktree": "casa", "pronto": ["main com push", "npm run vercel -- --conferir ok"],
+      "estimativa": 15
+    }
+  ]
+}

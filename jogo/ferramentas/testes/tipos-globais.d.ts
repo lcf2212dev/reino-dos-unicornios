@@ -24,6 +24,9 @@ interface ReinoGlobal {
   lugaresRegistrados?: LugarRegistrado[];
   lugaresRecusados?: string[];
   registrarLugar?(def: LugarRegistrado): boolean;
+  kitsCasa?: KitCasaDef[];
+  registrarKitCasa?(def: KitCasaDef): boolean;
+  kitCasa?(id: string): KitCasaDef | undefined;
   // js/nucleo/modulos.js
   modulos?: ModuloDef[];
   registrarModulo?(def: ModuloDef): void;

@@ -1,4 +1,5 @@
-// Botões do HUD por registro (ui/hud.js): um botão falso registrado aparece depois do álbum e é repintado no evento.
+// Botões do HUD por registro (ui/hud.js): um botão falso registrado aparece depois do álbum e é repintado no evento
+// (só os à vista: o da casa, ui/casa-decorar.js, fica escondido fora dela).
 // Servidor e banco de TESTE novos (cenario.js); save sintético.
 const { test } = require('node:test');
 const assert = require('assert');
@@ -12,7 +13,7 @@ test('botão registrado entra depois do álbum e repinta no evento', async () =>
         criar: function () { return Reino.util.el('button.btn-tela-cheia.btn-falso', { type: 'button' }); },
         pintar: function () { window.__pintou++; } });
       Reino.UI.montarHUD();`);
-    const ordem = await c.js("[].map.call(document.querySelectorAll('#hud .hud-botoes > button'), function (b) { return b.className; })");
+    const ordem = await c.js("[].map.call(document.querySelectorAll('#hud .hud-botoes > button:not([hidden])'), function (b) { return b.className; })");
     assert.deepStrictEqual(ordem.map((k) => k.split(' ')[1] || k), ['btn-tela-cheia', 'btn-foto', 'btn-album', 'btn-ajustes', 'btn-falso']);
     const antes = await c.js('window.__pintou');
     assert.ok(antes >= 1, 'pinta na montagem');

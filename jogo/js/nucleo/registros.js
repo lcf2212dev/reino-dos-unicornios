@@ -79,6 +79,21 @@ Reino.registrarLugar = function (def) {
   return true;
 };
 
+// kits de móveis da casa do jogador (conteudo/casa/kits-*.js; docs/contratos/casa.md §3). Id repetido é recusado.
+/** @type {KitCasaDef[]} */
+Reino.kitsCasa = [];
+/** @param {KitCasaDef} def @returns {boolean} false quando recusado */
+Reino.registrarKitCasa = function (def) {
+  if (!def || !def.id || !Array.isArray(def.itens) || Reino.kitsCasa.some(function (k) { return k.id === def.id; })) {
+    console.warn('Reino.registrarKitCasa: kit "' + (def && def.id) + '" recusado (sem id, sem itens ou repetido)');
+    return false;
+  }
+  Reino.kitsCasa.push(def);
+  return true;
+};
+/** @param {string} id @returns {KitCasaDef | undefined} */
+Reino.kitCasa = function (id) { return Reino.kitsCasa.find(function (k) { return k.id === id; }); };
+
 // personagens declarados fora do elenco.js (pasta do prédio ou arquivo da prova), com a voz junto.
 // O perfil entra na hora em Reino.config.vozes['npc-<id>']; o elenco.js soma todos ao N.ELENCO
 // (quem registra depois do elenco entra direto). Id repetido é erro.

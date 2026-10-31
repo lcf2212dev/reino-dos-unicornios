@@ -83,4 +83,6 @@
 # @ = visual da cidade: chão, praça, prédios de fora, árvores e lago (mapa, telas sobre o mapa e treinos); bloco vidaMapa do config
 # @ = moedas no lugar dos Robux (🪙 no HUD e telas), cofre-pote na praça (no lugar de um canteiro), Baú em moedas, selo de cartão no caderno
 # @ = arte nova da personagem e dos unicórnios (luz, sombra, rosto, crina, cílios; config.piscar)
+# @ = casa do jogador: interiores casa e casa-2, baú da casa, escolha do kit, modo decorar
+# @ = novidade da casa em destaque na abertura (config.novidadeInicio)
 @

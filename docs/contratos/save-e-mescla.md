@@ -63,6 +63,12 @@ estragado (não número ≥ 0, chave insegura) é limpo em `normalizarNovos` e c
 Declarado em `sistemas/visitados.js` com `registrarCampo('visitados', { mesclar: 'uniao', novoCiclo: 'mantem' })`.
 Só cresce; um aparelho antigo sem o campo não apaga nada (se sumir, o selo só volta). Fica fora da cópia `-novidades`.
 
+### 3.2 Casa do jogador (`casaBau`, `casaKits`, `casaItens`)
+Declarados em `sistemas/casa.js` (`registrarCampo`, `novoCiclo: 'mantem'`, `copiaSeguranca: true`): `casaBau`
+(`{ em }`, mescla própria: o menor `em`), `casaKits` (`{ <materiaId>: { kit, em } }`, `carimbo`) e `casaItens`
+(`{ <uid>: { andar, x, y, dir, em } | { guardado: true, em } }`, `carimbo`; guardar não apaga). Formato e regras
+derivadas: `casa.md` §6.
+
 ## 4. Mescla (`P.mesclar`, mesma geração)
 ### 4.1 `cuidados` (`juntarCuidados`)
 1. Para cada `uniId` de qualquer lado, se os DOIS lados têm carimbo para a fome e para a sede (o carimbo de

@@ -40344,6 +40344,60 @@
    "fala": "Pelo seu terceiro bimestre!"
   },
   {
+   "chave": "254e37efs",
+   "voz": "claude",
+   "texto": "Complete uma matéria!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Complete uma matéria!"
+  },
+  {
+   "chave": "f8246fc6v",
+   "voz": "claude",
+   "texto": "Assim você ganha móveis.",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Assim você ganha móveis."
+  },
+  {
+   "chave": "e60a2b66n",
+   "voz": "claude",
+   "texto": "Uma casa só sua!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Uma casa só sua!"
+  },
+  {
+   "chave": "d70ee107y",
+   "voz": "claude",
+   "texto": "Fica perto do Observatório!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Fica perto do Observatório!"
+  },
+  {
+   "chave": "8efdbf63w",
+   "voz": "claude",
+   "texto": "Escolha um kit de móveis!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Escolha um kit de móveis!"
+  },
+  {
+   "chave": "f4554aees",
+   "voz": "claude",
+   "texto": "Kit novo na sua casa!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Kit novo na sua casa!"
+  },
+  {
    "chave": "e2597d87w",
    "voz": "claude",
    "texto": "Chegou novidade no Reino!",

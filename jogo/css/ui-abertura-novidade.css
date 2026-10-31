@@ -1,0 +1,69 @@
+/* Novidade em destaque na tela de início (js/ui/abertura-novidade.js): a faixa de cima no lugar do "Um novo capítulo"
+   (como a da medalha, em rosa) e, embaixo do título, a casinha pulando em degraus de 4 px com o texto grande. */
+.abertura-faixa-novidade {
+  margin: 0; padding: 8px 16px;
+  font-size: var(--texto); line-height: var(--entrelinha-titulo); color: var(--tinta);
+  background: linear-gradient(180deg, var(--comum-fundo) 0 20%, var(--comum-desenho) 20% 80%, var(--rosa) 80%);
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
+  white-space: nowrap;
+}
+.novidade-bloco { display: flex; align-items: center; justify-content: center; gap: 16px; padding: 0 16px; }
+.novidade-pula { animation: novidade-pula calc(4 * var(--lento)) step-end infinite; }
+.novidade-casinha { display: block; image-rendering: pixelated; }
+@media (min-width: 601px) and (min-height: 501px) { .novidade-casinha { width: 120px; height: 144px; } }   /* 6 px por pixel da arte */
+.novidade-textos { display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; }
+.novidade-texto, .novidade-detalhe { margin: 0; line-height: var(--entrelinha-titulo); }
+.novidade-texto {
+  font-size: var(--texto-g); color: var(--ouro); background: var(--noite);
+  padding: 8px 12px; border: var(--borda-fina) solid var(--ouro); border-radius: var(--canto);
+}
+.novidade-detalhe {
+  font-size: var(--texto-aux); color: var(--tinta); background: var(--papel-quente);
+  padding: 8px 12px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
+}
+@keyframes novidade-pula {   /* pula 4 px e volta, em degraus inteiros (arte.md §15.4) */
+  0%, 60%, 100% { transform: none; }
+  70% { transform: translateY(-4px); }
+  80% { transform: none; }
+}
+@media (max-width: 600px) {
+  .novidade-bloco { gap: 8px; }
+  .abertura-faixa-novidade { padding: 8px 10px; }
+  .novidade-texto { font-size: var(--texto); }
+}
+@media (max-height: 500px) {
+  .abertura-faixa-novidade { font-size: var(--texto-aux); }
+  .novidade-casinha { width: 40px !important; height: 48px !important; }   /* vence o tamanho inline do PA.paraDOM: sobra chão para a Mariana */
+  .novidade-texto { font-size: var(--texto-aux); }
+  .novidade-detalhe { display: none; }
+}
+.abertura-parada .novidade-pula, body.sem-animacao .novidade-pula { animation: none; }
+@media (prefers-reduced-motion: reduce) { .novidade-pula { animation: none; } }
+
+/* A atualização de mentira (1ª vez do aparelho com a novidade): véu escuro, caixa de papel, barra que enche em blocos
+   inteiros (nada de barra lisa), o passo da vez e "Pronto!". Sem animação: a barra enche sem o brilho do bloco. */
+.atualizando-veu {
+  position: fixed; inset: 0; z-index: 30; display: flex; align-items: center; justify-content: center;
+  background: var(--veu); padding: 16px;
+}
+.atualizando-caixa {
+  display: flex; flex-direction: column; align-items: center; gap: 12px; width: min(520px, 100%);
+  padding: 20px 24px; background: var(--papel-quente); color: var(--tinta);
+  border: var(--borda-grossa) solid var(--borda); border-top-color: var(--ouro); border-radius: var(--canto-grande);
+}
+.atualizando-titulo { margin: 0; font-size: var(--texto-g); line-height: var(--entrelinha-titulo); text-align: center; }
+.atualizando-barra { display: flex; gap: 4px; width: 100%; padding: 4px; background: var(--noite); border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); }
+.atualizando-bloco { flex: 1; height: 24px; background: var(--noite); border: var(--borda-fina) solid var(--tinta-suave); }
+.atualizando-bloco.cheio { background: var(--rosa); border-color: var(--rosa); animation: atualizando-bloco var(--rapido) step-end; }
+.atualizando-pct { margin: 0; font-size: var(--texto); color: var(--laranja-escuro); }
+.atualizando-passo { margin: 0; min-height: var(--entrelinha); font-size: var(--texto); text-align: center; }
+.atualizando-caixa.pronto .atualizando-passo { color: var(--certo); }
+.atualizando-caixa.pronto .atualizando-bloco { background: var(--ouro); }
+@keyframes atualizando-bloco { 0% { background: var(--ouro-claro); } 100% { background: var(--rosa); } }
+@media (max-width: 600px) {
+  .atualizando-titulo { font-size: var(--texto); }
+  .atualizando-bloco { height: 16px; }
+  .atualizando-passo { font-size: var(--texto-aux); }
+}
+body.sem-animacao .atualizando-bloco.cheio { animation: none; }
+@media (prefers-reduced-motion: reduce) { .atualizando-bloco.cheio { animation: none; } }

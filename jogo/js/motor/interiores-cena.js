@@ -52,23 +52,32 @@
   }
 
   function criarCena(def) {
-    var g = grade(def);
     var npcs = def.npcs || [];
-    var objs = (def.objetos || []).map(function (o, i) {
-      var lib = libDe(o), d = dimensoes(o);
-      // cópia com a pegada resolvida (o desenho usa w/h da biblioteca quando o dado não traz)
-      o = Object.assign({}, o, { w: d.w, h: d.h });
-      var it = { i: i, o: o, lib: lib, w: d.w, h: d.h, topo: d.topo, W: d.w * T, H: d.h * T, px: o.x * T, py: o.y * T,
-        parede: ehParede(o), alto: ehAlto(o), interativo: interativo(o), sprite: null };
-      it.base = it.py + it.H;
-      it.ordem = it.parede ? 0 : lib.plano ? 1 : 2;
-      return it;
-    });
-    var altos = objs.filter(function (it) { return it.alto; });
-    // móveis baixos e sólidos (vão no estático): voltam por cima dela só quando o sprite dela avança sobre
-    // eles e o pé do móvel está mais embaixo que o dela (a montada é mais larga que um tile; O-05)
-    var baixos = objs.filter(function (it) { var s = solidoDe(it.o); return !it.alto && !it.parede && !it.lib.plano && (s === true || s === 'base'); });
-    var animados = objs.filter(function (it) { return it.lib.anim && !it.alto; });
+    // grade, objetos e as listas derivadas: montados de novo pelo refazer (decorável, casa.md §4); quem usa lê a
+    // variável na hora (as funções da cena, E e os itens por Y)
+    var g, objs, altos, baixos, animados, defPlacas;
+    function montarObjetos() {
+      var lista = II.objetosDe(def);
+      g = grade(def, lista);
+      // as placas guardam os objetos da parede por def: com extras, um def só delas, novo a cada montagem
+      defPlacas = lista === def.objetos || !def.objetosExtras ? def : Object.assign({}, def, { objetos: lista });
+      objs = lista.map(function (o, i) {
+        var lib = libDe(o), d = dimensoes(o);
+        // cópia com a pegada resolvida (o desenho usa w/h da biblioteca quando o dado não traz)
+        o = Object.assign({}, o, { w: d.w, h: d.h });
+        var it = { i: i, o: o, lib: lib, w: d.w, h: d.h, topo: d.topo, W: d.w * T, H: d.h * T, px: o.x * T, py: o.y * T,
+          parede: ehParede(o), alto: ehAlto(o), interativo: interativo(o), sprite: null };
+        it.base = it.py + it.H;
+        it.ordem = it.parede ? 0 : lib.plano ? 1 : 2;
+        return it;
+      });
+      altos = objs.filter(function (it) { return it.alto; });
+      // móveis baixos e sólidos (vão no estático): voltam por cima dela só quando o sprite dela avança sobre
+      // eles e o pé do móvel está mais embaixo que o dela (a montada é mais larga que um tile; O-05)
+      baixos = objs.filter(function (it) { var s = solidoDe(it.o); return !it.alto && !it.parede && !it.lib.plano && (s === true || s === 'base'); });
+      animados = objs.filter(function (it) { return it.lib.anim && !it.alto; });
+    }
+    montarObjetos();
     var estatico = null, chaveFeita = null, sujo = true;
     var tAtual = 0, animarAtual = false;
     // estado desta cena usado pelas funções de interiores-toque.js (pintorAtual: o pintor do último quadro;
@@ -218,7 +227,7 @@
       // antes dos personagens: nada (as placas vão por cima, em desenharSobre)
       desenharTela: function () {},
       // placas dos cômodos, em px da tela, com a fonte pixel, por cima de móveis e personagens (interiores-placas.js)
-      desenharSobre: function (ctx, pintor, t, animar) { II.desenharPlacas(def, ctx, pintor, t, animar); },
+      desenharSobre: function (ctx, pintor, t, animar) { II.desenharPlacas(defPlacas, ctx, pintor, t, animar); },
       itensDesenho: function (pintor, t, animar) {
         E.pintorAtual = pintor; tAtual = animar ? t : 0; animarAtual = animar;
         if (!estatico || sujo) renderizar();
@@ -240,25 +249,40 @@
     var vistaFundo = {}, vistaItens = {};
     // caixa de cada animado e de cada móvel alto (px do jogo): o sprite com o alcance da animação
     function caixa(it, F) { return { x0: it.px - 2 - F, y0: it.py - it.topo - F, x1: it.px + it.W + 2 + F, y1: it.base + 2 + F }; }
-    animados.forEach(function (it) { it.caixa = caixa(it, ALCANCE_ANIM); });
-    altos.forEach(function (it) { it.caixa = caixa(it, FOLGA_ITEM); });
 
-    // itens por Y (montados uma vez; o pintor e o tempo entram por variável). Com caixa (os móveis altos), só entram
-    // os que a câmera vê; os NPCs, sem caixa, entram sempre
+    // itens por Y (montados uma vez e a cada refazer; o pintor e o tempo entram por variável). Com caixa (os móveis
+    // altos), só entram os que a câmera vê; os NPCs, sem caixa, entram sempre
     var itens = [];
-    npcs.forEach(function (n) {
-      itens.push({ y: n.y * T + 12, npc: n, desenhar: function () { desenharNpc(E.pintorAtual, n, tAtual, animarAtual); } });
-    });
-    altos.forEach(function (it) {
-      itens.push({ y: it.base - 1, objeto: it.o, caixa: it.caixa, desenhar: function () {
-        if (!it.sprite) return;
-        spriteNoFundo(it.sprite, it.px + it.W / 2, it.base + 2);
-        if (it.lib.anim) it.lib.anim(ctxPintor, it.px, it.py, tAtual, it.o);
-      } });
-    });
-    baixos.forEach(function (it) {
-      it.item = { y: it.base - 1, objeto: it.o, desenhar: function () { if (it.sprite) desenharMovel(it); } };
-    });
+    function montarItens() {
+      animados.forEach(function (it) { it.caixa = caixa(it, ALCANCE_ANIM); });
+      altos.forEach(function (it) { it.caixa = caixa(it, FOLGA_ITEM); });
+      itens = [];
+      npcs.forEach(function (n) {
+        itens.push({ y: n.y * T + 12, npc: n, desenhar: function () { desenharNpc(E.pintorAtual, n, tAtual, animarAtual); } });
+      });
+      altos.forEach(function (it) {
+        itens.push({ y: it.base - 1, objeto: it.o, caixa: it.caixa, desenhar: function () {
+          if (!it.sprite) return;
+          spriteNoFundo(it.sprite, it.px + it.W / 2, it.base + 2);
+          if (it.lib.anim) it.lib.anim(ctxPintor, it.px, it.py, tAtual, it.o);
+        } });
+      });
+      baixos.forEach(function (it) {
+        it.item = { y: it.base - 1, objeto: it.o, desenhar: function () { if (it.sprite) desenharMovel(it); } };
+      });
+    }
+    montarItens();
+    // refazer (Reino.Interiores.refazer): grade, objetos e itens de novo a partir do def (com os extras de agora); o
+    // mesmo objeto cena continua (a Cena guarda ele). O estático é redesenhado no próximo quadro, sem íris
+    cena._refazer = function () {
+      montarObjetos();
+      montarItens();
+      E.g = cena.grade = g; E.objs = cena._objetos = objs;
+      E.mascaras = {}; E.retratos = {};
+      perto.length = 0; comPerto.length = 0;
+      chaveFeita = null; sujo = true;
+      return cena;
+    };
     return cena;
   }
 
@@ -318,7 +342,13 @@
       cenas[id] = criarCena(def);
       return cenas[id];
     },
+    // decorável (casa.md §4): refaz grade, objetos e estático da cena id a partir do def (com os objetosExtras de
+    // agora). A cena ativa continua a mesma, com ela onde está e sem íris. Cena ainda não criada: nada a refazer
+    // (a próxima cena(id) já nasce com os extras). Devolve a cena ou null
+    refazer: function (id) { return cenas[id] ? cenas[id]._refazer() : null; },
     grade: grade,
+    // placa de cômodo (e nome de kit da casa) com {nome}, {a|b} e {uni} trocados (interiores-placas.js)
+    textoPlaca: II.textoPlaca,
     objeto: objeto,
     OBJETOS: OBJETOS, PISOS: II.PISOS, PAREDES: II.PAREDES, FUNDOS: II.FUNDOS,
     desenho: { C: C, ret: D.ret, circulo: D.circulo, elipse: D.elipse, triangulo: D.triangulo, contornoRet: D.contornoRet, matriz: D.matriz, miudeza: D.miudeza, sorte: D.sorte,

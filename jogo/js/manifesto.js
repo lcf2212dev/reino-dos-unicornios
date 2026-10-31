@@ -42,11 +42,15 @@
       'css/ui-quimica-experiencias.css',
       'css/ui-jogadores.css',
       'css/ui-abertura.css',
+      'css/ui-abertura-novidade.css',
       'css/ui-personagem.css',
       'css/ui-voo.css',
       'css/ui-bau-presente.css',
       'css/ui-bau-cartao.css',
+      'css/ui-bau-casa.css',
+      'css/ui-casa-kits.css',
       'css/ui-moedas-festa.css',
+      'css/ui-casa-decorar.css',
     ],
     scripts: [
       { js: 'js/nucleo/congelar.js', grupo: 'nucleo' },
@@ -222,6 +226,8 @@
       { js: 'js/conteudo/materias/ingles4/unicornios-12p.js', grupo: 'materias', node: true },
       { js: 'js/conteudo/materias/ingles4/ingles4.js', grupo: 'materias', node: true },
       { js: 'js/conteudo/presentes.js', grupo: 'conteudo', node: true }, // presentes do jogo: as medalhas Ultra Lendárias (pedido 2026-10-28)
+      { js: 'js/conteudo/casa/kits-a.js', grupo: 'conteudo', node: true }, // casa: kits estar, jantar e cozinha (casa.md §3)
+      { js: 'js/conteudo/casa/kits-b.js', grupo: 'conteudo', node: true }, // casa: kits Banheiro, Quarto do jogador e Quarto do unicórnio
       { js: 'js/conteudo/materias/ciencias/icones.js', grupo: 'icones', node: true },
       { js: 'js/conteudo/materias/matematica/icones.js', grupo: 'icones', node: true },
       { js: 'js/conteudo/materias/geografia/icones.js', grupo: 'icones', node: true },
@@ -342,6 +348,8 @@
       { js: 'js/ui/aparencia.js', grupo: 'ui' },
       { js: 'js/ui/salao.js', grupo: 'ui' },
       { js: 'js/ui/cofre.js', grupo: 'ui' },
+      { js: 'js/ui/casa-decorar-fantasma.js', grupo: 'ui' }, // casa: modo decorar, o modo colocar e o fantasma (casa.md §9.3)
+      { js: 'js/ui/casa-decorar.js', grupo: 'ui' }, // casa: modo decorar, o painel das peças e o botão do HUD (UI.decorarCasa)
       { js: 'js/ui/quimica-palco.js', grupo: 'ui' },
       { js: 'js/ui/quimica-palco-2.js', grupo: 'ui' },
       { js: 'js/ui/quimica-bancada.js', grupo: 'ui' },
@@ -362,11 +370,16 @@
       { js: 'js/ui/jogadores.js', grupo: 'ui' },
       { js: 'js/ui/abertura-desenho.js', grupo: 'ui' },
       { js: 'js/ui/abertura-medalha.js', grupo: 'ui' },   // festa da medalha de ouro na abertura (até config.festaMedalha.ate)
+      { js: 'js/ui/abertura-novidade.js', grupo: 'ui' },   // a novidade em destaque na abertura (até config.novidadeInicio.ate)
       { js: 'js/ui/abertura.js', grupo: 'ui' },
       { js: 'js/sistemas/fotos.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/fotos-moldura.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/fotos-telas.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/presentes.js', grupo: 'sistemas', node: true }, // campo presentes, P.presentesPendentes, P.abrirPresente (módulo depois de cuidados, surpresa e fotos)
+      { js: 'js/sistemas/casa.js', grupo: 'sistemas', node: true }, // casa do jogador (casa.md): campos casaBau/casaKits/casaItens, Reino.Casa, ação casaDecorar
+      { js: 'js/ui/casa-falas.js', grupo: 'ui', node: true }, // falas do Claude no baú da casa e na escolha do kit (sem DOM)
+      { js: 'js/ui/bau-casa.js', grupo: 'ui' }, // o baú da casa do jogador ao entrar no Reino (UI.abrirBauCasa; casa.md §9)
+      { js: 'js/ui/casa-kits.js', grupo: 'ui' }, // a escolha do kit de móveis da casa (UI.escolherKitCasa, UI.casaKitsPendentes)
       { js: 'js/sistemas/versao.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/aura.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/viagem.js', grupo: 'sistemas', node: true },
@@ -557,6 +570,19 @@
       { js: 'js/interiores/escola-musica/escola-musica.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/escola-musica/fora.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/escola-musica/lugar.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/casa/virar.js', grupo: 'interiores', node: true }, // casa do jogador (casa.md): o desenho dos móveis nas 4 direções
+      { js: 'js/interiores/casa/moveis-estar.js', grupo: 'interiores', node: true }, // casa: móveis do kit Sala de Estar
+      { js: 'js/interiores/casa/moveis-jantar.js', grupo: 'interiores', node: true }, // casa: móveis do kit Sala de Jantar
+      { js: 'js/interiores/casa/moveis-cozinha.js', grupo: 'interiores', node: true }, // casa: móveis do kit Cozinha
+      { js: 'js/interiores/casa/moveis-banheiro.js', grupo: 'interiores', node: true }, // casa: móveis do kit Banheiro
+      { js: 'js/interiores/casa/moveis-quarto.js', grupo: 'interiores', node: true }, // casa: móveis do Quarto do jogador
+      { js: 'js/interiores/casa/moveis-quarto-uni.js', grupo: 'interiores', node: true }, // casa: móveis do Quarto do unicórnio
+      { js: 'js/interiores/casa/falas.js', grupo: 'interiores', node: true }, // casa: o prédio (falas, caixa de mudança, térreo, 2º andar, fora, lugar)
+      { js: 'js/interiores/casa/objetos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/casa/casa.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/casa/andar2.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/casa/fora.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/casa/lugar.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/padrao.js', grupo: 'interiores', node: true }, // padrao.js por último entre os prédios: monta o interior das matérias que não têm um próprio
       { js: 'js/sistemas/banho.js', grupo: 'sistemas' },
       { js: 'js/sistemas/banho-desenho.js', grupo: 'sistemas' },

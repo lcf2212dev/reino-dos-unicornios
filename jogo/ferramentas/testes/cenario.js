@@ -41,6 +41,9 @@ const TELAS = {
   'quimica-tabela': 'Reino.UI.telaQuimicaTabela && Reino.UI.telaQuimicaTabela()',
   // o baú do cartão de experiência nº 1 (quimica.md §10; para outro n: --js 'void Reino.UI.abrirCartaoBau(5)')
   'bau-cartao': 'void (Reino.UI.abrirCartaoBau && Reino.UI.abrirCartaoBau(1))',
+  // casa do jogador (casa.md §9): o baú (o save sintético já vem com ele aberto: esvazia só para abrir) e a escolha do kit
+  'bau-casa': 'void (Reino.UI.abrirBauCasa && ((e, b) => { e.casaBau = {}; Reino.UI.abrirBauCasa(); e.casaBau = b; })(Reino.Progresso.estado(), Reino.Progresso.estado().casaBau))',
+  'kit-casa': 'void (Reino.UI.escolherKitCasa && Reino.UI.escolherKitCasa())',
 };
 // telas com argumento: 'materia:historia', 'livro:historia', 'sala:h1', 'prova:historia-3bim', 'treino:historia'
 // (e 'desafio:h1-03', tratado em tela(): um desafio certo, sem sorteio)

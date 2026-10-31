@@ -15,6 +15,14 @@ Reino.config = {
   // cartões de experiência do Laboratório (sistemas/cartoes.js): um por sala feita (1ª vez) a partir desta data
   // (o começo do 4º bimestre); fixa, para os cartões não sumirem quando o bimestre mudar
   cartoes: { desde: '2026-10-05' },
+  // a casa do jogador (sistemas/casa.js; docs/contratos/casa.md): 1 kit de móveis por matéria completa de um
+  // bimestre >= desdeBimestre (as do 3º, arquivadas, não contam: daria todos de uma vez). kits = a ordem na tela
+  // de escolha; passoGirar = a ordem das direções no botão Girar
+  casa: {
+    desdeBimestre: 4,
+    kits: ['estar', 'jantar', 'cozinha', 'banheiro', 'quarto-jogador', 'quarto-uni'],
+    passoGirar: ['baixo', 'esq', 'cima', 'dir'],
+  },
   pinPais: '2026',            // troque aqui o PIN da Área dos Pais
   desafiosPorSala: 6,
   desafiosSalaLivro: 14,      // sala de livro (ordem: 'livro', 4º bimestre): todos os desafios, na ordem; no máximo este tanto
@@ -41,6 +49,13 @@ Reino.config = {
   // festa da medalha de ouro da prova real do 3º bimestre (js/ui/abertura-medalha.js): a tela de início vira festa
   // (medalha, confete dourado) e o Claude dá parabéns, só para a Mariana, até o dia `ate` (inclusive); depois some sozinha
   festaMedalha: { ate: '2026-12-20' },
+  // a novidade em destaque na tela de início (ui/abertura-novidade.js), para todos os jogadores, até `ate` (inclusive):
+  // a faixa de cima, o texto grande ao lado do desenho e a linha pequena. Enquanto vale, ela fica no lugar da
+  // medalha de ouro (a festa continua no confete e no parabéns do Claude no mapa)
+  // id: a 1ª vez que o aparelho vê esta novidade, o botão é "Atualizar" e passa a atualização de mentira (atualizarMs,
+  // com Animações; sem elas, atualizarParadoMs); depois volta o "Entrar no Reino". Trocar o id mostra de novo
+  novidadeInicio: { id: 'casa-2026-10-31', faixa: 'Nova atualização!', texto: 'Decore sua casa!',
+    detalhe: 'Cada matéria completa dá móveis', ate: '2026-11-30', atualizarMs: 3600, atualizarParadoMs: 1500 },
   // jogadores: tamanho do login e da senha; senhaMariana = senha da conta 'mariana' (sem segurança). Ninguém entra
   // direto: vale quando não há banco ou ele não responde (com banco, vale a senha guardada nele); vazio = não entra
   // sem rede ao abrir, com o save no aparelho: joga e tenta a nuvem de novo a cada reconectarMs (e quando a rede volta)

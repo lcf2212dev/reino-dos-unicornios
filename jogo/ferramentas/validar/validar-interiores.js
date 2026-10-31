@@ -134,6 +134,8 @@ defs.forEach((d) => {
   checar(d.tamanho && d.tamanho.w > 0 && d.tamanho.h > 0, `${onde}: tamanho inválido`);
   checar(Array.isArray(d.comodos) && d.comodos.length, `${onde}: sem cômodos`);
   checar(d.pacote, `${onde}: sem pacote de voz`);
+  // decorável (casa.md §4): os móveis vêm do jogador por objetosExtras; o critério de "rico" (itens 1, 2 e 4) não vale
+  if (d.objetosExtras !== undefined) checar(typeof d.objetosExtras === 'function', `${onde}: objetosExtras precisa ser função`);
   const idsC = new Set();
   (d.comodos || []).forEach((c) => {
     checar(c.id && !idsC.has(c.id), `${onde}: cômodo com id repetido ou vazio: ${c.id}`); idsC.add(c.id);
@@ -197,7 +199,7 @@ defs.forEach((d) => {
       if (o.acao) checarAcao(o.acao, on, false);
     }
   });
-  checar(interativos >= 3, `${onde}: só ${interativos} objetos interativos (mínimo 3)`);
+  if (!d.decoravel) checar(interativos >= 3, `${onde}: só ${interativos} objetos interativos (mínimo 3)`);
   // móvel alto por cima do vizinho ou da parede: resumo por interior; um a um com --detalhes
   avisos.push(...Extras.altosCobrindo(I, d, g, onde, DETALHES));
   // NPCs sem sobrepor
@@ -344,7 +346,7 @@ Object.keys(porLugar).filter(doSo).forEach((l) => {
   });
 });
 
-// critério de "rico": ≥15 tipos por cômodo; nenhuma janela 3×3 de chão vazia fora dos corredores
+// critério de "rico": ≥15 tipos por cômodo; nenhuma janela 3×3 de chão vazia fora dos corredores (decorável: dispensado)
 const resumo = [];
 defs.forEach((d) => {
   const g = grades.get(d.id);
@@ -361,7 +363,7 @@ defs.forEach((d) => {
       const toca = o.x < r.x + r.w && o.x + dm.w > r.x && o.y < r.y + r.h && o.y + dm.h > r.y;
       if (toca) { tipos.add(o.tipo); if (I.interativo(o)) inter++; }
     });
-    checar(tipos.size >= 15, `${d.id}/${c.id}: só ${tipos.size} tipos de objeto (mínimo 15)`);
+    if (!d.decoravel) checar(tipos.size >= 15, `${d.id}/${c.id}: só ${tipos.size} tipos de objeto (mínimo 15)`);
     const vazias = [];
     for (let y = r.y + 2; y + 3 <= r.y + r.h; y++) for (let x = r.x; x + 3 <= r.x + r.w; x++) {
       let chaoTodo = true, ocupada = false, noCorredor = false;
@@ -373,7 +375,7 @@ defs.forEach((d) => {
       }
       if (chaoTodo && !ocupada && !noCorredor) vazias.push(`(${x},${y})`);
     }
-    checar(!vazias.length, `${d.id}/${c.id}: janelas 3×3 de chão vazias em ${vazias.slice(0, 8).join(' ')}${vazias.length > 8 ? '…' : ''}`);
+    if (!d.decoravel) checar(!vazias.length, `${d.id}/${c.id}: janelas 3×3 de chão vazias em ${vazias.slice(0, 8).join(' ')}${vazias.length > 8 ? '…' : ''}`);
     const npcs = (d.npcs || []).filter((n) => n.x >= r.x && n.x < r.x + r.w && n.y >= r.y && n.y < r.y + r.h).length;
     linhasC.push(`    ${c.id} (${c.nome || ''}): ${tipos.size} tipos, ${inter} interativos, ${npcs} NPCs`);
   });

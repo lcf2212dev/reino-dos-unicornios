@@ -408,6 +408,7 @@
         if (premios.primeiraVez && UI.festaMoedas) seq = seq.then(function () { return UI.festaMoedas(premios.dinheiro + (premios.bonus || 0)); });
         if (cartao && UI.abrirCartaoBau) seq = seq.then(function () { return UI.abrirCartaoBau(cartao); });
         if (premios.ovos.length) seq = seq.then(function () { return UI.chocarOvos(premios.ovos); });
+        if (premios.primeiraVez && Reino.Progresso.materiaCompleta(materia) && UI.casaKitsPendentes) seq = seq.then(function () { return UI.casaKitsPendentes(); });
         seq.then(function () { if (aoTerminar) aoTerminar(premios); });
       });
       botaoFim = btn;

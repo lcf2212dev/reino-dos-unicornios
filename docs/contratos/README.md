@@ -23,6 +23,7 @@ contrato dele: a seção (§) do que vai mexer, não o arquivo inteiro. Mudança
 | quarto bimestre (cada matéria no prédio dela): livros inteiros, salas de livro, cartas ricas, vozes por capítulo, produções, tipos do livro, banco da Revisão | `quarto-bimestre.md` |
 | Laboratório de Química: misturas, caderno de receitas, microscópio, tabela periódica, 2º andar (curiosidades, estados, separar, livros), campo `quimica` | `quimica.md` |
 | experiências e mini-jogos do Laboratório de Ciências no Observatório | `laboratorio-atividades.md` |
+| casa do jogador: kits de móveis por matéria, colocar e girar móveis, interior decorável, campos `casaBau`/`casaKits`/`casaItens`, baú da casa | `casa.md` |
 | plano de frentes paralelas, reserva de personagem (vaga tracejada), ondas, conferência em pipeline | `plano-paralelo.md` |
 | regras gerais de código, ordem de carga, testes | tabela abaixo |
 

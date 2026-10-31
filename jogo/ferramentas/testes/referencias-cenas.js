@@ -74,6 +74,9 @@ const TELAS = [
   ['quimica-caderno', 'Reino.UI.telaQuimicaCaderno && Reino.UI.telaQuimicaCaderno()'],
   ['quimica-microscopio', 'Reino.UI.telaQuimicaMicroscopio && Reino.UI.telaQuimicaMicroscopio()'],
   ['quimica-tabela', 'Reino.UI.telaQuimicaTabela && Reino.UI.telaQuimicaTabela()'],
+  // casa do jogador (docs/contratos/casa.md §9): o baú (o save sintético já vem aberto: esvazia só para abrir) e a escolha do kit (a base antiga não tem: guarda)
+  ['bau-casa', 'void (Reino.UI.abrirBauCasa && ((e, b) => { e.casaBau = {}; Reino.UI.abrirBauCasa(); e.casaBau = b; })(Reino.Progresso.estado(), Reino.Progresso.estado().casaBau))'],
+  ['kit-casa', 'void (Reino.UI.escolherKitCasa && Reino.UI.escolherKitCasa())'],
 ];
 async function cenasTelas(page, pasta) {
   for (const [nome, js] of TELAS) {
@@ -97,6 +100,24 @@ async function cenasTelas(page, pasta) {
     await page.evaluate((id) => Reino.UI.abrirLivro(Reino.materia(id)), id);
     await foto(page, pasta, `tela-livro-${id}`);
     await limpar(page);
+  }
+  // modo decorar da casa (casa.md §9.3), por último (o relógio que anda até a casa mexeria nas barras do HUD das
+  // outras telas): dentro da casa, com o kit Sala de Estar só na memória (sem salvar), o painel; depois sai e devolve o
+  // save como estava (a base antiga não tem: guarda)
+  if (await page.evaluate(() => !!(Reino.UI.decorarCasa && Reino.Casa && Reino.Interiores.def('casa')))) {
+    await page.evaluate(() => { Reino.Cena.irPara('casa'); });
+    await avancar(page, 2500);
+    await page.evaluate(() => {
+      var e = Reino.Progresso.estado();
+      window.__kitsAntes = e.casaKits;
+      e.casaKits = Object.assign({}, e.casaKits, { 'e2e-decorar': { kit: 'estar', em: 1 } });
+      Reino.UI.decorarCasa({ kit: 'estar' });
+    });
+    await foto(page, pasta, 'tela-decorar');
+    await page.evaluate(() => { var b = document.querySelector('.decorar-pronto'); if (b) b.click(); Reino.Progresso.estado().casaKits = window.__kitsAntes; });
+    await limpar(page);
+    await page.evaluate(() => { Reino.Cena.sair(); });
+    await avancar(page, 2500);
   }
 }
 

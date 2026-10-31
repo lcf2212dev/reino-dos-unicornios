@@ -135,3 +135,34 @@ interface ReservaPersonagem {
 }
 /** um lugar de um personagem registrado: o interior, o tile e a ação */
 interface LugarPersonagem { predio: string; x?: number; y?: number; acao?: AcaoNpc; }
+
+/* ---------- casa do jogador (Reino.registrarKitCasa, js/nucleo/registros.js; casa.md) ---------- */
+/** Direção de um móvel da casa: 'baixo' = de frente (o desenho da biblioteca), 'esq'/'dir' = de lado (pegada w↔h). */
+type DirCasa = 'baixo' | 'cima' | 'esq' | 'dir';
+/** Um item de um kit: `objeto` é o tipo da biblioteca (Reino.Interiores.objeto) que desenha as direções. */
+interface ItemKitCasa {
+  id: string;
+  nome: string;
+  objeto: string;
+  /** quantas peças iguais o kit traz (padrão 1) */
+  qtd?: number;
+  /** 4 = baixo/esq/cima/dir; 2 = baixo/esq; 1 = não gira */
+  direcoes: 1 | 2 | 4;
+  /** pendurado: só nas 2 fileiras da parede do fundo, não gira */
+  parede?: boolean;
+}
+/** Um kit de móveis (casa.md §3). nome aceita {nome}, {a|b} e {uni}. */
+interface KitCasaDef {
+  id: string;
+  nome: string;
+  /** objeto da biblioteca desenhado como capa do kit na tela de escolha */
+  capa: string;
+  /** cômodo onde ele combina (só sugestão: os itens vão em qualquer cômodo) */
+  comodo: string;
+  itens: ItemKitCasa[];
+}
+/** Interior que o jogador decora (casa.md §4): o validador dispensa o critério de "rico" e a cena soma os móveis do save. */
+interface InteriorDef {
+  decoravel?: boolean;
+  objetosExtras?(P: any): ObjetoInterior[];
+}
