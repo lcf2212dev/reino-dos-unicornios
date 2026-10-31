@@ -128,7 +128,9 @@
 
     var atual = null;   // id da receita aberta; null = índice
     function lista() { return Q.receitas(); }
-    function falaIndice() { return Q.frase(Q.cadernoCompleto() ? 'caderno.completo' : 'caderno.oi'); }
+    // o troféu do caderno só com TODAS as que ela vê feitas (um cartão ganho e ainda não feito espera)
+    function completo() { var c = Q.contagem().receitas; return Q.cadernoCompleto() && c.feitas === c.total; }
+    function falaIndice() { return Q.frase(completo() ? 'caderno.completo' : 'caderno.oi'); }
     function falaPagina(r) {
       if (!Q.noCaderno(r.id)) return [r.dica].concat(Q.frase('caderno.segredo')).filter(Boolean);
       return [r.acontece].concat(r.explica || [], Q.frase('comum.seguranca')).filter(Boolean);
@@ -149,7 +151,7 @@
         el('h3.qcad-titulo', { tabindex: '-1' }, 'Minhas receitas'),
         el('p.qcad-contador', { 'aria-live': 'polite' }, U.colado(c.feitas + ' de ' + c.total + ' receitas feitas')));
       folha.appendChild(cab);
-      if (Q.cadernoCompleto()) {
+      if (completo()) {
         folha.appendChild(el('p.qcad-completo', icone('🏆', 2), el('span', U.colado(Q.frase('caderno.completo')[0] || 'Caderno completo!'))));
       }
       var grade = el('ul.qcad-grade');

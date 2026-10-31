@@ -220,6 +220,13 @@ alvo = { tipo: 'npc'|'objeto'|'saida'|'escada'|'lugar'|'claude', id,
    registrados) contra os outros lugares E contra o terreno fixo (rua, praça, água do lago, fonte, Claude, borda),
    e cada `caminho` contra os rects, a água, a fonte e a borda. "Fonte ou Claude" = tile sólido sem enfeite: as
    peças grandes da praça (`Mapa.CIDADE.objetos`) e o Claude.
+9. O cofre da praça (pedido `pedidos/2026-10-31-moedas-cofre-cartoes.md`): objeto `{ tipo: 'cofre', x: 22, y: 24, w: 3,
+   h: 3 }` de `Mapa.CIDADE.objetos` (no lugar de um canteiro: mesmos tiles, o sorteio não muda). `mundo/cofre-desenho.js`:
+   o pote parado registra o desenho em `I.OBJETOS.cofre` (`cidade-desenho.js`); a auréola, as moedas e o número saem na
+   camada do módulo `cofre` (`Reino.Cofre`: `moedas()` = `P.dinheiroBimestre()`, `fracao()`, `cheio()`, `canvas(m)`),
+   refeita só quando as moedas mudam (eventos `PROGRESSO`, `PROGRESSO_REMOTO`, `MAPA_MUDOU`). Cheio em
+   `config.cofre.cheio`. Toque: `Mapa.alvoObjeto(wx, wy)` e `Mapa.alvoObjetoPerto(tl, olhar)` (o adaptador do mapa em
+   `motor/cena.js`, depois do Claude): ela anda até (23, 27) e abre `UI.telaCofre()` (`ui/cofre.js`).
 
 ## 10. Nadar no lago
 ```

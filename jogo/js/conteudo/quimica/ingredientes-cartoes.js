@@ -5,8 +5,8 @@
   var Q = window.Reino.QUIMICA = window.Reino.QUIMICA || {};
   Q.ingredientes.push(
     { id: 'curcuma', nome: 'Cúrcuma', cor: '#f2b705', tipo: 'po', cartao: true, fala: 'A cúrcuma é bem amarela.' },
-    { id: 'giz', nome: 'Giz', cor: '#fbfaf2', tipo: 'po', grupo: 'reagentes', cartao: true,
-      formula: 'CaCO₃', forma: 'Pó', fala: 'O giz é carbonato de cálcio.' },
+    { id: 'casca-ovo', nome: 'Casca de ovo', cor: '#fbf3e4', tipo: 'po', grupo: 'reagentes', cartao: true,
+      formula: 'CaCO₃', forma: 'Pó moído', fala: 'A casca de ovo tem calcário.' },
     { id: 'batata', nome: 'Suco de batata', cor: '#efe3b8', tipo: 'liquido', cartao: true, fala: 'A batata tem enzimas.' },
     { id: 'mel', nome: 'Mel', cor: '#e0a030', tipo: 'liquido', cartao: true, fala: 'O mel é grosso e doce.' },
     { id: 'sabao', nome: 'Sabão', cor: '#bfe8ff', tipo: 'liquido', cartao: true, fala: 'O sabão abraça a gordura.' },

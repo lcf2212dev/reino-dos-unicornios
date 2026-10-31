@@ -29,22 +29,22 @@ async function premios(op, iniciar) {
 }
 const H1 = "Reino.Missao.iniciar(Reino.materia('historia'), Reino.materia('historia').salas[0]);";
 
-test('primeira vez: os Robux da sala, sem "treino livre" nem bônus', async () => {
+test('primeira vez: as moedas da sala, sem "treino livre" nem bônus', async () => {
   const itens = await premios({ save: 'inicio' }, H1);
-  assert.ok(itens.includes('+ 100 Robux no Baú do Tesouro!'), itens.join(' | '));
+  assert.ok(itens.includes('+ 10 moedas no Baú do Tesouro!'), itens.join(' | '));
   assert.ok(!itens.some((t) => /Treino livre|bônus/.test(t)), itens.join(' | '));
 });
 
-test('sala repetida: só o "treino livre", sem Robux novos', async () => {
+test('sala repetida: só o "treino livre", sem moedas novas', async () => {
   const itens = await premios({ save: 'completo' }, H1);
-  assert.ok(itens.some((t) => t.startsWith('Treino livre: os 100 Robux')), itens.join(' | '));
+  assert.ok(itens.some((t) => t.startsWith('Treino livre: as 10 moedas')), itens.join(' | '));
   assert.ok(!itens.some((t) => /no Baú do Tesouro!|bônus/.test(t)), itens.join(' | '));
 });
 
 test('última sala de matéria com bônus (6 salas): o valor da sala e o bônus, sem "treino livre"', async () => {
   const itens = await premios({ save: 'inicio', materiasCompletas: ['historia'] },
     "var m = Reino.materia('historia'); m.salas.push(Object.assign({}, m.salas[4], { id: 'h6-teste', nome: 'Sala de Teste' })); Reino.Missao.iniciar(m, m.salas[5]);");
-  assert.ok(itens.includes('+ 80 Robux no Baú do Tesouro!'), itens.join(' | '));
-  assert.ok(itens.includes('+ 20 Robux de bônus por completar História!'), itens.join(' | '));
+  assert.ok(itens.includes('+ 8 moedas no Baú do Tesouro!'), itens.join(' | '));
+  assert.ok(itens.includes('+ 2 moedas de bônus por completar História!'), itens.join(' | '));
   assert.ok(!itens.some((t) => /Treino livre/.test(t)), itens.join(' | '));
 });
