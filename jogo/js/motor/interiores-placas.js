@@ -1,7 +1,7 @@
 /* Interiores: as placas dos cômodos (em px da tela, com a fonte pixel, por cima de móveis e
    personagens): placas de parede que fogem do HUD, do balão e dos objetos da parede e da Mariana.
    Veio de motor/interiores.js (o corpo de cena.desenharSobre e os ajudantes do HUD).
-   Registra em Reino._interiores: desenharPlacas. Só roda quando chamado. */
+   Registra em Reino._interiores: desenharPlacas, textoPlaca. Só roda quando chamado. */
 (function () {
   var R = window.Reino;
   var II = R._interiores, T = II.T, K = II.K;
@@ -219,6 +219,33 @@
     if (!g) { g = {}; guardadas.set(def, g); }
     return g;
   }
+  // o texto da placa com {nome}, {a|b} (Reino.Genero.texto) e {uni} (o nome da montaria) trocados (casa.md §4.4).
+  // Sem chave nenhuma (quase todas), o próprio texto, sem custo. Com chave, guardado por texto até o save, o mapa
+  // (montaria, nome do unicórnio) ou o perfil mudarem. Sem Genero ou sem save (Node): a 1ª forma do {a|b}, o nome
+  // da config e "Unicórnio", para o texto ficar legível
+  var trocadas = null;
+  function esquecerTrocadas() { trocadas = {}; }
+  function textoPlaca(texto) {
+    var s = texto == null ? '' : String(texto);
+    if (s.indexOf('{') < 0) return s;
+    if (!trocadas) {
+      trocadas = {};
+      var U = R.util, EV = R.EVENTOS;
+      if (U && U.on && EV) [EV.PROGRESSO, EV.PROGRESSO_REMOTO, EV.MAPA_MUDOU, EV.PERFIL].forEach(function (e) { if (e) U.on(e, esquecerTrocadas); });
+    }
+    if (Object.prototype.hasOwnProperty.call(trocadas, s)) return trocadas[s];
+    var cru = s, G = R.Genero, nome = (R.config && R.config.nomeJogadora) || 'Mariana', feito = false;
+    if (G && G.texto) { try { s = G.texto(s); feito = true; } catch (e) {} }
+    if (!feito) s = s.replace(/\{([^{}|]*)\|[^{}|]*\}/g, '$1').replace(/\{nome\}/g, function () { return nome; });
+    if (s.indexOf('{uni}') >= 0) {
+      var P = II.progresso(), uni = '';
+      try { uni = P && P.nomeUni ? P.nomeUni(P.montaria()) : ''; } catch (e) {}
+      s = s.replace(/\{uni\}/g, function () { return uni || 'Unicórnio'; });
+    }
+    // sem save ainda (carregando): não guarda, para o {uni} sair certo quando ele chegar
+    if (II.progresso()) trocadas[cru] = s;
+    return s;
+  }
   function arred(q) { return Math.round(q.left) + ',' + Math.round(q.top) + ',' + Math.round(q.right) + ',' + Math.round(q.bottom); }
 
   // placas dos cômodos, em px da tela, com a fonte pixel, por cima de móveis e personagens (arte.md §9.5): a letra
@@ -252,9 +279,9 @@
     var assBolhas = null, guarda = guardaDe(def);
 
     // onde a placa do cômodo c fica: a lista de passos, em ordem; cada um devolve o lugar livre mais perto de (x, y)
-    function passos(c, esq, dir, cimaC, baixoC, dela) {
+    function passos(c, texto, esq, dir, cimaC, baixoC, dela) {
       var r = c.rect;
-      var med = linhasDa(ctx, c.placa, fonte, (r.w * T - 6) * escala - pad * 2);
+      var med = linhasDa(ctx, texto, fonte, (r.w * T - 6) * escala - pad * 2);
       var sw = Math.ceil(med.largura + pad * 2), sh = topo * 2 + lh * med.linhas.length;
       var sx = Math.round((esq + dir) / 2 - sw / 2), sy = naTela(pintor, 0, r.y * T + 2).y;
       var fimParede = naTela(pintor, 0, (r.y + 2) * T).y;
@@ -283,8 +310,8 @@
       // com Letras grandes a largura é a do chão do cômodo à direita dos chips (senão a placa larga nunca cabia no
       // chão); a palavra que não cabe ao lado dos chips (celular) usa a largura toda, abaixo deles
       function larg3() { return Math.min((r.w * T - 6) * escala, cw - xChips - borda * 4, grande ? xb - Math.max(xChips, xa) - borda * 4 : 1e9) - pad * 2; }
-      var m3 = linhasDa(ctx, c.placa, fonte, larg3());
-      if (grande && m3.largura > larg3()) { xChips = 0; m3 = linhasDa(ctx, c.placa, fonte, larg3()); }
+      var m3 = linhasDa(ctx, texto, fonte, larg3());
+      if (grande && m3.largura > larg3()) { xChips = 0; m3 = linhasDa(ctx, texto, fonte, larg3()); }
       var sw3 = Math.ceil(m3.largura + pad * 2), sh3 = topo * 2 + lh * m3.linhas.length;
       var x3 = Math.round((esq + dir) / 2 - sw3 / 2), tela = { x0: xChips, x1: cw, y0: 0, y1: ch };
       var chao = { x0: Math.max(xChips, xa), x1: xb, y0: Math.max(cimaC, 0), y1: Math.min(baixoC, ch) };
@@ -329,8 +356,8 @@
         p(m3, sw3, sh3, x3, sy, medido.rects.concat(mariR), tela),   // sem lugar nenhum fora da saída: a placa não some
       ]);
     }
-    function calcular(c, antes, esq, dir, cimaC, baixoC, dela, chave) {
-      var lista = passos(c, esq, dir, cimaC, baixoC, dela), i, q, livre;
+    function calcular(c, texto, antes, esq, dir, cimaC, baixoC, dela, chave) {
+      var lista = passos(c, texto, esq, dir, cimaC, baixoC, dela), i, q, livre;
       // histerese: o lugar de antes (preso ao cômodo, não à tela) vale enquanto continuar livre no mesmo passo
       if (antes && antes.pos && lista[antes.passo]) {
         q = lista[antes.passo];
@@ -361,11 +388,13 @@
       // com o balão aberto, só a placa do cômodo dela (a vizinha sairia cortada ao lado do balão)
       if (medido.dialogo && !dela) return;
       if (assBolhas === null) assBolhas = bolhas.concat(corpos).map(arred).join(';');
-      var chave = esq + ',' + cimaC + ',' + cw + 'x' + ch + ',' + fonte + '|' + medido.versao + '|' + assBolhas + '|' + celula + '|' + dela;
+      // o texto já trocado entra na chave: trocar o nome (ou a montaria) refaz a placa uma vez
+      var texto = textoPlaca(c.placa);
+      var chave = esq + ',' + cimaC + ',' + cw + 'x' + ch + ',' + fonte + '|' + medido.versao + '|' + assBolhas + '|' + celula + '|' + dela + '|' + texto;
       var g = guarda[c.id];
       // a Mariana andou dentro da célula e passou por baixo: recalcula (a do cômodo dela muda de lugar; a vizinha
       // que não achar outro lugar some enquanto ela estiver embaixo)
-      if (!g || g.chave !== chave || (g.pos && sobMariana(g.pos, mari, borda))) g = guarda[c.id] = calcular(c, g, esq, dir, cimaC, baixoC, dela, chave);
+      if (!g || g.chave !== chave || (g.pos && sobMariana(g.pos, mari, borda))) g = guarda[c.id] = calcular(c, texto, g, esq, dir, cimaC, baixoC, dela, chave);
       var s = g.pos;
       if (!s || sobMariana(s, mari, borda)) return;
       var sx = s.x, sy = s.y, sw = s.sw, sh = s.sh;
@@ -383,5 +412,5 @@
     ctx.imageSmoothingEnabled = false;
   }
 
-  II.desenharPlacas = desenharPlacas;
+  II.desenharPlacas = desenharPlacas; II.textoPlaca = textoPlaca;
 })();

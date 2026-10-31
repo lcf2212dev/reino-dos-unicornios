@@ -30,7 +30,13 @@ Reino.Interiores = {
   doLugar(lugarId) → def de entrada do lugar (entrada: true; senão a primeira) | null
   doPredio(lugarId) → [defs do lugar]
   cena(id) → cena (cena-e-motor.md §6), criada uma vez e reaproveitada
-  grade(def) → { w, h, solido[y][x], chao[y][x], comodo[y][x] }   // puro, sem DOM (usado pelo validador)
+  refazer(id) → cena | null           // decorável: refaz grade, objetos e estático da cena a partir do def (com os
+                                      // objetosExtras de agora); a mesma cena, e a ativa fica com ela onde está, sem
+                                      // íris (o estático sai no próximo quadro). Cena ainda não criada: null
+  grade(def) → { w, h, solido[y][x], chao[y][x], comodo[y][x] }   // puro, sem DOM (usado pelo validador); soma os
+                                                                  // objetosExtras, como a cena
+  textoPlaca(texto) → string          // {nome}, {a|b} (Reino.Genero.texto) e {uni} (nome da montaria) trocados; sem
+                                      // Genero/save: 1ª forma, config.nomeJogadora e "Unicórnio" (§3, placa)
   objeto(tipo, defObjeto)             // registra um tipo de objeto; cada prédio pode registrar os seus
   OBJETOS, PISOS, PAREDES, FUNDOS     // bibliotecas (FUNDOS: céu aberto, abaixo)
   desenho: { C, ret, circulo, elipse, triangulo, contornoRet, … }   // os helpers de arte/desenho.js
@@ -48,6 +54,9 @@ Reino.registrarInterior({
   nome: 'Museu das Memórias',
   entrada: true,                      // por aqui se entra pelo mapa (um por lugar)
   pacote: 'interior-museu',           // pacote de voz; andares do mesmo prédio usam o mesmo
+  decoravel?: true,                   // os móveis vêm do jogador (casa.md §4): sem o critério de "rico" (§7)
+  objetosExtras?(P) → [objeto],       // somados aos `objetos` na grade, no desenho, no toque e nas placas; lido ao
+                                      // criar a cena e a cada refazer(id). Erro ou não-lista: [] (a cena não cai)
   tamanho: { w, h },                  // em tiles
   saida: { x, y },                    // tapete de saída (só no de entrada): tile de chão na última fileira do cômodo
   spawn: { x, y },                    // 1 tile acima do tapete (planeta, sem entrada: onde o e2e e o irPara sem chegada põem)
@@ -57,7 +66,8 @@ Reino.registrarInterior({
                                       // 'sobe' = arco na parede, 'desce' = vão no chão; pareadas (abaixo)
   comodos: [{
     id: 'galeria1', nome: 'Cartas e Lembranças',
-    placa: 'Sala 1 • Cartas e Lembranças',   // placa com a fonte pixel na parede do fundo
+    placa: 'Sala 1 • Cartas e Lembranças',   // placa com a fonte pixel na parede do fundo; aceita {nome}, {a|b} e
+                                             // {uni} (textoPlaca; a posição guardada leva o texto já trocado)
     rect: { x, y, w, h },             // cômodo inteiro; as 2 primeiras fileiras são a parede do fundo (sólida)
     piso: 'taco' | 'mosaico' | 'pedra' | 'palha' | 'tabuas' | 'azulejo' | 'carpete',
     parede: 'papel' | 'pedra' | 'madeira' | 'tijolo' | 'azulejo',
@@ -173,6 +183,8 @@ Reino.Interiores.objeto('escrivaninha', {
 4. ≥3 objetos interativos por interior.
 5. Tudo alcançável a partir do `spawn`: vizinho livre de cada NPC e objeto interativo, a saída e as escadas.
 6. O validador aceita as telas e ações registradas (`Reino.NPCs.telas()`, `Reino.NPCs.acoes()`).
+7. Exceção: `decoravel: true` (casa do jogador, `casa.md` §4) dispensa os itens 1, 2 e 4; paredes, portas, escadas
+   pareadas e o item 5 continuam valendo. Conferido por `testes/unidade/interiores-decoravel.test.js`.
 
 ## 8. Convenções dos prédios
 1. Uma pasta por prédio: `jogo/js/interiores/<prédio>/`. `falas.js` (`Reino.falasDoPredio('<prédio>',

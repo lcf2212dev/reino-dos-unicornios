@@ -1,6 +1,6 @@
 /* Interiores: a grade de tiles de um interior (pura: sem DOM) e o caminho nela.
    Veio de motor/interiores.js. Registra em Reino._interiores: libDe, dimensoes, solidoDe, ehParede,
-   ehAlto, interativo, grade, caminhoNa. */
+   ehAlto, interativo, objetosDe, grade, caminhoNa. */
 (function () {
   var R = window.Reino;
   var II = R._interiores, OBJETOS = II.OBJETOS;
@@ -20,8 +20,18 @@
   function ehAlto(o) { return o.alto !== undefined ? !!o.alto : !!libDe(o).alto; }
   function interativo(o) { return !!(o.fala || o.acao); }
   function noRect(x, y, r) { return x >= r.x && y >= r.y && x < r.x + r.w && y < r.y + r.h; }
+  // os objetos do interior: os fixos e, no decorável, os extras de agora (casa.md §4). Extra que lança erro ou não
+  // devolve lista vira [] (a cena não cai); sem objetosExtras, a própria lista fixa (nada a mais para os outros)
+  function objetosDe(def) {
+    var fixos = def.objetos || [];
+    if (typeof def.objetosExtras !== 'function') return fixos;
+    var extras = null;
+    try { extras = def.objetosExtras(II.progresso()); } catch (e) { if (typeof console !== 'undefined') console.warn('objetosExtras de ' + def.id + ' falhou:', e); }
+    return Array.isArray(extras) && extras.length ? fixos.concat(extras) : fixos;
+  }
 
-  function grade(def) {
+  // objetos: a lista já montada (a cena passa a mesma que desenha, para os índices baterem); padrão objetosDe(def)
+  function grade(def, objetos) {
     var W = def.tamanho.w, H = def.tamanho.h;
     function matriz2(v) { var m = []; for (var y = 0; y < H; y++) { m.push([]); for (var x = 0; x < W; x++) m[y].push(v); } return m; }
     var g = { w: W, h: H, solido: matriz2(true), chao: matriz2(false), comodo: matriz2(null), parede: matriz2(false),
@@ -43,7 +53,7 @@
         g.porta[y][x] = true; g.solido[y][x] = false; g.chao[y][x] = true;
       }
     });
-    (def.objetos || []).forEach(function (o, i) {
+    (objetos || objetosDe(def)).forEach(function (o, i) {
       var d = dimensoes(o), s = solidoDe(o), parede = ehParede(o);
       for (var y = o.y; y < o.y + d.h; y++) for (var x = o.x; x < o.x + d.w; x++) {
         if (!dentro(x, y)) continue;
@@ -99,5 +109,5 @@
   }
 
   II.libDe = libDe; II.dimensoes = dimensoes; II.solidoDe = solidoDe; II.ehParede = ehParede;
-  II.ehAlto = ehAlto; II.interativo = interativo; II.grade = grade; II.caminhoNa = caminhoNa;
+  II.ehAlto = ehAlto; II.interativo = interativo; II.objetosDe = objetosDe; II.grade = grade; II.caminhoNa = caminhoNa;
 })();
