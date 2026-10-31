@@ -143,7 +143,7 @@ body.sem-animacao .titulo-letra, body.sem-animacao .btn-pulsar::before { animati
 .tela-inicio .btn-comecar { width: 100%; }
 @media (min-width: 1000px) and (min-height: 501px) {
   .tela-inicio .inicio { align-items: flex-start; justify-content: center; gap: 40px; padding: 32px 48px; }
-  .tela-inicio .abertura { width: 52%; }
+  .tela-inicio .abertura { width: 52%; max-width: 600px; }   /* a mesma largura da caixa do botão: a novidade fica centrada sobre ele */
   .titulo-linha-2 { font-size: var(--texto-t); }
   .tela-inicio .inicio-baixo { width: 52%; max-width: 600px; }
 }
