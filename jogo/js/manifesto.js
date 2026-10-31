@@ -369,6 +369,7 @@
       { js: 'js/sistemas/fotos-moldura.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/fotos-telas.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/presentes.js', grupo: 'sistemas', node: true }, // campo presentes, P.presentesPendentes, P.abrirPresente (módulo depois de cuidados, surpresa e fotos)
+      { js: 'js/sistemas/casa.js', grupo: 'sistemas', node: true }, // casa do jogador (casa.md): campos casaBau/casaKits/casaItens, Reino.Casa, ação casaDecorar
       { js: 'js/sistemas/versao.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/aura.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/viagem.js', grupo: 'sistemas', node: true },
