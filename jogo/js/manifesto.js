@@ -222,6 +222,7 @@
       { js: 'js/conteudo/materias/ingles4/unicornios-12p.js', grupo: 'materias', node: true },
       { js: 'js/conteudo/materias/ingles4/ingles4.js', grupo: 'materias', node: true },
       { js: 'js/conteudo/presentes.js', grupo: 'conteudo', node: true }, // presentes do jogo: as medalhas Ultra Lendárias (pedido 2026-10-28)
+      { js: 'js/conteudo/casa/kits-a.js', grupo: 'conteudo', node: true }, // casa: kits estar, jantar e cozinha (casa.md §3)
       { js: 'js/conteudo/materias/ciencias/icones.js', grupo: 'icones', node: true },
       { js: 'js/conteudo/materias/matematica/icones.js', grupo: 'icones', node: true },
       { js: 'js/conteudo/materias/geografia/icones.js', grupo: 'icones', node: true },
@@ -558,6 +559,9 @@
       { js: 'js/interiores/escola-musica/fora.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/escola-musica/lugar.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/casa/virar.js', grupo: 'interiores', node: true }, // casa do jogador (casa.md): o desenho dos móveis nas 4 direções
+      { js: 'js/interiores/casa/moveis-estar.js', grupo: 'interiores', node: true }, // casa: móveis do kit Sala de Estar
+      { js: 'js/interiores/casa/moveis-jantar.js', grupo: 'interiores', node: true }, // casa: móveis do kit Sala de Jantar
+      { js: 'js/interiores/casa/moveis-cozinha.js', grupo: 'interiores', node: true }, // casa: móveis do kit Cozinha
       { js: 'js/interiores/padrao.js', grupo: 'interiores', node: true }, // padrao.js por último entre os prédios: monta o interior das matérias que não têm um próprio
       { js: 'js/sistemas/banho.js', grupo: 'sistemas' },
       { js: 'js/sistemas/banho-desenho.js', grupo: 'sistemas' },
