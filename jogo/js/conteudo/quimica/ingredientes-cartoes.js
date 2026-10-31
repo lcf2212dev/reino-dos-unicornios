@@ -12,7 +12,7 @@
     { id: 'sabao', nome: 'Sabão', cor: '#bfe8ff', tipo: 'liquido', cartao: true, fala: 'O sabão abraça a gordura.' },
     { id: 'vitamina-c', nome: 'Vitamina C', cor: '#fff1c2', tipo: 'po', grupo: 'reagentes', cartao: true,
       formula: 'C₆H₈O₆', forma: 'Pó', fala: 'A vitamina C é um ácido.' },
-    { id: 'cha', nome: 'Chá preto', cor: '#9a5a2a', tipo: 'liquido', cartao: true, fala: 'Chá preto bem fraquinho.' },
+    { id: 'cha', nome: 'Chá preto', cor: '#9a5a2a', tipo: 'liquido', cartao: true, fala: 'Um chá preto bem fraquinho.' },
     { id: 'beterraba', nome: 'Suco de beterraba', cor: '#b0174f', tipo: 'liquido', cartao: true, fala: 'A beterraba pinta de vermelho.' },
     { id: 'magnesio', nome: 'Magnésio', cor: '#d9dde3', tipo: 'po', grupo: 'elementos', cartao: true,
       formula: 'Mg', forma: 'Fita de metal', fala: 'O magnésio é um metal leve.' },
