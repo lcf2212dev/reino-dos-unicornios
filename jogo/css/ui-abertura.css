@@ -86,12 +86,9 @@
   border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande);
 }
 .tela-inicio .btn-comecar { font-size: var(--texto); padding: 16px 28px; }
-.tela-inicio .inicio-materias-curta { display: none; }
-/* celular em pé: botão numa linha só e a caixa curta (a Mariana trota logo acima) */
+/* celular em pé: botão numa linha só (a Mariana trota logo acima) */
 @media (max-width: 600px) and (min-height: 501px) {
   .tela-inicio .btn-comecar { white-space: nowrap; padding: 14px 20px; }
-  .tela-inicio .inicio-materias-longa { display: none; }
-  .tela-inicio .inicio-materias-curta { display: inline; }
 }
 .btn-pulsar { position: relative; }
 /* o halo: um anel dourado de 4 px que se afasta do botão em degraus de 4 px e some (sem sombra desfocada) */
@@ -122,8 +119,7 @@ body.sem-animacao .abertura-entrando .titulo-abertura, body.sem-animacao .abertu
   .tela-inicio .btn-comecar { min-height: 50px; padding: 10px 22px; }
   .tela-inicio .inicio { gap: 8px; }
   .inicio-baixo { gap: 8px; }
-  /* celular deitado: a legenda menor (a novidade aparece) e o botão mais embaixo (a porta do castelo aparece) */
-  .tela-inicio .inicio-materias { padding: 4px 10px; font-size: var(--texto-aux); }
+  /* celular deitado: o botão mais embaixo (a porta do castelo aparece) */
   .tela-inicio .inicio { padding-bottom: 0; }
 }
 
@@ -143,7 +139,6 @@ body.sem-animacao .titulo-letra, body.sem-animacao .btn-pulsar::before { animati
 .tela-inicio .inicio { max-width: none; padding-top: 24px; }
 .tela-inicio .inicio-baixo { width: auto; max-width: 580px; padding: 16px 24px; background: var(--papel-quente); border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto-grande); border-top-color: var(--ouro); gap: 12px; }
 .tela-inicio .inicio-sub { background: transparent; border: 0; padding: 0; }
-.tela-inicio .inicio-materias { margin: 0; color: var(--tinta-suave); font-size: var(--texto-aux); }
 .tela-inicio .inicio-botoes { width: 100%; }
 .tela-inicio .btn-comecar { width: 100%; }
 @media (min-width: 1000px) and (min-height: 501px) {

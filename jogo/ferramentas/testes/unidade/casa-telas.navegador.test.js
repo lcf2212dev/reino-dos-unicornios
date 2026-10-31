@@ -70,11 +70,11 @@ test('casa: baú uma vez, escolha do kit, teclado e legenda', { timeout: 240000 
     assert.deepStrictEqual(await c.js("({ fim: __fila, tela: !!document.querySelector('.tela-kit-casa'), kits: Reino.Casa.kitsGanhos(), p: Reino.Casa.kitsPendentes() })"),
       { fim: true, tela: false, kits: ['jantar'], p: 0 });
 
-    // 5) a legenda nova na tela de início
+    // 5) a novidade em destaque na tela de início (ui/abertura-novidade.js)
     await c.js("Reino.UI.fecharTodas(); __reino.telaInicio(); 1");
-    assert.deepStrictEqual(await c.js(`({ longa: document.querySelector('.tela-inicio .inicio-materias-longa').textContent,
-      curta: document.querySelector('.tela-inicio .inicio-materias-curta').textContent })`),
-    { longa: 'Nova atualização: Decore sua casa!', curta: 'Decore sua casa!' });
+    assert.deepStrictEqual(await c.js(`({ texto: document.querySelector('.tela-inicio .novidade-texto').textContent,
+      casinha: !!document.querySelector('.tela-inicio .novidade-casinha') })`),
+    { texto: 'Decore sua casa!', casinha: true });
     await c.js('Reino.UI.fecharTodas(); 1');
     assert.deepStrictEqual(c.erros, []);
   } finally { await c.fechar(); }

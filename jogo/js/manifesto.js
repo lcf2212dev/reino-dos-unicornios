@@ -42,6 +42,7 @@
       'css/ui-quimica-experiencias.css',
       'css/ui-jogadores.css',
       'css/ui-abertura.css',
+      'css/ui-abertura-novidade.css',
       'css/ui-personagem.css',
       'css/ui-voo.css',
       'css/ui-bau-presente.css',
@@ -369,6 +370,7 @@
       { js: 'js/ui/jogadores.js', grupo: 'ui' },
       { js: 'js/ui/abertura-desenho.js', grupo: 'ui' },
       { js: 'js/ui/abertura-medalha.js', grupo: 'ui' },   // festa da medalha de ouro na abertura (até config.festaMedalha.ate)
+      { js: 'js/ui/abertura-novidade.js', grupo: 'ui' },   // a novidade em destaque na abertura (até config.novidadeInicio.ate)
       { js: 'js/ui/abertura.js', grupo: 'ui' },
       { js: 'js/sistemas/fotos.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/fotos-moldura.js', grupo: 'sistemas', node: true },

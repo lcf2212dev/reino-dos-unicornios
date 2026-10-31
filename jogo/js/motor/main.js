@@ -24,22 +24,27 @@
       var ap = Object.assign({}, PA.APARENCIA_PADRAO, vis.aparencia || {});
       // festa da medalha de ouro (ui/abertura-medalha.js): só se a última jogadora é a Mariana (ou ninguém) e até a data
       var medalha = UI.festaMedalha.ativa(ultimo);
-      var cena = UI.abertura({ montaria: Reino.Unicornios.def('inicial', vis.corInicial || 'rosa'), aparencia: ap, medalha: medalha });
-      var ir = el('button.btn-grande.btn-principal.btn-comecar.btn-pulsar', { type: 'button' }, 'Entrar no Reino ✨');
+      // a novidade em destaque (ui/abertura-novidade.js; config.novidadeInicio): para todos, no lugar da medalha
+      var novidade = UI.novidadeInicio.ativa();
+      var cena = UI.abertura({ montaria: Reino.Unicornios.def('inicial', vis.corInicial || 'rosa'), aparencia: ap, medalha: medalha, novidade: novidade });
+      // 1ª vez deste aparelho com a novidade: "Atualizar" e a atualização de mentira (ui/abertura-novidade.js) antes de entrar
+      var atualizar = novidade && UI.novidadeInicio.primeiraVez();
+      var ir = el('button.btn-grande.btn-principal.btn-comecar.btn-pulsar', { type: 'button' }, atualizar ? 'Atualizar ✨' : 'Entrar no Reino ✨');
       // (sem "Trocar jogador" aqui: o login vem logo depois do toque)
       var botoes = el('div.inicio-botoes', ir);
-      t.appendChild(el('div.inicio', cena.el, el('div.inicio-baixo', botoes,
-        el('p.inicio-sub.inicio-materias',
-          el('span.inicio-materias-longa', 'Nova atualização: Decore sua casa!'),
-          el('span.inicio-materias-curta', 'Decore sua casa!')))));   // curta: celular em pé
+      t.appendChild(el('div.inicio', cena.el, el('div.inicio-baixo', botoes)));   // a novidade fica no alto (abertura)
       var foi = false;
       ir.addEventListener('click', function () {
         if (foi) return;
         foi = true;
-        Reino.Som.ativar(); Reino.Som.tocar(medalha ? 'fanfarra' : 'porta');
-        if (medalha) UI.festaMedalha.entrou();   // o Claude dá parabéns ao chegar no mapa (se quem entrar for ela)
+        Reino.Som.ativar();
         UI.telaCheia(true);
-        cena.entrar().then(function () { UI.fecharTela(t); resolver(); });   // brilho e zoom no castelo
+        var antes = atualizar ? UI.novidadeInicio.atualizar(t) : Promise.resolve();
+        antes.then(function () {
+          Reino.Som.tocar(medalha || atualizar ? 'fanfarra' : 'porta');
+          if (medalha) UI.festaMedalha.entrou();   // o Claude dá parabéns ao chegar no mapa (se quem entrar for ela)
+          return cena.entrar();   // brilho e zoom no castelo
+        }).then(function () { UI.fecharTela(t); resolver(); });
       });
       setTimeout(function () { ir.focus(); }, 50);
     });

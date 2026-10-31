@@ -138,8 +138,9 @@ Qualquer cômodo vale para qualquer kit.
    - Tocar numa peça colocada pega para mover; aí aparece também Guardar.
    - Teclado: setas movem, R ou Espaço giram, Enter coloca, Esc cancela.
    - Sem animação com `body.sem-animacao` e `prefers-reduced-motion`.
-4. **Tela de início**: legenda "Nova atualização: Decore sua casa!" (curta: "Decore sua casa!"), também no celular
-   deitado.
+4. **Tela de início**: a novidade é o destaque principal (`js/ui/abertura-novidade.js`, `config.novidadeInicio`): faixa
+   "Nova atualização!" no alto e, embaixo do título, a casinha do baú com "Decore sua casa!", para todos até a data;
+   enquanto vale, fica no lugar do bloco da medalha de ouro (o confete e o parabéns do Claude continuam).
 
 ## 10. Falas e vozes
 1. Quem fala é o Claude (`{ voz: 'claude' }`). Cada arquivo dono de falas as registra pelo `falas()` do seu

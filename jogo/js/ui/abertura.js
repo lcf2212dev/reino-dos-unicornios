@@ -8,6 +8,7 @@
    arco-íris se desenhando, unicórnios voando com rastro, a Mariana trotando, vaga-lumes, estrela cadente.
    Sem animação (Ajustes, reduzir movimento do aparelho ou modo congelado dos testes): a mesma cena parada.
    opcoes.medalha: a festa da medalha de ouro (js/ui/abertura-medalha.js): faixa, medalha, confete e rastro dourados.
+   opcoes.novidade: a novidade em destaque (js/ui/abertura-novidade.js): faixa e bloco no lugar da medalha (o confete fica).
    Números: Reino.config.abertura (os que faltarem vêm de PADRAO). */
 (function () {
   var U = Reino.util, el = U.el, D = Reino.Desenho;
@@ -63,8 +64,10 @@
     var cv = el('canvas.abertura-cena', { 'aria-hidden': 'true' });
     var ctx = cv.getContext('2d');
     var flash = el('div.abertura-flash');
-    var festa = opcoes.medalha && A.festa, medalha = festa ? A.festa.bloco() : null;
-    var marca = festa ? el('div.abertura-marca.abertura-medalha', el('p.abertura-faixa-medalha', '🥇 Medalha de Ouro! 🥇'), titulo(cfg), medalha.el)
+    var festa = opcoes.medalha && A.festa, nov = opcoes.novidade && A.novidade;
+    var medalha = festa && !nov ? A.festa.bloco() : null;
+    var marca = nov ? el('div.abertura-marca.abertura-novidade', el('p.abertura-faixa-novidade', '✨ ' + nov.faixa() + ' ✨'), titulo(cfg), nov.bloco())
+      : festa ? el('div.abertura-marca.abertura-medalha', el('p.abertura-faixa-medalha', '🥇 Medalha de Ouro! 🥇'), titulo(cfg), medalha.el)
       : el('div.abertura-marca', el('p.abertura-capitulo', 'Um novo capítulo'), titulo(cfg), el('p.abertura-bimestre', '4º bimestre'));
     var raiz = el('div.logo.abertura' + (anima ? '' : '.abertura-parada'), cv, el('div.abertura-veu'), flash, marca);
     var m = null, cam = {}, estrelas = [], voadores = [], rastro = [], vagas = [];
@@ -254,7 +257,7 @@
       vagaLumes(t);
       if (festa) {   // confete dourado (parado sem animação) e o brilho passando na medalha
         A.festa.confete(ctx, m, t);
-        if (anima) A.festa.quadro(medalha, t);
+        if (anima && medalha) A.festa.quadro(medalha, t);
       }
     }
 

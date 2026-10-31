@@ -76,6 +76,9 @@
     '.kwwwwwwkDDkwwwwwwk.',
     'kkkkkkkkkkkkkkkkkkkk'];
 
+  // a mesma casinha, para a novidade da tela de início (ui/abertura-novidade.js)
+  UI.casinhaDOM = function (escala, classe) { return PA.paraDOM(PA.matriz(CASA, PAL_CASA), escala, classe); };
+
   function pequeno() { return window.innerWidth < 480; }
   function desenharBau(box, quadro) {
     box.innerHTML = '';
