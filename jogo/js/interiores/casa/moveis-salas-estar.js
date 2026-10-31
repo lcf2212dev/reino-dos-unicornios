@@ -1,0 +1,154 @@
+/* Casa do jogador: os móveis avulsos de Sala de Estar (casa.md §12; dados em js/conteudo/casa/moveis-salas.js),
+   em pixel art. baixo = de frente, cima = de costas, lado = virado para a esquerda (pegada trocada).
+   Paleta: madeira mel, piano lilás, tijolo coral, vidro azul-claro. Sem DOM no carregamento. */
+(function () {
+  var R = window.Reino;
+  var D = R.Desenho, C = D.C, K = D.K;
+  var ret = D.ret, matriz = D.matriz, escurecer = D.escurecer, clarear = D.clarear;
+  var I = R.Interiores, virado = R.CasaArte.virado;
+
+  var MAD = '#d99a5b', PIANO = '#b58cff', TIJ = '#ff8a7a', VIDRO = '#bfe9ff', AGUA = '#5fb4ff', PUFE = '#ff7eb6';
+
+  function pincel(ctx, px, py) {
+    var p = {
+      r: function (x, y, w, h, c) { ret(ctx, px + x, py + y, w, h, c); },
+      caixa: function (x, y, w, h, c) {
+        p.r(x, y, w, h, K); p.r(x + 1, y + 1, w - 2, h - 2, c);
+        p.r(x + 1, y + 1, w - 2, 1, clarear(c, 0.4)); p.r(x + 1, y + 2, 1, h - 3, clarear(c, 0.2));
+        p.r(x + 2, y + h - 2, w - 3, 1, escurecer(c, 0.2));
+      },
+      m: function (x, y, linhas, pal) { matriz(ctx, px + x, py + y, linhas, pal); },
+    };
+    return p;
+  }
+  function pe(p, x, y) { p.r(x, y, 3, 3, K); p.r(x + 1, y, 1, 2, C.madeira2); }
+
+  /* ----- aquário 1×1: vidro com peixinhos sobre um móvel ----- */
+  I.objeto('casa-movel-aquario', { w: 1, h: 1, topo: 10, solido: true, alto: true,
+    desenhar: function (ctx, px, py) {
+      var p = pincel(ctx, px, py);
+      p.r(0, -10, 16, 15, K); p.r(1, -9, 14, 13, VIDRO); p.r(1, -6, 14, 10, AGUA); p.r(1, -6, 14, 1, clarear(AGUA, 0.5));
+      p.r(2, -8, 1, 10, C.branco);
+      p.m(4, -4, ['.oo.o', 'ooooo', '.oo.o'], { o: '#ff8a3d' });
+      p.m(10, 0, ['y.yy.', 'yyyyy'], { y: C.ouro });
+      p.m(12, -4, ['g', 'gg', 'g', 'gg'], { g: C.folha3 }); p.r(3, 2, 10, 2, '#f3d9b0');
+      p.caixa(0, 5, 16, 10, MAD); p.r(6, 8, 4, 1, C.ouro);
+      pe(p, 1, 13); pe(p, 12, 13);
+    } });
+
+  /* ----- piano 2×1 ----- */
+  function teclas(p, x, y, n) {
+    p.r(x, y, n * 3 + 1, 5, K);
+    for (var i = 0; i < n; i++) { p.r(x + 1 + i * 3, y + 1, 2, 4, C.branco); if (i % 7 !== 2 && i % 7 !== 6) p.r(x + 3 + i * 3, y + 1, 1, 2, K); }
+  }
+  I.objeto('casa-movel-piano', { w: 2, h: 1, topo: 16, solido: true, alto: true, desenhar: virado({
+    baixo: function (ctx, px, py) {
+      var p = pincel(ctx, px, py);
+      p.caixa(1, -16, 30, 22, PIANO); p.r(4, -13, 24, 6, escurecer(PIANO, 0.2));
+      p.m(14, -13, ['..yy', '..yy', '..y.', '..y.', 'yyy.', 'yyy.'], { y: C.ouro });
+      p.r(3, -3, 26, 1, K); teclas(p, 4, -2, 8);
+      p.caixa(1, 4, 30, 9, escurecer(PIANO, 0.1)); p.r(14, 8, 4, 1, C.ouro);
+      pe(p, 2, 13); pe(p, 27, 13);
+    },
+    cima: function (ctx, px, py) {
+      var p = pincel(ctx, px, py), e = escurecer(PIANO, 0.15);
+      p.caixa(1, -16, 30, 29, e);
+      [6, 12, 18, 24].forEach(function (x) { p.r(x, -13, 1, 23, escurecer(PIANO, 0.3)); });
+      p.r(3, -15, 26, 1, clarear(PIANO, 0.5));
+      pe(p, 2, 13); pe(p, 27, 13);
+    },
+    lado: function (ctx, px, py) {
+      var p = pincel(ctx, px, py);
+      // corpo alto à direita, teclado saindo para a esquerda
+      p.caixa(6, -16, 10, 45, PIANO); p.r(8, -14, 2, 40, clarear(PIANO, 0.4));
+      p.r(0, 2, 7, 22, K); p.r(1, 3, 5, 20, C.branco);
+      for (var y = 5; y < 23; y += 3) p.r(1, y, 3, 1, K);
+      p.r(0, 24, 7, 4, K); p.r(1, 24, 5, 3, escurecer(PIANO, 0.2));
+      pe(p, 7, 29); pe(p, 12, 29);
+    },
+  }) });
+
+  /* ----- lareira 2×1: tijolos, fogo e uma prateleira ----- */
+  I.objeto('casa-movel-lareira', { w: 2, h: 1, topo: 18, solido: true, alto: true,
+    desenhar: function (ctx, px, py) {
+      var p = pincel(ctx, px, py), e = escurecer(TIJ, 0.2);
+      p.caixa(0, -18, 32, 34, TIJ);
+      for (var y = -14; y < 15; y += 4) p.r(1, y, 30, 1, e);
+      for (var j = 0; j < 8; j++) { var yy = -17 + j * 4, x0 = j % 2 ? 6 : 10; for (var x = x0; x < 31; x += 8) p.r(x, yy, 1, 3, e); }
+      p.caixa(0, -18, 32, 5, MAD);
+      p.r(7, -6, 18, 22, K); p.r(8, -5, 16, 21, '#4a4060');
+      p.m(9, 2, [
+        '....r.....r...', '...ror...ror..', '..royor.royor.', '.royyyororyyor', '.roywyyoyywyor', 'royywwyyywwyyo',
+      ], { r: '#ff5c6a', o: '#ff8a3d', y: C.ouro, w: '#fff1d6' });
+      p.r(9, 8, 14, 3, K); p.r(10, 9, 12, 1, C.madeira2);
+    } });
+
+  /* ----- relógio cuco de parede 1×2 ----- */
+  I.objeto('casa-movel-relogio-cuco', { w: 1, h: 2, parede: true, solido: false,
+    desenhar: function (ctx, px, py) {
+      var p = pincel(ctx, px, py);
+      p.m(1, 3, ['......kk......', '....kkMMkk....', '..kkMMMMMMkk..', 'kkMMMMMMMMMMkk'], { k: K, M: escurecer(MAD, 0.2) });
+      p.caixa(2, 7, 12, 14, MAD);
+      p.r(6, 8, 4, 3, K); p.r(7, 9, 2, 2, C.ouro); p.r(7, 9, 1, 1, '#ff8a3d');
+      p.r(4, 12, 8, 7, K); p.r(5, 13, 6, 5, C.branco); p.r(8, 14, 1, 2, K); p.r(8, 15, 2, 1, K);
+      p.r(5, 21, 1, 7, K); p.r(10, 21, 1, 5, K);
+      p.m(4, 27, ['kk', 'oo', 'kk'], { k: K, o: C.ouro }); p.m(9, 25, ['kk', 'oo', 'kk'], { k: K, o: C.ouro });
+    } });
+
+  /* ----- pufe 1×1 redondo com botão ----- */
+  I.objeto('casa-movel-pufe', { w: 1, h: 1, topo: 2, solido: true,
+    desenhar: function (ctx, px, py) {
+      var p = pincel(ctx, px, py), e = escurecer(PUFE, 0.2);
+      p.m(1, -2, [
+        '...kkkkkkkk...', '.kkPPPPPPPPkk.', 'kPPPPPPPPPPppk', 'kPPppppppppppk', 'kpppppbbpppppk', 'kpppppbbpppppk',
+        'kpppppppppppek', 'keeeeeeeeeeeek', 'kpppppppppppek', 'kPpppppppppppk', 'kPppppppppppek', 'kpppppppppppek',
+        '.keeeeeeeeeek.', '..kkkkkkkkkk..',
+      ], { k: K, P: clarear(PUFE, 0.45), p: PUFE, e: e, b: C.ouro });
+    } });
+
+  /* ----- vitrola 1×1: caixa de madeira com disco e corneta ----- */
+  function corneta(p, x, y) { p.m(x, y, ['..kkkk', '.kyyYk', 'kyyyYk', '.kyyYk', '..kkkk'], { k: K, y: C.ouro, Y: C.ouro3 }); }
+  I.objeto('casa-movel-vitrola', { w: 1, h: 1, topo: 10, solido: true, alto: true, desenhar: virado({
+    baixo: function (ctx, px, py) {
+      var p = pincel(ctx, px, py);
+      p.m(1, -10, ['kkkkkkkkk.', 'kyyyyyyYk.', '.kyyyyYk..', '..kyyYk...', '...kyk....', '....kk....'], { k: K, y: C.ouro, Y: C.ouro3 });
+      p.r(4, -4, 2, 4, K);
+      p.r(1, -1, 14, 3, K); p.r(2, -1, 12, 2, '#4a4060'); p.r(6, -1, 4, 1, PUFE);
+      p.caixa(1, 2, 14, 11, MAD); p.r(4, 5, 8, 5, escurecer(MAD, 0.2)); p.r(6, 7, 1, 1, C.ouro); p.r(9, 7, 1, 1, C.ouro);
+      pe(p, 2, 13); pe(p, 11, 13);
+    },
+    cima: function (ctx, px, py) {
+      var p = pincel(ctx, px, py);
+      corneta(p, 3, -10); p.r(8, -5, 2, 5, K);
+      p.caixa(1, -1, 14, 14, escurecer(MAD, 0.15)); p.r(4, 3, 8, 1, escurecer(MAD, 0.35)); p.r(4, 7, 8, 1, escurecer(MAD, 0.35));
+      pe(p, 2, 13); pe(p, 11, 13);
+    },
+    lado: function (ctx, px, py) {
+      var p = pincel(ctx, px, py);
+      p.m(1, -10, ['kkk...', 'kYyk..', 'kYyyk.', 'kYyk..', 'kkk...'], { k: K, y: C.ouro, Y: C.ouro3 });
+      p.r(5, -8, 6, 1, K); p.r(10, -8, 2, 8, K);
+      p.caixa(2, 0, 12, 13, MAD); p.m(4, 2, ['.kkkk.', 'kddddk', 'kdppdk', 'kddddk', '.kkkk.'], { k: K, d: '#4a4060', p: PUFE });
+      p.r(4, 9, 8, 1, escurecer(MAD, 0.3));
+      pe(p, 3, 13); pe(p, 10, 13);
+    },
+  }) });
+
+  /* ----- vitral de parede 2×2: arco-íris com unicórnio ----- */
+  I.objeto('casa-movel-vitral', { w: 2, h: 2, parede: true, solido: false,
+    desenhar: function (ctx, px, py) {
+      var p = pincel(ctx, px, py);
+      p.m(4, 2, [
+        '.......kkkkkkkkkk.......', '.....kkrrrrkrrrrrkk.....', '....krrrrrrkrrrrrrrk....', '...kooooooookooooooook...',
+        '..kooooooooookooooooook..', '..kyyyyyyyyykyyyyyyyyyk..', '.kyyyyyyyyyykyyyyyyyyyyk.', '.kgggggggggggkggggggggggk',
+        'kkkkkkkkkkkkkkkkkkkkkkkk', 'kbbbbbbbbbkkbbbbbbbbbbbk', 'kbbbwwwbbbkkbbbbbbbbbbbk', 'kbbwwwwbbbkkbbbbbbbbbbbk',
+        'kbbbbbbbbbkkbbbbbbbbbbbk', 'kkkkkkkkkkkkkkkkkkkkkkkk', 'kvvvvvvvvvvkvvvvvvvvvvvk', 'kvvvvvvvvvvkvvvvvvvvvvvk',
+        'kvvvvvvvvvvkvvvvvvvvvvvk', 'kvvvvvvvvvvkvvvvvvvvvvvk', 'kvvvvvvvvvvkvvvvvvvvvvvk', 'kkkkkkkkkkkkkkkkkkkkkkkk',
+      ], { k: K, r: '#ff5c6a', o: '#ff8a3d', y: '#ffd34d', g: '#6fdc8c', b: '#5fb4ff', w: C.branco, v: C.lilas });
+      // unicórnio branco no meio, de perfil, com chifre dourado e crina rosa
+      p.m(8, 10, [
+        '..........y...', '.........kyk..', '.......kkwwk..', '......pkwwwek.', '.....ppkwwwwwk', '.kkkkpkwwwkkk.',
+        'kwwwwwwwwwk...', 'kwwwwwwwwwk...', '.kwkkkkwkk....', '.kk...kk......',
+      ], { k: K, w: C.branco, y: C.ouro, p: PUFE, e: K });
+      p.r(3, 21, 26, 2, K); p.r(4, 21, 24, 1, MAD); p.r(2, 22, 28, 1, K);
+    } });
+})();

@@ -10,9 +10,10 @@
   var FALAS = Reino.CasaFalas;   // ui/casa-falas.js
   var T = 16;   // a capa cabe num quadrado de 96 px (80 no celular), em escala inteira
 
-  // a capa: o objeto da biblioteca desenhado de frente, com a folga do sprite da cena (2 px dos lados, topo acima)
-  function capa(kit) {
-    var I = Reino.Interiores, lib = kit && kit.capa && I && I.OBJETOS && I.OBJETOS[kit.capa];
+  // a capa: o objeto da biblioteca desenhado de frente, com a folga do sprite da cena (2 px dos lados, topo acima).
+  // Também a dos móveis avulsos (ui/casa-moveis.js: UI.capaCasa)
+  function capa(tipo) {
+    var I = Reino.Interiores, lib = tipo && I && I.OBJETOS && I.OBJETOS[tipo];
     if (!lib || !lib.desenhar) return el('span.ckit-capa-vazia', { 'aria-hidden': 'true' });
     var w = (lib.w || 1) * T + 4, topo = lib.topo || 0, h = topo + (lib.h || 1) * T + 2;
     var k = Math.max(1, Math.floor((window.innerWidth < 480 ? 80 : 96) / Math.max(w, h)));
@@ -20,12 +21,14 @@
     ctx.imageSmoothingEnabled = false;
     ctx.scale(k, k); ctx.translate(2, topo);
     try {
-      lib.desenhar(ctx, 0, 0, { tipo: kit.capa, x: 0, y: 0, w: lib.w || 1, h: lib.h || 1, dir: 'baixo' }, Reino.Progresso);
-    } catch (e) { console.warn('capa do kit:', kit.id, e); }
+      lib.desenhar(ctx, 0, 0, { tipo: tipo, x: 0, y: 0, w: lib.w || 1, h: lib.h || 1, dir: 'baixo' }, Reino.Progresso);
+    } catch (e) { console.warn('capa:', tipo, e); }
     cv.className = 'ckit-capa';
     cv.setAttribute('aria-hidden', 'true');
     return cv;
   }
+
+  UI.capaCasa = capa;
 
   /** A grade dos kits livres. @returns {Promise<boolean>} true se escolheu um kit */
   UI.escolherKitCasa = function () {
@@ -39,7 +42,7 @@
       var ordem = (Reino.config.casa && Reino.config.casa.kits) || livres;
       ordem.filter(function (id) { return livres.indexOf(id) >= 0; }).forEach(function (id) {
         var kit = Reino.kitCasa(id);
-        var b = el('button.ckit-cartao', { type: 'button', 'data-kit': id }, el('span.ckit-moldura', capa(kit)), el('b.ckit-nome', U.colado(C.nomeKit(id))));
+        var b = el('button.ckit-cartao', { type: 'button', 'data-kit': id }, el('span.ckit-moldura', capa(kit && kit.capa)), el('b.ckit-nome', U.colado(C.nomeKit(id))));
         b.addEventListener('click', function () { escolher(id, b); });
         grade.appendChild(b);
       });

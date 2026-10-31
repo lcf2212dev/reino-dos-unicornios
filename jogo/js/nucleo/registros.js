@@ -93,6 +93,20 @@ Reino.registrarKitCasa = function (def) {
 };
 /** @param {string} id @returns {KitCasaDef | undefined} */
 Reino.kitCasa = function (id) { return Reino.kitsCasa.find(function (k) { return k.id === id; }); };
+// móveis avulsos da casa (casa.md §12): um à escolha por sala feita; ids fixos para sempre (mudar some do save)
+/** @type {MovelCasaDef[]} */
+Reino.moveisCasa = [];
+/** @param {MovelCasaDef} def @returns {boolean} false quando recusado */
+Reino.registrarMovelCasa = function (def) {
+  if (!def || !def.id || !def.objeto || def.id.indexOf('.') >= 0 || Reino.moveisCasa.some(function (m) { return m.id === def.id; })) {
+    console.warn('Reino.registrarMovelCasa: móvel "' + (def && def.id) + '" recusado (sem id/objeto, com ponto ou repetido)');
+    return false;
+  }
+  Reino.moveisCasa.push(def);
+  return true;
+};
+/** @param {string} id @returns {MovelCasaDef | undefined} */
+Reino.movelCasa = function (id) { return Reino.moveisCasa.find(function (m) { return m.id === id; }); };
 
 // personagens declarados fora do elenco.js (pasta do prédio ou arquivo da prova), com a voz junto.
 // O perfil entra na hora em Reino.config.vozes['npc-<id>']; o elenco.js soma todos ao N.ELENCO

@@ -77,6 +77,8 @@ const TELAS = [
   // casa do jogador (docs/contratos/casa.md §9): o baú (o save sintético já vem aberto: esvazia só para abrir) e a escolha do kit (a base antiga não tem: guarda)
   ['bau-casa', 'void (Reino.UI.abrirBauCasa && ((e, b) => { e.casaBau = {}; Reino.UI.abrirBauCasa(); e.casaBau = b; })(Reino.Progresso.estado(), Reino.Progresso.estado().casaBau))'],
   ['kit-casa', 'void (Reino.UI.escolherKitCasa && Reino.UI.escolherKitCasa())'],
+  // o móvel de uma sala (casa.md §12): a 1ª sala de uma matéria que conta, feita e sem móvel só durante a abertura
+  ['movel-casa', 'void (Reino.UI.escolherMovelCasa && ((e) => { var m = Reino.materias.find((m) => (m.bimestre || 0) >= Reino.config.casa.desdeBimestre), s = m && m.salas[0].id; if (!s) return; var antes = e.salas[s], mv = e.casaMoveis; e.salas[s] = { vezes: 1, melhor: 6, feita: 1 }; e.casaMoveis = {}; Reino.UI.escolherMovelCasa(s, { de: 1, total: 3 }); if (antes) e.salas[s] = antes; else delete e.salas[s]; e.casaMoveis = mv; })(Reino.Progresso.estado()))'],
 ];
 async function cenasTelas(page, pasta) {
   for (const [nome, js] of TELAS) {

@@ -5,12 +5,14 @@
      casaItens { <uid>: { andar, x, y, dir, em } | { guardado: true, em } }; carimbo. Guardar não apaga.
    Derivado (nunca no save): kits ganhos, livres e pendentes, e quais peças estão na casa. Peça de kit que ela não
    tem é ignorada; duas peças no mesmo lugar (dois aparelhos): a mais nova fica, a outra conta como guardada.
-   Peça (uid) = '<kit>.<item>.<n>', n de 1 a qtd. A ação 'casaDecorar' é a da caixa de mudança.
+   Peça (uid) = '<kit>.<item>.<n>', n de 1 a qtd; móvel avulso (§12, sistemas/casa-moveis.js) = 'movel.<id>.<n>'.
+   Abas do modo decorar = os cômodos (ids de config.casa.kits) com kit ou móvel avulso. A ação 'casaDecorar' é a da
+   caixa de mudança.
    node: true: nada de DOM, canvas nem Progresso no carregamento (só o registrarCampo). */
 (function () {
   var R = window.Reino, P = R.Progresso, I = R._progresso;
   var objeto = I.objeto, numeroOu = I.numeroOu;
-  var ANDARES = ['casa', 'casa-2'];
+  var ANDARES = ['casa', 'casa-2'], MOVEL = 'movel';
 
   /* ---------- os 3 campos do save ---------- */
   P.registrarCampo('casaBau', {
@@ -113,10 +115,18 @@
   }
   // a peça do uid, só de kit que ela tem e de item que existe (senão null: órfã)
   function peca(uid) {
-    var p = typeof uid === 'string' ? uid.split('.') : [];
-    if (p.length !== 3 || kitsGanhos().indexOf(p[0]) < 0) return null;
-    var d = kitDef(p[0]), item = d && d.itens.find(function (i) { return i.id === p[1]; }), n = Number(p[2]);
-    if (!item || !(n >= 1 && n <= (item.qtd || 1) && n % 1 === 0) || String(n) !== p[2]) return null;
+    var p = typeof uid === 'string' ? uid.split('.') : [], item, max, n = Number(p[2]);
+    if (p.length !== 3) return null;
+    if (p[0] === MOVEL) {   // móvel avulso: tantas peças quantas salas o escolheram
+      item = R.movelCasa && R.movelCasa(p[1]);
+      max = item && R.CasaMoveis ? R.CasaMoveis.qtd(item.id) : 0;
+    } else {
+      if (kitsGanhos().indexOf(p[0]) < 0) return null;
+      var d = kitDef(p[0]);
+      item = d && d.itens.find(function (i) { return i.id === p[1]; });
+      max = item ? item.qtd || 1 : 0;
+    }
+    if (!item || !(n >= 1 && n <= max && n % 1 === 0) || String(n) !== p[2]) return null;
     var lib = libDe(item.objeto);
     return { uid: uid, kit: p[0], item: item.id, objeto: item.objeto, nome: item.nome, direcoes: item.parede ? 1 : (item.direcoes || 1),
       parede: !!(item.parede || lib.parede), plano: !!lib.plano, dirs: direcoesDe(item) };
@@ -222,7 +232,7 @@
   function resolver(andar) {
     var def = R.Interiores && R.Interiores.def(andar);
     if (!def) return [];
-    var itens = campo('casaItens'), chave = JSON.stringify(itens) + '|' + JSON.stringify(campo('casaKits')) + '|' + (R.kitsCasa || []).length;
+    var itens = campo('casaItens'), chave = JSON.stringify(itens) + '|' + JSON.stringify(campo('casaKits')) + '|' + JSON.stringify(campo('casaMoveis')) + '|' + (R.kitsCasa || []).length;
     var m = memo[andar];
     if (m && m.chave === chave && m.def === def) return m.lista;
     var cands = [];
@@ -248,15 +258,27 @@
     return null;
   }
 
-  function pecas(kit) {
-    var kits = !kit ? kitsGanhos() : kitsGanhos().filter(function (k) { return k === kit; }), l = [];
+  // abas do modo decorar: os cômodos (na ordem de config.casa.kits) com o kit ganho ou algum móvel avulso
+  function moveisDe(comodo) {
+    var CM = R.CasaMoveis;
+    return (R.moveisCasa || []).filter(function (m) { return (!comodo || m.comodo === comodo) && CM && CM.qtd(m.id) > 0; });
+  }
+  function abas() {
+    var ganhos = kitsGanhos();
+    return cfg().kits.filter(function (k) { return ganhos.indexOf(k) >= 0 || moveisDe(k).length > 0; });
+  }
+  // as peças de uma aba (sem aba: todas): as do kit, depois os móveis avulsos daquele cômodo
+  function pecas(aba) {
+    var kits = !aba ? kitsGanhos() : kitsGanhos().filter(function (k) { return k === aba; }), l = [];
+    var junta = function (uid) {
+      var p = peca(uid);
+      if (p) l.push({ uid: p.uid, kit: p.kit, item: p.item, objeto: p.objeto, nome: p.nome, direcoes: p.direcoes, parede: p.parede, lugar: lugarAtual(p.uid) });
+    };
     kits.forEach(function (k) {
-      (kitDef(k) || { itens: [] }).itens.forEach(function (item) {
-        for (var n = 1; n <= (item.qtd || 1); n++) {
-          var p = peca(k + '.' + item.id + '.' + n);
-          if (p) l.push({ uid: p.uid, kit: p.kit, item: p.item, objeto: p.objeto, nome: p.nome, direcoes: p.direcoes, parede: p.parede, lugar: lugarAtual(p.uid) });
-        }
-      });
+      (kitDef(k) || { itens: [] }).itens.forEach(function (item) { for (var n = 1; n <= (item.qtd || 1); n++) junta(k + '.' + item.id + '.' + n); });
+    });
+    (aba ? moveisDe(aba) : cfg().kits.reduce(function (t, k) { return t.concat(moveisDe(k)); }, [])).forEach(function (m) {
+      for (var n = 1; n <= R.CasaMoveis.qtd(m.id); n++) junta(MOVEL + '.' + m.id + '.' + n);
     });
     return l;
   }
@@ -312,9 +334,14 @@
   }
   function casaDecorar(acao) {
     var UI = R.UI || {}, kit = acao && acao.kit;
-    var decorar = function () { return kitsGanhos().length && UI.decorarCasa ? UI.decorarCasa({ kit: kit }) : null; };
-    if (kitsPendentes() > 0 && UI.casaKitsPendentes) return Promise.resolve(UI.casaKitsPendentes()).then(decorar);
-    if (kitsGanhos().length) return Promise.resolve(decorar());
+    var decorar = function () { return abas().length && UI.decorarCasa ? UI.decorarCasa({ kit: kit }) : null; };
+    var moveis = R.CasaMoveis && R.CasaMoveis.pendentes().length > 0 && UI.casaMoveisPendentes;
+    var kits = kitsPendentes() > 0 && UI.casaKitsPendentes;
+    if (moveis || kits) {
+      return Promise.resolve(moveis ? UI.casaMoveisPendentes() : null)
+        .then(function () { return kits ? UI.casaKitsPendentes() : null; }).then(decorar);
+    }
+    if (abas().length) return Promise.resolve(decorar());
     return falar(FALAS.semKit);
   }
 
@@ -328,7 +355,7 @@
       return true;
     },
     kitsGanhos: kitsGanhos, kitsLivres: kitsLivres, kitsPendentes: kitsPendentes, escolherKit: escolherKit, nomeKit: nomeKit,
-    pecas: pecas, podeColocar: podeColocar, colocar: colocar, guardar: guardar, proximaDirecao: proximaDirecao,
+    pecas: pecas, abas: abas, podeColocar: podeColocar, colocar: colocar, guardar: guardar, proximaDirecao: proximaDirecao,
     objetosDoAndar: objetosDoAndar, comodoEm: comodoEm,
   };
 

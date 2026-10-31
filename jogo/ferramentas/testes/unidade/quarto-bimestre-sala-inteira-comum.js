@@ -67,7 +67,7 @@ async function jogarSala(c, salaId) {
   assert.strictEqual(depois.ganhas - antes.ganhas, n + 3, 'estrelas: acertos de primeira + 3 da calma');
   assert.deepStrictEqual(depois.novos, antes.ovos.map((x) => x.split(':')[1]).sort(), 'os ovos da sala');
 
-  // "Chocar os ovos": três toques em cada ovo e "Guardar no estábulo"; volta à Casa das Palavras
+  // "Chocar os ovos": três toques em cada ovo e "Guardar no estábulo"; o móvel da sala; volta à Casa das Palavras
   await acionar(c, c.page.locator('.tela-missao .fim-sala .btn-principal'), 'toque');
   for (let k = 0; k < 2; k++) {
     assert.ok(await esperar(c, "!!document.querySelector('.tela-ovo .ovo-grande')", 4000), `sem o ovo ${k + 1}`);
@@ -76,6 +76,13 @@ async function jogarSala(c, salaId) {
     await acionar(c, c.page.locator('.tela-ovo .btn-secundario'), 'toque');
     await c.avancar(800);
   }
+  // o móvel da casa (casa.md §12): uma escolha por sala pendente (esta e as feitas antes, sem móvel); toca o 1º cartão
+  assert.ok(await esperar(c, "!!document.querySelector('.tela-movel-casa .cmovel-cartao')", 4000), 'sem a escolha do móvel da sala');
+  for (let k = 0; k < 40 && await c.js("!!document.querySelector('.tela-movel-casa .cmovel-cartao')"); k++) {
+    await acionar(c, c.page.locator('.tela-movel-casa .cmovel-cartao').first(), 'toque');
+    await c.avancar(1500);
+  }
+  assert.ok(await c.js(`!!Reino.Progresso.estado().casaMoveis['${sala.id}']`), 'o móvel da sala gravado');
   assert.ok(await esperar(c, "!Reino.UI.temTela() && /^portugues/.test(__reino.cena())", 6000), 'não voltou à Casa das Palavras');
   assert.deepStrictEqual(await c.js(`${JSON.stringify(depois.novos)}.map(function (id) { return Reino.Progresso.estado().unis[id].chocado; })`), [true, true]);
   assert.ok(sp(await c.js("document.querySelector('.chip-dinheiro').textContent")).indexOf(sp(await c.js('Reino.util.moedasNumero(Reino.Progresso.saldoMoedas())'))) >= 0,

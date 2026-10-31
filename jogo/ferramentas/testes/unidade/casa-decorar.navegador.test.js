@@ -44,6 +44,9 @@ test('casa: modo decorar pelo toque e pelo teclado, e a peça fica depois de rec
     await c.ir('casa');
     assert.ok(await esperar(c, "!document.querySelector('#hud .btn-casa-decorar').hidden"), 'botão à vista na casa');
     assert.strictEqual(await c.js("Reino.Casa.escolherKit('estar')"), true);
+    // as salas feitas do Inglês já deram móvel (senão a caixa abre antes a escolha dos móveis: casa.md §12)
+    await c.js("Reino.CasaMoveis.pendentes().forEach(function (s) { Reino.CasaMoveis.escolher(s, Reino.CasaMoveis.opcoes(s)[0]); })");
+    assert.strictEqual(await c.js('Reino.CasaMoveis.pendentes().length'), 0);
 
     // painel pelo botão; o sofá guardado entra no modo colocar
     await c.tocar('#hud .btn-casa-decorar');
