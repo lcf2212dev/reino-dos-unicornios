@@ -142,12 +142,13 @@
     Q.ingredientes().forEach(function (ing) {
       var mini = el('canvas.bancada-tubo-desenho', { 'aria-hidden': 'true' });
       P.tuboDePe(mini, ing);
-      var b = el('button.bancada-tubo', { type: 'button', 'data-tubo': ing.id, 'aria-label': ing.nome, 'data-grupo': ing.grupo || 'casa', hidden: !!ing.grupo },
+      var novo = R.Cartoes && R.Cartoes.novoNaBancada(ing.id);
+      var b = el('button.bancada-tubo' + (novo ? '.tem-novo' : ''), { type: 'button', 'data-tubo': ing.id, 'aria-label': ing.nome, 'data-grupo': ing.grupo || 'casa', hidden: !!ing.grupo },
         mini, el('span.bancada-tubo-nome', R._ui.hifenizar(ing.nome)),
         ing.formula ? el('small.bancada-tubo-formula', ing.formula) : null,
         ing.forma ? el('small.bancada-tubo-forma', ing.forma) : null,
         // produto que um cartão de experiência trouxe e ainda não entrou numa receita feita (quimica.md §10)
-        R.Cartoes && R.Cartoes.novoNaBancada(ing.id) ? el('span.bancada-tubo-novo', 'Novo!') : null);
+        novo ? el('span.bancada-tubo-novo', 'Novo!') : null);
       ligarArrasto(b, ing);
       prateleira.appendChild(b);
     });
