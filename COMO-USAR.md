@@ -72,6 +72,11 @@ Guia de uso para o Leandro. As regras técnicas ficam em `docs/contratos/`.
 - **Música:** ⚙️ Ajustes → "🎵 Musiquinha" (começa desligada). Cada lugar tem a sua; some no treino e nas provas.
 - **Observatório:** curiosidades do espaço e piadas do Robô Cosmo, só para brincar: não dá estrelas nem muda o
   progresso.
+- **Minha Casa:** a casa dela, perto do Observatório (menu Lugares → Minha Casa). Na primeira entrada no jogo, um baú
+  abre e dá a casa, vazia. Cada matéria completa do 4º bimestre dá um kit de móveis à escolha (Sala de Estar, Sala de
+  Jantar, Cozinha, Banheiro, o quarto dela e o do unicórnio). Para decorar: o botão da casinha no topo, dentro da casa,
+  ou a caixa de mudança de cada cômodo; escolha a peça, toque onde quer, gire e coloque (verde pode, vermelho não).
+  Dá para mudar de lugar ou guardar de novo quando quiser.
 - **Lugar novo:** mostra "✨ Novo!" no menu Lugares até ela entrar nele.
 
 ## Quando chega uma novidade
