@@ -72,6 +72,14 @@
 .qcad-selo.feita { background: var(--certo-fundo); color: var(--certo); }
 .qcad-selo.experimente { background: var(--laranja-claro); color: var(--laranja-escuro); }
 .qcad-selo canvas.icone-em { width: 16px !important; height: 16px !important; vertical-align: -2px; }
+/* a marca da receita de cartão de experiência (quimica.md §10): "🃏 Cartão n", roxinha; na cartinha, no lugar do Nº */
+.qcad-marca-cartao {
+  display: inline-block; padding: 4px 6px; font-size: var(--texto-aux); line-height: 1; white-space: nowrap;
+  color: var(--roxo-texto); background: var(--roxo-claro);
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-pequeno);
+}
+.qcad-cartao .qcad-marca-cartao { align-self: flex-start; }
+.qcad-marca-cartao canvas.icone-em { width: 16px !important; height: 16px !important; vertical-align: -2px; }
 
 /* ---------- página da receita ---------- */
 .qcad-folhear { display: flex; align-items: center; justify-content: space-between; gap: 8px; }

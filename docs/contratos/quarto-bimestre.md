@@ -182,7 +182,7 @@ fileira de acentos); resposta digitada vale sem diferença de maiúsculas, espa�
 
 ## 13. Etapas da sala de livro
 Por quê: uma sala inteira (até 13 cartas e 14 desafios) é longa demais de uma vez para a Mariana (TDAH e autismo
-nível 1). A sala vira uma trilha de etapas curtas; o `id` da sala, `P.salas`, Robux, estrelas, ovos e unicórnios não
+nível 1). A sala vira uma trilha de etapas curtas; o `id` da sala, `P.salas`, moedas, estrelas, ovos e unicórnios não
 mudam (nada do que ela já fez se perde).
 
 ### 13.1 Divisão (`jogo/js/atividades/etapas.js`, `node: true`)
@@ -217,7 +217,7 @@ API `Reino.Etapas` (no navegador; lê o estado na hora):
 - `concluirEtapa(materia, sala, n, { acertosPrimeira, total, pressas })` → grava a etapa (e a ⭐ se
   `acertosPrimeira === total`), salva, e devolve `{ ultima, perfeita, sala?: <retorno de P.concluirSala>,
   trilha?: <retorno de conferirTrilhas para esta sala> }`. Na última etapa da rodada chama `P.concluirSala` com a soma
-  das etapas da rodada (Robux, estrelas, ovos e persistência como sempre).
+  das etapas da rodada (moedas, estrelas, ovos e persistência como sempre).
 - Etapa refeita fora da rodada (para ganhar a ⭐): `concluirEtapa` aceita etapa já feita; grava de novo e não chama
   `concluirSala` se a rodada já tinha sido concluída.
 

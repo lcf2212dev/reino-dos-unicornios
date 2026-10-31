@@ -239,7 +239,7 @@
   // tela lê o nome inteiro (aria-label). Título novo comprido: passe opcoes.curto no UI.painel
   var CURTOS = {
     '📋 Lugares do Reino': '📋 Lugares', '🪞 Meu personagem': '🪞 Personagem', '✨ Crie seu personagem': '✨ Seu personagem',
-    '🦄 Estábulo Mágico': '🦄 Estábulo', '🧚 Loja das Fadas': '🧚 Loja', '💰 Baú do Tesouro': '💰 Baú',
+    '🦄 Estábulo Mágico': '🦄 Estábulo', '🧚 Loja das Fadas': '🧚 Loja', '🪙 Baú do Tesouro': '🪙 Baú',
   };
   // o emoji do começo do título vira o ícone de 32 px à esquerda (arte.md §21.1); o texto fica sem ele
   var EMOJI_INICIO = /^(\p{Extended_Pictographic}\uFE0F?(\u200D\p{Extended_Pictographic}\uFE0F?)*)\s*/u;

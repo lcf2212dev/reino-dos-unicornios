@@ -11,7 +11,7 @@
   function U() { return Reino.util; }
   // {nome} e o gênero ({campeã|campeão}) de quem joga: Reino.Genero (sistemas/genero.js)
   function nomeJogadora(t) { return Reino.Genero.texto(t); }
-  function robux(v) { return U().robux(v); }
+  function moedas(v) { return U().moedas(v); }
 
   // falas padrão (curtas: até ~30 letras por balão, que no celular dá 2 linhas)
   var PADRAO = {
@@ -41,7 +41,7 @@
       oi: ['Oi! Que bom te ver por aqui! 😄'],
       depois: ['Até logo! Volte sempre! 💛'],
       nova: {
-        estabulo: 'Quer ver seus unicórnios? 🦄', loja: 'Quer ver os enfeites da loja? ⭐', bau: 'Quer ver os seus Robux? 💰',
+        estabulo: 'Quer ver seus unicórnios? 🦄', loja: 'Quer ver os enfeites da loja? ⭐', bau: 'Quer ver as suas moedas? 🪙',
         plano: 'Quer ler o Plano da Prova? 📜', ovos: 'Vamos chocar os ovinhos? 🥚', livro: 'Quer ler o livro? 📖',
       },
     },
@@ -74,7 +74,7 @@
   function resumoFeitas(n, total) {
     return n === total ? 'Você fez as ' + extenso(total, true) + ' salas! 🎉' : 'Já fez ' + extenso(n, true) + ' de ' + extenso(total, true) + ' salas.';
   }
-  function resumoDinheiro(v) { return 'Já ganhou ' + robux(v) + '! 💰'; }
+  function resumoDinheiro(v) { return 'Já ganhou ' + moedas(v) + '! 🪙'; }
   function resumoProxima(m, s, primeira) {
     // sala de livro (4º bimestre): as estações não têm número, a fala diz o nome da sala
     if (s.ordem === 'livro') return (primeira ? 'A primeira é ' : 'Agora vamos para ') + '"' + s.nome + '"! ' + (s.emoji || '');
@@ -240,7 +240,7 @@
     if (a.tipo === 'guia') {
       var mg = materiaDoLugar(a.lugar);
       if (mg) {
-        // os Robux do balão (P.dinheiroMateria) com i salas feitas: a sala redonda e, na última, o bônus
+        // as moedas do balão (P.dinheiroMateria) com i salas feitas: a sala redonda e, na última, o bônus
         var total = mg.salas.length, vSala = P().valorSala(mg), vBonus = P().bonusMateria(mg);
         add(RESUMO_ZERO); add(RESUMO_FIM);
         for (var i = 1; i <= total; i++) { add(resumoFeitas(i, total)); add(resumoDinheiro(vSala * i + (i === total ? vBonus : 0))); }
@@ -260,7 +260,7 @@
     if (!s) return null;
     var el = U().el, p = P(), reg = p.estado().salas[s.id] || {}, raro = raroDaSala(m, s);
     return el('span.sala-chips',
-      el('span.chip-mini', '💰 ' + U().robuxNumero(p.valorSala(m))),   // o 💰 é o símbolo do Robux
+      el('span.chip-mini', '🪙 ' + U().moedasNumero(p.valorSala(m))),   // o 🪙 é a moeda
       reg.feita ? el('span.chip-mini.ok', '✓ Feita') : el('span.chip-mini.nova', 'Nova!'),
       raro && p.temUni(raro.id) ? el('span.chip-mini.raro', '💙 Raro') : null,
       reg.calma ? el('span.chip-mini.calma', '🌙 Calma') : null);

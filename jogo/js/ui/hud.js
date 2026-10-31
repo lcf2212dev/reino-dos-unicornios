@@ -153,10 +153,10 @@
     var hud = U.$('#hud');
     if (!hud || !hud.firstChild || !est()) return;
     // os chips em linha: ícone ao lado do número, sem quebra (D8A-02, ui-hud.css)
-    var saldo = P.saldoRobux(), chipD = U.$('.chip-dinheiro', hud);
-    U.preencher(chipD, '💰 ' + U.robuxNumero(saldo));
-    chipD.setAttribute('aria-label', 'Baú do Tesouro: ' + U.robux(saldo) + ' para receber');
-    chipD.title = U.robux(saldo) + ' para receber';
+    var saldo = P.saldoMoedas(), chipD = U.$('.chip-dinheiro', hud);
+    U.preencher(chipD, '🪙 ' + U.moedasNumero(saldo));
+    chipD.setAttribute('aria-label', 'Baú do Tesouro: ' + U.moedas(saldo) + ' para receber');
+    chipD.title = U.moedas(saldo) + ' para receber';
     U.preencher(U.$('.chip-estrelas', hud), '⭐ ' + P.estrelas());
     var ovos = P.ovosParaChocar();
     var cOvos = U.$('.chip-ovos', hud);

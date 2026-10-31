@@ -51,10 +51,10 @@ test('escolhas: carregar e salvar sem trocar não carimbam; cada troca carimba a
 test('pago: registrarPagamento carimba (também para menos) e o Novo ciclo apaga o carimbo com o pago', () => {
   const j = montar({ save: saveAtual() });
   j.P.carregar();
-  // os pais digitam Robux; o save guarda reais, como antes (R$ 1 = 25 Robux: progresso-regras.js)
-  j.relogio.agora += 1000; j.P.registrarPagamento('historia', 40 * 25);
+  // os pais digitam moedas; o save guarda reais, como antes (R$ 1 = 2,5 moedas: progresso-regras.js)
+  j.relogio.agora += 1000; j.P.registrarPagamento('historia', 40 * 2.5);
   assert.strictEqual(j.lido().pagoEm.historia, j.relogio.agora);
-  j.relogio.agora += 1000; j.P.registrarPagamento('historia', 4 * 25);
+  j.relogio.agora += 1000; j.P.registrarPagamento('historia', 4 * 2.5);
   assert.strictEqual(j.lido().pago.historia, 4); assert.strictEqual(j.lido().pagoEm.historia, j.relogio.agora);
   assert.strictEqual(j.lido().escolhasEm, undefined, 'pagar não é escolha');
   j.P.novoCiclo();
@@ -192,7 +192,7 @@ test('cópia -novidades: não leva os carimbos das escolhas nem do pago, e o sav
   const semTroca = j.lido();
   assert.ok(!('escolhasEm' in semTroca) && !('pagoEm' in semTroca));
   j.relogio.agora += 1000;
-  j.P.estado().montaria = 'h-cartinha'; j.P.registrarPagamento('historia', 2 * 25);
+  j.P.estado().montaria = 'h-cartinha'; j.P.registrarPagamento('historia', 2 * 2.5);
   const c = j.copiaGuardada();
   igual(Object.keys(c).sort(), ['atualizado', 'ciclo', 'cuidados', 'despensa', 'geracao', 'surpresa', 'surpresaEm'].filter((k) => k in c).sort());
   assert.ok(!('escolhasEm' in c) && !('pagoEm' in c), 'um carimbo velho não pode colar num valor que outra aba trocou');

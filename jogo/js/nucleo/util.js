@@ -1,5 +1,5 @@
 /* Utilidades comuns (Reino.util): $, $$, el (monta DOM), preencher, colar/colado (quebra de linha), semEn, embaralhar, sortear, clamp,
-   robux, robuxNumero, copia, esperar, hoje, o barramento de eventos (on, emit), reduzMovimentoSistema (o "reduzir movimento" do aparelho, seguido na
+   moedas, moedasNumero, copia, esperar, hoje, o barramento de eventos (on, emit), reduzMovimentoSistema (o "reduzir movimento" do aparelho, seguido na
    hora pelo ouvinte de change; o js/nucleo/congelar.js vem antes) e animar() (Animações ligadas E sem reduzir). */
 window.Reino = window.Reino || {};
 
@@ -163,9 +163,9 @@ Reino.util = (function () {
   }
   function sortear(arr, chave) { return arr[Math.floor(sorteador(chave)() * arr.length)]; }
   function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
-  // o prêmio das salas (Robux, sempre inteiro): "1.500" (ponto no milhar) e "1.500 Robux"
-  function robuxNumero(v) { return String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
-  function robux(v) { return robuxNumero(v) + ' Robux'; }
+  // o prêmio das salas (moedas, sempre inteiro): "1.500" (ponto no milhar) e "1.500 moedas" ("1 moeda")
+  function moedasNumero(v) { return String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
+  function moedas(v) { return moedasNumero(v) + (Math.round(v) === 1 ? ' moeda' : ' moedas'); }
   function copia(o) { return JSON.parse(JSON.stringify(o)); }
   function esperar(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
 
@@ -198,7 +198,7 @@ Reino.util = (function () {
 
   var api = { $: $, $$: $$, el: el, preencher: preencher, semEn: semEn, embaralhar: embaralhar, sortear: sortear, clamp: clamp,
     colar: colar, colado: colado, preencherColado: preencherColado,
-    robux: robux, robuxNumero: robuxNumero, copia: copia, esperar: esperar, hoje: hoje, on: on, emit: emit,
+    moedas: moedas, moedasNumero: moedasNumero, copia: copia, esperar: esperar, hoje: hoje, on: on, emit: emit,
     reduzMovimentoSistema: !!(mqReduz && mqReduz.matches), animar: animar };
   function aoMudarReduz() { api.reduzMovimentoSistema = !!mqReduz.matches; }
   try {

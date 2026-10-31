@@ -330,7 +330,8 @@
     });
     [[-16, 4], [15, 5], [-6, 10], [5, 11]].forEach(function (p) { ret(ctx, cx + p[0], cy + p[1], 2, 1, '#8fb83a'); });
   }
-  var OBJETOS = { fonte: desenharFonte, coreto: desenharCoreto, canteiro: desenharCanteiroGrande };
+  // I.OBJETOS: outras peças grandes se acrescentam (o cofre, mundo/cofre-desenho.js)
+  var OBJETOS = I.OBJETOS = { fonte: desenharFonte, coreto: desenharCoreto, canteiro: desenharCanteiroGrande };
   I.desenharObjeto = function (ctx, o) { if (OBJETOS[o.tipo]) OBJETOS[o.tipo](ctx, o); };
 
   /* ----- animação: água da fonte (jatos, pingos, ondinhas); os lampiões em mundo/cidade-pecas.js ----- */

@@ -219,8 +219,8 @@ parte). Aqui só o que outros arquivos usam. Escada entre andares de lugares dif
 3. NPC `aveia` e as ações `beber`/`banho`: `cuidados.md` §6 e §7.
 
 ### 9.3.1 Baú do Tesouro (lugar `bau`)
-1. Monte grande (`bau/bau.js`): escala fixa de 2 matérias, cheio em 1.000 Robux (`valorPorMateria` × 2); matéria
-   nova nunca faz os mesmos Robux parecerem menos. Cada `bau-pilha` cresce com os Robux da própria matéria.
+1. Monte grande (`bau/bau.js`): escala fixa de 2 matérias, cheio em 100 moedas (`valorPorMateria` × 2); matéria
+   nova nunca faz as mesmas moedas parecerem menos. Cada `bau-pilha` cresce com as moedas da própria matéria.
 
 ### 9.4 Observatório (lugar `observatorio`)
 1. Desenho de fora e cintilar (`Mapa.PREDIOS.observatorio`, `Mapa.PREDIOS_ANIM.observatorio`) em `observatorio/fora.js`.

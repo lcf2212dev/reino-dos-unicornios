@@ -1,4 +1,4 @@
-/* Área dos pais: PIN, pagamentos por matéria (em Robux; o save guarda em reais: P.pago), novo ciclo e apagar tudo. */
+/* Área dos pais: PIN, pagamentos por matéria (em moedas; o save guarda em reais: P.pago), novo ciclo e apagar tudo. */
 (function () {
   var U = Reino.util, el = U.el, P = Reino.Progresso;
   var EV = Reino.EVENTOS;
@@ -63,7 +63,7 @@
     Reino.materias.forEach(function (m) {
       var ganho = P.dinheiroMateria(m), pago = P.pago(m.id);
       total += ganho; pagoTotal += pago;
-      var campo = el('input.campo-pago#pago-' + m.id, { type: 'number', min: 0, step: 1, value: pago, 'aria-label': 'Robux já pagos de ' + m.nome });
+      var campo = el('input.campo-pago#pago-' + m.id, { type: 'number', min: 0, step: 1, value: pago, 'aria-label': 'Moedas já pagas de ' + m.nome });
       var salvar = el('button.btn-pequeno', { type: 'button' }, 'Registrar pagamento');
       salvar.addEventListener('click', function () { P.registrarPagamento(m.id, parseFloat(campo.value) || 0); UI.fecharTela(pn.tela); abrirPais(true, m.id); });
       var t = est().treinos[m.id] || {};
@@ -72,9 +72,9 @@
         // grade rótulo/valor (2 colunas); "A pagar" em destaque
         el('dl.pais-numeros',
           el('dt', 'Salas feitas'), el('dd', P.salasFeitas(m) + ' de ' + m.salas.length),
-          el('dt', 'Ganhou'), el('dd', U.robux(ganho)),
-          el('dt', 'Já pago'), el('dd', U.robux(pago)),
-          el('dt.pais-apagar', 'A pagar'), el('dd.pais-apagar', U.robux(Math.max(0, ganho - pago)))),
+          el('dt', 'Ganhou'), el('dd', U.moedas(ganho)),
+          el('dt', 'Já pago'), el('dd', U.moedas(pago)),
+          el('dt.pais-apagar', 'A pagar'), el('dd.pais-apagar', U.moedas(Math.max(0, ganho - pago)))),
         el('p', 'Treino da Medalha: ', el('b', t.melhor ? ({ ouro: '🥇 ouro', prata: '🥈 prata', bronze: '🥉 bronze' }[t.melhor]) : 'ainda não fez'), t.vezes ? ' (' + t.vezes + (t.vezes === 1 ? ' vez)' : ' vezes)') : ''),
         Reino.provas.filter(function (pv) { return pv.materiaId === m.id; }).map(function (pv) {
           var r = P.regProva(pv);
@@ -83,17 +83,17 @@
             r.tentativas ? ' • notas: ' + r.notas.map(Reino.Provas.formatarNota).join(' → ') : '',
             ' • prêmio: ', el('b', r.premio ? Reino.Unicornios.RARIDADES[r.premio].emoji + ' ' + pv.acessorios[r.premio].nome : 'ainda não ganhou'));
         }),
-        el('div.pais-pagar', el('label', { for: 'pago-' + m.id }, 'Já pago (Robux):'), campo, salvar)));
+        el('div.pais-pagar', el('label', { for: 'pago-' + m.id }, 'Já pago (moedas):'), campo, salvar)));
     });
-    c.appendChild(el('div.bau-total', el('span.bau-moeda', '💰'), el('div', el('small', 'Total ganho no jogo'), el('b', U.robux(total)), el('small', 'A pagar: ', el('span', { style: 'white-space:nowrap' }, U.robux(Math.max(0, total - pagoTotal)))))));
+    c.appendChild(el('div.bau-total', el('span.bau-moeda', '🪙'), el('div', el('small', 'Total ganho no jogo'), el('b', U.moedas(total)), el('small', 'A pagar: ', el('span', { style: 'white-space:nowrap' }, U.moedas(Math.max(0, total - pagoTotal)))))));
     // nuvem e jogo guardado para jogar sem internet: notas vivas (ui/sem-internet.js)
     c.appendChild(UI.notaNuvem());
     c.appendChild(UI.notaSemInternet());
-    c.appendChild(el('p.pais-nota', 'A medalha de ouro da escola (' + U.robux(Reino.config.medalhaEscolaValor) + ') é combinada fora do jogo. O jogo só lembra ' + Reino.Genero.nome() + ' de fazer a prova com calma.'));
-    c.appendChild(el('p.pais-nota', 'O prêmio é em Robux. Um "Já pago" registrado antes, em reais, aparece convertido: R$ 20 = 500 Robux.'));
+    c.appendChild(el('p.pais-nota', 'A medalha de ouro da escola (' + U.moedas(Reino.config.medalhaEscolaValor) + ') é combinada fora do jogo. O jogo só lembra ' + Reino.Genero.nome() + ' de fazer a prova com calma.'));
+    c.appendChild(el('p.pais-nota', 'O prêmio é em moedas. Um "Já pago" registrado antes, em reais, aparece convertido: R$ 20 = 50 moedas.'));
     var ciclo = el('button.btn-grande.btn-secundario', { type: 'button' }, '🔄 Começar novo ciclo de provas');
     ciclo.addEventListener('click', function () {
-      UI.confirmar('Zerar salas, treinos, Robux e pagamentos para um novo ciclo de provas? Os unicórnios, as estrelas e os enfeites continuam.', 'Sim, zerar', 'Cancelar').then(function (sim) {
+      UI.confirmar('Zerar salas, treinos, moedas e pagamentos para um novo ciclo de provas? Os unicórnios, as estrelas e os enfeites continuam.', 'Sim, zerar', 'Cancelar').then(function (sim) {
         if (!sim) return; P.novoCiclo(); UI.fecharTela(pn.tela); abrirPais(true); U.emit(EV.MAPA_MUDOU);
       });
     });

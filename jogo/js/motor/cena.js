@@ -118,14 +118,19 @@
         var vizinho = Mapa.maisPerto(ct.x - 1, ct.y, J().tile());
         return { tipo: 'claude', id: 'claude', tile: vizinho, olhar: { x: 1, y: 0 }, agir: falarComClaude };
       }
+      // peça da praça que se toca (o cofre, mundo/cofre-desenho.js)
+      var obj = Mapa.alvoObjeto && Mapa.alvoObjeto(wx, wy);
+      if (obj) return obj;
       var lugar = Mapa.lugarNoTile(tx, ty);
       // tocou logo embaixo do prédio (na frente da porta) também vale
       if (!lugar) lugar = Mapa.lugarNoTile(tx, ty - 1);
       return lugar ? alvoLugar(lugar) : null;
     },
-    alvoPerto: function (tl) {
+    alvoPerto: function (tl, olhar) {
       var p = Mapa.portaEm(tl.x, tl.y);
       if (p) return alvoLugar(p);
+      var obj = Mapa.alvoObjetoPerto && Mapa.alvoObjetoPerto(tl, olhar);
+      if (obj) return obj;
       var ct = Mapa.claudeTile;
       if (Math.abs(tl.x - ct.x) + Math.abs(tl.y - ct.y) === 1) {
         return { tipo: 'claude', id: 'claude', tile: { x: tl.x, y: tl.y }, olhar: null, agir: falarComClaude };

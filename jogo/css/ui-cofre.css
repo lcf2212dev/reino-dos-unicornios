@@ -1,0 +1,33 @@
+/* Cofre da praça: a tela de tocar no pote de moedas (UI.telaCofre, js/ui/cofre.js): o pote grande ao lado das
+   frases (quantas moedas, quantas faltam e a barra), e a lista das moedas de cada matéria do bimestre. */
+.cofre-topo {
+  display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap;
+  padding: 10px; border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto-grande);
+  background: linear-gradient(var(--ouro-claro), var(--ouro-claro)) center / 70% 84% no-repeat, var(--papel-quente);
+}
+.cofre-pote { flex: none; }
+.cofre-frases { flex: 1 1 260px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.cofre-frases p { margin: 0; }
+.cofre-total { font-size: var(--texto-g); line-height: var(--entrelinha-titulo); }
+.cofre-falta { color: var(--laranja-escuro); }
+.cofre-barra { height: 18px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--branco); overflow: hidden; }
+.cofre-barra span { display: block; height: 100%; background: repeating-linear-gradient(90deg, var(--ouro) 0 14px, var(--ouro-claro) 14px 18px); }
+.cofre-subtitulo { margin: 16px 0 8px; }
+.cofre-lista { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.cofre-materia {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 12px;
+  padding: 8px 12px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel);
+}
+.cofre-materia.completa { background: var(--ouro-claro); }
+.cofre-valor { white-space: nowrap; font-variant-numeric: tabular-nums; }
+/* notebook baixo: as matérias em 2 colunas (arte.md §21.2.1) */
+@media (min-width: 1000px) and (max-height: 820px) {
+  .cofre-lista { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 480px) {
+  /* celular: o pote em cima e as frases embaixo, na largura toda */
+  .cofre-topo { flex-direction: column; gap: 8px; }
+  .cofre-frases { flex: none; align-self: stretch; text-align: center; }
+  .cofre-total { font-size: var(--texto); }
+  .cofre-valor { white-space: normal; }
+}

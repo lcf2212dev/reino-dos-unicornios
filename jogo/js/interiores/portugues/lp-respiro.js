@@ -1,7 +1,7 @@
 /* Ação lp-respiro (Vovó Serena, Cantinho do Respiro do 1º andar): a respiração guiada numa tela calma por cima.
    Um círculo cresce (inspira, 4 s) e diminui (expira, 4 s), 3 vezes, com a narração na voz da Vovó Serena
    (textos em personagens-falas.js, chave `respiro`). Sem Animações ou com "reduzir movimento": o círculo fica
-   parado e o texto conta 1, 2, 3. Só calma: nada de pergunta, estrela, Robux ou save. Esc, ✕ e "Pronto" fecham. */
+   parado e o texto conta 1, 2, 3. Só calma: nada de pergunta, estrela, moedas ou save. Esc, ✕ e "Pronto" fecham. */
 (function () {
   var R = window.Reino;
   var FASE_MS = 4000, VEZES = 3;

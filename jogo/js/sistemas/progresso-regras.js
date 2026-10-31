@@ -4,13 +4,14 @@
   var I = Reino._progresso, P = I.P;
   var agora = I.agora, estadoNovo = I.estadoNovo, numeroOu = I.numeroOu, ORDEM_MEDALHA = I.ORDEM_MEDALHA;
 
-  /* ---------- dinheiro (em Robux) ---------- */
-  // o prêmio é em Robux desde 2026-10-16 (pedido do Leandro: config.valorPorMateria por matéria). Cada sala vale um
-  // valor redondo (de 10 em 10 Robux, arredondado para baixo) e a sobra vira bônus quando a matéria fica completa:
-  // nunca dízima (decisão do Leandro, 2026-09-26). Com 5 salas: 100 cada e bônus zero; com 6: 80 + 20.
-  var PASSO = 10;
+  /* ---------- dinheiro (em moedas) ---------- */
+  // o prêmio é em moedas desde 2026-10-31 (pedido do Leandro: 50 moedas por matéria, config.valorPorMateria; antes,
+  // 500 Robux). Cada sala vale um número inteiro de moedas (arredondado para baixo) e a sobra vira bônus quando a
+  // matéria fica completa: nunca dízima (decisão do Leandro, 2026-09-26). Com 5 salas: 10 cada e bônus zero; com 6:
+  // 8 + 2. A troca do pedido (20 Robux = 2 moedas) sai exata sem mexer no save: o dinheiro é derivado das salas feitas
+  // e cada valor antigo (de 10 em 10 Robux) vira o mesmo número ÷ 10 (80 Robux → 8 moedas; o bônus de 20 → 2).
   function valorMateria() { return Math.round(Reino.config.valorPorMateria); }
-  P.valorSala = function (materia) { var n = materia.salas.length; return n ? Math.floor(valorMateria() / n / PASSO) * PASSO : 0; };
+  P.valorSala = function (materia) { var n = materia.salas.length; return n ? Math.floor(valorMateria() / n) : 0; };
   P.bonusMateria = function (materia) { return materia.salas.length ? valorMateria() - P.valorSala(materia) * materia.salas.length : 0; };
   P.dinheiroMateria = function (materia) {
     var v = P.salasFeitas(materia) * P.valorSala(materia);
@@ -19,15 +20,20 @@
   P.dinheiroTotal = function () {
     return Reino.materias.reduce(function (t, m) { return t + P.dinheiroMateria(m); }, 0);
   };
+  // as moedas do bimestre ativo (matérias não arquivadas): o que enche o cofre da praça (config.cofre.cheio)
+  P.dinheiroBimestre = function () {
+    return Reino.materias.reduce(function (t, m) { return m.arquivada ? t : t + P.dinheiroMateria(m); }, 0);
+  };
   // `pago` continua no save em REAIS, como sempre foi (o formato não muda: save-e-mescla.md §2 e §4.7; um aparelho
-  // ainda na versão antiga lê o mesmo número). A tela fala em Robux: R$ 1 = 25 Robux, a troca do pedido
-  // (R$ 20 por matéria = 500 Robux). Fixo: a matéria paga em dinheiro continua paga mesmo que o valorPorMateria mude.
-  var ROBUX_POR_REAL = 25;
-  P.pago = function (materiaId) { return Math.round((I.estado.pago[materiaId] || 0) * ROBUX_POR_REAL); };
+  // ainda na versão antiga lê o mesmo número). A tela fala em moedas: R$ 20 por matéria = 50 moedas, então
+  // R$ 1 = 2,5 moedas (a mesma troca de antes, R$ 1 = 25 Robux, com 20 Robux = 2 moedas). Fixo: a matéria paga em
+  // dinheiro continua paga mesmo que o valorPorMateria mude.
+  var MOEDAS_POR_REAL = 2.5;
+  P.pago = function (materiaId) { return Math.round((I.estado.pago[materiaId] || 0) * MOEDAS_POR_REAL); };
   // o que os pais já pagaram, somado nas matérias registradas (como a Área dos Pais)
   P.pagoTotal = function () { return Reino.materias.reduce(function (t, m) { return t + P.pago(m.id); }, 0); };
-  // o 💰 do HUD: o que ainda falta receber (ganho − já pago), nunca negativo
-  P.saldoRobux = function () { return Math.max(0, P.dinheiroTotal() - P.pagoTotal()); };
+  // o 🪙 do HUD: o que ainda falta receber (ganho − já pago), nunca negativo
+  P.saldoMoedas = function () { return Math.max(0, P.dinheiroTotal() - P.pagoTotal()); };
 
   P.salasFeitas = function (materia) { return materia.salas.filter(function (s) { return I.estado.salas[s.id] && I.estado.salas[s.id].feita; }).length; };
   P.materiaCompleta = function (materia) { return P.salasFeitas(materia) === materia.salas.length; };
@@ -211,9 +217,9 @@
 
   /* ---------- área dos pais ---------- */
   // o carimbo `pagoEm` faz a correção dos pais valer na mescla, também para MENOS (400 digitado no lugar de 40)
-  // `robux`: o que os pais digitaram; o save guarda em reais (P.pago, acima)
-  P.registrarPagamento = function (materiaId, robux) {
-    I.estado.pago[materiaId] = Math.max(0, Math.round(robux)) / ROBUX_POR_REAL;
+  // `moedas`: o que os pais digitaram; o save guarda em reais (P.pago, acima)
+  P.registrarPagamento = function (materiaId, moedas) {
+    I.estado.pago[materiaId] = Math.max(0, Math.round(moedas)) / MOEDAS_POR_REAL;
     var em = I.estado.pagoEm = I.soCarimbos(I.estado.pagoEm);
     em[materiaId] = Math.max(agora(), (em[materiaId] || 0) + 1);
     I.nuvem.lutas = 0; I.nuvem.cedeu = false;   // troca nova: pode insistir de novo contra a versão antiga (progresso-nuvem.js)

@@ -112,7 +112,7 @@ body.sem-animacao .aura-dia { animation: none; }
 
 /* Celular: chips compactos e botões em uma fileira abaixo da montaria. */
 @media (max-width: 480px) {
-  /* coluna de chips com largura fixa (D13-01): 7,5 letras ("5 ovos!", a Aura compacta "12,3 mil"; os Robux, "1.500", cabem com folga) +
+  /* coluna de chips com largura fixa (D13-01): 7,5 letras ("5 ovos!", a Aura compacta "12,3 mil"; as moedas, "150", cabem com folga) +
      ícone, folgas e borda. O cartão da montaria fica com o resto da largura (194 px em 390), e os botões (tela
      cheia, 📷, álbum, ajustes) descem para uma fileira embaixo dele: assim cabem as barras e o nome em 2 linhas de 12 px
      ("Rainha da Torre" são 15 letras = 180 px). Nada aqui muda com o valor da Aura */

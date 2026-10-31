@@ -7,6 +7,9 @@
    de Reino.QUIMICA.experiencias), gravados por P.conferirTrilhas com Q.descobrir(grupo, id, { trilha: true }) (sem
    estrelas e sem salvar: quem chama salva). Cartão de elemento com `trilha: '<salaId>'` fica bloqueado até ganhar:
    Q.elementoGanho(z) (o sem `trilha` está sempre ganho); Q.experienciaGanha(id).
+   Cartões de experiência (§10, sistemas/cartoes.js): receita com `cartao` só aparece (receitas, misturar, caderno)
+   depois de ganha ou descoberta; produto com `cartao` só aparece na bancada liberado (Reino.Cartoes.liberado).
+   Q.todasReceitas() e falas() veem tudo; o caderno completo conta só as receitas sem `cartao`.
    node: true: nada de DOM, Progresso nem Cena no carregamento. */
 (function () {
   var R = window.Reino;
@@ -67,12 +70,22 @@
   Q.elementoGanho = function (z) { var e = Q.elemento(z); return !!e && (!e.trilha || Q.descoberto('elementos', 'z' + z)); };
   /** A carta de experiência já foi ganha (prêmio da trilha)? @param {string} id */
   Q.experienciaGanha = function (id) { return Q.descoberto('experiencias', id); };
-  Q.cadernoCompleto = function () { var t = Q.receitas().length; return t > 0 && Q.descobertas('receitas').length === t; };
-  /** O caderno mostra a receita aberta: descoberta ou `inicial` (a 1ª já vem escrita). */
-  Q.noCaderno = function (id) { var r = Q.receita(id); return !!r && (!!r.inicial || Q.descoberto('receitas', id)); };
+  function cartoes() { return R.Cartoes; }
+  // receita de cartão ganha (sistemas/cartoes.js carrega depois: lido na hora)
+  function cartaoGanho(r) { var C = cartoes(); return !!(C && C.ganho(r.id)); }
+  /** O caderno completo: só as receitas sem `cartao` (as estrelas dele não se repetem com os cartões). */
+  Q.cadernoCompleto = function () {
+    var base = lista('receitas').filter(function (r) { return !r.cartao; });
+    return base.length > 0 && base.every(function (r) { return Q.descoberto('receitas', r.id); });
+  };
+  /** O caderno mostra a receita aberta: descoberta, `inicial` (a 1ª já vem escrita) ou de cartão ganho. */
+  Q.noCaderno = function (id) { var r = Q.receita(id); return !!r && (!!r.inicial || Q.descoberto('receitas', id) || (!!r.cartao && cartaoGanho(r))); };
   Q.contagem = function () {
     var c = {};
     Q.GRUPOS.forEach(function (g) { c[g] = { feitas: Q.descobertas(g).length, total: lista(GRUPOS[g].lista).length }; });
+    // receitas: só as que ela vê (as de cartão ainda não ganho não contam)
+    var vis = Q.receitas();
+    c.receitas = { feitas: vis.filter(function (r) { return Q.descoberto('receitas', r.id); }).length, total: vis.length };
     return c;
   };
 
@@ -87,11 +100,13 @@
     if (!est || !GRUPOS[grupo] || !id || Q.descoberto(grupo, id)) return nada;
     if (!!GRUPOS[grupo].premio !== trilha) return nada;   // os grupos do prêmio só pela trilha (e a trilha só neles)
     if (!trilha && !achar((dados()[GRUPOS[grupo].lista] || []).map(function (x) { return { id: idDe(grupo, x) }; }), id)) return nada;
+    var rec = grupo === 'receitas' ? Q.receita(id) : null;
+    if (rec && rec.cartao && !cartaoGanho(rec)) return nada;   // receita de cartão: só depois de ganhar o cartão
     var q = est.quimica = est.quimica || {};
     (q[grupo] = q[grupo] || {})[id] = 1;
     if (trilha) return { nova: true, estrelas: 0, completo: false };
     var c = cfg(), n = c[GRUPOS[grupo].estrelas] || 0;
-    var completo = grupo === 'receitas' && Q.cadernoCompleto();
+    var completo = !!rec && !rec.cartao && Q.cadernoCompleto();   // o completo é só das receitas sem cartão
     if (completo) n += c.estrelasCadernoCompleto;
     try {
       if (n > 0) R.Progresso.ganharEstrelas(n);
@@ -104,9 +119,18 @@
   /* ================= OS DADOS ================= */
   function porOrdem(a, b) { return (a.ordem || 0) - (b.ordem || 0); }
   function achar(l, id) { for (var i = 0; i < l.length; i++) if (l[i].id === id) return l[i]; return null; }
-  Q.ingredientes = function () { return lista('ingredientes'); };
+  /** Os produtos da bancada: o de cartão só liberado (Reino.Cartoes.liberado). */
+  Q.ingredientes = function () {
+    var C = cartoes();
+    return lista('ingredientes').filter(function (g) { return !g.cartao || (!!C && C.liberado(g.id)); });
+  };
   Q.ingrediente = function (id) { return achar(dados().ingredientes || [], id); };
-  Q.receitas = function () { return lista('receitas').sort(porOrdem); };
+  /** As receitas que ela vê: as sem `cartao`, as de cartão ganho e as já descobertas, por `ordem`. */
+  Q.receitas = function () {
+    return lista('receitas').filter(function (r) { return !r.cartao || Q.descoberto('receitas', r.id) || cartaoGanho(r); }).sort(porOrdem);
+  };
+  /** Todas as receitas (as de cartão também), por `ordem`. */
+  Q.todasReceitas = function () { return lista('receitas').sort(porOrdem); };
   Q.receita = function (id) { return achar(dados().receitas || [], id); };
   Q.laminas = function () { return lista('laminas'); };
   Q.lamina = function (id) { return achar(dados().laminas || [], id); };
@@ -156,8 +180,8 @@
     function pus(x, voz) { paginas(x).forEach(function (p) { if (p) t.push({ texto: p, voz: voz || VOZ, pacote: PACOTE }); }); }
     var fr = dados().frases || {};
     Object.keys(fr).forEach(function (k) { pus(fr[k], Q.vozDe(k)); });
-    Q.ingredientes().forEach(function (g) { pus(g.fala); });
-    Q.receitas().forEach(function (r) { pus(r.acontece); pus(r.explica); pus(r.dica); });
+    lista('ingredientes').forEach(function (g) { pus(g.fala); });   // todos: os de cartão também (gravar antes)
+    Q.todasReceitas().forEach(function (r) { pus(r.acontece); pus(r.explica); pus(r.dica); });
     Q.laminas().forEach(function (l) { pus(l.explica); Object.keys(l.aumentos || {}).forEach(function (a) { pus(l.aumentos[a]); }); });
     Q.licoes().forEach(function (l) { pus(l.paginas); });
     Q.elementos().forEach(function (e) { pus(e.onde); pus(e.curiosidade); });
