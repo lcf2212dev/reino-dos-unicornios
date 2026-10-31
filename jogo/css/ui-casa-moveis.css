@@ -2,19 +2,18 @@
    (ui-casa-kits.css), mais o cômodo onde combina, o "Mais um!" do móvel repetido e o "1 de N" da fila. */
 .cmovel-dica { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px 10px; }
 .cmovel-conta {
-  padding: 2px 10px; font-size: var(--texto-aux); font-weight: bold; white-space: nowrap;
+  padding: 2px 10px; font-size: var(--texto-aux); white-space: nowrap;
   background: var(--papel-quente); border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
 }
-.cmovel-grade { grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); }
-.cmovel-cartao { gap: 4px; }
-.cmovel-comodo { font-size: var(--texto-aux); line-height: var(--entrelinha-titulo); text-align: center; opacity: 0.8; }
+.cmovel-grade { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }   /* os 5 numa fileira; quebrou, a de baixo no meio */
+.cmovel-cartao { flex: 0 1 126px; gap: 4px; }
+.cmovel-comodo { font-size: var(--texto-aux); line-height: var(--entrelinha-titulo); text-align: center; color: var(--tinta-suave); }
 .cmovel-mais {
-  padding: 1px 8px; font-size: var(--texto-aux); font-weight: bold;
+  padding: 1px 8px; font-size: var(--texto-aux);
   background: var(--certo-fundo); border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
 }
 
-/* celular: 2 colunas (a do kit), o 5º cartão sozinho no meio */
+/* celular: 2 por fileira, o 5º sozinho no meio */
 @media (max-width: 480px) {
-  .cmovel-grade { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .cmovel-cartao:last-child:nth-child(odd) { grid-column: 1 / -1; justify-self: center; width: calc(50% - 4px); }
+  .cmovel-cartao { flex-basis: calc(50% - 5px); }
 }

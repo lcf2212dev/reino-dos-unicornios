@@ -40398,6 +40398,24 @@
    "fala": "Kit novo na sua casa!"
   },
   {
+   "chave": "dc23fff8t",
+   "voz": "claude",
+   "texto": "Escolha um móvel novo!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Escolha um móvel novo!"
+  },
+  {
+   "chave": "728a26f1u",
+   "voz": "claude",
+   "texto": "Móvel novo na sua casa!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Móvel novo na sua casa!"
+  },
+  {
    "chave": "e2597d87w",
    "voz": "claude",
    "texto": "Chegou novidade no Reino!",

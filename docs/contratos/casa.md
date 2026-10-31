@@ -1,12 +1,12 @@
 # Casa do jogador (decorar com kits de móveis)
 
-Pedido: `pedidos/2026-10-31-casa.md`. A casa de 2 andares no canto de baixo à direita do mapa começa vazia. Cada
+Pedidos: `pedidos/2026-10-31-casa.md`, `pedidos/2026-10-31-moveis-salas.md` (§12). A casa de 2 andares no canto de baixo à direita do mapa começa vazia. Cada
 matéria completa (do 4º bimestre em diante) dá um kit de móveis à escolha, e o jogador põe cada móvel onde quiser,
 virado para onde quiser.
 
 ## Índice
 1. Onde está no código · 2. Ids · 3. Kits · 4. Interiores decoráveis (motor) · 5. Móveis e direções ·
-6. Save · 7. API `Reino.Casa` · 8. Onde um móvel pode ficar · 9. Telas · 10. Falas e vozes · 11. Testes
+6. Save · 7. API `Reino.Casa` · 8. Onde um móvel pode ficar · 9. Telas · 10. Falas e vozes · 11. Testes · 12. Móveis avulsos (um por sala)
 
 ## 1. Onde está no código
 | Parte | Arquivo |
@@ -151,7 +151,38 @@ Qualquer cômodo vale para qualquer kit.
 
 ## 11. Testes
 - `unidade/casa.test.js` (save, regras, mescla de 2 aparelhos, save antigo sem os campos, guardado, órfã).
+- `unidade/casa-moveis.test.js` (§12: pendentes, sorteio fixo, escolher, repetido, peças `movel.*`, mescla, caixa)
+  e `unidade/casa-moveis-salas.navegador.test.js` (os 38 desenhos; pranchas em `/tmp/reino-testes/casa-moveis-salas/`).
 - `unidade/interiores-decoravel.test.js` (motor: `objetosExtras`, `refazer`, placa com `{nome}`/`{uni}`, validador).
 - `unidade/casa-predio.navegador.test.js`, `unidade/casa-decorar.navegador.test.js`, `unidade/casa-telas.navegador.test.js`.
 - Cenas do e2e: o interior entra sozinho (vazio, como num save sintético sem kits); telas `bau-casa`, `kit-casa`,
-  `decorar`.
+  `movel-casa`, `decorar`.
+
+## 12. Móveis avulsos (um por sala)
+Além do kit por matéria, cada sala feita de uma matéria que conta (§6.4, bimestre >= `desdeBimestre`) dá UM móvel
+avulso, escolhido entre `config.casa.moveisOpcoes` (5) sorteados. Só depois de ganhar a casa (`casaBau`).
+
+| Parte | Onde |
+|---|---|
+| registro | `Reino.registrarMovelCasa({ id, nome, objeto, comodo, direcoes, parede? })` / `Reino.movelCasa(id)` / `Reino.moveisCasa` (`js/nucleo/registros.js`) |
+| dados (38: 25 salas de Língua Portuguesa + 13 de Inglês do 4º bimestre) | `js/conteudo/casa/moveis-salas.js` |
+| desenho | objeto `casa-movel-<id>` em `js/interiores/casa/moveis-salas-<cômodo>.js` (regras do §5) |
+| save, sorteio, pendentes | `js/sistemas/casa-moveis.js` (`Reino.CasaMoveis`) |
+| tela | `js/ui/casa-moveis.js` (`UI.escolherMovelCasa`, `UI.casaMoveisPendentes`) + `css/ui-casa-moveis.css` |
+
+1. `comodo` é um id de `config.casa.kits`: a aba do modo decorar. As abas passam a ser os cômodos com kit ganho ou
+   algum móvel avulso (`Casa.abas()`); a aba traz as peças do kit e depois os móveis avulsos daquele cômodo.
+2. Save: `casaMoveis: { <salaId>: { movel, em } }`, `carimbo`, `novoCiclo: 'mantem'`, `copiaSeguranca: true`. A escolha
+   de uma sala é para sempre. Entrada com móvel desconhecido não conta: a sala volta a ficar pendente.
+3. Derivado: quantas peças de cada móvel ela tem = quantas salas o escolheram (`CasaMoveis.qtd`). Peça (uid) =
+   `movel.<id>.<n>`, n de 1 a `qtd`; as regras de lugar (§8) e de `casaItens` (§6) são as mesmas das peças de kit.
+4. Sorteio (`CasaMoveis.opcoes(sala)`): fixo por sala (semente = id da sala + `casaBau.em`); os que ela ainda não tem
+   primeiro, na ordem sorteada; faltando novos, completa com os que ela tem (ganha mais um igual, "Mais um!").
+5. Pendentes (`CasaMoveis.pendentes()`): as salas que contam, feitas e sem móvel, na ordem das matérias e das salas.
+6. Quando a tela aparece: ao entrar no Reino, depois do baú da casa (`motor/main.js`; quem já tinha salas feitas
+   escolhe uma por sala, uma vez só); no fim de uma sala feita pela 1ª vez (antes do kit da matéria completa,
+   `atividades/missao.js`); na caixa de mudança e no botão do HUD (antes dos kits e do painel).
+7. Tela: "Escolha um móvel!", "Presente da sala “<nome>”" e "1 de N" na fila; cartões com a capa (`UI.capaCasa`,
+   de `ui/casa-kits.js`), o nome e o cômodo. O toque dá o móvel (festa e fala); "Depois" ou Esc param a fila e a sala
+   fica pendente. Falas (`ui/casa-falas.js`): "Escolha um móvel novo!" (só na 1ª da fila) e "Móvel novo na sua casa!".
+

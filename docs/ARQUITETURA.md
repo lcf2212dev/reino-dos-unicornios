@@ -105,6 +105,7 @@ linhas do manifesto e o index, e deixa `(preencher)` onde só a pessoa escreve (
 | Saber onde o jogo roda (`file:`, https, toque, compartilhar, baixar) | — | `Reino.ambiente` (`jogo/js/nucleo/ambiente.js`), funções avaliadas na hora | checar `window.claude`/`navigator.share` de novo | `fotos.md` |
 | Falas de um prédio em vários arquivos | `novo predio` | `Reino.falasDoPredio(id, parte)` (`nucleo/registros.js`) em cada parte | `Reino.FALAS_INTERIORES.<p> = …` | `npcs-e-dialogo.md` §10.5 |
 | Kit de móveis da casa do jogador | — | `Reino.registrarKitCasa` em `jogo/js/conteudo/casa/kits-*.js` + os objetos em `jogo/js/interiores/casa/moveis-<kit>.js` (`Reino.CasaArte.virado`) | o sistema e as telas da casa | `contratos/casa.md` §3 e §5 |
+| Móvel avulso da casa (um à escolha por sala feita) | — | `Reino.registrarMovelCasa` em `jogo/js/conteudo/casa/moveis-salas.js` + o objeto `casa-movel-<id>` em `jogo/js/interiores/casa/moveis-salas-<cômodo>.js` | o sistema e as telas da casa | `contratos/casa.md` §12 |
 | Andar novo com escadas | — | `escadas: [{ x, y, para, chegar, olhar, sentido }]` com par no outro andar (sem `chegada`) | arquivos de coordenação entre andares | `interiores.md` §3.1 |
 
 Conferir enquanto constrói e no fim: `jogo/ferramentas/CLAUDE.md` (Conferir enquanto constrói).
