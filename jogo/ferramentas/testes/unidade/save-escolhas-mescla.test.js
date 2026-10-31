@@ -192,7 +192,7 @@ test('cópia -novidades: não leva os carimbos das escolhas nem do pago, e o sav
   const semTroca = j.lido();
   assert.ok(!('escolhasEm' in semTroca) && !('pagoEm' in semTroca));
   j.relogio.agora += 1000;
-  j.P.estado().montaria = 'h-cartinha'; j.P.registrarPagamento('historia', 2 * 25);
+  j.P.estado().montaria = 'h-cartinha'; j.P.registrarPagamento('historia', 2 * 2.5);
   const c = j.copiaGuardada();
   igual(Object.keys(c).sort(), ['atualizado', 'ciclo', 'cuidados', 'despensa', 'geracao', 'surpresa', 'surpresaEm'].filter((k) => k in c).sort());
   assert.ok(!('escolhasEm' in c) && !('pagoEm' in c), 'um carimbo velho não pode colar num valor que outra aba trocou');

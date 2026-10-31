@@ -22,7 +22,7 @@
     loja: { icone: '🛍️', rotulo: 'Loja' }, bau: { icone: '🪙', rotulo: 'Baú das Moedas' },
     'salao-cabelo': { icone: '✂️', rotulo: 'Salão' }, 'salao-roupa': { icone: '✂️', rotulo: 'Salão' },
   };
-  // a sacola de compras (o ✂ é do Salão, salao/icones.js; o 💰, símbolo do Robux, de arte/icones/premios.js)
+  // a sacola de compras (o ✂ é do Salão, salao/icones.js; o 🪙 da moeda, de arte/icones/premios.js)
   if (Reino.registrarIcones && !(window.ICONES && window.ICONES['🛍'])) Reino.registrarIcones({
     '🛍': { n: 'sacola de compras', p: { k: '#3a2446', p: '#ff7eb6', P: '#d8588f', w: '#ffd1e6', y: '#ffd34d' }, d: [
       '................',

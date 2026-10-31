@@ -21,13 +21,29 @@
     return topo && c.contains(topo) ? ri : null;
   }
   function pintar(c, v) { if (c) U.preencher(c, '🪙 ' + U.moedasNumero(Math.max(0, v))); }
+  // uma tela que ficou aberta por cima do HUD (ex.: o painel da matéria, de onde ela começou a sala) se esconde
+  // durante o voo e volta no fim: as moedas precisam ver o chip. Devolve a função que mostra de novo.
+  function descobrir(c) {
+    var escondidas = [];
+    for (var i = 0; i < 4; i++) {
+      var r = c && c.getBoundingClientRect(), topo = r && r.width && document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+      if (!topo || c.contains(topo)) break;
+      var cima = topo;
+      while (cima.parentElement && cima.parentElement !== document.body) cima = cima.parentElement;
+      if (cima === document.body || cima.contains(c)) break;
+      escondidas.push([cima, cima.style.visibility]);
+      cima.style.visibility = 'hidden';
+    }
+    return function () { escondidas.forEach(function (e) { e[0].style.visibility = e[1]; }); };
+  }
 
   /** As moedas voando até o chip do HUD. @param {number} n moedas ganhas agora @returns {Promise<void>} */
   UI.festaMoedas = function (n) {
     n = Math.max(0, Math.round(n || 0));
     if (!n) return Promise.resolve();
-    var c = chip(), b = alvo(c);
+    var c = chip(), mostrar = U.animar() && window.PA ? descobrir(c) : function () {}, b = alvo(c);
     if (!U.animar() || !b || !window.PA) {
+      mostrar();
       Reino.Som.tocar('plim');
       if (UI.atualizarHUD) UI.atualizarHUD();
       return Promise.resolve();
@@ -71,6 +87,7 @@
       function fim() {
         timers.forEach(clearTimeout); timers = [];
         camada.remove();
+        mostrar();
         c.classList.remove('moedas-pulo');
         if (UI.atualizarHUD) UI.atualizarHUD();
         resolver();

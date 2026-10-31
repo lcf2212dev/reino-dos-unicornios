@@ -6,7 +6,7 @@
 
   /* ---------- baú do tesouro ---------- */
   UI.telaBau = function () {
-    var pn = painel('lugar', '💰 Baú do Tesouro');
+    var pn = painel('lugar', '🪙 Baú do Tesouro');
     var c = pn.conteudo;
     // os três números: o que ganhou, o que os pais já deram e o que falta receber (o 🪙 do HUD)
     function total(icone, rotulo, valor) { return el('div.bau-total', el('span.bau-moeda', icone), el('div', el('small', rotulo), el('b', U.colado(U.moedas(valor))))); }
