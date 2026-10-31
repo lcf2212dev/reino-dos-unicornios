@@ -796,13 +796,13 @@
    "fala": "Sabia? Quem termina a prova primeiro não ganha medalha. Quem acerta é que ganha!"
   },
   {
-   "chave": "6c5687f82r",
+   "chave": "32e560912q",
    "voz": "claude",
-   "texto": "A medalha de ouro da escola vale 2.500 Robux! E ela vem das respostas certas, não da pressa.",
+   "texto": "A medalha de ouro da escola vale 250 moedas! E ela vem das respostas certas, não da pressa.",
    "pacotes": [
     "geral"
    ],
-   "fala": "A medalha de ouro da escola vale 2.500 Robux! E ela vem das respostas certas, não da pressa."
+   "fala": "A medalha de ouro da escola vale 250 moedas! E ela vem das respostas certas, não da pressa."
   },
   {
    "chave": "41f322f11y",
@@ -19256,22 +19256,22 @@
    "fala": "Sou o Dragãozinho Tostão."
   },
   {
-   "chave": "730581acw",
+   "chave": "c36d8357x",
    "voz": "npc-tostao",
-   "texto": "Eu guardo seus Robux!",
+   "texto": "Eu guardo suas moedas!",
    "pacotes": [
     "interior-bau"
    ],
-   "fala": "Eu guardo seus Robux!"
+   "fala": "Eu guardo suas moedas!"
   },
   {
-   "chave": "927162c1z",
+   "chave": "486ea34410",
    "voz": "npc-tostao",
-   "texto": "Vamos contar seus Robux?",
+   "texto": "Vamos contar suas moedas?",
    "pacotes": [
     "interior-bau"
    ],
-   "fala": "Vamos contar seus Robux?"
+   "fala": "Vamos contar suas moedas?"
   },
   {
    "chave": "668448c913",
@@ -19292,13 +19292,13 @@
    "fala": "Vamos abrir o baú juntos?"
   },
   {
-   "chave": "9eca213a10",
+   "chave": "f916ea2711",
    "voz": "npc-tostao",
-   "texto": "Seus Robux estão seguros!",
+   "texto": "Suas moedas estão seguras!",
    "pacotes": [
     "interior-bau"
    ],
-   "fala": "Seus Robux estão seguros!"
+   "fala": "Suas moedas estão seguras!"
   },
   {
    "chave": "3ce4b1d215",
@@ -19364,22 +19364,22 @@
    "fala": "Os livros de contas do Tostão."
   },
   {
-   "chave": "235ea838v",
+   "chave": "9889de0av",
    "voz": "narradora",
-   "texto": "Ele anota cada Robux!",
+   "texto": "Ele anota cada moeda!",
    "pacotes": [
     "interior-bau"
    ],
-   "fala": "Ele anota cada Robux!"
+   "fala": "Ele anota cada moeda!"
   },
   {
-   "chave": "28dfb45410",
+   "chave": "cffb526f11",
    "voz": "narradora",
-   "texto": "O monte de todos os Robux!",
+   "texto": "O monte de todas as moedas!",
    "pacotes": [
     "interior-bau"
    ],
-   "fala": "O monte de todos os Robux!"
+   "fala": "O monte de todas as moedas!"
   },
   {
    "chave": "3b650e7d12",
@@ -19454,13 +19454,13 @@
    "fala": "Esta pilha é de uma matéria."
   },
   {
-   "chave": "c0dbf7f4z",
+   "chave": "a7bc9d6310",
    "voz": "narradora",
-   "texto": "Cada sala nova põe Robux!",
+   "texto": "Cada sala nova põe moedas!",
    "pacotes": [
     "interior-bau"
    ],
-   "fala": "Cada sala nova põe Robux!"
+   "fala": "Cada sala nova põe moedas!"
   },
   {
    "chave": "db1a1b871r",
@@ -23063,13 +23063,13 @@
    "fala": "Já fez uma de 25 salas."
   },
   {
-   "chave": "4994e41fy",
+   "chave": "a404086ey",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou 20 Robux!",
+   "texto": "Já ganhou 2 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 20 Robux!"
+   "fala": "Já ganhou 2 moedas!"
   },
   {
    "chave": "e58d7b6c13",
@@ -23081,13 +23081,13 @@
    "fala": "Já fez duas de 25 salas."
   },
   {
-   "chave": "f913cc89y",
+   "chave": "b958ef84y",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou 40 Robux!",
+   "texto": "Já ganhou 4 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 40 Robux!"
+   "fala": "Já ganhou 4 moedas!"
   },
   {
    "chave": "700d049213",
@@ -23099,13 +23099,13 @@
    "fala": "Já fez três de 25 salas."
   },
   {
-   "chave": "0cbf62fby",
+   "chave": "53491baay",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou 60 Robux!",
+   "texto": "Já ganhou 6 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 60 Robux!"
+   "fala": "Já ganhou 6 moedas!"
   },
   {
    "chave": "2b0d9dc115",
@@ -23117,13 +23117,13 @@
    "fala": "Já fez quatro de 25 salas."
   },
   {
-   "chave": "39641505y",
+   "chave": "dde15910y",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou 80 Robux!",
+   "texto": "Já ganhou 8 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 80 Robux!"
+   "fala": "Já ganhou 8 moedas!"
   },
   {
    "chave": "27be097b14",
@@ -23135,13 +23135,13 @@
    "fala": "Já fez cinco de 25 salas."
   },
   {
-   "chave": "e3fd7724z",
+   "chave": "dfb497b1z",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou 100 Robux!",
+   "texto": "Já ganhou 10 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 100 Robux!"
+   "fala": "Já ganhou 10 moedas!"
   },
   {
    "chave": "2073186513",
@@ -23153,13 +23153,13 @@
    "fala": "Já fez seis de 25 salas."
   },
   {
-   "chave": "b746a8f2z",
+   "chave": "0a04cacbz",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou 120 Robux!",
+   "texto": "Já ganhou 12 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 120 Robux!"
+   "fala": "Já ganhou 12 moedas!"
   },
   {
    "chave": "0935b80013",
@@ -23171,13 +23171,13 @@
    "fala": "Já fez sete de 25 salas."
   },
   {
-   "chave": "d9465960z",
+   "chave": "df12cb9dz",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou 140 Robux!",
+   "texto": "Já ganhou 14 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 140 Robux!"
+   "fala": "Já ganhou 14 moedas!"
   },
   {
    "chave": "e384b7fe13",
@@ -23189,13 +23189,13 @@
    "fala": "Já fez oito de 25 salas."
   },
   {
-   "chave": "2a76af0ez",
+   "chave": "ff99aea7z",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou 160 Robux!",
+   "texto": "Já ganhou 16 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 160 Robux!"
+   "fala": "Já ganhou 16 moedas!"
   },
   {
    "chave": "f726b67f13",
@@ -23207,13 +23207,13 @@
    "fala": "Já fez nove de 25 salas."
   },
   {
-   "chave": "6f13106cz",
+   "chave": "be34af59z",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou 180 Robux!",
+   "texto": "Já ganhou 18 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 180 Robux!"
+   "fala": "Já ganhou 18 moedas!"
   },
   {
    "chave": "b54ba76212",
@@ -23225,13 +23225,13 @@
    "fala": "Já fez dez de 25 salas."
   },
   {
-   "chave": "0328f5fbz",
+   "chave": "49b2aeaaz",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou 200 Robux!",
+   "texto": "Já ganhou 20 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 200 Robux!"
+   "fala": "Já ganhou 20 moedas!"
   },
   {
    "chave": "665b799113",
@@ -23243,13 +23243,13 @@
    "fala": "Já fez onze de 25 salas."
   },
   {
-   "chave": "ef7d5f89z",
+   "chave": "afc28284z",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou 220 Robux!",
+   "texto": "Já ganhou 22 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 220 Robux!"
+   "fala": "Já ganhou 22 moedas!"
   },
   {
    "chave": "7468552d13",
@@ -23261,13 +23261,13 @@
    "fala": "Já fez doze de 25 salas."
   },
   {
-   "chave": "3ffe771fz",
+   "chave": "9a6d9b6ez",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou 240 Robux!",
+   "texto": "Já ganhou 24 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 240 Robux!"
+   "fala": "Já ganhou 24 moedas!"
   },
   {
    "chave": "ae73140314",
@@ -23279,13 +23279,13 @@
    "fala": "Já fez treze de 25 salas."
   },
   {
-   "chave": "14c0fd9dz",
+   "chave": "0800ca28z",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou 260 Robux!",
+   "texto": "Já ganhou 26 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 260 Robux!"
+   "fala": "Já ganhou 26 moedas!"
   },
   {
    "chave": "915dc27716",
@@ -23297,13 +23297,13 @@
    "fala": "Já fez catorze de 25 salas."
   },
   {
-   "chave": "60c233a3z",
+   "chave": "d2855f92z",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou 280 Robux!",
+   "texto": "Já ganhou 28 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 280 Robux!"
+   "fala": "Já ganhou 28 moedas!"
   },
   {
    "chave": "0c349a1915",
@@ -23315,13 +23315,13 @@
    "fala": "Já fez quinze de 25 salas."
   },
   {
-   "chave": "4b3f18caz",
+   "chave": "a5a55363z",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou 300 Robux!",
+   "texto": "Já ganhou 30 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 300 Robux!"
+   "fala": "Já ganhou 30 moedas!"
   },
   {
    "chave": "2f5ea78a18",
@@ -23333,13 +23333,13 @@
    "fala": "Já fez dezesseis de 25 salas."
   },
   {
-   "chave": "3a0f27dcz",
+   "chave": "f8ae00a9z",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou 320 Robux!",
+   "texto": "Já ganhou 32 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 320 Robux!"
+   "fala": "Já ganhou 32 moedas!"
   },
   {
    "chave": "730e3e9f18",
@@ -23351,13 +23351,13 @@
    "fala": "Já fez dezessete de 25 salas."
   },
   {
-   "chave": "16c35306z",
+   "chave": "4540e9ffz",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou 340 Robux!",
+   "texto": "Já ganhou 34 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 340 Robux!"
+   "fala": "Já ganhou 34 moedas!"
   },
   {
    "chave": "838293cd16",
@@ -23369,13 +23369,13 @@
    "fala": "Já fez dezoito de 25 salas."
   },
   {
-   "chave": "6d3ec938z",
+   "chave": "72a66255z",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou 360 Robux!",
+   "texto": "Já ganhou 36 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 360 Robux!"
+   "fala": "Já ganhou 36 moedas!"
   },
   {
    "chave": "848fcfd117",
@@ -23387,13 +23387,13 @@
    "fala": "Já fez dezenove de 25 salas."
   },
   {
-   "chave": "c27dd6a2z",
+   "chave": "d453bd9bz",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou 380 Robux!",
+   "texto": "Já ganhou 38 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 380 Robux!"
+   "fala": "Já ganhou 38 moedas!"
   },
   {
    "chave": "86b6d90d14",
@@ -23405,13 +23405,13 @@
    "fala": "Já fez vinte de 25 salas."
   },
   {
-   "chave": "7743bba1z",
+   "chave": "81c46b7cz",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou 400 Robux!",
+   "texto": "Já ganhou 40 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 400 Robux!"
+   "fala": "Já ganhou 40 moedas!"
   },
   {
    "chave": "1e2b287611",
@@ -23423,13 +23423,13 @@
    "fala": "Já fez 21 de 25 salas."
   },
   {
-   "chave": "bddae653z",
+   "chave": "4dbd1822z",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou 420 Robux!",
+   "texto": "Já ganhou 42 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 420 Robux!"
+   "fala": "Já ganhou 42 moedas!"
   },
   {
    "chave": "161a1a4511",
@@ -23441,13 +23441,13 @@
    "fala": "Já fez 22 de 25 salas."
   },
   {
-   "chave": "f0327975z",
+   "chave": "20e8dc60z",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou 440 Robux!",
+   "texto": "Já ganhou 44 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 440 Robux!"
+   "fala": "Já ganhou 44 moedas!"
   },
   {
    "chave": "e77021a011",
@@ -23459,13 +23459,13 @@
    "fala": "Já fez 23 de 25 salas."
   },
   {
-   "chave": "a11d94f7z",
+   "chave": "016efbe6z",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou 460 Robux!",
+   "texto": "Já ganhou 46 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 460 Robux!"
+   "fala": "Já ganhou 46 moedas!"
   },
   {
    "chave": "5fd1f6bf11",
@@ -23477,13 +23477,13 @@
    "fala": "Já fez 24 de 25 salas."
   },
   {
-   "chave": "7a041779z",
+   "chave": "3cdf5c94z",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou 480 Robux!",
+   "texto": "Já ganhou 48 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 480 Robux!"
+   "fala": "Já ganhou 48 moedas!"
   },
   {
    "chave": "5048530c10",
@@ -23495,13 +23495,13 @@
    "fala": "Você fez as 25 salas!"
   },
   {
-   "chave": "b8a87218z",
+   "chave": "60988375z",
    "voz": "npc-lp-leticia",
-   "texto": "Já ganhou 500 Robux!",
+   "texto": "Já ganhou 50 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 500 Robux!"
+   "fala": "Já ganhou 50 moedas!"
   },
   {
    "chave": "84ee6a611a",
@@ -23864,13 +23864,13 @@
    "fala": "Já fez uma de 25 salas."
   },
   {
-   "chave": "aadd976by",
+   "chave": "74c3d2bay",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou 20 Robux!",
+   "texto": "Já ganhou 2 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 20 Robux!"
+   "fala": "Já ganhou 2 moedas!"
   },
   {
    "chave": "a428ede813",
@@ -23882,13 +23882,13 @@
    "fala": "Já fez duas de 25 salas."
   },
   {
-   "chave": "1d72fb4dy",
+   "chave": "0ba8a438y",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou 40 Robux!",
+   "texto": "Já ganhou 4 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 40 Robux!"
+   "fala": "Já ganhou 4 moedas!"
   },
   {
    "chave": "0e5b263613",
@@ -23900,13 +23900,13 @@
    "fala": "Já fez três de 25 salas."
   },
   {
-   "chave": "4c94b1cfy",
+   "chave": "4490ad7ey",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou 60 Robux!",
+   "texto": "Já ganhou 6 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 60 Robux!"
+   "fala": "Já ganhou 6 moedas!"
   },
   {
    "chave": "2d843b0515",
@@ -23918,13 +23918,13 @@
    "fala": "Já fez quatro de 25 salas."
   },
   {
-   "chave": "20a43ae1y",
+   "chave": "d616c73cy",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou 80 Robux!",
+   "texto": "Já ganhou 8 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 80 Robux!"
+   "fala": "Já ganhou 8 moedas!"
   },
   {
    "chave": "91f3101f14",
@@ -23936,13 +23936,13 @@
    "fala": "Já fez cinco de 25 salas."
   },
   {
-   "chave": "31eecfc8z",
+   "chave": "c334fa85z",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou 100 Robux!",
+   "texto": "Já ganhou 10 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 100 Robux!"
+   "fala": "Já ganhou 10 moedas!"
   },
   {
    "chave": "89c5bfd913",
@@ -23954,13 +23954,13 @@
    "fala": "Já fez seis de 25 salas."
   },
   {
-   "chave": "2c4eea96z",
+   "chave": "b628e32fz",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou 120 Robux!",
+   "texto": "Já ganhou 12 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 120 Robux!"
+   "fala": "Já ganhou 12 moedas!"
   },
   {
    "chave": "9a7c85e413",
@@ -23972,13 +23972,13 @@
    "fala": "Já fez sete de 25 salas."
   },
   {
-   "chave": "7efaa96cz",
+   "chave": "ce1c4859z",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou 140 Robux!",
+   "texto": "Já ganhou 14 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 140 Robux!"
+   "fala": "Já ganhou 14 moedas!"
   },
   {
    "chave": "fc94e9a213",
@@ -23990,13 +23990,13 @@
    "fala": "Já fez oito de 25 salas."
   },
   {
-   "chave": "a8172c1az",
+   "chave": "6f831653z",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou 160 Robux!",
+   "texto": "Já ganhou 16 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 160 Robux!"
+   "fala": "Já ganhou 16 moedas!"
   },
   {
    "chave": "7051e23b13",
@@ -24008,13 +24008,13 @@
    "fala": "Já fez nove de 25 salas."
   },
   {
-   "chave": "e92df260z",
+   "chave": "eefa649dz",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou 180 Robux!",
+   "texto": "Já ganhou 18 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 180 Robux!"
+   "fala": "Já ganhou 18 moedas!"
   },
   {
    "chave": "dc8ba25612",
@@ -24026,13 +24026,13 @@
    "fala": "Já fez dez de 25 salas."
   },
   {
-   "chave": "4fe6101fz",
+   "chave": "aa55346ez",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou 200 Robux!",
+   "texto": "Já ganhou 20 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 200 Robux!"
+   "fala": "Já ganhou 20 moedas!"
   },
   {
    "chave": "d62e988513",
@@ -24044,13 +24044,13 @@
    "fala": "Já fez onze de 25 salas."
   },
   {
-   "chave": "24a8969dz",
+   "chave": "17e86328z",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou 220 Robux!",
+   "texto": "Já ganhou 22 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 220 Robux!"
+   "fala": "Já ganhou 22 moedas!"
   },
   {
    "chave": "ca4dd0d113",
@@ -24062,13 +24062,13 @@
    "fala": "Já fez doze de 25 salas."
   },
   {
-   "chave": "13108efbz",
+   "chave": "599a47aaz",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou 240 Robux!",
+   "texto": "Já ganhou 24 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 240 Robux!"
+   "fala": "Já ganhou 24 moedas!"
   },
   {
    "chave": "6964a2bf14",
@@ -24080,13 +24080,13 @@
    "fala": "Já fez treze de 25 salas."
   },
   {
-   "chave": "ff64f889z",
+   "chave": "bfaa1b84z",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou 260 Robux!",
+   "texto": "Já ganhou 26 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 260 Robux!"
+   "fala": "Já ganhou 26 moedas!"
   },
   {
    "chave": "ebf690d316",
@@ -24098,13 +24098,13 @@
    "fala": "Já fez catorze de 25 salas."
   },
   {
-   "chave": "a56b6507z",
+   "chave": "3c63e816z",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou 280 Robux!",
+   "texto": "Já ganhou 28 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 280 Robux!"
+   "fala": "Já ganhou 28 moedas!"
   },
   {
    "chave": "d5493cfd15",
@@ -24116,13 +24116,13 @@
    "fala": "Já fez quinze de 25 salas."
   },
   {
-   "chave": "92c5406ez",
+   "chave": "324c9ec7z",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou 300 Robux!",
+   "texto": "Já ganhou 30 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 300 Robux!"
+   "fala": "Já ganhou 30 moedas!"
   },
   {
    "chave": "5bdf2c0e18",
@@ -24134,13 +24134,13 @@
    "fala": "Já fez dezesseis de 25 salas."
   },
   {
-   "chave": "d6f8ba40z",
+   "chave": "9f73993dz",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou 320 Robux!",
+   "texto": "Já ganhou 32 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 320 Robux!"
+   "fala": "Já ganhou 32 moedas!"
   },
   {
    "chave": "785a0e5318",
@@ -24152,13 +24152,13 @@
    "fala": "Já fez dezessete de 25 salas."
   },
   {
-   "chave": "eee67352z",
+   "chave": "50ec68ebz",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou 340 Robux!",
+   "texto": "Já ganhou 34 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 340 Robux!"
+   "fala": "Já ganhou 34 moedas!"
   },
   {
    "chave": "aa59ccd916",
@@ -24170,13 +24170,13 @@
    "fala": "Já fez dezoito de 25 salas."
   },
   {
-   "chave": "441ed504z",
+   "chave": "d13f3ad1z",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou 360 Robux!",
+   "texto": "Já ganhou 36 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 360 Robux!"
+   "fala": "Já ganhou 36 moedas!"
   },
   {
    "chave": "713637c517",
@@ -24188,13 +24188,13 @@
    "fala": "Já fez dezenove de 25 salas."
   },
   {
-   "chave": "4257d476z",
+   "chave": "c190954fz",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou 380 Robux!",
+   "texto": "Já ganhou 38 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 380 Robux!"
+   "fala": "Já ganhou 38 moedas!"
   },
   {
    "chave": "14c40e7114",
@@ -24206,13 +24206,13 @@
    "fala": "Já fez vinte de 25 salas."
   },
   {
-   "chave": "536767adz",
+   "chave": "f8728258z",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou 400 Robux!",
+   "texto": "Já ganhou 40 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 400 Robux!"
+   "fala": "Já ganhou 40 moedas!"
   },
   {
    "chave": "99cff8d211",
@@ -24224,13 +24224,13 @@
    "fala": "Já fez 21 de 25 salas."
   },
   {
-   "chave": "31f59a2fz",
+   "chave": "9aa8f89ez",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou 420 Robux!",
+   "texto": "Já ganhou 42 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 420 Robux!"
+   "fala": "Já ganhou 42 moedas!"
   },
   {
    "chave": "890d1eb111",
@@ -24242,13 +24242,13 @@
    "fala": "Já fez 22 de 25 salas."
   },
   {
-   "chave": "1b6aaa99z",
+   "chave": "e8f07df4z",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou 440 Robux!",
+   "texto": "Já ganhou 44 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 440 Robux!"
+   "fala": "Já ganhou 44 moedas!"
   },
   {
    "chave": "129db7dc11",
@@ -24260,13 +24260,13 @@
    "fala": "Já fez 23 de 25 salas."
   },
   {
-   "chave": "ba0327cbz",
+   "chave": "798c53daz",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou 460 Robux!",
+   "texto": "Já ganhou 46 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 460 Robux!"
+   "fala": "Já ganhou 46 moedas!"
   },
   {
    "chave": "44e1ac9311",
@@ -24278,13 +24278,13 @@
    "fala": "Já fez 24 de 25 salas."
   },
   {
-   "chave": "fe4d6a95z",
+   "chave": "58db6ac0z",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou 480 Robux!",
+   "texto": "Já ganhou 48 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 480 Robux!"
+   "fala": "Já ganhou 48 moedas!"
   },
   {
    "chave": "82ae660810",
@@ -24296,13 +24296,13 @@
    "fala": "Você fez as 25 salas!"
   },
   {
-   "chave": "f2dc5054z",
+   "chave": "63c7f681z",
    "voz": "npc-lp-celeste",
-   "texto": "Já ganhou 500 Robux!",
+   "texto": "Já ganhou 50 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 500 Robux!"
+   "fala": "Já ganhou 50 moedas!"
   },
   {
    "chave": "5b3fad5d1a",
@@ -24656,13 +24656,13 @@
    "fala": "Já fez uma de 25 salas."
   },
   {
-   "chave": "d7d9f04eu",
+   "chave": "d5310467u",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou 20 Robux!",
+   "texto": "Já ganhou 2 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 20 Robux!"
+   "fala": "Já ganhou 2 moedas!"
   },
   {
    "chave": "5673716fz",
@@ -24674,13 +24674,13 @@
    "fala": "Já fez duas de 25 salas."
   },
   {
-   "chave": "8ee64f64u",
+   "chave": "62695b71u",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou 40 Robux!",
+   "texto": "Já ganhou 4 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 40 Robux!"
+   "fala": "Já ganhou 4 moedas!"
   },
   {
    "chave": "46ca99adz",
@@ -24692,13 +24692,13 @@
    "fala": "Já fez três de 25 salas."
   },
   {
-   "chave": "0bf1ad32u",
+   "chave": "a2ab018bu",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou 60 Robux!",
+   "texto": "Já ganhou 6 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 60 Robux!"
+   "fala": "Já ganhou 6 moedas!"
   },
   {
    "chave": "541d3b9e11",
@@ -24710,13 +24710,13 @@
    "fala": "Já fez quatro de 25 salas."
   },
   {
-   "chave": "0dc7e608u",
+   "chave": "f5fb9f45u",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou 80 Robux!",
+   "texto": "Já ganhou 8 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 80 Robux!"
+   "fala": "Já ganhou 8 moedas!"
   },
   {
    "chave": "4100f58a10",
@@ -24728,13 +24728,13 @@
    "fala": "Já fez cinco de 25 salas."
   },
   {
-   "chave": "a31760dfv",
+   "chave": "1802eaaev",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou 100 Robux!",
+   "texto": "Já ganhou 10 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 100 Robux!"
+   "fala": "Já ganhou 10 moedas!"
   },
   {
    "chave": "0806544az",
@@ -24746,13 +24746,13 @@
    "fala": "Já fez seis de 25 salas."
   },
   {
-   "chave": "49206d5dv",
+   "chave": "db8e1268v",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou 120 Robux!",
+   "texto": "Já ganhou 12 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 120 Robux!"
+   "fala": "Já ganhou 12 moedas!"
   },
   {
    "chave": "e4d5425fz",
@@ -24764,13 +24764,13 @@
    "fala": "Já fez sete de 25 salas."
   },
   {
-   "chave": "bc7fb3bbv",
+   "chave": "a8c09beav",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou 140 Robux!",
+   "texto": "Já ganhou 14 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 140 Robux!"
+   "fala": "Já ganhou 14 moedas!"
   },
   {
    "chave": "966b8239z",
@@ -24782,13 +24782,13 @@
    "fala": "Já fez oito de 25 salas."
   },
   {
-   "chave": "3fa3ed49v",
+   "chave": "af8edbc4v",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou 160 Robux!",
+   "texto": "Já ganhou 16 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 160 Robux!"
+   "fala": "Já ganhou 16 moedas!"
   },
   {
    "chave": "99818214z",
@@ -24800,13 +24800,13 @@
    "fala": "Já fez nove de 25 salas."
   },
   {
-   "chave": "0f6f01c7v",
+   "chave": "e2afb156v",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou 180 Robux!",
+   "texto": "Já ganhou 18 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 180 Robux!"
+   "fala": "Já ganhou 18 moedas!"
   },
   {
    "chave": "f21c9ce3y",
@@ -24818,13 +24818,13 @@
    "fala": "Já fez dez de 25 salas."
   },
   {
-   "chave": "1c35cb88v",
+   "chave": "046984c5v",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou 200 Robux!",
+   "texto": "Já ganhou 20 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 200 Robux!"
+   "fala": "Já ganhou 20 moedas!"
   },
   {
    "chave": "de41df72z",
@@ -24836,13 +24836,13 @@
    "fala": "Já fez onze de 25 salas."
   },
   {
-   "chave": "1695e656v",
+   "chave": "f57e026fv",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou 220 Robux!",
+   "texto": "Já ganhou 22 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 220 Robux!"
+   "fala": "Já ganhou 22 moedas!"
   },
   {
    "chave": "1c56e782z",
@@ -24854,13 +24854,13 @@
    "fala": "Já fez doze de 25 salas."
   },
   {
-   "chave": "a632c42cv",
+   "chave": "71eda899v",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou 240 Robux!",
+   "texto": "Já ganhou 24 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 240 Robux!"
+   "fala": "Já ganhou 24 moedas!"
   },
   {
    "chave": "c3dcaa0610",
@@ -24872,13 +24872,13 @@
    "fala": "Já fez treze de 25 salas."
   },
   {
-   "chave": "121ac8dav",
+   "chave": "87d3d193v",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou 260 Robux!",
+   "texto": "Já ganhou 26 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 260 Robux!"
+   "fala": "Já ganhou 26 moedas!"
   },
   {
    "chave": "c7c8145a12",
@@ -24890,13 +24890,13 @@
    "fala": "Já fez catorze de 25 salas."
   },
   {
-   "chave": "82252420v",
+   "chave": "576d6dddv",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou 280 Robux!",
+   "texto": "Já ganhou 28 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 280 Robux!"
+   "fala": "Já ganhou 28 moedas!"
   },
   {
    "chave": "f64c963e11",
@@ -24908,13 +24908,13 @@
    "fala": "Já fez quinze de 25 salas."
   },
   {
-   "chave": "7e965fd1v",
+   "chave": "5d44e04cv",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou 300 Robux!",
+   "texto": "Já ganhou 30 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 300 Robux!"
+   "fala": "Já ganhou 30 moedas!"
   },
   {
    "chave": "82935fc314",
@@ -24926,13 +24926,13 @@
    "fala": "Já fez dezesseis de 25 salas."
   },
   {
-   "chave": "3ef2d203v",
+   "chave": "e96a4bb2v",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou 320 Robux!",
+   "texto": "Já ganhou 32 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 320 Robux!"
+   "fala": "Já ganhou 32 moedas!"
   },
   {
    "chave": "4b59879a14",
@@ -24944,13 +24944,13 @@
    "fala": "Já fez dezessete de 25 salas."
   },
   {
-   "chave": "b3e41665v",
+   "chave": "e4884eb0v",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou 340 Robux!",
+   "texto": "Já ganhou 34 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 340 Robux!"
+   "fala": "Já ganhou 34 moedas!"
   },
   {
    "chave": "80bc329c12",
@@ -24962,13 +24962,13 @@
    "fala": "Já fez dezoito de 25 salas."
   },
   {
-   "chave": "9d791267v",
+   "chave": "6d6a0bb6v",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou 360 Robux!",
+   "texto": "Já ganhou 36 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 360 Robux!"
+   "fala": "Já ganhou 36 moedas!"
   },
   {
    "chave": "d2556fbe13",
@@ -24980,13 +24980,13 @@
    "fala": "Já fez dezenove de 25 salas."
   },
   {
-   "chave": "e83dc769v",
+   "chave": "f560e8a4v",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou 380 Robux!",
+   "texto": "Já ganhou 38 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 380 Robux!"
+   "fala": "Já ganhou 38 moedas!"
   },
   {
    "chave": "953a8ffc10",
@@ -24998,13 +24998,13 @@
    "fala": "Já fez vinte de 25 salas."
   },
   {
-   "chave": "b591ecfav",
+   "chave": "efd9a973v",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou 400 Robux!",
+   "texto": "Já ganhou 40 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 400 Robux!"
+   "fala": "Já ganhou 40 moedas!"
   },
   {
    "chave": "26262491x",
@@ -25016,13 +25016,13 @@
    "fala": "Já fez 21 de 25 salas."
   },
   {
-   "chave": "2555754cv",
+   "chave": "0d1cb079v",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou 420 Robux!",
+   "texto": "Já ganhou 42 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 420 Robux!"
+   "fala": "Já ganhou 42 moedas!"
   },
   {
    "chave": "f815d9b2x",
@@ -25034,13 +25034,13 @@
    "fala": "Já fez 22 de 25 salas."
   },
   {
-   "chave": "b97cf5f6v",
+   "chave": "38b5b6cfv",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou 440 Robux!",
+   "texto": "Já ganhou 44 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 440 Robux!"
+   "fala": "Já ganhou 44 moedas!"
   },
   {
    "chave": "1fb511e7x",
@@ -25052,13 +25052,13 @@
    "fala": "Já fez 23 de 25 salas."
   },
   {
-   "chave": "451dee28v",
+   "chave": "22f49825v",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou 460 Robux!",
+   "texto": "Já ganhou 46 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 460 Robux!"
+   "fala": "Já ganhou 46 moedas!"
   },
   {
    "chave": "7135e408x",
@@ -25070,13 +25070,13 @@
    "fala": "Já fez 24 de 25 salas."
   },
   {
-   "chave": "660b94d2v",
+   "chave": "c8118a6bv",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou 480 Robux!",
+   "texto": "Já ganhou 48 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 480 Robux!"
+   "fala": "Já ganhou 48 moedas!"
   },
   {
    "chave": "48c590edw",
@@ -25088,13 +25088,13 @@
    "fala": "Você fez as 25 salas!"
   },
   {
-   "chave": "d5aad16bv",
+   "chave": "9f910cbav",
    "voz": "npc-lp-sol",
-   "texto": "Já ganhou 500 Robux!",
+   "texto": "Já ganhou 50 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 500 Robux!"
+   "fala": "Já ganhou 50 moedas!"
   },
   {
    "chave": "0ed611d416",
@@ -25448,13 +25448,13 @@
    "fala": "Já fez uma de 25 salas."
   },
   {
-   "chave": "6e91c68dw",
+   "chave": "cd3bcdf8w",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou 20 Robux!",
+   "texto": "Já ganhou 2 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 20 Robux!"
+   "fala": "Já ganhou 2 moedas!"
   },
   {
    "chave": "dd29778611",
@@ -25466,13 +25466,13 @@
    "fala": "Já fez duas de 25 salas."
   },
   {
-   "chave": "233ae1abw",
+   "chave": "49e4567aw",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou 40 Robux!",
+   "texto": "Já ganhou 4 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 40 Robux!"
+   "fala": "Já ganhou 4 moedas!"
   },
   {
    "chave": "6dae127c11",
@@ -25484,13 +25484,13 @@
    "fala": "Já fez três de 25 salas."
   },
   {
-   "chave": "619105f9w",
+   "chave": "246c4b14w",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou 60 Robux!",
+   "texto": "Já ganhou 6 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 60 Robux!"
+   "fala": "Já ganhou 6 moedas!"
   },
   {
    "chave": "33a772f713",
@@ -25502,13 +25502,13 @@
    "fala": "Já fez quatro de 25 salas."
   },
   {
-   "chave": "88aa8377w",
+   "chave": "e8fbea66w",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou 80 Robux!",
+   "texto": "Já ganhou 8 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 80 Robux!"
+   "fala": "Já ganhou 8 moedas!"
   },
   {
    "chave": "574ea81512",
@@ -25520,13 +25520,13 @@
    "fala": "Já fez cinco de 25 salas."
   },
   {
-   "chave": "81c643fax",
+   "chave": "bc0e0073x",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou 100 Robux!",
+   "texto": "Já ganhou 10 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 100 Robux!"
+   "fala": "Já ganhou 10 moedas!"
   },
   {
    "chave": "a037705311",
@@ -25538,13 +25538,13 @@
    "fala": "Já fez seis de 25 salas."
   },
   {
-   "chave": "f189cc4cx",
+   "chave": "d9510779x",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou 120 Robux!",
+   "texto": "Já ganhou 12 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 120 Robux!"
+   "fala": "Já ganhou 12 moedas!"
   },
   {
    "chave": "5a482c2a11",
@@ -25556,13 +25556,13 @@
    "fala": "Já fez sete de 25 salas."
   },
   {
-   "chave": "85b14cf6x",
+   "chave": "04ea0dcfx",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou 140 Robux!",
+   "texto": "Já ganhou 14 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 140 Robux!"
+   "fala": "Já ganhou 14 moedas!"
   },
   {
    "chave": "adafa13411",
@@ -25574,13 +25574,13 @@
    "fala": "Já fez oito de 25 salas."
   },
   {
-   "chave": "11524528x",
+   "chave": "ef28ef25x",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou 160 Robux!",
+   "texto": "Já ganhou 16 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 160 Robux!"
+   "fala": "Já ganhou 16 moedas!"
   },
   {
    "chave": "a3d62bb911",
@@ -25592,13 +25592,13 @@
    "fala": "Já fez nove de 25 salas."
   },
   {
-   "chave": "323febd2x",
+   "chave": "9445e16bx",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou 180 Robux!",
+   "texto": "Já ganhou 18 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 180 Robux!"
+   "fala": "Já ganhou 18 moedas!"
   },
   {
    "chave": "0ace56b010",
@@ -25610,13 +25610,13 @@
    "fala": "Já fez dez de 25 salas."
   },
   {
-   "chave": "f096056dx",
+   "chave": "6af2a298x",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou 200 Robux!",
+   "texto": "Já ganhou 20 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 200 Robux!"
+   "fala": "Já ganhou 20 moedas!"
   },
   {
    "chave": "601b973b11",
@@ -25628,13 +25628,13 @@
    "fala": "Já fez onze de 25 salas."
   },
   {
-   "chave": "123594efx",
+   "chave": "d52603dex",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou 220 Robux!",
+   "texto": "Já ganhou 22 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 220 Robux!"
+   "fala": "Já ganhou 22 moedas!"
   },
   {
    "chave": "a837335b11",
@@ -25646,13 +25646,13 @@
    "fala": "Já fez doze de 25 salas."
   },
   {
-   "chave": "67497e59x",
+   "chave": "b428db34x",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou 240 Robux!",
+   "texto": "Já ganhou 24 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 240 Robux!"
+   "fala": "Já ganhou 24 moedas!"
   },
   {
    "chave": "24f66a8d12",
@@ -25664,13 +25664,13 @@
    "fala": "Já fez treze de 25 salas."
   },
   {
-   "chave": "5731c58bx",
+   "chave": "86f5351ax",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou 260 Robux!",
+   "texto": "Já ganhou 26 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 260 Robux!"
+   "fala": "Já ganhou 26 moedas!"
   },
   {
    "chave": "748170a914",
@@ -25682,13 +25682,13 @@
    "fala": "Já fez catorze de 25 salas."
   },
   {
-   "chave": "08464d55x",
+   "chave": "21538400x",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou 280 Robux!",
+   "texto": "Já ganhou 28 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 280 Robux!"
+   "fala": "Já ganhou 28 moedas!"
   },
   {
    "chave": "a9ac607f13",
@@ -25700,13 +25700,13 @@
    "fala": "Já fez quinze de 25 salas."
   },
   {
-   "chave": "3ebb2414x",
+   "chave": "c728d0c1x",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou 300 Robux!",
+   "texto": "Já ganhou 30 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 300 Robux!"
+   "fala": "Já ganhou 30 moedas!"
   },
   {
    "chave": "952d299416",
@@ -25718,13 +25718,13 @@
    "fala": "Já fez dezesseis de 25 salas."
   },
   {
-   "chave": "36a0d5e2x",
+   "chave": "f3c97c5bx",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou 320 Robux!",
+   "texto": "Já ganhou 32 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 320 Robux!"
+   "fala": "Já ganhou 32 moedas!"
   },
   {
    "chave": "0891409516",
@@ -25736,13 +25736,13 @@
    "fala": "Já fez dezessete de 25 salas."
   },
   {
-   "chave": "83749d50x",
+   "chave": "45e2e12dx",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou 340 Robux!",
+   "texto": "Já ganhou 34 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 340 Robux!"
+   "fala": "Já ganhou 34 moedas!"
   },
   {
    "chave": "86f2719b14",
@@ -25754,13 +25754,13 @@
    "fala": "Já fez dezoito de 25 salas."
   },
   {
-   "chave": "18e352fex",
+   "chave": "97b453b7x",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou 360 Robux!",
+   "texto": "Já ganhou 36 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 360 Robux!"
+   "fala": "Já ganhou 36 moedas!"
   },
   {
    "chave": "89bc03ef15",
@@ -25772,13 +25772,13 @@
    "fala": "Já fez dezenove de 25 salas."
   },
   {
-   "chave": "1b490f1cx",
+   "chave": "31707469x",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou 380 Robux!",
+   "texto": "Já ganhou 38 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 380 Robux!"
+   "fala": "Já ganhou 38 moedas!"
   },
   {
    "chave": "931dba0f12",
@@ -25790,13 +25790,13 @@
    "fala": "Já fez vinte de 25 salas."
   },
   {
-   "chave": "6f4bb7dfx",
+   "chave": "e43741aex",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou 400 Robux!",
+   "texto": "Já ganhou 40 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 400 Robux!"
+   "fala": "Já ganhou 40 moedas!"
   },
   {
    "chave": "0a6aac80z",
@@ -25808,13 +25808,13 @@
    "fala": "Já fez 21 de 25 salas."
   },
   {
-   "chave": "1554c45dx",
+   "chave": "a7c26968x",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou 420 Robux!",
+   "texto": "Já ganhou 42 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 420 Robux!"
+   "fala": "Já ganhou 42 moedas!"
   },
   {
    "chave": "880d188bz",
@@ -25826,13 +25826,13 @@
    "fala": "Já fez 22 de 25 salas."
   },
   {
-   "chave": "88b40abbx",
+   "chave": "74f4f2eax",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou 440 Robux!",
+   "texto": "Já ganhou 44 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 440 Robux!"
+   "fala": "Já ganhou 44 moedas!"
   },
   {
    "chave": "f99aa456z",
@@ -25844,13 +25844,13 @@
    "fala": "Já fez 23 de 25 salas."
   },
   {
-   "chave": "0bd84449x",
+   "chave": "7bc332c4x",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou 460 Robux!",
+   "texto": "Já ganhou 46 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 460 Robux!"
+   "fala": "Já ganhou 46 moedas!"
   },
   {
    "chave": "5f156aa9z",
@@ -25862,13 +25862,13 @@
    "fala": "Já fez 24 de 25 salas."
   },
   {
-   "chave": "dba358c7x",
+   "chave": "aee40856x",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou 480 Robux!",
+   "texto": "Já ganhou 48 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 480 Robux!"
+   "fala": "Já ganhou 48 moedas!"
   },
   {
    "chave": "539abbaay",
@@ -25880,13 +25880,13 @@
    "fala": "Você fez as 25 salas!"
   },
   {
-   "chave": "f7f0c92ex",
+   "chave": "13766f07x",
    "voz": "npc-lp-pingo",
-   "texto": "Já ganhou 500 Robux!",
+   "texto": "Já ganhou 50 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 500 Robux!"
+   "fala": "Já ganhou 50 moedas!"
   },
   {
    "chave": "dc34f26718",
@@ -26556,13 +26556,13 @@
    "fala": "Já fez uma de 25 salas."
   },
   {
-   "chave": "7e4d208fy",
+   "chave": "f3283cbey",
    "voz": "npc-lp-rabisco",
-   "texto": "Já ganhou 20 Robux!",
+   "texto": "Já ganhou 2 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 20 Robux!"
+   "fala": "Já ganhou 2 moedas!"
   },
   {
    "chave": "9a4197dc13",
@@ -26574,13 +26574,13 @@
    "fala": "Já fez duas de 25 salas."
   },
   {
-   "chave": "1871c179y",
+   "chave": "db4d0694y",
    "voz": "npc-lp-rabisco",
-   "texto": "Já ganhou 40 Robux!",
+   "texto": "Já ganhou 4 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 40 Robux!"
+   "fala": "Já ganhou 4 moedas!"
   },
   {
    "chave": "1f492a2213",
@@ -26592,13 +26592,13 @@
    "fala": "Já fez três de 25 salas."
   },
   {
-   "chave": "da1b9d2by",
+   "chave": "00c511fay",
    "voz": "npc-lp-rabisco",
-   "texto": "Já ganhou 60 Robux!",
+   "texto": "Já ganhou 6 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 60 Robux!"
+   "fala": "Já ganhou 6 moedas!"
   },
   {
    "chave": "13e8adf115",
@@ -26610,13 +26610,13 @@
    "fala": "Já fez quatro de 25 salas."
   },
   {
-   "chave": "8ea02375y",
+   "chave": "bf568660y",
    "voz": "npc-lp-rabisco",
-   "texto": "Já ganhou 80 Robux!",
+   "texto": "Já ganhou 8 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 80 Robux!"
+   "fala": "Já ganhou 8 moedas!"
   },
   {
    "chave": "b2f6148b14",
@@ -26628,13 +26628,13 @@
    "fala": "Já fez cinco de 25 salas."
   },
   {
-   "chave": "a2824e94z",
+   "chave": "2aeffb41z",
    "voz": "npc-lp-rabisco",
-   "texto": "Já ganhou 100 Robux!",
+   "texto": "Já ganhou 10 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 100 Robux!"
+   "fala": "Já ganhou 10 moedas!"
   },
   {
    "chave": "7a92541513",
@@ -26646,13 +26646,13 @@
    "fala": "Já fez seis de 25 salas."
   },
   {
-   "chave": "9a680062z",
+   "chave": "5790a6dbz",
    "voz": "npc-lp-rabisco",
-   "texto": "Já ganhou 120 Robux!",
+   "texto": "Já ganhou 12 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 120 Robux!"
+   "fala": "Já ganhou 12 moedas!"
   },
   {
    "chave": "6f78beb013",
@@ -26664,13 +26664,13 @@
    "fala": "Já fez sete de 25 salas."
   },
   {
-   "chave": "e73bc7d0z",
+   "chave": "a9aa0badz",
    "voz": "npc-lp-rabisco",
-   "texto": "Já ganhou 140 Robux!",
+   "texto": "Já ganhou 14 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 140 Robux!"
+   "fala": "Já ganhou 14 moedas!"
   },
   {
    "chave": "4f32f38e13",
@@ -26682,13 +26682,13 @@
    "fala": "Já fez oito de 25 salas."
   },
   {
-   "chave": "7caa7d7ez",
+   "chave": "fb7b7e37z",
    "voz": "npc-lp-rabisco",
-   "texto": "Já ganhou 160 Robux!",
+   "texto": "Já ganhou 16 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 160 Robux!"
+   "fala": "Já ganhou 16 moedas!"
   },
   {
    "chave": "566293cf13",
@@ -26700,13 +26700,13 @@
    "fala": "Já fez nove de 25 salas."
   },
   {
-   "chave": "7f10399cz",
+   "chave": "95379ee9z",
    "voz": "npc-lp-rabisco",
-   "texto": "Já ganhou 180 Robux!",
+   "texto": "Já ganhou 18 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 180 Robux!"
+   "fala": "Já ganhou 18 moedas!"
   },
   {
    "chave": "990d611212",
@@ -26718,13 +26718,13 @@
    "fala": "Já fez dez de 25 salas."
   },
   {
-   "chave": "05a652ebz",
+   "chave": "cf8c8e3az",
    "voz": "npc-lp-rabisco",
-   "texto": "Já ganhou 200 Robux!",
+   "texto": "Já ganhou 20 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 200 Robux!"
+   "fala": "Já ganhou 20 moedas!"
   },
   {
    "chave": "4fc0caa113",
@@ -26736,13 +26736,13 @@
    "fala": "Já fez onze de 25 salas."
   },
   {
-   "chave": "6b3af639z",
+   "chave": "2f0bd0d4z",
    "voz": "npc-lp-rabisco",
-   "texto": "Já ganhou 220 Robux!",
+   "texto": "Já ganhou 22 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 220 Robux!"
+   "fala": "Já ganhou 22 moedas!"
   },
   {
    "chave": "a9ce6bfd13",
@@ -26754,13 +26754,13 @@
    "fala": "Já fez doze de 25 salas."
   },
   {
-   "chave": "a75d6d4fz",
+   "chave": "9f5968fez",
    "voz": "npc-lp-rabisco",
-   "texto": "Já ganhou 240 Robux!",
+   "texto": "Já ganhou 24 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 240 Robux!"
+   "fala": "Já ganhou 24 moedas!"
   },
   {
    "chave": "ed888c7314",
@@ -26772,13 +26772,13 @@
    "fala": "Já fez treze de 25 salas."
   },
   {
-   "chave": "783bb6cdz",
+   "chave": "66715fb8z",
    "voz": "npc-lp-rabisco",
-   "texto": "Já ganhou 260 Robux!",
+   "texto": "Já ganhou 26 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 260 Robux!"
+   "fala": "Já ganhou 26 moedas!"
   },
   {
    "chave": "af0ad36716",
@@ -26790,13 +26790,13 @@
    "fala": "Já fez catorze de 25 salas."
   },
   {
-   "chave": "b18c2e13z",
+   "chave": "4c488e62z",
    "voz": "npc-lp-rabisco",
-   "texto": "Já ganhou 280 Robux!",
+   "texto": "Já ganhou 28 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 280 Robux!"
+   "fala": "Já ganhou 28 moedas!"
   },
   {
    "chave": "83f6dd2915",
@@ -26808,13 +26808,13 @@
    "fala": "Já fez quinze de 25 salas."
   },
   {
-   "chave": "e58d6e7az",
+   "chave": "1fd52af3z",
    "voz": "npc-lp-rabisco",
-   "texto": "Já ganhou 300 Robux!",
+   "texto": "Já ganhou 30 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 300 Robux!"
+   "fala": "Já ganhou 30 moedas!"
   },
   {
    "chave": "c49a331a18",
@@ -26826,13 +26826,13 @@
    "fala": "Já fez dezesseis de 25 salas."
   },
   {
-   "chave": "5550f6ccz",
+   "chave": "3d1831f9z",
    "voz": "npc-lp-rabisco",
-   "texto": "Já ganhou 320 Robux!",
+   "texto": "Já ganhou 32 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 320 Robux!"
+   "fala": "Já ganhou 32 moedas!"
   },
   {
    "chave": "df3817ef18",
@@ -26844,13 +26844,13 @@
    "fala": "Já fez dezessete de 25 salas."
   },
   {
-   "chave": "e9787776z",
+   "chave": "68b1384fz",
    "voz": "npc-lp-rabisco",
-   "texto": "Já ganhou 340 Robux!",
+   "texto": "Já ganhou 34 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 340 Robux!"
+   "fala": "Já ganhou 34 moedas!"
   },
   {
    "chave": "cba3ab5d16",
@@ -26862,13 +26862,13 @@
    "fala": "Já fez dezoito de 25 salas."
   },
   {
-   "chave": "75196fa8z",
+   "chave": "52f019a5z",
    "voz": "npc-lp-rabisco",
-   "texto": "Já ganhou 360 Robux!",
+   "texto": "Já ganhou 36 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 360 Robux!"
+   "fala": "Já ganhou 36 moedas!"
   },
   {
    "chave": "bcde31c117",
@@ -26880,13 +26880,13 @@
    "fala": "Já fez dezenove de 25 salas."
   },
   {
-   "chave": "96071652z",
+   "chave": "f80d0bebz",
    "voz": "npc-lp-rabisco",
-   "texto": "Já ganhou 380 Robux!",
+   "texto": "Já ganhou 38 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 380 Robux!"
+   "fala": "Já ganhou 38 moedas!"
   },
   {
    "chave": "1adf635d14",
@@ -26898,13 +26898,13 @@
    "fala": "Já fez vinte de 25 salas."
   },
   {
-   "chave": "ae91e151z",
+   "chave": "8d4061ccz",
    "voz": "npc-lp-rabisco",
-   "texto": "Já ganhou 400 Robux!",
+   "texto": "Já ganhou 40 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 400 Robux!"
+   "fala": "Já ganhou 40 moedas!"
   },
   {
    "chave": "8e77d1a611",
@@ -26916,13 +26916,13 @@
    "fala": "Já fez 21 de 25 salas."
   },
   {
-   "chave": "6eee5383z",
+   "chave": "1965cd32z",
    "voz": "npc-lp-rabisco",
-   "texto": "Já ganhou 420 Robux!",
+   "texto": "Já ganhou 42 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 420 Robux!"
+   "fala": "Já ganhou 42 moedas!"
   },
   {
    "chave": "cef094f511",
@@ -26934,13 +26934,13 @@
    "fala": "Já fez 22 de 25 salas."
   },
   {
-   "chave": "e3df97e5z",
+   "chave": "1483d030z",
    "voz": "npc-lp-rabisco",
-   "texto": "Já ganhou 440 Robux!",
+   "texto": "Já ganhou 44 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 440 Robux!"
+   "fala": "Já ganhou 44 moedas!"
   },
   {
    "chave": "b3d92f1011",
@@ -26952,13 +26952,13 @@
    "fala": "Já fez 23 de 25 salas."
   },
   {
-   "chave": "cd7493e7z",
+   "chave": "9d658d36z",
    "voz": "npc-lp-rabisco",
-   "texto": "Já ganhou 460 Robux!",
+   "texto": "Já ganhou 46 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 460 Robux!"
+   "fala": "Já ganhou 46 moedas!"
   },
   {
    "chave": "aca481af11",
@@ -26970,13 +26970,13 @@
    "fala": "Já fez 24 de 25 salas."
   },
   {
-   "chave": "183948e9z",
+   "chave": "255c6a24z",
    "voz": "npc-lp-rabisco",
-   "texto": "Já ganhou 480 Robux!",
+   "texto": "Já ganhou 48 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 480 Robux!"
+   "fala": "Já ganhou 48 moedas!"
   },
   {
    "chave": "41be809c10",
@@ -26988,13 +26988,13 @@
    "fala": "Você fez as 25 salas!"
   },
   {
-   "chave": "4c314d08z",
+   "chave": "34650645z",
    "voz": "npc-lp-rabisco",
-   "texto": "Já ganhou 500 Robux!",
+   "texto": "Já ganhou 50 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 500 Robux!"
+   "fala": "Já ganhou 50 moedas!"
   },
   {
    "chave": "dfff99511a",
@@ -27312,13 +27312,13 @@
    "fala": "Já fez uma de 25 salas."
   },
   {
-   "chave": "59751757y",
+   "chave": "46e23186y",
    "voz": "npc-lp-melodia",
-   "texto": "Já ganhou 20 Robux!",
+   "texto": "Já ganhou 2 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 20 Robux!"
+   "fala": "Já ganhou 2 moedas!"
   },
   {
    "chave": "ec5804f413",
@@ -27330,13 +27330,13 @@
    "fala": "Já fez duas de 25 salas."
   },
   {
-   "chave": "b37a1601y",
+   "chave": "0b1cec9cy",
    "voz": "npc-lp-melodia",
-   "texto": "Já ganhou 40 Robux!",
+   "texto": "Já ganhou 4 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 40 Robux!"
+   "fala": "Já ganhou 4 moedas!"
   },
   {
    "chave": "6c0a154a13",
@@ -27348,13 +27348,13 @@
    "fala": "Já fez três de 25 salas."
   },
   {
-   "chave": "259ee4b3y",
+   "chave": "d49b3042y",
    "voz": "npc-lp-melodia",
-   "texto": "Já ganhou 60 Robux!",
+   "texto": "Já ganhou 6 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 60 Robux!"
+   "fala": "Já ganhou 6 moedas!"
   },
   {
    "chave": "0ed848f915",
@@ -27366,13 +27366,13 @@
    "fala": "Já fez quatro de 25 salas."
   },
   {
-   "chave": "68c7c36dy",
+   "chave": "e3246098y",
    "voz": "npc-lp-melodia",
-   "texto": "Já ganhou 80 Robux!",
+   "texto": "Já ganhou 8 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 80 Robux!"
+   "fala": "Já ganhou 8 moedas!"
   },
   {
    "chave": "633aa74314",
@@ -27384,13 +27384,13 @@
    "fala": "Já fez cinco de 25 salas."
   },
   {
-   "chave": "534251ecz",
+   "chave": "a263f0d9z",
    "voz": "npc-lp-melodia",
-   "texto": "Já ganhou 100 Robux!",
+   "texto": "Já ganhou 10 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 100 Robux!"
+   "fala": "Já ganhou 10 moedas!"
   },
   {
    "chave": "b9ed997d13",
@@ -27402,13 +27402,13 @@
    "fala": "Já fez seis de 25 salas."
   },
   {
-   "chave": "7c5ed49az",
+   "chave": "43cabed3z",
    "voz": "npc-lp-melodia",
-   "texto": "Já ganhou 120 Robux!",
+   "texto": "Já ganhou 12 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 120 Robux!"
+   "fala": "Já ganhou 12 moedas!"
   },
   {
    "chave": "52d07c6813",
@@ -27420,13 +27420,13 @@
    "fala": "Já fez sete de 25 salas."
   },
   {
-   "chave": "06367848z",
+   "chave": "977ca305z",
    "voz": "npc-lp-melodia",
-   "texto": "Já ganhou 140 Robux!",
+   "texto": "Já ganhou 14 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 140 Robux!"
+   "fala": "Já ganhou 14 moedas!"
   },
   {
    "chave": "982cb1f613",
@@ -27438,13 +27438,13 @@
    "fala": "Já fez oito de 25 salas."
   },
   {
-   "chave": "00969316z",
+   "chave": "8a708bafz",
    "voz": "npc-lp-melodia",
-   "texto": "Já ganhou 160 Robux!",
+   "texto": "Já ganhou 16 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 160 Robux!"
+   "fala": "Já ganhou 16 moedas!"
   },
   {
    "chave": "ec8399c713",
@@ -27456,13 +27456,13 @@
    "fala": "Já fez nove de 25 salas."
   },
   {
-   "chave": "c82cb8a4z",
+   "chave": "c3e3d931z",
    "voz": "npc-lp-melodia",
-   "texto": "Já ganhou 180 Robux!",
+   "texto": "Já ganhou 18 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 180 Robux!"
+   "fala": "Já ganhou 18 moedas!"
   },
   {
    "chave": "dfbd078a12",
@@ -27474,13 +27474,13 @@
    "fala": "Já fez dez de 25 salas."
   },
   {
-   "chave": "44f17523z",
+   "chave": "b6b4a112z",
    "voz": "npc-lp-melodia",
-   "texto": "Já ganhou 200 Robux!",
+   "texto": "Já ganhou 20 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 200 Robux!"
+   "fala": "Já ganhou 20 moedas!"
   },
   {
    "chave": "9243616913",
@@ -27492,13 +27492,13 @@
    "fala": "Já fez onze de 25 salas."
   },
   {
-   "chave": "8b3c8c71z",
+   "chave": "8774932cz",
    "voz": "npc-lp-melodia",
-   "texto": "Já ganhou 220 Robux!",
+   "texto": "Já ganhou 22 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 220 Robux!"
+   "fala": "Já ganhou 22 moedas!"
   },
   {
    "chave": "6dadd43513",
@@ -27510,13 +27510,13 @@
    "fala": "Já fez doze de 25 salas."
   },
   {
-   "chave": "79b30d87z",
+   "chave": "10ab9096z",
    "voz": "npc-lp-melodia",
-   "texto": "Já ganhou 240 Robux!",
+   "texto": "Já ganhou 24 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 240 Robux!"
+   "fala": "Já ganhou 24 moedas!"
   },
   {
    "chave": "c946e90b14",
@@ -27528,13 +27528,13 @@
    "fala": "Já fez treze de 25 salas."
   },
   {
-   "chave": "13fce985z",
+   "chave": "b87a2d90z",
    "voz": "npc-lp-melodia",
-   "texto": "Já ganhou 260 Robux!",
+   "texto": "Já ganhou 26 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 260 Robux!"
+   "fala": "Já ganhou 26 moedas!"
   },
   {
    "chave": "a0911f2f16",
@@ -27546,13 +27546,13 @@
    "fala": "Já fez catorze de 25 salas."
   },
   {
-   "chave": "e758377bz",
+   "chave": "2de1f02az",
    "voz": "npc-lp-melodia",
-   "texto": "Já ganhou 280 Robux!",
+   "texto": "Já ganhou 28 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 280 Robux!"
+   "fala": "Já ganhou 28 moedas!"
   },
   {
    "chave": "31936f7115",
@@ -27564,13 +27564,13 @@
    "fala": "Já fez quinze de 25 salas."
   },
   {
-   "chave": "c32e1bd2z",
+   "chave": "2534116bz",
    "voz": "npc-lp-melodia",
-   "texto": "Já ganhou 300 Robux!",
+   "texto": "Já ganhou 30 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 300 Robux!"
+   "fala": "Já ganhou 30 moedas!"
   },
   {
    "chave": "2b87db4218",
@@ -27582,13 +27582,13 @@
    "fala": "Já fez dezesseis de 25 salas."
   },
   {
-   "chave": "18667d84z",
+   "chave": "a586e351z",
    "voz": "npc-lp-melodia",
-   "texto": "Já ganhou 320 Robux!",
+   "texto": "Já ganhou 32 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 320 Robux!"
+   "fala": "Já ganhou 32 moedas!"
   },
   {
    "chave": "f94325c718",
@@ -27600,13 +27600,13 @@
    "fala": "Já fez dezessete de 25 salas."
   },
   {
-   "chave": "670ce8eez",
+   "chave": "06944747z",
    "voz": "npc-lp-melodia",
-   "texto": "Já ganhou 340 Robux!",
+   "texto": "Já ganhou 34 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 340 Robux!"
+   "fala": "Já ganhou 34 moedas!"
   },
   {
    "chave": "4ac8344516",
@@ -27618,13 +27618,13 @@
    "fala": "Já fez dezoito de 25 salas."
   },
   {
-   "chave": "ab4062c0z",
+   "chave": "73bb41bdz",
    "voz": "npc-lp-melodia",
-   "texto": "Já ganhou 360 Robux!",
+   "texto": "Já ganhou 36 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 360 Robux!"
+   "fala": "Já ganhou 36 moedas!"
   },
   {
    "chave": "138c25a917",
@@ -27636,13 +27636,13 @@
    "fala": "Já fez dezenove de 25 salas."
   },
   {
-   "chave": "12b473faz",
+   "chave": "4cfc3073z",
    "voz": "npc-lp-melodia",
-   "texto": "Já ganhou 380 Robux!",
+   "texto": "Já ganhou 38 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 380 Robux!"
+   "fala": "Já ganhou 38 moedas!"
   },
   {
    "chave": "ebd1c52514",
@@ -27654,13 +27654,13 @@
    "fala": "Já fez vinte de 25 salas."
   },
   {
-   "chave": "45604e69z",
+   "chave": "52836fa4z",
    "voz": "npc-lp-melodia",
-   "texto": "Já ganhou 400 Robux!",
+   "texto": "Já ganhou 40 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 400 Robux!"
+   "fala": "Já ganhou 40 moedas!"
   },
   {
    "chave": "fa2d199e11",
@@ -27672,13 +27672,13 @@
    "fala": "Já fez 21 de 25 salas."
   },
   {
-   "chave": "8f5d1e5bz",
+   "chave": "9dc5e34az",
    "voz": "npc-lp-melodia",
-   "texto": "Já ganhou 420 Robux!",
+   "texto": "Já ganhou 42 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 420 Robux!"
+   "fala": "Já ganhou 42 moedas!"
   },
   {
    "chave": "da1e2d0d11",
@@ -27690,13 +27690,13 @@
    "fala": "Já fez 22 de 25 salas."
   },
   {
-   "chave": "f4695f7dz",
+   "chave": "cabdaec8z",
    "voz": "npc-lp-melodia",
-   "texto": "Já ganhou 440 Robux!",
+   "texto": "Já ganhou 44 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 440 Robux!"
+   "fala": "Já ganhou 44 moedas!"
   },
   {
    "chave": "3c34942811",
@@ -27708,13 +27708,13 @@
    "fala": "Já fez 23 de 25 salas."
   },
   {
-   "chave": "d1e6fcffz",
+   "chave": "8ddada0ez",
    "voz": "npc-lp-melodia",
-   "texto": "Já ganhou 460 Robux!",
+   "texto": "Já ganhou 46 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 460 Robux!"
+   "fala": "Já ganhou 46 moedas!"
   },
   {
    "chave": "7c786e8711",
@@ -27726,13 +27726,13 @@
    "fala": "Já fez 24 de 25 salas."
   },
   {
-   "chave": "dbb8e6d1z",
+   "chave": "ba67674cz",
    "voz": "npc-lp-melodia",
-   "texto": "Já ganhou 480 Robux!",
+   "texto": "Já ganhou 48 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 480 Robux!"
+   "fala": "Já ganhou 48 moedas!"
   },
   {
    "chave": "24c343c410",
@@ -27744,13 +27744,13 @@
    "fala": "Você fez as 25 salas!"
   },
   {
-   "chave": "df47ab20z",
+   "chave": "b48ff4ddz",
    "voz": "npc-lp-melodia",
-   "texto": "Já ganhou 500 Robux!",
+   "texto": "Já ganhou 50 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 500 Robux!"
+   "fala": "Já ganhou 50 moedas!"
   },
   {
    "chave": "fe13a7091a",
@@ -28068,13 +28068,13 @@
    "fala": "Já fez uma de 25 salas."
   },
   {
-   "chave": "c58079c6v",
+   "chave": "b68a783fv",
    "voz": "npc-lp-tito",
-   "texto": "Já ganhou 20 Robux!",
+   "texto": "Já ganhou 2 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 20 Robux!"
+   "fala": "Já ganhou 2 moedas!"
   },
   {
    "chave": "87d6585710",
@@ -28086,13 +28086,13 @@
    "fala": "Já fez duas de 25 salas."
   },
   {
-   "chave": "bf07a69cv",
+   "chave": "d52f0be9v",
    "voz": "npc-lp-tito",
-   "texto": "Já ganhou 40 Robux!",
+   "texto": "Já ganhou 4 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 40 Robux!"
+   "fala": "Já ganhou 4 moedas!"
   },
   {
    "chave": "0e73a04510",
@@ -28104,13 +28104,13 @@
    "fala": "Já fez três de 25 salas."
   },
   {
-   "chave": "e329f38av",
+   "chave": "29b3fca3v",
    "voz": "npc-lp-tito",
-   "texto": "Já ganhou 60 Robux!",
+   "texto": "Já ganhou 6 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 60 Robux!"
+   "fala": "Já ganhou 6 moedas!"
   },
   {
    "chave": "7309f33612",
@@ -28122,13 +28122,13 @@
    "fala": "Já fez quatro de 25 salas."
   },
   {
-   "chave": "273334d0v",
+   "chave": "e9a178adv",
    "voz": "npc-lp-tito",
-   "texto": "Já ganhou 80 Robux!",
+   "texto": "Já ganhou 8 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 80 Robux!"
+   "fala": "Já ganhou 8 moedas!"
   },
   {
    "chave": "be8dc4b211",
@@ -28140,13 +28140,13 @@
    "fala": "Já fez cinco de 25 salas."
   },
   {
-   "chave": "d35ee967w",
+   "chave": "a34fe2b6w",
    "voz": "npc-lp-tito",
-   "texto": "Já ganhou 100 Robux!",
+   "texto": "Já ganhou 10 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 100 Robux!"
+   "fala": "Já ganhou 10 moedas!"
   },
   {
    "chave": "0e86972210",
@@ -28158,13 +28158,13 @@
    "fala": "Já fez seis de 25 salas."
   },
   {
-   "chave": "e9c9ed65w",
+   "chave": "1a6e25b0w",
    "voz": "npc-lp-tito",
-   "texto": "Já ganhou 120 Robux!",
+   "texto": "Já ganhou 12 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 120 Robux!"
+   "fala": "Já ganhou 12 moedas!"
   },
   {
    "chave": "8a6ca1a710",
@@ -28176,13 +28176,13 @@
    "fala": "Já fez sete de 25 salas."
   },
   {
-   "chave": "74d8a903w",
+   "chave": "1f5022b2w",
    "voz": "npc-lp-tito",
-   "texto": "Já ganhou 140 Robux!",
+   "texto": "Já ganhou 14 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 140 Robux!"
+   "fala": "Já ganhou 14 moedas!"
   },
   {
    "chave": "5cf91e5110",
@@ -28194,13 +28194,13 @@
    "fala": "Já fez oito de 25 salas."
   },
   {
-   "chave": "b47c36d1w",
+   "chave": "932ab74cw",
    "voz": "npc-lp-tito",
-   "texto": "Já ganhou 160 Robux!",
+   "texto": "Já ganhou 16 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 160 Robux!"
+   "fala": "Já ganhou 16 moedas!"
   },
   {
    "chave": "52ec439c10",
@@ -28212,13 +28212,13 @@
    "fala": "Já fez nove de 25 salas."
   },
   {
-   "chave": "aaaa4cffw",
+   "chave": "669e2a0ew",
    "voz": "npc-lp-tito",
-   "texto": "Já ganhou 180 Robux!",
+   "texto": "Já ganhou 18 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 180 Robux!"
+   "fala": "Já ganhou 18 moedas!"
   },
   {
    "chave": "b31e862bz",
@@ -28230,13 +28230,13 @@
    "fala": "Já fez dez de 25 salas."
   },
   {
-   "chave": "cc2898b0w",
+   "chave": "9b0c194dw",
    "voz": "npc-lp-tito",
-   "texto": "Já ganhou 200 Robux!",
+   "texto": "Já ganhou 20 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 200 Robux!"
+   "fala": "Já ganhou 20 moedas!"
   },
   {
    "chave": "ec0733ca10",
@@ -28248,13 +28248,13 @@
    "fala": "Já fez onze de 25 salas."
   },
   {
-   "chave": "d9ad79dew",
+   "chave": "bc2ec4d7w",
    "voz": "npc-lp-tito",
-   "texto": "Já ganhou 220 Robux!",
+   "texto": "Já ganhou 22 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 220 Robux!"
+   "fala": "Já ganhou 22 moedas!"
   },
   {
    "chave": "45bcd72a10",
@@ -28266,13 +28266,13 @@
    "fala": "Já fez doze de 25 salas."
   },
   {
-   "chave": "c897baf4w",
+   "chave": "465ad961w",
    "voz": "npc-lp-tito",
-   "texto": "Já ganhou 240 Robux!",
+   "texto": "Já ganhou 24 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 240 Robux!"
+   "fala": "Já ganhou 24 moedas!"
   },
   {
    "chave": "b008f82e11",
@@ -28284,13 +28284,13 @@
    "fala": "Já fez treze de 25 salas."
   },
   {
-   "chave": "23aa0dc2w",
+   "chave": "17a8ef7bw",
    "voz": "npc-lp-tito",
-   "texto": "Já ganhou 260 Robux!",
+   "texto": "Já ganhou 26 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 260 Robux!"
+   "fala": "Já ganhou 26 moedas!"
   },
   {
    "chave": "150f1bf213",
@@ -28302,13 +28302,13 @@
    "fala": "Já fez catorze de 25 salas."
   },
   {
-   "chave": "c2bc0258w",
+   "chave": "650e4f35w",
    "voz": "npc-lp-tito",
-   "texto": "Já ganhou 280 Robux!",
+   "texto": "Já ganhou 28 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 280 Robux!"
+   "fala": "Já ganhou 28 moedas!"
   },
   {
    "chave": "a959df7612",
@@ -28320,13 +28320,13 @@
    "fala": "Já fez quinze de 25 salas."
   },
   {
-   "chave": "71254bb9w",
+   "chave": "34f62654w",
    "voz": "npc-lp-tito",
-   "texto": "Já ganhou 300 Robux!",
+   "texto": "Já ganhou 30 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 300 Robux!"
+   "fala": "Já ganhou 30 moedas!"
   },
   {
    "chave": "8272df1b15",
@@ -28338,13 +28338,13 @@
    "fala": "Já fez dezesseis de 25 salas."
   },
   {
-   "chave": "0b90a86bw",
+   "chave": "d576e3baw",
    "voz": "npc-lp-tito",
-   "texto": "Já ganhou 320 Robux!",
+   "texto": "Já ganhou 32 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 320 Robux!"
+   "fala": "Já ganhou 32 moedas!"
   },
   {
    "chave": "63971f6215",
@@ -28356,13 +28356,13 @@
    "fala": "Já fez dezessete de 25 salas."
   },
   {
-   "chave": "7e260c4dw",
+   "chave": "6c5bb538w",
    "voz": "npc-lp-tito",
-   "texto": "Já ganhou 340 Robux!",
+   "texto": "Já ganhou 34 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 340 Robux!"
+   "fala": "Já ganhou 34 moedas!"
   },
   {
    "chave": "8628693413",
@@ -28374,13 +28374,13 @@
    "fala": "Já fez dezoito de 25 salas."
   },
   {
-   "chave": "ad47c2cfw",
+   "chave": "a543be7ew",
    "voz": "npc-lp-tito",
-   "texto": "Já ganhou 360 Robux!",
+   "texto": "Já ganhou 36 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 360 Robux!"
+   "fala": "Já ganhou 36 moedas!"
   },
   {
    "chave": "68eeee5614",
@@ -28392,13 +28392,13 @@
    "fala": "Já fez dezenove de 25 salas."
   },
   {
-   "chave": "81574be1w",
+   "chave": "36c9d83cw",
    "voz": "npc-lp-tito",
-   "texto": "Já ganhou 380 Robux!",
+   "texto": "Já ganhou 38 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 380 Robux!"
+   "fala": "Já ganhou 38 moedas!"
   },
   {
    "chave": "213b44f411",
@@ -28410,13 +28410,13 @@
    "fala": "Já fez vinte de 25 salas."
   },
   {
-   "chave": "a05255e2w",
+   "chave": "5d7afc5bw",
    "voz": "npc-lp-tito",
-   "texto": "Já ganhou 400 Robux!",
+   "texto": "Já ganhou 40 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 400 Robux!"
+   "fala": "Já ganhou 40 moedas!"
   },
   {
    "chave": "905fcf59y",
@@ -28428,13 +28428,13 @@
    "fala": "Já fez 21 de 25 salas."
   },
   {
-   "chave": "a86ca414w",
+   "chave": "30da50c1w",
    "voz": "npc-lp-tito",
-   "texto": "Já ganhou 420 Robux!",
+   "texto": "Já ganhou 42 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 420 Robux!"
+   "fala": "Já ganhou 42 moedas!"
   },
   {
    "chave": "33ae00fay",
@@ -28446,13 +28446,13 @@
    "fala": "Já fez 22 de 25 salas."
   },
   {
-   "chave": "8294d2few",
+   "chave": "0165d3b7w",
    "voz": "npc-lp-tito",
-   "texto": "Já ganhou 440 Robux!",
+   "texto": "Já ganhou 44 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 440 Robux!"
+   "fala": "Já ganhou 44 moedas!"
   },
   {
    "chave": "4b77878fy",
@@ -28464,13 +28464,13 @@
    "fala": "Já fez 23 de 25 salas."
   },
   {
-   "chave": "ed261d50w",
+   "chave": "af94612dw",
    "voz": "npc-lp-tito",
-   "texto": "Já ganhou 460 Robux!",
+   "texto": "Já ganhou 46 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 460 Robux!"
+   "fala": "Já ganhou 46 moedas!"
   },
   {
    "chave": "4effb870y",
@@ -28482,13 +28482,13 @@
    "fala": "Já fez 24 de 25 salas."
   },
   {
-   "chave": "a91cdc0aw",
+   "chave": "efa6e523w",
    "voz": "npc-lp-tito",
-   "texto": "Já ganhou 480 Robux!",
+   "texto": "Já ganhou 48 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 480 Robux!"
+   "fala": "Já ganhou 48 moedas!"
   },
   {
    "chave": "8a16d3a5x",
@@ -28500,13 +28500,13 @@
    "fala": "Você fez as 25 salas!"
   },
   {
-   "chave": "171ea6b3w",
+   "chave": "c61af242w",
    "voz": "npc-lp-tito",
-   "texto": "Já ganhou 500 Robux!",
+   "texto": "Já ganhou 50 moedas!",
    "pacotes": [
     "interior-portugues"
    ],
-   "fala": "Já ganhou 500 Robux!"
+   "fala": "Já ganhou 50 moedas!"
   },
   {
    "chave": "e6ddd87c17",
@@ -29868,13 +29868,13 @@
    "fala": "Já fez uma de treze salas."
   },
   {
-   "chave": "835738acw",
+   "chave": "4f121d19w",
    "voz": "npc-ponteiro",
-   "texto": "Já ganhou 30 Robux!",
+   "texto": "Já ganhou 3 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 30 Robux!"
+   "fala": "Já ganhou 3 moedas!"
   },
   {
    "chave": "6818f45d14",
@@ -29886,13 +29886,13 @@
    "fala": "Já fez duas de treze salas."
   },
   {
-   "chave": "022d81d3w",
+   "chave": "920fb3a2w",
    "voz": "npc-ponteiro",
-   "texto": "Já ganhou 60 Robux!",
+   "texto": "Já ganhou 6 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 60 Robux!"
+   "fala": "Já ganhou 6 moedas!"
   },
   {
    "chave": "9dc135db14",
@@ -29904,13 +29904,13 @@
    "fala": "Já fez três de treze salas."
   },
   {
-   "chave": "f7840732w",
+   "chave": "8e3d5b8bw",
    "voz": "npc-ponteiro",
-   "texto": "Já ganhou 90 Robux!",
+   "texto": "Já ganhou 9 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 90 Robux!"
+   "fala": "Já ganhou 9 moedas!"
   },
   {
    "chave": "2758ca6616",
@@ -29922,13 +29922,13 @@
    "fala": "Já fez quatro de treze salas."
   },
   {
-   "chave": "086bab3ax",
+   "chave": "c4875a33x",
    "voz": "npc-ponteiro",
-   "texto": "Já ganhou 120 Robux!",
+   "texto": "Já ganhou 12 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 120 Robux!"
+   "fala": "Já ganhou 12 moedas!"
   },
   {
    "chave": "c3484b5815",
@@ -29940,13 +29940,13 @@
    "fala": "Já fez cinco de treze salas."
   },
   {
-   "chave": "f3520cb3x",
+   "chave": "a24e5842x",
    "voz": "npc-ponteiro",
-   "texto": "Já ganhou 150 Robux!",
+   "texto": "Já ganhou 15 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 150 Robux!"
+   "fala": "Já ganhou 15 moedas!"
   },
   {
    "chave": "09b27af214",
@@ -29958,13 +29958,13 @@
    "fala": "Já fez seis de treze salas."
   },
   {
-   "chave": "002beac4x",
+   "chave": "9c33b011x",
    "voz": "npc-ponteiro",
-   "texto": "Já ganhou 180 Robux!",
+   "texto": "Já ganhou 18 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 180 Robux!"
+   "fala": "Já ganhou 18 moedas!"
   },
   {
    "chave": "9735e1f914",
@@ -29976,13 +29976,13 @@
    "fala": "Já fez sete de treze salas."
   },
   {
-   "chave": "ed15d378x",
+   "chave": "abc1f615x",
    "voz": "npc-ponteiro",
-   "texto": "Já ganhou 210 Robux!",
+   "texto": "Já ganhou 21 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 210 Robux!"
+   "fala": "Já ganhou 21 moedas!"
   },
   {
    "chave": "75bc0e8f14",
@@ -29994,13 +29994,13 @@
    "fala": "Já fez oito de treze salas."
   },
   {
-   "chave": "b621f5a7x",
+   "chave": "3ebc7a76x",
    "voz": "npc-ponteiro",
-   "texto": "Já ganhou 240 Robux!",
+   "texto": "Já ganhou 24 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 240 Robux!"
+   "fala": "Já ganhou 24 moedas!"
   },
   {
    "chave": "820eb4a414",
@@ -30012,13 +30012,13 @@
    "fala": "Já fez nove de treze salas."
   },
   {
-   "chave": "8550420ax",
+   "chave": "cbda4b23x",
    "voz": "npc-ponteiro",
-   "texto": "Já ganhou 270 Robux!",
+   "texto": "Já ganhou 27 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 270 Robux!"
+   "fala": "Já ganhou 27 moedas!"
   },
   {
    "chave": "61109f9b13",
@@ -30030,13 +30030,13 @@
    "fala": "Já fez dez de treze salas."
   },
   {
-   "chave": "308e0cf2x",
+   "chave": "834c2ecbx",
    "voz": "npc-ponteiro",
-   "texto": "Já ganhou 300 Robux!",
+   "texto": "Já ganhou 30 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 300 Robux!"
+   "fala": "Já ganhou 30 moedas!"
   },
   {
    "chave": "75f2ced614",
@@ -30048,13 +30048,13 @@
    "fala": "Já fez onze de treze salas."
   },
   {
-   "chave": "897b28cfx",
+   "chave": "8177247ex",
    "voz": "npc-ponteiro",
-   "texto": "Já ganhou 330 Robux!",
+   "texto": "Já ganhou 33 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 330 Robux!"
+   "fala": "Já ganhou 33 moedas!"
   },
   {
    "chave": "2753bbca14",
@@ -30066,13 +30066,13 @@
    "fala": "Já fez doze de treze salas."
   },
   {
-   "chave": "528dbd60x",
+   "chave": "585a2f9dx",
    "voz": "npc-ponteiro",
-   "texto": "Já ganhou 360 Robux!",
+   "texto": "Já ganhou 36 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 360 Robux!"
+   "fala": "Já ganhou 36 moedas!"
   },
   {
    "chave": "a82c135711",
@@ -30084,13 +30084,13 @@
    "fala": "Você fez as treze salas!"
   },
   {
-   "chave": "40588540x",
+   "chave": "08d3643dx",
    "voz": "npc-ponteiro",
-   "texto": "Já ganhou 500 Robux!",
+   "texto": "Já ganhou 50 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 500 Robux!"
+   "fala": "Já ganhou 50 moedas!"
   },
   {
    "chave": "19966508r",
@@ -30318,13 +30318,13 @@
    "fala": "Já fez uma de treze salas."
   },
   {
-   "chave": "87a87db9r",
+   "chave": "4b795854r",
    "voz": "npc-ben",
-   "texto": "Já ganhou 30 Robux!",
+   "texto": "Já ganhou 3 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 30 Robux!"
+   "fala": "Já ganhou 3 moedas!"
   },
   {
    "chave": "57159becz",
@@ -30336,13 +30336,13 @@
    "fala": "Já fez duas de treze salas."
   },
   {
-   "chave": "6addd8f2r",
+   "chave": "bd9bfacbr",
    "voz": "npc-ben",
-   "texto": "Já ganhou 60 Robux!",
+   "texto": "Já ganhou 6 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 60 Robux!"
+   "fala": "Já ganhou 6 moedas!"
   },
   {
    "chave": "0e0fcd42z",
@@ -30354,13 +30354,13 @@
    "fala": "Já fez três de treze salas."
   },
   {
-   "chave": "cdf9b593r",
+   "chave": "68b615e2r",
    "voz": "npc-ben",
-   "texto": "Já ganhou 90 Robux!",
+   "texto": "Já ganhou 9 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 90 Robux!"
+   "fala": "Já ganhou 9 moedas!"
   },
   {
    "chave": "549e731711",
@@ -30372,13 +30372,13 @@
    "fala": "Já fez quatro de treze salas."
   },
   {
-   "chave": "cf140f9ds",
+   "chave": "c253dc28s",
    "voz": "npc-ben",
-   "texto": "Já ganhou 120 Robux!",
+   "texto": "Já ganhou 12 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 120 Robux!"
+   "fala": "Já ganhou 12 moedas!"
   },
   {
    "chave": "d5d22a7b10",
@@ -30390,13 +30390,13 @@
    "fala": "Já fez cinco de treze salas."
   },
   {
-   "chave": "e967acb0s",
+   "chave": "b84b2d4ds",
    "voz": "npc-ben",
-   "texto": "Já ganhou 150 Robux!",
+   "texto": "Já ganhou 15 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 150 Robux!"
+   "fala": "Já ganhou 15 moedas!"
   },
   {
    "chave": "c2cd453bz",
@@ -30408,13 +30408,13 @@
    "fala": "Já fez seis de treze salas."
   },
   {
-   "chave": "4fd6de07s",
+   "chave": "e6cf6116s",
    "voz": "npc-ben",
-   "texto": "Já ganhou 180 Robux!",
+   "texto": "Já ganhou 18 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 180 Robux!"
+   "fala": "Já ganhou 18 moedas!"
   },
   {
    "chave": "af9d421cz",
@@ -30426,13 +30426,13 @@
    "fala": "Já fez sete de treze salas."
   },
   {
-   "chave": "d4b59793s",
+   "chave": "6f71f7e2s",
    "voz": "npc-ben",
-   "texto": "Já ganhou 210 Robux!",
+   "texto": "Já ganhou 21 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 210 Robux!"
+   "fala": "Já ganhou 21 moedas!"
   },
   {
    "chave": "24dc6306z",
@@ -30444,13 +30444,13 @@
    "fala": "Já fez oito de treze salas."
   },
   {
-   "chave": "2966226cs",
+   "chave": "7887c159s",
    "voz": "npc-ben",
-   "texto": "Já ganhou 240 Robux!",
+   "texto": "Já ganhou 24 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 240 Robux!"
+   "fala": "Já ganhou 24 moedas!"
   },
   {
    "chave": "2c13c2ddz",
@@ -30462,13 +30462,13 @@
    "fala": "Já fez nove de treze salas."
   },
   {
-   "chave": "eb460cb5s",
+   "chave": "39542120s",
    "voz": "npc-ben",
-   "texto": "Já ganhou 270 Robux!",
+   "texto": "Já ganhou 27 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 270 Robux!"
+   "fala": "Já ganhou 27 moedas!"
   },
   {
    "chave": "ae0a4e58y",
@@ -30480,13 +30480,13 @@
    "fala": "Já fez dez de treze salas."
   },
   {
-   "chave": "58079211s",
+   "chave": "f21fe20cs",
    "voz": "npc-ben",
-   "texto": "Já ganhou 300 Robux!",
+   "texto": "Já ganhou 30 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 300 Robux!"
+   "fala": "Já ganhou 30 moedas!"
   },
   {
    "chave": "3c884083z",
@@ -30498,13 +30498,13 @@
    "fala": "Já fez onze de treze salas."
   },
   {
-   "chave": "2e218178s",
+   "chave": "eccda415s",
    "voz": "npc-ben",
-   "texto": "Já ganhou 330 Robux!",
+   "texto": "Já ganhou 33 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 330 Robux!"
+   "fala": "Já ganhou 33 moedas!"
   },
   {
    "chave": "de685253z",
@@ -30516,13 +30516,13 @@
    "fala": "Já fez doze de treze salas."
   },
   {
-   "chave": "f72da3a7s",
+   "chave": "7fc82876s",
    "voz": "npc-ben",
-   "texto": "Já ganhou 360 Robux!",
+   "texto": "Já ganhou 36 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 360 Robux!"
+   "fala": "Já ganhou 36 moedas!"
   },
   {
    "chave": "58e9167cw",
@@ -30534,13 +30534,13 @@
    "fala": "Você fez as treze salas!"
   },
   {
-   "chave": "10d800abs",
+   "chave": "3781757as",
    "voz": "npc-ben",
-   "texto": "Já ganhou 500 Robux!",
+   "texto": "Já ganhou 50 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 500 Robux!"
+   "fala": "Já ganhou 50 moedas!"
   },
   {
    "chave": "d2eec2b3m",
@@ -30885,13 +30885,13 @@
    "fala": "Já fez uma de treze salas."
   },
   {
-   "chave": "755f3c4bu",
+   "chave": "34e8685au",
    "voz": "npc-stella",
-   "texto": "Já ganhou 30 Robux!",
+   "texto": "Já ganhou 3 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 30 Robux!"
+   "fala": "Já ganhou 3 moedas!"
   },
   {
    "chave": "27c8b66a12",
@@ -30903,13 +30903,13 @@
    "fala": "Já fez duas de treze salas."
   },
   {
-   "chave": "3a307884u",
+   "chave": "c750de51u",
    "voz": "npc-stella",
-   "texto": "Já ganhou 60 Robux!",
+   "texto": "Já ganhou 6 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 60 Robux!"
+   "fala": "Já ganhou 6 moedas!"
   },
   {
    "chave": "f25dbf5012",
@@ -30921,13 +30921,13 @@
    "fala": "Já fez três de treze salas."
   },
   {
-   "chave": "2fb126c1u",
+   "chave": "56cfd4dcu",
    "voz": "npc-stella",
-   "texto": "Já ganhou 90 Robux!",
+   "texto": "Já ganhou 9 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 90 Robux!"
+   "fala": "Já ganhou 9 moedas!"
   },
   {
    "chave": "a62ffe6914",
@@ -30939,13 +30939,13 @@
    "fala": "Já fez quatro de treze salas."
   },
   {
-   "chave": "3e370a23v",
+   "chave": "affa3612v",
    "voz": "npc-stella",
-   "texto": "Já ganhou 120 Robux!",
+   "texto": "Já ganhou 12 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 120 Robux!"
+   "fala": "Já ganhou 12 moedas!"
   },
   {
    "chave": "dac252d913",
@@ -30957,13 +30957,13 @@
    "fala": "Já fez cinco de treze salas."
   },
   {
-   "chave": "eecb82eav",
+   "chave": "0197c2c3v",
    "voz": "npc-stella",
-   "texto": "Já ganhou 150 Robux!",
+   "texto": "Já ganhou 15 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 150 Robux!"
+   "fala": "Já ganhou 15 moedas!"
   },
   {
    "chave": "3ff2496512",
@@ -30975,13 +30975,13 @@
    "fala": "Já fez seis de treze salas."
   },
   {
-   "chave": "ccf23609v",
+   "chave": "8d375904v",
    "voz": "npc-stella",
-   "texto": "Já ganhou 180 Robux!",
+   "texto": "Já ganhou 18 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 180 Robux!"
+   "fala": "Já ganhou 18 moedas!"
   },
   {
    "chave": "5988884212",
@@ -30993,13 +30993,13 @@
    "fala": "Já fez sete de treze salas."
   },
   {
-   "chave": "379a5a79v",
+   "chave": "fa759f94v",
    "voz": "npc-stella",
-   "texto": "Já ganhou 210 Robux!",
+   "texto": "Já ganhou 21 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 210 Robux!"
+   "fala": "Já ganhou 21 moedas!"
   },
   {
    "chave": "5c6894d812",
@@ -31011,13 +31011,13 @@
    "fala": "Já fez oito de treze salas."
   },
   {
-   "chave": "70c7aeb2v",
+   "chave": "0781030bv",
    "voz": "npc-stella",
-   "texto": "Já ganhou 240 Robux!",
+   "texto": "Já ganhou 24 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 240 Robux!"
+   "fala": "Já ganhou 24 moedas!"
   },
   {
    "chave": "059c691312",
@@ -31029,13 +31029,13 @@
    "fala": "Já fez nove de treze salas."
   },
   {
-   "chave": "9d75b98fv",
+   "chave": "1250d5bev",
    "voz": "npc-stella",
-   "texto": "Já ganhou 270 Robux!",
+   "texto": "Já ganhou 27 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 270 Robux!"
+   "fala": "Já ganhou 27 moedas!"
   },
   {
    "chave": "a657c4da11",
@@ -31047,13 +31047,13 @@
    "fala": "Já fez dez de treze salas."
   },
   {
-   "chave": "cb2c91ffv",
+   "chave": "87206f0ev",
    "voz": "npc-stella",
-   "texto": "Já ganhou 300 Robux!",
+   "texto": "Já ganhou 30 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 300 Robux!"
+   "fala": "Já ganhou 30 moedas!"
   },
   {
    "chave": "f73ec7d912",
@@ -31065,13 +31065,13 @@
    "fala": "Já fez onze de treze salas."
   },
   {
-   "chave": "801419a2v",
+   "chave": "91ea009bv",
    "voz": "npc-stella",
-   "texto": "Já ganhou 330 Robux!",
+   "texto": "Já ganhou 33 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 330 Robux!"
+   "fala": "Já ganhou 33 moedas!"
   },
   {
    "chave": "0314da9512",
@@ -31083,13 +31083,13 @@
    "fala": "Já fez doze de treze salas."
   },
   {
-   "chave": "3ea5e369v",
+   "chave": "4bc904a4v",
    "voz": "npc-stella",
-   "texto": "Já ganhou 360 Robux!",
+   "texto": "Já ganhou 36 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 360 Robux!"
+   "fala": "Já ganhou 36 moedas!"
   },
   {
    "chave": "f4b57776z",
@@ -31101,13 +31101,13 @@
    "fala": "Você fez as treze salas!"
   },
   {
-   "chave": "7f50aa0dv",
+   "chave": "ddfab178v",
    "voz": "npc-stella",
-   "texto": "Já ganhou 500 Robux!",
+   "texto": "Já ganhou 50 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 500 Robux!"
+   "fala": "Já ganhou 50 moedas!"
   },
   {
    "chave": "13597f35p",
@@ -31524,13 +31524,13 @@
    "fala": "Já fez uma de treze salas."
   },
   {
-   "chave": "ed5b1cdfs",
+   "chave": "6246a6aes",
    "voz": "npc-moon",
-   "texto": "Já ganhou 30 Robux!",
+   "texto": "Já ganhou 3 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 30 Robux!"
+   "fala": "Já ganhou 3 moedas!"
   },
   {
    "chave": "da64b36610",
@@ -31542,13 +31542,13 @@
    "fala": "Já fez duas de treze salas."
   },
   {
-   "chave": "7386eb70s",
+   "chave": "9957fa8ds",
    "voz": "npc-moon",
-   "texto": "Já ganhou 60 Robux!",
+   "texto": "Já ganhou 6 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 60 Robux!"
+   "fala": "Já ganhou 6 moedas!"
   },
   {
    "chave": "aa1206a410",
@@ -31560,13 +31560,13 @@
    "fala": "Já fez três de treze salas."
   },
   {
-   "chave": "4f2f3fc5s",
+   "chave": "444c9350s",
    "voz": "npc-moon",
-   "texto": "Já ganhou 90 Robux!",
+   "texto": "Já ganhou 9 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 90 Robux!"
+   "fala": "Já ganhou 9 moedas!"
   },
   {
    "chave": "f39d437d12",
@@ -31578,13 +31578,13 @@
    "fala": "Já fez quatro de treze salas."
   },
   {
-   "chave": "7945997ft",
+   "chave": "3539768et",
    "voz": "npc-moon",
-   "texto": "Já ganhou 120 Robux!",
+   "texto": "Já ganhou 12 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 120 Robux!"
+   "fala": "Já ganhou 12 moedas!"
   },
   {
    "chave": "abea67ad11",
@@ -31596,13 +31596,13 @@
    "fala": "Já fez cinco de treze salas."
   },
   {
-   "chave": "2121ac3et",
+   "chave": "e488dd77t",
    "voz": "npc-moon",
-   "texto": "Já ganhou 150 Robux!",
+   "texto": "Já ganhou 15 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 150 Robux!"
+   "fala": "Já ganhou 15 moedas!"
   },
   {
    "chave": "e97548f910",
@@ -31614,13 +31614,13 @@
    "fala": "Já fez seis de treze salas."
   },
   {
-   "chave": "b86539e5t",
+   "chave": "e9097230t",
    "voz": "npc-moon",
-   "texto": "Já ganhou 180 Robux!",
+   "texto": "Já ganhou 18 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 180 Robux!"
+   "fala": "Já ganhou 18 moedas!"
   },
   {
    "chave": "d5f1c17610",
@@ -31632,13 +31632,13 @@
    "fala": "Já fez sete de treze salas."
   },
   {
-   "chave": "2654eea5t",
+   "chave": "55689370t",
    "voz": "npc-moon",
-   "texto": "Já ganhou 210 Robux!",
+   "texto": "Já ganhou 21 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 210 Robux!"
+   "fala": "Já ganhou 21 moedas!"
   },
   {
    "chave": "35b233fc10",
@@ -31650,13 +31650,13 @@
    "fala": "Já fez oito de treze salas."
   },
   {
-   "chave": "3f37b346t",
+   "chave": "3041b1bft",
    "voz": "npc-moon",
-   "texto": "Já ganhou 240 Robux!",
+   "texto": "Já ganhou 24 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 240 Robux!"
+   "fala": "Já ganhou 24 moedas!"
   },
   {
    "chave": "5d64f76f10",
@@ -31668,13 +31668,13 @@
    "fala": "Já fez nove de treze salas."
   },
   {
-   "chave": "e6ec5643t",
+   "chave": "2e173f72t",
    "voz": "npc-moon",
-   "texto": "Já ganhou 270 Robux!",
+   "texto": "Já ganhou 27 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 270 Robux!"
+   "fala": "Já ganhou 27 moedas!"
   },
   {
    "chave": "b35a21fez",
@@ -31686,13 +31686,13 @@
    "fala": "Já fez dez de treze salas."
   },
   {
-   "chave": "c100d73bt",
+   "chave": "ad41bf6at",
    "voz": "npc-moon",
-   "texto": "Já ganhou 300 Robux!",
+   "texto": "Já ganhou 30 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 300 Robux!"
+   "fala": "Já ganhou 30 moedas!"
   },
   {
    "chave": "87a98efd10",
@@ -31704,13 +31704,13 @@
    "fala": "Já fez onze de treze salas."
   },
   {
-   "chave": "bdc6191et",
+   "chave": "7598e697t",
    "voz": "npc-moon",
-   "texto": "Já ganhou 330 Robux!",
+   "texto": "Já ganhou 33 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 330 Robux!"
+   "fala": "Já ganhou 33 moedas!"
   },
   {
    "chave": "37a9645910",
@@ -31722,13 +31722,13 @@
    "fala": "Já fez doze de treze salas."
   },
   {
-   "chave": "4da190ddt",
+   "chave": "e00f35e8t",
    "voz": "npc-moon",
-   "texto": "Já ganhou 360 Robux!",
+   "texto": "Já ganhou 36 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 360 Robux!"
+   "fala": "Já ganhou 36 moedas!"
   },
   {
    "chave": "c54ddac2x",
@@ -31740,13 +31740,13 @@
    "fala": "Você fez as treze salas!"
   },
   {
-   "chave": "351b9ce1t",
+   "chave": "ea8e293ct",
    "voz": "npc-moon",
-   "texto": "Já ganhou 500 Robux!",
+   "texto": "Já ganhou 50 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 500 Robux!"
+   "fala": "Já ganhou 50 moedas!"
   },
   {
    "chave": "7c6bc351n",
@@ -32064,13 +32064,13 @@
    "fala": "Já fez uma de treze salas."
   },
   {
-   "chave": "b1df1efct",
+   "chave": "0f058109t",
    "voz": "npc-smile",
-   "texto": "Já ganhou 30 Robux!",
+   "texto": "Já ganhou 3 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 30 Robux!"
+   "fala": "Já ganhou 3 moedas!"
   },
   {
    "chave": "08fd2a2d11",
@@ -32082,13 +32082,13 @@
    "fala": "Já fez duas de treze salas."
   },
   {
-   "chave": "d0d88023t",
+   "chave": "429bac12t",
    "voz": "npc-smile",
-   "texto": "Já ganhou 60 Robux!",
+   "texto": "Já ganhou 6 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 60 Robux!"
+   "fala": "Já ganhou 6 moedas!"
   },
   {
    "chave": "18659a8b11",
@@ -32100,13 +32100,13 @@
    "fala": "Já fez três de treze salas."
   },
   {
-   "chave": "f6ac5c42t",
+   "chave": "eaab3dfbt",
    "voz": "npc-smile",
-   "texto": "Já ganhou 90 Robux!",
+   "texto": "Já ganhou 9 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 90 Robux!"
+   "fala": "Já ganhou 9 moedas!"
   },
   {
    "chave": "0246673613",
@@ -32118,13 +32118,13 @@
    "fala": "Já fez quatro de treze salas."
   },
   {
-   "chave": "220b438au",
+   "chave": "68954ca3u",
    "voz": "npc-smile",
-   "texto": "Já ganhou 120 Robux!",
+   "texto": "Já ganhou 12 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 120 Robux!"
+   "fala": "Já ganhou 12 moedas!"
   },
   {
    "chave": "c7c7ad4812",
@@ -32136,13 +32136,13 @@
    "fala": "Já fez cinco de treze salas."
   },
   {
-   "chave": "ac166cc3u",
+   "chave": "f34155f2u",
    "voz": "npc-smile",
-   "texto": "Já ganhou 150 Robux!",
+   "texto": "Já ganhou 15 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 150 Robux!"
+   "fala": "Já ganhou 15 moedas!"
   },
   {
    "chave": "96a6acc211",
@@ -32154,13 +32154,13 @@
    "fala": "Já fez seis de treze salas."
   },
   {
-   "chave": "215b0b94u",
+   "chave": "a9c8b841u",
    "voz": "npc-smile",
-   "texto": "Já ganhou 180 Robux!",
+   "texto": "Já ganhou 18 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 180 Robux!"
+   "fala": "Já ganhou 18 moedas!"
   },
   {
    "chave": "6cb7fc4911",
@@ -32172,13 +32172,13 @@
    "fala": "Já fez sete de treze salas."
   },
   {
-   "chave": "38099c48u",
+   "chave": "c94fc705u",
    "voz": "npc-smile",
-   "texto": "Já ganhou 210 Robux!",
+   "texto": "Já ganhou 21 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 210 Robux!"
+   "fala": "Já ganhou 21 moedas!"
   },
   {
    "chave": "bf79653f11",
@@ -32190,13 +32190,13 @@
    "fala": "Já fez oito de treze salas."
   },
   {
-   "chave": "4baaaeb7u",
+   "chave": "56673426u",
    "voz": "npc-smile",
-   "texto": "Já ganhou 240 Robux!",
+   "texto": "Já ganhou 24 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 240 Robux!"
+   "fala": "Já ganhou 24 moedas!"
   },
   {
    "chave": "a77975d411",
@@ -32208,13 +32208,13 @@
    "fala": "Já fez nove de treze salas."
   },
   {
-   "chave": "ae31f89au",
+   "chave": "759de2d3u",
    "voz": "npc-smile",
-   "texto": "Já ganhou 270 Robux!",
+   "texto": "Já ganhou 27 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 270 Robux!"
+   "fala": "Já ganhou 27 moedas!"
   },
   {
    "chave": "bfb26c6b10",
@@ -32226,13 +32226,13 @@
    "fala": "Já fez dez de treze salas."
   },
   {
-   "chave": "9c987542u",
+   "chave": "909756fbu",
    "voz": "npc-smile",
-   "texto": "Já ganhou 300 Robux!",
+   "texto": "Já ganhou 30 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 300 Robux!"
+   "fala": "Já ganhou 30 moedas!"
   },
   {
    "chave": "d1bbbc0611",
@@ -32244,13 +32244,13 @@
    "fala": "Já fez onze de treze salas."
   },
   {
-   "chave": "5600dc9fu",
+   "chave": "b07000eeu",
    "voz": "npc-smile",
-   "texto": "Já ganhou 330 Robux!",
+   "texto": "Já ganhou 33 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 330 Robux!"
+   "fala": "Já ganhou 33 moedas!"
   },
   {
    "chave": "2e7a9a7a11",
@@ -32262,13 +32262,13 @@
    "fala": "Já fez doze de treze salas."
   },
   {
-   "chave": "45170030u",
+   "chave": "13fa80cdu",
    "voz": "npc-smile",
-   "texto": "Já ganhou 360 Robux!",
+   "texto": "Já ganhou 36 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 360 Robux!"
+   "fala": "Já ganhou 36 moedas!"
   },
   {
    "chave": "da1e5287y",
@@ -32280,13 +32280,13 @@
    "fala": "Você fez as treze salas!"
   },
   {
-   "chave": "15e1a310u",
+   "chave": "f32d2f6du",
    "voz": "npc-smile",
-   "texto": "Já ganhou 500 Robux!",
+   "texto": "Já ganhou 50 moedas!",
    "pacotes": [
     "interior-torre"
    ],
-   "fala": "Já ganhou 500 Robux!"
+   "fala": "Já ganhou 50 moedas!"
   },
   {
    "chave": "984c2058o",
@@ -45429,6 +45429,123 @@
    "fala": "É o gás das bebidas com gás."
   },
   {
+   "chave": "78dca21018",
+   "voz": "npc-quimica-proveta",
+   "texto": "A cúrcuma é bem amarela.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A cúrcuma é bem amarela."
+  },
+  {
+   "chave": "9214024f1c",
+   "voz": "npc-quimica-proveta",
+   "texto": "A casca de ovo tem calcário.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A casca de ovo tem calcário."
+  },
+  {
+   "chave": "8a86cca915",
+   "voz": "npc-quimica-proveta",
+   "texto": "A batata tem enzimas.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A batata tem enzimas."
+  },
+  {
+   "chave": "30a197f516",
+   "voz": "npc-quimica-proveta",
+   "texto": "O mel é grosso e doce.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O mel é grosso e doce."
+  },
+  {
+   "chave": "5bf4680819",
+   "voz": "npc-quimica-proveta",
+   "texto": "O sabão abraça a gordura.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O sabão abraça a gordura."
+  },
+  {
+   "chave": "8505bdd218",
+   "voz": "npc-quimica-proveta",
+   "texto": "A vitamina C é um ácido.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A vitamina C é um ácido."
+  },
+  {
+   "chave": "0f30bb311b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Um chá preto bem fraquinho.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um chá preto bem fraquinho."
+  },
+  {
+   "chave": "5c301a121e",
+   "voz": "npc-quimica-proveta",
+   "texto": "A beterraba pinta de vermelho.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A beterraba pinta de vermelho."
+  },
+  {
+   "chave": "c3ef6eea1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "O magnésio é um metal leve.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O magnésio é um metal leve."
+  },
+  {
+   "chave": "71fa640015",
+   "voz": "npc-quimica-proveta",
+   "texto": "O álcool é mais leve.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O álcool é mais leve."
+  },
+  {
+   "chave": "8ac8d74e19",
+   "voz": "npc-quimica-proveta",
+   "texto": "Tinta preta de canetinha.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Tinta preta de canetinha."
+  },
+  {
+   "chave": "38fad07719",
+   "voz": "npc-quimica-proveta",
+   "texto": "O argônio é um gás nobre.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O argônio é um gás nobre."
+  },
+  {
+   "chave": "a6882bc01b",
+   "voz": "npc-quimica-proveta",
+   "texto": "O neônio brilha nas placas.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O neônio brilha nas placas."
+  },
+  {
    "chave": "2a0186d31b",
    "voz": "npc-quimica-proveta",
    "texto": "POF! Saiu espuma e confete!",
@@ -46588,6 +46705,2040 @@
     "interior-quimica"
    ],
    "fala": "Água e o gás das bebidas."
+  },
+  {
+   "chave": "2971d68719",
+   "voz": "npc-quimica-proveta",
+   "texto": "O amarelo ficou vermelho!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O amarelo ficou vermelho!"
+  },
+  {
+   "chave": "38c2280e19",
+   "voz": "npc-quimica-proveta",
+   "texto": "A cúrcuma é um indicador.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A cúrcuma é um indicador."
+  },
+  {
+   "chave": "005e122b17",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ela é amarela no ácido.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ela é amarela no ácido."
+  },
+  {
+   "chave": "4f5565581b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Na base, ela fica vermelha!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Na base, ela fica vermelha!"
+  },
+  {
+   "chave": "5d9a1f6f19",
+   "voz": "npc-quimica-proveta",
+   "texto": "Pó amarelo e o pó do POF.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Pó amarelo e o pó do pof."
+  },
+  {
+   "chave": "61fa1e831d",
+   "voz": "npc-quimica-proveta",
+   "texto": "A casca soltou muitas bolhas!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A casca soltou muitas bolhas!"
+  },
+  {
+   "chave": "4db2bdf71c",
+   "voz": "npc-quimica-proveta",
+   "texto": "A casca é feita de calcário.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A casca é feita de calcário."
+  },
+  {
+   "chave": "836f3b211a",
+   "voz": "npc-quimica-proveta",
+   "texto": "O ácido desmancha a casca.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O ácido desmancha a casca."
+  },
+  {
+   "chave": "e52e491d1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Sai gás carbônico: bolhas!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Sai gás carbônico: bolhas!"
+  },
+  {
+   "chave": "9021b12518",
+   "voz": "npc-quimica-proveta",
+   "texto": "Casca de ovo e um ácido.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Casca de ovo e um ácido."
+  },
+  {
+   "chave": "8184fa7f1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "O roxo virou rosa de novo!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O roxo virou rosa de novo!"
+  },
+  {
+   "chave": "eef3c32a16",
+   "voz": "npc-quimica-proveta",
+   "texto": "O repolho é indicador.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O repolho é indicador."
+  },
+  {
+   "chave": "689ade2819",
+   "voz": "npc-quimica-proveta",
+   "texto": "O vinagre também é ácido.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O vinagre também é ácido."
+  },
+  {
+   "chave": "81f0224e1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Todo ácido deixa ele rosa.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Todo ácido deixa ele rosa."
+  },
+  {
+   "chave": "4196c43b16",
+   "voz": "npc-quimica-proveta",
+   "texto": "O limão não é o único!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O limão não é o único!"
+  },
+  {
+   "chave": "fc83c34018",
+   "voz": "npc-quimica-proveta",
+   "texto": "Roxo com o ácido do POF.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Roxo com o ácido do pof."
+  },
+  {
+   "chave": "5e452bee19",
+   "voz": "npc-quimica-proveta",
+   "texto": "Subiram bolhas sem parar!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Subiram bolhas sem parar!"
+  },
+  {
+   "chave": "80da49db18",
+   "voz": "npc-quimica-proveta",
+   "texto": "A batata tem uma enzima.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A batata tem uma enzima."
+  },
+  {
+   "chave": "2692d32416",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ela se chama catalase.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ela se chama catalase."
+  },
+  {
+   "chave": "d9a793ed1c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ela quebra a água oxigenada.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ela quebra a água oxigenada."
+  },
+  {
+   "chave": "04a581ad19",
+   "voz": "npc-quimica-proveta",
+   "texto": "Sai gás oxigênio: bolhas!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Sai gás oxigênio: bolhas!"
+  },
+  {
+   "chave": "1818e94c1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Um legume e a da farmácia.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Um legume e a da farmácia."
+  },
+  {
+   "chave": "c51bd8f715",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ficaram três andares!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ficaram três andares!"
+  },
+  {
+   "chave": "29798b3415",
+   "voz": "npc-quimica-proveta",
+   "texto": "O mel é o mais denso.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O mel é o mais denso."
+  },
+  {
+   "chave": "dec75ba716",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ele desce até o fundo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele desce até o fundo."
+  },
+  {
+   "chave": "165bdda114",
+   "voz": "npc-quimica-proveta",
+   "texto": "A água fica no meio.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A água fica no meio."
+  },
+  {
+   "chave": "5ea088e017",
+   "voz": "npc-quimica-proveta",
+   "texto": "O óleo boia lá em cima.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O óleo boia lá em cima."
+  },
+  {
+   "chave": "7083cdde1d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Camadas teimosas e algo doce.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Camadas teimosas e algo doce."
+  },
+  {
+   "chave": "2988bc8916",
+   "voz": "npc-quimica-proveta",
+   "texto": "O óleo sumiu no sabão!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O óleo sumiu no sabão!"
+  },
+  {
+   "chave": "4d9e9bab18",
+   "voz": "npc-quimica-proveta",
+   "texto": "O sabão tem duas pontas.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O sabão tem duas pontas."
+  },
+  {
+   "chave": "4073d0881b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Uma ponta gosta de gordura.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Uma ponta gosta de gordura."
+  },
+  {
+   "chave": "4cd57ac716",
+   "voz": "npc-quimica-proveta",
+   "texto": "A outra gosta de água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A outra gosta de água."
+  },
+  {
+   "chave": "a6b8dd2f19",
+   "voz": "npc-quimica-proveta",
+   "texto": "Assim ele leva a gordura!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Assim ele leva a gordura!"
+  },
+  {
+   "chave": "2229e5ab1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "O que lava a mão e o óleo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O que lava a mão e o óleo."
+  },
+  {
+   "chave": "e49801d214",
+   "voz": "npc-quimica-proveta",
+   "texto": "O marrom foi embora!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O marrom foi embora!"
+  },
+  {
+   "chave": "8b63a3931b",
+   "voz": "npc-quimica-proveta",
+   "texto": "A tintura de iodo é marrom.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A tintura de iodo é marrom."
+  },
+  {
+   "chave": "0bb88c481b",
+   "voz": "npc-quimica-proveta",
+   "texto": "A vitamina C reage com ele.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A vitamina C reage com ele."
+  },
+  {
+   "chave": "2803e9d218",
+   "voz": "npc-quimica-proveta",
+   "texto": "O iodo vira outra coisa.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O iodo vira outra coisa."
+  },
+  {
+   "chave": "92cf8cff19",
+   "voz": "npc-quimica-proveta",
+   "texto": "E essa coisa não tem cor!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "E essa coisa não tem cor!"
+  },
+  {
+   "chave": "18bdcee81d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Vitamina e o marrom do amido.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Vitamina e o marrom do amido."
+  },
+  {
+   "chave": "cdd09a1a1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "O chá ficou mais clarinho!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O chá ficou mais clarinho!"
+  },
+  {
+   "chave": "8bfc57e114",
+   "voz": "npc-quimica-proveta",
+   "texto": "O chá tem pigmentos.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O chá tem pigmentos."
+  },
+  {
+   "chave": "f083276117",
+   "voz": "npc-quimica-proveta",
+   "texto": "Eles mudam com o ácido.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Eles mudam com o ácido."
+  },
+  {
+   "chave": "af66833016",
+   "voz": "npc-quimica-proveta",
+   "texto": "O chá fica mais claro!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O chá fica mais claro!"
+  },
+  {
+   "chave": "6213d6341c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Chá escuro e fruta azedinha.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Chá escuro e fruta azedinha."
+  },
+  {
+   "chave": "7a35950b19",
+   "voz": "npc-quimica-proveta",
+   "texto": "O vermelho ficou roxinho!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O vermelho ficou roxinho!"
+  },
+  {
+   "chave": "43b0f76a19",
+   "voz": "npc-quimica-proveta",
+   "texto": "A beterraba tem pigmento.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A beterraba tem pigmento."
+  },
+  {
+   "chave": "603c0ac817",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ele também é indicador.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele também é indicador."
+  },
+  {
+   "chave": "d5e7cb7f1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Na base, puxa para o roxo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Na base, puxa para o roxo."
+  },
+  {
+   "chave": "9ac52d6e1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Suco vermelho e pó do POF.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Suco vermelho e pó do pof."
+  },
+  {
+   "chave": "1d9ac13016",
+   "voz": "npc-quimica-proveta",
+   "texto": "O metal soltou bolhas!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O metal soltou bolhas!"
+  },
+  {
+   "chave": "e3ace23416",
+   "voz": "npc-quimica-proveta",
+   "texto": "O magnésio é um metal.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O magnésio é um metal."
+  },
+  {
+   "chave": "32f4602a16",
+   "voz": "npc-quimica-proveta",
+   "texto": "O ácido reage com ele.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O ácido reage com ele."
+  },
+  {
+   "chave": "cfca242713",
+   "voz": "npc-quimica-proveta",
+   "texto": "Sai gás hidrogênio.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Sai gás hidrogênio."
+  },
+  {
+   "chave": "b3e91a4d14",
+   "voz": "npc-quimica-proveta",
+   "texto": "O metal vai sumindo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O metal vai sumindo."
+  },
+  {
+   "chave": "956788731c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Metal leve e o ácido do POF.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Metal leve e o ácido do pof."
+  },
+  {
+   "chave": "1f22d6ad16",
+   "voz": "npc-quimica-proveta",
+   "texto": "Os dois se misturaram!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Os dois se misturaram!"
+  },
+  {
+   "chave": "2e50132716",
+   "voz": "npc-quimica-proveta",
+   "texto": "O óleo não se mistura.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O óleo não se mistura."
+  },
+  {
+   "chave": "d94d94dd18",
+   "voz": "npc-quimica-proveta",
+   "texto": "Mas o álcool se mistura.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Mas o álcool se mistura."
+  },
+  {
+   "chave": "46ec7ea118",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ele gosta muito da água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele gosta muito da água."
+  },
+  {
+   "chave": "bebc69de14",
+   "voz": "npc-quimica-proveta",
+   "texto": "Vira uma mistura só.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Vira uma mistura só."
+  },
+  {
+   "chave": "37a02eeb1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Água e um líquido levinho.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Água e um líquido levinho."
+  },
+  {
+   "chave": "728eaea91a",
+   "voz": "npc-quimica-proveta",
+   "texto": "O preto se abriu em cores!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O preto se abriu em cores!"
+  },
+  {
+   "chave": "a71e1c2a1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "A tinta preta tem segredo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A tinta preta tem segredo."
+  },
+  {
+   "chave": "d89e7af919",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ela mistura várias cores.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ela mistura várias cores."
+  },
+  {
+   "chave": "c201b8df15",
+   "voz": "npc-quimica-proveta",
+   "texto": "A água sobe no papel.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A água sobe no papel."
+  },
+  {
+   "chave": "40e8e96318",
+   "voz": "npc-quimica-proveta",
+   "texto": "Cada cor anda diferente.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Cada cor anda diferente."
+  },
+  {
+   "chave": "0867602515",
+   "voz": "npc-quimica-proveta",
+   "texto": "Isso é cromatografia!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Isso é cromatografia!"
+  },
+  {
+   "chave": "d8450a691a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Tinta de canetinha e água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Tinta de canetinha e água."
+  },
+  {
+   "chave": "4604ac6a1c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Os três gases se misturaram!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Os três gases se misturaram!"
+  },
+  {
+   "chave": "f918af2513",
+   "voz": "npc-quimica-proveta",
+   "texto": "O ar é uma mistura.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O ar é uma mistura."
+  },
+  {
+   "chave": "dafc095115",
+   "voz": "npc-quimica-proveta",
+   "texto": "Tem muito nitrogênio.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Tem muito nitrogênio."
+  },
+  {
+   "chave": "eb5cd91b14",
+   "voz": "npc-quimica-proveta",
+   "texto": "Tem oxigênio também.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Tem oxigênio também."
+  },
+  {
+   "chave": "deb102eb16",
+   "voz": "npc-quimica-proveta",
+   "texto": "E um pouco de argônio!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "E um pouco de argônio!"
+  },
+  {
+   "chave": "7993dbf11b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Gases do ar e um gás nobre.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Gases do ar e um gás nobre."
+  },
+  {
+   "chave": "d62098b11c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Os gases nobres se juntaram!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Os gases nobres se juntaram!"
+  },
+  {
+   "chave": "0312cb3f1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Hélio e neônio são nobres.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Hélio e neônio são nobres."
+  },
+  {
+   "chave": "257a6f341e",
+   "voz": "npc-quimica-proveta",
+   "texto": "Gases nobres quase não reagem.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Gases nobres quase não reagem."
+  },
+  {
+   "chave": "1468330314",
+   "voz": "npc-quimica-proveta",
+   "texto": "Eles só se misturam.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Eles só se misturam."
+  },
+  {
+   "chave": "3adeb1541a",
+   "voz": "npc-quimica-proveta",
+   "texto": "O neônio acende as placas.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O neônio acende as placas."
+  },
+  {
+   "chave": "75c976b41a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Gás do balão e das placas.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Gás do balão e das placas."
+  },
+  {
+   "chave": "ce8e061813",
+   "voz": "npc-quimica-proveta",
+   "texto": "O sabão é uma base.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O sabão é uma base."
+  },
+  {
+   "chave": "4e5563c51b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Na base, ela fica vermelha.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Na base, ela fica vermelha."
+  },
+  {
+   "chave": "db2da36217",
+   "voz": "npc-quimica-proveta",
+   "texto": "Por isso a mancha muda!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Por isso a mancha muda!"
+  },
+  {
+   "chave": "54175adf18",
+   "voz": "npc-quimica-proveta",
+   "texto": "Pó amarelo e o de lavar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Pó amarelo e o de lavar."
+  },
+  {
+   "chave": "190bd93c17",
+   "voz": "npc-quimica-proveta",
+   "texto": "A casca chiou no limão!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A casca chiou no limão!"
+  },
+  {
+   "chave": "a4626f0c17",
+   "voz": "npc-quimica-proveta",
+   "texto": "O limão também é ácido.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O limão também é ácido."
+  },
+  {
+   "chave": "93ab70dc16",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ele desmancha a casca.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele desmancha a casca."
+  },
+  {
+   "chave": "24c2158312",
+   "voz": "npc-quimica-proveta",
+   "texto": "Sai gás carbônico.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Sai gás carbônico."
+  },
+  {
+   "chave": "8975985f11",
+   "voz": "npc-quimica-proveta",
+   "texto": "Igual ao vinagre!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Igual ao vinagre!"
+  },
+  {
+   "chave": "6b5672c819",
+   "voz": "npc-quimica-proveta",
+   "texto": "Casca de ovo e uma fruta.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Casca de ovo e uma fruta."
+  },
+  {
+   "chave": "b9bd7a6416",
+   "voz": "npc-quimica-proveta",
+   "texto": "O zinco soltou bolhas!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O zinco soltou bolhas!"
+  },
+  {
+   "chave": "5489282e13",
+   "voz": "npc-quimica-proveta",
+   "texto": "O zinco é um metal.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O zinco é um metal."
+  },
+  {
+   "chave": "bffbcfd414",
+   "voz": "npc-quimica-proveta",
+   "texto": "As bolhas são o gás.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "As bolhas são o gás."
+  },
+  {
+   "chave": "4ec5d13e17",
+   "voz": "npc-quimica-proveta",
+   "texto": "Metal cinza e o do POF.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Metal cinza e o do pof."
+  },
+  {
+   "chave": "84ee500215",
+   "voz": "npc-quimica-proveta",
+   "texto": "O ferro ficou marrom!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O ferro ficou marrom!"
+  },
+  {
+   "chave": "a46c022e1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "O ferro encontra oxigênio.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O ferro encontra oxigênio."
+  },
+  {
+   "chave": "9043cfc416",
+   "voz": "npc-quimica-proveta",
+   "texto": "A água ajuda a reação.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A água ajuda a reação."
+  },
+  {
+   "chave": "a52e60b116",
+   "voz": "npc-quimica-proveta",
+   "texto": "Forma uma capa marrom.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Forma uma capa marrom."
+  },
+  {
+   "chave": "833a98ccx",
+   "voz": "npc-quimica-proveta",
+   "texto": "É a ferrugem!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "É a ferrugem!"
+  },
+  {
+   "chave": "4444263d15",
+   "voz": "npc-quimica-proveta",
+   "texto": "Metal, o ar e a água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Metal, o ar e a água."
+  },
+  {
+   "chave": "08b46b6118",
+   "voz": "npc-quimica-proveta",
+   "texto": "O chá ficou quase preto!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O chá ficou quase preto!"
+  },
+  {
+   "chave": "3268c3ce17",
+   "voz": "npc-quimica-proveta",
+   "texto": "No chá existem taninos.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "No chá existem taninos."
+  },
+  {
+   "chave": "5407dd9517",
+   "voz": "npc-quimica-proveta",
+   "texto": "O ferro reage com eles.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O ferro reage com eles."
+  },
+  {
+   "chave": "a2c7c58b17",
+   "voz": "npc-quimica-proveta",
+   "texto": "Forma um pó bem escuro.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Forma um pó bem escuro."
+  },
+  {
+   "chave": "5cbbca0b15",
+   "voz": "npc-quimica-proveta",
+   "texto": "Assim se fazia tinta!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Assim se fazia tinta!"
+  },
+  {
+   "chave": "a712424519",
+   "voz": "npc-quimica-proveta",
+   "texto": "Chá e a solução de ferro.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Chá e a solução de ferro."
+  },
+  {
+   "chave": "b9b8413919",
+   "voz": "npc-quimica-proveta",
+   "texto": "Apareceu uma nata branca!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Apareceu uma nata branca!"
+  },
+  {
+   "chave": "99ad4ea016",
+   "voz": "npc-quimica-proveta",
+   "texto": "O cálcio pega o sabão.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O cálcio pega o sabão."
+  },
+  {
+   "chave": "764be06716",
+   "voz": "npc-quimica-proveta",
+   "texto": "Forma uma nata branca.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Forma uma nata branca."
+  },
+  {
+   "chave": "d4d095f818",
+   "voz": "npc-quimica-proveta",
+   "texto": "O sabão não espuma mais.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O sabão não espuma mais."
+  },
+  {
+   "chave": "5580ac2611",
+   "voz": "npc-quimica-proveta",
+   "texto": "Isso é água dura!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Isso é água dura!"
+  },
+  {
+   "chave": "e0cf08e618",
+   "voz": "npc-quimica-proveta",
+   "texto": "Sabão e o sal de cálcio.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Sabão e o sal de cálcio."
+  },
+  {
+   "chave": "8ad9b07518",
+   "voz": "npc-quimica-proveta",
+   "texto": "Virou uma geleca maluca!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Virou uma geleca maluca!"
+  },
+  {
+   "chave": "59e3ad0a18",
+   "voz": "npc-quimica-proveta",
+   "texto": "O amido não se dissolve.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O amido não se dissolve."
+  },
+  {
+   "chave": "8cc9c8d517",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ele fica solto na água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele fica solto na água."
+  },
+  {
+   "chave": "fb7243ec18",
+   "voz": "npc-quimica-proveta",
+   "texto": "Apertando, fica durinho.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Apertando, fica durinho."
+  },
+  {
+   "chave": "d897218a16",
+   "voz": "npc-quimica-proveta",
+   "texto": "Soltando, ele escorre!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Soltando, ele escorre!"
+  },
+  {
+   "chave": "f41fd91818",
+   "voz": "npc-quimica-proveta",
+   "texto": "Água e o pó das plantas.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Água e o pó das plantas."
+  },
+  {
+   "chave": "5ca6df0717",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ficou tudo azul-escuro!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ficou tudo azul-escuro!"
+  },
+  {
+   "chave": "a3d3e87613",
+   "voz": "npc-quimica-proveta",
+   "texto": "A batata tem amido.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A batata tem amido."
+  },
+  {
+   "chave": "03f55b3b1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Juntos, ficam azul-escuro.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Juntos, ficam azul-escuro."
+  },
+  {
+   "chave": "aa5cd8f019",
+   "voz": "npc-quimica-proveta",
+   "texto": "O amido estava escondido!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O amido estava escondido!"
+  },
+  {
+   "chave": "c377f1511c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Legume e o marrom revelador.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Legume e o marrom revelador."
+  },
+  {
+   "chave": "3beb19a418",
+   "voz": "npc-quimica-proveta",
+   "texto": "Fez barulho de pastilha!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Fez barulho de pastilha!"
+  },
+  {
+   "chave": "33e57d6d13",
+   "voz": "npc-quimica-proveta",
+   "texto": "Na água, ela reage.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Na água, ela reage."
+  },
+  {
+   "chave": "c056d9ac17",
+   "voz": "npc-quimica-proveta",
+   "texto": "O bicarbonato é a base.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O bicarbonato é a base."
+  },
+  {
+   "chave": "209234241a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Sai gás carbônico: chiado!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Sai gás carbônico: chiado!"
+  },
+  {
+   "chave": "73f8a97d16",
+   "voz": "npc-quimica-proveta",
+   "texto": "Vitamina, base e água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Vitamina, base e água."
+  },
+  {
+   "chave": "1f86dd6417",
+   "voz": "npc-quimica-proveta",
+   "texto": "A cor ficou em camadas!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A cor ficou em camadas!"
+  },
+  {
+   "chave": "ca56648718",
+   "voz": "npc-quimica-proveta",
+   "texto": "Água com açúcar é densa.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Água com açúcar é densa."
+  },
+  {
+   "chave": "87b63fb819",
+   "voz": "npc-quimica-proveta",
+   "texto": "Mais açúcar, mais pesada.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Mais açúcar, mais pesada."
+  },
+  {
+   "chave": "6194900219",
+   "voz": "npc-quimica-proveta",
+   "texto": "A mais doce fica embaixo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A mais doce fica embaixo."
+  },
+  {
+   "chave": "0b993b411a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Cada camada fica no lugar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Cada camada fica no lugar."
+  },
+  {
+   "chave": "af4ad1cb14",
+   "voz": "npc-quimica-proveta",
+   "texto": "Água doce e uma cor.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Água doce e uma cor."
+  },
+  {
+   "chave": "7b6c72c61a",
+   "voz": "npc-quimica-proveta",
+   "texto": "As gotas de óleo passeiam!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "As gotas de óleo passeiam!"
+  },
+  {
+   "chave": "5f8284fa1c",
+   "voz": "npc-quimica-proveta",
+   "texto": "O óleo boia em cima da água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O óleo boia em cima da água."
+  },
+  {
+   "chave": "92e77b061c",
+   "voz": "npc-quimica-proveta",
+   "texto": "O sal leva gotas para baixo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O sal leva gotas para baixo."
+  },
+  {
+   "chave": "fd8977ab1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Na água, o sal se dissolve.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Na água, o sal se dissolve."
+  },
+  {
+   "chave": "30c8d39e16",
+   "voz": "npc-quimica-proveta",
+   "texto": "E o óleo sobe de novo!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "E o óleo sobe de novo!"
+  },
+  {
+   "chave": "6201933b1c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Água, óleo e sal de cozinha.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Água, óleo e sal de cozinha."
+  },
+  {
+   "chave": "5908077713",
+   "voz": "npc-quimica-proveta",
+   "texto": "O leite fez grumos!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O leite fez grumos!"
+  },
+  {
+   "chave": "507c8b1c15",
+   "voz": "npc-quimica-proveta",
+   "texto": "O leite tem proteína.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O leite tem proteína."
+  },
+  {
+   "chave": "3a3aa63019",
+   "voz": "npc-quimica-proveta",
+   "texto": "O ácido junta a proteína.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O ácido junta a proteína."
+  },
+  {
+   "chave": "60bb8a0c19",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ela forma grumos brancos.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ela forma grumos brancos."
+  },
+  {
+   "chave": "a27e483015",
+   "voz": "npc-quimica-proveta",
+   "texto": "Assim nasce o queijo!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Assim nasce o queijo!"
+  },
+  {
+   "chave": "5beb527917",
+   "voz": "npc-quimica-proveta",
+   "texto": "Leite e o ácido do POF.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Leite e o ácido do pof."
+  },
+  {
+   "chave": "223252cd1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Devagar, o cobre apareceu!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Devagar, o cobre apareceu!"
+  },
+  {
+   "chave": "8e4115e31d",
+   "voz": "npc-quimica-proveta",
+   "texto": "O alumínio tem uma capa fina.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O alumínio tem uma capa fina."
+  },
+  {
+   "chave": "cc7174071b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ela deixa a reação devagar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ela deixa a reação devagar."
+  },
+  {
+   "chave": "e1acf6011a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ele toma o lugar do cobre.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele toma o lugar do cobre."
+  },
+  {
+   "chave": "767d740417",
+   "voz": "npc-quimica-proveta",
+   "texto": "O cobre gruda por cima.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O cobre gruda por cima."
+  },
+  {
+   "chave": "422a491318",
+   "voz": "npc-quimica-proveta",
+   "texto": "Metal leve e o sal azul.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Metal leve e o sal azul."
+  },
+  {
+   "chave": "78a11cdf1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Brilhou uma luz branquinha!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Brilhou uma luz branquinha!"
+  },
+  {
+   "chave": "0ecc1e5c18",
+   "voz": "npc-quimica-proveta",
+   "texto": "O magnésio queima no ar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O magnésio queima no ar."
+  },
+  {
+   "chave": "27b83fc017",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ele reage com oxigênio.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele reage com oxigênio."
+  },
+  {
+   "chave": "45a32ed516",
+   "voz": "npc-quimica-proveta",
+   "texto": "Faz uma luz bem forte.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Faz uma luz bem forte."
+  },
+  {
+   "chave": "dcbbdf0d13",
+   "voz": "npc-quimica-proveta",
+   "texto": "Sobra um pó branco.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Sobra um pó branco."
+  },
+  {
+   "chave": "a771bd8c19",
+   "voz": "npc-quimica-proveta",
+   "texto": "Metal leve e o gás do ar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Metal leve e o gás do ar."
+  },
+  {
+   "chave": "a03db55d13",
+   "voz": "npc-quimica-proveta",
+   "texto": "POP! Apareceu água!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "pop! Apareceu água!"
+  },
+  {
+   "chave": "310c39f51e",
+   "voz": "npc-quimica-proveta",
+   "texto": "Hidrogênio junta com oxigênio.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Hidrogênio junta com oxigênio."
+  },
+  {
+   "chave": "ccd1b47e14",
+   "voz": "npc-quimica-proveta",
+   "texto": "Faz um barulho: POP!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Faz um barulho: pop!"
+  },
+  {
+   "chave": "ee41ebaa13",
+   "voz": "npc-quimica-proveta",
+   "texto": "Os dois viram água.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Os dois viram água."
+  },
+  {
+   "chave": "f6bc5ddb14",
+   "voz": "npc-quimica-proveta",
+   "texto": "Água, a mais famosa!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Água, a mais famosa!"
+  },
+  {
+   "chave": "8a2dfa721a",
+   "voz": "npc-quimica-proveta",
+   "texto": "O gás mais leve e o do ar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O gás mais leve e o do ar."
+  },
+  {
+   "chave": "4ccf1b5014",
+   "voz": "npc-quimica-proveta",
+   "texto": "O carbono virou gás!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O carbono virou gás!"
+  },
+  {
+   "chave": "bbb4fd4916",
+   "voz": "npc-quimica-proveta",
+   "texto": "O carvão é de carbono.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O carvão é de carbono."
+  },
+  {
+   "chave": "50c69bca18",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ele queima com oxigênio.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele queima com oxigênio."
+  },
+  {
+   "chave": "fdeaf7b216",
+   "voz": "npc-quimica-proveta",
+   "texto": "Forma o gás carbônico.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Forma o gás carbônico."
+  },
+  {
+   "chave": "a12c546118",
+   "voz": "npc-quimica-proveta",
+   "texto": "Vai embora no ar, sabia?",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Vai embora no ar, sabia?"
+  },
+  {
+   "chave": "5e82462218",
+   "voz": "npc-quimica-proveta",
+   "texto": "A grafite e o gás do ar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A grafite e o gás do ar."
+  },
+  {
+   "chave": "9adc834b16",
+   "voz": "npc-quimica-proveta",
+   "texto": "Três andares sem água!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Três andares sem água!"
+  },
+  {
+   "chave": "706bfcf114",
+   "voz": "npc-quimica-proveta",
+   "texto": "O mel fica no fundo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O mel fica no fundo."
+  },
+  {
+   "chave": "a89cd46614",
+   "voz": "npc-quimica-proveta",
+   "texto": "O óleo fica no meio.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O óleo fica no meio."
+  },
+  {
+   "chave": "654dbe9317",
+   "voz": "npc-quimica-proveta",
+   "texto": "O álcool é o mais leve.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O álcool é o mais leve."
+  },
+  {
+   "chave": "cf6a57e614",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ele boia lá no alto!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele boia lá no alto!"
+  },
+  {
+   "chave": "b9e2fefb1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Doce, frigideira e levinho.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Doce, frigideira e levinho."
+  },
+  {
+   "chave": "79acd98719",
+   "voz": "npc-quimica-proveta",
+   "texto": "As cores correram rápido!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "As cores correram rápido!"
+  },
+  {
+   "chave": "40101edc1c",
+   "voz": "npc-quimica-proveta",
+   "texto": "O álcool também carrega cor.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O álcool também carrega cor."
+  },
+  {
+   "chave": "2713055d14",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ele sobe pelo papel.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele sobe pelo papel."
+  },
+  {
+   "chave": "16741d1b14",
+   "voz": "npc-quimica-proveta",
+   "texto": "As cores se separam.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "As cores se separam."
+  },
+  {
+   "chave": "c3d8413416",
+   "voz": "npc-quimica-proveta",
+   "texto": "É outra cromatografia!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "É outra cromatografia!"
+  },
+  {
+   "chave": "325c8c3718",
+   "voz": "npc-quimica-proveta",
+   "texto": "Tinta preta e o levinho.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Tinta preta e o levinho."
+  },
+  {
+   "chave": "71c4e89a16",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ficou amarelo de ouro!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ficou amarelo de ouro!"
+  },
+  {
+   "chave": "12bd2e2f1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "A cúrcuma tem um pigmento.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A cúrcuma tem um pigmento."
+  },
+  {
+   "chave": "2c8dbc271a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ele gosta muito de álcool.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele gosta muito de álcool."
+  },
+  {
+   "chave": "188bd9f819",
+   "voz": "npc-quimica-proveta",
+   "texto": "O álcool tira a cor dela.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O álcool tira a cor dela."
+  },
+  {
+   "chave": "9cad43df17",
+   "voz": "npc-quimica-proveta",
+   "texto": "O líquido fica dourado.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O líquido fica dourado."
+  },
+  {
+   "chave": "ef30d4f917",
+   "voz": "npc-quimica-proveta",
+   "texto": "Pó amarelo e o levinho.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Pó amarelo e o levinho."
+  },
+  {
+   "chave": "0bcf52f516",
+   "voz": "npc-quimica-proveta",
+   "texto": "O roxo ficou verdinho!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O roxo ficou verdinho!"
+  },
+  {
+   "chave": "27dc8f2b18",
+   "voz": "npc-quimica-proveta",
+   "texto": "Na base, ele fica verde.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Na base, ele fica verde."
+  },
+  {
+   "chave": "b185e80115",
+   "voz": "npc-quimica-proveta",
+   "texto": "Igual ao bicarbonato!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Igual ao bicarbonato!"
+  },
+  {
+   "chave": "ea2b8b6718",
+   "voz": "npc-quimica-proveta",
+   "texto": "Roxo e o de lavar a mão.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Roxo e o de lavar a mão."
+  },
+  {
+   "chave": "97f9142e18",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ficou rosa com vitamina!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ficou rosa com vitamina!"
+  },
+  {
+   "chave": "91f8349017",
+   "voz": "npc-quimica-proveta",
+   "texto": "O repolho percebe isso.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O repolho percebe isso."
+  },
+  {
+   "chave": "b820034518",
+   "voz": "npc-quimica-proveta",
+   "texto": "No ácido, ele fica rosa.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "No ácido, ele fica rosa."
+  },
+  {
+   "chave": "65858a3c18",
+   "voz": "npc-quimica-proveta",
+   "texto": "Indicador não se engana!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Indicador não se engana!"
+  },
+  {
+   "chave": "f51fe2911b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Roxo e a vitamina azedinha.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Roxo e a vitamina azedinha."
+  },
+  {
+   "chave": "c59d9d2a19",
+   "voz": "npc-quimica-proveta",
+   "texto": "Subiu um monte de bolhas!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Subiu um monte de bolhas!"
+  },
+  {
+   "chave": "9a427c2d17",
+   "voz": "npc-quimica-proveta",
+   "texto": "O carbonato é uma base.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O carbonato é uma base."
+  },
+  {
+   "chave": "72b2da8c19",
+   "voz": "npc-quimica-proveta",
+   "texto": "Os dois fazem uma reação.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Os dois fazem uma reação."
+  },
+  {
+   "chave": "31c229fa12",
+   "voz": "npc-quimica-proveta",
+   "texto": "Sai gás carbônico!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Sai gás carbônico!"
+  },
+  {
+   "chave": "9c978f1617",
+   "voz": "npc-quimica-proveta",
+   "texto": "O carbonato e o do POF.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O carbonato e o do pof."
+  },
+  {
+   "chave": "114ae0e719",
+   "voz": "npc-quimica-proveta",
+   "texto": "Caiu uma neve branquinha!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Caiu uma neve branquinha!"
+  },
+  {
+   "chave": "17bcdc031b",
+   "voz": "npc-quimica-proveta",
+   "texto": "As duas soluções se juntam.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "As duas soluções se juntam."
+  },
+  {
+   "chave": "a4e46d4b15",
+   "voz": "npc-quimica-proveta",
+   "texto": "Forma um sólido novo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Forma um sólido novo."
+  },
+  {
+   "chave": "063c494114",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ele não se dissolve.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele não se dissolve."
+  },
+  {
+   "chave": "f1ac5c7a1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Cai como neve: precipitado!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Cai como neve: precipitado!"
+  },
+  {
+   "chave": "ac1f199c1c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Sal de magnésio e carbonato.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Sal de magnésio e carbonato."
+  },
+  {
+   "chave": "69a5c4c518",
+   "voz": "npc-quimica-proveta",
+   "texto": "Apareceu uma nuvem azul!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Apareceu uma nuvem azul!"
+  },
+  {
+   "chave": "dacd6e6b18",
+   "voz": "npc-quimica-proveta",
+   "texto": "O cobre deixa tudo azul.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O cobre deixa tudo azul."
+  },
+  {
+   "chave": "d57a5e2b1a",
+   "voz": "npc-quimica-proveta",
+   "texto": "O carbonato reage com ele.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O carbonato reage com ele."
+  },
+  {
+   "chave": "c9cf4efc1b",
+   "voz": "npc-quimica-proveta",
+   "texto": "Surge um pó azul bem claro.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Surge um pó azul bem claro."
+  },
+  {
+   "chave": "491cb61513",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ele afunda devagar.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele afunda devagar."
+  },
+  {
+   "chave": "a2acd6b219",
+   "voz": "npc-quimica-proveta",
+   "texto": "O sal azul e o carbonato.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O sal azul e o carbonato."
+  },
+  {
+   "chave": "70081eab17",
+   "voz": "npc-quimica-proveta",
+   "texto": "Apareceu um pó laranja!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Apareceu um pó laranja!"
+  },
+  {
+   "chave": "23b166391c",
+   "voz": "npc-quimica-proveta",
+   "texto": "O cloreto férrico tem ferro.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O cloreto férrico tem ferro."
+  },
+  {
+   "chave": "034454cc1c",
+   "voz": "npc-quimica-proveta",
+   "texto": "Forma um pó cor de ferrugem.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Forma um pó cor de ferrugem."
+  },
+  {
+   "chave": "b5b5bb0611",
+   "voz": "npc-quimica-proveta",
+   "texto": "Ele cai no fundo.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Ele cai no fundo."
+  },
+  {
+   "chave": "728b113d1d",
+   "voz": "npc-quimica-proveta",
+   "texto": "Solução de ferro e carbonato.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Solução de ferro e carbonato."
+  },
+  {
+   "chave": "cc04b4221a",
+   "voz": "npc-quimica-proveta",
+   "texto": "Uma torre de espuma subiu!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Uma torre de espuma subiu!"
+  },
+  {
+   "chave": "3ccbea3e19",
+   "voz": "npc-quimica-proveta",
+   "texto": "A catalase da batata age.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "A catalase da batata age."
+  },
+  {
+   "chave": "ba141d2518",
+   "voz": "npc-quimica-proveta",
+   "texto": "Quebra a água oxigenada.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Quebra a água oxigenada."
+  },
+  {
+   "chave": "de82716717",
+   "voz": "npc-quimica-proveta",
+   "texto": "Sai muito gás oxigênio.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Sai muito gás oxigênio."
+  },
+  {
+   "chave": "5c5b169718",
+   "voz": "npc-quimica-proveta",
+   "texto": "O detergente faz espuma!",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "O detergente faz espuma!"
+  },
+  {
+   "chave": "da0a80b019",
+   "voz": "npc-quimica-proveta",
+   "texto": "Legume, farmácia e sabão.",
+   "pacotes": [
+    "interior-quimica"
+   ],
+   "fala": "Legume, farmácia e sabão."
   },
   {
    "chave": "0b575e0c1a",
@@ -50962,6 +53113,51 @@
     "interior-quimica"
    ],
    "fala": "Mas essa água não é de beber!"
+  },
+  {
+   "chave": "688b2efew",
+   "voz": "claude",
+   "texto": "Um cartão novo para você!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Um cartão novo para você!"
+  },
+  {
+   "chave": "47930f96p",
+   "voz": "claude",
+   "texto": "Vamos abrir o baú?",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Vamos abrir o baú?"
+  },
+  {
+   "chave": "73aa1ac5y",
+   "voz": "claude",
+   "texto": "Experimente no Laboratório!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Experimente no Laboratório!"
+  },
+  {
+   "chave": "a1885681s",
+   "voz": "claude",
+   "texto": "Saiu um produto novo!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Saiu um produto novo!"
+  },
+  {
+   "chave": "b8a76f52t",
+   "voz": "claude",
+   "texto": "Saíram produtos novos!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Saíram produtos novos!"
   },
   {
    "chave": "6a4a021b1r",
