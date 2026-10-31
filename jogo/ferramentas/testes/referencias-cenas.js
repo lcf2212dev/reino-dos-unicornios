@@ -74,6 +74,9 @@ const TELAS = [
   ['quimica-caderno', 'Reino.UI.telaQuimicaCaderno && Reino.UI.telaQuimicaCaderno()'],
   ['quimica-microscopio', 'Reino.UI.telaQuimicaMicroscopio && Reino.UI.telaQuimicaMicroscopio()'],
   ['quimica-tabela', 'Reino.UI.telaQuimicaTabela && Reino.UI.telaQuimicaTabela()'],
+  // casa do jogador (docs/contratos/casa.md §9): o baú (o save sintético já vem aberto: esvazia só para abrir) e a escolha do kit (a base antiga não tem: guarda)
+  ['bau-casa', 'void (Reino.UI.abrirBauCasa && ((e, b) => { e.casaBau = {}; Reino.UI.abrirBauCasa(); e.casaBau = b; })(Reino.Progresso.estado(), Reino.Progresso.estado().casaBau))'],
+  ['kit-casa', 'void (Reino.UI.escolherKitCasa && Reino.UI.escolherKitCasa())'],
 ];
 async function cenasTelas(page, pasta) {
   for (const [nome, js] of TELAS) {

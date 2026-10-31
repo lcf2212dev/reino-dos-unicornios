@@ -1,0 +1,27 @@
+/* Escolha do kit de móveis da casa (js/ui/casa-kits.js): grade de cartões em --papel com a capa (canvas do
+   móvel, nítido) numa moldura clara e o nome embaixo; o escolhido ganha o fundo do certo. O brilho da festa é o
+   .festa-brilho comum (ui-animacoes.css), que já para com body.sem-animacao e prefers-reduced-motion. */
+.ckit-dica { margin: 0 0 12px; text-align: center; }
+.ckit-grade { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.ckit-cartao {
+  display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 10px 8px; min-height: 160px;
+  color: var(--tinta); background: var(--papel); cursor: pointer;
+  border: var(--borda-grossa) solid var(--borda); border-radius: var(--canto-grande);
+}
+.ckit-cartao:hover { background: var(--papel-quente); }
+.ckit-cartao.escolhido { background: var(--certo-fundo); }
+.ckit-moldura {
+  display: flex; align-items: center; justify-content: center; width: 104px; height: 104px;
+  background: var(--papel-quente); border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
+}
+.ckit-capa { display: block; image-rendering: pixelated; }
+.ckit-capa-vazia { width: 48px; height: 48px; }
+.ckit-nome { font-size: var(--texto-aux); line-height: var(--entrelinha-titulo); text-align: center; overflow-wrap: break-word; }
+.ckit-botoes { display: flex; justify-content: center; margin-top: 14px; }
+
+/* celular: 2 colunas, capa menor */
+@media (max-width: 480px) {
+  .ckit-grade { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .ckit-cartao { min-height: 140px; padding: 8px 4px; }
+  .ckit-moldura { width: 88px; height: 88px; }
+}

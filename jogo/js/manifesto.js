@@ -46,6 +46,8 @@
       'css/ui-voo.css',
       'css/ui-bau-presente.css',
       'css/ui-bau-cartao.css',
+      'css/ui-bau-casa.css',
+      'css/ui-casa-kits.css',
       'css/ui-moedas-festa.css',
     ],
     scripts: [
@@ -338,6 +340,9 @@
       { js: 'js/ui/ovos.js', grupo: 'ui' },
       { js: 'js/ui/bau-presente.js', grupo: 'ui' }, // o baú dos presentes depois do login (UI.abrirPresentesPendentes)
       { js: 'js/ui/bau-cartao.js', grupo: 'ui' }, // o baú do cartão de experiência no fim da sala (UI.abrirCartaoBau)
+      { js: 'js/ui/casa-falas.js', grupo: 'ui', node: true }, // falas do Claude no baú da casa e na escolha do kit (sem DOM)
+      { js: 'js/ui/bau-casa.js', grupo: 'ui' }, // o baú da casa do jogador ao entrar no Reino (UI.abrirBauCasa; casa.md §9)
+      { js: 'js/ui/casa-kits.js', grupo: 'ui' }, // a escolha do kit de móveis da casa (UI.escolherKitCasa, UI.casaKitsPendentes)
       { js: 'js/ui/moedas-festa.js', grupo: 'ui' }, // as moedas voando até o chip do HUD (UI.festaMoedas)
       { js: 'js/ui/lugares.js', grupo: 'ui' },
       { js: 'js/ui/ajustes.js', grupo: 'ui' },

@@ -44,7 +44,7 @@ test('abertura: festa da medalha só para a Mariana e até a data; Enter no "Ent
     await c.js("localStorage.setItem('reino-jogador-atual', 'mariana'); 1");
     const festa = await c.js(ABRIR_E_LER);
     assert.deepStrictEqual(festa, { medalha: true, faixa: '[ícone] Medalha de Ouro! [ícone]', parabens: 'Parabéns, Mariana!', bimestre: '3º bimestre',
-      titulo: 'Reino dos Unicórnios', legenda: '4º bimestre · Língua Portuguesa chegou!', botao: 'Entrar no Reino [ícone]' });
+      titulo: 'Reino dos Unicórnios', legenda: 'Nova atualização: Decore sua casa!', botao: 'Entrar no Reino [ícone]' });
 
     // Enter no botão (teclado): fanfarra e a tela fecha
     await c.js("window.__sons = []; var t0 = Reino.Som.tocar; Reino.Som.tocar = function (n) { __sons.push(n); return t0.apply(this, arguments); }; document.querySelector('.tela-inicio .btn-comecar').focus(); 1");
@@ -58,7 +58,7 @@ test('abertura: festa da medalha só para a Mariana e até a data; Enter no "Ent
     const depois = await c.js(ABRIR_E_LER);
     assert.strictEqual(depois.medalha, false, 'depois da data: sem medalha');
     assert.strictEqual(depois.faixa, null, 'depois da data: sem faixa');
-    assert.strictEqual(depois.legenda, '4º bimestre · Língua Portuguesa chegou!');
+    assert.strictEqual(depois.legenda, 'Nova atualização: Decore sua casa!');
     await c.js("Reino.config.festaMedalha.ate = __ate; 1");
 
     // 3) outro jogador lembrado neste aparelho → a entrada de sempre
@@ -66,7 +66,7 @@ test('abertura: festa da medalha só para a Mariana e até a data; Enter no "Ent
     const outro = await c.js(ABRIR_E_LER);
     assert.strictEqual(outro.medalha, false, 'outro jogador: sem medalha');
     assert.strictEqual(outro.parabens, null, 'outro jogador: sem parabéns');
-    assert.strictEqual(outro.legenda, '4º bimestre · Língua Portuguesa chegou!');
+    assert.strictEqual(outro.legenda, 'Nova atualização: Decore sua casa!');
     await c.js("Reino.UI.fecharTodas(); 1");
   } finally { await c.fechar(); }
 });

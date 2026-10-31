@@ -1,0 +1,20 @@
+/* Baú da casa (js/ui/bau-casa.js). O céu, o baú, a luz, as estrelinhas e a subida são os do baú dos presentes
+   (a tela leva .tela-presente; css/ui-bau-presente.css); aqui só o lugar da casinha que sobe (mais larga que o
+   acessório) e o desenho nítido. A subida é a .subindo (bcasa-subir, só com .animado; sem animação ela fica
+   parada no alto). */
+.tela-bau-casa [hidden] { display: none !important; }
+.bcasa-casa { margin-left: -50px; transform: translateY(-96px); }
+.bcasa-casa canvas { image-rendering: pixelated; }
+.bcasa-cena { margin-top: 48px; }   /* o telhado da casinha no alto não encosta no título */
+.tela-presente.animado .bcasa-casa.subindo { animation: bcasa-subir calc(2 * var(--lento)) steps(10) both; }
+body.sem-animacao .bcasa-casa { animation: none !important; }
+@media (prefers-reduced-motion: reduce) { .bcasa-casa { animation: none !important; } }
+
+/* celular: casinha na escala 4 (80 px) */
+@media (max-width: 480px) {
+  .bcasa-casa { margin-left: -40px; transform: translateY(-72px); }
+  .bcasa-cena { margin-top: 40px; }
+  .tela-presente.animado .bcasa-casa.subindo { animation-name: bcasa-subir-p; }
+}
+@keyframes bcasa-subir-p { from { transform: none; } to { transform: translateY(-72px); } }
+@keyframes bcasa-subir { from { transform: none; } to { transform: translateY(-96px); } }

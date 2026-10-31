@@ -30,8 +30,8 @@
       var botoes = el('div.inicio-botoes', ir);
       t.appendChild(el('div.inicio', cena.el, el('div.inicio-baixo', botoes,
         el('p.inicio-sub.inicio-materias',
-          el('span.inicio-materias-longa', '4º bimestre · Língua Portuguesa chegou!'),
-          el('span.inicio-materias-curta', 'Língua Portuguesa chegou!')))));   // curta: celular em pé
+          el('span.inicio-materias-longa', 'Nova atualização: Decore sua casa!'),
+          el('span.inicio-materias-curta', 'Decore sua casa!')))));   // curta: celular em pé
       var foi = false;
       ir.addEventListener('click', function () {
         if (foi) return;
@@ -141,7 +141,11 @@
     // pergunta surpresa (módulo): o relógio só começa depois do tutorial da primeira vez
     ctxModulo.tutorial = tutorial;
     Reino.modulos.forEach(function (m) { if (m.depoisDasBoasVindas) m.depoisDasBoasVindas(ctxModulo); });
+    // o baú da casa (ui/bau-casa.js; resolve na hora se já ganhou): antigo depois dos presentes, novo depois do tutorial
+    var casa = !Reino.congelado && UI.abrirBauCasa;
+    if (casa && novo) tutorial.then(function () { return UI.abrirBauCasa(); }).catch(function (e) { console.warn('casa:', e); });
     bau.catch(function (e) { console.warn('presentes:', e); })
+      .then(function () { if (casa && !novo) return UI.abrirBauCasa().catch(function (e) { console.warn('casa:', e); }); })
       .then(boasVindas)
       .then(function () { UI.festaMedalha.parabens(); })
       .catch(function (e) { console.warn('presentes/parabéns:', e); })   // ela já está no mapa: só não festeja

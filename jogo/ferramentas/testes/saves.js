@@ -21,6 +21,8 @@ function gerarSaves() {
       // o baú dos presentes (sistemas/presentes.js) já aberto: senão ele cobre as telas dos testes fora do modo
       // congelado; o teste do baú (presentes.navegador.test.js) esvazia o campo para vê-lo
       presentes: { 'medalhas-2026': T - 2 * H },
+      // o baú da casa (ui/bau-casa.js) já aberto, pelo mesmo motivo; casa-telas.navegador.test.js esvazia o campo
+      casaBau: { em: T - 2 * H },
     }, extra || {});
   }
   var nota = R.config.notaSucessoProva;

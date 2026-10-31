@@ -122,8 +122,8 @@ body.sem-animacao .abertura-entrando .titulo-abertura, body.sem-animacao .abertu
   .tela-inicio .btn-comecar { min-height: 50px; padding: 10px 22px; }
   .tela-inicio .inicio { gap: 8px; }
   .inicio-baixo { gap: 8px; }
-  /* celular deitado: sem a caixa "Revisão de…" (cobria a Mariana) e o botão mais embaixo (a porta do castelo aparece) */
-  .tela-inicio .inicio-materias { display: none; }
+  /* celular deitado: a legenda menor (a novidade aparece) e o botão mais embaixo (a porta do castelo aparece) */
+  .tela-inicio .inicio-materias { padding: 4px 10px; font-size: var(--texto-aux); }
   .tela-inicio .inicio { padding-bottom: 0; }
 }
 
