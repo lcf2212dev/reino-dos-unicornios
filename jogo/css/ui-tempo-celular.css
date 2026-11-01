@@ -1,0 +1,19 @@
+/* Tempo de celular (ui/tempo-celular.js): quadro do Baú, escolher os minutos, mostrar aos pais */
+.premio-tempo { background: var(--roxo-claro) !important; }
+.tempo-quadro { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; padding: 14px 18px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--roxo-claro); }
+.tempo-quadro p { margin: 0; }
+.tempo-topo { display: flex; align-items: center; gap: 14px; }
+.tempo-topo small { display: block; }
+.tempo-topo b { font-size: var(--texto-g); }
+.tempo-vazio { font-size: var(--texto-aux); color: var(--tinta-suave); }
+.tempo-seletor { display: flex; align-items: center; justify-content: center; gap: 16px; margin: 12px 0; }
+.tempo-seletor .btn-icone { min-width: 56px; min-height: 56px; font-size: var(--texto-g); }
+.tempo-escolha { min-width: 7em; text-align: center; font-size: var(--texto-g); }
+.tempo-acoes { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.tempo-festa { display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; }
+.tempo-festa p { margin: 0; }
+.tempo-icone { animation: pulinho var(--lento) step-end 3; }
+.tempo-grande { font-size: var(--texto-g); line-height: var(--entrelinha-titulo); }
+.tempo-sobra { color: var(--tinta-suave); }
+body.sem-animacao .tempo-icone { animation: none; }
+@media (prefers-reduced-motion: reduce) { .tempo-icone { animation: none; } }

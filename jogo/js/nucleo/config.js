@@ -15,6 +15,9 @@ Reino.config = {
   // cartões de experiência do Laboratório (sistemas/cartoes.js): um por sala feita (1ª vez) a partir desta data
   // (o começo do 4º bimestre); fixa, para os cartões não sumirem quando o bimestre mudar
   cartoes: { desde: '2026-10-05' },
+  // tempo de celular (sistemas/tempo-celular.js): minutos por sala feita (1ª vez) a partir de `desde`; sem teto.
+  // passo = de quantos em quantos minutos ela escolhe no Baú
+  tempoCelular: { minutosPorSala: 5, desde: '2026-11-01', passo: 5 },
   // a casa do jogador (sistemas/casa.js; docs/contratos/casa.md): 1 kit de móveis por matéria completa de um
   // bimestre >= desdeBimestre (as do 3º, arquivadas, não contam: daria todos de uma vez). kits = a ordem na tela
   // de escolha; passoGirar = a ordem das direções no botão Girar

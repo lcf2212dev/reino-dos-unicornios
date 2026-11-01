@@ -70,6 +70,12 @@ Declarados em `sistemas/casa.js` (`registrarCampo`, `novoCiclo: 'mantem'`, `copi
 `sistemas/casa-moveis.js`, `casaMoveis` (`{ <salaId>: { movel, em } }`, `carimbo`). Formato e regras derivadas:
 `casa.md` §6 e §12.
 
+### 3.3 `tempoUsos` (tempo de celular)
+`tempoUsos: { '<Date.now()>-<aleatório>': minutos }`: cada uso do tempo de celular, chave única por uso. Declarado em
+`sistemas/tempo-celular.js` (`registrarCampo`, `mesclar: 'contadores'`, `novoCiclo: 'zera'`, `copiaSeguranca: true`;
+só inteiros > 0). O ganho NÃO fica no save: é derivado das salas feitas desde `config.tempoCelular.desde`. Dois
+aparelhos usando ao mesmo tempo geram chaves diferentes, e a mescla mantém as duas.
+
 ## 4. Mescla (`P.mesclar`, mesma geração)
 ### 4.1 `cuidados` (`juntarCuidados`)
 1. Para cada `uniId` de qualquer lado, se os DOIS lados têm carimbo para a fome e para a sede (o carimbo de
