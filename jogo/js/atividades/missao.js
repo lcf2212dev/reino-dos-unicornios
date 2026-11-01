@@ -384,6 +384,7 @@
       // matéria completa (O-36): o total da matéria numa linha só
       if (premios.materiaCompleta) itens.appendChild(el('li.premio-dinheiro', el('span.premio-icone', '🪙'), el('span', materia.nome + ': ', el('b', U.moedas(Reino.config.valorPorMateria)), ' no baú!')));
       if (cartao) itens.appendChild(el('li.premio-cartao', el('span.premio-icone', '🃏'), el('span', el('b', 'Cartão de experiência novo!'))));
+      if (premios.primeiraVez && Reino.UI.premioTempo) Reino.UI.premioTempo(itens, sala.id);   // ⏳ tempo de celular
       if (premios.ovos.length) itens.appendChild(el('li.premio-ovo', el('span.premio-icone', '🥚'), el('span', el('b', premios.ovos.length === 1 ? 'Você ganhou um ovo mágico!' : 'Você ganhou ' + premios.ovos.length + ' ovos mágicos!'))));
       if (premios.cresceu) itens.appendChild(el('li', el('span.premio-icone', '🌟'), el('span', Reino.Progresso.nomeUni(premios.cresceu.id) + ' cresceu!')));
       var raro = (materia.unicornios || []).find(function (u) { return u.raridade === 'raro' && u.sala === sala.id; });

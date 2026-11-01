@@ -86,6 +86,13 @@
         el('div.pais-pagar', el('label', { for: 'pago-' + m.id }, 'Já pago (moedas):'), campo, salvar)));
     });
     c.appendChild(el('div.bau-total', el('span.bau-moeda', '🪙'), el('div', el('small', 'Total ganho no jogo'), el('b', U.moedas(total)), el('small', 'A pagar: ', el('span', { style: 'white-space:nowrap' }, U.moedas(Math.max(0, total - pagoTotal)))))));
+    // tempo de celular (sistemas/tempo-celular.js): só leitura
+    var TC = Reino.TempoCelular, min = function (n) { return n + (n === 1 ? ' minuto' : ' minutos'); };
+    c.appendChild(el('div.pais-materia', el('h3', '⏳ Tempo de celular'),
+      el('dl.pais-numeros', el('dt', 'Ganhou'), el('dd', min(TC.ganho())), el('dt', 'Usou'), el('dd', min(TC.usado())),
+        el('dt.pais-apagar', 'Sobra'), el('dd.pais-apagar', min(TC.saldo()))),
+      el('p.pais-nota', 'Cada sala nova vale ' + min(Reino.config.tempoCelular.minutosPorSala) + ' (desde ' + Reino.config.tempoCelular.desde.split('-').reverse().join('/') + ').'),
+      TC.usos().slice(0, 5).map(function (u) { return el('p', new Date(u.em).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) + ': ', el('b', min(u.minutos))); })));
     // nuvem e jogo guardado para jogar sem internet: notas vivas (ui/sem-internet.js)
     c.appendChild(UI.notaNuvem());
     c.appendChild(UI.notaSemInternet());

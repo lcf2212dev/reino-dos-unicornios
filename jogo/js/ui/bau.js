@@ -12,6 +12,8 @@
     function total(icone, rotulo, valor) { return el('div.bau-total', el('span.bau-moeda', icone), el('div', el('small', rotulo), el('b', U.colado(U.moedas(valor))))); }
     c.appendChild(el('div.bau-totais', total('🪙', 'Você já ganhou', P.dinheiroTotal()), total('🎁', 'Já recebeu', P.pagoTotal()),
       total('✨', 'Para receber', P.saldoMoedas())));
+    // o tempo de celular (ui/tempo-celular.js); depois de usar, o Baú se redesenha
+    c.appendChild(UI.quadroTempoCelular(function () { UI.fecharTela(pn.tela); UI.telaBau(); }));
     Reino.materias.forEach(function (m) {
       c.appendChild(el('div.bau-materia', el('b', m.emoji + ' ' + m.nome), barraDinheiro(m),
         el('small', U.colado(P.salasFeitas(m) + ' de ' + m.salas.length + ' salas feitas • cada sala vale ' + U.moedas(P.valorSala(m)) +

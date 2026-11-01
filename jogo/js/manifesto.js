@@ -52,6 +52,7 @@
       'css/ui-casa-moveis.css',
       'css/ui-moedas-festa.css',
       'css/ui-casa-decorar.css',
+      'css/ui-tempo-celular.css',
     ],
     scripts: [
       { js: 'js/nucleo/congelar.js', grupo: 'nucleo' },
@@ -257,6 +258,7 @@
       { js: 'js/sistemas/progresso-nuvem.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/progresso-regras.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/progresso-campos.js', grupo: 'sistemas', node: true },
+      { js: 'js/sistemas/tempo-celular.js', grupo: 'sistemas', node: true }, // campo tempoUsos; ganho derivado das salas
       { js: 'js/sistemas/visitados.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/producoes.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/etapas-progresso.js', grupo: 'sistemas', node: true }, // campo etapas (quarto-bimestre.md §13)
@@ -337,6 +339,7 @@
       { js: 'js/ui/laboratorio-jogos.js', grupo: 'ui' },
       { js: 'js/ui/feira.js', grupo: 'ui' },
       { js: 'js/ui/bau.js', grupo: 'ui' },
+      { js: 'js/ui/tempo-celular.js', grupo: 'ui' }, // usar o tempo de celular (Baú) e mostrar aos pais
       { js: 'js/ui/loja.js', grupo: 'ui' },
       { js: 'js/ui/estabulo.js', grupo: 'ui' },
       { js: 'js/ui/petshop-enfeites.js', grupo: 'ui' },
