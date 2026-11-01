@@ -214,4 +214,86 @@
       ret(ctx, px + 7, py + 4, 2, 6, K); ret(ctx, px + 7, py + 5, 1, 4, AMAR);
       ret(ctx, px + 3, py + 10, 10, 4, K); ret(ctx, px + 4, py + 11, 8, 2, MAD2); ret(ctx, px + 4, py + 11, 8, 1, MAD);
     } });
+  /* ---------- camas: dossel e beliche (2×3; lado 3×2) ---------- */
+  function trav(ctx, x, y, w, h) { arred(ctx, x, y, w, h, K); arred(ctx, x + 1, y + 1, w - 2, h - 2, C.branco); ret(ctx, x + 2, y + h - 2, w - 4, 1, LIL2); }
+  function colcha(ctx, x, y, w, h, c, cor) {
+    ret(ctx, x, y, w, h, K); ret(ctx, x + 1, y + 1, w - 2, h - 2, c);
+    ret(ctx, x + 1, y + 1, w - 2, 2, clarear(c, 0.45)); ret(ctx, x + 1, y + h - 2, w - 2, 1, escurecer(c, 0.2));
+    if (cor) coracao(ctx, x + (w >> 1) - 2, y + (h >> 1) - 1, cor);
+  }
+  function coluna(ctx, x, y, h) { ret(ctx, x, y, 3, h, K); ret(ctx, x + 1, y + 1, 1, h - 2, AMAR); ret(ctx, x, y - 2, 3, 2, K); ret(ctx, x + 1, y - 1, 1, 1, C.branco); }
+  function veu(ctx, x, y, w) {                                                                        // cortina do alto, com franja
+    ret(ctx, x, y, w, 5, K); ret(ctx, x + 1, y + 1, w - 2, 3, LIL); ret(ctx, x + 1, y + 1, w - 2, 1, LIL2);
+    for (var i = x + 1; i < x + w - 2; i += 4) { ret(ctx, i, y + 4, 3, 2, K); ret(ctx, i + 1, y + 4, 1, 1, ROSA); }
+  }
+  I.objeto('casa-movel-cama-dossel', { w: 2, h: 3, topo: 16, solido: true,
+    desenhar: virado({
+      baixo: function (ctx, px, py) {
+        veu(ctx, px, py - 14, 32);
+        coluna(ctx, px + 1, py - 9, 54); coluna(ctx, px + 28, py - 9, 54);
+        ret(ctx, px + 4, py - 9, 3, 30, K); ret(ctx, px + 5, py - 9, 1, 29, ROSA);                      // cortinas presas nas colunas
+        ret(ctx, px + 25, py - 9, 3, 30, K); ret(ctx, px + 26, py - 9, 1, 29, ROSA);
+        arred(ctx, px + 7, py - 6, 18, 10, K); arred(ctx, px + 8, py - 5, 16, 8, ROSA); coracao(ctx, px + 14, py - 4, C.branco);
+        ret(ctx, px + 4, py + 4, 24, 38, K); ret(ctx, px + 5, py + 5, 22, 36, C.branco);
+        trav(ctx, px + 7, py + 6, 18, 8);
+        colcha(ctx, px + 4, py + 16, 24, 26, ROSA, C.branco);
+        ret(ctx, px + 3, py + 41, 26, 5, K); ret(ctx, px + 4, py + 42, 24, 3, LIL); ret(ctx, px + 4, py + 42, 24, 1, LIL2);
+      },
+      cima: function (ctx, px, py) {
+        veu(ctx, px, py - 14, 32);
+        coluna(ctx, px + 1, py - 9, 54); coluna(ctx, px + 28, py - 9, 54);
+        ret(ctx, px + 3, py - 4, 26, 5, K); ret(ctx, px + 4, py - 3, 24, 3, LIL);                       // pé da cama, no fundo
+        ret(ctx, px + 4, py + 1, 24, 34, K); ret(ctx, px + 5, py + 2, 22, 32, C.branco);
+        colcha(ctx, px + 4, py + 1, 24, 24, ROSA, C.branco);
+        trav(ctx, px + 7, py + 25, 18, 8);
+        arred(ctx, px + 4, py + 33, 24, 13, K); arred(ctx, px + 5, py + 34, 22, 11, escurecer(ROSA, 0.15));
+        for (var i = px + 8; i < px + 26; i += 4) ret(ctx, i, py + 36, 1, 7, escurecer(ROSA, 0.3));
+      },
+      lado: function (ctx, px, py) {
+        veu(ctx, px, py - 14, 48);
+        coluna(ctx, px + 1, py - 9, 39); coluna(ctx, px + 44, py - 9, 39);
+        ret(ctx, px + 4, py - 9, 3, 16, K); ret(ctx, px + 5, py - 9, 1, 15, ROSA);
+        ret(ctx, px + 41, py - 9, 3, 16, K); ret(ctx, px + 42, py - 9, 1, 15, ROSA);
+        ret(ctx, px + 5, py + 4, 36, 25, K); ret(ctx, px + 6, py + 5, 34, 23, C.branco);
+        colcha(ctx, px + 4, py + 4, 28, 25, ROSA, C.branco);
+        trav(ctx, px + 32, py + 5, 8, 18);
+        ret(ctx, px + 4, py + 6, 3, 24, K); ret(ctx, px + 5, py + 7, 1, 22, LIL);                     // pé à esquerda
+        arred(ctx, px + 39, py - 2, 5, 32, K); arred(ctx, px + 40, py - 1, 3, 30, ROSA); ret(ctx, px + 40, py, 1, 28, clarear(ROSA, 0.45));
+      },
+    }) });
+  function escadinha(ctx, x, y, h) {
+    ret(ctx, x, y, 2, h, K); ret(ctx, x + 6, y, 2, h, K); ret(ctx, x + 1, y, 1, h, MAD); ret(ctx, x + 7, y, 1, h, MAD);
+    for (var j = y + 3; j < y + h - 1; j += 6) { ret(ctx, x, j, 8, 2, K); ret(ctx, x + 1, j, 6, 1, MAD); }
+  }
+  I.objeto('casa-movel-beliche', { w: 2, h: 3, topo: 24, solido: true, alto: true,
+    desenhar: virado({
+      baixo: function (ctx, px, py) {
+        ret(ctx, px + 1, py - 24, 3, 70, K); ret(ctx, px + 2, py - 23, 1, 68, MAD);                    // pés compridos
+        ret(ctx, px + 28, py - 24, 3, 70, K); ret(ctx, px + 29, py - 23, 1, 68, MAD);
+        ret(ctx, px + 4, py - 22, 24, 4, K); ret(ctx, px + 5, py - 21, 22, 2, MAD);                    // grade de cima
+        trav(ctx, px + 7, py - 18, 18, 7); colcha(ctx, px + 4, py - 11, 24, 16, CEU, AMAR);
+        ret(ctx, px + 4, py + 5, 24, 4, K); ret(ctx, px + 5, py + 6, 22, 2, MAD2);                     // estrado de cima
+        trav(ctx, px + 7, py + 12, 18, 7); colcha(ctx, px + 4, py + 19, 24, 23, ROSA, C.branco);
+        ret(ctx, px + 1, py + 41, 30, 5, K); ret(ctx, px + 2, py + 42, 28, 3, MAD); ret(ctx, px + 2, py + 42, 28, 1, clarear(MAD, 0.4));
+        escadinha(ctx, px + 20, py - 18, 28);
+      },
+      cima: function (ctx, px, py) {
+        ret(ctx, px + 1, py - 24, 3, 70, K); ret(ctx, px + 2, py - 23, 1, 68, MAD);
+        ret(ctx, px + 28, py - 24, 3, 70, K); ret(ctx, px + 29, py - 23, 1, 68, MAD);
+        colcha(ctx, px + 4, py - 22, 24, 22, CEU, AMAR);
+        ret(ctx, px + 4, py, 24, 8, K); ret(ctx, px + 5, py + 1, 22, 6, MAD2);                        // tábua de trás
+        colcha(ctx, px + 4, py + 8, 24, 26, ROSA, C.branco);
+        ret(ctx, px + 4, py + 34, 24, 12, K); ret(ctx, px + 5, py + 35, 22, 10, MAD); ret(ctx, px + 5, py + 35, 22, 1, clarear(MAD, 0.4));
+      },
+      lado: function (ctx, px, py) {
+        ret(ctx, px + 1, py - 24, 3, 55, K); ret(ctx, px + 2, py - 23, 1, 53, MAD);
+        ret(ctx, px + 44, py - 24, 3, 55, K); ret(ctx, px + 45, py - 23, 1, 53, MAD);
+        ret(ctx, px + 4, py - 20, 40, 3, K); ret(ctx, px + 5, py - 19, 38, 1, MAD);
+        colcha(ctx, px + 4, py - 17, 30, 12, CEU, AMAR); trav(ctx, px + 34, py - 17, 10, 10);
+        ret(ctx, px + 4, py - 5, 40, 4, K); ret(ctx, px + 5, py - 4, 38, 2, MAD2);
+        colcha(ctx, px + 4, py + 4, 30, 18, ROSA, C.branco); trav(ctx, px + 34, py + 4, 10, 12);
+        ret(ctx, px + 4, py + 22, 40, 6, K); ret(ctx, px + 5, py + 23, 38, 4, MAD);
+        escadinha(ctx, px + 8, py - 17, 39);
+      },
+    }) });
 })();

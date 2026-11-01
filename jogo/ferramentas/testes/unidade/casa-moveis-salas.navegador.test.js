@@ -1,4 +1,4 @@
-// Casa do jogador, os móveis avulsos (casa.md §12): os 38 registrados (um por sala do 4º bimestre), cada um com o
+// Casa do jogador, os móveis avulsos (casa.md §12): os 41 registrados (um por sala do 4º bimestre, mais 3 camas), cada um com o
 // objeto casa-movel-<id> da biblioteca, cômodo de config.casa.kits, nome curto, direções 1/2/4; cada direção
 // declarada desenha só dentro da pegada (com a folga do `topo`), o lado e as costas diferem da frente. Salva uma
 // prancha por cômodo em /tmp/reino-testes/casa-moveis-salas/ para olhar. Servidor de TESTE (cenario.js).
@@ -53,13 +53,13 @@ const MEDIR = `(function () {
   return { res: res, pranchas: pranchas, kits: Reino.config.casa.kits };
 })()`;
 
-test('casa, móveis avulsos: 38 móveis, objetos, cômodos, pegadas e direções', async () => {
+test('casa, móveis avulsos: 41 móveis, objetos, cômodos, pegadas e direções', async () => {
   const c = await abrirCenario({ tamanho: 'notebook', save: 'completo', pasta: path.join(PASTA, 'cenario') });
   try {
     const { res, pranchas, kits } = await c.js(MEDIR);
     fs.mkdirSync(PASTA, { recursive: true });
     for (const [id, url] of Object.entries(pranchas)) fs.writeFileSync(path.join(PASTA, `moveis-${id}.png`), Buffer.from(url.split(',')[1], 'base64'));
-    assert.strictEqual(res.length, 38, '38 móveis (25 salas de Língua Portuguesa + 13 de Inglês)');
+    assert.strictEqual(res.length, 41, '41 móveis (25 salas de Língua Portuguesa + 13 de Inglês, mais 3 camas)');
     const ids = new Set(), porComodo = {};
     for (const it of res) {
       const onde = `movel.${it.id}`;

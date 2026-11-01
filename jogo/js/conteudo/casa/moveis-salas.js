@@ -1,5 +1,5 @@
-/* Casa do jogador: os móveis avulsos, um à escolha por sala feita (docs/contratos/casa.md §12). 38 móveis (um por
-   sala do 4º bimestre: 25 de Língua Portuguesa e 13 de Inglês), divididos pelos cômodos; `comodo` = a aba do modo
+/* Casa do jogador: os móveis avulsos, um à escolha por sala feita (docs/contratos/casa.md §12). 41 móveis (um por
+   sala do 4º bimestre: 25 de Língua Portuguesa e 13 de Inglês, mais 3 camas), divididos pelos cômodos; `comodo` = a aba do modo
    decorar. Desenhos em js/interiores/casa/moveis-salas-<cômodo>.js (objeto casa-movel-<id>).
    Ids fixos para sempre: mudar um id faz o móvel sumir do save. Nomes até 14 letras, sem emoji. */
 (function () {
@@ -50,5 +50,9 @@
     { id: 'luminaria-lua', nome: 'Luminária lua', objeto: 'casa-movel-luminaria-lua', comodo: 'quarto-uni', direcoes: 1 },
     { id: 'cesto-macas', nome: 'Cesto de maçãs', objeto: 'casa-movel-cesto-macas', comodo: 'quarto-uni', direcoes: 1 },
     { id: 'cristal', nome: 'Cristal mágico', objeto: 'casa-movel-cristal', comodo: 'quarto-uni', direcoes: 1 },
+    // camas (pedido de 01/11/2026): duas para o quarto dela, uma para o do unicórnio
+    { id: 'cama-dossel', nome: 'Cama de dossel', objeto: 'casa-movel-cama-dossel', comodo: 'quarto-jogador', direcoes: 4 },
+    { id: 'beliche', nome: 'Beliche', objeto: 'casa-movel-beliche', comodo: 'quarto-jogador', direcoes: 4 },
+    { id: 'caminha-nuvem', nome: 'Caminha nuvem', objeto: 'casa-movel-caminha-nuvem', comodo: 'quarto-uni', direcoes: 2 },
   ].forEach(function (m) { R.registrarMovelCasa(m); });
 })();

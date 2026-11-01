@@ -87,4 +87,5 @@
 # @ = novidade da casa em destaque na abertura (config.novidadeInicio)
 # @ = móveis por sala: tela nova movel-casa, campo casaMoveis no save, config.casa.moveisOpcoes e 2 falas novas
 # @ = tempo de celular no Baú; campo tempoUsos no save; tempoCelular no config
+# @ = camas entre os móveis das salas: o sorteio da tela movel-casa muda com 41 móveis
 @

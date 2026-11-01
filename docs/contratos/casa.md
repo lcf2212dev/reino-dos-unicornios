@@ -152,7 +152,7 @@ Qualquer cômodo vale para qualquer kit.
 ## 11. Testes
 - `unidade/casa.test.js` (save, regras, mescla de 2 aparelhos, save antigo sem os campos, guardado, órfã).
 - `unidade/casa-moveis.test.js` (§12: pendentes, sorteio fixo, escolher, repetido, peças `movel.*`, mescla, caixa)
-  e `unidade/casa-moveis-salas.navegador.test.js` (os 38 desenhos; pranchas em `/tmp/reino-testes/casa-moveis-salas/`).
+  e `unidade/casa-moveis-salas.navegador.test.js` (os 41 desenhos; pranchas em `/tmp/reino-testes/casa-moveis-salas/`).
 - `unidade/interiores-decoravel.test.js` (motor: `objetosExtras`, `refazer`, placa com `{nome}`/`{uni}`, validador).
 - `unidade/casa-predio.navegador.test.js`, `unidade/casa-decorar.navegador.test.js`, `unidade/casa-telas.navegador.test.js`.
 - Cenas do e2e: o interior entra sozinho (vazio, como num save sintético sem kits); telas `bau-casa`, `kit-casa`,
@@ -165,7 +165,7 @@ avulso, escolhido entre `config.casa.moveisOpcoes` (5) sorteados. Só depois de 
 | Parte | Onde |
 |---|---|
 | registro | `Reino.registrarMovelCasa({ id, nome, objeto, comodo, direcoes, parede? })` / `Reino.movelCasa(id)` / `Reino.moveisCasa` (`js/nucleo/registros.js`) |
-| dados (38: 25 salas de Língua Portuguesa + 13 de Inglês do 4º bimestre) | `js/conteudo/casa/moveis-salas.js` |
+| dados (41: um por sala do 4º bimestre, 25 de Língua Portuguesa + 13 de Inglês, mais 3 camas) | `js/conteudo/casa/moveis-salas.js` |
 | desenho | objeto `casa-movel-<id>` em `js/interiores/casa/moveis-salas-<cômodo>.js` (regras do §5) |
 | save, sorteio, pendentes | `js/sistemas/casa-moveis.js` (`Reino.CasaMoveis`) |
 | tela | `js/ui/casa-moveis.js` (`UI.escolherMovelCasa`, `UI.casaMoveisPendentes`) + `css/ui-casa-moveis.css` |

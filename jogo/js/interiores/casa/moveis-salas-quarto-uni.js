@@ -4,7 +4,7 @@
 (function () {
   var R = window.Reino;
   var I = R.Interiores, D = I.desenho, C = D.C;
-  var ret = D.ret, circulo = D.circulo, clarear = D.clarear;
+  var ret = D.ret, circulo = D.circulo, clarear = D.clarear, escurecer = D.escurecer;
   var K = R.Desenho.K;
   var LIL = '#c9a8ff', ROXO = '#9b7cf0', ROSA = '#ff8fc4', AMAR = '#ffd84d', OURO = '#f5b82e', AGUA = '#7fc8ff';
   var PEDRA = '#d8d0ea', VIME = '#d9a35c', VIME2 = '#b07a3a', MACA = '#ff5a6a', VERDE = '#7fe08a';
@@ -90,4 +90,38 @@
       ret(ctx, px + 4, py + 5, 8, 7, K); ret(ctx, px + 5, py + 5, 6, 6, ROXO); ret(ctx, px + 5, py + 5, 1, 6, LIL);
       ret(ctx, px + 2, py + 11, 12, 3, K); ret(ctx, px + 3, py + 12, 10, 1, ROXO);
     } });
+  /* ---------- caminha nuvem (2×2, baixa; lado espelhado) ---------- */
+  var NUVEM = [                                                                                        // # contorno, n nuvem, w luz, b sombra
+    '................................', '...............#####............', '.............##wwwww##..........', '............#wwnnnnnww#.........',
+    '...........#wnnnnnnnnnw#........', '...........#nnnnnnnnnnn#........', '.....######nnnnnnnnnnnn#........', '....#wwwwwwnnnnnnnnnnnn#........',
+    '...#wnnnnnnnnnnnnnnnnnn#..#.....', '...#nnnnnnnnnnnnnnnnnnnn##w##...', '...#nnnnnnnnnnnnnnnnnnnnwwnww#..', '...#nnnnnnnnnnnnnnnnnnnnnnnnnw#.',
+    '...#bnnnnnnnnnnnnnnnnnnnnnnnnn#.', '...#bnnnnnnnnnnnnnnnnnnnnnnnnb#.', '....#nnnnnnnnnnnnnnnnnnnnnnnnb#.', '.....#nnnnnnnnnnnnnnnnnnnnnnn#..',
+    '..###nnnnnnnnnnnnnnnnnnnnnnn#...', '.#wwwnnnnnnnnnnnnnnnnnnnnnnnn#..', '#wnnnnnnnnnnnnnnnnnnnnnnnnnnnw#.', '#nnnnnnnnnnnnnnnnnnnnnnnnnnnnn#.',
+    '#bnnnnnnnnnnnnnnnnnnnnnnnnnnnnn#', '#bbbnnnnnnnnnnnnnnnnnnnnnnnnnnb#', '.#bbnnnnnnnnnnnnnnnnnnnnnnnnbb#.', '..##nnnnnnnnnnnnnnnnnnnnnnnnbb#.',
+    '....#nnnnnnnnnnnnnnnnnnnnnnn##..', '....#nnnnnnnnnnbbnnnnnnnnnn#....', '....#nnnnnnnnnnbbnnnnnnnnnn#....', '....#bbnnnnnnbb##bbnnnnnnbb#....',
+    '.....#bnnnnnnb#..#bnnnnnnb#.....', '.....##nnnnnn##..##nnnnnn##.....', '.......######......######.......'];
+  var NUVEM_COR = { '#': K, n: '#eef7ff', w: C.branco, b: '#b9defa' };
+  function nuvem(ctx, x, y, espelho) {
+    for (var j = 0; j < NUVEM.length; j++) for (var i = 0; i < 32; i++) {
+      var c = NUVEM_COR[NUVEM[j][espelho ? 31 - i : i]]; if (c) ret(ctx, x + i, y + j, 1, 1, c);
+    }
+  }
+  function ninho(ctx, x, y) {                                                                         // almofada afundada
+    arred(ctx, x - 1, y - 1, 20, 12, '#b9defa');
+    arred(ctx, x, y, 18, 10, K); arred(ctx, x + 1, y + 1, 16, 8, LIL);
+    ret(ctx, x + 2, y + 1, 14, 2, escurecer(LIL, 0.18)); ret(ctx, x + 2, y + 7, 14, 1, clarear(LIL, 0.4));
+  }
+  I.objeto('casa-movel-caminha-nuvem', { w: 2, h: 2, topo: 4, solido: true,
+    desenhar: R.CasaArte.virado({
+      baixo: function (ctx, px, py) {
+        nuvem(ctx, px, py - 4, false); ninho(ctx, px + 7, py + 10);
+        brilho(ctx, px + 12, py + 15, AMAR); brilho(ctx, px + 20, py + 16, C.branco);
+        brilho(ctx, px + 9, py + 3, AMAR); brilho(ctx, px + 25, py + 6, ROSA); brilho(ctx, px + 4, py + 18, AMAR);
+      },
+      lado: function (ctx, px, py) {
+        nuvem(ctx, px, py - 4, true); ninho(ctx, px + 11, py + 12);
+        brilho(ctx, px + 15, py + 17, ROSA); brilho(ctx, px + 23, py + 16, AMAR);
+        brilho(ctx, px + 22, py + 3, AMAR); brilho(ctx, px + 7, py + 6, C.branco); brilho(ctx, px + 27, py + 18, ROSA);
+      },
+    }) });
 })();
