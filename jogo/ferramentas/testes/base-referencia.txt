@@ -90,4 +90,5 @@
 # @ = camas entre os móveis das salas: o sorteio da tela movel-casa muda com 41 móveis
 # @ = 4 matérias do 4º bimestre (Ciências, Geografia, História, Matemática) e seus prédios
 # @ = emoji da sala Corrida das abelhas
+# @ = História: diferença dos escritórios
 @
