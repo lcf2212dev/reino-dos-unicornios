@@ -91,4 +91,5 @@
 # @ = 4 matérias do 4º bimestre (Ciências, Geografia, História, Matemática) e seus prédios
 # @ = emoji da sala Corrida das abelhas
 # @ = História: diferença dos escritórios
+# @ = Matemática: ajustes da conferência
 @
