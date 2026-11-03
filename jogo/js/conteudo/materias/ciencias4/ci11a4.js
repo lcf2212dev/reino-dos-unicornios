@@ -1,0 +1,50 @@
+/* Sala ci11a4 (Livro de Aprendizagem, capítulo 11, pp. 22 e 23): o Testando as ideias com o quadro de flores de
+   Claude Monet, a planta para pintar pela legenda e o Agora você já sabe (docs/contratos/quarto-bimestre.md §3).
+   As raízes da planta do quadro estão dentro do vaso: não aparecem, não contam. */
+Reino.registrarSala('ciencias4',
+    {
+      id: 'ci11a4', nome: 'As partes no quadro', emoji: '🎨',
+      livroOrigem: 'aprendizagem', capitulo: 11, paginas: 'pp. 22 e 23', ordem: 'livro',
+      cartas: ['ci-a22', 'ci-a23'],
+      intro: 'Vamos olhar um quadro de flores e mostrar tudo o que você aprendeu sobre as partes das plantas!',
+      desafios: [
+        { id: 'ci11a4-01', tipo: 'varias', origem: 'APR-22-q1a', pagina: 22, livro: 'ci-a22',
+          figura: { img: 'ci:11-monet' },
+          pergunta: 'a) Assinale todas as partes da planta pintada por Monet. Toque em TODAS.',
+          opcoes: [
+            { t: 'Raiz' },
+            { t: 'Caule', ok: true },
+            { t: 'Folhas', ok: true },
+            { t: 'Flores', ok: true },
+            { t: 'Frutos' },
+            { t: 'Sementes' },
+          ],
+          explica: 'No quadro aparecem o caule, as folhas e as flores amarelas. A raiz fica escondida dentro do vaso, e não há frutos nem sementes.' },
+        { id: 'ci11a4-02', tipo: 'desenho', origem: 'APR-22-q1b', pagina: 22, livro: 'ci-a22', guardar: true,
+          pergunta: 'b) Desenhe uma planta completa com todas as partes. Depois, escreva o nome de cada parte, indicando-as com setas.',
+          requisitos: ['formas', 'cores'],
+          adaptacao: 'O espaço do livro virou a prancheta de desenho; os nomes com setas podem ser escritos na própria prancheta.',
+          explica: 'Que planta completa! Raiz, caule, folhas, flor, fruto e semente.' },
+        { id: 'ci11a4-03', tipo: 'ligar', origem: 'APR-23-q2', pagina: 23, livro: 'ci-a23',
+          pergunta: 'Pinte cada parte da planta de acordo com a legenda. Ligue cada função à parte da planta.',
+          pares: [
+            [{ t: 'Absorve água e nutrientes do solo.' }, { t: 'Raiz' }],
+            [{ t: 'Sustenta e transporta substâncias na planta.' }, { t: 'Caule' }],
+            [{ t: 'Faz fotossíntese.' }, { t: 'Folha' }],
+            [{ t: 'É responsável pela reprodução da planta.' }, { t: 'Flor' }],
+            [{ t: 'Protege as sementes.' }, { t: 'Fruto' }],
+            [{ t: 'Dá origem a novas plantas.' }, { t: 'Semente' }],
+          ],
+          adaptacao: 'Pintar o desenho com as cores da legenda virou ligar cada função à sua parte da planta.',
+          explica: 'Marrom na raiz, verde-escuro no caule, verde-claro nas folhas, amarelo na flor, vermelho no fruto e cinza na semente.' },
+        { id: 'ci11a4-04', tipo: 'completar', livre: true, origem: 'APR-23-qA', pagina: 23, livro: 'ci-a23',
+          pergunta: 'Agora você já sabe... Para cada item, escolha: Já sei, Preciso saber mais ou Ainda não sei.',
+          palavras: ['Já sei', 'Preciso saber mais', 'Ainda não sei'],
+          frases: [
+            { antes: 'Conhecer as principais partes de uma planta.', depois: '' },
+            { antes: 'Compreender as funções desempenhadas por cada parte de uma planta.', depois: '' },
+          ],
+          adaptacao: 'As carinhas da legenda viraram as palavras Já sei, Preciso saber mais e Ainda não sei.',
+          explica: 'Obrigado por contar! O que ainda não sabe, dá para treinar de novo.' },
+      ],
+    });

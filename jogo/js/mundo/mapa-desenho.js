@@ -319,12 +319,12 @@
         if (fa) fa(ctx, l.rect.x * T, l.rect.y * T, l.rect.w * T, l.rect.h * T, t);
       });
     }
-    // matéria de dentro de um prédio: brilha o prédio anfitrião (uma vez só)
+    // matéria de dentro de um prédio: brilha o prédio anfitrião (uma vez só), subindo até o do mapa
     var feitos = {};
     (opcoes.concluidos || []).forEach(function (id) {
       var l = Mapa.lugar(id);
-      if (l && l.dentro) l = I.lugares.find(function (o) { return o.id === l.dentro; });
-      if (!l || feitos[l.id] || !I.desenharContorno) return;
+      while (l && l.dentro) l = Mapa.lugar(l.dentro);
+      if (!l || I.lugares.indexOf(l) < 0 || feitos[l.id] || !I.desenharContorno) return;
       feitos[l.id] = true;
       I.desenharContorno(ctx, l, t, !opcoes.semAnimacao);
     });

@@ -222,7 +222,9 @@
     // não desenham nem fazem colisão (ficam fora de I.lugares)
     I.lugaresDentro = [];
     deDentro.forEach(function (m) {
-      var h = lugares.find(function (l) { return l.id === m.lugar.dentro; });
+      // anfitrião: um prédio do mapa ou um lugar de dentro já montado (Ciências da Natureza no Laboratório,
+      // que é o lugar materia:ciencias dentro do Observatório)
+      var h = lugares.concat(I.lugaresDentro).find(function (l) { return l.id === m.lugar.dentro; });
       if (!h) return;   // anfitrião inexistente: o validador acusa
       I.lugaresDentro.push({ id: 'materia:' + m.id, tipo: 'materia', materiaId: m.id, nome: m.lugar.nome,
         dentro: h.id, interior: m.lugar.interior, rect: h.rect, porta: h.porta,

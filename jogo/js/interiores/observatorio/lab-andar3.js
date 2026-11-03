@@ -1,15 +1,23 @@
-/* Laboratório de Ciências: o 3º andar do Observatório, onde mora a matéria Ciências (lugar materia:ciencias).
-   Hall (Professora Íris, o mapa das salas e o Livro de Ciências) + 5 cômodos, um para cada sala:
-   Vivo ou Não Vivo?, Quem Ganha, Quem Perde, Amigos da Natureza, Cada Um no Seu Hábitat e Detetives da Natureza.
+/* Laboratório de Ciências: o 3º andar do Observatório é da Ciências da Natureza do 4º bimestre (lugar materia:ciencias;
+   docs/contratos/quarto-bimestre.md §7). Tema do bimestre: as plantas.
+   Planta (49×25), quatro colunas de cômodos 11×11. Embaixo: a galeria do capítulo 10 | o hall | as galerias dos
+   capítulos 11 e 12 (Livro de Aprendizagem, verde). Em cima de cada galeria, a estufa do mesmo capítulo (Livro de
+   Atividades, amarelo); em cima do hall, a Sala das Experiências (os mini-jogos e as experiências do laboratório).
+   Portas largas entre vizinhos e uma cruz de corredores em cada cômodo: do hall se chega a tudo, sem beco.
    Sem porta para o mapa: ela chega pelo menu Lugares (no spawn) ou subindo do 2º andar; sai pela escada que desce.
-   Os objetos ficam em lab-objetos-*.js; as falas e os personagens, em lab-falas.js (carregados antes).
-   Só dados, objetos e registros; nada de DOM, PA ou Progresso no carregamento.
-   Laboratório claro (branco, verde-água e amarelo) e estático, sem animações, para contrastar com a noite
-   dos andares de baixo; a planta (37×25) é a mesma da Casa das Palavras. */
+   As estações das salas são GERADAS DOS DADOS: cada sala de Reino.materia('ciencias4').salas vai para a vaga da
+   galeria ou da estufa do seu capítulo e livro, na ordem do livro; vaga sem sala vira enfeite; sala sem lugar ou
+   capítulo com sala demais = erro na carga. O anfitrião de cada capítulo fica na galeria dele.
+   Objetos novos em ci-objetos.js, enfeites dos capítulos em ci-comodos.js, falas e pessoas em lab-falas.js.
+   O layout do 3º bimestre (salas c1–c5) está em arquivo/terceiro-bimestre/jogo/js/interiores/observatorio/lab-andar3.js. */
 (function () {
   var R = window.Reino;
+  var MAT = 'ciencias4', M = R.materia && R.materia(MAT);
+  // sem a matéria (contexto só com o catálogo do 3º bimestre) o laboratório não tem andar; a fixture histórica dos
+  // testes carrega o layout arquivado no lugar deste arquivo
+  if (!M) return;
   var S = R._predios.observatorio;
-  var F = R.FALAS_INTERIORES.observatorio;
+  var F = (R.FALAS_INTERIORES && R.FALAS_INTERIORES.observatorio) || { npcs: {}, objetos: {} };
   var ELENCO = (R.NPCs && R.NPCs.ELENCO) || {};
   var AGUA = S.lab.AGUA, AMARELO = S.lab.AMARELO;
 
@@ -29,154 +37,132 @@
     return { id: id, nome: e.nome || id, sprite: e.sprite ? Object.assign({ base: 'pessoa' }, e.sprite) : { base: 'pessoa' },
       voz: e.voz || 'npc-' + id, x: x, y: y, acao: acao, falas: F.npcs[id] || {} };
   }
-  function acaoSala(s) { return { tipo: 'sala', materia: 'ciencias', sala: s }; }
-  // o unicórnio raro da sala, lido da matéria (o id pode mudar)
-  function raro(s) {
-    var m = R.materia && R.materia('ciencias');
-    var u = m && (m.unicornios || []).find(function (x) { return x.sala === s && x.raridade === 'raro'; });
-    return u ? u.id : 'ciencias-' + s + '-raro';
-  }
-  function quadroRaro(s, x) { return { tipo: 'quadro-unicornio', x: x, y: 0, var: { uni: raro(s) } }; }
+  var GUIA = { tipo: 'guia', lugar: 'materia:' + MAT, livro: MAT };
   function cartaz(x, desenho, faixa) { return { tipo: 'lab-cartaz', x: x, y: 0, var: { desenho: desenho, faixa: faixa } }; }
   function quadro(x, desenho) { return { tipo: 'lab-quadro', x: x, y: 0, var: { desenho: desenho } }; }
 
+  /* ================= ESTAÇÕES (das salas da matéria) ================= */
+  // cada capítulo é uma coluna: a galeria embaixo (y 13) e a estufa em cima (y 1)
+  var COLUNA = { 10: 1, 11: 25, 12: 37 };
+  var CAPITULOS = [10, 11, 12];
+  var COMODO = { aprendizagem: { nome: 'galeria', oy: 13 }, atividades: { nome: 'estufa', oy: 1 } };
+  // as vagas de cada cômodo, na ordem do livro: as quatro de cima, dos dois lados da cruz, e as duas de baixo
+  var VAGAS = [[1, 4], [3, 4], [7, 4], [9, 4], [3, 8], [7, 8]];
+  function salasDo(cap, livro) { return M.salas.filter(function (s) { return s.capitulo === cap && s.livroOrigem === livro; }); }
+  M.salas.forEach(function (s) {
+    if (CAPITULOS.indexOf(s.capitulo) < 0 || !COMODO[s.livroOrigem]) {
+      throw new Error('observatorio: a sala ' + s.id + ' (capítulo ' + s.capitulo + ', livro ' + s.livroOrigem +
+        ') não tem lugar no Laboratório de Ciências (observatorio/lab-andar3.js, CAPITULOS)');
+    }
+  });
+  CAPITULOS.forEach(function (cap) {
+    Object.keys(COMODO).forEach(function (livro) {
+      var n = salasDo(cap, livro).length;
+      if (n > VAGAS.length) throw new Error('observatorio: o capítulo ' + cap + ' tem ' + n + ' salas do livro "' + livro +
+        '", mas a ' + COMODO[livro].nome + ' só tem ' + VAGAS.length + ' vagas (observatorio/lab-andar3.js, VAGAS)');
+    });
+  });
+  // "pp. 134 a 137" → "Páginas 134 a 137"; "p. 4" → "Página 4"
+  function textoPaginas(p) {
+    var t = String(p || '').trim(), m = /^(pp?)\.\s*(.+)$/i.exec(t);
+    if (!m) return t;
+    return (m[1].toLowerCase() === 'pp' || /\d\D+\d/.test(m[2]) ? 'Páginas ' : 'Página ') + m[2];
+  }
+  // fala curta da estação (sem emoji): "Páginas 134 a 137: As plantas."; se não couber numa página, só a página
+  // (o nome da sala já está no título do balão)
+  function falaSala(s) {
+    var pg = String(textoPaginas(s.paginas) || '').replace(/\bp\. /g, 'página '), nome = String(s.nome || '').trim(), fim = /[.!?…»]$/.test(nome) ? '' : '.';
+    if (!pg) return nome + fim;
+    var uma = pg + ': ' + nome + fim;
+    return uma.replace(/[«»]/g, '').length <= 34 ? uma : pg + '.';
+  }
+  function primeiraPagina(p) { var m = /\d+/.exec(String(p || '')); return m ? m[0] : ''; }
+  // vaga sem sala: um enfeite (nunca uma estação vazia)
+  var ENFEITE = { aprendizagem: { tipo: 'pedestal', var: { item: 'vaso' } }, atividades: { tipo: 'vaso-planta' } };
+  // as estações do cômodo do capítulo e livro, em coordenadas do interior
+  function estacoes(cap, livro) {
+    var ss = salasDo(cap, livro), ox = COLUNA[cap], oy = COMODO[livro].oy;
+    return VAGAS.map(function (p, i) {
+      var s = ss[i], o = { x: ox + p[0], y: oy + p[1] };
+      if (!s) return Object.assign(o, ENFEITE[livro]);
+      return Object.assign(o, { tipo: 'ci-estacao', chave: 'ci-sala-' + s.id, nome: s.nome, fala: falaSala(s),
+        acao: { tipo: 'sala', materia: MAT, sala: s.id }, var: { livro: livro, pagina: primeiraPagina(s.paginas) } });
+    });
+  }
+
   /* ================= LAYOUT ================= */
-  // colunas: 1 | 13 | 25 ; fileiras: 1 (amigos, hábitat, detetives) e 13 (vivo, hall, ganha)
+  var CI = S.ci.comodos(inter);
   var objetos = [].concat(
     /* ---------- HALL: Laboratório de Ciências (branco, verde-água e amarelo) ---------- */
+    // a porta de cima corta a parede em 4 a 6; os livros à esquerda, o mapa à direita, a escada que desce em (5,10)
     sala(13, 13, [
-      { tipo: 'janela', x: 0, y: 0 }, cartaz(1, 'atomo'), quadro(2, 'seres'),
-      { tipo: 'arandela', x: 4, y: 0 }, { tipo: 'arandela', x: 6, y: 0 }, quadro(7, 'mapa'),
+      { tipo: 'janela', x: 0, y: 0 }, cartaz(1, 'atomo'), quadro(2, 'seres'), quadro(7, 'mapa'),
       { tipo: 'relogio-parede', x: 9, y: 0 }, { tipo: 'janela', x: 10, y: 0 },
-      // encostado na parede, só coisa baixa embaixo dos quadros (O-12)
-      { tipo: 'bau', x: 0, y: 2 }, { tipo: 'pilha-livros', x: 1, y: 2 },
-      inter('lab-livro', 'Livro de Ciências', { tipo: 'lab-pulpito', x: 2, y: 3, acao: { tipo: 'tela', tela: 'livro', materia: 'ciencias' } }),
-      { tipo: 'tapete', x: 0, y: 4, w: 4, h: 1, var: { cor: '#bff0ea', borda: AGUA } },
-      { tipo: 'planta-alta', x: 0, y: 5 },
-      { tipo: 'flores', x: 7, y: 2, var: { vaso: AGUA } },
-      inter('lab-mapa', 'Mapa do laboratório', { tipo: 'lab-mapa', x: 8, y: 3 }),
-      { tipo: 'tapete-listrado', x: 7, y: 4, w: 4, h: 1, var: { cores: [AGUA, '#f4fbff', AMARELO, '#f4fbff'] } },
-      { tipo: 'poltrona', x: 8, y: 5 }, { tipo: 'cesto', x: 10, y: 5 },
-      inter('lab-minijogos', 'Mini-jogos de Ciências', { tipo: 'lab-microscopio', x: 0, y: 8, voz: 'narradora', acao: { tipo: 'tela', tela: 'laboratorio-jogos' } }),
-      { tipo: 'tapete-redondo', x: 1, y: 8, w: 1, h: 1 }, { tipo: 'globo', x: 2, y: 8 },
-      { tipo: 'pilha-livros', x: 0, y: 9 }, { tipo: 'almofada', x: 1, y: 9, var: { cor: '#9fe0a0' } },
-      { tipo: 'banco', x: 0, y: 10 }, { tipo: 'vaso-planta', x: 2, y: 10 }, { tipo: 'luminaria-pe', x: 3, y: 10 },
+      // a parede é toda enfeitada: na fileira 2 só coisa baixa; a fileira 3 fica livre (atrás dos livros e do mapa)
+      { tipo: 'bau', x: 0, y: 2 }, { tipo: 'pilha-livros', x: 1, y: 2 }, { tipo: 'lab-bancada', x: 2, y: 2, var: { itens: 'frascos' } },
+      { tipo: 'flores', x: 7, y: 2, var: { vaso: AGUA } }, { tipo: 'caixote', x: 8, y: 2, var: { item: 'planta' } },
+      { tipo: 'cesto', x: 9, y: 2 }, { tipo: 'vaso-grande', x: 10, y: 2, var: { cor: AGUA, faixa: '#d9fff4' } },   // var própria: sem ela o kit cola no vaso da Geografia
+      { tipo: 'globo', x: 0, y: 4 },
+      inter('ci-livro-aprendizagem', 'Livro de Aprendizagem', { tipo: 'ci-pulpito', x: 1, y: 4, var: { livro: 'aprendizagem' },
+        acao: { tipo: 'tela', tela: 'livro', materia: MAT, livro: 'aprendizagem' } }),
+      { tipo: 'flores', x: 2, y: 4 },
+      inter('ci-livro-atividades', 'Livro de Atividades', { tipo: 'ci-pulpito', x: 3, y: 4, var: { livro: 'atividades' },
+        acao: { tipo: 'tela', tela: 'livro', materia: MAT, livro: 'atividades' } }),
+      { tipo: 'pilha-livros', x: 7, y: 4 },
+      inter('ci-mapa', 'Mapa do laboratório', { tipo: 'ci-mapa', x: 8, y: 4 }), { tipo: 'cabideiro', x: 10, y: 4 },
+      { tipo: 'tapete-listrado', x: 0, y: 6, w: 3, h: 1, var: { cores: [AGUA, '#f4fbff', AMARELO, '#f4fbff'] } },
+      { tipo: 'tapete-listrado', x: 8, y: 6, w: 3, h: 1, var: { cores: [AGUA, '#f4fbff', AMARELO, '#f4fbff'] } },
+      { tipo: 'planta-alta', x: 0, y: 8 }, { tipo: 'poltrona', x: 1, y: 8 }, { tipo: 'mesa-centro', x: 2, y: 8 },
+      { tipo: 'relogio-pe', x: 9, y: 8 }, { tipo: 'vaso-grande', x: 10, y: 8 },
+      { tipo: 'pilha-livros', x: 0, y: 9 }, { tipo: 'balde', x: 1, y: 9 }, { tipo: 'cesto', x: 2, y: 9 },
+      { tipo: 'mesa', x: 8, y: 9, var: { toalha: '#dff6f2', itens: ['livro', 'xicara'] } }, { tipo: 'caixote', x: 10, y: 9, var: { item: 'planta' } },
       // o vão da escada que desce fica em (5, 10): nada em cima dele
-      inter('lab-experiencias', 'Experiências de Ciências', { tipo: 'lab-tubos', x: 7, y: 10, voz: 'narradora', acao: { tipo: 'tela', tela: 'laboratorio-atividades' } }),
-      { tipo: 'mesa', x: 8, y: 9, var: { toalha: '#dff6f2', itens: ['livro', 'xicara'] } },
-      { tipo: 'cabideiro', x: 10, y: 8 }, { tipo: 'relogio-pe', x: 9, y: 8 }, { tipo: 'caixote', x: 10, y: 9, var: { item: 'estrela' } }, { tipo: 'cesto', x: 10, y: 10 },
-      { tipo: 'banco', x: 8, y: 10 }, { tipo: 'almofada', x: 7, y: 8, var: { cor: AMARELO } },
+      { tipo: 'banco', x: 0, y: 10 }, { tipo: 'flores', x: 2, y: 10 }, { tipo: 'luminaria-pe', x: 3, y: 10 },
+      { tipo: 'vaso-planta', x: 7, y: 10 }, { tipo: 'banco', x: 8, y: 10 }, { tipo: 'cesto', x: 10, y: 10 },
     ]),
-    /* ---------- SALA 1: Vivo ou Não Vivo? (azulejo verde) ---------- */
-    sala(1, 13, [
-      cartaz(1, 'vivo', '#5fb85a'), quadro(2, 'seres'),   // 0 liso: o armário de vidro é alto
-      { tipo: 'cortina', x: 4, y: 0, var: { cor: '#9fe0a0' } }, { tipo: 'relogio-parede', x: 5, y: 0 },
-      { tipo: 'prateleira-parede', x: 6, y: 0 }, { tipo: 'janela', x: 8, y: 0 }, quadroRaro('c1', 9),
-      { tipo: 'lab-armario-vidro', x: 0, y: 2 }, { tipo: 'lab-bancada', x: 1, y: 2, var: { itens: 'frascos' } },
-      { tipo: 'lab-bancada', x: 3, y: 2, var: { itens: 'vasos' } },
-      inter('lab-formigueiro', 'Formigueiro de vidro', { tipo: 'lab-formigueiro', x: 6, y: 3 }),
-      { tipo: 'lab-pedras', x: 5, y: 2 }, { tipo: 'vaso-planta', x: 8, y: 4 },
-      inter('lab-broto', 'Brotinho de feijão', { tipo: 'lab-broto', x: 9, y: 3 }),
-      // nada alto embaixo do quadro do raro
-      { tipo: 'barril', x: 8, y: 2 }, { tipo: 'caixote', x: 10, y: 2 }, { tipo: 'cesto', x: 9, y: 2 },
-      { tipo: 'tapete-listrado', x: 0, y: 4, w: 3, h: 1, var: { cores: ['#5fb85a', '#f4fbff', AMARELO, '#f4fbff'] } },
-      { tipo: 'tapete', x: 1, y: 6, w: 3, h: 2, var: { cor: '#dff6d8', borda: '#5fb85a' } },
-      inter('lab-pedra', 'Pedra', { tipo: 'lab-pedra', x: 1, y: 8 }),
-      { tipo: 'cadeira', x: 0, y: 8, var: { almofada: '#9fe0a0' } }, { tipo: 'cadeira', x: 2, y: 8, var: { almofada: AMARELO } },
-      { tipo: 'mesa', x: 4, y: 9, var: { toalha: '#e8f8e0', itens: ['livro', 'xicara'] } },
-      { tipo: 'lab-bancada', x: 7, y: 5, var: { itens: 'pedras' } }, { tipo: 'lab-pedras', x: 9, y: 5 },
-      { tipo: 'lab-pedras', x: 5, y: 7 },
-      inter('lab-agua', 'Galão de água', { tipo: 'lab-agua', x: 6, y: 10 }),
-      { tipo: 'lab-tubos', x: 0, y: 10 }, { tipo: 'balde', x: 2, y: 10 }, { tipo: 'banco', x: 7, y: 10 },
-      { tipo: 'vaso-grande', x: 10, y: 10 }, { tipo: 'cesto', x: 9, y: 10 },
-      { tipo: 'almofada', x: 3, y: 8, var: { cor: '#9fe0a0' } },
-    ]),
-    /* ---------- SALA 2: Quem Ganha, Quem Perde (parque de capim e rio) ---------- */
-    sala(25, 13, [
-      quadroRaro('c2', 0),
-      { tipo: 'janela', x: 2, y: 0 }, cartaz(3, 'onca', '#f0a040'), { tipo: 'janela', x: 4, y: 0 }, cartaz(5, 'abelha', AMARELO),
-      quadro(6, 'cadeia'), { tipo: 'janela', x: 8, y: 0 }, { tipo: 'relogio-parede', x: 9, y: 0 }, { tipo: 'janela', x: 10, y: 0 },
-      { tipo: 'flores', x: 6, y: 2 },
-      inter('lab-colmeia', 'Colmeia', { tipo: 'lab-colmeia', x: 1, y: 4 }),
-      { tipo: 'lab-capim', x: 2, y: 2 }, { tipo: 'lab-capim', x: 4, y: 2 },
-      inter('lab-gafanhoto', 'Gafanhoto', { tipo: 'lab-gafanhoto', x: 7, y: 4 }),
-      { tipo: 'lab-capim', x: 7, y: 2 }, { tipo: 'vaso-grande', x: 10, y: 2 }, { tipo: 'lab-caixa', x: 1, y: 2 },
-      { tipo: 'lab-capim', x: 3, y: 4 },
-      inter('lab-onca', 'Onça-pintada', { tipo: 'lab-onca', x: 9, y: 5 }),
-      { tipo: 'lab-caixa', x: 10, y: 6 },
-      { tipo: 'lab-rio', x: 6, y: 6, w: 3, h: 1 }, { tipo: 'lab-rio', x: 8, y: 8, w: 3, h: 1 },
-      inter('lab-jacare', 'Jacaré', { tipo: 'lab-jacare', x: 5, y: 8 }),
-      inter('lab-pulgas', 'Cachorrinho', { tipo: 'lab-cachorro', x: 3, y: 8 }),
-      { tipo: 'vaso-grande', x: 0, y: 10 }, { tipo: 'banco', x: 1, y: 10 }, { tipo: 'balde', x: 3, y: 10 },
-      { tipo: 'cesto', x: 4, y: 10 }, { tipo: 'flores', x: 6, y: 10 }, { tipo: 'caixote', x: 7, y: 10, var: { item: 'moedas' } },
-      { tipo: 'lab-capim', x: 8, y: 10 },
-      { tipo: 'vaso-planta', x: 10, y: 10 }, { tipo: 'lab-cogumelo', x: 5, y: 6 },
-      { tipo: 'lab-caixa', x: 0, y: 8 },
-    ]),
-    /* ---------- SALA 3: Amigos da Natureza (jardim cor-de-rosa) ---------- */
-    sala(1, 1, [
-      { tipo: 'janela', x: 0, y: 0 }, cartaz(1, 'passaro', '#5fb4ff'), quadro(2, 'memoria'),
-      { tipo: 'bandeirinhas', x: 4, y: 0 }, cartaz(6, 'abelha', '#ff7eb6'), { tipo: 'cartaz', x: 7, y: 0 },
-      { tipo: 'estandarte', x: 8, y: 0, var: { cor: '#ff7eb6', emblema: 'coracao' } }, quadroRaro('c3', 9),
-      { tipo: 'lab-cogumelo', x: 0, y: 2 },
-      inter('lab-bufalo', 'Búfalo e passarinho', { tipo: 'lab-bufalo', x: 1, y: 3 }),
-      inter('lab-memoria', 'Jogo da memória', { tipo: 'lab-memoria', x: 2, y: 5 }),
-      inter('lab-flores', 'Flores e abelha', { tipo: 'lab-flores', x: 3, y: 2 }), { tipo: 'flores', x: 5, y: 2, var: { vaso: '#ff7eb6' } },
-      inter('lab-beija-flor', 'Beija-flor', { tipo: 'lab-beija-flor', x: 7, y: 3 }),
-      { tipo: 'lab-cogumelo', x: 6, y: 2, var: { cor: '#b58cff' } }, { tipo: 'cesto', x: 4, y: 2 },
-      { tipo: 'barril', x: 10, y: 3 },
-      { tipo: 'lab-cogumelo', x: 9, y: 4, var: { cor: AMARELO } },
-      { tipo: 'lab-flores', x: 0, y: 6 }, { tipo: 'balde', x: 0, y: 7 },
-      { tipo: 'banco', x: 4, y: 10 }, { tipo: 'lab-cogumelo', x: 6, y: 10 },
-      { tipo: 'tapete', x: 7, y: 8, w: 3, h: 2, var: { cor: '#ffd1e6', borda: '#ff7eb6' } },
-      { tipo: 'caixote', x: 10, y: 10, var: { item: 'estrela' } }, { tipo: 'cesto', x: 8, y: 10 },
-      { tipo: 'luminaria-pe', x: 0, y: 10 }, { tipo: 'lab-cogumelo', x: 5, y: 8, var: { cor: '#ff9d2e' } },
-      { tipo: 'lab-flores', x: 10, y: 8 },
-    ]),
-    /* ---------- SALA 4: Cada Um no Seu Hábitat (do gelo ao deserto) ---------- */
+    /* ---------- SALA DAS EXPERIÊNCIAS (em cima do hall): microscópio, tubos e bancadas ---------- */
+    // a fileira 3 fica livre (chega-se a ela por (5,4)); na fileira 2 só coisa baixa
     sala(13, 1, [
-      // 0-2 lisos: o iglu é alto (O-12)
-      cartaz(3, 'sol', '#ff9d2e'), quadro(4, 'mapa'), cartaz(6, 'neve', '#5fb4ff'),
-      { tipo: 'janela', x: 7, y: 0 }, { tipo: 'janela', x: 8, y: 0 }, quadroRaro('c4', 9),
-      inter('lab-urso', 'Iglu e urso-polar', { tipo: 'lab-iglu', x: 0, y: 2 }),
-      inter('lab-aguape', 'Aquário com aguapé', { tipo: 'lab-aquario', x: 7, y: 3 }),
-      { tipo: 'lab-cacto', x: 6, y: 3, var: { pequeno: true } },
-      { tipo: 'lab-bloco-gelo', x: 2, y: 4 }, { tipo: 'caixote', x: 4, y: 4, var: { item: 'concha' } },
-      inter('lab-camelo', 'Camelo', { tipo: 'lab-camelo', x: 10, y: 4 }), { tipo: 'lab-cacto', x: 7, y: 5, var: { pequeno: true } },
-      { tipo: 'barril', x: 4, y: 2 }, { tipo: 'lab-bloco-gelo', x: 9, y: 2 }, { tipo: 'caixote', x: 10, y: 2 },
-      inter('lab-cacto', 'Mandacaru', { tipo: 'lab-cacto', x: 0, y: 5 }),
-      { tipo: 'lab-areia', x: 0, y: 8, w: 3, h: 2 },
-      inter('lab-caatinga', 'Caatinga', { tipo: 'lab-caatinga', x: 8, y: 5 }),
-      inter('lab-termometro', 'Termômetro', { tipo: 'lab-termometro', x: 9, y: 9 }),
-      { tipo: 'caixote', x: 10, y: 10, var: { item: 'estrela' } }, { tipo: 'banco', x: 6, y: 10 }, { tipo: 'globo', x: 10, y: 9 },
-      { tipo: 'luminaria-pe', x: 0, y: 10 }, { tipo: 'balde', x: 1, y: 10 }, { tipo: 'lab-bloco-gelo', x: 3, y: 10 },
-      { tipo: 'lab-cacto', x: 2, y: 8, var: { pequeno: true } }, { tipo: 'cesto', x: 8, y: 8 },
-      { tipo: 'tapete', x: 3, y: 9, w: 2, h: 1, var: { cor: '#f0d8a0', borda: '#ff9d2e' } },
+      { tipo: 'janela', x: 0, y: 0 }, cartaz(1, 'atomo'), quadro(2, 'memoria'), { tipo: 'quimica-ciclo-agua', x: 4, y: 0 },
+      { tipo: 'relogio-parede', x: 6, y: 0 }, cartaz(7, 'abelha', AMARELO), { tipo: 'prateleira-parede', x: 8, y: 0 },
+      { tipo: 'janela', x: 10, y: 0 },
+      { tipo: 'lab-bancada', x: 0, y: 2, var: { itens: 'frascos' } }, { tipo: 'cesto', x: 2, y: 2 }, { tipo: 'lab-pedras', x: 3, y: 2 },
+      { tipo: 'quimica-vidrarias', x: 4, y: 2 }, { tipo: 'lab-bancada', x: 7, y: 2, var: { itens: 'pedras' } },
+      { tipo: 'balde', x: 9, y: 2 }, { tipo: 'barril', x: 10, y: 2 },
+      { tipo: 'lab-armario-vidro', x: 0, y: 4 }, { tipo: 'quimica-banqueta', x: 1, y: 4 },
+      inter('lab-minijogos', 'Mini-jogos de Ciências', { tipo: 'lab-microscopio', x: 2, y: 4, voz: 'narradora', acao: { tipo: 'tela', tela: 'laboratorio-jogos' } }),
+      { tipo: 'lab-formigueiro', x: 3, y: 4 }, { tipo: 'lab-agua', x: 4, y: 4 }, { tipo: 'quimica-atomo', x: 6, y: 4 },
+      { tipo: 'lab-termometro', x: 7, y: 4 },
+      inter('lab-experiencias', 'Experiências de Ciências', { tipo: 'lab-tubos', x: 8, y: 4, voz: 'narradora', acao: { tipo: 'tela', tela: 'laboratorio-atividades' } }),
+      { tipo: 'globo', x: 9, y: 4 }, { tipo: 'planta-alta', x: 10, y: 4 },
+      { tipo: 'tapete-listrado', x: 0, y: 6, w: 3, h: 1, var: { cores: [AGUA, '#f4fbff', AMARELO, '#f4fbff'] } },
+      { tipo: 'tapete-listrado', x: 8, y: 6, w: 3, h: 1, var: { cores: [AGUA, '#f4fbff', AMARELO, '#f4fbff'] } },
+      // Lupa em (2,8) e Ravi em (8,8); o meio de baixo (4 a 6) é o corredor até a porta do hall
+      { tipo: 'quimica-lupas', x: 0, y: 8 }, { tipo: 'lab-broto', x: 3, y: 8 }, { tipo: 'vaso-planta', x: 7, y: 8 },
+      { tipo: 'lab-bancada', x: 9, y: 8, var: { itens: 'vasos' } },
+      { tipo: 'pilha-livros', x: 0, y: 9 }, { tipo: 'ci-sementes', x: 1, y: 9 }, { tipo: 'cesto', x: 2, y: 9 },
+      { tipo: 'tapete', x: 7, y: 9, w: 2, h: 1, var: { cor: '#bff0ea', borda: AGUA } }, { tipo: 'caixote', x: 9, y: 9, var: { item: 'estrela' } },
+      { tipo: 'vaso-grande', x: 10, y: 9 },
+      { tipo: 'banco', x: 0, y: 10 }, { tipo: 'flores', x: 2, y: 10 }, { tipo: 'luminaria-pe', x: 3, y: 10 },
+      { tipo: 'flores', x: 7, y: 10, var: { vaso: AGUA } }, { tipo: 'cabideiro', x: 8, y: 10 }, { tipo: 'caixote', x: 9, y: 10 },
+      { tipo: 'cesto', x: 10, y: 10 },
     ]),
-    /* ---------- SALA 5: Detetives da Natureza (grama e pegadas) ---------- */
-    sala(25, 1, [
-      quadroRaro('c5', 0),
-      cartaz(2, 'pegada', '#8a5a3a'), { tipo: 'cartaz', x: 3, y: 0 }, { tipo: 'janela', x: 4, y: 0 }, quadro(5, 'cadeia'),
-      { tipo: 'janela', x: 7, y: 0 }, { tipo: 'estandarte', x: 8, y: 0, var: { cor: '#8a5a3a', emblema: 'estrela' } },
-      { tipo: 'janela', x: 9, y: 0 }, { tipo: 'janela', x: 10, y: 0 },
-      inter('lab-preguica', 'Bicho-preguiça', { tipo: 'lab-preguica', x: 1, y: 4 }), { tipo: 'flores', x: 2, y: 2 },
-      { tipo: 'lab-pegadas', x: 0, y: 2 }, { tipo: 'lab-pegadas', x: 3, y: 4, var: { bicho: 'pinguim' } },
-      inter('lab-mesa', 'Mesa do detetive', { tipo: 'lab-mesa-detetive', x: 5, y: 2 }),
-      { tipo: 'lab-cogumelo', x: 4, y: 2 }, { tipo: 'lab-cogumelo', x: 8, y: 2, var: { cor: AMARELO } },
-      { tipo: 'vaso-grande', x: 10, y: 2 }, { tipo: 'cesto', x: 9, y: 2 }, { tipo: 'balde', x: 3, y: 2 },   // baixos: embaixo das janelas
-      inter('lab-pinguim', 'Pinguim', { tipo: 'lab-pinguim', x: 9, y: 4 }),
-      inter('lab-feneco', 'Feneco', { tipo: 'lab-feneco', x: 10, y: 5 }),
-      inter('lab-tartaruga', 'Tartaruga marinha', { tipo: 'lab-tartaruga', x: 8, y: 9 }),
-      { tipo: 'lab-bancada', x: 9, y: 10, var: { itens: 'pedras' } },
-      inter('lab-lobo', 'Lobo-do-ártico', { tipo: 'lab-lobo', x: 10, y: 8 }),
-      { tipo: 'lab-bancada', x: 0, y: 10, var: { itens: 'vasos' } }, { tipo: 'flores', x: 2, y: 10 },
-      inter('lab-lagarto', 'Lagarto-de-colar', { tipo: 'lab-lagarto', x: 1, y: 8 }), { tipo: 'vaso-grande', x: 0, y: 8 },
-      { tipo: 'lab-neve', x: 3, y: 8 }, { tipo: 'cesto', x: 5, y: 10 },
-      { tipo: 'tapete', x: 5, y: 8, w: 2, h: 1, var: { cor: '#e8d8b8', borda: '#8a5a3a' } },
-      { tipo: 'lab-pegadas', x: 6, y: 10 },
-      { tipo: 'tapete-listrado', x: 7, y: 7, w: 3, h: 1, var: { cores: ['#8a5a3a', '#f4fbff', '#5fb85a', '#f4fbff'] } },
-    ])
+    /* ---------- OS CAPÍTULOS: galeria (embaixo) e estufa (em cima), enfeites em ci-comodos.js ---------- */
+    sala(1, 13, CI.galeria10), sala(1, 1, CI.estufa10),
+    sala(25, 13, CI.galeria11), sala(25, 1, CI.estufa11),
+    sala(37, 13, CI.galeria12), sala(37, 1, CI.estufa12),
+    estacoes(10, 'aprendizagem'), estacoes(10, 'atividades'),
+    estacoes(11, 'aprendizagem'), estacoes(11, 'atividades'),
+    estacoes(12, 'aprendizagem'), estacoes(12, 'atividades')
   );
+
+  // as paletas: hall branco e verde-água; galerias verdes (Aprendizagem); estufas amarelas (Atividades)
+  var HALL = { piso: '#f4fbff', piso2: '#bff0ea', detalhe: AGUA, parede: '#f4fbff', parede2: '#d6eef8', rodape: '#1f9a92' };
+  var GALERIA = { piso: '#f4fff0', piso2: '#cfeec4', detalhe: '#3fae5a', parede: '#f8fff4', parede2: '#d8f0cc', rodape: '#2a7a3e' };
+  var ESTUFA = { piso: '#fff6dc', piso2: '#ecdca8', detalhe: '#f0b020', parede: '#eaf8ff', parede2: '#fff0c8', rodape: '#b07a10' };
+  function comodo(id, nome, placa, x, y, piso, parede, paleta) {
+    return { id: id, nome: nome, placa: placa, rect: { x: x, y: y, w: 11, h: 11 }, piso: piso, parede: parede, paleta: paleta };
+  }
 
   // escada que desce ao 2º andar (vão no chão do Hall): quem sobe de lá chega logo acima do vão (18, 22)
   R.registrarInterior({
@@ -185,47 +171,43 @@
     nome: 'Laboratório de Ciências',
     entrada: true,
     pacote: 'interior-observatorio',
-    tamanho: { w: 37, h: 25 },
+    tamanho: { w: 49, h: 25 },
     spawn: { x: 18, y: 22 },
     escadas: [{ x: 18, y: 23, para: 'observatorio-2', chegar: { x: 0, y: -1 }, olhar: { x: 0, y: 1 }, sentido: 'desce' }],
     comodos: [
-      { id: 'hall', nome: 'Hall', placa: 'Hall • Laboratório de Ciências', rect: { x: 13, y: 13, w: 11, h: 11 },
-        piso: 'mosaico', parede: 'azulejo', paleta: { piso: '#f4fbff', piso2: '#bff0ea', detalhe: AGUA, parede: '#f4fbff', parede2: '#d6eef8', rodape: '#1f9a92' } },
-      { id: 'vivo', nome: 'Vivo ou Não Vivo?', placa: 'Sala 1 • Vivo ou Não Vivo?', rect: { x: 1, y: 13, w: 11, h: 11 },
-        piso: 'azulejo', parede: 'azulejo', paleta: { piso: '#f4fff0', piso2: '#cfeec4', detalhe: '#5fb85a', parede: '#f8fff4', parede2: '#d8f0cc', rodape: '#3f9a45' } },
-      { id: 'ganha', nome: 'Quem Ganha, Quem Perde', placa: 'Sala 2 • Quem Ganha, Quem Perde', rect: { x: 25, y: 13, w: 11, h: 11 },
-        piso: 'carpete', parede: 'madeira', paleta: { piso: '#d8e8a0', piso2: '#c0d888', parede: '#fff6e0', parede2: '#f0d8a0', rodape: '#8a5a3a' } },
-      { id: 'amigos', nome: 'Amigos da Natureza', placa: 'Sala 3 • Amigos da Natureza', rect: { x: 1, y: 1, w: 11, h: 11 },
-        piso: 'carpete', parede: 'papel', paleta: { piso: '#c8ecb0', piso2: '#b0e098', parede: '#fff1f6', parede2: '#ffd1e6', rodape: '#ff7eb6' } },
-      { id: 'habitat', nome: 'Cada Um no Seu Hábitat', placa: 'Sala 4 • Cada Um no Seu Hábitat', rect: { x: 13, y: 1, w: 11, h: 11 },
-        piso: 'mosaico', parede: 'papel', paleta: { piso: '#fff4dc', piso2: '#e0f2fb', detalhe: '#ff9d2e', parede: '#eaf8ff', parede2: '#fff0c8', rodape: '#2f6fd6' } },
-      { id: 'detetives', nome: 'Detetives da Natureza', placa: 'Sala 5 • Detetives da Natureza', rect: { x: 25, y: 1, w: 11, h: 11 },
-        piso: 'tabuas', parede: 'madeira', paleta: { piso: '#f0dcb8', piso2: '#dcc098', parede: '#f4fbff', parede2: '#d8ecd0', rodape: '#8a5a3a' } },
+      comodo('hall', 'Hall', 'Hall • Laboratório de Ciências', 13, 13, 'mosaico', 'azulejo', HALL),
+      comodo('experiencias', 'Sala das Experiências', 'Sala das Experiências', 13, 1, 'mosaico', 'azulejo',
+        Object.assign({}, HALL, { piso2: '#d6eef8', parede2: '#bff0ea' })),
+      comodo('galeria10', 'Conhecendo as plantas', 'Cap. 10 • Conhecendo as plantas', 1, 13, 'azulejo', 'azulejo', GALERIA),
+      comodo('estufa10', 'Estufa do capítulo 10', 'Cap. 10 • Estufa das Atividades', 1, 1, 'tabuas', 'papel', ESTUFA),
+      comodo('galeria11', 'As partes das plantas', 'Cap. 11 • As partes das plantas', 25, 13, 'azulejo', 'azulejo', GALERIA),
+      comodo('estufa11', 'Estufa do capítulo 11', 'Cap. 11 • Estufa das Atividades', 25, 1, 'tabuas', 'papel', ESTUFA),
+      comodo('galeria12', 'As plantas se relacionam', 'Cap. 12 • As plantas se relacionam', 37, 13, 'azulejo', 'azulejo', GALERIA),
+      comodo('estufa12', 'Estufa do capítulo 12', 'Cap. 12 • Estufa das Atividades', 37, 1, 'tabuas', 'papel', ESTUFA),
     ],
     portas: [
-      { x: 12, y: 19, w: 1, h: 2 },   // vivo ↔ hall
-      { x: 24, y: 19, w: 1, h: 2 },   // hall ↔ ganha
-      { x: 18, y: 12, w: 1, h: 3 },   // hall ↔ hábitat (atravessa a parede do fundo do hall)
-      { x: 12, y: 7, w: 1, h: 2 },    // amigos ↔ hábitat
-      { x: 24, y: 7, w: 1, h: 2 },    // hábitat ↔ detetives
+      { x: 12, y: 18, w: 1, h: 3 }, { x: 24, y: 18, w: 1, h: 3 }, { x: 36, y: 18, w: 1, h: 3 },   // galeria 10 ↔ hall ↔ galeria 11 ↔ galeria 12
+      { x: 12, y: 6, w: 1, h: 3 }, { x: 24, y: 6, w: 1, h: 3 }, { x: 36, y: 6, w: 1, h: 3 },      // estufa 10 ↔ experiências ↔ estufa 11 ↔ estufa 12
+      { x: 5, y: 12, w: 3, h: 3 }, { x: 17, y: 12, w: 3, h: 3 },                                 // estufa ↔ galeria; experiências ↔ hall
+      { x: 29, y: 12, w: 3, h: 3 }, { x: 41, y: 12, w: 3, h: 3 },                                // (atravessam a parede do fundo de baixo)
     ],
     corredores: [
-      { x: 17, y: 15, w: 3, h: 9 }, { x: 13, y: 19, w: 11, h: 2 },   // hall
-      { x: 8, y: 19, w: 4, h: 2 }, { x: 25, y: 19, w: 4, h: 2 },     // entradas das salas 1 e 2
-      { x: 17, y: 3, w: 3, h: 9 }, { x: 13, y: 7, w: 11, h: 2 },     // hábitat
-      { x: 8, y: 7, w: 4, h: 2 }, { x: 25, y: 7, w: 4, h: 2 },       // entradas das salas 3 e 5
+      { x: 1, y: 18, w: 47, h: 3 }, { x: 1, y: 6, w: 47, h: 3 },                                 // as fileiras das portas dos lados
+      { x: 17, y: 15, w: 3, h: 9 },                                                              // o hall, da porta de cima à escada
+      { x: 5, y: 15, w: 3, h: 3 }, { x: 29, y: 15, w: 3, h: 3 }, { x: 41, y: 15, w: 3, h: 3 },   // galerias: até a porta da estufa
+      { x: 5, y: 9, w: 3, h: 3 }, { x: 17, y: 9, w: 3, h: 3 }, { x: 29, y: 9, w: 3, h: 3 }, { x: 41, y: 9, w: 3, h: 3 },   // de cima: até a porta de baixo
     ],
     objetos: objetos,
     npcs: [
-      npc('lab-iris', 20, 21, { tipo: 'guia', lugar: 'materia:ciencias', livro: 'ciencias' }),
-      npc('lab-bento', 5, 18, acaoSala('c1')),
-      npc('lab-jana', 30, 18, acaoSala('c2')),
-      npc('lab-malu', 6, 6, acaoSala('c3')),
-      npc('lab-ravi', 16, 6, acaoSala('c4')),
-      npc('lab-lupa', 30, 6, acaoSala('c5')),
+      npc('lab-iris', 20, 21, GUIA),
+      npc('lab-malu', 6, 21, GUIA),     // capítulo 10
+      npc('lab-bento', 30, 21, GUIA),   // capítulo 11
+      npc('lab-jana', 42, 21, GUIA),    // capítulo 12
+      npc('lab-lupa', 15, 9, { tipo: 'tela', tela: 'laboratorio-jogos' }),
+      npc('lab-ravi', 21, 9, { tipo: 'tela', tela: 'laboratorio-atividades' }),
     // + os registrados com predio: 'observatorio-3' e x/y (Reino.personagensDoPredio)
     ].concat(R.personagensDoPredio('observatorio-3').filter(function (p) { return p.x != null && p.y != null; }).map(function (p) {
-      return npc(p.id, p.x, p.y, p.acao || { tipo: 'guia', lugar: 'materia:ciencias', livro: 'ciencias' });
+      return npc(p.id, p.x, p.y, p.acao || GUIA);
     })),
   });
 })();

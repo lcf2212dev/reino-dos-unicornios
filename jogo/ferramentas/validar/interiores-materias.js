@@ -13,7 +13,7 @@ function anfitrioes(Reino, LUGARES, checar) {
     const id = 'materia:' + m.id, l = m.lugar, di = Reino.interiores.find((d) => d.id === l.interior);
     ANFITRIAO[id] = l.dentro;
     const hospede = Reino.materias.find((h) => 'materia:' + h.id === l.dentro);   // o Museu é o lugar de História
-    checar(LUGARES.has(l.dentro) && !(hospede && hospede.lugar && hospede.lugar.dentro), `${id}: lugar.dentro "${l.dentro}" não é um prédio do mapa`);
+    checar(LUGARES.has(l.dentro) && !(hospede && hospede.lugar && hospede.lugar.dentro && hospede.lugar.interior !== l.interior), `${id}: lugar.dentro "${l.dentro}" não é um prédio do mapa`);
     if (!checar(di, `${id}: lugar.interior "${l.interior}" não existe`)) return;
     checar(di.lugar === id || (di.lugar === l.dentro && di.entrada),
       `${id}: o interior "${l.interior}" tem lugar "${di.lugar}" (precisa ser "${id}", um andar dela, ou o de entrada do anfitrião "${l.dentro}")`);
@@ -24,10 +24,11 @@ function anfitrioes(Reino, LUGARES, checar) {
 function esperadas(Reino) {
   const e = {}, juntar = (l, ks) => { e[l] = (e[l] || []).concat(ks); };
   const interiorDe = (m) => m.lugar && m.lugar.dentro && Reino.interiores.find((d) => d.id === m.lugar.interior);
-  const passados = new Set(Reino.materias.map(interiorDe).filter((d) => d && d.entrada).map((d) => d.lugar));
+  const passados = new Map();   // lugar de entrada -> a matéria que agora mora nele
+  Reino.materias.forEach((m) => { const d = interiorDe(m); if (d && d.entrada) passados.set(d.lugar, m.id); });
   Reino.materias.forEach((m) => {
     const di = interiorDe(m), l = di ? di.lugar : 'materia:' + m.id;
-    if (!m.arquivada && !(passados.has(l) && !di)) juntar(l, m.salas.map((s) => 'sala:' + s.id));
+    if (!m.arquivada && !(passados.has(l) && passados.get(l) !== m.id)) juntar(l, m.salas.map((s) => 'sala:' + s.id));
     juntar('castelo', ['treino:' + m.id]);
   });
   e.escola = Reino.provas.map((p) => 'prova:' + p.id);

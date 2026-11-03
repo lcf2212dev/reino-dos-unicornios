@@ -16,6 +16,11 @@ bimestre (`docs/contratos/quarto-bimestre.md` §7). A fixture histórica dos tes
 O mesmo vale para a Torre do Relógio (`jogo/js/interiores/torre/torre.js` e `falas.js`: um andar por sala i1–i5):
 no jogo, a torre inteira passou a ser do English do 4º bimestre; a fixture carrega os dois daqui.
 
+O mesmo vale para o Laboratório de Ciências (`jogo/js/interiores/observatorio/lab-andar3.js` e `lab-falas.js`: o
+Hall e as salas c1–c5): no jogo, o 3º andar do Observatório passou a ser da Ciências da Natureza do 4º bimestre.
+Também a Estação dos Caminhos (`interiores/geografia/geografia.js`), o Museu das Memórias (`interiores/museu/museu.js`)
+e a planta da Torre dos Números (`interiores/matematica/salas.js`): passaram às matérias do 4º bimestre.
+
 No jogo ativo resta um catálogo sem perguntas, respostas ou cartas de estudo. Ele conserva IDs, nomes,
 recompensas, sprites e metadados para manter progresso, dinheiro derivado, conquistas e identidade dos
 prédios. Consulte `docs/contratos/bimestres.md` para os pontos de acesso bloqueados e os cuidados ao adicionar

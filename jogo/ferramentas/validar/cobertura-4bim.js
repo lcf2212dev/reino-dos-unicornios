@@ -13,7 +13,7 @@ const Jogo = require('../jogo-no-node');
 const SIGLA = { aprendizagem: 'APR', atividades: 'ATI' };
 const siglaDo = (m, l) => (m.livros && m.livros[l] && m.livros[l].sigla) || SIGLA[l];
 const RE_PAGINA = /^## ([A-Z]{3}) p\. (\d+|sem número)\b/;
-const RE_QUESTAO = /^- \*\*(([A-Z]{3})-(\d{2,3})-q[0-9A-Z]+)\*\*/;
+const RE_QUESTAO = /^- \*\*(([A-Z]{3})-(\d{2,3})-q[0-9A-Z]+[a-z]?)\*\*/;   // item com letra (APR-10-q3a) também
 // a página de uma origem ('ENG-125-q2b' → 'ENG-125')
 const paginaDaOrigem = (o) => o.replace(/-q[0-9A-Z]+[a-z]?$/, '');
 
@@ -54,7 +54,7 @@ function cobertura(m, raizRepo) {
     if (d.adaptacao) adaptacoes.push({ origem: d.origem, desafio: d.id, tipo: d.tipo, adaptacao: d.adaptacao });
     if (!d.origem) return;
     const base = d.origem.replace(/[a-z]$/, '');
-    origens.add(base);
+    origens.add(base); origens.add(d.origem);
     if (!inv.questoes.includes(base) && !inv.questoes.includes(d.origem)) erros.push(`${d.id}: origem ${d.origem} não está no inventário`);
     const pg = paginaDaOrigem(base);
     const r = reg(pg);

@@ -1,0 +1,28 @@
+/* Unicórnios das salas do capítulo 12 (1 comum e 1 raro por sala), com os temas de cada sala.
+   O ciencias4.js junta estes com os épicos e o lendário da matéria. */
+Reino.registrarUnicornios('ciencias4', [
+  { id: 'ci-polenzinho', nome: 'Polenzinho', raridade: 'comum', sala: 'ci12a1',
+    cores: { corpo: '#fff8dc', crina: ['#ffb300', '#3a2446', '#ffe680'], chifre: '#ffd34d' },
+    frase: 'Sou amarelinho como o pólen. Pulo de flor em flor com as abelhas!' },
+  { id: 'ci-mel-de-flor', nome: 'Mel de Flor', raridade: 'raro', sala: 'ci12a1',
+    cores: { corpo: '#fff1d6', crina: ['#e08a00', '#ff9cc6', '#fff3a0'], chifre: '#ffffff' },
+    frase: 'Do néctar das flores sai o mel. E eu sou docinho igual!' },
+  { id: 'ci-dente-de-leao', nome: 'Dente-de-Leão', raridade: 'comum', sala: 'ci12a2',
+    cores: { corpo: '#ffffff', crina: ['#ffd34d', '#e9e4f5', '#7d9c1a'], chifre: '#fff3a0' },
+    frase: 'Assopre minha crina e minhas sementes voam com o vento!' },
+  { id: 'ci-pluminha', nome: 'Pluminha', raridade: 'raro', sala: 'ci12a2',
+    cores: { corpo: '#f7f4ff', crina: ['#ffffff', '#c9c4e8', '#8a5a2b'], chifre: '#ffe680' },
+    frase: 'Sou leve como a semente fofinha. O vento me leva para longe!' },
+  { id: 'ci-acai', nome: 'Açaí', raridade: 'comum', sala: 'ci12a3',
+    cores: { corpo: '#efe3ff', crina: ['#5b2a86', '#3a2446', '#7d9c1a'], chifre: '#c9a0ff' },
+    frase: 'Sou roxinho como o açaí. O tucano adora minhas frutinhas!' },
+  { id: 'ci-abelha-corredora', nome: 'Abelha Corredora', raridade: 'raro', sala: 'ci12a3',
+    cores: { corpo: '#fff3b0', crina: ['#3a2446', '#ffc61a', '#3a2446'], chifre: '#ffffff' },
+    frase: 'Zum, zum! Ganhei a corrida levando pólen de flor em flor!' },
+  { id: 'ci-barrigape', nome: 'Barrigapé', raridade: 'comum', sala: 'ci12t1',
+    cores: { corpo: '#e8f2d8', crina: ['#a0612e', '#7d9c1a', '#fff3a0'], chifre: '#ffd166' },
+    frase: 'Sou devagarinho como um caramujo, mas numa folha seca eu voo!' },
+  { id: 'ci-folha-voadora', nome: 'Folha Voadora', raridade: 'raro', sala: 'ci12t1',
+    cores: { corpo: '#f0ffe6', crina: ['#4f8a1a', '#a9d8ff', '#ffd34d'], chifre: '#ffffff' },
+    frase: 'Vuuuu! A ventania me levou lá para o alto do céu!' },
+]);

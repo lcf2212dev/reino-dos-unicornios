@@ -25,6 +25,10 @@ desafio, livro e salas em geral: `conteudo.md`. Prédio e andares: `interiores.m
   `lp-*.js` = pessoas, falas e objetos); o layout do 3º bimestre em
   `arquivo/terceiro-bimestre/jogo/js/interiores/portugues/portugues.js`.
 - English na Torre do Relógio: `jogo/js/conteudo/materias/ingles4/` e `jogo/js/interiores/torre/` (`interiores.md` §9.5.1).
+- Ciências da Natureza (`ciencias4`) no Laboratório de Ciências (`observatorio-3`, `jogo/js/interiores/observatorio/lab-andar3.js`,
+  `ci-*.js`; o lugar dela fica dentro de `materia:ciencias`), Geografia do Mundo (`geografia4`) na Estação dos Caminhos
+  (`interiores/geografia/`), História da Gente (`historia4`) no Museu das Memórias (`interiores/museu/`) e Matemática do
+  Dia a Dia (`matematica4`) na Torre dos Números, com interior próprio (`interiores/matematica/`): `interiores.md` §9.5.2.
 - Produções (escrita livre e desenho salvos): campo `producoes` (`jogo/js/sistemas/producoes.js`).
 
 ## 2. Matéria do 4º bimestre
@@ -130,7 +134,7 @@ Reino.registrarSala('portugues4', {
 5. O layout do 3º bimestre sai do jogo (cópia em `arquivo/terceiro-bimestre/`, que a fixture histórica dos testes
    carrega); a matéria arquivada fica registrada, sem sala no prédio (`validar-interiores.js` não exige NPC nem
    estação para sala de matéria arquivada). Já são do 4º bimestre: a Casa das Palavras (Língua Portuguesa) e a Torre
-   do Relógio (English: `interiores.md` §9.5.1); os outros prédios (o Museu…) não mudam.
+   do Relógio (English: `interiores.md` §9.5.1); o Laboratório de Ciências, a Estação dos Caminhos, o Museu das Memórias e a Torre dos Números (`interiores.md` §9.5.2).
 6. Menu Lugares: uma linha só para o prédio, a da matéria ativa (salas e dinheiro dela, sem "Dentro da…"), com as
    matérias ativas primeiro; o "Novo!" sai quando ela entra no prédio depois da novidade (`ui/lugares.js`).
 

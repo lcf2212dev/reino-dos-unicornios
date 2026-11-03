@@ -419,6 +419,10 @@ livro, sala, prova e prêmio.
 | Inglês | `#e0a020` |
 | Língua Portuguesa | `#8e4fd6` |
 | English | `#d23c9b` |
+| Ciências da Natureza | `#7d9c1a` |
+| Geografia do Mundo | `#e5731a` |
+| História da Gente | `#6c6f86` |
+| Matemática do Dia a Dia | `#4a3cc9` |
 
 1. O ícone é o `emoji` da própria matéria, com desenho 16×16; nada de ícone genérico (o 📜 da prova) no lugar dele.
 2. A cor vai no telhado, na faixa do cabeçalho, numa faixa interna do painel e das cartas do livro. É cor de faixa e

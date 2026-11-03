@@ -1,0 +1,45 @@
+/* Sala ci12a1 (Livro de Aprendizagem, capítulo 12, pp. 24 a 27): a abertura do capítulo com a abelha na flor, o
+   Conversa vai... e o Conversa vem..., e o texto "Plantas, outros seres vivos e o ambiente" (polinização e dispersão),
+   que vira cartas (docs/contratos/quarto-bimestre.md §3). As pp. 26 e 27 não têm questões. */
+Reino.registrarSala('ciencias4',
+    {
+      id: 'ci12a1', nome: 'Abelhas e flores', emoji: '🐝',
+      livroOrigem: 'aprendizagem', capitulo: 12, paginas: 'pp. 24 a 27', ordem: 'livro',
+      cartas: ['ci-a24', 'ci-a25', 'ci-a26', 'ci-a26b', 'ci-a27', 'ci-a27b'],
+      intro: 'Vamos ver como as abelhas e as flores são amigas, e como as sementes viajam para longe!',
+      desafios: [
+        { id: 'ci12a1-01', tipo: 'escolha', origem: 'APR-24-qA', pagina: 24, livro: 'ci-a24',
+          pergunta: 'O que são os pontinhos amarelos presos ao corpo da abelha?',
+          opcoes: [
+            { t: 'Grãos de pólen.' },
+            { t: 'Gotas de mel.' },
+            { t: 'Sementes.' },
+          ], certa: 0,
+          adaptacao: 'A pergunta de conversa virou escolha.',
+          explica: 'Os pontinhos amarelos são grãos de pólen. Eles grudam no corpo da abelha quando ela pousa na flor.' },
+        { id: 'ci12a1-02', tipo: 'escolha', origem: 'APR-24-qB', pagina: 24, livro: 'ci-a24',
+          pergunta: 'Por que as abelhas pousam nas flores?',
+          opcoes: [
+            { t: 'Para descansar e dormir.' },
+            { t: 'Para se alimentar do néctar e do pólen.' },
+            { t: 'Para fugir da chuva.' },
+          ], certa: 1,
+          adaptacao: 'A pergunta de conversa virou escolha.',
+          explica: 'As abelhas pousam nas flores para se alimentar do néctar e do pólen. Assim, elas levam o pólen de uma flor para outra.' },
+        { id: 'ci12a1-03', tipo: 'varias', origem: 'APR-25-qA', pagina: 25, livro: 'ci-a25',
+          pergunta: 'O que pode acontecer quando uma abelha pousa em uma flor para se alimentar? Toque em TODAS as certas.',
+          opcoes: [
+            { t: 'Os grãos de pólen podem grudar no corpo da abelha.', ok: true },
+            { t: 'A abelha pode carregar os grãos de pólen para outras flores.', ok: true },
+            { t: 'Os grãos de pólen podem servir de alimento para a abelha.', ok: true },
+            { t: 'A flor vira uma abelha.' },
+          ],
+          adaptacao: 'Marcar X nos quadrinhos virou tocar nas frases; o jogo pôs uma frase errada a mais.',
+          explica: 'As três frases do livro estão certas: o pólen gruda no corpo da abelha, ela leva o pólen para outras flores e também come o pólen. Uma flor nunca vira abelha!' },
+        { id: 'ci12a1-04', tipo: 'desenho', origem: 'APR-25-qB', pagina: 25, livro: 'ci-a25', guardar: true,
+          pergunta: 'No espaço a seguir, desenhe uma planta que você conhece e um ser vivo que se relacione com ela.',
+          requisitos: ['formas', 'cores'],
+          adaptacao: 'O espaço do livro virou a prancheta de desenho do jogo.',
+          explica: 'Que desenho bonito! Uma flor e uma abelha, uma árvore e um passarinho: plantas e bichos vivem juntinhos.' },
+      ],
+    });

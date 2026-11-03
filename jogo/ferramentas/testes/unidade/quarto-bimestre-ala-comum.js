@@ -227,15 +227,18 @@ function tamanhoAla(tamanho) {
       assert.ok(await esperar(c, "__reino.cena() === 'mapa' && __reino.estado() === 'mapa'"), 'não saiu da Casa das Palavras');
       assert.deepStrictEqual(await c.js('Jogador.tile()'), { x: porta.x, y: porta.y + 1 }, 'saiu longe da porta da casa');
 
-      // menu Lugares: uma linha só da Casa das Palavras, a 1ª (matéria ativa), com as salas da Língua Portuguesa;
+      // menu Lugares: uma linha só da Casa das Palavras, entre as matérias ativas (antes do 1º "em breve"), com as
+      // salas da Língua Portuguesa;
       // já visitada, sem o "Novo!"; o "Ir" dela anda até a casa e entra no saguão
       await c.tela('lugares');
       const linhas = await c.js("[...document.querySelectorAll('.sala-card')].map(function (b) { return b.textContent.replace(/\\u00ad/g, '').replace(/\\s+/g, ' '); })");
       const casa = linhas.map((t, i) => (t.indexOf('Casa das Palavras') >= 0 ? i : -1)).filter((i) => i >= 0);
-      assert.deepStrictEqual(casa, [0], 'a Casa das Palavras: uma linha só, a primeira do menu');
-      assert.ok(linhas[0].indexOf(`de ${M.salas.length} salas`) >= 0 && linhas[0].indexOf('em breve') < 0, 'a linha da casa sem as salas da Língua Portuguesa: ' + linhas[0]);
-      assert.ok(linhas[0].indexOf('Dentro') < 0 && linhas[0].indexOf('Novo!') < 0, 'a linha da casa com "Dentro" ou "Novo!" depois da visita: ' + linhas[0]);
-      await c.page.locator('.sala-card').nth(0).click();
+      const breve = linhas.findIndex((t) => t.indexOf('Novos conteúdos em breve') >= 0);
+      assert.ok(casa.length === 1 && (breve < 0 || casa[0] < breve), 'a Casa das Palavras: uma linha só, antes do 1º "em breve": ' + casa);
+      const lc = linhas[casa[0]];
+      assert.ok(lc.indexOf(`de ${M.salas.length} salas`) >= 0 && lc.indexOf('em breve') < 0, 'a linha da casa sem as salas da Língua Portuguesa: ' + lc);
+      assert.ok(lc.indexOf('Dentro') < 0 && lc.indexOf('Novo!') < 0, 'a linha da casa com "Dentro" ou "Novo!" depois da visita: ' + lc);
+      await c.page.locator('.sala-card').nth(casa[0]).click();
       assert.ok(await esperar(c, "__reino.cena() === 'portugues' && __reino.estado() === 'interior'", 40000, 500), 'o "Ir" não entrou na Casa das Palavras');
       assert.deepStrictEqual(await c.js('Jogador.tile()'), def.spawn);
       assert.deepStrictEqual(c.erros, [], 'erro de console');

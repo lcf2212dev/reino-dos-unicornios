@@ -274,6 +274,21 @@ parte). Aqui só o que outros arquivos usam. Escada entre andares de lugares dif
 3. O layout do 3º bimestre (um andar por sala `i1`…`i5`) está em `arquivo/terceiro-bimestre/`, que a fixture
    histórica carrega no lugar destes arquivos.
 
+### 9.5.2 Os prédios das outras matérias do 4º bimestre
+Mesmo modelo da Torre do Relógio: estações GERADAS DOS DADOS da matéria (vaga sem sala = enfeite; sala sem lugar ou
+capítulo com sala demais = erro na carga), um anfitrião por capítulo, os dois livros e o guia no saguão; o layout do
+3º bimestre de cada um está em `arquivo/terceiro-bimestre/`, que a fixture histórica carrega.
+- Laboratório de Ciências (`observatorio-3`, 49×25, `observatorio/lab-andar3.js`, `ci-objetos.js`, `ci-comodos.js`):
+  `ciencias4`; galeria (Aprendizagem) e estufa (Atividades) por capítulo; o resto do Observatório não muda.
+- Estação dos Caminhos (`geografia`, 37×33, `geografia/geografia.js`, `ge-objetos*.js`): `geografia4`; plataforma
+  (Aprendizagem, 6 vagas) e vagão (Atividades, 4) por capítulo.
+- Museu das Memórias (`museu`, 37×33, sem escadas, `museu/museu.js`, `hi-objetos.js`, `hi-galerias.js`): `historia4`;
+  galeria por capítulo e oficina em cima; o acervo fica no hall.
+- Torre dos Números (`matematica` térreo 13×13 e `matematica-1` a `-3`, um andar por capítulo, `matematica/*.js`):
+  `matematica4`; deixou o interior padrão (`padrao.js`).
+- Todo objeto destes layouts leva `var` própria: o kit de cor de vaso/cesto (`interiores-objetos-enfeites.js`,
+  `predioDe`) junta objetos de mesmo tipo e posição de prédios diferentes quando nenhum tem `var`.
+
 ### 9.6 Interior de teste
 O interior de teste da primeira fase (`teste`, lugar `bau`, NPCs `teste-guia`/`teste-sala`) foi trocado pelo
 Baú de verdade e não existe mais. Os perfis de voz `npc-teste-guia`/`npc-teste-sala` ainda estão em
