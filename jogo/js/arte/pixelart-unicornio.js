@@ -13,20 +13,15 @@
     var crina = def.cores.crina;
     var chifre = def.cores.chifre || '#ffd34d';
     var p = {
-      b: corpo, s: escurecer(corpo, 0.22), w: clarear(corpo, 0.55),
+      b: corpo, s: escurecer(corpo, 0.14), w: clarear(corpo, 0.55),
       m: crina[0], n: crina[1] || crina[0], r: crina[2] || crina[1] || crina[0],
       h: chifre, g: escurecer(chifre, 0.25), k: clarear(chifre, 0.45),
       e: '#2a1838', l: '#ffffff', p: '#ff9cc6', o: '#6b3b5a', q: misturar(corpo, '#ff9cc6', 0.22),
       f: escurecer(def.cores.casco || corpo, 0.3),
       W: def.cores.asa || '#ffffff', X: escurecer(def.cores.asa || '#ffffff', 0.18),
-      // meia-sombra, íris e cílio (moldes e pixelart-unicornio-acabamento.js); brilho (x t u) e sombra (y z v) das 3 cores da crina
-      d: escurecer(corpo, 0.12), i: misturar(crina[1] || crina[0], '#2a1838', 0.5), c: '#2a1838',
-      x: clarear(crina[0], 0.5), t: clarear(crina[1] || crina[0], 0.5), u: clarear(crina[2] || crina[1] || crina[0], 0.5),
-      y: escurecer(crina[0], 0.2), z: escurecer(crina[1] || crina[0], 0.2), v: escurecer(crina[2] || crina[1] || crina[0], 0.2),
     };
     if (estagio === 0) { p.h = clarear(chifre, 0.35); } // bebê: chifre bem pequenino
     if (estagio === 3) p.f = CASCO_ADULTO;               // adulto: casco dourado (o jovem, não)
-    p.F = clarear(p.f, 0.35);
     return p;
   }
 
@@ -180,7 +175,7 @@
     var meio = (x0 + x1) / 2;
     cascos.forEach(function (c) {
       g[c[1]][c[0]] = '.';
-      if (c[1] > 0 && 'bdsw'.indexOf(g[c[1] - 1][c[0]]) >= 0) g[c[1] - 1][c[0]] = '.';
+      if (c[1] > 0 && 'bs'.indexOf(g[c[1] - 1][c[0]]) >= 0) g[c[1] - 1][c[0]] = '.';
     });
     cascos.forEach(function (c) { if (c[1] > 0) g[c[1] - 1][c[0] + (c[0] < meio ? 1 : c[0] > meio ? -1 : 0)] = 'f'; });
     r = g.map(function (l) { return l.join(''); });
@@ -236,14 +231,13 @@
   }
 
   // estagio: 0 bebê, 1 pequeno, 2 jovem, 3 adulto • quadro: 0 parado, 1 e 2 passos, PULO (3) patas encolhidas
-  // • opcoes.vista: uma de PA.VISTAS • opcoes.cansado: pose cansada (fome ou sede baixa) • opcoes.piscando: olho fechado
+  // • opcoes.vista: uma de PA.VISTAS • opcoes.cansado: pose cansada (fome ou sede baixa)
   PA.unicornio = function (def, estagio, quadro, opcoes) {
     opcoes = opcoes || {};
     var enf = opcoes.enfeites || [];
     var vista = opcoes.vista || 'lado';
     var combo = enf.join('+');
-    var chave = ['uni', def.id, estagio, quadro, combo, opcoes.asasFada ? 'af' : '', vista, opcoes.cansado ? 'c' : '',
-      opcoes.piscando ? 'pi' : ''].join('|');
+    var chave = ['uni', def.id, estagio, quadro, combo, opcoes.asasFada ? 'af' : '', vista, opcoes.cansado ? 'c' : ''].join('|');
     if (cache[chave]) { usarCombo(combo); return cache[chave]; }
 
     var grande = estagio >= 2;
@@ -262,13 +256,10 @@
         if (l) corpoLinhas[p[1]] = l.slice(0, p[0]) + p[2] + l.slice(p[0] + 1);
       });
     }
-    // piscando: o olho fecha antes da pose cansada (a pálpebra do cansaço não fica boiando sobre o olho fechado)
-    if (opcoes.piscando && I.piscarUnicornio) corpoLinhas = I.piscarUnicornio(corpoLinhas);
     if (opcoes.cansado && molde.cansado) {
       corpoLinhas = cansar(corpoLinhas, molde.cansado);
       molde = moldeCansado(molde);
     }
-    if (I.acabarUnicornio) corpoLinhas = I.acabarUnicornio(corpoLinhas);
     var w = corpoLinhas[0].length, h = corpoLinhas.length;
     var base = novoCanvas(w, h);
     var ctx = base.getContext('2d');

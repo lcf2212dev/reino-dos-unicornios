@@ -280,9 +280,6 @@
     var quadroUni = alto > METADE_PULO * (J.salto ? J.salto.altura : 0) && alto > 0 ? PA._interno.PULO : quadro;
     // prefers-reduced-motion também para tudo o que é da água (ondinhas, partículas, ícone balançando)
     if (Reino.util.reduzMovimentoSistema) animar = false;
-    // piscar (Reino.config.piscar), só com Animações: ela e o unicórnio, cada um no seu ritmo
-    var PIS = animar && Reino.config && Reino.config.piscar, piscaM = !!PIS && J.t % PIS.marianaS < PIS.duraS;
-    opcoes.piscando = !!PIS && (J.t + 1.1) % PIS.unicornioS < PIS.duraS; opcoes.piscaMariana = piscaM;
     var particulas = animar;
     var icone = iconeMontaria();
     var sujo = montariaSuja();
@@ -303,7 +300,7 @@
     J.silhueta = null;
     if (banhoComUni()) {
       // banho de espuma: o unicórnio está na banheira (quem desenha é o banho) e ela fica a pé, ao lado
-      var aPe = PA.mariana(est.aparencia, false, 0, { capa: usa.capa, vista: olhar.vista, piscando: piscaM });
+      var aPe = PA.mariana(est.aparencia, false, 0, { capa: usa.capa, vista: olhar.vista });
       marcarSilhueta(aPe.canvas, J.x, J.y + 1, olhar.espelhar, 0, 0);
       return [{ y: J.y, desenhar: function () {
         sombra(p, J.x, J.y, 5);
@@ -336,7 +333,7 @@
       if (Math.hypot(frente.x - tras.x, frente.y - tras.y) > 1) J.olharBebe = PA.vistaDaDirecao(frente.x - tras.x, frente.y - tras.y);
       var olharB = J.olharBebe || olhar;
       var bebe = PA.unicornio(def, 0, quadroUni, Object.assign({}, opcoes, { vista: olharB.vista }));
-      var menina = PA.mariana(est.aparencia, false, quadro, { capa: usa.capa, vista: olhar.vista, piscando: piscaM });
+      var menina = PA.mariana(est.aparencia, false, quadro, { capa: usa.capa, vista: olhar.vista });
       pulo *= 1.5;
       var ry = r.y;
       var profB = fundura(r.x, ry), profM = fundura(J.x, J.y);

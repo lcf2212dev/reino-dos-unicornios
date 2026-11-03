@@ -96,9 +96,6 @@ Reino.config = {
   // passarinhoACadaMs: de quanto em quanto tempo passa um bando; passarinhoPxS: velocidade (px do jogo por s);
   // asaMs: troca de quadro das asas da borboleta
   vidaMapa: { borboletas: 10, libelulas: 3, folhas: 4, passarinhoACadaMs: 14000, passarinhoPxS: 46, asaMs: 160 },
-  // piscar (js/personagens/jogador-desenho.js), só com Animações: a Mariana pisca a cada `marianaS` segundos e o
-  // unicórnio dela a cada `unicornioS` (ritmos diferentes, para não piscarem sempre juntos); o olho fica fechado `duraS`
-  piscar: { marianaS: 3.3, unicornioS: 4.3, duraS: 0.14 },
   // fotos do jogo (js/sistemas/fotos.js): só no aparelho (IndexedDB 'reino-fotos'), nunca no save nem no servidor.
   // maxLado: px do lado maior; maxAlbum: fotos por aparelho; toqueLongoMs: segurar o 📷 abre o álbum.
   // NÃO troque o `banco`, senão o álbum parece vazio

@@ -93,4 +93,5 @@
 # @ = História: diferença dos escritórios
 # @ = Matemática: ajustes da conferência
 # @ = brilho da aura mais fraco por fora (sem retângulo) e chaminé da Minha Casa no telhado
+# @ = volta a arte anterior da personagem e dos unicórnios (desfaz cb35e360)
 @

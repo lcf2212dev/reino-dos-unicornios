@@ -83,13 +83,11 @@
       { js: 'js/arte/desenho.js', grupo: 'arte', node: true }, // desenho.js antes da pixel art: Reino.Desenho (paleta e helpers) é a fonte das cores do PA.cor
       { js: 'js/arte/pixelart.js', grupo: 'pixelart' }, // pixelart.js (base) primeiro: cria window.PA e PA._interno, que as outras partes usam
       { js: 'js/arte/pixelart-unicornio-moldes.js', grupo: 'pixelart' },
-      { js: 'js/arte/pixelart-unicornio-acabamento.js', grupo: 'pixelart' },
       { js: 'js/arte/enfeites-novidades.js', grupo: 'pixelart', node: true },
       { js: 'js/arte/pixelart-unicornio.js', grupo: 'pixelart' },
       { js: 'js/arte/pixelart-personagens.js', grupo: 'pixelart' },
       { js: 'js/arte/pixelart-mariana-visual.js', grupo: 'pixelart' },
       { js: 'js/arte/pixelart-menino-moldes.js', grupo: 'pixelart' },
-      { js: 'js/arte/pixelart-mariana-acabamento.js', grupo: 'pixelart' },
       { js: 'js/arte/pixelart-ovos.js', grupo: 'pixelart' },
       { js: 'js/arte/pixelart-icones.js', grupo: 'pixelart' },
       { js: 'js/conteudo/laboratorio/atividades.js', grupo: 'conteudo', node: true },
