@@ -1,0 +1,41 @@
+/* Ícones do capítulo 11 de História da Gente (grupo icones): o desenho de cada emoji novo das salas e cartas do
+   capítulo (formato e estilo: js/arte/icones/icones.js; contorno #3a2446). O 🏮 é o lampião de rua do acendedor
+   de lampiões (p. 17); o 🚜, o trator do agricultor (Atividades p. 8). */
+Reino.registrarIcones({
+  '🏮': { n: 'lampião de rua', p: { k: '#3a2446', d: '#4a4a5e', y: '#ffd34d', w: '#fff8e0', o: '#ffb020' }, d: [
+    '................',
+    '.......kk.......',
+    '.....kkddkk.....',
+    '....kddddddk....',
+    '...kkkkkkkkkk...',
+    '....kyywwyyk....',
+    '....kyowwoyk....',
+    '....kyooooyk....',
+    '....kyyyyyyk....',
+    '.....kkkkkk.....',
+    '......kddk......',
+    '......kddk......',
+    '......kddk......',
+    '......kddk......',
+    '.....kkddkk.....',
+    '....kddddddk....',
+  ] },
+  '🚜': { n: 'trator', p: { k: '#3a2446', r: '#e0433f', b: '#9fdcff', g: '#4a4a5e' }, d: [
+    '................',
+    '................',
+    '..kkkkkk........',
+    '..kbbbbk....kk..',
+    '..kbbbbk....kk..',
+    '..kbbbbk....kk..',
+    '.kkkkkkkkkkkkkk.',
+    '.krrrrrrrrrrrrk.',
+    '.krrrrrrrrrrrrk.',
+    '.kkkkkkkkkkkkkk.',
+    'kkggggkk...kkk..',
+    'kgggggggk.kgggk.',
+    'kggkkkggk.kgkgk.',
+    'kggkkkggk.kgggk.',
+    'kgggggggk..kkk..',
+    '.kkkkkkk........',
+  ] },
+});

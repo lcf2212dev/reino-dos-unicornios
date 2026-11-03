@@ -1,6 +1,6 @@
 // Aceite do 4º bimestre (Língua Portuguesa), parte 6: fumaça de regressão (o e2e já fotografa as telas). O 3º
-// bimestre continua em espera: a sala, o treino e a prova de uma matéria arquivada e a guia do térreo do Museu
-// (tocada de verdade) mostram o aviso do quarto bimestre e não abrem nada; e as outras áreas abrem sem erro: mapa,
+// bimestre continua em espera: a sala, o treino e a prova de uma matéria arquivada mostram o aviso do quarto bimestre e
+// não abrem nada; a guia do Museu (agora da História do 4º bimestre, tocada de verdade) fala a dela; e as outras áreas abrem sem erro: mapa,
 // Castelo (prédio e tela), Estábulo com uma baia para cada unicórnio do álbum (as da Língua Portuguesa também),
 // Escola (prédio e tela) e Loja (prédio e tela). Uma foto de cada em /tmp/reino-testes/aceite-4bim/ (não reprova).
 // Servidor e banco de TESTE novos (cenario.js); save sintético; congelado (?congelar=1); celular.
@@ -45,7 +45,7 @@ test('regressão: o 3º bimestre em espera e mapa, Castelo, Estábulo, Escola e 
     await aviso(c, 'treino de ' + arq.id);
     await c.js(`void Reino.NPCs.executar({ tipo: 'prova', prova: '${arq.prova}' })`);
     await aviso(c, 'prova ' + arq.prova);
-    // a guia do térreo do Museu (História arquivada), tocada de verdade
+    // a guia do hall do Museu (História da Gente, 4º bimestre), tocada de verdade: fala a dela, sem o aviso
     await c.ir('museu');
     const guia = await c.js("__reino.npcs().find(function (n) { return n.id === 'memoria'; })");
     assert.ok(guia, 'a guia do Museu');
@@ -53,7 +53,10 @@ test('regressão: o 3º bimestre em espera e mapa, Castelo, Estábulo, Escola e 
     assert.ok(await esperar(c, `(function (t) { return t.x === ${guia.x - 1} && t.y === ${guia.y} && !Jogador.caminho.length; })(Jogador.tile())`, 20000, 300));
     const p = await c.js(`__reino.paraTela(${guia.x * 16 + 8}, ${guia.y * 16})`);
     await c.page.touchscreen.tap(p.x, p.y);
-    await aviso(c, 'guia do Museu');
+    assert.ok(await esperar(c, 'Reino.Claude.dialogoAberto()'), 'guia do Museu: sem balão');
+    assert.match(await c.js("document.querySelector('#claude-balao .claude-texto').textContent"), /Dona Memória/, 'guia do Museu: outro texto no balão');
+    await c.js('Reino.Claude.limpar()');
+    await c.avancar(900);
 
     // Castelo, Escola e Loja: o prédio e a tela de cada um. O Castelo já tem o treino da Língua Portuguesa; a Escola,
     // só com as provas do 3º bimestre (arquivadas), mostra o aviso do quarto bimestre

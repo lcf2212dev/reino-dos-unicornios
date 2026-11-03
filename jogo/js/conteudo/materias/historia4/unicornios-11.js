@@ -1,0 +1,28 @@
+/* Unicórnios das salas do capítulo 11 (1 comum e 1 raro por sala), com os temas de cada sala.
+   O historia4.js junta estes com os épicos e o lendário da matéria. */
+Reino.registrarUnicornios('historia4', [
+  { id: 'hi-retratinho', nome: 'Retratinho', raridade: 'comum', sala: 'hi11a1',
+    cores: { corpo: '#f4efe6', crina: ['#6b4a2e', '#c9a27a', '#3a2446'], chifre: '#ffe680' },
+    frase: 'Fica paradinha e sorri! Vou guardar este momento numa foto.' },
+  { id: 'hi-revelacao', nome: 'Revelação', raridade: 'raro', sala: 'hi11a1',
+    cores: { corpo: '#2e2a3a', crina: ['#ff5c6a', '#ffd34d', '#f7f6fb'], chifre: '#ffffff' },
+    frase: 'Nasci devagarinho na sala escura, como as fotos de antigamente!' },
+  { id: 'hi-lampiao', nome: 'Lampião', raridade: 'comum', sala: 'hi11a2',
+    cores: { corpo: '#fff4d6', crina: ['#ffb020', '#e0433f', '#3a2446'], chifre: '#ffd166' },
+    frase: 'Eu ilumino a rua para você chegar em casa bem segura.' },
+  { id: 'hi-agulhinha', nome: 'Agulhinha', raridade: 'raro', sala: 'hi11a2',
+    cores: { corpo: '#fdeef6', crina: ['#ff7eb6', '#8e4fd6', '#5fb4ff'], chifre: '#d6d6e6' },
+    frase: 'Ponto aqui, ponto ali: costurei uma crina novinha para mim!' },
+  { id: 'hi-martelinho', nome: 'Martelinho', raridade: 'comum', sala: 'hi11a3',
+    cores: { corpo: '#f3e4cf', crina: ['#a0612e', '#4cc26b', '#ffd34d'], chifre: '#c9c9d6' },
+    frase: 'Toc, toc! Cada profissão tem a sua ferramenta e o seu lugar.' },
+  { id: 'hi-ponteirinho', nome: 'Ponteirinho', raridade: 'raro', sala: 'hi11a3',
+    cores: { corpo: '#eef4ff', crina: ['#3f7cff', '#ffd34d', '#3a2446'], chifre: '#ffe680' },
+    frase: 'Agora é hora de brincar, estudar e ser muito feliz!' },
+  { id: 'hi-leiteirinho', nome: 'Leiteirinho', raridade: 'comum', sala: 'hi11t1',
+    cores: { corpo: '#ffffff', crina: ['#9fdcff', '#5fb4ff', '#fff3a0'], chifre: '#ffe680' },
+    frase: 'Trouxe leite fresquinho até a sua porta, como antigamente!' },
+  { id: 'hi-colheitinha', nome: 'Colheitinha', raridade: 'raro', sala: 'hi11t1',
+    cores: { corpo: '#fff1c2', crina: ['#e0a800', '#4cc26b', '#e0433f'], chifre: '#ffd166' },
+    frase: 'Com o trator ou com a enxada, a colheita sai bonita!' },
+]);

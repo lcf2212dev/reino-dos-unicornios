@@ -1,0 +1,28 @@
+/* Unicórnios das salas do capítulo 12 (1 comum e 1 raro por sala), com os temas de cada sala.
+   O historia4.js junta estes com os épicos e o lendário da matéria. */
+Reino.registrarUnicornios('historia4', [
+  { id: 'hi-reciclinho', nome: 'Reciclinho', raridade: 'comum', sala: 'hi12a1',
+    cores: { corpo: '#eefbe8', crina: ['#4cc26b', '#2f8a4a', '#9fdcff'], chifre: '#ffe680' },
+    frase: 'Papel no azul, plástico no vermelho, metal no amarelo: eu sei separar!' },
+  { id: 'hi-ecoponto', nome: 'Ecoponto', raridade: 'raro', sala: 'hi12a1',
+    cores: { corpo: '#fdeef6', crina: ['#ff7eb6', '#4cc26b', '#ffd34d'], chifre: '#ffffff' },
+    frase: 'Traga o lixo limpinho: aqui ele vira coisa nova!' },
+  { id: 'hi-mangaba', nome: 'Mangaba', raridade: 'comum', sala: 'hi12a2',
+    cores: { corpo: '#fff4d6', crina: ['#e0a800', '#6fbf4a', '#a0612e'], chifre: '#ffd166' },
+    frase: 'Bolo, biscoito e doce de mangaba, e a mangabeira continua de pé!' },
+  { id: 'hi-sempre-viva', nome: 'Sempre-Viva', raridade: 'raro', sala: 'hi12a2',
+    cores: { corpo: '#f7f6fb', crina: ['#ffffff', '#6fbf4a', '#ffd34d'], chifre: '#fff3a0' },
+    frase: 'Sou uma florzinha que nunca murcha, como o seu carinho pela natureza.' },
+  { id: 'hi-mudinha', nome: 'Mudinha', raridade: 'comum', sala: 'hi12a3',
+    cores: { corpo: '#e8f7e0', crina: ['#2f6b3a', '#6fdc8c', '#a0612e'], chifre: '#ffe680' },
+    frase: 'Me planta, me rega, e um dia eu viro uma árvore bem grande!' },
+  { id: 'hi-composteira', nome: 'Composteira', raridade: 'raro', sala: 'hi12a3',
+    cores: { corpo: '#f3e4cf', crina: ['#7a4520', '#4cc26b', '#ff9cc6'], chifre: '#ffd166' },
+    frase: 'Casca de fruta vira adubo comigo. Ande mais 3 casas!' },
+  { id: 'hi-caicara', nome: 'Caiçara', raridade: 'comum', sala: 'hi12t1',
+    cores: { corpo: '#eef8ff', crina: ['#3f7cff', '#5fd3c4', '#fff3a0'], chifre: '#ffe680' },
+    frase: 'Moro pertinho do mar e da floresta, e cuido dos dois!' },
+  { id: 'hi-redinha', nome: 'Redinha', raridade: 'raro', sala: 'hi12t1',
+    cores: { corpo: '#fff8ee', crina: ['#5fb4ff', '#ffb020', '#3a2446'], chifre: '#ffffff' },
+    frase: 'Pesco só o que preciso, como os avós ensinaram. Sobra peixe para todo mundo!' },
+]);

@@ -1,0 +1,28 @@
+/* Unicórnios das salas do capítulo 10 (1 comum e 1 raro por sala), com os temas de cada sala
+   (docs/contratos/quarto-bimestre.md). O historia4.js junta estes com os épicos e o lendário da matéria. */
+Reino.registrarUnicornios('historia4', [
+  { id: 'hi-bombeirinho', nome: 'Bombeirinho', raridade: 'comum', sala: 'hi10a1',
+    cores: { corpo: '#fff0ec', crina: ['#e0433f', '#ffb020', '#ffd34d'], chifre: '#ffe680' },
+    frase: 'Fogo apagado! Eu cuido de todo mundo, igual ao bombeiro.' },
+  { id: 'hi-vigia-estrelado', nome: 'Vigia Estrelado', raridade: 'raro', sala: 'hi10a1',
+    cores: { corpo: '#eef0ff', crina: ['#2f3a8a', '#5fb4ff', '#ffd34d'], chifre: '#ffffff' },
+    frase: 'Enquanto você dorme, eu fico de olho nas estrelas e nas casas.' },
+  { id: 'hi-maleta-magica', nome: 'Maleta Mágica', raridade: 'comum', sala: 'hi10a2',
+    cores: { corpo: '#fbf1e6', crina: ['#9a5a2e', '#c98a52', '#ffd34d'], chifre: '#ffe680' },
+    frase: 'Todo emprego é um trabalho, mas nem todo trabalho é um emprego!' },
+  { id: 'hi-mil-ideias', nome: 'Mil Ideias', raridade: 'raro', sala: 'hi10a2',
+    cores: { corpo: '#fff8ee', crina: ['#ff9cc6', '#8e4fd6', '#ffd34d'], chifre: '#ffffff' },
+    frase: 'Minha cabeça vive cheia de ideias, igualzinho à de uma escritora!' },
+  { id: 'hi-leitinho', nome: 'Leitinho', raridade: 'comum', sala: 'hi10a3',
+    cores: { corpo: '#ffffff', crina: ['#5fb4ff', '#c9e8ff', '#ffd34d'], chifre: '#ffe680' },
+    frase: 'Da vaca até a sua casa: muita gente trabalha para o leite chegar!' },
+  { id: 'hi-memoria-feliz', nome: 'Memória Feliz', raridade: 'raro', sala: 'hi10a3',
+    cores: { corpo: '#f3ecff', crina: ['#8e4fd6', '#6fdc8c', '#ff9cc6'], chifre: '#ffffff' },
+    frase: 'Achei o par! Cada trabalho tem o seu lugar na comunidade.' },
+  { id: 'hi-palavra-secreta', nome: 'Palavra Secreta', raridade: 'comum', sala: 'hi10t1',
+    cores: { corpo: '#eefaf0', crina: ['#2f8a3a', '#a8329a', '#3f4fb0'], chifre: '#ffe680' },
+    frase: 'Flor, gota, círculo... a palavra secreta é TRABALHO!' },
+  { id: 'hi-astronautinha', nome: 'Astronautinha', raridade: 'raro', sala: 'hi10t1',
+    cores: { corpo: '#f4f4fb', crina: ['#3a2446', '#5fb4ff', '#ffd34d'], chifre: '#ffffff' },
+    frase: 'De foguete eu viajo pela Via Láctea!' },
+]);

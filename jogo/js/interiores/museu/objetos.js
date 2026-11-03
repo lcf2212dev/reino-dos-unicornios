@@ -42,9 +42,10 @@
       ret(ctx, cx - 4, py - 3, 7, 1, '#8a7aa8'); ret(ctx, cx - 4, py - 1, 9, 1, '#b8aac8'); ret(ctx, cx - 4, py + 1, 6, 1, '#b8aac8');
       ret(ctx, cx - 5, py - 4, 11, 1, C.branco);
     } });
+  // var.cor (opcional): a capa do livro aberto (os dois livros da História da Gente: verde e amarelo)
   I.objeto('museu-pulpito', { w: 1, h: 1, topo: 12, solido: true, alto: true,
-    desenhar: function (ctx, px, py) {
-      var cx = px + 8;
+    desenhar: function (ctx, px, py, o) {
+      var cx = px + 8, capa = v(o, 'cor', null);
       ret(ctx, cx - 6, py + 11, 13, 4, K); ret(ctx, cx - 5, py + 12, 11, 2, C.madeira3);
       ret(ctx, cx - 3, py - 2, 7, 14, K); ret(ctx, cx - 2, py - 2, 5, 13, C.madeira); ret(ctx, cx - 2, py - 2, 1, 13, C.madeiraClara);
       ret(ctx, cx - 1, py + 3, 3, 3, C.ouro2);
@@ -52,7 +53,8 @@
       // o Livro das Memórias aberto
       ret(ctx, cx - 7, py - 12, 15, 6, K);
       ret(ctx, cx - 6, py - 11, 6, 4, C.creme); ret(ctx, cx + 1, py - 11, 6, 4, C.creme);
-      ret(ctx, cx, py - 11, 1, 5, '#9b6bd6');
+      ret(ctx, cx, py - 11, 1, 5, capa || '#9b6bd6');
+      if (capa) ret(ctx, cx - 6, py - 7, 13, 1, capa);
       ret(ctx, cx - 5, py - 10, 4, 1, '#c8b8d8'); ret(ctx, cx - 5, py - 8, 3, 1, '#c8b8d8');
       ret(ctx, cx + 2, py - 10, 4, 1, '#c8b8d8'); ret(ctx, cx + 2, py - 8, 3, 1, '#c8b8d8');
       ret(ctx, cx, py - 6, 1, 3, C.rosa);
@@ -61,14 +63,26 @@
       var f = Math.floor(t / 260) % 8;
       if (f < 3) { ret(ctx, px + 3 + f * 4, py - 15 - f, 1, 3, C.ouro3); ret(ctx, px + 2 + f * 4, py - 14 - f, 3, 1, C.ouro3); }
     } });
+  // var.planta 'hi' (História da Gente): 3 oficinas em cima, 3 galerias no meio e o hall de ponta a ponta embaixo
   I.objeto('museu-mapa', { w: 2, h: 1, topo: 14, solido: true, alto: true,
-    desenhar: function (ctx, px, py) {
+    desenhar: function (ctx, px, py, o) {
       ret(ctx, px + 4, py, 3, 15, K); ret(ctx, px + 25, py, 3, 15, K);
       ret(ctx, px + 5, py, 1, 14, C.madeira); ret(ctx, px + 26, py, 1, 14, C.madeira);
       contornoRet(ctx, px + 1, py - 14, 30, 16, C.madeira2);
       ret(ctx, px + 3, py - 12, 26, 12, C.creme);
       // plantinha do museu: 3 salas em cima, 3 embaixo
       var cores = ['#9fe0a0', '#ffb070', '#c9a8ff', '#ffc2d8', '#ffe28a', '#9fcfff'];
+      if (v(o, 'planta', '') === 'hi') {
+        cores = ['#ffd6a8', '#c9a8ff', '#c8f0d0', '#ffb070', '#9fcfff', '#b8c98a'];
+        for (var j = 0; j < 6; j++) {
+          var xj = px + 4 + (j % 3) * 8, yj = py - 12 + Math.floor(j / 3) * 4;
+          ret(ctx, xj, yj, 7, 4, K); ret(ctx, xj + 1, yj + 1, 5, 2, cores[j]);
+        }
+        ret(ctx, px + 4, py - 4, 23, 4, K); ret(ctx, px + 5, py - 3, 21, 2, '#e0d0ff');
+        ret(ctx, px + 15, py - 3, 2, 2, C.vermelho);   // "você está aqui", no hall
+        ret(ctx, px + 1, py - 15, 30, 2, K); ret(ctx, px + 2, py - 14, 28, 1, C.ouro);
+        return;
+      }
       for (var i = 0; i < 6; i++) {
         var x = px + 4 + (i % 3) * 8, y = py - 11 + Math.floor(i / 3) * 5;
         ret(ctx, x, y, 7, 4, K); ret(ctx, x + 1, y + 1, 5, 2, cores[i]);

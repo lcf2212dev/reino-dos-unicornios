@@ -167,7 +167,9 @@ test('celular: separar com o item escolhido e os dois baús à vista', async () 
   } finally { await c.fechar(); }
 });
 
-// última página do guia (D5-04): nenhum ícone sozinho numa linha, "Livro das Memórias" em até 2 linhas, mesma altura na linha
+// última página do guia do Museu (D5-04): nenhum ícone sozinho numa linha, o botão dos livros (o nomeLivro da História do
+// 4º bimestre; era "Livro das Memórias") em até 2 linhas, mesma altura na linha
+const BOTAO_LIVROS = /^Livros? d/;   // o botão do livro da guia ('Livros de História…')
 for (const tamanho of ['celular', 'notebook']) {
   test(`${tamanho}: botões da última página do guia sem escada`, async () => {
     const c = await abrirCenario({ save: 'completo', tamanho, pasta: pasta('rodape-acao-guia-' + tamanho) });
@@ -187,10 +189,10 @@ for (const tamanho of ['celular', 'notebook']) {
         return { t: b.textContent.trim(), top: Math.round(r.top), h: Math.round(r.height), linhas: linhas,
           iconeSo: !!cv && cv.offsetParent !== null && b.textContent.trim() !== '' && Math.round(cv.getBoundingClientRect().top) > Math.min.apply(null, textoTopo) + lh / 2 };
       })`);
-      assert.ok(bs.some((b) => /Livro das Memórias/.test(b.t)), JSON.stringify(bs));
+      assert.ok(bs.some((b) => BOTAO_LIVROS.test(b.t)), JSON.stringify(bs));
       assert.deepStrictEqual(bs.filter((b) => b.iconeSo).map((b) => b.t), [], 'ícone sozinho na linha de baixo');
-      const livro = bs.find((b) => /Livro das Memórias/.test(b.t));
-      assert.ok(livro.linhas <= 2, 'Livro das Memórias: ' + livro.linhas + ' linhas');
+      const livro = bs.find((b) => BOTAO_LIVROS.test(b.t));
+      assert.ok(livro.linhas <= 2, livro.t + ': ' + livro.linhas + ' linhas');
       const porLinha = {};
       bs.forEach((b) => { (porLinha[b.top] = porLinha[b.top] || []).push(b.h); });
       Object.values(porLinha).forEach((hs) => assert.strictEqual(new Set(hs).size, 1, 'alturas na mesma linha: ' + hs));
