@@ -1,0 +1,28 @@
+/* Unicórnios das salas do capítulo 10 (1 comum e 1 raro por sala), com os temas de cada sala: as matérias-primas
+   e de onde elas vêm. O geografia4.js junta estes com os das outras salas da matéria. */
+Reino.registrarUnicornios('geografia4', [
+  { id: 'ge-madeirinha', nome: 'Madeirinha', raridade: 'comum', sala: 'ge10a1',
+    cores: { corpo: '#f6e3cc', crina: ['#a0612e', '#6e3f1c', '#ffd34d'], chifre: '#ffd166' },
+    frase: 'Sou feita de madeira, igualzinha ao aviãozinho da brincadeira!' },
+  { id: 'ge-grafitinho', nome: 'Grafitinho', raridade: 'raro', sala: 'ge10a1',
+    cores: { corpo: '#eceff5', crina: ['#4a4f63', '#ffd34d', '#ff9cc6'], chifre: '#b8c2d6' },
+    frase: 'Eu moro na pontinha do lápis. Vamos desenhar juntos?' },
+  { id: 'ge-seringueira', nome: 'Seringueira', raridade: 'comum', sala: 'ge10a2',
+    cores: { corpo: '#e8f7e0', crina: ['#2f8a4a', '#6fdc8c', '#fff3a0'], chifre: '#ffe680' },
+    frase: 'Do meu tronco sai o látex, que vira a sua borracha!' },
+  { id: 'ge-celulose', nome: 'Celulose', raridade: 'raro', sala: 'ge10a2',
+    cores: { corpo: '#ffffff', crina: ['#9fdcff', '#c9b6ff', '#ffd34d'], chifre: '#fff3a0' },
+    frase: 'Eu venho das árvores e viro folhinhas de papel para você escrever.' },
+  { id: 'ge-minerio', nome: 'Minério', raridade: 'comum', sala: 'ge10a3',
+    cores: { corpo: '#f3ddd0', crina: ['#a8483a', '#7d8aa3', '#ffd34d'], chifre: '#d6dbe6' },
+    frase: 'Saí de dentro das rochas e virei ferro forte para construir prédios!' },
+  { id: 'ge-palavra-chave', nome: 'Palavra-Chave', raridade: 'raro', sala: 'ge10a3',
+    cores: { corpo: '#fff8ee', crina: ['#3a2446', '#ff9cc6', '#ffd34d'], chifre: '#ffffff' },
+    frase: 'Madeira, látex, celulose: eu guardo as palavras que abrem tudo!' },
+  { id: 'ge-algodaozinho', nome: 'Algodãozinho', raridade: 'comum', sala: 'ge10t1',
+    cores: { corpo: '#ffffff', crina: ['#4cc26b', '#ff5c6a', '#fff3a0'], chifre: '#ffe680' },
+    frase: 'Sou fofinho como o algodão que vira a sua camiseta!' },
+  { id: 'ge-sal-marinho', nome: 'Sal Marinho', raridade: 'raro', sala: 'ge10t1',
+    cores: { corpo: '#eef4ff', crina: ['#3f7cff', '#9fdcff', '#ffffff'], chifre: '#d6ecff' },
+    frase: 'Eu venho do mar e deixo a comida mais gostosa!' },
+]);

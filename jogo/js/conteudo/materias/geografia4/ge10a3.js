@@ -1,0 +1,50 @@
+/* Sala ge10a3 (Livro de Aprendizagem, capítulo 10, pp. 10 e 11): o Testando as ideias (o ferro, da mina ao
+   edifício, e as palavras-chave madeira, látex e celulose) e o Agora você já sabe do fim do capítulo
+   (docs/contratos/quarto-bimestre.md §3). As respostas, o X e as palavras escritas à mão são da Mariana. */
+Reino.registrarSala('geografia4',
+    {
+      id: 'ge10a3', nome: 'Testando as matérias-primas', emoji: '⛏️',
+      livroOrigem: 'aprendizagem', capitulo: 10, paginas: 'pp. 10 a 11', ordem: 'livro',
+      cartas: ['ge-a10', 'ge-a11'],
+      intro: 'Hora de testar tudo o que você aprendeu sobre as matérias-primas. Você consegue!',
+      desafios: [
+        { id: 'ge10a3-01', tipo: 'digitar', origem: 'APR-10-q1a', pagina: 10, livro: 'ge-a10',
+          pergunta: 'Observe as imagens. a) Que matéria-prima aparece nas imagens?',
+          frases: [{ antes: '', depois: '', certas: ['ferro', 'o ferro', 'minério de ferro', 'o minério de ferro'] }],
+          explica: 'É o ferro! Ele sai da mina como minério de ferro e é usado na construção.' },
+        { id: 'ge10a3-02', tipo: 'escrever', origem: 'APR-10-q1b', pagina: 10, livro: 'ge-a10',
+          pergunta: 'b) Para que essa matéria-prima é utilizada na segunda imagem?',
+          linhas: 2,
+          chaves: [['construção', 'construir', 'construindo', 'constrói', 'edifício', 'edifícios', 'prédio', 'prédios', 'obra', 'casa', 'casas']],
+          modelo: 'Para a construção de um edifício.',
+          explica: 'Na segunda imagem, os trabalhadores usam barras de ferro na construção de um edifício em São Paulo.' },
+        { id: 'ge10a3-03', tipo: 'escolha', origem: 'APR-10-q1c', pagina: 10, livro: 'ge-a10',
+          pergunta: 'c) Essa matéria-prima é obtida por meio de qual tipo de extrativismo? Marque a opção correta.',
+          opcoes: [
+            { t: 'Extrativismo animal.' },
+            { t: 'Extrativismo vegetal.' },
+            { t: 'Extrativismo mineral.' },
+          ], certa: 2,
+          explica: 'O ferro é retirado das rochas e do solo: é extrativismo mineral.' },
+        { id: 'ge10a3-04', tipo: 'completar', origem: 'APR-11-q2', pagina: 11, livro: 'ge-a11',
+          pergunta: 'Analise as imagens. Depois, use as palavras-chave para indicar a principal matéria-prima usada na produção de cada objeto.',
+          palavras: ['madeira', 'látex', 'celulose'],
+          frases: [
+            { antes: 'FOLHA DE PAPEL:', depois: '', certa: 2 },
+            { antes: 'CADEIRA:', depois: '', certa: 0 },
+            { antes: 'BORRACHA ESCOLAR:', depois: '', certa: 1 },
+          ],
+          explica: 'A folha de papel é feita de celulose, a cadeira de madeira e a borracha escolar de látex.' },
+        { id: 'ge10a3-05', tipo: 'completar', livre: true, origem: 'APR-11-qA', pagina: 11, livro: 'ge-a11',
+          pergunta: 'Agora você já sabe... Para cada item, escolha: Já sei, Preciso saber mais ou Ainda não sei.',
+          palavras: ['Já sei', 'Preciso saber mais', 'Ainda não sei'],
+          frases: [
+            { antes: 'Entender o que são matérias-primas.', depois: '' },
+            { antes: 'Perceber que muitos objetos são feitos com matérias-primas retiradas da natureza.', depois: '' },
+            { antes: 'Reconhecer diferentes maneiras de obter matérias-primas.', depois: '' },
+            { antes: 'Diferenciar algumas matérias-primas conforme a origem delas.', depois: '' },
+          ],
+          adaptacao: 'As carinhas da legenda viraram as palavras Já sei, Preciso saber mais e Ainda não sei.',
+          explica: 'Obrigado por contar! O que ainda não sabe, dá para treinar de novo.' },
+      ],
+    });

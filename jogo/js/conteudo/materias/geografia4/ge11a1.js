@@ -1,0 +1,40 @@
+/* Sala ge11a1 (Livro de Aprendizagem, capítulo 11, pp. 12 e 13): abertura do capítulo com a paisagem de Rio do Fogo,
+   Conversa vai... e Conversa vem... (docs/contratos/quarto-bimestre.md §3). A primeira pergunta da conversa (descrever a
+   paisagem) fica como leitura na carta (soLeitura); as outras duas viram escolha e várias. */
+Reino.registrarSala('geografia4',
+    {
+      id: 'ge11a1', nome: 'Retrato de um lugar', emoji: '🏖️',
+      livroOrigem: 'aprendizagem', capitulo: 11, paginas: 'pp. 12 e 13', ordem: 'livro',
+      cartas: ['ge-a12', 'ge-a13'],
+      intro: 'Vamos olhar uma paisagem com muita atenção e descobrir o que a natureza e as pessoas fizeram nela!',
+      desafios: [
+        { id: 'ge11a1-01', tipo: 'escolha', origem: 'APR-12-qB', pagina: 12, livro: 'ge-a12',
+          pergunta: 'Na paisagem há mais elementos da natureza ou feitos pelo ser humano?',
+          opcoes: [
+            { t: 'Mais elementos da natureza.' },
+            { t: 'Mais elementos feitos pelo ser humano.' },
+          ], certa: 0,
+          adaptacao: 'A conversa com a turma virou marcar a resposta.',
+          explica: 'Isso! Quase tudo vem da natureza: o mar, o rio, a areia, as plantas e o céu.' },
+        { id: 'ge11a1-02', tipo: 'varias', origem: 'APR-12-qC', pagina: 12, livro: 'ge-a12',
+          pergunta: 'Quais elementos produzidos pelo ser humano você identifica?',
+          opcoes: [
+            { t: 'os barcos', ok: true },
+            { t: 'o mar' },
+            { t: 'a areia' },
+            { t: 'as plantas' },
+            { t: 'o céu' },
+          ],
+          adaptacao: 'A conversa com a turma virou tocar nos elementos feitos pelas pessoas.',
+          explica: 'Os barcos foram feitos pelo ser humano. O mar, a areia, as plantas e o céu são da natureza.' },
+        { id: 'ge11a1-03', tipo: 'desenho', origem: 'APR-13-qA', pagina: 13, livro: 'ge-a13', guardar: true,
+          pergunta: 'Crie uma paisagem composta de elementos criados pelo ser humano. Você pode desenhar elementos maiores (como ruas, calçadas e construções) ou menores (como placas, máquinas e veículos).',
+          requisitos: ['formas', 'cores'],
+          explica: 'Que paisagem caprichada! Ruas, casas e carros são feitos pelas pessoas.' },
+        { id: 'ge11a1-04', tipo: 'escrever', origem: 'APR-13-qB', pagina: 13, livro: 'ge-a13',
+          pergunta: 'Agora, descreva a paisagem que você desenhou.',
+          linhas: 3, minPalavras: 4,
+          modelo: 'Desenhei uma rua com casas, carros e uma placa.',
+          explica: 'Muito bem! Contar o que tem na paisagem é descrever a paisagem.' },
+      ],
+    });
