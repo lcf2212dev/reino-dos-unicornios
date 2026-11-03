@@ -3,7 +3,7 @@
    A pergunta pessoal da brincadeira (APR-30-q1a) é só de conversa: fica como leitura na carta ci-a30b. */
 Reino.registrarSala('ciencias4',
     {
-      id: 'ci12a3', nome: 'Corrida das abelhas', emoji: '🦜',
+      id: 'ci12a3', nome: 'Corrida das abelhas', emoji: '🍯',
       livroOrigem: 'aprendizagem', capitulo: 12, paginas: 'pp. 30 a 32', ordem: 'livro',
       cartas: ['ci-a30', 'ci-a30b', 'ci-a31', 'ci-a32'],
       intro: 'Vamos brincar de abelha, levar pólen de flor em flor e seguir a vida do açaizeiro!',
