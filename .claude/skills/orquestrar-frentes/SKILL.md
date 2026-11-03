@@ -4,8 +4,8 @@ description: Use no Reino dos Unicórnios quando o pedido é tamanho G (várias 
 ---
 # Orquestrar frentes (plano paralelo)
 
-Para quem coordena. O worker (`.claude/agents/worker-low.md`) já traz as regras fixas; o briefing só diz o que é da
-frente. Contrato: `docs/contratos/plano-paralelo.md`. Parta dos pedidos prontos (skill `nova-feature`).
+Para quem coordena. As regras fixas de toda frente estão em `docs/contratos/frente.md` (os presets globais não conhecem o projeto):
+todo briefing começa mandando ler esse arquivo; depois só diz o que é da frente. Contrato: `docs/contratos/plano-paralelo.md`. Parta dos pedidos prontos (skill `nova-feature`).
 
 ## Plano
 1. **Rascunho:** `npm run plano -- rascunho pedidos/<data>-<nome>.md --saida pedidos/<data>-<nome>.plano.json`.
@@ -28,10 +28,13 @@ frente. Contrato: `docs/contratos/plano-paralelo.md`. Parta dos pedidos prontos 
 - **Worktree:** uma por frente que roda navegador; frentes só de texto ou dados podem dividir uma, com prefixo de id
   e arquivo de falas próprios.
 - **Teto:** o do `CLAUDE.md` da raiz; terminou um e há trabalho independente, outro entra.
-- **Effort:** `worker-low` nas comuns (conteúdo, salas, arte, docs); maior nas delicadas (save/mescla, git, motor central).
+- **Quem executa (presets globais):** frente comum (conteúdo, salas, arte) → `builder` (sonnet/medium); delicada
+  (save/mescla, git/fluxo, motor central) → `builder` com `model: opus, effort: high`; bug sem causa óbvia → `debugger`;
+  edição mecânica → `runner`; testes → `tester`; docs → `writer`; conferente → `reviewer` (só lê e roda comandos).
 
 ## Briefing (o `plano briefing` monta; à mão, os mesmos campos)
 ```
+Leia antes: docs/contratos/frente.md
 Tarefa: <2 a 5 linhas>
 Worktree: /home/leandro/Development/projects/reino-<tema> (branch feat/<tema>)
 Arquivos seus: <lista exata>        Prefixo de id: <nasa->        Arquivo de falas: <…/nasa-falas.js>

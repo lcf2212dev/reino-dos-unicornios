@@ -83,7 +83,7 @@ function conferir(plano) {
     if (ids.has(t.id)) erros.push(`${q}: id repetido`);
     ids.add(t.id);
     if (!T.TIPOS[t.tipo]) erros.push(`${q}: tipo desconhecido "${t.tipo}" (${Object.keys(T.TIPOS).join(', ')})`);
-    if (!t.quem) erros.push(`${q}: preencha "quem" (worker-low, orquestrador ou o agente)`);
+    if (!t.quem) erros.push(`${q}: preencha "quem" (builder, orquestrador ou o preset)`);
     if (!/^[a-z0-9][a-z0-9-]*$/.test(t.worktree || '')) erros.push(`${q}: preencha "worktree" (o <tema> de reino-<tema>)`);
     if (!Array.isArray(t.depende || [])) erros.push(`${q}: "depende" tem de ser uma lista`);
     if (!['integracao', 'entrega'].includes(t.tipo) && !(t.arquivos || []).length) erros.push(`${q}: preencha "arquivos" (posse exclusiva de cada frente)`);

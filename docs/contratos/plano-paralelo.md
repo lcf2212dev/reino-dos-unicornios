@@ -63,7 +63,7 @@ Reino.reservarPersonagem({
     "id": "npc-lulu",                  // único; minúsculas e hífen
     "tipo": "npc",                     // §4
     "titulo": "Visual e ação da Dona Lulu",
-    "quem": "worker-low",              // worker-low | orquestrador | <agente>
+    "quem": "builder",                 // builder | debugger | runner | tester | writer | orquestrador | <preset>
     "depende": ["contrato"],           // ids que BLOQUEIAM esta (dependência real, não preferência)
     "arquivos": ["jogo/js/interiores/salao/personagens.js"],   // posse exclusiva; pasta termina em '/'
     "worktree": "salao-npcs",          // reino-<worktree>; frentes só de texto podem dividir uma

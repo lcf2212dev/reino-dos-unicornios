@@ -20,7 +20,7 @@
     },
     {
       "id": "icones", "tipo": "arte", "titulo": "Ícones pixel art dos emojis do salão",
-      "quem": "worker-low", "depende": [],
+      "quem": "builder", "depende": [],
       "arquivos": ["jogo/js/interiores/salao/icones.js"],
       "worktree": "salao-icones",
       "pronto": ["todo emoji do salão (✂, 👗, 💇) tem ícone pixel art"],
@@ -28,7 +28,7 @@
     },
     {
       "id": "fachada", "tipo": "fachada", "titulo": "Fachada do Salão de Beleza no terreno da praça",
-      "quem": "worker-low", "depende": ["contrato"],
+      "quem": "builder", "depende": ["contrato"],
       "arquivos": ["jogo/js/interiores/salao/fora.js"],
       "worktree": "salao-fachada",
       "pronto": ["fachada caprichada, com cerquinha e portão, nos 3 tamanhos", "porta alcançável andando"],
@@ -36,7 +36,7 @@
     },
     {
       "id": "cenario", "tipo": "cenario", "titulo": "Interior do salão: cadeira, arara, provador, pia, secador e as falas dos objetos",
-      "quem": "worker-low", "depende": ["contrato"],
+      "quem": "builder", "depende": ["contrato"],
       "arquivos": ["jogo/js/interiores/salao/salao.js", "jogo/js/interiores/salao/objetos.js", "jogo/js/interiores/salao/falas.js"],
       "worktree": "salao-cenario",
       "pronto": ["vaga da Dona Lulu (3,5) livre e alcançável", "cadeira abre salao-cabelo; arara e provador abrem salao-roupa"],
@@ -44,7 +44,7 @@
     },
     {
       "id": "npc-lulu", "tipo": "npc", "titulo": "Visual e ação da Dona Lulu",
-      "quem": "worker-low", "depende": ["contrato"],
+      "quem": "builder", "depende": ["contrato"],
       "arquivos": ["jogo/js/interiores/salao/personagens.js"],
       "worktree": "salao-npcs", "personagens": ["salao-lulu"],
       "pronto": ["a Dona Lulu aparece no lugar da vaga, nos 3 tamanhos", "conversar com ela abre salao-cabelo"],
@@ -52,7 +52,7 @@
     },
     {
       "id": "falas-lulu", "tipo": "falas", "titulo": "Falas da Dona Lulu (oi, nova, depois)",
-      "quem": "worker-low", "depende": ["contrato"],
+      "quem": "builder", "depende": ["contrato"],
       "arquivos": ["jogo/js/interiores/salao/personagens-falas.js"],
       "worktree": "salao-beleza", "personagens": ["salao-lulu"],
       "pronto": ["até 30 letras por página, frases de 3+ palavras, carinhosas"],
@@ -60,7 +60,7 @@
     },
     {
       "id": "telas", "tipo": "mecanica", "titulo": "Telas de corte de cabelo e de roupa, com prévia, e o desenho da Mariana com formatos",
-      "quem": "worker-low", "depende": ["contrato"],
+      "quem": "builder", "depende": ["contrato"],
       "arquivos": ["jogo/js/ui/salao.js", "jogo/css/ui-salao.css", "jogo/js/interiores/salao/acoes.js", "jogo/js/arte/pixelart-mariana-visual.js",
         "jogo/ferramentas/testes/unidade/salao.navegador.test.js", "jogo/ferramentas/testes/unidade/salao-visual.test.js"],
       "worktree": "salao-telas",

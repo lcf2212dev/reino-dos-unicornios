@@ -49,7 +49,7 @@ test('§6.1: arquivo com dois donos, pasta cobrindo arquivo de outra, disputado 
   acusa(p, /arquivo disputado jogo\/js\/manifesto\.js na tarefa telas/, /tem dois donos/);
   p = copia();
   tarefa(p, 'telas').arquivos.push('package.json');
-  acusa(p, /arquivo disputado package\.json na tarefa telas \(worker-low\)/);
+  acusa(p, /arquivo disputado package\.json na tarefa telas \(builder\)/);
 });
 
 test('§6.2: dependência inexistente e ciclo', () => {
@@ -238,7 +238,7 @@ Textos:     [x] escreva você
 test('plano conferir: "depende" em texto vira problema listado, não exceção', () => {
   const plano = { nome: 'x', personagens: [], tarefas: [
     { id: 'contrato', tipo: 'contrato', quem: 'orquestrador', worktree: 'x', arquivos: ['jogo/js/a.js'], depende: [] },
-    { id: 'mec', tipo: 'mecanica', quem: 'worker-low', worktree: 'mec', arquivos: ['jogo/js/b.js'], depende: 'contrato' },
+    { id: 'mec', tipo: 'mecanica', quem: 'builder', worktree: 'mec', arquivos: ['jogo/js/b.js'], depende: 'contrato' },
     { id: 'integracao', tipo: 'integracao', quem: 'orquestrador', worktree: 'x', depende: ['contrato', 'mec'] },
     { id: 'entrega', tipo: 'entrega', quem: 'orquestrador', worktree: 'x', depende: ['integracao'] },
   ] };
@@ -261,7 +261,7 @@ test('briefing diz como fazer: gerador, modelo, ler por seção e testes focados
   assert.doesNotMatch(JSON.stringify(T.TIPOS.entrega), /artifact/);
   assert.match(T.TIPOS.entrega.conferencia.join(), /npm run vercel -- --conferir/);
   assert.match(T.TIPOS.ferramenta.conferencia.join(), /--ajuda/);
-  p.tarefas.push({ id: 'docs', tipo: 'ferramenta', quem: 'worker-low', worktree: 'salao-docs', arquivos: ['docs/receitas/x.md'], depende: [] });
+  p.tarefas.push({ id: 'docs', tipo: 'ferramenta', quem: 'builder', worktree: 'salao-docs', arquivos: ['docs/receitas/x.md'], depende: [] });
   tarefa(p, 'integracao').depende.push('docs');
   assert.deepStrictEqual(P.conferir(p), []);
   assert.match(P.briefing(p, 'docs'), /^Diferença esperada no e2e: idêntico/m);

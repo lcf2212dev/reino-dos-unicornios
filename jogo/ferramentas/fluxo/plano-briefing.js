@@ -49,6 +49,7 @@ function briefing(plano, id, op = {}) {
   const p = predioDa(plano, t);
   const deps = (t.depende || []).length ? ` Parte do que já está aprovado em: ${t.depende.join(', ')}.` : '';
   const L = [
+    'Leia antes: docs/contratos/frente.md (regras fixas: sem commit; só os seus arquivos; linhas de arquivos do orquestrador vão no retorno).',
     `Tarefa: ${t.titulo || t.id} (tipo ${t.tipo}: ${tipo.descricao || '?'}).${deps}`,
     `Worktree: ${pastaWt(mae, t)} (branch feat/${t.worktree})`,
     `Arquivos seus: ${(t.arquivos || []).join(', ') || '(preencha no plano)'}`,
@@ -69,7 +70,6 @@ function briefing(plano, id, op = {}) {
     if (t.tipo === 'cenario') L.push('  deixe cada vaga livre e alcançável (chão, sem objeto em cima)');
     L.push('  Enquanto as frentes trabalham: REINO_RESERVAS_ABERTAS=1 npm run validar (reserva sem registro vira aviso).');
   }
-  L.push('Regras fixas: .claude/agents/worker-low.md (sem commit; só os seus arquivos; linhas de arquivos do orquestrador vão no retorno).');
   return L.join('\n');
 }
 
@@ -99,7 +99,7 @@ function conferente(plano, id, op = {}) {
   }
   const L = [
     `Você é o subagent CONFERENTE da tarefa ${t.id} (${t.tipo}) do plano ${plano.nome}. Você não fez o trabalho: não edita`,
-    'arquivo nem faz commit; só lê e roda comandos (regras fixas: .claude/agents/worker-low.md).',
+    'arquivo nem faz commit; só lê e roda comandos (das regras de docs/contratos/frente.md, valem as do "Nunca").',
     `Worktree: ${wt} (branch feat/${t.worktree})`,
     `Pedido: ${plano.pedido || '(sem pedido no plano)'}`,
     `Arquivos da frente: ${(t.arquivos || []).join(', ') || '(nenhum)'}`,

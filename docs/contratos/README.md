@@ -25,6 +25,7 @@ contrato dele: a seção (§) do que vai mexer, não o arquivo inteiro. Mudança
 | experiências e mini-jogos do Laboratório de Ciências no Observatório | `laboratorio-atividades.md` |
 | casa do jogador: kits de móveis por matéria, colocar e girar móveis, interior decorável, campos `casaBau`/`casaKits`/`casaItens`/`casaMoveis`, baú da casa, móvel à escolha por sala feita | `casa.md` |
 | plano de frentes paralelas, reserva de personagem (vaga tracejada), ondas, conferência em pipeline | `plano-paralelo.md` |
+| regras de toda frente/worker (worktree, proibições, formato do retorno) | `frente.md` |
 | regras gerais de código, ordem de carga, testes | tabela abaixo |
 
 ## Onde mora cada regra geral (uma fonte só)

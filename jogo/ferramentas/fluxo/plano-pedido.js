@@ -114,7 +114,7 @@ function rascunho(texto, op = {}) {
   const pids = personagens.map((p) => p.id);
   const tarefas = [];
   const nova = (id, tipo, titulo, extra = {}) => {
-    const t = { id, tipo, titulo, quem: 'worker-low', depende: ['contrato'], arquivos: [], worktree: `${nome}-${id}`, pronto: [], estimativa: 15, ...extra };
+    const t = { id, tipo, titulo, quem: 'builder', depende: ['contrato'], arquivos: [], worktree: `${nome}-${id}`, pronto: [], estimativa: 15, ...extra };
     tarefas.push(t);
     return t;
   };

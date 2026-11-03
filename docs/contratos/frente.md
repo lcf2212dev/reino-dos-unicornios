@@ -1,16 +1,17 @@
----
-name: worker-low
-description: Worker do jogo Reino dos Unicórnios (Opus, effort low). Executa uma tarefa delimitada com propriedade explícita de arquivos, passada pelo orquestrador.
-model: opus
-effort: low
----
-Você é um worker executando uma tarefa delimitada no jogo "Mariana e o Reino dos Unicórnios" (HTML/CSS/JS sem build, scripts clássicos).
+# Regras de toda frente/worker
+
+Valem em todo briefing, para qualquer agente que execute uma tarefa do jogo (preset `builder`, `tester`, `writer`,
+`runner`, `debugger`...). Os presets globais não conhecem o projeto: todo briefing começa mandando ler este arquivo.
+O conferente (`reviewer`) só lê e roda comandos: dele valem as proibições, não os passos de quem edita.
+Quem coordena: `.claude/skills/orquestrar-frentes/SKILL.md`.
+
+Você executa uma tarefa delimitada no jogo "Mariana e o Reino dos Unicórnios" (HTML/CSS/JS sem build, scripts clássicos).
 - Mexa SOMENTE nos arquivos que o orquestrador disser que são seus.
 - Imite o estilo do código ao redor (nomes em português, comentários curtos, mesma densidade).
 - Texto para a criança: português do Brasil correto, com acentos; frases curtas e carinhosas.
 - Seja objetivo: não explore além do necessário. Ao terminar, responda com um resumo curto (arquivos alterados, decisões, pendências).
 
-## Regras fixas (valem em todo briefing)
+## Regras fixas
 - Trabalhe SÓ na worktree do briefing. Nunca escreva em `/home/leandro/Development/projects/reino-dos-unicornios` (servida AO VIVO); ler lá pode.
 - Leia o `CLAUDE.md` da raiz e o de cada pasta que mexer; dos contratos e receitas, só as seções (§) que o briefing
   indica ("Ler (§)"), não o arquivo inteiro. Briefing com "Gerador": comece por ele; com "Modelo": copie o formato.
@@ -31,7 +32,7 @@ Você é um worker executando uma tarefa delimitada no jogo "Mariana e o Reino d
   No fim, UMA vez: `npm test` (já roda validar, tamanho e tipos) e `npm run e2e` (cada diferença com o porquê;
   diferença não explicada = defeito seu).
 
-## Frente de um plano paralelo (`docs/contratos/plano-paralelo.md`)
+## Frente de um plano paralelo (`plano-paralelo.md`)
 - A reserva (`<p>/reservas.js`: nome, gênero, idade, voz, vaga) é contrato: só leia. Precisa mudar? Diga no retorno.
 - Frente do NPC: `Reino.registrarPersonagem({ id, sprite })` (mais `acao` se a reserva não tiver); nada de nome,
   voz, x/y. Frente do cenário: deixe livre o tile de cada vaga (a vaga tracejada já ocupa o lugar).

@@ -20,10 +20,12 @@ pedido. Não pergunte: o que o pedido não fecha, decida (a opção que recomend
    Mostre os pedidos no chat. Pedidos independentes andam em paralelo (um agente cada), até o teto do `CLAUDE.md` da raiz.
 2. **Tamanho e caminho** (anote no relatório):
 
+   Todo worker (P ou M, preset `builder` ou outro) começa lendo `docs/contratos/frente.md`; o conferente é um `reviewer`.
+
    | Tamanho | Quando | Como |
    |---|---|---|
-   | P | até ~5 arquivos; sem save/progresso/mescla, motor central (laço, cena, câmera, entrada), git/fluxo nem personagem novo com voz | você, ou 1 `worker-low`; sem plano paralelo. Conferência leve: 1 conferente que confere as afirmações, o `git status`, as fotos do `npm run ver` e as diferenças do e2e (não reroda o que o verde por árvore já registrou) |
-   | M | o resto, numa frente só | 1 worker + 1 conferente completo (`orquestrar-frentes`, "Quando cada agente volta") |
+   | P | até ~5 arquivos; sem save/progresso/mescla, motor central (laço, cena, câmera, entrada), git/fluxo nem personagem novo com voz | você, ou 1 `builder`; sem plano paralelo. Conferência leve: 1 conferente que confere as afirmações, o `git status`, as fotos do `npm run ver` e as diferenças do e2e (não reroda o que o verde por árvore já registrou) |
+   | M | o resto, numa frente só | 1 `builder` + 1 conferente completo (`orquestrar-frentes`, "Quando cada agente volta") |
    | G | várias frentes (prédio + personagem, personagem + voz, tela + conteúdo…) | skill `orquestrar-frentes` (plano paralelo) |
 
    Assunto: matéria ou salas → `nova-materia`; prova → `nova-prova`; prédio → `novo-predio`; fala ou voz →
