@@ -92,4 +92,5 @@
 # @ = emoji da sala Corrida das abelhas
 # @ = História: diferença dos escritórios
 # @ = Matemática: ajustes da conferência
+# @ = brilho da aura mais fraco por fora (sem retângulo) e chaminé da Minha Casa no telhado
 @

@@ -18,10 +18,11 @@
   function desenharFora(ctx, px, py, w, h) {
     var V = window.Mapa.fachada.kit, Fa = window.Mapa.fachada, M = medidas(px, py);
     var y2 = py + 24, y1 = py + 47;                     // começo do andar de cima e do térreo
-    // chaminé de tijolos (antes do telhado: ele cobre o pé dela)
-    contornoRet(ctx, M.chx, M.chy + 3, 11, 22, TIJOLO);
-    Fa.tijolos(ctx, M.chx + 1, M.chy + 4, 9, 20, TIJOLO, 3);
-    ret(ctx, M.chx + 1, M.chy + 4, 1, 20, '#e8907e');
+    // chaminé de tijolos (antes do telhado: ele cobre o pé dela). Desce até py + 18, abaixo da água do telhado
+    // na coluna da esquerda (py + 15 em px + 14): o pé fica todo dentro do telhado, sem grama entre os dois
+    contornoRet(ctx, M.chx, M.chy + 3, 11, 30, TIJOLO);
+    Fa.tijolos(ctx, M.chx + 1, M.chy + 4, 9, 28, TIJOLO, 3);
+    ret(ctx, M.chx + 1, M.chy + 4, 1, 28, '#e8907e');
     ret(ctx, M.chx - 1, M.chy, 13, 4, K); ret(ctx, M.chx, M.chy + 1, 11, 1, '#e8907e');
     // andar de cima: tábuas creme deitadas
     contornoRet(ctx, px + 4, y2, w - 8, y1 - y2 + 1, TABUA);

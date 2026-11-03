@@ -199,7 +199,10 @@
   }
   // o halo em pixel (sem desfoque): a figura com o contorno, deslocada 1 e 2 px nos 4 lados, menos ela mesma.
   // Faixa 1 (a 1 px) mais forte, faixa 2 (a 2 px) mais clara. Calculado UMA vez por sprite; um canvas por cor.
-  var HALO = 2;
+  // O brilho só enfraquece para fora: as faixas do halo (ALFA_HALO, × 0,75–1) ficam sempre mais claras que o anel 2
+  // do contorno (90, × 0,85–1). Faixa do halo mais forte que o anel 2 vira uma 2ª linha a 3 px, de lados retos
+  // (enche o vão das patas e entre as cabeças): um retângulo em volta dela em vez do contorno da figura.
+  var HALO = 2, ALFA_HALO = [0, 70, 30];
   function halo(m) {
     if (m.halo) return m.halo;
     var W = m.W + HALO * 2, H = m.H + HALO * 2, faixa = new Uint8Array(W * H), cheio = new Uint8Array(W * H);
@@ -226,7 +229,7 @@
     for (var i = 0; i < h.faixa.length; i++) {
       if (!h.faixa[i]) continue;
       d[i * 4] = rgb[0]; d[i * 4 + 1] = rgb[1]; d[i * 4 + 2] = rgb[2];
-      d[i * 4 + 3] = h.faixa[i] === 1 ? 150 : 70;
+      d[i * 4 + 3] = ALFA_HALO[h.faixa[i]];
     }
     ctx.putImageData(img, 0, 0);
     h.cores[cor] = c;
