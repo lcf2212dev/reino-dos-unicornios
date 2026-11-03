@@ -1,0 +1,108 @@
+/* Sala ma12a7 (Livro de Aprendizagem, capítulo 12, pp. 72 a 74): Organizando o conhecimento, questões 2 (atividade
+   artística preferida, tabela e gráfico de barras duplas para pintar) e 3 (leitura de livros no ano, gráfico de
+   colunas duplas) (docs/contratos/quarto-bimestre.md §3). O item c) da questão 2 só manda observar a tabela (não tem
+   pergunta: fica na carta ma-a72). */
+(function () {
+  var ARTE = { titulo: 'Atividade artística preferida dos alunos', partes: [{ lista: [
+    'Pintura em tela: 20 meninas e 16 meninos', 'Escultura: 10 meninas e 12 meninos',
+    'Tapeçaria: 14 meninas e 6 meninos', 'Desenho à mão: 12 meninas e 18 meninos'] }] };
+  var LEITURA = { titulo: 'Leitura de livros no ano', partes: [{ lista: [
+    'Diego: 15 contos infantis e 30 gibis', 'Marina: 20 contos infantis e 25 gibis',
+    'Orlando: 10 contos infantis e 40 gibis', 'Carolina: 20 contos infantis e 30 gibis'] }] };
+  function nomes() { return [{ t: 'Diego' }, { t: 'Marina' }, { t: 'Orlando' }, { t: 'Carolina' }]; }
+  Reino.registrarSala('matematica4',
+    {
+      id: 'ma12a7', nome: 'Arte e livros lidos', emoji: '🎨',
+      livroOrigem: 'aprendizagem', capitulo: 12, paginas: 'pp. 72 a 74', ordem: 'livro',
+      cartas: ['ma-a72', 'ma-a73', 'ma-a74'],
+      intro: 'Pintura, escultura e muitos gibis: vamos comparar os dados de duas pesquisas!',
+      desafios: [
+        { id: 'ma12a7-01', tipo: 'escolha', origem: 'APR-72-q2a', pagina: 72, livro: 'ma-a72',
+          pergunta: 'a) Qual é o tema dessa pesquisa?',
+          opcoes: [
+            { t: 'Atividade artística preferida dos alunos.' },
+            { t: 'Esporte que os alunos praticam.' },
+            { t: 'Cor preferida do professor.' },
+            { t: 'Gastos na cantina.' },
+          ], certa: 0,
+          adaptacao: 'A resposta escrita virou escolher entre as opções.',
+          explica: 'O professor de Arte quer descobrir a atividade artística preferida dos alunos dele.' },
+        { id: 'ma12a7-02', tipo: 'escolha', origem: 'APR-72-q2b', pagina: 72, livro: 'ma-a72',
+          pergunta: 'b) Marque um X na pergunta que o professor pode fazer para os alunos nessa pesquisa.',
+          opcoes: [
+            { t: 'Qual esporte você pratica?' },
+            { t: 'Qual atividade artística você prefere?' },
+          ], certa: 1,
+          explica: 'A pergunta precisa ser sobre o tema: a atividade artística preferida.' },
+        { id: 'ma12a7-03', tipo: 'digitar', origem: 'APR-72-q2d', pagina: 72, livro: 'ma-a72', apoio: ARTE,
+          pergunta: 'd) Quantos meninos preferem escultura?',
+          frases: [{ antes: '', depois: 'meninos.', certas: ['12', 'doze'] }],
+          explica: 'Na linha da escultura, na coluna dos meninos, está o 12.' },
+        { id: 'ma12a7-04', tipo: 'escolha', origem: 'APR-72-q2e', pagina: 72, livro: 'ma-a72', apoio: ARTE,
+          pergunta: 'e) Qual atividade artística é preferida por 14 meninas?',
+          opcoes: [
+            { t: 'Pintura em tela' },
+            { t: 'Escultura' },
+            { t: 'Tapeçaria' },
+            { t: 'Desenho à mão' },
+          ], certa: 2,
+          adaptacao: 'A resposta escrita virou escolher entre as opções.',
+          explica: 'Na coluna das meninas, o 14 está na linha da tapeçaria.' },
+        { id: 'ma12a7-05', tipo: 'tabela', origem: 'APR-73-q2f', pagina: 73, livro: 'ma-a73', apoio: ARTE,
+          pergunta: 'f) Escolha uma cor para representar as meninas e outra cor para os meninos. Depois, pinte o gráfico de barras a seguir com as informações da tabela. Cada quadrinho equivale a 2 votos.',
+          cab: ['Atividade artística', 'Quadrinhos das meninas', 'Quadrinhos dos meninos'],
+          linhas: [
+            ['Pintura em tela', { certas: ['10'] }, { certas: ['8'] }],
+            ['Escultura', { certas: ['5'] }, { certas: ['6'] }],
+            ['Tapeçaria', { certas: ['7'] }, { certas: ['3'] }],
+            ['Desenho à mão', { certas: ['6'] }, { certas: ['9'] }],
+          ],
+          adaptacao: 'Pintar o gráfico de barras virou escrever quantos quadrinhos de 2 votos cada barra terá.',
+          explica: 'Cada quadrinho vale 2 votos: 20 são 10 quadrinhos, 16 são 8, 10 são 5, 12 são 6, 14 são 7, 6 são 3 e 18 são 9.' },
+        { id: 'ma12a7-06', tipo: 'digitar', origem: 'APR-73-q2g', pagina: 73, livro: 'ma-a73', apoio: ARTE,
+          pergunta: 'g) Quantos alunos preferem desenho à mão?',
+          frases: [{ antes: 'São', depois: 'alunos que preferem desenho à mão.', certas: ['30', 'trinta'] }],
+          explica: '12 meninas e 18 meninos: 12 + 18 = 30 alunos.' },
+        { id: 'ma12a7-07', tipo: 'escolha', origem: 'APR-74-q3a', pagina: 74, livro: 'ma-a74', apoio: LEITURA,
+          pergunta: 'a) Qual é o título do gráfico?',
+          opcoes: [
+            { t: 'Leitura de livros no ano' },
+            { t: 'Quantidade de livros' },
+            { t: 'Contos infantis e gibis' },
+            { t: 'Nome' },
+          ], certa: 0,
+          adaptacao: 'A resposta escrita virou escolher entre as opções.',
+          explica: 'O título fica em cima do gráfico: Leitura de livros no ano.' },
+        { id: 'ma12a7-08', tipo: 'escolha', origem: 'APR-74-q3b', pagina: 74, livro: 'ma-a74', apoio: LEITURA,
+          pergunta: 'b) Quem leu a menor quantidade de contos infantis?',
+          opcoes: nomes(), certa: 2,
+          adaptacao: 'A resposta escrita virou escolher entre as opções.',
+          explica: 'Orlando leu 10 contos infantis: a coluna verde mais baixa.' },
+        { id: 'ma12a7-09', tipo: 'escolha', origem: 'APR-74-q3c', pagina: 74, livro: 'ma-a74', apoio: LEITURA,
+          pergunta: 'c) Quem leu 25 gibis?',
+          opcoes: nomes(), certa: 1,
+          adaptacao: 'A resposta escrita virou escolher entre as opções.',
+          explica: 'A coluna lilás da Marina chega no 25.' },
+        { id: 'ma12a7-10', tipo: 'varias', origem: 'APR-74-q3d', pagina: 74, livro: 'ma-a74', apoio: LEITURA,
+          pergunta: 'd) Quais crianças leram a mesma quantidade de contos infantis? Toque em TODAS.',
+          opcoes: [
+            { t: 'Diego' },
+            { t: 'Marina', ok: true },
+            { t: 'Orlando' },
+            { t: 'Carolina', ok: true },
+          ],
+          adaptacao: 'A resposta escrita virou escolher entre as opções.',
+          explica: 'Marina e Carolina leram 20 contos infantis cada uma.' },
+        { id: 'ma12a7-11', tipo: 'escolha', origem: 'APR-74-q3e', pagina: 74, livro: 'ma-a74', apoio: LEITURA,
+          pergunta: 'e) Quem leu mais de 30 gibis?',
+          opcoes: nomes(), certa: 2,
+          adaptacao: 'A resposta escrita virou escolher entre as opções.',
+          explica: 'Orlando leu 40 gibis. Diego e Carolina leram 30, que não é mais de 30.' },
+        { id: 'ma12a7-12', tipo: 'escolha', origem: 'APR-74-q3f', pagina: 74, livro: 'ma-a74', apoio: LEITURA,
+          pergunta: 'f) Quem leu o dobro do número de gibis em comparação à quantidade de contos infantis?',
+          opcoes: nomes(), certa: 0,
+          adaptacao: 'A resposta escrita virou escolher entre as opções.',
+          explica: 'Diego leu 15 contos infantis e 30 gibis. O dobro de 15 é 15 + 15 = 30!' },
+      ],
+    });
+})();

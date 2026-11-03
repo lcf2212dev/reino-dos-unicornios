@@ -20,6 +20,11 @@ const CONGELADA = {
   'portugues-1:0': { para: 'portugues', x: 24, y: 26 },   // e de volta, logo abaixo do arco no fundo do saguão
   'casa:0': { para: 'casa-2', x: 2, y: 10 },             // Minha Casa: da Sala de Estar, logo acima do vão no Quarto
   'casa-2:0': { para: 'casa', x: 36, y: 4 },             // e de volta, logo abaixo do arco no canto da Sala de Estar
+  // Torre dos Números: o arco do saguão (e do ateliê de cada andar) sobe para o vão da 1ª galeria do andar de cima
+  'matematica:0': { para: 'matematica-1', x: 3, y: 10 },
+  'matematica-1:0': { para: 'matematica-2', x: 3, y: 10 }, 'matematica-1:1': { para: 'matematica', x: 9, y: 3 },
+  'matematica-2:0': { para: 'matematica-3', x: 3, y: 10 }, 'matematica-2:1': { para: 'matematica-1', x: 33, y: 3 },
+  'matematica-3:0': { para: 'matematica-2', x: 33, y: 3 },
 };
 TORRE.forEach((id, i) => {
   let k = 0;

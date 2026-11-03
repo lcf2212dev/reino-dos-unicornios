@@ -1,0 +1,38 @@
+/* Sala ma11a8 (Livro de Aprendizagem, capítulo 11, pp. 52 e 53): o fim do Testando as ideias (as cédulas de Igor,
+   os livros na estante e o gibi de Fabrício) e o Agora você já sabe..., a autoavaliação, que fica como leitura
+   (soLeitura na carta da p. 53) (docs/contratos/quarto-bimestre.md §3). Desenhar as cédulas virou marcar as cédulas. */
+Reino.registrarSala('matematica4',
+    {
+      id: 'ma11a8', nome: 'Dinheiro em partes', emoji: '💰',
+      livroOrigem: 'aprendizagem', capitulo: 11, paginas: 'pp. 52 e 53', ordem: 'livro',
+      cartas: ['ma-a52', 'ma-a53'],
+      intro: 'Vamos dividir dinheiro e livros, e ver tudo o que você já sabe sobre divisão!',
+      desafios: [
+        { id: 'ma11a8-01', tipo: 'digitar', origem: 'APR-52-q5a', pagina: 52, livro: 'ma-a52',
+          pergunta: 'Observe a quantia que Igor tem. a) Quantos reais Igor tem?',
+          frases: [{ antes: 'Igor tem', depois: 'reais.', certas: ['30', 'trinta'] }],
+          explica: 'Uma cédula de 20 reais e uma de 10 reais: 20 + 10 = 30 reais.' },
+        { id: 'ma11a8-02', tipo: 'varias', origem: 'APR-52-q5b', pagina: 52, livro: 'ma-a52',
+          pergunta: 'b) Igor trocou as cédulas e deu metade da quantia que tinha para Lucas. Desenhe cédulas para representar a quantia que Lucas ganhou de Igor. Toque nas cédulas que Lucas ganhou.',
+          opcoes: [
+            { img: 'ma:cedula-20', t: '20 reais' },
+            { img: 'ma:cedula-10', t: '10 reais', ok: true },
+            { img: 'ma:cedula-5', t: '5 reais', ok: true },
+            { img: 'ma:cedula-2', t: '2 reais' },
+          ],
+          adaptacao: 'Desenhar as cédulas virou tocar nas cédulas que somam a metade de 30 reais.',
+          explica: 'A metade de 30 reais é 15 reais: uma cédula de 10 e uma de 5, porque 10 + 5 = 15.' },
+        { id: 'ma11a8-03', tipo: 'digitar', origem: 'APR-52-q5c', pagina: 52, livro: 'ma-a52',
+          pergunta: 'c) Quantos reais Lucas ganhou de Igor?',
+          frases: [{ antes: 'Lucas ganhou', depois: 'reais.', certas: ['15', 'quinze'] }],
+          explica: '30 ÷ 2 = 15: Lucas ganhou 15 reais.' },
+        { id: 'ma11a8-04', tipo: 'digitar', origem: 'APR-52-q6', pagina: 52, livro: 'ma-a52',
+          pergunta: 'Em uma caixa há 21 livros infantis que serão distribuídos igualmente em 3 prateleiras de uma estante. Quantos livros serão colocados em cada prateleira?',
+          frases: [{ antes: 'Serão colocados', depois: 'livros em cada prateleira dessa estante.', certas: ['7', 'sete'] }],
+          explica: '21 ÷ 3 = 7, porque 7 + 7 + 7 = 21.' },
+        { id: 'ma11a8-05', tipo: 'digitar', origem: 'APR-53-q7', pagina: 53, livro: 'ma-a53',
+          pergunta: 'Fabrício gastou a terça parte da quantia representada a seguir na compra de um gibi. Quantos reais sobraram para Fabrício?',
+          frases: [{ antes: 'Sobraram', depois: 'reais.', certas: ['24', 'vinte e quatro'] }],
+          explica: 'Ele tinha 10 + 10 + 10 + 2 + 2 + 2 = 36 reais. A terça parte é 36 ÷ 3 = 12 reais, que ele gastou. Sobraram 36 - 12 = 24 reais.' },
+      ],
+    });

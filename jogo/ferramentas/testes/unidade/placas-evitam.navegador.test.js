@@ -12,12 +12,12 @@ const { abrirCenario } = require('../cenario');
 const { lancar } = require('../navegador');
 
 const CONVERSAS = [
-  ['padrao-matematica', 'sala-matematica-m3'], ['padrao-matematica', 'sala-matematica-m4'], ['padrao-matematica', 'sala-matematica-m6'],
+  ['matematica-1', 'mat-otavio'], ['matematica-2', 'mat-lara'], ['matematica-3', 'mat-tito'],
   ['museu', 'nina'], ['museu', 'taina'], ['observatorio-3', 'lab-lupa'], ['observatorio-3', 'lab-malu'], ['observatorio-3', 'lab-ravi'],
   ['geografia', 'geo-teo'], ['portugues', 'lp-celeste'], ['portugues', 'lp-sol'], ['portugues', 'lp-pingo'],
   ['planeta-lua', 'lua-pipo'], ['bau', 'tostao'], ['castelo', 'aurora'],
 ];
-const COMODOS = [['castelo', 'ala-ciencias'], ['escola', 'sala-matematica-3bim'], ['padrao-matematica', 'sala6'], ['museu', 'galeria1'], ['torre-relogio', null]];
+const COMODOS = [['castelo', 'ala-ciencias'], ['escola', 'sala-matematica-3bim'], ['matematica-3', 'ma-atelie12'], ['museu', 'galeria1'], ['torre-relogio', null]];
 
 // um quadro desenhado com o fillRect espiado: as placas (retângulo grande com o fundo da placa) em px CSS, o alfa na
 // hora de pintar, os retângulos do HUD e do balão e os objetos de parede de cada cômodo, também em px CSS

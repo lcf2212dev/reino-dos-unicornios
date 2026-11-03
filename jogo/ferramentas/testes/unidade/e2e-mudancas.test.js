@@ -14,7 +14,7 @@ const casa = (e, nomes) => nomes.filter((n) => e.regex.test(n));
 test('idsDoJogo: pasta → ids registrados (e os sem registro próprio pelo nome); fachadas em fora.js', () => {
   assert.deepStrictEqual(ids.interiores.loja, ['loja']);
   assert.deepStrictEqual(ids.interiores.observatorio.slice().sort(), ['observatorio', 'observatorio-2', 'observatorio-3']);
-  assert.deepStrictEqual(ids.interiores.matematica, ['padrao-matematica']);   // montada pelo padrao.js
+  assert.deepStrictEqual(ids.interiores.matematica, ['matematica', 'matematica-1', 'matematica-2', 'matematica-3']);   // Torre dos Números (4º bimestre)
   assert.ok(ids.interiores.torre.includes('torre-relogio'));
   assert.ok(ids.fora.includes('quimica') && !ids.fora.includes('loja'));
   const p4 = ids.materias.portugues4[0];
