@@ -230,6 +230,10 @@ function tamanhoAla(tamanho) {
       // menu Lugares: uma linha só da Casa das Palavras, entre as matérias ativas (antes do 1º "em breve"), com as
       // salas da Língua Portuguesa;
       // já visitada, sem o "Novo!"; o "Ir" dela anda até a casa e entra no saguão
+      // antes de abrir o menu, o relógio anda: aberto por código até 600 ms depois do toque no tapete, o jogo o toma
+      // como aberto por esse toque, e a guarda do toque fantasma (UI.segurarToques) fica no ponto do tapete, onde, no
+      // celular, cai o meio da linha da casa: o clique nela seria engolido
+      await c.avancar(700);
       await c.tela('lugares');
       const linhas = await c.js("[...document.querySelectorAll('.sala-card')].map(function (b) { return b.textContent.replace(/\\u00ad/g, '').replace(/\\s+/g, ' '); })");
       const casa = linhas.map((t, i) => (t.indexOf('Casa das Palavras') >= 0 ? i : -1)).filter((i) => i >= 0);

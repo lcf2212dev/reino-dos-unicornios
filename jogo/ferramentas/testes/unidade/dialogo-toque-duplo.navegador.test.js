@@ -25,13 +25,18 @@ test('toque duplo no "Continuar →" avança só uma página e não aciona o bot
     await page.waitForTimeout(1500);
     const info = await page.evaluate(() => {
       Reino.Claude.limpar();
-      // um NPC de sala com a apresentação em mais de uma página (a 1ª conversa da sessão)
+      // um NPC de sala com a apresentação em mais de uma página (a 1ª conversa da sessão). Os NPCs publicados de
+      // sala só anunciam a sala numa página (no 4º bimestre as salas são estações), e com ?congelar=1 o NPC do jogo
+      // é imutável: o teste usa uma cópia de um NPC de prédio, com a ação de uma sala de verdade e a saudação de
+      // duas páginas.
       var achado = null;
+      var m = Reino.materias.find(function (x) { return x.salas && x.salas.length; });
       Reino.interiores.some(function (d) {
-        return (d.npcs || []).some(function (n) {
-          if (!n.acao || n.acao.tipo !== 'sala') return false;
-          // Saudação sintética de duas páginas: o NPC publicado agora só anuncia o quarto bimestre.
-          n.falas = Object.assign({}, n.falas, { oi: ['Olá! Vamos conversar?', 'Esta é a segunda página.'] });
+        return (d.npcs || []).some(function (n0) {
+          var n = Object.assign({}, n0, {
+            acao: { tipo: 'sala', materia: m.id, sala: m.salas[0].id },
+            falas: { oi: ['Olá! Vamos conversar?', 'Esta é a segunda página.'] },
+          });
           var pags = [].concat.apply([], Reino._npcs.falas(n, 'oi').map(function (t) { return Reino._npcs.paginas([t]); }));
           if (pags.length >= 2) { achado = { d: d, n: n, pags: pags }; return true; }
           return false;

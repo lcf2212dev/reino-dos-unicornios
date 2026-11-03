@@ -74,6 +74,8 @@ function prepararFala(texto, voz, pacotes) {
   // siglas de documentos: soletradas do jeito que a gente fala
   // "3 × 5": a voz lia "multiplicação"; na apostila se lê "vezes"
   t = t.replace(/\s*×\s*/g, ' vezes ');
+  // "8 D - 1 D = 7 D": a voz pulava o sinal; "15 ÷ 3": lia "divisão" (conferido por transcrição)
+  t = t.replace(/\s+[-−]\s+(?=\d)/g, ' menos ').replace(/\s*÷\s*(?=\d)/g, ' dividido por ');
   t = t.replace(/\bCPF\b/g, 'cê pê éfe').replace(/\bRG\b/g, 'erre gê');
   // "ET" (extraterrestre) era lido "Ida": do jeito que a gente fala
   t = t.replace(/\bETs\b/g, 'etês').replace(/\bET\b/g, 'etê');
