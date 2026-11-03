@@ -37,7 +37,7 @@
           explica: 'A metade de 18 é 9: 18 ÷ 2 = 9. Ele leu 9 páginas na terça-feira.' },
         { id: 'ma11t3-04', tipo: 'digitar', origem: 'ATI-12-q3b', pagina: 12, livro: 'ma-t12',
           pergunta: 'b) Quantas páginas Lucas leu nesses dois dias?',
-          frases: [{ antes: 'Lucas leu', depois: 'páginas nesses dois dias.', certas: ['27'] }],
+          frases: [{ antes: 'Lucas leu', depois: 'páginas nesses dois dias.', certas: ['27', 'vinte e sete'] }],
           explica: '18 páginas na segunda e 9 na terça: 18 + 9 = 27 páginas.' },
         { id: 'ma11t3-05', tipo: 'digitar', origem: 'ATI-12-q4a', pagina: 12, livro: 'ma-t12', apoio: JOAO,
           pergunta: 'João gastou a terça parte da quantia que tinha na compra de um gibi. Observe a quantia que ele tinha. a) Quantos reais João tinha?',

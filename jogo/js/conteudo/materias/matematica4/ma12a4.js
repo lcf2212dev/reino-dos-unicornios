@@ -99,7 +99,7 @@
         { id: 'ma12a4-12', tipo: 'escrever', origem: 'APR-65-q3f', pagina: 65, livro: 'ma-a65', apoio: DOADOS,
           pergunta: 'f) Crie uma pergunta que pode ser feita com base nas informações do gráfico e da tabela.',
           linhas: 2, minPalavras: 3,
-          chaves: [['gibi', 'gibis', 'boneca', 'bonecas', 'turma', 'turmas', 'doou', 'doaram', 'doacao', 'doacoes']],
+          chaves: [['gibi', 'gibis', 'boneca', 'bonecas', 'turma', 'turmas', 'doou', 'doaram', 'doacao', 'doacoes', 'doado', 'doados', 'doada', 'doadas', 'doar', 'brinquedo', 'brinquedos']],
           modelo: 'Qual turma doou mais bonecas?',
           explica: 'Que boa pergunta! A resposta dela está na tabela das doações.' },
       ],

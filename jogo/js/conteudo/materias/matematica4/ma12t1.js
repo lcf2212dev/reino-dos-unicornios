@@ -81,7 +81,7 @@
           explica: 'No 2º ano B, o maior número é 15, de Histórias de aventura.' },
         { id: 'ma12t1-10', tipo: 'digitar', origem: 'ATI-14-q3d', pagina: 14, livro: 'ma-t14', apoio: LIVROS,
           pergunta: 'd) Quantos alunos do 2º ano A e do 2º ano B gostam de ler livros de histórias engraçadas ao todo?',
-          frases: [{ antes: '', depois: '', certas: ['24', '24 alunos'] }],
+          frases: [{ antes: '', depois: '', certas: ['24', 'vinte e quatro', '24 alunos', 'vinte e quatro alunos'] }],
           explica: 'Histórias engraçadas: 13 no 2º ano A e 11 no 2º ano B. 13 + 11 = 24 alunos.' },
       ],
     });

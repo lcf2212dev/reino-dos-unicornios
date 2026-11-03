@@ -76,7 +76,7 @@
     // grupos, palitos e tampinhas (pp. 33 a 35)
     carta('ma-a33', '✏️', ORGANIZANDO, 33, [
       { t: 'texto', texto: 'As crianças a seguir serão divididas em 2 grupos iguais.' },
-      { t: 'figuras', itens: [{ img: '👦' }, { img: '👧' }, { img: '👦' }, { img: '👧' }, { img: '👦' }, { img: '👧' }, { img: '👦' }, { img: '👧' }, { img: '👦' }, { img: '👧' }] },
+      { t: 'figuras', itens: [{ img: '👦' }, { img: '👦' }, { img: '👧' }, { img: '👦' }, { img: '👧' }, { img: '👦' }, { img: '👧' }, { img: '👦' }, { img: '👦' }, { img: '👧' }] },
       { t: 'texto', texto: 'Doze palitos de picolé serão distribuídos igualmente entre Ana, Luiz, Felipe e Cecília.' },
     ]),
     carta('ma-a34', '✏️', ORGANIZANDO, 34, [

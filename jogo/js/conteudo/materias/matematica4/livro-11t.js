@@ -16,7 +16,7 @@
       { t: 'quadro', itens: itens([
         'Murilo comprou um pacote de balas e vai dividir essas balas com os amigos dele. Trace linhas para dividir igualmente as balas entre Murilo e os amigos.',
       ]) },
-      { t: 'ilustracao', id: 'ma-t07-balas', alt: '12 balas embrulhadas, em duas fileiras de 6: azul, rosa, amarela e roxa, repetidas.' },
+      { t: 'ilustracao', id: 'ma-t07-balas', alt: '12 balas embrulhadas, numa fileira só: azul, rosa, amarela e roxa, repetidas.' },
       { t: 'quadro', itens: itens([
         'Para uma atividade, serão distribuídos igualmente 18 palitos de picolé entre 3 alunos. Desenhe a quantidade de palitos de picolé que cada aluno vai receber.',
       ]) },

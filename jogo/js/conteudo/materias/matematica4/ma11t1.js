@@ -2,7 +2,7 @@
    palitos de picolé e as crianças em grupos (docs/contratos/quarto-bimestre.md §3). Traçar as linhas entre as balas
    vira tocar onde cada linha passa; as balas são a ilustração ma-t07-balas (icones-t.js). */
 (function () {
-  var BALAS = { ilustracao: 'ma-t07-balas', alt: '12 balas embrulhadas, em duas fileiras de 6: azul, rosa, amarela e roxa, repetidas.' };
+  var BALAS = { ilustracao: 'ma-t07-balas', alt: '12 balas embrulhadas, numa fileira só: azul, rosa, amarela e roxa, repetidas.' };
   var CRIANCAS = { titulo: 'As crianças', partes: [{ texto: 'Murilo e os 3 amigos dele: 4 crianças.' }] };
   // "8 crianças em 4 grupos: __ ÷ __ = __"
   function divisao(rotulo, a, b, c) {

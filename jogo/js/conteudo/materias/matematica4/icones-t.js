@@ -17,7 +17,7 @@
   var BALA = ['...kkkkk...', 'k.kccwwck.k', 'kkkcccccwkk', 'kccccccccck', 'kkkdccccckk', 'k.kddccck.k', '...kkkkk...'];
   function corBala(c, d) { return { k: K, c: c, d: d, w: '#ffffff' }; }
   Reino.registrarIlustracao('ma-t07-balas', fileiras(BALA, [corBala('#5fb4ff', '#2f7fd0'), corBala('#ff7eb6', '#d94f8f'),
-    corBala('#ffd34d', '#d9a520'), corBala('#a77be8', '#7a4fc0')], 12, 6, 12, 9));
+    corBala('#ffd34d', '#d9a520'), corBala('#a77be8', '#7a4fc0')], 12, 12, 12, 9));
 
   var CUPCAKE = ['....kkkk....', '..kkppwpkk..', '.kppppppwpk.', 'kppppppppppk', 'kPppppppppPk', 'kkkkkkkkkkkk',
     '.kyYyYyYyYk.', '.kyYyYyYyYk.', '..kyYyYyYk..', '..kkkkkkkk..'];

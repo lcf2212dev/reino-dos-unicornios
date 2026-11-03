@@ -66,7 +66,7 @@
         { id: 'ma12a9-07', tipo: 'escrever', origem: 'APR-79-q3b', pagina: 79, livro: 'ma-a79',
           pergunta: 'b) Qual pergunta você faria nessa pesquisa?',
           linhas: 2, minPalavras: 4,
-          chaves: [['lanche', 'merenda', 'alimento', 'alimentos', 'comer', 'comida', 'fruta', 'frutas', 'prefere', 'preferido', 'preferida', 'gosta']],
+          chaves: [['lanche', 'merenda', 'alimento', 'alimentos', 'comer', 'comida', 'fruta', 'frutas', 'prefere', 'preferido', 'preferida', 'gosta', 'favorito', 'favorita', 'bebida', 'bebidas', 'suco', 'sucos', 'leite', 'agua', 'beber', 'cardapio', 'lanchar', 'lanches', 'merendas', 'gostam', 'gostaria', 'preferem', 'comem', 'bolo', 'pao', 'sanduiche']],
           modelo: 'Qual alimento você prefere na hora do lanche?',
           explica: 'Boa pergunta! Ela ajuda a descobrir o lanche preferido dos alunos.' },
         { id: 'ma12a9-08', tipo: 'digitar', livre: true, origem: 'APR-79-q3c', pagina: 79, livro: 'ma-a79',
