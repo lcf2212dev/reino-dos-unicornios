@@ -118,7 +118,10 @@ evento: U.emit(Reino.EVENTOS.CUIDADOS, depurar())  // a cada ponto inteiro que m
    do objeto; ela anda até o lado da banheira (tile (21,7), virada para ela).
 2. API:
    ```
-   Reino.Banho = { iniciar(uniId) → Promise, ativo() → bool,
+   Reino.Banho = { iniciar(uniId, op?) → Promise, ativo() → bool,
+                   // op.banheira { x, y, w, h, tipo?, dir? }: medidas por tipo+dir (banho-medidas.js; sem tipo ou
+                   // 'petshop-banheira' = a Pet Shop; 'casa-banheiro-banheira' nas 4 direções; tipo desconhecido =
+                   // versão curta); op.posto { x, y } | null: ela não anda (a casa já a pôs ao lado)
                    depurar() → { ativo, fase, t, curta, uniId, pulou },
                    itensDesenho(pintor, t, animar) → itens,   // o laço junta aos itens da cena
                    sobre(ctx, pintor, t, animar) }

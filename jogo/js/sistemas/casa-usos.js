@@ -177,12 +177,12 @@
     if (def.uso === 'chuveiro' && quem === 'uni' && Cu.niveis(u).banho >= 99.5) {
       return falarFrase('jaLimpinho', u).then(function () { res.resultado = { ok: false, motivo: 'cheio' }; return fim(res); });
     }
-    var st = novoSt(def, obj, quem, u), fogao = def.uso === 'cozinhar';
+    var st = novoSt(def, obj, quem, u), fogao = def.uso === 'cozinhar', aceso = fogao || def.uso === 'chuveiro';   // o fogão aceso e o chuveiro aberto durante o uso
     tocar(def.som);
-    if (fogao) ligar(obj.uid, true, andar);
+    if (aceso) ligar(obj.uid, true, andar);
     return animar(st).then(function (r) {
       res.pulou = !!r.pulou;
-      if (fogao) ligar(obj.uid, false, andar);
+      if (aceso) ligar(obj.uid, false, andar);
       var fala = null;
       if (def.uso === 'chuveiro' && quem === 'uni') { res.resultado = Cu.banhar(u); fala = res.resultado.ok ? 'banhou' : 'jaLimpinho'; }
       if (fogao && u) {

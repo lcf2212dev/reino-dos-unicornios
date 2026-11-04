@@ -94,4 +94,5 @@
 # @ = Matemática: ajustes da conferência
 # @ = brilho da aura mais fraco por fora (sem retângulo) e chaminé da Minha Casa no telhado
 # @ = volta a arte anterior da personagem e dos unicórnios (desfaz cb35e360)
+# @ = casa usos: chuveiro entra nos móveis das salas (sorteio da tela movel-casa com 42) e config.casa.usos na loja.json
 @

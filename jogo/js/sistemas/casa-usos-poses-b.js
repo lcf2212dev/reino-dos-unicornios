@@ -66,7 +66,7 @@
 
   /* ---------- chuveiro (2×2, uma direção): ela ou o unicórnio debaixo da água ----------
      o lugar de quem toma banho e de onde a água cai, em px da pegada */
-  var CHUVEIROS = { 'casa-movel-chuveiro': { pe: [16, 27], agua: [9, 23, -12] } };
+  var CHUVEIROS = { 'casa-movel-chuveiro': { pe: [11, 27], agua: [7, 15, -2] } };   // a ducha do desenho (moveis-salas-banheiro.js): x 7..15, de y -2; a porta de vidro é a metade direita
   I.poses.chuveiro = {
     sons: [[0.06, 'chuveiro'], [0.4, 'chuveiro'], [0.86, 'estrela']],
     geo: function (st) {
