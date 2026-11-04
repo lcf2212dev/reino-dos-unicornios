@@ -9,8 +9,6 @@
   var K = R.Desenho.K;
   var BRANCO = '#ffffff', AGUA = '#5fc8e8', AGUA2 = '#a8ecff', AGUA3 = '#2f9ec4';
   var ROSA = '#ff9cc6', ROSA2 = '#ff7eb6', OURO = '#ffd34d', LAR = '#ff8a3d', MAD = '#c98a4b', METAL = '#d9e2ee', METAL2 = '#9aa7ba';
-  // espuma da banheira: as mesmas bolhas do desenho parado (petshop.js), em px a partir do canto da banheira
-  var ESPUMA = [[10, 3, 4], [16, 1, 5], [23, 2, 4], [29, 0, 5], [36, 2, 4], [41, 4, 3], [13, -2, 3], [26, -3, 3], [33, -3, 3]];
   var PASSOS = [1, 0, 2, 0];
   // x do meio de um sprite de largura w com a borda esquerda no pixel inteiro do jogo (como o ET): anda em degraus
   function naGrade(x, w) { return Math.round(x - w / 2) + w / 2; }
@@ -135,7 +133,7 @@
     if (!pos.dentro && s >= 0.74) J.sombra(p, pos.x, pos.y - 1, spr.w / 2.6);
     if (pos.corta) {
       // recorta o buraco da banheira (da linha da espuma para baixo): o resto do sprite aparece inteiro
-      var a = p.tela(g.px + 1, g.linha), b = p.tela(g.px + 47, g.py + 32);
+      var rc = g.m.recorte, a = p.tela(g.px + rc[0], g.py + rc[1]), b = p.tela(g.px + rc[2], g.py + rc[3]);
       ctx.save();
       ctx.beginPath();
       ctx.rect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -151,11 +149,11 @@
   function desenharEspuma(p, s, deTras) {
     var f = espuma(s), g = I.st.geo;
     if (f <= 0) return;
-    ESPUMA.forEach(function (bq) {
+    g.m.espuma.forEach(function (bq) {
       if ((bq[1] < 0) !== deTras) return;
       var r = Math.round(bq[2] * f);
       if (r < 1) return;
-      p.sprite(bolha(r), g.px + bq[0] + 0.5, g.py + bq[1] + r + 1 + Math.round((1 - f) * 3));
+      p.sprite(bolha(r), g.px + bq[0] + 0.5, g.py + g.m.espy + bq[1] + r + 1 + Math.round((1 - f) * 3));
     });
   }
 
@@ -178,14 +176,14 @@
     if (s > 0.15 && s < 0.66) {
       for (var k = 0; k < 4; k++) {
         var c = ((e - 0.15 * d) / 1500 + k / 4) % 1;
-        var bx = g.px + [6, 11, 38, 43][k] + Math.sin(e / 300 + k) * 1.5, by = g.linha - 6 - c * 18;
+        var bx = g.px + g.m.bolhas[k] + Math.sin(e / 300 + k) * 1.5, by = g.linha - 6 - c * 18;
         if (c < 0.82) { var bk = bolha(k % 2 + 1); p.sprite(bk, naGrade(bx, bk.width), Math.round(by) + (k % 2 + 1) + 1); }
         else if (c < 0.94) brilho(p, Math.round(bx), Math.round(by), 1, BRANCO);
       }
     }
     // espuminha nas costas e a escova indo e vindo
     // costas: do lado contrário ao da cabeça (virado para a esquerda, o corpo fica à direita)
-    var costas = { x: g.tx + (g.vistaDentro.espelhar ? 4 : -4), y: Math.round(g.ty + fundo(s) - h * 0.5) };
+    var costas = { x: g.tx + (g.vistaDentro.espelhar ? g.m.costas : -g.m.costas), y: Math.round(g.ty + fundo(s) - h * g.m.escova) };
     var fc = s < 0.52 ? suave(trecho(s, 0.30, 0.36)) : 1 - suave(trecho(s, 0.52, 0.58));
     if (s > 0.30 && s < 0.58) {
       [[-5, 0, 2], [3, -1, 2], [8, 1, 1]].forEach(function (bq) {
@@ -216,7 +214,10 @@
       }
     }
     // patinho: vai para o cantinho da banheira, balança na espuma e volta para o lugar dele no fim
-    var casa = { x: g.px + 25.5, y: g.py - 2 }, canto = { x: g.px + 40.5, y: g.py - 1 };
+    // (as banheiras da casa não têm: o patinho parado delas fica atrás dele)
+    var pt = g.m.patinho;
+    if (!pt) return;
+    var casa = { x: g.px + pt.casa[0], y: g.py + pt.casa[1] }, canto = { x: g.px + pt.canto[0], y: g.py + pt.canto[1] };
     var kp = s < 0.5 ? suave(trecho(s, 0.01, 0.09)) : 1 - suave(trecho(s, 0.88, 0.98));
     var balanco = Math.sin(e / 260) * 1.2 * kp;
     var pat = patinho();
@@ -254,7 +255,7 @@
   B.itensDesenho = function (p, t, animar) {
     if (!B.desenhandoUni()) return [];
     var e = Math.min(I.st.dur, agora() - I.st.inicio), g = I.st.geo, pos = posicao(e);
-    var yBanheira = g.py + 20;
+    var yBanheira = g.py + g.m.ordem;
     var s = e / I.st.dur;
     return [
       { y: yBanheira - 0.1, desenhar: function () { if (I.st) desenharEspuma(p, s, true); } },

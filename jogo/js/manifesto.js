@@ -735,6 +735,7 @@
       { js: 'js/interiores/padrao.js', grupo: 'interiores', node: true }, // padrao.js por último entre os prédios: monta o interior das matérias que não têm um próprio
       { js: 'js/sistemas/banho.js', grupo: 'sistemas' },
       { js: 'js/sistemas/banho-desenho.js', grupo: 'sistemas' },
+      { js: 'js/sistemas/banho-medidas.js', grupo: 'sistemas' },
       { js: 'js/sistemas/casa-usos.js', grupo: 'sistemas', node: true }, // casa: os móveis funcionam (Reino.CasaUsos, ação casaUsar; casa.md §13)
       { js: 'js/sistemas/casa-usos-tabela.js', grupo: 'sistemas', node: true }, // casa: o uso de cada móvel de kit e avulso (casa.md §13)
       { js: 'js/sistemas/casa-usos-animar.js', grupo: 'sistemas' }, // casa: a animação de um uso (cena ocupada, pular, temporizador)

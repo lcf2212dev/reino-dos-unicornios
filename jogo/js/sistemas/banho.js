@@ -1,5 +1,5 @@
-/* Banho de espuma na banheira da Pet Shop (Reino.Banho) — docs/contratos/cuidados.md.
-   Tocar na banheira: ela anda até o lado dela (posto), a montaria pula na banheira e toma banho
+/* Banho de espuma na banheira da Pet Shop e na da casa (Reino.Banho) — docs/contratos/cuidados.md.
+   Tocar na banheira: ela anda até o lado dela (posto; na casa ela já está ao lado), a montaria pula na banheira e toma banho
    (~6 s, config.banho.duracaoMs): entrar (cortado na linha da espuma, como no nado), espuma crescendo
    com bolhas que sobem e estouram, escova indo e vindo, patinho balançando o tempo todo, chuveirinho
    enxaguando, pulo para fora com sacudida e gotas, brilhos de limpinho. Montada, ela desce e fica ao
@@ -9,9 +9,10 @@
    config.banho.pularDepoisMs, um toque (ou Enter/Espaço) pula para o fim.
    Tudo é desenhado a partir do tempo decorrido (sem partículas guardadas): pular é só ir ao fim.
    Nada de DOM, canvas, PA, Progresso nem Cena no carregamento: só dentro das funções.
-   Em dois arquivos, nesta ordem (Reino.Banho é um só):
+   Em três arquivos, nesta ordem (Reino.Banho é um só):
      banho.js          começo, fim, pulo, toque/teclado, falas e a API (iniciar, ativo, depurar)
      banho-desenho.js  o desenho: sprites, posição do unicórnio, espuma, bolhas, gotas e brilhos
+     banho-medidas.js  as medidas de cada banheira (Pet Shop; casa em pé e de lado), escolhidas por tipo + dir
    O que os dois dividem mora em Reino._banho (interno): `st` (o banho em curso ou null; sempre ler
    I.st), `B` e as funções que cada parte publica no fim dela. */
 (function () {
@@ -99,13 +100,20 @@
   function limparTimers() { (I.st.timers || []).forEach(clearTimeout); I.st.timers = []; }
   function depois(ms, fn) { I.st.timers.push(setTimeout(fn, ms)); }
 
-  // a banheira da cena ativa (a da Pet Shop): { x, y, w, h } em tiles
+  // a banheira da cena ativa (a da Pet Shop): { x, y, w, h, tipo } em tiles
   function acharBanheira() {
     try {
       var c = R.Cena && R.Cena.atual(), objs = (c && c._objetos) || [];
-      for (var i = 0; i < objs.length; i++) if (objs[i].o.tipo === 'petshop-banheira') return { x: objs[i].o.x, y: objs[i].o.y, w: objs[i].w, h: objs[i].h };
+      for (var i = 0; i < objs.length; i++) if (objs[i].o.tipo === 'petshop-banheira') return { x: objs[i].o.x, y: objs[i].o.y, w: objs[i].w, h: objs[i].h, tipo: 'petshop-banheira' };
     } catch (e) {}
     return null;
+  }
+
+  // ela olha para a banheira: de lado se está ao lado dela; se está acima ou abaixo (casa), para cima ou para baixo
+  function olharBanheira(J, px, py, m) {
+    var dx = px + m.w / 2 - J.x;
+    if (Math.abs(dx) >= 8 || m.h <= 32) J.virar(dx, 0);
+    else J.virar(0, py + m.h / 2 - J.y);
   }
 
   function comecar() {
@@ -113,19 +121,19 @@
     var J = window.Jogador, T = 16;
     I.st.comecou = true;
     I.st.inicio = agora();
-    var ban = I.st.banheira;
-    if (ban) {
+    var ban = I.st.banheira, m = I.st.medidas;
+    if (ban && m) {
       var px = ban.x * T, py = ban.y * T;
-      // ela olha para a banheira
-      J.virar(px + 24 - J.x, 0);
+      olharBanheira(J, px, py, m);
       var de = J.posMontaria();
       var alto = 0;
       PA.VISTAS.forEach(function (v) { alto = Math.max(alto, I.uniSprite(v, 0).h); });
-      var linha = py + 4;                                  // borda de cima da banheira (a linha da espuma)
+      var linha = py + m.linha;                            // borda de cima da banheira (a linha da espuma)
       // pés lá dentro: as pernas somem e a espuma cobre a barriga (o bebê, mais baixinho, fica mais para cima)
       var ty = linha + 1 - Math.round(Math.max(0, 23 - alto) * 0.6);
-      var tx = px + 23;
-      var lx = px + 14, ly = py + 32 + 9;                  // onde ele cai ao sair: no chão, na frente da banheira
+      var tx = px + m.tx;
+      // onde ele cai ao sair: no chão, na frente da banheira (do lado de quem está ao lado dela, se a banheira pede)
+      var lx = px + (m.ladoSaida && J.x > px + m.w / 2 ? m.w - m.sx : m.sx), ly = py + m.sy;
       var fim;
       if (I.st.montado) fim = { x: J.x, y: J.y + 1 };
       else {
@@ -133,9 +141,9 @@
         fim = { x: J.x + dx / dd * J.DIST_BEBE, y: J.y + dy / dd * J.DIST_BEBE + 1 };
       }
       var vistaFim = I.st.montado ? PA.vistaDaDirecao(J.olharX, J.olharY) : PA.vistaDaDirecao(J.x - fim.x, J.y + 1 - fim.y);
-      I.st.geo = { px: px, py: py, linha: linha, x0: de.x, y0: de.y, tx: tx, ty: ty, lx: lx, ly: ly, fx: fim.x, fy: fim.y,
-        altoUni: alto, altoEntra: Math.max(18, (de.y - linha) / 2 + 6), altoSai: Math.max(22, (ly - ty) / 2 + 8),
-        vistaDentro: PA.vistaDaDirecao(J.x - tx, Math.abs(J.x - tx) * 0.8 + 1), vistaFim: vistaFim };
+      I.st.geo = { px: px, py: py, m: m, linha: linha, x0: de.x, y0: de.y, tx: tx, ty: ty, lx: lx, ly: ly,
+        fx: fim.x, fy: fim.y, altoUni: alto, altoEntra: Math.max(18, (de.y - linha) / 2 + 6), altoSai: Math.max(22, (ly - ty) / 2 + 8),
+        vistaDentro: m.vista || PA.vistaDaDirecao(J.x - tx, Math.abs(J.x - tx) * 0.8 + 1), vistaFim: vistaFim };
     }
     if (I.st.curta) {
       tocar('estrela');
@@ -168,7 +176,7 @@
     try {
       if (s.banheira && s.geo && J) {
         if (!s.montado && !s.curta) J.bebeVoltou(s.geo.fx, s.geo.fy - 1);
-        J.virar(s.geo.px + 24 - J.x, 0);
+        olharBanheira(J, s.geo.px, s.geo.py, s.geo.m);
       }
     } catch (e) { console.error(e); }
     ultimo = { ativo: false, fase: 'fim', t: Math.round(agora() - (s.inicio || agora())), curta: s.curta, uniId: s.uniId, pulou: !!s.pulou, resultado: res };
@@ -186,7 +194,13 @@
   }
 
   /* ---------- API ---------- */
-  // op.banheira = { x, y, w, h } (tiles); sem ela, procura a da cena ativa
+  /* op.banheira = { x, y, w, h, tipo, dir } (tiles, a pegada de w × h já na direção: casa.md §5.3); sem ela, procura a
+     da cena ativa (a da Pet Shop). tipo e dir escolhem as medidas (banho-medidas.js): sem tipo ou 'petshop-banheira' é
+     a da Pet Shop; 'casa-banheiro-banheira' com dir 'baixo' | 'cima' | 'esq' | 'dir'. Tipo ou pegada que o banho não
+     conhece: só a versão curta (como sem Animações).
+     op.posto = { x, y } (tile onde ela fica ao lado da banheira): ela não anda se já está lá; sem `posto`, só a da Pet
+     Shop faz ela andar até o lado esquerdo (null = não anda). Na casa ela já está ao lado quando a ação roda.
+     Devolve Promise<{ ok, pulou, … }> (ok: false, motivo 'sem-uni' | 'cheio'). */
   B.iniciar = function (uniId, op) {
     if (I.st) return I.st.promessa;
     op = op || {};
@@ -199,18 +213,20 @@
       return falarFrase('jaLimpinho', uniId).then(function () { return { ok: false, motivo: 'cheio' }; });
     }
     var banheira = op.banheira || acharBanheira();
-    var curta = !animacoesLigadas() || !banheira;
+    var medidas = banheira ? I.medidas(banheira) : null;
+    var curta = !animacoesLigadas() || !medidas;
     var resolver;
     var promessa = new Promise(function (ok) { resolver = ok; });
     I.st = { uniId: uniId, def: P.defUni(uniId), estagio: R.Unicornios.estagio(u.xp || 0), montado: J.montado(),
-      sujo: !!(Cu && Cu.sujo && Cu.sujo(uniId)), curta: curta, banheira: banheira,
+      sujo: !!(Cu && Cu.sujo && Cu.sujo(uniId)), curta: curta, banheira: banheira, medidas: medidas,
       dur: curta ? cfg().duracaoCurtaMs : cfg().duracaoMs, inicio: 0, comecou: false, fim: false, pulou: false,
       timers: [], promessa: promessa, resolver: resolver };
     ultimo = null;
     if (R.Cena && R.Cena.ocupar) R.Cena.ocupar('banho');
     ouvir(true);
-    // ela vai até o posto (à esquerda da banheira, olhando para ela); se não der, fica onde está
-    var posto = banheira ? { x: banheira.x - 1, y: banheira.y + banheira.h - 1 } : null;
+    // ela vai até o posto (da Pet Shop: à esquerda da banheira, olhando para ela); se não der, fica onde está
+    var posto = op.posto !== undefined ? op.posto : medidas && (!banheira.tipo || banheira.tipo === 'petshop-banheira') ?
+      { x: banheira.x - 1, y: banheira.y + banheira.h - 1 } : null;
     var tl = J.tile();
     if (posto && (tl.x !== posto.x || tl.y !== posto.y) && J.irPara(posto.x, posto.y, comecar)) {
       J.marcador = null;
