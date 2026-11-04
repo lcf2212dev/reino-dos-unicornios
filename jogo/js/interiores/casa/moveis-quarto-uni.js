@@ -6,7 +6,7 @@
   var R = window.Reino;
   var I = R.Interiores, D = I.desenho, C = D.C;
   var ret = D.ret, circulo = D.circulo, clarear = D.clarear, escurecer = D.escurecer;
-  var K = R.Desenho.K, virado = R.CasaArte.virado;
+  var K = R.Desenho.K, virado = R.CasaArte.virado, usos = R.CasaArte.objeto;
   var LIL = '#c9a8ff', LIL2 = '#e6d8ff', ROXO = '#9b7cf0', AMAR = '#ffd84d', FENO = '#f2cf6b', FENO2 = '#c99a3a';
   var ARCO = ['#ff7a8a', '#ffb35c', '#ffe066', '#7fe08a', '#7fc8ff', '#b58cff'];
   var ESTRELA = ['...#...', '..###..', '#######', '.#####.', '.##.##.', '#.....#'];
@@ -112,7 +112,31 @@
 
   /* ---------- baú de brinquedos (2×1; lado 1×2) ---------- */
   function tampa(ctx, x, y, w, h) { arred(ctx, x, y, w, h, K); arred(ctx, x + 1, y + 1, w - 2, h - 2, ROXO); ret(ctx, x + 2, y + 1, w - 4, 1, clarear(ROXO, 0.45)); }
-  I.objeto('casa-quarto-uni-bau', { w: 2, h: 1, topo: 8, solido: true,
+  function faisca(p, x, y, c) { p.r(x + 1, y, 1, 3, c); p.r(x, y + 1, 3, 1, c); }
+  var BAU_DENTRO = '#4a3590';
+  var BAU_ON = {
+    baixo: function (p) {   // tampa levantada atrás (só a faixa de cima aparece); lá dentro, os brinquedos
+      p.r(1, -8, 30, 5, K); p.r(2, -7, 28, 3, LIL2); p.r(2, -7, 28, 1, C.branco); p.r(4, -6, 1, 1, ROXO); p.r(12, -5, 1, 1, ROXO); p.r(20, -6, 1, 1, ROXO);
+      p.r(2, -3, 28, 5, K); p.r(3, -2, 26, 4, BAU_DENTRO);
+      p.m(5, -6, ['.kk.', 'kbbk', 'kbbk', 'kkkk'], { k: K, b: '#5fb4ff' }); p.m(13, -7, ['.kkk.', 'kpppk', 'kpwpk', 'kpppk'], { k: K, p: '#ff9cc6', w: C.branco });
+      p.m(20, -7, ['k.k', 'kyk', 'kyk', 'kkk'], { k: K, y: AMAR }); p.m(24, -5, ['.kk', 'kgk', 'kkk'], { k: K, g: C.verde });
+    },
+    cima: function (p) {   // de costas, a tampa aberta é uma parede roxa que sobe
+      p.r(1, -8, 30, 8, K); p.r(2, -7, 28, 6, ROXO); p.r(2, -7, 28, 1, clarear(ROXO, 0.45)); p.r(2, -3, 28, 1, escurecer(ROXO, 0.2));
+      p.r(4, -7, 2, 2, AMAR); p.r(26, -7, 2, 2, AMAR); p.r(7, -6, 3, 6, AMAR); p.r(22, -6, 3, 6, AMAR);
+    },
+    lado: function (p) {
+      p.r(2, -5, 12, 29, K); p.r(3, -4, 10, 27, BAU_DENTRO); p.r(13, -6, 2, 31, K); p.r(13, -5, 1, 29, LIL2);
+      p.m(5, -2, ['kkk', 'kbk', 'kkk'], { k: K, b: '#5fb4ff' }); p.m(7, 6, ['.kk.', 'kppk', 'kppk', '.kk.'], { k: K, p: '#ff9cc6' });
+      p.m(5, 14, ['k.k', 'kyk', 'kkk'], { k: K, y: AMAR });
+    },
+    anim: {   // faíscas de magia subindo do baú
+      baixo: function (p, t) { [0, 1, 2].forEach(function (i) { var u = (t / 100 + i * 7) % 16; if (u < 12) faisca(p, 4 + i * 11 + (i & 1) * 3, -10 - Math.floor(u / 2), i === 1 ? AMAR : C.branco); }); },
+      cima: function (p, t) { var u = Math.floor(t / 200) % 3; p.r(6 + u * 9, -12, 1, 1, AMAR); },
+      lado: function (p, t) { var u = (t / 100) % 12; p.r(7, -5 - Math.floor(u / 2), 1, 1, AMAR); p.r(9, -4 - Math.floor(u / 3), 1, 1, C.branco); },
+    },
+  };
+  usos('casa-quarto-uni-bau', { w: 2, h: 1, topo: 8, solido: true,
     desenhar: virado({
       baixo: function (ctx, px, py) {
         tampa(ctx, px + 1, py - 8, 30, 10);
@@ -136,10 +160,20 @@
         ret(ctx, px + 1, py + 2, 14, 1, K); ret(ctx, px + 1, py + 19, 14, 1, K);
         ret(ctx, px + 6, py + 25, 5, 5, K); ret(ctx, px + 7, py + 26, 3, 3, AMAR); ret(ctx, px + 8, py + 27, 1, 1, K);   // fechadura
       },
-    }) });
+    }) }, BAU_ON);
 
   /* ---------- estrela luminosa (1×1, um lado só) ---------- */
-  I.objeto('casa-quarto-uni-estrela', { w: 1, h: 1, topo: 16, solido: true,
+  var ESTR_ON = { baixo: function (p) {   // acesa: corpo claro, miolo branco e pontas de luz
+      var G = ['......#......', '.....###.....', '....#####....', '#############', '.###########.', '..#########..', '...#######...', '..####.####..', '.###.....###.', '.#.........#.'];
+      p.m(1, -15, G, { '#': '#fff08a' }); p.r(6, -13, 1, 3, C.branco); p.r(4, -11, 5, 1, C.branco); p.r(5, -10, 3, 3, C.branco);
+      p.r(6, -15, 1, 1, C.branco); p.r(1, -12, 1, 1, C.branco); p.r(13, -12, 1, 1, C.branco);
+    },
+    anim: { baixo: function (p, t) {   // raios em cruz que pulsam em volta, além das pontas
+      var f = Math.floor(t / 300) % 3, a = [1, 2, 3][f];
+      p.r(7, -16 - a, 1, a, '#fff6c8'); p.r(-a, -11, a, 1, '#fff6c8'); p.r(15, -11, a, 1, '#fff6c8');
+      p.r(1 - f, -4 + f, 1, 1, C.branco); p.r(14 + f, -4 + f, 1, 1, C.branco); p.r(-2 + f, -17 + f, 1, 1, '#ffe27a'); p.r(16 - f, -17 + f, 1, 1, '#ffe27a');
+    } } };
+  usos('casa-quarto-uni-estrela', { w: 1, h: 1, topo: 16, solido: true,
     desenhar: function (ctx, px, py) {
       ret(ctx, px + 3, py + 10, 10, 5, K); ret(ctx, px + 4, py + 11, 8, 3, LIL); ret(ctx, px + 4, py + 11, 8, 1, clarear(LIL, 0.5));
       ret(ctx, px + 7, py - 2, 2, 12, K);
@@ -153,7 +187,7 @@
       var f = Math.floor(t / 400) % 4;
       var p = [[0, -12], [14, -14], [1, -3], [14, -4]][f];
       estrelinha(ctx, px + p[0], py + p[1], C.branco);
-    } });
+    } }, ESTR_ON);
 
   /* ---------- espelho de nuvem (parede, 1×2) ---------- */
   I.objeto('casa-quarto-uni-espelho', { w: 1, h: 2, parede: true, solido: false,

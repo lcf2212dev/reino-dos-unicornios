@@ -5,7 +5,7 @@
   var R = window.Reino;
   var I = R.Interiores, D = I.desenho, C = D.C;
   var ret = D.ret, circulo = D.circulo, clarear = D.clarear, escurecer = D.escurecer;
-  var K = R.Desenho.K, virado = R.CasaArte.virado;
+  var K = R.Desenho.K, virado = R.CasaArte.virado, usos = R.CasaArte.objeto;
   var ROSA = '#ff8fc4', LIL = '#c9a8ff', AMAR = '#ffd84d', CEU = '#8fd0ff', MAD = '#f2c38a', MAD2 = '#d39a5c';
 
   function arred(ctx, x, y, w, h, c) { ret(ctx, x + 1, y, w - 2, h, c); ret(ctx, x, y + 1, w, h - 2, c); }
@@ -60,7 +60,24 @@
     ret(ctx, x, y + 2, w, 3, K); ret(ctx, x + 1, y + 3, w - 2, 1, AMAR);
     for (var i = 0; i < 3; i++) { var cx = x + 3 + Math.round(i * (w - 7) / 2); ret(ctx, cx, y, 2, 3, K); ret(ctx, cx, y + 1, 1, 1, AMAR); }
   }
-  I.objeto('casa-quarto-jogador-guarda-roupa', { w: 2, h: 1, topo: 24, solido: 'base', alto: true,
+  var DENTRO = '#5b4a78';
+  // roupinhas penduradas no varão: cabide + peça colorida
+  function roupa(p, x, y, c, h) { p.r(x + 2, y, 1, 2, K); p.r(x, y + 2, 5, h, K); p.r(x + 1, y + 2, 3, h - 1, c); p.r(x + 1, y + 2, 1, h - 1, clarear(c, 0.4)); }
+  var GUARDA_ON = {
+    baixo: function (p) {
+      p.r(3, -16, 26, 25, K); p.r(4, -15, 24, 23, DENTRO); p.r(4, -15, 24, 1, clarear(DENTRO, 0.3)); p.r(4, -13, 24, 1, K); p.r(4, -12, 24, 1, C.metal);
+      roupa(p, 5, -12, ROSA, 12); roupa(p, 11, -12, CEU, 9); roupa(p, 17, -12, AMAR, 13); roupa(p, 23, -12, C.verde, 10);
+      p.r(4, 2, 24, 1, K); p.r(5, 3, 6, 4, C.rosa2); p.r(12, 4, 6, 3, '#8fd0ff'); p.r(19, 3, 8, 4, C.creme); p.r(4, 7, 24, 1, K);
+      p.r(0, -17, 3, 26, K); p.r(1, -16, 1, 24, ROSA); p.r(29, -17, 3, 26, K); p.r(30, -16, 1, 24, ROSA);
+    },
+    cima: function (p) { p.r(0, -18, 2, 32, K); p.r(1, -17, 1, 30, ROSA); p.r(30, -18, 2, 32, K); p.r(30, -17, 1, 30, ROSA); },
+    lado: function (p) {
+      p.r(2, -20, 5, 51, K); p.r(3, -19, 3, 49, DENTRO); p.r(3, -12, 3, 1, C.metal);
+      p.r(3, -10, 3, 8, ROSA); p.r(3, 0, 3, 7, CEU); p.r(3, 9, 3, 9, AMAR); p.r(3, 20, 3, 7, C.verde);
+      p.r(0, -18, 2, 49, K); p.r(0, -17, 1, 47, ROSA);
+    },
+  };
+  usos('casa-quarto-jogador-guarda-roupa', { w: 2, h: 1, topo: 24, solido: 'base', alto: true,
     desenhar: virado({
       baixo: function (ctx, px, py) {
         coroa(ctx, px + 4, py - 24, 24);
@@ -84,7 +101,7 @@
         ret(ctx, px + 3, py - 4, 1, 3, AMAR);
         ret(ctx, px + 7, py - 15, 4, 40, escurecer(LIL, 0.22)); ret(ctx, px + 8, py - 12, 2, 2, C.branco);
       },
-    }) });
+    }) }, GUARDA_ON);
 
   /* ---------- escrivaninha (2×1; lado 1×2) ---------- */
   function lapis(ctx, x, y) {
@@ -162,7 +179,22 @@
     ret(ctx, cx - 4, py - 13, 9, 1, clarear(AMAR, 0.5)); if (luz) ret(ctx, cx - 3, py - 12, 2, 4, '#fff6c8');
     ret(ctx, cx - 4, py - 8, 9, 1, ROSA);
   }
-  I.objeto('casa-quarto-jogador-criado-mudo', { w: 1, h: 1, topo: 14, solido: true,
+  var BRILHO = '#fff6c8';
+  function acesa(p) {   // abajur aceso: cúpula clara e o clarão em volta
+    p.r(3, -13, 9, 6, '#fff2a0'); p.r(4, -12, 6, 4, BRILHO); p.r(4, -12, 2, 4, C.branco); p.r(3, -8, 9, 1, ROSA);
+    [-11, -9, -7].forEach(function (y) { p.r(1 + (y & 1), y, 1, 1, '#ffe27a'); p.r(14 - (y & 1), y, 1, 1, '#ffe27a'); });
+    p.r(5, -14, 5, 1, '#ffe27a');
+  }
+  var LAMP_ON = {
+    baixo: acesa, cima: acesa, lado: acesa,
+    anim: { baixo: raios, cima: raios, lado: raios },
+  };
+  function raios(p, t) {
+    var f = Math.floor(t / 450) % 2;
+    p.r(-1 - f, -12, 2, 1, '#ffe27a'); p.r(15 + f, -12, 2, 1, '#ffe27a'); p.r(0, -16 - f, 1, 1, '#fff1b8'); p.r(15, -16 - f, 1, 1, '#fff1b8');
+    p.r(7, -17 - f, 2, 1, '#ffe27a'); p.r(-2, -8 + f, 1, 1, '#fff1b8'); p.r(17, -8 + f, 1, 1, '#fff1b8');
+  }
+  usos('casa-quarto-jogador-criado-mudo', { w: 1, h: 1, topo: 14, solido: true,
     desenhar: virado({
       baixo: function (ctx, px, py) {
         caixa(ctx, px + 2, py - 2, 12, 17, CEU); ret(ctx, px + 2, py + 6, 12, 1, K);
@@ -174,7 +206,7 @@
         ret(ctx, px + 3, py - 2, 3, 17, K); ret(ctx, px + 4, py - 1, 1, 15, CEU); ret(ctx, px + 2, py + 2, 1, 1, C.branco);
         abajur(ctx, px + 8, py, true);
       },
-    }) });
+    }) }, LAMP_ON);
 
   /* ---------- estante de brinquedos (2×1, alta; lado 1×2) ---------- */
   function brinquedos(ctx, x, y) {   // uma prateleira: bola, ursinho, blocos

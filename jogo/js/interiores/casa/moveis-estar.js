@@ -5,7 +5,7 @@
   var R = window.Reino;
   var D = R.Desenho, C = D.C, K = D.K;
   var ret = D.ret, circulo = D.circulo, matriz = D.matriz, escurecer = D.escurecer, clarear = D.clarear;
-  var I = R.Interiores, virado = R.CasaArte.virado;
+  var I = R.Interiores, virado = R.CasaArte.virado, usos = R.CasaArte.objeto;
 
   var SOFA = '#ff8f9c', POLT = '#ffc94d', MAD = '#d99a5b', TAP = '#c9a6ff', TV = '#4a4060';
   var ALM1 = '#7ed9c8', ALM2 = '#b58cff';
@@ -138,7 +138,30 @@
     var n = Math.max(1, Math.floor((w - 2) / 10)), q = Math.floor((w - 2) / n);
     for (var i = 0; i < n; i++) { p.r(x + 1 + i * q + 1, y + 3, q - 2, h - 5, escurecer(MAD, 0.15)); p.r(x + 1 + i * q + q - 3, y + 6, 1, 2, C.ouro); }
   }
-  I.objeto('casa-estar-estante-tv', { w: 2, h: 1, topo: 18, solido: true, alto: true, desenhar: virado({
+  var IMG = ['#ff7eb6', '#ffd34d', '#6fdc8c', '#5fb4ff'];
+  var TV_ON = {
+    baixo: function (p) {   // tela acesa: céu rosado, arco-íris e colinas
+      p.r(7, -16, 18, 11, '#ffe3f1'); p.r(7, -16, 18, 1, '#fff6fb');
+      p.m(9, -15, ['..rrrrrr..', '.roooooor.', 'royyyyyyor', 'rogggggor.', '..........'].slice(0, 4), { r: '#ff5c6a', o: '#ff8a3d', y: '#ffd34d', g: '#6fdc8c' });
+      p.r(7, -9, 18, 4, C.folha2); p.r(7, -9, 18, 1, C.verde); p.r(19, -9, 6, 4, C.folha3); p.r(21, -14, 3, 3, C.ouro); p.r(21, -14, 1, 1, C.branco);
+      p.r(4, -1, 24, 1, '#bff0ff');
+    },
+    cima: function (p) { p.r(4, -17, 1, 15, '#9fe8ff'); p.r(19, -17, 1, 15, '#9fe8ff'); p.r(21, -6, 2, 2, K); p.r(21, -6, 1, 1, '#6fff9c'); },
+    lado: function (p) {
+      IMG.forEach(function (c, i) { p.r(7, -4 + i * 4, 1, 4, c); }); p.r(7, 8, 1, 3, '#ff8f9c');
+      [3, 5, 4].forEach(function (x, i) { p.r(x, 4 + i * 4, 1, 1, '#bff0ff'); });
+    },
+    anim: {
+      baixo: function (p, t) {
+        var y = Math.floor(t / 120) % 11;
+        p.r(7, -16 + y, 18, 1, '#ffffff'); p.r(8 + Math.floor(t / 300) % 14, -15, 2, 1, C.branco);
+        if (Math.floor(t / 250) % 2) p.r(13, -8, 2, 1, '#fff6c8');
+      },
+      cima: function (p, t) { if (Math.floor(t / 400) % 2) p.r(21, -6, 2, 2, '#caffd9'); },
+      lado: function (p, t) { var i = Math.floor(t / 200) % 4; p.r(7, -4 + i * 4 + 4, 1, 1, C.branco); p.r(2, 2 + Math.floor(t / 250) % 3 * 5, 2, 1, '#bff0ff'); },
+    },
+  };
+  usos('casa-estar-estante-tv', { w: 2, h: 1, topo: 18, solido: true, alto: true, desenhar: virado({
     baixo: function (ctx, px, py) {
       var p = pincel(ctx, px, py);
       p.r(5, -18, 22, 16, K); p.r(6, -17, 20, 14, TV); p.r(7, -16, 18, 11, '#7fd4ff');
@@ -168,10 +191,22 @@
       p.m(2, 16, ['.g.', 'ggg', 'krk', '.k.'], { g: C.verde, k: K, r: C.terracota });
       pe(p, 2, 29); pe(p, 12, 29);
     },
-  }) });
+  }) }, TV_ON);
 
   /* ----- luminária de pé (cúpula creme com franja) ----- */
-  I.objeto('casa-estar-luminaria', { w: 1, h: 1, topo: 22, solido: 'base', alto: true,
+  var LUZ = {
+    baixo: function (p) {
+      p.r(3, -21, 10, 7, '#fffbd6'); p.r(4, -20, 3, 5, C.branco); p.r(2, -12, 12, 1, '#ffe27a');
+      [3, 6, 9, 12].forEach(function (x) { p.r(x, -10, 1, 1, '#ff7eb6'); });
+      for (var y = -9; y < 8; y += 2) { p.r(2 + ((y / 2) & 1) * 1, y, 1, 1, '#ffe99a'); p.r(12 + ((y / 2) & 1) * 1, y, 1, 1, '#ffe99a'); }
+    },
+    anim: { baixo: function (p, t) {
+      var f = Math.floor(t / 500) % 2;
+      p.r(-3 - f, -18, 1, 1, '#ffe27a'); p.r(-5, -15 + f, 1, 1, '#fff1b8'); p.r(18 + f, -18, 1, 1, '#ffe27a'); p.r(20, -15 + f, 1, 1, '#fff1b8');
+      p.r(-2, -9 - f, 2, 1, '#ffe99a'); p.r(16, -9 - f, 2, 1, '#ffe99a'); p.r(7 + f * 2, -26, 1, 1, '#fff1b8');
+    } },
+  };
+  usos('casa-estar-luminaria', { w: 1, h: 1, topo: 22, solido: 'base', alto: true,
     desenhar: function (ctx, px, py) {
       var p = pincel(ctx, px, py);
       p.r(3, -22, 10, 1, K); p.r(2, -21, 12, 10, K); p.r(3, -21, 10, 9, '#fff1b8'); p.r(1, -13, 14, 3, K);
@@ -179,7 +214,7 @@
       [3, 6, 9, 12].forEach(function (x) { p.r(x, -10, 1, 1, '#ff7eb6'); });
       p.r(7, -10, 2, 20, K); p.r(7, -10, 1, 19, C.ouro2);
       p.r(3, 10, 10, 4, K); p.r(4, 11, 8, 2, C.ouro); p.r(4, 11, 3, 1, C.ouro3);
-    } });
+    } }, LUZ);
 
   /* ----- vaso com planta grande ----- */
   I.objeto('casa-estar-planta', { w: 1, h: 1, topo: 12, solido: 'base', alto: true,

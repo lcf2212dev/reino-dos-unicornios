@@ -5,7 +5,7 @@
   var R = window.Reino;
   var D = R.Desenho, C = D.C, K = D.K;
   var ret = D.ret, circulo = D.circulo, matriz = D.matriz, escurecer = D.escurecer, clarear = D.clarear;
-  var I = R.Interiores, virado = R.CasaArte.virado;
+  var I = R.Interiores, virado = R.CasaArte.virado, usos = R.CasaArte.objeto;
 
   var MAD = '#c9764f', TOALHA = '#a8ecd0', ALM = '#ffd34d', CRIS = '#8fd6c4', VIDRO = '#d9f3ff', TAP = '#ff8a7a';
 
@@ -82,7 +82,32 @@
   }) });
 
   /* ----- cristaleira 2×1: louça atrás do vidro, gavetas e coroa ----- */
-  I.objeto('casa-jantar-cristaleira', { w: 2, h: 1, topo: 24, solido: true, alto: true, desenhar: virado({
+  var FUNDO = '#7fb8a8';
+  function louca(p, x, y) {   // prateleira de louça para as portas abertas
+    p.m(x, y, ['.kkk.', 'kpppk', 'kpwpk', 'kpppk', '.kkk.'], { k: K, p: '#ff9cc6', w: C.branco });
+    p.m(x + 12, y + 1, ['kk.kk', 'kbkkb', 'kbkkb', '.k..k'], { k: K, b: '#5fb4ff' });
+  }
+  var CRIS_ON = {
+    baixo: function (p) {
+      p.r(4, -17, 24, 18, K); p.r(5, -16, 22, 16, FUNDO); p.r(5, -16, 22, 1, clarear(FUNDO, 0.4)); p.r(5, -16, 1, 16, clarear(FUNDO, 0.2));
+      p.r(5, -8, 22, 1, K); p.r(5, -7, 22, 1, clarear(CRIS, 0.3));
+      louca(p, 7, -15); p.m(8, -6, ['k.k.k', 'kykyk', 'kkkkk'], { k: K, y: C.ouro }); p.m(19, -7, ['.kkk.', 'kgggk', 'kgggk', '.kkk.'], { k: K, g: C.verde });
+      p.r(14, -7, 5, 1, C.branco);
+      p.r(0, -18, 4, 19, K); p.r(1, -17, 2, 17, VIDRO); p.r(28, -18, 4, 19, K); p.r(29, -17, 2, 17, VIDRO);   // portas abertas, de lado
+    },
+    cima: function (p) { p.r(0, -18, 3, 19, K); p.r(1, -17, 1, 17, VIDRO); p.r(29, -18, 3, 19, K); p.r(30, -17, 1, 17, VIDRO); },
+    lado: function (p) {
+      p.r(1, -18, 4, 22, K); p.r(2, -17, 2, 20, FUNDO); p.r(1, 4, 4, 26, K); p.r(2, 5, 2, 24, FUNDO);
+      p.r(2, -9, 2, 1, K); p.r(2, 14, 2, 1, K); p.r(2, -14, 2, 3, '#ff9cc6'); p.r(2, 7, 2, 3, '#5fb4ff'); p.r(2, 17, 2, 3, C.ouro); p.r(2, 22, 2, 3, C.verde);
+      p.r(0, -17, 1, 20, VIDRO); p.r(0, 5, 1, 24, VIDRO);
+    },
+    anim: {
+      baixo: function (p, t) { var u = Math.floor(t / 300) % 4; p.r(9 + u * 4, -14 + (u & 1) * 5, 1, 1, C.branco); p.r(10 + u * 4, -15 + (u & 1) * 5, 1, 1, C.branco); },
+      cima: function (p, t) { },
+      lado: function (p, t) { var u = Math.floor(t / 300) % 4; p.r(2, -13 + u * 8, 1, 1, C.branco); },
+    },
+  };
+  usos('casa-jantar-cristaleira', { w: 2, h: 1, topo: 24, solido: true, alto: true, desenhar: virado({
     baixo: function (ctx, px, py) {
       var p = pincel(ctx, px, py);
       p.r(1, -22, 30, 4, K); p.r(2, -21, 28, 2, clarear(CRIS, 0.4)); p.m(14, -24, ['.kk.', 'kppk'], { k: K, p: '#ff7eb6' });
@@ -115,7 +140,7 @@
       p.r(1, -19, 2, 22, K); p.r(1, -17, 1, 17, VIDRO); p.r(1, 5, 2, 24, K);
       p.r(3, 30, 3, 1, K); p.r(11, 30, 3, 1, K);
     },
-  }) });
+  }) }, CRIS_ON);
 
   /* ----- tapete 3×2 listrado coral e creme ----- */
   function tapete(p, W, H, deitado) {
