@@ -27,6 +27,10 @@ Reino.config = {
     passoGirar: ['baixo', 'esq', 'cima', 'dir'],
     // a cada sala feita de uma matéria que conta, a tela sorteia este tanto de móveis avulsos (casa.md §12) e ela escolhe 1
     moveisOpcoes: 5,
+    // os móveis funcionam (casa.md §13): quanto a comida de casa enche a fome do unicórnio (de 100) e quanto dura
+    // cada uso, em ms (curtaMs = sem Animações; depois de pularDepoisMs um toque pula para o fim)
+    usos: { fomeFruta: 30, fomeComedouro: 45, fomeFogao: 60, sentarMs: 4000, deitarMs: 5000, banhoMs: 5000,
+      chuveiroMs: 4500, cozinharMs: 4000, efeitoMs: 2500, curtaMs: 800, pularDepoisMs: 700 },
   },
   pinPais: '2026',            // troque aqui o PIN da Área dos Pais
   desafiosPorSala: 6,

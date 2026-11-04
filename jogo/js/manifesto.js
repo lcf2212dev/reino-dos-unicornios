@@ -342,7 +342,7 @@
       { js: 'js/conteudo/presentes.js', grupo: 'conteudo', node: true }, // presentes do jogo: as medalhas Ultra Lendárias (pedido 2026-10-28)
       { js: 'js/conteudo/casa/kits-a.js', grupo: 'conteudo', node: true }, // casa: kits estar, jantar e cozinha (casa.md §3)
       { js: 'js/conteudo/casa/kits-b.js', grupo: 'conteudo', node: true }, // casa: kits Banheiro, Quarto do jogador e Quarto do unicórnio
-      { js: 'js/conteudo/casa/moveis-salas.js', grupo: 'conteudo', node: true }, // casa: os 38 móveis avulsos, um à escolha por sala feita (casa.md §12)
+      { js: 'js/conteudo/casa/moveis-salas.js', grupo: 'conteudo', node: true }, // casa: os 42 móveis avulsos, um à escolha por sala feita (casa.md §12)
       { js: 'js/conteudo/materias/ciencias/icones.js', grupo: 'icones', node: true },
       { js: 'js/conteudo/materias/matematica/icones.js', grupo: 'icones', node: true },
       { js: 'js/conteudo/materias/geografia/icones.js', grupo: 'icones', node: true },
@@ -735,6 +735,11 @@
       { js: 'js/interiores/padrao.js', grupo: 'interiores', node: true }, // padrao.js por último entre os prédios: monta o interior das matérias que não têm um próprio
       { js: 'js/sistemas/banho.js', grupo: 'sistemas' },
       { js: 'js/sistemas/banho-desenho.js', grupo: 'sistemas' },
+      { js: 'js/sistemas/casa-usos.js', grupo: 'sistemas', node: true }, // casa: os móveis funcionam (Reino.CasaUsos, ação casaUsar; casa.md §13)
+      { js: 'js/sistemas/casa-usos-tabela.js', grupo: 'sistemas', node: true }, // casa: o uso de cada móvel de kit e avulso (casa.md §13)
+      { js: 'js/sistemas/casa-usos-animar.js', grupo: 'sistemas' }, // casa: a animação de um uso (cena ocupada, pular, temporizador)
+      { js: 'js/sistemas/casa-usos-poses-a.js', grupo: 'sistemas' }, // casa: poses sentar e deitar (ela e o unicórnio)
+      { js: 'js/sistemas/casa-usos-poses-b.js', grupo: 'sistemas' }, // casa: poses banho, chuveiro e cozinhar
       { js: 'js/sistemas/vida-mapa.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/et-companheiro-desenho.js', grupo: 'sistemas' },
       { js: 'js/motor/cena.js', grupo: 'motor' },
