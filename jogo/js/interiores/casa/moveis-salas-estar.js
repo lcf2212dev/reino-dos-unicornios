@@ -23,17 +23,50 @@
   }
   function pe(p, x, y) { p.r(x, y, 3, 3, K); p.r(x + 1, y, 1, 2, C.madeira2); }
 
+  /* ----- usos (docs/contratos/casa.md §13): o estado ligado vem de Reino.CasaUsos.ligado(obj) (sem uid = desligado);
+     as animações só desenham quando ligado, só com ret (móvel alto), e espelham na direção 'dir' ----- */
+  function ligado(o) { return R.CasaUsos.ligado(o); }
+  function pa(ctx, px, py, o) {
+    var W = ((o && o.w) || 1) * 16, esp = !!o && o.dir === 'dir';
+    return { r: function (x, y, w, h, c) { ret(ctx, px + (esp ? W - x - w : x), py + y, w, h, c); } };
+  }
+  var NOTAS = [PUFE, C.ouro, AGUA, '#7ae0a8'];
+  // notinhas subindo e sumindo: n notas entre x0 e x0+larg, de y0 para cima (alt px)
+  function notas(p, t, x0, larg, y0, alt, n) {
+    for (var i = 0; i < n; i++) {
+      var u = ((t + i * 1800 / n) % 1800) / 1800;
+      if (u > 0.88) continue;
+      var x = x0 + Math.floor(larg * i / n) + Math.round(Math.sin(t / 260 + i * 2));
+      var y = y0 - Math.floor(alt * u), c = NOTAS[i % 4];
+      p.r(x - 1, y + 2, 4, 4, K); p.r(x, y - 1, 3, 6, K); p.r(x + 1, y - 1, 3, 4, K);   // contorno por fora
+      p.r(x, y + 3, 2, 2, c); p.r(x + 1, y, 1, 4, c); p.r(x + 2, y, 1, 1, c); p.r(x + 2, y + 1, 1, 1, c);
+    }
+  }
+
   /* ----- aquário 1×1: vidro com peixinhos sobre um móvel ----- */
   I.objeto('casa-movel-aquario', { w: 1, h: 1, topo: 10, solido: true, alto: true,
-    desenhar: function (ctx, px, py) {
-      var p = pincel(ctx, px, py);
-      p.r(0, -10, 16, 15, K); p.r(1, -9, 14, 13, VIDRO); p.r(1, -6, 14, 10, AGUA); p.r(1, -6, 14, 1, clarear(AGUA, 0.5));
+    desenhar: function (ctx, px, py, o) {
+      var p = pincel(ctx, px, py), on = ligado(o);
+      p.r(0, -10, 16, 15, K); p.r(1, -9, 14, 13, VIDRO); p.r(1, -6, 14, 10, on ? '#7cc8ff' : AGUA); p.r(1, -6, 14, 1, clarear(AGUA, 0.5));
       p.r(2, -8, 1, 10, C.branco);
-      p.m(4, -4, ['.oo.o', 'ooooo', '.oo.o'], { o: '#ff8a3d' });
-      p.m(10, 0, ['y.yy.', 'yyyyy'], { y: C.ouro });
+      if (on) { p.r(3, -9, 10, 2, '#fff6c8'); p.r(4, -9, 8, 1, C.branco); p.r(4, -5, 8, 1, '#a8dcff'); }   // luz acesa; os peixes nadam no anim
+      else { p.m(4, -4, ['.oo.o', 'ooooo', '.oo.o'], { o: '#ff8a3d' }); p.m(10, 0, ['y.yy.', 'yyyyy'], { y: C.ouro }); }
       p.m(12, -4, ['g', 'gg', 'g', 'gg'], { g: C.folha3 }); p.r(3, 2, 10, 2, '#f3d9b0');
       p.caixa(0, 5, 16, 10, MAD); p.r(6, 8, 4, 1, C.ouro);
       pe(p, 1, 13); pe(p, 12, 13);
+    },
+    anim: function (ctx, px, py, t, o) {
+      if (!ligado(o)) return;
+      var p = pa(ctx, px, py, o);
+      function peixe(x, y, c, volta) {                                // 3×2 com rabo e olho; volta = nadando para a esquerda
+        p.r(x, y, 3, 2, c); p.r(volta ? x + 3 : x - 1, y, 1, 2, c); p.r(volta ? x : x + 2, y, 1, 1, K);
+      }
+      var a = Math.floor(2.5 + 2.5 * Math.sin(t / 900)), b = Math.floor(2.5 + 2.5 * Math.sin(t / 700 + 2));
+      peixe(4 + a, -4, '#ff8a3d', Math.cos(t / 900) < 0);
+      peixe(6 + b, -1, C.ouro, Math.cos(t / 700 + 2) < 0);
+      for (var i = 0; i < 3; i++) {                                   // bolhas sobem da areia
+        var u = ((t / 140 + i * 5) % 9); p.r(10 + (i % 2) * 2, 2 - Math.floor(u), 1, 1, C.branco);
+      }
     } });
 
   /* ----- piano 2×1 ----- */
@@ -66,33 +99,66 @@
       p.r(0, 24, 7, 4, K); p.r(1, 24, 5, 3, escurecer(PIANO, 0.2));
       pe(p, 7, 29); pe(p, 12, 29);
     },
-  }) });
+  }), anim: function (ctx, px, py, t, o) {
+    if (!ligado(o)) return;
+    var p = pa(ctx, px, py, o), dir = o.dir || 'baixo';
+    if (dir === 'esq' || dir === 'dir') { notas(p, t, 2, 9, -21, 11, 3); return; }
+    notas(p, t, 5, 20, -21, 11, 3);
+    if (dir === 'baixo') { var i = Math.floor(t / 200) % 8; p.r(5 + i * 3, -1, 2, 4, '#d8c8f0'); }   // uma tecla afundada
+  } });
 
   /* ----- lareira 2×1: tijolos, fogo e uma prateleira ----- */
   I.objeto('casa-movel-lareira', { w: 2, h: 1, topo: 18, solido: true, alto: true,
-    desenhar: function (ctx, px, py) {
+    desenhar: function (ctx, px, py, o) {
       var p = pincel(ctx, px, py), e = escurecer(TIJ, 0.2);
+      // sem uid (capa, prancha) fica acesa como sempre; na casa, apagada até alguém acender (o fogo mexe no anim)
+      var viva = !(o && o.uid) || ligado(o), animada = !!(o && o.uid);
       p.caixa(0, -18, 32, 34, TIJ);
       for (var y = -14; y < 15; y += 4) p.r(1, y, 30, 1, e);
       for (var j = 0; j < 8; j++) { var yy = -17 + j * 4, x0 = j % 2 ? 6 : 10; for (var x = x0; x < 31; x += 8) p.r(x, yy, 1, 3, e); }
       p.caixa(0, -18, 32, 5, MAD);
       p.r(7, -6, 18, 22, K); p.r(8, -5, 16, 21, '#4a4060');
-      p.m(9, 2, [
+      var fogo = [
         '....r.....r...', '...ror...ror..', '..royor.royor.', '.royyyororyyor', '.roywyyoyywyor', 'royywwyyywwyyo',
-      ], { r: '#ff5c6a', o: '#ff8a3d', y: C.ouro, w: '#fff1d6' });
+      ];
+      if (viva) p.m(9, animada ? 5 : 2, animada ? fogo.slice(3) : fogo, { r: '#ff5c6a', o: '#ff8a3d', y: C.ouro, w: '#fff1d6' });
       p.r(9, 8, 14, 3, K); p.r(10, 9, 12, 1, C.madeira2);
+      if (!viva) { p.r(12, 7, 3, 1, '#6a5a70'); p.r(18, 7, 2, 1, '#6a5a70'); p.r(15, 8, 2, 1, '#8a7a90'); }   // só lenha e cinza
+    },
+    anim: function (ctx, px, py, t, o) {
+      if (!ligado(o)) return;
+      var p = pa(ctx, px, py, o);
+      [11, 16, 21].forEach(function (cx, i) {                         // três línguas de fogo de alturas diferentes
+        var h = 4 + Math.floor(2 + 2 * Math.sin(t / 120 + i * 2.1));
+        for (var j = 0; j < h; j++) {
+          var w = j < h - 2 ? 3 : 1, y = 4 - j;
+          p.r(cx - (w >> 1), y, w, 1, '#ff5c6a');
+          if (j < h - 1) p.r(cx, y, 1, 1, j < h - 3 ? '#ffd34d' : '#ff8a3d');
+        }
+      });
+      var s = Math.floor(t / 90) % 6; p.r(10 + (Math.floor(t / 720) % 3) * 5, 1 - s, 1, 1, C.ouro);   // faísca
     } });
 
   /* ----- relógio cuco de parede 1×2 ----- */
   I.objeto('casa-movel-relogio-cuco', { w: 1, h: 2, parede: true, solido: false,
-    desenhar: function (ctx, px, py) {
-      var p = pincel(ctx, px, py);
+    desenhar: function (ctx, px, py, o) {
+      var p = pincel(ctx, px, py), on = ligado(o);
       p.m(1, 3, ['......kk......', '....kkMMkk....', '..kkMMMMMMkk..', 'kkMMMMMMMMMMkk'], { k: K, M: escurecer(MAD, 0.2) });
       p.caixa(2, 7, 12, 14, MAD);
       p.r(6, 8, 4, 3, K); p.r(7, 9, 2, 2, C.ouro); p.r(7, 9, 1, 1, '#ff8a3d');
-      p.r(4, 12, 8, 7, K); p.r(5, 13, 6, 5, C.branco); p.r(8, 14, 1, 2, K); p.r(8, 15, 2, 1, K);
+      p.r(4, 12, 8, 7, K);
+      if (on) { p.r(5, 13, 6, 5, '#4a4060'); p.r(3, 12, 1, 7, K); p.r(2, 13, 1, 5, escurecer(MAD, 0.2)); }   // portinha aberta; o passarinho sai no anim
+      else { p.r(5, 13, 6, 5, C.branco); p.r(8, 14, 1, 2, K); p.r(8, 15, 2, 1, K); }
       p.r(5, 21, 1, 7, K); p.r(10, 21, 1, 5, K);
       p.m(4, 27, ['kk', 'oo', 'kk'], { k: K, o: C.ouro }); p.m(9, 25, ['kk', 'oo', 'kk'], { k: K, o: C.ouro });
+    },
+    anim: function (ctx, px, py, t, o) {
+      if (!ligado(o)) return;
+      var p = pincel(ctx, px, py), c = t % 1600;
+      var n = c < 250 ? Math.ceil(5 * c / 250) : c < 1350 ? 5 : Math.ceil(5 * (1600 - c) / 250);   // linhas à mostra: sobe, canta, desce
+      if (n <= 0) return;
+      var bico = c > 300 && c < 1300 && Math.floor(t / 200) % 2 === 0;
+      p.m(5, 18 - n, ['.kkkk.', 'kyyyyk', bico ? 'ooyeyk' : 'oyyeyk', 'kyyyyk', '.kkkk.'].slice(0, n), { k: K, y: C.ouro, o: '#ff8a3d', e: K });
     } });
 
   /* ----- pufe 1×1 redondo com botão ----- */
@@ -131,7 +197,17 @@
       p.r(4, 9, 8, 1, escurecer(MAD, 0.3));
       pe(p, 3, 13); pe(p, 10, 13);
     },
-  }) });
+  }), anim: function (ctx, px, py, t, o) {
+    if (!ligado(o)) return;
+    var p = pa(ctx, px, py, o), dir = o.dir || 'baixo', f = Math.floor(t / 100);
+    var g = '#9a8cc0';
+    if (dir === 'baixo') {                                             // brilho girando no disco
+      var q = [[3, -1], [5, -1], [10, -1], [12, -1], [12, 0], [10, 0], [5, 0], [3, 0]][f % 8]; p.r(q[0], q[1], 1, 1, g);
+    } else if (dir !== 'cima') {
+      var l = [[5, 3], [6, 3], [7, 3], [8, 3], [8, 4], [8, 5], [7, 5], [6, 5], [5, 5], [5, 4]][f % 10]; p.r(l[0], l[1], 1, 1, g);
+    }
+    notas(p, t, dir === 'baixo' ? 2 : 1, 7, -15, 11, 2);
+  } });
 
   /* ----- vitral de parede 2×2: arco-íris com unicórnio ----- */
   I.objeto('casa-movel-vitral', { w: 2, h: 2, parede: true, solido: false,

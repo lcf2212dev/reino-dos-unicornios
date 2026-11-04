@@ -21,6 +21,13 @@
     };
     return p;
   }
+  /* ----- usos (docs/contratos/casa.md §13): o estado ligado vem de Reino.CasaUsos.ligado(obj) (sem uid = desligado);
+     as animações só desenham quando ligado, só com ret (móvel alto), e espelham na direção 'dir' ----- */
+  function ligado(o) { return R.CasaUsos.ligado(o); }
+  function pa(ctx, px, py, o) {
+    var W = ((o && o.w) || 1) * 16, esp = !!o && o.dir === 'dir';
+    return { r: function (x, y, w, h, c) { ret(ctx, px + (esp ? W - x - w : x), py + y, w, h, c); } };
+  }
   // casquinha com uma bola de sorvete (5×7)
   function casquinha(p, x, y, cor) {
     p.m(x, y, ['.kkk.', 'kccck', 'kcwck', 'kyyyk', '.kyk.', '.kyk.', '..k..'], { k: K, c: cor, w: C.branco, y: CASQ });
@@ -53,15 +60,34 @@
       casquinha(p, 0, -3, MENTA);
       p.caixa(1, 7, 14, 8, MENTA); p.r(10, 9, 2, 2, AMAR);
     },
-  }) });
+  }), anim: function (ctx, px, py, t, o) {
+    if (!ligado(o)) return;
+    var p = pa(ctx, px, py, o), dir = o.dir || 'baixo', lado = dir === 'esq' || dir === 'dir', f = Math.floor(t / 150) % 8;
+    if (dir !== 'cima') {
+      var h = 1 + Math.floor(t / 300) % 3, x0 = lado ? 0 : 5, y0 = lado ? -5 : -6;   // a bola de sorvete cresce no bico
+      p.r(x0, y0, 6, h + 2, K); p.r(x0 + 1, y0 + 1, 4, h, '#fff'); p.r(x0 + 1, y0 + 1, 2, 1, '#ffd0e0'); p.r(x0 + 3, y0 + h, 2, 1, '#ffd0e0');
+      p.r(10, 9, 2, 2, f % 2 ? AMAR : '#fff3a8');                    // botões piscam
+      if (!lado) p.r(12, 9, 2, 2, f % 2 ? '#ffb3a8' : CORAL);
+    }
+    var b = [[4, -6], [12, -2], [3, 3], [12, 4], [8, 1], [5, 9]][Math.floor(t / 300) % 6];   // brilhinhos na máquina
+    p.r(b[0], b[1], 1, 1, C.branco);
+    if (f % 2) { p.r(b[0] - 1, b[1], 3, 1, C.branco); p.r(b[0], b[1] - 1, 1, 3, C.branco); }
+  } });
 
   /* ----- lixeira de pedal 1×1 ----- */
-  I.objeto('casa-movel-lixeira', { w: 1, h: 1, topo: 4, solido: 'base', desenhar: function (ctx, px, py) {
-    var p = pincel(ctx, px, py);
-    p.caixa(3, -4, 10, 4, MENTA); p.r(7, -3, 2, 1, K);
+  I.objeto('casa-movel-lixeira', { w: 1, h: 1, topo: 4, solido: 'base', desenhar: function (ctx, px, py, o) {
+    var p = pincel(ctx, px, py), on = ligado(o);
+    if (!on) { p.caixa(3, -4, 10, 4, MENTA); p.r(7, -3, 2, 1, K); }
     p.caixa(3, -1, 10, 14, MENTA);
+    if (on) { p.r(4, -1, 8, 2, K); p.r(5, -1, 6, 1, '#4a4060'); p.m(6, -3, ['.kk.', 'kwwk', 'kwwk'], { k: K, w: C.branco }); }   // boca aberta e um papel; a tampa levantada vai no anim
     p.m(5, 3, ['.k.k.', 'kpkpk', 'kpppk', '.kpk.', '..k..'], { k: K, p: ROSA });   // coraçãozinho
     p.r(5, 13, 6, 3, K); p.r(6, 13, 4, 1, METAL);                      // pedal
+  },
+  anim: function (ctx, px, py, t, o) {
+    if (!ligado(o)) return;
+    var p = pa(ctx, px, py, o);                                        // tampa levantada, de lado
+    p.r(4, -10, 8, 1, K); p.r(3, -9, 10, 3, K); p.r(4, -9, 8, 2, clarear(MENTA, 0.3)); p.r(4, -7, 8, 1, MENTA);
+    p.r(5, -6, 1, 5, K); p.r(10, -6, 1, 5, K);
   } });
 
   /* ----- prateleira de parede 2×2 com potes coloridos ----- */
