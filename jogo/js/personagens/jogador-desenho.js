@@ -100,11 +100,13 @@
   function montariaSuja() {
     try { return !!(Reino.Cuidados && Reino.Cuidados.sujo && Reino.Cuidados.sujo()); } catch (e) { return false; }
   }
-  // o banho de espuma (js/sistemas/banho.js) desenha o unicórnio enquanto dura: ela fica a pé, ao lado
+  // o banho de espuma (js/sistemas/banho.js) ou um uso da casa (casa-usos-animar.js) desenha o unicórnio: ela fica a pé
   function banhoComUni() {
-    var B = Reino.Banho;
-    try { return !!(B && B.desenhandoUni && B.desenhandoUni()); } catch (e) { return false; }
+    var B = Reino.Banho, U = Reino.CasaUsos;
+    try { return !!(B && B.desenhandoUni && B.desenhandoUni()) || !!(U && U.desenhandoUni && U.desenhandoUni()); } catch (e) { return false; }
   }
+  // um uso da casa em que ela senta, deita, toma banho ou cozinha: a animação desenha os dois
+  function casaComEla() { try { return !!(Reino.CasaUsos && Reino.CasaUsos.desenhandoEla && Reino.CasaUsos.desenhandoEla()); } catch (e) { return false; } }
   // nuvenzinha de poeira do sujinho: 3 fiapos cinza-terra junto dos cascos (yPes −1 … −5), atrás do unicórnio
   // de lado e dos dois lados das patas de frente ou de costas; em blocos de px inteiros do sprite (a mesma grade
   // dele: borda esquerda x − larg/2). Com Animações, sobem e somem devagar; sem, ficam parados.
@@ -298,6 +300,7 @@
 
     var itens, sobre = null;
     J.silhueta = null;
+    if (casaComEla()) return [];
     if (banhoComUni()) {
       // banho de espuma: o unicórnio está na banheira (quem desenha é o banho) e ela fica a pé, ao lado
       var aPe = PA.mariana(est.aparencia, false, 0, { capa: usa.capa, vista: olhar.vista });
