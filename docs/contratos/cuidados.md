@@ -35,7 +35,9 @@ comprar(comidaId) → { ok: true } | { ok: false, motivo: 'estrelas', faltam: n 
 alimentar(uniId, comidaId) → { ok: true, antes, depois } | { ok: false, motivo: 'sem-comida' | 'cheio' | 'sem-uni' }
      // usadas + 1; fome + comida.fome (enche = 100), no máximo 100; 'cheio' = fome ≥ 99,5; grava na hora
 beber(uniId) → { ok: true, antes, depois } | { ok: false, motivo: 'cheio' | 'sem-uni' }
-     // sede = 100, de graça; 'cheio' = sede ≥ 99,5; grava na hora. Só o bebedouro da Pet Shop chama
+     // sede = 100, de graça; 'cheio' = sede ≥ 99,5; grava na hora. O bebedouro da Pet Shop e os da casa chamam (`casa.md` §13)
+comerEmCasa(uniId, quanto) → { ok: true, antes, depois } | { ok: false, motivo: 'cheio' | 'sem-uni' }
+     // comida de casa, de graça: fome + quanto (config.casa.usos), no máximo 100; 'cheio' = fome ≥ 99,5; grava na hora
 banhar(uniId?) → { ok: true, antes, depois: 100 } | { ok: false, motivo: 'cheio' | 'sem-uni' }
      // 'cheio' = banho ≥ 99,5; banho = 100, acaoBanho = max(agora, acaoBanho + 1), em = agora; grava na hora
      // (P.salvar) e emite 'cuidados'. De graça. Não mexe em acao/acaoFome/acaoSede
@@ -88,7 +90,7 @@ evento: U.emit(Reino.EVENTOS.CUIDADOS, depurar())  // a cada ponto inteiro que m
    - já satisfeito (`cheio`): `frases.semSede` (Claude);
    - sem unicórnio chocado: a fala das `extras` da Pet Shop (narradora).
    Sempre em balão modal com "Ok! 👍". `bebeu`/`semSede` já estão no pacote geral: não duplicar nas `extras`.
-   É o único lugar com água.
+   Fora daqui, só a casa tem água (bebedouro, fontinha e filtro: `casa.md` §13).
 3. `UI.telaPetShop()` (`ui/petshop.js`): saldo de estrelas; cada comida com ícone, nome, preço e quanto enche;
    a despensa; nota de que a água é de graça.
 4. NADA é gasto sem ela confirmar: tocar numa comida abre UM `UI.escolher` (classe `painel-compra`), e só

@@ -6,7 +6,8 @@ virado para onde quiser.
 
 ## Índice
 1. Onde está no código · 2. Ids · 3. Kits · 4. Interiores decoráveis (motor) · 5. Móveis e direções ·
-6. Save · 7. API `Reino.Casa` · 8. Onde um móvel pode ficar · 9. Telas · 10. Falas e vozes · 11. Testes · 12. Móveis avulsos (um por sala)
+6. Save · 7. API `Reino.Casa` · 8. Onde um móvel pode ficar · 9. Telas · 10. Falas e vozes · 11. Testes · 12. Móveis avulsos (um por sala) ·
+13. Os móveis funcionam (`Reino.CasaUsos`)
 
 ## 1. Onde está no código
 | Parte | Arquivo |
@@ -152,7 +153,7 @@ Qualquer cômodo vale para qualquer kit.
 ## 11. Testes
 - `unidade/casa.test.js` (save, regras, mescla de 2 aparelhos, save antigo sem os campos, guardado, órfã).
 - `unidade/casa-moveis.test.js` (§12: pendentes, sorteio fixo, escolher, repetido, peças `movel.*`, mescla, caixa)
-  e `unidade/casa-moveis-salas.navegador.test.js` (os 41 desenhos; pranchas em `/tmp/reino-testes/casa-moveis-salas/`).
+  e `unidade/casa-moveis-salas.navegador.test.js` (os 42 desenhos; pranchas em `/tmp/reino-testes/casa-moveis-salas/`).
 - `unidade/interiores-decoravel.test.js` (motor: `objetosExtras`, `refazer`, placa com `{nome}`/`{uni}`, validador).
 - `unidade/casa-predio.navegador.test.js`, `unidade/casa-decorar.navegador.test.js`, `unidade/casa-telas.navegador.test.js`.
 - Cenas do e2e: o interior entra sozinho (vazio, como num save sintético sem kits); telas `bau-casa`, `kit-casa`,
@@ -165,7 +166,7 @@ avulso, escolhido entre `config.casa.moveisOpcoes` (5) sorteados. Só depois de 
 | Parte | Onde |
 |---|---|
 | registro | `Reino.registrarMovelCasa({ id, nome, objeto, comodo, direcoes, parede? })` / `Reino.movelCasa(id)` / `Reino.moveisCasa` (`js/nucleo/registros.js`) |
-| dados (41: um por sala do 4º bimestre, 25 de Língua Portuguesa + 13 de Inglês, mais 3 camas) | `js/conteudo/casa/moveis-salas.js` |
+| dados (42: um por sala do 4º bimestre, 25 de Língua Portuguesa + 13 de Inglês, mais 3 camas e o chuveiro) | `js/conteudo/casa/moveis-salas.js` |
 | desenho | objeto `casa-movel-<id>` em `js/interiores/casa/moveis-salas-<cômodo>.js` (regras do §5) |
 | save, sorteio, pendentes | `js/sistemas/casa-moveis.js` (`Reino.CasaMoveis`) |
 | tela | `js/ui/casa-moveis.js` (`UI.escolherMovelCasa`, `UI.casaMoveisPendentes`) + `css/ui-casa-moveis.css` |
@@ -186,3 +187,30 @@ avulso, escolhido entre `config.casa.moveisOpcoes` (5) sorteados. Só depois de 
    de `ui/casa-kits.js`), o nome e o cômodo. O toque dá o móvel (festa e fala); "Depois" ou Esc param a fila e a sala
    fica pendente. Falas (`ui/casa-falas.js`): "Escolha um móvel novo!" (só na 1ª da fila) e "Móvel novo na sua casa!".
 
+
+## 13. Os móveis funcionam (`Reino.CasaUsos`)
+Pedido: `pedidos/2026-11-03-casa-usos.md`. Peça colocada com uso ganha `uid`, `nome` (o do item) e
+`acao: { tipo: 'casaUsar', uid }` em `Casa.objetosDoAndar`; tocar nela (ou Enter ao lado) usa o móvel.
+
+| Parte | Onde |
+|---|---|
+| API, ação `casaUsar`, "Quem vai?" | `js/sistemas/casa-usos.js` (`Reino.CasaUsos`) |
+| o uso de cada móvel (kits e avulsos) | `js/sistemas/casa-usos-tabela.js` (`CasaUsos.registrar(tipo, def)`) |
+| animação (cena ocupada, pular) e poses | `js/sistemas/casa-usos-animar.js`, `casa-usos-poses-a.js` (sentar, deitar), `casa-usos-poses-b.js` (banho dela, chuveiro, cozinhar); interno `Reino._casaUsos` |
+| estado ligado/aberto no desenho | o `desenhar`/`anim` de cada móvel lê `CasaUsos.ligado(obj)` |
+| números | `config.casa.usos` |
+
+1. Usos: `alternar` (luz, TV, aquário, lareira: liga/desliga), `abrir` (geladeira, armários, guarda-roupa, baú),
+   `efeito` (liga por `efeitoMs` e desliga sozinho: pia, descarga, piano, vitrola, relógios, brinquedos), `sentar`
+   (ela), `deitar` (camas: ela ou o unicórnio; almofadão e caminha nuvem: o unicórnio), `banho` (banheira: o
+   unicórnio pelo `Reino.Banho`, ela pela pose), `chuveiro` (ela ou o unicórnio; o unicórnio fica limpinho),
+   `cozinhar` (fogão aceso; a comida enche a fome), `comer` (fruteira, cesto de maçãs, cesta de pães, comedouro) e
+   `beber` (bebedouro, fontinha, filtro: `Cuidados.beber`). Tapetes, quadros, plantas, espelhos e mesas são enfeite.
+2. Ligado/aberto vale só enquanto o jogo está aberto (memória, por `uid`): nada vai para o save. Mudar chama
+   `Interiores.refazer(andar)`. Sem `uid` (capa, prancha, fantasma) o móvel é desenhado como sempre; desligado com
+   `uid` também (só a lareira: dentro da casa começa apagada). Guardar a peça esquece o estado.
+3. Comer em casa: `Cuidados.comerEmCasa(uniId, quanto)` (de graça, grava como `beber`). Nenhum prêmio.
+4. "Quem vai?" (`UI.escolher`) só com unicórnio chocado e uso de quem `'ambos'`; sem unicórnio vai ela, e comer ou
+   beber só tocam o som.
+5. Falas: nenhuma nova; as frases dos cuidados (`comeu`, `bebeu`, `cheio`, `semSede`, `banhou`, `jaLimpinho`).
+6. A regra de lugar (§8.3) não muda: peça cercada por outras só não é alcançada (ela arruma os móveis).
