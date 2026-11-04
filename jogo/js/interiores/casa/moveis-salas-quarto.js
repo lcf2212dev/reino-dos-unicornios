@@ -5,7 +5,7 @@
   var R = window.Reino;
   var I = R.Interiores, D = I.desenho, C = D.C;
   var ret = D.ret, circulo = D.circulo, clarear = D.clarear, escurecer = D.escurecer;
-  var K = R.Desenho.K, virado = R.CasaArte.virado;
+  var K = R.Desenho.K, CA = R.CasaArte, virado = CA.virado;
   var ROSA = '#ff8fc4', LIL = '#c9a8ff', LIL2 = '#efe4ff', AMAR = '#ffd84d', CEU = '#8fd0ff', MAD = '#f2c38a', MAD2 = '#d39a5c';
   var VIDRO = '#d4eef8', MARROM = '#b07a4a', MARROM2 = '#8a5a34', VERDE = '#7fe08a', AZUL = '#4fa8e8';
 
@@ -15,10 +15,12 @@
     ret(ctx, x + 1, y + 1, w - 2, 1, clarear(c, 0.45)); ret(ctx, x + 1, y + 2, 1, h - 3, clarear(c, 0.2));
     ret(ctx, x + 1, y + h - 2, w - 2, 1, escurecer(c, 0.2));
   }
+  function brilho(ctx, x, y, c) { ret(ctx, x, y - 1, 1, 3, c); ret(ctx, x - 1, y, 3, 1, c); }
+  // estados com uso (casa.md §13): só ligado; o desligado é o desenho de sempre. Ver CA.animPorDir / CA.refazer (moveis-salas-banheiro.js)
   function coracao(ctx, x, y, c) { ret(ctx, x, y, 2, 2, c); ret(ctx, x + 3, y, 2, 2, c); ret(ctx, x, y + 1, 5, 2, c); ret(ctx, x + 1, y + 3, 3, 1, c); ret(ctx, x + 2, y + 4, 1, 1, c); }
 
   /* ---------- penteadeira (2×1; lado 1×2) ---------- */
-  I.objeto('casa-movel-penteadeira', { w: 2, h: 1, topo: 18, solido: 'base', alto: true,
+  var penteadeira = I.objeto('casa-movel-penteadeira', { w: 2, h: 1, topo: 18, solido: 'base', alto: true,
     desenhar: virado({
       baixo: function (ctx, px, py) {
         arred(ctx, px + 8, py - 18, 16, 16, K); arred(ctx, px + 9, py - 17, 14, 14, ROSA);         // moldura do espelho
@@ -47,6 +49,26 @@
         ret(ctx, px + 7, py + 20, 3, 4, K); ret(ctx, px + 8, py + 21, 1, 2, ROSA);                    // perfume
       },
     }) });
+  penteadeira.anim = CA.animPorDir({                                                                  // ligado: o espelho brilha
+    baixo: function (ctx, px, py, t) {
+      var f = Math.floor(t / 110) % 16, r, x;
+      for (r = 0; r < 10; r++) {
+        x = f - r;                                                                                    // reflexo na diagonal, 2 de largura
+        if (x < 0 || x > 9 || (r % 9 === 0 && (x === 0 || x === 9))) continue;
+        ret(ctx, px + 11 + x, py - 15 + r, x < 9 ? 2 : 1, 1, C.branco);
+      }
+      penteadeiraFaiscas(ctx, px, py, t, 7, -14, 25, -9);
+    },
+    cima: function (ctx, px, py, t) { penteadeiraFaiscas(ctx, px, py, t, 7, -14, 25, -9); },
+    lado: function (ctx, px, py, t) {
+      ret(ctx, px + 9, py - 15 + Math.floor(t / 110) % 16, 1, 2, C.branco);
+      penteadeiraFaiscas(ctx, px, py, t, 5, -12, 14, -6);
+    },
+  });
+  function penteadeiraFaiscas(ctx, px, py, t, x1, y1, x2, y2) {
+    var f = Math.floor(t / 240) % 4;
+    if (f < 2) brilho(ctx, px + x1, py + y1, f ? C.branco : AMAR); else brilho(ctx, px + x2, py + y2, f === 2 ? AMAR : C.branco);
+  }
 
   /* ---------- casa de boneca (2×1; lado 1×2) ---------- */
   function telhado(ctx, x, y, w, c) {
@@ -54,7 +76,7 @@
     for (i = 1; i < 7; i++) ret(ctx, x + (w >> 1) - i * 2 + 1, y + i, i * 4 - 2, 1, c);
   }
   function janelinha(ctx, x, y) { ret(ctx, x, y, 6, 6, K); ret(ctx, x + 1, y + 1, 4, 4, CEU); ret(ctx, x + 3, y + 1, 1, 4, C.branco); ret(ctx, x + 1, y + 3, 4, 1, C.branco); }
-  I.objeto('casa-movel-casa-boneca', { w: 2, h: 1, topo: 16, solido: 'base', alto: true,
+  var casaBoneca = I.objeto('casa-movel-casa-boneca', { w: 2, h: 1, topo: 16, solido: 'base', alto: true,
     desenhar: virado({
       baixo: function (ctx, px, py) {
         telhado(ctx, px + 1, py - 16, 30, ROSA);
@@ -82,14 +104,41 @@
         janelinha(ctx, px + 5, py + 6); janelinha(ctx, px + 5, py + 21);
       },
     }) });
+  // ligado: a frente abre (os dois andares aparecem) e a luzinha pisca
+  function faiscasTelhado(ctx, px, py, t) { if (Math.floor(t / 300) % 2) brilho(ctx, px + 4, py - 14, AMAR); else brilho(ctx, px + 27, py - 15, C.branco); }
+  casaBoneca.anim = CA.animPorDir({
+    baixo: function (ctx, px, py, t) {
+      var luz = Math.floor(t / 400) % 2 ? '#fff6c8' : AMAR;
+      ret(ctx, px + 4, py - 8, 24, 22, LIL2); ret(ctx, px + 4, py + 2, 24, 2, K);                    // dois andares à mostra
+      ret(ctx, px + 15, py - 8, 2, 10, LIL); ret(ctx, px + 5, py + 4, 22, 1, LIL);
+      ret(ctx, px + 6, py - 2, 9, 4, K); ret(ctx, px + 7, py - 1, 7, 2, MAD); ret(ctx, px + 7, py - 3, 3, 2, C.branco);   // caminha
+      ret(ctx, px + 9, py - 1, 5, 2, ROSA); ret(ctx, px + 6, py + 1, 1, 1, K);
+      ret(ctx, px + 19, py - 6, 5, 4, K); ret(ctx, px + 20, py - 5, 3, 2, CEU);                      // janelinha
+      ret(ctx, px + 22, py - 1, 1, 3, K); ret(ctx, px + 20, py - 3, 5, 3, K); ret(ctx, px + 21, py - 2, 3, 1, luz);   // abajur
+      ret(ctx, px + 6, py + 7, 10, 6, K); ret(ctx, px + 7, py + 8, 8, 4, ROSA); ret(ctx, px + 7, py + 8, 8, 1, clarear(ROSA, 0.4));   // sofazinho
+      ret(ctx, px + 19, py + 6, 6, 7, K); ret(ctx, px + 20, py + 7, 4, 5, VERDE); ret(ctx, px + 21, py + 12, 2, 1, MARROM);
+      ret(ctx, px + 1, py - 7, 3, 18, K); ret(ctx, px + 2, py - 6, 1, 16, ROSA);                       // as duas portas abertas
+      ret(ctx, px + 28, py - 7, 3, 18, K); ret(ctx, px + 29, py - 6, 1, 16, ROSA);
+      faiscasTelhado(ctx, px, py, t);
+    },
+    cima: faiscasTelhado,
+    lado: function (ctx, px, py, t) {
+      ret(ctx, px + 3, py + 3, 4, 13, LIL2); ret(ctx, px + 3, py + 18, 4, 12, LIL2);                 // a frente aberta: os andares
+      ret(ctx, px + 4, py + 11, 3, 4, MAD); ret(ctx, px + 4, py + 10, 2, 1, C.branco);
+      ret(ctx, px + 4, py + 25, 3, 4, ROSA); ret(ctx, px + 6, py + 20, 1, 3, Math.floor(t / 400) % 2 ? '#fff6c8' : AMAR);
+      ret(ctx, px, py + 4, 3, 24, K); ret(ctx, px + 1, py + 5, 1, 22, ROSA);                      // porta aberta
+      faiscasTelhado(ctx, px, py, t);
+    },
+  });
 
   /* ---------- baú de brinquedos aberto (2×1; lado 1×2) ---------- */
+  var PULO = [0, 0, 0, VERDE];                                                                        // ligado: bola, bloco e varinha pulam (dy) e a ponta brilha
   function brinquedosDentro(ctx, x, y) {
-    circulo(ctx, x + 4, y + 3, 3, K); circulo(ctx, x + 4, y + 3, 2, ROSA); ret(ctx, x + 3, y + 2, 1, 1, C.branco);   // bola
-    ret(ctx, x + 9, y - 2, 7, 7, K); ret(ctx, x + 10, y - 1, 5, 5, AMAR); ret(ctx, x + 12, y, 1, 3, K);             // bloco
-    ret(ctx, x + 18, y - 4, 2, 8, K); circulo(ctx, x + 19, y - 5, 2, VERDE);                                         // varinha
+    circulo(ctx, x + 4, y + 3 + PULO[0], 3, K); circulo(ctx, x + 4, y + 3 + PULO[0], 2, ROSA); ret(ctx, x + 3, y + 2 + PULO[0], 1, 1, C.branco);   // bola
+    ret(ctx, x + 9, y - 2 + PULO[1], 7, 7, K); ret(ctx, x + 10, y - 1 + PULO[1], 5, 5, AMAR); ret(ctx, x + 12, y + PULO[1], 1, 3, K);             // bloco
+    ret(ctx, x + 18, y - 4 + PULO[2], 2, 8, K); circulo(ctx, x + 19, y - 5 + PULO[2], 2, PULO[3]);                                                  // varinha
   }
-  I.objeto('casa-movel-brinquedos', { w: 2, h: 1, topo: 10, solido: true,
+  var brinquedos = I.objeto('casa-movel-brinquedos', { w: 2, h: 1, topo: 10, solido: true,
     desenhar: virado({
       baixo: function (ctx, px, py) {
         ret(ctx, px + 2, py - 10, 28, 8, K); ret(ctx, px + 3, py - 9, 26, 6, escurecer(CEU, 0.15));  // tampa aberta
@@ -108,13 +157,18 @@
       lado: function (ctx, px, py) {
         caixa(ctx, px + 3, py - 2, 11, 33, CEU);
         ret(ctx, px + 4, py + 1, 9, 27, escurecer(CEU, 0.35));                                       // o fundo do baú
-        circulo(ctx, px + 8, py + 6, 3, K); circulo(ctx, px + 8, py + 6, 2, ROSA);
-        ret(ctx, px + 5, py + 13, 6, 6, K); ret(ctx, px + 6, py + 14, 4, 4, AMAR);
-        circulo(ctx, px + 8, py + 24, 2, VERDE);
+        circulo(ctx, px + 8, py + 6 + PULO[0], 3, K); circulo(ctx, px + 8, py + 6 + PULO[0], 2, ROSA);
+        ret(ctx, px + 5, py + 13 + PULO[1], 6, 6, K); ret(ctx, px + 6, py + 14 + PULO[1], 4, 4, AMAR);
+        circulo(ctx, px + 8, py + 24 + PULO[2], 2, PULO[3]);
         ret(ctx, px + 12, py - 4, 4, 36, K); ret(ctx, px + 13, py - 3, 2, 34, escurecer(CEU, 0.15)); // tampa em pé
         ret(ctx, px + 3, py + 13, 1, 6, AMAR);
       },
     }) });
+  CA.refazer(brinquedos, function (ctx, px, py, t, obj, orig) {
+    var f = Math.floor(t / 130), pulo = [0, -2, -4, -5, -4, -2, 0, 0];
+    PULO = [pulo[f % 8], pulo[(f + 3) % 8], pulo[(f + 5) % 8], f % 4 < 2 ? VERDE : AMAR];
+    orig(ctx, px, py, obj); PULO = [0, 0, 0, VERDE];
+  });
 
   /* ---------- unicórnio de balanço (1×1) ---------- */
   function cabecaUni(ctx, x, y, olha) {
@@ -126,7 +180,7 @@
     ret(ctx, x + 2, y + 2, w - 4, 2, K); ret(ctx, x, y, 3, 3, K); ret(ctx, x + w - 3, y, 3, 3, K);
     ret(ctx, x + 3, y + 2, w - 6, 1, MAD); ret(ctx, x + 1, y + 1, 1, 1, MAD); ret(ctx, x + w - 2, y + 1, 1, 1, MAD);
   }
-  I.objeto('casa-movel-uni-balanco', { w: 1, h: 1, topo: 12, solido: true,
+  var uniBalanco = I.objeto('casa-movel-uni-balanco', { w: 1, h: 1, topo: 12, solido: true,
     desenhar: virado({
       baixo: function (ctx, px, py) {
         cabecaUni(ctx, px + 4, py - 8, true);
@@ -152,10 +206,13 @@
         balanco(ctx, px, py + 10, 16);
       },
     }) });
+  CA.refazer(uniBalanco, function (ctx, px, py, t, obj, orig) {                                        // ligado: balança, 1 px para cada lado
+    orig(ctx, px + [0, 1, 0, -1][Math.floor(t / 250) % 4], py, obj);
+  });
 
   /* ---------- ursão de pelúcia (1×1) ---------- */
   function orelhas(ctx, x, y) { circulo(ctx, x + 3, y + 2, 2, K); circulo(ctx, x + 11, y + 2, 2, K); ret(ctx, x + 3, y + 2, 1, 1, MAD); ret(ctx, x + 11, y + 2, 1, 1, MAD); }
-  I.objeto('casa-movel-ursao', { w: 1, h: 1, topo: 12, solido: true,
+  var ursao = I.objeto('casa-movel-ursao', { w: 1, h: 1, topo: 12, solido: true,
     desenhar: virado({
       baixo: function (ctx, px, py) {
         orelhas(ctx, px, py - 12);
@@ -185,6 +242,17 @@
         ret(ctx, px + 1, py + 10, 7, 4, K); ret(ctx, px + 2, py + 11, 5, 2, MAD);                    // pezinho
       },
     }) });
+  ursao.anim = CA.animPorDir({                                                                         // ligado: coraçõezinhos sobem
+    baixo: function (ctx, px, py, t) {
+      var f = Math.floor(t / 210);
+      [[4, 0], [9, 4]].forEach(function (h) {
+        var k = (f + h[1]) % 8, x = px + h[0] + [0, 1, 1, 0, 0, -1, -1, 0][k], y = py - 15 - k;
+        if (k > 3) return;
+        [[-1, 0], [1, 0], [0, -1], [0, 1]].forEach(function (d) { coracao(ctx, x + d[0], y + d[1], K); });
+        coracao(ctx, x, y, k > 2 ? ROSA : '#ff6fa8'); ret(ctx, x + 1, y, 1, 1, C.branco);
+      });
+    },
+  });
 
   /* ---------- lousa de parede (2×2) ---------- */
   I.objeto('casa-movel-lousa', { w: 2, h: 2, parede: true, solido: false,
@@ -204,16 +272,24 @@
     } });
 
   /* ---------- globo terrestre (1×1) ---------- */
-  I.objeto('casa-movel-globo', { w: 1, h: 1, topo: 12, solido: true,
+  var TERRA = [[4, -7, 3, 3], [5, -5, 2, 3], [9, -6, 4, 2], [10, -4, 2, 4], [6, 1, 3, 1]], GIRO = 0;      // continentes (x, y, w, h); GIRO = colunas andadas
+  var globo = I.objeto('casa-movel-globo', { w: 1, h: 1, topo: 12, solido: true,
     desenhar: function (ctx, px, py) {
       circulo(ctx, px + 8, py - 3, 7, K); circulo(ctx, px + 8, py - 3, 6, AZUL);
-      ret(ctx, px + 4, py - 7, 3, 3, VERDE); ret(ctx, px + 5, py - 5, 2, 3, VERDE);                   // continentes
-      ret(ctx, px + 9, py - 6, 4, 2, VERDE); ret(ctx, px + 10, py - 4, 2, 4, VERDE); ret(ctx, px + 6, py + 1, 3, 1, VERDE);
+      TERRA.forEach(function (r) {                                                                    // continentes: andam pela esfera e somem na borda
+        for (var j = 0; j < r[3]; j++) for (var i = 0; i < r[2]; i++) {
+          var x = (r[0] + i - 2 + GIRO) % 13 + 2, dy = r[1] + j + 3;
+          if (Math.abs(x - 8) <= Math.floor(Math.sqrt(36 - dy * dy) + 0.35)) ret(ctx, px + x, py + r[1] + j, 1, 1, VERDE);
+        }
+      });
       ret(ctx, px + 5, py - 8, 2, 1, C.branco);                                                       // brilho
       ret(ctx, px + 14, py - 6, 2, 9, K); ret(ctx, px + 14, py - 5, 1, 7, AMAR);                      // meia argola
       ret(ctx, px + 7, py + 4, 2, 6, K); ret(ctx, px + 7, py + 5, 1, 4, AMAR);
       ret(ctx, px + 3, py + 10, 10, 4, K); ret(ctx, px + 4, py + 11, 8, 2, MAD2); ret(ctx, px + 4, py + 11, 8, 1, MAD);
     } });
+  CA.refazer(globo, function (ctx, px, py, t, obj, orig) {                                                  // ligado: gira
+    GIRO = Math.floor(t / 220) % 13; orig(ctx, px, py, obj); GIRO = 0;
+  });
   /* ---------- camas: dossel e beliche (2×3; lado 3×2) ---------- */
   function trav(ctx, x, y, w, h) { arred(ctx, x, y, w, h, K); arred(ctx, x + 1, y + 1, w - 2, h - 2, C.branco); ret(ctx, x + 2, y + h - 2, w - 4, 1, LIL2); }
   function colcha(ctx, x, y, w, h, c, cor) {
