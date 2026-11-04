@@ -301,6 +301,7 @@
   }
   function guardar(uid) {
     if (!peca(uid)) return false;
+    if (R.CasaUsos) R.CasaUsos.esquecer(uid);   // ligado/aberto vive só em memória: a peça volta desligada
     var r = campo('casaItens')[uid], antes = lugarAtual(uid);
     if (!objeto(r) || r.guardado) return true;
     var itens = paraGravar('casaItens');
@@ -319,7 +320,15 @@
     }
     return 'baixo';
   }
-  function objetosDoAndar(andar) { return resolver(andar).map(function (a) { return comoObjeto(a.p, a.l); }); }
+  // as peças com uso (Reino.CasaUsos, casa.md §13) ganham uid, nome e a ação 'casaUsar'; enfeite fica só o desenho
+  function objetosDoAndar(andar) {
+    var U = R.CasaUsos;
+    return resolver(andar).map(function (a) {
+      var o = comoObjeto(a.p, a.l);
+      if (U && U.de(a.p.objeto)) { o.uid = a.p.uid; o.nome = a.p.nome; o.acao = { tipo: 'casaUsar', uid: a.p.uid }; }
+      return o;
+    });
+  }
   function comodoEm(andar, x, y) {
     var def = R.Interiores && R.Interiores.def(andar), g = def && R.Interiores.grade(def, def.objetos || []);
     return g && g.dentro(x, y) ? g.comodo[y][x] : null;

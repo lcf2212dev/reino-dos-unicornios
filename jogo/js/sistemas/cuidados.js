@@ -182,7 +182,18 @@
     contador(comidaId).usadas += 1;
     return satisfazer(uniId, 'fome', c.enche ? 100 : fome + c.fome);
   };
-  // água é de graça (só o bebedouro da Pet Shop chama)
+  // comida de graça da Minha Casa (fruteira, comedouro, fogão: sistemas/casa-usos.js): fome + quanto, sem despensa.
+  // quanto <= 0 ou que não é número: 'sem-comida' (não há o que comer; nada grava nem carimba)
+  /** @param {string} uniId @param {number} quanto @returns {ResultadoCuidado} */
+  C.comerEmCasa = function (uniId, quanto) {
+    uniId = uniId || montaria();
+    if (!chocado(uniId)) return { ok: false, motivo: 'sem-uni' };
+    if (!(typeof quanto === 'number' && quanto > 0 && isFinite(quanto))) return { ok: false, motivo: 'sem-comida' };
+    var fome = C.niveis(uniId).fome;
+    if (fome >= 99.5) return { ok: false, motivo: 'cheio' };
+    return satisfazer(uniId, 'fome', fome + quanto);
+  };
+  // água é de graça (o bebedouro da Pet Shop e os da Minha Casa chamam)
   /** @param {string} uniId @returns {ResultadoCuidado} */
   C.beber = function (uniId) {
     uniId = uniId || montaria();
