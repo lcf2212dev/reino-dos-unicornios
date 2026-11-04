@@ -63,6 +63,8 @@ Reino.registrarKitCasa({
    leva o texto já trocado.
 5. Desenho por cima da cena (fantasma do modo decorar): um módulo com `camada` (`Reino.registrarModulo`), como já
    existe; o motor não muda para isso.
+6. Camadas: a animação de um móvel não passa por cima do móvel que o estático desenha depois dele (`interiores.md`
+   §6.3); conferido por `testes/unidade/casa-camadas.navegador.test.js`.
 
 ## 5. Móveis e direções
 1. Cada móvel é um objeto da biblioteca: `Reino.Interiores.objeto('casa-<kit>-<item>', { w, h, solido, alto?, topo?,
@@ -156,6 +158,7 @@ Qualquer cômodo vale para qualquer kit.
   e `unidade/casa-moveis-salas.navegador.test.js` (os 42 desenhos; pranchas em `/tmp/reino-testes/casa-moveis-salas/`).
 - `unidade/interiores-decoravel.test.js` (motor: `objetosExtras`, `refazer`, placa com `{nome}`/`{uni}`, validador).
 - `unidade/casa-predio.navegador.test.js`, `unidade/casa-decorar.navegador.test.js`, `unidade/casa-telas.navegador.test.js`.
+- `unidade/casa-movimento.navegador.test.js` (§13.7; pranchas em `/tmp/reino-testes/casa-movimento/`).
 - Cenas do e2e: o interior entra sozinho (vazio, como num save sintético sem kits); telas `bau-casa`, `kit-casa`,
   `movel-casa`, `decorar`.
 
@@ -214,3 +217,10 @@ Pedido: `pedidos/2026-11-03-casa-usos.md`. Peça colocada com uso ganha `uid`, `
    beber só tocam o som.
 5. Falas: nenhuma nova; as frases dos cuidados (`comeu`, `bebeu`, `cheio`, `semSede`, `banhou`, `jaLimpinho`).
 6. A regra de lugar (§8.3) não muda: peça cercada por outras só não é alcançada (ela arruma os móveis).
+7. Movimento de sempre (pedido `pedidos/2026-11-04-casa-movimento.md`): sem tocar, com Animações, se mexem os móveis em
+   que o movimento é natural: água (gota, marola), peixes, pêndulo e brilho de magia. Plantas, tapetes, quadros e o
+   que só reage ao toque ficam parados. O `anim` vem de `Reino.CasaArte.sempre({ baixo, cima?, lado?, junto? }, hoje?)`
+   (`interiores/casa/virar.js`): roda ligado ou não, com o pincel espelhado em `dir`; ligado, o anim de hoje entra no
+   lugar dele (com `junto`, os dois). A parte que se move de verdade (pêndulo, peixes, patinho) sai do `desenhar` só
+   com `uid`. Invariante: com `uid`, desligado, `desenhar` + `anim` em t = 0 é pixel a pixel o `desenhar` sem `uid`
+   (gotas, bolhas e brilhos só com t > 0). A lista dos móveis e as conferências: `casa-movimento.navegador.test.js`.

@@ -1,6 +1,6 @@
 /* Interiores: desenho do estático (paredes, pisos, sombras, soleiras, lábios, escadas, saída e os móveis
    baixos, pré-renderizados num canvas) e as setas animadas da saída e das escadas.
-   Veio de motor/interiores.js. Registra em Reino._interiores: paletaComodo, comodoDoTile,
+   Veio de motor/interiores.js. Registra em Reino._interiores: ordemNoEstatico, paletaComodo, comodoDoTile,
    desenharEstatico, setaSaida, setaEscada. Só roda quando chamado (nada de DOM no carregamento). */
 (function () {
   var R = window.Reino;
@@ -194,10 +194,15 @@
     });
     // móveis e enfeites (os altos viram sprites desenhados na ordem por Y)
     objs.filter(function (it) { return !it.alto; })
-      .sort(function (a, b) { return (a.ordem - b.ordem) || (a.base - b.base) || (a.px - b.px); })
+      .sort(ordemNoEstatico)
       .forEach(function (it) { it.lib.desenhar && it.lib.desenhar(ctx, it.px, it.py, it.o, P); });
   }
 
+  // a ordem dos móveis não-altos no estático: parede, plano, chão; depois a base (mais embaixo, mais na frente), o x e a
+  // posição na lista. A cena usa a mesma nos interiores decoráveis (interiores-cena.js, animados e quem volta por cima)
+  function ordemNoEstatico(a, b) { return (a.ordem - b.ordem) || (a.base - b.base) || (a.px - b.px) || (a.i - b.i); }
+
+  II.ordemNoEstatico = ordemNoEstatico;
   II.paletaComodo = paletaComodo; II.comodoDoTile = comodoDoTile; II.desenharEstatico = desenharEstatico;
   II.setaSaida = setaSaida; II.setaEscada = setaEscada;
 })();

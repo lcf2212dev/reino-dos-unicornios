@@ -151,7 +151,9 @@ Reino.Interiores.objeto('escrivaninha', {
 1. Estático pré-renderizado UMA vez num canvas por interior; refeito só quando a chave de estado (junção
    das `chave(P)`) muda, conferida nos eventos `progresso`/`progressoRemoto`/`mapaMudou`.
 2. Nada de criar canvas a cada quadro. Móveis altos viram sprites pré-renderizados.
-3. Animações (vela, pêndulo, brilho, água) só com `animar`.
+3. Animações (vela, pêndulo, brilho, água) só com `animar`. Interior decorável (`casa.md` §4): os animados baixos vão na
+   ordem do estático (`II.ordemNoEstatico`) e, depois de cada `anim`, os móveis desenhados depois dele que encostam na
+   caixa da animação (sprite + 8 px) voltam por cima, recortados do sprite deles (recorte pronto no `montarObjetos`).
 4. Placas dos cômodos: em px da tela, fonte pixel, tamanho do texto pela regra do `arte.md` §9.5, desenhadas por
    cima dos itens (`desenharSobre`), sempre opacas (nada de `globalAlpha` entre 0 e 1). Visual de placa de parede,
    não de chip: fundo `--laranja-claro` chapado (madeira clara, longe do `--papel-quente` dos chips), borda `--tinta`

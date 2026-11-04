@@ -53,12 +53,13 @@
     p.r(x + 2, y + 1, 1, 1, clarear(cor, 0.5));
   }
 
-  /* ----- patinhos de borracha numa bacia 1×1 (ligado: balançam na água e soltam bolhas) ----- */
+  /* ----- patinhos de borracha numa bacia 1×1 (sempre: boiam devagar; ligado: balançam na água e soltam bolhas) ----- */
   var BOB = [0, 0];
-  var patinhos = I.objeto('casa-movel-patinhos', { w: 1, h: 1, topo: 2, solido: 'base', desenhar: function (ctx, px, py) {
+  function borda(p) { p.r(0, 4, 16, 2, K); p.r(1, 4, 14, 1, AGUA); p.r(3, 4, 2, 1, C.branco); p.r(10, 4, 2, 1, C.branco); }   // a água na boca da bacia
+  var patinhos = I.objeto('casa-movel-patinhos', { w: 1, h: 1, topo: 2, solido: 'base', desenhar: function (ctx, px, py, obj) {
     var p = pincel(ctx, px, py);
-    patinho(p, 0, -2 + BOB[0], AMAR); patinho(p, 6, -2 + BOB[1], ROSA);
-    p.r(0, 4, 16, 2, K); p.r(1, 4, 14, 1, AGUA); p.r(3, 4, 2, 1, C.branco); p.r(10, 4, 2, 1, C.branco);
+    if (!(obj && obj.uid)) { patinho(p, 0, -2 + BOB[0], AMAR); patinho(p, 6, -2 + BOB[1], ROSA); }   // na casa (uid), boiam no anim
+    borda(p);
     p.r(1, 6, 14, 7, K); p.r(2, 6, 12, 6, MENTA); p.r(2, 6, 12, 1, clarear(MENTA, 0.4));
     p.r(2, 10, 12, 1, escurecer(MENTA, 0.2)); p.r(3, 13, 10, 1, K);
     p.r(6, 8, 1, 1, C.branco); p.r(9, 8, 1, 1, C.branco);
@@ -66,12 +67,19 @@
   CA.refazer(patinhos, function (ctx, px, py, t, obj, orig) {
     var f = Math.floor(t / 300) % 4, p = pincel(ctx, px, py);
     BOB = [[0, -1, 0, 1][f], [0, 1, 0, -1][f]];
-    orig(ctx, px, py, obj); BOB = [0, 0];
+    orig(ctx, px, py); BOB = [0, 0];                                       // sem obj: o desenho inteiro, com os patos
     [[3, 0], [11, 3]].forEach(function (b) {                                  // bolhas claras subindo ao lado e acima dos patos
       var k = (Math.floor(t / 250) + b[1]) % 6;
       if (k < 5) { p.r(b[0] + (k & 1), -3 - k, 2, 2, '#e8fbff'); p.r(b[0] + 1 + (k & 1), -2 - k, 1, 1, AGUA); }
     });
   });
+  var BOIA = [0, -1, 0, 1];
+  patinhos.anim = CA.sempre({ baixo: function (p, t, obj) {                  // sempre: sobem e descem 1 px, devagar, em contratempo
+    if (!obj.uid) return;
+    var f = Math.floor(t / 650) % 4;
+    patinho(p, 0, -2 + BOIA[f], AMAR); patinho(p, 6, -2 - BOIA[f], ROSA);
+    borda(p);
+  } }, patinhos.anim);
 
   /* ----- samambaia no vaso 1×1 ----- */
   I.objeto('casa-movel-samambaia', { w: 1, h: 1, topo: 12, solido: true, alto: true, desenhar: function (ctx, px, py) {

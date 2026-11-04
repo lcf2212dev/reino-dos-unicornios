@@ -31,8 +31,9 @@
   // dos cômodos leem). Quanto a animação pode passar do sprite do móvel (px do jogo): o pior caso real é a fenda do
   // Observatório, 143 px; a folga 256 cobre também os ~179 px da decolagem do foguete da NASA, que hoje nenhum dado
   // dispara; o dos móveis altos, 8 px. O teste interiores-alcance.navegador.test.js desenha todas (com as de toque
-  // disparadas) e confere
-  var ALCANCE_ANIM = 256, FOLGA_ITEM = 16;
+  // disparadas) e confere. ANIM_FOLGA: quanto a animação de um móvel baixo passa do sprite dele (a cópia que vai na frente
+  // dela; os testes da casa garantem os 8 px)
+  var ALCANCE_ANIM = 256, FOLGA_ITEM = 16, ANIM_FOLGA = 8;
   function vistaDoPintor(p, v) {
     var c = p && p.cam, cv = p && p.ctx && p.ctx.canvas, e = p && p.escala;
     if (!c || !cv || !e) return null;
@@ -55,7 +56,7 @@
     var npcs = def.npcs || [];
     // grade, objetos e as listas derivadas: montados de novo pelo refazer (decorável, casa.md §4); quem usa lê a
     // variável na hora (as funções da cena, E e os itens por Y)
-    var g, objs, altos, baixos, animados, defPlacas;
+    var g, objs, altos, baixos, animados, cobrem, defPlacas;
     function montarObjetos() {
       var lista = II.objetosDe(def);
       g = grade(def, lista);
@@ -76,6 +77,30 @@
       // eles e o pé do móvel está mais embaixo que o dela (a montada é mais larga que um tile; O-05)
       baixos = objs.filter(function (it) { var s = solidoDe(it.o); return !it.alto && !it.parede && !it.lib.plano && (s === true || s === 'base'); });
       animados = objs.filter(function (it) { return it.lib.anim && !it.alto; });
+      cobrem = [];
+      if (def.decoravel) {
+        // decorável (casa.md §4): os móveis ficam onde ela quis, e o anim (pintado depois do estático) cairia por cima
+        // do móvel da frente. Os animados vão na ordem do estático e, depois de cada anim, quem o estático desenha
+        // depois dele e encosta na caixa da animação volta por cima (porCimaDe)
+        var naoAltos = objs.filter(function (it) { return !it.alto; }).sort(II.ordemNoEstatico);
+        animados.sort(II.ordemNoEstatico);
+        animados.forEach(function (a) {
+          a.porCima = porCimaDe(a, naoAltos);
+          a.porCima.forEach(function (p) { if (cobrem.indexOf(p.it) < 0) cobrem.push(p.it); });
+        });
+      }
+    }
+    // os móveis desenhados depois de `a` cujo sprite (px - 2, py - topo até px + W + 2, base + 2) encosta na caixa da
+    // animação de `a` (sprite + ANIM_FOLGA), com o recorte da interseção pronto: sx, sy no sprite, x, y no jogo, w × h
+    function porCimaDe(a, lista) {
+      var F = ANIM_FOLGA, x0 = a.px - 2 - F, y0 = a.py - a.topo - F, x1 = a.px + a.W + 2 + F, y1 = a.base + 2 + F, l = [];
+      for (var k = 0; k < lista.length; k++) {
+        var b = lista[k], bx = b.px - 2, by = b.py - b.topo;
+        if (II.ordemNoEstatico(a, b) >= 0) continue;
+        var ix0 = Math.max(x0, bx), iy0 = Math.max(y0, by), ix1 = Math.min(x1, b.px + b.W + 2), iy1 = Math.min(y1, b.base + 2);
+        if (ix0 < ix1 && iy0 < iy1) l.push({ it: b, sx: ix0 - bx, sy: iy0 - by, x: ix0, y: iy0, w: ix1 - ix0, h: iy1 - iy0 });
+      }
+      return l;
     }
     montarObjetos();
     var estatico = null, chaveFeita = null, sujo = true;
@@ -100,8 +125,9 @@
       desenharEstatico(ctx, def, g, P, objs);
       // anims parados entram no estático só como base? não: são desenhados a cada quadro (ver desenharFundo)
       altos.forEach(function (it) { pintarSprite(it, P); });
-      // os baixos só ganham sprite quando ela chega perto (spriteDoBaixo)
+      // os baixos só ganham sprite quando ela chega perto (spriteDoBaixo); os que voltam por cima de um anim, já
       baixos.forEach(function (it) { it.feito = false; });
+      cobrem.forEach(function (it) { pintarSprite(it, P); it.feito = true; });
       chaveFeita = chave; sujo = false;
     }
     // sprite de um móvel: 2 px de folga dos lados, topo acima do tile, 2 px embaixo (a sombra)
@@ -116,8 +142,7 @@
     }
     // contexto falso para as animações dos móveis altos: desenha com o pintor, em px da tela
     var ctxPintor = { fillStyle: '#000', fillRect: function (x, y, w, h) { E.pintorAtual.ret(x, y, w, h, this.fillStyle); } };
-    // baixo na frente dela; o animado leva a animação junto (numa cópia com 8 px de folga), e o fundo pula ela
-    var ANIM_FOLGA = 8;
+    // baixo na frente dela: o animado leva a animação junto (numa cópia com ANIM_FOLGA de folga), e o fundo pula ela
     // sprite do móvel com a mesma conta do estático (buffer em px inteiros, deslizado em px da tela: laco.js);
     // o pintor.sprite arredonda por conta própria e o móvel pulava ~1 px ao virar sprite (O-33)
     function spriteNoFundo(img, x, yPes) {
@@ -218,7 +243,14 @@
         baixosPerto();
         for (var i = 0; i < animados.length; i++) {
           var it = animados[i];
-          if (!it.naFrente && (!v || naVista(v, it.caixa))) it.lib.anim(bctx, it.px, it.py, tt, it.o);
+          if (it.naFrente || (v && !naVista(v, it.caixa))) continue;
+          it.lib.anim(bctx, it.px, it.py, tt, it.o);
+          // decorável: o móvel da frente volta por cima, só no recorte que a animação alcança
+          var pc = it.porCima;
+          if (pc) for (var q = 0; q < pc.length; q++) {
+            var r = pc[q];
+            if (r.it.sprite) bctx.drawImage(r.it.sprite, r.sx, r.sy, r.w, r.h, r.x, r.y, r.w, r.h);
+          }
         }
         if (def.saida) setaSaida(bctx, def.saida, t, animar);
         var esc = def.escadas || [];
