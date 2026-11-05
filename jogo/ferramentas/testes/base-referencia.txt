@@ -102,4 +102,6 @@
 # @ = novidade: O Bosque dos Fantasmas
 # @ = novidade: O Bosque dos Fantasmas
 # @ = novidade: O Bosque dos Fantasmas
+# @ = novidade com tema fantasmas
+# @ = novidade com tema fantasmas
 @

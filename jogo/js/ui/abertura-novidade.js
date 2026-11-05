@@ -24,7 +24,11 @@
     var c = cfg(), textos = el('div.novidade-textos', el('p.novidade-texto', c.texto));
     if (c.detalhe) textos.appendChild(el('p.novidade-detalhe', c.detalhe));
     var raiz = el('div.novidade-bloco');
-    if (UI.casinhaDOM) raiz.appendChild(el('div.novidade-pula', { 'aria-hidden': 'true' }, UI.casinhaDOM(4, 'novidade-casinha')));
+    if (c.tema) raiz.classList.add('novidade-tema-' + c.tema);
+    if (c.desenho && PA.iconeEmoji) {   // o desenho da novidade (ex.: o fantasminha 👻), flutuando em degraus
+      var d = PA.iconeEmoji(c.desenho, 4); d.classList.add('novidade-desenho');
+      raiz.appendChild(el('div.novidade-flutua', { 'aria-hidden': 'true' }, d));
+    } else if (UI.casinhaDOM) raiz.appendChild(el('div.novidade-pula', { 'aria-hidden': 'true' }, UI.casinhaDOM(4, 'novidade-casinha')));
     raiz.appendChild(textos);
     return raiz;
   }

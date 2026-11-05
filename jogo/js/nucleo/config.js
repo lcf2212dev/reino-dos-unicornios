@@ -63,9 +63,10 @@ Reino.config = {
   // a novidade em destaque na tela de início (ui/abertura-novidade.js), para todos os jogadores, até `ate` (inclusive):
   // a faixa de cima, o texto grande ao lado do desenho e a linha pequena. Enquanto vale, ela fica no lugar da
   // medalha de ouro (a festa continua no confete e no parabéns do Claude no mapa)
+  // tema: classe novidade-tema-<tema> (cores no css); desenho: emoji com ícone desenhado no lugar da casinha
   // id: a 1ª vez que o aparelho vê esta novidade, o botão é "Atualizar" e passa a atualização de mentira (atualizarMs,
   // com Animações; sem elas, atualizarParadoMs); depois volta o "Entrar no Reino". Trocar o id mostra de novo
-  novidadeInicio: { id: 'bosque-2026-11-05', faixa: 'Nova atualização!', texto: 'O Bosque dos Fantasmas',
+  novidadeInicio: { id: 'bosque-2026-11-05', faixa: 'Nova atualização!', texto: 'O Bosque dos Fantasmas', tema: 'fantasmas', desenho: '👻',
     detalhe: 'Venha explorar, se tiver coragem!', ate: '2026-11-30', atualizarMs: 3600, atualizarParadoMs: 1500 },
   // jogadores: tamanho do login e da senha; senhaMariana = senha da conta 'mariana' (sem segurança). Ninguém entra
   // direto: vale quando não há banco ou ele não responde (com banco, vale a senha guardada nele); vazio = não entra

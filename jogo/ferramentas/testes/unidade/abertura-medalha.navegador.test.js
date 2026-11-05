@@ -29,7 +29,7 @@ const ABRIR_E_LER = `(async () => {
     titulo: t.querySelector('.titulo-abertura').getAttribute('aria-label'),
     novidade: txt(t.querySelector('.abertura-faixa-novidade')),
     novidadeTexto: (t.querySelector('.novidade-texto') || {}).textContent || null,
-    casinha: !!t.querySelector('.novidade-casinha'),
+    casinha: !!t.querySelector('.novidade-desenho, .novidade-casinha'),
     botao: txt(t.querySelector('.btn-comecar')),
   };
 })()`;
