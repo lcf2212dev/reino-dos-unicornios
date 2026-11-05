@@ -78,3 +78,14 @@ test('acompanhamento: diário com buraco, entrada nula, estado nulo, texto e Nov
   assert.match(l, /Ganhou 2 estrelas/);
   assert.match(l, /Jogou salas 1x: a/);
 });
+
+test('acompanhamento: o instalador monta o app do dock (.desktop, ícone, resumo)', () => {
+  const { montarApp, APP_ID } = require('../../gnome/instalar.js');
+  const t = fs.mkdtempSync(path.join(os.tmpdir(), 'reino-gnome-app-'));
+  montarApp(path.join(t, 'app'), path.join(t, 'apl'), path.join(t, 'ico'));
+  for (const f of ['main.js', 'resumo.js', 'nomes.json']) assert.ok(fs.existsSync(path.join(t, 'app', f)), f);
+  assert.ok(fs.existsSync(path.join(t, 'ico', APP_ID + '.png')));
+  const d = fs.readFileSync(path.join(t, 'apl', APP_ID + '.desktop'), 'utf8');
+  assert.match(d, /^Exec=gjs -m .*main\.js$/m);
+  assert.match(d, new RegExp('^Icon=' + APP_ID + '$', 'm'));
+});
