@@ -31,7 +31,7 @@
 
   /* ---------- a atualização de mentira (pedido do Leandro, 31/10/2026: "fake updating") ---------- */
   var CHAVE = 'reino-novidade-vista';
-  var PASSOS = ['Abrindo o mapa do Reino…', 'Construindo a sua casa…', 'Trazendo os móveis…', 'Pintando as paredes…', 'Pronto!'];
+  var PASSOS = ['Abrindo o mapa do Reino…', 'Plantando as árvores do bosque…', 'Chamando os fantasmas…', 'Acendendo as lanternas…', 'Pronto!'];
   var BLOCOS = 12;
 
   function primeiraVez() {
@@ -55,7 +55,7 @@
       var passo = el('p.atualizando-passo', { 'aria-live': 'polite' }, PASSOS[0]);
       var pct = el('p.atualizando-pct', '0%');
       var caixa = el('div.atualizando-caixa', { role: 'status' },
-        el('p.atualizando-titulo', 'Atualizando o Reino'), barra, pct, passo);
+        el('p.atualizando-titulo', 'Atualizando'), barra, pct, passo);
       var veu = el('div.atualizando-veu', caixa);
       (tela || document.body).appendChild(veu);
       var t0 = Date.now(), ultimoPasso = 0;

@@ -99,4 +99,7 @@
 # @ = quarto do ET: o 2º andar da casa ganha o 3º quarto, o sorteio da tela movel-casa muda com 50 móveis e config.casa.comodos
 # @ = Bosque dos Fantasmas: interior novo, lugar e portal no mapa, config fantasmas, campos bosque e bosquePontos
 # @ = Bosque: pergunta a cada 10, nível a cada 30, baú de móvel, mosca feia, HUD do contador e a fala da espada sem a pergunta por fantasma
+# @ = novidade: O Bosque dos Fantasmas
+# @ = novidade: O Bosque dos Fantasmas
+# @ = novidade: O Bosque dos Fantasmas
 @

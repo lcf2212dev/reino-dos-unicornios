@@ -65,8 +65,8 @@ Reino.config = {
   // medalha de ouro (a festa continua no confete e no parabéns do Claude no mapa)
   // id: a 1ª vez que o aparelho vê esta novidade, o botão é "Atualizar" e passa a atualização de mentira (atualizarMs,
   // com Animações; sem elas, atualizarParadoMs); depois volta o "Entrar no Reino". Trocar o id mostra de novo
-  novidadeInicio: { id: 'casa-2026-10-31', faixa: 'Nova atualização!', texto: 'Decore sua casa!',
-    detalhe: 'Cada matéria completa dá móveis', ate: '2026-11-30', atualizarMs: 3600, atualizarParadoMs: 1500 },
+  novidadeInicio: { id: 'bosque-2026-11-05', faixa: 'Nova atualização!', texto: 'O Bosque dos Fantasmas',
+    detalhe: 'Venha explorar, se tiver coragem!', ate: '2026-11-30', atualizarMs: 3600, atualizarParadoMs: 1500 },
   // jogadores: tamanho do login e da senha; senhaMariana = senha da conta 'mariana' (sem segurança). Ninguém entra
   // direto: vale quando não há banco ou ele não responde (com banco, vale a senha guardada nele); vazio = não entra
   // sem rede ao abrir, com o save no aparelho: joga e tenta a nuvem de novo a cada reconectarMs (e quando a rede volta)
