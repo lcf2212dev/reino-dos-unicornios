@@ -20,7 +20,7 @@ test('worktree: cria a pasta, a branch, o link do node_modules e copia só o mat
   fs.mkdirSync(path.join(R.principal, 'node_modules/playwright'), { recursive: true });
 
   const r = criarWorktree(['ciencias', '--material', 'Ciências', '--material', 'Rastreada/'], R.principal);
-  const pasta = path.join(R.base, 'reino-ciencias');
+  const pasta = path.join(R.mae, 'reino-ciencias');
   assert.strictEqual(r.pasta, pasta);
   assert.strictEqual(R.git(pasta, 'rev-parse', '--abbrev-ref', 'HEAD'), 'feat/ciencias');
   assert.strictEqual(R.git(pasta, 'rev-parse', 'HEAD'), R.git(R.principal, 'rev-parse', 'main'));
@@ -34,7 +34,7 @@ test('worktree: cria a pasta, a branch, o link do node_modules e copia só o mat
 
   assert.throws(() => criarWorktree(['ciencias'], R.principal), /já existe/);
   assert.throws(() => criarWorktree(['outra', '--material', 'NaoExiste'], R.principal), /não existe/);
-  assert.ok(!fs.existsSync(path.join(R.base, 'reino-outra')), 'material inválido não pode deixar worktree pela metade');
+  assert.ok(!fs.existsSync(path.join(R.mae, 'reino-outra')), 'material inválido não pode deixar worktree pela metade');
   assert.throws(() => criarWorktree(['Maiuscula'], R.principal), /tema inválido/);
 });
 

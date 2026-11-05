@@ -36,7 +36,7 @@ todo briefing começa mandando ler esse arquivo; depois só diz o que é da fren
 ```
 Leia antes: docs/contratos/frente.md
 Tarefa: <2 a 5 linhas>
-Worktree: /home/leandro/Development/projects/reino-<tema> (branch feat/<tema>)
+Worktree: /home/leandro/Development/projects/reino-dos-unicornios/worktrees/reino-<tema> (branch feat/<tema>)
 Arquivos seus: <lista exata>        Prefixo de id: <nasa->        Arquivo de falas: <…/nasa-falas.js>
 Gerador: <npm run novo -- … (comece por ele, com --seco)>
 Modelo: <arquivo pronto para copiar o formato>

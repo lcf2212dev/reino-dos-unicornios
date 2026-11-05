@@ -19,7 +19,7 @@ aposentados em 29/09/2026, guardados como cópia) e tudo o que é proibido: `doc
 | Saves sintéticos | `jogo/ferramentas/testes/saves.js` | valores inventados, gerados pelo próprio jogo; nunca o save real |
 | Testes sem navegador | `jogo/ferramentas/testes/unidade/` | `vm` com localStorage de mentira |
 | Validador de docs | `jogo/ferramentas/validar/validar-docs.js` | nem olha o disco em `servidor/dados` |
-| Worktree própria | `/home/leandro/Development/projects/reino-<tarefa>` | nada escrito na árvore principal |
+| Worktree própria | `/home/leandro/Development/projects/reino-dos-unicornios/worktrees/reino-<tarefa>` | nada escrito na árvore principal |
 
 ## Consequências
 - Derrube só os seus servidores, pelo PID ou `s.parar()`; nunca `pkill`/`killall` por nome.
