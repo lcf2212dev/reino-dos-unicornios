@@ -1,0 +1,7 @@
+{
+  "uuid": "reino-acompanhamento@lcf2212.dev",
+  "name": "Reino dos Unicórnios: acompanhamento",
+  "description": "O que a Mariana fez no Reino dos Unicórnios, dia a dia (só leitura do progresso).",
+  "shell-version": ["45", "46", "47", "48", "49", "50"],
+  "version": 1
+}
