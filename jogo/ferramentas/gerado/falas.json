@@ -89740,15 +89740,6 @@
    "fala": "Vença os fantasmas fofinhos!"
   },
   {
-   "chave": "aa13e242x",
-   "voz": "claude",
-   "texto": "Cada um traz uma pergunta.",
-   "pacotes": [
-    "interior-bosque"
-   ],
-   "fala": "Cada um traz uma pergunta."
-  },
-  {
    "chave": "9d422be8u",
    "voz": "claude",
    "texto": "Você venceu o fantasma!",
