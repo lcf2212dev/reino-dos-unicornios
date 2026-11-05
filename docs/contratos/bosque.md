@@ -20,11 +20,12 @@ tira nada.
 | o interior | `js/interiores/bosque/bosque.js`, `fundo.js`, `objetos.js`, `objetos-2.js`, `falas.js` |
 | regras e save | `js/sistemas/bosque.js` (`Reino.Bosque`, módulo `'bosque'`, `node: true`) |
 | combate e desenho | `js/sistemas/bosque-combate.js` (`Reino.BosqueCombate`, módulo `'bosque-combate'` com `camada`), `bosque-desenho.js` |
+| ataque por alvo (clicar no fantasma) | `js/sistemas/bosque-alvo.js` (módulo `'bosque-alvo'`; estende `Reino.BosqueCombate`) |
 | falas do Claude | `js/sistemas/bosque-falas.js` (`Reino.BosqueFalas`, módulo `'bosque-falas'`, `node: true`) |
 | telas e HUD | `js/ui/bosque-hud.js`, `bosque-pergunta.js`, `bosque-nivel.js`, `css/ui-bosque.css` |
 | móvel por nível | `js/sistemas/casa-moveis.js`, `js/ui/casa-moveis.js` (`casa.md` §12) |
 
-Manifesto: `sistemas/bosque-falas|bosque|bosque-combate|bosque-desenho` logo depois de
+Manifesto: `sistemas/bosque-falas|bosque|bosque-combate|bosque-alvo|bosque-desenho` logo depois de
 `sistemas/et-companheiro-desenho.js`; `ui/bosque-*` depois de `ui/casa-moveis.js`; `css/ui-bosque.css` depois de
 `css/ui-casa-moveis.css`; `interiores/bosque/*` depois de `interiores/casa/lugar.js` e antes de `interiores/padrao.js`
 (o Bosque é o último prédio: as fotos das outras cenas do e2e não mudam), na ordem `icones`, `fundo`, `falas`,
@@ -73,6 +74,8 @@ Reino.Bosque (sistemas/bosque.js)
 Reino.BosqueCombate (sistemas/bosque-combate.js)
   ativo() vida() → { n, max }  atacar() → bool  fantasmas() → [{ id, tipo, x, y, vida, max, estado }]
   devolver(id) reiniciar()  passo(estado, dt, jogador) (puro, testável no Node)
+  mirar(id) → bool  alvo() → id | null  pararAlvo()  fantasmaNaTela(clientX, clientY) → { id, tipo } | null
+  (bosque-alvo.js; puros: fantasmaEm(est, wx, wy), mirarNo(est, id), pararNo(est), seguirAlvo(est, j))
 Reino.EVENTOS.BOSQUE  carga { tipo: 'vida' (+ n, max) | 'golpe' (+ acertou) | 'vencido' (+ id, fantasma = o tipo) | 'desmaio'
                       | 'acerto' (+ materia, nivel) | 'ponto' (+ nivel, h) }
 Reino.UI (ui/bosque-*.js)
@@ -103,6 +106,17 @@ I.FUNDOS.bosque = { cor, desenhar(ctx, w, h), saida(ctx, px, py) }   // saida = 
   `atacar()` devolve false. Chip e botão escondidos fora do Bosque (e o botão, sem a espada).
 - Segurar o botão da espada (dedo ou mouse) repete o golpe a cada `jogador.recargaMs`, como segurar o Espaço; para ao
   soltar, ao abrir tela e ao sair do Bosque (`ui/bosque-hud.js:botaoEspada`).
+- Clicar ou tocar num fantasma (que leva golpe, com a espada) ataca sozinho (`bosque-alvo.js`): ela anda até
+  `PERTO` do `alcance` (refaz o caminho quando ele muda de tile; no tile dele ou ao lado, reto), vira para ele e
+  golpeia a cada `recargaMs` pelo `golpear`, seguindo quem foge, até ele sumir (vencido, desmaio). Param: clique ou
+  toque no canvas fora de um fantasma, tecla de andar (setas, WASD), tela aberta e troca de cena. O toque no fantasma
+  é pego na captura do `pointerdown` da janela, antes do `motor/entrada.js`, e só no Bosque (fora dele nada muda). Mouse
+  e dedo na metade direita atacam no `pointerdown` e o motor não o vê; na metade esquerda (a do thumbstick) o dedo
+  só ataca ao soltar, num toque curto, e o que andar mais que o `limiarToque` do motor é repassado a ele (o arrasto). O alvo fica em `est.alvo`; o quadro do combate chama `S.quadro(est, j)` depois do passo.
+- Cursor: com o mouse em cima de um fantasma, o canvas usa o 🗡 em pixel art (data URL feita uma vez) com o ponto na
+  ponta da lâmina; trocado só no `pointermove` (`ui/bosque-hud.js`), de volta ao normal fora dele, com tela e fora do Bosque.
+- A espada na mão segue a grade de pixels do sprite dela (`J.silhueta`: borda esquerda e pés, com o trote), a px
+  inteiros do jogo: arredondada sozinha ela tremia andando (`bosque-desenho.js:desenharEspada`).
 - Dica do botão (só na tela, sem voz), até o 1º golpe da sessão: `UI.dicaEspadaBosque()` muda com o toque
   (`Reino.ambiente.toque()`): em tela de toque só "Toque na espada para atacar."; senão também fala do Espaço.
 - Vencido preso: `vencidoPresoMs` sem a UI devolver o fantasma (a pergunta não abriu) o faz voltar a contar `voltaMs`;

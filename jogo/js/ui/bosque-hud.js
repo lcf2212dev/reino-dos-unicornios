@@ -6,6 +6,8 @@
      no pointerup/cancel/leave, com tela aberta e fora do Bosque. Ao lado, a dica (só na tela, sem voz) até o 1º golpe:
      UI.dicaEspadaBosque(), "Toque na espada para atacar." em tela de toque (Reino.ambiente.toque()), senão
      "Toque na espada, ou aperte Espaço, para atacar." (também no prêmio da espada, ui/bosque-nivel.js).
+   - o cursor de espada (🗡 em pixel art, data URL montada uma vez) com o mouse em cima de um fantasma que se pode
+     atacar (BosqueCombate.fantasmaNaTela, sistemas/bosque-alvo.js), trocado só no pointermove do canvas;
    UI.telaBosque(): o painel com nível, XP, vida, os pontos de Força/Vida/Velocidade e o botão de pôr o ponto pendente
    (UI.subirNivelBosque, ui/bosque-nivel.js). Os ícones (💖 ⭐ 💪 ⚡ ⬆ 🗡) já existem: nenhum registrado aqui.
    Reino.Bosque e Reino.BosqueCombate carregam depois (sistemas/): lidos só dentro das funções. Estilos: css/ui-bosque.css. */
@@ -110,6 +112,31 @@
     });
     return el('div.bosque-acao', { hidden: true }, el('p.bosque-dica', { hidden: true }, dica()), b);
   }
+
+  /* ---------- o cursor de espada em cima de um fantasma (só mouse; nada por quadro) ---------- */
+  var cursorEspada = null, comCursor = false;
+  function urlCursor() {
+    if (cursorEspada) return cursorEspada;
+    var ic = PA.iconeEmoji('🗡', 2), c = PA.novoCanvas(ic.width * 2, ic.height * 2), x = c.getContext('2d');
+    x.imageSmoothingEnabled = false;
+    x.drawImage(ic, 0, 0, c.width, c.height);
+    // o clique é na ponta da lâmina (em cima, à direita)
+    cursorEspada = 'url(' + c.toDataURL() + ') ' + (c.width - 2) + ' 1, pointer';
+    return cursorEspada;
+  }
+  function trocarCursor(cv, sim) {
+    if (sim === comCursor) return;
+    comCursor = sim;
+    cv.style.cursor = sim ? urlCursor() : '';
+  }
+  document.addEventListener('pointermove', function (e) {
+    var V = Reino._motor, cv = V && V.canvas, c = combate();
+    if (!cv || e.target !== cv) return;
+    trocarCursor(cv, e.pointerType === 'mouse' && !!c && noBosque() && !UI.temTela() && c.temEspada() && !!c.fantasmaNaTela(e.clientX, e.clientY));
+  });
+  function semCursor() { var V = Reino._motor; if (V && V.canvas) trocarCursor(V.canvas, false); }
+  U.on(EV.CENA, semCursor);
+  U.on(EV.TELAS, semCursor);
 
   /* ---------- o painel do Bosque ---------- */
   function telaBosque() {

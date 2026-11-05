@@ -5,6 +5,8 @@
 // móvel guardado (sem casa); Esc e Tab/Enter no ponto; a vida zero não perde nada. Todo tipo de pergunta da sala
 // (um caso por tipo: certo dá +1 estrela, errado não dá nada) e a digitação de verdade pelo teclado. Servidor e banco de TESTE novos
 // (cenario.js), modo congelado (o prêmio só abre com Reino.congelado desligado de propósito, na entrada).
+// O ataque por alvo (js/sistemas/bosque-alvo.js): clicar no fantasma golpeia até vencer, clicar no chão, tecla de andar
+// ou tela param, o toque faz o mesmo, o cursor de espada em cima dele; e a espada não treme andando.
 const { test } = require('node:test');
 const assert = require('assert');
 const fs = require('fs');
@@ -329,6 +331,169 @@ test('bosque: a pergunta de todo tipo da sala (certo: +1 estrela; errado: nada e
     await c.avancar(100);
     const o = await estado();
     assert.deepStrictEqual([o.estrelas - antes.estrelas, o.acertos - antes.acertos], [1, 1], 'digitado certo: +1 estrela');
+    assert.deepStrictEqual(c.erros, []);
+  } finally { await c.fechar(); }
+});
+
+// ponto da tela (px CSS) do corpo do fantasma `id` (12 px do jogo acima dos pés) ou de um ponto do jogo
+const NA_TELA = `((wx, wy) => { const V = Reino._motor, r = V.canvas.getBoundingClientRect();
+  return { x: r.left + (wx - V.cam.x) * V.escala / V.dpr, y: r.top + (wy - V.cam.y) * V.escala / V.dpr }; })`;
+const FANTASMA_NA_TELA = (id) => `(() => { const f = Reino._bosqueCombate.estado.fantasmas.find((x) => x.id === '${id}');
+  return ${NA_TELA}(f.x, f.y - 12); })()`;
+// põe a jogadora num tile livre a ~4 tiles abaixo (ou acima) do fantasma do tipo pedido; devolve o id dele
+// (deLado: a ~4 tiles à direita, para ele ficar na metade esquerda da tela)
+const PERTO_DE = (tipo, deLado) => `(() => {
+  const est = Reino._bosqueCombate.estado, cena = Reino.Cena.atual();
+  const f = est.fantasmas.find((x) => x.tipo === '${tipo}' && x.estado === 'vagando');
+  const tx = Math.floor(f.x / 16), ty = Math.floor(f.y / 16);
+  for (const d of ${deLado ? '[4, 5, 3, 6]' : '[4, -4, 3, -3, 5, -5]'}) {
+    const x = tx + ${deLado ? 'd' : '0'}, y = ty + ${deLado ? '0' : 'd'};
+    if (!cena.solido(x, y) && cena.caminho({ x, y }, { x: tx, y: ty })) { Jogador.posicionar(x, y); return f.id; }
+  }
+  throw new Error('sem tile livre perto de ' + f.id);
+})()`;
+
+test('bosque: clicar no fantasma ataca sozinho até vencer; chão, tecla e toque; cursor de espada; a espada não treme', { timeout: 300000 }, async () => {
+  const c = await abrirCenario({ tamanho: 'notebook', pasta: pasta() });
+  try {
+    await c.js(`(() => { const e = Reino.Progresso.estado(); e.bosque = { acertos: 0, espada: 1, vencidos: 0 }; e.bosquePontos = {};
+      Reino.UI.fecharTodas(); return 1; })()`);
+    await c.ir('bosque');
+    await c.js(`(() => { Reino._bosqueCombate.estado.parados = true; Reino.UI.fecharTodas();
+      window.__golpes = 0; Reino.util.on(Reino.EVENTOS.BOSQUE, (e) => { if (e.tipo === 'golpe') __golpes++; }); return 1; })()`);
+    await c.avancar(300);
+    const cfg = await c.js('Reino.config.fantasmas');
+    const vidaDe = (id) => c.js(`Reino._bosqueCombate.estado.fantasmas.find((x) => x.id === '${id}').vida`);
+    const estadoDe = (id) => c.js(`Reino._bosqueCombate.estado.fantasmas.find((x) => x.id === '${id}').estado`);
+    const alvo = () => c.js('Reino.BosqueCombate.alvo()');
+    const cursor = () => c.js('Reino._motor.canvas.style.cursor');
+
+    // 1) cursor: espada em cima do fantasma, o de sempre fora dele
+    const f1 = await c.js(PERTO_DE('facil'));
+    await c.avancar(100);
+    let p = await c.js(FANTASMA_NA_TELA(f1));
+    await c.page.mouse.move(p.x, p.y);
+    assert.match(await cursor(), /^url\("?data:image\/png;base64,.+\) \d+ \d+, pointer$/, 'cursor de espada em cima do fantasma');
+    const chao = await c.js(`${NA_TELA}(Jogador.x + 24, Jogador.y - 6)`);
+    assert.strictEqual(await c.js(`Reino.BosqueCombate.fantasmaNaTela(${chao.x}, ${chao.y})`), null, 'o ponto do chão está livre');
+    await c.page.mouse.move(chao.x, chao.y);
+    assert.strictEqual(await cursor(), '', 'fora do fantasma: o cursor de sempre');
+
+    // 2) clicar no fantasma: ela vai até ele e golpeia sozinha, um golpe por vida, até vencer; aí o ataque acaba
+    await c.page.mouse.click(p.x, p.y);
+    assert.strictEqual(await alvo(), f1);
+    assert.strictEqual(await c.js('Jogador.marcador'), null, 'sem as setinhas do toque no chão');
+    await c.js('__golpes = 0; 1');
+    for (let i = 0; i < 40 && !/sumindo|vencido/.test(await estadoDe(f1)); i++) await c.avancar(200);
+    assert.strictEqual(await estadoDe(f1), 'sumindo', 'venceu sem outro clique');
+    assert.strictEqual(await c.js('__golpes'), cfg.tipos.facil.vida, 'um golpe por vida (dano 1)');
+    await c.avancar(cfg.vencidoMs + 300);
+    assert.strictEqual(await alvo(), null, 'vencido: o ataque para');
+    await c.js('Reino.UI.fecharTodas(); 1');
+    await c.avancar(300);
+
+    // 3) clicar no chão para o ataque (ela anda até lá e não golpeia mais)
+    const f2 = await c.js(PERTO_DE('medio'));
+    await c.avancar(100);
+    p = await c.js(FANTASMA_NA_TELA(f2));
+    await c.page.mouse.click(p.x, p.y);
+    for (let i = 0; i < 40 && (await vidaDe(f2)) === cfg.tipos.medio.vida; i++) await c.avancar(100);
+    const vida2 = await vidaDe(f2);
+    assert.ok(vida2 < cfg.tipos.medio.vida, 'golpeou');
+    // um tile de chão livre (sem árvore, objeto nem fantasma) a 3 tiles dela
+    const longe = await c.js(`(() => {
+      const cena = Reino.Cena.atual(), est = Reino._bosqueCombate.estado, t = Jogador.tile();
+      for (const [dx, dy] of [[-3, 0], [3, 0], [0, 3], [0, -3], [-3, 3], [3, 3]]) {
+        const wx = (t.x + dx) * 16 + 8, wy = (t.y + dy) * 16 + 8;
+        if (!cena.solido(t.x + dx, t.y + dy) && !cena.alvoEm(wx, wy) && !Reino.BosqueCombate.fantasmaEm(est, wx, wy)) return ${NA_TELA}(wx, wy);
+      }
+      throw new Error('sem chão livre perto dela');
+    })()`);
+    await c.page.mouse.click(longe.x, longe.y);
+    assert.strictEqual(await alvo(), null, 'clicou no chão: parou');
+    assert.ok(await c.js('Jogador.caminho.length > 0'), 'e o clique no chão anda, como sempre');
+    await c.avancar(cfg.jogador.recargaMs * 4);
+    assert.strictEqual(await vidaDe(f2), vida2, 'sem mais golpes');
+
+    // 4) tecla de andar e tela aberta param
+    await c.js(PERTO_DE('medio'));
+    await c.avancar(100);
+    p = await c.js(FANTASMA_NA_TELA(f2));
+    await c.page.mouse.click(p.x, p.y);
+    assert.strictEqual(await alvo(), f2);
+    await c.page.keyboard.press('ArrowLeft');
+    assert.strictEqual(await alvo(), null, 'seta: parou');
+    await c.page.mouse.click(p.x, p.y);
+    assert.strictEqual(await alvo(), f2);
+    await c.js('Reino.UI.telaBosque(); 1');
+    await c.avancar(300);
+    assert.strictEqual(await alvo(), null, 'tela aberta: parou');
+    await c.js('Reino.UI.fecharTodas(); 1');
+    await c.avancar(300);
+
+    // 5) toque (dedo) no fantasma: o mesmo ataque, e o motor não recebe o toque
+    await c.js(PERTO_DE('medio'));
+    await c.avancar(100);
+    p = await c.js(FANTASMA_NA_TELA(f2));
+    await c.js(`(() => { const o = { bubbles: true, pointerId: 9, pointerType: 'touch', isPrimary: true, clientX: ${p.x}, clientY: ${p.y} };
+      Reino._motor.canvas.dispatchEvent(new PointerEvent('pointerdown', o));
+      Reino._motor.canvas.dispatchEvent(new PointerEvent('pointerup', o)); return 1; })()`);
+    assert.strictEqual(await alvo(), f2, 'tocou: ataca');
+    const antes5 = await vidaDe(f2);
+    for (let i = 0; i < 40 && (await vidaDe(f2)) === antes5; i++) await c.avancar(100);
+    assert.ok((await vidaDe(f2)) < antes5, 'no toque também golpeia sozinha');
+    await c.js('Reino.BosqueCombate.pararAlvo(); 1');
+
+    // 5b) dedo na metade esquerda em cima do fantasma: arrastar abre o thumbstick (sem ataque); o toque curto ataca
+    await c.js(PERTO_DE('medio', true));
+    await c.avancar(100);
+    p = await c.js(FANTASMA_NA_TELA(f2));
+    assert.ok(p.x < (await c.js('innerWidth')) / 2, 'o fantasma na metade esquerda');
+    const DEDO = (tipo, dx) => `(() => { Reino._motor.canvas.dispatchEvent(new PointerEvent('${tipo}', { bubbles: true, pointerId: 11,
+      pointerType: 'touch', isPrimary: true, clientX: ${p.x} + ${dx}, clientY: ${p.y} })); return 1; })()`;
+    await c.js(DEDO('pointerdown', 0));
+    assert.strictEqual(await alvo(), null, 'o dedo encostou: ainda não ataca');
+    await c.js(DEDO('pointermove', 30));
+    assert.strictEqual(await c.js("!document.querySelector('#controle').hidden"), true, 'arrastou: o thumbstick aparece');
+    await c.js(DEDO('pointerup', 30));
+    assert.deepStrictEqual([await alvo(), await c.js("document.querySelector('#controle').hidden")], [null, true], 'soltou: sem ataque');
+    await c.js(DEDO('pointerdown', 0));
+    await c.js(DEDO('pointerup', 0));
+    assert.strictEqual(await alvo(), f2, 'o toque curto ataca');
+    await c.js('Reino.BosqueCombate.pararAlvo(); 1');
+    await c.avancar(cfg.jogador.golpeMs + 300);   // o último golpe acaba (a espada avança no golpe)
+
+    // 6) a espada não treme: andando numa direção, a posição dela (px da tela) em relação ao corpo fica constante
+    const tremor = await c.page.evaluate(async () => {
+      const P = Reino.Progresso, V = Reino._motor, u = P.estado().unis[P.montaria()], xp = u.xp;
+      P.estado().ajustes.animacoes = true; Reino.util.reduzMovimentoSistema = false;   // com o trote e os passos
+      const s0 = V.pintor.sprite, reg = [];
+      V.pintor.sprite = function (img, x, yPes) {
+        const dx = Math.round((x - img.width / 2 - V.cam.x) * V.escala), dy = Math.round((yPes - img.height - V.cam.y) * V.escala);
+        if (img.width === 5 && img.height === 11) reg.push(['e', dx, dy]);
+        else if (Jogador.silhueta && img === Jogador.silhueta.img) reg.push(['c', dx, dy]);
+        return s0.apply(this, arguments);
+      };
+      const saida = {};
+      try {
+        for (const montada of [true, false]) {
+          u.xp = montada ? xp : 0;
+          for (const k of ['dir', 'esq', 'cima', 'baixo']) {
+            Jogador.posicionar(28, 34); V.teclas = { [k]: true };
+            const vistos = new Set();
+            for (let i = 0; i < 40; i++) {
+              reg.length = 0;
+              await window.__congelar.avancar(16);
+              const e = reg.find((r) => r[0] === 'e'), b = reg.find((r) => r[0] === 'c');
+              if (e && b) vistos.add((e[1] - b[1]) + ',' + (e[2] - b[2]));
+            }
+            saida[(montada ? 'montada ' : 'a pé ') + k] = [...vistos];
+          }
+        }
+      } finally { V.teclas = {}; V.pintor.sprite = s0; u.xp = xp; }
+      return saida;
+    });
+    Object.entries(tremor).forEach(([k, v]) => assert.strictEqual(v.length, 1, k + ': a espada mexeu em relação a ela ' + JSON.stringify(v)));
     assert.deepStrictEqual(c.erros, []);
   } finally { await c.fechar(); }
 });

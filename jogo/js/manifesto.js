@@ -759,6 +759,7 @@
       { js: 'js/sistemas/bosque-falas.js', grupo: 'sistemas', node: true }, // Bosque dos Fantasmas: falas do Claude (Reino.BosqueFalas; bosque.md §6)
       { js: 'js/sistemas/bosque.js', grupo: 'sistemas', node: true }, // Bosque dos Fantasmas: regras, campos bosque/bosquePontos e o móvel por nível (Reino.Bosque; bosque.md §4, §5)
       { js: 'js/sistemas/bosque-combate.js', grupo: 'sistemas', node: true }, // Bosque dos Fantasmas: combate (Reino.BosqueCombate, camada; bosque.md §5)
+      { js: 'js/sistemas/bosque-alvo.js', grupo: 'sistemas', node: true }, // Bosque dos Fantasmas: clicar no fantasma ataca sozinho até vencer (BosqueCombate.mirar; bosque.md §5)
       { js: 'js/sistemas/bosque-desenho.js', grupo: 'sistemas' }, // Bosque dos Fantasmas: desenho dos fantasmas, da espada, do golpe e do desmaio
       { js: 'js/motor/cena.js', grupo: 'motor' },
       { js: 'js/motor/transicao.js', grupo: 'motor' },

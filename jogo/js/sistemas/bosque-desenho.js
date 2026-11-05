@@ -130,20 +130,26 @@
     }
     if (k > 0.3) { P.ret(x - r - 2, y - 1, 1, 1, C.ouro3); P.ret(x + r + 2, y + 1, 1, 1, C.ouro3); P.ret(x, y - r - 2, 1, 1, C.branco); }
   }
-  // a espada na mão dela: do lado da mão de quem olha; de costas, atrás dela; no golpe, avança para onde ela olha
+  /* a espada na mão dela: do lado da mão de quem olha; de costas, atrás dela; no golpe, avança para onde ela olha.
+     Presa à grade de pixels do sprite dela (J.silhueta: a borda esquerda e os pés, já com o pulinho do trote), a um
+     número inteiro de px do jogo: o pintor desenha em px da tela sem arredondar ao px do jogo (ela desliza), e a
+     espada arredondada sozinha (Math.round(J.x + lado)) e sem o trote tremia 1 px para lá e para cá andando. */
   function desenharEspada() {
-    var J = window.Jogador, est = S.estado, ox = J.olharX, oy = J.olharY;
+    // o olhar do corpo deste quadro (o ataque por alvo pode virá-la depois do corpo escolhido: bosque-alvo.js)
+    var J = window.Jogador, est = S.estado, ox = S.olharX, oy = S.olharY, s = J.silhueta, img = espada();
     var montada = J.montado && J.montado();
     // de lado, a mão fica perto do meio (montada, em cima do lombo); de frente ou de costas, ao lado do corpo
     var lado = Math.abs(ox) > Math.abs(oy) ? (ox < 0 ? -1 : 1) * (montada ? 0 : 4) : (oy < 0 ? 5 : -5);
-    var mao = maoAltura(J), x = Math.round(J.x + lado), y = Math.round(J.y + 1 - mao);
-    if (est && est.golpe) { x += Math.round(est.golpe.dx * 4); y += Math.round(est.golpe.dy * 3); }
-    P.sprite(espada(), x, y);
+    var w = s && s.img ? s.img.width : 0, esq = s && s.img ? s.x - w / 2 : J.x, pes = s && s.img ? s.yPes : J.y + 1;
+    var meia = img.width / 2, dx = Math.round(w / 2 + lado - meia), dy = -maoAltura(J);
+    if (est && est.golpe) { dx += Math.round(est.golpe.dx * 4); dy += Math.round(est.golpe.dy * 3); }
+    P.sprite(img, esq + dx + meia, pes + dy);
   }
   // o arco do golpe: um risco com contorno num meio-círculo que se abre na direção dela, na altura da mão
   var COR_ARCO = [C.branco, '#fff3c4', C.ouro3, '#ffe9a8'];
   function pontoArco(n, fim, cx, cy, raio, meio, contorno) {
-    var a = meio - 1.2 + n * 0.2, x = Math.round(cx + Math.cos(a) * raio), y = Math.round(cy + Math.sin(a) * raio * 0.75);
+    // o centro sem arredondar (com ela, sem tremer); só o desvio em px inteiros do jogo
+    var a = meio - 1.2 + n * 0.2, x = cx + Math.round(Math.cos(a) * raio), y = cy + Math.round(Math.sin(a) * raio * 0.75);
     if (contorno) P.ret(x - 2, y - 2, 4, 4, K);
     else P.ret(x - 1, y - 1, 2, 2, COR_ARCO[Math.min(3, Math.floor((fim - n) / 3))]);
   }
@@ -151,7 +157,8 @@
     var J = window.Jogador, est = S.estado, g = est.golpe, cj = est.cfg.jogador, n;
     if (!g) return;
     var k = Math.min(1, Math.max(0, (est.t - g.em) / cj.golpeMs)), meio = Math.atan2(g.dy, g.dx);
-    var cx = J.x, cy = J.y + 1 - maoAltura(J) - 4, raio = cj.alcance * 0.8, fim = ANIMAR ? Math.round(k * 12) : 12;
+    var s = J.silhueta, cx = J.x, cy = (s && s.img ? s.yPes : J.y + 1) - maoAltura(J) - 4, raio = cj.alcance * 0.8;
+    var fim = ANIMAR ? Math.round(k * 12) : 12;
     for (n = 0; n <= fim; n++) pontoArco(n, fim, cx, cy, raio, meio, true);
     for (n = 0; n <= fim; n++) pontoArco(n, fim, cx, cy, raio, meio, false);
   }
@@ -186,7 +193,7 @@
     }
     var temEspada = R.BosqueCombate.temEspada();
     if (temEspada && !S.desmaio) {
-      ITEM_ESPADA.y = J.olharY < 0 && Math.abs(J.olharY) >= Math.abs(J.olharX) ? J.y - 0.01 : J.y + 0.002;
+      ITEM_ESPADA.y = S.olharY < 0 && Math.abs(S.olharY) >= Math.abs(S.olharX) ? J.y - 0.01 : J.y + 0.002;
       itens.push(ITEM_ESPADA);
     }
     if (est.golpe) { ITEM_ARCO.y = J.y + 0.003; itens.push(ITEM_ARCO); }

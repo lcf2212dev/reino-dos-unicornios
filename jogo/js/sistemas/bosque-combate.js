@@ -5,12 +5,15 @@
    e nunca entram na zona segura do spawn. No modo congelado (e2e) ficam parados no ninho (foto estável).
    O passo é PURO (passo(estado, dt, jogador) só mexe no estado; os eventos vão para estado.eventos e a parte de fora
    emite): testável no Node. Sorteios com Reino.Desenho.rng (nada de Math.random).
-   Interno Reino._bosqueCombate (com bosque-desenho.js): { estado, desenho: { itens(p, t, animar), sobre(p, t, animar) },
-   desmaio: { desde } | null, t (o `t` do quadro), vencidoEm: { id: Date.now() de quando venceu } }.
+   Interno Reino._bosqueCombate (com bosque-desenho.js e bosque-alvo.js): { estado, desenho: { itens(p, t, animar),
+   sobre(p, t, animar) }, desmaio: { desde } | null, t (o `t` do quadro), vencidoEm: { id: Date.now() de quando venceu },
+   quadro(est, j) (o ataque por alvo, chamado a cada quadro depois do passo, com o `j` do passo), olharX/olharY (o
+   olhar dela no começo do quadro, o do corpo desenhado) }.
    node: true: nada de DOM, Progresso nem Cena no carregamento (só dentro das funções). */
 (function () {
   var R = window.Reino;
-  var S = R._bosqueCombate = { estado: null, desenho: null, desmaio: null, t: 0, grade: null, vencidoEm: {} };
+  var S = R._bosqueCombate = { estado: null, desenho: null, desmaio: null, t: 0, grade: null, vencidoEm: {},
+    olharX: 0, olharY: 1 };
   var CENA = 'bosque', OCUPACAO = 'bosque-desmaio', T = 16;
   var TIPOS = ['facil', 'medio', 'dificil'];
   var SEMENTE = 20261105;
@@ -293,7 +296,9 @@
       if (!cena) return VAZIO;
       var est = garantir(cena), dt = ultimoT === null ? 0 : t - ultimoT;
       ultimoT = t; S.t = t;
-      if (!bloqueado()) { passo(est, dt, jogador()); emitir(est); }
+      // o olhar com que o corpo dela foi escolhido neste quadro (o S.quadro pode virá-la depois): a espada usa este
+      S.olharX = window.Jogador.olharX; S.olharY = window.Jogador.olharY;
+      if (!bloqueado()) { passo(est, dt, jogador()); if (S.quadro) S.quadro(est, JOG); emitir(est); }
       return S.desenho ? S.desenho.itens(p, t, animar) : VAZIO;
     },
     sobre: function (ctx, p, t, animar) { if (S.desenho) S.desenho.sobre(p, t, animar); },

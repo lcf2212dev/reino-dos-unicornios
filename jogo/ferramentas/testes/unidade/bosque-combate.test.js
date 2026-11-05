@@ -1,6 +1,7 @@
 // Testes de unidade: o combate do Bosque dos Fantasmas (js/sistemas/bosque-combate.js; docs/contratos/bosque.md §5).
 // O passo é puro: estado de um mapa de mentira, dt explícito (ms), nada de Cena nem DOM. Golpe tira vida, vencido
 // emite evento, desmaio, volta depois de voltaMs, nada se move com a cena bloqueada, zona segura e ninhos por zona.
+// O ataque por alvo (js/sistemas/bosque-alvo.js): anda até o alcance, golpeia a cada recarga, segue quem foge e para.
 // Rodar (em jogo/): node --test ferramentas/testes/unidade/bosque-combate.test.js   (tudo: npm test, na raiz)
 const { test } = require('node:test');
 const assert = require('assert');
@@ -8,7 +9,7 @@ const Jogo = require('../../jogo-no-node');
 
 function montar() {
   const ctx = Jogo.contexto({ console, Math, Date, setTimeout, clearTimeout, Promise });
-  Jogo.carregar(ctx, Jogo.scripts({ nomes: ['nucleo/config', 'nucleo/registros', 'nucleo/modulos', 'nucleo/util', 'nucleo/eventos', 'arte/desenho', 'sistemas/bosque-combate'] }));
+  Jogo.carregar(ctx, Jogo.scripts({ nomes: ['nucleo/config', 'nucleo/registros', 'nucleo/modulos', 'nucleo/util', 'nucleo/eventos', 'arte/desenho', 'sistemas/bosque-combate', 'sistemas/bosque-alvo'] }));
   return { R: ctx.Reino, ctx, BC: ctx.Reino.BosqueCombate, cfg: ctx.Reino.config.fantasmas };
 }
 // o Bosque do contrato: 56 × 44, cômodo (1, 1, 54, 40), spawn (28, 39); árvores sólidas em algumas casas
@@ -251,4 +252,122 @@ test('no jogo: vida máxima e dano lidos só com ponto/acerto e ao entrar; venci
   assert.strictEqual(f.estado, 'esperando', 'o preso não foi solto');
   assert.strictEqual(g.estado, 'vencido', 'soltou o que ainda espera a pergunta');
   assert.ok(lidas > antes, 'não releu ao entrar');
+});
+
+// o ataque por alvo, quadro a quadro: ela anda (v px/s) até onde seguirAlvo manda e o passo roda depois
+function atacarAte(BC, est, j, fim, ms = 20000, v = 58) {
+  const golpes = [];
+  for (let t = 0; t < ms && !fim(); t += 16) {
+    BC.passo(est, 16, j);
+    const r = BC.seguirAlvo(est, j);
+    if (!r) break;
+    if (r.golpeou) golpes.push({ t: est.t, d: Math.hypot(r.x - j.x, r.y - j.y) });
+    if (r.andar) {
+      const dx = r.x - j.x, dy = r.y - j.y, d = Math.hypot(dx, dy), p = v * 0.016;
+      j.x += dx / d * Math.min(p, d); j.y += dy / d * Math.min(p, d);
+    }
+  }
+  return golpes;
+}
+
+test('ataque por alvo: anda até o alcance, golpeia a cada recarga, segue quem foge e para no vencido', () => {
+  const { BC, cfg } = montar();
+  const cj = cfg.jogador;
+  const est = BC.novoEstado(MAPA, cfg);
+  est.parados = true;
+  const f = est.fantasmas.find((x) => x.tipo === 'medio');
+  // a caixa do toque: no corpo dele (acima dos pés) acerta; longe, não
+  assert.strictEqual(BC.fantasmaEm(est, f.x, f.y - 12), f);
+  assert.strictEqual(BC.fantasmaEm(est, f.x + 30, f.y - 12), null);
+  const j = { x: f.x, y: f.y + 70, olharX: 0, olharY: 1, dano: 1 };
+  assert.strictEqual(BC.mirarNo(est, f.id), true);
+  // longe: só anda, sem golpe
+  const r0 = BC.seguirAlvo(est, j);
+  assert.deepStrictEqual([r0.andar, r0.golpeou, r0.x, r0.y], [true, false, f.x, f.y]);
+  const golpes = atacarAte(BC, est, j, () => f.estado === 'sumindo');
+  assert.strictEqual(f.estado, 'sumindo', 'venceu sozinha');
+  assert.strictEqual(golpes.length, cfg.tipos.medio.vida, 'um golpe de dano 1 por vida');
+  golpes.forEach((g, i) => {
+    assert.ok(g.d <= cj.alcance, 'golpe ' + i + ' no alcance (' + g.d.toFixed(1) + ')');
+    if (i) assert.ok(g.t - golpes[i - 1].t >= cj.recargaMs, 'golpe ' + i + ' respeita a recarga');
+  });
+  assert.ok(j.olharY < 0, 'virada para ele (acima dela)');
+  // vencido (sumindo): o alvo acaba
+  assert.strictEqual(BC.seguirAlvo(est, j), null);
+  assert.strictEqual(est.alvo, null);
+  assert.strictEqual(BC.mirarNo(est, f.id), false, 'quem some não vira alvo');
+});
+
+test('ataque por alvo: segue o fantasma que fugiu; parar (cancelar) e desmaio acabam o ataque', () => {
+  const { BC, cfg } = montar();
+  const est = BC.novoEstado(MAPA, cfg);
+  est.parados = true;
+  const f = est.fantasmas.find((x) => x.tipo === 'dificil');
+  const j = { x: f.x, y: f.y + 15, olharX: 0, olharY: 1, dano: 1 };
+  BC.mirarNo(est, f.id);
+  assert.strictEqual(BC.seguirAlvo(est, j).golpeou, true, 'no alcance: golpe na hora');
+  // fugiu para longe: ela vai atrás (andar até onde ele está agora), sem golpe
+  f.x += 50;
+  const r = BC.seguirAlvo(est, j);
+  assert.deepStrictEqual([r.andar, r.golpeou, r.x], [true, false, f.x]);
+  const antes = f.vida;
+  const golpes = atacarAte(BC, est, j, () => f.vida < antes, 3000);
+  assert.ok(golpes.length === 1 && Math.hypot(f.x - j.x, f.y - j.y) <= cfg.jogador.alcance, 'alcançou e golpeou de novo');
+  // cancelar: nada mais
+  BC.pararNo(est);
+  assert.strictEqual(BC.seguirAlvo(est, j), null);
+  const vida = f.vida;
+  BC.passo(est, cfg.jogador.recargaMs + 50, j);
+  assert.strictEqual(BC.seguirAlvo(est, j), null);
+  assert.strictEqual(f.vida, vida, 'parado: sem golpe');
+  // desmaio: o alvo acaba
+  BC.mirarNo(est, f.id);
+  est.desmaiado = true;
+  assert.strictEqual(BC.seguirAlvo(est, j), null);
+  assert.strictEqual(est.alvo, null);
+});
+
+test('ataque por alvo no jogo: fantasma sobre tile sólido e fora do alcance: um caminho só e ela espera; mudou de tile, vai', () => {
+  const { R, ctx, BC, cfg } = montar();
+  const est = BC.novoEstado(MAPA, cfg);
+  est.parados = true;
+  // a jogadora de mentira: segue o caminho a 58 px/s; conta as buscas de caminho
+  const J = ctx.Jogador = { x: 14 * T + 8, y: 30 * T + 12, olharX: 0, olharY: 1, caminho: [], aoChegar: null, marcador: null, buscas: 0,
+    tile() { return { x: Math.floor(this.x / T), y: Math.floor((this.y - 2) / T) }; },
+    irPara(tx, ty) { this.buscas++; this.caminho = [{ x: tx * T + 8, y: ty * T + 12 }]; return true; },
+    parar() { this.caminho = []; },
+    virar8(dx, dy) { const n = Math.hypot(dx, dy); if (n) { this.olharX = dx / n; this.olharY = dy / n; } } };
+  // o livre mais perto do tile sólido fica 3 tiles abaixo (fora do alcance)
+  R.Cena = { atual: () => ({ id: 'bosque', solido: MAPA.solido, maisPerto: (tx, ty) => ({ x: tx, y: ty + 3 }) }) };
+  R.modulo('bosque-alvo').iniciar();
+  const S = R._bosqueCombate;
+  S.estado = est;
+  const f = est.fantasmas.find((x) => x.tipo === 'medio');
+  assert.ok(MAPA.solido(14, 20), 'o tile do fantasma é sólido');
+  f.x = 14 * T + 8; f.y = 20 * T + 12;
+  const quadros = (n) => {
+    for (let i = 0; i < n; i++) {
+      const j = { x: J.x, y: J.y, olharX: J.olharX, olharY: J.olharY, dano: 1 };
+      BC.passo(est, 16, j);
+      S.quadro(est, j);
+      const p = J.caminho[0];
+      if (p) {
+        const dx = p.x - J.x, dy = p.y - J.y, d = Math.hypot(dx, dy), s = 58 * 0.016;
+        if (d <= s) { J.x = p.x; J.y = p.y; J.caminho.shift(); } else { J.x += dx / d * s; J.y += dy / d * s; }
+      }
+    }
+  };
+  assert.strictEqual(BC.mirarNo(est, f.id), true);
+  quadros(180);
+  assert.deepStrictEqual(J.tile(), { x: 14, y: 23 }, 'chegou ao livre mais perto');
+  assert.strictEqual(J.buscas, 1, 'um caminho só, nada de buscar a cada quadro');
+  assert.strictEqual(f.vida, f.max, 'fora do alcance: sem golpe');
+  assert.strictEqual(est.alvo, f.id, 'esperando, ainda mirando');
+  // ele vai para um tile livre (não vizinho): um caminho novo, depois reto, e ela golpeia
+  f.x = 15 * T + 8; f.y = 21 * T + 12;
+  quadros(120);
+  assert.ok(f.vida < f.max, 'alcançou e golpeou');
+  assert.ok(J.buscas <= 2, 'buscas: ' + J.buscas);
+  // o resultado é o mesmo objeto a cada quadro (nada criado por quadro)
+  assert.strictEqual(BC.seguirAlvo(est, { x: J.x, y: J.y, dano: 1 }), BC.seguirAlvo(est, { x: J.x, y: J.y, dano: 1 }));
 });
