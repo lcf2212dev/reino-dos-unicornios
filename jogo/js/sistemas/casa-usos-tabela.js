@@ -23,6 +23,8 @@
     [M + 'aquario', { uso: 'alternar', som: 'bolhas' }],
     [M + 'cristal', { uso: 'alternar', som: 'estrela' }],
     [M + 'lareira', { uso: 'alternar', som: 'rachar' }],
+    [M + 'disco-voador', { uso: 'alternar', som: 'estrela' }],
+    [M + 'abajur-saturno', { uso: 'alternar', som: 'plim' }],
     // abre e fecha
     [K + 'jantar-cristaleira', { uso: 'abrir', som: 'porta' }],
     [K + 'cozinha-geladeira', { uso: 'abrir', som: 'porta' }],
@@ -50,6 +52,9 @@
     [M + 'ursao', { uso: 'efeito', som: 'estrela' }],
     [M + 'globo', { uso: 'efeito', som: 'clique' }],
     [M + 'brinquedos', { uso: 'efeito', som: 'estrela' }],
+    [M + 'telescopio', { uso: 'efeito', som: 'estrela' }],
+    [M + 'painel-nave', { uso: 'efeito', som: 'selecionar' }],
+    [M + 'robozinho', { uso: 'efeito', som: 'sacudida' }],
     [M + 'penteadeira', { uso: 'efeito', som: 'plim' }],
     // ela senta
     [K + 'estar-sofa', { uso: 'sentar' }],
@@ -64,6 +69,7 @@
     [K + 'quarto-jogador-cama', { uso: 'deitar', quem: 'ambos', som: 'respira' }],
     [M + 'cama-dossel', { uso: 'deitar', quem: 'ambos', som: 'respira' }],
     [M + 'beliche', { uso: 'deitar', quem: 'ambos', som: 'respira' }],
+    [M + 'cama-foguete', { uso: 'deitar', quem: 'ambos', som: 'respira' }],
     [K + 'quarto-uni-almofadao', { uso: 'deitar', quem: 'uni', som: 'respira' }],
     [M + 'caminha-nuvem', { uso: 'deitar', quem: 'uni', som: 'respira' }],
     // banho (o do unicórnio é o banho de espuma do Reino.Banho), chuveiro e fogão
@@ -85,7 +91,8 @@
     K + 'banheiro-tapete', K + 'quarto-jogador-escrivaninha', K + 'quarto-jogador-tapete', K + 'quarto-jogador-estante',
     K + 'quarto-jogador-espelho', K + 'quarto-uni-tapete', K + 'quarto-uni-espelho', K + 'quarto-uni-cabideiro',
     M + 'vitral', M + 'vaso-flores', M + 'quadro-uvas', M + 'prateleira', M + 'panelas', M + 'samambaia', M + 'toalhas',
-    M + 'quadro-concha', M + 'lousa', M + 'arco-iris', M + 'ferradura'];
+    M + 'quadro-concha', M + 'lousa', M + 'arco-iris', M + 'ferradura',
+    M + 'planta-alien', M + 'quadro-galaxia'];
 
   TABELA.forEach(function (l) { R.CasaUsos.registrar(l[0], l[1]); });
   ENFEITES.forEach(function (t) { R.CasaUsos.registrar(t, { uso: 'enfeite' }); });

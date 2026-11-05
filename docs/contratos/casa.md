@@ -26,7 +26,9 @@ virado para onde quiser.
 ## 2. Ids
 - Lugar `casa` ("Minha Casa"), `rect {x:46,y:33,w:6,h:5}`, porta em (49,37), sprite `casa`.
 - Interiores: `casa` (térreo, `entrada: true`, `pacote: 'interior-casa'`) e `casa-2` (em cima, mesmo pacote).
-- Cômodos: no térreo `estar`, `jantar`, `cozinha`, `banheiro`; em `casa-2` os quartos `quarto-jogador` e `quarto-uni`.
+- Cômodos: no térreo `estar`, `jantar`, `cozinha`, `banheiro`; em `casa-2` os quartos `quarto-jogador`, `quarto-uni` e
+  `quarto-et` (o Quarto do ET, do amigo da viagem de foguete: só móveis avulsos, sem kit). Ordem das abas:
+  `config.casa.comodos`.
 - Kits (ordem de `config.casa.kits`): `estar`, `jantar`, `cozinha`, `banheiro`, `quarto-jogador`, `quarto-uni`.
 - Objetos: `casa-<nome>` para os do prédio (ex.: `casa-caixa`, a caixa de mudança); `casa-<kit>-<item>` para os móveis.
 - Peça de um kit (uid): `<kit>.<item>.<n>`, com n de 1 a `qtd` (ex.: `jantar.cadeira.3`).
@@ -155,7 +157,7 @@ Qualquer cômodo vale para qualquer kit.
 ## 11. Testes
 - `unidade/casa.test.js` (save, regras, mescla de 2 aparelhos, save antigo sem os campos, guardado, órfã).
 - `unidade/casa-moveis.test.js` (§12: pendentes, sorteio fixo, escolher, repetido, peças `movel.*`, mescla, caixa)
-  e `unidade/casa-moveis-salas.navegador.test.js` (os 42 desenhos; pranchas em `/tmp/reino-testes/casa-moveis-salas/`).
+  e `unidade/casa-moveis-salas.navegador.test.js` (os 50 desenhos; pranchas em `/tmp/reino-testes/casa-moveis-salas/`).
 - `unidade/interiores-decoravel.test.js` (motor: `objetosExtras`, `refazer`, placa com `{nome}`/`{uni}`, validador).
 - `unidade/casa-predio.navegador.test.js`, `unidade/casa-decorar.navegador.test.js`, `unidade/casa-telas.navegador.test.js`.
 - `unidade/casa-movimento.navegador.test.js` (§13.7; pranchas em `/tmp/reino-testes/casa-movimento/`).
@@ -169,12 +171,13 @@ avulso, escolhido entre `config.casa.moveisOpcoes` (5) sorteados. Só depois de 
 | Parte | Onde |
 |---|---|
 | registro | `Reino.registrarMovelCasa({ id, nome, objeto, comodo, direcoes, parede? })` / `Reino.movelCasa(id)` / `Reino.moveisCasa` (`js/nucleo/registros.js`) |
-| dados (42: um por sala do 4º bimestre, 25 de Língua Portuguesa + 13 de Inglês, mais 3 camas e o chuveiro) | `js/conteudo/casa/moveis-salas.js` |
+| dados (50: um por sala do 4º bimestre, 25 de Língua Portuguesa + 13 de Inglês, mais 3 camas, o chuveiro e os 8 do Quarto do ET) | `js/conteudo/casa/moveis-salas.js` |
 | desenho | objeto `casa-movel-<id>` em `js/interiores/casa/moveis-salas-<cômodo>.js` (regras do §5) |
 | save, sorteio, pendentes | `js/sistemas/casa-moveis.js` (`Reino.CasaMoveis`) |
 | tela | `js/ui/casa-moveis.js` (`UI.escolherMovelCasa`, `UI.casaMoveisPendentes`) + `css/ui-casa-moveis.css` |
 
-1. `comodo` é um id de `config.casa.kits`: a aba do modo decorar. As abas passam a ser os cômodos com kit ganho ou
+1. `comodo` é um id de `config.casa.comodos`: a aba do modo decorar. O nome da aba e do cômodo no cartão é o do kit
+   dele ou, sem kit, a placa do cômodo (`Casa.nomeComodo`). As abas passam a ser os cômodos com kit ganho ou
    algum móvel avulso (`Casa.abas()`); a aba traz as peças do kit e depois os móveis avulsos daquele cômodo.
 2. Save: `casaMoveis: { <salaId>: { movel, em } }`, `carimbo`, `novoCiclo: 'mantem'`, `copiaSeguranca: true`. A escolha
    de uma sala é para sempre. Entrada com móvel desconhecido não conta: a sala volta a ficar pendente.

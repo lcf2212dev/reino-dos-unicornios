@@ -6,7 +6,7 @@
    Derivado (nunca no save): kits ganhos, livres e pendentes, e quais peças estão na casa. Peça de kit que ela não
    tem é ignorada; duas peças no mesmo lugar (dois aparelhos): a mais nova fica, a outra conta como guardada.
    Peça (uid) = '<kit>.<item>.<n>', n de 1 a qtd; móvel avulso (§12, sistemas/casa-moveis.js) = 'movel.<id>.<n>'.
-   Abas do modo decorar = os cômodos (ids de config.casa.kits) com kit ou móvel avulso. A ação 'casaDecorar' é a da
+   Abas do modo decorar = os cômodos (config.casa.comodos) com kit ou móvel avulso. A ação 'casaDecorar' é a da
    caixa de mudança.
    node: true: nada de DOM, canvas nem Progresso no carregamento (só o registrarCampo). */
 (function () {
@@ -105,6 +105,13 @@
     var uni = 'Unicórnio';
     try { if (P.estado()) uni = P.nomeUni(P.montaria()); } catch (e) {}
     return t.replace(/\{uni\}/g, uni);
+  }
+  // o nome de um cômodo (aba do modo decorar, cartão do móvel): o do kit dele; sem kit, a placa do cômodo na casa
+  function nomeComodo(id) {
+    if (kitDef(id)) return nomeKit(id);
+    var II = R.Interiores, c = null;
+    ANDARES.forEach(function (a) { var d = II && II.def(a); (d && d.comodos || []).forEach(function (x) { if (x.id === id) c = x; }); });
+    return c ? c.placa || c.nome || id : id;
   }
 
   /* ---------- peças ---------- */
@@ -258,14 +265,15 @@
     return null;
   }
 
-  // abas do modo decorar: os cômodos (na ordem de config.casa.kits) com o kit ganho ou algum móvel avulso
+  // abas do modo decorar: os cômodos (na ordem de config.casa.comodos) com o kit ganho ou algum móvel avulso
   function moveisDe(comodo) {
     var CM = R.CasaMoveis;
     return (R.moveisCasa || []).filter(function (m) { return (!comodo || m.comodo === comodo) && CM && CM.qtd(m.id) > 0; });
   }
+  function comodos() { return cfg().comodos || cfg().kits; }
   function abas() {
     var ganhos = kitsGanhos();
-    return cfg().kits.filter(function (k) { return ganhos.indexOf(k) >= 0 || moveisDe(k).length > 0; });
+    return comodos().filter(function (k) { return ganhos.indexOf(k) >= 0 || moveisDe(k).length > 0; });
   }
   // as peças de uma aba (sem aba: todas): as do kit, depois os móveis avulsos daquele cômodo
   function pecas(aba) {
@@ -277,7 +285,7 @@
     kits.forEach(function (k) {
       (kitDef(k) || { itens: [] }).itens.forEach(function (item) { for (var n = 1; n <= (item.qtd || 1); n++) junta(k + '.' + item.id + '.' + n); });
     });
-    (aba ? moveisDe(aba) : cfg().kits.reduce(function (t, k) { return t.concat(moveisDe(k)); }, [])).forEach(function (m) {
+    (aba ? moveisDe(aba) : comodos().reduce(function (t, k) { return t.concat(moveisDe(k)); }, [])).forEach(function (m) {
       for (var n = 1; n <= R.CasaMoveis.qtd(m.id); n++) junta(MOVEL + '.' + m.id + '.' + n);
     });
     return l;
@@ -363,7 +371,7 @@
       P.salvar();
       return true;
     },
-    kitsGanhos: kitsGanhos, kitsLivres: kitsLivres, kitsPendentes: kitsPendentes, escolherKit: escolherKit, nomeKit: nomeKit,
+    kitsGanhos: kitsGanhos, kitsLivres: kitsLivres, kitsPendentes: kitsPendentes, escolherKit: escolherKit, nomeKit: nomeKit, nomeComodo: nomeComodo,
     pecas: pecas, abas: abas, podeColocar: podeColocar, colocar: colocar, guardar: guardar, proximaDirecao: proximaDirecao,
     objetosDoAndar: objetosDoAndar, comodoEm: comodoEm,
   };

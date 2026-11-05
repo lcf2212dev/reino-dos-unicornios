@@ -27,7 +27,7 @@
         var m = Reino.movelCasa(id), tem = CM.qtd(id);
         var b = el('button.ckit-cartao.cmovel-cartao', { type: 'button', 'data-movel': id },
           el('span.ckit-moldura', UI.capaCasa(m.objeto)), el('b.ckit-nome', U.colado(m.nome)),
-          el('span.cmovel-comodo', U.colado(C.nomeKit(m.comodo))),
+          el('span.cmovel-comodo', U.colado(C.nomeComodo(m.comodo))),
           tem ? el('span.cmovel-mais', 'Mais um!') : null);
         b.addEventListener('click', function () { escolher(id, b); });
         grade.appendChild(b);

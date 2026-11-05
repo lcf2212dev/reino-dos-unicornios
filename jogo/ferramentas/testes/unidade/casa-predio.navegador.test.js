@@ -1,4 +1,4 @@
-// Minha Casa, o prédio (casa.md §2 e §4): entra na casa pelo jogo, acha os 4 cômodos do térreo e os 2 quartos, sobe
+// Minha Casa, o prédio (casa.md §2 e §4): entra na casa pelo jogo, acha os 4 cômodos do térreo e os 3 quartos, sobe
 // e desce a escada, lê as placas com o nome do perfil e da montaria; com um kit dado pelo save (matéria do 4º
 // bimestre completa, forjada no save sintético), coloca uma peça (aparece e fica sólida) e guarda (some).
 // Servidor de TESTE (cenario.js), save sintético.
@@ -18,7 +18,7 @@ const LER = `(function () {
     uni: Reino.Progresso.nomeUni(Reino.Progresso.montaria()), decoravel: !!d.decoravel };
 })()`;
 
-test('casa: entra, 6 cômodos com placas, escadas e uma peça colocada e guardada', async () => {
+test('casa: entra, 7 cômodos com placas, escadas e uma peça colocada e guardada', async () => {
   const c = await abrirCenario({ tamanho: 'celular', save: 'completo', materiasCompletas: ['ingles4'], pasta: pasta() });
   try {
     await c.ir('casa');
@@ -36,9 +36,10 @@ test('casa: entra, 6 cômodos com placas, escadas e uma peça colocada e guardad
     assert.strictEqual(a2.id, 'casa-2');
     assert.deepStrictEqual(subir, { x: 2, y: 10 });
     const nome = await c.js("Reino.Genero.texto('{da|do} ') + Reino.Progresso.estado().perfil.nome");
-    assert.deepStrictEqual(a2.comodos, ['quarto-jogador|Quarto|Quarto ' + nome, 'quarto-uni|Quarto do unicórnio|Quarto de ' + a2.uni]);
+    assert.deepStrictEqual(a2.comodos, ['quarto-jogador|Quarto|Quarto ' + nome, 'quarto-uni|Quarto do unicórnio|Quarto de ' + a2.uni,
+      'quarto-et|Quarto do ET|Quarto do ET']);
     assert.ok(a2.uni && !/\{/.test(a2.comodos.join()), 'placas resolvidas');
-    assert.deepStrictEqual(a2.caixas.sort(), ['quarto-jogador:quarto-jogador', 'quarto-uni:quarto-uni']);
+    assert.deepStrictEqual(a2.caixas.sort(), ['quarto-et:quarto-et', 'quarto-jogador:quarto-jogador', 'quarto-uni:quarto-uni']);
 
     // kit pelo save e uma peça no quarto: aparece e fica sólida; guardada, some
     const r = await c.js(`(function () {

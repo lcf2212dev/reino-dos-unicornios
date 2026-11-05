@@ -53,7 +53,7 @@ function feita(j, ...salas) { salas.forEach((s) => { j.P.estado().salas[s] = { v
 // com a casa ganha e as 4 salas feitas
 function pronto(opcoes, moveis) { const j = jogo(opcoes, moveis); j.Casa.abrirBau(); feita(j, 't-s1', 't-s2', 't-s3', 't-s4'); return j; }
 
-test('casa-moveis: registro recusa repetido, sem objeto e id com ponto; dados de verdade: 42', () => {
+test('casa-moveis: registro recusa repetido, sem objeto e id com ponto; dados de verdade: 50', () => {
   const j = jogo(), R = j.R;
   assert.strictEqual(R.registrarMovelCasa({ id: 'pufe', nome: 'X', objeto: 't', comodo: 'estar', direcoes: 1 }), false);
   assert.strictEqual(R.registrarMovelCasa({ id: 'a.b', nome: 'X', objeto: 't', comodo: 'estar', direcoes: 1 }), false);
@@ -63,9 +63,9 @@ test('casa-moveis: registro recusa repetido, sem objeto e id com ponto; dados de
   Jogo.scripts = () => orig({});
   let real;
   try { real = montar({}); } finally { Jogo.scripts = orig; }
-  assert.strictEqual(real.R.moveisCasa.length, 42);
+  assert.strictEqual(real.R.moveisCasa.length, 50);
   assert.strictEqual(real.R.config.casa.moveisOpcoes, 5);
-  real.R.moveisCasa.forEach((m) => assert.ok(real.R.config.casa.kits.includes(m.comodo), m.id + ': cômodo de config.casa.kits'));
+  real.R.moveisCasa.forEach((m) => assert.ok(real.R.config.casa.comodos.includes(m.comodo), m.id + ': cômodo de config.casa.comodos'));
 });
 
 test('casa-moveis: pendentes só com a casa ganha, salas feitas das matérias que contam, na ordem', () => {

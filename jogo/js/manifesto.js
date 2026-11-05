@@ -725,6 +725,7 @@
       { js: 'js/interiores/casa/moveis-salas-cozinha.js', grupo: 'interiores', node: true }, // casa: móveis avulsos (por sala) de Cozinha
       { js: 'js/interiores/casa/moveis-salas-banheiro.js', grupo: 'interiores', node: true }, // casa: móveis avulsos (por sala) de Banheiro
       { js: 'js/interiores/casa/moveis-salas-quarto.js', grupo: 'interiores', node: true }, // casa: móveis avulsos (por sala) de Quarto do jogador
+      { js: 'js/interiores/casa/moveis-salas-quarto-et.js', grupo: 'interiores', node: true }, // casa: móveis avulsos (por sala) do Quarto do ET
       { js: 'js/interiores/casa/moveis-salas-quarto-uni.js', grupo: 'interiores', node: true }, // casa: móveis avulsos (por sala) de Quarto do unicórnio
       { js: 'js/interiores/casa/falas.js', grupo: 'interiores', node: true }, // casa: o prédio (falas, caixa de mudança, térreo, 2º andar, fora, lugar)
       { js: 'js/interiores/casa/objetos.js', grupo: 'interiores', node: true },

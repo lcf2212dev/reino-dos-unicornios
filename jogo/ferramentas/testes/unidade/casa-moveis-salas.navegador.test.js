@@ -1,5 +1,5 @@
-// Casa do jogador, os móveis avulsos (casa.md §12): os 42 registrados (um por sala do 4º bimestre, mais 3 camas e o chuveiro), cada um com o
-// objeto casa-movel-<id> da biblioteca, cômodo de config.casa.kits, nome curto, direções 1/2/4; cada direção
+// Casa do jogador, os móveis avulsos (casa.md §12): os 50 registrados (um por sala do 4º bimestre, mais 3 camas, o chuveiro e os 8 do quarto do ET), cada um com o
+// objeto casa-movel-<id> da biblioteca, cômodo de config.casa.comodos, nome curto, direções 1/2/4; cada direção
 // declarada desenha só dentro da pegada (com a folga do `topo`), o lado e as costas diferem da frente. Salva uma
 // prancha por cômodo em /tmp/reino-testes/casa-moveis-salas/ para olhar. Servidor de TESTE (cenario.js).
 const { test } = require('node:test');
@@ -50,23 +50,23 @@ const MEDIR = `(function () {
     });
     pranchas[com] = pr.toDataURL();
   });
-  return { res: res, pranchas: pranchas, kits: Reino.config.casa.kits };
+  return { res: res, pranchas: pranchas, kits: Reino.config.casa.comodos };
 })()`;
 
-test('casa, móveis avulsos: 42 móveis, objetos, cômodos, pegadas e direções', async () => {
+test('casa, móveis avulsos: 50 móveis, objetos, cômodos, pegadas e direções', async () => {
   const c = await abrirCenario({ tamanho: 'notebook', save: 'completo', pasta: path.join(PASTA, 'cenario') });
   try {
     const { res, pranchas, kits } = await c.js(MEDIR);
     fs.mkdirSync(PASTA, { recursive: true });
     for (const [id, url] of Object.entries(pranchas)) fs.writeFileSync(path.join(PASTA, `moveis-${id}.png`), Buffer.from(url.split(',')[1], 'base64'));
-    assert.strictEqual(res.length, 42, '42 móveis (25 salas de Língua Portuguesa + 13 de Inglês, mais 3 camas e o chuveiro)');
+    assert.strictEqual(res.length, 50, '50 móveis (25 salas de Língua Portuguesa + 13 de Inglês, mais 3 camas, o chuveiro e os 8 do quarto do ET)');
     const ids = new Set(), porComodo = {};
     for (const it of res) {
       const onde = `movel.${it.id}`;
       assert.ok(!ids.has(it.id), `${onde}: id repetido`); ids.add(it.id);
       assert.match(it.id, /^[a-z][a-z0-9-]*$/, `${onde}: id sem ponto (uid movel.<id>.<n>)`);
       assert.strictEqual(it.objeto, `casa-movel-${it.id}`, `${onde}: objeto casa-movel-<id>`);
-      assert.ok(kits.includes(it.comodo), `${onde}: cômodo ${it.comodo} de config.casa.kits`);
+      assert.ok(kits.includes(it.comodo), `${onde}: cômodo ${it.comodo} de config.casa.comodos`);
       porComodo[it.comodo] = (porComodo[it.comodo] || 0) + 1;
       assert.ok(it.nome.length >= 3 && it.nome.length <= 14, `${onde}: nome "${it.nome}" de 3 a 14 letras`);
       assert.ok(it.existe, `${onde}: objeto ${it.objeto} registrado`);

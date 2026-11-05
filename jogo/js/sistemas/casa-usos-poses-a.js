@@ -71,6 +71,8 @@
       uni: { baixo: [16, 19, 'frente'], cima: [16, 21, 'frente'], lado: [21, 15, 'lado'] } },
     'casa-movel-beliche': { ela: { baixo: [16, 15], cima: [16, 28, 34], lado: [39, 10] }, coberta: ['#ff8fc4', BRANCO],
       uni: { baixo: [16, 27, 'frente'], cima: [16, 20, 'frente'], lado: [20, 13, 'lado'] } },
+    'casa-movel-cama-foguete': { ela: { baixo: [16, 13], cima: [16, 27, 33], lado: [34, 14] }, coberta: ['#2b3a7a', '#ffd84d'],
+      uni: { baixo: [16, 22, 'frente'], cima: [16, 21, 'frente'], lado: [21, 15, 'lado'] } },
     'casa-quarto-uni-almofadao': { uni: { baixo: [24, 14, 'lado'], lado: [16, 22, 'frente'] } },
     'casa-movel-caminha-nuvem': { uni: { baixo: [16, 13, 'lado'], lado: [20, 15, 'lado'] } },
   };
