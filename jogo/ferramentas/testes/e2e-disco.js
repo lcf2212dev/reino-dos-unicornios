@@ -45,7 +45,7 @@ function arquivosHarness(ler) {
 // Só nome inteiro casando: travas/, planos/, integrar/, ver/, auditoria/, vercel/, base-*, ref-*, cap-* nunca casam
 const MKDTEMP = '[A-Za-z0-9]{6}';
 const TEMPORARIAS = new RegExp('^(?:(?:' + [
-  'banco', 'banco-mariana', 'fluxo-int', 'fluxo-intr', 'fluxo-wt', 'fluxo-mat', 'entrada', 'estrelinhas', 'servidor-lento',
+  'banco', 'banco-mariana', 'sw-nucleo', 'fluxo-int', 'fluxo-intr', 'fluxo-wt', 'fluxo-mat', 'entrada', 'estrelinhas', 'servidor-lento',
   'marcador', 'testar-sinal', 'empacotar-recusa', 'empacotar-ordem', 'indice',
   'validar-docs-[a-z]+', 'validar-uni', 'validar-npc', 'validar-emojis', 'validar-cor', 'trava', 'trava-corrida', 'trava-assumindo',
   'planos', 'vaivem-antiga', 'escolhas-antiga', 'trilhas-antiga', 'guardas-banco-link', 'vozes-pend', 'vigia-fase-dados',

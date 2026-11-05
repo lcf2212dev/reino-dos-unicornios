@@ -61,7 +61,9 @@ Reino.registrarInterior({
   saida: { x, y },                    // tapete de saída (só no de entrada): tile de chão na última fileira do cômodo
   spawn: { x, y },                    // 1 tile acima do tapete (planeta, sem entrada: onde o e2e e o irPara sem chegada põem)
   fundo?: 'espaco',                   // céu aberto: I.FUNDOS[id] = { cor, desenhar(ctx, w, h) } pinta o vão em volta
-                                      // dos cômodos (em vez do roxo-escuro, sem lábios) e `cor` é a cor fora do interior
+                                      // dos cômodos (em vez do roxo-escuro, sem lábios) e `cor` é a cor fora do interior;
+                                      // `saida?(ctx, px, py)` desenha a saída no lugar do vão e do capacho (o portal
+                                      // do Bosque, bosque.md); sem ela, a porta de sempre
   escadas: [{ x, y, para: 'torre-1', chegar: { x: 0, y: 1 }, olhar: { x: 0, y: 1 }, sentido: 'sobe'|'desce' }],
                                       // 'sobe' = arco na parede, 'desce' = vão no chão; pareadas (abaixo)
   comodos: [{

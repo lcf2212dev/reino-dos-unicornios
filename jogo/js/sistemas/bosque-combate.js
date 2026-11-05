@@ -1,0 +1,365 @@
+/* Bosque dos Fantasmas: o combate (Reino.BosqueCombate, módulo 'bosque-combate'; docs/contratos/bosque.md §5 e §7).
+   O laço não tem `atualizar`: a simulação avança em camada.itensDesenho (dt do `t`, no máximo 50 ms) e congela com a
+   cena bloqueada (íris, diálogo, desmaio) ou tela aberta. Fantasmas por zona, tirados da grade do interior
+   (config.fantasmas: quantos, zonas, zonaSegura): flutuam, vagam, perseguem dentro da `visao`, presos pela `coleira`,
+   e nunca entram na zona segura do spawn. No modo congelado (e2e) ficam parados no ninho (foto estável).
+   O passo é PURO (passo(estado, dt, jogador) só mexe no estado; os eventos vão para estado.eventos e a parte de fora
+   emite): testável no Node. Sorteios com Reino.Desenho.rng (nada de Math.random).
+   Interno Reino._bosqueCombate (com bosque-desenho.js): { estado, desenho: { itens(p, t, animar), sobre(p, t, animar) },
+   desmaio: { desde } | null, t (o `t` do quadro), vencidoEm: { id: Date.now() de quando venceu } }.
+   node: true: nada de DOM, Progresso nem Cena no carregamento (só dentro das funções). */
+(function () {
+  var R = window.Reino;
+  var S = R._bosqueCombate = { estado: null, desenho: null, desmaio: null, t: 0, grade: null, vencidoEm: {} };
+  var CENA = 'bosque', OCUPACAO = 'bosque-desmaio', T = 16;
+  var TIPOS = ['facil', 'medio', 'dificil'];
+  var SEMENTE = 20261105;
+  var ATIVOS = { vagando: 1, perseguindo: 1, voltando: 1, recuando: 1 };   // os que andam, tocam e levam golpe
+  var CONTROLES = 'button, a[href], [role="button"], input, select, textarea, [contenteditable="true"]';
+  var VAZIO = [];
+  function cfg() { return R.config.fantasmas; }
+
+  /* ================= PURO (sem Cena, sem DOM) ================= */
+  function evento(est, carga) { est.eventos.push(carga); }
+  function dist(ax, ay, bx, by) { var dx = ax - bx, dy = ay - by; return Math.sqrt(dx * dx + dy * dy); }
+  function dentro(r, x, y) { return x >= r.x0 && x < r.x1 && y >= r.y0 && y < r.y1; }
+  function embaralhar(lista, rng) {
+    for (var i = lista.length - 1; i > 0; i--) { var j = Math.floor(rng() * (i + 1)), x = lista[i]; lista[i] = lista[j]; lista[j] = x; }
+  }
+  // espalha os ninhos: primeiro longe dos outros (6 tiles), depois mais perto, até ter quantos
+  function escolher(lista, quantos, casas) {
+    var feitos = [], minimos = [6, 4, 2, 0];
+    for (var m = 0; m < minimos.length && feitos.length < quantos; m++) {
+      for (var i = 0; i < lista.length && feitos.length < quantos; i++) {
+        var tl = lista[i], ok = feitos.indexOf(tl) < 0;
+        for (var k = 0; ok && k < casas.length; k++) ok = Math.max(Math.abs(casas[k][0] - tl[0]), Math.abs(casas[k][1] - tl[1])) >= minimos[m];
+        if (ok) { feitos.push(tl); casas.push(tl); }
+      }
+    }
+    return feitos;
+  }
+
+  /* mapa = { comodo: { x, y, w, h } (tiles), spawn: { x, y }, solido(tx, ty) }; c = config.fantasmas.
+     Os fantasmas nascem em tile livre da zona do tipo, fora da zona segura, sempre nos mesmos lugares (semente). */
+  function novoEstado(mapa, c, semente) {
+    c = c || cfg();
+    semente = semente === undefined ? SEMENTE : semente;
+    var rng = R.Desenho.rng(semente), cm = mapa.comodo, sp = mapa.spawn, zs = c.zonaSegura, cj = c.jogador;
+    var est = { cfg: c, t: 0, vida: cj.vidaBase, max: cj.vidaBase, invencivelAte: 0, regenEm: 0, recargaAte: 0,
+      golpe: null, desmaiado: false, parados: false, eventos: [], fantasmas: [],
+      limites: { x0: cm.x * T + 4, y0: cm.y * T + 12, x1: (cm.x + cm.w) * T - 4, y1: (cm.y + cm.h) * T },
+      segura: { x0: (sp.x - zs) * T, y0: (sp.y - zs) * T, x1: (sp.x + zs + 1) * T, y1: (sp.y + zs + 1) * T } };
+    var b = c.raioToque + 1, Z = est.segura;
+    est.barreira = { x0: Z.x0 - b, y0: Z.y0 - b, x1: Z.x1 + b, y1: Z.y1 + b };
+    var casas = [], n = 0;
+    TIPOS.forEach(function (tipo) {
+      var quantos = (c.quantos && c.quantos[tipo]) || 0, z = c.zonas[tipo], lista = [], x, y;
+      if (!quantos || !z) return;
+      for (y = Math.max(z[0], cm.y); y <= Math.min(z[1], cm.y + cm.h - 1); y++) {
+        for (x = cm.x; x < cm.x + cm.w; x++) {
+          if (mapa.solido(x, y) || dentro(est.barreira, x * T + T / 2, y * T + 12)) continue;
+          lista.push([x, y]);
+        }
+      }
+      embaralhar(lista, rng);
+      escolher(lista, quantos, casas).forEach(function (tl) {
+        n++;
+        var tp = c.tipos[tipo], cx = tl[0] * T + T / 2, cy = tl[1] * T + 12;
+        est.fantasmas.push({ id: 'f' + n, tipo: tipo, casaX: cx, casaY: cy, x: cx, y: cy, vida: tp.vida, max: tp.vida,
+          estado: 'vagando', ate: 0, pausa: false, alvoX: cx, alvoY: cy, dx: 0, dy: 1, olhar: 1, feridoAte: 0,
+          fase: Math.floor(rng() * 4000), rng: R.Desenho.rng(semente + n * 7919) });
+      });
+    });
+    return est;
+  }
+
+  // anda até (x, y) com v px/s; devolve se chegou
+  function ir(f, x, y, v, s) {
+    var dx = x - f.x, dy = y - f.y, d = Math.sqrt(dx * dx + dy * dy), p = v * s;
+    if (Math.abs(dx) > 0.2) f.olhar = dx < 0 ? -1 : 1;
+    if (d <= p || d < 0.01) { f.x = x; f.y = y; return true; }
+    f.x += dx / d * p; f.y += dy / d * p;
+    return false;
+  }
+  function recuar(est, f, j) {
+    var dx = f.x - j.x, dy = f.y - j.y, d = Math.sqrt(dx * dx + dy * dy);
+    if (d < 0.5) { dx = 0; dy = -1; d = 1; }
+    f.dx = dx / d; f.dy = dy / d;
+    f.estado = 'recuando'; f.ate = est.t + est.cfg.recuoMs;
+  }
+  // fora do cômodo não sai; na zona segura não entra: fica a mais de raioToque da borda dela (a barreira), para o
+  // toque nunca chegar a quem está lá dentro (empurrado pela borda mais perto)
+  function prender(est, f) {
+    var L = est.limites, Z = est.barreira;
+    f.x = Math.max(L.x0, Math.min(L.x1, f.x)); f.y = Math.max(L.y0, Math.min(L.y1, f.y));
+    if (!dentro(Z, f.x, f.y)) return;
+    var e = f.x - Z.x0, d = Z.x1 - f.x, c = f.y - Z.y0, b = Z.y1 - f.y, m = Math.min(e, d, c, b);
+    if (m === e) f.x = Z.x0 - 0.01; else if (m === d) f.x = Z.x1; else if (m === c) f.y = Z.y0 - 0.01; else f.y = Z.y1;
+  }
+  function vagar(est, f, v, s) {
+    var t = est.t;
+    if (!f.pausa) { if (ir(f, f.alvoX, f.alvoY, v * 0.5, s)) { f.pausa = true; f.ate = t + 500 + f.rng() * 1500; } return; }
+    if (t < f.ate) return;
+    var raio = Math.min(est.cfg.coleira * 0.5, 48), a = f.rng() * 6.2832, r = raio * (0.3 + 0.7 * f.rng());
+    f.alvoX = f.casaX + Math.cos(a) * r; f.alvoY = f.casaY + Math.sin(a) * r;
+    f.pausa = false;
+  }
+  function levarToque(est, f, j) {
+    var c = est.cfg, t = est.t;
+    est.vida = Math.max(0, est.vida - c.tipos[f.tipo].forca);
+    est.invencivelAte = t + c.jogador.invencivelMs;
+    est.regenEm = t + c.jogador.regenSemDanoMs;
+    evento(est, { tipo: 'vida', n: est.vida, max: est.max });
+    if (est.vida <= 0) { est.desmaiado = true; evento(est, { tipo: 'desmaio' }); }
+    recuar(est, f, j);
+  }
+  function moverFantasma(est, f, s, j) {
+    var c = est.cfg, t = est.t, v = c.tipos[f.tipo].velocidade, F = f.estado;
+    if (F === 'vencido') return;
+    if (F === 'sumindo') { if (t >= f.ate) { f.estado = 'vencido'; evento(est, { tipo: 'vencido', id: f.id, fantasma: f.tipo }); } return; }
+    if (F === 'esperando') {
+      // volta depois de voltaMs, mas não em cima dela (espera ela se afastar do ninho)
+      if (t >= f.ate && dist(j.x, j.y, f.casaX, f.casaY) > c.visao) {
+        f.x = f.casaX; f.y = f.casaY; f.vida = f.max; f.estado = 'surgindo'; f.ate = t + c.vencidoMs; f.pausa = false;
+        f.alvoX = f.casaX; f.alvoY = f.casaY;
+      }
+      return;
+    }
+    if (F === 'surgindo') { if (t >= f.ate) f.estado = 'vagando'; return; }
+    if (F === 'recuando') {
+      // empurrão que perde força até o fim do recuo
+      var forca = Math.max(v * 1.5, 30) * s * Math.max(0, f.ate - t) / c.recuoMs;
+      if (!est.parados) { f.x += f.dx * forca; f.y += f.dy * forca; }
+      if (t >= f.ate) { f.estado = 'vagando'; f.pausa = true; f.ate = t + 400; }
+      prender(est, f);
+      return;
+    }
+    var dCasa = dist(f.x, f.y, f.casaX, f.casaY), dJog = dist(f.x, f.y, j.x, j.y), naSegura = dentro(est.segura, j.x, j.y);
+    if (!est.parados) {
+      if (F === 'voltando') { if (ir(f, f.casaX, f.casaY, v, s) || dCasa < c.coleira / 2) { f.estado = 'vagando'; f.pausa = true; f.ate = t + 300; } }
+      else if (dCasa >= c.coleira) f.estado = 'voltando';
+      else if (dJog <= c.visao && !naSegura) { f.estado = 'perseguindo'; ir(f, j.x, j.y, v, s); }
+      else {
+        if (F === 'perseguindo') { f.estado = 'vagando'; f.pausa = true; f.ate = t + 600; }
+        vagar(est, f, v, s);
+      }
+      prender(est, f);
+      dJog = dist(f.x, f.y, j.x, j.y);
+    }
+    // encostou nela: tira vida (fora do tempo invencível) e recua; invencível, só recua (não fica em cima dela)
+    if (dJog <= c.raioToque && f.estado !== 'voltando') {
+      if (t >= est.invencivelAte) levarToque(est, f, j); else recuar(est, f, j);
+    }
+  }
+  function ajustarMax(est, j) {
+    var m = j.vidaMax || est.cfg.jogador.vidaBase;
+    if (m === est.max) return;
+    if (m > est.max) est.vida += m - est.max;     // ponto em Vida: a vida nova já vem cheia
+    est.max = m; est.vida = Math.min(est.vida, m);
+    evento(est, { tipo: 'vida', n: est.vida, max: est.max });
+  }
+
+  /* jogador = { x, y (pés, px do jogo), olharX, olharY, vidaMax?, dano? }; dt em ms (no máximo 50) */
+  function passo(est, dt, j) {
+    dt = Math.max(0, Math.min(50, dt || 0));
+    est.t += dt;
+    ajustarMax(est, j);
+    if (est.desmaiado) return est;
+    var cj = est.cfg.jogador, s = dt / 1000;
+    if (est.golpe && est.t - est.golpe.em >= cj.golpeMs) est.golpe = null;
+    if (est.vida < est.max && est.t >= est.regenEm) {
+      est.vida++; est.regenEm = est.t + cj.regenACadaMs;
+      evento(est, { tipo: 'vida', n: est.vida, max: est.max });
+    }
+    for (var i = 0; i < est.fantasmas.length && !est.desmaiado; i++) moverFantasma(est, est.fantasmas[i], s, j);
+    return est;
+  }
+
+  /* golpe da espada: acerta quem está no alcance, na frente dela (ou encostado, de qualquer lado). → bool (golpeou) */
+  function golpear(est, j) {
+    var c = est.cfg, cj = c.jogador, t = est.t;
+    if (est.desmaiado || t < est.recargaAte) return false;
+    var ox = j.olharX || 0, oy = j.olharY || 0, n = Math.sqrt(ox * ox + oy * oy);
+    if (n < 0.01) { ox = 0; oy = 1; } else { ox /= n; oy /= n; }
+    est.recargaAte = t + cj.recargaMs;
+    est.golpe = { em: t, dx: ox, dy: oy };
+    var dano = j.dano || cj.danoBase, acertou = 0;
+    for (var i = 0; i < est.fantasmas.length; i++) {
+      var f = est.fantasmas[i];
+      if (!ATIVOS[f.estado]) continue;
+      var vx = f.x - j.x, vy = f.y - j.y, d = Math.sqrt(vx * vx + vy * vy);
+      if (d > cj.alcance || (d > c.raioToque && vx * ox + vy * oy < 0)) continue;
+      f.vida = Math.max(0, f.vida - dano); f.feridoAte = t + 160; acertou++;
+      if (f.vida <= 0) { f.estado = 'sumindo'; f.ate = t + c.vencidoMs; } else recuar(est, f, j);
+    }
+    evento(est, { tipo: 'golpe', acertou: acertou });
+    return true;
+  }
+
+  /* vida cheia, um tempinho invencível e os fantasmas soltos de volta ao ninho (os vencidos seguem esperando) */
+  function reiniciarEstado(est) {
+    est.vida = est.max; est.desmaiado = false; est.golpe = null; est.recargaAte = 0;
+    est.invencivelAte = est.t + est.cfg.jogador.invencivelMs; est.regenEm = est.t;
+    est.fantasmas.forEach(function (f) {
+      if (!ATIVOS[f.estado] && f.estado !== 'surgindo') return;
+      f.x = f.alvoX = f.casaX; f.y = f.alvoY = f.casaY; f.vida = f.max; f.estado = 'vagando'; f.pausa = true; f.ate = est.t + 600;
+    });
+    evento(est, { tipo: 'vida', n: est.vida, max: est.max });
+  }
+  function devolverNo(est, id) {
+    var f = est.fantasmas.filter(function (x) { return x.id === id; })[0];
+    if (!f || (f.estado !== 'vencido' && f.estado !== 'sumindo')) return false;
+    f.estado = 'esperando'; f.ate = est.t + est.cfg.voltaMs;
+    return true;
+  }
+
+  /* ================= NO JOGO ================= */
+  function naCena() { var c = R.Cena && R.Cena.atual && R.Cena.atual(); return c && c.id === CENA ? c : null; }
+  function temTela() { return !!(R.UI && R.UI.temTela && R.UI.temTela()); }
+  function bloqueado() { return !!(R.Cena && R.Cena.bloqueado && R.Cena.bloqueado()) || temTela(); }
+  function vidaMax() { var B = R.Bosque; return B && B.vidaMax ? B.vidaMax() : cfg().jogador.vidaBase; }
+  function dano() { var B = R.Bosque; return B && B.dano ? B.dano() : cfg().jogador.danoBase; }
+  function temEspada() { var B = R.Bosque; return B && B.temEspada ? !!B.temEspada() : true; }
+  // o jogador do passo (um objeto só, reaproveitado). Vida máxima e dano só mudam com ponto ou acerto (eventos do
+  // Bosque) e são lidos de novo nesses eventos e ao entrar no Bosque, não a cada quadro
+  var JOG = { x: 0, y: 0, olharX: 0, olharY: 1, vidaMax: 0, dano: 0 }, lidos = false;
+  function lerValores() { JOG.vidaMax = vidaMax(); JOG.dano = dano(); lidos = true; }
+  function jogador() {
+    var J = window.Jogador;
+    if (!lidos) lerValores();
+    JOG.x = J.x; JOG.y = J.y; JOG.olharX = J.olharX; JOG.olharY = J.olharY;
+    return JOG;
+  }
+  // a caixa de todos os cômodos do interior (em tiles)
+  function caixa(def) {
+    var x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+    (def.comodos || []).forEach(function (c) {
+      var r = c.rect; x0 = Math.min(x0, r.x); y0 = Math.min(y0, r.y); x1 = Math.max(x1, r.x + r.w); y1 = Math.max(y1, r.y + r.h);
+    });
+    return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 };
+  }
+  function garantir(cena) {
+    if (S.estado && S.grade === cena.grade) return S.estado;
+    S.grade = cena.grade;
+    var def = cena.def || R.Interiores.def(CENA);
+    S.estado = novoEstado({ comodo: caixa(def), spawn: def.spawn, solido: cena.solido }, cfg());
+    S.estado.parados = !!R.congelado;
+    lerValores();
+    S.estado.vida = S.estado.max = JOG.vidaMax;
+    return S.estado;
+  }
+  function emitir(est) {
+    if (!est.eventos.length) return;
+    var lista = est.eventos.splice(0, est.eventos.length);
+    for (var i = 0; i < lista.length; i++) {
+      if (lista[i].tipo === 'desmaio') desmaiar();
+      if (lista[i].tipo === 'vencido') S.vencidoEm[lista[i].id] = Date.now();
+      if (R.util && R.util.emit) R.util.emit(R.EVENTOS.BOSQUE, lista[i]);
+    }
+  }
+
+  /* desmaio: cena ocupada com estrelinhas, o Claude fala, volta ao começo do bosque e a vida enche (nada se perde) */
+  function desmaiar() {
+    if (S.desmaio) return;
+    S.desmaio = { desde: S.t };
+    var C = R.Cena, F = R.BosqueFalas;
+    if (C && C.ocupar) C.ocupar(OCUPACAO);
+    if (F && F.desmaio && R.Claude && R.Claude.falar) R.Claude.falar(F.desmaio.join(' '), { fala: F.desmaio.slice(), voz: 'claude' });
+    setTimeout(function () {
+      var def = R.Interiores && R.Interiores.def(CENA), sp = def && def.spawn;
+      var pr = C && C.irPara ? C.irPara(CENA, sp ? { x: sp.x, y: sp.y } : null, { x: 0, y: -1 }) : null;
+      Promise.resolve(pr).catch(function (e) { console.error(e); }).then(function () {
+        API.reiniciar();
+        S.desmaio = null;
+        if (C && C.liberar) C.liberar(OCUPACAO);
+      });
+    }, cfg().desmaioMs);
+  }
+
+  /* proteção: vencido há mais de vencidoPresoMs sem devolver (a pergunta não abriu) volta a esperar a hora de voltar */
+  function soltarPresos(est) {
+    var agora = Date.now(), limite = cfg().vencidoPresoMs;
+    est.fantasmas.forEach(function (f) {
+      var em = S.vencidoEm[f.id];
+      if (f.estado === 'vencido' && (em === undefined || agora - em > limite)) devolverNo(est, f.id);
+    });
+  }
+
+  var ultimoT = null;
+  var camada = {
+    ativo: function () { return !!window.Jogador && !!naCena(); },
+    itensDesenho: function (p, t, animar) {
+      var cena = naCena();
+      if (!cena) return VAZIO;
+      var est = garantir(cena), dt = ultimoT === null ? 0 : t - ultimoT;
+      ultimoT = t; S.t = t;
+      if (!bloqueado()) { passo(est, dt, jogador()); emitir(est); }
+      return S.desenho ? S.desenho.itens(p, t, animar) : VAZIO;
+    },
+    sobre: function (ctx, p, t, animar) { if (S.desenho) S.desenho.sobre(p, t, animar); },
+  };
+
+  // Espaço/Enter atacam só no Bosque, sem bloqueio nem tela, com o foco fora de controle e sem alvo perto (entrada.js)
+  var ligado = false;
+  function ligar() {
+    if (ligado) return;
+    ligado = true;
+    if (typeof document !== 'undefined') document.addEventListener('keydown', function (e) {
+      if (e.key !== ' ' && e.key !== 'Enter') return;
+      if (!naCena() || bloqueado()) return;
+      var foco = document.activeElement;
+      if (e.target && e.target.closest && e.target.closest(CONTROLES)) return;
+      if (foco && foco !== document.body && foco.closest && foco.closest(CONTROLES)) return;
+      var J = window.Jogador, cena = R.Cena.atual();
+      if (cena.alvoPerto && cena.alvoPerto(J.tile(), { x: J.olharX, y: J.olharY })) return;
+      e.preventDefault();
+      API.atacar();
+    });
+    // entrou no Bosque vindo de fora: valores relidos, vida cheia, fantasmas no ninho e os vencidos presos soltos
+    R.util.on(R.EVENTOS.CENA, function (m) {
+      ultimoT = null;
+      if (!m || m.para !== CENA || m.de === CENA) return;
+      lidos = false;
+      if (!S.estado) return;
+      lerValores();
+      soltarPresos(S.estado);
+      reiniciarEstado(S.estado);
+      emitir(S.estado);
+    });
+    R.util.on(R.EVENTOS.BOSQUE, function (e) { if (e && (e.tipo === 'ponto' || e.tipo === 'acerto')) lidos = false; });
+  }
+
+  var API = R.BosqueCombate = {
+    ativo: function () { return camada.ativo(); },
+    vida: function () { var e = S.estado; if (!e) { var m = vidaMax(); return { n: m, max: m }; } return { n: e.vida, max: e.max }; },
+    atacar: function () {
+      var cena = naCena();
+      if (!cena || !window.Jogador || bloqueado() || !temEspada()) return false;
+      var est = garantir(cena), ok = golpear(est, jogador());
+      emitir(est);
+      return ok;
+    },
+    fantasmas: function () {
+      return S.estado ? S.estado.fantasmas.map(function (f) {
+        return { id: f.id, tipo: f.tipo, x: Math.round(f.x), y: Math.round(f.y), vida: f.vida, max: f.max, estado: f.estado };
+      }) : [];
+    },
+    // a UI chama depois da pergunta do fantasma vencido: ele volta ao ninho depois de voltaMs
+    devolver: function (id) { return !!S.estado && devolverNo(S.estado, id); },
+    reiniciar: function () { if (S.estado) { reiniciarEstado(S.estado); emitir(S.estado); } },
+    // puros (testes no Node e ferramentas)
+    novoEstado: novoEstado, passo: passo, golpear: golpear, reiniciarEstado: reiniciarEstado, devolverNo: devolverNo,
+    temEspada: temEspada,
+  };
+
+  R.registrarModulo({
+    id: 'bosque-combate',
+    iniciar: ligar,
+    depurar: function () {
+      var e = S.estado;
+      return { ativo: camada.ativo(), vida: API.vida(), t: e ? Math.round(e.t) : 0, parados: !!(e && e.parados),
+        desmaio: !!S.desmaio, golpe: !!(e && e.golpe), fantasmas: API.fantasmas() };
+    },
+    camada: camada,
+  });
+})();

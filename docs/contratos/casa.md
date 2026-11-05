@@ -179,19 +179,24 @@ avulso, escolhido entre `config.casa.moveisOpcoes` (5) sorteados. Só depois de 
 1. `comodo` é um id de `config.casa.comodos`: a aba do modo decorar. O nome da aba e do cômodo no cartão é o do kit
    dele ou, sem kit, a placa do cômodo (`Casa.nomeComodo`). As abas passam a ser os cômodos com kit ganho ou
    algum móvel avulso (`Casa.abas()`); a aba traz as peças do kit e depois os móveis avulsos daquele cômodo.
-2. Save: `casaMoveis: { <salaId>: { movel, em } }`, `carimbo`, `novoCiclo: 'mantem'`, `copiaSeguranca: true`. A escolha
-   de uma sala é para sempre. Entrada com móvel desconhecido não conta: a sala volta a ficar pendente.
+2. Save: `casaMoveis: { <chave>: { movel, em } }`, `carimbo`, `novoCiclo: 'mantem'`, `copiaSeguranca: true`. Chave =
+   id da sala ou a de uma fonte (item 8). A escolha de uma chave é para sempre. Entrada com móvel desconhecido não conta: a sala volta a ficar pendente.
 3. Derivado: quantas peças de cada móvel ela tem = quantas salas o escolheram (`CasaMoveis.qtd`). Peça (uid) =
    `movel.<id>.<n>`, n de 1 a `qtd`; as regras de lugar (§8) e de `casaItens` (§6) são as mesmas das peças de kit.
 4. Sorteio (`CasaMoveis.opcoes(sala)`): fixo por sala (semente = id da sala + `casaBau.em`); os que ela ainda não tem
    primeiro, na ordem sorteada; faltando novos, completa com os que ela tem (ganha mais um igual, "Mais um!").
-5. Pendentes (`CasaMoveis.pendentes()`): as salas que contam, feitas e sem móvel, na ordem das matérias e das salas.
+5. Pendentes (`CasaMoveis.pendentes()`): as salas que contam, feitas e sem móvel, na ordem das matérias e das salas
+   (`CasaMoveis.salasPendentes()`), depois as chaves das fontes sem móvel (item 8). `CasaMoveis.escolhida(chave)`.
 6. Quando a tela aparece: ao entrar no Reino, depois do baú da casa (`motor/main.js`; quem já tinha salas feitas
    escolhe uma por sala, uma vez só); no fim de uma sala feita pela 1ª vez (antes do kit da matéria completa,
    `atividades/missao.js`); na caixa de mudança e no botão do HUD (antes dos kits e do painel).
-7. Tela: "Escolha um móvel!", "Presente da sala “<nome>”" e "1 de N" na fila; cartões com a capa (`UI.capaCasa`,
+7. Tela: "Escolha um móvel!", o título da chave (`CasaMoveis.titulo`: "Presente da sala “<nome>”" ou o da fonte) e
+   "1 de N" na fila; cartões com a capa (`UI.capaCasa`,
    de `ui/casa-kits.js`), o nome e o cômodo. O toque dá o móvel (festa e fala); "Depois" ou Esc param a fila e a sala
    fica pendente. Falas (`ui/casa-falas.js`): "Escolha um móvel novo!" (só na 1ª da fila) e "Móvel novo na sua casa!".
+8. Outras fontes (`CasaMoveis.registrarFonte({ id, chaves(), titulo(chave), soNovos? })`, na ordem do registro):
+   chaves próprias que não colidem com ids de sala; `soNovos`: as opções são só os móveis que ela ainda não tem (sem
+   repetido nem "Mais um!"). Única hoje: o móvel por nível do Bosque (`bosque:<n>`, regras em `bosque.md` §4).
 
 
 ## 13. Os móveis funcionam (`Reino.CasaUsos`)

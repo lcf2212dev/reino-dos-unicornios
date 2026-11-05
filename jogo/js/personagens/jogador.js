@@ -120,10 +120,20 @@
       return typeof f === 'number' && f > 0 ? f : 1;
     } catch (e) { return 1; }
   }
-  // px/s: montada 82, a pé 58; × fator do nado na água; × fome/sede (Cuidados.fatorVelocidade)
+  // fatores de fora (ex.: Velocidade no Bosque, docs/contratos/bosque.md): fn() → número > 0; outro valor ou erro = 1
+  var fatoresExtras = [];
+  J.registrarFatorVelocidade = function (fn) { if (typeof fn === 'function') fatoresExtras.push(fn); };
+  function fatorExtras() {
+    var f = 1;
+    for (var i = 0; i < fatoresExtras.length; i++) {
+      try { var v = fatoresExtras[i](); if (typeof v === 'number' && v > 0) f *= v; } catch (e) { /* fator com defeito não trava o passo */ }
+    }
+    return f;
+  }
+  // px/s: montada 82, a pé 58; × fator do nado na água; × fome/sede (Cuidados.fatorVelocidade); × fatores registrados
   J.velocidade = function () {
     var nado = (Reino.config && Reino.config.nado) || {};
-    return (J.montado() ? 82 : 58) * (J.nadando() ? (nado.fator || 0.6) : 1) * fatorCuidados();
+    return (J.montado() ? 82 : 58) * (J.nadando() ? (nado.fator || 0.6) : 1) * fatorCuidados() * fatorExtras();
   };
   // a velocidade usada no passo chega à de J.velocidade() aos poucos (sem tranco na margem)
   function velocidade(dt) {

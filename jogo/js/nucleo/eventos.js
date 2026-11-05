@@ -61,4 +61,10 @@ Reino.EVENTOS = {
      Carga: { certas, erradas } (números; nota parcial não entra). Emite: sistemas/aura.js (Reino.Aura.contar,
      antes de gravar a Aura). Ouve: sistemas/viagem.js (o combustível do foguete). */
   RESPOSTAS: 'respostas',
+  /* Algo aconteceu no Bosque dos Fantasmas (docs/contratos/bosque.md). Carga: { tipo, ... }:
+     'vida' (a vida dela mudou), 'golpe' (ela atacou), 'vencido' { id, tipo } (um fantasma foi vencido),
+     'desmaio' (a vida zerou), 'acerto' (pergunta certa), 'ponto' (ponto de habilidade posto).
+     Emite: sistemas/bosque-combate.js (vida, golpe, vencido, desmaio), sistemas/bosque.js (acerto, ponto).
+     Ouve: ui/bosque-hud.js (chip e botão da espada), ui/bosque-pergunta.js (abre a pergunta no 'vencido'). */
+  BOSQUE: 'bosque',
 };

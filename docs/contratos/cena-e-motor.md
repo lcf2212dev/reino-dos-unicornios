@@ -243,8 +243,10 @@ cena.agua(tx, ty) → bool          // adaptador do mapa; interiores não têm (
 Jogador.nadando() → bool          // o tile atual é água (velocidade e som)
 Jogador.fundura(x, y) → 0–1       // Mapa.fundura suavizada numa rampa de 12 px; fora do mapa = 0
 Jogador.velocidade() → px/s       // ALVO: base (montada 82, a pé 58) × (nadando ? config.nado.fator (0,6) : 1)
-                                  // × Cuidados.fatorVelocidade(). O passo usa J.vel, que chega ao alvo aos
-                                  // poucos (SUAVE_VEL 0,18 s), sem tranco na margem
+                                  // × Cuidados.fatorVelocidade() × cada fator registrado. O passo usa J.vel,
+                                  // que chega ao alvo aos poucos (SUAVE_VEL 0,18 s), sem tranco na margem
+Jogador.registrarFatorVelocidade(fn) // fn() → número > 0 multiplica o alvo (outro valor ou erro = 1); sem fator,
+                                  // a velocidade é a de sempre (ex.: Velocidade no Bosque, bosque.md §5)
 Reino.Som.tocar('splash' | 'gotas' | 'gole' | 'nhac')   // entrar na água, sair, beber, comer
 ```
 Lugar novo não entra na água: o validador acusa rect ou `caminho` no lago (§9.8).

@@ -1,0 +1,152 @@
+/* Bosque dos Fantasmas (docs/contratos/bosque.md): o chip do HUD e o botão da espada (js/ui/bosque-hud.js), o painel
+   do Bosque, a pergunta do fantasma (js/ui/bosque-pergunta.js), o prêmio da espada e os cartões do ponto
+   (js/ui/bosque-nivel.js). O prêmio usa o céu, a luz e os brilhos do baú dos presentes (.tela-presente,
+   css/ui-bau-presente.css). Movimento só em degraus, com saída para body.sem-animacao e prefers-reduced-motion. */
+
+/* ---------- chip do HUD: 💖 vida em cima; "Nv N" e a barrinha de XP embaixo; selo "+N" no canto ---------- */
+.chip-bosque {
+  position: relative;
+  display: flex; flex-direction: column; align-items: stretch; gap: 2px;
+  padding-top: 2px; padding-bottom: 6px;
+}
+.chip-bosque[hidden] { display: none; }
+.bosque-chip-vida { display: flex; align-items: center; gap: 4px; }
+.bosque-chip-nivel { display: flex; align-items: center; gap: 6px; font-size: var(--texto-aux); word-spacing: normal; }
+.bosque-chip-nivel .bosque-xp { flex: 1; min-width: 40px; }
+.bosque-xp {
+  display: block; height: 10px; overflow: hidden;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--branco);
+}
+.bosque-xp-cheia { display: block; height: 100%; background: linear-gradient(90deg, var(--roxo) 0 50%, var(--rosa) 50%); box-shadow: inset 0 2px 0 var(--brilho); }
+.bosque-selo {
+  position: absolute; top: -8px; right: -8px;
+  padding: 2px 6px; font-size: var(--texto-aux); line-height: var(--entrelinha-titulo); word-spacing: normal;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--ambar); color: var(--tinta);
+  box-shadow: var(--sombra-pequena); --degrau: 2px;
+  animation: pulsar calc(2 * var(--lento)) step-end 3;
+}
+
+/* ---------- botão da espada: redondo (canto em degrau do pixel), fixo embaixo à direita (acima do balão do Claude), e a dica ao lado ---------- */
+.bosque-acao {
+  position: absolute;
+  right: calc(env(safe-area-inset-right, 0px) + 16px);
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 16px + var(--balao-altura, 0px));
+  display: flex; align-items: flex-end; gap: 8px;
+  pointer-events: none;
+}
+#hud > .bosque-acao { pointer-events: none; }
+.bosque-acao[hidden], .bosque-dica[hidden] { display: none; }
+.btn-tela-cheia.btn-bosque-espada {
+  width: 80px; height: 80px; padding: 0;
+  border-width: var(--borda-grossa); border-radius: var(--canto-grande);   /* o "redondo" do pixel: canto em degrau (notch), como os painéis */
+  background: var(--papel-quente);
+  pointer-events: auto; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none;   /* segurar repete o golpe */
+}
+.btn-bosque-espada canvas { display: block; }
+.bosque-dica {
+  max-width: min(260px, calc(100vw - 136px)); margin: 0; padding: 6px 10px;
+  font-size: var(--texto-aux); line-height: var(--entrelinha);
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel); color: var(--tinta);
+  box-shadow: var(--sombra-pequena); --degrau: 2px;
+}
+
+/* ---------- painel do Bosque ---------- */
+.bosque-painel { display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; }
+.bosque-painel p { margin: 0; }
+.bosque-painel-nivel { font-size: var(--texto-t); line-height: var(--entrelinha-titulo); }
+.bosque-painel-xp { display: flex; align-items: center; gap: 8px; width: min(360px, 100%); }
+.bosque-painel-xp .bosque-xp { flex: 1; min-width: 0; }
+.bosque-xp.bosque-xp-grande { height: 22px; }
+.bosque-painel-vida { display: flex; align-items: center; gap: 8px; font-size: var(--texto); }
+.bosque-habs { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; width: min(360px, 100%); }
+.bosque-hab {
+  display: flex; align-items: center; gap: 10px; padding: 6px 12px;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel);
+}
+.bosque-hab-nome { flex: 1; text-align: left; white-space: nowrap; }
+.bosque-painel-pend { color: var(--tinta); }
+
+/* ---------- prêmio da espada ---------- */
+.tela-espada-bosque [hidden] { display: none !important; }
+.bosque-premio-cena { height: 260px; }
+.bosque-premio-espada { position: relative; z-index: 2; margin-bottom: 64px; }
+.bosque-premio-espada canvas {
+  display: block; image-rendering: pixelated;
+  filter: drop-shadow(2px 0 0 var(--papel)) drop-shadow(-2px 0 0 var(--papel)) drop-shadow(0 2px 0 var(--papel)) drop-shadow(0 -2px 0 var(--papel));
+}
+.bosque-premio-dica {
+  margin: 0; padding: 6px 12px; max-width: 420px;
+  font-size: var(--texto-aux); line-height: var(--entrelinha);
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel); color: var(--tinta);
+}
+@keyframes bosque-espada-subir { from { transform: translateY(48px); } to { transform: none; } }
+.tela-presente.animado .bosque-premio-espada { animation: bosque-espada-subir calc(2 * var(--lento)) steps(8) both; }
+
+/* ---------- pergunta do fantasma ---------- */
+.tela-bosque-pergunta .painel { max-width: 600px; }
+/* os tipos grandes da sala (ligar, tabela, desenho, marcar, a digitação com a fileira de 12 acentos…): painel mais largo,
+   para nada sair de lado; escolha, V ou F e várias ficam no de 600 */
+.tela-bosque-pergunta .painel:has(.desafio:not(.desafio-escolha, .desafio-vf, .desafio-varias)) { max-width: 900px; }
+.bosque-cabeca { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.bosque-cabeca canvas { flex: none; }
+.bosque-fala {
+  flex: 1; min-width: 0; margin: 0; padding: 8px 12px;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel);
+  font-size: var(--texto); line-height: var(--entrelinha);
+}
+.bosque-retorno { margin-top: 10px; padding: 8px 12px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); }
+.bosque-retorno h3 { margin: 0 0 4px; }
+.bosque-retorno p + p { margin-top: 6px; }
+.bosque-botoes { display: flex; justify-content: flex-end; gap: 10px; padding: 10px 16px 14px; }
+
+/* ---------- subir de nível: 3 cartões ---------- */
+.bosque-nivel-dica { margin: 0 0 10px; text-align: center; }
+.bosque-cartoes { display: flex; justify-content: center; gap: 10px; }
+.bosque-cartao {
+  flex: 0 1 184px; min-height: 48px;
+  display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 10px 8px;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel);
+  font: inherit; color: inherit; cursor: pointer;
+  box-shadow: var(--sombra-pequena); --degrau: 2px;
+}
+.bosque-cartao.escolhido { background: var(--certo-fundo); border-color: var(--certo); }
+.bosque-cartao-texto { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.bosque-cartao-nome { font-size: var(--texto); white-space: nowrap; }
+.bosque-cartao-diz { font-size: var(--texto-aux); line-height: var(--entrelinha-titulo); color: var(--tinta-suave); text-align: center; }
+.bosque-nivel-botoes, .bosque-painel-botoes { display: flex; justify-content: center; margin-top: 12px; }
+
+body.sem-animacao .bosque-selo, body.sem-animacao .bosque-premio-espada { animation: none !important; }
+@media (prefers-reduced-motion: reduce) { .bosque-selo, .bosque-premio-espada { animation: none !important; } }
+
+/* celular: botão um pouco menor, cartões um embaixo do outro (ícone à esquerda), pergunta mais justa */
+@media (max-width: 480px) {
+  .btn-tela-cheia.btn-bosque-espada { width: 72px; height: 72px; }
+  .bosque-dica { max-width: calc(100vw - 128px); }
+  .bosque-premio-cena { height: 200px; }
+  .bosque-premio-espada { margin-bottom: 48px; }
+  .bosque-cartoes { flex-direction: column; align-items: stretch; }
+  .bosque-cartao { flex: none; flex-direction: row; justify-content: flex-start; gap: 12px; padding: 8px 12px; }
+  .bosque-cartao-texto { align-items: flex-start; }
+  .bosque-cartao-diz { text-align: left; }
+  .bosque-cabeca { gap: 8px; margin-bottom: 6px; }
+  .bosque-fala { padding: 6px 10px; }
+  .bosque-botoes .btn-grande { flex: 1; }
+}
+@media (max-height: 500px) {
+  .bosque-botoes .btn-grande { flex: 1; }
+}
+
+/* ---------- pergunta: a página do livro com o texto-base (aberta, recolhível), acima do card; a página rola dentro
+   de uma caixa baixa, para a pergunta aparecer sem rolar o painel ---------- */
+.bosque-contexto { margin-bottom: 10px; }
+.bosque-contexto > summary { cursor: pointer; padding: 4px 0 14px; font-size: var(--texto); }
+.bosque-contexto > .livro-carta.bosque-carta {
+  max-height: 34vh; overflow-y: auto; padding: 10px 12px; border-width: var(--borda-fina);
+}
+.bosque-carta.carta-rica > h3 { font-size: var(--texto); margin: 4px 0 8px; }
+/* a aba do livro encosta na borda de cima (no livro ela sobe os 18 px do padding de lá; aqui a caixa rola e cortaria) */
+.livro-carta.bosque-carta.carta-rica > .carta-livro { margin-top: -10px; }
+@media (max-width: 480px) {
+  .bosque-contexto > .livro-carta.bosque-carta { padding: 8px; }
+  .livro-carta.bosque-carta.carta-rica > .carta-livro { margin-top: -8px; }
+}

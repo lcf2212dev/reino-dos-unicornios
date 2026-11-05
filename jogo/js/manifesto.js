@@ -50,6 +50,7 @@
       'css/ui-bau-casa.css',
       'css/ui-casa-kits.css',
       'css/ui-casa-moveis.css',
+      'css/ui-bosque.css',
       'css/ui-moedas-festa.css',
       'css/ui-casa-decorar.css',
       'css/ui-tempo-celular.css',
@@ -512,6 +513,9 @@
       { js: 'js/ui/bau-casa.js', grupo: 'ui' }, // o baú da casa do jogador ao entrar no Reino (UI.abrirBauCasa; casa.md §9)
       { js: 'js/ui/casa-kits.js', grupo: 'ui' }, // a escolha do kit de móveis da casa (UI.escolherKitCasa, UI.casaKitsPendentes)
       { js: 'js/ui/casa-moveis.js', grupo: 'ui' }, // a escolha do móvel avulso de uma sala feita (UI.escolherMovelCasa, UI.casaMoveisPendentes)
+      { js: 'js/ui/bosque-hud.js', grupo: 'ui' }, // Bosque dos Fantasmas: chip do HUD, botão da espada e o painel (UI.telaBosque; bosque.md §5)
+      { js: 'js/ui/bosque-nivel.js', grupo: 'ui' }, // Bosque dos Fantasmas: prêmio da espada e o ponto de nível (UI.telaEspadaBosque, UI.subirNivelBosque)
+      { js: 'js/ui/bosque-pergunta.js', grupo: 'ui' }, // Bosque dos Fantasmas: a pergunta do fantasma vencido (UI.perguntaFantasma)
       { js: 'js/sistemas/versao.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/aura.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/viagem.js', grupo: 'sistemas', node: true },
@@ -733,6 +737,14 @@
       { js: 'js/interiores/casa/andar2.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/casa/fora.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/casa/lugar.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/bosque/icones.js', grupo: 'interiores', node: true }, // Bosque dos Fantasmas (bosque.md): ícones, o interior de céu aberto, o portal no mapa e o lugar (o último prédio)
+      { js: 'js/interiores/bosque/fundo.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/bosque/falas.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/bosque/objetos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/bosque/objetos-2.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/bosque/bosque.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/bosque/fora.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/bosque/lugar.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/padrao.js', grupo: 'interiores', node: true }, // padrao.js por último entre os prédios: monta o interior das matérias que não têm um próprio
       { js: 'js/sistemas/banho.js', grupo: 'sistemas' },
       { js: 'js/sistemas/banho-desenho.js', grupo: 'sistemas' },
@@ -744,6 +756,10 @@
       { js: 'js/sistemas/casa-usos-poses-b.js', grupo: 'sistemas' }, // casa: poses banho, chuveiro e cozinhar
       { js: 'js/sistemas/vida-mapa.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/et-companheiro-desenho.js', grupo: 'sistemas' },
+      { js: 'js/sistemas/bosque-falas.js', grupo: 'sistemas', node: true }, // Bosque dos Fantasmas: falas do Claude (Reino.BosqueFalas; bosque.md §6)
+      { js: 'js/sistemas/bosque.js', grupo: 'sistemas', node: true }, // Bosque dos Fantasmas: regras, campos bosque/bosquePontos e o móvel por nível (Reino.Bosque; bosque.md §4, §5)
+      { js: 'js/sistemas/bosque-combate.js', grupo: 'sistemas', node: true }, // Bosque dos Fantasmas: combate (Reino.BosqueCombate, camada; bosque.md §5)
+      { js: 'js/sistemas/bosque-desenho.js', grupo: 'sistemas' }, // Bosque dos Fantasmas: desenho dos fantasmas, da espada, do golpe e do desmaio
       { js: 'js/motor/cena.js', grupo: 'motor' },
       { js: 'js/motor/transicao.js', grupo: 'motor' },
       { js: 'js/motor/camera.js', grupo: 'motor' },

@@ -1,0 +1,206 @@
+/* Bosque dos Fantasmas: o desenho do combate (parte de bosque-combate.js, pelo interno Reino._bosqueCombate).
+   Três fantasmas fofos (lilás fácil, turquesa médio, rosa-vinho com coroinha difícil) que flutuam, piscam, ficam
+   brancos ao levar golpe e se apagam num puf, com a barrinha de vida em cima; a espada na mão dela (só depois de
+   ganhar) e o arco do golpe; o piscar dela invencível e as estrelinhas do desmaio. Sem Animações: tudo parado
+   (sem balanço, sem piscar), o golpe e o puf continuam (são do jogo). Sprites feitos uma vez, itens fixos
+   reaproveitados, nada criado por quadro (o brilho branco dela é cacheado por sprite); nada de Math.random. */
+(function () {
+  var R = window.Reino;
+  var S = R._bosqueCombate;
+  var D = R.Desenho, K = D.K, C = D.C;
+  var ALTURA = 6, BALANCO = 1.5;          // px do jogo: quanto o fantasma flutua acima do chão e quanto balança
+  var FUNDO_BARRA = '#5b3f6b', COR_BARRA = C.rosa;
+
+  /* ---------- sprites (13 × 17: 3 linhas da coroinha em cima, vazias nos outros) ---------- */
+  var COROA = ['....K.K.K....', '...KoKgKoK...', '...KoooooK...'];
+  var SEM_COROA = ['.............', '.............', '.............'];
+  var CORPO = [
+    '....KKKKK....',
+    '..KKllbbbKK..',
+    '.KllbbbbbbsK.',
+    'KlbbbbbbbbbsK',
+    'KlbeKbbbeKbsK',
+    'KbbKKbbbKKbsK',
+    'KbrrbbbbbrrsK',
+    'KbbbbKbKbbbsK',
+    'KbbbbbKbbbbsK',
+    'KbbbbbbbbbbsK',
+    'KbbbbbbbbbbsK',
+    'KbbbbbbbbbssK',
+    'KbbbKbbbKbbsK',
+    '.KKK.KKK.KKK.',
+  ];
+  var PISCA = ['KlbbbbbbbbbsK', 'KbbKKbbbKKbsK'];   // linhas 4 e 5 com os olhinhos fechados
+  var CORES = {
+    facil: { b: '#cdb4ff', l: '#ece2ff', s: '#a385e0', r: '#ffb8d6' },
+    medio: { b: '#8fe3dc', l: '#d8fbf7', s: '#55bdb7', r: '#ffb8cf' },
+    dificil: { b: '#cf6a98', l: '#f2a8c8', s: '#a04573', r: '#ffc0d8' },
+  };
+  var BRANCO = { b: C.branco, l: C.branco, s: '#efe6ff', r: C.branco };
+  var SPR = { facil: [], medio: [], dificil: [] };   // 0 olhos abertos, 1 piscando, 2 branco (levou golpe)
+  function fantasma(tipo, q) {
+    var lista = SPR[tipo] || SPR.facil;
+    if (lista[q]) return lista[q];
+    var linhas = (tipo === 'dificil' ? COROA : SEM_COROA).concat(CORPO);
+    if (q === 1) { linhas = linhas.slice(); linhas[7] = PISCA[0]; linhas[8] = PISCA[1]; }
+    var p = q === 2 ? BRANCO : CORES[tipo] || CORES.facil;
+    var c = PA.novoCanvas(13, linhas.length);
+    D.matriz(c.getContext('2d'), 0, 0, linhas, { K: K, b: p.b, l: p.l, s: p.s, r: p.r, e: C.branco, o: C.ouro, g: C.rosa });
+    lista[q] = c;
+    return c;
+  }
+  var PUF = [
+    ['.KK.', 'KwwK', 'KwsK', '.KK.'],
+    ['.KKK.', 'KwwwK', 'KwwsK', 'KwssK', '.KKK.'],
+    ['..KKK..', '.KwwwK.', 'KwwwwsK', 'KwwwwsK', 'KwwwssK', '.KsssK.', '..KKK..'],
+  ];
+  var SPR_PUF = [];
+  function puf(i) {
+    if (SPR_PUF[i]) return SPR_PUF[i];
+    var c = PA.novoCanvas(PUF[i][0].length, PUF[i].length);
+    D.matriz(c.getContext('2d'), 0, 0, PUF[i], { K: K, w: C.creme, s: '#e3d4ff' });
+    return (SPR_PUF[i] = c);
+  }
+  var ESPADA = ['..K..', '.KwK.', '.KwK.', '.KwK.', '.KlK.', 'KKKKK', 'KogoK', 'KKpKK', '.KpK.', '.KoK.', '..K..'];
+  var ESTRELA = ['..K..', '.KoK.', 'KoyoK', '.KoK.', '..K..'];
+  var SPR_ESPADA = null, SPR_ESTRELA = null;
+  function espada() {
+    if (SPR_ESPADA) return SPR_ESPADA;
+    SPR_ESPADA = PA.novoCanvas(5, ESPADA.length);
+    D.matriz(SPR_ESPADA.getContext('2d'), 0, 0, ESPADA, { K: K, w: '#eef8ff', l: '#c7b8ff', o: C.ouro, g: C.rosa, p: C.roxo });
+    return SPR_ESPADA;
+  }
+  function estrela() {
+    if (SPR_ESTRELA) return SPR_ESTRELA;
+    SPR_ESTRELA = PA.novoCanvas(5, 5);
+    D.matriz(SPR_ESTRELA.getContext('2d'), 0, 0, ESTRELA, { K: K, o: C.ouro, y: C.ouro3 });
+    return SPR_ESTRELA;
+  }
+  // ela branquinha (piscar invencível): uma cópia por sprite dela, feita uma vez
+  var brancos = new WeakMap();
+  function branca(img) {
+    var b = brancos.get(img);
+    if (b) return b;
+    b = PA.novoCanvas(img.width, img.height);
+    var x = b.getContext('2d');
+    x.drawImage(img, 0, 0);
+    x.globalCompositeOperation = 'source-atop';
+    x.fillStyle = 'rgba(255,255,255,0.75)';
+    x.fillRect(0, 0, img.width, img.height);
+    brancos.set(img, b);
+    return b;
+  }
+
+  /* ---------- itens do quadro (objetos fixos, reaproveitados) ---------- */
+  var P = null, T0 = 0, ANIMAR = false;   // pintor, `t` e animar do quadro em curso
+  var itens = [], pool = [];
+  var vista = { x: 0, y: 0, w: 0, h: 0 };
+  function medirVista(p) {
+    var e = p.escala || 1, cv = p.ctx && p.ctx.canvas;
+    vista.x = p.cam.x; vista.y = p.cam.y; vista.w = cv ? cv.width / e : 400; vista.h = cv ? cv.height / e : 300;
+  }
+  function aVista(x, y) { return x > vista.x - 24 && x < vista.x + vista.w + 24 && y > vista.y - 8 && y < vista.y + vista.h + 40; }
+
+  function desenharFantasma() {
+    var f = this.f, est = S.estado, cfg = est.cfg, x = Math.round(f.x), y = Math.round(f.y);
+    var bob = ANIMAR ? Math.round(Math.sin((T0 + f.fase) / 420) * BALANCO) : 0, pe = y + 1 - ALTURA - bob;
+    if (f.estado === 'sumindo' || f.estado === 'surgindo') {
+      var k = 1 - Math.max(0, f.ate - est.t) / cfg.vencidoMs;
+      if (f.estado === 'surgindo') k = 1 - k;
+      if (k < 0.25) { P.sprite(fantasma(f.tipo, 2), x, pe); return; }
+      pufs(x, pe - 8, (k - 0.25) / 0.75);
+      return;
+    }
+    if (window.Jogador && Jogador.sombra) Jogador.sombra(P, x, y, 4);
+    var q = est.t < f.feridoAte ? 2 : ANIMAR && (T0 + f.fase * 7) % 3600 < 140 ? 1 : 0;
+    var img = fantasma(f.tipo, q);
+    P.sprite(img, x, pe);
+    // barrinha de vida em cima (contorno, fundo e o que sobra)
+    var by = pe - img.height + (f.tipo === 'dificil' ? 0 : 3) - 4, cheio = Math.round(10 * f.vida / f.max);
+    P.ret(x - 6, by, 12, 3, K);
+    P.ret(x - 5, by + 1, 10, 1, FUNDO_BARRA);
+    if (cheio > 0) P.ret(x - 5, by + 1, cheio, 1, COR_BARRA);
+  }
+  // puf: 5 nuvenzinhas que se abrem e encolhem, com brilhinhos
+  function pufs(x, y, k) {
+    var i = k < 0.35 ? 2 : k < 0.7 ? 1 : 0, r = 2 + Math.round(k * 9);
+    for (var n = 0; n < 5; n++) {
+      var a = n * 1.2566 + 0.3;
+      P.sprite(puf(i), Math.round(x + Math.cos(a) * r), Math.round(y + Math.sin(a) * r * 0.8) + 3);
+    }
+    if (k > 0.3) { P.ret(x - r - 2, y - 1, 1, 1, C.ouro3); P.ret(x + r + 2, y + 1, 1, 1, C.ouro3); P.ret(x, y - r - 2, 1, 1, C.branco); }
+  }
+  // a espada na mão dela: do lado da mão de quem olha; de costas, atrás dela; no golpe, avança para onde ela olha
+  function desenharEspada() {
+    var J = window.Jogador, est = S.estado, ox = J.olharX, oy = J.olharY;
+    var montada = J.montado && J.montado();
+    // de lado, a mão fica perto do meio (montada, em cima do lombo); de frente ou de costas, ao lado do corpo
+    var lado = Math.abs(ox) > Math.abs(oy) ? (ox < 0 ? -1 : 1) * (montada ? 0 : 4) : (oy < 0 ? 5 : -5);
+    var mao = maoAltura(J), x = Math.round(J.x + lado), y = Math.round(J.y + 1 - mao);
+    if (est && est.golpe) { x += Math.round(est.golpe.dx * 4); y += Math.round(est.golpe.dy * 3); }
+    P.sprite(espada(), x, y);
+  }
+  // o arco do golpe: um risco com contorno num meio-círculo que se abre na direção dela, na altura da mão
+  var COR_ARCO = [C.branco, '#fff3c4', C.ouro3, '#ffe9a8'];
+  function pontoArco(n, fim, cx, cy, raio, meio, contorno) {
+    var a = meio - 1.2 + n * 0.2, x = Math.round(cx + Math.cos(a) * raio), y = Math.round(cy + Math.sin(a) * raio * 0.75);
+    if (contorno) P.ret(x - 2, y - 2, 4, 4, K);
+    else P.ret(x - 1, y - 1, 2, 2, COR_ARCO[Math.min(3, Math.floor((fim - n) / 3))]);
+  }
+  function desenharArco() {
+    var J = window.Jogador, est = S.estado, g = est.golpe, cj = est.cfg.jogador, n;
+    if (!g) return;
+    var k = Math.min(1, Math.max(0, (est.t - g.em) / cj.golpeMs)), meio = Math.atan2(g.dy, g.dx);
+    var cx = J.x, cy = J.y + 1 - maoAltura(J) - 4, raio = cj.alcance * 0.8, fim = ANIMAR ? Math.round(k * 12) : 12;
+    for (n = 0; n <= fim; n++) pontoArco(n, fim, cx, cy, raio, meio, true);
+    for (n = 0; n <= fim; n++) pontoArco(n, fim, cx, cy, raio, meio, false);
+  }
+  // altura da mão dela acima dos pés (montada, pela altura do sprite do conjunto)
+  function maoAltura(J) {
+    var s = J.silhueta, h = s && s.img ? s.img.height : 24;
+    return J.montado && J.montado() ? Math.round(h * 0.32) : 6;
+  }
+  // invencível: ela pisca branquinha (só com Animações)
+  function desenharPiscar() {
+    var s = window.Jogador.silhueta;
+    if (s && s.img) P.sprite(branca(s.img), s.x, s.yPes);
+  }
+  var ITEM_ESPADA = { y: 0, desenhar: desenharEspada }, ITEM_ARCO = { y: 0, desenhar: desenharArco };
+  var ITEM_PISCAR = { y: 0, desenhar: desenharPiscar };
+
+  function itensDesenho(p, t, animar) {
+    itens.length = 0;
+    var est = S.estado, J = window.Jogador;
+    if (!est || !J) return itens;
+    P = p; T0 = t; ANIMAR = animar; medirVista(p);
+    var n = 0;
+    for (var i = 0; i < est.fantasmas.length; i++) {
+      var f = est.fantasmas[i];
+      if (f.estado === 'vencido' || f.estado === 'esperando' || !aVista(f.x, f.y)) continue;
+      if (!pool[n]) pool[n] = { y: 0, f: null, desenhar: desenharFantasma };
+      pool[n].y = f.y; pool[n].f = f;
+      itens.push(pool[n++]);
+    }
+    if (est.t < est.invencivelAte && animar && Math.floor(t / 100) % 2 === 0 && !S.desmaio) {
+      ITEM_PISCAR.y = J.y + 0.001; itens.push(ITEM_PISCAR);
+    }
+    var temEspada = R.BosqueCombate.temEspada();
+    if (temEspada && !S.desmaio) {
+      ITEM_ESPADA.y = J.olharY < 0 && Math.abs(J.olharY) >= Math.abs(J.olharX) ? J.y - 0.01 : J.y + 0.002;
+      itens.push(ITEM_ESPADA);
+    }
+    if (est.golpe) { ITEM_ARCO.y = J.y + 0.003; itens.push(ITEM_ARCO); }
+    return itens;
+  }
+  // estrelinhas do desmaio: três girando em volta da cabeça dela (por cima de tudo)
+  function sobre(p, t, animar) {
+    if (!S.desmaio || !window.Jogador) return;
+    var J = window.Jogador, s = J.silhueta, topo = (s && s.img ? s.yPes - s.img.height : J.y - 24) - 2;
+    for (var n = 0; n < 3; n++) {
+      var a = (animar ? (t - S.desmaio.desde) / 260 : 0) + n * 2.0944;
+      p.sprite(estrela(), Math.round(J.x + Math.cos(a) * 9), Math.round(topo + Math.sin(a) * 3));
+    }
+  }
+
+  S.desenho = { itens: itensDesenho, sobre: sobre };
+})();

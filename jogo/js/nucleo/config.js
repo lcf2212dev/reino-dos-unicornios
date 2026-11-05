@@ -174,6 +174,53 @@ Reino.config = {
   // cada toque em Esquentar ou Esfriar
   quimica: { estrelasReceitaNova: 2, estrelasLaminaNova: 1, estrelasLicaoNova: 1, estrelasCadernoCompleto: 10, maxTubos: 3,
     estrelasEstadoNovo: 1, estrelasMisturaNova: 1, estrelasLivroNovo: 1, grausPorToque: 10 },
+  // Bosque dos Fantasmas (docs/contratos/bosque.md; sistemas/bosque.js e bosque-combate.js). Tempos em ms, distâncias
+  // em px do mundo (tile = 16), velocidades em px/s (ela a pé anda 58). Nada se perde: errar e desmaiar não tiram nada
+  fantasmas: {
+    acertosPorNivel: 10,         // acertos para subir 1 nível (nível = 1 + acertos / acertosPorNivel)
+    nivelMax: 1000,              // o nível não passa daqui (os acertos continuam contando)
+    estrelasPorAcerto: 1,        // estrelas por pergunta certa (se mudar, regrave as vozes: o Claude fala da estrela)
+    // pergunta do fantasma: sorteio uniforme entre todas as perguntas do bimestre em curso (sala feita ou não), de
+    // todo tipo da sala menos estes. Também ficam de fora a pergunta pessoal (`livre: true`) e o `escrever` sem
+    // `chaves` (aceita qualquer texto): a estrela só vem de resposta certa
+    perguntaForaTipos: [
+      'memoria',                 // jogo da memória: sem resposta certa (termina sozinho ao achar os pares; vale 0)
+      'desenho',                 // desenho livre: qualquer desenho vale, não há resposta certa
+      'cacaPalavras',            // na tentativa única libera "Conferir" com uma palavra achada e dá errado
+    ],
+    jogador: {
+      vidaBase: 10,              // vida máxima sem pontos em Vida
+      vidaPorPonto: 2,           // vida máxima a mais por ponto em Vida
+      danoBase: 1,               // dano da espada sem pontos em Força
+      danoPorPonto: 1,           // dano a mais por ponto em Força
+      velocidadePorPonto: 0.04,  // fator de velocidade a mais por ponto em Velocidade (só no Bosque)
+      velocidadeMax: 1.6,        // teto do fator de velocidade
+      alcance: 20,               // alcance da espada
+      recargaMs: 350,            // espera entre dois golpes
+      golpeMs: 180,              // duração do golpe (desenho da espada)
+      invencivelMs: 1000,        // depois de levar um toque, esse tempo sem levar outro
+      regenSemDanoMs: 5000,      // tempo sem levar toque para a vida começar a voltar
+      regenACadaMs: 3000,        // depois disso, 1 de vida a cada esse tempo
+    },
+    // cada tipo de fantasma: vida (golpes de dano 1), forca (vida que tira por toque), velocidade (px/s)
+    tipos: {
+      facil: { vida: 2, forca: 1, velocidade: 16 },    // lilás
+      medio: { vida: 4, forca: 1, velocidade: 24 },    // azul-turquesa (mais vida e mais rápido que o fácil)
+      dificil: { vida: 5, forca: 2, velocidade: 28 },  // rosa-vinho com coroa: o único que bate mais forte (nível 1, 1 golpe a cada 700 ms: vence com folga)
+    },
+    quantos: { facil: 5, medio: 4, dificil: 3 },        // fantasmas de cada tipo no Bosque ao mesmo tempo
+    zonas: { facil: [27, 38], medio: [15, 26], dificil: [3, 14] },   // fileiras (tiles) onde cada tipo nasce e vagueia
+    zonaSegura: 4,               // tiles em volta do começo (spawn) sem fantasma
+    visao: 80,                   // distância em que o fantasma a vê e vem atrás dela
+    coleira: 144,                // distância máxima do ponto onde nasceu (depois disso ele volta)
+    raioToque: 9,                // distância em que o fantasma encosta nela
+    recuoMs: 700,                // o fantasma recua por esse tempo depois de encostar ou de levar golpe
+    voltaMs: 20000,              // fantasma vencido volta a aparecer depois desse tempo
+    vencidoMs: 500,              // animação do fantasma sumindo antes da pergunta
+    vencidoPresoMs: 60000,       // proteção: vencido há mais que isso sem a pergunta devolver volta a contar voltaMs
+                                 // (quando ela entra no Bosque vinda de fora)
+    desmaioMs: 1600,             // animação do desmaio antes de voltar ao começo
+  },
   novidadeDias: 45,   // dias em que o selo "✨ Novo!" aparece num lugar novo (lugar.novidade)
   versao: { intervaloMs: 10 * 60000, confirmarMs: 60000, cacheMs: 330000, paradaMs: 8000, avisoMs: 4500, esperaMs: 2500 },
   // acessórios das provas à venda na Loja (só depois de ganhar um da mesma prova)

@@ -67,8 +67,11 @@
       ret(ctx, px + 3, py, 10, 1, C.madeiraClara);
     }
   }
-  function desenharSaida(ctx, g, s) {
+  // fundo de céu aberto com saída própria (I.FUNDOS[id].saida(ctx, px, py), ex.: o portal do Bosque) desenha no lugar
+  // do vão e do capacho; sem ela, a porta de sempre
+  function desenharSaida(ctx, g, s, ceu) {
     var px = s.x * T, py = s.y * T;
+    if (ceu && typeof ceu.saida === 'function') { ceu.saida(ctx, px, py); return; }
     // vão da porta no lábio de baixo, com a luz de fora
     if (g.dentro(s.x, s.y + 1) || true) {
       ret(ctx, px + 1, py + 16, 14, 5, '#fff4c8');
@@ -181,7 +184,7 @@
     }
     // escadas e saída
     (def.escadas || []).forEach(function (e) { desenharEscada(ctx, g, e); });
-    if (saida) desenharSaida(ctx, g, saida);
+    if (saida) desenharSaida(ctx, g, saida, ceu);
     // luz das janelas no chão
     objs.forEach(function (it) { if (it.lib.luz) it.lib.luz(ctx, it.px, it.py, it.o); });
     // sombras automáticas sob os móveis

@@ -171,8 +171,53 @@ interface MovelCasaDef {
   direcoes: 1 | 2 | 4;
   parede?: boolean;
 }
+/** Outra fonte de móvel avulso além das salas (Reino.CasaMoveis.registrarFonte; casa.md §12). Chaves próprias
+ *  (ex.: 'bosque:3'), que não colidem com ids de sala. */
+interface FonteMovelCasa {
+  id: string;
+  /** as chaves que dão um móvel agora (as já escolhidas saem sozinhas dos pendentes) */
+  chaves(): string[];
+  /** o texto do presente na tela de escolha (ex.: "Presente do nível 3") */
+  titulo(chave: string): string;
+  /** opções só entre os móveis que ela ainda não tem (sem repetido nem "Mais um!") */
+  soNovos?: boolean;
+}
 /** Interior que o jogador decora (casa.md §4): o validador dispensa o critério de "rico" e a cena soma os móveis do save. */
 interface InteriorDef {
   decoravel?: boolean;
   objetosExtras?(P: any): ObjetoInterior[];
+}
+
+/* ---------- evento do Bosque dos Fantasmas (js/nucleo/eventos.js; bosque.md §5) ---------- */
+// junta-se ao EventosReino de tipos-jogo.d.ts (que está no limite de linhas)
+interface EventosReino {
+  /** carga: { tipo: 'vida'|'golpe'|'vencido'|'desmaio'|'acerto'|'ponto', ... } */
+  BOSQUE: 'bosque';
+}
+
+/* ---------- regras do Bosque dos Fantasmas (js/sistemas/bosque.js; bosque.md §5) ---------- */
+type HabilidadeBosque = 'forca' | 'vida' | 'velocidade';
+/** Uma pergunta de fantasma: os objetos da matéria, da sala e do desafio. */
+interface PerguntaBosque { materia: Materia; sala: Sala; desafio: Desafio }
+/** Reino.Bosque */
+interface BosqueApi {
+  acertos(): number;
+  nivel(): number;
+  xp(): { n: number; de: number; maximo: boolean };
+  temEspada(): boolean;
+  /** true só na 1ª vez */
+  ganharEspada(): boolean;
+  pontos(): { forca: number; vida: number; velocidade: number };
+  pontosPendentes(): number[];
+  porPonto(n: number, h: HabilidadeBosque): boolean;
+  dano(): number;
+  vidaMax(): number;
+  fatorVelocidade(): number;
+  noBosque(): boolean;
+  pergunta(): PerguntaBosque | null;
+  perguntas(): PerguntaBosque[];
+  acertou(materiaId: string): { estrelas: number; nivel: number; subiu: number | null };
+  errou(materiaId: string): void;
+  chaveMovel(n: number): string;
+  HABILIDADES: HabilidadeBosque[];
 }

@@ -24,6 +24,7 @@ contrato dele: a seção (§) do que vai mexer, não o arquivo inteiro. Mudança
 | Laboratório de Química: misturas, caderno de receitas, microscópio, tabela periódica, 2º andar (curiosidades, estados, separar, livros), campo `quimica` | `quimica.md` |
 | experiências e mini-jogos do Laboratório de Ciências no Observatório | `laboratorio-atividades.md` |
 | casa do jogador: kits de móveis por matéria, colocar e girar móveis, interior decorável, campos `casaBau`/`casaKits`/`casaItens`/`casaMoveis`, baú da casa, móvel à escolha por sala feita | `casa.md` |
+| Bosque dos Fantasmas: portal no mapa, interior de céu aberto, combate com espada, pergunta por fantasma, nível e pontos, campos `bosque`/`bosquePontos` | `bosque.md` |
 | plano de frentes paralelas, reserva de personagem (vaga tracejada), ondas, conferência em pipeline | `plano-paralelo.md` |
 | regras de toda frente/worker (worktree, proibições, formato do retorno) | `frente.md` |
 | regras gerais de código, ordem de carga, testes | tabela abaixo |
