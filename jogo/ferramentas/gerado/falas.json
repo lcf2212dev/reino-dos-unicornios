@@ -40110,6 +40110,96 @@
    "fala": "Cada sala nova põe moedas!"
   },
   {
+   "chave": "145f8440u",
+   "voz": "narradora",
+   "texto": "Bem-vinda ao bosque!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Bem-vinda ao bosque!"
+  },
+  {
+   "chave": "fe39a29eu",
+   "voz": "narradora",
+   "texto": "Bem-vindo ao bosque!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Bem-vindo ao bosque!"
+  },
+  {
+   "chave": "6487a60b13",
+   "voz": "narradora",
+   "texto": "Os fantasmas daqui são fofos.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Os fantasmas daqui são fofos."
+  },
+  {
+   "chave": "bfc15da014",
+   "voz": "narradora",
+   "texto": "Vença e responda às perguntas!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Vença e responda às perguntas!"
+  },
+  {
+   "chave": "b2019bf8x",
+   "voz": "narradora",
+   "texto": "Uma lanterna das fadas.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Uma lanterna das fadas."
+  },
+  {
+   "chave": "f8dd22d210",
+   "voz": "narradora",
+   "texto": "A luz dela nunca se apaga.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "A luz dela nunca se apaga."
+  },
+  {
+   "chave": "5f500214x",
+   "voz": "narradora",
+   "texto": "Um cogumelo que brilha!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Um cogumelo que brilha!"
+  },
+  {
+   "chave": "38ab9adaw",
+   "voz": "narradora",
+   "texto": "Ele ilumina o caminho.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Ele ilumina o caminho."
+  },
+  {
+   "chave": "c3b16e2113",
+   "voz": "narradora",
+   "texto": "Esta árvore é muito velhinha.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Esta árvore é muito velhinha."
+  },
+  {
+   "chave": "f41fc97b12",
+   "voz": "narradora",
+   "texto": "Ela já viu muitos fantasmas.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Ela já viu muitos fantasmas."
+  },
+  {
    "chave": "db1a1b871r",
    "voz": "npc-serena",
    "texto": "Em breve teremos novos conteúdos do quarto bimestre!",
@@ -89621,6 +89711,195 @@
     "geral"
    ],
    "fala": "Saíram produtos novos!"
+  },
+  {
+   "chave": "8eae3495u",
+   "voz": "claude",
+   "texto": "Você ganhou uma espada!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Você ganhou uma espada!"
+  },
+  {
+   "chave": "2c7e937bw",
+   "voz": "claude",
+   "texto": "Ela tem a magia do Reino.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Ela tem a magia do Reino."
+  },
+  {
+   "chave": "50449cfbz",
+   "voz": "claude",
+   "texto": "Vença os fantasmas fofinhos!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Vença os fantasmas fofinhos!"
+  },
+  {
+   "chave": "aa13e242x",
+   "voz": "claude",
+   "texto": "Cada um traz uma pergunta.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Cada um traz uma pergunta."
+  },
+  {
+   "chave": "9d422be8u",
+   "voz": "claude",
+   "texto": "Você venceu o fantasma!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Você venceu o fantasma!"
+  },
+  {
+   "chave": "8ee5c2a710",
+   "voz": "claude",
+   "texto": "Responda e ganhe uma estrela!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Responda e ganhe uma estrela!"
+  },
+  {
+   "chave": "9612ccfft",
+   "voz": "claude",
+   "texto": "Isso mesmo, muito bem!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Isso mesmo, muito bem!"
+  },
+  {
+   "chave": "bacaad4dw",
+   "voz": "claude",
+   "texto": "Você acertou, que beleza!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Você acertou, que beleza!"
+  },
+  {
+   "chave": "e874a74d10",
+   "voz": "claude",
+   "texto": "Quase, veja a resposta certa.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Quase, veja a resposta certa."
+  },
+  {
+   "chave": "d4bf2c09v",
+   "voz": "claude",
+   "texto": "O fantasma volta depois.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "O fantasma volta depois."
+  },
+  {
+   "chave": "9f5a9dd5x",
+   "voz": "claude",
+   "texto": "Depois você tenta de novo!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Depois você tenta de novo!"
+  },
+  {
+   "chave": "34f66b9dr",
+   "voz": "claude",
+   "texto": "Você subiu de nível!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Você subiu de nível!"
+  },
+  {
+   "chave": "99e9752610",
+   "voz": "claude",
+   "texto": "Escolha onde pôr o seu ponto.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Escolha onde pôr o seu ponto."
+  },
+  {
+   "chave": "22f0c047z",
+   "voz": "claude",
+   "texto": "Sua espada ficou mais forte!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Sua espada ficou mais forte!"
+  },
+  {
+   "chave": "916c5268w",
+   "voz": "claude",
+   "texto": "Agora você tem mais vida!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Agora você tem mais vida!"
+  },
+  {
+   "chave": "799462dbz",
+   "voz": "claude",
+   "texto": "Agora você anda mais rápido!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Agora você anda mais rápido!"
+  },
+  {
+   "chave": "7a4c181310",
+   "voz": "claude",
+   "texto": "Tem um móvel para a sua casa!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Tem um móvel para a sua casa!"
+  },
+  {
+   "chave": "d3e8a39dz",
+   "voz": "claude",
+   "texto": "Ele fica guardado para você.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Ele fica guardado para você."
+  },
+  {
+   "chave": "8e8f008f11",
+   "voz": "claude",
+   "texto": "Ufa, vamos descansar um pouco.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Ufa, vamos descansar um pouco."
+  },
+  {
+   "chave": "6accbde410",
+   "voz": "claude",
+   "texto": "Voltamos ao começo do bosque.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Voltamos ao começo do bosque."
+  },
+  {
+   "chave": "a9da0069x",
+   "voz": "claude",
+   "texto": "Você não perdeu nada, viu?",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Você não perdeu nada, viu?"
   },
   {
    "chave": "6a4a021b1r",
