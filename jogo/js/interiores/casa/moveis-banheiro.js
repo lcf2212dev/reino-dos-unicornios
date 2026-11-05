@@ -1,11 +1,12 @@
 /* Casa do jogador: móveis do kit Banheiro (prefixo casa-banheiro-; docs/contratos/casa.md §5). Banheira, vaso, pia,
    tapetinho e cesto no chão; espelho, toalheiro e armarinho na parede. Cada um nas direções do kit (kits-b.js):
-   baixo = de frente, cima = de costas, lado = virado para a esquerda (pegada trocada). Nada de DOM no carregamento. */
+   baixo = de frente, cima = de costas, lado = virado para a esquerda (pegada trocada). Movimento de sempre (casa.md
+   §13.7): o patinho da banheira boia e a espuma brilha. Nada de DOM no carregamento. */
 (function () {
   var R = window.Reino;
   var I = R.Interiores, D = I.desenho, C = D.C;
   var ret = D.ret, circulo = D.circulo, clarear = D.clarear, escurecer = D.escurecer;
-  var K = R.Desenho.K, virado = R.CasaArte.virado, usos = R.CasaArte.objeto;
+  var K = R.Desenho.K, CA = R.CasaArte, virado = CA.virado, usos = CA.objeto;
   var LOUCA = '#fbfbff', LOUCA2 = '#dfe3f3', AGUA = '#8fd8f0', AGUA2 = '#c8f0ff', MENTA = '#7fe0c8', LIL = '#c9a8ff';
 
   // retângulo de cantos cortados (1 px), cor cheia
@@ -22,8 +23,15 @@
   /* ---------- banheira (2×3; lado 3×2) ---------- */
   // pés de leão dourados
   function pe(ctx, x, y) { ret(ctx, x, y, 4, 4, K); ret(ctx, x + 1, y + 1, 2, 2, C.ouro); ret(ctx, x + 1, y + 1, 1, 1, C.ouro3); }
-  // a banheira vista de cima, comprida em pé: torneira no fundo (baixo) ou na frente (cima)
-  function banheiraEmPe(ctx, px, py, torneiraFrente) {
+  // patinho amarelo no canto (x, y) da caixa, bico para a esquerda (b = -1) ou para a direita (b = 1)
+  function patinho(p, x, y, b) {
+    p.r(x, y, 7, 5, K); p.r(x + 1, y + 1, 5, 3, C.ouro); p.r(b < 0 ? x - 1 : x + 6, y + 2, 2, 1, C.laranja);
+    p.r(b < 0 ? x + 2 : x + 4, y + 1, 1, 1, K);
+  }
+  var PATINHO = { baixo: [17, 9, -1], cima: [9, 5, 1], lado: [21, 3, -1] };
+  function pincel(ctx, px, py) { return { r: function (x, y, w, h, c) { ret(ctx, px + x, py + y, w, h, c); } }; }
+  // a banheira vista de cima, comprida em pé: torneira no fundo (baixo) ou na frente (cima); na casa (uid) o patinho boia no anim
+  function banheiraEmPe(ctx, px, py, torneiraFrente, uid) {
     pe(ctx, px + 3, py + 43); pe(ctx, px + 25, py + 43);
     arred(ctx, px + 1, py - 3, 30, 47, K); arred(ctx, px + 2, py - 2, 28, 45, LOUCA);
     ret(ctx, px + 2, py + 34, 28, 9, LIL); ret(ctx, px + 2, py + 34, 28, 1, K);      // a frente lilás
@@ -35,15 +43,13 @@
     [[11, 22], [16, 25], [21, 21], [13, 27], [19, 28]].forEach(function (b) { espuma(ctx, px + b[0], py + b[1]); });
     if (torneiraFrente) {
       torneira(ctx, px + 14, py + 30);
-      ret(ctx, px + 9, py + 5, 7, 5, K); ret(ctx, px + 10, py + 6, 5, 3, C.ouro); ret(ctx, px + 15, py + 7, 2, 1, C.laranja);  // patinho
-      ret(ctx, px + 13, py + 6, 1, 1, K);
     } else {
       torneira(ctx, px + 14, py - 6); ret(ctx, px + 16, py - 1, 1, 3, AGUA2);
-      ret(ctx, px + 17, py + 9, 7, 5, K); ret(ctx, px + 18, py + 10, 5, 3, C.ouro); ret(ctx, px + 16, py + 11, 2, 1, C.laranja);
-      ret(ctx, px + 19, py + 10, 1, 1, K);
     }
+    var b = PATINHO[torneiraFrente ? 'cima' : 'baixo'];
+    if (!uid) patinho(pincel(ctx, px, py), b[0], b[1], b[2]);
   }
-  function banheiraLado(ctx, px, py) {
+  function banheiraLado(ctx, px, py, obj) {
     pe(ctx, px + 3, py + 27); pe(ctx, px + 41, py + 27);
     arred(ctx, px + 1, py - 3, 46, 31, K); arred(ctx, px + 2, py - 2, 44, 29, LOUCA);
     ret(ctx, px + 2, py + 19, 44, 8, LIL); ret(ctx, px + 2, py + 19, 44, 1, K);
@@ -54,14 +60,27 @@
     [[10, 10], [15, 13], [20, 9], [26, 12], [31, 10]].forEach(function (b) { espuma(ctx, px + b[0], py + b[1]); });
     ret(ctx, px + 42, py - 2, 3, 9, K); ret(ctx, px + 39, py + 4, 4, 3, K); ret(ctx, px + 43, py - 1, 1, 7, C.metal);   // torneira à direita
     ret(ctx, px + 40, py + 5, 2, 1, C.metal);
-    ret(ctx, px + 21, py + 3, 7, 5, K); ret(ctx, px + 22, py + 4, 5, 3, C.ouro); ret(ctx, px + 20, py + 5, 2, 1, C.laranja); ret(ctx, px + 23, py + 4, 1, 1, K);
+    if (!(obj && obj.uid)) patinho(pincel(ctx, px, py), 21, 3, -1);
+  }
+  // sempre: o patinho sobe e desce 1 px (600 ms) e, uma de cada vez, uma bolha de espuma brilha (os brilhos só com t > 0)
+  var ESPUMA = { baixo: [[11, 22], [16, 25], [21, 21], [13, 27], [19, 28]], lado: [[10, 10], [15, 13], [20, 9], [26, 12], [31, 10]] };
+  ESPUMA.cima = ESPUMA.baixo;
+  function boiar(dir) {
+    return function (p, t, obj) {
+      var b = PATINHO[dir], e = ESPUMA[dir], k = Math.floor(t / 600);
+      if (obj.uid) patinho(p, b[0], b[1] - (k % 2), b[2]);
+      if (!t) return;
+      var bo = e[(k * 3) % 5];                                                              // brilho: o pontinho de luz clareia e acende ao lado
+      p.r(bo[0] - 1, bo[1] - 1, 1, 1, C.branco); p.r(bo[0] - 2, bo[1] - 2, 1, 1, C.branco);
+    };
   }
   I.objeto('casa-banheiro-banheira', { w: 2, h: 3, topo: 6, solido: true,
     desenhar: virado({
-      baixo: function (ctx, px, py) { banheiraEmPe(ctx, px, py, false); },
-      cima: function (ctx, px, py) { banheiraEmPe(ctx, px, py, true); },
+      baixo: function (ctx, px, py, obj) { banheiraEmPe(ctx, px, py, false, obj && obj.uid); },
+      cima: function (ctx, px, py, obj) { banheiraEmPe(ctx, px, py, true, obj && obj.uid); },
       lado: banheiraLado,
-    }) });
+    }),
+    anim: CA.sempre({ baixo: boiar('baixo'), cima: boiar('cima'), lado: boiar('lado') }) });
 
   /* ---------- vaso sanitário (1×1) ---------- */
   function caixaDescarga(ctx, x, y, w, h) { caixa(ctx, x, y, w, h, LOUCA); ret(ctx, x + 1, y + h - 2, w - 2, 1, LOUCA2); }

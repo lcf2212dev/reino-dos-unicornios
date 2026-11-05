@@ -95,4 +95,6 @@
 # @ = brilho da aura mais fraco por fora (sem retângulo) e chaminé da Minha Casa no telhado
 # @ = volta a arte anterior da personagem e dos unicórnios (desfaz cb35e360)
 # @ = casa usos: chuveiro entra nos móveis das salas (sorteio da tela movel-casa com 42) e config.casa.usos na loja.json
+# @ = quarto do ET: o 2º andar da casa ganha o 3º quarto, o sorteio da tela movel-casa muda com 50 móveis e config.casa.comodos
+# @ = quarto do ET: o 2º andar da casa ganha o 3º quarto, o sorteio da tela movel-casa muda com 50 móveis e config.casa.comodos
 @

@@ -1,11 +1,12 @@
 /* Casa do jogador: os móveis avulsos de Sala de Jantar (casa.md §12; dados em js/conteudo/casa/moveis-salas.js),
    em pixel art. baixo = de frente, cima = de costas, lado = virado para a esquerda (pegada trocada).
-   Paleta: madeira cerejeira, estofado menta, porcelana branca com rosa. Sem DOM no carregamento. */
+   Paleta: madeira cerejeira, estofado menta, porcelana branca com rosa. Movimento de sempre (casa.md §13.7): o pêndulo
+   do relógio de pé balança devagar. Sem DOM no carregamento. */
 (function () {
   var R = window.Reino;
   var D = R.Desenho, C = D.C, K = D.K;
   var ret = D.ret, matriz = D.matriz, escurecer = D.escurecer, clarear = D.clarear;
-  var I = R.Interiores, virado = R.CasaArte.virado;
+  var I = R.Interiores, CA = R.CasaArte, virado = CA.virado;
 
   var MAD = '#c9764f', ESTOF = '#a8ecd0', ROSA = '#ff7eb6', VASO = '#5fb4ff', UVA = '#b58cff';
 
@@ -101,6 +102,11 @@
     } });
 
   /* ----- relógio de pé 1×1, bem alto ----- */
+  // pêndulo da janela estreita: a haste presa no alto e o disco embaixo vão s px (-1, 0 ou 1) para o lado
+  function pendulo(p, s) {
+    for (var j = 0; j < 7; j++) p.r(8 + (j > 3 ? s : 0), -5 + j, 1, 1, K);
+    p.r(6 + s, 2, 4, 3, K); p.r(7 + s, 3, 2, 1, C.ouro);
+  }
   I.objeto('casa-movel-relogio-pe', { w: 1, h: 1, topo: 24, solido: true, alto: true,
     desenhar: function (ctx, px, py, o) {
       var p = pincel(ctx, px, py), e = escurecer(MAD, 0.25), on = ligado(o);
@@ -111,16 +117,17 @@
       if (on) { p.r(4, -6, 8, 13, K); p.r(5, -5, 6, 11, '#fff1d6'); p.r(7, -5, 2, 1, C.ouro); }   // janela mais larga: o pêndulo balança no anim
       else {
         p.r(5, -6, 6, 13, K); p.r(6, -5, 4, 11, '#fff1d6');
-        p.r(8, -5, 1, 7, K); p.r(6, 2, 4, 3, K); p.r(7, 3, 2, 1, C.ouro);
+        if (!(o && o.uid)) pendulo(p, 0);                             // na casa (com uid), ele balança no anim
       }
       p.caixa(1, 9, 14, 6, e); p.r(2, 15, 3, 1, K); p.r(11, 15, 3, 1, K);
     },
-    anim: function (ctx, px, py, t, o) {
-      if (!ligado(o)) return;
-      var p = pa(ctx, px, py, o), s = Math.round(2 * Math.sin(t / 159));   // balança forte, 1 s por ida e volta
+    anim: CA.sempre({ baixo: function (p, t, o) {                    // sempre: 1 px para cada lado, 1,8 s por ida e volta
+      if (o.uid) pendulo(p, Math.round(Math.sin(t * 2 * Math.PI / 1800)));
+    } }, function (ctx, px, py, t, o) {
+      var p = pa(ctx, px, py, o), s = Math.round(2 * Math.sin(t / 159));   // ligado: balança forte, 1 s por ida e volta
       for (var j = 0; j < 7; j++) p.r(7 + Math.round(s * (j + 1) / 8), -4 + j, 1, 1, K);
       p.r(7 + s, 3, 3, 3, K); p.r(8 + s, 4, 1, 1, C.ouro);
-    } });
+    }) });
 
   /* ----- jogo de chá 1×1: mesinha redonda com bule e xícaras ----- */
   I.objeto('casa-movel-jogo-cha', { w: 1, h: 1, topo: 6, solido: true,

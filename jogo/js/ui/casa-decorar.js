@@ -1,7 +1,7 @@
 /* Casa do jogador, modo decorar (docs/contratos/casa.md §9.3), parte 2: o botão do HUD e o painel das peças.
    UI.decorarCasa({ kit? }) → Promise (resolve quando ela sai com "Pronto", ✕ ou Esc). O painel fica no pé da tela,
    sem véu escuro: a casa aparece em cima. Abas pelos cômodos com kit ou móvel avulso (Reino.Casa.abas(), nome de
-   Reino.Casa.nomeKit); cada peça com a
+   Reino.Casa.nomeComodo); cada peça com a
    miniatura (o desenho do objeto, de frente), o nome e "Na casa" ou "Guardado". Tocar numa peça (ou num móvel da
    casa, por cima do painel) entra no modo colocar (ui/casa-decorar-fantasma.js); colocou, guardou ou cancelou,
    o painel volta. A cena fica ocupada (Cena.ocupar('decorar')) do começo ao fim: ela não anda.
@@ -105,10 +105,10 @@
       C().pecas(kit).forEach(function (p) { grade.appendChild(cartao(p)); });
     }
     var barraAbas = kits.length > 1 ? el('div.decorar-abas', { role: 'tablist', 'aria-label': 'Kits' }, kits.map(function (k) {
-      var b = el('button.decorar-aba', { type: 'button', role: 'tab', 'data-kit': k }, C().nomeKit(k));
+      var b = el('button.decorar-aba', { type: 'button', role: 'tab', 'data-kit': k }, C().nomeComodo(k));
       b.addEventListener('click', function () { R.Som.tocar('toque'); mostrar(k); });
       return (abas[k] = b);
-    })) : el('p.decorar-kit', C().nomeKit(kits[0]));
+    })) : el('p.decorar-kit', C().nomeComodo(kits[0]));
     var pronto = el('button.btn-pequeno.btn-principal.decorar-pronto', { type: 'button' }, 'Pronto');
     pronto.addEventListener('click', function () { R.Som.tocar('toque'); sair(); });
     // painel baixo (a sala fica à vista em cima): abas e "Pronto" numa linha, as peças numa fileira que rola de lado

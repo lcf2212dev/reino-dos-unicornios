@@ -248,6 +248,8 @@ Com relógios diferentes, as duas se desfariam para sempre. Por isso:
    - publicar ou republicar o artifact, ou abrir o jogo publicado;
    - `localStorage.clear()`, `removeItem` em chaves existentes, "Apagar tudo", "Novo ciclo" ou pagamentos
      fora do ambiente de teste.
+   Exceção única (pedido do Leandro, 05/11/2026): a extensão do GNOME de acompanhamento (`jogo/ferramentas/gnome/`,
+   `npm run gnome`) faz só GET em `/api/progresso`, no PC dele, e guarda só contagens. Agente nenhum a roda contra o banco.
 3. Como testar sem risco:
    - servidor de TESTE: `node jogo/ferramentas/testes/servidor-teste.js` (porta livre ≥ 1024, nunca 80, banco novo em
      `/tmp/reino-testes/`; recusa a porta 80 e banco fora de `/tmp`/dentro de `servidor/dados`). Em código:

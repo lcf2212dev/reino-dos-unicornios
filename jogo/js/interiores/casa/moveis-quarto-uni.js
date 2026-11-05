@@ -1,12 +1,12 @@
 /* Casa do jogador: móveis do kit Quarto do unicórnio (prefixo casa-quarto-uni-; docs/contratos/casa.md §5). Quarto
    mágico: almofadão de feno, bebedouro, comedouro de cenouras, tapete de nuvem, baú de brinquedos, estrela luminosa,
    espelho e cabideiro de escovas. baixo = de frente, cima = de costas, lado = virado para a esquerda (pegada
-   trocada). Nada de DOM no carregamento. */
+   trocada). Movimento de sempre (casa.md §13.7): pinga água no bebedouro. Nada de DOM no carregamento. */
 (function () {
   var R = window.Reino;
   var I = R.Interiores, D = I.desenho, C = D.C;
   var ret = D.ret, circulo = D.circulo, clarear = D.clarear, escurecer = D.escurecer;
-  var K = R.Desenho.K, virado = R.CasaArte.virado, usos = R.CasaArte.objeto;
+  var K = R.Desenho.K, CA = R.CasaArte, virado = CA.virado, usos = CA.objeto;
   var LIL = '#c9a8ff', LIL2 = '#e6d8ff', ROXO = '#9b7cf0', AMAR = '#ffd84d', FENO = '#f2cf6b', FENO2 = '#c99a3a';
   var ARCO = ['#ff7a8a', '#ffb35c', '#ffe066', '#7fe08a', '#7fc8ff', '#b58cff'];
   var ESTRELA = ['...#...', '..###..', '#######', '.#####.', '.##.##.', '#.....#'];
@@ -46,6 +46,23 @@
     caixa(ctx, x, y + 3, w, h, c); ret(ctx, x + 1, y + 6, w - 2, 1, escurecer(c, 0.3));
     ret(ctx, x, y, w, 5, K); ret(ctx, x + 1, y + 1, w - 2, 3, '#8fd8f0'); ret(ctx, x + 2, y + 1, w - 5, 1, '#d6f6ff');
   }
+  // sempre (só com t > 0): um fio de gotas cai da bica, uma por segundo (de y0 a y1, nas colunas xs, alternando), e cada
+  // uma abre uma roda na água em ya; a gota anterior ainda faz a roda enquanto a nova cai
+  var GOTA_MS = 1000, PASSO_GOTA = 110, PASSO_RODA = 200;
+  function pingar(xs, y0, y1, ya) {
+    var n = y1 - y0 + 1;
+    return function (p, t) {
+      if (!t) return;
+      for (var k = Math.floor(t / GOTA_MS), j = k - 1; j <= k; j++) {
+        if (j < 0) continue;
+        var idade = t - j * GOTA_MS, s = Math.floor(idade / PASSO_GOTA), x = xs[j % xs.length];
+        if (s < n) { p.r(x, y0 + s, 1, 2, '#8fd8f0'); p.r(x, y0 + s, 1, 1, C.branco); continue; }   // gota: luz em cima
+        s = Math.floor((idade - n * PASSO_GOTA) / PASSO_RODA);
+        if (s === 0) p.r(x, ya, 1, 1, C.branco);
+        else if (s < 3) { p.r(x - 1, ya + s - 1, 1, 1, '#d6f6ff'); p.r(x + 1, ya + s - 1, 1, 1, '#d6f6ff'); }   // a roda abre e some
+      }
+    };
+  }
   function bica(ctx, x, y) { ret(ctx, x, y, 3, 9, K); ret(ctx, x + 1, y + 1, 1, 7, C.metal); estrela(ctx, x - 2, y - 6, AMAR); }
   I.objeto('casa-quarto-uni-bebedouro', { w: 1, h: 1, topo: 12, solido: true,
     desenhar: virado({
@@ -60,7 +77,9 @@
         bica(ctx, px + 11, py - 6); ret(ctx, px + 9, py + 1, 3, 2, K);
         cocho(ctx, px + 3, py + 2, 10, 10, LIL); ret(ctx, px + 2, py + 6, 1, 4, K);
       },
-    }) });
+    }),
+    // de frente, das pontas da estrela; de costas, a estrela fica rente à água (pingo curto); de lado, do bico
+    anim: CA.sempre({ baixo: pingar([5, 11], -6, 2, 4), cima: pingar([5, 11], 0, 1, 2), lado: pingar([8], 1, 3, 4) }) });
 
   /* ---------- comedouro de cenouras (1×1) ---------- */
   function cenoura(ctx, x, y, deitada) {

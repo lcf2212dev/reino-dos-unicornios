@@ -1,5 +1,6 @@
-/* Casa do jogador: os móveis avulsos, um à escolha por sala feita (docs/contratos/casa.md §12). 42 móveis (um por
-   sala do 4º bimestre: 25 de Língua Portuguesa e 13 de Inglês, mais 3 camas e o chuveiro), divididos pelos cômodos; `comodo` = a aba do modo
+/* Casa do jogador: os móveis avulsos, um à escolha por sala feita (docs/contratos/casa.md §12). 50 móveis (um por
+   sala do 4º bimestre: 25 de Língua Portuguesa e 13 de Inglês, mais 3 camas, o chuveiro e os 8 do quarto do ET),
+   divididos pelos cômodos; `comodo` = a aba do modo
    decorar. Desenhos em js/interiores/casa/moveis-salas-<cômodo>.js (objeto casa-movel-<id>).
    Ids fixos para sempre: mudar um id faz o móvel sumir do save. Nomes até 14 letras, sem emoji. */
 (function () {
@@ -56,5 +57,14 @@
     { id: 'caminha-nuvem', nome: 'Caminha nuvem', objeto: 'casa-movel-caminha-nuvem', comodo: 'quarto-uni', direcoes: 2 },
     // chuveiro (pedido de 03/11/2026): box 2×2 com uso (casa.md §13)
     { id: 'chuveiro', nome: 'Chuveiro', objeto: 'casa-movel-chuveiro', comodo: 'banheiro', direcoes: 1 },
+    // quarto do ET (pedido de 05/11/2026): o amigo da viagem de foguete (casa-2, só móveis avulsos, sem kit)
+    { id: 'cama-foguete', nome: 'Cama foguete', objeto: 'casa-movel-cama-foguete', comodo: 'quarto-et', direcoes: 4 },
+    { id: 'disco-voador', nome: 'Disco voador', objeto: 'casa-movel-disco-voador', comodo: 'quarto-et', direcoes: 1 },
+    { id: 'telescopio', nome: 'Telescópio', objeto: 'casa-movel-telescopio', comodo: 'quarto-et', direcoes: 4 },
+    { id: 'painel-nave', nome: 'Painel da nave', objeto: 'casa-movel-painel-nave', comodo: 'quarto-et', direcoes: 4 },
+    { id: 'planta-alien', nome: 'Planta alien', objeto: 'casa-movel-planta-alien', comodo: 'quarto-et', direcoes: 1 },
+    { id: 'abajur-saturno', nome: 'Abajur Saturno', objeto: 'casa-movel-abajur-saturno', comodo: 'quarto-et', direcoes: 1 },
+    { id: 'quadro-galaxia', nome: 'Quadro galáxia', objeto: 'casa-movel-quadro-galaxia', comodo: 'quarto-et', direcoes: 1, parede: true },
+    { id: 'robozinho', nome: 'Robozinho', objeto: 'casa-movel-robozinho', comodo: 'quarto-et', direcoes: 4 },
   ].forEach(function (m) { R.registrarMovelCasa(m); });
 })();

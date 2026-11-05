@@ -26,7 +26,9 @@ virado para onde quiser.
 ## 2. Ids
 - Lugar `casa` ("Minha Casa"), `rect {x:46,y:33,w:6,h:5}`, porta em (49,37), sprite `casa`.
 - Interiores: `casa` (térreo, `entrada: true`, `pacote: 'interior-casa'`) e `casa-2` (em cima, mesmo pacote).
-- Cômodos: no térreo `estar`, `jantar`, `cozinha`, `banheiro`; em `casa-2` os quartos `quarto-jogador` e `quarto-uni`.
+- Cômodos: no térreo `estar`, `jantar`, `cozinha`, `banheiro`; em `casa-2` os quartos `quarto-jogador`, `quarto-uni` e
+  `quarto-et` (o Quarto do ET, do amigo da viagem de foguete: só móveis avulsos, sem kit). Ordem das abas:
+  `config.casa.comodos`.
 - Kits (ordem de `config.casa.kits`): `estar`, `jantar`, `cozinha`, `banheiro`, `quarto-jogador`, `quarto-uni`.
 - Objetos: `casa-<nome>` para os do prédio (ex.: `casa-caixa`, a caixa de mudança); `casa-<kit>-<item>` para os móveis.
 - Peça de um kit (uid): `<kit>.<item>.<n>`, com n de 1 a `qtd` (ex.: `jantar.cadeira.3`).
@@ -63,6 +65,8 @@ Reino.registrarKitCasa({
    leva o texto já trocado.
 5. Desenho por cima da cena (fantasma do modo decorar): um módulo com `camada` (`Reino.registrarModulo`), como já
    existe; o motor não muda para isso.
+6. Camadas: a animação de um móvel não passa por cima do móvel que o estático desenha depois dele (`interiores.md`
+   §6.3); conferido por `testes/unidade/casa-camadas.navegador.test.js`.
 
 ## 5. Móveis e direções
 1. Cada móvel é um objeto da biblioteca: `Reino.Interiores.objeto('casa-<kit>-<item>', { w, h, solido, alto?, topo?,
@@ -153,9 +157,10 @@ Qualquer cômodo vale para qualquer kit.
 ## 11. Testes
 - `unidade/casa.test.js` (save, regras, mescla de 2 aparelhos, save antigo sem os campos, guardado, órfã).
 - `unidade/casa-moveis.test.js` (§12: pendentes, sorteio fixo, escolher, repetido, peças `movel.*`, mescla, caixa)
-  e `unidade/casa-moveis-salas.navegador.test.js` (os 42 desenhos; pranchas em `/tmp/reino-testes/casa-moveis-salas/`).
+  e `unidade/casa-moveis-salas.navegador.test.js` (os 50 desenhos; pranchas em `/tmp/reino-testes/casa-moveis-salas/`).
 - `unidade/interiores-decoravel.test.js` (motor: `objetosExtras`, `refazer`, placa com `{nome}`/`{uni}`, validador).
 - `unidade/casa-predio.navegador.test.js`, `unidade/casa-decorar.navegador.test.js`, `unidade/casa-telas.navegador.test.js`.
+- `unidade/casa-movimento.navegador.test.js` (§13.7; pranchas em `/tmp/reino-testes/casa-movimento/`).
 - Cenas do e2e: o interior entra sozinho (vazio, como num save sintético sem kits); telas `bau-casa`, `kit-casa`,
   `movel-casa`, `decorar`.
 
@@ -166,12 +171,13 @@ avulso, escolhido entre `config.casa.moveisOpcoes` (5) sorteados. Só depois de 
 | Parte | Onde |
 |---|---|
 | registro | `Reino.registrarMovelCasa({ id, nome, objeto, comodo, direcoes, parede? })` / `Reino.movelCasa(id)` / `Reino.moveisCasa` (`js/nucleo/registros.js`) |
-| dados (42: um por sala do 4º bimestre, 25 de Língua Portuguesa + 13 de Inglês, mais 3 camas e o chuveiro) | `js/conteudo/casa/moveis-salas.js` |
+| dados (50: um por sala do 4º bimestre, 25 de Língua Portuguesa + 13 de Inglês, mais 3 camas, o chuveiro e os 8 do Quarto do ET) | `js/conteudo/casa/moveis-salas.js` |
 | desenho | objeto `casa-movel-<id>` em `js/interiores/casa/moveis-salas-<cômodo>.js` (regras do §5) |
 | save, sorteio, pendentes | `js/sistemas/casa-moveis.js` (`Reino.CasaMoveis`) |
 | tela | `js/ui/casa-moveis.js` (`UI.escolherMovelCasa`, `UI.casaMoveisPendentes`) + `css/ui-casa-moveis.css` |
 
-1. `comodo` é um id de `config.casa.kits`: a aba do modo decorar. As abas passam a ser os cômodos com kit ganho ou
+1. `comodo` é um id de `config.casa.comodos`: a aba do modo decorar. O nome da aba e do cômodo no cartão é o do kit
+   dele ou, sem kit, a placa do cômodo (`Casa.nomeComodo`). As abas passam a ser os cômodos com kit ganho ou
    algum móvel avulso (`Casa.abas()`); a aba traz as peças do kit e depois os móveis avulsos daquele cômodo.
 2. Save: `casaMoveis: { <salaId>: { movel, em } }`, `carimbo`, `novoCiclo: 'mantem'`, `copiaSeguranca: true`. A escolha
    de uma sala é para sempre. Entrada com móvel desconhecido não conta: a sala volta a ficar pendente.
@@ -214,3 +220,10 @@ Pedido: `pedidos/2026-11-03-casa-usos.md`. Peça colocada com uso ganha `uid`, `
    beber só tocam o som.
 5. Falas: nenhuma nova; as frases dos cuidados (`comeu`, `bebeu`, `cheio`, `semSede`, `banhou`, `jaLimpinho`).
 6. A regra de lugar (§8.3) não muda: peça cercada por outras só não é alcançada (ela arruma os móveis).
+7. Movimento de sempre (pedido `pedidos/2026-11-04-casa-movimento.md`): sem tocar, com Animações, se mexem os móveis em
+   que o movimento é natural: água (gota, marola), peixes, pêndulo e brilho de magia. Plantas, tapetes, quadros e o
+   que só reage ao toque ficam parados. O `anim` vem de `Reino.CasaArte.sempre({ baixo, cima?, lado?, junto? }, hoje?)`
+   (`interiores/casa/virar.js`): roda ligado ou não, com o pincel espelhado em `dir`; ligado, o anim de hoje entra no
+   lugar dele (com `junto`, os dois). A parte que se move de verdade (pêndulo, peixes, patinho) sai do `desenhar` só
+   com `uid`. Invariante: com `uid`, desligado, `desenhar` + `anim` em t = 0 é pixel a pixel o `desenhar` sem `uid`
+   (gotas, bolhas e brilhos só com t > 0). A lista dos móveis e as conferências: `casa-movimento.navegador.test.js`.

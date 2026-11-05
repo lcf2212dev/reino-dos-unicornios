@@ -1,6 +1,6 @@
 /* Casa do jogador: os móveis avulsos de Quarto do unicórnio (casa.md §12; dados em js/conteudo/casa/moveis-salas.js).
-   Fontinha de água, arco-íris e ferradura de parede, luminária de lua, cesto de maçãs e cristal mágico. Todos de
-   uma direção só. Nada de DOM no carregamento. */
+   Fontinha de água, arco-íris e ferradura de parede, luminária de lua, cesto de maçãs, cristal mágico e caminha nuvem.
+   Movimento de sempre (casa.md §13.7): o jorro da fontinha corre e os brilhos de magia piscam. Nada de DOM no carregamento. */
 (function () {
   var R = window.Reino;
   var I = R.Interiores, D = I.desenho, C = D.C;
@@ -25,19 +25,36 @@
         '.a....####....a.', '.a...#pppp#...a.', '..............a.', '#######..#######', '#paaawaaaaawaap#',
         '#paawaaaaaaaaap#', '#pppppppppppppp#', '#pPPpPPPpPPPpPP#', '#pppppppppppppp#', '.##############.'], 0);
     } });
-  // ligado: gotas voam pelos arcos do jorro e a água da bacia brilha em outros pontos
-  var ARCO_GOTA = [[7, -4], [5, -5], [4, -4], [3, -3], [2, -1], [1, 2], [1, 5]];
-  fontinha.anim = function (ctx, px, py, t, obj) {
-    if (!CA.ligado(obj)) return;
-    var n = Math.floor(t / 110);
-    [0, 3].forEach(function (fase) {
-      var g = ARCO_GOTA[(n + fase) % 7];
-      ret(ctx, px + g[0], py + g[1], 1, 2, AGUA); ret(ctx, px + g[0], py + g[1], 1, 1, C.branco);
-      ret(ctx, px + 15 - g[0], py + g[1], 1, 2, AGUA); ret(ctx, px + 15 - g[0], py + g[1], 1, 1, C.branco);
-    });
-    [3, 10].forEach(function (x) { ret(ctx, px + x, py + 7, 3, 1, AGUA); });                          // a marola: apaga o brilho de sempre
-    ret(ctx, px + 4 + (n % 3) * 3, py + 7, 1, 1, C.branco); ret(ctx, px + 9 + (n % 3) * 2, py + 8, 1, 1, C.branco);
-  };
+  // sempre (beber não liga): uma gotinha branca corre por cada arco do jorro até a bacia e o brilho da água vai e volta
+  var JORRO = [[7, -2], [6, -2], [5, -2], [4, -1], [3, -1], [2, 0], [2, 1], [1, 3], [1, 4], [1, 5]];   // lado esquerdo; o direito é 15 - x
+  var MAROLA = [[5, 7, 1], [11, 7, -1], [4, 8, -1]], VAIVEM = [0, 1, 0, -1];                          // os brilhos de sempre e para onde vão
+  fontinha.anim = CA.sempre({ baixo: function (p, t) {
+    if (!t) return;                                                                                    // parado: o desenho de sempre
+    var k = VAIVEM[Math.floor(t / 500) % 4], n = Math.floor(t / 260), i, m, g;
+    for (i = 0; i < MAROLA.length; i++) { m = MAROLA[i]; p.r(m[0], m[1], 1, 1, AGUA); }
+    for (i = 0; i < MAROLA.length; i++) { m = MAROLA[i]; p.r(m[0] + k * m[2], m[1], 1, 1, C.branco); }
+    for (var fase = 0; fase <= 5; fase += 5) {
+      i = (n + fase) % (JORRO.length + 2); g = JORRO[i];
+      if (g) { p.r(g[0], g[1], 1, 1, C.branco); p.r(15 - g[0], g[1], 1, 1, C.branco); }
+      else if (i === JORRO.length) { p.r(2, 7, 1, 1, C.branco); p.r(13, 7, 1, 1, C.branco); }         // pingo na bacia
+    }
+  } });
+
+  // os brilhos de magia piscam devagar, cada um no seu tempo: o miolo clareia, a cruz cresce e volta (só com t > 0)
+  // lista: [x, y, cor] de cada brilho (fixa, fora do quadro)
+  function piscar(p, t, lista) {
+    if (!t) return;
+    for (var i = 0, n = Math.floor(t / 550); i < lista.length; i++) {
+      var k = (n + i * 3 + (i >> 1)) % 7, b = lista[i], x = b[0], y = b[1], c = b[2];
+      if (k > 2) continue;
+      p.r(x, y, 1, 1, C.branco);
+      if (k === 1) { p.r(x, y - 2, 1, 1, c); p.r(x, y + 2, 1, 1, c); p.r(x - 2, y, 1, 1, c); p.r(x + 2, y, 1, 1, c); }
+    }
+  }
+  // os brilhos de cada móvel (os mesmos do desenho)
+  var BRILHOS = { arco: [[4, 6, AMAR], [28, 8, AMAR]], ferradura: [[8, 12, AMAR]], cristal: [[2, -10, AMAR], [14, -5, C.branco], [13, -13, ROSA]],
+    nuvem: [[12, 15, AMAR], [20, 16, C.branco], [9, 3, AMAR], [25, 6, ROSA], [4, 18, AMAR]],
+    nuvemLado: [[15, 17, ROSA], [23, 16, AMAR], [22, 3, AMAR], [7, 6, C.branco], [27, 18, ROSA]] };
 
   /* ---------- arco-íris de parede (2×2) ---------- */
   I.objeto('casa-movel-arco-iris', { w: 2, h: 2, parede: true, solido: false,
@@ -52,7 +69,8 @@
       circulo(ctx, px + 5, py + 23, 3, C.branco); circulo(ctx, px + 9, py + 22, 3, C.branco);       // nuvens nas pontas
       circulo(ctx, px + 26, py + 23, 3, C.branco); circulo(ctx, px + 22, py + 22, 3, C.branco);
       brilho(ctx, px + 4, py + 6, AMAR); brilho(ctx, px + 28, py + 8, AMAR);
-    } });
+    },
+    anim: CA.sempre({ baixo: function (p, t) { piscar(p, t, BRILHOS.arco); } }) });
 
   /* ---------- ferradura dourada de parede (1×2) ---------- */
   I.objeto('casa-movel-ferradura', { w: 1, h: 2, parede: true, solido: false,
@@ -62,7 +80,8 @@
         '.#o.#......#o#..', '.#oo#......#oo#.', '.#lo#......#o.#.', '.#oo#......#oo#.', '.#oo#......#oo#.', '.#o.#......#o.#.',
         '.#oo#......#oo#.', '#ooo#......#ooo#', '#oo##......##oo#', '####........####'], 0);
       brilho(ctx, px + 8, py + 12, AMAR);
-    } });
+    },
+    anim: CA.sempre({ baixo: function (p, t) { piscar(p, t, BRILHOS.ferradura); } }) });
 
   /* ---------- luminária de lua (1×1) ---------- */
   var LUA = ['...####...', '..#yy#....', '.#yyw#....', '#yyw#.....', '#yyy#.....', '#yyy#.....', '#yyyy#...#',
@@ -109,14 +128,15 @@
       ret(ctx, px + 4, py + 5, 8, 7, K); ret(ctx, px + 5, py + 5, 6, 6, ROXO); ret(ctx, px + 5, py + 5, 1, 6, LIL);
       ret(ctx, px + 2, py + 11, 12, 3, K); ret(ctx, px + 3, py + 12, 10, 1, ROXO);
     } });
-  cristal.anim = function (ctx, px, py, t, obj) {                                                     // ligado: as faces clareiam em onda e faíscas giram em volta
-    if (!CA.ligado(obj)) return;
+  cristal.anim = CA.sempre({ baixo: function (p, t) {                                                  // sempre: os brilhos piscam
+    piscar(p, t, BRILHOS.cristal);
+  } }, function (ctx, px, py, t) {                                                                    // ligado: as faces clareiam em onda e faíscas giram em volta
     var f = Math.floor(t / 200) % 6, pos = [[2, -10], [14, -5], [13, -13], [3, -2], [8, -16], [1, -6]];
     D.matriz(ctx, px + 4, py - 14, CRISTAL, { a: f % 2 ? clarear(ROSA, 0.4) : ROSA, b: f % 2 ? LIL : clarear(LIL, 0.4), c: C.branco });
     ret(ctx, px + 4 + 2 + (f % 3), py - 14 + 2 + f, 1, 2, C.branco);                                  // raio de luz descendo pela face
     brilho(ctx, px + pos[f][0], py + pos[f][1], f % 2 ? AMAR : C.branco);
     brilho(ctx, px + pos[(f + 3) % 6][0], py + pos[(f + 3) % 6][1], f % 2 ? C.branco : ROSA);
-  };
+  });
   /* ---------- caminha nuvem (2×2, baixa; lado espelhado) ---------- */
   var NUVEM = [                                                                                        // # contorno, n nuvem, w luz, b sombra
     '................................', '...............#####............', '.............##wwwww##..........', '............#wwnnnnnww#.........',
@@ -150,5 +170,9 @@
         brilho(ctx, px + 15, py + 17, ROSA); brilho(ctx, px + 23, py + 16, AMAR);
         brilho(ctx, px + 22, py + 3, AMAR); brilho(ctx, px + 7, py + 6, C.branco); brilho(ctx, px + 27, py + 18, ROSA);
       },
+    }),
+    anim: CA.sempre({   // os mesmos brilhos do desenho, piscando
+      baixo: function (p, t) { piscar(p, t, BRILHOS.nuvem); },
+      lado: function (p, t) { piscar(p, t, BRILHOS.nuvemLado); },
     }) });
 })();

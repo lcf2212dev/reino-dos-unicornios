@@ -1,11 +1,12 @@
 /* Casa do jogador: os móveis avulsos de Sala de Estar (casa.md §12; dados em js/conteudo/casa/moveis-salas.js),
    em pixel art. baixo = de frente, cima = de costas, lado = virado para a esquerda (pegada trocada).
-   Paleta: madeira mel, piano lilás, tijolo coral, vidro azul-claro. Sem DOM no carregamento. */
+   Paleta: madeira mel, piano lilás, tijolo coral, vidro azul-claro. Movimento de sempre (casa.md §13.7): os peixes do
+   aquário nadam e o pêndulo do relógio cuco balança. Sem DOM no carregamento. */
 (function () {
   var R = window.Reino;
   var D = R.Desenho, C = D.C, K = D.K;
   var ret = D.ret, matriz = D.matriz, escurecer = D.escurecer, clarear = D.clarear;
-  var I = R.Interiores, virado = R.CasaArte.virado;
+  var I = R.Interiores, CA = R.CasaArte, virado = CA.virado;
 
   var MAD = '#d99a5b', PIANO = '#b58cff', TIJ = '#ff8a7a', VIDRO = '#bfe9ff', AGUA = '#5fb4ff', PUFE = '#ff7eb6';
 
@@ -44,19 +45,37 @@
   }
 
   /* ----- aquário 1×1: vidro com peixinhos sobre um móvel ----- */
+  function vira(m) { return m.map(function (l) { return l.split('').reverse().join(''); }); }
+  var LARANJA = ['.oo.o', 'ooooo', '.oo.o'], DOURADO = ['y.yy.', 'yyyyy'];   // de frente para a esquerda e para a direita
+  var PEIXES = [LARANJA, vira(LARANJA), DOURADO, vira(DOURADO)], COR_L = { o: '#ff8a3d' }, COR_D = { y: C.ouro };
+  // ax, bx = quanto cada um nadou; av, bv = virado; tudo 0 = o lugar de sempre
+  function peixes(p, ax, av, bx, bv) {
+    p.m(4 + ax, -4, PEIXES[av ? 1 : 0], COR_L);
+    p.m(10 + bx, bx ? -1 : 0, PEIXES[bv ? 3 : 2], COR_D);                   // longe do canto, nada acima da areia
+  }
+  // nado de sempre: [dx, 1 = virado], passos de 450 e 520 ms; o laranja vai até a planta e volta, o dourado atravessa o aquário
+  var NADO_A = [[0, 0], [-1, 0], [-1, 1], [0, 1], [1, 1], [2, 1], [3, 1], [3, 0], [2, 0], [1, 0]];
+  var NADO_B = [[0, 0], [0, 1], [-1, 1], [-2, 1], [-3, 1], [-4, 1], [-5, 1], [-5, 0], [-4, 0], [-3, 0], [-2, 0], [-1, 0]];
   I.objeto('casa-movel-aquario', { w: 1, h: 1, topo: 10, solido: true, alto: true,
     desenhar: function (ctx, px, py, o) {
       var p = pincel(ctx, px, py), on = ligado(o);
       p.r(0, -10, 16, 15, K); p.r(1, -9, 14, 13, VIDRO); p.r(1, -6, 14, 10, on ? '#7cc8ff' : AGUA); p.r(1, -6, 14, 1, clarear(AGUA, 0.5));
       p.r(2, -8, 1, 10, C.branco);
       if (on) { p.r(3, -9, 10, 2, '#fff6c8'); p.r(4, -9, 8, 1, C.branco); p.r(4, -5, 8, 1, '#a8dcff'); }   // luz acesa; os peixes nadam no anim
-      else { p.m(4, -4, ['.oo.o', 'ooooo', '.oo.o'], { o: '#ff8a3d' }); p.m(10, 0, ['y.yy.', 'yyyyy'], { y: C.ouro }); }
+      else if (!(o && o.uid)) peixes(p, 0, 0, 0, 0);   // na casa (com uid), os peixes nadam no anim
       p.m(12, -4, ['g', 'gg', 'g', 'gg'], { g: C.folha3 }); p.r(3, 2, 10, 2, '#f3d9b0');
       p.caixa(0, 5, 16, 10, MAD); p.r(6, 8, 4, 1, C.ouro);
       pe(p, 1, 13); pe(p, 12, 13);
     },
-    anim: function (ctx, px, py, t, o) {
-      if (!ligado(o)) return;
+    anim: CA.sempre({ baixo: function (p, t, o) {
+      if (!o.uid) return;
+      var a = NADO_A[Math.floor(t / 450) % NADO_A.length], b = NADO_B[Math.floor(t / 520) % NADO_B.length];
+      peixes(p, a[0], a[1], b[0], b[1]);
+      if (!t) return;
+      for (var f = 0; f <= 4; f += 4) {                               // duas bolhas sobem devagar da areia
+        var u = (Math.floor(t / 380) + f) % 8; if (u < 7) p.r(f ? 7 : 11, 1 - u, 1, 1, C.branco);
+      }
+    } }, function (ctx, px, py, t, o) {                               // ligado: luz acesa e os peixes de hoje
       var p = pa(ctx, px, py, o);
       function peixe(x, y, c, volta) {                                // 3×2 com rabo e olho; volta = nadando para a esquerda
         p.r(x, y, 3, 2, c); p.r(volta ? x + 3 : x - 1, y, 1, 2, c); p.r(volta ? x : x + 2, y, 1, 1, K);
@@ -67,7 +86,7 @@
       for (var i = 0; i < 3; i++) {                                   // bolhas sobem da areia
         var u = ((t / 140 + i * 5) % 9); p.r(10 + (i % 2) * 2, 2 - Math.floor(u), 1, 1, C.branco);
       }
-    } });
+    }) });
 
   /* ----- piano 2×1 ----- */
   function teclas(p, x, y, n) {
@@ -140,6 +159,12 @@
     } });
 
   /* ----- relógio cuco de parede 1×2 ----- */
+  // pêndulo entre as correntes dos pesos: haste dourada presa embaixo da caixa e o disco abaixo dos pesos; s = -1, 0 ou 1 px
+  var VAIVEM = [0, 1, 0, -1];
+  function pendulo(p, s) {
+    p.r(8, 21, 1, 7, C.ouro2);
+    p.m(7 + s, 28, ['.k.', 'kok', 'kok', '.k.'], { k: K, o: C.ouro });
+  }
   I.objeto('casa-movel-relogio-cuco', { w: 1, h: 2, parede: true, solido: false,
     desenhar: function (ctx, px, py, o) {
       var p = pincel(ctx, px, py), on = ligado(o);
@@ -151,15 +176,17 @@
       else { p.r(5, 13, 6, 5, C.branco); p.r(8, 14, 1, 2, K); p.r(8, 15, 2, 1, K); }
       p.r(5, 21, 1, 7, K); p.r(10, 21, 1, 5, K);
       p.m(4, 27, ['kk', 'oo', 'kk'], { k: K, o: C.ouro }); p.m(9, 25, ['kk', 'oo', 'kk'], { k: K, o: C.ouro });
+      if (!(o && o.uid)) pendulo(p, 0);                             // na casa (com uid), ele balança no anim
     },
-    anim: function (ctx, px, py, t, o) {
-      if (!ligado(o)) return;
+    anim: CA.sempre({ junto: true, baixo: function (p, t, o) {      // sempre: o pêndulo vai e volta (1,8 s), ligado também
+      if (o.uid) pendulo(p, VAIVEM[Math.floor(t / 450) % 4]);
+    } }, function (ctx, px, py, t) {                                // ligado: o cuco sai e canta
       var p = pincel(ctx, px, py), c = t % 1600;
       var n = c < 250 ? Math.ceil(5 * c / 250) : c < 1350 ? 5 : Math.ceil(5 * (1600 - c) / 250);   // linhas à mostra: sobe, canta, desce
       if (n <= 0) return;
       var bico = c > 300 && c < 1300 && Math.floor(t / 200) % 2 === 0;
       p.m(5, 18 - n, ['.kkkk.', 'kyyyyk', bico ? 'ooyeyk' : 'oyyeyk', 'kyyyyk', '.kkkk.'].slice(0, n), { k: K, y: C.ouro, o: '#ff8a3d', e: K });
-    } });
+    }) });
 
   /* ----- pufe 1×1 redondo com botão ----- */
   I.objeto('casa-movel-pufe', { w: 1, h: 1, topo: 2, solido: true,

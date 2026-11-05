@@ -15,6 +15,8 @@ const USOS = [
   'estar.estante-tv', 'estar.luminaria', 'quarto-jogador.criado-mudo', 'quarto-uni.estrela', 'jantar.cristaleira',
   'cozinha.geladeira', 'cozinha.armario', 'banheiro.armario', 'banheiro.cesto', 'quarto-jogador.guarda-roupa',
   'quarto-uni.bau', 'cozinha.pia', 'banheiro.pia', 'banheiro.vaso', 'cozinha.fogao',
+  // os do Quarto do ET que acendem (casa.md §13)
+  'movel.disco-voador', 'movel.abajur-saturno', 'movel.telescopio', 'movel.painel-nave', 'movel.robozinho',
 ];
 const SEM_ANIM = ['banheiro.armario', 'banheiro.cesto', 'quarto-jogador.guarda-roupa', 'cozinha.armario']; // só abrem: nada precisa se mexer
 // (os demais: a animação ligada precisa mudar o desenho em pelo menos uma direção)
