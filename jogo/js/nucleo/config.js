@@ -177,8 +177,12 @@ Reino.config = {
   // Bosque dos Fantasmas (docs/contratos/bosque.md; sistemas/bosque.js e bosque-combate.js). Tempos em ms, distâncias
   // em px do mundo (tile = 16), velocidades em px/s (ela a pé anda 58). Nada se perde: errar e desmaiar não tiram nada
   fantasmas: {
-    acertosPorNivel: 10,         // acertos para subir 1 nível (nível = 1 + acertos / acertosPorNivel)
-    nivelMax: 1000,              // o nível não passa daqui (os acertos continuam contando)
+    acertosPorNivel: 10,         // LEGADO da migração do save: era o XP do nível (1 + acertos / acertosPorNivel).
+                                 // Hoje o nível é por mortosPorNivel; esta conta só mantém o nível que ela já tinha
+                                 // na 1ª carga do save novo (bosque.js:migrar). Não usar como XP.
+    perguntasPorBloco: 10,       // inimigos mortos por pergunta: a cada bloco de 10, para sempre (a mosca vale 2)
+    mortosPorNivel: 30,          // inimigos mortos para subir 1 nível (o ponto de habilidade + o baú de móvel)
+    nivelMax: 1000,              // o nível não passa daqui (os inimigos mortos continuam contando)
     estrelasPorAcerto: 1,        // estrelas por pergunta certa (se mudar, regrave as vozes: o Claude fala da estrela)
     // pergunta do fantasma: sorteio uniforme entre todas as perguntas do bimestre em curso (sala feita ou não), de
     // todo tipo da sala menos estes. Também ficam de fora a pergunta pessoal (`livre: true`) e o `escrever` sem
@@ -202,14 +206,16 @@ Reino.config = {
       regenSemDanoMs: 5000,      // tempo sem levar toque para a vida começar a voltar
       regenACadaMs: 3000,        // depois disso, 1 de vida a cada esse tempo
     },
-    // cada tipo de fantasma: vida (golpes de dano 1), forca (vida que tira por toque), velocidade (px/s)
+    // cada tipo de inimigo: vida (golpes de dano 1), forca (vida que tira por toque), velocidade (px/s) e mortos
+    // (quantos inimigos mortos ele conta no placar; a mosca conta 2)
     tipos: {
-      facil: { vida: 2, forca: 1, velocidade: 16 },    // lilás
-      medio: { vida: 4, forca: 1, velocidade: 24 },    // azul-turquesa (mais vida e mais rápido que o fácil)
-      dificil: { vida: 5, forca: 2, velocidade: 28 },  // rosa-vinho com coroa: o único que bate mais forte (nível 1, 1 golpe a cada 700 ms: vence com folga)
+      facil: { vida: 4, forca: 1, velocidade: 18, mortos: 1 },     // lilás
+      medio: { vida: 6, forca: 2, velocidade: 26, mortos: 1 },     // azul-turquesa (mais vida e mais rápido que o fácil)
+      dificil: { vida: 9, forca: 2, velocidade: 30, mortos: 1 },   // rosa-vinho com coroa
+      mosca: { vida: 12, forca: 3, velocidade: 40, mortos: 2 },    // mosca feia: a mais difícil e a mais rápida; vale 2
     },
-    quantos: { facil: 5, medio: 4, dificil: 3 },        // fantasmas de cada tipo no Bosque ao mesmo tempo
-    zonas: { facil: [27, 38], medio: [15, 26], dificil: [3, 14] },   // fileiras (tiles) onde cada tipo nasce e vagueia
+    quantos: { facil: 5, medio: 4, dificil: 3, mosca: 2 },   // inimigos de cada tipo no Bosque ao mesmo tempo
+    zonas: { facil: [27, 38], medio: [15, 26], dificil: [3, 14], mosca: [3, 10] },   // fileiras (tiles) onde cada tipo nasce e vagueia
     zonaSegura: 4,               // tiles em volta do começo (spawn) sem fantasma
     visao: 80,                   // distância em que o fantasma a vê e vem atrás dela
     coleira: 144,                // distância máxima do ponto onde nasceu (depois disso ele volta)

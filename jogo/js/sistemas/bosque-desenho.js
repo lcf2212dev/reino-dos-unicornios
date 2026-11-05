@@ -1,9 +1,10 @@
 /* Bosque dos Fantasmas: o desenho do combate (parte de bosque-combate.js, pelo interno Reino._bosqueCombate).
-   Três fantasmas fofos (lilás fácil, turquesa médio, rosa-vinho com coroinha difícil) que flutuam, piscam, ficam
-   brancos ao levar golpe e se apagam num puf, com a barrinha de vida em cima; a espada na mão dela (só depois de
-   ganhar) e o arco do golpe; o piscar dela invencível e as estrelinhas do desmaio. Sem Animações: tudo parado
-   (sem balanço, sem piscar), o golpe e o puf continuam (são do jogo). Sprites feitos uma vez, itens fixos
-   reaproveitados, nada criado por quadro (o brilho branco dela é cacheado por sprite); nada de Math.random. */
+   Quatro inimigos: os três fantasmas fofos (lilás fácil, turquesa médio, rosa-vinho com coroinha difícil) e a mosca
+   feia (verde-escura, asas claras, olhos vermelhos), que flutuam, piscam, ficam brancos ao levar golpe e se apagam
+   num puf, com a barrinha de vida em cima; a espada na mão dela (só depois de ganhar) e o arco do golpe; o piscar
+   dela invencível e as estrelinhas do desmaio. Sem Animações: tudo parado (sem balanço, sem piscar), o golpe e o puf
+   continuam (são do jogo). Sprites feitos uma vez, itens fixos reaproveitados, nada criado por quadro (o brilho
+   branco dela é cacheado por sprite); nada de Math.random. */
 (function () {
   var R = window.Reino;
   var S = R._bosqueCombate;
@@ -35,20 +36,56 @@
     facil: { b: '#cdb4ff', l: '#ece2ff', s: '#a385e0', r: '#ffb8d6' },
     medio: { b: '#8fe3dc', l: '#d8fbf7', s: '#55bdb7', r: '#ffb8cf' },
     dificil: { b: '#cf6a98', l: '#f2a8c8', s: '#a04573', r: '#ffc0d8' },
+    mosca: { g: '#3f6b3a', l: '#7fb45a', s: '#24401f', w: '#e6fff2', v: '#9fd8b8', r: '#ff4d4d', e: C.branco },
   };
   var BRANCO = { b: C.branco, l: C.branco, s: '#efe6ff', r: C.branco };
   var SPR = { facil: [], medio: [], dificil: [] };   // 0 olhos abertos, 1 piscando, 2 branco (levou golpe)
+  // a mosca feia: sprite próprio 13 × 17 (não usa o corpo do fantasma), asas claras nas laterais
+  var MOSCA = [
+    '..K.......K..',
+    '.K.........K.',
+    '..KKKKKKKKK..',
+    '.KlllllllllK.',
+    'KllgggggggllK',
+    'KggrrggggrrgK',
+    'KggeeggggeegK',
+    'KwwKgggggKwwK',
+    'KwvKgggggKwvK',
+    'KvwKgggggKvwK',
+    '.KKKgggggKKK.',
+    '...KgggggK...',
+    '...KgsgsgK...',
+    '...KgKgKgK...',
+    '..K.K.K.K.K..',
+    '.K...K...K...',
+    'K...K...K...K',
+  ];
+  var MOSCA_PISCA = ['KggKKggggKKgK', 'KgggggggggggK'];   // linhas 5 e 6 com os olhos fechados
+  var BRANCO_MOSCA = { g: C.branco, l: C.branco, s: '#efe6ff', w: C.branco, v: C.branco, r: C.branco, e: C.branco };
+  var SPR_MOSCA = [];   // 0 olhos abertos, 1 piscando, 2 branco (levou golpe)
+  function desenharMatriz(linhas, paleta, largura, altura) {
+    var c = PA.novoCanvas(largura || 13, altura || linhas.length);
+    D.matriz(c.getContext('2d'), 0, 0, linhas, paleta);
+    return c;
+  }
   function fantasma(tipo, q) {
     var lista = SPR[tipo] || SPR.facil;
     if (lista[q]) return lista[q];
     var linhas = (tipo === 'dificil' ? COROA : SEM_COROA).concat(CORPO);
     if (q === 1) { linhas = linhas.slice(); linhas[7] = PISCA[0]; linhas[8] = PISCA[1]; }
     var p = q === 2 ? BRANCO : CORES[tipo] || CORES.facil;
-    var c = PA.novoCanvas(13, linhas.length);
-    D.matriz(c.getContext('2d'), 0, 0, linhas, { K: K, b: p.b, l: p.l, s: p.s, r: p.r, e: C.branco, o: C.ouro, g: C.rosa });
+    var c = desenharMatriz(linhas, { K: K, b: p.b, l: p.l, s: p.s, r: p.r, e: C.branco, o: C.ouro, g: C.rosa });
     lista[q] = c;
     return c;
   }
+  function mosca(q) {
+    if (SPR_MOSCA[q]) return SPR_MOSCA[q];
+    var linhas = MOSCA.slice();
+    if (q === 1) { linhas[5] = MOSCA_PISCA[0]; linhas[6] = MOSCA_PISCA[1]; }
+    var p = q === 2 ? BRANCO_MOSCA : CORES.mosca;
+    return (SPR_MOSCA[q] = desenharMatriz(linhas, { K: K, g: p.g, l: p.l, s: p.s, w: p.w, v: p.v, r: p.r, e: p.e }));
+  }
+  function spriteDe(tipo, q) { return tipo === 'mosca' ? mosca(q) : fantasma(tipo, q); }
   var PUF = [
     ['.KK.', 'KwwK', 'KwsK', '.KK.'],
     ['.KKK.', 'KwwwK', 'KwwsK', 'KwssK', '.KKK.'],
@@ -107,13 +144,13 @@
     if (f.estado === 'sumindo' || f.estado === 'surgindo') {
       var k = 1 - Math.max(0, f.ate - est.t) / cfg.vencidoMs;
       if (f.estado === 'surgindo') k = 1 - k;
-      if (k < 0.25) { P.sprite(fantasma(f.tipo, 2), x, pe); return; }
+      if (k < 0.25) { P.sprite(spriteDe(f.tipo, 2), x, pe); return; }
       pufs(x, pe - 8, (k - 0.25) / 0.75);
       return;
     }
     if (window.Jogador && Jogador.sombra) Jogador.sombra(P, x, y, 4);
     var q = est.t < f.feridoAte ? 2 : ANIMAR && (T0 + f.fase * 7) % 3600 < 140 ? 1 : 0;
-    var img = fantasma(f.tipo, q);
+    var img = spriteDe(f.tipo, q);
     P.sprite(img, x, pe);
     // barrinha de vida em cima (contorno, fundo e o que sobra)
     var by = pe - img.height + (f.tipo === 'dificil' ? 0 : 3) - 4, cheio = Math.round(10 * f.vida / f.max);

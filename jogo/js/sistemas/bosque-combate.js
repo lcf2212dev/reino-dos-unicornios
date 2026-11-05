@@ -1,6 +1,6 @@
 /* Bosque dos Fantasmas: o combate (Reino.BosqueCombate, módulo 'bosque-combate'; docs/contratos/bosque.md §5 e §7).
    O laço não tem `atualizar`: a simulação avança em camada.itensDesenho (dt do `t`, no máximo 50 ms) e congela com a
-   cena bloqueada (íris, diálogo, desmaio) ou tela aberta. Fantasmas por zona, tirados da grade do interior
+   cena bloqueada (íris, diálogo, desmaio) ou tela aberta. Fantasmas e moscas por zona, tirados da grade do interior
    (config.fantasmas: quantos, zonas, zonaSegura): flutuam, vagam, perseguem dentro da `visao`, presos pela `coleira`,
    e nunca entram na zona segura do spawn. No modo congelado (e2e) ficam parados no ninho (foto estável).
    O passo é PURO (passo(estado, dt, jogador) só mexe no estado; os eventos vão para estado.eventos e a parte de fora
@@ -15,7 +15,7 @@
   var S = R._bosqueCombate = { estado: null, desenho: null, desmaio: null, t: 0, grade: null, vencidoEm: {},
     olharX: 0, olharY: 1 };
   var CENA = 'bosque', OCUPACAO = 'bosque-desmaio', T = 16;
-  var TIPOS = ['facil', 'medio', 'dificil'];
+  var TIPOS = ['facil', 'medio', 'dificil', 'mosca'];
   var SEMENTE = 20261105;
   var ATIVOS = { vagando: 1, perseguindo: 1, voltando: 1, recuando: 1 };   // os que andam, tocam e levam golpe
   var CONTROLES = 'button, a[href], [role="button"], input, select, textarea, [contenteditable="true"]';

@@ -1,7 +1,8 @@
-// Testes de unidade: as regras e o save do Bosque dos Fantasmas (js/sistemas/bosque.js, Reino.Bosque) e o móvel da
-// casa por nível (fonte 'bosque' de js/sistemas/casa-moveis.js). Contratos: docs/contratos/bosque.md §4, §5 e
-// casa.md §12. O jogo inteiro (todos os `node: true`) num vm com save sintético (ajudantes/jogo-save.js); nada toca
-// no save real. Matérias, casa e móveis sintéticos.
+// Testes de unidade: as regras e o save do Bosque dos Fantasmas (js/sistemas/bosque.js, Reino.Bosque) e o móvel
+// surpresa da casa (CasaMoveis.presente/guardar, js/sistemas/casa-moveis.js). Contratos: docs/contratos/bosque.md §4,
+// §5 e casa.md §12. Nível a cada 30 inimigos mortos, pergunta a cada 10 (a mosca conta 2), migração do save antigo
+// sem perder o nível nem abrir presentes retroativos. O jogo inteiro (todos os `node: true`) num vm com save
+// sintético (ajudantes/jogo-save.js); nada toca no save real. Matérias, casa e móveis sintéticos.
 // Rodar: node --test jogo/ferramentas/testes/unidade/bosque-regras.test.js   (tudo: npm test)
 const { test } = require('node:test');
 const assert = require('assert');
@@ -48,7 +49,12 @@ function jogo(opcoes = {}) {
   R.util.on(R.EVENTOS.BOSQUE, (c) => j.bosque.push(c));
   return j;
 }
-function comAcertos(j, n) { j.P.estado().bosque.acertos = n; }
+// mortos e blocos de pergunta já consumidos (migrado = 1: não deixa a migração do save antigo mexer)
+function comMortos(j, n, feitas) {
+  const b = j.P.estado().bosque;
+  b.mortos = n; b.migrado = 1;
+  b.perguntasFeitas = feitas === undefined ? Math.floor(n / 10) : feitas;
+}
 
 test('bosque: campos registrados (contadores e carimbo), mantêm no Novo ciclo, na cópia; save antigo ganha o padrão', () => {
   const j = jogo({ save: saveHoje() }), I = j.R._progresso;
@@ -59,53 +65,123 @@ test('bosque: campos registrados (contadores e carimbo), mantêm no Novo ciclo, 
     assert.strictEqual(I.campos[c].novoCiclo, 'mantem', c);
     assert.strictEqual(I.campos[c].copiaSeguranca, true, c);
   });
-  igual(j.P.estado().bosque, { acertos: 0, espada: 0, vencidos: 0 });
+  igual(j.P.estado().bosque, { acertos: 0, espada: 0, vencidos: 0, mortos: 0, perguntasFeitas: 0, migrado: 0 });
   igual(j.P.estado().bosquePontos, {});
   assert.strictEqual(j.B.nivel(), 1);
-  igual(j.B.xp(), { n: 0, de: 10, maximo: false });
+  igual(j.B.xp(), { n: 0, de: 30, maximo: false });
+  igual(j.B.proximaPergunta(), { n: 0, de: 10 });
+  assert.strictEqual(j.B.perguntasPendentes(), 0);
   igual(j.B.pontosPendentes(), []);
 });
 
-test('bosque: nível e XP derivados dos acertos; nível máximo 1000 (os acertos continuam contando)', () => {
+test('bosque: nível e XP derivados dos inimigos mortos (30); nível máximo 1000; a mosca conta 2', () => {
   const j = jogo(), B = j.B, cfg = j.R.config.fantasmas;
-  assert.strictEqual(cfg.acertosPorNivel, 10);
+  assert.strictEqual(cfg.mortosPorNivel, 30);
+  assert.strictEqual(cfg.perguntasPorBloco, 10);
   assert.strictEqual(cfg.nivelMax, 1000);
-  comAcertos(j, 9);
+  comMortos(j, 29);
   assert.strictEqual(B.nivel(), 1);
-  igual(B.xp(), { n: 9, de: 10, maximo: false });
-  comAcertos(j, 10);
+  igual(B.xp(), { n: 29, de: 30, maximo: false });
+  comMortos(j, 30);
   assert.strictEqual(B.nivel(), 2);
-  igual(B.xp(), { n: 0, de: 10, maximo: false });
-  comAcertos(j, 37);
-  assert.strictEqual(B.nivel(), 4);
-  igual(B.xp(), { n: 7, de: 10, maximo: false });
-  comAcertos(j, 9989);
+  igual(B.xp(), { n: 0, de: 30, maximo: false });
+  comMortos(j, 67);
+  assert.strictEqual(B.nivel(), 3);
+  igual(B.xp(), { n: 7, de: 30, maximo: false });
+  comMortos(j, 29969);
   assert.strictEqual(B.nivel(), 999);
-  comAcertos(j, 9990);
+  comMortos(j, 29970);
   assert.strictEqual(B.nivel(), 1000);
-  igual(B.xp(), { n: 10, de: 10, maximo: true }, 'no máximo, a barra cheia');
-  comAcertos(j, 50000);
+  igual(B.xp(), { n: 30, de: 30, maximo: true }, 'no máximo, a barra cheia');
+  comMortos(j, 50000);
   assert.strictEqual(B.nivel(), 1000);
-  assert.strictEqual(B.acertos(), 50000);
+  assert.strictEqual(B.mortos(), 50000);
   assert.strictEqual(B.pontosPendentes().length, 999, 'um ponto por nível, do 2 ao 1000');
-  // estragado: acertos que não é número conta 0
-  j.P.estado().bosque.acertos = { a: 3 };
+  // estragado: mortos que não é número conta 0
+  j.P.estado().bosque.mortos = { a: 3 };
   assert.strictEqual(B.nivel(), 1);
+  // a mosca vale 2 no placar
+  const k = jogo();
+  igual(k.B.abater('mosca'), { mortos: 2, perguntas: 0, subiu: null, premioNivel: null });
+  igual(k.B.abater('facil'), { mortos: 3, perguntas: 0, subiu: null, premioNivel: null });
 });
 
-test('bosque: acertou dá XP, estrela, salva, Aura e evento; subiu só quando passa de nível; errou não tira nada', () => {
+test('bosque: migração do save antigo mantém o nível, não abre pergunta nem presente retroativo e roda uma vez', () => {
+  const s = Object.assign(saveHoje(), { bosque: { acertos: 25, espada: 1, vencidos: 40 }, bosquePontos: {} });
+  const j = jogo({ save: s }), b = () => j.P.estado().bosque;
+  assert.strictEqual(j.B.nivel(), 3, '25 acertos = nível 3 no save antigo');
+  igual(b(), { acertos: 25, espada: 1, vencidos: 40, mortos: 60, perguntasFeitas: 6, migrado: 1 });
+  assert.strictEqual(j.B.perguntasPendentes(), 0, 'nenhuma pergunta retroativa');
+  j.R.Casa.abrirBau();
+  igual(j.CM.pendentes(), [], 'nenhum móvel retroativo na fila');
+  // um acerto novo de verdade no nível 3 (o piso legado é 60) não mexe no nível; mortos novos sim
+  b().acertos = 26;
+  assert.strictEqual(j.B.nivel(), 3);
+  b().mortos = 90;
+  assert.strictEqual(j.B.nivel(), 4);
+  // a migração não perde o que já estava maior e não roda de novo
+  const antes = copia(b());
+  assert.strictEqual(j.R.modulo('bosque').iniciar(), false);
+  igual(b(), antes);
+  // nível antigo com o ponto pendente: o presente sai na hora de pôr o ponto (sob demanda), não em fila
+  igual(j.B.pontosPendentes(), [2, 3, 4]);
+  assert.strictEqual(j.CM.escolhida('bosque:2'), false);
+  const p = j.CM.presente('bosque:2');
+  assert.strictEqual(p.chave, 'bosque:2');
+  assert.strictEqual(j.CM.escolhida('bosque:2'), true);
+  assert.strictEqual(j.CM.pendentes().indexOf('bosque:2'), -1, 'fora da fila das salas');
+});
+
+test('bosque: abater soma o placar, salva, emite e, ao subir de nível, já grava o móvel do nível', () => {
   const j = jogo(), B = j.B, P = j.P;
-  comAcertos(j, 8);
+  comMortos(j, 9);
+  const salvar = j.contagem.salvar;
+  const r = B.abater('facil');
+  assert.strictEqual(r.mortos, 10);
+  assert.strictEqual(r.perguntas, 1);
+  assert.strictEqual(r.subiu, null);
+  assert.strictEqual(r.premioNivel, null);
+  assert.ok(j.contagem.salvar > salvar, 'salvou');
+  igual(j.bosque.filter((c) => c.tipo === 'abate').map((c) => [c.mortos, c.subiu]), [[10, null]]);
+  // mosca no 29: 31 mortos, subiu ao nível 2 e o móvel bosque:2 já está no save
+  comMortos(j, 28, 2);
+  const r2 = B.abater('mosca');
+  assert.deepStrictEqual([r2.mortos, r2.perguntas, r2.subiu], [30, 1, 2]);
+  assert.strictEqual(r2.premioNivel.chave, 'bosque:2');
+  assert.ok(MOVEIS.some((m) => m.id === r2.premioNivel.movel));
+  assert.strictEqual(j.CM.escolhida('bosque:2'), true, 'gravado antes do baú');
+  igual(j.bosque.filter((c) => c.tipo === 'abate').map((c) => [c.mortos, c.subiu]), [[10, null], [30, 2]]);
+  assert.strictEqual(B.pontosPendentes()[0], 2);
+});
+
+test('bosque: acertou dá estrela e Aura, consome UMA pergunta e grava o móvel; errou consome sem prêmio', () => {
+  const j = jogo(), B = j.B, P = j.P;
+  comMortos(j, 10, 0);
   const estrelas = P.estrelas(), salvar = j.contagem.salvar;
-  igual(B.acertou('q4a'), { estrelas: 1, nivel: 1, subiu: null });
+  const r = B.acertou('q4a');
+  assert.deepStrictEqual([r.estrelas, r.nivel], [1, 1]);
+  assert.strictEqual(r.presente.chave, 'bosque:p1');
+  assert.ok(MOVEIS.some((m) => m.id === r.presente.movel));
   assert.strictEqual(P.estrelas(), estrelas + 1);
   assert.ok(j.contagem.salvar > salvar, 'salvou');
-  igual(B.acertou('q4b'), { estrelas: 1, nivel: 2, subiu: 2 });
-  igual(j.bosque.map((c) => c.tipo), ['acerto', 'acerto']);
-  igual(P.estado().bosque, { acertos: 10, espada: 0, vencidos: 2 });
+  assert.deepStrictEqual([j.P.estado().bosque.acertos, j.P.estado().bosque.vencidos, j.P.estado().bosque.perguntasFeitas], [1, 1, 1]);
+  assert.strictEqual(B.perguntasPendentes(), 0);
+  assert.strictEqual(j.CM.escolhida('bosque:p1'), true);
+  igual(j.bosque.filter((c) => c.tipo === 'acerto').map((c) => c.presente.chave), ['bosque:p1']);
+  // sem pergunta pendente: estrela sim, móvel não, e não cria bloco
+  const r2 = B.acertou('q4b');
+  assert.strictEqual(r2.presente, null);
+  assert.strictEqual(j.P.estado().bosque.perguntasFeitas, 1);
+  // errou: consome a pergunta pendente, conta o vencido e não dá prêmio
+  comMortos(j, 20, 1);
+  const antes = copia(j.P.estado().bosque);
   B.errou('q4a');
-  igual(P.estado().bosque, { acertos: 10, espada: 0, vencidos: 3 }, 'errou conta o fantasma, não o acerto');
-  assert.strictEqual(P.estrelas(), estrelas + 2, 'errou não tira estrela');
+  igual(j.P.estado().bosque, Object.assign(antes, { vencidos: antes.vencidos + 1, perguntasFeitas: 2 }));
+  assert.strictEqual(B.perguntasPendentes(), 0);
+  // consumirPergunta: sem prêmio, true só quando havia uma pendente
+  comMortos(j, 30, 2);
+  assert.strictEqual(B.consumirPergunta(), true);
+  assert.strictEqual(B.consumirPergunta(), false);
   assert.strictEqual(B.chaveMovel(7), 'bosque:7');
 });
 
@@ -120,7 +196,7 @@ test('bosque: a espada uma vez só', () => {
 
 test('bosque: porPonto, um por nível do 2 ao atual; dano, vida máxima e velocidade (com teto) pelos pontos', () => {
   const j = jogo(), B = j.B, J = j.R.config.fantasmas.jogador;
-  comAcertos(j, 35);   // nível 4: pontos dos níveis 2, 3 e 4
+  comMortos(j, 90);   // nível 4: pontos dos níveis 2, 3 e 4
   igual(B.pontosPendentes(), [2, 3, 4]);
   assert.strictEqual(B.porPonto(1, 'forca'), false, 'nível 1 não dá ponto');
   assert.strictEqual(B.porPonto(5, 'forca'), false, 'nível que não chegou');
@@ -140,7 +216,7 @@ test('bosque: porPonto, um por nível do 2 ao atual; dano, vida máxima e veloci
   assert.strictEqual(B.fatorVelocidade(), 1 + J.velocidadePorPonto);
   igual(j.bosque.filter((c) => c.tipo === 'ponto').map((c) => [c.nivel, c.h]), [[2, 'forca'], [3, 'vida'], [4, 'velocidade']]);
   // teto da velocidade
-  comAcertos(j, 1000);
+  comMortos(j, 3000);
   B.pontosPendentes().forEach((n) => B.porPonto(n, 'velocidade'));
   assert.strictEqual(B.fatorVelocidade(), J.velocidadeMax);
   // o fator só vale dentro do Bosque (o que o Jogador recebe)
@@ -160,12 +236,12 @@ test('bosque: escolha estragada ou de nível que não chegou não conta (o níve
   assert.strictEqual(B.porPonto(2, 'forca'), true);
   assert.ok(j.P.estado().bosquePontos[2].em > 1, 'carimbo novo');
   const j2 = jogo({ save: Object.assign(saveHoje(), { bosque: [1], bosquePontos: 'x' }) });
-  igual(j2.P.estado().bosque, { acertos: 0, espada: 0, vencidos: 0 });
+  igual(j2.P.estado().bosque, { acertos: 0, espada: 0, vencidos: 0, mortos: 0, perguntasFeitas: 0, migrado: 0 });
   igual(j2.P.estado().bosquePontos, {});
 });
 
 test('bosque: dois aparelhos escolhem o mesmo nível: a mescla guarda uma escolha por nível (nenhum ponto sobra)', () => {
-  const base = Object.assign(saveHoje(), { bosque: { acertos: 30, espada: 1, vencidos: 30 }, bosquePontos: {} });
+  const base = Object.assign(saveHoje(), { bosque: { acertos: 30, espada: 1, vencidos: 30, mortos: 90, perguntasFeitas: 9, migrado: 1 }, bosquePontos: {} });
   const A = jogo({ save: copia(base), agora: 1000 }), B = jogo({ save: copia(base), agora: 2000 });
   assert.ok(A.B.porPonto(2, 'forca'));
   assert.ok(A.B.porPonto(3, 'vida'));
@@ -174,7 +250,7 @@ test('bosque: dois aparelhos escolhem o mesmo nível: a mescla guarda uma escolh
   A.P.salvar(); B.P.salvar();
   [[A.lido(), B.lido()], [B.lido(), A.lido()]].forEach(([x, y]) => {
     const m = A.P.mesclar(copia(x), copia(y));
-    igual(m.bosque, { acertos: 32, espada: 1, vencidos: 32 });
+    igual(m.bosque, { acertos: 32, espada: 1, vencidos: 32, mortos: 90, perguntasFeitas: 9, migrado: 1 });
     igual(m.bosquePontos, { 2: { h: 'velocidade', em: 2000 }, 3: { h: 'vida', em: 1000 } }, 'a escolha mais nova');
     const J = jogo({ save: m });
     igual(J.B.pontos(), { forca: 0, vida: 1, velocidade: 1 });
@@ -184,9 +260,33 @@ test('bosque: dois aparelhos escolhem o mesmo nível: a mescla guarda uma escolh
   });
 });
 
+test('bosque: a mescla dos campos novos é por contador (o maior; nada regride)', () => {
+  const a = Object.assign(saveHoje(), { bosque: { acertos: 3, espada: 1, vencidos: 4, mortos: 20, perguntasFeitas: 1, migrado: 0 } });
+  const b = Object.assign(saveHoje(), { bosque: { acertos: 2, espada: 0, vencidos: 9, mortos: 50, perguntasFeitas: 2, migrado: 1 } });
+  const j = jogo({ save: a });
+  const m = j.P.mesclar(copia(a), copia(b));
+  igual(m.bosque, { acertos: 3, espada: 1, vencidos: 9, mortos: 50, perguntasFeitas: 2, migrado: 1 });
+});
+
+test('bosque: aparelho novo (migrado=1, mortos=0) + save antigo na mescla: o nível antigo sobe o piso, não regride nem abre pergunta retroativa', () => {
+  // o aparelho novo já gravou uma vez (migrado=1) mas nunca jogou o Bosque; o antigo tem 25 acertos = nível 3
+  const novo = Object.assign(saveHoje(), { bosque: { acertos: 0, espada: 0, vencidos: 0, mortos: 0, perguntasFeitas: 0, migrado: 1 } });
+  const antigo = Object.assign(saveHoje(), { bosque: { acertos: 25, espada: 1, vencidos: 40 }, bosquePontos: {} });
+  const j = jogo({ save: novo });
+  const m = j.P.mesclar(copia(novo), copia(antigo));
+  const k = jogo({ save: m });
+  assert.strictEqual(k.B.nivel(), 3, 'o piso do nível antigo é reaplicado mesmo com migrado=1');
+  igual(k.P.estado().bosque, { acertos: 25, espada: 1, vencidos: 40, mortos: 60, perguntasFeitas: 6, migrado: 1 });
+  assert.strictEqual(k.B.perguntasPendentes(), 0, 'nada retroativo');
+  // e de novo não muda (idempotente)
+  const antes = copia(k.P.estado().bosque);
+  assert.strictEqual(k.R.modulo('bosque').iniciar(), false);
+  igual(k.P.estado().bosque, antes);
+});
+
 test('bosque: aparelho de versão antiga (sem os campos) não apaga nada', () => {
   const A = jogo({ agora: 1000 });
-  comAcertos(A, 22);
+  comMortos(A, 45, 4);
   A.B.ganharEspada();
   assert.ok(A.B.porPonto(2, 'vida'));
   A.P.salvar();
@@ -233,77 +333,41 @@ test('bosque: o sorteio é uniforme por pergunta (a matéria com mais perguntas 
   assert.ok(Math.abs(q4b - 6 / 11) < 0.03, 'fração da q4b: ' + q4b);
 });
 
-test('bosque: móvel da casa por nível: sem casa nada; com casa, as salas e depois bosque:2..atual', () => {
-  const j = jogo(), B = j.B, CM = j.CM;
-  comAcertos(j, 31);   // nível 4
-  j.P.estado().salas.a1 = { vezes: 1, melhor: 6, feita: 1 };
-  igual(CM.pendentes(), [], 'sem a casa, nada');
-  j.R.Casa.abrirBau();
-  igual(CM.pendentes(), ['a1', 'bosque:2', 'bosque:3', 'bosque:4'], 'as salas primeiro, depois os níveis');
-  assert.strictEqual(CM.titulo('a1'), 'Presente da sala “Sala A1”', 'o texto das salas não muda');
-  assert.strictEqual(CM.titulo('bosque:3'), 'Presente do nível 3');
-  assert.strictEqual(CM.titulo('bosque:9'), '', 'nível que não chegou: de ninguém');
-  assert.strictEqual(CM.escolher('bosque:9', CM.opcoes('bosque:9')[0]), false);
-  const m = CM.opcoes('bosque:3')[0];
-  assert.strictEqual(CM.escolher(B.chaveMovel(3), m), true);
-  igual(CM.pendentes(), ['a1', 'bosque:2', 'bosque:4']);
-  assert.strictEqual(CM.qtd(m), 1, 'o móvel do nível conta como peça');
-  assert.strictEqual(CM.registrarFonte({ id: 'bosque', chaves: () => [], titulo: () => '' }), false, 'fonte repetida');
-  // nível 1: nenhuma chave
-  const k = jogo();
-  k.R.Casa.abrirBau();
-  igual(k.CM.pendentes(), []);
-});
-
-test('bosque: o móvel do nível só entre os que ela ainda não tem (sem repetido); com todos, o nível fica sem móvel', () => {
-  const j = jogo({ agora: 1790000000000 }), CM = j.CM, cm = () => j.P.estado().casaMoveis;
-  comAcertos(j, 31);   // nível 4
-  j.P.estado().salas.a1 = { vezes: 1, melhor: 6, feita: 1 };
-  j.R.Casa.abrirBau();
-  assert.strictEqual(j.R.config.casa.moveisOpcoes, 5);
-  assert.strictEqual(CM.opcoes('bosque:2').length, 5, 'todos novos: as 5 de sempre');
-  // ela tem 4 dos 6 (de outras chaves) e a sala a1 pendente: faltam 2, a sala leva 1, o nível 2 fica com o outro
-  ['pufe', 'vaso', 'piano', 'globo'].forEach((m, i) => { cm()['zz' + i] = { movel: m, em: 1 }; });
-  igual(CM.pendentes(), ['a1', 'bosque:2'], 'só o que pode virar móvel novo');
-  igual(CM.opcoes('bosque:2').slice().sort(), ['fonte', 'urso'], 'só os que ela não tem, sem completar');
-  assert.strictEqual(CM.opcoes('a1').length, 5, 'sala: completa com repetidos, como sempre');
-  assert.strictEqual(CM.escolher('bosque:3', 'urso'), false, 'nível fora da fila');
-  assert.strictEqual(CM.escolher('bosque:2', 'pufe'), false, 'repetido não vale no nível');
-  // na sala ela escolhe um repetido: os 2 novos voltam para os níveis
-  assert.ok(CM.escolher('a1', CM.opcoes('a1').find((m) => CM.qtd(m) > 0)));
-  igual(CM.pendentes(), ['bosque:2', 'bosque:3']);
-  assert.ok(CM.escolher('bosque:3', 'urso'));
-  igual(CM.pendentes(), ['bosque:2'], 'o nível 4 não entra: falta só 1 móvel');
-  igual(CM.opcoes('bosque:2'), ['fonte']);
-  // com todos os móveis: nenhum nível pendente
-  assert.ok(CM.escolher('bosque:2', 'fonte'));
-  igual(CM.pendentes(), [], 'nível 4 fica sem móvel');
-  assert.strictEqual(CM.titulo('bosque:4'), '');
-  assert.strictEqual(CM.escolher('bosque:4', CM.opcoes('bosque:4')[0]), false);
-  j.P.estado().salas.b1 = { vezes: 1, melhor: 6, feita: 1 };
-  igual(CM.pendentes(), ['b1'], 'a sala ainda dá móvel (Mais um!)');
-  assert.strictEqual(CM.opcoes('b1').length, 5);
-});
-
-test('bosque: a fila de móveis do nível tem no máximo os móveis que faltam, menos as salas pendentes (níveis mais baixos primeiro)', () => {
-  const j = jogo({ agora: 1790000000000 }), CM = j.CM, cm = () => j.P.estado().casaMoveis;
-  comAcertos(j, 395);   // nível 40
-  j.R.Casa.abrirBau();
-  igual(CM.pendentes(), ['bosque:2', 'bosque:3', 'bosque:4', 'bosque:5', 'bosque:6', 'bosque:7'], 'nenhum móvel: 6 níveis, não 39');
-  // 4 dos 6 já ganhos (o do nível 2 é um deles): faltam 2, nos níveis mais baixos ainda sem móvel
-  ['pufe', 'vaso', 'piano'].forEach((m, i) => { cm()['zz' + i] = { movel: m, em: 1 }; });
-  cm()['bosque:2'] = { movel: 'globo', em: 1 };
-  igual(CM.pendentes(), ['bosque:3', 'bosque:4'], '"1 de 2", não "1 de 39"');
-  assert.strictEqual(CM.titulo('bosque:3'), 'Presente do nível 3');
-  assert.strictEqual(CM.titulo('bosque:5'), '', 'fora da fila: de ninguém');
-  // salas pendentes descontam (a sala oferece os novos primeiro)
-  j.P.estado().salas.a1 = { vezes: 1, melhor: 6, feita: 1 };
-  igual(CM.pendentes(), ['a1', 'bosque:3']);
-  j.P.estado().salas.b1 = { vezes: 1, melhor: 6, feita: 1 };
-  igual(CM.pendentes(), ['a1', 'b1'], 'as salas levam os 2 que faltam');
-  j.P.estado().salas.a2 = { vezes: 1, melhor: 6, feita: 1 };
-  igual(CM.pendentes(), ['a1', 'a2', 'b1'], 'mais salas que móveis novos: nenhum nível');
-  igual(CM.salasPendentes(), ['a1', 'a2', 'b1']);
+test('bosque: o presente do nível grava o móvel fora da fila, prefere os novos e, com todos, dá mais um igual', () => {
+  const j = jogo(), B = j.B, CM = j.CM, cm = () => j.P.estado().casaMoveis;
+  comMortos(j, 90, 9);   // nível 4
+  assert.strictEqual(CM.titulo('bosque:p1'), 'Presente do Bosque');
+  assert.strictEqual(CM.titulo('bosque:2'), '');
+  // sem casa, o presente já grava (fica guardado até ela ganhar a casa)
+  const p1 = CM.presente('bosque:2');
+  assert.strictEqual(p1.chave, 'bosque:2');
+  assert.ok(MOVEIS.some((m) => m.id === p1.movel));
   assert.strictEqual(CM.escolhida('bosque:2'), true);
-  assert.strictEqual(CM.escolhida('bosque:3'), false);
+  assert.strictEqual(CM.qtd(p1.movel), 1);
+  igual(CM.presente('bosque:2'), p1, 'a chave já com móvel devolve o mesmo, sem trocar');
+  j.R.Casa.abrirBau();
+  igual(CM.pendentes(), [], 'os níveis não entram na fila das salas');
+  j.P.estado().salas.a1 = { vezes: 1, melhor: 6, feita: 1 };
+  igual(CM.pendentes(), ['a1'], 'só a sala');
+  // prefere os que ela ainda não tem: 4 dos outros 5 já ganhos (o do nível 2 é o 6º)
+  MOVEIS.map((m) => m.id).filter((id) => id !== p1.movel).slice(0, 4).forEach((m, i) => { cm()['zz' + i] = { movel: m, em: 1 }; });
+  const faltam = MOVEIS.map((m) => m.id).filter((id) => !CM.qtd(id));
+  const p2 = CM.presente('bosque:3');
+  assert.ok(faltam.includes(p2.movel), 'só os que faltam: ' + p2.movel);
+  // com todos, mais um igual
+  const p3 = CM.presente('bosque:4');
+  assert.ok(MOVEIS.some((m) => m.id === p3.movel));
+  assert.strictEqual(CM.qtd(p3.movel), 2, 'Mais um!');
+  // guardar valida o móvel e não exige a casa
+  assert.strictEqual(CM.guardar('bosque:5', 'inexistente'), false);
+  assert.strictEqual(CM.guardar('bosque:5', 'piano'), true);
+  assert.strictEqual(CM.escolhida('bosque:5'), true);
+});
+
+test('bosque: o presente é determinístico (mesma chave e mesmo estado, mesmo móvel)', () => {
+  const a = jogo({ agora: 1790000000000 }), b = jogo({ agora: 1790000000000 });
+  comMortos(a, 30); comMortos(b, 30);
+  a.R.Casa.abrirBau(); b.R.Casa.abrirBau();
+  igual(a.CM.presente('bosque:2'), b.CM.presente('bosque:2'));
+  igual(a.CM.presente('bosque:p1'), b.CM.presente('bosque:p1'));
 });

@@ -515,7 +515,8 @@
       { js: 'js/ui/casa-moveis.js', grupo: 'ui' }, // a escolha do móvel avulso de uma sala feita (UI.escolherMovelCasa, UI.casaMoveisPendentes)
       { js: 'js/ui/bosque-hud.js', grupo: 'ui' }, // Bosque dos Fantasmas: chip do HUD, botão da espada e o painel (UI.telaBosque; bosque.md §5)
       { js: 'js/ui/bosque-nivel.js', grupo: 'ui' }, // Bosque dos Fantasmas: prêmio da espada e o ponto de nível (UI.telaEspadaBosque, UI.subirNivelBosque)
-      { js: 'js/ui/bosque-pergunta.js', grupo: 'ui' }, // Bosque dos Fantasmas: a pergunta do fantasma vencido (UI.perguntaFantasma)
+      { js: 'js/ui/bosque-bau.js', grupo: 'ui' }, // Bosque dos Fantasmas: o baú do móvel surpresa, da pergunta e do nível (UI.bauBosque)
+      { js: 'js/ui/bosque-pergunta.js', grupo: 'ui' }, // Bosque dos Fantasmas: a pergunta do bloco de 10 inimigos e o prêmio (UI.perguntaFantasma)
       { js: 'js/sistemas/versao.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/aura.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/viagem.js', grupo: 'sistemas', node: true },
@@ -757,10 +758,10 @@
       { js: 'js/sistemas/vida-mapa.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/et-companheiro-desenho.js', grupo: 'sistemas' },
       { js: 'js/sistemas/bosque-falas.js', grupo: 'sistemas', node: true }, // Bosque dos Fantasmas: falas do Claude (Reino.BosqueFalas; bosque.md §6)
-      { js: 'js/sistemas/bosque.js', grupo: 'sistemas', node: true }, // Bosque dos Fantasmas: regras, campos bosque/bosquePontos e o móvel por nível (Reino.Bosque; bosque.md §4, §5)
-      { js: 'js/sistemas/bosque-combate.js', grupo: 'sistemas', node: true }, // Bosque dos Fantasmas: combate (Reino.BosqueCombate, camada; bosque.md §5)
+      { js: 'js/sistemas/bosque.js', grupo: 'sistemas', node: true }, // Bosque dos Fantasmas: regras, campos bosque/bosquePontos, placar de mortos, migração e os prêmios de móvel (Reino.Bosque; bosque.md §4, §5)
+      { js: 'js/sistemas/bosque-combate.js', grupo: 'sistemas', node: true }, // Bosque dos Fantasmas: combate dos 4 tipos, com a mosca (Reino.BosqueCombate, camada; bosque.md §5)
       { js: 'js/sistemas/bosque-alvo.js', grupo: 'sistemas', node: true }, // Bosque dos Fantasmas: clicar no fantasma ataca sozinho até vencer (BosqueCombate.mirar; bosque.md §5)
-      { js: 'js/sistemas/bosque-desenho.js', grupo: 'sistemas' }, // Bosque dos Fantasmas: desenho dos fantasmas, da espada, do golpe e do desmaio
+      { js: 'js/sistemas/bosque-desenho.js', grupo: 'sistemas' }, // Bosque dos Fantasmas: desenho dos fantasmas e da mosca, da espada, do golpe e do desmaio
       { js: 'js/motor/cena.js', grupo: 'motor' },
       { js: 'js/motor/transicao.js', grupo: 'motor' },
       { js: 'js/motor/camera.js', grupo: 'motor' },

@@ -5,7 +5,7 @@
 (function () {
   var R = window.Reino;
   R.BosqueFalas = {
-    espada: ['Você ganhou uma espada!', 'Ela tem a magia do Reino.', 'Vença os fantasmas fofinhos!', 'Cada um traz uma pergunta.'],
+    espada: ['Você ganhou uma espada!', 'Ela tem a magia do Reino.', 'Vença os fantasmas fofinhos!'],
     vencido: ['Você venceu o fantasma!', 'Responda e ganhe uma estrela!'],
     acerto: ['Isso mesmo, muito bem!', 'Você acertou, que beleza!'],
     erro: ['Quase, veja a resposta certa.', 'O fantasma volta depois.', 'Depois você tenta de novo!'],

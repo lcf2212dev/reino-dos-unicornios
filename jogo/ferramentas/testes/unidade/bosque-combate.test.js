@@ -25,7 +25,7 @@ function andar(BC, est, ms, j) { for (let t = 0; t < ms; t += 16) BC.passo(est, 
 test('ninhos: quantos de cada tipo, na zona do tipo, em tile livre e fora da zona segura; sempre iguais', () => {
   const { BC, cfg } = montar();
   const est = BC.novoEstado(MAPA, cfg);
-  const total = cfg.quantos.facil + cfg.quantos.medio + cfg.quantos.dificil;
+  const total = cfg.quantos.facil + cfg.quantos.medio + cfg.quantos.dificil + cfg.quantos.mosca;
   assert.strictEqual(est.fantasmas.length, total);
   est.fantasmas.forEach((f) => {
     const tx = Math.floor(f.casaX / T), ty = Math.floor(f.casaY / T), z = cfg.zonas[f.tipo];
@@ -34,6 +34,13 @@ test('ninhos: quantos de cada tipo, na zona do tipo, em tile livre e fora da zon
     assert.ok(Math.abs(tx - 28) > cfg.zonaSegura || Math.abs(ty - 39) > cfg.zonaSegura, f.id + ' na zona segura');
     assert.strictEqual(f.vida, cfg.tipos[f.tipo].vida);
   });
+  // a mosca feia: o 4º tipo, mais vida/força/velocidade e vale 2 inimigos mortos
+  assert.strictEqual(cfg.quantos.mosca, 2);
+  assert.strictEqual(Array.from(cfg.zonas.mosca).join(','), '3,10');
+  assert.strictEqual(cfg.tipos.mosca.mortos, 2);
+  assert.ok(cfg.tipos.mosca.vida > cfg.tipos.dificil.vida && cfg.tipos.mosca.forca > cfg.tipos.dificil.forca && cfg.tipos.mosca.velocidade > cfg.tipos.dificil.velocidade);
+  assert.strictEqual(est.fantasmas.filter((f) => f.tipo === 'mosca').length, 2);
+  assert.ok(est.fantasmas.filter((f) => f.tipo === 'mosca').every((f) => Math.floor(f.casaY / T) <= 10));
   const casas = (e) => e.fantasmas.map((f) => f.casaX + ',' + f.casaY).join(' ');
   assert.strictEqual(casas(BC.novoEstado(MAPA, cfg)), casas(est));
 });

@@ -1,10 +1,11 @@
 // Bosque dos Fantasmas, telas e HUD (docs/contratos/bosque.md §5 e §7; js/ui/bosque-*.js): chip e botão da espada só
-// dentro do Bosque; o prêmio da espada na 1ª entrada e não na 2ª; a pergunta do fantasma (certo: +1 estrela e +1 XP;
-// errado ou fechada: nada, e o fantasma volta; o texto-base do livro acima da pergunta); segurar a espada repete o
-// golpe; a dica sem o Espaço no toque; o 10º acerto abre o ponto e depois o móvel (com casa) ou a fala do
-// móvel guardado (sem casa); Esc e Tab/Enter no ponto; a vida zero não perde nada. Todo tipo de pergunta da sala
-// (um caso por tipo: certo dá +1 estrela, errado não dá nada) e a digitação de verdade pelo teclado. Servidor e banco de TESTE novos
-// (cenario.js), modo congelado (o prêmio só abre com Reino.congelado desligado de propósito, na entrada).
+// dentro do Bosque; o prêmio da espada na 1ª entrada e não na 2ª; a pergunta só a cada 10 inimigos mortos (certo:
+// +1 estrela e o baú do móvel; errado ou fechada: consome a pergunta, sem baú; o texto-base do livro acima da
+// pergunta); segurar a espada repete o golpe; a dica sem o Espaço no toque; o 30º morto abre o nível (ponto + baú do
+// móvel); sem casa o móvel fica guardado e o baú avisa; Esc e Tab/Enter no ponto e o Esc no baú (antes de abrir abre,
+// depois fecha); a vida zero não perde nada. Todo tipo de pergunta da sala (um caso por tipo: certo dá +1 estrela,
+// errado não dá nada) e a digitação de verdade pelo teclado. Servidor e banco de TESTE novos (cenario.js), modo
+// congelado (o prêmio só abre com Reino.congelado desligado de propósito, na entrada).
 // O ataque por alvo (js/sistemas/bosque-alvo.js): clicar no fantasma golpeia até vencer, clicar no chão, tecla de andar
 // ou tela param, o toque faz o mesmo, o cursor de espada em cima dele; e a espada não treme andando.
 const { test } = require('node:test');
@@ -20,13 +21,32 @@ const pasta = () => fs.mkdtempSync(path.join(PASTA_TESTES, 'bosque-telas-'));
 const OLHAR = `(() => {
   const chip = document.querySelector('#hud .chip-bosque'), acao = document.querySelector('#hud .bosque-acao');
   const P = Reino.Progresso, B = Reino.Bosque;
+  const barra = chip && chip.querySelector('.bosque-xp-cheia');
   return { cena: Reino.Cena.atual().id, chip: !!chip && !chip.hidden, acao: !!acao && !acao.hidden,
-    chipTexto: chip ? chip.textContent : '', estrelas: P.estrelas(), acertos: B.acertos(), nivel: B.nivel(),
-    xp: B.xp().n, vencidos: P.estado().bosque.vencidos, pontos: B.pontos(), pendentes: B.pontosPendentes(),
+    chipTexto: chip ? chip.textContent : '', chipAria: chip ? chip.getAttribute('aria-label') : '',
+    xpBarra: barra ? barra.style.width : '', estrelas: P.estrelas(), acertos: B.acertos(), mortos: B.mortos(),
+    nivel: B.nivel(), xp: B.xp().n, xpDe: B.xp().de, proxima: B.proximaPergunta(),
+    vencidos: P.estado().bosque.vencidos, feitas: P.estado().bosque.perguntasFeitas,
+    pendentesQ: B.perguntasPendentes(), pontos: B.pontos(), pendentes: B.pontosPendentes(),
     telas: [...document.querySelectorAll('#telas > .tela')].map((t) => t.className.split(' ').find((k) => k.startsWith('tela-') && k !== 'tela-presente')) };
 })()`;
 
-// um fantasma vencido (f1) e a pergunta de escolha; pontuar devolve window.__ok (o teste escolhe certo ou errado)
+// um inimigo vencido: emite o BOSQUE 'vencido' (o ouvinte chama Bosque.abater e enfileira)
+const VENCER = `(() => {
+  const est = Reino._bosqueCombate.estado, f = est.fantasmas[0];
+  f.estado = 'vencido';
+  Reino.util.emit(Reino.EVENTOS.BOSQUE, { tipo: 'vencido', id: f.id, fantasma: f.tipo });
+  return f.id;
+})()`;
+const VENCER_N = (n) => `(() => {
+  const est = Reino._bosqueCombate.estado, f = est.fantasmas[0];
+  for (let i = 0; i < ${n}; i++) { f.estado = 'vencido'; Reino.util.emit(Reino.EVENTOS.BOSQUE, { tipo: 'vencido', id: f.id, fantasma: f.tipo }); }
+  return ${n};
+})()`;
+// o placar de mortos e os blocos de pergunta, sem passar pelo combate (os testes de tela)
+const PLACAR = (mortos, feitas) => `(() => { const b = Reino.Progresso.estado().bosque;
+  b.mortos = ${mortos}; b.perguntasFeitas = ${feitas}; b.migrado = 1; return 1; })()`;
+// a pergunta de escolha; pontuar devolve window.__ok (o teste escolhe certo ou errado)
 const PREPARAR = `(() => {
   const B = Reino.Bosque, D = Reino.Desafios;
   if (!window.__pontuar) window.__pontuar = D.pontuar;
@@ -34,14 +54,8 @@ const PREPARAR = `(() => {
   B.pergunta = function () { return B.perguntas().find((q) => q.desafio.tipo === 'escolha'); };
   return !!B.pergunta();
 })()`;
-const VENCER = `(() => {
-  const est = Reino._bosqueCombate.estado, f = est.fantasmas[0];
-  f.estado = 'vencido';
-  Reino.util.emit(Reino.EVENTOS.BOSQUE, { tipo: 'vencido', id: f.id, fantasma: f.tipo });
-  return f.id;
-})()`;
 
-test('bosque: HUD, prêmio, pergunta, nível, móvel e desmaio', { timeout: 300000 }, async () => {
+test('bosque: HUD, prêmio, pergunta a cada 10, baú, nível a cada 30, sem casa, teclado e desmaio', { timeout: 300000 }, async () => {
   const c = await abrirCenario({ tamanho: 'celular', pasta: pasta() });
   const olhar = () => c.js(OLHAR);
   // responde a pergunta aberta (certo = ok) e devolve o estado logo depois do Conferir
@@ -49,20 +63,41 @@ test('bosque: HUD, prêmio, pergunta, nível, móvel e desmaio', { timeout: 3000
     await c.js(`window.__ok = ${ok}; 1`);
     await c.js(VENCER);
     await c.avancar(300);
-    assert.ok((await olhar()).telas.includes('tela-bosque-pergunta'), 'a pergunta abre no fantasma vencido');
+    assert.ok((await olhar()).telas.includes('tela-bosque-pergunta'), 'a pergunta abre no bloco de 10');
     await c.js("document.querySelector('.tela-bosque-pergunta .opcao').click(); 1");
     await c.avancar(100);
     await c.js("document.querySelector('.tela-bosque-pergunta .bosque-botao').click(); 1");
     await c.avancar(100);
     return c.js(`({ texto: document.querySelector('.tela-bosque-pergunta .bosque-retorno').textContent, ...${OLHAR} })`);
   }
-  async function continuar() {
+  // abre o baú fechado pelo toque, confere o cartão do móvel e fecha; `esc` faz o Esc antes de abrir (abre) e depois (fecha)
+  async function abrirEFecharBau(esc) {
+    assert.ok((await olhar()).telas.includes('tela-bosque-bau'), 'o baú do prêmio abre: ' + (await olhar()).telas);
+    if (esc) {
+      await c.page.keyboard.press('Escape');
+    } else {
+      await c.js("document.querySelector('.tela-bosque-bau .presente-bau').click(); 1");
+    }
+    await c.avancar(1500);
+    const cartao = await c.js(`(() => { const k = document.querySelector('.tela-bosque-bau .bosque-bau-cartao');
+      return { visivel: !!k && !k.hidden, nome: k ? (k.querySelector('.presente-nome') || {}).textContent || '' : '',
+        comodo: k ? (k.querySelector('.bosque-bau-comodo') || {}).textContent || '' : '',
+        nota: !!document.querySelector('.tela-bosque-bau .bosque-bau-nota') && !document.querySelector('.tela-bosque-bau .bosque-bau-nota').hidden }; })()`);
+    assert.strictEqual(cartao.visivel, true, 'o cartão com o móvel aparece');
+    assert.ok(cartao.nome && cartao.comodo, 'com o nome e o cômodo');
+    if (esc) await c.page.keyboard.press('Escape');
+    else await c.js("document.querySelector('.tela-bosque-bau .presente-continuar').click(); 1");
+    await c.avancar(300);
+    return cartao;
+  }
+  async function continuar(comBau) {
     await c.avancar(700);   // o botão nasce travado 600 ms
     await c.js("document.querySelector('.tela-bosque-pergunta .bosque-botao').click(); 1");
     await c.avancar(300);
+    if (comBau) await abrirEFecharBau(false);
   }
   try {
-    await c.js(`(() => { const e = Reino.Progresso.estado(); e.bosque = { acertos: 0, espada: 0, vencidos: 0 }; e.bosquePontos = {};
+    await c.js(`(() => { const e = Reino.Progresso.estado(); e.bosque = { acertos: 0, espada: 0, vencidos: 0, mortos: 0, perguntasFeitas: 0, migrado: 1 }; e.bosquePontos = {};
       Reino.UI.fecharTodas(); return 1; })()`);
     await c.avancar(600);
 
@@ -83,7 +118,10 @@ test('bosque: HUD, prêmio, pergunta, nível, móvel e desmaio', { timeout: 3000
     await c.avancar(600);
     o = await olhar();
     assert.deepStrictEqual([o.telas.length, o.chip, o.acao], [0, true, true], 'no Bosque: chip e espada à vista');
-    assert.match(o.chipTexto, /10\/10/);
+    assert.match(o.chipAria, /0 de 30 inimigos/, 'a barra é de inimigos até o próximo nível');
+    assert.match(o.chipAria, /próxima pergunta em 0 de 10/);
+    assert.strictEqual(o.xpBarra, '0%', 'a barra de 30 vazia');
+    assert.match(o.chipTexto, /0\/10/, 'e a linha da próxima pergunta');
     assert.match(o.chipTexto, /Nv\s1/);
     assert.strictEqual(await c.js("!document.querySelector('#hud .bosque-dica').hidden"), true, 'a dica até o 1º golpe');
 
@@ -141,69 +179,79 @@ test('bosque: HUD, prêmio, pergunta, nível, móvel e desmaio', { timeout: 3000
     assert.strictEqual(await c.js('__ctx'), 'depois');
     await c.js('Reino.Bosque.pergunta = __perg; 1');
 
-    // 4) certo: +1 estrela, +1 XP, o fantasma volta
+    // 4) só a cada 10: nove inimigos mortos não abrem a pergunta
     assert.strictEqual(await c.js(PREPARAR), true);
+    await c.js(PLACAR(0, 0));
+    await c.js(VENCER_N(9));
+    await c.avancar(600);
+    o = await olhar();
+    assert.deepStrictEqual([o.mortos, o.pendentesQ, o.telas.length], [9, 0, 0], '9 mortos: nenhuma pergunta');
+    assert.match(o.chipAria, /9 de 30 inimigos/);
+    assert.strictEqual(o.xpBarra, '30%');
+    assert.match(o.chipTexto, /9\/10/);
+
+    // 5) o 10º abre a pergunta; certo: +1 estrela, consome o bloco e abre o baú do móvel
     const antes = await olhar();
     o = await responder(true);
-    assert.deepStrictEqual([o.estrelas, o.acertos, o.xp], [antes.estrelas + 1, antes.acertos + 1, antes.xp + 1], 'certo dá estrela e XP');
+    assert.deepStrictEqual([o.estrelas, o.acertos, o.mortos, o.feitas, o.nivel], [antes.estrelas + 1, antes.acertos + 1, 10, 1, 1], 'certo dá estrela e consome o bloco');
     assert.match(o.texto, /\+1/);
-    await continuar();
+    assert.match(o.texto, /presente para a casa/);
+    assert.strictEqual(await c.js("Reino.CasaMoveis.escolhida('bosque:p1')"), true, 'o móvel da pergunta já está gravado');
+    await continuar(true);
     o = await olhar();
-    assert.strictEqual(o.telas.length, 0);
-    assert.strictEqual(await c.js("Reino._bosqueCombate.estado.fantasmas[0].estado"), 'esperando', 'o fantasma volta depois');
+    assert.strictEqual(o.telas.length, 0, 'o baú fecha');
+    assert.strictEqual(await c.js("Reino._bosqueCombate.estado.fantasmas[0].estado"), 'esperando', 'o inimigo volta depois');
 
-    // 5) errado: nada se ganha, a resposta certa aparece
+    // 6) errado no 20º: nada se ganha e não abre baú
+    await c.js(PLACAR(19, 1));
+    await c.avancar(50);
     const antes2 = await olhar();
     o = await responder(false);
-    assert.deepStrictEqual([o.estrelas, o.acertos, o.vencidos], [antes2.estrelas, antes2.acertos, antes2.vencidos + 1], 'errado não dá nada');
+    assert.deepStrictEqual([o.estrelas, o.acertos, o.vencidos, o.feitas, o.mortos], [antes2.estrelas, antes2.acertos, antes2.vencidos + 1, 2, 20], 'errado consome o bloco e não dá nada');
     assert.match(o.texto, /Quase/);
-    await continuar();
+    await continuar(false);
+    o = await olhar();
+    assert.deepStrictEqual([o.telas.length, o.telas.includes('tela-bosque-bau')], [0, false], 'errado: sem baú');
 
-    // 6) fechada pelo Esc antes de responder: conta como erro, nada se perde
+    // 7) o 30º: pergunta (Esc = erro) e depois o nível, com o ponto e o baú do nível
+    await c.js(PLACAR(29, 2));
+    await c.avancar(50);
     await c.js(VENCER);
     await c.avancar(300);
+    assert.ok((await olhar()).telas.includes('tela-bosque-pergunta'), 'a pergunta do 30º bloco abre');
+    assert.strictEqual(await c.js("Reino.CasaMoveis.escolhida('bosque:2')"), true, 'o móvel do nível é gravado no abate');
     await c.page.keyboard.press('Escape');
-    await c.avancar(300);
+    await c.avancar(500);
     o = await olhar();
-    assert.deepStrictEqual([o.telas.length, o.estrelas, o.acertos, o.vencidos], [0, antes2.estrelas, antes2.acertos, antes2.vencidos + 2]);
-    assert.strictEqual(await c.js("Reino._bosqueCombate.estado.fantasmas[0].estado"), 'esperando');
-
-    // 7) o 10º acerto: o ponto (Força) e depois o móvel do nível (ela tem casa)
-    await c.js('Reino.Progresso.estado().bosque.acertos = 9; 1');
-    o = await responder(true);
-    assert.deepStrictEqual([o.acertos, o.nivel, o.pendentes], [10, 2, [2]]);
-    assert.strictEqual(await c.js('Reino.Casa.ganhou() && Reino.CasaMoveis.pendentes().includes("bosque:2")'), true);
-    await continuar();
-    assert.ok((await olhar()).telas.includes('tela-bosque-nivel'), 'subiu: a tela do ponto');
+    assert.ok(o.telas.includes('tela-bosque-nivel'), 'subiu: a tela do ponto: ' + o.telas);
+    assert.deepStrictEqual([o.mortos, o.feitas, o.nivel, o.pendentes], [30, 3, 2, [2]]);
     await c.avancar(700);
     await c.js("document.querySelector('.tela-bosque-nivel [data-hab=forca]').click(); 1");
     await c.avancar(4000);
+    await abrirEFecharBau(true);   // Esc antes de abrir o baú, Esc depois de aberto
     o = await olhar();
-    assert.deepStrictEqual([o.pontos.forca, o.pendentes], [1, []]);
-    assert.ok(o.telas.includes('tela-movel-casa'), 'depois do ponto, o móvel: ' + o.telas);
-    await c.js("document.querySelector('.tela-movel-casa .ckit-depois').click(); 1");
-    await c.avancar(400);
+    assert.deepStrictEqual([o.pontos.forca, o.pendentes, o.telas.length], [1, [], 0]);
 
-    // 8) sem casa: o ponto e a fala do móvel guardado (nenhuma tela de móvel)
-    await c.js(`(() => { window.__ganhou = Reino.Casa.ganhou; Reino.Casa.ganhou = () => false;
-      window.__falas = []; const f = Reino.Claude.falar; window.__falar = f;
-      Reino.Claude.falar = function (t, op) { __falas.push(t); return f.apply(this, arguments); };
-      Reino.Progresso.estado().bosque.acertos = 19; return 1; })()`);
-    o = await responder(true);
-    assert.deepStrictEqual([o.nivel, o.pendentes], [3, [3]]);
-    await continuar();
+    // 8) sem casa: o móvel fica guardado e o baú avisa na tela
+    await c.js(`(() => { window.__ganhou = Reino.Casa.ganhou; Reino.Casa.ganhou = () => false; return 1; })()`);
+    await c.js(PLACAR(60, 6));
+    await c.avancar(50);
+    await c.js('void Reino.UI.subirNivelBosque(3)');
     await c.avancar(700);
     await c.js("document.querySelector('.tela-bosque-nivel [data-hab=vida]').click(); 1");
     await c.avancar(4000);
+    const semCasa = await abrirEFecharBau(false);
+    assert.strictEqual(semCasa.nota, true, 'sem casa: a nota na tela do baú');
+    assert.strictEqual(semCasa.nome.length > 0, true);
     o = await olhar();
-    assert.deepStrictEqual([o.pontos.vida, o.telas.includes('tela-movel-casa')], [1, false]);
-    const semCasa = await c.js('Reino.BosqueFalas.semCasa.join(" ")');
-    assert.ok((await c.js('__falas')).includes(semCasa), 'sem casa: o Claude diz que o móvel fica guardado');
-    await c.js('Reino.Casa.ganhou = __ganhou; Reino.Claude.falar = __falar; Reino.Claude.fechar && Reino.Claude.fechar(); 1');
+    assert.deepStrictEqual([o.pontos.vida, o.pendentes.length], [1, 0]);
+    await c.js('Reino.Casa.ganhou = __ganhou; 1');
     await c.avancar(300);
 
-    // 9) teclado: o painel pelo chip; Esc no ponto deixa pendente; Tab + Enter põe o ponto
-    await c.js('Reino.Progresso.estado().bosque.acertos = 30; Reino.UI.atualizarHUD(); 1');
+    // 9) teclado: o painel pelo chip; Esc no ponto abre o baú do nível e deixa o ponto pendente; Tab + Enter põe
+    await c.js(PLACAR(90, 9));
+    await c.avancar(50);
+    await c.js('Reino.UI.atualizarHUD(); 1');
     await c.js("document.querySelector('#hud .chip-bosque').click(); 1");
     await c.avancar(300);
     assert.ok((await olhar()).telas.includes('tela-bosque'));
@@ -211,8 +259,10 @@ test('bosque: HUD, prêmio, pergunta, nível, móvel e desmaio', { timeout: 3000
     await c.js("document.querySelector('.tela-bosque .bosque-por').click(); 1");
     await c.avancar(300);
     assert.ok((await olhar()).telas.includes('tela-bosque-nivel'));
+    await c.avancar(700);
     await c.page.keyboard.press('Escape');
-    await c.avancar(300);
+    await c.avancar(400);
+    await abrirEFecharBau(false);   // o baú do nível já sai no Esc/Depois
     o = await olhar();
     assert.deepStrictEqual([o.telas.length, o.pendentes], [0, [4]], 'Esc = Depois: o ponto fica pendente');
     await c.js('void Reino.UI.subirNivelBosque(4)');
@@ -227,7 +277,7 @@ test('bosque: HUD, prêmio, pergunta, nível, móvel e desmaio', { timeout: 3000
     await c.page.keyboard.press('Enter');
     await c.avancar(4000);
     o = await olhar();
-    assert.deepStrictEqual(o.pendentes, [], 'Enter no cartão põe o ponto');
+    assert.deepStrictEqual([o.pendentes, o.telas.length], [[], 0], 'Enter no cartão põe o ponto (o baú já saiu no Esc)');
     await c.js('Reino.UI.fecharTodas(); 1');
     await c.avancar(300);
 
@@ -275,7 +325,8 @@ const PERGUNTA_TIPO = (id, certo) => `(() => {
 test('bosque: a pergunta de todo tipo da sala (certo: +1 estrela; errado: nada e a certa por escrito) e o teclado', { timeout: 300000 }, async () => {
   const c = await abrirCenario({ tamanho: 'celular', pasta: pasta() });
   try {
-    await c.js('Reino.UI.fecharTodas(); Reino.Progresso.estado().bosque = { acertos: 0, espada: 1, vencidos: 0 }; 1');
+    // mortos/perguntas altos: o teste responde direto, sem matar, e o piso legado não pode entrar no meio
+    await c.js('Reino.UI.fecharTodas(); Reino.Progresso.estado().bosque = { acertos: 0, espada: 1, vencidos: 0, mortos: 1000, perguntasFeitas: 100, migrado: 1 }; 1');
     await c.avancar(300);
     // um desafio de cada tipo que entra no sorteio (o 1º de cada); a lista tem de ter os tipos da sala, menos os de fora
     const casos = await c.js(`(() => { const vistos = {};
@@ -291,8 +342,6 @@ test('bosque: a pergunta de todo tipo da sala (certo: +1 estrela; errado: nada e
       editaveis: [...document.querySelectorAll('.tela-bosque-pergunta .desafio input, .tela-bosque-pergunta .desafio textarea')].filter((x) => !x.readOnly).length })`);
     for (const [tipo, id] of Object.entries(casos)) {
       for (const certo of [true, false]) {
-        // sem subir de nível no meio (a tela do ponto): o acerto nunca é o 10º (só para cima: a mescla guarda o maior)
-        await c.js('(() => { const b = Reino.Progresso.estado().bosque; if (b.acertos % 10 === 9) b.acertos++; return 1; })()');
         const antes = await estado();
         assert.strictEqual(await c.js(PERGUNTA_TIPO(id, certo)), tipo);
         await c.avancar(300);
@@ -356,7 +405,7 @@ const PERTO_DE = (tipo, deLado) => `(() => {
 test('bosque: clicar no fantasma ataca sozinho até vencer; chão, tecla e toque; cursor de espada; a espada não treme', { timeout: 300000 }, async () => {
   const c = await abrirCenario({ tamanho: 'notebook', pasta: pasta() });
   try {
-    await c.js(`(() => { const e = Reino.Progresso.estado(); e.bosque = { acertos: 0, espada: 1, vencidos: 0 }; e.bosquePontos = {};
+    await c.js(`(() => { const e = Reino.Progresso.estado(); e.bosque = { acertos: 0, espada: 1, vencidos: 0, mortos: 0, perguntasFeitas: 0, migrado: 1 }; e.bosquePontos = {};
       Reino.UI.fecharTodas(); return 1; })()`);
     await c.ir('bosque');
     await c.js(`(() => { Reino._bosqueCombate.estado.parados = true; Reino.UI.fecharTodas();

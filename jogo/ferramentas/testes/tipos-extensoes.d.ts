@@ -191,7 +191,7 @@ interface InteriorDef {
 /* ---------- evento do Bosque dos Fantasmas (js/nucleo/eventos.js; bosque.md §5) ---------- */
 // junta-se ao EventosReino de tipos-jogo.d.ts (que está no limite de linhas)
 interface EventosReino {
-  /** carga: { tipo: 'vida'|'golpe'|'vencido'|'desmaio'|'acerto'|'ponto', ... } */
+  /** carga: { tipo: 'vida'|'golpe'|'vencido'|'abate'|'desmaio'|'acerto'|'ponto', ... } */
   BOSQUE: 'bosque';
 }
 
@@ -199,11 +199,18 @@ interface EventosReino {
 type HabilidadeBosque = 'forca' | 'vida' | 'velocidade';
 /** Uma pergunta de fantasma: os objetos da matéria, da sala e do desafio. */
 interface PerguntaBosque { materia: Materia; sala: Sala; desafio: Desafio }
+/** O móvel surpresa gravado por CasaMoveis.presente: a chave e o id do móvel. */
+interface PresenteBosque { chave: string; movel: string }
+/** O que um inimigo morto rende: o placar, as perguntas pendentes, o nível novo e o móvel que ele já gravou. */
+interface AbateBosque { mortos: number; perguntas: number; subiu: number | null; premioNivel: PresenteBosque | null }
 /** Reino.Bosque */
 interface BosqueApi {
   acertos(): number;
+  mortos(): number;
   nivel(): number;
   xp(): { n: number; de: number; maximo: boolean };
+  perguntasPendentes(): number;
+  proximaPergunta(): { n: number; de: number };
   temEspada(): boolean;
   /** true só na 1ª vez */
   ganharEspada(): boolean;
@@ -216,8 +223,10 @@ interface BosqueApi {
   noBosque(): boolean;
   pergunta(): PerguntaBosque | null;
   perguntas(): PerguntaBosque[];
-  acertou(materiaId: string): { estrelas: number; nivel: number; subiu: number | null };
+  abater(tipo: string): AbateBosque;
+  acertou(materiaId: string): { estrelas: number; nivel: number; presente: PresenteBosque | null };
   errou(materiaId: string): void;
+  consumirPergunta(): boolean;
   chaveMovel(n: number): string;
   HABILIDADES: HabilidadeBosque[];
 }

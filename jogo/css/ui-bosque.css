@@ -1,7 +1,8 @@
 /* Bosque dos Fantasmas (docs/contratos/bosque.md): o chip do HUD e o botão da espada (js/ui/bosque-hud.js), o painel
-   do Bosque, a pergunta do fantasma (js/ui/bosque-pergunta.js), o prêmio da espada e os cartões do ponto
-   (js/ui/bosque-nivel.js). O prêmio usa o céu, a luz e os brilhos do baú dos presentes (.tela-presente,
-   css/ui-bau-presente.css). Movimento só em degraus, com saída para body.sem-animacao e prefers-reduced-motion. */
+   do Bosque, a pergunta do bloco de 10 inimigos (js/ui/bosque-pergunta.js), o prêmio da espada e os cartões do ponto
+   (js/ui/bosque-nivel.js) e o baú do móvel surpresa (js/ui/bosque-bau.js). O prêmio usa o céu, a luz e os brilhos do
+   baú dos presentes (.tela-presente, css/ui-bau-presente.css). Movimento só em degraus, com saída para
+   body.sem-animacao e prefers-reduced-motion. */
 
 /* ---------- chip do HUD: 💖 vida em cima; "Nv N" e a barrinha de XP embaixo; selo "+N" no canto ---------- */
 .chip-bosque {
@@ -13,6 +14,7 @@
 .bosque-chip-vida { display: flex; align-items: center; gap: 4px; }
 .bosque-chip-nivel { display: flex; align-items: center; gap: 6px; font-size: var(--texto-aux); word-spacing: normal; }
 .bosque-chip-nivel .bosque-xp { flex: 1; min-width: 40px; }
+.bosque-chip-mortos { display: flex; align-items: center; gap: 4px; font-size: var(--texto-aux); word-spacing: normal; }
 .bosque-xp {
   display: block; height: 10px; overflow: hidden;
   border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--branco);
@@ -57,7 +59,7 @@
 .bosque-painel-xp { display: flex; align-items: center; gap: 8px; width: min(360px, 100%); }
 .bosque-painel-xp .bosque-xp { flex: 1; min-width: 0; }
 .bosque-xp.bosque-xp-grande { height: 22px; }
-.bosque-painel-vida { display: flex; align-items: center; gap: 8px; font-size: var(--texto); }
+.bosque-painel-vida, .bosque-painel-mortos, .bosque-painel-proxima { display: flex; align-items: center; gap: 8px; font-size: var(--texto); }
 .bosque-habs { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; width: min(360px, 100%); }
 .bosque-hab {
   display: flex; align-items: center; gap: 10px; padding: 6px 12px;
@@ -81,6 +83,23 @@
 }
 @keyframes bosque-espada-subir { from { transform: translateY(48px); } to { transform: none; } }
 .tela-presente.animado .bosque-premio-espada { animation: bosque-espada-subir calc(2 * var(--lento)) steps(8) both; }
+
+/* ---------- o baú do prêmio: a pergunta certa e o nível novo ---------- */
+.tela-bosque-bau .presente-cena.bosque-bau-cena { height: 230px; }
+.tela-bosque-bau .presente-cartao.bosque-bau-cartao { margin-top: 4px; }
+.bosque-bau-moldura {
+  display: flex; align-items: center; justify-content: center;
+  width: 120px; height: 120px; padding: 4px;
+  background: var(--papel-quente); border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
+}
+.bosque-bau-moldura canvas { display: block; image-rendering: pixelated; }
+.bosque-bau-comodo { font-size: var(--texto-aux); line-height: var(--entrelinha-titulo); color: var(--tinta-suave); text-align: center; }
+.bosque-bau-mais { font-size: var(--texto-aux); line-height: var(--entrelinha-titulo); color: var(--lendario-texto); }
+.bosque-bau-nota {
+  margin: 0; max-width: 420px; padding: 6px 12px;
+  font-size: var(--texto-aux); line-height: var(--entrelinha);
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel); color: var(--tinta);
+}
 
 /* ---------- pergunta do fantasma ---------- */
 .tela-bosque-pergunta .painel { max-width: 600px; }
@@ -124,6 +143,8 @@ body.sem-animacao .bosque-selo, body.sem-animacao .bosque-premio-espada { animat
   .bosque-dica { max-width: calc(100vw - 128px); }
   .bosque-premio-cena { height: 200px; }
   .bosque-premio-espada { margin-bottom: 48px; }
+  .tela-bosque-bau .presente-cena.bosque-bau-cena { height: 190px; }
+  .bosque-bau-moldura { width: 96px; height: 96px; }
   .bosque-cartoes { flex-direction: column; align-items: stretch; }
   .bosque-cartao { flex: none; flex-direction: row; justify-content: flex-start; gap: 12px; padding: 8px 12px; }
   .bosque-cartao-texto { align-items: flex-start; }

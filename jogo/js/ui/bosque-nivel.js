@@ -2,10 +2,12 @@
    UI.telaEspadaBosque() → Promise: a espada sobe na luz do arco-íris (céu e brilhos do baú dos presentes, .tela-presente
      de css/ui-bau-presente.css), Bosque.ganharEspada() na hora, festa e as falas `espada` do Claude. Abre sozinha ao fim
      da íris de entrada no Bosque se ela ainda não tem a espada; nunca no modo congelado (precedente: motor/main.js).
-   UI.subirNivelBosque(n, falas?) → Promise<'forca'|'vida'|'velocidade'|null>: 3 cartões (Força, Vida, Velocidade) →
-     Bosque.porPonto(n, h) e a fala `ponto`; "Depois", ✕ ou Esc deixam o ponto pendente (null). Depois do ponto, o móvel
-     do nível: com casa e a chave ainda pendente, UI.escolherMovelCasa(chave); sem casa, a fala `semCasa` (ele fica
-     guardado); com todos os móveis, nada. `falas` = o que o Claude diz ao abrir (padrão: as falas `nivel`).
+   UI.subirNivelBosque(n, falas?, premio?) → Promise<'forca'|'vida'|'velocidade'|null>: 3 cartões (Força, Vida,
+     Velocidade) → Bosque.porPonto(n, h) e a fala `ponto`; "Depois", ✕ ou Esc deixam o ponto pendente (null). Depois do
+     ponto (ou de "Depois"/Esc), o baú do nível (UI.bauBosque, ui/bosque-bau.js): o móvel surpresa que o abate já gravou
+     (`premio` = { chave, movel }) ou, para um nível antigo pendente, um CasaMoveis.presente('bosque:<n>') se a chave
+     ainda não tiver móvel (casa.md §12). Sem casa o móvel fica guardado e o próprio baú avisa na tela. Sem móvel, segue
+     sem baú. `falas` = o que o Claude diz ao abrir (padrão: as falas `nivel`).
    Os botões novos nascem travados 600 ms (toque duplo). Estilos: css/ui-bosque.css. */
 (function () {
   var U = Reino.util, el = U.el, UI = Reino.UI;
@@ -78,27 +80,36 @@
     });
   };
 
-  /* ---------- o ponto do nível ---------- */
-  // o móvel do nível n, depois do ponto (casa.md §12)
-  function movel(n) {
-    var B = Reino.Bosque, C = Reino.Casa, CM = Reino.CasaMoveis, Fa = F(), chave = B.chaveMovel(n);
-    // sem casa: o balão do Claude (texto e voz); o móvel aparece quando ela ganhar a casa
-    if (!C || !C.ganhou()) {
-      if (Fa && Reino.Claude && Reino.Claude.falar) Reino.Claude.falar(Fa.semCasa.join(' '), { fala: Fa.semCasa.slice(), voz: 'claude' });
-      return Promise.resolve();
+  /* ---------- o ponto do nível e o baú do móvel ---------- */
+  // o móvel do nível n (casa.md §12): o que o abate já gravou (premio) ou, para um nível antigo pendente, um
+  // presente novo se a chave ainda não tiver móvel. Sem móvel, segue sem baú (o baú avisa na tela quando não há casa).
+  function premioDoNivel(n, premio) {
+    var B = Reino.Bosque, CM = Reino.CasaMoveis;
+    if (!UI.bauBosque || !B || !CM) return Promise.resolve();
+    var p = premio;
+    if (!p) {
+      var chave = B.chaveMovel(n);
+      if (!CM.escolhida || CM.escolhida(chave)) return Promise.resolve();
+      p = CM.presente ? CM.presente(chave) : null;
     }
-    if (!CM || CM.pendentes().indexOf(chave) < 0 || !UI.escolherMovelCasa) return Promise.resolve();
-    return UI.escolherMovelCasa(chave).then(function () {}, function (e) { console.warn('bosque, móvel:', e); });
+    if (!p || !p.movel) return Promise.resolve();
+    return UI.bauBosque({ chave: p.chave, movel: p.movel, titulo: 'Presente do nível!' })
+      .then(function () {}, function (e) { console.warn('bosque, baú do nível:', e); });
   }
 
-  UI.subirNivelBosque = function (n, falas) {
+  UI.subirNivelBosque = function (n, falas, premio) {
     var B = Reino.Bosque, Fa = F();
-    if (!B || B.pontosPendentes().indexOf(n) < 0) return Promise.resolve(null);
+    if (!B) return Promise.resolve(null);
+    // prêmio já gravado (o abate chamou abater): o baú sai mesmo que o ponto já tenha sido posto antes
+    if (B.pontosPendentes().indexOf(n) < 0) {
+      if (!premio) return Promise.resolve(null);
+      return premioDoNivel(n, premio).then(function () { return null; });
+    }
     return new Promise(function (resolver) {
       var J = window.Jogador;
       if (J && J.parar) J.parar();
-      var feito = false;
-      var pn = UI.painel('bosque-nivel', '⬆ Nível ' + n + '!', { aoFechar: function () { sair(null); } });
+      var escolhido = false, saindo = false;
+      var pn = UI.painel('bosque-nivel', '⬆ Nível ' + n + '!', { aoFechar: function () { seguir(null); } });
       var grade = el('div.bosque-cartoes');
       var botoes = CARTOES.map(function (c) {
         var b = el('button.bosque-cartao', { type: 'button', 'data-hab': c.h },
@@ -109,7 +120,7 @@
         return b;
       });
       var depois = el('button.btn-grande.btn-secundario.bosque-depois', { type: 'button' }, 'Depois');
-      depois.addEventListener('click', function () { if (!feito) { Reino.Som.tocar('toque'); Reino.Som.calar(); UI.fecharTela(pn.tela); sair(null); } });
+      depois.addEventListener('click', function () { if (escolhido || saindo) return; Reino.Som.tocar('toque'); Reino.Som.calar(); UI.fecharTela(pn.tela); seguir(null); });
       pn.conteudo.appendChild(el('p.bosque-nivel-dica', U.colado('Escolha onde pôr o seu ponto:')));
       pn.conteudo.appendChild(grade);
       pn.conteudo.appendChild(el('div.bosque-nivel-botoes', depois));
@@ -119,9 +130,9 @@
       travar(botoes, pn.tela, botoes[0]);
 
       function escolher(h, b, e) {
-        if (feito) return;
+        if (escolhido || saindo) return;
         if (!B.porPonto(n, h)) { Reino.Som.tocar('erro'); Reino._ui.toqueIgnorado(b); return; }
-        feito = true;
+        escolhido = true;
         b.classList.add('escolhido');
         if (e && e.isTrusted && e.detail) UI.segurarToques();
         UI.festa(2, { item: b });
@@ -132,13 +143,14 @@
         var minimo = U.animar() ? Reino.config.movimento.lento * 2 : 0;
         Promise.all([Promise.race([fala, esperar(3000)]), esperar(minimo)]).then(function () {
           UI.fecharTela(pn.tela);
-          return movel(n);
-        }).then(function () { resolver(h); }, function () { resolver(h); });
+          seguir(h);
+        });
       }
-      function sair(v) {
-        if (feito) return;
-        feito = true;
-        resolver(v);
+      // fecha a tela do ponto (se ainda aberta) e abre o baú do nível; resolve só depois que ele fechar
+      function seguir(v) {
+        if (saindo) return;
+        saindo = true;
+        premioDoNivel(n, premio).then(function () { resolver(v); }, function () { resolver(v); });
       }
     });
   };

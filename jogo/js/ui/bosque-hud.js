@@ -1,6 +1,7 @@
 /* Bosque dos Fantasmas no HUD (docs/contratos/bosque.md §5 e §7), só dentro do interior `bosque`:
    - o chip na coluna da esquerda (padrão da Aura, ui/hud-aura.js): 💖 vida n/max (BosqueCombate.vida()), "Nv N", a
-     barrinha de XP n/10 (Bosque.xp()) e o selo "+N" quando há ponto para pôr. Tocar abre UI.telaBosque();
+     barrinha de inimigos mortos até o próximo nível n/30 (Bosque.xp()), a linha 👻 n/10 da próxima pergunta
+     (Bosque.proximaPergunta()) e o selo "+N" quando há ponto para pôr. Tocar abre UI.telaBosque();
    - o botão redondo da espada, fixo embaixo à direita (o pintar o tira da fileira de cima), para atacar no toque:
      segurar o dedo (ou o mouse) repete o golpe a cada config.fantasmas.jogador.recargaMs, como segurar o Espaço; para
      no pointerup/cancel/leave, com tela aberta e fora do Bosque. Ao lado, a dica (só na tela, sem voz) até o 1º golpe:
@@ -8,8 +9,9 @@
      "Toque na espada, ou aperte Espaço, para atacar." (também no prêmio da espada, ui/bosque-nivel.js).
    - o cursor de espada (🗡 em pixel art, data URL montada uma vez) com o mouse em cima de um fantasma que se pode
      atacar (BosqueCombate.fantasmaNaTela, sistemas/bosque-alvo.js), trocado só no pointermove do canvas;
-   UI.telaBosque(): o painel com nível, XP, vida, os pontos de Força/Vida/Velocidade e o botão de pôr o ponto pendente
-   (UI.subirNivelBosque, ui/bosque-nivel.js). Os ícones (💖 ⭐ 💪 ⚡ ⬆ 🗡) já existem: nenhum registrado aqui.
+   UI.telaBosque(): o painel com nível, o placar de inimigos (mortos e a próxima pergunta), vida, os pontos de
+   Força/Vida/Velocidade e o botão de pôr o ponto pendente (UI.subirNivelBosque, ui/bosque-nivel.js). Os ícones
+   (💖 ⭐ 👻 💪 ⚡ ⬆ 🗡) já existem: nenhum registrado aqui.
    Reino.Bosque e Reino.BosqueCombate carregam depois (sistemas/): lidos só dentro das funções. Estilos: css/ui-bosque.css. */
 (function () {
   var U = Reino.util, el = U.el, UI = Reino.UI, EV = Reino.EVENTOS;
@@ -45,16 +47,18 @@
     var mostra = noBosque();
     if (b.hidden === mostra) b.hidden = !mostra;
     if (!mostra) return;
-    var Bo = B(), v = vida(), x = Bo.xp(), nv = Bo.nivel(), pend = Bo.pontosPendentes().length;
-    var chave = [v.n, v.max, nv, x.n, x.de, pend].join('|');
+    var Bo = B(), v = vida(), x = Bo.xp(), nv = Bo.nivel(), pend = Bo.pontosPendentes().length, p = Bo.proximaPergunta();
+    var chave = [v.n, v.max, nv, x.n, x.de, p.n, p.de, pend].join('|');
     if (chave === ultimoChip && b.firstChild) return;
     ultimoChip = chave;
     b.innerHTML = '';
     b.appendChild(el('span.bosque-chip-vida', icone('💖'), el('span', v.n + '/' + v.max)));
     b.appendChild(el('span.bosque-chip-nivel', el('span', 'Nv ' + nv), barraXp(x)));
+    b.appendChild(el('span.bosque-chip-mortos', icone('👻'), el('span', p.n + '/' + p.de)));
     if (pend) b.appendChild(el('span.bosque-selo', '+' + pend));
-    b.setAttribute('aria-label', 'Bosque: vida ' + v.n + ' de ' + v.max + ', nível ' + nv +
-      (pend ? ', ponto para pôr' : ''));
+    var nivelAria = x.maximo ? ', nível máximo' : ', ' + x.n + ' de ' + x.de + ' inimigos para o próximo nível';
+    b.setAttribute('aria-label', 'Bosque: vida ' + v.n + ' de ' + v.max + ', nível ' + nv + nivelAria +
+      ', próxima pergunta em ' + p.n + ' de ' + p.de + (pend ? ', ponto para pôr' : ''));
   }
   function chipBosque() {
     var b = el('button.chip.chip-bosque', { type: 'button', 'aria-label': 'Bosque dos Fantasmas', hidden: true });
@@ -143,12 +147,14 @@
     var Bo = B();
     if (!Bo || UI.temTela()) return;
     var pn = UI.painel('bosque', '🗡 Bosque dos Fantasmas', { curto: '🗡 Bosque', estreito: true });
-    var x = Bo.xp(), v = vida(), pts = Bo.pontos(), pend = Bo.pontosPendentes();
+    var x = Bo.xp(), v = vida(), pts = Bo.pontos(), pend = Bo.pontosPendentes(), prox = Bo.proximaPergunta();
     var corpo = el('div.bosque-painel',
       el('p.bosque-painel-nivel', 'Nível ' + Bo.nivel()),
       el('div.bosque-painel-xp', icone('⭐'), barraXp(x, 'bosque-xp-grande'),
         el('b', x.maximo ? 'Máximo!' : x.n + '/' + x.de)),
       el('p.bosque-painel-vida', icone('💖'), el('span', 'Vida ' + v.n + '/' + v.max)));
+    corpo.appendChild(el('p.bosque-painel-mortos', icone('👻'), el('span', 'Inimigos mortos: ' + Bo.mortos())));
+    corpo.appendChild(el('p.bosque-painel-proxima', el('span', 'Próxima pergunta: ' + prox.n + '/' + prox.de)));
     var lista = el('ul.bosque-habs');
     HABS.forEach(function (a) {
       lista.appendChild(el('li.bosque-hab', icone(a.emoji), el('span.bosque-hab-nome', a.nome), el('b', String(pts[a.h]))));

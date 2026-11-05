@@ -1,13 +1,18 @@
 /* Casa do jogador, os móveis avulsos (docs/contratos/casa.md §12): um à escolha por sala feita.
    Campo (save-e-mescla.md §11; mantém no Novo ciclo e vai na cópia -novidades):
      casaMoveis { <chave>: { movel, em } }; carimbo (por chave, o `em` maior). Escolha é para sempre.
-   Chave = id da sala, ou a de uma fonte registrada (registrarFonte; ex.: 'bosque:<nível>', do Bosque dos Fantasmas).
+   Chave = id da sala, a de uma fonte registrada (registrarFonte; para conteúdo extra) ou um presente direto do
+   Bosque dos Fantasmas ('bosque:<nível>', 'bosque:p<bloco>'). Os presentes usam CasaMoveis.presente e NÃO entram em
+   `pendentes` nem na fila de escolha de sala (o baú surpresa do Bosque revela o móvel já gravado).
    Contam as salas feitas das matérias que dão kit (bimestre >= config.casa.desdeBimestre), só com a casa ganha.
    Derivado (nunca no save): quantos de cada móvel ela tem (as salas que o escolheram), as salas pendentes e os
    móveis sorteados de cada sala. Peça de um móvel (uid) = 'movel.<id>.<n>', n de 1 ao tanto que ela tem; as regras
    de peça, lugar e modo decorar são as de sistemas/casa.js.
    Sorteio: fixo por sala (semente = sala + o `em` do baú da casa), os que ela ainda não tem primeiro; faltando
-   novos, completa com repetidos (ganha mais um igual). node: true: nada de DOM no carregamento. */
+   novos, completa com repetidos (ganha mais um igual). O presente (presente) sorteia igual, mas com semente da
+   chave + o `em` do baú + a quantidade de móveis: deterministicamente, prefere os que ela ainda não tem e, com
+   todos, dá mais um igual. `guardar` grava um móvel direto (sem exigir a casa: ele espera o baú da casa).
+   node: true: nada de DOM no carregamento. */
 (function () {
   var R = window.Reino, P = R.Progresso, I = R._progresso;
   var objeto = I.objeto, numeroOu = I.numeroOu;
@@ -80,10 +85,11 @@
     return salas.concat(outras).filter(livre);
   }
   function salaInfo(salaId) { return salasQueContam().find(function (x) { return x.sala.id === salaId; }) || null; }
-  /** o texto do presente na tela de escolha: o da sala, ou o da fonte da chave; '' se a chave não é de ninguém */
+  /** o texto do presente na tela de escolha: o da sala, o do presente do Bosque, ou o da fonte da chave; '' se não é de ninguém */
   function titulo(chave) {
     var info = salaInfo(chave);
     if (info) return 'Presente da sala “' + info.sala.nome + '”';
+    if (/^bosque:p\d+$/.test(chave)) return 'Presente do Bosque';
     var x = chavesDasFontes().find(function (y) { return y.chave === chave; });
     if (!x) return '';
     try { return String(x.fonte.titulo(chave) || ''); } catch (e) { return ''; }
@@ -126,8 +132,39 @@
   /** os ids dos móveis que ela tem (ao menos uma peça), na ordem do registro */
   function ganhos() { return (R.moveisCasa || []).filter(function (m) { return qtd(m.id) > 0; }).map(function (m) { return m.id; }); }
 
+  /* ---------- presentes diretos do Bosque (fora da fila das salas) ---------- */
+  /** grava um móvel na chave, sem exigir a casa ganha (ele espera o baú da casa); false se o móvel não existe */
+  function guardar(chave, movelId) {
+    var e = P.estado();
+    if (!e || typeof chave !== 'string' || !chave || !def(movelId)) return false;
+    if (!objeto(e.casaMoveis)) e.casaMoveis = {};
+    var antigo = e.casaMoveis[chave];
+    // sempre maior que o carimbo anterior da chave (o relógio pode ter voltado)
+    e.casaMoveis[chave] = { movel: movelId, em: Math.max(I.agora(), (objeto(antigo) ? numeroOu(antigo.em, 0) : 0) + 1) };
+    P.salvar();
+    return true;
+  }
+  /** o presente surpresa da chave: se ela já tem um móvel válido, devolve o mesmo; senão sorteia (determinístico:
+   *  chave + casaBau.em + quantidade de móveis), prefere os que ela ainda não tem e, com todos, dá mais um igual.
+   *  @returns {{ chave: string, movel: string } | null} */
+  function presente(chave) {
+    var e = P.estado(), atual = e && objeto(e.casaMoveis) ? e.casaMoveis[chave] : null;
+    if (escolhido(atual)) return { chave: chave, movel: escolhido(atual) };
+    if (!e || typeof chave !== 'string' || !chave) return null;
+    var ids = (R.moveisCasa || []).map(function (m) { return m.id; });
+    if (!ids.length) return null;
+    var bau = (objeto(e.casaBau) && numeroOu(e.casaBau.em, 0)) || 0;
+    var rnd = sorteador(semente(String(chave) + '|' + bau + '|' + Object.keys(campo()).length));
+    for (var i = ids.length - 1; i > 0; i--) { var j = Math.floor(rnd() * (i + 1)), t = ids[i]; ids[i] = ids[j]; ids[j] = t; }
+    var novos = ids.filter(function (id) { return !qtd(id); });
+    var movel = (novos.length ? novos : ids)[0];
+    if (!guardar(chave, movel)) return null;
+    return { chave: chave, movel: movel };
+  }
+
   R.CasaMoveis = { qtd: qtd, pendentes: pendentes, salasPendentes: salasPendentes, escolhida: escolhida, salaInfo: salaInfo,
-    titulo: titulo, opcoes: opcoes, escolher: escolher, ganhos: ganhos, registrarFonte: registrarFonte };
+    titulo: titulo, opcoes: opcoes, escolher: escolher, ganhos: ganhos, registrarFonte: registrarFonte,
+    presente: presente, guardar: guardar };
 
   R.registrarModulo({
     id: 'casa-moveis',
