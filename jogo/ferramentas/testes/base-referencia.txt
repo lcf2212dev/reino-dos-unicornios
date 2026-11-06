@@ -110,4 +110,6 @@
 # @ = Cidade Nova: portal no centro-direita do Bosque, 4 lojas com pergunta do 4º bimestre, 50 móveis de decoração, 100 equipamentos e Teleportadora na praça principal e na Cidade Nova
 # @ = vozes da Cidade Nova (18 falas) e móveis da loja fora do sorteio das salas
 # @ = vozes da Teleportadora (2 falas no pacote geral)
+# @ = portais da Cidade Nova com ação na cena (Bosque e volta)
+# @ = portais da Cidade Nova com ação e nome na cena (Bosque e volta)
 @

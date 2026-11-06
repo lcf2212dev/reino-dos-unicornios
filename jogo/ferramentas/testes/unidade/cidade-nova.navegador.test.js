@@ -19,6 +19,9 @@ test('cidade-nova: portal, 4 lojas, terrenos, Teleportadoras e a entrada com per
     const portal = await c.js(`(() => { const p = Reino.config.lojaCidade.portalBosque;
       return { x: p.x, y: p.y, objeto: !!Reino.Interiores.OBJETOS['bosque-portal-cidade'] }; })()`);
     assert.deepStrictEqual(portal, { x: 43, y: 21, objeto: true });
+    const acaoBosque = await c.js(`(() => { const o = Reino.Interiores.def('bosque').objetos.filter((x) => x.tipo === 'bosque-portal-cidade')[0];
+      return o && o.acao; })()`);
+    assert.deepStrictEqual(acaoBosque, { tipo: 'portalCidade', para: 'cidade' });
     await c.js(`void Reino.Cena.irPara('cidade-nova', { x: 25, y: 33 }, { x: 0, y: -1 }); 1`);
     await c.avancar(2200);
     assert.strictEqual(await c.js('__reino.cena()'), 'cidade-nova');
@@ -29,6 +32,9 @@ test('cidade-nova: portal, 4 lojas, terrenos, Teleportadoras e a entrada com per
         mapaTele: (Mapa.CIDADE.objetos || []).some((o) => o.tipo === 'teleportadora'),
         lojas: Reino.interiores.filter((i) => i.lugar === 'portal:casa' || i.lugar === 'portal:armas' || i.lugar === 'portal:cabecas' || i.lugar === 'portal:armaduras').length }; })()`);
     assert.deepStrictEqual(resumo, { bau: 4, portas: 4, terrenos: 3, teleportadoras: 2, portal: 1, mapaTele: true, lojas: 4 });
+    const acaoCidade = await c.js(`(() => { const o = Reino.Interiores.def('cidade-nova').objetos.filter((x) => x.tipo === 'cidade-portal-bosque')[0];
+      return o && o.acao; })()`);
+    assert.deepStrictEqual(acaoCidade, { tipo: 'portalCidade', para: 'bosque' });
     // a porta da Casa & Lar leva ao interior; o tapete de dentro volta para a frente da porta
     const porta = await c.js(`(() => { const a = Reino.Cena.atual().alvoPerto({ x: 7, y: 7 }, { x: 0, y: -1 });
       return a && a.objeto && a.objeto.acao; })()`);

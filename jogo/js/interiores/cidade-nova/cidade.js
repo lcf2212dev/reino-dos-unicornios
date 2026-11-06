@@ -37,7 +37,7 @@
   poe('cidade-mural', 9, 11);
   poe('cidade-cartaz', 16, 16, { nome: 'Cartaz da praça', fala: ['Bem-vinda à Cidade Nova!'] });
   // entrada: o portal de volta ao Bosque e a Teleportadora da entrada
-  poe('cidade-portal-bosque', P.portalCidade.x, P.portalCidade.y);
+  poe('cidade-portal-bosque', P.portalCidade.x, P.portalCidade.y, { nome: 'Portal do Bosque', acao: { tipo: 'portalCidade', para: 'bosque' } });
   poe('cidade-teleportadora', P.teleportadoraEntrada.x, P.teleportadoraEntrada.y, { nome: 'Teleportadora', acao: { tipo: 'teleportadora', destino: 'principal' } });
   poe('banco', 31, 32);
   poe('luminaria-pe', 23, 32); poe('luminaria-pe', 34, 32);
