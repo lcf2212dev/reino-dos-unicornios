@@ -1,19 +1,14 @@
-/* Bosque dos Fantasmas e as outras arenas: o combate (Reino.BosqueCombate, módulo 'bosque-combate'; docs/contratos/
-   bosque.md §5 e §7, arenas.md). Vale em todo interior registrado como arena (Reino.registrarArena, motor/interiores-arena.js),
-   com os números dela (Reino.Arenas.cfg: os tipos, quantos e zonas da arena por cima de config.fantasmas); um estado
-   por arena (S.estados[id]), o da arena de agora em S.estado.
-   O laço não tem `atualizar`: a simulação avança em camada.itensDesenho (dt do `t`, no máximo 50 ms) e congela com a
-   cena bloqueada (íris, diálogo, desmaio) ou tela aberta. Fantasmas e moscas por zona, tirados da grade do interior
-   (config.fantasmas: quantos, zonas, zonaSegura): flutuam, vagam, perseguem dentro da `visao`, presos pela `coleira`,
-   e nunca entram na zona segura do spawn. No modo congelado (e2e) ficam parados no ninho (foto estável).
-   O passo é PURO (passo(estado, dt, jogador) só mexe no estado; os eventos vão para estado.eventos e a parte de fora
-   emite): testável no Node. Sorteios com Reino.Desenho.rng (nada de Math.random).
-   Interno Reino._bosqueCombate (com bosque-desenho.js e bosque-alvo.js): { estado (o da arena de agora, ou da última),
-   estados: { arena: estado }, grades: { arena: grade da cena }, arena (o id da arena de agora), naCena(), desenho: { itens(p, t, animar),
-   sobre(p, t, animar) }, desmaio: { desde } | null, t (o `t` do quadro), vencidoEm: { id (no Bosque) ou 'arena:id': Date.now() de quando venceu },
-   quadro(est, j) (o ataque por alvo, chamado a cada quadro depois do passo, com o `j` do passo), olharX/olharY (o
-   olhar dela no começo do quadro, o do corpo desenhado) }.
-   node: true: nada de DOM, Progresso nem Cena no carregamento (só dentro das funções). */
+/* Bosque dos Fantasmas e as outras arenas: o combate (Reino.BosqueCombate, módulo 'bosque-combate'; docs/contratos/bosque.md
+   §5 §7, arenas.md, itens.md §9). Vale em toda arena (Reino.registrarArena), com os números dela (Reino.Arenas.cfg); um
+   estado por arena (S.estados[id]), o de agora em S.estado. Sem `atualizar` no laço: a simulação avança em
+   camada.itensDesenho (dt do `t`, até 50 ms) e congela com a cena bloqueada (íris, diálogo, desmaio) ou tela aberta.
+   Inimigos por zona (config.fantasmas: quantos, zonas, zonaSegura): flutuam, vagam, perseguem dentro da `visao`, presos
+   pela `coleira`, nunca na zona segura; no modo congelado (e2e), parados no ninho. O passo é PURO (passo(estado, dt,
+   jogador) só mexe no estado; eventos em estado.eventos, emitidos por fora): testável no Node; sorteios com Reino.Desenho.rng.
+   Interno Reino._bosqueCombate (com bosque-desenho.js e bosque-alvo.js): { estado, estados: { arena: estado }, grades: {
+   arena: grade }, arena (id de agora), naCena(), desenho: { itens(p, t, animar), sobre(p, t, animar) }, desmaio: { desde } |
+   null, t (do quadro), vencidoEm: { id ou 'arena:id': Date.now() }, quadro(est, j) (ataque por alvo, depois do passo),
+   olharX/olharY (o olhar do corpo desenhado neste quadro) }. node: true: nada de DOM, Progresso nem Cena ao carregar. */
 (function () {
   var R = window.Reino;
   var S = R._bosqueCombate = { estado: null, estados: {}, grades: {}, arena: null, desenho: null, desmaio: null, t: 0,
@@ -49,14 +44,13 @@
   }
 
   /* mapa = { comodo: { x, y, w, h } (tiles), spawn: { x, y }, solido(tx, ty), agua?(tx, ty) }; c = os números da arena
-     (config.fantasmas no Bosque; Reino.Arenas.cfg(id) nas outras). Os tipos são os de c.tipos, na ordem (no Bosque:
-     facil, medio, dificil, mosca). Nascem em tile livre da zona do tipo, fora da zona segura (e, os do chão, fora da
-     água), sempre nos mesmos lugares (semente). */
+     (os tipos de c.tipos, na ordem). Nascem em tile livre da zona do tipo, fora da zona segura e (os do chão) da água,
+     sempre nos mesmos lugares (semente). */
   function novoEstado(mapa, c, semente) {
     c = c || cfg();
     semente = semente === undefined ? SEMENTE : semente;
     var rng = R.Desenho.rng(semente), cm = mapa.comodo, sp = mapa.spawn, zs = c.zonaSegura, cj = c.jogador;
-    var est = { cfg: c, t: 0, vida: cj.vidaBase, max: cj.vidaBase, invencivelAte: 0, regenEm: 0, recargaAte: 0,
+    var est = { cfg: c, t: 0, vida: cj.vidaBase, max: cj.vidaBase, maxPontos: cj.vidaBase, invencivelAte: 0, regenEm: 0, recargaAte: 0,
       golpe: null, desmaiado: false, parados: false, eventos: [], fantasmas: [],
       limites: { x0: cm.x * T + 4, y0: cm.y * T + 12, x1: (cm.x + cm.w) * T - 4, y1: (cm.y + cm.h) * T },
       segura: { x0: (sp.x - zs) * T, y0: (sp.y - zs) * T, x1: (sp.x + zs + 1) * T, y1: (sp.y + zs + 1) * T },
@@ -127,9 +121,13 @@
     f.alvoX = f.casaX + Math.cos(a) * r; f.alvoY = f.casaY + Math.sin(a) * r;
     f.pausa = false;
   }
+  // o que o toque tira: a Proteção vestida corta defesaPorPonto por ponto, até defesaMax, e nunca menos de 1 (itens.md §9)
+  function toque(forca, defesa) {
+    var ci = R.config.itens, corte = defesa > 0 && ci ? Math.min(ci.defesaMax, defesa * ci.defesaPorPonto) : 0;
+    return Math.max(1, Math.round(forca * (1 - corte))); }
   function levarToque(est, f, j) {
     var c = est.cfg, t = est.t;
-    est.vida = Math.max(0, est.vida - c.tipos[f.tipo].forca);
+    est.vida = Math.max(0, est.vida - toque(c.tipos[f.tipo].forca, j.defesa));
     est.invencivelAte = t + c.jogador.invencivelMs;
     est.regenEm = t + c.jogador.regenSemDanoMs;
     evento(est, { tipo: 'vida', n: est.vida, max: est.max });
@@ -178,15 +176,16 @@
       if (t >= est.invencivelAte) levarToque(est, f, j); else recuar(est, f, j);
     }
   }
+  // j.vidaMax = pontos + itens (j.vidaItens). Ponto em Vida já vem cheio; roupa não cura (itens.md §9): só o teto muda
   function ajustarMax(est, j) {
-    var m = j.vidaMax || est.cfg.jogador.vidaBase;
-    if (m === est.max) return;
-    if (m > est.max) est.vida += m - est.max;     // ponto em Vida: a vida nova já vem cheia
-    est.max = m; est.vida = Math.min(est.vida, m);
+    var m = j.vidaMax || est.cfg.jogador.vidaBase, mp = m - (j.vidaItens || 0);
+    if (m === est.max && mp === est.maxPontos) return;
+    if (mp > est.maxPontos) est.vida += mp - est.maxPontos;
+    est.maxPontos = mp; est.max = m; est.vida = Math.min(est.vida, m);
     evento(est, { tipo: 'vida', n: est.vida, max: est.max });
   }
 
-  /* jogador = { x, y (pés, px do jogo), olharX, olharY, vidaMax?, dano? }; dt em ms (no máximo 50) */
+  /* jogador = { x, y (pés, px do jogo), olharX, olharY, vidaMax?, vidaItens?, defesa?, dano? }; dt em ms (no máximo 50) */
   function passo(est, dt, j) {
     dt = Math.max(0, Math.min(50, dt || 0));
     est.t += dt;
@@ -233,6 +232,14 @@
     });
     evento(est, { tipo: 'vida', n: est.vida, max: est.max });
   }
+  // poção: soma n à vida, até a máxima (null desmaiada)
+  function curarNo(est, n) {
+    var antes = est.vida;
+    if (est.desmaiado) return null;
+    est.vida = Math.min(est.max, est.vida + Math.max(0, Math.round(n) || 0));
+    evento(est, { tipo: 'vida', n: est.vida, max: est.max });
+    return { antes: antes, depois: est.vida };
+  }
   function devolverNo(est, id) {
     var f = est.fantasmas.filter(function (x) { return x.id === id; })[0];
     if (!f || (f.estado !== 'vencido' && f.estado !== 'sumindo')) return false;
@@ -253,10 +260,10 @@
   function vidaMax() { var B = R.Bosque; return B && B.vidaMax ? B.vidaMax() : cfg().jogador.vidaBase; }
   function dano() { var B = R.Bosque; return B && B.dano ? B.dano() : cfg().jogador.danoBase; }
   function temEspada() { var B = R.Bosque; return B && B.temEspada ? !!B.temEspada() : true; }
-  // o jogador do passo (um objeto só, reaproveitado). Vida máxima e dano só mudam com ponto ou acerto (eventos do
-  // Bosque) e são lidos de novo nesses eventos e ao entrar no Bosque, não a cada quadro
-  var JOG = { x: 0, y: 0, olharX: 0, olharY: 1, vidaMax: 0, dano: 0 }, lidos = false;
-  function lerValores() { JOG.vidaMax = vidaMax(); JOG.dano = dano(); lidos = true; }
+  function bonus() { var B = R.Bosque; return B && B.bonus ? B.bonus() : { vida: 0, defesa: 0 }; }
+  // o jogador do passo (um só, reaproveitado); vida, dano e Proteção relidos nos eventos BOSQUE e ITENS e ao entrar
+  var JOG = { x: 0, y: 0, olharX: 0, olharY: 1, vidaMax: 0, vidaItens: 0, defesa: 0, dano: 0 }, lidos = false;
+  function lerValores() { var b = bonus(); JOG.vidaMax = vidaMax(); JOG.vidaItens = b.vida; JOG.defesa = b.defesa; JOG.dano = dano(); lidos = true; }
   function jogador() {
     var J = window.Jogador;
     if (!lidos) lerValores();
@@ -282,7 +289,7 @@
     est.arena = id;
     est.parados = !!R.congelado;
     lerValores();
-    est.vida = est.max = JOG.vidaMax;
+    est.vida = est.max = JOG.vidaMax; est.maxPontos = JOG.vidaMax - JOG.vidaItens;
     return est;
   }
   // a chave do vencido em S.vencidoEm: o id no Bosque; '<arena>:<id>' nas outras (os ids f<n> se repetem entre arenas)
@@ -365,12 +372,13 @@
       var est = S.estados[m.para];
       if (!est) return;
       S.estado = est; S.arena = m.para;
-      lerValores();
+      lerValores(); est.max = JOG.vidaMax; est.maxPontos = JOG.vidaMax - JOG.vidaItens;   // entra com a vida cheia
       soltarPresos(est);
       reiniciarEstado(est);
       emitir(est);
     });
     R.util.on(R.EVENTOS.BOSQUE, function (e) { if (e && (e.tipo === 'ponto' || e.tipo === 'acerto')) lidos = false; });
+    if (R.EVENTOS.ITENS) R.util.on(R.EVENTOS.ITENS, function () { lidos = false; });
   }
 
   var API = R.BosqueCombate = {
@@ -392,9 +400,11 @@
     devolver: function (id, arena) { var e = arena ? S.estados[arena] : S.estado; return !!e && devolverNo(e, id); },
     arena: function () { return naCena() ? S.arena : null; },
     reiniciar: function () { if (S.estado) { reiniciarEstado(S.estado); emitir(S.estado); } },
+    // poção (itens.md §9): na arena de agora, até a máxima; null fora dela ou desmaiada
+    curar: function (n) { var e = naCena() && !S.desmaio ? S.estado : null, r = e && curarNo(e, n); if (r) emitir(e); return r || null; },
     // puros (testes no Node e ferramentas)
     novoEstado: novoEstado, passo: passo, golpear: golpear, reiniciarEstado: reiniciarEstado, devolverNo: devolverNo,
-    temEspada: temEspada,
+    curarNo: curarNo, toque: toque, temEspada: temEspada,
   };
 
   R.registrarModulo({

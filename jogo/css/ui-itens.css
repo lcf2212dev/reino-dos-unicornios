@@ -1,0 +1,128 @@
+/* Itens (docs/contratos/itens.md §13): o espaço de item comum (ui/mochila-item.js), a tela da Mochila (ui/mochila.js),
+   o cartão do item, o Baú de Guardados (ui/guardados.js), o aviso no alto (ui/itens-aviso.js) e o botão 🎒 do HUD
+   (ui/hud-mochila.js). A raridade vem da classe .rar-<r> (ui-base.css): fundo chapado e faixa interna de 4 px. */
+
+/* ---------- espaço de item (grade da Mochila e colunas do baú) ---------- */
+.itens-espaco {
+  position: relative; display: grid; place-items: center; width: 64px; height: 64px; padding: 0;
+  background: var(--rar-fundo, var(--papel)); color: var(--tinta); cursor: pointer;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
+  box-shadow: inset 0 0 0 4px var(--rar-desenho, transparent), var(--sombra-pequena); --degrau: 2px;   /* tipografia-ok: faixa interna da raridade (arte.md §8) */
+  --brilho-apertado: inset 0 0 0 4px var(--rar-desenho, transparent);   /* tipografia-ok: faixa interna da raridade */
+}
+.itens-espaco.itens-livre { background: var(--papel-2); border-style: dashed; border-color: var(--tinta-suave); box-shadow: none; cursor: default; }
+.itens-qtd {
+  position: absolute; right: 4px; bottom: 4px; min-width: 16px; padding: 2px; text-align: center;
+  font-size: var(--texto-p); line-height: 1; color: var(--tinta);
+  background: var(--papel); border: var(--borda-fina) solid var(--borda); border-radius: 0;
+}
+
+/* ---------- Mochila: a figura e os slots à esquerda, a grade de 20 (4 × 5) à direita ---------- */
+.moch-corpo { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; align-items: start; }
+.moch-esq { display: flex; gap: 12px; align-items: flex-start; min-width: 0; }
+.moch-figura {
+  flex: none; display: grid; place-items: end center; min-width: 144px; min-height: 184px; padding: 8px;
+  background: var(--papel-quente); border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
+}
+.moch-figura-canvas { display: block; image-rendering: pixelated; }
+.moch-slots { display: flex; flex-direction: column; gap: 6px; flex: 1 1 0; min-width: 0; }
+.moch-slot {
+  display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 4px 12px; text-align: left;
+  background: var(--rar-fundo, var(--papel)); color: var(--tinta); cursor: pointer;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
+  box-shadow: inset 0 0 0 4px var(--rar-desenho, transparent), var(--sombra-pequena); --degrau: 2px;   /* tipografia-ok: faixa interna da raridade (arte.md §8) */
+  --brilho-apertado: inset 0 0 0 4px var(--rar-desenho, transparent);   /* tipografia-ok: faixa interna da raridade */
+}
+.moch-slot.moch-slot-livre { background: var(--papel); cursor: default; }
+.moch-slot-icone { flex: none; display: grid; place-items: center; width: 36px; height: 36px; }
+.moch-slot-vazio { width: 28px; height: 28px; border: var(--borda-fina) dashed var(--tinta-suave); border-radius: var(--canto-pequeno); }
+.moch-slot-texto { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.moch-slot-texto small { font-size: var(--texto-aux); line-height: 1.25; color: var(--tinta-suave); }
+.moch-slot-texto b { font-size: var(--texto-aux); line-height: 1.25; overflow-wrap: break-word; }
+.moch-slot-livre .moch-slot-texto b { color: var(--tinta-suave); }
+.moch-dir { display: flex; flex-direction: column; gap: 8px; align-items: center; }
+.moch-espacos { margin: 0; font-size: var(--texto-aux); }
+.moch-vazia { margin: 0; max-width: 280px; font-size: var(--texto-aux); line-height: 1.5; text-align: center; }
+.moch-grade { display: grid; grid-template-columns: repeat(4, 64px); gap: 8px; }
+
+/* celular: a figura e os slots em cima; embaixo a grade em 5 × 4 */
+@media (max-width: 480px) {
+  .moch-corpo { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .moch-esq { gap: 8px; }
+  .moch-figura { min-width: 112px; min-height: 184px; padding: 4px; }
+  .moch-grade { grid-template-columns: repeat(5, 56px); gap: 6px; }
+  .moch-grade .itens-espaco { width: 56px; height: 56px; }
+}
+
+/* ---------- cartão do item ---------- */
+.mitem-info { display: flex; gap: 16px; align-items: flex-start; }
+.mitem-moldura {
+  flex: none; display: grid; place-items: center; width: 96px; height: 96px;
+  background: var(--rar-fundo, var(--papel)); border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
+  box-shadow: inset 0 0 0 4px var(--rar-desenho, transparent);   /* tipografia-ok: faixa interna da raridade (arte.md §8) */
+}
+.mitem-texto { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.mitem-texto p { margin: 0; line-height: 1.5; }
+.mitem-raridade { color: var(--rar-texto); font-size: var(--texto-aux); }
+.mitem-atributos { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 4px; }
+.mitem-agora { color: var(--tinta-suave); font-size: var(--texto-aux); }
+.mitem-msg { margin: 12px 0 0; padding: 8px; text-align: center; line-height: 1.5; background: var(--quase-fundo); border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); }
+@media (max-width: 480px) {
+  /* celular: os botões do cartão um embaixo do outro, cada um na largura toda (o principal em cima) */
+  footer.rodape-acao.mitem-botoes { height: auto; flex-direction: column-reverse; align-items: stretch; gap: 8px; }
+  footer.rodape-acao.mitem-botoes > .btn-grande { flex: none; min-width: 0; width: 100%; margin: 0; white-space: normal; }
+  .mitem-info { gap: 12px; }
+  .mitem-moldura { width: 80px; height: 80px; }
+}
+
+/* ---------- Baú de Guardados: duas colunas (Mochila | Baú) ---------- */
+.guard-dica { margin: 0 0 12px; text-align: center; font-size: var(--texto-aux); }
+.guard-colunas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; align-items: start; }
+.guard-coluna {
+  display: flex; flex-direction: column; gap: 8px; min-width: 0; padding: 8px;
+  background: var(--papel-quente); border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
+}
+.guard-titulo { margin: 0; font-size: var(--texto-aux); text-align: center; }
+.guard-grade { display: grid; grid-template-columns: repeat(auto-fill, 64px); justify-content: center; gap: 8px; }
+.guard-vazio { margin: 8px 0; font-size: var(--texto-aux); color: var(--tinta-suave); text-align: center; line-height: 1.5; }
+.guard-rodape .btn-grande { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+.guard-msg { margin: 12px 0 0; padding: 8px; text-align: center; background: var(--quase-fundo); border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); }
+@media (max-width: 480px) {
+  .guard-colunas { gap: 8px; }
+  .guard-coluna { padding: 6px; }
+  .guard-grade { grid-template-columns: repeat(auto-fill, 48px); gap: 6px; }
+  .guard-grade .itens-espaco { width: 48px; height: 48px; }
+  /* rodapé (arte.md §20.2): o que não cabe vira só o ícone */
+  .guard-mochila-texto { display: none; }
+  footer.rodape-acao > .guard-mochila { flex: 0 0 72px; }
+  footer.rodape-acao > .guard-tudo { flex: 1 1 auto; min-width: max-content; }
+}
+
+/* ---------- aviso do item: faixa pequena no alto, abaixo do HUD (não é tela, não pega toque) ---------- */
+.itens-aviso {
+  position: fixed; z-index: 15; left: 0; right: 0; top: calc(var(--hud-topo, 64px) + 8px); width: max-content; margin: 0 auto;
+  display: flex; align-items: center; gap: 8px; max-width: calc(100vw - 16px); padding: 6px 12px 6px 8px;
+  font-size: var(--texto-aux); line-height: 1.25; color: var(--tinta); pointer-events: none;
+  background: var(--rar-fundo, var(--papel)); border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
+  box-shadow: inset 0 0 0 4px var(--rar-desenho, transparent), var(--sombra-pequena); --degrau: 2px;   /* tipografia-ok: faixa interna da raridade (arte.md §8) */
+  animation: itens-aviso-entra var(--rapido) steps(3);
+}
+.itens-aviso-icone { flex: none; display: grid; place-items: center; }
+@keyframes itens-aviso-entra { from { transform: translateY(-12px); opacity: 0; } to { transform: none; opacity: 1; } }
+body.sem-animacao .itens-aviso { animation: none; }
+@media (prefers-reduced-motion: reduce) { .itens-aviso { animation: none; } }
+
+/* ---------- botão 🎒 do HUD: o brilhinho de item novo (sem número) ---------- */
+.btn-mochila { position: relative; }
+.mochila-brilho { display: none; position: absolute; top: -4px; right: -4px; width: 12px; height: 12px; background: var(--ouro); border: var(--borda-fina) solid var(--borda); }
+.btn-mochila.com-novo .mochila-brilho { display: block; animation: mochila-brilho calc(2 * var(--lento)) steps(2) infinite; }
+@keyframes mochila-brilho { 50% { background: var(--ouro-claro); } }
+body.sem-animacao .btn-mochila.com-novo .mochila-brilho { animation: none; }
+@media (prefers-reduced-motion: reduce) { .btn-mochila.com-novo .mochila-brilho { animation: none; } }
+/* celular: a fileira já está cheia (4 botões; 5 dentro da casa), então o 🎒 desce para uma linha só dele, à direita,
+   sem mexer nos outros. Só com o 🎒 à vista: sem ele, a fileira fica como sempre foi */
+@media (max-width: 480px) {
+  .hud-botoes:has(> .btn-mochila:not([hidden])) { flex-wrap: wrap; justify-content: flex-end; row-gap: 6px; width: max-content; }
+  .hud-botoes:has(> .btn-mochila:not([hidden]))::after { content: ''; order: 1; flex-basis: 100%; height: 0; }
+  .hud-botoes > .btn-mochila { order: 2; }
+}

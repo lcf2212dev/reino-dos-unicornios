@@ -17,7 +17,7 @@ virado para onde quiser.
 | desenho nas 4 direções | `Reino.CasaArte.virado` em `js/interiores/casa/virar.js` |
 | dados dos kits | `js/conteudo/casa/kits-a.js` (estar, jantar, cozinha), `kits-b.js` (banheiro, quarto-jogador, quarto-uni) |
 | desenho dos móveis | `js/interiores/casa/moveis-<kit>.js` |
-| o prédio | `js/interiores/casa/` (`falas.js`, `objetos.js`, `casa.js`, `andar2.js`, `fora.js`, `lugar.js`) |
+| o prédio | `js/interiores/casa/` (`falas.js`, `objetos.js`, `guardados.js`, `casa.js`, `andar2.js`, `fora.js`, `lugar.js`) |
 | save, regras, ação da caixa | `js/sistemas/casa.js` (`Reino.Casa`) |
 | motor | `js/motor/interiores-cena.js` (`refazer`, `objetosExtras`), `interiores-placas.js` (`{nome}`, `{uni}`), validador `jogo/ferramentas/validar/validar-interiores.js` (`decoravel`) |
 | telas | `js/ui/bau-casa.js`, `ui/casa-kits.js`, `ui/casa-falas.js` (as falas das duas, `node: true`), `ui/casa-decorar.js` e `ui/casa-decorar-fantasma.js` (+ CSS `ui-bau-casa.css`, `ui-casa-kits.css`, `ui-casa-decorar.css`) |
@@ -31,6 +31,8 @@ virado para onde quiser.
   `config.casa.comodos`.
 - Kits (ordem de `config.casa.kits`): `estar`, `jantar`, `cozinha`, `banheiro`, `quarto-jogador`, `quarto-uni`.
 - Objetos: `casa-<nome>` para os do prédio (ex.: `casa-caixa`, a caixa de mudança); `casa-<kit>-<item>` para os móveis.
+- Baú de Guardados (`casa-guardados`, 2×1, ação `guardados`): fixo na Sala de Estar em (26,3), ao lado da caixa; guarda os
+  itens dos monstros, sem limite (`itens.md` §7). Como objeto fixo, entra na regra do §8 (nenhum móvel fica em cima dele).
 - Peça de um kit (uid): `<kit>.<item>.<n>`, com n de 1 a `qtd` (ex.: `jantar.cadeira.3`).
 - Ação de objeto: `{ tipo: 'casaDecorar', kit: '<kit>' }` (registrada por `sistemas/casa.js`).
 - Telas: `UI.abrirBauCasa()`, `UI.escolherKitCasa()`, `UI.casaKitsPendentes()`, `UI.decorarCasa(opts?)`.

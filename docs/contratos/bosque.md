@@ -25,6 +25,7 @@ Errar, fechar ou desmaiar não tira nada. O mesmo motor vale nos outros mapas de
 | ataque por alvo (clicar no inimigo) | `js/sistemas/bosque-alvo.js` (módulo `'bosque-alvo'`; estende `Reino.BosqueCombate`) |
 | falas do Claude | `js/sistemas/bosque-falas.js` (`Reino.BosqueFalas`, módulo `'bosque-falas'`, `node: true`) |
 | telas e HUD | `js/ui/bosque-hud.js`, `bosque-pergunta.js`, `bosque-nivel.js`, `bosque-bau.js`, `css/ui-bosque.css` |
+| itens na luta (`itens.md` §5, §9) | atributos em `bosque.js`/`bosque-combate.js`, espada e escudo vestidos em `bosque-desenho.js`, item no chão em `js/sistemas/itens-chao.js` (módulo `'itens-chao'` com `camada`), botão da poção em `js/ui/itens-pocao.js` + `css/ui-itens-pocao.css` |
 | móvel surpresa | `js/sistemas/casa-moveis.js` (`CasaMoveis.presente`/`guardar`), `js/ui/bosque-bau.js` (`UI.capaCasa`, de `ui/casa-kits.js`; `casa.md` §12) |
 
 Manifesto: `sistemas/bosque-falas|bosque|bosque-combate|bosque-alvo|bosque-desenho` logo depois de
@@ -105,7 +106,7 @@ Reino.Bosque (sistemas/bosque.js)
   naArena() arenaAtual() noBosque()   curva: { xpDoNivel, xpAte, nivelDoXp, xpLegado, tercosDe } (puros)
   temEspada() ganharEspada() → bool (true só na 1ª vez)
   pontos() → { forca, vida, velocidade }  pontosPendentes() → [n]  porPonto(n, 'forca'|'vida'|'velocidade') → bool
-  dano() vidaMax() fatorVelocidade()               pergunta() → { materia, sala, desafio } | null
+  dano() vidaMax() fatorVelocidade()  bonus() → Itens.bonus() (zeros sem itens)   pergunta() → { materia, sala, desafio } | null
   abater(tipo, arena?) → { mortos, perguntas, subiu: n | null, premioNivel: { chave, movel } | null, xp }
   acertou(materiaId) → { estrelas, nivel, presente: { chave, movel } | null }   errou(materiaId)
   consumirPergunta() → bool   chaveMovel(n) → 'bosque:' + n
@@ -114,6 +115,7 @@ Reino.CasaMoveis (sistemas/casa-moveis.js; casa.md §12)
 Reino.BosqueCombate (sistemas/bosque-combate.js)
   ativo() vida() → { n, max }  atacar() → bool  fantasmas() → [{ id, tipo, x, y, vida, max, estado }]
   devolver(id) reiniciar()  passo(estado, dt, jogador) (puro, testável no Node)
+  curar(n) → { antes, depois } | null (poção; null fora da arena ou desmaiada)   puros: curarNo(est, n), toque(forca, defesa)
   mirar(id) → bool  alvo() → id | null  pararAlvo()  fantasmaNaTela(clientX, clientY) → { id, tipo } | null
   (bosque-alvo.js; puros: fantasmaEm(est, wx, wy), mirarNo(est, id), pararNo(est), seguirAlvo(est, j))
 Reino.EVENTOS.BOSQUE  carga { tipo: 'vida' (+ n, max) | 'golpe' (+ acertou) | 'vencido' (+ id, fantasma = o tipo, arena)
@@ -125,6 +127,13 @@ Reino.UI (ui/bosque-*.js)
 Jogador.registrarFatorVelocidade(fn)   // Reino.Bosque registra fn = numa arena ? fatorVelocidade() : 1
 I.FUNDOS.bosque = { cor, desenhar(ctx, w, h), saida(ctx, px, py) }   // saida = o portal de volta
 ```
+- Itens vestidos (`itens.md` §9): Força soma ao `dano()`, Vida à `vidaMax()`, Rapidez ao `fatorVelocidade()` (o mesmo teto
+  `velocidadeMax`); Proteção corta o toque do inimigo (`toque`: `max(1, round(forca × (1 − min(defesaMax, defesa ×
+  defesaPorPonto))))`). O passo recebe `vidaItens` e `defesa` no jogador: o ponto em Vida enche junto, a vida por item
+  não cura (subiu: a de agora fica; desceu: fica no teto novo); entrar na arena enche, como sempre. Dano, vida e
+  Proteção são relidos nos eventos `BOSQUE` (`ponto`, `acerto`) e `ITENS`. Espada vestida (`PA.espadaItem`) no lugar da
+  do Bosque; escudo (`PA.escudoItem`) na outra mão: de frente e de costas, do lado oposto ao da espada; de lado, a pé,
+  atrás do corpo aparecendo à frente; montada de lado, na frente, no flanco.
 - Pergunta (pedido do Leandro, 05/11): a pergunta só aparece a cada terço da barra de XP do nível (§4). A lista é sorteada UNIFORMEMENTE entre todas as perguntas do bimestre em curso (`Reino.Bimestres.atual`: só as
   matérias desse bimestre e não arquivadas), valendo sala feita ou não. Cada pergunta tem a mesma chance: não se
   sorteia a matéria e depois a sala. Todo tipo da sala, menos `config.fantasmas.perguntaForaTipos` (cada um com o

@@ -1,7 +1,8 @@
 /* Bosque dos Fantasmas: o desenho do combate (parte de bosque-combate.js, pelo interno Reino._bosqueCombate).
    Quatro inimigos: os três fantasmas fofos (lilás fácil, turquesa médio, rosa-vinho com coroinha difícil) e a mosca
    feia (verde-escura, asas claras, olhos vermelhos), que flutuam, piscam, ficam brancos ao levar golpe e se apagam
-   num puf, com a barrinha de vida em cima; a espada na mão dela (só depois de ganhar) e o arco do golpe; o piscar
+   num puf, com a barrinha de vida em cima; a espada na mão dela (só depois de ganhar; a vestida, PA.espadaItem, no
+   lugar da do Bosque) e o escudo vestido na outra mão (PA.escudoItem; itens.md §8), o arco do golpe; o piscar
    dela invencível e as estrelinhas do desmaio. Sem Animações: tudo parado (sem balanço, sem piscar), o golpe e o puf
    continuam (são do jogo). Sprites feitos uma vez, itens fixos reaproveitados, nada criado por quadro (o brilho
    branco dela é cacheado por sprite); nada de Math.random.
@@ -196,16 +197,32 @@
      Presa à grade de pixels do sprite dela (J.silhueta: a borda esquerda e os pés, já com o pulinho do trote), a um
      número inteiro de px do jogo: o pintor desenha em px da tela sem arredondar ao px do jogo (ela desliza), e a
      espada arredondada sozinha (Math.round(J.x + lado)) e sem o trote tremia 1 px para lá e para cá andando. */
+  // o que ela veste na mão (itens.md §8): a espada no lugar da do Bosque; o escudo (null: sem escudo)
+  function vestes() { return R.Itens && R.Itens.vestes ? R.Itens.vestes() : null; }
+  function espadaVestida() { var v = vestes(), img = v && v.espada && PA.espadaItem ? PA.espadaItem(v.espada) : null; return img || espada(); }
+  function escudoVestido() { var v = vestes(); return v && v.escudo && PA.escudoItem ? PA.escudoItem(v.escudo) : null; }
+  function deLado(ox, oy) { return Math.abs(ox) > Math.abs(oy); }
   function desenharEspada() {
     // o olhar do corpo deste quadro (o ataque por alvo pode virá-la depois do corpo escolhido: bosque-alvo.js)
-    var J = window.Jogador, est = S.estado, ox = S.olharX, oy = S.olharY, s = J.silhueta, img = espada();
+    var J = window.Jogador, est = S.estado, ox = S.olharX, oy = S.olharY, s = J.silhueta, img = espadaVestida();
     var montada = J.montado && J.montado();
     // de lado, a mão fica perto do meio (montada, em cima do lombo); de frente ou de costas, ao lado do corpo
-    var lado = Math.abs(ox) > Math.abs(oy) ? (ox < 0 ? -1 : 1) * (montada ? 0 : 4) : (oy < 0 ? 5 : -5);
+    var lado = deLado(ox, oy) ? (ox < 0 ? -1 : 1) * (montada ? 0 : 4) : (oy < 0 ? 5 : -5);
     var w = s && s.img ? s.img.width : 0, esq = s && s.img ? s.x - w / 2 : J.x, pes = s && s.img ? s.yPes : J.y + 1;
     var meia = img.width / 2, dx = Math.round(w / 2 + lado - meia), dy = -maoAltura(J);
     if (est && est.golpe) { dx += Math.round(est.golpe.dx * 4); dy += Math.round(est.golpe.dy * 3); }
     P.sprite(img, esq + dx + meia, pes + dy);
+  }
+  /* o escudo na outra mão: de frente ou de costas, do lado oposto ao da espada; de lado, a pé, atrás do corpo dela,
+     aparecendo um pouco à frente (a mão de longe); montada de lado, na frente, no flanco (atrás o unicórnio o tapava).
+     Mesma grade de pixels da espada (J.silhueta); não se mexe no golpe */
+  function escudoNaFrente(ox, oy, montada) { return deLado(ox, oy) ? montada : !(oy < 0); }
+  function desenharEscudo() {
+    var J = window.Jogador, ox = S.olharX, oy = S.olharY, s = J.silhueta, img = this.img, montada = J.montado && J.montado();
+    var lado = deLado(ox, oy) ? (ox < 0 ? -1 : 1) * (montada ? -5 : 3) : (oy < 0 ? -5 : 5);
+    var w = s && s.img ? s.img.width : 0, esq = s && s.img ? s.x - w / 2 : J.x, pes = s && s.img ? s.yPes : J.y + 1;
+    var meia = img.width / 2, dx = Math.round(w / 2 + lado - meia);
+    P.sprite(img, esq + dx + meia, pes - maoAltura(J) + (montada && deLado(ox, oy) ? 7 : 3));   // montada de lado: no flanco, sem tapar o rosto
   }
   // o arco do golpe: um risco com contorno num meio-círculo que se abre na direção dela, na altura da mão
   var COR_ARCO = [C.branco, '#fff3c4', C.ouro3, '#ffe9a8'];
@@ -235,7 +252,7 @@
     if (s && s.img) P.sprite(branca(s.img), s.x, s.yPes);
   }
   var ITEM_ESPADA = { y: 0, desenhar: desenharEspada }, ITEM_ARCO = { y: 0, desenhar: desenharArco };
-  var ITEM_PISCAR = { y: 0, desenhar: desenharPiscar };
+  var ITEM_PISCAR = { y: 0, desenhar: desenharPiscar }, ITEM_ESCUDO = { y: 0, img: null, desenhar: desenharEscudo };
 
   function itensDesenho(p, t, animar) {
     itens.length = 0;
@@ -255,8 +272,12 @@
     }
     var temEspada = R.BosqueCombate.temEspada();
     if (temEspada && !S.desmaio) {
-      ITEM_ESPADA.y = S.olharY < 0 && Math.abs(S.olharY) >= Math.abs(S.olharX) ? J.y - 0.01 : J.y + 0.002;
+      var costas = S.olharY < 0 && Math.abs(S.olharY) >= Math.abs(S.olharX);
+      ITEM_ESPADA.y = costas ? J.y - 0.01 : J.y + 0.002;
       itens.push(ITEM_ESPADA);
+      // o escudo (embaixo da espada quando os dois estão na frente)
+      ITEM_ESCUDO.img = escudoVestido();
+      if (ITEM_ESCUDO.img) { ITEM_ESCUDO.y = escudoNaFrente(S.olharX, S.olharY, J.montado && J.montado()) ? J.y + 0.0015 : J.y - 0.011; itens.push(ITEM_ESCUDO); }
     }
     if (est.golpe) { ITEM_ARCO.y = J.y + 0.003; itens.push(ITEM_ARCO); }
     return itens;

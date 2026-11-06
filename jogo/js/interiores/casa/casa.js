@@ -1,6 +1,7 @@
 /* Minha Casa, térreo (interior `casa`): o layout e o registro. 4 cômodos vazios lado a lado, para ela mobiliar
    (casa.md §4): Cozinha | Sala de Jantar | Sala de Estar (entrada, com a escada que sobe) | Banheiro. Cada cômodo
-   tem só a janela e a caixa de mudança (abre o modo decorar com o kit dele); os móveis vêm de Reino.Casa.
+   tem só a janela e a caixa de mudança (abre o modo decorar com o kit dele); os móveis vêm de Reino.Casa. Na Sala de
+   Estar, ao lado da caixa, o Baú de Guardados (casa/guardados.js; itens.md §7).
    Formato: docs/contratos/interiores.md §3. Confira com node jogo/ferramentas/validar/validar-interiores.js --so casa --detalhes. */
 (function () {
   var R = window.Reino;
@@ -18,6 +19,8 @@
     { tipo: 'janela', x: COZ.x + 1, y: 1 }, { tipo: 'janela', x: JAN.x + 1, y: 1 }, { tipo: 'janela', x: JAN.x + 10, y: 1 },
     { tipo: 'janela', x: EST.x + 1, y: 1 }, { tipo: 'janela', x: BAN.x + 7, y: 1 },
     caixa(COZ.x, 'cozinha'), caixa(JAN.x, 'jantar'), caixa(EST.x, 'estar'), caixa(BAN.x + BAN.w - 1, 'banheiro'),
+    // o Baú de Guardados (2×1), encostado na parede do fundo ao lado da caixa da Sala de Estar
+    { tipo: 'casa-guardados', x: EST.x + 1, y: 3, nome: 'Baú de Guardados', acao: { tipo: 'guardados' } },
   ];
 
   Reino.registrarInterior({

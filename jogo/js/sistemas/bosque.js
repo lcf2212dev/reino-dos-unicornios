@@ -19,7 +19,7 @@
      perguntas liberadas = 3 por nível passado + as marcas de 1/3 e 2/3 já passadas no nível; pendentes = liberadas −
        perguntasFeitas − tercos (as antigas seguem valendo: um bloco de 10 era um terço de nível);
      pontos = as escolhas válidas de nível <= o atual; pendentes = níveis 2..atual sem escolha; dano, vida máxima e
-     fator de velocidade.
+     fator de velocidade (os pontos mais o que ela veste, Reino.Itens.bonus(): itens.md §9).
    Migração antiga (por acertos, idempotente): o nível de quem jogava antes dos mortos era 1 + floor(acertos /
    acertosPorNivel); ela vira mortos = (nível antigo - 1) * mortosPorNivel e perguntasFeitas, sem nada retroativo.
    Pergunta: sorteio uniforme entre TODAS as perguntas do bimestre em curso (sala feita ou não), sem fila.
@@ -190,9 +190,12 @@
     return true;
   }
   function jog() { return cfg().jogador; }
-  function dano() { return jog().danoBase + pontos().forca * jog().danoPorPonto; }
-  function vidaMax() { return jog().vidaBase + pontos().vida * jog().vidaPorPonto; }
-  function fatorVelocidade() { return Math.min(jog().velocidadeMax, 1 + pontos().velocidade * jog().velocidadePorPonto); }
+  // o que ela veste (itens.md §9): Força, Vida, Rapidez e Proteção somam aos pontos; sem itens, tudo 0
+  var SEM_BONUS = { dano: 0, defesa: 0, vida: 0, velocidade: 0, sorte: 0 };
+  function bonus() { var It = R.Itens; return It && It.bonus && estado() ? It.bonus() : SEM_BONUS; }
+  function dano() { return jog().danoBase + pontos().forca * jog().danoPorPonto + bonus().dano; }
+  function vidaMax() { return jog().vidaBase + pontos().vida * jog().vidaPorPonto + bonus().vida; }
+  function fatorVelocidade() { return Math.min(jog().velocidadeMax, 1 + pontos().velocidade * jog().velocidadePorPonto + bonus().velocidade); }
   function noBosque() {
     var c = R.Cena && R.Cena.atual ? R.Cena.atual() : null;
     return !!(c && c.tipo === 'interior' && c.id === 'bosque');
@@ -281,7 +284,7 @@
   function chaveMovel(n) { return 'bosque:' + n; }
 
   R.Bosque = { acertos: acertos, mortos: mortos, nivel: nivel, xp: xp, xpTotal: xpTotal, temEspada: temEspada, ganharEspada: ganharEspada,
-    pontos: pontos, pontosPendentes: pontosPendentes, porPonto: porPonto, dano: dano, vidaMax: vidaMax,
+    pontos: pontos, pontosPendentes: pontosPendentes, porPonto: porPonto, dano: dano, vidaMax: vidaMax, bonus: bonus,
     fatorVelocidade: fatorVelocidade, noBosque: noBosque, naArena: naArena, arenaAtual: arenaAtual, pergunta: pergunta, perguntas: perguntas,
     acertou: acertou, errou: errou, consumirPergunta: consumirPergunta, perguntasPendentes: perguntasPendentes,
     proximaPergunta: proximaPergunta, abater: abater, chaveMovel: chaveMovel, HABILIDADES: HABILIDADES,

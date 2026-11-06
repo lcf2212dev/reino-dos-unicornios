@@ -51,6 +51,8 @@
       'css/ui-casa-kits.css',
       'css/ui-casa-moveis.css',
       'css/ui-bosque.css',
+      'css/ui-itens.css',
+      'css/ui-itens-pocao.css',
       'css/ui-parquinho.css',
       'css/ui-moedas-festa.css',
       'css/ui-casa-decorar.css',
@@ -526,6 +528,12 @@
       { js: 'js/ui/bosque-nivel.js', grupo: 'ui' }, // Bosque dos Fantasmas: prêmio da espada e o ponto de nível (UI.telaEspadaBosque, UI.subirNivelBosque)
       { js: 'js/ui/bosque-bau.js', grupo: 'ui' }, // Bosque dos Fantasmas: o baú do móvel surpresa, da pergunta e do nível (UI.bauBosque)
       { js: 'js/ui/bosque-pergunta.js', grupo: 'ui' }, // Bosque dos Fantasmas: a pergunta do bloco de 10 inimigos e o prêmio (UI.perguntaFantasma)
+      { js: 'js/ui/hud-mochila.js', grupo: 'ui' }, // itens: o botão 🎒 do HUD, com o brilhinho de item novo (itens.md §13)
+      { js: 'js/ui/itens-aviso.js', grupo: 'ui' }, // itens: o aviso pequeno no alto quando cai um item (UI.avisoItem; itens.md §13)
+      { js: 'js/ui/mochila-item.js', grupo: 'ui' }, // itens: o cartão de um item (vestir, tirar, usar, dar, jogar fora; Reino._itensTelas)
+      { js: 'js/ui/mochila.js', grupo: 'ui' }, // itens: a tela da Mochila, 20 espaços e a figura vestida (UI.telaMochila; itens.md §6)
+      { js: 'js/ui/guardados.js', grupo: 'ui' }, // itens: a tela do Baú de Guardados da casa (UI.telaGuardados; itens.md §7)
+      { js: 'js/ui/itens-pocao.js', grupo: 'ui' }, // itens: o botão rápido da poção na arena (itens.md §9)
       { js: 'js/ui/parquinho.js', grupo: 'ui' }, // Parquinho: a tela do que falta (portal dormindo, presentes; UI.telaParquinho)
       { js: 'js/sistemas/versao.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/aura.js', grupo: 'sistemas', node: true },
@@ -745,6 +753,7 @@
       { js: 'js/interiores/casa/moveis-salas-quarto-uni.js', grupo: 'interiores', node: true }, // casa: móveis avulsos (por sala) de Quarto do unicórnio
       { js: 'js/interiores/casa/falas.js', grupo: 'interiores', node: true }, // casa: o prédio (falas, caixa de mudança, térreo, 2º andar, fora, lugar)
       { js: 'js/interiores/casa/objetos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/casa/guardados.js', grupo: 'interiores', node: true }, // o Baú de Guardados da casa e a ação 'guardados' (itens.md §7)
       { js: 'js/interiores/casa/casa.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/casa/andar2.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/casa/fora.js', grupo: 'interiores', node: true },
@@ -809,6 +818,7 @@
       { js: 'js/sistemas/bosque-desenho.js', grupo: 'sistemas' }, // Bosque dos Fantasmas: desenho dos fantasmas e da mosca, da espada, do golpe e do desmaio
       { js: 'js/sistemas/itens.js', grupo: 'sistemas', node: true }, // itens: Mochila, Baú de Guardados, vestido e o campo itens (Reino.Itens; itens.md §6, §10)
       { js: 'js/sistemas/itens-drop.js', grupo: 'sistemas', node: true }, // itens: o que cai do inimigo vencido, gravado na hora (Reino.ItensDrop; itens.md §5)
+      { js: 'js/sistemas/itens-chao.js', grupo: 'sistemas', node: true }, // itens: o item no chão da arena, salta e voa até ela (só desenho; itens.md §5)
       { js: 'js/sistemas/parquinho.js', grupo: 'sistemas', node: true }, // Parquinho: a fase (3 matérias com Matemática ou LP; todas) e o módulo da brincadeira (Reino.Parquinho; parquinho.md)
       { js: 'js/motor/cena.js', grupo: 'motor' },
       { js: 'js/motor/transicao.js', grupo: 'motor' },

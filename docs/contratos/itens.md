@@ -1,5 +1,4 @@
 # Itens: drops dos monstros, mochila, Baú de Guardados e roupas de aventura
-<!-- validar-docs: ignorar-arquivo -->
 <!-- Onda 0: os arquivos e símbolos citados ainda não existem; a integração tira a marca acima e roda validar-docs. -->
 
 Pedido: `pedidos/2026-11-05-itens.md`; plano: `pedidos/2026-11-05-itens.plano.json`. Os inimigos das arenas (`arenas.md`)
@@ -360,6 +359,6 @@ Nenhuma fala nova com voz (decidido pelo Claude): tudo do §13 é texto de tela.
 - C: `unidade/itens-telas.navegador.test.js` (mochila, vestir, tirar, jogar fora com a guarda, guardados, aviso, 3 tamanhos,
   teclado).
 - D: `unidade/itens-combate.test.js` (proteção, vida sem cura na troca, curar, rapidez com teto, chão sem travar o passo puro).
-- e2e: `--esperado 'interior-casa$|comodo-casa-|tela-(mochila|guardados)|^dados/(interiores|loja|save-estado-novo|save-mescla)\.json$'`
+- e2e: `--esperado 'interior-casa$|comodo-casa-|tela-decorar$|^dados/(interiores|loja|save-estado-novo|save-mescla)\.json$'`
   (o baú na Sala de Estar; as telas novas, se C as puser no e2e; o config e o campo novo nos dados). Mapa e arenas sem
   espada no save: idênticos (o 🎒 não aparece).
