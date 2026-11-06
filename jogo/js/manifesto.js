@@ -774,7 +774,11 @@
       { js: 'js/interiores/dunas/inimigos.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/dunas/dunas.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/dunas/lugar.js', grupo: 'interiores', node: true },
-      { js: 'js/interiores/cristal/lugar.js', grupo: 'interiores', node: true }, // Caverna de Cristal (arenas.md): a arena 5; interior mínimo da onda 0 e o portal
+      { js: 'js/interiores/cristal/falas.js', grupo: 'interiores', node: true }, // Caverna de Cristal (arenas.md): a arena 5 (falas, objetos, inimigos, chão/teto e interior, portal e lugar)
+      { js: 'js/interiores/cristal/objetos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/cristal/inimigos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/cristal/cristal.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/cristal/lugar.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/vulcao/lugar.js', grupo: 'interiores', node: true }, // Vulcão dos Dragõezinhos (arenas.md): a arena 6; interior mínimo da onda 0 e o portal
       { js: 'js/interiores/padrao.js', grupo: 'interiores', node: true }, // padrao.js por último entre os prédios: monta o interior das matérias que não têm um próprio
       { js: 'js/sistemas/banho.js', grupo: 'sistemas' },
