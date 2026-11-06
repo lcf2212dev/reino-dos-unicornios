@@ -17,3 +17,9 @@ Contrato: `docs/contratos/vila.md`.
 - Preços por raridade (20/35/55/80), a loja paga metade; peças de monstro pela tabela `vendaDrop`.
 - Os enfeites viram móveis da casa (sem campo novo no save) e não entram no sorteio das salas nem dos presentes.
 - A Vila é parte do prédio do Bosque (sem lugar no mapa); as portas são escadas `sentido: 'portal'`.
+
+## Ajuste (Leandro, 06/11)
+- Na Vila, só a Teleportadora da praça (saiu a da entrada).
+- O portal do Bosque ficou grande (redemoinho 2 × 3 com coluna de luz) e colado na borda direita.
+- A Teleportadora sem brilho (sem aura) e, em todos os unicórnios, sem as asas automáticas dos épicos e lendários
+  (o "caroço nas costas"); as Asinhas de fada da Loja, que ela escolhe, continuam.

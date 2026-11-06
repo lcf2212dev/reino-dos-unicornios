@@ -40,7 +40,7 @@ test('Teleportadora: sólida no mapa, balão, viagem para a Vila e de volta à p
         cofre: alvoCofre && alvoCofre.id,
         perto: (Mapa.alvoObjetoPerto({ x: t.x - 1, y: t.y }, { x: 1, y: 0 }) || {}).id,
         retrato: [r.width, r.height], imagem: [A.parado().width, A.parado().height],
-        pontos: A.pontos(0).length, parado: A.pontos(A.PARADO).length,
+        pontos: A.pontos(A.fase(1234, true)).length, parado: A.pontos(A.PARADO).length,
         voz: Reino.config.vozes['npc-teleportadora'] && Reino.config.vozes['npc-teleportadora'].voz,
         falas: Reino.Teleportadora.falas().map(function (f) { return f.voz + '|' + f.pacote; }),
       };
@@ -52,8 +52,8 @@ test('Teleportadora: sólida no mapa, balão, viagem para a Vila e de volta à p
     assert.strictEqual(mapa.cofre, 'cofre', 'o cofre continua tocável');
     assert.strictEqual(mapa.perto, 'teleportadora', 'Enter ao lado dela também vale');
     assert.deepStrictEqual(mapa.retrato, [21, 21], 'retrato do balão');
-    assert.deepStrictEqual(mapa.imagem, [48, 46], 'imagem dela com a aura');
-    assert.ok(mapa.pontos > 0 && mapa.parado === 0, 'a animação muda só as cores da aura');
+    assert.deepStrictEqual(mapa.imagem, [48, 46], 'imagem dela');
+    assert.ok(mapa.pontos === 0 && mapa.parado === 0, 'sem aura: ela fica parada (pedido do Leandro, 06/11)');
     assert.ok(mapa.voz, 'voz npc-teleportadora registrada');
     assert.ok(mapa.falas.length === 3 && mapa.falas.every((f) => f === 'npc-teleportadora|geral'), 'falas com a voz dela no pacote geral');
 

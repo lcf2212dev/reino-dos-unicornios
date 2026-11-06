@@ -144,12 +144,18 @@
     for (var i = 0; i < d.w; i++) for (var k = 1; k <= n && o.y - k >= 0; k++) if (quem[o.y - k][o.x + i] === 1 || quem[o.y - k][o.x + i] === 3) o.junto = true;
   });
 
-  // 6. o portal para a Vila Arco-Íris (vila.md §2), depois de todo o sorteio (o layout gerado não muda): sai o enfeite
-  //    não sólido do tile, entra o portal; a escada `portal` no mesmo tile leva à Vila (chega de volta logo abaixo)
-  var PV = { x: 44, y: 23 };
-  objetos = objetos.filter(function (o) { var d = dimensoes(o.tipo); return d.s !== false || o.x > PV.x || o.x + d.w <= PV.x || o.y > PV.y || o.y + d.h <= PV.y; });
+  // 6. o portal para a Vila Arco-Íris (vila.md §2), depois de todo o sorteio (o layout gerado não muda): colado na borda
+  //    direita, no meio da altura (2 × 3 a partir de PV). Sai tudo o que estiver no lugar dele e na clareira em volta
+  //    (x 50–54, fileiras 19–25); a escada `portal` no meio do redemoinho leva à Vila (chega de volta à esquerda dele)
+  var PV = { x: 53, y: 20 }, LIMPA = { x0: 50, x1: 54, y0: 19, y1: 25 };
+  objetos = objetos.filter(function (o) {
+    var d = dimensoes(o.tipo);
+    return o.x > LIMPA.x1 || o.x + d.w <= LIMPA.x0 || o.y > LIMPA.y1 || o.y + d.h <= LIMPA.y0;
+  });
+  [[50, 19], [51, 25], [50, 25], [51, 21], [50, 23], [52, 24], [51, 20]].forEach(function (c) { objetos.push({ tipo: c[1] % 2 ? 'bosque-mato' : 'bosque-flores', x: c[0], y: c[1], var: { n: c[0] % 5 } }); });
+  objetos.push({ tipo: 'bosque-cogumelo', x: 52, y: 19, var: { n: 3 } });
   objetos.push({ tipo: 'bosque-portal-vila', x: PV.x, y: PV.y });
-  var ESCADAS = [{ x: PV.x, y: PV.y, para: 'vila', sentido: 'portal', seta: false, chegar: { x: 0, y: 1 } }];
+  var ESCADAS = [{ x: PV.x, y: PV.y + 2, para: 'vila', sentido: 'portal', seta: false, chegar: { x: -1, y: 0 } }];
 
   var COMODO = { id: 'bosque', nome: 'Bosque dos Fantasmas', rect: { x: 1, y: 1, w: 54, h: 40 }, piso: 'bosque-grama', parede: 'bosque-copas' };
   // a primeira arena (motor/interiores-arena.js; docs/contratos/arenas.md): os números são os de config.fantasmas

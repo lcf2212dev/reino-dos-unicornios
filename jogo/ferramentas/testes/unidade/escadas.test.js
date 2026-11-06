@@ -29,7 +29,7 @@ const CONGELADA = {
   'bosque:0': { para: 'vila', x: 20, y: 28 },
   'vila:0': { para: 'vila-casa', x: 8, y: 9 }, 'vila:1': { para: 'vila-armas', x: 8, y: 9 },
   'vila:2': { para: 'vila-cabecas', x: 8, y: 9 }, 'vila:3': { para: 'vila-armaduras', x: 8, y: 9 },
-  'vila:4': { para: 'bosque', x: 44, y: 24 },
+  'vila:4': { para: 'bosque', x: 52, y: 22 },
   'vila-casa:0': { para: 'vila', x: 6, y: 9 }, 'vila-armas:0': { para: 'vila', x: 15, y: 9 },
   'vila-cabecas:0': { para: 'vila', x: 24, y: 9 }, 'vila-armaduras:0': { para: 'vila', x: 33, y: 9 },
 };

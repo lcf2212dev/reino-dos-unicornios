@@ -61,7 +61,7 @@
   poe('vila-portal', PORTAL.x, PORTAL.y);
   escada({ x: PORTAL.x, y: PORTAL.y, para: 'bosque', sentido: 'portal', seta: false, chegar: { x: 0, y: -1 } });
   poe('vila-placa', 17, 27, fala('placa', 'Placa'));
-  poe('vila-teleportadora', 23, 27, { w: 2, h: 1, solido: true, nome: 'Teleportadora', acao: { tipo: 'teleportadora', para: 'cidade' } });
+  poe('vila-canteiro', 23, 27);   // (aqui ficava a 2ª Teleportadora: só a da praça, pedido do Leandro 06/11)
   poe('vila-poco', 33, 24, fala('poco', 'Poço dos desejos'));
   poe('vila-carrinho', 27, 25);
   poe('vila-canteiro', 13, 25); poe('vila-canteiro', 26, 29);

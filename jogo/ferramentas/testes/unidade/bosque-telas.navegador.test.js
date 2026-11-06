@@ -397,7 +397,8 @@ const FANTASMA_NA_TELA = (id) => `(() => { const f = Reino._bosqueCombate.estado
 // (deLado: a ~4 tiles à direita, para ele ficar na metade esquerda da tela)
 const PERTO_DE = (tipo, deLado) => `(() => {
   const est = Reino._bosqueCombate.estado, cena = Reino.Cena.atual();
-  const f = est.fantasmas.find((x) => x.tipo === '${tipo}' && x.estado === 'vagando');
+  // longe da borda direita (o portal da Vila e a clareira dele ficam lá; a câmera encosta e ele não fica à esquerda)
+  const f = est.fantasmas.find((x) => x.tipo === '${tipo}' && x.estado === 'vagando' && x.x / 16 < 44);
   const tx = Math.floor(f.x / 16), ty = Math.floor(f.y / 16);
   for (const d of ${deLado ? '[4, 5, 3, 6]' : '[4, -4, 3, -3, 5, -5]'}) {
     const x = tx + ${deLado ? 'd' : '0'}, y = ty + ${deLado ? '0' : 'd'};
@@ -446,7 +447,7 @@ test('bosque: clicar no fantasma ataca sozinho até vencer; chão, tecla e toque
     await c.avancar(300);
 
     // 3) clicar no chão para o ataque (ela anda até lá e não golpeia mais)
-    const f2 = await c.js(PERTO_DE('medio'));
+    let f2 = await c.js(PERTO_DE('medio'));
     await c.avancar(100);
     p = await c.js(FANTASMA_NA_TELA(f2));
     await c.page.mouse.click(p.x, p.y);
@@ -498,7 +499,7 @@ test('bosque: clicar no fantasma ataca sozinho até vencer; chão, tecla e toque
     await c.js('Reino.BosqueCombate.pararAlvo(); 1');
 
     // 5b) dedo na metade esquerda em cima do fantasma: arrastar abre o thumbstick (sem ataque); o toque curto ataca
-    await c.js(PERTO_DE('medio', true));
+    f2 = await c.js(PERTO_DE('medio', true));   // o que está longe da borda agora (ele pode ter vagado)
     await c.avancar(100);
     p = await c.js(FANTASMA_NA_TELA(f2));
     assert.ok(p.x < (await c.js('innerWidth')) / 2, 'o fantasma na metade esquerda');

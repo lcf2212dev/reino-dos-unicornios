@@ -1,8 +1,8 @@
 # Vila Arco-Íris (portal no Bosque, 4 lojas e a Teleportadora)
 
 Pedido: `pedidos/2026-11-06-vila-arco-iris.md`. No centro-direita do Bosque dos Fantasmas há um portal que leva a uma
-cidade menor, a **Vila Arco-Íris**: praça, **4 lojas**, **3 terrenos livres** e a **Teleportadora**, um unicórnio de aura
-arco-íris (uma na entrada da Vila, uma na praça da Vila e uma na praça da cidade principal). Para conversar com um
+cidade menor, a **Vila Arco-Íris**: praça, **4 lojas**, **3 terrenos livres** e a **Teleportadora**, um unicórnio branco de crina arco-íris
+arco-íris (uma na praça da Vila e uma na praça da cidade principal). Para conversar com um
 lojista ela responde certo uma pergunta sorteada entre todas as do **4º bimestre**; comprar e vender aceitam **vários
 itens de uma vez**.
 
@@ -28,7 +28,8 @@ itens de uma vez**.
   - `vila-casa` "Casa Bonita", `vila-armas` "Forja Brilhante", `vila-cabecas` "Elmos e Chapéus", `vila-armaduras`
     "Armaduras e Botas": 16 × 12, um cômodo `{ x: 1, y: 1, w: 14, h: 10 }`.
 - Ligações (escadas pareadas `sentido: 'portal'`):
-  - Bosque (44, 23) `seta: false` ↔ Vila (20, 29) `seta: false`. Chega no Bosque em (44, 24); na Vila, em (20, 28).
+  - Bosque: o portal 'bosque-portal-vila' (2 × 3 em (53, 20), colado na borda direita) com a escada no meio dele, (53, 22),
+    `seta: false`, `chegar: { x: -1, y: 0 }` ↔ Vila (20, 29) `seta: false`. Chega no Bosque em (52, 22); na Vila, em (20, 28).
   - Porta de cada loja na Vila, na fileira 8, em x = 6, 15, 24, 33 (casa, armas, cabecas, armaduras), seta padrão,
     `chegar: { x: 0, y: 1 }` ↔ saída da loja em (8, 10) `seta: 'desce'`, `chegar: { x: 0, y: -1 }`.
 - Lojistas (`Reino.registrarPersonagem`, com voz): `lavanda` "Dona Lavanda" (casa), `bigorna` "Seu Bigorna" (armas),
@@ -64,7 +65,7 @@ itens de uma vez**.
   Não dá estrela nem Aura; não mexe no save.
 
 ## 6. Teleportadora
-- Unicórnio adulto alado, branco com crina arco-íris e aura arco-íris animada (parada sem Animações).
+- Unicórnio adulto branco com crina arco-íris, sem asas e sem aura (pedido do Leandro, 06/11).
 - Balão `Reino.Claude.falar` com `quem: { nome: 'Teleportadora', retrato, voz: 'npc-teleportadora' }`: na cidade leva
   à Vila (`Cena.irPara('vila', chegadaVila)`); na Vila leva à cidade (`Cena.sair(chegadaCidade)`).
 
