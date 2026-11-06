@@ -274,14 +274,14 @@ Reino.config = {
         facil: { vida: 18, forca: 4, velocidade: 26, mortos: 1, xp: 28 },    // escorpião
         medio: { vida: 24, forca: 5, velocidade: 32, mortos: 1, xp: 37 },    // cacto andante
         dificil: { vida: 32, forca: 6, velocidade: 36, mortos: 1, xp: 47 },  // múmia fofa com coroa
-        voador: { vida: 38, forca: 7, velocidade: 46, mortos: 2, xp: 65 },   // besouro voador
+        voador: { vida: 38, forca: 7, velocidade: 46, mortos: 2, xp: 65 },   // abutre engraçado
       } },
     cristal: { nivel: 15, visao: 100, zonas: { facil: [27, 38], medio: [15, 26], dificil: [3, 14], voador: [3, 10] },   // Caverna de Cristal
       quantos: { facil: 6, medio: 5, dificil: 4, voador: 3 },
       tipos: {
-        facil: { vida: 26, forca: 5, velocidade: 28, mortos: 1, xp: 36 },    // golem pequeno de cristal
-        medio: { vida: 34, forca: 6, velocidade: 34, mortos: 1, xp: 47 },    // aranha de cristal
-        dificil: { vida: 44, forca: 7, velocidade: 38, mortos: 1, xp: 60 },  // golem-rei com coroa
+        facil: { vida: 26, forca: 5, velocidade: 28, mortos: 1, xp: 36 },    // slime de cristal
+        medio: { vida: 34, forca: 6, velocidade: 34, mortos: 1, xp: 47 },    // golem de cristal pequeno
+        dificil: { vida: 44, forca: 7, velocidade: 38, mortos: 1, xp: 60 },  // aranha de cristal com coroa
         voador: { vida: 52, forca: 8, velocidade: 48, mortos: 2, xp: 82 },   // morcego
       } },
     vulcao: { nivel: 20, visao: 104, zonas: { facil: [27, 38], medio: [15, 26], dificil: [3, 14], voador: [3, 10] },   // Vulcão dos Dragõezinhos
