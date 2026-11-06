@@ -26,6 +26,8 @@ interface LugarRegistrado {
   placa?: 'acima' | 'direita';
   /** tiles [x, y] de rua da rua até a frente da porta (obrigatório) */
   caminho: [number, number][];
+  /** false = fechado: a porta abre menu.abrir em vez do interior e o lugar sai do menu Lugares (Reino.lugarLiberado) */
+  liberado?(l?: any): boolean;
   /** cerquinha com portão na fileira da frente (depois do sorteio; mundo/mapa.js) */
   cerca?: boolean;
   menu?: MenuLugar;
@@ -48,6 +50,8 @@ interface ModuloDef {
     itensDesenho(pintor: any, t: number, animar: boolean): any[];
     sobre?(ctx: CanvasRenderingContext2D, pintor: any, t: number, animar: boolean): void;
   };
+  /** true enquanto o módulo desenha ela e o unicórnio (o desenho normal some; personagens/jogador-desenho.js) */
+  desenhaEla?(): boolean;
 }
 
 /* ---------- campos do save (Reino.Progresso.registrarCampo; save-e-mescla.md §11) ---------- */

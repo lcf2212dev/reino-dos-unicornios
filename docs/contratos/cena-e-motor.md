@@ -293,7 +293,7 @@ Sistema novo (como cuidados, surpresa, fotos, banho) = arquivos na pasta dele + 
 `motor/main.js`, `motor/laco.js`, `sistemas/falas.js` nem `debug.js`. Registro em `js/nucleo/modulos.js`
 (`node: true`, logo depois de `nucleo/registros.js`):
 - `Reino.registrarModulo(def)`, `Reino.modulos` (ordem de registro = ordem do manifesto), `Reino.modulo(id)`.
-- `def = { id, iniciar?(ctx), depoisDasBoasVindas?(ctx), falas?(), depurar?(), acoes?, camada? }` (tipo `ModuloDef`).
+- `def = { id, iniciar?(ctx), depoisDasBoasVindas?(ctx), falas?(), depurar?(), acoes?, camada?, desenhaEla? }` (tipo `ModuloDef`).
 
 | Gancho | Quando roda |
 |---|---|
@@ -302,6 +302,7 @@ Sistema novo (como cuidados, surpresa, fotos, banho) = arquivos na pasta dele + 
 | `falas()` → `[{ texto, voz?, pacote? }]` | `Reino.Falas.todas()` (voz padrão `claude`, pacote padrão `geral`) |
 | `depurar()` | `__reino.modulo(id)` |
 | `camada: { ativo(), itensDesenho(pintor, t, animar), sobre?(ctx, pintor, t, animar) }` | a cada quadro, §5 passos 4 e 5 (erros com rótulo `id` e `id + '-sobre'`) |
+| `desenhaEla?()` → bool | a cada quadro: verdadeiro, o desenho normal dela e do unicórnio some (o módulo desenha os dois; `personagens/jogador-desenho.js`; ex.: o brinquedo do Parquinho) |
 | `acoes: { <tipo>: fn(acao, ctx) → Promise }` | quando a Mariana toca um objeto/NPC com `acao: { tipo: '<tipo>', … }` (npcs-e-dialogo.md §7) |
 
 1. Registrar só guarda funções: nada de DOM, Progresso ou Cena no carregamento (as ferramentas carregam no Node).

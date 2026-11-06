@@ -242,7 +242,8 @@
   // pisou na porta, tocou no prédio ou apertou Enter na porta (no mapa)
   function entrarLugar(lugar) {
     if (S.trans) return S.trans.promessa;
-    if (defDoLugar(lugar.id)) return Cena.entrar(lugar.id);
+    // lugar ainda fechado (Reino.lugarLiberado: o portal do Parquinho dormindo): a tela própria, sem o interior
+    if (defDoLugar(lugar.id) && Reino.lugarLiberado(lugar)) return Cena.entrar(lugar.id);
     painelAntigo(lugar);
     return Promise.resolve();
   }

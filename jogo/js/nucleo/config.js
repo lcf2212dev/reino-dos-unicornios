@@ -34,6 +34,16 @@ Reino.config = {
     usos: { fomeFruta: 30, fomeComedouro: 45, fomeFogao: 60, sentarMs: 4000, deitarMs: 5000, banhoMs: 5000,
       chuveiroMs: 4500, cozinharMs: 4000, efeitoMs: 2500, curtaMs: 800, pularDepoisMs: 700 },
   },
+  // o Parquinho (sistemas/parquinho.js; docs/contratos/parquinho.md): o portal da praça acorda com `fase1` matérias
+  // completas das que contam para a casa (bimestre >= casa.desdeBimestre), uma delas de `chave` (o id começa assim);
+  // com todas completas, os presentes viram brinquedos. ms = quanto dura cada brincadeira; curtaMs = sem Animações;
+  // depois de pularDepoisMs um toque pula para o fim
+  parquinho: {
+    fase1: 3,
+    chave: ['matematica', 'portugues'],
+    ms: { balanco: 4200, escorregador: 4200, gangorra: 4200, areia: 4200, carrossel: 4800, pulapula: 4200, bolinhas: 4200 },
+    curtaMs: 900, pularDepoisMs: 700,
+  },
   pinPais: '2026',            // troque aqui o PIN da Área dos Pais
   desafiosPorSala: 6,
   desafiosSalaLivro: 14,      // sala de livro (ordem: 'livro', 4º bimestre): todos os desafios, na ordem; no máximo este tanto

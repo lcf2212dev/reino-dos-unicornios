@@ -78,6 +78,13 @@ Reino.registrarLugar = function (def) {
   Reino.lugaresRegistrados.push(def);
   return true;
 };
+// lugar com `liberado()` (o portal do Parquinho): enquanto der false, a porta abre a tela própria (menu.abrir) em vez
+// do interior e o lugar sai do menu Lugares. Sem `liberado`, ou se ele der erro: liberado
+/** @param {{ liberado?: (l: any) => boolean } | null | undefined} l @returns {boolean} */
+Reino.lugarLiberado = function (l) {
+  if (!l || typeof l.liberado !== 'function') return true;
+  try { return !!l.liberado(l); } catch (e) { console.error(e); return true; }
+};
 
 // kits de móveis da casa do jogador (conteudo/casa/kits-*.js; docs/contratos/casa.md §3). Id repetido é recusado.
 /** @type {KitCasaDef[]} */

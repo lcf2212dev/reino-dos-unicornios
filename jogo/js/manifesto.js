@@ -51,6 +51,7 @@
       'css/ui-casa-kits.css',
       'css/ui-casa-moveis.css',
       'css/ui-bosque.css',
+      'css/ui-parquinho.css',
       'css/ui-moedas-festa.css',
       'css/ui-casa-decorar.css',
       'css/ui-tempo-celular.css',
@@ -517,6 +518,7 @@
       { js: 'js/ui/bosque-nivel.js', grupo: 'ui' }, // Bosque dos Fantasmas: prêmio da espada e o ponto de nível (UI.telaEspadaBosque, UI.subirNivelBosque)
       { js: 'js/ui/bosque-bau.js', grupo: 'ui' }, // Bosque dos Fantasmas: o baú do móvel surpresa, da pergunta e do nível (UI.bauBosque)
       { js: 'js/ui/bosque-pergunta.js', grupo: 'ui' }, // Bosque dos Fantasmas: a pergunta do bloco de 10 inimigos e o prêmio (UI.perguntaFantasma)
+      { js: 'js/ui/parquinho.js', grupo: 'ui' }, // Parquinho: a tela do que falta (portal dormindo, presentes; UI.telaParquinho)
       { js: 'js/sistemas/versao.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/aura.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/viagem.js', grupo: 'sistemas', node: true },
@@ -746,6 +748,15 @@
       { js: 'js/interiores/bosque/bosque.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/bosque/fora.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/bosque/lugar.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/parquinho/brincar.js', grupo: 'interiores', node: true }, // Parquinho (parquinho.md): a brincadeira (Reino.ParquinhoBrincar), o chão, os brinquedos, as poses, o interior, o portal na praça e o lugar
+      { js: 'js/interiores/parquinho/fundo.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/parquinho/objetos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/parquinho/objetos-2.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/parquinho/poses.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/parquinho/poses-2.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/parquinho/parquinho.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/parquinho/fora.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/parquinho/lugar.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/padrao.js', grupo: 'interiores', node: true }, // padrao.js por último entre os prédios: monta o interior das matérias que não têm um próprio
       { js: 'js/sistemas/banho.js', grupo: 'sistemas' },
       { js: 'js/sistemas/banho-desenho.js', grupo: 'sistemas' },
@@ -762,6 +773,7 @@
       { js: 'js/sistemas/bosque-combate.js', grupo: 'sistemas', node: true }, // Bosque dos Fantasmas: combate dos 4 tipos, com a mosca (Reino.BosqueCombate, camada; bosque.md §5)
       { js: 'js/sistemas/bosque-alvo.js', grupo: 'sistemas', node: true }, // Bosque dos Fantasmas: clicar no fantasma ataca sozinho até vencer (BosqueCombate.mirar; bosque.md §5)
       { js: 'js/sistemas/bosque-desenho.js', grupo: 'sistemas' }, // Bosque dos Fantasmas: desenho dos fantasmas e da mosca, da espada, do golpe e do desmaio
+      { js: 'js/sistemas/parquinho.js', grupo: 'sistemas', node: true }, // Parquinho: a fase (3 matérias com Matemática ou LP; todas) e o módulo da brincadeira (Reino.Parquinho; parquinho.md)
       { js: 'js/motor/cena.js', grupo: 'motor' },
       { js: 'js/motor/transicao.js', grupo: 'motor' },
       { js: 'js/motor/camera.js', grupo: 'motor' },

@@ -105,8 +105,10 @@
     var B = Reino.Banho, U = Reino.CasaUsos;
     try { return !!(B && B.desenhandoUni && B.desenhandoUni()) || !!(U && U.desenhandoUni && U.desenhandoUni()); } catch (e) { return false; }
   }
-  // um uso da casa em que ela senta, deita, toma banho ou cozinha: a animação desenha os dois
-  function casaComEla() { try { return !!(Reino.CasaUsos && Reino.CasaUsos.desenhandoEla && Reino.CasaUsos.desenhandoEla()); } catch (e) { return false; } }
+  // um uso da casa em que ela senta, deita, toma banho ou cozinha, ou um módulo com desenhaEla() (o brinquedo do Parquinho)
+  function casaComEla() {
+    try { return !!(Reino.CasaUsos && Reino.CasaUsos.desenhandoEla && Reino.CasaUsos.desenhandoEla()) || (Reino.modulos || []).some(function (m) { return !!(m.desenhaEla && m.desenhaEla()); }); } catch (e) { return false; }
+  }
   // nuvenzinha de poeira do sujinho: 3 fiapos cinza-terra junto dos cascos (yPes −1 … −5), atrás do unicórnio
   // de lado e dos dois lados das patas de frente ou de costas; em blocos de px inteiros do sprite (a mesma grade
   // dele: borda esquerda x − larg/2). Com Animações, sobem e somem devagar; sem, ficam parados.

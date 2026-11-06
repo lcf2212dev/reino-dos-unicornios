@@ -308,6 +308,9 @@ Prédio novo = a pasta `jogo/js/interiores/<p>/` + as linhas dela no manifesto. 
 - `menu = { emoji, info?(l), avisos?(l) → [{ texto, icone?, tipo }], abrir?(l) }` alimenta a linha do menu
   Lugares, os chips e a tela própria (`Reino.UI.registrarLugarMenu(tipo, menu)`, a mesma tabela dos lugares de
   hoje). Sem `menu`: 📍, sem informação, sem avisos e só o interior. `tipo` do lugar = `id`.
+- `liberado?(l) → bool` (lido só por `Reino.lugarLiberado(l)`): enquanto der false, a porta abre `menu.abrir` em vez do
+  interior (`motor/cena.js`, `entrarLugar`) e o lugar sai do menu Lugares; o rect, o caminho e o desenho parado ficam
+  para todo mundo. Exemplo: o portal do Parquinho (`parquinho.md` §3).
 - O validador lê os lugares dos dados (`ferramentas/validar/lugares-do-mapa.js`) e acusa id repetido, registrado
   sem caminho, rect fora do mapa ou por cima de outro lugar, caminho fora do mapa ou por dentro de um prédio.
 ```js

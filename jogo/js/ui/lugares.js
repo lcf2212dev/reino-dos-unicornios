@@ -139,7 +139,7 @@
       el('p', 'Escolha um lugar. Vamos até lá!'))));
     // as matérias ativas primeiro, depois as que esperam o material novo e os outros lugares; o prédio arquivado
     // cuja casa toda é de uma matéria ativa sai (a linha é a dela)
-    var todos = Mapa.lugares();
+    var todos = Mapa.lugares().filter(function (l) { return Reino.lugarLiberado(l); });   // fechado (liberado false) não aparece
     var ocupados = todos.filter(naCasaDoAnfitriao).map(function (l) { return l.dentro; });
     var vez = function (l) { return l.tipo !== 'materia' ? 2 : emEspera(l) ? 1 : 0; };
     var ordenados = todos.filter(function (l) { return !(ocupados.indexOf(l.id) >= 0 && emEspera(l)); })
