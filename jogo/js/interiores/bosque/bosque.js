@@ -75,7 +75,9 @@
     poe('bosque-' + tipo, x, y, { nome: nome, fala: F[chave] || [] });
   }
   [['placa', 34, 36, 'Placa', 'placa'], ['lanterna', 23, 36, 'Lanterna', 'lanterna'],
-    ['cogumelo', 42, 29, 'Cogumelo', 'cogumelo'], ['arvore-velha', 11, 25, 'Árvore velha', 'arvore-velha']].forEach(function (f) { fixo(f[0], f[1], f[2], f[3], f[4]); });
+    ['cogumelo', 42, 29, 'Cogumelo', 'cogumelo'], ['arvore-velha', 11, 25, 'Árvore velha', 'arvore-velha'],
+    // portal da Cidade Nova, no centro-direita (docs/contratos/cidade-nova.md)
+    ['portal-cidade', 43, 21, 'Portal da Cidade Nova', 'portal-cidade']].forEach(function (f) { fixo(f[0], f[1], f[2], f[3], f[4]); });
   poe('bosque-cogumelo', 43, 29, { var: { n: 2 } });   // o cogumelo falante tem um vizinho azul
 
   // 2. as clareiras: anel de fadas no meio das mágicas, cogumelos na borda das outras, poças e lanternas na trilha

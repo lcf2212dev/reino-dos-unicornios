@@ -54,7 +54,8 @@ test('tabela: todo item de kit e todo móvel avulso tem uso válido, mais o chuv
   const U = R.CasaUsos, usos = U.USOS, cfg = R.config.casa.usos;
   const objetos = [];
   R.kitsCasa.forEach((k) => k.itens.forEach((i) => objetos.push(i.objeto)));
-  R.moveisCasa.forEach((m) => objetos.push(m.objeto));
+  // os 50 móveis da loja da Cidade Nova são só decoração (sem uso), como os quadros e vasos
+  R.moveisCasa.filter((m) => m.loja !== 'casa').forEach((m) => objetos.push(m.objeto));
   assert.ok(R.kitsCasa.length >= 6 && R.moveisCasa.length >= 41, 'kits e móveis de verdade');
   objetos.forEach((t) => assert.ok(usos.indexOf(U.uso(t)) >= 0, 'sem uso: ' + t));
   assert.strictEqual(U.uso('casa-movel-chuveiro'), 'chuveiro');

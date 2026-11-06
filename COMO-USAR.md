@@ -78,6 +78,11 @@ Guia de uso para o Leandro. As regras técnicas ficam em `docs/contratos/`.
   ou a caixa de mudança de cada cômodo; escolha a peça, toque onde quer, gire e coloque (verde pode, vermelho não).
   Dá para mudar de lugar ou guardar de novo quando quiser.
 - **Lugar novo:** mostra "✨ Novo!" no menu Lugares até ela entrar nele.
+- **Cidade Nova:** o portal no centro-direita do Bosque dos Fantasmas leva a uma cidade menor, com praça, 3 terrenos
+  livres e 4 lojas: Casa & Lar (móveis a 30 estrelas), Forja das Lâminas, Elmos & Chapéus e Armaduras & Botas. Para
+  entrar numa loja, ela responde uma pergunta do 4º bimestre (certo entra; errado, tenta de novo depois). Dá para
+  comprar e vender vários itens de uma vez. A Teleportadora (unicórnio de aura arco-íris) fica na praça principal e
+  na Cidade Nova e leva de uma para a outra.
 
 ## Quando chega uma novidade
 O Claude põe a novidade na main e a Vercel publica sozinha. O progresso da Mariana fica como está.

@@ -107,4 +107,5 @@
 # @ = Parquinho: portal na praça
 # @ = 6 mapas de combate, XP por terços, lagoas no Pântano
 # @ = itens: drops, Mochila, Baú de Guardados
+# @ = Cidade Nova: portal no centro-direita do Bosque, 4 lojas com pergunta do 4º bimestre, 50 móveis de decoração, 100 equipamentos e Teleportadora na praça principal e na Cidade Nova
 @

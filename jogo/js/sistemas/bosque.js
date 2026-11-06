@@ -206,8 +206,8 @@
   /* ================= PERGUNTA ================= */
   // todas as perguntas do bimestre em curso: matérias dele e não arquivadas, sala feita ou não, de todo tipo com
   // resposta conferível (menos config.fantasmas.perguntaForaTipos, a pergunta pessoal, `livre`, e o `escrever` sem `chaves`)
-  function perguntas() {
-    var fora = cfg().perguntaForaTipos, bim = R.Bimestres && R.Bimestres.atual, lista = [];
+  function perguntasDe(bim) {
+    var fora = cfg().perguntaForaTipos, lista = [];
     (R.materias || []).forEach(function (m) {
       if (m.arquivada || bim === undefined || m.bimestre !== bim) return;
       (m.salas || []).forEach(function (s) {
@@ -218,10 +218,17 @@
     });
     return lista;
   }
+  /** as perguntas do bimestre em curso (padrão) ou do bimestre pedido; a loja da Cidade Nova pede o 4º */
+  function perguntas() { return perguntasDe(R.Bimestres && R.Bimestres.atual); }
   /** uma pergunta sorteada, cada uma com a mesma chance (sem fila nem evitar repetição); null sem nenhuma */
   function pergunta() {
     var l = perguntas();
     return l.length ? U.sortear(l, 'bosque:pergunta') : null;
+  }
+  /** o mesmo sorteio para um bimestre fixo (a entrada das lojas exige o 4º bimestre); null sem nenhuma */
+  function perguntaDoBimestre(bim) {
+    var l = perguntasDe(bim);
+    return l.length ? U.sortear(l, 'loja-cidade:pergunta') : null;
   }
 
   /* ================= PLACAR E PRÊMIOS ================= */
@@ -285,7 +292,7 @@
 
   R.Bosque = { acertos: acertos, mortos: mortos, nivel: nivel, xp: xp, xpTotal: xpTotal, temEspada: temEspada, ganharEspada: ganharEspada,
     pontos: pontos, pontosPendentes: pontosPendentes, porPonto: porPonto, dano: dano, vidaMax: vidaMax, bonus: bonus,
-    fatorVelocidade: fatorVelocidade, noBosque: noBosque, naArena: naArena, arenaAtual: arenaAtual, pergunta: pergunta, perguntas: perguntas,
+    fatorVelocidade: fatorVelocidade, noBosque: noBosque, naArena: naArena, arenaAtual: arenaAtual, pergunta: pergunta, perguntas: perguntas, perguntasDe: perguntasDe, perguntaDoBimestre: perguntaDoBimestre,
     acertou: acertou, errou: errou, consumirPergunta: consumirPergunta, perguntasPendentes: perguntasPendentes,
     proximaPergunta: proximaPergunta, abater: abater, chaveMovel: chaveMovel, HABILIDADES: HABILIDADES,
     // a curva (pura; testes e ferramentas)

@@ -28,7 +28,7 @@ const MEDIR = `(function () {
   }
   var res = [], pranchas = {}, linhas = {};
   (Reino.moveisCasa || []).forEach(function (m) {
-    var def = OBJ[m.objeto], r = { id: m.id, nome: m.nome, objeto: m.objeto, comodo: m.comodo, direcoes: m.direcoes, parede: !!m.parede, existe: !!def, dirs: {} };
+    var def = OBJ[m.objeto], r = { id: m.id, nome: m.nome, objeto: m.objeto, comodo: m.comodo, direcoes: m.direcoes, parede: !!m.parede, loja: m.loja || '', existe: !!def, dirs: {} };
     res.push(r);
     if (!def) return;
     r.def = { w: def.w, h: def.h, solido: def.solido, plano: !!def.plano, parede: !!def.parede };
@@ -59,13 +59,14 @@ test('casa, móveis avulsos: 50 móveis, objetos, cômodos, pegadas e direções
     const { res, pranchas, kits } = await c.js(MEDIR);
     fs.mkdirSync(PASTA, { recursive: true });
     for (const [id, url] of Object.entries(pranchas)) fs.writeFileSync(path.join(PASTA, `moveis-${id}.png`), Buffer.from(url.split(',')[1], 'base64'));
-    assert.strictEqual(res.length, 50, '50 móveis (25 salas de Língua Portuguesa + 13 de Inglês, mais 3 camas, o chuveiro e os 8 do quarto do ET)');
+    assert.strictEqual(res.length, 100, '50 móveis de sala + 50 da loja de decoração da Cidade Nova');
+    assert.strictEqual(res.filter((x) => x.loja === 'casa').length, 50, '50 da loja');
     const ids = new Set(), porComodo = {};
     for (const it of res) {
       const onde = `movel.${it.id}`;
       assert.ok(!ids.has(it.id), `${onde}: id repetido`); ids.add(it.id);
       assert.match(it.id, /^[a-z][a-z0-9-]*$/, `${onde}: id sem ponto (uid movel.<id>.<n>)`);
-      assert.strictEqual(it.objeto, `casa-movel-${it.id}`, `${onde}: objeto casa-movel-<id>`);
+      assert.strictEqual(it.objeto, (it.loja === 'casa' ? 'loja-movel-' : 'casa-movel-') + it.id, `${onde}: objeto ${it.loja === 'casa' ? 'loja-movel' : 'casa-movel'}-<id>`);
       assert.ok(kits.includes(it.comodo), `${onde}: cômodo ${it.comodo} de config.casa.comodos`);
       porComodo[it.comodo] = (porComodo[it.comodo] || 0) + 1;
       assert.ok(it.nome.length >= 3 && it.nome.length <= 14, `${onde}: nome "${it.nome}" de 3 a 14 letras`);

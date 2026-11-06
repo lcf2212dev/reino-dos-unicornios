@@ -22,7 +22,9 @@
     if (Object.prototype.hasOwnProperty.call(porId, def.id)) erro(def, 'id repetido');
     if (TIPOS.indexOf(def.tipo) < 0) erro(def, 'tipo desconhecido');
     if (typeof def.nome !== 'string' || !def.nome) erro(def, 'falta o nome');
-    if (!Array.isArray(def.arenas) || !def.arenas.length) erro(def, 'falta arenas');
+    // item só de loja (loja-cidade.md): não cai de inimigo, então pode não ter arena
+    if (def.arenas !== undefined && !Array.isArray(def.arenas)) erro(def, 'arenas precisa ser lista');
+    if ((!Array.isArray(def.arenas) || !def.arenas.length) && !def.loja) erro(def, 'falta arenas');
     var equip = !!SLOT[def.tipo];
     if (equip && def.slot !== SLOT[def.tipo]) erro(def, 'slot precisa ser "' + SLOT[def.tipo] + '"');
     if (equip && RARIDADES.indexOf(def.raridade) < 0) erro(def, 'raridade desconhecida');
@@ -39,7 +41,7 @@
   /** os itens que caem na arena (tipo: só os dessa família; 'equip' = todos os equipamentos) */
   function daArena(arena, tipo) {
     return lista.filter(function (d) {
-      if (d.arenas.indexOf(arena) < 0) return false;
+      if ((d.arenas || []).indexOf(arena) < 0) return false;
       return !tipo || d.tipo === tipo || (tipo === 'equip' && equipamento(d));
     });
   }

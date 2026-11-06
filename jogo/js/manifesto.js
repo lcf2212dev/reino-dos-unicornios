@@ -53,6 +53,7 @@
       'css/ui-bosque.css',
       'css/ui-itens.css',
       'css/ui-itens-pocao.css',
+      'css/ui-loja-cidade.css',
       'css/ui-parquinho.css',
       'css/ui-moedas-festa.css',
       'css/ui-casa-decorar.css',
@@ -62,6 +63,7 @@
       { js: 'js/nucleo/congelar.js', grupo: 'nucleo' },
       { js: 'js/nucleo/config.js', grupo: 'nucleo', node: true },
       { js: 'js/nucleo/config-itens.js', grupo: 'nucleo', node: true }, // números dos itens (Reino.config.itens; itens.md §12): logo depois do config.js
+      { js: 'js/nucleo/config-loja-cidade.js', grupo: 'nucleo', node: true }, // números da Cidade Nova e das lojas (cidade-nova.md)
       { js: 'js/nucleo/registros.js', grupo: 'nucleo', node: true },
       { js: 'js/sistemas/bimestres.js', grupo: 'nucleo', node: true },
       { js: 'js/nucleo/modulos.js', grupo: 'nucleo', node: true },
@@ -87,6 +89,7 @@
       { js: 'js/arte/icones/livros.js', grupo: 'icones', node: true }, // 📗 dos livros da escola (4º bimestre)
       { js: 'js/arte/desenho.js', grupo: 'arte', node: true }, // desenho.js antes da pixel art: Reino.Desenho (paleta e helpers) é a fonte das cores do PA.cor
       { js: 'js/arte/portal.js', grupo: 'arte', node: true }, // o portal mágico em qualquer cor (Reino.Portal: o do Bosque e os das outras arenas; arenas.md)
+      { js: 'js/arte/teleportadora.js', grupo: 'arte' }, // a Teleportadora e o portal da Cidade Nova (cidade-nova.md)
       { js: 'js/arte/pixelart.js', grupo: 'pixelart' }, // pixelart.js (base) primeiro: cria window.PA e PA._interno, que as outras partes usam
       { js: 'js/arte/pixelart-unicornio-moldes.js', grupo: 'pixelart' },
       { js: 'js/arte/enfeites-novidades.js', grupo: 'pixelart', node: true },
@@ -350,11 +353,13 @@
       { js: 'js/conteudo/casa/kits-a.js', grupo: 'conteudo', node: true }, // casa: kits estar, jantar e cozinha (casa.md §3)
       { js: 'js/conteudo/casa/kits-b.js', grupo: 'conteudo', node: true }, // casa: kits Banheiro, Quarto do jogador e Quarto do unicórnio
       { js: 'js/conteudo/casa/moveis-salas.js', grupo: 'conteudo', node: true }, // casa: os 42 móveis avulsos, um à escolha por sala feita (casa.md §12)
+      { js: 'js/conteudo/casa/loja-decoracao.js', grupo: 'conteudo', node: true }, // Cidade Nova: os 50 móveis da loja de decoração (cidade-nova.md)
       { js: 'js/conteudo/itens/catalogo.js', grupo: 'conteudo', node: true }, // itens dos monstros: o catálogo (Reino.ItensCatalogo; itens.md §3, §4)
       { js: 'js/conteudo/itens/vestes-a.js', grupo: 'conteudo', node: true }, // itens: moldes da cabeça (Reino.VESTES; itens.md §8)
       { js: 'js/conteudo/itens/vestes-b.js', grupo: 'conteudo', node: true }, // itens: moldes de armaduras, botas, espadas e escudos
       { js: 'js/conteudo/itens/icones-a.js', grupo: 'icones', node: true }, // itens: ícones item:<id> de espadas, escudos, capacetes e chapéus
       { js: 'js/conteudo/itens/icones-b.js', grupo: 'icones', node: true }, // itens: ícones de armaduras, botas, poções e bau-guardados
+      { js: 'js/conteudo/itens/loja-cidade.js', grupo: 'conteudo', node: true }, // Cidade Nova: 20 armas, 20 elmos, 20 chapéus, 20 armaduras e 20 botas de loja (cidade-nova.md)
       { js: 'js/conteudo/materias/ciencias/icones.js', grupo: 'icones', node: true },
       { js: 'js/conteudo/materias/matematica/icones.js', grupo: 'icones', node: true },
       { js: 'js/conteudo/materias/geografia/icones.js', grupo: 'icones', node: true },
@@ -423,6 +428,7 @@
       { js: 'js/mundo/cidade-desenho.js', grupo: 'mundo' },
       { js: 'js/mundo/cidade-pecas.js', grupo: 'mundo' },
       { js: 'js/mundo/cofre-desenho.js', grupo: 'mundo' },
+      { js: 'js/mundo/teleportadora.js', grupo: 'mundo' }, // a Teleportadora da praça principal (cidade-nova.md)
       { js: 'js/mundo/contorno.js', grupo: 'mundo' },
       { js: 'js/mundo/fachadas.js', grupo: 'mundo' },
       { js: 'js/mundo/fachadas-kit.js', grupo: 'mundo' },
@@ -520,6 +526,8 @@
       { js: 'js/sistemas/presentes.js', grupo: 'sistemas', node: true }, // campo presentes, P.presentesPendentes, P.abrirPresente (módulo depois de cuidados, surpresa e fotos)
       { js: 'js/sistemas/casa.js', grupo: 'sistemas', node: true }, // casa do jogador (casa.md): campos casaBau/casaKits/casaItens, Reino.Casa, ação casaDecorar
       { js: 'js/sistemas/casa-moveis.js', grupo: 'sistemas', node: true }, // casa: campo casaMoveis, um móvel avulso por sala feita (Reino.CasaMoveis; casa.md §12)
+      { js: 'js/sistemas/loja-cidade.js', grupo: 'sistemas', node: true }, // Cidade Nova: as 4 lojas, o carrinho e a pergunta de entrada (cidade-nova.md)
+      { js: 'js/sistemas/teleportadora.js', grupo: 'sistemas', node: true }, // a Teleportadora e os portais da Cidade Nova (cidade-nova.md)
       { js: 'js/ui/casa-falas.js', grupo: 'ui', node: true }, // falas do Claude no baú da casa e na escolha do kit (sem DOM)
       { js: 'js/ui/bau-casa.js', grupo: 'ui' }, // o baú da casa do jogador ao entrar no Reino (UI.abrirBauCasa; casa.md §9)
       { js: 'js/ui/casa-kits.js', grupo: 'ui' }, // a escolha do kit de móveis da casa (UI.escolherKitCasa, UI.casaKitsPendentes)
@@ -532,6 +540,7 @@
       { js: 'js/ui/itens-aviso.js', grupo: 'ui' }, // itens: o aviso pequeno no alto quando cai um item (UI.avisoItem; itens.md §13)
       { js: 'js/ui/mochila-item.js', grupo: 'ui' }, // itens: o cartão de um item (vestir, tirar, usar, dar, jogar fora; Reino._itensTelas)
       { js: 'js/ui/mochila.js', grupo: 'ui' }, // itens: a tela da Mochila, 20 espaços e a figura vestida (UI.telaMochila; itens.md §6)
+      { js: 'js/ui/loja-cidade.js', grupo: 'ui' }, // Cidade Nova: a pergunta de entrada e a loja com carrinho (cidade-nova.md)
       { js: 'js/ui/guardados.js', grupo: 'ui' }, // itens: a tela do Baú de Guardados da casa (UI.telaGuardados; itens.md §7)
       { js: 'js/ui/itens-pocao.js', grupo: 'ui' }, // itens: o botão rápido da poção na arena (itens.md §9)
       { js: 'js/ui/parquinho.js', grupo: 'ui' }, // Parquinho: a tela do que falta (portal dormindo, presentes; UI.telaParquinho)
@@ -751,6 +760,7 @@
       { js: 'js/interiores/casa/moveis-salas-quarto.js', grupo: 'interiores', node: true }, // casa: móveis avulsos (por sala) de Quarto do jogador
       { js: 'js/interiores/casa/moveis-salas-quarto-et.js', grupo: 'interiores', node: true }, // casa: móveis avulsos (por sala) do Quarto do ET
       { js: 'js/interiores/casa/moveis-salas-quarto-uni.js', grupo: 'interiores', node: true }, // casa: móveis avulsos (por sala) de Quarto do unicórnio
+      { js: 'js/interiores/casa/loja-moveis.js', grupo: 'interiores', node: true }, // Cidade Nova: os 50 desenhos da loja de decoração (cidade-nova.md)
       { js: 'js/interiores/casa/falas.js', grupo: 'interiores', node: true }, // casa: o prédio (falas, caixa de mudança, térreo, 2º andar, fora, lugar)
       { js: 'js/interiores/casa/objetos.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/casa/guardados.js', grupo: 'interiores', node: true }, // o Baú de Guardados da casa e a ação 'guardados' (itens.md §7)
@@ -763,6 +773,7 @@
       { js: 'js/interiores/bosque/falas.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/bosque/objetos.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/bosque/objetos-2.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/bosque/portal-cidade.js', grupo: 'interiores', node: true }, // Cidade Nova: o portal no centro-direita do Bosque (cidade-nova.md)
       { js: 'js/interiores/bosque/bosque.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/bosque/fora.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/bosque/lugar.js', grupo: 'interiores', node: true },
@@ -775,6 +786,10 @@
       { js: 'js/interiores/parquinho/parquinho.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/parquinho/fora.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/parquinho/lugar.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/cidade-nova/fundo.js', grupo: 'interiores', node: true }, // Cidade Nova: céu aberto (cidade-nova.md)
+      { js: 'js/interiores/cidade-nova/objetos.js', grupo: 'interiores', node: true }, // Cidade Nova: fachadas, terrenos, portal e Teleportadora
+      { js: 'js/interiores/cidade-nova/cidade.js', grupo: 'interiores', node: true }, // Cidade Nova: a praça, as 4 lojas e os terrenos livres
+      { js: 'js/interiores/cidade-nova/lojas.js', grupo: 'interiores', node: true }, // Cidade Nova: as 4 lojas por dentro
       { js: 'js/interiores/pantano/falas.js', grupo: 'interiores', node: true }, // Pântano das Rãs Resmungonas (arenas.md): a arena 2, modelo dos mapas novos (falas, objetos, ícone e inimigos, chão/céu e interior, portal e lugar)
       { js: 'js/interiores/pantano/objetos.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/pantano/inimigos.js', grupo: 'interiores', node: true },

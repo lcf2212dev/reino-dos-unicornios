@@ -96,8 +96,11 @@ Reino.interiores.forEach((d) => {
 // um interior de entrada por lugar
 const porLugar = {};
 Reino.interiores.forEach((d) => {
-  if (defs.includes(d)) checar(LUGARES.has(d.lugar), `${d.id}: lugar "${d.lugar}" não existe (${[...LUGARES].join(', ')})`);
-  (porLugar[d.lugar] = porLugar[d.lugar] || []).push(d);
+  // interior de portal (Cidade Nova): não tem lugar no mapa, entra-se por Cena.irPara; não conta como andar de um lugar
+  if (!d.portal) {
+    if (defs.includes(d)) checar(LUGARES.has(d.lugar), `${d.id}: lugar "${d.lugar}" não existe (${[...LUGARES].join(', ')})`);
+    (porLugar[d.lugar] = porLugar[d.lugar] || []).push(d);
+  }
 });
 Object.keys(porLugar).filter(doSo).forEach((l) => {
   const n = porLugar[l].filter((d) => d.entrada).length;
