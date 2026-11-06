@@ -65,6 +65,9 @@ raio do toque, recuo e tempos são os do Bosque (`config.fantasmas`). Nenhum nú
 - Falas do Claude fora do Bosque: `BosqueFalas.arena` (as mesmas frases gravadas, sem "fantasma" nem "bosque");
   `bosque-falas.js` as põe também no pacote de voz de cada arena com pacote próprio (o áudio é o mesmo, pelo texto).
 - Cada arena tem o seu estado de combate (`S.estados[id]`); sair e voltar põe todos no ninho com vida cheia.
+- Água (arena com `agua` no interior, §6.10): ela nada como no lago da cidade, com a espada valendo igual (o golpe só
+  olha a posição dela). Os inimigos do chão nascem fora da água e não entram nela (deslizam pela margem; vagando,
+  trocam de alvo); o voador (`voador`/`mosca`) passa por cima.
 
 ## 5. O que cada frente pode tocar
 Frente do mapa `<x>` (gelo, dunas, cristal, vulcao):
@@ -100,6 +103,12 @@ Frente do mapa `<x>` (gelo, dunas, cristal, vulcao):
    mínimo; `npm run index`.
 9. Conferir: `npm run validar` (17+ tipos, nada de alto cobrindo), `npm run unidade -- --so 'arenas|bosque'`,
    `npm run ver -- --ir <x>` e o combate (`--mudar '{"bosque":{"espada":1}}'`).
+10. Água andável (opcional; modelo: as lagoas do Pântano, `pantano/objetos.js`): no `registrarInterior`,
+    `agua: { tile(tx, ty) → bool, fundura(wx, wy) → px }` (px para dentro da água DESENHADA; negativo = fora). A
+    água é chão andável: nada sólido nem enfeite em cima (no Pântano, cada lagoa é um enfeite plano do tamanho da
+    caixa dela, posto antes da mata, com uma clareira em volta), fora da trilha e da zona segura. O desenho da água e
+    a `fundura` saem da mesma conta (a linha d'água dela casa com a margem). O resto (nado, corte, respingo) é do
+    motor: `cena-e-motor.md` §10. Teste: `testes/unidade/pantano-agua.test.js`.
 
 ## 7. Testes
 - `testes/unidade/arenas.test.js` (cfg, registro, passo puro numa arena, um estado por arena, o contrato de cada

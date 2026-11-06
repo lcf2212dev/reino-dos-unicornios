@@ -114,31 +114,34 @@
    a 40), saída (28, 40) (o portal de volta, desenhado pelo fundo), spawn (28, 39), fundo 'pantano' (fundo.js),
    pacote 'interior-pantano'. O layout sai de Reino.Interiores.arena (motor/interiores-arena.js), com semente: sempre
    igual. Zonas pelas fileiras (as do config): fáceis embaixo, médios no meio, difíceis e voadores em cima.
-   O chão e o céu na primeira parte (acima); objetos em objetos.js, falas em falas.js, ícone e inimigos em inimigos.js,
+   As lagoas (objetos.js) entram como enfeites planos e são a água do interior (`agua`): ela nada nelas.
+   O chão e o céu na primeira parte (acima); objetos e lagoas em objetos.js, falas em falas.js, ícone e inimigos em inimigos.js,
    portal e lugar em lugar.js. */
 (function () {
   var R = window.Reino, I = R.Interiores, P = (R._predios = R._predios || {}).pantano = R._predios.pantano || {};
   var F = ((R.FALAS_INTERIORES || {}).pantano || {}).objetos || {};
   var ALTOS = { 'pantano-salgueiro': 1, 'pantano-cipreste': 1 };
+  // as lagoas (objetos.js): a caixa de cada uma é um enfeite plano; a clareira em volta deixa a margem sem sólido
+  var LAGOAS = P.LAGOAS.map(function (l) { return ['pantano-lagoa-' + (l.n + 1), l.x, l.y]; });
+  var EM_VOLTA = P.LAGOAS.map(function (l) { var e = l.e[0]; return [e.cx / 16, e.cy / 16, e.rx / 16 + 1.5]; });
   var L = I.arena({
     semente: 20261106,
     trilha: P.trilha,
-    // clareiras sem sólido: a da entrada, as das lagoas e as do fundo
-    clareiras: [[28, 37, 5.5], [14, 33, 4], [45, 32, 4], [38, 36, 3], [13, 21, 4.5], [44, 21, 4.5], [27, 23, 3.5], [14, 10, 4], [42, 9, 4], [28, 6, 3.5]],
+    // clareiras sem sólido: a da entrada, as do caminho, as do fundo e a margem das lagoas
+    clareiras: [[28, 37, 5.5], [14, 33, 4], [45, 32, 4], [38, 36, 3], [13, 21, 4.5], [44, 21, 4.5], [27, 23, 3.5], [14, 10, 4], [42, 9, 4], [28, 6, 3.5]].concat(EM_VOLTA),
     fixos: [
       ['pantano-placa', 34, 36, 'Placa', F.placa],
       ['pantano-lanterna', 23, 36, 'Lanterna de vaga-lumes', F.lanterna],
       ['pantano-vitoria-regia', 42, 29, 'Vitória-régia', F['vitoria-regia']],
       ['pantano-estatua-ra', 11, 25, 'Estátua da rã', F['estatua-ra']],
     ],
-    enfeites: [
-      ['pantano-lago', 12, 33], ['pantano-lago', 44, 31], ['pantano-lago', 26, 22], ['pantano-lago', 13, 9], ['pantano-lago', 41, 20],
+    enfeites: LAGOAS.concat([
       ['pantano-juncos', 11, 32], ['pantano-juncos', 14, 34], ['pantano-juncos', 47, 31], ['pantano-juncos', 25, 23], ['pantano-juncos', 43, 21],
       ['pantano-lanterna', 22, 33], ['pantano-lanterna', 34, 32], ['pantano-lanterna', 33, 27], ['pantano-lanterna', 24, 26],
       ['pantano-lanterna', 33, 22], ['pantano-lanterna', 25, 18], ['pantano-lanterna', 32, 14], ['pantano-lanterna', 30, 8],
       ['pantano-tronco', 18, 30], ['pantano-tronco', 38, 27], ['pantano-tronco', 20, 15], ['pantano-tronco', 36, 11],
       ['pantano-estatua-ra', 28, 5],
-    ],
+    ]),
     altos: ALTOS,
     borda: { lado: 'pantano-salgueiro', baixo: ['pantano-juncos', 'pantano-cipreste'] },
     base: { facil: 0.025, medio: 0.07, dificil: 0.11 },
@@ -166,5 +169,7 @@
     spawn: L.spawn,
     comodos: [{ id: 'pantano', nome: 'Pântano das Rãs Resmungonas', rect: L.comodo, piso: 'pantano-lama', parede: 'pantano-salgueiros' }],
     objetos: L.objetos,
+    // água andável: ela nada nas lagoas (interiores.md §3, cena-e-motor.md §10)
+    agua: { tile: P.agua, fundura: P.fundura },
   });
 })();

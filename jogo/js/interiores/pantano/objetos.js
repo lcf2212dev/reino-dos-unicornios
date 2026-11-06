@@ -1,11 +1,11 @@
 /* Pântano das Rãs Resmungonas, os objetos da mata do brejo (prefixo pantano-): o salgueiro-chorão, o cipreste com as
-   raízes de fora, os juncos, o tronco caído, a pedra e o toco com musgo e a lagoinha com vitórias-régias (sólidos).
-   Mais abaixo, na segunda parte: os que se tocam e os enfeites do chão. Reino._predios.pantano guarda P.folhagem e
-   P.sombra. Nada de DOM nem canvas no carregamento. */
+   raízes de fora, os juncos, o tronco caído, a pedra e o toco com musgo (sólidos) e as lagoas (água andável, onde ela
+   nada). Mais abaixo, na segunda parte: os que se tocam e os enfeites do chão. Reino._predios.pantano guarda
+   P.folhagem, P.sombra e as lagoas (P.LAGOAS, P.fundura, P.agua). Nada de DOM nem canvas no carregamento. */
 (function () {
   var R = window.Reino;
   var I = R.Interiores, D = I.desenho, ret = D.ret, circulo = D.circulo, elipse = D.elipse;
-  var K = R.Desenho.K;
+  var K = R.Desenho.K, sorte = R.Desenho.sorte;
   var P = (R._predios = R._predios || {}).pantano = R._predios.pantano || {};
   var FOLHA = { verde: ['#2f6646', '#4a8f5a', '#7cc47a'], musgo: ['#4f6a2a', '#76963e', '#a8c860'] };
   var TRONCO = ['#4a3a2a', '#6a5438', '#8c7250'];
@@ -85,15 +85,133 @@
       elipse(ctx, px + 8, py + 6, 6, 3, K); elipse(ctx, px + 8, py + 6, 5, 2, '#b89a6a'); elipse(ctx, px + 8, py + 6, 3, 1, '#8c7250');
       ret(ctx, px + 3, py + 11, 4, 3, '#76963e');
     } });
-  // a lagoinha: água parada com a beira de lama, duas vitórias-régias e um brilho (sólida: ela contorna)
-  I.objeto('pantano-lago', { w: 2, h: 1, solido: true, semSombra: true,
-    desenhar: function (ctx, px, py) {
-      elipse(ctx, px + 16, py + 9, 15, 6, K); elipse(ctx, px + 16, py + 9, 14, 5, '#7a7440');
-      elipse(ctx, px + 16, py + 9, 12, 4, '#3a6b5a'); ret(ctx, px + 6, py + 7, 20, 1, '#4f8270');
-      circulo(ctx, px + 10, py + 9, 3, K); circulo(ctx, px + 10, py + 9, 2, '#5fae4a'); ret(ctx, px + 10, py + 7, 1, 2, '#3a6b5a');
-      circulo(ctx, px + 21, py + 10, 2, K); circulo(ctx, px + 21, py + 10, 1, '#7cc45a');
-      ret(ctx, px + 15, py + 8, 3, 1, '#9fd0c0');
-    } });
+  /* ---------- as lagoas: água andável (ela nada, como no lago da cidade; docs/contratos/arenas.md §6) ----------
+     Cada lagoa é a união de duas elipses [cx, cy, rx, ry] (tiles) com a margem ondulada. P.fundura(wx, wy) = quantos
+     px o ponto está para dentro da água desenhada (negativo = fora; a mesma conta pinta a água e corta o sprite
+     dela); P.agua(tx, ty) = o meio do tile na água. Um tipo por lagoa ('pantano-lagoa-<n>', plano e não sólido,
+     pegada = a caixa da lagoa com a beira de lama): o layout da arena não põe nada em cima e o desenho vai no
+     estático; a ondinha da linha d'água e os brilhos, no `anim` (parados sem Animações). */
+  var BEIRA = 8, FORA = 8;   // px de lama em volta da água (na caixa); fundura longe de toda lagoa
+  P.LAGOAS = [
+    [[10.2, 29.8, 3.6, 1.9], [12.8, 29.0, 1.7, 1.2]], [[40.5, 37.4, 3.3, 1.6], [38.2, 37.1, 1.6, 1.2]],   // fáceis
+    [[6.6, 22.4, 2.9, 1.8], [7.8, 23.3, 1.4, 1.0]],   [[49.6, 25.2, 2.4, 2.0], [48.0, 26.4, 1.5, 1.0]],     // médias
+    [[44.4, 16.8, 3.6, 2.0], [41.6, 17.6, 1.6, 1.2]], [[7.6, 9.2, 3.0, 1.8], [5.6, 8.4, 1.5, 1.1]],       // difíceis
+  ].map(function (es, n) {
+    var e = es.map(function (v) { return { cx: v[0] * 16, cy: v[1] * 16, rx: v[2] * 16, ry: v[3] * 16 }; });
+    function lim(f, s) { return e.reduce(function (m, a) { return f(m, a.cx + s * a.rx, a.cy + s * a.ry); }, null); }
+    var x0 = lim(function (m, x) { return m === null ? x : Math.min(m, x); }, -1) - BEIRA;
+    var x1 = lim(function (m, x) { return m === null ? x : Math.max(m, x); }, 1) + BEIRA;
+    var y0 = lim(function (m, x, y) { return m === null ? y : Math.min(m, y); }, -1) - BEIRA;
+    var y1 = lim(function (m, x, y) { return m === null ? y : Math.max(m, y); }, 1) + BEIRA;
+    var x = Math.floor(x0 / 16), y = Math.floor(y0 / 16);
+    return { n: n, e: e, x: x, y: y, w: Math.ceil(x1 / 16) - x, h: Math.ceil(y1 / 16) - y };
+  });
+  // distância com sinal até a borda da elipse (px; + dentro), pela 1ª ordem (boa perto da margem; no miolo, até o raio menor)
+  function dElipse(a, wx, wy) {
+    var dx = wx - a.cx, dy = wy - a.cy, rx2 = a.rx * a.rx, ry2 = a.ry * a.ry, m = Math.min(a.rx, a.ry);
+    var f = dx * dx / rx2 + dy * dy / ry2 - 1, gn = 2 * Math.sqrt(dx * dx / (rx2 * rx2) + dy * dy / (ry2 * ry2));
+    return gn < 1e-9 ? m : Math.min(m, -f / gn);
+  }
+  function fundLagoa(l, wx, wy) {
+    var d = -1e9;
+    for (var i = 0; i < l.e.length; i++) d = Math.max(d, dElipse(l.e[i], wx, wy));
+    return d + Math.sin(wx * 0.23 + l.n * 2.1) * 0.9 + Math.sin(wy * 0.41 + l.n * 3.7) * 0.6;   // a margem ondulada
+  }
+  P.fundura = function (wx, wy) {
+    var d = -FORA;
+    for (var i = 0; i < P.LAGOAS.length; i++) {
+      var l = P.LAGOAS[i];
+      if (wx >= l.x * 16 && wy >= l.y * 16 && wx < (l.x + l.w) * 16 && wy < (l.y + l.h) * 16) d = Math.max(d, fundLagoa(l, wx, wy));
+    }
+    return d;
+  };
+  P.agua = function (tx, ty) { return P.fundura(tx * 16 + 8, ty * 16 + 8) > 0; };
+
+  var LAMA = ['#7a7440', '#655f34', '#8a8450'], BORDA_LAMA = '#5e5a30', MOLHADA = '#5a5430', LINHA = '#1f4a40', RASO = '#7fb39a';
+  var TONS = ['#5f9c84', '#4b8a74', '#3c7864', '#306756', '#275a4c'], LIMITES = [4, 8, 13, 19];
+  var FLORES = ['#ff9cc6', '#ffffff', null, null], ANEL = '#a8e0c8';
+  function corDe(l, wx, wy) {
+    var k = fundLagoa(l, wx + 0.5, wy + 0.5), fim = -4 + (sorte(wx, wy >> 2, 61) < 0.4 ? 1 : 0);
+    if (k < fim) return null;
+    if (k < fim + 1) return BORDA_LAMA;                                        // a beirada da lama, no capim
+    if (k < -1) { var r = sorte(wx, wy, 62); return r < 0.15 ? LAMA[1] : r > 0.9 ? LAMA[2] : LAMA[0]; }
+    if (k < 0) return MOLHADA;
+    if (k < 1) return LINHA;                                                   // linha d'água de 1 px
+    if (k < 2.5) return RASO;
+    // o fundo puxa para baixo; a troca de tom em pontilhado 2 × 2
+    var v = k + (wy - l.e[0].cy) * 0.12, t = 0, xadrez = (wx + wy) & 1;
+    while (t < 4 && v >= LIMITES[t] + (xadrez ? 0 : 1.2)) t++;
+    return TONS[t];
+  }
+  function longe(lista, x, y, d) { return lista.every(function (p) { return Math.abs(p[0] - x) >= d || Math.abs(p[1] - y) >= d; }); }
+  // vitórias-régias (até 4), brilhos, juncos da margem e o anel da ondinha: pela sorte do lugar, feitos uma vez
+  function enfeitesDe(l) {
+    if (l.enf) return l.enf;
+    var reg = [], bri = [], jun = [], anel = [], X0 = l.x * 16, Y0 = l.y * 16, X1 = X0 + l.w * 16, Y1 = Y0 + l.h * 16, x, y, k;
+    for (y = Y0 + 2; y < Y1 - 2; y += 5) for (x = X0 + 2; x < X1 - 2; x += 5) {
+      k = fundLagoa(l, x + 0.5, y + 0.5);
+      var s = sorte(x, y, 63);
+      if (k > 9 && s < 0.25 && reg.length < 4 && longe(reg, x, y, 15)) reg.push([x, y, 4 + Math.floor(sorte(x, y, 64) * 3), 2, FLORES[reg.length % 4]]);
+      else if (k > 6 && s > 0.86 && bri.length < 3 && longe(reg, x, y, 10) && longe(bri, x, y, 12)) bri.push([x, y]);
+    }
+    // os juncos só na metade de cima (crescem para a terra; embaixo cobririam a água)
+    for (y = Y0 + 3; y < l.e[0].cy; y += 2) for (x = X0 + 3; x < X1 - 3; x += 2) {
+      k = fundLagoa(l, x + 0.5, y + 0.5);
+      if (k > -3 && k < -1.5 && sorte(x, y, 67) < 0.1 && longe(jun, x, y, 6)) jun.push([x, y, 7 + Math.floor(sorte(x, y, 68) * 6)]);
+    }
+    var c = l.e[0];
+    for (y = Y0; y < Y1; y++) for (x = X0; x < X1; x++) {
+      k = fundLagoa(l, x + 0.5, y + 0.5);
+      if (k >= 1 && k < 2) anel.push([x, y, Math.atan2((y - c.cy) / c.ry, (x - c.cx) / c.rx)]);
+    }
+    anel.sort(function (a, b) { return a[2] - b[2]; });
+    return (l.enf = { reg: reg, bri: bri, jun: jun, anel: anel });
+  }
+  // (ox, oy) = onde a caixa foi parar menos onde ela fica na arena (0 no jogo; a prévia desenha em outro lugar)
+  function desenharLagoa(ctx, l, ox, oy) {
+    var X0 = l.x * 16, Y0 = l.y * 16, X1 = X0 + l.w * 16, Y1 = Y0 + l.h * 16, x, y;
+    for (y = Y0; y < Y1; y++) {
+      var ini = X0, cor = corDe(l, X0, y);
+      for (x = X0 + 1; x <= X1; x++) {   // em tiras da mesma cor (menos fillRect)
+        var c2 = x < X1 ? corDe(l, x, y) : undefined;
+        if (c2 === cor) continue;
+        if (cor) ret(ctx, ini + ox, y + oy, x - ini, 1, cor);
+        ini = x; cor = c2;
+      }
+    }
+    var en = enfeitesDe(l);
+    en.reg.forEach(function (v) {   // a folha com contorno, a sombra na água, o cortezinho e às vezes uma flor
+      var bx = v[0] + ox, by = v[1] + oy, rx = v[2], ry = v[3];
+      elipse(ctx, bx + 1, by + 1, rx, ry, TONS[4]); elipse(ctx, bx, by, rx + 1, ry + 1, K);
+      elipse(ctx, bx, by, rx, ry, '#5fae4a'); elipse(ctx, bx - 1, by - 1, Math.max(2, rx - 2), 1, '#8cc85a');
+      ret(ctx, bx + 1, by - ry, 2, ry + 1, TONS[1]);
+      if (v[4]) { ret(ctx, bx - 3, by - 2, 5, 3, K); ret(ctx, bx - 2, by - 3, 3, 5, K); ret(ctx, bx - 2, by - 2, 3, 3, v[4]); ret(ctx, bx - 1, by - 1, 1, 1, '#ffd34d'); }
+    });
+    en.jun.forEach(function (h) {   // juncos e taboas na lama da margem
+      var jx = h[0] + ox, base = h[1] + oy, a = h[2], jy = base - a;
+      ret(ctx, jx, jy + 2, 1, a - 2, '#2f7a48'); ret(ctx, jx, jy, 1, 2, '#8fb83a');
+      ret(ctx, jx - 1, base - Math.ceil(a * 0.6), 1, Math.ceil(a * 0.6), '#4f9a4a');
+      ret(ctx, jx + 1, base - Math.ceil(a * 0.45), 1, Math.ceil(a * 0.45), '#3e8a46');
+      if (a > 9) { ret(ctx, jx - 1, jy - 5, 3, 6, K); ret(ctx, jx, jy - 4, 1, 4, '#9a5a36'); }
+    });
+  }
+  function tempoDe(t) { return (R.util && R.util.reduzMovimentoSistema) ? 0 : (t || 0); }
+  // a parte viva: a ondinha que corre na linha d'água (3 quadros) e os brilhos que piscam; t = 0: parados
+  function vivo(ctx, l, t, ox, oy) {
+    var en = enfeitesDe(l), tt = tempoDe(t), q = tt ? Math.floor(tt / 450) % 3 : 0;
+    ctx.fillStyle = ANEL;
+    for (var i = 0; i < en.anel.length; i++) if ((i + q * 4) % 12 < 3) ctx.fillRect(en.anel[i][0] + ox, en.anel[i][1] + oy, 1, 1);
+    en.bri.forEach(function (c, n) {
+      var b = [c[0] + ox, c[1] + oy], aceso = tt ? (q + n) % 3 === 0 : n % 2 === 0;
+      ret(ctx, b[0], b[1], 1, 1, '#ffffff');
+      if (aceso) { ret(ctx, b[0] - 1, b[1], 3, 1, ANEL); ret(ctx, b[0], b[1] - 1, 1, 3, ANEL); ret(ctx, b[0], b[1], 1, 1, '#ffffff'); }
+    });
+  }
+  P.LAGOAS.forEach(function (l) {
+    I.objeto('pantano-lagoa-' + (l.n + 1), { w: l.w, h: l.h, solido: false, plano: true, semSombra: true,
+      desenhar: function (ctx, px, py) { desenharLagoa(ctx, l, px - l.x * 16, py - l.y * 16); },
+      anim: function (ctx, px, py, t) { vivo(ctx, l, t, px - l.x * 16, py - l.y * 16); } });
+  });
 })();
 /* Segunda parte: os que se tocam e os enfeites do chão (prefixo pantano-): a placa, a estátua da rã,
    a lanterna de vaga-lumes e a vitória-régia (com fala); capim do brejo, lodo, lótus, cogumelos, raízes, vaga-lumes e

@@ -228,7 +228,11 @@ alvo = { tipo: 'npc'|'objeto'|'saida'|'escada'|'lugar'|'claude', id,
    `config.cofre.cheio`. Toque: `Mapa.alvoObjeto(wx, wy)` e `Mapa.alvoObjetoPerto(tl, olhar)` (o adaptador do mapa em
    `motor/cena.js`, depois do Claude): ela anda até (23, 27) e abre `UI.telaCofre()` (`ui/cofre.js`).
 
-## 10. Nadar no lago
+## 10. Nadar no lago (e na água de um interior)
+Interior com `agua` no def (`interiores.md` §3; ex.: as lagoas do Pântano, `arenas.md` §6.10): a cena ganha
+`agua(tx, ty)` e `fundura(wx, wy)` (as do def) e tudo abaixo vale nela igual ao lago (velocidade, corte, ondinhas,
+respingo, gotinhas, montada e bebê); o caminho vai por terra quando o destino é terra (sem o custo 3× do mapa). O mapa
+continua com `Mapa.fundura`, como sempre.
 ```
 Mapa.agua(tx, ty) → bool          // tile de água do lago (tipo 'a'); a fonte da praça não é água e segue sólida
 Mapa.solido(tx, ty)               // água do lago é andável (false); borda, prédios e enfeites, sólidos
@@ -239,9 +243,11 @@ Mapa.caminho(a, b)                // destino em terra: primeiro um caminho SEM �
 Mapa.maisPerto(x, y, de)          // tocou em terra sólida: prefere terra; quem está nadando prefere a terra encostada
                                   // no que tocou (senão a água em volta); tocou na água: aceita água
 Mapa.fundura(wx, wy) → px         // quanto o ponto está dentro da água DESENHADA (elipse do lago); negativo = margem
-cena.agua(tx, ty) → bool          // adaptador do mapa; interiores não têm (= false)
+cena.agua(tx, ty) → bool          // adaptador do mapa e interior com def.agua; os outros não têm (= false)
+cena.fundura(wx, wy) → px         // só interior com def.agua (o mapa usa Mapa.fundura)
 Jogador.nadando() → bool          // o tile atual é água (velocidade e som)
-Jogador.fundura(x, y) → 0–1       // Mapa.fundura suavizada numa rampa de 12 px; fora do mapa = 0
+Jogador.fundura(x, y) → 0–1       // Mapa.fundura (no interior com água, cena.fundura) suavizada numa rampa de 12 px;
+                                  // cena sem água = 0
 Jogador.velocidade() → px/s       // ALVO: base (montada 82, a pé 58) × (nadando ? config.nado.fator (0,6) : 1)
                                   // × Cuidados.fatorVelocidade() × cada fator registrado. O passo usa J.vel,
                                   // que chega ao alvo aos poucos (SUAVE_VEL 0,18 s), sem tranco na margem

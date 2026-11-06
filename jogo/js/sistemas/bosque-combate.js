@@ -21,6 +21,7 @@
   var CENA = 'bosque', OCUPACAO = 'bosque-desmaio', T = 16;
   var SEMENTE = 20261105;
   var ATIVOS = { vagando: 1, perseguindo: 1, voltando: 1, recuando: 1 };   // os que andam, tocam e levam golpe
+  var VOAM = { mosca: 1, voador: 1 };   // passam por cima da água (os do chão contornam: arenas.md §4)
   var CONTROLES = 'button, a[href], [role="button"], input, select, textarea, [contenteditable="true"]';
   var VAZIO = [];
   function cfg() { return R.config.fantasmas; }
@@ -47,9 +48,10 @@
     return feitos;
   }
 
-  /* mapa = { comodo: { x, y, w, h } (tiles), spawn: { x, y }, solido(tx, ty) }; c = os números da arena (config.fantasmas
-     no Bosque; Reino.Arenas.cfg(id) nas outras). Os tipos são os de c.tipos, na ordem (no Bosque: facil, medio,
-     dificil, mosca). Nascem em tile livre da zona do tipo, fora da zona segura, sempre nos mesmos lugares (semente). */
+  /* mapa = { comodo: { x, y, w, h } (tiles), spawn: { x, y }, solido(tx, ty), agua?(tx, ty) }; c = os números da arena
+     (config.fantasmas no Bosque; Reino.Arenas.cfg(id) nas outras). Os tipos são os de c.tipos, na ordem (no Bosque:
+     facil, medio, dificil, mosca). Nascem em tile livre da zona do tipo, fora da zona segura (e, os do chão, fora da
+     água), sempre nos mesmos lugares (semente). */
   function novoEstado(mapa, c, semente) {
     c = c || cfg();
     semente = semente === undefined ? SEMENTE : semente;
@@ -57,7 +59,8 @@
     var est = { cfg: c, t: 0, vida: cj.vidaBase, max: cj.vidaBase, invencivelAte: 0, regenEm: 0, recargaAte: 0,
       golpe: null, desmaiado: false, parados: false, eventos: [], fantasmas: [],
       limites: { x0: cm.x * T + 4, y0: cm.y * T + 12, x1: (cm.x + cm.w) * T - 4, y1: (cm.y + cm.h) * T },
-      segura: { x0: (sp.x - zs) * T, y0: (sp.y - zs) * T, x1: (sp.x + zs + 1) * T, y1: (sp.y + zs + 1) * T } };
+      segura: { x0: (sp.x - zs) * T, y0: (sp.y - zs) * T, x1: (sp.x + zs + 1) * T, y1: (sp.y + zs + 1) * T },
+      agua: typeof mapa.agua === 'function' ? mapa.agua : null };
     var b = c.raioToque + 1, Z = est.segura;
     est.barreira = { x0: Z.x0 - b, y0: Z.y0 - b, x1: Z.x1 + b, y1: Z.y1 + b };
     var casas = [], n = 0;
@@ -66,7 +69,7 @@
       if (!quantos || !z) return;
       for (y = Math.max(z[0], cm.y); y <= Math.min(z[1], cm.y + cm.h - 1); y++) {
         for (x = cm.x; x < cm.x + cm.w; x++) {
-          if (mapa.solido(x, y) || dentro(est.barreira, x * T + T / 2, y * T + 12)) continue;
+          if (mapa.solido(x, y) || dentro(est.barreira, x * T + T / 2, y * T + 12) || (est.agua && !VOAM[tipo] && est.agua(x, y))) continue;
           lista.push([x, y]);
         }
       }
@@ -105,6 +108,17 @@
     var e = f.x - Z.x0, d = Z.x1 - f.x, c = f.y - Z.y0, b = Z.y1 - f.y, m = Math.min(e, d, c, b);
     if (m === e) f.x = Z.x0 - 0.01; else if (m === d) f.x = Z.x1; else if (m === c) f.y = Z.y0 - 0.01; else f.y = Z.y1;
   }
+  // inimigo do chão não entra na água: desliza pela margem (um eixo de cada vez) e, vagando, desiste do alvo
+  function naAgua(est, x, y) { return est.agua(Math.floor(x / T), Math.floor(y / T)); }
+  function secar(est, f, x0, y0) {
+    if (!est.agua || VOAM[f.tipo] || !naAgua(est, f.x, f.y)) return;
+    if (!naAgua(est, f.x, y0)) f.y = y0;
+    else if (!naAgua(est, x0, f.y)) f.x = x0;
+    else { f.x = x0; f.y = y0; }
+    if (f.estado === 'vagando' && !f.pausa) { f.pausa = true; f.ate = est.t + 300; }
+    // voltando para casa e a lagoa no meio: desiste e vagueia (senão trava ou escorrega sem fim na margem)
+    else if (f.estado === 'voltando') { f.estado = 'vagando'; f.pausa = true; f.ate = est.t + 300; }
+  }
   function vagar(est, f, v, s) {
     var t = est.t;
     if (!f.pausa) { if (ir(f, f.alvoX, f.alvoY, v * 0.5, s)) { f.pausa = true; f.ate = t + 500 + f.rng() * 1500; } return; }
@@ -138,12 +152,13 @@
       return;
     }
     if (F === 'surgindo') { if (t >= f.ate) f.estado = 'vagando'; return; }
+    var x0 = f.x, y0 = f.y;
     if (F === 'recuando') {
       // empurrão que perde força até o fim do recuo
       var forca = Math.max(v * 1.5, 30) * s * Math.max(0, f.ate - t) / c.recuoMs;
       if (!est.parados) { f.x += f.dx * forca; f.y += f.dy * forca; }
       if (t >= f.ate) { f.estado = 'vagando'; f.pausa = true; f.ate = t + 400; }
-      prender(est, f);
+      prender(est, f); secar(est, f, x0, y0);
       return;
     }
     var dCasa = dist(f.x, f.y, f.casaX, f.casaY), dJog = dist(f.x, f.y, j.x, j.y), naSegura = dentro(est.segura, j.x, j.y);
@@ -155,7 +170,7 @@
         if (F === 'perseguindo') { f.estado = 'vagando'; f.pausa = true; f.ate = t + 600; }
         vagar(est, f, v, s);
       }
-      prender(est, f);
+      prender(est, f); secar(est, f, x0, y0);
       dJog = dist(f.x, f.y, j.x, j.y);
     }
     // encostou nela: tira vida (fora do tempo invencível) e recua; invencível, só recua (não fica em cima dela)
@@ -263,7 +278,7 @@
     if (est && S.grades[id] === cena.grade) return (S.estado = est);
     S.grades[id] = cena.grade;
     var def = cena.def || R.Interiores.def(id);
-    est = S.estados[id] = S.estado = novoEstado({ comodo: caixa(def), spawn: def.spawn, solido: cena.solido }, cfgDe(id));
+    est = S.estados[id] = S.estado = novoEstado({ comodo: caixa(def), spawn: def.spawn, solido: cena.solido, agua: cena.agua }, cfgDe(id));
     est.arena = id;
     est.parados = !!R.congelado;
     lerValores();

@@ -13,8 +13,9 @@
   /* ---------- nado ----------
      "Nadando" (velocidade, som) = o tile dela é água (Jogador.nadando()).
      O desenho (linha d'água, ondinhas, respingo, gotinhas) segue a água DESENHADA
-     (Mapa.fundura): cresce devagar nos primeiros px da margem, sem tranco, e nas pontas
-     da elipse, onde o tile é água mas o desenho é areia, ela não aparece cortada. */
+     (Mapa.fundura; num interior com água, a cena.fundura dele): cresce devagar nos primeiros px da
+     margem, sem tranco, e nas pontas da elipse, onde o tile é água mas o desenho é areia, ela não
+     aparece cortada. */
   var RAMPA = 12;            // px da margem até a água funda (o corte cresce aos pouquinhos)
   var ENTRA = 0.5, SAI = 0.15;   // fundura (0–1) que conta como entrar e sair (sem piscar na margem)
   var SUAVE_VEL = 0.18;      // s: a velocidade muda aos poucos ao entrar/sair da água (sem solavanco)
@@ -64,7 +65,7 @@
     J.rastro = [{ x: J.x - DIST_BEBE - 4, y: J.y }, { x: J.x, y: J.y }];
   };
 
-  // tile de água na cena ativa (só o mapa tem água; interior sem o método = sem água)
+  // tile de água na cena ativa (o lago do mapa ou um interior com água; sem o método = sem água)
   function aguaEm(tx, ty) {
     var c = cena();
     return !!(c.agua && c.agua(tx, ty));
@@ -242,11 +243,14 @@
     var est = Reino.Progresso && Reino.Progresso.estado();
     return !!(est && est.ajustes && est.ajustes.animacoes !== false) && !Reino.util.reduzMovimentoSistema;
   }
-  // 0 (seco) a 1 (água funda) no ponto dos pés, pela água desenhada do mapa
+  // 0 (seco) a 1 (água funda) no ponto dos pés, pela água desenhada: a do lago no mapa; num interior com água
+  // (def.agua, docs/contratos/interiores.md §3), a fundura que ele publica (cena.fundura)
   function fundura(x, y) {
-    var c = cena();
-    if (c.tipo !== 'mapa' || !c.agua || !Mapa.fundura) return 0;
-    var d = Mapa.fundura(x, y) / RAMPA;
+    var c = cena(), f;
+    if (c.tipo === 'mapa') { if (!c.agua || !Mapa.fundura) return 0; f = Mapa.fundura(x, y); }
+    else if (c.tipo === 'interior' && c.fundura) f = c.fundura(x, y);
+    else return 0;
+    var d = f / RAMPA;
     if (d <= 0) return 0;
     if (d >= 1) return 1;
     return d * d * (3 - 2 * d);

@@ -64,6 +64,8 @@ Reino.registrarInterior({
                                       // dos cômodos (em vez do roxo-escuro, sem lábios) e `cor` é a cor fora do interior;
                                       // `saida?(ctx, px, py)` desenha a saída no lugar do vão e do capacho (o portal
                                       // do Bosque, bosque.md); sem ela, a porta de sempre
+  agua?: { tile(tx, ty), fundura(wx, wy) },   // água andável: ela nada (cena-e-motor.md §10); tile → bool, fundura
+                                      // → px para dentro da água desenhada (negativo = fora). Sem ela, sem água
   escadas: [{ x, y, para: 'torre-1', chegar: { x: 0, y: 1 }, olhar: { x: 0, y: 1 }, sentido: 'sobe'|'desce' }],
                                       // 'sobe' = arco na parede, 'desce' = vão no chão; pareadas (abaixo)
   comodos: [{
