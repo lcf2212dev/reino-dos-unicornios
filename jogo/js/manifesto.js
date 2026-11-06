@@ -779,7 +779,11 @@
       { js: 'js/interiores/cristal/inimigos.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/cristal/cristal.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/cristal/lugar.js', grupo: 'interiores', node: true },
-      { js: 'js/interiores/vulcao/lugar.js', grupo: 'interiores', node: true }, // Vulcão dos Dragõezinhos (arenas.md): a arena 6; interior mínimo da onda 0 e o portal
+      { js: 'js/interiores/vulcao/falas.js', grupo: 'interiores', node: true }, // Vulcão dos Dragõezinhos (arenas.md): a arena 6 (falas, objetos, ícone e inimigos, chão/céu e interior, portal e lugar)
+      { js: 'js/interiores/vulcao/objetos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/vulcao/inimigos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/vulcao/vulcao.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/vulcao/lugar.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/padrao.js', grupo: 'interiores', node: true }, // padrao.js por último entre os prédios: monta o interior das matérias que não têm um próprio
       { js: 'js/sistemas/banho.js', grupo: 'sistemas' },
       { js: 'js/sistemas/banho-desenho.js', grupo: 'sistemas' },
