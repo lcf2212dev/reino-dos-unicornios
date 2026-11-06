@@ -40637,6 +40637,188 @@
    "fala": "Em breve teremos novos conteúdos do quarto bimestre!"
   },
   {
+   "chave": "15c021d9y",
+   "voz": "narradora",
+   "texto": "Bem-vinda à Cidade Nova!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Bem-vinda à Cidade Nova!"
+  },
+  {
+   "chave": "91472d561c",
+   "voz": "narradora",
+   "texto": "Terreno livre para a próxima novidade!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Terreno livre para a próxima novidade!"
+  },
+  {
+   "chave": "ee05c45be",
+   "voz": "npc-petala",
+   "texto": "Oi!",
+   "pacotes": [
+    "interior-bosque",
+    "interior-loja"
+   ],
+   "fala": "Oi!"
+  },
+  {
+   "chave": "df6d2cedz",
+   "voz": "npc-petala",
+   "texto": "Que bom te ver por aqui!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Que bom te ver por aqui!"
+  },
+  {
+   "chave": "b3d1cff715",
+   "voz": "npc-petala",
+   "texto": "Responda uma pergunta e entre!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Responda uma pergunta e entre!"
+  },
+  {
+   "chave": "128f7261o",
+   "voz": "npc-petala",
+   "texto": "Volte sempre!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Volte sempre!"
+  },
+  {
+   "chave": "6855843516",
+   "voz": "narradora",
+   "texto": "Só o dono da loja abre este baú.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Só o dono da loja abre este baú."
+  },
+  {
+   "chave": "c494a22214",
+   "voz": "narradora",
+   "texto": "Responda certinho para entrar!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Responda certinho para entrar!"
+  },
+  {
+   "chave": "8ac10616c",
+   "voz": "npc-feno",
+   "texto": "Oi!",
+   "pacotes": [
+    "interior-bosque",
+    "interior-estabulo"
+   ],
+   "fala": "Oi!"
+  },
+  {
+   "chave": "308c81d2t",
+   "voz": "npc-feno",
+   "texto": "A forja está quente!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "A forja está quente!"
+  },
+  {
+   "chave": "7a043f3413",
+   "voz": "npc-feno",
+   "texto": "Responda uma pergunta e entre!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Responda uma pergunta e entre!"
+  },
+  {
+   "chave": "74e8d494m",
+   "voz": "npc-feno",
+   "texto": "Volte sempre!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Volte sempre!"
+  },
+  {
+   "chave": "f0eca7cad",
+   "voz": "npc-aveia",
+   "texto": "Oi!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Oi!"
+  },
+  {
+   "chave": "e861cefbx",
+   "voz": "npc-aveia",
+   "texto": "Que chapéu lindo o seu!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Que chapéu lindo o seu!"
+  },
+  {
+   "chave": "b98e4d3814",
+   "voz": "npc-aveia",
+   "texto": "Responda uma pergunta e entre!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Responda uma pergunta e entre!"
+  },
+  {
+   "chave": "045493d0n",
+   "voz": "npc-aveia",
+   "texto": "Volte sempre!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Volte sempre!"
+  },
+  {
+   "chave": "e0c02c86d",
+   "voz": "npc-chico",
+   "texto": "Oi!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Oi!"
+  },
+  {
+   "chave": "0cfaf223x",
+   "voz": "npc-chico",
+   "texto": "Pronta para a aventura?",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Pronta para a aventura?"
+  },
+  {
+   "chave": "e4ca204414",
+   "voz": "npc-chico",
+   "texto": "Responda uma pergunta e entre!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Responda uma pergunta e entre!"
+  },
+  {
+   "chave": "484f8ca4n",
+   "voz": "npc-chico",
+   "texto": "Volte sempre!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Volte sempre!"
+  },
+  {
    "chave": "942301ebu",
    "voz": "narradora",
    "texto": "Bem-vinda à caverna!",
@@ -40995,15 +41177,6 @@
     "interior-escola-musica"
    ],
    "fala": "Que diferença você escuta?"
-  },
-  {
-   "chave": "8ac10616c",
-   "voz": "npc-feno",
-   "texto": "Oi!",
-   "pacotes": [
-    "interior-estabulo"
-   ],
-   "fala": "Oi!"
   },
   {
    "chave": "1c73e696r",
@@ -44837,15 +45010,6 @@
     "interior-observatorio"
    ],
    "fala": "Páginas 11 a 12."
-  },
-  {
-   "chave": "ee05c45be",
-   "voz": "npc-petala",
-   "texto": "Oi!",
-   "pacotes": [
-    "interior-loja"
-   ],
-   "fala": "Oi!"
   },
   {
    "chave": "538fe8e4w",
