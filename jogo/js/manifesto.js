@@ -764,7 +764,11 @@
       { js: 'js/interiores/pantano/inimigos.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/pantano/pantano.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/pantano/lugar.js', grupo: 'interiores', node: true },
-      { js: 'js/interiores/gelo/lugar.js', grupo: 'interiores', node: true }, // Montanha Gelada (arenas.md): a arena 3; interior mínimo da onda 0 e o portal (a frente do mapa troca)
+      { js: 'js/interiores/gelo/falas.js', grupo: 'interiores', node: true }, // Montanha Gelada (arenas.md): a arena 3 (falas, objetos, ícone e inimigos, chão/céu e interior, portal e lugar)
+      { js: 'js/interiores/gelo/objetos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/gelo/inimigos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/gelo/gelo.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/gelo/lugar.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/dunas/lugar.js', grupo: 'interiores', node: true }, // Dunas dos Escorpiões (arenas.md): a arena 4; interior mínimo da onda 0 e o portal
       { js: 'js/interiores/cristal/lugar.js', grupo: 'interiores', node: true }, // Caverna de Cristal (arenas.md): a arena 5; interior mínimo da onda 0 e o portal
       { js: 'js/interiores/vulcao/lugar.js', grupo: 'interiores', node: true }, // Vulcão dos Dragõezinhos (arenas.md): a arena 6; interior mínimo da onda 0 e o portal
