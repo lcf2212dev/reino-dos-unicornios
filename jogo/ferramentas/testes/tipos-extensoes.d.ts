@@ -197,6 +197,8 @@ interface InteriorDef {
 interface EventosReino {
   /** carga: { tipo: 'vida'|'golpe'|'vencido'|'abate'|'desmaio'|'acerto'|'ponto', ... } */
   BOSQUE: 'bosque';
+  /** carga: { tipo: 'ganhou'|'estrelas'|'mudou', ... } (itens.md §11) */
+  ITENS: 'itens';
 }
 
 /* ---------- regras do Bosque dos Fantasmas (js/sistemas/bosque.js; bosque.md §5) ---------- */

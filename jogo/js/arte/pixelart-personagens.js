@@ -1,6 +1,8 @@
 /* Pixel art dos personagens: Mariana (moldes das 5 vistas, aparência padrão e opções,
    PA.mariana; corte, roupa e laço do Salão em pixelart-mariana-visual.js, os de menino em pixelart-menino-moldes.js), Mariana montada no unicórnio (PA.montada, com a cabeça do unicórnio por cima
-   dela) e o Claude, mascote (PA.claude). */
+   dela) e o Claude, mascote (PA.claude). opcoes.vestes { cabeca, armadura, botas } (ids; itens.md §8): as roupas de
+   aventura de arte/itens-vestir.js; sem elas o desenho sai pixel a pixel o de sempre. O resultado leva topoExtra
+   (px a mais acima da cabeça, do chapéu ou do capacete). */
 (function () {
   var PA = window.PA, I = PA._interno;
   var CONTORNO = I.CONTORNO, cache = I.cache, usarCombo = I.usarCombo;
@@ -276,21 +278,28 @@
     // corte, roupa e laço do Salão; o de hoje ('solto' + 'vestido' + laço) não passa pelo aplicarVisual (pixel a pixel igual)
     var vis = PA.visualMariana ? PA.visualMariana(ap) : { corte: 'solto', modelo: 'vestido', laco: true };
     var especial = !!I.aplicarVisual && (vis.corte !== 'solto' || vis.modelo !== 'vestido' || !vis.laco);
+    // as roupas de aventura (itens-vestir.js): '' = nenhuma, o desenho de sempre
+    var vz = I.chaveVestes ? I.chaveVestes(opcoes.vestes) : '';
     var chave = ['mar', ap.pele, ap.cabelo, ap.roupa, ap.laco, sentada ? 1 : 0, quadro % 3, opcoes.capa ? 1 : 0, vista,
-      vis.corte, vis.modelo, vis.laco ? 1 : 0].join('|');
+      vis.corte, vis.modelo, vis.laco ? 1 : 0, vz].join('|');
     if (cache[chave]) return cache[chave];
     var molde = MARI[vista];
     var corpo = sentada ? molde.sentada : (molde.emPe[quadro % 3] || molde.emPe[1]);
     var linhas = molde.cabeca.concat(corpo);
     if (especial) linhas = I.aplicarVisual(linhas, vista, !!sentada, vis.corte, vis.modelo, vis.laco);
+    var paleta = paletaMariana(ap), topo = 0;
+    if (vz) {
+      var vest = I.aplicarVestes(linhas, vista, !!sentada, opcoes.vestes);
+      linhas = vest.linhas; topo = vest.topo; Object.assign(paleta, vest.paletaExtra);
+    }
     var base = novoCanvas(linhas[0].length, linhas.length);
     var ctx = base.getContext('2d');
     var capa = opcoes.capa && molde.capa;
-    if (capa && !capa.sobre) pintarMatriz(ctx, capa.linhas, { P: '#9b5cff' }, capa.x, capa.y);
-    pintarMatriz(ctx, linhas, paletaMariana(ap), 0, 0);
-    if (capa && capa.sobre) pintarMatriz(ctx, capa.linhas, { P: '#9b5cff' }, capa.x, capa.y);
+    if (capa && !capa.sobre) pintarMatriz(ctx, capa.linhas, { P: '#9b5cff' }, capa.x, capa.y + topo);
+    pintarMatriz(ctx, linhas, paleta, 0, 0);
+    if (capa && capa.sobre) pintarMatriz(ctx, capa.linhas, { P: '#9b5cff' }, capa.x, capa.y + topo);
     var final = contornar(base, CONTORNO);
-    var res = { canvas: final, w: final.width, h: final.height };
+    var res = { canvas: final, w: final.width, h: final.height, topoExtra: topo };
     cache[chave] = res;
     return res;
   };
@@ -304,11 +313,13 @@
     var vis = PA.visualMariana ? PA.visualMariana(ap) : {};
     var pulo = quadro === I.PULO;
     var chave = ['mont', def.id, estagio, pulo ? 'p' : quadro % 3, ap.pele, ap.cabelo, ap.roupa, ap.laco,
-      combo, opcoes.capa ? 1 : 0, opcoes.asasFada ? 1 : 0, vista, vis.corte, vis.modelo, vis.laco ? 1 : 0, opcoes.cansado ? 'c' : ''].join('|');
+      combo, opcoes.capa ? 1 : 0, opcoes.asasFada ? 1 : 0, vista, vis.corte, vis.modelo, vis.laco ? 1 : 0, opcoes.cansado ? 'c' : '',
+      I.chaveVestes ? I.chaveVestes(opcoes.vestes) : ''].join('|');
     if (cache[chave]) { usarCombo(combo); return cache[chave]; }
     var uni = PA.unicornio(def, estagio, quadro, opcoes);
-    var cav = PA.mariana(ap, true, 0, { capa: opcoes.capa, vista: vista });
-    var px = uni.cavaleira[0], py = uni.cavaleira[1] + (pulo ? 1 : 0);
+    var cav = PA.mariana(ap, true, 0, { capa: opcoes.capa, vista: vista, vestes: opcoes.vestes });
+    // o chapéu sobe (topoExtra), ela não desce
+    var px = uni.cavaleira[0], py = uni.cavaleira[1] + (pulo ? 1 : 0) - (cav.topoExtra || 0);
     // o canvas cresce para caber a cavaleira; o centro dos pés continua no meio do unicórnio
     var esq = Math.max(0, -px), dir = Math.max(0, px + cav.w - uni.w);
     // (pelo menos 8px livres em cima, como sempre foi: a logo e o estábulo contam com isso)
@@ -318,7 +329,7 @@
     ctx.drawImage(uni.canvas, margem, topo);
     ctx.drawImage(cav.canvas, margem + px, topo + py);
     if (uni.naFrente) pintarNaFrente(ctx, uni, cav, margem, topo, px, py);
-    var res = { canvas: c, w: c.width, h: c.height };
+    var res = { canvas: c, w: c.width, h: c.height, topoExtra: cav.topoExtra || 0 };
     cache[chave] = res;
     usarCombo(combo, chave);   // sai do cache junto com a combinação de enfeites (teto TETO_COMBOS)
     return res;

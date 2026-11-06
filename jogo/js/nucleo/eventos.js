@@ -70,4 +70,12 @@ Reino.EVENTOS = {
      Ouve: ui/bosque-hud.js (chip e botão da espada), ui/bosque-pergunta.js (abre a pergunta no 'vencido', processa
      o 'abate' e recupera a pergunta pendente na entrada). */
   BOSQUE: 'bosque',
+  /* Os itens dela mudaram (docs/contratos/itens.md §11). Carga: { tipo, ... }: 'ganhou' (+ uid, id, onde = 'mochila' |
+     'bau', arena, x, y) (um item caiu e já está gravado), 'estrelas' (+ n, arena, x, y) (caíram estrelas), 'mudou'
+     (+ motivo: 'vestir' | 'tirar' | 'mover' | 'usar' | 'jogar' | 'remoto') (vestiu, tirou, mudou de lugar, gastou, jogou
+     fora, ou veio de outro aparelho). x, y: onde o inimigo sumiu (px do jogo).
+     Emite: sistemas/itens.js (ganhou, mudou), sistemas/itens-drop.js (estrelas). Ouve: ui/hud-mochila.js,
+     ui/itens-aviso.js, ui/mochila.js, ui/guardados.js, ui/itens-pocao.js, sistemas/itens-chao.js,
+     sistemas/bosque-combate.js (relê dano e vida). */
+  ITENS: 'itens',
 };

@@ -76,6 +76,15 @@ Declarados em `sistemas/casa.js` (`registrarCampo`, `novoCiclo: 'mantem'`, `copi
 só inteiros > 0). O ganho NÃO fica no save: é derivado das salas feitas desde `config.tempoCelular.desde`. Dois
 aparelhos usando ao mesmo tempo geram chaves diferentes, e a mescla mantém as duas.
 
+### 3.4 `itens` (Mochila, Baú de Guardados, vestido)
+`itens: { <uid>: { id, onde: 'mochila' | 'bau' | 'vestido' | 'fora', em } }`: cada item que caiu de um inimigo, uma
+chave por peça (`uid` = `<Date.now() base 36>-<4 letras base 36>`, que nunca muda). Declarado em `sistemas/itens.js`
+(`registrarCampo`, `mesclar: 'carimbo'`, `novoCiclo: 'mantem'`, `copiaSeguranca: true`; `limpar` tira chave fora do
+formato do uid e registro sem `id`/`onde` em texto). Mexer só troca o `onde` com `em = max(agora, em + 1)`; gastar e
+jogar fora deixam lápide (`'fora'`), nunca apagam a chave: a mescla não duplica nem some peça. Vestido em conflito,
+mochila acima da capacidade, id e `onde` desconhecidos: resolvidos na leitura, sem gravar. Regras e derivados:
+`itens.md` §6 e §10; teste com a versão antiga: `testes/unidade/itens-save.test.js`.
+
 ## 4. Mescla (`P.mesclar`, mesma geração)
 ### 4.1 `cuidados` (`juntarCuidados`)
 1. Para cada `uniId` de qualquer lado, se os DOIS lados têm carimbo para a fome e para a sede (o carimbo de
