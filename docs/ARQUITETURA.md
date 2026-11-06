@@ -75,6 +75,7 @@ docs/  ARQUITETURA.md  contratos/  receitas/  decisoes/
 | Viagem de foguete (tanque, voo, planetas, ETs) | `jogo/js/sistemas/viagem*.js`, `jogo/js/ui/foguete.js`, `jogo/js/atividades/voo*.js`, `jogo/js/interiores/planetas/` | `docs/contratos/viagem.md` |
 | Laboratório de Química (misturas, caderno, microscópio, tabela periódica; 2º andar: curiosidades, Fogão dos Estados, Mesa de Separar, livros) | `jogo/js/sistemas/quimica.js`, `quimica-andar2.js`, `jogo/js/conteudo/quimica/`, `jogo/js/ui/quimica-*.js`, `jogo/js/interiores/quimica/` | `docs/contratos/quimica.md` |
 | Bosque dos Fantasmas (portal, combate, perguntas, nível) | `jogo/js/interiores/bosque/`, `jogo/js/sistemas/bosque*.js`, `jogo/js/ui/bosque-*.js` | `docs/contratos/bosque.md` |
+| Mapa de luta novo (arena: portal, inimigos, números) | `jogo/js/interiores/<mapa>/`, `jogo/js/motor/interiores-arena.js`, `arte/portal.js` | `docs/contratos/arenas.md` |
 | Som, música, voz | `jogo/js/sistemas/som*.js`, `musicas-faixas.js`, `musicas.js`, `voz.js`, `falas.js` | `docs/contratos/som-musica-e-voz.md` |
 | Fotos | `jogo/js/sistemas/fotos.js`, `fotos-moldura.js`, `fotos-telas.js` | `docs/contratos/fotos.md` |
 | Matérias, salas, provas, desafios | `jogo/js/conteudo/`, `jogo/js/atividades/` | `docs/contratos/conteudo.md` |

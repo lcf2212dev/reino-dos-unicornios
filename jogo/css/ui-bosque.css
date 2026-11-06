@@ -4,7 +4,7 @@
    baú dos presentes (.tela-presente, css/ui-bau-presente.css). Movimento só em degraus, com saída para
    body.sem-animacao e prefers-reduced-motion. */
 
-/* ---------- chip do HUD: 💖 vida em cima; "Nv N" e a barrinha de XP embaixo; selo "+N" no canto ---------- */
+/* ---------- chip do HUD: 💖 vida em cima; "Nv N" e a barrinha de XP (com as marquinhas dos terços) embaixo; selo "+N" no canto ---------- */
 .chip-bosque {
   position: relative;
   display: flex; flex-direction: column; align-items: stretch; gap: 2px;
@@ -14,12 +14,15 @@
 .bosque-chip-vida { display: flex; align-items: center; gap: 4px; }
 .bosque-chip-nivel { display: flex; align-items: center; gap: 6px; font-size: var(--texto-aux); word-spacing: normal; }
 .bosque-chip-nivel .bosque-xp { flex: 1; min-width: 40px; }
-.bosque-chip-mortos { display: flex; align-items: center; gap: 4px; font-size: var(--texto-aux); word-spacing: normal; }
 .bosque-xp {
+  position: relative;
   display: block; height: 10px; overflow: hidden;
   border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--branco);
 }
 .bosque-xp-cheia { display: block; height: 100%; background: linear-gradient(90deg, var(--roxo) 0 50%, var(--rosa) 50%); box-shadow: inset 0 2px 0 var(--brilho); }
+/* as marquinhas de cada terço do nível (a próxima pergunta vem nelas): traço de tinta; a já passada fica clara */
+.bosque-xp-marca { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--tinta); }
+.bosque-xp-marca.passou { background: var(--branco); }
 .bosque-selo {
   position: absolute; top: -8px; right: -8px;
   padding: 2px 6px; font-size: var(--texto-aux); line-height: var(--entrelinha-titulo); word-spacing: normal;

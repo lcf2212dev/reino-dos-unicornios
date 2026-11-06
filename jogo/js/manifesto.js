@@ -83,6 +83,7 @@
       { js: 'js/arte/icones/portugues-salas.js', grupo: 'icones', node: true },
       { js: 'js/arte/icones/livros.js', grupo: 'icones', node: true }, // 📗 dos livros da escola (4º bimestre)
       { js: 'js/arte/desenho.js', grupo: 'arte', node: true }, // desenho.js antes da pixel art: Reino.Desenho (paleta e helpers) é a fonte das cores do PA.cor
+      { js: 'js/arte/portal.js', grupo: 'arte', node: true }, // o portal mágico em qualquer cor (Reino.Portal: o do Bosque e os das outras arenas; arenas.md)
       { js: 'js/arte/pixelart.js', grupo: 'pixelart' }, // pixelart.js (base) primeiro: cria window.PA e PA._interno, que as outras partes usam
       { js: 'js/arte/pixelart-unicornio-moldes.js', grupo: 'pixelart' },
       { js: 'js/arte/enfeites-novidades.js', grupo: 'pixelart', node: true },
@@ -540,6 +541,7 @@
       { js: 'js/motor/interiores-placas.js', grupo: 'motor', node: true },
       { js: 'js/motor/interiores-toque.js', grupo: 'motor', node: true },
       { js: 'js/motor/interiores-cena.js', grupo: 'motor', node: true },
+      { js: 'js/motor/interiores-arena.js', grupo: 'motor', node: true }, // arenas (mapas de luta): Reino.registrarArena, registrarDesenhoInimigo, Reino.Arenas e o layout (Reino.Interiores.arena; arenas.md)
       { js: 'js/personagens/npcs.js', grupo: 'personagens', node: true },
       { js: 'js/personagens/npcs-corpo.js', grupo: 'personagens', node: true },
       { js: 'js/personagens/npcs-cabeca.js', grupo: 'personagens', node: true },
@@ -757,6 +759,15 @@
       { js: 'js/interiores/parquinho/parquinho.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/parquinho/fora.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/parquinho/lugar.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/pantano/falas.js', grupo: 'interiores', node: true }, // Pântano das Rãs Resmungonas (arenas.md): a arena 2, modelo dos mapas novos (falas, objetos, ícone e inimigos, chão/céu e interior, portal e lugar)
+      { js: 'js/interiores/pantano/objetos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/pantano/inimigos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/pantano/pantano.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/pantano/lugar.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/gelo/lugar.js', grupo: 'interiores', node: true }, // Montanha Gelada (arenas.md): a arena 3; interior mínimo da onda 0 e o portal (a frente do mapa troca)
+      { js: 'js/interiores/dunas/lugar.js', grupo: 'interiores', node: true }, // Dunas dos Escorpiões (arenas.md): a arena 4; interior mínimo da onda 0 e o portal
+      { js: 'js/interiores/cristal/lugar.js', grupo: 'interiores', node: true }, // Caverna de Cristal (arenas.md): a arena 5; interior mínimo da onda 0 e o portal
+      { js: 'js/interiores/vulcao/lugar.js', grupo: 'interiores', node: true }, // Vulcão dos Dragõezinhos (arenas.md): a arena 6; interior mínimo da onda 0 e o portal
       { js: 'js/interiores/padrao.js', grupo: 'interiores', node: true }, // padrao.js por último entre os prédios: monta o interior das matérias que não têm um próprio
       { js: 'js/sistemas/banho.js', grupo: 'sistemas' },
       { js: 'js/sistemas/banho-desenho.js', grupo: 'sistemas' },

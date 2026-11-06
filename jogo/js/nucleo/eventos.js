@@ -61,10 +61,10 @@ Reino.EVENTOS = {
      Carga: { certas, erradas } (números; nota parcial não entra). Emite: sistemas/aura.js (Reino.Aura.contar,
      antes de gravar a Aura). Ouve: sistemas/viagem.js (o combustível do foguete). */
   RESPOSTAS: 'respostas',
-  /* Algo aconteceu no Bosque dos Fantasmas (docs/contratos/bosque.md). Carga: { tipo, ... }:
-     'vida' (+ n, max) (a vida dela mudou), 'golpe' (+ acertou) (ela atacou), 'vencido' (+ id, fantasma = o tipo)
-     (um fantasma ou mosca foi vencido), 'abate' (+ mortos, subiu) (o placar de inimigos mortos subiu; a mosca conta
-     2; subiu = o nível novo, ou null), 'desmaio' (a vida zerou), 'acerto' (+ materia, nivel, presente) (pergunta
+  /* Algo aconteceu no Bosque dos Fantasmas ou noutra arena (docs/contratos/bosque.md, arenas.md). Carga: { tipo, ... }:
+     'vida' (+ n, max) (a vida dela mudou), 'golpe' (+ acertou) (ela atacou), 'vencido' (+ id, fantasma = o tipo,
+     arena = o id da arena) (um inimigo foi vencido), 'abate' (+ mortos, subiu, xp) (o placar e o XP subiram; a mosca e
+     o voador contam 2; subiu = o nível novo, ou null), 'desmaio' (a vida zerou), 'acerto' (+ materia, nivel, presente) (pergunta
      certa; presente = { chave, movel } do baú, ou null), 'ponto' (+ nivel, h) (ponto de habilidade posto).
      Emite: sistemas/bosque-combate.js (vida, golpe, vencido, desmaio), sistemas/bosque.js (abate, acerto, ponto).
      Ouve: ui/bosque-hud.js (chip e botão da espada), ui/bosque-pergunta.js (abre a pergunta no 'vencido', processa

@@ -191,8 +191,12 @@ Reino.config = {
     acertosPorNivel: 10,         // LEGADO da migração do save: era o XP do nível (1 + acertos / acertosPorNivel).
                                  // Hoje o nível é por mortosPorNivel; esta conta só mantém o nível que ela já tinha
                                  // na 1ª carga do save novo (bosque.js:migrar). Não usar como XP.
-    perguntasPorBloco: 10,       // inimigos mortos por pergunta: a cada bloco de 10, para sempre (a mosca vale 2)
-    mortosPorNivel: 30,          // inimigos mortos para subir 1 nível (o ponto de habilidade + o baú de móvel)
+    perguntasPorBloco: 10,       // LEGADO: era a pergunta a cada 10 inimigos mortos (save antigo; bosque.js:xpLegado)
+    mortosPorNivel: 30,          // LEGADO: era o nível a cada 30 mortos; o `mortos` antigo vira XP por esta conta
+    // XP (pedido do Leandro, 05/11): cada inimigo dá o `xp` do tipo dele; o nível N pede base + passo × (N - 1) de XP
+    // (nível 1→2: 300; 2→3: 330; 10→11: 570). A pergunta abre a cada terço do nível (33%, 66% e ao fechar o nível)
+    xpNivel: { base: 300, passo: 30 },
+    perguntasPorNivel: 3,        // perguntas em cada nível (uma a cada terço da barra); o nível dá o ponto e o baú
     nivelMax: 1000,              // o nível não passa daqui (os inimigos mortos continuam contando)
     estrelasPorAcerto: 1,        // estrelas por pergunta certa (se mudar, regrave as vozes: o Claude fala da estrela)
     // pergunta do fantasma: sorteio uniforme entre todas as perguntas do bimestre em curso (sala feita ou não), de
@@ -217,13 +221,14 @@ Reino.config = {
       regenSemDanoMs: 5000,      // tempo sem levar toque para a vida começar a voltar
       regenACadaMs: 3000,        // depois disso, 1 de vida a cada esse tempo
     },
-    // cada tipo de inimigo: vida (golpes de dano 1), forca (vida que tira por toque), velocidade (px/s) e mortos
-    // (quantos inimigos mortos ele conta no placar; a mosca conta 2)
+    // cada tipo de inimigo: vida (golpes de dano 1), forca (vida que tira por toque), velocidade (px/s), mortos
+    // (quantos inimigos mortos ele conta no placar; a mosca conta 2) e xp (o XP que ele dá; os mais fortes dão mais).
+    // Os outros mapas: config.arenas (abaixo), com os mesmos campos
     tipos: {
-      facil: { vida: 4, forca: 1, velocidade: 18, mortos: 1 },     // lilás
-      medio: { vida: 6, forca: 2, velocidade: 26, mortos: 1 },     // azul-turquesa (mais vida e mais rápido que o fácil)
-      dificil: { vida: 9, forca: 2, velocidade: 30, mortos: 1 },   // rosa-vinho com coroa
-      mosca: { vida: 12, forca: 3, velocidade: 40, mortos: 2 },    // mosca feia: a mais difícil e a mais rápida; vale 2
+      facil: { vida: 4, forca: 1, velocidade: 18, mortos: 1, xp: 10 },     // lilás
+      medio: { vida: 6, forca: 2, velocidade: 26, mortos: 1, xp: 12 },     // azul-turquesa (mais vida e mais rápido que o fácil)
+      dificil: { vida: 9, forca: 2, velocidade: 30, mortos: 1, xp: 15 },   // rosa-vinho com coroa
+      mosca: { vida: 12, forca: 3, velocidade: 40, mortos: 2, xp: 25 },    // mosca feia: a mais difícil e a mais rápida; vale 2
     },
     quantos: { facil: 5, medio: 4, dificil: 3, mosca: 2 },   // inimigos de cada tipo no Bosque ao mesmo tempo
     zonas: { facil: [27, 38], medio: [15, 26], dificil: [3, 14], mosca: [3, 10] },   // fileiras (tiles) onde cada tipo nasce e vagueia
@@ -237,6 +242,56 @@ Reino.config = {
     vencidoPresoMs: 60000,       // proteção: vencido há mais que isso sem a pergunta devolver volta a contar voltaMs
                                  // (quando ela entra no Bosque vinda de fora)
     desmaioMs: 1600,             // animação do desmaio antes de voltar ao começo
+  },
+  // Os mapas de luta além do Bosque (docs/contratos/arenas.md), do mais fácil ao mais difícil (o Bosque é o 1). Cada um
+  // vai por cima de config.fantasmas (Reino.Arenas.cfg): o que não está aqui (o jogador, as perguntas, a curva de XP,
+  // coleira, raio do toque, recuo, tempos) é o do Bosque. Por tipo: vida (golpes de dano 1), forca (vida que tira dela
+  // por toque), velocidade (px/s; ela a pé anda 58), mortos (no placar; o voador vale 2, como a mosca) e xp. Tipos:
+  // facil (embaixo), medio (no meio), dificil (com coroa, em cima), voador (em cima). quantos = de cada tipo ao mesmo
+  // tempo; zonas = fileiras do interior 56 × 44 (as do Bosque); visao = distância em que o inimigo a vê (Bosque: 80);
+  // nivel = o nível recomendado (menu Lugares). Vida e força crescem com o nível (um ponto de habilidade por nível); o
+  // XP também, para valer a pena lutar no mapa mais difícil (no Bosque o fácil dá 10)
+  arenas: {
+    pantano: { nivel: 3, visao: 84, zonas: { facil: [27, 38], medio: [15, 26], dificil: [3, 14], voador: [3, 10] },   // Pântano das Rãs Resmungonas
+      quantos: { facil: 6, medio: 5, dificil: 3, voador: 2 },
+      tipos: {
+        facil: { vida: 8, forca: 2, velocidade: 22, mortos: 1, xp: 15 },     // rã resmungona
+        medio: { vida: 11, forca: 3, velocidade: 28, mortos: 1, xp: 20 },    // bolha de lodo
+        dificil: { vida: 15, forca: 3, velocidade: 32, mortos: 1, xp: 26 },  // sapo-rei com coroa
+        voador: { vida: 18, forca: 4, velocidade: 42, mortos: 2, xp: 36 },   // libélula-mosca
+      } },
+    gelo: { nivel: 6, visao: 90, zonas: { facil: [27, 38], medio: [15, 26], dificil: [3, 14], voador: [3, 10] },   // Montanha Gelada
+      quantos: { facil: 6, medio: 5, dificil: 3, voador: 2 },
+      tipos: {
+        facil: { vida: 12, forca: 3, velocidade: 24, mortos: 1, xp: 21 },    // boneco de neve bravo
+        medio: { vida: 16, forca: 4, velocidade: 30, mortos: 1, xp: 28 },    // pinguim
+        dificil: { vida: 22, forca: 4, velocidade: 34, mortos: 1, xp: 36 },  // yeti com coroa
+        voador: { vida: 26, forca: 5, velocidade: 44, mortos: 2, xp: 50 },   // coruja das neves
+      } },
+    dunas: { nivel: 10, visao: 96, zonas: { facil: [27, 38], medio: [15, 26], dificil: [3, 14], voador: [3, 10] },   // Dunas dos Escorpiões
+      quantos: { facil: 6, medio: 5, dificil: 4, voador: 2 },
+      tipos: {
+        facil: { vida: 18, forca: 4, velocidade: 26, mortos: 1, xp: 28 },    // escorpião
+        medio: { vida: 24, forca: 5, velocidade: 32, mortos: 1, xp: 37 },    // cacto andante
+        dificil: { vida: 32, forca: 6, velocidade: 36, mortos: 1, xp: 47 },  // múmia fofa com coroa
+        voador: { vida: 38, forca: 7, velocidade: 46, mortos: 2, xp: 65 },   // besouro voador
+      } },
+    cristal: { nivel: 15, visao: 100, zonas: { facil: [27, 38], medio: [15, 26], dificil: [3, 14], voador: [3, 10] },   // Caverna de Cristal
+      quantos: { facil: 6, medio: 5, dificil: 4, voador: 3 },
+      tipos: {
+        facil: { vida: 26, forca: 5, velocidade: 28, mortos: 1, xp: 36 },    // golem pequeno de cristal
+        medio: { vida: 34, forca: 6, velocidade: 34, mortos: 1, xp: 47 },    // aranha de cristal
+        dificil: { vida: 44, forca: 7, velocidade: 38, mortos: 1, xp: 60 },  // golem-rei com coroa
+        voador: { vida: 52, forca: 8, velocidade: 48, mortos: 2, xp: 82 },   // morcego
+      } },
+    vulcao: { nivel: 20, visao: 104, zonas: { facil: [27, 38], medio: [15, 26], dificil: [3, 14], voador: [3, 10] },   // Vulcão dos Dragõezinhos
+      quantos: { facil: 6, medio: 5, dificil: 4, voador: 3 },
+      tipos: {
+        facil: { vida: 36, forca: 6, velocidade: 30, mortos: 1, xp: 45 },    // salamandra de fogo
+        medio: { vida: 46, forca: 8, velocidade: 36, mortos: 1, xp: 58 },    // bola de lava
+        dificil: { vida: 60, forca: 9, velocidade: 40, mortos: 1, xp: 74 },  // dragãozinho com coroa
+        voador: { vida: 70, forca: 10, velocidade: 50, mortos: 2, xp: 100 }, // morceguinho de fogo
+      } },
   },
   novidadeDias: 45,   // dias em que o selo "✨ Novo!" aparece num lugar novo (lugar.novidade)
   versao: { intervaloMs: 10 * 60000, confirmarMs: 60000, cacheMs: 330000, paradaMs: 8000, avisoMs: 4500, esperaMs: 2500 },

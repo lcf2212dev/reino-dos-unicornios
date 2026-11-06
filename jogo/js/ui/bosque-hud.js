@@ -1,7 +1,8 @@
-/* Bosque dos Fantasmas no HUD (docs/contratos/bosque.md §5 e §7), só dentro do interior `bosque`:
-   - o chip na coluna da esquerda (padrão da Aura, ui/hud-aura.js): 💖 vida n/max (BosqueCombate.vida()), "Nv N", a
-     barrinha de inimigos mortos até o próximo nível n/30 (Bosque.xp()), a linha 👻 n/10 da próxima pergunta
-     (Bosque.proximaPergunta()) e o selo "+N" quando há ponto para pôr. Tocar abre UI.telaBosque();
+/* Bosque dos Fantasmas no HUD (docs/contratos/bosque.md §5 e §7), dentro de toda arena (o Bosque e os mapas novos,
+   arenas.md; Bosque.naArena()):
+   - o chip na coluna da esquerda (padrão da Aura, ui/hud-aura.js): 💖 vida n/max (BosqueCombate.vida()), "Nv N" e a
+     barrinha de XP do nível (Bosque.xp()) com as marquinhas de cada terço (onde vem a próxima pergunta), e o selo
+     "+N" quando há ponto para pôr. Tocar abre UI.telaBosque();
    - o botão redondo da espada, fixo embaixo à direita (o pintar o tira da fileira de cima), para atacar no toque:
      segurar o dedo (ou o mouse) repete o golpe a cada config.fantasmas.jogador.recargaMs, como segurar o Espaço; para
      no pointerup/cancel/leave, com tela aberta e fora do Bosque. Ao lado, a dica (só na tela, sem voz) até o 1º golpe:
@@ -9,9 +10,9 @@
      "Toque na espada, ou aperte Espaço, para atacar." (também no prêmio da espada, ui/bosque-nivel.js).
    - o cursor de espada (🗡 em pixel art, data URL montada uma vez) com o mouse em cima de um fantasma que se pode
      atacar (BosqueCombate.fantasmaNaTela, sistemas/bosque-alvo.js), trocado só no pointermove do canvas;
-   UI.telaBosque(): o painel com nível, o placar de inimigos (mortos e a próxima pergunta), vida, os pontos de
+   UI.telaBosque(): o painel com nível, a barra de XP (n/de), vida, inimigos mortos, a próxima pergunta em %, os pontos de
    Força/Vida/Velocidade e o botão de pôr o ponto pendente (UI.subirNivelBosque, ui/bosque-nivel.js). Os ícones
-   (💖 ⭐ 👻 💪 ⚡ ⬆ 🗡) já existem: nenhum registrado aqui.
+   (💖 ⭐ 👻 💪 ⚡ ⬆ 🗡) já existem: nenhum registrado aqui (o emoji de cada arena vem da pasta dela).
    Reino.Bosque e Reino.BosqueCombate carregam depois (sistemas/): lidos só dentro das funções. Estilos: css/ui-bosque.css. */
 (function () {
   var U = Reino.util, el = U.el, UI = Reino.UI, EV = Reino.EVENTOS;
@@ -26,15 +27,23 @@
 
   function B() { return Reino.Bosque && Reino.Bosque.xp ? Reino.Bosque : null; }
   function combate() { return Reino.BosqueCombate || null; }
-  function noBosque() { var b = B(); return !!(b && b.noBosque()); }
+  // numa arena (o Bosque ou um mapa novo); o registro dela (nome, emoji)
+  function noBosque() { var b = B(); return !!(b && b.naArena()); }
+  function arena() { var b = B(), id = b && b.arenaAtual(); return (id && Reino.Arenas && Reino.Arenas.def(id)) || { id: 'bosque', nome: 'Bosque dos Fantasmas', emoji: '👻' }; }
   function vida() { var c = combate(); return c ? c.vida() : { n: 0, max: 0 }; }
   function icone(emoji, escala) { var c = PA.iconeEmoji(emoji, escala || 2); c.setAttribute('aria-hidden', 'true'); return c; }
 
-  // a barrinha de XP (cheia no nível máximo)
+  // a barrinha de XP (cheia no nível máximo), com uma marquinha em cada terço: lá vem a próxima pergunta
   function barraXp(x, classe) {
-    var cheio = el('span.bosque-xp-cheia');
+    var cheio = el('span.bosque-xp-cheia'), q = Reino.config.fantasmas.perguntasPorNivel || 3;
     cheio.style.width = (x.de ? Math.round(x.n / x.de * 100) : 100) + '%';
-    return el('span.bosque-xp' + (classe ? '.' + classe : ''), { 'aria-hidden': 'true' }, cheio);
+    var barra = el('span.bosque-xp' + (classe ? '.' + classe : ''), { 'aria-hidden': 'true' }, cheio);
+    for (var k = 1; k < q; k++) {
+      var m = el('span.bosque-xp-marca' + (x.n * q >= k * x.de ? '.passou' : ''));
+      m.style.left = (k * 100 / q).toFixed(3) + '%';
+      barra.appendChild(m);
+    }
+    return barra;
   }
 
   /* ---------- o chip ---------- */
@@ -47,21 +56,20 @@
     var mostra = noBosque();
     if (b.hidden === mostra) b.hidden = !mostra;
     if (!mostra) return;
-    var Bo = B(), v = vida(), x = Bo.xp(), nv = Bo.nivel(), pend = Bo.pontosPendentes().length, p = Bo.proximaPergunta();
-    var chave = [v.n, v.max, nv, x.n, x.de, p.n, p.de, pend].join('|');
+    var Bo = B(), v = vida(), x = Bo.xp(), nv = Bo.nivel(), pend = Bo.pontosPendentes().length, p = Bo.proximaPergunta(), a = arena();
+    var chave = [a.id, v.n, v.max, nv, x.n, x.de, p.pct, pend].join('|');
     if (chave === ultimoChip && b.firstChild) return;
     ultimoChip = chave;
     b.innerHTML = '';
     b.appendChild(el('span.bosque-chip-vida', icone('💖'), el('span', v.n + '/' + v.max)));
     b.appendChild(el('span.bosque-chip-nivel', el('span', 'Nv ' + nv), barraXp(x)));
-    b.appendChild(el('span.bosque-chip-mortos', icone('👻'), el('span', p.n + '/' + p.de)));
     if (pend) b.appendChild(el('span.bosque-selo', '+' + pend));
-    var nivelAria = x.maximo ? ', nível máximo' : ', ' + x.n + ' de ' + x.de + ' inimigos para o próximo nível';
-    b.setAttribute('aria-label', 'Bosque: vida ' + v.n + ' de ' + v.max + ', nível ' + nv + nivelAria +
-      ', próxima pergunta em ' + p.n + ' de ' + p.de + (pend ? ', ponto para pôr' : ''));
+    var nivelAria = x.maximo ? ', nível máximo' : ', ' + x.n + ' de ' + x.de + ' de XP para o próximo nível';
+    b.setAttribute('aria-label', a.nome + ': vida ' + v.n + ' de ' + v.max + ', nível ' + nv + nivelAria +
+      ', próxima pergunta em ' + p.pct + ' por cento' + (pend ? ', ponto para pôr' : ''));
   }
   function chipBosque() {
-    var b = el('button.chip.chip-bosque', { type: 'button', 'aria-label': 'Bosque dos Fantasmas', hidden: true });
+    var b = el('button.chip.chip-bosque', { type: 'button', 'aria-label': 'Arena', hidden: true });
     b.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') e.stopPropagation(); });
     b.addEventListener('click', function () {
       if (UI.temTela() || !noBosque()) return;
@@ -146,15 +154,15 @@
   function telaBosque() {
     var Bo = B();
     if (!Bo || UI.temTela()) return;
-    var pn = UI.painel('bosque', '🗡 Bosque dos Fantasmas', { curto: '🗡 Bosque', estreito: true });
+    var a = arena(), pn = UI.painel('bosque', '🗡 ' + a.nome, { curto: '🗡 ' + (a.curto || a.nome.split(' ')[0]), estreito: true });
     var x = Bo.xp(), v = vida(), pts = Bo.pontos(), pend = Bo.pontosPendentes(), prox = Bo.proximaPergunta();
     var corpo = el('div.bosque-painel',
       el('p.bosque-painel-nivel', 'Nível ' + Bo.nivel()),
       el('div.bosque-painel-xp', icone('⭐'), barraXp(x, 'bosque-xp-grande'),
         el('b', x.maximo ? 'Máximo!' : x.n + '/' + x.de)),
       el('p.bosque-painel-vida', icone('💖'), el('span', 'Vida ' + v.n + '/' + v.max)));
-    corpo.appendChild(el('p.bosque-painel-mortos', icone('👻'), el('span', 'Inimigos mortos: ' + Bo.mortos())));
-    corpo.appendChild(el('p.bosque-painel-proxima', el('span', 'Próxima pergunta: ' + prox.n + '/' + prox.de)));
+    corpo.appendChild(el('p.bosque-painel-mortos', icone(a.emoji || '👻'), el('span', 'Inimigos mortos: ' + Bo.mortos())));
+    corpo.appendChild(el('p.bosque-painel-proxima', el('span', 'Próxima pergunta: ' + prox.pct + '%')));
     var lista = el('ul.bosque-habs');
     HABS.forEach(function (a) {
       lista.appendChild(el('li.bosque-hab', icone(a.emoji), el('span.bosque-hab-nome', a.nome), el('b', String(pts[a.h]))));

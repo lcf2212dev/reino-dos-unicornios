@@ -1,26 +1,31 @@
-/* Bosque dos Fantasmas: o combate (Reino.BosqueCombate, módulo 'bosque-combate'; docs/contratos/bosque.md §5 e §7).
+/* Bosque dos Fantasmas e as outras arenas: o combate (Reino.BosqueCombate, módulo 'bosque-combate'; docs/contratos/
+   bosque.md §5 e §7, arenas.md). Vale em todo interior registrado como arena (Reino.registrarArena, motor/interiores-arena.js),
+   com os números dela (Reino.Arenas.cfg: os tipos, quantos e zonas da arena por cima de config.fantasmas); um estado
+   por arena (S.estados[id]), o da arena de agora em S.estado.
    O laço não tem `atualizar`: a simulação avança em camada.itensDesenho (dt do `t`, no máximo 50 ms) e congela com a
    cena bloqueada (íris, diálogo, desmaio) ou tela aberta. Fantasmas e moscas por zona, tirados da grade do interior
    (config.fantasmas: quantos, zonas, zonaSegura): flutuam, vagam, perseguem dentro da `visao`, presos pela `coleira`,
    e nunca entram na zona segura do spawn. No modo congelado (e2e) ficam parados no ninho (foto estável).
    O passo é PURO (passo(estado, dt, jogador) só mexe no estado; os eventos vão para estado.eventos e a parte de fora
    emite): testável no Node. Sorteios com Reino.Desenho.rng (nada de Math.random).
-   Interno Reino._bosqueCombate (com bosque-desenho.js e bosque-alvo.js): { estado, desenho: { itens(p, t, animar),
-   sobre(p, t, animar) }, desmaio: { desde } | null, t (o `t` do quadro), vencidoEm: { id: Date.now() de quando venceu },
+   Interno Reino._bosqueCombate (com bosque-desenho.js e bosque-alvo.js): { estado (o da arena de agora, ou da última),
+   estados: { arena: estado }, grades: { arena: grade da cena }, arena (o id da arena de agora), naCena(), desenho: { itens(p, t, animar),
+   sobre(p, t, animar) }, desmaio: { desde } | null, t (o `t` do quadro), vencidoEm: { id (no Bosque) ou 'arena:id': Date.now() de quando venceu },
    quadro(est, j) (o ataque por alvo, chamado a cada quadro depois do passo, com o `j` do passo), olharX/olharY (o
    olhar dela no começo do quadro, o do corpo desenhado) }.
    node: true: nada de DOM, Progresso nem Cena no carregamento (só dentro das funções). */
 (function () {
   var R = window.Reino;
-  var S = R._bosqueCombate = { estado: null, desenho: null, desmaio: null, t: 0, grade: null, vencidoEm: {},
-    olharX: 0, olharY: 1 };
+  var S = R._bosqueCombate = { estado: null, estados: {}, grades: {}, arena: null, desenho: null, desmaio: null, t: 0,
+    vencidoEm: {}, olharX: 0, olharY: 1 };
   var CENA = 'bosque', OCUPACAO = 'bosque-desmaio', T = 16;
-  var TIPOS = ['facil', 'medio', 'dificil', 'mosca'];
   var SEMENTE = 20261105;
   var ATIVOS = { vagando: 1, perseguindo: 1, voltando: 1, recuando: 1 };   // os que andam, tocam e levam golpe
   var CONTROLES = 'button, a[href], [role="button"], input, select, textarea, [contenteditable="true"]';
   var VAZIO = [];
   function cfg() { return R.config.fantasmas; }
+  // os números da arena (o Bosque: config.fantasmas)
+  function cfgDe(id) { return R.Arenas ? R.Arenas.cfg(id) : cfg(); }
 
   /* ================= PURO (sem Cena, sem DOM) ================= */
   function evento(est, carga) { est.eventos.push(carga); }
@@ -42,8 +47,9 @@
     return feitos;
   }
 
-  /* mapa = { comodo: { x, y, w, h } (tiles), spawn: { x, y }, solido(tx, ty) }; c = config.fantasmas.
-     Os fantasmas nascem em tile livre da zona do tipo, fora da zona segura, sempre nos mesmos lugares (semente). */
+  /* mapa = { comodo: { x, y, w, h } (tiles), spawn: { x, y }, solido(tx, ty) }; c = os números da arena (config.fantasmas
+     no Bosque; Reino.Arenas.cfg(id) nas outras). Os tipos são os de c.tipos, na ordem (no Bosque: facil, medio,
+     dificil, mosca). Nascem em tile livre da zona do tipo, fora da zona segura, sempre nos mesmos lugares (semente). */
   function novoEstado(mapa, c, semente) {
     c = c || cfg();
     semente = semente === undefined ? SEMENTE : semente;
@@ -55,7 +61,7 @@
     var b = c.raioToque + 1, Z = est.segura;
     est.barreira = { x0: Z.x0 - b, y0: Z.y0 - b, x1: Z.x1 + b, y1: Z.y1 + b };
     var casas = [], n = 0;
-    TIPOS.forEach(function (tipo) {
+    Object.keys(c.tipos).forEach(function (tipo) {
       var quantos = (c.quantos && c.quantos[tipo]) || 0, z = c.zonas[tipo], lista = [], x, y;
       if (!quantos || !z) return;
       for (y = Math.max(z[0], cm.y); y <= Math.min(z[1], cm.y + cm.h - 1); y++) {
@@ -119,7 +125,10 @@
   function moverFantasma(est, f, s, j) {
     var c = est.cfg, t = est.t, v = c.tipos[f.tipo].velocidade, F = f.estado;
     if (F === 'vencido') return;
-    if (F === 'sumindo') { if (t >= f.ate) { f.estado = 'vencido'; evento(est, { tipo: 'vencido', id: f.id, fantasma: f.tipo }); } return; }
+    if (F === 'sumindo') {
+      if (t >= f.ate) { f.estado = 'vencido'; evento(est, est.arena ? { tipo: 'vencido', id: f.id, fantasma: f.tipo, arena: est.arena } : { tipo: 'vencido', id: f.id, fantasma: f.tipo }); }
+      return;
+    }
     if (F === 'esperando') {
       // volta depois de voltaMs, mas não em cima dela (espera ela se afastar do ninho)
       if (t >= f.ate && dist(j.x, j.y, f.casaX, f.casaY) > c.visao) {
@@ -217,7 +226,13 @@
   }
 
   /* ================= NO JOGO ================= */
-  function naCena() { var c = R.Cena && R.Cena.atual && R.Cena.atual(); return c && c.id === CENA ? c : null; }
+  // a cena de agora, se for uma arena (sem o registro de arenas, só o Bosque)
+  function naCena() {
+    var c = R.Cena && R.Cena.atual && R.Cena.atual();
+    if (!c) return null;
+    return (R.Arenas ? R.Arenas.daCena(c) : c.id === CENA ? CENA : null) ? c : null;
+  }
+  S.naCena = naCena;
   function temTela() { return !!(R.UI && R.UI.temTela && R.UI.temTela()); }
   function bloqueado() { return !!(R.Cena && R.Cena.bloqueado && R.Cena.bloqueado()) || temTela(); }
   function vidaMax() { var B = R.Bosque; return B && B.vidaMax ? B.vidaMax() : cfg().jogador.vidaBase; }
@@ -241,36 +256,42 @@
     });
     return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 };
   }
+  // o estado da arena da cena (um por arena, refeito quando a grade da cena muda)
   function garantir(cena) {
-    if (S.estado && S.grade === cena.grade) return S.estado;
-    S.grade = cena.grade;
-    var def = cena.def || R.Interiores.def(CENA);
-    S.estado = novoEstado({ comodo: caixa(def), spawn: def.spawn, solido: cena.solido }, cfg());
-    S.estado.parados = !!R.congelado;
+    var id = cena.id, est = S.estados[id];
+    S.arena = id;
+    if (est && S.grades[id] === cena.grade) return (S.estado = est);
+    S.grades[id] = cena.grade;
+    var def = cena.def || R.Interiores.def(id);
+    est = S.estados[id] = S.estado = novoEstado({ comodo: caixa(def), spawn: def.spawn, solido: cena.solido }, cfgDe(id));
+    est.arena = id;
+    est.parados = !!R.congelado;
     lerValores();
-    S.estado.vida = S.estado.max = JOG.vidaMax;
-    return S.estado;
+    est.vida = est.max = JOG.vidaMax;
+    return est;
   }
+  // a chave do vencido em S.vencidoEm: o id no Bosque; '<arena>:<id>' nas outras (os ids f<n> se repetem entre arenas)
+  function chaveVencido(arena, id) { return !arena || arena === CENA ? id : arena + ':' + id; }
   function emitir(est) {
     if (!est.eventos.length) return;
     var lista = est.eventos.splice(0, est.eventos.length);
     for (var i = 0; i < lista.length; i++) {
       if (lista[i].tipo === 'desmaio') desmaiar();
-      if (lista[i].tipo === 'vencido') S.vencidoEm[lista[i].id] = Date.now();
+      if (lista[i].tipo === 'vencido') S.vencidoEm[chaveVencido(est.arena, lista[i].id)] = Date.now();
       if (R.util && R.util.emit) R.util.emit(R.EVENTOS.BOSQUE, lista[i]);
     }
   }
 
-  /* desmaio: cena ocupada com estrelinhas, o Claude fala, volta ao começo do bosque e a vida enche (nada se perde) */
+  /* desmaio: cena ocupada com estrelinhas, o Claude fala, volta ao começo da arena e a vida enche (nada se perde) */
   function desmaiar() {
     if (S.desmaio) return;
     S.desmaio = { desde: S.t };
-    var C = R.Cena, F = R.BosqueFalas;
+    var C = R.Cena, F = R.BosqueFalas, arena = S.arena || CENA, fala = F && F.de ? F.de('desmaio', arena) : F && F.desmaio;
     if (C && C.ocupar) C.ocupar(OCUPACAO);
-    if (F && F.desmaio && R.Claude && R.Claude.falar) R.Claude.falar(F.desmaio.join(' '), { fala: F.desmaio.slice(), voz: 'claude' });
+    if (fala && R.Claude && R.Claude.falar) R.Claude.falar(fala.join(' '), { fala: fala.slice(), voz: 'claude' });
     setTimeout(function () {
-      var def = R.Interiores && R.Interiores.def(CENA), sp = def && def.spawn;
-      var pr = C && C.irPara ? C.irPara(CENA, sp ? { x: sp.x, y: sp.y } : null, { x: 0, y: -1 }) : null;
+      var def = R.Interiores && R.Interiores.def(arena), sp = def && def.spawn;
+      var pr = C && C.irPara ? C.irPara(arena, sp ? { x: sp.x, y: sp.y } : null, { x: 0, y: -1 }) : null;
       Promise.resolve(pr).catch(function (e) { console.error(e); }).then(function () {
         API.reiniciar();
         S.desmaio = null;
@@ -281,9 +302,9 @@
 
   /* proteção: vencido há mais de vencidoPresoMs sem devolver (a pergunta não abriu) volta a esperar a hora de voltar */
   function soltarPresos(est) {
-    var agora = Date.now(), limite = cfg().vencidoPresoMs;
+    var agora = Date.now(), limite = est.cfg.vencidoPresoMs;
     est.fantasmas.forEach(function (f) {
-      var em = S.vencidoEm[f.id];
+      var em = S.vencidoEm[chaveVencido(est.arena, f.id)];
       if (f.estado === 'vencido' && (em === undefined || agora - em > limite)) devolverNo(est, f.id);
     });
   }
@@ -304,7 +325,7 @@
     sobre: function (ctx, p, t, animar) { if (S.desenho) S.desenho.sobre(p, t, animar); },
   };
 
-  // Espaço/Enter atacam só no Bosque, sem bloqueio nem tela, com o foco fora de controle e sem alvo perto (entrada.js)
+  // Espaço/Enter atacam só numa arena, sem bloqueio nem tela, com o foco fora de controle e sem alvo perto (entrada.js)
   var ligado = false;
   function ligar() {
     if (ligado) return;
@@ -320,16 +341,19 @@
       e.preventDefault();
       API.atacar();
     });
-    // entrou no Bosque vindo de fora: valores relidos, vida cheia, fantasmas no ninho e os vencidos presos soltos
+    // entrou numa arena vindo de fora: valores relidos, vida cheia, inimigos no ninho e os vencidos presos soltos
     R.util.on(R.EVENTOS.CENA, function (m) {
       ultimoT = null;
-      if (!m || m.para !== CENA || m.de === CENA) return;
+      var ehArena = m && (R.Arenas ? !!R.Arenas.def(m.para) : m.para === CENA);
+      if (!ehArena || m.de === m.para) return;
       lidos = false;
-      if (!S.estado) return;
+      var est = S.estados[m.para];
+      if (!est) return;
+      S.estado = est; S.arena = m.para;
       lerValores();
-      soltarPresos(S.estado);
-      reiniciarEstado(S.estado);
-      emitir(S.estado);
+      soltarPresos(est);
+      reiniciarEstado(est);
+      emitir(est);
     });
     R.util.on(R.EVENTOS.BOSQUE, function (e) { if (e && (e.tipo === 'ponto' || e.tipo === 'acerto')) lidos = false; });
   }
@@ -349,8 +373,9 @@
         return { id: f.id, tipo: f.tipo, x: Math.round(f.x), y: Math.round(f.y), vida: f.vida, max: f.max, estado: f.estado };
       }) : [];
     },
-    // a UI chama depois da pergunta do fantasma vencido: ele volta ao ninho depois de voltaMs
-    devolver: function (id) { return !!S.estado && devolverNo(S.estado, id); },
+    // a UI chama depois da pergunta do inimigo vencido: ele volta ao ninho depois de voltaMs (arena: a dele; padrão a de agora)
+    devolver: function (id, arena) { var e = arena ? S.estados[arena] : S.estado; return !!e && devolverNo(e, id); },
+    arena: function () { return naCena() ? S.arena : null; },
     reiniciar: function () { if (S.estado) { reiniciarEstado(S.estado); emitir(S.estado); } },
     // puros (testes no Node e ferramentas)
     novoEstado: novoEstado, passo: passo, golpear: golpear, reiniciarEstado: reiniciarEstado, devolverNo: devolverNo,
@@ -362,7 +387,7 @@
     iniciar: ligar,
     depurar: function () {
       var e = S.estado;
-      return { ativo: camada.ativo(), vida: API.vida(), t: e ? Math.round(e.t) : 0, parados: !!(e && e.parados),
+      return { ativo: camada.ativo(), arena: API.arena(), vida: API.vida(), t: e ? Math.round(e.t) : 0, parados: !!(e && e.parados),
         desmaio: !!S.desmaio, golpe: !!(e && e.golpe), fantasmas: API.fantasmas() };
     },
     camada: camada,

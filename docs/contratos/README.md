@@ -24,7 +24,8 @@ contrato dele: a seção (§) do que vai mexer, não o arquivo inteiro. Mudança
 | Laboratório de Química: misturas, caderno de receitas, microscópio, tabela periódica, 2º andar (curiosidades, estados, separar, livros), campo `quimica` | `quimica.md` |
 | experiências e mini-jogos do Laboratório de Ciências no Observatório | `laboratorio-atividades.md` |
 | casa do jogador: kits de móveis por matéria, colocar e girar móveis, interior decorável, campos `casaBau`/`casaKits`/`casaItens`/`casaMoveis`, baú da casa, móvel à escolha por sala feita | `casa.md` |
-| Bosque dos Fantasmas: portal no mapa, interior de céu aberto, combate com espada, pergunta por fantasma, nível e pontos, campos `bosque`/`bosquePontos` | `bosque.md` |
+| Bosque dos Fantasmas: portal no mapa, interior de céu aberto, combate com espada, XP e pergunta a cada terço do nível, nível e pontos, campos `bosque`/`bosquePontos` | `bosque.md` |
+| Arenas (os mapas de luta além do Bosque: Pântano, Gelo, Dunas, Cristal, Vulcão): `registrarArena`, desenho dos inimigos, números, portais, o que cada mapa cria | `arenas.md` |
 | Parquinho: portal na praça liberado por matérias completas, lugar fechado (`liberado`), brinquedos que ela usa com o unicórnio | `parquinho.md` |
 | plano de frentes paralelas, reserva de personagem (vaga tracejada), ondas, conferência em pipeline | `plano-paralelo.md` |
 | regras de toda frente/worker (worktree, proibições, formato do retorno) | `frente.md` |

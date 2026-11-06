@@ -145,6 +145,8 @@
   });
 
   var COMODO = { id: 'bosque', nome: 'Bosque dos Fantasmas', rect: { x: 1, y: 1, w: 54, h: 40 }, piso: 'bosque-grama', parede: 'bosque-copas' };
+  // a primeira arena (motor/interiores-arena.js; docs/contratos/arenas.md): os números são os de config.fantasmas
+  R.registrarArena({ id: 'bosque', nome: 'Bosque dos Fantasmas', curto: 'Bosque', emoji: '👻' });
   R.registrarInterior({
     id: 'bosque',
     lugar: 'bosque',

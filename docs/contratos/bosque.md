@@ -2,9 +2,10 @@
 
 Pedido: `pedidos/2026-11-05-portal-fantasmas.md`; ajuste: `pedidos/2026-11-05-bosque-mosca-bau.md`. Um portal
 brilhando entre as árvores à direita da Minha Casa leva a um bosque de céu aberto onde ela vence fantasmas fofos e
-moscas feias com uma espada. A cada 10 inimigos mortos abre uma pergunta (a mosca conta 2); a cada 30, o nível. A
-pergunta certa dá 1 estrela e a Aura; o nível dá um ponto de habilidade. Os dois prêmios trazem um móvel surpresa
-para a casa num baú que ela toca para abrir. Errar, fechar ou desmaiar não tira nada.
+moscas feias com uma espada. Cada inimigo dá XP; a cada terço da barra do nível (33%, 66% e ao fechar) abre uma
+pergunta, e ao fechar a barra vem o nível (pedido do Leandro, 05/11: XP). A pergunta certa dá 1 estrela e a Aura; o
+nível dá um ponto de habilidade. Os dois prêmios trazem um móvel surpresa para a casa num baú que ela toca para abrir.
+Errar, fechar ou desmaiar não tira nada. O mesmo motor vale nos outros mapas de luta, com o mesmo placar: `arenas.md`.
 
 ## Índice
 1. Onde está no código · 2. Ids e prefixos · 3. Números · 4. Save · 5. API · 6. Falas e vozes · 7. Fluxo ·
@@ -13,11 +14,11 @@ para a casa num baú que ela toca para abrir. Errar, fechar ou desmaiar não tir
 ## 1. Onde está no código
 | Parte | Arquivo |
 |---|---|
-| números | `Reino.config.fantasmas` em `js/nucleo/config.js` |
+| números | `Reino.config.fantasmas` em `js/nucleo/config.js` (as outras arenas: `config.arenas`, `arenas.md`) |
 | evento | `Reino.EVENTOS.BOSQUE` em `js/nucleo/eventos.js` |
 | fator de velocidade | `Jogador.registrarFatorVelocidade(fn)` (`cena-e-motor.md` §10) |
 | saída desenhada pelo fundo | `I.FUNDOS[id].saida(ctx, px, py)` (`interiores.md` §3, `fundo`) |
-| o portal no mapa | `js/interiores/bosque/lugar.js` (lugar), `fora.js` (desenho), `icones.js` (👻 🗡 🌀) |
+| o portal no mapa | `js/interiores/bosque/lugar.js` (lugar), `fora.js` (desenho: `Reino.Portal` de `js/arte/portal.js`), `icones.js` (👻 🗡 🌀) |
 | o interior | `js/interiores/bosque/bosque.js`, `fundo.js`, `objetos.js`, `objetos-2.js`, `falas.js` |
 | regras e save | `js/sistemas/bosque.js` (`Reino.Bosque`, módulo `'bosque'`, `node: true`) |
 | combate e desenho | `js/sistemas/bosque-combate.js` (`Reino.BosqueCombate`, módulo `'bosque-combate'` com `camada`), `bosque-desenho.js` |
@@ -41,32 +42,47 @@ e2e não mudam), na ordem `icones`, `fundo`, `falas`, `objetos`, `objetos-2`, `b
 - Piso `bosque-grama`, parede `bosque-copas`, objetos `bosque-<nome>`.
 - Inimigos: tipos `facil` (lilás), `medio` (azul-turquesa), `dificil` (rosa-vinho com coroa) e `mosca` (verde-escura
   feia, com asas e olhos vermelhos); id `f<n>`.
-- Ocupação da cena: `'bosque-desmaio'`. Chaves do móvel surpresa: `'bosque:' + n` (nível n) e `'bosque:p' + bloco`
-  (pergunta do bloco, bloco = 1, 2, 3…); as duas ficam fora da fila das salas (`CasaMoveis.presente`).
+- Ocupação da cena: `'bosque-desmaio'`. Chaves do móvel surpresa: `'bosque:' + n` (nível n) e `'bosque:p' + n`
+  (a n-ésima pergunta consumida, contando os blocos antigos e os terços: numeração contínua); as duas ficam fora da
+  fila das salas (`CasaMoveis.presente`). A arena `bosque` é registrada em `bosque.js` (`Reino.registrarArena`).
 - Zonas (fileiras do interior, em `config.fantasmas.zonas`): fáceis embaixo, perto do spawn; médios no meio;
   difíceis e moscas em cima. Zona segura de `zonaSegura` tiles em volta do spawn: sem inimigo, e com uma barreira de
   `raioToque` em volta dela (`bosque-combate.js:prender`): o inimigo fica fora da borda, então o toque nunca chega a
   quem está lá dentro.
 
 ## 3. Números
-Todos em `Reino.config.fantasmas` (cada um comentado lá): `perguntasPorBloco` (10 inimigos mortos por pergunta),
-`mortosPorNivel` (30 por nível), nível máximo, estrelas por acerto, tipos de pergunta, vida/dano/velocidade do jogador
-por ponto, vida/força/velocidade/mortos de cada tipo de inimigo (a mosca conta 2), quantos de cada, zonas, zona
-segura, visão, coleira, raio do toque e os tempos (`recuoMs`, `voltaMs`, `vencidoMs`, `vencidoPresoMs`, `desmaioMs`).
-`acertosPorNivel` fica só como legado da migração do save (§4). Nenhum número desses fica no código nem neste doc.
+Todos em `Reino.config.fantasmas` (cada um comentado lá): a curva de XP `xpNivel` (`base`, `passo`: o nível N pede
+base + passo × (N − 1)), `perguntasPorNivel` (3: uma a cada terço), nível máximo, estrelas por acerto, tipos de
+pergunta, vida/dano/velocidade do jogador por ponto, vida/força/velocidade/mortos/xp de cada tipo de inimigo (a mosca
+conta 2 no placar e dá mais XP), quantos de cada, zonas, zona segura, visão, coleira, raio do toque e os tempos
+(`recuoMs`, `voltaMs`, `vencidoMs`, `vencidoPresoMs`, `desmaioMs`). `perguntasPorBloco` (10), `mortosPorNivel` (30) e
+`acertosPorNivel` ficam só como legado da conta do save antigo (§4). Nenhum número desses no código nem neste doc.
 
 ## 4. Save (`save-e-mescla.md` §11)
-- `bosque: { acertos, espada, vencidos, mortos, perguntasFeitas, migrado }`, `mesclar: 'contadores'` (`espada` = 0 ou 1;
-  `mortos` = placar de inimigos mortos, a mosca conta 2; `perguntasFeitas` = blocos de 10 já consumidos; `migrado` = 1
+- `bosque: { acertos, espada, vencidos, mortos, perguntasFeitas, migrado, abates?, xp?, tercos?, certas? }`,
+  `mesclar: 'contadores'`. Os quatro novos (pedido do XP, 05/11) são subchaves aditivas do mesmo campo: ausentes = 0
+  (o `padrao()` e o save novo não mudam), a mescla é a de sempre (por chave, o maior) e um aparelho antigo os guarda
+  sem mexer. Quem soma cada um (nunca os dois lados a mesma coisa):
+  - só a versão ANTIGA do jogo ainda soma `mortos` (placar, a mosca conta 2), `perguntasFeitas` (blocos de 10) e
+    `acertos`; a versão de hoje não toca neles (fora a migração por acertos, abaixo);
+  - só a versão de HOJE soma `abates` (inimigos mortos desde o XP), `xp` (o XP ganho desde então), `tercos` (perguntas
+    de terço consumidas) e `certas` (perguntas certas).
+- Derivados do XP (nada gravado; a conta vale para o save antigo sem nenhuma escrita): XP total = `xpLegado(mortos) +
+  xp`, com `xpLegado(m)` = o XP do começo do nível antigo (1 + floor(m / 30)) + ceil((m % 30) × xpDoNivel / 30), isto
+  é, o mesmo nível e a mesma fração da barra; nível = o da curva; perguntas liberadas = 3 por nível passado + as
+  marcas de 1/3 e 2/3 já passadas (ceil(k × xpDoNivel / 3)); pendentes = liberadas − `perguntasFeitas` − `tercos`
+  (como a base da curva é múltipla de 30, os terços do placar antigo caem nos blocos de 10: as pendentes de antes
+  continuam as mesmas, sem pergunta nem baú retroativo). Um aparelho antigo que ainda mate soma `mortos`, que entra no
+  XP pela mesma conta. `Reino.Bosque.mortos()` = `mortos + abates`; `acertos()` = `acertos + certas`.
+- Campos legados: `espada` = 0 ou 1; `migrado` = 1
   é a marca da migração do save antigo, mas NÃO é porteira: o piso do nível antigo é reaplicado nas leituras, porque a
   mescla pode trazer acertos antigos com mortos novos; num save novo sem nível antigo ele fica 1 na memória e só vai ao
   arquivo na primeira gravação de verdade).
 - `bosquePontos: { '<nível>': { h: 'forca'|'vida'|'velocidade', em } }`, `mesclar: 'carimbo'`.
 - Os dois: `novoCiclo: 'mantem'`, `copiaSeguranca: true`. Registrados em `sistemas/bosque.js`.
-- Derivados (nunca guardados): nível = `min(nivelMax, 1 + floor(mortos / mortosPorNivel))`; `xp()` = mortos até o
-  próximo nível (`mortos % mortosPorNivel` de `mortosPorNivel`, cheio no máximo); `perguntasPendentes()` =
-  `max(0, floor(mortos / perguntasPorBloco) - perguntasFeitas)`; `proximaPergunta()` = `mortos % perguntasPorBloco`
-  de `perguntasPorBloco`; pontos = escolhas válidas com nível ≤ o atual; pendentes = níveis 2..atual sem escolha.
+- Derivados (nunca guardados): `xp()` = o XP dentro do nível de `xpDoNivel` (cheio no máximo); `proximaPergunta()` =
+  `{ n, de, pct, marca }` do terço de agora; pontos = escolhas válidas com nível ≤ o atual; pendentes = níveis 2..atual
+  sem escolha.
 - Migração do save antigo (idempotente e só para cima; o `migrado` é a marca, não a porteira): o nível antigo era
   `1 + floor(acertos / acertosPorNivel)`; o trecho legado é `max(0, nívelAntigo - 1) * mortosPorNivel`. Se ele passa
   dos `mortos`, sobe `mortos` até ele e `perguntasFeitas` até `floor(legado / perguntasPorBloco)`; se não passa, nada
@@ -78,18 +94,19 @@ segura, visão, coleira, raio do toque e os tempos (`recuoMs`, `voltaMs`, `venci
   e devolve `{ chave, movel }`; se a chave já tem móvel válido, devolve o mesmo. O sorteio é determinístico (semente =
   chave + `casaBau.em` + quantidade de móveis), prefere os móveis que ela ainda não tem e, com todos, dá mais um igual
   ("Mais um!"). Sem casa, o móvel fica guardado e aparece quando ela ganhar a casa.
-  O nível grava `bosque:<nível>` no abate (antes do baú abrir); a pergunta certa grava `bosque:p<bloco>` em `acertou`.
+  O nível grava `bosque:<nível>` no abate (antes do baú abrir); a pergunta certa grava `bosque:p<n>` em `acertou`.
   Níveis antigos ainda com o ponto pendente ganham o baú na hora de pôr o ponto, via `presente`, só se a chave ainda
   não tiver móvel (nunca uma fila retroativa).
 
 ## 5. API
 ```
 Reino.Bosque (sistemas/bosque.js)
-  acertos() mortos() nivel() xp() → { n, de, maximo }      perguntasPendentes() proximaPergunta() → { n, de }
+  acertos() mortos() nivel() xp() → { n, de, maximo } xpTotal()   perguntasPendentes() proximaPergunta() → { n, de, pct, marca }
+  naArena() arenaAtual() noBosque()   curva: { xpDoNivel, xpAte, nivelDoXp, xpLegado, tercosDe } (puros)
   temEspada() ganharEspada() → bool (true só na 1ª vez)
   pontos() → { forca, vida, velocidade }  pontosPendentes() → [n]  porPonto(n, 'forca'|'vida'|'velocidade') → bool
   dano() vidaMax() fatorVelocidade()               pergunta() → { materia, sala, desafio } | null
-  abater(tipo) → { mortos, perguntas, subiu: n | null, premioNivel: { chave, movel } | null }
+  abater(tipo, arena?) → { mortos, perguntas, subiu: n | null, premioNivel: { chave, movel } | null, xp }
   acertou(materiaId) → { estrelas, nivel, presente: { chave, movel } | null }   errou(materiaId)
   consumirPergunta() → bool   chaveMovel(n) → 'bosque:' + n
 Reino.CasaMoveis (sistemas/casa-moveis.js; casa.md §12)
@@ -99,17 +116,16 @@ Reino.BosqueCombate (sistemas/bosque-combate.js)
   devolver(id) reiniciar()  passo(estado, dt, jogador) (puro, testável no Node)
   mirar(id) → bool  alvo() → id | null  pararAlvo()  fantasmaNaTela(clientX, clientY) → { id, tipo } | null
   (bosque-alvo.js; puros: fantasmaEm(est, wx, wy), mirarNo(est, id), pararNo(est), seguirAlvo(est, j))
-Reino.EVENTOS.BOSQUE  carga { tipo: 'vida' (+ n, max) | 'golpe' (+ acertou) | 'vencido' (+ id, fantasma = o tipo)
-                      | 'abate' (+ mortos, subiu) | 'desmaio' | 'acerto' (+ materia, nivel, presente) | 'ponto' (+ nivel, h) }
+Reino.EVENTOS.BOSQUE  carga { tipo: 'vida' (+ n, max) | 'golpe' (+ acertou) | 'vencido' (+ id, fantasma = o tipo, arena)
+                      | 'abate' (+ mortos, subiu, xp) | 'desmaio' | 'acerto' (+ materia, nivel, presente) | 'ponto' (+ nivel, h) }
 Reino.UI (ui/bosque-*.js)
   telaEspadaBosque() → P   perguntaFantasma(f) → P<'certo'|'errado'|'depois'>   telaBosque()
   subirNivelBosque(n, falas?, premio?) → P<'forca'|'vida'|'velocidade'|null>
   bauBosque({ chave, movel, titulo }) → P   dicaEspadaBosque() → texto
-Jogador.registrarFatorVelocidade(fn)   // Reino.Bosque registra fn = no 'bosque' ? fatorVelocidade() : 1
+Jogador.registrarFatorVelocidade(fn)   // Reino.Bosque registra fn = numa arena ? fatorVelocidade() : 1
 I.FUNDOS.bosque = { cor, desenhar(ctx, w, h), saida(ctx, px, py) }   // saida = o portal de volta
 ```
-- Pergunta (pedido do Leandro, 05/11): a pergunta só aparece a cada `perguntasPorBloco` inimigos mortos (a mosca conta
-  2). A lista é sorteada UNIFORMEMENTE entre todas as perguntas do bimestre em curso (`Reino.Bimestres.atual`: só as
+- Pergunta (pedido do Leandro, 05/11): a pergunta só aparece a cada terço da barra de XP do nível (§4). A lista é sorteada UNIFORMEMENTE entre todas as perguntas do bimestre em curso (`Reino.Bimestres.atual`: só as
   matérias desse bimestre e não arquivadas), valendo sala feita ou não. Cada pergunta tem a mesma chance: não se
   sorteia a matéria e depois a sala. Todo tipo da sala, menos `config.fantasmas.perguntaForaTipos` (cada um com o
   motivo no config: só os sem resposta certa ou que enganam na tentativa única), o `escrever` sem `chaves` e a
@@ -155,8 +171,9 @@ I.FUNDOS.bosque = { cor, desenhar(ctx, w, h), saida(ctx, px, py) }   // saida = 
   "Mais um!" quando repetido. "Fechar ✨" fecha; Esc antes de abrir abre o baú, depois fecha. Sem casa, a nota "Ele fica
   guardado até você ganhar a sua casa." aparece na tela. O móvel já está gravado antes (fechar o jogo não perde nada).
   Sem Animações: os mesmos passos, parados. Sons: `estrela`, `rachar`, `chocar`.
-- HUD e painel: o chip mostra vida, "Nv N", a barra de `mortosPorNivel` e a linha 👻 `n/perguntasPorBloco` da próxima
-  pergunta (mais o selo de ponto pendente); o painel mostra "Inimigos mortos: N" e "Próxima pergunta: n/10".
+- HUD e painel: o chip mostra vida, "Nv N" e a barra de XP do nível com uma marquinha em cada terço (onde vem a
+  próxima pergunta; a já passada fica clara), mais o selo de ponto pendente; o painel mostra o XP (n/de), "Inimigos
+  mortos: N" e "Próxima pergunta: NN%". Nenhum número em fala com voz.
 - Vencido preso: `vencidoPresoMs` sem a UI devolver o inimigo (a pergunta não abriu) o faz voltar a contar `voltaMs`;
   vale ao entrar no Bosque vindo de fora (`bosque-combate.js:soltarPresos`).
 
@@ -174,7 +191,7 @@ Quem abre cada tela e quando:
 | Tela | Quem abre | Quando |
 |---|---|---|
 | `telaEspadaBosque` | `ui/bosque-nivel.js` (ouve `EV.TRANSICAO`) | fim da íris de entrada no Bosque, se `!temEspada()`, sem tela nem cena ocupada; nunca no modo congelado. `ganharEspada()` roda ao abrir |
-| `perguntaFantasma` | `ui/bosque-pergunta.js` (ouve `BOSQUE` `vencido`) | um por vez, em fila; só quando o abate fechou um bloco de 10 (ou é a pergunta pendente recuperada) e `Bosque.perguntasPendentes() > 0`; espera outra tela fechar (`EV.TELAS`) |
+| `perguntaFantasma` | `ui/bosque-pergunta.js` (ouve `BOSQUE` `vencido`) | um por vez, em fila; só quando o abate passou uma marca de terço (ou é a pergunta pendente recuperada) e `Bosque.perguntasPendentes() > 0`; espera outra tela fechar (`EV.TELAS`) |
 | `bauBosque` | `perguntaFantasma` (acerto) e `UI.subirNivelBosque` (nível) | o prêmio de móvel, depois da pergunta ou do ponto; o móvel já foi gravado |
 | `subirNivelBosque` | `ui/bosque-pergunta.js` (a fila, quando `abate.subiu`) e `telaBosque` (botão "Pôr o ponto", pendentes) | nível novo ou ponto pendente; depois do ponto (ou "Depois"/Esc), o baú do nível |
 | `telaBosque` | chip do HUD (`ui/bosque-hud.js`) | toque no chip, só no Bosque e sem outra tela |
@@ -183,10 +200,10 @@ Quem abre cada tela e quando:
    (fechou o jogo no meio), ela é recuperada com `id` null ao entrar e quando não há tela (com a espada e dentro do
    Bosque).
 2. Inimigo vencido: `bosque-combate.js:passo` emite `BOSQUE { tipo: 'vencido', id, fantasma }` (`fantasma` = o tipo)
-   → a UI chama `Bosque.abater(fantasma)` (o placar sobe; a mosca conta 2), enfileira `{ id, abate }` e processa um
-   por vez: pergunta (se o bloco fechou) → `BosqueCombate.devolver(id)` (ele volta depois de `voltaMs`) → nível (se
+   → a UI chama `Bosque.abater(fantasma, arena)` (o placar e o XP sobem; a mosca conta 2), enfileira `{ id, abate, arena }`
+   e processa um por vez: pergunta (se passou um terço) → `BosqueCombate.devolver(id, arena)` (ele volta depois de `voltaMs`) → nível (se
    `abate.subiu`). Fechar a pergunta sem responder conta como erro.
-3. Pergunta certa: estrela, Aura, consome a pergunta pendente, grava `bosque:p<bloco>` e, ao fechar, o baú do presente.
+3. Pergunta certa: estrela, Aura, consome a pergunta pendente, grava `bosque:p<n>` e, ao fechar, o baú do presente.
 4. Subiu de nível: `abater` grava `bosque:<nível>`; depois da pergunta, `subirNivelBosque(n, undefined, premioNivel)`
    (3 cartões; "Depois"/✕/Esc deixam o ponto pendente, resolve `null`) e, no fim, o baú do nível.
 5. Desmaio (vida 0): `Cena.ocupar('bosque-desmaio')` + estrelinhas; o Claude fala `desmaio`;
@@ -194,5 +211,7 @@ Quem abre cada tela e quando:
 6. Sair: o portal de volta (saída) leva ao mapa, em (53, 39), ao lado do portal.
 
 ## 8. Testes
-- `npm run validar` (interiores, conteúdo, ícones), `npm run unidade -- --so 'bosque'`, `npm run ver -- --ir bosque`.
-- e2e: `--esperado 'interior-bosque|comodo-bosque-|tela-lugares|^dados/(falas|mapa|interiores|loja|save-estado-novo|save-mescla|npcs-status)\.json$|^vozes\.json$'`.
+- `npm run validar` (interiores, conteúdo, ícones), `npm run unidade -- --so 'bosque|arenas'` (`bosque-xp.test.js`: curva,
+  terços, a conta do save antigo, dois aparelhos), `npm run ver -- --ir bosque`.
+- e2e: `--esperado 'interior-(bosque|pantano|gelo|dunas|cristal|vulcao)$|comodo-(bosque|pantano|gelo|dunas|cristal|vulcao)-|tela-lugares|^dados/(falas|mapa|interiores|loja|save-estado-novo|save-mescla|npcs-status)\.json$|^vozes\.json$'`
+  (com as arenas, `arenas.md` §7).

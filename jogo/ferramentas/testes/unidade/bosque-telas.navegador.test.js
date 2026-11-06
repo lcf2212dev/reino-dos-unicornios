@@ -1,5 +1,6 @@
 // Bosque dos Fantasmas, telas e HUD (docs/contratos/bosque.md §5 e §7; js/ui/bosque-*.js): chip e botão da espada só
-// dentro do Bosque; o prêmio da espada na 1ª entrada e não na 2ª; a pergunta só a cada 10 inimigos mortos (certo:
+// dentro do Bosque; o prêmio da espada na 1ª entrada e não na 2ª; a pergunta a cada terço da barra de XP (o fácil dá
+// 10 de XP: um terço do nível 1 = 10 fáceis; o chip com a barra e as 2 marquinhas) (certo:
 // +1 estrela e o baú do móvel; errado ou fechada: consome a pergunta, sem baú; o texto-base do livro acima da
 // pergunta); segurar a espada repete o golpe; a dica sem o Espaço no toque; o 30º morto abre o nível (ponto + baú do
 // móvel); sem casa o móvel fica guardado e o baú avisa; Esc e Tab/Enter no ponto e o Esc no baú (antes de abrir abre,
@@ -26,7 +27,8 @@ const OLHAR = `(() => {
     chipTexto: chip ? chip.textContent : '', chipAria: chip ? chip.getAttribute('aria-label') : '',
     xpBarra: barra ? barra.style.width : '', estrelas: P.estrelas(), acertos: B.acertos(), mortos: B.mortos(),
     nivel: B.nivel(), xp: B.xp().n, xpDe: B.xp().de, proxima: B.proximaPergunta(),
-    vencidos: P.estado().bosque.vencidos, feitas: P.estado().bosque.perguntasFeitas,
+    vencidos: P.estado().bosque.vencidos, feitas: (P.estado().bosque.perguntasFeitas || 0) + (P.estado().bosque.tercos || 0),
+    marcas: chip ? chip.querySelectorAll('.bosque-xp-marca').length : 0,
     pendentesQ: B.perguntasPendentes(), pontos: B.pontos(), pendentes: B.pontosPendentes(),
     telas: [...document.querySelectorAll('#telas > .tela')].map((t) => t.className.split(' ').find((k) => k.startsWith('tela-') && k !== 'tela-presente')) };
 })()`;
@@ -43,9 +45,11 @@ const VENCER_N = (n) => `(() => {
   for (let i = 0; i < ${n}; i++) { f.estado = 'vencido'; Reino.util.emit(Reino.EVENTOS.BOSQUE, { tipo: 'vencido', id: f.id, fantasma: f.tipo }); }
   return ${n};
 })()`;
-// o placar de mortos e os blocos de pergunta, sem passar pelo combate (os testes de tela)
+// o placar de mortos, o XP e as perguntas já feitas, sem passar pelo combate (os testes de tela): nos contadores
+// novos (o placar antigo fica em 0), com o XP de `mortos` mortos do placar antigo (xpLegado: o fácil dá 10, um morto
+// antigo no nível 1). Os contadores só sobem (a mescla com o banco de teste é pelo maior): cada PLACAR é maior que o anterior
 const PLACAR = (mortos, feitas) => `(() => { const b = Reino.Progresso.estado().bosque;
-  b.mortos = ${mortos}; b.perguntasFeitas = ${feitas}; b.migrado = 1; return 1; })()`;
+  b.mortos = 0; b.perguntasFeitas = 0; b.migrado = 1; b.abates = ${mortos}; b.xp = Reino.Bosque.curva.xpLegado(${mortos}); b.tercos = ${feitas}; return 1; })()`;
 // a pergunta de escolha; pontuar devolve window.__ok (o teste escolhe certo ou errado)
 const PREPARAR = `(() => {
   const B = Reino.Bosque, D = Reino.Desafios;
@@ -55,7 +59,7 @@ const PREPARAR = `(() => {
   return !!B.pergunta();
 })()`;
 
-test('bosque: HUD, prêmio, pergunta a cada 10, baú, nível a cada 30, sem casa, teclado e desmaio', { timeout: 300000 }, async () => {
+test('bosque: HUD, prêmio, pergunta a cada terço do XP, baú, nível ao fechar a barra, sem casa, teclado e desmaio', { timeout: 300000 }, async () => {
   const c = await abrirCenario({ tamanho: 'celular', pasta: pasta() });
   const olhar = () => c.js(OLHAR);
   // responde a pergunta aberta (certo = ok) e devolve o estado logo depois do Conferir
@@ -118,10 +122,10 @@ test('bosque: HUD, prêmio, pergunta a cada 10, baú, nível a cada 30, sem casa
     await c.avancar(600);
     o = await olhar();
     assert.deepStrictEqual([o.telas.length, o.chip, o.acao], [0, true, true], 'no Bosque: chip e espada à vista');
-    assert.match(o.chipAria, /0 de 30 inimigos/, 'a barra é de inimigos até o próximo nível');
-    assert.match(o.chipAria, /próxima pergunta em 0 de 10/);
-    assert.strictEqual(o.xpBarra, '0%', 'a barra de 30 vazia');
-    assert.match(o.chipTexto, /0\/10/, 'e a linha da próxima pergunta');
+    assert.match(o.chipAria, /0 de 300 de XP/, 'a barra é de XP até o próximo nível');
+    assert.match(o.chipAria, /próxima pergunta em 0 por cento/);
+    assert.strictEqual(o.xpBarra, '0%', 'a barra vazia');
+    assert.strictEqual(o.marcas, 2, 'as marquinhas dos terços (onde vem a pergunta)');
     assert.match(o.chipTexto, /Nv\s1/);
     assert.strictEqual(await c.js("!document.querySelector('#hud .bosque-dica').hidden"), true, 'a dica até o 1º golpe');
 
@@ -186,9 +190,9 @@ test('bosque: HUD, prêmio, pergunta a cada 10, baú, nível a cada 30, sem casa
     await c.avancar(600);
     o = await olhar();
     assert.deepStrictEqual([o.mortos, o.pendentesQ, o.telas.length], [9, 0, 0], '9 mortos: nenhuma pergunta');
-    assert.match(o.chipAria, /9 de 30 inimigos/);
+    assert.match(o.chipAria, /90 de 300 de XP/);
     assert.strictEqual(o.xpBarra, '30%');
-    assert.match(o.chipTexto, /9\/10/);
+    assert.match(o.chipAria, /próxima pergunta em 90 por cento/);
 
     // 5) o 10º abre a pergunta; certo: +1 estrela, consome o bloco e abre o baú do móvel
     const antes = await olhar();

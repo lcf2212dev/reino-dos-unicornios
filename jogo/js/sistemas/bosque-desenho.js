@@ -4,7 +4,10 @@
    num puf, com a barrinha de vida em cima; a espada na mão dela (só depois de ganhar) e o arco do golpe; o piscar
    dela invencível e as estrelinhas do desmaio. Sem Animações: tudo parado (sem balanço, sem piscar), o golpe e o puf
    continuam (são do jogo). Sprites feitos uma vez, itens fixos reaproveitados, nada criado por quadro (o brilho
-   branco dela é cacheado por sprite); nada de Math.random. */
+   branco dela é cacheado por sprite); nada de Math.random.
+   As outras arenas (arenas.md): o inimigo usa o molde de Reino.registrarDesenhoInimigo('<arena>-<tipo>', molde)
+   (feito em sprite uma vez por quadro: normal, piscando, branco do golpe e o passo); sem molde, o fantasma do
+   mesmo tipo (o voador vira a mosca). */
 (function () {
   var R = window.Reino;
   var S = R._bosqueCombate;
@@ -85,7 +88,27 @@
     var p = q === 2 ? BRANCO_MOSCA : CORES.mosca;
     return (SPR_MOSCA[q] = desenharMatriz(linhas, { K: K, g: p.g, l: p.l, s: p.s, w: p.w, v: p.v, r: p.r, e: p.e }));
   }
-  function spriteDe(tipo, q) { return tipo === 'mosca' ? mosca(q) : fantasma(tipo, q); }
+  // molde de arena (motor/interiores-arena.js): q 0 normal, 1 piscando, 2 branco (toda cor menos K), 3 o passo; um canvas por quadro
+  var MOLDES = {};
+  function doMolde(chave, m, q) {
+    var lista = MOLDES[chave] || (MOLDES[chave] = []);
+    if (lista[q]) return lista[q];
+    var linhas = m.linhas.slice(), troca = q === 1 ? m.pisca : q === 3 ? m.passo : null, p = m.paleta;
+    if (troca) Object.keys(troca).forEach(function (i) { linhas[+i] = troca[i]; });
+    if (q === 2) { p = {}; Object.keys(m.paleta).forEach(function (k) { p[k] = k === 'K' ? m.paleta[k] : C.branco; }); }
+    return (lista[q] = desenharMatriz(linhas, p, linhas[0].length, linhas.length));
+  }
+  // a primeira linha com desenho do molde (a barrinha de vida fica logo acima dela)
+  function topoDe(m) {
+    if (m._topo === undefined) { var i = 0; while (i < m.linhas.length - 1 && !/[^.]/.test(m.linhas[i])) i++; m._topo = i; }
+    return m._topo;
+  }
+  function moldeDe(arena, tipo) { return arena && arena !== 'bosque' && R.Arenas ? R.Arenas.desenho(arena, tipo) : null; }
+  function spriteDe(tipo, q, arena) {
+    var m = moldeDe(arena, tipo);
+    if (m) return doMolde(arena + '-' + tipo, m, q);
+    return tipo === 'mosca' || tipo === 'voador' ? mosca(q) : fantasma(tipo, q);
+  }
   var PUF = [
     ['.KK.', 'KwwK', 'KwsK', '.KK.'],
     ['.KKK.', 'KwwwK', 'KwwsK', 'KwssK', '.KKK.'],
@@ -139,21 +162,23 @@
   function aVista(x, y) { return x > vista.x - 24 && x < vista.x + vista.w + 24 && y > vista.y - 8 && y < vista.y + vista.h + 40; }
 
   function desenharFantasma() {
-    var f = this.f, est = S.estado, cfg = est.cfg, x = Math.round(f.x), y = Math.round(f.y);
-    var bob = ANIMAR ? Math.round(Math.sin((T0 + f.fase) / 420) * BALANCO) : 0, pe = y + 1 - ALTURA - bob;
+    var f = this.f, est = S.estado, cfg = est.cfg, x = Math.round(f.x), y = Math.round(f.y), m = moldeDe(est.arena, f.tipo);
+    var alto = m && m.flutua !== undefined ? m.flutua : ALTURA, bal = m && m.balanco !== undefined ? m.balanco : BALANCO;
+    var bob = ANIMAR && bal ? Math.round(Math.sin((T0 + f.fase) / 420) * bal) : 0, pe = y + 1 - alto - bob;
     if (f.estado === 'sumindo' || f.estado === 'surgindo') {
       var k = 1 - Math.max(0, f.ate - est.t) / cfg.vencidoMs;
       if (f.estado === 'surgindo') k = 1 - k;
-      if (k < 0.25) { P.sprite(spriteDe(f.tipo, 2), x, pe); return; }
+      if (k < 0.25) { P.sprite(spriteDe(f.tipo, 2, est.arena), x, pe); return; }
       pufs(x, pe - 8, (k - 0.25) / 0.75);
       return;
     }
     if (window.Jogador && Jogador.sombra) Jogador.sombra(P, x, y, 4);
     var q = est.t < f.feridoAte ? 2 : ANIMAR && (T0 + f.fase * 7) % 3600 < 140 ? 1 : 0;
-    var img = spriteDe(f.tipo, q);
+    if (q === 0 && m && m.passo && ANIMAR && Math.floor((T0 + f.fase) / 220) % 2) q = 3;
+    var img = spriteDe(f.tipo, q, est.arena);
     P.sprite(img, x, pe);
     // barrinha de vida em cima (contorno, fundo e o que sobra)
-    var by = pe - img.height + (f.tipo === 'dificil' ? 0 : 3) - 4, cheio = Math.round(10 * f.vida / f.max);
+    var by = pe - img.height + (m ? topoDe(m) : f.tipo === 'dificil' ? 0 : 3) - 4, cheio = Math.round(10 * f.vida / f.max);
     P.ret(x - 6, by, 12, 3, K);
     P.ret(x - 5, by + 1, 10, 1, FUNDO_BARRA);
     if (cheio > 0) P.ret(x - 5, by + 1, cheio, 1, COR_BARRA);

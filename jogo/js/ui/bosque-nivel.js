@@ -8,6 +8,7 @@
      (`premio` = { chave, movel }) ou, para um nível antigo pendente, um CasaMoveis.presente('bosque:<n>') se a chave
      ainda não tiver móvel (casa.md §12). Sem casa o móvel fica guardado e o próprio baú avisa na tela. Sem móvel, segue
      sem baú. `falas` = o que o Claude diz ao abrir (padrão: as falas `nivel`).
+   Em toda arena (arenas.md); fora do Bosque, as falas sem fantasma (BosqueFalas.de).
    Os botões novos nascem travados 600 ms (toque duplo). Estilos: css/ui-bosque.css. */
 (function () {
   var U = Reino.util, el = U.el, UI = Reino.UI;
@@ -48,6 +49,7 @@
   UI.telaEspadaBosque = function () {
     var B = Reino.Bosque, Fa = F();
     if (!B || !window.PA) return Promise.resolve();
+    var esp = Fa ? (Fa.de ? Fa.de('espada') : Fa.espada) : null;   // fora do Bosque, sem falar de fantasma
     return new Promise(function (resolver) {
       var J = window.Jogador;
       if (J && J.parar) J.parar();
@@ -56,16 +58,16 @@
       t.setAttribute('aria-label', 'Prêmio: a espada');
       if (animar) t.classList.add('animado');
       B.ganharEspada();
-      var titulo = el('h2.presente-titulo', U.colado(Fa ? Fa.espada[0] : 'Você ganhou uma espada!'));
+      var titulo = el('h2.presente-titulo', U.colado(esp ? esp[0] : 'Você ganhou uma espada!'));
       var espada = el('div.bosque-premio-espada', { 'aria-hidden': 'true' }, PA.iconeEmoji('🗡', pequeno() ? 6 : 8));
       var cena = el('div.presente-cena.bosque-premio-cena', feixe(), faiscas(), espada);
-      var fala = el('p.presente-dica', U.colado(Fa ? Fa.espada[2] : ''));
+      var fala = el('p.presente-dica', U.colado(esp ? esp[esp.length - 1] : ''));
       var dica = el('p.bosque-premio-dica', UI.dicaEspadaBosque ? UI.dicaEspadaBosque() : 'Toque na espada, ou aperte Espaço, para atacar.');
       var ok = el('button.btn-grande.btn-principal.presente-continuar', { type: 'button' }, 'Vamos lá! ✨');
       t.appendChild(el('div.presente-palco.bosque-premio', titulo, cena, fala, dica, el('div.presente-botoes', ok)));
       Reino.Som.tocar('estrela');
       UI.festa(2, { titulo: titulo, emoji: espada, som: false });
-      if (Fa) falar(Fa.espada);
+      if (esp) falar(esp);
       travar([ok], t, ok);
       var feito = false;
       function fechar() {
@@ -155,11 +157,11 @@
     });
   };
 
-  /* ---------- a espada ao entrar no Bosque (fim da íris) ---------- */
+  /* ---------- a espada ao entrar numa arena (o Bosque ou um mapa novo; fim da íris) ---------- */
   U.on(Reino.EVENTOS.TRANSICAO, function (comecou) {
     if (comecou || Reino.congelado) return;
     var B = Reino.Bosque, C = Reino.Cena;
-    if (!B || !B.noBosque() || B.temEspada() || UI.temTela() || (C && C.ocupada && C.ocupada())) return;
+    if (!B || !B.naArena() || B.temEspada() || UI.temTela() || (C && C.ocupada && C.ocupada())) return;
     UI.telaEspadaBosque().catch(function (e) { console.warn('bosque, espada:', e); });
   });
 })();

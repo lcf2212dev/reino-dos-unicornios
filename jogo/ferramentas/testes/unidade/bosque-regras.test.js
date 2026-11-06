@@ -1,7 +1,7 @@
 // Testes de unidade: as regras e o save do Bosque dos Fantasmas (js/sistemas/bosque.js, Reino.Bosque) e o móvel
 // surpresa da casa (CasaMoveis.presente/guardar, js/sistemas/casa-moveis.js). Contratos: docs/contratos/bosque.md §4,
-// §5 e casa.md §12. Nível a cada 30 inimigos mortos, pergunta a cada 10 (a mosca conta 2), migração do save antigo
-// sem perder o nível nem abrir presentes retroativos. O jogo inteiro (todos os `node: true`) num vm com save
+// §5, arenas.md e casa.md §12. XP por inimigo (curva de config.fantasmas.xpNivel), pergunta a cada terço do nível, o
+// placar antigo de mortos (30 por nível, pergunta a cada 10) vira XP sem perder o nível nem abrir presentes retroativos. O jogo inteiro (todos os `node: true`) num vm com save
 // sintético (ajudantes/jogo-save.js); nada toca no save real. Matérias, casa e móveis sintéticos.
 // Rodar: node --test jogo/ferramentas/testes/unidade/bosque-regras.test.js   (tudo: npm test)
 const { test } = require('node:test');
@@ -49,10 +49,11 @@ function jogo(opcoes = {}) {
   R.util.on(R.EVENTOS.BOSQUE, (c) => j.bosque.push(c));
   return j;
 }
-// mortos e blocos de pergunta já consumidos (migrado = 1: não deixa a migração do save antigo mexer)
+// mortos do placar ANTIGO e blocos de pergunta já consumidos (migrado = 1: não deixa a migração por acertos mexer);
+// zera os contadores novos (abates, xp, tercos): o XP vem todo do placar antigo (xpLegado)
 function comMortos(j, n, feitas) {
   const b = j.P.estado().bosque;
-  b.mortos = n; b.migrado = 1;
+  b.mortos = n; b.migrado = 1; b.abates = 0; b.xp = 0; b.tercos = 0;
   b.perguntasFeitas = feitas === undefined ? Math.floor(n / 10) : feitas;
 }
 
@@ -68,31 +69,31 @@ test('bosque: campos registrados (contadores e carimbo), mantêm no Novo ciclo, 
   igual(j.P.estado().bosque, { acertos: 0, espada: 0, vencidos: 0, mortos: 0, perguntasFeitas: 0, migrado: 0 });
   igual(j.P.estado().bosquePontos, {});
   assert.strictEqual(j.B.nivel(), 1);
-  igual(j.B.xp(), { n: 0, de: 30, maximo: false });
-  igual(j.B.proximaPergunta(), { n: 0, de: 10 });
+  igual(j.B.xp(), { n: 0, de: 300, maximo: false });
+  igual(j.B.proximaPergunta(), { n: 0, de: 100, pct: 0, marca: 1 });
   assert.strictEqual(j.B.perguntasPendentes(), 0);
   igual(j.B.pontosPendentes(), []);
 });
 
-test('bosque: nível e XP derivados dos inimigos mortos (30); nível máximo 1000; a mosca conta 2', () => {
+test('bosque: o placar antigo de mortos (30 por nível) vira XP no mesmo nível e fração; nível máximo 1000; a mosca conta 2', () => {
   const j = jogo(), B = j.B, cfg = j.R.config.fantasmas;
   assert.strictEqual(cfg.mortosPorNivel, 30);
   assert.strictEqual(cfg.perguntasPorBloco, 10);
   assert.strictEqual(cfg.nivelMax, 1000);
   comMortos(j, 29);
   assert.strictEqual(B.nivel(), 1);
-  igual(B.xp(), { n: 29, de: 30, maximo: false });
+  igual(B.xp(), { n: 290, de: 300, maximo: false });
   comMortos(j, 30);
   assert.strictEqual(B.nivel(), 2);
-  igual(B.xp(), { n: 0, de: 30, maximo: false });
+  igual(B.xp(), { n: 0, de: 330, maximo: false });
   comMortos(j, 67);
   assert.strictEqual(B.nivel(), 3);
-  igual(B.xp(), { n: 7, de: 30, maximo: false });
+  igual(B.xp(), { n: 84, de: 360, maximo: false }, '7 de 30 = 84 de 360');
   comMortos(j, 29969);
   assert.strictEqual(B.nivel(), 999);
   comMortos(j, 29970);
   assert.strictEqual(B.nivel(), 1000);
-  igual(B.xp(), { n: 30, de: 30, maximo: true }, 'no máximo, a barra cheia');
+  igual(B.xp(), { n: 30270, de: 30270, maximo: true }, 'no máximo, a barra cheia');
   comMortos(j, 50000);
   assert.strictEqual(B.nivel(), 1000);
   assert.strictEqual(B.mortos(), 50000);
@@ -102,8 +103,8 @@ test('bosque: nível e XP derivados dos inimigos mortos (30); nível máximo 100
   assert.strictEqual(B.nivel(), 1);
   // a mosca vale 2 no placar
   const k = jogo();
-  igual(k.B.abater('mosca'), { mortos: 2, perguntas: 0, subiu: null, premioNivel: null });
-  igual(k.B.abater('facil'), { mortos: 3, perguntas: 0, subiu: null, premioNivel: null });
+  igual(k.B.abater('mosca'), { mortos: 2, perguntas: 0, subiu: null, premioNivel: null, xp: 25 });
+  igual(k.B.abater('facil'), { mortos: 3, perguntas: 0, subiu: null, premioNivel: null, xp: 10 });
 });
 
 test('bosque: migração do save antigo mantém o nível, não abre pergunta nem presente retroativo e roda uma vez', () => {
@@ -164,19 +165,20 @@ test('bosque: acertou dá estrela e Aura, consome UMA pergunta e grava o móvel;
   assert.ok(MOVEIS.some((m) => m.id === r.presente.movel));
   assert.strictEqual(P.estrelas(), estrelas + 1);
   assert.ok(j.contagem.salvar > salvar, 'salvou');
-  assert.deepStrictEqual([j.P.estado().bosque.acertos, j.P.estado().bosque.vencidos, j.P.estado().bosque.perguntasFeitas], [1, 1, 1]);
+  const bq = j.P.estado().bosque;
+  assert.deepStrictEqual([B.acertos(), bq.acertos, bq.certas, bq.vencidos, bq.perguntasFeitas, bq.tercos], [1, 0, 1, 1, 0, 1], 'a versão nova soma certas e tercos, não os contadores antigos');
   assert.strictEqual(B.perguntasPendentes(), 0);
   assert.strictEqual(j.CM.escolhida('bosque:p1'), true);
   igual(j.bosque.filter((c) => c.tipo === 'acerto').map((c) => c.presente.chave), ['bosque:p1']);
   // sem pergunta pendente: estrela sim, móvel não, e não cria bloco
   const r2 = B.acertou('q4b');
   assert.strictEqual(r2.presente, null);
-  assert.strictEqual(j.P.estado().bosque.perguntasFeitas, 1);
+  assert.strictEqual(j.P.estado().bosque.tercos, 1);
   // errou: consome a pergunta pendente, conta o vencido e não dá prêmio
   comMortos(j, 20, 1);
   const antes = copia(j.P.estado().bosque);
   B.errou('q4a');
-  igual(j.P.estado().bosque, Object.assign(antes, { vencidos: antes.vencidos + 1, perguntasFeitas: 2 }));
+  igual(j.P.estado().bosque, Object.assign(antes, { vencidos: antes.vencidos + 1, tercos: 1 }));
   assert.strictEqual(B.perguntasPendentes(), 0);
   // consumirPergunta: sem prêmio, true só quando havia uma pendente
   comMortos(j, 30, 2);
@@ -250,7 +252,7 @@ test('bosque: dois aparelhos escolhem o mesmo nível: a mescla guarda uma escolh
   A.P.salvar(); B.P.salvar();
   [[A.lido(), B.lido()], [B.lido(), A.lido()]].forEach(([x, y]) => {
     const m = A.P.mesclar(copia(x), copia(y));
-    igual(m.bosque, { acertos: 32, espada: 1, vencidos: 32, mortos: 90, perguntasFeitas: 9, migrado: 1 });
+    igual(m.bosque, { acertos: 30, espada: 1, vencidos: 32, mortos: 90, perguntasFeitas: 9, migrado: 1, certas: 2 });
     igual(m.bosquePontos, { 2: { h: 'velocidade', em: 2000 }, 3: { h: 'vida', em: 1000 } }, 'a escolha mais nova');
     const J = jogo({ save: m });
     igual(J.B.pontos(), { forca: 0, vida: 1, velocidade: 1 });

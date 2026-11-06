@@ -11,13 +11,15 @@ if (require.main === module) require('./ajuda').ajuda(__filename);
 const fs = require('fs');
 const path = require('path');
 
-const LIMITE = { codigo: 600, dados: 800, tipos: 1000 };   // acima: falha
+const LIMITE = { codigo: 600, dados: 800, tipos: 1000, catalogo: 1200 };   // acima: falha
 const AVISO = { codigo: 420 };                             // acima (até o LIMITE): aviso, hora de dividir
 
 // A regra de cada arquivo, por caminho (a partir de jogo/). A PRIMEIRA regra que casa vale.
 //   gerado  sem limite e fora da conta (pacotes de voz, cache das vozes, index.html do gerar-index)
 //   dados   listas e desenhos (conteúdo das salas, ícones em pixel, falas, elenco, moldes, partituras):
 //           crescem com o jogo e se leem por item, então o limite é maior
+//   catalogo o manifesto (js/manifesto.js): uma linha por arquivo do jogo, na ordem de carga; dividir quebraria a
+//           ÚNICA lista de carga, então o limite é maior (1200)
 //   tipos   declarações do TypeScript (.d.ts) do npm run tipos: uma lista de formas lida por item, como os
 //           dados; limite maior (1000) porque tipos-jogo.d.ts junta TODAS as formas num arquivo só, citado
 //           pelos comentários JSDoc do jogo e pela documentação (dividir mudaria essas referências)
@@ -26,7 +28,7 @@ const REGRAS = [
   { tipo: 'gerado', casa: /^js\/voz\// },
   { tipo: 'gerado', casa: /^ferramentas\/gerado\// },
   { tipo: 'gerado', casa: /^index\.html$/ },
-  { tipo: 'dados', casa: /^js\/manifesto\.js$/ }, // catálogo de arquivos, lido por item e crescente com o jogo
+  { tipo: 'catalogo', casa: /^js\/manifesto\.js$/ }, // catálogo de arquivos: uma linha por script, cresce com o jogo
   { tipo: 'dados', casa: /^js\/conteudo\// },
   { tipo: 'dados', casa: /^js\/arte\/icones\// },
   { tipo: 'dados', casa: /^js\/.*\/falas\.js$/ },

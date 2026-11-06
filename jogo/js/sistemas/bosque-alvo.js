@@ -2,15 +2,16 @@
    ficar no alcance, vira para ele e golpeia a cada recargaMs, sozinha, seguindo-o se ele fugir, até ele sumir
    (vencido, sumiu ou desmaio). Clique ou toque fora de um fantasma, tecla de andar, tela aberta ou troca de cena
    param. Espaço, Enter e o botão da espada seguem como antes (bosque-combate.js:ligar, ui/bosque-hud.js).
-   O clique no fantasma é pego na CAPTURA do pointerdown da janela, antes do motor (motor/entrada.js), e só no Bosque
-   com a espada: o motor não o vê (nem o tocar para andar nem o mouse segurado); fora dele, nada muda.
+   O clique no fantasma é pego na CAPTURA do pointerdown da janela, antes do motor (motor/entrada.js), e só numa arena
+   (o Bosque ou um mapa novo; arenas.md) com a espada: o motor não o vê (nem o tocar para andar nem o mouse
+   segurado); fora dela, nada muda. A caixa do toque (TOQUE) serve aos desenhos de até 17 × 20.
    Parte de bosque-combate.js (interno Reino._bosqueCombate): S.quadro(est, j) roda a cada quadro, depois do passo.
    O alvo é est.alvo (o id do fantasma). Puros, testáveis no Node: fantasmaEm, mirarNo, pararNo, seguirAlvo.
    node: true: nada de DOM, Progresso nem Cena no carregamento (só dentro das funções). */
 (function () {
   var R = window.Reino;
   var S = R._bosqueCombate, BC = R.BosqueCombate;
-  var CENA = 'bosque', T = 16;
+  var T = 16;
   var ATIVOS = { vagando: 1, perseguindo: 1, voltando: 1, recuando: 1 };   // os que levam golpe (bosque-combate.js)
   // a caixa do toque em volta dos pés do fantasma (px do jogo): o desenho (13 × 17 flutuando acima do chão, com a
   // barrinha de vida em cima; bosque-desenho.js) e uma folguinha para o dedo
@@ -60,7 +61,8 @@
   }
 
   /* ================= NO JOGO ================= */
-  function naCena() { var c = R.Cena && R.Cena.atual && R.Cena.atual(); return c && c.id === CENA ? c : null; }
+  // numa arena (o Bosque ou um mapa novo; bosque-combate.js:naCena)
+  function naCena() { return S.naCena ? S.naCena() : null; }
   function bloqueado() { return !!(R.Cena && R.Cena.bloqueado && R.Cena.bloqueado()) || !!(R.UI && R.UI.temTela && R.UI.temTela()); }
   // ela anda até o alvo por um caminho NOSSO (parar o ataque a para); (destX, destY) = o tile do fantasma desse caminho
   var andando = false, destX = -1, destY = -1;
@@ -97,7 +99,7 @@
     if (andando) { J.parar(); soltarCaminho(); }
     J.virar8(r.x - J.x, r.y - J.y);   // parada, sempre virada para ele (8 direções, sem piscar entre duas)
   }
-  // o fantasma sob o ponto da tela (clientX/Y), no Bosque; ou null
+  // o fantasma sob o ponto da tela (clientX/Y), numa arena; ou null
   function fantasmaNaTela(cx, cy) {
     var V = R._motor, est = S.estado;
     if (!V || !V.canvas || !est || !naCena()) return null;

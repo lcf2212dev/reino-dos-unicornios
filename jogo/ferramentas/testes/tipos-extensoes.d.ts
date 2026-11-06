@@ -206,15 +206,18 @@ interface PerguntaBosque { materia: Materia; sala: Sala; desafio: Desafio }
 /** O móvel surpresa gravado por CasaMoveis.presente: a chave e o id do móvel. */
 interface PresenteBosque { chave: string; movel: string }
 /** O que um inimigo morto rende: o placar, as perguntas pendentes, o nível novo e o móvel que ele já gravou. */
-interface AbateBosque { mortos: number; perguntas: number; subiu: number | null; premioNivel: PresenteBosque | null }
+interface AbateBosque { mortos: number; perguntas: number; subiu: number | null; premioNivel: PresenteBosque | null; xp: number }
 /** Reino.Bosque */
 interface BosqueApi {
   acertos(): number;
   mortos(): number;
   nivel(): number;
   xp(): { n: number; de: number; maximo: boolean };
+  /** XP total: o do placar antigo de mortos (xpLegado) + o ganho desde o XP */
+  xpTotal(): number;
   perguntasPendentes(): number;
-  proximaPergunta(): { n: number; de: number };
+  /** n de `de` XP do terço de agora; pct 0–99; marca = qual terço do nível (1 a 3) */
+  proximaPergunta(): { n: number; de: number; pct: number; marca: number };
   temEspada(): boolean;
   /** true só na 1ª vez */
   ganharEspada(): boolean;
@@ -225,12 +228,17 @@ interface BosqueApi {
   vidaMax(): number;
   fatorVelocidade(): number;
   noBosque(): boolean;
+  /** numa arena (o Bosque ou um mapa novo; arenas.md) */
+  naArena(): boolean;
+  arenaAtual(): string | null;
   pergunta(): PerguntaBosque | null;
   perguntas(): PerguntaBosque[];
-  abater(tipo: string): AbateBosque;
+  /** arena: a dele (padrão: a de agora; sem arena, o Bosque) */
+  abater(tipo: string, arena?: string): AbateBosque;
   acertou(materiaId: string): { estrelas: number; nivel: number; presente: PresenteBosque | null };
   errou(materiaId: string): void;
   consumirPergunta(): boolean;
   chaveMovel(n: number): string;
   HABILIDADES: HabilidadeBosque[];
+  curva: { xpDoNivel(n: number): number; xpAte(n: number): number; nivelDoXp(x: number): number; xpLegado(m: number): number; tercosDe(x: number): number };
 }

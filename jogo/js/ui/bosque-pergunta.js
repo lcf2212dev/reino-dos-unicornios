@@ -1,7 +1,8 @@
-/* Bosque dos Fantasmas: a pergunta do bloco de 10 inimigos mortos e o prêmio (docs/contratos/bosque.md §5 e §7).
-   Ouve Reino.EVENTOS.BOSQUE { tipo: 'vencido', id, fantasma } e chama Reino.Bosque.abater(fantasma): o placar de
-   mortos sobe (a mosca conta 2) e, a cada 10, a pergunta abre; a cada 30, o nível. A fila processa um vencido por
-   vez, esperando as telas fecharem: pergunta (se o bloco fechou e há pergunta pendente) → BosqueCombate.devolver(id)
+/* Bosque dos Fantasmas e as outras arenas: a pergunta de cada terço do nível e o prêmio (docs/contratos/bosque.md §5 e
+   §7, arenas.md). Ouve Reino.EVENTOS.BOSQUE { tipo: 'vencido', id, fantasma, arena? } e chama
+   Reino.Bosque.abater(fantasma, arena): o placar e o XP sobem e, a cada terço da barra do nível, a pergunta abre; ao
+   fechar a barra, também o nível. Fora do Bosque, o emoji da arena e as falas sem fantasma. A fila processa um vencido por
+   vez, esperando as telas fecharem: pergunta (se o terço fechou e há pergunta pendente) → BosqueCombate.devolver(id)
    → nível (UI.subirNivelBosque(n, undefined, abate.premioNivel)). A pergunta vem de Reino.Bosque.pergunta()
    ({ materia, sala, desafio }), no card de Reino.Desafios.render como o desafio do ET (ui/et-desafio.js): o Claude
    fala `vencido`, a narradora lê a pergunta, Conferir → certo: Bosque.acertou (1 estrela, Aura e UM móvel surpresa
@@ -27,7 +28,10 @@
 
   function perguntaFantasma(f) {
     var B = Reino.Bosque, D = Reino.Desafios, Fa = Reino.BosqueFalas, q = B && B.pergunta();
-    var devolver = function () { if (Reino.BosqueCombate && Reino.BosqueCombate.devolver) Reino.BosqueCombate.devolver(f && f.id); };
+    var devolver = function () { if (Reino.BosqueCombate && Reino.BosqueCombate.devolver) Reino.BosqueCombate.devolver(f && f.id, f && f.arena); };
+    var arenaId = (f && f.arena) || (B && B.arenaAtual && B.arenaAtual()) || 'bosque';
+    var ar = Reino.Arenas && Reino.Arenas.def(arenaId), emoji = (ar && ar.emoji) || '👻';
+    var falas = function (k) { return Fa.de ? Fa.de(k, arenaId) : Fa[k]; };
     if (!q) {
       // bimestre sem pergunta: a pendente é consumida sem tela (senão ela voltaria em toda entrada no Bosque)
       if (B && B.consumirPergunta) B.consumirPergunta();
@@ -40,11 +44,11 @@
       if (J && J.parar) J.parar();
       if (Reino.Claude && Reino.Claude.limpar) Reino.Claude.limpar();
       var fase = 'pergunta', ctrl = null, resultado = null, premio = null, materiaId = q.materia.id;
-      var pn = UI.painel('bosque-pergunta', '👻 Hora da pergunta!', { curto: '👻 Pergunta!', aoFechar: function () { terminar(); } });
+      var pn = UI.painel('bosque-pergunta', emoji + ' Hora da pergunta!', { curto: emoji + ' Pergunta!', aoFechar: function () { terminar(); } });
       pn.tela._bosqueAtual = function () { return q; };   // a pergunta na tela (testes)
 
       var fala = el('p.bosque-fala');
-      var cabeca = el('div.bosque-cabeca', PA.iconeEmoji('👻', compacto() ? 2 : 3), fala);
+      var cabeca = el('div.bosque-cabeca', PA.iconeEmoji(emoji, compacto() ? 2 : 3), fala);
       var area = el('div.bosque-area');
       var retorno = el('div.bosque-retorno', { hidden: true });
       var btn = el('button.btn-grande.btn-conferir.bosque-botao', { type: 'button', disabled: true }, 'Conferir ✓');
@@ -115,7 +119,7 @@
           Reino.Som.tocar('erro');
           retorno.appendChild(el('h3', '💭 Quase!'));
           retorno.appendChild(el('p.surpresa-certa', D.linhaCerta(q.desafio)));
-          dizer(Fa.erro);
+          dizer(falas('erro'));
         }
         if (q.desafio.explica) retorno.appendChild(el('p.retorno-explica', '📌 ' + q.desafio.explica));
         retorno.hidden = false;
@@ -162,20 +166,20 @@
       });
 
       Reino.Som.tocar('porta');
-      mostrar(dizer(Fa.vencido));
+      mostrar(dizer(falas('vencido')));
     });
   }
 
   /* ---------- a fila dos vencidos, um por vez ---------- */
   var fila = [], andando = false;
   function bloqueado() { return !!(Reino.Cena && Reino.Cena.bloqueado && Reino.Cena.bloqueado()); }
-  // abre a pergunta sempre que há bloco pendente (o `abate` só é usado para os prêmios e o nível)
+  // abre a pergunta sempre que há terço pendente (o `abate` só é usado para os prêmios e o nível)
   function temPergunta() {
     var B = Reino.Bosque;
     return !!(B && B.perguntasPendentes && B.perguntasPendentes() > 0);
   }
   function devolverUltimo(item) {
-    if (Reino.BosqueCombate && Reino.BosqueCombate.devolver) Reino.BosqueCombate.devolver(item && item.id);
+    if (Reino.BosqueCombate && Reino.BosqueCombate.devolver) Reino.BosqueCombate.devolver(item && item.id, item && item.arena);
   }
   // pergunta → devolver o fantasma → nível novo (com o baú do móvel que o abate já gravou)
   function processar(item) {
@@ -196,28 +200,28 @@
     // depois do prêmio, outra pergunta que tenha ficado pendente (save mesclado/crash) entra na fila
     processar(fila.shift()).then(function () { andando = false; recuperar(); setTimeout(proximo, 0); });
   }
-  // a pergunta que ficou pendente (fechou o jogo no meio): recupera com id null, só dentro do Bosque e com a espada
+  // a pergunta que ficou pendente (fechou o jogo no meio): recupera com id null, só dentro de uma arena e com a espada
   function recuperar() {
     if (andando || fila.length || UI.temTela() || bloqueado()) return;
     var B = Reino.Bosque;
-    if (!B || !B.noBosque || !B.noBosque() || !B.perguntasPendentes || B.perguntasPendentes() <= 0) return;
+    if (!B || !B.naArena || !B.naArena() || !B.perguntasPendentes || B.perguntasPendentes() <= 0) return;
     if (B.temEspada && !B.temEspada()) return;   // a tela da espada da 1ª entrada vem primeiro
     if (!B.pergunta()) {   // bimestre sem pergunta: consome as pendentes sem abrir tela
       while (B.perguntasPendentes() > 0 && B.consumirPergunta && B.consumirPergunta()) {}
       return;
     }
-    fila.push({ id: null, abate: null });
+    fila.push({ id: null, abate: null, arena: B.arenaAtual() });
     proximo();
   }
 
   U.on(EV.BOSQUE, function (e) {
     if (!e || e.tipo !== 'vencido') return;
-    var B = Reino.Bosque, abate = B && B.abater ? B.abater(e.fantasma) : null;
-    fila.push({ id: e.id || null, abate: abate });
+    var B = Reino.Bosque, abate = B && B.abater ? B.abater(e.fantasma, e.arena) : null;
+    fila.push({ id: e.id || null, abate: abate, arena: e.arena || null });
     proximo();
   });
   U.on(EV.TELAS, function (n) { if (!n) setTimeout(function () { recuperar(); proximo(); }, 0); });
-  U.on(EV.CENA, function (m) { if (m && m.para === 'bosque') setTimeout(recuperar, 0); });
+  U.on(EV.CENA, function (m) { if (m && Reino.Arenas && Reino.Arenas.def(m.para)) setTimeout(recuperar, 0); });
   // a íris/diálogo acabou: o que estava esperando a cena liberar pode abrir
   U.on(EV.TRANSICAO, function (comecou) { if (!comecou) setTimeout(function () { recuperar(); proximo(); }, 0); });
   U.on(EV.OCUPADA, function (motivo) { if (!motivo) setTimeout(function () { recuperar(); proximo(); }, 0); });
