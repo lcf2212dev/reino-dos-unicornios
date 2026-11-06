@@ -19,8 +19,8 @@
   V.rua = function (tx, ty) {
     if (tx < 1 || tx > 38 || ty < 3 || ty > 30) return false;
     return ty === 8 || ty === 9 ||                                  // a rua das lojas
-      (tx >= 19 && tx <= 21 && ty >= 10) ||                         // a avenida do portal até a rua
-      (ty === 19 && tx >= 9 && tx <= 31);                           // a travessa da praça até os terrenos
+      (tx >= 19 && tx <= 21 && ty >= 10 && ty <= 24) ||              // a avenida da praça até a rua
+      (ty === 19 && tx >= 1 && tx <= 31);                           // a travessa: do portal (esquerda) à praça e aos terrenos
   };
 
   /* ---------- moitas redondas (o fundo em volta e a parede) ---------- */

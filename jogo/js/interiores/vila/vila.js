@@ -1,17 +1,17 @@
 /* Vila Arco-Íris, a vila por fora (docs/contratos/vila.md §2): id 'vila', 40 × 32 tiles, um cômodo
-   { x: 1, y: 1, w: 38, h: 30 } (chão nas fileiras 3 a 30), céu aberto (fundo 'vila', fundo.js), spawn (20, 28), parte do
-   Bosque (lugar 'bosque', entrada: false, pacote 'interior-bosque'). Sem saída: entra e sai pelo portal (20, 29).
+   { x: 1, y: 1, w: 38, h: 30 } (chão nas fileiras 3 a 30), céu aberto (fundo 'vila', fundo.js), spawn (2, 19), parte do
+   Bosque (lugar 'bosque', entrada: false, pacote 'interior-bosque'). Sem saída: entra e sai pelo portal (1, 19), na borda esquerda.
    No alto, as 4 fachadas das lojas (a porta é a escada `portal` na fileira 8: x = 6, 15, 24, 33); a rua das lojas
-   (fileiras 8–9), a avenida do portal até ela (x 19–21) e a travessa da praça (fileira 19) são `corredores`. No meio,
-   a praça com a fonte e uma Teleportadora (o objeto 'vila-teleportadora' é de vila/teleportadora.js); embaixo, a
-   entrada com o portal de volta e a outra Teleportadora; dos lados, os 3 terrenos livres cercados, com placa.
+   (fileiras 8–9), a avenida da praça até ela (x 19–21) e a travessa da praça, do portal da esquerda aos terrenos (fileira 19) são `corredores`. No meio,
+   a praça com a fonte e uma Teleportadora (o objeto 'vila-teleportadora' é de vila/teleportadora.js); na borda esquerda, a
+   entrada com o portal de volta e a placa de boas-vindas; dos lados, os 3 terrenos livres cercados, com placa.
    Ordem: fixos → árvores das bordas e moitas de baixo → flores onde ainda sobra janela 3×3 vazia (a regra do "rico"),
    pela mesma semente (Reino.Desenho.rng): o layout sai sempre igual. */
 (function () {
   var R = window.Reino;
   var I = R.Interiores, V = R._predios.vila;
   var F = ((R.FALAS_INTERIORES || {}).vila || {}).objetos || {};
-  var W = 40, H = 32, X0 = 1, X1 = 38, Y0 = 3, Y1 = 30, SPAWN = { x: 20, y: 28 }, PORTAL = { x: 20, y: 29 };
+  var W = 40, H = 32, X0 = 1, X1 = 38, Y0 = 3, Y1 = 30, SPAWN = { x: 2, y: 19 }, PORTAL = { x: 1, y: 19 };
   var LOJAS = [['casa', 6], ['armas', 15], ['cabecas', 24], ['armaduras', 33]];   // [loja, x da porta]
   var rnd = R.Desenho.rng(20261106);
   var objetos = [], occ = [], x, y;
@@ -59,22 +59,24 @@
 
   // 4. a entrada: o portal de volta, a placa de boas-vindas, a Teleportadora, o poço e o carrinho de flores
   poe('vila-portal', PORTAL.x, PORTAL.y);
-  escada({ x: PORTAL.x, y: PORTAL.y, para: 'bosque', sentido: 'portal', seta: false, chegar: { x: 0, y: -1 } });
-  poe('vila-placa', 17, 27, fala('placa', 'Placa'));
+  escada({ x: PORTAL.x, y: PORTAL.y, para: 'bosque', sentido: 'portal', seta: false, chegar: { x: 1, y: 0 } });
+  poe('vila-placa', 4, 18, fala('placa', 'Placa'));
+  poe('vila-poste', 2, 17); poe('vila-poste', 2, 21);
+  poe('vila-placa', 17, 27);   // a placa de antes, no fim da avenida (só enfeite)
   poe('vila-canteiro', 23, 27);   // (aqui ficava a 2ª Teleportadora: só a da praça, pedido do Leandro 06/11)
   poe('vila-poco', 33, 24, fala('poco', 'Poço dos desejos'));
   poe('vila-carrinho', 27, 25);
   poe('vila-canteiro', 13, 25); poe('vila-canteiro', 26, 29);
-  poe('vila-poste', 18, 29); poe('vila-poste', 22, 29);
+  poe('vila-canteiro', 20, 27); poe('vila-poste', 18, 26); poe('vila-poste', 22, 26);
 
   // 5. árvores nas bordas e moitas na fileira de baixo (o portal fica aberto)
-  for (y = 12; y <= 28; y += 3) { poe('vila-arvore', 1, y, { var: { n: y } }); poe('vila-arvore', 38, y, { var: { n: y + 2 } }); }
-  for (x = 1; x <= 38; x++) if (Math.abs(x - PORTAL.x) > 2 && !occ[30][x]) poe(x % 4 ? 'bosque-arbusto' : 'vila-arvore', x, 30, x % 4 ? null : { var: { n: x } });
+  for (y = 12; y <= 28; y += 3) { if (y !== 18) poe('vila-arvore', 1, y, { var: { n: y } }); poe('vila-arvore', 38, y, { var: { n: y + 2 } }); }
+  for (x = 1; x <= 38; x++) if (!occ[30][x]) poe(x % 4 ? 'bosque-arbusto' : 'vila-arvore', x, 30, x % 4 ? null : { var: { n: x } });
 
   // 6. flores e mato (não sólidos) em toda janela 3×3 de chão que ainda estiver vazia (fora das ruas, se der)
   var MIUDOS = ['bosque-flores', 'bosque-margaridas', 'bosque-trevo', 'bosque-flores', 'bosque-mato'];
   function sorteio(n) { return Math.floor(rnd() * n); }
-  var CORREDORES = [{ x: 1, y: 8, w: 38, h: 2 }, { x: 19, y: 10, w: 3, h: 21 }, { x: 9, y: 19, w: 23, h: 1 }];
+  var CORREDORES = [{ x: 1, y: 8, w: 38, h: 2 }, { x: 19, y: 10, w: 3, h: 15 }, { x: 1, y: 19, w: 31, h: 1 }];
   function noCorredor(tx, ty) { return CORREDORES.some(function (r) { return tx >= r.x && ty >= r.y && tx < r.x + r.w && ty < r.y + r.h; }); }
   for (y = Y0; y + 2 <= Y1; y++) for (x = X0; x + 2 <= X1; x++) {
     var vazia = true, corr = false, j, i;

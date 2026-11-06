@@ -24,12 +24,12 @@ itens de uma vez**.
 ## 2. Ids
 - Interiores, todos com `lugar: 'bosque'`, `entrada: false`, `pacote: 'interior-bosque'` (são parte do prédio do
   Bosque: entram pelo portal, nunca por porta do mapa):
-  - `vila` "Vila Arco-Íris", céu aberto (`fundo: 'vila'`), 40 × 32, um cômodo `{ x: 1, y: 1, w: 38, h: 30 }`, spawn (20, 28).
+  - `vila` "Vila Arco-Íris", céu aberto (`fundo: 'vila'`), 40 × 32, um cômodo `{ x: 1, y: 1, w: 38, h: 30 }`, spawn (2, 19).
   - `vila-casa` "Casa Bonita", `vila-armas` "Forja Brilhante", `vila-cabecas` "Elmos e Chapéus", `vila-armaduras`
     "Armaduras e Botas": 16 × 12, um cômodo `{ x: 1, y: 1, w: 14, h: 10 }`.
 - Ligações (escadas pareadas `sentido: 'portal'`):
   - Bosque: o portal 'bosque-portal-vila' (2 × 3 em (53, 20), colado na borda direita) com a escada no meio dele, (53, 22),
-    `seta: false`, `chegar: { x: -1, y: 0 }` ↔ Vila (20, 29) `seta: false`. Chega no Bosque em (52, 22); na Vila, em (20, 28).
+    `seta: false`, `chegar: { x: -1, y: 0 }` ↔ Vila (1, 19), na borda esquerda, `seta: false`, `chegar: { x: 1, y: 0 }`. Chega no Bosque em (52, 22); na Vila, em (2, 19).
   - Porta de cada loja na Vila, na fileira 8, em x = 6, 15, 24, 33 (casa, armas, cabecas, armaduras), seta padrão,
     `chegar: { x: 0, y: 1 }` ↔ saída da loja em (8, 10) `seta: 'desce'`, `chegar: { x: 0, y: -1 }`.
 - Lojistas (`Reino.registrarPersonagem`, com voz): `lavanda` "Dona Lavanda" (casa), `bigorna` "Seu Bigorna" (armas),

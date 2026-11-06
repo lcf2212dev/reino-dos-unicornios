@@ -23,3 +23,4 @@ Contrato: `docs/contratos/vila.md`.
 - O portal do Bosque ficou grande (redemoinho 2 × 3 com coluna de luz) e colado na borda direita.
 - A Teleportadora sem brilho (sem aura) e, em todos os unicórnios, sem as asas automáticas dos épicos e lendários
   (o "caroço nas costas"); as Asinhas de fada da Loja, que ela escolhe, continuam.
+- A entrada da Vila (o portal de volta ao Bosque) fica na borda esquerda, na travessa da praça.

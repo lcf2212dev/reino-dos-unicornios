@@ -110,4 +110,5 @@
 # @ = Vila Arco-Íris: a Vila, as 4 lojas com os lojistas e a Teleportadora na praça da cidade
 # @ = Vila: portal grande no Bosque, uma Teleportadora sem brilho, unicórnios sem asas automáticas
 # @ = Vila: portal grande no Bosque, uma Teleportadora sem brilho, unicórnios sem asas automáticas
+# @ = Vila: entrada na borda esquerda
 @
