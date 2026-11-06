@@ -74,9 +74,8 @@ Frente do mapa `<x>` (gelo, dunas, cristal, vulcao):
   interior) pelos 5 do modelo: `falas.js`, `objetos.js`, `inimigos.js` (ícone + os 4 desenhos), `<x>.js` (chão, céu
   e o interior) e `lugar.js` (o portal com as cores dela, `if (Reino.Portal) Reino.Portal.registrar(...)`, e o
   `registrarLugar` com o MESMO rect, caminho e menu). O `lugar.js` tem de carregar sozinho (o validador de lugares,
-  `validar/lugares-do-mapa.js`, só carrega config, registros e os `lugar.js`). Cinco linhas no manifesto, nunca mais:
-  ele está no limite de 800 linhas (`npm run tamanho`); cada mapa completo soma 4, e o orquestrador abre a exceção ou
-  divide o manifesto na integração.
+  `validar/lugares-do-mapa.js`, só carrega config, registros e os `lugar.js`). Cinco linhas no manifesto, nunca mais
+  (o manifesto tem limite próprio de catálogo, 1200 linhas, em `ferramentas/tamanho.js`).
 - NÃO mexe: `rect` e `caminho` do lugar, o id, o tamanho/spawn/saída do interior, `config*.js`, `sistemas/bosque*`,
   `ui/bosque*`, `motor/interiores-arena.js`, `arte/portal.js` nem pasta de outro mapa. Precisa de
   número diferente ou de API nova? Diga no retorno (o orquestrador muda).
