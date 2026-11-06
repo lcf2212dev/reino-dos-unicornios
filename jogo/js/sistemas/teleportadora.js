@@ -58,6 +58,13 @@
 
   R.registrarModulo({
     id: 'teleportadora',
+    // as duas falas do balão da Teleportadora entram no pacote geral (voz `narradora`)
+    falas: function () {
+      return [
+        { texto: 'Quer conhecer a Cidade Nova? Eu levo você! ✨', voz: 'narradora', pacote: 'geral' },
+        { texto: 'Quer voltar para a Cidade Principal? Eu levo você! ✨', voz: 'narradora', pacote: 'geral' },
+      ];
+    },
     acoes: {
       teleportadora: function (acao) { return falar(acao && acao.destino); },
       portalCidade: function (acao) { return portal(acao && acao.para); },

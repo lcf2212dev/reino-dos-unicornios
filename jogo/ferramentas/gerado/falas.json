@@ -77417,6 +77417,24 @@
    "fala": "Assim você ganha móveis."
   },
   {
+   "chave": "f3e06d2c1g",
+   "voz": "narradora",
+   "texto": "Quer conhecer a Cidade Nova? Eu levo você!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Quer conhecer a Cidade Nova? Eu levo você!"
+  },
+  {
+   "chave": "5385f66d1o",
+   "voz": "narradora",
+   "texto": "Quer voltar para a Cidade Principal? Eu levo você!",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Quer voltar para a Cidade Principal? Eu levo você!"
+  },
+  {
    "chave": "e60a2b66n",
    "voz": "claude",
    "texto": "Uma casa só sua!",
