@@ -54,7 +54,8 @@ CENTENAS = ' cento duzentos trezentos quatrocentos quinhentos seiscentos setecen
 # o transcritor escreve diferente do texto, mas a voz disse certo
 TROCAS = {'pro': 'para o', 'pra': 'para a', 'pros': 'para os', 'pras': 'para as', 'uma': 'um', 'catorze': 'quatorze',
           'comeia': 'colmeia', 'comeias': 'colmeias', 'real': 'reais', 'duas': 'dois',
-          'sem': 'cem'}   # homófonos: "Já ganhou 100 Robux" saía "sem" (vale para os dois lados, a voz diz igual)
+          'sem': 'cem',   # homófonos: "Já ganhou 100 Robux" saía "sem" (vale para os dois lados, a voz diz igual)
+          'arcoiris': 'arco iris', 'arcuiris': 'arco iris'}   # "Arco-Íris" sai junto (Vila Arco-Íris, 2026-11-06)
 
 
 def extenso(n):

@@ -107,4 +107,5 @@
 # @ = Parquinho: portal na praça
 # @ = 6 mapas de combate, XP por terços, lagoas no Pântano
 # @ = itens: drops, Mochila, Baú de Guardados
+# @ = Vila Arco-Íris: a Vila, as 4 lojas com os lojistas e a Teleportadora na praça da cidade
 @
