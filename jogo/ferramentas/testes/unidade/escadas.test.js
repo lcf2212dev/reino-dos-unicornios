@@ -25,6 +25,13 @@ const CONGELADA = {
   'matematica-1:0': { para: 'matematica-2', x: 3, y: 10 }, 'matematica-1:1': { para: 'matematica', x: 9, y: 3 },
   'matematica-2:0': { para: 'matematica-3', x: 3, y: 10 }, 'matematica-2:1': { para: 'matematica-1', x: 33, y: 3 },
   'matematica-3:0': { para: 'matematica-2', x: 33, y: 3 },
+  // Vila Arco-Íris (vila.md §2): o portal do Bosque e o da Vila (sentido 'portal'), e a porta de cada loja ↔ a saída dela
+  'bosque:0': { para: 'vila', x: 20, y: 28 },
+  'vila:0': { para: 'vila-casa', x: 8, y: 9 }, 'vila:1': { para: 'vila-armas', x: 8, y: 9 },
+  'vila:2': { para: 'vila-cabecas', x: 8, y: 9 }, 'vila:3': { para: 'vila-armaduras', x: 8, y: 9 },
+  'vila:4': { para: 'bosque', x: 44, y: 24 },
+  'vila-casa:0': { para: 'vila', x: 6, y: 9 }, 'vila-armas:0': { para: 'vila', x: 15, y: 9 },
+  'vila-cabecas:0': { para: 'vila', x: 24, y: 9 }, 'vila-armaduras:0': { para: 'vila', x: 33, y: 9 },
 };
 TORRE.forEach((id, i) => {
   let k = 0;

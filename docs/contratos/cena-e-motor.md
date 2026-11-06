@@ -39,7 +39,7 @@ Reino.Cena = {
   irPara(interiorId, chegada {x,y}?, olhar {x,y}?, de?) → Promise   // interior → interior (escadas), com íris.
                                  // Sem chegada: ao lado da escada de interiorId que volta para `de`
                                  // (Interiores.chegadaVindoDe; interiores.md §3.1); sem ela, o spawn
-  sair() → Promise               // interior → mapa, 1 tile abaixo da porta do lugar, olhando para baixo
+  sair(chegada?) → Promise       // interior → mapa, 1 tile abaixo da porta do lugar (ou no tile `chegada` {x,y}), olhando para baixo
   paraTela(wx, wy) → {x, y}      // px do jogo → px CSS da página (testes e toques)
   quadros: { media() → ms, ultimo }   // tempo de desenho por quadro (últimos ~120), para o debug
   ocupar(motivo), liberar(motivo)     // estado 'atividade' sem tela DOM (ex.: banho); evento OCUPADA (motivo | null)

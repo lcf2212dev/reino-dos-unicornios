@@ -53,6 +53,7 @@
       'css/ui-bosque.css',
       'css/ui-itens.css',
       'css/ui-itens-pocao.css',
+      'css/ui-vila.css',
       'css/ui-parquinho.css',
       'css/ui-moedas-festa.css',
       'css/ui-casa-decorar.css',
@@ -62,6 +63,7 @@
       { js: 'js/nucleo/congelar.js', grupo: 'nucleo' },
       { js: 'js/nucleo/config.js', grupo: 'nucleo', node: true },
       { js: 'js/nucleo/config-itens.js', grupo: 'nucleo', node: true }, // números dos itens (Reino.config.itens; itens.md §12): logo depois do config.js
+      { js: 'js/nucleo/config-vila.js', grupo: 'nucleo', node: true }, // Vila Arco-Íris: números das lojas e da Teleportadora (Reino.config.vila; vila.md)
       { js: 'js/nucleo/registros.js', grupo: 'nucleo', node: true },
       { js: 'js/sistemas/bimestres.js', grupo: 'nucleo', node: true },
       { js: 'js/nucleo/modulos.js', grupo: 'nucleo', node: true },
@@ -87,6 +89,7 @@
       { js: 'js/arte/icones/livros.js', grupo: 'icones', node: true }, // 📗 dos livros da escola (4º bimestre)
       { js: 'js/arte/desenho.js', grupo: 'arte', node: true }, // desenho.js antes da pixel art: Reino.Desenho (paleta e helpers) é a fonte das cores do PA.cor
       { js: 'js/arte/portal.js', grupo: 'arte', node: true }, // o portal mágico em qualquer cor (Reino.Portal: o do Bosque e os das outras arenas; arenas.md)
+      { js: 'js/arte/teleportadora.js', grupo: 'arte', node: true }, // a Teleportadora, unicórnio de aura arco-íris (Reino.TeleportadoraArte; vila.md)
       { js: 'js/arte/pixelart.js', grupo: 'pixelart' }, // pixelart.js (base) primeiro: cria window.PA e PA._interno, que as outras partes usam
       { js: 'js/arte/pixelart-unicornio-moldes.js', grupo: 'pixelart' },
       { js: 'js/arte/enfeites-novidades.js', grupo: 'pixelart', node: true },
@@ -350,11 +353,16 @@
       { js: 'js/conteudo/casa/kits-a.js', grupo: 'conteudo', node: true }, // casa: kits estar, jantar e cozinha (casa.md §3)
       { js: 'js/conteudo/casa/kits-b.js', grupo: 'conteudo', node: true }, // casa: kits Banheiro, Quarto do jogador e Quarto do unicórnio
       { js: 'js/conteudo/casa/moveis-salas.js', grupo: 'conteudo', node: true }, // casa: os 42 móveis avulsos, um à escolha por sala feita (casa.md §12)
+      { js: 'js/conteudo/casa/moveis-loja.js', grupo: 'conteudo', node: true }, // casa: os 50 enfeites da loja Casa Bonita da Vila, 30 estrelas cada (loja: true; vila.md)
       { js: 'js/conteudo/itens/catalogo.js', grupo: 'conteudo', node: true }, // itens dos monstros: o catálogo (Reino.ItensCatalogo; itens.md §3, §4)
       { js: 'js/conteudo/itens/vestes-a.js', grupo: 'conteudo', node: true }, // itens: moldes da cabeça (Reino.VESTES; itens.md §8)
       { js: 'js/conteudo/itens/vestes-b.js', grupo: 'conteudo', node: true }, // itens: moldes de armaduras, botas, espadas e escudos
       { js: 'js/conteudo/itens/icones-a.js', grupo: 'icones', node: true }, // itens: ícones item:<id> de espadas, escudos, capacetes e chapéus
       { js: 'js/conteudo/itens/icones-b.js', grupo: 'icones', node: true }, // itens: ícones de armaduras, botas, poções e bau-guardados
+      { js: 'js/conteudo/itens/loja-moldes.js', grupo: 'conteudo', node: true }, // Vila: moldes e ícones gerados das 100 peças das lojas (vila.md)
+      { js: 'js/conteudo/itens/loja-armas.js', grupo: 'conteudo', node: true }, // Vila: as 20 espadas da Forja
+      { js: 'js/conteudo/itens/loja-cabecas.js', grupo: 'conteudo', node: true }, // Vila: os 20 capacetes e 20 chapéus
+      { js: 'js/conteudo/itens/loja-armaduras.js', grupo: 'conteudo', node: true }, // Vila: as 20 armaduras e 20 botas
       { js: 'js/conteudo/materias/ciencias/icones.js', grupo: 'icones', node: true },
       { js: 'js/conteudo/materias/matematica/icones.js', grupo: 'icones', node: true },
       { js: 'js/conteudo/materias/geografia/icones.js', grupo: 'icones', node: true },
@@ -423,6 +431,7 @@
       { js: 'js/mundo/cidade-desenho.js', grupo: 'mundo' },
       { js: 'js/mundo/cidade-pecas.js', grupo: 'mundo' },
       { js: 'js/mundo/cofre-desenho.js', grupo: 'mundo' },
+      { js: 'js/mundo/teleportadora.js', grupo: 'mundo' }, // a Teleportadora na praça da cidade (objeto do mapa, camada e toque; vila.md)
       { js: 'js/mundo/contorno.js', grupo: 'mundo' },
       { js: 'js/mundo/fachadas.js', grupo: 'mundo' },
       { js: 'js/mundo/fachadas-kit.js', grupo: 'mundo' },
@@ -533,6 +542,8 @@
       { js: 'js/ui/mochila-item.js', grupo: 'ui' }, // itens: o cartão de um item (vestir, tirar, usar, dar, jogar fora; Reino._itensTelas)
       { js: 'js/ui/mochila.js', grupo: 'ui' }, // itens: a tela da Mochila, 20 espaços e a figura vestida (UI.telaMochila; itens.md §6)
       { js: 'js/ui/guardados.js', grupo: 'ui' }, // itens: a tela do Baú de Guardados da casa (UI.telaGuardados; itens.md §7)
+      { js: 'js/ui/vila-pergunta.js', grupo: 'ui' }, // Vila: a pergunta do 4º bimestre antes de falar com o lojista (UI.perguntaVila)
+      { js: 'js/ui/vila-loja.js', grupo: 'ui' }, // Vila: a tela de comprar e vender, vários de uma vez (UI.telaVilaLoja)
       { js: 'js/ui/itens-pocao.js', grupo: 'ui' }, // itens: o botão rápido da poção na arena (itens.md §9)
       { js: 'js/ui/parquinho.js', grupo: 'ui' }, // Parquinho: a tela do que falta (portal dormindo, presentes; UI.telaParquinho)
       { js: 'js/sistemas/versao.js', grupo: 'sistemas', node: true },
@@ -751,6 +762,9 @@
       { js: 'js/interiores/casa/moveis-salas-quarto.js', grupo: 'interiores', node: true }, // casa: móveis avulsos (por sala) de Quarto do jogador
       { js: 'js/interiores/casa/moveis-salas-quarto-et.js', grupo: 'interiores', node: true }, // casa: móveis avulsos (por sala) do Quarto do ET
       { js: 'js/interiores/casa/moveis-salas-quarto-uni.js', grupo: 'interiores', node: true }, // casa: móveis avulsos (por sala) de Quarto do unicórnio
+      { js: 'js/interiores/casa/moveis-loja-a.js', grupo: 'interiores', node: true }, // casa: desenhos dos enfeites da loja da Vila (casa-movel-<id>)
+      { js: 'js/interiores/casa/moveis-loja-b.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/casa/moveis-loja-c.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/casa/falas.js', grupo: 'interiores', node: true }, // casa: o prédio (falas, caixa de mudança, térreo, 2º andar, fora, lugar)
       { js: 'js/interiores/casa/objetos.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/casa/guardados.js', grupo: 'interiores', node: true }, // o Baú de Guardados da casa e a ação 'guardados' (itens.md §7)
@@ -763,6 +777,7 @@
       { js: 'js/interiores/bosque/falas.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/bosque/objetos.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/bosque/objetos-2.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/bosque/portal-vila.js', grupo: 'interiores', node: true }, // o portal para a Vila Arco-Íris, no centro-direita (vila.md)
       { js: 'js/interiores/bosque/bosque.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/bosque/fora.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/bosque/lugar.js', grupo: 'interiores', node: true },
@@ -800,6 +815,13 @@
       { js: 'js/interiores/vulcao/inimigos.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/vulcao/vulcao.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/vulcao/lugar.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/vila/falas.js', grupo: 'interiores', node: true }, // Vila Arco-Íris (vila.md): falas e lojistas, céu e chão, objetos, a Teleportadora, a praça e as 4 lojas
+      { js: 'js/interiores/vila/fundo.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/vila/objetos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/vila/objetos-2.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/vila/teleportadora.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/vila/vila.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/vila/lojas.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/padrao.js', grupo: 'interiores', node: true }, // padrao.js por último entre os prédios: monta o interior das matérias que não têm um próprio
       { js: 'js/sistemas/banho.js', grupo: 'sistemas' },
       { js: 'js/sistemas/banho-desenho.js', grupo: 'sistemas' },
@@ -819,6 +841,8 @@
       { js: 'js/sistemas/itens.js', grupo: 'sistemas', node: true }, // itens: Mochila, Baú de Guardados, vestido e o campo itens (Reino.Itens; itens.md §6, §10)
       { js: 'js/sistemas/itens-drop.js', grupo: 'sistemas', node: true }, // itens: o que cai do inimigo vencido, gravado na hora (Reino.ItensDrop; itens.md §5)
       { js: 'js/sistemas/itens-chao.js', grupo: 'sistemas', node: true }, // itens: o item no chão da arena, salta e voa até ela (só desenho; itens.md §5)
+      { js: 'js/sistemas/vila-lojas.js', grupo: 'sistemas', node: true }, // Vila: as 4 lojas, comprar e vender vários, a pergunta do 4º bimestre (Reino.VilaLojas; vila.md)
+      { js: 'js/sistemas/teleportadora.js', grupo: 'sistemas', node: true }, // Vila: a Teleportadora leva entre as praças (Reino.Teleportadora; vila.md)
       { js: 'js/sistemas/parquinho.js', grupo: 'sistemas', node: true }, // Parquinho: a fase (3 matérias com Matemática ou LP; todas) e o módulo da brincadeira (Reino.Parquinho; parquinho.md)
       { js: 'js/motor/cena.js', grupo: 'motor' },
       { js: 'js/motor/transicao.js', grupo: 'motor' },

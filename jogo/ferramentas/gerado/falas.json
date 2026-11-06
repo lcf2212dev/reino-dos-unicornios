@@ -288,6 +288,11 @@
    "velocidade": "-4%",
    "tom": "+8Hz"
   },
+  "npc-teleportadora": {
+   "voz": "pt-BR-FranciscaNeural",
+   "velocidade": "+16%",
+   "tom": "+30Hz"
+  },
   "npc-lab-cavaleira": {
    "voz": "en-US-EmmaMultilingualNeural",
    "velocidade": "+0%",
@@ -552,6 +557,26 @@
    "voz": "en-US-AvaMultilingualNeural",
    "velocidade": "+12%",
    "tom": "+24Hz"
+  },
+  "npc-lavanda": {
+   "voz": "pt-BR-FranciscaNeural",
+   "velocidade": "+2%",
+   "tom": "+12Hz"
+  },
+  "npc-bigorna": {
+   "voz": "pt-BR-AntonioNeural",
+   "velocidade": "-4%",
+   "tom": "-34Hz"
+  },
+  "npc-plumita": {
+   "voz": "pt-BR-ThalitaMultilingualNeural",
+   "velocidade": "-12%",
+   "tom": "-12Hz"
+  },
+  "npc-ferrolho": {
+   "voz": "pt-BR-AntonioNeural",
+   "velocidade": "+10%",
+   "tom": "-18Hz"
   }
  },
  "falas": [
@@ -69477,6 +69502,348 @@
    "fala": "Ele toca na hora certa."
   },
   {
+   "chave": "e466bb6214",
+   "voz": "narradora",
+   "texto": "A fonte tem água de arco-íris.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "A fonte tem água de arco-íris."
+  },
+  {
+   "chave": "ea679b3714",
+   "voz": "narradora",
+   "texto": "Ela brilha com todas as cores.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Ela brilha com todas as cores."
+  },
+  {
+   "chave": "cdb761a7y",
+   "voz": "narradora",
+   "texto": "Este terreno está livre!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Este terreno está livre!"
+  },
+  {
+   "chave": "a9890ce613",
+   "voz": "narradora",
+   "texto": "Um dia vai ter novidade aqui.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Um dia vai ter novidade aqui."
+  },
+  {
+   "chave": "2dafba1011",
+   "voz": "narradora",
+   "texto": "Bem-vinda à Vila Arco-Íris!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Bem-vinda à Vila Arco-Íris!"
+  },
+  {
+   "chave": "738930fa11",
+   "voz": "narradora",
+   "texto": "Bem-vindo à Vila Arco-Íris!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Bem-vindo à Vila Arco-Íris!"
+  },
+  {
+   "chave": "bd9e3deaw",
+   "voz": "narradora",
+   "texto": "Aqui tem quatro lojas.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Aqui tem quatro lojas."
+  },
+  {
+   "chave": "62b3ad29u",
+   "voz": "narradora",
+   "texto": "Um poço dos desejos.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Um poço dos desejos."
+  },
+  {
+   "chave": "2657876910",
+   "voz": "narradora",
+   "texto": "Faça um pedido bem bonito!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Faça um pedido bem bonito!"
+  },
+  {
+   "chave": "35e133c012",
+   "voz": "npc-lavanda",
+   "texto": "Oi, eu sou a Dona Lavanda!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Oi, eu sou a Dona Lavanda!"
+  },
+  {
+   "chave": "c06a3a2615",
+   "voz": "npc-lavanda",
+   "texto": "Tenho enfeites para sua casa.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Tenho enfeites para sua casa."
+  },
+  {
+   "chave": "0c696754x",
+   "voz": "npc-lavanda",
+   "texto": "Quer ver os enfeites?",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Quer ver os enfeites?"
+  },
+  {
+   "chave": "fb227b3911",
+   "voz": "npc-lavanda",
+   "texto": "Sua casa vai ficar linda!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Sua casa vai ficar linda!"
+  },
+  {
+   "chave": "82054693z",
+   "voz": "narradora",
+   "texto": "Tapetes para a sala toda.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Tapetes para a sala toda."
+  },
+  {
+   "chave": "0e8035cay",
+   "voz": "narradora",
+   "texto": "Vasos de todas as cores!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Vasos de todas as cores!"
+  },
+  {
+   "chave": "cdf72604x",
+   "voz": "narradora",
+   "texto": "Almofadas bem fofinhas!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Almofadas bem fofinhas!"
+  },
+  {
+   "chave": "022e8f4512",
+   "voz": "npc-bigorna",
+   "texto": "Olá, eu sou o Seu Bigorna!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Olá, eu sou o Seu Bigorna!"
+  },
+  {
+   "chave": "8aacbcd113",
+   "voz": "npc-bigorna",
+   "texto": "Eu faço espadas brilhantes.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Eu faço espadas brilhantes."
+  },
+  {
+   "chave": "69e6b84913",
+   "voz": "npc-bigorna",
+   "texto": "Quer ver as minhas espadas?",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Quer ver as minhas espadas?"
+  },
+  {
+   "chave": "a631f5bb12",
+   "voz": "npc-bigorna",
+   "texto": "Use com coragem e carinho!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Use com coragem e carinho!"
+  },
+  {
+   "chave": "378479c412",
+   "voz": "narradora",
+   "texto": "O fogo da forja é quentinho.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "O fogo da forja é quentinho."
+  },
+  {
+   "chave": "715e460110",
+   "voz": "narradora",
+   "texto": "Espadas que brilham muito!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Espadas que brilham muito!"
+  },
+  {
+   "chave": "46c9a614z",
+   "voz": "narradora",
+   "texto": "Aqui o ferro vira espada.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Aqui o ferro vira espada."
+  },
+  {
+   "chave": "9f7cda6d15",
+   "voz": "npc-plumita",
+   "texto": "Olá, eu sou a Madame Plumita!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Olá, eu sou a Madame Plumita!"
+  },
+  {
+   "chave": "a3e9359215",
+   "voz": "npc-plumita",
+   "texto": "Tenho chapéus e elmos lindos.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Tenho chapéus e elmos lindos."
+  },
+  {
+   "chave": "43dc502d11",
+   "voz": "npc-plumita",
+   "texto": "Vamos escolher um chapéu?",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Vamos escolher um chapéu?"
+  },
+  {
+   "chave": "5842514710",
+   "voz": "npc-plumita",
+   "texto": "Ficou uma graça em você!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Ficou uma graça em você!"
+  },
+  {
+   "chave": "5bc21e9d10",
+   "voz": "narradora",
+   "texto": "Chapéus de todas as cores!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Chapéus de todas as cores!"
+  },
+  {
+   "chave": "51393fc512",
+   "voz": "narradora",
+   "texto": "Um elmo com uma pluma linda.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Um elmo com uma pluma linda."
+  },
+  {
+   "chave": "643d3cf1z",
+   "voz": "narradora",
+   "texto": "Caixas cheias de chapéus.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Caixas cheias de chapéus."
+  },
+  {
+   "chave": "bcd7a78715",
+   "voz": "npc-ferrolho",
+   "texto": "Olá, sou o Capitão Ferrolho!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Olá, sou o Capitão Ferrolho!"
+  },
+  {
+   "chave": "ddee850513",
+   "voz": "npc-ferrolho",
+   "texto": "Armadura boa protege você.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Armadura boa protege você."
+  },
+  {
+   "chave": "2a17c39714",
+   "voz": "npc-ferrolho",
+   "texto": "Quer ver armaduras e botas?",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Quer ver armaduras e botas?"
+  },
+  {
+   "chave": "9730b9a513",
+   "voz": "npc-ferrolho",
+   "texto": "Agora você está protegida!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Agora você está protegida!"
+  },
+  {
+   "chave": "134981bf13",
+   "voz": "npc-ferrolho",
+   "texto": "Agora você está protegido!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Agora você está protegido!"
+  },
+  {
+   "chave": "3b998fe5x",
+   "voz": "narradora",
+   "texto": "Uma armadura bem forte.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Uma armadura bem forte."
+  },
+  {
+   "chave": "b44ef0e110",
+   "voz": "narradora",
+   "texto": "Botas para longas viagens.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Botas para longas viagens."
+  },
+  {
+   "chave": "bc43f588w",
+   "voz": "narradora",
+   "texto": "Um elmo para a cabeça.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Um elmo para a cabeça."
+  },
+  {
    "chave": "7c425675u",
    "voz": "narradora",
    "texto": "Bem-vinda ao vulcão!",
@@ -90371,6 +90738,33 @@
     "interior-vulcao"
    ],
    "fala": "Você não perdeu nada, viu?"
+  },
+  {
+   "chave": "57895a0819",
+   "voz": "npc-teleportadora",
+   "texto": "Oi! Eu sou a Teleportadora.",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Oi! Eu sou a Teleportadora."
+  },
+  {
+   "chave": "908ec5621c",
+   "voz": "npc-teleportadora",
+   "texto": "Quer ir para a Vila Arco-Íris?",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Quer ir para a Vila Arco-Íris?"
+  },
+  {
+   "chave": "9eb4295c18",
+   "voz": "npc-teleportadora",
+   "texto": "Quer voltar para a cidade?",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Quer voltar para a cidade?"
   },
   {
    "chave": "6a4a021b1r",

@@ -12,6 +12,8 @@
      acoes                     { tipo: fn(acao, ctx) → Promise }: ações de objeto/NPC ({ tipo: 'assar' }) que o
                                sistema oferece aos prédios (o NPCs.registrarAcao ainda não existe quando ele carrega);
                                a conversa procura aqui depois das de registrarAcao, e o validar-interiores as aceita
+     porteira(npc)             antes da conversa com um NPC: null = conversa normal; uma Promise<bool> = espera
+                               (true: a conversa começa; false: não fala). Ex.: a pergunta dos lojistas da Vila
      camada                    desenho por cima do mapa/interior no quadro (js/motor/laco.js):
        { ativo(), itensDesenho(pintor, t, animar) → itens ordenados por y, sobre?(ctx, pintor, t, animar) }
    Registrar só guarda funções: nada de DOM, Progresso ou Cena no carregamento (node: true). */

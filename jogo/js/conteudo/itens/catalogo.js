@@ -22,7 +22,9 @@
     if (Object.prototype.hasOwnProperty.call(porId, def.id)) erro(def, 'id repetido');
     if (TIPOS.indexOf(def.tipo) < 0) erro(def, 'tipo desconhecido');
     if (typeof def.nome !== 'string' || !def.nome) erro(def, 'falta o nome');
-    if (!Array.isArray(def.arenas) || !def.arenas.length) erro(def, 'falta arenas');
+    // item de loja (a Vila Arco-Íris: `loja` = id da loja, `preco` em estrelas) pode não cair em arena nenhuma
+    if (!Array.isArray(def.arenas) || (!def.arenas.length && !def.loja)) erro(def, 'falta arenas');
+    if (def.loja && !(typeof def.preco === 'number' && def.preco > 0)) erro(def, 'item de loja precisa de preco');
     var equip = !!SLOT[def.tipo];
     if (equip && def.slot !== SLOT[def.tipo]) erro(def, 'slot precisa ser "' + SLOT[def.tipo] + '"');
     if (equip && RARIDADES.indexOf(def.raridade) < 0) erro(def, 'raridade desconhecida');

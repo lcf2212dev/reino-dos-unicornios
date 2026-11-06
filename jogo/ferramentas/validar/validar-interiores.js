@@ -171,7 +171,8 @@ defs.forEach((d) => {
     if (!checar(dest, `${o}: destino "${e.para}" não existe`)) return;
     checar(predio(dest.lugar) === predio(d.lugar), `${o}: destino "${e.para}" é de outro prédio`);
     if (e.olhar) checar(Math.abs(e.olhar.x) + Math.abs(e.olhar.y) > 0, `${o}: olhar vazio`);
-    if (e.sentido) checar(['sobe', 'desce'].includes(e.sentido), `${o}: sentido deve ser 'sobe' ou 'desce'`);
+    if (e.sentido) checar(['sobe', 'desce', 'portal'].includes(e.sentido), `${o}: sentido deve ser 'sobe', 'desce' ou 'portal'`);
+    if (e.seta !== undefined) checar(e.sentido === 'portal' && ['sobe', 'desce', false].includes(e.seta), `${o}: seta ('sobe', 'desce' ou false) só com sentido 'portal'`);
   });
   // objetos
   let interativos = 0;
@@ -189,7 +190,10 @@ defs.forEach((d) => {
       for (let y = o.y; y < o.y + dm.h; y++) for (let x = o.x; x < o.x + dm.w; x++) if (!g.dentro(x, y) || !g.chao[y][x]) noChao = false;
       checar(noChao, `${on}: móvel fora do chão`);
       const pisa = (p) => p && p.x >= o.x && p.x < o.x + dm.w && p.y >= o.y && p.y < o.y + dm.h;
-      checar(!pisa(d.saida) && !pisa(d.spawn) && !(d.escadas || []).some(pisa), `${on}: em cima da saída, do spawn ou de escada`);
+      // na escada 'portal' fica o desenho dela (portal, capacho): objeto NÃO sólido pode
+      const naoSolido = (I.OBJETOS[o.tipo] || {}).solido === false && o.solido !== true && o.solido !== 'base';
+      const escadaRuim = (e) => pisa(e) && !(e.sentido === 'portal' && naoSolido);
+      checar(!pisa(d.saida) && !pisa(d.spawn) && !(d.escadas || []).some(escadaRuim), `${on}: em cima da saída, do spawn ou de escada`);
     }
     if (I.interativo(o)) {
       interativos++;

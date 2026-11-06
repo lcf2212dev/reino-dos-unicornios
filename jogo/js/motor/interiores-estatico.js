@@ -29,6 +29,8 @@
 
   function desenharEscada(ctx, g, e) {
     var px = e.x * T, py = e.y * T;
+    // portal (porta de loja, portal mágico): o prédio desenha o que está ali (objeto); aqui, nada
+    if (e.sentido === 'portal') return;
     if (e.sentido !== 'desce') {
       // sobe: degraus que entram por um arco na parede do fundo (ou só no tile, longe da parede)
       var subeParede = g.dentro(e.x, e.y - 1) && g.parede[e.y - 1][e.x];
@@ -94,7 +96,9 @@
   }
   function setaEscada(ctx, e, t, animar) {
     var px = e.x * T, py = e.y * T, d = animar ? Math.round((Math.sin(t / 300) + 1) * 1) : 1;
-    var cima = e.sentido !== 'desce';
+    // portal: a seta de `seta` ('sobe' padrão, 'desce' ou false = sem seta)
+    if (e.sentido === 'portal' && e.seta === false) return;
+    var cima = e.sentido === 'portal' ? e.seta !== 'desce' : e.sentido !== 'desce';
     var linhas = ['...kk...', '..kwwk..', '.kwwwwk.', 'kwwwwwwk', 'kkkwwkkk', '..kwwk..', '..kwwk..', '..kkkk..'];
     if (!cima) linhas = linhas.slice().reverse();
     matriz(ctx, px + 4, py + 4 + (cima ? -d : d), linhas, { k: K, w: C.ouro });

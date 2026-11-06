@@ -45,6 +45,8 @@ interface ModuloDef {
   depurar?(): any;
   /** ações de objeto/NPC que o sistema oferece aos prédios (npcs-conversa.js procura aqui) */
   acoes?: { [tipo: string]: (acao: any, ctx: any) => any };
+  /** antes da conversa com um NPC: null = normal; Promise<bool> = espera (false: não conversa) */
+  porteira?(npc: any): Promise<boolean> | null;
   camada?: {
     ativo(): boolean;
     itensDesenho(pintor: any, t: number, animar: boolean): any[];
@@ -174,6 +176,8 @@ interface MovelCasaDef {
   comodo: string;
   direcoes: 1 | 2 | 4;
   parede?: boolean;
+  /** móvel da loja da Vila (só se compra; fora do sorteio das salas e dos presentes) */
+  loja?: boolean;
 }
 /** Outra fonte de móvel avulso além das salas (Reino.CasaMoveis.registrarFonte; casa.md §12). Chaves próprias
  *  (ex.: 'bosque:3'), que não colidem com ids de sala. */

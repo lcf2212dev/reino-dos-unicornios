@@ -286,7 +286,8 @@
     });
   };
 
-  Cena.sair = function () {
+  // chegada {x,y} opcional: outro tile do mapa (a Teleportadora leva à praça); sem ela, a frente da porta
+  Cena.sair = function (chegada) {
     if (S.trans) return S.trans.promessa;
     var atual = Cena.atual();
     if (atual.tipo !== 'interior') return Promise.resolve();
@@ -294,8 +295,9 @@
     return S.transicionar({
       cena: mapa,
       depois: function () {
-        // reaparece na frente da porta, virada para baixo
-        if (lugar) J().posicionar(lugar.porta.x, lugar.porta.y + 1);
+        // reaparece na frente da porta (ou na chegada), virada para baixo
+        if (chegada && typeof chegada.x === 'number') J().posicionar(chegada.x, chegada.y);
+        else if (lugar) J().posicionar(lugar.porta.x, lugar.porta.y + 1);
         J().virar(0, 1);
       },
     });
