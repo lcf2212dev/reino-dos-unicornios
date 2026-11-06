@@ -83,6 +83,17 @@ Reino.config = {
   // sem rede ao abrir, com o save no aparelho: joga e tenta a nuvem de novo a cada reconectarMs (e quando a rede volta)
   reconectarMs: 30000,
   jogadores: { loginMin: 2, loginMax: 20, senhaMin: 3, senhaMax: 30, prefixoSave: 'reino-v1-', senhaMariana: 'unicorlice77' },
+  // Jogar juntos no mesmo servidor (js/sistemas/juntos.js; docs/contratos/juntos.md): a presença é leve e efêmera
+  juntos: {
+    ligado: true,             // interruptor geral; sem servidor com a rota /api/presenca, o sistema se desliga sozinho
+    intervaloMs: 2500,        // de quanto em quanto tempo conta onde está e recebe quem está no reino
+    intervaloParadoMs: 8000,  // com a aba escondida manda menos (só para não sumir da lista)
+    ttlMs: 15000,             // sem notícia por este tempo o jogador some da tela; o servidor usa o mesmo (vercel/lib/presenca.js)
+    maxJogadores: 32,         // teto da lista (o reino é de família); o servidor usa o mesmo (vercel/lib/presenca.js)
+    suavidade: 8,             // por segundo: quanto maior, mais depressa o desenho alcança a posição que chegou
+    acenoMs: 3500,            // o 👋 fica no ar (maior que intervaloMs: o outro só olha de 2,5 em 2,5 s)
+    recadoMs: 5500,           // o balão do recado fica no ar
+  },
   // fome e sede da montaria (js/sistemas/cuidados.js): só gastam com o jogo aberto e ela jogando.
   // 100 = satisfeito. Abaixo de `baixo`, ela anda a `fatorLento` da velocidade até comer/beber.
   cuidados: {

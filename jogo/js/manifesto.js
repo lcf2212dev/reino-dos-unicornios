@@ -58,6 +58,7 @@
       'css/ui-moedas-festa.css',
       'css/ui-casa-decorar.css',
       'css/ui-tempo-celular.css',
+      'css/ui-juntos.css',
     ],
     scripts: [
       { js: 'js/nucleo/congelar.js', grupo: 'nucleo' },
@@ -474,6 +475,7 @@
       { js: 'js/ui/cuidados.js', grupo: 'ui' },
       { js: 'js/ui/hud.js', grupo: 'ui' },
       { js: 'js/ui/hud-fotos.js', grupo: 'ui' },
+      { js: 'js/ui/juntos.js', grupo: 'ui' }, // Jogar juntos: o botão 👥 do HUD e a tela "Quem está no reino" (juntos.md §8)
       { js: 'js/ui/hud-aura.js', grupo: 'ui' },
       { js: 'js/ui/foguete.js', grupo: 'ui' },
       { js: 'js/ui/et-desafio.js', grupo: 'ui' },
@@ -844,6 +846,8 @@
       { js: 'js/sistemas/vila-lojas.js', grupo: 'sistemas', node: true }, // Vila: as 4 lojas, comprar e vender vários, a pergunta do 4º bimestre (Reino.VilaLojas; vila.md)
       { js: 'js/sistemas/teleportadora.js', grupo: 'sistemas', node: true }, // Vila: a Teleportadora leva entre as praças (Reino.Teleportadora; vila.md)
       { js: 'js/sistemas/parquinho.js', grupo: 'sistemas', node: true }, // Parquinho: a fase (3 matérias com Matemática ou LP; todas) e o módulo da brincadeira (Reino.Parquinho; parquinho.md)
+      { js: 'js/sistemas/juntos.js', grupo: 'sistemas', node: true }, // Jogar juntos: a presença ao vivo (Reino.Juntos, módulo 'juntos'; juntos.md)
+      { js: 'js/sistemas/juntos-desenho.js', grupo: 'sistemas', node: true }, // Jogar juntos: o desenho dos outros jogadores (Reino.JuntosDesenho; juntos.md §7)
       { js: 'js/motor/cena.js', grupo: 'motor' },
       { js: 'js/motor/transicao.js', grupo: 'motor' },
       { js: 'js/motor/camera.js', grupo: 'motor' },

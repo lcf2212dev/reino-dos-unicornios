@@ -112,4 +112,7 @@
 # @ = Vila: portal grande no Bosque, uma Teleportadora sem brilho, unicórnios sem asas automáticas
 # @ = Vila: entrada na borda esquerda
 # @ = Portais em redemoinho em todo lugar
+# @ = Jogar juntos: config.juntos novo (dados) e nenhuma imagem diferente
+# @ = Jogar com amigos: o botão 👥 no HUD (e a placa de Química que desvia dele)
+# @ = Jogar com amigos: aceno 3,5 s e recado 5,5 s (dados); nenhuma imagem diferente
 @

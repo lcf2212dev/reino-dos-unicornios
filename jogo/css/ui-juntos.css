@@ -1,0 +1,66 @@
+/* Jogar com amigos (js/sistemas/juntos.js, js/ui/juntos.js; docs/contratos/juntos.md §8): o botão 👥 do HUD, com a
+   contagem de quem está no servidor, e a tela de servidores (criar, convite, quem está, sair e fechar). */
+.hud-botoes > .btn-juntos { position: relative; }
+.juntos-contagem {
+  position: absolute; top: -8px; right: -8px;
+  display: grid; place-items: center; min-width: 24px; height: 24px; padding: 0 4px;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-pequeno);
+  background: var(--ouro); color: var(--tinta); font-size: var(--texto-p); line-height: 1.5;
+}
+.juntos-contagem[hidden] { display: none; }
+
+.tela-juntos .painel { width: min(620px, 100%); }
+.juntos-corpo { display: flex; flex-direction: column; gap: 12px; }
+.juntos-dica { margin: 0; font-size: var(--texto-aux); color: var(--tinta-suave); }
+.juntos-erro {
+  margin: 0; padding: 8px 10px;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
+  background: var(--erro-fundo); text-align: center;
+}
+.juntos-titulo { margin: 0; font-size: var(--texto); }
+.juntos-acao { display: flex; }
+.juntos-acao .btn-grande { flex: 1 1 auto; }
+.juntos-form { display: flex; align-items: stretch; gap: 8px; }
+.juntos-campo { width: 6em; min-height: 52px; font-size: var(--texto-g); text-align: center; letter-spacing: 0.2em; }
+.juntos-codigo {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  padding: 10px 14px;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
+  background: var(--papel-quente);
+}
+.juntos-codigo-rotulo { font-size: var(--texto-aux); color: var(--tinta-suave); }
+.juntos-codigo-grande { font-size: var(--texto-t); line-height: 1.25; letter-spacing: 0.2em; }
+.juntos-link {
+  margin: 0; padding: 8px 10px;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
+  background: var(--papel-2); font-size: var(--texto-aux);
+  overflow-wrap: anywhere; user-select: all;
+}
+.juntos-lista { display: flex; flex-direction: column; gap: 8px; }
+.juntos-linha {
+  display: flex; align-items: center; gap: 12px;
+  padding: 8px 12px;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
+  background: var(--papel-quente);
+}
+.juntos-aqui { background: var(--roxo-claro); }
+.juntos-retrato-caixa { flex: none; display: grid; place-items: end center; width: 72px; min-height: 56px; overflow: hidden; }
+.juntos-retrato { max-width: 100%; height: auto; }   /* o canvas já vem em px CSS (PA.paraDOM) */
+.juntos-texto { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.juntos-nome { overflow-wrap: anywhere; }
+.juntos-onde { font-size: var(--texto-aux); color: var(--tinta-suave); }
+.juntos-vazio {
+  margin: 0; padding: 14px 16px;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
+  background: var(--papel-2); text-align: center;
+}
+.juntos-pe { display: flex; flex-direction: column; gap: 8px; }
+.juntos-pe[hidden] { display: none; }
+.juntos-pe p { margin: 0; }
+.juntos-recados { display: flex; flex-wrap: wrap; gap: 8px; }
+.juntos-acenar { display: inline-flex; align-items: center; gap: 6px; }
+.juntos-botoes { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; margin-top: 4px; }
+@media (max-width: 480px) {
+  .juntos-retrato-caixa { width: 56px; min-height: 44px; }
+  .juntos-codigo-grande { font-size: var(--texto-g); }
+}

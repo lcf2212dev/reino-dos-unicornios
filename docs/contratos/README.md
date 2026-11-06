@@ -29,6 +29,7 @@ contrato dele: a seção (§) do que vai mexer, não o arquivo inteiro. Mudança
 | Itens: drops dos monstros, Mochila (20 espaços), Baú de Guardados da casa, roupas de aventura no desenho, campo `itens` | `itens.md` |
 | Vila Arco-Íris: portal no Bosque, 4 lojas (enfeites da casa, armas, cabeça, armaduras e botas), pergunta do 4º bimestre antes do lojista, a Teleportadora | `vila.md` |
 | Parquinho: portal na praça liberado por matérias completas, lugar fechado (`liberado`), brinquedos que ela usa com o unicórnio | `parquinho.md` |
+| Jogar com amigos: servidores como no PKXD (criar, código e convite, entrar, fechar), presença no servidor (quem está, sala, posição), rotas `/api/juntos` e `/api/presenca`, tabelas `juntos` e `presenca`, desenho dos outros | `juntos.md` |
 | plano de frentes paralelas, reserva de personagem (vaga tracejada), ondas, conferência em pipeline | `plano-paralelo.md` |
 | regras de toda frente/worker (worktree, proibições, formato do retorno) | `frente.md` |
 | regras gerais de código, ordem de carga, testes | tabela abaixo |

@@ -19,6 +19,10 @@ function preparar() {
       sql`CREATE INDEX IF NOT EXISTS historico_id ON historico (id, n)`,
       sql`CREATE TABLE IF NOT EXISTS jogadores (login TEXT PRIMARY KEY, senha TEXT NOT NULL, criado BIGINT NOT NULL)`,
       sql`INSERT INTO jogadores (login, senha, criado) VALUES (${MARIANA}, ${SENHA_MARIANA}, ${Date.now()}) ON CONFLICT (login) DO NOTHING`,
+      // "Jogar juntos" (docs/contratos/juntos.md §3): só a presença efêmera; NÃO tem nada do save
+      sql`CREATE TABLE IF NOT EXISTS presenca (login TEXT PRIMARY KEY, servidor TEXT NOT NULL DEFAULT '', dados TEXT NOT NULL, visto BIGINT NOT NULL)`,
+      // os servidores (PKXD): código, dono, nome e o `visto` que os mantém abertos enquanto alguém está dentro
+      sql`CREATE TABLE IF NOT EXISTS juntos (codigo TEXT PRIMARY KEY, dono TEXT NOT NULL, nome TEXT NOT NULL, criado BIGINT NOT NULL, visto BIGINT NOT NULL)`,
     ]).catch((e) => { pronto = null; throw e; });
   }
   return pronto;
@@ -62,6 +66,79 @@ async function criarJogador(login, senha) {
   return r.length > 0;
 }
 
+/* ---------- presença ("Jogar juntos"; docs/contratos/juntos.md §3) ----------
+   O que é efêmero, separado do progresso: a linha tem o JSON que o servidor montou (lib/presenca.js) e o `visto`
+   do relógio do servidor. A varredura das linhas vencidas acontece junto do POST (é o único momento em que há
+   alguém esperando). Nada aqui lê nem grava `progresso`, `historico` ou `jogadores`. */
+// só quem está no MEU servidor: quem não criou nem entrou em nenhum não vê ninguém (e ninguém o vê)
+async function lerPresenca(servidor) {
+  await preparar();
+  if (!servidor) return [];
+  const p = require('./presenca');
+  const agora = Date.now();
+  const r = await sql`SELECT dados, visto FROM presenca WHERE servidor = ${servidor} AND visto >= ${agora - p.TTL_MS} ORDER BY visto DESC LIMIT ${p.MAX}`;
+  return p.lista(r, agora);
+}
+
+async function gravarPresenca(login, servidor, dados) {
+  await preparar();
+  const p = require('./presenca');
+  const agora = Date.now();
+  await sql.transaction([
+    sql`DELETE FROM presenca WHERE visto < ${agora - p.TTL_MS}`,
+    sql`INSERT INTO presenca (login, servidor, dados, visto) VALUES (${login}, ${servidor}, ${dados}, ${agora})
+        ON CONFLICT (login) DO UPDATE SET servidor = excluded.servidor, dados = excluded.dados, visto = excluded.visto`,
+  ]);
+  return lerPresenca(servidor);
+}
+
+/* ---------- servidores de "Jogar juntos" ---------- */
+// 6 tentativas de código livre (1M de combinações; a colisão é rara e o ON CONFLICT resolve)
+async function criarJuntos(login, nome) {
+  await preparar();
+  const j = require('./juntos');
+  await expirarJuntos();
+  for (let i = 0; i < 6; i++) {
+    const codigo = j.novoCodigo(), agora = Date.now();
+    const r = await sql`INSERT INTO juntos (codigo, dono, nome, criado, visto) VALUES (${codigo}, ${login}, ${nome}, ${agora}, ${agora})
+                        ON CONFLICT (codigo) DO NOTHING RETURNING codigo, dono, nome, criado`;
+    if (r.length) return r[0];
+  }
+  return null;
+}
+async function lerJuntos(codigo) {
+  await preparar();
+  const j = require('./juntos');
+  const r = await sql`SELECT codigo, dono, nome, criado FROM juntos WHERE codigo = ${codigo} AND visto >= ${Date.now() - j.TTL_MS}`;
+  return r.length ? r[0] : null;
+}
+// um membro entrou (ou continua dentro): renova o servidor; false = esse código não existe mais
+async function tocarJuntos(codigo) {
+  await preparar();
+  const j = require('./juntos');
+  const agora = Date.now();
+  const r = await sql`UPDATE juntos SET visto = ${agora} WHERE codigo = ${codigo} AND visto >= ${agora - j.TTL_MS} RETURNING codigo`;
+  return r.length > 0;
+}
+// só o dono fecha; aí os membros somem junto (a presença deles não é mais lida)
+async function fecharJuntos(login, codigo) {
+  await preparar();
+  const r = await sql`DELETE FROM juntos WHERE codigo = ${codigo} AND dono = ${login} RETURNING codigo`;
+  if (!r.length) return false;
+  await sql`DELETE FROM presenca WHERE servidor = ${codigo}`;
+  return true;
+}
+async function expirarJuntos() {
+  await preparar();
+  const j = require('./juntos');
+  await sql`DELETE FROM juntos WHERE visto < ${Date.now() - j.TTL_MS}`;
+}
+
+async function sairPresenca(login) {
+  await preparar();
+  await sql`DELETE FROM presenca WHERE login = ${login}`;
+}
+
 // corpo do pedido como texto (sem o parser da Vercel), cortado em `limite` caracteres
 function lerCorpo(req, limite) {
   return new Promise((ok) => {
@@ -88,4 +165,6 @@ function json(res, status, d) {
   res.end(JSON.stringify(d));
 }
 
-module.exports = { LOGIN, MARIANA, lerProgresso, gravarProgresso, senhaDe, logins, criarJogador, lerCorpo, cabecalhos, json };
+module.exports = { LOGIN, MARIANA, lerProgresso, gravarProgresso, senhaDe, logins, criarJogador,
+  lerPresenca, gravarPresenca, sairPresenca, criarJuntos, lerJuntos, tocarJuntos, fecharJuntos, expirarJuntos,
+  lerCorpo, cabecalhos, json };

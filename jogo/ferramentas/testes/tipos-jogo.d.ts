@@ -985,7 +985,7 @@ interface EventosReino {
   NUVEM: 'nuvem';
   /** carga: { nome, sexo } */
   PERFIL: 'perfil';
-  RESPOSTAS: 'respostas';
+  RESPOSTAS: 'respostas'; JUNTOS: 'juntos';   // JUNTOS: carga { total, sala, jogadores, servidor, aviso } (juntos.md)
 }
 /** Nome de um evento ('progresso', 'cena'…). */
 type Evento = EventosReino[keyof EventosReino];

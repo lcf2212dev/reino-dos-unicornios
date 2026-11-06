@@ -11,6 +11,10 @@ https://reino-dos-unicornios.vercel.app (projeto `reino-dos-unicornios` do time 
   que ele lê do repositório (o plano B exporta só isso).
 - `api/progresso.js` e `api/jogadores.js` (+ `lib/banco.js`): as mesmas rotas, respostas e regras de
   `jogo/servidor/servidor.js` (§12 de `docs/contratos/save-e-mescla.md`), sobre Postgres. As tabelas nascem sozinhas.
+- `api/juntos.js` e `api/presenca.js` (+ `lib/juntos.js`, `lib/presenca.js`): "Jogar com amigos"
+  (`docs/contratos/juntos.md`), como no PKXD. Quem cria um servidor recebe um código (`juntos`) e quem entra nele
+  aparece para os outros com o nome, o lugar e a posição (`presenca`). As duas tabelas nascem sozinhas e não encostam em
+  `progresso`/`jogadores`. Sem senha: a presença é pública dentro do servidor e não tem nada do save.
 - `pwa/`: o app instalável. `montar.js` copia o manifesto e os ícones, gera o `sw.js` com o hash de cada arquivo (o
   jogo inteiro fica no aparelho; um deploy novo só baixa o que mudou) e registra os dois no `index.html`. O `sw.js`
   instala em duas fases: o núcleo (index, lotes, CSS, fonte, ícones, manifesto, versão) na instalação, e o jogo já

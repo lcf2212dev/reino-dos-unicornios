@@ -57,6 +57,10 @@ Reino.EVENTOS = {
      Emite: sistemas/jogadores.js. Ouve: quem mostra o nome ou desenha o personagem (a tela de criar personagem),
      motor/interiores-placas.js (texto das placas com {nome}). */
   PERFIL: 'perfil',
+  /* Quem está no reino mudou (Jogar juntos; docs/contratos/juntos.md §5). Carga: { total, sala, jogadores } (os
+     outros jogadores online, cada um com { login, nome, sala, x, y }). Emite: sistemas/juntos.js (só quando muda o
+     conjunto: login, nome ou sala; a posição não emite). Ouve: ui/juntos.js (botão 👥 e a tela "Quem está no reino"). */
+  JUNTOS: 'juntos',
   /* Respostas conferidas (as mesmas que contam na Aura: salas, treino, provas, pergunta surpresa).
      Carga: { certas, erradas } (números; nota parcial não entra). Emite: sistemas/aura.js (Reino.Aura.contar,
      antes de gravar a Aura). Ouve: sistemas/viagem.js (o combustível do foguete). */
