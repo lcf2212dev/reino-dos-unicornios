@@ -105,4 +105,5 @@
 # @ = novidade com tema fantasmas
 # @ = novidade com tema fantasmas
 # @ = Parquinho: portal na praça
+# @ = 6 mapas de combate, XP por terços, lagoas no Pântano
 @

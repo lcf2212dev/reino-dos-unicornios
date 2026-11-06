@@ -40141,7 +40141,12 @@
    "voz": "narradora",
    "texto": "Vença e responda às perguntas!",
    "pacotes": [
-    "interior-bosque"
+    "interior-bosque",
+    "interior-cristal",
+    "interior-dunas",
+    "interior-gelo",
+    "interior-pantano",
+    "interior-vulcao"
    ],
    "fala": "Vença e responda às perguntas!"
   },
@@ -40630,6 +40635,168 @@
     "interior-castelo"
    ],
    "fala": "Em breve teremos novos conteúdos do quarto bimestre!"
+  },
+  {
+   "chave": "942301ebu",
+   "voz": "narradora",
+   "texto": "Bem-vinda à caverna!",
+   "pacotes": [
+    "interior-cristal"
+   ],
+   "fala": "Bem-vinda à caverna!"
+  },
+  {
+   "chave": "86930a21u",
+   "voz": "narradora",
+   "texto": "Bem-vindo à caverna!",
+   "pacotes": [
+    "interior-cristal"
+   ],
+   "fala": "Bem-vindo à caverna!"
+  },
+  {
+   "chave": "0c7fa18a14",
+   "voz": "narradora",
+   "texto": "Os cristais brilham no escuro.",
+   "pacotes": [
+    "interior-cristal"
+   ],
+   "fala": "Os cristais brilham no escuro."
+  },
+  {
+   "chave": "fe6c26bfy",
+   "voz": "narradora",
+   "texto": "O lampião de um mineiro.",
+   "pacotes": [
+    "interior-cristal"
+   ],
+   "fala": "O lampião de um mineiro."
+  },
+  {
+   "chave": "393d5405x",
+   "voz": "narradora",
+   "texto": "Ele ilumina os trilhos.",
+   "pacotes": [
+    "interior-cristal"
+   ],
+   "fala": "Ele ilumina os trilhos."
+  },
+  {
+   "chave": "d1b2a74d14",
+   "voz": "narradora",
+   "texto": "Um carrinho cheio de cristais!",
+   "pacotes": [
+    "interior-cristal"
+   ],
+   "fala": "Um carrinho cheio de cristais!"
+  },
+  {
+   "chave": "c218e1c4z",
+   "voz": "narradora",
+   "texto": "Alguém esqueceu ele aqui.",
+   "pacotes": [
+    "interior-cristal"
+   ],
+   "fala": "Alguém esqueceu ele aqui."
+  },
+  {
+   "chave": "fd436f8810",
+   "voz": "narradora",
+   "texto": "Uma pedra rachada ao meio.",
+   "pacotes": [
+    "interior-cristal"
+   ],
+   "fala": "Uma pedra rachada ao meio."
+  },
+  {
+   "chave": "7283fd4ey",
+   "voz": "narradora",
+   "texto": "Dentro, só cristal roxo!",
+   "pacotes": [
+    "interior-cristal"
+   ],
+   "fala": "Dentro, só cristal roxo!"
+  },
+  {
+   "chave": "a4613d6dt",
+   "voz": "narradora",
+   "texto": "Bem-vinda às dunas!",
+   "pacotes": [
+    "interior-dunas"
+   ],
+   "fala": "Bem-vinda às dunas!"
+  },
+  {
+   "chave": "a2d08253t",
+   "voz": "narradora",
+   "texto": "Bem-vindo às dunas!",
+   "pacotes": [
+    "interior-dunas"
+   ],
+   "fala": "Bem-vindo às dunas!"
+  },
+  {
+   "chave": "bcab069710",
+   "voz": "narradora",
+   "texto": "Cuidado com os escorpiões.",
+   "pacotes": [
+    "interior-dunas"
+   ],
+   "fala": "Cuidado com os escorpiões."
+  },
+  {
+   "chave": "e7407242v",
+   "voz": "narradora",
+   "texto": "Um vaso muito antigo.",
+   "pacotes": [
+    "interior-dunas"
+   ],
+   "fala": "Um vaso muito antigo."
+  },
+  {
+   "chave": "3fd04658u",
+   "voz": "narradora",
+   "texto": "Tem areia lá dentro.",
+   "pacotes": [
+    "interior-dunas"
+   ],
+   "fala": "Tem areia lá dentro."
+  },
+  {
+   "chave": "1607732412",
+   "voz": "narradora",
+   "texto": "Um oásis de água fresquinha!",
+   "pacotes": [
+    "interior-dunas"
+   ],
+   "fala": "Um oásis de água fresquinha!"
+  },
+  {
+   "chave": "48bb6130w",
+   "voz": "narradora",
+   "texto": "A palmeira faz sombra.",
+   "pacotes": [
+    "interior-dunas"
+   ],
+   "fala": "A palmeira faz sombra."
+  },
+  {
+   "chave": "91f1db5110",
+   "voz": "narradora",
+   "texto": "Uma pirâmide pequenininha.",
+   "pacotes": [
+    "interior-dunas"
+   ],
+   "fala": "Uma pirâmide pequenininha."
+  },
+  {
+   "chave": "26cff7f7w",
+   "voz": "narradora",
+   "texto": "Quem será que mora aí?",
+   "pacotes": [
+    "interior-dunas"
+   ],
+   "fala": "Quem será que mora aí?"
   },
   {
    "chave": "3db4cf231u",
@@ -41143,6 +41310,87 @@
     "interior-feira"
    ],
    "fala": "Desenhe o que você observou."
+  },
+  {
+   "chave": "cd42aa79v",
+   "voz": "narradora",
+   "texto": "Bem-vinda à montanha!",
+   "pacotes": [
+    "interior-gelo"
+   ],
+   "fala": "Bem-vinda à montanha!"
+  },
+  {
+   "chave": "fa3968ffv",
+   "voz": "narradora",
+   "texto": "Bem-vindo à montanha!",
+   "pacotes": [
+    "interior-gelo"
+   ],
+   "fala": "Bem-vindo à montanha!"
+  },
+  {
+   "chave": "7d2ac44910",
+   "voz": "narradora",
+   "texto": "Aqui faz muito frio. Brrr!",
+   "pacotes": [
+    "interior-gelo"
+   ],
+   "fala": "Aqui faz muito frio. Brrr!"
+  },
+  {
+   "chave": "68ec2a3a10",
+   "voz": "narradora",
+   "texto": "Uma casinha feita de gelo.",
+   "pacotes": [
+    "interior-gelo"
+   ],
+   "fala": "Uma casinha feita de gelo."
+  },
+  {
+   "chave": "8e2cfa49w",
+   "voz": "narradora",
+   "texto": "Lá dentro é quentinho!",
+   "pacotes": [
+    "interior-gelo"
+   ],
+   "fala": "Lá dentro é quentinho!"
+  },
+  {
+   "chave": "38c6d63bs",
+   "voz": "narradora",
+   "texto": "Um trenó vermelho.",
+   "pacotes": [
+    "interior-gelo"
+   ],
+   "fala": "Um trenó vermelho."
+  },
+  {
+   "chave": "9feb776611",
+   "voz": "narradora",
+   "texto": "Ele desliza rápido na neve!",
+   "pacotes": [
+    "interior-gelo"
+   ],
+   "fala": "Ele desliza rápido na neve!"
+  },
+  {
+   "chave": "211407a6v",
+   "voz": "narradora",
+   "texto": "Um unicórnio de gelo!",
+   "pacotes": [
+    "interior-gelo"
+   ],
+   "fala": "Um unicórnio de gelo!"
+  },
+  {
+   "chave": "63a351f013",
+   "voz": "narradora",
+   "texto": "Ele brilha quando bate o sol.",
+   "pacotes": [
+    "interior-gelo"
+   ],
+   "fala": "Ele brilha quando bate o sol."
   },
   {
    "chave": "7dca5f57j",
@@ -57691,6 +57939,87 @@
    "fala": "Páginas 28 e 29."
   },
   {
+   "chave": "04546b9bv",
+   "voz": "narradora",
+   "texto": "Bem-vinda ao pântano!",
+   "pacotes": [
+    "interior-pantano"
+   ],
+   "fala": "Bem-vinda ao pântano!"
+  },
+  {
+   "chave": "05b70011v",
+   "voz": "narradora",
+   "texto": "Bem-vindo ao pântano!",
+   "pacotes": [
+    "interior-pantano"
+   ],
+   "fala": "Bem-vindo ao pântano!"
+  },
+  {
+   "chave": "befcddf213",
+   "voz": "narradora",
+   "texto": "As rãs daqui resmungam muito.",
+   "pacotes": [
+    "interior-pantano"
+   ],
+   "fala": "As rãs daqui resmungam muito."
+  },
+  {
+   "chave": "8325178913",
+   "voz": "narradora",
+   "texto": "Vaga-lumes moram aqui dentro.",
+   "pacotes": [
+    "interior-pantano"
+   ],
+   "fala": "Vaga-lumes moram aqui dentro."
+  },
+  {
+   "chave": "3bfe8b8aw",
+   "voz": "narradora",
+   "texto": "Eles piscam para você!",
+   "pacotes": [
+    "interior-pantano"
+   ],
+   "fala": "Eles piscam para você!"
+  },
+  {
+   "chave": "cf038cb610",
+   "voz": "narradora",
+   "texto": "Uma folha gigante na água.",
+   "pacotes": [
+    "interior-pantano"
+   ],
+   "fala": "Uma folha gigante na água."
+  },
+  {
+   "chave": "7b3a160810",
+   "voz": "narradora",
+   "texto": "Uma rãzinha dorme em cima.",
+   "pacotes": [
+    "interior-pantano"
+   ],
+   "fala": "Uma rãzinha dorme em cima."
+  },
+  {
+   "chave": "145fd76611",
+   "voz": "narradora",
+   "texto": "Uma rã de pedra bem antiga.",
+   "pacotes": [
+    "interior-pantano"
+   ],
+   "fala": "Uma rã de pedra bem antiga."
+  },
+  {
+   "chave": "b5b9102312",
+   "voz": "narradora",
+   "texto": "Dizem que ela sorri à noite.",
+   "pacotes": [
+    "interior-pantano"
+   ],
+   "fala": "Dizem que ela sorri à noite."
+  },
+  {
    "chave": "6a2d4940z",
    "voz": "npc-aveia",
    "texto": "Olá, eu sou a Dona Aveia!",
@@ -69146,6 +69475,87 @@
     "interior-torre"
    ],
    "fala": "Ele toca na hora certa."
+  },
+  {
+   "chave": "7c425675u",
+   "voz": "narradora",
+   "texto": "Bem-vinda ao vulcão!",
+   "pacotes": [
+    "interior-vulcao"
+   ],
+   "fala": "Bem-vinda ao vulcão!"
+  },
+  {
+   "chave": "5f01fc8fu",
+   "voz": "narradora",
+   "texto": "Bem-vindo ao vulcão!",
+   "pacotes": [
+    "interior-vulcao"
+   ],
+   "fala": "Bem-vindo ao vulcão!"
+  },
+  {
+   "chave": "69179c4914",
+   "voz": "narradora",
+   "texto": "Os dragõezinhos são bravinhos.",
+   "pacotes": [
+    "interior-vulcao"
+   ],
+   "fala": "Os dragõezinhos são bravinhos."
+  },
+  {
+   "chave": "243d8ed011",
+   "voz": "narradora",
+   "texto": "Ele solta fumaça quentinha.",
+   "pacotes": [
+    "interior-vulcao"
+   ],
+   "fala": "Ele solta fumaça quentinha."
+  },
+  {
+   "chave": "f0ec842b11",
+   "voz": "narradora",
+   "texto": "Parece um dragão bocejando!",
+   "pacotes": [
+    "interior-vulcao"
+   ],
+   "fala": "Parece um dragão bocejando!"
+  },
+  {
+   "chave": "0a1be22e12",
+   "voz": "narradora",
+   "texto": "Um ninho com ovos de dragão.",
+   "pacotes": [
+    "interior-vulcao"
+   ],
+   "fala": "Um ninho com ovos de dragão."
+  },
+  {
+   "chave": "c787485213",
+   "voz": "narradora",
+   "texto": "Eles gostam de ficar quentes.",
+   "pacotes": [
+    "interior-vulcao"
+   ],
+   "fala": "Eles gostam de ficar quentes."
+  },
+  {
+   "chave": "1093cec414",
+   "voz": "narradora",
+   "texto": "Um osso de dragão, de mentira!",
+   "pacotes": [
+    "interior-vulcao"
+   ],
+   "fala": "Um osso de dragão, de mentira!"
+  },
+  {
+   "chave": "d7d0659a12",
+   "voz": "narradora",
+   "texto": "Os filhotes brincam com ele.",
+   "pacotes": [
+    "interior-vulcao"
+   ],
+   "fala": "Os filhotes brincam com ele."
   },
   {
    "chave": "3798a37cx",
@@ -89717,7 +90127,12 @@
    "voz": "claude",
    "texto": "Você ganhou uma espada!",
    "pacotes": [
-    "interior-bosque"
+    "interior-bosque",
+    "interior-cristal",
+    "interior-dunas",
+    "interior-gelo",
+    "interior-pantano",
+    "interior-vulcao"
    ],
    "fala": "Você ganhou uma espada!"
   },
@@ -89726,7 +90141,12 @@
    "voz": "claude",
    "texto": "Ela tem a magia do Reino.",
    "pacotes": [
-    "interior-bosque"
+    "interior-bosque",
+    "interior-cristal",
+    "interior-dunas",
+    "interior-gelo",
+    "interior-pantano",
+    "interior-vulcao"
    ],
    "fala": "Ela tem a magia do Reino."
   },
@@ -89753,7 +90173,12 @@
    "voz": "claude",
    "texto": "Responda e ganhe uma estrela!",
    "pacotes": [
-    "interior-bosque"
+    "interior-bosque",
+    "interior-cristal",
+    "interior-dunas",
+    "interior-gelo",
+    "interior-pantano",
+    "interior-vulcao"
    ],
    "fala": "Responda e ganhe uma estrela!"
   },
@@ -89762,7 +90187,12 @@
    "voz": "claude",
    "texto": "Isso mesmo, muito bem!",
    "pacotes": [
-    "interior-bosque"
+    "interior-bosque",
+    "interior-cristal",
+    "interior-dunas",
+    "interior-gelo",
+    "interior-pantano",
+    "interior-vulcao"
    ],
    "fala": "Isso mesmo, muito bem!"
   },
@@ -89771,7 +90201,12 @@
    "voz": "claude",
    "texto": "Você acertou, que beleza!",
    "pacotes": [
-    "interior-bosque"
+    "interior-bosque",
+    "interior-cristal",
+    "interior-dunas",
+    "interior-gelo",
+    "interior-pantano",
+    "interior-vulcao"
    ],
    "fala": "Você acertou, que beleza!"
   },
@@ -89780,7 +90215,12 @@
    "voz": "claude",
    "texto": "Quase, veja a resposta certa.",
    "pacotes": [
-    "interior-bosque"
+    "interior-bosque",
+    "interior-cristal",
+    "interior-dunas",
+    "interior-gelo",
+    "interior-pantano",
+    "interior-vulcao"
    ],
    "fala": "Quase, veja a resposta certa."
   },
@@ -89798,7 +90238,12 @@
    "voz": "claude",
    "texto": "Depois você tenta de novo!",
    "pacotes": [
-    "interior-bosque"
+    "interior-bosque",
+    "interior-cristal",
+    "interior-dunas",
+    "interior-gelo",
+    "interior-pantano",
+    "interior-vulcao"
    ],
    "fala": "Depois você tenta de novo!"
   },
@@ -89807,7 +90252,12 @@
    "voz": "claude",
    "texto": "Você subiu de nível!",
    "pacotes": [
-    "interior-bosque"
+    "interior-bosque",
+    "interior-cristal",
+    "interior-dunas",
+    "interior-gelo",
+    "interior-pantano",
+    "interior-vulcao"
    ],
    "fala": "Você subiu de nível!"
   },
@@ -89816,7 +90266,12 @@
    "voz": "claude",
    "texto": "Escolha onde pôr o seu ponto.",
    "pacotes": [
-    "interior-bosque"
+    "interior-bosque",
+    "interior-cristal",
+    "interior-dunas",
+    "interior-gelo",
+    "interior-pantano",
+    "interior-vulcao"
    ],
    "fala": "Escolha onde pôr o seu ponto."
   },
@@ -89825,7 +90280,12 @@
    "voz": "claude",
    "texto": "Sua espada ficou mais forte!",
    "pacotes": [
-    "interior-bosque"
+    "interior-bosque",
+    "interior-cristal",
+    "interior-dunas",
+    "interior-gelo",
+    "interior-pantano",
+    "interior-vulcao"
    ],
    "fala": "Sua espada ficou mais forte!"
   },
@@ -89834,7 +90294,12 @@
    "voz": "claude",
    "texto": "Agora você tem mais vida!",
    "pacotes": [
-    "interior-bosque"
+    "interior-bosque",
+    "interior-cristal",
+    "interior-dunas",
+    "interior-gelo",
+    "interior-pantano",
+    "interior-vulcao"
    ],
    "fala": "Agora você tem mais vida!"
   },
@@ -89843,7 +90308,12 @@
    "voz": "claude",
    "texto": "Agora você anda mais rápido!",
    "pacotes": [
-    "interior-bosque"
+    "interior-bosque",
+    "interior-cristal",
+    "interior-dunas",
+    "interior-gelo",
+    "interior-pantano",
+    "interior-vulcao"
    ],
    "fala": "Agora você anda mais rápido!"
   },
@@ -89870,7 +90340,12 @@
    "voz": "claude",
    "texto": "Ufa, vamos descansar um pouco.",
    "pacotes": [
-    "interior-bosque"
+    "interior-bosque",
+    "interior-cristal",
+    "interior-dunas",
+    "interior-gelo",
+    "interior-pantano",
+    "interior-vulcao"
    ],
    "fala": "Ufa, vamos descansar um pouco."
   },
@@ -89888,7 +90363,12 @@
    "voz": "claude",
    "texto": "Você não perdeu nada, viu?",
    "pacotes": [
-    "interior-bosque"
+    "interior-bosque",
+    "interior-cristal",
+    "interior-dunas",
+    "interior-gelo",
+    "interior-pantano",
+    "interior-vulcao"
    ],
    "fala": "Você não perdeu nada, viu?"
   },
