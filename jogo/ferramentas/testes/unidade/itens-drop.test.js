@@ -26,10 +26,7 @@ const perto = (x, alvo, tol, m) => assert.ok(Math.abs(x - alvo) <= tol, (m || ''
 
 test('itens: catálogo com 31 equipamentos, 2 poções e uma comidinha por comida da config; cada arena tem todo slot', () => {
   const j = jogo(), C = j.R.ItensCatalogo;
-  const todosEquip = C.equipamentos();
-  assert.strictEqual(todosEquip.filter((d) => !d.loja).length, 31, 'os 31 que caem de monstro continuam 31');
-  assert.strictEqual(todosEquip.filter((d) => d.loja).length, 100, 'Cidade Nova: 20 armas + 20 elmos + 20 chapéus + 20 armaduras + 20 botas');
-  assert.deepStrictEqual([...new Set(todosEquip.filter((d) => d.loja).map((d) => d.loja))].sort(), ['armaduras', 'armas', 'cabecas']);
+  assert.strictEqual(C.equipamentos().length, 31);
   igual(C.daArena('bosque', 'pocao').map((d) => d.id), ['pocao-pequena']);
   igual(C.daArena('gelo', 'pocao').map((d) => d.id), ['pocao-pequena', 'pocao-grande']);
   igual(C.daArena('vulcao', 'comida').map((d) => d.id), j.R.config.comidas.map((c) => 'comida-' + c.id));

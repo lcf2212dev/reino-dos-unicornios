@@ -112,7 +112,7 @@
   /** os móveis sorteados para a sala (ou chave de fonte; ids): os que ela não tem primeiro, até config.casa.moveisOpcoes */
   function opcoes(salaId) {
     var bau = (P.estado() && objeto(P.estado().casaBau) && numeroOu(P.estado().casaBau.em, 0)) || 0;
-    var rnd = sorteador(semente(String(salaId) + '|' + bau)), ids = (R.moveisCasa || []).filter(function (m) { return !m.loja; }).map(function (m) { return m.id; });
+    var rnd = sorteador(semente(String(salaId) + '|' + bau)), ids = (R.moveisCasa || []).map(function (m) { return m.id; });
     for (var i = ids.length - 1; i > 0; i--) { var j = Math.floor(rnd() * (i + 1)), t = ids[i]; ids[i] = ids[j]; ids[j] = t; }
     var novos = ids.filter(function (id) { return !qtd(id); }), repetidos = ids.filter(function (id) { return qtd(id) > 0; });
     if (!salaInfo(salaId) && chavesDasFontes().some(function (x) { return x.chave === salaId && x.fonte.soNovos; })) repetidos = [];
@@ -151,7 +151,7 @@
     var e = P.estado(), atual = e && objeto(e.casaMoveis) ? e.casaMoveis[chave] : null;
     if (escolhido(atual)) return { chave: chave, movel: escolhido(atual) };
     if (!e || typeof chave !== 'string' || !chave) return null;
-    var ids = (R.moveisCasa || []).filter(function (m) { return !m.loja; }).map(function (m) { return m.id; });
+    var ids = (R.moveisCasa || []).map(function (m) { return m.id; });
     if (!ids.length) return null;
     var bau = (objeto(e.casaBau) && numeroOu(e.casaBau.em, 0)) || 0;
     var rnd = sorteador(semente(String(chave) + '|' + bau + '|' + Object.keys(campo()).length));

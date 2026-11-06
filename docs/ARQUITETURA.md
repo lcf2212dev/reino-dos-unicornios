@@ -75,7 +75,6 @@ docs/  ARQUITETURA.md  contratos/  receitas/  decisoes/
 | Viagem de foguete (tanque, voo, planetas, ETs) | `jogo/js/sistemas/viagem*.js`, `jogo/js/ui/foguete.js`, `jogo/js/atividades/voo*.js`, `jogo/js/interiores/planetas/` | `docs/contratos/viagem.md` |
 | Laboratório de Química (misturas, caderno, microscópio, tabela periódica; 2º andar: curiosidades, Fogão dos Estados, Mesa de Separar, livros) | `jogo/js/sistemas/quimica.js`, `quimica-andar2.js`, `jogo/js/conteudo/quimica/`, `jogo/js/ui/quimica-*.js`, `jogo/js/interiores/quimica/` | `docs/contratos/quimica.md` |
 | Bosque dos Fantasmas (portal, combate, perguntas, nível) | `jogo/js/interiores/bosque/`, `jogo/js/sistemas/bosque*.js`, `jogo/js/ui/bosque-*.js` | `docs/contratos/bosque.md` |
-| Cidade Nova (portal, 4 lojas, Teleportadora, pergunta do 4º bimestre) | `jogo/js/interiores/cidade-nova/`, `jogo/js/sistemas/loja-cidade.js`, `teleportadora.js`, `jogo/js/ui/loja-cidade.js` | `docs/contratos/cidade-nova.md` |
 | Mapa de luta novo (arena: portal, inimigos, números) | `jogo/js/interiores/<mapa>/`, `jogo/js/motor/interiores-arena.js`, `arte/portal.js` | `docs/contratos/arenas.md` |
 | Som, música, voz | `jogo/js/sistemas/som*.js`, `musicas-faixas.js`, `musicas.js`, `voz.js`, `falas.js` | `docs/contratos/som-musica-e-voz.md` |
 | Fotos | `jogo/js/sistemas/fotos.js`, `fotos-moldura.js`, `fotos-telas.js` | `docs/contratos/fotos.md` |
@@ -109,7 +108,6 @@ linhas do manifesto e o index, e deixa `(preencher)` onde só a pessoa escreve (
 | Falas de um prédio em vários arquivos | `novo predio` | `Reino.falasDoPredio(id, parte)` (`nucleo/registros.js`) em cada parte | `Reino.FALAS_INTERIORES.<p> = …` | `npcs-e-dialogo.md` §10.5 |
 | Kit de móveis da casa do jogador | — | `Reino.registrarKitCasa` em `jogo/js/conteudo/casa/kits-*.js` + os objetos em `jogo/js/interiores/casa/moveis-<kit>.js` (`Reino.CasaArte.virado`) | o sistema e as telas da casa | `contratos/casa.md` §3 e §5 |
 | Móvel avulso da casa (um à escolha por sala feita) | — | `Reino.registrarMovelCasa` em `jogo/js/conteudo/casa/moveis-salas.js` + o objeto `casa-movel-<id>` em `jogo/js/interiores/casa/moveis-salas-<cômodo>.js` | o sistema e as telas da casa | `contratos/casa.md` §12 |
-| Loja de cidade (itens, carrinho, pergunta de entrada) | — | `Reino.LojaCidade` em `jogo/js/sistemas/loja-cidade.js` + itens/decor em `jogo/js/conteudo/itens/loja-cidade.js` e `conteudo/casa/loja-decoracao.js` | as telas das lojas antigas | `contratos/cidade-nova.md` |
 | Andar novo com escadas | — | `escadas: [{ x, y, para, chegar, olhar, sentido }]` com par no outro andar (sem `chegada`) | arquivos de coordenação entre andares | `interiores.md` §3.1 |
 
 Conferir enquanto constrói e no fim: `jogo/ferramentas/CLAUDE.md` (Conferir enquanto constrói).

@@ -63,9 +63,7 @@ test('casa-moveis: registro recusa repetido, sem objeto e id com ponto; dados de
   Jogo.scripts = () => orig({});
   let real;
   try { real = montar({}); } finally { Jogo.scripts = orig; }
-  var daLoja = real.R.moveisCasa.filter(function (m) { return m.loja === 'casa'; });
-  assert.strictEqual(real.R.moveisCasa.length - daLoja.length, 50);
-  assert.strictEqual(daLoja.length, 50, 'Cidade Nova: 50 móveis de decoração');
+  assert.strictEqual(real.R.moveisCasa.length, 50);
   assert.strictEqual(real.R.config.casa.moveisOpcoes, 5);
   real.R.moveisCasa.forEach((m) => assert.ok(real.R.config.casa.comodos.includes(m.comodo), m.id + ': cômodo de config.casa.comodos'));
 });
