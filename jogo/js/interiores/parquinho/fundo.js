@@ -107,11 +107,7 @@
   };
   I.FUNDOS.parquinho = { cor: VERDES[0],
     desenhar: function (ctx, w, h) { P.copas(ctx, 0, 0, w, h); },
-    saida: function (ctx, px, py) {
-      ret(ctx, px, py, 16, 16, '#ecd9a4');
-      P.anelDePedras(ctx, px + 8, py + 9);
-      P.redemoinho(ctx, px + 8, py + 9);
-      ret(ctx, px + 1, py + 1, 1, 3, '#fff3a0'); ret(ctx, px, py + 2, 3, 1, '#fff3a0');
-      ret(ctx, px + 14, py + 4, 1, 3, '#ffffff'); ret(ctx, px + 13, py + 5, 3, 1, '#ffffff');
-    } };
+    // o portal de volta: o redemoinho de todo portal (Reino.Portal.vortice; arte/portal.js)
+    saida: function (ctx, px, py) { ret(ctx, px, py, 16, 16, '#ecd9a4'); R.Portal.vortice(ctx, px + 8, py + 9, R.Portal.AZUL, 0); },
+  };
 })();

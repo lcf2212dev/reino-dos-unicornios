@@ -104,19 +104,6 @@
   var PEDRA = ['#8a8a9c', '#b0b0c2', '#d4d4e0'];
   I.FUNDOS.bosque = { cor: VERDES[0],
     desenhar: function (ctx, w, h) { copas(ctx, 0, 0, w, h); },
-    // o portal: anel de pedrinhas com o redemoinho rosa e lilás no meio (o mesmo do portal do mapa)
-    saida: function (ctx, px, py) {
-      var cx = px + 8, cy = py + 9, i, a;
-      elipse(ctx, cx, cy + 1, 11, 7, 'rgba(58,36,70,0.22)');
-      for (i = 0; i < 9; i++) {
-        a = (i + 0.5) / 9 * Math.PI * 2;
-        var sx = cx + Math.round(Math.cos(a) * 10), sy = cy + Math.round(Math.sin(a) * 6);
-        B.pedra(ctx, sx - 2, sy - 2, 5, 4, PEDRA);
-      }
-      elipse(ctx, cx, cy, 9, 5, K); elipse(ctx, cx, cy, 8, 4, '#7a3fd0');
-      elipse(ctx, cx, cy, 7, 4, '#b57cff'); elipse(ctx, cx, cy, 5, 3, '#ff9ed2'); elipse(ctx, cx, cy, 3, 2, '#ffd6ec'); elipse(ctx, cx, cy, 1, 1, '#ffffff');
-      ret(ctx, cx - 6, cy - 1, 3, 1, '#ffd6ec'); ret(ctx, cx + 3, cy + 1, 3, 1, '#ffd6ec');
-      ret(ctx, px + 1, py + 1, 1, 3, '#fff3a0'); ret(ctx, px, py + 2, 3, 1, '#fff3a0');
-      ret(ctx, px + 14, py + 4, 1, 3, '#ffffff'); ret(ctx, px + 13, py + 5, 3, 1, '#ffffff');
-    } };
+    // o portal de volta: o redemoinho de todo portal (Reino.Portal.vortice; arte/portal.js), espiral azul
+    saida: function (ctx, px, py) { R.Portal.vortice(ctx, px + 8, py + 9, R.Portal.AZUL, 0); }, };
 })();

@@ -111,4 +111,5 @@
 # @ = Vila: portal grande no Bosque, uma Teleportadora sem brilho, unicórnios sem asas automáticas
 # @ = Vila: portal grande no Bosque, uma Teleportadora sem brilho, unicórnios sem asas automáticas
 # @ = Vila: entrada na borda esquerda
+# @ = Portais em redemoinho em todo lugar
 @
