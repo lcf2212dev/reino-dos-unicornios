@@ -5456,8 +5456,7 @@
    "voz": "narradora",
    "texto": "Beto vai ajudar a mãe a pendurar 12 camisetas no varal. Desenhe e pinte as camisetas distribuindo a mesma quantidade em cada corda do varal.",
    "pacotes": [
-    "matematica4-livro-11",
-    "matematica4-ma11a2"
+    "matematica4-livro-11"
    ],
    "fala": "Beto vai ajudar a mãe a pendurar 12 camisetas no varal. Desenhe e pinte as camisetas distribuindo a mesma quantidade em cada corda do varal."
   },
@@ -5484,7 +5483,8 @@
    "voz": "narradora",
    "texto": "Doze palitos de picolé serão distribuídos igualmente entre Ana, Luiz, Felipe e Cecília.",
    "pacotes": [
-    "matematica4-livro-11"
+    "matematica4-livro-11",
+    "matematica4-ma11a3"
    ],
    "fala": "Doze palitos de picolé serão distribuídos igualmente entre Ana, Luiz, Felipe e Cecília."
   },
@@ -5529,8 +5529,7 @@
    "voz": "narradora",
    "texto": "Em dupla com um colega, use 20 palitos de picolé para esta atividade. Juntos, vocês vão formar grupos com os palitos seguindo as indicações da tabela. Depois, cada um deve completar sua tabela com as informações que estão faltando.",
    "pacotes": [
-    "matematica4-livro-11",
-    "matematica4-ma11a3"
+    "matematica4-livro-11"
    ],
    "fala": "Em dupla com um colega, use 20 palitos de picolé para esta atividade. Juntos, vocês vão formar grupos com os palitos seguindo as indicações da tabela. Depois, cada um deve completar sua tabela com as informações que estão faltando."
   },
@@ -6477,7 +6476,8 @@
    "voz": "narradora",
    "texto": "10 reais, 10 reais, 10 reais, 2 reais, 2 reais, 2 reais.",
    "pacotes": [
-    "matematica4-livro-11"
+    "matematica4-livro-11",
+    "matematica4-ma11a8"
    ],
    "fala": "10 reais, 10 reais, 10 reais, 2 reais, 2 reais, 2 reais."
   },
@@ -8668,8 +8668,7 @@
    "voz": "narradora",
    "texto": "Escreva na tabela as informações apresentadas no gráfico da atividade anterior.",
    "pacotes": [
-    "matematica4-livro-12",
-    "matematica4-ma12t1"
+    "matematica4-livro-12"
    ],
    "fala": "Escreva na tabela as informações apresentadas no gráfico da atividade anterior."
   },
@@ -9010,13 +9009,13 @@
    "fala": "Agora, conte e escreva no quadro a seguir a quantia que cada um deles recebeu nessa troca."
   },
   {
-   "chave": "0e98c68az",
+   "chave": "74ba7c0c25",
    "voz": "narradora",
-   "texto": "Depois, complete a frase.",
+   "texto": "Complete a frase sobre as quantias que Murilo e Gabriela receberam.",
    "pacotes": [
     "matematica4-ma10a2"
    ],
-   "fala": "Depois, complete a frase."
+   "fala": "Complete a frase sobre as quantias que Murilo e Gabriela receberam."
   },
   {
    "chave": "a246300a3a",
@@ -9244,22 +9243,22 @@
    "fala": "Memória das quantias: ligue cada carta à carta que tem a mesma quantia."
   },
   {
-   "chave": "6ae0d5c53a",
+   "chave": "b20a560e37",
    "voz": "narradora",
-   "texto": "Para cada quantia a seguir, forme o par. Quais grupos têm o mesmo valor da cédula de 20 reais? Marque todos.",
+   "texto": "Forme o par da carta com a cédula de 20 reais. Quais grupos têm o mesmo valor dessa cédula? Marque todos.",
    "pacotes": [
     "matematica4-ma10a5"
    ],
-   "fala": "Para cada quantia a seguir, forme o par. Quais grupos têm o mesmo valor da cédula de 20 reais? Marque todos."
+   "fala": "Forme o par da carta com a cédula de 20 reais. Quais grupos têm o mesmo valor dessa cédula? Marque todos."
   },
   {
-   "chave": "c80619ba2d",
+   "chave": "080f93e438",
    "voz": "narradora",
-   "texto": "Agora, quais grupos têm o mesmo valor da cédula de 200 reais? Marque todos.",
+   "texto": "Forme o par da carta com a cédula de 200 reais. Quais grupos têm o mesmo valor dessa cédula? Marque todos.",
    "pacotes": [
     "matematica4-ma10a5"
    ],
-   "fala": "Agora, quais grupos têm o mesmo valor da cédula de 200 reais? Marque todos."
+   "fala": "Forme o par da carta com a cédula de 200 reais. Quais grupos têm o mesmo valor dessa cédula? Marque todos."
   },
   {
    "chave": "9e3918f42o",
@@ -9361,22 +9360,22 @@
    "fala": "a) Quantos reais a tia de Sara gastou nessa compra?"
   },
   {
-   "chave": "b9000a411c",
+   "chave": "2c2adb641m",
    "voz": "narradora",
-   "texto": "b) Quantos reais ela recebeu de troco?",
+   "texto": "b) Quantos reais a tia de Sara recebeu de troco?",
    "pacotes": [
     "matematica4-ma10a6"
    ],
-   "fala": "b) Quantos reais ela recebeu de troco?"
+   "fala": "b) Quantos reais a tia de Sara recebeu de troco?"
   },
   {
-   "chave": "c23db7c02k",
+   "chave": "bc0b45a52k",
    "voz": "narradora",
-   "texto": "Elas compraram 2 baldes de pipoca e 2 algodões doces. Quantos reais elas gastaram?",
+   "texto": "Elas compraram 2 baldes de pipoca e 2 algodões-doces. Quantos reais elas gastaram?",
    "pacotes": [
     "matematica4-ma10a6"
    ],
-   "fala": "Elas compraram 2 baldes de pipoca e 2 algodões doces. Quantos reais elas gastaram?"
+   "fala": "Elas compraram 2 baldes de pipoca e 2 algodões-doces. Quantos reais elas gastaram?"
   },
   {
    "chave": "fb7d53e31u",
@@ -9712,13 +9711,13 @@
    "fala": "50 centavos, 50 centavos, 50 centavos, 50 centavos, 50 centavos, 50 centavos, 1 real, 1 real."
   },
   {
-   "chave": "f9cd6f313v",
+   "chave": "9e7ea3724k",
    "voz": "narradora",
-   "texto": "b) Renato já tem 10 moedas de 50 centavos no cofrinho. Quantos reais ele terá no total se acrescentar o valor indicado no item a?",
+   "texto": "b) Renato já tem 10 moedas de 50 centavos no cofrinho. Quantos reais ele terá no total se acrescentar as moedas que recebeu na troca da cédula de 5 reais?",
    "pacotes": [
     "matematica4-ma10t2"
    ],
-   "fala": "b) Renato já tem 10 moedas de 50 centavos no cofrinho. Quantos reais ele terá no total se acrescentar o valor indicado no item a?"
+   "fala": "b) Renato já tem 10 moedas de 50 centavos no cofrinho. Quantos reais ele terá no total se acrescentar as moedas que recebeu na troca da cédula de 5 reais?"
   },
   {
    "chave": "494e4fd25j",
@@ -9811,13 +9810,13 @@
    "fala": "Jorge ganhou do avô 3 cédulas iguais à cédula que está representada ao lado. Quantos reais Jorge ganhou do avô? Escreva uma adição para representar essa situação."
   },
   {
-   "chave": "e707b4961v",
+   "chave": "a94731e53e",
    "voz": "narradora",
-   "texto": "Escreva uma multiplicação para representar essa situação.",
+   "texto": "Jorge ganhou do avô 3 cédulas iguais à cédula ao lado. Escreva uma multiplicação para representar essa situação.",
    "pacotes": [
     "matematica4-ma10t3"
    ],
-   "fala": "Escreva uma multiplicação para representar essa situação."
+   "fala": "Jorge ganhou do avô 3 cédulas iguais à cédula ao lado. Escreva uma multiplicação para representar essa situação."
   },
   {
    "chave": "86aa00fb68",
@@ -9892,6 +9891,33 @@
    "fala": "d) Quantos reais os três irmãos pouparam juntos?"
   },
   {
+   "chave": "fb7c2a51y",
+   "voz": "narradora",
+   "texto": "O que os irmãos pouparam",
+   "pacotes": [
+    "matematica4-ma10t3"
+   ],
+   "fala": "O que os irmãos pouparam"
+  },
+  {
+   "chave": "c18c33f7f",
+   "voz": "narradora",
+   "texto": "Bruno",
+   "pacotes": [
+    "matematica4-ma10t3"
+   ],
+   "fala": "Bruno"
+  },
+  {
+   "chave": "3bc160222k",
+   "voz": "narradora",
+   "texto": "Ana poupou o dobro da quantia de Bruno. Paula poupou o triplo da quantia de Bruno.",
+   "pacotes": [
+    "matematica4-ma10t3"
+   ],
+   "fala": "Ana poupou o dobro da quantia de Bruno. Paula poupou o triplo da quantia de Bruno."
+  },
+  {
    "chave": "4fc371cbp",
    "voz": "claude",
    "texto": "Arrumando o quarto",
@@ -9937,6 +9963,15 @@
    "fala": "Quantos brinquedos Beatriz deve colocar em cada prateleira?"
   },
   {
+   "chave": "030a1d932b",
+   "voz": "narradora",
+   "texto": "Beatriz quer colocar a mesma quantidade de brinquedos em cada prateleira.",
+   "pacotes": [
+    "matematica4-ma11a1"
+   ],
+   "fala": "Beatriz quer colocar a mesma quantidade de brinquedos em cada prateleira."
+  },
+  {
    "chave": "051531b31h",
    "voz": "narradora",
    "texto": "Quantos bichinhos de pelúcia Beatriz doará?",
@@ -9964,13 +9999,13 @@
    "fala": "Quantas caixas ela usará para colocar essas pelúcias?"
   },
   {
-   "chave": "105eb7e41z",
+   "chave": "21d3691231",
    "voz": "narradora",
-   "texto": "Trace linhas para ligar cada bichinho de pelúcia a uma caixa.",
+   "texto": "Trace linhas para ligar cada bichinho de pelúcia a uma caixa. Quantas pelúcias vão para cada caixa?",
    "pacotes": [
     "matematica4-ma11a1"
    ],
-   "fala": "Trace linhas para ligar cada bichinho de pelúcia a uma caixa."
+   "fala": "Trace linhas para ligar cada bichinho de pelúcia a uma caixa. Quantas pelúcias vão para cada caixa?"
   },
   {
    "chave": "0de4a5f51q",
@@ -10090,6 +10125,15 @@
    "fala": "Recorte as rosquinhas da aba. Depois, cole as rosquinhas nos pratos e responda: Há quantas rosquinhas em cada prato?"
   },
   {
+   "chave": "a279519257",
+   "voz": "narradora",
+   "texto": "Beto vai ajudar a mãe a pendurar 12 camisetas no varal. Desenhe e pinte as camisetas distribuindo a mesma quantidade em cada corda do varal. Quantas camisetas vão em cada corda?",
+   "pacotes": [
+    "matematica4-ma11a2"
+   ],
+   "fala": "Beto vai ajudar a mãe a pendurar 12 camisetas no varal. Desenhe e pinte as camisetas distribuindo a mesma quantidade em cada corda do varal. Quantas camisetas vão em cada corda?"
+  },
+  {
    "chave": "ee7d325a14",
    "voz": "narradora",
    "texto": "Quantas camisetas são ao todo?",
@@ -10181,6 +10225,15 @@
    "fala": "d) Represente essa situação por meio de uma divisão."
   },
   {
+   "chave": "46cada461l",
+   "voz": "narradora",
+   "texto": "As crianças serão divididas em 2 grupos iguais.",
+   "pacotes": [
+    "matematica4-ma11a3"
+   ],
+   "fala": "As crianças serão divididas em 2 grupos iguais."
+  },
+  {
    "chave": "c40fd3586y",
    "voz": "narradora",
    "texto": "Doze palitos de picolé serão distribuídos igualmente entre Ana, Luiz, Felipe e Cecília. Faça um tracinho embaixo de cada criança para representar quantos palitos cada uma deve receber. a) Quantos palitos de picolé cada criança deve receber?",
@@ -10199,6 +10252,15 @@
    "fala": "b) Represente essa situação por meio de uma divisão."
   },
   {
+   "chave": "17253fa1k",
+   "voz": "narradora",
+   "texto": "Os palitos",
+   "pacotes": [
+    "matematica4-ma11a3"
+   ],
+   "fala": "Os palitos"
+  },
+  {
    "chave": "7c69165f3i",
    "voz": "narradora",
    "texto": "Forme grupos com 10 tampinhas em cada um deles. Em seguida, responda às perguntas. a) Quantas tampinhas são ao todo?",
@@ -10206,6 +10268,24 @@
     "matematica4-ma11a3"
    ],
    "fala": "Forme grupos com 10 tampinhas em cada um deles. Em seguida, responda às perguntas. a) Quantas tampinhas são ao todo?"
+  },
+  {
+   "chave": "bd5eaadem",
+   "voz": "narradora",
+   "texto": "As tampinhas",
+   "pacotes": [
+    "matematica4-ma11a3"
+   ],
+   "fala": "As tampinhas"
+  },
+  {
+   "chave": "5d57bcd92t",
+   "voz": "narradora",
+   "texto": "São 4 fileiras de tampinhas, com 10 tampinhas em cada fileira. Cada grupo tem 10 tampinhas.",
+   "pacotes": [
+    "matematica4-ma11a3"
+   ],
+   "fala": "São 4 fileiras de tampinhas, com 10 tampinhas em cada fileira. Cada grupo tem 10 tampinhas."
   },
   {
    "chave": "fcc2e4dd1q",
@@ -10226,13 +10306,22 @@
    "fala": "Antônio quer dividir igualmente o valor desta cédula entre seus 5 sobrinhos. Para isso, ele deve trocar a cédula por outras de menor valor. a) Quantos reais Antônio quer dividir entre seus sobrinhos?"
   },
   {
-   "chave": "9c18e9101q",
+   "chave": "c4e7feaf2n",
    "voz": "narradora",
-   "texto": "b) Desenhe a quantia que cada sobrinho deve receber.",
+   "texto": "b) Desenhe a quantia que cada sobrinho deve receber. Que cédula cada sobrinho recebe?",
    "pacotes": [
     "matematica4-ma11a3"
    ],
-   "fala": "b) Desenhe a quantia que cada sobrinho deve receber."
+   "fala": "b) Desenhe a quantia que cada sobrinho deve receber. Que cédula cada sobrinho recebe?"
+  },
+  {
+   "chave": "280c85fa56",
+   "voz": "narradora",
+   "texto": "Forme grupos com os palitos de picolé seguindo as indicações da tabela. Os grupos devem ter a mesma quantidade. Depois, complete a tabela com as informações que estão faltando.",
+   "pacotes": [
+    "matematica4-ma11a3"
+   ],
+   "fala": "Forme grupos com os palitos de picolé seguindo as indicações da tabela. Os grupos devem ter a mesma quantidade. Depois, complete a tabela com as informações que estão faltando."
   },
   {
    "chave": "be6ff1ab3a",
@@ -10370,13 +10459,13 @@
    "fala": "Vamos pintar a metade e a terça parte, dividir carrinhos e jogar o Bingo da divisão!"
   },
   {
-   "chave": "bc50592b3m",
+   "chave": "e85d116449",
    "voz": "narradora",
-   "texto": "Renata usou meia dúzia de ovos para fazer um quindim. Desenhe a quantidade de ovos que Renata usou para fazer esse doce.",
+   "texto": "Renata usou meia dúzia de ovos para fazer um quindim. Desenhe a quantidade de ovos que Renata usou para fazer esse doce. Quantos ovos ela usou?",
    "pacotes": [
     "matematica4-ma11a5"
    ],
-   "fala": "Renata usou meia dúzia de ovos para fazer um quindim. Desenhe a quantidade de ovos que Renata usou para fazer esse doce."
+   "fala": "Renata usou meia dúzia de ovos para fazer um quindim. Desenhe a quantidade de ovos que Renata usou para fazer esse doce. Quantos ovos ela usou?"
   },
   {
    "chave": "5dca67435g",
@@ -10397,22 +10486,58 @@
    "fala": "Escreva a divisão que representa essa situação."
   },
   {
-   "chave": "2d1d7dc53q",
+   "chave": "43a695cer",
    "voz": "narradora",
-   "texto": "a) Lucas quer arrumar esses carrinhos. Cole no espaço a seguir a metade desses carrinhos para Lucas colocá-los numa estante.",
+   "texto": "Os pães de queijo",
    "pacotes": [
     "matematica4-ma11a5"
    ],
-   "fala": "a) Lucas quer arrumar esses carrinhos. Cole no espaço a seguir a metade desses carrinhos para Lucas colocá-los numa estante."
+   "fala": "Os pães de queijo"
   },
   {
-   "chave": "6e3124173s",
+   "chave": "6e8339e32t",
    "voz": "narradora",
-   "texto": "b) Dos carrinhos que sobraram, Lucas separou a terça parte para brincar. Cole no espaço a seguir a quantidade que ele separou.",
+   "texto": "A mãe de Isaque separou a terça parte dos pães de queijo para o lanche de Isaque na escola.",
    "pacotes": [
     "matematica4-ma11a5"
    ],
-   "fala": "b) Dos carrinhos que sobraram, Lucas separou a terça parte para brincar. Cole no espaço a seguir a quantidade que ele separou."
+   "fala": "A mãe de Isaque separou a terça parte dos pães de queijo para o lanche de Isaque na escola."
+  },
+  {
+   "chave": "3de6f2df4o",
+   "voz": "narradora",
+   "texto": "a) Lucas quer arrumar esses carrinhos. Cole no espaço a seguir a metade desses carrinhos para Lucas colocá-los numa estante. Quantos carrinhos você vai colar?",
+   "pacotes": [
+    "matematica4-ma11a5"
+   ],
+   "fala": "a) Lucas quer arrumar esses carrinhos. Cole no espaço a seguir a metade desses carrinhos para Lucas colocá-los numa estante. Quantos carrinhos você vai colar?"
+  },
+  {
+   "chave": "0a724bd74n",
+   "voz": "narradora",
+   "texto": "b) Dos carrinhos que sobraram, Lucas separou a terça parte para brincar. Cole no espaço a seguir a quantidade que ele separou. Quantos carrinhos ele separou?",
+   "pacotes": [
+    "matematica4-ma11a5"
+   ],
+   "fala": "b) Dos carrinhos que sobraram, Lucas separou a terça parte para brincar. Cole no espaço a seguir a quantidade que ele separou. Quantos carrinhos ele separou?"
+  },
+  {
+   "chave": "70b51f4bv",
+   "voz": "narradora",
+   "texto": "Os carrinhos de Lucas",
+   "pacotes": [
+    "matematica4-ma11a5"
+   ],
+   "fala": "Os carrinhos de Lucas"
+  },
+  {
+   "chave": "1a26f0002x",
+   "voz": "narradora",
+   "texto": "Lucas tem 18 carrinhos. Ele colocou a metade desses carrinhos numa estante. Os outros sobraram.",
+   "pacotes": [
+    "matematica4-ma11a5"
+   ],
+   "fala": "Lucas tem 18 carrinhos. Ele colocou a metade desses carrinhos numa estante. Os outros sobraram."
   },
   {
    "chave": "de083a383j",
@@ -10460,13 +10585,13 @@
    "fala": "Identifique no texto do problema as informações descritas a seguir. Depois, pinte no texto do problema cada informação seguindo as cores indicadas em cada lápis de cor."
   },
   {
-   "chave": "25e0ba663t",
+   "chave": "b0b716974t",
    "voz": "narradora",
-   "texto": "Para resolver esse problema, pinte de marrom as figuras dos cupcakes de chocolate e de rosa as figuras dos cupcakes de morango.",
+   "texto": "Para resolver esse problema, pinte de marrom as figuras dos cupcakes de chocolate e de rosa as figuras dos cupcakes de morango. Quantos cupcakes ficam de cada cor?",
    "pacotes": [
     "matematica4-ma11a6"
    ],
-   "fala": "Para resolver esse problema, pinte de marrom as figuras dos cupcakes de chocolate e de rosa as figuras dos cupcakes de morango."
+   "fala": "Para resolver esse problema, pinte de marrom as figuras dos cupcakes de chocolate e de rosa as figuras dos cupcakes de morango. Quantos cupcakes ficam de cada cor?"
   },
   {
    "chave": "e260399d69",
@@ -10595,13 +10720,13 @@
    "fala": "Denise vai distribuir igualmente esta quantidade de giz de cera entre 4 crianças. Quantos gizes de cera cada criança ganhará?"
   },
   {
-   "chave": "c8ad72745i",
+   "chave": "d52706796f",
    "voz": "narradora",
-   "texto": "Matias convidou 20 pessoas para a festa de aniversário dele. Os convidados serão distribuídos igualmente nestas mesas. Desenhe bancos para representar a quantidade de pessoas em cada mesa.",
+   "texto": "Matias convidou 20 pessoas para a festa de aniversário dele. Os convidados serão distribuídos igualmente nestas mesas. Desenhe bancos para representar a quantidade de pessoas em cada mesa. Quantos bancos vão em cada mesa?",
    "pacotes": [
     "matematica4-ma11a7"
    ],
-   "fala": "Matias convidou 20 pessoas para a festa de aniversário dele. Os convidados serão distribuídos igualmente nestas mesas. Desenhe bancos para representar a quantidade de pessoas em cada mesa."
+   "fala": "Matias convidou 20 pessoas para a festa de aniversário dele. Os convidados serão distribuídos igualmente nestas mesas. Desenhe bancos para representar a quantidade de pessoas em cada mesa. Quantos bancos vão em cada mesa?"
   },
   {
    "chave": "2af038881r",
@@ -10703,6 +10828,24 @@
    "fala": "c) Quantos reais Lucas ganhou de Igor?"
   },
   {
+   "chave": "57f089b1r",
+   "voz": "narradora",
+   "texto": "A quantia de Igor",
+   "pacotes": [
+    "matematica4-ma11a8"
+   ],
+   "fala": "A quantia de Igor"
+  },
+  {
+   "chave": "12f9d8b01v",
+   "voz": "narradora",
+   "texto": "O menino Igor deu metade da quantia que tinha para Lucas.",
+   "pacotes": [
+    "matematica4-ma11a8"
+   ],
+   "fala": "O menino Igor deu metade da quantia que tinha para Lucas."
+  },
+  {
    "chave": "59a3b1594i",
    "voz": "narradora",
    "texto": "Em uma caixa há 21 livros infantis que serão distribuídos igualmente em 3 prateleiras de uma estante. Quantos livros serão colocados em cada prateleira?",
@@ -10719,6 +10862,15 @@
     "matematica4-ma11a8"
    ],
    "fala": "Fabrício gastou a terça parte da quantia representada a seguir na compra de um gibi. Quantos reais sobraram para Fabrício?"
+  },
+  {
+   "chave": "1cc32761v",
+   "voz": "narradora",
+   "texto": "A quantia de Fabrício",
+   "pacotes": [
+    "matematica4-ma11a8"
+   ],
+   "fala": "A quantia de Fabrício"
   },
   {
    "chave": "78db7b04q",
@@ -11703,13 +11855,13 @@
    "fala": "Qual pergunta a professora e os alunos podem fazer para descobrir as brincadeiras preferidas dos pais ou responsáveis em uma gincana?"
   },
   {
-   "chave": "48ecde811d",
+   "chave": "33a24a131p",
    "voz": "narradora",
-   "texto": "Para quem essa pergunta deve ser feita?",
+   "texto": "Para quem a pergunta dessa pesquisa deve ser feita?",
    "pacotes": [
     "matematica4-ma12a5"
    ],
-   "fala": "Para quem essa pergunta deve ser feita?"
+   "fala": "Para quem a pergunta dessa pesquisa deve ser feita?"
   },
   {
    "chave": "5245fc882p",
@@ -11766,13 +11918,13 @@
    "fala": "Corrida de 3 pernas: 18 votos"
   },
   {
-   "chave": "18e257f61n",
+   "chave": "7fe68ec01n",
    "voz": "narradora",
-   "texto": "Quantos votos teve a brincadeira Corrida de saco?",
+   "texto": "Quantos votos teve a brincadeira Corrida do saco?",
    "pacotes": [
     "matematica4-ma12a5"
    ],
-   "fala": "Quantos votos teve a brincadeira Corrida de saco?"
+   "fala": "Quantos votos teve a brincadeira Corrida do saco?"
   },
   {
    "chave": "aadc303119",
@@ -12444,6 +12596,15 @@
    "fala": "e) Quem ganhou 28 pontos?"
   },
   {
+   "chave": "e13a43052d",
+   "voz": "narradora",
+   "texto": "Escreva na tabela as informações apresentadas no gráfico Pontuação no jogo.",
+   "pacotes": [
+    "matematica4-ma12t1"
+   ],
+   "fala": "Escreva na tabela as informações apresentadas no gráfico Pontuação no jogo."
+  },
+  {
    "chave": "60124b0e54",
    "voz": "narradora",
    "texto": "A tabela a seguir mostra o tipo de livro que os alunos do 2º ano mais gostam de ler na biblioteca da escola. a) Quantos alunos do 2º ano A gostam de ler livros sobre animais?",
@@ -12615,13 +12776,13 @@
    "fala": "e) Quantos alunos preferem xadrez e trilha?"
   },
   {
-   "chave": "35c1dd4b5d",
+   "chave": "59b344b25c",
    "voz": "narradora",
-   "texto": "Pinte as colunas do gráfico para representar as informações da tabela presente na atividade anterior. Cada quadrinho equivale a 2 alunos. Quantos quadrinhos você pinta em cada coluna?",
+   "texto": "Pinte as colunas do gráfico para representar as informações da tabela Jogos de tabuleiro preferidos. Cada quadrinho equivale a 2 alunos. Quantos quadrinhos você pinta em cada coluna?",
    "pacotes": [
     "matematica4-ma12t2"
    ],
-   "fala": "Pinte as colunas do gráfico para representar as informações da tabela presente na atividade anterior. Cada quadrinho equivale a 2 alunos. Quantos quadrinhos você pinta em cada coluna?"
+   "fala": "Pinte as colunas do gráfico para representar as informações da tabela Jogos de tabuleiro preferidos. Cada quadrinho equivale a 2 alunos. Quantos quadrinhos você pinta em cada coluna?"
   },
   {
    "chave": "3418317c1f",
@@ -14965,8 +15126,7 @@
    "voz": "narradora",
    "texto": "Converse com os colegas e o professor sobre como você pode ajudar o trabalho dessas pessoas.",
    "pacotes": [
-    "historia4-livro-12",
-    "historia4-hi12a1"
+    "historia4-livro-12"
    ],
    "fala": "Converse com os colegas e o professor sobre como você pode ajudar o trabalho dessas pessoas."
   },
@@ -14975,8 +15135,7 @@
    "voz": "narradora",
    "texto": "Desenhe três objetos que podem ser descartados em cada uma das lixeiras abaixo.",
    "pacotes": [
-    "historia4-livro-12",
-    "historia4-hi12a1"
+    "historia4-livro-12"
    ],
    "fala": "Desenhe três objetos que podem ser descartados em cada uma das lixeiras abaixo."
   },
@@ -15341,8 +15500,7 @@
    "voz": "narradora",
    "texto": "Leia a seguir alguns problemas que as pessoas causam ao meio ambiente. Depois, pesquise e escreva quais são as possíveis soluções para cada problema.",
    "pacotes": [
-    "historia4-livro-12",
-    "historia4-hi12a3"
+    "historia4-livro-12"
    ],
    "fala": "Leia a seguir alguns problemas que as pessoas causam ao meio ambiente. Depois, pesquise e escreva quais são as possíveis soluções para cada problema."
   },
@@ -15731,13 +15889,13 @@
    "fala": "Leia o poema a seguir. Encontre e circule o nome das profissões citadas no texto."
   },
   {
-   "chave": "b30ac6ab33",
+   "chave": "5286dd5b1z",
    "voz": "narradora",
-   "texto": "Qual será a profissão da prima Célia? Converse com os colegas e o professor e escreva a sua resposta.",
+   "texto": "Qual será a profissão da prima Célia? Escreva a sua resposta.",
    "pacotes": [
     "historia4-hi10a3"
    ],
-   "fala": "Qual será a profissão da prima Célia? Converse com os colegas e o professor e escreva a sua resposta."
+   "fala": "Qual será a profissão da prima Célia? Escreva a sua resposta."
   },
   {
    "chave": "300b5b3ds",
@@ -15821,13 +15979,13 @@
    "fala": "Desenhe um tipo de trabalho em que as pessoas precisam usar mais criatividade."
   },
   {
-   "chave": "69da5b992t",
+   "chave": "ddb3554826",
    "voz": "narradora",
-   "texto": "Observe as cenas a seguir e escreva, como souber, quais trabalhos as pessoas estão fazendo.",
+   "texto": "Observe as cenas a seguir. Quais trabalhos as pessoas estão fazendo?",
    "pacotes": [
     "historia4-hi10t1"
    ],
-   "fala": "Observe as cenas a seguir e escreva, como souber, quais trabalhos as pessoas estão fazendo."
+   "fala": "Observe as cenas a seguir. Quais trabalhos as pessoas estão fazendo?"
   },
   {
    "chave": "2a5b6ff82p",
@@ -15857,13 +16015,13 @@
    "fala": "b) Qual é o meio de transporte usado por esse profissional para realizar seu trabalho?"
   },
   {
-   "chave": "aa800e4441",
+   "chave": "5ae3d5062k",
    "voz": "narradora",
-   "texto": "c) Pesquise e escreva o nome de duas outras profissões que também estão relacionadas com o espaço. Toque em TODAS as que são do espaço.",
+   "texto": "c) Quais outras profissões também estão relacionadas com o espaço? Toque em TODAS.",
    "pacotes": [
     "historia4-hi10t1"
    ],
-   "fala": "c) Pesquise e escreva o nome de duas outras profissões que também estão relacionadas com o espaço. Toque em todas as que são do espaço."
+   "fala": "c) Quais outras profissões também estão relacionadas com o espaço? Toque em todas."
   },
   {
    "chave": "6e66401931",
@@ -16010,13 +16168,13 @@
    "fala": "b) Qual invenção fez com que esse trabalho deixasse de existir?"
   },
   {
-   "chave": "df374eec3u",
+   "chave": "0c0bb8ac3v",
    "voz": "narradora",
-   "texto": "c) Na imagem, a pessoa está usando dois objetos para realizar seu trabalho. Pinte os quadros a seguir que indicam esses objetos.",
+   "texto": "c) Na imagem, a pessoa está usando dois objetos para realizar seu trabalho. Toque nos quadros a seguir que indicam esses objetos.",
    "pacotes": [
     "historia4-hi11a2"
    ],
-   "fala": "c) Na imagem, a pessoa está usando dois objetos para realizar seu trabalho. Pinte os quadros a seguir que indicam esses objetos."
+   "fala": "c) Na imagem, a pessoa está usando dois objetos para realizar seu trabalho. Toque nos quadros a seguir que indicam esses objetos."
   },
   {
    "chave": "76473633y",
@@ -16037,22 +16195,22 @@
    "fala": "Vamos conhecer o lugar de trabalho de cada profissional e lembrar que criança é para brincar e estudar!"
   },
   {
-   "chave": "c7c6f58f34",
+   "chave": "79ebe28c3v",
    "voz": "narradora",
-   "texto": "Escolha uma das profissões da atividade anterior e descreva o ambiente de trabalho desse profissional.",
+   "texto": "Escolha uma das profissões (marceneiro, professor, sapateiro ou relojoeiro) e descreva o ambiente de trabalho desse profissional.",
    "pacotes": [
     "historia4-hi11a3"
    ],
-   "fala": "Escolha uma das profissões da atividade anterior e descreva o ambiente de trabalho desse profissional."
+   "fala": "Escolha uma das profissões (marceneiro, professor, sapateiro ou relojoeiro) e descreva o ambiente de trabalho desse profissional."
   },
   {
-   "chave": "e017f7654q",
+   "chave": "496b202731",
    "voz": "narradora",
-   "texto": "Forme um grupo de até três colegas e conversem sobre por que as crianças não devem trabalhar. O que as crianças precisam fazer para crescer saudáveis e felizes?",
+   "texto": "As crianças não devem trabalhar. O que as crianças precisam fazer para crescer saudáveis e felizes?",
    "pacotes": [
     "historia4-hi11a3"
    ],
-   "fala": "Forme um grupo de até três colegas e conversem sobre por que as crianças não devem trabalhar. O que as crianças precisam fazer para crescer saudáveis e felizes?"
+   "fala": "As crianças não devem trabalhar. O que as crianças precisam fazer para crescer saudáveis e felizes?"
   },
   {
    "chave": "3a6d69a83f",
@@ -16145,13 +16303,13 @@
    "fala": "Como a sua família faz para comprar leite atualmente?"
   },
   {
-   "chave": "8394ac8c3w",
+   "chave": "a8c952573w",
    "voz": "narradora",
-   "texto": "Observe as imagens a seguir. a) Escreva duas diferenças entre os escritórios mostrados nas imagens. Toque em TODAS as verdadeiras.",
+   "texto": "Observe as imagens a seguir. a) Quais são as diferenças entre os escritórios mostrados nas imagens? Toque em TODAS as verdadeiras.",
    "pacotes": [
     "historia4-hi11t1"
    ],
-   "fala": "Observe as imagens a seguir. a) Escreva duas diferenças entre os escritórios mostrados nas imagens. Toque em todas as verdadeiras."
+   "fala": "Observe as imagens a seguir. a) Quais são as diferenças entre os escritórios mostrados nas imagens? Toque em todas as verdadeiras."
   },
   {
    "chave": "e946e50d31",
@@ -16206,6 +16364,24 @@
     "historia4-extra"
    ],
    "fala": "Vamos conhecer quem recolhe o lixo para reciclar e descobrir como cuidar da natureza!"
+  },
+  {
+   "chave": "5cc97cd91l",
+   "voz": "narradora",
+   "texto": "Como você pode ajudar o trabalho dos catadores?",
+   "pacotes": [
+    "historia4-hi12a1"
+   ],
+   "fala": "Como você pode ajudar o trabalho dos catadores?"
+  },
+  {
+   "chave": "b4674d512p",
+   "voz": "narradora",
+   "texto": "Quais objetos podem ser descartados em cada uma das lixeiras: Plástico, Metais e Papel?",
+   "pacotes": [
+    "historia4-hi12a1"
+   ],
+   "fala": "Quais objetos podem ser descartados em cada uma das lixeiras: Plástico, Metais e Papel?"
   },
   {
    "chave": "0e92e934u",
@@ -16271,6 +16447,15 @@
    "fala": "Vamos descobrir soluções para os problemas da natureza e contar como a sua família cuida do planeta!"
   },
   {
+   "chave": "19acc2233o",
+   "voz": "narradora",
+   "texto": "Leia a seguir alguns problemas que as pessoas causam ao meio ambiente. Quais são as possíveis soluções para cada problema?",
+   "pacotes": [
+    "historia4-hi12a3"
+   ],
+   "fala": "Leia a seguir alguns problemas que as pessoas causam ao meio ambiente. Quais são as possíveis soluções para cada problema?"
+  },
+  {
    "chave": "5cd6fbff3l",
    "voz": "narradora",
    "texto": "As ações das pessoas podem ter impactos positivos ou negativos no meio ambiente. Separe cada ação do jogo de tabuleiro.",
@@ -16325,40 +16510,40 @@
    "fala": "Vamos descobrir o que ajuda e o que prejudica a natureza e conhecer a pesca dos caiçaras!"
   },
   {
-   "chave": "60df1b8e2k",
+   "chave": "0b7848c22c",
    "voz": "narradora",
-   "texto": "Observe as imagens a seguir. a) Escreva o que está representado em cada uma delas.",
+   "texto": "Observe as imagens a seguir. a) O que está representado em cada uma delas?",
    "pacotes": [
     "historia4-hi12t1"
    ],
-   "fala": "Observe as imagens a seguir. a) Escreva o que está representado em cada uma delas."
+   "fala": "Observe as imagens a seguir. a) O que está representado em cada uma delas?"
   },
   {
-   "chave": "fb52eed72w",
+   "chave": "7b0541f42b",
    "voz": "narradora",
-   "texto": "b) Pinte de verde o quadrinho das imagens que representam impactos positivos ao meio ambiente.",
+   "texto": "b) Toque nas imagens que representam impactos positivos ao meio ambiente.",
    "pacotes": [
     "historia4-hi12t1"
    ],
-   "fala": "b) Pinte de verde o quadrinho das imagens que representam impactos positivos ao meio ambiente."
+   "fala": "b) Toque nas imagens que representam impactos positivos ao meio ambiente."
   },
   {
-   "chave": "1a7e991c2z",
+   "chave": "0678a02b2b",
    "voz": "narradora",
-   "texto": "c) Pinte de vermelho o quadrinho das imagens que representam impactos negativos ao meio ambiente.",
+   "texto": "c) Toque nas imagens que representam impactos negativos ao meio ambiente.",
    "pacotes": [
     "historia4-hi12t1"
    ],
-   "fala": "c) Pinte de vermelho o quadrinho das imagens que representam impactos negativos ao meio ambiente."
+   "fala": "c) Toque nas imagens que representam impactos negativos ao meio ambiente."
   },
   {
-   "chave": "1a32532d2m",
+   "chave": "d32008b92f",
    "voz": "narradora",
-   "texto": "a) O que é a pesca artesanal? Copie o trecho do texto que explica como ela acontece.",
+   "texto": "a) O que é a pesca artesanal? Qual trecho do texto explica como ela acontece?",
    "pacotes": [
     "historia4-hi12t1"
    ],
-   "fala": "a) O que é a pesca artesanal? Copie o trecho do texto que explica como ela acontece."
+   "fala": "a) O que é a pesca artesanal? Qual trecho do texto explica como ela acontece?"
   },
   {
    "chave": "22309887r",
@@ -17960,7 +18145,8 @@
    "voz": "narradora",
    "texto": "Sabia-se que Jaci, quando se escondia atrás das montanhas, sempre levava consigo algumas jovens e as transformava em estrelas no céu.",
    "pacotes": [
-    "portugues4-livro-10"
+    "portugues4-livro-10",
+    "portugues4-lp10a4"
    ],
    "fala": "Sabia-se que Jaci, quando se escondia atrás das montanhas, sempre levava consigo algumas jovens e as transformava em estrelas no céu."
   },
@@ -19832,7 +20018,8 @@
    "voz": "narradora",
    "texto": "Sobre o que é a letra dessa canção?",
    "pacotes": [
-    "portugues4-livro-11"
+    "portugues4-livro-11",
+    "portugues4-lp11a1"
    ],
    "fala": "Sobre o que é a letra dessa canção?"
   },
@@ -23171,13 +23358,13 @@
    "fala": "Quais são os elementos narrativos do conto O Gato de Botas? Ligue cada elemento ao que ele é nesse conto."
   },
   {
-   "chave": "50fe92db2h",
+   "chave": "2f0cf7ad2y",
    "voz": "narradora",
-   "texto": "O que você imagina que vai acontecer no fim da história? Registre sua resposta.",
+   "texto": "O que você imagina que vai acontecer no fim da história do Gato de Botas? Registre sua resposta.",
    "pacotes": [
     "portugues4-lp10a1"
    ],
-   "fala": "O que você imagina que vai acontecer no fim da história? Registre sua resposta."
+   "fala": "O que você imagina que vai acontecer no fim da história do Gato de Botas? Registre sua resposta."
   },
   {
    "chave": "7004b9cep",
@@ -23225,6 +23412,24 @@
    "fala": "Complete as linhas a seguir com um exemplo de cada elemento narrativo do conto O Gato de Botas."
   },
   {
+   "chave": "a5fb1aabp",
+   "voz": "narradora",
+   "texto": "O Gato de Botas",
+   "pacotes": [
+    "portugues4-lp10a2"
+   ],
+   "fala": "O Gato de Botas"
+  },
+  {
+   "chave": "d4d0dd895m",
+   "voz": "narradora",
+   "texto": "Era uma vez um velho moleiro que tinha três filhos. Ao morrer, deixou, como herança, o moinho para o primogênito, um burrinho para o filho do meio e um gato para o caçula, que se pôs a chorar.",
+   "pacotes": [
+    "portugues4-lp10a2"
+   ],
+   "fala": "Era uma vez um velho moleiro que tinha três filhos. Ao morrer, deixou, como herança, o moinho para o primogênito, um burrinho para o filho do meio e um gato para o caçula, que se pôs a chorar."
+  },
+  {
    "chave": "5740fbf13o",
    "voz": "narradora",
    "texto": "O principal objetivo do Gato de Botas era ajudar seu dono. Na sua opinião, ele conseguiu isso no fim da história? Por quê?",
@@ -23261,13 +23466,13 @@
    "fala": "Ponto-final, ponto de interrogação e ponto de exclamação: vamos descobrir para que serve cada um!"
   },
   {
-   "chave": "992a3f593a",
+   "chave": "a488015d3q",
    "voz": "narradora",
-   "texto": "No texto, foram usados alguns sinais, como \"!\" e \"?\". Para que eles servem? Ligue cada sinal ao que ele faz.",
+   "texto": "No texto O Gato de Botas, foram usados alguns sinais, como \"!\" e \"?\". Para que eles servem? Ligue cada sinal ao que ele faz.",
    "pacotes": [
     "portugues4-lp10a3"
    ],
-   "fala": "No texto, foram usados alguns sinais, como \"!\" e \"?\". Para que eles servem? Ligue cada sinal ao que ele faz."
+   "fala": "No texto O Gato de Botas, foram usados alguns sinais, como \"!\" e \"?\". Para que eles servem? Ligue cada sinal ao que ele faz."
   },
   {
    "chave": "23058af934",
@@ -23511,6 +23716,33 @@
     "portugues4-lp10a4"
    ],
    "fala": "Leia as frases sobre a lenda da vitória-régia. Depois, assinale V para o que for verdadeiro e F para o que for falso."
+  },
+  {
+   "chave": "2a3a67deq",
+   "voz": "narradora",
+   "texto": "Trechos da lenda",
+   "pacotes": [
+    "portugues4-lp10a4"
+   ],
+   "fala": "Trechos da lenda"
+  },
+  {
+   "chave": "cc43ce092o",
+   "voz": "narradora",
+   "texto": "Acontece que uma moça [...], a guerreira Naiá, vivia sonhando com esse encontro [...].",
+   "pacotes": [
+    "portugues4-lp10a4"
+   ],
+   "fala": "Acontece que uma moça [...], a guerreira Naiá, vivia sonhando com esse encontro [...]."
+  },
+  {
+   "chave": "0db836735t",
+   "voz": "narradora",
+   "texto": "Jaci, comovida com tão intenso desejo, quis recompensar o sacrifício da bela jovem indígena [...]. Assim, Naiá foi transformada na \"Estrela das Águas\", única e majestosa, que é a vitória-régia [...].",
+   "pacotes": [
+    "portugues4-lp10a4"
+   ],
+   "fala": "Jaci, comovida com tão intenso desejo, quis recompensar o sacrifício da bela jovem indígena [...]. Assim, Naiá foi transformada na \"Estrela das Águas\", única e majestosa, que é a vitória-régia [...]."
   },
   {
    "chave": "1ba73dec2l",
@@ -23864,13 +24096,13 @@
    "fala": "Como a mãe de João reagiu quando ele contou sobre a troca que fez no caminho?"
   },
   {
-   "chave": "363d6b861l",
+   "chave": "90ac8d2b2j",
    "voz": "narradora",
-   "texto": "Qual foi a consequência da ação da mãe de João?",
+   "texto": "Qual foi a consequência da ação da mãe de João, que jogou os feijões pela janela?",
    "pacotes": [
     "portugues4-lp10a7"
    ],
-   "fala": "Qual foi a consequência da ação da mãe de João?"
+   "fala": "Qual foi a consequência da ação da mãe de João, que jogou os feijões pela janela?"
   },
   {
    "chave": "b36cf2a537",
@@ -24144,13 +24376,13 @@
    "fala": "Algumas frases a seguir estão com a pontuação final errada. Circule essas frases. Toque em todas."
   },
   {
-   "chave": "68b2feeb2q",
+   "chave": "cb99e1be2u",
    "voz": "narradora",
-   "texto": "Reescreva as frases que você circulou na questão anterior inserindo a pontuação correta.",
+   "texto": "Reescreva as frases que estavam com a pontuação final errada, inserindo a pontuação correta.",
    "pacotes": [
     "portugues4-lp10t2"
    ],
-   "fala": "Reescreva as frases que você circulou na questão anterior inserindo a pontuação correta."
+   "fala": "Reescreva as frases que estavam com a pontuação final errada, inserindo a pontuação correta."
   },
   {
    "chave": "344f47ea2n",
@@ -24251,15 +24483,6 @@
     "portugues4-lp11a2"
    ],
    "fala": "Rei da Floresta"
-  },
-  {
-   "chave": "60541b352c",
-   "voz": "narradora",
-   "texto": "Converse com os colegas e o professor. Sobre o que é a letra dessa canção?",
-   "pacotes": [
-    "portugues4-lp11a1"
-   ],
-   "fala": "Converse com os colegas e o professor. Sobre o que é a letra dessa canção?"
   },
   {
    "chave": "4d566d61q",
@@ -24527,13 +24750,13 @@
    "fala": "c) O cachorrinho Tom estava assustado com o barulho dos fogos."
   },
   {
-   "chave": "d996b0ca33",
+   "chave": "7339345f2v",
    "voz": "narradora",
-   "texto": "Qual é o aumentativo das palavras a seguir? Coloque cada palavra da aba recortável no espaço correto.",
+   "texto": "Qual é o aumentativo das palavras a seguir? Coloque cada palavra do quadro no espaço correto.",
    "pacotes": [
     "portugues4-lp11a4"
    ],
-   "fala": "Qual é o aumentativo das palavras a seguir? Coloque cada palavra da aba recortável no espaço correto."
+   "fala": "Qual é o aumentativo das palavras a seguir? Coloque cada palavra do quadro no espaço correto."
   },
   {
    "chave": "9bf7b681h",
@@ -24896,13 +25119,13 @@
    "fala": "Quais são as palavras que você consegue ler na imagem acima? Toque em todas."
   },
   {
-   "chave": "2879768c54",
+   "chave": "1f4566d74n",
    "voz": "narradora",
-   "texto": "Que tal criar um animal letrado, como o que você viu na página anterior? Escreva várias vezes dentro da imagem o nome do animal formado. Aqui, escreva o nome nas três caixas.",
+   "texto": "Que tal criar um animal letrado, como o jacaré letrado? Escreva várias vezes dentro da imagem o nome do animal formado. Aqui, escreva o nome nas três caixas.",
    "pacotes": [
     "portugues4-lp12a1"
    ],
-   "fala": "Que tal criar um animal letrado, como o que você viu na página anterior? Escreva várias vezes dentro da imagem o nome do animal formado. Aqui, escreva o nome nas três caixas."
+   "fala": "Que tal criar um animal letrado, como o jacaré letrado? Escreva várias vezes dentro da imagem o nome do animal formado. Aqui, escreva o nome nas três caixas."
   },
   {
    "chave": "a57fa66d1k",
@@ -24941,13 +25164,13 @@
    "fala": "c) Existe uma letra que se repete no poema. Qual letra é essa?"
   },
   {
-   "chave": "45f77b3f24",
+   "chave": "3ca2e6f430",
    "voz": "narradora",
-   "texto": "O que a letra que se repete tem a ver com imagem formada no poema?",
+   "texto": "A letra O se repete no poema. O que a letra que se repete tem a ver com a imagem formada no poema?",
    "pacotes": [
     "portugues4-lp12a1"
    ],
-   "fala": "O que a letra que se repete tem a ver com imagem formada no poema?"
+   "fala": "A letra O se repete no poema. O que a letra que se repete tem a ver com a imagem formada no poema?"
   },
   {
    "chave": "99f91eba1r",
@@ -24959,13 +25182,13 @@
    "fala": "Complete as frases a seguir com as palavras corretas."
   },
   {
-   "chave": "620649a33e",
+   "chave": "28e62ec63f",
    "voz": "narradora",
-   "texto": "Leia novamente os poemas visuais das páginas anteriores. Como esses poemas usam as palavras para formar imagens?",
+   "texto": "Leia novamente os poemas visuais jacaré letrado e um ovo. Como esses poemas usam as palavras para formar imagens?",
    "pacotes": [
     "portugues4-lp12a1"
    ],
-   "fala": "Leia novamente os poemas visuais das páginas anteriores. Como esses poemas usam as palavras para formar imagens?"
+   "fala": "Leia novamente os poemas visuais jacaré letrado e um ovo. Como esses poemas usam as palavras para formar imagens?"
   },
   {
    "chave": "c3445b0849",
@@ -25337,13 +25560,13 @@
    "fala": "Complete as frases a seguir. Lembre de usar letra maiúscula e letra minúscula nos lugares corretos."
   },
   {
-   "chave": "8fb136b43o",
+   "chave": "da436e375c",
    "voz": "narradora",
-   "texto": "As frases a seguir foram escritas com letras minúsculas. Reescreva as frases usando a letra maiúscula onde for necessário.",
+   "texto": "As frases a seguir foram escritas com letras minúsculas. Reescreva as frases usando a letra maiúscula onde for necessário. Aqui, contorne as palavras que precisam de letra maiúscula.",
    "pacotes": [
     "portugues4-lp12a4"
    ],
-   "fala": "As frases a seguir foram escritas com letras minúsculas. Reescreva as frases usando a letra maiúscula onde for necessário."
+   "fala": "As frases a seguir foram escritas com letras minúsculas. Reescreva as frases usando a letra maiúscula onde for necessário. Aqui, contorne as palavras que precisam de letra maiúscula."
   },
   {
    "chave": "b681835cn",
@@ -25481,22 +25704,22 @@
    "fala": "Leia o poema visual. a) O que as palavras formam no poema?"
   },
   {
-   "chave": "59f29fd21w",
+   "chave": "702fddad20",
    "voz": "narradora",
-   "texto": "b) Escreva a seguir a frase se repete nas pétalas da flor.",
+   "texto": "b) Escreva a seguir a frase que se repete nas pétalas da flor.",
    "pacotes": [
     "portugues4-lp12a6"
    ],
-   "fala": "b) Escreva a seguir a frase se repete nas pétalas da flor."
+   "fala": "b) Escreva a seguir a frase que se repete nas pétalas da flor."
   },
   {
-   "chave": "12049ca13z",
+   "chave": "bed02ea24p",
    "voz": "narradora",
-   "texto": "Essa frase é uma brincadeira antiga. Pesquise como se brinca. Depois, responda: Por que você acha que essa frase aparece nas pétalas?",
+   "texto": "Essa frase (bem me quer mal me quer) é uma brincadeira antiga. Pesquise como se brinca. Depois, responda: Por que você acha que essa frase aparece nas pétalas?",
    "pacotes": [
     "portugues4-lp12a6"
    ],
-   "fala": "Essa frase é uma brincadeira antiga. Pesquise como se brinca. Depois, responda: Por que você acha que essa frase aparece nas pétalas?"
+   "fala": "Essa frase (bem me quer mal me quer) é uma brincadeira antiga. Pesquise como se brinca. Depois, responda: Por que você acha que essa frase aparece nas pétalas?"
   },
   {
    "chave": "e1fd5c50o",
@@ -25535,22 +25758,22 @@
    "fala": "d) O título e as frases desse poema começam com"
   },
   {
-   "chave": "e86989a522",
+   "chave": "f70bb6a84c",
    "voz": "narradora",
-   "texto": "Esse uso está correto de acordo com as regras que você aprendeu?",
+   "texto": "O título e as frases do poema a primavera endoideceu começam com letra minúscula. Esse uso está correto de acordo com as regras que você aprendeu?",
    "pacotes": [
     "portugues4-lp12a6"
    ],
-   "fala": "Esse uso está correto de acordo com as regras que você aprendeu?"
+   "fala": "O título e as frases do poema a primavera endoideceu começam com letra minúscula. Esse uso está correto de acordo com as regras que você aprendeu?"
   },
   {
-   "chave": "f39d47f31v",
+   "chave": "c8b182914j",
    "voz": "narradora",
-   "texto": "O que justifica essa escolha do autor do poema? Explique.",
+   "texto": "No poema a primavera endoideceu, o autor usou letra minúscula no título e no começo das frases. O que justifica essa escolha do autor do poema? Explique.",
    "pacotes": [
     "portugues4-lp12a6"
    ],
-   "fala": "O que justifica essa escolha do autor do poema? Explique."
+   "fala": "No poema a primavera endoideceu, o autor usou letra minúscula no título e no começo das frases. O que justifica essa escolha do autor do poema? Explique."
   },
   {
    "chave": "2ebcbd141h",
@@ -25578,6 +25801,24 @@
     "portugues4-lp12a6"
    ],
    "fala": "Escolha um substantivo próprio e um substantivo comum da atividade anterior. Depois, escreva uma frase que tenha as duas palavras."
+  },
+  {
+   "chave": "cc3abfcd17",
+   "voz": "narradora",
+   "texto": "As palavras da atividade anterior",
+   "pacotes": [
+    "portugues4-lp12a6"
+   ],
+   "fala": "As palavras da atividade anterior"
+  },
+  {
+   "chave": "763e30d73v",
+   "voz": "narradora",
+   "texto": "Loja Melissa – foguete – Rua Costa Barros – água – espada – macarrão – Roraima – Egito – sacola – Rio Negro – lancheira – Marília",
+   "pacotes": [
+    "portugues4-lp12a6"
+   ],
+   "fala": "Loja Melissa – foguete – Rua Costa Barros – água – espada – macarrão – Roraima – Egito – sacola – Rio Negro – lancheira – Marília"
   },
   {
    "chave": "69f743e9l",
@@ -25679,13 +25920,13 @@
    "fala": "Passe cada palavra abaixo para o plural usando a terminação que está ao lado dela."
   },
   {
-   "chave": "d25bcae11n",
+   "chave": "878807541b",
    "voz": "narradora",
-   "texto": "Depois, escreva uma frase com essa palavra: pães.",
+   "texto": "Escreva uma frase com a palavra pães.",
    "pacotes": [
     "portugues4-lp12t1"
    ],
-   "fala": "Depois, escreva uma frase com essa palavra: pães."
+   "fala": "Escreva uma frase com a palavra pães."
   },
   {
    "chave": "f63a2d911i",
@@ -25787,13 +26028,13 @@
    "fala": "domingo é dia de brincar com meu Cachorro pipoca."
   },
   {
-   "chave": "32886fb51s",
+   "chave": "b687fbbb3b",
    "voz": "narradora",
-   "texto": "b) Reescreva as frases fazendo os ajustes necessários.",
+   "texto": "b) Reescreva as frases fazendo os ajustes necessários. Aqui, contorne as palavras com a letra inicial errada.",
    "pacotes": [
     "portugues4-lp12t2"
    ],
-   "fala": "b) Reescreva as frases fazendo os ajustes necessários."
+   "fala": "b) Reescreva as frases fazendo os ajustes necessários. Aqui, contorne as palavras com a letra inicial errada."
   },
   {
    "chave": "0ff325772x",
@@ -28639,6 +28880,24 @@
    "fala": "Qual matéria-prima chamou mais a sua atenção entre os objetos investigados? Explique sua resposta."
   },
   {
+   "chave": "07e2bff5x",
+   "voz": "narradora",
+   "texto": "Os objetos investigados",
+   "pacotes": [
+    "geografia4-ge10a2"
+   ],
+   "fala": "Os objetos investigados"
+  },
+  {
+   "chave": "56375e263i",
+   "voz": "narradora",
+   "texto": "Lápis: madeira e grafite. Folha de papel: celulose. Borracha escolar: látex. Mesa de madeira: madeira. Prego: ferro.",
+   "pacotes": [
+    "geografia4-ge10a2"
+   ],
+   "fala": "Lápis: madeira e grafite. Folha de papel: celulose. Borracha escolar: látex. Mesa de madeira: madeira. Prego: ferro."
+  },
+  {
    "chave": "36073472y",
    "voz": "claude",
    "texto": "Testando as matérias-primas",
@@ -28927,22 +29186,22 @@
    "fala": "Agora, imagine que você está no lugar retratado na fotografia. O que você consegue perceber nessa paisagem por meio: a) da sua audição."
   },
   {
-   "chave": "df434966p",
+   "chave": "c32bb02927",
    "voz": "narradora",
-   "texto": "b) do seu tato.",
+   "texto": "O que você consegue perceber nessa paisagem por meio: b) do seu tato.",
    "pacotes": [
     "geografia4-ge11a4"
    ],
-   "fala": "b) do seu tato."
+   "fala": "O que você consegue perceber nessa paisagem por meio: b) do seu tato."
   },
   {
-   "chave": "93c7377er",
+   "chave": "a18c28e929",
    "voz": "narradora",
-   "texto": "c) do seu olfato.",
+   "texto": "O que você consegue perceber nessa paisagem por meio: c) do seu olfato.",
    "pacotes": [
     "geografia4-ge11a4"
    ],
-   "fala": "c) do seu olfato."
+   "fala": "O que você consegue perceber nessa paisagem por meio: c) do seu olfato."
   },
   {
    "chave": "15a20359s",
@@ -29278,13 +29537,13 @@
    "fala": "Marque um X na imagem que mostra uma alteração na paisagem feita pela ação humana."
   },
   {
-   "chave": "ac33e1491i",
+   "chave": "a7b430542h",
    "voz": "narradora",
-   "texto": "Em seguida, escreva qual foi essa alteração.",
+   "texto": "Em seguida, escreva qual foi essa alteração na paisagem feita pela ação humana.",
    "pacotes": [
     "geografia4-ge12a4"
    ],
-   "fala": "Em seguida, escreva qual foi essa alteração."
+   "fala": "Em seguida, escreva qual foi essa alteração na paisagem feita pela ação humana."
   },
   {
    "chave": "4559d6935c",
@@ -29305,13 +29564,13 @@
    "fala": "Desenhe uma ação humana que causa mudanças nas paisagens."
   },
   {
-   "chave": "2514f9ce2v",
+   "chave": "b950d2403n",
    "voz": "narradora",
-   "texto": "Em seguida, descreva os elementos presentes nela que ajudaram você a chegar a essa conclusão.",
+   "texto": "Em seguida, toque nos elementos presentes na paisagem natural bem conservada que ajudaram você a chegar a essa conclusão.",
    "pacotes": [
     "geografia4-ge12a4"
    ],
-   "fala": "Em seguida, descreva os elementos presentes nela que ajudaram você a chegar a essa conclusão."
+   "fala": "Em seguida, toque nos elementos presentes na paisagem natural bem conservada que ajudaram você a chegar a essa conclusão."
   },
   {
    "chave": "27cf4ec9s",
@@ -34515,13 +34774,13 @@
    "fala": "A happy day!"
   },
   {
-   "chave": "7bf4d7e610",
+   "chave": "f9f6ae6710",
    "voz": "narradora",
-   "texto": "Olhe o primeiro quadrinho.",
+   "texto": "Leia o começo da história.",
    "pacotes": [
     "ingles4-en11e1"
    ],
-   "fala": "Olhe o primeiro quadrinho."
+   "fala": "Leia o começo da história."
   },
   {
    "chave": "91c5d758r",
@@ -34615,40 +34874,40 @@
    "fala": "Ligue cada foto à ação em inglês."
   },
   {
-   "chave": "9396104b1l",
+   "chave": "6da281901c",
    "voz": "narradora",
-   "texto": "Na figura, a menina está triste. O que ela faz?",
+   "texto": "Uma menina está triste. O que ela faz?",
    "pacotes": [
     "ingles4-en11e2"
    ],
-   "fala": "Na figura, a menina está triste. O que ela faz?"
+   "fala": "Uma menina está triste. O que ela faz?"
   },
   {
-   "chave": "13b67a231u",
+   "chave": "fce221181j",
    "voz": "narradora",
-   "texto": "Na figura, as crianças estão animadas. O que elas fazem?",
+   "texto": "As crianças estão animadas. O que elas fazem?",
    "pacotes": [
     "ingles4-en11e2"
    ],
-   "fala": "Na figura, as crianças estão animadas. O que elas fazem?"
+   "fala": "As crianças estão animadas. O que elas fazem?"
   },
   {
-   "chave": "4a17e07b20",
+   "chave": "2878c7191q",
    "voz": "narradora",
-   "texto": "Na figura, o menino está entediado na carteira. O que ele faz?",
+   "texto": "Um menino está entediado na carteira. O que ele faz?",
    "pacotes": [
     "ingles4-en11e2"
    ],
-   "fala": "Na figura, o menino está entediado na carteira. O que ele faz?"
+   "fala": "Um menino está entediado na carteira. O que ele faz?"
   },
   {
-   "chave": "c532f8511l",
+   "chave": "a9658e901a",
    "voz": "narradora",
-   "texto": "Na figura, um menino está bravo. O que ele faz?",
+   "texto": "Um menino está bravo. O que ele faz?",
    "pacotes": [
     "ingles4-en11e2"
    ],
-   "fala": "Na figura, um menino está bravo. O que ele faz?"
+   "fala": "Um menino está bravo. O que ele faz?"
   },
   {
    "chave": "7b8f3d62y",
@@ -34912,13 +35171,13 @@
    "fala": "What do you do when a toy breaks?"
   },
   {
-   "chave": "7aa1868a1u",
+   "chave": "4ca60b651m",
    "voz": "narradora",
-   "texto": "Na figura, o brinquedo do menino quebrou. O que ele faz?",
+   "texto": "O brinquedo de um menino quebrou. O que ele faz?",
    "pacotes": [
     "ingles4-en11e3"
    ],
-   "fala": "Na figura, o brinquedo do menino quebrou. O que ele faz?"
+   "fala": "O brinquedo de um menino quebrou. O que ele faz?"
   },
   {
    "chave": "baf4617e19",
@@ -34930,13 +35189,13 @@
    "fala": "What do you do when you go to a party?"
   },
   {
-   "chave": "24ee6b6d1w",
+   "chave": "85ddbc4a1l",
    "voz": "narradora",
-   "texto": "Na figura, as crianças estão numa festa. O que elas fazem?",
+   "texto": "As crianças estão numa festa. O que elas fazem?",
    "pacotes": [
     "ingles4-en11e3"
    ],
-   "fala": "Na figura, as crianças estão numa festa. O que elas fazem?"
+   "fala": "As crianças estão numa festa. O que elas fazem?"
   },
   {
    "chave": "e2d17f9728",
@@ -35684,13 +35943,13 @@
    "fala": "Quem tem cabelo loiro?"
   },
   {
-   "chave": "89abbf682b",
+   "chave": "e3c1474624",
    "voz": "narradora",
-   "texto": "Na foto, Isabela usa boné e óculos, e o cabelo dela é clarinho. Complete:",
+   "texto": "A Isabela usa boné e óculos, e o cabelo dela é clarinho. Complete:",
    "pacotes": [
     "ingles4-en11p1"
    ],
-   "fala": "Na foto, Isabela usa boné e óculos, e o cabelo dela é clarinho. Complete:"
+   "fala": "A Isabela usa boné e óculos, e o cabelo dela é clarinho. Complete:"
   },
   {
    "chave": "bf24b25al",
@@ -35702,13 +35961,13 @@
    "fala": "Isabela has..."
   },
   {
-   "chave": "9b8c2fa623",
+   "chave": "d6bd6d211h",
    "voz": "narradora",
-   "texto": "Hugo é o último menino da foto, de cabelo bem curtinho. Complete:",
+   "texto": "O Hugo tem o cabelo bem curtinho. Complete:",
    "pacotes": [
     "ingles4-en11p1"
    ],
-   "fala": "Hugo é o último menino da foto, de cabelo bem curtinho. Complete:"
+   "fala": "O Hugo tem o cabelo bem curtinho. Complete:"
   },
   {
    "chave": "eba6af80i",
@@ -39063,13 +39322,13 @@
    "fala": "Vamos conhecer as plantas e descobrir do que elas precisam para viver!"
   },
   {
-   "chave": "2c57c2443c",
+   "chave": "270db3ed2j",
    "voz": "narradora",
-   "texto": "Explique, com suas palavras, o que são plantas. Assinale V para o que for verdadeiro e F para o que for falso.",
+   "texto": "O que são plantas? Assinale V para o que for verdadeiro e F para o que for falso.",
    "pacotes": [
     "ciencias4-ci10a1"
    ],
-   "fala": "Explique, com suas palavras, o que são plantas. Assinale V para o que for verdadeiro e F para o que for falso."
+   "fala": "O que são plantas? Assinale V para o que for verdadeiro e F para o que for falso."
   },
   {
    "chave": "89ec1d822c",
@@ -39144,13 +39403,13 @@
    "fala": "Vamos fazer um experimento: uma plantinha no sol e outra no escuro. O que será que acontece?"
   },
   {
-   "chave": "c11089672d",
+   "chave": "8a908a101l",
    "voz": "narradora",
-   "texto": "Conversem com os colegas: o que vocês acham que acontecerá com as sementes?",
+   "texto": "O que você acha que acontecerá com as sementes?",
    "pacotes": [
     "ciencias4-ci10a3"
    ],
-   "fala": "Conversem com os colegas: o que vocês acham que acontecerá com as sementes?"
+   "fala": "O que você acha que acontecerá com as sementes?"
   },
   {
    "chave": "5c727cd92c",
@@ -39189,13 +39448,13 @@
    "fala": "Qual foi a planta que ficou mais verde?"
   },
   {
-   "chave": "f704dc2f1d",
+   "chave": "d3f571fd31",
    "voz": "narradora",
-   "texto": "Por que vocês acham que isso aconteceu?",
+   "texto": "A planta do local ensolarado cresceu mais e ficou mais verde. Por que você acha que isso aconteceu?",
    "pacotes": [
     "ciencias4-ci10a3"
    ],
-   "fala": "Por que vocês acham que isso aconteceu?"
+   "fala": "A planta do local ensolarado cresceu mais e ficou mais verde. Por que você acha que isso aconteceu?"
   },
   {
    "chave": "297c8d0dp",
@@ -39379,13 +39638,13 @@
    "fala": "Vamos descobrir para que servem o caule, as folhas, as flores, os frutos e as sementes!"
   },
   {
-   "chave": "897e7c9d3d",
+   "chave": "06cbd0711j",
    "voz": "narradora",
-   "texto": "Recorte as imagens da aba e cole as partes das plantas nos locais corretos. Ligue cada figura ao nome da parte.",
+   "texto": "Ligue cada figura ao nome da parte da planta.",
    "pacotes": [
     "ciencias4-ci11a2"
    ],
-   "fala": "Recorte as imagens da aba e cole as partes das plantas nos locais corretos. Ligue cada figura ao nome da parte."
+   "fala": "Ligue cada figura ao nome da parte da planta."
   },
   {
    "chave": "255037afo",
@@ -39469,13 +39728,13 @@
    "fala": "b) Desenhe uma planta completa com todas as partes. Depois, escreva o nome de cada parte, indicando-as com setas."
   },
   {
-   "chave": "6b0c22a22q",
+   "chave": "08741df11a",
    "voz": "narradora",
-   "texto": "Pinte cada parte da planta de acordo com a legenda. Ligue cada função à parte da planta.",
+   "texto": "Ligue cada função à parte da planta.",
    "pacotes": [
     "ciencias4-ci11a4"
    ],
-   "fala": "Pinte cada parte da planta de acordo com a legenda. Ligue cada função à parte da planta."
+   "fala": "Ligue cada função à parte da planta."
   },
   {
    "chave": "40840d5bq",
@@ -39505,13 +39764,13 @@
    "fala": "Identifique o nome das partes do tomateiro."
   },
   {
-   "chave": "6f0aad0d34",
+   "chave": "934e660d3b",
    "voz": "narradora",
-   "texto": "Observe a imagem da planta a seguir. Depois, escreva onde ficam a raiz, o caule e as folhas da planta.",
+   "texto": "Observe a imagem da planta a seguir. Depois, ligue a raiz, o caule e as folhas ao lugar onde ficam na planta.",
    "pacotes": [
     "ciencias4-ci11t1"
    ],
-   "fala": "Observe a imagem da planta a seguir. Depois, escreva onde ficam a raiz, o caule e as folhas da planta."
+   "fala": "Observe a imagem da planta a seguir. Depois, ligue a raiz, o caule e as folhas ao lugar onde ficam na planta."
   },
   {
    "chave": "da24fb8a32",
@@ -39532,13 +39791,13 @@
    "fala": "Escreva o nome das partes da planta indicadas na imagem a seguir."
   },
   {
-   "chave": "409fdf383p",
+   "chave": "b7777e922o",
    "voz": "narradora",
-   "texto": "Quais são as funções das diferentes partes das plantas? Escreva no quadrado de cada função a letra da parte correspondente.",
+   "texto": "Quais são as funções das diferentes partes das plantas? Ligue cada parte à sua função.",
    "pacotes": [
     "ciencias4-ci11t1"
    ],
-   "fala": "Quais são as funções das diferentes partes das plantas? Escreva no quadrado de cada função a letra da parte correspondente."
+   "fala": "Quais são as funções das diferentes partes das plantas? Ligue cada parte à sua função."
   },
   {
    "chave": "35a7091e1s",
@@ -39640,13 +39899,13 @@
    "fala": "Um beija-flor está com o bico dentro de uma flor amarela e laranja."
   },
   {
-   "chave": "3cd2a7641s",
+   "chave": "25a87a7a1t",
    "voz": "narradora",
-   "texto": "Pinte, a seguir, o que acontece durante a polinização.",
+   "texto": "Toque, a seguir, no que acontece durante a polinização.",
    "pacotes": [
     "ciencias4-ci12a2"
    ],
-   "fala": "Pinte, a seguir, o que acontece durante a polinização."
+   "fala": "Toque, a seguir, no que acontece durante a polinização."
   },
   {
    "chave": "acecca4f2k",
@@ -39838,13 +40097,13 @@
    "fala": "Complete as frases usando as palavras do quadro a seguir."
   },
   {
-   "chave": "c6eef6913l",
+   "chave": "92cbd4423b",
    "voz": "narradora",
-   "texto": "Escreva e desenhe as informações que faltam sobre as formas de dispersão de sementes para completar o esquema a seguir.",
+   "texto": "Escreva as informações que faltam sobre as formas de dispersão de sementes para completar o esquema a seguir.",
    "pacotes": [
     "ciencias4-ci12t1"
    ],
-   "fala": "Escreva e desenhe as informações que faltam sobre as formas de dispersão de sementes para completar o esquema a seguir."
+   "fala": "Escreva as informações que faltam sobre as formas de dispersão de sementes para completar o esquema a seguir."
   },
   {
    "chave": "83ad2fa42h",

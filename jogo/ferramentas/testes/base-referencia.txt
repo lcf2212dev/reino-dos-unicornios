@@ -115,4 +115,5 @@
 # @ = Jogar juntos: config.juntos novo (dados) e nenhuma imagem diferente
 # @ = Jogar com amigos: o botão 👥 no HUD (e a placa de Química que desvia dele)
 # @ = Jogar com amigos: aceno 3,5 s e recado 5,5 s (dados); nenhuma imagem diferente
+# @ = perguntas do 4º bimestre arrumadas: enunciados, Leia antes da Vila, dica da cruzadinha
 @
