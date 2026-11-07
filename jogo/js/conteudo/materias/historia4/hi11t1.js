@@ -73,7 +73,7 @@ Reino.registrarSala('historia4',
           modelo: 'Compramos leite de caixinha no mercado.',
           explica: 'Hoje quase ninguém recebe o leite na porta: ele vem em caixinhas, no mercado ou na padaria.' },
         { id: 'hi11t1-09', tipo: 'varias', origem: 'ATI-07-q1a', pagina: 7, livro: 'hi-t07',
-          pergunta: 'Observe as imagens a seguir. a) Escreva duas diferenças entre os escritórios mostrados nas imagens. Toque em TODAS as verdadeiras.',
+          pergunta: 'Observe as imagens a seguir. a) Quais são as diferenças entre os escritórios mostrados nas imagens? Toque em TODAS as verdadeiras.',
           opcoes: [
             { t: 'Hoje há computadores no escritório.', ok: true },
             { t: 'Em 1917, tudo era feito no papel.', ok: true },

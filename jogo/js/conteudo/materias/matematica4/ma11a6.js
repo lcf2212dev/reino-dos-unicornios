@@ -33,7 +33,7 @@
           adaptacao: 'O "10 unidades" escrito nos pacotes da figura virou uma linha do texto, para pintar.',
           explica: 'Vermelho: 10 unidades. Amarelo: 4 pacotes. Verde: 5 grupos. Azul: Quantas bexigas cada grupo terá?' },
         { id: 'ma11a6-02', tipo: 'digitar', origem: 'APR-44-qA', pagina: 44, livro: 'ma-a44',
-          pergunta: 'Para resolver esse problema, pinte de marrom as figuras dos cupcakes de chocolate e de rosa as figuras dos cupcakes de morango.',
+          pergunta: 'Para resolver esse problema, pinte de marrom as figuras dos cupcakes de chocolate e de rosa as figuras dos cupcakes de morango. Quantos cupcakes ficam de cada cor?',
           frases: [
             { antes: 'Marrom (chocolate):', depois: 'cupcakes', certas: ['10', 'dez'] },
             { antes: 'Rosa (morango):', depois: 'cupcakes', certas: ['20', 'vinte'] },
@@ -105,7 +105,7 @@
             { t: '2 grupos de 16 alunos', ok: true },
           ],
           adaptacao: 'A pergunta de conversa do balão virou marcar os jeitos de dividir em que ninguém sobra.',
-          explica: '4 × 8, 8 × 4 e 2 × 16 dão 32: ninguém sobra. Com 5 grupos de 6 ou 3 grupos de 10, são só 30 alunos e sobram 2.' },
+          explica: '4 grupos de 8, 8 grupos de 4 e 2 grupos de 16 dão 32 alunos: ninguém sobra. Com 5 grupos de 6 ou 3 grupos de 10, são só 30 alunos e sobram 2.' },
       ],
     });
 })();

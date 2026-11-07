@@ -57,7 +57,7 @@
           adaptacao: 'Resposta pessoal: qualquer nome vale.',
           explica: 'Que lindo! Soletrar é dizer o nome letra por letra, em inglês.' },
         { id: 'en11e3-07', tipo: 'escolha', origem: 'ENG-144-q12a', pagina: 144, livro: 'en-e144',
-          pergunta: '«Talk to a friend.» «What do you do when a toy breaks?» Na figura, o brinquedo do menino quebrou. O que ele faz?',
+          pergunta: '«Talk to a friend.» «What do you do when a toy breaks?» O brinquedo de um menino quebrou. O que ele faz?',
           opcoes: [
             { img: '😢', t: '«I cry.»' },
             { img: '💃', t: '«I dance.»' },
@@ -66,7 +66,7 @@
           adaptacao: 'A conversa com o amigo virou escolher a resposta que combina com a foto.',
           explica: 'Brinquedo quebrado deixa a gente triste: «I cry.», eu choro.' },
         { id: 'en11e3-08', tipo: 'escolha', origem: 'ENG-144-q12b', pagina: 144, livro: 'en-e144',
-          pergunta: '«What do you do when you go to a party?» Na figura, as crianças estão numa festa. O que elas fazem?',
+          pergunta: '«What do you do when you go to a party?» As crianças estão numa festa. O que elas fazem?',
           opcoes: [
             { img: '😢', t: '«I cry.»' },
             { img: '🦶', t: '«I stamp my foot.»' },

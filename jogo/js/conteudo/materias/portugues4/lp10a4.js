@@ -50,6 +50,11 @@ Reino.registrarSala('portugues4',
           modelo: 'Porque ficam rosadas como o rosto da guerreira Naiá.',
           explica: 'Ao nascer do sol, as flores ficam rosadas como o rosto da guerreira Naiá.' },
         { id: 'lp10a4-07', tipo: 'vfLista', origem: 'APR-18-q7', pagina: 18, livro: 'lp-a14b',
+          apoio: { titulo: 'Trechos da lenda', partes: [
+            { texto: 'Sabia-se que Jaci, quando se escondia atrás das montanhas, sempre levava consigo algumas jovens e as transformava em estrelas no céu.' },
+            { texto: 'Acontece que uma moça [...], a guerreira Naiá, vivia sonhando com esse encontro [...].' },
+            { texto: 'Jaci, comovida com tão intenso desejo, quis recompensar o sacrifício da bela jovem indígena [...]. Assim, Naiá foi transformada na "Estrela das Águas", única e majestosa, que é a vitória-régia [...].' },
+          ] },
           pergunta: 'Leia as frases sobre a lenda da vitória-régia. Depois, assinale V para o que for verdadeiro e F para o que for falso.',
           itens: [
             { t: 'Naiá era uma pajé que ajudava a aldeia.', v: false },

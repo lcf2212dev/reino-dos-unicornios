@@ -10,7 +10,7 @@
   // o desafio vira pergunta de portal? devolve { opcoes, certa } ou null
   // figura (d.figura) ou só desenho nas opções (d.soImagem): a pergunta depende do desenho, não vira portal só com texto
   function opcoesDe(d) {
-    if (!d || d.apoio || d.livre || d.figura || d.soImagem) return null;
+    if (!d || !R.avulsa(d) || d.apoio || d.livre || d.figura || d.soImagem) return null;
     if (d.tipo === 'vf') return typeof d.afirmacao === 'string' ? { opcoes: ['Verdadeiro', 'Falso'], certa: d.certo ? 0 : 1 } : null;
     if (d.tipo !== 'escolha' || !Array.isArray(d.opcoes)) return null;
     if (d.opcoes.length < 2 || d.opcoes.length > MAX_OPCOES) return null;

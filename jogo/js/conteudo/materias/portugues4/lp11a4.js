@@ -82,8 +82,8 @@
           ],
           adaptacao: 'Reescrever a frase inteira virou escrever só a palavra trocada (dedo, bigode e barulho).',
           explica: 'Dedo, dedão; bigode, bigodão; barulho, barulhão.' },
-        { id: 'lp11a4-07', tipo: 'completar', origem: 'APR-44-q4', pagina: 44, livro: 'lp-a44',
-          pergunta: 'Qual é o aumentativo das palavras a seguir? Coloque cada palavra da aba recortável no espaço correto.',
+        { id: 'lp11a4-07', tipo: 'completar', origem: 'APR-44-q4', pagina: 44, livro: 'lp-a44', avulsa: { carta: 'lp-a41c' },
+          pergunta: 'Qual é o aumentativo das palavras a seguir? Coloque cada palavra do quadro no espaço correto.',
           palavras: ['carrão', 'olhão', 'casona', 'janelona', 'pedregulho', 'barracão'],
           frases: [
             { antes: 'OLHO:', depois: '', certa: 1 },
@@ -104,7 +104,7 @@
           ], certa: 1,
           adaptacao: 'Pintar a frase virou tocar nela.',
           explica: 'Festão mostra admiração: a festa foi incrível! Amigão mostra carinho, e meninão fala do tamanho do menino.' },
-        { id: 'lp11a4-09', tipo: 'completar', origem: 'APR-45-q6', pagina: 45, livro: 'lp-a45',
+        { id: 'lp11a4-09', tipo: 'completar', origem: 'APR-45-q6', pagina: 45, livro: 'lp-a45', avulsa: { carta: 'lp-a41c' },
           pergunta: 'Leia as dicas e descubra quais são as palavras no aumentativo.',
           palavras: ['pezão', 'garrafona', 'colheraça', 'vozeirão'],
           frases: [

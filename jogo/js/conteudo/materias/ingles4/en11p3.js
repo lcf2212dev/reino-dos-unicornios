@@ -71,7 +71,7 @@ Reino.registrarSala('ingles4',
           ],
           adaptacao: 'Sem a foto, cada criança é descrita em português; escrever o número virou ligar.',
           explica: '«He\'s black.» quer dizer: ele é negro. «She has black hair.»: ela tem cabelo preto. «She has blond hair.»: cabelo loiro. «He has brown hair.»: cabelo castanho. «He\'s white.»: ele é branco. «She\'s black.»: ela é negra. Cada um é de um jeito, e todos são lindos!' },
-        { id: 'en11p3-08', tipo: 'digitar', origem: 'PRJ-177-qA', pagina: 177, livro: 'en-p177',
+        { id: 'en11p3-08', tipo: 'digitar', origem: 'PRJ-177-qA', pagina: 177, livro: 'en-p177', avulsa: { carta: 'en-p175' },
           pergunta: 'Escreva nos cartões, em inglês, os materiais da caixa da gentileza.',
           frases: [
             { antes: 'Caixa de papel:', depois: '', certas: ['paper box'] },

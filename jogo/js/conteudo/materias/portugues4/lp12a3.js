@@ -58,7 +58,7 @@
             [{ t: 'FABÍOLA' }, { t: 'VARÍOLA' }],
           ],
           explica: 'Manuela rima com varicela, Dora com catapora e Fabíola com varíola.' },
-        { id: 'lp12a3-05', tipo: 'completar', origem: 'APR-69-q1', pagina: 69, livro: 'lp-a69',
+        { id: 'lp12a3-05', tipo: 'completar', origem: 'APR-69-q1', pagina: 69, livro: 'lp-a69', avulsa: { carta: 'lp-a68' },
           pergunta: 'Escreva P para substantivo próprio e C para substantivo comum.',
           palavras: ['P', 'C'],
           frases: [
@@ -73,7 +73,7 @@
             { antes: '', depois: 'garoto', certa: 1 },
           ],
           explica: 'Belinha, Brasil, João Carlos e Rua Jardim dos Pássaros são próprios (P). Panela, supermercado, vaca, mesa e garoto são comuns (C).' },
-        { id: 'lp12a3-06', tipo: 'completar', origem: 'APR-69-q2', pagina: 69, livro: 'lp-a69',
+        { id: 'lp12a3-06', tipo: 'completar', origem: 'APR-69-q2', pagina: 69, livro: 'lp-a69', avulsa: { carta: 'lp-a68' },
           pergunta: 'Complete os parênteses de acordo com a legenda: 1 para substantivo próprio e 2 para substantivo comum.',
           palavras: ['1', '2'],
           frases: [
@@ -87,7 +87,7 @@
             { antes: '', depois: 'jabuticaba', certa: 1 },
           ],
           explica: 'Amazonas, Rio São Francisco, Rex e Maria são próprios (1). Avião, chocolate, tesoura e jabuticaba são comuns (2).' },
-        { id: 'lp12a3-07', tipo: 'separar', origem: 'APR-69-q3', pagina: 69, livro: 'lp-a69',
+        { id: 'lp12a3-07', tipo: 'separar', origem: 'APR-69-q3', pagina: 69, livro: 'lp-a69', avulsa: { carta: 'lp-a68' },
           pergunta: 'Organize as palavras a seguir no quadro, separando os substantivos próprios e os substantivos comuns.',
           grupos: [{ e: '🔠', t: 'Substantivos próprios' }, { e: '🔤', t: 'Substantivos comuns' }],
           itens: [
@@ -102,7 +102,7 @@
           ],
           adaptacao: 'O quadro de duas colunas virou separar nos baús (a ordem dentro de cada coluna é livre).',
           explica: 'Próprios: Oceano Pacífico, Teatro Amazonas, Tereza e Recife. Comuns: abacate, televisão, bicicleta e quadro.' },
-        { id: 'lp12a3-08', tipo: 'marcar', origem: 'APR-70-q4', pagina: 70, livro: 'lp-a70',
+        { id: 'lp12a3-08', tipo: 'marcar', origem: 'APR-70-q4', pagina: 70, livro: 'lp-a70', avulsa: { carta: 'lp-a68' },
           pergunta: 'Observe as palavras de cada quadro e veja se a maioria é substantivo próprio ou comum. Depois, encontre e contorne a palavra que não combina em cada quadro.',
           marca: 'circular',
           texto: 'Mato Grosso, Paraná, {mar}, Foz do Iguaçu\n{Denise}, cama, ventilador, mesa\n' +

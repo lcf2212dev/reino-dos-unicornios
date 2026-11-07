@@ -87,7 +87,7 @@
       if (m.arquivada) return;
       (m.salas || []).forEach(function (s) {
         (s.desafios || []).forEach(function (d) {
-          if (tipos.indexOf(d.tipo) < 0 || d.livre) return;
+          if (tipos.indexOf(d.tipo) < 0 || d.livre || !Reino.avulsa(d)) return;
           lista.push({ materia: m, sala: s, desafio: d });
         });
       });

@@ -248,3 +248,9 @@ interface BosqueApi {
   HABILIDADES: HabilidadeBosque[];
   curva: { xpDoNivel(n: number): number; xpAte(n: number): number; nivelDoXp(x: number): number; xpLegado(m: number): number; tercosDe(x: number): number };
 }
+
+/* ---------- pergunta sozinha (Reino.avulsa / Reino.cartaAvulsa, js/nucleo/registros.js; quarto-bimestre.md §12.1) ---------- */
+interface DesafioBase {
+  /** Bosque, Vila, surpresa, viagem: false = só na sala; { carta } = a carta do "Leia antes" no lugar da `livro` (null: nenhuma) */
+  avulsa?: false | { carta: string | null };
+}

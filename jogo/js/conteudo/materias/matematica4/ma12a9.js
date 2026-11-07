@@ -79,7 +79,7 @@
           ],
           adaptacao: 'As opções, que no livro são escolhidas com os colegas, ela escolhe sozinha.',
           explica: 'Que cardápio gostoso! Frutas, iogurte e sanduíche natural são ótimas escolhas.' },
-        { id: 'ma12a9-09', tipo: 'escrever', origem: 'APR-80-q3e', pagina: 80, livro: 'ma-a80',
+        { id: 'ma12a9-09', tipo: 'escrever', origem: 'APR-80-q3e', pagina: 80, livro: 'ma-a80', avulsa: { carta: 'ma-a79' },
           pergunta: 'e) Escreva uma pergunta que envolva as informações da tabela.',
           linhas: 2, minPalavras: 4,
           chaves: [['qual', 'quais', 'quantos', 'quantas', 'quem', 'que']],

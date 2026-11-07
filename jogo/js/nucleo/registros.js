@@ -24,6 +24,16 @@ Reino._acharDesafio = function (fn) {
   }
   return undefined;
 };
+// pergunta avulsa (Bosque, Vila, surpresa, viagem: fora da sala, sem as questões de antes; quarto-bimestre.md §12.1):
+// `avulsa: false` = só na sala (depende da questão anterior ou de algo que só a sala tem);
+// `avulsa: { carta: '<id>' | null }` = a carta do "Leia antes" no lugar da `livro` (null: nenhuma carta)
+/** @param {Desafio} d @returns {boolean} */
+Reino.avulsa = function (d) { return !!d && d.avulsa !== false; };
+/** @param {Materia} materia @param {Desafio} d @returns {Object | null} a carta do "Leia antes" da pergunta avulsa */
+Reino.cartaAvulsa = function (materia, d) {
+  var id = d && d.avulsa && d.avulsa.carta !== undefined ? d.avulsa.carta : d && d.livro;
+  return (id && ((materia && materia.livro) || []).find(function (c) { return c.id === id; })) || null;
+};
 // provas bimestrais: cada uma em js/conteudo/provas/<id>.js
 Reino.provas = [];
 /** @param {Prova} p */

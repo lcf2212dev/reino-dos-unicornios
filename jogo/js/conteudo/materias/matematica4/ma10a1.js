@@ -3,7 +3,11 @@
    (docs/contratos/quarto-bimestre.md §3). As conversas APR-03-qB, APR-03-qC e APR-05-qA são leitura (soLeitura). */
 (function () {
   // jeitos de escrever uma quantia inteira em reais: 45, 45,00, R$ 45,00, 45 reais
-  function reais(n) { return [n + '', n + ',00', 'R$ ' + n + ',00', 'R$' + n + ',00', 'R$ ' + n, 'R$' + n, n + ' reais']; }
+  // ext (opcional): a quantia por extenso, que também vale ("cinco", "cinco reais")
+  function reais(n, ext) {
+    var r = [n + '', n + ',00', 'R$ ' + n + ',00', 'R$' + n + ',00', 'R$ ' + n, 'R$' + n, n + ' reais'];
+    return ext ? r.concat(ext, ext + ' reais') : r;
+  }
   Reino.registrarSala('matematica4',
     {
       id: 'ma10a1', nome: 'O nosso dinheiro', emoji: '💵',
@@ -20,11 +24,11 @@
           ], certa: 0,
           adaptacao: 'A conversa oral virou escolher a resposta.',
           explica: 'Com moedas no caixa, fica fácil devolver o troco certinho para cada cliente.' },
-        { id: 'ma10a1-02', tipo: 'digitar', origem: 'APR-04-qA', pagina: 4, livro: 'ma-a04',
+        { id: 'ma10a1-02', tipo: 'digitar', origem: 'APR-04-qA', pagina: 4, livro: 'ma-a04', avulsa: { carta: 'ma-a03' },
           pergunta: 'Qual foi o valor total da compra que eles fizeram?',
           frases: [{ antes: 'A compra custou', depois: '', certas: reais(45) }],
           explica: 'A tela do caixa mostra o total: R$ 45,00.' },
-        { id: 'ma10a1-03', tipo: 'escolha', origem: 'APR-04-qB', pagina: 4, livro: 'ma-a04',
+        { id: 'ma10a1-03', tipo: 'escolha', origem: 'APR-04-qB', pagina: 4, livro: 'ma-a04', avulsa: { carta: 'ma-a03' },
           pergunta: 'Qual cédula o avô de Murilo usou para pagar a compra?',
           opcoes: [
             { t: '10 reais', img: 'ma:cedula-10' },
@@ -34,11 +38,11 @@
           ], certa: 2,
           adaptacao: 'A conversa oral virou escolher a cédula.',
           explica: 'O avô entregou a cédula de 50 reais, a laranja.' },
-        { id: 'ma10a1-04', tipo: 'digitar', origem: 'APR-04-qC', pagina: 4, livro: 'ma-a04',
+        { id: 'ma10a1-04', tipo: 'digitar', origem: 'APR-04-qC', pagina: 4, livro: 'ma-a04', avulsa: { carta: 'ma-a03' },
           pergunta: 'Quantos reais o avô de Murilo deve receber de troco?',
-          frases: [{ antes: 'Ele deve receber', depois: 'de troco.', certas: reais(5) }],
+          frases: [{ antes: 'Ele deve receber', depois: 'de troco.', certas: reais(5, 'cinco') }],
           explica: 'Ele pagou 50 e a compra custou 45: 50 - 45 = 5. O troco é de R$ 5,00.' },
-        { id: 'ma10a1-05', tipo: 'varias', origem: 'APR-04-qD', pagina: 4, livro: 'ma-a04',
+        { id: 'ma10a1-05', tipo: 'varias', origem: 'APR-04-qD', pagina: 4, livro: 'ma-a04', avulsa: { carta: 'ma-a03' },
           pergunta: 'Marque um X nas quantias que o avô de Murilo poderia usar para pagar essa compra sem precisar de troco. Há mais de um jeito de conseguir isso.',
           opcoes: [
             { t: '20 reais + 20 reais + 5 reais', ok: true },

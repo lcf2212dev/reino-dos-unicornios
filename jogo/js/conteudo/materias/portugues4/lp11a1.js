@@ -80,7 +80,7 @@
           explica: 'Na canção, o rei da floresta vê primeiro o elefante, depois o macaco, a girafa, a arara e, por último, a tartaruga.' },
         { id: 'lp11a1-09', tipo: 'escolha', origem: 'APR-33-qA', pagina: 33, livro: 'lp-a32',
           apoio: CANCAO,
-          pergunta: 'Converse com os colegas e o professor. Sobre o que é a letra dessa canção?',
+          pergunta: 'Sobre o que é a letra dessa canção?',
           opcoes: [
             { e: '🐒', t: 'Sobre os bichos que o rei da floresta já viu.' },
             { e: '🌊', t: 'Sobre os peixes do fundo do mar.' },

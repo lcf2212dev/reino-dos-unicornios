@@ -11,7 +11,7 @@
       cartas: ['ma-a54', 'ma-a55'],
       intro: 'Vamos plantar árvores com a turma da Soraia e ler a primeira tabela do capítulo!',
       desafios: [
-        { id: 'ma12a1-01', tipo: 'escolha', origem: 'APR-55-qA', pagina: 55, livro: 'ma-a55', apoio: MUDAS,
+        { id: 'ma12a1-01', tipo: 'escolha', origem: 'APR-55-qA', pagina: 55, livro: 'ma-a55', avulsa: { carta: 'ma-a54' }, apoio: MUDAS,
           pergunta: 'Qual ano escolar plantou a maior quantidade de mudas de árvores?',
           opcoes: [
             { t: '1º ano' },
@@ -22,12 +22,12 @@
           ], certa: 3,
           adaptacao: 'Pergunta oral do Conversa vem... virou escolha.',
           explica: 'O 4º ano plantou 12 mudas, a maior quantidade da tabela.' },
-        { id: 'ma12a1-02', tipo: 'digitar', origem: 'APR-55-qB', pagina: 55, livro: 'ma-a55', apoio: MUDAS,
+        { id: 'ma12a1-02', tipo: 'digitar', origem: 'APR-55-qB', pagina: 55, livro: 'ma-a55', avulsa: { carta: 'ma-a54' }, apoio: MUDAS,
           pergunta: 'Quantas mudas de árvores os alunos do 2º ano plantaram?',
           frases: [{ antes: 'Os alunos do 2º ano plantaram', depois: 'mudas.', certas: ['8', 'oito'] }],
           adaptacao: 'Pergunta oral do Conversa vem... virou digitar o número.',
           explica: 'Na linha do 2º ano, a tabela mostra 8 mudas.' },
-        { id: 'ma12a1-03', tipo: 'escolha', origem: 'APR-55-qC', pagina: 55, livro: 'ma-a55', apoio: MUDAS,
+        { id: 'ma12a1-03', tipo: 'escolha', origem: 'APR-55-qC', pagina: 55, livro: 'ma-a55', avulsa: { carta: 'ma-a54' }, apoio: MUDAS,
           pergunta: 'Observando os dados da tabela, foram plantadas ao todo mais de 50 mudas ou menos?',
           opcoes: [
             { t: 'Mais de 50 mudas.' },
@@ -35,7 +35,7 @@
           ], certa: 1,
           adaptacao: 'Pergunta oral do Conversa vem... virou escolha.',
           explica: '10 + 8 + 6 + 12 + 10 = 46 mudas. 46 é menos que 50!' },
-        { id: 'ma12a1-04', tipo: 'tabela', origem: 'APR-55-qD', pagina: 55, livro: 'ma-a55', apoio: MUDAS,
+        { id: 'ma12a1-04', tipo: 'tabela', origem: 'APR-55-qD', pagina: 55, livro: 'ma-a55', avulsa: { carta: 'ma-a54' }, apoio: MUDAS,
           pergunta: 'Insira no gráfico abaixo as informações da tabela. Para isso, pinte na malha quadriculada a quantidade de mudas que cada ano escolar plantou. Cada quadradinho pintado deve representar uma muda de árvore plantada.',
           cab: ['Ano escolar', 'Quadradinhos pintados'],
           linhas: [

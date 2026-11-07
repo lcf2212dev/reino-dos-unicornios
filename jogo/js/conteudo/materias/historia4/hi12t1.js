@@ -44,7 +44,7 @@
           explica: 'Jogar lixo na rua e cortar árvores prejudicam a natureza. Doar, separar o lixo, usar menos plástico e limpar as praias ajudam!' },
         { id: 'hi12t1-03', tipo: 'ligar', origem: 'ATI-10-q3a', pagina: 10, livro: 'hi-t10',
           instrucao: 'Ligue cada foto à frase.',
-          pergunta: 'Observe as imagens a seguir. a) Escreva o que está representado em cada uma delas.',
+          pergunta: 'Observe as imagens a seguir. a) O que está representado em cada uma delas?',
           pares: [
             [FOTOS[0], { t: 'Uma fábrica soltando fumaça.' }],
             [FOTOS[1], { t: 'Uma pessoa andando de bicicleta.' }],
@@ -54,7 +54,7 @@
           adaptacao: 'Escrever o que cada foto mostra virou ligar a foto à frase.',
           explica: 'Foto 1: a fábrica solta fumaça. Foto 2: alguém pedala na ciclovia. Foto 3: pessoas cuidam da horta. Foto 4: lixo na calçada.' },
         { id: 'hi12t1-04', tipo: 'varias', origem: 'ATI-10-q3b', pagina: 10, livro: 'hi-t10',
-          pergunta: 'b) Pinte de verde o quadrinho das imagens que representam impactos positivos ao meio ambiente.',
+          pergunta: 'b) Toque nas imagens que representam impactos positivos ao meio ambiente.',
           opcoes: [
             { img: '🏭', t: 'Foto 1: a fábrica soltando fumaça' },
             { img: '🚲', t: 'Foto 2: a bicicleta na ciclovia', ok: true },
@@ -64,7 +64,7 @@
           adaptacao: 'Pintar o quadrinho de verde virou tocar nas fotos.',
           explica: 'A bicicleta não solta fumaça, e a horta dá alimento e cuida do solo: são impactos positivos!' },
         { id: 'hi12t1-05', tipo: 'varias', origem: 'ATI-10-q3c', pagina: 10, livro: 'hi-t10',
-          pergunta: 'c) Pinte de vermelho o quadrinho das imagens que representam impactos negativos ao meio ambiente.',
+          pergunta: 'c) Toque nas imagens que representam impactos negativos ao meio ambiente.',
           opcoes: [
             { img: '🏭', t: 'Foto 1: a fábrica soltando fumaça', ok: true },
             { img: '🚲', t: 'Foto 2: a bicicleta na ciclovia' },
@@ -75,7 +75,7 @@
           explica: 'A fumaça da fábrica polui o ar, e o lixo na calçada suja a rua: são impactos negativos.' },
         { id: 'hi12t1-06', tipo: 'escolha', origem: 'ATI-11-q1a', pagina: 11, livro: 'hi-t11b', apoio: PESCA,
           instrucao: 'Escolha o trecho certo do texto.',
-          pergunta: 'a) O que é a pesca artesanal? Copie o trecho do texto que explica como ela acontece.',
+          pergunta: 'a) O que é a pesca artesanal? Qual trecho do texto explica como ela acontece?',
           opcoes: [
             { t: 'É uma pesca bonita, gostosa de ir, em que usamos materiais simples e o conhecimento que aprendemos com nossos avós e bisavós.' },
             { t: 'Tem equipamento, sonar, alta tecnologia, e, com isso, mata muito, muito mais peixe.' },

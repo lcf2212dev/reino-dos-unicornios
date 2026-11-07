@@ -13,7 +13,7 @@
       cartas: ['lp-a71', 'lp-a72', 'lp-a73', 'lp-a74'],
       intro: 'Vamos aprender quando usar letra maiúscula e letra minúscula. A Ana até escreveu uma mensagem para a avó!',
       desafios: [
-        { id: 'lp12a4-01', tipo: 'completar', colado: true, origem: 'APR-72-q1a', pagina: 72, livro: 'lp-a72',
+        { id: 'lp12a4-01', tipo: 'completar', colado: true, origem: 'APR-72-q1a', pagina: 72, livro: 'lp-a72', avulsa: { carta: 'lp-a71' },
           pergunta: LETRA,
           palavras: ['J', 'j', 'T', 't', 'M', 'm'],
           frases: [
@@ -23,7 +23,7 @@
             { antes: '', depois: 'ocantins', certa: 2 },
           ],
           explica: 'Japão, Manaus e Tocantins são nomes próprios: J, M e T maiúsculos. Televisão é comum: t minúsculo.' },
-        { id: 'lp12a4-02', tipo: 'completar', colado: true, origem: 'APR-72-q1b', pagina: 72, livro: 'lp-a72',
+        { id: 'lp12a4-02', tipo: 'completar', colado: true, origem: 'APR-72-q1b', pagina: 72, livro: 'lp-a72', avulsa: { carta: 'lp-a71' },
           pergunta: LETRA,
           palavras: ['L', 'l', 'R', 'r'],
           frases: [
@@ -31,7 +31,7 @@
             { antes: '', depois: 'oraima', certa: 2 },
           ],
           explica: 'Roraima é nome de lugar: R maiúsculo. Lousa é comum: l minúsculo.' },
-        { id: 'lp12a4-03', tipo: 'completar', colado: true, origem: 'APR-72-q1c', pagina: 72, livro: 'lp-a72',
+        { id: 'lp12a4-03', tipo: 'completar', colado: true, origem: 'APR-72-q1c', pagina: 72, livro: 'lp-a72', avulsa: { carta: 'lp-a71' },
           pergunta: LETRA,
           palavras: ['P', 'p', 'C', 'c'],
           frases: [
@@ -39,7 +39,7 @@
             { antes: '', depois: 'aminhão', certa: 3 },
           ],
           explica: 'Parede e caminhão são substantivos comuns: começam com letra minúscula.' },
-        { id: 'lp12a4-04', tipo: 'ligar', origem: 'APR-72-q2', pagina: 72, livro: 'lp-a72',
+        { id: 'lp12a4-04', tipo: 'ligar', origem: 'APR-72-q2', pagina: 72, livro: 'lp-a72', avulsa: { carta: 'lp-a68' },
           pergunta: 'Escolha um substantivo comum ou um substantivo próprio do quadro para nomear cada imagem a seguir.',
           pares: [
             [{ img: 'lp:12-ana', alt: 'menina' }, { t: 'Ana' }],
@@ -51,7 +51,7 @@
           ],
           adaptacao: 'Escrever o nome embaixo de cada imagem, com o quadro de palavras, virou ligar cada imagem ao nome do quadro.',
           explica: 'A menina é a Ana e o menino é o Joaquim; Brasil é o nome do país: próprios, com maiúscula. Mala, meias e abelha são comuns.' },
-        { id: 'lp12a4-05', tipo: 'completar', colado: true, origem: 'APR-73-q3a', pagina: 73, livro: 'lp-a73',
+        { id: 'lp12a4-05', tipo: 'completar', colado: true, origem: 'APR-73-q3a', pagina: 73, livro: 'lp-a73', avulsa: { carta: 'lp-a71' },
           pergunta: PARENTESES,
           palavras: ['B', 'b', 'J', 'j'],
           frases: [
@@ -61,7 +61,7 @@
             { letra: 'b', antes: 'A rua ', depois: 'oão Torres tem muitos parques. (J - j)', certa: 2 },
           ],
           explica: 'Bruna e João são nomes próprios: B e J maiúsculos. Boneca e bola são comuns: b minúsculo.' },
-        { id: 'lp12a4-06', tipo: 'completar', colado: true, origem: 'APR-73-q3c', pagina: 73, livro: 'lp-a73',
+        { id: 'lp12a4-06', tipo: 'completar', colado: true, origem: 'APR-73-q3c', pagina: 73, livro: 'lp-a73', avulsa: { carta: 'lp-a71' },
           pergunta: PARENTESES,
           palavras: ['M', 'm', 'P', 'p'],
           frases: [
@@ -95,8 +95,8 @@
           ],
           adaptacao: 'Resposta pessoal: vale a resposta de cada um, com maiúscula nos nomes próprios (cidade, escola, desenho) e minúscula nos comuns (brinquedo, objeto do estojo).',
           explica: 'Cidade, escola e desenho têm nome próprio: começam com maiúscula. O brinquedo e o objeto do estojo são comuns: minúscula.' },
-        { id: 'lp12a4-10', tipo: 'marcar', origem: 'APR-74-q6', pagina: 74, livro: 'lp-a74',
-          pergunta: 'As frases a seguir foram escritas com letras minúsculas. Reescreva as frases usando a letra maiúscula onde for necessário.',
+        { id: 'lp12a4-10', tipo: 'marcar', origem: 'APR-74-q6', pagina: 74, livro: 'lp-a74', avulsa: { carta: 'lp-a71' },
+          pergunta: 'As frases a seguir foram escritas com letras minúsculas. Reescreva as frases usando a letra maiúscula onde for necessário. Aqui, contorne as palavras que precisam de letra maiúscula.',
           marca: 'circular',
           texto: '{minha} amiga {letícia} levou seu cachorro {paco} para uma consulta no veterinário.\n' +
             '{fomos} passear no {parque} {ibirapuera} e vimos uma árvore enorme.\n' +

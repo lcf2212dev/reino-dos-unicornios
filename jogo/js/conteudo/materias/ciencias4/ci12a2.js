@@ -41,7 +41,7 @@ Reino.registrarSala('ciencias4',
           adaptacao: 'Marcar X nos quadrinhos virou tocar nas frases; a foto virou uma descrição.',
           explica: 'O beija-flor toma o néctar e leva o pólen para outra flor: os dois ganham! Ele não está espalhando sementes: ele está polinizando.' },
         { id: 'ci12a2-04', tipo: 'escolha', origem: 'APR-29-q3', pagina: 29, livro: 'ci-a29',
-          pergunta: 'Pinte, a seguir, o que acontece durante a polinização.',
+          pergunta: 'Toque, a seguir, no que acontece durante a polinização.',
           opcoes: [
             { t: 'O pólen é levado de uma flor para outra, ajudando na reprodução.' },
             { t: 'As sementes são levadas pela água para outros lugares.' },

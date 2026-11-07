@@ -64,7 +64,7 @@
           adaptacao: 'Recortar e colar as rosquinhas nos pratos virou escrever quantas ficam em cada prato.',
           explica: '9 rosquinhas em 3 pratos: 3 em cada prato, porque 3 + 3 + 3 = 9.' },
         { id: 'ma11a2-10', tipo: 'digitar', origem: 'APR-32-q2a', pagina: 32, livro: 'ma-a32',
-          pergunta: 'Beto vai ajudar a mãe a pendurar 12 camisetas no varal. Desenhe e pinte as camisetas distribuindo a mesma quantidade em cada corda do varal.',
+          pergunta: 'Beto vai ajudar a mãe a pendurar 12 camisetas no varal. Desenhe e pinte as camisetas distribuindo a mesma quantidade em cada corda do varal. Quantas camisetas vão em cada corda?',
           frases: [
             { antes: '1ª corda:', depois: 'camisetas', certas: ['6', 'seis'] },
             { antes: '2ª corda:', depois: 'camisetas', certas: ['6', 'seis'] },

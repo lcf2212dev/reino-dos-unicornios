@@ -15,7 +15,7 @@
       intro: 'Vamos fazer um experimento: uma plantinha no sol e outra no escuro. O que será que acontece?',
       desafios: [
         { id: 'ci10a3-01', tipo: 'escolha', origem: 'APR-09-q4', pagina: 9, livro: 'ci-a09',
-          pergunta: 'Conversem com os colegas: o que vocês acham que acontecerá com as sementes?',
+          pergunta: 'O que você acha que acontecerá com as sementes?',
           opcoes: [
             { t: 'A do sol vai crescer mais e ficar bem verde.' },
             { t: 'A do escuro vai crescer mais e ficar bem verde.' },
@@ -48,13 +48,13 @@
           opcoes: LOCAIS, certa: 0,
           explica: 'A planta do sol ficou mais verde. No escuro, a planta fica amarelada.' },
         { id: 'ci10a3-06', tipo: 'escolha', origem: 'APR-10-q3c', pagina: 10, livro: 'ci-a10',
-          pergunta: 'Por que vocês acham que isso aconteceu?',
+          pergunta: 'A planta do local ensolarado cresceu mais e ficou mais verde. Por que você acha que isso aconteceu?',
           opcoes: [
             { t: 'Porque a planta precisa da luz do sol para fazer a fotossíntese.' },
             { t: 'Porque a planta não gosta de ficar sozinha.' },
             { t: 'Porque no escuro a planta dorme o tempo todo.' },
           ], certa: 0,
-          adaptacao: 'A conversa em grupo virou escolher o motivo certo.',
+          adaptacao: 'A conversa em grupo virou escolher o motivo certo; o enunciado lembra o resultado do experimento.',
           explica: 'Com a luz do sol, a planta faz a fotossíntese e produz o próprio alimento. Por isso ela cresce verde e forte!' },
       ],
     });

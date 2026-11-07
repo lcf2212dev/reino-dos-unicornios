@@ -14,6 +14,10 @@
     { img: '👦' }, { img: '👦' }, { img: '👦' }, { img: '👦' }, { img: '👦' },
     { img: '👦' }, { img: '👧' }, { img: '👧' }, { img: '👧' }, { img: '👧' },
   ] }] };
+  // "essa situação" sozinha (fora da sala): a carta da página tem duas situações; o apoio diz qual é
+  var CRIANCAS_GRUPOS = { titulo: 'As crianças', partes: [{ texto: 'As crianças serão divididas em 2 grupos iguais.', figuras: CRIANCAS.partes[0].figuras }] };
+  var PALITOS = { titulo: 'Os palitos', partes: [{ texto: 'Doze palitos de picolé serão distribuídos igualmente entre Ana, Luiz, Felipe e Cecília.' }] };
+  var TAMPINHAS = { titulo: 'As tampinhas', partes: [{ texto: 'São 4 fileiras de tampinhas, com 10 tampinhas em cada fileira. Cada grupo tem 10 tampinhas.' }] };
   var GRUPOS_RAQUEL = { titulo: 'Os grupos de Raquel', partes: [{ figuras: [
     { img: 'ma:11-palitos' }, { img: 'ma:11-palitos' }, { img: 'ma:11-palitos' },
     { img: 'ma:11-palitos' }, { img: 'ma:11-palitos' }, { img: 'ma:11-palitos' },
@@ -38,7 +42,7 @@
           frases: [{ antes: '', depois: 'crianças em cada grupo.', certas: ['5', 'cinco'] }],
           adaptacao: 'Circular as crianças virou só escrever quantas ficam em cada grupo.',
           explica: '10 crianças em 2 grupos iguais: 5 em cada grupo, porque 5 + 5 = 10.' },
-        { id: 'ma11a3-04', tipo: 'digitar', origem: 'APR-33-q3d', pagina: 33, livro: 'ma-a33',
+        { id: 'ma11a3-04', tipo: 'digitar', origem: 'APR-33-q3d', pagina: 33, livro: 'ma-a33', apoio: CRIANCAS_GRUPOS,
           pergunta: 'd) Represente essa situação por meio de uma divisão.',
           frases: divisao('10', '2', '5'),
           explica: '10 crianças divididas em 2 grupos: 10 ÷ 2 = 5.' },
@@ -52,7 +56,7 @@
           ],
           adaptacao: 'Os tracinhos embaixo de cada criança viraram o número de palitos de cada uma.',
           explica: '12 palitos para 4 crianças: 3 para cada uma, porque 3 + 3 + 3 + 3 = 12.' },
-        { id: 'ma11a3-06', tipo: 'digitar', origem: 'APR-33-q4b', pagina: 33, livro: 'ma-a33',
+        { id: 'ma11a3-06', tipo: 'digitar', origem: 'APR-33-q4b', pagina: 33, livro: 'ma-a33', apoio: PALITOS,
           pergunta: 'b) Represente essa situação por meio de uma divisão.',
           frases: divisao('12', '4', '3'),
           explica: '12 palitos divididos entre 4 crianças: 12 ÷ 4 = 3.' },
@@ -60,11 +64,11 @@
           pergunta: 'Forme grupos com 10 tampinhas em cada um deles. Em seguida, responda às perguntas. a) Quantas tampinhas são ao todo?',
           frases: [{ antes: '', depois: 'tampinhas', certas: ['40', 'quarenta'] }],
           explica: 'São 4 fileiras de 10 tampinhas: 10 + 10 + 10 + 10 = 40.' },
-        { id: 'ma11a3-08', tipo: 'digitar', origem: 'APR-34-q5b', pagina: 34, livro: 'ma-a34',
+        { id: 'ma11a3-08', tipo: 'digitar', origem: 'APR-34-q5b', pagina: 34, livro: 'ma-a34', apoio: TAMPINHAS,
           pergunta: 'b) Quantos grupos foram formados?',
           frases: [{ antes: '', depois: 'grupos', certas: ['4', 'quatro'] }],
           explica: 'Cada fileira de 10 tampinhas é um grupo: 4 grupos.' },
-        { id: 'ma11a3-09', tipo: 'digitar', origem: 'APR-34-q5c', pagina: 34, livro: 'ma-a34',
+        { id: 'ma11a3-09', tipo: 'digitar', origem: 'APR-34-q5c', pagina: 34, livro: 'ma-a34', apoio: TAMPINHAS,
           pergunta: 'c) Represente essa situação por meio de uma divisão.',
           frases: divisao('40', '10', '4'),
           explica: '40 tampinhas em grupos de 10: 40 ÷ 10 = 4 grupos.' },
@@ -73,7 +77,7 @@
           frases: [{ antes: '', depois: 'reais', certas: ['50', 'cinquenta'] }],
           explica: 'A cédula é de 50 reais.' },
         { id: 'ma11a3-11', tipo: 'escolha', origem: 'APR-34-q6b', pagina: 34, livro: 'ma-a34',
-          pergunta: 'b) Desenhe a quantia que cada sobrinho deve receber.',
+          pergunta: 'b) Desenhe a quantia que cada sobrinho deve receber. Que cédula cada sobrinho recebe?',
           opcoes: [
             { t: 'Uma cédula de 5 reais.' },
             { t: 'Uma cédula de 10 reais.' },
@@ -83,7 +87,7 @@
           adaptacao: 'Desenhar a quantia virou escolher a cédula que cada sobrinho recebe.',
           explica: '50 ÷ 5 = 10: cada sobrinho recebe 10 reais, porque 10 + 10 + 10 + 10 + 10 = 50.' },
         { id: 'ma11a3-12', tipo: 'tabela', origem: 'APR-35-q7a', pagina: 35, livro: 'ma-a35',
-          pergunta: 'Em dupla com um colega, use 20 palitos de picolé para esta atividade. Juntos, vocês vão formar grupos com os palitos seguindo as indicações da tabela. Depois, cada um deve completar sua tabela com as informações que estão faltando.',
+          pergunta: 'Forme grupos com os palitos de picolé seguindo as indicações da tabela. Os grupos devem ter a mesma quantidade. Depois, complete a tabela com as informações que estão faltando.',
           cab: ['Quantidade de palitos de picolé', 'Quantidade de grupos formados', 'Quantidade de palitos em cada grupo', 'Divisão'],
           linhas: [
             ['8', '2', '4', '8 ÷ 2 = 4'],

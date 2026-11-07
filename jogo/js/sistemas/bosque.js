@@ -212,7 +212,7 @@
       if (m.arquivada || bim === undefined || m.bimestre !== bim) return;
       (m.salas || []).forEach(function (s) {
         (s.desafios || []).forEach(function (d) {
-          if (R.tiposDesafio[d.tipo] && fora.indexOf(d.tipo) < 0 && !d.livre && !(d.tipo === 'escrever' && !(d.chaves && d.chaves.length))) lista.push({ materia: m, sala: s, desafio: d });
+          if (R.tiposDesafio[d.tipo] && R.avulsa(d) && fora.indexOf(d.tipo) < 0 && !d.livre && !(d.tipo === 'escrever' && !(d.chaves && d.chaves.length))) lista.push({ materia: m, sala: s, desafio: d });
         });
       });
     });

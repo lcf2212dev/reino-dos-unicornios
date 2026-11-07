@@ -324,6 +324,21 @@ test('bosque: pergunta só do bimestre atual (não arquivada), sala feita ou nã
   assert.strictEqual(B.pergunta(), null, 'nenhuma pergunta');
 });
 
+test('pergunta sozinha (quarto-bimestre.md §12.1): avulsa false fica só na sala; avulsa.carta troca o Leia antes', () => {
+  const j = jogo(), B = j.B, R = j.R, m = R.materias.find((x) => x.id === 'q4b');
+  m.livro = [{ id: 'pg1', titulo: 'Página 1' }, { id: 'pg2', titulo: 'Página 2' }];
+  const ds = m.salas[0].desafios;
+  ds[0].avulsa = false;
+  igual(B.perguntas().map((p) => p.desafio.id), VALEM.filter((id) => id !== 'b1-1'), 'avulsa: false sai do sorteio');
+  ds[1].livro = 'pg2';
+  assert.strictEqual(R.cartaAvulsa(m, ds[1]).id, 'pg2', 'sem avulsa: a carta livro');
+  ds[1].avulsa = { carta: 'pg1' };
+  assert.strictEqual(R.cartaAvulsa(m, ds[1]).id, 'pg1', 'avulsa.carta: a outra carta');
+  ds[1].avulsa = { carta: null };
+  assert.strictEqual(R.cartaAvulsa(m, ds[1]), null, 'avulsa.carta null: nenhuma');
+  assert.ok(B.perguntas().some((p) => p.desafio.id === 'b1-2'), 'com carta trocada continua no sorteio');
+});
+
 test('bosque: o sorteio é uniforme por pergunta (a matéria com mais perguntas sai mais)', () => {
   const j = jogo(), B = j.B, n = 18000, conta = {};
   for (let i = 0; i < n; i++) { const id = B.pergunta().desafio.id; conta[id] = (conta[id] || 0) + 1; }

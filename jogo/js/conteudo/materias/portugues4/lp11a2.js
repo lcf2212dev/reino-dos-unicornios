@@ -23,6 +23,7 @@
       intro: 'Vamos organizar o que aprendemos com o Rei da Floresta: estrofes, versos, rimas e os bichos da canção!',
       desafios: [
         { id: 'lp11a2-01', tipo: 'escrever', origem: 'APR-34-q1a', pagina: 34, livro: 'lp-a32',
+          apoio: CANCAO,
           pergunta: 'Sobre a letra da canção Rei da Floresta: qual é o tema da canção?',
           linhas: 2, minPalavras: 2,
           chaves: [['animais', 'animal', 'bichos', 'bicho', 'elefante', 'macaco', 'girafa', 'arara', 'tartaruga', 'floresta']],
@@ -70,6 +71,7 @@
           modelo: 'Eu sou o rei da floresta\nConheço tudo por aqui\nEu ando por tudo, correndo e caçando\nTem tanto bicho que eu já vi',
           explica: 'O refrão é a estrofe que se repete: "Eu sou o rei da floresta, conheço tudo por aqui, eu ando por tudo, correndo e caçando, tem tanto bicho que eu já vi".' },
         { id: 'lp11a2-07', tipo: 'ligar', origem: 'APR-35-q6', pagina: 35, livro: 'lp-a35',
+          apoio: CANCAO,
           pergunta: 'Ligue cada animal ao que ele faz na canção Rei da Floresta.',
           pares: [
             [{ img: 'lp:11-elefante', alt: 'elefante' }, { t: 'Espirra água pelo nariz como um chafariz.' }],

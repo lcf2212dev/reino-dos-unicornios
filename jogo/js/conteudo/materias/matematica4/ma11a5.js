@@ -30,7 +30,7 @@
           adaptacao: 'Pintar a metade das bolas virou escrever quantas bolas pintar; a divisão de cada linha já vem escrita.',
           explica: 'A metade é dividir por 2: 2 ÷ 2 = 1, 4 ÷ 2 = 2, 6 ÷ 2 = 3 e 10 ÷ 2 = 5.' },
         { id: 'ma11a5-02', tipo: 'escolha', origem: 'APR-39-q2', pagina: 39, livro: 'ma-a39',
-          pergunta: 'Renata usou meia dúzia de ovos para fazer um quindim. Desenhe a quantidade de ovos que Renata usou para fazer esse doce.',
+          pergunta: 'Renata usou meia dúzia de ovos para fazer um quindim. Desenhe a quantidade de ovos que Renata usou para fazer esse doce. Quantos ovos ela usou?',
           opcoes: [
             { t: '3 ovos' },
             { t: '5 ovos' },
@@ -54,11 +54,12 @@
           frases: [{ antes: 'A mãe dele separou', depois: 'pães de queijo.', certas: ['5', 'cinco'] }],
           explica: 'São 8 + 7 = 15 pães de queijo. A terça parte de 15 é 5, porque 5 + 5 + 5 = 15.' },
         { id: 'ma11a5-05', tipo: 'digitar', origem: 'APR-40-q4b', pagina: 40, livro: 'ma-a40',
+          apoio: { titulo: 'Os pães de queijo', partes: [{ texto: 'A mãe de Isaque separou a terça parte dos pães de queijo para o lanche de Isaque na escola.' }] },
           pergunta: 'Escreva a divisão que representa essa situação.',
           frases: divisao('15', '3', '5'),
           explica: '15 pães de queijo divididos em 3 partes iguais: 15 ÷ 3 = 5.' },
         { id: 'ma11a5-06', tipo: 'escolha', origem: 'APR-41-q5a', pagina: 41, livro: 'ma-a41',
-          pergunta: 'a) Lucas quer arrumar esses carrinhos. Cole no espaço a seguir a metade desses carrinhos para Lucas colocá-los numa estante.',
+          pergunta: 'a) Lucas quer arrumar esses carrinhos. Cole no espaço a seguir a metade desses carrinhos para Lucas colocá-los numa estante. Quantos carrinhos você vai colar?',
           opcoes: [
             { t: '6 carrinhos' },
             { t: '8 carrinhos' },
@@ -68,7 +69,8 @@
           adaptacao: 'Recortar e colar os carrinhos virou escolher quantos carrinhos colar.',
           explica: 'A coleção tem 18 carrinhos. A metade de 18 é 9, porque 9 + 9 = 18.' },
         { id: 'ma11a5-07', tipo: 'escolha', origem: 'APR-41-q5b', pagina: 41, livro: 'ma-a41',
-          pergunta: 'b) Dos carrinhos que sobraram, Lucas separou a terça parte para brincar. Cole no espaço a seguir a quantidade que ele separou.',
+          apoio: { titulo: 'Os carrinhos de Lucas', partes: [{ texto: 'Lucas tem 18 carrinhos. Ele colocou a metade desses carrinhos numa estante. Os outros sobraram.' }] },
+          pergunta: 'b) Dos carrinhos que sobraram, Lucas separou a terça parte para brincar. Cole no espaço a seguir a quantidade que ele separou. Quantos carrinhos ele separou?',
           opcoes: [
             { t: '2 carrinhos' },
             { t: '3 carrinhos' },

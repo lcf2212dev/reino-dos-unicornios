@@ -55,7 +55,7 @@
             'Não sei se imito o papai,\nQue é um grande {professor},\nOu a minha prima Célia,\nQue conserta até motor.',
           explica: 'As profissões do poema são médico, piscineiro, cantor e professor.' },
         { id: 'hi10a3-05', tipo: 'digitar', origem: 'APR-12-q2', pagina: 12, livro: 'hi-a12', apoio: POEMA,
-          pergunta: 'Qual será a profissão da prima Célia? Converse com os colegas e o professor e escreva a sua resposta.',
+          pergunta: 'Qual será a profissão da prima Célia? Escreva a sua resposta.',
           frases: [
             { antes: '', depois: '', certas: ['mecânica', 'mecânico', 'a mecânica', 'ela é mecânica', 'mecânica de carros',
               'mecânica de carro', 'mecânica de motor', 'mecânica de motores'] },

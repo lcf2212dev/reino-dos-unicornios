@@ -12,7 +12,7 @@ Reino.registrarSala('geografia4',
         { id: 'ge10t1-01', tipo: 'cruzadinha', origem: 'ATI-01-q1', pagina: 1, livro: 'ge-t01',
           pergunta: 'Complete a cruzadinha a seguir com os elementos e fenômenos da natureza.',
           palavras: [
-            { resposta: 'NATUREZA', x: 5, y: 0, dir: 'v', dica: 'A palavra que já vem escrita no livro.' },
+            { resposta: 'NATUREZA', x: 5, y: 0, dir: 'v', dica: 'Nuvem, vento, rio, árvore e montanhas fazem parte da...' },
             { resposta: 'NUVEM', x: 5, y: 0, dir: 'h', img: '☁️' },
             { resposta: 'VENTO', x: 2, y: 2, dir: 'h', img: '🌬️' },
             { resposta: 'RIO', x: 5, y: 4, dir: 'h', img: 'ge:10-rio' },

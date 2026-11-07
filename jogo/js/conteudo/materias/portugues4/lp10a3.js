@@ -8,7 +8,7 @@ Reino.registrarSala('portugues4',
       intro: 'Ponto-final, ponto de interrogação e ponto de exclamação: vamos descobrir para que serve cada um!',
       desafios: [
         { id: 'lp10a3-01', tipo: 'ligar', origem: 'APR-11-qA', pagina: 11, livro: 'lp-a11b',
-          pergunta: 'No texto, foram usados alguns sinais, como "!" e "?". Para que eles servem? Ligue cada sinal ao que ele faz.',
+          pergunta: 'No texto O Gato de Botas, foram usados alguns sinais, como "!" e "?". Para que eles servem? Ligue cada sinal ao que ele faz.',
           pares: [
             [{ t: 'Ponto-final ( . )' }, { t: 'Indica que a frase terminou.' }],
             [{ t: 'Ponto de interrogação ( ? )' }, { t: 'Faz uma pergunta ou mostra uma dúvida.' }],

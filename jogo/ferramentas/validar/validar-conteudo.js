@@ -146,6 +146,11 @@ MATERIAS.forEach((m) => {
       checar(tipoDe(d), `${d.id}: tipo desconhecido ${d.tipo}`);
       checar(typeof d.explica === 'string' && d.explica.length > 10, `${d.id}: sem explicação`);
       checar(livro.has(d.livro), `${d.id}: cartão do livro "${d.livro}" não existe`);
+      // pergunta avulsa (quarto-bimestre.md §12.1): false, ou { carta: id da carta da matéria | null }
+      if (d.avulsa !== undefined) {
+        const a = d.avulsa, ok = a === false || (a && typeof a === 'object' && 'carta' in a && (a.carta === null || livro.has(a.carta)));
+        checar(ok, `${d.id}: avulsa tem de ser false ou { carta: <id de carta da matéria> | null }`);
+      }
       checarNovos(d, false);
     });
     const unis = m.unicornios || [];

@@ -30,6 +30,7 @@ Reino.registrarSala('ciencias4',
           adaptacao: 'A etiqueta da exsicata de verdade virou identificar a parte da planta numa figura.',
           explica: 'É uma flor! Na Etapa 2, o grupo escolhe um ramo com folhas e outro com flores.' },
         { id: 'ci11a3-03', tipo: 'ordenar', origem: 'APR-21-q2', pagina: 21, livro: 'ci-a21b',
+          avulsa: { carta: 'ci-a20b' },
           pergunta: 'Aproveitem para observar as diferentes plantas coletadas pelos seus colegas e conversar sobre o processo de produção das exsicatas. Coloque os passos na ordem.',
           itens: [
             'Coletar ramos de plantas com folhas e flores.',

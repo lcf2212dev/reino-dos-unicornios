@@ -3,7 +3,11 @@
    frase com lacuna viraram digitar a quantia; desenhar a cédula (q5) virou escolher. Na q7 o livro escreve "Quanto
    reais"; aqui fica "Quantos reais", como pede o INVENTARIO.md. A autoavaliação APR-25-qA é leitura (soLeitura). */
 (function () {
-  function reais(n) { return [n + '', n + ',00', 'R$ ' + n + ',00', 'R$' + n + ',00', 'R$ ' + n, 'R$' + n, n + ' reais']; }
+  // ext (opcional): a quantia por extenso, que também vale ("cinco", "cinco reais")
+  function reais(n, ext) {
+    var r = [n + '', n + ',00', 'R$ ' + n + ',00', 'R$' + n + ',00', 'R$ ' + n, 'R$' + n, n + ' reais'];
+    return ext ? r.concat(ext, ext + ' reais') : r;
+  }
   Reino.registrarSala('matematica4',
     {
       id: 'ma10a6', nome: 'Compras e troco', emoji: '🎈',
@@ -34,11 +38,11 @@
           frases: [{ antes: 'A tia de Sara gastou', depois: 'nessa compra.', certas: reais(215) }],
           explica: 'Blusa e saia: 90 + 125 = 215. Ela gastou R$ 215,00.' },
         { id: 'ma10a6-05', tipo: 'digitar', origem: 'APR-24-q6b', pagina: 24, livro: 'ma-a24',
-          pergunta: 'b) Quantos reais ela recebeu de troco?',
+          pergunta: 'b) Quantos reais a tia de Sara recebeu de troco?',
           frases: [{ antes: 'Ela recebeu', depois: 'de troco.', certas: reais(35) }],
           explica: 'Ela pagou com 200 + 50 = 250. 250 - 215 = 35. O troco foi de R$ 35,00.' },
         { id: 'ma10a6-06', tipo: 'digitar', origem: 'APR-24-q7', pagina: 24, livro: 'ma-a24',
-          pergunta: 'Elas compraram 2 baldes de pipoca e 2 algodões doces. Quantos reais elas gastaram?',
+          pergunta: 'Elas compraram 2 baldes de pipoca e 2 algodões-doces. Quantos reais elas gastaram?',
           frases: [{ antes: 'Elas gastaram', depois: '', certas: reais(26) }],
           explica: 'Pipoca: 5 + 5 = 10. Algodão-doce: 8 + 8 = 16. 10 + 16 = 26. Elas gastaram R$ 26,00.' },
         { id: 'ma10a6-07', tipo: 'escolha', origem: 'APR-25-q8a', pagina: 25, livro: 'ma-a25',
@@ -51,7 +55,7 @@
           explica: '3 pacotes de 8 reais: 8 + 8 + 8 = 24. Como 24 é menos que 30, o dinheiro dá!' },
         { id: 'ma10a6-08', tipo: 'digitar', origem: 'APR-25-q8b', pagina: 25, livro: 'ma-a25',
           pergunta: 'b) Se Alice fizer essa compra, ela receberá troco? Se sim, de quantos reais?',
-          frases: [{ antes: 'Alice vai receber', depois: 'de troco.', certas: reais(6) }],
+          frases: [{ antes: 'Alice vai receber', depois: 'de troco.', certas: reais(6, 'seis') }],
           explica: 'Sim! 30 - 24 = 6. Alice recebe R$ 6,00 de troco.' },
       ],
     });

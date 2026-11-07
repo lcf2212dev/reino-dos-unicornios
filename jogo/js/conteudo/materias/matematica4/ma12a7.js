@@ -59,7 +59,7 @@
           ],
           adaptacao: 'Pintar o gráfico de barras virou escrever quantos quadrinhos de 2 votos cada barra terá.',
           explica: 'Cada quadrinho vale 2 votos: 20 são 10 quadrinhos, 16 são 8, 10 são 5, 12 são 6, 14 são 7, 6 são 3 e 18 são 9.' },
-        { id: 'ma12a7-06', tipo: 'digitar', origem: 'APR-73-q2g', pagina: 73, livro: 'ma-a73', apoio: ARTE,
+        { id: 'ma12a7-06', tipo: 'digitar', origem: 'APR-73-q2g', pagina: 73, livro: 'ma-a73', avulsa: { carta: 'ma-a72' }, apoio: ARTE,
           pergunta: 'g) Quantos alunos preferem desenho à mão?',
           frases: [{ antes: 'São', depois: 'alunos que preferem desenho à mão.', certas: ['30', 'trinta'] }],
           explica: '12 meninas e 18 meninos: 12 + 18 = 30 alunos.' },

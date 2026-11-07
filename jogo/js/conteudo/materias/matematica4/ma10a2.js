@@ -32,7 +32,7 @@
           linhas: [[{ certas: reais(120) }, { certas: reais(120) }]],
           explica: 'Murilo: 100 + 20 = 120. Gabriela: 50 + 50 + 10 + 10 = 120. Os dois receberam R$ 120,00.' },
         { id: 'ma10a2-04', tipo: 'completar', origem: 'APR-08-qC', pagina: 8, livro: 'ma-a08',
-          pergunta: 'Depois, complete a frase.',
+          pergunta: 'Complete a frase sobre as quantias que Murilo e Gabriela receberam.',
           palavras: ['iguais', 'diferentes'],
           frases: [{ antes: 'As quantias que eles receberam são', depois: '.', certa: 0 }],
           explica: 'Os dois têm R$ 120,00: as quantias são iguais.' },

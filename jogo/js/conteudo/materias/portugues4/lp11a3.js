@@ -23,7 +23,7 @@ Reino.registrarSala('portugues4',
           texto: '{menino|0}   {gata|1}   {leão|0}\n{pata|1}   {leoa|1}   {gato|0}\n{rã|1}   {menina|1}   {sapo|0}',
           adaptacao: 'Pintar no livro virou tocar em cada palavra com a cor da legenda.',
           explica: 'Masculinos: menino, leão, gato e sapo. Femininos: gata, pata, leoa, rã e menina.' },
-        { id: 'lp11a3-03', tipo: 'digitar', origem: 'APR-38-q2', pagina: 38, livro: 'lp-a38',
+        { id: 'lp11a3-03', tipo: 'digitar', origem: 'APR-38-q2', pagina: 38, livro: 'lp-a38', avulsa: { carta: 'lp-a37' },
           pergunta: 'Complete os quadrinhos com o nome de cada imagem no feminino.',
           frases: [
             { img: '🐱', alt: 'gato', antes: 'GATO:', depois: '', certas: ['GATA'] },

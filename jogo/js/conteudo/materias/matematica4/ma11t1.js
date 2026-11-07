@@ -32,7 +32,7 @@
           ],
           adaptacao: 'Traçar as linhas entre as balas virou tocar nos lugares por onde as linhas passam.',
           explica: 'São 12 balas para 4 crianças. Separando de 3 em 3, as linhas passam depois da terceira, da sexta e da nona bala.' },
-        { id: 'ma11t1-02', tipo: 'digitar', origem: 'ATI-07-q1b', pagina: 7, livro: 'ma-t07', figura: BALAS,
+        { id: 'ma11t1-02', tipo: 'digitar', origem: 'ATI-07-q1b', pagina: 7, livro: 'ma-t07', figura: BALAS, apoio: CRIANCAS,
           pergunta: 'Quantas balas cada criança recebeu?',
           frases: [{ antes: '', depois: 'balas', certas: ['3', 'três', '3 balas', 'três balas'] }],
           explica: '12 balas divididas igualmente por 4 crianças: 12 ÷ 4 = 3. Cada criança recebeu 3 balas.' },

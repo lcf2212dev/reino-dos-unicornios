@@ -65,7 +65,7 @@
 
       // a página do livro da pergunta (o texto-base do grupo: quanto Alice tem, qual é a compra…)
       function contexto() {
-        var d = q.desafio, c = d.livro && (q.materia.livro || []).find(function (x) { return x.id === d.livro; });
+        var c = Reino.cartaAvulsa(q.materia, q.desafio);   // a `livro` do desafio ou a do `avulsa.carta`
         if (!c || !UI.desenharCarta) return null;
         var carta = el('div.livro-carta.bosque-carta');
         UI.desenharCarta(carta, c, q.materia);

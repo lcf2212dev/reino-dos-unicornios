@@ -23,6 +23,9 @@ Reino.registrarSala('portugues4',
           modelo: 'Ele se pôs a chorar, porque achou que ia morrer de fome.',
           explica: 'O caçula se pôs a chorar. Ele achou que o pai o tinha deixado desamparado e que ia morrer de fome.' },
         { id: 'lp10a2-03', tipo: 'tabela', origem: 'APR-09-q3', pagina: 9, livro: 'lp-a05c',
+          apoio: { titulo: 'O Gato de Botas', partes: [
+            { texto: 'Era uma vez um velho moleiro que tinha três filhos. Ao morrer, deixou, como herança, o moinho para o primogênito, um burrinho para o filho do meio e um gato para o caçula, que se pôs a chorar.' },
+          ] },
           pergunta: 'Complete as linhas a seguir com um exemplo de cada elemento narrativo do conto O Gato de Botas.',
           cab: ['Elemento', 'Exemplo do conto'],
           linhas: [
