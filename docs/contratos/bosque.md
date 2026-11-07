@@ -148,8 +148,12 @@ I.FUNDOS.bosque = { cor, desenhar(ctx, w, h), saida(ctx, px, py) }   // saida = 
 - A pergunta mostra a página do livro da sala (`d.livro`) aberta acima do enunciado, "Leia antes"
   (`ui/bosque-pergunta.js:contexto`, `UI.desenharCarta`); o texto de apoio e a figura vêm no card do `Desafios.render`.
 - Acerto: `P.ganharEstrelas(estrelasPorAcerto)`, `P.salvar()`, `Aura.contar([true], materia)`, consome UMA pergunta
-  pendente (`perguntasFeitas++`) e grava o móvel `bosque:p<bloco>` (o `presente` do evento `acerto`). Erro ou fechar:
+  pendente (`perguntasFeitas++`) e grava o móvel `bosque:p<bloco>` (o `presente` do evento `acerto`). Erro:
   consome a pergunta pendente, conta o vencido e só `Aura.contar([false], materia)`; não abre baú.
+- A pergunta só fecha depois de acertada (pedido do Leandro, 07/11): sem ✕, Esc nem toque fora (`semFechar`). Errou:
+  a certa à vista e "Tentar de novo" (a mesma pergunta em branco, o "Leia antes" fica), quantas vezes precisar;
+  acertar na nova tentativa só libera o "Continuar" (o prêmio é da 1ª; resolve `'errado'`). Tela fechada por fora
+  (`UI.fecharTodas`, troca de cena) conta como sem resposta (`'depois'`, erro).
 - Sem pergunta no bimestre: `Bosque.pergunta()` é null e o fluxo chama `Bosque.consumirPergunta()` (consome a pendente
   sem tela); a recuperação na entrada também faz isso, para não repetir em toda visita.
 - Combate: a simulação avança em `camada.itensDesenho` (o laço não tem `atualizar`); congela com
@@ -211,7 +215,7 @@ Quem abre cada tela e quando:
 2. Inimigo vencido: `bosque-combate.js:passo` emite `BOSQUE { tipo: 'vencido', id, fantasma }` (`fantasma` = o tipo)
    → a UI chama `Bosque.abater(fantasma, arena)` (o placar e o XP sobem; a mosca conta 2), enfileira `{ id, abate, arena }`
    e processa um por vez: pergunta (se passou um terço) → `BosqueCombate.devolver(id, arena)` (ele volta depois de `voltaMs`) → nível (se
-   `abate.subiu`). Fechar a pergunta sem responder conta como erro.
+   `abate.subiu`). A pergunta só fecha acertada (errou: "Tentar de novo"); fechada por fora sem resposta = erro.
 3. Pergunta certa: estrela, Aura, consome a pergunta pendente, grava `bosque:p<n>` e, ao fechar, o baú do presente.
 4. Subiu de nível: `abater` grava `bosque:<nível>`; depois da pergunta, `subirNivelBosque(n, undefined, premioNivel)`
    (3 cartões; "Depois"/✕/Esc deixam o ponto pendente, resolve `null`) e, no fim, o baú do nível.

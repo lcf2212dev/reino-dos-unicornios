@@ -1,7 +1,8 @@
 // Bosque dos Fantasmas, telas e HUD (docs/contratos/bosque.md §5 e §7; js/ui/bosque-*.js): chip e botão da espada só
 // dentro do Bosque; o prêmio da espada na 1ª entrada e não na 2ª; a pergunta a cada terço da barra de XP (o fácil dá
 // 10 de XP: um terço do nível 1 = 10 fáceis; o chip com a barra e as 2 marquinhas) (certo:
-// +1 estrela e o baú do móvel; errado ou fechada: consome a pergunta, sem baú; o texto-base do livro acima da
+// +1 estrela e o baú do móvel; errado: consome a pergunta, sem baú, e "Tentar de novo" até acertar (sem ✕ nem Esc;
+// fechada por fora conta como erro); o texto-base do livro acima da
 // pergunta); segurar a espada repete o golpe; a dica sem o Espaço no toque; o 30º morto abre o nível (ponto + baú do
 // móvel); sem casa o móvel fica guardado e o baú avisa; Esc e Tab/Enter no ponto e o Esc no baú (antes de abrir abre,
 // depois fecha); a vida zero não perde nada. Todo tipo de pergunta da sala (um caso por tipo: certo dá +1 estrela,
@@ -94,6 +95,24 @@ test('bosque: HUD, prêmio, pergunta a cada terço do XP, baú, nível ao fechar
     await c.avancar(300);
     return cartao;
   }
+  // depois do erro: "Tentar de novo" põe a mesma pergunta em branco; acertando, "Continuar" fecha sem prêmio
+  async function tentarDeNovoEAcertar() {
+    await c.avancar(700);
+    assert.strictEqual(await c.js("document.querySelector('.tela-bosque-pergunta .bosque-botao').textContent"), 'Tentar de novo');
+    await c.js("document.querySelector('.tela-bosque-pergunta .bosque-botao').click(); 1");
+    await c.avancar(300);
+    const nova = await c.js(`({ aberta: !!document.querySelector('.tela-bosque-pergunta'), retorno: document.querySelector('.tela-bosque-pergunta .bosque-retorno').hidden,
+      controles: document.querySelectorAll('.tela-bosque-pergunta .desafio').length, botao: document.querySelector('.tela-bosque-pergunta .bosque-botao').textContent.trim() })`);
+    assert.deepStrictEqual(nova, { aberta: true, retorno: true, controles: 1, botao: 'Conferir' }, 'a mesma pergunta de novo, em branco');
+    const antes = await olhar();
+    await c.js("window.__ok = true; document.querySelector('.tela-bosque-pergunta .opcao').click(); 1");
+    await c.avancar(100);
+    await c.js("document.querySelector('.tela-bosque-pergunta .bosque-botao').click(); 1");
+    await c.avancar(100);
+    const o = await c.js(`({ texto: document.querySelector('.tela-bosque-pergunta .bosque-retorno').textContent, ...${OLHAR} })`);
+    assert.match(o.texto, /Agora você acertou/);
+    assert.deepStrictEqual([o.estrelas, o.acertos, o.feitas], [antes.estrelas, antes.acertos, antes.feitas], 'acertar de novo não dá prêmio');
+  }
   async function continuar(comBau) {
     await c.avancar(700);   // o botão nasce travado 600 ms
     await c.js("document.querySelector('.tela-bosque-pergunta .bosque-botao').click(); 1");
@@ -180,6 +199,10 @@ test('bosque: HUD, prêmio, pergunta a cada terço do XP, baú, nível ao fechar
     assert.strictEqual(ctx.ordem, true, 'acima da pergunta');
     await c.page.keyboard.press('Escape');
     await c.avancar(300);
+    assert.deepStrictEqual(await c.js("[!!document.querySelector('.tela-bosque-pergunta'), !!document.querySelector('.tela-bosque-pergunta .btn-fechar'), __ctx]"),
+      [true, false, null], 'sem ✕ e o Esc não fecha a pergunta');
+    await c.js('Reino.UI.fecharTodas(); 1');   // fechada por fora (troca de cena): resolve como sem resposta
+    await c.avancar(300);
     assert.strictEqual(await c.js('__ctx'), 'depois');
     await c.js('Reino.Bosque.pergunta = __perg; 1');
 
@@ -213,6 +236,7 @@ test('bosque: HUD, prêmio, pergunta a cada terço do XP, baú, nível ao fechar
     o = await responder(false);
     assert.deepStrictEqual([o.estrelas, o.acertos, o.vencidos, o.feitas, o.mortos], [antes2.estrelas, antes2.acertos, antes2.vencidos + 1, 2, 20], 'errado consome o bloco e não dá nada');
     assert.match(o.texto, /Quase/);
+    await tentarDeNovoEAcertar();
     await continuar(false);
     o = await olhar();
     assert.deepStrictEqual([o.telas.length, o.telas.includes('tela-bosque-bau')], [0, false], 'errado: sem baú');
@@ -224,8 +248,16 @@ test('bosque: HUD, prêmio, pergunta a cada terço do XP, baú, nível ao fechar
     await c.avancar(300);
     assert.ok((await olhar()).telas.includes('tela-bosque-pergunta'), 'a pergunta do 30º bloco abre');
     assert.strictEqual(await c.js("Reino.CasaMoveis.escolhida('bosque:2')"), true, 'o móvel do nível é gravado no abate');
-    await c.page.keyboard.press('Escape');
-    await c.avancar(500);
+    await c.page.keyboard.press('Escape');   // não fecha: erra, tenta de novo e acerta
+    await c.avancar(300);
+    assert.ok((await olhar()).telas.includes('tela-bosque-pergunta'), 'o Esc não fecha a pergunta');
+    await c.js("window.__ok = false; document.querySelector('.tela-bosque-pergunta .opcao').click(); 1");
+    await c.avancar(100);
+    await c.js("document.querySelector('.tela-bosque-pergunta .bosque-botao').click(); 1");
+    await c.avancar(100);
+    await tentarDeNovoEAcertar();
+    await continuar(false);
+    await c.avancar(200);
     o = await olhar();
     assert.ok(o.telas.includes('tela-bosque-nivel'), 'subiu: a tela do ponto: ' + o.telas);
     assert.deepStrictEqual([o.mortos, o.feitas, o.nivel, o.pendentes], [30, 3, 2, [2]]);
@@ -360,6 +392,12 @@ test('bosque: a pergunta de todo tipo da sala (certo: +1 estrela; errado: nada e
         await c.avancar(700);
         await c.js("document.querySelector('.tela-bosque-pergunta .bosque-botao').click(); 1");
         await c.avancar(300);
+        if (!certo) {   // errado: "Tentar de novo" deixa a pergunta aberta, em branco; fechada por fora, resolve 'errado'
+          assert.deepStrictEqual(await c.js(`[!!document.querySelector('.tela-bosque-pergunta'), window.__fim,
+            document.querySelector('.tela-bosque-pergunta .bosque-botao').textContent.trim()]`), [true, null, 'Conferir'], tipo + ': tenta de novo');
+          await c.js('Reino.UI.fecharTodas(); 1');
+          await c.avancar(100);
+        }
         assert.strictEqual((await estado()).fim, certo ? 'certo' : 'errado', tipo);
         await c.js('Reino.UI.fecharTodas(); 1');
       }

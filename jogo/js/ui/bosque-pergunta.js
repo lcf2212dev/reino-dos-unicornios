@@ -8,8 +8,9 @@
    fala `vencido`, a narradora lê a pergunta, Conferir → certo: Bosque.acertou (1 estrela, Aura e UM móvel surpresa
    para a casa), fala `acerto`, a estrela voa até o HUD e o texto "🎁 Um presente para a casa!"; no fechar, o baú do
    presente (UI.bauBosque, ui/bosque-bau.js) abre antes de resolver. Errado: Bosque.errou (consome a pergunta, sem
-   baú), falas `erro` e a resposta certa à vista. Fechar (✕, Esc, fora) antes de responder conta como erro. Uma
-   tentativa, SEM limite de tempo. Todo tipo da sala (digitar, ligar, completar, tabela, desenho…), no modo 'prova':
+   baú), falas `erro`, a resposta certa à vista e "Tentar de novo": a mesma pergunta em branco até acertar (pedido do
+   Leandro, 07/11: a pergunta da batalha só fecha depois de acertada; sem ✕, Esc nem toque fora). Acertar na nova
+   tentativa só fecha: o prêmio é da 1ª. SEM limite de tempo. Todo tipo da sala (digitar, ligar, completar, tabela, desenho…), no modo 'prova':
    uma tentativa só, sem o texto ou o desenho guardado da sala já preenchido (Reino.Producoes); conferir é só
    D.pontuar === 1 (o ctrl.conferir da sala grava a produção e ensina a refazer). Errou: o tipo com ctrl.revelar
    mostra a certa no próprio controle; os outros ficam como ela deixou e a certa vem por escrito. Sem pergunta no
@@ -43,8 +44,9 @@
       var J = window.Jogador;
       if (J && J.parar) J.parar();
       if (Reino.Claude && Reino.Claude.limpar) Reino.Claude.limpar();
-      var fase = 'pergunta', ctrl = null, resultado = null, premio = null, materiaId = q.materia.id;
-      var pn = UI.painel('bosque-pergunta', emoji + ' Hora da pergunta!', { curto: emoji + ' Pergunta!', aoFechar: function () { terminar(); } });
+      var fase = 'pergunta', ctrl = null, resultado = null, premio = null, materiaId = q.materia.id, acertou = false;
+      // sem ✕, Esc nem toque fora: só fecha depois de acertar (o Continuar do acerto)
+      var pn = UI.painel('bosque-pergunta', emoji + ' Hora da pergunta!', { curto: emoji + ' Pergunta!', semFechar: true });
       pn.tela._bosqueAtual = function () { return q; };   // a pergunta na tela (testes)
 
       var fala = el('p.bosque-fala');
@@ -75,6 +77,11 @@
       function mostrar(ler) {
         var ctx = contexto();
         if (ctx) area.appendChild(ctx);
+        desenhar(ler);
+      }
+      // o controle da pergunta (de novo em branco a cada tentativa) e a leitura dela
+      function desenhar(ler) {
+        if (ctrl && ctrl.card && ctrl.card.parentNode) ctrl.card.parentNode.removeChild(ctrl.card);
         ctrl = D.render(q.desafio, { modo: 'prova', onMudar: function () { btn.disabled = fase !== 'pergunta' || !ctrl.pronto(); } });
         area.appendChild(ctrl.card);
         btn.disabled = !ctrl.pronto();
@@ -95,12 +102,15 @@
         ctrl.travado = true;
         var ok = D.pontuar(q.desafio, ctrl.valor()) === 1;
         travar();
+        U.preencher(retorno, '');
+        if (resultado) return conferirDeNovo(ok);
         retorno.className = 'bosque-retorno ' + (ok ? 'retorno-certo' : 'retorno-quase');
         Reino.Som.calar();
         if (ok) {
           var r = B.acertou(materiaId);
           resultado = 'certo';
           premio = r.presente;
+          acertou = true;
           ctrl.marcarCerto();
           Reino.Som.tocar('acerto');
           setTimeout(function () { Reino.Som.tocar('estrela'); }, 350);
@@ -123,7 +133,32 @@
         }
         if (q.desafio.explica) retorno.appendChild(el('p.retorno-explica', '📌 ' + q.desafio.explica));
         retorno.hidden = false;
-        U.preencher(btn, 'Continuar →');
+        botaoDepois(ok ? 'Continuar →' : 'Tentar de novo');
+      }
+
+      // nova tentativa depois do erro: certo fecha (sem prêmio: ele é da 1ª); errado mostra a certa e tenta de novo
+      function conferirDeNovo(ok) {
+        retorno.className = 'bosque-retorno ' + (ok ? 'retorno-certo' : 'retorno-quase');
+        Reino.Som.calar();
+        if (ok) {
+          acertou = true;
+          ctrl.marcarCerto();
+          Reino.Som.tocar('acerto');
+          retorno.appendChild(el('h3', '✨ Isso! Agora você acertou!'));
+        } else {
+          if (ctrl.revelar) ctrl.revelar();
+          Reino.Som.tocar('erro');
+          retorno.appendChild(el('h3', '💭 Quase!'));
+          retorno.appendChild(el('p.surpresa-certa', D.linhaCerta(q.desafio)));
+        }
+        if (q.desafio.explica) retorno.appendChild(el('p.retorno-explica', '📌 ' + q.desafio.explica));
+        retorno.hidden = false;
+        botaoDepois(ok ? 'Continuar →' : 'Tentar de novo');
+      }
+
+      // o botão depois de conferir: Continuar (acertou) ou Tentar de novo
+      function botaoDepois(rotulo) {
+        U.preencher(btn, rotulo);
         // o botão novo nasce travado: um toque duplo no Conferir não fecha sem ver a resposta
         btn.disabled = true;
         setTimeout(function () { btn.disabled = false; if (pn.tela.isConnected && UI.porTeclado()) btn.focus(); }, TRAVA_MS);
@@ -159,16 +194,30 @@
         if (btn.disabled) return;
         Reino.Som.tocar('toque');
         if (fase === 'pergunta') return conferir();
+        if (!acertou) {   // Tentar de novo: a mesma pergunta em branco, o "Leia antes" continua acima
+          fase = 'pergunta';
+          retorno.hidden = true;
+          U.preencher(btn, 'Conferir ✓');
+          Reino.Som.calar();
+          desenhar(Promise.resolve());
+          return;
+        }
         if (e.isTrusted && e.detail) UI.segurarToques();
         Reino.Som.calar();
         UI.fecharTela(pn.tela);
         terminar();
       });
 
+      aberta = { tela: pn.tela, fim: terminar };
       Reino.Som.tocar('porta');
       mostrar(dizer(falas('vencido')));
     });
   }
+
+  // a tela saiu da pilha sem o Continuar (UI.fecharTodas, troca de cena): resolve do mesmo jeito (senão a fila trava);
+  // sem resposta conta como erro
+  var aberta = null;
+  U.on(EV.TELAS, function () { if (aberta && Reino._ui.pilha.indexOf(aberta.tela) < 0) { var a = aberta; aberta = null; a.fim(); } });
 
   /* ---------- a fila dos vencidos, um por vez ---------- */
   var fila = [], andando = false;
