@@ -7,7 +7,8 @@
       "namespace": "android_app",
       "package_name": "app.vercel.reino_dos_unicornios.twa",
       "sha256_cert_fingerprints": [
-        "28:16:77:1D:CB:2B:F6:DA:8C:69:8A:DB:58:CD:54:9F:27:E2:40:6F:7F:A7:3A:02:6F:9E:8D:A1:4E:81:7E:ED"
+        "28:16:77:1D:CB:2B:F6:DA:8C:69:8A:DB:58:CD:54:9F:27:E2:40:6F:7F:A7:3A:02:6F:9E:8D:A1:4E:81:7E:ED",
+        "CE:2B:AA:81:EA:B8:55:F7:29:C4:77:63:CA:60:7A:C6:E6:B2:6E:D3:3A:55:57:5B:0E:EA:5F:36:F1:FF:75:AA"
       ]
     }
   }

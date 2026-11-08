@@ -12,6 +12,13 @@ Chrome do aparelho, em tela cheia, sem barra de endereço, com o ícone e o nome
   `vercel/montar.js`) com a impressão digital de cada chave que assina o app. Impressão que falta = o app abre com
   uma barrinha de endereço em cima (funciona, mas não fica em tela cheia).
 
+## Onde está
+- Play Console: conta de organização da Caranga (ID 7722747646221687094, login appcaranga@gmail.com), app
+  "Reino dos Unicórnios" (ID 4973153950237759908), faixa **Teste interno**, lista de e-mails "Família (Reino dos
+  Unicórnios)". Versão 1 (1.0.0) publicada em 08/11/2026.
+- Link de convite (abrir no celular com uma conta da lista): https://play.google.com/apps/internaltest/4700582616513865224
+- A chave de assinatura do Google (SHA-256 `CE:2B:AA:…:FF:75:AA`) e a de envio já estão no `vercel/loja/assetlinks.json`.
+
 ## Quem pode instalar (o "acesso restrito")
 São duas travas, uma por cima da outra:
 1. **Na Play Store, o app só existe para quem está na lista**: ele fica no **teste interno** (até 100 contas Google,
