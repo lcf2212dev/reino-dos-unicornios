@@ -1,0 +1,8 @@
+plugins {
+    id 'com.android.application' version '8.13.0' apply false
+}
+
+// npm run android passa -PreinoBuild=/tmp/reino-testes/android/<árvore>/build: o build fica fora do repositório
+if (findProperty('reinoBuild')) {
+    allprojects { layout.buildDirectory = file("${findProperty('reinoBuild')}/${project.name}") }
+}

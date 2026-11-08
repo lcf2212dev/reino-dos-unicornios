@@ -23,6 +23,9 @@ https://reino-dos-unicornios.vercel.app (projeto `reino-dos-unicornios` do time 
   Testes: `montar-lotes.navegador.test.js` (lotes, e a foto do mapa igual à do `jogo/`) e `sw-nucleo.navegador.test.js`
   (o SW de antes dos lotes passando para o novo, e a instalação do zero, as duas sem rede no fim), com o
   `jogo/ferramentas/testes/servidor-estatico.js`.
+- `loja/`: o que o app da Play Store (`android/README.md`) pede ao site, publicado pelo `montar.js` fora do `sw.js`:
+  `/.well-known/assetlinks.json` (as impressões das chaves que assinam o app; nova só por `npm run android --
+  --impressao`) e `/privacidade.html` (a política de privacidade da página da loja).
 - Publicar: sozinho. O projeto está ligado ao GitHub e cada push na `main` vira publicação de produção, se o jogo mudou
   (`ignorar-build.sh`, o "Ignored Build Step" do `vercel.json`: preview nunca, porque as variáveis do banco valem também
   em preview; `git.deploymentEnabled` só na `main`). Conferir: `npm run vercel -- --conferir` (a mesma regra do

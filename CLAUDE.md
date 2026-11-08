@@ -83,7 +83,7 @@ antigas dos pacotes) e `jogo/index.html` (mude `jogo/js/manifesto.js` e rode `np
 - `npm run worktree` · `npm run material -- <Pasta>` (prints de `matérias/<pasta>/` reduzidos) · `npm run plano`
   (frentes paralelas de um pedido) · `npm run integrar` (skill `entregar`) · `npm run limpar` (lista worktrees e
   branches que sobraram; `--aplicar`) · `npm run vercel` (publica na Vercel) ·
-  `npm run icones` (ícones do app instalado, de `jogo/ferramentas/pwa/`)
+  `npm run icones` (ícones do app instalado, de `jogo/ferramentas/pwa/`) · `npm run android` (o app da Play Store)
 
 ## Mapa de pastas
 ```
@@ -98,6 +98,7 @@ jogo/css/                  plano, sem subpasta; ordem da cascata = manifesto
 jogo/ferramentas/          testes, validadores, vozes, fluxo (worktree, integrar), gerado/ (GERADO)
 jogo/servidor/             servidor de casa (aposentado): intocável
 vercel/                    o jogo na Vercel: API sobre Postgres, PWA (pwa/), build copia jogo/
+android/                   o app da Play Store (abre o site da Vercel; acesso restrito pelo teste interno)
 matérias/<matéria>/        prints e fotos da escola (apostila; Revisão/ = folha de prova)
 docs/                      ARQUITETURA.md (mapa; §5.1 quero X → qual registro), contratos/, receitas/, decisoes/
 ```

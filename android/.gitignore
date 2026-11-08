@@ -1,0 +1,4 @@
+# o build do npm run android vai para /tmp; estes só aparecem com o gradle rodado à mão
+.gradle/
+build/
+local.properties

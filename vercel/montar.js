@@ -6,7 +6,9 @@
 // - os pacotes de voz (js/voz/*.js) ficam soltos (carregam sob demanda); o resto de js/ (CLAUDE.md) não vai.
 // Monta também o app instalável (PWA): manifesto e ícones de pwa/, as imagens de abertura do iOS (geradas aqui), o
 // sw.js com a lista { caminho: hash } de tudo (o jogo inteiro funciona sem rede) e, no index.html, o manifesto e o
-// registro do service worker. A API (api/) é a do servidor de casa (jogo/servidor/servidor.js) sobre Postgres:
+// registro do service worker. E o que o app da Play Store (android/) pede ao site, de loja/, fora do sw.js:
+// /.well-known/assetlinks.json (a prova de que o app é deste site) e /privacidade.html (a política de privacidade).
+// A API (api/) é a do servidor de casa (jogo/servidor/servidor.js) sobre Postgres:
 // lib/banco.js.
 // Uso: node montar.js [--saida <pasta>]   (npm run build em vercel/; --ajuda mostra isto)
 //   a saída (apagada e refeita) é vercel/public/ ou uma pasta dentro de /tmp/reino-testes/ (REINO_TESTES; os testes)
@@ -20,6 +22,9 @@ if (require.main === module) require(path.join(JOGO, 'ferramentas', 'ajuda.js'))
 const { conferirPastaTmp } = require(path.join(JOGO, 'ferramentas', 'testes', 'guardas.js'));
 const PUBLICO = path.join(__dirname, 'public');
 const PWA = path.join(__dirname, 'pwa');
+const LOJA = path.join(__dirname, 'loja');
+// loja/<arquivo> → caminho publicado (depois do sw.js: não entram no jogo sem rede)
+const DA_LOJA = { 'assetlinks.json': '.well-known/assetlinks.json', 'privacidade.html': 'privacidade.html' };
 // cor do app (theme-color): Reino.config.paleta.noite; o jogo troca para a grama com o mapa aberto (arte.md §8)
 const COR = /\bnoite:\s*'(#[0-9a-f]{6})'/i.exec(fs.readFileSync(path.join(JOGO, 'js', 'nucleo', 'config.js'), 'utf8'))[1];
 // o que o build lê do repositório (o plano B, jogo/ferramentas/fluxo/vercel.js, exporta só isto)
@@ -193,6 +198,10 @@ function montar(saida) {
   const sw = fs.readFileSync(path.join(PWA, 'sw.js'), 'utf8');
   if (!sw.includes('__ARQUIVOS__')) throw new Error('pwa/sw.js sem __ARQUIVOS__');
   fs.writeFileSync(path.join(saida, 'sw.js'), sw.replace('__ARQUIVOS__', JSON.stringify(ordenados)));
+  Object.entries(DA_LOJA).forEach(([de, para]) => {
+    fs.mkdirSync(path.dirname(path.join(saida, para)), { recursive: true });
+    fs.copyFileSync(path.join(LOJA, de), path.join(saida, para));
+  });
   return { arquivos: ordenados, lotes, css };
 }
 

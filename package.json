@@ -28,6 +28,7 @@
     "plano": "node jogo/ferramentas/fluxo/plano.js",
     "vercel": "node jogo/ferramentas/fluxo/vercel.js",
     "icones": "node jogo/ferramentas/pwa/gerar-icones.js",
-    "gnome": "node jogo/ferramentas/gnome/instalar.js"
+    "gnome": "node jogo/ferramentas/gnome/instalar.js",
+    "android": "node jogo/ferramentas/android/android.js"
   }
 }

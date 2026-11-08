@@ -1,4 +1,4 @@
-// Gera os ícones do app instalado (vercel/pwa/*.png) e o favicon do jogo (jogo/ferramentas/pwa/favicon.svg, que o
+// Gera os ícones do app instalado (vercel/pwa/*.png), os do app da Play Store (android/app/src/main/res) e o favicon do jogo (jogo/ferramentas/pwa/favicon.svg, que o
 // gerar-index.js põe no index.html) a partir da pixel art do jogo: o primeiro unicórnio (rosa, adulto, de lado),
 // desenhado pelo próprio js/arte/pixelart-unicornio.js (sprite.js), em escala inteira, sobre faixas lisas de roxo
 // alinhadas à grade de pixel do desenho (nada de degradê), com a sombra reta embaixo.
@@ -16,12 +16,15 @@ const { unicornio } = require('./sprite');
 
 const RAIZ = path.join(__dirname, '..', '..', '..');
 const PWA = path.join(RAIZ, 'vercel', 'pwa');
+const RES = path.join(RAIZ, 'android', 'app', 'src', 'main', 'res');   // o app da Play Store (android/README.md)
 const FAVICON = path.join(__dirname, 'favicon.svg');
 
 // fundo: céu em duas faixas e o chão onde ele pisa (o roxo da abertura do app em cima, #3b2170 = background_color)
 const CEU = '#3b2170', CEU_2 = '#4a2880', CHAO = '#5c3290';
 const SOMBRA_ALFA = 0.25;              // sombra de chão (arte.md §13: alfa 0,15 a 0,25, um nível)
 const ZONA_SEGURA = 0.4;               // maskable: raio do círculo seguro = 40 % do lado (204,8 px em 512)
+const ZONA_ADAPTATIVO = 33 / 108;      // ícone adaptativo do Android: círculo seguro de 66 dp numa camada de 108 dp
+const LARGURA_ANDROID = 0.8;           // ícone antigo do Android (mipmap): o desenho até 80 % da largura
 
 /* ---------- a arte, em pixels de arte ---------- */
 function mistura(a, b, t) {
@@ -48,7 +51,8 @@ function desenho() {
 
 /* ---------- ícone: fundo em faixas + desenho em escala inteira, centrado ---------- */
 // ícone de lado L com o desenho na escala e a origem dadas; faixas nas linhas de arte (bordas em múltiplos da escala)
-function icone(L, d, escala, ox, oy) {
+// transparente: só o desenho (a abertura do app Android, sobre a cor de fundo dele)
+function icone(L, d, escala, ox, oy, transparente) {
   const img = new PNG({ width: L, height: L });
   const faixa = (yPx) => {
     const linha = Math.floor((yPx - oy) / escala);   // linha de arte (negativa acima do desenho)
@@ -58,7 +62,8 @@ function icone(L, d, escala, ox, oy) {
     const fundo = faixa(y);
     for (let x = 0; x < L; x++) {
       const ay = Math.floor((y - oy) / escala), ax = Math.floor((x - ox) / escala);
-      const cor = (ay >= 0 && ax >= 0 && ay < d.h && ax < d.w && d.px[ay][ax]) || fundo;
+      const cor = (ay >= 0 && ax >= 0 && ay < d.h && ax < d.w && d.px[ay][ax]) || (transparente ? null : fundo);
+      if (!cor) continue;
       const n = parseInt(cor.slice(1), 16), k = (y * L + x) * 4;
       img.data[k] = n >> 16; img.data[k + 1] = (n >> 8) & 255; img.data[k + 2] = n & 255; img.data[k + 3] = 255;
     }
@@ -89,10 +94,10 @@ function raioMaximo(L, d, escala, ox, oy) {
   return r;
 }
 // maior escala inteira em que o desenho inteiro cabe no círculo seguro
-function escalaMaskable(L, d) {
+function escalaMaskable(L, d, zona = ZONA_SEGURA) {
   for (let e = 32; e > 1; e--) {
     const [ox, oy] = centrar(L, d, e);
-    if (raioMaximo(L, d, e, ox, oy) <= L * ZONA_SEGURA) return e;
+    if (raioMaximo(L, d, e, ox, oy) <= L * zona) return e;
   }
   throw new Error('gerar-icones: o desenho não cabe no círculo seguro');
 }
@@ -142,18 +147,27 @@ const ICONES = [
   { arq: 'icone-512.png', L: 512, escala: 14 },
   { arq: 'icone-maskable-512.png', L: 512, escala: 'maskable' },
   { arq: 'apple-touch-icon.png', L: 180, escala: 5 },
+  // Android (android/app/src/main/res): o mipmap antigo em cada densidade, a camada da frente do ícone adaptativo
+  // (108 dp, o desenho no círculo seguro; o fundo em faixas vai junto) e a imagem da abertura do app
+  ...[['mdpi', 1], ['hdpi', 1.5], ['xhdpi', 2], ['xxhdpi', 3], ['xxxhdpi', 4]].flatMap(([dpi, x]) => [
+    { arq: `mipmap-${dpi}/ic_launcher.png`, pasta: RES, L: 48 * x, escala: 'android' },
+    { arq: `mipmap-${dpi}/ic_launcher_frente.png`, pasta: RES, L: 108 * x, escala: 'adaptativo' },
+  ]),
+  { arq: 'drawable-nodpi/abertura.png', pasta: RES, L: 384, escala: 10, transparente: true },
 ];
 const opcoesPng = { deflateLevel: 9, filterType: 4 };
 
 function gerar() {
   const d = desenho(), saidas = [], info = [];
   ICONES.forEach((ic) => {
-    const e = ic.escala === 'maskable' ? escalaMaskable(ic.L, d) : ic.escala;
+    const e = ic.escala === 'maskable' ? escalaMaskable(ic.L, d)
+      : ic.escala === 'adaptativo' ? escalaMaskable(ic.L, d, ZONA_ADAPTATIVO)
+        : ic.escala === 'android' ? Math.max(1, Math.floor(ic.L * LARGURA_ANDROID / caixa(d).w)) : ic.escala;
     const [ox, oy] = centrar(ic.L, d, e);
-    const img = icone(ic.L, d, e, ox, oy);
+    const img = icone(ic.L, d, e, ox, oy, ic.transparente);
     const c = caixa(d);
     info.push({ arq: ic.arq, L: ic.L, escala: e, largura: c.w * e, raio: raioMaximo(ic.L, d, e, ox, oy), img });
-    saidas.push({ caminho: path.join(PWA, ic.arq), dados: PNG.sync.write(img, opcoesPng) });
+    saidas.push({ caminho: path.join(ic.pasta || PWA, ic.arq), dados: PNG.sync.write(img, opcoesPng) });
   });
   const fav = favicon(d);
   saidas.push({ caminho: FAVICON, dados: Buffer.from(faviconSvg(fav)) });
@@ -172,7 +186,7 @@ function ampliar(pasta, info, fav) {
     return o;
   };
   info.forEach((i) => {
-    escrever(i.arq.replace('.png', '-x2.png'), vezes(i.img, i.L < 256 ? 4 : 2));
+    escrever(i.arq.replace('/', '-').replace('.png', '-x2.png'), vezes(i.img, i.L < 256 ? 4 : 2));
     if (!i.arq.includes('maskable')) return;
     // o recorte redondo do Android: fora do círculo de raio 50 % fica cinza; a linha do círculo seguro (40 %) em branco
     const m = PNG.sync.read(PNG.sync.write(i.img));
@@ -197,7 +211,7 @@ if (require.main === module) {
     if (errados.length) { console.error('  rode: node jogo/ferramentas/pwa/gerar-icones.js'); process.exit(1); }
     console.log('✔ ícones do app e favicon batem com o gerador (' + saidas.length + ' arquivos)');
   } else {
-    saidas.forEach((s) => fs.writeFileSync(s.caminho, s.dados));
+    saidas.forEach((s) => { fs.mkdirSync(path.dirname(s.caminho), { recursive: true }); fs.writeFileSync(s.caminho, s.dados); });
     info.forEach((i) => console.log(`${i.arq}: ${i.L}×${i.L}, ${i.escala} px por pixel, desenho ${i.largura} px (${Math.round(100 * i.largura / i.L)} % da largura), canto mais longe a ${i.raio.toFixed(1)} px do centro`));
     console.log('favicon.svg: 16×16 (a cabeça), no index.html pelo gerar-index.js');
   }

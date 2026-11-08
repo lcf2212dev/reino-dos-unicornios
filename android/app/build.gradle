@@ -1,0 +1,86 @@
+plugins {
+    id 'com.android.application'
+}
+
+// Tudo o que o app precisa saber do jogo mora aqui (um lugar só). O site é o mesmo do vercel/loja/assetlinks.json.
+def twa = [
+    applicationId     : 'app.vercel.reino_dos_unicornios.twa',
+    host              : 'reino-dos-unicornios.vercel.app',
+    startUrl          : '/',
+    nome              : 'Reino dos Unicórnios',     // name do vercel/pwa/manifest.webmanifest
+    nomeCurto         : 'Unicórnios',               // short_name (embaixo do ícone)
+    corTema           : '#24162E',                  // theme_color
+    corFundo          : '#24162E',                  // background_color
+    corBarraNavegacao : '#24162E',
+]
+
+def versao = new Properties()
+file('../versao.properties').withInputStream { versao.load(it) }
+
+// A chave de envio fica FORA do repositório (npm run android cria na primeira vez; README.md desta pasta).
+def assinatura = new Properties()
+def arqAssinatura = file(System.getenv('REINO_ANDROID_ASSINATURA') ?:
+    "${System.getProperty('user.home')}/.config/reino-dos-unicornios/android/assinatura.properties")
+if (arqAssinatura.exists()) arqAssinatura.withInputStream { assinatura.load(it) }
+
+android {
+    namespace twa.applicationId
+    compileSdk 36
+
+    defaultConfig {
+        applicationId twa.applicationId
+        minSdk 24
+        targetSdk 36
+        versionCode versao.getProperty('versionCode').toInteger()
+        versionName versao.getProperty('versionName')
+
+        resValue 'string', 'app_name', twa.nome
+        resValue 'string', 'launcher_name', twa.nomeCurto
+        resValue 'color', 'cor_tema', twa.corTema
+        resValue 'color', 'cor_fundo', twa.corFundo
+        resValue 'color', 'cor_barra_navegacao', twa.corBarraNavegacao
+        // JSON dentro de um recurso de texto: as aspas vão escapadas (\" no XML), senão o aapt2 as tira
+        resValue 'string', 'asset_statements',
+            '[{ \\"relation\\": [\\"delegate_permission/common.handle_all_urls\\"], ' +
+            '\\"target\\": { \\"namespace\\": \\"web\\", \\"site\\": \\"https://' + twa.host + '\\" } }]'
+
+        manifestPlaceholders = [
+            hostName       : twa.host,
+            defaultUrl     : 'https://' + twa.host + twa.startUrl,
+            launchableActivityName: 'com.google.androidbrowserhelper.trusted.LauncherActivity',
+        ]
+    }
+
+    signingConfigs {
+        release {
+            if (assinatura.getProperty('storeFile')) {
+                storeFile file(assinatura.getProperty('storeFile'))
+                storePassword assinatura.getProperty('storePassword')
+                keyAlias assinatura.getProperty('keyAlias')
+                keyPassword assinatura.getProperty('keyPassword')
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
+            if (assinatura.getProperty('storeFile')) signingConfig signingConfigs.release
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    lint {
+        // o app não tem código próprio; o lint de release não deve travar o build por aviso de biblioteca
+        checkReleaseBuilds false
+    }
+}
+
+dependencies {
+    implementation 'com.google.androidbrowserhelper:androidbrowserhelper:2.7.4'
+}
