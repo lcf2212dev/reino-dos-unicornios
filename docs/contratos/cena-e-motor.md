@@ -371,7 +371,8 @@ Exemplo mínimo (um sistema novo "brilho" na pasta dos sistemas, no manifesto de
 
 ## 15. Versão nova: a aba se atualiza sozinha
 Módulo `versao` (`jogo/js/sistemas/versao.js`, `Reino.Versao`). Depois de publicar o jogo novo (Vercel), as
-abas que ficaram abertas nos aparelhos percebem e recarregam sozinhas (decisão do Leandro: sem perguntar).
+abas que ficaram abertas nos aparelhos (e o app instalado, que é a mesma página com o service worker) percebem e
+recarregam sozinhas (decisão do Leandro: sem perguntar).
 - **A impressão digital**: `npm run versao` (`jogo/ferramentas/gerar-versao.js`) grava `jogo/js/versao.json` =
   `{ versao, gerado }`, com `versao` = sha256 de `index.html` + `css/**` + `js/**` (inclusive `js/voz/`, fora o próprio
   `versao.json`), caminho e conteúdo, em ordem alfabética: a mesma árvore dá sempre o mesmo hash. O arquivo está no
@@ -395,8 +396,24 @@ abas que ficaram abertas nos aparelhos percebem e recarregam sozinhas (decisão 
   os testes trocam), com `Jogadores.lembrarEntrada()` antes: o reload entra direto no mapa, sem abertura nem senha
   (`save-e-mescla.md` §12). Tocar fora do balão, tecla, andar ou sair do mapa durante o aviso ou a espera: desiste e tenta de
   novo na próxima parada. Nada vai para o save.
+- **Service worker (Vercel/PWA)**: o `sw.js` muda a cada deploy e serve o jogo inteiro do cache (`vercel/pwa/sw.js`);
+  o REGISTRO inline do index montado (`vercel/montar.js`) confere o `sw.js` (`registration.update()`) ao abrir, quando
+  a aba volta a ficar visível e a cada 60 s com a aba visível (repetir é inofensivo: sem rate-limit). O install do
+  `sw.js` novo baixa o NÚCLEO INTEIRO antes do `skipWaiting()`/`clients.claim()`; quando ele assume a aba
+  (`controllerchange`), a página pode estar com o index/scripts velhos: o REGISTRO chama `Reino.Versao.novaVersao()`
+  (`V.novaVersao()`), que põe a fase em `nova` (`nova = 'serviceworker'`) e segue o fluxo normal (parada → aviso →
+  gravar → reload); com o jogo ainda não entrado (ou sem o módulo), a aba recarrega na hora, porque a versão nova já
+  está inteira no cache. O primeiro controle (instalação nova, com a página já na versão servida) não recarrega.
+  Corrida resolvida: se o `sw.js` novo assume antes de `V.iniciar`, o módulo lembra a troca (`trocou`) e `V.iniciar`
+  chama `V.novaVersao()` — a marca-base lida depois já seria a da versão nova, e a página velha nunca seria percebida.
+  Guarda: reabrir o jogo sem rede continua servindo a versão do cache que já está no aparelho.
 - Números: `config.versao = { intervaloMs, confirmarMs, cacheMs, paradaMs, avisoMs, esperaMs }` (o módulo tem os
   mesmos valores padrão se faltar). Depuração: `__reino.modulo('versao')` → `{ ligado, motivo, fase, base, suspeita,
-  nova, buscas, avisos, cancelados, … }` (`fase`: `desligado`, `vigiando`, `nova`, `aviso`, `gravado`, `recarregando`).
-- Testes: `unidade/versao.test.js` (desligado, falas, gerador estável) e `unidade/versao.navegador.test.js`
-  (`?debug=1&congelar=1&versao=1`, `page.route` servindo v1 e v2).
+  nova, buscas, avisos, cancelados, controle, trocou, … }` (`fase`: `desligado`, `vigiando`, `nova`, `aviso`, `gravado`,
+  `recarregando`; `nova = 'serviceworker'` = a troca veio do service worker).
+- Testes: `unidade/versao.test.js` (desligado, falas, gerador estável), `unidade/versao.navegador.test.js`
+  (`?debug=1&congelar=1&versao=1`, `page.route` servindo v1 e v2), `unidade/versao-entrou.navegador.test.js` (modo vivo:
+  o reload cai direto no mapa, uma vez só) e `unidade/atualizacao-sozinha.navegador.test.js` (o app montado com service
+  worker: na tela de início o deploy novo recarrega a aba na hora; com o jogo aberto, o `sw.js` novo assume, o Claude
+  avisa, o jogo grava e recarrega direto no mapa na v2; `unidade/sw-nucleo.navegador.test.js` cobre o núcleo/vozes do
+  `sw.js` e `unidade/montar-lotes.navegador.test.js` confere o REGISTRO no index montado).

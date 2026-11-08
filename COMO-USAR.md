@@ -86,7 +86,9 @@ Guia de uso para o Leandro. As regras técnicas ficam em `docs/contratos/`.
 
 ## Quando chega uma novidade
 O Claude põe a novidade na main e a Vercel publica sozinha. O progresso da Mariana fica como está.
-- As abas abertas (e o app instalado) se atualizam sozinhas quando ela para no mapa.
+- As abas abertas (e o app instalado) percebem a versão nova sozinhas: na tela de início a página recarrega na hora;
+  com o jogo aberto, ela espera a Mariana parar no mapa, avisa num balão, guarda e recarrega direto no mapa. Não é
+  preciso dar vários reloads (se o aparelho estava com uma versão antiga de antes desta correção, um reload resolve).
 - Se preferir que nada mude enquanto ela joga, peça a novidade num horário em que ela não esteja jogando.
 - **Se algo parecer errado:** não apague nada nem use "Apagar tudo". Deixe o jogo fechado e peça ao Claude para
   olhar.

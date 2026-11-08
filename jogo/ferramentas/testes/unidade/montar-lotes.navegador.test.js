@@ -89,6 +89,15 @@ test('montar.js: só apaga e refaz vercel/public ou uma pasta de teste; --ajuda 
   // a aba só deixa de lembrar o SW com o "guardado" de quem a controla, e recomeça quando outro assume
   const html = ler('index.html');
   assert.ok(html.includes('e.source === sw.controller') && html.includes('"controllerchange", function () { pronto = false;'));
+  // a versão publicada (o sw.js muda a cada deploy) é conferida ao abrir, ao voltar para a aba e a cada minuto com a
+  // aba visível; quando o sw.js novo assume, o versao.js cuida (jogo aberto) ou a aba recarrega na hora (tela de
+  // início); o primeiro controle de uma instalação nova não recarrega
+  assert.ok(html.includes('function procurar()'), 'confere o sw.js');
+  assert.ok(html.includes('setInterval(function () { seguir(); if (!document.hidden) procurar(); }, 60000)'), 'confere o sw.js a cada minuto com a aba visível');
+  assert.ok(html.includes('if (!document.hidden) { seguir(); procurar(); }'), 'confere o sw.js ao voltar para a aba');
+  assert.ok(html.includes('if (V && V.novaVersao && V.novaVersao() === true) return;') && html.includes('location.reload();'),
+    'a versão nova assumiu: o versao.js cuida ou a aba recarrega');
+  assert.ok(html.includes('if (!tinhaControle) { tinhaControle = true; return; }'), 'o primeiro controle não recarrega');
 });
 
 // a API da Vercel de mentira: as publicações de produção READY (a mais nova primeiro)

@@ -11,6 +11,8 @@
       Se ela mexer (tocar fora do balão, tecla, andar) no aviso, desiste e tenta de novo na próxima parada.
    Desligado no artifact do claude.ai (a plataforma já entrega a versão nova), aberto do arquivo (file:) e no
    modo determinístico dos testes (?congelar=1), a menos que a URL tenha &versao=1 (teste deste módulo).
+   Na Vercel (PWA), o service worker novo que assume a aba chama `V.novaVersao()` e cai no mesmo fluxo, sem esperar
+   o poll; se o jogo ainda não entrou, quem recarrega é o registro do sw.js (vercel/montar.js).
    Nada aqui toca em DOM, Progresso ou Cena no carregamento (node: true: listar-falas.js lê as falas num vm).
    Nada vai para o save. */
 (function () {
@@ -48,9 +50,24 @@
   var fase = 'desligado', motivo = null, iniciado = false, relogio = null;
   var base = null;            // a impressão da versão desta aba ('v:<hash>' ou 'i:<hash do index>')
   var suspeita = null;        // { marca, em }: uma leitura diferente da base, esperando a confirmação
-  var nova = null;            // a marca confirmada
+  var nova = null;            // a marca confirmada ('v:<hash>', 'i:<hash do index>' ou 'serviceworker')
   var buscando = false, ultimaBusca = -Infinity, buscas = 0;
   var paradaDesde = null, avisos = 0, cancelados = 0, vezAviso = 0, avisoNaTela = false, timerRecarga = null;
+
+  /* ---------- a troca do service worker ---------- */
+  // A versão nova publicada muda o sw.js; quando ele instala (o núcleo inteiro, ANTES do skipWaiting) e assume a aba
+  // (controllerchange), a página pode estar com o index/scripts velhos. O registro do sw.js (vercel/montar.js) chama
+  // V.novaVersao(); a memória da troca cobre a corrida em que ela acontece ANTES de o jogo entrar (a marca-base lida
+  // depois já seria a da versão nova, e a página velha nunca seria percebida). O 1º controle de uma instalação nova
+  // (a página acabou de baixar a mesma versão) não é troca.
+  var controle = false, trocou = false;
+  if (typeof navigator !== 'undefined' && navigator.serviceWorker) {
+    controle = !!navigator.serviceWorker.controller;
+    navigator.serviceWorker.addEventListener('controllerchange', function () {
+      if (controle) trocou = true;
+      controle = true;
+    });
+  }
 
   // marca curta de um texto (djb2), para o index.html quando não há versao.json
   function marcaDoTexto(t) {
@@ -160,12 +177,27 @@
     if (fase === 'aviso' && (andando() || !noMapa() || !visivel())) cancelar();
   }
 
+  /* A versão nova do jogo assumiu (o service worker novo está no controle): true = o fluxo normal cuida da troca
+     (parada no mapa → aviso → P.salvar → reload direto no mapa); false = o jogo ainda não entrou, e quem recarrega
+     a página é o registro do sw.js (a versão nova já está inteira no cache do service worker). */
+  V.novaVersao = function () {
+    if (!iniciado) return false;
+    if (fase === 'desligado') return true;   // congelado (e2e), file: e artifact: a plataforma/o reload manual resolve
+    if (fase === 'aviso' || fase === 'gravado' || fase === 'recarregando') return true;   // já está a caminho
+    nova = 'serviceworker';
+    fase = 'nova';
+    paradaDesde = null;
+    return true;
+  };
+
   V.iniciar = function () {
     if (iniciado) return;
     iniciado = true;
     motivo = V.motivoDesligado(ambiente());
     if (motivo) return;
     fase = 'vigiando';
+    // o service worker novo assumiu enquanto o jogo abria (a marca-base lida agora seria a nova, e a página é velha)
+    if (trocou) V.novaVersao();
     var op = { capture: true, passive: true };
     ['pointerdown', 'touchstart', 'keydown'].forEach(function (ev) { window.addEventListener(ev, mexeu, op); });
     document.addEventListener('visibilitychange', function () {
@@ -181,7 +213,8 @@
   // para os testes: __reino.modulo('versao')
   V.depurar = function () {
     return { ligado: !motivo && iniciado, motivo: motivo, fase: fase, base: base, suspeita: suspeita ? suspeita.marca : null,
-      nova: nova, buscas: buscas, avisos: avisos, cancelados: cancelados, parada: paradaDesde !== null, relogio: !!relogio };
+      nova: nova, buscas: buscas, avisos: avisos, cancelados: cancelados, parada: paradaDesde !== null, relogio: !!relogio,
+      controle: controle, trocou: trocou };
   };
 
   Reino.Versao = V;

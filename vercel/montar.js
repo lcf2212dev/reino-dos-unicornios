@@ -115,17 +115,30 @@ function pngLiso(L, A, fundo, s, escala) {
 
 // registra o sw.js; o novo baixa as vozes em segundo plano depois de ativo, e a aba lembra a ele de continuar
 // (o navegador para um service worker parado; cada mensagem o acorda por alguns minutos): a cada minuto, até o
-// "guardado" de quem controla a aba (o de um novo ainda instalando não conta; versão nova no controle = recomeça)
-const REGISTRO = '<script>if ("serviceWorker" in navigator) addEventListener("load", function () {'
-  + ' var sw = navigator.serviceWorker, pronto = false;'
+// "guardado" de quem controla a aba (o de um novo ainda instalando não conta; versão nova no controle = recomeça).
+// A conferência da versão publicada (o sw.js muda a cada deploy) é feita ao abrir, quando a aba volta a ficar visível
+// e a cada minuto com a aba visível (registration.update(); sem rate-limit extra: repetir é inofensivo). Quando o
+// sw.js novo instala (o núcleo inteiro, ANTES do skipWaiting) e assume a aba (controllerchange), a página é que está
+// velha: o versao.js avisa/grava/recarrega parada no mapa; se o jogo ainda não entrou (ou o módulo não existe), a
+// recarga é na hora — a versão nova já está inteira no cache. O primeiro controle (instalação nova, com a página já
+// atual) não conta como troca.
+const REGISTRO = '<script>if ("serviceWorker" in navigator) (function () {'
+  + ' var sw = navigator.serviceWorker, pronto = false, tinhaControle = !!sw.controller;'
   + ' function seguir() { if (!pronto && sw.controller) sw.controller.postMessage({ reino: "continuar" }); }'
+  + ' function procurar() { sw.getRegistration().then(function (r) { return r && r.update(); }).catch(function () {}); }'
   + ' sw.addEventListener("message", function (e) {'
   + ' if (e.data && e.data.reino === "guardado" && sw.controller && e.source === sw.controller) pronto = true; });'
-  + ' sw.addEventListener("controllerchange", function () { pronto = false; seguir(); });'
-  + ' setInterval(seguir, 60000); seguir();'
-  + ' sw.register("sw.js").then(function (r) {'
-  + ' document.addEventListener("visibilitychange", function () { if (!document.hidden) { seguir(); r.update().catch(function () {}); } });'
-  + ' }).catch(function () {}); });</script>';
+  + ' sw.addEventListener("controllerchange", function () { pronto = false; seguir();'
+  + ' if (!tinhaControle) { tinhaControle = true; return; }'
+  + ' var V = window.Reino && Reino.Versao;'
+  + ' if (V && V.novaVersao && V.novaVersao() === true) return;'
+  + ' location.reload(); });'
+  + ' addEventListener("load", function () { tinhaControle = !!sw.controller; seguir();'
+  + ' sw.register("sw.js").then(function () { procurar();'
+  + ' document.addEventListener("visibilitychange", function () { if (!document.hidden) { seguir(); procurar(); } });'
+  + ' setInterval(function () { seguir(); if (!document.hidden) procurar(); }, 60000);'
+  + ' }).catch(function () {}); });'
+  + ' })();</script>';
 
 // a pasta que o build apaga e refaz: só vercel/public/ ou dentro da pasta de testes (nunca o jogo, nunca a raiz)
 function conferirSaida(saida) {
