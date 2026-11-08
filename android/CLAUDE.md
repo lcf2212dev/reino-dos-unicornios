@@ -1,6 +1,7 @@
 # android — regras locais
 
-O app da Play Store (Trusted Web Activity que abre o site da Vercel; guia e publicação: `README.md` desta pasta).
+O app da Play Store (uma WebView própria, `MainActivity.java`, que abre o site da Vercel dentro do app; guia e
+publicação: `README.md` desta pasta). Não depende do Chrome: o Family Link pode deixar só ele liberado.
 - Nada do jogo mora aqui: o app só aponta para https://reino-dos-unicornios.vercel.app. Mudança no jogo = Vercel.
 - Configuração num lugar só: o bloco `twa` de `app/build.gradle`. O `applicationId` nunca muda.
 - Ícones (`app/src/main/res/mipmap-*`, `drawable-nodpi/abertura.png`): gerados (`npm run icones`); não edite à mão.

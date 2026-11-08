@@ -1,16 +1,21 @@
 # O app na Play Store (acesso restrito)
 
-O app é uma **Trusted Web Activity**: ele não leva o jogo dentro; abre https://reino-dos-unicornios.vercel.app no
-Chrome do aparelho, em tela cheia, sem barra de endereço, com o ícone e o nome do Reino. Por isso:
-
+O app é uma **WebView própria** (`app/src/main/java/.../MainActivity.java`): abre
+https://reino-dos-unicornios.vercel.app **dentro do app**, em tela cheia, com o ícone e o nome do Reino. Até a versão 1
+era uma Trusted Web Activity, que roda dentro do Chrome; trocamos porque, assim, o Family Link enxerga o Reino como um
+app só dele: dá para deixá-lo **"Sempre permitido"** (sem limite de tempo) com o Chrome bloqueado.
 - **O jogo atualiza sozinho** (push na `main` → Vercel). Novo envio à Play só quando muda o app em si (ícone, nome,
   cores, este projeto); aí `npm run android -- --nova-versao`.
-- **O save é o mesmo do site**: o app usa o armazenamento do Chrome para aquele endereço (`mariana-reino-v1`), e o
-  login/senha do jogo e a sincronização com o banco da Vercel valem igual. Nada de save novo nem migração.
-- **Sem rede** funciona como o app instalado da Vercel (o service worker do `vercel/pwa/`).
-- Prova de dono: o site publica `/.well-known/assetlinks.json` (de `vercel/loja/assetlinks.json`, pelo
-  `vercel/montar.js`) com a impressão digital de cada chave que assina o app. Impressão que falta = o app abre com
-  uma barrinha de endereço em cima (funciona, mas não fica em tela cheia).
+- **O save vem pelo login**: a WebView tem armazenamento próprio (separado do Chrome); ao entrar com login e senha, o
+  jogo busca o save no banco da Vercel, como num aparelho novo. O que está no Chrome do aparelho continua lá.
+- **Sem rede** funciona depois da primeira abertura (o service worker do `vercel/pwa/`; conferido no emulador).
+- O que a WebView não tem: **as fotos não saem do app**. O botão "Salvar no aparelho" aparece e avisa "Pronto! A foto
+  foi salva", mas nada é salvo, e a dica "Segure a foto para compartilhar ou salvar" não funciona (a WebView não tem
+  menu de toque longo). O álbum do Chrome também não vem junto (as fotos ficam em cada navegador/app). Links para fora
+  do site só abrem se o aparelho tiver navegador liberado. Consertar de verdade é mudança à parte: no jogo, esconder
+  Salvar e a dica quando o navegador diz `ReinoApp/` (o app já manda isso no user agent); no app, salvar pela galeria.
+- `/.well-known/assetlinks.json` (de `vercel/loja/assetlinks.json`) liga o app ao site: links do jogo (convite do
+  "Jogar com amigos") abrem direto no app.
 
 ## Onde está
 - Play Console: conta de organização da Caranga (ID 7722747646221687094, login appcaranga@gmail.com), app
@@ -30,6 +35,13 @@ São duas travas, uma por cima da outra:
    quem souber o login) e as senhas ficam em texto. Os dados em si não são secretos (a política de privacidade diz isso).
 
 O endereço da Vercel continua aberto no navegador, como hoje. Fechar o site ou a API é outra mudança, à parte.
+
+### Family Link (conta de criança)
+- O Family Link **bloqueia app sem classificação**: o app só baixa na conta da criança depois que a classificação de
+  conteúdo (Livre, já respondida) for publicada, e ela só é publicada quando o app passa pela revisão do Google
+  (Visão geral da publicação → Enviar para revisão, com a configuração do app completa).
+- Depois de instalado: Family Link → criança → Controles → Limites de apps → Reino dos Unicórnios → **Sempre permitido**.
+  O Chrome pode continuar bloqueado.
 
 ## Fazer o .aab
 ```

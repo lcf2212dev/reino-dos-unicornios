@@ -1,4 +1,4 @@
-// O app da Play Store (android/, uma Trusted Web Activity que abre https://reino-dos-unicornios.vercel.app no Chrome).
+// O app da Play Store (android/: uma WebView própria que abre https://reino-dos-unicornios.vercel.app dentro do app).
 // Guia da publicação e do acesso restrito: android/README.md.
 // Uso: node jogo/ferramentas/android/android.js [opções]            (npm run android -- [opções])
 //   (sem opção)        build do .aab (o que vai para a Play Console) e do .apk (para instalar por cabo), assinados

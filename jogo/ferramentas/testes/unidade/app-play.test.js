@@ -28,10 +28,12 @@ test('assetlinks.json: o app do build.gradle, com impressões SHA-256 válidas',
   assert.strictEqual(new Set(shas).size, shas.length, 'impressão repetida');
 });
 
-test('build.gradle: o app abre o site da Vercel', () => {
+test('build.gradle: o app abre o site da Vercel, numa WebView própria', () => {
   assert.match(GRADLE, /host\s*:\s*'reino-dos-unicornios\.vercel\.app'/);
-  // o JSON do asset_statements vai com as aspas escapadas (\\" no Groovy → \" no XML); sem isso o aapt2 as tira
-  assert.match(GRADLE, /\\\\"relation\\\\"/);
+  // o jogo roda numa WebView do próprio app (não no Chrome): o Family Link pode liberar só ele
+  const main = fs.readFileSync(path.join(RAIZ, 'android', 'app', 'src', 'main', 'java', 'app', 'vercel', 'reino_dos_unicornios', 'twa', 'MainActivity.java'), 'utf8');
+  assert.match(main, /setDomStorageEnabled\(true\)/, 'sem localStorage o save não fica no aparelho');
+  assert.match(fs.readFileSync(path.join(RAIZ, 'android', 'app', 'src', 'main', 'AndroidManifest.xml'), 'utf8'), /android\.permission\.INTERNET/);
 });
 
 test('montar.js: assetlinks e privacidade publicados, fora do sw.js', () => {
