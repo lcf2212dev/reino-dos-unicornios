@@ -792,6 +792,11 @@
       { js: 'js/interiores/neblina/objetos.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/neblina/inimigos.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/neblina/neblina.js', grupo: 'interiores', node: true },
+      // Bosque da Lua Cheia (arenas.md §8): bosque de dentro do Bosque (falas, objetos, inimigos, chão/céu, interior e portal)
+      { js: 'js/interiores/lua/falas.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/lua/objetos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/lua/inimigos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/lua/lua.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/parquinho/brincar.js', grupo: 'interiores', node: true }, // Parquinho (parquinho.md): a brincadeira (Reino.ParquinhoBrincar), o chão, os brinquedos, as poses, o interior, o portal na praça e o lugar
       { js: 'js/interiores/parquinho/fundo.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/parquinho/objetos.js', grupo: 'interiores', node: true },
