@@ -33,8 +33,8 @@ Manifesto: `sistemas/bosque-falas|bosque|bosque-combate|bosque-alvo|bosque-desen
 `sistemas/et-companheiro-desenho.js`; `ui/bosque-hud`, `ui/bosque-nivel`, `ui/bosque-bau`, `ui/bosque-pergunta`
 depois de `ui/casa-moveis.js`; `css/ui-bosque.css` depois de `css/ui-casa-moveis.css`; `interiores/bosque/*` depois de
 `interiores/casa/lugar.js` antes de `interiores/padrao.js`, na ordem `icones`, `fundo`, `falas`, `objetos`,
-`objetos-2`, `portal-vila`, `bosque`, `portais`, `fora`, `lugar` (os 3 bosques de dentro entram depois do Bosque e
-antes do Pântano; `arenas.md` §8).
+`objetos-2`, `portal-vila`, `bosque`, `portais`, `fora`, `lugar` (os 3 bosques de dentro entram no fim do grupo
+`interiores`, antes de `padrao.js`; `arenas.md` §8).
 
 ## 2. Ids e prefixos
 - Lugar `bosque` ("Bosque dos Fantasmas"), sprite `portal-bosque`, rect 1×1 em (53, 38) (a porta é o próprio tile),

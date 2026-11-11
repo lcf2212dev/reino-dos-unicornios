@@ -784,19 +784,6 @@
       { js: 'js/interiores/bosque/portais.js', grupo: 'interiores', node: true }, // os portais novos dentro do Bosque (Orvalho, Neblina, Lua Cheia; arenas.md §8)
       { js: 'js/interiores/bosque/fora.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/bosque/lugar.js', grupo: 'interiores', node: true },
-      { js: 'js/interiores/orvalho/falas.js', grupo: 'interiores', node: true }, // Bosque do Orvalho (arenas.md §8): bosque de dentro do Bosque (falas, objetos, inimigos, chão/céu, interior e portal)
-      { js: 'js/interiores/orvalho/objetos.js', grupo: 'interiores', node: true },
-      { js: 'js/interiores/orvalho/inimigos.js', grupo: 'interiores', node: true },
-      { js: 'js/interiores/orvalho/orvalho.js', grupo: 'interiores', node: true },
-      { js: 'js/interiores/neblina/falas.js', grupo: 'interiores', node: true }, // Bosque da Neblina (arenas.md §8): bosque de dentro do Bosque (falas, objetos, inimigos, chão/céu, interior e portal)
-      { js: 'js/interiores/neblina/objetos.js', grupo: 'interiores', node: true },
-      { js: 'js/interiores/neblina/inimigos.js', grupo: 'interiores', node: true },
-      { js: 'js/interiores/neblina/neblina.js', grupo: 'interiores', node: true },
-      // Bosque da Lua Cheia (arenas.md §8): bosque de dentro do Bosque (falas, objetos, inimigos, chão/céu, interior e portal)
-      { js: 'js/interiores/lua/falas.js', grupo: 'interiores', node: true },
-      { js: 'js/interiores/lua/objetos.js', grupo: 'interiores', node: true },
-      { js: 'js/interiores/lua/inimigos.js', grupo: 'interiores', node: true },
-      { js: 'js/interiores/lua/lua.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/parquinho/brincar.js', grupo: 'interiores', node: true }, // Parquinho (parquinho.md): a brincadeira (Reino.ParquinhoBrincar), o chão, os brinquedos, as poses, o interior, o portal na praça e o lugar
       { js: 'js/interiores/parquinho/fundo.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/parquinho/objetos.js', grupo: 'interiores', node: true },
@@ -838,6 +825,21 @@
       { js: 'js/interiores/vila/teleportadora.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/vila/vila.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/vila/lojas.js', grupo: 'interiores', node: true },
+      // Bosques de dentro do Bosque (arenas.md §8): no fim do grupo interiores (as fotos das cenas de antes do e2e não mudam);
+      // depois do Bosque, que carrega antes, para chamarem Reino._predios.bosque.portalNovo
+      { js: 'js/interiores/orvalho/falas.js', grupo: 'interiores', node: true }, // Bosque do Orvalho (arenas.md §8): bosque de dentro do Bosque (falas, objetos, inimigos, chão/céu, interior e portal)
+      { js: 'js/interiores/orvalho/objetos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/orvalho/inimigos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/orvalho/orvalho.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/neblina/falas.js', grupo: 'interiores', node: true }, // Bosque da Neblina (arenas.md §8): bosque de dentro do Bosque (falas, objetos, inimigos, chão/céu, interior e portal)
+      { js: 'js/interiores/neblina/objetos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/neblina/inimigos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/neblina/neblina.js', grupo: 'interiores', node: true },
+      // Bosque da Lua Cheia (arenas.md §8): bosque de dentro do Bosque (falas, objetos, inimigos, chão/céu, interior e portal)
+      { js: 'js/interiores/lua/falas.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/lua/objetos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/lua/inimigos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/lua/lua.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/padrao.js', grupo: 'interiores', node: true }, // padrao.js por último entre os prédios: monta o interior das matérias que não têm um próprio
       { js: 'js/sistemas/banho.js', grupo: 'sistemas' },
       { js: 'js/sistemas/banho-desenho.js', grupo: 'sistemas' },

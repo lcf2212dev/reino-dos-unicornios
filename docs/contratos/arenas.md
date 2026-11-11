@@ -150,8 +150,9 @@ a pergunta, o nível e o baú são os de sempre (§4).
 - Cada pasta nova tem: `falas.js`, `objetos.js` (piso, parede, céu e os objetos-assinatura), `inimigos.js` (o ícone
   da arena e os 4 moldes dos monstros) e `<id>.js` (trilha própria, `Reino.Interiores.arena`, `registrarArena`,
   `registrarInterior` e a chamada `portalNovo`). Modelo: `jogo/js/interiores/pantano/` + os três bosques prontos;
-  nenhum `lugar.js` (não é lugar do mapa) e nenhum `fora.js`. Manifesto: grupo `interiores`, `node: true`, depois de
-  `interiores/bosque/` e antes de `interiores/pantano/`, na ordem `falas, objetos, inimigos, <id>`.
+  nenhum `lugar.js` (não é lugar do mapa) e nenhum `fora.js`. Manifesto: grupo `interiores`, `node: true`, no FIM do
+  grupo (depois dos outros prédios e antes de `padrao.js`: as fotos das cenas de antes no e2e não mudam de relógio),
+  na ordem `falas, objetos, inimigos, <id>`; carregam depois do Bosque, de quem usam o `portalNovo`.
 - Números em `config.arenas.<id>`: vida, força, velocidade, mortos, xp, quantos, zonas, `visao` e `nivel`; todos acima
   do `vulcao` por tipo e crescendo entre os três (o teste confere), com o XP para valer a pena.
 - O painel do chip (`UI.telaBosque`) mostra "Nível recomendado: N" nas arenas que não são de entrada (as de dentro).
