@@ -784,6 +784,10 @@
       { js: 'js/interiores/bosque/portais.js', grupo: 'interiores', node: true }, // os portais novos dentro do Bosque (Orvalho, Neblina, Lua Cheia; arenas.md §8)
       { js: 'js/interiores/bosque/fora.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/bosque/lugar.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/orvalho/falas.js', grupo: 'interiores', node: true }, // Bosque do Orvalho (arenas.md §8): bosque de dentro do Bosque (falas, objetos, inimigos, chão/céu, interior e portal)
+      { js: 'js/interiores/orvalho/objetos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/orvalho/inimigos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/orvalho/orvalho.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/parquinho/brincar.js', grupo: 'interiores', node: true }, // Parquinho (parquinho.md): a brincadeira (Reino.ParquinhoBrincar), o chão, os brinquedos, as poses, o interior, o portal na praça e o lugar
       { js: 'js/interiores/parquinho/fundo.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/parquinho/objetos.js', grupo: 'interiores', node: true },
