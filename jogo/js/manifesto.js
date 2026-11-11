@@ -788,6 +788,10 @@
       { js: 'js/interiores/orvalho/objetos.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/orvalho/inimigos.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/orvalho/orvalho.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/neblina/falas.js', grupo: 'interiores', node: true }, // Bosque da Neblina (arenas.md §8): bosque de dentro do Bosque (falas, objetos, inimigos, chão/céu, interior e portal)
+      { js: 'js/interiores/neblina/objetos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/neblina/inimigos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/neblina/neblina.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/parquinho/brincar.js', grupo: 'interiores', node: true }, // Parquinho (parquinho.md): a brincadeira (Reino.ParquinhoBrincar), o chão, os brinquedos, as poses, o interior, o portal na praça e o lugar
       { js: 'js/interiores/parquinho/fundo.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/parquinho/objetos.js', grupo: 'interiores', node: true },
