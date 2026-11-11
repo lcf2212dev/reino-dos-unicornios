@@ -107,6 +107,8 @@ test('juntos: a ana cria o servidor, a bia entra pelo convite, o caio fica sozin
     // a bia fecha o jogo: o pagehide manda saiu: true e a ana deixa de vê-la na hora (sem esperar o TTL)
     await b.page.evaluate(() => { window.dispatchEvent(new Event('pagehide')); });
     await esperar(b.page, () => !Reino.Juntos.ligado());
+    // o POST keepalive do pagehide chega depois: espera ele no proxy (sob carga, o fetch pode passar do quadro seguinte)
+    for (let i = 0; i < 60 && proxy.saiu < 1; i++) await new Promise((r) => setTimeout(r, 50));
     assert.ok(proxy.saiu >= 1, 'o pagehide mandou saiu: true (não dependeu do TTL)');
     await b.context.close();
     await euNaoVejo(a.page, 'bia');
