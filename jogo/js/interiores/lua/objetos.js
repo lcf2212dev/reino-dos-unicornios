@@ -112,7 +112,7 @@
     ret(ctx, x - 1, y, w + 2, h, K); ret(ctx, x, y, w, h, '#3a4a7a'); ret(ctx, x, y, 2, h, '#55689c'); ret(ctx, x + w - 2, y, 2, h, '#26325c');
   }
   // a árvore-da-lua: tronco azul-escuro e a copa de folhas prateadas, com estrelinhas entre elas
-  I.objeto('lua-arvore', { w: 2, h: 1, solido: true, alto: true, topo: 46,
+  I.objeto('luacheia-arvore', { w: 2, h: 1, solido: true, alto: true, topo: 46,
     desenhar: function (ctx, px, py) {
       sombra(ctx, px + 16, py + 14, 13);
       tronco(ctx, px + 12, py - 6, 8, 20);
@@ -125,7 +125,7 @@
 
   // o cristal-da-lua: três pontas de quartzo azul que brilham (um halo parado e os brilhinhos no `anim`)
   var CRISTAL = ['#7f9cd8', '#b8d4f8', '#eef6ff'];
-  I.objeto('lua-cristal', { w: 1, h: 1, solido: true, topo: 10,
+  I.objeto('luacheia-cristal', { w: 1, h: 1, solido: true, topo: 10,
     desenhar: function (ctx, px, py) {
       elipse(ctx, px + 8, py + 14, 6, 2, 'rgba(20,28,60,0.32)');
       elipse(ctx, px + 8, py + 7, 13, 10, 'rgba(184,212,248,0.16)');
@@ -153,7 +153,7 @@
     elipse(ctx, cx, base - r - 1, r + 1, r, K); elipse(ctx, cx, base - r - 1, r, r - 1, CHAPEU[i % 3]);
     ret(ctx, cx - 1, base - r - 2, 2, 1, CHAPEU[2]); ret(ctx, cx + 1, base - r - 1, 1, 1, CHAPEU[2]);
   }
-  I.objeto('lua-cogumelo-lua', { w: 1, h: 1, solido: false, plano: true,
+  I.objeto('luacheia-cogumelo', { w: 1, h: 1, solido: false, plano: true,
     desenhar: function (ctx, px, py, o) {
       var i = (o && o.var && o.var.n) || 0;
       elipse(ctx, px + 8, py + 9, 9, 6, 'rgba(184,212,248,0.16)');

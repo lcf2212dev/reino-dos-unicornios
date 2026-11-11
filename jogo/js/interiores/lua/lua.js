@@ -39,7 +39,7 @@
   P.trilha = function (tx, ty) { if (!_trilha) _trilha = montarTrilha(); return !!_trilha[ty * 100 + tx]; };
 
   // as árvores da mata (as copas podem ficar atrás umas das outras, como no Bosque)
-  var ALTOS = { 'lua-arvore': 1, 'bosque-pinheiro': 1 };
+  var ALTOS = { 'luacheia-arvore': 1, 'bosque-pinheiro': 1 };
   var L = I.arena({
     semente: 20261137,
     zonas: R.Arenas.cfg('lua').zonas,
@@ -53,22 +53,22 @@
       ['bosque-arvore-velha', 11, 25, 'Árvore velha', F['arvore-velha']],
     ],
     enfeites: [
-      ['lua-cristal', 45, 35], ['lua-cristal', 17, 30], ['lua-cristal', 33, 8], ['lua-cristal', 47, 17],
-      ['lua-cogumelo-lua', 12, 33], ['lua-cogumelo-lua', 38, 27], ['lua-cogumelo-lua', 21, 14], ['lua-cogumelo-lua', 30, 5],
+      ['luacheia-cristal', 45, 35], ['luacheia-cristal', 17, 30], ['luacheia-cristal', 33, 8], ['luacheia-cristal', 47, 17],
+      ['luacheia-cogumelo', 12, 33], ['luacheia-cogumelo', 38, 27], ['luacheia-cogumelo', 21, 14], ['luacheia-cogumelo', 30, 5],
       ['bosque-poca', 40, 32], ['bosque-poca', 18, 6], ['bosque-anel-fadas', 20, 19],
     ],
     altos: ALTOS,
-    borda: { lado: 'lua-arvore', baixo: ['bosque-arbusto', 'bosque-pedra'] },
+    borda: { lado: 'luacheia-arvore', baixo: ['bosque-arbusto', 'bosque-pedra'] },
     base: { facil: 0.025, medio: 0.07, dificil: 0.11 },
     bosques: [[8, 36, 4], [48, 37, 4], [20, 30, 3], [38, 28, 3], [8, 18, 5], [21, 18, 4], [37, 25, 4], [49, 15, 5], [34, 17, 3],
       [8, 6, 5], [21, 4, 4], [36, 4, 4], [49, 6, 5], [21, 11, 4], [37, 13, 4], [7, 12, 3], [49, 11, 3]],
-    mata: [[0.6, 'lua-arvore'], [0.74, 'bosque-pinheiro'], [0.84, 'bosque-arbusto'], [0.92, 'bosque-pedra'], [0.97, 'bosque-toco'], [1, 'bosque-tronco']],
+    mata: [[0.6, 'luacheia-arvore'], [0.74, 'bosque-pinheiro'], [0.84, 'bosque-arbusto'], [0.92, 'bosque-pedra'], [0.97, 'bosque-toco'], [1, 'bosque-tronco']],
     bolsao: ['bosque-arbusto', 'bosque-arbusto', 'bosque-pedra', 'bosque-toco'], coberto: 'bosque-arbusto',
     miudos: {
       comum: ['bosque-mato', 'bosque-flores', 'bosque-margaridas', 'bosque-trevo', 'bosque-samambaia', 'bosque-pedrinhas',
-        'bosque-cogumelos', 'bosque-flor-brilho', 'bosque-vagalumes', 'lua-cogumelo-lua'],
-      fundo: ['bosque-vagalumes', 'bosque-flor-brilho', 'bosque-cogumelos', 'lua-cogumelo-lua', 'bosque-mato', 'bosque-samambaia'], fundoAte: 20,
-      trilha: 'bosque-pedrinhas', varN: { 'bosque-flores': 5, 'bosque-cogumelos': 3, 'lua-cogumelo-lua': 3 },
+        'bosque-cogumelos', 'bosque-flor-brilho', 'bosque-vagalumes', 'luacheia-cogumelo'],
+      fundo: ['bosque-vagalumes', 'bosque-flor-brilho', 'bosque-cogumelos', 'luacheia-cogumelo', 'bosque-mato', 'bosque-samambaia'], fundoAte: 20,
+      trilha: 'bosque-pedrinhas', varN: { 'bosque-flores': 5, 'bosque-cogumelos': 3, 'luacheia-cogumelo': 3 },
     },
   });
 
