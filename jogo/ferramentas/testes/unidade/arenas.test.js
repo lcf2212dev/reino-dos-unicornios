@@ -114,9 +114,12 @@ test('arenas: no jogo, cada arena tem o seu estado; a cena de uma arena qualquer
 
 test('arenas do jogo: interior, lugar com portal 1×1 na borda, números completos e desenhos do Pântano', () => {
   const R = tudo();
+  // as 6 arenas do mapa (portal na borda da cidade) e os 3 bosques de dentro do Bosque (portais dentro da arena; arenas.md §8)
+  const DO_MAPA = ['bosque', 'cristal', 'dunas', 'gelo', 'pantano', 'vulcao'];
+  const DE_DENTRO = ['lua', 'neblina', 'orvalho'];
   const ids = R.Arenas.ids();
-  assert.deepStrictEqual(Array.from(ids).sort(), ['bosque', 'cristal', 'dunas', 'gelo', 'pantano', 'vulcao']);
-  ids.forEach((id) => {
+  assert.deepStrictEqual(Array.from(ids).sort(), DO_MAPA.concat(DE_DENTRO).sort());
+  DO_MAPA.forEach((id) => {
     const a = R.Arenas.def(id), d = R.Interiores.def(id), l = R.lugaresRegistrados.find((x) => x.id === id);
     assert.ok(a.nome && a.emoji, id + ': nome e emoji');
     assert.ok(d && d.lugar === id && d.entrada && d.fundo && d.pacote, id + ': interior de entrada com fundo e pacote');
@@ -124,17 +127,46 @@ test('arenas do jogo: interior, lugar com portal 1×1 na borda, números complet
     assert.ok(l && l.rect.w === 1 && l.rect.h === 1 && l.caminho.length && /^portal-/.test(l.sprite), id + ': portal 1×1 com caminho');
     const r = l.rect;
     assert.ok(r.x <= 2 || r.x >= 53 || r.y <= 3 || r.y >= 38, id + ': na borda da cidade, colado na floresta');
-    const c = R.Arenas.cfg(id);
-    Object.keys(c.tipos).forEach((t) => {
-      const n = c.tipos[t];
-      ['vida', 'forca', 'velocidade', 'mortos', 'xp'].forEach((k) => assert.ok(n[k] > 0, id + ' ' + t + '.' + k));
-      assert.ok(c.quantos[t] > 0 && c.zonas[t], id + ' ' + t + ': quantos e zona');
-    });
+    numerosDaArena(R, id);
     if (id !== 'bosque') {
       assert.ok(R.config.arenas[id].nivel > 1, id + ': nível recomendado');
       assert.match(l.menu.info(), /^Nível recomendado: \d+$/);
     }
   });
+  // os 3 bosques de dentro do Bosque: interior com lugar 'bosque', sem tapete de saída (a volta é o portal) e sem lugar no mapa
+  DE_DENTRO.forEach((id) => {
+    const a = R.Arenas.def(id), d = R.Interiores.def(id);
+    assert.ok(a.nome && a.emoji, id + ': nome e emoji');
+    assert.ok(d && d.lugar === 'bosque' && !d.entrada && d.fundo === id && d.pacote, id + ': interior de dentro do Bosque');
+    assert.strictEqual(d.saida, undefined, id + ': sem tapete de saída (volta pelo portal)');
+    assert.deepStrictEqual([d.tamanho.w, d.tamanho.h, d.spawn.x, d.spawn.y], [56, 44, 28, 39], id + ': o contrato das arenas de dentro do Bosque');
+    assert.strictEqual(R.lugaresRegistrados.find((x) => x.id === id), undefined, id + ': não é lugar do mapa');
+    numerosDaArena(R, id);
+    assert.ok(R.config.arenas[id].nivel > 20, id + ': nível recomendado');
+    // o portal no Bosque, a placa do nível, a escada de ida, o portal de volta e a escada de volta (pareadas)
+    const bosque = R.Interiores.def('bosque');
+    assert.ok(bosque.objetos.some((o) => o.tipo === 'bosque-portal-' + id), id + ': o portal novo no Bosque');
+    assert.ok(bosque.objetos.some((o) => o.tipo === 'bosque-placa-' + id), id + ': a placa do nível no Bosque');
+    assert.ok(d.objetos.some((o) => o.tipo === id + '-portal-volta'), id + ': o portal de volta na floresta');
+    const ida = bosque.escadas.filter((e) => e.para === id), volta = d.escadas.filter((e) => e.para === 'bosque');
+    assert.strictEqual(ida.length, 1, id + ': uma escada no Bosque');
+    assert.strictEqual(volta.length, 1, id + ': uma escada de volta para o Bosque');
+    assert.strictEqual(ida[0].sentido, 'portal', id + ': sentido portal');
+    // os 4 desenhos próprios dos monstros (contorno K, até 17 × 20)
+    ['facil', 'medio', 'dificil', 'voador'].forEach((t) => {
+      const m = R.Arenas.desenho(id, t);
+      assert.ok(m, id + '-' + t + ': desenho próprio');
+      assert.ok(m.linhas.length <= 20 && m.linhas[0].length <= 17, id + '-' + t + ': até 17 × 20');
+      assert.strictEqual(m.paleta.K, '#3a2446', id + '-' + t + ': contorno');
+    });
+  });
+  // de dentro do Bosque: mais fortes que o Vulcão (o mapa mais forte de hoje) e crescendo de floresta em floresta
+  const ORDEM = ['vulcao', 'orvalho', 'neblina', 'lua'];
+  ORDEM.slice(1).forEach((id, i) => ['facil', 'medio', 'dificil', 'voador'].forEach((t) => {
+    const a = R.Arenas.cfg(ORDEM[i]).tipos[t], b = R.Arenas.cfg(id).tipos[t];
+    assert.ok(b.vida > a.vida && b.forca >= a.forca && b.xp > a.xp, id + ' ' + t + ' mais forte que ' + ORDEM[i]);
+  }));
+  ORDEM.forEach((id, i) => assert.ok(!i || R.config.arenas[id].nivel > R.config.arenas[ORDEM[i - 1]].nivel, id + ': nível recomendado crescente'));
   ['facil', 'medio', 'dificil', 'voador'].forEach((t) => {
     const m = R.Arenas.desenho('pantano', t);
     assert.ok(m, 'pantano-' + t);
@@ -142,3 +174,13 @@ test('arenas do jogo: interior, lugar com portal 1×1 na borda, números complet
     assert.strictEqual(m.paleta.K, '#3a2446', 'contorno');
   });
 });
+
+// os números de uma arena: os 4 tipos com vida, força, velocidade, mortos e XP; quantos e zona de cada um
+function numerosDaArena(R, id) {
+  const c = R.Arenas.cfg(id);
+  Object.keys(c.tipos).forEach((t) => {
+    const n = c.tipos[t];
+    ['vida', 'forca', 'velocidade', 'mortos', 'xp'].forEach((k) => assert.ok(n[k] > 0, id + ' ' + t + '.' + k));
+    assert.ok(c.quantos[t] > 0 && c.zonas[t], id + ' ' + t + ': quantos e zona');
+  });
+}

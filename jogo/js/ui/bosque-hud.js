@@ -163,6 +163,11 @@
       el('p.bosque-painel-vida', icone('💖'), el('span', 'Vida ' + v.n + '/' + v.max)));
     corpo.appendChild(el('p.bosque-painel-mortos', icone(a.emoji || '👻'), el('span', 'Inimigos mortos: ' + Bo.mortos())));
     corpo.appendChild(el('p.bosque-painel-proxima', el('span', 'Próxima pergunta: ' + prox.pct + '%')));
+    // arena de dentro do Bosque (os bosques novos, arenas.md §8): o nível recomendado também no painel
+    var defArena = Reino.Interiores && Reino.Interiores.def(a.id);
+    if (defArena && !defArena.entrada && (Reino.config.arenas || {})[a.id]) {
+      corpo.appendChild(el('p.bosque-painel-proxima', el('span', 'Nível recomendado: ' + Reino.config.arenas[a.id].nivel)));
+    }
     var lista = el('ul.bosque-habs');
     HABS.forEach(function (a) {
       lista.appendChild(el('li.bosque-hab', icone(a.emoji), el('span.bosque-hab-nome', a.nome), el('b', String(pts[a.h]))));

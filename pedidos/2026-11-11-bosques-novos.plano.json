@@ -1,0 +1,183 @@
+{
+  "nome": "bosques-novos",
+  "pedido": "pedidos/2026-11-11-bosques-novos.md",
+  "personagens": [],
+  "tarefas": [
+    {
+      "id": "contrato",
+      "tipo": "contrato",
+      "titulo": "Contrato: 3 arenas novas em config.arenas, portais dentro do Bosque (bosque/portais.js), painel com o nível recomendado, testes de unidade e docs",
+      "quem": "orquestrador",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/nucleo/config.js",
+        "jogo/js/interiores/bosque/portais.js",
+        "jogo/js/manifesto.js",
+        "jogo/index.html",
+        "jogo/js/ui/bosque-hud.js",
+        "jogo/ferramentas/testes/unidade/arenas.test.js",
+        "jogo/ferramentas/testes/unidade/bosque-xp.test.js",
+        "docs/contratos/arenas.md",
+        "docs/contratos/bosque.md",
+        "pedidos/2026-11-11-bosques-novos.md",
+        "pedidos/2026-11-11-bosques-novos.plano.json"
+      ],
+      "worktree": "bosques-novos",
+      "ler": [
+        "docs/contratos/arenas.md §1-§7",
+        "docs/contratos/bosque.md §2 §5 §7",
+        "docs/contratos/interiores.md §3"
+      ],
+      "pronto": [
+        "3 entradas novas em config.arenas: orvalho (25), neblina (30) e lua (35), todas mais fortes que o vulcão e crescendo entre elas",
+        "bosque/portais.js com portalNovo(): portal no Bosque, placa 'Nv N', escada pareada, trilha e enfeites de preenchimento; sem voz nova",
+        "o painel do chip mostra 'Nível recomendado: N' nas arenas de dentro do Bosque",
+        "testes unidade das arenas e do XP com as 3 novas (vermelho só enquanto as frentes não chegam: documentado no retorno)",
+        "arenas.md e bosque.md com os portais novos, os ids, as cores e o nível de cada floresta"
+      ],
+      "testes": [
+        "npm run validar",
+        "npm run unidade -- --so 'arenas|bosque'"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "orvalho",
+      "tipo": "cenario",
+      "titulo": "Bosque do Orvalho (Nv 25): interior 56x44, chão/céu/objetos próprios, 4 monstros novos e o portal novo no Bosque",
+      "quem": "builder",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/interiores/orvalho/"
+      ],
+      "worktree": "bosques-orvalho",
+      "ler": [
+        "docs/contratos/arenas.md §1-§7",
+        "docs/contratos/bosque.md §2 §4 §5",
+        "docs/contratos/interiores.md §3 §7",
+        "docs/contratos/frente.md",
+        "pedidos/2026-11-11-bosques-novos.md"
+      ],
+      "modelo": "jogo/js/interiores/pantano/",
+      "testes": [
+        "npm run validar",
+        "npm run unidade -- --so 'arenas|bosque'"
+      ],
+      "pronto": [
+        "interior 'orvalho' 56x44, spawn (28,39), portal de volta em (28,40) e escada pareada com o Bosque",
+        "4 monstros novos (caracol, lagarta, ouriço com coroa e mariposa), mais fortes que os do vulcão",
+        "piso, parede, céu e pelo menos 2 objetos-assinatura do orvalho; o resto do bosque vem dos objetos do Bosque",
+        "portal novo no Bosque (embaixo à esquerda) com placa 'Nv 25' e trilha; ida e volta funcionando",
+        "as 4 falas dos objetos copiadas do Bosque (nada de voz nova); fotos nos 3 tamanhos"
+      ],
+      "estimativa": 70
+    },
+    {
+      "id": "neblina",
+      "tipo": "cenario",
+      "titulo": "Bosque da Neblina (Nv 30): interior 56x44, chão/céu/objetos próprios, 4 monstros novos e o portal novo no Bosque",
+      "quem": "builder",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/interiores/neblina/"
+      ],
+      "worktree": "bosques-neblina",
+      "ler": [
+        "docs/contratos/arenas.md §1-§7",
+        "docs/contratos/bosque.md §2 §4 §5",
+        "docs/contratos/interiores.md §3 §7",
+        "docs/contratos/frente.md",
+        "pedidos/2026-11-11-bosques-novos.md"
+      ],
+      "modelo": "jogo/js/interiores/pantano/",
+      "testes": [
+        "npm run validar",
+        "npm run unidade -- --so 'arenas|bosque'"
+      ],
+      "pronto": [
+        "interior 'neblina' 56x44, spawn (28,39), portal de volta em (28,40) e escada pareada com o Bosque",
+        "4 monstros novos (guaxinim, raposa, javali com coroa e gavião), mais fortes que os do orvalho",
+        "piso, parede, céu e pelo menos 2 objetos-assinatura da neblina; ícone pixel art do 🌫; o resto do bosque vem dos objetos do Bosque",
+        "portal novo no Bosque (borda direita, abaixo do portal da Vila) com placa 'Nv 30' e trilha; ida e volta funcionando",
+        "as 4 falas dos objetos copiadas do Bosque (nada de voz nova); fotos nos 3 tamanhos"
+      ],
+      "estimativa": 70
+    },
+    {
+      "id": "lua",
+      "tipo": "cenario",
+      "titulo": "Bosque da Lua Cheia (Nv 35): interior 56x44, chão/céu/objetos próprios, 4 monstros novos e o portal novo no Bosque",
+      "quem": "builder",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/interiores/lua/"
+      ],
+      "worktree": "bosques-lua",
+      "ler": [
+        "docs/contratos/arenas.md §1-§7",
+        "docs/contratos/bosque.md §2 §4 §5",
+        "docs/contratos/interiores.md §3 §7",
+        "docs/contratos/frente.md",
+        "pedidos/2026-11-11-bosques-novos.md"
+      ],
+      "modelo": "jogo/js/interiores/pantano/",
+      "testes": [
+        "npm run validar",
+        "npm run unidade -- --so 'arenas|bosque'"
+      ],
+      "pronto": [
+        "interior 'lua' 56x44, spawn (28,39), portal de volta em (28,40) e escada pareada com o Bosque",
+        "4 monstros novos (gato da lua, cervo da lua, urso com coroa e corvo), os mais fortes do jogo",
+        "piso, parede, céu e pelo menos 2 objetos-assinatura da lua; o resto do bosque vem dos objetos do Bosque",
+        "portal novo no Bosque (no alto, fim da trilha principal) com placa 'Nv 35' e trilha; ida e volta funcionando",
+        "as 4 falas dos objetos copiadas do Bosque (nada de voz nova); fotos nos 3 tamanhos"
+      ],
+      "estimativa": 70
+    },
+    {
+      "id": "integracao",
+      "tipo": "integracao",
+      "titulo": "Juntar o contrato e as 3 frentes, linhas do manifesto, npm test e e2e, base nova do e2e",
+      "quem": "orquestrador",
+      "depende": [
+        "contrato",
+        "orvalho",
+        "neblina",
+        "lua"
+      ],
+      "arquivos": [
+        "jogo/ferramentas/testes/base-referencia.txt"
+      ],
+      "worktree": "bosques-integra",
+      "pronto": [
+        "npm test verde",
+        "npm run e2e só com as diferenças que a feature explica (aceitas)",
+        "nenhuma fala sem áudio"
+      ],
+      "estimativa": 40
+    },
+    {
+      "id": "entrega",
+      "tipo": "entrega",
+      "titulo": "Merge na main, push e conferência da Vercel",
+      "quem": "orquestrador",
+      "depende": [
+        "integracao"
+      ],
+      "arquivos": [],
+      "pronto": [
+        "main com o commit da feature",
+        "push feito",
+        "npm run vercel -- --conferir ok"
+      ],
+      "estimativa": 15,
+      "worktree": "bosques-integra"
+    }
+  ]
+}

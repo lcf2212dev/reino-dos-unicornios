@@ -19,6 +19,7 @@ Errar, fechar ou desmaiar não tira nada. O mesmo motor vale nos outros mapas de
 | fator de velocidade | `Jogador.registrarFatorVelocidade(fn)` (`cena-e-motor.md` §10) |
 | saída desenhada pelo fundo | `I.FUNDOS[id].saida(ctx, px, py)` (`interiores.md` §3, `fundo`) |
 | o portal no mapa | `js/interiores/bosque/lugar.js` (lugar), `fora.js` (desenho: `Reino.Portal` de `js/arte/portal.js`), `icones.js` (👻 🗡 🌀) |
+| os portais de dentro (Orvalho, Neblina, Lua Cheia) | `js/interiores/bosque/portais.js` (`arenas.md` §8) |
 | o interior | `js/interiores/bosque/bosque.js`, `fundo.js`, `objetos.js`, `objetos-2.js`, `falas.js` |
 | regras e save | `js/sistemas/bosque.js` (`Reino.Bosque`, módulo `'bosque'`, `node: true`) |
 | combate e desenho | `js/sistemas/bosque-combate.js` (`Reino.BosqueCombate`, módulo `'bosque-combate'` com `camada`), `bosque-desenho.js` |
@@ -31,8 +32,9 @@ Errar, fechar ou desmaiar não tira nada. O mesmo motor vale nos outros mapas de
 Manifesto: `sistemas/bosque-falas|bosque|bosque-combate|bosque-alvo|bosque-desenho` logo depois de
 `sistemas/et-companheiro-desenho.js`; `ui/bosque-hud`, `ui/bosque-nivel`, `ui/bosque-bau`, `ui/bosque-pergunta`
 depois de `ui/casa-moveis.js`; `css/ui-bosque.css` depois de `css/ui-casa-moveis.css`; `interiores/bosque/*` depois de
-`interiores/casa/lugar.js` e antes de `interiores/padrao.js` (o Bosque é o último prédio: as fotos das outras cenas do
-e2e não mudam), na ordem `icones`, `fundo`, `falas`, `objetos`, `objetos-2`, `bosque`, `fora`, `lugar`.
+`interiores/casa/lugar.js` antes de `interiores/padrao.js`, na ordem `icones`, `fundo`, `falas`, `objetos`,
+`objetos-2`, `portal-vila`, `bosque`, `portais`, `fora`, `lugar` (os 3 bosques de dentro entram depois do Bosque e
+antes do Pântano; `arenas.md` §8).
 
 ## 2. Ids e prefixos
 - Lugar `bosque` ("Bosque dos Fantasmas"), sprite `portal-bosque`, rect 1×1 em (53, 38) (a porta é o próprio tile),
@@ -50,6 +52,11 @@ e2e não mudam), na ordem `icones`, `fundo`, `falas`, `objetos`, `objetos-2`, `b
   difíceis e moscas em cima. Zona segura de `zonaSegura` tiles em volta do spawn: sem inimigo, e com uma barreira de
   `raioToque` em volta dela (`bosque-combate.js:prender`): o inimigo fica fora da borda, então o toque nunca chega a
   quem está lá dentro.
+- Portais de dentro (`arenas.md` §8): `interiores/bosque/portais.js` põe os objetos `bosque-portal-<id>` (o redemoinho),
+  `bosque-placa-<id>` (a placa "Nv N") e as escadas `portal` para `orvalho` (embaixo à esquerda, gatilho (9,40)),
+  `neblina` (borda direita, (53,32)) e `lua` (no alto, (27,5)); a escada de VOLTA fica em cada floresta
+  (`<id>-portal-volta` em (28,40)). O que estava no lugar e na trilha nova sai do layout e as janelas 3×3 abertas são
+  preenchidas com miudezas (o layout do `bosque.js` já foi sorteado quando a floresta chama `portalNovo`).
 
 ## 3. Números
 Todos em `Reino.config.fantasmas` (cada um comentado lá): a curva de XP `xpNivel` (`base`, `passo`: o nível N pede

@@ -781,6 +781,7 @@
       { js: 'js/interiores/bosque/objetos-2.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/bosque/portal-vila.js', grupo: 'interiores', node: true }, // o portal para a Vila Arco-Íris, no centro-direita (vila.md)
       { js: 'js/interiores/bosque/bosque.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/bosque/portais.js', grupo: 'interiores', node: true }, // os portais novos dentro do Bosque (Orvalho, Neblina, Lua Cheia; arenas.md §8)
       { js: 'js/interiores/bosque/fora.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/bosque/lugar.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/parquinho/brincar.js', grupo: 'interiores', node: true }, // Parquinho (parquinho.md): a brincadeira (Reino.ParquinhoBrincar), o chão, os brinquedos, as poses, o interior, o portal na praça e o lugar

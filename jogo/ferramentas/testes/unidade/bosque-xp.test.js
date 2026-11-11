@@ -127,7 +127,7 @@ test('arenas: o XP e o placar vêm dos números da arena (config.arenas); sem ar
   assert.strictEqual(B.abater('voador', 'pantano').mortos, 3, 'o voador conta 2');
   assert.strictEqual(B.abater('facil').xp, j.R.config.fantasmas.tipos.facil.xp);
   // de mapa em mapa, mais forte e mais XP
-  const ordem = ['pantano', 'gelo', 'dunas', 'cristal', 'vulcao'];
+  const ordem = ['pantano', 'gelo', 'dunas', 'cristal', 'vulcao', 'orvalho', 'neblina', 'lua'];
   ordem.slice(1).forEach((id, i) => ['facil', 'medio', 'dificil', 'voador'].forEach((t) => {
     const a = A[ordem[i]].tipos[t], b = A[id].tipos[t];
     assert.ok(b.vida > a.vida && b.forca >= a.forca && b.xp > a.xp, id + ' ' + t + ' mais forte que ' + ordem[i]);

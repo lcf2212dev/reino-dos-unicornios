@@ -303,6 +303,34 @@ Reino.config = {
         dificil: { vida: 60, forca: 9, velocidade: 40, mortos: 1, xp: 74 },  // dragãozinho com coroa
         voador: { vida: 70, forca: 10, velocidade: 50, mortos: 2, xp: 100 }, // morceguinho de fogo
       } },
+    // Os três bosques de dentro do Bosque dos Fantasmas (pedido do Leandro, 11/11/2026; arenas.md §8): os portais
+    // ficam DENTRO da arena do Bosque (bosque/portais.js), não são lugares do mapa. Do mais fácil ao mais difícil, cada
+    // um acima do Vulcão (o mapa mais forte de hoje) em vida, força e XP, e crescendo entre eles. Nível recomendado
+    // no menu do painel do chip e na placa do portal.
+    orvalho: { nivel: 25, visao: 108, zonas: { facil: [27, 38], medio: [15, 26], dificil: [3, 14], voador: [3, 10] },   // Bosque do Orvalho
+      quantos: { facil: 6, medio: 5, dificil: 4, voador: 3 },
+      tipos: {
+        facil: { vida: 44, forca: 7, velocidade: 32, mortos: 1, xp: 55 },    // caracol
+        medio: { vida: 56, forca: 9, velocidade: 38, mortos: 1, xp: 70 },    // lagarta
+        dificil: { vida: 72, forca: 11, velocidade: 42, mortos: 1, xp: 90 }, // ouriço com coroa
+        voador: { vida: 84, forca: 12, velocidade: 52, mortos: 2, xp: 120 }, // mariposa
+      } },
+    neblina: { nivel: 30, visao: 112, zonas: { facil: [27, 38], medio: [15, 26], dificil: [3, 14], voador: [3, 10] },   // Bosque da Neblina
+      quantos: { facil: 6, medio: 5, dificil: 4, voador: 3 },
+      tipos: {
+        facil: { vida: 54, forca: 8, velocidade: 34, mortos: 1, xp: 66 },    // guaxinim
+        medio: { vida: 68, forca: 10, velocidade: 40, mortos: 1, xp: 84 },   // raposa
+        dificil: { vida: 86, forca: 12, velocidade: 44, mortos: 1, xp: 108 }, // javali com coroa
+        voador: { vida: 100, forca: 13, velocidade: 54, mortos: 2, xp: 144 }, // gavião
+      } },
+    lua: { nivel: 35, visao: 116, zonas: { facil: [27, 38], medio: [15, 26], dificil: [3, 14], voador: [3, 10] },   // Bosque da Lua Cheia
+      quantos: { facil: 7, medio: 6, dificil: 5, voador: 3 },
+      tipos: {
+        facil: { vida: 64, forca: 9, velocidade: 36, mortos: 1, xp: 78 },    // gato da lua
+        medio: { vida: 80, forca: 12, velocidade: 42, mortos: 1, xp: 100 },  // cervo da lua
+        dificil: { vida: 100, forca: 14, velocidade: 46, mortos: 1, xp: 128 }, // urso da lua com coroa
+        voador: { vida: 118, forca: 15, velocidade: 56, mortos: 2, xp: 170 }, // corvo da lua
+      } },
   },
   novidadeDias: 45,   // dias em que o selo "✨ Novo!" aparece num lugar novo (lugar.novidade)
   versao: { intervaloMs: 10 * 60000, confirmarMs: 60000, cacheMs: 330000, paradaMs: 8000, avisoMs: 4500, esperaMs: 2500 },
