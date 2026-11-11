@@ -32,6 +32,15 @@ const CONGELADA = {
   'vila:4': { para: 'bosque', x: 52, y: 22 },
   'vila-casa:0': { para: 'vila', x: 6, y: 9 }, 'vila-armas:0': { para: 'vila', x: 15, y: 9 },
   'vila-cabecas:0': { para: 'vila', x: 24, y: 9 }, 'vila-armaduras:0': { para: 'vila', x: 33, y: 9 },
+  // Bosques de dentro do Bosque (arenas.md §8): aqui as pastas carregam em ordem alfabética (lua, neblina, orvalho),
+  // então a escada de cada uma entra no Bosque nessa ordem. A ida chega no spawn da floresta (28,39: o portal de
+  // volta fica em (28,40) com `chegar` (0,-1)); a volta chega ao lado do portal do Bosque (`chegar` de cada um)
+  'bosque:1': { para: 'lua', x: 28, y: 39 },
+  'bosque:2': { para: 'neblina', x: 28, y: 39 },
+  'bosque:3': { para: 'orvalho', x: 28, y: 39 },
+  'lua:0': { para: 'bosque', x: 27, y: 6 },
+  'neblina:0': { para: 'bosque', x: 52, y: 32 },
+  'orvalho:0': { para: 'bosque', x: 8, y: 40 },
 };
 TORRE.forEach((id, i) => {
   let k = 0;
