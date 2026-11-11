@@ -33,16 +33,16 @@ Reino.registrarIcones({
   // o guaxinim: cinza-azulado, a máscara escura nos olhos, o focinho claro e o rabo listrado
   R.registrarDesenhoInimigo('neblina-facil', {
     flutua: 0, balanco: 0,
-    paleta: paleta({ g: '#8090ac', l: '#b6c2d8', m: '#3e4a68' }),
+    paleta: paleta({ g: '#4a5690', l: '#7e8cc0', m: '#2e3860', h: '#b8c8e4', c: '#7ff2e0' }),
     linhas: [
       '..KK......KK.....',
-      '.KggK....KggK....',
+      '.KhgK....KggK....',
       '.KgmgK..KgmgK....',
-      '.KggggggggggK....',
-      'KggggggggggggK...',
+      '.KhgggggggggK....',
+      'KhgggggggggggK...',
       'KgmmmmmmmmmmgK...',
-      'KgmwwmmmmwwmgK...',
-      'KgmwpmmmmwpmgK...',
+      'KgmwcmmmmwcmgK...',
+      'KgmccmmmmccmgK...',
       'KggmmmmmmmmggKKKK',
       'KgggllllllgggKllK',
       'KggllllKllllgKmmK',
@@ -51,21 +51,22 @@ Reino.registrarIcones({
       '..KKggKKggKK..KKK',
     ],
     pisca: { 6: 'KgmmmmmmmmmmgK...', 7: 'KgmKKmmmmKKmgK...' },
+    passo: { 13: '...KKgKKgKK...KKK' },
   });
 
   // a raposa: laranja, as orelhas pontudas, o focinho claro e o rabo felpudo com a ponta branca
   R.registrarDesenhoInimigo('neblina-medio', {
     flutua: 0, balanco: 1,
-    paleta: paleta({ o: '#e8823c', d: '#b85a24', l: '#ffe2b8', c: '#fff4e2', n: '#7a3a18' }),
+    paleta: paleta({ o: '#d8683c', d: '#a04a24', l: '#ffe2b8', c: '#fff4e2', n: '#7a3a18', h: '#b8c8e4', e: '#ffc94d' }),
     linhas: [
       '..K.......K......',
-      '..KoK...KoK......',
+      '..KhK...KoK......',
       '..KooK.KooK......',
-      '.KoooooooooK.....',
+      '.KhooooooooK.....',
+      'KhooooooooooK....',
       'KoooooooooooK....',
-      'KoooooooooooK....',
-      'KoowwooowwooK....',
-      'KoowpoooopwoK....',
+      'KooweoooewooK....',
+      'KooeeoooeeooK....',
       'KoooooooooooKKKKK',
       'KooollllllooKoooK',
       'KoolllnlllllKdooK',
@@ -74,21 +75,22 @@ Reino.registrarIcones({
       '..KKooKKooKK.KKKK',
     ],
     pisca: { 6: 'KoooooooooooK....', 7: 'KooKKoooKKooK....' },
+    passo: { 13: '...KKoKKoKK..KKKK' },
   });
 
   // o javali com coroa: marrom-escuro, a coroa dourada, o focinho claro e as presas de fora
   R.registrarDesenhoInimigo('neblina-dificil', {
     flutua: 0, balanco: 0,
-    paleta: paleta({ b: '#6a4a34', d: '#46301f', l: '#c8a878', t: '#f4ecd8', u: '#fff4d8', o: '#ffd34d' }),
+    paleta: paleta({ b: '#4c3a70', d: '#382a58', l: '#c8a878', t: '#f4ecd8', u: '#fff4d8', o: '#ffd34d', h: '#b8c8e4', a: '#ffc94d' }),
     linhas: [
       '.....K.K.K......',
       '.....KoKoKoK....',
       '....KoooooooK...',
       '..KKKKKKKKKKKK..',
-      '.KbbbbbbbbbbbbK.',
-      'KbbbbbbbbbbbbbbK',
-      'KbbbwwbbbbwwbbbK',
-      'KbbbwpbbbbwpbbbK',
+      '.KhbbbbbbbbbbbK.',
+      'KhbbbbbbbbbbbbbK',
+      'KbbbwabbbbawbbbK',
+      'KbbbaabbbbaabbbK',
       'KbbbbbbbbbbbbbbK',
       'KbbbbbbbbbbbbbbK',
       'KbbdlllllllldbbK',
@@ -98,20 +100,22 @@ Reino.registrarIcones({
       '.KbbbbbbbbbbbbK.',
       '..KKKbKKKKbKKK..',
     ],
+    pisca: { 6: 'KbbbbbbbbbbbbbbK', 7: 'KbbbKKbbbbKKbbbK' },
     passo: { 14: '..KbbbbbbbbbbK..', 15: '...KKbKKKKbKK...' },
   });
 
   // o gavião: as asas abertas marrom-violeta e o bico amarelo (voa, balança de leve)
   R.registrarDesenhoInimigo('neblina-voador', {
-    paleta: paleta({ b: '#7a5a86', d: '#543a62', l: '#c8b8d0', y: '#ffd34d' }),
+    flutua: 8, balanco: 2,
+    paleta: paleta({ b: '#4a3e80', d: '#352a62', l: '#8e84c4', y: '#ffd34d', h: '#b8c8e4', a: '#ffc94d' }),
     linhas: [
       'KK.............KK',
       'KlK...........KlK',
       'KllK.........KllK',
       'KllbK..KKK..KbllK',
       'KllbbK.KwK.KbbllK',
-      'KllbbbKKwKKbbbllK',
-      'KbbbbbbKpKbbbbbbK',
+      'KllbbbKKaKKbbbllK',
+      'KhbbbbbKpKbbbbbbK',
       'KbbbbbbKyKbbbbbbK',
       '.KbbbbbKyKbbbbbK.',
       '..KbbbbKyKbbbbK..',

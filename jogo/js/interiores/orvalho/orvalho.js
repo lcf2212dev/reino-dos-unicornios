@@ -38,49 +38,68 @@
    Fixos (contrato das arenas de dentro): id 'orvalho', 56 × 44 tiles, cômodo { x: 1, y: 1, w: 54, h: 40 } (chão nas
    fileiras 3 a 40), spawn (28,39), fundo 'orvalho', pacote 'interior-bosque'. O layout sai de
    Reino.Interiores.arena (motor/interiores-arena.js), com semente: sempre igual. Zonas pelas fileiras (as do config):
-   fáceis embaixo, médios no meio, difíceis e voadores em cima. Os objetos-assinatura (a árvore do orvalho, a folha e a
-   florzinha) e o chão/céu estão em objetos.js; as falas em falas.js; os monstros em inimigos.js; o portal no Bosque
+   fáceis embaixo, médios no meio, difíceis e voadores em cima. Os objetos-assinatura (árvores, poças, teia, flores…) e o chão/céu estão em objetos.js; as falas em falas.js; os monstros em inimigos.js; o portal no Bosque
    vem de interiores/bosque/portais.js (B.portalNovo, no fim). */
 (function () {
   var R = window.Reino, I = R.Interiores, P = (R._predios = R._predios || {}).orvalho = R._predios.orvalho || {};
   var F = ((R.FALAS_INTERIORES || {}).orvalho || {}).objetos || {};
-  // as árvores que podem ficar atrás de outra igual na mata (o layout marca `junto` nelas: a copa não é "por cima")
-  var ALTOS = { 'orvalho-arvore': 1, 'bosque-arvore': 1, 'bosque-arvore-p': 1, 'bosque-pinheiro': 1 };
+  // as árvores 2×1 que podem ficar atrás de outra na mata (o layout marca `junto` nelas: a copa não é "por cima")
+  var ALTOS = { 'orvalho-arvore': 1, 'orvalho-arvore-p': 1, 'orvalho-arvore-velha': 1, 'orvalho-arvoreta': 1, 'orvalho-arbusto': 1, 'orvalho-toco': 1 };
   var L = I.arena({
     semente: 20261125,
     trilha: P.trilha,
-    // clareiras sem sólido: a da entrada e a de cada cruzamento de trilha (as mesmas folgas do Bosque e do Pântano)
-    clareiras: [[28, 37, 5.5], [14, 33, 4], [45, 32, 4], [38, 36, 3], [13, 21, 4.5], [44, 21, 4.5], [27, 23, 3.5], [14, 10, 4], [42, 9, 4], [28, 6, 3.5]],
+    // clareiras sem sólido: a chegada, cada cruzamento de trilha, o miolo do poço de orvalho e a clareira do fundo
+    clareiras: [[28, 37, 5.5], [14, 33, 4], [45, 32, 4], [38, 36, 3], [13, 21, 4.5], [44, 21, 4.5], [27, 23, 3.5], [14, 10, 4], [42, 9, 4], [28, 6, 3.5],
+      [20, 27, 1.8], [38, 16, 3], [22.5, 33, 3.4]],
     fixos: [
-      ['bosque-placa', 34, 36, 'Placa', F.placa],
-      ['bosque-lanterna', 23, 36, 'Lanterna', F.lanterna],
-      ['bosque-cogumelo', 42, 29, 'Cogumelo', F.cogumelo],
-      ['bosque-arvore-velha', 11, 25, 'Árvore velha', F['arvore-velha']],
+      ['orvalho-placa', 34, 36, 'Placa', F.placa],
+      ['orvalho-lanterna', 23, 36, 'Lanterna', F.lanterna],
+      ['orvalho-cogumelo', 42, 29, 'Cogumelo', F.cogumelo],
+      ['orvalho-arvore-velha', 11, 25, 'Árvore velha', F['arvore-velha']],
     ],
     enfeites: [
-      // as assinaturas da manhã na trilha da entrada: folhas caídas e florzinhas com a gota brilhando
-      ['orvalho-folha', 20, 38], ['orvalho-folha', 37, 38], ['orvalho-folha', 32, 32], ['orvalho-folha', 24, 23],
-      ['orvalho-florzinha', 17, 36], ['orvalho-florzinha', 39, 34], ['orvalho-florzinha', 23, 32], ['orvalho-florzinha', 33, 20],
-      // as mágicas do Bosque, como lá: as lanternas das fadas ladeiam a trilha e os cogumelos ficam nas clareiras
-      ['bosque-lanterna', 22, 33], ['bosque-lanterna', 34, 32], ['bosque-lanterna', 32, 27], ['bosque-lanterna', 24, 26],
-      ['bosque-lanterna', 33, 22], ['bosque-lanterna', 25, 18], ['bosque-lanterna', 32, 14], ['bosque-lanterna', 30, 8],
-      ['bosque-cogumelo', 18, 32, { n: 1 }], ['bosque-cogumelo', 40, 31, { n: 2 }], ['bosque-cogumelo', 20, 28, { n: 3 }],
-      ['bosque-cogumelo', 36, 26, { n: 4 }], ['bosque-tronco', 18, 30], ['bosque-tronco', 38, 27], ['bosque-tronco', 20, 15],
-      ['bosque-tronco', 36, 11],
+      // o cartão de visita: o poço de orvalho à esquerda do portal, duas árvores altas emoldurando a chegada (fora da zona segura,
+      // desencontradas) e o anel de flores em volta do portal de volta
+      ['orvalho-poco', 21, 31], ['orvalho-arvore', 18, 38], ['orvalho-arvore-p', 36, 39], ['orvalho-arvore', 39, 39],
+      ['orvalho-florzinha', 26, 40, { n: 0 }], ['orvalho-flor', 27, 40], ['orvalho-florzinha', 31, 40, { n: 1 }], ['orvalho-flor', 32, 40],
+      ['orvalho-florzinha', 26, 39, { n: 2 }], ['orvalho-florzinha', 31, 39, { n: 0 }], ['orvalho-polen', 27, 38],
+      ['orvalho-polen', 24, 38], ['orvalho-polen', 33, 37], ['orvalho-polen', 25, 33],
+      // a mata em volta da vista do spawn (fora da zona segura, nada sobre a trilha): a chegada é uma clareira emoldurada
+      ['orvalho-arvore', 17, 31], ['orvalho-arvore-p', 19, 29], ['orvalho-arvore', 22, 29], ['orvalho-arvoreta', 20, 33],
+      ['orvalho-arvore-p', 35, 33], ['orvalho-arvore', 38, 31], ['orvalho-arvoreta', 38, 34], ['orvalho-arvore-p', 41, 30],
+      // as poças de sol da manhã (planas, elipses de pixel), ao longo da trilha
+      ['orvalho-raio', 25, 36], ['orvalho-raio', 31, 34], ['orvalho-raio', 36, 32],
+      // as moitas-assinatura (samambaias, flores e gotas num objeto só) quebram a grade
+      ['orvalho-moita', 19, 36, { n: 0 }], ['orvalho-moita-g', 32, 38, { n: 1 }], ['orvalho-moita', 25, 31, { n: 2 }], ['orvalho-moita', 37, 34, { n: 0 }],
+      ['orvalho-moita-g', 24, 29, { n: 2 }], ['orvalho-moita', 34, 27, { n: 1 }], ['orvalho-moita', 14, 23, { n: 0 }],
+      // a trilha da entrada: poças rente à beirada, folhas caídas, lanternas das fadas, teia
+      ['orvalho-poca', 24, 34], ['orvalho-poca', 33, 34], ['orvalho-teia', 17, 35],
+      ['orvalho-folha', 32, 32], ['orvalho-folha', 24, 23], ['orvalho-folha', 22, 38],
+      ['orvalho-florzinha', 13, 31, { n: 1 }], ['orvalho-florzinha', 39, 34, { n: 2 }], ['orvalho-florzinha', 33, 20, { n: 0 }],
+      ['orvalho-samambaia', 40, 30], ['orvalho-samambaia', 22, 29],
+      ['orvalho-lanterna', 24, 33], ['orvalho-lanterna', 34, 32], ['orvalho-lanterna', 32, 27], ['orvalho-lanterna', 24, 26],
+      ['orvalho-lanterna', 33, 22], ['orvalho-lanterna', 25, 18], ['orvalho-lanterna', 32, 14], ['orvalho-lanterna', 30, 8],
+      ['orvalho-cogumelo', 18, 30], ['orvalho-cogumelo', 36, 26], ['orvalho-cogumelo', 21, 15], ['orvalho-toco', 38, 27], ['orvalho-toco', 36, 11],
+      // o poço de pedras do meio (clareira): pedras em volta, poças no miolo e samambaias
+      ['orvalho-pedra', 17, 27], ['orvalho-pedra', 18, 25], ['orvalho-pedra', 22, 25], ['orvalho-pedra', 23, 27], ['orvalho-pedra', 21, 29],
+      ['orvalho-poca', 20, 27], ['orvalho-samambaia', 19, 28], ['orvalho-samambaia', 22, 26], ['orvalho-polen', 20, 25],
+      // a clareira do fundo: teia, poças, samambaias e um retalho de sol
+      ['orvalho-teia', 36, 14], ['orvalho-raio', 39, 17], ['orvalho-samambaia', 36, 17],
+      ['orvalho-samambaia', 41, 15], ['orvalho-pedra', 35, 18], ['orvalho-pedra', 42, 17], ['orvalho-polen', 37, 15], ['orvalho-florzinha', 40, 14, { n: 1 }],
     ],
     altos: ALTOS,
-    borda: { lado: 'orvalho-arvore', baixo: ['orvalho-arvore', 'bosque-arbusto'] },
-    base: { facil: 0.025, medio: 0.07, dificil: 0.11 },
-    bosques: [[8, 36, 4], [48, 37, 4], [20, 29, 3], [38, 28, 3], [8, 18, 5], [21, 18, 4], [37, 25, 4], [49, 15, 5], [34, 17, 3],
+    borda: { lado: 'orvalho-arvore-p', baixo: ['orvalho-arbusto', 'orvalho-arvoreta'] },
+    base: { facil: 0.03, medio: 0.08, dificil: 0.12 },
+    bosques: [[28, 32, 5], [20, 34, 5], [37, 33, 5], [8, 36, 4], [48, 37, 4], [20, 29, 3], [38, 28, 3], [8, 18, 5], [21, 18, 4], [37, 25, 4], [49, 15, 5], [34, 17, 3],
       [8, 6, 5], [21, 4, 4], [36, 4, 4], [49, 6, 5], [21, 11, 4], [37, 13, 4], [7, 12, 3], [49, 11, 3]],
-    mata: [[0.3, 'orvalho-arvore'], [0.52, 'bosque-arvore-p'], [0.7, 'bosque-pinheiro'], [0.85, 'bosque-arbusto'], [0.93, 'bosque-pedra'], [1, 'bosque-toco']],
-    bolsao: ['bosque-arbusto', 'bosque-pedra', 'bosque-toco'], coberto: 'bosque-arbusto',
+    mata: [[0.3, 'orvalho-arvore'], [0.55, 'orvalho-arvore-p'], [0.7, 'orvalho-arvoreta'], [0.86, 'orvalho-arbusto'], [0.94, 'orvalho-pedra'], [1, 'orvalho-toco']],
+    bolsao: ['orvalho-arbusto', 'orvalho-pedra', 'orvalho-toco'], coberto: 'orvalho-arbusto',
     miudos: {
-      comum: ['bosque-mato', 'bosque-mato', 'bosque-flores', 'bosque-margaridas', 'bosque-trevo', 'bosque-samambaia', 'orvalho-folha', 'orvalho-florzinha'],
-      fundo: ['bosque-cogumelos', 'bosque-flor-brilho', 'bosque-vagalumes', 'orvalho-folha', 'orvalho-florzinha', 'bosque-flores'],
+      comum: ['orvalho-samambaia', 'orvalho-flor', 'orvalho-folha', 'orvalho-florzinha', 'orvalho-samambaia', 'orvalho-florzinha', 'orvalho-folha', 'orvalho-flor'],
+      fundo: ['orvalho-folha', 'orvalho-flor', 'orvalho-florzinha'],
       fundoAte: 20,
-      trilha: 'bosque-pedrinhas',
-      varN: { 'bosque-cogumelos': 4, 'bosque-flores': 5, 'bosque-flor-brilho': 3 },
+      trilha: 'orvalho-folha',
+      varN: { 'orvalho-florzinha': 3 },
     },
   });
 

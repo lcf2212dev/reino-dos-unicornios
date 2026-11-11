@@ -118,4 +118,5 @@
 # @ = perguntas do 4º bimestre arrumadas: enunciados, Leia antes da Vila, dica da cruzadinha
 # @ = pergunta da batalha sem ✕
 # @ = os 3 bosques de dentro do Bosque (portais no Bosque, Orvalho/Neblina/Lua Cheia, monstros e niveis)
+# @ = passe de arte dos Bosques do Orvalho, da Neblina e da Lua Cheia (chão, copas, céu, enfeites, atmosfera e monstros)
 @

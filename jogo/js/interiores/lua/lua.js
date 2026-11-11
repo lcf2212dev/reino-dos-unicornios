@@ -38,37 +38,51 @@
   }
   P.trilha = function (tx, ty) { if (!_trilha) _trilha = montarTrilha(); return !!_trilha[ty * 100 + tx]; };
 
-  // as árvores da mata (as copas podem ficar atrás umas das outras, como no Bosque)
-  var ALTOS = { 'luacheia-arvore': 1, 'bosque-pinheiro': 1 };
+  // as árvores 2×1 da mata (as copas podem ficar atrás umas das outras, como no Bosque)
+  var ALTOS = { 'lua-arvore': 1, 'lua-arvore-m': 1, 'lua-arvore-p': 1 };
+  // o círculo de pedras rúnicas (o marco da floresta): 6 pedras em roda de (14, 17), com cristais e um raio de luar no meio
+  var RODA = [[10, 16], [12, 13], [16, 13], [18, 16], [16, 20], [11, 20]].map(function (p) { return ['lua-pedra-runa', p[0], p[1]]; });
   var L = I.arena({
     semente: 20261137,
     zonas: R.Arenas.cfg('lua').zonas,
     trilha: P.trilha,
-    // clareiras sem sólido: a da entrada, as do caminho, as do fundo e as dos fixos
-    clareiras: [[28, 37, 5.5], [14, 34, 4], [45, 33, 4], [38, 36, 3], [14, 22, 4.5], [44, 21, 4.5], [27, 23, 3.5], [14, 10, 4], [42, 10, 4], [28, 6, 3.5]],
+    // clareiras sem sólido: a da chegada, as do caminho, a do círculo de pedras e as do fundo
+    clareiras: [[28, 37, 4], [14, 34, 3.5], [45, 33, 4], [38, 36, 2.5], [14, 17, 3.2], [14, 23, 3.5], [44, 21, 4.5], [27, 23, 3.5], [14, 10, 3], [42, 10, 4], [28, 6, 4]],
     fixos: [
-      ['bosque-placa', 34, 36, 'Placa', F.placa],
-      ['bosque-lanterna', 19, 35, 'Lanterna das fadas', F.lanterna],
-      ['bosque-cogumelo', 42, 29, 'Cogumelo', F.cogumelo],
-      ['bosque-arvore-velha', 11, 25, 'Árvore velha', F['arvore-velha']],
+      ['lua-placa', 34, 36, 'Placa', F.placa],
+      ['lua-lanterna', 17, 34, 'Lanterna das fadas', F.lanterna],
+      ['lua-cogumelo', 42, 29, 'Cogumelo', F.cogumelo],
+      ['lua-arvore-velha', 11, 25, 'Árvore velha', F['arvore-velha']],
     ],
-    enfeites: [
-      ['luacheia-cristal', 45, 35], ['luacheia-cristal', 17, 30], ['luacheia-cristal', 33, 8], ['luacheia-cristal', 47, 17],
-      ['luacheia-cogumelo', 12, 33], ['luacheia-cogumelo', 38, 27], ['luacheia-cogumelo', 21, 14], ['luacheia-cogumelo', 30, 5],
-      ['bosque-poca', 40, 32], ['bosque-poca', 18, 6], ['bosque-anel-fadas', 20, 19],
-    ],
+    enfeites: RODA.concat([
+      // a vista do spawn: a poça da lua, 2 feixes de luar, poças de luar no campo, runas (não só o círculo é marco) e moitas
+      ['lua-poca-g', 30, 37], ['lua-feixe', 29, 30], ['lua-feixe', 19, 28], ['lua-luar', 20, 35], ['lua-luar', 33, 33, 1], ['lua-luar', 24, 25, 2], ['lua-luar', 26, 33, 3],
+      ['lua-arvore-p', 18, 29], ['lua-arvore-m', 20, 28], ['lua-arvore', 33, 29], ['lua-arvore-m', 37, 29], ['lua-arvore-p', 38, 31], ['lua-arvore', 35, 27],   // a clareira: copas sobrepostas em volta da vista do spawn
+      ['lua-pedra', 35, 31], ['lua-pedra', 21, 29], ['lua-pedra', 41, 36],
+      ['lua-moita', 25, 36, 1], ['lua-moita', 37, 33], ['lua-moita-g', 22, 32], ['lua-moita-g', 38, 26, 1], ['lua-moita', 30, 27, 2],
+      // a chegada emoldurada: árvores desencontradas, cristais e flores-da-lua em volta do portal de volta
+      ['lua-arvore', 20, 38], ['lua-arvore-m', 36, 40], ['lua-cristal-g', 22, 38], ['lua-cristal-fixo', 35, 39], ['lua-arvoreta', 31, 40], ['lua-arvore-p', 12, 40], ['lua-arvore-m', 44, 40], ['lua-pedra', 9, 40], ['lua-arvore-m', 16, 40], ['lua-moita', 23, 40], ['lua-moita', 33, 40, 1], ['lua-pedra', 40, 40], ['lua-arvore', 47, 40],
+      ['lua-flor-lua', 27, 40], ['lua-flor-lua', 29, 40, 1], ['lua-flor-lua-fixa', 26, 39, 2], ['lua-flor-lua-fixa', 30, 39], ['lua-vaga-lumes', 33, 39],
+      // o círculo: cristais e o raio de luar no miolo
+      ['lua-raio', 14, 15], ['lua-cristal-g', 14, 18], ['lua-cristal', 13, 16], ['lua-flor-lua-fixa', 15, 17, 1], ['lua-flor-lua-fixa', 12, 17, 2], ['lua-luar', 8, 17],
+      // o miolo
+      ['lua-cristal-g-fixo', 44, 28], ['lua-cristal', 39, 30], ['lua-cogumelos', 40, 28, 1], ['lua-cogumelos-fixo', 45, 31, 2], ['lua-poca-fixa', 40, 32, 1],
+      ['lua-vaga-lumes', 33, 29], ['lua-vaga-lumes', 10, 30], ['lua-vaga-lumes', 17, 26], ['lua-cogumelos-fixo', 38, 21, 3], ['lua-poca', 28, 28, 2],
+      // o fundo
+      ['lua-cristal-g-fixo', 24, 5], ['lua-cristal-fixo', 33, 6], ['lua-cogumelos-fixo', 30, 5, 1], ['lua-cogumelos-fixo', 26, 8, 2], ['lua-flor-lua-fixa', 28, 4, 1], ['lua-flor-lua-fixa', 31, 7, 2],
+      ['lua-poca-fixa', 18, 6], ['lua-moita-g', 21, 12], ['lua-vaga-lumes', 40, 14], ['lua-cristal-fixo', 47, 17], ['lua-cristal-fixo', 17, 31],
+    ]),
     altos: ALTOS,
-    borda: { lado: 'luacheia-arvore', baixo: ['bosque-arbusto', 'bosque-pedra'] },
+    borda: { lado: 'lua-arvore-p', baixo: ['lua-arbusto', 'lua-arvoreta'] },
     base: { facil: 0.025, medio: 0.07, dificil: 0.11 },
-    bosques: [[8, 36, 4], [48, 37, 4], [20, 30, 3], [38, 28, 3], [8, 18, 5], [21, 18, 4], [37, 25, 4], [49, 15, 5], [34, 17, 3],
+    bosques: [[28, 32, 5], [20, 34, 5], [37, 33, 5], [8, 36, 4], [48, 37, 4], [20, 30, 3], [38, 28, 3], [8, 18, 5], [21, 18, 4], [37, 25, 4], [49, 15, 5], [34, 17, 3],
       [8, 6, 5], [21, 4, 4], [36, 4, 4], [49, 6, 5], [21, 11, 4], [37, 13, 4], [7, 12, 3], [49, 11, 3]],
-    mata: [[0.6, 'luacheia-arvore'], [0.74, 'bosque-pinheiro'], [0.84, 'bosque-arbusto'], [0.92, 'bosque-pedra'], [0.97, 'bosque-toco'], [1, 'bosque-tronco']],
-    bolsao: ['bosque-arbusto', 'bosque-arbusto', 'bosque-pedra', 'bosque-toco'], coberto: 'bosque-arbusto',
+    mata: [[0.26, 'lua-arvore'], [0.44, 'lua-arvore-m'], [0.58, 'lua-arvore-p'], [0.72, 'lua-arvoreta'], [0.86, 'lua-arbusto'], [0.94, 'lua-pedra'], [1, 'lua-arbusto']],
+    bolsao: ['lua-arbusto', 'lua-pedra'], coberto: 'lua-arbusto',
     miudos: {
-      comum: ['bosque-mato', 'bosque-flores', 'bosque-margaridas', 'bosque-trevo', 'bosque-samambaia', 'bosque-pedrinhas',
-        'bosque-cogumelos', 'bosque-flor-brilho', 'bosque-vagalumes', 'luacheia-cogumelo'],
-      fundo: ['bosque-vagalumes', 'bosque-flor-brilho', 'bosque-cogumelos', 'luacheia-cogumelo', 'bosque-mato', 'bosque-samambaia'], fundoAte: 20,
-      trilha: 'bosque-pedrinhas', varN: { 'bosque-flores': 5, 'bosque-cogumelos': 3, 'luacheia-cogumelo': 3 },
+      comum: ['lua-samambaia', 'lua-flor-lua-fixa', 'lua-folhas', 'lua-cogumelos-fixo', 'lua-samambaia', 'lua-flor-lua-fixa', 'lua-folhas'],   // só tipos sem anim (os animados ficam em enfeites)
+      fundo: ['lua-cogumelos-fixo', 'lua-flor-lua-fixa', 'lua-samambaia'], fundoAte: 20,
+      trilha: 'lua-folhas', varN: { 'lua-cogumelos-fixo': 4, 'lua-flor-lua-fixa': 3 },
     },
   });
 
