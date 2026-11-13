@@ -22,6 +22,8 @@ const QUEBRAS = [
   // (o jogo zera o recuo nos pseudo-elementos da letra: css/ui-desafios.css; a quebra aqui desfaz isso à força)
   ['maiúscula acentuada empurrada pelo recuo da caixa', 'acento-deslocado', `(function (c) { var p = document.createElement('p'); p.className = 'quebra-teste'; p.innerHTML = '<style>.quebra-teste span.mai-acento::before, .quebra-teste span.mai-acento::after { text-indent: -16px !important; }</style>VOC<span class="mai-acento" data-b="E" data-a="^">Ê</span>'; c.appendChild(p); })(document.querySelector('${CARTAO}'))`],
   ['uma opção com a letra menor que as irmãs', 'letra-desigual', `(function (t) { t.dataset.antes = t.style.cssText; t.style.fontSize = '8px'; })(document.querySelectorAll('${CARTAO} .opcoes > button')[1].querySelector('.opcao-texto'))`],
+  // (o grupo que devia ficar junto na linha é mais largo que a caixa e quebra por dentro, sem o ajuste de quebra.js)
+  ['grupo colado mais largo que a caixa', 'grupo-partido', `(function (c) { var p = document.createElement('p'); p.className = 'quebra-teste'; p.style.cssText = 'width:130px;font-size:16px'; p.innerHTML = '<span class="grupo-colado">I didn\\'t.</span>'; c.appendChild(p); })(document.querySelector('${CARTAO}'))`],
   ['marcação do conteúdo aparecendo', 'texto-cru', `(function (c) { var p = document.createElement('p'); p.className = 'quebra-teste'; p.textContent = 'O {gato|0} correu'; c.appendChild(p); })(document.querySelector('${CARTAO}'))`],
 ];
 const DESFAZER = `(function () { Array.prototype.forEach.call(document.querySelectorAll('.quebra-teste'), function (e) { e.remove(); });

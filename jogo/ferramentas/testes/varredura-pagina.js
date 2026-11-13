@@ -4,7 +4,7 @@
 //     tipos (o que a geometria mostra de quebrado; a regra de cada um está em varredura.js, TIPOS):
 //     vaza, cortado, rola-de-lado, vaza-baixo, cortado-baixo, rola-dentro, resposta-nao-cabe, fora-da-tela,
 //     palavra-partida, sobreposto, coberto, inalcancavel, fim-coberto, texto-cru, emoji-texto, imagem-vazia,
-//     acento-deslocado, letra-desigual, texto-esmagado, letra-pequena, alvo-pequeno
+//     acento-deslocado, letra-desigual, grupo-partido, texto-esmagado, letra-sozinha, letra-pequena, alvo-pequeno
 //     toque: true = também traz cada controle para o meio da tela e confere que o toque chega nele (rola e devolve
 //     a rolagem ao lugar)
 //   rolarFotos({ raiz, passo })  rola a área principal da tela um passo para baixo; devolve false no fim
@@ -267,6 +267,37 @@ function medir(op) {
       if (!linhas.some(function (y) { return Math.abs(y - rs[z].top) < rs[z].height * 0.5; })) linhas.push(rs[z].top);
     }
     if (linhas.length >= 4 && palavras / linhas.length <= 1.25) achar('texto-esmagado', e, palavras + ' palavras em ' + linhas.length + ' linhas, numa coluna de ' + Math.round(e.getBoundingClientRect().width) + 'px');
+  });
+
+  /* 14: grupo colado partido: o que devia ficar junto na linha («I cry.», "de brinquedo", "R$ 10"; arte.md §17.4) é
+     mais largo que a caixa e quebra por dentro sem o ajuste ver (quebra.js desce o degrau do texto curto ou desfaz o
+     grupo: .grupo-solto). E, no texto com grupo desfeito, a palavra de 1 letra que sobra sozinha numa linha
+     ("Foto 1: / a / fábrica": coluna estreita demais para o texto longo) */
+  function linhasDe(e) {
+    var tg = document.createTreeWalker(e, NodeFilter.SHOW_TEXT), t, linhas = [], re = /\S+/g, m;
+    while ((t = tg.nextNode())) {
+      re.lastIndex = 0;
+      while ((m = re.exec(t.nodeValue))) {
+        rg.setStart(t, m.index); rg.setEnd(t, m.index + m[0].length);
+        var r = rg.getClientRects()[0];
+        if (!r || r.width < 0.5) continue;
+        var l = linhas.filter(function (x) { return Math.abs(x.topo - r.top) < r.height * 0.5; })[0];
+        if (!l) linhas.push(l = { topo: r.top, palavras: [] });
+        l.palavras.push(m[0]);
+      }
+    }
+    return linhas.map(function (x) { return x.palavras.join(' '); });
+  }
+  var comSolto = [];
+  todos.forEach(function (e) {
+    if (!e.matches('.grupo-colado')) return;
+    if (e.matches('.grupo-solto')) { var dono = e.closest('.opcao-texto, .ligar-texto') || e.parentElement; if (comSolto.indexOf(dono) < 0) comSolto.push(dono); return; }
+    var ls = linhasDe(e);
+    if (ls.length > 1) achar('grupo-partido', e, ls.join(' / '));
+  });
+  comSolto.forEach(function (e) {
+    var ls = linhasDe(e);
+    if (ls.some(function (l) { return !/\s/.test(l) && l.replace(/[^\p{L}\p{N}]/gu, '').length === 1; })) achar('letra-sozinha', e, ls.join(' / '));
   });
 
   return { achados: achados, fontes: fontes, rola: rolador ? { alto: rolador.scrollHeight, cabe: rolador.clientHeight, topo: rolador.scrollTop } : null };

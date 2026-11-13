@@ -30,8 +30,8 @@ const Q = require('./unidade/ajudantes/quarto-bimestre');
 const TIPOS = {
   'sem-tela': 'grave', vaza: 'grave', cortado: 'grave', 'vaza-baixo': 'grave', 'cortado-baixo': 'grave', 'fora-da-tela': 'grave',
   'palavra-partida': 'grave', sobreposto: 'grave', coberto: 'grave', inalcancavel: 'grave', 'fim-coberto': 'grave',
-  'resposta-nao-cabe': 'grave', 'texto-cru': 'grave', 'imagem-vazia': 'grave', 'acento-deslocado': 'grave', 'figura-faltando': 'grave', 'letra-desigual': 'grave', falha: 'grave',
-  'rola-de-lado': 'aviso', 'rola-dentro': 'aviso', 'emoji-texto': 'aviso', 'texto-esmagado': 'aviso', 'letra-pequena': 'nota', 'alvo-pequeno': 'nota',
+  'resposta-nao-cabe': 'grave', 'texto-cru': 'grave', 'imagem-vazia': 'grave', 'acento-deslocado': 'grave', 'figura-faltando': 'grave', 'letra-desigual': 'grave', 'grupo-partido': 'grave', falha: 'grave',
+  'rola-de-lado': 'aviso', 'rola-dentro': 'aviso', 'emoji-texto': 'aviso', 'texto-esmagado': 'aviso', 'letra-sozinha': 'aviso', 'letra-pequena': 'nota', 'alvo-pequeno': 'nota',
 };
 // o que é de propósito (regex sobre "tipo onde det"); cada linha com o porquê
 const DE_PROPOSITO = [
