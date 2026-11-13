@@ -1,0 +1,553 @@
+{
+  "nome": "conferir-4bim",
+  "pedido": "pedidos/2026-11-12-conferir-4bim.md",
+  "personagens": [],
+  "tarefas": [
+    {
+      "id": "varredura",
+      "tipo": "ferramenta",
+      "titulo": "Varredura de layout de todas as questões (3 tamanhos, na sala e sozinha)",
+      "quem": "orquestrador",
+      "depende": [],
+      "arquivos": [
+        "jogo/ferramentas/testes/varredura.js",
+        "jogo/ferramentas/testes/varredura-pagina.js",
+        "jogo/ferramentas/testes/varredura-folhas.js",
+        "jogo/ferramentas/CLAUDE.md",
+        "package.json",
+        "pedidos/"
+      ],
+      "worktree": "conferir-4bim",
+      "pronto": [
+        "npm run varredura roda as 837 questões nos 3 tamanhos e lista os defeitos de layout por questão",
+        "fotos e folhas de contato em /tmp/reino-testes/varredura/"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "c-ma10",
+      "tipo": "conteudo",
+      "titulo": "Conferir e corrigir o conteúdo das questões: Matemática, capítulo 10 (Sistema monetário)",
+      "quem": "builder",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/conteudo/materias/matematica4/icones-10.js",
+        "jogo/js/conteudo/materias/matematica4/livro-10a.js",
+        "jogo/js/conteudo/materias/matematica4/livro-10t.js",
+        "jogo/js/conteudo/materias/matematica4/ma10a1.js",
+        "jogo/js/conteudo/materias/matematica4/ma10a2.js",
+        "jogo/js/conteudo/materias/matematica4/ma10a3.js",
+        "jogo/js/conteudo/materias/matematica4/ma10a4.js",
+        "jogo/js/conteudo/materias/matematica4/ma10a5.js",
+        "jogo/js/conteudo/materias/matematica4/ma10a6.js",
+        "jogo/js/conteudo/materias/matematica4/ma10t1.js",
+        "jogo/js/conteudo/materias/matematica4/ma10t2.js",
+        "jogo/js/conteudo/materias/matematica4/ma10t3.js"
+      ],
+      "worktree": "c4-ma10",
+      "pronto": [
+        "cada questão conferida contra a página do livro (enunciado, dados, gabarito resolvido de novo, explicação, português)",
+        "defeitos corrigidos nos arquivos da frente, com a lista (questão, o que estava errado, como ficou, página)",
+        "validar-conteudo, cobertura-4bim e etapas-4bim verdes"
+      ],
+      "ler": [
+        "docs/contratos/quarto-bimestre.md §4, §6, §12, §12.1",
+        "docs/contratos/conteudo.md §3, §4, §6",
+        "jogo/js/conteudo/CLAUDE.md"
+      ],
+      "testes": [
+        "node jogo/ferramentas/validar/validar-conteudo.js",
+        "node jogo/ferramentas/validar/cobertura-4bim.js matematica4",
+        "node jogo/ferramentas/validar/etapas-4bim.js"
+      ],
+      "estimativa": 70
+    },
+    {
+      "id": "c-ma11",
+      "tipo": "conteudo",
+      "titulo": "Conferir e corrigir o conteúdo das questões: Matemática, capítulo 11 (Divisão em partes iguais)",
+      "quem": "builder",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/conteudo/materias/matematica4/icones-11.js",
+        "jogo/js/conteudo/materias/matematica4/livro-11a.js",
+        "jogo/js/conteudo/materias/matematica4/livro-11t.js",
+        "jogo/js/conteudo/materias/matematica4/ma11a1.js",
+        "jogo/js/conteudo/materias/matematica4/ma11a2.js",
+        "jogo/js/conteudo/materias/matematica4/ma11a3.js",
+        "jogo/js/conteudo/materias/matematica4/ma11a4.js",
+        "jogo/js/conteudo/materias/matematica4/ma11a5.js",
+        "jogo/js/conteudo/materias/matematica4/ma11a6.js",
+        "jogo/js/conteudo/materias/matematica4/ma11a7.js",
+        "jogo/js/conteudo/materias/matematica4/ma11a8.js",
+        "jogo/js/conteudo/materias/matematica4/ma11t1.js",
+        "jogo/js/conteudo/materias/matematica4/ma11t2.js",
+        "jogo/js/conteudo/materias/matematica4/ma11t3.js"
+      ],
+      "worktree": "c4-ma11",
+      "pronto": [
+        "cada questão conferida contra a página do livro (enunciado, dados, gabarito resolvido de novo, explicação, português)",
+        "defeitos corrigidos nos arquivos da frente, com a lista (questão, o que estava errado, como ficou, página)",
+        "validar-conteudo, cobertura-4bim e etapas-4bim verdes"
+      ],
+      "ler": [
+        "docs/contratos/quarto-bimestre.md §4, §6, §12, §12.1",
+        "docs/contratos/conteudo.md §3, §4, §6",
+        "jogo/js/conteudo/CLAUDE.md"
+      ],
+      "testes": [
+        "node jogo/ferramentas/validar/validar-conteudo.js",
+        "node jogo/ferramentas/validar/cobertura-4bim.js matematica4",
+        "node jogo/ferramentas/validar/etapas-4bim.js"
+      ],
+      "estimativa": 70
+    },
+    {
+      "id": "c-ma12",
+      "tipo": "conteudo",
+      "titulo": "Conferir e corrigir o conteúdo das questões: Matemática, capítulo 12 (Estatística)",
+      "quem": "builder",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/conteudo/materias/matematica4/icones-12.js",
+        "jogo/js/conteudo/materias/matematica4/livro-12a.js",
+        "jogo/js/conteudo/materias/matematica4/livro-12t.js",
+        "jogo/js/conteudo/materias/matematica4/ma12a1.js",
+        "jogo/js/conteudo/materias/matematica4/ma12a2.js",
+        "jogo/js/conteudo/materias/matematica4/ma12a3.js",
+        "jogo/js/conteudo/materias/matematica4/ma12a4.js",
+        "jogo/js/conteudo/materias/matematica4/ma12a5.js",
+        "jogo/js/conteudo/materias/matematica4/ma12a6.js",
+        "jogo/js/conteudo/materias/matematica4/ma12a7.js",
+        "jogo/js/conteudo/materias/matematica4/ma12a8.js",
+        "jogo/js/conteudo/materias/matematica4/ma12a9.js",
+        "jogo/js/conteudo/materias/matematica4/ma12t1.js",
+        "jogo/js/conteudo/materias/matematica4/ma12t2.js",
+        "jogo/js/conteudo/materias/matematica4/ma12t3.js"
+      ],
+      "worktree": "c4-ma12",
+      "pronto": [
+        "cada questão conferida contra a página do livro (enunciado, dados, gabarito resolvido de novo, explicação, português)",
+        "defeitos corrigidos nos arquivos da frente, com a lista (questão, o que estava errado, como ficou, página)",
+        "validar-conteudo, cobertura-4bim e etapas-4bim verdes"
+      ],
+      "ler": [
+        "docs/contratos/quarto-bimestre.md §4, §6, §12, §12.1",
+        "docs/contratos/conteudo.md §3, §4, §6",
+        "jogo/js/conteudo/CLAUDE.md"
+      ],
+      "testes": [
+        "node jogo/ferramentas/validar/validar-conteudo.js",
+        "node jogo/ferramentas/validar/cobertura-4bim.js matematica4",
+        "node jogo/ferramentas/validar/etapas-4bim.js"
+      ],
+      "estimativa": 70
+    },
+    {
+      "id": "c-lp10",
+      "tipo": "conteudo",
+      "titulo": "Conferir e corrigir o conteúdo das questões: Língua Portuguesa, capítulo 10",
+      "quem": "builder",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/conteudo/materias/portugues4/icones-10.js",
+        "jogo/js/conteudo/materias/portugues4/ilustracoes-10.js",
+        "jogo/js/conteudo/materias/portugues4/livro-10a.js",
+        "jogo/js/conteudo/materias/portugues4/livro-10t.js",
+        "jogo/js/conteudo/materias/portugues4/lp10a1.js",
+        "jogo/js/conteudo/materias/portugues4/lp10a2.js",
+        "jogo/js/conteudo/materias/portugues4/lp10a3.js",
+        "jogo/js/conteudo/materias/portugues4/lp10a4.js",
+        "jogo/js/conteudo/materias/portugues4/lp10a5.js",
+        "jogo/js/conteudo/materias/portugues4/lp10a6.js",
+        "jogo/js/conteudo/materias/portugues4/lp10a7.js",
+        "jogo/js/conteudo/materias/portugues4/lp10t1.js",
+        "jogo/js/conteudo/materias/portugues4/lp10t2.js"
+      ],
+      "worktree": "c4-lp10",
+      "pronto": [
+        "cada questão conferida contra a página do livro (enunciado, dados, gabarito resolvido de novo, explicação, português)",
+        "defeitos corrigidos nos arquivos da frente, com a lista (questão, o que estava errado, como ficou, página)",
+        "validar-conteudo, cobertura-4bim e etapas-4bim verdes"
+      ],
+      "ler": [
+        "docs/contratos/quarto-bimestre.md §4, §6, §12, §12.1",
+        "docs/contratos/conteudo.md §3, §4, §6",
+        "jogo/js/conteudo/CLAUDE.md"
+      ],
+      "testes": [
+        "node jogo/ferramentas/validar/validar-conteudo.js",
+        "node jogo/ferramentas/validar/cobertura-4bim.js portugues4",
+        "node jogo/ferramentas/validar/etapas-4bim.js"
+      ],
+      "estimativa": 70
+    },
+    {
+      "id": "c-lp11",
+      "tipo": "conteudo",
+      "titulo": "Conferir e corrigir o conteúdo das questões: Língua Portuguesa, capítulo 11",
+      "quem": "builder",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/conteudo/materias/portugues4/icones-11.js",
+        "jogo/js/conteudo/materias/portugues4/ilustracoes-11.js",
+        "jogo/js/conteudo/materias/portugues4/livro-11a.js",
+        "jogo/js/conteudo/materias/portugues4/livro-11t.js",
+        "jogo/js/conteudo/materias/portugues4/lp11a1.js",
+        "jogo/js/conteudo/materias/portugues4/lp11a2.js",
+        "jogo/js/conteudo/materias/portugues4/lp11a3.js",
+        "jogo/js/conteudo/materias/portugues4/lp11a4.js",
+        "jogo/js/conteudo/materias/portugues4/lp11a5.js",
+        "jogo/js/conteudo/materias/portugues4/lp11a6.js",
+        "jogo/js/conteudo/materias/portugues4/lp11t1.js",
+        "jogo/js/conteudo/materias/portugues4/lp11t2.js"
+      ],
+      "worktree": "c4-lp11",
+      "pronto": [
+        "cada questão conferida contra a página do livro (enunciado, dados, gabarito resolvido de novo, explicação, português)",
+        "defeitos corrigidos nos arquivos da frente, com a lista (questão, o que estava errado, como ficou, página)",
+        "validar-conteudo, cobertura-4bim e etapas-4bim verdes"
+      ],
+      "ler": [
+        "docs/contratos/quarto-bimestre.md §4, §6, §12, §12.1",
+        "docs/contratos/conteudo.md §3, §4, §6",
+        "jogo/js/conteudo/CLAUDE.md"
+      ],
+      "testes": [
+        "node jogo/ferramentas/validar/validar-conteudo.js",
+        "node jogo/ferramentas/validar/cobertura-4bim.js portugues4",
+        "node jogo/ferramentas/validar/etapas-4bim.js"
+      ],
+      "estimativa": 70
+    },
+    {
+      "id": "c-lp12",
+      "tipo": "conteudo",
+      "titulo": "Conferir e corrigir o conteúdo das questões: Língua Portuguesa, capítulo 12",
+      "quem": "builder",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/conteudo/materias/portugues4/icones-12.js",
+        "jogo/js/conteudo/materias/portugues4/ilustracoes-12.js",
+        "jogo/js/conteudo/materias/portugues4/livro-12a.js",
+        "jogo/js/conteudo/materias/portugues4/livro-12t.js",
+        "jogo/js/conteudo/materias/portugues4/lp12a1.js",
+        "jogo/js/conteudo/materias/portugues4/lp12a2.js",
+        "jogo/js/conteudo/materias/portugues4/lp12a3.js",
+        "jogo/js/conteudo/materias/portugues4/lp12a4.js",
+        "jogo/js/conteudo/materias/portugues4/lp12a5.js",
+        "jogo/js/conteudo/materias/portugues4/lp12a6.js",
+        "jogo/js/conteudo/materias/portugues4/lp12t1.js",
+        "jogo/js/conteudo/materias/portugues4/lp12t2.js"
+      ],
+      "worktree": "c4-lp12",
+      "pronto": [
+        "cada questão conferida contra a página do livro (enunciado, dados, gabarito resolvido de novo, explicação, português)",
+        "defeitos corrigidos nos arquivos da frente, com a lista (questão, o que estava errado, como ficou, página)",
+        "validar-conteudo, cobertura-4bim e etapas-4bim verdes"
+      ],
+      "ler": [
+        "docs/contratos/quarto-bimestre.md §4, §6, §12, §12.1",
+        "docs/contratos/conteudo.md §3, §4, §6",
+        "jogo/js/conteudo/CLAUDE.md"
+      ],
+      "testes": [
+        "node jogo/ferramentas/validar/validar-conteudo.js",
+        "node jogo/ferramentas/validar/cobertura-4bim.js portugues4",
+        "node jogo/ferramentas/validar/etapas-4bim.js"
+      ],
+      "estimativa": 70
+    },
+    {
+      "id": "c-en-eng",
+      "tipo": "conteudo",
+      "titulo": "Conferir e corrigir o conteúdo das questões: English, livro de inglês (capítulos 11 e 12)",
+      "quem": "builder",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/conteudo/materias/ingles4/en11e1.js",
+        "jogo/js/conteudo/materias/ingles4/en11e2.js",
+        "jogo/js/conteudo/materias/ingles4/en11e3.js",
+        "jogo/js/conteudo/materias/ingles4/en11e4.js",
+        "jogo/js/conteudo/materias/ingles4/en12e1.js",
+        "jogo/js/conteudo/materias/ingles4/en12e2.js",
+        "jogo/js/conteudo/materias/ingles4/en12e3.js",
+        "jogo/js/conteudo/materias/ingles4/icones-11e.js",
+        "jogo/js/conteudo/materias/ingles4/icones-12e.js",
+        "jogo/js/conteudo/materias/ingles4/livro-11e.js",
+        "jogo/js/conteudo/materias/ingles4/livro-12e.js"
+      ],
+      "worktree": "c4-en-eng",
+      "pronto": [
+        "cada questão conferida contra a página do livro (enunciado, dados, gabarito resolvido de novo, explicação, português)",
+        "defeitos corrigidos nos arquivos da frente, com a lista (questão, o que estava errado, como ficou, página)",
+        "validar-conteudo, cobertura-4bim e etapas-4bim verdes"
+      ],
+      "ler": [
+        "docs/contratos/quarto-bimestre.md §4, §6, §12, §12.1",
+        "docs/contratos/conteudo.md §3, §4, §6",
+        "jogo/js/conteudo/CLAUDE.md"
+      ],
+      "testes": [
+        "node jogo/ferramentas/validar/validar-conteudo.js",
+        "node jogo/ferramentas/validar/cobertura-4bim.js ingles4",
+        "node jogo/ferramentas/validar/etapas-4bim.js"
+      ],
+      "estimativa": 70
+    },
+    {
+      "id": "c-en-prj",
+      "tipo": "conteudo",
+      "titulo": "Conferir e corrigir o conteúdo das questões: English, livro de projetos (capítulos 11 e 12)",
+      "quem": "builder",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/conteudo/materias/ingles4/en11p1.js",
+        "jogo/js/conteudo/materias/ingles4/en11p2.js",
+        "jogo/js/conteudo/materias/ingles4/en11p3.js",
+        "jogo/js/conteudo/materias/ingles4/en12p1.js",
+        "jogo/js/conteudo/materias/ingles4/en12p2.js",
+        "jogo/js/conteudo/materias/ingles4/en12p3.js",
+        "jogo/js/conteudo/materias/ingles4/icones-11p.js",
+        "jogo/js/conteudo/materias/ingles4/icones-12p.js",
+        "jogo/js/conteudo/materias/ingles4/livro-11p.js",
+        "jogo/js/conteudo/materias/ingles4/livro-12p.js"
+      ],
+      "worktree": "c4-en-prj",
+      "pronto": [
+        "cada questão conferida contra a página do livro (enunciado, dados, gabarito resolvido de novo, explicação, português)",
+        "defeitos corrigidos nos arquivos da frente, com a lista (questão, o que estava errado, como ficou, página)",
+        "validar-conteudo, cobertura-4bim e etapas-4bim verdes"
+      ],
+      "ler": [
+        "docs/contratos/quarto-bimestre.md §4, §6, §12, §12.1",
+        "docs/contratos/conteudo.md §3, §4, §6",
+        "jogo/js/conteudo/CLAUDE.md"
+      ],
+      "testes": [
+        "node jogo/ferramentas/validar/validar-conteudo.js",
+        "node jogo/ferramentas/validar/cobertura-4bim.js ingles4",
+        "node jogo/ferramentas/validar/etapas-4bim.js"
+      ],
+      "estimativa": 70
+    },
+    {
+      "id": "c-hi",
+      "tipo": "conteudo",
+      "titulo": "Conferir e corrigir o conteúdo das questões: História da Gente (capítulos 10 a 12)",
+      "quem": "builder",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/conteudo/materias/historia4/hi10a1.js",
+        "jogo/js/conteudo/materias/historia4/hi10a2.js",
+        "jogo/js/conteudo/materias/historia4/hi10a3.js",
+        "jogo/js/conteudo/materias/historia4/hi10t1.js",
+        "jogo/js/conteudo/materias/historia4/hi11a1.js",
+        "jogo/js/conteudo/materias/historia4/hi11a2.js",
+        "jogo/js/conteudo/materias/historia4/hi11a3.js",
+        "jogo/js/conteudo/materias/historia4/hi11t1.js",
+        "jogo/js/conteudo/materias/historia4/hi12a1.js",
+        "jogo/js/conteudo/materias/historia4/hi12a2.js",
+        "jogo/js/conteudo/materias/historia4/hi12a3.js",
+        "jogo/js/conteudo/materias/historia4/hi12t1.js",
+        "jogo/js/conteudo/materias/historia4/icones-10.js",
+        "jogo/js/conteudo/materias/historia4/icones-11.js",
+        "jogo/js/conteudo/materias/historia4/icones-12.js",
+        "jogo/js/conteudo/materias/historia4/livro-10a.js",
+        "jogo/js/conteudo/materias/historia4/livro-10t.js",
+        "jogo/js/conteudo/materias/historia4/livro-11a.js",
+        "jogo/js/conteudo/materias/historia4/livro-11t.js",
+        "jogo/js/conteudo/materias/historia4/livro-12a.js",
+        "jogo/js/conteudo/materias/historia4/livro-12t.js"
+      ],
+      "worktree": "c4-hi",
+      "pronto": [
+        "cada questão conferida contra a página do livro (enunciado, dados, gabarito resolvido de novo, explicação, português)",
+        "defeitos corrigidos nos arquivos da frente, com a lista (questão, o que estava errado, como ficou, página)",
+        "validar-conteudo, cobertura-4bim e etapas-4bim verdes"
+      ],
+      "ler": [
+        "docs/contratos/quarto-bimestre.md §4, §6, §12, §12.1",
+        "docs/contratos/conteudo.md §3, §4, §6",
+        "jogo/js/conteudo/CLAUDE.md"
+      ],
+      "testes": [
+        "node jogo/ferramentas/validar/validar-conteudo.js",
+        "node jogo/ferramentas/validar/cobertura-4bim.js historia4",
+        "node jogo/ferramentas/validar/etapas-4bim.js"
+      ],
+      "estimativa": 70
+    },
+    {
+      "id": "c-ge",
+      "tipo": "conteudo",
+      "titulo": "Conferir e corrigir o conteúdo das questões: Geografia do Mundo (capítulos 10 a 12)",
+      "quem": "builder",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/conteudo/materias/geografia4/ge10a1.js",
+        "jogo/js/conteudo/materias/geografia4/ge10a2.js",
+        "jogo/js/conteudo/materias/geografia4/ge10a3.js",
+        "jogo/js/conteudo/materias/geografia4/ge10t1.js",
+        "jogo/js/conteudo/materias/geografia4/ge11a1.js",
+        "jogo/js/conteudo/materias/geografia4/ge11a2.js",
+        "jogo/js/conteudo/materias/geografia4/ge11a3.js",
+        "jogo/js/conteudo/materias/geografia4/ge11a4.js",
+        "jogo/js/conteudo/materias/geografia4/ge11t1.js",
+        "jogo/js/conteudo/materias/geografia4/ge12a1.js",
+        "jogo/js/conteudo/materias/geografia4/ge12a2.js",
+        "jogo/js/conteudo/materias/geografia4/ge12a3.js",
+        "jogo/js/conteudo/materias/geografia4/ge12a4.js",
+        "jogo/js/conteudo/materias/geografia4/ge12t1.js",
+        "jogo/js/conteudo/materias/geografia4/ge12t2.js",
+        "jogo/js/conteudo/materias/geografia4/icones-10.js",
+        "jogo/js/conteudo/materias/geografia4/icones-11.js",
+        "jogo/js/conteudo/materias/geografia4/icones-12.js",
+        "jogo/js/conteudo/materias/geografia4/livro-10a.js",
+        "jogo/js/conteudo/materias/geografia4/livro-10t.js",
+        "jogo/js/conteudo/materias/geografia4/livro-11a.js",
+        "jogo/js/conteudo/materias/geografia4/livro-11t.js",
+        "jogo/js/conteudo/materias/geografia4/livro-12a.js",
+        "jogo/js/conteudo/materias/geografia4/livro-12t.js"
+      ],
+      "worktree": "c4-ge",
+      "pronto": [
+        "cada questão conferida contra a página do livro (enunciado, dados, gabarito resolvido de novo, explicação, português)",
+        "defeitos corrigidos nos arquivos da frente, com a lista (questão, o que estava errado, como ficou, página)",
+        "validar-conteudo, cobertura-4bim e etapas-4bim verdes"
+      ],
+      "ler": [
+        "docs/contratos/quarto-bimestre.md §4, §6, §12, §12.1",
+        "docs/contratos/conteudo.md §3, §4, §6",
+        "jogo/js/conteudo/CLAUDE.md"
+      ],
+      "testes": [
+        "node jogo/ferramentas/validar/validar-conteudo.js",
+        "node jogo/ferramentas/validar/cobertura-4bim.js geografia4",
+        "node jogo/ferramentas/validar/etapas-4bim.js"
+      ],
+      "estimativa": 70
+    },
+    {
+      "id": "c-ci",
+      "tipo": "conteudo",
+      "titulo": "Conferir e corrigir o conteúdo das questões: Ciências da Natureza (capítulos 10 a 12)",
+      "quem": "builder",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/conteudo/materias/ciencias4/ci10a1.js",
+        "jogo/js/conteudo/materias/ciencias4/ci10a2.js",
+        "jogo/js/conteudo/materias/ciencias4/ci10a3.js",
+        "jogo/js/conteudo/materias/ciencias4/ci10a4.js",
+        "jogo/js/conteudo/materias/ciencias4/ci10t1.js",
+        "jogo/js/conteudo/materias/ciencias4/ci11a1.js",
+        "jogo/js/conteudo/materias/ciencias4/ci11a2.js",
+        "jogo/js/conteudo/materias/ciencias4/ci11a3.js",
+        "jogo/js/conteudo/materias/ciencias4/ci11a4.js",
+        "jogo/js/conteudo/materias/ciencias4/ci11t1.js",
+        "jogo/js/conteudo/materias/ciencias4/ci12a1.js",
+        "jogo/js/conteudo/materias/ciencias4/ci12a2.js",
+        "jogo/js/conteudo/materias/ciencias4/ci12a3.js",
+        "jogo/js/conteudo/materias/ciencias4/ci12t1.js",
+        "jogo/js/conteudo/materias/ciencias4/icones-10.js",
+        "jogo/js/conteudo/materias/ciencias4/icones-11.js",
+        "jogo/js/conteudo/materias/ciencias4/icones-12.js",
+        "jogo/js/conteudo/materias/ciencias4/livro-10a.js",
+        "jogo/js/conteudo/materias/ciencias4/livro-10t.js",
+        "jogo/js/conteudo/materias/ciencias4/livro-11a.js",
+        "jogo/js/conteudo/materias/ciencias4/livro-11t.js",
+        "jogo/js/conteudo/materias/ciencias4/livro-12a.js",
+        "jogo/js/conteudo/materias/ciencias4/livro-12t.js"
+      ],
+      "worktree": "c4-ci",
+      "pronto": [
+        "cada questão conferida contra a página do livro (enunciado, dados, gabarito resolvido de novo, explicação, português)",
+        "defeitos corrigidos nos arquivos da frente, com a lista (questão, o que estava errado, como ficou, página)",
+        "validar-conteudo, cobertura-4bim e etapas-4bim verdes"
+      ],
+      "ler": [
+        "docs/contratos/quarto-bimestre.md §4, §6, §12, §12.1",
+        "docs/contratos/conteudo.md §3, §4, §6",
+        "jogo/js/conteudo/CLAUDE.md"
+      ],
+      "testes": [
+        "node jogo/ferramentas/validar/validar-conteudo.js",
+        "node jogo/ferramentas/validar/cobertura-4bim.js ciencias4",
+        "node jogo/ferramentas/validar/etapas-4bim.js"
+      ],
+      "estimativa": 70
+    },
+    {
+      "id": "layout",
+      "tipo": "mecanica",
+      "titulo": "Corrigir as quebras de layout que a varredura e a leitura das fotos acharem",
+      "quem": "builder",
+      "depende": [
+        "varredura"
+      ],
+      "arquivos": [
+        "jogo/css/",
+        "jogo/js/atividades/",
+        "jogo/js/ui/"
+      ],
+      "worktree": "c4-layout",
+      "pronto": [
+        "a varredura sai sem defeito de layout nos 3 tamanhos, na sala e sozinha",
+        "nenhuma tela de antes mudou fora do que a correção explica"
+      ],
+      "ler": [
+        "docs/contratos/arte.md §17",
+        "docs/contratos/ui.md",
+        "jogo/css/CLAUDE.md"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "integracao",
+      "tipo": "integracao",
+      "titulo": "Juntar as frentes, vozes das falas que mudaram, varredura final e e2e",
+      "quem": "orquestrador",
+      "depende": [
+        "varredura",
+        "c-ma10",
+        "c-ma11",
+        "c-ma12",
+        "c-lp10",
+        "c-lp11",
+        "c-lp12",
+        "c-en-eng",
+        "c-en-prj",
+        "c-hi",
+        "c-ge",
+        "c-ci",
+        "layout"
+      ],
+      "arquivos": [
+        "jogo/ferramentas/testes/base-referencia.txt"
+      ],
+      "worktree": "integracao-conferir-4bim",
+      "pronto": [
+        "npm test e npm run e2e verdes",
+        "varredura final sem defeito aberto",
+        "nenhuma fala sem áudio"
+      ],
+      "estimativa": 60
+    },
+    {
+      "id": "entrega",
+      "tipo": "entrega",
+      "titulo": "Merge na main, push e a Vercel no ar",
+      "quem": "orquestrador",
+      "depende": [
+        "integracao"
+      ],
+      "arquivos": [],
+      "worktree": "integracao-conferir-4bim",
+      "pronto": [
+        "main no GitHub",
+        "npm run vercel -- --conferir"
+      ],
+      "estimativa": 15
+    }
+  ]
+}

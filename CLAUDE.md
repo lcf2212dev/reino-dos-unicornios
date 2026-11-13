@@ -78,6 +78,7 @@ antigas dos pacotes) e `jogo/index.html` (mude `jogo/js/manifesto.js` e rode `np
   `--forcar` roda) · `npm run e2e` (jogo x base, tem que dar idêntico; `--mudancas` durante o trabalho) ·
   `npm run unidade` · `npm run validar` · `npm run tamanho` · `npm run tipos`
 - `npm run novo -- <tipo> <id>` (gerador; `--lista`) · `npm run ver` (fotografa uma cena nos 3 tamanhos) ·
+  `npm run varredura` (layout de todas as questões das salas de livro, nos 3 tamanhos) ·
   `npm run servidor-teste` (skill `servidor-de-teste`) · `npm run memoria` (memória de uma aba, passo a passo)
 - `npm run index` · `npm run versao` · `npm run vozes` e `npm run vozes-elenco` (skills `gravar-vozes`, `validar-vozes`)
 - `npm run worktree` · `npm run material -- <Pasta>` (prints de `matérias/<pasta>/` reduzidos) · `npm run plano`

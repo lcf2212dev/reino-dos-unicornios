@@ -19,6 +19,7 @@
     "tamanho": "node jogo/ferramentas/tamanho.js",
     "tipos": "node jogo/ferramentas/testes/tipos.js",
     "ver": "node jogo/ferramentas/testes/ver.js",
+    "varredura": "node jogo/ferramentas/testes/varredura.js",
     "memoria": "node jogo/ferramentas/testes/sonda-memoria.js",
     "novo": "node jogo/ferramentas/novo/novo.js",
     "worktree": "node jogo/ferramentas/fluxo/worktree.js",

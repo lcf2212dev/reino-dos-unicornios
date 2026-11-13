@@ -37,6 +37,7 @@ node jogo/ferramentas/validar/cobertura-4bim.js portugues4
 node jogo/ferramentas/validar/etapas-4bim.js --tabela
 npm run unidade -- --so quarto-bimestre
 npm run ver -- --tela sala:lp12a7 --nome lp12a7
+npm run varredura -- --salas '^lp12a7$'      # layout de cada questão da sala nos 3 tamanhos
 npm test
 ```
 No `npm run e2e`: mudam os dados da matéria (`materias`, `vozes`), a Casa das Palavras e a tela da matéria.

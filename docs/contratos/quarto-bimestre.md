@@ -165,6 +165,7 @@ node jogo/ferramentas/validar/validar-conteudo.js
 node jogo/ferramentas/validar/cobertura-4bim.js portugues4
 node jogo/ferramentas/vozes/listar-falas.js
 npm run unidade -- --so quarto-bimestre   # suíte de aceite: casa, questões, salas inteiras, persistência, save antigo, regressão
+npm run varredura -- --materias <m>       # layout de cada questão nos 3 tamanhos, na sala e sozinha (jogo/ferramentas/CLAUDE.md, "Ver o jogo")
 npm test
 ```
 
