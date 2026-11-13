@@ -4,7 +4,7 @@
 //     tipos (o que a geometria mostra de quebrado; a regra de cada um está em varredura.js, TIPOS):
 //     vaza, cortado, rola-de-lado, vaza-baixo, cortado-baixo, rola-dentro, resposta-nao-cabe, fora-da-tela,
 //     palavra-partida, sobreposto, coberto, inalcancavel, fim-coberto, texto-cru, emoji-texto, imagem-vazia,
-//     acento-deslocado, letra-desigual, letra-pequena, alvo-pequeno
+//     acento-deslocado, letra-desigual, texto-esmagado, letra-pequena, alvo-pequeno
 //     toque: true = também traz cada controle para o meio da tela e confere que o toque chega nele (rola e devolve
 //     a rolagem ao lugar)
 //   rolarFotos({ raiz, passo })  rola a área principal da tela um passo para baixo; devolve false no fim
@@ -249,6 +249,24 @@ function medir(op) {
         if (ks.length > 1) achar('letra-desigual', pai, ks.map(function (px) { return porTipo[t][px] + ' com ' + px + 'px'; }).join(', ') + ' em ' + t + ' de ' + k.toLowerCase(), 'desigual|' + onde(pai) + '|' + k + '|' + t);
       });
     });
+  });
+
+  /* 13: texto esmagado numa coluna estreita: 4 linhas ou mais com praticamente uma palavra por linha
+     ("A / mata, / com / árvo- / res / e / capim."), numa caixa que ocupa menos de 60% da largura da área (ler em
+     escadinha com espaço sobrando ao lado; letra grande em tela estreita, de largura inteira, não conta) */
+  var larguraUtil = rolador ? rolador.clientWidth : vw;
+  todos.forEach(function (e) {
+    if (!textoProprio(e) || /^inline$/.test(cs(e).display) || e.matches('input, textarea, .marcar-token, .caca-letra')) return;
+    if (e.getBoundingClientRect().width >= 0.6 * larguraUtil) return;
+    var palavras = (e.textContent.replace(/\u00ad/g, '').match(/[^\s\u00a0]+/g) || []).length;
+    if (palavras < 4) return;
+    rg.selectNodeContents(e);
+    var linhas = [], rs = rg.getClientRects();
+    for (var z = 0; z < rs.length; z++) {
+      if (rs[z].width < 0.5) continue;
+      if (!linhas.some(function (y) { return Math.abs(y - rs[z].top) < rs[z].height * 0.5; })) linhas.push(rs[z].top);
+    }
+    if (linhas.length >= 4 && palavras / linhas.length <= 1.25) achar('texto-esmagado', e, palavras + ' palavras em ' + linhas.length + ' linhas, numa coluna de ' + Math.round(e.getBoundingClientRect().width) + 'px');
   });
 
   return { achados: achados, fontes: fontes, rola: rolador ? { alto: rolador.scrollHeight, cabe: rolador.clientHeight, topo: rolador.scrollTop } : null };
