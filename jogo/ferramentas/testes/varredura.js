@@ -10,6 +10,7 @@
 //                         do Bosque (em branco e retorno); padrão: os dois
 //   --paralelo 6          navegadores ao mesmo tempo (cada um ocupa uma vaga de Chromium)
 //   --sem-fotos           só mede
+//   --ajustes '<json>'    ajustes do save sintético (ex.: '{"texto":1.15}' = Ajustes → Letras grandes)
 //   --nome <n>            pasta de saída (padrão: data e hora)      --raiz <pasta jogo>   outra cópia do jogo
 // Saída em /tmp/reino-testes/varredura/<nome>/: relatorio.md (defeitos por questão), relatorio.json (tudo) e
 // fotos/<tamanho>/<modo>/<id>-<estado>[-N].jpg (N = tela comprida, rolada). Sai com 1 se houver defeito grave.
@@ -27,7 +28,7 @@ const Q = require('./unidade/ajudantes/quarto-bimestre');
 const TIPOS = {
   'sem-tela': 'grave', vaza: 'grave', cortado: 'grave', 'vaza-baixo': 'grave', 'cortado-baixo': 'grave', 'fora-da-tela': 'grave',
   'palavra-partida': 'grave', sobreposto: 'grave', coberto: 'grave', inalcancavel: 'grave', 'fim-coberto': 'grave',
-  'resposta-nao-cabe': 'grave', 'texto-cru': 'grave', 'imagem-vazia': 'grave', falha: 'grave',
+  'resposta-nao-cabe': 'grave', 'texto-cru': 'grave', 'imagem-vazia': 'grave', 'acento-deslocado': 'grave', 'figura-faltando': 'grave', falha: 'grave',
   'rola-de-lado': 'aviso', 'rola-dentro': 'aviso', 'emoji-texto': 'aviso', 'letra-pequena': 'nota', 'alvo-pequeno': 'nota',
 };
 // o que é de propósito (regex sobre "tipo onde det"); cada linha com o porquê
@@ -51,6 +52,7 @@ function lerArgs(argv) {
     else if (k === '--modos') a.modos = v().split(',');
     else if (k === '--paralelo') a.paralelo = Math.max(1, Number(v()) || 1);
     else if (k === '--sem-fotos') a.fotos = false;
+    else if (k === '--ajustes') a.ajustes = JSON.parse(v());
     else if (k === '--nome') a.nome = v();
     else if (k === '--raiz') a.raiz = v();
     else throw new Error(`opção desconhecida: ${k} (veja --ajuda)`);
@@ -79,6 +81,11 @@ function preparar() {
   if (window.__q) return;
   var D = Reino.Desafios, render = D.render, q = window.__q = { atual: null, erros: [], avisosResize: 0, render: render };
   window.addEventListener('error', function (e) { if (!/ResizeObserver loop/.test(e.message)) q.erros.push((q.atual ? q.atual.d.id + ': ' : '') + e.message); });
+  // figura sem desenho: _d.figuraIcone (desafios/figuras.js) devolve ❓ no lugar; conta cada uma que a tela pedir
+  // (o ❓ que o conteúdo escolheu como emoji de uma carta não passa por ali)
+  var _d = Reino._desafios, figuraIcone = _d.figuraIcone;
+  q.semFigura = 0;
+  _d.figuraIcone = function () { var r = figuraIcone.apply(_d, arguments); if (r === '❓') q.semFigura++; return r; };
   D.render = function (d, opts) {
     var c = render.call(D, d, opts);
     if (opts && (opts.modo === 'missao' || opts.modo === 'prova') && opts.onMudar) q.atual = { d: d, ctrl: c };
@@ -149,6 +156,8 @@ async function varrer(c, tarefa, a, pasta, registrar) {
     }
     // resposta pessoal (qualquer texto vale): o texto dela não tem tamanho certo para caber na caixa
     const achados = op.livre ? m.achados.filter((x) => x.tipo !== 'resposta-nao-cabe') : m.achados;
+    const semFigura = await c.js('(function (q) { var n = q.semFigura; q.semFigura = 0; return n; })(window.__q)');
+    if (semFigura) achados.push({ tipo: 'figura-faltando', onde: '', texto: '', det: `${semFigura} figura(s) sem desenho: aparece ❓ no lugar` });
     registrar(Object.assign({ sala, id, estado, fotos, achados, fontes: m.fontes }, base));
   }
   const levar = async (r, alvo) => {
@@ -292,7 +301,7 @@ async function principal() {
     const browser = await lancar({ nome: 'varredura' });
     try {
       for (let t; (t = tarefas.shift());) {
-        const c = await abrirCenario({ browser, tamanho: t.tamanho, save: 'completo', raiz: a.raiz, pasta });
+        const c = await abrirCenario({ browser, tamanho: t.tamanho, save: 'completo', raiz: a.raiz, pasta, ajustes: a.ajustes });
         try { await varrer(c, t, a, pasta, (r) => registros.push(r)); }
         catch (e) { registros.push({ tamanho: t.tamanho, modo: t.modo, materia: t.materia.id, sala: '', id: t.materia.id, estado: 'falha', fotos: [], achados: [{ tipo: 'falha', onde: '', texto: '', det: String(e && e.message || e).split('\n')[0] }] }); }
         finally { await c.fechar(); }

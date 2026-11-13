@@ -66,7 +66,7 @@ Ferramentas de desenvolvimento (Node). Nenhuma entra no jogo. Comandos: `CLAUDE.
 - Layout de TODAS as questões das salas de livro: `npm run varredura` (`testes/varredura.js`; `--materias`, `--salas '<regex>'`,
   `--tamanhos`, `--modos sala,sozinha`). Joga cada sala e abre cada pergunta sozinha nos 3 tamanhos, mede a tela
   (`testes/varredura-pagina.js`: vaza, cortado, palavra partida, sobreposto, coberto, resposta que não cabe…) e
-  fotografa; sai em `/tmp/reino-testes/varredura/<nome>/` (`relatorio.md`, `relatorio.json`, `fotos/`) e com código 1
+  fotografa; sai em `/tmp/reino-testes/varredura/<nome>/` (o relatório em Markdown e em JSON, e as fotos) e com código 1
   se houver defeito grave. O que é de propósito entra em `DE_PROPOSITO`, com o porquê. Não entra no `npm test` (leva
   uns 2 min); `unidade/varredura.navegador.test.js` confere que o medidor enxerga cada quebra.
 

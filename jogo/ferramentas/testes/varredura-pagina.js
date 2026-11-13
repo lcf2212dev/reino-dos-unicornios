@@ -4,7 +4,7 @@
 //     tipos (o que a geometria mostra de quebrado; a regra de cada um está em varredura.js, TIPOS):
 //     vaza, cortado, rola-de-lado, vaza-baixo, cortado-baixo, rola-dentro, resposta-nao-cabe, fora-da-tela,
 //     palavra-partida, sobreposto, coberto, inalcancavel, fim-coberto, texto-cru, emoji-texto, imagem-vazia,
-//     letra-pequena, alvo-pequeno
+//     acento-deslocado, letra-pequena, alvo-pequeno
 //     toque: true = também traz cada controle para o meio da tela e confere que o toque chega nele (rola e devolve
 //     a rolagem ao lugar)
 //   rolarFotos({ raiz, passo })  rola a área principal da tela um passo para baixo; devolve false no fim
@@ -207,6 +207,13 @@ function medir(op) {
   /* 10: figura sem tamanho */
   Array.prototype.forEach.call(raiz.querySelectorAll('canvas, img'), function (e) {
     if (e.tagName === 'CANVAS' ? !(e.width && e.height) : e.complete && !e.naturalWidth) achar('imagem-vazia', e.parentElement || e, nome(e));
+  });
+
+  /* 11: maiúscula acentuada fora do lugar: a letra é desenhada por ::before/::after (css/ui-desafios.css) e um recuo
+     herdado da caixa (text-indent dos versos) a empurra para cima da letra vizinha */
+  Array.prototype.forEach.call(raiz.querySelectorAll('span.mai-acento'), function (e) {
+    var recuo = parseFloat(getComputedStyle(e, '::before').textIndent) || 0;
+    if (recuo && e.parentElement && visivel(e.parentElement)) achar('acento-deslocado', e.parentElement, 'a letra ' + e.textContent + ' sai ' + recuo + 'px do lugar');
   });
 
   return { achados: achados, fontes: fontes, rola: rolador ? { alto: rolador.scrollHeight, cabe: rolador.clientHeight, topo: rolador.scrollTop } : null };

@@ -19,6 +19,8 @@ const QUEBRAS = [
   ['botão coberto por outra coisa', 'coberto', `(function (t) { var d = document.createElement('div'); d.className = 'quebra-teste'; d.style.cssText = 'position:fixed;left:0;right:0;top:120px;bottom:120px;z-index:99999;background:#f0f'; t.appendChild(d); })(document.querySelector('.tela-missao'))`],
   ['opção em cima da de antes', 'sobreposto', `(function (b) { b.dataset.antes = b.style.cssText; b.style.marginTop = '-40px'; })(document.querySelectorAll('${CARTAO} .opcoes > button')[1])`],
   ['resposta maior que a caixa', 'resposta-nao-cabe', `(function (c) { var i = document.createElement('input'); i.className = 'quebra-teste'; i.style.cssText = 'width:40px;display:block'; i.value = 'uma resposta comprida demais'; c.appendChild(i); })(document.querySelector('${CARTAO}'))`],
+  // (o jogo zera o recuo nos pseudo-elementos da letra: css/ui-desafios.css; a quebra aqui desfaz isso à força)
+  ['maiúscula acentuada empurrada pelo recuo da caixa', 'acento-deslocado', `(function (c) { var p = document.createElement('p'); p.className = 'quebra-teste'; p.innerHTML = '<style>.quebra-teste span.mai-acento::before, .quebra-teste span.mai-acento::after { text-indent: -16px !important; }</style>VOC<span class="mai-acento" data-b="E" data-a="^">Ê</span>'; c.appendChild(p); })(document.querySelector('${CARTAO}'))`],
   ['marcação do conteúdo aparecendo', 'texto-cru', `(function (c) { var p = document.createElement('p'); p.className = 'quebra-teste'; p.textContent = 'O {gato|0} correu'; c.appendChild(p); })(document.querySelector('${CARTAO}'))`],
 ];
 const DESFAZER = `(function () { Array.prototype.forEach.call(document.querySelectorAll('.quebra-teste'), function (e) { e.remove(); });
@@ -57,6 +59,7 @@ test('opções da varredura: padrão, filtros e recusa do que não existe', () =
   const a = lerArgs(['--materias', 'ciencias4,ingles4', '--salas', '^ci12', '--tamanhos', 'celular', '--modos', 'sala', '--sem-fotos']);
   assert.deepStrictEqual([a.materias, a.tamanhos, a.modos, a.fotos, a.salas.test('ci12a2')], [['ciencias4', 'ingles4'], ['celular'], ['sala'], false, true]);
   assert.deepStrictEqual(lerArgs([]).tamanhos, ['celular', 'tablet', 'notebook']);
+  assert.deepStrictEqual(lerArgs(['--ajustes', '{"texto":1.15}']).ajustes, { texto: 1.15 });
   assert.throws(() => lerArgs(['--tamanhos', 'iphone']), /não existe/);
   assert.throws(() => lerArgs(['--modos', 'prova']), /não existe/);
   assert.throws(() => lerArgs(['--nada']), /opção desconhecida/);
