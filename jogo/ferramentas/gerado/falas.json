@@ -5763,8 +5763,7 @@
    "voz": "narradora",
    "texto": "Pinte a metade da quantidade de bolas em cada situação. Depois, escreva a divisão correspondente.",
    "pacotes": [
-    "matematica4-livro-11",
-    "matematica4-ma11a5"
+    "matematica4-livro-11"
    ],
    "fala": "Pinte a metade da quantidade de bolas em cada situação. Depois, escreva a divisão correspondente."
   },
@@ -5782,8 +5781,7 @@
    "voz": "narradora",
    "texto": "Pinte a terça parte da quantidade de balões em cada situação. Depois, escreva a divisão correspondente.",
    "pacotes": [
-    "matematica4-livro-11",
-    "matematica4-ma11a5"
+    "matematica4-livro-11"
    ],
    "fala": "Pinte a terça parte da quantidade de balões em cada situação. Depois, escreva a divisão correspondente."
   },
@@ -9999,13 +9997,13 @@
    "fala": "Quantas caixas ela usará para colocar essas pelúcias?"
   },
   {
-   "chave": "21d3691231",
+   "chave": "ccb5fba736",
    "voz": "narradora",
-   "texto": "Trace linhas para ligar cada bichinho de pelúcia a uma caixa. Quantas pelúcias vão para cada caixa?",
+   "texto": "Beatriz quer colocar a mesma quantidade de pelúcias em cada caixa. Quantas pelúcias vão para cada caixa?",
    "pacotes": [
     "matematica4-ma11a1"
    ],
-   "fala": "Trace linhas para ligar cada bichinho de pelúcia a uma caixa. Quantas pelúcias vão para cada caixa?"
+   "fala": "Beatriz quer colocar a mesma quantidade de pelúcias em cada caixa. Quantas pelúcias vão para cada caixa?"
   },
   {
    "chave": "0de4a5f51q",
@@ -10053,13 +10051,13 @@
    "fala": "O professor formará quantos grupos?"
   },
   {
-   "chave": "11124d222l",
+   "chave": "188142b315",
    "voz": "narradora",
-   "texto": "Circule os alunos para formar os grupos e responda: Quantos alunos cada grupo terá?",
+   "texto": "Quantos alunos cada grupo terá?",
    "pacotes": [
     "matematica4-ma11a2"
    ],
-   "fala": "Circule os alunos para formar os grupos e responda: Quantos alunos cada grupo terá?"
+   "fala": "Quantos alunos cada grupo terá?"
   },
   {
    "chave": "709b8d0e11",
@@ -10080,13 +10078,13 @@
    "fala": "Quantas crianças estão jogando?"
   },
   {
-   "chave": "ccdbcd3d30",
+   "chave": "944ac6b81b",
    "voz": "narradora",
-   "texto": "Trace linhas para ligar cada carta a uma criança e responda: Quantas cartas cada criança receberá?",
+   "texto": "Quantas cartas cada criança receberá?",
    "pacotes": [
     "matematica4-ma11a2"
    ],
-   "fala": "Trace linhas para ligar cada carta a uma criança e responda: Quantas cartas cada criança receberá?"
+   "fala": "Quantas cartas cada criança receberá?"
   },
   {
    "chave": "37d114c05m",
@@ -10116,22 +10114,22 @@
    "fala": "Em quantos pratos ela colocará as rosquinhas?"
   },
   {
-   "chave": "b05dccf43i",
+   "chave": "90ec37452w",
    "voz": "narradora",
-   "texto": "Recorte as rosquinhas da aba. Depois, cole as rosquinhas nos pratos e responda: Há quantas rosquinhas em cada prato?",
+   "texto": "As rosquinhas serão distribuídas igualmente nos 3 pratos. Há quantas rosquinhas em cada prato?",
    "pacotes": [
     "matematica4-ma11a2"
    ],
-   "fala": "Recorte as rosquinhas da aba. Depois, cole as rosquinhas nos pratos e responda: Há quantas rosquinhas em cada prato?"
+   "fala": "As rosquinhas serão distribuídas igualmente nos 3 pratos. Há quantas rosquinhas em cada prato?"
   },
   {
-   "chave": "a279519257",
+   "chave": "f2b4e2254e",
    "voz": "narradora",
-   "texto": "Beto vai ajudar a mãe a pendurar 12 camisetas no varal. Desenhe e pinte as camisetas distribuindo a mesma quantidade em cada corda do varal. Quantas camisetas vão em cada corda?",
+   "texto": "Beto vai ajudar a mãe a pendurar 12 camisetas no varal, distribuindo a mesma quantidade em cada corda do varal. Quantas camisetas vão em cada corda?",
    "pacotes": [
     "matematica4-ma11a2"
    ],
-   "fala": "Beto vai ajudar a mãe a pendurar 12 camisetas no varal. Desenhe e pinte as camisetas distribuindo a mesma quantidade em cada corda do varal. Quantas camisetas vão em cada corda?"
+   "fala": "Beto vai ajudar a mãe a pendurar 12 camisetas no varal, distribuindo a mesma quantidade em cada corda do varal. Quantas camisetas vão em cada corda?"
   },
   {
    "chave": "ee7d325a14",
@@ -10179,13 +10177,13 @@
    "fala": "Vamos formar grupos iguais com crianças, palitos e tampinhas, e escrever cada divisão!"
   },
   {
-   "chave": "34f69ede41",
+   "chave": "402113df2r",
    "voz": "narradora",
-   "texto": "As crianças a seguir serão divididas em 2 grupos iguais. Circule as crianças para formar esses grupos. a) Quantas crianças são ao todo?",
+   "texto": "As crianças a seguir serão divididas em 2 grupos iguais. a) Quantas crianças são ao todo?",
    "pacotes": [
     "matematica4-ma11a3"
    ],
-   "fala": "As crianças a seguir serão divididas em 2 grupos iguais. Circule as crianças para formar esses grupos. a) Quantas crianças são ao todo?"
+   "fala": "As crianças a seguir serão divididas em 2 grupos iguais. a) Quantas crianças são ao todo?"
   },
   {
    "chave": "3ae83b73l",
@@ -10234,13 +10232,13 @@
    "fala": "As crianças serão divididas em 2 grupos iguais."
   },
   {
-   "chave": "c40fd3586y",
+   "chave": "285327ef49",
    "voz": "narradora",
-   "texto": "Doze palitos de picolé serão distribuídos igualmente entre Ana, Luiz, Felipe e Cecília. Faça um tracinho embaixo de cada criança para representar quantos palitos cada uma deve receber. a) Quantos palitos de picolé cada criança deve receber?",
+   "texto": "Doze palitos de picolé serão distribuídos igualmente entre Ana, Luiz, Felipe e Cecília. a) Quantos palitos de picolé cada criança deve receber?",
    "pacotes": [
     "matematica4-ma11a3"
    ],
-   "fala": "Doze palitos de picolé serão distribuídos igualmente entre Ana, Luiz, Felipe e Cecília. Faça um tracinho embaixo de cada criança para representar quantos palitos cada uma deve receber. a) Quantos palitos de picolé cada criança deve receber?"
+   "fala": "Doze palitos de picolé serão distribuídos igualmente entre Ana, Luiz, Felipe e Cecília. a) Quantos palitos de picolé cada criança deve receber?"
   },
   {
    "chave": "7bf77b681q",
@@ -10261,13 +10259,13 @@
    "fala": "Os palitos"
   },
   {
-   "chave": "7c69165f3i",
+   "chave": "5197c9f539",
    "voz": "narradora",
-   "texto": "Forme grupos com 10 tampinhas em cada um deles. Em seguida, responda às perguntas. a) Quantas tampinhas são ao todo?",
+   "texto": "As tampinhas serão separadas em grupos com 10 tampinhas em cada um deles. a) Quantas tampinhas são ao todo?",
    "pacotes": [
     "matematica4-ma11a3"
    ],
-   "fala": "Forme grupos com 10 tampinhas em cada um deles. Em seguida, responda às perguntas. a) Quantas tampinhas são ao todo?"
+   "fala": "As tampinhas serão separadas em grupos com 10 tampinhas em cada um deles. a) Quantas tampinhas são ao todo?"
   },
   {
    "chave": "bd5eaadem",
@@ -10306,22 +10304,22 @@
    "fala": "Antônio quer dividir igualmente o valor desta cédula entre seus 5 sobrinhos. Para isso, ele deve trocar a cédula por outras de menor valor. a) Quantos reais Antônio quer dividir entre seus sobrinhos?"
   },
   {
-   "chave": "c4e7feaf2n",
+   "chave": "0b8b677b19",
    "voz": "narradora",
-   "texto": "b) Desenhe a quantia que cada sobrinho deve receber. Que cédula cada sobrinho recebe?",
+   "texto": "b) Que cédula cada sobrinho recebe?",
    "pacotes": [
     "matematica4-ma11a3"
    ],
-   "fala": "b) Desenhe a quantia que cada sobrinho deve receber. Que cédula cada sobrinho recebe?"
+   "fala": "b) Que cédula cada sobrinho recebe?"
   },
   {
-   "chave": "280c85fa56",
+   "chave": "13d00a3f58",
    "voz": "narradora",
-   "texto": "Forme grupos com os palitos de picolé seguindo as indicações da tabela. Os grupos devem ter a mesma quantidade. Depois, complete a tabela com as informações que estão faltando.",
+   "texto": "Os palitos de picolé foram separados em grupos, seguindo as indicações da tabela. Os grupos devem ter a mesma quantidade. Complete a tabela com as informações que estão faltando.",
    "pacotes": [
     "matematica4-ma11a3"
    ],
-   "fala": "Forme grupos com os palitos de picolé seguindo as indicações da tabela. Os grupos devem ter a mesma quantidade. Depois, complete a tabela com as informações que estão faltando."
+   "fala": "Os palitos de picolé foram separados em grupos, seguindo as indicações da tabela. Os grupos devem ter a mesma quantidade. Complete a tabela com as informações que estão faltando."
   },
   {
    "chave": "be6ff1ab3a",
@@ -10396,13 +10394,13 @@
    "fala": "Quantos lápis de cor tem nessa caixa?"
   },
   {
-   "chave": "5f9d93c42u",
+   "chave": "f39a8bb33c",
    "voz": "narradora",
-   "texto": "Contorne os lápis a seguir para indicar a quantidade de lápis que Daniel usou nessa pintura.",
+   "texto": "Quantos lápis a seguir devem ser contornados para indicar a quantidade de lápis que Daniel usou nessa pintura?",
    "pacotes": [
     "matematica4-ma11a4"
    ],
-   "fala": "Contorne os lápis a seguir para indicar a quantidade de lápis que Daniel usou nessa pintura."
+   "fala": "Quantos lápis a seguir devem ser contornados para indicar a quantidade de lápis que Daniel usou nessa pintura?"
   },
   {
    "chave": "eae4be09p",
@@ -10459,13 +10457,31 @@
    "fala": "Vamos pintar a metade e a terça parte, dividir carrinhos e jogar o Bingo da divisão!"
   },
   {
-   "chave": "e85d116449",
+   "chave": "f522592a2g",
    "voz": "narradora",
-   "texto": "Renata usou meia dúzia de ovos para fazer um quindim. Desenhe a quantidade de ovos que Renata usou para fazer esse doce. Quantos ovos ela usou?",
+   "texto": "Descubra a metade da quantidade de bolas em cada situação e complete a tabela.",
    "pacotes": [
     "matematica4-ma11a5"
    ],
-   "fala": "Renata usou meia dúzia de ovos para fazer um quindim. Desenhe a quantidade de ovos que Renata usou para fazer esse doce. Quantos ovos ela usou?"
+   "fala": "Descubra a metade da quantidade de bolas em cada situação e complete a tabela."
+  },
+  {
+   "chave": "c967fda22e",
+   "voz": "narradora",
+   "texto": "Renata usou meia dúzia de ovos para fazer um quindim. Quantos ovos ela usou?",
+   "pacotes": [
+    "matematica4-ma11a5"
+   ],
+   "fala": "Renata usou meia dúzia de ovos para fazer um quindim. Quantos ovos ela usou?"
+  },
+  {
+   "chave": "22134da42m",
+   "voz": "narradora",
+   "texto": "Descubra a terça parte da quantidade de balões em cada situação e complete a tabela.",
+   "pacotes": [
+    "matematica4-ma11a5"
+   ],
+   "fala": "Descubra a terça parte da quantidade de balões em cada situação e complete a tabela."
   },
   {
    "chave": "5dca67435g",
@@ -10504,22 +10520,22 @@
    "fala": "A mãe de Isaque separou a terça parte dos pães de queijo para o lanche de Isaque na escola."
   },
   {
-   "chave": "3de6f2df4o",
+   "chave": "f08363813y",
    "voz": "narradora",
-   "texto": "a) Lucas quer arrumar esses carrinhos. Cole no espaço a seguir a metade desses carrinhos para Lucas colocá-los numa estante. Quantos carrinhos você vai colar?",
+   "texto": "a) Lucas quer arrumar esses carrinhos. Ele vai colocar a metade desses carrinhos numa estante. Quantos carrinhos vão para a estante?",
    "pacotes": [
     "matematica4-ma11a5"
    ],
-   "fala": "a) Lucas quer arrumar esses carrinhos. Cole no espaço a seguir a metade desses carrinhos para Lucas colocá-los numa estante. Quantos carrinhos você vai colar?"
+   "fala": "a) Lucas quer arrumar esses carrinhos. Ele vai colocar a metade desses carrinhos numa estante. Quantos carrinhos vão para a estante?"
   },
   {
-   "chave": "0a724bd74n",
+   "chave": "2877e00b35",
    "voz": "narradora",
-   "texto": "b) Dos carrinhos que sobraram, Lucas separou a terça parte para brincar. Cole no espaço a seguir a quantidade que ele separou. Quantos carrinhos ele separou?",
+   "texto": "b) Dos carrinhos que sobraram, Lucas separou a terça parte para brincar. Quantos carrinhos ele separou?",
    "pacotes": [
     "matematica4-ma11a5"
    ],
-   "fala": "b) Dos carrinhos que sobraram, Lucas separou a terça parte para brincar. Cole no espaço a seguir a quantidade que ele separou. Quantos carrinhos ele separou?"
+   "fala": "b) Dos carrinhos que sobraram, Lucas separou a terça parte para brincar. Quantos carrinhos ele separou?"
   },
   {
    "chave": "70b51f4bv",
@@ -10585,22 +10601,22 @@
    "fala": "Identifique no texto do problema as informações descritas a seguir. Depois, pinte no texto do problema cada informação seguindo as cores indicadas em cada lápis de cor."
   },
   {
-   "chave": "b0b716974t",
+   "chave": "2419b3083r",
    "voz": "narradora",
-   "texto": "Para resolver esse problema, pinte de marrom as figuras dos cupcakes de chocolate e de rosa as figuras dos cupcakes de morango. Quantos cupcakes ficam de cada cor?",
+   "texto": "A mãe de Vanessa fez 30 cupcakes. A terça parte é de chocolate e o restante é de morango. Quantos cupcakes são de cada sabor?",
    "pacotes": [
     "matematica4-ma11a6"
    ],
-   "fala": "Para resolver esse problema, pinte de marrom as figuras dos cupcakes de chocolate e de rosa as figuras dos cupcakes de morango. Quantos cupcakes ficam de cada cor?"
+   "fala": "A mãe de Vanessa fez 30 cupcakes. A terça parte é de chocolate e o restante é de morango. Quantos cupcakes são de cada sabor?"
   },
   {
-   "chave": "e260399d69",
+   "chave": "d757d7014d",
    "voz": "narradora",
-   "texto": "Carla comprou um pacote com 18 balas e distribuiu igualmente essas balas entre seus 6 sobrinhos. Desenhe as balas para descobrir quantos doces cada sobrinho ganhou. a) Escreva a divisão que representa essa situação.",
+   "texto": "Carla comprou um pacote com 18 balas e distribuiu igualmente essas balas entre seus 6 sobrinhos. a) Escreva a divisão que representa essa situação.",
    "pacotes": [
     "matematica4-ma11a6"
    ],
-   "fala": "Carla comprou um pacote com 18 balas e distribuiu igualmente essas balas entre seus 6 sobrinhos. Desenhe as balas para descobrir quantos doces cada sobrinho ganhou. a) Escreva a divisão que representa essa situação."
+   "fala": "Carla comprou um pacote com 18 balas e distribuiu igualmente essas balas entre seus 6 sobrinhos. a) Escreva a divisão que representa essa situação."
   },
   {
    "chave": "f194119a2w",
@@ -10657,13 +10673,13 @@
    "fala": "A professora do 2º ano vai dividir a turma em grupos iguais. Cada grupo terá 6 alunos cada um. Observe a quantidade de alunos que estudam nessa turma. a) Quantos alunos tem nessa turma ao todo?"
   },
   {
-   "chave": "c76e5fc32k",
+   "chave": "a1b75b471n",
    "voz": "narradora",
-   "texto": "b) Circule os alunos para formar os grupos e responda: Quantos grupos você formou?",
+   "texto": "b) Quantos grupos de 6 alunos podem ser formados?",
    "pacotes": [
     "matematica4-ma11a6"
    ],
-   "fala": "b) Circule os alunos para formar os grupos e responda: Quantos grupos você formou?"
+   "fala": "b) Quantos grupos de 6 alunos podem ser formados?"
   },
   {
    "chave": "e0822fb31i",
@@ -10720,13 +10736,13 @@
    "fala": "Denise vai distribuir igualmente esta quantidade de giz de cera entre 4 crianças. Quantos gizes de cera cada criança ganhará?"
   },
   {
-   "chave": "d52706796f",
+   "chave": "4513b9d152",
    "voz": "narradora",
-   "texto": "Matias convidou 20 pessoas para a festa de aniversário dele. Os convidados serão distribuídos igualmente nestas mesas. Desenhe bancos para representar a quantidade de pessoas em cada mesa. Quantos bancos vão em cada mesa?",
+   "texto": "Matias convidou 20 pessoas para a festa de aniversário dele. Os convidados serão distribuídos igualmente nestas mesas. Quantos bancos vão em cada mesa, um para cada pessoa?",
    "pacotes": [
     "matematica4-ma11a7"
    ],
-   "fala": "Matias convidou 20 pessoas para a festa de aniversário dele. Os convidados serão distribuídos igualmente nestas mesas. Desenhe bancos para representar a quantidade de pessoas em cada mesa. Quantos bancos vão em cada mesa?"
+   "fala": "Matias convidou 20 pessoas para a festa de aniversário dele. Os convidados serão distribuídos igualmente nestas mesas. Quantos bancos vão em cada mesa, um para cada pessoa?"
   },
   {
    "chave": "2af038881r",
@@ -10810,13 +10826,13 @@
    "fala": "Observe a quantia que Igor tem. a) Quantos reais Igor tem?"
   },
   {
-   "chave": "57b91da65y",
+   "chave": "a7233b7f41",
    "voz": "narradora",
-   "texto": "b) Igor trocou as cédulas e deu metade da quantia que tinha para Lucas. Desenhe cédulas para representar a quantia que Lucas ganhou de Igor. Toque em todos os jeitos de cédulas que dão a quantia de Lucas.",
+   "texto": "b) Igor trocou as cédulas e deu metade da quantia que tinha para Lucas. Toque em todos os jeitos de cédulas que dão a quantia de Lucas.",
    "pacotes": [
     "matematica4-ma11a8"
    ],
-   "fala": "b) Igor trocou as cédulas e deu metade da quantia que tinha para Lucas. Desenhe cédulas para representar a quantia que Lucas ganhou de Igor. Toque em todos os jeitos de cédulas que dão a quantia de Lucas."
+   "fala": "b) Igor trocou as cédulas e deu metade da quantia que tinha para Lucas. Toque em todos os jeitos de cédulas que dão a quantia de Lucas."
   },
   {
    "chave": "dc7905671c",
@@ -11179,13 +11195,13 @@
    "fala": "Observando os dados da tabela, foram plantadas ao todo mais de 50 mudas ou menos?"
   },
   {
-   "chave": "4081248566",
+   "chave": "54ee89c87q",
    "voz": "narradora",
-   "texto": "Insira no gráfico abaixo as informações da tabela. Para isso, pinte na malha quadriculada a quantidade de mudas que cada ano escolar plantou. Cada quadradinho pintado deve representar uma muda de árvore plantada.",
+   "texto": "Insira no gráfico as informações da tabela. Para isso, pinte na malha quadriculada a quantidade de mudas que cada ano escolar plantou. Cada quadradinho pintado deve representar uma muda de árvore plantada. Quantos quadradinhos você pinta na coluna de cada ano escolar?",
    "pacotes": [
     "matematica4-ma12a1"
    ],
-   "fala": "Insira no gráfico abaixo as informações da tabela. Para isso, pinte na malha quadriculada a quantidade de mudas que cada ano escolar plantou. Cada quadradinho pintado deve representar uma muda de árvore plantada."
+   "fala": "Insira no gráfico as informações da tabela. Para isso, pinte na malha quadriculada a quantidade de mudas que cada ano escolar plantou. Cada quadradinho pintado deve representar uma muda de árvore plantada. Quantos quadradinhos você pinta na coluna de cada ano escolar?"
   },
   {
    "chave": "e7a0747ap",
@@ -11675,22 +11691,22 @@
    "fala": "e) Quantos alunos ao todo vão a pé à escola, considerando todos os cinco anos escolares?"
   },
   {
-   "chave": "4963acc04e",
+   "chave": "69ae5f8d5n",
    "voz": "narradora",
-   "texto": "f) Observe as cores da legenda. Em seguida, pinte o gráfico de barras para representar as informações da tabela. Cada quadrinho equivale a 5 alunos.",
+   "texto": "f) Observe as cores da legenda. Em seguida, pinte o gráfico de barras para representar as informações da tabela. Cada quadrinho equivale a 5 alunos. Quantos quadrinhos você pinta em cada barra?",
    "pacotes": [
     "matematica4-ma12a4"
    ],
-   "fala": "f) Observe as cores da legenda. Em seguida, pinte o gráfico de barras para representar as informações da tabela. Cada quadrinho equivale a 5 alunos."
+   "fala": "f) Observe as cores da legenda. Em seguida, pinte o gráfico de barras para representar as informações da tabela. Cada quadrinho equivale a 5 alunos. Quantos quadrinhos você pinta em cada barra?"
   },
   {
-   "chave": "aa58a2863s",
+   "chave": "4271160b52",
    "voz": "narradora",
-   "texto": "a) Pinte o gráfico para representar a quantidade de gibis e de bonecas doados por turma. Cada quadrinho equivale a 3 unidades.",
+   "texto": "a) Pinte o gráfico para representar a quantidade de gibis e de bonecas doados por turma. Cada quadrinho equivale a 3 unidades. Quantos quadrinhos você pinta em cada coluna?",
    "pacotes": [
     "matematica4-ma12a4"
    ],
-   "fala": "a) Pinte o gráfico para representar a quantidade de gibis e de bonecas doados por turma. Cada quadrinho equivale a 3 unidades."
+   "fala": "a) Pinte o gráfico para representar a quantidade de gibis e de bonecas doados por turma. Cada quadrinho equivale a 3 unidades. Quantos quadrinhos você pinta em cada coluna?"
   },
   {
    "chave": "6e464f89w",
@@ -11864,13 +11880,13 @@
    "fala": "Para quem a pergunta dessa pesquisa deve ser feita?"
   },
   {
-   "chave": "5245fc882p",
+   "chave": "f7af2e053y",
    "voz": "narradora",
-   "texto": "Pinte no gráfico de barras as informações da tabela. Cada quadrinho equivale a 3 votos.",
+   "texto": "Pinte no gráfico de barras as informações da tabela. Cada quadrinho equivale a 3 votos. Quantos quadrinhos você pinta em cada barra?",
    "pacotes": [
     "matematica4-ma12a5"
    ],
-   "fala": "Pinte no gráfico de barras as informações da tabela. Cada quadrinho equivale a 3 votos."
+   "fala": "Pinte no gráfico de barras as informações da tabela. Cada quadrinho equivale a 3 votos. Quantos quadrinhos você pinta em cada barra?"
   },
   {
    "chave": "a1d81b3az",
@@ -12145,13 +12161,13 @@
    "fala": "e) Qual atividade artística é preferida por 14 meninas?"
   },
   {
-   "chave": "e89709285d",
+   "chave": "358f86196d",
    "voz": "narradora",
-   "texto": "f) Escolha uma cor para representar as meninas e outra cor para os meninos. Depois, pinte o gráfico de barras a seguir com as informações da tabela. Cada quadrinho equivale a 2 votos.",
+   "texto": "f) Escolha uma cor para representar as meninas e outra cor para os meninos. Depois, pinte o gráfico de barras com as informações da tabela. Cada quadrinho equivale a 2 votos. Quantos quadrinhos você pinta em cada barra?",
    "pacotes": [
     "matematica4-ma12a7"
    ],
-   "fala": "f) Escolha uma cor para representar as meninas e outra cor para os meninos. Depois, pinte o gráfico de barras a seguir com as informações da tabela. Cada quadrinho equivale a 2 votos."
+   "fala": "f) Escolha uma cor para representar as meninas e outra cor para os meninos. Depois, pinte o gráfico de barras com as informações da tabela. Cada quadrinho equivale a 2 votos. Quantos quadrinhos você pinta em cada barra?"
   },
   {
    "chave": "759dedbc1f",
@@ -12424,13 +12440,13 @@
    "fala": "d) Quantos pulos de corda todas as crianças deram sem errar?"
   },
   {
-   "chave": "d520751d53",
+   "chave": "1540e74b3r",
    "voz": "narradora",
-   "texto": "Foram entrevistados 81 alunos no total. Com essa informação, descubra a quantidade de alunos que não têm animal de estimação. Depois, pinte a barra para completar o gráfico.",
+   "texto": "Foram entrevistados 81 alunos no total. Com essa informação, descubra a quantidade de alunos que não têm animal de estimação.",
    "pacotes": [
     "matematica4-ma12a9"
    ],
-   "fala": "Foram entrevistados 81 alunos no total. Com essa informação, descubra a quantidade de alunos que não têm animal de estimação. Depois, pinte a barra para completar o gráfico."
+   "fala": "Foram entrevistados 81 alunos no total. Com essa informação, descubra a quantidade de alunos que não têm animal de estimação."
   },
   {
    "chave": "32b38cbd1e",
@@ -12512,6 +12528,24 @@
     "matematica4-ma12a9"
    ],
    "fala": "e) Escreva uma pergunta que envolva as informações da tabela."
+  },
+  {
+   "chave": "fc4290e815",
+   "voz": "narradora",
+   "texto": "Alimentos preferidos dos alunos",
+   "pacotes": [
+    "matematica4-ma12a9"
+   ],
+   "fala": "Alimentos preferidos dos alunos"
+  },
+  {
+   "chave": "4a8fd61a2m",
+   "voz": "narradora",
+   "texto": "A tabela da votação da merenda tem as colunas Opção de lanche e Quantidade de votos.",
+   "pacotes": [
+    "matematica4-ma12a9"
+   ],
+   "fala": "A tabela da votação da merenda tem as colunas Opção de lanche e Quantidade de votos."
   },
   {
    "chave": "e97316e62t",
@@ -19833,8 +19867,7 @@
    "voz": "narradora",
    "texto": "Por que essa música é especial para você? Conte aos colegas e ouça o que eles tem a dizer.",
    "pacotes": [
-    "portugues4-livro-11",
-    "portugues4-lp11a1"
+    "portugues4-livro-11"
    ],
    "fala": "Por que essa música é especial para você? Conte aos colegas e ouça o que eles tem a dizer."
   },
@@ -24087,6 +24120,33 @@
    "fala": "Quem João encontrou no caminho? E o que essa pessoa propôs a ele?"
   },
   {
+   "chave": "bd895ba8v",
+   "voz": "narradora",
+   "texto": "João e o pé de feijão",
+   "pacotes": [
+    "portugues4-lp10a7"
+   ],
+   "fala": "João e o pé de feijão"
+  },
+  {
+   "chave": "f502de9b24",
+   "voz": "narradora",
+   "texto": "No caminho, ele conheceu um homem que lhe fez a seguinte proposta:",
+   "pacotes": [
+    "portugues4-lp10a7"
+   ],
+   "fala": "No caminho, ele conheceu um homem que lhe fez a seguinte proposta:"
+  },
+  {
+   "chave": "4a72dc033b",
+   "voz": "narradora",
+   "texto": "— Criança, dê-me a sua vaquinha, que lhe dou estes sete grãos de feijão. É uma boa troca, porque são mágicos.",
+   "pacotes": [
+    "portugues4-lp10a7"
+   ],
+   "fala": "— Criança, dê… me a sua vaquinha, que lhe dou estes sete grãos de feijão. É uma boa troca, porque são mágicos."
+  },
+  {
    "chave": "05b456342f",
    "voz": "narradora",
    "texto": "Como a mãe de João reagiu quando ele contou sobre a troca que fez no caminho?",
@@ -24466,6 +24526,15 @@
    "fala": "Começa o capítulo Quem canta... Hoje tem música, dança e a canção do Rei da Floresta!"
   },
   {
+   "chave": "255e52e81f",
+   "voz": "narradora",
+   "texto": "Por que essa música é especial para você?",
+   "pacotes": [
+    "portugues4-lp11a1"
+   ],
+   "fala": "Por que essa música é especial para você?"
+  },
+  {
    "chave": "71eec3af3w",
    "voz": "narradora",
    "texto": "Leia a letra da canção e, depois, cante junto com muito ritmo e animação! Coloque estes versos na ordem em que aparecem na canção.",
@@ -24831,13 +24900,13 @@
    "fala": "Hora de criar! Vamos inventar uma paródia musical e depois testar tudo o que aprendemos no capítulo."
   },
   {
-   "chave": "b10a96cb3e",
+   "chave": "1466c8ae2g",
    "voz": "narradora",
-   "texto": "Junto aos colegas e ao professor, selecione uma música. Pode ser uma das canções estudadas ao longo do capítulo.",
+   "texto": "Selecione uma música. Pode ser uma das canções estudadas ao longo do capítulo.",
    "pacotes": [
     "portugues4-lp11a6"
    ],
-   "fala": "Junto aos colegas e ao professor, selecione uma música. Pode ser uma das canções estudadas ao longo do capítulo."
+   "fala": "Selecione uma música. Pode ser uma das canções estudadas ao longo do capítulo."
   },
   {
    "chave": "0eaf84fd25",
@@ -25641,13 +25710,13 @@
    "fala": "Releia o seu poema visual e responda às perguntas: Sim, Não ou Pode melhorar?"
   },
   {
-   "chave": "8142699e42",
+   "chave": "f2e1b1243p",
    "voz": "narradora",
-   "texto": "Produza a versão final do seu poema. Considere os comentários do seu colega. Aqui, desenhe a imagem que as palavras do seu poema formam.",
+   "texto": "Produza a versão final do seu poema. Considere a sua avaliação. Aqui, desenhe a imagem que as palavras do seu poema formam.",
    "pacotes": [
     "portugues4-lp12a5"
    ],
-   "fala": "Produza a versão final do seu poema. Considere os comentários do seu colega. Aqui, desenhe a imagem que as palavras do seu poema formam."
+   "fala": "Produza a versão final do seu poema. Considere a sua avaliação. Aqui, desenhe a imagem que as palavras do seu poema formam."
   },
   {
    "chave": "a471fe4419",
@@ -28862,13 +28931,13 @@
    "fala": "Observe as imagens e classifique-as de acordo com a origem de cada matéria-prima. Para isso, pinte usando as cores da legenda a seguir."
   },
   {
-   "chave": "7ab16f813c",
+   "chave": "5e92c9313c",
    "voz": "narradora",
-   "texto": "Agora, você vai investigar alguns objetos. Escreva a principal matéria-prima utilizada na produção de cada um.",
+   "texto": "Agora, você vai investigar alguns objetos. Escolha a principal matéria-prima utilizada na produção de cada um.",
    "pacotes": [
     "geografia4-ge10a2"
    ],
-   "fala": "Agora, você vai investigar alguns objetos. Escreva a principal matéria-prima utilizada na produção de cada um."
+   "fala": "Agora, você vai investigar alguns objetos. Escolha a principal matéria-prima utilizada na produção de cada um."
   },
   {
    "chave": "a6e5c68b30",
@@ -35743,13 +35812,13 @@
    "fala": "Ligue cada giz de cera ao nome da cor."
   },
   {
-   "chave": "31fb33bf2d",
+   "chave": "838569c12v",
    "voz": "narradora",
-   "texto": "O último giz não tem nome. Escolha uma cor e escreva o nome dela em inglês.",
+   "texto": "No livro, o último giz de cera vem sem nome. Escolha uma cor e escreva o nome dela em inglês.",
    "pacotes": [
     "ingles4-en12e2"
    ],
-   "fala": "O último giz não tem nome. Escolha uma cor e escreva o nome dela em inglês."
+   "fala": "No livro, o último giz de cera vem sem nome. Escolha uma cor e escreva o nome dela em inglês."
   },
   {
    "chave": "19542f64h",
@@ -36558,6 +36627,24 @@
     "ingles4-en12p2"
    ],
    "fala": "Ligue cada comida ao que se faz com ela."
+  },
+  {
+   "chave": "f13a8ee3u",
+   "voz": "narradora",
+   "texto": "Os desenhos do livro",
+   "pacotes": [
+    "ingles4-en12p2"
+   ],
+   "fala": "Os desenhos do livro"
+  },
+  {
+   "chave": "c3a51e954m",
+   "voz": "narradora",
+   "texto": "Embaixo, o livro mostra: um pote de mel, um vidro de ketchup, um vidro de azeite, um pote de geleia vermelha, um ovo frito e um copo de suco cor de laranja.",
+   "pacotes": [
+    "ingles4-en12p2"
+   ],
+   "fala": "Embaixo, o livro mostra: um pote de mel, um vidro de ketchup, um vidro de azeite, um pote de geleia vermelha, um ovo frito e um copo de suco cor de laranja."
   },
   {
    "chave": "60224320r",
@@ -37750,13 +37837,13 @@
    "fala": "As plantas precisam de água e luz do sol. Observe as imagens das plantas 1 e 2."
   },
   {
-   "chave": "7993d3d94i",
+   "chave": "9de0816f4u",
    "voz": "narradora",
-   "texto": "1: um lago coberto de folhas redondas que boiam, com flores lilases., 2: uma planta de folhas compridas num solo seco e cheio de pedras, com sol forte..",
+   "texto": "1: um lago ensolarado, coberto de folhas redondas que boiam, com flores lilases., 2: uma planta de folhas compridas num solo seco e cheio de pedras, com sol forte..",
    "pacotes": [
     "ciencias4-livro-10"
    ],
-   "fala": "1: um lago coberto de folhas redondas que boiam, com flores lilases., 2: uma planta de folhas compridas num solo seco e cheio de pedras, com sol forte.."
+   "fala": "1: um lago ensolarado, coberto de folhas redondas que boiam, com flores lilases., 2: uma planta de folhas compridas num solo seco e cheio de pedras, com sol forte.."
   },
   {
    "chave": "550a6ebe3n",
@@ -37812,6 +37899,15 @@
     "ciencias4-ci10t1"
    ],
    "fala": "Ligue as partes das plantas usadas como matéria-prima com os produtos que elas ajudam a fazer."
+  },
+  {
+   "chave": "bd789b9c81",
+   "voz": "narradora",
+   "texto": "Nas fotos: a) um algodão aberto no pé; b) flores de camomila secas numa colher de pau; c) toras de madeira empilhadas; d) folhas verdes de hortelã. Do outro lado: uma xícara de chá amarelinho, roupas dobradas, um vidrinho de óleos essenciais com varetas e uma mesinha de madeira.",
+   "pacotes": [
+    "ciencias4-livro-10"
+   ],
+   "fala": "Nas fotos: a) um algodão aberto no pé; b) flores de camomila secas numa colher de pau; c) toras de madeira empilhadas; d) folhas verdes de hortelã. Do outro lado: uma xícara de chá amarelinho, roupas dobradas, um vidrinho de óleos essenciais com varetas e uma mesinha de madeira."
   },
   {
    "chave": "f08e753a34",
