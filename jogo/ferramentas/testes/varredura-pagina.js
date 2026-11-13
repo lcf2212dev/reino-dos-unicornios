@@ -4,7 +4,7 @@
 //     tipos (o que a geometria mostra de quebrado; a regra de cada um está em varredura.js, TIPOS):
 //     vaza, cortado, rola-de-lado, vaza-baixo, cortado-baixo, rola-dentro, resposta-nao-cabe, fora-da-tela,
 //     palavra-partida, sobreposto, coberto, inalcancavel, fim-coberto, texto-cru, emoji-texto, imagem-vazia,
-//     acento-deslocado, letra-pequena, alvo-pequeno
+//     acento-deslocado, letra-desigual, letra-pequena, alvo-pequeno
 //     toque: true = também traz cada controle para o meio da tela e confere que o toque chega nele (rola e devolve
 //     a rolagem ao lugar)
 //   rolarFotos({ raiz, passo })  rola a área principal da tela um passo para baixo; devolve false no fim
@@ -214,6 +214,29 @@ function medir(op) {
   Array.prototype.forEach.call(raiz.querySelectorAll('span.mai-acento'), function (e) {
     var recuo = parseFloat(getComputedStyle(e, '::before').textIndent) || 0;
     if (recuo && e.parentElement && visivel(e.parentElement)) achar('acento-deslocado', e.parentElement, 'a letra ' + e.textContent + ' sai ' + recuo + 'px do lugar');
+  });
+
+  /* 12: irmãos iguais (as opções de uma pergunta, as casas de uma grade, os itens de uma lista) com a letra em
+     tamanhos diferentes: um desceu de degrau para caber e os vizinhos não */
+  // o texto principal de um item: o pedaço com mais letras (não o número da casa nem a marca do par); empate, a letra maior
+  function letraDe(e) {
+    var d = (textoProprio(e) ? [e] : []).concat(Array.prototype.filter.call(e.querySelectorAll('*'), function (x) { return textoProprio(x) && visivel(x); }));
+    var proprio = function (x) { var n = 0; for (var c = x.firstChild; c; c = c.nextSibling) if (c.nodeType === 3) n += c.nodeValue.trim().length; return n; };
+    return d.sort(function (x, y) { return proprio(y) - proprio(x) || parseFloat(cs(y).fontSize) - parseFloat(cs(x).fontSize); })[0] || null;
+  }
+  [raiz].concat(todos).forEach(function (pai) {
+    var grupos = {};
+    Array.prototype.forEach.call(pai.children, function (f) {
+      if (!visivel(f)) return;
+      var k = f.tagName + '.' + (f.classList[0] || '');
+      (grupos[k] = grupos[k] || []).push(f);
+    });
+    Object.keys(grupos).forEach(function (k) {
+      var tam = {};
+      grupos[k].forEach(function (f) { var t = letraDe(f); if (t) { var px = Math.round(parseFloat(cs(t).fontSize)); tam[px] = (tam[px] || 0) + 1; } });
+      var ks = Object.keys(tam);
+      if (grupos[k].length > 1 && ks.length > 1) achar('letra-desigual', pai, ks.map(function (px) { return tam[px] + ' com ' + px + 'px'; }).join(', ') + ' em ' + k.toLowerCase(), 'desigual|' + onde(pai) + '|' + k);
+    });
   });
 
   return { achados: achados, fontes: fontes, rola: rolador ? { alto: rolador.scrollHeight, cabe: rolador.clientHeight, topo: rolador.scrollTop } : null };
