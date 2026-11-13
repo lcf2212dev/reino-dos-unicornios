@@ -105,7 +105,15 @@
     if (acentos) corpo.insertBefore(acentos, trs[digitadas[0][0]].nextSibling);
     var tabela = el('table.tabela-quadro',
       d.cab ? el('thead', el('tr', d.cab.map(function (t) { return el('th', { scope: 'col' }, t); }))) : null, corpo);
-    wrap.appendChild(el('div.tabela-moldura', tabela));
+    var moldura = wrap.appendChild(el('div.tabela-moldura', tabela));
+    // mais larga que a moldura (Letras grandes no tablet e no notebook): uma ficha por linha, como no celular (css)
+    function caberTabela() {
+      if (!tabela.isConnected) return;
+      wrap.classList.remove('tabela-ficha');
+      if (tabela.offsetWidth > moldura.clientWidth + 1) wrap.classList.add('tabela-ficha');
+    }
+    if (window.ResizeObserver) new ResizeObserver(caberTabela).observe(moldura);
+    setTimeout(caberTabela, 0);
     // as caixas crescem quando entram na tela e quando a largura muda (girar o aparelho, Letras grandes)
     function crescerTodas() { Array.prototype.forEach.call(corpo.querySelectorAll('.tabela-campo'), crescer); }
     if (digitadas.length) {

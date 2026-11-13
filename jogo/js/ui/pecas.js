@@ -12,8 +12,8 @@
   var VOGAL = 'aeiouáéíóúâêôãõàü';
   function ehVogal(ch) { return VOGAL.indexOf(ch.toLowerCase()) >= 0; }
   function ehLetra(ch) { return /[a-zà-ÿ]/i.test(ch); }
-  function hifenizarPalavra(w) {
-    if (w.length < 9) return w;  // até 8 letras cabe inteira nas colunas do celular
+  function hifenizarPalavra(w, min) {
+    if (w.length < (min || 9)) return w;  // até 8 letras cabe inteira nas colunas do celular (min: o último recurso, _d.caberTexto)
     var cortes = [];
     for (var i = 1; i < w.length - 1; i++) {
       var a = w[i - 1], b = w[i], c = w[i + 1], d = w[i + 2];
@@ -31,7 +31,7 @@
     for (var j = cortes.length - 1; j >= 0; j--) w = w.slice(0, cortes[j]) + '\u00AD' + w.slice(cortes[j]);
     return w;
   }
-  function hifenizar(texto) { return String(texto).replace(/[a-zà-ÿ]+/gi, hifenizarPalavra); }
+  function hifenizar(texto, min) { return String(texto).replace(/[a-zà-ÿ]+/gi, function (w) { return hifenizarPalavra(w, min); }); }
   function aparencia() { return est().aparencia; }
 
   /* ---------- confete ---------- */

@@ -194,7 +194,7 @@
       var d = lista[idx];
       corpo.innerHTML = '';
       ctrl = D.render(d, {
-        modo: 'missao',
+        modo: 'missao', aoLivro: sala.ordem === 'livro' && d.livro ? function () { Reino.UI.abrirLivro(materia, d.livro); } : null,
         lerSozinho: Reino.config.esperaFala.lerQuestoes ? [sair] : null,
         onMudar: function () { btnConferir.disabled = !ctrl.pronto(); },
         onCompleto: function () { conferir(true); },

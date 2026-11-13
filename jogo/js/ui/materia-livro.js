@@ -81,9 +81,11 @@
   // → as colunas na largura do conteúdo (.tabela-solta: a coluna "A" estreita, a de "montanha alta" larga); a tabela
   // ainda mais larga que a carta → a letra desce um degrau por vez (16, 12); nada disso → o de antes, partindo a
   // palavra (.tabela-parte). Mede de novo quando a largura muda (girar o aparelho, Letras grandes).
-  var DEGRAUS_TABELA = [['tabela-solta'], ['tabela-solta', 'tabela-degrau-1', '--texto'], ['tabela-solta', 'tabela-degrau-2', '--texto-aux']];
+  // (Letras grandes, onde 16 é o menor: a tabela vira uma ficha por linha, como no celular: .tabela-ficha)
+  var DEGRAUS_TABELA = [['tabela-solta'], ['tabela-solta', 'tabela-degrau-1', '--texto'], ['tabela-solta', 'tabela-degrau-2', '--texto-aux'],
+    ['tabela-ficha'], ['tabela-ficha', 'tabela-degrau-2', '--texto-aux']];
   function ajustarTabela(t) {
-    var ro = null, pai = null, todas = ['tabela-solta', 'tabela-degrau-1', 'tabela-degrau-2', 'tabela-parte'];
+    var ro = null, pai = null, todas = ['tabela-solta', 'tabela-degrau-1', 'tabela-degrau-2', 'tabela-ficha', 'tabela-parte'];
     function cabe() {
       // a tabela tem width: 100% (e max-width): mais larga que o lugar dela na carta = não coube (a margem auto dela
       // fica negativa quando ela passa: não entra na conta)
@@ -172,7 +174,7 @@
     var L = R.livroEscolar(m, c.livroOrigem), pag = typeof c.pagina === 'number';
     if (!L && !pag) return null;
     return el('div.carta-livro', L ? L.emoji : null, el('span.carta-livro-texto', L ? L.nome + ' ' : null,
-      pag ? el('span.carta-livro-pag', (L ? '• ' : '') + (c.pagina === 0 ? 'página sem número' : 'p.\u00a0' + c.pagina)) : null));
+      pag ? el('span.carta-livro-pag' + (c.pagina === 0 ? '.pag-sem-numero' : ''), (L ? (c.pagina === 0 ? '•\u00a0' : '• ') : '') + (c.pagina === 0 ? 'página sem número' : 'p.\u00a0' + c.pagina)) : null));
   }
 
   // desenho de uma carta (o livro pela estante e o resumo antes das questões da sala); materia: opcional (o cabeçalho)

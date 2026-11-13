@@ -74,7 +74,8 @@
       var letras = Math.max.apply(null, certas.map(function (t) { return t.length; }).concat(d.livre ? 12 : 3));
       // resposta de várias palavras com LONGA letras ou mais ("Gênio da Lâmpada"): a caixa é uma textarea de uma linha que
       // quebra entre as palavras e cresce para baixo; nada fica escondido de lado na caixa estreita (celular, painel)
-      var longa = letras >= LONGA && certas.some(function (t) { return /\S\s+\S/.test(t); });
+      // a resposta pessoal (livre) também: ela escreve o que quiser
+      var longa = !!d.livre || (letras >= LONGA && certas.some(function (t) { return /\S\s+\S/.test(t); }));
       var c = _d.campoTexto({ valor: texto(ini[i]), semAcentos: true, max: MAX_LETRAS, linhas: longa ? 2 : 1, rotulo: 'Resposta ' + (f.letra || i + 1),
         classe: longa ? '.digitar-longa' : '',
         aoMudar: function (t) {

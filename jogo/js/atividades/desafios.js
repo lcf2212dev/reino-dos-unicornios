@@ -170,8 +170,15 @@
         if (nk < melhor.n) melhor = { c: g[0], n: nk };
         return !nk;
       });
-      // nem o degrau de baixo cabe ("Matérias-primas" com o ícone): a palavra composta quebra no hífen, na letra de antes
-      if (melhor.n >= 100) { usar(null); titulo.classList.add('titulo-hifen'); if (nota() < melhor.n) return; titulo.classList.remove('titulo-hifen'); }
+      // nem o degrau de baixo cabe ("Matérias-primas" com o ícone): a palavra quebra no hífen dela ou na sílaba
+      // (hífen suave, arte.md §17.2), na letra de antes; o ícone fica com a 1ª parte (espaço inquebrável)
+      if (melhor.n >= 100) {
+        var cola = titulo.querySelector('.titulo-cola'), h = Reino._ui && Reino._ui.hifenizar;
+        if (cola && h) Array.prototype.forEach.call(cola.childNodes, function (n) { if (n.nodeType === 3) n.nodeValue = h(n.nodeValue); });
+        usar(null); titulo.classList.add('titulo-hifen');
+        if (nota() < melhor.n) return;
+        titulo.classList.remove('titulo-hifen');
+      }
       usar(melhor.c);
     }
     function pedir() { if (!pedido) pedido = requestAnimationFrame(medir); }
@@ -317,10 +324,17 @@
     if (d.figura) enun.appendChild(D.figuraDesafio(d.figura));
     var ouvir = el('button.btn-ouvir.livre-na-fala', { type: 'button', 'aria-label': 'Ouvir a pergunta' }, '🔊 Ouvir');
     ouvir.addEventListener('click', function () { Reino.UI.ouvirDeNovo(Reino.Falas.segmentosDesafio(d, ctrl.ordem), { voz: 'narradora' }); });
-    if (Reino.Som.temVoz()) enun.appendChild(ouvir);
+    // opts.aoLivro (só na sala de livro, missao.js): "📖 Livro" ao lado do 🔊, abre a carta da pergunta (como o
+    // "Ver no livro" do erro); a pergunta fica como está e o foco volta ao botão quando o livro fecha
+    var livro = opts.aoLivro && el('button.btn-ouvir.btn-livro.livre-na-fala', { type: 'button', 'aria-label': 'Ver no livro' }, '📖 Livro');
+    if (livro) livro.addEventListener('click', function () { Reino.Som.tocar('toque'); opts.aoLivro(); });
+    var botoes = Reino.Som.temVoz() ? [ouvir] : [];
+    if (livro) enun.appendChild(el('div.enunciado-botoes', botoes.concat(livro)));
+    else if (botoes.length) enun.appendChild(ouvir);
     card.appendChild(enun);
     card.appendChild(ctrl.el);
     ctrl.card = card;
+    _d.caberDentro(card);   // a palavra que não cabe quebra na sílaba, nunca no meio (desafios/quebra.js)
     // opts.lerSozinho (true ou lista de alvos a mais, ex.: ✕ e "Conferir"): lê a questão ao aparecer (UI.esperarFala:
     // só trava as respostas e os alvos com config.esperaFala.travar); ctrl.leitura é a Promise do fim.
     if (opts.lerSozinho) {

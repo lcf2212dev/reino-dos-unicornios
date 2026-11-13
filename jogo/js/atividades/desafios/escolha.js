@@ -19,9 +19,23 @@
     com.forEach(function (o) { _d.conferirDesenho(o.img, d.id + ': opção "' + o.t + '"', v); });
   };
 
+  // opções que começam todas com um rótulo em sequência ("A:", "b)", "Foto 1:", "Grupo 2:", "3)"): a ordem do conteúdo,
+  // sem sorteio (B, C, E, A embaralhados confundem); as outras continuam sorteadas pela mesma chave
+  var RE_ROTULO = /^\s*(?:(?:foto|quadro|grupo|imagem)\s+(\d+)\s*[:).-]?|([a-z])\s*[):]|(\d+)\s*\))/i;
+  _d.ordemRotulada = function (d) {
+    var ops = d.opcoes || [];
+    var ok = ops.length > 1 && ops.every(function (o, i) {
+      var m = RE_ROTULO.exec(String(o && o.t || ''));
+      if (!m) return false;
+      var n = m[1] || m[3] ? Number(m[1] || m[3]) : m[2].toLowerCase().charCodeAt(0) - 96;
+      return n === i + 1;
+    });
+    return ok ? ops.map(function (_, i) { return i; }) : null;
+  };
+
   // escolha única (também serve para "completar a frase")
   function montarEscolha(d, opts) {
-    var ordem = opts.ordem || U.embaralhar(d.opcoes.map(function (_, i) { return i; }), ['escolha', d]);
+    var ordem = opts.ordem || _d.ordemRotulada(d) || U.embaralhar(d.opcoes.map(function (_, i) { return i; }), ['escolha', d]);
     var sel = opts.valorInicial != null ? opts.valorInicial : null;
     var bloqueadas = {};
     var comImg = _d.temImg(d);

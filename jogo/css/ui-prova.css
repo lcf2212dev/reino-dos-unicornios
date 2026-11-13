@@ -100,7 +100,7 @@
 .vf-botao { width: 52px; height: 52px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--branco); font-size: var(--texto); box-shadow: var(--sombra-pequena); --degrau: 2px; }
 .vf-botao.vf-com-icone { padding: 0; display: flex; align-items: center; justify-content: center; }   /* ✓ e ✘ desenhados, centrados (D12b-02) */
 .vf-botao[aria-pressed="true"] { background: var(--roxo-texto); color: var(--branco); box-shadow: var(--sombra-pequena); --degrau: 2px; outline: var(--borda-fina) solid var(--roxo); outline-offset: 2px; }
-.vf-texto { flex: 1; font-size: var(--texto); }
+.vf-texto { flex: 1; min-width: 0; font-size: var(--texto); }   /* a palavra longa não empurra os botões para fora (quebra na sílaba: _d.caberTexto) */
 .tudo-certo .vf-linha { background: var(--certo-fundo); }
 
 /* completar com as palavras do quadro */

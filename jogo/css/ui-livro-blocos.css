@@ -12,6 +12,7 @@
 }
 .carta-livro-texto { min-width: 0; text-align: left; }
 .carta-livro-pag { white-space: nowrap; color: var(--tinta-suave); }
+.letras-grandes .carta-livro-pag.pag-sem-numero { white-space: normal; }   /* "• página sem número" quebra entre as palavras (o "•" fica com "página") */
 .livro-carta.carta-rica > h3 { margin: 4px 0 12px; }
 .carta-titulo-emoji { margin-right: 8px; }
 /* os blocos: alinhados à esquerda, na largura de leitura, com o mesmo vão entre eles */
@@ -56,7 +57,7 @@
 /* figuras: ícone num quadro de 64 px (16×16 em 4×, 32×32 em 2×: todas do mesmo tamanho) com a legenda embaixo */
 .bloco-figuras { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 16px; }
 .bloco-figura { display: flex; flex-direction: column; align-items: center; gap: 4px; max-width: 160px; margin: 0; text-align: center; }
-.bloco-figura figcaption { font-size: var(--texto-aux); line-height: var(--entrelinha-titulo); }
+.bloco-figura figcaption { max-width: 100%; font-size: var(--texto-aux); line-height: var(--entrelinha-titulo); }   /* não passa da figura: a palavra que não cabe vai pelo _d.caberTexto */
 /* ilustração: canvas no meio, na escala inteira que o JS escolhe; a mais larga que a carta rola de lado no quadro */
 .bloco-ilustracao { overflow-x: auto; }
 .ilustracao-px { display: block; margin: 0 auto; }
@@ -94,6 +95,13 @@
 .livro-carta .bloco-tabela.tabela-degrau-1.tabela-degrau-1 :is(th, td) { font-size: var(--texto); }
 .livro-carta .bloco-tabela.tabela-degrau-2.tabela-degrau-2 :is(th, td) { font-size: var(--texto-aux); }
 .bloco-tabela.tabela-parte :is(th, td) { overflow-wrap: break-word; }
+/* nem assim (Letras grandes): uma ficha por linha, cada valor com o seu cabeçalho (o mesmo desenho do celular, acima) */
+.bloco-tabela.tabela-ficha, .bloco-tabela.tabela-ficha :is(tbody, tr, td) { display: block; }
+.bloco-tabela.tabela-ficha thead { display: none; }
+.bloco-tabela.tabela-ficha tr { padding: 4px 8px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel); }
+.bloco-tabela.tabela-ficha tr + tr { margin-top: 8px; }
+.bloco-tabela.tabela-ficha td { padding: 2px 0; border: 0; }
+.bloco-tabela.tabela-ficha td[data-cab]::before { content: attr(data-cab) ": "; font-size: var(--texto-aux); color: var(--tinta-suave); }
 
 /* ---------- os dois livros da escola: uma aba para cada, em cima das marcas ---------- */
 .livro-abas {

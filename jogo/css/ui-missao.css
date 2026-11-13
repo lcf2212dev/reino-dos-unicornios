@@ -87,6 +87,10 @@
 .pergunta { font-size: var(--texto); }   /* enunciado: 16 no celular, 24 a partir de 640 px (arte.md §9.1) */
 @media (min-width: 640px) { .pergunta { font-size: var(--texto-g); } }
 .afirmacao { margin: 10px 0 0; padding: 12px 14px; border-left: var(--borda-grossa) solid var(--ambar); background: var(--papel-quente); border-radius: var(--canto); font-size: var(--texto); }
+/* "🔊 Ouvir" e "📖 Livro" (sala de livro, D.render aoLivro) na mesma linha, rótulos inteiros */
+.enunciado-botoes { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.enunciado-botoes > .btn-ouvir { margin-top: 0; padding: 4px 10px; white-space: nowrap; }
+@media (max-width: 480px) { .letras-grandes .enunciado-botoes > .btn-ouvir { font-size: var(--texto-aux); } }   /* rótulo curto: um degrau abaixo (arte.md §17.3) */
 .btn-ouvir { margin-top: 10px; min-height: 44px; padding: 4px 14px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel-quente); font-size: var(--texto); }
 
 .opcoes { display: grid; grid-template-columns: 1fr; gap: 12px; }
@@ -108,6 +112,9 @@
    é o último recurso) */
 .opcao-texto { flex: 1; min-width: 0; overflow-wrap: normal; }
 .opcao-texto.texto-parte, .ligar-texto.texto-parte { overflow-wrap: break-word; }
+/* o degrau de baixo de qualquer texto que não cabe (_d.caberTexto): toda tela mora em #telas, e o id vence a letra de
+   cada lugar (enunciado, carta, legenda) */
+#telas .texto-menor { font-size: var(--texto-aux); }
 /* grupo colado do texto da opção e do ligar com emoji (_d.textoOpcao: "de brinquedo", "100 reais"): inteiro na linha; só
    o que é mais largo que o botão quebra entre as palavras (ou na sílaba, com hífen), em vez de vazar (arte.md §17) */
 .grupo-colado { display: inline-block; max-width: 100%; }
@@ -175,8 +182,9 @@
   min-height: 52px; padding: 8px 14px; text-align: left;
   border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
   background: var(--papel); box-shadow: var(--sombra-pequena); --degrau: 2px;
-  
+  max-width: 100%;   /* a frase longa quebra dentro do botão (sílaba: _d.caberTexto), nunca passa da caixa */
 }
+.seq-item > span { min-width: 0; }
 .seq-alvo .seq-item { width: 100%; background: var(--ambar-claro); }
 .seq-monte { display: flex; flex-wrap: wrap; gap: 10px; }
 .frase-linha { flex-direction: row; flex-wrap: wrap; align-items: center; }

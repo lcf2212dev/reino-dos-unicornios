@@ -140,10 +140,18 @@
   .painel .apoio-fechado .apoio-corpo { display: none; }
   .painel .apoio-inteiro .apoio-corpo { max-height: none; overflow: visible; }
 }
+/* Letras grandes num painel (tablet e notebook): o 🔊 fica só com o ícone, como no celular, e "📖 Esconder" inteiro numa
+   linha; as opções numa coluna (em 24 px, meia largura do painel não tem lugar para "consulta") */
+@media (min-width: 640px) {
+  .letras-grandes .painel .apoio-ouvir-rotulo { display: none; }
+  .letras-grandes .painel .apoio-abrir { white-space: nowrap; }
+  .letras-grandes .painel :is(.opcoes-varias, .opcoes-duas):not(.opcoes-img) { grid-template-columns: 1fr; }
+}
 
 /* instrucao (opcional): como responder no jogo, numa linha própria logo abaixo da pergunta */
 .instrucao { display: flex; align-items: baseline; gap: 6px; margin: 8px 0 0; font-size: var(--texto); font-style: italic; color: var(--tinta-suave); }
 .instrucao-icone { flex: none; font-style: normal; }
+.instrucao > span:last-child { min-width: 0; }
 
 /* completar: lacuna dentro da palavra (colado) e grade compacta (itens com figura) */
 .completar-itens { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 10em), 1fr)); gap: 8px; }
@@ -164,6 +172,8 @@
 .completar-grade.completar-palavras-longas .chip-palavra { flex: none; max-width: none; padding: 6px 8px; }
 .completar-img { display: inline-flex; line-height: 1; min-height: 64px; align-items: center; justify-content: center; font-size: var(--texto-t); }
 .palavra-colada { white-space: nowrap; }
+/* Letras grandes no celular: a palavra da lacuna colada ("Vitória-Régia") inteira, um degrau abaixo (arte.md §17.3) */
+@media (max-width: 480px) { .letras-grandes .frase-colada { font-size: var(--texto-aux); } }
 /* a lacuna e o sinal logo depois dela ("__."), juntos na quebra de linha; a lacuna preenchida com a resposta longa
    ("Chapeuzinho Vermelho") quebra dentro dela e encolhe para o sinal caber */
 .lacuna-cola { display: inline-flex; align-items: baseline; max-width: 100%; }

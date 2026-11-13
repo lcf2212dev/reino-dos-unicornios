@@ -277,5 +277,10 @@ footer.rodape-acao:not(:has(.btn-grande:not([hidden]))) { height: auto; padding-
   footer.rodape-acao:not(:has(.btn-grande:not([hidden]))) { display: none; }
   footer.rodape-acao > .so-seta, footer.rodape-acao > .rodape-vaga { flex: 0 0 64px; min-width: 0; padding: 0; }
   footer.rodape-acao .sem-relogio { display: none; }
+  /* Letras grandes: o rótulo do botão do rodapé ("Continuar ➡") um degrau abaixo, inteiro no botão (arte.md §17.3) */
+  .letras-grandes footer.rodape-acao .btn-grande { font-size: var(--texto-aux); }
 }
+/* Letras grandes em qualquer tela: o rótulo longo do rodapé sai, como no celular ("Próxima ▶", "Descansar"; arte.md §20.2) */
+.letras-grandes footer.rodape-acao .rotulo-longo { display: none; }
+.letras-grandes footer.rodape-acao .rotulo-curto { display: inline; }
 

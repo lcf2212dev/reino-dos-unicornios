@@ -32,7 +32,9 @@ textarea.campo-texto { display: block; resize: vertical; }
   display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 6px 12px;
   border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--branco);
   box-shadow: var(--sombra-pequena); --degrau: 2px; font-size: var(--texto); text-align: left;
+  max-width: 100%;   /* o nome que não cabe desce um degrau dentro do botão (_d.caberTexto), não passa da legenda */
 }
+.marcar-cor > span:last-child { min-width: 0; }
 .marcar-cor[aria-pressed="true"] { background: var(--ambar-claro); outline: var(--borda-fina) solid var(--roxo); outline-offset: 2px; }
 .marcar-amostra { flex: none; width: 24px; height: 24px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-pequeno); background: var(--marca-cor, var(--roxo)); }
 /* isolation: a marca (::before, z-index -1) fica atrás das letras e na frente do papel */
@@ -107,6 +109,9 @@ textarea.campo-texto { display: block; resize: vertical; }
 .digitar-img { flex: none; display: inline-flex; align-items: center; justify-content: center; min-height: 64px; line-height: 1; }
 .tudo-certo .digitar-item { background: var(--certo-fundo); }
 @media (max-width: 480px) { .digitar-item { padding: 10px; gap: 8px; } }
+/* Letras grandes no celular: a caixa de uma palavra fica no degrau de baixo (16), como a do tamanho normal: uma palavra
+   não quebra, e "PROFESSORA" em 24 px não cabe ao lado da figura (arte.md §17.3) */
+@media (max-width: 480px) { .letras-grandes .digitar input.campo-texto { font-size: var(--texto-aux); } }
 
 /* ---------- escrever: resposta escrita ---------- */
 .escrever { display: flex; flex-direction: column; gap: 12px; }
