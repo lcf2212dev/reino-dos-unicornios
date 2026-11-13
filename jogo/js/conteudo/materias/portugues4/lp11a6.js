@@ -17,7 +17,7 @@
       intro: 'Hora de criar! Vamos inventar uma paródia musical e depois testar tudo o que aprendemos no capítulo.',
       desafios: [
         { id: 'lp11a6-01', tipo: 'completar', origem: 'APR-50-q1', pagina: 50, livro: 'lp-a50', livre: true,
-          pergunta: 'Junto aos colegas e ao professor, selecione uma música. Pode ser uma das canções estudadas ao longo do capítulo.',
+          pergunta: 'Selecione uma música. Pode ser uma das canções estudadas ao longo do capítulo.',
           palavras: ['Rei da Floresta', 'Fundo do mar', 'Como é verde na floresta', 'Ciranda, cirandinha'],
           frases: [
             { antes: 'A música escolhida é', depois: '.', certa: 0 },
@@ -136,7 +136,7 @@
           pergunta: 'Use as dicas entre parênteses para completar o texto a seguir.',
           frases: [
             { antes: 'Na floresta tem um', depois: '(diminutivo de lobo),', certas: ['lobinho'] },
-            { antes: 'No jardim tem uma', depois: '(diminutivo de flor),', certas: ['florzinha'] },
+            { antes: 'No jardim tem uma', depois: '(diminutivo de flor),', certas: ['florzinha', 'florinha'] },
             { antes: 'Há também os', depois: '(diminutivo de bichos),', certas: ['bichinhos'] },
             { antes: 'Meu amigo tem um', depois: '(diminutivo de cão),', certas: ['cãozinho'] },
             { antes: 'Na escola tem um', depois: '(aumentativo de livro),', certas: ['livrão'] },

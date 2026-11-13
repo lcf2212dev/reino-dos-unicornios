@@ -2,7 +2,8 @@
    (docs/contratos/quarto-bimestre.md §3). Letra que falta (pp. 72 e 73): tocar na letra certa (a digitada não
    confere maiúscula), em vários desafios para ter poucos botões (até 6). Decisões do INVENTARIO.md: "___apão" =
    Japão e "___ousa" = lousa; na mensagem de Ana, vovó e beijos são comuns opcionais (marcar: {x|1?});
-   Parque Ibirapuera e Mercado São João levam maiúscula em todas as palavras. */
+   em Parque Ibirapuera e Mercado São João, "parque" e "mercado" são alvos opcionais (maiúscula facultativa,
+   Base XIX do Acordo de 1990; o livro escreve "A rua João Torres"). */
 (function () {
   var LETRA = 'Complete as palavras com as letras que estão faltando. Dica: use a letra maiúscula em nomes próprios.';
   var PARENTESES = 'Complete as palavras usando a letra certa, conforme indicado nos parênteses.';
@@ -99,8 +100,8 @@
           pergunta: 'As frases a seguir foram escritas com letras minúsculas. Reescreva as frases usando a letra maiúscula onde for necessário. Aqui, contorne as palavras que precisam de letra maiúscula.',
           marca: 'circular',
           texto: '{minha} amiga {letícia} levou seu cachorro {paco} para uma consulta no veterinário.\n' +
-            '{fomos} passear no {parque} {ibirapuera} e vimos uma árvore enorme.\n' +
-            '{compramos} frutas no {mercado} {são} {joão}, perto da casa da vovó {ana}.',
+            '{fomos} passear no {parque?} {ibirapuera} e vimos uma árvore enorme.\n' +
+            '{compramos} frutas no {mercado?} {são} {joão}, perto da casa da vovó {ana}.',
           adaptacao: 'Reescrever virou contornar as palavras que precisam de letra maiúscula; a explicação mostra as frases reescritas.',
           explica: 'Minha amiga Letícia levou seu cachorro Paco ao veterinário. Fomos passear no Parque Ibirapuera. Compramos frutas no Mercado São João, perto da casa da vovó Ana.' },
       ],

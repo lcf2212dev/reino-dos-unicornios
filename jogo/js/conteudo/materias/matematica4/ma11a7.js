@@ -25,7 +25,7 @@ Reino.registrarSala('matematica4',
           frases: [{ antes: 'Cada criança vai ganhar', depois: 'gizes de cera.', certas: ['3', 'três'] }],
           explica: 'São 6 + 6 = 12 gizes. 12 ÷ 4 = 3 gizes para cada criança.' },
         { id: 'ma11a7-03', tipo: 'digitar', origem: 'APR-50-q2a', pagina: 50, livro: 'ma-a50',
-          pergunta: 'Matias convidou 20 pessoas para a festa de aniversário dele. Os convidados serão distribuídos igualmente nestas mesas. Desenhe bancos para representar a quantidade de pessoas em cada mesa. Quantos bancos vão em cada mesa?',
+          pergunta: 'Matias convidou 20 pessoas para a festa de aniversário dele. Os convidados serão distribuídos igualmente nestas mesas. Quantos bancos vão em cada mesa, um para cada pessoa?',
           frases: [
             { antes: '1ª mesa:', depois: 'bancos', certas: ['4', 'quatro'] },
             { antes: '2ª mesa:', depois: 'bancos', certas: ['4', 'quatro'] },

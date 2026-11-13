@@ -20,7 +20,7 @@
         { img: '⛰️', legenda: 'Chapada Diamantina, na Bahia.' },
         { img: '🌳', legenda: 'Floresta Amazônica, no Amazonas.' },
         { img: '⛪', legenda: 'Belém, no Pará.' },
-        { img: '🏛️', legenda: 'Porto Alegre, no Rio Grande do Sul.' },
+        { img: '🌇', legenda: 'Porto Alegre, no Rio Grande do Sul.' },
       ] },
     ]),
     carta('ge-t07', '🏖️', SECAO, 7, [

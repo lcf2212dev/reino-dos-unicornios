@@ -1,7 +1,7 @@
 /* Sala lp11t2 (Livro de Atividades, capítulo 11, pp. 11 e 12): graus do substantivo, aumentativo e diminutivo
    (os dois quadros, escrever o diminutivo, a palavra diferente de cada grupo e os animais). Na p. 12 os quadros
-   não têm rótulo (verde = aumentativo, lilás = diminutivo): no jogo, as colunas têm nome. O quinto animal é um
-   pássaro (vale também pombo). */
+   não têm rótulo (verde = aumentativo, lilás = diminutivo): no jogo, as colunas têm nome e cada linha diz o animal
+   (cachorro, pássaro), então só valem as formas dessa palavra (cãozinho e pombinho são de cão e de pombo). */
 Reino.registrarSala('portugues4',
     {
       id: 'lp11t2', nome: 'Aumentativo e diminutivo', emoji: '🐦',
@@ -52,10 +52,10 @@ Reino.registrarSala('portugues4',
           cab: ['Animal', 'Aumentativo', 'Diminutivo'],
           linhas: [
             ['peixe', { certas: ['peixão'] }, { certas: ['peixinho'] }],
-            ['cachorro', { certas: ['cachorrão', 'canzarrão'] }, { certas: ['cachorrinho', 'cãozinho'] }],
+            ['cachorro', { certas: ['cachorrão'] }, { certas: ['cachorrinho'] }],
             ['rato', { certas: ['ratão'] }, { certas: ['ratinho'] }],
             ['tartaruga', { certas: ['tartarugona'] }, { certas: ['tartaruguinha'] }],
-            ['pássaro', { certas: ['passarão', 'pombão'] }, { certas: ['passarinho', 'pombinho'] }],
+            ['pássaro', { certas: ['passarão'] }, { certas: ['passarinho'] }],
           ],
           adaptacao: 'Os quadros sem nome do livro (verde e lilás) viraram as colunas Aumentativo e Diminutivo.',
           explica: 'Peixão e peixinho; cachorrão e cachorrinho; ratão e ratinho; tartarugona e tartaruguinha; passarão e passarinho.' },

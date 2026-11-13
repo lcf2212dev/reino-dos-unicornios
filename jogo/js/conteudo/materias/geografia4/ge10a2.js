@@ -21,7 +21,7 @@ Reino.registrarSala('geografia4',
           banco: ['madeira e grafite', 'celulose', 'látex', 'madeira', 'ferro'],
           linhas: [
             ['lápis', { certa: 0 }],
-            ['folha de papel', { certas: ['celulose', 'madeira', 'a celulose', 'a madeira'] }],
+            ['folha de papel', { certa: 1 }],
             ['borracha escolar', { certa: 2 }],
             ['mesa de madeira', { certa: 3 }],
             ['prego', { certa: 4 }],

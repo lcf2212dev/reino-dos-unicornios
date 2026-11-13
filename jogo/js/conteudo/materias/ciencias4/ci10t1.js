@@ -65,6 +65,6 @@ Reino.registrarSala('ciencias4',
             [{ t: 'Madeira' }, { t: 'Mesa' }],
             [{ t: 'Hortelã' }, { t: 'Óleos essenciais' }],
           ],
-          explica: 'O algodão vira roupa, a camomila vira chá, a madeira vira mesa e a hortelã vira óleo essencial. A hortelã também vira chá! Mas a camomila só serve para o chá, então a hortelã fica com os óleos essenciais.' },
+          explica: 'O algodão vira roupa, a camomila vira chá, a madeira vira mesa e a hortelã vira óleo essencial. A hortelã também dá chá, mas as flores secas de camomila da foto são para o chá; então a hortelã fica com os óleos essenciais.' },
       ],
     });

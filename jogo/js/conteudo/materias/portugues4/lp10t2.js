@@ -55,8 +55,9 @@ Reino.registrarSala('portugues4',
         { id: 'lp10t2-05', tipo: 'frase', origem: 'ATI-04-q5a', pagina: 4, livro: 'lp-a11b',
           pergunta: 'Coloque as palavras em ordem para formar a frase a). Toque nos blocos na ordem certa.',
           blocos: ['COMO', 'VOCÊ', 'SE', 'CHAMA'],
+          aceitas: [[0, 2, 3, 1]],
           adaptacao: 'As palavras em ordem viram blocos; o sinal de pontuação vem na questão seguinte.',
-          explica: 'A frase é "Como você se chama". É uma pergunta!' },
+          explica: 'A frase é "Como você se chama" ou "Como se chama você". É uma pergunta!' },
         { id: 'lp10t2-06', tipo: 'frase', origem: 'ATI-04-q5b', pagina: 4, livro: 'lp-a11b',
           pergunta: 'Coloque as palavras em ordem para formar a frase b). Toque nos blocos na ordem certa.',
           blocos: ['EU', 'AMO', 'QUANDO', 'O', 'DIA', 'ESTÁ', 'ENSOLARADO'],
@@ -92,7 +93,7 @@ Reino.registrarSala('portugues4',
             'O lobo soprou: "Fuuuuuu!" – e a casa voou pelos ares. O porquinho correu para a casa de madeira do irmão.\n' +
             '{Logo}, o lobo voltou:\n' +
             'O lobo soprou mais forte: "Fuuuuuu!" – e a casa caiu. Os dois fugiram para a casa de tijolos do terceiro irmão.\n' +
-            '{No fim da tarde}, o lobo apareceu de novo e gritou:\n' +
+            '{No fim da tarde}, o lobo apareceu {de novo|?} e gritou:\n' +
             'O lobo assoprou: "FUUUUUUU!" Mas a casa resistiu. Cansado, ele foi embora. Os porquinhos comemoraram:',
           adaptacao: 'Escrever dois marcadores virou tocar em todos os marcadores temporais dos trechos do conto (sem as falas), para não valer o mesmo duas vezes.',
           explica: 'Os marcadores temporais do conto são: "Era uma vez", "Um dia", "Naquela manhã", "Logo" e "No fim da tarde".' },

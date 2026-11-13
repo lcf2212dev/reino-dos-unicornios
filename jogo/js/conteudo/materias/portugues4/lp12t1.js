@@ -85,7 +85,7 @@
           explica: 'Um pão, dois pães. Uma mãe, duas mães. O plural termina em -ães.' },
         { id: 'lp12t1-10', tipo: 'escrever', origem: 'ATI-16-q5b', pagina: 16, livro: 'lp-t16', avulsa: { carta: 'lp-a63b' },
           pergunta: 'Escreva uma frase com a palavra pães.',
-          linhas: 2, minFrases: 1, chaves: [['pães']],
+          linhas: 2, minFrases: 1, maiusculas: true, chaves: [['pães']],
           modelo: 'Comprei pães na padaria.',
           explica: 'Muito bem! A frase começa com letra maiúscula e termina com ponto.' },
         { id: 'lp12t1-11', tipo: 'escrever', origem: 'ATI-16-q5c', pagina: 16, livro: 'lp-t16', avulsa: { carta: 'lp-a63b' },

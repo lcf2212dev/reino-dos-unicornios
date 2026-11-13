@@ -31,9 +31,9 @@
           pergunta: 'Descubra a metade e a terça parte de cada quantidade de bolinhas de tênis. Depois, complete o quadro com as informações que faltam.',
           cab: ['Quantidade de bolas', 'Metade', 'Terça parte'],
           linhas: [
-            ['6', { certas: ['3'] }, { certas: ['2'] }],
-            ['12', { certas: ['6'] }, { certas: ['4'] }],
-            ['24', { certas: ['12'] }, { certas: ['8'] }],
+            ['6', { certas: ['3', 'três'] }, { certas: ['2', 'dois'] }],
+            ['12', { certas: ['6', 'seis'] }, { certas: ['4', 'quatro'] }],
+            ['24', { certas: ['12', 'doze'] }, { certas: ['8', 'oito'] }],
           ],
           adaptacao: 'As bolinhas de tênis desenhadas em cada linha viraram o número de bolinhas.',
           explica: '6: metade 3, terça parte 2. 12: metade 6, terça parte 4. 24: metade 12, terça parte 8.' },

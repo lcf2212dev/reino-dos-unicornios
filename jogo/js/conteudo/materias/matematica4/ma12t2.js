@@ -16,7 +16,7 @@
       desafios: [
         { id: 'ma12t2-01', tipo: 'digitar', origem: 'ATI-15-q1a', pagina: 15, livro: 'ma-t15', apoio: JOGOS,
           pergunta: 'Observe a pergunta que a professora Raquel fez aos alunos do 2º ano. O resultado dessa pesquisa foi organizado na tabela a seguir. a) Quantos alunos preferem xadrez?',
-          frases: [{ antes: '', depois: '', certas: ['16', 'dezesseis', '16 alunos'] }],
+          frases: [{ antes: '', depois: '', certas: ['16', 'dezesseis', '16 alunos', 'dezesseis alunos'] }],
           explica: 'Na tabela, o xadrez tem 16 alunos.' },
         { id: 'ma12t2-02', tipo: 'escolha', origem: 'ATI-15-q1b', pagina: 15, livro: 'ma-t15', apoio: JOGOS,
           pergunta: 'b) Qual é o jogo preferido por 12 alunos?',

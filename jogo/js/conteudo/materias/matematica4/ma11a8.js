@@ -13,7 +13,7 @@ Reino.registrarSala('matematica4',
           frases: [{ antes: 'Igor tem', depois: 'reais.', certas: ['30', 'trinta'] }],
           explica: 'Uma cédula de 20 reais e uma de 10 reais: 20 + 10 = 30 reais.' },
         { id: 'ma11a8-02', tipo: 'varias', origem: 'APR-52-q5b', pagina: 52, livro: 'ma-a52',
-          pergunta: 'b) Igor trocou as cédulas e deu metade da quantia que tinha para Lucas. Desenhe cédulas para representar a quantia que Lucas ganhou de Igor. Toque em todos os jeitos de cédulas que dão a quantia de Lucas.',
+          pergunta: 'b) Igor trocou as cédulas e deu metade da quantia que tinha para Lucas. Toque em todos os jeitos de cédulas que dão a quantia de Lucas.',
           opcoes: [
             { t: 'R$ 10 + R$ 5', ok: true },
             { t: 'R$ 5 + R$ 5 + R$ 5', ok: true },

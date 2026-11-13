@@ -62,7 +62,7 @@
           modelo: 'Ela fala de amizade e de brincar com os amigos.',
           explica: 'Toda canção tem um assunto: ela pode falar de amizade, de bichos, de amor ou de brincadeiras.' },
         { id: 'lp11a1-06', tipo: 'escrever', origem: 'APR-31-qC', pagina: 31, livro: 'lp-a31',
-          pergunta: 'Por que essa música é especial para você? Conte aos colegas e ouça o que eles tem a dizer.',
+          pergunta: 'Por que essa música é especial para você?',
           linhas: 3, minPalavras: 3,
           modelo: 'Porque ela é alegre e me lembra da minha família.',
           adaptacao: 'Contar aos colegas virou escrever a resposta.',

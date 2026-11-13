@@ -33,8 +33,8 @@
           linhas: [
             ['cédula de 2 reais', { certas: reais(4, 'quatro') }, { certas: reais(6, 'seis') }],
             ['cédula de 5 reais', { certas: reais(10, 'dez') }, { certas: reais(15, 'quinze') }],
-            ['cédula de 10 reais', { certas: reais(20) }, { certas: reais(30) }],
-            ['cédula de 10 reais e cédula de 2 reais', { certas: reais(24) }, { certas: reais(36) }],
+            ['cédula de 10 reais', { certas: reais(20, 'vinte') }, { certas: reais(30, 'trinta') }],
+            ['cédula de 10 reais e cédula de 2 reais', { certas: reais(24, 'vinte e quatro') }, { certas: reais(36, 'trinta e seis') }],
           ],
           explica: 'O dobro é 2 vezes e o triplo é 3 vezes: 2 dá 4 e 6; 5 dá 10 e 15; 10 dá 20 e 30; 12 dá 24 e 36.' },
         { id: 'ma10a4-04', tipo: 'digitar', origem: 'APR-17-q3', pagina: 17, livro: 'ma-a17',

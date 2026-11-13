@@ -29,7 +29,7 @@
         { id: 'ma10a2-03', tipo: 'tabela', origem: 'APR-08-qB', pagina: 8, livro: 'ma-a08',
           pergunta: 'Agora, conte e escreva no quadro a seguir a quantia que cada um deles recebeu nessa troca.',
           cab: ['Murilo', 'Gabriela'],
-          linhas: [[{ certas: reais(120) }, { certas: reais(120) }]],
+          linhas: [[{ certas: reais(120).concat('cento e vinte', 'cento e vinte reais') }, { certas: reais(120).concat('cento e vinte', 'cento e vinte reais') }]],
           explica: 'Murilo: 100 + 20 = 120. Gabriela: 50 + 50 + 10 + 10 = 120. Os dois receberam R$ 120,00.' },
         { id: 'ma10a2-04', tipo: 'completar', origem: 'APR-08-qC', pagina: 8, livro: 'ma-a08',
           pergunta: 'Complete a frase sobre as quantias que Murilo e Gabriela receberam.',

@@ -73,6 +73,7 @@ Reino.registrarSala('portugues4',
           adaptacao: 'Pintar no livro virou tocar em cada sinal (dois-pontos, travessão e aspas) com a cor da legenda.',
           explica: 'No trecho a, os dois-pontos vêm antes da fala, e o travessão abre a fala dos anciões. No trecho b, os dois-pontos vêm antes de uma explicação. No trecho c, as aspas destacam "Estrela das Águas" e "mumuru".' },
         { id: 'lp10a4-09', tipo: 'ligar', origem: 'APR-19-q9', pagina: 19, livro: 'lp-a19',
+          avulsa: { carta: 'lp-a15' },
           apoio: { titulo: 'Veja um exemplo', partes: [
             { titulo: 'Ação:', texto: 'Naiá ficava noites acordada, subindo nos galhos das árvores para tentar alcançar Jaci.' },
             { titulo: 'Consequência:', texto: 'Naiá ficou enfraquecida.' },

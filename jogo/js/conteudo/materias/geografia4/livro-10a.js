@@ -19,7 +19,7 @@
     carta('ge-a03', '✈️', 'Matérias-primas: de onde vêm? – Capítulo 10', 3, [
       { t: 'texto', texto: 'Na imagem, duas crianças brincam numa sala. A menina segura um avião de brinquedo e tem à frente blocos de montar coloridos. O menino desenha com um lápis numa folha de papel.' },
       { t: 'figuras', itens: [
-        { img: '✈️', legenda: 'avião de brinquedo' }, { img: 'ge:10-blocos', legenda: 'blocos de montar' },
+        { img: 'ge:10-aviao', legenda: 'avião de brinquedo' }, { img: 'ge:10-blocos', legenda: 'blocos de montar' },
         { img: '✏️', legenda: 'lápis' }, { img: '📄', legenda: 'folha de papel' },
       ] },
       { t: 'quadro', titulo: 'Conversa vai...', itens: [
