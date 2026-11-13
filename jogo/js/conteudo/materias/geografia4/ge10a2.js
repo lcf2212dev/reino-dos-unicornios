@@ -16,7 +16,7 @@ Reino.registrarSala('geografia4',
           adaptacao: 'Pintar o quadrado de cada foto virou pintar o nome da foto (nos nomes de várias palavras, todas elas).',
           explica: 'O grafite vem das rochas: extrativismo mineral (vermelho). O peixe vem de um animal: extrativismo animal (amarelo). A madeira e o açaí vêm das plantas: extrativismo vegetal (azul).' },
         { id: 'ge10a2-02', tipo: 'tabela', origem: 'APR-09-q1', pagina: 9, livro: 'ge-a09',
-          pergunta: 'Agora, você vai investigar alguns objetos. Escreva a principal matéria-prima utilizada na produção de cada um.',
+          pergunta: 'Agora, você vai investigar alguns objetos. Escolha a principal matéria-prima utilizada na produção de cada um.',
           cab: ['Nome do objeto', 'Principal matéria-prima'],
           banco: ['madeira e grafite', 'celulose', 'látex', 'madeira', 'ferro'],
           linhas: [
