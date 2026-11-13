@@ -216,13 +216,12 @@ function medir(op) {
     if (recuo && e.parentElement && visivel(e.parentElement)) achar('acento-deslocado', e.parentElement, 'a letra ' + e.textContent + ' sai ' + recuo + 'px do lugar');
   });
 
-  /* 12: irmãos iguais (as opções de uma pergunta, as casas de uma grade, os itens de uma lista) com a letra em
-     tamanhos diferentes: um desceu de degrau para caber e os vizinhos não */
-  // o texto principal de um item: o pedaço com mais letras (não o número da casa nem a marca do par); empate, a letra maior
-  function letraDe(e) {
-    var d = (textoProprio(e) ? [e] : []).concat(Array.prototype.filter.call(e.querySelectorAll('*'), function (x) { return textoProprio(x) && visivel(x); }));
-    var proprio = function (x) { var n = 0; for (var c = x.firstChild; c; c = c.nextSibling) if (c.nodeType === 3) n += c.nodeValue.trim().length; return n; };
-    return d.sort(function (x, y) { return proprio(y) - proprio(x) || parseFloat(cs(y).fontSize) - parseFloat(cs(x).fontSize); })[0] || null;
+  /* 12: irmãos iguais (as opções de uma pergunta, os itens de uma coluna, os baús) em que o MESMO tipo de texto (a
+     mesma tag e classe: o rótulo da opção, o título do baú) está em tamanhos diferentes: um desceu de degrau para
+     caber e os vizinhos não. Textos de tipos diferentes (o número do par e o texto, a palavra e a frase) não se comparam */
+  function tipoDoTexto(x, item) {
+    if (x === item) return '(o item)';
+    return x.tagName.toLowerCase() + Array.prototype.filter.call(x.classList, function (c) { return !/^texto-(menor|parte)$/.test(c); }).map(function (c) { return '.' + c; }).join('');
   }
   [raiz].concat(todos).forEach(function (pai) {
     var grupos = {};
@@ -232,10 +231,23 @@ function medir(op) {
       (grupos[k] = grupos[k] || []).push(f);
     });
     Object.keys(grupos).forEach(function (k) {
-      var tam = {};
-      grupos[k].forEach(function (f) { var t = letraDe(f); if (t) { var px = Math.round(parseFloat(cs(t).fontSize)); tam[px] = (tam[px] || 0) + 1; } });
-      var ks = Object.keys(tam);
-      if (grupos[k].length > 1 && ks.length > 1) achar('letra-desigual', pai, ks.map(function (px) { return tam[px] + ' com ' + px + 'px'; }).join(', ') + ' em ' + k.toLowerCase(), 'desigual|' + onde(pai) + '|' + k);
+      if (grupos[k].length < 2) return;
+      var porTipo = {};
+      grupos[k].forEach(function (f) {
+        var visto = {};
+        (textoProprio(f) ? [f] : []).concat(Array.prototype.filter.call(f.querySelectorAll('*'), function (x) { return textoProprio(x) && visivel(x); })).forEach(function (x) {
+          var t = tipoDoTexto(x, f);
+          if (visto[t]) return;   // um por irmão e por tipo
+          visto[t] = 1;
+          var px = Math.round(parseFloat(cs(x).fontSize));
+          porTipo[t] = porTipo[t] || {};
+          porTipo[t][px] = (porTipo[t][px] || 0) + 1;
+        });
+      });
+      Object.keys(porTipo).forEach(function (t) {
+        var ks = Object.keys(porTipo[t]);
+        if (ks.length > 1) achar('letra-desigual', pai, ks.map(function (px) { return porTipo[t][px] + ' com ' + px + 'px'; }).join(', ') + ' em ' + t + ' de ' + k.toLowerCase(), 'desigual|' + onde(pai) + '|' + k + '|' + t);
+      });
     });
   });
 
