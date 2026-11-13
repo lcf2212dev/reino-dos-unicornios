@@ -97,9 +97,13 @@
 /* Verdadeiro/Falso e duas opções lado a lado só a partir de 640 px: no celular, "Verdadeiro" na letra pixel
    não cabe em meia tela e empurrava o "Falso" para fora */
 @media (min-width: 640px) { .opcoes-varias { grid-template-columns: 1fr 1fr; } .opcoes-duas, .opcoes-vf { grid-template-columns: 1fr 1fr; } }
-/* rótulo comprido (escolha.js, .opcoes-longas: 4 palavras ou mais): uma coluna só, na sala e no painel (em meia largura a
+/* rótulo comprido (escolha.js, .opcoes-longas: mais de 24 letras): uma coluna só, na sala e no painel (em meia largura a
    frase ficava com uma palavra por linha) */
-.opcoes-longas:not(.opcoes-img) { grid-template-columns: 1fr; }
+:root:not(.letras-grandes) .opcoes-longas:not(.opcoes-img):not(:has(> .opcao:nth-child(7))),
+.opcoes-muito-longas:not(.opcoes-img):not(:has(> .opcao:nth-child(7))),
+.letras-grandes .opcoes-longas:not(.opcoes-img):not(:has(> .opcao:nth-child(5))) { grid-template-columns: 1fr; }
+/* (só até 6 opções: as 10 de uma lista em uma coluna desciam 800 px abaixo do rodapé no tablet; com Letras grandes, as
+   de 25 a 48 letras só até 4: com 5 ou mais, em uma coluna, passavam do rodapé no tablet) */
 .opcao {
   display: flex; align-items: center; gap: 12px;
   min-height: 64px; padding: 12px 16px; text-align: left;
@@ -122,6 +126,10 @@
    o que é mais largo que o botão quebra entre as palavras (ou na sílaba, com hífen), em vez de vazar (arte.md §17) */
 .grupo-colado { display: inline-block; max-width: 100%; }
 .en .grupo-colado { max-width: calc(100% - 0.3em); }   /* dentro do «inglês», menos a folga dele (ui-desafios.css) */
+/* no nome da opção com figura o pai tem a largura do próprio texto (flex: none) e a conta exata da folga arredonda uma
+   fração de px para menos: «I cry.» quebrava em "I / cry." com espaço sobrando (arte.md §17.4). 0.05em de sobra
+   absorve o arredondamento; sem folga nenhuma (100%) o rótulo mais largo que o botão passava 7 px com Letras grandes */
+.opcao-img .en .grupo-colado { max-width: calc(100% - 0.25em); }
 /* palavra comprida (ex.: "acontecimentos" com letras grandes no celular): quebra dentro do texto da opção em vez de
    empurrar o botão para fora da tela; palavras que cabem não mudam (break-word só age quando a palavra não cabe) */
 .opcoes > .opcao { min-width: 0; }

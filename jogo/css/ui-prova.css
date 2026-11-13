@@ -117,7 +117,7 @@
 .completar .chip-palavra { min-width: 48px; }
 /* lista longa (5+ frases, as contas curtas da Matemática): 2 colunas quando a caixa comporta 2 de 340 px (D6-27);
    caixa estreita e lista curta (frases longas) ficam em 1 coluna */
-.completar:not(.completar-grade):not(.completar-colado-longo):has(> .frase-completar:nth-child(6)) { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); }
+.completar:not(.completar-grade):not(.completar-colado-longo):has(> .frase-completar:nth-child(6)) { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 21.25em), 1fr)); }   /* 340 px em 16; com Letras grandes (24) a frase longa fica numa coluna, sem uma palavra por linha */
 .completar:not(.completar-grade):not(.completar-colado-longo):has(> .frase-completar:nth-child(6)) > .quadro-palavras { grid-column: 1 / -1; }
 .tudo-certo .frase-completar { background: var(--certo-fundo); }
 

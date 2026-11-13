@@ -33,10 +33,13 @@
     return ok ? ops.map(function (_, i) { return i; }) : null;
   };
 
-  // rótulo comprido (4 palavras ou mais, ou mais de 24 letras): a grade das opções fica com colunas largas (uma só no
-  // texto; mais larga na figura), na sala e no painel (ui-missao.css, ui-desafios-grade.css)
+  // rótulo comprido: .opcoes-longas (mais de 24 letras: uma coluna só no texto, até 6 opções, ou 4 com Letras grandes;
+  // a coluna da figura mais larga a partir de 640 px) e .opcoes-muito-longas (mais de 48 letras: uma coluna só no
+  // texto também com Letras grandes). Medido nas 291 perguntas de opção: nenhuma regra empurra a última opção para
+  // baixo do rodapé (ui-missao.css, ui-desafios-grade.css)
   _d.classeLongas = function (d) {
-    return (d.opcoes || []).some(function (o) { var t = U.semEn(String(o && o.t || '')).trim(); return t.length > 24 || t.split(/\s+/).length >= 4; }) ? '.opcoes-longas' : '';
+    var n = Math.max.apply(null, (d.opcoes || []).map(function (o) { return U.semEn(String(o && o.t || '')).trim().length; }).concat(0));
+    return (n > 24 ? '.opcoes-longas' : '') + (n > 48 ? '.opcoes-muito-longas' : '');
   };
 
   // escolha única (também serve para "completar a frase")

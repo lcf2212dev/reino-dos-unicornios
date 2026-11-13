@@ -24,9 +24,17 @@
    cabe uma palavra de 8 letras inteira (128 px + 8 px de folga de cada lado + a borda: "elefante", «football»); a de 9
    ou mais quebra na sílaba (_d.textoOpcao) */
 .opcoes.opcoes-img { grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.5em), 1fr)); }
-/* a coluna em em (acompanha a letra do nome: 152 px em 16, 228 em 24) e auto-fit (poucas opções = colunas largas, sem
-   trilhas vazias); rótulo comprido (escolha.js, .opcoes-longas) com a coluna mais larga */
-.opcoes.opcoes-img.opcoes-longas { grid-template-columns: repeat(auto-fit, minmax(min(100%, 14em), 1fr)); }
+/* a coluna em em (acompanha a letra do nome: 152 px em 16) e auto-fit (poucas opções = colunas largas, sem trilhas
+   vazias). Com Letras grandes no tablet e no notebook, 6.5em (156 px em 24): as 4 colunas de antes, que cabiam sem
+   rolar (com 9em, 3 colunas empurravam a última figura para baixo do rodapé). Rótulo comprido (escolha.js,
+   .opcoes-longas) com a coluna mais larga só a partir de 640 px e sem Letras grandes: no celular 14em não cabe duas
+   vezes, e com Letras grandes 2 colunas empurravam a última opção para baixo do rodapé */
+@media (min-width: 640px) {
+  .letras-grandes .opcoes.opcoes-img { grid-template-columns: repeat(auto-fit, minmax(min(100%, 6.5em), 1fr)); }
+  /* o rótulo comprido em 3 opções ou mais desce um degrau (16): em 24 ele crescia as figuras para baixo do rodapé */
+  .letras-grandes .opcoes-img.opcoes-longas:has(> .opcao:nth-child(3)) .opcao-texto { font-size: var(--texto-aux); }
+  :root:not(.letras-grandes) .opcoes.opcoes-img.opcoes-longas { grid-template-columns: repeat(auto-fit, minmax(min(100%, 14em), 1fr)); }
+}
 .opcao.opcao-img { flex-direction: column; justify-content: center; gap: 6px; padding: 10px 8px 12px; text-align: center; }
 .opcao-img .opcao-figura { display: inline-flex; align-items: center; justify-content: center; min-height: 64px; font-size: var(--texto-t); line-height: 1; }
 /* o nome não parte no meio: a palavra que não cabe faz a letra descer um degrau (_d.caberTexto e .texto-menor, arte.md §17.3) */

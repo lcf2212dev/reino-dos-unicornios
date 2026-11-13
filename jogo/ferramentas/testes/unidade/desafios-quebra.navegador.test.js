@@ -173,3 +173,22 @@ test('o degrau volta quando o cartão alarga e quando o tablet gira', async () =
     assert.deepStrictEqual(c.erros || [], []);
   } finally { await c.fechar(); }
 });
+
+// o «inglês» curto no nome da opção com figura fica numa linha só quando há espaço ("I cry.", não "I / cry."; arte.md
+// §17.4): o grupo colado tem a largura inteira do nome (sem a folga do fundo do «inglês» descontada). Tablet e celular.
+const INGLES = { id: 'tq-en', tipo: 'escolha', pergunta: 'How do you feel?', opcoes: [{ t: '«I cry.»', img: '✏️' }, { t: '«I jump.»', img: '✏️' }, { t: '«I dance.»', img: '✏️' }], certa: 0 };
+test('«I cry.» numa linha só no nome da opção com figura', async () => {
+  for (const tamanho of ['tablet', 'celular']) {
+    const c = await abrirCenario({ tamanho, save: 'completo', pasta: fs.mkdtempSync(path.join(PASTA_TESTES, 'desafios-quebra-')) });
+    try {
+      await c.js(`Reino.UI.fecharTodas(); var pn = Reino.UI.painel('teste-quebra', 'Teste');
+        pn.conteudo.appendChild(Reino.Desafios.render(${JSON.stringify(INGLES)}, { modo: 'prova', onMudar: function () {} }).card)`);
+      await c.avancar(300); await c.page.waitForTimeout(150); await c.avancar(100);
+      const linhas = await c.js(`[].map.call(document.querySelectorAll('.opcao-img .opcao-texto'), function (e) { var g = document.createRange(); g.selectNodeContents(e);
+        var tops = []; [].forEach.call(g.getClientRects(), function (r) { if (r.width > 1 && !tops.some(function (t) { return Math.abs(t - r.top) < 4; })) tops.push(r.top); });
+        return e.textContent + '=' + tops.length; })`);
+      assert.deepStrictEqual(Array.from(linhas).sort(), ['I cry.=1', 'I dance.=1', 'I jump.=1'], `${tamanho}: rótulo curto em inglês partido em duas linhas`);
+      assert.deepStrictEqual(c.erros || [], []);
+    } finally { await c.fechar(); }
+  }
+});

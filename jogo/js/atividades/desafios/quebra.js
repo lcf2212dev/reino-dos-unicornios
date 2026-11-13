@@ -48,10 +48,11 @@
     membros.forEach(function (m) { m.classList.toggle('texto-menor', !!(m._menor || algum)); });
   }
   // texto que pode não caber (opção, ligar com emoji, enunciado, texto de apoio, retorno, carta): a palavra que não cabe
-  // nunca parte no meio (arte.md §17). Só quando ela não cabe, nesta ordem: o rótulo curto (degrau; até 12 letras, §17.3)
-  // desce um degrau (.texto-menor: o token de baixo, --texto-aux); a palavra de 9 letras ou mais ganha o hífen suave do
-  // hifenizar (sílaba, §17.2); depois a de 6 a 8 letras; a onomatopeia sem sílaba ("Vuuuuu!") um hífen a cada 6 letras;
-  // o degrau abaixo também no texto longo; nada disso, ela quebra no meio (.texto-parte, como antes). A palavra que cabe
+  // nunca parte no meio (arte.md §17). Só quando ela não cabe, nesta ordem: 1) o rótulo curto (degrau; até 12 letras,
+  // §17.3) desce um degrau (.texto-menor: o token de baixo, --texto-aux); 2) a palavra de 9 letras ou mais ganha o hífen
+  // suave do hifenizar (sílaba, §17.2); 3) o degrau abaixo também no texto longo; só então, como último recurso, 4) a
+  // sílaba na palavra de 6 a 8 letras e 5) o hífen a cada 6 letras na onomatopeia sem sílaba ("Vuuuuu!"); nada disso,
+  // 6) ela quebra no meio (.texto-parte, como antes). A palavra que cabe
   // fica inteira (sem hífen à toa). Toda medida começa do texto original (o resultado não depende de quantas vezes mediu),
   // sem a quebra no meio do body (overflow-wrap: normal), que volta no fim. Nome próprio (célula da tabela) não leva hífen.
   _d.caberTexto = function (el, degrau) {
