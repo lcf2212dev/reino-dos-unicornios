@@ -230,6 +230,23 @@ test('grupo colado que não cabe: o rótulo curto desce o degrau; no longo o gru
     // com espaço (380 px) o grupo cabe inteiro e continua colado
     r = await abrir(LONGO, 380);
     assert.deepStrictEqual(r.map((x) => [x.menor, x.soltos, x.linhas.length]), [[false, 0, 2], [false, 0, 2]], `rótulo longo com espaço: ${JSON.stringify(r)}`);
+    // a largura muda com a pergunta aberta (o aparelho gira, a barra de rolagem aparece): o grupo que estava inteiro e
+    // deixa de caber se desfaz sem ganhar um ajuste só dele (letra menor, hífen ou .texto-parte dentro do mesmo nome),
+    // o nome fica num tamanho só e o resultado é o mesmo de abrir já estreito, e parado (duas leituras iguais)
+    const UMSO = `[].map.call(document.querySelectorAll('.opcao-img .opcao-texto'), function (e) {
+      var tam = getComputedStyle(e).fontSize;
+      return { tamanhos: [].every.call(e.querySelectorAll('*'), function (x) { return getComputedStyle(x).fontSize === tam; }), soltos: e.querySelectorAll('.grupo-solto').length,
+        ajustados: e.querySelectorAll('.grupo-colado.texto-menor, .grupo-colado.texto-parte').length, hifens: (e.textContent.match(/\u00ad/g) || []).length }; })`;
+    const limpo = { tamanhos: true, soltos: 1, ajustados: 0, hifens: 0 };
+    for (const largura of [330, 380, 330]) {
+      await c.js(`document.querySelector('.painel .desafio').style.width = '${largura}px'`);
+      await c.avancar(200); await c.page.waitForTimeout(250); await c.avancar(200); await c.page.waitForTimeout(250);
+      const u = Array.from(await c.js(UMSO)), esperado = largura === 330 ? [limpo, limpo] : [{ ...limpo, soltos: 0 }, { ...limpo, soltos: 0 }];
+      assert.deepStrictEqual(u, esperado, `rótulo longo em ${largura} px, depois de mudar a largura: ${JSON.stringify(u)}`);
+      await c.avancar(200); await c.page.waitForTimeout(250);
+      assert.deepStrictEqual(Array.from(await c.js(UMSO)), u, `rótulo longo em ${largura} px: o ajuste não parou`);
+    }
+    assert.deepStrictEqual(Array.from(await c.js(LINHAS)).map((x) => x.linhas.join(' / ')).sort(), ['Um pé de / galinha', 'Um pé de / moleque'], 'estreitar depois de aberto dá o mesmo que abrir estreito');
     assert.deepStrictEqual(c.erros || [], []);
   } finally { await c.fechar(); }
 });

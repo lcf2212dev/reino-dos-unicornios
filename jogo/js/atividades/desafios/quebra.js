@@ -70,8 +70,12 @@
   function sincronizar(el) {
     var g = el.closest(GRUPO), membros = g ? Array.prototype.filter.call(g.querySelectorAll('*'), function (m) { return m._caber && m._chave === el._chave; }) : [el];
     var algum = membros.some(function (m) { return m._menor; });
-    membros.forEach(function (m) { m.classList.toggle('texto-menor', !!(m._menor || algum)); });
-    membros.forEach(soltar);
+    // os grupos medem de novo em quem mediu agora e nos irmãos que mudaram de tamanho com ele (os outros não mudaram)
+    membros.forEach(function (m) {
+      var antes = m.classList.contains('texto-menor'), agora = !!(m._menor || algum);
+      m.classList.toggle('texto-menor', agora);
+      if (m === el || antes !== agora) soltar(m);
+    });
   }
   // texto que pode não caber (opção, ligar com emoji, enunciado, texto de apoio, retorno, carta): a palavra que não cabe
   // nunca parte no meio (arte.md §17). Só quando ela não cabe, nesta ordem: 1) o rótulo curto (degrau; até 12 letras,
@@ -185,9 +189,10 @@
   // todo bloco de texto dentro de `raiz` (o cartão do desafio, o retorno, a carta do livro) ganha o _d.caberTexto; os
   // rótulos (legenda, botão de palavra, cor da legenda) com o degrau. O que já tem o seu (opção) fica como está.
   var ROTULO = 'figcaption, button, .chip-palavra, .caca-palavra, .lista-termo, .tabela-fixa';
-  // fora: campos, a tabela da carta (tem o ajuste dela), a fonte da carta (o endereço não tem sílaba) e a casa de uma
-  // letra (caça-palavras, cruzadinha: a margem de -2 px da grade não é texto que vaza)
-  var FORA = 'input, textarea, summary, .bloco-tabela th, .bloco-tabela td, .bloco-fonte, .caca-letra, .cruz-casa, .cruz-letra, .cruz-num';
+  // fora: campos, a tabela da carta (tem o ajuste dela), a fonte da carta (o endereço não tem sílaba), a casa de uma
+  // letra (caça-palavras, cruzadinha: a margem de -2 px da grade não é texto que vaza) e o grupo colado (quem ajusta é
+  // o texto inteiro da opção: um ajuste só dele brigava com o do texto quando o grupo se desfaz)
+  var FORA = 'input, textarea, summary, .bloco-tabela th, .bloco-tabela td, .bloco-fonte, .caca-letra, .cruz-casa, .cruz-letra, .cruz-num, .grupo-colado';
   _d.caberDentro = function (raiz) {
     // o que o desafio redesenha depois (sequência, separar, lacuna preenchida) entra na próxima busca
     if (!raiz._caberMO && window.MutationObserver) {
