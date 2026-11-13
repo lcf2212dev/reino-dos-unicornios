@@ -97,7 +97,13 @@ textarea.campo-texto { display: block; resize: vertical; }
 .digitar-frase .campo-texto-caixa { display: inline-flex; vertical-align: middle; max-width: 100%; margin: 2px 0; }
 /* a caixa do tamanho da maior resposta (--letras, do JS; a fonte pixel tem 1ch por letra) */
 .digitar .campo-texto { width: calc(var(--letras, 8) * 1ch + 24px); max-width: 100%; text-align: center; }
+/* resposta longa de várias palavras (digitar.js, .digitar-longa): textarea de uma linha, com a mesma altura da caixa de
+   uma linha, que quebra entre as palavras e cresce para baixo (o texto nunca some de lado) */
+.digitar textarea.digitar-longa { padding-top: 10px; padding-bottom: 10px; resize: none; overflow: hidden; }
 .digitar-palavra { white-space: nowrap; }
+/* a caixa e o sinal logo depois dela ("[caixa]."), juntos na quebra de linha; a caixa encolhe para o sinal caber */
+.digitar-cola { display: inline-flex; align-items: center; max-width: 100%; vertical-align: middle; }
+.digitar-cola > .campo-texto-caixa { min-width: 0; }
 .digitar-img { flex: none; display: inline-flex; align-items: center; justify-content: center; min-height: 64px; line-height: 1; }
 .tudo-certo .digitar-item { background: var(--certo-fundo); }
 @media (max-width: 480px) { .digitar-item { padding: 10px; gap: 8px; } }

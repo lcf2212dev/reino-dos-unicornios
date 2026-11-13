@@ -13,6 +13,7 @@
   var U = Reino.util, el = U.el, _d = Reino._desafios;
   var fracao = _d.fracao;
   var MAX_LETRAS = 40;
+  var LONGA = 12;   // letras da resposta de várias palavras que já pede a caixa que quebra (digitar-longa)
 
   function texto(v) { return v == null ? '' : String(v); }
   function frasesDe(d) { return Array.isArray(d.frases) ? d.frases : []; }
@@ -51,9 +52,7 @@
 
   // figura de js/arte/icones/ antes da frase (como no completar); desenho que falta: ❓
   function figura(f) {
-    var desenho = PA.iconeDesenho(f.img);
-    return el('span.digitar-img', { role: 'img', 'aria-label': f.alt ? U.semEn(f.alt) : null },
-      desenho ? PA.paraDOM(desenho, PA.escalaNitida(64, desenho.width)) : '❓');
+    return el('span.digitar-img', { role: 'img', 'aria-label': f.alt ? U.semEn(f.alt) : null }, _d.figuraIcone(f.img, 64));
   }
   // colado: [texto antes da palavra, pedaço antes da caixa, pedaço depois, resto da frase] (como no completar)
   function partesColado(f) {
@@ -67,13 +66,23 @@
     var ultimo = null;
     var acentos = _d.fileiraAcentos(function () { return ultimo || campos[0].campo; });
     var campos = d.frases.map(function (f, i) {
-      var c = _d.campoTexto({ valor: texto(ini[i]), semAcentos: true, max: MAX_LETRAS, rotulo: 'Resposta ' + (f.letra || i + 1),
-        aoMudar: function () { if (_d.marcado(wrap)) wrap.__erroFim(); opts.onMudar(); } });
       // a caixa do tamanho da maior resposta (a fonte pixel tem 1ch por letra)
       // numa caixa de qualquerOrdem, a maior resposta do grupo (a largura não dá pista de qual palavra vai ali)
       var grupo = (Array.isArray(d.qualquerOrdem) ? d.qualquerOrdem : []).find(function (g) { return g.indexOf(i) >= 0; });
       var todas = d.trocarGrupos && grupo ? [].concat.apply([], d.qualquerOrdem) : grupo || [i];
-      var letras = Math.max.apply(null, [].concat.apply([], todas.map(function (k) { return (d.frases[k].certas || []).map(function (t) { return String(t).length; }); })).concat(d.livre ? 12 : 3));
+      var certas = [].concat.apply([], todas.map(function (k) { return (d.frases[k].certas || []).map(String); }));
+      var letras = Math.max.apply(null, certas.map(function (t) { return t.length; }).concat(d.livre ? 12 : 3));
+      // resposta de várias palavras com LONGA letras ou mais ("Gênio da Lâmpada"): a caixa é uma textarea de uma linha que
+      // quebra entre as palavras e cresce para baixo; nada fica escondido de lado na caixa estreita (celular, painel)
+      var longa = letras >= LONGA && certas.some(function (t) { return /\S\s+\S/.test(t); });
+      var c = _d.campoTexto({ valor: texto(ini[i]), semAcentos: true, max: MAX_LETRAS, linhas: longa ? 2 : 1, rotulo: 'Resposta ' + (f.letra || i + 1),
+        classe: longa ? '.digitar-longa' : '',
+        aoMudar: function (t) {
+          if (longa && /\n/.test(t)) c.campo.value = t.replace(/\s*\n\s*/g, ' ');   // colado com quebra de linha
+          if (longa) _d.crescerCampo(c.campo);
+          if (_d.marcado(wrap)) wrap.__erroFim(); opts.onMudar();
+        } });
+      if (longa) c.campo.rows = 1;
       c.campo.style.setProperty('--letras', String(Math.min(letras + 1, 24)));
       c.campo.addEventListener('focus', function () { ultimo = c.campo; });
       // palavra do livro em maiúsculas (PA__ARINHO): o que ela digita aparece em maiúsculas (a comparação não muda)
@@ -85,9 +94,11 @@
         if (campos[i + 1]) campos[i + 1].campo.focus();
       });
       var cola = d.colado && partesColado(f);
+      // o sinal logo depois da caixa fica preso a ela (nunca sozinho no começo da linha de baixo)
+      var pont = d.colado ? '' : _d.sinalColado(f.depois), resto = f.depois.slice(pont.length);
       var frase = d.colado
         ? el('div.digitar-frase', f.letra ? el('b', f.letra + ') ') : null, cola[0], el('span.digitar-palavra', cola[1], c.el, cola[2]), cola[3])
-        : el('div.digitar-frase', f.letra ? el('b', f.letra + ') ') : null, f.antes ? f.antes + ' ' : '', c.el, /^[.,!?;:]/.test(f.depois) || !f.depois ? '' : ' ', f.depois);
+        : el('div.digitar-frase', f.letra ? el('b', f.letra + ') ') : null, f.antes ? f.antes + ' ' : '', pont ? el('span.digitar-cola', c.el, pont) : c.el, pont ? resto : (f.depois ? ' ' : '') + f.depois);
       // junto: a caixa entra na linha da frase anterior
       var ant = f.junto && i > 0 && wrap.lastChild && wrap.lastChild.querySelector('.digitar-frase');
       if (ant) { while (frase.firstChild) ant.appendChild(frase.firstChild); return { c: c, item: wrap.lastChild }; }
@@ -99,6 +110,13 @@
       return x.c;
     });
     wrap.insertBefore(acentos, wrap.children[1] || null);
+    // as caixas longas crescem quando entram na tela e quando a largura muda (girar o aparelho, Letras grandes)
+    var longas = campos.filter(function (c) { return c.campo.classList.contains('digitar-longa'); });
+    if (longas.length) {
+      var crescerTodas = function () { longas.forEach(function (c) { _d.crescerCampo(c.campo); }); };
+      if (window.ResizeObserver) new ResizeObserver(crescerTodas).observe(wrap);
+      setTimeout(crescerTodas, 0);   // a 1ª medida assim que entra na tela (também no jogo congelado, sem quadros)
+    }
 
     function valor() { return campos.map(function (c) { return c.valor(); }); }
     var ctrl = {

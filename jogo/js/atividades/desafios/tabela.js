@@ -28,11 +28,7 @@
   // palavra de 9 letras ou mais quebra na sílaba, com o hífen à vista (arte.md §17.2; Reino._ui vem depois, já na tela)
   function hifenizar(t) { return Reino._ui && Reino._ui.hifenizar ? Reino._ui.hifenizar(t) : String(t); }
   // a caixa de digitar da célula: uma linha que cresce com o texto (nada fica escondido de lado)
-  function crescer(campo) {
-    if (!campo.isConnected) return;
-    campo.style.height = 'auto';
-    campo.style.height = campo.scrollHeight + campo.offsetHeight - campo.clientHeight + 'px';
-  }
+  function crescer(campo) { _d.crescerCampo(campo); }
 
   var montar = function (d, opts) {
     var ncol = d.linhas.reduce(function (n, l) { return Math.max(n, l.length); }, 0);
@@ -100,7 +96,7 @@
           celulas[i + ',' + j] = { caixa: b, botao: b };
         } else {
           td.classList.add('tabela-fixa');
-          U.preencher(td, hifenizar(String(c)));
+          U.preencher(td, hifenizar(_d.colarReais(String(c))));
         }
       });
       return tr;

@@ -26,9 +26,6 @@
 .bloco-versos .estrofe { margin: 0; }
 .bloco-versos .estrofe + .estrofe { margin-top: 16px; }
 .verso { display: block; padding-left: 2em; text-indent: -2em; }
-/* a maiúscula acentuada desenhada por cima (ui-desafios.css) não herda o recuo negativo (o "É" sairia à esquerda) */
-:is(.bloco-fala, .verso, .bloco-lista li) span.mai-acento.mai-acento::before,
-:is(.bloco-fala, .verso, .bloco-lista li) span.mai-acento.mai-acento::after { text-indent: 0; }
 /* lista: quadradinho de pixel e o termo em destaque pela cor (a fonte não tem negrito, arte.md §9.3) */
 .bloco-lista { list-style: none; padding: 0; }
 .bloco-lista li { padding-left: 20px; text-indent: -20px; }
@@ -89,6 +86,14 @@
   .resumo-sala .livro-carta.carta-rica .bloco-figura figcaption { font-size: var(--texto); }
   .resumo-sala .livro-carta.carta-rica > p.bloco-fonte { font-size: var(--texto-aux); }
 }
+
+/* tabela que não coube (materia-livro.js, ajustarTabela; arte.md §17): a palavra fica inteira na célula; colunas na
+   largura do conteúdo e, se ainda não couber, a letra um degrau abaixo; o último recurso parte a palavra, como antes */
+.bloco-tabela :is(th, td) { overflow-wrap: normal; }
+.bloco-tabela.tabela-solta { table-layout: auto; }
+.livro-carta .bloco-tabela.tabela-degrau-1.tabela-degrau-1 :is(th, td) { font-size: var(--texto); }
+.livro-carta .bloco-tabela.tabela-degrau-2.tabela-degrau-2 :is(th, td) { font-size: var(--texto-aux); }
+.bloco-tabela.tabela-parte :is(th, td) { overflow-wrap: break-word; }
 
 /* ---------- os dois livros da escola: uma aba para cada, em cima das marcas ---------- */
 .livro-abas {

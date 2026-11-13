@@ -195,7 +195,7 @@ test('bosque: HUD, prêmio, pergunta a cada terço do XP, baú, nível ao fechar
     const ctx = await c.js(`(() => { const d = document.querySelector('.tela-bosque-pergunta .bosque-contexto');
       return { aberto: !!d && d.open, texto: d ? d.textContent : '', ordem: !!d && !!(d.compareDocumentPosition(document.querySelector('.tela-bosque-pergunta .desafio')) & 4) }; })()`);
     assert.strictEqual(ctx.aberto, true, 'a página do livro aparece aberta');
-    assert.match(ctx.texto, /Alice tem R\$ 30,00/, 'com o texto-base da pergunta');
+    assert.match(ctx.texto, /Alice tem R\$\s30,00/, 'com o texto-base da pergunta');
     assert.strictEqual(ctx.ordem, true, 'acima da pergunta');
     await c.page.keyboard.press('Escape');
     await c.avancar(300);

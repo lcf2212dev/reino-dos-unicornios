@@ -7,9 +7,7 @@
   function completarAceita(f, j) { return j === f.certa || (f.aceitas || []).indexOf(j) >= 0; }
   // figura de js/arte/icones/ (32×32) para uma frase do completar; desenho que falta: ❓
   function figuraCompletar(f) {
-    var desenho = PA.iconeDesenho(f.img);
-    return el('span.completar-img', { role: 'img', 'aria-label': f.alt ? U.semEn(f.alt) : null },
-      desenho ? PA.paraDOM(desenho, PA.escalaNitida(64, desenho.width)) : '❓');
+    return el('span.completar-img', { role: 'img', 'aria-label': f.alt ? U.semEn(f.alt) : null }, _d.figuraIcone(f.img, 64));
   }
 
   // colado: [texto antes da palavra, pedaço da palavra antes da lacuna, pedaço depois, resto da frase]
@@ -27,11 +25,15 @@
     var coladoLongo = !!d.colado && d.frases.some(function (f) { return /\s/.test((f.antes + f.depois).trim()); });
     // com figura ou com a lacuna dentro da palavra solta: os itens ficam numa grade compacta
     var comFigura = d.frases.some(function (f) { return f.img; }) || (!!d.colado && !coladoLongo);
-    var wrap = el('div.completar' + (d.colado ? '.completar-colado' : '') + (coladoLongo ? '.completar-colado-longo' : '') + (comFigura ? '.completar-grade' : ''));
+    // na grade, palavra do quadro maior que uma sílaba ("Pelo vento"): um botão por linha (ui-desafios.css)
+    var longas = comFigura && d.palavras.some(function (p) { return String(p).length > 4; });
+    var wrap = el('div.completar' + (d.colado ? '.completar-colado' : '') + (coladoLongo ? '.completar-colado-longo' : '') + (comFigura ? '.completar-grade' : '') + (longas ? '.completar-palavras-longas' : ''));
     wrap.appendChild(el('div.quadro-palavras', d.palavras.map(function (p) {
       return el('b.quadro-etiqueta', p);
     })));
     var grade = comFigura ? el('div.completar-itens') : wrap;
+    // fora da grade, botões de um sinal ou número ('.', '"', '6'): dividem a linha por igual, sem um sobrar sozinho embaixo
+    var curtas = !comFigura && d.palavras.every(function (p) { return String(p).length <= 2; });
     // quantos botões cada item tem: a coluna da grade fica larga o bastante para botões de 48 px (css)
     if (comFigura) grade.style.setProperty('--opcoes', String(d.palavras.length));
     if (comFigura) wrap.appendChild(grade);
@@ -48,9 +50,11 @@
       });
       // colado: PA + lacuna + ARINHO, sem espaços; só a palavra da lacuna fica inteira (o resto da frase quebra nos espaços)
       var cola = d.colado && partesColado(f);
+      // o sinal logo depois da lacuna fica preso a ela (nunca sozinho no começo da linha de baixo)
+      var pont = d.colado ? '' : _d.sinalColado(f.depois), resto = f.depois.slice(pont.length);
       var texto = d.colado
         ? el('p.frase-texto.frase-colada', f.letra ? el('b', f.letra + ') ') : null, cola[0], el('span.palavra-colada', cola[1], lacuna, cola[2]), cola[3])
-        : el('p.frase-texto', f.letra ? el('b', f.letra + ') ') : null, f.antes + ' ', lacuna, f.depois.match(/^[.,!?]/) ? '' : ' ', f.depois);
+        : el('p.frase-texto', f.letra ? el('b', f.letra + ') ') : null, f.antes + ' ', pont ? el('span.lacuna-cola', lacuna, pont) : lacuna, pont ? resto : ' ' + f.depois);
       // colado na grade: quantas letras a linha "a) PA__ARINHO" tem (a fonte pixel tem 1em por letra; a lacuna
       // vale a maior palavra do quadro, no mínimo 2). O css encolhe um pouco a fonte só se a linha não couber.
       if (d.colado && !coladoLongo) {
@@ -60,7 +64,7 @@
       var caixa = el('div.frase-completar' + (f.img ? '.com-img' : ''),
         f.img ? figuraCompletar(f) : null,
         texto,
-        el('div.frase-opcoes', botoes));
+        el('div.frase-opcoes' + (curtas ? '.opcoes-curtas' : ''), botoes));
       grade.appendChild(caixa);
       return { caixa: caixa, lacuna: lacuna, botoes: botoes };
     });

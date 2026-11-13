@@ -20,11 +20,15 @@
 .apoio-estrofe:last-child { margin-bottom: 0; }
 .apoio-verso { display: block; padding-left: 16px; text-indent: -16px; }
 
-/* opção com desenho (escolha e varias): o desenho de 64 px em cima do nome; grade de 2 colunas no celular */
-.opcoes.opcoes-img { grid-template-columns: repeat(auto-fill, minmax(min(100%, 140px), 1fr)); }
+/* opção com desenho (escolha e varias): o desenho de 64 px em cima do nome; grade de 2 colunas no celular. A coluna
+   cabe uma palavra de 8 letras inteira (128 px + 8 px de folga de cada lado + a borda: "elefante", «football»); a de 9
+   ou mais quebra na sílaba (_d.textoOpcao) */
+.opcoes.opcoes-img { grid-template-columns: repeat(auto-fill, minmax(min(100%, 152px), 1fr)); }
 .opcao.opcao-img { flex-direction: column; justify-content: center; gap: 6px; padding: 10px 8px 12px; text-align: center; }
 .opcao-img .opcao-figura { display: inline-flex; align-items: center; justify-content: center; min-height: 64px; font-size: var(--texto-t); line-height: 1; }
-.opcao-img .opcao-texto { flex: none; max-width: 100%; overflow-wrap: break-word; }
+/* o nome não parte no meio: a palavra que não cabe faz a letra descer um degrau (_d.caberTexto, arte.md §17.3) */
+.opcao-img .opcao-texto { flex: none; max-width: 100%; }
+.opcao-img .opcao-texto.texto-menor { font-size: var(--texto-aux); }
 /* celular com letras grandes: o nome da opção desce um degrau (24 → 16) para caber na meia largura (arte.md §17.3) */
 @media (max-width: 480px) { .letras-grandes .opcao-img .opcao-texto { font-size: var(--texto-aux); } }
 .opcao-marcar.opcao-img { position: relative; padding-top: 16px; }

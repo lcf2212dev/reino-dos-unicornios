@@ -63,6 +63,9 @@
       if (rola) area.setAttribute('tabindex', '0'); else area.removeAttribute('tabindex');
     }
     if (window.ResizeObserver) new ResizeObserver(caber).observe(area);
+    // a 1ª medida assim que entra na tela (também no jogo congelado, sem quadros): antes dela a figura tem a escala da
+    // janela inteira e passava de lado da coluna da pergunta (notebook)
+    (function esperar(n) { if (area.isConnected) caber(); else if (n < 20) setTimeout(function () { esperar(n + 1); }, 0); })(0);
     return area;
   }
   D.figuraDesafio = function (f) {

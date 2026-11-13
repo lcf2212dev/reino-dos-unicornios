@@ -6,6 +6,7 @@
      _d.acentosNoFoco(fileira, campo, depoisDe?)  uma fileira para várias caixas: quando o campo ganha o foco, a fileira
                             vai para logo depois de `depoisDe` (padrão: o próprio campo), e o Tab do campo leva direto
                             aos acentos dele (o toque também: a fileira fica perto da caixa, acima do teclado da tela)
+     _d.crescerCampo(campo)  a textarea de uma linha cresce até mostrar a resposta inteira (tabela, digitar longo)
      _d.normalizar(t)       minúsculas, sem espaço sobrando e sem pontuação no fim (o acento continua)
      _d.semAcento(t)        normalizar e sem acentos (para palavras-chave da escrita livre)
      _d.digitadaCerta(t, certas)  t bate com alguma das certas (normalizar dos dois lados) */
@@ -58,6 +59,12 @@
       var ref = depoisDe || campo;
       if (ref.parentNode && ref.nextSibling !== fileira) ref.parentNode.insertBefore(fileira, ref.nextSibling);
     });
+  };
+
+  _d.crescerCampo = function (campo) {
+    if (!campo.isConnected) return;
+    campo.style.height = 'auto';
+    campo.style.height = campo.scrollHeight + campo.offsetHeight - campo.clientHeight + 'px';
   };
 
   _d.campoTexto = function (o) {

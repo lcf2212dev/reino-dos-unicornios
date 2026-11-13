@@ -443,6 +443,7 @@
       { js: 'js/personagens/jogador.js', grupo: 'personagens' },
       { js: 'js/personagens/jogador-desenho.js', grupo: 'personagens' },
       { js: 'js/atividades/desafios.js', grupo: 'atividades', node: true }, // node: true: o validador e as falas usam os ganchos dos tipos (no carregamento, nada de document)
+      { js: 'js/atividades/desafios/quebra.js', grupo: 'atividades', node: true }, // quebra de linha dos desafios: opção colada e hifenizada, sinal e "R$" presos, rótulo que desce um degrau
       { js: 'js/atividades/desafios/campo-texto.js', grupo: 'atividades', node: true }, // caixa de digitar com acentos (helpers dos tipos do 4º bimestre)
       { js: 'js/atividades/desafios/marcar.js', grupo: 'atividades', node: true }, // tipos do livro do 4º bimestre: circular/sublinhar/pintar, completar escrevendo, resposta escrita
       { js: 'js/atividades/desafios/digitar.js', grupo: 'atividades', node: true },

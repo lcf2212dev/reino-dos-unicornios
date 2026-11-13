@@ -10,7 +10,7 @@
   _d.botaoImg = function (o, d, extra) {
     return el('button.opcao.opcao-img' + (extra || ''), { type: 'button', 'aria-label': d.soImagem ? U.semEn(o.t) : null },
       el('span.opcao-figura', { 'aria-hidden': 'true' }, o.img ? _d.figuraIcone(o.img, 64) : null),
-      d.soImagem ? null : el('span.opcao-texto', U.colado(o.t)));
+      d.soImagem ? null : _d.caberTexto(el('span.opcao-texto', _d.textoOpcao(o.t)), true));
   };
   // validar: desenho das opções (aviso na sala, erro na prova) e soImagem só com desenho em todas
   _d.conferirOpcoesImg = function (d, v) {
@@ -28,7 +28,7 @@
     var lista = el('div.opcoes' + (d.opcoes.length === 2 ? '.opcoes-duas' : '') + (comImg ? '.opcoes-img' : ''));
     var botoes = {};
     ordem.forEach(function (i) {
-      var o = d.opcoes[i], b = comImg ? _d.botaoImg(o, d) : botaoOpcao({ e: o.e, t: U.colado(o.t) });   // colado: arte.md §17
+      var o = d.opcoes[i], b = comImg ? _d.botaoImg(o, d) : botaoOpcao({ e: o.e, t: String(o.t) });   // colado e hifenizado: _d.textoOpcao (arte.md §17)
       b.addEventListener('click', function () {
         if (bloqueadas[i] || ctrl.travado) return;
         sel = i; Reino.Som.tocar('selecionar'); pintar(); opts.onMudar();
