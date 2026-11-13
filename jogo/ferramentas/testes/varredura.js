@@ -14,6 +14,8 @@
 //   --nome <n>            pasta de saída (padrão: data e hora)      --raiz <pasta jogo>   outra cópia do jogo
 // Saída em /tmp/reino-testes/varredura/<nome>/: relatorio.md (defeitos por questão), relatorio.json (tudo) e
 // fotos/<tamanho>/<modo>/<id>-<estado>[-N].jpg (N = tela comprida, rolada). Sai com 1 se houver defeito grave.
+// O /tmp é RAM: uma rodada inteira com fotos ocupa uns 1,5 GB. Com menos de 4 GB livres ela recusa (use --sem-fotos
+// ou apague as rodadas antigas pelo caminho escrito por extenso).
 // Estados: carta · branco · quase (errou) · certa (resposta posta, antes de conferir) · retorno (acertou).
 if (require.main === module) require('../ajuda').ajuda(__filename);
 const fs = require('fs');
@@ -37,6 +39,7 @@ const DE_PROPOSITO = [
   /^rola-dentro .*apoio-corpo/,    // o texto de apoio rola dentro da caixa dele, para a pergunta ficar à vista (ui-desafios.css)
   /^rola-de-lado .*desafio-ilustracao-rola/,   // ilustração larga rola de lado, com a borda que avisa (desafios/figuras.js)
   /^palavra-partida .*bloco-fonte.* "\S*https?:/,   // o endereço da fonte de uma carta não tem sílaba onde quebrar
+  /^vaza .*span\.en passa [1-4]px /,   // o fundo e o pontilhado do «inglês» passam uns px da última letra, para dentro do recuo da caixa: nada é cortado
 ];
 
 const MISSAO = '.tela-missao', SOZINHA = '.tela-bosque-pergunta';
@@ -287,6 +290,15 @@ async function principal() {
   const a = lerArgs(process.argv.slice(2));
   const pasta = path.join(PASTA_TESTES, 'varredura', a.nome || new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19));
   fs.mkdirSync(pasta, { recursive: true });
+  if (a.fotos) {
+    const st = fs.statfsSync(pasta), livre = st.bavail * st.bsize / 1e9, raizFotos = path.dirname(pasta);
+    if (livre < 4) {
+      const antigas = fs.readdirSync(raizFotos).filter((n) => n !== path.basename(pasta)).map((n) => path.join(raizFotos, n));
+      console.error(`✘ só ${livre.toFixed(1)} GB livres em ${raizFotos} (o /tmp é RAM; a rodada com fotos ocupa uns 1,5 GB): rode com --sem-fotos`
+        + ` ou apague rodadas antigas (${antigas.length ? antigas.join(' ') : 'nenhuma aqui'})`);
+      process.exit(2);
+    }
+  }
   // o catálogo sai do próprio jogo (um cenário curto)
   const c0 = await abrirCenario({ tamanho: 'notebook', save: 'completo', raiz: a.raiz, pasta });
   let materias;
