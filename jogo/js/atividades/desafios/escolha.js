@@ -33,8 +33,11 @@
     return ok ? ops.map(function (_, i) { return i; }) : null;
   };
 
-  // opção de frase comprida (mais de 40 letras): num painel do tablet e do notebook, uma coluna só (ui-desafios.css)
-  _d.classeLongas = function (d) { return (d.opcoes || []).some(function (o) { return String(o && o.t || '').length > 40; }) ? '.opcoes-longas' : ''; };
+  // rótulo comprido (4 palavras ou mais, ou mais de 24 letras): a grade das opções fica com colunas largas (uma só no
+  // texto; mais larga na figura), na sala e no painel (ui-missao.css, ui-desafios-grade.css)
+  _d.classeLongas = function (d) {
+    return (d.opcoes || []).some(function (o) { var t = U.semEn(String(o && o.t || '')).trim(); return t.length > 24 || t.split(/\s+/).length >= 4; }) ? '.opcoes-longas' : '';
+  };
 
   // escolha única (também serve para "completar a frase")
   function montarEscolha(d, opts) {

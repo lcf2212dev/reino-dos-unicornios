@@ -145,3 +145,31 @@ test('lacuna preenchida: mesmo tamanho nas frases irmãs, inteira, e medida de n
     assert.deepStrictEqual(c.erros || [], []);
   } finally { await c.fechar(); }
 });
+
+// o degrau não fica preso: a opção com figura que desceu num cartão estreito volta ao tamanho cheio quando o cartão
+// alarga, e também depois de girar o tablet (deitado e em pé de novo). Tablet, letra normal.
+const IMG2 = { id: 'tq-i2', tipo: 'varias', pergunta: 'Quais?', opcoes: [{ t: 'cabeleireiro', img: '✏️', ok: true }, { t: 'cozinheiro', img: '✏️' }] };
+test('o degrau volta quando o cartão alarga e quando o tablet gira', async () => {
+  const c = await abrirCenario({ tamanho: 'tablet', save: 'completo', pasta: fs.mkdtempSync(path.join(PASTA_TESTES, 'desafios-quebra-')) });
+  try {
+    const quadro = async () => { await c.avancar(200); await c.page.waitForTimeout(200); await c.avancar(100); };
+    const menores = () => c.js(`document.querySelectorAll('.opcao-texto.texto-menor').length`);
+    await c.js(`Reino.UI.fecharTodas(); var pn = Reino.UI.painel('teste-quebra', 'Teste'), k = Reino.Desafios.render(${JSON.stringify(IMG2)}, { modo: 'prova', onMudar: function () {} }).card;
+      k.style.width = '330px'; pn.conteudo.appendChild(k)`);
+    await quadro();
+    assert.ok(await menores() > 0, 'em 330 px nenhuma opção desceu (o teste não testou nada)');
+    await c.js(`document.querySelector('.painel .desafio').style.width = '600px'`);
+    await quadro();
+    assert.strictEqual(await menores(), 0, 'o degrau ficou preso depois de alargar');
+    // girar: estreita de novo, gira deitado e volta em pé com o cartão largo
+    await c.js(`document.querySelector('.painel .desafio').style.width = '330px'`);
+    await quadro();
+    await c.js(`document.querySelector('.painel .desafio').style.width = ''`);
+    await c.page.setViewportSize({ width: 1180, height: 820 });
+    await quadro();
+    await c.page.setViewportSize({ width: 820, height: 1180 });
+    await quadro();
+    assert.strictEqual(await menores(), 0, 'o degrau ficou preso depois de girar o tablet');
+    assert.deepStrictEqual(c.erros || [], []);
+  } finally { await c.fechar(); }
+});

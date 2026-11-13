@@ -97,6 +97,9 @@
 /* Verdadeiro/Falso e duas opções lado a lado só a partir de 640 px: no celular, "Verdadeiro" na letra pixel
    não cabe em meia tela e empurrava o "Falso" para fora */
 @media (min-width: 640px) { .opcoes-varias { grid-template-columns: 1fr 1fr; } .opcoes-duas, .opcoes-vf { grid-template-columns: 1fr 1fr; } }
+/* rótulo comprido (escolha.js, .opcoes-longas: 4 palavras ou mais): uma coluna só, na sala e no painel (em meia largura a
+   frase ficava com uma palavra por linha) */
+.opcoes-longas:not(.opcoes-img) { grid-template-columns: 1fr; }
 .opcao {
   display: flex; align-items: center; gap: 12px;
   min-height: 64px; padding: 12px 16px; text-align: left;

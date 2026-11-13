@@ -23,13 +23,16 @@
 /* opção com desenho (escolha e varias): o desenho de 64 px em cima do nome; grade de 2 colunas no celular. A coluna
    cabe uma palavra de 8 letras inteira (128 px + 8 px de folga de cada lado + a borda: "elefante", «football»); a de 9
    ou mais quebra na sílaba (_d.textoOpcao) */
-.opcoes.opcoes-img { grid-template-columns: repeat(auto-fill, minmax(min(100%, 152px), 1fr)); }
+.opcoes.opcoes-img { grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.5em), 1fr)); }
+/* a coluna em em (acompanha a letra do nome: 152 px em 16, 228 em 24) e auto-fit (poucas opções = colunas largas, sem
+   trilhas vazias); rótulo comprido (escolha.js, .opcoes-longas) com a coluna mais larga */
+.opcoes.opcoes-img.opcoes-longas { grid-template-columns: repeat(auto-fit, minmax(min(100%, 14em), 1fr)); }
 .opcao.opcao-img { flex-direction: column; justify-content: center; gap: 6px; padding: 10px 8px 12px; text-align: center; }
 .opcao-img .opcao-figura { display: inline-flex; align-items: center; justify-content: center; min-height: 64px; font-size: var(--texto-t); line-height: 1; }
 /* o nome não parte no meio: a palavra que não cabe faz a letra descer um degrau (_d.caberTexto e .texto-menor, arte.md §17.3) */
 .opcao-img .opcao-texto { flex: none; max-width: 100%; }
 /* celular com letras grandes: o nome da opção desce um degrau (24 → 16) para caber na meia largura (arte.md §17.3) */
-@media (max-width: 480px) { .letras-grandes .opcao-img .opcao-texto { font-size: var(--texto-aux); } }
+@media (max-width: 480px) { .letras-grandes .opcao-img .opcao-texto, .letras-grandes .opcoes-img { font-size: var(--texto-aux); } }   /* a grade mede em em do nome */
 .opcao-marcar.opcao-img { position: relative; padding-top: 16px; }
 .opcao-marcar.opcao-img::after { position: absolute; top: 6px; right: 6px; }
 

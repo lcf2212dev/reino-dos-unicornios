@@ -12,14 +12,15 @@
   // o sinal que vem colado logo depois de uma lacuna ou caixa ('.', ',', '").', '?'): fica preso a ela na quebra de linha
   _d.sinalColado = function (depois) { return (String(depois || '').match(/^[.,!?;:…"”')»]+/) || [''])[0]; };
   // o que não se separa na quebra de linha (arte.md §17.4), com espaço inquebrável: "R$" e o número de depois ("R$ 10,00";
-  // o U.colado prende o "R$" só no começo de um grupo, "De R$" | "10,00"), o sinal entre parênteses ("( ? )", "(J - j)")
-  // e a conta ("8 ÷ 2 = 4")
+  // o U.colado prende o "R$" só no começo de um grupo, "De R$" | "10,00"), o sinal entre parênteses ("( ? )", "(J - j)"),
+  // a conta ("8 ÷ 2 = 4") e a letra do rótulo no fim ("Imagem A.")
   _d.colarTexto = function (t) {
     if (typeof t !== 'string') return t;
     return t.replace(/R\$ (?=\d)/g, 'R$\u00a0')
       .replace(/\( (\S{1,3}) \)/g, '(\u00a0$1\u00a0)')
       .replace(/\((\S{1,3}) ([-–—]) (\S{1,3})\)/g, '($1\u00a0$2\u00a0$3)')
-      .replace(/(\d) ([÷×+=–-]) (?=\d)/g, '$1\u00a0$2\u00a0');
+      .replace(/(\d) ([÷×+=–-]) (?=\d)/g, '$1\u00a0$2\u00a0')
+      .replace(/(\p{L}) (\p{Lu}[.:)]?)$/u, '$1\u00a0$2');   // a letra do rótulo no fim ("Imagem A.") fica com a palavra
   };
   // texto de opção: os grupos colados do U.colado ("de brinquedo", "100 reais") viram .grupo-colado (inteiros na linha;
   // mais largos que o botão, quebram entre as palavras: ui-missao.css), com o colarTexto
@@ -55,7 +56,7 @@
   // sem a quebra no meio do body (overflow-wrap: normal), que volta no fim. Nome próprio (célula da tabela) não leva hífen.
   _d.caberTexto = function (el, degrau) {
     if (el._caber) return el;
-    var ro = window.ResizeObserver ? new ResizeObserver(function () { medir(); }) : null;
+    var ro = window.ResizeObserver ? new ResizeObserver(function () { medir(); }) : null, pai = null;
     // rótulo curto (até 12 letras, §17.3) desce o degrau; o texto mais longo quebra na sílaba
     var curto = el.textContent.replace(/[\s\u00ad]/g, '').length <= 12, nome = el.matches('.tabela-fixa') && /^\s*\p{Lu}\p{Ll}+\s*$/u.test(el.textContent);
     el._chave = chaveDe(el);
@@ -114,6 +115,10 @@
     function menor(sim) { el.classList.toggle('texto-menor', sim); }   // o token de baixo (css: .texto-menor)
     function medir() {
       if (!el.isConnected) { if (ro) ro.disconnect(); return; }
+      // a caixa que tem o tamanho do texto (lacuna, nome da opção com figura) não muda quando quem a contém estreita ou
+      // alarga (o retorno que abre, a barra de rolagem, o tablet que gira): observa também o pai, já na tela (o span
+      // chega aqui antes de entrar no botão)
+      if (ro && el.parentElement !== pai) { if (pai) ro.unobserve(pai); pai = el.parentElement; if (pai) ro.observe(pai); }
       original();
       menor(false);
       el.classList.remove('texto-parte');
@@ -123,9 +128,11 @@
         var desce = aux < parseFloat(getComputedStyle(el).fontSize);
         if ((degrau || nome) && desce && curto) menor(true);
         if (vaza()) hifenizar();
+        // a palavra de até 8 letras que não cabe: primeiro o degrau abaixo; a sílaba nela e o hífen a cada 6 letras só
+        // depois, como último recurso antes de partir no meio (arte.md §17.2 só manda a sílaba na de 9 ou mais)
+        if (vaza() && desce) menor(true);
         if (vaza()) hifenizar(6);
         if (vaza()) hifenizar(0);
-        if (vaza() && desce) menor(true);
         if (vaza()) el.classList.add('texto-parte');
       }
       el.style.overflowWrap = el.classList.contains('texto-parte') ? 'break-word' : '';
@@ -133,9 +140,7 @@
       sincronizar(el);
     }
     el._caber = medir;
-    // a caixa que tem o tamanho do texto (lacuna, botão) não muda quando quem a contém estreita (o retorno que abre, a
-    // barra de rolagem que aparece): observa também o pai
-    if (ro) { ro.observe(el); if (el.parentElement) ro.observe(el.parentElement); }
+    if (ro) ro.observe(el);
     // a 1ª medida assim que entra na tela (também no jogo congelado, sem quadros); de novo com a fonte pronta
     (function esperar(n) {
       if (!el.isConnected) { if (n < 20) setTimeout(function () { esperar(n + 1); }, 0); return; }
