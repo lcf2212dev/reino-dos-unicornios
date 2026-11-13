@@ -130,6 +130,9 @@
    fração de px para menos: «I cry.» quebrava em "I / cry." com espaço sobrando (arte.md §17.4). 0.05em de sobra
    absorve o arredondamento; sem folga nenhuma (100%) o rótulo mais largo que o botão passava 7 px com Letras grandes */
 .opcao-img .en .grupo-colado { max-width: calc(100% - 0.25em); }
+/* o grupo mais largo que a caixa mesmo no degrau de baixo se desfaz (quebra.js, soltar): as palavras dele quebram como
+   texto comum, sem a linha de uma palavra só que o grupo inteiro na linha de baixo deixava */
+.grupo-colado.grupo-solto { display: inline; }
 /* palavra comprida (ex.: "acontecimentos" com letras grandes no celular): quebra dentro do texto da opção em vez de
    empurrar o botão para fora da tela; palavras que cabem não mudam (break-word só age quando a palavra não cabe) */
 .opcoes > .opcao { min-width: 0; }

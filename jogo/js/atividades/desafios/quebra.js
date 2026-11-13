@@ -4,7 +4,8 @@
      _d.colarTexto(t)       → "R$" e o número, "( ? )", "(J - j)", "8 ÷ 2 = 4" presos (espaço inquebrável)
      _d.textoOpcao(t)       → fragmento do texto da opção: colado (U.colado) e com o colarTexto
      _d.caberTexto(el, degrau?) → a palavra que não cabe: um degrau abaixo (degrau), hífen suave, ou (último recurso) parte;
-                            os irmãos do mesmo grupo (as opções, o ligar…) descem juntos
+                            os irmãos do mesmo grupo (as opções, o ligar…) descem juntos; o grupo colado que não cabe
+                            inteiro na linha faz o texto curto descer o degrau e, se nem assim, se desfaz (.grupo-solto)
      _d.caberDentro(raiz)   → o caberTexto em cada bloco de texto de dentro (cartão, retorno, carta do livro) */
 (function () {
   var U = Reino.util, _d = Reino._desafios;
@@ -42,10 +43,35 @@
     var c = Array.prototype.filter.call(el.classList, function (k) { return !/^(texto-|grupo-colado$)/.test(k); })[0];
     return el.tagName + '.' + (c || '');
   }
+  // o grupo colado («I cry.», "5 reais", "de brinquedo": §17.4) mais largo que a caixa quebra por dentro sem vazar, e o
+  // grupo inteiro na linha de baixo deixa uma palavra sozinha em cima ("No, / I / didn't."). partido(g): o texto do
+  // grupo ocupa mais de uma linha
+  function partido(g) {
+    var tw = document.createTreeWalker(g, NodeFilter.SHOW_TEXT), n, r = document.createRange(), topo = null;
+    while ((n = tw.nextNode())) {
+      if (!/\S/.test(n.nodeValue)) continue;
+      r.selectNodeContents(n);
+      for (var rs = r.getClientRects(), i = 0; i < rs.length; i++) {
+        if (rs[i].width < 0.5) continue;
+        if (topo === null) topo = rs[i].top;
+        else if (Math.abs(rs[i].top - topo) > rs[i].height * 0.5) return true;
+      }
+    }
+    return false;
+  }
+  function grupos(el, so) { var l = Array.prototype.slice.call(el.querySelectorAll('.grupo-colado')); return so ? l.filter(so) : l; }
+  // no tamanho em que o texto ficou (depois do degrau dos irmãos): o grupo que ainda não cabe inteiro se desfaz
+  // (.grupo-solto, ui-missao.css) e as palavras dele quebram como texto comum ("Foto 2: a / bicicleta", não
+  // "Foto 2: / a / bicicleta")
+  function soltar(el) {
+    grupos(el).forEach(function (g) { g.classList.remove('grupo-solto'); });
+    grupos(el, partido).forEach(function (g) { g.classList.add('grupo-solto'); });
+  }
   function sincronizar(el) {
     var g = el.closest(GRUPO), membros = g ? Array.prototype.filter.call(g.querySelectorAll('*'), function (m) { return m._caber && m._chave === el._chave; }) : [el];
     var algum = membros.some(function (m) { return m._menor; });
     membros.forEach(function (m) { m.classList.toggle('texto-menor', !!(m._menor || algum)); });
+    membros.forEach(soltar);
   }
   // texto que pode não caber (opção, ligar com emoji, enunciado, texto de apoio, retorno, carta): a palavra que não cabe
   // nunca parte no meio (arte.md §17). Só quando ela não cabe, nesta ordem: 1) o rótulo curto (degrau; até 12 letras,
@@ -122,6 +148,7 @@
       if (ro && el.parentElement !== pai) { if (pai) ro.unobserve(pai); pai = el.parentElement; if (pai) ro.observe(pai); }
       original();
       menor(false);
+      grupos(el).forEach(function (g) { g.classList.remove('grupo-solto'); });
       el.classList.remove('texto-parte');
       el.style.overflowWrap = 'normal';
       if (vaza()) {
@@ -136,6 +163,11 @@
         if (vaza()) hifenizar(0);
         if (vaza()) el.classList.add('texto-parte');
       }
+      // o texto curto (até 12 letras: o nome da figura, a opção, o item do ligar) com um grupo colado que não cabe
+      // inteiro na linha desce o degrau, como o da palavra que não cabe (§17.3: "5 reais", «I jump.», "a passarela"); o
+      // texto longo fica no tamanho dele e o grupo se desfaz (sincronizar → soltar)
+      if (curto && !el.classList.contains('texto-menor') && grupos(el, partido).length &&
+          parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--texto-aux')) < parseFloat(getComputedStyle(el).fontSize)) menor(true);
       el.style.overflowWrap = el.classList.contains('texto-parte') ? 'break-word' : '';
       el._menor = el.classList.contains('texto-menor');
       sincronizar(el);

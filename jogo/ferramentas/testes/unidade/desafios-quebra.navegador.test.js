@@ -192,3 +192,44 @@ test('«I cry.» numa linha só no nome da opção com figura', async () => {
     } finally { await c.fechar(); }
   }
 });
+
+// o grupo colado que não cabe inteiro na linha (arte.md §17.3 e §17.4): no rótulo curto ("100 reais") a letra desce um
+// degrau, nas opções irmãs juntas, e ele fica numa linha; no rótulo longo ("Um pé de moleque") a letra fica como está
+// e o grupo se desfaz (.grupo-solto): "Um pé de / moleque", não "Um pé / de / moleque". Tablet, cartão de 330 px (2
+// colunas, 139 px úteis no nome: "Um pé de" tem 128 px e "de moleque" 160).
+const LINHAS = `[].map.call(document.querySelectorAll('.opcao-img .opcao-texto'), function (e) {
+  var tw = document.createTreeWalker(e, NodeFilter.SHOW_TEXT), n, g = document.createRange(), linhas = [], re = /\\S+/g, m;
+  while ((n = tw.nextNode())) { re.lastIndex = 0; while ((m = re.exec(n.nodeValue))) {
+    g.setStart(n, m.index); g.setEnd(n, m.index + m[0].length);
+    var r = g.getClientRects()[0]; if (!r) continue;
+    var l = linhas.filter(function (x) { return Math.abs(x.t - r.top) < r.height / 2; })[0];
+    if (!l) linhas.push(l = { t: r.top, p: [] });
+    l.p.push(m[0]); } }
+  return { menor: e.classList.contains('texto-menor'), soltos: e.querySelectorAll('.grupo-solto').length, linhas: linhas.map(function (x) { return x.p.join(' '); }) }; })`;
+const CURTO = { id: 'tq-gc', tipo: 'escolha', pergunta: 'Quanto?', opcoes: [{ t: '100 reais', img: '✏️' }, { t: '200 reais', img: '✏️' }], certa: 0 };
+const LONGO = { id: 'tq-gl', tipo: 'escolha', pergunta: 'Qual doce?', opcoes: [{ t: 'Um pé de moleque', img: '✏️' }, { t: 'Um pé de galinha', img: '✏️' }], certa: 0 };
+test('grupo colado que não cabe: o rótulo curto desce o degrau; no longo o grupo se desfaz', async () => {
+  const c = await abrirCenario({ tamanho: 'tablet', save: 'completo', pasta: fs.mkdtempSync(path.join(PASTA_TESTES, 'desafios-quebra-')) });
+  try {
+    const abrir = async (d, largura) => {
+      await c.js(`Reino.UI.fecharTodas(); var pn = Reino.UI.painel('teste-quebra', 'Teste'), k = Reino.Desafios.render(${JSON.stringify(d)}, { modo: 'prova', onMudar: function () {} }).card;
+        k.style.width = '${largura}px'; pn.conteudo.appendChild(k)`);
+      await c.avancar(200); await c.page.waitForTimeout(200); await c.avancar(100);
+      return Array.from(await c.js(LINHAS));
+    };
+    // curto: em 330 px (2 colunas) "100 reais" não cabe em 16; desce para 12 e fica numa linha, nas duas opções
+    let r = await abrir(CURTO, 330);
+    assert.deepStrictEqual(r.map((x) => [x.menor, x.soltos, x.linhas.length]), [[true, 0, 1], [true, 0, 1]], `rótulo curto: ${JSON.stringify(r)}`);
+    // com espaço (600 px) fica no tamanho cheio, numa linha
+    r = await abrir(CURTO, 600);
+    assert.deepStrictEqual(r.map((x) => [x.menor, x.soltos, x.linhas.length]), [[false, 0, 1], [false, 0, 1]], `rótulo curto com espaço: ${JSON.stringify(r)}`);
+    // longo: a letra não desce por causa do grupo; o grupo que não cabe se desfaz e nenhuma linha fica com uma palavrinha só
+    r = await abrir(LONGO, 330);
+    assert.deepStrictEqual(r.map((x) => [x.menor, x.soltos, x.linhas.join(' / ')]).sort(),
+      [[false, 1, 'Um pé de / galinha'], [false, 1, 'Um pé de / moleque']], `rótulo longo: ${JSON.stringify(r)}`);
+    // com espaço (380 px) o grupo cabe inteiro e continua colado
+    r = await abrir(LONGO, 380);
+    assert.deepStrictEqual(r.map((x) => [x.menor, x.soltos, x.linhas.length]), [[false, 0, 2], [false, 0, 2]], `rótulo longo com espaço: ${JSON.stringify(r)}`);
+    assert.deepStrictEqual(c.erros || [], []);
+  } finally { await c.fechar(); }
+});
