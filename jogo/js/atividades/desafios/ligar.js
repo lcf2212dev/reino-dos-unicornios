@@ -54,7 +54,7 @@
         ? el('span.ligar-img', _d.figuraIcone(p[0].img, 64))
         // com emoji, o texto fica sempre na coluna ao lado da bolinha (não desce): a palavra que não cabe quebra na
         // sílaba, com hífen (_d.caberTexto, arte.md §17.2); sem emoji, ele desce inteiro para baixo da bolinha (D10-B01)
-        : [p[0].e ? el('span.opcao-emoji', p[0].e) : null, p[0].e ? _d.caberTexto(el('span.ligar-texto', _d.textoOpcao(p[0].t))) : el('span', p[0].t)];
+        : [p[0].e ? el('span.opcao-emoji', p[0].e) : null, p[0].e ? _d.caberTexto(el('span.ligar-texto', _d.textoOpcao(p[0].t))) : el('span', _d.colarTexto(p[0].t))];
       var b = el('button.ligar-item.ligar-esq' + (p[0].img ? '.com-img' : ''), { type: 'button', 'aria-label': p[0].img ? U.semEn(p[0].alt) : null }, el('span.ligar-marca'), conteudo);
       b.addEventListener('click', function () {
         if (ctrl.travado) return;
@@ -67,7 +67,7 @@
     });
     direita.forEach(function (j) {
       var p = d.pares[j];
-      var b = el('button.ligar-item.ligar-dir', { type: 'button' }, el('span.ligar-marca'), el('span', p[1].t));
+      var b = el('button.ligar-item.ligar-dir', { type: 'button' }, el('span.ligar-marca'), el('span', _d.colarTexto(p[1].t)));
       b.addEventListener('click', function () {
         if (ctrl.travado) return;
         var dono = Object.keys(liga).find(function (k) { return liga[k] === j; });

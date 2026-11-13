@@ -2,7 +2,8 @@
 // botão está no cartão do enunciado, ao lado do "🔊 Ouvir" e na mesma linha (celular); pelo teclado (foco e Enter) abre o
 // livro na carta da pergunta (d.livro); o Esc fecha, a opção marcada continua marcada e o foco volta ao botão. Não existe
 // na pergunta sozinha (Hora da pergunta!), no treino do Castelo, na prova da Escola nem na sala sorteada.
-// Servidor e banco de TESTE novos (cenario.js); save sintético; congelado (?congelar=1); celular. Sem erro de console.
+// Servidor e banco de TESTE novos (cenario.js); save sintético; congelado (?congelar=1); celular (o botão também no tablet e
+// no notebook, e com Letras grandes nos 3). Sem erro de console.
 // Rodar (da raiz): npm run unidade -- --so desafio-livro
 const { test } = require('node:test');
 const assert = require('assert');
@@ -15,38 +16,43 @@ const { preparar, seguirSala } = require('./ajudantes/quarto-bimestre');
 const MAT = 'matematica4', SALA = 'ma11a7', D1 = 'ma11a7-01';
 const temBotao = (c, tela) => c.js(`!!document.querySelector('${tela} .btn-livro')`);
 
+// na 1ª pergunta da sala de livro: o botão, a carta certa pelo teclado, o Esc e a resposta que continua
+async function naSala(c, onde) {
+  await c.page.evaluate(preparar);
+  await c.js(`void Reino.Missao.iniciar(Reino.materia('${MAT}'), Reino.materia('${MAT}').salas.find(function (s) { return s.id === '${SALA}'; }))`);
+  await c.avancar(1500);
+  assert.strictEqual((await seguirSala(c, async () => {}, { antesDe: D1 })).fim, 'desafio', 'não chegou à 1ª pergunta' + onde);
+  const b = await c.js(`(function () { var b = document.querySelector('.tela-missao .enunciado .btn-livro'), o = document.querySelector('.tela-missao .enunciado .btn-ouvir:not(.btn-livro)');
+    return b && { texto: b.textContent, aria: b.getAttribute('aria-label'), mesmaLinha: !o || Math.abs(b.getBoundingClientRect().top - o.getBoundingClientRect().top) < 2,
+      dentro: b.getBoundingClientRect().right <= document.querySelector('.tela-missao .enunciado').getBoundingClientRect().right }; })()`);
+  assert.ok(b, 'sem o botão do livro na pergunta da sala de livro' + onde);
+  assert.match(b.texto, /Livro/);
+  assert.deepStrictEqual([b.aria, b.mesmaLinha, b.dentro], ['Ver no livro', true, true], 'rótulo, linha do 🔊 e dentro do cartão' + onde);
+  // a resposta em andamento: uma opção marcada
+  await c.page.locator('.tela-missao .opcao').first().click();
+  await c.avancar(200);
+  // teclado: foco no botão e Enter abre o livro na carta da pergunta
+  await c.page.locator('.tela-missao .btn-livro').focus();
+  await c.page.keyboard.press('Enter');
+  await c.avancar(800);
+  const livro = await c.js(`(function () { var m = Reino.materia('${MAT}'), d = m.salas.find(function (s) { return s.id === '${SALA}'; }).desafios[0];
+    var carta = m.livro.find(function (x) { return x.id === d.livro; }), t = document.querySelector('#telas > .tela:last-child');
+    var h = t && t.querySelector('.livro-carta h3');
+    return { tela: t && t.className, titulo: h && h.textContent.replace(/\\u00ad/g, ''), esperado: carta.titulo }; })()`);
+  assert.ok(!/tela-missao/.test(livro.tela), 'o livro não abriu: ' + livro.tela);
+  assert.ok(livro.titulo && livro.titulo.indexOf(livro.esperado.slice(0, 12)) >= 0, `carta errada: ${livro.titulo} (esperava ${livro.esperado})`);
+  await c.page.keyboard.press('Escape');
+  await c.avancar(800);
+  const volta = await c.js(`({ topo: document.querySelector('#telas > .tela:last-child').className,
+    marcada: !!document.querySelector('.tela-missao .opcao[aria-pressed="true"]'), foco: document.activeElement && document.activeElement.classList.contains('btn-livro') })`);
+  assert.match(volta.topo, /tela-missao/, 'o Esc não fechou o livro' + onde);
+  assert.deepStrictEqual([volta.marcada, volta.foco], [true, true], 'a resposta sumiu ou o foco não voltou ao botão' + onde);
+}
+
 test('"📖 Livro" só na pergunta da sala de livro: abre a carta, fecha com Esc e a resposta continua', async () => {
   const c = await abrirCenario({ tamanho: 'celular', save: 'completo', pasta: fs.mkdtempSync(path.join(PASTA_TESTES, 'desafio-livro-')) });
   try {
-    await c.page.evaluate(preparar);
-    await c.js(`void Reino.Missao.iniciar(Reino.materia('${MAT}'), Reino.materia('${MAT}').salas.find(function (s) { return s.id === '${SALA}'; }))`);
-    await c.avancar(1500);
-    assert.strictEqual((await seguirSala(c, async () => {}, { antesDe: D1 })).fim, 'desafio', 'não chegou à 1ª pergunta');
-    const b = await c.js(`(function () { var b = document.querySelector('.tela-missao .enunciado .btn-livro'), o = document.querySelector('.tela-missao .enunciado .btn-ouvir:not(.btn-livro)');
-      return b && { texto: b.textContent, aria: b.getAttribute('aria-label'), mesmaLinha: !o || Math.abs(b.getBoundingClientRect().top - o.getBoundingClientRect().top) < 2,
-        dentro: b.getBoundingClientRect().right <= document.querySelector('.tela-missao .enunciado').getBoundingClientRect().right }; })()`);
-    assert.ok(b, 'sem o botão do livro na pergunta da sala de livro');
-    assert.match(b.texto, /Livro/);
-    assert.deepStrictEqual([b.aria, b.mesmaLinha, b.dentro], ['Ver no livro', true, true]);
-    // a resposta em andamento: uma opção marcada
-    await c.page.locator('.tela-missao .opcao').first().click();
-    await c.avancar(200);
-    // teclado: foco no botão e Enter abre o livro na carta da pergunta
-    await c.page.locator('.tela-missao .btn-livro').focus();
-    await c.page.keyboard.press('Enter');
-    await c.avancar(800);
-    const livro = await c.js(`(function () { var m = Reino.materia('${MAT}'), d = m.salas.find(function (s) { return s.id === '${SALA}'; }).desafios[0];
-      var carta = m.livro.find(function (x) { return x.id === d.livro; }), t = document.querySelector('#telas > .tela:last-child');
-      var h = t && t.querySelector('.livro-carta h3');
-      return { tela: t && t.className, titulo: h && h.textContent.replace(/\\u00ad/g, ''), esperado: carta.titulo }; })()`);
-    assert.ok(!/tela-missao/.test(livro.tela), 'o livro não abriu: ' + livro.tela);
-    assert.ok(livro.titulo && livro.titulo.indexOf(livro.esperado.slice(0, 12)) >= 0, `carta errada: ${livro.titulo} (esperava ${livro.esperado})`);
-    await c.page.keyboard.press('Escape');
-    await c.avancar(800);
-    const volta = await c.js(`({ topo: document.querySelector('#telas > .tela:last-child').className,
-      marcada: !!document.querySelector('.tela-missao .opcao[aria-pressed="true"]'), foco: document.activeElement && document.activeElement.classList.contains('btn-livro') })`);
-    assert.match(volta.topo, /tela-missao/, 'o Esc não fechou o livro');
-    assert.deepStrictEqual([volta.marcada, volta.foco], [true, true], 'a resposta sumiu ou o foco não voltou ao botão');
+    await naSala(c, ' (celular)');
 
     // a pergunta sozinha (o "Leia antes" faz esse papel)
     await c.js(`(function () { Reino.UI.fecharTodas(); document.body.classList.remove('em-missao'); var m = Reino.materia('${MAT}'), s = m.salas.find(function (x) { return x.id === '${SALA}'; });
@@ -90,4 +96,14 @@ test('"📖 Livro" só na pergunta da sala de livro: abre a carta, fecha com Esc
     }
     assert.deepStrictEqual(c.erros || [], []);
   } finally { await c.fechar(); }
+});
+
+test('"📖 Livro" no tablet e no notebook, e com Letras grandes nos 3 tamanhos', async () => {
+  for (const [tamanho, grandes] of [['tablet', false], ['notebook', false], ['celular', true], ['tablet', true], ['notebook', true]]) {
+    const c = await abrirCenario({ tamanho, save: 'completo', ajustes: grandes ? { texto: 1.15 } : undefined, pasta: fs.mkdtempSync(path.join(PASTA_TESTES, 'desafio-livro-')) });
+    try {
+      await naSala(c, ` (${tamanho}${grandes ? ', Letras grandes' : ''})`);
+      assert.deepStrictEqual(c.erros || [], []);
+    } finally { await c.fechar(); }
+  }
 });

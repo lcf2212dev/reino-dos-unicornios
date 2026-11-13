@@ -10,7 +10,7 @@
     var bloq = {};
     // opções com desenho (o.img; d.soImagem): _d.botaoImg, de escolha.js
     var comImg = _d.temImg(d);
-    var lista = el('div.opcoes.opcoes-varias' + (comImg ? '.opcoes-img' : ''));
+    var lista = el('div.opcoes.opcoes-varias' + (comImg ? '.opcoes-img' : '') + _d.classeLongas(d));
     var botoes = {};
     ordem.forEach(function (i) {
       var b = comImg ? _d.botaoImg(d.opcoes[i], d, '.opcao-marcar') : botaoOpcao(d.opcoes[i], '.opcao-marcar');

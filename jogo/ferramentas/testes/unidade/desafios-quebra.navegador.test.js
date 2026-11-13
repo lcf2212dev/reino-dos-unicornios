@@ -67,3 +67,81 @@ test('quebra de linha e desenho dos desafios; cartão num painel do notebook em 
     assert.deepStrictEqual(c.erros || [], []);
   } finally { await c.fechar(); }
 });
+
+// o ajuste da palavra que não cabe (_d.caberTexto): a casa de uma letra fica fora, medir de novo dá o mesmo resultado,
+// o escondido não é marcado e os irmãos (as opções da pergunta) descem o degrau juntos. Celular.
+const CACA = { id: 'tq-cp', tipo: 'cacaPalavras', pergunta: 'Ache.', grade: ['GATOXYZ', 'ABCDEFG', 'SAPOHIJ'], palavras: ['GATO', 'SAPO'] };
+const CRUZ = { id: 'tq-cz', tipo: 'cruzadinha', pergunta: 'Complete.', palavras: [{ resposta: 'GATO', x: 0, y: 0, dir: 'h', dica: 'Mia.' }, { resposta: 'GALO', x: 0, y: 0, dir: 'v', dica: 'Canta.' }] };
+const IMG = { id: 'tq-im', tipo: 'varias', pergunta: 'Quais?', opcoes: [{ t: 'cabeleireiro', img: '✏️', ok: true }, { t: 'cozinheiro', img: '✏️' },
+  { t: 'astrônomo', img: '✏️' }, { t: 'pé', img: '✏️' }] };
+const ESCONDIDO = { id: 'tq-es', tipo: 'escolha', pergunta: 'Qual?', opcoes: [{ t: 'Sim.' }, { t: 'Não.' }], certa: 0,
+  apoio: { titulo: 'Texto', partes: [{ texto: 'Era uma vez um gato.' }] } };
+
+test('caberTexto: casa de grade fora, mesma medida duas vezes, escondido sem marca e irmãos juntos', async () => {
+  const c = await abrirCenario({ tamanho: 'celular', save: 'completo', pasta: fs.mkdtempSync(path.join(PASTA_TESTES, 'desafios-quebra-')) });
+  try {
+    const abrir = async (d, largura) => {
+      await c.js(`Reino.UI.fecharTodas(); var pn = Reino.UI.painel('teste-quebra', 'Teste'), k = Reino.Desafios.render(${JSON.stringify(d)}, { modo: 'prova', onMudar: function () {} }).card;
+        ${largura ? `k.style.width = '${largura}px';` : ''} pn.conteudo.appendChild(k)`);
+      await c.avancar(300);
+      await c.page.waitForTimeout(150);   // o ResizeObserver vem no quadro de verdade
+      await c.avancar(100);
+    };
+    // a grade do caça-palavras e da cruzadinha: toda casa com a mesma letra, nenhuma marcada (a margem de -2 px não vaza)
+    for (const d of [CACA, CRUZ]) {
+      await abrir(d);
+      const casas = await c.js(`(function () { var cs = [].slice.call(document.querySelectorAll('.caca-letra, .cruz-casa'));
+        return { n: cs.length, letras: cs.map(function (e) { return getComputedStyle(e.querySelector('.cruz-letra') || e).fontSize; }).filter(function (v, i, a) { return a.indexOf(v) === i; }),
+          marcadas: cs.filter(function (e) { return e.querySelector('.texto-menor, .texto-parte') || e.matches('.texto-menor, .texto-parte'); }).length }; })()`);
+      assert.ok(casas.n > 0, d.tipo + ': sem casas');
+      assert.deepStrictEqual([casas.letras.length, casas.marcadas], [1, 0], `${d.tipo}: a letra da casa mudou (${casas.letras})`);
+    }
+    // as opções com desenho num cartão estreito: medir de novo dá o mesmo; quem desce leva os irmãos junto
+    await abrir(IMG, 330);
+    const foto = `[].map.call(document.querySelectorAll('.opcao-texto'), function (e) { return e.className + '|' + getComputedStyle(e).fontSize + '|' + e.textContent; }).join(' / ')`;
+    const antes = await c.js(foto);
+    await c.js(`[].forEach.call(document.querySelectorAll('.opcao-texto'), function (e) { e._caber(); e._caber(); })`);
+    assert.strictEqual(await c.js(foto), antes, 'medir duas vezes mudou o resultado');
+    const tam = await c.js(`[].map.call(document.querySelectorAll('.opcao-texto'), function (e) { return getComputedStyle(e).fontSize; }).filter(function (v, i, a) { return a.indexOf(v) === i; })`);
+    assert.strictEqual(tam.length, 1, 'as opções da mesma pergunta em tamanhos diferentes: ' + tam);
+    assert.ok(/texto-menor/.test(antes), 'o cartão estreito não fez nenhuma opção descer (o teste não testou nada): ' + antes);
+    // escondido (o rótulo "Texto de apoio" no celular): nenhuma marca nem hífen
+    await abrir(ESCONDIDO);
+    const esc = await c.js(`(function () { var r = document.querySelector('.apoio-rotulo'); return { visivel: !!r.getClientRects().length, classe: r.className, hifen: /\\u00ad/.test(r.textContent) }; })()`);
+    assert.deepStrictEqual(esc, { visivel: false, classe: 'apoio-rotulo', hifen: false }, 'o escondido foi marcado');
+    assert.deepStrictEqual(c.erros || [], []);
+  } finally { await c.fechar(); }
+});
+
+// a lacuna preenchida (completar, celular com Letras grandes): as palavras postas ficam todas no mesmo tamanho, nenhuma
+// parte no meio, e o ajuste roda de novo quando o bloco estreita depois (o retorno que abre, a barra de rolagem)
+const LACUNAS = { id: 'tq-la', tipo: 'completar', pergunta: 'Complete.', palavras: ['FOTOSSÍNTESE', 'GÁS OXIGÊNIO', 'LUZ DO SOL'],
+  frases: [{ antes: 'a) Durante a', depois: ', as plantas produzem açúcares.', certa: 0 }, { antes: 'b) As folhas soltam', depois: 'no ar.', certa: 1 },
+    { antes: 'c) A planta usa a', depois: 'para crescer.', certa: 2 }] };
+
+test('lacuna preenchida: mesmo tamanho nas frases irmãs, inteira, e medida de novo quando o bloco estreita', async () => {
+  const c = await abrirCenario({ tamanho: 'celular', save: 'completo', ajustes: { texto: 1.15 }, pasta: fs.mkdtempSync(path.join(PASTA_TESTES, 'desafios-quebra-')) });
+  try {
+    await c.js(`Reino.UI.fecharTodas(); var pn = Reino.UI.painel('teste-quebra', 'Teste');
+      pn.conteudo.appendChild(Reino.Desafios.render(${JSON.stringify(LACUNAS)}, { modo: 'prova', onMudar: function () {} }).card)`);
+    await c.avancar(300);
+    // cada frase com a sua palavra
+    await c.js(`[].forEach.call(document.querySelectorAll('.frase-completar'), function (f, i) { f.querySelectorAll('.chip-palavra')[i].click(); })`);
+    await c.avancar(300);
+    await c.page.waitForTimeout(150);   // o ResizeObserver vem no quadro de verdade
+    await c.avancar(100);
+    const olhar = () => c.js(`(function () { var ls = [].slice.call(document.querySelectorAll('.lacuna.preenchida'));
+      return { n: ls.length, tamanhos: ls.map(function (l) { return getComputedStyle(l).fontSize; }).filter(function (v, i, a) { return a.indexOf(v) === i; }),
+        partidas: ls.filter(function (l) { return l.classList.contains('texto-parte'); }).length,
+        vazam: ls.filter(function (l) { var g = document.createRange(); g.selectNodeContents(l); var t = g.getBoundingClientRect(), p = l.closest('.frase-texto').getBoundingClientRect(); return t.right > p.right + 1; }).length }; })()`);
+    const r = await olhar();
+    assert.deepStrictEqual([r.n, r.tamanhos.length, r.partidas, r.vazam], [3, 1, 0, 0], 'lacunas preenchidas: ' + JSON.stringify(r));
+    // o bloco estreita depois (como quando o retorno abre): a lacuna mede de novo e continua inteira
+    await c.js(`document.querySelector('.painel .desafio').style.width = '230px'`);
+    await c.page.waitForTimeout(200);
+    await c.avancar(100);
+    const r2 = await olhar();
+    assert.deepStrictEqual([r2.tamanhos.length, r2.partidas, r2.vazam], [1, 0, 0], 'depois de estreitar: ' + JSON.stringify(r2));
+    assert.deepStrictEqual(c.erros || [], []);
+  } finally { await c.fechar(); }
+});

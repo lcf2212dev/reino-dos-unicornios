@@ -26,7 +26,11 @@
   }
   function preenchida(c, v) { return digitada(c) ? typeof v === 'string' && v.trim() !== '' : v !== null && v !== undefined; }
   // palavra de 9 letras ou mais quebra na sílaba, com o hífen à vista (arte.md §17.2; Reino._ui vem depois, já na tela)
-  function hifenizar(t) { return Reino._ui && Reino._ui.hifenizar ? Reino._ui.hifenizar(t) : String(t); }
+  // (o nome próprio, "Jaqueline", não quebra: se não couber, desce o degrau, _d.caberTexto; arte.md §17.3)
+  function hifenizar(t) {
+    var h = Reino._ui && Reino._ui.hifenizar;
+    return h && !/^\s*\p{Lu}\p{Ll}+\s*$/u.test(t) ? h(t) : String(t);   // a célula de um nome só fica inteira
+  }
   // a caixa de digitar da célula: uma linha que cresce com o texto (nada fica escondido de lado)
   function crescer(campo) { _d.crescerCampo(campo); }
 
@@ -96,7 +100,7 @@
           celulas[i + ',' + j] = { caixa: b, botao: b };
         } else {
           td.classList.add('tabela-fixa');
-          U.preencher(td, hifenizar(_d.colarReais(String(c))));
+          U.preencher(td, hifenizar(_d.colarTexto(String(c))));
         }
       });
       return tr;

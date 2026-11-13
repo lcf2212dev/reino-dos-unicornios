@@ -33,13 +33,16 @@
     return ok ? ops.map(function (_, i) { return i; }) : null;
   };
 
+  // opção de frase comprida (mais de 40 letras): num painel do tablet e do notebook, uma coluna só (ui-desafios.css)
+  _d.classeLongas = function (d) { return (d.opcoes || []).some(function (o) { return String(o && o.t || '').length > 40; }) ? '.opcoes-longas' : ''; };
+
   // escolha única (também serve para "completar a frase")
   function montarEscolha(d, opts) {
     var ordem = opts.ordem || _d.ordemRotulada(d) || U.embaralhar(d.opcoes.map(function (_, i) { return i; }), ['escolha', d]);
     var sel = opts.valorInicial != null ? opts.valorInicial : null;
     var bloqueadas = {};
     var comImg = _d.temImg(d);
-    var lista = el('div.opcoes' + (d.opcoes.length === 2 ? '.opcoes-duas' : '') + (comImg ? '.opcoes-img' : ''));
+    var lista = el('div.opcoes' + (d.opcoes.length === 2 ? '.opcoes-duas' : '') + (comImg ? '.opcoes-img' : '') + _d.classeLongas(d));
     var botoes = {};
     ordem.forEach(function (i) {
       var o = d.opcoes[i], b = comImg ? _d.botaoImg(o, d) : botaoOpcao({ e: o.e, t: String(o.t) });   // colado e hifenizado: _d.textoOpcao (arte.md §17)

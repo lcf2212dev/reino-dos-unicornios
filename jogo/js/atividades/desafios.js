@@ -261,8 +261,8 @@
       (apoio.partes || []).map(function (p) {
         return el('div.apoio-parte',
           p.titulo ? el('p.apoio-parte-titulo', p.titulo) : null,
-          p.lista ? el('ul.apoio-lista', p.lista.map(function (t) { return el('li' + (/^\s*([a-z]\)|\d+[.)]|[■•])\s/.test(t) ? '.sem-marca' : ''), _d.colarReais(t)); })) : null,
-          p.texto ? el('p.apoio-texto', _d.colarReais(p.texto)) : null,
+          p.lista ? el('ul.apoio-lista', p.lista.map(function (t) { return el('li' + (/^\s*([a-z]\)|\d+[.)]|[■•])\s/.test(t) ? '.sem-marca' : ''), _d.colarTexto(t)); })) : null,
+          p.texto ? el('p.apoio-texto', _d.colarTexto(p.texto)) : null,
           // versos e figuras (4º bimestre): desafios/figuras.js
           p.versos ? _d.versosApoio(p.versos) : null,
           p.figuras ? _d.figurasLista(p.figuras, 'apoio-figuras') : null);
@@ -317,7 +317,7 @@
     if (d.apoio) card.appendChild(D.caixaApoio(d.apoio, !!opts.apoioFechado));
     var enun = el('div.enunciado'), def = D.tipoDe(d);
     // enunciadoTela: o tipo desenha o próprio enunciado (vf: a pergunta fixa e a afirmação)
-    (def && def.enunciadoTela ? def.enunciadoTela(d) : [el('p.pergunta', _d.colarReais(d.pergunta))]).forEach(function (n) { enun.appendChild(n); });
+    (def && def.enunciadoTela ? def.enunciadoTela(d) : [el('p.pergunta', _d.colarTexto(d.pergunta))]).forEach(function (n) { enun.appendChild(n); });
     // instrucao (opcional): o jeito de responder no jogo, numa linha própria logo abaixo da pergunta
     if (d.instrucao) enun.appendChild(el('p.instrucao', el('span.instrucao-icone', { 'aria-hidden': 'true' }, '👉'), el('span', d.instrucao)));
     // figura (opcional, 4º bimestre): ícone ou ilustração logo abaixo do enunciado (desafios/figuras.js)

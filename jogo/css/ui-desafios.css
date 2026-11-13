@@ -146,6 +146,9 @@
   .letras-grandes .painel .apoio-ouvir-rotulo { display: none; }
   .letras-grandes .painel .apoio-abrir { white-space: nowrap; }
   .letras-grandes .painel :is(.opcoes-varias, .opcoes-duas):not(.opcoes-img) { grid-template-columns: 1fr; }
+  /* opções de frase comprida (escolha.js, .opcoes-longas): uma coluna também sem Letras grandes (meia largura do painel
+     deixava 3 palavras por linha) */
+  .painel .opcoes-longas:not(.opcoes-img) { grid-template-columns: 1fr; }
 }
 
 /* instrucao (opcional): como responder no jogo, numa linha própria logo abaixo da pergunta */

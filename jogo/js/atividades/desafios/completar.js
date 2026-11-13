@@ -53,8 +53,8 @@
       // o sinal logo depois da lacuna fica preso a ela (nunca sozinho no começo da linha de baixo)
       var pont = d.colado ? '' : _d.sinalColado(f.depois), resto = f.depois.slice(pont.length);
       var texto = d.colado
-        ? el('p.frase-texto.frase-colada', f.letra ? el('b', f.letra + ') ') : null, cola[0], el('span.palavra-colada', cola[1], lacuna, cola[2]), cola[3])
-        : el('p.frase-texto', f.letra ? el('b', f.letra + ') ') : null, f.antes + ' ', pont ? el('span.lacuna-cola', lacuna, pont) : lacuna, pont ? resto : ' ' + f.depois);
+        ? el('p.frase-texto.frase-colada', f.letra ? el('b', f.letra + ') ') : null, cola[0], el('span.palavra-colada', cola[1], lacuna, cola[2]), _d.colarTexto(cola[3]))
+        : el('p.frase-texto', f.letra ? el('b', f.letra + ') ') : null, f.antes + ' ', pont ? el('span.lacuna-cola', lacuna, pont) : lacuna, _d.colarTexto(pont ? resto : ' ' + f.depois));
       // colado na grade: quantas letras a linha "a) PA__ARINHO" tem (a fonte pixel tem 1em por letra; a lacuna
       // vale a maior palavra do quadro, no mínimo 2). O css encolhe um pouco a fonte só se a linha não couber.
       if (d.colado && !coladoLongo) {

@@ -129,6 +129,9 @@
 
 /* letras grandes no celular: as palavras do quadro e das escolhas ficam em 16 ("liquidificador" cabe na linha) */
 @media (max-width: 480px) { .letras-grandes .quadro-palavras, .letras-grandes .chip-palavra { font-size: var(--texto-aux); } }
+/* ... e a palavra posta na lacuna no mesmo tamanho do botão dela (16): as lacunas das frases ficam iguais entre si e
+   "FOTOSSÍNTESE" cabe inteira */
+@media (max-width: 480px) { .letras-grandes .completar .lacuna { font-size: var(--texto-aux); } }
 /* letras grandes no celular: o selo da tentativa numa linha e a linha do prêmio em três faixas (quando, selo, prêmio) */
 @media (max-width: 480px) {
   .letras-grandes .selo-tentativa b { font-size: var(--texto); }
