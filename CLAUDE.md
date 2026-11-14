@@ -100,7 +100,7 @@ jogo/ferramentas/          testes, validadores, vozes, fluxo (worktree, integrar
 jogo/servidor/             servidor de casa (aposentado): intocável
 vercel/                    o jogo na Vercel: API sobre Postgres, PWA (pwa/), build copia jogo/
 android/                   o app da Play Store (abre o site da Vercel; acesso restrito pelo teste interno)
-matérias/<matéria>/        prints e fotos da escola (apostila; Revisão/ = folha de prova)
+matérias/<matéria>/        prints e fotos da escola (apostila; Revisão/ = folha de prova); fora do git, só no disco
 docs/                      ARQUITETURA.md (mapa; §5.1 quero X → qual registro), contratos/, receitas/, decisoes/
 ```
 
