@@ -33,7 +33,14 @@ function paginaDe(sigla, n) { return sigla + '-' + String(n).padStart(2, '0'); }
 function cobertura(m, raizRepo) {
   const erros = [], avisos = [];
   const arq = path.join(raizRepo, m.inventario);
-  if (!fs.existsSync(arq)) return { erros: [`${m.id}: inventário não existe (${m.inventario})`], avisos, linhas: [] };
+  if (!fs.existsSync(arq)) {
+    // a pasta de material fica fora do git (.gitignore): numa worktree nova ela não existe, e faltar o inventário
+    // por isso não é erro; na árvore que tem matérias/ (a principal), inventário que falta é erro
+    if (!fs.existsSync(path.join(raizRepo, 'matérias'))) {
+      return { erros, avisos: [`${m.id}: inventário não está nesta árvore (matérias/ fora do git)`], linhas: [], adaptacoes: [] };
+    }
+    return { erros: [`${m.id}: inventário não existe (${m.inventario})`], avisos, linhas: [], adaptacoes: [] };
+  }
   const inv = lerInventario(arq);
   const porPagina = {};   // 'APR-05' → { salas: Set, cartas: [], desafios: [] }
   const reg = (pg) => (porPagina[pg] = porPagina[pg] || { salas: new Set(), cartas: [], desafios: [] });
@@ -79,6 +86,10 @@ if (require.main === module) {
   const raizRepo = path.join(Jogo.raiz, '..');
   const ms = ctx.Reino.materias.filter((m) => m.inventario && (!ids.length || ids.includes(m.id)));
   ids.forEach((id) => { if (!ms.some((m) => m.id === id)) { console.log(`✘ ${id}: matéria sem inventário (campo inventario) ou inexistente`); process.exit(1); } });
+  if (ms.length && !fs.existsSync(path.join(raizRepo, 'matérias'))) {
+    console.log('⚠ matérias/ está fora do git (.gitignore) e não existe nesta árvore: cobertura dos livros do 4º bimestre não conferida');
+    process.exit(0);
+  }
   let falhas = 0;
   ms.forEach((m) => {
     const r = cobertura(m, raizRepo);

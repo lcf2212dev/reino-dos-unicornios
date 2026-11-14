@@ -14,7 +14,8 @@
 // Ignorados: `/tmp/…`; texto com marcador de modelo (<…>, *, {…}, …, $); qualquer coisa em servidor/dados (nem
 //   olhamos o disco lá: é o banco da Mariana); blocos entre <!-- validar-docs: ignorar --> e
 //   <!-- validar-docs: fim --> (histórico ou exemplo); arquivo com <!-- validar-docs: ignorar-arquivo -->;
-//   as cópias de outras árvores em .claude/worktrees/ e os trechos históricos da lista HISTORICOS abaixo.
+//   as cópias de outras árvores em worktrees/ e .claude/worktrees/; as referências a matérias/ (fora do git) onde a
+//   pasta não está nesta árvore; e os trechos históricos da lista HISTORICOS abaixo.
 // Arquivos da lista EM_CONSTRUCAO que ainda não existem viram aviso (outro construtor os entrega), não erro.
 // Sai com código 1 e lista cada referência quebrada como arquivo:linha.
 const fs = require('fs');
@@ -35,7 +36,11 @@ const HISTORICOS = [
 const EM_CONSTRUCAO = [];
 const PULAR_PASTAS = new Set(['node_modules', '.git']);
 // Outras worktrees têm documentação e arquivos próprios: não podem gerar erros nem resolver referências desta árvore.
-const PULAR_CAMINHOS = ['.claude/worktrees', 'jogo/js/voz', 'jogo/ferramentas/gerado/vozes-cache', 'jogo/servidor/dados'];
+const PULAR_CAMINHOS = ['worktrees', '.claude/worktrees', 'jogo/js/voz', 'jogo/ferramentas/gerado/vozes-cache', 'jogo/servidor/dados'];
+// A pasta de material (fotos e PDFs da escola) fica fora do git (.gitignore): numa worktree nova ela não existe e as
+// referências a ela não são erro; na árvore principal, com a pasta no disco, são conferidas como qualquer caminho.
+const MATERIAL = /^(matérias\/|Revisão[^/]*\/$)/;
+const semMaterial = !fs.existsSync(path.join(RAIZ, 'matérias'));
 const RAIZES_SIMBOLO = /^(?:window\.)?(Reino|Mapa|Jogador|PA|UI|__reino|__congelar)(?=\.|$)/;
 const EXT = /\.(js|mjs|cjs|md|css|html|json|py|txt|db|ts|sh|yml|yaml|mp3|png|service)$/i;
 const MODELO = /[<>*{}…$|()'"=,;!?]|\.\.\./;
@@ -98,6 +103,7 @@ function ehCaminho(t) {
 function conferirCaminho(t, docDir) {
   if (GERADOS_IGNORADOS.test(t)) return null;
   if (t.startsWith('/tmp/') || t === '/tmp' || proibido(t)) return null;
+  if (semMaterial && MATERIAL.test(t)) return null;
   if (existeCaminho(t, docDir)) return null;
   const pend = emConstrucao(t);
   if (pend) return { aviso: `${t}: ainda não existe (${pend}, de outro construtor)` };
