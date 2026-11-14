@@ -1,7 +1,13 @@
 {
   "name": "reino-dos-unicornios",
   "private": true,
+  "license": "MIT",
   "description": "Ferramentas de desenvolvimento do jogo Mariana e o Reino dos Unicórnios (o jogo não tem dependências nem build).",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lcf2212dev/reino-dos-unicornios.git"
+  },
+  "homepage": "https://reino-dos-unicornios.vercel.app",
   "devDependencies": {
     "playwright": "1.63.0",
     "pngjs": "7.0.0"
