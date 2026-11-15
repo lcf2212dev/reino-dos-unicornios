@@ -120,4 +120,5 @@
 # @ = os 3 bosques de dentro do Bosque (portais no Bosque, Orvalho/Neblina/Lua Cheia, monstros e niveis)
 # @ = passe de arte dos Bosques do Orvalho, da Neblina e da Lua Cheia (chão, copas, céu, enfeites, atmosfera e monstros)
 # @ = questões do 4º bimestre conferidas: conteúdo corrigido contra os livros e layout das perguntas (opções, texto que não cabe, botão Livro)
+# @ = parquinho: números do balanço e da caixa de areia na config
 @

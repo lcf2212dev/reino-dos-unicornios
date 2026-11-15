@@ -55,6 +55,7 @@
       'css/ui-itens-pocao.css',
       'css/ui-vila.css',
       'css/ui-parquinho.css',
+      'css/ui-parquinho-areia.css',
       'css/ui-moedas-festa.css',
       'css/ui-casa-decorar.css',
       'css/ui-tempo-celular.css',
@@ -549,6 +550,7 @@
       { js: 'js/ui/vila-loja.js', grupo: 'ui' }, // Vila: a tela de comprar e vender, vários de uma vez (UI.telaVilaLoja)
       { js: 'js/ui/itens-pocao.js', grupo: 'ui' }, // itens: o botão rápido da poção na arena (itens.md §9)
       { js: 'js/ui/parquinho.js', grupo: 'ui' }, // Parquinho: a tela do que falta (portal dormindo, presentes; UI.telaParquinho)
+      { js: 'js/ui/parquinho-areia.js', grupo: 'ui' }, // Parquinho: a caixa de areia de perto (UI.telaParquinhoAreia; parquinho.md)
       { js: 'js/sistemas/versao.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/aura.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/viagem.js', grupo: 'sistemas', node: true },
@@ -794,6 +796,8 @@
       { js: 'js/interiores/parquinho/poses-balanco.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/parquinho/balanco.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/parquinho/poses-areia.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/parquinho/areia-caixa.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/parquinho/areia-desenho.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/parquinho/parquinho.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/parquinho/fora.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/parquinho/lugar.js', grupo: 'interiores', node: true },

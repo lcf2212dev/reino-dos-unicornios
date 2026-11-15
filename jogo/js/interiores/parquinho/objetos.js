@@ -85,31 +85,24 @@
       if (!emUso('gangorra')) P.prancha(ctx, px, py, g.inclina);
     } });
 
-  /* ---------- caixa de areia (3 × 2): moldura de madeira, balde e pazinha; o castelinho fica depois de brincar ---------- */
-  GEO.areia = { ela: [12, 23], castelo: [30, 25], uni: [56, 30] };   // o unicórnio fica na grama, do lado de fora
-  // o castelinho em etapas (1 a 4), com a base em (x, y)
-  P.castelo = function (ctx, x, y, etapa) {
-    var A = '#e8c77e', L = '#f6e2a8', S = '#c9a45e';
-    if (etapa >= 1) { P.caixa(ctx, x - 8, y - 6, 17, 7, A); ret(ctx, x - 7, y - 5, 15, 1, L); ret(ctx, x - 1, y - 3, 3, 3, S); }
-    if (etapa >= 2) { P.caixa(ctx, x - 9, y - 12, 6, 7, A); P.caixa(ctx, x + 4, y - 12, 6, 7, A); ret(ctx, x - 8, y - 11, 1, 5, L); ret(ctx, x + 5, y - 11, 1, 5, L); }
-    if (etapa >= 3) { P.caixa(ctx, x - 3, y - 17, 7, 12, A); ret(ctx, x - 2, y - 16, 1, 10, L); ret(ctx, x - 9, y - 14, 2, 2, K); ret(ctx, x - 5, y - 14, 2, 2, K); ret(ctx, x + 4, y - 14, 2, 2, K); ret(ctx, x + 8, y - 14, 2, 2, K); }
-    if (etapa >= 4) { ret(ctx, x, y - 24, 1, 8, K); ret(ctx, x + 1, y - 24, 4, 3, K); ret(ctx, x + 1, y - 23, 3, 1, '#ff7eb6'); }   // a bandeirinha
-  };
+  /* ---------- caixa de areia (3 × 2): moldura de madeira, balde e pazinha; mostra o que ela fez na areia de perto ---------- */
+  GEO.areia = { ela: [12, 23], uni: [56, 30] };   // onde ela senta (pés); o unicórnio fica na grama, do lado de fora
+  function areia() { return R.ParquinhoAreia; }   // areia-caixa.js (carrega depois): lido na hora
   I.objeto('parquinho-areia', { w: 3, h: 2, solido: true, alto: false,
-    chave: function () { return (emUso('areia') ? 'uso' : '') + (P.castelos && P.castelos() > 0 ? 'c' : ''); },
+    chave: function () { var A = areia(); return (emUso('areia') ? 'uso' : '') + (A ? A.chaveMundo() : ''); },
     desenhar: function (ctx, px, py) {
-      var x, y;
+      var x, y, A = areia();
       sombra(ctx, px + 24, py + 30, 23);
       P.caixa(ctx, px + 1, py + 3, 46, 28, '#c98a4a');
       ret(ctx, px + 2, py + 4, 44, 1, '#e0a868');
       ret(ctx, px + 4, py + 6, 40, 22, K); ret(ctx, px + 5, py + 7, 38, 20, '#f3dc9a');
       for (y = 0; y < 5; y++) for (x = 0; x < 9; x++) if ((x * 7 + y * 3) % 5 === 0) ret(ctx, px + 7 + x * 4, py + 9 + y * 4, 1, 1, '#d8bd78');
       ret(ctx, px + 6, py + 8, 36, 1, '#e3c788');                                 // a sombra da borda
-      if (P.castelos && P.castelos() > 0 && !emUso('areia')) P.castelo(ctx, px + GEO.areia.castelo[0], py + GEO.areia.castelo[1], 4);
-      if (emUso('areia')) return;
-      // o balde vermelho e a pazinha amarela, no canto
-      P.caixa(ctx, px + 34, py + 15, 7, 7, '#ff5c6a'); ret(ctx, px + 35, py + 16, 5, 1, '#ffb0b8'); ret(ctx, px + 35, py + 13, 5, 1, K);
-      ret(ctx, px + 9, py + 20, 6, 1, K); P.caixa(ctx, px + 14, py + 18, 5, 5, '#ffd34d');
+      if (!emUso('areia')) {                                                       // o balde vermelho e a pazinha amarela
+        P.caixa(ctx, px + 34, py + 15, 7, 7, '#ff5c6a'); ret(ctx, px + 35, py + 16, 5, 1, '#ffb0b8'); ret(ctx, px + 35, py + 13, 5, 1, K);
+        ret(ctx, px + 9, py + 20, 6, 1, K); P.caixa(ctx, px + 14, py + 18, 5, 5, '#ffd34d');
+      }
+      if (A) A.desenharMundo(ctx, px, py);                                         // buracos, montinhos e torres, por cima
     } });
 
   /* ---------- presente (os brinquedos da fase 2 antes de ela completar todas as matérias) ---------- */
