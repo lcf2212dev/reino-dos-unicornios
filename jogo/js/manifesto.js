@@ -791,6 +791,8 @@
       { js: 'js/interiores/parquinho/objetos-2.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/parquinho/poses.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/parquinho/poses-2.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/parquinho/poses-balanco.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/parquinho/poses-areia.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/parquinho/parquinho.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/parquinho/fora.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/parquinho/lugar.js', grupo: 'interiores', node: true },

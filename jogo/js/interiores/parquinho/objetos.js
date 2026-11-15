@@ -96,7 +96,7 @@
     if (etapa >= 4) { ret(ctx, x, y - 24, 1, 8, K); ret(ctx, x + 1, y - 24, 4, 3, K); ret(ctx, x + 1, y - 23, 3, 1, '#ff7eb6'); }   // a bandeirinha
   };
   I.objeto('parquinho-areia', { w: 3, h: 2, solido: true, alto: false,
-    chave: function () { var b = B(); return (emUso('areia') ? 'uso' : '') + (b && b.castelos() > 0 ? 'c' : ''); },
+    chave: function () { return (emUso('areia') ? 'uso' : '') + (P.castelos && P.castelos() > 0 ? 'c' : ''); },
     desenhar: function (ctx, px, py) {
       var x, y;
       sombra(ctx, px + 24, py + 30, 23);
@@ -105,8 +105,7 @@
       ret(ctx, px + 4, py + 6, 40, 22, K); ret(ctx, px + 5, py + 7, 38, 20, '#f3dc9a');
       for (y = 0; y < 5; y++) for (x = 0; x < 9; x++) if ((x * 7 + y * 3) % 5 === 0) ret(ctx, px + 7 + x * 4, py + 9 + y * 4, 1, 1, '#d8bd78');
       ret(ctx, px + 6, py + 8, 36, 1, '#e3c788');                                 // a sombra da borda
-      var b = B();
-      if (b && b.castelos() > 0 && !emUso('areia')) P.castelo(ctx, px + GEO.areia.castelo[0], py + GEO.areia.castelo[1], 4);
+      if (P.castelos && P.castelos() > 0 && !emUso('areia')) P.castelo(ctx, px + GEO.areia.castelo[0], py + GEO.areia.castelo[1], 4);
       if (emUso('areia')) return;
       // o balde vermelho e a pazinha amarela, no canto
       P.caixa(ctx, px + 34, py + 15, 7, 7, '#ff5c6a'); ret(ctx, px + 35, py + 16, 5, 1, '#ffb0b8'); ret(ctx, px + 35, py + 13, 5, 1, K);

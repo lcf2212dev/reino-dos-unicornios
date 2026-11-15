@@ -7,16 +7,17 @@
    Quem desenha é a camada do módulo 'parquinho' (sistemas/parquinho.js); a pose de cada brinquedo vem do prédio
    (interiores/parquinho/poses*.js), por registrarPose(id, def):
      def = { sons: [[fração, som]], esconde?: true, geo(st) → geo, itens(p, st, e, animar) → itens,
-             sobre?(p, st, e, animar), saida?(st) → { x, y } (tile onde ela fica no fim) }
+             sobre?(p, st, e, animar), saida?(st) → { x, y } (tile onde ela fica no fim),
+             fim?(st, { pulou }) (no fim, antes de refazer o desenho parado: o que fica depois da brincadeira) }
      st = { id, obj: { tipo, x, y, w, h }, de: { x, y } (os pés dela no começo), dur, curta, geo, interior }
    `esconde`: o desenho parado do brinquedo tira a parte que se mexe enquanto ele está em uso (emUso(id), lido pela
    `chave` dos objetos em interiores/parquinho/; o interior é refeito no começo e no fim).
-   Nada vai para o save: o castelinho de areia fica de pé até fechar o jogo (memória).
+   Nada vai para o save (o que fica depois da brincadeira é da pose, no `fim`, e só em memória).
    Sem nada de DOM, canvas, PA, Progresso nem Cena no carregamento. */
 (function () {
   var R = window.Reino;
   var Q = { poses: {} };
-  var st = null, timers = [], engolirAte = 0, ouvindo = false, ultimo = null, castelos = 0;
+  var st = null, timers = [], engolirAte = 0, ouvindo = false, ultimo = null;
 
   function cfg() { return R.config.parquinho; }
   function agora() { return (window.performance && performance.now) ? performance.now() : Date.now(); }
@@ -63,7 +64,7 @@
     var s = st, pose = Q.poses[s.id];
     timers.forEach(clearTimeout); timers = [];
     st = null;
-    if (s.id === 'areia') castelos++;   // antes de refazer: o castelinho entra no desenho parado
+    if (pose && pose.fim) { try { pose.fim(s, { pulou: !!porToque }); } catch (e) { console.error(e); } }   // antes de refazer
     ultimo = { ativo: false, brinquedo: s.id, t: Math.round(agora() - s.inicio), curta: s.curta, pulou: !!porToque };
     // ela fica onde a brincadeira acaba (o pé do escorregador), se o tile estiver livre
     var J = window.Jogador, cena = R.Cena && R.Cena.atual();
@@ -112,8 +113,6 @@
     },
     ativo: function () { return !!st && !!R.Cena && R.Cena.atual && R.Cena.atual().id === st.interior; },
     emUso: function (id) { return !!st && st.id === id && !!(Q.poses[id] && Q.poses[id].esconde); },
-    // quantos castelinhos ela já fez desde que abriu o jogo (o da caixa de areia fica de pé)
-    castelos: function () { return castelos; },
     itens: function (p, t, animar) {
       if (!B.ativo()) return [];
       var e = Math.min(st.dur, Math.max(0, agora() - st.inicio));

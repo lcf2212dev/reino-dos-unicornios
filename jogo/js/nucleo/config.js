@@ -42,7 +42,15 @@ Reino.config = {
     fase1: 3,
     chave: ['matematica', 'portugues'],
     ms: { balanco: 4200, escorregador: 4200, gangorra: 4200, areia: 4200, carrossel: 4800, pulapula: 4200, bolinhas: 4200 },
+    // o balanço (interiores/parquinho/poses-balanco.js): ela puxa e solta. puxarPx = quanto arrastar (px da tela) para
+    // puxar tudo; teclaMs = segurando a tecla, quanto leva para puxar tudo; cheio = a fração do puxão que conta como
+    // "puxou tudo" (eles voam para a caixa de areia); amortece = quanto do balanço sobra a cada ida e volta;
+    // periodoMs = uma ida e volta; voarMs = o voo até a caixa de areia
+    balanco: { puxarPx: 140, teclaMs: 1400, cheio: 0.95, amortece: 0.8, periodoMs: 1600, voarMs: 1400 },
     curtaMs: 900, pularDepoisMs: 700,
+    // a caixa de areia (a brincadeira de construir, cavar e cobrir os dois): cobrirPassadas = quantas passadas de areia
+    // cobrem um deles até o pescoço; andaresMax = andares de uma torre do castelo; enfeitesMax = enfeites na areia
+    areia: { cobrirPassadas: 10, andaresMax: 3, enfeitesMax: 30 },
   },
   pinPais: '2026',            // troque aqui o PIN da Área dos Pais
   desafiosPorSala: 6,

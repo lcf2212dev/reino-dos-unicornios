@@ -12,7 +12,7 @@ matérias completas, os presentes do parque viram brinquedos novos. Sem prêmio,
 | a brincadeira (cena ocupada, pular, timers) | `js/interiores/parquinho/brincar.js` (`Reino.ParquinhoBrincar`; no começo da pasta, porque as poses se registram nele) |
 | chão, cerca, céu aberto e o portal de volta | `js/interiores/parquinho/fundo.js` (cria `Reino._predios.parquinho`) |
 | brinquedos e enfeites | `objetos.js` (fase 1 e o presente), `objetos-2.js` (fase 2 e enfeites) |
-| como cada um brinca | `poses.js` (fase 1, ajudantes `P.H`), `poses-2.js` (fase 2) |
+| como cada um brinca | `poses.js` (escorregador e gangorra; ajudantes `P.H`), `poses-2.js` (fase 2), `poses-balanco.js`, `poses-areia.js` |
 | o interior | `parquinho.js` |
 | o portal no mapa | `fora.js` (dormindo no desenho parado; acordado na camada do módulo `'parquinho-portal'`), `lugar.js` |
 | a tela do que falta | `js/ui/parquinho.js` (`UI.telaParquinho`), `css/ui-parquinho.css` |
@@ -35,13 +35,13 @@ matérias completas, os presentes do parque viram brinquedos novos. Sem prêmio,
 ## 4. A brincadeira
 - Objeto com `acao: { tipo: 'parquinhoBrincar', brinquedo, surpresa? }`. `surpresa` (os da fase 2) com fase < 2 abre
   `UI.telaParquinho('presente')`.
-- `Reino.ParquinhoBrincar = { registrarPose(id, def), poses(), brincar(acao, ctx), ativo(), emUso(id), castelos(),
-  itens(), sobre(), parar(), depurar() }`; o formato de `def` está no cabeçalho de `brincar.js`.
+- `Reino.ParquinhoBrincar = { registrarPose(id, def), poses(), brincar(acao, ctx), ativo(), emUso(id), itens(),
+  sobre(), parar(), depurar() }`; o formato de `def` está no cabeçalho de `brincar.js` (`fim` = o que fica depois).
 - Como a casa (`casa.md` §13): `Cena.ocupar('parquinho')`, toque ou Enter depois de `pularDepoisMs` pula para o fim,
   temporizador de segurança, versão curta (`curtaMs`) sem Animações. Troca de cena encerra.
 - O desenho normal dela e do unicórnio some enquanto o módulo diz `desenhaEla()` (`cena-e-motor.md` §14); a pose
   desenha os dois. Pose com `esconde`: a parte que se mexe sai do desenho parado (`emUso` na `chave`, `refazer`).
-- O castelinho da caixa de areia fica de pé até fechar o jogo (memória, `castelos()`).
+- O castelinho da caixa de areia fica de pé até fechar o jogo (memória, `P.castelos()` de `poses-areia.js`).
 
 ## 5. Testes
 `npm run unidade -- --so parquinho` (fases 0/1/2, 3 completas sem Matemática nem LP, lugar liberado, brinquedos e

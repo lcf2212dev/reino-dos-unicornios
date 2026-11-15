@@ -1,8 +1,10 @@
-/* Parquinho, parte 5: como ela e o unicórnio brincam nos brinquedos da fase 1 (balanço, escorregador, gangorra,
-   caixa de areia), registrado em Reino.ParquinhoBrincar.registrarPose (interiores/parquinho/brincar.js; o esquema está
-   no cabeçalho de lá). Desenha no pintor da camada (px do jogo), com as medidas de P.GEO e os desenhos de objetos.js
-   (P.pintor faz o pintor aceitar os mesmos helpers). Sem Animações: a pose parada do meio da brincadeira.
-   Cria P.H, os ajudantes que poses-2.js também usa. Nada roda no carregamento. */
+/* Parquinho, parte 5: como ela e o unicórnio brincam no escorregador e na gangorra (fase 1), registrado em
+   Reino.ParquinhoBrincar.registrarPose (interiores/parquinho/brincar.js; o esquema está no cabeçalho de lá). O balanço
+   e a caixa de areia têm arquivo próprio (poses-balanco.js, poses-areia.js). Desenha no pintor da camada (px do jogo),
+   com as medidas de P.GEO e os desenhos de objetos.js (P.pintor faz o pintor aceitar os mesmos helpers). Sem
+   Animações: a pose parada do meio da brincadeira.
+   Cria P.H e P.registrarPose, os ajudantes que poses-2.js, poses-balanco.js e poses-areia.js também usam. Nada roda no
+   carregamento. */
 (function () {
   var R = window.Reino;
   var P = R._predios.parquinho, GEO = P.GEO, T = 16;
@@ -39,25 +41,6 @@
   H.item = function (y, fn) { return { y: y, desenhar: fn }; };
   function reg(id, def) { if (R.ParquinhoBrincar) R.ParquinhoBrincar.registrarPose(id, def); }
   P.registrarPose = reg;
-
-  /* ---------- balanço: ela no assento azul e o unicórnio no rosa, balançando juntos (ele um tiquinho atrás) ---------- */
-  reg('balanco', {
-    esconde: true,
-    sons: [[0.05, 'toque'], [0.35, 'toque'], [0.65, 'toque'], [0.97, 'plim']],
-    itens: function (p, st, e, animar) {
-      var o = H.origem(st), g = GEO.balanco, s = H.onda(e, 1300, animar, 0.6), c = P.pintor(p);
-      return [H.item(H.base(st), function () {
-        g.assentos.forEach(function (ax, i) {
-          var lado = i ? H.onda(e + 160, 1300, animar, 0.6) : s, dx = Math.round(lado * 6), dy = -Math.round(Math.abs(lado) * 3);
-          var x = o.x + ax + dx, y = o.y + g.assento + dy;
-          P.assento(c, o.x + ax, o.y + g.barra, x, y, g.cores[i]);
-          if (i === 0) H.spr(p, H.ela(true, 'frente'), x, y + 6, false);
-          else H.spr(p, H.uni('frente'), x, y + 1, false);
-          P.linha(c, o.x + ax - 5, o.y + g.barra, x - 5, y, '#8e9ab4'); P.linha(c, o.x + ax + 5, o.y + g.barra, x + 5, y, '#8e9ab4');
-        });
-      })];
-    },
-  });
 
   /* ---------- escorregador: ela sobe a escada, senta e escorrega; o unicórnio vai logo atrás ---------- */
   var ESC = GEO.escorregador;
@@ -115,30 +98,6 @@
         P.prancha(c, o.x, o.y, a);
         H.spr(p, H.ela(true, 'lado'), o.x + xe, altura(xe) + 3, false);
         H.spr(p, H.uni('lado'), o.x + xu, altura(xu), true);
-      })];
-    },
-  });
-
-  /* ---------- caixa de areia: ela senta na areia e o castelinho sobe em etapas; o unicórnio ajuda ---------- */
-  reg('areia', {
-    esconde: true,
-    sons: [[0.2, 'toque'], [0.45, 'toque'], [0.7, 'toque'], [0.95, 'estrela']],
-    itens: function (p, st, e, animar) {
-      var o = H.origem(st), g = GEO.areia, c = P.pintor(p), k = e / st.dur;
-      var etapa = animar ? Math.min(4, 1 + Math.floor(k * 4.4)) : 4;
-      var pula = animar && Math.floor(e / 320) % 2 ? 1 : 0;
-      return [H.item(H.base(st), function () {
-        P.castelo(c, o.x + g.castelo[0], o.y + g.castelo[1], etapa);
-        H.sombra(p, o.x + g.uni[0], o.y + g.uni[1], 8);
-        H.spr(p, H.uni('lado'), o.x + g.uni[0], o.y + g.uni[1] - pula, true);
-        H.spr(p, H.ela(true, 'frente'), o.x + g.ela[0], o.y + g.ela[1], false);
-        if (animar && etapa < 4) {                                            // a areia voando das mãos
-          var f = (e % 400) / 400;
-          [[-4, 1], [3, 0], [7, 2]].forEach(function (s, i) {
-            c.fillStyle = i % 2 ? '#e8c77e' : '#f6e2a8';
-            c.fillRect(o.x + g.ela[0] + 8 + s[0] + Math.round(f * 6), o.y + g.ela[1] - 10 - Math.round(Math.sin(f * Math.PI) * 6) + s[1], 1, 1);
-          });
-        }
       })];
     },
   });
