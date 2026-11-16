@@ -5,7 +5,7 @@
 .treinadores-corpo { display: flex; align-items: stretch; justify-content: center; gap: 12px; flex-wrap: wrap; }
 .treinadores-cartao { flex: 1 1 220px; max-width: 300px; cursor: default; padding: 12px 10px; }
 .treinadores-cartao .vila-cartao-nome { font-size: var(--texto); }
-.treinadores-super { border-color: var(--azul); background: #eef6ff; }
+.treinadores-super { border-color: var(--ouro); background: var(--ouro-claro); }
 .treinadores-tem { font-size: var(--texto-aux); color: var(--tinta-suave); }
 .treinadores-escolha { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 6px; }
 .treinadores-escolha .btn-icone { width: 48px; height: 48px; min-width: 48px; font-size: var(--texto); }
