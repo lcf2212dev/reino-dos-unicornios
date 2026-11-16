@@ -1,7 +1,8 @@
 # Vila Arco-Íris (portal no Bosque, 4 lojas e a Teleportadora)
 
 Pedido: `pedidos/2026-11-06-vila-arco-iris.md`. No centro-direita do Bosque dos Fantasmas há um portal que leva a uma
-cidade menor, a **Vila Arco-Íris**: praça, **4 lojas**, **3 terrenos livres** e a **Teleportadora**, um unicórnio branco de crina arco-íris
+cidade menor, a **Vila Arco-Íris**: praça, **4 lojas**, **2 terrenos livres** (o terceiro, o da direita, virou os
+**Treinadores de Monstros**: `monstros.md`) e a **Teleportadora**, um unicórnio branco de crina arco-íris
 arco-íris (uma na praça da Vila e uma na praça da cidade principal). Para conversar com um
 lojista ela responde certo uma pergunta sorteada entre todas as do **4º bimestre**; comprar e vender aceitam **vários
 itens de uma vez**.
@@ -19,6 +20,7 @@ itens de uma vez**.
 | telas | `js/ui/vila-pergunta.js` (`UI.perguntaVila`), `js/ui/vila-loja.js` (`UI.telaVilaLoja`), `css/ui-vila.css` |
 | a Vila e as lojas | `js/interiores/vila/` (`falas.js` com os 4 lojistas, `fundo.js`, `objetos*.js`, `vila.js`, `lojas.js`) |
 | o portal no Bosque | `js/interiores/bosque/portal-vila.js` + a escada no fim de `bosque.js` |
+| os Treinadores de Monstros (o terreno da direita) | `js/interiores/vila/treinadores*.js`, `js/sistemas/treinadores.js`, `js/ui/treinadores-loja.js` (`monstros.md`) |
 | a Teleportadora | desenho `js/arte/teleportadora.js`; no mapa `js/mundo/teleportadora.js`; na Vila `js/interiores/vila/teleportadora.js`; falas e viagem `js/sistemas/teleportadora.js` |
 
 ## 2. Ids
@@ -30,6 +32,9 @@ itens de uma vez**.
 - Ligações (escadas pareadas `sentido: 'portal'`):
   - Bosque: o portal 'bosque-portal-vila' (2 × 3 em (53, 20), colado na borda direita) com a escada no meio dele, (53, 22),
     `seta: false`, `chegar: { x: -1, y: 0 }` ↔ Vila (1, 19), na borda esquerda, `seta: false`, `chegar: { x: 1, y: 0 }`. Chega no Bosque em (52, 22); na Vila, em (2, 19).
+  - Treinadores de Monstros: fachada `vila-treinadores-predio` (6 × 5) em (31, 12), no lugar do terreno da direita; porta
+    = escada `portal` em (33, 17), `chegar: { x: 0, y: 1 }` ↔ interior `vila-treinadores` (16 × 12), saída (8, 10) como as
+    lojas. Os outros 2 terrenos (esquerda) seguem livres (`monstros.md`).
   - Porta de cada loja na Vila, na fileira 8, em x = 6, 15, 24, 33 (casa, armas, cabecas, armaduras), seta padrão,
     `chegar: { x: 0, y: 1 }` ↔ saída da loja em (8, 10) `seta: 'desce'`, `chegar: { x: 0, y: -1 }`.
 - Lojistas (`Reino.registrarPersonagem`, com voz): `lavanda` "Dona Lavanda" (casa), `bigorna` "Seu Bigorna" (armas),

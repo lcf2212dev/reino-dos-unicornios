@@ -55,6 +55,7 @@
       'css/ui-itens-pocao.css',
       'css/ui-monstros.css',
       'css/ui-vila.css',
+      'css/ui-treinadores.css',
       'css/ui-parquinho.css',
       'css/ui-parquinho-areia.css',
       'css/ui-moedas-festa.css',
@@ -551,6 +552,7 @@
       { js: 'js/ui/guardados.js', grupo: 'ui' }, // itens: a tela do Baú de Guardados da casa (UI.telaGuardados; itens.md §7)
       { js: 'js/ui/vila-pergunta.js', grupo: 'ui' }, // Vila: a pergunta do 4º bimestre antes de falar com o lojista (UI.perguntaVila)
       { js: 'js/ui/vila-loja.js', grupo: 'ui' }, // Vila: a tela de comprar e vender, vários de uma vez (UI.telaVilaLoja)
+      { js: 'js/ui/treinadores-loja.js', grupo: 'ui' }, // Treinadores de Monstros: a loja das MonsterBalls (UI.telaTreinadores; monstros.md)
       { js: 'js/ui/itens-pocao.js', grupo: 'ui' }, // itens: o botão rápido da poção na arena (itens.md §9)
       { js: 'js/ui/monstros.js', grupo: 'ui' }, // Treinadores de Monstros: a tela Meus monstros e o aviso da bola (UI.telaMonstros; monstros.md)
       { js: 'js/ui/monstros-bola.js', grupo: 'ui' }, // Treinadores de Monstros: o botão da MonsterBall na arena (monstros.md §4)
@@ -833,12 +835,15 @@
       { js: 'js/interiores/vulcao/vulcao.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/vulcao/lugar.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/vila/falas.js', grupo: 'interiores', node: true }, // Vila Arco-Íris (vila.md): falas e lojistas, céu e chão, objetos, a Teleportadora, a praça e as 4 lojas
+      { js: 'js/interiores/vila/treinadores-falas.js', grupo: 'interiores', node: true }, // Treinadores de Monstros (monstros.md): a Treinadora Kiara e as falas do prédio
       { js: 'js/interiores/vila/fundo.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/vila/objetos.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/vila/objetos-2.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/vila/treinadores-objetos.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/vila/teleportadora.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/vila/vila.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/vila/lojas.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/vila/treinadores.js', grupo: 'interiores', node: true },
       // Bosques de dentro do Bosque (arenas.md §8): no fim do grupo interiores (as fotos das cenas de antes do e2e não mudam);
       // depois do Bosque, que carrega antes, para chamarem Reino._predios.bosque.portalNovo
       { js: 'js/interiores/orvalho/falas.js', grupo: 'interiores', node: true }, // Bosque do Orvalho (arenas.md §8): bosque de dentro do Bosque (falas, objetos, inimigos, chão/céu, interior e portal)
@@ -878,6 +883,7 @@
       { js: 'js/sistemas/itens-drop.js', grupo: 'sistemas', node: true }, // itens: o que cai do inimigo vencido, gravado na hora (Reino.ItensDrop; itens.md §5)
       { js: 'js/sistemas/itens-chao.js', grupo: 'sistemas', node: true }, // itens: o item no chão da arena, salta e voa até ela (só desenho; itens.md §5)
       { js: 'js/sistemas/vila-lojas.js', grupo: 'sistemas', node: true }, // Vila: as 4 lojas, comprar e vender vários, a pergunta do 4º bimestre (Reino.VilaLojas; vila.md)
+      { js: 'js/sistemas/treinadores.js', grupo: 'sistemas', node: true }, // Treinadores de Monstros: comprar MonsterBalls, a pergunta antes da Kiara (Reino.Treinadores; monstros.md)
       { js: 'js/sistemas/teleportadora.js', grupo: 'sistemas', node: true }, // Vila: a Teleportadora leva entre as praças (Reino.Teleportadora; vila.md)
       { js: 'js/sistemas/parquinho.js', grupo: 'sistemas', node: true }, // Parquinho: a fase (3 matérias com Matemática ou LP; todas) e o módulo da brincadeira (Reino.Parquinho; parquinho.md)
       { js: 'js/sistemas/juntos.js', grupo: 'sistemas', node: true }, // Jogar juntos: a presença ao vivo (Reino.Juntos, módulo 'juntos'; juntos.md)

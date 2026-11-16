@@ -1,0 +1,18 @@
+/* Treinadores de Monstros: a loja das MonsterBalls da Treinadora Kiara (js/ui/treinadores-loja.js;
+   docs/contratos/monstros.md). Usa as peças da loja da Vila (css/ui-vila.css): saldo, recado, cartão e rodapé.
+   Um cartão por bola (MonsterBall e Super MonsterBall), lado a lado; no celular, um embaixo do outro. */
+.tela-treinadores .painel { width: min(680px, 100%); }
+.treinadores-corpo { display: flex; align-items: stretch; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.treinadores-cartao { flex: 1 1 220px; max-width: 300px; cursor: default; padding: 12px 10px; }
+.treinadores-cartao .vila-cartao-nome { font-size: var(--texto); }
+.treinadores-super { border-color: var(--azul); background: #eef6ff; }
+.treinadores-tem { font-size: var(--texto-aux); color: var(--tinta-suave); }
+.treinadores-escolha { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 6px; }
+.treinadores-escolha .btn-icone { width: 48px; height: 48px; min-width: 48px; font-size: var(--texto); }
+.treinadores-qtd { min-width: 32px; text-align: center; font-size: var(--texto); }
+.treinadores-meus { min-height: 44px; padding: 6px 14px; font-size: var(--texto-aux); }
+/* celular: os cartões ocupam a largura, um embaixo do outro */
+@media (max-width: 480px) {
+  .treinadores-corpo { flex-direction: column; gap: 8px; }
+  .treinadores-cartao { flex: none; width: 100%; max-width: none; padding: 8px 6px; }
+}
