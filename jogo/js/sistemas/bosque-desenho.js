@@ -292,5 +292,5 @@
     }
   }
 
-  S.desenho = { itens: itensDesenho, sobre: sobre };
+  S.desenho = { itens: itensDesenho, sobre: sobre, sprite: spriteDe };   // sprite: os monstros da Mariana (monstros.md)
 })();

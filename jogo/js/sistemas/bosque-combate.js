@@ -8,7 +8,7 @@
    Interno Reino._bosqueCombate (com bosque-desenho.js e bosque-alvo.js): { estado, estados: { arena: estado }, grades: {
    arena: grade }, arena (id de agora), naCena(), desenho: { itens(p, t, animar), sobre(p, t, animar) }, desmaio: { desde } |
    null, t (do quadro), vencidoEm: { id ou 'arena:id': Date.now() }, quadro(est, j) (ataque por alvo, depois do passo),
-   olharX/olharY (o olhar do corpo desenhado neste quadro) }. node: true: nada de DOM, Progresso nem Cena ao carregar. */
+   olharX/olharY (o olhar do corpo deste quadro) }; partes: bosque-alvo, -desenho, -combate-monstros. node: true: nada de DOM, Progresso nem Cena ao carregar. */
 (function () {
   var R = window.Reino;
   var S = R._bosqueCombate = { estado: null, estados: {}, grades: {}, arena: null, desenho: null, desmaio: null, t: 0,
@@ -136,7 +136,7 @@
   }
   function moverFantasma(est, f, s, j) {
     var c = est.cfg, t = est.t, v = c.tipos[f.tipo].velocidade, F = f.estado;
-    if (F === 'vencido') return;
+    if (F === 'vencido' || F === 'preso') return;   // preso: a MonsterBall voando até ele (bosque-combate-monstros.js)
     if (F === 'sumindo') {
       if (t >= f.ate) { f.estado = 'vencido'; evento(est, est.arena ? { tipo: 'vencido', id: f.id, fantasma: f.tipo, arena: est.arena } : { tipo: 'vencido', id: f.id, fantasma: f.tipo }); }
       return;
@@ -227,7 +227,7 @@
     est.vida = est.max; est.desmaiado = false; est.golpe = null; est.recargaAte = 0;
     est.invencivelAte = est.t + est.cfg.jogador.invencivelMs; est.regenEm = est.t;
     est.fantasmas.forEach(function (f) {
-      if (!ATIVOS[f.estado] && f.estado !== 'surgindo') return;
+      if (!ATIVOS[f.estado] && f.estado !== 'surgindo' && f.estado !== 'preso') return;   // preso: a MonsterBall (monstros.md)
       f.x = f.alvoX = f.casaX; f.y = f.alvoY = f.casaY; f.vida = f.max; f.estado = 'vagando'; f.pausa = true; f.ate = est.t + 600;
     });
     evento(est, { tipo: 'vida', n: est.vida, max: est.max });

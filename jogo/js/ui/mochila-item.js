@@ -15,6 +15,8 @@
     pequena: 'Cura um pouco da vida.', grande: 'Enche toda a vida.', comida: 'Enche a barriga do unicórnio.',
     'fora-arena': 'Use a poção numa arena, quando a vida baixar.', 'vida-cheia': 'Sua vida já está cheia!',
     'sem-uni': 'Você ainda não tem um unicórnio.', cheia: 'Mochila cheia! Foi para o baú da casa.',
+    bola: 'Jogue numa arena, perto de um monstro, para tentar pegar ele!',
+    'bola-super': 'A Super MonsterBall pega o monstro sempre! Jogue numa arena, perto de um monstro.', 'bola-usar': 'Use na arena, perto de um monstro: toque no botão da bola.',
   };
 
   function It() { return Reino.Itens; }
@@ -82,6 +84,7 @@
           el('ul.mitem-atributos', atributos(d).map(function (t) { return el('li', t); })),
           d.tipo === 'pocao' ? el('p', TEXTOS[d.cura === 'grande' ? 'grande' : 'pequena']) : null,
           d.tipo === 'comida' ? el('p', TEXTOS.comida) : null,
+          d.tipo === 'bola' ? el('p', TEXTOS[d.id] || TEXTOS.bola) : null,
           it.qtd > 1 ? el('p.mitem-qtd', 'Você tem ' + it.qtd + '.') : null,
           it.vestido ? el('p.mitem-agora', 'Vestido agora.') : null,
           !it.vestido && d.slot ? el('p.mitem-agora', 'Agora: ', U.colado(nomeVestido(d.slot))) : null));
@@ -104,6 +107,7 @@
         var r = It().usar(it.uids[0]);
         if (r.ok) { Reino.Som.tocar('selecionar'); fechar(); } else aviso(TEXTOS[r.motivo] || TEXTOS['fora-arena']);
       }, 'usar');
+      else if (d.tipo === 'bola') botao('Usar', true, function () { aviso(TEXTOS['bola-usar']); }, 'usar');   // quem joga é o botão da arena
       else if (d.tipo === 'comida') botao('Dar ao unicórnio', true, function () {
         var r = It().usar(it.uids[0]), uni = Reino.Progresso.montaria();
         if (r.ok) { Reino.Som.tocar('nhac'); fechar(); R.falarCuidado('comeu', uni); }

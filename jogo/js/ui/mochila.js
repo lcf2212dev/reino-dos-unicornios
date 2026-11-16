@@ -1,7 +1,8 @@
 /* A tela da Mochila (docs/contratos/itens.md §6, §13): UI.telaMochila({ uid? }) → Promise (resolve ao fechar).
    À esquerda a figura dela vestida (PA.mariana com as vestes, escala 8) e os 5 slots do corpo; à direita
    "Espaços: N de 20" e a grade de 20 (4 × 5; no celular 5 × 4, css/ui-itens.css). Tocar num espaço ou num slot
-   abre o cartão do item (ui/mochila-item.js); { uid } abre direto no cartão daquele item. Repinta no EVENTOS.ITENS
+   abre o cartão do item (ui/mochila-item.js); { uid } abre direto no cartão daquele item. Com monstro ou MonsterBall,
+   o botão "Meus monstros" (UI.telaMonstros; monstros.md). Repinta no EVENTOS.ITENS
    (o cartão, a nuvem ou outra aba mexeram), lendo Reino.Itens na hora. */
 (function () {
   var U = Reino.util, el = U.el, UI = Reino.UI, EV = Reino.EVENTOS;
@@ -32,6 +33,16 @@
     }));
   }
 
+  // "Meus monstros" (monstros.md): só para quem já tem um monstro ou uma MonsterBall
+  function botaoMonstros() {
+    var M = Reino.Monstros;
+    if (!M || !UI.telaMonstros || !(M.capturados().length || M.bolas().length)) return null;
+    var b = el('button.btn-grande.btn-secundario.moch-monstros', { type: 'button', 'data-foco': 'monstros' },
+      T().icone('item:bola-monster', 32), 'Meus monstros');
+    b.addEventListener('click', function () { Reino.Som.tocar('toque'); UI.telaMonstros(); });
+    return b;
+  }
+
   /** @returns {Promise<void>} */
   UI.telaMochila = function (opcoes) {
     opcoes = opcoes || {};
@@ -60,7 +71,7 @@
         corpo.appendChild(el('div.moch-dir',
           el('p.moch-espacos', 'Espaços: ' + esp.usados + ' de ' + esp.total),
           grupos.length ? null : el('p.moch-vazia', 'Sua mochila está vazia. Vença monstros nos portais para achar tesouros!'),
-          grade));
+          grade, botaoMonstros()));
       }
       pn.tela.classList.add('tela-mochila');
       aberta = { tela: pn.tela, pintar: pintar };

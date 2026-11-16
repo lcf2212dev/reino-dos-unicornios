@@ -53,6 +53,7 @@
       'css/ui-bosque.css',
       'css/ui-itens.css',
       'css/ui-itens-pocao.css',
+      'css/ui-monstros.css',
       'css/ui-vila.css',
       'css/ui-parquinho.css',
       'css/ui-parquinho-areia.css',
@@ -551,6 +552,8 @@
       { js: 'js/ui/vila-pergunta.js', grupo: 'ui' }, // Vila: a pergunta do 4º bimestre antes de falar com o lojista (UI.perguntaVila)
       { js: 'js/ui/vila-loja.js', grupo: 'ui' }, // Vila: a tela de comprar e vender, vários de uma vez (UI.telaVilaLoja)
       { js: 'js/ui/itens-pocao.js', grupo: 'ui' }, // itens: o botão rápido da poção na arena (itens.md §9)
+      { js: 'js/ui/monstros.js', grupo: 'ui' }, // Treinadores de Monstros: a tela Meus monstros e o aviso da bola (UI.telaMonstros; monstros.md)
+      { js: 'js/ui/monstros-bola.js', grupo: 'ui' }, // Treinadores de Monstros: o botão da MonsterBall na arena (monstros.md §4)
       { js: 'js/ui/parquinho.js', grupo: 'ui' }, // Parquinho: a tela do que falta (portal dormindo, presentes; UI.telaParquinho)
       { js: 'js/ui/parquinho-areia.js', grupo: 'ui' }, // Parquinho: a caixa de areia de perto (UI.telaParquinhoAreia; parquinho.md)
       { js: 'js/sistemas/versao.js', grupo: 'sistemas', node: true },
@@ -561,6 +564,7 @@
       { js: 'js/sistemas/viagem-desafio.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/viagem-amigos.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/et-companheiro.js', grupo: 'sistemas', node: true },
+      { js: 'js/sistemas/monstros.js', grupo: 'sistemas', node: true }, // Treinadores de Monstros: coleção, monstro equipado, campos monstros/monstroCompanheiro (Reino.Monstros; monstros.md)
       { js: 'js/sistemas/quimica.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/quimica-andar2.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/cartoes.js', grupo: 'sistemas', node: true }, // cartões de experiência do Laboratório: derivados das salas feitas (quimica.md §10)
@@ -861,10 +865,14 @@
       { js: 'js/sistemas/casa-usos-poses-b.js', grupo: 'sistemas' }, // casa: poses banho, chuveiro e cozinhar
       { js: 'js/sistemas/vida-mapa.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/et-companheiro-desenho.js', grupo: 'sistemas' },
+      { js: 'js/sistemas/monstros-desenho.js', grupo: 'sistemas' }, // Treinadores de Monstros: o monstro que segue, o pulo da ajuda e a MonsterBall voando
       { js: 'js/sistemas/bosque-falas.js', grupo: 'sistemas', node: true }, // Bosque dos Fantasmas: falas do Claude (Reino.BosqueFalas; bosque.md §6)
       { js: 'js/sistemas/bosque.js', grupo: 'sistemas', node: true }, // Bosque dos Fantasmas: regras, campos bosque/bosquePontos, placar de mortos, migração e os prêmios de móvel (Reino.Bosque; bosque.md §4, §5)
       { js: 'js/sistemas/bosque-combate.js', grupo: 'sistemas', node: true }, // Bosque dos Fantasmas: combate dos 4 tipos, com a mosca (Reino.BosqueCombate, camada; bosque.md §5)
       { js: 'js/sistemas/bosque-alvo.js', grupo: 'sistemas', node: true }, // Bosque dos Fantasmas: clicar no fantasma ataca sozinho até vencer (BosqueCombate.mirar; bosque.md §5)
+      { js: 'js/sistemas/bosque-combate-monstros.js', grupo: 'sistemas', node: true }, // Treinadores de Monstros: ferir e capturar no combate (BosqueCombate.ferir/capturar; monstros.md §5)
+      { js: 'js/sistemas/monstros-bola.js', grupo: 'sistemas', node: true }, // Treinadores de Monstros: jogar a MonsterBall (Monstros.podeJogar/jogar)
+      { js: 'js/sistemas/monstros-ajuda.js', grupo: 'sistemas', node: true }, // Treinadores de Monstros: o monstro equipado ataca junto na arena
       { js: 'js/sistemas/bosque-desenho.js', grupo: 'sistemas' }, // Bosque dos Fantasmas: desenho dos fantasmas e da mosca, da espada, do golpe e do desmaio
       { js: 'js/sistemas/itens.js', grupo: 'sistemas', node: true }, // itens: Mochila, Baú de Guardados, vestido e o campo itens (Reino.Itens; itens.md §6, §10)
       { js: 'js/sistemas/itens-drop.js', grupo: 'sistemas', node: true }, // itens: o que cai do inimigo vencido, gravado na hora (Reino.ItensDrop; itens.md §5)

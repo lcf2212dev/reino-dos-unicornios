@@ -60,3 +60,8 @@ distância do monstro que segue, alcance, recarga e força da ajuda. Força dos 
 # 11. O que NÃO pode mudar
 O ET continua no álbum (a amizade não some); o save antigo abre igual (sem monstro, o ET de antes continua com ela).
 Progresso da Mariana intocável.
+
+# Acréscimo (pedido do Leandro, mesmo dia)
+"adicione também a Super MonsterBall que custará 125 e terá 100% de chance de captura."
+Item `bola-super` (125 ⭐, `config.monstros.precoSuper`; chance `chanceSuper` = 1). Na loja da Kiara, um segundo cartão;
+na arena, um segundo botão (borda dourada), só quando ela tem Super na mochila. (decidido pelo Claude)

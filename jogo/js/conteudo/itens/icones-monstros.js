@@ -1,5 +1,6 @@
-/* Ícone 16×16 da MonsterBall (item:bola-monster; docs/contratos/monstros.md): metade de cima rosa, de baixo branca,
-   a faixa escura no meio e o botão redondo. Só dados (Reino.registrarIcones). */
+/* Ícones 16×16 das bolas dos Treinadores de Monstros (docs/contratos/monstros.md): a MonsterBall (item:bola-monster:
+   metade de cima rosa, de baixo branca, a faixa escura e o botão redondo) e a Super MonsterBall (item:bola-super:
+   metade de cima dourada, de baixo roxa, a estrelinha no botão e um brilho). Só dados (Reino.registrarIcones). */
 Reino.registrarIcones({
   'item:bola-monster': { n: 'monsterball', p: { k: '#3a2446', r: '#ff5c9a', s: '#c8336e', l: '#ffb3d0', w: '#ffffff', g: '#d8d0e8', b: '#fff6a8' }, d: [
     '................',
@@ -16,6 +17,24 @@ Reino.registrarIcones({
     '..kwwwwwwwwwgk..',
     '..kwwwwwwwwggk..',
     '...kkgggggggk...',
+    '.....kkkkkk.....',
+    '................',
+  ] },
+  'item:bola-super': { n: 'super monsterball', p: { k: '#3a2446', o: '#ffd34d', d: '#d99a1f', l: '#fff2a8', p: '#9a6bff', q: '#6a3fc8', w: '#ffffff', y: '#ffd34d' }, d: [
+    '.............w..',
+    '.....kkkkkk.www.',
+    '...kkoooooldkw..',
+    '..koollooooodk..',
+    '..kolooooooodk..',
+    '.kooooooooooodk.',
+    '.koooookkkkoodk.',
+    '.kkkkkkywykkkkk.',
+    '.kkkkkywwwykkkk.',
+    '.kppppkkkkkppqk.',
+    '.kpppppppppppqk.',
+    '..kpppppppppqk..',
+    '..kpppppppppqk..',
+    '...kkqqqqqqqk...',
     '.....kkkkkk.....',
     '................',
   ] },

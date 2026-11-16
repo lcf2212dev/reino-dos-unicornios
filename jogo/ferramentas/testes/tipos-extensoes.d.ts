@@ -203,6 +203,8 @@ interface EventosReino {
   BOSQUE: 'bosque';
   /** carga: { tipo: 'ganhou'|'estrelas'|'mudou', ... } (itens.md §11) */
   ITENS: 'itens';
+  /** carga: { tipo: 'jogou'|'capturou'|'escapou'|'voltou'|'equipou', especie?, arena? } (monstros.md) */
+  MONSTROS: 'monstros';
 }
 
 /* ---------- regras do Bosque dos Fantasmas (js/sistemas/bosque.js; bosque.md §5) ---------- */

@@ -242,7 +242,7 @@
     if (n) fechar('mover');
     return Array.isArray(uids) ? n : n > 0;
   }
-  /** usa uma poção (numa arena) ou dá uma comidinha ao unicórnio; só gasta se fez efeito */
+  /** usa uma poção (numa arena), dá uma comidinha ao unicórnio ou gasta a MonsterBall jogada; só gasta se fez efeito */
   function usar(uid) {
     var p = peca(uid), nao = function (m) { return { ok: false, motivo: m }; };
     if (!p || p.onde !== 'mochila') return nao('nao-usa');
@@ -260,6 +260,10 @@
       var r = R.Cuidados.comerEmCasa(P.montaria(), p.def.fome);
       if (!r.ok) return nao(r.motivo === 'cheio' || r.motivo === 'sem-uni' ? r.motivo : 'nao-usa');
       efeito = { tipo: 'comida', antes: r.antes, depois: r.depois };
+    } else if (p.def.tipo === 'bola') {   // MonsterBall (monstros.md): só numa arena, perto de um monstro; quem joga é Monstros.jogar
+      var pode = R.Monstros && R.Monstros.podeJogar ? R.Monstros.podeJogar(p.id === 'bola-super' ? 'super' : 'comum') : { ok: false, motivo: 'fora-arena' };
+      if (!pode.ok) return nao(pode.motivo === 'fora-arena' ? 'fora-arena' : 'longe');
+      efeito = { tipo: 'bola', alvo: pode.alvo.id };
     } else return nao('nao-usa');
     mover(uid, 'fora');
     fechar('usar');

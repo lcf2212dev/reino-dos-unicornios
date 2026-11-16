@@ -7,6 +7,8 @@
     precoBola: 50,            // cada MonsterBall custa 50 estrelas na loja dos Treinadores (pedido)
     maxCarrinho: 10,          // quantas MonsterBalls cabem no carrinho de uma compra
     chanceCaptura: 0.4,       // chance de a MonsterBall pegar o monstro (pedido: 40%)
+    precoSuper: 125,          // cada Super MonsterBall custa 125 estrelas (pedido do Leandro, 16/11)
+    chanceSuper: 1,           // chance de a Super MonsterBall pegar o monstro (pedido: 100%, pega sempre)
     alcanceBola: 56,          // distância (px) do monstro mais perto em que dá para jogar a bola
     recargaBolaMs: 1500,      // espera entre duas bolas jogadas
     bolaVooMs: 450,           // a bola voando até o monstro

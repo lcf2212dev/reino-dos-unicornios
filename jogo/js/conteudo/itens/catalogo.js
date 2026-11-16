@@ -90,9 +90,12 @@
   registrar({ id: 'pocao-grande', nome: 'Poção de Vida Grande', tipo: 'pocao', cura: 'grande', arenas: ARENAS.slice(2),
     peso: pesoPocao.grande === undefined ? 15 : pesoPocao.grande, icone: 'item:pocao-grande' });
 
-  // a MonsterBall (monstros.md): só se compra nos Treinadores de Monstros da Vila, não cai de monstro nenhum
+  // a MonsterBall e a Super (monstros.md): só se compram nos Treinadores de Monstros da Vila, não caem de monstro nenhum
   registrar({ id: 'bola-monster', nome: 'MonsterBall', tipo: 'bola', arenas: [], loja: 'treinadores', peso: 0,
     preco: ((R.config && R.config.monstros) || {}).precoBola || 50, icone: 'item:bola-monster' });
+  // a Super MonsterBall: pega sempre (config.monstros.chanceSuper), também só nos Treinadores
+  registrar({ id: 'bola-super', nome: 'Super MonsterBall', tipo: 'bola', arenas: [], loja: 'treinadores', peso: 0,
+    preco: ((R.config && R.config.monstros) || {}).precoSuper || 125, icone: 'item:bola-super' });
 
   // comidinhas do unicórnio: uma por comida da Pet Shop, com o nome, o ícone e o `fome` de lá (enche = 100)
   var pesoComida = cfg.pesoComida || {}, padrao = cfg.pesoComidaPadrao === undefined ? 15 : cfg.pesoComidaPadrao;
