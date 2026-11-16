@@ -4,7 +4,7 @@
      barrinha de XP do nível (Bosque.xp()) com as marquinhas de cada terço (onde vem a próxima pergunta), e o selo
      "+N" quando há ponto para pôr. Tocar abre UI.telaBosque();
    - o botão redondo da espada, fixo embaixo à direita (o pintar o tira da fileira de cima), para atacar no toque:
-     segurar o dedo (ou o mouse) repete o golpe a cada config.fantasmas.jogador.recargaMs, como segurar o Espaço; para
+     segurar o dedo (ou o mouse) repete o golpe a cada Bosque.recargaMs() (os pontos em Velocidade), como segurar o Espaço; para
      no pointerup/cancel/leave, com tela aberta e fora do Bosque. Ao lado, a dica (só na tela, sem voz) até o 1º golpe:
      UI.dicaEspadaBosque(), "Toque na espada para atacar." em tela de toque (Reino.ambiente.toque()), senão
      "Toque na espada, ou aperte Espaço, para atacar." (também no prêmio da espada, ui/bosque-nivel.js).
@@ -113,7 +113,7 @@
       try { b.setPointerCapture(e.pointerId); } catch (x) { /* ponteiro sintético */ }
       pararRepetir();
       if (!golpe()) Reino._ui.toqueIgnorado(b);
-      if (!UI.temTela() && noBosque()) repetir = setInterval(golpe, Reino.config.fantasmas.jogador.recargaMs);
+      if (!UI.temTela() && noBosque()) repetir = setInterval(golpe, Reino.Bosque && Reino.Bosque.recargaMs ? Reino.Bosque.recargaMs() : Reino.config.fantasmas.jogador.recargaMs);
     });
     ['pointerup', 'pointercancel', 'pointerleave', 'lostpointercapture'].forEach(function (ev) { b.addEventListener(ev, pararRepetir); });
     b.addEventListener('contextmenu', function (e) { e.preventDefault(); });

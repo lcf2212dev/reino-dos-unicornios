@@ -234,12 +234,15 @@ Reino.config = {
       danoPorPonto: 1,           // dano a mais por ponto em Força
       velocidadePorPonto: 0.04,  // fator de velocidade a mais por ponto em Velocidade (só no Bosque)
       velocidadeMax: 1.6,        // teto do fator de velocidade
+      ataquePorPonto: 0.1,       // ataque 10% mais rápido por ponto em Velocidade (a recarga = recargaMs / (1 + 0,1 × pontos))
+      ataqueMax: 3,              // teto do fator de ataque (no máximo 3× mais golpes; a recarga não cai abaixo de recargaMs / 3)
+      regenPorPonto: 0.005,      // cada ponto em Vida cura 0,5% da vida máxima por segundo (somado ao 1 a cada regenACadaMs)
       alcance: 20,               // alcance da espada
       recargaMs: 350,            // espera entre dois golpes
       golpeMs: 180,              // duração do golpe (desenho da espada)
       invencivelMs: 1000,        // depois de levar um toque, esse tempo sem levar outro
       regenSemDanoMs: 5000,      // tempo sem levar toque para a vida começar a voltar
-      regenACadaMs: 3000,        // depois disso, 1 de vida a cada esse tempo
+      regenACadaMs: 3000,        // depois disso, 1 de vida a cada esse tempo (a cura dos pontos em Vida também espera)
     },
     // cada tipo de inimigo: vida (golpes de dano 1), forca (vida que tira por toque), velocidade (px/s), mortos
     // (quantos inimigos mortos ele conta no placar; a mosca conta 2) e xp (o XP que ele dá; os mais fortes dão mais).

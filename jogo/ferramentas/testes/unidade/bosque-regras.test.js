@@ -216,11 +216,17 @@ test('bosque: porPonto, um por nível do 2 ao atual; dano, vida máxima e veloci
   assert.strictEqual(B.dano(), J.danoBase + J.danoPorPonto);
   assert.strictEqual(B.vidaMax(), J.vidaBase + J.vidaPorPonto);
   assert.strictEqual(B.fatorVelocidade(), 1 + J.velocidadePorPonto);
+  // Velocidade também apressa a espada (10% por ponto); Vida cura 0,5% da vida máxima por segundo por ponto
+  assert.strictEqual(B.fatorAtaque(), 1 + J.ataquePorPonto);
+  assert.ok(Math.abs(B.recargaMs() - J.recargaMs / (1 + J.ataquePorPonto)) < 1e-9);
+  assert.strictEqual(B.regenPorSegundo(), J.regenPorPonto);
   igual(j.bosque.filter((c) => c.tipo === 'ponto').map((c) => [c.nivel, c.h]), [[2, 'forca'], [3, 'vida'], [4, 'velocidade']]);
   // teto da velocidade
   comMortos(j, 3000);
   B.pontosPendentes().forEach((n) => B.porPonto(n, 'velocidade'));
   assert.strictEqual(B.fatorVelocidade(), J.velocidadeMax);
+  assert.strictEqual(B.fatorAtaque(), J.ataqueMax, 'teto do ataque');
+  assert.ok(Math.abs(B.recargaMs() - J.recargaMs / J.ataqueMax) < 1e-9);
   // o fator só vale dentro do Bosque (o que o Jogador recebe)
   assert.strictEqual(B.noBosque(), false);
   j.cena.atual = { tipo: 'interior', id: 'bosque' };

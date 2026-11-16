@@ -235,6 +235,12 @@ interface BosqueApi {
   dano(): number;
   vidaMax(): number;
   fatorVelocidade(): number;
+  /** 1 + ataquePorPonto × pontos em Velocidade, até ataqueMax */
+  fatorAtaque(): number;
+  /** a espera entre golpes: recargaMs / fatorAtaque() */
+  recargaMs(): number;
+  /** fração da vida máxima curada por segundo (pontos em Vida × regenPorPonto) */
+  regenPorSegundo(): number;
   noBosque(): boolean;
   /** numa arena (o Bosque ou um mapa novo; arenas.md) */
   naArena(): boolean;

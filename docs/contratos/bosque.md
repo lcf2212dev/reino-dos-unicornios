@@ -113,7 +113,7 @@ Reino.Bosque (sistemas/bosque.js)
   naArena() arenaAtual() noBosque()   curva: { xpDoNivel, xpAte, nivelDoXp, xpLegado, tercosDe } (puros)
   temEspada() ganharEspada() → bool (true só na 1ª vez)
   pontos() → { forca, vida, velocidade }  pontosPendentes() → [n]  porPonto(n, 'forca'|'vida'|'velocidade') → bool
-  dano() vidaMax() fatorVelocidade()  bonus() → Itens.bonus() (zeros sem itens)   pergunta() → { materia, sala, desafio } | null
+  dano() vidaMax() fatorVelocidade() fatorAtaque() recargaMs() regenPorSegundo()  bonus() → Itens.bonus() (zeros sem itens)   pergunta() → { materia, sala, desafio } | null
   abater(tipo, arena?) → { mortos, perguntas, subiu: n | null, premioNivel: { chave, movel } | null, xp }
   acertou(materiaId) → { estrelas, nivel, presente: { chave, movel } | null }   errou(materiaId)
   consumirPergunta() → bool   chaveMovel(n) → 'bosque:' + n
@@ -169,7 +169,10 @@ I.FUNDOS.bosque = { cor, desenhar(ctx, w, h), saida(ctx, px, py) }   // saida = 
 - Ataque: botão da espada (`UI.registrarBotaoHud`, redondo, embaixo à direita), Espaço ou Enter só quando: cena
   `bosque`, não bloqueada, sem tela, foco fora de controle e sem `alvoPerto` (`bosque-combate.js:ligar`). Sem a espada
   `atacar()` devolve false. Chip e botão escondidos fora do Bosque (e o botão, sem a espada).
-- Segurar o botão da espada (dedo ou mouse) repete o golpe a cada `jogador.recargaMs`, como segurar o Espaço; para ao
+- Ponto em Velocidade: anda mais rápido (`velocidadePorPonto`) e golpeia mais rápido (`recargaMs()` = `recargaMs /
+  min(ataqueMax, 1 + ataquePorPonto × pontos)`). Ponto em Vida: mais vida e cura `regenPorPonto` da vida máxima por
+  segundo, somada ao 1 a cada `regenACadaMs` e com a mesma espera `regenSemDanoMs` depois do toque.
+- Segurar o botão da espada (dedo ou mouse) repete o golpe a cada `Bosque.recargaMs()`, como segurar o Espaço; para ao
   soltar, ao abrir tela e ao sair do Bosque (`ui/bosque-hud.js:botaoEspada`).
 - Clicar ou tocar num inimigo (que leva golpe, com a espada) ataca sozinho (`bosque-alvo.js`): ela anda até `PERTO` do
   `alcance` (refaz o caminho quando ele muda de tile; no tile dele ou ao lado, reto), vira para ele e golpeia a cada

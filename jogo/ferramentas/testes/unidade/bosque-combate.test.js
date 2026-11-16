@@ -378,3 +378,31 @@ test('ataque por alvo no jogo: fantasma sobre tile sólido e fora do alcance: um
   // o resultado é o mesmo objeto a cada quadro (nada criado por quadro)
   assert.strictEqual(BC.seguirAlvo(est, { x: J.x, y: J.y, dano: 1 }), BC.seguirAlvo(est, { x: J.x, y: J.y, dano: 1 }));
 });
+
+test('pontos: a recarga vem do jogador (Velocidade) e Vida cura uma fração por segundo depois da espera', () => {
+  const { BC, cfg } = montar();
+  const cj = cfg.jogador;
+  // recarga menor: golpeia de novo antes da recarga padrão
+  let est = BC.novoEstado(MAPA, cfg); est.parados = true;
+  const f = est.fantasmas.find((x) => x.tipo === 'medio');
+  const j = Object.assign(perto(f), { dano: 1, recargaMs: 100 });
+  assert.strictEqual(BC.golpear(est, j), true);
+  andar(BC, est, 112, j);
+  assert.strictEqual(BC.golpear(est, j), true, 'com a recarga do jogador');
+  // cura: vida máxima 20, 5% por segundo = 1 por segundo, só depois de regenSemDanoMs sem toque
+  est = BC.novoEstado(MAPA, cfg); est.parados = true;
+  const lj = Object.assign(longe(), { vidaMax: 20, regen: 0.05 });
+  BC.passo(est, 16, lj);
+  est.vida = 10; est.regenEm = est.curaDe = est.t + cj.regenSemDanoMs; est.curaSobra = 0;
+  andar(BC, est, cj.regenSemDanoMs - 100, lj);
+  assert.strictEqual(est.vida, 10, 'nada antes da espera');
+  andar(BC, est, 100 + 1000, lj);
+  // na espera: +1 do regen padrão e ~+1 da cura dos pontos
+  assert.ok(est.vida >= 11 && est.vida <= 12, 'curou ' + est.vida);
+  const v = est.vida;
+  andar(BC, est, 2000, lj);
+  assert.ok(est.vida >= v + 2, 'pontos curam 1 por segundo (' + v + ' → ' + est.vida + ')');
+  andar(BC, est, 60000, lj);
+  assert.strictEqual(est.vida, 20, 'não passa da máxima');
+  assert.strictEqual(est.curaSobra, 0);
+});

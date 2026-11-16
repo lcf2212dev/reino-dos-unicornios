@@ -15,8 +15,8 @@
   var TRAVA_MS = 600;
   var CARTOES = [
     { h: 'forca', emoji: '💪', nome: 'Força', diz: 'Golpe mais forte' },
-    { h: 'vida', emoji: '💖', nome: 'Vida', diz: 'Mais vida' },
-    { h: 'velocidade', emoji: '⚡', nome: 'Velocidade', diz: 'Anda mais rápido' },
+    { h: 'vida', emoji: '💖', nome: 'Vida', diz: 'Mais vida e cura' },
+    { h: 'velocidade', emoji: '⚡', nome: 'Velocidade', diz: 'Anda e ataca mais rápido' },
   ];
 
   function F() { return Reino.BosqueFalas; }

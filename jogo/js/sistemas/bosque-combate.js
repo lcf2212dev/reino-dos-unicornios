@@ -50,7 +50,7 @@
     c = c || cfg();
     semente = semente === undefined ? SEMENTE : semente;
     var rng = R.Desenho.rng(semente), cm = mapa.comodo, sp = mapa.spawn, zs = c.zonaSegura, cj = c.jogador;
-    var est = { cfg: c, t: 0, vida: cj.vidaBase, max: cj.vidaBase, maxPontos: cj.vidaBase, invencivelAte: 0, regenEm: 0, recargaAte: 0,
+    var est = { cfg: c, t: 0, vida: cj.vidaBase, max: cj.vidaBase, maxPontos: cj.vidaBase, invencivelAte: 0, regenEm: 0, curaDe: 0, curaSobra: 0, recargaAte: 0,
       golpe: null, desmaiado: false, parados: false, eventos: [], fantasmas: [],
       limites: { x0: cm.x * T + 4, y0: cm.y * T + 12, x1: (cm.x + cm.w) * T - 4, y1: (cm.y + cm.h) * T },
       segura: { x0: (sp.x - zs) * T, y0: (sp.y - zs) * T, x1: (sp.x + zs + 1) * T, y1: (sp.y + zs + 1) * T },
@@ -129,7 +129,7 @@
     var c = est.cfg, t = est.t;
     est.vida = Math.max(0, est.vida - toque(c.tipos[f.tipo].forca, j.defesa));
     est.invencivelAte = t + c.jogador.invencivelMs;
-    est.regenEm = t + c.jogador.regenSemDanoMs;
+    est.regenEm = est.curaDe = t + c.jogador.regenSemDanoMs; est.curaSobra = 0;
     evento(est, { tipo: 'vida', n: est.vida, max: est.max });
     if (est.vida <= 0) { est.desmaiado = true; evento(est, { tipo: 'desmaio' }); }
     recuar(est, f, j);
@@ -185,7 +185,9 @@
     evento(est, { tipo: 'vida', n: est.vida, max: est.max });
   }
 
-  /* jogador = { x, y (pés, px do jogo), olharX, olharY, vidaMax?, vidaItens?, defesa?, dano? }; dt em ms (no máximo 50) */
+  /* jogador = { x, y (pés, px do jogo), olharX, olharY, vidaMax?, vidaItens?, defesa?, dano?, recargaMs?, regen? }; dt em
+     ms (no máximo 50). regen = fração da vida máxima curada por segundo (os pontos em Vida), depois de regenSemDanoMs
+     sem toque, somada ao 1 a cada regenACadaMs; recargaMs = a espera entre golpes (os pontos em Velocidade) */
   function passo(est, dt, j) {
     dt = Math.max(0, Math.min(50, dt || 0));
     est.t += dt;
@@ -193,10 +195,15 @@
     if (est.desmaiado) return est;
     var cj = est.cfg.jogador, s = dt / 1000;
     if (est.golpe && est.t - est.golpe.em >= cj.golpeMs) est.golpe = null;
-    if (est.vida < est.max && est.t >= est.regenEm) {
-      est.vida++; est.regenEm = est.t + cj.regenACadaMs;
-      evento(est, { tipo: 'vida', n: est.vida, max: est.max });
+    var curou = false;
+    if (est.vida < est.max && est.t >= est.regenEm) { est.vida++; est.regenEm = est.t + cj.regenACadaMs; curou = true; }
+    if (est.vida < est.max && j.regen > 0 && est.t >= est.curaDe) {
+      est.curaSobra += est.max * j.regen * s;
+      var n = Math.floor(est.curaSobra);
+      if (n > 0) { est.curaSobra -= n; est.vida = Math.min(est.max, est.vida + n); curou = true; }
     }
+    if (est.vida >= est.max) est.curaSobra = 0;
+    if (curou) evento(est, { tipo: 'vida', n: est.vida, max: est.max });
     for (var i = 0; i < est.fantasmas.length && !est.desmaiado; i++) moverFantasma(est, est.fantasmas[i], s, j);
     return est;
   }
@@ -207,7 +214,7 @@
     if (est.desmaiado || t < est.recargaAte) return false;
     var ox = j.olharX || 0, oy = j.olharY || 0, n = Math.sqrt(ox * ox + oy * oy);
     if (n < 0.01) { ox = 0; oy = 1; } else { ox /= n; oy /= n; }
-    est.recargaAte = t + cj.recargaMs;
+    est.recargaAte = t + (j.recargaMs || cj.recargaMs);
     est.golpe = { em: t, dx: ox, dy: oy };
     var dano = j.dano || cj.danoBase, acertou = 0;
     for (var i = 0; i < est.fantasmas.length; i++) {
@@ -225,7 +232,7 @@
   /* vida cheia, um tempinho invencível e os fantasmas soltos de volta ao ninho (os vencidos seguem esperando) */
   function reiniciarEstado(est) {
     est.vida = est.max; est.desmaiado = false; est.golpe = null; est.recargaAte = 0;
-    est.invencivelAte = est.t + est.cfg.jogador.invencivelMs; est.regenEm = est.t;
+    est.invencivelAte = est.t + est.cfg.jogador.invencivelMs; est.regenEm = est.curaDe = est.t; est.curaSobra = 0;
     est.fantasmas.forEach(function (f) {
       if (!ATIVOS[f.estado] && f.estado !== 'surgindo' && f.estado !== 'preso') return;   // preso: a MonsterBall (monstros.md)
       f.x = f.alvoX = f.casaX; f.y = f.alvoY = f.casaY; f.vida = f.max; f.estado = 'vagando'; f.pausa = true; f.ate = est.t + 600;
@@ -261,9 +268,14 @@
   function dano() { var B = R.Bosque; return B && B.dano ? B.dano() : cfg().jogador.danoBase; }
   function temEspada() { var B = R.Bosque; return B && B.temEspada ? !!B.temEspada() : true; }
   function bonus() { var B = R.Bosque; return B && B.bonus ? B.bonus() : { vida: 0, defesa: 0 }; }
-  // o jogador do passo (um só, reaproveitado); vida, dano e Proteção relidos nos eventos BOSQUE e ITENS e ao entrar
-  var JOG = { x: 0, y: 0, olharX: 0, olharY: 1, vidaMax: 0, vidaItens: 0, defesa: 0, dano: 0 }, lidos = false;
-  function lerValores() { var b = bonus(); JOG.vidaMax = vidaMax(); JOG.vidaItens = b.vida; JOG.defesa = b.defesa; JOG.dano = dano(); lidos = true; }
+  function recargaMs() { var B = R.Bosque; return B && B.recargaMs ? B.recargaMs() : cfg().jogador.recargaMs; }
+  function regen() { var B = R.Bosque; return B && B.regenPorSegundo ? B.regenPorSegundo() : 0; }
+  // o jogador do passo (um só, reaproveitado); vida, dano, Proteção, recarga e cura relidos nos eventos BOSQUE e ITENS e ao entrar
+  var JOG = { x: 0, y: 0, olharX: 0, olharY: 1, vidaMax: 0, vidaItens: 0, defesa: 0, dano: 0, recargaMs: 0, regen: 0 }, lidos = false;
+  function lerValores() {
+    var b = bonus(); JOG.vidaMax = vidaMax(); JOG.vidaItens = b.vida; JOG.defesa = b.defesa; JOG.dano = dano();
+    JOG.recargaMs = recargaMs(); JOG.regen = regen(); lidos = true;
+  }
   function jogador() {
     var J = window.Jogador;
     if (!lidos) lerValores();

@@ -196,6 +196,10 @@
   function dano() { return jog().danoBase + pontos().forca * jog().danoPorPonto + bonus().dano; }
   function vidaMax() { return jog().vidaBase + pontos().vida * jog().vidaPorPonto + bonus().vida; }
   function fatorVelocidade() { return Math.min(jog().velocidadeMax, 1 + pontos().velocidade * jog().velocidadePorPonto + bonus().velocidade); }
+  // os pontos em Velocidade também apressam a espada; os em Vida curam uma fração da vida máxima por segundo
+  function fatorAtaque() { return Math.min(jog().ataqueMax, 1 + pontos().velocidade * jog().ataquePorPonto); }
+  function recargaMs() { return jog().recargaMs / fatorAtaque(); }
+  function regenPorSegundo() { return pontos().vida * jog().regenPorPonto; }
   function noBosque() {
     var c = R.Cena && R.Cena.atual ? R.Cena.atual() : null;
     return !!(c && c.tipo === 'interior' && c.id === 'bosque');
@@ -285,7 +289,7 @@
 
   R.Bosque = { acertos: acertos, mortos: mortos, nivel: nivel, xp: xp, xpTotal: xpTotal, temEspada: temEspada, ganharEspada: ganharEspada,
     pontos: pontos, pontosPendentes: pontosPendentes, porPonto: porPonto, dano: dano, vidaMax: vidaMax, bonus: bonus,
-    fatorVelocidade: fatorVelocidade, noBosque: noBosque, naArena: naArena, arenaAtual: arenaAtual, pergunta: pergunta, perguntas: perguntas,
+    fatorVelocidade: fatorVelocidade, fatorAtaque: fatorAtaque, recargaMs: recargaMs, regenPorSegundo: regenPorSegundo, noBosque: noBosque, naArena: naArena, arenaAtual: arenaAtual, pergunta: pergunta, perguntas: perguntas,
     acertou: acertou, errou: errou, consumirPergunta: consumirPergunta, perguntasPendentes: perguntasPendentes,
     proximaPergunta: proximaPergunta, abater: abater, chaveMovel: chaveMovel, HABILIDADES: HABILIDADES,
     // a curva (pura; testes e ferramentas)
@@ -304,7 +308,7 @@
       return { acertos: acertos(), mortos: mortos(), nivel: nivel(), xp: xp(), xpTotal: xpTotal(), espada: temEspada(), vencidos: contador('vencidos'),
         perguntasFeitas: feitas(), perguntasPendentes: perguntasPendentes(), proximaPergunta: proximaPergunta(), arena: arenaAtual(),
         migrado: contador('migrado'), pontos: pontos(), pendentes: pontosPendentes().length, dano: dano(), vidaMax: vidaMax(),
-        fatorVelocidade: fatorVelocidade(), noBosque: noBosque(), naArena: naArena(), perguntas: perguntas().length };
+        fatorVelocidade: fatorVelocidade(), recargaMs: recargaMs(), regenPorSegundo: regenPorSegundo(), noBosque: noBosque(), naArena: naArena(), perguntas: perguntas().length };
     },
   });
 })();
