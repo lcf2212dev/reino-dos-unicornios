@@ -13,7 +13,7 @@
 
   R.falasDoPredio('vila', {
     npcs: {
-      kiara: { oi: ['Oi, eu sou a Treinadora Kiara!', 'Eu cuido de monstrinhos.'],
+      kiara: { oi: ['Oi, eu sou a Treinadora Kiara!', 'Eu cuido dos monstrinhos.'],
         nova: ['Quer uma MonsterBall?'], depois: ['Boa sorte na aventura!'] },
     },
     objetos: {
