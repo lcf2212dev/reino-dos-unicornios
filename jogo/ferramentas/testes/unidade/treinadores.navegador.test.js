@@ -4,7 +4,8 @@
 // 'treinadores') pede a pergunta do 4º bimestre antes da conversa (UI.perguntaVila). Na loja (UI.telaTreinadores), dois
 // cartões: comprar 2 MonsterBalls tira 100 estrelas e põe 2 'bola-monster' na mochila; 1 de cada (MonsterBall + Super
 // MonsterBall) tira 175 e põe 1 'bola-monster' + 1 'bola-super'; sem estrelas, o botão fica apagado e
-// Reino.Treinadores.comprar recusa sem gastar nada.
+// Reino.Treinadores.comprar recusa sem gastar nada. Trava (config.monstros.libera): sem salas da Matemática do Dia a Dia
+// as duas bolas ficam trancadas (cartão apagado, comprar recusa 'trancada'); 16 salas abrem a MonsterBall; 32, a Super.
 // Anda de verdade (tecla de seta), no jogo congelado; servidor e banco de TESTE novos (cenario.js); save sintético.
 const { test } = require('node:test');
 const assert = require('assert');
@@ -17,6 +18,10 @@ const pasta = () => fs.mkdtempSync(path.join(PASTA_TESTES, 'treinadores-'));
 const ONDE = `(() => { const c = Reino.Cena.atual(), t = Jogador.tile(); return { cena: c && c.id, x: t.x, y: t.y }; })()`;
 const BOLAS = `Reino.Itens.pecas().filter((p) => p.id === 'bola-monster' && p.onde === 'mochila').length`;
 const SUPER = `Reino.Itens.pecas().filter((p) => p.id === 'bola-super' && p.onde === 'mochila').length`;
+// marca as n primeiras salas da matéria da trava como feitas (save sintético) e devolve as ofertas
+const SALAS = (n) => `(() => { const m = Reino.materia(Reino.config.monstros.libera.materia), e = Reino.Progresso.estado();
+  m.salas.forEach((s, i) => { if (i < ${n}) e.salas[s.id] = { vezes: 1, melhor: 6, feita: 1 }; else delete e.salas[s.id]; });
+  return Reino.Treinadores.ofertas().map((o) => [o.id, o.liberada, o.feitas, o.precisa]); })()`;
 
 test('treinadores: prédio na Vila, porta e volta, Kiara com a pergunta, compra de MonsterBalls', { timeout: 240000 }, async () => {
   const c = await abrirCenario({ tamanho: 'celular', estrelas: 400, pasta: pasta() });
@@ -60,6 +65,21 @@ test('treinadores: prédio na Vila, porta e volta, Kiara com a pergunta, compra 
     assert.strictEqual(pergunta || await c.js(`!!document.querySelector('.tela-vila-pergunta')`), true, 'abriu a pergunta da Vila');
     await c.js('Reino.UI.fecharTodas(); 1');
     await c.avancar(600);
+
+    // a trava: sem salas de Matemática, as duas trancadas; 16 abrem a MonsterBall; 32, a Super
+    assert.deepStrictEqual(await c.js(SALAS(0)), [['bola-monster', false, 0, 16], ['bola-super', false, 0, 32]]);
+    const tranc = await c.js(`(() => { const a = Reino.Progresso.estrelas(), r = Reino.Treinadores.comprar(1); return [r.ok, r.motivo, Reino.Progresso.estrelas() === a]; })()`);
+    assert.deepStrictEqual(tranc, [false, 'trancada', true], 'trancada: não compra nem gasta');
+    await c.js('void Reino.modulo("treinadores").acoes.treinadores({ tipo: "treinadores" }); 1');
+    await c.avancar(600);
+    assert.deepStrictEqual(await c.js(`[...document.querySelectorAll('.tela-treinadores .treinadores-cartao')].map((e) => [e.classList.contains('treinadores-trancada'), /Abre com \\d+ salas de Matemática/.test(e.textContent)])`),
+      [[true, true], [true, true]], 'os dois cartões trancados, dizendo quantas salas faltam');
+    assert.strictEqual(await c.js(`document.querySelector('.tela-treinadores .vila-botao-total').disabled`), true);
+    await c.js('Reino.UI.fecharTodas(); 1');
+    await c.avancar(600);
+    assert.deepStrictEqual(await c.js(SALAS(16)), [['bola-monster', true, 16, 16], ['bola-super', false, 16, 32]]);
+    assert.strictEqual(await c.js(`Reino.Treinadores.comprar([{ id: 'bola-super', qtd: 1 }]).motivo`), 'trancada', 'a Super pede as 32');
+    assert.deepStrictEqual(await c.js(SALAS(32)), [['bola-monster', true, 32, 16], ['bola-super', true, 32, 32]]);
 
     // a loja: + uma (2 bolas = 100 estrelas), Comprar, confirmar
     await c.js('void Reino.modulo("treinadores").acoes.treinadores({ tipo: "treinadores" }); 1');

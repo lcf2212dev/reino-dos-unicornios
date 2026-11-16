@@ -75,3 +75,10 @@ Reino.UI.telaMonstros() → P        Reino.UI.telaTreinadores(npc) → P
 `Reino.config.monstros` (comentados lá; preços `precoBola` 50 e `precoSuper` 125, chances `chanceCaptura` 0,4 e `chanceSuper` 1).
 Força dos 3 bosques de dentro: `config.arenas.orvalho|neblina|lua`
 (`arenas.md` §8).
+
+## 7. Trava da loja
+A Kiara só vende cada bola depois de tantas salas feitas de `config.monstros.libera.materia` (Matemática do Dia a Dia,
+`matematica4`): `libera.bola` (16) para a MonsterBall e `libera.super` (32) para a Super (pedido do Leandro, 16/11).
+`Treinadores.liberacao(id) → { liberada, feitas, precisa }` (contado na hora por `P.salasFeitas`, nada no save);
+`ofertas()` traz os três campos; `comprar` recusa com `motivo: 'trancada'`. Cartão trancado: desenho `--apagado`, sem
+− e +, "Abre com N salas de Matemática feitas. Você fez M." Jogar uma bola que ela já tem não tem trava.

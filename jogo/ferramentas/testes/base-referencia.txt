@@ -122,4 +122,5 @@
 # @ = questões do 4º bimestre conferidas: conteúdo corrigido contra os livros e layout das perguntas (opções, texto que não cabe, botão Livro)
 # @ = parquinho: números do balanço e da caixa de areia na config
 # @ = treinadores: prédio na Vila, Kiara, MonsterBalls, campos monstros/monstroCompanheiro e bosques de dentro mais fortes
+# @ = treinadores: prédio na Vila, Kiara, MonsterBalls com trava de salas de Matemática, campos monstros/monstroCompanheiro e bosques de dentro mais fortes
 @

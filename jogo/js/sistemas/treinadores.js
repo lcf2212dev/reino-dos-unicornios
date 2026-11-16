@@ -1,14 +1,17 @@
 /* Treinadores de Monstros, na Vila Arco-Íris (docs/contratos/monstros.md): comprar MonsterBalls e Super MonsterBalls e
    a pergunta antes da conversa com a Treinadora Kiara (a mesma das lojas da Vila, vila.md §5). Reino.Treinadores:
      ID, ID_SUPER          'bola-monster' e 'bola-super' (os itens, conteudo/itens/catalogo.js)
-     ofertas()             [{ id, def, preco, chance }] das bolas que existem no catálogo, na ordem da loja
-                           (MonsterBall: config.monstros.precoBola / chanceCaptura; Super: precoSuper / chanceSuper)
+     ofertas()             [{ id, def, preco, chance, liberada, feitas, precisa }] das bolas que existem no catálogo,
+                           na ordem da loja (MonsterBall: config.monstros.precoBola / chanceCaptura; Super: precoSuper /
+                           chanceSuper). liberada = feitas ≥ precisa: salas feitas de config.monstros.libera.materia
+                           (Matemática do Dia a Dia) contra libera.bola (16) ou libera.super (32)
+     liberacao(id?)        { liberada, feitas, precisa } de uma bola
      preco(id?) chance(id?) o preço e a chance de uma bola (sem id: a MonsterBall)
      max()                 quantas de cada cabem numa compra (config.monstros.maxCarrinho)
      tem(id?)              quantas daquela bola ela tem (mochila e baú)
      total(itens)          o preço de [{ id, qtd }] (0 se algo não fecha); um número n = n MonsterBalls
      comprar(itens)        tudo ou nada: confere o saldo, gasta e dá as bolas (Itens.ganhar; mochila cheia, o baú)
-                           → { ok, total, motivo?: 'sem-save' | 'itens' | 'saldo', falta?, ganhos? }
+                           → { ok, total, motivo?: 'sem-save' | 'itens' | 'trancada' | 'saldo', falta?, ganhos? }
    Módulo 'treinadores': porteira(npc) (NPC com a ação 'treinadores' → UI.perguntaVila) e a ação 'treinadores' (abre
    UI.telaTreinadores e resolve 'tchau'). Nada novo no save (as bolas são itens, o campo `itens`). node: true: nada
    de DOM no carregamento. */
@@ -27,9 +30,19 @@
   }
   function chance(id) { return id === ID_SUPER ? numero(cfg().chanceSuper, 1) : numero(cfg().chanceCaptura, 0.4); }
   function max() { return cfg().maxCarrinho || 10; }
+  // quantas salas da matéria de config.monstros.libera ela já fez, e quantas a bola pede (lido na hora: P.estado)
+  function liberacao(id) {
+    var l = cfg().libera || {}, precisa = numero(id === ID_SUPER ? l.super : l.bola, 0);
+    var m = R.materia && R.materia(l.materia), Pr = P();
+    var feitas = m && Pr && Pr.estado() && Pr.salasFeitas ? Pr.salasFeitas(m) : 0;
+    return { liberada: feitas >= precisa, feitas: feitas, precisa: precisa };
+  }
   function ofertas() {
     return [ID, ID_SUPER].filter(function (id) { return !!def(id); })
-      .map(function (id) { return { id: id, def: def(id), preco: preco(id), chance: chance(id) }; });
+      .map(function (id) {
+        var lb = liberacao(id);
+        return { id: id, def: def(id), preco: preco(id), chance: chance(id), liberada: lb.liberada, feitas: lb.feitas, precisa: lb.precisa };
+      });
   }
   function tem(id) {
     var It = R.Itens, alvo = id || ID;
@@ -58,6 +71,7 @@
     var l = conferir(itens);
     if (!l || !(R.Itens && R.Itens.ganhar)) return { ok: false, motivo: 'itens', total: 0 };
     var t = soma(l), saldo = Pr.estrelas();
+    if (l.some(function (x) { return !x.oferta.liberada; })) return { ok: false, motivo: 'trancada', total: t };
     if (saldo < t) return { ok: false, motivo: 'saldo', total: t, falta: t - saldo };
     if (!Pr.gastarEstrelas(t)) return { ok: false, motivo: 'saldo', total: t, falta: t - Pr.estrelas() };
     var ganhos = [];
@@ -86,7 +100,7 @@
     return Promise.resolve(UI.telaTreinadores()).then(function () { return 'tchau'; });
   }
 
-  R.Treinadores = { ID: ID, ID_SUPER: ID_SUPER, ofertas: ofertas, preco: preco, chance: chance, max: max, tem: tem,
+  R.Treinadores = { ID: ID, ID_SUPER: ID_SUPER, ofertas: ofertas, liberacao: liberacao, preco: preco, chance: chance, max: max, tem: tem,
     total: total, comprar: comprar };
 
   R.registrarModulo({

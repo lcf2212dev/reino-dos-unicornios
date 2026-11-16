@@ -65,3 +65,10 @@ Progresso da Mariana intocável.
 "adicione também a Super MonsterBall que custará 125 e terá 100% de chance de captura."
 Item `bola-super` (125 ⭐, `config.monstros.precoSuper`; chance `chanceSuper` = 1). Na loja da Kiara, um segundo cartão;
 na arena, um segundo botão (borda dourada), só quando ela tem Super na mochila. (decidido pelo Claude)
+
+# Acréscimo 2 (pedido do Leandro, mesmo dia)
+"Só deve ser possível comprar a MonsterBall depois de completar 16 salas de matemática. Só deve ser possível comprar a
+Super MonsterBall depois de completar as 32 salas de matemática."
+A matéria é a Matemática do Dia a Dia (`matematica4`, 32 salas). `config.monstros.libera: { materia, bola: 16, super: 32 }`.
+Na loja, a bola trancada fica com o cartão apagado: "Abre com 16 salas de Matemática feitas. Você fez N." Jogar a bola
+que ela já tem continua livre. (decidido pelo Claude)

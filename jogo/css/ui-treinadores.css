@@ -6,6 +6,8 @@
 .treinadores-cartao { flex: 1 1 220px; max-width: 300px; cursor: default; padding: 12px 10px; }
 .treinadores-cartao .vila-cartao-nome { font-size: var(--texto); }
 .treinadores-super { border-color: var(--ouro); background: var(--ouro-claro); }
+.treinadores-trancada .vila-cartao-desenho { filter: var(--apagado); }
+.treinadores-tranca { font-size: var(--texto-aux); color: var(--tinta-suave); margin-top: 6px; }
 .treinadores-tem { font-size: var(--texto-aux); color: var(--tinta-suave); }
 .treinadores-escolha { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 6px; }
 .treinadores-escolha .btn-icone { width: 48px; height: 48px; min-width: 48px; font-size: var(--texto); }
