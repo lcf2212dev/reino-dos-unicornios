@@ -316,29 +316,31 @@ Reino.config = {
     // ficam DENTRO da arena do Bosque (bosque/portais.js), não são lugares do mapa. Do mais fácil ao mais difícil, cada
     // um acima do Vulcão (o mapa mais forte de hoje) em vida, força e XP, e crescendo entre eles. Nível recomendado
     // no menu do painel do chip e na placa do portal.
-    orvalho: { nivel: 25, visao: 108, zonas: { facil: [27, 38], medio: [15, 26], dificil: [3, 14], voador: [3, 10] },   // Bosque do Orvalho
-      quantos: { facil: 6, medio: 5, dificil: 4, voador: 3 },
-      tipos: {
-        facil: { vida: 44, forca: 7, velocidade: 32, mortos: 1, xp: 55 },    // caracol
-        medio: { vida: 56, forca: 9, velocidade: 38, mortos: 1, xp: 70 },    // lagarta
-        dificil: { vida: 72, forca: 11, velocidade: 42, mortos: 1, xp: 90 }, // ouriço com coroa
-        voador: { vida: 84, forca: 12, velocidade: 52, mortos: 2, xp: 120 }, // mariposa
-      } },
-    neblina: { nivel: 30, visao: 112, zonas: { facil: [27, 38], medio: [15, 26], dificil: [3, 14], voador: [3, 10] },   // Bosque da Neblina
-      quantos: { facil: 6, medio: 5, dificil: 4, voador: 3 },
-      tipos: {
-        facil: { vida: 54, forca: 8, velocidade: 34, mortos: 1, xp: 66 },    // guaxinim
-        medio: { vida: 68, forca: 10, velocidade: 40, mortos: 1, xp: 84 },   // raposa
-        dificil: { vida: 86, forca: 12, velocidade: 44, mortos: 1, xp: 108 }, // javali com coroa
-        voador: { vida: 100, forca: 13, velocidade: 54, mortos: 2, xp: 144 }, // gavião
-      } },
-    lua: { nivel: 35, visao: 116, zonas: { facil: [27, 38], medio: [15, 26], dificil: [3, 14], voador: [3, 10] },   // Bosque da Lua Cheia
+    // Mais fortes (pedido do Leandro, 16/11/2026: "está muito fácil"): vida ×2, força ×1,6, velocidade ×1,15, visão +16,
+    // um inimigo a mais de cada tipo no chão; o XP subiu ×1,25 para a luta mais longa não atrasar o nível.
+    orvalho: { nivel: 25, visao: 124, zonas: { facil: [27, 38], medio: [15, 26], dificil: [3, 14], voador: [3, 10] },   // Bosque do Orvalho
       quantos: { facil: 7, medio: 6, dificil: 5, voador: 3 },
       tipos: {
-        facil: { vida: 64, forca: 9, velocidade: 36, mortos: 1, xp: 78 },    // gato da lua
-        medio: { vida: 80, forca: 12, velocidade: 42, mortos: 1, xp: 100 },  // cervo da lua
-        dificil: { vida: 100, forca: 14, velocidade: 46, mortos: 1, xp: 128 }, // urso da lua com coroa
-        voador: { vida: 118, forca: 15, velocidade: 56, mortos: 2, xp: 170 }, // corvo da lua
+        facil: { vida: 88, forca: 11, velocidade: 37, mortos: 1, xp: 69 },    // caracol
+        medio: { vida: 112, forca: 14, velocidade: 44, mortos: 1, xp: 88 },    // lagarta
+        dificil: { vida: 144, forca: 18, velocidade: 48, mortos: 1, xp: 112 }, // ouriço com coroa
+        voador: { vida: 168, forca: 19, velocidade: 60, mortos: 2, xp: 150 }, // mariposa
+      } },
+    neblina: { nivel: 30, visao: 128, zonas: { facil: [27, 38], medio: [15, 26], dificil: [3, 14], voador: [3, 10] },   // Bosque da Neblina
+      quantos: { facil: 7, medio: 6, dificil: 5, voador: 3 },
+      tipos: {
+        facil: { vida: 108, forca: 13, velocidade: 39, mortos: 1, xp: 82 },    // guaxinim
+        medio: { vida: 136, forca: 16, velocidade: 46, mortos: 1, xp: 105 },   // raposa
+        dificil: { vida: 172, forca: 19, velocidade: 51, mortos: 1, xp: 135 }, // javali com coroa
+        voador: { vida: 200, forca: 21, velocidade: 62, mortos: 2, xp: 180 }, // gavião
+      } },
+    lua: { nivel: 35, visao: 132, zonas: { facil: [27, 38], medio: [15, 26], dificil: [3, 14], voador: [3, 10] },   // Bosque da Lua Cheia
+      quantos: { facil: 8, medio: 7, dificil: 6, voador: 3 },
+      tipos: {
+        facil: { vida: 128, forca: 14, velocidade: 41, mortos: 1, xp: 98 },    // gato da lua
+        medio: { vida: 160, forca: 19, velocidade: 48, mortos: 1, xp: 125 },  // cervo da lua
+        dificil: { vida: 200, forca: 22, velocidade: 53, mortos: 1, xp: 160 }, // urso da lua com coroa
+        voador: { vida: 236, forca: 24, velocidade: 64, mortos: 2, xp: 212 }, // corvo da lua
       } },
   },
   novidadeDias: 45,   // dias em que o selo "✨ Novo!" aparece num lugar novo (lugar.novidade)

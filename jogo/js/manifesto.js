@@ -66,6 +66,7 @@
       { js: 'js/nucleo/config.js', grupo: 'nucleo', node: true },
       { js: 'js/nucleo/config-itens.js', grupo: 'nucleo', node: true }, // números dos itens (Reino.config.itens; itens.md §12): logo depois do config.js
       { js: 'js/nucleo/config-vila.js', grupo: 'nucleo', node: true }, // Vila Arco-Íris: números das lojas e da Teleportadora (Reino.config.vila; vila.md)
+      { js: 'js/nucleo/config-monstros.js', grupo: 'nucleo', node: true }, // Treinadores de Monstros: MonsterBall, captura, monstro que segue e ajuda (Reino.config.monstros; monstros.md)
       { js: 'js/nucleo/registros.js', grupo: 'nucleo', node: true },
       { js: 'js/sistemas/bimestres.js', grupo: 'nucleo', node: true },
       { js: 'js/nucleo/modulos.js', grupo: 'nucleo', node: true },
@@ -361,6 +362,7 @@
       { js: 'js/conteudo/itens/vestes-b.js', grupo: 'conteudo', node: true }, // itens: moldes de armaduras, botas, espadas e escudos
       { js: 'js/conteudo/itens/icones-a.js', grupo: 'icones', node: true }, // itens: ícones item:<id> de espadas, escudos, capacetes e chapéus
       { js: 'js/conteudo/itens/icones-b.js', grupo: 'icones', node: true }, // itens: ícones de armaduras, botas, poções e bau-guardados
+      { js: 'js/conteudo/itens/icones-monstros.js', grupo: 'icones', node: true }, // Treinadores de Monstros: o ícone da MonsterBall (item:bola-monster)
       { js: 'js/conteudo/itens/loja-moldes.js', grupo: 'conteudo', node: true }, // Vila: moldes e ícones gerados das 100 peças das lojas (vila.md)
       { js: 'js/conteudo/itens/loja-armas.js', grupo: 'conteudo', node: true }, // Vila: as 20 espadas da Forja
       { js: 'js/conteudo/itens/loja-cabecas.js', grupo: 'conteudo', node: true }, // Vila: os 20 capacetes e 20 chapéus

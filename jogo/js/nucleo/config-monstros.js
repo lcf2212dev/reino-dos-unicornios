@@ -1,0 +1,24 @@
+/* Treinadores de Monstros (docs/contratos/monstros.md): os números da MonsterBall, da captura, do monstro que segue a
+   Mariana e da ajuda dele na luta. Reino.config.monstros. Só dados (node: true), logo depois do config-vila.js. */
+(function () {
+  var R = window.Reino;
+  R.config = R.config || {};
+  R.config.monstros = {
+    precoBola: 50,            // cada MonsterBall custa 50 estrelas na loja dos Treinadores (pedido)
+    maxCarrinho: 10,          // quantas MonsterBalls cabem no carrinho de uma compra
+    chanceCaptura: 0.4,       // chance de a MonsterBall pegar o monstro (pedido: 40%)
+    alcanceBola: 56,          // distância (px) do monstro mais perto em que dá para jogar a bola
+    recargaBolaMs: 1500,      // espera entre duas bolas jogadas
+    bolaVooMs: 450,           // a bola voando até o monstro
+    bolaBalancoMs: 1100,      // a bola balançando no chão antes do "Pegou!" ou do "Escapou!"
+    distancia: 30,            // o monstro equipado anda atrás dela a esta distância (px), como o ET (viagem.companheiroDistancia)
+    ajuda: {                  // o monstro equipado ataca os inimigos da arena junto com ela
+      alcance: 72,            // distância (px) dela em que ele procura um inimigo para atacar
+      recargaMs: 1400,        // espera entre dois ataques dele
+      pulo: 22,               // até onde ele pula na direção do inimigo no ataque (px)
+      // o dano dele = fração do dano da espada dela (mínimo 1), pelo tipo do monstro capturado
+      fator: { facil: 0.3, medio: 0.4, dificil: 0.5, voador: 0.45, mosca: 0.45 },
+      bonusNivel: 0.005,      // +0,5% de fração por nível recomendado da arena de onde ele veio (Lua, Nv 35: +17,5%)
+    },
+  };
+})();

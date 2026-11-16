@@ -18,7 +18,7 @@ const BONUS = { espada: ['dano'], capacete: ['defesa', 'vida'], chapeu: ['sorte'
 
 test('vila: 20 peças por família, com a mistura de raridades, loja e preço', () => {
   const w = jogo(), R = w.Reino, C = R.ItensCatalogo, precos = R.config.vila.precos;
-  const loja = C.todos().filter((d) => d.loja);
+  const loja = C.todos().filter((d) => d.loja && d.loja !== 'treinadores');
   assert.strictEqual(loja.length, 100);
   Object.keys(FAMILIAS).forEach((t) => {
     const f = loja.filter((d) => d.tipo === t);
@@ -42,7 +42,7 @@ test('vila: ids e nomes únicos (com os das arenas), molde e ícone de cada peç
   const w = jogo(), R = w.Reino, C = R.ItensCatalogo;
   const nomes = Array.from(C.todos(), (d) => d.nome);   // Array.from: arrays do vm têm outro protótipo
   assert.deepStrictEqual(nomes.filter((n, i) => nomes.indexOf(n) !== i), [], 'nomes repetidos');
-  C.todos().filter((d) => d.loja).forEach((d) => {
+  C.todos().filter((d) => d.loja && d.loja !== 'treinadores').forEach((d) => {
     const m = R.VESTES[d.id], ic = w.ICONES['item:' + d.id];
     assert.ok(m && m.paleta, d.id + ' sem molde');
     assert.strictEqual(d.icone, 'item:' + d.id);
@@ -68,6 +68,6 @@ test('vila: ids e nomes únicos (com os das arenas), molde e ícone de cada peç
     }
   });
   // forma e cor: duas peças da mesma família nunca têm o mesmo ícone
-  const desenhos = C.todos().filter((d) => d.loja).map((d) => JSON.stringify(w.ICONES['item:' + d.id].d) + JSON.stringify(w.ICONES['item:' + d.id].p));
+  const desenhos = C.todos().filter((d) => d.loja && d.loja !== 'treinadores').map((d) => JSON.stringify(w.ICONES['item:' + d.id].d) + JSON.stringify(w.ICONES['item:' + d.id].p));
   assert.strictEqual(new Set(desenhos).size, 100);
 });

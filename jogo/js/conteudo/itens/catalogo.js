@@ -9,7 +9,7 @@
 (function () {
   var R = window.Reino;
   var ARENAS = ['bosque', 'pantano', 'gelo', 'dunas', 'cristal', 'vulcao'];   // as 6 arenas, na ordem do caminho
-  var TIPOS = ['espada', 'escudo', 'capacete', 'chapeu', 'armadura', 'botas', 'pocao', 'comida'];
+  var TIPOS = ['espada', 'escudo', 'capacete', 'chapeu', 'armadura', 'botas', 'pocao', 'comida', 'bola'];
   var SLOT = { espada: 'espada', escudo: 'escudo', capacete: 'cabeca', chapeu: 'cabeca', armadura: 'armadura', botas: 'botas' };
   var RARIDADES = ['comum', 'raro', 'epico', 'lendario'];
   var BONUS = ['dano', 'defesa', 'vida', 'velocidade', 'sorte'];
@@ -89,6 +89,10 @@
     peso: pesoPocao.pequena === undefined ? 85 : pesoPocao.pequena, icone: 'item:pocao-pequena' });
   registrar({ id: 'pocao-grande', nome: 'Poção de Vida Grande', tipo: 'pocao', cura: 'grande', arenas: ARENAS.slice(2),
     peso: pesoPocao.grande === undefined ? 15 : pesoPocao.grande, icone: 'item:pocao-grande' });
+
+  // a MonsterBall (monstros.md): só se compra nos Treinadores de Monstros da Vila, não cai de monstro nenhum
+  registrar({ id: 'bola-monster', nome: 'MonsterBall', tipo: 'bola', arenas: [], loja: 'treinadores', peso: 0,
+    preco: ((R.config && R.config.monstros) || {}).precoBola || 50, icone: 'item:bola-monster' });
 
   // comidinhas do unicórnio: uma por comida da Pet Shop, com o nome, o ícone e o `fome` de lá (enche = 100)
   var pesoComida = cfg.pesoComida || {}, padrao = cfg.pesoComidaPadrao === undefined ? 15 : cfg.pesoComidaPadrao;
