@@ -63,7 +63,9 @@ test('itens: o vencido grava na hora; mochila cheia vai ao baú; estrelas també
   j.R.util.emit(j.R.EVENTOS.BOSQUE, { tipo: 'vencido', id: 'f1', fantasma: 'facil', arena: 'vulcao' });
   const ev = j.itensEv.pop();
   assert.strictEqual(ev.tipo, 'ganhou');
-  assert.ok(ev.id.endsWith('-dragao'), 'no Vulcão cai o conjunto do Dragão: ' + ev.id);
+  // equipamento do Vulcão: o conjunto do Dragão ou a Coroinha Brilhante (chapeu-coroa cai no Cristal e no Vulcão);
+  // antes só aceitava '-dragao' e falhava ao acaso quando o sorteio dava a coroa
+  assert.ok(j.R.ItensCatalogo.daArena('vulcao', 'equip').some((d) => d.id === ev.id), 'no Vulcão cai equipamento do Vulcão: ' + ev.id);
   assert.strictEqual(ev.arena, 'vulcao');
   assert.strictEqual(j.lido().itens[ev.uid].id, ev.id, 'não gravou na hora do drop');
   for (let i = 0; i < 19; i++) j.It.ganhar('espada-madeira');

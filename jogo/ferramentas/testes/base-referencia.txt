@@ -124,4 +124,5 @@
 # @ = treinadores: prédio na Vila, Kiara, MonsterBalls, campos monstros/monstroCompanheiro e bosques de dentro mais fortes
 # @ = treinadores: prédio na Vila, Kiara, MonsterBalls com trava de salas de Matemática, campos monstros/monstroCompanheiro e bosques de dentro mais fortes
 # @ = treinadores: números da Mini MonsterBall na config
+# @ = treinadores: números da Mini MonsterBall na config
 @
