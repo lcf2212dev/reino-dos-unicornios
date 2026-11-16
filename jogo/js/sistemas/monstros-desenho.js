@@ -34,6 +34,11 @@
     return SPR.bolaSuper || (SPR.bolaSuper = matriz(['.KKKKK.', 'KoooooK', 'KoloooK', 'KKKwKKK', 'KppppqK', 'KppppqK', '.KKKKK.'],
       { K: K, o: '#ffd34d', l: '#fff2a8', w: '#ffffff', p: '#9a6bff', q: '#6a3fc8' }));
   }
+  // a Mini: menor, verde em cima
+  function bolaMini() {
+    return SPR.bolaMini || (SPR.bolaMini = matriz(['.KKK.', 'KvvvK', 'KKwKK', 'KwwgK', '.KKK.'],
+      { K: K, v: '#5fd48a', w: '#ffffff', g: '#d8d0e8' }));
+  }
   function brilho() {
     return SPR.brilho || (SPR.brilho = matriz(['.y.', 'yoy', '.y.'], { y: C.ouro3, o: '#ffffff' }));
   }
@@ -117,7 +122,7 @@
     if (a && t - a.em < PULO_MS) p.sprite(estrela(), Math.round(a.x), Math.round(a.y - 8));
     var b = S.bola;
     if (!b) return;
-    var c = cfg(), dt = Date.now() - b.em, img = b.super ? bolaSuper() : bola();
+    var c = cfg(), dt = Date.now() - b.em, img = b.super ? bolaSuper() : b.mini ? bolaMini() : bola();
     if (!b.chegou) {
       var k = animar ? Math.min(1, dt / c.bolaVooMs) : 1;
       var x = b.x0 + (b.x - b.x0) * k, y = b.y0 + (b.y - 4 - b.y0) * k - Math.sin(Math.PI * k) * SALTO_BOLA;

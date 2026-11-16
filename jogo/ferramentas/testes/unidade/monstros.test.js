@@ -284,3 +284,29 @@ test('monstros: a Super MonsterBall pega sempre e gasta 1 Super (a comum fica)',
   j.ctx.Jogador.x = g.x + 10; j.ctx.Jogador.y = g.y;
   assert.strictEqual(M.podeJogar().ok, true);
 });
+
+test('monstros: a Mini MonsterBall (25 estrelas, 20%) gasta 1 Mini, usa chanceMini e volta como Mini', () => {
+  const j = jogo(), { M, It, R } = j;
+  const def = R.ItensCatalogo.def('bola-mini');
+  assert.deepStrictEqual([def.nome, def.tipo, def.loja, def.preco, def.icone], ['Mini MonsterBall', 'bola', 'treinadores', 25, 'item:bola-mini']);
+  assert.strictEqual(R.config.monstros.chanceMini, 0.2);
+  assert.strictEqual(R.config.monstros.libera.mini, 5);
+  const { f } = naArena(j, 'dunas');
+  It.ganhar('bola-monster'); It.ganhar('bola-mini');
+  R.config.monstros.chanceMini = 1; R.config.monstros.chanceCaptura = 0;   // a chance é a da Mini, não a da comum
+  assert.ok(M.jogar('mini'));
+  assert.deepStrictEqual([M.bolas('mini').length, M.bolas('comum').length], [0, 1]);
+  assert.strictEqual(R._monstros.bola.mini, true);
+  j.relogio.agora += R.config.monstros.bolaVooMs + 1; R._monstros.quadroBola();
+  assert.strictEqual(M.quantos('dunas-' + f.tipo), 1, 'pegou com a Mini');
+  // trocou de cena com a Mini no ar: volta uma Mini (não uma MonsterBall)
+  j.relogio.agora += R.config.monstros.bolaBalancoMs + R.config.monstros.recargaBolaMs + 2; R._monstros.quadroBola();
+  It.ganhar('bola-mini');
+  const g = j.R._bosqueCombate.estado.fantasmas.find((x) => x.estado === 'vagando');
+  j.ctx.Jogador.x = g.x + 10; j.ctx.Jogador.y = g.y;
+  assert.ok(M.jogar('mini'));
+  j.R.BosqueCombate.arena = () => null;   // saiu da arena
+  R._monstros.quadroBola();
+  assert.deepStrictEqual([M.bolas('mini').length, M.bolas('comum').length], [1, 1], 'a Mini voltou como Mini');
+});
+

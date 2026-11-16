@@ -16,6 +16,7 @@
     'fora-arena': 'Use a poção numa arena, quando a vida baixar.', 'vida-cheia': 'Sua vida já está cheia!',
     'sem-uni': 'Você ainda não tem um unicórnio.', cheia: 'Mochila cheia! Foi para o baú da casa.',
     bola: 'Jogue numa arena, perto de um monstro, para tentar pegar ele!',
+    'bola-mini': 'A Mini MonsterBall é pequenina: às vezes pega o monstro. Jogue numa arena, perto de um monstro.',
     'bola-super': 'A Super MonsterBall pega o monstro sempre! Jogue numa arena, perto de um monstro.', 'bola-usar': 'Use na arena, perto de um monstro: toque no botão da bola.',
   };
 

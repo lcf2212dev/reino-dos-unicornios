@@ -5,19 +5,20 @@
    Ao chegar (bolaVooMs): pegou → BosqueCombate.capturar (some sem XP, pergunta nem drop) e só então a captura se
    grava; escapou → ele é solto e a bola balança e abre (bolaBalancoMs). Sai o 'capturou' ou o 'escapou'
    (EVENTOS.MONSTROS; o aviso é do ui/monstros.js). Não chegou (trocou de cena) ou não deu para capturar: a bola volta
-   para a mochila ('voltou'), nada se perde. Duas bolas (`tipo`): 'comum' (bola-monster, chanceCaptura) e 'super'
-   (bola-super, chanceSuper: pega sempre). Acrescenta a Reino.Monstros: podeJogar(tipo?), jogar(tipo?), bolas(tipo?),
+   para a mochila ('voltou'), nada se perde. Três bolas (`tipo`): 'mini' (bola-mini, chanceMini), 'comum'
+   (bola-monster, chanceCaptura) e 'super' (bola-super, chanceSuper: pega sempre). Acrescenta a Reino.Monstros: podeJogar(tipo?), jogar(tipo?), bolas(tipo?),
    ITEM_BOLA. node: true. */
 (function () {
   var R = window.Reino;
   var S = R._monstros, M = R.Monstros;
   var ATIVOS = { vagando: 1, perseguindo: 1, voltando: 1, recuando: 1 };
   var proxima = 0;   // Date.now() a partir do qual pode jogar outra (a bola corre no relógio: virtual no modo congelado)
-  var ITEM = { comum: 'bola-monster', super: 'bola-super' };
+  var ITEM = { mini: 'bola-mini', comum: 'bola-monster', super: 'bola-super' };
   function cfg() { return R.config.monstros; }
-  function chance(tipo) { return tipo === 'super' ? cfg().chanceSuper : cfg().chanceCaptura; }
+  function chance(tipo) { return tipo === 'super' ? cfg().chanceSuper : tipo === 'mini' ? cfg().chanceMini : cfg().chanceCaptura; }
+  function tipoDe(t) { return ITEM[t] ? t : 'comum'; }
 
-  // os uids das bolas da mochila (só as da mochila se usam): de um tipo ('comum' | 'super') ou de todos
+  // os uids das bolas da mochila (só as da mochila se usam): de um tipo ('mini' | 'comum' | 'super') ou de todos
   function bolas(tipo) {
     var It = R.Itens, r = [];
     if (!It || !It.mochila) return r;
@@ -41,10 +42,10 @@
     return melhor;
   }
 
-  /** tipo 'comum' (padrão) | 'super' → { ok: true, alvo, arena, uid, tipo } | { ok: false, motivo: 'fora-arena' | 'parada' |
+  /** tipo 'mini' | 'comum' (padrão) | 'super' → { ok: true, alvo, arena, uid, tipo } | { ok: false, motivo: 'fora-arena' | 'parada' |
       'recarga' | 'sem-bola' | 'longe' } */
   function podeJogar(tipo) {
-    tipo = tipo === 'super' ? 'super' : 'comum';
+    tipo = tipoDe(tipo);
     var BC = R.BosqueCombate, arena = BC && BC.arena ? BC.arena() : null, nao = function (m) { return { ok: false, motivo: m }; };
     if (!arena) return nao('fora-arena');
     if (parada()) return nao('parada');
@@ -56,7 +57,7 @@
     return { ok: true, alvo: alvo, arena: arena, uid: uids[0], tipo: tipo };
   }
 
-  /** joga uma bola do tipo ('comum' padrão | 'super'): true se jogou (gastou 1 dela) */
+  /** joga uma bola do tipo ('mini' | 'comum' padrão | 'super'): true se jogou (gastou 1 dela) */
   function jogar(tipo) {
     var p = podeJogar(tipo);
     if (!p.ok) return false;
@@ -65,7 +66,7 @@
     var especie = p.arena + '-' + p.alvo.tipo, J = window.Jogador;
     var pegou = R.Itens.rolar('monstros:bola') < chance(p.tipo);
     R.BosqueCombate.prender(p.alvo.id);
-    S.bola = { alvo: p.alvo.id, tipo: p.alvo.tipo, arena: p.arena, especie: especie, pegou: pegou, super: p.tipo === 'super', em: Date.now(),
+    S.bola = { alvo: p.alvo.id, tipo: p.alvo.tipo, arena: p.arena, especie: especie, pegou: pegou, bola: p.tipo, super: p.tipo === 'super', mini: p.tipo === 'mini', em: Date.now(),
       x0: J.x, y0: J.y - 10, x: p.alvo.x, y: p.alvo.y, chegou: false };
     proxima = Date.now() + cfg().recargaBolaMs;
     if (R.Som) R.Som.tocar('toque');
@@ -76,7 +77,7 @@
   // a bola não pegou ninguém de verdade: volta para a mochila (gastou no jogar)
   function devolver(b) {
     if (R.BosqueCombate && R.BosqueCombate.soltar) R.BosqueCombate.soltar(b.alvo, b.arena);
-    R.Itens.ganhar(b.super ? ITEM.super : ITEM.comum);
+    R.Itens.ganhar(ITEM[b.bola] || ITEM.comum);
     b.pegou = false; b.voltou = true;
   }
   function fim() {

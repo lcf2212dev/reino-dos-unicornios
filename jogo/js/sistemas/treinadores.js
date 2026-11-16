@@ -1,10 +1,11 @@
 /* Treinadores de Monstros, na Vila Arco-Íris (docs/contratos/monstros.md): comprar MonsterBalls e Super MonsterBalls e
    a pergunta antes da conversa com a Treinadora Kiara (a mesma das lojas da Vila, vila.md §5). Reino.Treinadores:
-     ID, ID_SUPER          'bola-monster' e 'bola-super' (os itens, conteudo/itens/catalogo.js)
+     ID, ID_SUPER, ID_MINI 'bola-monster', 'bola-super' e 'bola-mini' (os itens, conteudo/itens/catalogo.js)
      ofertas()             [{ id, def, preco, chance, liberada, feitas, precisa }] das bolas que existem no catálogo,
-                           na ordem da loja (MonsterBall: config.monstros.precoBola / chanceCaptura; Super: precoSuper /
-                           chanceSuper). liberada = feitas ≥ precisa: salas feitas de config.monstros.libera.materia
-                           (Matemática do Dia a Dia) contra libera.bola (16) ou libera.super (32)
+                           na ordem da loja: Mini (config.monstros.precoMini / chanceMini), MonsterBall (precoBola /
+                           chanceCaptura) e Super (precoSuper / chanceSuper). liberada = feitas ≥ precisa: salas feitas
+                           de config.monstros.libera.materia (Matemática do Dia a Dia) contra libera.mini (5),
+                           libera.bola (16) ou libera.super (32)
      liberacao(id?)        { liberada, feitas, precisa } de uma bola
      preco(id?) chance(id?) o preço e a chance de uma bola (sem id: a MonsterBall)
      max()                 quantas de cada cabem numa compra (config.monstros.maxCarrinho)
@@ -17,7 +18,7 @@
    de DOM no carregamento. */
 (function () {
   var R = window.Reino, U = R.util;
-  var ID = 'bola-monster', ID_SUPER = 'bola-super';
+  var ID = 'bola-monster', ID_SUPER = 'bola-super', ID_MINI = 'bola-mini';
 
   function cfg() { return (R.config && R.config.monstros) || {}; }
   function P() { return R.Progresso; }
@@ -26,19 +27,23 @@
   function preco(id) {
     var d = def(id || ID), c = cfg();
     if (id === ID_SUPER) return numero(c.precoSuper, (d && d.preco) || 125);
+    if (id === ID_MINI) return numero(c.precoMini, (d && d.preco) || 25);
     return numero(c.precoBola, (d && d.preco) || 50);
   }
-  function chance(id) { return id === ID_SUPER ? numero(cfg().chanceSuper, 1) : numero(cfg().chanceCaptura, 0.4); }
+  function chance(id) {
+    if (id === ID_SUPER) return numero(cfg().chanceSuper, 1);
+    return id === ID_MINI ? numero(cfg().chanceMini, 0.2) : numero(cfg().chanceCaptura, 0.4);
+  }
   function max() { return cfg().maxCarrinho || 10; }
   // quantas salas da matéria de config.monstros.libera ela já fez, e quantas a bola pede (lido na hora: P.estado)
   function liberacao(id) {
-    var l = cfg().libera || {}, precisa = numero(id === ID_SUPER ? l.super : l.bola, 0);
+    var l = cfg().libera || {}, precisa = numero(id === ID_SUPER ? l.super : id === ID_MINI ? l.mini : l.bola, 0);
     var m = R.materia && R.materia(l.materia), Pr = P();
     var feitas = m && Pr && Pr.estado() && Pr.salasFeitas ? Pr.salasFeitas(m) : 0;
     return { liberada: feitas >= precisa, feitas: feitas, precisa: precisa };
   }
   function ofertas() {
-    return [ID, ID_SUPER].filter(function (id) { return !!def(id); })
+    return [ID_MINI, ID, ID_SUPER].filter(function (id) { return !!def(id); })
       .map(function (id) {
         var lb = liberacao(id);
         return { id: id, def: def(id), preco: preco(id), chance: chance(id), liberada: lb.liberada, feitas: lb.feitas, precisa: lb.precisa };
@@ -100,7 +105,7 @@
     return Promise.resolve(UI.telaTreinadores()).then(function () { return 'tchau'; });
   }
 
-  R.Treinadores = { ID: ID, ID_SUPER: ID_SUPER, ofertas: ofertas, liberacao: liberacao, preco: preco, chance: chance, max: max, tem: tem,
+  R.Treinadores = { ID: ID, ID_SUPER: ID_SUPER, ID_MINI: ID_MINI, ofertas: ofertas, liberacao: liberacao, preco: preco, chance: chance, max: max, tem: tem,
     total: total, comprar: comprar };
 
   R.registrarModulo({
@@ -108,7 +113,7 @@
     acoes: { treinadores: abrir },
     porteira: porteira,
     depurar: function () {
-      return { ofertas: ofertas().map(function (o) { return [o.id, o.preco, o.chance]; }), tem: P() && P().estado() ? [tem(ID), tem(ID_SUPER)] : null };
+      return { ofertas: ofertas().map(function (o) { return [o.id, o.preco, o.chance]; }), tem: P() && P().estado() ? [tem(ID_MINI), tem(ID), tem(ID_SUPER)] : null };
     },
   });
 })();

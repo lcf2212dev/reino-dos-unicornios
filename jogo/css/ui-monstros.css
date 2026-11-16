@@ -26,9 +26,13 @@
 /* a Super, logo acima da comum, com a borda dourada */
 .monstros-bola.monstros-super { bottom: calc(env(safe-area-inset-bottom, 0px) + 16px + var(--balao-altura, 0px) + 80px + 12px + 56px + 12px + 56px + 12px); }
 .monstros-super .btn-monstros-bola { border-color: var(--ouro); }
+/* a Mini, à esquerda da MonsterBall (mesma altura), com a borda azul */
+.monstros-bola.monstros-mini { right: calc(env(safe-area-inset-right, 0px) + 16px + 12px + 56px + 12px); }
+.monstros-mini .btn-monstros-bola { border-color: var(--azul); }
 @media (max-width: 480px) {
   .monstros-bola.monstros-super { bottom: calc(env(safe-area-inset-bottom, 0px) + 16px + var(--balao-altura, 0px) + 72px + 10px + 56px + 10px + 56px + 10px); }
   .monstros-bola { right: calc(env(safe-area-inset-right, 0px) + 16px + 8px); bottom: calc(env(safe-area-inset-bottom, 0px) + 16px + var(--balao-altura, 0px) + 72px + 10px + 56px + 10px); }
+  .monstros-bola.monstros-mini { right: calc(env(safe-area-inset-right, 0px) + 16px + 8px + 56px + 10px); }
 }
 
 /* a tela "Meus monstros" */

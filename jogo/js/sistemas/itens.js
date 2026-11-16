@@ -261,7 +261,7 @@
       if (!r.ok) return nao(r.motivo === 'cheio' || r.motivo === 'sem-uni' ? r.motivo : 'nao-usa');
       efeito = { tipo: 'comida', antes: r.antes, depois: r.depois };
     } else if (p.def.tipo === 'bola') {   // MonsterBall (monstros.md): só numa arena, perto de um monstro; quem joga é Monstros.jogar
-      var pode = R.Monstros && R.Monstros.podeJogar ? R.Monstros.podeJogar(p.id === 'bola-super' ? 'super' : 'comum') : { ok: false, motivo: 'fora-arena' };
+      var pode = R.Monstros && R.Monstros.podeJogar ? R.Monstros.podeJogar(p.id === 'bola-super' ? 'super' : p.id === 'bola-mini' ? 'mini' : 'comum') : { ok: false, motivo: 'fora-arena' };
       if (!pode.ok) return nao(pode.motivo === 'fora-arena' ? 'fora-arena' : 'longe');
       efeito = { tipo: 'bola', alvo: pode.alvo.id };
     } else return nao('nao-usa');

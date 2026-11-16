@@ -7,11 +7,14 @@
     precoBola: 50,            // cada MonsterBall custa 50 estrelas na loja dos Treinadores (pedido)
     maxCarrinho: 10,          // quantas MonsterBalls cabem no carrinho de uma compra
     chanceCaptura: 0.4,       // chance de a MonsterBall pegar o monstro (pedido: 40%)
+    precoMini: 25,            // cada Mini MonsterBall custa 25 estrelas (pedido do Leandro, 16/11)
+    chanceMini: 0.2,          // chance de a Mini MonsterBall pegar o monstro (pedido: 20%)
     precoSuper: 125,          // cada Super MonsterBall custa 125 estrelas (pedido do Leandro, 16/11)
     chanceSuper: 1,           // chance de a Super MonsterBall pegar o monstro (pedido: 100%, pega sempre)
     // a loja só vende cada bola depois de tantas salas feitas desta matéria (pedido do Leandro, 16/11: a MonsterBall com
-    // 16 salas de Matemática, a Super com as 32, todas as da Matemática do Dia a Dia). Jogar a bola que já tem: sempre pode
-    libera: { materia: 'matematica4', bola: 16, super: 32 },
+    // 16 salas de Matemática, a Super com as 32, todas as da Matemática do Dia a Dia; a Mini com 5). Jogar a bola que já
+    // tem: sempre pode
+    libera: { materia: 'matematica4', mini: 5, bola: 16, super: 32 },
     alcanceBola: 56,          // distância (px) do monstro mais perto em que dá para jogar a bola
     recargaBolaMs: 1500,      // espera entre duas bolas jogadas
     bolaVooMs: 450,           // a bola voando até o monstro

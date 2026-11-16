@@ -82,3 +82,10 @@ A Kiara só vende cada bola depois de tantas salas feitas de `config.monstros.li
 `Treinadores.liberacao(id) → { liberada, feitas, precisa }` (contado na hora por `P.salasFeitas`, nada no save);
 `ofertas()` traz os três campos; `comprar` recusa com `motivo: 'trancada'`. Cartão trancado: desenho `--apagado`, sem
 − e +, "Abre com N salas de Matemática feitas. Você fez M." Jogar uma bola que ela já tem não tem trava.
+
+## 8. Mini MonsterBall
+Item `bola-mini` "Mini MonsterBall" (tipo `bola`, loja `treinadores`, ícone `item:bola-mini`): `config.monstros.precoMini`
+(25), `chanceMini` (0,2) e `libera.mini` (5 salas). Na loja é o primeiro cartão (`Treinadores.ID_MINI`; começa com 1
+quando a MonsterBall ainda está trancada). Na arena, `Monstros.podeJogar('mini')`/`jogar('mini')`; botão
+`monstros-mini` à esquerda do da MonsterBall, só com Mini na Mochila; a bola que volta (`'voltou'`) volta do mesmo tipo.
+

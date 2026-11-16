@@ -72,3 +72,8 @@ Super MonsterBall depois de completar as 32 salas de matemática."
 A matéria é a Matemática do Dia a Dia (`matematica4`, 32 salas). `config.monstros.libera: { materia, bola: 16, super: 32 }`.
 Na loja, a bola trancada fica com o cartão apagado: "Abre com 16 salas de Matemática feitas. Você fez N." Jogar a bola
 que ela já tem continua livre. (decidido pelo Claude)
+
+# Acréscimo 3 (pedido do Leandro, mesmo dia)
+"Adicione uma Mini MonsterBall, que desbloqueia com 5 salas de matemática feitas, custa 25 estrelas e têm 20% de chance."
+Item `bola-mini` (`config.monstros.precoMini` 25, `chanceMini` 0,2, `libera.mini` 5). Na loja, o primeiro cartão (borda
+azul); na arena, um botão à esquerda do da MonsterBall, só quando ela tem Mini na mochila. (decidido pelo Claude)

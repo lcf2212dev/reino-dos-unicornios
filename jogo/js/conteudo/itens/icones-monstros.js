@@ -38,4 +38,23 @@ Reino.registrarIcones({
     '.....kkkkkk.....',
     '................',
   ] },
+  // a Mini: menor, verde em cima e branca embaixo
+  'item:bola-mini': { n: 'mini monsterball', p: { k: '#3a2446', v: '#5fd48a', e: '#2f9a5a', l: '#c4f5d4', w: '#ffffff', g: '#d8d0e8', b: '#fff6a8' }, d: [
+    '................',
+    '................',
+    '................',
+    '......kkkk......',
+    '....kkvvvvkk....',
+    '...kvllvvvvek...',
+    '...kvlvvvvvek...',
+    '..kvvvkkkkvvek..',
+    '..kkkkkwbkkkkk..',
+    '..kwwwkkkkwwgk..',
+    '...kwwwwwwwgk...',
+    '...kwwwwwwggk...',
+    '....kkggggkk....',
+    '......kkkk......',
+    '................',
+    '................',
+  ] },
 });

@@ -96,6 +96,9 @@
   // a Super MonsterBall: pega sempre (config.monstros.chanceSuper), também só nos Treinadores
   registrar({ id: 'bola-super', nome: 'Super MonsterBall', tipo: 'bola', arenas: [], loja: 'treinadores', peso: 0,
     preco: ((R.config && R.config.monstros) || {}).precoSuper || 125, icone: 'item:bola-super' });
+  // a Mini MonsterBall: a mais barata, a primeira que abre (config.monstros.chanceMini), também só nos Treinadores
+  registrar({ id: 'bola-mini', nome: 'Mini MonsterBall', tipo: 'bola', arenas: [], loja: 'treinadores', peso: 0,
+    preco: ((R.config && R.config.monstros) || {}).precoMini || 25, icone: 'item:bola-mini' });
 
   // comidinhas do unicórnio: uma por comida da Pet Shop, com o nome, o ícone e o `fome` de lá (enche = 100)
   var pesoComida = cfg.pesoComida || {}, padrao = cfg.pesoComidaPadrao === undefined ? 15 : cfg.pesoComidaPadrao;

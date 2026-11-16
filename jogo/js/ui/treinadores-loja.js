@@ -1,8 +1,8 @@
 /* Treinadores de Monstros: a loja das MonsterBalls da Treinadora Kiara (docs/contratos/monstros.md).
    UI.telaTreinadores() → Promise (resolve ao fechar). As regras são do Reino.Treinadores (sistemas/treinadores.js).
-   Topo: o saldo de estrelas. No meio, um cartão por bola de Reino.Treinadores.ofertas() (MonsterBall: "Chance de pegar:
-   40%"; Super MonsterBall: "Pega sempre: 100%"), com o ícone, o preço, quantas ela já tem e − e + (de 0 até
-   config.monstros.maxCarrinho; a MonsterBall começa em 1). Bola ainda trancada (poucas salas de Matemática feitas,
+   Topo: o saldo de estrelas. No meio, um cartão por bola de Reino.Treinadores.ofertas() (Mini: "Chance de pegar: 20%";
+   MonsterBall: "Chance de pegar: 40%"; Super MonsterBall: "Pega sempre: 100%"), com o ícone, o preço, quantas ela já tem e − e + (de 0 até
+   config.monstros.maxCarrinho; começa em 1 a MonsterBall, ou a Mini quando só ela está aberta). Bola ainda trancada (poucas salas de Matemática feitas,
    Treinadores.liberacao): o cartão apagado diz quantas salas abrem a bola e quantas ela já fez, sem − e +. Rodapé: o total somado e "Comprar (N ⭐)", que pergunta
    antes (UI.confirmar com gasta) e compra tudo ou nada; sem saldo, "Faltam N estrelas!" e o botão apagado. Com a tela
    dos monstros (UI.telaMonstros, da outra frente), o botão "Meus monstros" abre por cima. Só texto na tela (sem voz
@@ -36,7 +36,11 @@
       var J = window.Jogador;
       if (J && J.parar) J.parar();
       var ofs = Tr.ofertas(), qtd = {}, ocupado = false, gravando = false, acabou = false, cartoes = {};
-      function zerar() { ofs.forEach(function (o, i) { qtd[o.id] = i === 0 && o.liberada ? 1 : 0; }); }
+      // começa com 1 na MonsterBall (aberta) ou, antes dela, na primeira bola aberta (a Mini)
+      function zerar() {
+        var bola = ofs.filter(function (o) { return o.id === Tr.ID && o.liberada; })[0] || ofs.filter(function (o) { return o.liberada; })[0];
+        ofs.forEach(function (o) { qtd[o.id] = bola && o.id === bola.id ? 1 : 0; });
+      }
       zerar();
       var pn = UI.painel('treinadores', 'Treinadores de Monstros', { icone: 'item:bola-monster', aoFechar: function () { fim(); } });
       pn.tela.classList.add('tela-vila-loja-treinadores');
@@ -60,7 +64,7 @@
         menos.addEventListener('click', function () { por(o.id, -1); });
         mais.addEventListener('click', function () { por(o.id, 1); });
         var tranca = o.liberada ? null : el('span.treinadores-tranca', 'Abre com ' + o.precisa + ' salas de Matemática feitas. Você fez ' + o.feitas + '.');
-        var cartao = el('div.vila-cartao.treinadores-cartao' + (o.chance >= 1 ? '.treinadores-super' : '') + (o.liberada ? '' : '.treinadores-trancada'),
+        var cartao = el('div.vila-cartao.treinadores-cartao' + (o.chance >= 1 ? '.treinadores-super' : o.id === Tr.ID_MINI ? '.treinadores-mini' : '') + (o.liberada ? '' : '.treinadores-trancada'),
           { 'data-id': o.id, 'aria-disabled': o.liberada ? null : 'true' },
           el('span.vila-cartao-desenho', icone(o.def.icone || 'item:' + o.id, 48)),
           el('b.vila-cartao-nome', U.colado(o.def.nome)),

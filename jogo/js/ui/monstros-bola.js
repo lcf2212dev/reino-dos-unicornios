@@ -1,7 +1,8 @@
-/* As bolas na luta (docs/contratos/monstros.md §4): dois botões rápidos redondos, fixos embaixo à direita, acima do da
+/* As bolas na luta (docs/contratos/monstros.md §4): três botões rápidos redondos, fixos embaixo à direita, acima do da
    poção (ui/itens-pocao.js), em toda arena:
    - a MonsterBall: só para quem já teve alguma bola ou algum monstro (assim as fotos do e2e, sem bola, não mudam);
-   - a Super MonsterBall, logo acima: só quando há Super na Mochila.
+   - a Super MonsterBall, logo acima: só quando há Super na Mochila;
+   - a Mini MonsterBall, à esquerda da MonsterBall: só quando há Mini na Mochila.
    Cada um mostra o ícone e quantas há na Mochila. Tocar (ou Enter/Espaço com o foco nele) joga uma daquele tipo no
    monstro mais perto (Reino.Monstros.jogar(tipo)). Apagado (aria-disabled, continua focável) sem bola, sem monstro perto
    (até config.monstros.alcanceBola), com a bola no ar, na recarga ou com a luta parada; tocar apagado explica no aviso
@@ -13,6 +14,7 @@
     longe: 'Chegue mais perto de um monstro para jogar a MonsterBall.' };
   var TIPOS = {
     comum: { id: 'monstros-bola', classe: 'monstros-bola', icone: 'item:bola-monster', nome: 'MonsterBall', ordem: 9 },
+    mini: { id: 'monstros-mini', classe: 'monstros-bola.monstros-mini', icone: 'item:bola-mini', nome: 'Mini MonsterBall', ordem: 11 },
     super: { id: 'monstros-super', classe: 'monstros-bola.monstros-super', icone: 'item:bola-super', nome: 'Super MonsterBall', ordem: 10 },
   };
 
@@ -24,7 +26,7 @@
     if (!est) return false;
     if (M && M.capturados().length) return true;
     var it = est.itens || {};
-    return Object.keys(it).some(function (k) { return it[k] && (it[k].id === 'bola-monster' || it[k].id === 'bola-super'); });
+    return Object.keys(it).some(function (k) { return it[k] && /^bola-(monster|super|mini)$/.test(it[k].id); });
   }
 
   function botaoDe(tipo) {
@@ -60,7 +62,7 @@
       if (!caixa || !hud) return;
       if (caixa.parentNode !== hud) hud.appendChild(caixa);
       var M = Reino.Monstros, n = naArena() && M ? M.bolas(tipo).length : 0;
-      var mostra = naArena() && (tipo === 'super' ? n > 0 : conhece());
+      var mostra = naArena() && (tipo === 'comum' ? conhece() : n > 0);
       if (visto.mostra !== mostra) { visto.mostra = mostra; caixa.hidden = !mostra; }
       if (!mostra) return;
       var b = caixa.querySelector('button'), apagado = !M.podeJogar(tipo).ok;
@@ -81,4 +83,5 @@
   }
   botaoDe('comum');
   botaoDe('super');
+  botaoDe('mini');
 })();
