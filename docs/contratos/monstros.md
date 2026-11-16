@@ -76,16 +76,16 @@ Reino.UI.telaMonstros() → P        Reino.UI.telaTreinadores(npc) → P
 Força dos 3 bosques de dentro: `config.arenas.orvalho|neblina|lua`
 (`arenas.md` §8).
 
-## 7. Trava da loja
-A Kiara só vende cada bola depois de tantas salas feitas de `config.monstros.libera.materia` (Matemática do Dia a Dia,
-`matematica4`): `libera.bola` (16) para a MonsterBall e `libera.super` (32) para a Super (pedido do Leandro, 16/11).
-`Treinadores.liberacao(id) → { liberada, feitas, precisa }` (contado na hora por `P.salasFeitas`, nada no save);
-`ofertas()` traz os três campos; `comprar` recusa com `motivo: 'trancada'`. Cartão trancado: desenho `--apagado`, sem
-− e +, "Abre com N salas de Matemática feitas. Você fez M." Jogar uma bola que ela já tem não tem trava.
+## 7. Desconto da loja
+As bolas se compram sempre (pedido do Leandro, 16/11: "não precisa condicionar às salas"). As salas feitas de
+`config.monstros.desconto.materia` (Matemática do Dia a Dia, `matematica4`) dão desconto em todas: a maior faixa de
+`desconto.faixas` alcançada (5 salas → 10%, 16 → 25%, 32 → 50%); preço = `max(1, round(cheio × (1 − desconto)))`.
+`Treinadores.desconto() → { desconto, feitas, proxima: { salas, desconto } | null }` (contado na hora por
+`P.salasFeitas`, nada no save); `ofertas()` traz `preco` (com desconto) e `cheio`. Na loja: o preço cheio riscado ao
+lado e, abaixo do saldo, "Desconto de N%: você fez M salas de Matemática! Com K salas, X% de desconto."
 
 ## 8. Mini MonsterBall
 Item `bola-mini` "Mini MonsterBall" (tipo `bola`, loja `treinadores`, ícone `item:bola-mini`): `config.monstros.precoMini`
-(25), `chanceMini` (0,2) e `libera.mini` (5 salas). Na loja é o primeiro cartão (`Treinadores.ID_MINI`; começa com 1
-quando a MonsterBall ainda está trancada). Na arena, `Monstros.podeJogar('mini')`/`jogar('mini')`; botão
+(25) e `chanceMini` (0,2). Na loja é o primeiro cartão (`Treinadores.ID_MINI`). Na arena, `Monstros.podeJogar('mini')`/`jogar('mini')`; botão
 `monstros-mini` à esquerda do da MonsterBall, só com Mini na Mochila; a bola que volta (`'voltou'`) volta do mesmo tipo.
 

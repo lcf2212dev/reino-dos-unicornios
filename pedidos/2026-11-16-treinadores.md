@@ -77,3 +77,10 @@ que ela já tem continua livre. (decidido pelo Claude)
 "Adicione uma Mini MonsterBall, que desbloqueia com 5 salas de matemática feitas, custa 25 estrelas e têm 20% de chance."
 Item `bola-mini` (`config.monstros.precoMini` 25, `chanceMini` 0,2, `libera.mini` 5). Na loja, o primeiro cartão (borda
 azul); na arena, um botão à esquerda do da MonsterBall, só quando ela tem Mini na mochila. (decidido pelo Claude)
+
+# Acréscimo 4 (pedido do Leandro, mesmo dia)
+"não precisa condicionar as pokebolas às salas. porém se fizer 5 salas, elas ficam 10% mais baratas, se fizer 16 ficam
+25% mais baratas e se fizer 32 ficam 50% mais baratas."
+Sem trava: as três bolas sempre à venda. `config.monstros.desconto` (Matemática do Dia a Dia): 5 → 10%, 16 → 25%,
+32 → 50%, preço arredondado (Mini 25/23/19/13, MonsterBall 50/45/38/25, Super 125/113/94/63). Na loja, o preço cheio
+riscado e a frase do desconto de agora e do próximo. (decidido pelo Claude: arredondar para o inteiro mais perto)

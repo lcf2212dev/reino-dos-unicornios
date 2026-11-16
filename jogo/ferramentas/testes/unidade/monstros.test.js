@@ -290,7 +290,7 @@ test('monstros: a Mini MonsterBall (25 estrelas, 20%) gasta 1 Mini, usa chanceMi
   const def = R.ItensCatalogo.def('bola-mini');
   assert.deepStrictEqual([def.nome, def.tipo, def.loja, def.preco, def.icone], ['Mini MonsterBall', 'bola', 'treinadores', 25, 'item:bola-mini']);
   assert.strictEqual(R.config.monstros.chanceMini, 0.2);
-  assert.strictEqual(R.config.monstros.libera.mini, 5);
+  assert.strictEqual(JSON.stringify(R.config.monstros.desconto.faixas.map((f) => [f.salas, f.desconto])), '[[5,0.1],[16,0.25],[32,0.5]]');
   const { f } = naArena(j, 'dunas');
   It.ganhar('bola-monster'); It.ganhar('bola-mini');
   R.config.monstros.chanceMini = 1; R.config.monstros.chanceCaptura = 0;   // a chance é a da Mini, não a da comum

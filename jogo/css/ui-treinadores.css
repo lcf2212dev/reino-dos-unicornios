@@ -8,8 +8,8 @@
 .treinadores-super { border-color: var(--ouro); background: var(--ouro-claro); }
 /* a Mini: a borda azul */
 .treinadores-mini { border-color: var(--azul); }
-.treinadores-trancada .vila-cartao-desenho { filter: var(--apagado); }
-.treinadores-tranca { font-size: var(--texto-aux); color: var(--tinta-suave); margin-top: 6px; }
+.treinadores-cheio { margin-left: 8px; color: var(--tinta-suave); font-size: var(--texto-aux); text-decoration: line-through; text-decoration-thickness: 2px; text-decoration-color: var(--erro); }
+.treinadores-desconto { text-align: center; font-size: var(--texto-aux); color: var(--tinta-suave); margin: 0 0 10px; }
 .treinadores-tem { font-size: var(--texto-aux); color: var(--tinta-suave); }
 .treinadores-escolha { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 6px; }
 .treinadores-escolha .btn-icone { width: 48px; height: 48px; min-width: 48px; font-size: var(--texto); }

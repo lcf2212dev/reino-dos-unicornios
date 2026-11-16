@@ -11,10 +11,9 @@
     chanceMini: 0.2,          // chance de a Mini MonsterBall pegar o monstro (pedido: 20%)
     precoSuper: 125,          // cada Super MonsterBall custa 125 estrelas (pedido do Leandro, 16/11)
     chanceSuper: 1,           // chance de a Super MonsterBall pegar o monstro (pedido: 100%, pega sempre)
-    // a loja só vende cada bola depois de tantas salas feitas desta matéria (pedido do Leandro, 16/11: a MonsterBall com
-    // 16 salas de Matemática, a Super com as 32, todas as da Matemática do Dia a Dia; a Mini com 5). Jogar a bola que já
-    // tem: sempre pode
-    libera: { materia: 'matematica4', mini: 5, bola: 16, super: 32 },
+    // desconto nas bolas pelas salas feitas desta matéria (pedido do Leandro, 16/11: a Matemática do Dia a Dia): com
+    // 5 salas, 10% mais baratas; com 16, 25%; com as 32, 50%. Vale a maior faixa alcançada; o preço arredonda (mínimo 1)
+    desconto: { materia: 'matematica4', faixas: [{ salas: 5, desconto: 0.1 }, { salas: 16, desconto: 0.25 }, { salas: 32, desconto: 0.5 }] },
     alcanceBola: 56,          // distância (px) do monstro mais perto em que dá para jogar a bola
     recargaBolaMs: 1500,      // espera entre duas bolas jogadas
     bolaVooMs: 450,           // a bola voando até o monstro

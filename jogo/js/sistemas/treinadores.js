@@ -1,18 +1,18 @@
 /* Treinadores de Monstros, na Vila Arco-Íris (docs/contratos/monstros.md): comprar MonsterBalls e Super MonsterBalls e
    a pergunta antes da conversa com a Treinadora Kiara (a mesma das lojas da Vila, vila.md §5). Reino.Treinadores:
      ID, ID_SUPER, ID_MINI 'bola-monster', 'bola-super' e 'bola-mini' (os itens, conteudo/itens/catalogo.js)
-     ofertas()             [{ id, def, preco, chance, liberada, feitas, precisa }] das bolas que existem no catálogo,
-                           na ordem da loja: Mini (config.monstros.precoMini / chanceMini), MonsterBall (precoBola /
-                           chanceCaptura) e Super (precoSuper / chanceSuper). liberada = feitas ≥ precisa: salas feitas
-                           de config.monstros.libera.materia (Matemática do Dia a Dia) contra libera.mini (5),
-                           libera.bola (16) ou libera.super (32)
-     liberacao(id?)        { liberada, feitas, precisa } de uma bola
-     preco(id?) chance(id?) o preço e a chance de uma bola (sem id: a MonsterBall)
+     ofertas()             [{ id, def, preco, cheio, chance }] das bolas que existem no catálogo, na ordem da loja: Mini
+                           (config.monstros.precoMini / chanceMini), MonsterBall (precoBola / chanceCaptura) e Super
+                           (precoSuper / chanceSuper); preco = cheio com o desconto de agora
+     desconto()            { desconto, feitas, proxima: { salas, desconto } | null }: salas feitas de
+                           config.monstros.desconto.materia (Matemática do Dia a Dia) contra as faixas (5 → 10%,
+                           16 → 25%, 32 → 50%); lido na hora (P.salasFeitas), nada no save
+     preco(id?) cheio(id?) chance(id?) o preço com desconto, o preço cheio e a chance de uma bola (sem id: a MonsterBall)
      max()                 quantas de cada cabem numa compra (config.monstros.maxCarrinho)
      tem(id?)              quantas daquela bola ela tem (mochila e baú)
      total(itens)          o preço de [{ id, qtd }] (0 se algo não fecha); um número n = n MonsterBalls
      comprar(itens)        tudo ou nada: confere o saldo, gasta e dá as bolas (Itens.ganhar; mochila cheia, o baú)
-                           → { ok, total, motivo?: 'sem-save' | 'itens' | 'trancada' | 'saldo', falta?, ganhos? }
+                           → { ok, total, motivo?: 'sem-save' | 'itens' | 'saldo', falta?, ganhos? }
    Módulo 'treinadores': porteira(npc) (NPC com a ação 'treinadores' → UI.perguntaVila) e a ação 'treinadores' (abre
    UI.telaTreinadores e resolve 'tchau'). Nada novo no save (as bolas são itens, o campo `itens`). node: true: nada
    de DOM no carregamento. */
@@ -24,7 +24,7 @@
   function P() { return R.Progresso; }
   function def(id) { return R.ItensCatalogo ? R.ItensCatalogo.def(id) : null; }
   function numero(v, padrao) { return typeof v === 'number' && isFinite(v) ? v : padrao; }
-  function preco(id) {
+  function cheio(id) {
     var d = def(id || ID), c = cfg();
     if (id === ID_SUPER) return numero(c.precoSuper, (d && d.preco) || 125);
     if (id === ID_MINI) return numero(c.precoMini, (d && d.preco) || 25);
@@ -35,19 +35,25 @@
     return id === ID_MINI ? numero(cfg().chanceMini, 0.2) : numero(cfg().chanceCaptura, 0.4);
   }
   function max() { return cfg().maxCarrinho || 10; }
-  // quantas salas da matéria de config.monstros.libera ela já fez, e quantas a bola pede (lido na hora: P.estado)
-  function liberacao(id) {
-    var l = cfg().libera || {}, precisa = numero(id === ID_SUPER ? l.super : id === ID_MINI ? l.mini : l.bola, 0);
-    var m = R.materia && R.materia(l.materia), Pr = P();
-    var feitas = m && Pr && Pr.estado() && Pr.salasFeitas ? Pr.salasFeitas(m) : 0;
-    return { liberada: feitas >= precisa, feitas: feitas, precisa: precisa };
+  // o desconto de agora: a maior faixa de config.monstros.desconto que as salas feitas da matéria alcançam (lido na hora)
+  function desconto() {
+    var d = cfg().desconto || {}, faixas = (d.faixas || []).slice().sort(function (a, b) { return a.salas - b.salas; });
+    var m = R.materia && R.materia(d.materia), Pr = P(), feitas = 0;
+    try { feitas = m && Pr && Pr.estado() && Pr.salasFeitas ? Pr.salasFeitas(m) : 0; } catch (e) { feitas = 0; }
+    var agora = 0, proxima = null;
+    faixas.forEach(function (f) {
+      if (feitas >= f.salas) agora = Math.max(agora, numero(f.desconto, 0));
+      else if (!proxima) proxima = { salas: f.salas, desconto: f.desconto };
+    });
+    return { desconto: Math.min(1, Math.max(0, agora)), feitas: feitas, proxima: proxima };
+  }
+  function preco(id) {
+    var c = cheio(id), d = desconto().desconto;
+    return d ? Math.max(1, Math.round(c * (1 - d))) : c;
   }
   function ofertas() {
     return [ID_MINI, ID, ID_SUPER].filter(function (id) { return !!def(id); })
-      .map(function (id) {
-        var lb = liberacao(id);
-        return { id: id, def: def(id), preco: preco(id), chance: chance(id), liberada: lb.liberada, feitas: lb.feitas, precisa: lb.precisa };
-      });
+      .map(function (id) { return { id: id, def: def(id), preco: preco(id), cheio: cheio(id), chance: chance(id) }; });
   }
   function tem(id) {
     var It = R.Itens, alvo = id || ID;
@@ -76,7 +82,6 @@
     var l = conferir(itens);
     if (!l || !(R.Itens && R.Itens.ganhar)) return { ok: false, motivo: 'itens', total: 0 };
     var t = soma(l), saldo = Pr.estrelas();
-    if (l.some(function (x) { return !x.oferta.liberada; })) return { ok: false, motivo: 'trancada', total: t };
     if (saldo < t) return { ok: false, motivo: 'saldo', total: t, falta: t - saldo };
     if (!Pr.gastarEstrelas(t)) return { ok: false, motivo: 'saldo', total: t, falta: t - Pr.estrelas() };
     var ganhos = [];
@@ -105,7 +110,7 @@
     return Promise.resolve(UI.telaTreinadores()).then(function () { return 'tchau'; });
   }
 
-  R.Treinadores = { ID: ID, ID_SUPER: ID_SUPER, ID_MINI: ID_MINI, ofertas: ofertas, liberacao: liberacao, preco: preco, chance: chance, max: max, tem: tem,
+  R.Treinadores = { ID: ID, ID_SUPER: ID_SUPER, ID_MINI: ID_MINI, ofertas: ofertas, desconto: desconto, cheio: cheio, preco: preco, chance: chance, max: max, tem: tem,
     total: total, comprar: comprar };
 
   R.registrarModulo({
