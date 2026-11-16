@@ -577,6 +577,11 @@
    "voz": "pt-BR-AntonioNeural",
    "velocidade": "+10%",
    "tom": "-18Hz"
+  },
+  "npc-kiara": {
+   "voz": "en-US-AvaMultilingualNeural",
+   "velocidade": "+6%",
+   "tom": "+8Hz"
   }
  },
  "falas": [
@@ -70197,6 +70202,78 @@
     "interior-bosque"
    ],
    "fala": "Um elmo para a cabeça."
+  },
+  {
+   "chave": "c6e6bc9714",
+   "voz": "npc-kiara",
+   "texto": "Oi, eu sou a Treinadora Kiara!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Oi, eu sou a Treinadora Kiara!"
+  },
+  {
+   "chave": "ea26788bz",
+   "voz": "npc-kiara",
+   "texto": "Eu cuido dos monstrinhos.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Eu cuido dos monstrinhos."
+  },
+  {
+   "chave": "f224166fv",
+   "voz": "npc-kiara",
+   "texto": "Quer uma MonsterBall?",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Quer uma MonsterBall?"
+  },
+  {
+   "chave": "450f9096w",
+   "voz": "npc-kiara",
+   "texto": "Boa sorte na aventura!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Boa sorte na aventura!"
+  },
+  {
+   "chave": "ffac7a7110",
+   "voz": "narradora",
+   "texto": "Bolas para pegar monstros!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Bolas para pegar monstros!"
+  },
+  {
+   "chave": "1422924fz",
+   "voz": "narradora",
+   "texto": "Monstrinhos bem cuidados.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Monstrinhos bem cuidados."
+  },
+  {
+   "chave": "99d97e0by",
+   "voz": "narradora",
+   "texto": "Uma MonsterBall gigante!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Uma MonsterBall gigante!"
+  },
+  {
+   "chave": "a268ac2d11",
+   "voz": "narradora",
+   "texto": "Aqui se treina com carinho.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Aqui se treina com carinho."
   },
   {
    "chave": "7c425675u",
