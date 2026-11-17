@@ -18,7 +18,7 @@
     comeco: 'Comece na bolinha verde e siga a setinha.',
     longe: 'Comece na bolinha verde!',
     contra: 'Por aí não! Siga a setinha.',
-    solto: 'Levante o dedo e comece na bolinha verde.',
+    solto: 'Ops! Comece de novo na bolinha verde.',
     palavra: 'Muito bem!',
     frase: 'Frase pronta!',
     teclado: 'Escreva com o dedo ou com o mouse.',
@@ -197,11 +197,15 @@
         }
         return -1;
       }
-      // onde vão as setinhas: com um bico logo à frente, só uma, bem antes dele e apontando para ele (vá até lá; a de
-      // depois do bico cairia em cima dela no vai-e-volta do t, do i e do m); sem bico, duas
+      // onde vão as setinhas: com um bico logo à frente, só uma (no vai-e-volta do t, do i e do m, duas cairiam uma em
+      // cima da outra): longe do bico, bem antes dele e apontando para ele (vá até lá); perto, depois dele, para onde
+      // virar, a pelo menos 0,35 da bolinha (senão fica debaixo dela); sem bico, duas
       function lugaresDasSetas(tr, k) {
         var b = bico(tr, k, 0.7);
-        if (b > 0) return tr.s[b] - tr.s[k] > 0.12 ? [indice(tr, k, tr.s[b] - tr.s[k] - 0.06)] : [indice(tr, b, 0.3)];
+        if (b > 0) {
+          var falta = tr.s[b] - tr.s[k];
+          return falta > 0.35 ? [indice(tr, k, falta - 0.06)] : [indice(tr, b, Math.max(0.3, falta + 0.35))];
+        }
         return [indice(tr, k, 0.38), indice(tr, k, 0.8)];
       }
       function desenhar() {
@@ -248,12 +252,8 @@
         dizer(DICAS[qual]);
         if (t - ultimoAviso > 900) { R.Som.tocar('toque'); ultimoAviso = t; }
       }
-      // a tolerância do dedo em x-altura: a do config, mas nunca menos que N px da tela (no celular a letra é menor)
-      function opDedo() {
-        var pxPorX = L.E * cv.getBoundingClientRect().width / L.w || L.E * 2;
-        return { tol: Math.min(cfg.toleranciaMax || 0.38, Math.max(cfg.tolerancia || C.TOL, (cfg.toleranciaPx || 14) / pxPorX)),
-          pegar: Math.max(cfg.pegar || C.PEGAR, (cfg.pegarPx || 22) / pxPorX) };
-      }
+      // a op do dedo pelo tamanho da letra na tela (Cursiva.opTela: tolerância, toque inicial e passada em px)
+      function opDedo() { return C.opTela(L.E * cv.getBoundingClientRect().width / L.w || L.E * 2); }
       cv.addEventListener('pointerdown', function (e) {
         if (dedo || est.pronto || trocando || !L || (e.button && e.button > 0)) return;
         var t = tracoAtual(), u = unid(e);

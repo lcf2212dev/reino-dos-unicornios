@@ -16,6 +16,8 @@
     pegar: 0.5,             // quão perto da bolinha verde o dedo encosta para começar (em x-altura)
     pegarPx: 22,            // ... e nunca menos que isto em px da tela
     contra: 0.35,           // quanto o dedo anda sem pintar até a setinha ficar vermelha ("Por aí não!"), em x-altura
+    passadaPx: 6,           // o dedo só conta depois de andar isto em px da tela (o toque treme ~1 px: com menos, girar o
+                            // e ao contrário bem devagar acaba pintando nas palavras compridas do celular)
     espaco: 0.9,            // o espaço entre as palavras da frase (em x-altura)
     xAlturaMax: 40,         // a letra maior que a tela de escrever desenha (x-altura em px de arte; 1 px de arte = 2 px)
     esperaPalavraMs: 700,   // a palavra pronta fica na tela antes de passar para a próxima

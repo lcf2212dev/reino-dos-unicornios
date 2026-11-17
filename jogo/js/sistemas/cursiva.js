@@ -13,7 +13,8 @@
                                          para a frente, só puxada pelo dedo e no sentido certo; regra no bloco abaixo)
      perto(traço, k, x, y, op?) → bool   o dedo encostou na ponta (op.pegar): é por aí que começa
      tocar(traço, k, x, y, op?) → dedo   arrastar(dedo, x, y) → dedo { k, pegou, contra, solto }: o dedo inteiro (a tela usa)
-     op = { tol (TOL, config.cursiva.tolerancia), pegar (PEGAR, .pegar), contra (CONTRA, .contra) }, em x-altura
+     opTela(px) → op       a op da tela para a letra a px px de tela por x-altura (a tela e os testes usam)
+     op = { tol (TOL, config.cursiva.tolerancia), pegar (PEGAR, .pegar), contra (CONTRA, .contra), passada }, em x-altura
      registrarFrases([texto]) frases() → [texto]   o banco de frases (conteudo/cursiva-frases.js)
      sortearFrases(n?) → [texto]   n frases diferentes (padrão config.cursiva.frasesPorBola), sem repetir as da
                                    última vez enquanto der; chave 'cursiva:frases' no modo congelado
@@ -253,8 +254,9 @@
       var fx = x0 + (x1 - x0) * i / n, fy = y0 + (y1 - y0) * i / n;
       var lo = indiceEm(t, t.s[k] - VIZINHO, k), hi = indiceEm(t, t.s[k] + VIZINHO, k), perto = Infinity, j;
       for (j = lo; j <= hi; j++) perto = Math.min(perto, Math.hypot(t.x[j] - fx, t.y[j] - fy));
-      var melhor = k, md = Math.hypot(t.x[k] - fx, t.y[k] - fy), lim = t.s[k] + o.alcance;
-      (t.bicos || []).forEach(function (b) { if (b > t.s[k] && b <= t.s[k] + o.alcance) lim = Math.max(lim, b + o.alcance); });
+      // a ponta fica até uma passada atrás do dedo: passada maior que a padrão (letra pequena), alcance maior na mesma conta
+      var al = o.alcance + Math.max(0, o.passada - PASSADA), melhor = k, md = Math.hypot(t.x[k] - fx, t.y[k] - fy), lim = t.s[k] + al;
+      (t.bicos || []).forEach(function (b) { if (b > t.s[k] && b <= t.s[k] + al) lim = Math.max(lim, b + al); });
       for (j = k + 1; j < t.n && t.s[j] <= lim; j++) {
         var dd = Math.hypot(t.x[j] - fx, t.y[j] - fy);
         if (dd > o.tol || dd >= md || dd > perto + FOLGA) continue;
@@ -264,6 +266,15 @@
       k = melhor;
     }
     return k;
+  }
+  // a op da tela, pelas medidas de config.cursiva, com a letra a `px` px de tela por x-altura: a tolerância e o toque
+  // inicial nunca menores que N px (dedo grosso), a tolerância nunca maior que toleranciaMax, e a passada nunca menor
+  // que passadaPx (no celular a letra pequena tem ~40 px por x-altura e o toque treme ~1 px por evento)
+  function opTela(px) {
+    var c = cfg();
+    px = px > 0 ? px : 80;
+    return { tol: Math.min(num(c.toleranciaMax, 0.38), Math.max(num(c.tolerancia, TOL), num(c.toleranciaPx, 14) / px)),
+      pegar: Math.max(num(c.pegar, PEGAR), num(c.pegarPx, 22) / px), passada: Math.max(PASSADA, num(c.passadaPx, 6) / px) };
   }
   // o dedo encostou na ponta: é só ali que começa (ou recomeça depois de levantar ou se perder)
   function perto(t, k, x, y, o) {
@@ -296,6 +307,6 @@
   }
 
   R.Cursiva = { J: J, PASSO: PASSO, TOL: TOL, PEGAR: PEGAR, registrarLetras: registrarLetras, letra: letra, letras: letras,
-    faltam: faltam, palavra: palavra, frase: frase, seguir: seguir, perto: perto, tocar: tocar, arrastar: arrastar,
+    faltam: faltam, palavra: palavra, frase: frase, seguir: seguir, perto: perto, tocar: tocar, arrastar: arrastar, opTela: opTela,
     registrarFrases: registrarFrases, frases: function () { return FRASES.slice(); }, sortearFrases: sortearFrases };
 })();

@@ -75,7 +75,7 @@ test('cursiva: seguir com o dedo tremendo um pouco também chega ao fim', () => 
     for (let j = 0; j < t.n + 2; j += 2) { const q = Math.min(j, t.n - 1); pts.push([t.x[q] + acaso() * 0.12, t.y[q] + acaso() * 0.12]); }
     pts.push([t.x[t.n - 1], t.y[t.n - 1]]);
     const k = mao(t, 0, pts).k;
-    assert.ok(t.s[k] >= t.comp - 0.1, p.texto + ' (a tela dá o traço por pronto a 0,1 do fim)');
+    assert.ok(t.s[k] >= t.comp - 0.2, p.texto + ' (a tela dá o traço por pronto a 0,2 do fim)');
   })));
 });
 
@@ -135,7 +135,7 @@ function denso(pts, passo = 0.03) {
   }
   return r;
 }
-const pronto = (t, k) => t.s[k] >= t.comp - 0.1;
+const pronto = (t, k) => t.s[k] >= t.comp - 0.2;   // como a tela (ui/cursiva.js): os últimos 0,2 são a saidinha reta
 
 test('cursiva: o e e as laçadas altas (l, h) ao contrário não ficam prontos, em qualquer passo do dedo', () => {
   const J = C.J;
@@ -151,6 +151,75 @@ test('cursiva: o e e as laçadas altas (l, h) ao contrário não ficam prontos, 
     for (let vez = 0; vez < 3; vez++) k = mao(t, k, denso([[t.x[k], t.y[k]]].concat(ERRADO[ch].map(deitar)), passo), o).k;
     assert.ok(!pronto(t, k), `${ch} ao contrário ficou pronto (passo ${passo})`);
   })));
+});
+
+// o tamanho da letra da tela no celular (390 px de largura: o papel tem ~175 px de arte; 2 px de tela cada)
+function pxNoCelular(w) {
+  const larg = C.palavra(w).larg, E = Math.max(10, Math.floor(Math.min((175 - 12) / (larg + 0.6), (177 - 8) / 3.7, R.config.cursiva.xAlturaMax)));
+  return 2 * E;
+}
+// o toque de verdade: 120 eventos/s a `vel` x-alturas/s, cada um com tremor gaussiano de `ruidoPx` px de tela
+function toque(pts, vel, ruidoPx, px, rnd) {
+  const passo = vel / 120, r = [];
+  const gauss = () => Math.sqrt(-2 * Math.log(rnd() || 1e-9)) * Math.cos(2 * Math.PI * rnd());
+  for (let i = 1; i < pts.length; i++) {
+    const [a, b] = [pts[i - 1], pts[i]], n = Math.max(1, Math.round(Math.hypot(b[0] - a[0], b[1] - a[1]) / passo));
+    for (let j = 0; j < n; j++) r.push([a[0] + (b[0] - a[0]) * j / n + gauss() * ruidoPx / px, a[1] + (b[1] - a[1]) * j / n + gauss() * ruidoPx / px]);
+  }
+  return r;
+}
+// as laçadas do e de uma palavra (o caminho volta a passar perto de si e fecha área, dentro de um e; a subida do a, que
+// a bolinha cobre de volta, é igual ao contrário e não conta): [{ a, b }] com o laço de a até b
+function lacadasDoE(w) {
+  const ps = C.palavra(w), t = ps.tracos[ps.tracos.length - 1], letras = w.normalize('NFD').replace(/[\u0300-\u036f.]/g, '');
+  const fimDe = (pre) => { const p = C.palavra(pre), u = p.tracos[p.tracos.length - 1]; return pre ? u.x[u.n - 1] - u.y[u.n - 1] * inc : 0; };
+  const faixas = [];
+  for (let i = 0; i < letras.length; i++) if (letras[i] === 'e') faixas.push([fimDe(letras.slice(0, i)), fimDe(letras.slice(0, i + 1))]);
+  return { t, lacos: lacadas(t).filter(({ a }) => faixas.some(([x0, x1]) => t.x[a] - t.y[a] * inc >= x0 - 0.05 && t.x[a] - t.y[a] * inc <= x1)) };
+}
+function lacadas(t) {
+  const r = [];
+  for (let a = 0; a < t.n; a++) {
+    for (let b = a + 15; b < t.n && t.s[b] - t.s[a] < 2.4; b++) {
+      if (Math.hypot(t.x[a] - t.x[b], t.y[a] - t.y[b]) > 0.03) continue;
+      let area = 0;
+      for (let j = a; j < b; j++) area += t.x[j] * t.y[j + 1] - t.x[j + 1] * t.y[j];
+      if (Math.abs(area / 2) > 0.04 && !r.some((l) => Math.abs(l.a - a) < 10)) r.push({ a, b });
+      break;
+    }
+  }
+  return r;
+}
+
+test('cursiva: girar o e ao contrário devagar, com o tremor do toque do celular, não pinta o e (palavras compridas)', () => {
+  let semente = 11;
+  const rnd = () => { semente = (semente * 16807) % 2147483647; return semente / 2147483647; };
+  ['aprendo.', 'boneca.', 'Mamãe', 'escola.', 'escreve', 'bem'].forEach((w) => {
+    const px = pxNoCelular(w), o = C.opTela(px), { t, lacos } = lacadasDoE(w);
+    assert.ok(lacos.length >= 1, w + ': tem o laço do e');
+    lacos.forEach(({ a, b }) => [0.5, 1].forEach((vel) => [0.75, 1, 1.25].forEach((ruido) => {
+      const volta = [];
+      for (let j = b; j >= a; j -= 2) volta.push([t.x[j], t.y[j]]);
+      let g = [[t.x[a], t.y[a]]];
+      for (let v = 0; v < 4; v++) g = g.concat(volta);
+      const d = mao(t, a, toque(g, vel, ruido, px, rnd), o);
+      assert.ok(t.s[d.k] < t.s[b] - 0.05, `${w} (${px} px): a laçada em ${t.s[a].toFixed(1)} ao contrário pintou (vel ${vel}, ruído ${ruido} px)`);
+    })));
+  });
+});
+
+test('cursiva: no celular, seguir o caminho certo com o tremor do toque chega ao fim', () => {
+  let semente = 5;
+  const rnd = () => { semente = (semente * 16807) % 2147483647; return semente / 2147483647; };
+  ['aprendo.', 'Mariana', 'unicórnio', 'escreve', 'tinta', 'bem'].forEach((w) => {
+    const px = pxNoCelular(w), o = C.opTela(px);
+    C.palavra(w).tracos.forEach((t) => [0.5, 2].forEach((vel) => {
+      const pts = [];
+      for (let j = 0; j < t.n; j += 3) pts.push([t.x[j], t.y[j]]);
+      pts.push([t.x[t.n - 1], t.y[t.n - 1]]);
+      assert.ok(pronto(t, mao(t, 0, toque(pts, vel, 1, px, rnd).concat([pts[pts.length - 1]]), o).k), `${w} (${px} px, vel ${vel})`);
+    }));
+  });
 });
 
 test('cursiva: zigue-zague baixinho (entre a linha de base e a do meio) não escreve me, um, meu, é, eu', () => {

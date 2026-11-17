@@ -1,6 +1,6 @@
 // Letra cursiva na loja da Treinadora Kiara (docs/contratos/cursiva.md), com o dedo de verdade (toque pelo CDP, celular):
 // no cartão da MonsterBall, "Escrever 2 frases" abre a tela de escrever com 2 frases do banco. Tocar longe da bolinha
-// verde não começa; começar para baixo (o certo é subir) não pinta e avisa ("Por aí não!" e, longe, "Levante o dedo…");
+// verde não começa; começar para baixo (o certo é subir) não pinta e avisa ("Por aí não!" e, longe, "Comece de novo…");
 // seguindo o tracejado, palavra por palavra, as 2 frases ficam prontas e "Pegar a MonsterBall" põe 1 'bola-monster' na
 // mochila sem gastar estrela.
 // Fechar no meio guarda as frases e o ponto onde parou ("Continuar a escrever").
@@ -72,8 +72,8 @@ test('cursiva: escrever 2 frases na loja da Kiara dá 1 MonsterBall; o caminho e
     await d.up();
     await c.avancar(100);
     assert.strictEqual(await c.js(PONTA), '0:0', 'para baixo: bloqueado');
-    // primeiro "Por aí não!"; longe demais, soltou: "Levante o dedo e comece na bolinha verde."
-    assert.match(await c.js(DICA), /Por aí não! Siga a setinha\.|Levante o dedo e comece na bolinha verde\./);
+    // primeiro "Por aí não!"; longe demais, soltou: "Ops! Comece de novo na bolinha verde."
+    assert.match(await c.js(DICA), /Por aí não! Siga a setinha\.|Comece de novo na bolinha verde\./);
 
     // um pedaço do 1º traço, fechar no meio e voltar: continua do mesmo ponto
     await tracar(12);
