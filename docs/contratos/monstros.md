@@ -89,3 +89,6 @@ Item `bola-mini` "Mini MonsterBall" (tipo `bola`, loja `treinadores`, ícone `it
 (25) e `chanceMini` (0,2). Na loja é o primeiro cartão (`Treinadores.ID_MINI`). Na arena, `Monstros.podeJogar('mini')`/`jogar('mini')`; botão
 `monstros-mini` à esquerda do da MonsterBall, só com Mini na Mochila; a bola que volta (`'voltou'`) volta do mesmo tipo.
 
+## 9. MonsterBall pela letra cursiva
+No cartão da MonsterBall, "ou" e "Escrever 2 frases": as frases em letra cursiva dão 1 MonsterBall sem estrela
+(`Treinadores.ganharEscrevendo`). Tudo em `cursiva.md`.

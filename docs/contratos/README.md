@@ -29,6 +29,7 @@ contrato dele: a seção (§) do que vai mexer, não o arquivo inteiro. Mudança
 | Itens: drops dos monstros, Mochila (20 espaços), Baú de Guardados da casa, roupas de aventura no desenho, campo `itens` | `itens.md` |
 | Vila Arco-Íris: portal no Bosque, 4 lojas (enfeites da casa, armas, cabeça, armaduras e botas), pergunta do 4º bimestre antes do lojista, a Teleportadora | `vila.md` |
 | Treinadores de Monstros (Vila): MonsterBall, captura nas arenas, coleção, monstro equipado que segue no lugar do ET e ajuda na luta, campos `monstros`/`monstroCompanheiro` | `monstros.md` |
+| Letra cursiva: escrever frases na loja da Kiara para ganhar MonsterBall, o desenho das letras na ordem do traço, o dedo que só pinta no sentido certo | `cursiva.md` |
 | Parquinho: portal na praça liberado por matérias completas, lugar fechado (`liberado`), brinquedos que ela usa com o unicórnio, balanço de puxar e soltar, caixa de areia de perto | `parquinho.md` |
 | Jogar com amigos: servidores como no PKXD (criar, código e convite, entrar, fechar), presença no servidor (quem está, sala, posição), rotas `/api/juntos` e `/api/presenca`, tabelas `juntos` e `presenca`, desenho dos outros | `juntos.md` |
 | plano de frentes paralelas, reserva de personagem (vaga tracejada), ondas, conferência em pipeline | `plano-paralelo.md` |

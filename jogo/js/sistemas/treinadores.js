@@ -13,6 +13,8 @@
      total(itens)          o preço de [{ id, qtd }] (0 se algo não fecha); um número n = n MonsterBalls
      comprar(itens)        tudo ou nada: confere o saldo, gasta e dá as bolas (Itens.ganhar; mochila cheia, o baú)
                            → { ok, total, motivo?: 'sem-save' | 'itens' | 'saldo', falta?, ganhos? }
+     ganharEscrevendo()    a bola de config.cursiva.bola (a MonsterBall) de graça, depois das frases em letra cursiva
+                           (UI.telaCursiva; docs/contratos/cursiva.md) → { ok, id, onde?, motivo?: 'sem-save' | 'itens' }
    Módulo 'treinadores': porteira(npc) (NPC com a ação 'treinadores' → UI.perguntaVila) e a ação 'treinadores' (abre
    UI.telaTreinadores e resolve 'tchau'). Nada novo no save (as bolas são itens, o campo `itens`). node: true: nada
    de DOM no carregamento. */
@@ -96,6 +98,17 @@
     return { ok: true, total: t, ganhos: ganhos };
   }
 
+  // as frases da letra cursiva ficaram prontas: 1 bola de graça (sem gastar estrela)
+  function ganharEscrevendo() {
+    var Pr = P(), id = (R.config && R.config.cursiva && R.config.cursiva.bola) || ID;
+    if (!Pr || !Pr.estado()) return { ok: false, motivo: 'sem-save', id: id };
+    if (!def(id) || !(R.Itens && R.Itens.ganhar)) return { ok: false, motivo: 'itens', id: id };
+    var g = R.Itens.ganhar(id);
+    Pr.salvar();
+    U.emit(R.EVENTOS.MAPA_MUDOU);
+    return { ok: true, id: id, onde: g && g.onde };
+  }
+
   // só a Kiara (ação 'treinadores'); sem pergunta (ou sem a tela), conversa direto
   function porteira(npc) {
     var a = npc && npc.acao;
@@ -111,7 +124,7 @@
   }
 
   R.Treinadores = { ID: ID, ID_SUPER: ID_SUPER, ID_MINI: ID_MINI, ofertas: ofertas, desconto: desconto, cheio: cheio, preco: preco, chance: chance, max: max, tem: tem,
-    total: total, comprar: comprar };
+    total: total, comprar: comprar, ganharEscrevendo: ganharEscrevendo };
 
   R.registrarModulo({
     id: 'treinadores',

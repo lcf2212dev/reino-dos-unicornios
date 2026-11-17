@@ -56,6 +56,7 @@
       'css/ui-monstros.css',
       'css/ui-vila.css',
       'css/ui-treinadores.css',
+      'css/ui-cursiva.css',
       'css/ui-parquinho.css',
       'css/ui-parquinho-areia.css',
       'css/ui-moedas-festa.css',
@@ -69,6 +70,7 @@
       { js: 'js/nucleo/config-itens.js', grupo: 'nucleo', node: true }, // números dos itens (Reino.config.itens; itens.md §12): logo depois do config.js
       { js: 'js/nucleo/config-vila.js', grupo: 'nucleo', node: true }, // Vila Arco-Íris: números das lojas e da Teleportadora (Reino.config.vila; vila.md)
       { js: 'js/nucleo/config-monstros.js', grupo: 'nucleo', node: true }, // Treinadores de Monstros: MonsterBall, captura, monstro que segue e ajuda (Reino.config.monstros; monstros.md)
+      { js: 'js/nucleo/config-cursiva.js', grupo: 'nucleo', node: true }, // Letra cursiva: frases por bola, inclinação, tolerância do dedo (Reino.config.cursiva; cursiva.md)
       { js: 'js/nucleo/registros.js', grupo: 'nucleo', node: true },
       { js: 'js/sistemas/bimestres.js', grupo: 'nucleo', node: true },
       { js: 'js/nucleo/modulos.js', grupo: 'nucleo', node: true },
@@ -553,6 +555,7 @@
       { js: 'js/ui/vila-pergunta.js', grupo: 'ui' }, // Vila: a pergunta do 4º bimestre antes de falar com o lojista (UI.perguntaVila)
       { js: 'js/ui/vila-loja.js', grupo: 'ui' }, // Vila: a tela de comprar e vender, vários de uma vez (UI.telaVilaLoja)
       { js: 'js/ui/treinadores-loja.js', grupo: 'ui' }, // Treinadores de Monstros: a loja das MonsterBalls (UI.telaTreinadores; monstros.md)
+      { js: 'js/ui/cursiva.js', grupo: 'ui' }, // Letra cursiva: a tela de escrever, que só pinta no sentido certo (UI.telaCursiva; cursiva.md)
       { js: 'js/ui/itens-pocao.js', grupo: 'ui' }, // itens: o botão rápido da poção na arena (itens.md §9)
       { js: 'js/ui/monstros.js', grupo: 'ui' }, // Treinadores de Monstros: a tela Meus monstros e o aviso da bola (UI.telaMonstros; monstros.md)
       { js: 'js/ui/monstros-bola.js', grupo: 'ui' }, // Treinadores de Monstros: o botão da MonsterBall na arena (monstros.md §4)
@@ -884,6 +887,9 @@
       { js: 'js/sistemas/itens-chao.js', grupo: 'sistemas', node: true }, // itens: o item no chão da arena, salta e voa até ela (só desenho; itens.md §5)
       { js: 'js/sistemas/vila-lojas.js', grupo: 'sistemas', node: true }, // Vila: as 4 lojas, comprar e vender vários, a pergunta do 4º bimestre (Reino.VilaLojas; vila.md)
       { js: 'js/sistemas/treinadores.js', grupo: 'sistemas', node: true }, // Treinadores de Monstros: comprar MonsterBalls, a pergunta antes da Kiara (Reino.Treinadores; monstros.md)
+      { js: 'js/sistemas/cursiva.js', grupo: 'sistemas', node: true }, // Letra cursiva: o caminho das palavras e o dedo só no sentido certo (Reino.Cursiva; cursiva.md)
+      { js: 'js/conteudo/cursiva-letras.js', grupo: 'conteudo', node: true }, // Letra cursiva: o desenho de cada letra, na ordem do traço (depois do Reino.Cursiva)
+      { js: 'js/conteudo/cursiva-frases.js', grupo: 'conteudo', node: true }, // Letra cursiva: o banco de frases da loja da Kiara
       { js: 'js/sistemas/teleportadora.js', grupo: 'sistemas', node: true }, // Vila: a Teleportadora leva entre as praças (Reino.Teleportadora; vila.md)
       { js: 'js/sistemas/parquinho.js', grupo: 'sistemas', node: true }, // Parquinho: a fase (3 matérias com Matemática ou LP; todas) e o módulo da brincadeira (Reino.Parquinho; parquinho.md)
       { js: 'js/sistemas/juntos.js', grupo: 'sistemas', node: true }, // Jogar juntos: a presença ao vivo (Reino.Juntos, módulo 'juntos'; juntos.md)

@@ -127,4 +127,5 @@
 # @ = treinadores: números da Mini MonsterBall na config
 # @ = treinadores: desconto das bolas na config
 # @ = pontos de Velocidade e Vida: números novos no config
+# @ = Letra cursiva na loja da Kiara: Reino.config.cursiva entra nos dados da loja (o jogo na tela não muda)
 @
