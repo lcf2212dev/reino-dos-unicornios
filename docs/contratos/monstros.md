@@ -3,9 +3,9 @@
 Pedido: `pedidos/2026-11-16-treinadores.md`. Na Vila Arco-Íris, o terreno da direita virou o prédio **Treinadores de
 Monstros** (interior `vila-treinadores`, lojista **Treinadora Kiara**, `kiara`). Lá se compra a **MonsterBall**
 (`bola-monster`, 50 estrelas; 40% de chance) e a **Super MonsterBall** (`bola-super`, 125 estrelas; pega sempre); nas
-arenas ela joga a bola no monstro mais perto. Um monstro capturado pode
-ser equipado (1 monstro por vez): anda atrás dela e ajuda na luta, junto com o ET que ela levou (os 3 bichinhos, com o
-unicórnio: pedido do Leandro, 17/11).
+arenas ela joga a bola no monstro mais perto. Os monstros capturados podem ser equipados (até 4, e mais 1 por matéria
+do bimestre terminada: pedido do Leandro, 17/11): andam em fila atrás dela e ajudam na luta, junto com o ET que ela
+levou (no fim da fila) e o unicórnio.
 
 ## 1. Onde está no código
 | Parte | Arquivo |
@@ -30,23 +30,34 @@ unicórnio: pedido do Leandro, 17/11).
 - Evento `Reino.EVENTOS.MONSTROS: 'monstros'`, carga `{ tipo: 'jogou' | 'capturou' | 'escapou' | 'voltou' | 'equipou', especie? }`
   (documentado em `nucleo/eventos.js`).
 
-## 3. Save (`save-e-mescla.md` §11, dois campos novos)
+## 3. Save (`save-e-mescla.md` §11, três campos)
 ```
 monstros: { <especie>: n }                      // quantos de cada espécie ela já capturou; 'contadores' (só cresce)
-monstroCompanheiro: { mariana: { id, em } }     // o equipado (id = espécie ou null); 'carimbo', como etCompanheiro
+monstroCompanheiro: { mariana: { id, em } }     // o 1º da fila (id = espécie ou null); 'carimbo', como etCompanheiro
+monstrosJuntos: { mariana: { ids: [especie…], em } }   // a fila dos equipados, em ordem (17/11); 'carimbo'
 ```
-Novo ciclo mantém os dois; cópia `-novidades`: sim. Save antigo: `{}` (sem monstro: o ET continua).
-- **O monstro e o ET vão juntos**: equipar um monstro só grava `monstroCompanheiro`; escolher um ET no álbum só grava
-  `etCompanheiro`. Um não tira o outro (até 17/11 era só 1: o save de quem equipou um monstro antes ficou com o ET
-  `null`, e ela leva o ET de novo pelo álbum). Na fila atrás dela: o bebê (a pé), o monstro a `distancia` px e o ET
-  `config.viagem.etAtrasDoMonstro` px mais atrás (`Reino._etCompanheiro.distancia()`), todos no mesmo rastro.
+Novo ciclo mantém os três; cópia `-novidades`: sim. Save antigo: `{}` (sem monstro: o ET continua).
+- **A fila**: `equipar` e `deixar` gravam a lista em `monstrosJuntos` e o 1º dela em `monstroCompanheiro`, no MESMO
+  `em`. Na leitura vale a lista, a não ser que o `monstroCompanheiro` seja mais novo (um aparelho da versão antiga
+  trocou ou deixou o monstro em casa depois: vale o dele, sozinho) ou que a lista não exista (save de antes: o
+  monstro de sempre). Lista limpa: só ids de espécie, sem repetir.
+- **Vagas**: `config.monstros.equipar.base` (4) e mais `porMateria` (1) por matéria do bimestre de agora (não
+  arquivada) com todas as salas feitas (`P.materiaCompleta`), contadas na hora (nada no save). A fila mostra só as
+  primeiras `vagas()`; a lista gravada não encolhe por isso.
+- **Os monstros e o ET vão juntos**: equipar não mexe no `etCompanheiro`; escolher um ET no álbum não mexe nos
+  monstros (até 17/11 era só 1: o save de quem equipou um monstro antes ficou com o ET `null`, e ela leva o ET de novo
+  pelo álbum). Na fila atrás dela, no mesmo rastro: o bebê (a pé), o 1º monstro a `distancia` px, cada outro
+  `entreMonstros` px atrás do de antes (`Reino._monstros.distancia(n)`) e o ET `config.viagem.etAtrasDoMonstro` px
+  atrás do último (`Reino._etCompanheiro.distancia()`).
 - Monstro equipado de espécie que ela não tem (mescla estranha) = nenhum.
 
 ## 4. API
 ```
 Reino.Monstros
   especies() → [{ id, arena, tipo, nome, nivel }]      capturados() → [{ id, qtd, def }]
-  equipado() → especie | null                         equipar(especie | null) → bool   (grava, emite 'equipou')
+  equipados() → [especie]  (a fila, até vagas())     equipado() → o 1º da fila | null    estaJunto(especie) → bool
+  equipar(especie) → bool  (no fim da fila; false sem vaga)   equipar(null) → deixa todos em casa   deixar(especie) → bool
+  (equipar e deixar gravam e emitem 'equipou')   vagas() → n   maisVagas() → bool   materiasTerminadas() → n
   podeJogar(tipo?) → { ok, alvo, arena, uid, tipo } | { ok: false, motivo: 'fora-arena' | 'parada' | 'recarga' | 'sem-bola' | 'longe' }
   jogar(tipo?) → bool        tipo 'comum' (padrão, bola-monster, chanceCaptura) | 'super' (bola-super, chanceSuper)
   bolas(tipo?) → [uid]   ITEM_BOLA: { comum: 'bola-monster', super: 'bola-super' }   quantos(especie) → n   especie(id) → def | null   danoAjuda(especie, danoEspada) → n
@@ -59,7 +70,9 @@ Reino.UI.telaMonstros() → P        Reino.UI.telaTreinadores(npc) → P
 - Botões na arena (`ui/monstros-bola.js`, `UI.registrarBotaoHud`, acima do da poção): o da MonsterBall só para quem já
   teve alguma bola ou algum monstro (o e2e, sem bola, não muda); o da Super, logo acima e com a borda dourada, só com
   Super na Mochila. Apagados sem bola, longe, no ar ou parada. A Super voa com faíscas douradas.
-- "Meus monstros": os que ela tem primeiro, depois os que faltam em silhueta; abre pela Mochila (botão só com monstro
+- "Meus monstros": no topo "N de M monstros • com você: K de V" (cheio: "Termine uma matéria para levar mais um!");
+  "Levar comigo" / "Deixar em casa" em cada capturado, e sem vaga o "Levar comigo" fica indisponível (`arte.md` §19.1).
+  Os que ela tem primeiro, depois os que faltam em silhueta; abre pela Mochila (botão só com monstro
   ou bola) e pela loja da Kiara. O cartão da bola na Mochila explica que se joga pelo botão da arena.
 
 ## 5. Captura e ajuda
@@ -69,8 +82,9 @@ Reino.UI.telaMonstros() → P        Reino.UI.telaTreinadores(npc) → P
   (trocou de cena) ou não deu para capturar: a bola volta para a mochila ('voltou'). Sorteio por
   `Reino.sorteioDaChave('monstros:bola')` no modo congelado (`Itens.rolar`). O preso é solto na arena dele
   (`soltar(id, arena)`; ela pode ter ido de arena para arena com a bola no ar) e o reinício da arena também o solta.
-- O monstro equipado tem um coraçãozinho rosa sempre acima dele (é amigo; na arena tem o desenho dos inimigos).
-- Ajuda: dano = `max(1, round(dano da espada × (fator[tipo] + bonusNivel × nivel da arena de origem)))`, a cada
+- Cada monstro equipado tem um coraçãozinho rosa sempre acima dele (é amigo; na arena tem o desenho dos inimigos).
+- Ajuda: cada monstro da fila ataca no seu tempo (o 1º na hora, os outros escalonados na recarga; `S.ataques[especie]`),
+  dano = `max(1, round(dano da espada × (fator[tipo] + bonusNivel × nivel da arena de origem)))`, a cada
   `ajuda.recargaMs`, no inimigo mais perto até `ajuda.alcance`. Inimigo vencido por ele = vencido por ela.
 
 ## 6. Números

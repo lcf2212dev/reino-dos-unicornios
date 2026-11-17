@@ -1,10 +1,12 @@
-/* Treinadores de Monstros (docs/contratos/monstros.md): a coleção de monstros da Mariana e o monstro equipado, que anda
-   atrás dela (junto com o ET, se ela levou um: os 3 bichinhos, com o unicórnio) e ajuda na luta. Aqui: os nomes das espécies, os dois campos do save
-   (`monstros`, `monstroCompanheiro`), Reino.Monstros (espécies, capturados, equipar, dano da ajuda) e o módulo
+/* Treinadores de Monstros (docs/contratos/monstros.md): a coleção de monstros da Mariana e os monstros equipados (até
+   `config.monstros.equipar.base`, mais 1 por matéria do bimestre terminada), que andam em fila atrás dela (com o ET, se
+   ela levou um, no fim da fila) e ajudam na luta. Aqui: os nomes das espécies, os campos do save (`monstros`,
+   `monstroCompanheiro`, `monstrosJuntos`), Reino.Monstros (espécies, capturados, equipar, vagas, dano da ajuda) e o módulo
    'monstros' com a camada de desenho. Cria o interno Reino._monstros, que as partes dividem:
      t                 o `t` do último quadro desenhado (ms; virtual no modo congelado)
      bola              a MonsterBall voando (monstros-bola.js): { alvo, tipo, arena, especie, pegou, em (Date.now), x0, y0, x, y, chegou } | null
-     ataque            o último pulo do monstro (monstros-ajuda.js): { em, x, y, dx, dy } | null
+     ataques           o último pulo de cada monstro equipado (monstros-ajuda.js): { <especie>: { em, x, y, dano } }
+     distancia(n)      quanto o n-ésimo da fila anda atrás dela (px)
      itensDesenho, sobre  o desenho (monstros-desenho.js);  quadroBola(), quadroAjuda(t)  (as partes de regra)
      parada(), maisPerto(raio)  luta parada? / o inimigo ativo mais perto dela (monstros-bola.js)
    Partes: monstros-bola.js (jogar a bola), monstros-ajuda.js (o ataque dele), monstros-desenho.js (seguir e desenhar),
@@ -12,8 +14,9 @@
    node: true: nada de DOM, Progresso nem Cena no carregamento (só dentro das funções). */
 (function () {
   var R = window.Reino;
-  var S = R._monstros = { t: 0, bola: null, ataque: null };
+  var S = R._monstros = { t: 0, bola: null, ataques: {} };
   var ESPECIE = /^[a-z0-9]+-[a-z0-9]+$/;
+  var MAX_JUNTOS = 60;   // teto da lista no save (lixo); a vaga de verdade é vagas()
   function cfg() { return R.config.monstros; }
 
   // os nomes de cada espécie (os dos comentários de config.fantasmas e config.arenas)
@@ -62,6 +65,24 @@
     },
     exemplos: [{ mariana: { id: 'lua-dificil', em: 10 } }, { mariana: { id: null, em: 20 } }],
   });
+  // monstrosJuntos: { mariana: { ids: [especie…], em } }: os equipados, em ordem (pedido de 17/11: até 4, e mais 1 por
+  // matéria terminada); vale o mais recente entre aparelhos. O `monstroCompanheiro` continua gravado com o primeiro,
+  // no mesmo `em`: um aparelho da versão antiga vê 1 monstro e, se trocar depois, o dele vale (em maior)
+  R.Progresso.registrarCampo('monstrosJuntos', {
+    padrao: function () { return {}; },
+    mesclar: 'carimbo',
+    novoCiclo: 'mantem',
+    copiaSeguranca: true,
+    limpar: function (v) {
+      var m = v.mariana;
+      if (m === undefined) return v;
+      var ids = (Array.isArray(m.ids) ? m.ids : []).filter(function (x, i, l) {
+        return typeof x === 'string' && ESPECIE.test(x) && l.indexOf(x) === i;
+      }).slice(0, MAX_JUNTOS);
+      return { mariana: { ids: ids, em: typeof m.em === 'number' && m.em >= 0 ? m.em : 0 } };
+    },
+    exemplos: [{ mariana: { ids: ['lua-dificil', 'gelo-medio'], em: 10 } }, { mariana: { ids: [], em: 20 } }],
+  });
   function estado() { try { return R.Progresso.estado(); } catch (e) { return null; } }
 
   /* ================= ESPÉCIES ================= */
@@ -79,11 +100,17 @@
     });
     return lista;
   }
+  // por id, refeito só quando muda o número de arenas (elas se registram no carregamento): especie() é chamado a cada
+  // quadro, para cada monstro da fila
+  var mapa = null, nArenas = -1;
   function especie(id) {
     if (typeof id !== 'string') return null;
-    var l = especies();
-    for (var i = 0; i < l.length; i++) if (l[i].id === id) return l[i];
-    return null;
+    var n = R.Arenas ? R.Arenas.ids().length : 0;
+    if (!mapa || n !== nArenas) {
+      mapa = {}; nArenas = n;
+      especies().forEach(function (e) { mapa[e.id] = e; });
+    }
+    return Object.prototype.hasOwnProperty.call(mapa, id) ? mapa[id] : null;
   }
   // os que ela tem (espécie conhecida, quantos > 0), na ordem das espécies
   function capturados() {
@@ -92,23 +119,79 @@
   }
   function quantos(id) { var est = estado(), m = est && est.monstros; return m && m[id] > 0 ? m[id] : 0; }
 
-  /* ================= O COMPANHEIRO (o monstro; o ET é à parte, os dois podem ir juntos) ================= */
-  // o equipado: espécie que ela tem (mescla estranha ou espécie de versão nova = nenhum)
-  function equipado() {
-    var est = estado(), m = est && est.monstroCompanheiro && est.monstroCompanheiro.mariana, id = m && m.id;
-    return id && quantos(id) && especie(id) ? id : null;
+  /* ================= OS EQUIPADOS (os monstros que vão com ela; o ET é à parte, vai junto) ================= */
+  // matérias do bimestre de agora (não arquivadas) com todas as salas feitas
+  function materiasTerminadas() {
+    var P = R.Progresso;
+    try {
+      return (R.materias || []).filter(function (m) {
+        return !m.arquivada && Array.isArray(m.salas) && m.salas.length && P.materiaCompleta(m);
+      }).length;
+    } catch (e) { return 0; }   // sem save carregado (teste)
   }
-  // equipar (espécie que ela tem) ou tirar (null); o ET escolhido continua junto. true = gravou
-  function equipar(id) {
+  // quantos ela pode levar: `equipar.base` e mais `porMateria` por matéria terminada
+  function vagas() { var c = cfg().equipar; return c.base + c.porMateria * materiasTerminadas(); }
+  // ainda dá para ganhar vaga (alguma matéria do bimestre de agora por terminar)?
+  function maisVagas() {
+    var ativas = (R.materias || []).filter(function (m) { return !m.arquivada && Array.isArray(m.salas) && m.salas.length; }).length;
+    return materiasTerminadas() < ativas;
+  }
+  // a lista gravada: a de `monstrosJuntos`, ou o `monstroCompanheiro` se ele é mais novo (aparelho da versão antiga
+  // trocou depois) ou se a lista não existe (save de antes)
+  function listaGravada() {
+    var est = estado(), j = est && est.monstrosJuntos && est.monstrosJuntos.mariana;
+    var a = est && est.monstroCompanheiro && est.monstroCompanheiro.mariana;
+    if (j && (!a || (j.em || 0) >= (a.em || 0))) return j.ids || [];
+    return a && a.id ? [a.id] : [];
+  }
+  // os equipados, em ordem: espécies que ela tem (mescla estranha ou espécie de versão nova ficam de fora), até as vagas
+  function equipados() {
+    var l = listaGravada().filter(function (id, i, x) { return x.indexOf(id) === i && quantos(id) && especie(id); });
+    return l.length > cfg().equipar.base ? l.slice(0, vagas()) : l;   // a conta das matérias só quando passa da base
+  }
+  function equipado() { return equipados()[0] || null; }
+  function estaJunto(id) { return equipados().indexOf(id) >= 0; }
+  // a distância atrás dela do n-ésimo da fila (0 = o primeiro): nunca em cima do bebê (como o ET); o ET usa a do
+  // último para ir atrás da fila (et-companheiro.js)
+  S.distancia = function (n) {
+    var d = cfg().distancia, J = window.Jogador;
+    if (J && J.DIST_BEBE && !(J.montado && J.montado())) d = Math.max(d, J.DIST_BEBE + 16);
+    return d + (n || 0) * cfg().entreMonstros;
+  };
+  // a lista gravada, sem repetir: conserva espécie de versão nova (save-e-mescla.md §6.6) e quem a vaga esconde
+  function gravada() { return listaGravada().filter(function (id, i, l) { return typeof id === 'string' && l.indexOf(id) === i; }); }
+  function gravar(ids, especieMudou) {
     var est = estado();
-    if (!est || (id !== null && (!especie(id) || !quantos(id)))) return false;
-    var m = est.monstroCompanheiro && est.monstroCompanheiro.mariana;
-    est.monstroCompanheiro = { mariana: { id: id, em: Math.max(Date.now(), ((m && m.em) || 0) + 1) } };
+    var j = est.monstrosJuntos && est.monstrosJuntos.mariana, a = est.monstroCompanheiro && est.monstroCompanheiro.mariana;
+    var em = Math.max(Date.now(), Math.max((j && j.em) || 0, (a && a.em) || 0) + 1);
+    est.monstrosJuntos = { mariana: { ids: ids.slice(), em: em } };
+    var primeiro = ids.filter(function (id) { return quantos(id) && especie(id); })[0] || null;   // o 1º que esta versão mostra
+    est.monstroCompanheiro = { mariana: { id: primeiro, em: em } };
     if (R._etCompanheiro) R._etCompanheiro.rastro = [];
-    S.ataque = null;
+    S.ataques = {};
     try { R.Progresso.salvar(); } catch (e) { /* sem save (teste) */ }
-    emitir({ tipo: 'equipou', especie: id });
+    emitir({ tipo: 'equipou', especie: especieMudou });
     return true;
+  }
+  // levar mais um (espécie que ela tem, com vaga) no fim da fila (logo depois do último que aparece); null = deixar
+  // todos em casa (a espécie de versão nova fica guardada). true = gravou
+  function equipar(id) {
+    var est = estado(), l = equipados(), g = gravada();
+    if (!est) return false;
+    if (id === null) return gravar(g.filter(function (x) { return !especie(x); }), null);
+    if (!especie(id) || !quantos(id)) return false;
+    if (l.indexOf(id) >= 0) return true;
+    if (l.length >= vagas()) return false;
+    g = g.filter(function (x) { return x !== id; });
+    var depois = l.length ? g.indexOf(l[l.length - 1]) + 1 : 0;
+    g.splice(depois, 0, id);
+    return gravar(g, id);
+  }
+  // deixar um em casa (os outros continuam). true = gravou
+  function deixar(id) {
+    var est = estado();
+    if (!est || equipados().indexOf(id) < 0) return false;
+    return gravar(gravada().filter(function (x) { return x !== id; }), id);
   }
   // a MonsterBall pegou: +1 dessa espécie, gravado na hora
   function registrarCaptura(id) {
@@ -132,15 +215,16 @@
 
   R.Monstros = {
     NOMES: NOMES, especies: especies, especie: especie, capturados: capturados, quantos: quantos,
-    equipado: equipado, equipar: equipar, danoAjuda: danoAjuda, registrarCaptura: registrarCaptura,
+    equipado: equipado, equipados: equipados, estaJunto: estaJunto, equipar: equipar, deixar: deixar, vagas: vagas, maisVagas: maisVagas,
+    materiasTerminadas: materiasTerminadas, danoAjuda: danoAjuda, registrarCaptura: registrarCaptura,
     emitir: emitir,
   };
 
   R.registrarModulo({
     id: 'monstros',
     depurar: function () {
-      return { equipado: equipado(), capturados: capturados().map(function (c) { return c.id + '×' + c.qtd; }),
-        bola: S.bola ? { alvo: S.bola.alvo, pegou: S.bola.pegou } : null, ataque: !!S.ataque };
+      return { equipados: equipados(), vagas: vagas(), capturados: capturados().map(function (c) { return c.id + '×' + c.qtd; }),
+        bola: S.bola ? { alvo: S.bola.alvo, pegou: S.bola.pegou } : null, ataques: Object.keys(S.ataques || {}) };
     },
     // desenho junto dos personagens (ordenado por y) e a bola por cima: com o monstro equipado ou a bola voando
     camada: {

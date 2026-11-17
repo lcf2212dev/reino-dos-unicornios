@@ -84,7 +84,7 @@ Reino.EVENTOS = {
   ITENS: 'itens',
   /* Os monstros dela mudaram (docs/contratos/monstros.md). Carga: { tipo, especie? }: 'capturou' (+ especie, arena)
      (a MonsterBall pegou; já gravado), 'escapou' (+ especie, arena) (a bola abriu e ele fugiu), 'voltou' (+ especie, arena) (a bola não chegou: voltou para a mochila), 'jogou' (+ especie)
-     (a bola saiu da mão dela; já gastou), 'equipou' (+ especie, ou null = tirou).
+     (a bola saiu da mão dela; já gastou), 'equipou' (+ especie que entrou ou saiu da fila, ou null = deixou todos em casa).
      Emite: sistemas/monstros.js (equipou), sistemas/monstros-bola.js (jogou, capturou, escapou, voltou).
      Ouve: ui/monstros.js (aviso e a tela aberta), ui/monstros-bola.js (o botão da bola), ui/mochila.js (o botão). */
   MONSTROS: 'monstros',

@@ -130,4 +130,5 @@
 # @ = Letra cursiva na loja da Kiara: Reino.config.cursiva entra nos dados da loja (o jogo na tela não muda)
 # @ = Letra cursiva: config.cursiva.passadaPx entra nos dados da loja (o jogo na tela não muda)
 # @ = 3 bichinhos juntos (config.viagem.etAtrasDoMonstro) e ETs de desafio com a matéria do 4º bimestre
+# @ = monstros em fila: até 4 e +1 por matéria terminada (campo monstrosJuntos, config.monstros.equipar)
 @

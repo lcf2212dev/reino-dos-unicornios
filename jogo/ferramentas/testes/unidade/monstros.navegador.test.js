@@ -120,6 +120,22 @@ test('monstros: MonsterBall na arena, Meus monstros, o monstro e o ET seguindo j
     assert.deepStrictEqual(await c.js('({ eq: Reino.Monstros.equipado(), et: Reino.Viagem.companheiro() })'), { eq: especie, et: null });
     await c.js("Reino.Viagem.escolherCompanheiro('lua-lumi'); 1");
     assert.deepStrictEqual(await c.js('({ eq: Reino.Monstros.equipado(), et: Reino.Viagem.companheiro() })'), { eq: especie, et: 'lua-lumi' });
+
+    // 8) até 4 na fila: com 4 levados, o "Levar comigo" do 5º fica indisponível e o topo explica (termine uma matéria)
+    await c.js("['gelo-medio', 'lua-dificil', 'dunas-medio', 'vulcao-dificil'].forEach((id) => { Reino.Monstros.registrarCaptura(id); Reino.Monstros.equipar(id); }); 1");
+    const fila = await c.js('Reino.Monstros.equipados()');
+    assert.strictEqual(fila.length, 4, 'até 4: ' + JSON.stringify(fila));
+    await c.js('Reino.UI.telaMonstros(); 1');
+    await c.avancar(400);
+    const cheia = await c.js(`({ topo: document.querySelector('.tela-monstros .monstros-contador').textContent,
+      selos: document.querySelectorAll('.tela-monstros .monstros-cartao.junto').length,
+      semVaga: document.querySelector('.tela-monstros [data-monstro="vulcao-dificil"]').getAttribute('aria-disabled') })`);
+    assert.match(cheia.topo, /com você: 4 de 4\. Termine uma matéria para levar mais um!/);
+    assert.strictEqual(cheia.selos, 4);
+    assert.strictEqual(cheia.semVaga, 'true');
+    await c.js(`document.querySelector('.tela-monstros [data-monstro="vulcao-dificil"]').click(); 1`);
+    assert.strictEqual((await c.js('Reino.Monstros.equipados()')).length, 4, 'sem vaga: o toque não leva');
+    await c.js('Reino.UI.fecharTodas(); 1');
   } finally {
     await c.fechar();
   }

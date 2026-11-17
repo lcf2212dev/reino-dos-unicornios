@@ -127,8 +127,8 @@ perguntas(materia, n, chave) → [{ id, materia, sala, texto, opcoes: [texto], c
   { mariana: { id, em } }` (carimbo, `novoCiclo: 'mantem'`).
 - Camada de desenho (`registrarModulo` com `camada`): o ET flutua um pouco atrás da Mariana, no mapa e nos
   interiores, seguindo o caminho dela (rastro próprio; recomeça ao trocar de cena), balançando devagar (parado sem
-  Animações). Não conversa nem bloqueia nada. Números em `config.viagem.companheiroDistancia` e, com um monstro
-  equipado junto, `etAtrasDoMonstro` (o ET vai atrás dele).
+  Animações). Não conversa nem bloqueia nada. Números em `config.viagem.companheiroDistancia` e, com monstros
+  equipados junto (em fila, `monstros.md` §3), `etAtrasDoMonstro` (o ET vai atrás do último).
 
 ### 6.4 Capacete de astronauta (Loja)
 - Enfeite do unicórnio no encaixe `cabeca` (receita `docs/receitas/enfeite-novo.md`), tema espaço (`espaco: true`).

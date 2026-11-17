@@ -1,7 +1,8 @@
-/* Treinadores de Monstros, parte de desenho (de sistemas/monstros.js, interno Reino._monstros; monstros.md): o monstro
-   equipado andando atrás dela no caminho dela (o rastro do ET, Reino._etCompanheiro; com o ET junto, ele vai logo atrás dela e o ET atrás dele),
+/* Treinadores de Monstros, parte de desenho (de sistemas/monstros.js, interno Reino._monstros; monstros.md): os monstros
+   equipados andando em fila atrás dela no caminho dela (o rastro do ET, Reino._etCompanheiro: o 1º a `distancia`, cada
+   outro `entreMonstros` px atrás do de antes, e o ET, se ela levou um, no fim da fila),
    com o desenho do inimigo (BosqueCombate.spriteInimigo: o passo, o piscar, a sombra, flutuando como na arena), virado
-   para onde anda; o pulo no inimigo quando ajuda (S.ataque) e a MonsterBall voando, caindo, balançando, com as estrelinhas
+   para onde anda; o pulo no inimigo quando ajuda (S.ataques) e a MonsterBall voando, caindo, balançando, com as estrelinhas
    do "Pegou!" ou o puf do "Escapou!" (a Super, dourada e roxa, com faíscas douradas em volta). Sobre ele, sempre, um coraçãozinho rosa (é amigo, não inimigo: na arena ele tem
    o mesmo desenho dos inimigos; a coroa do tipo difícil fica, vem do molde). Sem Animações: parado, sem pulo (só a estrelinha no inimigo) e a bola parada no alvo.
    Roda as partes de regra a cada quadro (S.quadroBola, S.quadroAjuda). Sprites feitos uma vez; nada criado por quadro
@@ -68,42 +69,45 @@
     if (m._topoAmigo === undefined) { var i = 0; while (i < m.linhas.length - 1 && !/[^.]/.test(m.linhas[i])) i++; m._topoAmigo = i; }
     return m._topoAmigo;
   }
-  // a distância atrás dela: nunca em cima do bebê (como o ET)
-  function distancia() {
-    var d = cfg().distancia, J = window.Jogador;
-    if (J && J.DIST_BEBE && !(J.montado && J.montado())) d = Math.max(d, J.DIST_BEBE + 16);
-    return d;
-  }
-  var ultX = null, espelhar = false;
+  var distancia = S.distancia;   // o n-ésimo da fila (sistemas/monstros.js)
+  var lado = {};   // por espécie: { ultX, espelhar } (para onde cada um olha)
 
   S.itensDesenho = function (p, t, animar) {
     var J = window.Jogador, cena = R.Cena && R.Cena.atual(), itens = [];
     S.t = t;
     S.quadroBola();
-    var id = M.equipado(), e = id && M.especie(id);
-    if (!e || !E) return itens;
+    var ids = M.equipados();
+    if (!ids.length || !E) return itens;
     E.atualizar(J.x, J.y, cena && cena.id, J.olharX, J.olharY);
-    var q = E.pontoAtras(distancia());
-    if (!q) return itens;
     S.quadroAjuda(t);
-    if (ultX !== null && Math.abs(q.x - ultX) > 0.05) espelhar = q.x < ultX;
-    ultX = q.x;
+    ids.forEach(function (id, n) {
+      var e = M.especie(id), q = e && E.pontoAtras(distancia(n));
+      if (q) itens.push(item(p, t, animar, e, q, n));
+    });
+    return itens;
+  };
+  // um monstro da fila, no ponto q do rastro
+  function item(p, t, animar, e, q, n) {
+    var J = window.Jogador, l = lado[e.id] || (lado[e.id] = { ultX: null, espelhar: false });
+    if (l.ultX !== null && Math.abs(q.x - l.ultX) > 0.05) l.espelhar = q.x < l.ultX;
+    l.ultX = q.x;
     var BC = R.BosqueCombate, m = R.Arenas ? R.Arenas.desenho(e.arena, e.tipo) : null;
     var topo = topoDe(m, e);
     var alto = m && m.flutua !== undefined ? m.flutua : ALTURA, bal = m && m.balanco !== undefined ? m.balanco : BALANCO;
-    itens.push({ y: q.y, desenhar: function () {
-      var x = q.x, y = q.y, a = S.ataque, quadro = 0, sobe = alto;
+    return { y: q.y, desenhar: function () {
+      var x = q.x, y = q.y, a = S.ataques && S.ataques[e.id], quadro = 0, sobe = alto, espelhar = l.espelhar;
       // o pulo no inimigo: vai e volta (sem Animações, fica no lugar)
       if (a && t - a.em < PULO_MS && animar) {
         var k = Math.sin(Math.PI * (t - a.em) / PULO_MS), dx = a.x - x, dy = a.y - y, d = Math.hypot(dx, dy) || 1;
         var ir = Math.min(cfg().ajuda.pulo, d) * k;
         x += dx / d * ir; y += dy / d * ir; sobe += 4 * k;
-        if (Math.abs(dx) > 0.5) espelhar = dx < 0;
+        if (Math.abs(dx) > 0.5) espelhar = l.espelhar = dx < 0;
       }
       if (animar) {
+        var fase = n * 977;   // cada um pisca e balança no seu tempo (pelo lugar na fila)
         if (m && m.passo && Math.floor(t / 220) % 2) quadro = 3;
-        if (t % 3700 < 140) quadro = 1;
-        if (bal) sobe += Math.sin(t / 420) * bal;
+        if ((t + fase) % 3700 < 140) quadro = 1;
+        if (bal) sobe += Math.sin((t + fase) / 420) * bal;
       }
       if (J.sombra) J.sombra(p, Math.round(x), Math.round(y), 4);
       var spr = BC && BC.spriteInimigo ? BC.spriteInimigo(e.tipo, quadro, e.arena) : null;
@@ -112,14 +116,15 @@
       p.sprite(espelhar ? espelho(spr) : spr, Math.round(x), pe);
       // o coração de amigo, logo acima do desenho (sobe e desce devagar com Animações; parado sem)
       p.sprite(coracao(), Math.round(x), pe - spr.height + topo - 2 + (animar ? Math.round(Math.sin(t / 300)) : 0));
-    } });
-    return itens;
-  };
+    } };
+  }
 
-  // por cima de tudo: a estrelinha do ataque e a MonsterBall
+  // por cima de tudo: a estrelinha de cada ataque e a MonsterBall
   S.sobre = function (p, t, animar) {
-    var a = S.ataque;
-    if (a && t - a.em < PULO_MS) p.sprite(estrela(), Math.round(a.x), Math.round(a.y - 8));
+    Object.keys(S.ataques || {}).forEach(function (id) {
+      var a = S.ataques[id];
+      if (a && t - a.em < PULO_MS) p.sprite(estrela(), Math.round(a.x), Math.round(a.y - 8));
+    });
     var b = S.bola;
     if (!b) return;
     var c = cfg(), dt = Date.now() - b.em, img = b.super ? bolaSuper() : b.mini ? bolaMini() : bola();

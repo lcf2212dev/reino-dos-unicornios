@@ -58,6 +58,79 @@ test('monstros: captura conta, equipar só o que tem, tirar com null, tudo grava
   assert.strictEqual(j.R.Monstros.equipado(), 'bosque-facil');
 });
 
+test('monstros: até 4 equipados em fila; o 5º só com uma matéria terminada; deixar um abre a vaga', () => {
+  const j = jogo(), { M, R } = j;
+  const ids = ['bosque-facil', 'gelo-medio', 'lua-dificil', 'pantano-facil', 'dunas-medio', 'vulcao-dificil'];
+  ids.forEach((id) => pegar(j, id));
+  assert.strictEqual(M.vagas(), R.config.monstros.equipar.base);
+  assert.strictEqual(R.config.monstros.equipar.base, 4, 'pedido: até 4');
+  ids.slice(0, 4).forEach((id) => assert.ok(M.equipar(id), id));
+  igual(M.equipados(), ids.slice(0, 4));
+  assert.strictEqual(M.equipado(), ids[0], 'o primeiro da fila');
+  assert.strictEqual(M.equipar(ids[4]), false, 'sem vaga');
+  assert.strictEqual(M.equipados().length, 4);
+  // gravado: a lista em monstrosJuntos e o primeiro em monstroCompanheiro (versão antiga), no mesmo carimbo
+  const lido = j.lido();
+  igual(lido.monstrosJuntos.mariana.ids, ids.slice(0, 4));
+  assert.strictEqual(lido.monstroCompanheiro.mariana.id, ids[0]);
+  assert.strictEqual(lido.monstroCompanheiro.mariana.em, lido.monstrosJuntos.mariana.em);
+  // termina uma matéria do bimestre de agora: +1 vaga (matéria arquivada não conta)
+  const arquivada = R.materias.find((m) => m.arquivada && m.salas.length);
+  arquivada.salas.forEach((s) => { j.P.estado().salas[s.id] = { feita: true }; });
+  assert.strictEqual(M.vagas(), 4, 'matéria do 3º bimestre não conta');
+  const m = R.materias.find((x) => !x.arquivada && x.salas.length);
+  m.salas.forEach((s) => { j.P.estado().salas[s.id] = { feita: true }; });
+  assert.strictEqual(M.materiasTerminadas(), 1);
+  assert.strictEqual(M.vagas(), 5);
+  assert.ok(M.equipar(ids[4]));
+  assert.strictEqual(M.equipar(ids[5]), false);
+  // deixar um em casa: a fila continua na ordem, e a vaga volta
+  assert.ok(M.deixar(ids[1]));
+  igual(M.equipados(), [ids[0], ids[2], ids[3], ids[4]]);
+  assert.ok(M.equipar(ids[5]));
+  igual(M.equipados(), [ids[0], ids[2], ids[3], ids[4], ids[5]]);
+  assert.strictEqual(M.deixar('lua-medio'), false, 'quem não está junto');
+  // sem a matéria (outro aparelho, Novo ciclo): a fila fica só com as vagas de agora, sem apagar a lista gravada
+  m.salas.forEach((s) => { delete j.P.estado().salas[s.id]; });
+  assert.strictEqual(M.equipados().length, 4);
+  assert.strictEqual(j.lido().monstrosJuntos.mariana.ids.length, 5);
+  assert.ok(M.equipar(null));
+  igual(M.equipados(), []);
+  assert.strictEqual(j.lido().monstroCompanheiro.mariana.id, null);
+});
+
+test('monstros: save de antes (só monstroCompanheiro) e aparelho da versão antiga trocando depois', () => {
+  const base = { monstros: { 'lua-dificil': 1, 'gelo-medio': 1, 'bosque-facil': 1 } };
+  // save de antes: o monstro de sempre continua
+  const a = jogo(Object.assign(saveHoje(), base, { monstroCompanheiro: { mariana: { id: 'lua-dificil', em: 5 } } }));
+  igual(a.M.equipados(), ['lua-dificil']);
+  // a lista é a mais nova (o primeiro dela no campo antigo, no mesmo carimbo): vale a lista
+  const b = jogo(Object.assign(saveHoje(), base, { monstrosJuntos: { mariana: { ids: ['gelo-medio', 'bosque-facil'], em: 30 } },
+    monstroCompanheiro: { mariana: { id: 'gelo-medio', em: 30 } } }));
+  igual(b.M.equipados(), ['gelo-medio', 'bosque-facil']);
+  // um aparelho da versão antiga trocou o monstro depois (em maior): vale o dele, sozinho
+  const c = jogo(Object.assign(saveHoje(), base, { monstrosJuntos: { mariana: { ids: ['gelo-medio', 'bosque-facil'], em: 30 } },
+    monstroCompanheiro: { mariana: { id: 'lua-dificil', em: 40 } } }));
+  igual(c.M.equipados(), ['lua-dificil']);
+  const d = jogo(Object.assign(saveHoje(), base, { monstrosJuntos: { mariana: { ids: ['gelo-medio'], em: 30 } },
+    monstroCompanheiro: { mariana: { id: null, em: 40 } } }));
+  igual(d.M.equipados(), [], 'deixou em casa no aparelho antigo');
+  // lixo na lista é limpo; espécie que ela não tem fica de fora (sem apagar)
+  const e = jogo(Object.assign(saveHoje(), base, { monstrosJuntos: { mariana: { ids: ['gelo-medio', 'x y', 42, 'gelo-medio', 'lua-medio'], em: 9 } } }));
+  igual(e.P.estado().monstrosJuntos.mariana.ids, ['gelo-medio', 'lua-medio']);
+  igual(e.M.equipados(), ['gelo-medio']);
+});
+
+test('monstros: com vários na fila, o ET anda atrás do último', () => {
+  const j = jogo(), { M, V, R } = j;
+  V.fazerAmigo('lua-lumi'); V.escolherCompanheiro('lua-lumi');
+  ['bosque-facil', 'gelo-medio', 'lua-dificil'].forEach((id) => { pegar(j, id); M.equipar(id); });
+  const MS = R._monstros, c = R.config;
+  assert.strictEqual(MS.distancia(1) - MS.distancia(0), c.monstros.entreMonstros);
+  assert.strictEqual(R._etCompanheiro.distancia(), Math.max(c.viagem.companheiroDistancia, MS.distancia(2)) + c.viagem.etAtrasDoMonstro);
+  assert.ok(c.monstros.entreMonstros >= 16, 'um não encosta no outro');
+});
+
 test('monstros: o monstro e o ET vão juntos: equipar um não tira o outro', () => {
   const j = jogo(), { M, V } = j;
   V.fazerAmigo('lua-lumi');
@@ -236,7 +309,7 @@ test('monstros: a ajuda: o monstro equipado tira vida do inimigo mais perto; ven
   const d = M.danoAjuda('lua-dificil', 10);
   R._monstros.quadroAjuda(2000);
   assert.strictEqual(f.vida, f.max - d);
-  assert.ok(R._monstros.ataque && R._monstros.ataque.dano === d);
+  assert.ok(R._monstros.ataques['lua-dificil'] && R._monstros.ataques['lua-dificil'].dano === d);
   R._monstros.quadroAjuda(2100);
   assert.strictEqual(f.vida, f.max - d, 'na recarga não ataca');
   R._monstros.quadroAjuda(2000 + R.config.monstros.ajuda.recargaMs);
@@ -327,3 +400,70 @@ test('monstros: a Mini MonsterBall (25 estrelas, 20%) gasta 1 Mini, usa chanceMi
   assert.deepStrictEqual([M.bolas('mini').length, M.bolas('comum').length], [1, 1], 'a Mini voltou como Mini');
 });
 
+
+test('monstros: a fila ataca escalonada, também depois de esperar sem inimigo perto', () => {
+  const j = jogo(), { M, R } = j;
+  const { f } = naArena(j, 'pantano');
+  f.vida = f.max = 100000;
+  R.Bosque.dano = () => 10;
+  const ids = ['bosque-facil', 'gelo-medio', 'lua-dificil'];
+  ids.forEach((id) => { pegar(j, id); M.equipar(id); });
+  const rec = R.config.monstros.ajuda.recargaMs, S = R._monstros, Jog = j.ctx.Jogador;
+  // 3 s longe do inimigo (fora do alcance): ninguém ataca
+  Jog.x = f.x + 500;
+  for (let t = 1000; t <= 4000; t += 16) S.quadroAjuda(t);
+  assert.deepStrictEqual(Object.keys(S.ataques || {}), []);
+  // o inimigo chega perto: os três atacam em tempos diferentes
+  Jog.x = f.x + 10;
+  const quando = {};
+  for (let t = 4016; t <= 4016 + rec * 2; t += 16) {
+    S.quadroAjuda(t);
+    ids.forEach((id) => { const a = S.ataques[id]; if (a && !quando[id]) quando[id] = a.em; });
+  }
+  const tempos = ids.map((id) => quando[id]);
+  assert.ok(tempos.every((x) => x > 0), 'todos atacaram: ' + JSON.stringify(tempos));
+  assert.strictEqual(new Set(tempos).size, 3, 'em tempos diferentes: ' + JSON.stringify(tempos));
+});
+
+test('monstros: a gravação conserva espécie de versão nova e quem a vaga esconde', () => {
+  const j = jogo(Object.assign(saveHoje(), { monstros: { 'lua-dificil': 1, 'gelo-medio': 1, 'bosque-facil': 1, 'pantano-facil': 1, 'dunas-medio': 1 },
+    monstrosJuntos: { mariana: { ids: ['nova-facil', 'gelo-medio', 'bosque-facil', 'pantano-facil', 'dunas-medio', 'lua-dificil'], em: 10 } } }));
+  const { M } = j;
+  igual(M.equipados(), ['gelo-medio', 'bosque-facil', 'pantano-facil', 'dunas-medio'], 'até 4; a de versão nova não aparece');
+  assert.ok(M.deixar('bosque-facil'));
+  igual(j.lido().monstrosJuntos.mariana.ids, ['nova-facil', 'gelo-medio', 'pantano-facil', 'dunas-medio', 'lua-dificil']);
+  igual(M.equipados(), ['gelo-medio', 'pantano-facil', 'dunas-medio', 'lua-dificil'], 'o escondido entra na vaga');
+  assert.strictEqual(j.lido().monstroCompanheiro.mariana.id, 'gelo-medio', 'o 1º que esta versão mostra');
+  assert.ok(M.deixar('lua-dificil'));
+  assert.ok(M.equipar('bosque-facil'));
+  igual(j.lido().monstrosJuntos.mariana.ids, ['nova-facil', 'gelo-medio', 'pantano-facil', 'dunas-medio', 'bosque-facil']);
+  assert.ok(M.equipar(null));
+  igual(j.lido().monstrosJuntos.mariana.ids, ['nova-facil'], 'deixar todos em casa guarda a de versão nova');
+  igual(M.equipados(), []);
+});
+
+test('monstros: maisVagas: sem vaga, a frase muda quando não há matéria por terminar', () => {
+  const j = jogo(), { M, R } = j;
+  assert.strictEqual(M.maisVagas(), true);
+  R.materias.filter((m) => !m.arquivada).forEach((m) => m.salas.forEach((s) => { j.P.estado().salas[s.id] = { feita: true }; }));
+  assert.strictEqual(M.maisVagas(), false);
+  assert.strictEqual(M.vagas(), 4 + R.materias.filter((m) => !m.arquivada && m.salas.length).length);
+});
+
+test('monstros: mescla com o doc de um aparelho da versão antiga (sem a fila, mais recente)', () => {
+  const j = jogo(), { P } = j;
+  const base = { monstros: { 'lua-dificil': 1, 'gelo-medio': 1, 'bosque-facil': 1 } };
+  const novo = Object.assign(saveHoje(), base, { atualizado: 10,
+    monstrosJuntos: { mariana: { ids: ['gelo-medio', 'bosque-facil'], em: 10 } }, monstroCompanheiro: { mariana: { id: 'gelo-medio', em: 10 } } });
+  // o antigo não conhece a fila: trocou o monstro depois
+  const antigo = Object.assign(saveHoje(), base, { atualizado: 20, monstroCompanheiro: { mariana: { id: 'lua-dificil', em: 20 } } });
+  [P.mesclar(novo, antigo), P.mesclar(antigo, novo)].forEach((m) => {
+    igual(m.monstrosJuntos.mariana.ids, ['gelo-medio', 'bosque-facil'], 'a fila não some');
+    assert.strictEqual(m.monstroCompanheiro.mariana.id, 'lua-dificil');
+    const k = jogo(m);
+    igual(k.M.equipados(), ['lua-dificil'], 'vale a troca mais nova, a do aparelho antigo');
+  });
+  // o antigo só abriu e gravou (sem trocar): a fila continua
+  const so = Object.assign(saveHoje(), base, { atualizado: 30, monstroCompanheiro: { mariana: { id: 'gelo-medio', em: 10 } } });
+  igual(jogo(P.mesclar(novo, so)).M.equipados(), ['gelo-medio', 'bosque-facil']);
+});
