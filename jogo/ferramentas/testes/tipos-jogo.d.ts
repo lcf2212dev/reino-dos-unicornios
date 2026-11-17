@@ -994,7 +994,7 @@ type Evento = EventosReino[keyof EventosReino];
 interface BimestresApi {
   atual: number; inicio: string; aviso: string;
   emEspera(materia: Materia | string): boolean;
-  acaoEmEspera(acao: any): boolean;
+  acaoEmEspera(acao: any): boolean; ativa(materia: Materia | string): string;   // ativa: a nova do mesmo prédio
   avisar(quem?: any): Promise<any>;
   painel(titulo?: string, opcoes?: any): any;
 }

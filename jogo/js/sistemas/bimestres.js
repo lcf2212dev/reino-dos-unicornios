@@ -12,6 +12,15 @@
     var m = typeof materia === 'string' ? R.materia(materia) : materia;
     return !!(m && m.arquivada);
   };
+  // a matéria que vale hoje no lugar de uma arquivada: a do mesmo prédio (`lugar.dentro: 'materia:<id antigo>'`).
+  // A própria, se não está arquivada ou ainda não tem uma nova (ex.: os ETs dos planetas e os portais do voo)
+  B.ativa = function (materia) {
+    var m = typeof materia === 'string' ? R.materia(materia) : materia;
+    if (!m) return typeof materia === 'string' ? materia : '';
+    if (!m.arquivada) return m.id;
+    var nova = (R.materias || []).filter(function (x) { return !x.arquivada && x.lugar && x.lugar.dentro === 'materia:' + m.id; })[0];
+    return nova ? nova.id : m.id;
+  };
   B.acaoEmEspera = function (acao) {
     var a = acao || {};
     if (a.tipo === 'prova') { var p = R.prova(a.prova); return !!(p && p.arquivada); }

@@ -188,13 +188,13 @@ fileira de acentos); resposta digitada vale sem diferença de maiúsculas, espa�
 ### 12.1 A pergunta sozinha (`avulsa`)
 Toda pergunta conferível do bimestre também sai sozinha, fora da sala e sem as questões de antes: no Bosque e nas
 arenas ("Hora da pergunta!", `ui/bosque-pergunta.js`), nos lojistas da Vila (`ui/vila-pergunta.js`), na pergunta
-surpresa e nos portais da viagem. Ali o "📖 Leia antes" é a carta `livro` inteira, e depois vêm `apoio`, `figura` e o
+surpresa, nos portais da viagem e no desafio do ET (`ui/et-desafio.js`). Ali o "📖 Leia antes" é a carta `livro` inteira, e depois vêm `apoio`, `figura` e o
 enunciado. Pedido do Leandro (2026-11-07, "perguntas muito estranhas"): sozinha, ela tem de fazer sentido.
 1. Dado que a pergunta usa (tabela, preços, texto-base) vem na carta, no `apoio` ou na `figura`; nada de "a atividade
    anterior", "o gráfico" ou "a resposta que você deu" que não esteja na tela.
 2. `avulsa: { carta: '<id>' }`: a carta do "Leia antes" quando sozinha (a `livro` fala de outra atividade ou só manda
    pintar/recortar); `avulsa: { carta: null }`: sem carta (o `apoio` basta). Na sala, nada muda.
-3. `avulsa: false`: só na sala (depende de verdade da questão anterior). `Reino.avulsa(d)` filtra os quatro sorteios;
+3. `avulsa: false`: só na sala (depende de verdade da questão anterior). `Reino.avulsa(d)` filtra os sorteios;
    `Reino.cartaAvulsa(materia, d)` dá a carta (`nucleo/registros.js`). `validar-conteudo` confere o formato.
 
 ## 13. Etapas da sala de livro

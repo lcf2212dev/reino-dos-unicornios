@@ -27,6 +27,8 @@
 
   /** Perguntas curtas da matéria. @returns {{ id, materia, sala, texto, opcoes: string[], certa: number, desafio }[]} */
   V.perguntas = function (materia, n, chave) {
+    // matéria arquivada (3º bimestre, sem perguntas) = a nova do mesmo prédio (bimestres.md)
+    if (R.Bimestres && R.Bimestres.ativa) materia = R.Bimestres.ativa(materia);
     var U = R.util, m = (R.materias || []).find(function (x) { return x.id === materia; });
     if (!m || !(n > 0)) return [];
     var todas = [];

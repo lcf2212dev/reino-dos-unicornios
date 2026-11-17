@@ -1,7 +1,7 @@
 // Treinadores de Monstros no jogo (docs/contratos/monstros.md): o botão da MonsterBall na arena (escondido para quem
 // nunca teve bola, apagado sem bola ou longe), jogar com o sorteio fixo (pega: gasta 1, o inimigo some, aviso "Pegou!";
-// escapa: gasta 1, aviso "Escapou!"), a tela Meus monstros (pela Mochila; Levar comigo tira o ET), o monstro seguindo
-// no lugar do ET e a ajuda tirando vida de um inimigo. Servidor e banco de TESTE novos (cenario.js), save sintético;
+// escapa: gasta 1, aviso "Escapou!"), a tela Meus monstros (pela Mochila; Levar comigo, e o ET continua), o monstro e o
+// ET seguindo juntos (o ET atrás do monstro) e a ajuda tirando vida de um inimigo. Servidor e banco de TESTE novos (cenario.js), save sintético;
 // modo congelado.
 const { test } = require('node:test');
 const assert = require('assert');
@@ -17,7 +17,7 @@ const PERTO = `(() => { const f = Reino.BosqueCombate.fantasmas().find((x) => x.
 const BOTAO = `(() => { const c = document.querySelector('#hud .monstros-bola'), b = c && c.querySelector('button');
   return { ver: !!c && !c.hidden, apagado: !!b && b.getAttribute('aria-disabled') === 'true', n: b ? b.querySelector('.monstros-bola-n').textContent : '' }; })()`;
 
-test('monstros: MonsterBall na arena, Meus monstros, o monstro seguindo no lugar do ET e a ajuda', { timeout: 300000 }, async () => {
+test('monstros: MonsterBall na arena, Meus monstros, o monstro e o ET seguindo juntos e a ajuda', { timeout: 300000 }, async () => {
   const c = await abrirCenario({ tamanho: 'celular', pasta: pasta() });
   try {
     await c.js('Reino.UI.fecharTodas(); 1');
@@ -83,7 +83,7 @@ test('monstros: MonsterBall na arena, Meus monstros, o monstro seguindo no lugar
     assert.deepStrictEqual(await c.js("({ s: Reino.Monstros.bolas('super').length, cap: Reino.Monstros.capturados().reduce((n, x) => n + x.qtd, 0) })"), { s: 0, cap: 2 });
     assert.strictEqual(await c.js(SUPER), false, 'acabou a Super: o botão some');
 
-    // 5) com um ET levado, equipa o monstro pela Mochila → Meus monstros: o ET fica em casa e o monstro segue
+    // 5) com um ET levado, equipa o monstro pela Mochila → Meus monstros: os dois seguem (o ET atrás do monstro)
     await c.js("Reino.Viagem.fazerAmigo('lua-lumi'); Reino.Viagem.escolherCompanheiro('lua-lumi'); 1");
     assert.strictEqual(await c.js('Reino.Viagem.companheiro()'), 'lua-lumi');
     await c.js("document.querySelector('#hud .btn-mochila').click(); 1");
@@ -100,12 +100,14 @@ test('monstros: MonsterBall na arena, Meus monstros, o monstro seguindo no lugar
     assert.deepStrictEqual(await c.js(`({ eq: Reino.Monstros.equipado(), et: Reino.Viagem.companheiro(),
       selo: !!document.querySelector('.tela-monstros .monstros-cartao.junto .monstros-selo'),
       botao: document.querySelector('.tela-monstros [data-monstro="${especie}"]').textContent })`),
-    { eq: especie, et: null, selo: true, botao: 'Deixar em casa' });
+    { eq: especie, et: 'lua-lumi', selo: true, botao: 'Deixar em casa' });
     await c.js('Reino.UI.fecharTodas(); 1');
     await c.avancar(600);
-    const dep = await c.js("({ ativo: !!Reino.modulo('monstros').camada.ativo(), et: !!Reino.modulo('et-companheiro').camada.ativo() })");
+    const dep = await c.js(`({ ativo: !!Reino.modulo('monstros').camada.ativo(), et: !!Reino.modulo('et-companheiro').camada.ativo(),
+      dEt: Reino._etCompanheiro.distancia(), dMonstro: Reino.config.monstros.distancia })`);
     assert.strictEqual(dep.ativo, true, 'o monstro aparece');
-    assert.strictEqual(dep.et, false, 'o ET some');
+    assert.strictEqual(dep.et, true, 'o ET continua junto');
+    assert.ok(dep.dEt >= dep.dMonstro + 16, 'o ET vai atrás do monstro: ' + JSON.stringify(dep));
 
     // 6) a ajuda: perto de um inimigo, o monstro tira vida dele sozinho
     const id2 = await c.js(PERTO);
@@ -113,9 +115,11 @@ test('monstros: MonsterBall na arena, Meus monstros, o monstro seguindo no lugar
     const ferido = await c.js(`(() => { const f = Reino.BosqueCombate.fantasmas().find((x) => x.id === ${JSON.stringify(id2)}); return { vida: f.vida, max: f.max, estado: f.estado }; })()`);
     assert.ok(ferido.vida < ferido.max || ferido.estado !== 'vagando', 'o monstro bateu: ' + JSON.stringify(ferido));
 
-    // 7) levar o ET de novo tira o monstro
+    // 7) deixar o ET em casa não tira o monstro, e levar de novo também não
+    await c.js("Reino.Viagem.escolherCompanheiro(null); 1");
+    assert.deepStrictEqual(await c.js('({ eq: Reino.Monstros.equipado(), et: Reino.Viagem.companheiro() })'), { eq: especie, et: null });
     await c.js("Reino.Viagem.escolherCompanheiro('lua-lumi'); 1");
-    assert.deepStrictEqual(await c.js('({ eq: Reino.Monstros.equipado(), et: Reino.Viagem.companheiro() })'), { eq: null, et: 'lua-lumi' });
+    assert.deepStrictEqual(await c.js('({ eq: Reino.Monstros.equipado(), et: Reino.Viagem.companheiro() })'), { eq: especie, et: 'lua-lumi' });
   } finally {
     await c.fechar();
   }

@@ -24,7 +24,9 @@ Ao adicionar material futuro, registre um catálogo separado, com novos IDs de m
 (o formato do 4º bimestre, no prédio de cada matéria: `quarto-bimestre.md`; sala nova: `docs/receitas/sala-4bim.md`).
 Não reative nem acrescente salas ao catálogo do terceiro bimestre: o dinheiro já ganho depende da quantidade
 de salas dele. Os NPCs e seus interiores poderão apontar para o material novo, mantendo o catálogo antigo
-registrado para as conquistas. A mudança de temporada não chama `novoCiclo`.
+registrado para as conquistas. A mudança de temporada não chama `novoCiclo`. `ativa(materia)` dá a matéria nova do
+mesmo prédio (a que tem `lugar.dentro: 'materia:<id antigo>'`), ou a própria: os ETs dos planetas e os portais do voo
+apontam para a matéria antiga e usam a nova por ela (`viagem.md` §6.1).
 
 Os testes do motor pedagógico carregam o arquivo histórico explicitamente, em VM ou contexto isolado.
 As gravações históricas são servidas apenas pela fixture de teste. A validação confere tanto o catálogo

@@ -1,6 +1,6 @@
 // Testes de unidade: Treinadores de Monstros (docs/contratos/monstros.md): as espécies, os campos `monstros` e
-// `monstroCompanheiro` (ida e volta, mescla com dois aparelhos, limpeza, save antigo), só 1 companheiro (o monstro ou o
-// ET), o dano da ajuda, a MonsterBall (podeJogar, gasta 1, sorteio, captura gravada) e o combate (ferir, capturar).
+// `monstroCompanheiro` (ida e volta, mescla com dois aparelhos, limpeza, save antigo), o monstro e o ET juntos (os 3
+// bichinhos com o unicórnio, o ET atrás do monstro), o dano da ajuda, a MonsterBall (podeJogar, gasta 1, sorteio, captura gravada) e o combate (ferir, capturar).
 // O jogo inteiro (todos os `node: true`) num vm com save sintético (ajudantes/jogo-save.js); nada toca no save real.
 // Rodar: node --test jogo/ferramentas/testes/unidade/monstros.test.js   (tudo: npm test)
 const { test } = require('node:test');
@@ -58,25 +58,44 @@ test('monstros: captura conta, equipar só o que tem, tirar com null, tudo grava
   assert.strictEqual(j.R.Monstros.equipado(), 'bosque-facil');
 });
 
-test('monstros: só 1 companheiro: equipar o monstro tira o ET; levar o ET tira o monstro', () => {
+test('monstros: o monstro e o ET vão juntos: equipar um não tira o outro', () => {
   const j = jogo(), { M, V } = j;
   V.fazerAmigo('lua-lumi');
   assert.ok(V.escolherCompanheiro('lua-lumi'));
   assert.strictEqual(V.companheiro(), 'lua-lumi');
   pegar(j, 'gelo-medio');
   assert.ok(M.equipar('gelo-medio'));
-  assert.strictEqual(V.companheiro(), null, 'o ET ficou em casa');
-  assert.strictEqual(j.lido().etCompanheiro.mariana.id, null);
+  assert.strictEqual(V.companheiro(), 'lua-lumi', 'o ET continua junto');
+  assert.strictEqual(j.lido().etCompanheiro.mariana.id, 'lua-lumi');
   assert.strictEqual(M.equipado(), 'gelo-medio');
   j.relogio.agora += 1000;
   assert.ok(V.escolherCompanheiro('lua-lumi'));
+  assert.strictEqual(M.equipado(), 'gelo-medio', 'o monstro continua junto');
+  assert.strictEqual(j.lido().monstroCompanheiro.mariana.id, 'gelo-medio');
+  // deixar um em casa não mexe no outro
+  assert.ok(V.escolherCompanheiro(null));
+  assert.strictEqual(M.equipado(), 'gelo-medio');
+  assert.ok(V.escolherCompanheiro('lua-lumi'));
+  assert.ok(M.equipar(null));
   assert.strictEqual(V.companheiro(), 'lua-lumi');
-  assert.strictEqual(M.equipado(), null, 'o monstro ficou em casa');
-  assert.strictEqual(j.lido().monstroCompanheiro.mariana.id, null);
   assert.ok(V.ehAmigo('lua-lumi'), 'a amizade não some');
 });
 
-test('monstros: dois aparelhos: contadores pelo maior, companheiro pelo mais recente, ET x monstro pelo em', () => {
+test('monstros: com os dois juntos, o ET anda atrás do monstro (nunca em cima dele nem do bebê)', () => {
+  const j = jogo(), { M, V, R } = j;
+  const E = R._etCompanheiro, cfg = R.config.viagem;
+  V.fazerAmigo('lua-lumi');
+  V.escolherCompanheiro('lua-lumi');
+  const so = E.distancia();
+  pegar(j, 'gelo-medio');
+  M.equipar('gelo-medio');
+  assert.strictEqual(E.distancia(), Math.max(so, R.config.monstros.distancia) + cfg.etAtrasDoMonstro, 'o ET vai atrás do monstro');
+  R.config.monstros.distancia = so + 40;   // monstro mais longe: o ET continua atrás dele
+  assert.strictEqual(E.distancia(), so + 40 + cfg.etAtrasDoMonstro);
+  assert.ok(cfg.etAtrasDoMonstro >= 16, 'sem encostar no monstro');
+});
+
+test('monstros: dois aparelhos: contadores pelo maior, companheiro pelo mais recente; ET e monstro cada um no seu campo', () => {
   const j = jogo(), { P } = j;
   const a = Object.assign(saveHoje(), { atualizado: 2, monstros: { 'lua-dificil': 1, 'gelo-medio': 3 },
     monstroCompanheiro: { mariana: { id: 'lua-dificil', em: 10 } } });
@@ -86,15 +105,13 @@ test('monstros: dois aparelhos: contadores pelo maior, companheiro pelo mais rec
     igual(m.monstros, { 'lua-dificil': 2, 'gelo-medio': 3, 'bosque-facil': 1 });
     assert.strictEqual(m.monstroCompanheiro.mariana.id, null);
   });
-  // um aparelho levou o ET depois de o outro equipar o monstro: vale o mais recente (sem gravar nada na leitura)
-  const v = jogo(Object.assign(saveHoje(), { etsAmigos: { 'lua-lumi': true }, monstros: { 'lua-dificil': 1 },
-    etCompanheiro: { mariana: { id: 'lua-lumi', em: 30 } }, monstroCompanheiro: { mariana: { id: 'lua-dificil', em: 20 } } }));
-  assert.strictEqual(v.M.equipado(), null);
-  assert.strictEqual(v.V.companheiro(), 'lua-lumi');
-  const w = jogo(Object.assign(saveHoje(), { etsAmigos: { 'lua-lumi': true }, monstros: { 'lua-dificil': 1 },
-    etCompanheiro: { mariana: { id: 'lua-lumi', em: 20 } }, monstroCompanheiro: { mariana: { id: 'lua-dificil', em: 30 } } }));
-  assert.strictEqual(w.M.equipado(), 'lua-dificil');
-  assert.strictEqual(w.V.companheiro(), null);
+  // o ET e o monstro gravados: os dois vão juntos, seja qual for o mais recente (nada gravado na leitura)
+  [[30, 20], [20, 30]].forEach(([emEt, emMonstro]) => {
+    const v = jogo(Object.assign(saveHoje(), { etsAmigos: { 'lua-lumi': true }, monstros: { 'lua-dificil': 1 },
+      etCompanheiro: { mariana: { id: 'lua-lumi', em: emEt } }, monstroCompanheiro: { mariana: { id: 'lua-dificil', em: emMonstro } } }));
+    assert.strictEqual(v.M.equipado(), 'lua-dificil');
+    assert.strictEqual(v.V.companheiro(), 'lua-lumi');
+  });
   // equipado de uma espécie que ela não tem (mescla estranha) = nenhum; o ET continua
   const x = jogo(Object.assign(saveHoje(), { etsAmigos: { 'lua-lumi': true }, etCompanheiro: { mariana: { id: 'lua-lumi', em: 5 } },
     monstroCompanheiro: { mariana: { id: 'lua-dificil', em: 30 } } }));

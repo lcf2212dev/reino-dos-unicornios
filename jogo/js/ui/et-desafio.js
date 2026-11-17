@@ -1,6 +1,7 @@
 /* Desafio do ET (Reino.UI.telaDesafioET(npc, materia)), aberto pela ação `viagem-desafio` (sistemas/viagem-desafio.js):
    o retrato e a fala do ET, config.viagem.desafioPerguntas perguntas uma por vez (o card de Reino.Desafios.render,
-   como a pergunta surpresa), Conferir → Aura e estrela no acerto; errada mostra a certa e a explicação e segue.
+   como a pergunta surpresa, com o "📖 Leia antes" da pergunta sozinha: quarto-bimestre.md §12.1), Conferir → Aura e
+   estrela no acerto; errada mostra a certa e a explicação e segue.
    No fim, o ET agradece e vira amigo. Contrato: docs/contratos/viagem.md §6.1. Estilos: css/ui-et-desafio.css. */
 (function () {
   var U = Reino.util, el = U.el;
@@ -26,7 +27,10 @@
     if (!X || !npc || UI.temTela()) return;
     var id = npc.id, F = X.frases(id), voz = npc.voz || X.voz(id), G = Reino.Genero;
     var des = X.comecar(id, materia);
-    if (!des.perguntas.length) return;
+    // sem nenhuma pergunta (matéria sem conteúdo): ela ajudou do mesmo jeito, o ET vira amigo (e entra no álbum)
+    if (!des.perguntas.length) { X.terminar(des); return; }
+    var novoAmigo = null;   // a amizade vale ao responder a última (fechar no ✕ antes do "Terminar" não a perde)
+    var reserva = (Reino.reservas && Reino.reservas[id]) || {}, genero = npc.genero || reserva.genero;
     var fala = function (t) { return G ? G.genero(t) : t; };
     var i = 0, fase = 'pergunta', ctrl = null, atual = null;
 
@@ -61,12 +65,24 @@
       U.preencher(placar, (compacto() ? '' : 'Pergunta ') + Math.min(i + 1, des.perguntas.length) + ' de ' + des.perguntas.length + ' • ' + des.estrelas + ' ⭐');
     }
 
+    // a página do livro da pergunta (o texto-base, as cédulas…), como no Bosque e na Vila
+    function contexto(q) {
+      var m = q && Reino.materia ? Reino.materia(q.materia) : null;   // q.materia é o id
+      var c = m && Reino.cartaAvulsa ? Reino.cartaAvulsa(m, q.desafio) : null;
+      if (!c || !UI.desenharCarta) return null;
+      var carta = el('div.livro-carta.et-carta');
+      UI.desenharCarta(carta, c, m);
+      return el('details.et-contexto', { open: true }, el('summary', el('b', '📖 Leia antes')), carta);
+    }
+
     function mostrarPergunta(ler) {
       fase = 'pergunta';
       atual = des.perguntas[i].desafio;
       area.innerHTML = '';
       retorno.hidden = true;
       retorno.innerHTML = '';
+      var leia = contexto(des.perguntas[i]);
+      if (leia) area.appendChild(leia);
       ctrl = D.render(atual, { modo: 'surpresa', onMudar: function () { btn.disabled = fase !== 'pergunta' || !ctrl.pronto(); } });
       area.appendChild(ctrl.card);
       U.preencher(btn, 'Conferir ✓');
@@ -75,7 +91,7 @@
       var d = atual, c = ctrl, q = des.perguntas[i];
       // carrega o pacote de voz da sala antes de ler (como a pergunta surpresa); no máximo 4 s de espera
       var voz = q && q.materia && q.sala && Reino.Voz && Reino.Voz.carregarSala
-        ? Promise.race([Reino.Voz.carregarSala(q.materia, q.sala), new Promise(function (r) { setTimeout(r, 4000); })]) : null;
+        ? Promise.race([Reino.Voz.carregarSala({ id: q.materia }, { id: q.sala }), new Promise(function (r) { setTimeout(r, 4000); })]) : null;
       Promise.all([ler, voz]).then(function () {
         if (c === ctrl && fase === 'pergunta' && pn.tela.isConnected) Reino.Som.falar(Reino.Falas.segmentosDesafio(d, c.ordem), { voz: 'narradora' });
       });
@@ -112,6 +128,7 @@
       retorno.hidden = false;
       atualizarPlacar();
       U.preencher(btn, i + 1 < des.perguntas.length ? 'Próxima →' : 'Terminar ✓');
+      if (i + 1 >= des.perguntas.length && novoAmigo === null) novoAmigo = X.terminar(des);
       travar();
       setTimeout(function () { if (retorno.scrollIntoView) retorno.scrollIntoView({ block: 'nearest', behavior: reduzMovimento() ? 'auto' : 'smooth' }); }, 60);
     }
@@ -124,11 +141,11 @@
 
     function fim() {
       fase = 'fim';
-      var novo = X.terminar(des);
+      var novo = novoAmigo !== null ? novoAmigo : X.terminar(des);
       area.innerHTML = '';
       retorno.hidden = true;
       U.preencher(placar, des.certas + ' de ' + des.perguntas.length + ' certas • +' + des.estrelas + ' ⭐');
-      var amiga = npc.genero === 'm' ? 'seu amigo' : 'sua amiga';
+      var amiga = genero === 'm' ? 'seu amigo' : 'sua amiga';
       area.appendChild(el('p.et-amigo', '💛 ' + (npc.nome || 'ET') + (novo ? ' virou ' : ' é ') + amiga + '!'));
       Reino.Som.tocar('estrela');
       UI.festa(2, { som: false });   // ET vencido: nível 2 (arte.md §16)

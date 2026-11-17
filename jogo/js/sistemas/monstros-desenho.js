@@ -1,5 +1,5 @@
 /* Treinadores de Monstros, parte de desenho (de sistemas/monstros.js, interno Reino._monstros; monstros.md): o monstro
-   equipado andando atrás dela no caminho dela (o rastro do ET, Reino._etCompanheiro: os dois nunca aparecem juntos),
+   equipado andando atrás dela no caminho dela (o rastro do ET, Reino._etCompanheiro; com o ET junto, ele vai logo atrás dela e o ET atrás dele),
    com o desenho do inimigo (BosqueCombate.spriteInimigo: o passo, o piscar, a sombra, flutuando como na arena), virado
    para onde anda; o pulo no inimigo quando ajuda (S.ataque) e a MonsterBall voando, caindo, balançando, com as estrelinhas
    do "Pegou!" ou o puf do "Escapou!" (a Super, dourada e roxa, com faíscas douradas em volta). Sobre ele, sempre, um coraçãozinho rosa (é amigo, não inimigo: na arena ele tem

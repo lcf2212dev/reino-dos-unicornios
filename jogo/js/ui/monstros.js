@@ -1,6 +1,6 @@
 /* Meus monstros (Reino.UI.telaMonstros; docs/contratos/monstros.md): um cartão por espécie, como o Álbum de ETs: a que
    ela pegou em cores (desenho do inimigo, nome, de onde veio e "×N"), a que falta como silhueta com "?" e o lugar onde
-   mora. No cartão de um capturado: "Levar comigo" / "Deixar em casa" (Reino.Monstros.equipar; só 1, e tira o ET) e o
+   mora. No cartão de um capturado: "Levar comigo" / "Deixar em casa" (Reino.Monstros.equipar; só 1 monstro, o ET continua) e o
    selo "Está com você"; os que ela tem vêm primeiro. Sem nenhum: o convite para comprar MonsterBalls nos Treinadores de Monstros da Vila.
    Abre pelo botão da Mochila (ui/mochila.js) e pela loja da Kiara (UI.telaTreinadores). Também o aviso pequeno da bola
    ("Pegou!" / "Escapou!", UI.avisoItem) no EVENTOS.MONSTROS. Só na tela, sem voz. Estilos: css/ui-monstros.css. */

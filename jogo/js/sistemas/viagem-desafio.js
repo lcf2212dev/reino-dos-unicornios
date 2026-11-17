@@ -39,31 +39,33 @@
 
   /* ================= O DESAFIO ================= */
   var vezes = {};   // desafios começados nesta sessão, por ET: cada vez, outra chave de sorteio
-  // as perguntas: Reino.Viagem.perguntas (§4.1) quando existir; senão, 'escolha'/'vf' das salas, num sorteio pela chave
+  function salaFeita(id) { var est = estado(), x = est && est.salas && est.salas[id]; return !!(x && x.feita); }
+  // as perguntas: 'escolha' e 'vf' das salas que valem sozinhas (Reino.avulsa; o painel usa o card inteiro da sala,
+  // com o "Leia antes": não precisam ser curtas como as dos portais), as das salas que ela já fez primeiro, sorteadas
+  // por U.embaralhar (Math.random no jogo; a chave no modo congelado)
   function sortear(materia, n, chave) {
-    var m = R.materia && R.materia(materia), lista = [];
+    var m = R.materia && R.materia(materia), U = R.util, todas = [];
     if (!m) return [];
     (m.salas || []).forEach(function (s) {
       (s.desafios || []).forEach(function (d) {
-        if (d.tipo === 'escolha' || d.tipo === 'vf') lista.push({ id: d.id, materia: m.id, sala: s.id, desafio: d });
+        if ((d.tipo === 'escolha' || d.tipo === 'vf') && (!R.avulsa || R.avulsa(d))) todas.push({ id: d.id, materia: m.id, sala: s.id, desafio: d });
       });
     });
-    var h = 0, s = String(chave);
-    for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
-    function rnd() { h = (h * 1103515245 + 12345) >>> 0; return h / 4294967296; }
-    for (var j = lista.length - 1; j > 0; j--) { var k = Math.floor(rnd() * (j + 1)), t = lista[j]; lista[j] = lista[k]; lista[k] = t; }
-    return lista.slice(0, n);
+    var k = String(chave), feitas = todas.filter(function (p) { return salaFeita(p.sala); });
+    var outras = todas.filter(function (p) { return feitas.indexOf(p) < 0; });
+    return U.embaralhar(feitas, k + ':feitas').concat(U.embaralhar(outras, k + ':resto')).slice(0, n);
   }
   function perguntasDoET(npcId, materia) {
     var n = cfg().desafioPerguntas, vez = vezes[npcId] = (vezes[npcId] || 0) + 1;
     var chave = 'et-' + npcId + '-' + (V.ehAmigo(npcId) ? 'amigo-' : '') + vez;
-    var l = typeof V.perguntas === 'function' ? V.perguntas(materia, n, chave) : null;
-    l = (l && l.length ? l : sortear(materia, n, chave)).filter(function (p) { return p && p.desafio; });
-    return l;
+    return sortear(materia, n, chave);
   }
 
-  // começa um desafio: { npcId, materia, perguntas, amigoAntes, vez, estrelas }
+  // começa um desafio: { npcId, materia, perguntas, amigoAntes, vez, estrelas }. A matéria do ET é a do 3º bimestre
+  // (arquivada, sem perguntas): vale a nova do mesmo prédio (Bimestres.ativa); sem isso o painel não abria e o ET
+  // nunca virava amigo (pedido de 17/11)
   function comecar(npcId, materia) {
+    if (R.Bimestres && R.Bimestres.ativa) materia = R.Bimestres.ativa(materia);
     return { npcId: npcId, materia: materia, amigoAntes: V.ehAmigo(npcId), perguntas: perguntasDoET(npcId, materia), estrelas: 0, certas: 0 };
   }
   // uma resposta conferida (cada pergunta é respondida uma vez: acerto = de primeira): Aura e estrela

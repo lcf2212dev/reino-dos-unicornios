@@ -1,8 +1,8 @@
 /* Viagem de foguete (3ª versão): o ET amigo que acompanha a Mariana, flutuando um pouco atrás dela no mapa e nos
    interiores (campo `etCompanheiro`). Contrato: docs/contratos/viagem.md §6.3. Desenho: et-companheiro-desenho.js.
    Aqui: API (Reino.Viagem.companheiro / escolherCompanheiro), o campo do save e o rastro próprio (o do bebê é do
-   jogador.js). Não conversa nem bloqueia nada. Só 1 companheiro (monstros.md §3): com um monstro equipado
-   (Reino.Monstros.tiraEt) o ET fica em casa; levar o ET tira o monstro. O rastro também serve ao monstro (monstros-desenho.js).
+   jogador.js). Não conversa nem bloqueia nada. O ET e o monstro equipado (monstros.md §3) vão juntos: o monstro logo
+   atrás dela e o ET atrás dele (`config.viagem.etAtrasDoMonstro`). O rastro serve aos dois (monstros-desenho.js).
    node: true: nada de DOM, Progresso nem Cena no carregamento (só dentro das funções). */
 (function () {
   var R = window.Reino;
@@ -31,24 +31,17 @@
 
   /* ================= API ================= */
   // o ET escolhido (id do elenco) ou null; some se deixou de ser amigo ou se o personagem não existe
-  V.companheiroBruto = function () {
+  V.companheiro = function () {
     var est = estado(), m = est && est.etCompanheiro && est.etCompanheiro.mariana, id = m && m.id;
     if (!id || !V.ehAmigo || !V.ehAmigo(id)) return null;
     var el = R.NPCs && R.NPCs.ELENCO && R.NPCs.ELENCO[id];
     if (R.NPCs && R.NPCs.ELENCO && (!el || !el.sprite || el.sprite.base === 'reserva')) return null;
     return id;
   };
-  // quem vai junto: o escolhido, menos quando um monstro está equipado (Reino.Monstros)
-  V.companheiro = function () {
-    var id = V.companheiroBruto();
-    return id && R.Monstros && R.Monstros.tiraEt && R.Monstros.tiraEt() ? null : id;
-  };
-  // levar um amigo (id) ou deixar em casa (null); true = gravou
+  // levar um amigo (id) ou deixar em casa (null); o monstro equipado continua junto. true = gravou
   V.escolherCompanheiro = function (id) {
     var est = estado();
     if (!est || (id !== null && (typeof id !== 'string' || !V.ehAmigo || !V.ehAmigo(id)))) return false;
-    var mc = est.monstroCompanheiro && est.monstroCompanheiro.mariana;
-    if (id !== null && mc && mc.id && R.Monstros) R.Monstros.equipar(null);   // só 1 companheiro: o monstro fica em casa
     var m = est.etCompanheiro && est.etCompanheiro.mariana;
     est.etCompanheiro = { mariana: { id: id, em: Math.max(Date.now(), (m && m.em || 0) + 1) } };
     S.rastro = [];
@@ -57,10 +50,13 @@
   };
 
   /* ================= RASTRO ================= */
-  // a distância atrás dela: nunca em cima do bebê (que anda DIST_BEBE atrás)
+  // a distância atrás dela: nunca em cima do bebê (que anda DIST_BEBE atrás); com o monstro junto, atrás dele
+  // (o monstro anda config.monstros.distancia atrás dela, com a mesma regra do bebê: monstros-desenho.js)
   S.distancia = function () {
-    var d = cfg().companheiroDistancia, J = window.Jogador;
-    if (J && J.DIST_BEBE && !(J.montado && J.montado())) d = Math.max(d, J.DIST_BEBE + 16);
+    var J = window.Jogador, M = R.Monstros, aPe = J && J.DIST_BEBE && !(J.montado && J.montado());
+    function longeDoBebe(d) { return aPe ? Math.max(d, J.DIST_BEBE + 16) : d; }
+    var d = longeDoBebe(cfg().companheiroDistancia);
+    if (M && M.equipado && M.equipado()) d = Math.max(d, longeDoBebe(R.config.monstros.distancia)) + cfg().etAtrasDoMonstro;
     return d;
   };
   // recomeça de lado, um pouco atrás (y menor): a pé, à direita (o bebê começa à esquerda); montada, à esquerda

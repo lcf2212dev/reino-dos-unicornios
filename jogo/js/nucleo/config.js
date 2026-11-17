@@ -194,9 +194,10 @@ Reino.config = {
   // 2ª versão: no voo para um planeta com matéria, `portaisPorVoo` portais de resposta (certo = `estrelasPorPortal`
   // estrela a mais e conta na Aura; errado não tira nada). O ET do desafio faz `desafioPerguntas` perguntas da matéria
   // (cada acerto de primeira vale `estrelasPorAcertoET`; errada mostra a certa); ajudar até o fim faz dele um amigo.
-  // 3ª versão: o ET amigo que acompanha a Mariana anda `companheiroDistancia` px atrás dela
+  // 3ª versão: o ET amigo que acompanha a Mariana anda `companheiroDistancia` px atrás dela; com um monstro equipado
+  // junto (os 3 bichinhos), o monstro vai nessa distância e o ET `etAtrasDoMonstro` px mais atrás, sem encostar nele
   viagem: { tanque: 10, cheioNoComeco: true, vooSegundos: 30, estrelasPorVoo: 5, portaisPorVoo: 3, estrelasPorPortal: 1,
-    desafioPerguntas: 3, estrelasPorAcertoET: 1, companheiroDistancia: 30 },
+    desafioPerguntas: 3, estrelasPorAcertoET: 1, companheiroDistancia: 30, etAtrasDoMonstro: 22 },
   // Laboratório de Química (js/sistemas/quimica.js): estrelas só na 1ª vez de cada descoberta (receita, lâmina do
   // microscópio, lição lida até o fim) e uma vez ao completar o caderno; nada de dinheiro nem Aura (é diversão).
   // `maxTubos`: quantos tubos cabem no béquer. Se mudar as estrelas, regrave as vozes (a Doutora Proveta fala o valor)

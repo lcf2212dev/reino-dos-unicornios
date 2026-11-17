@@ -4,7 +4,8 @@ Pedido: `pedidos/2026-11-16-treinadores.md`. Na Vila Arco-Íris, o terreno da di
 Monstros** (interior `vila-treinadores`, lojista **Treinadora Kiara**, `kiara`). Lá se compra a **MonsterBall**
 (`bola-monster`, 50 estrelas; 40% de chance) e a **Super MonsterBall** (`bola-super`, 125 estrelas; pega sempre); nas
 arenas ela joga a bola no monstro mais perto. Um monstro capturado pode
-ser equipado (só 1): anda atrás dela no lugar do ET e ajuda na luta.
+ser equipado (1 monstro por vez): anda atrás dela e ajuda na luta, junto com o ET que ela levou (os 3 bichinhos, com o
+unicórnio: pedido do Leandro, 17/11).
 
 ## 1. Onde está no código
 | Parte | Arquivo |
@@ -35,9 +36,10 @@ monstros: { <especie>: n }                      // quantos de cada espécie ela 
 monstroCompanheiro: { mariana: { id, em } }     // o equipado (id = espécie ou null); 'carimbo', como etCompanheiro
 ```
 Novo ciclo mantém os dois; cópia `-novidades`: sim. Save antigo: `{}` (sem monstro: o ET continua).
-- **Só 1 companheiro**: equipar um monstro grava `monstroCompanheiro` e escolhe o ET `null`
-  (`Reino.Viagem.escolherCompanheiro(null)`); escolher um ET no álbum grava `monstroCompanheiro.mariana.id = null`.
-  Na leitura, se os dois aparecem (dois aparelhos), vale o de `em` maior; o outro conta como guardado (sem gravar).
+- **O monstro e o ET vão juntos**: equipar um monstro só grava `monstroCompanheiro`; escolher um ET no álbum só grava
+  `etCompanheiro`. Um não tira o outro (até 17/11 era só 1: o save de quem equipou um monstro antes ficou com o ET
+  `null`, e ela leva o ET de novo pelo álbum). Na fila atrás dela: o bebê (a pé), o monstro a `distancia` px e o ET
+  `config.viagem.etAtrasDoMonstro` px mais atrás (`Reino._etCompanheiro.distancia()`), todos no mesmo rastro.
 - Monstro equipado de espécie que ela não tem (mescla estranha) = nenhum.
 
 ## 4. API
@@ -48,8 +50,8 @@ Reino.Monstros
   podeJogar(tipo?) → { ok, alvo, arena, uid, tipo } | { ok: false, motivo: 'fora-arena' | 'parada' | 'recarga' | 'sem-bola' | 'longe' }
   jogar(tipo?) → bool        tipo 'comum' (padrão, bola-monster, chanceCaptura) | 'super' (bola-super, chanceSuper)
   bolas(tipo?) → [uid]   ITEM_BOLA: { comum: 'bola-monster', super: 'bola-super' }   quantos(especie) → n   especie(id) → def | null   danoAjuda(especie, danoEspada) → n
-  registrarCaptura(especie) → bool   tiraEt() → bool  (o ET fica em casa)   NOMES
-Reino.Viagem.companheiroBruto() → id | null           (o ET escolhido, sem olhar o monstro; companheiro() olha)
+  registrarCaptura(especie) → bool   NOMES
+Reino.Viagem.companheiro() → id | null                (o ET escolhido; não depende do monstro)
 Reino.BosqueCombate.ferir(id, dano) → { vida, vencido } | null   prender(id) / soltar(id, arena?) / capturar(id) → bool   spriteInimigo(tipo, q, arena) → canvas | null
 Reino.Itens.usar(uid da bola) → só gasta com Monstros.podeJogar() ok (quem joga é Monstros.jogar)
 Reino.UI.telaMonstros() → P        Reino.UI.telaTreinadores(npc) → P

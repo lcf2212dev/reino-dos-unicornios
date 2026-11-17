@@ -1,5 +1,5 @@
 /* Treinadores de Monstros (docs/contratos/monstros.md): a coleção de monstros da Mariana e o monstro equipado, que anda
-   atrás dela no lugar do ET (só 1 companheiro) e ajuda na luta. Aqui: os nomes das espécies, os dois campos do save
+   atrás dela (junto com o ET, se ela levou um: os 3 bichinhos, com o unicórnio) e ajuda na luta. Aqui: os nomes das espécies, os dois campos do save
    (`monstros`, `monstroCompanheiro`), Reino.Monstros (espécies, capturados, equipar, dano da ajuda) e o módulo
    'monstros' com a camada de desenho. Cria o interno Reino._monstros, que as partes dividem:
      t                 o `t` do último quadro desenhado (ms; virtual no modo congelado)
@@ -92,30 +92,16 @@
   }
   function quantos(id) { var est = estado(), m = est && est.monstros; return m && m[id] > 0 ? m[id] : 0; }
 
-  /* ================= O COMPANHEIRO (só 1: o monstro ou o ET) ================= */
-  function brutoMonstro() {
-    var est = estado(), m = est && est.monstroCompanheiro && est.monstroCompanheiro.mariana, id = m && m.id;
-    if (!id || !quantos(id) || !especie(id)) return null;
-    return { id: id, em: m.em || 0 };
-  }
-  function brutoEt() {
-    var V = R.Viagem, est = estado(), id = V && V.companheiroBruto ? V.companheiroBruto() : null;
-    if (!id) return null;
-    var m = est && est.etCompanheiro && est.etCompanheiro.mariana;
-    return { id: id, em: (m && m.em) || 0 };
-  }
-  // o equipado: o monstro, se o ET não foi escolhido depois (dois aparelhos: vale o `em` maior; empate = o monstro)
+  /* ================= O COMPANHEIRO (o monstro; o ET é à parte, os dois podem ir juntos) ================= */
+  // o equipado: espécie que ela tem (mescla estranha ou espécie de versão nova = nenhum)
   function equipado() {
-    var mo = brutoMonstro();
-    if (!mo) return null;
-    var et = brutoEt();
-    return et && et.em > mo.em ? null : mo.id;
+    var est = estado(), m = est && est.monstroCompanheiro && est.monstroCompanheiro.mariana, id = m && m.id;
+    return id && quantos(id) && especie(id) ? id : null;
   }
-  // equipar (espécie que ela tem) ou tirar (null); tira o ET. true = gravou
+  // equipar (espécie que ela tem) ou tirar (null); o ET escolhido continua junto. true = gravou
   function equipar(id) {
     var est = estado();
     if (!est || (id !== null && (!especie(id) || !quantos(id)))) return false;
-    if (id !== null && R.Viagem && R.Viagem.companheiroBruto && R.Viagem.companheiroBruto()) R.Viagem.escolherCompanheiro(null);
     var m = est.monstroCompanheiro && est.monstroCompanheiro.mariana;
     est.monstroCompanheiro = { mariana: { id: id, em: Math.max(Date.now(), ((m && m.em) || 0) + 1) } };
     if (R._etCompanheiro) R._etCompanheiro.rastro = [];
@@ -147,8 +133,6 @@
   R.Monstros = {
     NOMES: NOMES, especies: especies, especie: especie, capturados: capturados, quantos: quantos,
     equipado: equipado, equipar: equipar, danoAjuda: danoAjuda, registrarCaptura: registrarCaptura,
-    // o ET some quando o monstro está equipado (et-companheiro.js pergunta)
-    tiraEt: function () { return !!equipado(); },
     emitir: emitir,
   };
 
