@@ -23,6 +23,8 @@
     // quantos ela pode levar (pedido do Leandro, 17/11): `base` monstros, e mais `porMateria` por matéria do bimestre
     // de agora terminada (todas as salas feitas). Com as 6 matérias do 4º bimestre, até 10
     equipar: { base: 4, porMateria: 1 },
+    // os monstros das matérias (Casa Mal-Assombrada, monstros.md §10): tipo e nível de todos (a ajuda mais forte)
+    materias: { tipo: 'dificil', nivel: 40 },
     ajuda: {                  // o monstro equipado ataca os inimigos da arena junto com ela
       alcance: 72,            // distância (px) dela em que ele procura um inimigo para atacar
       recargaMs: 1400,        // espera entre dois ataques dele

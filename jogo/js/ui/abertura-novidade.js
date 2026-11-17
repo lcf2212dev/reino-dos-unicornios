@@ -20,8 +20,25 @@
     return !c.ate || (hoje || UI.festaMedalha.hoje()) <= c.ate;
   }
 
+  // o texto grande: o U.colado, e palavra com hífen nunca parte (arte.md §17.4), nem a mais longa que ele segura
+  // ("Mal-Assombrada")
+  function textoGrande(s) {
+    var p = el('p.novidade-texto'), junto = [];
+    function soltar() { if (junto.length) { p.appendChild(U.colado ? U.colado(junto.join(' ')) : document.createTextNode(junto.join(' '))); junto = []; } }
+    String(s).split(' ').forEach(function (w, i) {
+      if (!/\p{L}-\p{L}/u.test(w)) { junto.push(w); return; }
+      soltar();
+      if (i) p.appendChild(document.createTextNode(' '));
+      var sp = el('span', w);
+      sp.style.whiteSpace = 'nowrap';
+      p.appendChild(sp);
+      junto = [''];   // o espaço antes da próxima palavra
+    });
+    soltar();
+    return p;
+  }
   function bloco() {
-    var c = cfg(), textos = el('div.novidade-textos', el('p.novidade-texto', c.texto));
+    var c = cfg(), textos = el('div.novidade-textos', textoGrande(c.texto));
     if (c.detalhe) textos.appendChild(el('p.novidade-detalhe', c.detalhe));
     var raiz = el('div.novidade-bloco');
     if (c.tema) raiz.classList.add('novidade-tema-' + c.tema);
@@ -35,7 +52,8 @@
 
   /* ---------- a atualização de mentira (pedido do Leandro, 31/10/2026: "fake updating") ---------- */
   var CHAVE = 'reino-novidade-vista';
-  var PASSOS = ['Abrindo o mapa do Reino…', 'Plantando as árvores do bosque…', 'Chamando os fantasmas…', 'Acendendo as lanternas…', 'Pronto!'];
+  // os passos da barra: os da novidade (config.novidadeInicio.passos, o último é o "Pronto!") ou estes
+  var PASSOS_PADRAO = ['Abrindo o mapa do Reino…', 'Plantando as árvores do bosque…', 'Chamando os fantasmas…', 'Acendendo as lanternas…', 'Pronto!'];
   var BLOCOS = 12;
 
   function primeiraVez() {
@@ -53,6 +71,7 @@
     return new Promise(function (resolver) {
       if (Reino.congelado) { marcarVista(); resolver(); return; }
       var total = U.animar() ? (c.atualizarMs || 3600) : (c.atualizarParadoMs || 1500);
+      var PASSOS = Array.isArray(c.passos) && c.passos.length > 1 ? c.passos : PASSOS_PADRAO;
       var blocos = [];
       var barra = el('div.atualizando-barra', { 'aria-hidden': 'true' });
       for (var i = 0; i < BLOCOS; i++) { var b = el('span.atualizando-bloco'); blocos.push(b); barra.appendChild(b); }

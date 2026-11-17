@@ -23,9 +23,10 @@ const pegar = (j, id, n = 1) => { for (let i = 0; i < n; i++) assert.ok(j.M.regi
 
 test('monstros: as espécies de todas as arenas, com nome em português, sem repetir', () => {
   const { M, R } = jogo();
-  const l = M.especies(), ids = l.map((e) => e.id);
+  const todas = M.especies(), l = todas.filter((e) => !e.daMateria), ids = todas.map((e) => e.id);
   assert.strictEqual(new Set(ids).size, ids.length, 'espécie repetida');
   assert.strictEqual(l.length, R.Arenas.ids().length * 4);
+  assert.strictEqual(todas.length - l.length, 6, 'os 6 da Casa Mal-Assombrada (monstros-materias.test.js)');
   R.Arenas.ids().forEach((a) => assert.ok(ids.includes(a + '-facil'), a));
   l.forEach((e) => {
     assert.ok(M.NOMES[e.id], 'sem nome: ' + e.id);

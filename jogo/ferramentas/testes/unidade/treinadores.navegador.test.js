@@ -48,7 +48,7 @@ test('treinadores: prédio na Vila, porta e volta, Kiara com a pergunta, compra 
     })()`);
     assert.deepStrictEqual(d.predio, [[31, 12]]);
     assert.deepStrictEqual(d.porta, [[33, 17, 'portal']]);
-    assert.strictEqual(d.terrenos, 2, 'os outros 2 terrenos continuam livres');
+    assert.strictEqual(d.terrenos, 1, 'o terreno de baixo da esquerda continua livre (o de cima é a Casa Mal-Assombrada)');
     assert.deepStrictEqual(d.interior, ['bosque', false, 'interior-bosque', 16, 12, 8, 10, 'vila']);
     assert.deepStrictEqual(d.kiara, ['kiara', 'Treinadora Kiara', 'npc-kiara', 'treinadores', true]);
     assert.strictEqual(d.porteira, 'function');

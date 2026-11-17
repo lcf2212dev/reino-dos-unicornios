@@ -5,7 +5,8 @@ Monstros** (interior `vila-treinadores`, lojista **Treinadora Kiara**, `kiara`).
 (`bola-monster`, 50 estrelas; 40% de chance) e a **Super MonsterBall** (`bola-super`, 125 estrelas; pega sempre); nas
 arenas ela joga a bola no monstro mais perto. Os monstros capturados podem ser equipados (até 4, e mais 1 por matéria
 do bimestre terminada: pedido do Leandro, 17/11): andam em fila atrás dela e ajudam na luta, junto com o ET que ela
-levou (no fim da fila) e o unicórnio.
+levou (no fim da fila) e o unicórnio. Na **Casa Mal-Assombrada** da Vila mora um monstro de cada matéria, ganho ao
+completar a matéria dele (§10).
 
 ## 1. Onde está no código
 | Parte | Arquivo |
@@ -16,13 +17,14 @@ levou (no fim da fila) e o unicórnio.
 | o monstro que segue e a ajuda na luta | `js/sistemas/monstros-bola.js`, `monstros-ajuda.js`, `monstros-desenho.js` (camada do módulo 'monstros', rastro do ET) |
 | ferir e capturar no combate | `js/sistemas/bosque-combate-monstros.js` (parte de `bosque-combate.js`) |
 | telas | `js/ui/monstros.js` (`UI.telaMonstros`), `js/ui/monstros-bola.js` (botão da bola na arena), `css/ui-monstros.css`; `js/ui/treinadores-loja.js` (`UI.telaTreinadores`) |
-| testes | `unidade/monstros.test.js`, `unidade/monstros.navegador.test.js` |
+| os monstros das matérias (§10) | `js/sistemas/monstros-materias.js` (os 6 moldes); a casa em `js/interiores/vila/assombrada*.js` |
+| testes | `unidade/monstros.test.js`, `unidade/monstros-materias.test.js`, `unidade/monstros.navegador.test.js`, `unidade/assombrada.navegador.test.js` |
 | o prédio | `js/interiores/vila/treinadores*.js` + o terreno da direita em `vila.js` |
 
 ## 2. Ids
 - Espécie de monstro: `'<arena>-<tipo>'` (ex.: `'lua-dificil'`, `'bosque-mosca'`), arena = id de `Reino.Arenas` ou
   `'bosque'`; tipo = `facil | medio | dificil | voador` (ou `mosca` no Bosque). Nome: o do comentário da config
-  (ex.: "Urso da Lua"), numa tabela de nomes de `sistemas/monstros*.js`.
+  (ex.: "Urso da Lua"), numa tabela de nomes de `sistemas/monstros*.js`. Os das matérias: `'assombrada-<assunto>'` (§10).
 - Interior `vila-treinadores` (16 × 12, `lugar: 'bosque'`, `entrada: false`, `pacote: 'interior-bosque'`), porta na
   Vila em frente ao prédio, escada `sentido: 'portal'` como as das lojas (`vila.md` §2).
 - NPC `kiara` "Treinadora Kiara" (mulher, jovem), ação `{ tipo: 'treinadores' }`, com a mesma pergunta do 4º bimestre
@@ -38,7 +40,7 @@ monstrosJuntos: { mariana: { ids: [especie…], em } }   // a fila dos equipados
 ```
 Novo ciclo mantém os três; cópia `-novidades`: sim. Save antigo: `{}` (sem monstro: o ET continua).
 - **A fila**: `equipar` e `deixar` gravam a lista em `monstrosJuntos` e o 1º dela em `monstroCompanheiro`, no MESMO
-  `em`. Na leitura vale a lista, a não ser que o `monstroCompanheiro` seja mais novo (um aparelho da versão antiga
+  `em` (no `monstroCompanheiro`, o 1º que não é de matéria: a versão de antes da fila não conhece os da §10). Na leitura vale a lista, a não ser que o `monstroCompanheiro` seja mais novo (um aparelho da versão antiga
   trocou ou deixou o monstro em casa depois: vale o dele, sozinho) ou que a lista não exista (save de antes: o
   monstro de sempre). Lista limpa: só ids de espécie, sem repetir.
 - **Vagas**: `config.monstros.equipar.base` (4) e mais `porMateria` (1) por matéria do bimestre de agora (não
@@ -54,7 +56,9 @@ Novo ciclo mantém os três; cópia `-novidades`: sim. Save antigo: `{}` (sem mo
 ## 4. API
 ```
 Reino.Monstros
-  especies() → [{ id, arena, tipo, nome, nivel }]      capturados() → [{ id, qtd, def }]
+  especies() → [{ id, arena, tipo, nome, nivel, daMateria? }]      capturados() → [{ id, qtd, def }]
+  daMateria() → [{ id, nome, materia, ganho }]   molde(especie) → molde | null   sprite(especie, quadro) → canvas | null
+  registrarEspecie({ id, assunto, nome, molde })   (só no carregamento; §10)
   equipados() → [especie]  (a fila, até vagas())     equipado() → o 1º da fila | null    estaJunto(especie) → bool
   equipar(especie) → bool  (no fim da fila; false sem vaga)   equipar(null) → deixa todos em casa   deixar(especie) → bool
   (equipar e deixar gravam e emitem 'equipou')   vagas() → n   maisVagas() → bool   materiasTerminadas() → n
@@ -108,3 +112,24 @@ Item `bola-mini` "Mini MonsterBall" (tipo `bola`, loja `treinadores`, ícone `it
 ## 9. MonsterBall pela letra cursiva
 No cartão da MonsterBall, "ou" e "Escrever 2 frases": as frases em letra cursiva dão 1 MonsterBall sem estrela
 (`Treinadores.ganharEscrevendo`). Tudo em `cursiva.md`.
+
+## 10. Os monstros das matérias (Casa Mal-Assombrada)
+Pedido: `pedidos/2026-11-17-casa-mal-assombrada.md`. Um monstro por matéria (`'assombrada-<assunto>'`: matematica,
+ingles, portugues, geografia, ciencias, historia), registrado por `Monstros.registrarEspecie` com o molde desenhado em
+`sistemas/monstros-materias.js` (`{ linhas, paleta, pisca, flutua, balanco }`, contorno `K`). Arena `'assombrada'`,
+lugar "Casa Mal-Assombrada".
+- **Ganho = derivado**: `quantos(id)` é 1 quando alguma matéria do mesmo prédio (`lugar.dentro: 'materia:<assunto>'`)
+  tem todas as salas feitas (`P.materiaCompleta`), e 0 sem isso; a do 3º bimestre (id = o assunto, arquivada antes da
+  novidade) não conta. A jaula pede a de agora (`Bimestres.ativa(assunto)`); quando ela também for arquivada, o monstro
+  continua dela. Nada no save: o campo `monstros` não os conta, a MonsterBall não os pega (`registrarCaptura` recusa)
+  e um número lá não vale. Tipo e nível: `config.monstros.materias`.
+- **Equipar**: como os outros (`equipar`, a fila em `monstrosJuntos`, as `vagas()`); sem a matéria (outro aparelho,
+  Novo ciclo) ele sai da fila sem apagar a lista gravada e volta com ela. Aparelho da versão antiga não conhece a
+  espécie: não mostra (§6.6 do `save-e-mescla.md`).
+- **Desenho**: `Monstros.sprite(id, quadro)` serve para toda espécie (o da arena por `BosqueCombate.spriteInimigo`, o
+  da matéria pelo molde; quadro 1 = piscando), usado pela fila, pelo "Meus monstros" e pelas jaulas da casa.
+- **A casa**: na Vila, o terreno de cima da esquerda (`vila.md` §2), interior `vila-assombrada` com 6 jaulas
+  (`acao: { tipo: 'assombrada-monstro', especie }`): o monstro em silhueta com "?" até ganhar; ganho, colorido, a
+  jaula aberta e o "Levar comigo". O botão da MonsterBall na arena não aparece só por ter um monstro de matéria.
+- **Aviso na tela de início**: `config.novidadeInicio` (a Casa Mal-Assombrada, até 15/12).
+

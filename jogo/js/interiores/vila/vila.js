@@ -4,8 +4,9 @@
    No alto, as 4 fachadas das lojas (a porta é a escada `portal` na fileira 8: x = 6, 15, 24, 33); a rua das lojas
    (fileiras 8–9), a avenida da praça até ela (x 19–21) e a travessa da praça, do portal da esquerda aos terrenos (fileira 19) são `corredores`. No meio,
    a praça com a fonte e uma Teleportadora (o objeto 'vila-teleportadora' é de vila/teleportadora.js); na borda esquerda, a
-   entrada com o portal de volta e a placa de boas-vindas; à esquerda, os 2 terrenos livres cercados, com placa; à direita,
-   os Treinadores de Monstros (treinadores-objetos.js), com a porta em (33, 17).
+   entrada com o portal de volta e a placa de boas-vindas; à esquerda, em cima a Casa Mal-Assombrada (assombrada-objetos.js),
+   com a porta em (5, 17), e embaixo o terreno livre cercado, com placa; à direita, os Treinadores de Monstros
+   (treinadores-objetos.js), com a porta em (33, 17).
    Ordem: fixos → árvores das bordas e moitas de baixo → flores onde ainda sobra janela 3×3 vazia (a regra do "rico"),
    pela mesma semente (Reino.Desenho.rng): o layout sai sempre igual. */
 (function () {
@@ -52,19 +53,22 @@
   poe('vila-bandeirolas', 18, 13); poe('vila-bandeirolas', 18, 23);
   poe('vila-teleportadora', 22, 20, { w: 2, h: 1, solido: true, nome: 'Teleportadora', acao: { tipo: 'teleportadora', para: 'cidade' } });
 
-  // 3. os terrenos livres (cercados) com a placa na frente; o da direita virou os Treinadores de Monstros (monstros.md):
-  // a fachada 6 × 5 em (31, 12) e a porta, escada `portal` em (33, 17), logo abaixo dela (a escada entra depois da do
-  // portal, no fim da parte 4: as escadas de antes guardam o índice)
+  // 3. os terrenos: o da direita virou os Treinadores de Monstros (monstros.md), a fachada 6 × 5 em (31, 12) e a porta,
+  // escada `portal` em (33, 17), logo abaixo dela; o de cima da esquerda virou a Casa Mal-Assombrada (vila.md §2), a
+  // fachada em (3, 12), a abóbora no lugar da placa (o mesmo tile ocupado: as flores sorteadas não mudam) e a porta em
+  // (5, 17); o de baixo da esquerda continua livre, cercado e com a placa (as escadas novas entram no fim da parte 4: as
+  // de antes guardam o índice)
   poe('vila-treinadores-predio', 31, 12);
-  [[3, 12, 6, 5, 9, 16], [3, 22, 6, 5, 9, 26]].forEach(function (t) {
-    poe('vila-terreno', t[0], t[1], { w: t[2], h: t[3] });
-    poe('vila-placa-terreno', t[4], t[5], fala('terreno', 'Terreno livre'));
-  });
+  poe('vila-assombrada-predio', 3, 12);
+  poe('vila-assombrada-abobora', 9, 16);
+  poe('vila-terreno', 3, 22, { w: 6, h: 5 });
+  poe('vila-placa-terreno', 9, 26, fala('terreno', 'Terreno livre'));
 
   // 4. a entrada: o portal de volta, a placa de boas-vindas, a Teleportadora, o poço e o carrinho de flores
   poe('vila-portal', PORTAL.x, PORTAL.y);
   escada({ x: PORTAL.x, y: PORTAL.y, para: 'bosque', sentido: 'portal', seta: false, chegar: { x: 1, y: 0 } });
   escada({ x: 33, y: 17, para: 'vila-treinadores', sentido: 'portal', chegar: { x: 0, y: 1 } });   // a porta dos Treinadores
+  escada({ x: 5, y: 17, para: 'vila-assombrada', sentido: 'portal', chegar: { x: 0, y: 1 } });    // a porta da Casa Mal-Assombrada
   poe('vila-placa', 4, 18, fala('placa', 'Placa'));
   poe('vila-poste', 2, 17); poe('vila-poste', 2, 21);
   poe('vila-placa', 17, 27);   // a placa de antes, no fim da avenida (só enfeite)

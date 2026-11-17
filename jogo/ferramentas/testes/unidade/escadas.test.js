@@ -32,6 +32,8 @@ const CONGELADA = {
   'vila:4': { para: 'bosque', x: 52, y: 22 },
   // Treinadores de Monstros (monstros.md): a porta no terreno da direita ↔ a saída do prédio
   'vila:5': { para: 'vila-treinadores', x: 8, y: 9 }, 'vila-treinadores:0': { para: 'vila', x: 33, y: 18 },
+  // Casa Mal-Assombrada (vila.md §2): a porta no terreno de cima da esquerda ↔ a saída da casa
+  'vila:6': { para: 'vila-assombrada', x: 8, y: 9 }, 'vila-assombrada:0': { para: 'vila', x: 5, y: 18 },
   'vila-casa:0': { para: 'vila', x: 6, y: 9 }, 'vila-armas:0': { para: 'vila', x: 15, y: 9 },
   'vila-cabecas:0': { para: 'vila', x: 24, y: 9 }, 'vila-armaduras:0': { para: 'vila', x: 33, y: 9 },
   // Bosques de dentro do Bosque (arenas.md §8): aqui as pastas carregam em ordem alfabética (lua, neblina, orvalho),
