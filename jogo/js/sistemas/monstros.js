@@ -89,19 +89,26 @@
   // os monstros das matérias (monstros-materias.js, monstros.md §10): { id, arena: 'assombrada', tipo, nome, nivel,
   // lugar, curto, assunto, molde }; ganhos com a matéria completa (derivado), nunca pela MonsterBall
   var EXTRAS = [], mapa = null, nArenas = -1;
-  var ASSOMBRADA = { lugar: 'Casa Mal-Assombrada', curto: 'Casa Assombrada', tipo: 'dificil', nivel: 40 };
+  var ASSOMBRADA = { lugar: 'Casa Mal-Assombrada', curto: 'Casa Assombrada' };
   function registrarEspecie(d) {
+    var c = cfg().materias;   // o tipo e o nível de todos (config.monstros.materias)
     if (!d || typeof d.id !== 'string' || !ESPECIE.test(d.id) || !d.molde || !d.assunto) throw new Error('monstro da matéria inválido: ' + (d && d.id));
     if (EXTRAS.some(function (e) { return e.id === d.id; })) throw new Error('monstro da matéria repetido: ' + d.id);
-    EXTRAS.push({ id: d.id, arena: 'assombrada', tipo: ASSOMBRADA.tipo, nome: d.nome, nivel: ASSOMBRADA.nivel,
+    EXTRAS.push({ id: d.id, arena: 'assombrada', tipo: c.tipo, nome: d.nome, nivel: c.nivel,
       lugar: ASSOMBRADA.lugar, curto: ASSOMBRADA.curto, emoji: null, assunto: d.assunto, molde: d.molde, daMateria: true });
     mapa = null;
   }
-  // a matéria (id) que dá o monstro: a de agora do prédio do assunto (Bimestres.ativa)
+  // a matéria (id) que ela tem de terminar: a de agora do prédio do assunto (Bimestres.ativa)
   function materiaDe(e) { var B = R.Bimestres; return B && B.ativa ? B.ativa(e.assunto) : e.assunto; }
+  // ganhou: alguma matéria do mesmo prédio completa, menos a do 3º bimestre (id = o assunto, arquivada antes desta
+  // novidade). A de agora conta; quando ela também for arquivada (bimestre novo), o monstro continua dela
   function ganhou(e) {
-    try { var m = R.materia(materiaDe(e)); return !!(m && !m.arquivada && m.salas && m.salas.length && R.Progresso.materiaCompleta(m)); }
-    catch (err) { return false; }   // sem save carregado (teste)
+    try {
+      return (R.materias || []).some(function (m) {
+        return m.id !== e.assunto && m.lugar && m.lugar.dentro === 'materia:' + e.assunto && Array.isArray(m.salas) &&
+          m.salas.length && R.Progresso.materiaCompleta(m);
+      });
+    } catch (err) { return false; }   // sem save carregado (teste)
   }
   // todas as espécies: as de cada arena registrada (o Bosque primeiro), na ordem dos tipos da config, e depois as das
   // matérias
@@ -214,7 +221,8 @@
     var j = est.monstrosJuntos && est.monstrosJuntos.mariana, a = est.monstroCompanheiro && est.monstroCompanheiro.mariana;
     var em = Math.max(Date.now(), Math.max((j && j.em) || 0, (a && a.em) || 0) + 1);
     est.monstrosJuntos = { mariana: { ids: ids.slice(), em: em } };
-    var primeiro = ids.filter(function (id) { return quantos(id) && especie(id); })[0] || null;   // o 1º que esta versão mostra
+    // o 1º que esta versão mostra, menos o da matéria (a versão de antes da fila só lê este campo e não o conhece)
+    var primeiro = ids.filter(function (id) { var e = especie(id); return e && !e.daMateria && quantos(id); })[0] || null;
     est.monstroCompanheiro = { mariana: { id: primeiro, em: em } };
     if (R._etCompanheiro) R._etCompanheiro.rastro = [];
     S.ataques = {};

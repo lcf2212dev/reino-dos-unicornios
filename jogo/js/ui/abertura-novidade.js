@@ -20,8 +20,25 @@
     return !c.ate || (hoje || UI.festaMedalha.hoje()) <= c.ate;
   }
 
+  // o texto grande: o U.colado, e palavra com hífen nunca parte (arte.md §17.4), nem a mais longa que ele segura
+  // ("Mal-Assombrada")
+  function textoGrande(s) {
+    var p = el('p.novidade-texto'), junto = [];
+    function soltar() { if (junto.length) { p.appendChild(U.colado ? U.colado(junto.join(' ')) : document.createTextNode(junto.join(' '))); junto = []; } }
+    String(s).split(' ').forEach(function (w, i) {
+      if (!/\p{L}-\p{L}/u.test(w)) { junto.push(w); return; }
+      soltar();
+      if (i) p.appendChild(document.createTextNode(' '));
+      var sp = el('span', w);
+      sp.style.whiteSpace = 'nowrap';
+      p.appendChild(sp);
+      junto = [''];   // o espaço antes da próxima palavra
+    });
+    soltar();
+    return p;
+  }
   function bloco() {
-    var c = cfg(), textos = el('div.novidade-textos', el('p.novidade-texto', c.texto));
+    var c = cfg(), textos = el('div.novidade-textos', textoGrande(c.texto));
     if (c.detalhe) textos.appendChild(el('p.novidade-detalhe', c.detalhe));
     var raiz = el('div.novidade-bloco');
     if (c.tema) raiz.classList.add('novidade-tema-' + c.tema);

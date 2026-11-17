@@ -840,6 +840,7 @@
       { js: 'js/interiores/vulcao/lugar.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/vila/falas.js', grupo: 'interiores', node: true }, // Vila Arco-Íris (vila.md): falas e lojistas, céu e chão, objetos, a Teleportadora, a praça e as 4 lojas
       { js: 'js/interiores/vila/treinadores-falas.js', grupo: 'interiores', node: true }, // Treinadores de Monstros (monstros.md): a Treinadora Kiara e as falas do prédio
+      { js: 'js/interiores/vila/assombrada-icones.js', grupo: 'interiores', node: true }, // Casa Mal-Assombrada: o ícone da abóbora acesa (🎃), o desenho do aviso na tela de início
       { js: 'js/interiores/vila/assombrada-falas.js', grupo: 'interiores', node: true }, // Casa Mal-Assombrada (vila.md §2): as falas dos enfeites e das 6 jaulas dos monstros das matérias
       { js: 'js/interiores/vila/fundo.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/vila/objetos.js', grupo: 'interiores', node: true },

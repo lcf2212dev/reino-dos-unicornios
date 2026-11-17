@@ -53,9 +53,9 @@ test('monstros das matérias: sem a matéria completa não tem; completa, tem 1 
   assert.ok(!M.capturados().some((c) => c.id === id));
   assert.strictEqual(M.equipar(id), false, 'ainda não ganhou');
   assert.ok(M.daMateria().every((d) => !d.ganho));
-  // a matéria do 3º bimestre (arquivada) não dá o monstro
+  // a matéria do 3º bimestre (arquivada antes da novidade) não dá o monstro
   completar(j, 'matematica');
-  assert.strictEqual(M.quantos(id), 0, 'arquivada não conta');
+  assert.strictEqual(M.quantos(id), 0, 'a do 3º bimestre não conta');
   // a de agora: ganhou
   const nova = R.Bimestres.ativa('matematica');
   completar(j, nova);
@@ -77,6 +77,33 @@ test('monstros das matérias: sem a matéria completa não tem; completa, tem 1 
   // recarregar: continua
   j.P.carregar();
   igual(j.R.Monstros.equipados(), ['lua-dificil', id]);
+  // aparelho da versão de antes da fila (só lê monstroCompanheiro): ali vai o 1º que não é de matéria
+  assert.ok(j.R.Monstros.deixar('lua-dificil'));
+  assert.ok(j.R.Monstros.equipar('lua-dificil'));
+  igual(j.R.Monstros.equipados(), [id, 'lua-dificil']);
+  assert.strictEqual(j.lido().monstroCompanheiro.mariana.id, 'lua-dificil');
+  assert.ok(j.R.Monstros.deixar('lua-dificil'));
+  assert.strictEqual(j.lido().monstroCompanheiro.mariana.id, null, 'só o da matéria: a versão antiga não mostra nenhum');
+});
+
+test('monstros das matérias: quando o bimestre vira (a matéria de agora arquivada), o monstro continua dela', () => {
+  const j = jogo(), { M, R } = j, id = 'assombrada-geografia', nova = R.Bimestres.ativa('geografia');
+  completar(j, nova);
+  assert.strictEqual(M.quantos(id), 1);
+  R.materia(nova).arquivada = true;
+  assert.strictEqual(M.quantos(id), 1, 'arquivada depois de ganhar: continua');
+  R.materia(nova).salas.forEach((s) => { delete j.P.estado().salas[s.id]; });
+  assert.strictEqual(M.quantos(id), 0);
+});
+
+test('monstros das matérias: as falas das jaulas dizem o nome da matéria de agora e o do monstro', () => {
+  const { M, R } = jogo(), f = R.FALAS_INTERIORES.vila.assombrada;
+  M.daMateria().forEach((d) => {
+    const t = f.especies[d.id], nome = R.materia(d.materia).nome;
+    assert.ok(t, d.id + ': sem falas');
+    assert.ok(t.termine.includes(nome), d.id + ': «' + t.termine + '» sem «' + nome + '»');
+    assert.ok(t.ganhe.includes(d.nome) && t.seu.includes(d.nome), d.id + ': o nome do monstro');
+  });
 });
 
 test('monstros das matérias: a MonsterBall não pega e o campo monstros não guarda', () => {

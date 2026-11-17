@@ -40,7 +40,7 @@ monstrosJuntos: { mariana: { ids: [especie…], em } }   // a fila dos equipados
 ```
 Novo ciclo mantém os três; cópia `-novidades`: sim. Save antigo: `{}` (sem monstro: o ET continua).
 - **A fila**: `equipar` e `deixar` gravam a lista em `monstrosJuntos` e o 1º dela em `monstroCompanheiro`, no MESMO
-  `em`. Na leitura vale a lista, a não ser que o `monstroCompanheiro` seja mais novo (um aparelho da versão antiga
+  `em` (no `monstroCompanheiro`, o 1º que não é de matéria: a versão de antes da fila não conhece os da §10). Na leitura vale a lista, a não ser que o `monstroCompanheiro` seja mais novo (um aparelho da versão antiga
   trocou ou deixou o monstro em casa depois: vale o dele, sozinho) ou que a lista não exista (save de antes: o
   monstro de sempre). Lista limpa: só ids de espécie, sem repetir.
 - **Vagas**: `config.monstros.equipar.base` (4) e mais `porMateria` (1) por matéria do bimestre de agora (não
@@ -117,11 +117,12 @@ No cartão da MonsterBall, "ou" e "Escrever 2 frases": as frases em letra cursiv
 Pedido: `pedidos/2026-11-17-casa-mal-assombrada.md`. Um monstro por matéria (`'assombrada-<assunto>'`: matematica,
 ingles, portugues, geografia, ciencias, historia), registrado por `Monstros.registrarEspecie` com o molde desenhado em
 `sistemas/monstros-materias.js` (`{ linhas, paleta, pisca, flutua, balanco }`, contorno `K`). Arena `'assombrada'`,
-tipo `dificil`, nível 40 (a ajuda mais forte), lugar "Casa Mal-Assombrada".
-- **Ganho = derivado**: `quantos(id)` é 1 quando a matéria de agora do mesmo prédio (`Bimestres.ativa(assunto)`, a
-  não arquivada) tem todas as salas feitas (`P.materiaCompleta`), e 0 sem isso. Nada no save: o campo `monstros` não
-  os conta, a MonsterBall não os pega (`registrarCaptura` recusa) e um número lá não vale. Matéria do 3º bimestre
-  (arquivada) não dá.
+lugar "Casa Mal-Assombrada".
+- **Ganho = derivado**: `quantos(id)` é 1 quando alguma matéria do mesmo prédio (`lugar.dentro: 'materia:<assunto>'`)
+  tem todas as salas feitas (`P.materiaCompleta`), e 0 sem isso; a do 3º bimestre (id = o assunto, arquivada antes da
+  novidade) não conta. A jaula pede a de agora (`Bimestres.ativa(assunto)`); quando ela também for arquivada, o monstro
+  continua dela. Nada no save: o campo `monstros` não os conta, a MonsterBall não os pega (`registrarCaptura` recusa)
+  e um número lá não vale. Tipo e nível: `config.monstros.materias`.
 - **Equipar**: como os outros (`equipar`, a fila em `monstrosJuntos`, as `vagas()`); sem a matéria (outro aparelho,
   Novo ciclo) ele sai da fila sem apagar a lista gravada e volta com ela. Aparelho da versão antiga não conhece a
   espécie: não mostra (§6.6 do `save-e-mescla.md`).
