@@ -6,10 +6,13 @@
      t                 o `t` do último quadro desenhado (ms; virtual no modo congelado)
      bola              a MonsterBall voando (monstros-bola.js): { alvo, tipo, arena, especie, pegou, em (Date.now), x0, y0, x, y, chegou } | null
      ataques           o último pulo de cada monstro equipado (monstros-ajuda.js): { <especie>: { em, x, y, dano } }
+     tiros             o último tiro do unicórnio e do ET (monstros-pets.js): { unicornio|et: { em, x0, y0, x, y, dano, alvo, arena, chegou } }
      distancia(n)      quanto o n-ésimo da fila anda atrás dela (px)
-     itensDesenho, sobre  o desenho (monstros-desenho.js);  quadroBola(), quadroAjuda(t)  (as partes de regra)
+     itensDesenho, sobre  o desenho (monstros-desenho.js);  quadroBola(), quadroAjuda(t), quadroPets(t)  (as partes de regra)
+     petsNaLuta()      quem, além dos monstros, ataca agora: ['unicornio'] ou ['unicornio', 'et'] (monstros-pets.js)
      parada(), maisPerto(raio)  luta parada? / o inimigo ativo mais perto dela (monstros-bola.js)
-   Partes: monstros-bola.js (jogar a bola), monstros-ajuda.js (o ataque dele), monstros-desenho.js (seguir e desenhar),
+   Partes: monstros-bola.js (jogar a bola), monstros-ajuda.js (o ataque dele), monstros-pets.js (o unicórnio e o ET também
+   atacam), monstros-desenho.js (seguir e desenhar),
    sistemas/bosque-combate-monstros.js (ferir/capturar no combate). O rastro é o do ET (Reino._etCompanheiro).
    node: true: nada de DOM, Progresso nem Cena no carregamento (só dentro das funções). */
 (function () {
@@ -284,9 +287,13 @@
       return { equipados: equipados(), vagas: vagas(), capturados: capturados().map(function (c) { return c.id + '×' + c.qtd; }),
         bola: S.bola ? { alvo: S.bola.alvo, pegou: S.bola.pegou } : null, ataques: Object.keys(S.ataques || {}) };
     },
-    // desenho junto dos personagens (ordenado por y) e a bola por cima: com o monstro equipado ou a bola voando
+    // desenho junto dos personagens (ordenado por y) e a bola por cima: com o monstro equipado, a bola voando ou na arena
     camada: {
-      ativo: function () { return !!(window.Jogador && S.itensDesenho && (S.bola || equipado())); },
+      // na arena sempre: o unicórnio e o ET também atacam (monstros-pets.js)
+      ativo: function () {
+        var BC = R.BosqueCombate;
+        return !!(window.Jogador && S.itensDesenho && (S.bola || equipado() || (BC && BC.arena && BC.arena())));
+      },
       itensDesenho: function (p, t, animar) { return S.itensDesenho(p, t, animar); },
       sobre: function (ctx, p, t, animar) { if (S.sobre) S.sobre(p, t, animar); },
     },

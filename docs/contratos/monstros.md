@@ -14,11 +14,11 @@ completar a matéria dele (§10).
 | números | `js/nucleo/config-monstros.js` (`Reino.config.monstros`) |
 | os itens | `conteudo/itens/catalogo.js` (tipo `bola`, ids `bola-monster` e `bola-super`, `loja: 'treinadores'`, `arenas: []`, `peso: 0`, preço `precoBola`/`precoSuper`); ícones `item:bola-monster` e `item:bola-super` em `conteudo/itens/icones-monstros.js` |
 | regras, save, captura, coleção | `js/sistemas/monstros*.js` (`Reino.Monstros`) |
-| o monstro que segue e a ajuda na luta | `js/sistemas/monstros-bola.js`, `monstros-ajuda.js`, `monstros-desenho.js` (camada do módulo 'monstros', rastro do ET) |
+| o monstro que segue e a ajuda na luta | `js/sistemas/monstros-bola.js`, `monstros-ajuda.js`, `monstros-pets.js` (o unicórnio e o ET também atacam), `monstros-desenho.js` (camada do módulo 'monstros', rastro do ET) |
 | ferir e capturar no combate | `js/sistemas/bosque-combate-monstros.js` (parte de `bosque-combate.js`) |
 | telas | `js/ui/monstros.js` (`UI.telaMonstros`), `js/ui/monstros-bola.js` (botão da bola na arena), `css/ui-monstros.css`; `js/ui/treinadores-loja.js` (`UI.telaTreinadores`) |
 | os monstros das matérias (§10) | `js/sistemas/monstros-materias.js` (os 6 moldes); a casa em `js/interiores/vila/assombrada*.js` |
-| testes | `unidade/monstros.test.js`, `unidade/monstros-materias.test.js`, `unidade/monstros.navegador.test.js`, `unidade/assombrada.navegador.test.js` |
+| testes | `unidade/monstros.test.js`, `unidade/monstros-pets.test.js`, `unidade/monstros-materias.test.js`, `unidade/monstros.navegador.test.js`, `unidade/assombrada.navegador.test.js` |
 | o prédio | `js/interiores/vila/treinadores*.js` + o terreno da direita em `vila.js` |
 
 ## 2. Ids
@@ -90,6 +90,12 @@ Reino.UI.telaMonstros() → P        Reino.UI.telaTreinadores(npc) → P
 - Ajuda: cada monstro da fila ataca no seu tempo (o 1º na hora, os outros escalonados na recarga; `S.ataques[especie]`),
   dano = `max(1, round(dano da espada × (fator[tipo] + bonusNivel × nivel da arena de origem)))`, a cada
   `ajuda.recargaMs`, no inimigo mais perto até `ajuda.alcance`. Inimigo vencido por ele = vencido por ela.
+- **Os outros bichinhos também atacam** (pedido de 17/11, `pedidos/2026-11-17-pets-atacam.md`; `sistemas/monstros-pets.js`):
+  em toda arena, o unicórnio (sempre com ela: o bebê a pé ou montado) solta uma estrelinha de arco-íris do chifre e o
+  ET levado (`Viagem.companheiro()`) um raio verde, no mesmo alvo e alcance, cada um a cada `ajuda.pets.<quem>.recargaMs`
+  e fora do compasso dos outros (recomeça a cada arena), dano `max(1, round(dano da espada × ajuda.pets.<quem>.fator))`.
+  O tiro voa `ajuda.pets.vooMs` e o dano entra na chegada (sem Animações, só o brilho, na mesma hora); fica em
+  `S.tiros[quem]`. Com a camada do módulo 'monstros' ativa em toda arena (mesmo sem monstro equipado). Nada no save.
 
 ## 6. Números
 `Reino.config.monstros` (comentados lá; preços `precoBola` 50 e `precoSuper` 125, chances `chanceCaptura` 0,4 e `chanceSuper` 1).

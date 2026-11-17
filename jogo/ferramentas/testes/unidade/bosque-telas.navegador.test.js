@@ -451,7 +451,9 @@ test('bosque: clicar no fantasma ataca sozinho até vencer; chão, tecla e toque
     await c.js(`(() => { const e = Reino.Progresso.estado(); e.bosque = { acertos: 0, espada: 1, vencidos: 0, mortos: 0, perguntasFeitas: 0, migrado: 1 }; e.bosquePontos = {};
       Reino.UI.fecharTodas(); return 1; })()`);
     await c.ir('bosque');
-    await c.js(`(() => { Reino._bosqueCombate.estado.parados = true; Reino.UI.fecharTodas();
+    // aqui só a espada: o unicórnio, que também ataca na arena (monstros-pets.js, testado em monstros-pets.test.js),
+    // fica parado, senão os golpes não batem com a vida
+    await c.js(`(() => { Reino._bosqueCombate.estado.parados = true; Reino.UI.fecharTodas(); Reino._monstros.quadroPets = function () {};
       window.__golpes = 0; Reino.util.on(Reino.EVENTOS.BOSQUE, (e) => { if (e.tipo === 'golpe') __golpes++; }); return 1; })()`);
     await c.avancar(300);
     const cfg = await c.js('Reino.config.fantasmas');

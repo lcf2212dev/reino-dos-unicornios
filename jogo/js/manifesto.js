@@ -888,6 +888,7 @@
       { js: 'js/sistemas/bosque-combate-monstros.js', grupo: 'sistemas', node: true }, // Treinadores de Monstros: ferir e capturar no combate (BosqueCombate.ferir/capturar; monstros.md §5)
       { js: 'js/sistemas/monstros-bola.js', grupo: 'sistemas', node: true }, // Treinadores de Monstros: jogar a MonsterBall (Monstros.podeJogar/jogar)
       { js: 'js/sistemas/monstros-ajuda.js', grupo: 'sistemas', node: true }, // Treinadores de Monstros: o monstro equipado ataca junto na arena
+      { js: 'js/sistemas/monstros-pets.js', grupo: 'sistemas', node: true }, // o unicórnio e o ET também atacam na arena (monstros.md §5)
       { js: 'js/sistemas/bosque-desenho.js', grupo: 'sistemas' }, // Bosque dos Fantasmas: desenho dos fantasmas e da mosca, da espada, do golpe e do desmaio
       { js: 'js/sistemas/itens.js', grupo: 'sistemas', node: true }, // itens: Mochila, Baú de Guardados, vestido e o campo itens (Reino.Itens; itens.md §6, §10)
       { js: 'js/sistemas/itens-drop.js', grupo: 'sistemas', node: true }, // itens: o que cai do inimigo vencido, gravado na hora (Reino.ItensDrop; itens.md §5)
