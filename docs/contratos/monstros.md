@@ -93,9 +93,9 @@ Reino.UI.telaMonstros() → P        Reino.UI.telaTreinadores(npc) → P
 - **Os outros bichinhos também atacam** (pedido de 17/11, `pedidos/2026-11-17-pets-atacam.md`; `sistemas/monstros-pets.js`):
   em toda arena, o unicórnio (sempre com ela: o bebê a pé ou montado) solta uma estrelinha de arco-íris do chifre e o
   ET levado (`Viagem.companheiro()`) um raio verde, no mesmo alvo e alcance, cada um a cada `ajuda.pets.<quem>.recargaMs`
-  e fora do compasso dos outros, dano `max(1, round(dano da espada × ajuda.pets.<quem>.fator))`. O tiro voa
-  `ajuda.pets.vooMs` (só o desenho; o dano é na hora) e fica em `S.tiros[quem]`. Com a camada do módulo 'monstros'
-  ativa em toda arena (mesmo sem monstro equipado). Nada no save.
+  e fora do compasso dos outros (recomeça a cada arena), dano `max(1, round(dano da espada × ajuda.pets.<quem>.fator))`.
+  O tiro voa `ajuda.pets.vooMs` e o dano entra na chegada (sem Animações, só o brilho, na mesma hora); fica em
+  `S.tiros[quem]`. Com a camada do módulo 'monstros' ativa em toda arena (mesmo sem monstro equipado). Nada no save.
 
 ## 6. Números
 `Reino.config.monstros` (comentados lá; preços `precoBola` 50 e `precoSuper` 125, chances `chanceCaptura` 0,4 e `chanceSuper` 1).

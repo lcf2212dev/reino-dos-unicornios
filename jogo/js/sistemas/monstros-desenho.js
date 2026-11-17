@@ -7,7 +7,7 @@
    bichinhos na luta (monstros-pets.js, S.tiros): a estrelinha de arco-íris do unicórnio e o raio verde do ET voando
    até o inimigo, e o brilho no acerto (sem Animações, só o brilho). Sobre ele, sempre, um coraçãozinho rosa (é amigo, não inimigo: na arena ele tem
    o mesmo desenho dos inimigos; a coroa do tipo difícil fica, vem do molde). Sem Animações: parado, sem pulo (só a estrelinha no inimigo) e a bola parada no alvo.
-   Roda as partes de regra a cada quadro (S.quadroBola, S.quadroAjuda). Sprites feitos uma vez; nada criado por quadro
+   Roda as partes de regra a cada quadro (S.quadroBola, S.quadroPets, S.quadroAjuda). Sprites feitos uma vez; nada criado por quadro
    além dos itens de desenho (o espelho é cacheado por canvas). */
 (function () {
   var R = window.Reino;
@@ -139,10 +139,10 @@
       var a = S.ataques[id];
       if (a && t - a.em < PULO_MS) p.sprite(estrela(), Math.round(a.x), Math.round(a.y - 8));
     });
-    var voo = animar ? cfg().ajuda.pets.vooMs : 0;
+    var voo = cfg().ajuda.pets.vooMs;   // o dano entra na chegada (monstros-pets.js): sem Animações, só o brilho dela
     Object.keys(S.tiros || {}).forEach(function (quem) {
       var a = S.tiros[quem], dt = a ? t - a.em : Infinity, et = quem === 'et';
-      if (dt < 0 || dt >= voo + PULO_MS) return;
+      if (dt < 0 || dt >= voo + PULO_MS || (dt < voo && !animar)) return;
       if (dt < voo) {   // voando do pet até o inimigo
         var k = dt / voo;
         p.sprite(et ? raio() : estrelaArco(), Math.round(a.x0 + (a.x - a.x0) * k), Math.round(a.y0 + (a.y - 8 - a.y0) * k));

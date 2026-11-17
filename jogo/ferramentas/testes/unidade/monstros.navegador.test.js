@@ -109,11 +109,14 @@ test('monstros: MonsterBall na arena, Meus monstros, o monstro e o ET seguindo j
     assert.strictEqual(dep.et, true, 'o ET continua junto');
     assert.ok(dep.dEt >= dep.dMonstro + 16, 'o ET vai atrás do monstro: ' + JSON.stringify(dep));
 
-    // 6) a ajuda: perto de um inimigo, o monstro tira vida dele sozinho
+    // 6) a ajuda: perto de um inimigo, o monstro tira vida dele sozinho (o pulo dele em S.ataques: o unicórnio, que
+    // também ataca agora (monstros-pets.js), não conta como prova)
     const id2 = await c.js(PERTO);
+    await c.js('Reino._monstros.ataques = {}; 1');
     await c.avancar(3000);
     const ferido = await c.js(`(() => { const f = Reino.BosqueCombate.fantasmas().find((x) => x.id === ${JSON.stringify(id2)}); return { vida: f.vida, max: f.max, estado: f.estado }; })()`);
-    assert.ok(ferido.vida < ferido.max || ferido.estado !== 'vagando', 'o monstro bateu: ' + JSON.stringify(ferido));
+    assert.ok(ferido.vida < ferido.max || ferido.estado !== 'vagando', 'alguém bateu: ' + JSON.stringify(ferido));
+    assert.ok(await c.js(`!!Reino._monstros.ataques[${JSON.stringify(especie)}]`), 'o monstro equipado bateu');
 
     // 7) deixar o ET em casa não tira o monstro, e levar de novo também não
     await c.js("Reino.Viagem.escolherCompanheiro(null); 1");

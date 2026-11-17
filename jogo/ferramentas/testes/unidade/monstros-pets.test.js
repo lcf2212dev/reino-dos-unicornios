@@ -42,15 +42,37 @@ test('pets: fora da arena ninguém ataca; na arena o unicórnio ataca sozinho, c
   assert.deepStrictEqual(JSON.parse(JSON.stringify(S.petsNaLuta())), ['unicornio'], 'sem ET levado: só o unicórnio');
   S.quadroPets(1000);   // o 1º quadro marca o compasso
   assert.strictEqual(f.vida, f.max, 'espera o compasso dele');
-  S.quadroPets(1000 + p.unicornio.recargaMs / 3);
-  assert.strictEqual(f.vida, f.max - d);
+  const t1 = 1000 + p.unicornio.recargaMs / 3;
+  S.quadroPets(t1);
   const tiro = S.tiros.unicornio;
-  assert.ok(tiro && tiro.dano === d && tiro.x === f.x && tiro.y === f.y, 'o tiro vai até o inimigo');
-  S.quadroPets(1000 + p.unicornio.recargaMs / 3 + 100);
+  assert.ok(tiro && tiro.dano === d && tiro.x === f.x && tiro.y === f.y && tiro.alvo === f.id, 'o tiro vai até o inimigo');
+  assert.strictEqual(f.vida, f.max, 'voando: o dano entra na chegada');
+  S.quadroPets(t1 + p.vooMs);
+  assert.strictEqual(f.vida, f.max - d);
+  assert.ok(S.tiros.unicornio.chegou);
+  S.quadroPets(t1 + p.vooMs + 100);
   assert.strictEqual(f.vida, f.max - d, 'na recarga não ataca');
-  S.quadroPets(1000 + p.unicornio.recargaMs / 3 + p.unicornio.recargaMs);
+  S.quadroPets(t1 + p.unicornio.recargaMs);
+  S.quadroPets(t1 + p.unicornio.recargaMs + p.vooMs);
   assert.strictEqual(f.vida, f.max - 2 * d);
   assert.ok(!S.tiros.et, 'sem ET, sem raio');
+});
+
+test('pets: trocar de arena recomeça o compasso e esquece o tiro no ar', () => {
+  const j = jogo(), { S, R } = j;
+  const { f } = naArena(j, 'pantano');
+  f.vida = f.max = 1000;
+  R.Bosque.dano = () => 10;
+  const p = P(j);
+  S.quadroPets(1000);
+  S.quadroPets(1000 + p.unicornio.recargaMs / 3);
+  assert.ok(S.tiros.unicornio && !S.tiros.unicornio.chegou);
+  const g = naArena(j, 'gelo').f;
+  g.vida = g.max = 1000;
+  S.quadroPets(1000 + p.unicornio.recargaMs / 3 + p.vooMs);
+  assert.deepStrictEqual(Object.keys(S.tiros), [], 'o tiro da outra arena não chega');
+  assert.strictEqual(f.vida, 1000);
+  assert.strictEqual(g.vida, 1000, 'na arena nova, espera o compasso');
 });
 
 test('pets: o ET levado também ataca, fora do compasso do unicórnio', () => {
@@ -91,7 +113,7 @@ test('pets: parada (desmaio) e inimigo longe não atacam; vencido por eles segue
   // perto e com 1 de vida: vence; no passo, o 'vencido' de sempre (XP, pergunta e drop)
   j.ctx.Jogador = { x: f.x + 10, y: f.y };
   f.vida = 1;
-  for (let t = 10000; t <= 10000 + rec * 2 && f.estado !== 'sumindo'; t += 16) S.quadroPets(t);
+  for (let t = 10000; t <= 10000 + rec * 3 && f.estado !== 'sumindo'; t += 16) S.quadroPets(t);
   assert.strictEqual(f.estado, 'sumindo');
   for (let i = 0; i < 20 && f.estado === 'sumindo'; i++) BC.passo(est, 50, { x: 0, y: 0, olharX: 0, olharY: 1, vidaMax: 10 });
   assert.strictEqual(f.estado, 'vencido');
