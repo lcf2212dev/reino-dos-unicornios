@@ -3,7 +3,9 @@
    outro `entreMonstros` px atrás do de antes, e o ET, se ela levou um, no fim da fila),
    com o desenho do inimigo (Monstros.sprite: o da arena ou o da matéria; o passo, o piscar, a sombra, flutuando), virado
    para onde anda; o pulo no inimigo quando ajuda (S.ataques) e a MonsterBall voando, caindo, balançando, com as estrelinhas
-   do "Pegou!" ou o puf do "Escapou!" (a Super, dourada e roxa, com faíscas douradas em volta). Sobre ele, sempre, um coraçãozinho rosa (é amigo, não inimigo: na arena ele tem
+   do "Pegou!" ou o puf do "Escapou!" (a Super, dourada e roxa, com faíscas douradas em volta). Também o tiro dos outros
+   bichinhos na luta (monstros-pets.js, S.tiros): a estrelinha de arco-íris do unicórnio e o raio verde do ET voando
+   até o inimigo, e o brilho no acerto (sem Animações, só o brilho). Sobre ele, sempre, um coraçãozinho rosa (é amigo, não inimigo: na arena ele tem
    o mesmo desenho dos inimigos; a coroa do tipo difícil fica, vem do molde). Sem Animações: parado, sem pulo (só a estrelinha no inimigo) e a bola parada no alvo.
    Roda as partes de regra a cada quadro (S.quadroBola, S.quadroAjuda). Sprites feitos uma vez; nada criado por quadro
    além dos itens de desenho (o espelho é cacheado por canvas). */
@@ -58,6 +60,17 @@
     return SPR.coracao || (SPR.coracao = matriz(['.KK.KK.', 'KrlKrrK', 'KrrrrrK', '.KrrrK.', '..KrK..', '...K...'],
       { K: K, r: '#ff6fa8', l: '#ffd1e3' }));
   }
+  // a estrelinha de arco-íris do chifre do unicórnio (5 × 5) e o raio do ET (4 × 4), com o brilho verde do acerto
+  function estrelaArco() {
+    return SPR.arco || (SPR.arco = matriz(['..K..', '.KpK.', 'KyWbK', '.KgK.', '..K..'],
+      { K: K, p: '#ff7ac0', y: '#ffd34d', W: '#ffffff', b: '#7ad0ff', g: '#7be07b' }));
+  }
+  function raio() {
+    return SPR.raio || (SPR.raio = matriz(['.KK.', 'KlgK', 'KggK', '.KK.'], { K: K, l: '#efffc4', g: '#8dff5a' }));
+  }
+  function faiscaEt() {
+    return SPR.faiscaEt || (SPR.faiscaEt = matriz(['..l..', '.lgl.', 'lgWgl', '.lgl.', '..l..'], { l: '#c9ff9e', g: '#8dff5a', W: '#ffffff' }));
+  }
   function puf() {
     return SPR.puf || (SPR.puf = matriz(['.KKK.', 'KwwwK', 'KwwsK', 'KwssK', '.KKK.'], { K: K, w: C.creme, s: '#e3d4ff' }));
   }
@@ -76,6 +89,7 @@
     var J = window.Jogador, cena = R.Cena && R.Cena.atual(), itens = [];
     S.t = t;
     S.quadroBola();
+    if (S.quadroPets) S.quadroPets(t);   // o unicórnio e o ET também atacam (monstros-pets.js)
     var ids = M.equipados();
     if (!ids.length || !E) return itens;
     E.atualizar(J.x, J.y, cena && cena.id, J.olharX, J.olharY);
@@ -119,11 +133,20 @@
     } };
   }
 
-  // por cima de tudo: a estrelinha de cada ataque e a MonsterBall
+  // por cima de tudo: a estrelinha de cada ataque, o tiro dos outros bichinhos e a MonsterBall
   S.sobre = function (p, t, animar) {
     Object.keys(S.ataques || {}).forEach(function (id) {
       var a = S.ataques[id];
       if (a && t - a.em < PULO_MS) p.sprite(estrela(), Math.round(a.x), Math.round(a.y - 8));
+    });
+    var voo = animar ? cfg().ajuda.pets.vooMs : 0;
+    Object.keys(S.tiros || {}).forEach(function (quem) {
+      var a = S.tiros[quem], dt = a ? t - a.em : Infinity, et = quem === 'et';
+      if (dt < 0 || dt >= voo + PULO_MS) return;
+      if (dt < voo) {   // voando do pet até o inimigo
+        var k = dt / voo;
+        p.sprite(et ? raio() : estrelaArco(), Math.round(a.x0 + (a.x - a.x0) * k), Math.round(a.y0 + (a.y - 8 - a.y0) * k));
+      } else p.sprite(et ? faiscaEt() : estrela(), Math.round(a.x), Math.round(a.y - 8));   // o acerto
     });
     var b = S.bola;
     if (!b) return;

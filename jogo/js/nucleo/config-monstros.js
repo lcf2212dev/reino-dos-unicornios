@@ -32,6 +32,10 @@
       // o dano dele = fração do dano da espada dela (mínimo 1), pelo tipo do monstro capturado
       fator: { facil: 0.3, medio: 0.4, dificil: 0.5, voador: 0.45, mosca: 0.45 },
       bonusNivel: 0.005,      // +0,5% de fração por nível recomendado da arena de onde ele veio (Lua, Nv 35: +17,5%)
+      // os outros bichinhos também atacam (pedido do Leandro, 17/11: "todos os pets atacar no modo aventura";
+      // monstros-pets.js): o unicórnio (a pé ou montado) solta uma estrelinha do chifre e o ET levado, um raio. Dano =
+      // fração do dano da espada dela (mínimo 1), a cada recargaMs; vooMs = o tiro voando até o inimigo (só o desenho)
+      pets: { unicornio: { fator: 0.3, recargaMs: 1500 }, et: { fator: 0.3, recargaMs: 1700 }, vooMs: 240 },
     },
   };
 })();

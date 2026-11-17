@@ -284,9 +284,13 @@
       return { equipados: equipados(), vagas: vagas(), capturados: capturados().map(function (c) { return c.id + '×' + c.qtd; }),
         bola: S.bola ? { alvo: S.bola.alvo, pegou: S.bola.pegou } : null, ataques: Object.keys(S.ataques || {}) };
     },
-    // desenho junto dos personagens (ordenado por y) e a bola por cima: com o monstro equipado ou a bola voando
+    // desenho junto dos personagens (ordenado por y) e a bola por cima: com o monstro equipado, a bola voando ou na arena
     camada: {
-      ativo: function () { return !!(window.Jogador && S.itensDesenho && (S.bola || equipado())); },
+      // na arena sempre: o unicórnio e o ET também atacam (monstros-pets.js)
+      ativo: function () {
+        var BC = R.BosqueCombate;
+        return !!(window.Jogador && S.itensDesenho && (S.bola || equipado() || (BC && BC.arena && BC.arena())));
+      },
       itensDesenho: function (p, t, animar) { return S.itensDesenho(p, t, animar); },
       sobre: function (ctx, p, t, animar) { if (S.sobre) S.sobre(p, t, animar); },
     },
