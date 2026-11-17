@@ -146,8 +146,10 @@ Qualquer cômodo vale para qualquer kit.
    - Teclado: setas movem, R ou Espaço giram, Enter coloca, Esc cancela.
    - Sem animação com `body.sem-animacao` e `prefers-reduced-motion`.
 4. **Tela de início**: a novidade é o destaque principal (`js/ui/abertura-novidade.js`, `config.novidadeInicio`): faixa
-   "Nova atualização!" no alto e, embaixo do título, a casinha do baú com "Decore sua casa!", para todos até a data;
-   enquanto vale, fica no lugar do bloco da medalha de ouro (o confete e o parabéns do Claude continuam).
+   "Nova atualização!" no alto e, embaixo do título, o `desenho` (ou a casinha do baú) com o `texto` e o `detalhe`, para
+   todos até a data `ate`; na 1ª vez do aparelho, o botão "Atualizar" passa a barra da atualização de mentira (com os
+   `passos` da novidade). Enquanto vale, fica no lugar do bloco da medalha de ouro (o confete e o parabéns do Claude
+   continuam).
 
 ## 10. Falas e vozes
 1. Quem fala é o Claude (`{ voz: 'claude' }`). Cada arquivo dono de falas as registra pelo `falas()` do seu

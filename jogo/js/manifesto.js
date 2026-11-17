@@ -570,6 +570,7 @@
       { js: 'js/sistemas/viagem-amigos.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/et-companheiro.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/monstros.js', grupo: 'sistemas', node: true }, // Treinadores de Monstros: coleção, monstros equipados em fila, campos monstros/monstroCompanheiro/monstrosJuntos (Reino.Monstros; monstros.md)
+      { js: 'js/sistemas/monstros-materias.js', grupo: 'sistemas', node: true }, // Monstros das matérias (Casa Mal-Assombrada): os 6 moldes, ganhos com a matéria completa (monstros.md §10)
       { js: 'js/sistemas/quimica.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/quimica-andar2.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/cartoes.js', grupo: 'sistemas', node: true }, // cartões de experiência do Laboratório: derivados das salas feitas (quimica.md §10)

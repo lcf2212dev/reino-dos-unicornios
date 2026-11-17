@@ -86,10 +86,28 @@
   function estado() { try { return R.Progresso.estado(); } catch (e) { return null; } }
 
   /* ================= ESPÉCIES ================= */
-  // todas as espécies: as de cada arena registrada (o Bosque primeiro), na ordem dos tipos da config
+  // os monstros das matérias (monstros-materias.js, monstros.md §10): { id, arena: 'assombrada', tipo, nome, nivel,
+  // lugar, curto, assunto, molde }; ganhos com a matéria completa (derivado), nunca pela MonsterBall
+  var EXTRAS = [], mapa = null, nArenas = -1;
+  var ASSOMBRADA = { lugar: 'Casa Mal-Assombrada', curto: 'Casa Assombrada', tipo: 'dificil', nivel: 40 };
+  function registrarEspecie(d) {
+    if (!d || typeof d.id !== 'string' || !ESPECIE.test(d.id) || !d.molde || !d.assunto) throw new Error('monstro da matéria inválido: ' + (d && d.id));
+    if (EXTRAS.some(function (e) { return e.id === d.id; })) throw new Error('monstro da matéria repetido: ' + d.id);
+    EXTRAS.push({ id: d.id, arena: 'assombrada', tipo: ASSOMBRADA.tipo, nome: d.nome, nivel: ASSOMBRADA.nivel,
+      lugar: ASSOMBRADA.lugar, curto: ASSOMBRADA.curto, emoji: null, assunto: d.assunto, molde: d.molde, daMateria: true });
+    mapa = null;
+  }
+  // a matéria (id) que dá o monstro: a de agora do prédio do assunto (Bimestres.ativa)
+  function materiaDe(e) { var B = R.Bimestres; return B && B.ativa ? B.ativa(e.assunto) : e.assunto; }
+  function ganhou(e) {
+    try { var m = R.materia(materiaDe(e)); return !!(m && !m.arquivada && m.salas && m.salas.length && R.Progresso.materiaCompleta(m)); }
+    catch (err) { return false; }   // sem save carregado (teste)
+  }
+  // todas as espécies: as de cada arena registrada (o Bosque primeiro), na ordem dos tipos da config, e depois as das
+  // matérias
   function especies() {
     var A = R.Arenas, lista = [];
-    if (!A) return lista;
+    if (!A) return lista.concat(EXTRAS);
     A.ids().forEach(function (arena) {
       var c = A.cfg(arena), d = A.def(arena) || {}, nivel = arena === 'bosque' ? 1 : (c.nivel || 1);
       Object.keys(c.tipos || {}).forEach(function (tipo) {
@@ -98,11 +116,10 @@
           lugar: d.nome || arena, curto: d.curto || d.nome || arena, emoji: d.emoji || null });
       });
     });
-    return lista;
+    return lista.concat(EXTRAS);
   }
   // por id, refeito só quando muda o número de arenas (elas se registram no carregamento): especie() é chamado a cada
   // quadro, para cada monstro da fila
-  var mapa = null, nArenas = -1;
   function especie(id) {
     if (typeof id !== 'string') return null;
     var n = R.Arenas ? R.Arenas.ids().length : 0;
@@ -114,10 +131,42 @@
   }
   // os que ela tem (espécie conhecida, quantos > 0), na ordem das espécies
   function capturados() {
-    var est = estado(), m = (est && est.monstros) || {};
-    return especies().filter(function (e) { return m[e.id] > 0; }).map(function (e) { return { id: e.id, qtd: m[e.id], def: e }; });
+    return especies().map(function (e) { return { id: e.id, qtd: quantos(e.id), def: e }; }).filter(function (c) { return c.qtd > 0; });
   }
-  function quantos(id) { var est = estado(), m = est && est.monstros; return m && m[id] > 0 ? m[id] : 0; }
+  // quantos ela tem: os pegos pela MonsterBall (campo `monstros`); o da matéria, 1 com a matéria completa
+  function quantos(id) {
+    var e = especie(id);
+    if (e && e.daMateria) return ganhou(e) ? 1 : 0;
+    var est = estado(), m = est && est.monstros;
+    return m && m[id] > 0 ? m[id] : 0;
+  }
+  // os monstros das matérias, na ordem: { id, nome, materia (a de agora), ganho }
+  function daMateria() {
+    return EXTRAS.map(function (e) { return { id: e.id, nome: e.nome, materia: materiaDe(e), ganho: ganhou(e) }; });
+  }
+  // o molde do desenho: o do inimigo da arena, ou o do monstro da matéria
+  function molde(id) {
+    var e = especie(id);
+    if (!e) return null;
+    if (e.daMateria) return e.molde;
+    return R.Arenas ? R.Arenas.desenho(e.arena, e.tipo) : null;
+  }
+  // o sprite com contorno (quadro 0 parado, 1 piscando, 3 o passo dos que andam): o das arenas
+  // (BosqueCombate.spriteInimigo) ou o do molde da matéria, feito uma vez
+  var SPR = {};
+  function sprite(id, quadro) {
+    var e = especie(id), q = quadro || 0;
+    if (!e) return null;
+    if (!e.daMateria) { var BC = R.BosqueCombate; return BC && BC.spriteInimigo ? BC.spriteInimigo(e.tipo, q, e.arena) : null; }
+    if (q !== 1) q = 0;
+    var k = id + '|' + q;
+    if (SPR[k]) return SPR[k];
+    var m = e.molde, linhas = m.linhas.slice();
+    if (q === 1 && m.pisca) Object.keys(m.pisca).forEach(function (i) { linhas[+i] = m.pisca[i]; });
+    var c = window.PA.novoCanvas(linhas[0].length, linhas.length);
+    R.Desenho.matriz(c.getContext('2d'), 0, 0, linhas, m.paleta);
+    return (SPR[k] = c);
+  }
 
   /* ================= OS EQUIPADOS (os monstros que vão com ela; o ET é à parte, vai junto) ================= */
   // matérias do bimestre de agora (não arquivadas) com todas as salas feitas
@@ -193,10 +242,10 @@
     if (!est || equipados().indexOf(id) < 0) return false;
     return gravar(gravada().filter(function (x) { return x !== id; }), id);
   }
-  // a MonsterBall pegou: +1 dessa espécie, gravado na hora
+  // a MonsterBall pegou: +1 dessa espécie, gravado na hora (o da matéria não se pega: vem com a matéria completa)
   function registrarCaptura(id) {
-    var est = estado();
-    if (!est || typeof id !== 'string' || !ESPECIE.test(id)) return false;
+    var est = estado(), e = especie(id);
+    if (!est || typeof id !== 'string' || !ESPECIE.test(id) || (e && e.daMateria)) return false;
     var m = est.monstros = est.monstros || {};
     m[id] = (m[id] > 0 ? m[id] : 0) + 1;
     try { R.Progresso.salvar(); } catch (e) { /* sem save (teste) */ }
@@ -215,6 +264,7 @@
 
   R.Monstros = {
     NOMES: NOMES, especies: especies, especie: especie, capturados: capturados, quantos: quantos,
+    registrarEspecie: registrarEspecie, daMateria: daMateria, molde: molde, sprite: sprite,
     equipado: equipado, equipados: equipados, estaJunto: estaJunto, equipar: equipar, deixar: deixar, vagas: vagas, maisVagas: maisVagas,
     materiasTerminadas: materiasTerminadas, danoAjuda: danoAjuda, registrarCaptura: registrarCaptura,
     emitir: emitir,

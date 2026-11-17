@@ -1,7 +1,7 @@
 /* Treinadores de Monstros, parte de desenho (de sistemas/monstros.js, interno Reino._monstros; monstros.md): os monstros
    equipados andando em fila atrás dela no caminho dela (o rastro do ET, Reino._etCompanheiro: o 1º a `distancia`, cada
    outro `entreMonstros` px atrás do de antes, e o ET, se ela levou um, no fim da fila),
-   com o desenho do inimigo (BosqueCombate.spriteInimigo: o passo, o piscar, a sombra, flutuando como na arena), virado
+   com o desenho do inimigo (Monstros.sprite: o da arena ou o da matéria; o passo, o piscar, a sombra, flutuando), virado
    para onde anda; o pulo no inimigo quando ajuda (S.ataques) e a MonsterBall voando, caindo, balançando, com as estrelinhas
    do "Pegou!" ou o puf do "Escapou!" (a Super, dourada e roxa, com faíscas douradas em volta). Sobre ele, sempre, um coraçãozinho rosa (é amigo, não inimigo: na arena ele tem
    o mesmo desenho dos inimigos; a coroa do tipo difícil fica, vem do molde). Sem Animações: parado, sem pulo (só a estrelinha no inimigo) e a bola parada no alvo.
@@ -91,7 +91,7 @@
     var J = window.Jogador, l = lado[e.id] || (lado[e.id] = { ultX: null, espelhar: false });
     if (l.ultX !== null && Math.abs(q.x - l.ultX) > 0.05) l.espelhar = q.x < l.ultX;
     l.ultX = q.x;
-    var BC = R.BosqueCombate, m = R.Arenas ? R.Arenas.desenho(e.arena, e.tipo) : null;
+    var m = M.molde(e.id);
     var topo = topoDe(m, e);
     var alto = m && m.flutua !== undefined ? m.flutua : ALTURA, bal = m && m.balanco !== undefined ? m.balanco : BALANCO;
     return { y: q.y, desenhar: function () {
@@ -110,7 +110,7 @@
         if (bal) sobe += Math.sin((t + fase) / 420) * bal;
       }
       if (J.sombra) J.sombra(p, Math.round(x), Math.round(y), 4);
-      var spr = BC && BC.spriteInimigo ? BC.spriteInimigo(e.tipo, quadro, e.arena) : null;
+      var spr = M.sprite(e.id, quadro);
       if (!spr) return;
       var pe = Math.round(y + 1 - sobe);
       p.sprite(espelhar ? espelho(spr) : spr, Math.round(x), pe);

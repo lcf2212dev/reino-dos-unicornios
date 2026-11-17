@@ -24,7 +24,7 @@
     var M = Reino.Monstros, est = null;
     try { est = Reino.Progresso.estado(); } catch (e) { return false; }
     if (!est) return false;
-    if (M && M.capturados().length) return true;
+    if (M && M.capturados().some(function (c) { return !c.def.daMateria; })) return true;   // o da matéria não conta
     var it = est.itens || {};
     return Object.keys(it).some(function (k) { return it[k] && /^bola-(monster|super|mini)$/.test(it[k].id); });
   }

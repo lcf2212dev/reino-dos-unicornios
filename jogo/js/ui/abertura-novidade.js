@@ -35,7 +35,8 @@
 
   /* ---------- a atualização de mentira (pedido do Leandro, 31/10/2026: "fake updating") ---------- */
   var CHAVE = 'reino-novidade-vista';
-  var PASSOS = ['Abrindo o mapa do Reino…', 'Plantando as árvores do bosque…', 'Chamando os fantasmas…', 'Acendendo as lanternas…', 'Pronto!'];
+  // os passos da barra: os da novidade (config.novidadeInicio.passos, o último é o "Pronto!") ou estes
+  var PASSOS_PADRAO = ['Abrindo o mapa do Reino…', 'Plantando as árvores do bosque…', 'Chamando os fantasmas…', 'Acendendo as lanternas…', 'Pronto!'];
   var BLOCOS = 12;
 
   function primeiraVez() {
@@ -53,6 +54,7 @@
     return new Promise(function (resolver) {
       if (Reino.congelado) { marcarVista(); resolver(); return; }
       var total = U.animar() ? (c.atualizarMs || 3600) : (c.atualizarParadoMs || 1500);
+      var PASSOS = Array.isArray(c.passos) && c.passos.length > 1 ? c.passos : PASSOS_PADRAO;
       var blocos = [];
       var barra = el('div.atualizando-barra', { 'aria-hidden': 'true' });
       for (var i = 0; i < BLOCOS; i++) { var b = el('span.atualizando-bloco'); blocos.push(b); barra.appendChild(b); }

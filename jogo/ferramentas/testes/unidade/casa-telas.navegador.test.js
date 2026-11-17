@@ -74,7 +74,7 @@ test('casa: baú uma vez, escolha do kit, teclado e legenda', { timeout: 240000 
     await c.js("Reino.UI.fecharTodas(); __reino.telaInicio(); 1");
     assert.deepStrictEqual(await c.js(`({ texto: document.querySelector('.tela-inicio .novidade-texto').textContent,
       casinha: !!document.querySelector('.tela-inicio .novidade-desenho') })`),
-    { texto: 'O Bosque dos Fantasmas', casinha: true });
+    { texto: 'A Casa Mal-Assombrada', casinha: true });
     await c.js('Reino.UI.fecharTodas(); 1');
     assert.deepStrictEqual(c.erros, []);
   } finally { await c.fechar(); }
