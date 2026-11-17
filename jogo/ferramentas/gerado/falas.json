@@ -70276,6 +70276,33 @@
    "fala": "Aqui se treina com carinho."
   },
   {
+   "chave": "c9a7d82612",
+   "voz": "narradora",
+   "texto": "Um fantasma sorri no quadro.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Um fantasma sorri no quadro."
+  },
+  {
+   "chave": "ebe0b40614",
+   "voz": "narradora",
+   "texto": "O caldeirão faz bolhas verdes!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "O caldeirão faz bolhas verdes!"
+  },
+  {
+   "chave": "ea5a09b412",
+   "voz": "narradora",
+   "texto": "Eu sou um fantasminha amigo!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Eu sou um fantasminha amigo!"
+  },
+  {
    "chave": "7c425675u",
    "voz": "narradora",
    "texto": "Bem-vinda ao vulcão!",
@@ -91197,6 +91224,213 @@
     "geral"
    ],
    "fala": "Quer voltar para a cidade?"
+  },
+  {
+   "chave": "d029788918",
+   "voz": "narradora",
+   "texto": "Termine a Matemática do Dia a Dia!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Termine a Matemática do Dia a Dia!"
+  },
+  {
+   "chave": "0bf2de2e14",
+   "voz": "narradora",
+   "texto": "E ganhe o Fantasma das Contas!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "E ganhe o Fantasma das Contas!"
+  },
+  {
+   "chave": "e3d14bcc12",
+   "voz": "narradora",
+   "texto": "O Fantasma das Contas é seu!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "O Fantasma das Contas é seu!"
+  },
+  {
+   "chave": "8550232712",
+   "voz": "narradora",
+   "texto": "Termine as salas de English!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Termine as salas de English!"
+  },
+  {
+   "chave": "f7406af917",
+   "voz": "narradora",
+   "texto": "E você ganha o Vampirinho Inglês!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "E você ganha o Vampirinho Inglês!"
+  },
+  {
+   "chave": "79e9aa7d10",
+   "voz": "narradora",
+   "texto": "O Vampirinho Inglês é seu!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "O Vampirinho Inglês é seu!"
+  },
+  {
+   "chave": "9224b6c612",
+   "voz": "narradora",
+   "texto": "Termine a Língua Portuguesa!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Termine a Língua Portuguesa!"
+  },
+  {
+   "chave": "9293ed9e11",
+   "voz": "narradora",
+   "texto": "E ganhe a Múmia das Letras!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "E ganhe a Múmia das Letras!"
+  },
+  {
+   "chave": "6b92c998z",
+   "voz": "narradora",
+   "texto": "A Múmia das Letras é sua!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "A Múmia das Letras é sua!"
+  },
+  {
+   "chave": "8e550f0e13",
+   "voz": "narradora",
+   "texto": "Termine a Geografia do Mundo!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Termine a Geografia do Mundo!"
+  },
+  {
+   "chave": "7c58c69614",
+   "voz": "narradora",
+   "texto": "E ganhe o Lobisomem dos Mapas!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "E ganhe o Lobisomem dos Mapas!"
+  },
+  {
+   "chave": "7d26362812",
+   "voz": "narradora",
+   "texto": "O Lobisomem dos Mapas é seu!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "O Lobisomem dos Mapas é seu!"
+  },
+  {
+   "chave": "2998d02e15",
+   "voz": "narradora",
+   "texto": "Termine a Ciências da Natureza!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Termine a Ciências da Natureza!"
+  },
+  {
+   "chave": "bc7898191a",
+   "voz": "narradora",
+   "texto": "E ganhe o Monstrinho do Laboratório!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "E ganhe o Monstrinho do Laboratório!"
+  },
+  {
+   "chave": "45e9900318",
+   "voz": "narradora",
+   "texto": "O Monstrinho do Laboratório é seu!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "O Monstrinho do Laboratório é seu!"
+  },
+  {
+   "chave": "718e3a3612",
+   "voz": "narradora",
+   "texto": "Termine a História da Gente!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Termine a História da Gente!"
+  },
+  {
+   "chave": "8693e04013",
+   "voz": "narradora",
+   "texto": "E ganhe o Esqueleto do Museu!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "E ganhe o Esqueleto do Museu!"
+  },
+  {
+   "chave": "4e9008f611",
+   "voz": "narradora",
+   "texto": "O Esqueleto do Museu é seu!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "O Esqueleto do Museu é seu!"
+  },
+  {
+   "chave": "1001049eu",
+   "voz": "narradora",
+   "texto": "Quer levar com você?",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Quer levar com você?"
+  },
+  {
+   "chave": "e04b0f2as",
+   "voz": "narradora",
+   "texto": "Ele está com você!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Ele está com você!"
+  },
+  {
+   "chave": "74a0688es",
+   "voz": "narradora",
+   "texto": "Ela está com você!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Ela está com você!"
+  },
+  {
+   "chave": "8fdd593210",
+   "voz": "narradora",
+   "texto": "Não tem vaga para mais um.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Não tem vaga para mais um."
+  },
+  {
+   "chave": "75f753bez",
+   "voz": "narradora",
+   "texto": "Deixe um monstro em casa.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Deixe um monstro em casa."
   },
   {
    "chave": "6a4a021b1r",

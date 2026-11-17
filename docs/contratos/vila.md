@@ -1,8 +1,8 @@
 # Vila Arco-Íris (portal no Bosque, 4 lojas e a Teleportadora)
 
 Pedido: `pedidos/2026-11-06-vila-arco-iris.md`. No centro-direita do Bosque dos Fantasmas há um portal que leva a uma
-cidade menor, a **Vila Arco-Íris**: praça, **4 lojas**, **2 terrenos livres** (o terceiro, o da direita, virou os
-**Treinadores de Monstros**: `monstros.md`) e a **Teleportadora**, um unicórnio branco de crina arco-íris
+cidade menor, a **Vila Arco-Íris**: praça, **4 lojas**, **1 terreno livre** (o da direita virou os **Treinadores de
+Monstros** e o de cima da esquerda, a **Casa Mal-Assombrada**: `monstros.md`) e a **Teleportadora**, um unicórnio branco de crina arco-íris
 arco-íris (uma na praça da Vila e uma na praça da cidade principal). Para conversar com um
 lojista ela responde certo uma pergunta sorteada entre todas as do **4º bimestre**; comprar e vender aceitam **vários
 itens de uma vez**.
@@ -21,6 +21,7 @@ itens de uma vez**.
 | a Vila e as lojas | `js/interiores/vila/` (`falas.js` com os 4 lojistas, `fundo.js`, `objetos*.js`, `vila.js`, `lojas.js`) |
 | o portal no Bosque | `js/interiores/bosque/portal-vila.js` + a escada no fim de `bosque.js` |
 | os Treinadores de Monstros (o terreno da direita) | `js/interiores/vila/treinadores*.js`, `js/sistemas/treinadores.js`, `js/ui/treinadores-loja.js` (`monstros.md`) |
+| a Casa Mal-Assombrada (o terreno de cima da esquerda) | `js/interiores/vila/assombrada*.js` (falas, objetos, o salão e a ação das jaulas, módulo `'assombrada'`); os monstros das matérias: `js/sistemas/monstros-materias.js` (`monstros.md`) |
 | a Teleportadora | desenho `js/arte/teleportadora.js`; no mapa `js/mundo/teleportadora.js`; na Vila `js/interiores/vila/teleportadora.js`; falas e viagem `js/sistemas/teleportadora.js` |
 
 ## 2. Ids
@@ -34,7 +35,11 @@ itens de uma vez**.
     `seta: false`, `chegar: { x: -1, y: 0 }` ↔ Vila (1, 19), na borda esquerda, `seta: false`, `chegar: { x: 1, y: 0 }`. Chega no Bosque em (52, 22); na Vila, em (2, 19).
   - Treinadores de Monstros: fachada `vila-treinadores-predio` (6 × 5) em (31, 12), no lugar do terreno da direita; porta
     = escada `portal` em (33, 17), `chegar: { x: 0, y: 1 }` ↔ interior `vila-treinadores` (16 × 12), saída (8, 10) como as
-    lojas. Os outros 2 terrenos (esquerda) seguem livres (`monstros.md`).
+    lojas (`monstros.md`).
+  - Casa Mal-Assombrada: fachada `vila-assombrada-predio` (6 × 5) em (3, 12), no lugar do terreno de cima da esquerda (uma
+    `vila-assombrada-abobora` em (9, 16), no lugar da placa); porta = escada `portal` em (5, 17), `chegar: { x: 0, y: 1 }`
+    ↔ interior `vila-assombrada` "Casa Mal-Assombrada" (16 × 12, um cômodo `{ x: 1, y: 1, w: 14, h: 10 }`), saída (8, 10)
+    como as lojas. O terreno de baixo da esquerda, (3, 22), segue livre, com a placa em (9, 26).
   - Porta de cada loja na Vila, na fileira 8, em x = 6, 15, 24, 33 (casa, armas, cabecas, armaduras), seta padrão,
     `chegar: { x: 0, y: 1 }` ↔ saída da loja em (8, 10) `seta: 'desce'`, `chegar: { x: 0, y: -1 }`.
 - Lojistas (`Reino.registrarPersonagem`, com voz): `lavanda` "Dona Lavanda" (casa), `bigorna` "Seu Bigorna" (armas),
@@ -42,6 +47,13 @@ itens de uma vez**.
 - Lojas (`loja`): `casa`, `armas`, `cabecas`, `armaduras`.
 - Peças: `loja: 'armas'|'cabecas'|'armaduras'`, `preco` (estrelas), `arenas: []` (não caem de monstro). Enfeites:
   `Reino.registrarMovelCasa({ …, loja: true })`, objeto `casa-movel-<id>`.
+- Casa Mal-Assombrada: 6 jaulas `vila-assombrada-jaula` (2 × 2, sólidas), uma por monstro de matéria
+  (`Reino.Monstros.daMateria()`, na ordem), com `acao: { tipo: 'assombrada-monstro', especie }`: o monstro em cores, de
+  porta aberta e coração se a matéria de agora do prédio está completa; em silhueta com "?" se não; na plaquinha, o ícone
+  da matéria. A ação abre o balão da narradora (pacote `interior-bosque`; textos em `assombrada-falas.js`): "Termine a
+  <matéria>!" / "E ganhe o <monstro>!"; ganho, "O <monstro> é seu!" e "Quer levar com você?" com "Levar comigo"
+  (`Monstros.equipar`; sem vaga, "Não tem vaga para mais um." / "Deixe um monstro em casa.") e "Agora não"; já com ela,
+  "Ele está com você!". Só lê o progresso: quem grava a fila é o `Monstros.equipar`.
 - Teleportadora: objeto `vila-teleportadora` (2 × 1, sólido) com `acao: { tipo: 'teleportadora', para: 'cidade' }`;
   no mapa, 2 × 1 a partir do tile `config.vila.teleportadoraMapa`, levando `para: 'vila'`.
 
@@ -77,5 +89,6 @@ itens de uma vez**.
 ## 7. Testes
 `unidade/vila-lojas.test.js` (preços, compra/venda de vários, pergunta do 4º bimestre, porteira, móveis fora do
 sorteio), `unidade/vila-itens.test.js` (as 100 peças, moldes e ícones), `unidade/casa-moveis-loja.navegador.test.js` (os
-50 enfeites), `unidade/vila.navegador.test.js` (portal, Vila, portas das lojas, lojistas, terrenos) e
+50 enfeites), `unidade/vila.navegador.test.js` (portal, Vila, portas das lojas, lojistas, terrenos), `unidade/assombrada.navegador.test.js`
+(a porta da Casa Mal-Assombrada e a volta, as 6 jaulas, ganhar e levar o monstro, sem vaga) e
 `unidade/teleportadora.navegador.test.js` (no mapa e na Vila, as duas viagens).
