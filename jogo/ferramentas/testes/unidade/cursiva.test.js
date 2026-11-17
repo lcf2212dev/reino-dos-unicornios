@@ -153,9 +153,10 @@ test('cursiva: o e e as laçadas altas (l, h) ao contrário não ficam prontos, 
   })));
 });
 
-// o tamanho da letra da tela no celular (390 px de largura: o papel tem ~175 px de arte; 2 px de tela cada)
+// o tamanho da letra da tela no celular (390 px de largura: o papel tem ~159 px de arte, 2 px de tela cada; medido na
+// tela: aprendo. 38 px, unicórnio 32 px por x-altura)
 function pxNoCelular(w) {
-  const larg = C.palavra(w).larg, E = Math.max(10, Math.floor(Math.min((175 - 12) / (larg + 0.6), (177 - 8) / 3.7, R.config.cursiva.xAlturaMax)));
+  const larg = C.palavra(w).larg, E = Math.max(10, Math.floor(Math.min((159 - 12) / (larg + 0.6), (177 - 8) / 3.7, R.config.cursiva.xAlturaMax)));
   return 2 * E;
 }
 // o toque de verdade: 120 eventos/s a `vel` x-alturas/s, cada um com tremor gaussiano de `ruidoPx` px de tela

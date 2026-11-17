@@ -199,12 +199,16 @@
       }
       // onde vão as setinhas: com um bico logo à frente, só uma (no vai-e-volta do t, do i e do m, duas cairiam uma em
       // cima da outra): longe do bico, bem antes dele e apontando para ele (vá até lá); perto, depois dele, para onde
-      // virar, a pelo menos 0,35 da bolinha (senão fica debaixo dela); sem bico, duas
+      // virar, a pelo menos 0,35 da bolinha no papel (senão fica debaixo dela); sem bico, duas
       function lugaresDasSetas(tr, k) {
         var b = bico(tr, k, 0.7);
         if (b > 0) {
           var falta = tr.s[b] - tr.s[k];
-          return falta > 0.35 ? [indice(tr, k, falta - 0.06)] : [indice(tr, b, Math.max(0.3, falta + 0.35))];
+          if (falta > 0.35) return [indice(tr, k, falta - 0.06)];
+          // depois do bico, a 0,35 da bolinha em linha reta no papel (no a, a bola volta por cima da subida)
+          var j = indice(tr, b, 0.3);
+          while (j < tr.n - 2 && Math.hypot(tr.x[j] - tr.x[k], tr.y[j] - tr.y[k]) < 0.35) j++;
+          return [j];
         }
         return [indice(tr, k, 0.38), indice(tr, k, 0.8)];
       }

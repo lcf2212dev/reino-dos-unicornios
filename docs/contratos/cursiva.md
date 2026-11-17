@@ -40,7 +40,8 @@ op = { tol, pegar, contra, passada } em x-altura (padrão: config.cursiva)
 1. A ponta `k` é uma conta num fio: só anda para a frente e só puxada pelo dedo. O dedo conta a cada `passada`
    andada (0,06 de x-altura, e nunca menos que `passadaPx` 6 px de tela): a direção é a desse pedaço, não a de cada
    evento (o toque do celular treme ~1 px por evento, e um passo de 1 px aponta para qualquer lado). Em cada pedaço, a ponta vai para o ponto logo à frente (até `ALCANCE` 0,3 de
-   arco; com um bico do desenho a até 0,3 à frente, até 0,3 depois dele) que está a menos de `tol` do dedo, mais perto dele que a ponta, é (com folga de 0,08) o pedaço do caminho mais
+   arco, mais o que a passada passa de 0,06, porque a ponta fica até uma passada atrás do dedo; com um bico do desenho
+   a até esse alcance à frente, até o alcance depois dele) que está a menos de `tol` do dedo, mais perto dele que a ponta, é (com folga de 0,08) o pedaço do caminho mais
    perto do dedo na vizinhança (1,4 de arco para trás e para a frente) e tem o caminho andando para onde o dedo anda
    (até 60° da direção do caminho naquele ponto). Assim: para
    baixo no começo do "a", voltas para a direita na bolinha de a, o, d, g, q, o "e" e as laçadas altas (l, b, h, f)
@@ -56,8 +57,9 @@ op = { tol, pegar, contra, passada } em x-altura (padrão: config.cursiva)
 3. Na tela (`opTela`): a tolerância é `tolerancia` (0,3), mas nunca menos que `toleranciaPx` da tela (letra pequena
    no celular) nem mais que `toleranciaMax` (0,38); o toque inicial, `pegar` e `pegarPx`; a passada, acima. Com a letra grande (tablet, notebook), até o n escrito como u fica sem
    terminar; no celular, a diferença de forma pequena cabe no dedo, o sentido não.
-   Limite conhecido: o "é" (uma letra só) sai com um zigue-zague teimoso num ritmo certo (umas 5 tentativas); nas
-   palavras de duas letras ou mais, nenhum rabisco escreve (medido com a op real da tela, celular e tablet).
+   Limite conhecido: as palavras curtinhas de e ("é", "eu") saem com um rabisco teimoso (zigue-zague num ritmo certo
+   ou uma molinha, que já gira o e para o lado certo), em 4 a 7 tentativas; nas outras palavras do banco, nenhum
+   rabisco escreve (medido com a op real da tela, celular e tablet).
 4. Levantar o dedo no meio da palavra pode: continua da bolinha (não premia pressa nem pune a criança de 7 anos).
 5. Pingos, acentos, cedilha, corte do t e pontuação aparecem sozinhos quando a palavra acaba (decisão: o que se
    cobra é o sentido das letras).
@@ -66,8 +68,8 @@ op = { tol, pegar, contra, passada } em x-altura (padrão: config.cursiva)
 - Em cima "Frase 1 de 2", a frase em letra de forma e a frase toda pequena em cursiva (as palavras feitas em tinta).
   No meio o papel (pauta do caderno: haste e perna tracejadas, a faixa do meio azul-clara), com a palavra da vez
   grande e tracejada, a bolinha verde (a ponta) e duas setinhas laranja à frente. Com um bico a até 0,7 à frente,
-  uma só: longe dele, bem antes e apontando para ele (vá até a ponta); perto, depois dele, para onde virar, longe da
-  bolinha. Canvas em px de arte (2 px CSS),
+  uma só: longe dele, bem antes e apontando para ele (vá até a ponta); perto, depois dele, para onde virar, a 0,35 da
+  bolinha no papel. Canvas em px de arte (2 px CSS),
   riscos por carimbo. "Ver como faz": a caneta laranja faz o que falta do traço (sem animação: o caminho em laranja
   com setinhas). Fim: "Você escreveu as N frases!", festa 2 e o botão `premio` ("Pegar a MonsterBall").
 - `estado` guarda frase, palavra, a ponta de cada traço e `pronto`: quem chama devolve o mesmo objeto e ela continua
