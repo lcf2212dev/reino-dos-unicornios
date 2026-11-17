@@ -18,7 +18,11 @@
     recargaBolaMs: 1500,      // espera entre duas bolas jogadas
     bolaVooMs: 450,           // a bola voando até o monstro
     bolaBalancoMs: 1100,      // a bola balançando no chão antes do "Pegou!" ou do "Escapou!"
-    distancia: 30,            // o monstro equipado anda atrás dela a esta distância (px), como o ET (viagem.companheiroDistancia)
+    distancia: 30,            // o 1º monstro equipado anda atrás dela a esta distância (px), como o ET (viagem.companheiroDistancia)
+    entreMonstros: 30,        // cada outro monstro equipado anda esta distância (px) atrás do de antes, em fila (o coração não cai no da frente)
+    // quantos ela pode levar (pedido do Leandro, 17/11): `base` monstros, e mais `porMateria` por matéria do bimestre
+    // de agora terminada (todas as salas feitas). Com as 6 matérias do 4º bimestre, até 10
+    equipar: { base: 4, porMateria: 1 },
     ajuda: {                  // o monstro equipado ataca os inimigos da arena junto com ela
       alcance: 72,            // distância (px) dela em que ele procura um inimigo para atacar
       recargaMs: 1400,        // espera entre dois ataques dele

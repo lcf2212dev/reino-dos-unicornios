@@ -569,7 +569,7 @@
       { js: 'js/sistemas/viagem-desafio.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/viagem-amigos.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/et-companheiro.js', grupo: 'sistemas', node: true },
-      { js: 'js/sistemas/monstros.js', grupo: 'sistemas', node: true }, // Treinadores de Monstros: coleção, monstro equipado, campos monstros/monstroCompanheiro (Reino.Monstros; monstros.md)
+      { js: 'js/sistemas/monstros.js', grupo: 'sistemas', node: true }, // Treinadores de Monstros: coleção, monstros equipados em fila, campos monstros/monstroCompanheiro/monstrosJuntos (Reino.Monstros; monstros.md)
       { js: 'js/sistemas/quimica.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/quimica-andar2.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/cartoes.js', grupo: 'sistemas', node: true }, // cartões de experiência do Laboratório: derivados das salas feitas (quimica.md §10)

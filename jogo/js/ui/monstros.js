@@ -1,7 +1,8 @@
 /* Meus monstros (Reino.UI.telaMonstros; docs/contratos/monstros.md): um cartão por espécie, como o Álbum de ETs: a que
    ela pegou em cores (desenho do inimigo, nome, de onde veio e "×N"), a que falta como silhueta com "?" e o lugar onde
-   mora. No cartão de um capturado: "Levar comigo" / "Deixar em casa" (Reino.Monstros.equipar; só 1 monstro, o ET continua) e o
-   selo "Está com você"; os que ela tem vêm primeiro. Sem nenhum: o convite para comprar MonsterBalls nos Treinadores de Monstros da Vila.
+   mora. No cartão de um capturado: "Levar comigo" / "Deixar em casa" (Reino.Monstros.equipar / deixar; até
+   Monstros.vagas(): 4, e mais 1 por matéria terminada; o ET continua) e o selo "Está com você"; sem vaga, o "Levar
+   comigo" fica indisponível e o topo diz "Termine uma matéria para levar mais um!". Os que ela tem vêm primeiro. Sem nenhum: o convite para comprar MonsterBalls nos Treinadores de Monstros da Vila.
    Abre pelo botão da Mochila (ui/mochila.js) e pela loja da Kiara (UI.telaTreinadores). Também o aviso pequeno da bola
    ("Pegou!" / "Escapou!", UI.avisoItem) no EVENTOS.MONSTROS. Só na tela, sem voz. Estilos: css/ui-monstros.css. */
 (function () {
@@ -32,17 +33,21 @@
       pn.conteudo.appendChild(grade);
 
       function montar(foco) {
-        var todas = M.especies(), tem = {}, junto = M.equipado();
+        var todas = M.especies(), tem = {}, juntos = M.equipados(), vagas = M.vagas(), cheio = juntos.length >= vagas;
+        // sem vaga: com matéria por terminar, o caminho para mais uma; com todas terminadas, o máximo
+        var porque = M.maisVagas() ? 'Termine uma matéria para levar mais um!' : 'Você já leva o máximo de monstros!';
         M.capturados().forEach(function (c) { tem[c.id] = c.qtd; });
         var n = Object.keys(tem).length;
-        topo.textContent = n ? n + ' de ' + todas.length + ' monstros' :
+        topo.textContent = n ? n + ' de ' + todas.length + ' monstros • com você: ' + juntos.length + ' de ' + vagas +
+          (cheio && n > juntos.length ? '. ' + porque : '') :
           'Você ainda não tem monstros. Compre MonsterBalls nos Treinadores de Monstros, na Vila Arco-Íris, e jogue perto de um monstro nas arenas!';
         topo.classList.toggle('monstros-vazio', !n);
         grade.textContent = '';
         // os que ela tem primeiro (na ordem das arenas), depois os que faltam
         todas.filter(function (e) { return tem[e.id]; }).concat(todas.filter(function (e) { return !tem[e.id]; })).forEach(function (e) {
           var qtd = tem[e.id] || 0, nome = U.colado ? U.colado(e.nome) : e.nome;
-          var li = el('li.monstros-cartao' + (qtd ? '.tem' : '.silhueta') + (junto === e.id ? '.junto' : ''),
+          var junto = juntos.indexOf(e.id) >= 0;
+          var li = el('li.monstros-cartao' + (qtd ? '.tem' : '.silhueta') + (junto ? '.junto' : ''),
             el('div.monstros-figura', figura(e, !!qtd), qtd ? '' : el('span.monstros-interroga', { 'aria-hidden': 'true' }, '?')));
           li.tabIndex = 0;
           li.setAttribute('aria-label', qtd ? e.nome + ', de ' + e.lugar + ', ' + qtd : 'Monstro de ' + e.lugar + ', ainda não pegou');
@@ -55,14 +60,17 @@
           li.appendChild(el('b', nome));
           li.appendChild(el('small', U.colado ? U.colado(e.curto) : e.curto));
           li.appendChild(el('span.monstros-qtd', '×' + qtd));
-          if (junto === e.id) li.appendChild(el('span.monstros-selo', 'Está com você'));
-          var leva = junto !== e.id;
-          var b = el('button.btn-grande' + (leva ? '.btn-principal' : '') + '.monstros-levar', { type: 'button', 'data-monstro': e.id },
+          if (junto) li.appendChild(el('span.monstros-selo', 'Está com você'));
+          var leva = !junto, semVaga = leva && cheio;
+          var b = el('button.btn-grande' + (leva && !semVaga ? '.btn-principal' : '') + '.monstros-levar', { type: 'button', 'data-monstro': e.id },
             leva ? 'Levar comigo' : 'Deixar em casa');
-          b.setAttribute('aria-label', (leva ? 'Levar ' : 'Deixar em casa ') + e.nome + (leva ? ' comigo' : ''));
+          b.setAttribute('aria-label', (leva ? 'Levar ' : 'Deixar em casa ') + e.nome + (leva ? ' comigo' : '') +
+            (semVaga ? '. Sem vaga. ' + porque : ''));
+          if (semVaga) b.setAttribute('aria-disabled', 'true');
           b.addEventListener('click', function () {
+            if (semVaga) { Reino._ui.toqueIgnorado(b); UI.avisoItem({ icone: ICONE, texto: porque }); return; }
             Reino.Som.tocar(leva ? 'selecionar' : 'toque');
-            M.equipar(leva ? e.id : null);
+            if (leva) M.equipar(e.id); else M.deixar(e.id);
             montar(e.id);
           });
           li.appendChild(b);
